@@ -39,33 +39,39 @@ Solid lines are the ten open paths; dotted is the shut bridge.
 
 ## The formula
 
-Notation first, in words. A graph is two lists, its junctions and its joined pairs: $V$ for the junctions, $E$ for the paths, $n$ and $m$ for how many of each ([Graphs](01-graphs-vertices-and-edges.md)).
+Notation first, in words. A graph is two lists, its junctions and its joined pairs: $`V`$ for the junctions, $`E`$ for the paths, $`n`$ and $`m`$ for how many of each ([Graphs](01-graphs-vertices-and-edges.md)).
 
-A path here is one track; a **route** is a string of them — the walk of [Walks, paths and cycles](03-walks-paths-and-cycles.md). Write $u \sim v$ when some route joins them, and $d(v)$ for the fewest paths a route from the start $S$ to $v$ can use.
+A path here is one track; a **route** is a string of them — the walk of [Walks, paths and cycles](03-walks-paths-and-cycles.md). Write $`u \sim v`$ when some route joins them, and $`d(v)`$ for the fewest paths a route from the start $`S`$ to $`v`$ can use.
 
-$$u \sim v \quad\text{exactly when}\quad \text{some route in } G \text{ runs from } u \text{ to } v$$
+```math
+u \sim v \quad\text{exactly when}\quad \text{some route in } G \text{ runs from } u \text{ to } v
+```
 
 **Read it aloud:** two junctions reach each other when a rider can get from one to the other, however long the way round.
 
-Reaching splits the junctions into blocks with no path between them: the **components**. Write $c(G)$ for how many.
+Reaching splits the junctions into blocks with no path between them: the **components**. Write $`c(G)`$ for how many.
 
-$$G \text{ is connected} \quad\text{exactly when}\quad c(G) = 1$$
+```math
+G \text{ is connected} \quad\text{exactly when}\quad c(G) = 1
+```
 
-The flood is not told $d(v)$; it hands out its own number, $r(v)$, by one rule applied until it runs out of work.
+The flood is not told $`d(v)`$; it hands out its own number, $`r(v)`$, by one rule applied until it runs out of work.
 
-$$r(S) = 0, \qquad r(w) = r(v) + 1 \text{ for the junction } v \text{ that first reaches } w$$
+```math
+r(S) = 0, \qquad r(w) = r(v) + 1 \text{ for the junction } v \text{ that first reaches } w
+```
 
 **Read it aloud:** each junction is numbered one more than the neighbour that reached it first. "First" is the whole method, and a queue delivers it; Step 3 proves the two numbers agree.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$, $V$, $E$ | the map, its junctions, its paths | the town | — |
-| $n$, $m$ | junctions and paths, counted | 9 and 10 | more junctions, more pieces; more paths, fewer |
-| $S$, $v$, $w$ | start; junction reached; neighbour | station; D; E | — |
-| $u \sim v$ | a route joins the two | S reaches E, not H | — |
-| $d(v)$ | fewest paths from the start | d(E) = 3 | it sits further out |
-| $r(v)$ | the flood's ring number | r(E) = 3 | — |
-| $c(G)$ | pieces the map is in | 2 | more of the map cut off |
+| $`G`$, $`V`$, $`E`$ | the map, its junctions, its paths | the town | — |
+| $`n`$, $`m`$ | junctions and paths, counted | 9 and 10 | more junctions, more pieces; more paths, fewer |
+| $`S`$, $`v`$, $`w`$ | start; junction reached; neighbour | station; D; E | — |
+| $`u \sim v`$ | a route joins the two | S reaches E, not H | — |
+| $`d(v)`$ | fewest paths from the start | d(E) = 3 | it sits further out |
+| $`r(v)`$ | the flood's ring number | r(E) = 3 | — |
+| $`c(G)`$ | pieces the map is in | 2 | more of the map cut off |
 
 ### When it holds
 

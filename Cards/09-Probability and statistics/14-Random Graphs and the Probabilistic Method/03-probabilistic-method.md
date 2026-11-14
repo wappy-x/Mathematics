@@ -35,52 +35,60 @@ Bars: a seeded simulation of 20000 colourings. Their average is 3.2517 with a st
 
 ## The formula
 
-Notation first, in words, with reminders. $P(A)$ is the chance of event A. $E[X]$ is the expectation of a random count $X$, read "the average value of X in the long run" ([Expectation](../02-Random%20Variables/02-expectation.md)). C(n, k), read "n choose k", counts the ways to pick k things from n. $K(n)$ is n dots with every pair joined, and $R(k,k)$ is the smallest n at which every two-colouring of $K(n)$ has a one-colour set of k dots ([Ramsey numbers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md)). A set of dots all joined in one colour is a one-colour **clique**.
+Notation first, in words, with reminders. $`P(A)`$ is the chance of event A. $`E[X]`$ is the expectation of a random count $`X`$, read "the average value of X in the long run" ([Expectation](../02-Random%20Variables/02-expectation.md)). C(n, k), read "n choose k", counts the ways to pick k things from n. $`K(n)`$ is n dots with every pair joined, and $`R(k,k)`$ is the smallest n at which every two-colouring of $`K(n)`$ has a one-colour set of k dots ([Ramsey numbers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md)). A set of dots all joined in one colour is a one-colour **clique**.
 
 The method rests on one fact about averages:
 
-$$\text{some outcome has } X \le E[X], \quad\text{and some outcome has } X \ge E[X]$$
+```math
+\text{some outcome has } X \le E[X], \quad\text{and some outcome has } X \ge E[X]
+```
 
 **Read it aloud:** a random count takes, in at least one outcome, a value no bigger than its average, and in at least one outcome a value no smaller.
 
-For the board, $X$ counts the one-colour k-sets when every thread is a fair coin flip:
+For the board, $`X`$ counts the one-colour k-sets when every thread is a fair coin flip:
 
-$$E[X] \;=\; C(n,k)\;\cdot\;2^{\,1 - C(k,2)}$$
+```math
+E[X] \;=\; C(n,k)\;\cdot\;2^{\,1 - C(k,2)}
+```
 
 **Read it aloud:** the number of k-sets, times the chance that one of them has all its C(k, 2) threads the same colour.
 
-The **deletion** step turns that average into a bound, and $\lfloor E[X] \rfloor$, read "the floor of E[X]", is its whole-number part:
+The **deletion** step turns that average into a bound, and $`\lfloor E[X] \rfloor`$, read "the floor of E[X]", is its whole-number part:
 
-$$R(k,k) \;>\; n - \lfloor E[X] \rfloor \qquad\text{for every board size } n\text{, with } E[X] \text{ taken on } n \text{ nails}$$
+```math
+R(k,k) \;>\; n - \lfloor E[X] \rfloor \qquad\text{for every board size } n\text{, with } E[X] \text{ taken on } n \text{ nails}
+```
 
 **Read it aloud:** some colouring has at most the whole-number part of E[X] bad sets; remove one nail from each, and what is left is clean.
 
-For staff with $m$ clashing pairs, each sent to one of two rooms by a coin flip:
+For staff with $`m`$ clashing pairs, each sent to one of two rooms by a coin flip:
 
-$$E[\text{pairs separated}] \;=\; \frac{m}{2}$$
+```math
+E[\text{pairs separated}] \;=\; \frac{m}{2}
+```
 
 **Read it aloud:** each clashing pair is split between the rooms with chance one half, so on average half the pairs are.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | nails on the board | 21 | more six-sets, so E[X] rises fast |
-| $k$ | size of the one-colour set to avoid | 6 | far fewer bad sets: each needs more threads to agree |
-| $K(n)$ | n nails, every pair joined by a thread | K(21), 210 threads | — |
+| $`n`$ | nails on the board | 21 | more six-sets, so E[X] rises fast |
+| $`k`$ | size of the one-colour set to avoid | 6 | far fewer bad sets: each needs more threads to agree |
+| $`K(n)`$ | n nails, every pair joined by a thread | K(21), 210 threads | — |
 | C(n, k) | k-sets among n nails | C(21, 6) = 54264 | — |
 | C(k, 2) | threads inside one k-set | 15 | chance per set halves with each thread |
-| $S$, $I_S$ | one k-set, and its indicator: 1 if one colour, else 0 | $P(I_S = 1)$ = 2^-14 | — |
-| $X$ | one-colour k-sets on a random board | average 3.3120 | — |
-| $E[X]$ | the expectation of X | 3.3120 | fewer nails survive deletion |
-| $\lfloor E[X] \rfloor$ | the whole-number part of E[X] | 3 | — |
-| $R(k,k)$ | smallest board forcing a one-colour k-set | more than 18 | — |
-| $P(A)$ | the chance of event A | — | — |
-| $m$ | clashing pairs among the staff | 15 | the guaranteed split grows by one half per pair |
-| $y$ | in the 1/e proof: e n divided by k 2^((k − 1)/2), so that E[X] is at most 2y^k | — | E[X]'s ceiling grows as its k-th power |
-| $\varepsilon$ | in the 1/e proof: a small positive number, read "epsilon", by which the board falls short of the target size | — | the bound proved is smaller |
+| $`S`$, $`I_S`$ | one k-set, and its indicator: 1 if one colour, else 0 | $`P(I_S = 1)`$ = 2^-14 | — |
+| $`X`$ | one-colour k-sets on a random board | average 3.3120 | — |
+| $`E[X]`$ | the expectation of X | 3.3120 | fewer nails survive deletion |
+| $`\lfloor E[X] \rfloor`$ | the whole-number part of E[X] | 3 | — |
+| $`R(k,k)`$ | smallest board forcing a one-colour k-set | more than 18 | — |
+| $`P(A)`$ | the chance of event A | — | — |
+| $`m`$ | clashing pairs among the staff | 15 | the guaranteed split grows by one half per pair |
+| $`y`$ | in the 1/e proof: e n divided by k 2^((k − 1)/2), so that E[X] is at most 2y^k | — | E[X]'s ceiling grows as its k-th power |
+| $`\varepsilon`$ | in the 1/e proof: a small positive number, read "epsilon", by which the board falls short of the target size | — | the bound proved is smaller |
 
 ### When it holds
 
-- **A well-defined average.** The averaging fact needs $E[X]$ to exist. On a finite board it always does: 2^210 colourings, each with a count.
+- **A well-defined average.** The averaging fact needs $`E[X]`$ to exist. On a finite board it always does: 2^210 colourings, each with a count.
 - **The chance per set must be right.** The 2^-14 uses fair, independent coins inside one six-set. Colour every thread by one shared coin and each six-set is one colour with chance 1, not 2^-14.
 - **No independence between sets is needed.** Six-sets share threads, so their events are tangled; the expectation of a sum is the sum of expectations anyway. A product of chances, by contrast, does need independence, and fails here (What breaks).
 - **Existence, not construction.** The method names no colouring. Finding one is a separate problem; for large k, even checking a single colouring means testing astronomically many sets.
@@ -95,51 +103,56 @@ An average is a weighted mix of values. A mix cannot be larger than every ingred
 
 ### Step 1: the averaging principle, proved
 
-Let $X$ take whole-number values on finitely many outcomes. By definition $E[X]$ is the sum of each value times its chance. Suppose every outcome had $X$ strictly above $E[X]$. Then each term exceeds $E[X]$ times its chance, and the chances add to 1, so the sum exceeds $E[X]$: the average would be larger than itself. So some outcome has $X \le E[X]$. Swap the inequality for the other half.
+Let $`X`$ take whole-number values on finitely many outcomes. By definition $`E[X]`$ is the sum of each value times its chance. Suppose every outcome had $`X`$ strictly above $`E[X]`$. Then each term exceeds $`E[X]`$ times its chance, and the chances add to 1, so the sum exceeds $`E[X]`$: the average would be larger than itself. So some outcome has $`X \le E[X]`$. Swap the inequality for the other half.
 
 ### Step 2: the expectation of X, by adding indicators
 
-For each six-set $S$, let $I_S$ be 1 when all 15 of its threads share a colour and 0 otherwise. A 0-or-1 count of this kind is an **indicator**, and its expectation is the chance that it reads 1. All red has chance 2^-15, all blue the same, so $P(I_S = 1)$ = 2^-14.
+For each six-set $`S`$, let $`I_S`$ be 1 when all 15 of its threads share a colour and 0 otherwise. A 0-or-1 count of this kind is an **indicator**, and its expectation is the chance that it reads 1. All red has chance 2^-15, all blue the same, so $`P(I_S = 1)`$ = 2^-14.
 
-$X$ is the sum of the 54264 indicators. Expectations of sums add, even when the pieces are dependent, as the expectation card proves. This rule is called linearity of expectation. So:
+$`X`$ is the sum of the 54264 indicators. Expectations of sums add, even when the pieces are dependent, as the expectation card proves. This rule is called linearity of expectation. So:
 
-$$E[X] \;=\; 54264 \times 2^{-14} \;=\; 3.3120$$
+```math
+E[X] \;=\; 54264 \times 2^{-14} \;=\; 3.3120
+```
 
 Two six-sets sharing four nails share six threads; their indicators are strongly tied. Linearity does not care.
 
 ### Step 3: when the expectation is below 1
 
-$X$ is a whole number, never negative. If $E[X] < 1$, Step 1 gives an outcome with $X < 1$, so $X = 0$: a clean colouring. This is the counting card's argument in the language of chance ([Erdos's counting trick](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md)): the largest six-set board it clears is 17 nails, so R(6,6) > 17. Markov's inequality ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) adds a little: the chance of a clean colouring is at least 1 − E[X].
+$`X`$ is a whole number, never negative. If $`E[X] < 1`$, Step 1 gives an outcome with $`X < 1`$, so $`X = 0`$: a clean colouring. This is the counting card's argument in the language of chance ([Erdos's counting trick](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md)): the largest six-set board it clears is 17 nails, so R(6,6) > 17. Markov's inequality ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) adds a little: the chance of a clean colouring is at least 1 − E[X].
 
 ### Step 4: when it is not, delete
 
-At 21 nails $E[X]$ = 3.3120, well over 1, and the counting argument stops. The expectation keeps going. Step 1 gives a colouring with $X \le 3.3120$, so $X \le 3$. Each bad six-set loses one of its nails. Removing a nail destroys every six-set containing it and creates none. At most 3 nails go, at least 18 stay, and no one-colour six-set remains among them. So R(6,6) > 18, one better than the counting argument.
+At 21 nails $`E[X]`$ = 3.3120, well over 1, and the counting argument stops. The expectation keeps going. Step 1 gives a colouring with $`X \le 3.3120`$, so $`X \le 3`$. Each bad six-set loses one of its nails. Removing a nail destroys every six-set containing it and creates none. At most 3 nails go, at least 18 stay, and no one-colour six-set remains among them. So R(6,6) > 18, one better than the counting argument.
 
-The same holds at every board size $n$: a colouring with at most $\lfloor E[X] \rfloor$ bad sets exists, and deleting a nail per set leaves $n - \lfloor E[X] \rfloor$ clean nails. Scanning $n$ from 17 to 23 gives 17, 17, 18, 18, 18, 18, 17: the best is 18.
+The same holds at every board size $`n`$: a colouring with at most $`\lfloor E[X] \rfloor`$ bad sets exists, and deleting a nail per set leaves $`n - \lfloor E[X] \rfloor`$ clean nails. Scanning $`n`$ from 17 to 23 gives 17, 17, 18, 18, 18, 18, 17: the best is 18.
 
-For large k the gain grows. As k grows, the counting argument gives R(k,k) near $k\,2^{k/2}$ times 0.2601; deletion gives it times 0.3679, which is 1/e. The ratio between them heads to the square root of 2, 1.4142.
+For large k the gain grows. As k grows, the counting argument gives R(k,k) near $`k\,2^{k/2}`$ times 0.2601; deletion gives it times 0.3679, which is 1/e. The ratio between them heads to the square root of 2, 1.4142.
 
 <details>
 <summary>Detailed proof: where 1/e comes from</summary>
 
-Every k satisfies $k! \ge (k/e)^k$, because the series for $e^k$ holds the term $k^k/k!$ and all its terms are positive. With C(n, k) ≤ n^k / k!:
-$$E[X] \;\le\; 2\,\frac{n^k}{k!}\,2^{-k(k-1)/2} \;\le\; 2\left(\frac{e\,n}{k\,2^{(k-1)/2}}\right)^{k} \;=\; 2\,y^k, \qquad y = \frac{e\,n}{k\,2^{(k-1)/2}}.$$
+Every k satisfies $`k! \ge (k/e)^k`$, because the series for $`e^k`$ holds the term $`k^k/k!`$ and all its terms are positive. With C(n, k) ≤ n^k / k!:
 
-**Counting alone** needs $2y^k < 1$, so y just under 1: n just under $\frac{k}{e}\,2^{(k-1)/2}$, which is $\frac{1}{e\sqrt2}\,k\,2^{k/2}$.
+$`\displaystyle E[X] \;\le\; 2\,\frac{n^k}{k!}\,2^{-k(k-1)/2} \;\le\; 2\left(\frac{e\,n}{k\,2^{(k-1)/2}}\right)^{k} \;=\; 2\,y^k, \qquad y = \frac{e\,n}{k\,2^{(k-1)/2}}.`$
 
-**Deletion** allows y larger. Fix a small positive ε and take $y = \sqrt2\,(1-\varepsilon)$, so $n = \frac{1-\varepsilon}{e}\,k\,2^{k/2}$. Then $E[X] \le 2\cdot 2^{k/2}(1-\varepsilon)^k$. Divided by n, that is $2e(1-\varepsilon)^k/((1-\varepsilon)k)$, which shrinks to 0 as k grows. So the deletion bound $n - E[X]$ is $n$ times a factor tending to 1:
-$$R(k,k) \;>\; (1 - \varepsilon - \text{a term tending to } 0)\;\frac{1}{e}\,k\,2^{k/2}.$$
+**Counting alone** needs $`2y^k < 1`$, so y just under 1: n just under $`\frac{k}{e}\,2^{(k-1)/2}`$, which is $`\frac{1}{e\sqrt2}\,k\,2^{k/2}`$.
+
+**Deletion** allows y larger. Fix a small positive ε and take $`y = \sqrt2\,(1-\varepsilon)`$, so $`n = \frac{1-\varepsilon}{e}\,k\,2^{k/2}`$. Then $`E[X] \le 2\cdot 2^{k/2}(1-\varepsilon)^k`$. Divided by n, that is $`2e(1-\varepsilon)^k/((1-\varepsilon)k)`$, which shrinks to 0 as k grows. So the deletion bound $`n - E[X]`$ is $`n`$ times a factor tending to 1:
+
+$`\displaystyle R(k,k) \;>\; (1 - \varepsilon - \text{a term tending to } 0)\;\frac{1}{e}\,k\,2^{k/2}.`$
+
 The two constants differ by exactly the factor √2 in y. ∎
 
 </details>
 
 ### Step 5: a large cut, by the same average
 
-An office has 10 staff and 15 pairs who clash. Two rooms are free. Put each person in a room by a fair coin flip. A clashing pair is separated when its two coins differ: chance one half. Let $X$ now count separated pairs; by linearity $E[X]$ = 15/2 = 7.50. By Step 1 some split separates at least 7.50 pairs, so at least 8.
+An office has 10 staff and 15 pairs who clash. Two rooms are free. Put each person in a room by a fair coin flip. A clashing pair is separated when its two coins differ: chance one half. Let $`X`$ now count separated pairs; by linearity $`E[X]`$ = 15/2 = 7.50. By Step 1 some split separates at least 7.50 pairs, so at least 8.
 
-The rule holds for any network: a graph with $m$ edges (lines joining dots) has a **cut**, a split of the dots into two groups, crossed by at least $m/2$ edges. Nothing about the network's shape was used.
+The rule holds for any network: a graph with $`m`$ edges (lines joining dots) has a **cut**, a split of the dots into two groups, crossed by at least $`m/2`$ edges. Nothing about the network's shape was used.
 
-A different route to existence with dependent bad events is the Lovász local lemma, which gains another factor of about 1.4142 on Ramsey bounds (Spencer, in Sources). When $E[X]$ is large, the question flips to whether $X$ is above 0 for most choices, which needs the variance: [First and second moments](04-first-and-second-moment-methods.md).
+A different route to existence with dependent bad events is the Lovász local lemma, which gains another factor of about 1.4142 on Ramsey bounds (Spencer, in Sources). When $`E[X]`$ is large, the question flips to whether $`X`$ is above 0 for most choices, which needs the variance: [First and second moments](04-first-and-second-moment-methods.md).
 
 ---
 
@@ -559,9 +572,9 @@ The two outputs match line for line.
 
 Lean proves the averaging principle, the deletion bound for every board size and clique size, and the large cut for every finite graph.
 
-- Take any random count $X$ on finitely many outcomes, with chances adding to 1. Then some outcome has $X \le E[X]$, and some has $X \ge E[X]$.
-- Take $n$ nails and $k \ge 1$, with $E[X] = C(n,k) \cdot 2^{1 - C(k,2)}$. Then $R(k,k) > n - \lfloor E[X] \rfloor$: some colouring of that many nails has no one-colour k-set.
-- Take any graph with $m$ edges on finitely many dots. Then some cut is crossed by at least $m/2$ of them.
+- Take any random count $`X`$ on finitely many outcomes, with chances adding to 1. Then some outcome has $`X \le E[X]`$, and some has $`X \ge E[X]`$.
+- Take $`n`$ nails and $`k \ge 1`$, with $`E[X] = C(n,k) \cdot 2^{1 - C(k,2)}`$. Then $`R(k,k) > n - \lfloor E[X] \rfloor`$: some colouring of that many nails has no one-colour k-set.
+- Take any graph with $`m`$ edges on finitely many dots. Then some cut is crossed by at least $`m/2`$ of them.
 - The hand arithmetic also holds: 54264 six-sets, a floor of 3, the counting argument's 17, and the office's 8.
 
 The simulations, the full listings, the pruned colouring and the large-k table are left to the Python and Rust checks.

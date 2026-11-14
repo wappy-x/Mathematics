@@ -40,43 +40,53 @@ One branch is drawn to the bottom; the other three quarter-finals carry the same
 
 ## The formula
 
-Notation first, in words. A graph's dots are vertices, its lines edges, and $n$ counts the vertices ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). Write $T$ for a tree, $r$ for the vertex named its **root**. The **depth** $d(v)$ of a vertex $v$ counts the edges from $r$ down to it. The **height** $h$ is the largest depth, and $k$ stands for whichever depth is being counted.
+Notation first, in words. A graph's dots are vertices, its lines edges, and $`n`$ counts the vertices ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). Write $`T`$ for a tree, $`r`$ for the vertex named its **root**. The **depth** $`d(v)`$ of a vertex $`v`$ counts the edges from $`r`$ down to it. The **height** $`h`$ is the largest depth, and $`k`$ stands for whichever depth is being counted.
 
 Three words about children. **Binary**: at most two children, told apart as left and right. **Full**: two or none at every vertex. **Perfect**: full, with every leaf at the same depth — the cup's shape, all sixteen teams entering in one round.
 
 For a perfect binary tree:
 
-$$n = 1 + 2 + 4 + \dots + 2^{h} = 2^{h+1} - 1$$
+```math
+n = 1 + 2 + 4 + \dots + 2^{h} = 2^{h+1} - 1
+```
 
 **Read it aloud:** one root, then two, then four, doubling per level and landing one short of the next double.
 
-$$\text{leaves} = 2^{h}, \qquad \text{inner vertices} = 2^{h} - 1$$
+```math
+\text{leaves} = 2^{h}, \qquad \text{inner vertices} = 2^{h} - 1
+```
 
 The last level holds the leaves; a vertex with children is **inner**. The two differ by one: 16 teams, 15 matches.
 
 Three rules, the **walks**, read a tree out, each calling itself on the subtrees, the plus joining lists. A vertex's **subtree** is that vertex with everything hanging below it.
 
-$$\text{pre}(v) = [\,v\,] + \text{pre}(\text{left}) + \text{pre}(\text{right})$$
-$$\text{in}(v) = \text{in}(\text{left}) + [\,v\,] + \text{in}(\text{right})$$
-$$\text{post}(v) = \text{post}(\text{left}) + \text{post}(\text{right}) + [\,v\,]$$
+```math
+\text{pre}(v) = [\,v\,] + \text{pre}(\text{left}) + \text{pre}(\text{right})
+```
+```math
+\text{in}(v) = \text{in}(\text{left}) + [\,v\,] + \text{in}(\text{right})
+```
+```math
+\text{post}(v) = \text{post}(\text{left}) + \text{post}(\text{right}) + [\,v\,]
+```
 
 **Read it aloud:** read the left half, read the right half; the only choice is where the vertex names itself.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$ | a tree, root named | the cup draw | — |
-| $r$ | the root, where it hangs | the final | depths change |
-| $n$ | vertices, counted | 31 | — |
-| $v$ | a vertex, left and right its children | a quarter-final | — |
-| $d(v)$ | depth: edges below the root | a team, 4 | it hangs lower |
-| $h$ | height: the largest depth | 4 | the count doubles |
-| $k$ | a depth | 0 to 4 | — |
-| $2^k$ | vertices at depth $k$ | 1, 2, 4, 8, 16 | — |
+| $`T`$ | a tree, root named | the cup draw | — |
+| $`r`$ | the root, where it hangs | the final | depths change |
+| $`n`$ | vertices, counted | 31 | — |
+| $`v`$ | a vertex, left and right its children | a quarter-final | — |
+| $`d(v)`$ | depth: edges below the root | a team, 4 | it hangs lower |
+| $`h`$ | height: the largest depth | 4 | the count doubles |
+| $`k`$ | a depth | 0 to 4 | — |
+| $`2^k`$ | vertices at depth $`k`$ | 1, 2, 4, 8, 16 | — |
 
 ### When it holds
 
 - **The root is a choice, not a property.** Rooted at a team, the same 31 vertices stand 8 deep.
-- **Full and level, for the count.** Two children or none, *and* every leaf at depth $h$. A ladder draw, where each winner plays the next team in, is full but stands 15 deep, where the formula claims 65535 vertices for 31.
+- **Full and level, for the count.** Two children or none, *and* every leaf at depth $`h`$. A ladder draw, where each winner plays the next team in, is full but stands 15 deep, where the formula claims 65535 vertices for 31.
 - **Two children, for in-order.** A folder holding three things has no middle.
 - **Finitely many vertices.** Each rule hands itself a smaller subtree, so a walk ends.
 
@@ -86,17 +96,19 @@ $$\text{post}(v) = \text{post}(\text{left}) + \text{post}(\text{right}) + [\,v\,
 
 ### Step 0: one path from the root, so every vertex has one parent
 
-A tree holds exactly one path between any two vertices ([Trees](01-trees.md)). Fix the root: from any other vertex that path leaves along one edge, and the vertex at its far end is the parent. Every edge is now a parent-child link pointing one way, and since only the root lacks a parent the links number $n - 1$: 30 here, exactly a tree's edge count.
+A tree holds exactly one path between any two vertices ([Trees](01-trees.md)). Fix the root: from any other vertex that path leaves along one edge, and the vertex at its far end is the parent. Every edge is now a parent-child link pointing one way, and since only the root lacks a parent the links number $`n - 1`$: 30 here, exactly a tree's edge count.
 
 ### Step 1: depth splits the tree into levels, and each level doubles
 
-Depth is the length of that one path: one path, one number, so each vertex sits in exactly one level and level-by-level counting misses nothing. In a perfect tree every vertex at a depth short of $h$ has two children one level down, and each of those children has one parent back above. So level $k + 1$ holds two for each vertex of level $k$: the count doubles exactly. From one root, level $k$ holds $2^{k}$ — 1, 2, 4, 8, 16 — and the last level's number is the height.
+Depth is the length of that one path: one path, one number, so each vertex sits in exactly one level and level-by-level counting misses nothing. In a perfect tree every vertex at a depth short of $`h`$ has two children one level down, and each of those children has one parent back above. So level $`k + 1`$ holds two for each vertex of level $`k`$: the count doubles exactly. From one root, level $`k`$ holds $`2^{k}`$ — 1, 2, 4, 8, 16 — and the last level's number is the height.
 
 ### Step 2: add the levels up
 
-$$1 + 2 + 4 + 8 + 16 = 31 = 2^{5} - 1$$
+```math
+1 + 2 + 4 + 8 + 16 = 31 = 2^{5} - 1
+```
 
-Why one short of the next double: double every term and each becomes the next one up, so the doubled list is the old one with the 1 dropped and $2^{h+1}$ added. So twice the total is the total, less one, plus $2^{h+1}$, leaving it at $2^{h+1} - 1$. The leaves are the last level, 16; the inner vertices the rest, 15.
+Why one short of the next double: double every term and each becomes the next one up, so the doubled list is the old one with the 1 dropped and $`2^{h+1}`$ added. So twice the total is the total, less one, plus $`2^{h+1}`$, leaving it at $`2^{h+1} - 1`$. The leaves are the last level, 16; the inner vertices the rest, 15.
 
 ### Step 3: a second count that never mentions depth
 
@@ -118,7 +130,7 @@ flowchart TB
     Y2 --- D["apr.jpg<br/>3 MB"]
 ```
 
-Seven vertices, height 2, perfect again: $2^{3} - 1 = 7$.
+Seven vertices, height 2, perfect again: $`2^{3} - 1 = 7`$.
 
 - **Pre-order**, the vertex before both subtrees: photos 2025 jan.jpg feb.jpg 2026 mar.jpg apr.jpg
 - **In-order**, between them: jan.jpg 2025 feb.jpg photos mar.jpg 2026 apr.jpg
@@ -129,7 +141,7 @@ Each earns its keep. Pre-order is how a listing prints. Post-order is how a size
 <details>
 <summary>Detailed proof: each walk names every vertex exactly once</summary>
 
-By induction on the height. A tree of height 0 is one leaf, and all three rules return that name. Let $T$ have root $v$, and suppose the claim holds for both its subtrees, each of smaller height. Every rule returns their two lists and $[\,v\,]$ in some order, so each vertex below $v$ is named once and $v$ once. Each call takes a smaller tree, so the walk ends.
+By induction on the height. A tree of height 0 is one leaf, and all three rules return that name. Let $`T`$ have root $`v`$, and suppose the claim holds for both its subtrees, each of smaller height. Every rule returns their two lists and $`[\,v\,]`$ in some order, so each vertex below $`v`$ is named once and $`v`$ once. Each call takes a smaller tree, so the walk ends.
 
 </details>
 
@@ -369,9 +381,9 @@ The two outputs match line for line.
 
 Lean proves the counts for every finite tree, whatever its root and its height.
 
-- In a perfect binary tree of height $h$, depth $k$ holds $2^{k}$ vertices, for each $k$ from 0 to $h$.
-- It has $2^{h+1} - 1$ vertices, $2^{h}$ leaves and $2^{h} - 1$ inner vertices.
-- Its edges number $2^{h+1} - 2$, one fewer than the vertices.
+- In a perfect binary tree of height $`h`$, depth $`k`$ holds $`2^{k}`$ vertices, for each $`k`$ from 0 to $`h`$.
+- It has $`2^{h+1} - 1`$ vertices, $`2^{h}`$ leaves and $`2^{h} - 1`$ inner vertices.
+- Its edges number $`2^{h+1} - 2`$, one fewer than the vertices.
 - In any full binary tree, the inner vertices plus one equal the leaves, whatever the height.
 
 It also checks the card's sums: the cup draw, the folder tree and the two mistakes. The three walks, the mirror and the sorted keys are left to the Python and Rust checks.
@@ -689,7 +701,7 @@ example : 2 ^ (5 + 1) - 1 = 63 ∧ 2 ^ (15 + 1) - 1 = 65535 := by norm_num
 
 ## What this builds on
 
-- [Trees](01-trees.md): the single path between two vertices, which gives each vertex one parent, and the $n - 1$ edges the parent links match.
+- [Trees](01-trees.md): the single path between two vertices, which gives each vertex one parent, and the $`n - 1`$ edges the parent links match.
 
 ## Where this goes next
 

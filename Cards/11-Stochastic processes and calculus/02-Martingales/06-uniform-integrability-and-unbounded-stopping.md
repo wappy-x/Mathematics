@@ -36,57 +36,65 @@ Orange: the chance she is broke by round n. Green: the chance she has reached 30
 
 ## The formula
 
-Notation from earlier cards, in one line each. $X_n$ is her fortune after round n, the process read "the value at time n". $\mathcal{F}_n$ is what is known after round n: the results of the first n tosses. A **martingale** is a process whose best forecast of the next value, given $\mathcal{F}_n$, is today's value ([Martingales](01-martingales.md)). A **stopping time** $\tau$ is a round you recognise when it arrives, without seeing the future. New notation: $\tau \wedge n$, read "tau capped at n", is the smaller of $\tau$ and n.
+Notation from earlier cards, in one line each. $`X_n`$ is her fortune after round n, the process read "the value at time n". $`\mathcal{F}_n`$ is what is known after round n: the results of the first n tosses. A **martingale** is a process whose best forecast of the next value, given $`\mathcal{F}_n`$, is today's value ([Martingales](01-martingales.md)). A **stopping time** $`\tau`$ is a round you recognise when it arrives, without seeing the future. New notation: $`\tau \wedge n`$, read "tau capped at n", is the smaller of $`\tau`$ and n.
 
-The capped process $M_{\tau \wedge n}$ is the game frozen at $\tau$, and read at round n if $\tau$ has not arrived.
+The capped process $`M_{\tau \wedge n}`$ is the game frozen at $`\tau`$, and read at round n if $`\tau`$ has not arrived.
 
-The theorem. Let $M_n$ be a martingale and $\tau$ a stopping time with $P(\tau < \infty) = 1$. If the family of capped values is uniformly integrable,
+The theorem. Let $`M_n`$ be a martingale and $`\tau`$ a stopping time with $`P(\tau < \infty) = 1`$. If the family of capped values is uniformly integrable,
 
-$$\lim_{K \to \infty}\ \sup_{n \ge 0}\ E\big[\,|M_{\tau\wedge n}|\,\mathbf{1}_{\{|M_{\tau\wedge n}| > K\}}\big] = 0.$$
+```math
+\lim_{K \to \infty}\ \sup_{n \ge 0}\ E\big[\,|M_{\tau\wedge n}|\,\mathbf{1}_{\{|M_{\tau\wedge n}| > K\}}\big] = 0.
+```
 
-Here $E[\cdot]$ is the average over all runs, $\sup_{n \ge 0}$ is the largest value over every cap n, and $\mathbf{1}_{\{\ldots\}}$ is 1 on the runs where the event holds and 0 elsewhere, so the average counts only values above K.
+Here $`E[\cdot]`$ is the average over all runs, $`\sup_{n \ge 0}`$ is the largest value over every cap n, and $`\mathbf{1}_{\{\ldots\}}`$ is 1 on the runs where the event holds and 0 elsewhere, so the average counts only values above K.
 
-Then $M_\tau$ is integrable and
+Then $`M_\tau`$ is integrable and
 
-$$E[M_\tau] = E[M_0].$$
+```math
+E[M_\tau] = E[M_0].
+```
 
 **Read it aloud:** if, for a high enough cutoff, the part of the average above that cutoff is small at every cap at once, the fair game's average survives stopping at a time with no ceiling.
 
-Two tests make the condition easy to check. **Bounded:** $|M_{\tau\wedge n}| \le C$ for every n; above the cutoff C there is nothing. **Enveloped:** each step moves $M_n$ by at most a constant c and $E[\tau] < \infty$; then $|M_{\tau\wedge n}| \le |M_0| + c\,\tau$, one integrable ceiling for every n.
+Two tests make the condition easy to check. **Bounded:** $`|M_{\tau\wedge n}| \le C`$ for every n; above the cutoff C there is nothing. **Enveloped:** each step moves $`M_n`$ by at most a constant c and $`E[\tau] < \infty`$; then $`|M_{\tau\wedge n}| \le |M_0| + c\,\tau`$, one integrable ceiling for every n.
 
 The corollary this card is named for. With a goal b and a start a, where the game ends at 0 or b,
 
-$$P(\text{reach } b) = \frac{a}{b}, \qquad E[\tau] = a\,(b - a).$$
+```math
+P(\text{reach } b) = \frac{a}{b}, \qquad E[\tau] = a\,(b - a).
+```
 
 **Read it aloud:** the chance of reaching the goal is the start divided by the goal, and the average length in rounds is the start times the distance to the goal.
 
-For a coin that wins with probability p and loses with probability q = 1 − p, the fortune is no longer fair, but $(q/p)^{X_n}$ is. The same line gives
+For a coin that wins with probability p and loses with probability q = 1 − p, the fortune is no longer fair, but $`(q/p)^{X_n}`$ is. The same line gives
 
-$$P(\text{reach } b) = \frac{(q/p)^a - 1}{(q/p)^b - 1}.$$
+```math
+P(\text{reach } b) = \frac{(q/p)^a - 1}{(q/p)^b - 1}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_n$ | her fortune after round n, in dollars | starts at 10 | — |
-| $n$ | the round count, one stake per round | 0, 100, … 1000 | a later cap freezes more games |
-| $a$, $b$ | the starting fortune and the goal | 10 and 30 | a higher a raises a/b; a higher b lowers it |
-| $\tau$ | the stopping time: the round she hits 0 or 30 | averages 200 rounds | — |
-| $\tau \wedge n$ | tau capped at n: the smaller of the two | at n = 100, most games are still running | — |
-| $M_n$ | any martingale: a fair game's running value | $X_n$, or $(q/p)^{X_n}$, or $X_n^2 - n$ | — |
-| $\mathcal{F}_n$ | what is known after round n | the first n tosses | — |
-| $p$, $q$ | chance of winning and of losing one round | 0.5 and 0.5; roulette red 18/38 and 20/38 | a lower p crushes the chance of the goal |
-| $K$ | the cutoff in the uniform-integrability test | K = 30 leaves no tail at all here | smaller tails |
-| $C$, $c$ | a bound on the capped values; a bound on one step | C = 30; c = 1 | — |
-| $w$ | the chance of reaching the goal | 0.333333; roulette 0.082691 | — |
-| $r$ | the ratio q/p, the base of the fair function $r^{X_n}$ | roulette 20/18 = 1.111111 | a worse wheel: the chance of the goal falls |
-| $h(x)$, $x$ | the second road: the chance of reaching 30 from a fortune of x dollars | h(0) = 0, h(10) = 0.333333, h(30) = 1 | a higher x, a higher chance |
-| $G_n$ | the doubler's gain after n tosses | 1 once she wins, 1 − 2^n if all n are lost | — |
+| $`X_n`$ | her fortune after round n, in dollars | starts at 10 | — |
+| $`n`$ | the round count, one stake per round | 0, 100, … 1000 | a later cap freezes more games |
+| $`a`$, $`b`$ | the starting fortune and the goal | 10 and 30 | a higher a raises a/b; a higher b lowers it |
+| $`\tau`$ | the stopping time: the round she hits 0 or 30 | averages 200 rounds | — |
+| $`\tau \wedge n`$ | tau capped at n: the smaller of the two | at n = 100, most games are still running | — |
+| $`M_n`$ | any martingale: a fair game's running value | $`X_n`$, or $`(q/p)^{X_n}`$, or $`X_n^2 - n`$ | — |
+| $`\mathcal{F}_n`$ | what is known after round n | the first n tosses | — |
+| $`p`$, $`q`$ | chance of winning and of losing one round | 0.5 and 0.5; roulette red 18/38 and 20/38 | a lower p crushes the chance of the goal |
+| $`K`$ | the cutoff in the uniform-integrability test | K = 30 leaves no tail at all here | smaller tails |
+| $`C`$, $`c`$ | a bound on the capped values; a bound on one step | C = 30; c = 1 | — |
+| $`w`$ | the chance of reaching the goal | 0.333333; roulette 0.082691 | — |
+| $`r`$ | the ratio q/p, the base of the fair function $`r^{X_n}`$ | roulette 20/18 = 1.111111 | a worse wheel: the chance of the goal falls |
+| $`h(x)`$, $`x`$ | the second road: the chance of reaching 30 from a fortune of x dollars | h(0) = 0, h(10) = 0.333333, h(30) = 1 | a higher x, a higher chance |
+| $`G_n`$ | the doubler's gain after n tosses | 1 once she wins, 1 − 2^n if all n are lost | — |
 
 ### When it holds
 
-- **The game ends with certainty.** $P(\tau < \infty) = 1$, or $M_\tau$ is undefined on the runs that never stop. Two barriers force an end here; Step 1 proves it.
+- **The game ends with certainty.** $`P(\tau < \infty) = 1`$, or $`M_\tau`$ is undefined on the runs that never stop. Two barriers force an end here; Step 1 proves it.
 - **The capped values are uniformly integrable.** Without it the average can leak away: the doubler's capped gains average 0 at every cap yet end at 1 on every run.
 - **A finite average duration is not enough by itself.** The doubler's first win comes after 2 tosses on average, yet stakes of 2^n break the envelope test. It needs bounded steps as well.
-- **The process must be a martingale.** On a roulette wheel the fortune drifts down, and a/b gives 0.333333 where the truth is 0.082691. Use a function of the fortune that is fair, such as $(q/p)^{X_n}$.
+- **The process must be a martingale.** On a roulette wheel the fortune drifts down, and a/b gives 0.333333 where the truth is 0.082691. Use a function of the fortune that is fair, such as $`(q/p)^{X_n}`$.
 
 ---
 
@@ -94,59 +102,65 @@ $$P(\text{reach } b) = \frac{(q/p)^a - 1}{(q/p)^b - 1}.$$
 
 ### Step 0: stopping at every cap is already safe; the question is the limit
 
-Cap the game at any round n. The capped fortune is the start plus the steps taken while the game is still on. Step k counts only if $\tau \ge k$, which the first k − 1 tosses decide, and a fair step multiplied by something known before it is taken still averages zero. So the capped fortune averages 10 dollars: the earlier card's theorem, and Lemma 1 below.
+Cap the game at any round n. The capped fortune is the start plus the steps taken while the game is still on. Step k counts only if $`\tau \ge k`$, which the first k − 1 tosses decide, and a fair step multiplied by something known before it is taken still averages zero. So the capped fortune averages 10 dollars: the earlier card's theorem, and Lemma 1 below.
 
-The code prints that average at every hundredth round up to 1000: 10.000000 each time. Stopping is a betting rule that stakes 1 until $\tau$ and 0 after ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)).
+The code prints that average at every hundredth round up to 1000: 10.000000 each time. Stopping is a betting rule that stakes 1 until $`\tau`$ and 0 after ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)).
 
 As n grows, the capped fortune becomes the final fortune, run by run. So the whole question is whether an average passes to the limit along with the values. That is exactly what uniform integrability controls ([Uniform integrability](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)).
 
 ### Step 1: the game ends, and on average quickly
 
-From any fortune short of the goal, a run of b = 30 straight wins reaches it. Cut the rounds into blocks of b. Each block, independently of the past, is all wins with probability $p^b$. So the chance the game survives k blocks is at most $(1 - p^b)^k$, which falls to zero. The game ends with certainty.
+From any fortune short of the goal, a run of b = 30 straight wins reaches it. Cut the rounds into blocks of b. Each block, independently of the past, is all wins with probability $`p^b`$. So the chance the game survives k blocks is at most $`(1 - p^b)^k`$, which falls to zero. The game ends with certainty.
 
 The same bound gives a finite average length. The average of a count is the sum of the chances that it exceeds 0, 1, 2 and so on, and those chances fall geometrically. The printed answer is 200 rounds.
 
 ### Step 2: uniform integrability passes the average to the limit
 
-Once n passes $\tau$, the capped value equals $M_\tau$, so $M_{\tau\wedge n} \to M_\tau$ on every run that ends: almost surely, hence in probability: the chance of a gap larger than any fixed size falls to zero. Vitali's theorem says convergence in probability plus uniform integrability gives convergence in mean, $E|M_{\tau\wedge n} - M_\tau| \to 0$. Averages differ by at most that mean distance. So $E[M_\tau]$ is the limit of the capped averages, each of which is $E[M_0]$.
+Once n passes $`\tau`$, the capped value equals $`M_\tau`$, so $`M_{\tau\wedge n} \to M_\tau`$ on every run that ends: almost surely, hence in probability: the chance of a gap larger than any fixed size falls to zero. Vitali's theorem says convergence in probability plus uniform integrability gives convergence in mean, $`E|M_{\tau\wedge n} - M_\tau| \to 0`$. Averages differ by at most that mean distance. So $`E[M_\tau]`$ is the limit of the capped averages, each of which is $`E[M_0]`$.
 
 For the gambler the test is the bounded one. Her fortune never leaves 0 to 30, so above the cutoff K = 30 there is nothing, at every cap. The code prints that tail as 0.
 
-Two earlier cards meet the condition from other sides. A martingale whose average of $|M_n|^p$ stays bounded, for some power p above 1, has a running peak with a finite average, by Doob's inequality ([Doob's inequalities](05-doob-inequalities.md)), and that peak is one envelope for every cap. And uniform integrability is what [Martingale convergence](04-martingale-convergence.md) lacked for averages: a uniformly integrable martingale converges in mean as well as run by run, and each of its values is the best forecast of its limit, which is optional stopping at time infinity. This card states the second fact without proof; Williams proves it in chapter 14.
+Two earlier cards meet the condition from other sides. A martingale whose average of $`|M_n|^p`$ stays bounded, for some power p above 1, has a running peak with a finite average, by Doob's inequality ([Doob's inequalities](05-doob-inequalities.md)), and that peak is one envelope for every cap. And uniform integrability is what [Martingale convergence](04-martingale-convergence.md) lacked for averages: a uniformly integrable martingale converges in mean as well as run by run, and each of its values is the best forecast of its limit, which is optional stopping at time infinity. This card states the second fact without proof; Williams proves it in chapter 14.
 
 ### Step 3: the ruin odds in one line
 
-At the end, $X_\tau$ is 30 with probability w and 0 otherwise. Optional stopping says its average is the start:
+At the end, $`X_\tau`$ is 30 with probability w and 0 otherwise. Optional stopping says its average is the start:
 
-$$30\,w + 0\,(1 - w) = 10, \qquad w = \tfrac{10}{30}.$$
+```math
+30\,w + 0\,(1 - w) = 10, \qquad w = \tfrac{10}{30}.
+```
 
 She reaches 30 with probability 0.333333, and is ruined with probability 0.666667. Nothing about paths, tosses or time entered. The first-step equations, the pushed law and 10000 simulated games all agree; the code shows it.
 
 ### Step 4: roulette, where the fortune is not fair
 
-A 1-dollar bet on red at American roulette wins with p = 18/38, about 47.4%, and loses with q = 20/38. Her fortune drifts down: optional stopping on $X_n$ itself does not apply.
+A 1-dollar bet on red at American roulette wins with p = 18/38, about 47.4%, and loses with q = 20/38. Her fortune drifts down: optional stopping on $`X_n`$ itself does not apply.
 
-Look for a fair function instead. With r = q/p, the value $r^{X_n}$ moves to $r^{X_n}\,r$ with probability p and to $r^{X_n}/r$ with probability q. Its average next value is $r^{X_n}(p\,r + q/r) = r^{X_n}(q + p) = r^{X_n}$. It is a martingale. Between 0 and 30 dollars it stays between 1 and $r^{30}$, so it is bounded, and Step 2 applies:
+Look for a fair function instead. With r = q/p, the value $`r^{X_n}`$ moves to $`r^{X_n}\,r`$ with probability p and to $`r^{X_n}/r`$ with probability q. Its average next value is $`r^{X_n}(p\,r + q/r) = r^{X_n}(q + p) = r^{X_n}`$. It is a martingale. Between 0 and 30 dollars it stays between 1 and $`r^{30}`$, so it is bounded, and Step 2 applies:
 
-$$w\,r^{30} + (1 - w) = r^{10}, \qquad w = \frac{r^{10} - 1}{r^{30} - 1} = 0.082691.$$
+```math
+w\,r^{30} + (1 - w) = r^{10}, \qquad w = \frac{r^{10} - 1}{r^{30} - 1} = 0.082691.
+```
 
 The house edge of about 5 cents a round cuts her chance of reaching 30 from about 1 in 3 to about 1 in 12.
 
 ### Step 5: how long it takes, from a second martingale
 
-For the fair coin, $X_n^2 - n$ is a martingale: from fortune x the next square averages $\tfrac12(x+1)^2 + \tfrac12(x-1)^2 = x^2 + 1$, and subtracting the round count removes the 1. This one is not bounded, since $n$ grows, so the bounded test fails. The envelope works: $|X_{\tau\wedge n}^2 - \tau\wedge n| \le 900 + \tau$, and $\tau$ has a finite average by Step 1. Optional stopping gives
+For the fair coin, $`X_n^2 - n`$ is a martingale: from fortune x the next square averages $`\tfrac12(x+1)^2 + \tfrac12(x-1)^2 = x^2 + 1`$, and subtracting the round count removes the 1. This one is not bounded, since $`n`$ grows, so the bounded test fails. The envelope works: $`|X_{\tau\wedge n}^2 - \tau\wedge n| \le 900 + \tau`$, and $`\tau`$ has a finite average by Step 1. Optional stopping gives
 
-$$E[X_\tau^2] - E[\tau] = 10^2, \qquad E[\tau] = 900 \times 0.333333 - 100 = 200.$$
+```math
+E[X_\tau^2] - E[\tau] = 10^2, \qquad E[\tau] = 900 \times 0.333333 - 100 = 200.
+```
 
-That is a(b − a) = 10 × 20. On roulette, $X_n + (q - p)\,n$ is the fair version, with steps of at most $1 + (q - p)$, and the same argument gives $E[\tau] = (a - b\,w)/(q - p)$ = 142.866 rounds.
+That is a(b − a) = 10 × 20. On roulette, $`X_n + (q - p)\,n`$ is the fair version, with steps of at most $`1 + (q - p)`$, and the same argument gives $`E[\tau] = (a - b\,w)/(q - p)`$ = 142.866 rounds.
 
 ### Step 6: where the average leaks away
 
-**Doubling.** Stake 1 dollar, double after each loss, stop at the first win. After a win the gain is 1. If all n tosses are lost, the gain is $1 - 2^n$, with probability $2^{-n}$. Every cap averages 0. Yet the first win comes with certainty, after 2 tosses on average, and the final gain is 1.
+**Doubling.** Stake 1 dollar, double after each loss, stop at the first win. After a win the gain is 1. If all n tosses are lost, the gain is $`1 - 2^n`$, with probability $`2^{-n}`$. Every cap averages 0. Yet the first win comes with certainty, after 2 tosses on average, and the final gain is 1.
 
-Above the cutoff K = 100, the capped gain's tail is $1 - 2^{-n}$ once $2^n - 1$ exceeds 100: 0.992188 at 7 tosses, 0.999023 at 10. The worst tail stays at 1 for every K. The average size $E|G_n|$ never exceeds 2, so a bounded average is not enough either. Not uniformly integrable, and optional stopping fails by exactly 1 dollar.
+Above the cutoff K = 100, the capped gain's tail is $`1 - 2^{-n}`$ once $`2^n - 1`$ exceeds 100: 0.992188 at 7 tosses, 0.999023 at 10. The worst tail stays at 1 for every K. The average size $`E|G_n|`$ never exceeds 2, so a bounded average is not enough either. Not uniformly integrable, and optional stopping fails by exactly 1 dollar.
 
-**No goal.** Remove the 30-dollar exit: she plays until broke. Ruin is certain, because it is at least as likely as ruin before any goal b, which is 1 − a/b: 0.90 at b = 100, 0.990 at b = 1000. So $X_\tau = 0$ on every run, while every capped average is 10. The average has not vanished; it has moved to the rare survivors with large fortunes. The part of the capped average above 30 dollars climbs toward 10: 9.25 by round 2000.
+**No goal.** Remove the 30-dollar exit: she plays until broke. Ruin is certain, because it is at least as likely as ruin before any goal b, which is 1 − a/b: 0.90 at b = 100, 0.990 at b = 1000. So $`X_\tau = 0`$ on every run, while every capped average is 10. The average has not vanished; it has moved to the rare survivors with large fortunes. The part of the capped average above 30 dollars climbs toward 10: 9.25 by round 2000.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -163,21 +177,21 @@ Orange: the average capped fortune, 10 dollars at every round. Green: the part o
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** A probability space with filtration $\mathcal{F}_n$; $M_n$ an integrable martingale; $\tau$ a stopping time, so $\{\tau \le n\}$ is in $\mathcal{F}_n$ for each n, with $P(\tau < \infty) = 1$. Put $M_\tau = M_j$ on $\{\tau = j\}$ and 0 on the null event $\{\tau = \infty\}$.
+**Setting.** A probability space with filtration $`\mathcal{F}_n`$; $`M_n`$ an integrable martingale; $`\tau`$ a stopping time, so $`\{\tau \le n\}`$ is in $`\mathcal{F}_n`$ for each n, with $`P(\tau < \infty) = 1`$. Put $`M_\tau = M_j`$ on $`\{\tau = j\}`$ and 0 on the null event $`\{\tau = \infty\}`$.
 
-**Lemma 1 (capped stopping).** For every n, $E[M_{\tau\wedge n}] = E[M_0]$. *Proof.* $M_{\tau\wedge n} = M_0 + \sum_{k=1}^{n} \mathbf{1}_{\{\tau \ge k\}}(M_k - M_{k-1})$, checked run by run. The event $\{\tau \ge k\}$ is the complement of $\{\tau \le k-1\}$, so it is in $\mathcal{F}_{k-1}$, and its indicator is bounded. Taking out what is known, $E[\mathbf{1}_{\{\tau \ge k\}}(M_k - M_{k-1})] = E[\mathbf{1}_{\{\tau \ge k\}}\,E[M_k - M_{k-1} \mid \mathcal{F}_{k-1}]] = 0$. Sum the n terms.
+**Lemma 1 (capped stopping).** For every n, $`E[M_{\tau\wedge n}] = E[M_0]`$. *Proof.* $`M_{\tau\wedge n} = M_0 + \sum_{k=1}^{n} \mathbf{1}_{\{\tau \ge k\}}(M_k - M_{k-1})`$, checked run by run. The event $`\{\tau \ge k\}`$ is the complement of $`\{\tau \le k-1\}`$, so it is in $`\mathcal{F}_{k-1}`$, and its indicator is bounded. Taking out what is known, $`E[\mathbf{1}_{\{\tau \ge k\}}(M_k - M_{k-1})] = E[\mathbf{1}_{\{\tau \ge k\}}\,E[M_k - M_{k-1} \mid \mathcal{F}_{k-1}]] = 0`$. Sum the n terms.
 
-**Theorem.** If $\{M_{\tau\wedge n}\}$ is uniformly integrable, then $M_\tau \in L^1$ and $E[M_\tau] = E[M_0]$. *Proof.* On $\{\tau < \infty\}$, $M_{\tau\wedge n} = M_\tau$ for all $n \ge \tau$, so $M_{\tau\wedge n} \to M_\tau$ almost surely, hence in probability. Vitali's theorem, proved on the uniform-integrability card, gives $M_\tau \in L^1$ and $E|M_{\tau\wedge n} - M_\tau| \to 0$. Then $|E[M_{\tau\wedge n}] - E[M_\tau]| \le E|M_{\tau\wedge n} - M_\tau| \to 0$, and Lemma 1 makes every $E[M_{\tau\wedge n}]$ equal $E[M_0]$.
+**Theorem.** If $`\{M_{\tau\wedge n}\}`$ is uniformly integrable, then $`M_\tau \in L^1`$ and $`E[M_\tau] = E[M_0]`$. *Proof.* On $`\{\tau < \infty\}`$, $`M_{\tau\wedge n} = M_\tau`$ for all $`n \ge \tau`$, so $`M_{\tau\wedge n} \to M_\tau`$ almost surely, hence in probability. Vitali's theorem, proved on the uniform-integrability card, gives $`M_\tau \in L^1`$ and $`E|M_{\tau\wedge n} - M_\tau| \to 0`$. Then $`|E[M_{\tau\wedge n}] - E[M_\tau]| \le E|M_{\tau\wedge n} - M_\tau| \to 0`$, and Lemma 1 makes every $`E[M_{\tau\wedge n}]`$ equal $`E[M_0]`$.
 
-**Corollary (two tests).** (a) If $|M_{\tau\wedge n}| \le C$ for all n, the family is dominated by the constant C, so uniformly integrable. (b) If $|M_k - M_{k-1}| \le c$ whenever $k \le \tau$, and $E[\tau] < \infty$, then $|M_{\tau\wedge n}| \le |M_0| + c\,\tau$, an integrable envelope, so the family is uniformly integrable. Both use the dominated-family test from the uniform-integrability card.
+**Corollary (two tests).** (a) If $`|M_{\tau\wedge n}| \le C`$ for all n, the family is dominated by the constant C, so uniformly integrable. (b) If $`|M_k - M_{k-1}| \le c`$ whenever $`k \le \tau`$, and $`E[\tau] < \infty`$, then $`|M_{\tau\wedge n}| \le |M_0| + c\,\tau`$, an integrable envelope, so the family is uniformly integrable. Both use the dominated-family test from the uniform-integrability card.
 
-**Lemma 2 (two barriers end the game).** Take integers $0 < a < b$ and independent steps of +1 with probability $p > 0$ and −1 otherwise; $\tau$ the first round at 0 or b. From any fortune strictly between, b straight wins reach b. The events "rounds $jb+1$ to $jb+b$ are all wins", for $j = 0, 1, \ldots$, are independent, each of probability $p^b$, and $\tau > kb$ forces all of the first k to fail. So $P(\tau > kb) \le (1 - p^b)^k$. Hence $P(\tau = \infty) = 0$, and $E[\tau] = \sum_{m \ge 0} P(\tau > m) \le b \sum_{k \ge 0} (1 - p^b)^k = b\,p^{-b} < \infty$.
+**Lemma 2 (two barriers end the game).** Take integers $`0 < a < b`$ and independent steps of +1 with probability $`p > 0`$ and −1 otherwise; $`\tau`$ the first round at 0 or b. From any fortune strictly between, b straight wins reach b. The events "rounds $`jb+1`$ to $`jb+b`$ are all wins", for $`j = 0, 1, \ldots`$, are independent, each of probability $`p^b`$, and $`\tau > kb`$ forces all of the first k to fail. So $`P(\tau > kb) \le (1 - p^b)^k`$. Hence $`P(\tau = \infty) = 0`$, and $`E[\tau] = \sum_{m \ge 0} P(\tau > m) \le b \sum_{k \ge 0} (1 - p^b)^k = b\,p^{-b} < \infty`$.
 
-**Gambler's ruin.** Fair coin: $X_{\tau\wedge n} \in [0, b]$, test (a), so $E[X_\tau] = a$; as $X_\tau \in \{0, b\}$, $b\,w = a$. For the length, $E[X_{n+1}^2 - (n+1) \mid \mathcal{F}_n] = X_n^2 + 1 - (n+1)$, a martingale with $|X^2_{\tau\wedge n} - \tau\wedge n| \le b^2 + \tau$, integrable by Lemma 2, so the family is dominated and uniformly integrable: $E[X_\tau^2] - E[\tau] = a^2$, and $E[X_\tau^2] = b^2 w = ab$ gives $E[\tau] = a(b - a)$. Biased coin, $r = q/p$: $E[r^{X_{n+1}} \mid \mathcal{F}_n] = r^{X_n}(p r + q/r) = r^{X_n}$, bounded on $[0, b]$ between $\min(1, r^b)$ and $\max(1, r^b)$, so $w\,r^b + (1 - w) = r^a$. And $X_n + (q - p)n$ is a martingale with steps at most $1 + |q - p|$, so test (b) gives $a = b\,w + (q - p)\,E[\tau]$.
+**Gambler's ruin.** Fair coin: $`X_{\tau\wedge n} \in [0, b]`$, test (a), so $`E[X_\tau] = a`$; as $`X_\tau \in \{0, b\}`$, $`b\,w = a`$. For the length, $`E[X_{n+1}^2 - (n+1) \mid \mathcal{F}_n] = X_n^2 + 1 - (n+1)`$, a martingale with $`|X^2_{\tau\wedge n} - \tau\wedge n| \le b^2 + \tau`$, integrable by Lemma 2, so the family is dominated and uniformly integrable: $`E[X_\tau^2] - E[\tau] = a^2`$, and $`E[X_\tau^2] = b^2 w = ab`$ gives $`E[\tau] = a(b - a)`$. Biased coin, $`r = q/p`$: $`E[r^{X_{n+1}} \mid \mathcal{F}_n] = r^{X_n}(p r + q/r) = r^{X_n}`$, bounded on $`[0, b]`$ between $`\min(1, r^b)`$ and $`\max(1, r^b)`$, so $`w\,r^b + (1 - w) = r^a`$. And $`X_n + (q - p)n`$ is a martingale with steps at most $`1 + |q - p|`$, so test (b) gives $`a = b\,w + (q - p)\,E[\tau]`$.
 
-**Failure 1, doubling.** $G_n = 1$ if a head has appeared by toss n, else $1 - 2^n$, with probability $2^{-n}$. $E[G_n] = (1 - 2^{-n}) + 2^{-n}(1 - 2^n) = 0$. The first head comes with probability 1, so $G_\tau = 1$. For $K \ge 1$ and n with $2^n - 1 > K$, the only value above K in size is the loss: tail $= 2^{-n}(2^n - 1) = 1 - 2^{-n}$, supremum 1. Not uniformly integrable.
+**Failure 1, doubling.** $`G_n = 1`$ if a head has appeared by toss n, else $`1 - 2^n`$, with probability $`2^{-n}`$. $`E[G_n] = (1 - 2^{-n}) + 2^{-n}(1 - 2^n) = 0`$. The first head comes with probability 1, so $`G_\tau = 1`$. For $`K \ge 1`$ and n with $`2^n - 1 > K`$, the only value above K in size is the loss: tail $`= 2^{-n}(2^n - 1) = 1 - 2^{-n}`$, supremum 1. Not uniformly integrable.
 
-**Failure 2, no goal.** Let $\tau$ be the first visit to 0 from a. For every $b > a$, ruin before b has probability $1 - a/b$ by the fair case, so $P(\tau < \infty) = 1$ and $X_\tau = 0$. Each capped value is at least 0 with average a. On $\{X_{\tau\wedge n} \le K\}$ the value is at most K and positive only if $\tau > n$, so $E[X_{\tau\wedge n}\mathbf{1}_{\{X_{\tau\wedge n} \le K\}}] \le K\,P(\tau > n) \to 0$. The tail above K therefore tends to a for every K. Not uniformly integrable, and $E[\tau] = \infty$: it is at least the two-barrier average a(b − a) for every goal b.
+**Failure 2, no goal.** Let $`\tau`$ be the first visit to 0 from a. For every $`b > a`$, ruin before b has probability $`1 - a/b`$ by the fair case, so $`P(\tau < \infty) = 1`$ and $`X_\tau = 0`$. Each capped value is at least 0 with average a. On $`\{X_{\tau\wedge n} \le K\}`$ the value is at most K and positive only if $`\tau > n`$, so $`E[X_{\tau\wedge n}\mathbf{1}_{\{X_{\tau\wedge n} \le K\}}] \le K\,P(\tau > n) \to 0`$. The tail above K therefore tends to a for every K. Not uniformly integrable, and $`E[\tau] = \infty`$: it is at least the two-barrier average a(b − a) for every goal b.
 
 </details>
 
@@ -194,7 +208,7 @@ A second road skips martingales entirely: write down, for each fortune x, the ch
 | optional stopping, bounded test | 30 w + 0 (1 − w) = 10 | w = 10/30 |
 | chance of reaching 30 | 10 ÷ 30 | **0.333333** |
 | chance of ruin | 1 − 0.333333 | **0.666667** |
-| $X^2 - n$ at the end | 900 × 0.333333 | 300 |
+| $`X^2 - n`$ at the end | 900 × 0.333333 | 300 |
 | average length | 300 − 10^2 | **200 rounds** |
 | roulette, r = q/p | 20/18 | 1.111111 |
 | r^10 and r^30 | repeated multiplication | 2.867972 and 23.589825 |
@@ -207,9 +221,9 @@ On a fair coin she turns her 10 dollars into 30 about 1 time in 3, after 200 rou
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Doubling, optional stopping applied | claims 0; the gain is 1 on every run | Losses of $2^n - 1$ at chance $2^{-n}$: the tail above 100 is 0.999023 by toss 10 |
+| Doubling, optional stopping applied | claims 0; the gain is 1 on every run | Losses of $`2^n - 1`$ at chance $`2^{-n}`$: the tail above 100 is 0.999023 by toss 10 |
 | No goal, optional stopping applied | claims an average of 10; it is 0 | Ruin is certain; the part of the average above 30 dollars is 9.25 by round 2000 |
-| Fair formula a/b on roulette | 0.333333 against 0.082691 | The fortune drifts down; only $(q/p)^{X_n}$ is fair |
+| Fair formula a/b on roulette | 0.333333 against 0.082691 | The fortune drifts down; only $`(q/p)^{X_n}`$ is fair |
 
 All three are printed by the code.
 
@@ -639,13 +653,13 @@ The two outputs match line for line, simulated digits included, because both lan
 
 Lean proves the theorem and its bounded test for every martingale, the ruin odds for every fair game, and checks the worked numbers.
 
-- Suppose $M_n$ is a martingale, $\tau$ a stopping time with $P(\tau < \infty) = 1$, and the capped values uniformly integrable. Then $M_\tau$ is integrable and $E[M_\tau] = E[M_0]$.
-- Take the same martingale and stopping time, with $|M_{\tau\wedge n}| \le C$ for every n. Then $M_\tau$ is integrable and $E[M_\tau] = E[M_0]$.
-- Suppose a fair game starts at a, with $0 < a < b$, stays between 0 and b, and ends with certainty at 0 or b. Then $P(\text{reach } b) = a/b$.
+- Suppose $`M_n`$ is a martingale, $`\tau`$ a stopping time with $`P(\tau < \infty) = 1`$, and the capped values uniformly integrable. Then $`M_\tau`$ is integrable and $`E[M_\tau] = E[M_0]`$.
+- Take the same martingale and stopping time, with $`|M_{\tau\wedge n}| \le C`$ for every n. Then $`M_\tau`$ is integrable and $`E[M_\tau] = E[M_0]`$.
+- Suppose a fair game starts at a, with $`0 < a < b`$, stays between 0 and b, and ends with certainty at 0 or b. Then $`P(\text{reach } b) = a/b`$.
 - The fair chance of reaching 30 from 10 is 10/30 = 1/3, and the chance of ruin is 2/3.
-- From fortune x, the next square averages $x^2 + 1$, so $X_n^2 - n$ is fair.
-- The average length is $900 \times \tfrac13 - 10^2 = 200$, which equals $10 \times 20$.
-- On roulette, $r = 20/18$ makes $p\,r + q/r = 1$, so $r^{X_n}$ is fair.
+- From fortune x, the next square averages $`x^2 + 1`$, so $`X_n^2 - n`$ is fair.
+- The average length is $`900 \times \tfrac13 - 10^2 = 200`$, which equals $`10 \times 20`$.
+- On roulette, $`r = 20/18`$ makes $`p\,r + q/r = 1`$, so $`r^{X_n}`$ is fair.
 - The roulette chance of reaching 30 lies between 0.082690 and 0.082692.
 - The doubler's capped gain averages 0 at 1, 4, 7 and 10 tosses.
 - Its tail above 100 is 127/128 at 7 tosses and 1023/1024 at 10 tosses.
@@ -848,11 +862,11 @@ example : 1 - (10 : ℚ) / 100 = 9 / 10 ∧ 1 - (10 : ℚ) / 1000 = 99 / 100 := 
 ## The usual mistake
 
 > [!warning]
-> **Believing that a game which ends with certainty keeps its average.** It does not. The doubler stops with certainty, after 2 tosses on average, and every cap averages 0, yet the final gain is 1. The average leaks through rare losses of $2^n - 1$ dollars that grow as fast as their chance shrinks. Certainty of ending is one hypothesis; uniform integrability is the other.
+> **Believing that a game which ends with certainty keeps its average.** It does not. The doubler stops with certainty, after 2 tosses on average, and every cap averages 0, yet the final gain is 1. The average leaks through rare losses of $`2^n - 1`$ dollars that grow as fast as their chance shrinks. Certainty of ending is one hypothesis; uniform integrability is the other.
 >
 > - **Reading "fair" as "cannot win".** The doubler wins 1 dollar with certainty; the price is an unlimited bankroll, which is the missing uniform integrability.
 > - **Ruin without a goal read as unlikely.** Playing a fair game until broke, with no exit, ends in ruin with certainty: 0.823114 by round 2000 and rising. The capped average of 10 is carried by a shrinking crowd of large fortunes.
-> - **The fair formula on a biased coin.** a/b gives 0.333333 at roulette; the truth, from $(q/p)^{X_n}$, is 0.082691.
+> - **The fair formula on a biased coin.** a/b gives 0.333333 at roulette; the truth, from $`(q/p)^{X_n}`$, is 0.082691.
 
 ---
 
@@ -860,8 +874,8 @@ example : 1 - (10 : ℚ) / 100 = 9 / 10 ∧ 1 - (10 : ℚ) / 1000 = 99 / 100 := 
 
 - **Casinos and bankroll limits.** Table limits and finite bankrolls are the bound that restores optional stopping: no betting system turns a losing wheel into a winning one.
 - **Sequential testing.** A trial that stops when evidence crosses one of two thresholds uses the same two-barrier argument to fix its error rates in advance.
-- **Insurance and ruin.** A company's surplus is a drifting random walk; a fair function of it, like $(q/p)^{X_n}$ here, gives the chance of ruin before a target.
-- **Random algorithms.** How long a random search takes to hit one of two ends is $a(b - a)$ steps for the fair walk, from the $X_n^2 - n$ martingale.
+- **Insurance and ruin.** A company's surplus is a drifting random walk; a fair function of it, like $`(q/p)^{X_n}`$ here, gives the chance of ruin before a target.
+- **Random algorithms.** How long a random search takes to hit one of two ends is $`a(b - a)`$ steps for the fair walk, from the $`X_n^2 - n`$ martingale.
 
 > **Say it back**
 > Optional stopping is safe at any time with a ceiling. With no ceiling, the game must end with certainty and its capped values must be uniformly integrable, so no share of the average hides in rare extreme values. A fortune held between 0 and 30 is bounded, so the ruin chance is the start over the goal, 10 over 30. The doubler and the gambler with no exit break the condition, and their averages leak away. On a biased coin, a fair function of the fortune gives the ruin odds instead.

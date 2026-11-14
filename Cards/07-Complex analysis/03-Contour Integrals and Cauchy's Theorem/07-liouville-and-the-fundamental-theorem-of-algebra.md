@@ -26,34 +26,40 @@ To scale, 50 units per 1. Four dots at distance 1 are the roots of z^4 + 1; two 
 
 ## The formula
 
-$f'(a)$ is the complex derivative of $f$ at the point $a$. The loop sign ∮ is the contour integral once round a circle, anticlockwise ([Contour integrals](01-contour-integrals.md)). $M(r)$ is the largest size $|f(z)|$ on the circle of radius $r$ round $a$. Cauchy's estimate, from [Derivatives from the boundary](06-derivatives-from-the-boundary.md):
+$`f'(a)`$ is the complex derivative of $`f`$ at the point $`a`$. The loop sign ∮ is the contour integral once round a circle, anticlockwise ([Contour integrals](01-contour-integrals.md)). $`M(r)`$ is the largest size $`|f(z)|`$ on the circle of radius $`r`$ round $`a`$. Cauchy's estimate, from [Derivatives from the boundary](06-derivatives-from-the-boundary.md):
 
-$$|f'(a)| \le \frac{M(r)}{r}$$
+```math
+|f'(a)| \le \frac{M(r)}{r}
+```
 
 **Read it aloud:** the slope at the centre is at most the largest size on the circle over the radius.
 
-Liouville's theorem: if $f$ is entire and $|f(z)| \le M$ for every $z$, then
+Liouville's theorem: if $`f`$ is entire and $`|f(z)| \le M`$ for every $`z`$, then
 
-$$f'(a) = 0 \text{ for every } a, \quad \text{so } f \text{ is constant.}$$
+```math
+f'(a) = 0 \text{ for every } a, \quad \text{so } f \text{ is constant.}
+```
 
 **Read it aloud:** entire and never above one fixed size means no slope anywhere, so no change.
 
-The fundamental theorem of algebra: a polynomial $p$ of degree $n \ge 1$, leading coefficient $a_n$, has roots $z_1$ to $z_n$, repeats allowed, with
+The fundamental theorem of algebra: a polynomial $`p`$ of degree $`n \ge 1`$, leading coefficient $`a_n`$, has roots $`z_1`$ to $`z_n`$, repeats allowed, with
 
-$$p(z) = a_n (z - z_1)(z - z_2)\cdots(z - z_n)$$
+```math
+p(z) = a_n (z - z_1)(z - z_2)\cdots(z - z_n)
+```
 
 **Read it aloud:** leading coefficient times one bracket per root.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the function, holomorphic inside the circle | 1/(z^4 + 1) | — |
-| $a$ | the centre, where the slope is taken | 1 | — |
-| $f'(a)$ | the complex derivative at $a$ | -1, by two roads | — |
-| $r$ | the circle's radius | 0.25, 0.5, 0.75 | bound shrinks if $M(r)$ holds still |
-| $M(r)$, $M$ | largest size on the circle; a ceiling for the plane | M(r)/r = 3.038576 at r = 0.25 | bound loosens |
-| $p$ | a polynomial | z^4 + 1; 5z^2 - 20z + 25 | — |
-| $n$, $a_n$ | degree and leading coefficient | 4 and 1; 2 and 5 | one more root; roots stay only if all of $p$ scales |
-| $z_1$ to $z_n$ | the roots, repeats counted | (±1 ± i)/√2; 2 ± i | — |
+| $`f`$ | the function, holomorphic inside the circle | 1/(z^4 + 1) | — |
+| $`a`$ | the centre, where the slope is taken | 1 | — |
+| $`f'(a)`$ | the complex derivative at $`a`$ | -1, by two roads | — |
+| $`r`$ | the circle's radius | 0.25, 0.5, 0.75 | bound shrinks if $`M(r)`$ holds still |
+| $`M(r)`$, $`M`$ | largest size on the circle; a ceiling for the plane | M(r)/r = 3.038576 at r = 0.25 | bound loosens |
+| $`p`$ | a polynomial | z^4 + 1; 5z^2 - 20z + 25 | — |
+| $`n`$, $`a_n`$ | degree and leading coefficient | 4 and 1; 2 and 5 | one more root; roots stay only if all of $`p`$ scales |
+| $`z_1`$ to $`z_n`$ | the roots, repeats counted | (±1 ± i)/√2; 2 ± i | — |
 
 ### When it holds
 
@@ -68,13 +74,15 @@ $$p(z) = a_n (z - z_1)(z - z_2)\cdots(z - z_n)$$
 
 ### Step 0: a big field with a low fence leaves no room to climb
 
-Picture a path that must stay under a fence of fixed height. The wider the field, the gentler the path must be at its centre. Cauchy's estimate makes this exact: the fence is $M(r)$, the width $r$, the steepness $|f'(a)|$. An entire function gets fields of every width; a bounded one never gets a taller fence. Its slope is squeezed to 0.
+Picture a path that must stay under a fence of fixed height. The wider the field, the gentler the path must be at its centre. Cauchy's estimate makes this exact: the fence is $`M(r)`$, the width $`r`$, the steepness $`|f'(a)|`$. An entire function gets fields of every width; a bounded one never gets a taller fence. Its slope is squeezed to 0.
 
 ### Step 1: the slope at a point is controlled by a circle round it
 
 From [Derivatives from the boundary](06-derivatives-from-the-boundary.md), the slope is a loop integral:
 
-$$f'(a) = \frac{1}{2\pi i}\oint \frac{f(z)}{(z - a)^2}\,dz$$
+```math
+f'(a) = \frac{1}{2\pi i}\oint \frac{f(z)}{(z - a)^2}\,dz
+```
 
 The circle has length 2πr. On it, |z - a| is r, so the integrand's size is at most M(r)/r^2. Length times largest size, divided by the 2π in front, gives M(r)/r.
 
@@ -82,7 +90,7 @@ Take p(z) = z^4 + 1, f = 1/p, a = 1. Here p(1) = 2 and p'(1) = 4, and the recipr
 
 ### Step 2: a bounded entire function has no slope, so it is constant
 
-If $f$ is entire, the circle round $a$ may have any radius; if $|f(z)| \le M$ everywhere, then $|f'(a)| \le M/r$ for every $r$. That tends to 0, so $f'(a) = 0$ at every $a$. Between two points, $f$ changes by the integral of its slope along the segment joining them ([Antiderivatives](02-antiderivatives-and-path-independence.md)), which is 0.
+If $`f`$ is entire, the circle round $`a`$ may have any radius; if $`|f(z)| \le M`$ everywhere, then $`|f'(a)| \le M/r`$ for every $`r`$. That tends to 0, so $`f'(a) = 0`$ at every $`a`$. Between two points, $`f`$ changes by the integral of its slope along the segment joining them ([Antiderivatives](02-antiderivatives-and-path-independence.md)), which is 0.
 
 1/(z^4 + 1) escapes. Round 1 its M(r)/r falls from 3.038576 at r = 0.25 to 2.306999 at r = 0.5, then jumps to 21.883435 at r = 0.75. The root 0.765367 away, where 1/p blows up, stops the circle growing.
 
@@ -108,18 +116,18 @@ The line is the smallest |z^4 + 1| over 360 points of each circle, equal to |r^4
 
 ### Step 4: Liouville then flattens 1/p, and that is impossible
 
-Bounded and entire, 1/p would be constant by Step 2, slope 0 everywhere. Step 1 found its slope at 1 is -1. So z^4 + 1 has a root. Nothing used the 4: for any degree $n \ge 1$ the top term $a_n z^n$ outgrows the rest far out, and 1/p constant would make $p$ constant.
+Bounded and entire, 1/p would be constant by Step 2, slope 0 everywhere. Step 1 found its slope at 1 is -1. So z^4 + 1 has a root. Nothing used the 4: for any degree $`n \ge 1`$ the top term $`a_n z^n`$ outgrows the rest far out, and 1/p constant would make $`p`$ constant.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Liouville.** Let $f$ be entire with $|f(z)| \le M$ everywhere. Fix $a$ and any $\varepsilon > 0$; take $r > M/\varepsilon$. Then $|f'(a)| \le M/r < \varepsilon$, so $f'(a) = 0$. For any w, $f(w) - f(a)$ is the integral of $f'$ along the segment from $a$ to w: 0.
+**Liouville.** Let $`f`$ be entire with $`|f(z)| \le M`$ everywhere. Fix $`a`$ and any $`\varepsilon > 0`$; take $`r > M/\varepsilon`$. Then $`|f'(a)| \le M/r < \varepsilon`$, so $`f'(a) = 0`$. For any w, $`f(w) - f(a)`$ is the integral of $`f'`$ along the segment from $`a`$ to w: 0.
 
-**Growth.** Let $p(z) = a_n z^n + \dots + a_0$, $n \ge 1$, S the sum of $|a_0|$ to $|a_{n-1}|$, and R the larger of 1 and $2S/|a_n|$. For $|z| \ge R$: $|p(z)| \ge |a_n||z|^n - S|z|^{n-1} \ge \tfrac12 |a_n||z|^n$. For z^4 + 1, R = 2, the circle in the picture.
+**Growth.** Let $`p(z) = a_n z^n + \dots + a_0`$, $`n \ge 1`$, S the sum of $`|a_0|`$ to $`|a_{n-1}|`$, and R the larger of 1 and $`2S/|a_n|`$. For $`|z| \ge R`$: $`|p(z)| \ge |a_n||z|^n - S|z|^{n-1} \ge \tfrac12 |a_n||z|^n`$. For z^4 + 1, R = 2, the circle in the picture.
 
-**Corollary.** If $p$ has no root, $1/p$ is entire, at most $2/|a_n|$ for $|z| \ge R$, and continuous, hence bounded, on the closed disc $|z| \le R$. Liouville makes $1/p$, so $p$, constant; the growth bound forbids it.
+**Corollary.** If $`p`$ has no root, $`1/p`$ is entire, at most $`2/|a_n|`$ for $`|z| \ge R`$, and continuous, hence bounded, on the closed disc $`|z| \le R`$. Liouville makes $`1/p`$, so $`p`$, constant; the growth bound forbids it.
 
-**All n roots.** A root $z_1$ gives $p(z) = (z - z_1)$ times a polynomial of degree $n - 1$ (the factor theorem). Repeat; after $n$ steps the leftover is $a_n$.
+**All n roots.** A root $`z_1`$ gives $`p(z) = (z - z_1)`$ times a polynomial of degree $`n - 1`$ (the factor theorem). Repeat; after $`n`$ steps the leftover is $`a_n`$.
 
 </details>
 

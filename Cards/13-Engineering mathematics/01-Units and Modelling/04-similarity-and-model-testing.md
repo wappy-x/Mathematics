@@ -42,44 +42,50 @@ A reminder of notation: square brackets name a dimension, [L] length, [M] mass, 
 
 The drag on a body of fixed shape depends on six quantities: the force itself, the air's density, its viscosity, its speed of sound, the speed, and one size. Three dimensions, [M], [L] and [T], leave three groups, and the law is a relation among them:
 
-$$C_D = \frac{F}{\tfrac12 \rho U^2 A} = \varphi(\mathrm{Re}, \mathrm{Ma}), \qquad \mathrm{Re} = \frac{\rho U D}{\mu} = \frac{U D}{\nu}, \qquad \mathrm{Ma} = \frac{U}{c}$$
+```math
+C_D = \frac{F}{\tfrac12 \rho U^2 A} = \varphi(\mathrm{Re}, \mathrm{Ma}), \qquad \mathrm{Re} = \frac{\rho U D}{\mu} = \frac{U D}{\nu}, \qquad \mathrm{Ma} = \frac{U}{c}
+```
 
-**Read it aloud:** the drag coefficient, which is the force divided by the air's dynamic pressure $\tfrac12 \rho U^2$ (the pressure rise if the moving air were brought to rest) and the frontal area, is some fixed function of the Reynolds number and the Mach number, and of nothing else.
+**Read it aloud:** the drag coefficient, which is the force divided by the air's dynamic pressure $`\tfrac12 \rho U^2`$ (the pressure rise if the moving air were brought to rest) and the frontal area, is some fixed function of the Reynolds number and the Mach number, and of nothing else.
 
-The function $\varphi$ is unknown; finding it is the tunnel's job. Similarity uses only the fact that it exists. If the model, marked m, and the full-size helmet, marked p for prototype (the engineer's word for the full-size thing), have the same Re and the same Ma, they have the same $C_D$, and the force scales as
+The function $`\varphi`$ is unknown; finding it is the tunnel's job. Similarity uses only the fact that it exists. If the model, marked m, and the full-size helmet, marked p for prototype (the engineer's word for the full-size thing), have the same Re and the same Ma, they have the same $`C_D`$, and the force scales as
 
-$$F_p = F_m \, \frac{\rho_p \, U_p^2 \, D_p^2}{\rho_m \, U_m^2 \, D_m^2} \qquad \text{when } \mathrm{Re}_m = \mathrm{Re}_p \text{ and } \mathrm{Ma}_m = \mathrm{Ma}_p$$
+```math
+F_p = F_m \, \frac{\rho_p \, U_p^2 \, D_p^2}{\rho_m \, U_m^2 \, D_m^2} \qquad \text{when } \mathrm{Re}_m = \mathrm{Re}_p \text{ and } \mathrm{Ma}_m = \mathrm{Ma}_p
+```
 
 **Read it aloud:** with the groups matched, the full-size drag is the model's drag times the ratio of density times speed squared times size squared.
 
-Both groups can be matched at a scale $\lambda$ only when the two airs satisfy
+Both groups can be matched at a scale $`\lambda`$ only when the two airs satisfy
 
-$$\frac{\nu_m}{\nu_p} = \lambda \, \frac{c_m}{c_p}$$
+```math
+\frac{\nu_m}{\nu_p} = \lambda \, \frac{c_m}{c_p}
+```
 
-In one fixed air the left side is 1 and the right side is $\lambda$, so a quarter-scale model can never match both.
+In one fixed air the left side is 1 and the right side is $`\lambda`$, so a quarter-scale model can never match both.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$, $F_m$, $F_p$ | drag force, in newtons, on the model and on the full-size helmet | $F_p$ = 1.4810 N | — |
-| $\rho$, $\rho_m$, $\rho_p$ | air density, kg/m^3 | 1.2041 at 1 atm, 20 °C | drag rises roughly in proportion, and Re rises |
-| $U$, $U_m$, $U_p$ | air speed past the helmet, m/s | 12.5 full size; 50 Re-matched model | drag rises roughly as the square |
-| $D$, $D_m$, $D_p$, $A$ | width, m, and frontal area $A = \pi D^2/4$, m^2 | 0.22 and 0.055; $A$ = 0.03801 m^2 | drag rises as the square of $D$ |
-| $\mu$ | dynamic viscosity: the air's stickiness, Pa s, [M][L]^-1[T]^-1 | 18.134 µPa s | Re falls |
-| $\nu$, $\nu_m$, $\nu_p$ | kinematic viscosity $\mu/\rho$, m^2/s, [L]^2[T]^-1 | 15.060 mm^2/s at 1 atm | Re falls |
-| $c$, $c_m$, $c_p$ | speed of sound, m/s | 343.23 | Ma falls |
-| $\lambda$ | scale: model size over full size, $D_m/D_p$ | 1/4 | the Re-matching speed falls |
-| $\mathrm{Re}$ | Reynolds number: inertia over viscosity | 182,603 | thinner boundary layers, lower $C_D$ here |
-| $\mathrm{Ma}$ | Mach number: speed over speed of sound | 0.0364 full size | compressibility grows, as Ma^2/2 |
-| $C_D$, $\varphi$, $\Pi$ | drag coefficient; the unknown law $C_D = \varphi(\mathrm{Re}, \mathrm{Ma})$; any dimensionless group | $C_D$ = 0.4141 | drag rises in proportion |
-| $p$, $T$, $R$, $\gamma$, $\beta$, $S$ | air pressure, temperature, gas constant 287.05 J/(kg K), heat-capacity ratio 1.4, Sutherland's two constants | 1 atm, 293.15 K | raising $p$ raises $\rho$ and Re; leaves $\mu$ and $c$ alone |
+| $`F`$, $`F_m`$, $`F_p`$ | drag force, in newtons, on the model and on the full-size helmet | $`F_p`$ = 1.4810 N | — |
+| $`\rho`$, $`\rho_m`$, $`\rho_p`$ | air density, kg/m^3 | 1.2041 at 1 atm, 20 °C | drag rises roughly in proportion, and Re rises |
+| $`U`$, $`U_m`$, $`U_p`$ | air speed past the helmet, m/s | 12.5 full size; 50 Re-matched model | drag rises roughly as the square |
+| $`D`$, $`D_m`$, $`D_p`$, $`A`$ | width, m, and frontal area $`A = \pi D^2/4`$, m^2 | 0.22 and 0.055; $`A`$ = 0.03801 m^2 | drag rises as the square of $`D`$ |
+| $`\mu`$ | dynamic viscosity: the air's stickiness, Pa s, [M][L]^-1[T]^-1 | 18.134 µPa s | Re falls |
+| $`\nu`$, $`\nu_m`$, $`\nu_p`$ | kinematic viscosity $`\mu/\rho`$, m^2/s, [L]^2[T]^-1 | 15.060 mm^2/s at 1 atm | Re falls |
+| $`c`$, $`c_m`$, $`c_p`$ | speed of sound, m/s | 343.23 | Ma falls |
+| $`\lambda`$ | scale: model size over full size, $`D_m/D_p`$ | 1/4 | the Re-matching speed falls |
+| $`\mathrm{Re}`$ | Reynolds number: inertia over viscosity | 182,603 | thinner boundary layers, lower $`C_D`$ here |
+| $`\mathrm{Ma}`$ | Mach number: speed over speed of sound | 0.0364 full size | compressibility grows, as Ma^2/2 |
+| $`C_D`$, $`\varphi`$, $`\Pi`$ | drag coefficient; the unknown law $`C_D = \varphi(\mathrm{Re}, \mathrm{Ma})`$; any dimensionless group | $`C_D`$ = 0.4141 | drag rises in proportion |
+| $`p`$, $`T`$, $`R`$, $`\gamma`$, $`\beta`$, $`S`$ | air pressure, temperature, gas constant 287.05 J/(kg K), heat-capacity ratio 1.4, Sutherland's two constants | 1 atm, 293.15 K | raising $`p`$ raises $`\rho`$ and Re; leaves $`\mu`$ and $`c`$ alone |
 
-The air's properties come from the constants of the U.S. Standard Atmosphere 1976: density from the ideal-gas law $\rho = p/(RT)$, viscosity from Sutherland's law $\mu = \beta T^{3/2}/(T + S)$ with $\beta$ = 1.458e-6 kg/(m s K^0.5) and $S$ = 110.4 K, and $c = \sqrt{\gamma R T}$. [Boundary layers](06-boundary-layers-and-singular-perturbation.md) takes 1.82 × 10^-5 Pa s for the same air, from a newer correlation; the two values differ by 0.4 %, which moves Re by the same 0.4 % and leaves the method untouched.
+The air's properties come from the constants of the U.S. Standard Atmosphere 1976: density from the ideal-gas law $`\rho = p/(RT)`$, viscosity from Sutherland's law $`\mu = \beta T^{3/2}/(T + S)`$ with $`\beta`$ = 1.458e-6 kg/(m s K^0.5) and $`S`$ = 110.4 K, and $`c = \sqrt{\gamma R T}`$. [Boundary layers](06-boundary-layers-and-singular-perturbation.md) takes 1.82 × 10^-5 Pa s for the same air, from a newer correlation; the two values differ by 0.4 %, which moves Re by the same 0.4 % and leaves the method untouched.
 
-To have a curve to test against, the card lets a smooth sphere of the helmet's width stand in for $\varphi$, using White's curve fit $C_D \approx 24/\mathrm{Re} + 6/(1 + \sqrt{\mathrm{Re}}) + 0.4$, stated for Re up to 200,000. It has no Mach dependence, so on it a Re-matched test is exact. A real helmet's curve differs, which is why it goes in a tunnel; the method needs only that some curve exists.
+To have a curve to test against, the card lets a smooth sphere of the helmet's width stand in for $`\varphi`$, using White's curve fit $`C_D \approx 24/\mathrm{Re} + 6/(1 + \sqrt{\mathrm{Re}}) + 0.4`$, stated for Re up to 200,000. It has no Mach dependence, so on it a Re-matched test is exact. A real helmet's curve differs, which is why it goes in a tunnel; the method needs only that some curve exists.
 
 ### When it holds
 
-- **Geometric similarity.** Every length on the model is $\lambda$ times the matching length on the helmet, vents, straps and surface roughness included. A quarter-scale vent that a printer rounds off is a different shape, with its own $\varphi$.
+- **Geometric similarity.** Every length on the model is $`\lambda`$ times the matching length on the helmet, vents, straps and surface roughness included. A quarter-scale vent that a printer rounds off is a different shape, with its own $`\varphi`$.
 - **The list of quantities is complete.** Six quantities give three groups. A free surface would add gravity and a Froude number, speed squared over gravitational acceleration times size; a heated helmet would add heat-transfer groups. Leave one out and the matched model misses the physics it carries.
 - **Every group matched, or shown not to matter.** Matching Re in open air leaves Ma four times too large, 0.1457 against 0.0364. That is acceptable only because density changes across the flow by about Ma^2/2, 1.06 % on the model; at Ma 0.3 it is 4.50 %, and a 1/10 model would need 125 m/s, Ma 0.3642, past that line.
 - **The stand-in curve's range.** White's fit holds to Re 200,000. A 20 m/s descent on the full helmet has Re 292,164, outside it, where a smooth sphere's drag drops sharply and this card's numbers no longer apply.
@@ -94,28 +100,28 @@ The drag on the helmet is the same whether it is measured in newtons or in pound
 
 ### Step 1: count the groups
 
-The list is $F$, $\rho$, $U$, $D$, $\mu$, $c$: six quantities in three dimensions. The Buckingham Pi theorem ([Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md)) says six minus three, so three independent groups. One choice is $C_D$, Re and Ma. Check Re: $\rho U D/\mu$ has dimensions [M][L]^-3 times [L][T]^-1 times [L], divided by [M][L]^-1[T]^-1, and every exponent cancels.
+The list is $`F`$, $`\rho`$, $`U`$, $`D`$, $`\mu`$, $`c`$: six quantities in three dimensions. The Buckingham Pi theorem ([Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md)) says six minus three, so three independent groups. One choice is $`C_D`$, Re and Ma. Check Re: $`\rho U D/\mu`$ has dimensions [M][L]^-3 times [L][T]^-1 times [L], divided by [M][L]^-1[T]^-1, and every exponent cancels.
 
 ### Step 2: the law is one function of two groups
 
-Solve the relation among three groups for the one containing the force: $C_D = \varphi(\mathrm{Re}, \mathrm{Ma})$. This is the step that turns six quantities into two inputs. It is also what the unit-change check in the code shows: the full-size flow written in feet, pounds and minutes has a drag number of 38562.3 instead of 1.4810, but Re is 182,603, Ma 0.0364 and $C_D$ 0.4141 in both.
+Solve the relation among three groups for the one containing the force: $`C_D = \varphi(\mathrm{Re}, \mathrm{Ma})`$. This is the step that turns six quantities into two inputs. It is also what the unit-change check in the code shows: the full-size flow written in feet, pounds and minutes has a drag number of 38562.3 instead of 1.4810, but Re is 182,603, Ma 0.0364 and $`C_D`$ 0.4141 in both.
 
 <details>
 <summary>Detailed proof: why the law can only depend on the groups</summary>
 
-Suppose $F = f(\rho, U, D, \mu, c)$ holds in every system of units. Change the mass, length and time units by three positive factors: each quantity's number changes by a known product of powers of those factors. Choose them so that the numbers for $\rho$, $U$ and $D$ all become 1, which three free factors can always do, since $\rho$, $U$ and $D$ between them contain mass, length and time independently.
+Suppose $`F = f(\rho, U, D, \mu, c)`$ holds in every system of units. Change the mass, length and time units by three positive factors: each quantity's number changes by a known product of powers of those factors. Choose them so that the numbers for $`\rho`$, $`U`$ and $`D`$ all become 1, which three free factors can always do, since $`\rho`$, $`U`$ and $`D`$ between them contain mass, length and time independently.
 
-In those units, $\mu$'s number is $\mu/(\rho U D)$, which is 1/Re, and $c$'s number is $c/U$, which is 1/Ma; the force's number is $F/(\rho U^2 D^2)$. The law still holds there, so $F/(\rho U^2 D^2) = f(1, 1, 1, 1/\mathrm{Re}, 1/\mathrm{Ma})$, a function of Re and Ma alone. Since $\tfrac12 \rho U^2 A = (\pi/8)\rho U^2 D^2$, multiplying by the constant $8/\pi$ gives $C_D = \varphi(\mathrm{Re}, \mathrm{Ma})$. The same argument on any list leaves as many groups as there are quantities beyond the independent dimensions, which is the Buckingham theorem.
+In those units, $`\mu`$'s number is $`\mu/(\rho U D)`$, which is 1/Re, and $`c`$'s number is $`c/U`$, which is 1/Ma; the force's number is $`F/(\rho U^2 D^2)`$. The law still holds there, so $`F/(\rho U^2 D^2) = f(1, 1, 1, 1/\mathrm{Re}, 1/\mathrm{Ma})`$, a function of Re and Ma alone. Since $`\tfrac12 \rho U^2 A = (\pi/8)\rho U^2 D^2`$, multiplying by the constant $`8/\pi`$ gives $`C_D = \varphi(\mathrm{Re}, \mathrm{Ma})`$. The same argument on any list leaves as many groups as there are quantities beyond the independent dimensions, which is the Buckingham theorem.
 
 </details>
 
 ### Step 3: matched groups give matched drag coefficients
 
-If the model's Re and Ma equal the helmet's, the same function returns the same $C_D$ for both. Write $C_D$ out on each side and set them equal: $F_m/(\tfrac12 \rho_m U_m^2 A_m) = F_p/(\tfrac12 \rho_p U_p^2 A_p)$. The areas are in the ratio $D_m^2/D_p^2$, the halves cancel, and the scaling formula follows. Nothing about the shape of $\varphi$ was used.
+If the model's Re and Ma equal the helmet's, the same function returns the same $`C_D`$ for both. Write $`C_D`$ out on each side and set them equal: $`F_m/(\tfrac12 \rho_m U_m^2 A_m) = F_p/(\tfrac12 \rho_p U_p^2 A_p)`$. The areas are in the ratio $`D_m^2/D_p^2`$, the halves cancel, and the scaling formula follows. Nothing about the shape of $`\varphi`$ was used.
 
 ### Step 4: in one air, Re and Ma pull the speed apart
 
-Take ratios, model over full size, at scale $\lambda$. Re's ratio is $(U_m/U_p) \lambda (\nu_p/\nu_m)$; Ma's is $(U_m/U_p)(c_p/c_m)$. In the same air, $\nu$ and $c$ are the same on both, so Re wants $U_m = U_p/\lambda$, which is 50 m/s, and Ma wants $U_m = U_p$, which is 12.5 m/s. Setting both ratios to 1 and dividing one by the other gives $\nu_m/\nu_p = \lambda c_m/c_p$: the second air must have a kinematic viscosity $\lambda$ times smaller, relative to its speed of sound.
+Take ratios, model over full size, at scale $`\lambda`$. Re's ratio is $`(U_m/U_p) \lambda (\nu_p/\nu_m)`$; Ma's is $`(U_m/U_p)(c_p/c_m)`$. In the same air, $`\nu`$ and $`c`$ are the same on both, so Re wants $`U_m = U_p/\lambda`$, which is 50 m/s, and Ma wants $`U_m = U_p`$, which is 12.5 m/s. Setting both ratios to 1 and dividing one by the other gives $`\nu_m/\nu_p = \lambda c_m/c_p`$: the second air must have a kinematic viscosity $`\lambda`$ times smaller, relative to its speed of sound.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -132,9 +138,9 @@ The shallow line is the Reynolds ratio, which reaches 1 at 50 m/s. The steep lin
 
 ### Step 5: change the air instead of the speed
 
-Pressurising the tunnel raises the density in proportion to the pressure, $\rho = p/(RT)$. Viscosity and the speed of sound depend on temperature, not pressure, so $\nu = \mu/\rho$ falls by the pressure ratio while $c$ stays put. At the rider's 12.5 m/s, Ma matches automatically, and Re matches when the pressure is $1/\lambda$ times atmospheric: 4 atm. That is complete similarity. The model then feels 0.3702 N. The scaling formula divides by 4 for the denser air, leaves the speed alone and multiplies by 16 for the larger size: 0.3702 × 16 / 4 gives the full 1.4810 N.
+Pressurising the tunnel raises the density in proportion to the pressure, $`\rho = p/(RT)`$. Viscosity and the speed of sound depend on temperature, not pressure, so $`\nu = \mu/\rho`$ falls by the pressure ratio while $`c`$ stays put. At the rider's 12.5 m/s, Ma matches automatically, and Re matches when the pressure is $`1/\lambda`$ times atmospheric: 4 atm. That is complete similarity. The model then feels 0.3702 N. The scaling formula divides by 4 for the denser air, leaves the speed alone and multiplies by 16 for the larger size: 0.3702 × 16 / 4 gives the full 1.4810 N.
 
-Pressure is one way to move $\nu$ against $c$; cooling the gas is another, since viscosity falls and density rises as temperature drops. Open tunnels usually take the third way, **partial similarity**: match Re, let Ma float, and check that Ma stays where compressibility is a percent or so.
+Pressure is one way to move $`\nu`$ against $`c`$; cooling the gas is another, since viscosity falls and density rises as temperature drops. Open tunnels usually take the third way, **partial similarity**: match Re, let Ma float, and check that Ma stays where compressibility is a percent or so.
 
 Barenblatt uses the same words in a second, narrower sense, about one unmatched group rather than all of them: if the law tends to a finite, non-zero limit as that group goes to zero or infinity, the group drops out (complete similarity in it); if instead it leaves a power of the group behind, the similarity is incomplete and the group cannot simply be ignored.
 
@@ -147,7 +153,7 @@ Barenblatt uses the same words in a second, narrower sense, about one unmatched 
 | air density, 1 atm, 20 °C | 101325 / (287.05 × 293.15) | 1.2041 kg/m^3 |
 | kinematic viscosity | 18.134 µPa s / 1.2041 kg/m^3 | 15.060 mm^2/s |
 | full-size Re | 12.5 × 0.22 / (15.060 × 10^-6) | 182,603 |
-| stand-in $C_D$ | 0.00013 + 6 / (1 + 427.32) + 0.4 = 0.00013 + 0.01401 + 0.4 | 0.4141 |
+| stand-in $`C_D`$ | 0.00013 + 6 / (1 + 427.32) + 0.4 = 0.00013 + 0.01401 + 0.4 | 0.4141 |
 | dynamic pressure and area | ½ × 1.2041 × 12.5^2; π × 0.22^2 / 4 | 94.07 Pa; 0.03801 m^2 |
 | full-size drag | 94.07 × 0.03801 × 0.4141, carried unrounded | 1.4810 N |
 | Re-matching tunnel speed | 12.5 × 0.22 / 0.055 | 50 m/s |
@@ -500,9 +506,9 @@ The two outputs match line for line.
 
 Lean proves the scaling formula, the rule for matching both groups, and the one-air clash for any positive values, and checks the worked numbers.
 
-- Suppose model and full size share one law for $C_D$, with equal Re, equal Ma, and positive densities, speeds and sizes. Then the full-size drag is $F_m$ times the ratio of $\rho U^2 D^2$, full size over model. No property of $\varphi$ is used.
-- Take positive speeds, sizes, kinematic viscosities and speeds of sound. Then some tunnel speed matches both Re and Ma exactly when $\nu_m/\nu_p = \lambda c_m/c_p$.
-- Take one fixed air, the same $\nu$ and $c$ on model and full size. Then a speed matching both Re and Ma exists only when the model is full size.
+- Suppose model and full size share one law for $`C_D`$, with equal Re, equal Ma, and positive densities, speeds and sizes. Then the full-size drag is $`F_m`$ times the ratio of $`\rho U^2 D^2`$, full size over model. No property of $`\varphi`$ is used.
+- Take positive speeds, sizes, kinematic viscosities and speeds of sound. Then some tunnel speed matches both Re and Ma exactly when $`\nu_m/\nu_p = \lambda c_m/c_p`$.
+- Take one fixed air, the same $`\nu`$ and $`c`$ on model and full size. Then a speed matching both Re and Ma exists only when the model is full size.
 - The worked numbers hold: 45 km/h is 12.5 m/s, the Re-matching speed is 50 m/s, and the force ratio there is 1.
 - Complete similarity needs 4 atm, and at 50 m/s the Mach ratio is 4.
 - The wrong-way speed is 3.125 m/s, and scaling by area alone is off by +1500 %. Together, 4 atm and 50 m/s give a Re ratio of 4.
@@ -635,7 +641,7 @@ example : (4 : ℚ) * 4 * (1 / 4) = 4 := by norm_num
 
 ## Where you meet it in real life
 
-- **Bicycle and helmet aerodynamics.** Helmets and riders are tested in wind tunnels and reported as drag area ($C_D$ times frontal area) or watts at a stated speed; a scale model is useful only at its Re-matched speed.
+- **Bicycle and helmet aerodynamics.** Helmets and riders are tested in wind tunnels and reported as drag area ($`C_D`$ times frontal area) or watts at a stated speed; a scale model is useful only at its Re-matched speed.
 - **Pressurised and cryogenic tunnels.** Aircraft models are tested in compressed or cooled gas to match Re and Ma together, the route of Step 5.
 - **Ship towing tanks.** A hull has a free surface, so the Froude number joins Re; in water both cannot be matched together, and naval architects match Froude and correct friction by a separate rule.
 - **River and harbour models.** Gravity-driven flows are scaled by Froude number, with roughness adjusted so the model's friction comes out right.

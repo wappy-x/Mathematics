@@ -34,27 +34,29 @@ The top route adds, then translates; the bottom translates, then adds. A homomor
 
 ## The formula
 
-A group is a set with one operation, as in [Groups](01-groups.md). Combining never leaves the set, brackets can be moved, one member changes nothing, and every member can be undone. Where the operation could be either group's, this wing writes it as a star: $a * b$ means "combine these two as this group does". Call the group translated from $G$, the one translated into $H$, the translation $f$. Then $f$ is a homomorphism when
+A group is a set with one operation, as in [Groups](01-groups.md). Combining never leaves the set, brackets can be moved, one member changes nothing, and every member can be undone. Where the operation could be either group's, this wing writes it as a star: $`a * b`$ means "combine these two as this group does". Call the group translated from $`G`$, the one translated into $`H`$, the translation $`f`$. Then $`f`$ is a homomorphism when
 
-$$f(a * b) = f(a) * f(b)$$
+```math
+f(a * b) = f(a) * f(b)
+```
 
-holds for every pair $a$, $b$ in $G$ — the left star $G$'s operation, the right star $H$'s.
+holds for every pair $`a`$, $`b`$ in $`G`$ — the left star $`G`$'s operation, the right star $`H`$'s.
 
 **Read it aloud:** combine, then translate, and the answer is the same as translate, then combine.
 
-Both clocks add, one wrapping at 24 and one at 12. The map takes the remainder on division by 12, written mod 12, so here the rule reads $f(a + b) = f(a) + f(b)$ with each addition done on its own clock.
+Both clocks add, one wrapping at 24 and one at 12. The map takes the remainder on division by 12, written mod 12, so here the rule reads $`f(a + b) = f(a) + f(b)`$ with each addition done on its own clock.
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
-| $f$ | the translation, a function between groups | remainder on division by 12 | another map may wreck the operation |
-| $G$, $H$ | the groups translated from and into | the 24 station readings, the 12 wall readings | other members, other answers |
-| $a$, $b$ | any two members of $G$ | 23 and 5 | every pair must hold, or none |
-| $*$ | the operation of the group it sits in | addition round a clock face | on the tile, one turn then another |
-| $e$ | the identity: changes nothing | 0 on either clock | fixed by the group |
-| $a^{-1}$ | the member that undoes $a$ | 13 undoes 11 | no inverse, no group |
-| $\ker f$, $f(G)$ | the kernel and the image, below | {0, 12}, all 12 readings | a bigger kernel, a smaller image |
+| $`f`$ | the translation, a function between groups | remainder on division by 12 | another map may wreck the operation |
+| $`G`$, $`H`$ | the groups translated from and into | the 24 station readings, the 12 wall readings | other members, other answers |
+| $`a`$, $`b`$ | any two members of $`G`$ | 23 and 5 | every pair must hold, or none |
+| $`*`$ | the operation of the group it sits in | addition round a clock face | on the tile, one turn then another |
+| $`e`$ | the identity: changes nothing | 0 on either clock | fixed by the group |
+| $`a^{-1}`$ | the member that undoes $`a`$ | 13 undoes 11 | no inverse, no group |
+| $`\ker f`$, $`f(G)`$ | the kernel and the image, below | {0, 12}, all 12 readings | a bigger kernel, a smaller image |
 
-The **kernel**, $\ker f$, holds the members of $G$ sent to the identity of $H$: the readings with remainder zero, 0 and 12. The **image**, $f(G)$, holds what $f$ reaches: all twelve readings. An **isomorphism** is a homomorphism that is one-to-one (no two members land in the same place) and onto (every member of $H$ is reached) — a bijection, from [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md).
+The **kernel**, $`\ker f`$, holds the members of $`G`$ sent to the identity of $`H`$: the readings with remainder zero, 0 and 12. The **image**, $`f(G)`$, holds what $`f`$ reaches: all twelve readings. An **isomorphism** is a homomorphism that is one-to-one (no two members land in the same place) and onto (every member of $`H`$ is reached) — a bijection, from [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md).
 
 ### When it holds
 
@@ -72,7 +74,7 @@ The members of a group are furniture. What makes it a group is how the operation
 
 ### Step 1: the identity and the inverses come along free
 
-The identity combined with itself is the identity, so $f(e) = f(e) * f(e)$ in $H$. Combine both sides with the inverse of $f(e)$: one copy cancels, and $f(e)$ is the identity of $H$. A member combined with its inverse gives the identity, so their translations combine to the identity too: an inverse translates to an inverse. Neither fact was assumed; both are forced.
+The identity combined with itself is the identity, so $`f(e) = f(e) * f(e)`$ in $`H`$. Combine both sides with the inverse of $`f(e)`$: one copy cancels, and $`f(e)`$ is the identity of $`H`$. A member combined with its inverse gives the identity, so their translations combine to the identity too: an inverse translates to an inverse. Neither fact was assumed; both are forced.
 
 That is already a test: shifting every reading up by one sends 0 to 1, so it is no homomorphism.
 
@@ -95,13 +97,13 @@ Member counts prove nothing. The numbers 1, 3, 5, 7 multiplied with wrapping at 
 <details>
 <summary>Detailed proof</summary>
 
-Here $f$ is a homomorphism from $G$ to $H$, and $e$ is the identity of either group.
+Here $`f`$ is a homomorphism from $`G`$ to $`H`$, and $`e`$ is the identity of either group.
 
-**Identity and inverses.** $e * e = e$, so $f(e) = f(e) * f(e)$; combining both sides with the inverse of $f(e)$ leaves $f(e) = e$. And $a * a^{-1} = e$, where $a^{-1}$ combines with $a$ to give the identity, so $f(a) * f(a^{-1}) = e$: inverses are unique, so $f(a^{-1})$ is the inverse of $f(a)$.
+**Identity and inverses.** $`e * e = e`$, so $`f(e) = f(e) * f(e)`$; combining both sides with the inverse of $`f(e)`$ leaves $`f(e) = e`$. And $`a * a^{-1} = e`$, where $`a^{-1}`$ combines with $`a`$ to give the identity, so $`f(a) * f(a^{-1}) = e`$: inverses are unique, so $`f(a^{-1})`$ is the inverse of $`f(a)`$.
 
-**The kernel is a subgroup.** If $f(a) = e$ and $f(b) = e$ then $f(a * b) = e * e = e$, and $f(a^{-1})$ is the inverse of $e$, which is $e$.
+**The kernel is a subgroup.** If $`f(a) = e`$ and $`f(b) = e`$ then $`f(a * b) = e * e = e`$, and $`f(a^{-1})`$ is the inverse of $`e`$, which is $`e`$.
 
-**Collisions.** $f(a) = f(b)$ exactly when $f(a) * f(b)^{-1} = e$, and that left side is $f(a * b^{-1})$: two members collide exactly when $a * b^{-1}$ lies in the kernel, so a kernel holding only $e$ forces $a = b$.
+**Collisions.** $`f(a) = f(b)`$ exactly when $`f(a) * f(b)^{-1} = e`$, and that left side is $`f(a * b^{-1})`$: two members collide exactly when $`a * b^{-1}`$ lies in the kernel, so a kernel holding only $`e`$ forces $`a = b`$.
 
 </details>
 

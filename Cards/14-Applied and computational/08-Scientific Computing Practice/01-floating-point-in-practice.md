@@ -32,7 +32,9 @@ sign   exponent field (11 bits)   fraction field (52 bits)
 
 A **double** (double-precision number) is 64 bits split into three fields. It is the default type for numbers with a fractional part in Python, Rust, JavaScript and spreadsheets.
 
-$$x = (-1)^{s} \times \left(1 + \frac{f}{2^{52}}\right) \times 2^{\,e-1023}$$
+```math
+x = (-1)^{s} \times \left(1 + \frac{f}{2^{52}}\right) \times 2^{\,e-1023}
+```
 
 **Read it aloud:** the sign, times a number between 1 and 2 whose binary digits after the point are the fraction field, times two raised to the exponent field minus 1023.
 
@@ -40,24 +42,26 @@ That is [Scientific notation](../../01-Foundations/03-Powers%2C%20Roots%20and%20
 
 The promise every basic operation keeps, for addition, subtraction, multiplication, division and square root:
 
-$$\mathrm{fl}(a \circ b) = (a \circ b)(1 + \delta), \qquad |\delta| \le u = 2^{-53}$$
+```math
+\mathrm{fl}(a \circ b) = (a \circ b)(1 + \delta), \qquad |\delta| \le u = 2^{-53}
+```
 
 **Read it aloud:** the computed result is the exact result times one plus a tiny relative error, and that error is never bigger than u, one part in 2^53.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | sign bit: 0 for plus, 1 for minus | 0 | flips the sign |
-| $e$ | exponent field, 11 bits, a whole number from 1 to 2046 for ordinary numbers | 1019, so a scale of $2^{-4}$ | each step up doubles the number and doubles the gaps around it |
-| $f$ | fraction field, 52 bits, read as a whole number | 2702159776422298 | the front number $1 + f/2^{52}$ creeps from 1 toward 2 |
-| $E$ | the power of two at or below a number, so the number lies between $2^E$ and $2^{E+1}$ | −4 for 0.1 | gaps double with each step up |
-| $m / 2^k$ | the same double as a 53-bit whole number $m$ over a power of two | 0.1 is 7205759403792794 / $2^{56}$ | — |
-| $\varepsilon_{\text{mach}}$ | machine epsilon: the gap between 1 and the next double, $2^{-52}$ | 2.220e-16 | — |
-| $\mathrm{ulp}(x)$ | unit in the last place: the gap from $x$ to the next double up | 5.551e-17 at 0.3 | doubles at every power of two |
-| $u$ | unit roundoff: half of machine epsilon, $2^{-53}$, the most any one rounding can cost, relative | 1.110e-16 | — |
-| $\mathrm{fl}(a \circ b)$ | the value the machine computes for one basic operation $\circ$ ($+$, $-$, $\times$ or $\div$) on stored numbers $a$ and $b$ | fl(0.1 + 0.2) = 0.30000000000000004 | — |
-| $\delta$ | the relative error of one operation | 9.252e-17, which is 0.8333 $u$ | never past $u$ |
-| $n$ | how many numbers are added in a running sum | 10 and 1,000,000 | the worst-case error grows like $n^2$ for equal terms |
-| $x_i$; $S_i$, $\hat S_i$ | the terms of a sum; the exact and the computed total of the first $i$ | each $x_i$ is 0.1; $\hat S_{10}$ = 0.9999999999999999 | — |
+| $`s`$ | sign bit: 0 for plus, 1 for minus | 0 | flips the sign |
+| $`e`$ | exponent field, 11 bits, a whole number from 1 to 2046 for ordinary numbers | 1019, so a scale of $`2^{-4}`$ | each step up doubles the number and doubles the gaps around it |
+| $`f`$ | fraction field, 52 bits, read as a whole number | 2702159776422298 | the front number $`1 + f/2^{52}`$ creeps from 1 toward 2 |
+| $`E`$ | the power of two at or below a number, so the number lies between $`2^E`$ and $`2^{E+1}`$ | −4 for 0.1 | gaps double with each step up |
+| $`m / 2^k`$ | the same double as a 53-bit whole number $`m`$ over a power of two | 0.1 is 7205759403792794 / $`2^{56}`$ | — |
+| $`\varepsilon_{\text{mach}}`$ | machine epsilon: the gap between 1 and the next double, $`2^{-52}`$ | 2.220e-16 | — |
+| $`\mathrm{ulp}(x)`$ | unit in the last place: the gap from $`x`$ to the next double up | 5.551e-17 at 0.3 | doubles at every power of two |
+| $`u`$ | unit roundoff: half of machine epsilon, $`2^{-53}`$, the most any one rounding can cost, relative | 1.110e-16 | — |
+| $`\mathrm{fl}(a \circ b)`$ | the value the machine computes for one basic operation $`\circ`$ ($`+`$, $`-`$, $`\times`$ or $`\div`$) on stored numbers $`a`$ and $`b`$ | fl(0.1 + 0.2) = 0.30000000000000004 | — |
+| $`\delta`$ | the relative error of one operation | 9.252e-17, which is 0.8333 $`u`$ | never past $`u`$ |
+| $`n`$ | how many numbers are added in a running sum | 10 and 1,000,000 | the worst-case error grows like $`n^2`$ for equal terms |
+| $`x_i`$; $`S_i`$, $`\hat S_i`$ | the terms of a sum; the exact and the computed total of the first $`i`$ | each $`x_i`$ is 0.1; $`\hat S_{10}`$ = 0.9999999999999999 | — |
 
 Relative error, used throughout, is the error divided by the size of the true value: (computed − true) / true. It is what the promise controls. The absolute error (computed − true) grows with the size of the numbers.
 
@@ -105,23 +109,27 @@ At 2^53 the gap reaches 2, so whole numbers stop being exact. 2^53 + 1 is a tie 
 
 ### Step 3: rounding to nearest costs at most half a gap
 
-Take an exact answer $x$ between $2^E$ and $2^{E+1}$. The doubles there are $2^{E-52}$ apart, so the nearest one is at most half that away: $2^{E-53}$. Since $x \ge 2^E$, the relative error is at most
+Take an exact answer $`x`$ between $`2^E`$ and $`2^{E+1}`$. The doubles there are $`2^{E-52}`$ apart, so the nearest one is at most half that away: $`2^{E-53}`$. Since $`x \ge 2^E`$, the relative error is at most
 
-$$\frac{2^{E-53}}{2^E} = 2^{-53} = u.$$
+```math
+\frac{2^{E-53}}{2^E} = 2^{-53} = u.
+```
 
 That is the whole proof of the promise. It needs one more fact: the hardware really computes the exact answer before rounding. The standard requires this, and the code tests it.
 
-It draws 20,000 random sums and products from a seeded generator, one that gives the same numbers on every run ([Seeds](03-reproducible-simulation-and-seeds.md)). For each, it works out the exact answer in whole numbers, rounds it with its own 53-bit rounding, and compares with the hardware. There are 0 disagreements. The worst relative error seen is 0.999585 $u$: close to the bound, never over it.
+It draws 20,000 random sums and products from a seeded generator, one that gives the same numbers on every run ([Seeds](03-reproducible-simulation-and-seeds.md)). For each, it works out the exact answer in whole numbers, rounds it with its own 53-bit rounding, and compares with the hardware. There are 0 disagreements. The worst relative error seen is 0.999585 $`u`$: close to the bound, never over it.
 
 ### Step 4: where rounding shows up
 
 Each operation keeps the promise. Trouble comes from three habits.
 
-**Long sums.** Every addition rounds the running total, and each rounding can cost up to $u$ times the total so far. Add $n$ numbers and the errors can pile up to about
+**Long sums.** Every addition rounds the running total, and each rounding can cost up to $`u`$ times the total so far. Add $`n`$ numbers and the errors can pile up to about
 
-$$(n - 1)\,u\,\sum |x_i|$$
+```math
+(n - 1)\,u\,\sum |x_i|
+```
 
-to first order, which means ignoring the far smaller terms in $u^2$. For 0.1 added $n$ times, $\sum |x_i|$ is $n/10$, so the bound grows like $n^2$. In practice the roundings partly cancel, and the real error stays below the bound at every size:
+to first order, which means ignoring the far smaller terms in $`u^2`$. For 0.1 added $`n`$ times, $`\sum |x_i|`$ is $`n/10`$, so the bound grows like $`n^2`$. In practice the roundings partly cancel, and the real error stays below the bound at every size:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -133,9 +141,9 @@ xychart-beta
     line [-15.00, -12.96, -10.96, -8.95, -6.95, -4.95]
 ```
 
-Orange: the measured error, against the exact sum of the stored 0.1s. Green: the bound $(n-1)\,u\,(n/10)$. Each tenfold step in $n$ costs about two decimal digits of accuracy, as the $n^2$ predicts. After a million additions the total reads 100000.00000133288, off by 1.333e-6.
+Orange: the measured error, against the exact sum of the stored 0.1s. Green: the bound $`(n-1)\,u\,(n/10)`$. Each tenfold step in $`n`$ costs about two decimal digits of accuracy, as the $`n^2`$ predicts. After a million additions the total reads 100000.00000133288, off by 1.333e-6.
 
-**Long products.** Multiplication is gentler. Relative errors add, so $n$ multiplications cost at most about $n\,u$, whatever the sizes. The [Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md) balance, 100 × 1.05 ten times, comes out 162.8894626777442. Its relative error is 3.59 $u$, inside the roughly 20 $u$ allowed: one rounding for storing 1.05, counted ten times over, plus ten multiplications.
+**Long products.** Multiplication is gentler. Relative errors add, so $`n`$ multiplications cost at most about $`n\,u`$, whatever the sizes. The [Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md) balance, 100 × 1.05 ten times, comes out 162.8894626777442. Its relative error is 3.59 $`u`$, inside the roughly 20 $`u`$ allowed: one rounding for storing 1.05, counted ten times over, plus ten multiplications.
 
 **Comparisons.** Two routes to the same true number round differently, so `==` fails even when both are accurate. 0.1 + 0.2 and the stored 0.3 are one ulp apart.
 
@@ -144,7 +152,7 @@ Subtracting two nearly equal numbers is the other trap. It keeps the inputs' abs
 <details>
 <summary>Detailed proof: the bound on a running sum</summary>
 
-Write $S_i$ for the exact sum of the first $i$ terms and $\hat S_i$ for the computed one, with $\hat S_1 = x_1$. Each step computes $\hat S_i = (\hat S_{i-1} + x_i)(1 + \delta_i)$ with $|\delta_i| \le u$. Unroll the steps. Term $x_1$ is multiplied by $(1+\delta_2)\cdots(1+\delta_n)$, and term $x_i$ by the $n - i + 1$ factors from step $i$ on. A product of $j$ such factors lies within $j\,u + O(u^2)$ of 1, where $O(u^2)$ stands for terms about as small as $u^2$. So the computed sum is the exact sum plus a sum of terms, each at most $(n-1)\,u\,|x_i|$ to first order. Adding them gives $|\hat S_n - S_n| \le (n-1)\,u \sum |x_i| + O(u^2)$. The code checks the first-order bound at all six sizes.
+Write $`S_i`$ for the exact sum of the first $`i`$ terms and $`\hat S_i`$ for the computed one, with $`\hat S_1 = x_1`$. Each step computes $`\hat S_i = (\hat S_{i-1} + x_i)(1 + \delta_i)`$ with $`|\delta_i| \le u`$. Unroll the steps. Term $`x_1`$ is multiplied by $`(1+\delta_2)\cdots(1+\delta_n)`$, and term $`x_i`$ by the $`n - i + 1`$ factors from step $`i`$ on. A product of $`j`$ such factors lies within $`j\,u + O(u^2)`$ of 1, where $`O(u^2)`$ stands for terms about as small as $`u^2`$. So the computed sum is the exact sum plus a sum of terms, each at most $`(n-1)\,u\,|x_i|`$ to first order. Adding them gives $`|\hat S_n - S_n| \le (n-1)\,u \sum |x_i| + O(u^2)`$. The code checks the first-order bound at all six sizes.
 
 </details>
 
@@ -164,11 +172,11 @@ Write $S_i$ for the exact sum of the first $i$ terms and $\hat S_i$ for the comp
 | tie to even | 5404319552844595 is odd, so round up | 5404319552844596 / 2^54 |
 | stored 0.3, for comparison | the nearest double to 3/10 | 5404319552844595 / 2^54 |
 | **the result** | one step above stored 0.3 | **0.3000000000000000444089209850062616169452667236328125** |
-| relative error of the add | (result − exact sum) / exact sum | 9.252e-17, which is 0.8333 $u$ |
+| relative error of the add | (result − exact sum) / exact sum | 9.252e-17, which is 0.8333 $`u`$ |
 
 Python prints the shortest decimal that reads back to the same double. "0.3" already names the double below, so the sum needs 17 digits: 0.30000000000000004.
 
-The add kept its promise: 0.8333 $u$ is under $u$. The `==` test failed anyway. Rounding 0.1 and 0.2 on the way in left their exact sum exactly halfway between two doubles, and the tie rule sent it up.
+The add kept its promise: 0.8333 $`u`$ is under $`u`$. The `==` test failed anyway. Rounding 0.1 and 0.2 on the way in left their exact sum exactly halfway between two doubles, and the tie rule sent it up.
 
 ### What breaks if you drop a piece
 
@@ -592,13 +600,13 @@ The two outputs are identical, down to the last digit of the random test. That i
 
 ### Lean
 
-Lean proves the promise for results in the ordinary range, the $2^{53}$ limit on whole numbers, and the 0.1 + 0.2 tie.
+Lean proves the promise for results in the ordinary range, the $`2^{53}`$ limit on whole numbers, and the 0.1 + 0.2 tie.
 
-- Take stored numbers $a$ and $b$, an operation $\circ$ among $+$, $-$, $\times$ and $\div$, and an exact answer in the ordinary range. Then every nearest double to $a \circ b$ equals $(a \circ b)(1 + \delta)$, with $|\delta| \le u$.
-- Every whole number from $-2^{53}$ to $2^{53}$ is a double, but $2^{53} + 1$ is not.
+- Take stored numbers $`a`$ and $`b`$, an operation $`\circ`$ among $`+`$, $`-`$, $`\times`$ and $`\div`$, and an exact answer in the ordinary range. Then every nearest double to $`a \circ b`$ equals $`(a \circ b)(1 + \delta)`$, with $`|\delta| \le u`$.
+- Every whole number from $`-2^{53}`$ to $`2^{53}`$ is a double, but $`2^{53} + 1`$ is not.
 - The stored 0.1, 0.2 and 0.3 are nearest doubles to one tenth, two tenths and three tenths.
 - The exact sum of the stored 0.1 and 0.2 has exactly two nearest doubles: the stored 0.3 and the next double up. So it sits on a tie.
-- Lean also checks the hand-worked numbers: the bits of 0.1, the 2 dropped bits, and the add's error under $u$.
+- Lean also checks the hand-worked numbers: the bits of 0.1, the 2 dropped bits, and the add's error under $`u`$.
 
 The tie rule's choice, the 20,000 random tests and the running-sum bound are left to the Python and Rust checks.
 
@@ -1108,7 +1116,7 @@ end FloatingPointInPractice
 ## Where you meet it in real life
 
 - **This library's check scripts.** Each card's Python and Rust outputs match line for line because both follow the same round-to-nearest-even rule. An assert that compares two routes to one value uses a tolerance. It uses `==` only where the rounding rule makes the answer exact, as in this card's bit-level checks. How the scripts are built is [The check script](07-writing-a-check-script.md). Why a test needs two roads is [Two roads and a mutation](06-testing-numerical-code-two-roads-and-mutations.md).
-- **Spreadsheets.** A column of prices that should total 0 can show a tiny remainder, a few units of $u$ times the size of the totals. That is the long-sum error above, not a formula bug.
+- **Spreadsheets.** A column of prices that should total 0 can show a tiny remainder, a few units of $`u`$ times the size of the totals. That is the long-sum error above, not a formula bug.
 - **JavaScript and JSON.** Every JavaScript number is a double. A database ID above 2^53 can come back changed by one, because the ID landed in a gap.
 - **Games and maps.** Positions far from the origin sit where the ulp is large. Objects there jitter, because their coordinates can only move in coarse steps.
 

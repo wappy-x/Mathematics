@@ -43,32 +43,36 @@ The upper line is the 5 percent account, the lower one an 8 percent account. Bot
 
 ## The formula
 
-Two pieces of notation, in words before they are used. The discount factor for a payment $T$ years away is written $D(T)$, said "D of T": one letter with the waiting time in brackets, the way a function is written.
+Two pieces of notation, in words before they are used. The discount factor for a payment $`T`$ years away is written $`D(T)`$, said "D of T": one letter with the waiting time in brackets, the way a function is written.
 
-A small numeral set low and to the right of a rate says how many times a year the interest is added. So $r_1$ is the quote for interest added once a year, and a 2 in that place would mean twice a year. The letter $m$ holds that place when the count is left open, and the c in $r_c$ stands for continuous.
+A small numeral set low and to the right of a rate says how many times a year the interest is added. So $`r_1`$ is the quote for interest added once a year, and a 2 in that place would mean twice a year. The letter $`m`$ holds that place when the count is left open, and the c in $`r_c`$ stands for continuous.
 
-$$D(T) \;=\; \frac{1}{(1+r_1)^{T}} \;=\; \left(1 + \frac{r_m}{m}\right)^{-mT} \;=\; e^{-r_c T}$$
+```math
+D(T) \;=\; \frac{1}{(1+r_1)^{T}} \;=\; \left(1 + \frac{r_m}{m}\right)^{-mT} \;=\; e^{-r_c T}
+```
 
-**Read it aloud:** one unit of money due $T$ years from now costs, today, one unit divided by whatever the account grows to over those $T$ years — and the three expressions are three ways of writing that same growth.
+**Read it aloud:** one unit of money due $`T`$ years from now costs, today, one unit divided by whatever the account grows to over those $`T`$ years — and the three expressions are three ways of writing that same growth.
 
 | Symbol | Plain meaning | In our example | Push it up and the deposit… |
 | --- | --- | --- | --- |
-| $D(T)$ | the discount factor: today's price of one unit paid at $T$ | 0.7835261665 | — |
-| $T$ | time from today to the payment, counted in years | 5 | falls: 613.91 per 1,000 at ten years |
-| $r_1$ | the quote when interest is added once a year | 5.000000 percent | falls: 680.58 per 1,000 at 8 percent |
-| $r_m$ | the quote when interest is added $m$ times a year | 4.939015 percent at $m$ = 2 | falls, for the same reason |
-| $m$ | how many times a year the interest is added | twice a year, monthly, daily | barely moves: the quotes crowd toward one floor |
-| $A$ | the growth factor over the wait: what one unit in the bank becomes by the date | 1.05 multiplied in five times | falls: growth and discount are reciprocals |
-| $r_c$ | the continuous quote: interest added at every instant | 4.879016 percent | falls |
-| $e$ | the number the continuous convention is built on: what one unit grows to in a year at 100 percent added at every instant, from [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md) | — | — |
-| $C$ | a cash amount due on a stated later date | 1000.00 | rises in step: the deposit scales with it |
-| $P$ | today's price of a whole stream of dated cash amounts | 1043.29 for the bond below | — |
+| $`D(T)`$ | the discount factor: today's price of one unit paid at $`T`$ | 0.7835261665 | — |
+| $`T`$ | time from today to the payment, counted in years | 5 | falls: 613.91 per 1,000 at ten years |
+| $`r_1`$ | the quote when interest is added once a year | 5.000000 percent | falls: 680.58 per 1,000 at 8 percent |
+| $`r_m`$ | the quote when interest is added $`m`$ times a year | 4.939015 percent at $`m`$ = 2 | falls, for the same reason |
+| $`m`$ | how many times a year the interest is added | twice a year, monthly, daily | barely moves: the quotes crowd toward one floor |
+| $`A`$ | the growth factor over the wait: what one unit in the bank becomes by the date | 1.05 multiplied in five times | falls: growth and discount are reciprocals |
+| $`r_c`$ | the continuous quote: interest added at every instant | 4.879016 percent | falls |
+| $`e`$ | the number the continuous convention is built on: what one unit grows to in a year at 100 percent added at every instant, from [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md) | — | — |
+| $`C`$ | a cash amount due on a stated later date | 1000.00 | rises in step: the deposit scales with it |
+| $`P`$ | today's price of a whole stream of dated cash amounts | 1043.29 for the bond below | — |
 
 Two quotes describe the same money when they grow one unit to the same place in one year. Setting those growths equal and solving gives the conversion pair:
 
-$$r_c = m\,\ln\!\left(1 + \frac{r_m}{m}\right), \qquad r_m = m\left(e^{r_c/m} - 1\right)$$
+```math
+r_c = m\,\ln\!\left(1 + \frac{r_m}{m}\right), \qquad r_m = m\left(e^{r_c/m} - 1\right)
+```
 
-In words: to put a quote onto the continuous label, work out the growth it actually delivers in a year and take its natural logarithm. The natural logarithm is the operation that undoes $e$ raised to a power. To come back, undo the logarithm. Run on the town's account, the pair gives every label below.
+In words: to put a quote onto the continuous label, work out the growth it actually delivers in a year and take its natural logarithm. The natural logarithm is the operation that undoes $`e`$ raised to a power. To come back, undo the logarithm. Run on the town's account, the pair gives every label below.
 
 | The council's 5 percent, quoted as | The same money, same deposit |
 | --- | --- |
@@ -78,9 +82,9 @@ In words: to put a quote onto the continuous label, work out the growth it actua
 | daily | 4.879343 percent |
 | continuously | 4.879016 percent |
 
-**Conventions verified 14 Sep 2026.** Quoting is a market habit, and habits are dated. The United States Treasury publishes its yield curve, the rate for each length of loan, on a bond-equivalent, semi-annual basis. The printed rate is halved and applied twice a year. So it is not the effective annual growth, and it must be converted before it is used as $r_1$.
+**Conventions verified 14 Sep 2026.** Quoting is a market habit, and habits are dated. The United States Treasury publishes its yield curve, the rate for each length of loan, on a bond-equivalent, semi-annual basis. The printed rate is halved and applied twice a year. So it is not the effective annual growth, and it must be converted before it is used as $`r_1`$.
 
-Derivative desks convert everything to $r_c$ first, because only the continuous label lets exponents be added. Day-count rules decide what counts as a year in the first place, and those live on [Day counts](02-day-counts-and-dates.md).
+Derivative desks convert everything to $`r_c`$ first, because only the continuous label lets exponents be added. Day-count rules decide what counts as a year in the first place, and those live on [Day counts](02-day-counts-and-dates.md).
 
 ### When it holds
 
@@ -113,22 +117,24 @@ Nothing has happened to the money. All five conventions in the check produce the
 
 The drops shrink fast. Going from once a year to twice moves the quote most; twice to monthly moves it less; monthly to daily less again.
 
-The quotes are crowding down onto a floor, and the floor is 4.879016 percent. That floor is the continuous quote $r_c$, and it is exactly the natural logarithm of one year's growth ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)). Written forward, growth over $T$ years is $e$ raised to $r_c T$; written backwards, the factor is $e$ raised to minus $r_c T$.
+The quotes are crowding down onto a floor, and the floor is 4.879016 percent. That floor is the continuous quote $`r_c`$, and it is exactly the natural logarithm of one year's growth ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)). Written forward, growth over $`T`$ years is $`e`$ raised to $`r_c T`$; written backwards, the factor is $`e`$ raised to minus $`r_c T`$.
 
 <details>
 <summary>The algebra behind the floor</summary>
 
-Interest added $m$ times a year at quote $r_m$ grows one unit to $(1 + r_m/m)^m$ in a year. Take the natural logarithm and the power becomes a product: $m\ln(1 + r_m/m)$. For a small $x$, $\ln(1+x) = x - x^2/2 + x^3/3 - \cdots$, so with $x = r_m/m$,
-$$m\ln\!\left(1+\frac{r_m}{m}\right) = r_m - \frac{r_m^2}{2m} + \frac{r_m^3}{3m^2} - \cdots$$
-Every term after the first carries an $m$ underneath, so as $m$ grows the whole tail is squeezed to nothing and the expression settles on $r_m$. Read the other way round — fixing the growth and letting $m$ rise — the quote needed slides down to the logarithm of that growth, and stops there. The check runs the interest added once a year, twice a year, monthly and daily, and prints the four quotes crowding down.
+Interest added $`m`$ times a year at quote $`r_m`$ grows one unit to $`(1 + r_m/m)^m`$ in a year. Take the natural logarithm and the power becomes a product: $`m\ln(1 + r_m/m)`$. For a small $`x`$, $`\ln(1+x) = x - x^2/2 + x^3/3 - \cdots`$, so with $`x = r_m/m`$,
+
+$`\displaystyle m\ln\!\left(1+\frac{r_m}{m}\right) = r_m - \frac{r_m^2}{2m} + \frac{r_m^3}{3m^2} - \cdots`$
+
+Every term after the first carries an $`m`$ underneath, so as $`m`$ grows the whole tail is squeezed to nothing and the expression settles on $`r_m`$. Read the other way round — fixing the growth and letting $`m`$ rise — the quote needed slides down to the logarithm of that growth, and stops there. The check runs the interest added once a year, twice a year, monthly and daily, and prints the four quotes crowding down.
 
 </details>
 
 ### Step 4: factors multiply, so a dated stream is one sum
 
-The one-year factor multiplied in five times is the five-year factor. On the continuous label that is the exponent law: $e$ raised to one exponent times $e$ raised to another is $e$ raised to their sum. That is why desks convert to $r_c$ before touching anything with more than one date.
+The one-year factor multiplied in five times is the five-year factor. On the continuous label that is the exponent law: $`e`$ raised to one exponent times $`e`$ raised to another is $`e`$ raised to their sum. That is why desks convert to $`r_c`$ before touching anything with more than one date.
 
-So a contract paying on several dates needs no new idea. A cash amount $C$ due at $T$ is worth $C$ times $D(T)$ today, and the price $P$ of a whole stream is those products added up, one per date. That is the whole of the shelf's bond, and the whole of [NPV and IRR](04-net-present-value-and-irr.md) (net present value and internal rate of return).
+So a contract paying on several dates needs no new idea. A cash amount $`C`$ due at $`T`$ is worth $`C`$ times $`D(T)`$ today, and the price $`P`$ of a whole stream is those products added up, one per date. That is the whole of the shelf's bond, and the whole of [NPV and IRR](04-net-present-value-and-irr.md) (net present value and internal rate of return).
 
 <details>
 <summary>Detailed proof: why a certain payment must trade at this price</summary>
@@ -137,30 +143,30 @@ Step 0 fixes the cost of funding a promise. It does not by itself fix the price 
 
 Suppose three things:
 
-- a promise to pay one unit on the date can be bought or sold in either direction at the quoted price $z$;
-- the bank lends and borrows on the same schedule, growing one unit by the factor $A$ over the wait, so that $D = 1/A$;
+- a promise to pay one unit on the date can be bought or sold in either direction at the quoted price $`z`$;
+- the bank lends and borrows on the same schedule, growing one unit by the factor $`A`$ over the wait, so that $`D = 1/A`$;
 - no trade is available that costs nothing today and is certain to pay something later.
 
-If $z > D$: sell the promise for $z$ and deposit all of it. Today's cashflow is $z - z = 0$. On the date the deposit has grown by the factor $A$ and one unit is owed, leaving $zA - 1 = (z - D)A$, which is positive. Something from nothing.
+If $`z > D`$: sell the promise for $`z`$ and deposit all of it. Today's cashflow is $`z - z = 0`$. On the date the deposit has grown by the factor $`A`$ and one unit is owed, leaving $`zA - 1 = (z - D)A`$, which is positive. Something from nothing.
 
-If $z < D$: borrow $z$ and buy the promise. Today's cashflow is $z - z = 0$ again. On the date one unit arrives, the loan has grown by that same factor $A$, and the balance left is $1 - zA = (D - z)A$, positive again.
+If $`z < D`$: borrow $`z`$ and buy the promise. Today's cashflow is $`z - z = 0`$ again. On the date one unit arrives, the loan has grown by that same factor $`A`$, and the balance left is $`1 - zA = (D - z)A`$, positive again.
 
-Both are ruled out by assumption, and the only remaining case is $z = D$.
+Both are ruled out by assumption, and the only remaining case is $`z = D`$.
 
-Conversely, in this two-instrument market any holding of promises and bank balance costs some amount today and pays exactly $A$ times that amount on the date. So a position costing nothing today pays nothing later: there is no such trade to find. The argument needs the payment certain and sellable in both directions. It proves nothing about a defaultable promise, and nothing about a larger market.
+Conversely, in this two-instrument market any holding of promises and bank balance costs some amount today and pays exactly $`A`$ times that amount on the date. So a position costing nothing today pays nothing later: there is no such trade to find. The argument needs the payment certain and sellable in both directions. It proves nothing about a defaultable promise, and nothing about a larger market.
 
 </details>
 
 A second road skips rates entirely. A traded price for a payment on that date *is* the factor, once divided by the size of the payment. Rates are then read out of prices rather than fed into them. That is the inverse direction, done properly on [Yield from price](07-yield-from-price.md).
 
-That reading back always works, and works only one way. Over a wait $T$ longer than zero, $e^{-r_c T}$ falls strictly as $r_c$ rises, and on the way down it passes through every positive number exactly once. So a positive factor names one continuous rate and no other: $r_c$ is minus the natural logarithm of $D(T)$, divided by $T$.
+That reading back always works, and works only one way. Over a wait $`T`$ longer than zero, $`e^{-r_c T}`$ falls strictly as $`r_c`$ rises, and on the way down it passes through every positive number exactly once. So a positive factor names one continuous rate and no other: $`r_c`$ is minus the natural logarithm of $`D(T)`$, divided by $`T`$.
 
 The boundaries follow from the same sweep:
 
 - A factor of exactly 1 means a rate of 0.
 - A factor above 1 means a rate below 0, the shrinking account of a negative-rate market.
 - A factor of zero or less names no rate at all, because a positive deposit never grows to nothing.
-- At $T$ = 0 the factor is 1 whatever the rate, so a payment due today fixes no rate.
+- At $`T`$ = 0 the factor is 1 whatever the rate, so a payment due today fixes no rate.
 
 The check does the small version: 0.7835261665 goes in, 4.879016 percent comes back.
 
@@ -643,12 +649,12 @@ The two outputs match line for line, from series written out twice in two langua
 
 Lean proves the formula, the rate read back and the promise's price in general, and the card's cents at 5 percent.
 
-- Suppose $m$ is at least 1, each period's growth is positive, and the three quotes grow one unit to the same place in a year. Then, for every wait $T$, the three ways of writing $D(T)$ give the same number.
-- Under the same conditions, both halves of the conversion pair hold, from $r_m$ to $r_c$ and back.
-- Take a wait $T$ longer than zero. Then $e^{-r_c T}$ falls strictly as $r_c$ rises.
-- Take a wait $T$ longer than zero and a positive factor $D(T)$. Then $r_c$ is minus the natural logarithm of $D(T)$, divided by $T$, and no other rate gives it.
+- Suppose $`m`$ is at least 1, each period's growth is positive, and the three quotes grow one unit to the same place in a year. Then, for every wait $`T`$, the three ways of writing $`D(T)`$ give the same number.
+- Under the same conditions, both halves of the conversion pair hold, from $`r_m`$ to $`r_c`$ and back.
+- Take a wait $`T`$ longer than zero. Then $`e^{-r_c T}`$ falls strictly as $`r_c`$ rises.
+- Take a wait $`T`$ longer than zero and a positive factor $`D(T)`$. Then $`r_c`$ is minus the natural logarithm of $`D(T)`$, divided by $`T`$, and no other rate gives it.
 - Over such a wait, a factor of zero or less names no rate, a factor of exactly 1 means 0, and above 1 means below 0.
-- Suppose promises of one unit trade both ways at price $z$, and the bank lends and borrows at a positive growth factor $A$. Then no trade costing nothing today pays a positive amount on the date, exactly when $z = 1/A$.
+- Suppose promises of one unit trade both ways at price $`z`$, and the bank lends and borrows at a positive growth factor $`A`$. Then no trade costing nothing today pays a positive amount on the date, exactly when $`z = 1/A`$.
 - The five-year factor at 5 percent is exactly 20 to the fifth over 21 to the fifth, and rounds to 0.7835261665.
 - The deposits land on the card's cents: 783.53 for the bill, grown back to 1000.00, and every deposit in the two bar charts.
 - Added date by date or with the coupons as one block, the bond's price is exactly the same, and rounds to 1043.29.
@@ -880,7 +886,7 @@ example : (13665 / 2 : ℚ) ≤ 5354 * (105 / 100) ^ 5 ∧
 > [!warning]
 > **Treating a rate as a number instead of a label.** "5 percent" is not money until the convention is attached. The same account is 5.000000 percent annual, 4.939015 percent semi-annual and 4.879016 percent continuous, and all three fund the bill with the same 783.53. Two quotes can only be compared after both are converted to the same convention; comparing the printed numbers compares nothing.
 >
-> - **Feeding an annual quote into a continuous formula.** Option and swap formulas want $r_c$. Putting 5.000000 percent where 4.879016 percent belongs sets aside 778.80 for a bill that then needs 1000.00, and the account arrives holding 993.97.
+> - **Feeding an annual quote into a continuous formula.** Option and swap formulas want $`r_c`$. Putting 5.000000 percent where 4.879016 percent belongs sets aside 778.80 for a bill that then needs 1000.00, and the account arrives holding 993.97.
 > - **Halving a nominal quote and calling it equivalent.** A nominal rate split across two payments a year grows faster than its printed number. The deposit comes out at 781.20 rather than 783.53.
 > - **Mixing the time unit.** The quote is per year, so the waiting time is in years. Sixty months fed in as sixty periods gives 53.54.
 > - **Reading the factor as a probability.** It sits between 0 and 1 and it is not a chance of anything. It is a price, and in a market where rates go negative it climbs above 1: a deposit larger than the bill, because the account shrinks while it waits.
@@ -904,11 +910,11 @@ example : (13665 / 2 : ℚ) ≤ 5354 * (105 / 100) ^ 5 ∧
 
 - [Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md): why interest left in makes growth a multiply per period rather than a fixed step.
 - [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): running that growth backwards to value one future amount today.
-- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the ceiling that paying more often runs into, and the number $e$ that names it.
+- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the ceiling that paying more often runs into, and the number $`e`$ that names it.
 
 ## Where this goes next
 
-- [Day counts](02-day-counts-and-dates.md): what a market counts as a year, so that $T$ can be filled in from two calendar dates.
+- [Day counts](02-day-counts-and-dates.md): what a market counts as a year, so that $`T`$ can be filled in from two calendar dates.
 - [Annuities](03-annuities-and-loans.md): a run of equal payments, with the factors collapsed into one block as in the last row of the worked table.
 - [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md): a different rate for every maturity, and the rate for a stretch that starts later.
 - [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the two trades in the folded proof run on a physical asset instead of a promise.

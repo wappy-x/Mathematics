@@ -39,15 +39,21 @@ Orange line: the call. Green line: the put. Dark line: zero. Both are most negat
 
 ## The formula
 
-Notation first. A **partial derivative** measures how one quantity changes when a single input moves and all the others stay fixed; it is written with a curly $\partial V/\partial t$ ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Theta is the partial derivative of the option price with respect to today's date:
+Notation first. A **partial derivative** measures how one quantity changes when a single input moves and all the others stay fixed; it is written with a curly $`\partial V/\partial t`$ ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Theta is the partial derivative of the option price with respect to today's date:
 
-$$\Theta = \frac{\partial V}{\partial t} = -\frac{\partial V}{\partial T}$$
+```math
+\Theta = \frac{\partial V}{\partial t} = -\frac{\partial V}{\partial T}
+```
 
-The date $t$ moves forward while the time left $T$ shrinks at the same speed, which is where the minus sign comes from. For a European call and put on a share paying a continuous dividend yield, differentiating the Black-Scholes prices gives
+The date $`t`$ moves forward while the time left $`T`$ shrinks at the same speed, which is where the minus sign comes from. For a European call and put on a share paying a continuous dividend yield, differentiating the Black-Scholes prices gives
 
-$$\Theta_C = -\frac{S e^{-qT}\,\phi(d_1)\,\sigma}{2\sqrt{T}} \;+\; q\,S e^{-qT} N(d_1) \;-\; r\,K e^{-rT} N(d_2)$$
+```math
+\Theta_C = -\frac{S e^{-qT}\,\phi(d_1)\,\sigma}{2\sqrt{T}} \;+\; q\,S e^{-qT} N(d_1) \;-\; r\,K e^{-rT} N(d_2)
+```
 
-$$\Theta_P = -\frac{S e^{-qT}\,\phi(d_1)\,\sigma}{2\sqrt{T}} \;-\; q\,S e^{-qT} N(-d_1) \;+\; r\,K e^{-rT} N(-d_2)$$
+```math
+\Theta_P = -\frac{S e^{-qT}\,\phi(d_1)\,\sigma}{2\sqrt{T}} \;-\; q\,S e^{-qT} N(-d_1) \;+\; r\,K e^{-rT} N(-d_2)
+```
 
 **Read it aloud:** a day costs the holder a slice of the option's uncertainty, then the two carry terms settle up for the dividends and the interest on the strike that one day nearer expiry changes.
 
@@ -59,34 +65,36 @@ The three terms, in plain words:
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Theta$, $\Theta_C$, $\Theta_P$, $\partial V/\partial t$ | theta (of the call, of the put): the price's rate of change against the calendar, dollars per year | call −5.089319, put −2.293569 | — |
-| $V$, $C$, $P$ | the option's price; $C$ for the call, $P$ for the put | 9.227006 and 6.330081 | — |
-| $t$, $T$ | today's date; the time left to expiry in years | $T$ = 1 | theta grows in size near expiry, at the strike |
-| $S$ | Acme's share price today, frozen while theta is taken | $100 | moves the option away from or toward the strike |
-| $K$ | the strike | $100 | the put's theta turns positive above $120.04 |
-| $r$ | the riskless interest rate, continuously compounded | 5% | call theta falls, put theta rises |
-| $q$ | the dividend yield: the share's payouts as a yearly fraction of its price | 2% | call theta rises, put theta falls |
-| $\sigma$ | volatility: the yearly spread of the share's log price | 20% | the volatility term grows in size |
-| $d_1$, $d_2$ | distances from the strike in units of $\sigma\sqrt{T}$ | 0.25 and 0.05 | — |
-| $N$, $\phi$ | the bell curve's area to the left of a point; the bell curve's height at a point | $N(d_1)$ = 0.598706, $\phi(d_1)$ = 0.386668 | — |
-| $\Delta$, $\Gamma$ | delta, the price's slope against $S$; gamma, the slope of delta | 0.586851 and 0.018951 | larger $\Gamma$, larger rent |
-| $e^{-rT}$, $e^{-qT}$ | the discount on cash due at expiry; the share's dividend drag | 0.951229 and 0.980199 | — |
+| $`\Theta`$, $`\Theta_C`$, $`\Theta_P`$, $`\partial V/\partial t`$ | theta (of the call, of the put): the price's rate of change against the calendar, dollars per year | call −5.089319, put −2.293569 | — |
+| $`V`$, $`C`$, $`P`$ | the option's price; $`C`$ for the call, $`P`$ for the put | 9.227006 and 6.330081 | — |
+| $`t`$, $`T`$ | today's date; the time left to expiry in years | $`T`$ = 1 | theta grows in size near expiry, at the strike |
+| $`S`$ | Acme's share price today, frozen while theta is taken | $100 | moves the option away from or toward the strike |
+| $`K`$ | the strike | $100 | the put's theta turns positive above $120.04 |
+| $`r`$ | the riskless interest rate, continuously compounded | 5% | call theta falls, put theta rises |
+| $`q`$ | the dividend yield: the share's payouts as a yearly fraction of its price | 2% | call theta rises, put theta falls |
+| $`\sigma`$ | volatility: the yearly spread of the share's log price | 20% | the volatility term grows in size |
+| $`d_1`$, $`d_2`$ | distances from the strike in units of $`\sigma\sqrt{T}`$ | 0.25 and 0.05 | — |
+| $`N`$, $`\phi`$ | the bell curve's area to the left of a point; the bell curve's height at a point | $`N(d_1)`$ = 0.598706, $`\phi(d_1)`$ = 0.386668 | — |
+| $`\Delta`$, $`\Gamma`$ | delta, the price's slope against $`S`$; gamma, the slope of delta | 0.586851 and 0.018951 | larger $`\Gamma`$, larger rent |
+| $`e^{-rT}`$, $`e^{-qT}`$ | the discount on cash due at expiry; the share's dividend drag | 0.951229 and 0.980199 | — |
 
 The helpers, as on the pilot [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \phi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \phi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}
+```
 
-$d_2$ is how far above the strike the share is expected to finish, in units of its spread $\sigma\sqrt{T}$; $d_1$ sits one unit higher. $\phi$ is the height of the bell curve, the slope of $N$.
+$`d_2`$ is how far above the strike the share is expected to finish, in units of its spread $`\sigma\sqrt{T}`$; $`d_1`$ sits one unit higher. $`\phi`$ is the height of the bell curve, the slope of $`N`$.
 
-Theta comes out per year, because $T$ is in years. Dividing by 365 gives the call's −0.013943 per calendar day, the 1.4 cents of the overview.
+Theta comes out per year, because $`T`$ is in years. Dividing by 365 gives the call's −0.013943 per calendar day, the 1.4 cents of the overview.
 
 **Conventions, as of 2026-09-19:** most option screens divide by 365 calendar days; some desks divide by 252 trading days, which quotes the same call at −0.020196. Check which divisor a quote uses before comparing two of them.
 
 ### When it holds
 
-- **The Black-Scholes world: constant volatility, rate and dividend yield.** If implied volatility (the $\sigma$ the market prices) drifts as expiry nears, the overnight change is theta plus vega times the volatility move ([Vega](03-vega.md)).
-- **The share price frozen.** Theta is one partial derivative. A real day also moves $S$, and the full change needs delta and gamma as well ([The Greeks together](09-greeks-together-taylor-pnl.md)).
-- **European exercise.** The positive theta of a deep put relies on the holder being unable to exercise early. Where early exercise is optimal, an American put is worth $K - S$ whatever the date, so its theta is zero.
+- **The Black-Scholes world: constant volatility, rate and dividend yield.** If implied volatility (the $`\sigma`$ the market prices) drifts as expiry nears, the overnight change is theta plus vega times the volatility move ([Vega](03-vega.md)).
+- **The share price frozen.** Theta is one partial derivative. A real day also moves $`S`$, and the full change needs delta and gamma as well ([The Greeks together](09-greeks-together-taylor-pnl.md)).
+- **European exercise.** The positive theta of a deep put relies on the holder being unable to exercise early. Where early exercise is optimal, an American put is worth $`K - S`$ whatever the date, so its theta is zero.
 - **A continuous dividend yield.** A share paying lumpy cash dividends makes the dividend term jump around the ex-dividend dates (the days the share stops carrying its next dividend) instead of accruing smoothly.
 - **A small step.** Theta is a slope. Over one day the slope and the actual repricing differ by under a thousandth of a cent at the house market (−0.013943 against −0.013952); over a month near expiry they do not agree.
 
@@ -96,52 +104,60 @@ Theta comes out per year, because $T$ is in years. Dividing by 365 gives the cal
 
 ### Step 0: the price depends on time only through the time left
 
-Nothing in the Black-Scholes price mentions the date itself. It mentions $T$, the time left. So theta is minus the slope against $T$, and the whole derivation is one differentiation of the price formula, done carefully.
+Nothing in the Black-Scholes price mentions the date itself. It mentions $`T`$, the time left. So theta is minus the slope against $`T`$, and the whole derivation is one differentiation of the price formula, done carefully.
 
 ### Step 1: split the call into two payments
 
 The pilot card writes the call as a share half minus a cash half:
 
-$$C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)$$
+```math
+C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)
+```
 
 Each half is a product: a discounted amount times a probability. The product rule (the slope of a product is each factor's slope times the other factor, added) gives two pieces from each half. One piece comes from the discount changing, the other from the probability changing.
 
 ### Step 2: the discounts give the two carry terms
 
-Shortening $T$ by a little shrinks the dividend drag's effect: $S e^{-qT}$ grows at rate $q$. The discounted strike $K e^{-rT}$ grows at rate $r$. Carried through with the minus sign from Step 0, these give $+qSe^{-qT}N(d_1)$ and $-rKe^{-rT}N(d_2)$ in the call's theta. Neither involves volatility. Both appear in a forward contract (an agreement to buy the share at the strike on the expiry date), which has no uncertainty cost at all.
+Shortening $`T`$ by a little shrinks the dividend drag's effect: $`S e^{-qT}`$ grows at rate $`q`$. The discounted strike $`K e^{-rT}`$ grows at rate $`r`$. Carried through with the minus sign from Step 0, these give $`+qSe^{-qT}N(d_1)`$ and $`-rKe^{-rT}N(d_2)`$ in the call's theta. Neither involves volatility. Both appear in a forward contract (an agreement to buy the share at the strike on the expiry date), which has no uncertainty cost at all.
 
 ### Step 3: the probabilities collapse into one volatility term
 
-Changing $T$ also moves $d_1$ and $d_2$, and so moves both probabilities. This looks like two messy terms. It is one, because of an identity from the pilot's Step 3: the two halves have equal bell-curve weight at the boundary,
+Changing $`T`$ also moves $`d_1`$ and $`d_2`$, and so moves both probabilities. This looks like two messy terms. It is one, because of an identity from the pilot's Step 3: the two halves have equal bell-curve weight at the boundary,
 
-$$S e^{-qT}\,\phi(d_1) = K e^{-rT}\,\phi(d_2).$$
+```math
+S e^{-qT}\,\phi(d_1) = K e^{-rT}\,\phi(d_2).
+```
 
-With that identity, the two probability pieces combine into a common factor times the change in $d_1 - d_2$. And $d_1 - d_2$ is $\sigma\sqrt{T}$, whose slope against $T$ is $\sigma/(2\sqrt{T})$. So the probability pieces reduce to $S e^{-qT}\phi(d_1)\,\sigma/(2\sqrt{T})$, which becomes the volatility term after the sign flip. It is negative for every holder, call or put. The share has one day less to wander, and an option is a bet that pays on wandering.
+With that identity, the two probability pieces combine into a common factor times the change in $`d_1 - d_2`$. And $`d_1 - d_2`$ is $`\sigma\sqrt{T}`$, whose slope against $`T`$ is $`\sigma/(2\sqrt{T})`$. So the probability pieces reduce to $`S e^{-qT}\phi(d_1)\,\sigma/(2\sqrt{T})`$, which becomes the volatility term after the sign flip. It is negative for every holder, call or put. The share has one day less to wander, and an option is a bet that pays on wandering.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write $A = S e^{-qT}$ and $B = K e^{-rT}$, so $C = A\,N(d_1) - B\,N(d_2)$.
+Write $`A = S e^{-qT}`$ and $`B = K e^{-rT}`$, so $`C = A\,N(d_1) - B\,N(d_2)`$.
 
-**The identity.** $\phi(d_1)/\phi(d_2) = e^{-(d_1^2 - d_2^2)/2} = e^{-(d_1 - d_2)(d_1 + d_2)/2}$. Here $d_1 - d_2 = \sigma\sqrt{T}$ and $d_1 + d_2 = 2(\ln(S/K) + (r-q)T)/(\sigma\sqrt{T})$. Their product over 2 is $\ln(S/K) + (r-q)T$, so $\phi(d_1)/\phi(d_2) = (K/S)e^{-(r-q)T} = B/A$. Hence $A\phi(d_1) = B\phi(d_2)$.
+**The identity.** $`\phi(d_1)/\phi(d_2) = e^{-(d_1^2 - d_2^2)/2} = e^{-(d_1 - d_2)(d_1 + d_2)/2}`$. Here $`d_1 - d_2 = \sigma\sqrt{T}`$ and $`d_1 + d_2 = 2(\ln(S/K) + (r-q)T)/(\sigma\sqrt{T})`$. Their product over 2 is $`\ln(S/K) + (r-q)T`$, so $`\phi(d_1)/\phi(d_2) = (K/S)e^{-(r-q)T} = B/A`$. Hence $`A\phi(d_1) = B\phi(d_2)`$.
 
-**The slope against time left.** The slope of $N$ is $\phi$, and $\partial A/\partial T = -qA$, $\partial B/\partial T = -rB$, so
-$$\frac{\partial C}{\partial T} = -qA\,N(d_1) + A\phi(d_1)\frac{\partial d_1}{\partial T} + rB\,N(d_2) - B\phi(d_2)\frac{\partial d_2}{\partial T}.$$
-Replace $B\phi(d_2)$ by $A\phi(d_1)$. The two middle pieces become $A\phi(d_1)\,\partial(d_1 - d_2)/\partial T = A\phi(d_1)\,\sigma/(2\sqrt{T})$. So
-$$\frac{\partial C}{\partial T} = \frac{A\phi(d_1)\sigma}{2\sqrt{T}} - qA\,N(d_1) + rB\,N(d_2).$$
+**The slope against time left.** The slope of $`N`$ is $`\phi`$, and $`\partial A/\partial T = -qA`$, $`\partial B/\partial T = -rB`$, so
+
+$`\displaystyle \frac{\partial C}{\partial T} = -qA\,N(d_1) + A\phi(d_1)\frac{\partial d_1}{\partial T} + rB\,N(d_2) - B\phi(d_2)\frac{\partial d_2}{\partial T}.`$
+
+Replace $`B\phi(d_2)`$ by $`A\phi(d_1)`$. The two middle pieces become $`A\phi(d_1)\,\partial(d_1 - d_2)/\partial T = A\phi(d_1)\,\sigma/(2\sqrt{T})`$. So
+
+$`\displaystyle \frac{\partial C}{\partial T} = \frac{A\phi(d_1)\sigma}{2\sqrt{T}} - qA\,N(d_1) + rB\,N(d_2).`$
+
 Theta is minus this, which is the call formula.
 
-**The put.** Put-call parity says $C - P = A - B$ at every $T$. The slope of $A - B$ against $T$ is $-qA + rB$, so $\Theta_C - \Theta_P = qA - rB$. Then $\Theta_P = \Theta_C - qA + rB$. Using $1 - N(d_1) = N(-d_1)$ and $1 - N(d_2) = N(-d_2)$ gives the put formula. The volatility terms are identical, as the formula table shows.
+**The put.** Put-call parity says $`C - P = A - B`$ at every $`T`$. The slope of $`A - B`$ against $`T`$ is $`-qA + rB`$, so $`\Theta_C - \Theta_P = qA - rB`$. Then $`\Theta_P = \Theta_C - qA + rB`$. Using $`1 - N(d_1) = N(-d_1)`$ and $`1 - N(d_2) = N(-d_2)`$ gives the put formula. The volatility terms are identical, as the formula table shows.
 
-**The call's sign.** If $q \le 0$ and $r \ge 0$, every term of $\Theta_C$ is at most zero and the volatility term is strictly negative, so $\Theta_C < 0$. A positive call theta needs a positive dividend yield.
+**The call's sign.** If $`q \le 0`$ and $`r \ge 0`$, every term of $`\Theta_C`$ is at most zero and the volatility term is strictly negative, so $`\Theta_C < 0`$. A positive call theta needs a positive dividend yield.
 
 </details>
 
 ### Step 4: the put, and why its theta can be positive
 
-Put-call parity says a call minus a put is a forward: receive the share, pay the strike. So the two thetas differ by the forward's theta, $qSe^{-qT} - rKe^{-rT}$, which at the house market is −2.795750 per year. The put keeps the same volatility term and swaps the signs of the carry.
+Put-call parity says a call minus a put is a forward: receive the share, pay the strike. So the two thetas differ by the forward's theta, $`qSe^{-qT} - rKe^{-rT}`$, which at the house market is −2.795750 per year. The put keeps the same volatility term and swaps the signs of the carry.
 
-Now push the put deep into the money (strike far above the share price). At a strike of $130 the put ends up exercised with probability about 90 percent, $N(-d_2)$ = 0.896. $\phi(d_1)$ falls to 0.227, and the volatility term shrinks to −2.225350. The rate term grows to +5.543011: the $130 the holder will probably receive is one day nearer, so its discounted value grows, like a bond accruing interest. Net of the dividend term, −1.677790, theta is +1.639871 per year.
+Now push the put deep into the money (strike far above the share price). At a strike of $130 the put ends up exercised with probability about 90 percent, $`N(-d_2)`$ = 0.896. $`\phi(d_1)`$ falls to 0.227, and the volatility term shrinks to −2.225350. The rate term grows to +5.543011: the $130 the holder will probably receive is one day nearer, so its discounted value grows, like a bond accruing interest. Net of the dividend term, −1.677790, theta is +1.639871 per year.
 
 The call's mirror case needs a high-yield share. A call struck at $80 on a share yielding 8 percent is deep in the money, so its holder will probably (about 81 percent) end up owning the share. Every day of waiting is a day less of dividends forfeited. The dividend term wins and theta is +1.170421 per year.
 
@@ -149,15 +165,17 @@ The call's mirror case needs a high-yield share. A call struck at $80 on a share
 
 The Black-Scholes equation ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) ties theta to delta and gamma for any option in the model:
 
-$$\Theta + (r-q)S\,\Delta + \tfrac12\sigma^2 S^2\,\Gamma = rV$$
+```math
+\Theta + (r-q)S\,\Delta + \tfrac12\sigma^2 S^2\,\Gamma = rV
+```
 
-Rearranged, $\Theta = \big[\,rV - (r-q)S\Delta\,\big] - \tfrac12\sigma^2 S^2\Gamma$. The bracket is carry: the interest on the money tied up in the option, less the net carry on the hedge's shares. For the house call it is 0.461350 − 1.760553. What is left, $-\tfrac12\sigma^2S^2\Gamma$, is −3.790116 per year, exactly the volatility term of Step 3 found another way.
+Rearranged, $`\Theta = \big[\,rV - (r-q)S\Delta\,\big] - \tfrac12\sigma^2 S^2\Gamma`$. The bracket is carry: the interest on the money tied up in the option, less the net carry on the hedge's shares. For the house call it is 0.461350 − 1.760553. What is left, $`-\tfrac12\sigma^2S^2\Gamma`$, is −3.790116 per year, exactly the volatility term of Step 3 found another way.
 
-Here is the rent reading. A holder who hedges away delta is left owning gamma. A move of *m* dollars in the share earns about $\tfrac12\Gamma m^2$, whichever way it goes. The rent for one day is 3.790116 / 365 = 0.010384.
+Here is the rent reading. A holder who hedges away delta is left owning gamma. A move of *m* dollars in the share earns about $`\tfrac12\Gamma m^2`$, whichever way it goes. The rent for one day is 3.790116 / 365 = 0.010384.
 
-Setting that gain equal to that rent gives a breakeven daily move of $1.046848, which is $\sigma S\sqrt{1/365}$: one day's standard move at 20 percent volatility. A share that moves more than that pays the rent and more. A quiet share does not.
+Setting that gain equal to that rent gives a breakeven daily move of $1.046848, which is $`\sigma S\sqrt{1/365}`$: one day's standard move at 20 percent volatility. A share that moves more than that pays the rent and more. A quiet share does not.
 
-Theta is not a fee lost for nothing; it is the market price of the gamma, set so that a share moving exactly at volatility $\sigma$ breaks even. The accounting over many days belongs to [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
+Theta is not a fee lost for nothing; it is the market price of the gamma, set so that a share moving exactly at volatility $`\sigma`$ breaks even. The accounting over many days belongs to [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 
 A second route to theta avoids the formula entirely: reprice the option at slightly longer and shorter lives and take the slope. The code does that, and also reads theta off a binomial tree (a lattice in which the share moves one notch up or down per step), where two steps forward at the middle node return the share to today's price.
 
@@ -165,23 +183,23 @@ A second route to theta avoids the formula entirely: reprice the option at sligh
 
 ## Worked numbers, by hand
 
-House market: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$.
+House market: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$, $d_2$ | $(0 + 0.05)/0.20$, then $0.25 - 0.20$ | 0.25, 0.05 |
-| $\phi(d_1)$ | $e^{-0.03125}/\sqrt{2\pi}$ | 0.386668 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.598706, 0.519939 |
-| $e^{-qT}$, $e^{-rT}$ | $e^{-0.02}$, $e^{-0.05}$ | 0.980199, 0.951229 |
-| volatility term | $-100 \times 0.980199 \times 0.386668 \times 0.20 / 2$ | −3.790116 |
-| call dividend term | $0.02 \times 100 \times 0.980199 \times 0.598706$ | +1.173702 |
-| call rate term | $-0.05 \times 100 \times 0.951229 \times 0.519939$ | −2.472905 |
-| **call theta** | $-3.790116 + 1.173702 - 2.472905$ | **−5.089319 per year** |
-| per calendar day | $-5.089319 / 365$ | **−0.013943** |
-| put dividend term | $-0.02 \times 100 \times 0.980199 \times (1 - 0.598706)$ | −0.786695 |
-| put rate term | $0.05 \times 100 \times 0.951229 \times (1 - 0.519939)$ | +2.283242 |
-| **put theta** | $-3.790116 - 0.786695 + 2.283242$ | **−2.293569 per year** |
-| put per calendar day | $-2.293569 / 365$ | −0.006284 |
+| $`d_1`$, $`d_2`$ | $`(0 + 0.05)/0.20`$, then $`0.25 - 0.20`$ | 0.25, 0.05 |
+| $`\phi(d_1)`$ | $`e^{-0.03125}/\sqrt{2\pi}`$ | 0.386668 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.598706, 0.519939 |
+| $`e^{-qT}`$, $`e^{-rT}`$ | $`e^{-0.02}`$, $`e^{-0.05}`$ | 0.980199, 0.951229 |
+| volatility term | $`-100 \times 0.980199 \times 0.386668 \times 0.20 / 2`$ | −3.790116 |
+| call dividend term | $`0.02 \times 100 \times 0.980199 \times 0.598706`$ | +1.173702 |
+| call rate term | $`-0.05 \times 100 \times 0.951229 \times 0.519939`$ | −2.472905 |
+| **call theta** | $`-3.790116 + 1.173702 - 2.472905`$ | **−5.089319 per year** |
+| per calendar day | $`-5.089319 / 365`$ | **−0.013943** |
+| put dividend term | $`-0.02 \times 100 \times 0.980199 \times (1 - 0.598706)`$ | −0.786695 |
+| put rate term | $`0.05 \times 100 \times 0.951229 \times (1 - 0.519939)`$ | +2.283242 |
+| **put theta** | $`-3.790116 - 0.786695 + 2.283242`$ | **−2.293569 per year** |
+| put per calendar day | $`-2.293569 / 365`$ | −0.006284 |
 
 Holding the call overnight with Acme still at $100 costs about 1.4 cents, of which about 1.04 cents is the volatility term, the rent on gamma; the rest is carry. The put costs about 0.6 cents.
 
@@ -189,9 +207,9 @@ Holding the call overnight with Acme still at $100 costs about 1.4 cents, of whi
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Theta taken as $\partial V/\partial T$ | +5.089319 per year | That is the slope against time left. The calendar runs the other way. |
+| Theta taken as $`\partial V/\partial T`$ | +5.089319 per year | That is the slope against time left. The calendar runs the other way. |
 | Per-year theta read as a day's loss | −5.09 per day | Off by a factor of 365. The day is −0.013943. |
-| The 2 dropped from $2\sqrt{T}$ | −8.879435 per year | The volatility term doubles. At $T = 1$ the $\sqrt{T}$ hides, but the 2 does not. |
+| The 2 dropped from $`2\sqrt{T}`$ | −8.879435 per year | The volatility term doubles. At $`T = 1`$ the $`\sqrt{T}`$ hides, but the 2 does not. |
 | The dividend term dropped | −6.263021 per year | Treats Acme as paying nothing. The call looks 1.17 dollars a year dearer to hold. |
 | The call's theta used for the put | −5.089319 against −2.293569 | Gamma and vega are shared by call and put; theta is not, because the carry differs. |
 
@@ -199,7 +217,7 @@ Holding the call overnight with Acme still at $100 costs about 1.4 cents, of whi
 
 ## How theta moves as expiry nears
 
-The stock does nothing; the clock does it. Freeze Acme at $100 and let the calendar run. The volatility term scales like $1/\sqrt{T}$, so for an option at the strike it grows without limit as expiry approaches.
+The stock does nothing; the clock does it. Freeze Acme at $100 and let the calendar run. The volatility term scales like $`1/\sqrt{T}`$, so for an option at the strike it grows without limit as expiry approaches.
 
 The at-the-money call, cents lost per calendar day:
 
@@ -631,11 +649,11 @@ The two outputs agree line for line. The tree lands about 0.15 cents a year off 
 
 Lean proves the theta formulas, the rent on gamma and the call's sign, for every positive share price, strike, volatility and time left.
 
-- Take a positive share price, strike and volatility, with today's date before expiry. Then the call and put prices have slopes $\Theta_C$ and $\Theta_P$ against the date, exactly as in the formulas above.
-- Take positive $S$, $K$, $\sigma$ and $T$. Then both options satisfy $\Theta + (r-q)S\Delta + \tfrac12\sigma^2 S^2\Gamma = rV$.
-- Take the same conditions. Then the rent $\tfrac12\sigma^2 S^2\Gamma$ is exactly the size of the volatility term for both options.
-- Suppose $q \le 0$ and $r \ge 0$, with $S$, $K$, $\sigma$ and $T$ positive. Then the call's theta is below zero.
-- Take the house market. Then $d_1 = 1/4$ and $d_2 = 1/20$ exactly, and $2\sqrt{T} = 2$.
+- Take a positive share price, strike and volatility, with today's date before expiry. Then the call and put prices have slopes $`\Theta_C`$ and $`\Theta_P`$ against the date, exactly as in the formulas above.
+- Take positive $`S`$, $`K`$, $`\sigma`$ and $`T`$. Then both options satisfy $`\Theta + (r-q)S\Delta + \tfrac12\sigma^2 S^2\Gamma = rV`$.
+- Take the same conditions. Then the rent $`\tfrac12\sigma^2 S^2\Gamma`$ is exactly the size of the volatility term for both options.
+- Suppose $`q \le 0`$ and $`r \ge 0`$, with $`S`$, $`K`$, $`\sigma`$ and $`T`$ positive. Then the call's theta is below zero.
+- Take the house market. Then $`d_1 = 1/4`$ and $`d_2 = 1/20`$ exactly, and $`2\sqrt{T} = 2`$.
 
 The decimals, the bumps, the tree, both sign flips and the zero at a strike of $120.04 are left to the Python and Rust checks.
 
@@ -960,10 +978,10 @@ example : 2 * √(1 : ℝ) = 2 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating theta as a fee the holder loses for nothing.** It is rent on gamma. A hedged holder pays about 1.04 cents a day for the volatility term and earns $\tfrac12\Gamma m^2$ back from each day's move of *m* dollars. At a daily move of $1.046848 the two cancel. A seller who "collects theta" is not collecting free money; the seller is short gamma and pays out on every large move.
+> **Treating theta as a fee the holder loses for nothing.** It is rent on gamma. A hedged holder pays about 1.04 cents a day for the volatility term and earns $`\tfrac12\Gamma m^2`$ back from each day's move of *m* dollars. At a daily move of $1.046848 the two cancel. A seller who "collects theta" is not collecting free money; the seller is short gamma and pays out on every large move.
 >
 > Smaller traps:
-> - **The sign.** Writing $\partial V/\partial T$ gives +5.089319 for the call. Theta is against the calendar, so it is −5.089319.
+> - **The sign.** Writing $`\partial V/\partial T`$ gives +5.089319 for the call. Theta is against the calendar, so it is −5.089319.
 > - **Units.** −5.089319 is per year. A day is −0.013943 on a 365-day screen and −0.020196 on a 252-day desk.
 > - **"Theta is always negative."** A European put struck at $130 has +1.639871 per year; a call struck at $80 on an 8 percent yielder has +1.170421.
 > - **Call and put share theta.** They share gamma and vega, not theta. Here they differ by −2.795750 per year, the forward's carry.
@@ -976,11 +994,11 @@ example : 2 * √(1 : ℝ) = 2 := by norm_num
 - **The last week before expiry.** Short-dated options at the strike lose value fastest: the house call's daily cost rises from 1.39 cents with a year left to 21.29 cents on its last day.
 - **Weekends and holidays.** Markets close but calendar days pass. Whether a desk spreads theta over 365 or 252 days changes the quote, not the option.
 - **Early exercise of American puts.** A deep European put with positive theta shows why its American cousin is exercised early: the holder would rather have the $130 now and earn interest on it.
-- **Currency options.** For an option on a currency the foreign interest rate plays the role of $q$, and theta carries two interest-rate terms ([The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)).
+- **Currency options.** For an option on a currency the foreign interest rate plays the role of $`q`$, and theta carries two interest-rate terms ([The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)).
 - **The daily profit-and-loss explain.** A risk report splits an option book's overnight change into delta, gamma, vega and theta pieces ([The Greeks together](09-greeks-together-taylor-pnl.md)); the other Greeks on this shelf are [Delta](01-delta.md) and [Rho and dividend rho](05-rho-and-dividend-rho.md), among others.
 
 > **Say it back**
-> Theta is how an option's price changes as the calendar moves, with the share price and everything else held still. It has three parts: a volatility term that always costs the holder, and dividend and interest terms that can go either way. The Acme call's theta is −5.089319 a year, 1.4 cents a day; a deep put or a call on a high-yield share can gain. Net of carry, theta equals minus one half of $\sigma^2 S^2 \Gamma$: the rent on gamma. A share moving about $1.05 a day earns that rent back.
+> Theta is how an option's price changes as the calendar moves, with the share price and everything else held still. It has three parts: a volatility term that always costs the holder, and dividend and interest terms that can go either way. The Acme call's theta is −5.089319 a year, 1.4 cents a day; a deep put or a call on a high-yield share can gain. Net of carry, theta equals minus one half of $`\sigma^2 S^2 \Gamma`$: the rent on gamma. A share moving about $1.05 a day earns that rent back.
 
 ---
 
@@ -995,7 +1013,7 @@ example : 2 * √(1 : ℝ) = 2 := by norm_num
 - [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md): the hedged book day by day, where the rent on this card is paid and earned back.
 - [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same theta for currency options, with two interest rates and the desk's day-count habits.
 
-This card prices a single day of gamma; whether a hedged holder actually comes out ahead over many days, when realised moves differ from $\sigma$, is the question [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md) answers.
+This card prices a single day of gamma; whether a hedged holder actually comes out ahead over many days, when realised moves differ from $`\sigma`$, is the question [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md) answers.
 
 ---
 
@@ -1004,7 +1022,7 @@ This card prices a single day of gamma; whether a hedged holder actually comes o
 Verified 2026-09-24: every link below resolves to the publisher's page.
 
 - Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The hedging argument whose equation ties theta to gamma.
-- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield $q$, source of the dividend term.
+- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield $`q`$, source of the dividend term.
 - Cox, John C., Stephen A. Ross, and Mark Rubinstein. "Option Pricing: A Simplified Approach." *Journal of Financial Economics* 7, no. 3 (1979): 229–263. [doi:10.1016/0304-405X(79)90015-1](https://doi.org/10.1016/0304-405X(79)90015-1). The recombining tree used as road 4.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The call and put theta formulas with a dividend yield, and the per-day quoting habit.
 - Wilmott, Paul. *Paul Wilmott on Quantitative Finance*, 2nd ed. Wiley. [Publisher page](https://www.wiley.com/en-us/Paul+Wilmott+on+Quantitative+Finance%2C+3+Volume+Set%2C+2nd+Edition-p-9781118836835). The hedged option as a trade of gamma against theta.

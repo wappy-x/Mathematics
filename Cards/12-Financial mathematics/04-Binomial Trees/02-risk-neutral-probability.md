@@ -33,47 +33,53 @@ Everything the weights ever see about a contract is the pair of payments on the 
 
 ## The formula
 
-A **factor** here is a multiplier over one step: the share's price is multiplied by the up factor or the down factor, a dollar in the bank by its own growth factor. The step's length in years is $\Delta t$, one whole year here. The letter $R$ is the factor the share's own price grows by over the step; it is not the bank's factor when the share pays dividends, because a dividend leaves the share's price when it is paid.
+A **factor** here is a multiplier over one step: the share's price is multiplied by the up factor or the down factor, a dollar in the bank by its own growth factor. The step's length in years is $`\Delta t`$, one whole year here. The letter $`R`$ is the factor the share's own price grows by over the step; it is not the bank's factor when the share pays dividends, because a dividend leaves the share's price when it is paid.
 
-$$q = \frac{R - d}{u - d}, \qquad 1 - q = \frac{u - R}{u - d}$$
+```math
+q = \frac{R - d}{u - d}, \qquad 1 - q = \frac{u - R}{u - d}
+```
 
 **Read it aloud:** the weight on the up branch is how far the share's growth factor sits above the down factor, measured as a share of the whole fork.
 
 Those weights then price any contract that settles at the end of the step:
 
-$$V_0 = e^{-r\Delta t}\left[\,q\,C_u + (1 - q)\,C_d\,\right]$$
+```math
+V_0 = e^{-r\Delta t}\left[\,q\,C_u + (1 - q)\,C_d\,\right]
+```
 
 **Read it aloud:** weight the two payments, add them, and carry the total back through the bank.
 
 | Symbol | Plain meaning | In our example | Push it up and the put… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100.00 | costs less: selling at a fixed price is worth less |
-| $K$ | the strike: the price the put may sell at | $100.00 | costs more |
-| $u$ | up factor: the multiplier on the up branch | 1.221403 | costs more: weight slides to the paying branch |
-| $d$ | down factor: the multiplier on the down branch | 0.818731 | costs less: the bad ending is less bad |
-| $R$ | the share's own price growth factor over the step | 1.030455 | costs less |
-| $q$ | the weight on the up branch | 0.525797 | costs less |
-| $p$ | the real-world chance of an up move | never appears | does not move at all |
-| $r$ | the bank rate, continuously compounded | 5 percent | costs less: $R$ rises, the discount deepens |
-| $y$ | the dividend yield paid out by the share | 2 percent | costs more: $R$ falls |
-| $\Delta t$ | the length of one step, in years | 1 | — |
-| $C_u$, $C_d$ | the contract's payment on each branch | $0.00 and $18.13 | costs more |
-| $V_0$ | what the contract is worth today | $8.18 | — |
+| $`S`$ | Acme's price today | $100.00 | costs less: selling at a fixed price is worth less |
+| $`K`$ | the strike: the price the put may sell at | $100.00 | costs more |
+| $`u`$ | up factor: the multiplier on the up branch | 1.221403 | costs more: weight slides to the paying branch |
+| $`d`$ | down factor: the multiplier on the down branch | 0.818731 | costs less: the bad ending is less bad |
+| $`R`$ | the share's own price growth factor over the step | 1.030455 | costs less |
+| $`q`$ | the weight on the up branch | 0.525797 | costs less |
+| $`p`$ | the real-world chance of an up move | never appears | does not move at all |
+| $`r`$ | the bank rate, continuously compounded | 5 percent | costs less: $`R`$ rises, the discount deepens |
+| $`y`$ | the dividend yield paid out by the share | 2 percent | costs more: $`R`$ falls |
+| $`\Delta t`$ | the length of one step, in years | 1 | — |
+| $`C_u`$, $`C_d`$ | the contract's payment on each branch | $0.00 and $18.13 | costs more |
+| $`V_0`$ | what the contract is worth today | $8.18 | — |
 
-One warning about letters: cards elsewhere on this shelf write the weight $p$ and keep $q$ for the dividend yield. Here the weight is $q$, as the title has it, the real-world chance of an up move is $p$, and the dividend yield is $y$.
+One warning about letters: cards elsewhere on this shelf write the weight $`p`$ and keep $`q`$ for the dividend yield. Here the weight is $`q`$, as the title has it, the real-world chance of an up move is $`p`$, and the dividend yield is $`y`$.
 
 The growth factor has its own short formula, and it is the one place a dividend enters:
 
-$$R = e^{(r - y)\Delta t}$$
+```math
+R = e^{(r - y)\Delta t}
+```
 
-In words: the share's price climbs at the bank rate less what leaks out as dividends, so at 5 percent and 2 percent it grows over the year by 1.030455 while a dollar of cash grows by 1.051271. The same number is the market's forward price for a share delivered in a year, divided by today's price. On a share paying nothing, $y$ is zero and $R$ is the bank's factor.
+In words: the share's price climbs at the bank rate less what leaks out as dividends, so at 5 percent and 2 percent it grows over the year by 1.030455 while a dollar of cash grows by 1.051271. The same number is the market's forward price for a share delivered in a year, divided by today's price. On a share paying nothing, $`y`$ is zero and $`R`$ is the bank's factor.
 
-**Conventions verified 14 Sep 2026:** both rates here are continuously compounded and $\Delta t$ counts calendar years. Day-count and compounding conventions differ by market and do change; convert before substituting.
+**Conventions verified 14 Sep 2026:** both rates here are continuously compounded and $`\Delta t`$ counts calendar years. Day-count and compounding conventions differ by market and do change; convert before substituting.
 
 ### When it holds
 
 - **Two endings and one step.** With three possible prices, two instruments cannot reproduce three payments and a contract's price becomes a range: [Trinomial trees](06-trinomial-trees-and-the-grid-connection.md).
-- **The fork straddles the growth factor: $d < R < u$.** Otherwise $q$ leaves the interval from 0 to 1 and free money is on the table, as Step 3 shows.
+- **The fork straddles the growth factor: $`d < R < u`$.** Otherwise $`q`$ leaves the interval from 0 to 1 and free money is on the table, as Step 3 shows.
 - **Borrowing, lending and shorting at one rate, in any quantity, with no fees.** Shorting is selling a borrowed share and buying it back later. Charge more to borrow than the bank pays and the single price widens into a band.
 - **The payout is a known proportional yield.** A lump cash dividend is not one: its present value comes off the share price before the fork is built. Treating this share as paying nothing moves the weight to 0.577493.
 
@@ -89,20 +95,28 @@ That solve is the previous card's. What follows is arithmetic on its finished bi
 
 ### Step 1: the bill, regrouped, is a weighted average
 
-Add the copy's two costs and gather the terms in $C_u$ and in $C_d$. The coefficient in front of $C_u$ comes out as $(R - d)/(u - d)$ divided by the bank's factor, the one in front of $C_d$ as $(u - R)/(u - d)$ divided by the same factor. Both are positive when the fork straddles the growth factor, and together they make exactly one over that factor. Nothing was assumed to arrange it; it is what the subtraction leaves behind.
+Add the copy's two costs and gather the terms in $`C_u`$ and in $`C_d`$. The coefficient in front of $`C_u`$ comes out as $`(R - d)/(u - d)`$ divided by the bank's factor, the one in front of $`C_d`$ as $`(u - R)/(u - d)`$ divided by the same factor. Both are positive when the fork straddles the growth factor, and together they make exactly one over that factor. Nothing was assumed to arrange it; it is what the subtraction leaves behind.
 
 <details>
 <summary>Detailed proof: from the two matching equations to the weighted average</summary>
 
-The copy holds $\Delta$ shares (a share count, not the step length $\Delta t$) and some cash, and dividends are reinvested in more shares, so $\Delta$ shares today become $\Delta e^{y\Delta t}$ shares by the end of the step. Matching the contract in both endings gives two equations:
-$$\Delta S u\,e^{y\Delta t} + \text{cash}\;e^{r\Delta t} = C_u, \qquad \Delta S d\,e^{y\Delta t} + \text{cash}\;e^{r\Delta t} = C_d.$$
-Subtracting kills the cash, and $u > d$ allows the division:
-$$\Delta = e^{-y\Delta t}\,\frac{C_u - C_d}{S\,(u - d)}.$$
+The copy holds $`\Delta`$ shares (a share count, not the step length $`\Delta t`$) and some cash, and dividends are reinvested in more shares, so $`\Delta`$ shares today become $`\Delta e^{y\Delta t}`$ shares by the end of the step. Matching the contract in both endings gives two equations:
+
+$`\displaystyle \Delta S u\,e^{y\Delta t} + \text{cash}\;e^{r\Delta t} = C_u, \qquad \Delta S d\,e^{y\Delta t} + \text{cash}\;e^{r\Delta t} = C_d.`$
+
+Subtracting kills the cash, and $`u > d`$ allows the division:
+
+$`\displaystyle \Delta = e^{-y\Delta t}\,\frac{C_u - C_d}{S\,(u - d)}.`$
+
 Putting that back into the first equation gives the cash:
-$$\text{cash} = e^{-r\Delta t}\,\frac{u\,C_d - d\,C_u}{u - d}.$$
-The bill is the shares at today's price plus that cash. To add the two pieces, write the share piece with the same discount out front, using $e^{-y\Delta t} = e^{-r\Delta t}\,e^{(r-y)\Delta t} = e^{-r\Delta t} R$:
-$$V_0 = e^{-r\Delta t}\left[\frac{R\,(C_u - C_d) + u\,C_d - d\,C_u}{u - d}\right] = e^{-r\Delta t}\left[\frac{(R - d)\,C_u + (u - R)\,C_d}{u - d}\right].$$
-The two numerators, divided by $u - d$, are $q$ and $1 - q$. That is the pricing rule. The derivation used the two matching equations and $u > d$, and nothing else: no probability was written down, because none appears in either equation.
+
+$`\displaystyle \text{cash} = e^{-r\Delta t}\,\frac{u\,C_d - d\,C_u}{u - d}.`$
+
+The bill is the shares at today's price plus that cash. To add the two pieces, write the share piece with the same discount out front, using $`e^{-y\Delta t} = e^{-r\Delta t}\,e^{(r-y)\Delta t} = e^{-r\Delta t} R`$:
+
+$`\displaystyle V_0 = e^{-r\Delta t}\left[\frac{R\,(C_u - C_d) + u\,C_d - d\,C_u}{u - d}\right] = e^{-r\Delta t}\left[\frac{(R - d)\,C_u + (u - R)\,C_d}{u - d}\right].`$
+
+The two numerators, divided by $`u - d`$, are $`q`$ and $`1 - q`$. That is the pricing rule. The derivation used the two matching equations and $`u > d`$, and nothing else: no probability was written down, because none appears in either equation.
 
 </details>
 
@@ -110,7 +124,7 @@ The two numerators, divided by $u - d$, are $q$ and $1 - q$. That is the pricing
 
 Run the rule on the simplest contract of all: one Acme share, delivered at the end of the step. Its payments are $122.14 and $81.87. The weighted average is $103.05, today's price multiplied by the growth factor, and carrying that back through the bank leaves $98.02.
 
-That is the right answer: the cost today of having one share in a year is not $100.00 but $98.02, because buying 0.9802 shares now and reinvesting the dividends grows the holding to exactly one share. The algebra is $q$'s own formula read backwards, so it is no second proof; what it supplies is the property that picks $q$ out. Which weight averages the two factors to the growth factor is one equation in one unknown, and the two factors being different makes its answer unique. The check solves that equation a second way, halving a bracket until it stops moving, and lands on 0.525797.
+That is the right answer: the cost today of having one share in a year is not $100.00 but $98.02, because buying 0.9802 shares now and reinvesting the dividends grows the holding to exactly one share. The algebra is $`q`$'s own formula read backwards, so it is no second proof; what it supplies is the property that picks $`q`$ out. Which weight averages the two factors to the growth factor is one equation in one unknown, and the two factors being different makes its answer unique. The check solves that equation a second way, halving a bracket until it stops moving, and lands on 0.525797.
 
 A quantity whose weighted average equals its value today is called a **martingale**: a running total that neither drifts up nor down. Carried back through the bank, the share's price is one of those under these weights. And in a world where the weights really were the odds, nobody would be paid extra for holding a risky share rather than cash, so everything would grow at the bank rate — which is where **risk-neutral** comes from. Nobody claims to live in that world.
 
@@ -120,13 +134,13 @@ Here is the trade that decides it. Borrow $98.02, buy 0.9802 Acme shares and rei
 
 Now push the growth factor around.
 
-If $R$ is at or above $u$, the debt at the end matches or beats the share in **both** endings. Run the trade backwards — short the share, lend the cash — and it never loses: at $R = 1.30$ it collects $7.86 and $48.13. The check prints that pair as negatives, since its table gives the gains of the borrow-and-hold trade this one reverses. Meanwhile the weight is at or above 1: its top, $R - d$, has caught its bottom, $u - d$.
+If $`R`$ is at or above $`u`$, the debt at the end matches or beats the share in **both** endings. Run the trade backwards — short the share, lend the cash — and it never loses: at $`R = 1.30`$ it collects $7.86 and $48.13. The check prints that pair as negatives, since its table gives the gains of the borrow-and-hold trade this one reverses. Meanwhile the weight is at or above 1: its top, $`R - d`$, has caught its bottom, $`u - d`$.
 
-If $R$ is at or below $d$, the share matches or beats the debt in both endings, so borrowing and holding never loses: at $R = 0.80$ it collects $42.14 and $1.87. And the weight is at or below 0: its top, $R - d$, has fallen to zero or below.
+If $`R`$ is at or below $`d`$, the share matches or beats the debt in both endings, so borrowing and holding never loses: at $`R = 0.80`$ it collects $42.14 and $1.87. And the weight is at or below 0: its top, $`R - d`$, has fallen to zero or below.
 
-Those are the same statement twice. $q > 0$ says exactly $R > d$, and $q < 1$ says exactly $R < u$. So **the weight is a genuine pair of positive numbers adding to one precisely when no trade in the share and the bank makes money out of nothing.** That is this card's theorem, in its one-step form.
+Those are the same statement twice. $`q > 0`$ says exactly $`R > d`$, and $`q < 1`$ says exactly $`R < u`$. So **the weight is a genuine pair of positive numbers adding to one precisely when no trade in the share and the bank makes money out of nothing.** That is this card's theorem, in its one-step form.
 
-The check runs both boundaries. At $R = u$, $q$ is 1 and the down branch is priced at nothing: short and lend, and the up state breaks even while the down state pays $40.27. At $R = d$ the mirror trade pays $40.27 in the up state and nothing in the down. A trade that cannot lose and sometimes wins is free money too, so the endpoints are out.
+The check runs both boundaries. At $`R = u`$, $`q`$ is 1 and the down branch is priced at nothing: short and lend, and the up state breaks even while the down state pays $40.27. At $`R = d`$ the mirror trade pays $40.27 in the up state and nothing in the down. A trade that cannot lose and sometimes wins is free money too, so the endpoints are out.
 
 Slide the growth factor across a fixed fork and the whole theorem is one straight line.
 
@@ -139,11 +153,11 @@ xychart-beta
     line [-0.05, 0.08, 0.20, 0.33, 0.45, 0.57, 0.70, 0.82, 0.95, 1.07]
 ```
 
-The line crosses 0 where $R$ meets the down factor 0.8187 and 1 where it meets the up factor 1.2214, with Acme's own 1.030455 between them at 0.525797. Off either end every point is a market with a trade that prints money.
+The line crosses 0 where $`R`$ meets the down factor 0.8187 and 1 where it meets the up factor 1.2214, with Acme's own 1.030455 between them at 0.525797. Off either end every point is a market with a trade that prints money.
 
 ### Step 4: nothing in any of that was a forecast
 
-Neither matching equation in the folded proof contains $p$, the real-world chance of an up move. They cannot: the copy reproduces the contract in **both** endings, so how often each occurs never comes up.
+Neither matching equation in the folded proof contains $`p`$, the real-world chance of an up move. They cannot: the copy reproduces the contract in **both** endings, so how often each occurs never comes up.
 
 The check rebuilds the copy for three views of Acme and prices the put the naive way alongside:
 
@@ -155,26 +169,26 @@ The check rebuilds the copy for three views of Acme and prices the put the naive
 
 The right-hand column forecasts what the put will pay, and every row of it is defensible. Only the middle column is a price, and it does not move. The bear cannot buy this put for $12.07 from anyone: a seller assembles the copy for $8.18 and pockets the difference with no risk at all.
 
-A second route reaches the same weights from the other end. Price a dollar paid only in the up ending, and a dollar paid only in the down ending: those two prices are $q$ and $1 - q$ carried back through the bank, and every contract here is those two multiplied by its payments. They are **state prices**: [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md).
+A second route reaches the same weights from the other end. Price a dollar paid only in the up ending, and a dollar paid only in the down ending: those two prices are $`q`$ and $`1 - q`$ carried back through the bank, and every contract here is those two multiplied by its payments. They are **state prices**: [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Acme on the house tree: $S = 100$, $K = 100$, up 1.2214, down 0.8187, $r = 5$ percent, $y = 2$ percent, one year.
+Acme on the house tree: $`S = 100`$, $`K = 100`$, up 1.2214, down 0.8187, $`r = 5`$ percent, $`y = 2`$ percent, one year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the fork | $100 × 1.221403$ and $100 × 0.818731$ | 122.14 and 81.87 |
-| the share's growth factor | $e^{(0.05 - 0.02) × 1}$ | 1.030455 |
-| the bank's growth factor | $e^{0.05 × 1}$ | 1.051271 |
-| the width of the fork | $1.221403 - 0.818731$ | 0.402672 |
-| how far $R$ clears the down factor | $1.030455 - 0.818731$ | 0.211724 |
-| the weight on the up branch | $0.211724 ÷ 0.402672$ | **0.525797** |
-| the weight on the down branch | $1 - 0.525797$ | 0.474203 |
-| the put's two payments | $\max(100 - 122.14,\,0)$ and $\max(100 - 81.87,\,0)$ | 0.00 and 18.13 |
-| the weighted average | $0.525797 × 0 + 0.474203 × 18.126925$ | 8.595840 |
-| carried back through the bank | $8.595840 ÷ 1.051271$ | **$8.18** |
+| the fork | $`100 × 1.221403`$ and $`100 × 0.818731`$ | 122.14 and 81.87 |
+| the share's growth factor | $`e^{(0.05 - 0.02) × 1}`$ | 1.030455 |
+| the bank's growth factor | $`e^{0.05 × 1}`$ | 1.051271 |
+| the width of the fork | $`1.221403 - 0.818731`$ | 0.402672 |
+| how far $`R`$ clears the down factor | $`1.030455 - 0.818731`$ | 0.211724 |
+| the weight on the up branch | $`0.211724 ÷ 0.402672`$ | **0.525797** |
+| the weight on the down branch | $`1 - 0.525797`$ | 0.474203 |
+| the put's two payments | $`\max(100 - 122.14,\,0)`$ and $`\max(100 - 81.87,\,0)`$ | 0.00 and 18.13 |
+| the weighted average | $`0.525797 × 0 + 0.474203 × 18.126925`$ | 8.595840 |
+| carried back through the bank | $`8.595840 ÷ 1.051271`$ | **$8.18** |
 | the same thing as a copy | 0.441252 shares sold short, 52.30 of cash | **$8.18** |
 
 So the put's seller charges $8.18, sells 0.441252 shares short, banks $52.30, and finishes the year square whichever ending arrives.
@@ -186,7 +200,7 @@ One outside witness: the same weights price the call — the right to buy at $10
 | Mistake | The put comes out at | What went wrong |
 | --- | --- | --- |
 | Weighting with a real-world view, 0.70 up | $5.17 | A copy's bill does not move when an opinion moves |
-| Dropping the 2 percent dividend, so $R = 1.051271$ and $q = 0.577493$ | $7.29 | Dividends leave the price, so the price grows slower than the bank |
+| Dropping the 2 percent dividend, so $`R = 1.051271`$ and $`q = 0.577493`$ | $7.29 | Dividends leave the price, so the price grows slower than the bank |
 | Swapping the two weights | $9.07 | The up weight measures the climb from the down factor to the growth factor, not the fall from the up factor |
 | Averaging the payments and never discounting | $8.60 | $18.13 arriving in a year is not $18.13 today |
 
@@ -207,7 +221,7 @@ how far the up weight clears a half, one block per 0.001
   252 steps              ██                          0.5016
 ```
 
-Nothing about Acme changed down that list; only the bookkeeping interval did. Read as odds it is absurd: a share's chance of rising does not approach a coin flip because the clock is read more often. It is what $(R - d)/(u - d)$ does when top and bottom shrink at different speeds: the fork narrows like the square root of the step, while $R$'s climb above 1 shrinks like the step itself, so $R$ lands ever closer to the middle of the fork.
+Nothing about Acme changed down that list; only the bookkeeping interval did. Read as odds it is absurd: a share's chance of rising does not approach a coin flip because the clock is read more often. It is what $`(R - d)/(u - d)`$ does when top and bottom shrink at different speeds: the fork narrows like the square root of the step, while $`R`$'s climb above 1 shrinks like the step itself, so $`R`$ lands ever closer to the middle of the fork.
 
 What a desk does with hundreds of those steps is [Many steps](03-multi-step-trees-and-backward-induction.md), and where the answer settles as the steps get finer is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md).
 
@@ -615,9 +629,9 @@ The two outputs match line for line.
 
 Lean proves Steps 1, 2 and 3 for every one-step fork, with any rates, dividend yield, step length and payments.
 
-- Take a fork with $d < R < u$, and any copy of shares and cash that matches both payments. Then $0 < q < 1$, and the bill equals the weighted average of $C_u$ and $C_d$, carried back through the bank.
-- Take any weight, a fork with $u \ne d$, and $S > 0$. Then the weight prices one share delivered at the step's end at $S e^{-y\Delta t}$ exactly when it is $q$.
-- Take a fork with $d < u$ and $S > 0$. Then no trade in the share and the bank makes free money exactly when $0 < q < 1$.
+- Take a fork with $`d < R < u`$, and any copy of shares and cash that matches both payments. Then $`0 < q < 1`$, and the bill equals the weighted average of $`C_u`$ and $`C_d`$, carried back through the bank.
+- Take any weight, a fork with $`u \ne d`$, and $`S > 0`$. Then the weight prices one share delivered at the step's end at $`S e^{-y\Delta t}`$ exactly when it is $`q`$.
+- Take a fork with $`d < u`$ and $`S > 0`$. Then no trade in the share and the bank makes free money exactly when $`0 < q < 1`$.
 
 The Acme numbers, the drift towards a half and the four mistakes are left to the Python and Rust checks.
 
@@ -789,7 +803,7 @@ theorem no_free_money_iff_risk_neutral_weight_strictly_between_zero_and_one
 > **Reading q as the chance that Acme goes up.** It is a ratio of prices in a probability's clothes. On this fork it is 0.525797 whoever is looking, because three market numbers build it and nothing else does. Somebody certain that Acme rises 70 percent of the time still prices this put at $8.18; their own discounted average, $5.17, answers a different question — what the put will pay.
 >
 > - **Averaging with the real odds and discounting at a rate adjusted for risk.** That rate is not known until the option's price is, which is the circle the copy cuts through.
-> - **Pricing anyway when the weight falls outside the interval from 0 to 1.** The formula keeps returning numbers when the growth factor escapes the fork, and they are not prices: at $R = 1.30$ the weight is 1.1952 and a trade collects $7.86 and $48.13 for nothing.
+> - **Pricing anyway when the weight falls outside the interval from 0 to 1.** The formula keeps returning numbers when the growth factor escapes the fork, and they are not prices: at $`R = 1.30`$ the weight is 1.1952 and a trade collects $7.86 and $48.13 for nothing.
 > - **Expecting the weight to depend on the contract.** The same 0.525797 prices the put at $8.18 and the call at $11.07; a contract enters only through its two payments.
 
 ---

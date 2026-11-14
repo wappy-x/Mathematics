@@ -42,45 +42,53 @@ Orange: the market-implied curve, bootstrapped from the 120, 200 and 250 bp quot
 
 ## The formula
 
-Notation first, in words. Two probability laws are in play. $\mathbb{P}$ ("blackboard P") is the **real-world law**: how often things actually happen. $\mathbb{Q}$ is the **pricing law**: the weights that make average discounted payoffs equal today's prices. $S(T)$ is the chance of surviving past year $T$, with a subscript saying under which law.
+Notation first, in words. Two probability laws are in play. $`\mathbb{P}`$ ("blackboard P") is the **real-world law**: how often things actually happen. $`\mathbb{Q}`$ is the **pricing law**: the weights that make average discounted payoffs equal today's prices. $`S(T)`$ is the chance of surviving past year $`T`$, with a subscript saying under which law.
 
 The comparison is made on hazards, not on probabilities. First turn each five-year survival into its **average hazard**:
 
-$$\bar h(T) = -\frac{\ln S(T)}{T}$$
+```math
+\bar h(T) = -\frac{\ln S(T)}{T}
+```
 
-**Read it aloud:** the average hazard is the flat yearly default rate that would leave the same fraction of survivors after $T$ years.
+**Read it aloud:** the average hazard is the flat yearly default rate that would leave the same fraction of survivors after $`T`$ years.
 
 Then take the ratio:
 
-$$\rho(T) = \frac{\bar h_{\mathbb{Q}}(T)}{\bar h_{\mathbb{P}}(T)} = \frac{\ln S_{\mathbb{Q}}(T)}{\ln S_{\mathbb{P}}(T)}$$
+```math
+\rho(T) = \frac{\bar h_{\mathbb{Q}}(T)}{\bar h_{\mathbb{P}}(T)} = \frac{\ln S_{\mathbb{Q}}(T)}{\ln S_{\mathbb{P}}(T)}
+```
 
 **Read it aloud:** the hazard ratio is how many times faster the market assumes the borrower dies than history does, on average over the horizon.
 
 The same gap in the CDS market's own units is a spread:
 
-$$\text{risk premium} = s - s_{\mathbb{P}}$$
+```math
+\text{risk premium} = s - s_{\mathbb{P}}
+```
 
-**Read it aloud:** the premium is the quoted spread minus the spread that would just pay for historical losses. Here $s_{\mathbb{P}}$ is the **actuarial spread**: the par spread (the fee that makes the contract worth zero on the day it is signed) of the same contract priced with the historical survival curve in place of the market one.
+**Read it aloud:** the premium is the quoted spread minus the spread that would just pay for historical losses. Here $`s_{\mathbb{P}}`$ is the **actuarial spread**: the par spread (the fee that makes the contract worth zero on the day it is signed) of the same contract priced with the historical survival curve in place of the market one.
 
-Behind all three sits one identity. Take any event $A$ at the horizon, such as "Northwind has defaulted". Write $\mathbf{1}_A$ for its indicator (1 if $A$ happens, 0 if not), $\mathbb{E}_{\mathbb{P}}$ for an average under the real-world law, and $M$ for the **pricing weight**: what a dollar paid in a given future state costs today, per unit of that state's real-world chance.
+Behind all three sits one identity. Take any event $`A`$ at the horizon, such as "Northwind has defaulted". Write $`\mathbf{1}_A`$ for its indicator (1 if $`A`$ happens, 0 if not), $`\mathbb{E}_{\mathbb{P}}`$ for an average under the real-world law, and $`M`$ for the **pricing weight**: what a dollar paid in a given future state costs today, per unit of that state's real-world chance.
 
-$$\mathbb{Q}(A) = \frac{\mathbb{E}_{\mathbb{P}}[M\,\mathbf{1}_A]}{\mathbb{E}_{\mathbb{P}}[M]}$$
+```math
+\mathbb{Q}(A) = \frac{\mathbb{E}_{\mathbb{P}}[M\,\mathbf{1}_A]}{\mathbb{E}_{\mathbb{P}}[M]}
+```
 
 **Read it aloud:** the pricing chance of an event is its real-world chance, weighted by how much a dollar is worth in the states where it happens.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mathbb{P}$, $\mathbb{Q}$ | the real-world law and the pricing law | rating table; CDS curve | — |
-| $T$ | the horizon, in years | 5 | both default chances rise |
-| $S_{\mathbb{Q}}$, $S_{\mathbb{P}}$ | chance of surviving past $T$ under each law | 0.807041; 0.891947 | a higher survival lowers that side's hazard |
-| $H$ | cumulative hazard, $-\ln S$: the total default rate piled up to $T$ | 0.214381; 0.114349 | — |
-| $h$, $\bar h$, $\bar h_{\mathbb{Q}}$, $\bar h_{\mathbb{P}}$ | a flat hazard; the average hazard, $H/T$, per year ("h bar") | 4.29%; 2.29% | — |
-| $\rho$ | the hazard ratio ("rho") | 1.87 | a higher market hazard raises it |
-| $\lambda_1$, $\lambda_2$, $\lambda_3$ | the bootstrapped market hazard on years 0–1, 1–3, 3–5 ("lambda") | 1.98%, 4.04%, 5.68% | — |
-| $s$, $s_{\mathbb{P}}$ | the quoted 5-year spread; the actuarial spread from the historical curve | 250 bp; 133.56 bp | a higher quote raises the premium |
-| $R$, $r$ | recovery (cents per dollar returned at default); the riskless rate | 40%; 5% | a higher assumed $R$ raises the market hazard |
-| $M$, $m_A$, $\pi$ | the **pricing weight**: the state price $\pi$ (cost today of $1 paid in that state only) divided by that state's real-world chance; $m_A$ is its value in the states where $A$ happens | default states weigh 1.97 times survival states | the more it favours default states, the higher $\mathbb{Q}$ |
-| $\mathbf{1}_A$, $A$, $\omega$, $\mathbb{E}_{\mathbb{P}}$, $D$ | the indicator of event $A$ (1 if it happens, 0 if not); the event; one future state ("omega"); the average under $\mathbb{P}$; $D = \mathbb{E}_{\mathbb{P}}[M]$, the discount factor | $A$ = defaulted by year 5 | — |
+| $`\mathbb{P}`$, $`\mathbb{Q}`$ | the real-world law and the pricing law | rating table; CDS curve | — |
+| $`T`$ | the horizon, in years | 5 | both default chances rise |
+| $`S_{\mathbb{Q}}`$, $`S_{\mathbb{P}}`$ | chance of surviving past $`T`$ under each law | 0.807041; 0.891947 | a higher survival lowers that side's hazard |
+| $`H`$ | cumulative hazard, $`-\ln S`$: the total default rate piled up to $`T`$ | 0.214381; 0.114349 | — |
+| $`h`$, $`\bar h`$, $`\bar h_{\mathbb{Q}}`$, $`\bar h_{\mathbb{P}}`$ | a flat hazard; the average hazard, $`H/T`$, per year ("h bar") | 4.29%; 2.29% | — |
+| $`\rho`$ | the hazard ratio ("rho") | 1.87 | a higher market hazard raises it |
+| $`\lambda_1`$, $`\lambda_2`$, $`\lambda_3`$ | the bootstrapped market hazard on years 0–1, 1–3, 3–5 ("lambda") | 1.98%, 4.04%, 5.68% | — |
+| $`s`$, $`s_{\mathbb{P}}`$ | the quoted 5-year spread; the actuarial spread from the historical curve | 250 bp; 133.56 bp | a higher quote raises the premium |
+| $`R`$, $`r`$ | recovery (cents per dollar returned at default); the riskless rate | 40%; 5% | a higher assumed $`R`$ raises the market hazard |
+| $`M`$, $`m_A`$, $`\pi`$ | the **pricing weight**: the state price $`\pi`$ (cost today of $1 paid in that state only) divided by that state's real-world chance; $`m_A`$ is its value in the states where $`A`$ happens | default states weigh 1.97 times survival states | the more it favours default states, the higher $`\mathbb{Q}`$ |
+| $`\mathbf{1}_A`$, $`A`$, $`\omega`$, $`\mathbb{E}_{\mathbb{P}}`$, $`D`$ | the indicator of event $`A`$ (1 if it happens, 0 if not); the event; one future state ("omega"); the average under $`\mathbb{P}`$; $`D = \mathbb{E}_{\mathbb{P}}[M]`$, the discount factor | $`A`$ = defaulted by year 5 | — |
 
 Conventions, as on the bootstrapping card, verified 2026-09-28: premiums paid quarterly at the end of each quarter, no premium accrued at default, recovery paid at the default time, flat riskless rate 5% continuously compounded. The traded contract also pays accrued premium on default; that moves the numbers in the second decimal, not the story.
 
@@ -104,58 +112,64 @@ Default protection pays out mostly in bad states. So its price is higher than it
 
 ### Step 1: the market number comes from prices
 
-The bootstrap finds, one tenor (contract length) at a time, the flat hazard that makes the premium leg (the fees, paid while Northwind survives) equal the protection leg (60% of the $10m notional, the face amount protected, paid at default). The three quotes give $\lambda_1 = 1.98\%$ on year one, $\lambda_2 = 4.04\%$ on years one to three and $\lambda_3 = 5.68\%$ on years three to five. The cumulative hazard is the sum of rate times length:
+The bootstrap finds, one tenor (contract length) at a time, the flat hazard that makes the premium leg (the fees, paid while Northwind survives) equal the protection leg (60% of the $10m notional, the face amount protected, paid at default). The three quotes give $`\lambda_1 = 1.98\%`$ on year one, $`\lambda_2 = 4.04\%`$ on years one to three and $`\lambda_3 = 5.68\%`$ on years three to five. The cumulative hazard is the sum of rate times length:
 
-$$H_{\mathbb{Q}}(5) = \lambda_1 \times 1 + \lambda_2 \times 2 + \lambda_3 \times 2 = 0.214381, \qquad S_{\mathbb{Q}}(5) = e^{-0.214381} = 0.807041.$$
+```math
+H_{\mathbb{Q}}(5) = \lambda_1 \times 1 + \lambda_2 \times 2 + \lambda_3 \times 2 = 0.214381, \qquad S_{\mathbb{Q}}(5) = e^{-0.214381} = 0.807041.
+```
 
-Nothing in that calculation looked at how often ferry companies actually fail. It used prices, a recovery assumption and a discount rate. That is why the output is a $\mathbb{Q}$ number. How the bootstrap is done belongs to [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md); this card only uses its output.
+Nothing in that calculation looked at how often ferry companies actually fail. It used prices, a recovery assumption and a discount rate. That is why the output is a $`\mathbb{Q}`$ number. How the bootstrap is done belongs to [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md); this card only uses its output.
 
 ### Step 2: the historical number comes from counting
 
-The rating table records one year of grade moves for a population of borrowers: Solid borrowers stay Solid 90% of the time, slip to Shaky 9% and default 1%; Shaky ones climb back 10%, stay 80% and default 10%. Multiplying that table by itself five times, as [Rating transition matrices](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md) shows, gives the five-year default chance from Solid: 10.81%. Nothing in that calculation used a price. It counted. That is why it is a $\mathbb{P}$ number.
+The rating table records one year of grade moves for a population of borrowers: Solid borrowers stay Solid 90% of the time, slip to Shaky 9% and default 1%; Shaky ones climb back 10%, stay 80% and default 10%. Multiplying that table by itself five times, as [Rating transition matrices](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md) shows, gives the five-year default chance from Solid: 10.81%. Nothing in that calculation used a price. It counted. That is why it is a $`\mathbb{P}`$ number.
 
 ### Step 3: put them on one scale
 
 Probabilities are awkward to compare directly: they cannot exceed 1, so ratios of them shrink as horizons grow. Hazards have no ceiling. Each survival converts to one average hazard, and only one:
 
-- **Existence.** For any survival strictly between 0 and 1, the curve $e^{-hT}$ runs from 1 at $h = 0$ down toward 0 as $h$ grows, passing every value in between. Some $h$ hits it.
-- **Uniqueness.** The curve only falls as $h$ grows, so it hits each value once.
-- **Boundaries.** A survival of 1 (no defaults ever recorded) gives $\bar h_{\mathbb{P}} = 0$, and the ratio $\rho$ divides by zero: it is undefined. A survival of 0 needs an infinite hazard.
+- **Existence.** For any survival strictly between 0 and 1, the curve $`e^{-hT}`$ runs from 1 at $`h = 0`$ down toward 0 as $`h`$ grows, passing every value in between. Some $`h`$ hits it.
+- **Uniqueness.** The curve only falls as $`h`$ grows, so it hits each value once.
+- **Boundaries.** A survival of 1 (no defaults ever recorded) gives $`\bar h_{\mathbb{P}} = 0`$, and the ratio $`\rho`$ divides by zero: it is undefined. A survival of 0 needs an infinite hazard.
 
-Taking logs gives the formula, and the ratio of two average hazards over the same $T$ is the ratio of two logs, because the $T$ cancels. For Northwind, $\rho(5) = 0.214381 / 0.114349 = 1.87$. The ratio of the two cumulative probabilities, 19.30% over 10.81%, is 1.79. That is a different number and not the hazard ratio.
+Taking logs gives the formula, and the ratio of two average hazards over the same $`T`$ is the ratio of two logs, because the $`T`$ cancels. For Northwind, $`\rho(5) = 0.214381 / 0.114349 = 1.87`$. The ratio of the two cumulative probabilities, 19.30% over 10.81%, is 1.79. That is a different number and not the hazard ratio.
 
 ### Step 4: why the market number is the bigger one
 
-The state-prices card ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)) shows that, without arbitrage, every future state $\omega$ has a positive price $\pi(\omega)$: the cost today of $1 paid in that state and nowhere else. Divide by the state's real-world chance and the result is the pricing weight $M$. Normalise the state prices so they add to 1 and the result is $\mathbb{Q}$. That gives the identity in The formula, and one line of algebra turns it into
+The state-prices card ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)) shows that, without arbitrage, every future state $`\omega`$ has a positive price $`\pi(\omega)`$: the cost today of $1 paid in that state and nowhere else. Divide by the state's real-world chance and the result is the pricing weight $`M`$. Normalise the state prices so they add to 1 and the result is $`\mathbb{Q}`$. That gives the identity in The formula, and one line of algebra turns it into
 
-$$\mathbb{Q}(A) - \mathbb{P}(A) = \frac{\operatorname{Cov}_{\mathbb{P}}(M, \mathbf{1}_A)}{\mathbb{E}_{\mathbb{P}}[M]},$$
+```math
+\mathbb{Q}(A) - \mathbb{P}(A) = \frac{\mathrm{Cov}_{\mathbb{P}}(M, \mathbf{1}_A)}{\mathbb{E}_{\mathbb{P}}[M]},
+```
 
-where $\operatorname{Cov}$ is the covariance: positive when $M$ tends to be high exactly when $A$ happens. **The pricing chance exceeds the real chance precisely when money is dear in the states where the event happens.** Defaults bunch in recessions; money is dear in recessions; so $\mathbb{Q}$(default) is above $\mathbb{P}$(default).
+where $`\mathrm{Cov}`$ is the covariance: positive when $`M`$ tends to be high exactly when $`A`$ happens. **The pricing chance exceeds the real chance precisely when money is dear in the states where the event happens.** Defaults bunch in recessions; money is dear in recessions; so $`\mathbb{Q}`$(default) is above $`\mathbb{P}`$(default).
 
 With just two states at year five, default and survival, the identity becomes a statement about odds:
 
-$$\frac{\mathbb{Q}(A)}{1 - \mathbb{Q}(A)} = \frac{m_A}{m_{\text{not }A}} \times \frac{\mathbb{P}(A)}{1 - \mathbb{P}(A)},$$
+```math
+\frac{\mathbb{Q}(A)}{1 - \mathbb{Q}(A)} = \frac{m_A}{m_{\text{not }A}} \times \frac{\mathbb{P}(A)}{1 - \mathbb{P}(A)},
+```
 
-with $m_A$ and $m_{\text{not }A}$ the pricing weights in the two states. For Northwind the market odds of default are 1.97 times the historical odds. Read literally: per unit of real-world chance, a dollar paid at year five in the world where Northwind has failed costs about twice as much as one paid in the world where it survives.
+with $`m_A`$ and $`m_{\text{not }A}`$ the pricing weights in the two states. For Northwind the market odds of default are 1.97 times the historical odds. Read literally: per unit of real-world chance, a dollar paid at year five in the world where Northwind has failed costs about twice as much as one paid in the world where it survives.
 
 <details>
 <summary>Detailed proof: the reweighting identity and its odds form</summary>
 
-Take finitely many states, each with real-world chance $p(\omega) > 0$ and state price $\pi(\omega) > 0$. Define $M(\omega) = \pi(\omega)/p(\omega)$. Then $\mathbb{E}_{\mathbb{P}}[M] = \sum_\omega p(\omega) M(\omega) = \sum_\omega \pi(\omega)$, the price of $1 paid in every state: the discount factor. Define $\mathbb{Q}(\omega) = \pi(\omega)/\sum \pi$. Each $\mathbb{Q}(\omega)$ is positive and they add to 1, so $\mathbb{Q}$ is a probability law. For an event $A$, $\mathbb{Q}(A) = \sum_{\omega \in A} \pi(\omega) / \sum \pi = \mathbb{E}_{\mathbb{P}}[M \mathbf{1}_A] / \mathbb{E}_{\mathbb{P}}[M]$. That is the identity.
+Take finitely many states, each with real-world chance $`p(\omega) > 0`$ and state price $`\pi(\omega) > 0`$. Define $`M(\omega) = \pi(\omega)/p(\omega)`$. Then $`\mathbb{E}_{\mathbb{P}}[M] = \sum_\omega p(\omega) M(\omega) = \sum_\omega \pi(\omega)`$, the price of $1 paid in every state: the discount factor. Define $`\mathbb{Q}(\omega) = \pi(\omega)/\sum \pi`$. Each $`\mathbb{Q}(\omega)`$ is positive and they add to 1, so $`\mathbb{Q}`$ is a probability law. For an event $`A`$, $`\mathbb{Q}(A) = \sum_{\omega \in A} \pi(\omega) / \sum \pi = \mathbb{E}_{\mathbb{P}}[M \mathbf{1}_A] / \mathbb{E}_{\mathbb{P}}[M]`$. That is the identity.
 
-Covariance form: by definition $\operatorname{Cov}(M, \mathbf{1}_A) = \mathbb{E}[M \mathbf{1}_A] - \mathbb{E}[M]\,\mathbb{E}[\mathbf{1}_A]$, and $\mathbb{E}[\mathbf{1}_A] = \mathbb{P}(A)$. Divide by $\mathbb{E}[M]$ and rearrange.
+Covariance form: by definition $`\mathrm{Cov}(M, \mathbf{1}_A) = \mathbb{E}[M \mathbf{1}_A] - \mathbb{E}[M]\,\mathbb{E}[\mathbf{1}_A]`$, and $`\mathbb{E}[\mathbf{1}_A] = \mathbb{P}(A)`$. Divide by $`\mathbb{E}[M]`$ and rearrange.
 
-Odds form: with two states, $A$ and not-$A$, $\mathbb{Q}(A) = p_A m_A / D$ and $1 - \mathbb{Q}(A) = (1 - p_A) m_{\text{not }A} / D$, where $D$ is the common denominator. Divide the first by the second; $D$ cancels.
+Odds form: with two states, $`A`$ and not-$`A`$, $`\mathbb{Q}(A) = p_A m_A / D`$ and $`1 - \mathbb{Q}(A) = (1 - p_A) m_{\text{not }A} / D`$, where $`D`$ is the common denominator. Divide the first by the second; $`D`$ cancels.
 
-What the identity does not say: a single CDS quote pins down one reweighted number, not the whole weighting $M$. Many different pricing weights give the same five-year $\mathbb{Q}$. The odds ratio 1.97 is the simplest weighting consistent with both numbers, not a measurement of the market's full pricing weight.
+What the identity does not say: a single CDS quote pins down one reweighted number, not the whole weighting $`M`$. Many different pricing weights give the same five-year $`\mathbb{Q}`$. The odds ratio 1.97 is the simplest weighting consistent with both numbers, not a measurement of the market's full pricing weight.
 
 </details>
 
-Why is $M$ high in default states? Three reasons, in order of what the evidence supports.
+Why is $`M`$ high in default states? Three reasons, in order of what the evidence supports.
 
 - **Default losses cluster in bad years.** Many firms fail together in recessions, recoveries are lower then, and investors' other wealth is down at the same time. A loss then hurts more than the same loss in a boom. This is systematic risk (risk that diversifying across many borrowers cannot remove), and investors demand pay for bearing it.
 - **Jump-to-default risk.** A default is a sudden loss of 60 cents on the dollar. Even a diversified investor holds a finite number of names (borrowers) and cannot average the jumps away completely.
-- **Non-default pieces read as default.** Liquidity costs, taxes on bond coupons and counterparty risk all widen spreads. A bootstrap that treats the whole spread as default risk inflates $\mathbb{Q}$ with them.
+- **Non-default pieces read as default.** Liquidity costs, taxes on bond coupons and counterparty risk all widen spreads. A bootstrap that treats the whole spread as default risk inflates $`\mathbb{Q}`$ with them.
 
 ### Step 5: the gap in spread units
 
@@ -163,7 +177,7 @@ Price the same five-year contract with the historical survival curve in place of
 
 The market charges 250 bp. The difference, 116.44 bp a year, is the risk premium in the CDS market's own units. Almost half of the fee is payment for bearing the risk, not for expected losses.
 
-The quick version uses the credit triangle (spread ≈ hazard × loss fraction, from [The credit triangle](03-the-credit-triangle.md)): $(1 - R)(\bar h_{\mathbb{Q}} - \bar h_{\mathbb{P}}) = 0.6 \times (4.29\% - 2.29\%)$, which gives 120.04 bp. The triangle ignores discounting and the shape of the curve, so it lands a few basis points off the full repricing.
+The quick version uses the credit triangle (spread ≈ hazard × loss fraction, from [The credit triangle](03-the-credit-triangle.md)): $`(1 - R)(\bar h_{\mathbb{Q}} - \bar h_{\mathbb{P}}) = 0.6 \times (4.29\% - 2.29\%)`$, which gives 120.04 bp. The triangle ignores discounting and the shape of the curve, so it lands a few basis points off the full repricing.
 
 ### The other door: the credit spread puzzle
 
@@ -183,17 +197,17 @@ Northwind: quotes 120, 200 and 250 bp at one, three and five years, recovery 40%
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Market hazards from the bootstrap | $\lambda_1, \lambda_2, \lambda_3$ | 0.019826, 0.040440, 0.056837 |
-| Market cumulative hazard, 5 years | $0.019826 \times 1 + 0.040440 \times 2 + 0.056837 \times 2$ | 0.214381 |
-| Market survival | $e^{-0.214381}$ | 0.807041 |
-| Market default chance | $1 - 0.807041$ | **19.30%** |
+| Market hazards from the bootstrap | $`\lambda_1, \lambda_2, \lambda_3`$ | 0.019826, 0.040440, 0.056837 |
+| Market cumulative hazard, 5 years | $`0.019826 \times 1 + 0.040440 \times 2 + 0.056837 \times 2`$ | 0.214381 |
+| Market survival | $`e^{-0.214381}`$ | 0.807041 |
+| Market default chance | $`1 - 0.807041`$ | **19.30%** |
 | Historical default chance | Solid row of the table to the fifth power | **10.81%** |
-| Historical cumulative hazard | $-\ln(1 - 0.108053)$ | 0.114349 |
-| Average hazards | $0.214381 / 5$ and $0.114349 / 5$ | 4.29% and 2.29% a year |
-| Hazard ratio | $0.214381 / 0.114349$ | **1.87** |
+| Historical cumulative hazard | $`-\ln(1 - 0.108053)`$ | 0.114349 |
+| Average hazards | $`0.214381 / 5`$ and $`0.114349 / 5`$ | 4.29% and 2.29% a year |
+| Hazard ratio | $`0.214381 / 0.114349`$ | **1.87** |
 | Actuarial spread | 5-year CDS priced on the historical curve | 133.56 bp |
-| Risk premium | $250 - 133.56$ | **116.44 bp a year** |
-| Pricing odds ratio | $\dfrac{0.192959 / 0.807041}{0.108053 / 0.891947}$ | 1.97 |
+| Risk premium | $`250 - 133.56`$ | **116.44 bp a year** |
+| Pricing odds ratio | $`\dfrac{0.192959 / 0.807041}{0.108053 / 0.891947}`$ | 1.97 |
 
 In the world: of 1,000 borrowers like Northwind, history expects about 108 to default within five years. The market charges as if 193 would. The difference is not a disagreement about the future; it is what investors charge to carry the risk.
 
@@ -647,12 +661,12 @@ The two outputs agree line for line. The random numbers match because both progr
 
 Lean proves the reweighting identity and its covariance and odds forms on finitely many states, and the rating table's exact default chances.
 
-- Take finitely many states, each with a positive real-world chance $p$ and a positive state price $\pi$, the chances adding to 1. Then the normalised state prices are positive and add to 1, so $\mathbb{Q}$ is a probability law.
-- Take the same states, with pricing weight $M = \pi / p$. Then $\mathbb{E}_{\mathbb{P}}[M]$ is the sum of the state prices, the discount factor $D$.
-- Take any event $A$. Then $\mathbb{Q}(A) = \mathbb{E}_{\mathbb{P}}[M\,\mathbf{1}_A] / \mathbb{E}_{\mathbb{P}}[M]$.
-- Take any event $A$. Then $\mathbb{Q}(A) - \mathbb{P}(A) = \operatorname{Cov}_{\mathbb{P}}(M, \mathbf{1}_A) / \mathbb{E}_{\mathbb{P}}[M]$.
-- Take any event $A$. Then its pricing chance exceeds its real-world chance exactly when that covariance is positive.
-- Take two states, default and survival, with real-world chances above 0 and positive state prices. Then the pricing odds of default are $m_A / m_{\text{not }A}$ times the real-world odds.
+- Take finitely many states, each with a positive real-world chance $`p`$ and a positive state price $`\pi`$, the chances adding to 1. Then the normalised state prices are positive and add to 1, so $`\mathbb{Q}`$ is a probability law.
+- Take the same states, with pricing weight $`M = \pi / p`$. Then $`\mathbb{E}_{\mathbb{P}}[M]`$ is the sum of the state prices, the discount factor $`D`$.
+- Take any event $`A`$. Then $`\mathbb{Q}(A) = \mathbb{E}_{\mathbb{P}}[M\,\mathbf{1}_A] / \mathbb{E}_{\mathbb{P}}[M]`$.
+- Take any event $`A`$. Then $`\mathbb{Q}(A) - \mathbb{P}(A) = \mathrm{Cov}_{\mathbb{P}}(M, \mathbf{1}_A) / \mathbb{E}_{\mathbb{P}}[M]`$.
+- Take any event $`A`$. Then its pricing chance exceeds its real-world chance exactly when that covariance is positive.
+- Take two states, default and survival, with real-world chances above 0 and positive state prices. Then the pricing odds of default are $`m_A / m_{\text{not }A}`$ times the real-world odds.
 - Take the rating table. Then the five-year default chance is exactly 0.10805311 from Solid and 0.3504457 from Shaky.
 - Take the Solid row. Then the default chances by years two, three and four are exactly 0.028, 0.05149 and 0.078625.
 
@@ -844,8 +858,8 @@ example :
 
 ## Where you meet it in real life
 
-- **Bank capital.** Regulatory capital for loans is built on real-world default probabilities estimated from a bank's own history or agency tables: the $\mathbb{P}$ side.
-- **Counterparty valuation adjustments.** When a bank values the risk that a trading partner defaults, accounting rules push it toward market-implied default chances from CDS: the $\mathbb{Q}$ side. The same bank thus holds two numbers for the same counterparty.
+- **Bank capital.** Regulatory capital for loans is built on real-world default probabilities estimated from a bank's own history or agency tables: the $`\mathbb{P}`$ side.
+- **Counterparty valuation adjustments.** When a bank values the risk that a trading partner defaults, accounting rules push it toward market-implied default chances from CDS: the $`\mathbb{Q}`$ side. The same bank thus holds two numbers for the same counterparty.
 - **Loan loss provisions.** Accounting provisions for expected losses use forward-looking real-world estimates, not CDS-implied ones.
 - **Credit investing.** A bond or CDS investor asks whether 116 bp of premium over expected losses is enough pay for the risk. That comparison is the actuarial spread against the quote.
 - **Research on risk premia.** Berndt, Douglas, Duffie and Ferguson (2018, in Sources) measure market-implied default rates from CDS against real-world estimates for the same firms, and find the market rates well above the real-world ones, with the ratio moving sharply over time.

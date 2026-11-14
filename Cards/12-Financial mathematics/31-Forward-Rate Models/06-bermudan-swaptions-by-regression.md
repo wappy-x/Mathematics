@@ -40,40 +40,46 @@ Orange: the payoff, what switching pays now. Green: the hold value the regressio
 
 ## The formula
 
-Notation first, in words. Years are counted 0 to 6. The forward rate $L_i$ covers borrowing from year $i$ to year $i+1$. A price at year $e$ of 1 dollar paid at year 6 is written $P(e,6)$. A capital sigma sums over the swap's payment years. An average over simulated futures, given everything known at year $e$, is written $E_e[\;]$.
+Notation first, in words. Years are counted 0 to 6. The forward rate $`L_i`$ covers borrowing from year $`i`$ to year $`i+1`$. A price at year $`e`$ of 1 dollar paid at year 6 is written $`P(e,6)`$. A capital sigma sums over the swap's payment years. An average over simulated futures, given everything known at year $`e`$, is written $`E_e[\;]`$.
 
-At an exercise year $e$ the swap left to enter pays fixed $K$ in years $e+1$ to 6. Its value per 1 of loan is
+At an exercise year $`e`$ the swap left to enter pays fixed $`K`$ in years $`e+1`$ to 6. Its value per 1 of loan is
 
-$$A_e\,(S_e - K), \qquad A_e = \sum_{m=e+1}^{6} P(e,m), \qquad S_e = \frac{1 - P(e,6)}{A_e}.$$
+```math
+A_e\,(S_e - K), \qquad A_e = \sum_{m=e+1}^{6} P(e,m), \qquad S_e = \frac{1 - P(e,6)}{A_e}.
+```
 
 Switching is optional, so the payoff is the positive part. Measure it in year-6 bonds instead of dollars:
 
-$$h_e = \frac{A_e\,\max(S_e - K,\,0)}{P(e,6)}.$$
+```math
+h_e = \frac{A_e\,\max(S_e - K,\,0)}{P(e,6)}.
+```
 
 The price is the best average over all legal rules, and every legal rule pins it between two computable numbers:
 
-$$\boxed{\;P(0,6)\,E\big[h_{\hat\tau}\big] \;\le\; V_0 \;=\; P(0,6)\,\max_{\tau} E\big[h_\tau\big] \;\le\; P(0,6)\,E\Big[\max_{1\le e\le 5}\big(h_e - M_e\big)\Big]\;}$$
+```math
+\boxed{\;P(0,6)\,E\big[h_{\hat\tau}\big] \;\le\; V_0 \;=\; P(0,6)\,\max_{\tau} E\big[h_\tau\big] \;\le\; P(0,6)\,E\Big[\max_{1\le e\le 5}\big(h_e - M_e\big)\Big]\;}
+```
 
 **Read it aloud:** the price is today's value of a year-6 dollar times the best average switching value; the rule learned by regression can only do worse, and the switching values minus any fair-game process, maximised path by path, can only do better.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L_i$, $\mu_i$, $i$ | forward rate for borrowing from year $i$ to $i+1$, compounded once a year; $\mu_i$ its drift in the year-6 bond's world | 5% for $i = 0$ to 5 | rises: the swap that pays fixed gains |
-| $\sigma$, $W$ | volatility: the yearly spread of each forward's log; $W$ the running total of the one shock that moves all six | 20% | rises: more chance of a big move |
-| $K$ | the strike: the fixed rate the holder may lock in | 5% | falls: less to gain from switching |
-| $e$, $\tau$, $\hat\tau$ | an exercise year, 1 to 5; $\tau$ the year a rule picks, decided only from curves seen so far; $\hat\tau$ the regression rule's pick | $\hat\tau = 1$ on 73,696 of 400,000 paths | — |
-| $P(e,6)$ | price at year $e$ of 1 dollar paid at year 6: the **numeraire**, the unit all values are counted in | 0.746215 today | — |
-| $A_e$, $m$ | the **annuity**: the year-$e$ value of 1 paid in each payment year $m$ from $e+1$ to 6 | $A(0) = 4.123311$: today's value of the year-1 swap's annuity, years 2 to 6 | — |
-| $S_e$, $x_e$ | the swap rate that makes the swap worth zero; $x_e = 100\,(S_e - K)$, the same in percentage points | $S(0) = 5\%$ today: at the money | — |
-| $h_e$ | the switching value at year $e$, counted in year-6 bonds | 0 below the strike | — |
-| $C_e$, $\beta_e$ | the hold value $C_e = E_e[h_\tau]$ over later years; $\beta_e$ its three regression coefficients | see the chart | — |
-| $M_e$ | a **martingale**: a fair-game process, whose expected next value, given today, is today's value; $M_0 = 0$ | built from the rule | — |
-| $V_0$, $Y_e$, $Y_0$ | the price today, per 1 of loan; $Y_e$ the true value at year $e$ in year-6 bonds, so $V_0 = P(0,6)\,Y_0$ | 2.35% | — |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas in the Black formula for the one-date swaption, $d_1 = -d_2 = \sigma/2$ here | 0.539828, 0.460172 | — |
+| $`L_i`$, $`\mu_i`$, $`i`$ | forward rate for borrowing from year $`i`$ to $`i+1`$, compounded once a year; $`\mu_i`$ its drift in the year-6 bond's world | 5% for $`i = 0`$ to 5 | rises: the swap that pays fixed gains |
+| $`\sigma`$, $`W`$ | volatility: the yearly spread of each forward's log; $`W`$ the running total of the one shock that moves all six | 20% | rises: more chance of a big move |
+| $`K`$ | the strike: the fixed rate the holder may lock in | 5% | falls: less to gain from switching |
+| $`e`$, $`\tau`$, $`\hat\tau`$ | an exercise year, 1 to 5; $`\tau`$ the year a rule picks, decided only from curves seen so far; $`\hat\tau`$ the regression rule's pick | $`\hat\tau = 1`$ on 73,696 of 400,000 paths | — |
+| $`P(e,6)`$ | price at year $`e`$ of 1 dollar paid at year 6: the **numeraire**, the unit all values are counted in | 0.746215 today | — |
+| $`A_e`$, $`m`$ | the **annuity**: the year-$`e`$ value of 1 paid in each payment year $`m`$ from $`e+1`$ to 6 | $`A(0) = 4.123311`$: today's value of the year-1 swap's annuity, years 2 to 6 | — |
+| $`S_e`$, $`x_e`$ | the swap rate that makes the swap worth zero; $`x_e = 100\,(S_e - K)`$, the same in percentage points | $`S(0) = 5\%`$ today: at the money | — |
+| $`h_e`$ | the switching value at year $`e`$, counted in year-6 bonds | 0 below the strike | — |
+| $`C_e`$, $`\beta_e`$ | the hold value $`C_e = E_e[h_\tau]`$ over later years; $`\beta_e`$ its three regression coefficients | see the chart | — |
+| $`M_e`$ | a **martingale**: a fair-game process, whose expected next value, given today, is today's value; $`M_0 = 0`$ | built from the rule | — |
+| $`V_0`$, $`Y_e`$, $`Y_0`$ | the price today, per 1 of loan; $`Y_e`$ the true value at year $`e`$ in year-6 bonds, so $`V_0 = P(0,6)\,Y_0`$ | 2.35% | — |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas in the Black formula for the one-date swaption, $`d_1 = -d_2 = \sigma/2`$ here | 0.539828, 0.460172 | — |
 
 **Conventions, dated 28 Sep 2026:** annual periods with a year fraction of exactly one, one curve for both forecasting and discounting, and settlement by entering the swap. Traded swaps use day counts and a separate discount curve; the method does not change.
 
-Two helper facts carry the rest. The floating side of a swap is worth $1 - P(e,6)$: borrowing 1 now and repaying it at year 6 with floating interest in between is a floating loan at par. The fixed side is worth $K A_e$. Their difference is the swap value above.
+Two helper facts carry the rest. The floating side of a swap is worth $`1 - P(e,6)`$: borrowing 1 now and repaying it at year 6 with floating interest in between is a floating loan at par. The fixed side is worth $`K A_e`$. Their difference is the swap value above.
 
 ### When it holds
 
@@ -98,73 +104,77 @@ A good fair game comes from a good rule: its value, updated as the curve moves. 
 
 A dollar at year 2 and a dollar at year 5 are different things today. So count everything in one unit, the bond that pays 1 dollar at year 6: divide every value by that bond's price at the same moment. In the matching pricing world, every traded value counted this way is a fair game ([Forward measures](02-forward-measures-for-rates.md)).
 
-The payoff at any year then compares directly with the payoff at any other year. No discounting runs between exercise dates. The price is $P(0,6)$ times the average of $h_e$ at the chosen year.
+The payoff at any year then compares directly with the payoff at any other year. No discounting runs between exercise dates. The price is $`P(0,6)`$ times the average of $`h_e`$ at the chosen year.
 
 ### Step 2: simulate the curve in that world
 
 In the year-6 bond's world the last forward, for year 5 to 6, has no drift. Each earlier forward has a drift fixed by no-arbitrage, from the forwards after it ([Market models](03-libor-and-sofr-market-models.md)):
 
-$$\frac{dL_i}{L_i} = -\sigma^2 \sum_{j=i+1}^{5} \frac{L_j}{1 + L_j}\,dt \;+\; \sigma\,dW.$$
+```math
+\frac{dL_i}{L_i} = -\sigma^2 \sum_{j=i+1}^{5} \frac{L_j}{1 + L_j}\,dt \;+\; \sigma\,dW.
+```
 
 The last term is one normal shock shared by all six forwards; the first is the drift over a short time step. The simulation steps one year at a time, updating the last forward first and working to the front. The drift is averaged between its value before the step and after it, a predictor-corrector step (a first guess, then a correction using the guessed values). Dropping the drift moves the simulated one-date swaption off the Black formula far enough that the check fails.
 
 ### Step 3: the value of switching
 
-On each simulated path at year $e$, the bond prices come from the live forwards: $P(e,m)$ is 1 divided by $(1+L_e)(1+L_{e+1})\cdots(1+L_{m-1})$. The annuity, swap rate and $h_e$ follow from the formula section. The floating leg is worth $1 - P(e,6)$ because each floating payment repays exactly the interest on 1 borrowed and rolled.
+On each simulated path at year $`e`$, the bond prices come from the live forwards: $`P(e,m)`$ is 1 divided by $`(1+L_e)(1+L_{e+1})\cdots(1+L_{m-1})`$. The annuity, swap rate and $`h_e`$ follow from the formula section. The floating leg is worth $`1 - P(e,6)`$ because each floating payment repays exactly the interest on 1 borrowed and rolled.
 
 <details>
 <summary>The algebra behind the floating leg</summary>
 
-Take one payment year, from $m-1$ to $m$ with $m$ between $e+1$ and 6. Its floating payment is $L_{m-1}$, fixed at the start and paid at the end. At year $m-1$ it is worth $L_{m-1}/(1+L_{m-1}) = 1 - 1/(1+L_{m-1})$: one dollar now minus one dollar next year. Priced at year $e$, that is $P(e,m-1) - P(e,m)$. Add over $m = e+1$ to 6: the middle terms cancel in pairs and leave $P(e,e) - P(e,6) = 1 - P(e,6)$.
+Take one payment year, from $`m-1`$ to $`m`$ with $`m`$ between $`e+1`$ and 6. Its floating payment is $`L_{m-1}`$, fixed at the start and paid at the end. At year $`m-1`$ it is worth $`L_{m-1}/(1+L_{m-1}) = 1 - 1/(1+L_{m-1})`$: one dollar now minus one dollar next year. Priced at year $`e`$, that is $`P(e,m-1) - P(e,m)`$. Add over $`m = e+1`$ to 6: the middle terms cancel in pairs and leave $`P(e,e) - P(e,6) = 1 - P(e,6)`$.
 
 </details>
 
 ### Step 4: learn the hold value by regression
 
-Work backward. At year 5 no choice is left: switch if the swap is worth something. At year 4, take the paths where switching pays something. On each, record the swap-rate spread $x_e$ and the cash that path went on to collect, counted in year-6 bonds. Fit $C_e \approx \beta_0 + \beta_1 x_e + \beta_2 x_e^2$ by least squares, with $e = 4$. Switch on a path where $h_e$ beats the fitted $C_e$. Repeat at years 3, 2 and 1.
+Work backward. At year 5 no choice is left: switch if the swap is worth something. At year 4, take the paths where switching pays something. On each, record the swap-rate spread $`x_e`$ and the cash that path went on to collect, counted in year-6 bonds. Fit $`C_e \approx \beta_0 + \beta_1 x_e + \beta_2 x_e^2`$ by least squares, with $`e = 4`$. Switch on a path where $`h_e`$ beats the fitted $`C_e`$. Repeat at years 3, 2 and 1.
 
 A least-squares fit estimates an average given what is known; that is why it stands in for the hold value ([Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md)). Only paths where switching pays something (in the money) enter the fit: elsewhere there is no decision to make. The coefficients are then frozen.
 
 ### Step 5: the lower bound
 
-Run the frozen rule on 400,000 new curves. At each year it looks at the curve it has, computes $h_e$ and $x_e$, and switches if $h_e$ beats the fitted hold value. That rule sees only the past, so it is one of the legal rules the maximum ranges over. Its average is at most the maximum. Times $P(0,6)$, it is a lower bound: 2.345457%, standard error 0.004932%.
+Run the frozen rule on 400,000 new curves. At each year it looks at the curve it has, computes $`h_e`$ and $`x_e`$, and switches if $`h_e`$ beats the fitted hold value. That rule sees only the past, so it is one of the legal rules the maximum ranges over. Its average is at most the maximum. Times $`P(0,6)`$, it is a lower bound: 2.345457%, standard error 0.004932%.
 
 Fresh curves matter: on its training paths the rule has seen the answers, and its average there can sit above the truth.
 
 ### Step 6: the upper bound, for any fair game
 
-Take any martingale $M_e$ with $M_0 = 0$ and any legal rule $\tau$. Since $M_e$ is a fair game, stopping it by a rule that cannot see ahead leaves its average at zero: $E[M_\tau] = 0$. So
+Take any martingale $`M_e`$ with $`M_0 = 0`$ and any legal rule $`\tau`$. Since $`M_e`$ is a fair game, stopping it by a rule that cannot see ahead leaves its average at zero: $`E[M_\tau] = 0`$. So
 
-$$E[h_\tau] = E[h_\tau - M_\tau] \le E\Big[\max_{e}\,(h_e - M_e)\Big].$$
+```math
+E[h_\tau] = E[h_\tau - M_\tau] \le E\Big[\max_{e}\,(h_e - M_e)\Big].
+```
 
-The right side does not depend on $\tau$. It bounds the best rule too. That is the **dual** bound, found by Rogers and, independently, by Haugh and Kogan. With $M = 0$ it is the perfect-foresight value, a poor bound. With the right $M_e$ it is exact.
+The right side does not depend on $`\tau`$. It bounds the best rule too. That is the **dual** bound, found by Rogers and, independently, by Haugh and Kogan. With $`M = 0`$ it is the perfect-foresight value, a poor bound. With the right $`M_e`$ it is exact.
 
 <details>
 <summary>Detailed proof: the bound is exact for the best martingale</summary>
 
-Let $Y_e$ be the true value of the option at year $e$ (in year-6 bonds): $Y_5 = h_5$ and $Y_e = \max(h_e, E_e[Y_{e+1}])$. Define the martingale by its increments, $M^*_e - M^*_{e-1} = Y_e - E_{e-1}[Y_e]$, with $M^*_0 = 0$ and $Y_0 = E_0[Y_1]$.
+Let $`Y_e`$ be the true value of the option at year $`e`$ (in year-6 bonds): $`Y_5 = h_5`$ and $`Y_e = \max(h_e, E_e[Y_{e+1}])`$. Define the martingale by its increments, $`M^*_e - M^*_{e-1} = Y_e - E_{e-1}[Y_e]`$, with $`M^*_0 = 0`$ and $`Y_0 = E_0[Y_1]`$.
 
-Claim: $h_e - M^*_e \le Y_0$ on every path, for every $e$. Induction: $Y_0 - M^*_0 = Y_0$. And $Y_e - M^*_e = Y_{e-1} - M^*_{e-1} - (Y_{e-1} - E_{e-1}[Y_e]) \le Y_{e-1} - M^*_{e-1}$, since $Y_{e-1} \ge E_{e-1}[Y_e]$. So $Y_e - M^*_e \le Y_0$, and $h_e \le Y_e$ gives the claim.
+Claim: $`h_e - M^*_e \le Y_0`$ on every path, for every $`e`$. Induction: $`Y_0 - M^*_0 = Y_0`$. And $`Y_e - M^*_e = Y_{e-1} - M^*_{e-1} - (Y_{e-1} - E_{e-1}[Y_e]) \le Y_{e-1} - M^*_{e-1}`$, since $`Y_{e-1} \ge E_{e-1}[Y_e]`$. So $`Y_e - M^*_e \le Y_0`$, and $`h_e \le Y_e`$ gives the claim.
 
-So $E[\max_e(h_e - M^*_e)] \le Y_0$. The dual inequality gives the reverse, so the upper bound with $M^*_e$ equals the price. The argument only uses $h_e \le Y_e$ and $Y_{e-1} \ge E_{e-1}[Y_e]$, so a near-optimal value process gives a near-optimal martingale.
+So $`E[\max_e(h_e - M^*_e)] \le Y_0`$. The dual inequality gives the reverse, so the upper bound with $`M^*_e`$ equals the price. The argument only uses $`h_e \le Y_e`$ and $`Y_{e-1} \ge E_{e-1}[Y_e]`$, so a near-optimal value process gives a near-optimal martingale.
 
 </details>
 
 ### Step 7: build the fair game from the rule
 
-Andersen and Broadie built $M_e$ from the frozen rule. Let $C_e$ be the value at year $e$ of following the rule from year $e+1$ on. Let the rule's value at $e$ be $h_e$ if it switches, and $C_e$ if it holds. Then $E_{e-1}$ of the rule's value at $e$ is exactly $C_{e-1}$. So the increments "rule's value at $e$ minus $C_{e-1}$" average to zero: a fair game.
+Andersen and Broadie built $`M_e`$ from the frozen rule. Let $`C_e`$ be the value at year $`e`$ of following the rule from year $`e+1`$ on. Let the rule's value at $`e`$ be $`h_e`$ if it switches, and $`C_e`$ if it holds. Then $`E_{e-1}`$ of the rule's value at $`e`$ is exactly $`C_{e-1}`$. So the increments "rule's value at $`e`$ minus $`C_{e-1}`$" average to zero: a fair game.
 
-The $C_e$ are not known. On each of 500 outer paths, at each year, 400 inner paths are simulated from that curve, run under the rule, and averaged.
+The $`C_e`$ are not known. On each of 500 outer paths, at each year, 400 inner paths are simulated from that curve, run under the rule, and averaged.
 
-The fair game starts at year 1 as the rule's value there minus that value's average. That average is the lower bound itself. So the upper bound splits into the lower bound plus a **duality gap**. The gap is the average over outer paths of the largest $h_e$ minus the running total of increments, with the rule's year-1 value as the starting point. The gap is 0.003043%, standard error 0.000842%. The upper bound is 2.348499%.
+The fair game starts at year 1 as the rule's value there minus that value's average. That average is the lower bound itself. So the upper bound splits into the lower bound plus a **duality gap**. The gap is the average over outer paths of the largest $`h_e`$ minus the running total of increments, with the rule's year-1 value as the starting point. The gap is 0.003043%, standard error 0.000842%. The upper bound is 2.348499%.
 
-The gap is small because the rule is good: where the rule is close to the best, its value process is close to $Y_e$, and Step 6's proof then says the cheater's advantage nearly vanishes.
+The gap is small because the rule is good: where the rule is close to the best, its value process is close to $`Y_e`$, and Step 6's proof then says the cheater's advantage nearly vanishes.
 
 ### Step 8: a third road, the tree
 
-With one shock, every forward at year $e$ depends on the path only through the drift. Freeze the drifts at today's values and every forward becomes a function of the total shock $W$ so far: $L_i = L_i(0)\exp\big((\mu_i - \tfrac12\sigma^2)e + \sigma W\big)$, with $\mu_i$ the frozen drift. $W$ lives on a recombining binomial tree: 200 up-or-down steps a year, each of size $1/\sqrt{200}$.
+With one shock, every forward at year $`e`$ depends on the path only through the drift. Freeze the drifts at today's values and every forward becomes a function of the total shock $`W`$ so far: $`L_i = L_i(0)\exp\big((\mu_i - \tfrac12\sigma^2)e + \sigma W\big)`$, with $`\mu_i`$ the frozen drift. $`W`$ lives on a recombining binomial tree: 200 up-or-down steps a year, each of size $`1/\sqrt{200}`$.
 
-At each exercise year, the value at a node is the larger of $h_e$ and the average of its two children, rolled back step by step. This is the backward induction of [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md), run on the market model's own shock instead of a short rate. No regression and no simulation enter.
+At each exercise year, the value at a node is the larger of $`h_e`$ and the average of its two children, rolled back step by step. This is the backward induction of [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md), run on the market model's own shock instead of a short rate. No regression and no simulation enter.
 
 The tree gives 2.350191%, inside the simulated bracket's noise. Its European is 1.646175% against Black's 1.642226%. That small excess is the price of freezing the drift, and the size of the tree's own bias.
 
@@ -190,12 +200,12 @@ The one-date part first, by the Black formula for a swaption: today's annuity ti
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| year-6 bond today, $P(0,6)$ | $1 / 1.05^6$ | 0.746215 |
-| annuity, years 2 to 6, $A(0)$ | $1.05^{-2} + 1.05^{-3} + \dots + 1.05^{-6}$ | 4.123311 |
-| forward swap rate | $(1.05^{-1} - 1.05^{-6}) / 4.123311$ | 5%, the strike |
-| $d_1$, $d_2$ at the money, one year | $\pm\,\sigma/2$ | 0.1, −0.1 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.539828, 0.460172 |
-| European 1-into-5 | $100 \times 4.123311 \times 0.05 \times (0.539828 - 0.460172)$ | 1.642226% |
+| year-6 bond today, $`P(0,6)`$ | $`1 / 1.05^6`$ | 0.746215 |
+| annuity, years 2 to 6, $`A(0)`$ | $`1.05^{-2} + 1.05^{-3} + \dots + 1.05^{-6}`$ | 4.123311 |
+| forward swap rate | $`(1.05^{-1} - 1.05^{-6}) / 4.123311`$ | 5%, the strike |
+| $`d_1`$, $`d_2`$ at the money, one year | $`\pm\,\sigma/2`$ | 0.1, −0.1 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.539828, 0.460172 |
+| European 1-into-5 | $`100 \times 4.123311 \times 0.05 \times (0.539828 - 0.460172)`$ | 1.642226% |
 | year 1, curve flat at 5.50% | switch 2.14 against hold 2.78 | hold |
 | year 1, curve flat at 6.00% | switch 4.21 against hold 3.93 | switch |
 | lower bound, frozen rule, fresh curves | average over 400,000 paths | 2.345457% |
@@ -213,7 +223,7 @@ What it means: the four extra dates add 0.704016% of the loan, on the tree, over
 | --- | --- | --- |
 | Price only the first date | 1.642226% | Four later rights, worth 0.70% of the loan, thrown away |
 | Switch the first year the swap is worth anything | 2.039482% | Takes a small gain and gives up the chance of a larger one; a legal rule, so a valid but loose lower bound |
-| Upper bound with no fair game, $M = 0$ | 2.769233% | Perfect foresight: the holder picks the best year after seeing the whole path |
+| Upper bound with no fair game, $`M = 0`$ | 2.769233% | Perfect foresight: the holder picks the best year after seeing the whole path |
 
 ### How the rule spends its rights
 
@@ -653,11 +663,11 @@ The two outputs are identical line for line: same random numbers, same order of 
 
 Lean proves both bounds, the exact bound from the true value, and the floating side's value, for any number of exercise years.
 
-- Take any legal rule $\hat\tau$ and switching values with finite averages. Then $P(0,6)\,E[h_{\hat\tau}] \le V_0$.
-- Suppose also $M_e$ is a fair game with $M_0 = 0$. Then $V_0 \le P(0,6)\,E[\max_{1\le e\le 5}(h_e - M_e)]$.
-- Let $Y_e$ be the true value and $M^*_e$ the fair game built from it, as in Step 6. Then $h_e - M^*_e \le Y_0$ on every path, at every exercise year.
-- Take positive forward rates $L_i$. Then the floating side of a swap from year $e$ to year $n$ is worth $1 - P(e,n)$ at year $e$.
-- Take today's flat 5% curve. Then the forward swap rate is exactly 5%, and the year-1 swap's floating side is worth $1.05^{-1} - 1.05^{-6}$.
+- Take any legal rule $`\hat\tau`$ and switching values with finite averages. Then $`P(0,6)\,E[h_{\hat\tau}] \le V_0`$.
+- Suppose also $`M_e`$ is a fair game with $`M_0 = 0`$. Then $`V_0 \le P(0,6)\,E[\max_{1\le e\le 5}(h_e - M_e)]`$.
+- Let $`Y_e`$ be the true value and $`M^*_e`$ the fair game built from it, as in Step 6. Then $`h_e - M^*_e \le Y_0`$ on every path, at every exercise year.
+- Take positive forward rates $`L_i`$. Then the floating side of a swap from year $`e`$ to year $`n`$ is worth $`1 - P(e,n)`$ at year $`e`$.
+- Take today's flat 5% curve. Then the forward swap rate is exactly 5%, and the year-1 swap's floating side is worth $`1.05^{-1} - 1.05^{-6}`$.
 - The frozen rule's exercise counts by year add up to 400,000 paths.
 
 The model, the simulation, the regression rule, the bounds' numbers, the tree and the Greeks are left to the Python and Rust checks.
@@ -885,7 +895,7 @@ example : 73696 + 55043 + 39622 + 30795 + 23489 + 177355 = 400000 := by norm_num
 >
 > Smaller traps:
 > - **Discounting between exercise dates at a fixed rate.** When rates move, a fixed discount factor is wrong on every path. Counting in year-6 bonds removes the question.
-> - **Upper bound with no fair game.** $M = 0$ gives the perfect-foresight value, 2.769233%. It is a valid upper bound, and useless.
+> - **Upper bound with no fair game.** $`M = 0`$ gives the perfect-foresight value, 2.769233%. It is a valid upper bound, and useless.
 > - **Noisy inner averages mistaken for exact ones.** The upper bound's fair game uses hold values from 400 inner paths. Their noise pushes the upper bound up, so it stays valid, but too few inner paths inflate the gap and make a good rule look poor.
 > - **Switching the moment the swap is worth something.** That gives 2.039482%: a legal rule, so a lower bound, but well below the price.
 

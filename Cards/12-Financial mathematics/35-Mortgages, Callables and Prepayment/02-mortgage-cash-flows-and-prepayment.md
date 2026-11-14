@@ -37,49 +37,57 @@ Top line: no prepayment, the plain loan schedule. Middle line: 8 percent a year 
 
 ## The formula
 
-Notation first, in words. Months are counted $m$ = 1, 2, … up to the term $N$ = 360. The monthly rate $i$ is the yearly note rate (the interest rate written in the loan contract) divided by 12. The **annuity factor** $a_n(i)$ is today's value of one dollar paid at the end of each of $n$ months, as on [Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md).
+Notation first, in words. Months are counted $`m`$ = 1, 2, … up to the term $`N`$ = 360. The monthly rate $`i`$ is the yearly note rate (the interest rate written in the loan contract) divided by 12. The **annuity factor** $`a_n(i)`$ is today's value of one dollar paid at the end of each of $`n`$ months, as on [Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md).
 
-The prepayment speed is quoted as a yearly percentage $c$, the **conditional prepayment rate** or **CPR**. It is used month by month as $s$, the **single monthly mortality** or **SMM**: the fraction of loans still in the pool that pay off early in a given month.
+The prepayment speed is quoted as a yearly percentage $`c`$, the **conditional prepayment rate** or **CPR**. It is used month by month as $`s`$, the **single monthly mortality** or **SMM**: the fraction of loans still in the pool that pay off early in a given month.
 
-$$B_m \;=\; L\,(1-s)^m\,\frac{a_{N-m}(i)}{a_N(i)}, \qquad s \;=\; 1-(1-c)^{1/12}$$
+```math
+B_m \;=\; L\,(1-s)^m\,\frac{a_{N-m}(i)}{a_N(i)}, \qquad s \;=\; 1-(1-c)^{1/12}
+```
 
-**Read it aloud:** the balance after month $m$ is the original pool, times the fraction of loans that have survived $m$ months, times the fraction of its balance a single loan still owes on schedule.
+**Read it aloud:** the balance after month $`m`$ is the original pool, times the fraction of loans that have survived $`m`$ months, times the fraction of its balance a single loan still owes on schedule.
 
-The cash flow to the investor in month $m$ comes from the balance alone:
+The cash flow to the investor in month $`m`$ comes from the balance alone:
 
-$$X_m \;=\; I_m + Q_m + U_m \;=\; i\,B_{m-1} \;+\; (B_{m-1} - B_m)$$
+```math
+X_m \;=\; I_m + Q_m + U_m \;=\; i\,B_{m-1} \;+\; (B_{m-1} - B_m)
+```
 
 **Read it aloud:** each month the investor receives interest on what was owed at the start of the month, plus every dollar by which the balance fell.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$ | the pool's balance on day one | $1,000,000.00 | every flow scales in step |
-| $N$, $m$, $n$ | months in the term; which month is being looked at; months left | 360; 1 to 360; 360 at the start | a longer term slows scheduled principal |
-| $i$ | monthly note rate: yearly rate over 12 | 0.5% | more of each payment is interest |
-| $a_n(i)$, $a_{360}$ | annuity factor: today's value of 1 a month for $n$ months | $a_{360}$ = 166.791614 | each dollar of payment carries more loan |
-| $A$, $P_m$ | level payment of the whole pool with no prepayment; the pool's scheduled payment in month $m$ | $5,995.51; $5,953.99 in month 2 | — |
-| $c$, $c_m$ | CPR: yearly prepayment speed, constant or month by month | 8% | principal comes back sooner |
-| $s$, $s_m$ | SMM: monthly fraction of surviving loans that prepay | 0.692438% | same as CPR, monthly |
-| $B_m$, $B$ | balance still owed after month $m$; any one balance | $363,521.13 after 10 years | — |
-| $I_m$, $Q_m$, $U_m$, $I_1$, $Q_1$, $U_1$ | month $m$'s interest, scheduled principal, prepaid principal; the same in month 1 | $5,000.00, $995.51, $6,917.49 in month 1 | — |
-| $X_m$, $X_1$ | total cash to the investor in month $m$; in month 1 | $12,912.99 in month 1 | — |
-| $M$ | market rate on new mortgages, which drives refinancing | 6% | fewer refinance, CPR falls |
-| $W$ | weighted average life: average wait, in years, for a dollar of principal | 8.96 years | — |
+| $`L`$ | the pool's balance on day one | $1,000,000.00 | every flow scales in step |
+| $`N`$, $`m`$, $`n`$ | months in the term; which month is being looked at; months left | 360; 1 to 360; 360 at the start | a longer term slows scheduled principal |
+| $`i`$ | monthly note rate: yearly rate over 12 | 0.5% | more of each payment is interest |
+| $`a_n(i)`$, $`a_{360}`$ | annuity factor: today's value of 1 a month for $`n`$ months | $`a_{360}`$ = 166.791614 | each dollar of payment carries more loan |
+| $`A`$, $`P_m`$ | level payment of the whole pool with no prepayment; the pool's scheduled payment in month $`m`$ | $5,995.51; $5,953.99 in month 2 | — |
+| $`c`$, $`c_m`$ | CPR: yearly prepayment speed, constant or month by month | 8% | principal comes back sooner |
+| $`s`$, $`s_m`$ | SMM: monthly fraction of surviving loans that prepay | 0.692438% | same as CPR, monthly |
+| $`B_m`$, $`B`$ | balance still owed after month $`m`$; any one balance | $363,521.13 after 10 years | — |
+| $`I_m`$, $`Q_m`$, $`U_m`$, $`I_1`$, $`Q_1`$, $`U_1`$ | month $`m`$'s interest, scheduled principal, prepaid principal; the same in month 1 | $5,000.00, $995.51, $6,917.49 in month 1 | — |
+| $`X_m`$, $`X_1`$ | total cash to the investor in month $`m`$; in month 1 | $12,912.99 in month 1 | — |
+| $`M`$ | market rate on new mortgages, which drives refinancing | 6% | fewer refinance, CPR falls |
+| $`W`$ | weighted average life: average wait, in years, for a dollar of principal | 8.96 years | — |
 
 The month is worked in a fixed order:
 
-$$I_m = i\,B_{m-1}, \quad P_m = \frac{B_{m-1}}{a_{N-m+1}(i)}, \quad Q_m = P_m - I_m, \quad U_m = s\,(B_{m-1} - Q_m), \quad B_m = B_{m-1} - Q_m - U_m$$
+```math
+I_m = i\,B_{m-1}, \quad P_m = \frac{B_{m-1}}{a_{N-m+1}(i)}, \quad Q_m = P_m - I_m, \quad U_m = s\,(B_{m-1} - Q_m), \quad B_m = B_{m-1} - Q_m - U_m
+```
 
 In plain words:
 
 1. Charge interest on the opening balance.
 2. The surviving loans make their scheduled payment, which spreads what they owe over the months they have left.
 3. The part that is not interest is scheduled principal.
-4. Then a fraction $s$ of what remains is prepaid.
+4. Then a fraction $`s`$ of what remains is prepaid.
 
 The average life weights each dollar of principal by the year it arrives:
 
-$$W \;=\; \frac{1}{L}\sum_{m=1}^{N} \frac{m}{12}\,(Q_m + U_m)$$
+```math
+W \;=\; \frac{1}{L}\sum_{m=1}^{N} \frac{m}{12}\,(Q_m + U_m)
+```
 
 ### When it holds
 
@@ -107,11 +115,13 @@ So the pool splits into two separate questions. How many loans are still in? Tha
 
 ### Step 1: turning the yearly speed into a monthly one
 
-A speed of 8 percent a year means that of the loans in the pool at the start of a year, 92 percent would still be there at its end, if nothing else happened. Losing the same fraction $s$ every month for twelve months must leave the same 92 percent:
+A speed of 8 percent a year means that of the loans in the pool at the start of a year, 92 percent would still be there at its end, if nothing else happened. Losing the same fraction $`s`$ every month for twelve months must leave the same 92 percent:
 
-$$(1-s)^{12} = 1 - c \quad\Longrightarrow\quad s = 1 - (1-c)^{1/12}$$
+```math
+(1-s)^{12} = 1 - c \quad\Longrightarrow\quad s = 1 - (1-c)^{1/12}
+```
 
-For $c$ = 8%, $s$ = 0.692438% a month. Dividing 8 by 12 gives 0.666667%, which is wrong: it treats losses as if they came off the original pool, when each month's losses come off what is left. The twelfth root is the same compounding that turns a yearly interest rate into a monthly one, run for survival instead of growth.
+For $`c`$ = 8%, $`s`$ = 0.692438% a month. Dividing 8 by 12 gives 0.666667%, which is wrong: it treats losses as if they came off the original pool, when each month's losses come off what is left. The twelfth root is the same compounding that turns a yearly interest rate into a monthly one, run for survival instead of growth.
 
 ### Step 2: the order inside one month
 
@@ -119,56 +129,66 @@ Interest is charged on the opening balance, since every loan owed it for the who
 
 ### Step 3: the pool's payment shrinks with its survivors
 
-A loan with $n$ months left and balance $B$ pays $B / a_n(i)$: what is owed, spread evenly over the months remaining. Applied to the whole pool, $P_m = B_{m-1}/a_{N-m+1}(i)$.
+A loan with $`n`$ months left and balance $`B`$ pays $`B / a_n(i)`$: what is owed, spread evenly over the months remaining. Applied to the whole pool, $`P_m = B_{m-1}/a_{N-m+1}(i)`$.
 
 The annuity factor obeys one small identity. One more month of payments, discounted one month, is the same as a dollar now plus the rest:
 
-$$(1+i)\,a_n(i) = 1 + a_{n-1}(i)$$
+```math
+(1+i)\,a_n(i) = 1 + a_{n-1}(i)
+```
 
 Use it on the balance after scheduled principal, which is the opening balance grown by a month of interest, less the payment:
 
-$$(1+i)B_{m-1} - \frac{B_{m-1}}{a_n(i)} \;=\; B_{m-1}\,\frac{(1+i)\,a_n(i) - 1}{a_n(i)} \;=\; B_{m-1}\,\frac{a_{n-1}(i)}{a_n(i)}, \qquad n = N-m+1$$
+```math
+(1+i)B_{m-1} - \frac{B_{m-1}}{a_n(i)} \;=\; B_{m-1}\,\frac{(1+i)\,a_n(i) - 1}{a_n(i)} \;=\; B_{m-1}\,\frac{a_{n-1}(i)}{a_n(i)}, \qquad n = N-m+1
+```
 
-In words: scheduled principal moves the balance one step down the single-loan schedule. Prepayment then takes away the fraction $s$. So the pool's scheduled payment is $A$ times the fraction of loans left: $(1-s)^{m-1}A$. In month 2 that is $5,953.99$, and the ledger's own division gives the same figure.
+In words: scheduled principal moves the balance one step down the single-loan schedule. Prepayment then takes away the fraction $`s`$. So the pool's scheduled payment is $`A`$ times the fraction of loans left: $`(1-s)^{m-1}A`$. In month 2 that is $`5,953.99`$, and the ledger's own division gives the same figure.
 
 ### Step 4: the closed form
 
-Chain Step 3 month after month. Each month multiplies the balance by $a_{n-1}(i)/a_n(i)$ for the schedule and by $(1-s)$ for survival. The schedule factors cancel in a chain, leaving $a_{N-m}(i)/a_N(i)$, and the survival factors stack to $(1-s)^m$. That is the formula.
+Chain Step 3 month after month. Each month multiplies the balance by $`a_{n-1}(i)/a_n(i)`$ for the schedule and by $`(1-s)`$ for survival. The schedule factors cancel in a chain, leaving $`a_{N-m}(i)/a_N(i)`$, and the survival factors stack to $`(1-s)^m`$. That is the formula.
 
 <details>
 <summary>Detailed proof: the closed form, by induction</summary>
 
-**Claim.** For every month $m$ from 0 to $N$, $B_m = L(1-s)^m a_{N-m}(i)/a_N(i)$, with $a_0(i) = 0$.
+**Claim.** For every month $`m`$ from 0 to $`N`$, $`B_m = L(1-s)^m a_{N-m}(i)/a_N(i)`$, with $`a_0(i) = 0`$.
 
-**Start.** At $m$ = 0 the right side is $L \cdot 1 \cdot a_N(i)/a_N(i) = L$. True.
+**Start.** At $`m`$ = 0 the right side is $`L \cdot 1 \cdot a_N(i)/a_N(i) = L`$. True.
 
-**Step.** Suppose it holds at $m-1$. Put $n = N-m+1$, so $B_{m-1} = L(1-s)^{m-1}a_n(i)/a_N(i)$. The ledger gives $B_m = (1-s)\,(B_{m-1} - Q_m)$, since $U_m$ is $s$ times $B_{m-1} - Q_m$. And $B_{m-1} - Q_m = B_{m-1} - P_m + I_m = (1+i)B_{m-1} - B_{m-1}/a_n(i)$, which Step 3 showed is $B_{m-1}\,a_{n-1}(i)/a_n(i)$. So
-$$B_m = (1-s)\cdot L(1-s)^{m-1}\frac{a_n(i)}{a_N(i)}\cdot\frac{a_{n-1}(i)}{a_n(i)} = L(1-s)^m\frac{a_{N-m}(i)}{a_N(i)}.$$
-**End.** At $m = N$ the factor $a_0(i)$ is 0, so the pool is fully repaid in month 360 whatever the speed. The scheduled payment in month $m$ is $B_{m-1}/a_n(i) = L(1-s)^{m-1}/a_N(i) = (1-s)^{m-1}A$.
+**Step.** Suppose it holds at $`m-1`$. Put $`n = N-m+1`$, so $`B_{m-1} = L(1-s)^{m-1}a_n(i)/a_N(i)`$. The ledger gives $`B_m = (1-s)\,(B_{m-1} - Q_m)`$, since $`U_m`$ is $`s`$ times $`B_{m-1} - Q_m`$. And $`B_{m-1} - Q_m = B_{m-1} - P_m + I_m = (1+i)B_{m-1} - B_{m-1}/a_n(i)`$, which Step 3 showed is $`B_{m-1}\,a_{n-1}(i)/a_n(i)`$. So
 
-**The identity.** $(1+i)a_n(i) = \sum_{k=1}^{n}(1+i)^{-(k-1)} = 1 + \sum_{k=1}^{n-1}(1+i)^{-k} = 1 + a_{n-1}(i)$.
+$`\displaystyle B_m = (1-s)\cdot L(1-s)^{m-1}\frac{a_n(i)}{a_N(i)}\cdot\frac{a_{n-1}(i)}{a_n(i)} = L(1-s)^m\frac{a_{N-m}(i)}{a_N(i)}.`$
+
+**End.** At $`m = N`$ the factor $`a_0(i)`$ is 0, so the pool is fully repaid in month 360 whatever the speed. The scheduled payment in month $`m`$ is $`B_{m-1}/a_n(i) = L(1-s)^{m-1}/a_N(i) = (1-s)^{m-1}A`$.
+
+**The identity.** $`(1+i)a_n(i) = \sum_{k=1}^{n}(1+i)^{-(k-1)} = 1 + \sum_{k=1}^{n-1}(1+i)^{-k} = 1 + a_{n-1}(i)`$.
 
 </details>
 
 ### Step 5: every dollar comes back once, and at the coupon rate prepayment is worth nothing
 
-The ledger takes $Q_m + U_m$ off the balance each month, so these add up over the whole life to exactly $L$. Principal is never created or lost, only moved in time.
+The ledger takes $`Q_m + U_m`$ off the balance each month, so these add up over the whole life to exactly $`L`$. Principal is never created or lost, only moved in time.
 
-A sharper fact follows from $X_m = (1+i)B_{m-1} - B_m$. Discount month $m$'s cash flow at the note rate, dividing by $(1+i)^m$:
+A sharper fact follows from $`X_m = (1+i)B_{m-1} - B_m`$. Discount month $`m`$'s cash flow at the note rate, dividing by $`(1+i)^m`$:
 
-$$\frac{X_m}{(1+i)^m} = \frac{B_{m-1}}{(1+i)^{m-1}} - \frac{B_m}{(1+i)^m}$$
+```math
+\frac{X_m}{(1+i)^m} = \frac{B_{m-1}}{(1+i)^{m-1}} - \frac{B_m}{(1+i)^m}
+```
 
-Adding over all months, each middle term appears once with a plus and once with a minus. Only $B_0 = L$ survives. So discounted at 6 percent, the pool is worth exactly $1,000,000.00 at any speed, even one that changes month to month. A value equal to the starting balance is called par. A prepaid dollar stops earning 6 percent at exactly the moment it stops being discounted at 6 percent. Prepayment matters for value only when the market's rate differs from the loans' rate. That difference is where the rest of this shelf lives.
+Adding over all months, each middle term appears once with a plus and once with a minus. Only $`B_0 = L`$ survives. So discounted at 6 percent, the pool is worth exactly $1,000,000.00 at any speed, even one that changes month to month. A value equal to the starting balance is called par. A prepaid dollar stops earning 6 percent at exactly the moment it stops being discounted at 6 percent. Prepayment matters for value only when the market's rate differs from the loans' rate. That difference is where the rest of this shelf lives.
 
 ### Step 6: a speed that depends on rates
 
-Borrowers refinance when new mortgages are cheaper than their own. A simple rule ties the speed to the market rate $M$ on new loans:
+Borrowers refinance when new mortgages are cheaper than their own. A simple rule ties the speed to the market rate $`M`$ on new loans:
 
-$$c = \min\big(30\%,\ \max(2\%,\ 8\% + 4\,(6\% - M))\big)$$
+```math
+c = \min\big(30\%,\ \max(2\%,\ 8\% + 4\,(6\% - M))\big)
+```
 
-At $M$ = 6% it gives the house 8%. At 5% it gives 12%; at 7%, 4%. The floor stands for people who move house whatever rates do; the cap for borrowers who never refinance. The number 4 is a teaching choice, not an estimate.
+At $`M`$ = 6% it gives the house 8%. At 5% it gives 12%; at 7%, 4%. The floor stands for people who move house whatever rates do; the cap for borrowers who never refinance. The number 4 is a teaching choice, not an estimate.
 
-When $M$ changes over time, so does the speed: $c_m$ in month $m$, with SMM $s_m = 1-(1-c_m)^{1/12}$. The ledger runs unchanged. In the closed form, $(1-s)^m$ becomes the product $(1-s_1)(1-s_2)\cdots(1-s_m)$, since survival still multiplies month by month.
+When $`M`$ changes over time, so does the speed: $`c_m`$ in month $`m`$, with SMM $`s_m = 1-(1-c_m)^{1/12}`$. The ledger runs unchanged. In the closed form, $`(1-s)^m`$ becomes the product $`(1-s_1)(1-s_2)\cdots(1-s_m)`$, since survival still multiplies month by month.
 
 Take a market rate of 7% for ten years, then 4%. The speed is 4% for months 1 to 120 and 16% from month 121. After 10 years the pool still owes $556,370.01, far more than the $363,521.13 at a steady 8%.
 
@@ -180,22 +200,22 @@ Another road to the same balances takes Step 0 literally: simulate thousands of 
 
 ## Worked numbers, by hand
 
-The pool: $L$ = $1,000,000, $N$ = 360 months, $i$ = 0.5% a month, CPR 8%.
+The pool: $`L`$ = $1,000,000, $`N`$ = 360 months, $`i`$ = 0.5% a month, CPR 8%.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| annuity factor $a_{360}$ | $(1 - 1.005^{-360}) / 0.005$ | 166.791614 |
-| level payment $A$ | $1{,}000{,}000 / 166.791614$ | $5,995.51 |
-| SMM $s$ | $1 - 0.92^{1/12}$ | 0.692438% |
-| month 1 interest $I_1$ | $0.005 \times 1{,}000{,}000$ | $5,000.00 |
-| month 1 scheduled principal $Q_1$ | $5{,}995.51 - 5{,}000.00$ | $995.51 |
-| month 1 prepaid $U_1$ | $0.00692438 \times (1{,}000{,}000 - 995.51)$ | $6,917.49 |
-| month 1 cash to investor $X_1$ | $5{,}000.00 + 995.51 + 6{,}917.49$ | **$12,912.99** |
-| balance after month 1 | $1{,}000{,}000 - 995.51 - 6{,}917.49$ | $992,087.01 |
-| month 2 scheduled payment | $(1 - s) \times 5{,}995.51$ | $5,953.99 |
-| survivors after 10 years | $(1-s)^{120} = 0.92^{10}$ | 0.434388 |
-| balance after 10 years | $0.434388 \times 836{,}857.25$ (scheduled balance) | **$363,521.13** |
-| weighted average life | the $W$ sum, 360 terms | **8.96 years** |
+| annuity factor $`a_{360}`$ | $`(1 - 1.005^{-360}) / 0.005`$ | 166.791614 |
+| level payment $`A`$ | $`1{,}000{,}000 / 166.791614`$ | $5,995.51 |
+| SMM $`s`$ | $`1 - 0.92^{1/12}`$ | 0.692438% |
+| month 1 interest $`I_1`$ | $`0.005 \times 1{,}000{,}000`$ | $5,000.00 |
+| month 1 scheduled principal $`Q_1`$ | $`5{,}995.51 - 5{,}000.00`$ | $995.51 |
+| month 1 prepaid $`U_1`$ | $`0.00692438 \times (1{,}000{,}000 - 995.51)`$ | $6,917.49 |
+| month 1 cash to investor $`X_1`$ | $`5{,}000.00 + 995.51 + 6{,}917.49`$ | **$12,912.99** |
+| balance after month 1 | $`1{,}000{,}000 - 995.51 - 6{,}917.49`$ | $992,087.01 |
+| month 2 scheduled payment | $`(1 - s) \times 5{,}995.51`$ | $5,953.99 |
+| survivors after 10 years | $`(1-s)^{120} = 0.92^{10}`$ | 0.434388 |
+| balance after 10 years | $`0.434388 \times 836{,}857.25`$ (scheduled balance) | **$363,521.13** |
+| weighted average life | the $`W`$ sum, 360 terms | **8.96 years** |
 
 In the first month the investor receives more than twice the scheduled payment, and more than half of it is principal that was not due for decades. Over the life, interest totals $537,570.80 against $1,158,381.89 with no prepayment: less than half, because the money was not borrowed for as long.
 
@@ -232,7 +252,7 @@ Nothing in a loan contract changed, yet the cash flows did. The speed is where t
 
 Run the rate rule from Step 6 with the market rate held at three levels for the whole life, and value each pool's cash flows by discounting at that same market rate:
 
-| Market rate $M$ | CPR from the rule | Average life | Value with rule-driven speed | Value if speed stayed 8% |
+| Market rate $`M`$ | CPR from the rule | Average life | Value with rule-driven speed | Value if speed stayed 8% |
 | --- | --- | --- | --- | --- |
 | 5% | 12% | 6.67 years | $1,050,948.57 | $1,064,349.46 |
 | 6% | 8% | 8.96 years | $1,000,000.00 | $1,000,000.00 |
@@ -642,14 +662,14 @@ The two outputs are identical line for line. The simulation matches exactly beca
 
 Lean proves the ledger's closed form, full repayment and par at the note rate, for any monthly rate above −100% and any speeds.
 
-- Take a constant SMM $s$. Then $B_m = L(1-s)^m\,a_{N-m}(i)/a_N(i)$ for every month $m$ from 0 to $N$.
-- Take a constant SMM $s$. Then the pool's scheduled payment in month $m$ is $(1-s)^{m-1}A$.
-- Take a constant SMM $s$ and any month $m$. Then the cash flow is $X_m = i\,B_{m-1} + (B_{m-1} - B_m)$.
-- Take a constant SMM $s$. Then the pool is fully repaid at the end of the term: $B_N = 0$.
-- Suppose the SMM changes month by month: $s_m$ in month $m$. Then $B_m = L(1-s_1)(1-s_2)\cdots(1-s_m)\,a_{N-m}(i)/a_N(i)$.
-- Take any speeds, even ones that change month to month. Then scheduled plus prepaid principal over the whole life add up to exactly $L$.
-- Take any speeds, even ones that change month to month. Then the cash flows, discounted at the note rate, are worth exactly $L$: par.
-- Take the card's pool: $L$ = \$1,000,000, $N$ = 360, $i$ = 0.5%. Then $a_{360}$ = 166.791614, $A$ = \$5,995.51 and $Q_1$ = \$995.51, to the printed digit.
+- Take a constant SMM $`s`$. Then $`B_m = L(1-s)^m\,a_{N-m}(i)/a_N(i)`$ for every month $`m`$ from 0 to $`N`$.
+- Take a constant SMM $`s`$. Then the pool's scheduled payment in month $`m`$ is $`(1-s)^{m-1}A`$.
+- Take a constant SMM $`s`$ and any month $`m`$. Then the cash flow is $`X_m = i\,B_{m-1} + (B_{m-1} - B_m)`$.
+- Take a constant SMM $`s`$. Then the pool is fully repaid at the end of the term: $`B_N = 0`$.
+- Suppose the SMM changes month by month: $`s_m`$ in month $`m`$. Then $`B_m = L(1-s_1)(1-s_2)\cdots(1-s_m)\,a_{N-m}(i)/a_N(i)`$.
+- Take any speeds, even ones that change month to month. Then scheduled plus prepaid principal over the whole life add up to exactly $`L`$.
+- Take any speeds, even ones that change month to month. Then the cash flows, discounted at the note rate, are worth exactly $`L`$: par.
+- Take the card's pool: $`L`$ = \$1,000,000, $`N`$ = 360, $`i`$ = 0.5%. Then $`a_{360}`$ = 166.791614, $`A`$ = \$5,995.51 and $`Q_1`$ = \$995.51, to the printed digit.
 - Take a speed of 8% CPR. Then the survivors after 10 years round to 0.434388, and the balance to \$363,521.13.
 - The rate rule gives 8%, 12%, 4% and 16% at market rates of 6%, 5%, 7% and 4%.
 
@@ -936,7 +956,7 @@ example : min (30 / 100 : ℚ) (max (2 / 100) (8 / 100 + 4 * (6 / 100 - 4 / 100)
 
 ## Where you meet it in real life
 
-- **Agency pass-throughs.** Pools guaranteed by Fannie Mae, Freddie Mac and Ginnie Mae publish a factor every month: the fraction of the original balance still outstanding, which is this card's $B_m / L$. Traders read the speed off the change in factor.
+- **Agency pass-throughs.** Pools guaranteed by Fannie Mae, Freddie Mac and Ginnie Mae publish a factor every month: the fraction of the original balance still outstanding, which is this card's $`B_m / L`$. Traders read the speed off the change in factor.
 - **Quoting speeds.** Pools trade at an assumed CPR or a multiple of the standard ramp: "200 PSA" is twice its speed at every age. The dealer's yield and average life come from running this ledger at that speed.
 - **Refinancing waves.** When mortgage rates fall sharply, speeds on older pools jump and investors get principal back just when it can only be lent out again at lower rates. That is the reinvestment problem [Callable bonds](01-callable-bonds-and-yield-to-worst.md) met with one issuer; a pool has thousands of borrowers each holding the call.
 - **Slicing the flows.** Collateralised mortgage obligations split one pool's ledger into classes that take principal in turn, so some investors get short, stable flows and others take the long tail: [Mortgage-backed securities in outline](05-mortgage-backed-securities-in-outline.md).

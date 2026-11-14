@@ -24,30 +24,34 @@ Drawn to scale, 1 m = 40 units. The short panels, hinged at A and B, really lie 
 
 ## The formula
 
-The degree sign ° counts turning, 360° to a full turn, as on [Angles](01-angles-and-parallel-lines.md). New here, the naming used for every triangle from now on: corners are A, B and C, each letter also naming the angle there, and each side takes the small letter of the corner it faces: side $a$ lies opposite corner $A$.
+The degree sign ° counts turning, 360° to a full turn, as on [Angles](01-angles-and-parallel-lines.md). New here, the naming used for every triangle from now on: corners are A, B and C, each letter also naming the angle there, and each side takes the small letter of the corner it faces: side $`a`$ lies opposite corner $`A`$.
 
-In the 5 m bed, A and B are the ends of the 5 m panel and C is where the other two meet, so $c$ = 5 m, $b$ = 3 m and $a$ = 4 m.
+In the 5 m bed, A and B are the ends of the 5 m panel and C is where the other two meet, so $`c`$ = 5 m, $`b`$ = 3 m and $`a`$ = 4 m.
 
-$$A + B + C = 180^\circ$$
+```math
+A + B + C = 180^\circ
+```
 
 **Read it aloud:** the three angles of a triangle add to a half-turn.
 
-So a missing angle is whatever the other two leave of 180°: $C = 180^\circ - A - B$.
+So a missing angle is whatever the other two leave of 180°: $`C = 180^\circ - A - B`$.
 
-$$a + b > c, \qquad b + c > a, \qquad c + a > b$$
+```math
+a + b > c, \qquad b + c > a, \qquad c + a > b
+```
 
 **Read it aloud:** each side is shorter than the other two laid end to end.
 
-With $c$ the longest side, the second and third lines hold automatically, since $c$ alone is at least as long as $a$ or $b$. One comparison settles it: the two shorter against the longest. For the fence, 3 + 4 = 7, not more than 8.
+With $`c`$ the longest side, the second and third lines hold automatically, since $`c`$ alone is at least as long as $`a`$ or $`b`$. One comparison settles it: the two shorter against the longest. For the fence, 3 + 4 = 7, not more than 8.
 
 Turned round, a third panel works with the 3 m and 4 m ones when it is shorter than 4 + 3 = 7 m and longer than 4 − 3 = 1 m.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $B$, $C$ | the angles at the three corners, in degrees | 53.13°, 36.87°, 90° | the other two must shrink by the same total |
-| $a$, $b$, $c$ | side lengths, each named after the corner it faces | 4 m, 3 m, 5 m (the failed bed: 4, 3, 8) | push $c$ to 7 m or past it and the triangle is gone |
-| $^\circ$ | a degree: one 360th of a full turn | 90° is a quarter turn | — |
-| $>$ | strictly greater: equal does not count | 7 > 5 | — |
+| $`A`$, $`B`$, $`C`$ | the angles at the three corners, in degrees | 53.13°, 36.87°, 90° | the other two must shrink by the same total |
+| $`a`$, $`b`$, $`c`$ | side lengths, each named after the corner it faces | 4 m, 3 m, 5 m (the failed bed: 4, 3, 8) | push $`c`$ to 7 m or past it and the triangle is gone |
+| $`^\circ`$ | a degree: one 360th of a full turn | 90° is a quarter turn | — |
+| $`>`$ | strictly greater: equal does not count | 7 > 5 | — |
 
 ### When it holds
 
@@ -341,7 +345,7 @@ Lean proves both theorems, and the one-comparison shortcut, for every triangle o
 
 - Three lengths make a triangle with an inside exactly when each is strictly shorter than the other two laid end to end.
 - In any such triangle, the three angles add to a half-turn, 180°.
-- When $c$ is the longest side, the other two tests pass on their own, so $a + b > c$ settles it.
+- When $`c`$ is the longest side, the other two tests pass on their own, so $`a + b > c`$ settles it.
 
 It also checks the card's whole-number sums exactly: the 3, 4 and 8 m fence, the 5 m bed, third panels of 1 to 8 m, and the mistakes. The decimal angles, the swing and the 1000 random triangles are left to the Python and Rust checks.
 

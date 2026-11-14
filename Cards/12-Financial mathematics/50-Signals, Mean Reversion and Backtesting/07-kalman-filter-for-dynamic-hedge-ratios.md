@@ -39,44 +39,50 @@ Orange: the true ratio. Teal: the Kalman filter's estimate. Dark blue: the 60-da
 
 ## The formula
 
-Notation first. A small $t$ under a letter names the trading day. The filter's **state**, the hidden number it tracks, is the hedge ratio. Its law is written as two lines: how the hidden ratio moves, and how the prices seen depend on it. Together they are a **state-space model**:
+Notation first. A small $`t`$ under a letter names the trading day. The filter's **state**, the hidden number it tracks, is the hedge ratio. Its law is written as two lines: how the hidden ratio moves, and how the prices seen depend on it. Together they are a **state-space model**:
 
-$$\beta_t = \beta_{t-1} + w_t, \qquad A_t = \beta_t\,B_t + v_t$$
+```math
+\beta_t = \beta_{t-1} + w_t, \qquad A_t = \beta_t\,B_t + v_t
+```
 
 **Read it aloud:** today's ratio is yesterday's plus a small random step; A's price is today's ratio times B's price, plus noise.
 
 The filter runs four lines each day. Predict, measure the surprise, weigh it, update:
 
-$$e_t = A_t - m_{t-1}B_t, \qquad S_t = B_t^2\,(P_{t-1}+Q) + R$$
+```math
+e_t = A_t - m_{t-1}B_t, \qquad S_t = B_t^2\,(P_{t-1}+Q) + R
+```
 
-$$K_t = \frac{(P_{t-1}+Q)\,B_t}{S_t}, \qquad m_t = m_{t-1} + K_t\,e_t, \qquad P_t = \frac{(P_{t-1}+Q)\,R}{S_t}$$
+```math
+K_t = \frac{(P_{t-1}+Q)\,B_t}{S_t}, \qquad m_t = m_{t-1} + K_t\,e_t, \qquad P_t = \frac{(P_{t-1}+Q)\,R}{S_t}
+```
 
 **Read it aloud:** the surprise is A's price minus the price yesterday's ratio predicted; move the ratio by the gain times the surprise; the gain is large when the ratio is uncertain and prices are clean, small the other way round.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A_t$, $B_t$ (day $t$) | closing prices of the two retailers on trading day $t$, dollars | A $130.01 to $122.95, B $100.00 to $110.90 | — |
-| $\beta_t$, $\beta_0$ | the true hedge ratio: B shares per A share. Say "beta". Hidden. | 1.30 sliding to 1.10 | — |
-| $m_t$ | the filter's estimate of $\beta_t$ after day $t$'s prices | 1.105739 on day 250 | — |
-| $P_t$ | the variance (average squared error) of that estimate | error band $\pm 2\sqrt{P_t}$: ±0.005792 on day 250 | wider error band |
-| $m_0$, $P_0$ | the starting belief: last year's ratio and its variance | 1.30 and 0.0001 | a surer start moves less at first |
-| $Q$ | variance of the ratio's daily step: how far it may drift | 0.000001 | the filter forgets old days faster |
-| $R$ | variance of the noise on A's price, dollars squared | 1 | the filter trusts each new day less |
-| $w_t$, $v_t$ | the ratio's random step and the price noise: bell curves with mean 0 and variances $Q$ and $R$ | — | — |
-| $e_t$ | the surprise: A's price minus the predicted price; it is also the spread, hedged with yesterday's ratio | average −0.8169 dollars | — |
-| $S_t$ | the surprise's variance: ratio uncertainty scaled by $B_t^2$, plus price noise | — | smaller gain |
-| $K_t$, $K_tB_t$, $k$ | the **gain**: ratio change per dollar of surprise. $K_tB_t$ is the **weight** on today's reading; $k$ is the weight once it settles | weight 0.103134 on day 250 | faster, noisier estimate |
-| $a$, $b$, $p$ | shorthand in the detailed proof: yesterday's estimate, a candidate value of the ratio, the prediction variance | — | — |
+| $`A_t`$, $`B_t`$ (day $`t`$) | closing prices of the two retailers on trading day $`t`$, dollars | A $130.01 to $122.95, B $100.00 to $110.90 | — |
+| $`\beta_t`$, $`\beta_0`$ | the true hedge ratio: B shares per A share. Say "beta". Hidden. | 1.30 sliding to 1.10 | — |
+| $`m_t`$ | the filter's estimate of $`\beta_t`$ after day $`t`$'s prices | 1.105739 on day 250 | — |
+| $`P_t`$ | the variance (average squared error) of that estimate | error band $`\pm 2\sqrt{P_t}`$: ±0.005792 on day 250 | wider error band |
+| $`m_0`$, $`P_0`$ | the starting belief: last year's ratio and its variance | 1.30 and 0.0001 | a surer start moves less at first |
+| $`Q`$ | variance of the ratio's daily step: how far it may drift | 0.000001 | the filter forgets old days faster |
+| $`R`$ | variance of the noise on A's price, dollars squared | 1 | the filter trusts each new day less |
+| $`w_t`$, $`v_t`$ | the ratio's random step and the price noise: bell curves with mean 0 and variances $`Q`$ and $`R`$ | — | — |
+| $`e_t`$ | the surprise: A's price minus the predicted price; it is also the spread, hedged with yesterday's ratio | average −0.8169 dollars | — |
+| $`S_t`$ | the surprise's variance: ratio uncertainty scaled by $`B_t^2`$, plus price noise | — | smaller gain |
+| $`K_t`$, $`K_tB_t`$, $`k`$ | the **gain**: ratio change per dollar of surprise. $`K_tB_t`$ is the **weight** on today's reading; $`k`$ is the weight once it settles | weight 0.103134 on day 250 | faster, noisier estimate |
+| $`a`$, $`b`$, $`p`$ | shorthand in the detailed proof: yesterday's estimate, a candidate value of the ratio, the prediction variance | — | — |
 
-$P_{t-1}+Q$ is the **prediction variance**: yesterday's uncertainty plus the room the ratio had to move overnight. The best guess itself does not move overnight, since the step $w_t$ averages zero.
+$`P_{t-1}+Q`$ is the **prediction variance**: yesterday's uncertainty plus the room the ratio had to move overnight. The best guess itself does not move overnight, since the step $`w_t`$ averages zero.
 
 ### When it holds
 
 - **The ratio moves in small random steps.** Here it moves in a straight line instead. A random-walk model has no notion of trend, so the filter lags: on this path by about 0.006957, and the surprise averages −0.8169 dollars instead of zero.
-- **Price noise is fresh each day, with one variance $R$.** A spread that wanders for weeks before returning, as in [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md), looks to the filter like the ratio moving. The filter then bends the ratio toward the spread and erases part of the very signal a pairs trade lives on.
-- **$Q$ and $R$ are known.** They never are. Set $Q$ to zero and the error over days 60 to 250 is 0.064414; the right-sized $Q$ gives 0.007755. The table in Worked numbers has the rest.
+- **Price noise is fresh each day, with one variance $`R`$.** A spread that wanders for weeks before returning, as in [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md), looks to the filter like the ratio moving. The filter then bends the ratio toward the spread and erases part of the very signal a pairs trade lives on.
+- **$`Q`$ and $`R`$ are known.** They never are. Set $`Q`$ to zero and the error over days 60 to 250 is 0.064414; the right-sized $`Q`$ gives 0.007755. The table in Worked numbers has the rest.
 - **The spread's level is zero.** The model has no constant term. A pair whose spread sits at $5 needs a second hidden number for the level; the filter then carries two numbers and a two-by-two table of uncertainties, with the same four steps.
-- **B's price is not zero.** A reading with $B_t = 0$ carries no information about the ratio, and the formulas give it zero weight.
+- **B's price is not zero.** A reading with $`B_t = 0`$ carries no information about the ratio, and the formulas give it zero weight.
 
 ---
 
@@ -84,60 +90,66 @@ $P_{t-1}+Q$ is the **prediction variance**: yesterday's uncertainty plus the roo
 
 ### Step 0: yesterday's belief plus one noisy reading
 
-The filter's belief about the ratio is a bell curve: centre $m_{t-1}$, variance $P_{t-1}$. Each day brings one new reading of the ratio: today's price pair. When a bell-curve belief meets a bell-curve reading, the combined belief is again a bell curve, and its centre is a weighted average of the two, each weighted by its **precision** (one over its variance) ([Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)).
+The filter's belief about the ratio is a bell curve: centre $`m_{t-1}`$, variance $`P_{t-1}`$. Each day brings one new reading of the ratio: today's price pair. When a bell-curve belief meets a bell-curve reading, the combined belief is again a bell curve, and its centre is a weighted average of the two, each weighted by its **precision** (one over its variance) ([Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)).
 
 The Kalman filter is that one step, repeated every day, with one extra move: before each reading, the belief is widened because the ratio may have drifted.
 
 ### Step 1: predict, by widening the belief
 
-Overnight the ratio takes a step $w_t$ with mean zero and variance $Q$. The best guess stays at $m_{t-1}$. The uncertainty grows: independent variances add, so the prediction variance is $P_{t-1}+Q$.
+Overnight the ratio takes a step $`w_t`$ with mean zero and variance $`Q`$. The best guess stays at $`m_{t-1}`$. The uncertainty grows: independent variances add, so the prediction variance is $`P_{t-1}+Q`$.
 
 Without this step the filter would grow ever more certain and ignore new data. With it, uncertainty can never fall below a floor, so every day keeps some weight.
 
 ### Step 2: today's prices are a reading of the ratio
 
-Divide the price equation by $B_t$: $A_t/B_t = \beta_t + v_t/B_t$. The observed price ratio is the true ratio plus noise of variance $R/B_t^2$. A $1 error on a $100 share is a 0.01 error on the ratio.
+Divide the price equation by $`B_t`$: $`A_t/B_t = \beta_t + v_t/B_t`$. The observed price ratio is the true ratio plus noise of variance $`R/B_t^2`$. A $1 error on a $100 share is a 0.01 error on the ratio.
 
 ### Step 3: combine by precision
 
-Two bell curves for one number: the prediction, centre $m_{t-1}$ and variance $P_{t-1}+Q$; the reading, centre $A_t/B_t$ and variance $R/B_t^2$. The combined centre puts on the reading the weight
+Two bell curves for one number: the prediction, centre $`m_{t-1}`$ and variance $`P_{t-1}+Q`$; the reading, centre $`A_t/B_t`$ and variance $`R/B_t^2`$. The combined centre puts on the reading the weight
 
-$$\frac{P_{t-1}+Q}{(P_{t-1}+Q) + R/B_t^2} = \frac{(P_{t-1}+Q)B_t^2}{S_t} = K_tB_t.$$
+```math
+\frac{P_{t-1}+Q}{(P_{t-1}+Q) + R/B_t^2} = \frac{(P_{t-1}+Q)B_t^2}{S_t} = K_tB_t.
+```
 
-So $m_t = m_{t-1} + K_tB_t\,(A_t/B_t - m_{t-1})$, which is $m_{t-1} + K_t e_t$. Precisions add: $1/P_t = 1/(P_{t-1}+Q) + B_t^2/R$, which rearranges to $P_t = (P_{t-1}+Q)R/S_t$. Those are the four lines.
+So $`m_t = m_{t-1} + K_tB_t\,(A_t/B_t - m_{t-1})`$, which is $`m_{t-1} + K_t e_t`$. Precisions add: $`1/P_t = 1/(P_{t-1}+Q) + B_t^2/R`$, which rearranges to $`P_t = (P_{t-1}+Q)R/S_t`$. Those are the four lines.
 
 <details>
 <summary>Detailed proof: the update is the exact posterior</summary>
 
-Write $p = P_{t-1}+Q$ and $a = m_{t-1}$. Given all prices to day $t-1$, the ratio $\beta_t$ has a bell-curve law with centre $a$ and variance $p$: by induction the day-$(t-1)$ law is a bell curve, and adding an independent bell-curve step keeps it one. Today's price gives a likelihood proportional to $\exp[-(A_t - B_t b)^2/(2R)]$ in the unknown ratio $b$. Multiply by the prior density and collect the exponent:
-$$\frac{(b-a)^2}{p} + \frac{(A_t - B_tb)^2}{R} = \Big(\frac1p + \frac{B_t^2}{R}\Big)(b - m_t)^2 + \text{terms without } b.$$
-Matching the $b^2$ terms gives $1/P_t = 1/p + B_t^2/R$, so $P_t = pR/(B_t^2p+R) = pR/S_t$. Matching the $b$ terms gives $m_t/P_t = a/p + A_tB_t/R$; substituting $P_t$ and simplifying gives $m_t = a + (pB_t/S_t)(A_t - aB_t)$, which is $m_{t-1} + K_te_t$. The posterior is a bell curve with that centre and variance, which closes the induction. Its centre is the estimate with the smallest average squared error, so the filter is optimal inside the model. Kalman's 1960 paper proves the same for any number of hidden values, with matrices in place of these numbers.
+Write $`p = P_{t-1}+Q`$ and $`a = m_{t-1}`$. Given all prices to day $`t-1`$, the ratio $`\beta_t`$ has a bell-curve law with centre $`a`$ and variance $`p`$: by induction the day-$`(t-1)`$ law is a bell curve, and adding an independent bell-curve step keeps it one. Today's price gives a likelihood proportional to $`\exp[-(A_t - B_t b)^2/(2R)]`$ in the unknown ratio $`b`$. Multiply by the prior density and collect the exponent:
+
+$`\displaystyle \frac{(b-a)^2}{p} + \frac{(A_t - B_tb)^2}{R} = \Big(\frac1p + \frac{B_t^2}{R}\Big)(b - m_t)^2 + \text{terms without } b.`$
+
+Matching the $`b^2`$ terms gives $`1/P_t = 1/p + B_t^2/R`$, so $`P_t = pR/(B_t^2p+R) = pR/S_t`$. Matching the $`b`$ terms gives $`m_t/P_t = a/p + A_tB_t/R`$; substituting $`P_t`$ and simplifying gives $`m_t = a + (pB_t/S_t)(A_t - aB_t)`$, which is $`m_{t-1} + K_te_t`$. The posterior is a bell curve with that centre and variance, which closes the induction. Its centre is the estimate with the smallest average squared error, so the filter is optimal inside the model. Kalman's 1960 paper proves the same for any number of hidden values, with matrices in place of these numbers.
 
 </details>
 
 ### Step 4: the filter is a regression
 
-Write out every day's ratio, $\beta_0$ to $\beta_t$, as unknowns, and choose them all at once to minimise
+Write out every day's ratio, $`\beta_0`$ to $`\beta_t`$, as unknowns, and choose them all at once to minimise
 
-$$\frac{(\beta_0 - m_0)^2}{P_0} + \sum_{j=1}^{t}\frac{(\beta_j-\beta_{j-1})^2}{Q} + \sum_{j=1}^{t}\frac{(A_j-\beta_jB_j)^2}{R}.$$
+```math
+\frac{(\beta_0 - m_0)^2}{P_0} + \sum_{j=1}^{t}\frac{(\beta_j-\beta_{j-1})^2}{Q} + \sum_{j=1}^{t}\frac{(A_j-\beta_jB_j)^2}{R}.
+```
 
-The last sum is ordinary least squares, one coefficient per day. The middle sum charges for every change in the coefficient: small $Q$, costly changes. The first sum anchors the start. The last unknown of that minimiser, $\beta_t$, is exactly $m_t$: the exponent in the detailed proof, summed over every day, is this sum. The code solves this whole-path regression from scratch for every day and finds the filter's estimate each time, to within about $10^{-14}$.
+The last sum is ordinary least squares, one coefficient per day. The middle sum charges for every change in the coefficient: small $`Q`$, costly changes. The first sum anchors the start. The last unknown of that minimiser, $`\beta_t`$, is exactly $`m_t`$: the exponent in the detailed proof, summed over every day, is this sum. The code solves this whole-path regression from scratch for every day and finds the filter's estimate each time, to within about $`10^{-14}`$.
 
-Two edge cases make the title literal. With $Q = 0$ the coefficient is not allowed to move, and the filter becomes an **expanding regression**: least squares on every day so far, plus the prior. On the simulated year both give 1.195701567. With $Q > 0$ old days count for less. With $B_t$ held fixed, the weight settles to a constant $k$ and each day's reading carries $(1-k)$ times the weight of the next: an exponentially weighted regression.
+Two edge cases make the title literal. With $`Q = 0`$ the coefficient is not allowed to move, and the filter becomes an **expanding regression**: least squares on every day so far, plus the prior. On the simulated year both give 1.195701567. With $`Q > 0`$ old days count for less. With $`B_t`$ held fixed, the weight settles to a constant $`k`$ and each day's reading carries $`(1-k)`$ times the weight of the next: an exponentially weighted regression.
 
 ### Step 5: why the rolling window lags more
 
 A 60-day rolling regression puts equal weight on the last 60 days and none before. Its average day is 29.5 days old. The ratio falls 0.0008 a day, so the window lags by about 0.023600.
 
-The filter's weights decay geometrically; with weight 0.103134 on the latest day, its average day is $(1-k)/k$ days old, a lag of 0.006957. Over days 60 to 250 the measured errors are 0.023788 for the window and 0.007755 for the filter. The lag rule explains almost all of the window's error.
+The filter's weights decay geometrically; with weight 0.103134 on the latest day, its average day is $`(1-k)/k`$ days old, a lag of 0.006957. Over days 60 to 250 the measured errors are 0.023788 for the window and 0.007755 for the filter. The lag rule explains almost all of the window's error.
 
-A 20-day window does nearly as well as the filter here, 0.008386. The filter's advantage is not magic accuracy. It is a weighting set by stated variances instead of a calendar, an error band that comes with every estimate, and a gain that adapts when $B_t$ moves.
+A 20-day window does nearly as well as the filter here, 0.008386. The filter's advantage is not magic accuracy. It is a weighting set by stated variances instead of a calendar, an error band that comes with every estimate, and a gain that adapts when $`B_t`$ moves.
 
 ---
 
 ## Worked numbers, by hand
 
-Four days, arranged so the arithmetic is visible. B stays at $100. Start at $m_0 = 1.30$ with $P_0 = Q = 0.0001$ and $R = 1$, so the reading's variance $R/B^2$ is also 0.0001. Counting variances in units of 0.0001 makes the weights small fractions.
+Four days, arranged so the arithmetic is visible. B stays at $100. Start at $`m_0 = 1.30`$ with $`P_0 = Q = 0.0001`$ and $`R = 1`$, so the reading's variance $`R/B^2`$ is also 0.0001. Counting variances in units of 0.0001 makes the weights small fractions.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -155,7 +167,7 @@ Four days, arranged so the arithmetic is visible. B stays at $100. Start at $m_0
 
 After four readings of 1.29, 1.27, 1.26 and 1.24, the filter says 1.250364. A two-day rolling window, the average of the last two readings, says 1.2500. Solving the whole-path regression of Step 4 on the same four days gives 1.250364 again.
 
-The weights are ratios of Fibonacci numbers: 2/3, 5/8, 13/21, 34/55. With $Q$ equal to the reading variance, each weight $k$ produces the next as $(k+1)/(k+2)$, and that map's fixed point solves $k^2 + k - 1 = 0$: $k = (\sqrt5-1)/2$. By day 20 the weight is 0.618033989, the golden ratio's fractional part to nine places. The steady weight depends only on $Q$ relative to $R/B^2$, never on A's prices.
+The weights are ratios of Fibonacci numbers: 2/3, 5/8, 13/21, 34/55. With $`Q`$ equal to the reading variance, each weight $`k`$ produces the next as $`(k+1)/(k+2)`$, and that map's fixed point solves $`k^2 + k - 1 = 0`$: $`k = (\sqrt5-1)/2`$. By day 20 the weight is 0.618033989, the golden ratio's fractional part to nine places. The steady weight depends only on $`Q`$ relative to $`R/B^2`$, never on A's prices.
 
 ### What breaks if you drop a piece
 
@@ -164,10 +176,10 @@ Same simulated year; error is the root mean square gap from the true ratio over 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | One fixed ratio for the year | 1.195343; spread runs from $10.47 to −$9.60 | the drift shows up as a fake signal |
-| $Q = 0$ in the filter | error 0.064414; ends at 1.195701567 | a ratio forbidden to move is one expanding regression |
-| $Q$ ten times too small, 0.0000001 | error 0.022530 | the filter forgets too slowly and lags like a 60-day window |
+| $`Q = 0`$ in the filter | error 0.064414; ends at 1.195701567 | a ratio forbidden to move is one expanding regression |
+| $`Q`$ ten times too small, 0.0000001 | error 0.022530 | the filter forgets too slowly and lags like a 60-day window |
 | 60-day rolling window | error 0.023788 | its average day is 29.5 days old |
-| $Q$ a hundred times larger, 0.0001 | error 0.006783 | noisier, but on a moving ratio still better than too small |
+| $`Q`$ a hundred times larger, 0.0001 | error 0.006783 | noisier, but on a moving ratio still better than too small |
 
 ---
 
@@ -175,7 +187,7 @@ Same simulated year; error is the root mean square gap from the true ratio over 
 
 ### The spread, hedged two ways
 
-A pairs trader watches the spread, not the ratio. Hedge with the one fixed ratio and the spread drifts. Hedge each day with yesterday's filtered ratio and the spread is the filter's surprise $e_t$:
+A pairs trader watches the spread, not the ratio. Hedge with the one fixed ratio and the spread drifts. Hedge each day with yesterday's filtered ratio and the spread is the filter's surprise $`e_t`$:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -191,7 +203,7 @@ Orange: A minus 1.195343 B, the one fixed ratio. It says "A is rich" all spring 
 
 ### How much to let the ratio move
 
-The one input that decides everything is $Q$. Error against the true ratio, days 60 to 250, one block per 0.005 of error:
+The one input that decides everything is $`Q`$. Error against the true ratio, days 60 to 250, one block per 0.005 of error:
 
 ```
 error of each estimate, root mean square, days 60 to 250
@@ -205,7 +217,7 @@ Kalman, Q = 0.0001       █              0.006783
 Kalman, Q = 0.00001      █              0.004862
 ```
 
-Too small a $Q$ and the filter is a slow regression. Too large and it chases every day's noise. In between is a best $Q$, 0.00001 on this path. It is best only because the path is known; in real trading $Q$ is fitted on past data and judged on later data, or the choice itself becomes a source of false confidence ([Trying many strategies](06-deflated-sharpe-and-multiple-testing.md)).
+Too small a $`Q`$ and the filter is a slow regression. Too large and it chases every day's noise. In between is a best $`Q`$, 0.00001 on this path. It is best only because the path is known; in real trading $`Q`$ is fitted on past data and judged on later data, or the choice itself becomes a source of false confidence ([Trying many strategies](06-deflated-sharpe-and-multiple-testing.md)).
 
 ---
 
@@ -213,7 +225,7 @@ Too small a $Q$ and the filter is a slow regression. Too large and it chases eve
 
 Nothing imported contains the answer: random numbers come from a hand-written generator, and the regressions and solver are loops. The filter's estimate is reached by **three independent roads**.
 
-Road 1 is the four-line recursion. Road 2 solves the whole-path penalised regression of Step 4 for every day, by elimination on its three-band system of equations (the Thomas algorithm), and never uses a gain. Road 3 draws 2,000 worlds from the model itself and checks that the filter's own variance $P_t$ matches its real squared error. The hand example is checked against Fibonacci integers and the golden ratio, and the $Q = 0$ case against the expanding regression written in closed form.
+Road 1 is the four-line recursion. Road 2 solves the whole-path penalised regression of Step 4 for every day, by elimination on its three-band system of equations (the Thomas algorithm), and never uses a gain. Road 3 draws 2,000 worlds from the model itself and checks that the filter's own variance $`P_t`$ matches its real squared error. The hand example is checked against Fibonacci integers and the golden ratio, and the $`Q = 0`$ case against the expanding regression written in closed form.
 
 ### Python
 
@@ -601,16 +613,16 @@ The two outputs match line for line. On day 50 the filter's variance is 0.000008
 
 Lean proves the filter's algebra exactly, for every day and any prices, when the variances are positive.
 
-- Take $P_{t-1}+Q > 0$ and $R > 0$. Then precisions add: $1/P_t = 1/(P_{t-1}+Q) + B_t^2/R$.
-- Under the same conditions, the detailed proof's exponent is one bell curve. Its centre is $m_t$ and its variance is $P_t$.
-- Suppose $B_t \ne 0$. Then $m_t$ is the weighted average of $m_{t-1}$ and the reading $A_t/B_t$, with weight $K_tB_t$.
-- Suppose $B_t = 0$. Then the reading gets zero weight: $m_t = m_{t-1}$ and $P_t = P_{t-1}+Q$.
-- Take $P_0$, $Q$ and $R$ all above zero. Then Step 4's whole-path regression has a minimiser, and every minimiser's last unknown $\beta_t$ equals $m_t$.
-- Hold $B_t$ fixed and nonzero, and take $P_0 = Q = R/B_t^2$. Then the weights are the Fibonacci ratios 2/3, 5/8, 13/21, 34/55, and so on.
-- Those weights tend to $k = (\sqrt5-1)/2$.
+- Take $`P_{t-1}+Q > 0`$ and $`R > 0`$. Then precisions add: $`1/P_t = 1/(P_{t-1}+Q) + B_t^2/R`$.
+- Under the same conditions, the detailed proof's exponent is one bell curve. Its centre is $`m_t`$ and its variance is $`P_t`$.
+- Suppose $`B_t \ne 0`$. Then $`m_t`$ is the weighted average of $`m_{t-1}`$ and the reading $`A_t/B_t`$, with weight $`K_tB_t`$.
+- Suppose $`B_t = 0`$. Then the reading gets zero weight: $`m_t = m_{t-1}`$ and $`P_t = P_{t-1}+Q`$.
+- Take $`P_0`$, $`Q`$ and $`R`$ all above zero. Then Step 4's whole-path regression has a minimiser, and every minimiser's last unknown $`\beta_t`$ equals $`m_t`$.
+- Hold $`B_t`$ fixed and nonzero, and take $`P_0 = Q = R/B_t^2`$. Then the weights are the Fibonacci ratios 2/3, 5/8, 13/21, 34/55, and so on.
+- Those weights tend to $`k = (\sqrt5-1)/2`$.
 - The four hand-worked days, run through the filter's own steps, end at exactly 6877/5500, the card's 1.250364.
 
-The random model, the simulated year and the match between $P_t$ and the real squared error are left to the Python and Rust checks.
+The random model, the simulated year and the match between $`P_t`$ and the real squared error are left to the Python and Rust checks.
 
 ```lean
 -- A moving hedge ratio: each Kalman update is the exact precision-weighted combination of yesterday's belief and today's price reading, the filter's estimate is the last coefficient of the whole-path penalised regression, and with Q equal to the reading variance the weights are Fibonacci ratios that settle at (√5 - 1)/2.
@@ -997,20 +1009,20 @@ end KalmanHedge
 > Guess first, then run it.
 > - **A ratio allowed to move ten times more.** The table already runs `Q = 1e-5`: error 0.004862, the best of the five. Put it in the main filter and the day-250 estimate moves closer to 1.100.
 > - **A shorter window.** The rolling 20-day fit scores 0.008386, close to the filter. A window can be tuned to match; it still comes with no error band.
-> - **Forbid movement.** Set `Q = 0.0` in the main filter and the Python stops: road 2 charges $1/Q$ for each change and divides by zero. The table's `Q = 0` line already runs the filter that way and ends at 1.195701567, the closed-form whole-year regression with a prior.
+> - **Forbid movement.** Set `Q = 0.0` in the main filter and the Python stops: road 2 charges $`1/Q`$ for each change and divides by zero. The table's `Q = 0` line already runs the filter that way and ends at 1.195701567, the closed-form whole-year regression with a prior.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Believing the filter finds the true ratio.** It finds the ratio implied by its $Q$ and $R$. On one path, $Q$ = 0 gives an error of 0.064414 and $Q$ = 0.00001 gives 0.004862, from the same prices. The filter is exact arithmetic on assumptions; the assumptions carry the risk.
+> **Believing the filter finds the true ratio.** It finds the ratio implied by its $`Q`$ and $`R`$. On one path, $`Q`$ = 0 gives an error of 0.064414 and $`Q`$ = 0.00001 gives 0.004862, from the same prices. The filter is exact arithmetic on assumptions; the assumptions carry the risk.
 >
-> - **Hedging today with a ratio that saw today's price.** The filtered $m_t$ has already used $A_t$. The spread $A_t - m_tB_t$ equals the surprise times $1 - K_tB_t$, 0.896866 of it on day 250: mechanically smaller, and a backtest built on it trades on information not yet available ([Backtesting](05-backtesting-pitfalls.md)). Hedge day $t$ with $m_{t-1}$.
+> - **Hedging today with a ratio that saw today's price.** The filtered $`m_t`$ has already used $`A_t`$. The spread $`A_t - m_tB_t`$ equals the surprise times $`1 - K_tB_t`$, 0.896866 of it on day 250: mechanically smaller, and a backtest built on it trades on information not yet available ([Backtesting](05-backtesting-pitfalls.md)). Hedge day $`t`$ with $`m_{t-1}`$.
 > - **Reading a filtered spread as proof of a tie.** A ratio that may move can fit almost any pair. The cointegration test, which asks whether a fixed mix of the two prices keeps returning to a steady level ([Pairs trading](02-pairs-trading-and-cointegration.md)), belongs to a fixed ratio; a moving one needs its surprises checked on later data.
-> - **Letting the ratio swallow the spread.** If the spread wanders for weeks, a large $Q$ lets the ratio follow it and the trade signal vanishes into the hedge.
-> - **Reading the moving spread as profit.** When the ratio moves from $m_{t-1}$ to $m_t$, the hedge buys or sells $(m_t - m_{t-1})$ B shares at $B_t$. That cash belongs in the ledger. The day-to-day change in $A_t - m_tB_t$ is not what a held position earned.
-> - **Units.** $Q$ is in squared ratio units per day, $R$ in squared dollars. Move from daily to weekly prices and $Q$ must grow about fivefold.
+> - **Letting the ratio swallow the spread.** If the spread wanders for weeks, a large $`Q`$ lets the ratio follow it and the trade signal vanishes into the hedge.
+> - **Reading the moving spread as profit.** When the ratio moves from $`m_{t-1}`$ to $`m_t`$, the hedge buys or sells $`(m_t - m_{t-1})`$ B shares at $`B_t`$. That cash belongs in the ledger. The day-to-day change in $`A_t - m_tB_t`$ is not what a held position earned.
+> - **Units.** $`Q`$ is in squared ratio units per day, $`R`$ in squared dollars. Move from daily to weekly prices and $`Q`$ must grow about fivefold.
 
 ---
 
@@ -1022,7 +1034,7 @@ end KalmanHedge
 - **Signals on this shelf.** A filtered spread feeds the mean-reversion rules of [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md), and its predictive power is scored as in [The fundamental law](04-information-coefficient-and-the-fundamental-law.md).
 
 > **Say it back**
-> A pair's hedge ratio can drift, and a fixed ratio then shows the drift as a fake spread. The Kalman filter treats the ratio as a hidden number that takes small random steps. Each day it widens its uncertainty by $Q$, then moves toward the ratio today's prices imply, by a weight set by its uncertainty against the price noise $R$. That is a least-squares regression in which the coefficient may change at a price, updated one day at a time. Its answer is only as good as $Q$ and $R$.
+> A pair's hedge ratio can drift, and a fixed ratio then shows the drift as a fake spread. The Kalman filter treats the ratio as a hidden number that takes small random steps. Each day it widens its uncertainty by $`Q`$, then moves toward the ratio today's prices imply, by a weight set by its uncertainty against the price noise $`R`$. That is a least-squares regression in which the coefficient may change at a price, updated one day at a time. Its answer is only as good as $`Q`$ and $`R`$.
 
 ---
 
@@ -1033,12 +1045,12 @@ end KalmanHedge
 
 ## Where this goes next
 
-- [Backtesting](05-backtesting-pitfalls.md): why hedging day $t$ with $m_t$ is look-ahead, and how to test a filtered pair honestly.
-- [Trying many strategies](06-deflated-sharpe-and-multiple-testing.md): what trying five values of $Q$ does to the apparent quality of the best one.
+- [Backtesting](05-backtesting-pitfalls.md): why hedging day $`t`$ with $`m_t`$ is look-ahead, and how to test a filtered pair honestly.
+- [Trying many strategies](06-deflated-sharpe-and-multiple-testing.md): what trying five values of $`Q`$ does to the apparent quality of the best one.
 - [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md): the entry and exit rules the filtered spread feeds.
 - [The Kalman filter](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/07-kalman-filter.md): the same predict-and-correct recursion in matrices, for several hidden numbers at once, such as a ratio plus a spread level.
 
-The filter says where the ratio is and how sure it is; whether a strategy built on it earns anything after the choice of $Q$ is tested on data it never saw is the question the backtesting cards answer.
+The filter says where the ratio is and how sure it is; whether a strategy built on it earns anything after the choice of $`Q`$ is tested on data it never saw is the question the backtesting cards answer.
 
 ---
 

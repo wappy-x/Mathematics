@@ -39,48 +39,54 @@ All three promise 0.95. At p = 0.01 the Wald interval contains the truth in only
 
 ## The formula
 
-Notation first, with one-line reminders. $K$ is the count of recoveries, a random variable, and $K \sim \text{Binomial}(n, p)$ is read "K follows the binomial law with n trials and chance p". A hat marks an estimate: $\hat p = k/n$ is the observed rate. $\Phi$ is the standard bell curve's area to the left of a point. The number $z$ is the point with $\Phi(z) = 0.975$, so that 95% of the bell lies within $z$ of the centre: $z = 1.959964$.
+Notation first, with one-line reminders. $`K`$ is the count of recoveries, a random variable, and $`K \sim \text{Binomial}(n, p)`$ is read "K follows the binomial law with n trials and chance p". A hat marks an estimate: $`\hat p = k/n`$ is the observed rate. $`\Phi`$ is the standard bell curve's area to the left of a point. The number $`z`$ is the point with $`\Phi(z) = 0.975`$, so that 95% of the bell lies within $`z`$ of the centre: $`z = 1.959964`$.
 
-The letter $\alpha$ (alpha) is the error allowed, 1 minus the confidence level: $\alpha = 0.05$ for a 95% interval.
+The letter $`\alpha`$ (alpha) is the error allowed, 1 minus the confidence level: $`\alpha = 0.05`$ for a 95% interval.
 
 The Wald interval:
 
-$$\hat p \;\pm\; z\sqrt{\frac{\hat p(1-\hat p)}{n}}$$
+```math
+\hat p \;\pm\; z\sqrt{\frac{\hat p(1-\hat p)}{n}}
+```
 
 **Read it aloud:** the observed rate, plus or minus z times the spread that rate would have.
 
 The Wilson interval:
 
-$$W_{\pm} \;=\; \frac{\hat p + \dfrac{z^2}{2n} \;\pm\; z\sqrt{\dfrac{\hat p(1-\hat p)}{n} + \dfrac{z^2}{4n^2}}}{1 + \dfrac{z^2}{n}}$$
+```math
+W_{\pm} \;=\; \frac{\hat p + \dfrac{z^2}{2n} \;\pm\; z\sqrt{\dfrac{\hat p(1-\hat p)}{n} + \dfrac{z^2}{4n^2}}}{1 + \dfrac{z^2}{n}}
+```
 
 **Read it aloud:** a centre pulled a little towards one half, plus or minus a margin that stays positive even when nothing, or everything, was observed.
 
-The exact interval runs from $L$ to $U$, where
+The exact interval runs from $`L`$ to $`U`$, where
 
-$$A_k(L) = \frac{\alpha}{2}, \qquad B_k(U) = \frac{\alpha}{2}, \qquad A_k(p) = P_p(K \ge k), \quad B_k(p) = P_p(K \le k)$$
+```math
+A_k(L) = \frac{\alpha}{2}, \qquad B_k(U) = \frac{\alpha}{2}, \qquad A_k(p) = P_p(K \ge k), \quad B_k(p) = P_p(K \le k)
+```
 
-$P_p$ is a chance worked out as if the true rate were $p$.
+$`P_p`$ is a chance worked out as if the true rate were $`p`$.
 
-**Read it aloud:** the lowest rate at which a count this high still has a 2.5% chance, up to the highest rate at which a count this low still has a 2.5% chance. At $k = 0$ the lower end is 0; at $k = n$ the upper end is 1.
+**Read it aloud:** the lowest rate at which a count this high still has a 2.5% chance, up to the highest rate at which a count this low still has a 2.5% chance. At $`k = 0`$ the lower end is 0; at $`k = n`$ the upper end is 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | patients treated, fixed before the trial | 100 | every interval narrows, roughly as one over the square root of n |
-| $K$, $k$ | the count of recoveries: the random variable, and the value seen | 45 | the interval slides right |
-| $p$ | the true recovery rate, fixed and unknown | unknown | — |
-| $\hat p$ | the observed rate, $k/n$ ("p hat") | 0.45 | the interval slides right |
-| $\alpha$ | the error allowed, 1 minus the confidence level | 0.05 | intervals narrow and miss more often |
-| $z$ | the bell's point with $\Phi(z) = 1 - \alpha/2$ | 1.959964 | intervals widen |
-| $\Phi$ | the standard bell curve's area to the left of a point | $\Phi(z) = 0.975$ | — |
-| $W_{-}$, $W_{+}$ | the Wilson interval's lower and upper ends | 0.356145, 0.547554 | — |
-| $L$, $U$ | the exact interval's lower and upper ends | 0.350320, 0.552720 | — |
-| $P_p$ | a chance worked out at true rate p | $P_{0.45}(K = 45)$ | — |
-| $A_k$ | the chance, at rate p, of k or more recoveries | 0.025 at $p = L$ | rises as p rises |
-| $B_k$ | the chance, at rate p, of k or fewer recoveries | 0.025 at $p = U$ | falls as p rises |
-| $C(n, j)$, $j$ | ways to choose which j of n patients recover | $C(100, 45)$ | — |
-| $b_j$ | in the proofs: the chance, at rate p, of exactly j recoveries, $C(n,j)p^j(1-p)^{n-j}$ | $b_{45}(0.45) = P_{0.45}(K = 45)$ | — |
-| $r$, $s$ | in the proofs: the smallest count whose exact interval lies wholly above p, and the largest whose interval lies wholly below it | — | — |
-| $t$ | in the area form of $A_k$: a rate running from 0 up to p as the area is added up | — | — |
+| $`n`$ | patients treated, fixed before the trial | 100 | every interval narrows, roughly as one over the square root of n |
+| $`K`$, $`k`$ | the count of recoveries: the random variable, and the value seen | 45 | the interval slides right |
+| $`p`$ | the true recovery rate, fixed and unknown | unknown | — |
+| $`\hat p`$ | the observed rate, $`k/n`$ ("p hat") | 0.45 | the interval slides right |
+| $`\alpha`$ | the error allowed, 1 minus the confidence level | 0.05 | intervals narrow and miss more often |
+| $`z`$ | the bell's point with $`\Phi(z) = 1 - \alpha/2`$ | 1.959964 | intervals widen |
+| $`\Phi`$ | the standard bell curve's area to the left of a point | $`\Phi(z) = 0.975`$ | — |
+| $`W_{-}`$, $`W_{+}`$ | the Wilson interval's lower and upper ends | 0.356145, 0.547554 | — |
+| $`L`$, $`U`$ | the exact interval's lower and upper ends | 0.350320, 0.552720 | — |
+| $`P_p`$ | a chance worked out at true rate p | $`P_{0.45}(K = 45)`$ | — |
+| $`A_k`$ | the chance, at rate p, of k or more recoveries | 0.025 at $`p = L`$ | rises as p rises |
+| $`B_k`$ | the chance, at rate p, of k or fewer recoveries | 0.025 at $`p = U`$ | falls as p rises |
+| $`C(n, j)`$, $`j`$ | ways to choose which j of n patients recover | $`C(100, 45)`$ | — |
+| $`b_j`$ | in the proofs: the chance, at rate p, of exactly j recoveries, $`C(n,j)p^j(1-p)^{n-j}`$ | $`b_{45}(0.45) = P_{0.45}(K = 45)`$ | — |
+| $`r`$, $`s`$ | in the proofs: the smallest count whose exact interval lies wholly above p, and the largest whose interval lies wholly below it | — | — |
+| $`t`$ | in the area form of $`A_k`$: a rate running from 0 up to p as the area is added up | — | — |
 
 ### When it holds
 
@@ -102,17 +108,19 @@ If each test rules out a true rate only 5% of the time, then the kept set misses
 
 ### Step 1: Wald measures surprise with the spread at the observed rate
 
-The observed rate $\hat p$ has average $p$ and spread $\sqrt{p(1-p)/n}$, the standard deviation of a count divided by n ([Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). With 100 patients it is close to a bell curve. So in about 95% of trials, $\hat p$ lands within $z$ spreads of $p$:
+The observed rate $`\hat p`$ has average $`p`$ and spread $`\sqrt{p(1-p)/n}`$, the standard deviation of a count divided by n ([Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). With 100 patients it is close to a bell curve. So in about 95% of trials, $`\hat p`$ lands within $`z`$ spreads of $`p`$:
 
-$$\lvert \hat p - p\rvert \le z\sqrt{\frac{p(1-p)}{n}}.$$
+```math
+\lvert \hat p - p\rvert \le z\sqrt{\frac{p(1-p)}{n}}.
+```
 
-The spread involves the unknown $p$. Wald replaces it by $\hat p$: the spread becomes $\sqrt{0.45 \times 0.55/100} = 0.049749$, a fixed number, and the inequality solves at once to $\hat p \pm z \times 0.049749 = 0.45 \pm 0.097507$.
+The spread involves the unknown $`p`$. Wald replaces it by $`\hat p`$: the spread becomes $`\sqrt{0.45 \times 0.55/100} = 0.049749`$, a fixed number, and the inequality solves at once to $`\hat p \pm z \times 0.049749 = 0.45 \pm 0.097507`$.
 
-That replacement is the flaw. When the count is 0, the estimated spread is $\sqrt{0 \times 1/100} = 0$, and the interval shrinks to a single point.
+That replacement is the flaw. When the count is 0, the estimated spread is $`\sqrt{0 \times 1/100} = 0`$, and the interval shrinks to a single point.
 
 ### Step 2: Wilson keeps the true spread and solves for p
 
-Wilson keeps $p$ inside the spread. For each candidate $p$, the allowance $z\sqrt{p(1-p)/n}$ is the room that candidate's own spread gives. Keep $p$ when the distance from $\hat p$ fits inside it.
+Wilson keeps $`p`$ inside the spread. For each candidate $`p`$, the allowance $`z\sqrt{p(1-p)/n}`$ is the room that candidate's own spread gives. Keep $`p`$ when the distance from $`\hat p`$ fits inside it.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -125,49 +133,55 @@ xychart-beta
     line [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
-Orange line: the distance from the observed rate 0 to the candidate, which is the candidate itself. Teal curve: Wilson's allowance, $z\sqrt{p(1-p)/100}$. Dark line along the floor: Wald's allowance, zero for every candidate. Wilson keeps every candidate where orange is under teal, from 0 up to where they cross, just past 0.035: the upper end is 0.036993. Wald keeps only the point 0.
+Orange line: the distance from the observed rate 0 to the candidate, which is the candidate itself. Teal curve: Wilson's allowance, $`z\sqrt{p(1-p)/100}`$. Dark line along the floor: Wald's allowance, zero for every candidate. Wilson keeps every candidate where orange is under teal, from 0 up to where they cross, just past 0.035: the upper end is 0.036993. Wald keeps only the point 0.
 
-Squaring the inequality and multiplying by $n$ gives a quadratic in $p$:
+Squaring the inequality and multiplying by $`n`$ gives a quadratic in $`p`$:
 
-$$(n + z^2)\,p^2 - (2n\hat p + z^2)\,p + n\hat p^2 \le 0.$$
+```math
+(n + z^2)\,p^2 - (2n\hat p + z^2)\,p + n\hat p^2 \le 0.
+```
 
-A quadratic with a positive first coefficient is at or below zero exactly between its two roots. The quadratic formula gives those roots, and they are $W_{-}$ and $W_{+}$ in The formula. For the trial: centre 0.451850, half-width 0.095704, interval 0.356145 to 0.547554.
+A quadratic with a positive first coefficient is at or below zero exactly between its two roots. The quadratic formula gives those roots, and they are $`W_{-}`$ and $`W_{+}`$ in The formula. For the trial: centre 0.451850, half-width 0.095704, interval 0.356145 to 0.547554.
 
 <details>
 <summary>Detailed proof: the Wilson roots, and why they stay inside 0 to 1</summary>
 
-Both sides of $\lvert \hat p - p\rvert \le z\sqrt{p(1-p)/n}$ are at least zero, so squaring loses nothing: $n(\hat p - p)^2 \le z^2 p(1-p)$. Expanding, $n\hat p^2 - 2n\hat p\,p + np^2 \le z^2 p - z^2 p^2$, which rearranges to the quadratic above.
+Both sides of $`\lvert \hat p - p\rvert \le z\sqrt{p(1-p)/n}`$ are at least zero, so squaring loses nothing: $`n(\hat p - p)^2 \le z^2 p(1-p)`$. Expanding, $`n\hat p^2 - 2n\hat p\,p + np^2 \le z^2 p - z^2 p^2`$, which rearranges to the quadratic above.
 
 Its roots are
-$$p = \frac{(2n\hat p + z^2) \pm \sqrt{(2n\hat p + z^2)^2 - 4(n + z^2)\,n\hat p^2}}{2(n + z^2)}.$$
-Inside the root, $(2n\hat p + z^2)^2 - 4(n+z^2)n\hat p^2 = 4n\hat p z^2 + z^4 - 4nz^2\hat p^2 = z^2\big(4n\hat p(1-\hat p) + z^2\big)$. Divide top and bottom by $2n$: the centre is $(\hat p + z^2/(2n))/(1 + z^2/n)$ and the half-width is $z\sqrt{\hat p(1-\hat p)/n + z^2/(4n^2)}/(1 + z^2/n)$, as stated.
 
-The quadratic at $p = 0$ equals $n\hat p^2 \ge 0$; at $p = 1$ it equals $n(1-\hat p)^2 \ge 0$; at $p = \hat p$ it equals $-z^2\hat p(1-\hat p) \le 0$. So both roots lie in 0 to 1, one on each side of $\hat p$. At $k = 0$ the roots are 0 and $z^2/(n + z^2)$, the 0.036993 of the chart.
+$`\displaystyle p = \frac{(2n\hat p + z^2) \pm \sqrt{(2n\hat p + z^2)^2 - 4(n + z^2)\,n\hat p^2}}{2(n + z^2)}.`$
+
+Inside the root, $`(2n\hat p + z^2)^2 - 4(n+z^2)n\hat p^2 = 4n\hat p z^2 + z^4 - 4nz^2\hat p^2 = z^2\big(4n\hat p(1-\hat p) + z^2\big)`$. Divide top and bottom by $`2n`$: the centre is $`(\hat p + z^2/(2n))/(1 + z^2/n)`$ and the half-width is $`z\sqrt{\hat p(1-\hat p)/n + z^2/(4n^2)}/(1 + z^2/n)`$, as stated.
+
+The quadratic at $`p = 0`$ equals $`n\hat p^2 \ge 0`$; at $`p = 1`$ it equals $`n(1-\hat p)^2 \ge 0`$; at $`p = \hat p`$ it equals $`-z^2\hat p(1-\hat p) \le 0`$. So both roots lie in 0 to 1, one on each side of $`\hat p`$. At $`k = 0`$ the roots are 0 and $`z^2/(n + z^2)`$, the 0.036993 of the chart.
 
 </details>
 
 ### Step 3: the exact interval uses the binomial chances themselves
 
-Drop the bell. For a candidate $p$, the exact chance of 45 or more recoveries is $A_{45}(p) = \sum_{j=45}^{100} C(100, j)\,p^j(1-p)^{100-j}$, a sum of binomial chances. Rule $p$ out on the low side if that chance is below 0.025: the count would be too high for such a small rate. Rule it out on the high side if $B_{45}(p)$, the chance of 45 or fewer, is below 0.025.
+Drop the bell. For a candidate $`p`$, the exact chance of 45 or more recoveries is $`A_{45}(p) = \sum_{j=45}^{100} C(100, j)\,p^j(1-p)^{100-j}`$, a sum of binomial chances. Rule $`p`$ out on the low side if that chance is below 0.025: the count would be too high for such a small rate. Rule it out on the high side if $`B_{45}(p)`$, the chance of 45 or fewer, is below 0.025.
 
-With k = 45, $A_k$ rises steadily from 0 to 1 as $p$ rises, and $B_k$ falls steadily from 1 to 0, so each crosses 0.025 exactly once. The crossings are $L = 0.350320$ and $U = 0.552720$. For 0 rashes, $B_0(p) = (1-p)^{100}$, and $(1-U)^{100} = 0.025$ solves by hand: $U = 1 - 0.025^{1/100} = 0.036217$.
+With k = 45, $`A_k`$ rises steadily from 0 to 1 as $`p`$ rises, and $`B_k`$ falls steadily from 1 to 0, so each crosses 0.025 exactly once. The crossings are $`L = 0.350320`$ and $`U = 0.552720`$. For 0 rashes, $`B_0(p) = (1-p)^{100}`$, and $`(1-U)^{100} = 0.025`$ solves by hand: $`U = 1 - 0.025^{1/100} = 0.036217`$.
 
 ### Step 4: why the exact interval keeps its promise
 
-Fix the true rate $p$. The interval misses on the low side, with $L > p$, only when the count is so high that $A_K(p) < 0.025$. Those counts are the top few, and together they have chance below 0.025, since $A_k$ at the smallest of them, for this $p$, is exactly that total. Misses on the high side likewise have chance below 0.025. So all misses together have chance below 0.05, for every $p$: coverage at least 95%, with no approximation anywhere.
+Fix the true rate $`p`$. The interval misses on the low side, with $`L > p`$, only when the count is so high that $`A_K(p) < 0.025`$. Those counts are the top few, and together they have chance below 0.025, since $`A_k`$ at the smallest of them, for this $`p`$, is exactly that total. Misses on the high side likewise have chance below 0.025. So all misses together have chance below 0.05, for every $`p`$: coverage at least 95%, with no approximation anywhere.
 
 <details>
 <summary>Detailed proof: the tails move one way, and the misses add to less than alpha</summary>
 
-Write $b_j(p) = C(n,j)p^j(1-p)^{n-j}$. Differentiating, and using $j\,C(n,j) = n\,C(n-1,j-1)$ and $(n-j)\,C(n,j) = n\,C(n-1,j)$,
-$$b_j'(p) = n\big(C(n-1,j-1)p^{j-1}(1-p)^{n-j} - C(n-1,j)p^{j}(1-p)^{n-j-1}\big).$$
-Summed from $j = k$ to $n$, neighbouring terms cancel and one survives: $A_k'(p) = n\,C(n-1,k-1)\,p^{k-1}(1-p)^{n-k} > 0$ for $0 < p < 1$ and $k \ge 1$. So $A_k$ rises strictly from 0 to 1, and $B_k = 1 - A_{k+1}$ falls strictly from 1 to 0. Each crosses $\alpha/2$ once, which defines $L$ and $U$, and $p \ge L$ exactly when $A_k(p) \ge \alpha/2$, and $p \le U$ exactly when $B_k(p) \ge \alpha/2$.
+Write $`b_j(p) = C(n,j)p^j(1-p)^{n-j}`$. Differentiating, and using $`j\,C(n,j) = n\,C(n-1,j-1)`$ and $`(n-j)\,C(n,j) = n\,C(n-1,j)`$,
 
-Now fix $p$. For a fixed rate, $A_k(p)$ falls as $k$ rises, so the counts with $A_k(p) < \alpha/2$ are all counts from some smallest one, r, upward. The chance of landing there is $A_r(p)$, which is below $\alpha/2$. Likewise the counts with $B_k(p) < \alpha/2$ are all counts up to some largest one, s, with total chance $B_s(p) < \alpha/2$. The interval misses $p$ only on one of these two sets of counts, so it misses with chance below $\alpha$.
+$`\displaystyle b_j'(p) = n\big(C(n-1,j-1)p^{j-1}(1-p)^{n-j} - C(n-1,j)p^{j}(1-p)^{n-j-1}\big).`$
 
-If a set is empty its chance is 0. At $p = 0$ the count is always 0 and $L(0) = 0$; at $p = 1$ it is always $n$ and $U(n) = 1$: coverage 1 at both ends.
+Summed from $`j = k`$ to $`n`$, neighbouring terms cancel and one survives: $`A_k'(p) = n\,C(n-1,k-1)\,p^{k-1}(1-p)^{n-k} > 0`$ for $`0 < p < 1`$ and $`k \ge 1`$. So $`A_k`$ rises strictly from 0 to 1, and $`B_k = 1 - A_{k+1}`$ falls strictly from 1 to 0. Each crosses $`\alpha/2`$ once, which defines $`L`$ and $`U`$, and $`p \ge L`$ exactly when $`A_k(p) \ge \alpha/2`$, and $`p \le U`$ exactly when $`B_k(p) \ge \alpha/2`$.
 
-The same sum has a second form, used by the checks as an independent road: $A_k(p) = k\,C(n,k)\int_0^p t^{k-1}(1-t)^{n-k}\,dt$. Both sides are 0 at $p = 0$, and their derivatives agree by the display above.
+Now fix $`p`$. For a fixed rate, $`A_k(p)`$ falls as $`k`$ rises, so the counts with $`A_k(p) < \alpha/2`$ are all counts from some smallest one, r, upward. The chance of landing there is $`A_r(p)`$, which is below $`\alpha/2`$. Likewise the counts with $`B_k(p) < \alpha/2`$ are all counts up to some largest one, s, with total chance $`B_s(p) < \alpha/2`$. The interval misses $`p`$ only on one of these two sets of counts, so it misses with chance below $`\alpha`$.
+
+If a set is empty its chance is 0. At $`p = 0`$ the count is always 0 and $`L(0) = 0`$; at $`p = 1`$ it is always $`n`$ and $`U(n) = 1`$: coverage 1 at both ends.
+
+The same sum has a second form, used by the checks as an independent road: $`A_k(p) = k\,C(n,k)\int_0^p t^{k-1}(1-t)^{n-k}\,dt`$. Both sides are 0 at $`p = 0`$, and their derivatives agree by the display above.
 
 </details>
 
@@ -177,12 +191,12 @@ Suppose the true rash rate is 2%. A trial of 100 then often sees no rash at all,
 
 The estimated spread is smallest exactly when the count happens to be low, so the low counts are the ones given too little room. Add up the chances and Wald catches 0.02 in 0.8664 of trials. Near 100% the same happens in reverse: at a true rate of 0.98, Wald again catches 0.8664. Wilson's allowance depends on the candidate, not on the count, so it does not shrink when the count is small.
 
-The coverage lines jump up and down because counts are whole numbers: as p moves, whole counts enter or leave the set that covers it. The Wilson interval is also what an inverted score test gives. A score test judges a candidate rate with the spread at that candidate: it rejects $p$ when $\lvert \hat p - p\rvert > z\sqrt{p(1-p)/n}$, which is Step 2's keep rule turned round. Step 0 is that link between tests and intervals in words; [Hypothesis tests](03-hypothesis-tests-and-p-values.md) builds tests and shows the same match for the trial's gap.
+The coverage lines jump up and down because counts are whole numbers: as p moves, whole counts enter or leave the set that covers it. The Wilson interval is also what an inverted score test gives. A score test judges a candidate rate with the spread at that candidate: it rejects $`p`$ when $`\lvert \hat p - p\rvert > z\sqrt{p(1-p)/n}`$, which is Step 2's keep rule turned round. Step 0 is that link between tests and intervals in words; [Hypothesis tests](03-hypothesis-tests-and-p-values.md) builds tests and shows the same match for the trial's gap.
 
 <details>
 <summary>A fourth recipe: add two and two</summary>
 
-Agresti and Coull noticed that adding two recoveries and two non-recoveries, then running Wald on the padded count, behaves almost like Wilson. At 95%, $z^2 = 3.8415$, close to 4, so Wilson's centre $(k + z^2/2)/(n + z^2)$ is close to $(k + 2)/(n + 4)$. The Try changing box below runs it.
+Agresti and Coull noticed that adding two recoveries and two non-recoveries, then running Wald on the padded count, behaves almost like Wilson. At 95%, $`z^2 = 3.8415`$, close to 4, so Wilson's centre $`(k + z^2/2)/(n + z^2)`$ is close to $`(k + 2)/(n + 4)`$. The Try changing box below runs it.
 
 </details>
 
@@ -194,17 +208,17 @@ Agresti and Coull noticed that adding two recoveries and two non-recoveries, the
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| observed rate $\hat p$ | 45 / 100 | 0.450000 |
-| $\hat p(1 - \hat p)/n$ | 0.45 × 0.55 / 100 | 0.002475 |
+| observed rate $`\hat p`$ | 45 / 100 | 0.450000 |
+| $`\hat p(1 - \hat p)/n`$ | 0.45 × 0.55 / 100 | 0.002475 |
 | estimated spread | √0.002475 | 0.049749 |
-| $z$ | bisection on $\Phi(z) = 0.975$ | 1.959964 |
+| $`z`$ | bisection on $`\Phi(z) = 0.975`$ | 1.959964 |
 | Wald margin | 1.959964 × 0.049749 | 0.097507 |
 | **Wald interval** | 0.45 ± 0.097507 | **0.352493 to 0.547507** |
-| $z^2/n$ | 3.8415 / 100 | 0.038415 |
+| $`z^2/n`$ | 3.8415 / 100 | 0.038415 |
 | Wilson centre | (0.45 + 0.038415/2) / 1.038415 | 0.451850 |
 | Wilson half-width | 1.959964 × √(0.002475 + 0.038415/400) / 1.038415 | 0.095704 |
 | **Wilson interval** | 0.451850 ± 0.095704 | **0.356145 to 0.547554** |
-| **exact interval** | $A_{45}(L) = 0.025$, $B_{45}(U) = 0.025$, by bisection | **0.350320 to 0.552720** |
+| **exact interval** | $`A_{45}(L) = 0.025`$, $`B_{45}(U) = 0.025`$, by bisection | **0.350320 to 0.552720** |
 
 Read back in the trial: the recovery rate on the drug is 45%, with a 95% interval of about 35% to 55% by any of the three recipes. That is the headline's "plus or minus 10".
 
@@ -228,10 +242,10 @@ The code prints all four.
 The scripts build everything themselves:
 
 - the bell's area by its Taylor series, a sum of powers of z cut off once the terms are tiny;
-- $z$ by bisection (halving an interval that holds the answer until it is tiny);
+- $`z`$ by bisection (halving an interval that holds the answer until it is tiny);
 - the binomial chances by the ratio rule from one count to the next.
 
-Each interval end is reached by two roads. Wilson: the quadratic formula, and bisection on the kept-or-not test itself. Exact: bisection on summed binomial tails, and bisection on the same tail written as an area and integrated by Simpson's rule (adding up thin strips under the curve). At 0 rashes the closed form $1 - 0.025^{1/100}$ is a third road.
+Each interval end is reached by two roads. Wilson: the quadratic formula, and bisection on the kept-or-not test itself. Exact: bisection on summed binomial tails, and bisection on the same tail written as an area and integrated by Simpson's rule (adding up thin strips under the curve). At 0 rashes the closed form $`1 - 0.025^{1/100}`$ is a third road.
 
 Coverage is computed by enumeration over all 101 counts. It is computed again by simulating 20,000 trials of 100 patients from a SplitMix64 random-number generator with seed 20260928, its fixed starting value, so every run repeats. The simulated rate is printed with its standard error (se): the typical size of the simulation's own chance error.
 
@@ -683,14 +697,14 @@ The two outputs match line for line.
 
 Lean proves the exact interval's promise and the Wilson interval's shape, for every n, every count k, and every z above 0.
 
-- Take α between 0 and 1, and any true rate p from 0 to 1. Then the counts whose exact interval keeps p have total binomial chance at least $1 - \alpha$.
-- Here the exact interval keeps p unless $A_k(p)$ or $B_k(p)$ is below $\alpha/2$, as in Step 3.
-- Take k of n patients, with n at least 1, z above 0 and p from 0 to 1. Then p passes Step 2's keep rule exactly when $W_{-} \le p \le W_{+}$.
-- Take k of n patients, with n at least 1 and z above 0. Then $0 \le W_{-} \le \hat p \le W_{+} \le 1$.
+- Take α between 0 and 1, and any true rate p from 0 to 1. Then the counts whose exact interval keeps p have total binomial chance at least $`1 - \alpha`$.
+- Here the exact interval keeps p unless $`A_k(p)`$ or $`B_k(p)`$ is below $`\alpha/2`$, as in Step 3.
+- Take k of n patients, with n at least 1, z above 0 and p from 0 to 1. Then p passes Step 2's keep rule exactly when $`W_{-} \le p \le W_{+}`$.
+- Take k of n patients, with n at least 1 and z above 0. Then $`0 \le W_{-} \le \hat p \le W_{+} \le 1`$.
 - The trial's numbers: 45/100 is 0.45, and 0.45 × 0.55 / 100 is 0.002475.
 - The placebo arm: 35/100 is 0.35, and 0.35 × 0.65 / 100 is 0.002275.
 - Wald on 0 rashes in 100 gives 0 to 0, whatever z is.
-- For 0 rashes in 100, $B_0(p) = (1-p)^{100}$.
+- For 0 rashes in 100, $`B_0(p) = (1-p)^{100}`$.
 
 The bisected ends L and U, the decimals and every catch rate are left to the Python and Rust checks.
 
@@ -1036,7 +1050,7 @@ example (p : ℝ) : lowerTail 100 0 p = (1 - p) ^ 100 := by
 - **Clinical trials.** Recovery rates, response rates and, above all, side-effect rates. For rare events the exact or Wilson interval is standard; 0 to 0 would hide the risk.
 - **Opinion polls.** The quoted margin of error on a poll is usually Wald's margin, often worked out at 50%. With a large sample and a rate near the middle, the approximation is sound.
 - **A/B tests on websites.** Conversion rates are proportions, often small, and 2% is exactly where Wald fails; [Randomised experiments](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md) compares two of them.
-- **Quality control.** A batch inspection that finds no defects reports an upper bound, the exact interval's $U$.
+- **Quality control.** A batch inspection that finds no defects reports an upper bound, the exact interval's $`U`$.
 - **Planning a trial.** How many patients buy a narrower margin is [Power](04-power-and-sample-size.md).
 
 > **Say it back**

@@ -40,9 +40,11 @@ Lines are the 12 paved roads: a ring of eight, plus a road from each town straig
 
 ## The formula
 
-Notation first, in words. $R(s,t)$, read "R of s and t", is the fewest towns that force either $s$ towns all joined by paved roads or $t$ towns all joined by gravel, however the roads are surfaced. $C(n, k)$ is "n choose k", the number of ways to pick k things from n ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
+Notation first, in words. $`R(s,t)`$, read "R of s and t", is the fewest towns that force either $`s`$ towns all joined by paved roads or $`t`$ towns all joined by gravel, however the roads are surfaced. $`C(n, k)`$ is "n choose k", the number of ways to pick k things from n ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
 
-$$R(s,t) \le R(s-1,\,t) + R(s,\,t-1)$$
+```math
+R(s,t) \le R(s-1,\,t) + R(s,\,t-1)
+```
 
 **Read it aloud:** the threshold is at most the threshold with one fewer paved town plus the one with one fewer gravel town.
 
@@ -50,26 +52,28 @@ The two thresholds on the right are its feeders. A proved upper limit like this 
 
 Unrolled to the bottom, it becomes one count:
 
-$$R(s,t) \le C(s+t-2,\ s-1)$$
+```math
+R(s,t) \le C(s+t-2,\ s-1)
+```
 
 **Read it aloud:** the threshold is at most the number of ways to choose s − 1 things from s + t − 2.
 
-For the county: $R(3,4) \le R(2,4) + R(3,3) = 4 + 6 = 10$, and $C(5, 2) = 10$ too. A parity step, an even-or-odd count in Step 2, cuts 10 to 9.
+For the county: $`R(3,4) \le R(2,4) + R(3,3) = 4 + 6 = 10`$, and $`C(5, 2) = 10`$ too. A parity step, an even-or-odd count in Step 2, cuts 10 to 9.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $R(s,t)$ | fewest towns forcing s all-paved or t all-gravel | $R(3,4) = 9$ | — |
-| $s$ | size of the all-paved group demanded | 3, a paved trio | rises |
-| $t$ | size of the all-gravel group demanded | 4, a gravel foursome | rises |
-| $n$ | number of towns in the county | 8 dodge, 9 cannot | from R(s,t) on, the pattern is certain |
-| $C(n, k)$ | n choose k: ways to pick k from n | C(9, 2) = 36 roads | — |
-| $p$ | paved roads at one town | exactly 3, if nine towns were to dodge | — |
+| $`R(s,t)`$ | fewest towns forcing s all-paved or t all-gravel | $`R(3,4) = 9`$ | — |
+| $`s`$ | size of the all-paved group demanded | 3, a paved trio | rises |
+| $`t`$ | size of the all-gravel group demanded | 4, a gravel foursome | rises |
+| $`n`$ | number of towns in the county | 8 dodge, 9 cannot | from R(s,t) on, the pattern is certain |
+| $`C(n, k)`$ | n choose k: ways to pick k from n | C(9, 2) = 36 roads | — |
+| $`p`$ | paved roads at one town | exactly 3, if nine towns were to dodge | — |
 
 ### When it holds
 
 - **Every road surfaced, one of two ways.** An undecided road serves neither pattern, and the count no longer applies.
-- **The recursion is a ceiling, not a value.** It is exact for $R(3,5)$ and $R(4,4)$, but gives 32 for $R(4,5)$, whose true value is 25.
-- **The parity step needs both feeders even.** 4 and 6 are, so 10 drops to 9. For $R(4,4)$ the feeders are 9 and 9: no drop.
+- **The recursion is a ceiling, not a value.** It is exact for $`R(3,5)`$ and $`R(4,4)`$, but gives 32 for $`R(4,5)`$, whose true value is 25.
+- **The parity step needs both feeders even.** 4 and 6 are, so 10 drops to 9. For $`R(4,4)`$ the feeders are 9 and 9: no drop.
 - **More than two surfaces.** The same split still works, with bigger ceilings.
 
 ---
@@ -82,15 +86,15 @@ Pick one town and sort its roads by surface. The two piles add up to all its roa
 
 ### Step 1: the ceiling R(3,4) ≤ 10
 
-Take ten towns. Town A has 9 roads. Suppose 4 are paved. $R(2,4) = 4$ says those four towns hold a paved road or are a gravel foursome. A paved road between two of them, with their paved roads to A, makes a paved trio.
+Take ten towns. Town A has 9 roads. Suppose 4 are paved. $`R(2,4) = 4`$ says those four towns hold a paved road or are a gravel foursome. A paved road between two of them, with their paved roads to A, makes a paved trio.
 
-Otherwise at most 3 are paved, so 6 are gravel. $R(3,3) = 6$ says those six hold a paved trio or a gravel trio, and a gravel trio plus A is a gravel foursome.
+Otherwise at most 3 are paved, so 6 are gravel. $`R(3,3) = 6`$ says those six hold a paved trio or a gravel trio, and a gravel trio plus A is a gravel foursome.
 
 ### Step 2: the parity step cuts 10 to 9
 
-Suppose nine towns dodge both patterns. Each town has 8 roads. By Step 1, 4 paved or 6 gravel at one town would force a pattern, so each town has at most 3 paved and at most 5 gravel. These add to 8, so every town has exactly $p = 3$ paved.
+Suppose nine towns dodge both patterns. Each town has 8 roads. By Step 1, 4 paved or 6 gravel at one town would force a pattern, so each town has at most 3 paved and at most 5 gravel. These add to 8, so every town has exactly $`p = 3`$ paved.
 
-Count paved road-ends town by town: 9 × 3 = 27. Every road has 2 ends, so the count must be even. It is odd, so no such county exists: $R(3,4) \le 9$.
+Count paved road-ends town by town: 9 × 3 = 27. Every road has 2 ends, so the count must be even. It is odd, so no such county exists: $`R(3,4) \le 9`$.
 
 ```mermaid
 flowchart TB
@@ -104,11 +108,11 @@ flowchart TB
 
 ### Step 3: eight towns dodge, so R(3,4) = 9
 
-The first picture's county dodges, so eight towns are not enough: $R(3,4) = 9$. The code's search, building every dodging county town by town, agrees: 17640 dodging surfacings of eight named towns, 0 of nine.
+The first picture's county dodges, so eight towns are not enough: $`R(3,4) = 9`$. The code's search, building every dodging county town by town, agrees: 17640 dodging surfacings of eight named towns, 0 of nine.
 
 ### Step 4: the general recursion and the binomial ceiling
 
-Steps 1 and 2 used nothing special about 3 and 4, so the recursion holds for every $s$ and $t$.
+Steps 1 and 2 used nothing special about 3 and 4, so the recursion holds for every $`s`$ and $`t`$.
 
 <details>
 <summary>Detailed proof: the recursion, the parity step, and the binomial ceiling</summary>
@@ -129,9 +133,9 @@ The binomial ceiling is finite, so every Ramsey number exists. That is Ramsey's 
 
 ### Step 5: why the table stays so short
 
-An exact value needs a ceiling and a dodging county one town short. For $R(4,4) = 18$ that county is 17 towns round a clock face. A road is paved when the gap between its towns, counted round the clock, is 1, 2, 4, 8, 9, 13, 15 or 16: the remainders of perfect squares divided by 17. None of its 2380 foursomes is one surface. For $R(3,5) = 14$, a 13-town clock with paved gaps 1, 5, 8 and 12 does the same.
+An exact value needs a ceiling and a dodging county one town short. For $`R(4,4) = 18`$ that county is 17 towns round a clock face. A road is paved when the gap between its towns, counted round the clock, is 1, 2, 4, 8, 9, 13, 15 or 16: the remainders of perfect squares divided by 17. None of its 2380 foursomes is one surface. For $`R(3,5) = 14`$, a 13-town clock with paved gaps 1, 5, 8 and 12 does the same.
 
-Past that, search fails. For $R(5,5)$ the recursion gives 50 and the binomial 70. Geoffrey Exoo found a dodging county one town short of 43 in 1989; Vigleik Angeltveit and Brendan McKay proved the ceiling 46 by computer, posted in 2024. The value lies from 43 to 46.
+Past that, search fails. For $`R(5,5)`$ the recursion gives 50 and the binomial 70. Geoffrey Exoo found a dodging county one town short of 43 in 1989; Vigleik Angeltveit and Brendan McKay proved the ceiling 46 by computer, posted in 2024. The value lies from 43 to 46.
 
 Floors can also come from counting bad surfacings, without building a county ([Erdos's counting trick](03-probabilistic-method-by-counting.md)).
 
@@ -374,15 +378,15 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the recursion, its parity step, the binomial ceiling and $R(3,4) = 9$, for counties of any size.
+Lean proves the recursion, its parity step, the binomial ceiling and $`R(3,4) = 9`$, for counties of any size.
 
-- $R(s,t) \le R(s-1,\,t) + R(s,\,t-1)$ for every $s$ and $t$ of 2 or more.
+- $`R(s,t) \le R(s-1,\,t) + R(s,\,t-1)`$ for every $`s`$ and $`t`$ of 2 or more.
 - When both feeders are even, one town fewer is enough.
-- $R(s,t) \le C(s+t-2,\ s-1)$ for every $s$ and $t$, so every Ramsey number exists.
-- Nine towns always hold a paved trio or a gravel foursome, and some eight towns dodge both, so $R(3,4) = 9$.
+- $`R(s,t) \le C(s+t-2,\ s-1)`$ for every $`s`$ and $`t`$, so every Ramsey number exists.
+- Nine towns always hold a paved trio or a gravel foursome, and some eight towns dodge both, so $`R(3,4) = 9`$.
 - The picture's county has 12 paved roads, 3 at every town, 0 paved trios of 56 and 0 gravel foursomes of 70.
 
-The searches, the six-town brute force and the floors for $R(3,5)$ and $R(4,4)$ are left to the Python and Rust checks.
+The searches, the six-town brute force and the floors for $`R(3,5)`$ and $`R(4,4)`$ are left to the Python and Rust checks.
 
 ```lean
 -- Ramsey numbers: when every road between towns is paved or gravel, the threshold for s all-paved or t all-gravel towns is at most the sum of its two feeders (one less when both are even), it is at most C(s+t-2, s-1) so it always exists, and R(3,4) = 9.
@@ -664,10 +668,10 @@ example : Nat.choose 17 4 = 2380 ∧ Nat.choose 13 5 = 1287 ∧
 ## The usual mistake
 
 > [!warning]
-> **Treating a ceiling as the answer.** The recursion and the binomial are safe but usually too big: 10 for $R(3,4)$, 70 for $R(5,5)$. A value is known only when a ceiling meets a dodging county one town short. For $R(5,5)$ they have not met.
+> **Treating a ceiling as the answer.** The recursion and the binomial are safe but usually too big: 10 for $`R(3,4)`$, 70 for $`R(5,5)`$. A value is known only when a ceiling meets a dodging county one town short. For $`R(5,5)`$ they have not met.
 >
 > - **Demanding one pattern.** The promise is paved trio or gravel foursome, the county's choice. An all-gravel county of 9 has 0 paved trios.
-> - **Parity where it does not apply.** $R(4,4) \le 9 + 9$: both feeders odd, no cut. The 18 stands, and is exact.
+> - **Parity where it does not apply.** $`R(4,4) \le 9 + 9`$: both feeders odd, no cut. The 18 stands, and is exact.
 
 ---
 

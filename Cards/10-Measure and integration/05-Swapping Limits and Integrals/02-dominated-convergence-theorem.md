@@ -35,47 +35,53 @@ Caption: orange is the binomial with 10 slots, green with 100 slots, dark blue t
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). The integral $\int f\,d\mu$ is read "the integral of f against mu". "Almost everywhere", written a.e., means "except on a set of size zero" ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). A function is **integrable**, in $L^1$, when $\int |f|\,d\mu$ is finite ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
+Notation first, in words. A measure space $`(\Omega,\mathcal F,\mu)`$ is a set $`\Omega`$ (omega), the collection $`\mathcal F`$ of sets we allow ourselves to measure, and a measure $`\mu`$ (mu) giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). The integral $`\int f\,d\mu`$ is read "the integral of f against mu". "Almost everywhere", written a.e., means "except on a set of size zero" ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). A function is **integrable**, in $`L^1`$, when $`\int |f|\,d\mu`$ is finite ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
 
 One new measure carries the spam example. **Counting measure** on the counts 0, 1, 2, … gives a set of counts its number of members. Integrating against it is adding up: a non-negative function's integral is its series, because the partial sums rise to it ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)).
 
-The theorem. Let $f_n$ and $f$ be measurable functions on $\Omega$, and $g$ a non-negative one.
+The theorem. Let $`f_n`$ and $`f`$ be measurable functions on $`\Omega`$, and $`g`$ a non-negative one.
 
-$$\text{If}\quad f_n\to f\ \text{a.e.},\qquad |f_n|\le g\ \text{a.e. for every } n,\qquad \int g\,d\mu<\infty,$$
+```math
+\text{If}\quad f_n\to f\ \text{a.e.},\qquad |f_n|\le g\ \text{a.e. for every } n,\qquad \int g\,d\mu<\infty,
+```
 
-$$\text{then}\quad \int |f_n-f|\,d\mu\;\longrightarrow\;0\qquad\text{and}\qquad \lim_{n\to\infty}\int f_n\,d\mu=\int f\,d\mu .$$
+```math
+\text{then}\quad \int |f_n-f|\,d\mu\;\longrightarrow\;0\qquad\text{and}\qquad \lim_{n\to\infty}\int f_n\,d\mu=\int f\,d\mu .
+```
 
 **Read it aloud:** if the functions settle down point by point, and one function with a finite integral sits above all their sizes at once, then the total error goes to zero and the limit may be taken inside the integral.
 
 Two corollaries do most of the daily work.
 
-**Bounded convergence.** If $\mu(\Omega)<\infty$, $f_n\to f$ a.e., and $|f_n|\le M$ for one number $M$ and every n, the constant $M$ is a dominating function, with integral $M\,\mu(\Omega)$.
+**Bounded convergence.** If $`\mu(\Omega)<\infty`$, $`f_n\to f`$ a.e., and $`|f_n|\le M`$ for one number $`M`$ and every n, the constant $`M`$ is a dominating function, with integral $`M\,\mu(\Omega)`$.
 
-**Scheffé's lemma.** If $f_n\ge 0$, $f_n\to f$ a.e., and every $f_n$ has the same finite total as $f$, then
+**Scheffé's lemma.** If $`f_n\ge 0`$, $`f_n\to f`$ a.e., and every $`f_n`$ has the same finite total as $`f`$, then
 
-$$\int |f_n-f|\,d\mu\;\longrightarrow\;0,\qquad\text{and for every set } A\in\mathcal F:\quad \Big|\int_A f_n\,d\mu-\int_A f\,d\mu\Big|\le \tfrac12\int|f_n-f|\,d\mu .$$
+```math
+\int |f_n-f|\,d\mu\;\longrightarrow\;0,\qquad\text{and for every set } A\in\mathcal F:\quad \Big|\int_A f_n\,d\mu-\int_A f\,d\mu\Big|\le \tfrac12\int|f_n-f|\,d\mu .
+```
 
 **Read it aloud:** densities that converge point by point and keep the same total converge in total error, and half that total error bounds the error in every probability at once.
 
-On the spam example, $\Omega$ is the counts and $\mu$ is counting measure. With $p_n(k)=\binom{n}{k}(2/n)^k(1-2/n)^{n-k}$ the binomial chance of k spams in n slots, and $q(k)=e^{-2}2^k/k!$ the Poisson chance, the dominating function is $g(k)=2^k/k!$.
+On the spam example, $`\Omega`$ is the counts and $`\mu`$ is counting measure. With $`p_n(k)=\binom{n}{k}(2/n)^k(1-2/n)^{n-k}`$ the binomial chance of k spams in n slots, and $`q(k)=e^{-2}2^k/k!`$ the Poisson chance, the dominating function is $`g(k)=2^k/k!`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f_n$, $n$ | the n-th function of the sequence; its index | the binomial chances $p_n$; x^n on [0, 1] | larger n, closer to the limit |
-| $f$, $e_n$ | the a.e. limit of the sequence; the error at stage n, the size of f_n − f | the Poisson chances $q$; 0 on [0, 1) | — |
-| $g$ | dominating function: one integrable function above every $|f_n|$ | 2^k/k!, total 7.3891; the constant 1 | a larger roof is still a roof while its integral stays finite |
-| $\Omega$, $\mu$ | the space and its measure | the counts with counting measure; [0, 1] with length | — |
-| $\lambda$ | Lebesgue measure: length on the line | length on [0, 1] | — |
-| $k$, $K$ | a count of spams; the random count itself | k = 0 to 60 in the code | tail chances shrink like 2^k/k! |
-| $p_n$ | binomial chances with n slots and chance 2/n each | p_10(2) = 0.3020 | more slots, closer to q |
-| $q$ | Poisson(2) chances, e^(−2) 2^k/k! | q(2) = 0.2707 | — |
-| $h$ | a quantity computed from the count, then averaged | k^2; "5 or more" | faster growth needs a bigger roof |
-| $M$ | a constant bound, for bounded convergence | 1, for x^n | — |
-| $A$, $N$, $N_0$, $N_n$ | a measurable set (an event); null sets: all bad points, non-convergence points, points where f_n pokes above g | "5 or more spams"; the point x = 1 | — |
-| $a^+$ | positive part: a when a > 0, else 0 | (q(k) − p_n(k))^+ | — |
-| $u_n$ | any sequence of functions of zero or more, in the statement of Fatou's lemma | g + f_n and g − f_n in the proof | — |
-| $R$ | the last count summed for the sliding mass | R = 10, 100, 1000 | the smallest roof's total grows with R |
-| $x$, $\xi$, $i$ | a point of [0, 1] or of the line; a frequency (xi); the square root of −1 | x = 0.999, where x^1000 is still 0.3677 | — |
+| $`f_n`$, $`n`$ | the n-th function of the sequence; its index | the binomial chances $`p_n`$; x^n on [0, 1] | larger n, closer to the limit |
+| $`f`$, $`e_n`$ | the a.e. limit of the sequence; the error at stage n, the size of f_n − f | the Poisson chances $`q`$; 0 on [0, 1) | — |
+| $`g`$ | dominating function: one integrable function above every $`\lvert f_n\rvert`$ | 2^k/k!, total 7.3891; the constant 1 | a larger roof is still a roof while its integral stays finite |
+| $`\Omega`$, $`\mu`$ | the space and its measure | the counts with counting measure; [0, 1] with length | — |
+| $`\lambda`$ | Lebesgue measure: length on the line | length on [0, 1] | — |
+| $`k`$, $`K`$ | a count of spams; the random count itself | k = 0 to 60 in the code | tail chances shrink like 2^k/k! |
+| $`p_n`$ | binomial chances with n slots and chance 2/n each | p_10(2) = 0.3020 | more slots, closer to q |
+| $`q`$ | Poisson(2) chances, e^(−2) 2^k/k! | q(2) = 0.2707 | — |
+| $`h`$ | a quantity computed from the count, then averaged | k^2; "5 or more" | faster growth needs a bigger roof |
+| $`M`$ | a constant bound, for bounded convergence | 1, for x^n | — |
+| $`A`$, $`N`$, $`N_0`$, $`N_n`$ | a measurable set (an event); null sets: all bad points, non-convergence points, points where f_n pokes above g | "5 or more spams"; the point x = 1 | — |
+| $`a^+`$ | positive part: a when a > 0, else 0 | (q(k) − p_n(k))^+ | — |
+| $`u_n`$ | any sequence of functions of zero or more, in the statement of Fatou's lemma | g + f_n and g − f_n in the proof | — |
+| $`R`$ | the last count summed for the sliding mass | R = 10, 100, 1000 | the smallest roof's total grows with R |
+| $`x`$, $`\xi`$, $`i`$ | a point of [0, 1] or of the line; a frequency (xi); the square root of −1 | x = 0.999, where x^1000 is still 0.3677 | — |
 
 ### When it holds
 
@@ -91,42 +97,42 @@ On the spam example, $\Omega$ is the counts and $\mu$ is counting measure. With 
 
 ### Step 0: Fatou blocks leaks one way; a dominating function turns that into two ways
 
-Fatou's lemma ([Fatou's lemma](01-fatous-lemma.md)) says that for non-negative functions, mass can vanish in a limit but never appear: $\int \liminf u_n\,d\mu \le \liminf \int u_n\,d\mu$, where liminf is the eventual lowest value. Signed functions could leak mass upward or downward. The trick is to add and subtract the dominating function: $g+f_n$ and $g-f_n$ are both non-negative. Fatou on the first stops a downward leak, Fatou on the second an upward one. Because $\int g\,d\mu$ is finite, it can be subtracted from both sides without meeting ∞ − ∞. Nothing leaks either way, so the integrals converge.
+Fatou's lemma ([Fatou's lemma](01-fatous-lemma.md)) says that for non-negative functions, mass can vanish in a limit but never appear: $`\int \liminf u_n\,d\mu \le \liminf \int u_n\,d\mu`$, where liminf is the eventual lowest value. Signed functions could leak mass upward or downward. The trick is to add and subtract the dominating function: $`g+f_n`$ and $`g-f_n`$ are both non-negative. Fatou on the first stops a downward leak, Fatou on the second an upward one. Because $`\int g\,d\mu`$ is finite, it can be subtracted from both sides without meeting ∞ − ∞. Nothing leaks either way, so the integrals converge.
 
 ### Step 1: g + f_n gives the lower bound
 
-The functions $g+f_n$ are non-negative and converge a.e. to $g+f$. Fatou gives $\int(g+f)\,d\mu\le\liminf\int(g+f_n)\,d\mu$. Split both integrals, which is legal because every piece is finite, and cancel $\int g\,d\mu$: the integral of the limit is at most the eventual lowest value of the integrals.
+The functions $`g+f_n`$ are non-negative and converge a.e. to $`g+f`$. Fatou gives $`\int(g+f)\,d\mu\le\liminf\int(g+f_n)\,d\mu`$. Split both integrals, which is legal because every piece is finite, and cancel $`\int g\,d\mu`$: the integral of the limit is at most the eventual lowest value of the integrals.
 
 ### Step 2: g − f_n gives the upper bound
 
-The functions $g-f_n$ are non-negative too, converging to $g-f$. Fatou and the same cancellation give $-\int f\,d\mu\le\liminf(-\int f_n\,d\mu)=-\limsup\int f_n\,d\mu$. So the eventual highest value of the integrals is at most the integral of the limit. With Step 1, the eventual lowest and highest values both equal $\int f\,d\mu$, and the limit exists.
+The functions $`g-f_n`$ are non-negative too, converging to $`g-f`$. Fatou and the same cancellation give $`-\int f\,d\mu\le\liminf(-\int f_n\,d\mu)=-\limsup\int f_n\,d\mu`$. So the eventual highest value of the integrals is at most the integral of the limit. With Step 1, the eventual lowest and highest values both equal $`\int f\,d\mu`$, and the limit exists.
 
 ### Step 3: the total error goes to zero
 
-Apply Steps 1 and 2 to the errors $|f_n-f|$. They converge to 0 a.e., and $|f_n-f|\le|f_n|+|f|\le 2g$, so $2g$ dominates them. Their integrals therefore converge to the integral of 0, which is 0. The first conclusion is stronger than the second: $|\int f_n\,d\mu-\int f\,d\mu|\le\int|f_n-f|\,d\mu$.
+Apply Steps 1 and 2 to the errors $`|f_n-f|`$. They converge to 0 a.e., and $`|f_n-f|\le|f_n|+|f|\le 2g`$, so $`2g`$ dominates them. Their integrals therefore converge to the integral of 0, which is 0. The first conclusion is stronger than the second: $`|\int f_n\,d\mu-\int f\,d\mu|\le\int|f_n-f|\,d\mu`$.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space; $f_n$, $f$ are measurable and real-valued; $g$ is measurable with values in [0, ∞]; $f_n\to f$ a.e.; for each n, $|f_n|\le g$ a.e.; $\int g\,d\mu<\infty$.
+**Setting.** $`(\Omega,\mathcal F,\mu)`$ is a measure space; $`f_n`$, $`f`$ are measurable and real-valued; $`g`$ is measurable with values in [0, ∞]; $`f_n\to f`$ a.e.; for each n, $`|f_n|\le g`$ a.e.; $`\int g\,d\mu<\infty`$.
 
-**1. Clearing the null sets.** Let $N_0$ be the set where $f_n(x)$ does not converge to $f(x)$, and $N_n$ the set where $|f_n|>g$. Each is measurable and has measure 0 by hypothesis. The set $\{g=\infty\}$ has measure 0 too. Write $\mathbf 1_{\{g=\infty\}}$ for its indicator, the function that is 1 where g is infinite and 0 elsewhere. For every whole number m, $m\,\mathbf 1_{\{g=\infty\}}\le g$, so $m\,\mu(g=\infty)\le\int g\,d\mu<\infty$ for every m. Let $N$ be the union of all these sets; it is a countable union of null sets, so $\mu(N)=0$ by countable subadditivity ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Replace $f_n$, $f$ and $g$ by 0 on $N$. The new functions are measurable, and no integral changes, since functions equal a.e. have equal integrals ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). From here on convergence and domination hold at every point, and $g$ is finite.
+**1. Clearing the null sets.** Let $`N_0`$ be the set where $`f_n(x)`$ does not converge to $`f(x)`$, and $`N_n`$ the set where $`|f_n|>g`$. Each is measurable and has measure 0 by hypothesis. The set $`\{g=\infty\}`$ has measure 0 too. Write $`\mathbf 1_{\{g=\infty\}}`$ for its indicator, the function that is 1 where g is infinite and 0 elsewhere. For every whole number m, $`m\,\mathbf 1_{\{g=\infty\}}\le g`$, so $`m\,\mu(g=\infty)\le\int g\,d\mu<\infty`$ for every m. Let $`N`$ be the union of all these sets; it is a countable union of null sets, so $`\mu(N)=0`$ by countable subadditivity ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Replace $`f_n`$, $`f`$ and $`g`$ by 0 on $`N`$. The new functions are measurable, and no integral changes, since functions equal a.e. have equal integrals ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). From here on convergence and domination hold at every point, and $`g`$ is finite.
 
-**2. Everything is integrable.** Letting n → ∞ in $|f_n(x)|\le g(x)$ gives $|f(x)|\le g(x)$. Monotonicity of the integral gives $\int|f_n|\,d\mu\le\int g\,d\mu<\infty$ and $\int|f|\,d\mu\le\int g\,d\mu$, so every $f_n$ and $f$ is in $L^1$, and linearity of the integral holds for them ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
+**2. Everything is integrable.** Letting n → ∞ in $`|f_n(x)|\le g(x)`$ gives $`|f(x)|\le g(x)`$. Monotonicity of the integral gives $`\int|f_n|\,d\mu\le\int g\,d\mu<\infty`$ and $`\int|f|\,d\mu\le\int g\,d\mu`$, so every $`f_n`$ and $`f`$ is in $`L^1`$, and linearity of the integral holds for them ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
 
-**3. Lower bound.** $g+f_n\ge0$ and $g+f_n\to g+f$ at every point, so $\liminf(g+f_n)=g+f$. Fatou's lemma: $\int(g+f)\,d\mu\le\liminf_n\int(g+f_n)\,d\mu$. By linearity on integrable functions, the left side is $\int g\,d\mu+\int f\,d\mu$ and the right side is $\int g\,d\mu+\liminf_n\int f_n\,d\mu$, since adding a fixed number commutes with liminf. Subtract the finite number $\int g\,d\mu$: $\int f\,d\mu\le\liminf_n\int f_n\,d\mu$.
+**3. Lower bound.** $`g+f_n\ge0`$ and $`g+f_n\to g+f`$ at every point, so $`\liminf(g+f_n)=g+f`$. Fatou's lemma: $`\int(g+f)\,d\mu\le\liminf_n\int(g+f_n)\,d\mu`$. By linearity on integrable functions, the left side is $`\int g\,d\mu+\int f\,d\mu`$ and the right side is $`\int g\,d\mu+\liminf_n\int f_n\,d\mu`$, since adding a fixed number commutes with liminf. Subtract the finite number $`\int g\,d\mu`$: $`\int f\,d\mu\le\liminf_n\int f_n\,d\mu`$.
 
-**4. Upper bound.** $g-f_n\ge0$ and $g-f_n\to g-f$. Fatou and linearity give $\int g\,d\mu-\int f\,d\mu\le\int g\,d\mu+\liminf_n(-\int f_n\,d\mu)$. For any real sequence, $\liminf(-a_n)=-\limsup a_n$, since negation turns lowest tail values into highest ones. Subtract $\int g\,d\mu$ and multiply by −1: $\limsup_n\int f_n\,d\mu\le\int f\,d\mu$.
+**4. Upper bound.** $`g-f_n\ge0`$ and $`g-f_n\to g-f`$. Fatou and linearity give $`\int g\,d\mu-\int f\,d\mu\le\int g\,d\mu+\liminf_n(-\int f_n\,d\mu)`$. For any real sequence, $`\liminf(-a_n)=-\limsup a_n`$, since negation turns lowest tail values into highest ones. Subtract $`\int g\,d\mu`$ and multiply by −1: $`\limsup_n\int f_n\,d\mu\le\int f\,d\mu`$.
 
-**5. The limit of the integrals.** From 3 and 4, $\limsup_n\int f_n\,d\mu\le\int f\,d\mu\le\liminf_n\int f_n\,d\mu$. A liminf never exceeds the limsup, so all three are equal, and $\int f_n\,d\mu\to\int f\,d\mu$.
+**5. The limit of the integrals.** From 3 and 4, $`\limsup_n\int f_n\,d\mu\le\int f\,d\mu\le\liminf_n\int f_n\,d\mu`$. A liminf never exceeds the limsup, so all three are equal, and $`\int f_n\,d\mu\to\int f\,d\mu`$.
 
-**6. The total error.** Put $e_n=|f_n-f|$. These are measurable, $e_n\to0$ at every point, and $e_n\le|f_n|+|f|\le 2g$, with $\int 2g\,d\mu<\infty$. Steps 3 to 5 applied to $e_n$ with dominating function $2g$ give $\int e_n\,d\mu\to\int 0\,d\mu=0$. Finally $|\int f_n\,d\mu-\int f\,d\mu|=|\int(f_n-f)\,d\mu|\le\int|f_n-f|\,d\mu$, the triangle inequality for integrals. ∎
+**6. The total error.** Put $`e_n=|f_n-f|`$. These are measurable, $`e_n\to0`$ at every point, and $`e_n\le|f_n|+|f|\le 2g`$, with $`\int 2g\,d\mu<\infty`$. Steps 3 to 5 applied to $`e_n`$ with dominating function $`2g`$ give $`\int e_n\,d\mu\to\int 0\,d\mu=0`$. Finally $`|\int f_n\,d\mu-\int f\,d\mu|=|\int(f_n-f)\,d\mu|\le\int|f_n-f|\,d\mu`$, the triangle inequality for integrals. ∎
 
-**Bounded convergence.** If $\mu(\Omega)<\infty$, $f_n\to f$ a.e., and $|f_n|\le M$ for all n, take $g=M$: $\int g\,d\mu=M\mu(\Omega)<\infty$. ∎
+**Bounded convergence.** If $`\mu(\Omega)<\infty`$, $`f_n\to f`$ a.e., and $`|f_n|\le M`$ for all n, take $`g=M`$: $`\int g\,d\mu=M\mu(\Omega)<\infty`$. ∎
 
-**Scheffé's lemma.** Suppose $f_n\ge0$, $f\ge0$, $f_n\to f$ a.e., and $\int f_n\,d\mu=\int f\,d\mu<\infty$ for all n. The functions $(f-f_n)^+$ are measurable, converge to $(f-f)^+=0$ a.e. because $a\mapsto a^+$ is continuous, and satisfy $0\le(f-f_n)^+\le f$ because $f_n\ge0$. So $f$ dominates them, and the theorem gives $\int(f-f_n)^+\,d\mu\to0$. For any real a, $|a|=a+2(-a)^+$. With $a=f_n-f$ this reads $|f_n-f|=(f_n-f)+2(f-f_n)^+$. Integrate, using linearity on integrable functions: $\int|f_n-f|\,d\mu=\int f_n\,d\mu-\int f\,d\mu+2\int(f-f_n)^+\,d\mu=2\int(f-f_n)^+\,d\mu\to0$.
+**Scheffé's lemma.** Suppose $`f_n\ge0`$, $`f\ge0`$, $`f_n\to f`$ a.e., and $`\int f_n\,d\mu=\int f\,d\mu<\infty`$ for all n. The functions $`(f-f_n)^+`$ are measurable, converge to $`(f-f)^+=0`$ a.e. because $`a\mapsto a^+`$ is continuous, and satisfy $`0\le(f-f_n)^+\le f`$ because $`f_n\ge0`$. So $`f`$ dominates them, and the theorem gives $`\int(f-f_n)^+\,d\mu\to0`$. For any real a, $`|a|=a+2(-a)^+`$. With $`a=f_n-f`$ this reads $`|f_n-f|=(f_n-f)+2(f-f_n)^+`$. Integrate, using linearity on integrable functions: $`\int|f_n-f|\,d\mu=\int f_n\,d\mu-\int f\,d\mu+2\int(f-f_n)^+\,d\mu=2\int(f-f_n)^+\,d\mu\to0`$.
 
-For a set $A\in\mathcal F$: $\int_A f_n\,d\mu-\int_A f\,d\mu=\int_A(f_n-f)\,d\mu\le\int(f_n-f)^+\,d\mu$. Equal totals give $\int(f_n-f)\,d\mu=0$, so $\int(f_n-f)^+\,d\mu=\int(f-f_n)^+\,d\mu$, and each is half of $\int|f_n-f|\,d\mu$. The same argument with the roles of $f_n$ and $f$ swapped bounds the difference from below. ∎
+For a set $`A\in\mathcal F`$: $`\int_A f_n\,d\mu-\int_A f\,d\mu=\int_A(f_n-f)\,d\mu\le\int(f_n-f)^+\,d\mu`$. Equal totals give $`\int(f_n-f)\,d\mu=0`$, so $`\int(f_n-f)^+\,d\mu=\int(f-f_n)^+\,d\mu`$, and each is half of $`\int|f_n-f|\,d\mu`$. The same argument with the roles of $`f_n`$ and $`f`$ swapped bounds the difference from below. ∎
 
 </details>
 
@@ -134,17 +140,19 @@ For a set $A\in\mathcal F$: $\int_A f_n\,d\mu-\int_A f\,d\mu=\int_A(f_n-f)\,d\mu
 
 Write the binomial chance as three factors:
 
-$$p_n(k)=\underbrace{\frac{n}{n}\cdot\frac{n-1}{n}\cdots\frac{n-k+1}{n}}_{\text{each factor}\ \le 1}\;\cdot\;\frac{2^k}{k!}\;\cdot\;\underbrace{\Big(1-\frac2n\Big)^{n-k}}_{\le 1}\qquad(k\le n),$$
+```math
+p_n(k)=\underbrace{\frac{n}{n}\cdot\frac{n-1}{n}\cdots\frac{n-k+1}{n}}_{\text{each factor}\ \le 1}\;\cdot\;\frac{2^k}{k!}\;\cdot\;\underbrace{\Big(1-\frac2n\Big)^{n-k}}_{\le 1}\qquad(k\le n),
+```
 
-and $p_n(k)=0$ for $k>n$. For fixed k, the first factor tends to 1 and the last to $e^{-2}$, which is the Poisson limit. Both outer factors are at most 1 for every n, so $p_n(k)\le 2^k/k!$ at every count and every n. That is one dominating function for the whole sequence, with total $e^2$ = 7.3891.
+and $`p_n(k)=0`$ for $`k>n`$. For fixed k, the first factor tends to 1 and the last to $`e^{-2}`$, which is the Poisson limit. Both outer factors are at most 1 for every n, so $`p_n(k)\le 2^k/k!`$ at every count and every n. That is one dominating function for the whole sequence, with total $`e^2`$ = 7.3891.
 
-Now any quantity $h(k)$ with $\sum_k |h(k)|\,2^k/k!<\infty$ passes to the limit: $|h(k)|\,2^k/k!$ dominates $h(k)\,p_n(k)$, so $\sum_k h(k)\,p_n(k)\to\sum_k h(k)\,q(k)$. For $h(k)=k^2$ the dominating total is $6e^2$ = 44.3343, finite. So the average of the squared count converges: 5.6000 at 10 slots, 5.9600 at 100, 5.9960 at 1,000, toward the Poisson value 6. The variance, average square minus squared mean, goes 1.6000, 1.9600, 1.9960, toward 2.
+Now any quantity $`h(k)`$ with $`\sum_k |h(k)|\,2^k/k!<\infty`$ passes to the limit: $`|h(k)|\,2^k/k!`$ dominates $`h(k)\,p_n(k)`$, so $`\sum_k h(k)\,p_n(k)\to\sum_k h(k)\,q(k)`$. For $`h(k)=k^2`$ the dominating total is $`6e^2`$ = 44.3343, finite. So the average of the squared count converges: 5.6000 at 10 slots, 5.9600 at 100, 5.9960 at 1,000, toward the Poisson value 6. The variance, average square minus squared mean, goes 1.6000, 1.9600, 1.9960, toward 2.
 
 On counting measure this special case has its own name, Tannery's theorem: a series whose terms converge one by one, with every term bounded by the matching term of one convergent series, converges to the series of the limits. The Weierstrass M-test on [Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md) uses the same bound.
 
 ### Step 5: bounded convergence, and a limit that is not uniform
 
-On [0, 1] with length $\lambda$, the functions x^n converge to 0 at every x below 1 and equal 1 at x = 1. That single point is a null set, so x^n → 0 a.e. The constant 1 dominates every one of them, and $\lambda([0,1])=1$, so bounded convergence gives $\int_0^1 x^n\,dx\to0$. The exact values 1/(n+1) agree: 0.500000, 0.090909, 0.009901, 0.000999 at n = 1, 10, 100, 1000.
+On [0, 1] with length $`\lambda`$, the functions x^n converge to 0 at every x below 1 and equal 1 at x = 1. That single point is a null set, so x^n → 0 a.e. The constant 1 dominates every one of them, and $`\lambda([0,1])=1`$, so bounded convergence gives $`\int_0^1 x^n\,dx\to0`$. The exact values 1/(n+1) agree: 0.500000, 0.090909, 0.009901, 0.000999 at n = 1, 10, 100, 1000.
 
 The convergence is not uniform. At x = 0.999 the function x^1000 is still 0.3677, and just below 1 there are always points where x^n is close to 1. The Riemann-era theorem that swaps a limit and an integral needs uniform convergence ([Swapping limits](../../06-Calculus%20and%20analysis/06-Series/08-swapping-limits-with-integrals-and-derivatives.md)), so it cannot say this. The dominating function can.
 
@@ -163,13 +171,13 @@ Caption: orange is the dominating function 1, green is x^5, dark blue is x^20. T
 
 ### Step 6: Scheffé, where equal totals supply the dominating function
 
-The spam chances converge count by count, and every one of them totals 1, as the Poisson chances do. Scheffé's lemma needs nothing more. Its proof uses the limit $q$ itself as the dominating function, not for $p_n$ but for the shortfall $(q-p_n)^+$, which can never exceed $q$ because $p_n$ is never negative. The shortfall's total goes to 0, and equal totals make the full error exactly twice the shortfall: $\sum_k|p_n(k)-q(k)|=2\sum_k(q(k)-p_n(k))^+$.
+The spam chances converge count by count, and every one of them totals 1, as the Poisson chances do. Scheffé's lemma needs nothing more. Its proof uses the limit $`q`$ itself as the dominating function, not for $`p_n`$ but for the shortfall $`(q-p_n)^+`$, which can never exceed $`q`$ because $`p_n`$ is never negative. The shortfall's total goes to 0, and equal totals make the full error exactly twice the shortfall: $`\sum_k|p_n(k)-q(k)|=2\sum_k(q(k)-p_n(k))^+`$.
 
 The total errors are 0.1044, 0.0091 and 0.0009 at 10, 100 and 1,000 slots. Half of each bounds the error in the chance of every event at once. The chance of a burst of 5 or more spams is 0.0527 under Poisson and 0.0328 under the 10-slot binomial: the gap 0.0199 is under the bound 0.0522. At 1,000 slots the gap is 0.0002 against a bound of 0.0005. One number certifies every probability about the count, which is what makes the Poisson law safe to use in place of the binomial. An outside check agrees: Le Cam's inequality bounds the same total error by 8/n, that is 0.8000, 0.0800 and 0.0080, and every total error above sits under it.
 
 ### Step 7: a missing dominating function is the diagnosis
 
-Any dominating function must lie above $\sup_n|f_n|$, the pointwise highest value over the whole sequence. So a dominating function exists exactly when that supremum has a finite integral. For the sliding mass, all of the chance at count n, the supremum is 1 at every count from 1 on. Its total over counts 1 to R is R: 10, 100, 1000, without end. No integrable roof exists.
+Any dominating function must lie above $`\sup_n|f_n|`$, the pointwise highest value over the whole sequence. So a dominating function exists exactly when that supremum has a finite integral. For the sliding mass, all of the chance at count n, the supremum is 1 at every count from 1 on. Its total over counts 1 to R is R: 10, 100, 1000, without end. No integrable roof exists.
 
 The theorem also works backwards. If the integrals of a sequence fail to follow its a.e. limit, no integrable dominating function can exist, since one would force them to follow. The tall spike (n+1)x^n on [0, 1] tends to 0 below x = 1 but has integral 1.0000 for every n, so no roof over it has a finite integral. The sharp condition, weaker than a roof and exactly enough, is [Uniform integrability](05-uniform-integrability.md).
 
@@ -597,10 +605,10 @@ ALL CHECKS PASS
 
 Lean proves the theorem, bounded convergence and Scheffé's lemma in general, and checks the 10-slot hand numbers in exact fractions.
 
-- Suppose measurable $f_n$ converge a.e. to a measurable $f$, under one dominating function $g$. Then the total error goes to zero, and $\int f_n\,d\mu\to\int f\,d\mu$.
-- Suppose $\mu(\Omega)<\infty$, and measurable $f_n$ converge a.e. to a measurable $f$, with $|f_n|\le M$ a.e. Then the same two conclusions hold.
-- Suppose integrable $f_n$ and $f$ are never negative, $f_n\to f$ a.e., and each $f_n$ has the same total as $f$. Then the total error goes to zero.
-- In that case, on every measurable set $A$, the error is at most half the total error.
+- Suppose measurable $`f_n`$ converge a.e. to a measurable $`f`$, under one dominating function $`g`$. Then the total error goes to zero, and $`\int f_n\,d\mu\to\int f\,d\mu`$.
+- Suppose $`\mu(\Omega)<\infty`$, and measurable $`f_n`$ converge a.e. to a measurable $`f`$, with $`|f_n|\le M`$ a.e. Then the same two conclusions hold.
+- Suppose integrable $`f_n`$ and $`f`$ are never negative, $`f_n\to f`$ a.e., and each $`f_n`$ has the same total as $`f`$. Then the total error goes to zero.
+- In that case, on every measurable set $`A`$, the error is at most half the total error.
 - With 10 slots, the first factor at count 2 is 10 × 9/100 = 9/10.
 - So p_10(2) = 9/10 × 2 × 0.8^8, which lies under the roof 2^2/2! = 2.
 - With 10 slots, every chance p_10(k) lies under the roof 2^k/k!, for k = 0 to 10.
@@ -828,7 +836,7 @@ example : (28 / 5 : ℚ) - 2 ^ 2 = 2 * (1 - 2 / 10) ∧ (28 / 5 : ℚ) - 2 ^ 2 =
 
 - **Counting rare events.** Call-centre arrivals, insurance claims, defects on a line and server spam are modelled by Poisson counts. Scheffé's lemma is why swapping the exact binomial for the Poisson law is safe for every probability at once, with an error that shrinks as the slots do.
 - **Statistics.** Proving that a sample average's expected value, or a likelihood's score, behaves in the limit means moving a limit inside an expectation. The standard justification is a dominating function, often a moment bound. Moving a derivative inside, as in [Differentiating under the integral sign](03-differentiating-under-the-integral.md), is this theorem applied to difference quotients.
-- **Signals and the Fourier transform.** The Fourier transform of an integrable function is continuous because $|e^{-i\xi x}f(x)|\le|f(x)|$, one dominating function for every frequency (The Fourier transform of an absolutely integrable signal, and why it fades at infinity).
+- **Signals and the Fourier transform.** The Fourier transform of an integrable function is continuous because $`|e^{-i\xi x}f(x)|\le|f(x)|`$, one dominating function for every frequency (The Fourier transform of an absolutely integrable signal, and why it fades at infinity).
 - **Conditional expectation.** Filtering and pricing move limits inside conditional averages; the conditional form of this theorem, proved from it, is what allows that ([The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)).
 
 > **Say it back**

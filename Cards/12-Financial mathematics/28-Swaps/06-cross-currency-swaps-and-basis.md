@@ -30,44 +30,50 @@ The principals move twice: once at the start and once at the end, both at 1.10. 
 
 ## The formula
 
-Notation in words first. The bank is the **euro lender**: it gives euros now and receives the euro leg. A **discount factor** is today's price of one unit of a currency paid at a later date; $D_d(t)$ is that price for a dollar paid $t$ years from now, read off the dollar overnight curve. $P_f(t)$ is the same for a euro on the euro overnight curve. $D_x(t)$ is a third curve: what one euro paid in $t$ years is worth today, measured in euros, by a market that values everything in dollars. It is pinned by the foreign-exchange (FX) forward $F(t)$, the rate agreed today for swapping euros into dollars in $t$ years:
+Notation in words first. The bank is the **euro lender**: it gives euros now and receives the euro leg. A **discount factor** is today's price of one unit of a currency paid at a later date; $`D_d(t)`$ is that price for a dollar paid $`t`$ years from now, read off the dollar overnight curve. $`P_f(t)`$ is the same for a euro on the euro overnight curve. $`D_x(t)`$ is a third curve: what one euro paid in $`t`$ years is worth today, measured in euros, by a market that values everything in dollars. It is pinned by the foreign-exchange (FX) forward $`F(t)`$, the rate agreed today for swapping euros into dollars in $`t`$ years:
 
-$$D_x(t) = \frac{F(t)\,D_d(t)}{S}$$
+```math
+D_x(t) = \frac{F(t)\,D_d(t)}{S}
+```
 
-**Read it aloud:** a euro in $t$ years is worth the dollars it will fetch at the forward, discounted as dollars, then turned back into euros at today's spot.
+**Read it aloud:** a euro in $`t`$ years is worth the dollars it will fetch at the forward, discounted as dollars, then turned back into euros at today's spot.
 
-The fair basis on a swap that pays once a year for $T$ years:
+The fair basis on a swap that pays once a year for $`T`$ years:
 
-$$s = \frac{1 - D_x(T) - \sum_{i=1}^{T} f_i\, D_x(i)}{A_x}, \qquad A_x = \sum_{i=1}^{T} D_x(i)$$
+```math
+s = \frac{1 - D_x(T) - \sum_{i=1}^{T} f_i\, D_x(i)}{A_x}, \qquad A_x = \sum_{i=1}^{T} D_x(i)
+```
 
 **Read it aloud:** the spread is whatever is missing for the euro payments, valued on the dollar-funded euro curve, to add up to the euro principal, spread over the number of years that curve counts.
 
 The value to the euro lender after the start, in dollars:
 
-$$V = S N_f \Big[\sum_{i=1}^{T} (f_i + s) D_x(i) + D_x(T)\Big] - N_d \Big[\sum_{i=1}^{T} g_i D_d(i) + D_d(T)\Big]$$
+```math
+V = S N_f \Big[\sum_{i=1}^{T} (f_i + s) D_x(i) + D_x(T)\Big] - N_d \Big[\sum_{i=1}^{T} g_i D_d(i) + D_d(T)\Big]
+```
 
-And the funding difference the basis reveals: write $D_x(T) = e^{-yT}$, so $y$ is the euro rate the swap market implies, and compare it with the euro overnight rate $r_f$. The gap $y - r_f$ is in continuous-rate terms what the $-15$ basis points is in annual terms.
+And the funding difference the basis reveals: write $`D_x(T) = e^{-yT}`$, so $`y`$ is the euro rate the swap market implies, and compare it with the euro overnight rate $`r_f`$. The gap $`y - r_f`$ is in continuous-rate terms what the $`-15`$ basis points is in annual terms.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | spot: dollars for one euro today | 1.10 | the euro leg is worth more dollars; the euro lender gains |
-| $N_f$, $N_d$ | the two principals, euros and dollars | €100m and $110m | every value scales with them |
-| $t$, $i$, $T$ | time in years, the year counter, and years to the end | 1 to 5, and 5 | a longer swap has a bigger annuity |
-| $f_i$, $g_i$ | euro and dollar floating rate paid in year $i$ | 3.0455% and 5.1271% | fair basis falls as $f_i$ rises with $D_x$ fixed |
-| $s$ | the basis: spread added to the euro rate | −0.15% | the euro lender receives more |
-| $D_d(t)$ | today's price of a dollar paid at $t$ | 0.778801 at 5 years | dollar payments are worth more |
-| $P_f(t)$ | today's price of a euro paid at $t$, euro curve | $e^{-0.03t}$ | the euro rates $f_i$ fall |
-| $D_x(t)$ | today's price of a euro paid at $t$, in a dollar-valued market | 0.867000 at 5 years | the fair basis falls |
-| $F(t)$ | FX forward: dollars per euro agreed today for year $t$ | 1.2246 at 5 years | $D_x$ rises, the basis falls |
-| $A_x$, $A_d$ | annuities: sums of the yearly discount factors | 4.5934 and 4.3143 years | a basis point is worth more |
-| $r_d$, $r_f$ | dollar and euro overnight rates, continuously compounded | 5% and 3% | $g_i$ or $f_i$ rises |
-| $y$ | euro rate implied by the swap, continuously compounded | 2.8543% | euros through the swap earn more |
+| $`S`$ | spot: dollars for one euro today | 1.10 | the euro leg is worth more dollars; the euro lender gains |
+| $`N_f`$, $`N_d`$ | the two principals, euros and dollars | €100m and $110m | every value scales with them |
+| $`t`$, $`i`$, $`T`$ | time in years, the year counter, and years to the end | 1 to 5, and 5 | a longer swap has a bigger annuity |
+| $`f_i`$, $`g_i`$ | euro and dollar floating rate paid in year $`i`$ | 3.0455% and 5.1271% | fair basis falls as $`f_i`$ rises with $`D_x`$ fixed |
+| $`s`$ | the basis: spread added to the euro rate | −0.15% | the euro lender receives more |
+| $`D_d(t)`$ | today's price of a dollar paid at $`t`$ | 0.778801 at 5 years | dollar payments are worth more |
+| $`P_f(t)`$ | today's price of a euro paid at $`t`$, euro curve | $`e^{-0.03t}`$ | the euro rates $`f_i`$ fall |
+| $`D_x(t)`$ | today's price of a euro paid at $`t`$, in a dollar-valued market | 0.867000 at 5 years | the fair basis falls |
+| $`F(t)`$ | FX forward: dollars per euro agreed today for year $`t`$ | 1.2246 at 5 years | $`D_x`$ rises, the basis falls |
+| $`A_x`$, $`A_d`$ | annuities: sums of the yearly discount factors | 4.5934 and 4.3143 years | a basis point is worth more |
+| $`r_d`$, $`r_f`$ | dollar and euro overnight rates, continuously compounded | 5% and 3% | $`g_i`$ or $`f_i`$ rises |
+| $`y`$ | euro rate implied by the swap, continuously compounded | 2.8543% | euros through the swap earn more |
 
-One line on each helper. The yearly floating rate from a flat continuous rate is $f_i = e^{0.03} - 1 = 3.0455\%$: overnight interest compounded over a year. The value splits into the euro leg, converted at spot because $D_x$ already carries the forward, minus the dollar leg.
+One line on each helper. The yearly floating rate from a flat continuous rate is $`f_i = e^{0.03} - 1 = 3.0455\%`$: overnight interest compounded over a year. The value splits into the euro leg, converted at spot because $`D_x`$ already carries the forward, minus the dollar leg.
 
 ### When it holds
 
-- **Dollars are the collateral.** The curve $D_x$ belongs to a market that funds and posts collateral in dollars ([Collateral discounting](05-ois-discounting-and-collateral.md)). Collateralise in euros and the euro leg goes back on $P_f$, while the dollar leg is discounted on a dollar curve read through the forward; the same quote calibrates that curve instead.
+- **Dollars are the collateral.** The curve $`D_x`$ belongs to a market that funds and posts collateral in dollars ([Collateral discounting](05-ois-discounting-and-collateral.md)). Collateralise in euros and the euro leg goes back on $`P_f`$, while the dollar leg is discounted on a dollar curve read through the forward; the same quote calibrates that curve instead.
 - **Fixed principals.** Both principals stay at €100m and $110m. A variant resets the dollar principal to spot every year, paying the change in cash; that removes most of the currency exposure shown below and needs its own ledger.
 - **Floating rates that fix at their forwards.** The curves here are flat and known. With random rates, a euro payment valued in dollars picks up a small correction from how the exchange rate and euro rates move together; the method stays, the number shifts.
 - **No default and no bid–ask.** The −15 is a mid quote. Dealers charge a few basis points either side, and a counterparty that can fail is worth less than one that cannot.
@@ -87,12 +93,12 @@ A cross-currency swap is two such loans pointing opposite ways. The bank lends �
 
 ### Step 1: on its own curve, each leg is at par
 
-Take the euro leg. The rate paid in year $i$ is set by the euro curve: $1 + f_i = P_f(i-1)/P_f(i)$. So the coupon plus the principal still owed, discounted one year, is exactly the principal one year earlier. Work backwards from year 5 and each year collapses into the one before, until only today's €100 million is left.
+Take the euro leg. The rate paid in year $`i`$ is set by the euro curve: $`1 + f_i = P_f(i-1)/P_f(i)`$. So the coupon plus the principal still owed, discounted one year, is exactly the principal one year earlier. Work backwards from year 5 and each year collapses into the one before, until only today's €100 million is left.
 
 <details>
 <summary>Detailed proof: the telescoping sum</summary>
 
-Discount year $i$'s coupon on the euro curve: $f_i P_f(i) = P_f(i-1) - P_f(i)$, straight from the definition of $f_i$. Sum from 1 to $T$: every middle term cancels with its neighbour, leaving $P_f(0) - P_f(T) = 1 - P_f(T)$. Add the principal paid back at $T$, worth $P_f(T)$, and the total is 1 per euro of principal. The same steps with $D_d$ and $g_i$ put the dollar leg at par. Nothing in the argument used the rates being flat.
+Discount year $`i`$'s coupon on the euro curve: $`f_i P_f(i) = P_f(i-1) - P_f(i)`$, straight from the definition of $`f_i`$. Sum from 1 to $`T`$: every middle term cancels with its neighbour, leaving $`P_f(0) - P_f(T) = 1 - P_f(T)`$. Add the principal paid back at $`T`$, worth $`P_f(T)`$, and the total is 1 per euro of principal. The same steps with $`D_d`$ and $`g_i`$ put the dollar leg at par. Nothing in the argument used the rates being flat.
 
 </details>
 
@@ -100,32 +106,36 @@ With both legs at par on their own curves, the fair basis is zero. The market sa
 
 ### Step 2: in a dollar market, euros are valued through the FX forward
 
-The dealers on the other side post and fund collateral in dollars: cash each side hands over to cover what it owes, earning the dollar overnight rate. They value every payment in dollars today. A euro paid in year $i$ is worth, to them, whatever dollars it fetches at the FX forward, discounted on the dollar curve: $F(i)\,D_d(i)$ dollars, or $F(i)\,D_d(i)/S$ euros at today's spot. That is $D_x(i)$.
+The dealers on the other side post and fund collateral in dollars: cash each side hands over to cover what it owes, earning the dollar overnight rate. They value every payment in dollars today. A euro paid in year $`i`$ is worth, to them, whatever dollars it fetches at the FX forward, discounted on the dollar curve: $`F(i)\,D_d(i)`$ dollars, or $`F(i)\,D_d(i)/S`$ euros at today's spot. That is $`D_x(i)`$.
 
-If covered interest parity held ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)), the forward would be $S\,P_f(i)/D_d(i)$ and $D_x$ would equal $P_f$. It does not hold. Since 2007 banks have paid up to borrow dollars through FX swaps, so forwards sit away from parity, and $D_x$ differs from $P_f$. The euro leg's rates still come from the euro curve, because €STR is what gets paid. But its payments are discounted on $D_x$. Projected on one curve, discounted on another: Step 1's telescoping no longer closes.
+If covered interest parity held ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)), the forward would be $`S\,P_f(i)/D_d(i)`$ and $`D_x`$ would equal $`P_f`$. It does not hold. Since 2007 banks have paid up to borrow dollars through FX swaps, so forwards sit away from parity, and $`D_x`$ differs from $`P_f`$. The euro leg's rates still come from the euro curve, because €STR is what gets paid. But its payments are discounted on $`D_x`$. Projected on one curve, discounted on another: Step 1's telescoping no longer closes.
 
 ### Step 3: solve for the spread that restores par
 
-The dollar leg is on its own curve, so by Step 1 it is still worth $110 million. The swap is fair when the euro leg is worth €100 million on $D_x$:
+The dollar leg is on its own curve, so by Step 1 it is still worth $110 million. The swap is fair when the euro leg is worth €100 million on $`D_x`$:
 
-$$\sum_{i=1}^{T} (f_i + s)\,D_x(i) + D_x(T) = 1.$$
+```math
+\sum_{i=1}^{T} (f_i + s)\,D_x(i) + D_x(T) = 1.
+```
 
-The spread enters once per year, so the left side rises by $A_x$ for each unit of $s$. Solving gives the formula above. It exists and is unique because $A_x$ is positive.
+The spread enters once per year, so the left side rises by $`A_x`$ for each unit of $`s`$. Solving gives the formula above. It exists and is unique because $`A_x`$ is positive.
 
 ### Step 4: read the curve from the quotes, then read the funding gap
 
-In practice the arrows run the other way. The market quotes the basis for each maturity, and $D_x$ is read out of the quotes, one year at a time. With the one-year quote, the one-year equation has one unknown, $D_x(1)$. With it known, the two-year equation has one unknown, $D_x(2)$. And so on. When every maturity is quoted at the same −15, each year's rate on the $D_x$ curve is exactly $f_i + s$:
+In practice the arrows run the other way. The market quotes the basis for each maturity, and $`D_x`$ is read out of the quotes, one year at a time. With the one-year quote, the one-year equation has one unknown, $`D_x(1)`$. With it known, the two-year equation has one unknown, $`D_x(2)`$. And so on. When every maturity is quoted at the same −15, each year's rate on the $`D_x`$ curve is exactly $`f_i + s`$:
 
-$$D_x(i) = \frac{D_x(i-1)}{1 + f_i + s}.$$
+```math
+D_x(i) = \frac{D_x(i-1)}{1 + f_i + s}.
+```
 
 <details>
 <summary>Detailed proof: the bootstrap</summary>
 
-Suppose $D_x(i-1)/D_x(i) = 1 + f_i + s$ for every year. Then $(f_i + s)D_x(i) = D_x(i-1) - D_x(i)$, and the sum in Step 3 telescopes exactly as in Step 1, to $1 - D_x(T)$. Adding $D_x(T)$ gives 1 at every $T$: every quote is matched. Conversely, the $T$-year equation minus the $(T-1)$-year one leaves $(f_T + s)D_x(T) + D_x(T) - D_x(T-1) = 0$, which is the same recursion. So the curve is unique.
+Suppose $`D_x(i-1)/D_x(i) = 1 + f_i + s`$ for every year. Then $`(f_i + s)D_x(i) = D_x(i-1) - D_x(i)`$, and the sum in Step 3 telescopes exactly as in Step 1, to $`1 - D_x(T)`$. Adding $`D_x(T)`$ gives 1 at every $`T`$: every quote is matched. Conversely, the $`T`$-year equation minus the $`(T-1)`$-year one leaves $`(f_T + s)D_x(T) + D_x(T) - D_x(T-1) = 0`$, which is the same recursion. So the curve is unique.
 
 </details>
 
-So the dollar-funded euro curve earns 2.8955 percent a year where the euro deposit curve earns 3.0455. Written as a continuous rate, $y = \ln(1.028955) = 2.8543\%$, against $r_f = 3\%$. The **implied funding difference** is $y - r_f = -14.57$ basis points: euros delivered through the swap earn about 15 basis points less than euros in the bank. Equivalently, dollars obtained through the swap cost more than dollars borrowed directly.
+So the dollar-funded euro curve earns 2.8955 percent a year where the euro deposit curve earns 3.0455. Written as a continuous rate, $`y = \ln(1.028955) = 2.8543\%`$, against $`r_f = 3\%`$. The **implied funding difference** is $`y - r_f = -14.57`$ basis points: euros delivered through the swap earn about 15 basis points less than euros in the bank. Equivalently, dollars obtained through the swap cost more than dollars borrowed directly.
 
 ### The other road: average over simulated exchange rates
 
@@ -139,19 +149,19 @@ The bank's swap: €100m against $110m, spot 1.10, five annual payments, dollar 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| euro floating rate $f_i$ | $e^{0.03} - 1$ | 3.0455% |
-| dollar floating rate $g_i$ | $e^{0.05} - 1$ | 5.1271% |
+| euro floating rate $`f_i`$ | $`e^{0.03} - 1`$ | 3.0455% |
+| dollar floating rate $`g_i`$ | $`e^{0.05} - 1`$ | 5.1271% |
 | euro rate with basis | 3.0455% − 0.15% | 2.8955% |
 | euro coupon received each year | 2.8955% × €100m | €2,895,453.40 |
 | dollar coupon paid each year | 5.1271% × $110m | $5,639,820.60 |
-| $D_x(1)$ | 1 / 1.028955 | 0.971860 |
-| $D_x(5)$ | 1 / 1.028955^5 | 0.867000 |
-| $A_x$ | sum of the five $D_x(i)$ | 4.5934 |
+| $`D_x(1)`$ | 1 / 1.028955 | 0.971860 |
+| $`D_x(5)`$ | 1 / 1.028955^5 | 0.867000 |
+| $`A_x`$ | sum of the five $`D_x(i)`$ | 4.5934 |
 | fair basis check | (1 − 0.867000 − 3.0455% × 4.5934) / 4.5934 | −15.00 bp |
-| implied euro rate $y$ | −ln(0.867000) / 5 | 2.8543% |
-| **funding difference** $y - r_f$ | 2.8543% − 3% | **−14.57 bp** |
-| five-year forward $F(5)$ | 1.10 × 0.867000 / 0.778801 | 1.2246 |
-| the same forward if parity held | $1.10\,e^{0.10}$ | 1.2157 |
+| implied euro rate $`y`$ | −ln(0.867000) / 5 | 2.8543% |
+| **funding difference** $`y - r_f`$ | 2.8543% − 3% | **−14.57 bp** |
+| five-year forward $`F(5)`$ | 1.10 × 0.867000 / 0.778801 | 1.2246 |
+| the same forward if parity held | $`1.10\,e^{0.10}`$ | 1.2157 |
 | value of 15 bp a year | 0.0015 × €100m × 4.5934 | €689,011.50 |
 | in dollars | × 1.10 | $757,912.65 |
 | **dollar-leg equivalent** | 757,912.65 / ($110m × 4.3143) | **15.97 bp** |
@@ -169,7 +179,7 @@ Correct answer: the −15 basis-point swap is worth zero at inception, and the f
 | Discount the euro leg on the euro overnight curve | fair basis 0.00 bp; the −15 swap shows −$754,671.99 | treats covered parity as holding, so the market quote looks like a loss |
 | Drop the final exchange of principals | fair basis +177.01 bp | the dollar coupons are bigger than the euro coupons; only the principals' forward value pays for the gap |
 | Read −15 bp as a shift to the continuous euro rate | the swap shows +$22,499.29 | −15 is an annual spread on the paid rate, worth −14.57 bp continuous |
-| Move the 15 bp to the dollar leg unchanged | the euro lender is +$46,052.11 better off | a basis point is worth $A_x$ years on the euro side and $A_d$ on the dollar side; the dollar equivalent is 15.97 |
+| Move the 15 bp to the dollar leg unchanged | the euro lender is +$46,052.11 better off | a basis point is worth $`A_x`$ years on the euro side and $`A_d`$ on the dollar side; the dollar equivalent is 15.97 |
 | Convert every euro payment at today's spot | −$10,590,853.58 | euros in five years fetch the forward, 1.2246, not 1.10 |
 
 ---
@@ -180,7 +190,7 @@ The swap is worth zero on day one. A week later the rates have not moved, the ba
 
 ### Force one: the exchange rate
 
-Right after the start, the euro leg is worth €100 million on its curve and the dollar leg $110 million. So the value to the euro lender is $100\text{m} \times \text{spot} - 110\text{m}$ dollars. The coupons alone carry little of that; the final principal carries almost all of it.
+Right after the start, the euro leg is worth €100 million on its curve and the dollar leg $110 million. So the value to the euro lender is $`100\text{m} \times \text{spot} - 110\text{m}`$ dollars. The coupons alone carry little of that; the final principal carries almost all of it.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -635,9 +645,9 @@ The two outputs agree line for line.
 
 Lean proves the three algebra steps behind the price, for any number of years and any positive curve, flat or not.
 
-- Suppose the euro curve $P_f$ starts at 1, stays positive, and sets each year's floating rate, as in Step 1. Then the discounted coupons plus the discounted principal come to 1 per euro of principal, for any number of years.
-- Suppose every $D_x(i)$ is positive and the swap runs at least one year. Then a spread $s$ puts the euro leg at par exactly when $s$ equals the fair-basis formula above. So the fair basis exists and is unique.
-- Suppose $D_x$ starts at 1, stays positive, and every maturity is quoted at the same basis $s$. Then every quote is matched exactly when $D_x(i-1)/D_x(i) = 1 + f_i + s$ for every year. So the bootstrapped curve is the only one that matches.
+- Suppose the euro curve $`P_f`$ starts at 1, stays positive, and sets each year's floating rate, as in Step 1. Then the discounted coupons plus the discounted principal come to 1 per euro of principal, for any number of years.
+- Suppose every $`D_x(i)`$ is positive and the swap runs at least one year. Then a spread $`s`$ puts the euro leg at par exactly when $`s`$ equals the fair-basis formula above. So the fair basis exists and is unique.
+- Suppose $`D_x`$ starts at 1, stays positive, and every maturity is quoted at the same basis $`s`$. Then every quote is matched exactly when $`D_x(i-1)/D_x(i) = 1 + f_i + s`$ for every year. So the bootstrapped curve is the only one that matches.
 - Exact fractions also confirm that €100m is $110m at spot 1.10, and the swap's value just after the start at three spots.
 
 Decimals, the curve numbers, the simulation, the bisection search and every what-breaks row are left to the Python and Rust checks.
@@ -789,7 +799,7 @@ example : (100 : ℚ) * (21 / 20) - 110 = -5 := by norm_num
 ## What this builds on
 
 - [Collateral discounting](05-ois-discounting-and-collateral.md): why the collateral currency picks the discount curve. This card applies it with dollars as collateral and euros paid.
-- [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): the forward that would hold without frictions, $F = S\,e^{(r_d - r_f)T}$. The basis is the swap market's measure of how far it fails.
+- [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): the forward that would hold without frictions, $`F = S\,e^{(r_d - r_f)T}`$. The basis is the swap market's measure of how far it fails.
 - [Interest rate swaps](01-interest-rate-swaps.md): the one-currency swap and the floating leg valued at par.
 - [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md): projecting on one curve and discounting on another, inside one currency. Here the two curves belong to two currencies.
 

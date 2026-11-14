@@ -38,26 +38,28 @@ A and its ring, all ten borders between them. Outside, G H I J K L close a ring 
 
 ## The formula
 
-The map becomes a network, written $G$: a dot per ward, a line per shared stretch of border ([Colouring](03-vertex-colouring-and-chromatic-number.md)). $V$ counts its dots, $E$ its lines, and a dot's **degree** is how many lines meet it. The **chromatic number** of $G$ is the fewest colours its dots can take with no line's two ends alike, written with the Greek letter chi.
+The map becomes a network, written $`G`$: a dot per ward, a line per shared stretch of border ([Colouring](03-vertex-colouring-and-chromatic-number.md)). $`V`$ counts its dots, $`E`$ its lines, and a dot's **degree** is how many lines meet it. The **chromatic number** of $`G`$ is the fewest colours its dots can take with no line's two ends alike, written with the Greek letter chi.
 
-$$\chi(G) \le 5 \qquad\text{and}\qquad \chi(G) \le 4 \qquad\text{for every planar } G$$
+```math
+\chi(G) \le 5 \qquad\text{and}\qquad \chi(G) \le 4 \qquad\text{for every planar } G
+```
 
 **Read it aloud:** a network drawn flat without crossings never needs a sixth colour, and in fact never a fifth.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | the network drawn from the map | 12 dots, 27 lines | — |
-| $V$ | dots, one per ward | 12 | neither 5 nor 4 moves |
-| $E$ | lines, one per border | 27 | past $3V - 6$ it is not flat |
-| $\chi$ | fewest colours that work | 4 | — |
-| $v$ | one dot, one ward | A, H | — |
-| $\deg$ | a dot's degree: lines at it | A 5, C 6, H 3 | busier dots block more inks |
+| $`G`$ | the network drawn from the map | 12 dots, 27 lines | — |
+| $`V`$ | dots, one per ward | 12 | neither 5 nor 4 moves |
+| $`E`$ | lines, one per border | 27 | past $`3V - 6`$ it is not flat |
+| $`\chi`$ | fewest colours that work | 4 | — |
+| $`v`$ | one dot, one ward | A, H | — |
+| $`\deg`$ | a dot's degree: lines at it | A 5, C 6, H 3 | busier dots block more inks |
 
 ### When it holds
 
 - **Drawn flat, no crossings.** The count belongs to the sheet and the sphere; on a doughnut it rises to seven.
 - **Each region in one piece, borders that are stretches, not points.** A ward printed as two patches sharing one ink can force a fifth; wards meeting at a corner are not neighbours.
-- **At least three regions.** Below three dots the bound $E \le 3V - 6$ does not start ([Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md)). One or two regions need no proof: they take at most two inks.
+- **At least three regions.** Below three dots the bound $`E \le 3V - 6`$ does not start ([Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md)). One or two regions need no proof: they take at most two inks.
 
 ---
 
@@ -65,13 +67,15 @@ $$\chi(G) \le 5 \qquad\text{and}\qquad \chi(G) \le 4 \qquad\text{for every plana
 
 ### Step 0: shading the dots puts flat drawings behind the question
 
-Colouring the map is colouring the dots of its network, so every fact about flat drawings bears on inks ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). The first: a flat drawing cannot be crowded, $E \le 3V - 6$.
+Colouring the map is colouring the dots of its network, so every fact about flat drawings bears on inks ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). The first: a flat drawing cannot be crowded, $`E \le 3V - 6`$.
 
 ### Step 1: some ward has at most five neighbours
 
-Every line has two ends, so the degrees added up over all the dots $v$ — what the sigma sign says to do — count each line twice:
+Every line has two ends, so the degrees added up over all the dots $`v`$ — what the sigma sign says to do — count each line twice:
 
-$$2E = \sum_{v} \deg(v) \le 6V - 12$$
+```math
+2E = \sum_{v} \deg(v) \le 6V - 12
+```
 
 That averages under six lines a dot, and whole numbers cannot all sit above their average, so some dot has degree 5 or less. Here the degrees add to 54 against a ceiling of 60, the average is 4.50, and the least busy ward, H, has 3.
 
@@ -364,7 +368,7 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md): the ceiling $E \le 3V - 6$, and why five mutually bordering regions are not flat.
+- [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md): the ceiling $`E \le 3V - 6`$, and why five mutually bordering regions are not flat.
 - [Colouring](03-vertex-colouring-and-chromatic-number.md): the map-to-network step, and the count this card bounds.
 - [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): why settling small maps and one lifted region settles all.
 

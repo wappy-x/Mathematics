@@ -36,17 +36,23 @@ Orange: the chain, 8 cosh(x/8) − 8. Green: Galileo's guess, the parabola throu
 
 ## The formula
 
-Notation: e^−t is 1 divided by e^t; $\cosh^2 t$ is cosh t times itself; d/dt is the rate per unit of t ([The derivative](01-the-derivative.md)); ln x is the natural logarithm, the power of e that gives x.
+Notation: e^−t is 1 divided by e^t; $`\cosh^2 t`$ is cosh t times itself; d/dt is the rate per unit of t ([The derivative](01-the-derivative.md)); ln x is the natural logarithm, the power of e that gives x.
 
-$$\cosh t = \frac{e^t + e^{-t}}{2}, \qquad \sinh t = \frac{e^t - e^{-t}}{2}, \qquad \tanh t = \frac{\sinh t}{\cosh t}$$
+```math
+\cosh t = \frac{e^t + e^{-t}}{2}, \qquad \sinh t = \frac{e^t - e^{-t}}{2}, \qquad \tanh t = \frac{\sinh t}{\cosh t}
+```
 
-$$\cosh^2 t - \sinh^2 t = 1, \qquad \frac{d}{dt}\sinh t = \cosh t, \qquad \frac{d}{dt}\cosh t = \sinh t, \qquad \frac{d}{dt}\tanh t = \frac{1}{\cosh^2 t}$$
+```math
+\cosh^2 t - \sinh^2 t = 1, \qquad \frac{d}{dt}\sinh t = \cosh t, \qquad \frac{d}{dt}\cosh t = \sinh t, \qquad \frac{d}{dt}\tanh t = \frac{1}{\cosh^2 t}
+```
 
 **Read it aloud:** cosh is the average of e^t and e^−t, sinh half their difference, tanh their ratio; cosh squared minus sinh squared is one; each of sinh and cosh changes at the other's rate, with no minus sign.
 
-The chain, measured from a level $a$ below its lowest point, and its slope:
+The chain, measured from a level $`a`$ below its lowest point, and its slope:
 
-$$y = a\cosh\frac{x}{a}, \qquad \frac{dy}{dx} = \sinh\frac{x}{a}$$
+```math
+y = a\cosh\frac{x}{a}, \qquad \frac{dy}{dx} = \sinh\frac{x}{a}
+```
 
 The inverses undo the functions. Cosh is equal at t and −t, so it is undone only on t ≥ 0:
 
@@ -58,13 +64,13 @@ The inverses undo the functions. Cosh is equal at t and −t, so it is undone on
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | the input, a plain number | x/a: 1 at the hook | both grow, near e^t / 2 |
-| $e$ | the base whose power is its own rate | 2.718282 | — |
-| $\cosh$, $\sinh$ | the even and odd halves of e^t | 1.543081 and 1.175201 at t = 1 | both climb without end |
-| $\tanh$ | sinh over cosh | 0.761594 at t = 1 | creeps towards 1, never reaches it |
-| $x$, $y$ | across from the lowest point; height above the chosen level; m | hook: 8, 12.344645 | — |
-| $a$ | horizontal pull over the chain's weight per metre, m | 8 m | less sag |
-| $h$ | a small step in the input: the run | 0.1, 0.01, 0.001 | the quotient drifts from the rate |
+| $`t`$ | the input, a plain number | x/a: 1 at the hook | both grow, near e^t / 2 |
+| $`e`$ | the base whose power is its own rate | 2.718282 | — |
+| $`\cosh`$, $`\sinh`$ | the even and odd halves of e^t | 1.543081 and 1.175201 at t = 1 | both climb without end |
+| $`\tanh`$ | sinh over cosh | 0.761594 at t = 1 | creeps towards 1, never reaches it |
+| $`x`$, $`y`$ | across from the lowest point; height above the chosen level; m | hook: 8, 12.344645 | — |
+| $`a`$ | horizontal pull over the chain's weight per metre, m | 8 m | less sag |
+| $`h`$ | a small step in the input: the run | 0.1, 0.01, 0.001 | the quotient drifts from the rate |
 | arsinh, arcosh, artanh | the inverses | arcosh 1.25 = 0.693147 | — |
 
 ### When it holds
@@ -84,11 +90,15 @@ The definitions hold for every real t; the conditions belong to the inverses and
 
 An even function takes the same value at t and −t; an odd one flips sign. Any function f splits into the two:
 
-$$f(t) = \frac{f(t) + f(-t)}{2} + \frac{f(t) - f(-t)}{2}$$
+```math
+f(t) = \frac{f(t) + f(-t)}{2} + \frac{f(t) - f(-t)}{2}
+```
 
 For e^t the pieces are cosh t and sinh t, so
 
-$$\cosh t + \sinh t = e^t, \qquad \cosh t - \sinh t = e^{-t}$$
+```math
+\cosh t + \sinh t = e^t, \qquad \cosh t - \sinh t = e^{-t}
+```
 
 At t = 1: 1.543081 + 1.175201 is 2.718282, and 1.543081 − 1.175201 is 0.367879.
 
@@ -96,7 +106,9 @@ At t = 1: 1.543081 + 1.175201 is 2.718282, and 1.543081 − 1.175201 is 0.367879
 
 Multiply the two lines of Step 0. A sum times a difference is a difference of squares, and e^t × e^−t is 1:
 
-$$\cosh^2 t - \sinh^2 t = e^t e^{-t} = 1$$
+```math
+\cosh^2 t - \sinh^2 t = e^t e^{-t} = 1
+```
 
 At t = 1: 2.381098 − 1.381098 = 1. So cosh, a positive number whose square is 1 + sinh^2, is at least 1, and tanh stays strictly between −1 and 1.
 
@@ -104,13 +116,15 @@ At t = 1: 2.381098 − 1.381098 = 1. So cosh, a positive number whose square is 
 
 The rate of e^t is e^t ([Derivatives of exp and log](05-derivatives-of-exp-and-log.md)); the chain rule ([Chain rule](03-chain-rule.md)) gives e^−t the rate −e^−t. Rates of sums are sums of rates:
 
-$$\frac{d}{dt}\sinh t = \frac{e^t + e^{-t}}{2} = \cosh t, \qquad \frac{d}{dt}\cosh t = \frac{e^t - e^{-t}}{2} = \sinh t$$
+```math
+\frac{d}{dt}\sinh t = \frac{e^t + e^{-t}}{2} = \cosh t, \qquad \frac{d}{dt}\cosh t = \frac{e^t - e^{-t}}{2} = \sinh t
+```
 
 The minus inside e^−t cancels the minus between the terms, so no minus survives, unlike cosine's rate ([Derivatives of sine and cosine](04-derivatives-of-trig-functions.md)).
 
 The rise over run of sinh at 1 closes in: 1.604463, 1.548982, 1.543668 for h = 0.1, 0.01, 0.001, against cosh 1 = 1.543081, each gap about a tenth of the last.
 
-For tanh the quotient rule ([Product and quotient rules](02-product-and-quotient-rules.md)) gives cosh × cosh − sinh × sinh, which Step 1 makes 1, over $\cosh^2 t$: 0.419974 at t = 1.
+For tanh the quotient rule ([Product and quotient rules](02-product-and-quotient-rules.md)) gives cosh × cosh − sinh × sinh, which Step 1 makes 1, over $`\cosh^2 t`$: 0.419974 at t = 1.
 
 ### Step 3: the chain's slope and length
 
@@ -118,7 +132,9 @@ By the chain rule, 8 cosh(x/8) has slope 8 × sinh(x/8) × 1/8 = sinh(x/8), metr
 
 The slope's own rate is (1/8) cosh(x/8), 0.192885 per metre at the hook; Step 1 makes cosh equal √(1 + sinh^2), so
 
-$$\text{rate of the slope} = \frac{1}{a}\sqrt{1 + \text{slope}^2}$$
+```math
+\text{rate of the slope} = \frac{1}{a}\sqrt{1 + \text{slope}^2}
+```
 
 That is the chain's balance of forces, derived on [Paths with a budget](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md). The identity is what lets cosh obey it.
 

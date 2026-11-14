@@ -41,47 +41,61 @@ Notation already met: ε (epsilon) is a small dimensionless number, and O(ε), "
 
 The model problem is a two-point boundary value problem: one condition at each end ([Boundary value problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)).
 
-$$\varepsilon\, y'' + y' + y = 0, \qquad y(0) = 0,\quad y(1) = 1$$
+```math
+\varepsilon\, y'' + y' + y = 0, \qquad y(0) = 0,\quad y(1) = 1
+```
 
 It is not the wing's equation. It has the wing's structure: the small number multiplies the highest derivative, as viscosity does; the middle term carries the solution along, as the oncoming air does; and the wall sits at x = 0, where the solution must vanish, as the air speed does. Unlike the wing, it can be solved exactly, so the method can be checked before it is trusted.
 
 The method, in four lines:
 
-$$\text{outer: } y_o' + y_o = 0,\ y_o(1) = 1 \;\Rightarrow\; y_o = e^{1-x}$$
+```math
+\text{outer: } y_o' + y_o = 0,\ y_o(1) = 1 \;\Rightarrow\; y_o = e^{1-x}
+```
 
-$$\text{inner: } X = \frac{x}{\varepsilon},\quad Y'' + Y' = 0,\ Y(0) = 0 \;\Rightarrow\; Y = A\,(1 - e^{-X})$$
+```math
+\text{inner: } X = \frac{x}{\varepsilon},\quad Y'' + Y' = 0,\ Y(0) = 0 \;\Rightarrow\; Y = A\,(1 - e^{-X})
+```
 
-$$\text{match: } \lim_{X\to\infty} Y = \lim_{x\to 0} y_o \;\Rightarrow\; A = e$$
+```math
+\text{match: } \lim_{X\to\infty} Y = \lim_{x\to 0} y_o \;\Rightarrow\; A = e
+```
 
-$$y_c(x) = y_o(x) + Y\!\left(\tfrac{x}{\varepsilon}\right) - e = e^{1-x} - e^{\,1 - x/\varepsilon}$$
+```math
+y_c(x) = y_o(x) + Y\!\left(\tfrac{x}{\varepsilon}\right) - e = e^{1-x} - e^{\,1 - x/\varepsilon}
+```
 
 **Read it aloud:** away from the wall, drop the small term and keep the far condition; near the wall, magnify distance by one over epsilon and keep the wall condition; choose the free constant so the two agree in between; add them and take away the value they share.
 
 On the wing the same four steps run on Prandtl's boundary-layer equations: the equations of air flow, with the terms that stay small in a thin layer dropped. The layer's thickness scale and the inner equation are
 
-$$\delta = \frac{c}{\sqrt{\mathrm{Re}}}, \qquad f''' + \tfrac12 f f'' = 0,\quad f(0) = f'(0) = 0,\quad f'(\infty) = 1$$
+```math
+\delta = \frac{c}{\sqrt{\mathrm{Re}}}, \qquad f''' + \tfrac12 f f'' = 0,\quad f(0) = f'(0) = 0,\quad f'(\infty) = 1
+```
 
-Here $\eta$ is the height above the skin in units of the local layer scale, $\eta = y_w\sqrt{U/(\nu x_w)}$. In it, $y_w$ is the height and $x_w$ the distance back from the front edge. The air's speed as a fraction of the free stream is $u/U = f'(\eta)$. The condition $f'(\infty) = 1$ is the matching: far above the skin, in the inner variable, the layer must reach the outer flow's speed. This is Blasius's equation (1908). Its solution gives the average skin-friction coefficient and the drag on one side per metre of span:
+Here $`\eta`$ is the height above the skin in units of the local layer scale, $`\eta = y_w\sqrt{U/(\nu x_w)}`$. In it, $`y_w`$ is the height and $`x_w`$ the distance back from the front edge. The air's speed as a fraction of the free stream is $`u/U = f'(\eta)`$. The condition $`f'(\infty) = 1`$ is the matching: far above the skin, in the inner variable, the layer must reach the outer flow's speed. This is Blasius's equation (1908). Its solution gives the average skin-friction coefficient and the drag on one side per metre of span:
 
-$$C_f = \frac{4 f''(0)}{\sqrt{\mathrm{Re}}} = \frac{1.328}{\sqrt{\mathrm{Re}}}, \qquad D = \tfrac12 \rho U^2 c\, C_f$$
+```math
+C_f = \frac{4 f''(0)}{\sqrt{\mathrm{Re}}} = \frac{1.328}{\sqrt{\mathrm{Re}}}, \qquad D = \tfrac12 \rho U^2 c\, C_f
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$, $x_w$, $y_w$ | model: distance from the wall, and the solution; wing: distance back from the front edge, and height above the skin. The model's x plays the part of the wing's height $y_w$, not of $x_w$ | x from 0 to 1; $x_w$ up to 0.20 m | — |
-| $\varepsilon$ | the small number on the highest derivative | 0.05; on the wing 1/Re = 5.038 per million | the layer thickens and the composite's error grows, about e × ε |
-| $e$ | Euler's number, the base of the natural exponential | 2.7183, the value outer and inner share | — |
-| $A$, $B$ | free constants of a general solution, fixed by the conditions | $B = -A$ from the wall; $A = e$ by matching | — |
-| $r_1$, $r_2$, $a$ | in the proofs: the slow and fast roots of ε r^2 + r + 1 = 0; the trial power in x = ε^a X | $r_1$ near −1, $r_2$ near −1/ε; a = 1 in the layer | — |
-| $y_o$ | outer solution: small term dropped, far condition kept | $e^{1-x}$, 2.7183 at the wall | — |
-| $X$, $Y$ | inner (stretched) distance x/ε, and the inner solution | x = 0.05 is X = 1, Y = 1.7183 | — |
-| $y_c$ | composite: outer plus inner minus the shared value e | 1.5857 at x = 0.05, exact 1.6117 | — |
-| $U$, $c$ | free-stream speed; chord | 15 m/s; 0.20 m | U up: thinner layer, more drag |
-| $\nu$, $\mu$, $\rho$ | kinematic viscosity μ/ρ; viscosity; air density | 15.1152 mm^2/s; 1.82 × 10^-5 Pa s; 1.2041 kg/m^3 | ν up: thicker layer, more drag |
-| $\mathrm{Re}$ | Reynolds number Uc/ν | 198,476 | thinner layer, smaller C_f |
-| $\delta$ | the layer's thickness scale c/√Re at the back edge | 0.4489 mm | — |
-| $\eta$, $f$ | inner height in units of the local layer scale; Blasius's function, with u/U = f′ | f′ reaches 0.99 at η = 4.9100 | — |
-| $C_f$ | average skin-friction coefficient: drag over ½ρU^2 times area | 0.002981 | — |
-| $D$ | skin-friction drag, one side, per metre of span | 0.08077 N/m | — |
+| $`x`$, $`y`$, $`x_w`$, $`y_w`$ | model: distance from the wall, and the solution; wing: distance back from the front edge, and height above the skin. The model's x plays the part of the wing's height $`y_w`$, not of $`x_w`$ | x from 0 to 1; $`x_w`$ up to 0.20 m | — |
+| $`\varepsilon`$ | the small number on the highest derivative | 0.05; on the wing 1/Re = 5.038 per million | the layer thickens and the composite's error grows, about e × ε |
+| $`e`$ | Euler's number, the base of the natural exponential | 2.7183, the value outer and inner share | — |
+| $`A`$, $`B`$ | free constants of a general solution, fixed by the conditions | $`B = -A`$ from the wall; $`A = e`$ by matching | — |
+| $`r_1`$, $`r_2`$, $`a`$ | in the proofs: the slow and fast roots of ε r^2 + r + 1 = 0; the trial power in x = ε^a X | $`r_1`$ near −1, $`r_2`$ near −1/ε; a = 1 in the layer | — |
+| $`y_o`$ | outer solution: small term dropped, far condition kept | $`e^{1-x}`$, 2.7183 at the wall | — |
+| $`X`$, $`Y`$ | inner (stretched) distance x/ε, and the inner solution | x = 0.05 is X = 1, Y = 1.7183 | — |
+| $`y_c`$ | composite: outer plus inner minus the shared value e | 1.5857 at x = 0.05, exact 1.6117 | — |
+| $`U`$, $`c`$ | free-stream speed; chord | 15 m/s; 0.20 m | U up: thinner layer, more drag |
+| $`\nu`$, $`\mu`$, $`\rho`$ | kinematic viscosity μ/ρ; viscosity; air density | 15.1152 mm^2/s; 1.82 × 10^-5 Pa s; 1.2041 kg/m^3 | ν up: thicker layer, more drag |
+| $`\mathrm{Re}`$ | Reynolds number Uc/ν | 198,476 | thinner layer, smaller C_f |
+| $`\delta`$ | the layer's thickness scale c/√Re at the back edge | 0.4489 mm | — |
+| $`\eta`$, $`f`$ | inner height in units of the local layer scale; Blasius's function, with u/U = f′ | f′ reaches 0.99 at η = 4.9100 | — |
+| $`C_f`$ | average skin-friction coefficient: drag over ½ρU^2 times area | 0.002981 | — |
+| $`D`$ | skin-friction drag, one side, per metre of span | 0.08077 N/m | — |
 
 The viscosity is Lemmon and Jacobsen's value for air at 20 °C and 1 atm. [Similarity](04-similarity-and-model-testing.md) computes the same air's viscosity from Sutherland's older law and gets a value 0.4 % lower; that would move Re by about the same 0.4 % and change no step of the method.
 
@@ -103,7 +117,7 @@ Setting ε to 0 turns a second-order equation into a first-order one. A first-or
 
 ### Step 1: the outer solution keeps the far condition
 
-Drop ε: y′ + y = 0, solved by A e^(−x). Which condition to keep is decided by where the layer can sit: at x = 0, the only wall the inner solution's e^(−X) decays away from (Step 3). So the outer solution keeps y(1) = 1 and is $y_o = e^{1-x}$. At the wall it gives e = 2.7183, where the truth is 0. On the wing the outer solution is the inviscid flow, the flow with viscosity left out: on a thin flat wing, air at 15 m/s sliding over the skin.
+Drop ε: y′ + y = 0, solved by A e^(−x). Which condition to keep is decided by where the layer can sit: at x = 0, the only wall the inner solution's e^(−X) decays away from (Step 3). So the outer solution keeps y(1) = 1 and is $`y_o = e^{1-x}`$. At the wall it gives e = 2.7183, where the truth is 0. On the wing the outer solution is the inviscid flow, the flow with viscosity left out: on a thin flat wing, air at 15 m/s sliding over the skin.
 
 ### Step 2: stretch the coordinate until the small term counts again
 
@@ -123,7 +137,7 @@ On the wing, matching is the condition f′(∞) = 1: the top of the layer must 
 
 ### Step 5: the composite counts the shared part once
 
-Inner plus outer counts the overlap value e twice. Subtract it: $y_c = e^{1-x} - e^{1 - x/\varepsilon}$. Near the wall the outer part is close to e and cancels the subtraction, leaving the inner solution. Far away the inner part is e and cancels, leaving the outer one. The worst gap from the exact answer, divided by ε, settles towards e: 2.674 at ε = 0.001.
+Inner plus outer counts the overlap value e twice. Subtract it: $`y_c = e^{1-x} - e^{1 - x/\varepsilon}`$. Near the wall the outer part is close to e and cancels the subtraction, leaving the inner solution. Far away the inner part is e and cancels, leaving the outer one. The worst gap from the exact answer, divided by ε, settles towards e: 2.674 at ε = 0.001.
 
 <details>
 <summary>Detailed proof: the composite is within about e × ε of the exact answer</summary>
@@ -140,7 +154,7 @@ Subtract the composite: y − y_c = ε(1 − x) e^(1−x) − (ε + x) e^(1 − 
 
 ### Step 6: the wing's inner problem, solved by shooting
 
-Prandtl's equations in the layer have no length of their own along the skin, so the speed profile has the same shape at every distance $x_w$ back from the front edge, stretched by √(ν x_w/U). That collapses them to Blasius's ordinary differential equation. It is a boundary value problem with conditions at η = 0 and at infinity. The shooting method ([Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md)) guesses the unknown f″(0), integrates out to η = 10, and adjusts until f′ there is 1. The answer is f″(0) = 0.332057, Howarth's 1938 value. Here the outer flow is uniform, so the composite is U + U f′ − U = U f′: the inner solution is already uniformly valid.
+Prandtl's equations in the layer have no length of their own along the skin, so the speed profile has the same shape at every distance $`x_w`$ back from the front edge, stretched by √(ν x_w/U). That collapses them to Blasius's ordinary differential equation. It is a boundary value problem with conditions at η = 0 and at infinity. The shooting method ([Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md)) guesses the unknown f″(0), integrates out to η = 10, and adjusts until f′ there is 1. The answer is f″(0) = 0.332057, Howarth's 1938 value. Here the outer flow is uniform, so the composite is U + U f′ − U = U f′: the inner solution is already uniformly valid.
 
 ### Step 7: drag, two ways
 
@@ -575,10 +589,10 @@ The two outputs match line for line.
 
 Lean proves the model problem's exact answer, the matching step, and how the composite's worst error behaves as ε shrinks to 0.
 
-- Take $0 < \varepsilon < 1/4$, and let $r_1$ and $r_2$ be the two roots of $\varepsilon r^2 + r + 1 = 0$. Then $(e^{r_1 x} - e^{r_2 x})/(e^{r_1} - e^{r_2})$ solves the model problem, with both end conditions.
-- The outer solution $e^{1-x}$ tends to $e$ as $x$ tends to 0.
-- Take the inner solution $A(1 - e^{-X})$. Then it tends to $e$ as $X$ grows exactly when $A = e$.
-- Take ε shrinking to 0. Then the worst gap between the composite and the exact answer, over x from 0 to 1, divided by ε, tends to $e$.
+- Take $`0 < \varepsilon < 1/4`$, and let $`r_1`$ and $`r_2`$ be the two roots of $`\varepsilon r^2 + r + 1 = 0`$. Then $`(e^{r_1 x} - e^{r_2 x})/(e^{r_1} - e^{r_2})`$ solves the model problem, with both end conditions.
+- The outer solution $`e^{1-x}`$ tends to $`e`$ as $`x`$ tends to 0.
+- Take the inner solution $`A(1 - e^{-X})`$. Then it tends to $`e`$ as $`X`$ grows exactly when $`A = e`$.
+- Take ε shrinking to 0. Then the worst gap between the composite and the exact answer, over x from 0 to 1, divided by ε, tends to $`e`$.
 
 The wing's numbers, Blasius's equation, the finite-difference solve, the table of gaps and the drag are left to the Python and Rust checks.
 

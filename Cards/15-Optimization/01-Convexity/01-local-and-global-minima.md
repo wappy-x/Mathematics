@@ -35,34 +35,40 @@ The one line is the total cost. The left dip, the chocolatey blend, is the lowes
 
 The cost of a kilo, in pounds, with the Ethiopian share x running from 0 to 0.8:
 
-$$f(x) = \underbrace{0.2 \times 5 + 9\,(0.8 - x) + 14\,x}_{\text{beans: } 8.2 \,+\, 5x} \;+\; \underbrace{1250\,(x - 0.2)^2\,(x - 0.6)^2}_{\text{taste penalty } P(x)}$$
+```math
+f(x) = \underbrace{0.2 \times 5 + 9\,(0.8 - x) + 14\,x}_{\text{beans: } 8.2 \,+\, 5x} \;+\; \underbrace{1250\,(x - 0.2)^2\,(x - 0.6)^2}_{\text{taste penalty } P(x)}
+```
 
 The bean part is a straight line. A straight line has no dip at all: its lowest point on a range is always an end. **Both dips come from the taste penalty.** It is zero at the two target tastes, x = 0.2 and x = 0.6, and £2.00 at x = 0.4, halfway between. The weight 1250 sets how hard the café punishes a muddled taste.
 
-Now the two words this card is about. This wing writes $x^*$ (read "x star") for a minimiser: an allowed point where the cost is lowest. The place is written $\operatorname{argmin}$ and the lowest value $\min$.
+Now the two words this card is about. This wing writes $`x^*`$ (read "x star") for a minimiser: an allowed point where the cost is lowest. The place is written $`\mathrm{argmin}`$ and the lowest value $`\min`$.
 
-$$x^* \text{ is a global minimiser:} \quad f(x^*) \le f(x) \ \text{ for every allowed } x.$$
+```math
+x^* \text{ is a global minimiser:} \quad f(x^*) \le f(x) \ \text{ for every allowed } x.
+```
 
-$$x^* \text{ is a local minimiser:} \quad \text{there is a radius } r > 0 \text{ with } f(x^*) \le f(x) \ \text{ for every allowed } x \text{ with } |x - x^*| < r.$$
+```math
+x^* \text{ is a local minimiser:} \quad \text{there is a radius } r > 0 \text{ with } f(x^*) \le f(x) \ \text{ for every allowed } x \text{ with } |x - x^*| < r.
+```
 
 **Read it aloud:** a global minimum is at least as cheap as every allowed blend; a local minimum is at least as cheap as every allowed blend within some small distance of it, and says nothing about blends further away.
 
-For the blend, $\operatorname{argmin} f = \{0.188509\}$ and $\min f = £9.170493$ a kilo. The fruity point, x = 0.586081, is a local minimiser and not a global one.
+For the blend, $`\mathrm{argmin}\, f = \{0.188509\}`$ and $`\min f = £9.170493`$ a kilo. The fruity point, x = 0.586081, is a local minimiser and not a global one.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | Ethiopian share of the blend, from 0 to 0.8 | 0.188509 at the cheapest blend | a walk started past 0.43 ends in the fruity dip |
-| $f(x)$ | cost of a kilo of blend, pounds | £9.170493 at the cheapest | — |
-| $P(x)$ | taste penalty: price lost for a muddled taste, pounds a kilo | £2.00 at x = 0.4 | a heavier weight raises the hump and pins the dips nearer 0.2 and 0.6; a weight of 100 leaves only one dip |
-| $x^*$ | a minimiser: a point where the cost is lowest | 0.188509 | — |
-| $\operatorname{argmin}$, $\min$ | the place of the lowest cost, and the lowest cost itself | {0.188509} and £9.170493 | — |
-| $r$ | a radius: how near "nearby" means in the local definition | anything short of the distance from a dip to the hump at 0.425410 | larger r asks a local minimum to beat more points |
-| $f'(x)$ | slope: pounds per unit of share | 0 at both dips; 5 at x = 0.2 | positive means cheaper to the left |
-| $f''(x)$ | curvature: how fast the slope changes | 470.93 at the cheapest dip | positive means a dip, negative a hump |
-| $L$ | slope bound: no slope on the range is steeper than this | 725 | a bigger bound needs a finer grid |
-| $h$ | gap between grid points | 0.001 | a coarser grid loosens the certificate |
-| $g$, $D$, $c$, $w$, $d$, $u$ | the cost with a hidden dip added (Step 3); the dip's shape, centre, half-width, depth, and position scaled by the half-width | g = £8.202475 at c = 0.4005; w = 0.0004, d = 4 | a wider dip, w = 0.0006, shows up on the grid |
-| $p_1, \dots, p_n$, $\hat x$ | the n points a search asks about, and the point it reports | 801 grid points; 0.188509 | — |
+| $`x`$ | Ethiopian share of the blend, from 0 to 0.8 | 0.188509 at the cheapest blend | a walk started past 0.43 ends in the fruity dip |
+| $`f(x)`$ | cost of a kilo of blend, pounds | £9.170493 at the cheapest | — |
+| $`P(x)`$ | taste penalty: price lost for a muddled taste, pounds a kilo | £2.00 at x = 0.4 | a heavier weight raises the hump and pins the dips nearer 0.2 and 0.6; a weight of 100 leaves only one dip |
+| $`x^*`$ | a minimiser: a point where the cost is lowest | 0.188509 | — |
+| $`\mathrm{argmin}`$, $`\min`$ | the place of the lowest cost, and the lowest cost itself | {0.188509} and £9.170493 | — |
+| $`r`$ | a radius: how near "nearby" means in the local definition | anything short of the distance from a dip to the hump at 0.425410 | larger r asks a local minimum to beat more points |
+| $`f'(x)`$ | slope: pounds per unit of share | 0 at both dips; 5 at x = 0.2 | positive means cheaper to the left |
+| $`f''(x)`$ | curvature: how fast the slope changes | 470.93 at the cheapest dip | positive means a dip, negative a hump |
+| $`L`$ | slope bound: no slope on the range is steeper than this | 725 | a bigger bound needs a finer grid |
+| $`h`$ | gap between grid points | 0.001 | a coarser grid loosens the certificate |
+| $`g`$, $`D`$, $`c`$, $`w`$, $`d`$, $`u`$ | the cost with a hidden dip added (Step 3); the dip's shape, centre, half-width, depth, and position scaled by the half-width | g = £8.202475 at c = 0.4005; w = 0.0004, d = 4 | a wider dip, w = 0.0006, shows up on the grid |
+| $`p_1, \dots, p_n`$, $`\hat x`$ | the n points a search asks about, and the point it reports | 801 grid points; 0.188509 | — |
 
 ### When it holds
 
@@ -88,9 +94,13 @@ The calculus wing already sorts flat spots: where the slope is zero and the curv
 
 The slope and curvature of the blend's cost are
 
-$$f'(x) = 5 + 2500\,(x - 0.2)(x - 0.6)(2x - 0.8),$$
+```math
+f'(x) = 5 + 2500\,(x - 0.2)(x - 0.6)(2x - 0.8),
+```
 
-$$f''(x) = 2500\,\big[(x - 0.6)(2x - 0.8) + (x - 0.2)(2x - 0.8) + 2(x - 0.2)(x - 0.6)\big].$$
+```math
+f''(x) = 2500\,\big[(x - 0.6)(2x - 0.8) + (x - 0.2)(2x - 0.8) + 2(x - 0.2)(x - 0.6)\big].
+```
 
 The 5 is the bean cost's slope; the rest is the penalty's. At the chocolatey dip, x = 0.188509, the slope is zero and the curvature is 470.93. At the fruity dip, x = 0.586081, the slope is zero and the curvature is 319.39. **Both pass the local test.** The test cannot rank them, because it never looks beyond its own point.
 
@@ -115,13 +125,13 @@ The check does this on the blend. A dip of depth 4, half-width 0.0004, centred a
 <details>
 <summary>Detailed proof: no finite search certifies a global minimum</summary>
 
-Let a search be any rule that, given the answers so far, picks the next point to ask about, or stops and reports a point. Run it on a continuous cost f on [0, 0.8]. It asks at points $p_1, \dots, p_n$ and reports $\hat x$. The asked points are finitely many, so some open stretch $(c - w, c + w)$ inside [0, 0.8] contains none of them, and it can be chosen with $\hat x$ outside $[c - w, c + w]$, ends included.
+Let a search be any rule that, given the answers so far, picks the next point to ask about, or stops and reports a point. Run it on a continuous cost f on [0, 0.8]. It asks at points $`p_1, \dots, p_n`$ and reports $`\hat x`$. The asked points are finitely many, so some open stretch $`(c - w, c + w)`$ inside [0, 0.8] contains none of them, and it can be chosen with $`\hat x`$ outside $`[c - w, c + w]`$, ends included.
 
-Define the dip $D(x) = -d\,(1 - u^2)^2$ where $u = (x - c)/w$, for $|x - c| < w$, and $D(x) = 0$ elsewhere. At $u = \pm 1$ both $(1 - u^2)^2$ and its slope $-4u(1 - u^2)$ are zero, so $g = f + D$ is continuous with a continuous slope. (A higher power of $1 - u^2$ matches more derivatives as well.)
+Define the dip $`D(x) = -d\,(1 - u^2)^2`$ where $`u = (x - c)/w`$, for $`|x - c| < w`$, and $`D(x) = 0`$ elsewhere. At $`u = \pm 1`$ both $`(1 - u^2)^2`$ and its slope $`-4u(1 - u^2)`$ are zero, so $`g = f + D`$ is continuous with a continuous slope. (A higher power of $`1 - u^2`$ matches more derivatives as well.)
 
-At every asked point $D = 0$ and $D' = 0$, so g gives the search the same first answer as f. The rule then picks the same second point, which is also outside the dip, and so on: by induction it asks the same points, gets the same answers and reports the same $\hat x$. Choose the depth $d > f(c) - f(\hat x)$. Then $g(c) = f(c) - d < f(\hat x) = g(\hat x)$, so $\hat x$ is not a global minimiser of g.
+At every asked point $`D = 0`$ and $`D' = 0`$, so g gives the search the same first answer as f. The rule then picks the same second point, which is also outside the dip, and so on: by induction it asks the same points, gets the same answers and reports the same $`\hat x`$. Choose the depth $`d > f(c) - f(\hat x)`$. Then $`g(c) = f(c) - d < f(\hat x) = g(\hat x)`$, so $`\hat x`$ is not a global minimiser of g.
 
-The search cannot tell f from g, so whatever it reports, it cannot certify that the report is global for the cost it was given. The argument does not touch local minima: the dip lies outside some neighbourhood of $\hat x$, so g equals f there, and a local minimiser of f stays a local minimiser of g.
+The search cannot tell f from g, so whatever it reports, it cannot certify that the report is global for the cost it was given. The argument does not touch local minima: the dip lies outside some neighbourhood of $`\hat x`$, so g equals f there, and a local minimiser of f stays a local minimiser of g.
 
 </details>
 
@@ -131,13 +141,13 @@ Three kinds of extra knowledge close the gap. Each rules out the hidden dip.
 
 **The whole formula.** The cost is continuous on the closed range [0, 0.8], so a cheapest blend exists. It sits at an end or at a flat spot.
 
-The slope $f'$ is a cubic (its highest power of x is $x^3$), so it has at most three zeros. Its signs at 0, 0.3, 0.5 and 0.8 are −235, 20, −10 and 245: three sign changes, so three zeros, and none missed. Bisection (halving a range where the slope changes sign, keeping the half where it still does) finds them at 0.188509, 0.425410 and 0.586081.
+The slope $`f'`$ is a cubic (its highest power of x is $`x^3`$), so it has at most three zeros. Its signs at 0, 0.3, 0.5 and 0.8 are −235, 20, −10 and 245: three sign changes, so three zeros, and none missed. Bisection (halving a range where the slope changes sign, keeping the half where it still does) finds them at 0.188509, 0.425410 and 0.586081.
 
 Listing them with the two ends gives five candidates. The cheapest is 0.188509 at £9.170493. That list is a full enumeration, a certificate: evidence anyone can recheck that no blend is cheaper.
 
-**A true slope bound.** On [0, 0.8], each factor of the penalty's slope is small: $|x - 0.2| \le 0.6$, $|x - 0.6| \le 0.6$ and $|2x - 0.8| \le 0.8$. So no slope exceeds $L = 5 + 2500 \times 0.6 \times 0.6 \times 0.8 = 725$ pounds per unit share.
+**A true slope bound.** On [0, 0.8], each factor of the penalty's slope is small: $`|x - 0.2| \le 0.6`$, $`|x - 0.6| \le 0.6`$ and $`|2x - 0.8| \le 0.8`$. So no slope exceeds $`L = 5 + 2500 \times 0.6 \times 0.6 \times 0.8 = 725`$ pounds per unit share.
 
-By the [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md), the cost cannot change by more than L times the distance moved. Every blend is within $h/2 = 0.0005$ of a grid point, so it costs at least the grid's best minus $L h / 2 = 0.3625$. The 801-point grid's best is £9.170549, so **no blend costs below £8.808049**.
+By the [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md), the cost cannot change by more than L times the distance moved. Every blend is within $`h/2 = 0.0005`$ of a grid point, so it costs at least the grid's best minus $`L h / 2 = 0.3625`$. The 801-point grid's best is £9.170549, so **no blend costs below £8.808049**.
 
 The best found, £9.170493, sits less than the slack, £0.3625, above that floor. So this road certifies the lowest cost to within £0.3625, not the exact place of x*; a finer grid tightens it. The hidden dip breaks exactly this road: its slope reaches 15401, far past 725.
 

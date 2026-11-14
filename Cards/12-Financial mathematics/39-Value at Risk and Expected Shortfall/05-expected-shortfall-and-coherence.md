@@ -38,51 +38,53 @@ The left column grows when the bonds are merged. The right column shrinks.
 
 ## The formula
 
-Notation first, in words. A **loss** is money lost over the chosen horizon, one day here, with a gain counted as a negative loss. $\mathrm{VaR}_\alpha(L)$ is the value at risk of the loss $L$ at confidence $\alpha$: the smallest amount the loss stays at or below with chance at least $\alpha$. $E[\,\cdot\,]$ is the expectation, the probability-weighted average. $(x)_+$ is the **positive part** of $x$: $x$ itself if positive, otherwise 0.
+Notation first, in words. A **loss** is money lost over the chosen horizon, one day here, with a gain counted as a negative loss. $`\mathrm{VaR}_\alpha(L)`$ is the value at risk of the loss $`L`$ at confidence $`\alpha`$: the smallest amount the loss stays at or below with chance at least $`\alpha`$. $`E[\,\cdot\,]`$ is the expectation, the probability-weighted average. $`(x)_+`$ is the **positive part** of $`x`$: $`x`$ itself if positive, otherwise 0.
 
-$$\mathrm{ES}_\alpha(L) \;=\; v \;+\; \frac{E\big[(L - v)_+\big]}{1-\alpha}, \qquad v = \mathrm{VaR}_\alpha(L)$$
+```math
+\mathrm{ES}_\alpha(L) \;=\; v \;+\; \frac{E\big[(L - v)_+\big]}{1-\alpha}, \qquad v = \mathrm{VaR}_\alpha(L)
+```
 
 **Read it aloud:** start at the value-at-risk line, then add the average overshoot above it, spread over the whole worst slice of size one minus alpha.
 
 The denominator is the size of the slice, 1%, even when fewer than 1% of outcomes lie strictly above the line. That detail is what makes ties at the line come out right, and it matters for the two bonds, where 1.98% of tomorrows sit exactly at the $100 line.
 
-The same number, read as an average: take outcomes from the worst down, until exactly a fraction $t = 1 - \alpha$ of probability is collected, splitting the last outcome if needed. The average loss over that slice is the expected shortfall.
+The same number, read as an average: take outcomes from the worst down, until exactly a fraction $`t = 1 - \alpha`$ of probability is collected, splitting the last outcome if needed. The average loss over that slice is the expected shortfall.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$, $M$ | loss on a book over one day, in dollars; a gain is negative | 0, 100 or 200 for the pair | rises |
-| $\alpha$ | confidence level | 99% | rises: a thinner, worse slice |
-| $t$ | tail fraction, $1 - \alpha$: the size of the worst slice | 1% | falls |
-| $v$ | value at risk, $\mathrm{VaR}_\alpha(L)$: where the worst slice begins | $0 per bond, $100 for the pair | — |
-| $\mathrm{ES}_\alpha(L)$ | expected shortfall: average loss over the worst slice | $100 per bond, $101 for the pair | — |
-| $E$ | expectation: the probability-weighted average | — | — |
-| $(x)_+$ | positive part: $x$ if above zero, else 0 | $(200 - 100)_+ = 100$ | — |
-| $p$ | chance that one issuer defaults tomorrow | 1% | rises |
-| $s$ | a trial line, tried in place of $v$ | any loss level | — |
-| $\rho$, $c$, $\lambda$ | any risk measure; a certain cash loss; a scale factor at least 0 | $c = 5$, $\lambda = 2$ | — |
-| $w$ | weight given to one outcome when averaging a slice, between 0 and $1/t$ | 100 on the double default | — |
-| $\sigma$, $\varphi$, $z$ | spread of a bell-curve loss; bell-curve height; the $\alpha$ point of the standard bell curve | $1 million; 2.33 at 99% | ES rises with $\sigma$ |
+| $`L`$, $`M`$ | loss on a book over one day, in dollars; a gain is negative | 0, 100 or 200 for the pair | rises |
+| $`\alpha`$ | confidence level | 99% | rises: a thinner, worse slice |
+| $`t`$ | tail fraction, $`1 - \alpha`$: the size of the worst slice | 1% | falls |
+| $`v`$ | value at risk, $`\mathrm{VaR}_\alpha(L)`$: where the worst slice begins | $0 per bond, $100 for the pair | — |
+| $`\mathrm{ES}_\alpha(L)`$ | expected shortfall: average loss over the worst slice | $100 per bond, $101 for the pair | — |
+| $`E`$ | expectation: the probability-weighted average | — | — |
+| $`(x)_+`$ | positive part: $`x`$ if above zero, else 0 | $`(200 - 100)_+ = 100`$ | — |
+| $`p`$ | chance that one issuer defaults tomorrow | 1% | rises |
+| $`s`$ | a trial line, tried in place of $`v`$ | any loss level | — |
+| $`\rho`$, $`c`$, $`\lambda`$ | any risk measure; a certain cash loss; a scale factor at least 0 | $`c = 5`$, $`\lambda = 2`$ | — |
+| $`w`$ | weight given to one outcome when averaging a slice, between 0 and $`1/t`$ | 100 on the double default | — |
+| $`\sigma`$, $`\varphi`$, $`z`$ | spread of a bell-curve loss; bell-curve height; the $`\alpha`$ point of the standard bell curve | $1 million; 2.33 at 99% | ES rises with $`\sigma`$ |
 
-For a loss shaped like a bell curve (a normal distribution) with average zero and standard deviation $\sigma$, the formula has a closed form: $\mathrm{ES}_\alpha = \sigma\,\varphi(z)/(1-\alpha)$. Here $z$ is the point with $\alpha$ of the standard bell curve to its left, and $\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}$ is the curve's height there. Value at risk is $\sigma z$.
+For a loss shaped like a bell curve (a normal distribution) with average zero and standard deviation $`\sigma`$, the formula has a closed form: $`\mathrm{ES}_\alpha = \sigma\,\varphi(z)/(1-\alpha)`$. Here $`z`$ is the point with $`\alpha`$ of the standard bell curve to its left, and $`\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}`$ is the curve's height there. Value at risk is $`\sigma z`$.
 
 ### The four rules of a coherent risk measure
 
-A **risk measure** $\rho$ turns a loss into one number of dollars. Artzner, Delbaen, Eber and Heath (1999) asked what rules such a number must obey to serve as capital. They gave four.
+A **risk measure** $`\rho`$ turns a loss into one number of dollars. Artzner, Delbaen, Eber and Heath (1999) asked what rules such a number must obey to serve as capital. They gave four.
 
 | Rule | In symbols | In words | VaR | ES |
 | --- | --- | --- | --- | --- |
-| Monotonicity | $L \le M$ in every outcome gives $\rho(L) \le \rho(M)$ | a book that loses more on every day needs more capital | holds | holds |
-| Cash translation | $\rho(L + c) = \rho(L) + c$ | a certain extra loss of $c$ dollars adds $c$ to the capital | holds | holds |
-| Positive homogeneity | $\rho(\lambda L) = \lambda\,\rho(L)$ for $\lambda \ge 0$ | double the book, double the capital | holds | holds |
-| Subadditivity | $\rho(L + M) \le \rho(L) + \rho(M)$ | merging two books never needs more capital than keeping them apart | **fails** | holds |
+| Monotonicity | $`L \le M`$ in every outcome gives $`\rho(L) \le \rho(M)`$ | a book that loses more on every day needs more capital | holds | holds |
+| Cash translation | $`\rho(L + c) = \rho(L) + c`$ | a certain extra loss of $`c`$ dollars adds $`c`$ to the capital | holds | holds |
+| Positive homogeneity | $`\rho(\lambda L) = \lambda\,\rho(L)`$ for $`\lambda \ge 0`$ | double the book, double the capital | holds | holds |
+| Subadditivity | $`\rho(L + M) \le \rho(L) + \rho(M)`$ | merging two books never needs more capital than keeping them apart | **fails** | holds |
 
 Subadditivity is an inequality. It does not promise that merging reduces risk, only that it never adds any.
 
 ### When it holds
 
-- **One loss law for everything.** $L$, $M$ and $L + M$ must come from the same scenarios, horizon and currency. Add expected shortfalls computed under two different models and the inequality compares two different worlds.
-- **A finite average loss.** The formula needs $E[L]$ to exist. A tail heavy enough to have no average leaves expected shortfall infinite while value at risk stays finite; measuring such tails is [Extreme value theory](07-extreme-value-theory-and-tails.md).
-- **The slice is exactly $t$.** Averaging only the losses strictly above value at risk breaks the rule whenever outcomes tie at the line: for the pair it gives $200, not $101.
+- **One loss law for everything.** $`L`$, $`M`$ and $`L + M`$ must come from the same scenarios, horizon and currency. Add expected shortfalls computed under two different models and the inequality compares two different worlds.
+- **A finite average loss.** The formula needs $`E[L]`$ to exist. A tail heavy enough to have no average leaves expected shortfall infinite while value at risk stays finite; measuring such tails is [Extreme value theory](07-extreme-value-theory-and-tails.md).
+- **The slice is exactly $`t`$.** Averaging only the losses strictly above value at risk breaks the rule whenever outcomes tie at the line: for the pair it gives $200, not $101.
 - **Coherence is about the arithmetic, not the model.** A wrong default probability gives a coherent, wrong number.
 
 ---
@@ -106,67 +108,73 @@ List tomorrow's four outcomes.
 | B only | 0.99% | $0 | $100 | $100 |
 | both default | 0.01% | $100 | $100 | $200 |
 
-Bond A alone: the loss is $0 with chance 99%, so the smallest amount reached with at least 99% chance is $0. For the pair, a loss of $0 comes with only 98.01% chance, short of 99%; a loss of $100 or less misses only the 0.01% of double defaults. So $\mathrm{VaR}_{99\%}$ of the pair is $100, against $0 + $0 for the parts. One counterexample settles it: value at risk is not subadditive.
+Bond A alone: the loss is $0 with chance 99%, so the smallest amount reached with at least 99% chance is $0. For the pair, a loss of $0 comes with only 98.01% chance, short of 99%; a loss of $100 or less misses only the 0.01% of double defaults. So $`\mathrm{VaR}_{99\%}`$ of the pair is $100, against $0 + $0 for the parts. One counterexample settles it: value at risk is not subadditive.
 
 ### Step 2: fill the worst slice exactly
 
 The pair's worst 1% starts with the 0.01% of double defaults at $200. It still needs 0.99% more, and takes it from the 1.98% of single defaults sitting at $100. The average over the slice is
 
-$$\frac{0.0001 \times 200 + 0.0099 \times 100}{0.01} = 101.$$
+```math
+\frac{0.0001 \times 200 + 0.0099 \times 100}{0.01} = 101.
+```
 
-The formula gives the same thing another way. The line is $v = 100$. Only the double default overshoots it, by $100$, with chance 0.01%. So $E[(L - v)_+] = 0.0001 \times 100 = 0.01$, and $100 + 0.01/0.01 = 101$.
+The formula gives the same thing another way. The line is $`v = 100`$. Only the double default overshoots it, by $`100`$, with chance 0.01%. So $`E[(L - v)_+] = 0.0001 \times 100 = 0.01`$, and $`100 + 0.01/0.01 = 101`$.
 
-The two agree always, not by luck: every outcome in the slice either sits above $v$, contributing its overshoot, or sits exactly at $v$, contributing nothing beyond $v$. Adding $v$ back for the whole slice restores the average.
+The two agree always, not by luck: every outcome in the slice either sits above $`v`$, contributing its overshoot, or sits exactly at $`v`$, contributing nothing beyond $`v`$. Adding $`v`$ back for the whole slice restores the average.
 
 ### Step 3: expected shortfall is the worst average over any slice
 
-Call a **slice** any way of picking a fraction $t$ of the probability, where part of an outcome may be taken. Put in weights: each outcome gets a weight $w$ between 0 and $1/t$, and the weights average to 1. The weighted average loss $E[wL]$ is the average over that slice.
+Call a **slice** any way of picking a fraction $`t`$ of the probability, where part of an outcome may be taken. Put in weights: each outcome gets a weight $`w`$ between 0 and $`1/t`$, and the weights average to 1. The weighted average loss $`E[wL]`$ is the average over that slice.
 
 The claim: the largest such average is exactly the expected shortfall. The worst slice puts full weight on the biggest losses and fills from the top, which is Step 2's recipe.
 
 <details>
 <summary>Detailed proof: the worst slice, and the minimum over lines</summary>
 
-Fix $t = 1 - \alpha$ and a trial line $s$. For any weight $w$ with $0 \le w \le 1/t$ and $E[w] = 1$,
-$$E[wL] = s + E[w(L - s)] \le s + E[w\,(L-s)_+] \le s + \frac{E[(L-s)_+]}{t}.$$
-The first step uses $E[w] = 1$; the second uses $w \ge 0$; the third uses $w \le 1/t$. So every slice average sits below $s + E[(L-s)_+]/t$ for every $s$.
+Fix $`t = 1 - \alpha`$ and a trial line $`s`$. For any weight $`w`$ with $`0 \le w \le 1/t`$ and $`E[w] = 1`$,
 
-Now take $s = v$ and the filling weight: $w = 1/t$ above $v$, $w = 0$ below $v$, and on the outcomes tied at $v$ just enough weight to make $E[w] = 1$. Value at risk's definition puts at most $1-\alpha$ of chance strictly above $v$ and at least $1 - \alpha$ at or above it, so that tied weight lies between 0 and $1/t$. With this $w$ both inequalities become equalities: the first because $w = 0$ wherever $L < v$, the second because $w = 1/t$ wherever $L > v$. Hence
-$$\mathrm{ES}_\alpha(L) = \max_{w} E[wL] = \min_{s}\Big(s + \frac{E[(L-s)_+]}{t}\Big),$$
-and both are reached, at the filling weight and at $s = v$. No independence and no smooth density were used.
+$`\displaystyle E[wL] = s + E[w(L - s)] \le s + E[w\,(L-s)_+] \le s + \frac{E[(L-s)_+]}{t}.`$
+
+The first step uses $`E[w] = 1`$; the second uses $`w \ge 0`$; the third uses $`w \le 1/t`$. So every slice average sits below $`s + E[(L-s)_+]/t`$ for every $`s`$.
+
+Now take $`s = v`$ and the filling weight: $`w = 1/t`$ above $`v`$, $`w = 0`$ below $`v`$, and on the outcomes tied at $`v`$ just enough weight to make $`E[w] = 1`$. Value at risk's definition puts at most $`1-\alpha`$ of chance strictly above $`v`$ and at least $`1 - \alpha`$ at or above it, so that tied weight lies between 0 and $`1/t`$. With this $`w`$ both inequalities become equalities: the first because $`w = 0`$ wherever $`L < v`$, the second because $`w = 1/t`$ wherever $`L > v`$. Hence
+
+$`\displaystyle \mathrm{ES}_\alpha(L) = \max_{w} E[wL] = \min_{s}\Big(s + \frac{E[(L-s)_+]}{t}\Big),`$
+
+and both are reached, at the filling weight and at $`s = v`$. No independence and no smooth density were used.
 
 </details>
 
 ### Step 4: the four rules follow
 
-The set of allowed weights depends only on $t$, not on the book. So:
+The set of allowed weights depends only on $`t`$, not on the book. So:
 
-- **Subadditivity.** $E[w(L+M)] = E[wL] + E[wM] \le \mathrm{ES}(L) + \mathrm{ES}(M)$ for every allowed $w$. Take the largest on the left: $\mathrm{ES}(L+M) \le \mathrm{ES}(L) + \mathrm{ES}(M)$. The best slice for the pair is merely one slice for each bond.
-- **Monotonicity.** If $L \le M$ everywhere, then $E[wL] \le E[wM]$ for every $w \ge 0$.
-- **Cash translation.** $E[w(L + c)] = E[wL] + c$, since the weights average to 1. Adding a certain $5 loss to the pair gives $106.
-- **Positive homogeneity.** $E[w\lambda L] = \lambda E[wL]$. Doubling the pair gives $202.
+- **Subadditivity.** $`E[w(L+M)] = E[wL] + E[wM] \le \mathrm{ES}(L) + \mathrm{ES}(M)`$ for every allowed $`w`$. Take the largest on the left: $`\mathrm{ES}(L+M) \le \mathrm{ES}(L) + \mathrm{ES}(M)`$. The best slice for the pair is merely one slice for each bond.
+- **Monotonicity.** If $`L \le M`$ everywhere, then $`E[wL] \le E[wM]`$ for every $`w \ge 0`$.
+- **Cash translation.** $`E[w(L + c)] = E[wL] + c`$, since the weights average to 1. Adding a certain $5 loss to the pair gives $106.
+- **Positive homogeneity.** $`E[w\lambda L] = \lambda E[wL]`$. Doubling the pair gives $202.
 
 Value at risk passes the first three and fails only the fourth, which is the one Step 1 broke.
 
-A second route reaches the same number: average the value at risk over every confidence level from $\alpha$ up to 1. That is the quantile average of Acerbi and Tasche (2002). The minimum over $s$ in the proof is the route of Rockafellar and Uryasev (2000): it turns "choose a portfolio with the smallest expected shortfall" into a linear programme: a problem with straight-line costs and straight-line limits that standard solvers handle. See [Modelling tricks](../../15-Optimization/04-Linear%20Programming/07-piecewise-linear-and-minimax-objectives-as-lps.md).
+A second route reaches the same number: average the value at risk over every confidence level from $`\alpha`$ up to 1. That is the quantile average of Acerbi and Tasche (2002). The minimum over $`s`$ in the proof is the route of Rockafellar and Uryasev (2000): it turns "choose a portfolio with the smallest expected shortfall" into a linear programme: a problem with straight-line costs and straight-line limits that standard solvers handle. See [Modelling tricks](../../15-Optimization/04-Linear%20Programming/07-piecewise-linear-and-minimax-objectives-as-lps.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Two bonds, $100 each, default chance $p = 1\%$ each, independent, nothing recovered. One day, 99%.
+Two bonds, $100 each, default chance $`p = 1\%`$ each, independent, nothing recovered. One day, 99%.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| chance neither defaults | $0.99 \times 0.99$ | 0.9801 |
-| chance exactly one defaults | $2 \times 0.01 \times 0.99$ | 0.0198 |
-| chance both default | $0.01 \times 0.01$ | 0.0001 |
+| chance neither defaults | $`0.99 \times 0.99`$ | 0.9801 |
+| chance exactly one defaults | $`2 \times 0.01 \times 0.99`$ | 0.0198 |
+| chance both default | $`0.01 \times 0.01`$ | 0.0001 |
 | value at risk, one bond | no loss with chance 99%, which meets 99% | $0 |
 | value at risk, pair | 98.01% falls short of 99%; the next loss level is $100 | $100 |
-| shortfall, one bond | $0 + (0.01 \times 100)/0.01$ | $100 |
-| slice taken at $100 for the pair | $0.01 - 0.0001$ | 0.0099 |
-| shortfall, pair | $100 + (0.0001 \times 100)/0.01$ | **$101** |
-| shortfall, parts added | $100 + 100$ | $200 |
+| shortfall, one bond | $`0 + (0.01 \times 100)/0.01`$ | $100 |
+| slice taken at $100 for the pair | $`0.01 - 0.0001`$ | 0.0099 |
+| shortfall, pair | $`100 + (0.0001 \times 100)/0.01`$ | **$101** |
+| shortfall, parts added | $`100 + 100`$ | $200 |
 
 Merging the two bonds adds $100 of value at risk and takes expected shortfall from $200 down to $101. The saving is the diversification a bank expects to see: two unrelated defaults rarely land on the same day.
 
@@ -188,18 +196,18 @@ xychart-beta
 
 Orange: value at risk of the pair. Green: value at risk of the bonds added. Dark blue: expected shortfall of the pair. Yellow: expected shortfall of the bonds added. At 98.5% and 99% the orange line sits above the green: value at risk breaks. The dark blue line never rises above the yellow.
 
-Below 98.01% the slice is wide enough to hold every default, and both shortfalls equal the average loss divided by $t$, so they coincide.
+Below 98.01% the slice is wide enough to hold every default, and both shortfalls equal the average loss divided by $`t`$, so they coincide.
 
 ### A second case: a bell-curve loss
 
-For a desk whose one-day loss is a bell curve with average zero and spread $\sigma$ of $1 million:
+For a desk whose one-day loss is a bell curve with average zero and spread $`\sigma`$ of $1 million:
 
 | Measure | Arithmetic | Value |
 | --- | --- | --- |
-| value at risk, 99% | $z = 2.326348$ | $2.33 million |
-| expected shortfall, 99% | $\varphi(2.326348)/0.01$ | $2.67 million |
-| value at risk, 97.5% | $z = 1.959964$ | $1.96 million |
-| expected shortfall, 97.5% | $\varphi(1.959964)/0.025$ | $2.34 million |
+| value at risk, 99% | $`z = 2.326348`$ | $2.33 million |
+| expected shortfall, 99% | $`\varphi(2.326348)/0.01`$ | $2.67 million |
+| value at risk, 97.5% | $`z = 1.959964`$ | $1.96 million |
+| expected shortfall, 97.5% | $`\varphi(1.959964)/0.025`$ | $2.34 million |
 
 For a bell curve, expected shortfall at 97.5% is almost exactly value at risk at 99%. That near-match is why the Basel market-risk rules could swap one for the other in 2016 without moving capital much for books whose losses are close to a bell curve ([Market-risk capital](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md)).
 
@@ -220,7 +228,7 @@ Right answer for the pair: $101.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the pair's shortfall three independent ways: filling the worst slice from the top, minimising $s + E[(L-s)_+]/t$ over trial lines, and simulating a million days with a home-made random number generator. All tail sums are whole numbers of millionths, so roads 1 and 2 are compared exactly. Then 2,000 random two-asset books test subadditivity at 80%: value at risk should break it on some, expected shortfall on none. The bell-curve case is computed by closed form and by integrating the tail directly. Every number on the card is printed.
+The scripts reach the pair's shortfall three independent ways: filling the worst slice from the top, minimising $`s + E[(L-s)_+]/t`$ over trial lines, and simulating a million days with a home-made random number generator. All tail sums are whole numbers of millionths, so roads 1 and 2 are compared exactly. Then 2,000 random two-asset books test subadditivity at 80%: value at risk should break it on some, expected shortfall on none. The bell-curve case is computed by closed form and by integrating the tail directly. Every number on the card is printed.
 
 ### Python
 
@@ -640,10 +648,10 @@ The simulation saw 109 double-default days in a million, against 100 expected, a
 
 Lean proves the four coherence rules for expected shortfall and the failure of value at risk, for any losses with a finite average.
 
-- Take losses $L$ and $M$ from the same scenarios, each with a finite average, and $0 < \alpha < 1$. Then $\mathrm{ES}_\alpha(L + M) \le \mathrm{ES}_\alpha(L) + \mathrm{ES}_\alpha(M)$.
-- Take $L \le M$ in every outcome. Then $\mathrm{ES}_\alpha(L) \le \mathrm{ES}_\alpha(M)$.
-- Take a certain cash loss $c$. Then $\mathrm{ES}_\alpha(L + c) = \mathrm{ES}_\alpha(L) + c$.
-- Take a scale factor $\lambda \ge 0$. Then $\mathrm{ES}_\alpha(\lambda L) = \lambda\,\mathrm{ES}_\alpha(L)$.
+- Take losses $`L`$ and $`M`$ from the same scenarios, each with a finite average, and $`0 < \alpha < 1`$. Then $`\mathrm{ES}_\alpha(L + M) \le \mathrm{ES}_\alpha(L) + \mathrm{ES}_\alpha(M)`$.
+- Take $`L \le M`$ in every outcome. Then $`\mathrm{ES}_\alpha(L) \le \mathrm{ES}_\alpha(M)`$.
+- Take a certain cash loss $`c`$. Then $`\mathrm{ES}_\alpha(L + c) = \mathrm{ES}_\alpha(L) + c`$.
+- Take a scale factor $`\lambda \ge 0`$. Then $`\mathrm{ES}_\alpha(\lambda L) = \lambda\,\mathrm{ES}_\alpha(L)`$.
 - Some two losses have a larger value at risk at 99% together than added apart. Lean's example is two $100 defaults of 1% each that never coincide.
 - The hand arithmetic of Worked numbers checks out: 98.01%, $100 per bond, $101 for the pair, $106 and $202.
 
@@ -1173,7 +1181,7 @@ example : ((198 / 10000 : ℚ) * 100 + 1 / 10000 * 200) / (199 / 10000) = 20000 
 ## The usual mistake
 
 > [!warning]
-> **Defining expected shortfall as "the average of the losses above value at risk".** For smooth loss curves that is right. When losses tie at the line, as they do for defaults, it is wrong: for the pair it gives **$200**, since only the double default lies strictly above $100. The slice must hold exactly a fraction $1 - \alpha$ of probability, splitting the tied outcomes. Averaged the loose way, the measure is not coherent.
+> **Defining expected shortfall as "the average of the losses above value at risk".** For smooth loss curves that is right. When losses tie at the line, as they do for defaults, it is wrong: for the pair it gives **$200**, since only the double default lies strictly above $100. The slice must hold exactly a fraction $`1 - \alpha`$ of probability, splitting the tied outcomes. Averaged the loose way, the measure is not coherent.
 >
 > Smaller traps:
 > - **Reading subadditivity as "merging reduces risk".** It says merging never *adds* risk. With defaults that move together the pair's shortfall equals the sum, **$200**.

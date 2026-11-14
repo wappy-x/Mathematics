@@ -39,34 +39,36 @@ Each number is a price. G hangs off the rest by EG 9 and FG 11 alone.
 
 ## The formula
 
-Notation first, in words. A graph is written $G$: its vertices (the dots, here buildings) are $V$, its edges (the lines, here runs) are $E$, and $n$ counts the vertices. Each edge carries a **weight**, written $w$ — here a price, so $w$ of AD is 5.
+Notation first, in words. A graph is written $`G`$: its vertices (the dots, here buildings) are $`V`$, its edges (the lines, here runs) are $`E`$, and $`n`$ counts the vertices. Each edge carries a **weight**, written $`w`$ — here a price, so $`w`$ of AD is 5.
 
-A set of runs $T$ costs its weights added up, which the sigma sign says: add what follows, once per item underneath.
+A set of runs $`T`$ costs its weights added up, which the sigma sign says: add what follows, once per item underneath.
 
-$$w(T) = \sum_{e \in T} w(e)$$
+```math
+w(T) = \sum_{e \in T} w(e)
+```
 
 **Read it aloud:** the price of a network is the prices of its runs added up.
 
-A **spanning tree** joins every vertex with no loop; on $n$ vertices that takes $n - 1$ edges. A **minimum spanning tree** is one no spanning tree beats on price: the cheapest skeleton.
+A **spanning tree** joins every vertex with no loop; on $`n`$ vertices that takes $`n - 1`$ edges. A **minimum spanning tree** is one no spanning tree beats on price: the cheapest skeleton.
 
-Split the vertices into a group $S$ and the rest, neither empty: that is a **cut**. An edge **crosses** it with one end in $S$, one outside.
+Split the vertices into a group $`S`$ and the rest, neither empty: that is a **cut**. An edge **crosses** it with one end in $`S`$, one outside.
 
 **The cut property.** Of the edges crossing a cut, a cheapest can always be kept: some minimum spanning tree holds it. Such an edge is **safe**.
 
 **The cycle property.** An edge dearer than every other on a loop lies in no minimum spanning tree.
 
-**Kruskal's walk.** Sort the edges cheap to dear, keep each whose ends lie in different pieces of what is kept, skip the rest, stop at $n - 1$ keeps.
+**Kruskal's walk.** Sort the edges cheap to dear, keep each whose ends lie in different pieces of what is kept, skip the rest, stop at $`n - 1`$ keeps.
 
-**Prim's walk.** Put one vertex in a group; keep a cheapest edge leaving the group and move its far end in, until all $n$ are in.
+**Prim's walk.** Put one vertex in a group; keep a cheapest edge leaving the group and move its far end in, until all $`n`$ are in.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | the map: vertices and priced edges | 7 buildings, 11 runs | — |
-| $V$, $n$ | the vertices, and how many | A to G, $n$ is 7 | one more run to buy |
-| $E$ | the candidate edges | the 11 runs | the price can only fall, never rise |
-| $e$, $f$, $u$, $v$ | edges, and the vertices one joins | AD joins A and D | — |
-| $w$ | an edge's weight, here a price | $w$ of AD is 5 | the total rises |
-| $T$, $S$ | kept edges; one side of a cut | the six runs; A, B, D, F | — |
+| $`G`$ | the map: vertices and priced edges | 7 buildings, 11 runs | — |
+| $`V`$, $`n`$ | the vertices, and how many | A to G, $`n`$ is 7 | one more run to buy |
+| $`E`$ | the candidate edges | the 11 runs | the price can only fall, never rise |
+| $`e`$, $`f`$, $`u`$, $`v`$ | edges, and the vertices one joins | AD joins A and D | — |
+| $`w`$ | an edge's weight, here a price | $`w`$ of AD is 5 | the total rises |
+| $`T`$, $`S`$ | kept edges; one side of a cut | the six runs; A, B, D, F | — |
 
 ### When it holds
 
@@ -84,7 +86,7 @@ Add BC to the six runs that win — AD, CE, DF, AB, BE, EG. The seven hold one l
 
 ### Step 1: a cheapest edge across a cut is safe
 
-Cut the vertices into $S$ and the rest. Let $e$ be a cheapest crossing edge, $T$ any cheapest skeleton. If $T$ holds $e$, nothing to prove. If not, add $e$ to $T$: one loop appears, it leaves $S$ and returns, so a second crossing edge $f$ lies on it. Drop $f$, keep $e$: a skeleton priced $w(T) - w(f) + w(e)$, no dearer, since $e$ was cheapest across the cut. Nothing beats a cheapest skeleton, so the new one is cheapest too, and holds $e$.
+Cut the vertices into $`S`$ and the rest. Let $`e`$ be a cheapest crossing edge, $`T`$ any cheapest skeleton. If $`T`$ holds $`e`$, nothing to prove. If not, add $`e`$ to $`T`$: one loop appears, it leaves $`S`$ and returns, so a second crossing edge $`f`$ lies on it. Drop $`f`$, keep $`e`$: a skeleton priced $`w(T) - w(f) + w(e)`$, no dearer, since $`e`$ was cheapest across the cut. Nothing beats a cheapest skeleton, so the new one is cheapest too, and holds $`e`$.
 
 After Kruskal keeps AD, CE, DF and AB, the group A, B, D, F faces C, E, G. Crossing it: BE 7, BC 8, EF 8, FG 11, DE 15 — cheapest BE 7, which is in the answer.
 
@@ -97,15 +99,15 @@ One swap makes one edge safe; a walk needs everything kept inside one cheapest s
 
 The claim: after each keep, some cheapest skeleton holds everything kept. True at the start, the empty set sitting inside any cheapest skeleton — and one exists, the map being finite and connected.
 
-Say cheapest skeleton $T$ holds everything kept, and the next keep is $e$, a cheapest edge across a cut no kept edge crosses. If $T$ holds $e$, the claim survives. If not, Step 1's swap drops a crossing edge $f$ of the loop in $T$ plus $e$, yielding a cheapest skeleton that holds $e$. And $f$ crossed the cut, so it was never kept.
+Say cheapest skeleton $`T`$ holds everything kept, and the next keep is $`e`$, a cheapest edge across a cut no kept edge crosses. If $`T`$ holds $`e`$, the claim survives. If not, Step 1's swap drops a crossing edge $`f`$ of the loop in $`T`$ plus $`e`$, yielding a cheapest skeleton that holds $`e`$. And $`f`$ crossed the cut, so it was never kept.
 
-After $n - 1$ keeps, the kept set and that skeleton are both $n - 1$ loop-free edges: the same set.
+After $`n - 1`$ keeps, the kept set and that skeleton are both $`n - 1`$ loop-free edges: the same set.
 
 </details>
 
 ### Step 3: both walks keep only cheapest crossing edges
 
-When Kruskal keeps the edge joining $u$ and $v$, let $S$ be the piece of kept edges holding $u$. No kept edge crosses that cut, each sitting inside one piece. Nor does a cheaper edge. It came earlier in the sort, and its ends lie in different pieces now. Pieces only merge, so its ends lay in different pieces then too, and the walk would have kept it. But a kept edge's ends sit in one piece. A skip needs no defence: its ends are joined already.
+When Kruskal keeps the edge joining $`u`$ and $`v`$, let $`S`$ be the piece of kept edges holding $`u`$. No kept edge crosses that cut, each sitting inside one piece. Nor does a cheaper edge. It came earlier in the sort, and its ends lie in different pieces now. Pieces only merge, so its ends lay in different pieces then too, and the walk would have kept it. But a kept edge's ends sit in one piece. A skip needs no defence: its ends are joined already.
 
 Prim's cut is the group itself: every kept edge lies inside it, and the edge kept is a cheapest one leaving it. Each keep adds a new vertex, so no loop forms; the start fixes only the order, all seven pricing out at 39.
 

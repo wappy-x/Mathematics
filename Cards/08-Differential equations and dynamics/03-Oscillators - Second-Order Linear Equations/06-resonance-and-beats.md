@@ -38,38 +38,46 @@ Let y be the deck's sideways displacement in metres. Reminder: y' is its rate, t
 
 A frequency f in hertz becomes an **angular frequency** ω = 2πf in radians per second, since one cycle is 2π radians of angle. The deck's own 1 Hz is ω0 = 6.2832 rad/s; the push at 0.9 Hz is ω = 5.6549 rad/s. The deck starts at rest:
 
-$$y'' + \omega_0^2\,y = F\cos(\omega t),\qquad y(0) = 0,\quad y'(0) = 0$$
+```math
+y'' + \omega_0^2\,y = F\cos(\omega t),\qquad y(0) = 0,\quad y'(0) = 0
+```
 
 **Read it aloud:** acceleration plus the spring's pull, ω0 squared times displacement, equals a push of strength F at angular frequency ω.
 
 Away from the natural frequency:
 
-$$y(t) = \frac{F}{\omega_0^2-\omega^2}\bigl(\cos\omega t-\cos\omega_0 t\bigr) = \frac{2F}{\omega_0^2-\omega^2}\,\sin\frac{(\omega_0-\omega)t}{2}\,\sin\frac{(\omega_0+\omega)t}{2}$$
+```math
+y(t) = \frac{F}{\omega_0^2-\omega^2}\bigl(\cos\omega t-\cos\omega_0 t\bigr) = \frac{2F}{\omega_0^2-\omega^2}\,\sin\frac{(\omega_0-\omega)t}{2}\,\sin\frac{(\omega_0+\omega)t}{2}
+```
 
 **Read it aloud:** a fast oscillation at the average frequency, inside a slow envelope at half the difference.
 
 At the natural frequency:
 
-$$y(t) = \frac{F}{2\omega_0}\,t\,\sin\omega_0 t$$
+```math
+y(t) = \frac{F}{2\omega_0}\,t\,\sin\omega_0 t
+```
 
 **Read it aloud:** the deck swings at its own frequency, its amplitude growing by F over 2ω0 each second.
 
 Add damping, a drag proportional to velocity, and the swing settles to a steady amplitude:
 
-$$y'' + b\,y' + \omega_0^2\,y = F\cos(\omega t),\qquad A(\omega) = \frac{F}{\sqrt{(\omega_0^2-\omega^2)^2 + b^2\omega^2}}$$
+```math
+y'' + b\,y' + \omega_0^2\,y = F\cos(\omega t),\qquad A(\omega) = \frac{F}{\sqrt{(\omega_0^2-\omega^2)^2 + b^2\omega^2}}
+```
 
 **Read it aloud:** the push divided by a quantity that is smallest close to where the two frequencies meet.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y$ | sideways displacement in metres; y' velocity, y'' acceleration | 0 at the start; −26.66 mm at 5 s | — |
-| $t$ | time since the crowd stepped on, in seconds | 0 to 20 s | resonant swing grows |
-| $\omega_0$ | natural angular frequency, 2π times f0 = 1 Hz | 6.2832 rad/s | faster free sway |
-| $\omega$ | forcing angular frequency, 2π times the pace f | 5.6549 rad/s at 0.9 Hz | nearer ω0: bigger, slower beats |
-| $F$ | strongest push per kilogram of deck, in N/kg, the same as m/s^2 | 0.1 m/s^2 | every swing scales with it |
-| $b$ | damping: drag per unit velocity, per second | 0.1257 per s | lower, broader peak |
-| $\zeta$ | damping ratio b / (2ω0), a pure number | 0.01, that is 1% | lower peak, 1 / (2ζ) times the static sag |
-| $A$ | steady amplitude after the start dies out | 126.65 mm at 1 Hz | — |
+| $`y`$ | sideways displacement in metres; y' velocity, y'' acceleration | 0 at the start; −26.66 mm at 5 s | — |
+| $`t`$ | time since the crowd stepped on, in seconds | 0 to 20 s | resonant swing grows |
+| $`\omega_0`$ | natural angular frequency, 2π times f0 = 1 Hz | 6.2832 rad/s | faster free sway |
+| $`\omega`$ | forcing angular frequency, 2π times the pace f | 5.6549 rad/s at 0.9 Hz | nearer ω0: bigger, slower beats |
+| $`F`$ | strongest push per kilogram of deck, in N/kg, the same as m/s^2 | 0.1 m/s^2 | every swing scales with it |
+| $`b`$ | damping: drag per unit velocity, per second | 0.1257 per s | lower, broader peak |
+| $`\zeta`$ | damping ratio b / (2ω0), a pure number | 0.01, that is 1% | lower peak, 1 / (2ζ) times the static sag |
+| $`A`$ | steady amplitude after the start dies out | 126.65 mm at 1 Hz | — |
 
 ### When it holds
 

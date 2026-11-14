@@ -35,36 +35,42 @@ Left: one row per note, longest on top. Right: the same eight dots read down the
 
 ## The formula
 
-Notation first, in words. A partition is written as its parts joined by plus signs, biggest first: 3+3+2. The number of partitions of $n$ is written $p(n)$, read "p of n".
+Notation first, in words. A partition is written as its parts joined by plus signs, biggest first: 3+3+2. The number of partitions of $`n`$ is written $`p(n)`$, read "p of n".
 
-$$p(n) = \text{how many ways } n = a_1 + a_2 + \cdots + a_r \text{ with } a_1 \ge a_2 \ge \cdots \ge a_r \ge 1$$
+```math
+p(n) = \text{how many ways } n = a_1 + a_2 + \cdots + a_r \text{ with } a_1 \ge a_2 \ge \cdots \ge a_r \ge 1
+```
 
 **Read it aloud:** count the ways to write the number as a sum of whole numbers of at least one, listed biggest first.
 
-The small numbers are labels, not multiplications: $a_1$ is the first part, $a_2$ the second, $r$ how many parts. Biggest-first throws the order away, so each partition has one legal writing and counting writings counts partitions.
+The small numbers are labels, not multiplications: $`a_1`$ is the first part, $`a_2`$ the second, $`r`$ how many parts. Biggest-first throws the order away, so each partition has one legal writing and counting writings counts partitions.
 
-Two capped counts carry this card. $R_k(n)$ counts the partitions of $n$ with at most $k$ parts — few rows of dots. $C_k(n)$ counts those with every part at most $k$ — short rows. They are always equal:
+Two capped counts carry this card. $`R_k(n)`$ counts the partitions of $`n`$ with at most $`k`$ parts — few rows of dots. $`C_k(n)`$ counts those with every part at most $`k`$ — short rows. They are always equal:
 
-$$R_k(n) = C_k(n)$$
+```math
+R_k(n) = C_k(n)
+```
 
 **Read it aloud:** into few parts, or into small parts, is the same number of ways — at eight beats with a cap of three, 10 each.
 
 The capped count is reachable without listing, from smaller capped counts — a **recurrence**:
 
-$$R_k(n) = R_k(n-k) + R_{k-1}(n)$$
+```math
+R_k(n) = R_k(n-k) + R_{k-1}(n)
+```
 
-Either the partition uses exactly $k$ parts, and then one unit comes off every part, leaving $n-k$ in at most $k$ parts; or it uses fewer than $k$. Start from $R_k(0) = 1$ and $R_0(n) = 0$ for $n$ at least one.
+Either the partition uses exactly $`k`$ parts, and then one unit comes off every part, leaving $`n-k`$ in at most $`k`$ parts; or it uses fewer than $`k`$. Start from $`R_k(0) = 1`$ and $`R_0(n) = 0`$ for $`n`$ at least one.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the number being split | 8 beats | more splits, fast |
-| $p(n)$ | how many partitions $n$ has | 22 | — |
-| $a_1$, $a_2$, …, $a_r$ | the parts, biggest first | 3, 3, 2 | — |
-| $i$, $a_i$ | a place in the list, and its part | place 2 holds 3 | — |
-| $r$ | how many parts | 3 | — |
-| $k$ | the cap, on part count or part size | 3 | both capped counts rise |
-| $R_k(n)$ | partitions with at most $k$ parts | 10 | — |
-| $C_k(n)$ | partitions with every part at most $k$ | 10 | — |
+| $`n`$ | the number being split | 8 beats | more splits, fast |
+| $`p(n)`$ | how many partitions $`n`$ has | 22 | — |
+| $`a_1`$, $`a_2`$, …, $`a_r`$ | the parts, biggest first | 3, 3, 2 | — |
+| $`i`$, $`a_i`$ | a place in the list, and its part | place 2 holds 3 | — |
+| $`r`$ | how many parts | 3 | — |
+| $`k`$ | the cap, on part count or part size | 3 | both capped counts rise |
+| $`R_k(n)`$ | partitions with at most $`k`$ parts | 10 | — |
+| $`C_k(n)`$ | partitions with every part at most $`k`$ | 10 | — |
 
 ### When it holds
 
@@ -95,14 +101,14 @@ Turn 3+1+1+1+1+1 and its columns read six dots, then one, then one: 6+1+1 again.
 
 A turned shape's top row is the original's first column, which holds one dot per row, since every row reaches column one. So the row count before the turn is the biggest part after it.
 
-Read that as a restriction: at most three rows turns into biggest part at most three, and back. Collections matched one for one are the same size ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): the theorem $R_k(n) = C_k(n)$. Both are 10 here, and the code prints the ten pairs.
+Read that as a restriction: at most three rows turns into biggest part at most three, and back. Collections matched one for one are the same size ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): the theorem $`R_k(n) = C_k(n)`$. Both are 10 here, and the code prints the ten pairs.
 
 <details>
 <summary>Detailed proof: the turn, written out</summary>
 
-Take parts $a_1 \ge a_2 \ge \cdots \ge a_r \ge 1$ adding to $n$, and let each column's height, up to column $a_1$, be the number of parts reaching it. Heights are at least one, since the first part reaches every column; they never rise going right, since a part reaching one column reaches the one before it; and they add to $n$, each part counted once per column it reaches. So the heights are a partition of $n$ with $a_1$ parts whose first height is $r$: the two numbers traded.
+Take parts $`a_1 \ge a_2 \ge \cdots \ge a_r \ge 1`$ adding to $`n`$, and let each column's height, up to column $`a_1`$, be the number of parts reaching it. Heights are at least one, since the first part reaches every column; they never rise going right, since a part reaching one column reaches the one before it; and they add to $`n`$, each part counted once per column it reaches. So the heights are a partition of $`n`$ with $`a_1`$ parts whose first height is $`r`$: the two numbers traded.
 
-Turn again. A column's height is at least $i$ exactly when $i$ parts or more reach it, which for parts in falling order says the $i$th part reaches it: the new shape has $a_i$ heights of $i$ or more. Its own $i$th column counts just those, so it stands $a_i$ dots tall, and the second turn hands back $a_1, a_2, \ldots, a_r$.
+Turn again. A column's height is at least $`i`$ exactly when $`i`$ parts or more reach it, which for parts in falling order says the $`i`$th part reaches it: the new shape has $`a_i`$ heights of $`i`$ or more. Its own $`i`$th column counts just those, so it stands $`a_i`$ dots tall, and the second turn hands back $`a_1, a_2, \ldots, a_r`$.
 
 </details>
 
@@ -110,7 +116,7 @@ Turn again. A column's height is at least $i$ exactly when $i$ parts or more rea
 
 The recurrence fills capped counts from smaller ones: at most three notes in eight beats is at most three in five beats plus at most two in eight, 5+5 = 10.
 
-For $p(n)$, build up by note length. Start with the one way to fill zero beats and let one-beat notes in: every bar length now has one way. Let two-beat notes in and each bar gains the ways to fill it two beats shorter, every such split being a shorter one with a two-beat note added. Carry on to eight-beat notes and the counts read 1, 1, 2, 3, 5, 7, 11, 15, 22, nothing listed.
+For $`p(n)`$, build up by note length. Start with the one way to fill zero beats and let one-beat notes in: every bar length now has one way. Let two-beat notes in and each bar gains the ways to fill it two beats shorter, every such split being a shorter one with a two-beat note added. Carry on to eight-beat notes and the counts read 1, 1, 2, 3, 5, 7, 11, 15, 22, nothing listed.
 
 That loop written as one line of algebra is Euler's product, the next card ([Euler's product](02-partitions-generating-function.md)).
 
@@ -362,11 +368,11 @@ The two outputs match line for line.
 
 Lean proves the card's facts for every whole number and every cap, not just for eight beats.
 
-- Few parts or small parts, the same count: $R_k(n) = C_k(n)$.
+- Few parts or small parts, the same count: $`R_k(n) = C_k(n)`$.
 - The turn gives a partition of the same number, and turning twice gives back the original.
 - The turn swaps the number of parts with the biggest part.
-- The recurrence $R_k(n) = R_k(n-k) + R_{k-1}(n)$ holds whenever $k$ is at least one and $n$ is at least $k$.
-- Its starting values hold too: $R_k(0) = 1$, and $R_0(n) = 0$ for $n$ at least one.
+- The recurrence $`R_k(n) = R_k(n-k) + R_{k-1}(n)`$ holds whenever $`k`$ is at least one and $`n`$ is at least $`k`$.
+- Its starting values hold too: $`R_k(0) = 1`$, and $`R_0(n) = 0`$ for $`n`$ at least one.
 - For eight beats: 10 splits with at most three notes, 10 with no note over three, 5 with exactly three, 15 with none over four.
 
 The count of 22, the build-up by note length and the ten printed pairs are left to the Python and Rust checks.
@@ -598,7 +604,7 @@ example : 2 ^ (8 - 1) = 128 := by norm_num
 > [!warning]
 > **Counting the rhythms.** Three-three-two and two-three-three are two rhythms and one split. Rhythms give 128 for eight beats, splits 22. Whether order matters is the whole question.
 >
-> - **Reaching for a formula.** No formula as simple as a binomial coefficient gives $p(n)$; the exact ones are deep and long. The build-up above, or the next card's product, is how the number is got.
+> - **Reaching for a formula.** No formula as simple as a binomial coefficient gives $`p(n)`$; the exact ones are deep and long. The build-up above, or the next card's product, is how the number is got.
 > - **Using stars and bars.** Three named notes filling eight beats is 21 ways ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)). Take the names off and 5 remain.
 > - **Confusing "at most" with "exactly".** At most three notes is 10, exactly three is 5. The capped counts here are all "at most".
 > - **Naming the items.** Eight named jobs on identical machines is a different, much larger count ([Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md)). Here the beats are interchangeable.

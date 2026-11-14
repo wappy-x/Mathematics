@@ -26,53 +26,61 @@ To scale: 280 px per metre across, 100 px per centimetre up, from the checks' `f
 
 ## The formula
 
-Notation first, in words. Two primes, $y''$, mean the rate of the rate: the bending. One prime is the slope. The cable obeys
+Notation first, in words. Two primes, $`y''`$, mean the rate of the rate: the bending. One prime is the slope. The cable obeys
 
-$$-y'' + y = f \quad\text{for } 0 < x < 1, \qquad y(0) = 1, \quad y(1) = 2,$$
+```math
+-y'' + y = f \quad\text{for } 0 < x < 1, \qquad y(0) = 1, \quad y(1) = 2,
+```
 
-where $x$ is the distance from the left post in metres and $y$ is the height in centimetres. The spring stiffness over the tension is 1 per square metre, and $f$ is any extra load. Here $f = 0$: the sag comes from the springs and the posts.
+where $`x`$ is the distance from the left post in metres and $`y`$ is the height in centimetres. The spring stiffness over the tension is 1 per square metre, and $`f`$ is any extra load. Here $`f = 0`$: the sag comes from the springs and the posts.
 
-A **test function** $v$ is any curve that is zero at both posts and has a slope worth integrating. Multiply the equation by $v$, integrate from 0 to 1, and move one derivative from $y$ onto $v$ by [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md). The **weak form** is
+A **test function** $`v`$ is any curve that is zero at both posts and has a slope worth integrating. Multiply the equation by $`v`$, integrate from 0 to 1, and move one derivative from $`y`$ onto $`v`$ by [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md). The **weak form** is
 
-$$a(y, v) = (f, v) \quad\text{for every test function } v, \qquad a(u, v) = \int_0^1 \big(u'v' + uv\big)\,dx, \qquad (f, v) = \int_0^1 f\,v\,dx.$$
+```math
+a(y, v) = (f, v) \quad\text{for every test function } v, \qquad a(u, v) = \int_0^1 \big(u'v' + uv\big)\,dx, \qquad (f, v) = \int_0^1 f\,v\,dx.
+```
 
 **Read it aloud:** the slopes of the cable and of the test curve, multiplied and added up, plus the heights multiplied and added up, equal the load weighted by the test curve.
 
-The pairing $a(u, v)$ is the **energy pairing**. Half of $a(y, y)$ is the energy the cable stores: stretching from the slope, springs from the height.
+The pairing $`a(u, v)`$ is the **energy pairing**. Half of $`a(y, y)`$ is the energy the cable stores: stretching from the slope, springs from the height.
 
-Now cut $[0, 1]$ into $n$ elements of length $h = 1/n$, with nodes $x_i = ih$. The **hat function** $\varphi_i$ is 1 at node $i$, 0 at every other node, and straight in between. (On the secant card $\varphi$ is the golden ratio; on this shelf it is a hat.) The **Galerkin method** looks for a broken line
+Now cut $`[0, 1]`$ into $`n`$ elements of length $`h = 1/n`$, with nodes $`x_i = ih`$. The **hat function** $`\varphi_i`$ is 1 at node $`i`$, 0 at every other node, and straight in between. (On the secant card $`\varphi`$ is the golden ratio; on this shelf it is a hat.) The **Galerkin method** looks for a broken line
 
-$$y_h = \varphi_0 \cdot 1 + \sum_{i=1}^{n-1} U_i\,\varphi_i + \varphi_n \cdot 2$$
+```math
+y_h = \varphi_0 \cdot 1 + \sum_{i=1}^{n-1} U_i\,\varphi_i + \varphi_n \cdot 2
+```
 
-that obeys the weak form for the inside hats only: $a(y_h, \varphi_j) = (f, \varphi_j)$ for $j = 1, \dots, n-1$. That is $n - 1$ linear equations,
+that obeys the weak form for the inside hats only: $`a(y_h, \varphi_j) = (f, \varphi_j)`$ for $`j = 1, \dots, n-1`$. That is $`n - 1`$ linear equations,
 
-$$(K + M)\,U = F, \qquad K_{ij} = \int_0^1 \varphi_i'\varphi_j'\,dx, \quad M_{ij} = \int_0^1 \varphi_i\varphi_j\,dx.$$
+```math
+(K + M)\,U = F, \qquad K_{ij} = \int_0^1 \varphi_i'\varphi_j'\,dx, \quad M_{ij} = \int_0^1 \varphi_i\varphi_j\,dx.
+```
 
 **Read it aloud:** the stiffness matrix plus the mass matrix, times the list of unknown node heights, equals the right side made by the load and the two posts.
 
-Each row has at most three entries, because a hat overlaps only its two neighbours: $d = 2/h + 4h/6$ on the diagonal and $o = -1/h + h/6$ beside it. With $h$ = 0.25 these are 8.166667 and −3.958333.
+Each row has at most three entries, because a hat overlaps only its two neighbours: $`d = 2/h + 4h/6`$ on the diagonal and $`o = -1/h + h/6`$ beside it. With $`h`$ = 0.25 these are 8.166667 and −3.958333.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | distance from the left post, m; exact height, cm | middle: 0.5 m, 1.330228 cm | — |
-| $s$, $t$ | the exact cable's starting slope, cm per m; a nudge to one node height, cm | 0.38880097; 0.01 | — |
-| $f$, $(f, v)$ | extra load; the load weighted by a test curve | $f = 0$ | the cable sags further |
-| $v$, $w$ | test function: any curve that is zero at both posts; any other broken line through the posts | the inside hats; $Iy$ | — |
-| $a(u, v)$ | energy pairing $\int (u'v' + uv)\,dx$ | $a(y, y)$ = 3.1615039145 | — |
-| $h$, $n$ | element length, m; number of elements | 0.25; 4 | $h$ up: errors grow |
-| $x_i$, $\varphi_i$ | node $i$; the hat function on it | $x_2$ = 0.5 m | — |
-| $U_i$, $y_h$ | computed node height, cm; the broken line through them | $U_2$ = 1.329422 | — |
-| $K$, $M$, $d$, $o$ | stiffness and mass matrices; diagonal and side entry of $K + M$ | 8.166667 and −3.958333 | — |
-| $F$ | right side: what the posts and the load push into each row | 3.958333, 0, 7.916667 | — |
-| $\lVert\cdot\rVert$, $\lVert\cdot\rVert_a$ | L2 size $\sqrt{\int w^2}$; energy size $\sqrt{a(w, w)}$ | $\lVert y''\rVert$ = 1.416040 | — |
-| $e$, $Iy$, $c$, $b_m$ | error $y - y_h$ (in the proof fold, $y - Iy$); the broken line through the exact node heights; its slope on one element; the size of the $m$-th sine in $e$ | $\lVert e\rVert_a$ = 1.023e-1 | — |
+| $`x`$, $`y`$ | distance from the left post, m; exact height, cm | middle: 0.5 m, 1.330228 cm | — |
+| $`s`$, $`t`$ | the exact cable's starting slope, cm per m; a nudge to one node height, cm | 0.38880097; 0.01 | — |
+| $`f`$, $`(f, v)`$ | extra load; the load weighted by a test curve | $`f = 0`$ | the cable sags further |
+| $`v`$, $`w`$ | test function: any curve that is zero at both posts; any other broken line through the posts | the inside hats; $`Iy`$ | — |
+| $`a(u, v)`$ | energy pairing $`\int (u'v' + uv)\,dx`$ | $`a(y, y)`$ = 3.1615039145 | — |
+| $`h`$, $`n`$ | element length, m; number of elements | 0.25; 4 | $`h`$ up: errors grow |
+| $`x_i`$, $`\varphi_i`$ | node $`i`$; the hat function on it | $`x_2`$ = 0.5 m | — |
+| $`U_i`$, $`y_h`$ | computed node height, cm; the broken line through them | $`U_2`$ = 1.329422 | — |
+| $`K`$, $`M`$, $`d`$, $`o`$ | stiffness and mass matrices; diagonal and side entry of $`K + M`$ | 8.166667 and −3.958333 | — |
+| $`F`$ | right side: what the posts and the load push into each row | 3.958333, 0, 7.916667 | — |
+| $`\lVert\cdot\rVert`$, $`\lVert\cdot\rVert_a`$ | L2 size $`\sqrt{\int w^2}`$; energy size $`\sqrt{a(w, w)}`$ | $`\lVert y''\rVert`$ = 1.416040 | — |
+| $`e`$, $`Iy`$, $`c`$, $`b_m`$ | error $`y - y_h`$ (in the proof fold, $`y - Iy`$); the broken line through the exact node heights; its slope on one element; the size of the $`m`$-th sine in $`e`$ | $`\lVert e\rVert_a`$ = 1.023e-1 | — |
 
 ### When it holds
 
-- **The energy pairing is positive.** The proofs below need $a(v, v) > 0$ for every nonzero test curve; a pairing negative for every curve works too, after multiplying the equation by −1. Springs that push outward, $-y'' - 10y = 0$, make it positive for some curves and negative for others. With four elements the middle comes out at 53.3354 cm; the exact cable bulges to −145.0352 cm, and 64 elements give −147.3256 cm.
-- **Trial curves (the shapes the answer is built from) with a slope, not a bend.** The weak form needs only $y'$, which a hat has. A hat has no usable $y''$: inside each element it is zero, and at a node it is a spike. Skipping integration by parts gives nonsense (What breaks, row 1).
-- **Test curves that vanish where the height is fixed.** That kills the end term $[y'v]_0^1$ from integration by parts. A free end, where the slope is given instead, keeps that term ([Assembly and error](08-finite-element-assembly-and-error.md)).
-- **A smooth enough cable for the rates.** The energy bound needs $y''$ square-integrable. A point load puts a corner in the cable, and the rates then depend on where the corner falls.
+- **The energy pairing is positive.** The proofs below need $`a(v, v) > 0`$ for every nonzero test curve; a pairing negative for every curve works too, after multiplying the equation by −1. Springs that push outward, $`-y'' - 10y = 0`$, make it positive for some curves and negative for others. With four elements the middle comes out at 53.3354 cm; the exact cable bulges to −145.0352 cm, and 64 elements give −147.3256 cm.
+- **Trial curves (the shapes the answer is built from) with a slope, not a bend.** The weak form needs only $`y'`$, which a hat has. A hat has no usable $`y''`$: inside each element it is zero, and at a node it is a spike. Skipping integration by parts gives nonsense (What breaks, row 1).
+- **Test curves that vanish where the height is fixed.** That kills the end term $`[y'v]_0^1`$ from integration by parts. A free end, where the slope is given instead, keeps that term ([Assembly and error](08-finite-element-assembly-and-error.md)).
+- **A smooth enough cable for the rates.** The energy bound needs $`y''`$ square-integrable. A point load puts a corner in the cable, and the rates then depend on where the corner falls.
 - **Integrals done exactly.** Here every entry has a closed form. A spring stiffness that varies along the cable needs a quadrature rule, which adds its own error.
 
 ---
@@ -81,94 +89,104 @@ Each row has at most three entries, because a hat overlaps only its two neighbou
 
 ### Step 0: ask the equation to hold on average, against chosen weights
 
-A broken line has a corner at every node, so $-y_h'' + y_h = 0$ fails everywhere. Holding pointwise is too much to ask. Holding "on average, weighted by $v$" is not, and if it holds for every possible $v$, it says the same thing as the equation. Galerkin's move is to use the same few shapes both to build the answer and to test it.
+A broken line has a corner at every node, so $`-y_h'' + y_h = 0`$ fails everywhere. Holding pointwise is too much to ask. Holding "on average, weighted by $`v`$" is not, and if it holds for every possible $`v`$, it says the same thing as the equation. Galerkin's move is to use the same few shapes both to build the answer and to test it.
 
 ### Step 1: the weak form, by integration by parts
 
-Multiply $-y'' + y = f$ by a test curve $v$ and integrate:
+Multiply $`-y'' + y = f`$ by a test curve $`v`$ and integrate:
 
-$$-\int_0^1 y''v\,dx + \int_0^1 yv\,dx = \int_0^1 fv\,dx.$$
+```math
+-\int_0^1 y''v\,dx + \int_0^1 yv\,dx = \int_0^1 fv\,dx.
+```
 
-Integration by parts turns the first term into $-[y'v]_0^1 + \int_0^1 y'v'\,dx$. The end term is zero, because $v(0) = v(1) = 0$. What is left is $a(y, v) = (f, v)$.
+Integration by parts turns the first term into $`-[y'v]_0^1 + \int_0^1 y'v'\,dx`$. The end term is zero, because $`v(0) = v(1) = 0`$. What is left is $`a(y, v) = (f, v)`$.
 
-Two things happened. The second derivative left $y$, so a curve with corners now qualifies. And the pairing became symmetric, $a(u, v) = a(v, u)$, with $a(v, v) = \int (v'^2 + v^2)\,dx > 0$. That positivity drives the rest.
+Two things happened. The second derivative left $`y`$, so a curve with corners now qualifies. And the pairing became symmetric, $`a(u, v) = a(v, u)`$, with $`a(v, v) = \int (v'^2 + v^2)\,dx > 0`$. That positivity drives the rest.
 
 ### Step 2: hats turn the weak form into a tridiagonal matrix
 
-On one element $[x_k, x_k + h]$, two hats are alive. One falls from 1 to 0, slope $-1/h$; the other rises, slope $+1/h$. Integrating over the element gives two small tables:
+On one element $`[x_k, x_k + h]`$, two hats are alive. One falls from 1 to 0, slope $`-1/h`$; the other rises, slope $`+1/h`$. Integrating over the element gives two small tables:
 
-- slopes: $\int \varphi_k'^2 = h \cdot (1/h)^2 = 1/h$, and $\int \varphi_k'\varphi_{k+1}' = -1/h$;
-- heights: $\int \varphi_k^2 = h/3$, and $\int \varphi_k\varphi_{k+1} = h/6$.
+- slopes: $`\int \varphi_k'^2 = h \cdot (1/h)^2 = 1/h`$, and $`\int \varphi_k'\varphi_{k+1}' = -1/h`$;
+- heights: $`\int \varphi_k^2 = h/3`$, and $`\int \varphi_k\varphi_{k+1} = h/6`$.
 
-An inside node belongs to two elements, so its diagonal entry adds two copies: $2/h + 2h/3$, which is the $d = 2/h + 4h/6$ of The formula. Its neighbours share one element with it: $o = -1/h + h/6$. Hats two nodes apart never overlap, so every other entry is zero.
+An inside node belongs to two elements, so its diagonal entry adds two copies: $`2/h + 2h/3`$, which is the $`d = 2/h + 4h/6`$ of The formula. Its neighbours share one element with it: $`o = -1/h + h/6`$. Hats two nodes apart never overlap, so every other entry is zero.
 
-The posts enter through the end hats. Row 1 contains $o \times 1$ from $\varphi_0$, which moves to the right side as $-o$ = 3.958333. Row 3 contains $o \times 2$, giving 7.916667. Solving the three rows with [The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md) gives 1.129056, 1.329422 and 1.613750 cm.
+The posts enter through the end hats. Row 1 contains $`o \times 1`$ from $`\varphi_0`$, which moves to the right side as $`-o`$ = 3.958333. Row 3 contains $`o \times 2`$, giving 7.916667. Solving the three rows with [The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md) gives 1.129056, 1.329422 and 1.613750 cm.
 
 <details>
 <summary>Detailed comparison: Galerkin's rows against finite differences</summary>
 
-Divide row $i$ by $h$:
+Divide row $`i`$ by $`h`$:
 
-$$\frac{-U_{i-1} + 2U_i - U_{i+1}}{h^2} + \frac{U_{i-1} + 4U_i + U_{i+1}}{6} = 0.$$
+$`\displaystyle \frac{-U_{i-1} + 2U_i - U_{i+1}}{h^2} + \frac{U_{i-1} + 4U_i + U_{i+1}}{6} = 0.`$
 
-The first part is the usual second difference. The second part is the spring term, but spread over three nodes with weights 1, 4, 1 instead of sitting on node $i$. Put all of it on the diagonal ("lump" the mass matrix) and the rows become the finite-difference scheme of [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md). That scheme gives 1.130193, 1.331023 and 1.615041 cm.
+The first part is the usual second difference. The second part is the spring term, but spread over three nodes with weights 1, 4, 1 instead of sitting on node $`i`$. Put all of it on the diagonal ("lump" the mass matrix) and the rows become the finite-difference scheme of [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md). That scheme gives 1.130193, 1.331023 and 1.615041 cm.
 
-Taylor's theorem says the second difference misses $-y''$ by $-\tfrac{h^2}{12}y''''$, and the 1, 4, 1 average misses $y$ by $+\tfrac{h^2}{6}y''$. On this cable $y'''' = y'' = y$, so Galerkin's rows miss by $+\tfrac{h^2}{12}y$ and finite differences by $-\tfrac{h^2}{12}y$. The node errors match that: −8.067e-4 and +7.942e-4 cm in the middle. Averaging the two answers cancels the $h^2$ term, and the middle error drops to −6.268e-6 cm.
+Taylor's theorem says the second difference misses $`-y''`$ by $`-\tfrac{h^2}{12}y''''`$, and the 1, 4, 1 average misses $`y`$ by $`+\tfrac{h^2}{6}y''`$. On this cable $`y'''' = y'' = y`$, so Galerkin's rows miss by $`+\tfrac{h^2}{12}y`$ and finite differences by $`-\tfrac{h^2}{12}y`$. The node errors match that: −8.067e-4 and +7.942e-4 cm in the middle. Averaging the two answers cancels the $`h^2`$ term, and the middle error drops to −6.268e-6 cm.
 
 </details>
 
 ### Step 3: Galerkin orthogonality, and why the answer is the best broken line
 
-The exact cable obeys $a(y, \varphi_j) = (f, \varphi_j)$ for every inside hat. The broken line obeys the same equations by construction. Subtract:
+The exact cable obeys $`a(y, \varphi_j) = (f, \varphi_j)`$ for every inside hat. The broken line obeys the same equations by construction. Subtract:
 
-$$a(y - y_h, \varphi_j) = 0 \quad\text{for } j = 1, \dots, n-1.$$
+```math
+a(y - y_h, \varphi_j) = 0 \quad\text{for } j = 1, \dots, n-1.
+```
 
-The error is perpendicular to every inside hat in the energy pairing. This is **Galerkin orthogonality**. Take any other broken line $w$ through the posts. The gap $y_h - w$ is a mix of inside hats, so it is perpendicular to the error too. Pythagoras in the energy pairing gives
+The error is perpendicular to every inside hat in the energy pairing. This is **Galerkin orthogonality**. Take any other broken line $`w`$ through the posts. The gap $`y_h - w`$ is a mix of inside hats, so it is perpendicular to the error too. Pythagoras in the energy pairing gives
 
-$$\lVert y - w\rVert_a^2 = \lVert y - y_h\rVert_a^2 + \lVert y_h - w\rVert_a^2.$$
+```math
+\lVert y - w\rVert_a^2 = \lVert y - y_h\rVert_a^2 + \lVert y_h - w\rVert_a^2.
+```
 
-So no broken line on this mesh comes closer to the cable in energy than $y_h$. This is the closest-point property of [L2 as a Hilbert space](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md), with $a$ in place of the L2 pairing.
+So no broken line on this mesh comes closer to the cable in energy than $`y_h`$. This is the closest-point property of [L2 as a Hilbert space](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md), with $`a`$ in place of the L2 pairing.
 
-The check tests it on the most natural rival, the broken line $Iy$ through the exact node heights. Its energy error is 1.022838e-1; Galerkin's is 1.022661e-1. Both are estimates from a three-point Gauss rule on each element, good to a few units in the last digit, so the gap is real. The rival has the right heights at the nodes, yet loses in energy.
+The check tests it on the most natural rival, the broken line $`Iy`$ through the exact node heights. Its energy error is 1.022838e-1; Galerkin's is 1.022661e-1. Both are estimates from a three-point Gauss rule on each element, good to a few units in the last digit, so the gap is real. The rival has the right heights at the nodes, yet loses in energy.
 
 ### Step 4: the same answer is the lowest energy (Ritz)
 
-Take any broken line $w$ through the posts again, with $f = 0$. Because $y - w$ is zero at the posts, $a(y, y - w) = 0$ by the weak form, and expanding gives
+Take any broken line $`w`$ through the posts again, with $`f = 0`$. Because $`y - w`$ is zero at the posts, $`a(y, y - w) = 0`$ by the weak form, and expanding gives
 
-$$a(w, w) = a(y, y) + \lVert y - w\rVert_a^2.$$
+```math
+a(w, w) = a(y, y) + \lVert y - w\rVert_a^2.
+```
 
-A broken line's $a(w, w)$ exceeds the cable's by exactly its squared energy error, so it stores more energy than the cable. Hence the least-energy broken line and the closest broken line are the same: $y_h$. Building it this way is the **Rayleigh-Ritz method**; for a symmetric positive pairing it gives the same answer as Galerkin.
+A broken line's $`a(w, w)`$ exceeds the cable's by exactly its squared energy error, so it stores more energy than the cable. Hence the least-energy broken line and the closest broken line are the same: $`y_h`$. Building it this way is the **Rayleigh-Ritz method**; for a symmetric positive pairing it gives the same answer as Galerkin.
 
-Two numbers confirm it. For the cable, $a(y, y)$ = 3.1615039145, twice the energy it stores, from $y(1)y'(1) - y(0)y'(0)$. For the broken line, $a(y_h, y_h)$ = 3.1719622845. The square root of the difference is 1.022662e-1, the energy error found by integrating the error directly (1.022661e-1, with a three-point Gauss rule per element). And nudging node 2 by 0.01 cm raises the stored energy, half of $a(y_h, y_h)$, by 4.083e-4, exactly $t^2 d/2$ with $t$ = 0.01: no first-order change, so the nodes sit at the minimum.
+Two numbers confirm it. For the cable, $`a(y, y)`$ = 3.1615039145, twice the energy it stores, from $`y(1)y'(1) - y(0)y'(0)`$. For the broken line, $`a(y_h, y_h)`$ = 3.1719622845. The square root of the difference is 1.022662e-1, the energy error found by integrating the error directly (1.022661e-1, with a three-point Gauss rule per element). And nudging node 2 by 0.01 cm raises the stored energy, half of $`a(y_h, y_h)`$, by 4.083e-4, exactly $`t^2 d/2`$ with $`t`$ = 0.01: no first-order change, so the nodes sit at the minimum.
 
 ### Step 5: the energy error halves when the elements halve
 
-Step 3 says the Galerkin error is at most the error of $Iy$. That one can be bounded on each element. The error of $Iy$ is zero at both ends of the element, and a curve that vanishes at both ends of a length $h$ cannot be large unless its slope is. The result is
+Step 3 says the Galerkin error is at most the error of $`Iy`$. That one can be bounded on each element. The error of $`Iy`$ is zero at both ends of the element, and a curve that vanishes at both ends of a length $`h`$ cannot be large unless its slope is. The result is
 
-$$\lVert y - y_h\rVert_a \;\le\; \lVert y - Iy\rVert_a \;\le\; \frac{h}{\pi}\sqrt{1 + \Big(\frac{h}{\pi}\Big)^2}\;\lVert y''\rVert.$$
+```math
+\lVert y - y_h\rVert_a \;\le\; \lVert y - Iy\rVert_a \;\le\; \frac{h}{\pi}\sqrt{1 + \Big(\frac{h}{\pi}\Big)^2}\;\lVert y''\rVert.
+```
 
 **Read it aloud:** the energy error is at most the element length over pi, times a factor just above 1, times the size of the cable's bending.
 
 <details>
 <summary>Detailed proof: the interpolation bound, element by element</summary>
 
-Fix one element of length $h$ and let $e = y - Iy$ there. It is zero at both ends, and $(Iy)'$ is a constant $c$.
+Fix one element of length $`h`$ and let $`e = y - Iy`$ there. It is zero at both ends, and $`(Iy)'`$ is a constant $`c`$.
 
-1. **Wirtinger's inequality.** On the element $[x_k, x_k + h]$, expand $e$ in sines that vanish at both ends, $e = \sum_{m \ge 1} b_m \sin(m\pi(x - x_k)/h)$. By Parseval ([Parseval's identity](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/03-parsevals-identity.md)), $\int e^2 = \tfrac{h}{2}\sum b_m^2$ and $\int e'^2 = \tfrac{h}{2}\sum (m\pi/h)^2 b_m^2$. Every $m \ge 1$, so $\int e^2 \le (h/\pi)^2 \int e'^2$.
-2. **Slope through bending.** $\int e'^2 = \int e'(y' - c) = \int e'y'$, since $\int e' c = c\,[e] = 0$. Integrate by parts: $\int e'y' = [e y'] - \int e y'' = -\int e y''$.
-3. **Cauchy-Schwarz.** $-\int e y'' \le \lVert e\rVert\,\lVert y''\rVert \le (h/\pi)\lVert e'\rVert\,\lVert y''\rVert$, using step 1. Divide by $\lVert e'\rVert$: $\lVert e'\rVert \le (h/\pi)\lVert y''\rVert$, and then $\lVert e\rVert \le (h/\pi)^2\lVert y''\rVert$.
+1. **Wirtinger's inequality.** On the element $`[x_k, x_k + h]`$, expand $`e`$ in sines that vanish at both ends, $`e = \sum_{m \ge 1} b_m \sin(m\pi(x - x_k)/h)`$. By Parseval ([Parseval's identity](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/03-parsevals-identity.md)), $`\int e^2 = \tfrac{h}{2}\sum b_m^2`$ and $`\int e'^2 = \tfrac{h}{2}\sum (m\pi/h)^2 b_m^2`$. Every $`m \ge 1`$, so $`\int e^2 \le (h/\pi)^2 \int e'^2`$.
+2. **Slope through bending.** $`\int e'^2 = \int e'(y' - c) = \int e'y'`$, since $`\int e' c = c\,[e] = 0`$. Integrate by parts: $`\int e'y' = [e y'] - \int e y'' = -\int e y''`$.
+3. **Cauchy-Schwarz.** $`-\int e y'' \le \lVert e\rVert\,\lVert y''\rVert \le (h/\pi)\lVert e'\rVert\,\lVert y''\rVert`$, using step 1. Divide by $`\lVert e'\rVert`$: $`\lVert e'\rVert \le (h/\pi)\lVert y''\rVert`$, and then $`\lVert e\rVert \le (h/\pi)^2\lVert y''\rVert`$.
 
-Square, add $\lVert e'\rVert^2 + \lVert e\rVert^2$, and sum over the elements: the energy error squared is at most $(h/\pi)^2\big(1 + (h/\pi)^2\big)\lVert y''\rVert^2$. Step 3 then passes the bound to $y_h$.
+Square, add $`\lVert e'\rVert^2 + \lVert e\rVert^2`$, and sum over the elements: the energy error squared is at most $`(h/\pi)^2\big(1 + (h/\pi)^2\big)\lVert y''\rVert^2`$. Step 3 then passes the bound to $`y_h`$.
 
 </details>
 
-On the cable $y'' = y$, so $\lVert y''\rVert = \lVert y\rVert$ = 1.416040, from a closed form and again by quadrature. With $h$ = 0.25 the bound is 1.130e-1 against a true 1.023e-1: a ratio of 1.105. It stays at 1.103 for every finer mesh. The bound is tight because the cable's bending barely changes over one element. The error on each element is then close to a parabola, and for a parabola the bound is exactly $\sqrt{12}/\pi$ times the truth: the 1.103 of the table.
+On the cable $`y'' = y`$, so $`\lVert y''\rVert = \lVert y\rVert`$ = 1.416040, from a closed form and again by quadrature. With $`h`$ = 0.25 the bound is 1.130e-1 against a true 1.023e-1: a ratio of 1.105. It stays at 1.103 for every finer mesh. The bound is tight because the cable's bending barely changes over one element. The error on each element is then close to a parabola, and for a parabola the bound is exactly $`\sqrt{12}/\pi`$ times the truth: the 1.103 of the table.
 
 ### Step 6: what the checks see as the mesh shrinks
 
 Selected rows from the run, which doubles the number of elements from 4 to 1024. The node errors are true errors against the closed form. The L2 and energy errors are estimates: they integrate the true error with a three-point Gauss rule on each element, which can be off by one in the last digit shown.
 
-| $n$ | node error, cm | L2 error | energy error | bound | bound / true |
+| $`n`$ | node error, cm | L2 error | energy error | bound | bound / true |
 | ---: | --- | --- | --- | --- | ---: |
 | 4 | 8.067e-4 | 7.614e-3 | 1.023e-1 | 1.130e-1 | 1.105 |
 | 8 | 2.005e-4 | 1.903e-3 | 5.111e-2 | 5.639e-2 | 1.103 |
@@ -191,26 +209,26 @@ xychart-beta
 
 Orange: largest node error, cm, slope 2. Green: L2 error, slope 2. Dark: energy error, slope 1.
 
-**Cost.** The system has $n - 1$ unknowns in a tridiagonal matrix, so the Thomas sweep takes $8(n-1) - 7$ flops: 17 at $n$ = 4, 8177 at $n$ = 1024.
+**Cost.** The system has $`n - 1`$ unknowns in a tridiagonal matrix, so the Thomas sweep takes $`8(n-1) - 7`$ flops: 17 at $`n`$ = 4, 8177 at $`n`$ = 1024.
 
-**Rounding.** The entries grow like $2/h$ while their sums nearly cancel, so rounding grows as $h$ shrinks. The largest node error is 1.9e-10 cm at $n$ = 4096, then rises to 9.1e-9 at 16384 and 1.5e-7 at 65536. That 1.9e-10 is partly luck: near 4096 the shrinking $h^2$ error and the growing rounding error are about the same size and partly cancel. Past about 4096 elements, more elements make the answer worse.
+**Rounding.** The entries grow like $`2/h`$ while their sums nearly cancel, so rounding grows as $`h`$ shrinks. The largest node error is 1.9e-10 cm at $`n`$ = 4096, then rises to 9.1e-9 at 16384 and 1.5e-7 at 65536. That 1.9e-10 is partly luck: near 4096 the shrinking $`h^2`$ error and the growing rounding error are about the same size and partly cancel. Past about 4096 elements, more elements make the answer worse.
 
 ---
 
 ## Worked numbers, by hand
 
-Four elements, $h$ = 0.25 m, posts at 1 cm and 2 cm, $f = 0$.
+Four elements, $`h`$ = 0.25 m, posts at 1 cm and 2 cm, $`f = 0`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| diagonal $d$ | $2/0.25 + 4 \times 0.25/6$ | 8.166667 |
-| side entry $o$ | $-1/0.25 + 0.25/6$ | −3.958333 |
-| right side, rows 1 to 3 | $-o \times 1$; 0; $-o \times 2$ | 3.958333, 0, 7.916667 |
-| solve $(K + M)U = F$ | Thomas sweep, 17 flops | 1.129056, 1.329422, 1.613750 |
-| exact nodes | $\cosh x + s\sinh x$, $s$ = 0.38880097 | 1.129629, 1.330228, 1.614401 |
+| diagonal $`d`$ | $`2/0.25 + 4 \times 0.25/6`$ | 8.166667 |
+| side entry $`o`$ | $`-1/0.25 + 0.25/6`$ | −3.958333 |
+| right side, rows 1 to 3 | $`-o \times 1`$; 0; $`-o \times 2`$ | 3.958333, 0, 7.916667 |
+| solve $`(K + M)U = F`$ | Thomas sweep, 17 flops | 1.129056, 1.329422, 1.613750 |
+| exact nodes | $`\cosh x + s\sinh x`$, $`s`$ = 0.38880097 | 1.129629, 1.330228, 1.614401 |
 | node errors | computed minus exact | −5.726e-4, −8.067e-4, −6.506e-4 |
-| energy error | $\sqrt{3.1719622845 - 3.1615039145}$ | 1.022662e-1 |
-| bound | $0.25/\pi \times \sqrt{1 + (0.25/\pi)^2} \times 1.416040$ | 1.130e-1, ratio 1.105 |
+| energy error | $`\sqrt{3.1719622845 - 3.1615039145}`$ | 1.022662e-1 |
+| bound | $`0.25/\pi \times \sqrt{1 + (0.25/\pi)^2} \times 1.416040`$ | 1.130e-1, ratio 1.105 |
 | middle height | Galerkin, 4 elements | **1.329422 cm, off by 8.067e-4 cm** |
 
 Four elements put the middle of the cable within a hundredth of a millimetre, and the energy bound promised no worse than 1.130e-1 in energy before the exact answer was known.
@@ -219,16 +237,16 @@ Four elements put the middle of the cable within a hundredth of a millimetre, an
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No integration by parts: hats put straight into $-y'' + y$ | −0.3036, 0.2143, −0.5536 cm | a hat's $y''$ is zero inside every element, so only the spring term survives and the heights zig-zag below the mat |
+| No integration by parts: hats put straight into $`-y'' + y`$ | −0.3036, 0.2143, −0.5536 cm | a hat's $`y''`$ is zero inside every element, so only the spring term survives and the heights zig-zag below the mat |
 | Spring term dropped | 1.2500, 1.5000, 1.7500 cm | with no springs the cable is the straight chord |
-| Sign slip in integration by parts: $-y'v' + yv$ | 1.3972, 1.7080, 1.9132 cm | the pairing turns negative definite, and the rows become Galerkin's for $y'' + y = 0$: a cable on springs that push out, which bows up above the chord |
+| Sign slip in integration by parts: $`-y'v' + yv`$ | 1.3972, 1.7080, 1.9132 cm | the pairing turns negative definite, and the rows become Galerkin's for $`y'' + y = 0`$: a cable on springs that push out, which bows up above the chord |
 | End hats left out of the right side | 0.0000, 0.0000, 0.0000 cm | the posts reach the system only through the end hats |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the Galerkin system for any number of elements, solves it with a Thomas sweep and measures the errors. It takes three roads. Road one is the closed form $\cosh x + s\sinh x$. Road two is the Galerkin answer, with its errors found by a three-point Gauss rule on each element. Road three is the energy theory: the identity $a(y_h, y_h) - a(y, y) = \lVert e\rVert_a^2$, the Ritz nudge, the best-fit comparison with $Iy$, and the bound. Asserts check that the roads agree, that the observed orders are 2 and 1, that the bound holds, and that rounding stops the fall.
+The code builds the Galerkin system for any number of elements, solves it with a Thomas sweep and measures the errors. It takes three roads. Road one is the closed form $`\cosh x + s\sinh x`$. Road two is the Galerkin answer, with its errors found by a three-point Gauss rule on each element. Road three is the energy theory: the identity $`a(y_h, y_h) - a(y, y) = \lVert e\rVert_a^2`$, the Ritz nudge, the best-fit comparison with $`Iy`$, and the bound. Asserts check that the roads agree, that the observed orders are 2 and 1, that the bound holds, and that rounding stops the fall.
 
 ### Python
 
@@ -571,10 +589,10 @@ ALL CHECKS PASS
 
 Lean proves Galerkin's best fit, the tridiagonal matrix and the Ritz energy identity for any number of elements, and the four-element numbers exactly.
 
-- Take a cable whose bending $y''$ is continuous and which obeys $-y'' + y = f$ on $[0, 1]$. Let the broken line $y_h$ through the posts obey the weak form for every inside hat. Then no broken line $w$ through the same posts is closer in energy: $\lVert y - y_h\rVert_a^2 \le \lVert y - w\rVert_a^2$.
-- Hats give a tridiagonal matrix. An inside hat pairs with itself to $d = 2/h + 4h/6$, neighbours pair to $o = -1/h + h/6$, and hats two or more nodes apart pair to 0.
-- With no load, a broken line's $a(w, w)$ exceeds the cable's $a(y, y)$ by exactly its squared energy error, $\lVert y - w\rVert_a^2$.
-- The hand numbers hold as exact fractions: $d$ = 49/6, $o$ = −95/24, the right side, the three Galerkin nodes, the springs-dropped chord, and the 17 and 8177 flops.
+- Take a cable whose bending $`y''`$ is continuous and which obeys $`-y'' + y = f`$ on $`[0, 1]`$. Let the broken line $`y_h`$ through the posts obey the weak form for every inside hat. Then no broken line $`w`$ through the same posts is closer in energy: $`\lVert y - y_h\rVert_a^2 \le \lVert y - w\rVert_a^2`$.
+- Hats give a tridiagonal matrix. An inside hat pairs with itself to $`d = 2/h + 4h/6`$, neighbours pair to $`o = -1/h + h/6`$, and hats two or more nodes apart pair to 0.
+- With no load, a broken line's $`a(w, w)`$ exceeds the cable's $`a(y, y)`$ by exactly its squared energy error, $`\lVert y - w\rVert_a^2`$.
+- The hand numbers hold as exact fractions: $`d`$ = 49/6, $`o`$ = −95/24, the right side, the three Galerkin nodes, the springs-dropped chord, and the 17 and 8177 flops.
 
 The energy-error bound, the observed orders, the rounding floor, the other mistakes and the figure are left to the Python and Rust checks.
 
@@ -1267,7 +1285,7 @@ example : 8 * (1024 - 1) - 7 = 8177 := by decide
 > **Try changing**
 > - **Guess first:** run `galerkin(8)` instead of `galerkin(4)`. How far is the middle node now? It reads 1.330028 against 1.330228: the error falls from 8.067e-4 to 2.005e-4, about four times less.
 > - **Guess first:** call `galerkin(4, lump=True)`, which puts the whole spring term on the diagonal. The result is finite differences: 1.130193, 1.331023, 1.615041, with errors the same size as Galerkin's and the opposite sign.
-> - **Guess first:** average the Galerkin and finite-difference answers node by node. The errors drop to −4.453e-6, −6.268e-6 and −5.086e-6, because the two $h^2$ terms cancel.
+> - **Guess first:** average the Galerkin and finite-difference answers node by node. The errors drop to −4.453e-6, −6.268e-6 and −5.086e-6, because the two $`h^2`$ terms cancel.
 > - **Guess first:** call `galerkin(4, km=-10.0)` for springs that push out. The middle reads 53.3354 cm; the exact cable sits at −145.0352 cm.
 
 ---
@@ -1275,10 +1293,10 @@ example : 8 * (1024 - 1) - 7 = 8177 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Putting hat functions into the equation as written.** A hat is straight inside each element, so its second derivative there is zero, and $-y_h''$ vanishes from every integral. Only the spring term is left, and the three heights come out at −0.3036, 0.2143 and −0.5536 cm. Integration by parts is not a convenience: it moves one derivative onto the test curve, so that slopes, which hats have, carry the bending.
+> **Putting hat functions into the equation as written.** A hat is straight inside each element, so its second derivative there is zero, and $`-y_h''`$ vanishes from every integral. Only the spring term is left, and the three heights come out at −0.3036, 0.2143 and −0.5536 cm. Integration by parts is not a convenience: it moves one derivative onto the test curve, so that slopes, which hats have, carry the bending.
 >
 > - **Forgetting the posts.** The fixed end heights reach the system through the end hats. Leave them off the right side and every height is 0.0000 cm.
-> - **A sign slip in the slope term.** Writing $-y'v' + yv$ makes the pairing negative definite and turns the weak form into that of $y'' + y = 0$, a different cable. The middle reads 1.7080 cm, above the straight chord.
+> - **A sign slip in the slope term.** Writing $`-y'v' + yv`$ makes the pairing negative definite and turns the weak form into that of $`y'' + y = 0`$, a different cable. The middle reads 1.7080 cm, above the straight chord.
 > - **Expecting finite elements to beat finite differences at the nodes.** On this cable they do not: −8.067e-4 against +7.942e-4 cm. The finite-element strength is the energy guarantee and the freedom of the mesh, not extra node accuracy.
 > - **Refining past the rounding floor.** The node error is 1.9e-10 cm at 4096 elements and 1.5e-7 at 65536.
 
@@ -1287,11 +1305,11 @@ example : 8 * (1024 - 1) - 7 = 8177 := by decide
 ## Where you meet it in real life
 
 - **Structural software.** Bridge, aircraft and car-body codes use this exact recipe in two and three dimensions: weak form, simple pieces, one sparse system. The cantilever of [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md) is the beam version.
-- **Heat in a steel bar.** The shelf's house example, a one-metre bar held cold at both ends, takes hats in space and a θ-step in time ([Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md)). The mass matrix $M$ from this card multiplies the time derivative.
+- **Heat in a steel bar.** The shelf's house example, a one-metre bar held cold at both ends, takes hats in space and a θ-step in time ([Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md)). The mass matrix $`M`$ from this card multiplies the time derivative.
 - **Spectral methods.** Galerkin with sines or polynomials in place of hats gives [Spectral methods](10-spectral-methods-and-the-fft.md): the same test-and-project step, with wider shapes.
 
 > **Say it back**
-> Multiply the equation by a test curve that is zero at the fixed ends, integrate, and move one derivative onto the test curve: that is the weak form $a(y, v) = (f, v)$. Build the answer from hat functions and test it with the same hats. Each hat overlaps only its neighbours, so the result is a tridiagonal system, solved in about $8n$ flops. The answer's error is perpendicular to every hat in the energy pairing, so it is the best broken line in energy and also the one of least energy. Its energy error is at most $(h/\pi)\lVert y''\rVert$ times a factor near 1, which halves when the elements halve.
+> Multiply the equation by a test curve that is zero at the fixed ends, integrate, and move one derivative onto the test curve: that is the weak form $`a(y, v) = (f, v)`$. Build the answer from hat functions and test it with the same hats. Each hat overlaps only its neighbours, so the result is a tridiagonal system, solved in about $`8n`$ flops. The answer's error is perpendicular to every hat in the energy pairing, so it is the best broken line in energy and also the one of least energy. Its energy error is at most $`(h/\pi)\lVert y''\rVert`$ times a factor near 1, which halves when the elements halve.
 
 ---
 
@@ -1307,7 +1325,7 @@ example : 8 * (1024 - 1) - 7 = 8177 := by decide
 - [Assembly and error](08-finite-element-assembly-and-error.md): element matrices added into one sparse system, fixed and free ends, and the error estimate in general.
 - Galerkin (planned): the method with any family of trial and test shapes, including different ones (Petrov-Galerkin).
 - Lax-Milgram (planned): why the weak form has exactly one solution whenever the pairing is bounded and positive.
-- Weak derivatives (planned): what $y'$ means for a curve with corners, made precise.
+- Weak derivatives (planned): what $`y'`$ means for a curve with corners, made precise.
 - Weak solutions (planned): problems whose only solutions are weak ones, such as a cable under a point load.
 
 The proof here bounds the energy error, but the node heights fell twice as fast: what makes the heights more accurate than the slopes?

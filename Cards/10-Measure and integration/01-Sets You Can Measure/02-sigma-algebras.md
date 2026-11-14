@@ -30,39 +30,41 @@ Every box is drawn to scale, 40 units per week; the block edges are printed by b
 
 ## The formula
 
-Notation first, in words. The space of all outcomes is written $\Omega$ (capital omega), and one outcome in it $\omega$ (small omega). A script letter such as $\mathcal{F}$ names a family of subsets of $\Omega$, read "the collection of sets we allow ourselves to measure". $A^c$, "the complement of A", is every outcome of $\Omega$ not in $A$. A list of sets that can be numbered first, second, third and on without end is a **countable** list ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), written $A_1, A_2, A_3, \dots$ with $A_n$ the one in place $n$.
+Notation first, in words. The space of all outcomes is written $`\Omega`$ (capital omega), and one outcome in it $`\omega`$ (small omega). A script letter such as $`\mathcal{F}`$ names a family of subsets of $`\Omega`$, read "the collection of sets we allow ourselves to measure". $`A^c`$, "the complement of A", is every outcome of $`\Omega`$ not in $`A`$. A list of sets that can be numbered first, second, third and on without end is a **countable** list ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), written $`A_1, A_2, A_3, \dots`$ with $`A_n`$ the one in place $`n`$.
 
-A family $\mathcal{F}$ of subsets of $\Omega$ is a sigma-algebra when it obeys three rules:
+A family $`\mathcal{F}`$ of subsets of $`\Omega`$ is a sigma-algebra when it obeys three rules:
 
-$$\text{(1)}\;\; \Omega \in \mathcal{F} \qquad \text{(2)}\;\; A \in \mathcal{F} \Rightarrow A^c \in \mathcal{F} \qquad \text{(3)}\;\; A_1, A_2, \dots \in \mathcal{F} \Rightarrow \bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$$
+```math
+\text{(1)}\;\; \Omega \in \mathcal{F} \qquad \text{(2)}\;\; A \in \mathcal{F} \Rightarrow A^c \in \mathcal{F} \qquad \text{(3)}\;\; A_1, A_2, \dots \in \mathcal{F} \Rightarrow \bigcup_{n=1}^{\infty} A_n \in \mathcal{F}
+```
 
 **Read it aloud:** the whole space is in the family; the opposite of anything in the family is in the family; and whatever is in at least one set of a countable list from the family is a set in the family.
 
-The pair $(\Omega, \mathcal{F})$ is a **measurable space**: a space together with the sets it allows to be measured. The sets in $\mathcal{F}$ are its **measurable sets**, or in probability its **events**.
+The pair $`(\Omega, \mathcal{F})`$ is a **measurable space**: a space together with the sets it allows to be measured. The sets in $`\mathcal{F}`$ are its **measurable sets**, or in probability its **events**.
 
-Two sigma-algebras live on every space. The smallest is $\{\varnothing, \Omega\}$, where $\varnothing$ is the empty set. The largest is the power set $\mathcal{P}(\Omega)$, every subset ([Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md) writes it P; the script letter keeps plain P free for probability). On a finite space, one more formula counts any sigma-algebra: if it cuts $\Omega$ into $k$ blocks, it has $2^k$ members.
+Two sigma-algebras live on every space. The smallest is $`\{\varnothing, \Omega\}`$, where $`\varnothing`$ is the empty set. The largest is the power set $`\mathcal{P}(\Omega)`$, every subset ([Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md) writes it P; the script letter keeps plain P free for probability). On a finite space, one more formula counts any sigma-algebra: if it cuts $`\Omega`$ into $`k`$ blocks, it has $`2^k`$ members.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$ | the space: every outcome the model allows | the 8 three-day words, DDD to RRR | more outcomes, many more possible sets |
-| $\omega$, $\omega'$, $\eta$ | outcomes | RDR, DDR, DRD | — |
-| $A$, $B$, $A_n$, $A_m$ | sets of outcomes, each one yes/no question; $A_n$ is the one in place $n$ of a list | rain on day two: DRD, DRR, RRD, RRR | — |
-| $n$ | a place in a countable list | 1, 2, 3, … | — |
-| $A^c$ | the complement: outcomes not in $A$ | dry on day two | a bigger $A$ leaves a smaller $A^c$ |
-| $\bigcup_n A_n$ | the union: outcomes in at least one $A_n$ | rain on day one or day two | — |
-| $\mathcal{F}$ | a sigma-algebra: the sets allowed a size | the valley station's 4 sets | finer questions become answerable |
-| $(\Omega, \mathcal{F})$ | a measurable space | 8 words with one station's sets | — |
-| $\varnothing$ | the empty set: the question never answered yes | — | — |
-| $\mathcal{P}(\Omega)$ | the power set: every subset | 256 sets | — |
-| $a(\omega)$ | the block holding $\omega$: the smallest member of $\mathcal{F}$ containing it | $a(\text{DDR})$ = all 7 rainy weeks, for the valley station | — |
-| $k$ | the number of blocks a finite sigma-algebra makes | 2 for the valley station | each extra block doubles the count |
-| $2^k$ | the size of a finite sigma-algebra with $k$ blocks | 4 | — |
+| $`\Omega`$ | the space: every outcome the model allows | the 8 three-day words, DDD to RRR | more outcomes, many more possible sets |
+| $`\omega`$, $`\omega'`$, $`\eta`$ | outcomes | RDR, DDR, DRD | — |
+| $`A`$, $`B`$, $`A_n`$, $`A_m`$ | sets of outcomes, each one yes/no question; $`A_n`$ is the one in place $`n`$ of a list | rain on day two: DRD, DRR, RRD, RRR | — |
+| $`n`$ | a place in a countable list | 1, 2, 3, … | — |
+| $`A^c`$ | the complement: outcomes not in $`A`$ | dry on day two | a bigger $`A`$ leaves a smaller $`A^c`$ |
+| $`\bigcup_n A_n`$ | the union: outcomes in at least one $`A_n`$ | rain on day one or day two | — |
+| $`\mathcal{F}`$ | a sigma-algebra: the sets allowed a size | the valley station's 4 sets | finer questions become answerable |
+| $`(\Omega, \mathcal{F})`$ | a measurable space | 8 words with one station's sets | — |
+| $`\varnothing`$ | the empty set: the question never answered yes | — | — |
+| $`\mathcal{P}(\Omega)`$ | the power set: every subset | 256 sets | — |
+| $`a(\omega)`$ | the block holding $`\omega`$: the smallest member of $`\mathcal{F}`$ containing it | $`a(\text{DDR})`$ = all 7 rainy weeks, for the valley station | — |
+| $`k`$ | the number of blocks a finite sigma-algebra makes | 2 for the valley station | each extra block doubles the count |
+| $`2^k`$ | the size of a finite sigma-algebra with $`k`$ blocks | 4 | — |
 
 ### When it holds
 
 A definition does not hold or fail; a family passes the rules or does not. What each rule buys:
 
-- **Rule 1, the whole space.** Without it the empty family passes rules 2 and 3 and allows nothing to be measured; a probability needs $\Omega$ to give the total, 1.
+- **Rule 1, the whole space.** Without it the empty family passes rules 2 and 3 and allows nothing to be measured; a probability needs $`\Omega`$ to give the total, 1.
 - **Rule 2, complements.** Without it a family could hold "some rain" but not "no rain", so a size for one would not give a size for the other.
 - **Rule 3, countable unions.** With finite unions only, limits escape: the union of infinitely many allowed sets may be missing, and measure is about limits. Step 5 below shows the failure on the days of a season.
 
@@ -72,21 +74,23 @@ A definition does not hold or fail; a family passes the rules or does not. What 
 
 ### Step 0: the rules are the logic of settled questions
 
-A record settles a question when, whatever the outcome, the record says whether the answer is yes. The three rules are what any record passes. "Is the outcome in $\Omega$?" is always yes, so it is settled. If "in $A$?" is settled, "not in $A$?" is too: flip the answer. If each of $A_1, A_2, \dots$ is settled, so is "in at least one?": the record answers each and says yes if any said yes. A sigma-algebra is this closure, written as rules on sets so it can be used where there is no record at all.
+A record settles a question when, whatever the outcome, the record says whether the answer is yes. The three rules are what any record passes. "Is the outcome in $`\Omega`$?" is always yes, so it is settled. If "in $`A`$?" is settled, "not in $`A`$?" is too: flip the answer. If each of $`A_1, A_2, \dots`$ is settled, so is "in at least one?": the record answers each and says yes if any said yes. A sigma-algebra is this closure, written as rules on sets so it can be used where there is no record at all.
 
 ### Step 1: the rules give the other operations for free
 
-Rule 1 puts $\Omega$ in; rule 2 then puts its complement, $\varnothing$, in. A finite union $A \cup B$ is the countable union of the list $A, B, \varnothing, \varnothing, \dots$, so rule 3 covers it. Intersections come from De Morgan's law ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)): the outcomes in every $A_n$ are the outcomes not in any $A_n^c$, so
+Rule 1 puts $`\Omega`$ in; rule 2 then puts its complement, $`\varnothing`$, in. A finite union $`A \cup B`$ is the countable union of the list $`A, B, \varnothing, \varnothing, \dots`$, so rule 3 covers it. Intersections come from De Morgan's law ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)): the outcomes in every $`A_n`$ are the outcomes not in any $`A_n^c`$, so
 
-$$\bigcap_{n} A_n = \Big(\bigcup_{n} A_n^c\Big)^c,$$
+```math
+\bigcap_{n} A_n = \Big(\bigcup_{n} A_n^c\Big)^c,
+```
 
-three uses of the rules. A difference, "in $A$ but not $B$", is $A \cap B^c$. So a sigma-algebra is closed under every operation of set logic used a countable number of times.
+three uses of the rules. A difference, "in $`A`$ but not $`B`$", is $`A \cap B^c`$. So a sigma-algebra is closed under every operation of set logic used a countable number of times.
 
 ### Step 2: the smallest and the largest
 
-$\{\varnothing, \Omega\}$ passes: each is the other's complement, and any union of them is one of them. Read as a record, it is the station that sends nothing: it settles only "always yes" and "always no". The power set passes because every complement and every union of subsets is again a subset: that is the full log.
+$`\{\varnothing, \Omega\}`$ passes: each is the other's complement, and any union of them is one of them. Read as a record, it is the station that sends nothing: it settles only "always yes" and "always no". The power set passes because every complement and every union of subsets is again a subset: that is the full log.
 
-Every sigma-algebra sits between the two: Step 1 put $\varnothing$ and $\Omega$ in every one, and every one is a family of subsets. The code's six stations run from 2 sets (no report) to 256 (the full log). They nest along two chains, which the code checks: no report, day 1 so far, days 1-2 so far, full log; and no report, any rain this week, rain-day count, full log. One station's family sits inside another's exactly when the lesser report can be worked out from the greater one.
+Every sigma-algebra sits between the two: Step 1 put $`\varnothing`$ and $`\Omega`$ in every one, and every one is a family of subsets. The code's six stations run from 2 sets (no report) to 256 (the full log). They nest along two chains, which the code checks: no report, day 1 so far, days 1-2 so far, full log; and no report, any rain this week, rain-day count, full log. One station's family sits inside another's exactly when the lesser report can be worked out from the greater one.
 
 If it can, outcomes that share the greater message share the lesser one, so whatever the lesser settles, the greater settles too. If it cannot, two outcomes share the greater message but not the lesser, and the lesser's block holding one of them is a set the greater does not settle.
 
@@ -94,17 +98,17 @@ Across the two chains nesting can fail both ways. The 4-set day-1 station settle
 
 ### Step 3: whatever a record decides is a sigma-algebra
 
-Let a report be any rule that sends each outcome to a message. Call a set $A$ **settled by the report** when two outcomes with the same message are either both in $A$ or both out of it. Then the settled sets form a sigma-algebra, on any space, finite or not.
+Let a report be any rule that sends each outcome to a message. Call a set $`A`$ **settled by the report** when two outcomes with the same message are either both in $`A`$ or both out of it. Then the settled sets form a sigma-algebra, on any space, finite or not.
 
-Rule 1: every outcome is in $\Omega$, so no two disagree. Rule 2: if two outcomes with one message agree about $A$, they agree about $A^c$. Rule 3: take $\omega$ in $\bigcup_n A_n$, say in $A_m$, and $\omega'$ with the same message. $A_m$ is settled, so $\omega'$ is in $A_m$, hence in the union. Swapping the roles covers $\omega$ outside the union.
+Rule 1: every outcome is in $`\Omega`$, so no two disagree. Rule 2: if two outcomes with one message agree about $`A`$, they agree about $`A^c`$. Rule 3: take $`\omega`$ in $`\bigcup_n A_n`$, say in $`A_m`$, and $`\omega'`$ with the same message. $`A_m`$ is settled, so $`\omega'`$ is in $`A_m`$, hence in the union. Swapping the roles covers $`\omega`$ outside the union.
 
 For the valley station, "rain on day two" fails the test: DDR and DRD send the same line and disagree. The code finds that pair by search.
 
 ### Step 4: on a finite space, a sigma-algebra is a set of blocks
 
-In the picture, every settled set is a union of whole boxes. That is always so on a finite space. The idea: for each outcome, intersect all the sets of $\mathcal{F}$ that contain it. The result is in $\mathcal{F}$ (Step 1, a finite intersection) and is the smallest member holding that outcome: its **block**, also called an atom.
+In the picture, every settled set is a union of whole boxes. That is always so on a finite space. The idea: for each outcome, intersect all the sets of $`\mathcal{F}`$ that contain it. The result is in $`\mathcal{F}`$ (Step 1, a finite intersection) and is the smallest member holding that outcome: its **block**, also called an atom.
 
-Two blocks never partly overlap, so the blocks cut $\Omega$ into pieces. Each member of $\mathcal{F}$ is the union of the blocks of its own outcomes, and each union of blocks is in $\mathcal{F}$ by rule 3. So choosing a member of $\mathcal{F}$ is choosing, block by block, in or out: $2^k$ choices for $k$ blocks.
+Two blocks never partly overlap, so the blocks cut $`\Omega`$ into pieces. Each member of $`\mathcal{F}`$ is the union of the blocks of its own outcomes, and each union of blocks is in $`\mathcal{F}`$ by rule 3. So choosing a member of $`\mathcal{F}`$ is choosing, block by block, in or out: $`2^k`$ choices for $`k`$ blocks.
 
 The valley station has 2 blocks, so 4 sets. The rain-day count has 4 blocks, so 16. The full log has 8 blocks of one word each, so 256. A family on a finite space whose size is not a power of 2 is never a sigma-algebra.
 
@@ -115,21 +119,21 @@ On an infinite space that fails. By Step 3's definition, a record's settled sets
 <details>
 <summary>Detailed proof: finite sigma-algebras are exactly the ways to cut into blocks</summary>
 
-Let $\Omega$ be finite and $\mathcal{F}$ a sigma-algebra on it. For an outcome $\omega$, let $a(\omega)$ be the intersection of all members of $\mathcal{F}$ that contain $\omega$. There are finitely many of them and $\Omega$ is one, so $a(\omega)$ is a finite intersection of members and lies in $\mathcal{F}$ by Step 1. It contains $\omega$ and sits inside every member that contains $\omega$.
+Let $`\Omega`$ be finite and $`\mathcal{F}`$ a sigma-algebra on it. For an outcome $`\omega`$, let $`a(\omega)`$ be the intersection of all members of $`\mathcal{F}`$ that contain $`\omega`$. There are finitely many of them and $`\Omega`$ is one, so $`a(\omega)`$ is a finite intersection of members and lies in $`\mathcal{F}`$ by Step 1. It contains $`\omega`$ and sits inside every member that contains $`\omega`$.
 
-*Blocks that meet are equal.* Suppose $\eta$ lies in $a(\omega)$. If $\omega$ were not in $a(\eta)$, then $a(\omega) \cap a(\eta)^c$ would be a member of $\mathcal{F}$ (rule 2 and Step 1) containing $\omega$, so $a(\omega)$ would sit inside it, and then $\eta$, which is in $a(\eta)$, could not be in $a(\omega)$: a contradiction. So $\omega \in a(\eta)$, which makes $a(\eta)$ a member holding $\omega$, so $a(\omega) \subseteq a(\eta)$. And $\eta \in a(\omega)$ makes $a(\omega)$ a member holding $\eta$, so $a(\eta) \subseteq a(\omega)$. Equal. Now if $a(\omega)$ and $a(\omega')$ share an outcome $\eta$, both equal $a(\eta)$. So the distinct blocks are disjoint and, each holding its own outcome, cover $\Omega$.
+*Blocks that meet are equal.* Suppose $`\eta`$ lies in $`a(\omega)`$. If $`\omega`$ were not in $`a(\eta)`$, then $`a(\omega) \cap a(\eta)^c`$ would be a member of $`\mathcal{F}`$ (rule 2 and Step 1) containing $`\omega`$, so $`a(\omega)`$ would sit inside it, and then $`\eta`$, which is in $`a(\eta)`$, could not be in $`a(\omega)`$: a contradiction. So $`\omega \in a(\eta)`$, which makes $`a(\eta)`$ a member holding $`\omega`$, so $`a(\omega) \subseteq a(\eta)`$. And $`\eta \in a(\omega)`$ makes $`a(\omega)`$ a member holding $`\eta`$, so $`a(\eta) \subseteq a(\omega)`$. Equal. Now if $`a(\omega)`$ and $`a(\omega')`$ share an outcome $`\eta`$, both equal $`a(\eta)`$. So the distinct blocks are disjoint and, each holding its own outcome, cover $`\Omega`$.
 
-*Members are unions of blocks.* If $A \in \mathcal{F}$ and $\omega \in A$, then $a(\omega) \subseteq A$ by definition, so $A$ is the union of the blocks of its outcomes. Conversely a union of blocks is a finite union of members, in $\mathcal{F}$ by Step 1. Different sets of blocks give different unions, because blocks are disjoint and none is empty. So $\mathcal{F}$ matches the subsets of the $k$ blocks one for one, and has $2^k$ members.
+*Members are unions of blocks.* If $`A \in \mathcal{F}`$ and $`\omega \in A`$, then $`a(\omega) \subseteq A`$ by definition, so $`A`$ is the union of the blocks of its outcomes. Conversely a union of blocks is a finite union of members, in $`\mathcal{F}`$ by Step 1. Different sets of blocks give different unions, because blocks are disjoint and none is empty. So $`\mathcal{F}`$ matches the subsets of the $`k`$ blocks one for one, and has $`2^k`$ members.
 
-*Every cut gives one.* Given any way to cut $\Omega$ into blocks, the unions of blocks pass the rules: $\Omega$ is the union of all of them, the complement of a union of blocks is the union of the other blocks, and a union of unions of blocks is a union of blocks. Different cuts give different families, since the cut can be read back as the smallest nonempty members. So on a finite space, sigma-algebras and ways to cut into blocks match one for one.
+*Every cut gives one.* Given any way to cut $`\Omega`$ into blocks, the unions of blocks pass the rules: $`\Omega`$ is the union of all of them, the complement of a union of blocks is the union of the other blocks, and a union of unions of blocks is a union of blocks. Different cuts give different families, since the cut can be read back as the smallest nonempty members. So on a finite space, sigma-algebras and ways to cut into blocks match one for one.
 
-The number of ways to cut $n$ points into blocks is the $n$-th Bell number. The code counts those by the recurrence "choose which other points share a block with the last point, then cut the rest", and separately tests every family of subsets on 1 to 4 points against the three rules: 1, 2, 5 and 15 both ways. On the station's 8 words, the count is 4140 different sigma-algebras: 4140 different levels of information a report could carry.
+The number of ways to cut $`n`$ points into blocks is the $`n`$-th Bell number. The code counts those by the recurrence "choose which other points share a block with the last point, then cut the rest", and separately tests every family of subsets on 1 to 4 points against the three rules: 1, 2, 5 and 15 both ways. On the station's 8 words, the count is 4140 different sigma-algebras: 4140 different levels of information a report could carry.
 
 </details>
 
 ### Step 5: why countable unions, not only finite ones
 
-On a finite space, rule 3 asks for nothing beyond finite unions. A countable list of subsets of 8 words has at most 256 different members, and its union is the union of those. The word "countable" earns its place only when $\Omega$ is infinite.
+On a finite space, rule 3 asks for nothing beyond finite unions. A countable list of subsets of 8 words has at most 256 different members, and its union is the union of those. The word "countable" earns its place only when $`\Omega`$ is infinite.
 
 So take a season with no end. Let the outcome be the day number of the season's first rain: 1, 2, 3, and so on. Let the family hold every set of days that is finite, like "first rain on day 2", and every set whose complement is finite, like "first rain after day 10".
 
@@ -170,7 +174,7 @@ The valley station can put a size on 4 sets of weeks and on no other: a chance f
 | --- | --- | --- |
 | Taking none, all, rain on day one, rain on day two as a sigma-algebra | 4 sets; 2 complements and 1 union missing | Rule 2 fails first; closing it up gives 16 sets |
 | Crediting the valley station with every subset | 256 claimed, 4 settled | Only unions of its 2 blocks are settled |
-| Counting blocks as the sets of the rain-day count | 4 claimed, 16 settled | $k$ blocks give $2^k$ sets |
+| Counting blocks as the sets of the rain-day count | 4 claimed, 16 settled | $`k`$ blocks give $`2^k`$ sets |
 | Finite unions only, on a season with no end | first rain on an even day: 5/50/500 days in and out of 10/100/1000 | The union of countably many allowed sets is missing |
 
 The code prints every row.
@@ -564,7 +568,7 @@ Lean proves Step 3 for every space and Step 4 for every finite space, and checks
 
 - Take any report on any space, finite or not. The sets it settles form a sigma-algebra.
 - On a finite space, every sigma-algebra is exactly the family of sets some report settles.
-- Take a sigma-algebra on a finite space that cuts it into $k$ blocks. Then it has exactly $2^k$ sets.
+- Take a sigma-algebra on a finite space that cuts it into $`k`$ blocks. Then it has exactly $`2^k`$ sets.
 - There are 8 weeks. The full log settles 256 sets, the rain-day count 16, and the valley station 4.
 - The valley station does not settle "rain on day two": DDR and DRD send the same line.
 - The Bell numbers for 1, 2, 3 and 4 points are 1, 2, 5 and 15, and for 8 points 4140.
@@ -749,7 +753,7 @@ example : Nat.bell 8 = 4140 := by decide +kernel
 - **Lengths, areas and volumes.** The sets that can carry a length on the line form a sigma-algebra far larger than the intervals and smaller than every subset: [Caratheodory's criterion](../02-Length%20Done%20Properly/02-caratheodory-measurable-sets.md).
 
 > **Say it back**
-> A sigma-algebra is a family of subsets of a space that holds the whole space, the complement of each member, and the union of any countable list of members. Whatever a record can settle forms one; on a finite space every sigma-algebra arises that way, but on an infinite space the record reading is a guide, not a theorem. The smallest is the empty set with the whole space, the largest is every subset. On a finite space it is a way of cutting the space into blocks, and with $k$ blocks it has $2^k$ members: the valley station's 2 blocks give 4 settled questions out of 256. Countable unions matter only on infinite spaces, where measure needs its limits.
+> A sigma-algebra is a family of subsets of a space that holds the whole space, the complement of each member, and the union of any countable list of members. Whatever a record can settle forms one; on a finite space every sigma-algebra arises that way, but on an infinite space the record reading is a guide, not a theorem. The smallest is the empty set with the whole space, the largest is every subset. On a finite space it is a way of cutting the space into blocks, and with $`k`$ blocks it has $`2^k`$ members: the valley station's 2 blocks give 4 settled questions out of 256. Countable unions matter only on infinite spaces, where measure needs its limits.
 
 ---
 

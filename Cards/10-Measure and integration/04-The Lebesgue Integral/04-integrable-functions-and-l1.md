@@ -26,52 +26,64 @@ To scale: 300 pixels per km along the river, 160 per metre of depth downward. Th
 
 ## The formula
 
-Notation first. A measure space $(\Omega, \mathcal F, \mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
+Notation first. A measure space $`(\Omega, \mathcal F, \mu)`$ is a set of points $`\Omega`$, the collection $`\mathcal F`$ of sets we allow ourselves to measure, and a measure $`\mu`$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
 
-On the river $\Omega$ is the stretch from 0 to 1 km and the measure is length, $\lambda$. For a non-negative measurable function, $\int u\,d\mu$, read "the integral of u against mu", is the best lower staircase total, a number from 0 up to infinity ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)).
+On the river $`\Omega`$ is the stretch from 0 to 1 km and the measure is length, $`\lambda`$. For a non-negative measurable function, $`\int u\,d\mu`$, read "the integral of u against mu", is the best lower staircase total, a number from 0 up to infinity ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)).
 
-The **positive part** $f^+ = \max(f, 0)$ keeps f where it is above zero and is 0 elsewhere; the **negative part** $f^- = \max(-f, 0)$ is the depth of f below zero, itself never negative ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). At every point
+The **positive part** $`f^+ = \max(f, 0)`$ keeps f where it is above zero and is 0 elsewhere; the **negative part** $`f^- = \max(-f, 0)`$ is the depth of f below zero, itself never negative ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). At every point
 
-$$f = f^+ - f^-, \qquad \lvert f\rvert = f^+ + f^-.$$
+```math
+f = f^+ - f^-, \qquad \lvert f\rvert = f^+ + f^-.
+```
 
-The definition. A measurable $f$ is **integrable** when
+The definition. A measurable $`f`$ is **integrable** when
 
-$$\int \lvert f\rvert\,d\mu < \infty, \qquad\text{and then}\qquad \int f\,d\mu = \int f^+\,d\mu - \int f^-\,d\mu .$$
+```math
+\int \lvert f\rvert\,d\mu < \infty, \qquad\text{and then}\qquad \int f\,d\mu = \int f^+\,d\mu - \int f^-\,d\mu .
+```
 
 **Read it aloud:** a signed function is integrable when the area between it and zero, counted without signs, is finite; its integral is the area above zero minus the area below.
 
-The integrable functions form a collection written $L^1(\mu)$, read "L-one of mu"; on the river, $L^1(\lambda)$. Over a set $A$, $\int_A f\,d\mu$ means $\int f\,\mathbf 1_A\,d\mu$, where $\mathbf 1_A$ is one on A and zero off it.
+The integrable functions form a collection written $`L^1(\mu)`$, read "L-one of mu"; on the river, $`L^1(\lambda)`$. Over a set $`A`$, $`\int_A f\,d\mu`$ means $`\int f\,\mathbf 1_A\,d\mu`$, where $`\mathbf 1_A`$ is one on A and zero off it.
 
-Four theorems. For $f$, $g$ in $L^1(\mu)$ and real numbers $a$, $b$:
+Four theorems. For $`f`$, $`g`$ in $`L^1(\mu)`$ and real numbers $`a`$, $`b`$:
 
-$$\int (a f + b g)\,d\mu = a\int f\,d\mu + b\int g\,d\mu \qquad\text{(linearity)}$$
+```math
+\int (a f + b g)\,d\mu = a\int f\,d\mu + b\int g\,d\mu \qquad\text{(linearity)}
+```
 
-$$f \le g \text{ everywhere} \;\Longrightarrow\; \int f\,d\mu \le \int g\,d\mu \qquad\text{(monotonicity)}$$
+```math
+f \le g \text{ everywhere} \;\Longrightarrow\; \int f\,d\mu \le \int g\,d\mu \qquad\text{(monotonicity)}
+```
 
-$$\Big\lvert \int f\,d\mu \Big\rvert \le \int \lvert f\rvert\,d\mu \qquad\text{(triangle inequality)}$$
+```math
+\Big\lvert \int f\,d\mu \Big\rvert \le \int \lvert f\rvert\,d\mu \qquad\text{(triangle inequality)}
+```
 
-$$\text{for every } \varepsilon > 0 \text{ there is } \delta > 0 \text{ with } \mu(A) < \delta \;\Longrightarrow\; \int_A \lvert f\rvert\,d\mu < \varepsilon \qquad\text{(absolute continuity)}$$
+```math
+\text{for every } \varepsilon > 0 \text{ there is } \delta > 0 \text{ with } \mu(A) < \delta \;\Longrightarrow\; \int_A \lvert f\rvert\,d\mu < \varepsilon \qquad\text{(absolute continuity)}
+```
 
 **Read it aloud:** combine integrable functions and their integrals combine the same way; a lower function has the smaller integral; the size of the integral is at most the integral of the size; and sets of small enough size carry as little integral as anyone asks.
 
-On the river, $h = d - 0.5$, so linearity alone gives $\int h\,d\lambda = 2/3 - 1/2 = 1/6$ without finding where the bed crosses the marker.
+On the river, $`h = d - 0.5`$, so linearity alone gives $`\int h\,d\lambda = 2/3 - 1/2 = 1/6`$ without finding where the bed crosses the marker.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$, $r$ | distance along the stretch in km; distance from mid-river, x − 1/2; half the channel's width | r = √2/4 km: the bed crosses the marker at y = ±r | — |
-| $d$ | river depth in metres at x km | 4x(1 − x); integral 2/3 km·m | deeper river, more channel below the marker |
-| $h$ | height of the bed below the marker, d − 0.5 | +0.5 m mid-stretch, −0.5 m at both ends | a higher marker: more channel, less shoal |
-| $f$, $g$ | general measurable functions with real values | h and d | — |
-| $u$, $v$ | non-negative measurable functions, in the definition and the proof | d, h+, h− | larger u, larger integral |
-| $f^+$, $f^-$ | positive part and negative part, both ≥ 0 | channel 0.2357, shoals 0.0690 km·m | f up: f+ grows, f− shrinks |
-| $\lvert f\rvert$ | size of f, sign ignored | integral 0.3047 km·m: earth moved | — |
-| $\Omega$, $\mathcal F$, $\mu$, $\lambda$ | space, measurable sets, a measure; λ is length | 0 to 1 km, Borel sets (the sets built from intervals), length | — |
-| $L^1(\mu)$ | the integrable functions | h, d, the spike s | — |
-| $a$, $b$ | real constants, either sign | 1 and −0.5: h = 1·d − 0.5·1 | integral moves by that multiple |
-| $p$, $q$ | any two non-negative integrable functions with f = p − q | p = d, q = 0.5 | — |
-| $A$, $\mathbf 1_A$ | a measurable set; one on A, zero off it | a window of the stretch | bigger set, more integral |
-| $\varepsilon$, $\delta$ | allowed integral; set size that guarantees it | ε = 1/10, δ = 1/120 for the spike | smaller ε forces smaller δ |
-| $s$, $N$, $w$ | an unbounded integrable spike; a cap on it; an endless bed that is not integrable | 1/(2√x), N = 6; +1, −1/2, +1/3, … | — |
+| $`x`$, $`y`$, $`r`$ | distance along the stretch in km; distance from mid-river, x − 1/2; half the channel's width | r = √2/4 km: the bed crosses the marker at y = ±r | — |
+| $`d`$ | river depth in metres at x km | 4x(1 − x); integral 2/3 km·m | deeper river, more channel below the marker |
+| $`h`$ | height of the bed below the marker, d − 0.5 | +0.5 m mid-stretch, −0.5 m at both ends | a higher marker: more channel, less shoal |
+| $`f`$, $`g`$ | general measurable functions with real values | h and d | — |
+| $`u`$, $`v`$ | non-negative measurable functions, in the definition and the proof | d, h+, h− | larger u, larger integral |
+| $`f^+`$, $`f^-`$ | positive part and negative part, both ≥ 0 | channel 0.2357, shoals 0.0690 km·m | f up: f+ grows, f− shrinks |
+| $`\lvert f\rvert`$ | size of f, sign ignored | integral 0.3047 km·m: earth moved | — |
+| $`\Omega`$, $`\mathcal F`$, $`\mu`$, $`\lambda`$ | space, measurable sets, a measure; λ is length | 0 to 1 km, Borel sets (the sets built from intervals), length | — |
+| $`L^1(\mu)`$ | the integrable functions | h, d, the spike s | — |
+| $`a`$, $`b`$ | real constants, either sign | 1 and −0.5: h = 1·d − 0.5·1 | integral moves by that multiple |
+| $`p`$, $`q`$ | any two non-negative integrable functions with f = p − q | p = d, q = 0.5 | — |
+| $`A`$, $`\mathbf 1_A`$ | a measurable set; one on A, zero off it | a window of the stretch | bigger set, more integral |
+| $`\varepsilon`$, $`\delta`$ | allowed integral; set size that guarantees it | ε = 1/10, δ = 1/120 for the spike | smaller ε forces smaller δ |
+| $`s`$, $`N`$, $`w`$ | an unbounded integrable spike; a cap on it; an endless bed that is not integrable | 1/(2√x), N = 6; +1, −1/2, +1/3, … | — |
 
 ### When it holds
 
@@ -92,64 +104,66 @@ For non-negative functions the integral is already built, and it adds, scales an
 
 ### Step 1: integrable means both parts are finite
 
-At each point at most one of $f^+$ and $f^-$ is nonzero, and $\lvert f\rvert$ is their sum. Additivity for non-negative functions gives $\int \lvert f\rvert = \int f^+ + \int f^-$. A sum of two numbers from 0 to infinity is finite exactly when both are. So the definition asks for exactly what subtraction needs.
+At each point at most one of $`f^+`$ and $`f^-`$ is nonzero, and $`\lvert f\rvert`$ is their sum. Additivity for non-negative functions gives $`\int \lvert f\rvert = \int f^+ + \int f^-`$. A sum of two numbers from 0 to infinity is finite exactly when both are. So the definition asks for exactly what subtraction needs.
 
-On the river: $h^+$ is the channel, 0.2357 km·m, and $h^-$ is the two shoals together, 0.0690 km·m. Their sum, 0.3047 km·m, is the integral of $\lvert h\rvert$: the earth moved to level the bed at the marker. Their difference is 1/6.
+On the river: $`h^+`$ is the channel, 0.2357 km·m, and $`h^-`$ is the two shoals together, 0.0690 km·m. Their sum, 0.3047 km·m, is the integral of $`\lvert h\rvert`$: the earth moved to level the bed at the marker. Their difference is 1/6.
 
 ### Step 2: any split into two non-negative pieces gives the same answer
 
-The river offers a second split: $h = d - 0.5$, with $d$ and the constant 0.5 both non-negative. Move terms so nothing is subtracted:
+The river offers a second split: $`h = d - 0.5`$, with $`d`$ and the constant 0.5 both non-negative. Move terms so nothing is subtracted:
 
-$$h^+ + 0.5 = h^- + d \quad\text{at every point.}$$
+```math
+h^+ + 0.5 = h^- + d \quad\text{at every point.}
+```
 
-Both sides are non-negative. Integrate, using additivity: $\int h^+ + 0.5 = \int h^- + 2/3$. All four numbers are finite, so $\int h^+ - \int h^- = 2/3 - 1/2 = 1/6$. The crossing points never entered; in the exact values, $\sqrt 2/6$ and $(\sqrt 2 - 1)/6$, their irrational parts cancel.
+Both sides are non-negative. Integrate, using additivity: $`\int h^+ + 0.5 = \int h^- + 2/3`$. All four numbers are finite, so $`\int h^+ - \int h^- = 2/3 - 1/2 = 1/6`$. The crossing points never entered; in the exact values, $`\sqrt 2/6`$ and $`(\sqrt 2 - 1)/6`$, their irrational parts cancel.
 
-In general, if $f = p - q$ with $p$ and $q$ non-negative and integrable, then $f^+ + q = f^- + p$, and the same two lines give $\int f = \int p - \int q$. The integral does not depend on how the function is split.
+In general, if $`f = p - q`$ with $`p`$ and $`q`$ non-negative and integrable, then $`f^+ + q = f^- + p`$, and the same two lines give $`\int f = \int p - \int q`$. The integral does not depend on how the function is split.
 
 ### Step 3: linearity
 
-For a sum: $f + g = (f^+ + g^+) - (f^- + g^-)$ is one more split into two non-negative integrable pieces, so Step 2 gives $\int (f+g) = \int f + \int g$. The sum is integrable because $\lvert f + g\rvert \le \lvert f\rvert + \lvert g\rvert$ at every point.
+For a sum: $`f + g = (f^+ + g^+) - (f^- + g^-)`$ is one more split into two non-negative integrable pieces, so Step 2 gives $`\int (f+g) = \int f + \int g`$. The sum is integrable because $`\lvert f + g\rvert \le \lvert f\rvert + \lvert g\rvert`$ at every point.
 
-For a constant $a \ge 0$ the parts of $a f$ are $a f^+$ and $a f^-$. For $a < 0$ they swap: $(a f)^+ = \lvert a\rvert f^-$ and $(a f)^- = \lvert a\rvert f^+$. Either way the integral comes out as $a\int f$.
+For a constant $`a \ge 0`$ the parts of $`a f`$ are $`a f^+`$ and $`a f^-`$. For $`a < 0`$ they swap: $`(a f)^+ = \lvert a\rvert f^-`$ and $`(a f)^- = \lvert a\rvert f^+`$. Either way the integral comes out as $`a\int f`$.
 
 ### Step 4: order, and the triangle inequality
 
-If $f \le g$, then $g - f$ is non-negative and integrable, so its integral is at least 0. Linearity turns that into $\int g - \int f \ge 0$. On the river $h \le d$, and 1/6 ≤ 2/3.
+If $`f \le g`$, then $`g - f`$ is non-negative and integrable, so its integral is at least 0. Linearity turns that into $`\int g - \int f \ge 0`$. On the river $`h \le d`$, and 1/6 ≤ 2/3.
 
-Apply monotonicity twice to $-\lvert f\rvert \le f \le \lvert f\rvert$: $\int f$ lies between $-\int \lvert f\rvert$ and $\int \lvert f\rvert$. That is the triangle inequality. On the river 1/6 ≤ 0.3047, and the gap is twice the shoal integral: cancellation hides the shoals. Equality needs one part to have integral zero, that is, $f \ge 0$ almost everywhere or $f \le 0$ almost everywhere, that is, everywhere except on a set of measure zero ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
+Apply monotonicity twice to $`-\lvert f\rvert \le f \le \lvert f\rvert`$: $`\int f`$ lies between $`-\int \lvert f\rvert`$ and $`\int \lvert f\rvert`$. That is the triangle inequality. On the river 1/6 ≤ 0.3047, and the gap is twice the shoal integral: cancellation hides the shoals. Equality needs one part to have integral zero, that is, $`f \ge 0`$ almost everywhere or $`f \le 0`$ almost everywhere, that is, everywhere except on a set of measure zero ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
 
 ### Step 5: small sets carry small integrals
 
-For a bounded function this is one line. $\lvert h\rvert \le 0.5$, so any set of length $\delta$ carries at most $0.5\,\delta$; to get below $\varepsilon$, take $\delta = 2\varepsilon$.
+For a bounded function this is one line. $`\lvert h\rvert \le 0.5`$, so any set of length $`\delta`$ carries at most $`0.5\,\delta`$; to get below $`\varepsilon`$, take $`\delta = 2\varepsilon`$.
 
-An unbounded function needs one more idea. Take the spike $s(x) = 1/(2\sqrt x)$ on (0, 1]: its integral is 1, but it has no ceiling. Cap it at a height $N$. The capped function is bounded, so it behaves as above. The part above the cap is a thin sliver near 0 with integral $1/(4N)$. By the monotone convergence theorem, capped versions of any integrable function rise to it, so the sliver above the cap always shrinks to zero integral as $N$ grows.
+An unbounded function needs one more idea. Take the spike $`s(x) = 1/(2\sqrt x)`$ on (0, 1]: its integral is 1, but it has no ceiling. Cap it at a height $`N`$. The capped function is bounded, so it behaves as above. The part above the cap is a thin sliver near 0 with integral $`1/(4N)`$. By the monotone convergence theorem, capped versions of any integrable function rise to it, so the sliver above the cap always shrinks to zero integral as $`N`$ grows.
 
-The proof spends half of $\varepsilon$ on each piece. For $\varepsilon = 1/10$: the cap $N = 6$ leaves a sliver of 0.041667, under half of $\varepsilon$. Then $\delta = \varepsilon/(2N) = 1/120$ keeps the capped part under the other half. The largest integral any window of length 1/120 can carry sits against 0, where $s$ is tallest: 0.0912870929, under 1/10 as promised.
+The proof spends half of $`\varepsilon`$ on each piece. For $`\varepsilon = 1/10`$: the cap $`N = 6`$ leaves a sliver of 0.041667, under half of $`\varepsilon`$. Then $`\delta = \varepsilon/(2N) = 1/120`$ keeps the capped part under the other half. The largest integral any window of length 1/120 can carry sits against 0, where $`s`$ is tallest: 0.0912870929, under 1/10 as promised.
 
 ### Step 6: why infinity minus infinity is refused
 
-Extend the river downstream forever and give its bed alternating 1 km pieces: a pool 1 m below the marker, then a bar 1/2 m above it, then a pool 1/3 m below, and so on. Call this bed $w$. Its running total, piece by piece, settles on ln 2 = 0.693147. Yet its positive part totals 6.391644 after 100000 km and its negative part 5.698502, and both keep growing without bound, as the harmonic series 1 + 1/2 + 1/3 + … does.
+Extend the river downstream forever and give its bed alternating 1 km pieces: a pool 1 m below the marker, then a bar 1/2 m above it, then a pool 1/3 m below, and so on. Call this bed $`w`$. Its running total, piece by piece, settles on ln 2 = 0.693147. Yet its positive part totals 6.391644 after 100000 km and its negative part 5.698502, and both keep growing without bound, as the harmonic series 1 + 1/2 + 1/3 + … does.
 
 Count the same pieces two pools, then one bar, and the running total settles on 1.5 ln 2 = 1.039721 instead. A measure sees sets, not an order of travel, so a total that depends on the order cannot be the integral. Integrability rules the case out.
 
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, $(\Omega, \mathcal F, \mu)$ is a measure space and $f$, $g$ are measurable with real values. Facts used: **(N1)** for non-negative measurable $u$, $u'$ and $c \ge 0$, $\int (u + u') = \int u + \int u'$ and $\int cu = c\int u$ ([The monotone convergence theorem](03-monotone-convergence-theorem.md), by rising simple approximations); **(N2)** $0 \le u \le v$ implies $\int u \le \int v$ ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): the supremum is over a larger family); **(N3)** the monotone convergence theorem; **(N4)** sums, constant multiples, max and min of measurable functions are measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
+Throughout, $`(\Omega, \mathcal F, \mu)`$ is a measure space and $`f`$, $`g`$ are measurable with real values. Facts used: **(N1)** for non-negative measurable $`u`$, $`u'`$ and $`c \ge 0`$, $`\int (u + u') = \int u + \int u'`$ and $`\int cu = c\int u`$ ([The monotone convergence theorem](03-monotone-convergence-theorem.md), by rising simple approximations); **(N2)** $`0 \le u \le v`$ implies $`\int u \le \int v`$ ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): the supremum is over a larger family); **(N3)** the monotone convergence theorem; **(N4)** sums, constant multiples, max and min of measurable functions are measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
 
-**1. The parts.** By (N4) $f^+$, $f^-$ and $\lvert f\rvert = f^+ + f^-$ are measurable and non-negative, and $f = f^+ - f^-$. By (N1) $\int \lvert f\rvert = \int f^+ + \int f^-$, so $\int \lvert f\rvert < \infty$ exactly when both $\int f^\pm < \infty$, and the definition subtracts finite numbers.
+**1. The parts.** By (N4) $`f^+`$, $`f^-`$ and $`\lvert f\rvert = f^+ + f^-`$ are measurable and non-negative, and $`f = f^+ - f^-`$. By (N1) $`\int \lvert f\rvert = \int f^+ + \int f^-`$, so $`\int \lvert f\rvert < \infty`$ exactly when both $`\int f^\pm < \infty`$, and the definition subtracts finite numbers.
 
-**2. Any split.** Let $f = p - q$ with $p, q \ge 0$ measurable and $\int p$, $\int q$ finite. Since $q \ge 0$, $f \le p$, so $f^+ = \max(f, 0) \le p$; likewise $f^- \le q$. By (N2) $f$ is integrable. From $f^+ - f^- = p - q$, with all four finite at each point, $f^+ + q = f^- + p$. By (N1), $\int f^+ + \int q = \int f^- + \int p$. All four integrals are finite, so $\int f^+ - \int f^- = \int p - \int q$.
+**2. Any split.** Let $`f = p - q`$ with $`p, q \ge 0`$ measurable and $`\int p`$, $`\int q`$ finite. Since $`q \ge 0`$, $`f \le p`$, so $`f^+ = \max(f, 0) \le p`$; likewise $`f^- \le q`$. By (N2) $`f`$ is integrable. From $`f^+ - f^- = p - q`$, with all four finite at each point, $`f^+ + q = f^- + p`$. By (N1), $`\int f^+ + \int q = \int f^- + \int p`$. All four integrals are finite, so $`\int f^+ - \int f^- = \int p - \int q`$.
 
-**3. Linearity.** $\lvert f + g\rvert \le \lvert f\rvert + \lvert g\rvert$ pointwise, so (N2) and (N1) give $\int \lvert f + g\rvert \le \int \lvert f\rvert + \int \lvert g\rvert < \infty$. Apply 2 with $p = f^+ + g^+$ and $q = f^- + g^-$ and use (N1) on each: $\int (f+g) = \int f^+ + \int g^+ - \int f^- - \int g^- = \int f + \int g$. For $a \ge 0$, $(a f)^+ = a f^+$ and $(a f)^- = a f^-$, so (N1) gives $\int a f = a\int f$. For $a < 0$, $(a f)^+ = \lvert a\rvert f^-$ and $(a f)^- = \lvert a\rvert f^+$, so $\int a f = \lvert a\rvert \int f^- - \lvert a\rvert \int f^+ = a\int f$. Combining the two gives $\int (a f + b g) = a\int f + b\int g$.
+**3. Linearity.** $`\lvert f + g\rvert \le \lvert f\rvert + \lvert g\rvert`$ pointwise, so (N2) and (N1) give $`\int \lvert f + g\rvert \le \int \lvert f\rvert + \int \lvert g\rvert < \infty`$. Apply 2 with $`p = f^+ + g^+`$ and $`q = f^- + g^-`$ and use (N1) on each: $`\int (f+g) = \int f^+ + \int g^+ - \int f^- - \int g^- = \int f + \int g`$. For $`a \ge 0`$, $`(a f)^+ = a f^+`$ and $`(a f)^- = a f^-`$, so (N1) gives $`\int a f = a\int f`$. For $`a < 0`$, $`(a f)^+ = \lvert a\rvert f^-`$ and $`(a f)^- = \lvert a\rvert f^+`$, so $`\int a f = \lvert a\rvert \int f^- - \lvert a\rvert \int f^+ = a\int f`$. Combining the two gives $`\int (a f + b g) = a\int f + b\int g`$.
 
-**4. Monotonicity and the triangle inequality.** If $f \le g$ with both integrable, $u = g - f$ is non-negative and integrable by 3, and its signed integral is its non-negative integral ($u^- = 0$), which is $\ge 0$. By 3, $\int g - \int f = \int u \ge 0$. Since $-\lvert f\rvert \le f \le \lvert f\rvert$, monotonicity and 3 give $-\int \lvert f\rvert \le \int f \le \int \lvert f\rvert$.
+**4. Monotonicity and the triangle inequality.** If $`f \le g`$ with both integrable, $`u = g - f`$ is non-negative and integrable by 3, and its signed integral is its non-negative integral ($`u^- = 0`$), which is $`\ge 0`$. By 3, $`\int g - \int f = \int u \ge 0`$. Since $`-\lvert f\rvert \le f \le \lvert f\rvert`$, monotonicity and 3 give $`-\int \lvert f\rvert \le \int f \le \int \lvert f\rvert`$.
 
-**5. Null sets change nothing.** If $u \ge 0$ is measurable and zero off a set $Z$ of measure zero, every simple function under $u$ is zero off $Z$ and has integral 0, so $\int u = 0$. If $f = g$ off $Z$ with $f$ integrable, then $\lvert g\rvert \le \lvert f\rvert + \lvert f - g\rvert$ makes $g$ integrable, and 4 applied to $f - g$ gives $\lvert \int f - \int g\rvert \le \int \lvert f - g\rvert = 0$. So $L^1(\mu)$ treats functions equal almost everywhere as one.
+**5. Null sets change nothing.** If $`u \ge 0`$ is measurable and zero off a set $`Z`$ of measure zero, every simple function under $`u`$ is zero off $`Z`$ and has integral 0, so $`\int u = 0`$. If $`f = g`$ off $`Z`$ with $`f`$ integrable, then $`\lvert g\rvert \le \lvert f\rvert + \lvert f - g\rvert`$ makes $`g`$ integrable, and 4 applied to $`f - g`$ gives $`\lvert \int f - \int g\rvert \le \int \lvert f - g\rvert = 0`$. So $`L^1(\mu)`$ treats functions equal almost everywhere as one.
 
-**6. Absolute continuity.** Let $f$ be integrable and $\varepsilon > 0$. Put $u_N = \min(\lvert f\rvert, N)$ for $N = 1, 2, \dots$ These are measurable by (N4), rise with $N$, and tend to $\lvert f\rvert$ at every point because $\lvert f\rvert$ is finite everywhere. By (N3), $\int u_N \to \int \lvert f\rvert$, a finite number. By 3, $\int (\lvert f\rvert - u_N) = \int \lvert f\rvert - \int u_N \to 0$; choose $N$ with this below $\varepsilon/2$. Put $\delta = \varepsilon/(2N)$. If $\mu(A) < \delta$, then pointwise $\lvert f\rvert\mathbf 1_A = (\lvert f\rvert - u_N)\mathbf 1_A + u_N \mathbf 1_A \le (\lvert f\rvert - u_N) + N\mathbf 1_A$, and (N1), (N2) give $\int_A \lvert f\rvert \le \int(\lvert f\rvert - u_N) + N\mu(A) < \varepsilon/2 + \varepsilon/2 = \varepsilon$. By 4, also $\lvert \int_A f\rvert < \varepsilon$.
+**6. Absolute continuity.** Let $`f`$ be integrable and $`\varepsilon > 0`$. Put $`u_N = \min(\lvert f\rvert, N)`$ for $`N = 1, 2, \dots`$ These are measurable by (N4), rise with $`N`$, and tend to $`\lvert f\rvert`$ at every point because $`\lvert f\rvert`$ is finite everywhere. By (N3), $`\int u_N \to \int \lvert f\rvert`$, a finite number. By 3, $`\int (\lvert f\rvert - u_N) = \int \lvert f\rvert - \int u_N \to 0`$; choose $`N`$ with this below $`\varepsilon/2`$. Put $`\delta = \varepsilon/(2N)`$. If $`\mu(A) < \delta`$, then pointwise $`\lvert f\rvert\mathbf 1_A = (\lvert f\rvert - u_N)\mathbf 1_A + u_N \mathbf 1_A \le (\lvert f\rvert - u_N) + N\mathbf 1_A`$, and (N1), (N2) give $`\int_A \lvert f\rvert \le \int(\lvert f\rvert - u_N) + N\mu(A) < \varepsilon/2 + \varepsilon/2 = \varepsilon`$. By 4, also $`\lvert \int_A f\rvert < \varepsilon`$.
 
-**7. The hypothesis is needed.** For $f(x) = 1/x$ on (0, 1] with length, and any $\delta \le 1$: on the piece from $\delta/2^{j+1}$ to $\delta/2^j$ the function is at least $2^j/\delta$, and the piece has length $\delta/2^{j+1}$, so the piece contributes at least 1/2. The first k pieces lie inside (0, δ] and contribute at least k/2 for every k, so $\int_{(0,\delta]} f = \infty$ although the set has length $\delta$.
+**7. The hypothesis is needed.** For $`f(x) = 1/x`$ on (0, 1] with length, and any $`\delta \le 1`$: on the piece from $`\delta/2^{j+1}`$ to $`\delta/2^j`$ the function is at least $`2^j/\delta`$, and the piece has length $`\delta/2^{j+1}`$, so the piece contributes at least 1/2. The first k pieces lie inside (0, δ] and contribute at least k/2 for every k, so $`\int_{(0,\delta]} f = \infty`$ although the set has length $`\delta`$.
 
 </details>
 
@@ -185,7 +199,7 @@ Per metre of river width: a 0.5 m drop leaves 235.7 m^3 of water; levelling the 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop integrability: the endless bed $w$ | in order 0.693142 after 100000 km; two pools then a bar 1.039718 after 300000 pieces | both parts infinite; the order of adding picks the answer |
+| Drop integrability: the endless bed $`w`$ | in order 0.693142 after 100000 km; two pools then a bar 1.039718 after 300000 pieces | both parts infinite; the order of adding picks the answer |
 | Drop integrability in Step 5: 1/x near 0 | at least 5, 10, 20 on (δ/2^10, δ], (δ/2^20, δ], (δ/2^40, δ] | no δ keeps the integral small |
 | Report the net as the water left | 0.1666666667 instead of 0.2357022604 km·m | shoals hold no negative water |
 | Take the size of the integral for the integral of the size | 0.1666666667 instead of 0.3047378541 km·m | cancellation hides twice the shoals |
@@ -618,12 +632,12 @@ The two outputs match line for line.
 Lean proves the definition and the four theorems on any measure space, and the 1/x failure for every δ up to 1.
 
 - A measurable function is integrable exactly when the integral of its size is finite. That holds exactly when both its parts have finite integral.
-- Suppose a measurable $f$ is integrable. Then $\int f\,d\mu = \int f^+\,d\mu - \int f^-\,d\mu$.
-- Take integrable $f$ and $g$, and real numbers $a$ and $b$. Then $a f + b g$ is integrable, with integral $a\int f\,d\mu + b\int g\,d\mu$.
-- Suppose $f$ and $g$ are integrable and $f \le g$ everywhere. Then $\int f\,d\mu \le \int g\,d\mu$.
+- Suppose a measurable $`f`$ is integrable. Then $`\int f\,d\mu = \int f^+\,d\mu - \int f^-\,d\mu`$.
+- Take integrable $`f`$ and $`g`$, and real numbers $`a`$ and $`b`$. Then $`a f + b g`$ is integrable, with integral $`a\int f\,d\mu + b\int g\,d\mu`$.
+- Suppose $`f`$ and $`g`$ are integrable and $`f \le g`$ everywhere. Then $`\int f\,d\mu \le \int g\,d\mu`$.
 - For an integrable function, the size of the integral is at most the integral of the size.
-- Take an integrable $f$ and any $\varepsilon > 0$. Then some $\delta > 0$ gives every measurable set of measure under $\delta$ an integral of $\lvert f\rvert$ under $\varepsilon$.
-- Take $0 < \delta \le 1$. Then $1/x$ has infinite integral on the interval $(0, \delta]$.
+- Take an integrable $`f`$ and any $`\varepsilon > 0`$. Then some $`\delta > 0`$ gives every measurable set of measure under $`\delta`$ an integral of $`\lvert f\rvert`$ under $`\varepsilon`$.
+- Take $`0 < \delta \le 1`$. Then $`1/x`$ has infinite integral on the interval $`(0, \delta]`$.
 - The four-reach warm-up holds exactly: positive part 7/32, negative part 1/32, net 3/16, also 3/16 by linearity, and size 1/4.
 
 The river itself, the spike, the endless bed and the figure are left to the Python and Rust checks.
@@ -761,9 +775,9 @@ example : (7/32 : ℚ) - 1/32 = 3/16 ∧ (7/16 + 15/16 + 15/16 + 7/16) * (1/4 : 
 > [!warning]
 > **Believing a signed function has an integral whenever its running total settles.** The endless bed's running total settles on 0.693147 in river order and on 1.039721 counted two pools to one bar. Both parts are infinite, so no Lebesgue integral exists; an improper Riemann limit along one order is a fact about the order, not the function.
 >
-> - **Reading the negative part as negative.** $f^-$ is the depth below zero, never negative: 0.0690 km·m for the shoals. Adding it instead of subtracting gives 0.3047, the size, not the net.
+> - **Reading the negative part as negative.** $`f^-`$ is the depth below zero, never negative: 0.0690 km·m for the shoals. Adding it instead of subtracting gives 0.3047, the size, not the net.
 > - **Bounded means integrable.** Only on a space of finite measure. The constant 0.5 on the whole line is bounded and has infinite integral.
-> - **Integrable means bounded.** The spike $s$ has no ceiling and integral 1.
+> - **Integrable means bounded.** The spike $`s`$ has no ceiling and integral 1.
 
 ---
 

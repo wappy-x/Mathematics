@@ -36,42 +36,48 @@ Orange: one year to expiry, a low hump peaking at 0.0754 near 1.12. Green: the s
 
 ## The formula
 
-Notation first. $S$ is EURUSD today, dollars per euro. $L$ and $U$ are the lower and upper walls, with $L < S < U$. $T$ is the time to expiry in years; $r_d$ and $r_f$ are the dollar and euro rates; $\sigma$ is the volatility. The double no-touch pays one dollar at expiry if the rate stays strictly between the walls until then. The rest follows [One-touch and no-touch](04-fx-one-touch-and-no-touch.md): $\nu = r_d - r_f - \tfrac12\sigma^2$ is the drift of log EURUSD in the dollar pricing world, $\lambda = \nu/\sigma^2$ is that drift in units of yearly variance, and $N(x)$ is the bell-curve area left of $x$.
+Notation first. $`S`$ is EURUSD today, dollars per euro. $`L`$ and $`U`$ are the lower and upper walls, with $`L < S < U`$. $`T`$ is the time to expiry in years; $`r_d`$ and $`r_f`$ are the dollar and euro rates; $`\sigma`$ is the volatility. The double no-touch pays one dollar at expiry if the rate stays strictly between the walls until then. The rest follows [One-touch and no-touch](04-fx-one-touch-and-no-touch.md): $`\nu = r_d - r_f - \tfrac12\sigma^2`$ is the drift of log EURUSD in the dollar pricing world, $`\lambda = \nu/\sigma^2`$ is that drift in units of yearly variance, and $`N(x)`$ is the bell-curve area left of $`x`$.
 
-One helper price. Write $G(x)$ for the price, with **no walls at all**, of one dollar paid at expiry if EURUSD ends between $L$ and $U$, when today's rate is $x$:
+One helper price. Write $`G(x)`$ for the price, with **no walls at all**, of one dollar paid at expiry if EURUSD ends between $`L`$ and $`U`$, when today's rate is $`x`$:
 
-$$G(x) = e^{-r_d T}\left[N\!\left(\frac{\ln(x/L) + \nu T}{\sigma\sqrt{T}}\right) - N\!\left(\frac{\ln(x/U) + \nu T}{\sigma\sqrt{T}}\right)\right]$$
+```math
+G(x) = e^{-r_d T}\left[N\!\left(\frac{\ln(x/L) + \nu T}{\sigma\sqrt{T}}\right) - N\!\left(\frac{\ln(x/U) + \nu T}{\sigma\sqrt{T}}\right)\right]
+```
 
-In words: the discounted chance of finishing above $L$, minus the discounted chance of finishing above $U$. Then
+In words: the discounted chance of finishing above $`L`$, minus the discounted chance of finishing above $`U`$. Then
 
-$$V_{DNT} = \sum_{n=-\infty}^{\infty} \left(\frac{U}{L}\right)^{2n\lambda}\left[\,G\!\left(S\left(\frac{U}{L}\right)^{2n}\right) - \left(\frac{U}{S}\right)^{2\lambda} G\!\left(\frac{U^2}{S}\left(\frac{U}{L}\right)^{2n}\right)\right]$$
+```math
+V_{DNT} = \sum_{n=-\infty}^{\infty} \left(\frac{U}{L}\right)^{2n\lambda}\left[\,G\!\left(S\left(\frac{U}{L}\right)^{2n}\right) - \left(\frac{U}{S}\right)^{2\lambda} G\!\left(\frac{U^2}{S}\left(\frac{U}{L}\right)^{2n}\right)\right]
+```
 
 **Read it aloud:** the double no-touch is the plain bet on ending between the walls, minus that bet started from today's rate mirrored in the upper wall, with each of those two repeated from rates shifted by whole round trips between the walls; every copy is weighted for drift.
 
-At $n = 0$: the plain bet $G(S)$ and its mirror in the upper wall, from $U^2/S$. The mirror in the lower wall, from $L^2/S$, is the second group's $n = -1$ member. Every further $n$ is an image of an image.
+At $`n = 0`$: the plain bet $`G(S)`$ and its mirror in the upper wall, from $`U^2/S`$. The mirror in the lower wall, from $`L^2/S`$, is the second group's $`n = -1`$ member. Every further $`n`$ is an image of an image.
 
-The double knock-out call uses the same sum with a different helper. Replace $G$ by $G_K$, the no-wall price of the call struck at $K$ that pays only if EURUSD ends below $U$:
+The double knock-out call uses the same sum with a different helper. Replace $`G`$ by $`G_K`$, the no-wall price of the call struck at $`K`$ that pays only if EURUSD ends below $`U`$:
 
-$$G_K(x) = x\,e^{-r_f T}\big[N(d_1(x,K)) - N(d_1(x,U))\big] - K e^{-r_d T}\big[N(d_2(x,K)) - N(d_2(x,U))\big]$$
+```math
+G_K(x) = x\,e^{-r_f T}\big[N(d_1(x,K)) - N(d_1(x,U))\big] - K e^{-r_d T}\big[N(d_2(x,K)) - N(d_2(x,U))\big]
+```
 
-with $d_2(x,H) = \big(\ln(x/H) + \nu T\big)/(\sigma\sqrt{T})$ and $d_1 = d_2 + \sigma\sqrt{T}$, for $L \le K < U$. Kunitomo and Ikeda published the formula in 1992, with walls allowed to curve.
+with $`d_2(x,H) = \big(\ln(x/H) + \nu T\big)/(\sigma\sqrt{T})`$ and $`d_1 = d_2 + \sigma\sqrt{T}`$, for $`L \le K < U`$. Kunitomo and Ikeda published the formula in 1992, with walls allowed to curve.
 
 | Symbol | Plain meaning | In our example | Push it up and the double no-touch… |
 | --- | --- | --- | --- |
-| $S$ | EURUSD today, dollars per euro | 1.10 | peaks near 1.12, then falls to 0 at $U$ |
-| $L$, $U$ | lower and upper walls | 1.05 and 1.20 | $L$ up: falls, less room; $U$ up: rises |
-| $K$ | strike of the double knock-out call | 1.10 | (call) falls |
-| $T$ | time to expiry, in years | 1 | falls: more time to touch |
-| $r_d$, $r_f$, $D$ | dollar and euro rates, continuously compounded; $D = e^{-r_d T}$ | 5%, 3%; 0.951229 | $r_d$ up tilts EURUSD toward $U$ |
-| $\sigma$ | volatility: the yearly spread of log moves in EURUSD | 10% | falls steeply |
-| $X_t$, $a$, $b$, $w$ | $X_t = \ln(S_t/S)$, the log of the rate's ratio to today; the walls on that scale, $a = \ln(L/S)$, $b = \ln(U/S)$, and the gap $w = b - a$ | $a = -0.046520$, $b = 0.087011$, $w = 0.133531$ | |
-| $\nu$, $\lambda$ | drift of $X_t$ per year in the dollar pricing world; $\lambda = \nu/\sigma^2$ | 0.015; 1.5 | |
-| $n$, $c$ | an image's round-trip count and its centre on the log scale | $c = 0$, $+0.174023$, $-0.093040$ first | |
-| $G(x)$, $G_K(x)$, $N(x)$, $d_1$, $d_2$, $H$ | no-wall prices of the range bet and capped call from rate $x$; the bell-curve area; Garman–Kohlhagen distances from $x$ to a level $H$ | $G(S) = 0.470917$ | |
-| $v$, $\varphi_v$, $k$, $m_k$ | in the proof and wave series: the year's variance $\sigma^2 T$, the bell curve with that variance, a wave's count and its frequency $k\pi/w$ | 0.01 | |
-| $V_{DNT}$, $V_{DKO}$, $V_{NT}$ | prices today of the double no-touch (per dollar of payout) and double knock-out call (dollars per euro); $V_{NT}(H)$, the single no-touch at wall $H$ | 0.068977; 0.001989; $V_{NT}(1.05) = 0.383822$ | |
+| $`S`$ | EURUSD today, dollars per euro | 1.10 | peaks near 1.12, then falls to 0 at $`U`$ |
+| $`L`$, $`U`$ | lower and upper walls | 1.05 and 1.20 | $`L`$ up: falls, less room; $`U`$ up: rises |
+| $`K`$ | strike of the double knock-out call | 1.10 | (call) falls |
+| $`T`$ | time to expiry, in years | 1 | falls: more time to touch |
+| $`r_d`$, $`r_f`$, $`D`$ | dollar and euro rates, continuously compounded; $`D = e^{-r_d T}`$ | 5%, 3%; 0.951229 | $`r_d`$ up tilts EURUSD toward $`U`$ |
+| $`\sigma`$ | volatility: the yearly spread of log moves in EURUSD | 10% | falls steeply |
+| $`X_t`$, $`a`$, $`b`$, $`w`$ | $`X_t = \ln(S_t/S)`$, the log of the rate's ratio to today; the walls on that scale, $`a = \ln(L/S)`$, $`b = \ln(U/S)`$, and the gap $`w = b - a`$ | $`a = -0.046520`$, $`b = 0.087011`$, $`w = 0.133531`$ | |
+| $`\nu`$, $`\lambda`$ | drift of $`X_t`$ per year in the dollar pricing world; $`\lambda = \nu/\sigma^2`$ | 0.015; 1.5 | |
+| $`n`$, $`c`$ | an image's round-trip count and its centre on the log scale | $`c = 0`$, $`+0.174023`$, $`-0.093040`$ first | |
+| $`G(x)`$, $`G_K(x)`$, $`N(x)`$, $`d_1`$, $`d_2`$, $`H`$ | no-wall prices of the range bet and capped call from rate $`x`$; the bell-curve area; Garman–Kohlhagen distances from $`x`$ to a level $`H`$ | $`G(S) = 0.470917`$ | |
+| $`v`$, $`\varphi_v`$, $`k`$, $`m_k`$ | in the proof and wave series: the year's variance $`\sigma^2 T`$, the bell curve with that variance, a wave's count and its frequency $`k\pi/w`$ | 0.01 | |
+| $`V_{DNT}`$, $`V_{DKO}`$, $`V_{NT}`$ | prices today of the double no-touch (per dollar of payout) and double knock-out call (dollars per euro); $`V_{NT}(H)`$, the single no-touch at wall $`H`$ | 0.068977; 0.001989; $`V_{NT}(1.05) = 0.383822`$ | |
 
-On the log scale, reflecting in a wall sends a point $c$ to $2b - c$ or $2a - c$, and one reflection in each wall shifts it by $2w$. So plain terms sit at $c = 2nw$, mirrored ones at $c = 2b + 2nw$, each with weight $e^{\lambda c}$: the powers above, written as logs.
+On the log scale, reflecting in a wall sends a point $`c`$ to $`2b - c`$ or $`2a - c`$, and one reflection in each wall shifts it by $`2w`$. So plain terms sit at $`c = 2nw`$, mirrored ones at $`c = 2b + 2nw`$, each with weight $`e^{\lambda c}`$: the powers above, written as logs.
 
 **Conventions verified 27 Sep 2026:** quoted as a percentage of payout, paid at expiry; both walls watched continuously against the bank's reference rate; a trade exactly at a wall is a touch. From Clark and Wystup in Sources; a term sheet overrides them.
 
@@ -93,7 +99,7 @@ Orange: the payoff on a path that never touched either wall, climbing to 0.09 at
 
 - **Continuous monitoring of both walls.** The formula counts every touch, however brief. Checking once a week and ignoring the gaps gives 0.122999, nearly double.
 - **A lognormal rate with one constant volatility, no jumps.** The double no-touch is a pure volatility bet, so on a real smile the model price is off. Desks correct it; the size of the correction is measured on [Barriers on a smile](07-barriers-with-the-smile.md).
-- **Known, constant rates in both currencies.** The drift $\nu$ and the discount $D$ both come from them.
+- **Known, constant rates in both currencies.** The drift $`\nu`$ and the discount $`D`$ both come from them.
 - **Flat walls, spot strictly inside, strike between the walls.** On or outside a wall the contract is dead: price 0. Walls that move with time need Kunitomo and Ikeda's curved form.
 - **No rebate.** A cash sum paid on the touch adds a pay-at-hit double one-touch, not priced here.
 
@@ -103,42 +109,46 @@ Orange: the payoff on a path that never touched either wall, climbing to 0.09 at
 
 ### Step 0: a price is a discounted chance, and two mirrors make infinitely many
 
-The double no-touch pays one dollar at expiry exactly when the path never leaves the corridor. In the dollar pricing world ([Currency digitals](01-fx-digitals.md)) its price is $D$ times the chance of that event. So everything reduces to one question: how is the rate distributed at expiry, counting only the paths that stayed inside?
+The double no-touch pays one dollar at expiry exactly when the path never leaves the corridor. In the dollar pricing world ([Currency digitals](01-fx-digitals.md)) its price is $`D`$ times the chance of that event. So everything reduces to one question: how is the rate distributed at expiry, counting only the paths that stayed inside?
 
 One wall answers that with one mirror ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)). Two walls answer it with a mirror in each, then mirrors of mirrors.
 
 ### Step 1: work on the log scale, where the walls are flat and the corridor has a width
 
-Measure EURUSD by $X_t = \ln(S_t/S)$. In the dollar pricing world $X_t$ drifts at $\nu = 0.05 - 0.03 - 0.005 = 0.015$ per year and spreads by $\sigma\sqrt{T} = 0.100000$ over the year. The walls become flat levels, $a = \ln(1.05/1.10) = -0.046520$ below and $b = \ln(1.20/1.10) = 0.087011$ above. The corridor is $w = 0.133531$ wide: a little more than one year's spread.
+Measure EURUSD by $`X_t = \ln(S_t/S)`$. In the dollar pricing world $`X_t`$ drifts at $`\nu = 0.05 - 0.03 - 0.005 = 0.015`$ per year and spreads by $`\sigma\sqrt{T} = 0.100000`$ over the year. The walls become flat levels, $`a = \ln(1.05/1.10) = -0.046520`$ below and $`b = \ln(1.20/1.10) = 0.087011`$ above. The corridor is $`w = 0.133531`$ wide: a little more than one year's spread.
 
 ### Step 2: without drift, subtract a mirror in each wall
 
-Set the drift to zero for now. Start with every path, whatever it did: its end point spreads as a bell curve centred at 0. Some of those paths touched $b$. By the reflection argument, the touched paths that end at $x$ are exactly as many as all paths that end at $2b - x$: a bell curve centred at $2b$. Subtract it. Do the same for $a$: subtract a bell curve centred at $2a$.
+Set the drift to zero for now. Start with every path, whatever it did: its end point spreads as a bell curve centred at 0. Some of those paths touched $`b`$. By the reflection argument, the touched paths that end at $`x`$ are exactly as many as all paths that end at $`2b - x`$: a bell curve centred at $`2b`$. Subtract it. Do the same for $`a`$: subtract a bell curve centred at $`2a`$.
 
-That over-subtracts. A path that touched $b$ and later $a$ was removed twice. So add back the paths that touched $b$ then $a$, and those that touched $a$ then $b$. Reflect twice, once in each wall, and a point moves by $2w$: those two groups are bell curves centred at $+2w$ and $-2w$. Adding them over-adds the paths that touched three times, alternating, so subtract again, and so on. Each round removes or restores a group of paths with one more alternating touch.
+That over-subtracts. A path that touched $`b`$ and later $`a`$ was removed twice. So add back the paths that touched $`b`$ then $`a`$, and those that touched $`a`$ then $`b`$. Reflect twice, once in each wall, and a point moves by $`2w`$: those two groups are bell curves centred at $`+2w`$ and $`-2w`$. Adding them over-adds the paths that touched three times, alternating, so subtract again, and so on. Each round removes or restores a group of paths with one more alternating touch.
 
-The result is an alternating sum of bell curves. Those with a plus sign sit at $2nw$ for every whole number $n$; those with a minus sign sit at $2b + 2nw$.
+The result is an alternating sum of bell curves. Those with a plus sign sit at $`2nw`$ for every whole number $`n`$; those with a minus sign sit at $`2b + 2nw`$.
 
 ### Step 3: put the drift back, and each image gets a weight
 
-With drift, a path and its mirror image are no longer equally likely. Girsanov's theorem (a change of drift is a reweighting of paths) says a path of the drifting walk ending at $x$ carries the weight $e^{\lambda x}$, times a constant, relative to the driftless walk. Carry that weight through the integral for each image centred at $c$, complete the square, and the image becomes the plain range bet started from the shifted rate $S e^{c}$, times $e^{\lambda c}$. For the plain term, $c = 0$ and the weight is 1. For the first mirror in the upper wall, $c = 2b$ and the weight is $e^{2\lambda b} = (U/S)^{2\lambda} = 1.298272$, the same mirror weight as on the one-wall card.
+With drift, a path and its mirror image are no longer equally likely. Girsanov's theorem (a change of drift is a reweighting of paths) says a path of the drifting walk ending at $`x`$ carries the weight $`e^{\lambda x}`$, times a constant, relative to the driftless walk. Carry that weight through the integral for each image centred at $`c`$, complete the square, and the image becomes the plain range bet started from the shifted rate $`S e^{c}`$, times $`e^{\lambda c}`$. For the plain term, $`c = 0`$ and the weight is 1. For the first mirror in the upper wall, $`c = 2b`$ and the weight is $`e^{2\lambda b} = (U/S)^{2\lambda} = 1.298272`$, the same mirror weight as on the one-wall card.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $v = \sigma^2 T$ and $\varphi_v(u) = e^{-u^2/(2v)}/\sqrt{2\pi v}$, the bell curve with variance $v$.
+Let $`v = \sigma^2 T`$ and $`\varphi_v(u) = e^{-u^2/(2v)}/\sqrt{2\pi v}`$, the bell curve with variance $`v`$.
 
-**Driftless walk.** Claim: a driftless walk from 0 that stays in $(a, b)$ ends with density
-$$p_0(x) = \sum_{n=-\infty}^{\infty}\big[\varphi_v(x - 2nw) - \varphi_v(x - 2b - 2nw)\big].$$
-Each term solves the heat equation $\partial_v p = \tfrac12 \partial_x^2 p$. As $v \to 0$ only the $n = 0$ plus term is centred inside $(a, b)$: the start is a point mass at 0. At $x = b$ plus term $n$ cancels minus term $-n$, since $\varphi_v$ is even. At $x = a$ plus term $n$ cancels minus term $-n - 1$, because $a - 2b + 2(n+1)w = 2nw - a$. The sum converges uniformly, the centres growing linearly against a Gaussian decay. The heat equation on an interval with zero at both ends and a given start has one solution, so this is it.
+**Driftless walk.** Claim: a driftless walk from 0 that stays in $`(a, b)`$ ends with density
 
-**Drift.** Under drift $\nu$ the walk has density $e^{\lambda X_T - \lambda^2 v/2}$ against the driftless one, and staying inside is a statement about the path, so $p_\nu(x) = e^{\lambda x - \lambda^2 v/2}\,p_0(x)$.
+$`\displaystyle p_0(x) = \sum_{n=-\infty}^{\infty}\big[\varphi_v(x - 2nw) - \varphi_v(x - 2b - 2nw)\big].`$
 
-**One image.** For an image at $c$ and a window $(lo, hi)$, complete the square:
-$$\int_{lo}^{hi} e^{\lambda x - \lambda^2 v/2}\varphi_v(x - c)\,dx = e^{\lambda c}\Big[N\Big(\tfrac{hi - c - \nu T}{\sqrt v}\Big) - N\Big(\tfrac{lo - c - \nu T}{\sqrt v}\Big)\Big],$$
-because $\lambda v = \nu T$. With $(lo, hi) = (a, b)$ and the discount $D$ this is $e^{\lambda c}\,G(S e^{c})$: the range bet from rate $S e^c$. Summing over the plus centres $2nw$ and the minus centres $2b + 2nw$ gives the formula for $V_{DNT}$.
+Each term solves the heat equation $`\partial_v p = \tfrac12 \partial_x^2 p`$. As $`v \to 0`$ only the $`n = 0`$ plus term is centred inside $`(a, b)`$: the start is a point mass at 0. At $`x = b`$ plus term $`n`$ cancels minus term $`-n`$, since $`\varphi_v`$ is even. At $`x = a`$ plus term $`n`$ cancels minus term $`-n - 1`$, because $`a - 2b + 2(n+1)w = 2nw - a`$. The sum converges uniformly, the centres growing linearly against a Gaussian decay. The heat equation on an interval with zero at both ends and a given start has one solution, so this is it.
 
-**The call.** Paying $S_T - K$ multiplies the integrand by $S e^{x}$. The same square-completion with $\lambda + 1$ in place of $\lambda$ yields $e^{\lambda c}\,S e^{c}\,e^{(\lambda + \frac12)v}$ times a bracket in $d_1$; since $(\lambda + \tfrac12)\sigma^2 T = (r_d - r_f)T$, the discounted asset part is $e^{\lambda c}\,S e^{c} e^{-r_f T}[\dots]$. With the window $(\ln(K/S), b)$ that is $e^{\lambda c}\,G_K(S e^{c})$, and the sum gives $V_{DKO}$.
+**Drift.** Under drift $`\nu`$ the walk has density $`e^{\lambda X_T - \lambda^2 v/2}`$ against the driftless one, and staying inside is a statement about the path, so $`p_\nu(x) = e^{\lambda x - \lambda^2 v/2}\,p_0(x)`$.
+
+**One image.** For an image at $`c`$ and a window $`(lo, hi)`$, complete the square:
+
+$`\displaystyle \int_{lo}^{hi} e^{\lambda x - \lambda^2 v/2}\varphi_v(x - c)\,dx = e^{\lambda c}\Big[N\Big(\tfrac{hi - c - \nu T}{\sqrt v}\Big) - N\Big(\tfrac{lo - c - \nu T}{\sqrt v}\Big)\Big],`$
+
+because $`\lambda v = \nu T`$. With $`(lo, hi) = (a, b)`$ and the discount $`D`$ this is $`e^{\lambda c}\,G(S e^{c})`$: the range bet from rate $`S e^c`$. Summing over the plus centres $`2nw`$ and the minus centres $`2b + 2nw`$ gives the formula for $`V_{DNT}`$.
+
+**The call.** Paying $`S_T - K`$ multiplies the integrand by $`S e^{x}`$. The same square-completion with $`\lambda + 1`$ in place of $`\lambda`$ yields $`e^{\lambda c}\,S e^{c}\,e^{(\lambda + \frac12)v}`$ times a bracket in $`d_1`$; since $`(\lambda + \tfrac12)\sigma^2 T = (r_d - r_f)T`$, the discounted asset part is $`e^{\lambda c}\,S e^{c} e^{-r_f T}[\dots]`$. With the window $`(\ln(K/S), b)`$ that is $`e^{\lambda c}\,G_K(S e^{c})`$, and the sum gives $`V_{DKO}`$.
 
 </details>
 
@@ -147,26 +157,28 @@ because $\lambda v = \nu T$. With $(lo, hi) = (a, b)$ and the discount $D$ this 
 The plain term and the two first mirrors are the big ones:
 
 - plain term, centre 0: 0.470917;
-- mirror in 1.20, centre $+0.174023$: 0.178558;
-- mirror in 1.05, centre $-0.093040$: 0.270440.
+- mirror in 1.20, centre $`+0.174023`$: 0.178558;
+- mirror in 1.05, centre $`-0.093040`$: 0.270440.
 
-After them, every new image sits a further $2w = 0.267063$ away from the corridor. Its bracket is the chance that a bell curve with spread 0.100000 lands in the corridor from that far away, and such tail chances fall like $e^{-u^2/2}$ in the distance $u$ measured in spreads. The partial sums show it: 0.470917 with no reflections, 0.021919 after one, 0.069957 after two, 0.068972 after three, 0.068977 after four, and no change to six decimals after that. The code sums eight to be safe.
+After them, every new image sits a further $`2w = 0.267063`$ away from the corridor. Its bracket is the chance that a bell curve with spread 0.100000 lands in the corridor from that far away, and such tail chances fall like $`e^{-u^2/2}`$ in the distance $`u`$ measured in spreads. The partial sums show it: 0.470917 with no reflections, 0.021919 after one, 0.069957 after two, 0.068972 after three, 0.068977 after four, and no change to six decimals after that. The code sums eight to be safe.
 
-With a long expiry or a narrow corridor the spread grows against $w$ and more images matter. There the second series takes over.
+With a long expiry or a narrow corridor the spread grows against $`w`$ and more images matter. There the second series takes over.
 
 ### Step 5: the same answer as a sum of sine waves
 
-Solve the same problem by separating the heat equation (the equation the driftless survival density obeys, as in the Detailed proof) instead of by mirrors. On a corridor of width $w$ with zero at both walls, the natural shapes are the sine waves $\sin\big(k\pi(x - a)/w\big)$, $k = 1, 2, 3, \dots$, and the $k$-th one decays like $e^{-\frac12 m_k^2\sigma^2 T}$ with $m_k = k\pi/w$. The driftless survival density is their sum; the drift weight $e^{\lambda x}$ integrates against each wave in closed form. The double no-touch becomes
+Solve the same problem by separating the heat equation (the equation the driftless survival density obeys, as in the Detailed proof) instead of by mirrors. On a corridor of width $`w`$ with zero at both walls, the natural shapes are the sine waves $`\sin\big(k\pi(x - a)/w\big)`$, $`k = 1, 2, 3, \dots`$, and the $`k`$-th one decays like $`e^{-\frac12 m_k^2\sigma^2 T}`$ with $`m_k = k\pi/w`$. The driftless survival density is their sum; the drift weight $`e^{\lambda x}`$ integrates against each wave in closed form. The double no-touch becomes
 
-$$V_{DNT} = e^{-r_d T - \frac12\lambda^2\sigma^2 T + \lambda a}\sum_{k=1}^{\infty}\frac{2}{w}\,\sin(-m_k a)\,e^{-\frac12 m_k^2\sigma^2 T}\;\frac{m_k\big(1 - (-1)^k e^{\lambda w}\big)}{\lambda^2 + m_k^2}.$$
+```math
+V_{DNT} = e^{-r_d T - \frac12\lambda^2\sigma^2 T + \lambda a}\sum_{k=1}^{\infty}\frac{2}{w}\,\sin(-m_k a)\,e^{-\frac12 m_k^2\sigma^2 T}\;\frac{m_k\big(1 - (-1)^k e^{\lambda w}\big)}{\lambda^2 + m_k^2}.
+```
 
 One wave gives 0.0689775726, two give 0.0689767879, and the third changes nothing at ten decimals. Images converge fast for short expiries, waves for long ones. They are one function written two ways; Poisson summation (a rule turning a sum of shifted bell curves into a sum of waves) converts one into the other. Pelsser derived the wave form in 2000.
 
 ### Step 6: the knock-out, and in-plus-out
 
-The double knock-out call is Step 3 with the capped call in place of the range bet. Its partial sums settle as fast, 0.014559, $-0.000241$, 0.002007, 0.001989, swinging through zero on the way: a warning against stopping at one reflection.
+The double knock-out call is Step 3 with the capped call in place of the range bet. Its partial sums settle as fast, 0.014559, $`-0.000241`$, 0.002007, 0.001989, swinging through zero on the way: a warning against stopping at one reflection.
 
-A double knock-in call, born on the first touch of either wall, completes it: knock-in plus knock-out is the plain call, 0.053556. So the double knock-in costs $0.053556 - 0.001989 = 0.051567$. Likewise a double one-touch, paying one dollar at expiry if either wall is touched, costs $D - V_{DNT} = 0.951229 - 0.068977 = 0.882253$. Neither identity needs the model.
+A double knock-in call, born on the first touch of either wall, completes it: knock-in plus knock-out is the plain call, 0.053556. So the double knock-in costs $`0.053556 - 0.001989 = 0.051567`$. Likewise a double one-touch, paying one dollar at expiry if either wall is touched, costs $`D - V_{DNT} = 0.951229 - 0.068977 = 0.882253`$. Neither identity needs the model.
 
 ### Other roads
 
@@ -180,21 +192,21 @@ EURUSD 1.10, walls 1.05 and 1.20, dollar rate 5%, euro rate 3%, volatility 10%, 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| lower wall on the log scale, $a$ | $\ln(1.05/1.10)$ | $-0.046520$ |
-| upper wall on the log scale, $b$ | $\ln(1.20/1.10)$ | 0.087011 |
-| corridor width, $w$ | $0.087011 + 0.046520$ | 0.133531 |
-| drift, $\nu$; $\lambda$ | $0.05 - 0.03 - \tfrac12(0.10)^2$; $0.015/0.01$ | 0.015; 1.5 |
-| discount, $D$ | $e^{-0.05}$ | 0.951229 |
-| plain term: end inside, no walls | $D \times [N(0.615200) - N(-0.720114)] = D \times 0.495061$ | 0.470917 |
-| mirror in 1.20, centre $2b = 0.174023$ | $D \times 1.298272 \times [N(2.355428) - N(1.020114)]$, bracket 0.144587 | 0.178558 |
-| mirror in 1.05, centre $2a = -0.093040$ | $D \times 0.869741 \times [N(-0.315200) - N(-1.650514)]$, bracket 0.326886 | 0.270440 |
-| after one reflection | $0.470917 - 0.178558 - 0.270440$ | 0.021919 |
-| after two reflections | add the images at $\pm 2w$ | 0.069957 |
+| lower wall on the log scale, $`a`$ | $`\ln(1.05/1.10)`$ | $`-0.046520`$ |
+| upper wall on the log scale, $`b`$ | $`\ln(1.20/1.10)`$ | 0.087011 |
+| corridor width, $`w`$ | $`0.087011 + 0.046520`$ | 0.133531 |
+| drift, $`\nu`$; $`\lambda`$ | $`0.05 - 0.03 - \tfrac12(0.10)^2`$; $`0.015/0.01`$ | 0.015; 1.5 |
+| discount, $`D`$ | $`e^{-0.05}`$ | 0.951229 |
+| plain term: end inside, no walls | $`D \times [N(0.615200) - N(-0.720114)] = D \times 0.495061`$ | 0.470917 |
+| mirror in 1.20, centre $`2b = 0.174023`$ | $`D \times 1.298272 \times [N(2.355428) - N(1.020114)]`$, bracket 0.144587 | 0.178558 |
+| mirror in 1.05, centre $`2a = -0.093040`$ | $`D \times 0.869741 \times [N(-0.315200) - N(-1.650514)]`$, bracket 0.326886 | 0.270440 |
+| after one reflection | $`0.470917 - 0.178558 - 0.270440`$ | 0.021919 |
+| after two reflections | add the images at $`\pm 2w`$ | 0.069957 |
 | after three | subtract the next pair | 0.068972 |
 | **after four and beyond: double no-touch** | | **0.068977** |
-| payout over premium | $1 / 0.068977$ | 14.497631 |
+| payout over premium | $`1 / 0.068977`$ | 14.497631 |
 
-Each bracket is $G/D$ read at the image's rate, with arguments $(c - a + \nu T)/\sigma\sqrt{T}$ and $(c - b + \nu T)/\sigma\sqrt{T}$.
+Each bracket is $`G/D`$ read at the image's rate, with arguments $`(c - a + \nu T)/\sigma\sqrt{T}`$ and $`(c - b + \nu T)/\sigma\sqrt{T}`$.
 
 In desk terms: 6.90% of payout; each dollar of premium buys 14.50 of payout if EURUSD stays inside 1.05 to 1.20 for a year.
 
@@ -216,11 +228,11 @@ Right answer 0.068977.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Multiply the two single no-touch chances: $V_{NT}(1.20)\,V_{NT}(1.05)/D$ | 0.216687 | Treated the walls as independent. A path that avoids 1.20 spends more time low, nearer 1.05. |
-| Add the two single no-touches and take off one $D$ | $-0.030391$ | Inclusion–exclusion with the paths that touch both walls left out; they were subtracted twice. |
+| Multiply the two single no-touch chances: $`V_{NT}(1.20)\,V_{NT}(1.05)/D`$ | 0.216687 | Treated the walls as independent. A path that avoids 1.20 spends more time low, nearer 1.05. |
+| Add the two single no-touches and take off one $`D`$ | $`-0.030391`$ | Inclusion–exclusion with the paths that touch both walls left out; they were subtracted twice. |
 | Stop at one mirror per wall | 0.021919 | The same double subtraction: the images of images restore those paths. |
 | Simulate weekly checks, no bridge correction | 0.122999 | Missed every touch that happened and reversed between two checks. |
-| Quote the ending bet $G(S)$ as the price | 0.470917 | Priced where EURUSD ends, not where it went. |
+| Quote the ending bet $`G(S)`$ as the price | 0.470917 | Priced where EURUSD ends, not where it went. |
 
 ---
 
@@ -233,8 +245,8 @@ So the double no-touch has the opposite gamma, vega and theta to a plain option 
 | Greek | Double no-touch, per 1 USD | Double knock-out call, per euro | Meaning |
 | --- | --- | --- | --- |
 | delta | +0.006651 | +0.000192 | value change for EURUSD up 0.01 |
-| gamma | $-0.003397$ | $-0.000098$ | second difference over steps of 0.01: negative, the hump bends down |
-| vega | $-0.039476$ | $-0.001162$ | value change per volatility point, averaged over 9% and 11% |
+| gamma | $`-0.003397`$ | $`-0.000098`$ | second difference over steps of 0.01: negative, the hump bends down |
+| vega | $`-0.039476`$ | $`-0.001162`$ | value change per volatility point, averaged over 9% and 11% |
 | theta | +0.000537 | +0.000015 | value change over one day, nothing else moving |
 
 Negative vega and positive theta are the signature of selling volatility. The double no-touch's vega per point is more than half its value. Its buyer sells volatility with the loss capped at the premium. The knock-out call shares the signs, despite being a call, because the upper wall caps what a big move could give. How these Greeks jump near a wall is on [Greeks at the wall](06-barrier-and-touch-greeks.md).
@@ -680,10 +692,10 @@ Series and waves agree to ten decimals. The grid lands at 0.068978. The simulati
 
 Lean proves three steps of Why it works, for every corridor, drift and positive variance, and checks the worked numbers exactly.
 
-- Take walls $a < 0 < b$ and a positive variance $v$. Then Step 2's alternating sum of bell curves converges at every end point, and is zero on both walls.
-- Take any $\lambda$, image centre $c$, window from $lo$ to $hi$, and positive variance $v$. Then the "One image" formula in the Detailed proof holds, with $\lambda v$ for $\nu T$.
-- Take any model, any payoff with a finite price, and any discount $D$. Then knock-in plus knock-out is the plain option, and the double one-touch costs $D - V_{DNT}$.
-- Exact fractions confirm $\nu = 0.015$, $\lambda = 1.5$, $w = 0.133531$, 0.021919 after one reflection, and the double knock-in 0.051567.
+- Take walls $`a < 0 < b`$ and a positive variance $`v`$. Then Step 2's alternating sum of bell curves converges at every end point, and is zero on both walls.
+- Take any $`\lambda`$, image centre $`c`$, window from $`lo`$ to $`hi`$, and positive variance $`v`$. Then the "One image" formula in the Detailed proof holds, with $`\lambda v`$ for $`\nu T`$.
+- Take any model, any payoff with a finite price, and any discount $`D`$. Then knock-in plus knock-out is the plain option, and the double one-touch costs $`D - V_{DNT}`$.
+- Exact fractions confirm $`\nu = 0.015`$, $`\lambda = 1.5`$, $`w = 0.133531`$, 0.021919 after one reflection, and the double knock-in 0.051567.
 
 Why the sum is the survival density, the dollar prices and the sine-wave series are left to the Python and Rust checks.
 
@@ -902,14 +914,14 @@ end DoubleBarrier
 > - **Widen the walls to 1.00 and 1.25.** Guess first: double, or more? Set `L=1.00, U=1.25`. The price is 0.443888, more than six times as much.
 > - **Halve the time.** Guess first. Set `T=0.5`. The price is 0.283576: half the time, about four times the value.
 > - **Lower volatility to 8%.** Set `sig=0.08`. The double no-touch rises to 0.189361 and the double knock-out call to 0.005596. Two volatility points almost triple both.
-> - **Set the images to one reflection.** Set `jmax=1`. The double no-touch falls to 0.021919 and the call to $-0.000241$, a negative price: the sign that the sum was cut too early.
+> - **Set the images to one reflection.** Set `jmax=1`. The double no-touch falls to 0.021919 and the call to $`-0.000241`$, a negative price: the sign that the sum was cut too early.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Pricing two walls as two separate bets.** The chance of avoiding both walls is not the product of the chances of avoiding each: a path kept away from one spends its time nearer the other. The product gives 0.216687, three times the right 0.068977. Inclusion–exclusion without the both-walls term gives $-0.030391$. The images are the correct bookkeeping for every sequence of touches.
+> **Pricing two walls as two separate bets.** The chance of avoiding both walls is not the product of the chances of avoiding each: a path kept away from one spends its time nearer the other. The product gives 0.216687, three times the right 0.068977. Inclusion–exclusion without the both-walls term gives $`-0.030391`$. The images are the correct bookkeeping for every sequence of touches.
 >
 > Smaller traps:
 > - **Stopping the series at one mirror per wall, or simulating weekly checks without the bridge.** Both appear in the table above. Sum until the terms stop changing; use very fine steps or the bridge factor.

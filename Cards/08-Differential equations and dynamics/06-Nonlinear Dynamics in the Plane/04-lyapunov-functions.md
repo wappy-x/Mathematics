@@ -36,13 +36,17 @@ Orange: the honey bowl, x' = −x^3, still 0.20 cm out at 12 s. Green: a round b
 
 Notation first. A rest of x' = f(x) is a point x* where f(x*) = 0. A function V is **positive definite** about x* when V(x*) = 0 and V is positive at every other point near it. The rate of V along a motion is written V' and computed from f alone:
 
-$$V'(x) = \nabla V(x)\cdot f(x)$$
+```math
+V'(x) = \nabla V(x)\cdot f(x)
+```
 
 **Read it aloud:** the rate of V along the motion is the gradient of V (its slopes in each direction) dotted with the velocity the rate law prescribes.
 
 On a line the gradient is the plain slope, so V' = x · (−x^3) = −x^4 in the bowl. Lyapunov's direct method: for V positive definite with continuous slopes near x*,
 
-$$V' \le 0 \;\Rightarrow\; x^* \text{ stable}, \qquad V' < 0 \text{ except at } x^* \;\Rightarrow\; x^* \text{ asymptotically stable}.$$
+```math
+V' \le 0 \;\Rightarrow\; x^* \text{ stable}, \qquad V' < 0 \text{ except at } x^* \;\Rightarrow\; x^* \text{ asymptotically stable}.
+```
 
 **Read it aloud:** if V never rises, motions that start close stay close; if V always falls away from the rest, they also settle into it.
 
@@ -50,14 +54,14 @@ $$V' \le 0 \;\Rightarrow\; x^* \text{ stable}, \qquad V' < 0 \text{ except at } 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | distance of the ball from the bottom, cm | 1 cm at the start | V and the push grow |
-| $t$ | time since release, s | 0 to 12 s | x shrinks, slowly |
-| $f$ | the rate law: velocity at each place | −x^3 cm/s | — |
-| $x^*$ | the rest being tested | 0, the bottom | — |
-| $x_0$ | starting distance | 1 cm | x(12) barely changes |
-| $V$ | the Lyapunov function, a height-like score | x^2/2, 0.5 at the start | — |
-| $V'$ | rate of V along the motion | −x^4: −1 at 1 cm | more negative: settles faster |
-| $y$, $E$ | without honey: speed in cm/s, and energy x^4/4 + y^2/2 | E = 0.25 from rest at 1 cm | E never changes |
+| $`x`$ | distance of the ball from the bottom, cm | 1 cm at the start | V and the push grow |
+| $`t`$ | time since release, s | 0 to 12 s | x shrinks, slowly |
+| $`f`$ | the rate law: velocity at each place | −x^3 cm/s | — |
+| $`x^*`$ | the rest being tested | 0, the bottom | — |
+| $`x_0`$ | starting distance | 1 cm | x(12) barely changes |
+| $`V`$ | the Lyapunov function, a height-like score | x^2/2, 0.5 at the start | — |
+| $`V'`$ | rate of V along the motion | −x^4: −1 at 1 cm | more negative: settles faster |
+| $`y`$, $`E`$ | without honey: speed in cm/s, and energy x^4/4 + y^2/2 | E = 0.25 from rest at 1 cm | E never changes |
 
 ### When it holds
 

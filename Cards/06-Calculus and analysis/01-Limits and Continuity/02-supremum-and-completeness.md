@@ -28,28 +28,32 @@ To scale: 250 units of width per unit of number, so 0 sits at x = 40, 0.5 at 165
 
 ## The formula
 
-$S$ names a collection of numbers. $\sup S$, read "the supremum of S", is its least upper bound; $\max S$ is its largest member, if any. An **upper bound**, or ceiling, is a number no member passes.
+$`S`$ names a collection of numbers. $`\sup S`$, read "the supremum of S", is its least upper bound; $`\max S`$ is its largest member, if any. An **upper bound**, or ceiling, is a number no member passes.
 
-$$s = \sup S \iff \begin{cases} x \le s & \text{for every } x \text{ in } S \\ \text{some } x \text{ in } S \text{ has } x > t & \text{for every } t < s \end{cases}$$
+```math
+s = \sup S \iff \begin{cases} x \le s & \text{for every } x \text{ in } S \\ \text{some } x \text{ in } S \text{ has } x > t & \text{for every } t < s \end{cases}
+```
 
 **Read it aloud:** s is a ceiling over every member, and any number lower than s is passed by some member. Neither line asks s to be a member.
 
 Completeness, the axiom:
 
-$$S \text{ non-empty, bounded above} \;\Longrightarrow\; \sup S \text{ exists, a real number}$$
+```math
+S \text{ non-empty, bounded above} \;\Longrightarrow\; \sup S \text{ exists, a real number}
+```
 
 **Read it aloud:** a collection of reals with a member and a ceiling has a lowest ceiling, and it is a real number. For (0, 1] the supremum and maximum are both 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | a collection of real numbers | (0, 1) | a higher top edge raises the supremum |
-| $x$ | any one member of $S$ | 0.95 | stays below 1 |
-| $s$, $\sup S$ | the least upper bound | 1 | — |
-| $\max S$ | the largest member, if any | none; 1 for (0, 1] | — |
-| $m$ | a proposed maximum | 0.9 | its beater (m + 1)/2 rises too |
-| $t$ | a challenger below $s$ | 0.999 | the member passing it nears 1 |
-| $\iff$, $\Longrightarrow$ | "exactly when"; "guarantees" | read the two lines aloud | — |
-| $\inf S$ | the greatest lower bound, the **infimum** | 0 | — |
+| $`S`$ | a collection of real numbers | (0, 1) | a higher top edge raises the supremum |
+| $`x`$ | any one member of $`S`$ | 0.95 | stays below 1 |
+| $`s`$, $`\sup S`$ | the least upper bound | 1 | — |
+| $`\max S`$ | the largest member, if any | none; 1 for (0, 1] | — |
+| $`m`$ | a proposed maximum | 0.9 | its beater (m + 1)/2 rises too |
+| $`t`$ | a challenger below $`s`$ | 0.999 | the member passing it nears 1 |
+| $`\iff`$, $`\Longrightarrow`$ | "exactly when"; "guarantees" | read the two lines aloud | — |
+| $`\inf S`$ | the greatest lower bound, the **infimum** | 0 | — |
 
 The infimum works upside down: negate every member, take the supremum, negate it back.
 
@@ -71,11 +75,11 @@ A maximum is a member. A ceiling is any number the members cannot pass. Naming t
 
 ### Step 1: (0, 1) has no largest member
 
-Take any member $m$. Halfway to 1 is (m + 1)/2, above $m$ and below 1 because $m$ is below 1. So it is a larger member. With numbers: 0.9 is beaten by 0.95, 0.99 by 0.995, 0.999 by 0.9995. The argument works for whichever member is named.
+Take any member $`m`$. Halfway to 1 is (m + 1)/2, above $`m`$ and below 1 because $`m`$ is below 1. So it is a larger member. With numbers: 0.9 is beaten by 0.95, 0.99 by 0.995, 0.999 by 0.9995. The argument works for whichever member is named.
 
 ### Step 2: 1 is the lowest ceiling
 
-Every member is below 1, so 1 is a ceiling. Any lower challenger $t$ loses. If $t$ is above 0, the member (t + 1)/2 passes it: 0.999 is passed by 0.9995, and 0.5 by 0.75. If $t$ is 0 or below, 0.5 passes it; the challenger -3 is one such. No number below 1 is a ceiling, so the supremum is 1.
+Every member is below 1, so 1 is a ceiling. Any lower challenger $`t`$ loses. If $`t`$ is above 0, the member (t + 1)/2 passes it: 0.999 is passed by 0.9995, and 0.5 by 0.75. If $`t`$ is 0 or below, 0.5 passes it; the challenger -3 is one such. No number below 1 is a ceiling, so the supremum is 1.
 
 This is the tolerance game of [Limits](01-limits.md): name any gap below 1, and a member lands in it. On a grid of step 1/2^n (fractions with 2^n on the bottom), the largest member is 1 minus one step.
 
@@ -106,13 +110,13 @@ Suppose one were. Completeness gives a lowest ceiling s. Then s − 1 is not a c
 <details>
 <summary>Detailed proof</summary>
 
-**The standard form.** Write $\varepsilon$ (epsilon) for any positive number. The formula's second line, with $t = s - \varepsilon$, reads: for every $\varepsilon > 0$ some member exceeds $s - \varepsilon$.
+**The standard form.** Write $`\varepsilon`$ (epsilon) for any positive number. The formula's second line, with $`t = s - \varepsilon`$, reads: for every $`\varepsilon > 0`$ some member exceeds $`s - \varepsilon`$.
 
-**The fraction rule.** For a positive fraction q, let $q^* = (2q + 2)/(q + 2)$. Then $q - q^* = (q^2 - 2)/(q + 2)$ and $(q^*)^2 - 2 = 2(q^2 - 2)/(q + 2)^2$. If $q^2 > 2$, both are positive: $q^*$ is lower and still a ceiling. If $q^2 < 2$, both are negative: $q^*$ is a larger member, so q is no ceiling. A fraction ceiling that is lowest would need $q^2 = 2$.
+**The fraction rule.** For a positive fraction q, let $`q^* = (2q + 2)/(q + 2)`$. Then $`q - q^* = (q^2 - 2)/(q + 2)`$ and $`(q^*)^2 - 2 = 2(q^2 - 2)/(q + 2)^2`$. If $`q^2 > 2`$, both are positive: $`q^*`$ is lower and still a ceiling. If $`q^2 < 2`$, both are negative: $`q^*`$ is a larger member, so q is no ceiling. A fraction ceiling that is lowest would need $`q^2 = 2`$.
 
 **Completeness from infinite decimals.** Model reals as infinite decimals. Let S have a member and a ceiling. Pick the whole-number part, then each digit in turn, as the largest keeping "some member reaches this cut-off" true. Call the result s, and its cut-off after k digits s(k).
 
-By construction some member reaches s(k), and none reaches $s(k) + 10^{-k}$, or a digit (or, past a 9, an earlier digit) could have been larger. So every member is below $s + 10^{-k}$ for every k, hence at most s: s is a ceiling. For any $t < s$, pick k with $10^{-k} < s - t$; then $s(k) > t$, and a member reaching s(k) passes t. So s is the supremum.
+By construction some member reaches s(k), and none reaches $`s(k) + 10^{-k}`$, or a digit (or, past a 9, an earlier digit) could have been larger. So every member is below $`s + 10^{-k}`$ for every k, hence at most s: s is a ceiling. For any $`t < s`$, pick k with $`10^{-k} < s - t`$; then $`s(k) > t`$, and a member reaching s(k) passes t. So s is the supremum.
 
 </details>
 

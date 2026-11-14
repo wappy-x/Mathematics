@@ -36,11 +36,15 @@ Orange: the swing, starting at rest. Teal: the steady part alone, 2 cos t + sin 
 
 A **second-order linear equation with constant coefficients** has the shape
 
-$$y'' + c\,y' + k\,y = g(t)$$
+```math
+y'' + c\,y' + k\,y = g(t)
+```
 
 with c and k fixed numbers and g(t), the **forcing**, what is pushed in. Every solution is one particular solution plus the unpushed family ([Superposition](01-superposition-and-the-shape-of-linear-solutions.md)):
 
-$$y = y_h + y_p$$
+```math
+y = y_h + y_p
+```
 
 The **characteristic roots** r solve r^2 + cr + k = 0 ([The characteristic equation](02-the-characteristic-equation.md)). The trial for y_p follows the forcing; M is the push's size, a its growth rate per s, ω its rate in radians per s:
 
@@ -55,20 +59,22 @@ A sum of pushes takes the sum of trials. The collision rule: if the trial's rate
 
 For a cosine push of size F at rate ω, the trial A cos ωt + B sin ωt gives two equations:
 
-$$(k-\omega^2)A + c\omega B = F, \qquad -c\omega A + (k-\omega^2)B = 0$$
+```math
+(k-\omega^2)A + c\omega B = F, \qquad -c\omega A + (k-\omega^2)B = 0
+```
 
 **Read it aloud:** the cosine terms must add up to the push, and the sine terms must cancel.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y$, $t$ | seat position, dm; time, s | starts at 0 | — |
-| $c$, $k$ | damping, per s; stiffness, per s^2 | 2 and 5 | smaller steady swing |
-| $g$, $F$, $\omega$ | the forcing; its size, dm/s^2; its rate, radians per s | 10 cos t; 10; 1 | F: swing grows in step |
-| $A$, $B$ | the undetermined coefficients | 2 and 1 | — |
-| $y_p$ | the particular solution: the steady swing | 2 cos t + sin t | — |
-| $y_h$, $C_1$, $C_2$ | the unpushed family; its constants, set by the start | −2 and −1.5 | a bigger transient |
-| $r$ | a characteristic root | −1 ± 2i | — |
-| $s$ | how many times the trial's rate is a root: the power of t | 0 for the swing | — |
+| $`y`$, $`t`$ | seat position, dm; time, s | starts at 0 | — |
+| $`c`$, $`k`$ | damping, per s; stiffness, per s^2 | 2 and 5 | smaller steady swing |
+| $`g`$, $`F`$, $`\omega`$ | the forcing; its size, dm/s^2; its rate, radians per s | 10 cos t; 10; 1 | F: swing grows in step |
+| $`A`$, $`B`$ | the undetermined coefficients | 2 and 1 | — |
+| $`y_p`$ | the particular solution: the steady swing | 2 cos t + sin t | — |
+| $`y_h`$, $`C_1`$, $`C_2`$ | the unpushed family; its constants, set by the start | −2 and −1.5 | a bigger transient |
+| $`r`$ | a characteristic root | −1 ± 2i | — |
+| $`s`$ | how many times the trial's rate is a root: the power of t | 0 for the swing | — |
 
 ### When it holds
 

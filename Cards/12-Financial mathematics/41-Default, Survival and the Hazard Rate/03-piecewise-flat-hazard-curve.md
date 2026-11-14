@@ -36,50 +36,58 @@ Bars: the hazard in force during each year, the staircase itself. Line: the aver
 
 ## The formula
 
-Notation first, in words. The node dates are written $t_0, t_1, t_2, t_3$ = 0, 1, 3, 5 years. The flat hazard on piece number i, the stretch from $t_{i-1}$ to $t_i$, is $\lambda_i$ ("lambda i"): 2%, 4% and 6% for the three pieces. The **cumulative hazard** $\Lambda(t)$ ("capital lambda") is the area under the hazard from today to date $t$. $S(t)$ is survival: the chance the van still runs at $t$. A capital sigma, Σ, means "add up over the pieces listed under it".
+Notation first, in words. The node dates are written $`t_0, t_1, t_2, t_3`$ = 0, 1, 3, 5 years. The flat hazard on piece number i, the stretch from $`t_{i-1}`$ to $`t_i`$, is $`\lambda_i`$ ("lambda i"): 2%, 4% and 6% for the three pieces. The **cumulative hazard** $`\Lambda(t)`$ ("capital lambda") is the area under the hazard from today to date $`t`$. $`S(t)`$ is survival: the chance the van still runs at $`t`$. A capital sigma, Σ, means "add up over the pieces listed under it".
 
-For a date $t$ inside piece i, so $t_{i-1} \le t \le t_i$:
+For a date $`t`$ inside piece i, so $`t_{i-1} \le t \le t_i`$:
 
-$$\Lambda(t) \;=\; \sum_{j < i} \lambda_j\,(t_j - t_{j-1}) \;+\; \lambda_i\,(t - t_{i-1}), \qquad S(t) = e^{-\Lambda(t)}.$$
+```math
+\Lambda(t) \;=\; \sum_{j < i} \lambda_j\,(t_j - t_{j-1}) \;+\; \lambda_i\,(t - t_{i-1}), \qquad S(t) = e^{-\Lambda(t)}.
+```
 
 **Read it aloud:** the area is the full rectangles of every finished piece plus the part of the current piece reached so far; survival is e to the minus that area.
 
 Three helper formulas follow from it, each proved below.
 
-Between two nodes, survival runs along a straight line in its logarithm, with $w$ the fraction of the way from one node to the next:
+Between two nodes, survival runs along a straight line in its logarithm, with $`w`$ the fraction of the way from one node to the next:
 
-$$\ln S(t) = (1 - w)\,\ln S(t_{i-1}) + w\,\ln S(t_i), \qquad w = \frac{t - t_{i-1}}{t_i - t_{i-1}}.$$
+```math
+\ln S(t) = (1 - w)\,\ln S(t_{i-1}) + w\,\ln S(t_i), \qquad w = \frac{t - t_{i-1}}{t_i - t_{i-1}}.
+```
 
-The average hazard from today to $T$, and the rate in force recovered from two averages:
+The average hazard from today to $`T`$, and the rate in force recovered from two averages:
 
-$$\bar\lambda(T) = \frac{\Lambda(T)}{T} = -\frac{\ln S(T)}{T}, \qquad \lambda_i = \frac{\bar\lambda(t_i)\,t_i - \bar\lambda(t_{i-1})\,t_{i-1}}{t_i - t_{i-1}}.$$
+```math
+\bar\lambda(T) = \frac{\Lambda(T)}{T} = -\frac{\ln S(T)}{T}, \qquad \lambda_i = \frac{\bar\lambda(t_i)\,t_i - \bar\lambda(t_{i-1})\,t_{i-1}}{t_i - t_{i-1}}.
+```
 
-The chance of dying inside a window from date $a$ to date $b$, with $\tau$ ("tau") the van's breakdown date:
+The chance of dying inside a window from date $`a`$ to date $`b`$, with $`\tau`$ ("tau") the van's breakdown date:
 
-$$P(a < \tau \le b) = S(a) - S(b).$$
+```math
+P(a < \tau \le b) = S(a) - S(b).
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | a date, in years from the purchase | 2.5 | survival falls |
-| $t_i$ | the node dates, where the hazard may jump | 0, 1, 3, 5 | — |
-| $\lambda_i$ | the flat hazard on piece i, per year | 2%, 4%, 6% | survival falls from that piece on |
-| $\lambda(t)$ | the hazard in force at date $t$: the step it sits on | 4% at 2.5 years | — |
-| $\Lambda(t)$ | cumulative hazard: area under the staircase from 0 to $t$ | 0.10 at 3 years, 0.22 at 5 | survival falls |
-| $S(t)$ | survival: chance the van still runs at $t$ | 0.9048 at 3, 0.8025 at 5 | — |
-| $w$ | fraction of the way from one node to the next | 0.5 at 2 years | — |
-| $T$ | a horizon, in years | 5 | the average takes in more steps |
-| $\bar\lambda(T)$ | average hazard from today to $T$ ("lambda bar") | 4.4% to 5 years | — |
-| $\tau$ | the van's breakdown date, a random number of years ("tau") | unknown | — |
-| $a$, $b$ | the start and end of a window | 3 and 4 | a longer window catches more deaths |
-| $e$, $\ln$ | the growth constant 2.71828… and its undo, the natural log | $e^{-0.22}$ = 0.8025 | — |
+| $`t`$ | a date, in years from the purchase | 2.5 | survival falls |
+| $`t_i`$ | the node dates, where the hazard may jump | 0, 1, 3, 5 | — |
+| $`\lambda_i`$ | the flat hazard on piece i, per year | 2%, 4%, 6% | survival falls from that piece on |
+| $`\lambda(t)`$ | the hazard in force at date $`t`$: the step it sits on | 4% at 2.5 years | — |
+| $`\Lambda(t)`$ | cumulative hazard: area under the staircase from 0 to $`t`$ | 0.10 at 3 years, 0.22 at 5 | survival falls |
+| $`S(t)`$ | survival: chance the van still runs at $`t`$ | 0.9048 at 3, 0.8025 at 5 | — |
+| $`w`$ | fraction of the way from one node to the next | 0.5 at 2 years | — |
+| $`T`$ | a horizon, in years | 5 | the average takes in more steps |
+| $`\bar\lambda(T)`$ | average hazard from today to $`T`$ ("lambda bar") | 4.4% to 5 years | — |
+| $`\tau`$ | the van's breakdown date, a random number of years ("tau") | unknown | — |
+| $`a`$, $`b`$ | the start and end of a window | 3 and 4 | a longer window catches more deaths |
+| $`e`$, $`\ln`$ | the growth constant 2.71828… and its undo, the natural log | $`e^{-0.22}`$ = 0.8025 | — |
 
-A reminder on powers: $e^{-x}$ is $1/e^{x}$, and $e^{x}\,e^{y} = e^{x+y}$, so multiplying survivals adds their areas ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)).
+A reminder on powers: $`e^{-x}`$ is $`1/e^{x}`$, and $`e^{x}\,e^{y} = e^{x+y}`$, so multiplying survivals adds their areas ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)).
 
 ### When it holds
 
-- **The hazard is a fixed curve, known today.** If it moves at random with the van's use or the economy, survival is an average of $e^{-\Lambda}$ over the possible curves and the staircase is only a summary of it.
+- **The hazard is a fixed curve, known today.** If it moves at random with the van's use or the economy, survival is an average of $`e^{-\Lambda}`$ over the possible curves and the staircase is only a summary of it.
 - **Flat between nodes is a choice, not a finding.** The data (a mechanic's table, or market quotes) fix only the area of each piece. A hazard that rises smoothly inside a piece with the same area gives the same survival at the nodes and different survival between them.
-- **Node survivals must fall, or at least not rise.** Reading the staircase back from survivals needs $1 \ge S(t_1) \ge S(t_2) \ge S(t_3) > 0$. Equal neighbours give a hazard of 0; a rise gives a negative hazard, which no real curve has; a survival of 0 gives no finite hazard at all.
+- **Node survivals must fall, or at least not rise.** Reading the staircase back from survivals needs $`1 \ge S(t_1) \ge S(t_2) \ge S(t_3) > 0`$. Equal neighbours give a hazard of 0; a rise gives a negative hazard, which no real curve has; a survival of 0 gives no finite hazard at all.
 - **Past the last node, something must be assumed.** The house convention holds the last rate flat: with 6% held on, survival at seven years is 0.7118. Any other tail is just as consistent with the data and gives a different number.
 
 ---
@@ -92,50 +100,56 @@ The hazard-rate card proves that survival to a date is e to the minus the area u
 
 ### Step 1: add up the rectangles
 
-The first piece is 1 year wide at 2%: area 0.02. The second is 2 years wide at 4%: area 0.08, running total 0.10 at year 3. The third is 2 years wide at 6%: area 0.12, running total 0.22 at year 5. Inside a piece, only the part reached so far counts: at 2.5 years the area is 0.02 + 0.04 × 1.5 = 0.08, and survival is $e^{-0.08}$ = 0.9231.
+The first piece is 1 year wide at 2%: area 0.02. The second is 2 years wide at 4%: area 0.08, running total 0.10 at year 3. The third is 2 years wide at 6%: area 0.12, running total 0.22 at year 5. Inside a piece, only the part reached so far counts: at 2.5 years the area is 0.02 + 0.04 × 1.5 = 0.08, and survival is $`e^{-0.08}`$ = 0.9231.
 
 ### Step 2: survival multiplies piece by piece
 
-Since $e^{x+y} = e^{x}\,e^{y}$,
+Since $`e^{x+y} = e^{x}\,e^{y}`$,
 
-$$S(5) = e^{-0.02}\,e^{-0.08}\,e^{-0.12}.$$
+```math
+S(5) = e^{-0.02}\,e^{-0.08}\,e^{-0.12}.
+```
 
 Each factor is a chance in its own right: surviving that piece, counting only vans alive at its start. Survival to five years is survive year one, then survive years two and three given that, then years four and five given both. The staircase is a chain of flat-hazard curves glued end to end, each one starting where the last one left off.
 
-This also says how the van ages. A van still running at year 3 faces two years at 6%: it survives to year 5 with chance $S(5)/S(3) = e^{-0.12}$ = 0.8869. A new van's next two years give 0.9418. A single flat hazard forgets the van's age; the staircase remembers it, one piece at a time.
+This also says how the van ages. A van still running at year 3 faces two years at 6%: it survives to year 5 with chance $`S(5)/S(3) = e^{-0.12}`$ = 0.8869. A new van's next two years give 0.9418. A single flat hazard forgets the van's age; the staircase remembers it, one piece at a time.
 
 ### Step 3: between nodes, flat hazard is a straight line in log survival
 
 Take logs of survival inside piece i:
 
-$$\ln S(t) = \ln S(t_{i-1}) - \lambda_i\,(t - t_{i-1}).$$
+```math
+\ln S(t) = \ln S(t_{i-1}) - \lambda_i\,(t - t_{i-1}).
+```
 
-That is a straight line in $t$, with slope $-\lambda_i$. So on a chart of $\ln S$ the curve is a broken line, kinked at the nodes. The reverse holds too: a straight line in $\ln S$ has one slope, and one slope means one hazard. **Log-linear interpolation of survival** (a straight line in log survival between the known nodes) and **a piecewise-flat hazard** are the same choice described twice.
+That is a straight line in $`t`$, with slope $`-\lambda_i`$. So on a chart of $`\ln S`$ the curve is a broken line, kinked at the nodes. The reverse holds too: a straight line in $`\ln S`$ has one slope, and one slope means one hazard. **Log-linear interpolation of survival** (a straight line in log survival between the known nodes) and **a piecewise-flat hazard** are the same choice described twice.
 
-For the van at 2 years, halfway between nodes 1 and 3: $\ln S(2)$ is the midpoint of $-0.02$ and $-0.10$, which is $-0.06$, so $S(2) = e^{-0.06}$ = 0.9418. The staircase gives the same: 0.02 + 0.04 × 1 = 0.06.
+For the van at 2 years, halfway between nodes 1 and 3: $`\ln S(2)`$ is the midpoint of $`-0.02`$ and $`-0.10`$, which is $`-0.06`$, so $`S(2) = e^{-0.06}`$ = 0.9418. The staircase gives the same: 0.02 + 0.04 × 1 = 0.06.
 
-A straight line in survival itself would give 0.9425 at 2 years. It is close, but it is a different curve: along a straight line in $S$ the same number of vans is lost each year from a shrinking pool, so the hazard creeps up inside each piece instead of staying flat.
+A straight line in survival itself would give 0.9425 at 2 years. It is close, but it is a different curve: along a straight line in $`S`$ the same number of vans is lost each year from a shrinking pool, so the hazard creeps up inside each piece instead of staying flat.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Log-linear equals flat.** Suppose on the stretch from $t_{i-1}$ to $t_i$ the hazard is some curve $\lambda(t)$, and survival there satisfies $\ln S(t) = (1-w)\ln S(t_{i-1}) + w \ln S(t_i)$ with $w = (t - t_{i-1})/(t_i - t_{i-1})$. Then $-\ln S(t) = \Lambda(t)$ is a straight line in $t$ with slope $(\ln S(t_{i-1}) - \ln S(t_i))/(t_i - t_{i-1})$. The hazard is the slope of $\Lambda$, by the definition on the hazard-rate card, so it is that constant on the whole stretch. Conversely, a constant hazard $\lambda_i$ makes $\Lambda$ a straight line with slope $\lambda_i$, so $\ln S$ is a straight line, which matches the interpolation at both ends. The two descriptions pick out the same survival curve.
+**Log-linear equals flat.** Suppose on the stretch from $`t_{i-1}`$ to $`t_i`$ the hazard is some curve $`\lambda(t)`$, and survival there satisfies $`\ln S(t) = (1-w)\ln S(t_{i-1}) + w \ln S(t_i)`$ with $`w = (t - t_{i-1})/(t_i - t_{i-1})`$. Then $`-\ln S(t) = \Lambda(t)`$ is a straight line in $`t`$ with slope $`(\ln S(t_{i-1}) - \ln S(t_i))/(t_i - t_{i-1})`$. The hazard is the slope of $`\Lambda`$, by the definition on the hazard-rate card, so it is that constant on the whole stretch. Conversely, a constant hazard $`\lambda_i`$ makes $`\Lambda`$ a straight line with slope $`\lambda_i`$, so $`\ln S`$ is a straight line, which matches the interpolation at both ends. The two descriptions pick out the same survival curve.
 
-**The average lags the rate in force.** By Step 1, $\Lambda(t_i) = \Lambda(t_{i-1}) + \lambda_i (t_i - t_{i-1})$. Divide by $t_i$ and write $\Lambda(t) = \bar\lambda(t)\,t$:
-$$\bar\lambda(t_i) = \frac{t_{i-1}}{t_i}\,\bar\lambda(t_{i-1}) + \frac{t_i - t_{i-1}}{t_i}\,\lambda_i.$$
-The two weights are positive and add to 1, so the new average lies between the old average and the new rate. If the average rose, the new rate is above both. Rearranged, $\lambda_i - \bar\lambda(t_i) = t_{i-1}\,\frac{\bar\lambda(t_i) - \bar\lambda(t_{i-1})}{t_i - t_{i-1}}$: the gap is the start date times the average's climb per year. Solving for $\lambda_i$ gives the recovery formula in The formula.
+**The average lags the rate in force.** By Step 1, $`\Lambda(t_i) = \Lambda(t_{i-1}) + \lambda_i (t_i - t_{i-1})`$. Divide by $`t_i`$ and write $`\Lambda(t) = \bar\lambda(t)\,t`$:
 
-**Reading the staircase back from node survivals.** Given $S(t_1), \dots, S(t_n)$, set $\lambda_i = (\ln S(t_{i-1}) - \ln S(t_i))/(t_i - t_{i-1})$ with $S(t_0) = 1$. The logarithm exists exactly when every survival is above 0, and then the formula gives one number per piece: the staircase exists and is unique. Each $\lambda_i$ is at least 0 exactly when $S(t_i) \le S(t_{i-1})$. At $S(t_i) = S(t_{i-1})$ the piece has hazard 0; as $S(t_i)$ shrinks towards 0 the hazard grows without bound; at 0 there is none.
+$`\displaystyle \bar\lambda(t_i) = \frac{t_{i-1}}{t_i}\,\bar\lambda(t_{i-1}) + \frac{t_i - t_{i-1}}{t_i}\,\lambda_i.`$
+
+The two weights are positive and add to 1, so the new average lies between the old average and the new rate. If the average rose, the new rate is above both. Rearranged, $`\lambda_i - \bar\lambda(t_i) = t_{i-1}\,\frac{\bar\lambda(t_i) - \bar\lambda(t_{i-1})}{t_i - t_{i-1}}`$: the gap is the start date times the average's climb per year. Solving for $`\lambda_i`$ gives the recovery formula in The formula.
+
+**Reading the staircase back from node survivals.** Given $`S(t_1), \dots, S(t_n)`$, set $`\lambda_i = (\ln S(t_{i-1}) - \ln S(t_i))/(t_i - t_{i-1})`$ with $`S(t_0) = 1`$. The logarithm exists exactly when every survival is above 0, and then the formula gives one number per piece: the staircase exists and is unique. Each $`\lambda_i`$ is at least 0 exactly when $`S(t_i) \le S(t_{i-1})`$. At $`S(t_i) = S(t_{i-1})`$ the piece has hazard 0; as $`S(t_i)`$ shrinks towards 0 the hazard grows without bound; at 0 there is none.
 
 </details>
 
 ### Step 4: the chance of dying in one year
 
-Dying in year four means running at year 3 and not at year 4: $S(3) - S(4) = 0.9048 - 0.8521$ = 5.27%. Dying in year five is $S(4) - S(5) = 0.8521 - 0.8025$ = 4.96%.
+Dying in year four means running at year 3 and not at year 4: $`S(3) - S(4) = 0.9048 - 0.8521`$ = 5.27%. Dying in year five is $`S(4) - S(5) = 0.8521 - 0.8025`$ = 4.96%.
 
 The hazard is 6% in both years, yet year five kills fewer vans. The 6% acts on the vans still running, and there are fewer of them in year five. The same thing happens at the second piece: 3.84% in year two, 3.69% in year three.
 
-The other end gives the same numbers. The chance of dying in a thin slice near $t$, counted over all vans, is the hazard times the chance of being alive to face it, $\lambda(t)\,S(t)$ per year. The area under that curve over year four is again 5.27%. Counting only vans running at year 3, year four's chance is $1 - e^{-0.06}$ = 5.82%.
+The other end gives the same numbers. The chance of dying in a thin slice near $`t`$, counted over all vans, is the hazard times the chance of being alive to face it, $`\lambda(t)\,S(t)`$ per year. The area under that curve over year four is again 5.27%. Counting only vans running at year 3, year four's chance is $`1 - e^{-0.06}`$ = 5.82%.
 
 ### Step 5: why averages hide the steep back end
 
@@ -165,21 +179,21 @@ The van: 2% a year in year one, 4% in years two and three, 6% in years four and 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\Lambda(1)$ | 0.02 × 1 | 0.02 |
-| $S(1)$ | $e^{-0.02}$ | 0.9802 |
-| $\Lambda(3)$ | 0.02 + 0.04 × 2 | 0.10 |
-| $S(3)$ | $e^{-0.10}$ | 0.9048 |
-| $\Lambda(5)$ | 0.10 + 0.06 × 2 | 0.22 |
-| $S(5)$ | $e^{-0.22}$ | 0.8025 |
-| $S(2)$, log-linear | $e^{-(0.02 + 0.10)/2} = e^{-0.06}$ | 0.9418 |
-| $S(4)$, log-linear | $e^{-(0.10 + 0.22)/2} = e^{-0.16}$ | 0.8521 |
+| $`\Lambda(1)`$ | 0.02 × 1 | 0.02 |
+| $`S(1)`$ | $`e^{-0.02}`$ | 0.9802 |
+| $`\Lambda(3)`$ | 0.02 + 0.04 × 2 | 0.10 |
+| $`S(3)`$ | $`e^{-0.10}`$ | 0.9048 |
+| $`\Lambda(5)`$ | 0.10 + 0.06 × 2 | 0.22 |
+| $`S(5)`$ | $`e^{-0.22}`$ | 0.8025 |
+| $`S(2)`$, log-linear | $`e^{-(0.02 + 0.10)/2} = e^{-0.06}`$ | 0.9418 |
+| $`S(4)`$, log-linear | $`e^{-(0.10 + 0.22)/2} = e^{-0.16}`$ | 0.8521 |
 | died in year four | 0.9048 − 0.8521 | **5.27%** |
 | died in year five | 0.8521 − 0.8025 | 4.96% |
-| year four, given running at 3 | $1 - e^{-0.06}$ | 5.82% |
+| year four, given running at 3 | $`1 - e^{-0.06}`$ | 5.82% |
 | dead by five years | 1 − 0.8025 | 19.75% |
 | average hazard to five years | 0.22 / 5 | 4.4% |
 
-In words: of a hundred vans like this one, about 20 are gone by year five, and about 5 of those go in year four. The $S(1)$ row cross-checks the shelf's house example: Northwind Lines, the shipping company on [The hazard rate](02-hazard-rate-and-survival-probability.md), at a flat 2% survives one year with the same 0.9802, since for one year the two share a hazard.
+In words: of a hundred vans like this one, about 20 are gone by year five, and about 5 of those go in year four. The $`S(1)`$ row cross-checks the shelf's house example: Northwind Lines, the shipping company on [The hazard rate](02-hazard-rate-and-survival-probability.md), at a flat 2% survives one year with the same 0.9802, since for one year the two share a hazard.
 
 The bars below are each year's share of all vans bought, one block per 0.2 percentage points:
 
@@ -198,16 +212,16 @@ Each step up in the hazard lifts the bar; inside a step the bar slides down as t
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| A straight line in survival between nodes | $S(2)$ = 0.9425 (right: 0.9418); $S(4)$ = 0.8537 (right: 0.8521) | The hazard is flat only when log survival is straight. A straight line in $S$ hides a hazard that creeps up inside the piece. |
+| A straight line in survival between nodes | $`S(2)`$ = 0.9425 (right: 0.9418); $`S(4)`$ = 0.8537 (right: 0.8521) | The hazard is flat only when log survival is straight. A straight line in $`S`$ hides a hazard that creeps up inside the piece. |
 | The 4.4% five-year average used as the year-five hazard | 4.30% chance of dying in year five, given running at 4 (right: 5.82%) | The average mixes in the cheap early years. The rate in force is 6%. |
 | The hazard read as the year's death chance | 6.00% in year four (right: 5.27%) | The hazard acts only on vans still running, and is a rate, not a yearly chance. |
-| One slice a year: survive each year with 1 minus the hazard | $S(5)$ = 0.7980 (right: 0.8025) | Treats each rate as a once-a-year chance. The hazard compounds continuously. |
+| One slice a year: survive each year with 1 minus the hazard | $`S(5)`$ = 0.7980 (right: 0.8025) | Treats each rate as a once-a-year chance. The hazard compounds continuously. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the van's survival curve by four independent roads: e to the minus the staircase's area; a product over 500,000 thin slices, surviving each with 1 minus hazard times slice width, with no exponential in it; Simpson's rule (adding up thin parabolic strips under a curve) on the density $\lambda(t)S(t)$ (the chance per year of breaking down near date $t$, counted over all vans bought) for each year's deaths; and 100,000 simulated vans flipping a monthly coin from a hand-written random number generator, using no exponential and no log. Log-linear interpolation is checked against the staircase at 2 and 4 years, and the rates in force are recovered from the averages. Every number on the card, every chart point and every bar is printed.
+The scripts reach the van's survival curve by four independent roads: e to the minus the staircase's area; a product over 500,000 thin slices, surviving each with 1 minus hazard times slice width, with no exponential in it; Simpson's rule (adding up thin parabolic strips under a curve) on the density $`\lambda(t)S(t)`$ (the chance per year of breaking down near date $`t`$, counted over all vans bought) for each year's deaths; and 100,000 simulated vans flipping a monthly coin from a hand-written random number generator, using no exponential and no log. Log-linear interpolation is checked against the staircase at 2 and 4 years, and the rates in force are recovered from the averages. Every number on the card, every chart point and every bar is printed.
 
 ### Python
 
@@ -396,7 +410,7 @@ bars, died in yr %      1.98  3.84  3.69  5.27  4.96
 ALL CHECKS PASS
 ```
 
-Four roads, one curve. The slice product matches e to the minus the area to six decimals. Simpson's rule on the density matches $S(a) - S(b)$ for every year. The simulated vans land at 0.8029 against 0.8025, well inside one standard error (the usual size of the simulation's chance error) of 0.0013; their year-four deaths, 5.31%, sit near 5.27%.
+Four roads, one curve. The slice product matches e to the minus the area to six decimals. Simpson's rule on the density matches $`S(a) - S(b)`$ for every year. The simulated vans land at 0.8029 against 0.8025, well inside one standard error (the usual size of the simulation's chance error) of 0.0013; their year-four deaths, 5.31%, sit near 5.27%.
 
 ### Rust
 
@@ -874,7 +888,7 @@ example : (22 : ℚ) + 6 * (7 - 5) = 34 := by norm_num
 > **Reading an average hazard as the hazard in force.** Five-year survival of 0.8025 says the average hazard over five years is 4.4%. It says nothing about when inside those five years the vans die. With the staircase underneath, the rate in years four and five is 6%, and a van running at year 4 has a 5.82% chance of dying in year five, not the 4.30% the average suggests. Whenever averages rise with the horizon, the rates in force rise faster.
 >
 > Smaller traps:
-> - **Straight lines in survival.** Interpolating $S$ itself between nodes gives 0.9425 at 2 years instead of 0.9418, and a hazard that is not flat inside the piece. Interpolate $\ln S$.
+> - **Straight lines in survival.** Interpolating $`S`$ itself between nodes gives 0.9425 at 2 years instead of 0.9418, and a hazard that is not flat inside the piece. Interpolate $`\ln S`$.
 > - **The hazard as a death chance.** Year four's hazard is 6%; the chance a new van dies in year four is 5.27%, and 5.82% for a van running at year 3.
 > - **Same hazard, same deaths.** Years four and five share a 6% hazard but lose 5.27% and 4.96% of the vans bought. The pool shrinks.
 > - **Forgetting the widths.** Swapping the order of the rates changes the answer, 0.8353 against 0.8025, because each rate is multiplied by the length of its own piece.
@@ -886,7 +900,7 @@ example : (22 : ℚ) + 6 * (7 - 5) = 34 := by norm_num
 - **Credit default swap curves.** Dealers quote swaps at maturities such as 1, 3, 5, 7 and 10 years, and the standard model puts one flat hazard between each pair. Solving for those hazards from the quotes is [Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md); this card runs the curve forwards once it is built.
 - **Risky bond prices.** Each coupon of a company's bond is weighted by the survival curve at its payment date, read off the staircase between nodes: [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md).
 - **Interest-rate curves.** Straight lines in the log of discount factors, the prices today of a dollar paid later, give flat forward interest rates between nodes. It is the same construction, with interest in place of hazard.
-- **Expected loss by year.** A lender budgets each year's losses from that year's slice of default probability, $S(a) - S(b)$, times the loss if default happens: [Default probability, recovery and expected loss](01-default-probability-recovery-and-expected-loss.md).
+- **Expected loss by year.** A lender budgets each year's losses from that year's slice of default probability, $`S(a) - S(b)`$, times the loss if default happens: [Default probability, recovery and expected loss](01-default-probability-recovery-and-expected-loss.md).
 - **Rating agency tables.** Cumulative default rates by horizon are survival curves read at nodes; turning them into the rate in force each year is the recovery formula on this card. Default reached through rating changes is [Rating transition matrices](04-rating-transition-matrix-and-cumulative-default-rates.md).
 - **Life tables and machine fleets.** Actuaries often hold the force of mortality flat within each year of age, and fleet managers do the same with failure rates by age band: piecewise-flat hazards under other names.
 

@@ -34,32 +34,38 @@ Orange: the lounge. Teal: the bedroom, which warms for the first 0.2027 h, fed t
 
 ## The formula
 
-Reminder: $x' = Ax$ says "the rate of the state x is the matrix A times x" ([From one equation to a system](01-from-one-equation-to-a-system.md)). Each room loses, per hour, its excess over outside plus its gap to the other room. For the lounge that is $-T_1 - (T_1 - T_2) = -2T_1 + T_2$:
+Reminder: $`x' = Ax`$ says "the rate of the state x is the matrix A times x" ([From one equation to a system](01-from-one-equation-to-a-system.md)). Each room loses, per hour, its excess over outside plus its gap to the other room. For the lounge that is $`-T_1 - (T_1 - T_2) = -2T_1 + T_2`$:
 
-$$\begin{pmatrix} T_1 \\ T_2 \end{pmatrix}' = \begin{pmatrix} -2 & 1 \\ 1 & -2 \end{pmatrix} \begin{pmatrix} T_1 \\ T_2 \end{pmatrix}, \qquad \begin{pmatrix} T_1 \\ T_2 \end{pmatrix}(0) = \begin{pmatrix} 30 \\ 10 \end{pmatrix}$$
+```math
+\begin{pmatrix} T_1 \\ T_2 \end{pmatrix}' = \begin{pmatrix} -2 & 1 \\ 1 & -2 \end{pmatrix} \begin{pmatrix} T_1 \\ T_2 \end{pmatrix}, \qquad \begin{pmatrix} T_1 \\ T_2 \end{pmatrix}(0) = \begin{pmatrix} 30 \\ 10 \end{pmatrix}
+```
 
-An **eigenvector** of A is a direction A only stretches: $Av = \lambda v$, with the stretch $\lambda$ its **eigenvalue** ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). With two of them:
+An **eigenvector** of A is a direction A only stretches: $`Av = \lambda v`$, with the stretch $`\lambda`$ its **eigenvalue** ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). With two of them:
 
-$$x(t) = c_1\, e^{\lambda_1 t}\, v_1 + c_2\, e^{\lambda_2 t}\, v_2, \qquad c_1 v_1 + c_2 v_2 = x(0)$$
+```math
+x(t) = c_1\, e^{\lambda_1 t}\, v_1 + c_2\, e^{\lambda_2 t}\, v_2, \qquad c_1 v_1 + c_2 v_2 = x(0)
+```
 
 **Read it aloud:** the state is each eigenvector, times its weight, fading at its own eigenvalue, added up; the weights are what it takes to build the start.
 
 For the rooms, eigenvalue −1 goes with (1, 1) and −3 with (1, −1); the weights are 20 and 10:
 
-$$T_1 = 20e^{-t} + 10e^{-3t}, \qquad T_2 = 20e^{-t} - 10e^{-3t}$$
+```math
+T_1 = 20e^{-t} + 10e^{-3t}, \qquad T_2 = 20e^{-t} - 10e^{-3t}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T_1$, $T_2$ | lounge and bedroom, °C above outside | 30 and 10 at the start | — |
-| $x$ | the state: both temperatures as one vector | (30, 10) at the start | — |
-| $A$ | the rate matrix; row i gives room i's rate | `[[-2, 1], [1, -2]]` per hour | faster change |
-| $t$ | time since the heating went off, in hours | 0 to 3 h | every mode smaller |
-| $\lambda$, $\lambda_1$, $\lambda_2$ | eigenvalues: each mode's rate, per hour | −1 and −3 | that mode fades more slowly |
-| $v$, $v_1$, $v_2$ | eigenvectors: the pattern each mode keeps | (1, 1) average, (1, −1) difference | — |
-| $c_1$, $c_2$ | weights: how much of each mode the start holds | 20 and 10 | more of that mode |
-| $I$, $P$, $D$ | identity; eigenvectors as columns; eigenvalues on a diagonal | `[[1, 1], [1, -1]]` for P | — |
+| $`T_1`$, $`T_2`$ | lounge and bedroom, °C above outside | 30 and 10 at the start | — |
+| $`x`$ | the state: both temperatures as one vector | (30, 10) at the start | — |
+| $`A`$ | the rate matrix; row i gives room i's rate | `[[-2, 1], [1, -2]]` per hour | faster change |
+| $`t`$ | time since the heating went off, in hours | 0 to 3 h | every mode smaller |
+| $`\lambda`$, $`\lambda_1`$, $`\lambda_2`$ | eigenvalues: each mode's rate, per hour | −1 and −3 | that mode fades more slowly |
+| $`v`$, $`v_1`$, $`v_2`$ | eigenvectors: the pattern each mode keeps | (1, 1) average, (1, −1) difference | — |
+| $`c_1`$, $`c_2`$ | weights: how much of each mode the start holds | 20 and 10 | more of that mode |
+| $`I`$, $`P`$, $`D`$ | identity; eigenvectors as columns; eigenvalues on a diagonal | `[[1, 1], [1, -1]]` for P | — |
 
-The eigenvalues solve $\det(A - \lambda I) = 0$, the **characteristic equation**: A minus that stretch squashes some direction flat. Here det is the determinant: for a 2 × 2 matrix, top-left times bottom-right minus top-right times bottom-left.
+The eigenvalues solve $`\det(A - \lambda I) = 0`$, the **characteristic equation**: A minus that stretch squashes some direction flat. Here det is the determinant: for a 2 × 2 matrix, top-left times bottom-right minus top-right times bottom-left.
 
 ### When it holds
 
@@ -80,7 +86,9 @@ One equation y' = λy is solved by e^(λt) times its start. A system is harder o
 
 For a 2 × 2 matrix the characteristic equation is λ^2 − (diagonal sum) λ + determinant = 0. Here the diagonal sums to −4 and the determinant is 4 − 1 = 3:
 
-$$\lambda^2 + 4\lambda + 3 = (\lambda + 1)(\lambda + 3) = 0$$
+```math
+\lambda^2 + 4\lambda + 3 = (\lambda + 1)(\lambda + 3) = 0
+```
 
 For a direction (a, b), the first row of (A − λI)(a, b) = 0 reads −a + b = 0 at λ = −1, giving (1, 1), and a + b = 0 at −3, giving (1, −1). Check: A times them gives (−1, −1) and (−3, 3).
 
@@ -97,7 +105,7 @@ In eigenvector coordinates, the weights, the system is two separate one-variable
 <details>
 <summary>Detailed proof: every solution is a sum of modes</summary>
 
-If $v_2 = k v_1$, then $A v_2 = \lambda_1 v_2$, so $\lambda_2 = \lambda_1$: distinct eigenvalues give independent eigenvectors. So $P$ has an inverse, and $AP = PD$.
+If $`v_2 = k v_1`$, then $`A v_2 = \lambda_1 v_2`$, so $`\lambda_2 = \lambda_1`$: distinct eigenvalues give independent eigenvectors. So $`P`$ has an inverse, and $`AP = PD`$.
 
 Let x be any solution and put z = P^(−1) x. P is constant, so z' = P^(−1) x' = P^(−1) A P z = D z. Row by row: z_1' = λ_1 z_1 and z_2' = λ_2 z_2, with no coupling.
 

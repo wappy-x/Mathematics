@@ -40,45 +40,51 @@ Orange: rough volatility, H = 0.1. Green: Brownian, H = 0.5, its daily size 5.27
 
 ## The formula
 
-Notation first, in words. Fractional Brownian motion is written $B^H_t$, read "the value at time t, with exponent H". The Hurst exponent $H$ is a fixed number strictly between 0 and 1. Brownian motion $W_t$ is the case H = ½. The correlation between two unit increments n steps apart is written $\rho(n)$. $E$ is the mean over all paths. The sign $\sim$ reads "is distributed as", and $\overset{d}{=}$ reads "has the same probability law as".
+Notation first, in words. Fractional Brownian motion is written $`B^H_t`$, read "the value at time t, with exponent H". The Hurst exponent $`H`$ is a fixed number strictly between 0 and 1. Brownian motion $`W_t`$ is the case H = ½. The correlation between two unit increments n steps apart is written $`\rho(n)`$. $`E`$ is the mean over all paths. The sign $`\sim`$ reads "is distributed as", and $`\overset{d}{=}`$ reads "has the same probability law as".
 
 Fractional Brownian motion is the process that starts at 0, has jointly normal values with mean 0, continuous paths, and this covariance:
 
-$$E\big[B^H_s B^H_t\big] = \tfrac12\left(s^{2H} + t^{2H} - \lvert t - s\rvert^{2H}\right).$$
+```math
+E\big[B^H_s B^H_t\big] = \tfrac12\left(s^{2H} + t^{2H} - \lvert t - s\rvert^{2H}\right).
+```
 
 **Read it aloud:** the shared part of the values at two times is half of: the first time to the power 2H, plus the second time to the power 2H, minus the gap between them to the power 2H.
 
 Two consequences carry the card. The size of a move depends only on the gap, through the power H:
 
-$$B^H_t - B^H_s \sim \text{normal, mean } 0,\ \text{variance } \lvert t - s\rvert^{2H}, \qquad B^H_{ct} \overset{d}{=} c^H B^H_t.$$
+```math
+B^H_t - B^H_s \sim \text{normal, mean } 0,\ \text{variance } \lvert t - s\rvert^{2H}, \qquad B^H_{ct} \overset{d}{=} c^H B^H_t.
+```
 
 **Read it aloud:** a move over a gap of length g has spread g to the power H, and running the clock c times faster multiplies the whole path by c to the power H.
 
 The moves over neighbouring steps of length 1 are correlated:
 
-$$\rho(n) = \tfrac12\left((n+1)^{2H} - 2n^{2H} + (n-1)^{2H}\right), \quad n \ge 1.$$
+```math
+\rho(n) = \tfrac12\left((n+1)^{2H} - 2n^{2H} + (n-1)^{2H}\right), \quad n \ge 1.
+```
 
 **Read it aloud:** the correlation of two unit moves n steps apart is half the second difference of the function "time to the power 2H" at n.
 
-The example is the log of volatility: $X_t = \nu B^H_t$ with volatility $\sigma_t = 20\% \times e^{X_t}$.
+The example is the log of volatility: $`X_t = \nu B^H_t`$ with volatility $`\sigma_t = 20\% \times e^{X_t}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $B^H_t$ | fractional Brownian motion: the value at time t | the noise in the log of volatility | — |
-| $H$ | Hurst exponent: the power of time that sets the spread | 0.1 | smoother paths; above ½ moves reinforce each other |
-| $W_t$ | Brownian motion, the case H = ½ | the comparison path | — |
-| $X_t$ | log of volatility over its starting level, $\nu B^H_t$ | starts at 0 | — |
-| $\sigma_t$ | volatility, % per year, $20\% \times e^{X_t}$ | starts at 20% | — |
-| $\nu$ | spread of a one-day move in $X_t$ | 0.3 | every move scales with it |
-| $t$, $s$, $g$ | times, in trading days; a gap | 0 to 64; 1,024 for four years | spread grows like t to the power H |
-| $c$ | zoom factor for the clock | 32 | path multiplied by c to the power H |
-| $n$ | gap between two increments, in steps | 1, 2, 4, 16 | correlation fades towards 0 |
-| $\rho(n)$ | correlation of two unit moves n steps apart | −0.4257 at n = 1 | — |
-| $h$ | grid step, in days | 1, 1/4, 1/16 | finer grid, larger sum of squared moves when H < ½ |
-| $\Delta X$ | one grid step's move in X | spread 0.3 on a 1-day step | — |
-| $S$ | Step 6's price | — | — |
-| $m$, $U$, $V$, $r$, $M$ | Detailed proof: step count; squared-move sum; absolute-move sum; a correlation; local martingale part | — | — |
-| $T$ | horizon, in days | 64 | — |
+| $`B^H_t`$ | fractional Brownian motion: the value at time t | the noise in the log of volatility | — |
+| $`H`$ | Hurst exponent: the power of time that sets the spread | 0.1 | smoother paths; above ½ moves reinforce each other |
+| $`W_t`$ | Brownian motion, the case H = ½ | the comparison path | — |
+| $`X_t`$ | log of volatility over its starting level, $`\nu B^H_t`$ | starts at 0 | — |
+| $`\sigma_t`$ | volatility, % per year, $`20\% \times e^{X_t}`$ | starts at 20% | — |
+| $`\nu`$ | spread of a one-day move in $`X_t`$ | 0.3 | every move scales with it |
+| $`t`$, $`s`$, $`g`$ | times, in trading days; a gap | 0 to 64; 1,024 for four years | spread grows like t to the power H |
+| $`c`$ | zoom factor for the clock | 32 | path multiplied by c to the power H |
+| $`n`$ | gap between two increments, in steps | 1, 2, 4, 16 | correlation fades towards 0 |
+| $`\rho(n)`$ | correlation of two unit moves n steps apart | −0.4257 at n = 1 | — |
+| $`h`$ | grid step, in days | 1, 1/4, 1/16 | finer grid, larger sum of squared moves when H < ½ |
+| $`\Delta X`$ | one grid step's move in X | spread 0.3 on a 1-day step | — |
+| $`S`$ | Step 6's price | — | — |
+| $`m`$, $`U`$, $`V`$, $`r`$, $`M`$ | Detailed proof: step count; squared-move sum; absolute-move sum; a correlation; local martingale part | — | — |
+| $`T`$ | horizon, in days | 64 | — |
 
 ### When it holds
 
@@ -99,7 +105,9 @@ Brownian moves over separate days are independent, so their variances add: 1,024
 
 Suppose a Gaussian process, written B with the H dropped, starts at 0 and its move over a gap of length g has variance g to the power 2H, whatever the start. For any two times, write the product as a difference of squares:
 
-$$B_s B_t = \tfrac12\left(B_s^2 + B_t^2 - (B_t - B_s)^2\right).$$
+```math
+B_s B_t = \tfrac12\left(B_s^2 + B_t^2 - (B_t - B_s)^2\right).
+```
 
 Take means. The value at s is the move from 0 to s, variance s to the power 2H. The same for t. The last term is the move over the gap. That is the covariance formula: no choice was left. A Gaussian process with mean 0 is fixed by its covariance, so there is at most one such process for each H.
 
@@ -131,7 +139,9 @@ A move over a step h has spread h to the power H. For H = 0.1, cutting the step 
 
 Ito calculus rests on one sum: the squared moves over a fine grid, which for Brownian motion settle at the elapsed time, the quadratic variation ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)). For fractional Brownian motion, over a horizon T with T/h steps of size h, and ΔX the move of X over one step, the mean of that sum is
 
-$$E\sum (\Delta X)^2 = \frac{T}{h}\,\nu^2 h^{2H} = \nu^2\,T\,h^{2H-1}.$$
+```math
+E\sum (\Delta X)^2 = \frac{T}{h}\,\nu^2 h^{2H} = \nu^2\,T\,h^{2H-1}.
+```
 
 For H = ½ the step cancels, and the sum is the same at every grid. For H = 0.1 the power of h is −0.8: each refinement by 4 roughly triples the sum. For H above ½ the sum falls to zero.
 
@@ -152,7 +162,9 @@ Orange: mean over 1,000 simulated paths of rough log-volatility. Green: the form
 
 Ito's integral evaluates the integrand at the left end of each step. For Brownian motion, left and right ends give sums that differ by the squared moves, which settle at the elapsed time: a finite, known correction, the dt term in Ito's formula ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)). Take the integral of X against its own moves. Algebra alone gives, path by path,
 
-$$\sum X_{\text{left}}\,\Delta X = \tfrac12\Big(X_T^2 - \sum (\Delta X)^2\Big), \qquad \sum X_{\text{right}}\,\Delta X = \tfrac12\Big(X_T^2 + \sum (\Delta X)^2\Big).$$
+```math
+\sum X_{\text{left}}\,\Delta X = \tfrac12\Big(X_T^2 - \sum (\Delta X)^2\Big), \qquad \sum X_{\text{right}}\,\Delta X = \tfrac12\Big(X_T^2 + \sum (\Delta X)^2\Big).
+```
 
 For rough volatility over 64 days on a 1/16-day grid, the left sum averages −26.32 and the right +26.52, while X at 64 days, squared, averages only 0.2068. The gap is the sum of squared moves, which grows without limit as the grid is refined. The left-point rule has no limit; neither has the right. The Ito integral against fractional Brownian motion with H < ½ does not exist as a limit of these sums.
 
@@ -181,7 +193,7 @@ Below ½, Terry Lyons's theory of rough paths (1998) adds data. Alongside the pa
 
 In one dimension the data is fixed by the path: the corrected left sum here is exactly half of X at 64 days squared. With two noises, a price and its volatility, it is new information. Friz and Hairer give the theory in full (Sources).
 
-Rough volatility takes a gentler route. The price is still an Ito integral against Brownian motion, $dS = \sigma_t S\,dW_t$, valid because volatility is known at each moment. What breaks is the Markov property: volatility's future depends on its whole history, so pricing does not reduce to an equation in today's state, and simulation must carry the history, as the Fourier road in the code does.
+Rough volatility takes a gentler route. The price is still an Ito integral against Brownian motion, $`dS = \sigma_t S\,dW_t`$, valid because volatility is known at each moment. What breaks is the Markov property: volatility's future depends on its whole history, so pricing does not reduce to an equation in today's state, and simulation must carry the history, as the Fourier road in the code does.
 
 ---
 
@@ -618,13 +630,13 @@ The simulated neighbouring correlation, −0.4245 ± 0.0012, sits one standard e
 
 ### Lean
 
-Lean proves Steps 1, 3 and 5 of Why it works, for every $H$ strictly between 0 and 1, and checks the worked numbers.
+Lean proves Steps 1, 3 and 5 of Why it works, for every $`H`$ strictly between 0 and 1, and checks the worked numbers.
 
-- Suppose $B$ starts at 0 and the squared move over any gap $g$ has mean $g^{2H}$. Then $E[B_s B_t]$ is the covariance formula above, Gaussian or not.
-- Take $H$ strictly between 0 and 1 and $n \ge 1$. Then $\rho(n)$ is negative for $H$ below ½, zero at ½, and positive above ½.
-- Take any path $X$ on a grid, starting at 0. Then the left-point sum is $\tfrac12(X_T^2 - \sum (\Delta X)^2)$; the right-point sum has a plus there.
-- Take 1,024 trading days. Then $\sqrt{1024} = 32$ and $2^{10} = 1024$, so the spreads are 9.6 if Brownian and 0.6 rough.
-- Take the 1-day grid over 64 days. Then the mean sum of squared moves is $0.3^2 \times 64 = 5.76$.
+- Suppose $`B`$ starts at 0 and the squared move over any gap $`g`$ has mean $`g^{2H}`$. Then $`E[B_s B_t]`$ is the covariance formula above, Gaussian or not.
+- Take $`H`$ strictly between 0 and 1 and $`n \ge 1`$. Then $`\rho(n)`$ is negative for $`H`$ below ½, zero at ½, and positive above ½.
+- Take any path $`X`$ on a grid, starting at 0. Then the left-point sum is $`\tfrac12(X_T^2 - \sum (\Delta X)^2)`$; the right-point sum has a plus there.
+- Take 1,024 trading days. Then $`\sqrt{1024} = 32`$ and $`2^{10} = 1024`$, so the spreads are 9.6 if Brownian and 0.6 rough.
+- Take the 1-day grid over 64 days. Then the mean sum of squared moves is $`0.3^2 \times 64 = 5.76`$.
 
 Lean has no fractional Brownian motion, so its existence, scaling, growing squared-move sums and simulations are left to the Python and Rust checks.
 

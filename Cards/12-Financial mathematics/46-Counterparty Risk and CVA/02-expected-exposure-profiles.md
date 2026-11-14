@@ -37,53 +37,61 @@ Top line (orange): the 95% potential future exposure. Middle line (green): expec
 
 ## The formula
 
-Notation first, in words. The letter $u$ is a future date, in years from today. $V(u)$ is the trade's value to the bank on that date, before any thought of default; it may be negative. The exposure on that date is $\max(V(u), 0)$: the value if the bank is owed, zero if the bank owes.
+Notation first, in words. The letter $`u`$ is a future date, in years from today. $`V(u)`$ is the trade's value to the bank on that date, before any thought of default; it may be negative. The exposure on that date is $`\max(V(u), 0)`$: the value if the bank is owed, zero if the bank owes.
 
-$\mathbb{E}[\,\cdot\,]$ is an average over all the ways the market could move, weighted by their chances (see [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). $\Pr(\,\cdot\,)$ is the chance that the statement inside is true.
+$`\mathbb{E}[\,\cdot\,]`$ is an average over all the ways the market could move, weighted by their chances (see [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). $`\Pr(\,\cdot\,)`$ is the chance that the statement inside is true.
 
-$$\mathrm{EE}(u) = \mathbb{E}\big[\max(V(u),\,0)\big]$$
+```math
+\mathrm{EE}(u) = \mathbb{E}\big[\max(V(u),\,0)\big]
+```
 
 **Read it aloud:** on each future date, floor the trade's value at zero in every scenario, then average.
 
-$$\mathrm{PFE}_\alpha(u) = \text{the smallest } x \text{ with } \Pr\big(\max(V(u),0) \le x\big) \ge \alpha$$
+```math
+\mathrm{PFE}_\alpha(u) = \text{the smallest } x \text{ with } \Pr\big(\max(V(u),0) \le x\big) \ge \alpha
+```
 
-**Read it aloud:** raise a threshold until a fraction $\alpha$ of scenarios sit at or below it; that threshold is the potential future exposure at confidence $\alpha$.
+**Read it aloud:** raise a threshold until a fraction $`\alpha`$ of scenarios sit at or below it; that threshold is the potential future exposure at confidence $`\alpha`$.
 
-With $\alpha$ = 95%, PFE is the 95th percentile of exposure: one scenario in twenty is worse. Two helpers follow. Multiplying EE by the discount $e^{-ru}$ restates it in today's dollars. Averaging EE itself, undiscounted, over a window of dates gives the **expected positive exposure**:
+With $`\alpha`$ = 95%, PFE is the 95th percentile of exposure: one scenario in twenty is worse. Two helpers follow. Multiplying EE by the discount $`e^{-ru}`$ restates it in today's dollars. Averaging EE itself, undiscounted, over a window of dates gives the **expected positive exposure**:
 
-$$\mathrm{EPE}[0,T] = \frac{1}{T}\int_0^T \mathrm{EE}(u)\,du$$
+```math
+\mathrm{EPE}[0,T] = \frac{1}{T}\int_0^T \mathrm{EE}(u)\,du
+```
 
-Write $C_0$ for the call's price today, $c(u,s)$ for its value on date $u$ if Acme stands at $s$, and $z_\alpha$ for the bell-curve point with area $\alpha$ to its left (1.645 at 95%). For the long Acme call, the card proves two closed forms:
+Write $`C_0`$ for the call's price today, $`c(u,s)`$ for its value on date $`u`$ if Acme stands at $`s`$, and $`z_\alpha`$ for the bell-curve point with area $`\alpha`$ to its left (1.645 at 95%). For the long Acme call, the card proves two closed forms:
 
-$$e^{-ru}\,\mathrm{EE}(u) = C_0, \qquad \mathrm{PFE}_\alpha(u) = c\Big(u,\; S_0\,e^{(r-q-\frac12\sigma^2)u + \sigma\sqrt{u}\,z_\alpha}\Big)$$
+```math
+e^{-ru}\,\mathrm{EE}(u) = C_0, \qquad \mathrm{PFE}_\alpha(u) = c\Big(u,\; S_0\,e^{(r-q-\frac12\sigma^2)u + \sigma\sqrt{u}\,z_\alpha}\Big)
+```
 
 **Read it aloud:** the call's average exposure, shrunk to today, is today's price at every date; its 95% exposure is the call revalued at the 95th-percentile Acme price.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | a future date, years from today | 0.5 | EE for the call rises slowly; PFE rises fast |
-| $V(u)$ | the trade's value to the bank on date $u$, signed | call: always ≥ 0 | more exposure |
-| $\mathrm{EE}(u)$ | expected exposure: average of the floored value | \$9.46 at six months | a bigger credit charge |
-| $e^{-ru}$ | the discount: a dollar due at $u$ in today's dollars | 0.9753 at six months | |
-| $\mathrm{PFE}_\alpha(u)$ | potential future exposure: the $\alpha$ percentile of exposure | \$28.26 at six months | a tighter credit limit |
-| $\alpha$, $z_\alpha$ | confidence level, and the bell-curve point with that much area to its left | 95%, 1.645 | PFE rises |
-| $S_0$, $S_u$, $S_T$ | Acme's price today, on date $u$, and at expiry | \$100, random, random | call exposure rises |
-| $K$, $T$, $H$ | the call's strike, its expiry, and its payoff at expiry | \$100, 1 year, $\max(S_T - K, 0)$ | |
-| $c(u,s)$, $s$, $C_0$ | the call's value on date $u$ if Acme is at price $s$; today's price | $C_0$ = \$9.23 | |
-| $r$, $q$, $\sigma$ | riskless rate (the "bank rate" below), Acme's dividend yield, Acme's volatility | 5%, 2%, 20% | $\sigma$ up: PFE up sharply |
-| $\mathrm{EPE}$ | expected exposure averaged over a window of dates | \$9.46 over year one | |
-| $N(x)$, $d_1$, $d_2$ | bell-curve area left of $x$; the call's two bell-curve distances | 1.857, 1.716 at the six-month PFE | |
+| $`u`$ | a future date, years from today | 0.5 | EE for the call rises slowly; PFE rises fast |
+| $`V(u)`$ | the trade's value to the bank on date $`u`$, signed | call: always ≥ 0 | more exposure |
+| $`\mathrm{EE}(u)`$ | expected exposure: average of the floored value | \$9.46 at six months | a bigger credit charge |
+| $`e^{-ru}`$ | the discount: a dollar due at $`u`$ in today's dollars | 0.9753 at six months | |
+| $`\mathrm{PFE}_\alpha(u)`$ | potential future exposure: the $`\alpha`$ percentile of exposure | \$28.26 at six months | a tighter credit limit |
+| $`\alpha`$, $`z_\alpha`$ | confidence level, and the bell-curve point with that much area to its left | 95%, 1.645 | PFE rises |
+| $`S_0`$, $`S_u`$, $`S_T`$ | Acme's price today, on date $`u`$, and at expiry | \$100, random, random | call exposure rises |
+| $`K`$, $`T`$, $`H`$ | the call's strike, its expiry, and its payoff at expiry | \$100, 1 year, $`\max(S_T - K, 0)`$ | |
+| $`c(u,s)`$, $`s`$, $`C_0`$ | the call's value on date $`u`$ if Acme is at price $`s`$; today's price | $`C_0`$ = \$9.23 | |
+| $`r`$, $`q`$, $`\sigma`$ | riskless rate (the "bank rate" below), Acme's dividend yield, Acme's volatility | 5%, 2%, 20% | $`\sigma`$ up: PFE up sharply |
+| $`\mathrm{EPE}`$ | expected exposure averaged over a window of dates | \$9.46 over year one | |
+| $`N(x)`$, $`d_1`$, $`d_2`$ | bell-curve area left of $`x`$; the call's two bell-curve distances | 1.857, 1.716 at the six-month PFE | |
 
-$c(u,s)$ is the Black-Scholes call with $T - u$ years left ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). $z_\alpha$ is the normal quantile: the point with area $\alpha$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+$`c(u,s)`$ is the Black-Scholes call with $`T - u`$ years left ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). $`z_\alpha`$ is the normal quantile: the point with area $`\alpha`$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
 
 ### When it holds
 
 EE and PFE are definitions and hold for any trade. The call's two closed forms rest on assumptions:
 
-- **Paths from the pricing world.** The pricing world is the pretend world used for pricing (finance calls it "risk-neutral"), where every asset earns the bank rate in total. In it Acme drifts at $r - q$, the bank rate less the dividend. Simulate with a real-world expected return of 8% instead and the average exposure no longer equals $C_0$ grown at the bank rate; the six-month PFE moves from \$28.26 to \$30.10.
+- **Paths from the pricing world.** The pricing world is the pretend world used for pricing (finance calls it "risk-neutral"), where every asset earns the bank rate in total. In it Acme drifts at $`r - q`$, the bank rate less the dividend. Simulate with a real-world expected return of 8% instead and the average exposure no longer equals $`C_0`$ grown at the bank rate; the six-month PFE moves from \$28.26 to \$30.10.
 - **Nothing paid before expiry.** The call pays once, at the end, and cannot be exercised early. A trade that pays coupons or can be cut short loses the flat line: each payment steps the profile down.
 - **Exposure and default unrelated.** The profile ignores whether Northwind is likelier to fail when Acme soars. When the two move together, the average exposure given default differs from EE; that is [Wrong-way risk](05-wrong-way-risk.md).
-- **No collateral, one trade.** Collateral posted by Northwind or netting against other trades changes $V(u)$ before the floor; the profile is then of the residual ([Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md)).
+- **No collateral, one trade.** Collateral posted by Northwind or netting against other trades changes $`V(u)`$ before the floor; the profile is then of the residual ([Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md)).
 - **One model for paths and prices.** Simulating Acme with one volatility and revaluing the call with another breaks the flat line by the mismatch.
 
 ---
@@ -106,39 +114,43 @@ The sorted percentile is the smallest simulated value with 95% of all values at 
 
 ### Step 2: floor first, then average
 
-The order in the formula matters. Flooring a scenario can only raise its value: $\max(V, 0) \ge V$ and $\max(V,0) \ge 0$ in every scenario. Averages keep inequalities, so the average of the floors is at least the average value, and at least zero. Hence
+The order in the formula matters. Flooring a scenario can only raise its value: $`\max(V, 0) \ge V`$ and $`\max(V,0) \ge 0`$ in every scenario. Averages keep inequalities, so the average of the floors is at least the average value, and at least zero. Hence
 
-$$\mathbb{E}\big[\max(V,0)\big] \;\ge\; \max\big(\mathbb{E}[V],\,0\big).$$
+```math
+\mathbb{E}\big[\max(V,0)\big] \;\ge\; \max\big(\mathbb{E}[V],\,0\big).
+```
 
 The gap is large when the trade can go either way. The swap below is worth close to nothing on average at year two, \$0.08, yet its expected exposure is \$1.65. The scenarios where the bank owes Northwind do not cancel the ones where Northwind owes the bank, because a default in the first kind costs the bank nothing.
 
 ### Step 3: the call's expected exposure, shrunk to today, is its price
 
-A bought call is never worth less than zero, so its exposure is its value: $\max(c, 0) = c$. The floor does nothing.
+A bought call is never worth less than zero, so its exposure is its value: $`\max(c, 0) = c`$. The floor does nothing.
 
-Now the pricing world's defining property ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)): any traded thing that pays nothing along the way, shrunk by the bank rate, has an average future value equal to its value today. The call qualifies. On date $u$ its value is the shrunk average of its final payoff given what is known then. Averaging again over what might be known then gives the shrunk average of the final payoff, which is $C_0$. So
+Now the pricing world's defining property ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)): any traded thing that pays nothing along the way, shrunk by the bank rate, has an average future value equal to its value today. The call qualifies. On date $`u`$ its value is the shrunk average of its final payoff given what is known then. Averaging again over what might be known then gives the shrunk average of the final payoff, which is $`C_0`$. So
 
-$$e^{-ru}\,\mathrm{EE}(u) = C_0 \quad\text{for every } u \text{ up to expiry.}$$
+```math
+e^{-ru}\,\mathrm{EE}(u) = C_0 \quad\text{for every } u \text{ up to expiry.}
+```
 
-Undo the shrinking and the undiscounted EE grows at the bank rate: $C_0\,e^{ru}$. At six months that is \$9.46; just before expiry it is \$9.70, the average payoff itself.
+Undo the shrinking and the undiscounted EE grows at the bank rate: $`C_0\,e^{ru}`$. At six months that is \$9.46; just before expiry it is \$9.70, the average payoff itself.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write $H = \max(S_T - K, 0)$ for the payoff and $\mathcal{F}_u$ for everything known on date $u$. Under the pricing world, Black-Scholes gives $c(u, S_u) = e^{-r(T-u)}\,\mathbb{E}[H \mid \mathcal{F}_u]$ for $0 \le u < T$. Multiply by $e^{-ru}$: $e^{-ru}c(u,S_u) = \mathbb{E}[e^{-rT}H \mid \mathcal{F}_u]$. Take the plain average of both sides. The tower rule (averaging a conditional average returns the plain average) gives $\mathbb{E}[e^{-ru}c(u,S_u)] = \mathbb{E}[e^{-rT}H] = C_0$. The payoff is integrable because $0 \le H \le S_T$ and $S_T$ has a finite average under the lognormal model. Since $c \ge 0$, exposure equals value and $e^{-ru}\mathrm{EE}(u) = C_0$. At expiry, just before settlement, $c(T^-, S_T) = H$ and the same identity holds. After settlement the call is gone and its exposure is zero. Nothing here uses the dividend yield: $q$ changes $C_0$ but not the flatness.
+Write $`H = \max(S_T - K, 0)`$ for the payoff and $`\mathcal{F}_u`$ for everything known on date $`u`$. Under the pricing world, Black-Scholes gives $`c(u, S_u) = e^{-r(T-u)}\,\mathbb{E}[H \mid \mathcal{F}_u]`$ for $`0 \le u < T`$. Multiply by $`e^{-ru}`$: $`e^{-ru}c(u,S_u) = \mathbb{E}[e^{-rT}H \mid \mathcal{F}_u]`$. Take the plain average of both sides. The tower rule (averaging a conditional average returns the plain average) gives $`\mathbb{E}[e^{-ru}c(u,S_u)] = \mathbb{E}[e^{-rT}H] = C_0`$. The payoff is integrable because $`0 \le H \le S_T`$ and $`S_T`$ has a finite average under the lognormal model. Since $`c \ge 0`$, exposure equals value and $`e^{-ru}\mathrm{EE}(u) = C_0`$. At expiry, just before settlement, $`c(T^-, S_T) = H`$ and the same identity holds. After settlement the call is gone and its exposure is zero. Nothing here uses the dividend yield: $`q`$ changes $`C_0`$ but not the flatness.
 
 </details>
 
 ### Step 4: the call's PFE is one revaluation
 
-The call's value rises with Acme's price: its slope is $e^{-q(T-u)}N(d_1)$, always positive. A rising map keeps order. If 95% of scenarios have Acme at or below some price $s^*$, then 95% have the call at or below $c(u, s^*)$. So the 95th percentile of exposure is the call revalued at the 95th percentile of Acme.
+The call's value rises with Acme's price: its slope is $`e^{-q(T-u)}N(d_1)`$, always positive. A rising map keeps order. If 95% of scenarios have Acme at or below some price $`s^*`$, then 95% have the call at or below $`c(u, s^*)`$. So the 95th percentile of exposure is the call revalued at the 95th percentile of Acme.
 
-Acme's percentile needs no simulation. In the pricing world its log price on date $u$ is bell-shaped, centred at $\ln S_0 + (r - q - \tfrac12\sigma^2)u$ with spread $\sigma\sqrt{u}$. The 95th percentile sits $z_{0.95}$ = 1.645 spreads above the centre. That gives the formula above. Because the spread grows like $\sqrt{u}$, PFE climbs steeply while EE barely moves: \$21.37 at three months, \$28.26 at six, \$34.54 at nine, \$40.35 at expiry.
+Acme's percentile needs no simulation. In the pricing world its log price on date $`u`$ is bell-shaped, centred at $`\ln S_0 + (r - q - \tfrac12\sigma^2)u`$ with spread $`\sigma\sqrt{u}`$. The 95th percentile sits $`z_{0.95}`$ = 1.645 spreads above the centre. That gives the formula above. Because the spread grows like $`\sqrt{u}`$, PFE climbs steeply while EE barely moves: \$21.37 at three months, \$28.26 at six, \$34.54 at nine, \$40.35 at expiry.
 
 <details>
 <summary>Why the percentile passes through the revaluation, including at expiry</summary>
 
-Let the revaluation map $g(s)$ be continuous and never decreasing, and let $s^*$ be the $\alpha$ percentile of Acme's price, which has no gaps or jumps in its distribution. Then $\Pr(g(S_u) \le g(s^*)) \ge \Pr(S_u \le s^*) = \alpha$. For any level $x < g(s^*)$, continuity gives a price strictly below $s^*$ above which $g(s)$ exceeds $x$, so $\Pr(g(S_u) \le x) < \alpha$. Hence $g(s^*)$ is the smallest level reaching $\alpha$: the percentile. Before expiry $g(s)$ is $c(u, s)$, strictly rising. At expiry $g(s)$ is the payoff $\max(s - K, 0)$, flat below the strike, and the argument still holds; if $s^*$ sat below the strike the percentile would be zero. The argument fails for a trade whose value rises then falls in the driver, such as a range bet; there the simulation's sorted value is the only route.
+Let the revaluation map $`g(s)`$ be continuous and never decreasing, and let $`s^*`$ be the $`\alpha`$ percentile of Acme's price, which has no gaps or jumps in its distribution. Then $`\Pr(g(S_u) \le g(s^*)) \ge \Pr(S_u \le s^*) = \alpha`$. For any level $`x < g(s^*)`$, continuity gives a price strictly below $`s^*`$ above which $`g(s)`$ exceeds $`x`$, so $`\Pr(g(S_u) \le x) < \alpha`$. Hence $`g(s^*)`$ is the smallest level reaching $`\alpha`$: the percentile. Before expiry $`g(s)`$ is $`c(u, s)`$, strictly rising. At expiry $`g(s)`$ is the payoff $`\max(s - K, 0)`$, flat below the strike, and the argument still holds; if $`s^*`$ sat below the strike the percentile would be zero. The argument fails for a trade whose value rises then falls in the driver, such as a range bet; there the simulation's sorted value is the only route.
 
 </details>
 
@@ -159,26 +171,26 @@ Capital rules use EE through a ratchet. Effective EE on each date is the largest
 
 ## Worked numbers, by hand
 
-The Acme call at six months: $S_0$ = \$100, $K$ = \$100, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%, $u$ = 0.5, half a year left.
+The Acme call at six months: $`S_0`$ = \$100, $`K`$ = \$100, $`r`$ = 5%, $`q`$ = 2%, $`\sigma`$ = 20%, $`u`$ = 0.5, half a year left.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| today's price $C_0$ | Black-Scholes | \$9.23 |
-| growth to six months, $e^{ru}$ | $e^{0.05 \times 0.5}$ | 1.0253 |
+| today's price $`C_0`$ | Black-Scholes | \$9.23 |
+| growth to six months, $`e^{ru}`$ | $`e^{0.05 \times 0.5}`$ | 1.0253 |
 | **EE at six months** | \$9.23 × 1.0253 | **\$9.46** |
-| EE in today's dollars | \$9.46 × $e^{-0.025}$ | \$9.23 |
-| centre shift, $(r - q - \tfrac12\sigma^2)u$ | $(0.05 - 0.02 - 0.02) × 0.5$ | 0.0050 |
-| spread, $\sigma\sqrt{u}$ | 0.20 × $\sqrt{0.5}$ | 0.1414 |
-| 95th-percentile Acme | 100 × $e^{0.0050 + 1.6449 \times 0.1414}$ | \$126.82 |
-| $d_1$, $d_2$ at that price, half a year left | Black-Scholes | 1.857, 1.716 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.968, 0.957 |
-| share half | \$126.82 × $e^{-0.01}$ × 0.968 | \$121.59 |
-| cash half | \$100 × $e^{-0.025}$ × 0.957 | \$93.33 |
+| EE in today's dollars | \$9.46 × $`e^{-0.025}`$ | \$9.23 |
+| centre shift, $`(r - q - \tfrac12\sigma^2)u`$ | $`(0.05 - 0.02 - 0.02) × 0.5`$ | 0.0050 |
+| spread, $`\sigma\sqrt{u}`$ | 0.20 × $`\sqrt{0.5}`$ | 0.1414 |
+| 95th-percentile Acme | 100 × $`e^{0.0050 + 1.6449 \times 0.1414}`$ | \$126.82 |
+| $`d_1`$, $`d_2`$ at that price, half a year left | Black-Scholes | 1.857, 1.716 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.968, 0.957 |
+| share half | \$126.82 × $`e^{-0.01}`$ × 0.968 | \$121.59 |
+| cash half | \$100 × $`e^{-0.025}`$ × 0.957 | \$93.33 |
 | **PFE at six months, 95%** | \$121.59 − \$93.33 | **\$28.26** |
 
 If Northwind fails in six months, the bank expects to be owed about \$9.46, and in one scenario in twenty it is owed more than \$28.26. The average prices the risk; the tail sizes the limit a credit officer sets on Northwind.
 
-For the house cross-check, take Northwind's hazard of 2% a year (its rate of failing: roughly a 2% chance each year) and 40% recovery (the share of the claim the bankruptcy court returns). Then the flat \$9.23 in today's dollars gives a credit charge of 0.6 × \$9.23 × (1 − $e^{-0.02}$) = \$0.1096, and a risky price of \$9.12. That computation belongs to [CVA](03-cva.md); it appears here only to show the profile feeding it.
+For the house cross-check, take Northwind's hazard of 2% a year (its rate of failing: roughly a 2% chance each year) and 40% recovery (the share of the claim the bankruptcy court returns). Then the flat \$9.23 in today's dollars gives a credit charge of 0.6 × \$9.23 × (1 − $`e^{-0.02}`$) = \$0.1096, and a risky price of \$9.12. That computation belongs to [CVA](03-cva.md); it appears here only to show the profile feeding it.
 
 ### What breaks if you drop a piece
 
@@ -238,7 +250,7 @@ Top line (orange): 95% potential future exposure. Bottom line (green): expected 
 
 ## Code, from first principles, and it actually runs
 
-The script builds the call's profile three ways: the closed form $C_0 e^{ru}$; a Simpson's-rule average of the revalued call over the bell curve; and a 40,000-path simulation that steps Acme forward, revalues, floors, averages and sorts. It builds PFE two ways: the percentile formula, and the 38,000th sorted simulated value. The swap's profile comes two ways: an integral over the falling-rate half of the bell curve, and its own simulation. Year-one EPE and the house credit charge are each computed from the integral road and checked against their closed forms. The normal curve, its percentile, the integrator and the random numbers are all written out.
+The script builds the call's profile three ways: the closed form $`C_0 e^{ru}`$; a Simpson's-rule average of the revalued call over the bell curve; and a 40,000-path simulation that steps Acme forward, revalues, floors, averages and sorts. It builds PFE two ways: the percentile formula, and the 38,000th sorted simulated value. The swap's profile comes two ways: an integral over the falling-rate half of the bell curve, and its own simulation. Year-one EPE and the house credit charge are each computed from the integral road and checked against their closed forms. The normal curve, its percentile, the integrator and the random numbers are all written out.
 
 ### Python
 
@@ -651,9 +663,9 @@ The two outputs agree line for line at four decimals, including the simulated co
 
 Lean proves the facts behind Steps 2, 3 and 4 in general, not just for Acme, plus two counts.
 
-- Take any trade value $V$ with a finite average. Then $\mathbb{E}[\max(V,0)] \ge \max(\mathbb{E}[V],0)$: flooring first never lowers the average.
-- Take a bought option whose payoff is never negative, valued as its shrunk average payoff given what is known. Then $e^{-ru}\,\mathrm{EE}(u) = C_0$ at every date $u$ up to expiry.
-- Suppose the revaluation map $g$ is continuous and never decreasing, and $s^*$ is the $\alpha$ percentile of the driving price. Then $g(s^*)$ is the $\alpha$ percentile of the revalued trade.
+- Take any trade value $`V`$ with a finite average. Then $`\mathbb{E}[\max(V,0)] \ge \max(\mathbb{E}[V],0)`$: flooring first never lowers the average.
+- Take a bought option whose payoff is never negative, valued as its shrunk average payoff given what is known. Then $`e^{-ru}\,\mathrm{EE}(u) = C_0`$ at every date $`u`$ up to expiry.
+- Suppose the revaluation map $`g`$ is continuous and never decreasing, and $`s^*`$ is the $`\alpha`$ percentile of the driving price. Then $`g(s^*)`$ is the $`\alpha`$ percentile of the revalued trade.
 - With 40,000 paths, the 95th percentile is the 38,000th sorted value.
 - At 95% confidence, one scenario in twenty is worse.
 
@@ -753,7 +765,7 @@ example : (1 : ℚ) - 95 / 100 = 1 / 20 := by norm_num
 > - **Simulate with the real-world drift.** In the call's `mc_profile` step, replace `r - q` with `0.08 - q`. Guess: the simulated EE column climbs away from the formula, date by date, and the EE assert fails at the first date. It does.
 > - **Double the rate spread.** Set `sn` to 0.02. Guess: the swap's EE and PFE roughly double and the hump stays at year two. They do, a little more than double, because rate moves are not quite linear in value.
 > - **Starve the simulation.** Set `n=4000`. Guess: the simulated columns wander about three times further from the formula. They do, and the EE assert fails at expiry: 4,000 paths cannot pin an average to within \$0.15.
-> - **Set the dividend to zero.** Set `q` to 0.0. Guess: every number moves, but the "disc EE" column stays flat at the new call price. It does; the flatness never depended on $q$.
+> - **Set the dividend to zero.** Set `q` to 0.0. Guess: every number moves, but the "disc EE" column stays flat at the new call price. It does; the flatness never depended on $`q`$.
 
 ---
 
@@ -773,7 +785,7 @@ example : (1 : ℚ) - 95 / 100 = 1 / 20 := by norm_num
 - **Credit limits.** A bank's credit officers cap each counterparty's PFE profile at a limit. A new trade with Northwind is approved only if the combined profile, with the new trade netted in, stays under the limit on every date.
 - **The CVA desk.** The expected-exposure profile in today's dollars, weighted by the chance Northwind fails in each period and by the loss if it does, is the credit charge: [CVA](03-cva.md). Its sensitivities are hedged: [CVA risk numbers](06-cva-risk-numbers-and-hedging.md).
 - **Capital rules.** The Basel counterparty rules define EE, effective EE and effective EPE, and banks with approved models set capital from them.
-- **The other side of the trade.** Northwind runs the same profile on what it owes the bank. The bank's own view of that, the negative side of $V(u)$, drives the charge for the bank's own default: [DVA](04-dva-and-bilateral-cva.md).
+- **The other side of the trade.** Northwind runs the same profile on what it owes the bank. The bank's own view of that, the negative side of $`V(u)`$, drives the charge for the bank's own default: [DVA](04-dva-and-bilateral-cva.md).
 - **Margin.** Collateral cuts exposure to what can build up between margin calls; the residual profile is the same machinery on a short window: [Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md).
 
 > **Say it back**

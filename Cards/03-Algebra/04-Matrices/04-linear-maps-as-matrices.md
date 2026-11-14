@@ -36,35 +36,41 @@ Same corner, same two moves, different finish: the "order matters" of [Matrix mu
 
 ## The formula
 
-A rule $T$ is a linear map when both hold, for every pair of vectors and every number:
+A rule $`T`$ is a linear map when both hold, for every pair of vectors and every number:
 
-$$T(u + v) = T(u) + T(v) \qquad\text{and}\qquad T(cu) = c\,T(u)$$
+```math
+T(u + v) = T(u) + T(v) \qquad\text{and}\qquad T(cu) = c\,T(u)
+```
 
 **Read it aloud:** add two points then move them, or move each then add: same landing spot. Stretching before the move stretches the answer to match.
 
 Put 0 in for the number and the second test says the map sends (0, 0) to (0, 0).
 
-Now the build. Name the axis arrows $e_1$ = (1, 0) and $e_2$ = (0, 1), and write their answers as columns:
+Now the build. Name the axis arrows $`e_1`$ = (1, 0) and $`e_2`$ = (0, 1), and write their answers as columns:
 
-$$A = [\;T(e_1)\;\;T(e_2)\;] \qquad\text{and then}\qquad T(v) = A v \text{ for every } v$$
+```math
+A = [\;T(e_1)\;\;T(e_2)\;] \qquad\text{and then}\qquad T(v) = A v \text{ for every } v
+```
 
 **Read it aloud:** each axis arrow's answer is a column, and from then on the matrix *is* the map.
 
-Then the composition (one map done after another), with $A$ the shear's matrix and $B$ the turn's:
+Then the composition (one map done after another), with $`A`$ the shear's matrix and $`B`$ the turn's:
 
-$$\text{turn, then shear} = A B \qquad\text{and}\qquad \text{shear, then turn} = B A$$
+```math
+\text{turn, then shear} = A B \qquad\text{and}\qquad \text{shear, then turn} = B A
+```
 
 **Read it aloud:** the move made first sits on the right.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$ | takes a vector in, hands one back | the shear, or the turn | — |
-| $u$, $v$ | any two vectors, in round brackets | (1, 0) and (0, 1) | both tests hold for every pair |
-| $c$ | any plain number, stretching a vector | 3 | every number, not just this one |
-| $e_1$, $e_2$ | the two axis arrows | (1, 0) and (0, 1) | — |
-| $A$, $B$ | a map's two answers as columns, 2 × 2 | the shear's `[[1, 1], [0, 1]]`, the turn's `[[0, -1], [1, 0]]` | change a column and one axis arrow moves |
-| $AB$ | the matrix of "turn first, then shear" | `[[1, -1], [1, 0]]` | — |
-| $BA$ | the matrix of "shear first, then turn" | `[[0, -1], [1, 1]]` | swap the order, the sprite finishes elsewhere |
+| $`T`$ | takes a vector in, hands one back | the shear, or the turn | — |
+| $`u`$, $`v`$ | any two vectors, in round brackets | (1, 0) and (0, 1) | both tests hold for every pair |
+| $`c`$ | any plain number, stretching a vector | 3 | every number, not just this one |
+| $`e_1`$, $`e_2`$ | the two axis arrows | (1, 0) and (0, 1) | — |
+| $`A`$, $`B`$ | a map's two answers as columns, 2 × 2 | the shear's `[[1, 1], [0, 1]]`, the turn's `[[0, -1], [1, 0]]` | change a column and one axis arrow moves |
+| $`AB`$ | the matrix of "turn first, then shear" | `[[1, -1], [1, 0]]` | — |
+| $`BA`$ | the matrix of "shear first, then turn" | `[[0, -1], [1, 1]]` | swap the order, the sprite finishes elsewhere |
 
 ### When it holds
 
@@ -85,7 +91,9 @@ The corner (1, 1) is one step right plus one step up: (1, 1) = 1 × (1, 0) + 1 �
 
 Feed (x, y) into a linear map. The first test splits the sum: the map of the mix is the map of one piece plus the map of the other. The second pulls x and y out in front:
 
-$$T(v) = x\,T(e_1) + y\,T(e_2)$$
+```math
+T(v) = x\,T(e_1) + y\,T(e_2)
+```
 
 The map is never asked about (x, y): ask the two arrows once and everything else is answered.
 
@@ -502,7 +510,7 @@ example : squareFirst ((2 : ℝ) • ![1, 1]) ≠ (2 : ℝ) • squareFirst ![1,
 >
 > - **Writing it in the order it was said.** "Turn, then shear" puts the shear's matrix on the left; the other way round, the corner (1, 1) lands at (-1, 2), not (0, 1).
 > - **Rows instead of columns.** The answers go down the columns. As rows, the shear reads `[[1, 0], [1, 1]]` and the corner goes to (1, 2).
-> - **The straight line from school.** There, "linear" means $y = mx + b$, a graph. Here it means the two tests, with the origin fixed.
+> - **The straight line from school.** There, "linear" means $`y = mx + b`$, a graph. Here it means the two tests, with the origin fixed.
 
 ---
 

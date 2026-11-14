@@ -39,51 +39,59 @@ One line: the interpolating polynomial, read at every whole year. It passes exac
 
 ## The formula
 
-Notation first. Number the quotes from 0. The maturities are the **nodes** $x_0, \dots, x_n$, here 1, 2, 3, 5 and 10 years, so $n = 4$. The quoted rates are $y_0, \dots, y_n$. The title's "n points" are these $n + 1$ points; the polynomial has degree at most $n$.
+Notation first. Number the quotes from 0. The maturities are the **nodes** $`x_0, \dots, x_n`$, here 1, 2, 3, 5 and 10 years, so $`n = 4`$. The quoted rates are $`y_0, \dots, y_n`$. The title's "n points" are these $`n + 1`$ points; the polynomial has degree at most $`n`$.
 
-The **interpolating polynomial** $p$ is a polynomial of degree at most $n$ with $p(x_j) = y_j$ at every node. Here is the same $p$ three ways.
+The **interpolating polynomial** $`p`$ is a polynomial of degree at most $`n`$ with $`p(x_j) = y_j`$ at every node. Here is the same $`p`$ three ways.
 
-**Lagrange form.** Each quote gets a **basis polynomial** $\ell_j$ that is 1 at its own node and 0 at every other node:
+**Lagrange form.** Each quote gets a **basis polynomial** $`\ell_j`$ that is 1 at its own node and 0 at every other node:
 
-$$p(x) = \sum_{j=0}^{n} y_j\,\ell_j(x), \qquad \ell_j(x) = \prod_{k \ne j} \frac{x - x_k}{x_j - x_k}$$
+```math
+p(x) = \sum_{j=0}^{n} y_j\,\ell_j(x), \qquad \ell_j(x) = \prod_{k \ne j} \frac{x - x_k}{x_j - x_k}
+```
 
-**Read it aloud:** the reading at $x$ is a weighted sum of the quotes, and quote $j$'s weight is a polynomial that switches it fully on at its own maturity and off at the others.
+**Read it aloud:** the reading at $`x`$ is a weighted sum of the quotes, and quote $`j`$'s weight is a polynomial that switches it fully on at its own maturity and off at the others.
 
-**Newton form.** The **divided differences** are built by one rule, starting from the quotes, $f[x_j] = y_j$:
+**Newton form.** The **divided differences** are built by one rule, starting from the quotes, $`f[x_j] = y_j`$:
 
-$$f[x_i, \dots, x_{i+k}] = \frac{f[x_{i+1}, \dots, x_{i+k}] - f[x_i, \dots, x_{i+k-1}]}{x_{i+k} - x_i}$$
+```math
+f[x_i, \dots, x_{i+k}] = \frac{f[x_{i+1}, \dots, x_{i+k}] - f[x_i, \dots, x_{i+k-1}]}{x_{i+k} - x_i}
+```
 
-$$p(x) = f[x_0] + f[x_0, x_1](x - x_0) + f[x_0, x_1, x_2](x - x_0)(x - x_1) + \dots + f[x_0, \dots, x_n](x - x_0)\cdots(x - x_{n-1})$$
+```math
+p(x) = f[x_0] + f[x_0, x_1](x - x_0) + f[x_0, x_1, x_2](x - x_0)(x - x_1) + \dots + f[x_0, \dots, x_n](x - x_0)\cdots(x - x_{n-1})
+```
 
 **Read it aloud:** start from the first quote, then add one correction per extra quote; each correction is zero at every earlier node, so it never spoils an earlier fit.
 
-**Vandermonde form.** Write $p(x) = a_0 + a_1 x + \dots + a_n x^n$ and demand $p(x_j) = y_j$ at every node. That is a linear system $V a = y$ ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)):
+**Vandermonde form.** Write $`p(x) = a_0 + a_1 x + \dots + a_n x^n`$ and demand $`p(x_j) = y_j`$ at every node. That is a linear system $`V a = y`$ ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)):
 
-$$V = \begin{pmatrix} 1 & x_0 & x_0^2 & \cdots & x_0^n \\ \vdots & & & & \vdots \\ 1 & x_n & x_n^2 & \cdots & x_n^n \end{pmatrix}, \qquad \det V = \prod_{0 \le i < j \le n} (x_j - x_i)$$
+```math
+V = \begin{pmatrix} 1 & x_0 & x_0^2 & \cdots & x_0^n \\ \vdots & & & & \vdots \\ 1 & x_n & x_n^2 & \cdots & x_n^n \end{pmatrix}, \qquad \det V = \prod_{0 \le i < j \le n} (x_j - x_i)
+```
 
-**Read it aloud:** row $j$ of the Vandermonde matrix is the powers of maturity $j$; its determinant is the product of every gap between two maturities, so it is zero only when two maturities coincide.
+**Read it aloud:** row $`j`$ of the Vandermonde matrix is the powers of maturity $`j`$; its determinant is the product of every gap between two maturities, so it is zero only when two maturities coincide.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the maturity where the curve is read, in years | 7 | moves along the curve; past 10 it is extrapolation |
-| $x_j$ | node $j$: a quoted maturity | 1, 2, 3, 5, 10 | — |
-| $y_j$ | the quoted rate at node $j$, percent | 4.20, 3.95, 3.85, 3.90, 4.15 | the reading moves by $\ell_j(x)$ times the change |
-| $n$ | the degree; there are $n + 1$ nodes | 4 | more wiggle between nodes ([Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md)) |
-| $p(x)$ | the interpolating polynomial's reading | 4.045238 at 7 years | — |
-| $\ell_j(x)$ | Lagrange basis polynomial: 1 at $x_j$, 0 at the other nodes | at 7 years: −1.666667, 6.000000, −6.428571, 3.000000, 0.095238 | — |
-| $f[x_i, \dots, x_{i+k}]$ | a divided difference: the leading coefficient of the curve through those nodes | $f[x_0, x_1] = -0.25$ | — |
-| $a_k$ | the coefficient of $x^k$ in the ordinary (monomial) form | $a_0 = 4.6619047619$, $a_4 = 0.0003968254$ | — |
-| $V$ | the Vandermonde matrix: row $j$ holds $1, x_j, x_j^2, \dots, x_j^n$ | 5 by 5; $\det V = 120960$ | — |
-| $w_j$ | barycentric weight: $1 / \prod_{k \ne j}(x_j - x_k)$ | computed once, 45 operations | — |
-| $\kappa(V)$ | condition number: how much $V$ can magnify a small error in $y$ or in rounding | 248330.9 | more digits lost in $a$ |
-| $\omega(x)$ | the node product $(x - x_0)\cdots(x - x_n)$ | $\omega(7) = -720$ | — |
+| $`x`$ | the maturity where the curve is read, in years | 7 | moves along the curve; past 10 it is extrapolation |
+| $`x_j`$ | node $`j`$: a quoted maturity | 1, 2, 3, 5, 10 | — |
+| $`y_j`$ | the quoted rate at node $`j`$, percent | 4.20, 3.95, 3.85, 3.90, 4.15 | the reading moves by $`\ell_j(x)`$ times the change |
+| $`n`$ | the degree; there are $`n + 1`$ nodes | 4 | more wiggle between nodes ([Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md)) |
+| $`p(x)`$ | the interpolating polynomial's reading | 4.045238 at 7 years | — |
+| $`\ell_j(x)`$ | Lagrange basis polynomial: 1 at $`x_j`$, 0 at the other nodes | at 7 years: −1.666667, 6.000000, −6.428571, 3.000000, 0.095238 | — |
+| $`f[x_i, \dots, x_{i+k}]`$ | a divided difference: the leading coefficient of the curve through those nodes | $`f[x_0, x_1] = -0.25`$ | — |
+| $`a_k`$ | the coefficient of $`x^k`$ in the ordinary (monomial) form | $`a_0 = 4.6619047619`$, $`a_4 = 0.0003968254`$ | — |
+| $`V`$ | the Vandermonde matrix: row $`j`$ holds $`1, x_j, x_j^2, \dots, x_j^n`$ | 5 by 5; $`\det V = 120960`$ | — |
+| $`w_j`$ | barycentric weight: $`1 / \prod_{k \ne j}(x_j - x_k)`$ | computed once, 45 operations | — |
+| $`\kappa(V)`$ | condition number: how much $`V`$ can magnify a small error in $`y`$ or in rounding | 248330.9 | more digits lost in $`a`$ |
+| $`\omega(x)`$ | the node product $`(x - x_0)\cdots(x - x_n)`$ | $`\omega(7) = -720`$ | — |
 
 ### When it holds
 
-- **The nodes are all different.** Two quotes at 5 years with rates 3.90 and 3.92 make a gap $x_j - x_i$ of zero. Every form then divides by zero, and no polynomial fits both quotes.
-- **The degree is capped at $n$.** Allow degree 5 through five points and the curve is no longer unique. The node product $\omega(x) = (x - 1)(x - 2)(x - 3)(x - 5)(x - 10)$ is zero at every quote, so adding $0.0001\,\omega(x)$ keeps every quote but moves the 7-year reading to 3.973238.
+- **The nodes are all different.** Two quotes at 5 years with rates 3.90 and 3.92 make a gap $`x_j - x_i`$ of zero. Every form then divides by zero, and no polynomial fits both quotes.
+- **The degree is capped at $`n`$.** Allow degree 5 through five points and the curve is no longer unique. The node product $`\omega(x) = (x - 1)(x - 2)(x - 3)(x - 5)(x - 10)`$ is zero at every quote, so adding $`0.0001\,\omega(x)`$ keeps every quote but moves the 7-year reading to 3.973238.
 - **The reading stays inside the nodes.** Inside 1 to 10 years the curve is a fair guess. At 30 years it reads 92.650000 percent, which is nonsense.
-- **Exact arithmetic, or a well-scaled form.** All three forms agree in exact arithmetic. The monomial coefficients are fragile: at 10 years the $x^4$ coefficient is multiplied by the fourth power of 10, so rounding the coefficients to four decimals moves the 10-year reading from 4.15 to 4.182900. The same large powers make the condition number $\kappa(V)$ 248330.9.
+- **Exact arithmetic, or a well-scaled form.** All three forms agree in exact arithmetic. The monomial coefficients are fragile: at 10 years the $`x^4`$ coefficient is multiplied by the fourth power of 10, so rounding the coefficients to four decimals moves the 10-year reading from 4.15 to 4.182900. The same large powers make the condition number $`\kappa(V)`$ 248330.9.
 
 ---
 
@@ -91,49 +99,49 @@ $$V = \begin{pmatrix} 1 & x_0 & x_0^2 & \cdots & x_0^n \\ \vdots & & & & \vdots 
 
 ### Step 0: build one function per quote, then add
 
-The trick is to solve five small problems instead of one large one. For each quote, build a polynomial that is 1 at that quote's maturity and 0 at the other four. A product of factors $(x - x_k)$ vanishes at the other four nodes; dividing by the same product at $x_j$ makes it 1 at node $j$. That is $\ell_j$.
+The trick is to solve five small problems instead of one large one. For each quote, build a polynomial that is 1 at that quote's maturity and 0 at the other four. A product of factors $`(x - x_k)`$ vanishes at the other four nodes; dividing by the same product at $`x_j`$ makes it 1 at node $`j`$. That is $`\ell_j`$.
 
-Multiply each $\ell_j$ by its quote and add. At node $j$ only the $j$-th term survives, and it gives exactly $y_j$. Each $\ell_j$ has degree $n$, so the sum has degree at most $n$. That proves a curve **exists**.
+Multiply each $`\ell_j`$ by its quote and add. At node $`j`$ only the $`j`$-th term survives, and it gives exactly $`y_j`$. Each $`\ell_j`$ has degree $`n`$, so the sum has degree at most $`n`$. That proves a curve **exists**.
 
 ### Step 1: there is only one
 
-Suppose two polynomials $p$ and $q$ of degree at most $n$ both pass through all $n + 1$ points. Their difference $p - q$ has degree at most $n$ and is zero at $n + 1$ different nodes.
+Suppose two polynomials $`p`$ and $`q`$ of degree at most $`n`$ both pass through all $`n + 1`$ points. Their difference $`p - q`$ has degree at most $`n`$ and is zero at $`n + 1`$ different nodes.
 
-A polynomial of degree at most $n$ that is not identically zero has at most $n$ roots ([Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md)). So $p - q$ is identically zero, and $p = q$. The curve is **unique**.
+A polynomial of degree at most $`n`$ that is not identically zero has at most $`n`$ roots ([Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md)). So $`p - q`$ is identically zero, and $`p = q`$. The curve is **unique**.
 
-The Vandermonde road says the same thing in linear algebra. The system $V a = y$ has exactly one solution when $\det V \ne 0$. The determinant is the product of all node gaps, which is never zero for different nodes. For our five maturities both the elimination and the product of gaps give 120960.
+The Vandermonde road says the same thing in linear algebra. The system $`V a = y`$ has exactly one solution when $`\det V \ne 0`$. The determinant is the product of all node gaps, which is never zero for different nodes. For our five maturities both the elimination and the product of gaps give 120960.
 
 <details>
 <summary>Detailed proof: the Vandermonde determinant is the product of node gaps</summary>
 
-Work by induction on $n$. For $n = 1$, $\det V = x_1 - x_0$.
+Work by induction on $`n`$. For $`n = 1`$, $`\det V = x_1 - x_0`$.
 
-For larger $n$, replace the last node $x_n$ by a variable $t$. The determinant becomes a polynomial in $t$ of degree at most $n$; its $t^n$ coefficient is the smaller Vandermonde determinant on $x_0, \dots, x_{n-1}$.
+For larger $`n`$, replace the last node $`x_n`$ by a variable $`t`$. The determinant becomes a polynomial in $`t`$ of degree at most $`n`$; its $`t^n`$ coefficient is the smaller Vandermonde determinant on $`x_0, \dots, x_{n-1}`$.
 
-Put $t = x_i$ for any $i < n$: two rows are then equal, so the determinant is 0. A polynomial of degree $n$ with the $n$ roots $x_0, \dots, x_{n-1}$ is its leading coefficient times $(t - x_0)\cdots(t - x_{n-1})$.
+Put $`t = x_i`$ for any $`i < n`$: two rows are then equal, so the determinant is 0. A polynomial of degree $`n`$ with the $`n`$ roots $`x_0, \dots, x_{n-1}`$ is its leading coefficient times $`(t - x_0)\cdots(t - x_{n-1})`$.
 
-So $\det V$ equals the smaller determinant times $\prod_{i<n}(x_n - x_i)$. The induction hypothesis turns the smaller determinant into $\prod_{0 \le i < j \le n-1}(x_j - x_i)$, and the two products together are the full product. ∎
+So $`\det V`$ equals the smaller determinant times $`\prod_{i<n}(x_n - x_i)`$. The induction hypothesis turns the smaller determinant into $`\prod_{0 \le i < j \le n-1}(x_j - x_i)`$, and the two products together are the full product. ∎
 
 </details>
 
 ### Step 2: Newton's form adds one quote at a time
 
-Start with the constant 4.20, the 1-year quote. To add the 2-year quote without spoiling the first, add a multiple of $(x - 1)$: that term is zero at 1 year. Choose the multiple so the curve hits 3.95 at 2 years.
+Start with the constant 4.20, the 1-year quote. To add the 2-year quote without spoiling the first, add a multiple of $`(x - 1)`$: that term is zero at 1 year. Choose the multiple so the curve hits 3.95 at 2 years.
 
-Repeat. To add the 3-year quote, add a multiple of $(x - 1)(x - 2)$, which is zero at both earlier nodes. Each new term is zero at every earlier node, so old fits survive.
+Repeat. To add the 3-year quote, add a multiple of $`(x - 1)(x - 2)`$, which is zero at both earlier nodes. Each new term is zero at every earlier node, so old fits survive.
 
 The multiple chosen at each stage is the **leading coefficient** (the coefficient of the highest power) of the curve through the nodes used so far. The divided-difference rule computes exactly that number.
 
 <details>
 <summary>Detailed proof: the leading coefficient obeys the divided-difference rule</summary>
 
-Let $r$ be the interpolant through $x_{i+1}, \dots, x_{i+k}$ and $s$ the interpolant through $x_i, \dots, x_{i+k-1}$. Both have degree at most $k - 1$. Define
+Let $`r`$ be the interpolant through $`x_{i+1}, \dots, x_{i+k}`$ and $`s`$ the interpolant through $`x_i, \dots, x_{i+k-1}`$. Both have degree at most $`k - 1`$. Define
 
-$$P(x) = \frac{(x - x_i)\,r(x) - (x - x_{i+k})\,s(x)}{x_{i+k} - x_i}.$$
+$`\displaystyle P(x) = \frac{(x - x_i)\,r(x) - (x - x_{i+k})\,s(x)}{x_{i+k} - x_i}.`$
 
-At $x_i$ the first product vanishes and $P(x_i) = s(x_i) = y_i$. At $x_{i+k}$ the second product vanishes and $P = r(x_{i+k}) = y_{i+k}$. At a shared inner node, $r = s = y$, and $P = y\,(x_{i+k} - x_i)/(x_{i+k} - x_i) = y$.
+At $`x_i`$ the first product vanishes and $`P(x_i) = s(x_i) = y_i`$. At $`x_{i+k}`$ the second product vanishes and $`P = r(x_{i+k}) = y_{i+k}`$. At a shared inner node, $`r = s = y`$, and $`P = y\,(x_{i+k} - x_i)/(x_{i+k} - x_i) = y`$.
 
-So $P$ has degree at most $k$ and passes through all of $x_i, \dots, x_{i+k}$; by Step 1 it is the interpolant there. Its $x^k$ coefficient is (leading coefficient of $r$ − leading coefficient of $s$) / $(x_{i+k} - x_i)$. That is the divided-difference rule. ∎
+So $`P`$ has degree at most $`k`$ and passes through all of $`x_i, \dots, x_{i+k}`$; by Step 1 it is the interpolant there. Its $`x^k`$ coefficient is (leading coefficient of $`r`$ − leading coefficient of $`s`$) / $`(x_{i+k} - x_i)`$. That is the divided-difference rule. ∎
 
 This identity, used to compute values instead of coefficients, is Neville's algorithm.
 
@@ -141,21 +149,25 @@ This identity, used to compute values instead of coefficients, is Neville's algo
 
 ### Step 3: the barycentric form makes Lagrange cheap to read
 
-Read directly, the Lagrange form costs 90 operations at every maturity, because each $\ell_j$ is rebuilt. A rearrangement fixes this. Each $\ell_j$ is the node product $\omega(x)$ with its own factor $(x - x_j)$ taken out, times a number $w_j$ that depends only on the nodes:
+Read directly, the Lagrange form costs 90 operations at every maturity, because each $`\ell_j`$ is rebuilt. A rearrangement fixes this. Each $`\ell_j`$ is the node product $`\omega(x)`$ with its own factor $`(x - x_j)`$ taken out, times a number $`w_j`$ that depends only on the nodes:
 
-$$\ell_j(x) = \omega(x)\,\frac{w_j}{x - x_j}, \qquad w_j = \frac{1}{\prod_{k \ne j}(x_j - x_k)}$$
+```math
+\ell_j(x) = \omega(x)\,\frac{w_j}{x - x_j}, \qquad w_j = \frac{1}{\prod_{k \ne j}(x_j - x_k)}
+```
 
-So $p(x) = \omega(x) \sum_j \frac{w_j}{x - x_j}\,y_j$. The same formula applied to the constant 1, whose interpolant is 1, gives $1 = \omega(x) \sum_j \frac{w_j}{x - x_j}$. Divide the first by the second, and $\omega(x)$ cancels:
+So $`p(x) = \omega(x) \sum_j \frac{w_j}{x - x_j}\,y_j`$. The same formula applied to the constant 1, whose interpolant is 1, gives $`1 = \omega(x) \sum_j \frac{w_j}{x - x_j}`$. Divide the first by the second, and $`\omega(x)`$ cancels:
 
-$$p(x) = \frac{\sum_j \dfrac{w_j}{x - x_j}\,y_j}{\sum_j \dfrac{w_j}{x - x_j}}$$
+```math
+p(x) = \frac{\sum_j \dfrac{w_j}{x - x_j}\,y_j}{\sum_j \dfrac{w_j}{x - x_j}}
+```
 
-The formula divides by $x - x_j$, so it cannot be used at a node itself; there the reading is $y_j$, returned directly.
+The formula divides by $`x - x_j`$, so it cannot be used at a node itself; there the reading is $`y_j`$, returned directly.
 
-The weights $w_j$ depend only on the nodes. They cost 45 operations once; each reading then costs 26. This is the **barycentric** form. Higham (2004) showed it is forward stable (its rounding error stays small) on well-spread nodes, which makes it the standard way to evaluate a Lagrange interpolant in floating point.
+The weights $`w_j`$ depend only on the nodes. They cost 45 operations once; each reading then costs 26. This is the **barycentric** form. Higham (2004) showed it is forward stable (its rounding error stays small) on well-spread nodes, which makes it the standard way to evaluate a Lagrange interpolant in floating point.
 
 ### Step 4: what each form costs, and when to use it
 
-Every count below is for five quotes ($n = 4$), counting each +, −, × and ÷ once. The checks count them as they run, and assert each against the formulas below.
+Every count below is for five quotes ($`n = 4`$), counting each +, −, × and ÷ once. The checks count them as they run, and assert each against the formulas below.
 
 | Form | Build once | Each reading | Add a sixth quote | Use it when |
 | --- | ---: | ---: | --- | --- |
@@ -164,11 +176,11 @@ Every count below is for five quotes ($n = 4$), counting each +, −, × and ÷ 
 | Newton | 30 | 12 | 15 more | quotes arrive one at a time, or a few readings of one curve |
 | Vandermonde | 135 | 8 | 221, from scratch | many readings of one fixed curve on a few well-scaled nodes |
 
-In general, with $n + 1$ nodes, Newton's table costs $3n(n+1)/2$ operations and each reading $3n$. Vandermonde elimination costs about $2(n+1)^3/3$ for large $n$; this code's exact count, with back substitution, is $n(n+1)(2n+1)/3 + 5n(n+1)/2 + (n+1)^2$, which is 135 at $n = 4$ and 221 at $n = 5$. Lagrange read directly costs $(4n + 2)(n + 1)$ per reading; the barycentric form costs $(2n + 1)(n + 1)$ once and $5(n + 1) + 1$ per reading.
+In general, with $`n + 1`$ nodes, Newton's table costs $`3n(n+1)/2`$ operations and each reading $`3n`$. Vandermonde elimination costs about $`2(n+1)^3/3`$ for large $`n`$; this code's exact count, with back substitution, is $`n(n+1)(2n+1)/3 + 5n(n+1)/2 + (n+1)^2`$, which is 135 at $`n = 4`$ and 221 at $`n = 5`$. Lagrange read directly costs $`(4n + 2)(n + 1)`$ per reading; the barycentric form costs $`(2n + 1)(n + 1)`$ once and $`5(n + 1) + 1`$ per reading.
 
-At five quotes every form is accurate in floating point: the four float roads land within 4.4e-15 of the exact reading, and Newton is the cheapest to build, read and update. The barycentric form earns its place another way. Its weights depend only on the maturities, so when tomorrow's rates arrive at the same five maturities, nothing is rebuilt: one reading costs 26 operations, against Newton's 30 to redo its table plus 12 to read. Higham's proof also covers its rounding on well-spread nodes at any $n$.
+At five quotes every form is accurate in floating point: the four float roads land within 4.4e-15 of the exact reading, and Newton is the cheapest to build, read and update. The barycentric form earns its place another way. Its weights depend only on the maturities, so when tomorrow's rates arrive at the same five maturities, nothing is rebuilt: one reading costs 26 operations, against Newton's 30 to redo its table plus 12 to read. Higham's proof also covers its rounding on well-spread nodes at any $`n`$.
 
-Vandermonde has the cheapest reading, but its coefficients are the most sensitive. Its condition number $\kappa(V)$, the factor by which it can magnify a small error, is 248330.9 on maturities 1 to 10. At five quotes double precision absorbs that: the Vandermonde reading is off by only 8.9e-16. But $\kappa(V)$ grows fast with more nodes, and coefficients written down to a few decimals feel it at once (What breaks, below). Rescaling the maturities to the interval −1 to 1 first brings it down to 205.0. [Matrix norms and the condition number](../03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md) defines $\kappa$.
+Vandermonde has the cheapest reading, but its coefficients are the most sensitive. Its condition number $`\kappa(V)`$, the factor by which it can magnify a small error, is 248330.9 on maturities 1 to 10. At five quotes double precision absorbs that: the Vandermonde reading is off by only 8.9e-16. But $`\kappa(V)`$ grows fast with more nodes, and coefficients written down to a few decimals feel it at once (What breaks, below). Rescaling the maturities to the interval −1 to 1 first brings it down to 205.0. [Matrix norms and the condition number](../03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md) defines $`\kappa`$.
 
 ---
 
@@ -206,15 +218,15 @@ The new curve passes through all six quotes. Its 4-year reading moves from 3.847
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Two quotes at 5 years, 3.90 and 3.92 | division by zero | Nodes must differ; no function takes two values at one point |
-| Degree 5 through five quotes, adding $0.0001\,\omega(x)$ | 7 years reads 3.973238, not 4.045238 | Without the degree cap the curve is not unique |
-| Monomial coefficients rounded to 4 decimals | 10 years reads 4.182900, not 4.15; 7 years reads 4.053600 | The $x^4$ coefficient is multiplied by the fourth power of 10, so a tiny rounding grows; the same scaling makes $\kappa(V)$ 248330.9 |
-| Reading at 30 years | 92.650000 percent | Extrapolation: the $x^4$ term takes over outside the nodes |
+| Degree 5 through five quotes, adding $`0.0001\,\omega(x)`$ | 7 years reads 3.973238, not 4.045238 | Without the degree cap the curve is not unique |
+| Monomial coefficients rounded to 4 decimals | 10 years reads 4.182900, not 4.15; 7 years reads 4.053600 | The $`x^4`$ coefficient is multiplied by the fourth power of 10, so a tiny rounding grows; the same scaling makes $`\kappa(V)`$ 248330.9 |
+| Reading at 30 years | 92.650000 percent | Extrapolation: the $`x^4`$ term takes over outside the nodes |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the 7-year reading five ways. The known answer is the Lagrange form in exact fractions, 1699/420. Against it run four floating-point roads: Lagrange read directly, Newton's table with nested evaluation (innermost bracket first), Vandermonde by Gaussian elimination with partial pivoting (the largest entry used as pivot), and the barycentric form. Each prints its error against the exact answer and its operation count, and every count is asserted against its closed form. A separate exact elimination gives $\det V$ and $\kappa(V)$; the determinant is checked against the product of node gaps, and $\kappa(V)$ against an inverse rebuilt from the coefficients of the Lagrange basis polynomials. The Rust program writes its own fraction type.
+The code builds the 7-year reading five ways. The known answer is the Lagrange form in exact fractions, 1699/420. Against it run four floating-point roads: Lagrange read directly, Newton's table with nested evaluation (innermost bracket first), Vandermonde by Gaussian elimination with partial pivoting (the largest entry used as pivot), and the barycentric form. Each prints its error against the exact answer and its operation count, and every count is asserted against its closed form. A separate exact elimination gives $`\det V`$ and $`\kappa(V)`$; the determinant is checked against the product of node gaps, and $`\kappa(V)`$ against an inverse rebuilt from the coefficients of the Lagrange basis polynomials. The Rust program writes its own fraction type.
 
 ### Python
 
@@ -602,14 +614,14 @@ The two outputs match line for line. Every float road lands within 4.4e-15 of th
 Lean proves the uniqueness theorem, the Vandermonde determinant and the divided-difference rule, for any number of different nodes.
 
 - Through n + 1 points with different x-values passes exactly one polynomial of degree at most n.
-- $\det V$ is the product of every node gap $x_j - x_i$ with $i < j$, so it is zero exactly when two nodes coincide.
+- $`\det V`$ is the product of every node gap $`x_j - x_i`$ with $`i < j`$, so it is zero exactly when two nodes coincide.
 - The leading coefficient of the interpolant through any different nodes obeys the divided-difference rule.
-- The hand numbers hold in exact fractions: $\det V = 120960$, every level of the divided-difference table, and the Newton terms at 7 years.
+- The hand numbers hold in exact fractions: $`\det V = 120960`$, every level of the divided-difference table, and the Newton terms at 7 years.
 - The monomial form hits all five quotes, and the monomial, Newton and Lagrange forms all read 1699/420 at 7 years.
 - The Lagrange weights at 7 years are −5/3, 6, −45/7, 3 and 2/21, and they add to 1.
-- The What breaks numbers hold: adding $0.0001\,\omega(x)$ reads 41719/10500 at 7 years, rounded coefficients read 4.1829 at 10 years, and 30 years reads 92.65.
+- The What breaks numbers hold: adding $`0.0001\,\omega(x)`$ reads 41719/10500 at 7 years, rounded coefficients read 4.1829 at 10 years, and 30 years reads 92.65.
 
-The Newton and barycentric formulas, the operation counts, floating-point errors, $\kappa(V)$ and the sixth quote are left to the Python and Rust checks.
+The Newton and barycentric formulas, the operation counts, floating-point errors, $`\kappa(V)`$ and the sixth quote are left to the Python and Rust checks.
 
 ```lean
 -- One polynomial through n points: exactly one polynomial of degree at most n passes through n + 1 points with different x-values, the Vandermonde determinant is the product of the node gaps, and the divided-difference rule gives the interpolant's leading coefficient.
@@ -822,7 +834,7 @@ example : (979/210 : ℚ) - 1489/2520 * 30 + 89/630 * 30^2 - 4/315 * 30^3 + 1/25
 ## The usual mistake
 
 > [!warning]
-> **Solving the Vandermonde system and keeping the monomial coefficients.** It looks like the natural answer: a polynomial is its coefficients. But the powers of the maturity are badly scaled, so the matrix is badly conditioned: $\kappa(V)$ is 248330.9 for maturities 1 to 10 and grows fast with more nodes. In double precision at five quotes the damage stays in the last digit, but coefficients written down to four decimals show it: the curve misses its own 10-year quote, reading 4.182900 instead of 4.15. Keep the Newton or barycentric form, or at least rescale the maturities to −1 to 1 first, where $\kappa$ is 205.0.
+> **Solving the Vandermonde system and keeping the monomial coefficients.** It looks like the natural answer: a polynomial is its coefficients. But the powers of the maturity are badly scaled, so the matrix is badly conditioned: $`\kappa(V)`$ is 248330.9 for maturities 1 to 10 and grows fast with more nodes. In double precision at five quotes the damage stays in the last digit, but coefficients written down to four decimals show it: the curve misses its own 10-year quote, reading 4.182900 instead of 4.15. Keep the Newton or barycentric form, or at least rescale the maturities to −1 to 1 first, where $`\kappa`$ is 205.0.
 >
 > - **Thinking the three forms give three curves.** They give one curve. Through five quotes, all four float roads read 4.045238 at 7 years.
 > - **Rebuilding everything when a quote arrives.** Newton adds the 7-year quote in 15 operations and keeps its old coefficients; Vandermonde needs 221.
@@ -846,13 +858,13 @@ example : (979/210 : ℚ) - 1489/2520 * 30 + 89/630 * 30^2 - 4/315 * 30^3 + 1/25
 
 ## What this builds on
 
-- [Linear interpolation](01-linear-interpolation-and-extrapolation.md): the straight line through two points, which is the $n = 1$ case of everything here.
-- [Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md): degree, roots, and the fact that a nonzero polynomial of degree $n$ has at most $n$ roots, which gives uniqueness.
+- [Linear interpolation](01-linear-interpolation-and-extrapolation.md): the straight line through two points, which is the $`n = 1`$ case of everything here.
+- [Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md): degree, roots, and the fact that a nonzero polynomial of degree $`n`$ has at most $`n`$ roots, which gives uniqueness.
 - [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md): when a square system has exactly one answer, which is the Vandermonde view of the same theorem.
 
 ## Where this goes next
 
-- [The interpolation error theorem](03-polynomial-interpolation-error.md): how far the curve can be from the true function, as a high derivative times $\omega(x)$.
+- [The interpolation error theorem](03-polynomial-interpolation-error.md): how far the curve can be from the true function, as a high derivative times $`\omega(x)`$.
 - [Fitting instead of passing through](07-least-squares-and-orthogonal-polynomials.md): when quotes carry noise, a lower-degree curve that misses each point a little is better than one that hits them all.
 
 The shelf also takes this curve to [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md), [Cubic splines](05-splines.md), [Ends and shape](06-spline-end-conditions-and-shape.md), [Weierstrass and the minimax fit](08-weierstrass-and-best-approximation.md) and [Pade approximants](09-pade-and-rational-approximation.md).

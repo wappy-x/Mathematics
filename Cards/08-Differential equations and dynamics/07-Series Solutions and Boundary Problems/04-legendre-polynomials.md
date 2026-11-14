@@ -37,35 +37,43 @@ Orange: P1(x) = x. Teal: P2(x) = (3x^2 − 1)/2, lowest on the equator. Dark blu
 
 Reminder: a differential equation links an unknown function to its own rates. Here the variable is x = cos θ, and primes are rates in x.
 
-$$(1 - x^2)\,y'' - 2x\,y' + n(n+1)\,y = 0$$
+```math
+(1 - x^2)\,y'' - 2x\,y' + n(n+1)\,y = 0
+```
 
 **Read it aloud:** one minus x squared times the second rate, minus 2x times the first rate, plus n(n + 1) times the function, is zero between the poles.
 
 A power series y = a_0 + a_1 x + a_2 x^2 + … must obey
 
-$$a_{k+2} = \frac{(k - n)(k + n + 1)}{(k + 1)(k + 2)}\,a_k$$
+```math
+a_{k+2} = \frac{(k - n)(k + n + 1)}{(k + 1)(k + 2)}\,a_k
+```
 
 **Read it aloud:** each coefficient is the one two back times a factor that is zero at k = n.
 
 So for whole n one series stops at x^n. Scaled to 1 at x = 1:
 
-$$P_0 = 1,\quad P_1 = x,\quad P_2 = \tfrac{3x^2 - 1}{2},\quad P_3 = \tfrac{5x^3 - 3x}{2},\quad P_4 = \tfrac{35x^4 - 30x^2 + 3}{8}$$
+```math
+P_0 = 1,\quad P_1 = x,\quad P_2 = \tfrac{3x^2 - 1}{2},\quad P_3 = \tfrac{5x^3 - 3x}{2},\quad P_4 = \tfrac{35x^4 - 30x^2 + 3}{8}
+```
 
 For different whole numbers m and n:
 
-$$\int_{-1}^{1} P_m(x)\,P_n(x)\,dx = 0, \qquad \int_{-1}^{1} P_n(x)^2\,dx = \frac{2}{2n + 1}.$$
+```math
+\int_{-1}^{1} P_m(x)\,P_n(x)\,dx = 0, \qquad \int_{-1}^{1} P_n(x)^2\,dx = \frac{2}{2n + 1}.
+```
 
 **Read it aloud:** two different ones multiplied and integrated from −1 to 1 give zero; one squared gives 2/(2n + 1).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $\theta$ | cos θ, no unit; θ the angle from the north pole | x = 1 at the pole, 0 on the equator | — |
-| $n$ | the whole number in n(n + 1); the degree | 2 | one more zero between poles |
-| $y$, $y'$, $y''$ | the unknown; its rate in x; that rate's rate | P2 = −0.5 at x = 0 | — |
-| $a_k$ | coefficient of x^k | 1, 0, −3 for n = 2, unscaled | — |
-| $P_n$ | Legendre polynomial, degree n, P_n(1) = 1 | (3x^2 − 1)/2 | more wiggles |
-| $c_n$ | volts of P_n in the surface voltage | 10, 0, 20, 0, 0 | — |
-| $r$, $R$, $V$ | distance from centre; radius; voltage | 5 cm; 10 cm; 15 V | r up: V nears the surface |
+| $`x`$, $`\theta`$ | cos θ, no unit; θ the angle from the north pole | x = 1 at the pole, 0 on the equator | — |
+| $`n`$ | the whole number in n(n + 1); the degree | 2 | one more zero between poles |
+| $`y`$, $`y'`$, $`y''`$ | the unknown; its rate in x; that rate's rate | P2 = −0.5 at x = 0 | — |
+| $`a_k`$ | coefficient of x^k | 1, 0, −3 for n = 2, unscaled | — |
+| $`P_n`$ | Legendre polynomial, degree n, P_n(1) = 1 | (3x^2 − 1)/2 | more wiggles |
+| $`c_n`$ | volts of P_n in the surface voltage | 10, 0, 20, 0, 0 | — |
+| $`r`$, $`R`$, $`V`$ | distance from centre; radius; voltage | 5 cm; 10 cm; 15 V | r up: V nears the surface |
 
 ### When it holds
 
@@ -86,7 +94,9 @@ Near x = 0 the coefficient 1 − x^2 is not zero, so a power series solves the e
 
 Put y = sum of a_k x^k in and collect the x^k terms: (1 − x^2) y'' gives (k+2)(k+1) a_{k+2} and −k(k−1) a_k, −2x y' gives −2k a_k, the last term n(n+1) a_k. Their total is zero for every k:
 
-$$(k+2)(k+1)\,a_{k+2}=\bigl(k(k+1)-n(n+1)\bigr)\,a_k=(k-n)(k+n+1)\,a_k.$$
+```math
+(k+2)(k+1)\,a_{k+2}=\bigl(k(k+1)-n(n+1)\bigr)\,a_k=(k-n)(k+n+1)\,a_k.
+```
 
 Even links only to even: an even series started by a_0, an odd one by a_1.
 
@@ -111,7 +121,9 @@ At x = 1 the series is about L(1/2 + 1/4 + 1/6 + …), half the harmonic series:
 
 The equation is ((1 − x^2) y')' + n(n+1) y = 0, as expanding the first rate shows. Multiply P_m's equation by P_n and P_n's by P_m, subtract, integrate from −1 to 1:
 
-$$\bigl(m(m+1)-n(n+1)\bigr)\int_{-1}^{1}P_mP_n\,dx=\Bigl[(1-x^2)\bigl(P_mP_n'-P_nP_m'\bigr)\Bigr]_{-1}^{1}.$$
+```math
+\bigl(m(m+1)-n(n+1)\bigr)\int_{-1}^{1}P_mP_n\,dx=\Bigl[(1-x^2)\bigl(P_mP_n'-P_nP_m'\bigr)\Bigr]_{-1}^{1}.
+```
 
 <details>
 <summary>The algebra behind this</summary>
@@ -128,7 +140,9 @@ The squared integrals are 2, 0.6667, 0.4000, 0.2857, 0.2222 for n = 0 to 4, matc
 
 If a surface voltage f(x) is c_0 P_0 + c_1 P_1 + c_2 P_2 + …, multiply by P_n and integrate from −1 to 1. Only the n-th term survives:
 
-$$c_n=\frac{2n+1}{2}\int_{-1}^{1}f(x)\,P_n(x)\,dx.$$
+```math
+c_n=\frac{2n+1}{2}\int_{-1}^{1}f(x)\,P_n(x)\,dx.
+```
 
 This is projection onto one direction ([Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)), with the integral as the dot product. For f = 30x^2: c_0 = 10 V, c_2 = 20 V, the rest 0, so 30x^2 = 10 + 20 P2(x).
 
@@ -136,7 +150,9 @@ Inside, each P_n is multiplied by (r/R)^n, so V = c_0 + c_2 (r/R)^2 P2(cos θ); 
 
 A second road to the polynomials, with no series, is Bonnet's rule, started from P0 = 1 and P1 = x:
 
-$$(n+1)\,P_{n+1}=(2n+1)\,x\,P_n-n\,P_{n-1}.$$
+```math
+(n+1)\,P_{n+1}=(2n+1)\,x\,P_n-n\,P_{n-1}.
+```
 
 ---
 

@@ -26,34 +26,38 @@ Drawn at 1 unit = 50 drawing units. The curve meets the x-axis once, at x = −1
 
 ## The formula
 
-An elliptic curve here is $y^2 = x^3 + ax + b$, with fixed numbers $a$ and $b$; on this card $a$ is −1 and $b$ is 1. To add $P$ at $(x_1, y_1)$ and $Q$ at $(x_2, y_2)$, first find the slope $m$ of the chord, or of the tangent when the points agree:
+An elliptic curve here is $`y^2 = x^3 + ax + b`$, with fixed numbers $`a`$ and $`b`$; on this card $`a`$ is −1 and $`b`$ is 1. To add $`P`$ at $`(x_1, y_1)`$ and $`Q`$ at $`(x_2, y_2)`$, first find the slope $`m`$ of the chord, or of the tangent when the points agree:
 
-$$m = \frac{y_2 - y_1}{x_2 - x_1} \quad\text{or}\quad m = \frac{3x_1^2 + a}{2y_1}$$
+```math
+m = \frac{y_2 - y_1}{x_2 - x_1} \quad\text{or}\quad m = \frac{3x_1^2 + a}{2y_1}
+```
 
-Then the sum $P + Q$ is the point $(x_3, y_3)$:
+Then the sum $`P + Q`$ is the point $`(x_3, y_3)`$:
 
-$$x_3 = m^2 - x_1 - x_2, \qquad y_3 = m(x_1 - x_3) - y_1$$
+```math
+x_3 = m^2 - x_1 - x_2, \qquad y_3 = m(x_1 - x_3) - y_1
+```
 
 **Read it aloud:** square the slope and take away both starting x-coordinates; follow the line to that x, then flip the sign of the height.
 
-One extra point, $O$, is the zero: $P + O = P$, the reflection $(x, -y)$ is $-P$, and $P + (-P) = O$.
+One extra point, $`O`$, is the zero: $`P + O = P`$, the reflection $`(x, -y)`$ is $`-P`$, and $`P + (-P) = O`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$, $b$ | the curve's fixed numbers | −1 and 1 | a different curve |
-| $P$, $Q$, $W$ | points on the curve; $W$ a third, for grouping | (0, 1), (1, 1) | — |
-| $x_1$, $y_1$, $x_2$, $y_2$ | coordinates of $P$ and $Q$ | 0, 1 and 1, 1 | the sum moves |
-| $m$ | slope of the chord or tangent | 0 for P + Q; 1 for Q + Q | $m^2$ grows (for $m$ above 0): third crossing moves right |
-| $k$ | height where the line $y = mx + k$ meets the y-axis | 1 | — |
-| $R$ | the line's third crossing, before reflecting | (−1, 1) | — |
-| $x_3$, $y_3$ | coordinates of the sum | −1, −1 | — |
-| $O$, $nQ$ | the zero point; $Q$ added to itself n times | 9Q is (56, −419) | longer fractions as n grows |
+| $`a`$, $`b`$ | the curve's fixed numbers | −1 and 1 | a different curve |
+| $`P`$, $`Q`$, $`W`$ | points on the curve; $`W`$ a third, for grouping | (0, 1), (1, 1) | — |
+| $`x_1`$, $`y_1`$, $`x_2`$, $`y_2`$ | coordinates of $`P`$ and $`Q`$ | 0, 1 and 1, 1 | the sum moves |
+| $`m`$ | slope of the chord or tangent | 0 for P + Q; 1 for Q + Q | $`m^2`$ grows (for $`m`$ above 0): third crossing moves right |
+| $`k`$ | height where the line $`y = mx + k`$ meets the y-axis | 1 | — |
+| $`R`$ | the line's third crossing, before reflecting | (−1, 1) | — |
+| $`x_3`$, $`y_3`$ | coordinates of the sum | −1, −1 | — |
+| $`O`$, $`nQ`$ | the zero point; $`Q`$ added to itself n times | 9Q is (56, −419) | longer fractions as n grows |
 
 ### When it holds
 
-- **No cusp or self-crossing.** $4a^3 + 27b^2$ must not be zero; here it is 23. For y squared equals x cubed it is zero: a sharp point at the origin, where the tangent rule fails.
+- **No cusp or self-crossing.** $`4a^3 + 27b^2`$ must not be zero; here it is 23. For y squared equals x cubed it is zero: a sharp point at the origin, where the tangent rule fails.
 - **One curve.** Both points must lie on the same curve; the formulas never check this.
-- **Vertical lines go to O.** When $x_1 = x_2$ and $y_1 = -y_2$, the slope would divide by zero; the answer is $O$.
+- **Vertical lines go to O.** When $`x_1 = x_2`$ and $`y_1 = -y_2`$, the slope would divide by zero; the answer is $`O`$.
 - **Division must work.** Fractions, or remainders mod a prime such as 7. Mod 2 and mod 3 need a longer equation.
 
 ---
@@ -66,19 +70,23 @@ A line put into the curve's equation gives a cubic in x. Two known crossings are
 
 ### Step 1: the third crossing, from the sum of the roots
 
-Put the line $y = mx + k$ into $y^2 = x^3 + ax + b$ and collect terms:
+Put the line $`y = mx + k`$ into $`y^2 = x^3 + ax + b`$ and collect terms:
 
-$$x^3 - m^2x^2 + (a - 2mk)\,x + (b - k^2) = 0$$
+```math
+x^3 - m^2x^2 + (a - 2mk)\,x + (b - k^2) = 0
+```
 
-The crossings are its roots $x_1$, $x_2$, $x_3$, so the left side is $(x - x_1)(x - x_2)(x - x_3)$, whose $x^2$ term is minus the sum of the roots. So $x_1 + x_2 + x_3 = m^2$: the formula for $x_3$. $R$ has height $mx_3 + k$, which is $y_1 + m(x_3 - x_1)$; reflecting flips the sign, giving $y_3$. Only the four operations appear, so rational points give rational sums: the rule is closed.
+The crossings are its roots $`x_1`$, $`x_2`$, $`x_3`$, so the left side is $`(x - x_1)(x - x_2)(x - x_3)`$, whose $`x^2`$ term is minus the sum of the roots. So $`x_1 + x_2 + x_3 = m^2`$: the formula for $`x_3`$. $`R`$ has height $`mx_3 + k`$, which is $`y_1 + m(x_3 - x_1)`$; reflecting flips the sign, giving $`y_3`$. Only the four operations appear, so rational points give rational sums: the rule is closed.
 
 ### Step 2: the tangent slope, without calculus
 
-Doubling has no second point for a chord. Write the curve's equation at a point $(x, y)$ and at $P$, and subtract:
+Doubling has no second point for a chord. Write the curve's equation at a point $`(x, y)`$ and at $`P`$, and subtract:
 
-$$(y - y_1)(y + y_1) = (x - x_1)(x^2 + x\,x_1 + x_1^2 + a)$$
+```math
+(y - y_1)(y + y_1) = (x - x_1)(x^2 + x\,x_1 + x_1^2 + a)
+```
 
-On a line through $P$, $y - y_1$ is $m(x - x_1)$. Cancel $x - x_1$, the crossing at $P$ itself; every other crossing satisfies $m(y + y_1) = x^2 + x\,x_1 + x_1^2 + a$. The line touches at $P$ when $P$ is a crossing twice over: when $P$ also satisfies this equation. Put in $P$: $2y_1m = 3x_1^2 + a$, the tangent slope. At Q it is 1: the line y = x.
+On a line through $`P`$, $`y - y_1`$ is $`m(x - x_1)`$. Cancel $`x - x_1`$, the crossing at $`P`$ itself; every other crossing satisfies $`m(y + y_1) = x^2 + x\,x_1 + x_1^2 + a`$. The line touches at $`P`$ when $`P`$ is a crossing twice over: when $`P`$ also satisfies this equation. Put in $`P`$: $`2y_1m = 3x_1^2 + a`$, the tangent slope. At Q it is 1: the line y = x.
 
 ### The picture: doubling Q
 
@@ -88,19 +96,21 @@ Same scale. The tangent at Q crosses again at R (−1, −1); reflected, Q + Q i
 
 ### Step 3: the extra point O, and why the reflection
 
-A vertical line meets the curve in only two ordinary points, a point and its mirror image. Add one point $O$ on every vertical line, pictured infinitely far up and down; now every line meets the curve three times.
+A vertical line meets the curve in only two ordinary points, a point and its mirror image. Add one point $`O`$ on every vertical line, pictured infinitely far up and down; now every line meets the curve three times.
 
-The line through $P$ and $O$ is the vertical at $P$; its third crossing is $-P$, and reflecting gives back $P$. So $P + O = P$. Without the reflection the answer would be $-P$, and nothing would act as zero.
+The line through $`P`$ and $`O`$ is the vertical at $`P`$; its third crossing is $`-P`$, and reflecting gives back $`P`$. So $`P + O = P`$. Without the reflection the answer would be $`-P`$, and nothing would act as zero.
 
-The vertical through $P$ and $-P$ meets $O$, its own reflection, so $P + (-P) = O$. A point of height zero is its own mirror image, and doubling it gives $O$.
+The vertical through $`P`$ and $`-P`$ meets $`O`$, its own reflection, so $`P + (-P) = O`$. A point of height zero is its own mirror image, and doubling it gives $`O`$.
 
 ### Step 4: the group laws
 
-A group ([Groups](../../03-Algebra/08-Groups/01-groups.md)) needs closure (Step 1), a zero and an undo (Step 3), and associativity. Order does not matter either: the line through $P$ and $Q$ is the line through $Q$ and $P$. Associativity says
+A group ([Groups](../../03-Algebra/08-Groups/01-groups.md)) needs closure (Step 1), a zero and an undo (Step 3), and associativity. Order does not matter either: the line through $`P`$ and $`Q`$ is the line through $`Q`$ and $`P`$. Associativity says
 
-$$(P + Q) + W = P + (Q + W)$$
+```math
+(P + Q) + W = P + (Q + W)
+```
 
-for any third point $W$. It holds on every elliptic curve, but no single drawing shows it. The code checks 216 rational triples: evidence, not proof.
+for any third point $`W`$. It holds on every elliptic curve, but no single drawing shows it. The code checks 216 rational triples: evidence, not proof.
 
 <details>
 <summary>Detailed proof</summary>
@@ -113,9 +123,9 @@ Each set of three lines is one cubic curve (multiply their equations). Both pass
 
 ### Step 5: a small curve where every case can be checked
 
-The rule uses only the four operations, so it runs on remainders mod 7. Dividing by a number then means multiplying by its partner: the number whose product with it leaves remainder 1. There $4a^3 + 27b^2$ is 23, remainder 2, not zero, so no cusp.
+The rule uses only the four operations, so it runs on remainders mod 7. Dividing by a number then means multiplying by its partner: the number whose product with it leaves remainder 1. There $`4a^3 + 27b^2`$ is 23, remainder 2, not zero, so no cusp.
 
-The same equation mod 7 has 12 points, $O$ included: (0,1), (0,6), (1,1), (1,6), (2,0), (3,2), (3,5), (5,3), (5,4), (6,1), (6,6). Here 6 stands for −1, so (0,6) mirrors (0,1), and (2,0) mirrors itself.
+The same equation mod 7 has 12 points, $`O`$ included: (0,1), (0,6), (1,1), (1,6), (2,0), (3,2), (3,5), (5,3), (5,4), (6,1), (6,6). Here 6 stands for −1, so (0,6) mirrors (0,1), and (2,0) mirrors itself.
 
 The code tries all 1728 triples. With finitely many points, that exhaustive check proves associativity for this one curve.
 
@@ -127,14 +137,14 @@ The other road is algebra: expand both sides with the formulas, as The group law
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| curve test | $4(-1)^3 + 27(1)^2$ | 23, not zero |
-| chord slope, P + Q | $(1 - 1) \div (1 - 0)$ | 0 |
-| x and y | $0 - 0 - 1$; $0 - 1$ | **P + Q = (−1, −1)** |
-| tangent slope at Q | $(3 - 1) \div 2$ | 1 |
-| x and y | $1 - 1 - 1$; $1 \times 2 - 1$ | **Q + Q = (−1, 1)** |
-| tangent slope at P | $(0 - 1) \div 2$ | −1/2 |
-| x and y | $1/4 - 0 - 0$; $-\tfrac12(0 - 1/4) - 1$ | **P + P = (1/4, −7/8)** |
-| on the curve? | $(-7/8)^2$ and $(1/4)^3 - 1/4 + 1$ | 49/64 both |
+| curve test | $`4(-1)^3 + 27(1)^2`$ | 23, not zero |
+| chord slope, P + Q | $`(1 - 1) \div (1 - 0)`$ | 0 |
+| x and y | $`0 - 0 - 1`$; $`0 - 1`$ | **P + Q = (−1, −1)** |
+| tangent slope at Q | $`(3 - 1) \div 2`$ | 1 |
+| x and y | $`1 - 1 - 1`$; $`1 \times 2 - 1`$ | **Q + Q = (−1, 1)** |
+| tangent slope at P | $`(0 - 1) \div 2`$ | −1/2 |
+| x and y | $`1/4 - 0 - 0`$; $`-\tfrac12(0 - 1/4) - 1`$ | **P + P = (1/4, −7/8)** |
+| on the curve? | $`(-7/8)^2`$ and $`(1/4)^3 - 1/4 + 1`$ | 49/64 both |
 
 ### What breaks if you drop a piece
 
@@ -142,7 +152,7 @@ The other road is algebra: expand both sides with the formulas, as The group law
 | --- | --- | --- |
 | Add the coordinates | (1, 2), off the curve | ignores the curve |
 | Skip the reflection | (−1, 1) for P + Q | that is R; O stops being a zero |
-| Drop $a$ from the tangent slope | slope 3/2, Q + Q at (1/4, 1/8), off the curve | not the tangent |
+| Drop $`a`$ from the tangent slope | slope 3/2, Q + Q at (1/4, 1/8), off the curve | not the tangent |
 
 ---
 
@@ -347,11 +357,11 @@ The two outputs match line for line.
 Lean proves these facts for every curve with no cusp or self-crossing, wherever division works except mod 2 and mod 3.
 
 - The sum of any two points on the curve is on the curve.
-- $P + O = P$, and $P + (-P) = O$.
-- Order does not matter: $P + Q = Q + P$.
-- Grouping never matters: $(P + Q) + W = P + (Q + W)$ for all points, not only those in general position. This step uses the group law already proved in Lean's math library.
-- Step 1: a chord through two points with different x crosses the curve again at $x_3 = m^2 - x_1 - x_2$.
-- Step 2: the line of slope $m$ through $P$ touches the curve there exactly when $2y_1m = 3x_1^2 + a$.
+- $`P + O = P`$, and $`P + (-P) = O`$.
+- Order does not matter: $`P + Q = Q + P`$.
+- Grouping never matters: $`(P + Q) + W = P + (Q + W)`$ for all points, not only those in general position. This step uses the group law already proved in Lean's math library.
+- Step 1: a chord through two points with different x crosses the curve again at $`x_3 = m^2 - x_1 - x_2`$.
+- Step 2: the line of slope $`m`$ through $`P`$ touches the curve there exactly when $`2y_1m = 3x_1^2 + a`$.
 - The card's numbers: 23, P + Q, Q + Q, P + P, the multiples up to 9Q, the mistakes off the curve, and 11 ordinary points mod 7.
 
 The line scans, the 216 sampled triples, the 1728 triples mod 7 and the figure's coordinates are left to the Python and Rust checks.

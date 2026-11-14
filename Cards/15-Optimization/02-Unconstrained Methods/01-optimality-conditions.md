@@ -8,7 +8,9 @@
 
 The banana valley is a landscape of two numbers, x and y. Its height is
 
-$$f(x, y) = (1 - x)^2 + 100\,(y - x^2)^2 .$$
+```math
+f(x, y) = (1 - x)^2 + 100\,(y - x^2)^2 .
+```
 
 The job is to **minimise** it: choose x and y to make f as small as possible, with nothing limiting the choice. H. H. Rosenbrock built it in 1960 to test search methods, and it is this shelf's running example.
 
@@ -42,50 +44,56 @@ Contour f = c reaches from x = 1 − √c to x = 1 + √c. So the innermost sliv
 
 ## The formula
 
-Notation first, in words. The inputs form a list $x = (x_1, \dots, x_n)$: two for the banana, four for the chained valley. The **gradient** $\nabla f$ lists the n slopes, one per input ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)). The **Hessian** $\nabla^2 f$ is the square table of second derivatives. It is the calculus wing's H, written the way optimisation writes it ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). A minimiser is written $x^*$.
+Notation first, in words. The inputs form a list $`x = (x_1, \dots, x_n)`$: two for the banana, four for the chained valley. The **gradient** $`\nabla f`$ lists the n slopes, one per input ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)). The **Hessian** $`\nabla^2 f`$ is the square table of second derivatives. It is the calculus wing's H, written the way optimisation writes it ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). A minimiser is written $`x^*`$.
 
 The **chained valley** lines up n inputs so that each neighbouring pair forms one banana, with wall steepness b (100 throughout, unless a line says otherwise):
 
-$$f(x) = \sum_{i=1}^{n-1} \Big[\, b\,(x_{i+1} - x_i^2)^2 + (1 - x_i)^2 \Big].$$
+```math
+f(x) = \sum_{i=1}^{n-1} \Big[\, b\,(x_{i+1} - x_i^2)^2 + (1 - x_i)^2 \Big].
+```
 
 With n = 2 this is the banana itself.
 
-For a direction d of length 1, the number $d^{\mathsf T}\,\nabla^2 f\,d$ is the **curvature along d**: the second derivative of f as you walk a straight line through the point in direction d. The Hessian is **positive semidefinite**, written $\nabla^2 f \succeq 0$, when that curvature is zero or above for every d. It is **positive definite**, written $\nabla^2 f \succ 0$, when it is above zero for every d ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)).
+For a direction d of length 1, the number $`d^{\mathsf T}\,\nabla^2 f\,d`$ is the **curvature along d**: the second derivative of f as you walk a straight line through the point in direction d. The Hessian is **positive semidefinite**, written $`\nabla^2 f \succeq 0`$, when that curvature is zero or above for every d. It is **positive definite**, written $`\nabla^2 f \succ 0`$, when it is above zero for every d ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)).
 
-**Necessary condition.** If $x^*$ is a local minimiser and f has continuous second derivatives near it, then
+**Necessary condition.** If $`x^*`$ is a local minimiser and f has continuous second derivatives near it, then
 
-$$\nabla f(x^*) = 0 \quad\text{and}\quad \nabla^2 f(x^*) \succeq 0 .$$
+```math
+\nabla f(x^*) = 0 \quad\text{and}\quad \nabla^2 f(x^*) \succeq 0 .
+```
 
-**Sufficient condition.** If f has continuous second derivatives near $x^*$, and
+**Sufficient condition.** If f has continuous second derivatives near $`x^*`$, and
 
-$$\nabla f(x^*) = 0 \quad\text{and}\quad \nabla^2 f(x^*) \succ 0 ,$$
+```math
+\nabla f(x^*) = 0 \quad\text{and}\quad \nabla^2 f(x^*) \succ 0 ,
+```
 
-then $x^*$ is a strict local minimiser: every other point close enough is strictly higher.
+then $`x^*`$ is a strict local minimiser: every other point close enough is strictly higher.
 
 **Read it aloud:** at a minimum the ground is flat and nowhere curves down; flat ground that curves up in every direction is guaranteed to be a minimum.
 
-The curvatures along all directions run from the smallest eigenvalue $\lambda_{\min}$ of the Hessian to the largest, $\lambda_{\max}$. So "curves up in every direction" is the same as $\lambda_{\min} > 0$. The hand test uses **pivots**, the numbers on the diagonal after elimination: the Hessian is positive definite exactly when every pivot is above zero.
+The curvatures along all directions run from the smallest eigenvalue $`\lambda_{\min}`$ of the Hessian to the largest, $`\lambda_{\max}`$. So "curves up in every direction" is the same as $`\lambda_{\min} > 0`$. The hand test uses **pivots**, the numbers on the diagonal after elimination: the Hessian is positive definite exactly when every pivot is above zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $c$ | the height to be made smallest; c is one fixed height, drawn as a contour | 24.2 at the start, 0 at (1, 1) | — |
-| $x$, $y$, $x_i$, $n$ | the inputs, $x = (x_1, \dots, x_n)$, and how many there are | (1, 1) at the bottom; n = 2, or 4 for the chained valley | more room for saddles: 3 flat spots found at n = 4 |
-| $b$ | how steep the walls are; the banana uses 100 | 100 | the stretch grows: 33.97 at b = 1, 2508.01 at b = 100 |
-| $x^*$ | a minimiser | (1, 1) | — |
-| $\nabla f$, $\partial$ | the gradient: one slope per input; $\partial f/\partial x$ is the slope in x alone | (0, 0) at (1, 1) | a nonzero slope means some way down |
-| $\nabla^2 f$; $A$, $B$, $C$, $D$ | the Hessian, the table of second derivatives; with two inputs, its entries A, B, C and $D = AC - B^2$ | `[[802, -400], [-400, 200]]` at (1, 1); D = 400 | — |
-| $d$, $t$, $h$ | a direction of length 1; a distance along it; a short step in any direction | flat direction (0.446499, 0.894784) | — |
-| $\varphi$, $\tau$, $\theta$, $E$, $\delta$ | height along a straight walk; in-between points where Taylor's theorem reads a derivative; the Hessian's drift and the radius where it stays small (proof only) | — | — |
-| $d^{\mathsf T}\nabla^2 f\,d$ | curvature along d | between 0.399361 and 1001.600639 | below 0 in any direction: not a minimum |
-| $\lambda_{\min}$, $\lambda_{\max}$ | smallest and largest eigenvalue: the least and most curvature | 0.399361 and 1001.600639 | a small $\lambda_{\min}$ still passes, but slows downhill methods |
-| $\succeq 0$, $\succ 0$ | curves up or stays level everywhere; curves strictly up everywhere | $\succ 0$ at (1, 1) | — |
-| $p_k$; $L$, $P$, $u$, $e_k$ | pivots from elimination; the triangular table and pivot table it builds, the reshaped direction, the k-th axis direction | pivots 802 and 0.498753 | one below 0: a way down exists |
+| $`f`$, $`c`$ | the height to be made smallest; c is one fixed height, drawn as a contour | 24.2 at the start, 0 at (1, 1) | — |
+| $`x`$, $`y`$, $`x_i`$, $`n`$ | the inputs, $`x = (x_1, \dots, x_n)`$, and how many there are | (1, 1) at the bottom; n = 2, or 4 for the chained valley | more room for saddles: 3 flat spots found at n = 4 |
+| $`b`$ | how steep the walls are; the banana uses 100 | 100 | the stretch grows: 33.97 at b = 1, 2508.01 at b = 100 |
+| $`x^*`$ | a minimiser | (1, 1) | — |
+| $`\nabla f`$, $`\partial`$ | the gradient: one slope per input; $`\partial f/\partial x`$ is the slope in x alone | (0, 0) at (1, 1) | a nonzero slope means some way down |
+| $`\nabla^2 f`$; $`A`$, $`B`$, $`C`$, $`D`$ | the Hessian, the table of second derivatives; with two inputs, its entries A, B, C and $`D = AC - B^2`$ | `[[802, -400], [-400, 200]]` at (1, 1); D = 400 | — |
+| $`d`$, $`t`$, $`h`$ | a direction of length 1; a distance along it; a short step in any direction | flat direction (0.446499, 0.894784) | — |
+| $`\varphi`$, $`\tau`$, $`\theta`$, $`E`$, $`\delta`$ | height along a straight walk; in-between points where Taylor's theorem reads a derivative; the Hessian's drift and the radius where it stays small (proof only) | — | — |
+| $`d^{\mathsf T}\nabla^2 f\,d`$ | curvature along d | between 0.399361 and 1001.600639 | below 0 in any direction: not a minimum |
+| $`\lambda_{\min}`$, $`\lambda_{\max}`$ | smallest and largest eigenvalue: the least and most curvature | 0.399361 and 1001.600639 | a small $`\lambda_{\min}`$ still passes, but slows downhill methods |
+| $`\succeq 0`$, $`\succ 0`$ | curves up or stays level everywhere; curves strictly up everywhere | $`\succ 0`$ at (1, 1) | — |
+| $`p_k`$; $`L`$, $`P`$, $`u`$, $`e_k`$ | pivots from elimination; the triangular table and pivot table it builds, the reshaped direction, the k-th axis direction | pivots 802 and 0.498753 | one below 0: a way down exists |
 
 ### When it holds
 
-- **Continuous second derivatives near the point.** Without them there may be no Hessian at all. The function $|x| + y^2$ is lowest at (0, 0), where it has a kink and no slope in x; [Subgradients](../01-Convexity/07-subgradients.md) handle that case.
+- **Continuous second derivatives near the point.** Without them there may be no Hessian at all. The function $`|x| + y^2`$ is lowest at (0, 0), where it has a kink and no slope in x; [Subgradients](../01-Convexity/07-subgradients.md) handle that case.
 - **No constraints, or the point is inside the allowed region.** At an edge, the lowest point can sit on a slope. The constrained tests are [Second-order conditions under constraints](../03-Constrained%20Optimisation/03-second-order-conditions-for-constrained-problems.md).
-- **Strictly positive curvature, for the sufficient test.** If the smallest curvature is exactly zero, there is no verdict. The functions $x^2 + y^4$ and $x^2 - y^4$ share the Hessian diag(2, 0) at the origin. The first has a minimum there; the second does not.
+- **Strictly positive curvature, for the sufficient test.** If the smallest curvature is exactly zero, there is no verdict. The functions $`x^2 + y^4`$ and $`x^2 - y^4`$ share the Hessian diag(2, 0) at the origin. The first has a minimum there; the second does not.
 - **Local only.** Both tests look at one point and its immediate neighbourhood. The chained valley's second pit passes both tests at height 3.701429, while the true bottom is 0. Global needs a separate argument, such as convexity or a lower bound. A convex function is one bowl everywhere, so every local bottom is the lowest ([Convexity pays off](../01-Convexity/04-local-minima-are-global-when-convex.md)).
 - **Minimising.** For a maximum, flip every sign: the curvature must be at most zero, and strictly below zero for the guarantee.
 
@@ -93,55 +101,59 @@ The curvatures along all directions run from the smallest eigenvalue $\lambda_{\
 
 ## Why it works
 
-The calculus wing already proves that an interior minimum has a zero gradient, and it sorts two-variable flat spots with $D = AC - B^2$ ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)). This section does the same for any number of inputs.
+The calculus wing already proves that an interior minimum has a zero gradient, and it sorts two-variable flat spots with $`D = AC - B^2`$ ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)). This section does the same for any number of inputs.
 
 ### Step 0: walk a straight line, and n inputs become one
 
-Pick a direction d and walk along it from $x^*$: at distance t you are at $x^* + t\,d$. The height along the walk, $\varphi(t) = f(x^* + t\,d)$, depends on one number, t. By the chain rule, its slope at t = 0 is $\nabla f(x^*) \cdot d$, and its second derivative is $d^{\mathsf T}\,\nabla^2 f(x^*)\,d$ ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). A minimum in n inputs is a minimum along every line through it. One-variable facts about each line give the n-variable result.
+Pick a direction d and walk along it from $`x^*`$: at distance t you are at $`x^* + t\,d`$. The height along the walk, $`\varphi(t) = f(x^* + t\,d)`$, depends on one number, t. By the chain rule, its slope at t = 0 is $`\nabla f(x^*) \cdot d`$, and its second derivative is $`d^{\mathsf T}\,\nabla^2 f(x^*)\,d`$ ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). A minimum in n inputs is a minimum along every line through it. One-variable facts about each line give the n-variable result.
 
 ### Step 1: flat slope is necessary
 
-If $x^*$ is a local minimiser, then t = 0 is a local minimum of $\varphi$ for every d. A one-variable minimum inside an interval has slope zero, so $\nabla f(x^*) \cdot d = 0$ for every d. Taking d along each axis in turn makes every entry of the gradient zero.
+If $`x^*`$ is a local minimiser, then t = 0 is a local minimum of $`\varphi`$ for every d. A one-variable minimum inside an interval has slope zero, so $`\nabla f(x^*) \cdot d = 0`$ for every d. Taking d along each axis in turn makes every entry of the gradient zero.
 
-On the banana, the slope in y is $200(y - x^2)$, which is zero only on the floor, $y = x^2$. The slope in x is $-2(1 - x) - 400x(y - x^2)$. On the floor the second part vanishes, leaving $-2(1 - x)$, zero only at x = 1. So (1, 1) is the **only** flat spot of the banana anywhere.
+On the banana, the slope in y is $`200(y - x^2)`$, which is zero only on the floor, $`y = x^2`$. The slope in x is $`-2(1 - x) - 400x(y - x^2)`$. On the floor the second part vanishes, leaving $`-2(1 - x)`$, zero only at x = 1. So (1, 1) is the **only** flat spot of the banana anywhere.
 
 ### Step 2: no downward curvature is necessary too
 
-Suppose some direction d had $d^{\mathsf T}\nabla^2 f(x^*)\,d < 0$. By continuity, the curvature stays negative for a short way along that line. Taylor's theorem with the slope term already zero says $\varphi(t) = \varphi(0) + \tfrac12 t^2 \varphi''(\tau)$ for some $\tau$ between 0 and t. That is below $\varphi(0)$, so $x^*$ would not be a minimum. Hence no direction curves down: $\nabla^2 f(x^*) \succeq 0$.
+Suppose some direction d had $`d^{\mathsf T}\nabla^2 f(x^*)\,d < 0`$. By continuity, the curvature stays negative for a short way along that line. Taylor's theorem with the slope term already zero says $`\varphi(t) = \varphi(0) + \tfrac12 t^2 \varphi''(\tau)`$ for some $`\tau`$ between 0 and t. That is below $`\varphi(0)`$, so $`x^*`$ would not be a minimum. Hence no direction curves down: $`\nabla^2 f(x^*) \succeq 0`$.
 
 ### Step 3: flat slope plus upward curvature everywhere is sufficient
 
-Now suppose the gradient is zero and every curvature is at least $\lambda_{\min} > 0$. Taylor along the line from $x^*$ to $x^* + h$ gives
+Now suppose the gradient is zero and every curvature is at least $`\lambda_{\min} > 0`$. Taylor along the line from $`x^*`$ to $`x^* + h`$ gives
 
-$$f(x^* + h) - f(x^*) = \tfrac12\,h^{\mathsf T}\,\nabla^2 f(x^* + \theta h)\,h \quad\text{for some } \theta \text{ in } (0, 1).$$
+```math
+f(x^* + h) - f(x^*) = \tfrac12\,h^{\mathsf T}\,\nabla^2 f(x^* + \theta h)\,h \quad\text{for some } \theta \text{ in } (0, 1).
+```
 
-If the Hessian were read at $x^*$ itself, the right side would be at least $\tfrac12\lambda_{\min}|h|^2$. Close to $x^*$ the Hessian barely changes, so the right side stays at least $\tfrac14\lambda_{\min}|h|^2$, which is above zero. Every nearby point is higher: a strict local minimum.
+If the Hessian were read at $`x^*`$ itself, the right side would be at least $`\tfrac12\lambda_{\min}|h|^2`$. Close to $`x^*`$ the Hessian barely changes, so the right side stays at least $`\tfrac14\lambda_{\min}|h|^2`$, which is above zero. Every nearby point is higher: a strict local minimum.
 
 <details>
 <summary>Detailed proof: the Hessian's drift cannot undo the bowl</summary>
 
-Let $E = \nabla^2 f(x^* + \theta h) - \nabla^2 f(x^*)$. Continuity gives $\delta > 0$ such that every entry of E is smaller than $\lambda_{\min}/(2n)$ in size whenever $|h| < \delta$. Then
+Let $`E = \nabla^2 f(x^* + \theta h) - \nabla^2 f(x^*)`$. Continuity gives $`\delta > 0`$ such that every entry of E is smaller than $`\lambda_{\min}/(2n)`$ in size whenever $`|h| < \delta`$. Then
 
-$$|h^{\mathsf T} E h| \le \sum_{i,j} |E_{ij}|\,|h_i|\,|h_j| < \frac{\lambda_{\min}}{2n}\Big(\sum_i |h_i|\Big)^2 \le \frac{\lambda_{\min}}{2n}\cdot n\,|h|^2 = \tfrac12\lambda_{\min}|h|^2,$$
+$`\displaystyle |h^{\mathsf T} E h| \le \sum_{i,j} |E_{ij}|\,|h_i|\,|h_j| < \frac{\lambda_{\min}}{2n}\Big(\sum_i |h_i|\Big)^2 \le \frac{\lambda_{\min}}{2n}\cdot n\,|h|^2 = \tfrac12\lambda_{\min}|h|^2,`$
 
-using $(\sum_i |h_i|)^2 \le n|h|^2$ (Cauchy–Schwarz). So for $0 < |h| < \delta$,
+using $`(\sum_i |h_i|)^2 \le n|h|^2`$ (Cauchy–Schwarz). So for $`0 < |h| < \delta`$,
 
-$$f(x^* + h) - f(x^*) \ge \tfrac12\big(\lambda_{\min} - \tfrac12\lambda_{\min}\big)|h|^2 = \tfrac14\lambda_{\min}|h|^2 > 0 .$$
+$`\displaystyle f(x^* + h) - f(x^*) \ge \tfrac12\big(\lambda_{\min} - \tfrac12\lambda_{\min}\big)|h|^2 = \tfrac14\lambda_{\min}|h|^2 > 0 .`$
 
-The bound $h^{\mathsf T}\nabla^2 f(x^*)\,h \ge \lambda_{\min}|h|^2$ is the spectral theorem: write h in the Hessian's perpendicular eigenvector directions, and the form becomes a sum of eigenvalues times squares. ∎
+The bound $`h^{\mathsf T}\nabla^2 f(x^*)\,h \ge \lambda_{\min}|h|^2`$ is the spectral theorem: write h in the Hessian's perpendicular eigenvector directions, and the form becomes a sum of eigenvalues times squares. ∎
 
 </details>
 
 ### Step 4: pivots test every direction at once
 
-Checking curvature direction by direction never ends. Elimination does it in one pass. Eliminating below each diagonal entry, without swapping rows and with no zero pivot on the way, writes the Hessian as $L\,P\,L^{\mathsf T}$. Here L is a lower-triangular table with ones on its diagonal, and P holds the pivots $p_1, \dots, p_n$ on its diagonal. Then for any direction d, with $u = L^{\mathsf T} d$,
+Checking curvature direction by direction never ends. Elimination does it in one pass. Eliminating below each diagonal entry, without swapping rows and with no zero pivot on the way, writes the Hessian as $`L\,P\,L^{\mathsf T}`$. Here L is a lower-triangular table with ones on its diagonal, and P holds the pivots $`p_1, \dots, p_n`$ on its diagonal. Then for any direction d, with $`u = L^{\mathsf T} d`$,
 
-$$d^{\mathsf T}\,\nabla^2 f\,d = p_1 u_1^2 + p_2 u_2^2 + \dots + p_n u_n^2 .$$
+```math
+d^{\mathsf T}\,\nabla^2 f\,d = p_1 u_1^2 + p_2 u_2^2 + \dots + p_n u_n^2 .
+```
 
 This is completing the square, done n times. L can be undone, so u = 0 only when d = 0.
 
 - **Every pivot above zero:** every nonzero d gives a sum above zero. Positive definite.
-- **Some pivot $p_k$ below zero:** solve $L^{\mathsf T} d = e_k$, the k-th axis direction. Then $u = e_k$, and $d^{\mathsf T}\nabla^2 f\,d = p_k < 0$. Scaled to length 1, d still curves down, by $p_k$ divided by d's squared length. That d is a concrete way down.
+- **Some pivot $`p_k`$ below zero:** solve $`L^{\mathsf T} d = e_k`$, the k-th axis direction. Then $`u = e_k`$, and $`d^{\mathsf T}\nabla^2 f\,d = p_k < 0`$. Scaled to length 1, d still curves down, by $`p_k`$ divided by d's squared length. That d is a concrete way down.
 
 The banana's pivots are 802 and 400/802 = 0.498753. Both are above zero. For two inputs they are the calculus wing's A and D/A, so this is the same test. With more inputs the count of negative pivots equals the count of negative eigenvalues: Sylvester's law of inertia.
 
@@ -151,11 +163,11 @@ The chain runs one way only:
 
 positive definite Hessian ⇒ strict local minimum ⇒ local minimum ⇒ positive semidefinite Hessian.
 
-Neither end reverses. The function $x^4 + y^4$ has a strict minimum at the origin, yet its Hessian there is all zeros, so the sufficient test is silent. The function $x^2 - y^4$ passes the necessary test at the origin, with Hessian diag(2, 0), yet $f(0, 0.1) = -0.000100$. The gap is exactly a zero eigenvalue. Along that level direction, terms beyond the square decide.
+Neither end reverses. The function $`x^4 + y^4`$ has a strict minimum at the origin, yet its Hessian there is all zeros, so the sufficient test is silent. The function $`x^2 - y^4`$ passes the necessary test at the origin, with Hessian diag(2, 0), yet $`f(0, 0.1) = -0.000100`$. The gap is exactly a zero eigenvalue. Along that level direction, terms beyond the square decide.
 
 ### Step 6: the banana's stretch, and what it means
 
-The banana's Hessian at (1, 1) has eigenvalues 1001.600639 and 0.399361, a ratio of 2508.01. The weak direction, (0.446499, 0.894784), runs along the floor. It is close to the floor's own direction at (1, 1), where $y = x^2$ climbs 2 for every 1 across. The stiff direction, (0.894784, −0.446499), cuts straight across. Near the bottom, the quadratic model's contour f = 0.01 reaches 0.2238 along the floor and only 0.0045 across.
+The banana's Hessian at (1, 1) has eigenvalues 1001.600639 and 0.399361, a ratio of 2508.01. The weak direction, (0.446499, 0.894784), runs along the floor. It is close to the floor's own direction at (1, 1), where $`y = x^2`$ climbs 2 for every 1 across. The stiff direction, (0.894784, −0.446499), cuts straight across. Near the bottom, the quadratic model's contour f = 0.01 reaches 0.2238 along the floor and only 0.0045 across.
 
 None of this weakens the verdict, because a small positive curvature is still positive. It does make the bottom slow to reach. A method that follows the slope zigzags between the walls. That cost is the subject of [Gradient descent](02-gradient-descent-and-its-rate.md) and [Convergence rates](03-rates-of-convergence-and-conditioning.md).
 
@@ -167,21 +179,21 @@ The banana is a sum of two squares, so f is never below zero. At (1, 1) it is ex
 
 ## Worked numbers, by hand
 
-The banana, $f(x, y) = (1 - x)^2 + 100(y - x^2)^2$.
+The banana, $`f(x, y) = (1 - x)^2 + 100(y - x^2)^2`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| slope in y | $200(y - x^2) = 0$ | $y = x^2$, the floor |
-| slope in x, on the floor | $-2(1 - x) - 400x \cdot 0 = 0$ | x = 1, so the flat spot is (1, 1) |
-| height there | $(1 - 1)^2 + 100(1 - 1)^2$ | 0 |
-| $\partial^2 f/\partial x^2 = 1200x^2 - 400y + 2$ | $1200 - 400 + 2$ | 802 |
-| $\partial^2 f/\partial x\,\partial y = -400x$ | $-400 \times 1$ | −400 |
-| $\partial^2 f/\partial y^2$ | $2 \times 100$ | 200 |
-| trace, the sum of the diagonal | $802 + 200$ | 1002 |
-| determinant | $802 \times 200 - 400^2$ | 400 |
-| eigenvalues | $(1002 \pm \sqrt{1002^2 - 4 \times 400})/2$ | 1001.600639 and 0.399361 |
-| stretch | $1001.600639 / 0.399361$ | 2508.01 |
-| pivots | 802, then $200 - 400^2/802 = 400/802$ | 802 and 0.498753 |
+| slope in y | $`200(y - x^2) = 0`$ | $`y = x^2`$, the floor |
+| slope in x, on the floor | $`-2(1 - x) - 400x \cdot 0 = 0`$ | x = 1, so the flat spot is (1, 1) |
+| height there | $`(1 - 1)^2 + 100(1 - 1)^2`$ | 0 |
+| $`\partial^2 f/\partial x^2 = 1200x^2 - 400y + 2`$ | $`1200 - 400 + 2`$ | 802 |
+| $`\partial^2 f/\partial x\,\partial y = -400x`$ | $`-400 \times 1`$ | −400 |
+| $`\partial^2 f/\partial y^2`$ | $`2 \times 100`$ | 200 |
+| trace, the sum of the diagonal | $`802 + 200`$ | 1002 |
+| determinant | $`802 \times 200 - 400^2`$ | 400 |
+| eigenvalues | $`(1002 \pm \sqrt{1002^2 - 4 \times 400})/2`$ | 1001.600639 and 0.399361 |
+| stretch | $`1001.600639 / 0.399361`$ | 2508.01 |
+| pivots | 802, then $`200 - 400^2/802 = 400/802`$ | 802 and 0.498753 |
 | verdict | both pivots above zero; f is a sum of squares, 0 here | **strict local minimum, and global: f(1, 1) = 0** |
 
 So the bottom of the banana is (1, 1), height 0, and nothing in the plane is lower. Its curvature is about 2,500 times stronger across the valley than along it.
@@ -191,8 +203,8 @@ So the bottom of the banana is (1, 1), height 0, and nothing in the plane is low
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Stop at the flat slope | chained valley, flat spot (−0.656125, 0.443120, 0.204312, 0.041743), f = 3.708242; a step of 0.01 along the downhill direction changes f by −2.4658e−05 | a saddle: pivots 341.351, 154.116, 31.542, −11.747 |
-| Accept level curvature as enough | $x^2 - y^4$: Hessian diag(2, 0) passes the necessary test; f(0, 0.1) = −0.000100 | a zero eigenvalue gives no verdict |
-| Use the two-variable rule with three inputs | $x^2 - y^2 - z^2$: determinant 8 and top-left entry 2 both pass; f(0, 0.1, 0) = −0.010000 | pivots 2, −2, −2: a saddle with 2 ways down |
+| Accept level curvature as enough | $`x^2 - y^4`$: Hessian diag(2, 0) passes the necessary test; f(0, 0.1) = −0.000100 | a zero eigenvalue gives no verdict |
+| Use the two-variable rule with three inputs | $`x^2 - y^2 - z^2`$: determinant 8 and top-left entry 2 both pass; f(0, 0.1, 0) = −0.010000 | pivots 2, −2, −2: a saddle with 2 ways down |
 | Call a pit global | chained valley's second pit: f = 3.701429, against 0.000000 at (1, 1, 1, 1) | both tests are local |
 
 ---
@@ -862,7 +874,7 @@ example : (10 : ℤ) + 2 = 12 ∧ (10 : ℤ) * 2 - 4 ^ 2 = 4 := by decide
 >
 > Smaller traps:
 > - **Judging by the diagonal.** The saddle's Hessian has every diagonal entry above zero: 341.351, 355.902, 235.395, 200.000. Yet its curvature along the downhill direction is −0.5378. The off-diagonal entries matter.
-> - **Carrying the two-variable rule into more inputs.** "Determinant above zero and top-left entry above zero" works only for two inputs. For $x^2 - y^2 - z^2$ the determinant is 8 and the top-left entry is 2, and it is a saddle.
+> - **Carrying the two-variable rule into more inputs.** "Determinant above zero and top-left entry above zero" works only for two inputs. For $`x^2 - y^2 - z^2`$ the determinant is 8 and the top-left entry is 2, and it is a saddle.
 > - **Reading a tiny eigenvalue as failure.** 0.399361 beside 1001.600639 looks like nearly zero, but it is positive, and the sufficient test passes. Smallness costs speed, not the verdict. Only an eigenvalue of exactly zero leaves the question open.
 > - **Testing a handful of directions.** At the saddle, all 80 sampled directions go up, the smallest by 8.852e−06. The one direction that goes down was not among them.
 
@@ -882,7 +894,7 @@ example : (10 : ℤ) + 2 = 12 ∧ (10 : ℤ) * 2 - 4 ^ 2 = 4 := by decide
 
 ## What this builds on
 
-- [Local and global minima](../01-Convexity/01-local-and-global-minima.md): what local, global and strict mean, and $x^*$ for a minimiser.
+- [Local and global minima](../01-Convexity/01-local-and-global-minima.md): what local, global and strict mean, and $`x^*`$ for a minimiser.
 - [Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md): the zero-gradient proof and the two-variable test D = AC − B², which this card extends to n inputs.
 - [Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md): the table of second derivatives and the quadratic model with its remainder, used in Steps 0 and 3.
 

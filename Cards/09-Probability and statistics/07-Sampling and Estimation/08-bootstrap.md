@@ -8,7 +8,7 @@
 
 An insurer closes the year with a book of 200 home-contents claims. The smallest is $87.91 and the largest $17,253.10. The middle claim, the **median**, is $1,513.40: half the claims were smaller, half larger. The average is $2,484.93, pulled up by a few large losses. The pricing team quotes the median as the typical claim.
 
-How firm is $1,513.40? Next year's 200 claims will give a different median. For an average there is a formula for that wobble, the standard error $s/\sqrt{n}$ of [Standard error](02-sample-mean-and-standard-error.md). For a median the usual formula needs the height of the unknown claim law at its middle, a number 200 claims cannot pin down well.
+How firm is $1,513.40? Next year's 200 claims will give a different median. For an average there is a formula for that wobble, the standard error $`s/\sqrt{n}`$ of [Standard error](02-sample-mean-and-standard-error.md). For a median the usual formula needs the height of the unknown claim law at its middle, a number 200 claims cannot pin down well.
 
 The **bootstrap** gets the wobble without a formula. Treat the 200 claims as if they were the whole population. Draw 200 claims from them at random, putting each one back after it is drawn, so some claims come up twice and some not at all. That new list is a **resample**. Take its median. Do it 2,000 times. The 2,000 medians scatter, and their scatter stands in for the scatter of next year's median. Here it is $133.65: the typical claim is $1,513.40 give or take about that much. The same recipe gives the average a standard error of $202.30. The name comes from "pulling oneself up by one's bootstraps": the data are used to judge themselves.
 
@@ -34,42 +34,48 @@ Bars: the 2,000 simulated resamples. Line: the same law computed exactly by coun
 
 ## The formula
 
-Notation first, in words. A reminder from [Samples and estimators](01-populations-samples-and-estimators.md): a hat marks a guess, so $\hat\theta$ (theta-hat) is the book's estimate of a population number θ, here the median. A star marks anything computed from a resample: $x^*_1, \dots, x^*_n$ is one resample, and $\hat\theta^*_b$ is the estimate on resample number b. Brackets round a subscript mean rank: $x_{(k)}$ is the k-th smallest claim.
+Notation first, in words. A reminder from [Samples and estimators](01-populations-samples-and-estimators.md): a hat marks a guess, so $`\hat\theta`$ (theta-hat) is the book's estimate of a population number θ, here the median. A star marks anything computed from a resample: $`x^*_1, \dots, x^*_n`$ is one resample, and $`\hat\theta^*_b`$ is the estimate on resample number b. Brackets round a subscript mean rank: $`x_{(k)}`$ is the k-th smallest claim.
 
 The bootstrap standard error is the ordinary spread of the resampled estimates:
 
-$$\widehat{\mathrm{se}}_B = \sqrt{\frac{1}{B-1}\sum_{b=1}^{B}\bigl(\hat\theta^*_b - \bar\theta^*\bigr)^2}, \qquad \bar\theta^* = \frac{1}{B}\sum_{b=1}^{B}\hat\theta^*_b$$
+```math
+\widehat{\mathrm{se}}_B = \sqrt{\frac{1}{B-1}\sum_{b=1}^{B}\bigl(\hat\theta^*_b - \bar\theta^*\bigr)^2}, \qquad \bar\theta^* = \frac{1}{B}\sum_{b=1}^{B}\hat\theta^*_b
+```
 
 **Read it aloud:** the bootstrap standard error is the standard deviation of the estimate across the B resamples.
 
 The **percentile interval** reads the middle 95 percent of those estimates:
 
-$$\Bigl[\,q^*_{0.025},\; q^*_{0.975}\,\Bigr]$$
+```math
+\Bigl[\,q^*_{0.025},\; q^*_{0.975}\,\Bigr]
+```
 
 **Read it aloud:** from the resampled estimates, the value with 2.5 percent below it to the value with 97.5 percent below it.
 
 For the mean, no simulation is needed. Letting B grow without end gives the exact bootstrap standard error:
 
-$$\mathrm{se}^*(\bar x) = \frac{\hat\sigma}{\sqrt n}, \qquad \hat\sigma^2 = \frac{1}{n}\sum_{i=1}^{n}\bigl(x_i - \bar x\bigr)^2$$
+```math
+\mathrm{se}^*(\bar x) = \frac{\hat\sigma}{\sqrt n}, \qquad \hat\sigma^2 = \frac{1}{n}\sum_{i=1}^{n}\bigl(x_i - \bar x\bigr)^2
+```
 
 **Read it aloud:** the bootstrap standard error of the mean is the claims' spread, measured with divisor n, over the square root of the number of claims.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of claims in the book | 200 | every standard error falls, like 1/√n |
-| $x_i$, $x_{(k)}$ | claim number i; the k-th smallest claim | 100th smallest $1,509.52; 101st $1,517.29 | — |
-| $\hat\theta$ | the book's estimate, here the median | $1,513.40 | — |
-| $x^*_i$ | a claim in a resample, drawn with replacement | any of the 200, chance 1/200 each | — |
-| $B$ | number of resamples | 2,000 | simulation noise falls; the answer itself does not move |
-| $\hat\theta^*_b$, $\bar\theta^*$ | estimate on resample b; average of the B of them | $\bar\theta^*$ close to $1,513.40 | — |
-| $\widehat{\mathrm{se}}_B$ | bootstrap standard error from B resamples | median $133.65, mean $202.30 | — |
-| $\mathrm{se}^*$ | exact bootstrap standard error, B without end | median $133.90, mean $202.97 | — |
-| $\bar x$, $\hat\sigma$ | the book's mean; its spread with divisor n | $2,484.93; $2,870.49 | $\hat\sigma$ up: the mean's standard error up |
-| $s$ | the book's spread with divisor n − 1, used by the textbook standard error $s/\sqrt n$ | $2,877.69 | the textbook standard error up |
-| $q^*_{0.025}$, $q^*_{0.975}$ | 2.5% and 97.5% points of the resampled estimates | median $1,215.34 to $1,755.73 | — |
-| $f(m)$ | height of the true claim density at the true median m | 1/(1500 √(2π)) per dollar | the median's true standard error falls |
+| $`n`$ | number of claims in the book | 200 | every standard error falls, like 1/√n |
+| $`x_i`$, $`x_{(k)}`$ | claim number i; the k-th smallest claim | 100th smallest $1,509.52; 101st $1,517.29 | — |
+| $`\hat\theta`$ | the book's estimate, here the median | $1,513.40 | — |
+| $`x^*_i`$ | a claim in a resample, drawn with replacement | any of the 200, chance 1/200 each | — |
+| $`B`$ | number of resamples | 2,000 | simulation noise falls; the answer itself does not move |
+| $`\hat\theta^*_b`$, $`\bar\theta^*`$ | estimate on resample b; average of the B of them | $`\bar\theta^*`$ close to $1,513.40 | — |
+| $`\widehat{\mathrm{se}}_B`$ | bootstrap standard error from B resamples | median $133.65, mean $202.30 | — |
+| $`\mathrm{se}^*`$ | exact bootstrap standard error, B without end | median $133.90, mean $202.97 | — |
+| $`\bar x`$, $`\hat\sigma`$ | the book's mean; its spread with divisor n | $2,484.93; $2,870.49 | $`\hat\sigma`$ up: the mean's standard error up |
+| $`s`$ | the book's spread with divisor n − 1, used by the textbook standard error $`s/\sqrt n`$ | $2,877.69 | the textbook standard error up |
+| $`q^*_{0.025}`$, $`q^*_{0.975}`$ | 2.5% and 97.5% points of the resampled estimates | median $1,215.34 to $1,755.73 | — |
+| $`f(m)`$ | height of the true claim density at the true median m | 1/(1500 √(2π)) per dollar | the median's true standard error falls |
 
-The last row belongs to the large-sample formula the bootstrap sidesteps: the median's standard error is about $1/\bigl(2 f(m)\sqrt n\bigr)$. It needs $f(m)$, and a book of claims does not supply it.
+The last row belongs to the large-sample formula the bootstrap sidesteps: the median's standard error is about $`1/\bigl(2 f(m)\sqrt n\bigr)`$. It needs $`f(m)`$, and a book of claims does not supply it.
 
 ### When it holds
 
@@ -95,9 +101,9 @@ Without replacement, 200 draws from 200 claims are just the same 200 claims in a
 
 ### Step 2: for the mean, the exact answer is a formula
 
-One resampled claim has average $\bar x$ (each claim, weight 1/200) and variance $\hat\sigma^2$, the average squared distance from $\bar x$ with divisor n. The 200 draws are independent, so the variance of their average is $\hat\sigma^2/n$ ([Standard error](02-sample-mean-and-standard-error.md) makes the same step for a real sample). For the book: $2,870.49/√200 = $202.97. The 2,000 simulated resamples give $202.30, within simulation noise.
+One resampled claim has average $`\bar x`$ (each claim, weight 1/200) and variance $`\hat\sigma^2`$, the average squared distance from $`\bar x`$ with divisor n. The 200 draws are independent, so the variance of their average is $`\hat\sigma^2/n`$ ([Standard error](02-sample-mean-and-standard-error.md) makes the same step for a real sample). For the book: $2,870.49/√200 = $202.97. The 2,000 simulated resamples give $202.30, within simulation noise.
 
-The textbook standard error uses s, the spread with divisor n − 1, and gives $203.48. The two differ by the factor √(199/200), just under 1: the bootstrap is the plug-in version of the familiar formula, and for large books they agree. On the shelf's poll, 520 of 1,000 voters for one side, the same step gives the share's standard error 0.0158: a share is the mean of answers coded 1 and 0, and $\hat\sigma^2$ becomes 0.52 × 0.48.
+The textbook standard error uses s, the spread with divisor n − 1, and gives $203.48. The two differ by the factor √(199/200), just under 1: the bootstrap is the plug-in version of the familiar formula, and for large books they agree. On the shelf's poll, 520 of 1,000 voters for one side, the same step gives the share's standard error 0.0158: a share is the mean of answers coded 1 and 0, and $`\hat\sigma^2`$ becomes 0.52 × 0.48.
 
 ### Step 3: for the median, the exact answer is a count of ranks
 
@@ -110,14 +116,15 @@ The count gives 1,699 rank pairs with a chance above 10^−13; together they hol
 
 Hold the book fixed and write P\* for chances over resamples. Each of the 200 draws lands on rank k with chance 1/200, independently.
 
-**Two different ranks.** Suppose the 100th smallest draw is claim $x_{(i)}$ and the 101st is $x_{(j)}$, with i < j. Then exactly 100 draws land on ranks 1 to i, at least one of them on rank i, and the other 100 land on ranks j to 200, at least one on rank j. Choose which 100 draws are the low ones: $\binom{200}{100}$ ways. Each low draw lands in ranks 1 to i with chance i/200; subtracting the case where none hits rank i leaves $(i/200)^{100} - ((i-1)/200)^{100}$. The high draws give the matching factor. So
-$$P^*\bigl(\text{middle pair} = x_{(i)}, x_{(j)}\bigr) = \binom{200}{100}\Bigl[\bigl(\tfrac{i}{200}\bigr)^{100} - \bigl(\tfrac{i-1}{200}\bigr)^{100}\Bigr]\Bigl[\bigl(\tfrac{201-j}{200}\bigr)^{100} - \bigl(\tfrac{200-j}{200}\bigr)^{100}\Bigr].$$
+**Two different ranks.** Suppose the 100th smallest draw is claim $`x_{(i)}`$ and the 101st is $`x_{(j)}`$, with i < j. Then exactly 100 draws land on ranks 1 to i, at least one of them on rank i, and the other 100 land on ranks j to 200, at least one on rank j. Choose which 100 draws are the low ones: $`\binom{200}{100}`$ ways. Each low draw lands in ranks 1 to i with chance i/200; subtracting the case where none hits rank i leaves $`(i/200)^{100} - ((i-1)/200)^{100}`$. The high draws give the matching factor. So
 
-**The same rank twice.** The 100th smallest draw is at most $x_{(k)}$ exactly when at least 100 draws land on ranks 1 to k. That count is Binomial(200, k/200), so P\*(100th smallest ≤ $x_{(k)}$) is a binomial tail. Differencing at k = i and k = i − 1 gives the chance that the 100th smallest draw is $x_{(i)}$. Subtract the pairs with j > i from the line above, and what remains is the chance that both middle draws are $x_{(i)}$.
+$`\displaystyle P^*\bigl(\text{middle pair} = x_{(i)}, x_{(j)}\bigr) = \binom{200}{100}\Bigl[\bigl(\tfrac{i}{200}\bigr)^{100} - \bigl(\tfrac{i-1}{200}\bigr)^{100}\Bigr]\Bigl[\bigl(\tfrac{201-j}{200}\bigr)^{100} - \bigl(\tfrac{200-j}{200}\bigr)^{100}\Bigr].`$
 
-**The law.** The resampled median equals $(x_{(i)} + x_{(j)})/2$ with the chance just found. Its mean and variance are finite sums; the square root of the variance is the exact bootstrap standard error. The code tests the pair formula a second way. Summing the chances over the lower rank must give the law of the 101st smallest draw, a binomial tail with 101 in place of 100; the two agree to within 10^−9.
+**The same rank twice.** The 100th smallest draw is at most $`x_{(k)}`$ exactly when at least 100 draws land on ranks 1 to k. That count is Binomial(200, k/200), so P\*(100th smallest ≤ $`x_{(k)}`$) is a binomial tail. Differencing at k = i and k = i − 1 gives the chance that the 100th smallest draw is $`x_{(i)}`$. Subtract the pairs with j > i from the line above, and what remains is the chance that both middle draws are $`x_{(i)}`$.
 
-**The mean.** Each draw has mean $\bar x$ and variance $\hat\sigma^2$ under P\*. Independent draws have covariance 0, so the variance of their average is $n\hat\sigma^2/n^2 = \hat\sigma^2/n$.
+**The law.** The resampled median equals $`(x_{(i)} + x_{(j)})/2`$ with the chance just found. Its mean and variance are finite sums; the square root of the variance is the exact bootstrap standard error. The code tests the pair formula a second way. Summing the chances over the lower rank must give the law of the 101st smallest draw, a binomial tail with 101 in place of 100; the two agree to within 10^−9.
+
+**The mean.** Each draw has mean $`\bar x`$ and variance $`\hat\sigma^2`$ under P\*. Independent draws have covariance 0, so the variance of their average is $`n\hat\sigma^2/n^2 = \hat\sigma^2/n`$.
 
 </details>
 
@@ -125,7 +132,7 @@ $$P^*\bigl(\text{middle pair} = x_{(i)}, x_{(j)}\bigr) = \binom{200}{100}\Bigl[\
 
 As the book grows, the empirical distribution closes in on the true law of claims at every dollar amount at once; that is the Glivenko–Cantelli theorem, stated here and not proved, since its proof rests on the strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)). Closeness here means the share of the book below each dollar amount is near the true chance of a claim below it.
 
-For the median that is nearly enough. The true claim density at the middle, $f(m)$, is above zero, so the chance of a claim below a dollar amount climbs steadily through one half there. Move the law a little and the place where it crosses one half moves in proportion, by about that amount divided by $f(m)$.
+For the median that is nearly enough. The true claim density at the middle, $`f(m)`$, is above zero, so the chance of a claim below a dollar amount climbs steadily through one half there. Move the law a little and the place where it crosses one half moves in proportion, by about that amount divided by $`f(m)`$.
 
 A resample's shares stray from the book's by about as much as a fresh book's stray from the truth, both of size about 1/√n, so the two medians stray by matching amounts. For the standard error itself the median also needs a very mild tail condition, that some small power of a claim has a finite average; lognormal claims meet it.
 
@@ -155,7 +162,7 @@ The book of 200 claims, its median and its mean. SE stands for standard error.
 | --- | --- | --- |
 | median of the book | ($1,509.52 + $1,517.29)/2 | $1,513.40 |
 | mean of the book | total of the claims / 200 | $2,484.93 |
-| spread with divisor n, $\hat\sigma$ | √(average squared distance from $2,484.93) | $2,870.49 |
+| spread with divisor n, $`\hat\sigma`$ | √(average squared distance from $2,484.93) | $2,870.49 |
 | **exact bootstrap SE of the mean** | 2,870.49 / √200 | **$202.97** |
 | textbook SE, divisor n − 1 | 2,877.69 / √200 | $203.48 |
 | simulated SE of the mean, B = 2,000 | spread of 2,000 resampled means | $202.30 |
@@ -584,12 +591,12 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's exact resampling facts for a book of any size n, counting all $n^n$ equally likely resamples.
+Lean proves the card's exact resampling facts for a book of any size n, counting all $`n^n`$ equally likely resamples.
 
-- Take any book of n claims. Then the resampled mean averages to $\bar x$, the book's mean.
-- The exact bootstrap standard error of the mean is $\hat\sigma/\sqrt n$, with $\hat\sigma$ the book's spread with divisor n.
-- Take any one claim in a book of n. Then a resample contains it with chance $1 - (1 - 1/n)^n$.
-- Take a book of n claims and a rank k. Then a resample's largest claim is $x_{(k)}$ with chance $(k/n)^n - ((k-1)/n)^n$.
+- Take any book of n claims. Then the resampled mean averages to $`\bar x`$, the book's mean.
+- The exact bootstrap standard error of the mean is $`\hat\sigma/\sqrt n`$, with $`\hat\sigma`$ the book's spread with divisor n.
+- Take any one claim in a book of n. Then a resample contains it with chance $`1 - (1 - 1/n)^n`$.
+- Take a book of n claims and a rank k. Then a resample's largest claim is $`x_{(k)}`$ with chance $`(k/n)^n - ((k-1)/n)^n`$.
 
 The median's rank count, the simulations, the fresh books and every dollar figure are left to the Python and Rust checks.
 
@@ -824,7 +831,7 @@ theorem resample_max_rank_prob (n : ℕ) (k : Fin n) :
 
 ## What this builds on
 
-- [Standard error](02-sample-mean-and-standard-error.md): the standard error of a mean, $s/\sqrt{n}$, which the bootstrap reproduces for the mean and replaces for everything else.
+- [Standard error](02-sample-mean-and-standard-error.md): the standard error of a mean, $`s/\sqrt{n}`$, which the bootstrap reproduces for the mean and replaces for everything else.
 
 ## Where this goes next
 

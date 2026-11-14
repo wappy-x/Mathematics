@@ -38,31 +38,35 @@ First line: Birch ends at $100, so the kink sits at $100 and the picture is a va
 
 ## The formula
 
-Notation first, in words. A subscript 1 marks Acme, the share received; a subscript 2 marks Birch, the share handed over. $S_1(T)$ is Acme's price at the expiry date T. The Greek letter $\rho$ (rho) is the correlation between the two shares' random moves. $q_1$ and $q_2$ are dividend yields, $\sigma_1$ and $\sigma_2$ (sigma) volatilities, and $N(x)$ is the bell-curve area to the left of x, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). The table lists every symbol.
+Notation first, in words. A subscript 1 marks Acme, the share received; a subscript 2 marks Birch, the share handed over. $`S_1(T)`$ is Acme's price at the expiry date T. The Greek letter $`\rho`$ (rho) is the correlation between the two shares' random moves. $`q_1`$ and $`q_2`$ are dividend yields, $`\sigma_1`$ and $`\sigma_2`$ (sigma) volatilities, and $`N(x)`$ is the bell-curve area to the left of x, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). The table lists every symbol.
 
-$$V = S_1 e^{-q_1 T} N(d_1) \;-\; S_2 e^{-q_2 T} N(d_2)$$
+```math
+V = S_1 e^{-q_1 T} N(d_1) \;-\; S_2 e^{-q_2 T} N(d_2)
+```
 
 **Read it aloud:** the Acme share that might be received minus the Birch share that might be handed over, each trimmed for the dividends it pays before expiry, each weighted by its own chance.
 
 The inputs that drive the chances:
 
-$$\sigma = \sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2}, \qquad d_1 = \frac{\ln\!\left(\dfrac{S_1 e^{-q_1 T}}{S_2 e^{-q_2 T}}\right) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+\sigma = \sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2}, \qquad d_1 = \frac{\ln\!\left(\dfrac{S_1 e^{-q_1 T}}{S_2 e^{-q_2 T}}\right) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: $\sigma$ is the volatility of the ratio Acme over Birch. Each share adds its own variance, the square of its volatility, and the part they share cancels, twice the correlation times the two volatilities. $d_2$ counts, in units of the ratio's log-spread $\sigma\sqrt{T}$, how far the middle of the ratio's log lands above zero, the log of the strike 1; $d_1$ is one spread further.
+In words: $`\sigma`$ is the volatility of the ratio Acme over Birch. Each share adds its own variance, the square of its volatility, and the part they share cancels, twice the correlation times the two volatilities. $`d_2`$ counts, in units of the ratio's log-spread $`\sigma\sqrt{T}`$, how far the middle of the ratio's log lands above zero, the log of the strike 1; $`d_1`$ is one spread further.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | price today of the right to swap one Birch share for one Acme share at T | $7.81 | is the answer |
-| $S_1$, $S_2$ | Acme's and Birch's prices today | $100 each | Acme up: rises; Birch up: falls |
-| $q_1$, $q_2$ | dividend yields, continuously compounded; $e^{-qT}$ is the share left after a year of dividends leak out | 2% each | Acme's up: falls; Birch's up: rises |
-| $\sigma_1$, $\sigma_2$ | each share's volatility: the spread of its yearly log return | 20% each | usually rises, through $\sigma$ |
-| $\rho$ | correlation of the two shares' random moves | 0.5 | falls: the shares move together, so the gap between them shrinks |
-| $\sigma$ | the effective volatility: that of the ratio Acme over Birch | 20% | rises |
-| $T$ | years to expiry | 1 | rises |
-| $R$, $R_T$ | the ratio Acme over Birch, today and at T | 1 today | — |
-| $d_1$, $d_2$, $N$ | distances of the ratio from 1 in units of its spread; $N$ is the bell-curve area to the left of a point | 0.1 and −0.1; N(d1) 0.5398 | — |
-| $r$, $K$ | the bank rate, continuously compounded; a fixed cash strike, used only in the cash case | 5%; $100 | r: no effect at all |
-| $Z_1$, $Z_2$, $Z_\perp$ | the two standard bell-curve shocks that move Acme and Birch, correlated as rho; $Z_\perp$ is a third shock independent of Birch's | — | — |
+| $`V`$ | price today of the right to swap one Birch share for one Acme share at T | $7.81 | is the answer |
+| $`S_1`$, $`S_2`$ | Acme's and Birch's prices today | $100 each | Acme up: rises; Birch up: falls |
+| $`q_1`$, $`q_2`$ | dividend yields, continuously compounded; $`e^{-qT}`$ is the share left after a year of dividends leak out | 2% each | Acme's up: falls; Birch's up: rises |
+| $`\sigma_1`$, $`\sigma_2`$ | each share's volatility: the spread of its yearly log return | 20% each | usually rises, through $`\sigma`$ |
+| $`\rho`$ | correlation of the two shares' random moves | 0.5 | falls: the shares move together, so the gap between them shrinks |
+| $`\sigma`$ | the effective volatility: that of the ratio Acme over Birch | 20% | rises |
+| $`T`$ | years to expiry | 1 | rises |
+| $`R`$, $`R_T`$ | the ratio Acme over Birch, today and at T | 1 today | — |
+| $`d_1`$, $`d_2`$, $`N`$ | distances of the ratio from 1 in units of its spread; $`N`$ is the bell-curve area to the left of a point | 0.1 and −0.1; N(d1) 0.5398 | — |
+| $`r`$, $`K`$ | the bank rate, continuously compounded; a fixed cash strike, used only in the cash case | 5%; $100 | r: no effect at all |
+| $`Z_1`$, $`Z_2`$, $`Z_\perp`$ | the two standard bell-curve shocks that move Acme and Birch, correlated as rho; $`Z_\perp`$ is a third shock independent of Birch's | — | — |
 
 ### When it holds
 
@@ -70,7 +74,7 @@ In words: $\sigma$ is the volatility of the ratio Acme over Birch. Each share ad
 - **Exercise only at expiry.** When neither share pays dividends, swapping early never pays, and the American contract, which may be exercised on any day up to expiry, is worth the same. With dividends, early exercise can pay, and this formula is a floor.
 - **Dividends paid as a steady yield.** A lump-sum dividend before expiry must be subtracted from that share's price today instead.
 - **Both shares can be bought, and sold short (borrowed and sold), without cost.** The hedge in Step 4 holds both shares. If Birch cannot be borrowed, the replication argument fails, and so does the price.
-- **One share for one share.** A contract swapping n Birch shares for one Acme share uses n times $S_2$ in every place; the formula is unchanged otherwise.
+- **One share for one share.** A contract swapping n Birch shares for one Acme share uses n times $`S_2`$ in every place; the formula is unchanged otherwise.
 
 ---
 
@@ -80,19 +84,23 @@ In words: $\sigma$ is the volatility of the ratio Acme over Birch. Each share ad
 
 A price in dollars is a count of dollars. Nothing forces that unit. The payoff at expiry factors:
 
-$$\max\big(S_1(T) - S_2(T),\,0\big) = S_2(T)\,\max(R_T - 1,\,0).$$
+```math
+\max\big(S_1(T) - S_2(T),\,0\big) = S_2(T)\,\max(R_T - 1,\,0).
+```
 
-Read in Birch shares, the payoff is $\max(R_T - 1, 0)$ Birch shares: a call on the ratio, struck at 1. The unit of account, here a Birch share, is called the **numeraire**, the word used from here on ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
+Read in Birch shares, the payoff is $`\max(R_T - 1, 0)`$ Birch shares: a call on the ratio, struck at 1. The unit of account, here a Birch share, is called the **numeraire**, the word used from here on ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
 
 In dollars, a call is priced against a bank account that grows at r. In Birch shares, the "bank account" is a Birch share itself, dividends reinvested, and measured in Birch shares it earns nothing but those dividends. The bank rate has no job left to do. What remains is a zero-interest call on the ratio. Steps 1 and 2 find the ratio's spread and its centre; Step 3 prices it.
 
 ### Step 1: the ratio's volatility, net of what the shares share
 
-The log of a ratio is a difference of logs: $\ln R_T = \ln S_1(T) - \ln S_2(T)$. Over the year, Acme's log price takes the random shock $\sigma_1\sqrt{T}Z_1$ and Birch's takes $\sigma_2\sqrt{T}Z_2$, where $Z_1$ and $Z_2$ are standard bell-curve draws with correlation $\rho$. The ratio takes their difference. The variance of a difference of two correlated shocks is each variance, minus twice the shared part:
+The log of a ratio is a difference of logs: $`\ln R_T = \ln S_1(T) - \ln S_2(T)`$. Over the year, Acme's log price takes the random shock $`\sigma_1\sqrt{T}Z_1`$ and Birch's takes $`\sigma_2\sqrt{T}Z_2`$, where $`Z_1`$ and $`Z_2`$ are standard bell-curve draws with correlation $`\rho`$. The ratio takes their difference. The variance of a difference of two correlated shocks is each variance, minus twice the shared part:
 
-$$\sigma^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2 = 0.04 + 0.04 - 2(0.5)(0.2)(0.2) = 0.04.$$
+```math
+\sigma^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2 = 0.04 + 0.04 - 2(0.5)(0.2)(0.2) = 0.04.
+```
 
-So the ratio moves 20 percent a year, as much as either share on its own. Correlation decides the price. At +1, two shares this alike take the same shock, the ratio never moves, and the option is worthless. With unequal volatilities the ratio still moves at $|\sigma_1 - \sigma_2|$, and the option keeps a value. At −1 they move in opposite directions, the ratio moves 40 percent a year, and the option costs about twice as much.
+So the ratio moves 20 percent a year, as much as either share on its own. Correlation decides the price. At +1, two shares this alike take the same shock, the ratio never moves, and the option is worthless. With unequal volatilities the ratio still moves at $`|\sigma_1 - \sigma_2|`$, and the option keeps a value. At −1 they move in opposite directions, the ratio moves 40 percent a year, and the option costs about twice as much.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -107,30 +115,34 @@ The one line is the Margrabe price at each correlation, everything else held at 
 
 ### Step 2: the ratio's centre, counted in Birch
 
-Pricing in a numeraire rests on one rule: any traded holding, divided by the numeraire holding, is a fair game. Its expected future value, in the probabilities that go with that numeraire, is its value today. Acme with dividends reinvested is a traded holding, and so is Birch with dividends reinvested. Their ratio, $R\,e^{(q_1 - q_2)t}$ at time t, is therefore a fair game.
+Pricing in a numeraire rests on one rule: any traded holding, divided by the numeraire holding, is a fair game. Its expected future value, in the probabilities that go with that numeraire, is its value today. Acme with dividends reinvested is a traded holding, and so is Birch with dividends reinvested. Their ratio, $`R\,e^{(q_1 - q_2)t}`$ at time t, is therefore a fair game.
 
-So the expected ratio at T is $R\,e^{(q_2 - q_1)T}$: today's ratio, pushed by the difference in dividends. Acme leaks dividends, which lowers the ratio; Birch leaks them too, which raises it. For Acme and Birch the two yields are equal, and the ratio is expected to stay at 1. The bank rate would push both shares up equally, and in a ratio it cancels.
+So the expected ratio at T is $`R\,e^{(q_2 - q_1)T}`$: today's ratio, pushed by the difference in dividends. Acme leaks dividends, which lowers the ratio; Birch leaks them too, which raises it. For Acme and Birch the two yields are equal, and the ratio is expected to stay at 1. The bank rate would push both shares up equally, and in a ratio it cancels.
 
 ### Step 3: price the ratio call, then convert back to dollars
 
-The ratio is lognormal with centre $R\,e^{(q_2 - q_1)T}$ and volatility $\sigma$, and the call on it has strike 1 and zero interest. That is the Black-Scholes call from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), with the rate set to zero. In Birch shares at expiry, its value is
+The ratio is lognormal with centre $`R\,e^{(q_2 - q_1)T}`$ and volatility $`\sigma`$, and the call on it has strike 1 and zero interest. That is the Black-Scholes call from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), with the rate set to zero. In Birch shares at expiry, its value is
 
-$$R\,e^{(q_2 - q_1)T} N(d_1) - N(d_2).$$
+```math
+R\,e^{(q_2 - q_1)T} N(d_1) - N(d_2).
+```
 
-To bring that back to dollars today, multiply by what one Birch share delivered at T costs today: $S_2 e^{-q_2 T}$, a share bought now minus the dividends it pays out along the way. Multiplied out, $S_2 e^{-q_2T}\cdot R\,e^{(q_2-q_1)T} = S_1 e^{-q_1 T}$, and the formula appears:
+To bring that back to dollars today, multiply by what one Birch share delivered at T costs today: $`S_2 e^{-q_2 T}`$, a share bought now minus the dividends it pays out along the way. Multiplied out, $`S_2 e^{-q_2T}\cdot R\,e^{(q_2-q_1)T} = S_1 e^{-q_1 T}`$, and the formula appears:
 
-$$V = S_1 e^{-q_1 T} N(d_1) - S_2 e^{-q_2 T} N(d_2).$$
+```math
+V = S_1 e^{-q_1 T} N(d_1) - S_2 e^{-q_2 T} N(d_2).
+```
 
 <details>
 <summary>Detailed proof: the same price by direct integration in dollars</summary>
 
-In the dollar pretend world (risk-neutral), $\ln S_i(T) = \ln S_i + (r - q_i - \tfrac12\sigma_i^2)T + \sigma_i\sqrt{T}Z_i$ for i = 1, 2, where $Z_1$ and $Z_2$ are standard normal with correlation $\rho$. The price is $e^{-rT}$ times the average of $S_2(T)\max(R_T - 1, 0)$.
+In the dollar pretend world (risk-neutral), $`\ln S_i(T) = \ln S_i + (r - q_i - \tfrac12\sigma_i^2)T + \sigma_i\sqrt{T}Z_i`$ for i = 1, 2, where $`Z_1`$ and $`Z_2`$ are standard normal with correlation $`\rho`$. The price is $`e^{-rT}`$ times the average of $`S_2(T)\max(R_T - 1, 0)`$.
 
-Write $S_2(T) = S_2 e^{(r - q_2)T} \cdot e^{\sigma_2\sqrt{T}Z_2 - \frac12\sigma_2^2 T}$. The first factor is a constant; times $e^{-rT}$ it is $S_2 e^{-q_2 T}$, and r is gone. The second factor has average 1 and reweights the bell curve. As on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), completing the square shows the reweighted $Z_2$ is a normal centred at $\sigma_2\sqrt{T}$ instead of 0. Since $Z_1 = \rho Z_2 + \sqrt{1-\rho^2}\,Z_\perp$ with $Z_\perp$ independent, $Z_1$ is centred at $\rho\sigma_2\sqrt{T}$.
+Write $`S_2(T) = S_2 e^{(r - q_2)T} \cdot e^{\sigma_2\sqrt{T}Z_2 - \frac12\sigma_2^2 T}`$. The first factor is a constant; times $`e^{-rT}`$ it is $`S_2 e^{-q_2 T}`$, and r is gone. The second factor has average 1 and reweights the bell curve. As on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), completing the square shows the reweighted $`Z_2`$ is a normal centred at $`\sigma_2\sqrt{T}`$ instead of 0. Since $`Z_1 = \rho Z_2 + \sqrt{1-\rho^2}\,Z_\perp`$ with $`Z_\perp`$ independent, $`Z_1`$ is centred at $`\rho\sigma_2\sqrt{T}`$.
 
-Under the reweighting, $\ln R_T = \ln R + (q_2 - q_1)T - \tfrac12(\sigma_1^2 - \sigma_2^2)T + \sigma_1\sqrt{T}Z_1 - \sigma_2\sqrt{T}Z_2$ has centre shifted by $\rho\sigma_1\sigma_2 T - \sigma_2^2 T$, giving $\ln R + (q_2 - q_1)T - \tfrac12(\sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2)T = \ln R + (q_2 - q_1)T - \tfrac12\sigma^2 T$. The reweighting shifts centres, not spreads, so its variance is still $\sigma_1^2 T + \sigma_2^2 T - 2\rho\sigma_1\sigma_2 T = \sigma^2 T$.
+Under the reweighting, $`\ln R_T = \ln R + (q_2 - q_1)T - \tfrac12(\sigma_1^2 - \sigma_2^2)T + \sigma_1\sqrt{T}Z_1 - \sigma_2\sqrt{T}Z_2`$ has centre shifted by $`\rho\sigma_1\sigma_2 T - \sigma_2^2 T`$, giving $`\ln R + (q_2 - q_1)T - \tfrac12(\sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2)T = \ln R + (q_2 - q_1)T - \tfrac12\sigma^2 T`$. The reweighting shifts centres, not spreads, so its variance is still $`\sigma_1^2 T + \sigma_2^2 T - 2\rho\sigma_1\sigma_2 T = \sigma^2 T`$.
 
-So $R_T$ is lognormal with average $R\,e^{(q_2 - q_1)T}$ and log-spread $\sigma\sqrt{T}$, and the price is $S_2 e^{-q_2 T}$ times the average of $\max(R_T - 1, 0)$. The lognormal call average, $F N(d_1) - N(d_2)$ with $F = R\,e^{(q_2 - q_1)T}$, is the Black-Scholes integral with no discount. Multiplying by $S_2 e^{-q_2 T}$ gives the formula. The reweighting is the change to Birch as numeraire, done by hand.
+So $`R_T`$ is lognormal with average $`R\,e^{(q_2 - q_1)T}`$ and log-spread $`\sigma\sqrt{T}`$, and the price is $`S_2 e^{-q_2 T}`$ times the average of $`\max(R_T - 1, 0)`$. The lognormal call average, $`F N(d_1) - N(d_2)`$ with $`F = R\,e^{(q_2 - q_1)T}`$, is the Black-Scholes integral with no discount. Multiplying by $`S_2 e^{-q_2 T}`$ gives the formula. The reweighting is the change to Birch as numeraire, done by hand.
 
 </details>
 
@@ -138,7 +150,9 @@ So $R_T$ is lognormal with average $R\,e^{(q_2 - q_1)T}$ and log-spread $\sigma\
 
 Double both share prices and every payoff doubles, so the price doubles. A price with that property equals each input times its sensitivity, summed (Euler's identity for functions of degree one):
 
-$$V = S_1 \cdot \Delta_1 + S_2 \cdot \Delta_2, \qquad \Delta_1 = e^{-q_1T}N(d_1),\quad \Delta_2 = -e^{-q_2T}N(d_2).$$
+```math
+V = S_1 \cdot \Delta_1 + S_2 \cdot \Delta_2, \qquad \Delta_1 = e^{-q_1T}N(d_1),\quad \Delta_2 = -e^{-q_2T}N(d_2).
+```
 
 Here the Greek letter Δ (delta) is the dollars the price gains per dollar on a share. For Acme and Birch: 0.52914 × $100 − 0.45106 × $100 = $7.81. The replicating portfolio is 0.5291 Acme shares held and 0.4511 Birch shares sold short, with nothing in the bank. A hedge with no cash in it cannot care what cash earns. That is the second reason r is absent, seen from the trading desk.
 
@@ -146,7 +160,7 @@ Here the Greek letter Δ (delta) is the dollars the price gains per dollar on a 
 
 Replace Birch with a bond that pays $100 at expiry. Its price today is 100 × e^−0.05 = $95.12. It has no volatility, pays no dividend, and grows at the bank rate.
 
-Put $S_2 = K e^{-rT}$, $q_2 = 0$ and $\sigma_2 = 0$ into the formula. The effective volatility becomes $\sigma_1$, $S_2 e^{-q_2T}$ becomes $K e^{-rT}$, and the result is the Black-Scholes call, $9.227006, the house vanilla: the worked example of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), a call on Acme at a fixed $100 strike. The bank rate returns only because the second asset is now a bond whose price contains it.
+Put $`S_2 = K e^{-rT}`$, $`q_2 = 0`$ and $`\sigma_2 = 0`$ into the formula. The effective volatility becomes $`\sigma_1`$, $`S_2 e^{-q_2T}`$ becomes $`K e^{-rT}`$, and the result is the Black-Scholes call, $9.227006, the house vanilla: the worked example of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), a call on Acme at a fixed $100 strike. The bank rate returns only because the second asset is now a bond whose price contains it.
 
 Two other roads reach the exchange price, and the code takes both. Fix Birch's shock; Acme is then lognormal with a known centre and spread, the inner average is a closed Black-Scholes-type expression, and one integral over Birch's shock finishes the job, with r written in. Or simulate the two shares together, correlating their shocks as on [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md), and average the discounted payoff.
 
@@ -154,16 +168,16 @@ Two other roads reach the exchange price, and the code takes both. Fix Birch's s
 
 ## Worked numbers, by hand
 
-Acme and Birch: $S_1 = S_2 = 100$, $\sigma_1 = \sigma_2 = 20\%$, $q_1 = q_2 = 2\%$, $\rho = 0.5$, $r = 5\%$, $T = 1$ year.
+Acme and Birch: $`S_1 = S_2 = 100`$, $`\sigma_1 = \sigma_2 = 20\%`$, $`q_1 = q_2 = 2\%`$, $`\rho = 0.5`$, $`r = 5\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| effective variance, $\sigma^2$ | 0.04 + 0.04 − 2 × 0.5 × 0.2 × 0.2 | 0.04 |
-| effective volatility, $\sigma$ | √0.04 | 0.20 |
+| effective variance, $`\sigma^2`$ | 0.04 + 0.04 − 2 × 0.5 × 0.2 × 0.2 | 0.04 |
+| effective volatility, $`\sigma`$ | √0.04 | 0.20 |
 | Acme today net of dividends | 100 × e^−0.02 | $98.02 |
 | Birch today net of dividends | 100 × e^−0.02 | $98.02 |
-| $d_1$ | (ln 1 + 0.5 × 0.04) / 0.20 | 0.1 |
-| $d_2$ | 0.1 − 0.20 | −0.1 |
+| $`d_1`$ | (ln 1 + 0.5 × 0.04) / 0.20 | 0.1 |
+| $`d_2`$ | 0.1 − 0.20 | −0.1 |
 | N(d1), N(d2) | bell-curve table | 0.5398, 0.4602 |
 | Acme half | 98.020 × 0.53983 | $52.914 |
 | Birch half | 98.020 × 0.46017 | $45.106 |
@@ -180,9 +194,9 @@ Same contract, right answer $7.81. Every wrong number is printed by both checks.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Treat Birch as a fixed $100 strike | $9.23 | Birch grows and moves with Acme; a cash strike does neither |
-| Leave the correlation out, $\sigma^2 = \sigma_1^2 + \sigma_2^2$ | $11.02 | Priced as if the two shares moved independently |
-| Flip the sign, $+2\rho\sigma_1\sigma_2$ | $13.48 | Positive correlation narrows the gap; the plus sign widens it, pricing the shares as if $\rho = -0.5$ |
-| Drop the 2, $-\rho\sigma_1\sigma_2$ | $9.55 | The cross term of a squared difference comes twice |
+| Leave the correlation out, $`\sigma^2 = \sigma_1^2 + \sigma_2^2`$ | $11.02 | Priced as if the two shares moved independently |
+| Flip the sign, $`+2\rho\sigma_1\sigma_2`$ | $13.48 | Positive correlation narrows the gap; the plus sign widens it, pricing the shares as if $`\rho = -0.5`$ |
+| Drop the 2, $`-\rho\sigma_1\sigma_2`$ | $9.55 | The cross term of a squared difference comes twice |
 | Drop both dividend yields | $7.97 | Each share delivered at T is worth $98.02 today, not $100 |
 
 ### The Greeks
@@ -191,12 +205,12 @@ Sensitivities by bumping the formula (nudging one input up and down and comparin
 
 | Greek | Plain meaning | Value |
 | --- | --- | --- |
-| delta, Acme | dollars gained per dollar on Acme; equals $e^{-q_1T}N(d_1)$ | 0.5291 |
-| delta, Birch | dollars gained per dollar on Birch; equals $-e^{-q_2T}N(d_2)$ | −0.4511 |
+| delta, Acme | dollars gained per dollar on Acme; equals $`e^{-q_1T}N(d_1)`$ | 0.5291 |
+| delta, Birch | dollars gained per dollar on Birch; equals $`-e^{-q_2T}N(d_2)`$ | −0.4511 |
 | gamma, Acme | change in Acme's delta per dollar on Acme | 0.0195 |
 | vega, Acme | dollars per one point of Acme's volatility | 0.1944 |
 | correlation | dollars per 0.01 of correlation | −0.0778 |
-| bank rate (the Greek named rho, not the correlation $\rho$) | dollars per point of r | 0 |
+| bank rate (the Greek named rho, not the correlation $`\rho`$) | dollars per point of r | 0 |
 
 The last row is the title of the card.
 
@@ -204,7 +218,7 @@ The last row is the title of the card.
 
 ## Code, from first principles, and it actually runs
 
-Both programs reach the price three ways. Road 1 is Margrabe's formula, which contains no bank rate. Road 2 fixes Birch's shock, prices Acme's conditional payoff exactly, and integrates over Birch's shock by Simpson's rule; it discounts at r and uses no effective volatility, and it is run at r = 0%, 5% and 10%. Road 3 simulates a million correlated pairs of year-end prices, correlated by the Cholesky step $Z_1 = \rho Z_2 + \sqrt{1-\rho^2}\,Z_\perp$.
+Both programs reach the price three ways. Road 1 is Margrabe's formula, which contains no bank rate. Road 2 fixes Birch's shock, prices Acme's conditional payoff exactly, and integrates over Birch's shock by Simpson's rule; it discounts at r and uses no effective volatility, and it is run at r = 0%, 5% and 10%. Road 3 simulates a million correlated pairs of year-end prices, correlated by the Cholesky step $`Z_1 = \rho Z_2 + \sqrt{1-\rho^2}\,Z_\perp`$.
 
 Then the cash case is checked against the house vanilla, the deltas against Euler's identity, and every what-breaks, Greek, chart and try-changing number is printed. The normal CDF is a written-out series; the random numbers come from a written-out generator (splitmix64 with the Box-Muller transform).
 
@@ -591,11 +605,11 @@ The two outputs agree line for line, the simulated price included, because both 
 
 Lean proves Margrabe's formula from the bell-curve model, plus the cash case and the hedge, for any positive prices and expiry.
 
-- Take two shares whose log prices are bell-curved with correlation $\rho$, positive prices today, and any bank rate $r$. Then the average payoff in the dollar pretend world, discounted at $r$, is Margrabe's formula $V$.
-- Take the same inputs. Then $V$ equals $S_2 e^{-q_2 T}$ times a Black-Scholes call on the ratio, struck at 1 with no bank rate. That call takes the dividend yield $q_1 - q_2$.
-- Suppose Birch is replaced by a bond paying $K$ at expiry, and $\sigma_1 \ge 0$. Then Margrabe's formula gives the Black-Scholes call on Acme with strike $K$, at any correlation.
-- Suppose the ratio moves, so $\sigma > 0$. Then Acme's delta is $e^{-q_1T}N(d_1)$ and Birch's delta is $-e^{-q_2T}N(d_2)$.
-- Take the same case. Then $V = S_1 \Delta_1 + S_2 \Delta_2$, with no cash term.
+- Take two shares whose log prices are bell-curved with correlation $`\rho`$, positive prices today, and any bank rate $`r`$. Then the average payoff in the dollar pretend world, discounted at $`r`$, is Margrabe's formula $`V`$.
+- Take the same inputs. Then $`V`$ equals $`S_2 e^{-q_2 T}`$ times a Black-Scholes call on the ratio, struck at 1 with no bank rate. That call takes the dividend yield $`q_1 - q_2`$.
+- Suppose Birch is replaced by a bond paying $`K`$ at expiry, and $`\sigma_1 \ge 0`$. Then Margrabe's formula gives the Black-Scholes call on Acme with strike $`K`$, at any correlation.
+- Suppose the ratio moves, so $`\sigma > 0`$. Then Acme's delta is $`e^{-q_1T}N(d_1)`$ and Birch's delta is $`-e^{-q_2T}N(d_2)`$.
+- Take the same case. Then $`V = S_1 \Delta_1 + S_2 \Delta_2`$, with no cash term.
 - Take Acme and Birch at correlation 1. Then the price is exactly zero.
 
 The bell-curve values, and so the $7.81 price, the Greeks and the simulation, are left to the Python and Rust checks.
@@ -1208,8 +1222,8 @@ example : max ((120 : ℚ) - 110) 0 - 781 / 100 = 219 / 100 := by norm_num
 >
 > Smaller traps:
 > - **Leaving the correlation out.** Adding the two variances with no cross term prices the pair as independent: $11.02 instead of $7.81.
-> - **The wrong sign or the missing 2 in the cross term.** A plus sign gives $13.48; a single cross term gives $9.55. The variance of a difference is each variance minus twice the covariance, the shared part $\rho\sigma_1\sigma_2$.
-> - **Discounting at the bank rate.** No $e^{-rT}$ belongs in the formula. Each share's value delivered at expiry is already its price today net of dividends; discounting again counts the bank rate twice.
+> - **The wrong sign or the missing 2 in the cross term.** A plus sign gives $13.48; a single cross term gives $9.55. The variance of a difference is each variance minus twice the covariance, the shared part $`\rho\sigma_1\sigma_2`$.
+> - **Discounting at the bank rate.** No $`e^{-rT}`$ belongs in the formula. Each share's value delivered at expiry is already its price today net of dividends; discounting again counts the bank rate twice.
 > - **Forgetting the dividends.** Dropping both yields gives $7.97. Equal yields cancel in the ratio, but not in the size of each share delivered.
 
 ---

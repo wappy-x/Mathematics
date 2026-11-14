@@ -26,34 +26,42 @@ To scale: 280 px per unit across, 400 up. The curve sits above each rectangle on
 
 ## The formula
 
-Notation first. The interval from a to b is cut into n equal slices of width h = (b − a)/n, at the points $x_i = a + ih$. f″ is the second derivative, how fast the slope changes; $f^{(4)}$ is the fourth ([Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)).
+Notation first. The interval from a to b is cut into n equal slices of width h = (b − a)/n, at the points $`x_i = a + ih`$. f″ is the second derivative, how fast the slope changes; $`f^{(4)}`$ is the fourth ([Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)).
 
-$$M_n = h\sum_{i=1}^{n} f\bigl(a + (i - \tfrac12)h\bigr)$$
+```math
+M_n = h\sum_{i=1}^{n} f\bigl(a + (i - \tfrac12)h\bigr)
+```
 
-$$T_n = h\Bigl[\tfrac12 f(x_0) + f(x_1) + \dots + f(x_{n-1}) + \tfrac12 f(x_n)\Bigr]$$
+```math
+T_n = h\Bigl[\tfrac12 f(x_0) + f(x_1) + \dots + f(x_{n-1}) + \tfrac12 f(x_n)\Bigr]
+```
 
-$$S_n = \tfrac{h}{3}\Bigl[f(x_0) + 4f(x_1) + 2f(x_2) + \dots + 4f(x_{n-1}) + f(x_n)\Bigr], \quad n \text{ even}$$
+```math
+S_n = \tfrac{h}{3}\Bigl[f(x_0) + 4f(x_1) + 2f(x_2) + \dots + 4f(x_{n-1}) + f(x_n)\Bigr], \quad n \text{ even}
+```
 
 **Read it aloud:** midpoint is width times the sum of the centre heights; trapezoid, width times the sum of the cut heights with the two ends halved; Simpson, a third of the width times the heights weighted 1, 4, 2, …, 4, 1.
 
-If the size of f″ never exceeds $K_2$ on the interval, and that of $f^{(4)}$ never exceeds $K_4$:
+If the size of f″ never exceeds $`K_2`$ on the interval, and that of $`f^{(4)}`$ never exceeds $`K_4`$:
 
-$$|I - M_n| \le \frac{K_2\,(b-a)\,h^2}{24}, \qquad |I - T_n| \le \frac{K_2\,(b-a)\,h^2}{12}, \qquad |I - S_n| \le \frac{K_4\,(b-a)\,h^4}{180}$$
+```math
+|I - M_n| \le \frac{K_2\,(b-a)\,h^2}{24}, \qquad |I - T_n| \le \frac{K_2\,(b-a)\,h^2}{12}, \qquad |I - S_n| \le \frac{K_4\,(b-a)\,h^4}{180}
+```
 
 **Read it aloud:** midpoint error is at most bend ceiling times length times width squared, over 24; trapezoid, twice that; Simpson, the fourth-derivative ceiling with the width to the fourth, over 180.
 
-For a target error $E$, set a bound equal to it and solve for n, rounding up (to even, for Simpson).
+For a target error $`E`$, set a bound equal to it and solve for n, rounding up (to even, for Simpson).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $x$ | the curve's height at position x | 0.398942 at 0, 0.241971 at 1 | more area |
-| $a$, $b$ | the ends of the interval | 0 and 1 | longer interval, larger bound |
-| $n$, $h$ | slice count and width | n = 4, h = 0.25 | smaller error |
-| $x_i$, $i$ | cut point i | 0, 0.25, …, 1 | — |
-| $M_n$, $T_n$, $S_n$ | the three rules' totals | 0.341977187, 0.340081845, 0.341355488 | — |
-| $I$ | the true area | 0.341344746069 | — |
-| $K_2$, $K_4$ | ceilings on the size of f″ and $f^{(4)}$ | 0.398942 and 1.196827 | a larger bound |
-| $E$ | the target error | 5e-7, half a unit in the sixth decimal | fewer slices |
+| $`f`$, $`x`$ | the curve's height at position x | 0.398942 at 0, 0.241971 at 1 | more area |
+| $`a`$, $`b`$ | the ends of the interval | 0 and 1 | longer interval, larger bound |
+| $`n`$, $`h`$ | slice count and width | n = 4, h = 0.25 | smaller error |
+| $`x_i`$, $`i`$ | cut point i | 0, 0.25, …, 1 | — |
+| $`M_n`$, $`T_n`$, $`S_n`$ | the three rules' totals | 0.341977187, 0.340081845, 0.341355488 | — |
+| $`I`$ | the true area | 0.341344746069 | — |
+| $`K_2`$, $`K_4`$ | ceilings on the size of f″ and $`f^{(4)}`$ | 0.398942 and 1.196827 | a larger bound |
+| $`E`$ | the target error | 5e-7, half a unit in the sixth decimal | fewer slices |
 
 ### When it holds
 
@@ -86,7 +94,7 @@ Signs matter too. On [0, 1], f″ = (x^2 − 1)·f is never positive, so the cur
 
 Centre two slices at m, with t = x − m from −h to h. Weights on the three heights, equal at the ends, must give the true area for 1, t and t^2, whose integrals are 2h, 0 and 2h^3/3. That forces h/3 at each end and 4h/3 at the centre. Pairs share ends, so interior weights alternate 4, 2.
 
-Exactness for t^3 comes free: its area is 0, and the weighted heights −h^3, 0, h^3 cancel too. Exact on every cubic, the rule's error falls with $h^4$, not $h^3$.
+Exactness for t^3 comes free: its area is 0, and the weighted heights −h^3, 0, h^3 cancel too. Exact on every cubic, the rule's error falls with $`h^4`$, not $`h^3`$.
 
 Rolle again, with a cubic matching the three heights and the centre slope, bounds a pair's error by K₄h^5/90; n/2 pairs give K₄(b − a)h^4/180.
 
@@ -103,11 +111,11 @@ Rolle's theorem: a smooth function zero at two points has zero derivative somewh
 
 ### Step 4: the ceilings for the bell curve, and the step for six decimals
 
-Differentiating gives f″ = (x^2 − 1)·f and $f^{(4)}$ = (x^4 − 6x^2 + 3)·f. On [0, 1] both are largest in size at x = 0: K₂ = 1/√(2π) = 0.398942 and K₄ = 3/√(2π) = 1.196827. Difference quotients on 1001 points agree: 0.398932 and 1.196727.
+Differentiating gives f″ = (x^2 − 1)·f and $`f^{(4)}`$ = (x^4 − 6x^2 + 3)·f. On [0, 1] both are largest in size at x = 0: K₂ = 1/√(2π) = 0.398942 and K₄ = 3/√(2π) = 1.196827. Difference quotients on 1001 points agree: 0.398932 and 1.196727.
 
 Six decimals means an error below 5e-7. The bounds ask for 183 midpoint, 258 trapezoid or 12 Simpson slices. They are cautious: 143, 201 and 10 work, as the bend hits its ceiling only at x = 0.
 
-Midpoint's error is about half the trapezoid's, with opposite sign (0.000632441 against 0.001262902); their two-to-one blend is Simpson's rule on twice the slices. Halving h from n = 8 to 16 cuts the errors by 4.00, 4.00 and 16.07, as $h^2$ and $h^4$ predict.
+Midpoint's error is about half the trapezoid's, with opposite sign (0.000632441 against 0.001262902); their two-to-one blend is Simpson's rule on twice the slices. Halving h from n = 8 to 16 cuts the errors by 4.00, 4.00 and 16.07, as $`h^2`$ and $`h^4`$ predict.
 
 The second road: e^u is the sum of u^k/k! (wing 01). Put u = −x^2/2 and integrate each power: the area is 1/√(2π) times the sum of (−1)^k/(2^k k! (2k + 1)). Taylor's theorem bounds the tail after 13 terms by (1/2)^13/13! times 1/√(2π), below 7.8e-15, so I = 0.341344746069.
 
@@ -350,7 +358,7 @@ Lean proves the three error bounds for every curve with the needed derivatives, 
 
 - Take a curve whose f″ exists at every point of [a, b], with size never above K₂. Cut into n equal slices of width h. The midpoint total misses the true area by at most K₂(b − a)h^2/24.
 - Under the same ceiling, the trapezoid total misses by at most K₂(b − a)h^2/12.
-- Take a curve whose $f^{(4)}$ exists at every point of [a, b], with size never above K₄. For an even count n, Simpson misses by at most K₄(b − a)h^4/180.
+- Take a curve whose $`f^{(4)}`$ exists at every point of [a, b], with size never above K₄. For an even count n, Simpson misses by at most K₄(b − a)h^4/180.
 - The tank, filling at 3 + 2t litres per minute for 10 minutes, holds exactly 130 litres. With 10 slices, all three rules give 130.
 - With h = 1, Simpson's weights on one pair of slices give the true areas 2, 0, 2/3 and 0 for 1, t, t^2 and t^3.
 
@@ -827,7 +835,7 @@ example : (1 : ℚ) / 3 * ((-1) ^ 3 + 4 * 0 ^ 3 + 1 ^ 3) = 0 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading the derivative ceiling at a convenient point.** The bound needs the largest size of f″ or $f^{(4)}$ over the whole interval. At x = 1, f″ is 0 and the bound promises perfection; one midpoint slice is off by 0.010721.
+> **Reading the derivative ceiling at a convenient point.** The bound needs the largest size of f″ or $`f^{(4)}`$ over the whole interval. At x = 1, f″ is 0 and the bound promises perfection; one midpoint slice is off by 0.010721.
 >
 > - **Taking the bound for the error.** It asks for 183 midpoint slices; 143 work. A guarantee, not a forecast.
 > - **Taking a small error for correct digits.** 3.0e-07 below the truth rounds to 0.341344.

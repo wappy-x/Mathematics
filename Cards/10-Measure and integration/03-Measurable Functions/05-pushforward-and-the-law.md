@@ -32,43 +32,49 @@ The flat piece carries 0.3 of the draws onto a single point, $0. That point gets
 
 Notation first, in words.
 
-- A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, a sigma-algebra (the collection of sets we allow ourselves to measure) and a probability measure on it ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Here $\Omega$ is the draws from 0 to 1, and $P$ is length, Lebesgue measure $\lambda$.
-- The Borel sets $\mathcal{B}(\mathbb{R})$ are the sets of real numbers built from intervals by complements and countable unions.
-- For a set $B$ of dollar amounts, $X^{-1}(B)$ is read "the preimage of B": every draw that the map sends into B. It is a set of draws and exists whether or not the map can be undone; the claim rule sends 0.3 of the draws to one point, so it has no inverse.
-- $\mu_X$ is read "the law of X", and is also written $P \circ X^{-1}$, "P after the preimage".
+- A probability space $`(\Omega, \mathcal{F}, P)`$ is a set of outcomes, a sigma-algebra (the collection of sets we allow ourselves to measure) and a probability measure on it ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Here $`\Omega`$ is the draws from 0 to 1, and $`P`$ is length, Lebesgue measure $`\lambda`$.
+- The Borel sets $`\mathcal{B}(\mathbb{R})`$ are the sets of real numbers built from intervals by complements and countable unions.
+- For a set $`B`$ of dollar amounts, $`X^{-1}(B)`$ is read "the preimage of B": every draw that the map sends into B. It is a set of draws and exists whether or not the map can be undone; the claim rule sends 0.3 of the draws to one point, so it has no inverse.
+- $`\mu_X`$ is read "the law of X", and is also written $`P \circ X^{-1}`$, "P after the preimage".
 
-$$\mu_X(B) \;=\; P\big(X^{-1}(B)\big) \;=\; P\big(\{\,u \in \Omega : X(u) \in B\,\}\big), \qquad B \in \mathcal{B}(\mathbb{R})$$
+```math
+\mu_X(B) \;=\; P\big(X^{-1}(B)\big) \;=\; P\big(\{\,u \in \Omega : X(u) \in B\,\}\big), \qquad B \in \mathcal{B}(\mathbb{R})
+```
 
 **Read it aloud:** the law gives a set of values the probability of all the draws that land in it.
 
 Its distribution function reads the law on half-lines:
 
-$$F_X(t) \;=\; \mu_X\big((-\infty, t]\big) \;=\; P(X \le t)$$
+```math
+F_X(t) \;=\; \mu_X\big((-\infty, t]\big) \;=\; P(X \le t)
+```
 
 **Read it aloud:** the distribution function at t is the chance the value is at most t.
 
-For the claim, $F_X(t)$ is 0 below $0, then 0.3 + 0.7 × t/1,000 from $0 up to $1,000, then 1. Two of the card's theorems, in symbols:
+For the claim, $`F_X(t)`$ is 0 below $0, then 0.3 + 0.7 × t/1,000 from $0 up to $1,000, then 1. Two of the card's theorems, in symbols:
 
-$$F_X = F_Y \;\Longrightarrow\; \mu_X = \mu_Y, \qquad\qquad \mu_X = \mu_{F}\ \text{ where } F = F_X$$
+```math
+F_X = F_Y \;\Longrightarrow\; \mu_X = \mu_Y, \qquad\qquad \mu_X = \mu_{F}\ \text{ where } F = F_X
+```
 
 **Read it aloud:** two variables with the same distribution function have the same law, and that law is the measure shelf 2 builds from the function.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $u$ | the space of outcomes, and one outcome | draws u from 0 to 1 | — |
-| $\mathcal{F}$ | the sets of draws that get a probability | Borel sets of draws | a finer collection lets more maps be measurable |
-| $P$, $\lambda$ | the probability on the draws; here length | the stretch 0.44 to 0.65 has 0.21 | — |
-| $X$, $Y$ | random variables: measurable maps to the line | X the claim rule; Y pays $0 if u > 0.7, else u/0.7 × $1,000 | — |
-| $B$, $B_i$, $B_j$ | Borel sets of values | claims above $200, at most $500 | a wider band collects more draws |
-| $X^{-1}(B)$ | the preimage: draws sent into B | draws from 0.44 to 0.65 | — |
-| $\mathcal{B}(\mathbb{R})$ | the Borel sets of the line | every set built from intervals | — |
-| $\mu_X$, $\mu_Y$ | the laws of X and Y, measures on values | 0.21 on the band, 0.3 on $0 | — |
-| $F_X$, $F$ | the distribution function of X; F alone is any such function | 0.475 at $250 | rises with t, never falls |
-| $\mu_F$ | the measure shelf 2 builds from F | mass F(b) − F(a) on each (a, b] | — |
-| $t$, $a$, $b$ | thresholds and interval ends, in dollars | $250; $200 and $500 | a larger t collects more draws |
-| $Q$ | the quantile map: u goes to the smallest amount x with F(x) ≥ u | the claim rule itself | a larger u gives a larger amount |
-| $n$, $x$, $s$ | a whole-number counter, as in t − 1/n and (−n, t]; an amount in Q's definition; a second threshold, rising to t in $F_X(t-)$ or beside t in the proof of Step 4 | n = 1, 2, 3, …; x and s in dollars | a larger n: t − 1/n closes in on t |
-| $\mathcal{P}$ | the family of half-lines (−∞, t], a pi-system | used in the proof of Step 4 | — |
+| $`\Omega`$, $`u`$ | the space of outcomes, and one outcome | draws u from 0 to 1 | — |
+| $`\mathcal{F}`$ | the sets of draws that get a probability | Borel sets of draws | a finer collection lets more maps be measurable |
+| $`P`$, $`\lambda`$ | the probability on the draws; here length | the stretch 0.44 to 0.65 has 0.21 | — |
+| $`X`$, $`Y`$ | random variables: measurable maps to the line | X the claim rule; Y pays $0 if u > 0.7, else u/0.7 × $1,000 | — |
+| $`B`$, $`B_i`$, $`B_j`$ | Borel sets of values | claims above $200, at most $500 | a wider band collects more draws |
+| $`X^{-1}(B)`$ | the preimage: draws sent into B | draws from 0.44 to 0.65 | — |
+| $`\mathcal{B}(\mathbb{R})`$ | the Borel sets of the line | every set built from intervals | — |
+| $`\mu_X`$, $`\mu_Y`$ | the laws of X and Y, measures on values | 0.21 on the band, 0.3 on $0 | — |
+| $`F_X`$, $`F`$ | the distribution function of X; F alone is any such function | 0.475 at $250 | rises with t, never falls |
+| $`\mu_F`$ | the measure shelf 2 builds from F | mass F(b) − F(a) on each (a, b] | — |
+| $`t`$, $`a`$, $`b`$ | thresholds and interval ends, in dollars | $250; $200 and $500 | a larger t collects more draws |
+| $`Q`$ | the quantile map: u goes to the smallest amount x with F(x) ≥ u | the claim rule itself | a larger u gives a larger amount |
+| $`n`$, $`x`$, $`s`$ | a whole-number counter, as in t − 1/n and (−n, t]; an amount in Q's definition; a second threshold, rising to t in $`F_X(t-)`$ or beside t in the proof of Step 4 | n = 1, 2, 3, …; x and s in dollars | a larger n: t − 1/n closes in on t |
+| $`\mathcal{P}`$ | the family of half-lines (−∞, t], a pi-system | used in the proof of Step 4 | — |
 
 ### When it holds
 
@@ -92,13 +98,15 @@ Plain version. The law of the whole line is the probability of all draws, 1. The
 <details>
 <summary>Detailed proof: the law is a probability measure on the Borel sets</summary>
 
-Let $X$ be measurable from $(\Omega, \mathcal{F})$ to the line with its Borel sets: $X^{-1}(B)$ is in $\mathcal{F}$ for every Borel $B$ ([Measurable functions](01-measurable-functions.md)). So $\mu_X(B) = P(X^{-1}(B))$ is defined for every Borel $B$, and lies between 0 and 1 because $P$ does.
+Let $`X`$ be measurable from $`(\Omega, \mathcal{F})`$ to the line with its Borel sets: $`X^{-1}(B)`$ is in $`\mathcal{F}`$ for every Borel $`B`$ ([Measurable functions](01-measurable-functions.md)). So $`\mu_X(B) = P(X^{-1}(B))`$ is defined for every Borel $`B`$, and lies between 0 and 1 because $`P`$ does.
 
-Totals. $X^{-1}(\mathbb{R}) = \Omega$, since every draw has a real value; so $\mu_X(\mathbb{R}) = P(\Omega) = 1$. $X^{-1}(\emptyset) = \emptyset$, so the empty set gets 0.
+Totals. $`X^{-1}(\mathbb{R}) = \Omega`$, since every draw has a real value; so $`\mu_X(\mathbb{R}) = P(\Omega) = 1`$. $`X^{-1}(\emptyset) = \emptyset`$, so the empty set gets 0.
 
-Countable additivity. Let $B_1, B_2, \ldots$ be disjoint Borel sets. If a draw $u$ were in both $X^{-1}(B_i)$ and $X^{-1}(B_j)$ with $i \ne j$, then $X(u)$ would be in both $B_i$ and $B_j$, which share nothing; so the preimages are disjoint. A draw is in $X^{-1}(\bigcup_i B_i)$ exactly when $X(u)$ is in some $B_i$, exactly when $u$ is in some $X^{-1}(B_i)$; so the preimage of the union is the union of the preimages. Countable additivity of $P$ then gives
-$$\mu_X\Big(\bigcup_i B_i\Big) = P\Big(\bigcup_i X^{-1}(B_i)\Big) = \sum_i P\big(X^{-1}(B_i)\big) = \sum_i \mu_X(B_i).$$
-No inverse of $X$, no density and no continuity was used.
+Countable additivity. Let $`B_1, B_2, \ldots`$ be disjoint Borel sets. If a draw $`u`$ were in both $`X^{-1}(B_i)`$ and $`X^{-1}(B_j)`$ with $`i \ne j`$, then $`X(u)`$ would be in both $`B_i`$ and $`B_j`$, which share nothing; so the preimages are disjoint. A draw is in $`X^{-1}(\bigcup_i B_i)`$ exactly when $`X(u)`$ is in some $`B_i`$, exactly when $`u`$ is in some $`X^{-1}(B_i)`$; so the preimage of the union is the union of the preimages. Countable additivity of $`P`$ then gives
+
+$`\displaystyle \mu_X\Big(\bigcup_i B_i\Big) = P\Big(\bigcup_i X^{-1}(B_i)\Big) = \sum_i P\big(X^{-1}(B_i)\big) = \sum_i \mu_X(B_i).`$
+
+No inverse of $`X`$, no density and no continuity was used.
 
 </details>
 
@@ -112,15 +120,19 @@ A non-example. Keep the ten tickets but let the sigma-algebra be only: nothing, 
 
 ### Step 3: the distribution function falls out of the law
 
-Set B to the half-line of amounts at most t. The law then gives $F_X(t)$, the chance the claim is at most t. Because the law is a probability measure, this function never falls, is continuous from the right, and runs from 0 to 1 ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). For an interval, split the half-line at a:
+Set B to the half-line of amounts at most t. The law then gives $`F_X(t)`$, the chance the claim is at most t. Because the law is a probability measure, this function never falls, is continuous from the right, and runs from 0 to 1 ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). For an interval, split the half-line at a:
 
-$$\mu_X\big((a, b]\big) = F_X(b) - F_X(a).$$
+```math
+\mu_X\big((a, b]\big) = F_X(b) - F_X(a).
+```
 
 For the claim, the band's preimage runs from 0.3 + 0.7 × 200/1,000 = 0.44 to 0.3 + 0.7 × 500/1,000 = 0.65. By the preimage, 0.21; by the distribution function, 0.65 − 0.44 = 0.21.
 
-Write $F_X(t-)$, read "F just below t", for the limit of $F_X(s)$ as s rises to t. The half-lines up to t − 1/n grow to the values strictly below t, so continuity from below gives $F_X(t-) = P(X < t)$, and
+Write $`F_X(t-)`$, read "F just below t", for the limit of $`F_X(s)`$ as s rises to t. The half-lines up to t − 1/n grow to the values strictly below t, so continuity from below gives $`F_X(t-) = P(X < t)`$, and
 
-$$P(X = t) \;=\; F_X(t) - F_X(t-).$$
+```math
+P(X = t) \;=\; F_X(t) - F_X(t-).
+```
 
 A jump is a single value with probability of its own, called an atom. At $0, 0.3 − 0 = 0.3: the 0.3 of the draws that land on $0.
 
@@ -131,15 +143,15 @@ Plain version. The half-lines "at most t" overlap in another half-line, so they 
 <details>
 <summary>Detailed proof: equal distribution functions give equal laws</summary>
 
-Let $X$ and $Y$ be real random variables, possibly on different probability spaces, with $F_X(t) = F_Y(t)$ for every real $t$. By Step 1, $\mu_X$ and $\mu_Y$ are probability measures on $\mathcal{B}(\mathbb{R})$.
+Let $`X`$ and $`Y`$ be real random variables, possibly on different probability spaces, with $`F_X(t) = F_Y(t)`$ for every real $`t`$. By Step 1, $`\mu_X`$ and $`\mu_Y`$ are probability measures on $`\mathcal{B}(\mathbb{R})`$.
 
-The family $\mathcal{P}$ of half-lines $(-\infty, t]$ is a pi-system: $(-\infty, s] \cap (-\infty, t] = (-\infty, \min(s, t)]$.
+The family $`\mathcal{P}`$ of half-lines $`(-\infty, t]`$ is a pi-system: $`(-\infty, s] \cap (-\infty, t] = (-\infty, \min(s, t)]`$.
 
-It generates the Borel sets. An interval $(a, b]$ is $(-\infty, b]$ with $(-\infty, a]$ removed; an open interval $(a, b)$ is the union of $(a, b - 1/n]$ over whole numbers n; every open set of the line is a countable union of open intervals with rational ends; and the Borel sets are generated by the open sets ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)). So $\sigma(\mathcal{P}) = \mathcal{B}(\mathbb{R})$.
+It generates the Borel sets. An interval $`(a, b]`$ is $`(-\infty, b]`$ with $`(-\infty, a]`$ removed; an open interval $`(a, b)`$ is the union of $`(a, b - 1/n]`$ over whole numbers n; every open set of the line is a countable union of open intervals with rational ends; and the Borel sets are generated by the open sets ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)). So $`\sigma(\mathcal{P}) = \mathcal{B}(\mathbb{R})`$.
 
-The two laws agree on $\mathcal{P}$, because $\mu_X((-\infty, t]) = F_X(t) = F_Y(t) = \mu_Y((-\infty, t])$, and have the same total, 1. Dynkin's uniqueness theorem ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) gives $\mu_X(B) = \mu_Y(B)$ for every Borel $B$.
+The two laws agree on $`\mathcal{P}`$, because $`\mu_X((-\infty, t]) = F_X(t) = F_Y(t) = \mu_Y((-\infty, t])`$, and have the same total, 1. Dynkin's uniqueness theorem ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) gives $`\mu_X(B) = \mu_Y(B)`$ for every Borel $`B`$.
 
-The same argument with $\mu_F$ in place of $\mu_Y$ gives $\mu_X = \mu_F$. The measure $\mu_F$ has mass $F(b) - F(a)$ on each $(a, b]$ by construction, and continuity from below along the growing intervals $(-n, t]$ gives $\mu_F((-\infty, t]) = F(t) - \lim_{n} F(-n) = F(t)$. Letting t grow, continuity from below again gives $\mu_F(\mathbb{R}) = \lim_t F(t) = 1$, so $\mu_F$ has the total 1 that the uniqueness step needs.
+The same argument with $`\mu_F`$ in place of $`\mu_Y`$ gives $`\mu_X = \mu_F`$. The measure $`\mu_F`$ has mass $`F(b) - F(a)`$ on each $`(a, b]`$ by construction, and continuity from below along the growing intervals $`(-n, t]`$ gives $`\mu_F((-\infty, t]) = F(t) - \lim_{n} F(-n) = F(t)`$. Letting t grow, continuity from below again gives $`\mu_F(\mathbb{R}) = \lim_t F(t) = 1`$, so $`\mu_F`$ has the total 1 that the uniqueness step needs.
 
 </details>
 
@@ -166,15 +178,15 @@ For the claim, F already reaches any u at or below 0.3 at $0, so Q(u) is $0. Abo
 <details>
 <summary>Detailed proof: the quantile map has law F</summary>
 
-Let $F$ be non-decreasing, continuous from the right, with limits 0 at minus infinity and 1 at plus infinity. For $u$ strictly between 0 and 1 set $Q(u) = \inf\{x : F(x) \ge u\}$. The set is non-empty because $F$ tends to 1 and $u < 1$; it is bounded below because $F$ tends to 0 and $u > 0$. So $Q(u)$ is a real number.
+Let $`F`$ be non-decreasing, continuous from the right, with limits 0 at minus infinity and 1 at plus infinity. For $`u`$ strictly between 0 and 1 set $`Q(u) = \inf\{x : F(x) \ge u\}`$. The set is non-empty because $`F`$ tends to 1 and $`u < 1`$; it is bounded below because $`F`$ tends to 0 and $`u > 0`$. So $`Q(u)`$ is a real number.
 
-Claim: $Q(u) \le t$ exactly when $u \le F(t)$.
+Claim: $`Q(u) \le t`$ exactly when $`u \le F(t)`$.
 
-If $u \le F(t)$, then $t$ is in the set, so its infimum $Q(u)$ is at most $t$.
+If $`u \le F(t)`$, then $`t`$ is in the set, so its infimum $`Q(u)`$ is at most $`t`$.
 
-If $Q(u) \le t$: for every whole number n some amount x in the set lies below Q(u) + 1/n, and $F$ never falls, so $F(Q(u) + 1/n) \ge F(x) \ge u$. Continuity from the right lets n grow: $F(Q(u)) \ge u$. Then $F(t) \ge F(Q(u)) \ge u$.
+If $`Q(u) \le t`$: for every whole number n some amount x in the set lies below Q(u) + 1/n, and $`F`$ never falls, so $`F(Q(u) + 1/n) \ge F(x) \ge u`$. Continuity from the right lets n grow: $`F(Q(u)) \ge u`$. Then $`F(t) \ge F(Q(u)) \ge u`$.
 
-So $\{u : Q(u) \le t\}$ is the stretch of draws from 0 up to $F(t)$, clipped to $(0, 1)$. It is an interval, so $Q$ is measurable by the half-line test ([Measurable functions](01-measurable-functions.md)), and its length is $F(t)$. Hence $F_Q = F$, and Step 4 gives $\mu_Q = \mu_F$.
+So $`\{u : Q(u) \le t\}`$ is the stretch of draws from 0 up to $`F(t)`$, clipped to $`(0, 1)`$. It is an interval, so $`Q`$ is measurable by the half-line test ([Measurable functions](01-measurable-functions.md)), and its length is $`F(t)`$. Hence $`F_Q = F`$, and Step 4 gives $`\mu_Q = \mu_F`$.
 
 </details>
 
@@ -577,10 +589,10 @@ The two outputs match line for line.
 
 Lean proves the card's three theorems for real random variables on any probability space, and checks the claim's worked numbers exactly.
 
-- Take a measurable real random variable X on a probability space. Then its law is a probability measure, and gives each Borel set B the probability $P(X^{-1}(B))$.
+- Take a measurable real random variable X on a probability space. Then its law is a probability measure, and gives each Borel set B the probability $`P(X^{-1}(B))`$.
 - Suppose X and Y are measurable real random variables, possibly on different probability spaces, with the same distribution function. Then their laws agree on every Borel set.
 - Take F non-decreasing, continuous from the right, with limits 0 at minus infinity and 1 at plus infinity. Then the quantile map Q is measurable.
-- Feed Q draws u strictly between 0 and 1, with probability given by length. Then the law of Q is $\mu_F$.
+- Feed Q draws u strictly between 0 and 1, with probability given by length. Then the law of Q is $`\mu_F`$.
 - The band's preimage runs from draw 0.44 to draw 0.65, and the rule sends those draws to $200 and $500.
 - The band gets 0.21, and (0, 200] gets 0.14. The distribution function at $250 is 0.475.
 - Claims above $900 get 0.07. Claims of $0, in the band, or above $900 together get 0.58.

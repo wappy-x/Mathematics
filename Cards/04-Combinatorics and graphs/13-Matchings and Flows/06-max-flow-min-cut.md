@@ -36,29 +36,33 @@ Labels are capacities in loads a night. The box marks the cut the method hands b
 
 ## The formula
 
-Notation from [Flows](05-flow-networks-and-ford-fulkerson.md): a flow puts $f(u,v)$ loads on the road from junction $u$ to junction $v$, at most its capacity $c(u,v)$, stranding nothing between source $s$ and sink $t$. Its value $\lvert f\rvert$ is the net count leaving $s$. A cut splits the junctions into a side $S$ holding $s$ and a side $T$ holding $t$; its price adds the capacities of roads leaving $S$.
+Notation from [Flows](05-flow-networks-and-ford-fulkerson.md): a flow puts $`f(u,v)`$ loads on the road from junction $`u`$ to junction $`v`$, at most its capacity $`c(u,v)`$, stranding nothing between source $`s`$ and sink $`t`$. Its value $`\lvert f\rvert`$ is the net count leaving $`s`$. A cut splits the junctions into a side $`S`$ holding $`s`$ and a side $`T`$ holding $`t`$; its price adds the capacities of roads leaving $`S`$.
 
-$$\max_{f}\ \lvert f\rvert \;=\; \min_{(S,T)}\ c(S,T), \qquad c(S,T) = \sum_{u \in S,\ v \in T} c(u,v)$$
+```math
+\max_{f}\ \lvert f\rvert \;=\; \min_{(S,T)}\ c(S,T), \qquad c(S,T) = \sum_{u \in S,\ v \in T} c(u,v)
+```
 
 **Read it aloud:** the value of the best flow equals the price of the cheapest cut.
 
 The method works on leftover: a road's spare capacity, plus any load on the reverse road, which a push may cancel. A step that only cancels such a load is a backward stub. An augmenting route has leftover above 0 on every step.
 
-For pairing, roads of capacity 1 run from $s$ to each volunteer, from each volunteer to each task that volunteer can do, and from each task to $t$. Write $P$ for the volunteers, $X$ for any group of them and $N(X)$ for the tasks the group can do ([Hall's theorem](02-halls-marriage-theorem.md)). A cut whose source side holds exactly the volunteers in $X$ pays at least
+For pairing, roads of capacity 1 run from $`s`$ to each volunteer, from each volunteer to each task that volunteer can do, and from each task to $`t`$. Write $`P`$ for the volunteers, $`X`$ for any group of them and $`N(X)`$ for the tasks the group can do ([Hall's theorem](02-halls-marriage-theorem.md)). A cut whose source side holds exactly the volunteers in $`X`$ pays at least
 
-$$c(S,T) \;\ge\; \lvert P\rvert - \lvert X\rvert + \lvert N(X)\rvert .$$
+```math
+c(S,T) \;\ge\; \lvert P\rvert - \lvert X\rvert + \lvert N(X)\rvert .
+```
 
 **Read it aloud:** a cut pays at least once per volunteer left outside, and once per task the inside group reaches.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $t$ | source and sink | plant and port | — |
-| $A$, $B$, $u$, $v$ | junctions: the depots, and any two | A → B is a road | — |
-| $c(u,v)$ | a road's capacity | 3 outer, 1 cross | may raise the best flow |
-| $f$, $\lvert f\rvert$ | a flow, and its value | best 6; 5 at the fun run | stops at the cheapest cut |
-| $S$, $T$ | a cut's two sides; $c(S,T)$ its price | {s} and {A,B,t}, price 6 | — |
-| $R$ | junctions reachable from $s$ on leftover once no augmenting route remains | {s} | — |
-| $P$, $X$, $N(X)$, $j$ | volunteers, a group, the tasks it can do, one task | 5; Priya and Tomas; registration | more reach, fuller pairing |
+| $`s`$, $`t`$ | source and sink | plant and port | — |
+| $`A`$, $`B`$, $`u`$, $`v`$ | junctions: the depots, and any two | A → B is a road | — |
+| $`c(u,v)`$ | a road's capacity | 3 outer, 1 cross | may raise the best flow |
+| $`f`$, $`\lvert f\rvert`$ | a flow, and its value | best 6; 5 at the fun run | stops at the cheapest cut |
+| $`S`$, $`T`$ | a cut's two sides; $`c(S,T)`$ its price | {s} and {A,B,t}, price 6 | — |
+| $`R`$ | junctions reachable from $`s`$ on leftover once no augmenting route remains | {s} | — |
+| $`P`$, $`X`$, $`N(X)`$, $`j`$ | volunteers, a group, the tasks it can do, one task | 5; Priya and Tomas; registration | more reach, fuller pairing |
 
 ### When it holds
 
@@ -77,32 +81,36 @@ Each flow sits at or below each cut. So one flow and one cut with the same numbe
 
 ### Step 1: no flow beats any cut
 
-Junctions on the source side, except $s$, pass on what they receive, so the side's net output is $\lvert f\rvert$, and it leaves only by crossing to $T$:
+Junctions on the source side, except $`s`$, pass on what they receive, so the side's net output is $`\lvert f\rvert`$, and it leaves only by crossing to $`T`$:
 
-$$\lvert f\rvert = \sum_{u \in S,\ v \in T} f(u,v) \;-\; \sum_{u \in T,\ v \in S} f(u,v) \;\le\; c(S,T).$$
+```math
+\lvert f\rvert = \sum_{u \in S,\ v \in T} f(u,v) \;-\; \sum_{u \in T,\ v \in S} f(u,v) \;\le\; c(S,T).
+```
 
 The first sum is at most the price, road by road. The second counts loads coming back, never negative. On the diamond every plan is at most 6.
 
 ### Step 2: when the method stops, the reachable side is a cut priced at the flow
 
-Push until no augmenting route is left. Let $R$ be the junctions still reachable from $s$ on leftover. The sink is outside $R$, or a route would exist, so $R$ and the rest form a cut.
+Push until no augmenting route is left. Let $`R`$ be the junctions still reachable from $`s`$ on leftover. The sink is outside $`R`$, or a route would exist, so $`R`$ and the rest form a cut.
 
-Leftover on $u \to v$ is spare capacity plus any load on $v \to u$ that could be cancelled. A road leaving $R$ with room would make its far end reachable, so every road leaving $R$ is full. A road entering $R$ with a load would offer a stub back out, so every such road is empty. Step 1's sums become the full price and 0:
+Leftover on $`u \to v`$ is spare capacity plus any load on $`v \to u`$ that could be cancelled. A road leaving $`R`$ with room would make its far end reachable, so every road leaving $`R`$ is full. A road entering $`R`$ with a load would offer a stub back out, so every such road is empty. Step 1's sums become the full price and 0:
 
-$$\lvert f\rvert = c(R,\ \text{rest}).$$
+```math
+\lvert f\rvert = c(R,\ \text{rest}).
+```
 
 ### Step 3: the two numbers are equal
 
-With whole-number capacities the method stops, so Step 2's pair exists, and by Step 1 neither can be improved. On the diamond the pushes end at 6 with $R$ = {s}. Two other splits, {s,B} and {s,A,B}, also price 6: the value is one number, the cheapest cut need not be one set.
+With whole-number capacities the method stops, so Step 2's pair exists, and by Step 1 neither can be improved. On the diamond the pushes end at 6 with $`R`$ = {s}. Two other splits, {s,B} and {s,A,B}, also price 6: the value is one number, the cheapest cut need not be one set.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Tightness.** For $u$ in $R$ and $v$ outside it, leftover $(c(u,v) - f(u,v)) + f(v,u)$ is 0 with both brackets at least 0, so $f(u,v) = c(u,v)$ and $f(v,u) = 0$.
+**Tightness.** For $`u`$ in $`R`$ and $`v`$ outside it, leftover $`(c(u,v) - f(u,v)) + f(v,u)`$ is 0 with both brackets at least 0, so $`f(u,v) = c(u,v)`$ and $`f(v,u) = 0`$.
 
 **Existence.** Whole-number capacities: each push adds at least 1 and the price of {s} caps the value, so pushing stops. Fractions: scale to whole numbers. Real capacities: the Edmonds-Karp rule stops ([Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md)).
 
-**Hall's bound.** Let $X$ be the volunteers in $S$. Each volunteer outside $X$ gives a priced road from $s$. Each task $j$ reached by $X$ gives one more: its road to $t$ if $j$ is in $S$, a road from $X$ if not. The roads are distinct, which gives the bound in The formula.
+**Hall's bound.** Let $`X`$ be the volunteers in $`S`$. Each volunteer outside $`X`$ gives a priced road from $`s`$. Each task $`j`$ reached by $`X`$ gives one more: its road to $`t`$ if $`j`$ is in $`S`$, a road from $`X`$ if not. The roads are distinct, which gives the bound in The formula.
 
 </details>
 
@@ -112,15 +120,15 @@ Every push moves the smallest leftover on its route. With whole-number capacitie
 
 ### Step 5: a pairing is a flow of 0s and 1s
 
-Every fun-run road has capacity 1, so a whole-number flow puts 0 or 1 on each. A volunteer receives at most 1, so takes at most one task; a task passes at most 1 to $t$, so has at most one volunteer. The roads carrying 1 between them form a matching (pairs sharing nobody) as large as the value, and any matching is such a flow. So the largest matching equals the best flow and the cheapest cut.
+Every fun-run road has capacity 1, so a whole-number flow puts 0 or 1 on each. A volunteer receives at most 1, so takes at most one task; a task passes at most 1 to $`t`$, so has at most one volunteer. The roads carrying 1 between them form a matching (pairs sharing nobody) as large as the value, and any matching is such a flow. So the largest matching equals the best flow and the cheapest cut.
 
 An augmenting route here is the alternating path of [Matchings](01-matchings-and-augmenting-paths.md). Greedy leaves Priya on registration, Lena on first aid and Tomas idle. The route s → Tomas → registration, back along the stub to Priya, on to first aid, back to Lena, then timing → t moves Priya and Lena along and gives Tomas registration.
 
 ### Step 6: when the pairing falls short, the cut names the crowded group
 
-Suppose Priya cannot do first aid: she and Tomas both have only registration. The best flow is 4, and the reachable side is {s, Priya, Tomas, registration}. It pays for the roads from $s$ to Omar, Lena and Sam, and for registration → t: 4. Inside, $X$ = {Priya, Tomas} reaches $N(X)$ = {registration}, and the bound reads 5 − 2 + 1 = 4, met exactly.
+Suppose Priya cannot do first aid: she and Tomas both have only registration. The best flow is 4, and the reachable side is {s, Priya, Tomas, registration}. It pays for the roads from $`s`$ to Omar, Lena and Sam, and for registration → t: 4. Inside, $`X`$ = {Priya, Tomas} reaches $`N(X)`$ = {registration}, and the bound reads 5 − 2 + 1 = 4, met exactly.
 
-If every group reaches at least as many tasks as it has members, every cut costs at least $\lvert P\rvert$ and everyone is placed: Hall's theorem.
+If every group reaches at least as many tasks as it has members, every cut costs at least $`\lvert P\rvert`$ and everyone is placed: Hall's theorem.
 
 ---
 

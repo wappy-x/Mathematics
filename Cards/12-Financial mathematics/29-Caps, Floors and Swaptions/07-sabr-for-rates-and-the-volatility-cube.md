@@ -39,48 +39,58 @@ Orange: beta 0. Green: beta one half, the card's choice. Dark: beta 1. All three
 
 ## The formula
 
-Notation first. $F$ is the forward swap rate, $K$ the strike, $\delta$ the shift (written $a$ on the rate-volatilities card). The shifted rate $f = F + \delta$ and shifted strike $k = K + \delta$ are what the formulas see. $W_1$ and $W_2$ are Brownian motions, the random drivers of Itô calculus; $dW$ is one tiny random kick. Shifted SABR says:
+Notation first. $`F`$ is the forward swap rate, $`K`$ the strike, $`\delta`$ the shift (written $`a`$ on the rate-volatilities card). The shifted rate $`f = F + \delta`$ and shifted strike $`k = K + \delta`$ are what the formulas see. $`W_1`$ and $`W_2`$ are Brownian motions, the random drivers of Itô calculus; $`dW`$ is one tiny random kick. Shifted SABR says:
 
-$$df_t = \alpha_t\,f_t^{\beta}\,dW_1, \qquad d\alpha_t = \nu\,\alpha_t\,dW_2, \qquad dW_1\,dW_2 = \rho\,dt.$$
+```math
+df_t = \alpha_t\,f_t^{\beta}\,dW_1, \qquad d\alpha_t = \nu\,\alpha_t\,dW_2, \qquad dW_1\,dW_2 = \rho\,dt.
+```
 
 **Read it aloud:** the shifted rate takes random steps sized by the current volatility times the shifted rate to the power beta; the volatility takes random steps in proportion to itself; the two sets of steps lean together by rho.
 
-Hagan's formula turns the dials into a volatility per strike. With $\beta = 1/2$, and $y = \ln(k/f)$ the log-distance from forward to strike, it reads
+Hagan's formula turns the dials into a volatility per strike. With $`\beta = 1/2`$, and $`y = \ln(k/f)`$ the log-distance from forward to strike, it reads
 
-$$\sigma_B(K) = \frac{\alpha_k}{1 + \frac{y^2}{96} + \frac{y^4}{30720}}\cdot\frac{z}{\chi(z)}\cdot\Bigl[1 + \Bigl(\frac{\alpha_k^2}{96} + \frac{\rho\nu\alpha_k}{8} + \frac{(2-3\rho^2)\nu^2}{24}\Bigr)T\Bigr],$$
+```math
+\sigma_B(K) = \frac{\alpha_k}{1 + \frac{y^2}{96} + \frac{y^4}{30720}}\cdot\frac{z}{\chi(z)}\cdot\Bigl[1 + \Bigl(\frac{\alpha_k^2}{96} + \frac{\rho\nu\alpha_k}{8} + \frac{(2-3\rho^2)\nu^2}{24}\Bigr)T\Bigr],
+```
 
-$$\alpha_k = \frac{\alpha}{(fk)^{1/4}}, \qquad z = -\frac{\nu\,y}{\alpha_k}, \qquad \chi(z) = \ln\frac{\sqrt{1-2\rho z+z^2}+z-\rho}{1-\rho}.$$
+```math
+\alpha_k = \frac{\alpha}{(fk)^{1/4}}, \qquad z = -\frac{\nu\,y}{\alpha_k}, \qquad \chi(z) = \ln\frac{\sqrt{1-2\rho z+z^2}+z-\rho}{1-\rho}.
+```
 
 **Read it aloud:** the volatility at a strike is the level seen from that strike, bent by the vol of vol and the correlation, and lifted a little by time.
 
-The premium of a payer swaption on notional $L$ with annuity $A$ is Black's formula on the shifted rate ([The annuity measure](05-the-annuity-measure.md)):
+The premium of a payer swaption on notional $`L`$ with annuity $`A`$ is Black's formula on the shifted rate ([The annuity measure](05-the-annuity-measure.md)):
 
-$$V = L\,A\,\bigl[f\,N(d_1) - k\,N(d_2)\bigr], \qquad d_1 = \frac{\ln(f/k) + \tfrac12\sigma_B^2T}{\sigma_B\sqrt T}, \qquad d_2 = d_1 - \sigma_B\sqrt T.$$
+```math
+V = L\,A\,\bigl[f\,N(d_1) - k\,N(d_2)\bigr], \qquad d_1 = \frac{\ln(f/k) + \tfrac12\sigma_B^2T}{\sigma_B\sqrt T}, \qquad d_2 = d_1 - \sigma_B\sqrt T.
+```
 
 The card's own tool is the **reading**, Hagan's formula expanded near the money:
 
-$$\frac{\sigma_B(K)}{\sigma_B(F)} \approx 1 - \tfrac12\,(1 - \beta - \rho\lambda)\,y + \tfrac1{12}\bigl[(1-\beta)^2 + (2-3\rho^2)\lambda^2\bigr]\,y^2, \qquad \lambda = \frac{\nu\,f^{1-\beta}}{\alpha}.$$
+```math
+\frac{\sigma_B(K)}{\sigma_B(F)} \approx 1 - \tfrac12\,(1 - \beta - \rho\lambda)\,y + \tfrac1{12}\bigl[(1-\beta)^2 + (2-3\rho^2)\lambda^2\bigr]\,y^2, \qquad \lambda = \frac{\nu\,f^{1-\beta}}{\alpha}.
+```
 
 **Read it aloud:** relative to the middle, the smile tilts by the backbone's pull minus the correlation's push, and curls by the backbone's own bend plus the vol of vol squared.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$, $K$ | forward swap rate; strike | 2.50%; 2.00%, 2.50%, 3.00% | payer dearer; payer cheaper |
-| $\delta$, $a$, $f$, $k$, $f_t$ | the shift (the rate-volatilities card calls it a); shifted forward; shifted strike; shifted forward at time t | 2%; 4.50%; 4.00% at the low strike | a larger shift needs a smaller volatility for the same premium |
-| $T$ | years to expiry | 1 | the time factor grows |
-| $L$, $A$, $V$ | notional; annuity, the value of 1 a year paid on the swap's fixed dates; premium | $1,000,000; 4.40; $17,342.94 at the money | premium in proportion |
-| $\sigma_B$ | shifted-lognormal (Black) volatility at a strike | 22.625%, 22%, 22.375% | premium rises |
-| $\alpha$, $\alpha_t$, $\alpha_k$ | the level today; at time t; seen from strike k | 0.044702; 0.217023 at 2.00% | the whole smile rises |
-| $\beta$ | backbone exponent: how a step's size scales with the rate | 1/2, fixed in advance | weaker downward tilt; the at-the-money volatility falls less as rates rise |
-| $\rho$, $W_1$, $W_2$, $dW$ | correlation between the rate's and the volatility's drivers; the drivers; one tiny random kick | 0.1353 | tilts the smile up to the right |
-| $\nu$ | vol of vol: how hard the volatility is kicked | 0.7114 | curls both wings up |
-| $\lambda$, $s$, $c$ | vol of vol over the level, in the rate's own units; the smile's slope and curvature against log-strike, relative to the middle | 3.375896; −0.028491; 1.805926 | a larger lambda amplifies rho's tilt and nu's curl |
-| $y$, $z$, $\chi$ | log-distance to the strike; minus that, times the vol of vol over the level; the curved length that replaces it | −0.117783; 0.386086; 0.386622 at 2.00% | — |
-| $N$, $d_1$, $d_2$ | the bell-curve area to the left; the two cut-offs in Black's formula | — | — |
+| $`F`$, $`K`$ | forward swap rate; strike | 2.50%; 2.00%, 2.50%, 3.00% | payer dearer; payer cheaper |
+| $`\delta`$, $`a`$, $`f`$, $`k`$, $`f_t`$ | the shift (the rate-volatilities card calls it a); shifted forward; shifted strike; shifted forward at time t | 2%; 4.50%; 4.00% at the low strike | a larger shift needs a smaller volatility for the same premium |
+| $`T`$ | years to expiry | 1 | the time factor grows |
+| $`L`$, $`A`$, $`V`$ | notional; annuity, the value of 1 a year paid on the swap's fixed dates; premium | $1,000,000; 4.40; $17,342.94 at the money | premium in proportion |
+| $`\sigma_B`$ | shifted-lognormal (Black) volatility at a strike | 22.625%, 22%, 22.375% | premium rises |
+| $`\alpha`$, $`\alpha_t`$, $`\alpha_k`$ | the level today; at time t; seen from strike k | 0.044702; 0.217023 at 2.00% | the whole smile rises |
+| $`\beta`$ | backbone exponent: how a step's size scales with the rate | 1/2, fixed in advance | weaker downward tilt; the at-the-money volatility falls less as rates rise |
+| $`\rho`$, $`W_1`$, $`W_2`$, $`dW`$ | correlation between the rate's and the volatility's drivers; the drivers; one tiny random kick | 0.1353 | tilts the smile up to the right |
+| $`\nu`$ | vol of vol: how hard the volatility is kicked | 0.7114 | curls both wings up |
+| $`\lambda`$, $`s`$, $`c`$ | vol of vol over the level, in the rate's own units; the smile's slope and curvature against log-strike, relative to the middle | 3.375896; −0.028491; 1.805926 | a larger lambda amplifies rho's tilt and nu's curl |
+| $`y`$, $`z`$, $`\chi`$ | log-distance to the strike; minus that, times the vol of vol over the level; the curved length that replaces it | −0.117783; 0.386086; 0.386622 at 2.00% | — |
+| $`N`$, $`d_1`$, $`d_2`$ | the bell-curve area to the left; the two cut-offs in Black's formula | — | — |
 
 ### When it holds
 
-- **The shift is fixed and larger than any rate the node will see.** With $\delta$ = 2% the 2y-into-2y node below, at −0.50%, has a shifted forward of 1.50% and fits. A rate below −2% would put the logarithm out of range. Change the shift and every volatility changes with it, so the shift is part of the quote.
+- **The shift is fixed and larger than any rate the node will see.** With $`\delta`$ = 2% the 2y-into-2y node below, at −0.50%, has a shifted forward of 1.50% and fits. A rate below −2% would put the logarithm out of range. Change the shift and every volatility changes with it, so the shift is part of the quote.
 - **Beta is fixed before the fit.** Beta and rho both tilt the smile; three quotes cannot separate them (the picture above). Beta comes from the backbone, Step 4, or from house convention.
 - **Hagan's formula is accurate.** It is an expansion for short expiries and strikes near the money; [SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md) measures how it drifts from the model at long expiries and far strikes. Long expiries on the cube's far edge need the arbitrage-free repairs of Hagan and co-authors (2014).
 - **The fitted smile has no negative butterfly.** A butterfly (long one low and one high strike, short two in the middle) never pays less than zero, so its price must be positive. Here the smallest 25 bp butterfly on the grid costs $660.52. Far wings at long expiries can fail this.
@@ -100,36 +110,42 @@ A smile has three things the eye picks out: how high it sits, which way it tilts
 
 Hagan's formula takes the logarithm of forward over strike and raises both to fractional powers. Both must be positive. Swap rates were negative in euros and Swiss francs for years after 2014.
 
-The fix is to model $f = F + \delta$ instead of $F$. The payoff does not change: $f - k = F - K$, so the payer still pays the rate minus the strike.
+The fix is to model $`f = F + \delta`$ instead of $`F`$. The payoff does not change: $`f - k = F - K`$, so the payer still pays the rate minus the strike.
 
 Only the language of the volatility changes. The 22% quote at the money means 22% of 4.50%, not of 2.50%. In the normal language, basis points a year with no percentage of anything, the same premium is 98.80 bp ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
 
 ### Step 2: the reading, and why rho's sign is not the risk reversal's
 
-Expand Hagan's formula in powers of $y$, keeping the square (Detailed proof, below). Relative to the middle quote the smile is $1 + s\,y + c\,y^2$, with slope and curvature
+Expand Hagan's formula in powers of $`y`$, keeping the square (Detailed proof, below). Relative to the middle quote the smile is $`1 + s\,y + c\,y^2`$, with slope and curvature
 
-$$s = -\tfrac12\,(1 - \beta - \rho\lambda), \qquad c = \tfrac1{12}\bigl[(1-\beta)^2 + (2-3\rho^2)\lambda^2\bigr].$$
+```math
+s = -\tfrac12\,(1 - \beta - \rho\lambda), \qquad c = \tfrac1{12}\bigl[(1-\beta)^2 + (2-3\rho^2)\lambda^2\bigr].
+```
 
-The slope has two parts. $-(1-\beta)/2$ is the **backbone's pull**: with beta below 1 a step's size grows more slowly than the rate, so in percentage terms low strikes see more volatility. $\rho\lambda/2$ is the correlation's push. At beta one half the pull alone would tilt the smile far more steeply than the quotes' slope, −0.028491. The backbone over-delivers the downward tilt, so rho must push back up: rho is positive, 0.1353, although the risk reversal is negative.
+The slope has two parts. $`-(1-\beta)/2`$ is the **backbone's pull**: with beta below 1 a step's size grows more slowly than the rate, so in percentage terms low strikes see more volatility. $`\rho\lambda/2`$ is the correlation's push. At beta one half the pull alone would tilt the smile far more steeply than the quotes' slope, −0.028491. The backbone over-delivers the downward tilt, so rho must push back up: rho is positive, 0.1353, although the risk reversal is negative.
 
-Run it backwards. Two wing ratios and two log-distances give $s$ and $c$ by solving two linear equations. Then $\rho\lambda = 2s + (1-\beta)$, and from $c$
+Run it backwards. Two wing ratios and two log-distances give $`s`$ and $`c`$ by solving two linear equations. Then $`\rho\lambda = 2s + (1-\beta)`$, and from $`c`$
 
-$$\lambda^2 = \tfrac12\bigl[12c - (1-\beta)^2 + 3(\rho\lambda)^2\bigr].$$
+```math
+\lambda^2 = \tfrac12\bigl[12c - (1-\beta)^2 + 3(\rho\lambda)^2\bigr].
+```
 
-Divide to get rho. Since $\alpha/f^{1-\beta}$, 0.210725 here, is close to the at-the-money volatility, nu is about lambda times that quote. The reading gives rho 0.133545 and nu 0.729822, close to the exact 0.135320 and 0.711387, and no solver was run. The curvature, 1.805926, is mostly vol of vol: the backbone's own bend, $(1-\beta)^2/12$, is a small part of it.
+Divide to get rho. Since $`\alpha/f^{1-\beta}`$, 0.210725 here, is close to the at-the-money volatility, nu is about lambda times that quote. The reading gives rho 0.133545 and nu 0.729822, close to the exact 0.135320 and 0.711387, and no solver was run. The curvature, 1.805926, is mostly vol of vol: the backbone's own bend, $`(1-\beta)^2/12`$, is a small part of it.
 
 <details>
 <summary>Detailed proof: the reading from Hagan's formula</summary>
 
-Write $y = \ln(k/f)$ and $e = 1 - \beta$. Keep terms to $y^2$ and drop the time factor, which varies little across these strikes.
+Write $`y = \ln(k/f)`$ and $`e = 1 - \beta`$. Keep terms to $`y^2`$ and drop the time factor, which varies little across these strikes.
 
-**The level seen from the strike.** $(fk)^{-e/2} = f^{-e}\,e^{-ey/2} \approx f^{-e}\bigl(1 - \tfrac e2 y + \tfrac{e^2}8 y^2\bigr)$. The divisor $1 + \tfrac{e^2}{24}y^2 + \dots$ contributes $-\tfrac{e^2}{24}y^2$.
+**The level seen from the strike.** $`(fk)^{-e/2} = f^{-e}\,e^{-ey/2} \approx f^{-e}\bigl(1 - \tfrac e2 y + \tfrac{e^2}8 y^2\bigr)`$. The divisor $`1 + \tfrac{e^2}{24}y^2 + \dots`$ contributes $`-\tfrac{e^2}{24}y^2`$.
 
-**The bend.** $z = -\lambda\,y\,e^{ey/2} \approx -\lambda y\bigl(1 + \tfrac e2 y\bigr)$. The series $\chi(z) = z + \tfrac\rho2 z^2 + \dots$ gives $z/\chi(z) \approx 1 - \tfrac\rho2 z + \tfrac{2-3\rho^2}{12}z^2$, so the bend is $1 + \tfrac{\rho\lambda}2 y\bigl(1 + \tfrac e2 y\bigr) + \tfrac{(2-3\rho^2)\lambda^2}{12}y^2$.
+**The bend.** $`z = -\lambda\,y\,e^{ey/2} \approx -\lambda y\bigl(1 + \tfrac e2 y\bigr)`$. The series $`\chi(z) = z + \tfrac\rho2 z^2 + \dots`$ gives $`z/\chi(z) \approx 1 - \tfrac\rho2 z + \tfrac{2-3\rho^2}{12}z^2`$, so the bend is $`1 + \tfrac{\rho\lambda}2 y\bigl(1 + \tfrac e2 y\bigr) + \tfrac{(2-3\rho^2)\lambda^2}{12}y^2`$.
 
-**Multiply.** The $y$ terms: $-\tfrac e2 + \tfrac{\rho\lambda}2$. The $y^2$ terms: $\tfrac{e^2}8 - \tfrac{e^2}{24} = \tfrac{e^2}{12}$ from the level and divisor; $+\tfrac{\rho\lambda e}4$ from the bend's own $y^2$ term; $-\tfrac{\rho\lambda e}4$ from the cross product of $-\tfrac e2 y$ and $\tfrac{\rho\lambda}2 y$, which cancels it; and $\tfrac{(2-3\rho^2)\lambda^2}{12}$. So
-$$\frac{\sigma_B(K)}{\sigma_B(F)} \approx 1 - \tfrac12(e - \rho\lambda)\,y + \tfrac1{12}\bigl[e^2 + (2-3\rho^2)\lambda^2\bigr]y^2,$$
-which is Hagan et al. (2002), equation 3.1, divided through by its at-the-money value. At $\beta = 1$ it reduces to the reading on [SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md), Step 4.
+**Multiply.** The $`y`$ terms: $`-\tfrac e2 + \tfrac{\rho\lambda}2`$. The $`y^2`$ terms: $`\tfrac{e^2}8 - \tfrac{e^2}{24} = \tfrac{e^2}{12}`$ from the level and divisor; $`+\tfrac{\rho\lambda e}4`$ from the bend's own $`y^2`$ term; $`-\tfrac{\rho\lambda e}4`$ from the cross product of $`-\tfrac e2 y`$ and $`\tfrac{\rho\lambda}2 y`$, which cancels it; and $`\tfrac{(2-3\rho^2)\lambda^2}{12}`$. So
+
+$`\displaystyle \frac{\sigma_B(K)}{\sigma_B(F)} \approx 1 - \tfrac12(e - \rho\lambda)\,y + \tfrac1{12}\bigl[e^2 + (2-3\rho^2)\lambda^2\bigr]y^2,`$
+
+which is Hagan et al. (2002), equation 3.1, divided through by its at-the-money value. At $`\beta = 1`$ it reduces to the reading on [SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md), Step 4.
 
 </details>
 
@@ -147,7 +163,7 @@ On these quotes Newton's method, started from the reading, lands on the same poi
 
 The three lines in the picture are three complete fits. Beta 0 needs rho 0.2811; beta 1 needs rho −0.0184. Nu barely moves, 0.7336 to 0.7094, because the curl is the vol of vol's job at every beta. Rho soaks up whatever tilt the backbone does not supply.
 
-The betas differ in what happens when the forward moves. At the money, Hagan's formula is roughly $\alpha/f^{1-\beta}$. Hold the dials and move the rate: with beta 1 the at-the-money volatility stays at 22% whatever the rate does; with beta 0 it falls as the rate rises, so that the normal volatility, the percentage times the rate, stays nearly still. That path is the **backbone**.
+The betas differ in what happens when the forward moves. At the money, Hagan's formula is roughly $`\alpha/f^{1-\beta}`$. Hold the dials and move the rate: with beta 1 the at-the-money volatility stays at 22% whatever the rate does; with beta 0 it falls as the rate rises, so that the normal volatility, the percentage times the rate, stays nearly still. That path is the **backbone**.
 
 A desk picks beta by looking at history: when rates rose, did the at-the-money percentage volatility fall (beta near 0) or hold (beta near 1)? Rate desks have often landed at one half, or at 0 on a shifted rate. How the smile moves when rates move, below, traces the difference in dollars.
 
@@ -174,13 +190,13 @@ The low strike, 2.00%, with the fitted dials.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| shifted forward $f$ | 2.50% + 2% | 0.045000 |
-| shifted strike $k$ | 2.00% + 2% | 0.040 |
-| log-distance $\ln(f/k)$, so $y$ = −0.117783 | ln(0.045 / 0.040) | 0.117783 |
-| level at the strike $\alpha_k$ | 0.044702 / (0.045 × 0.040)^(1/4) | 0.217023 |
-| $z$ | 0.711387 × 0.117783 / 0.217023 | 0.386086 |
-| $\chi(z)$ | ln((√(1 − 2 × 0.135320 × 0.386086 + 0.386086^2) + 0.386086 − 0.135320) / (1 − 0.135320)) | 0.386622 |
-| bend $z/\chi(z)$ | 0.386086 / 0.386622 | 0.998613 |
+| shifted forward $`f`$ | 2.50% + 2% | 0.045000 |
+| shifted strike $`k`$ | 2.00% + 2% | 0.040 |
+| log-distance $`\ln(f/k)`$, so $`y`$ = −0.117783 | ln(0.045 / 0.040) | 0.117783 |
+| level at the strike $`\alpha_k`$ | 0.044702 / (0.045 × 0.040)^(1/4) | 0.217023 |
+| $`z`$ | 0.711387 × 0.117783 / 0.217023 | 0.386086 |
+| $`\chi(z)`$ | ln((√(1 − 2 × 0.135320 × 0.386086 + 0.386086^2) + 0.386086 − 0.135320) / (1 − 0.135320)) | 0.386622 |
+| bend $`z/\chi(z)`$ | 0.386086 / 0.386622 | 0.998613 |
 | divisor | 1 + 0.117783^2/96 + 0.117783^4/30720 | 1.000145 |
 | time factor | 1 + (0.217023^2/96 + 0.135320 × 0.711387 × 0.217023/8 + (2 − 3 × 0.135320^2) × 0.711387^2/24) × 1 | 1.044116 |
 | **volatility at 2.00%** | 0.217023 × 0.998613 × 1.044116 / 1.000145 | **0.226250, or 22.625%** |
@@ -641,12 +657,12 @@ ALL CHECKS PASS
 
 Lean proves the reading's algebra and the butterfly payoff for all values, and checks the card's quote and shift arithmetic.
 
-- Take $f > 0$, $\alpha > 0$, $\nu > 0$, and the slope $s$ and curvature $c$ of Step 2. Then Step 2's formulas for $\rho\lambda$ and $\lambda^2$ hold exactly.
-- Take the same conditions, with $\lambda$ the positive square root of Step 2's formula. Then $\rho = (2s + 1 - \beta)/\lambda$ and $\nu = \lambda\alpha/f^{1-\beta}$, exactly.
-- Take the Detailed proof's three pieces: the level seen from the strike, the divisor's share and the bend. Then their product is the reading, up to terms in $y^3$.
+- Take $`f > 0`$, $`\alpha > 0`$, $`\nu > 0`$, and the slope $`s`$ and curvature $`c`$ of Step 2. Then Step 2's formulas for $`\rho\lambda`$ and $`\lambda^2`$ hold exactly.
+- Take the same conditions, with $`\lambda`$ the positive square root of Step 2's formula. Then $`\rho = (2s + 1 - \beta)/\lambda`$ and $`\nu = \lambda\alpha/f^{1-\beta}`$, exactly.
+- Take the Detailed proof's three pieces: the level seen from the strike, the divisor's share and the bend. Then their product is the reading, up to terms in $`y^3`$.
 - A butterfly never pays less than zero, whatever the rate at expiry.
 - The risk reversal is −25 vol bp and the butterfly is +50 vol bp.
-- The 2% shift moves the forward to 4.50% and the low strike to 4.00%. The payoff is unchanged: $f - k = F - K$.
+- The 2% shift moves the forward to 4.50% and the low strike to 4.00%. The payoff is unchanged: $`f - k = F - K`$.
 - The 2y-into-2y forward of −0.50% shifts to 1.50%, which is positive.
 
 Hagan's formula itself, its accuracy, the exact fit and every price are left to the Python and Rust checks.

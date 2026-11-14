@@ -36,45 +36,49 @@ First line: Acme's month-end price. Second line: the lowest price so far, which 
 
 ## The formula
 
-Notation first, in words. $S$ is Acme's price today and $m$ is the lowest price recorded so far; a fresh contract starts with $m = S$. $m_T$ is the lowest price over the whole life, recorded minimum included, and $M_T$ the highest.
+Notation first, in words. $`S`$ is Acme's price today and $`m`$ is the lowest price recorded so far; a fresh contract starts with $`m = S`$. $`m_T`$ is the lowest price over the whole life, recorded minimum included, and $`M_T`$ the highest.
 
-$E[\,\cdot\,]$ is an average in the pretend world where every asset grows at the bank rate (the risk-neutral world of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The payoff is $S_T - m_T$, with no "if positive": the final price can never sit below the lowest price.
+$`E[\,\cdot\,]`$ is an average in the pretend world where every asset grows at the bank rate (the risk-neutral world of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The payoff is $`S_T - m_T`$, with no "if positive": the final price can never sit below the lowest price.
 
-$$C_{LB} = S e^{-qT} N(a_1) - m\, e^{-rT} N(a_2) + S e^{-rT}\frac{\sigma^2}{2b}\left[\left(\frac{S}{m}\right)^{-2b/\sigma^2} N(-a_3) - e^{bT} N(-a_1)\right]$$
+```math
+C_{LB} = S e^{-qT} N(a_1) - m\, e^{-rT} N(a_2) + S e^{-rT}\frac{\sigma^2}{2b}\left[\left(\frac{S}{m}\right)^{-2b/\sigma^2} N(-a_3) - e^{bT} N(-a_1)\right]
+```
 
 **Read it aloud:** a vanilla call struck at the lowest price so far, plus an extra that pays for any lower price still to come.
 
-The first two terms are exactly the Black-Scholes call with strike $m$. The bracketed third term is the extra, and it is never negative. The formula is Goldman, Sosin and Gatto's (1979), written with a dividend yield.
+The first two terms are exactly the Black-Scholes call with strike $`m`$. The bracketed third term is the extra, and it is never negative. The formula is Goldman, Sosin and Gatto's (1979), written with a dividend yield.
 
 | Symbol | Plain meaning | In our example | Push it up and the price… |
 | --- | --- | --- | --- |
-| $C_{LB}$ | price today of the floating-strike lookback call | $15.98 | is the answer |
-| $S$, $S_T$ | Acme's price today; its price at expiry | $100 | rises in proportion, for a fresh contract |
-| $m$ | lowest price recorded so far, never above $S$ | $100 | falls: a higher floor leaves less to gain (flat at $m = S$) |
-| $m_T$, $M_T$ | lowest and highest price over the whole life | random | — |
-| $K$ | the fixed strike of the fixed-strike lookbacks and the vanilla | $100 | — |
-| $T$ | years to expiry | 1 | rises: more time to set a lower low |
-| $r$, $q$ | bank rate and dividend yield, continuously compounded | 5% and 2% | $r$ up: price rises; $q$ up: price falls |
-| $b$ | the carry, $r - q$: the pretend-world growth rate of Acme | 0.03 | — |
-| $\sigma$ | volatility: the spread of Acme's yearly log return | 20% | rises strongly: wider swings, deeper lows |
-| $a_1$, $a_2$, $a_3$ | distances in units of $\sigma\sqrt{T}$, defined below | 0.25, 0.05, −0.05 | — |
-| $N$, $\varphi$, $E$ | bell-curve area to the left of a point; bell-curve height; pretend-world average | — | — |
-| $h$, $Q(h)$, $\nu$ | a price level; the chance the low stays above it; the log drift $b - \tfrac12\sigma^2$ | — | — |
+| $`C_{LB}`$ | price today of the floating-strike lookback call | $15.98 | is the answer |
+| $`S`$, $`S_T`$ | Acme's price today; its price at expiry | $100 | rises in proportion, for a fresh contract |
+| $`m`$ | lowest price recorded so far, never above $`S`$ | $100 | falls: a higher floor leaves less to gain (flat at $`m = S`$) |
+| $`m_T`$, $`M_T`$ | lowest and highest price over the whole life | random | — |
+| $`K`$ | the fixed strike of the fixed-strike lookbacks and the vanilla | $100 | — |
+| $`T`$ | years to expiry | 1 | rises: more time to set a lower low |
+| $`r`$, $`q`$ | bank rate and dividend yield, continuously compounded | 5% and 2% | $`r`$ up: price rises; $`q`$ up: price falls |
+| $`b`$ | the carry, $`r - q`$: the pretend-world growth rate of Acme | 0.03 | — |
+| $`\sigma`$ | volatility: the spread of Acme's yearly log return | 20% | rises strongly: wider swings, deeper lows |
+| $`a_1`$, $`a_2`$, $`a_3`$ | distances in units of $`\sigma\sqrt{T}`$, defined below | 0.25, 0.05, −0.05 | — |
+| $`N`$, $`\varphi`$, $`E`$ | bell-curve area to the left of a point; bell-curve height; pretend-world average | — | — |
+| $`h`$, $`Q(h)`$, $`\nu`$ | a price level; the chance the low stays above it; the log drift $`b - \tfrac12\sigma^2`$ | — | — |
 
 The three distances:
 
-$$a_1 = \frac{\ln(S/m) + (b + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad a_2 = a_1 - \sigma\sqrt{T}, \qquad a_3 = a_1 - \frac{2b\sqrt{T}}{\sigma}$$
+```math
+a_1 = \frac{\ln(S/m) + (b + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad a_2 = a_1 - \sigma\sqrt{T}, \qquad a_3 = a_1 - \frac{2b\sqrt{T}}{\sigma}
+```
 
-In words: $a_1$ and $a_2$ are the Black-Scholes distances d1 and d2 for a call struck at $m$. For a fresh contract they are the vanilla's own 0.25 and 0.05. The third, $a_3$, shifts $a_1$ back by $2b\sqrt{T}/\sigma$; it belongs to the reflected path in Step 1.
+In words: $`a_1`$ and $`a_2`$ are the Black-Scholes distances d1 and d2 for a call struck at $`m`$. For a fresh contract they are the vanilla's own 0.25 and 0.05. The third, $`a_3`$, shifts $`a_1`$ back by $`2b\sqrt{T}/\sigma`$; it belongs to the reflected path in Step 1.
 
-When $r = q$ the carry $b$ is zero and $\sigma^2/(2b)$ divides by zero. The price has a finite limit there, a separate short formula written out in both check programs and tested against the integral road.
+When $`r = q`$ the carry $`b`$ is zero and $`\sigma^2/(2b)`$ divides by zero. The price has a finite limit there, a separate short formula written out in both check programs and tested against the integral road.
 
 ### When it holds
 
 - **Watching is continuous.** The formula reads the true lowest price. A contract that reads one closing price a day misses dips between closes and is worth less: about $15.38 against $15.98 here. The Broadie-Glasserman-Kou shift in Step 5 repairs most of the gap.
 - **Acme follows geometric Brownian motion with constant volatility.** Its log price is a random walk with a steady drift and spread ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). With a volatility smile, where the market quotes different volatilities at different price levels, deep lows are priced by higher volatilities than 20%. The formula's extra is then off by roughly its vega (dollars per point of volatility) times the volatility error.
 - **Rates and dividend yield are constant and continuous.** A cash dividend drops the share price on a known day; that drop can set the minimum, and the yield version misses it.
-- **The recorded minimum is carried over.** A contract already running must be priced with its true $m$. Resetting $m$ to today's price throws away a banked gain.
+- **The recorded minimum is carried over.** A contract already running must be priced with its true $`m`$. Resetting $`m`$ to today's price throws away a banked gain.
 
 ---
 
@@ -82,60 +86,72 @@ When $r = q$ the carry $b$ is zero and $\sigma^2/(2b)$ divides by zero. The pric
 
 ### Step 0: the payoff is always paid, so price the minimum
 
-The final price is one of the prices the path visited, so it can never be below the lowest. The payoff $S_T - m_T$ is never negative and needs no "if positive". A payoff with no kink splits into two averages:
+The final price is one of the prices the path visited, so it can never be below the lowest. The payoff $`S_T - m_T`$ is never negative and needs no "if positive". A payoff with no kink splits into two averages:
 
-$$C_{LB} = e^{-rT}E[S_T] - e^{-rT}E[m_T] = S e^{-qT} - e^{-rT}E[m_T].$$
+```math
+C_{LB} = e^{-rT}E[S_T] - e^{-rT}E[m_T] = S e^{-qT} - e^{-rT}E[m_T].
+```
 
 The first term is the share paid for today and delivered at expiry, less the dividends it leaks: $98.02. Everything else is one number, the expected lowest price. For Acme it is $86.25. Discounted at 5% that is $82.04, and $98.02 minus $82.04 is $15.98. The whole card is how to find $86.25.
 
 ### Step 1: the chance that the low stays above a level
 
-Pick a level $h$ below today's price, say $90. The low stays above $90 exactly when the path never touches $90. That is a no-touch event, priced on [One-touch and no-touch](05-one-touch-and-no-touch.md).
+Pick a level $`h`$ below today's price, say $90. The low stays above $90 exactly when the path never touches $90. That is a no-touch event, priced on [One-touch and no-touch](05-one-touch-and-no-touch.md).
 
-Its probability comes from the reflection principle ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)): every path that touches the level and ends above it is matched with a mirror-image path that ends below it. Subtracting the mirror paths leaves only the paths that never touched. In log terms, with drift $\nu = b - \tfrac12\sigma^2$:
+Its probability comes from the reflection principle ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)): every path that touches the level and ends above it is matched with a mirror-image path that ends below it. Subtracting the mirror paths leaves only the paths that never touched. In log terms, with drift $`\nu = b - \tfrac12\sigma^2`$:
 
-$$Q(h) = N\!\left(\frac{\ln(S/h) + \nu T}{\sigma\sqrt{T}}\right) - \left(\frac{h}{S}\right)^{2\nu/\sigma^2} N\!\left(\frac{\nu T - \ln(S/h)}{\sigma\sqrt{T}}\right).$$
+```math
+Q(h) = N\!\left(\frac{\ln(S/h) + \nu T}{\sigma\sqrt{T}}\right) - \left(\frac{h}{S}\right)^{2\nu/\sigma^2} N\!\left(\frac{\nu T - \ln(S/h)}{\sigma\sqrt{T}}\right).
+```
 
-The first term is the chance of ending above $h$. The second removes the paths that ended above $h$ after touching it. The power of $h/S$ is the price of reflecting a path that drifts: the mirror path runs against the drift, and that weight corrects for it.
+The first term is the chance of ending above $`h`$. The second removes the paths that ended above $`h`$ after touching it. The power of $`h/S`$ is the price of reflecting a path that drifts: the mirror path runs against the drift, and that weight corrects for it.
 
 ### Step 2: add up the survival chances, level by level
 
-A positive number equals the length of the stretch of levels below it. The lowest price $m_T$ is the length of the stretch from 0 up to $m_T$. Averaging turns "length of the levels below it" into "sum over levels of the chance the low is above that level":
+A positive number equals the length of the stretch of levels below it. The lowest price $`m_T`$ is the length of the stretch from 0 up to $`m_T`$. Averaging turns "length of the levels below it" into "sum over levels of the chance the low is above that level":
 
-$$E[m_T] = \int_0^{m} Q(h)\, dh.$$
+```math
+E[m_T] = \int_0^{m} Q(h)\, dh.
+```
 
-This is the **layer-cake rule**: slice the minimum into thin horizontal layers and count each layer with the probability that the minimum reaches past it. The upper limit is $m$, not infinity, because the recorded minimum caps $m_T$ from above. The code evaluates this integral by Simpson's rule, as road 2, and gets $86.250441, matching the closed form to six decimals. Simpson's rule adds up the area in thin slices, each topped by a parabola ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)).
+This is the **layer-cake rule**: slice the minimum into thin horizontal layers and count each layer with the probability that the minimum reaches past it. The upper limit is $`m`$, not infinity, because the recorded minimum caps $`m_T`$ from above. The code evaluates this integral by Simpson's rule, as road 2, and gets $86.250441, matching the closed form to six decimals. Simpson's rule adds up the area in thin slices, each topped by a parabola ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)).
 
 ### Step 3: two integrals of bell curves give the closed form
 
-Change variable from the level $h$ to its log distance below today, $u = \ln(S/h)$. The integral splits into two pieces: the ending-above term and the mirror term. Each is an exponential times a bell-curve area, integrated along a half-line. Integrating each by parts and completing the square, as [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) does for d1, turns each into bell-curve areas at the distances $a_1$, $a_2$ and $a_3$. Substituting into Step 0 gives the formula.
+Change variable from the level $`h`$ to its log distance below today, $`u = \ln(S/h)`$. The integral splits into two pieces: the ending-above term and the mirror term. Each is an exponential times a bell-curve area, integrated along a half-line. Integrating each by parts and completing the square, as [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) does for d1, turns each into bell-curve areas at the distances $`a_1`$, $`a_2`$ and $`a_3`$. Substituting into Step 0 gives the formula.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write $t = \sigma\sqrt{T}$, $\ell = \ln(S/m) \ge 0$ and $\lambda = 2b/\sigma^2$, so that $1 + 2\nu/\sigma^2 = \lambda$. With $h = S e^{-u}$ and $dh = -S e^{-u}du$, Step 2 becomes
-$$E[m_T] = S\,(I_1 - I_2), \qquad I_1 = \int_\ell^\infty e^{-u} N\!\left(\tfrac{u + \nu T}{t}\right)du, \qquad I_2 = \int_\ell^\infty e^{-\lambda u} N\!\left(\tfrac{\nu T - u}{t}\right)du.$$
-**First integral.** By parts, the boundary term at $u = \ell$ is $e^{-\ell}N(a_2) = (m/S)N(a_2)$, since $(\ell + \nu T)/t = a_2$. The remaining piece is $\int_\ell^\infty e^{-u}\varphi\big((u+\nu T)/t\big)\,du/t$, with $\varphi$ the bell-curve height. Put $z = (u + \nu T)/t$: it becomes $e^{\nu T}\int_{a_2}^\infty e^{-tz}\varphi(z)\,dz$. Completing the square, $e^{-tz}\varphi(z) = e^{t^2/2}\varphi(z + t)$, so the piece is $e^{\nu T + t^2/2}N(-a_2 - t) = e^{bT}N(-a_1)$. So $I_1 = (m/S)N(a_2) + e^{bT}N(-a_1)$.
+Write $`t = \sigma\sqrt{T}`$, $`\ell = \ln(S/m) \ge 0`$ and $`\lambda = 2b/\sigma^2`$, so that $`1 + 2\nu/\sigma^2 = \lambda`$. With $`h = S e^{-u}`$ and $`dh = -S e^{-u}du`$, Step 2 becomes
 
-**Second integral.** By parts, the boundary term at $u = \ell$ is $e^{-\lambda\ell}N(-a_3)/\lambda$, since $(\nu T - \ell)/t = -a_3$. The remaining piece is $-\tfrac{1}{\lambda}\int_\ell^\infty e^{-\lambda u}\varphi\big((u - \nu T)/t\big)\,du/t$. Put $w = (u - \nu T)/t$ and complete the square: the exponent collects to $-\lambda\nu T + \lambda^2 t^2/2 = bT$, and the lower limit shifts by $\lambda t$ to $(\ell - \nu T)/t + \lambda t = a_1$. So $I_2 = \big[e^{-\lambda\ell}N(-a_3) - e^{bT}N(-a_1)\big]/\lambda$. At infinity both boundary terms vanish, because a bell-curve tail beats any fixed exponential.
+$`\displaystyle E[m_T] = S\,(I_1 - I_2), \qquad I_1 = \int_\ell^\infty e^{-u} N\!\left(\tfrac{u + \nu T}{t}\right)du, \qquad I_2 = \int_\ell^\infty e^{-\lambda u} N\!\left(\tfrac{\nu T - u}{t}\right)du.`$
 
-**Assemble.** $E[m_T] = m N(a_2) + S e^{bT}N(-a_1) - \tfrac{S}{\lambda}\big[(S/m)^{-\lambda}N(-a_3) - e^{bT}N(-a_1)\big]$. Put this into $C_{LB} = S e^{-qT} - e^{-rT}E[m_T]$ and use $1 - N(-a_1) = N(a_1)$ and $e^{-rT}e^{bT} = e^{-qT}$:
-$$C_{LB} = S e^{-qT}N(a_1) - m e^{-rT}N(a_2) + \frac{S e^{-rT}}{\lambda}\Big[(S/m)^{-\lambda}N(-a_3) - e^{bT}N(-a_1)\Big],$$
-which is the formula, since $1/\lambda = \sigma^2/(2b)$. When $b = 0$, $\lambda = 0$ and the second integral is taken directly instead of by the division; its value is $t\,[\varphi(a_1) - a_1 N(-a_1)]$, the zero-carry branch in the code.
+**First integral.** By parts, the boundary term at $`u = \ell`$ is $`e^{-\ell}N(a_2) = (m/S)N(a_2)`$, since $`(\ell + \nu T)/t = a_2`$. The remaining piece is $`\int_\ell^\infty e^{-u}\varphi\big((u+\nu T)/t\big)\,du/t`$, with $`\varphi`$ the bell-curve height. Put $`z = (u + \nu T)/t`$: it becomes $`e^{\nu T}\int_{a_2}^\infty e^{-tz}\varphi(z)\,dz`$. Completing the square, $`e^{-tz}\varphi(z) = e^{t^2/2}\varphi(z + t)`$, so the piece is $`e^{\nu T + t^2/2}N(-a_2 - t) = e^{bT}N(-a_1)`$. So $`I_1 = (m/S)N(a_2) + e^{bT}N(-a_1)`$.
+
+**Second integral.** By parts, the boundary term at $`u = \ell`$ is $`e^{-\lambda\ell}N(-a_3)/\lambda`$, since $`(\nu T - \ell)/t = -a_3`$. The remaining piece is $`-\tfrac{1}{\lambda}\int_\ell^\infty e^{-\lambda u}\varphi\big((u - \nu T)/t\big)\,du/t`$. Put $`w = (u - \nu T)/t`$ and complete the square: the exponent collects to $`-\lambda\nu T + \lambda^2 t^2/2 = bT`$, and the lower limit shifts by $`\lambda t`$ to $`(\ell - \nu T)/t + \lambda t = a_1`$. So $`I_2 = \big[e^{-\lambda\ell}N(-a_3) - e^{bT}N(-a_1)\big]/\lambda`$. At infinity both boundary terms vanish, because a bell-curve tail beats any fixed exponential.
+
+**Assemble.** $`E[m_T] = m N(a_2) + S e^{bT}N(-a_1) - \tfrac{S}{\lambda}\big[(S/m)^{-\lambda}N(-a_3) - e^{bT}N(-a_1)\big]`$. Put this into $`C_{LB} = S e^{-qT} - e^{-rT}E[m_T]`$ and use $`1 - N(-a_1) = N(a_1)`$ and $`e^{-rT}e^{bT} = e^{-qT}`$:
+
+$`\displaystyle C_{LB} = S e^{-qT}N(a_1) - m e^{-rT}N(a_2) + \frac{S e^{-rT}}{\lambda}\Big[(S/m)^{-\lambda}N(-a_3) - e^{bT}N(-a_1)\Big],`$
+
+which is the formula, since $`1/\lambda = \sigma^2/(2b)`$. When $`b = 0`$, $`\lambda = 0`$ and the second integral is taken directly instead of by the division; its value is $`t\,[\varphi(a_1) - a_1 N(-a_1)]`$, the zero-carry branch in the code.
 
 </details>
 
 ### Step 4: read the answer as a vanilla plus an extra
 
-Every path has $m_T \le m$, so the lookback pays at least $S_T - m$, and at least the vanilla payoff struck at $m$. The first two terms of the formula are that vanilla. The bracket is what the chance of a new, lower low adds. For a fresh Acme contract the vanilla is $9.23 and the extra is $6.75.
+Every path has $`m_T \le m`$, so the lookback pays at least $`S_T - m`$, and at least the vanilla payoff struck at $`m`$. The first two terms of the formula are that vanilla. The bracket is what the chance of a new, lower low adds. For a fresh Acme contract the vanilla is $9.23 and the extra is $6.75.
 
 The same comparison ranks the shelf. On every path, the lookback pays at least the vanilla, and the vanilla pays at least the down-and-out call, which is the vanilla cancelled on paths that touch $80. So $15.98 ≥ $9.23 ≥ $9.13 is forced by the payoffs, before any model.
 
-The fixed-strike lookback call pays the highest price minus $100, which is at least the vanilla too. It is dearer still. At $K = S$ the high is never below $100, so "if positive" drops, and its payoff is the floating put's payoff plus $S_T - 100$:
+The fixed-strike lookback call pays the highest price minus $100, which is at least the vanilla too. It is dearer still. At $`K = S`$ the high is never below $100, so "if positive" drops, and its payoff is the floating put's payoff plus $`S_T - 100`$:
 
-$$(M_T - 100) = (M_T - S_T) + (S_T - 100),$$
+```math
+(M_T - 100) = (M_T - S_T) + (S_T - 100),
+```
 
-and the second piece is worth $S e^{-qT} - K e^{-rT}$ = $2.90 today. So the fixed-strike call is $15.01 + $2.90 = $17.91. The same identity with the minimum makes the fixed-strike lookback put worth $15.98 − $2.90 = $13.08.
+and the second piece is worth $`S e^{-qT} - K e^{-rT}`$ = $2.90 today. So the fixed-strike call is $15.01 + $2.90 = $17.91. The same identity with the minimum makes the fixed-strike lookback put worth $15.98 − $2.90 = $13.08.
 
 ```
 House market, one year, dollars (every value printed by both checks)
@@ -153,7 +169,7 @@ The lookbacks top the shelf because each pays, on every path, at least what the 
 
 A minimum over 252 closing prices is never below the minimum over every instant, and usually above it: the true low falls between closes. A higher recorded low means a smaller payoff on every path. So the daily lookback is cheaper. This is the same mechanism as [Daily monitoring](03-discrete-monitoring-correction.md), turned around: there a missed touch makes a knock-out dearer, here a missed low makes the lookback cheaper.
 
-Broadie, Glasserman and Kou showed that, to first order in $\sqrt{\Delta t}$, the daily low behaves like the continuous low raised by the factor $e^{0.5826\,\sigma\sqrt{\Delta t}}$, with $\Delta t = 1/252$ a trading day. Applied to $E[m_T]$ this gives $15.37, against a simulated $15.38.
+Broadie, Glasserman and Kou showed that, to first order in $`\sqrt{\Delta t}`$, the daily low behaves like the continuous low raised by the factor $`e^{0.5826\,\sigma\sqrt{\Delta t}}`$, with $`\Delta t = 1/252`$ a trading day. Applied to $`E[m_T]`$ this gives $15.37, against a simulated $15.38.
 
 A second route to the formula is the hedging equation. The Black-Scholes equation holds with the recorded minimum as a second variable. On the line where today's price equals the minimum, the price must not change when the minimum moves by a tiny amount, because the minimum is only just being set. Solving that equation gives the same formula.
 
@@ -163,17 +179,17 @@ The simulation road is [Monte Carlo pricing](../06-Numerical%20Methods%20for%20P
 
 ## Worked numbers, by hand
 
-Acme, fresh contract: $S = m = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year.
+Acme, fresh contract: $`S = m = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| carry $b$ | 0.05 − 0.02 | 0.03 |
-| $a_1$ | (ln 1 + (0.03 + 0.02) × 1) / 0.20 | 0.25 |
-| $a_2$, $a_3$ | 0.25 − 0.20; 0.25 − 2 × 0.03 / 0.20 | 0.05, −0.05 |
-| $N(a_1)$, $N(a_2)$ | bell-curve table | 0.5987, 0.5199 |
-| vanilla struck at $m$ | 100 × e^(−0.02) × 0.5987 − 100 × e^(−0.05) × 0.5199 (full precision) | $9.2270 |
-| $(S/m)$ to any power | 1 to any power | 1 |
-| $N(-a_3)$, $N(-a_1)$ | bell-curve table | 0.5199, 0.4013 |
+| carry $`b`$ | 0.05 − 0.02 | 0.03 |
+| $`a_1`$ | (ln 1 + (0.03 + 0.02) × 1) / 0.20 | 0.25 |
+| $`a_2`$, $`a_3`$ | 0.25 − 0.20; 0.25 − 2 × 0.03 / 0.20 | 0.05, −0.05 |
+| $`N(a_1)`$, $`N(a_2)`$ | bell-curve table | 0.5987, 0.5199 |
+| vanilla struck at $`m`$ | 100 × e^(−0.02) × 0.5987 − 100 × e^(−0.05) × 0.5199 (full precision) | $9.2270 |
+| $`(S/m)`$ to any power | 1 to any power | 1 |
+| $`N(-a_3)`$, $`N(-a_1)`$ | bell-curve table | 0.5199, 0.4013 |
 | bracket | 0.5199 − e^(0.03) × 0.4013 = 0.5199 − 1.0305 × 0.4013 | 0.1064 |
 | front factor | 100 × e^(−0.05) × 0.04 / 0.06 | 63.4153 |
 | extra | 63.4153 × 0.1064 | $6.7489 |
@@ -190,8 +206,8 @@ Same contract, right answer $15.98. Every wrong number is printed by both checks
 | --- | --- | --- |
 | Price a daily-watched contract with the continuous formula | $15.98 (right: about $15.38) | Daily closes miss the true low; the recorded low is higher |
 | Stop at the vanilla struck at the minimum so far | $9.23 | Drops the $6.75 extra for lows still to come |
-| Use the original formula without the dividend yield | $17.22 | With $q = 0$ the share grows faster in the pretend world, and the share leg is overpaid |
-| Drop the $e^{bT}$ in front of $N(-a_1)$ | $16.75 | The completed square in Step 3 leaves that factor behind |
+| Use the original formula without the dividend yield | $17.22 | With $`q = 0`$ the share grows faster in the pretend world, and the share leg is overpaid |
+| Drop the $`e^{bT}`$ in front of $`N(-a_1)`$ | $16.75 | The completed square in Step 3 leaves that factor behind |
 | Reset a seasoned minimum of $90 to today's $100 | $15.98 (right: $17.99) | The $90 low is already banked; the vanilla struck at $90 alone is $15.12 |
 
 ### The Greeks
@@ -637,13 +653,13 @@ ALL CHECKS PASS
 Lean proves the card's price split and layer-cake rule for any continuous, positive price paths, and the payoff comparisons on every path.
 
 - The floating-strike lookback call never pays a negative amount, because the final price is never below the lowest price.
-- Suppose prices are continuous and positive, $0 < m \le S$, and the pretend-world average of $S_T$ is $S e^{bT}$. Then $C_{LB} = S e^{-qT} - e^{-rT}E[m_T]$, as in Step 0.
-- Take the same setting. Then $E[m_T] = \int_0^{m} Q(h)\, dh$, the layer-cake rule of Step 2.
-- On every path, the lookback call pays at least the vanilla call struck at the recorded minimum $m$.
+- Suppose prices are continuous and positive, $`0 < m \le S`$, and the pretend-world average of $`S_T`$ is $`S e^{bT}`$. Then $`C_{LB} = S e^{-qT} - e^{-rT}E[m_T]`$, as in Step 0.
+- Take the same setting. Then $`E[m_T] = \int_0^{m} Q(h)\, dh`$, the layer-cake rule of Step 2.
+- On every path, the lookback call pays at least the vanilla call struck at the recorded minimum $`m`$.
 - On every path, a contract that reads the price at finitely many times, such as daily closes, pays no more than continuous watching.
 - On the illustrative year, the lowest price so far steps down to $88. The lookback pays $20, the vanilla $8 and the fixed-strike call $10.
 
-The reflection formula for $Q(h)$, the closed form, the daily price and the Greeks are left to the Python and Rust checks.
+The reflection formula for $`Q(h)`$, the closed form, the daily price and the Greeks are left to the Python and Rust checks.
 
 ```lean
 -- Lookback options: a floating-strike lookback call never pays a negative amount, it is worth the prepaid share minus today's value of the expected lowest price (that expectation being the layer-cake integral of the chance the low stays above each level), it pays at least the vanilla call struck at the recorded minimum, and daily watching pays no more than continuous watching.
@@ -835,7 +851,7 @@ example : (110 : ℤ) - 100 = (110 - 108) + (108 - 100) := by decide
 > **Try changing**
 > Guess the direction first. Then run it.
 > - **Shorten the life.** Set `T = 0.25`. The lookback drops from $15.98 to **$8.04**. Less time, fewer chances to set a low.
-> - **Remove the carry.** Set `q = 0.05`, so $r = q$. The formula switches to its zero-carry branch and gives **$14.25**; the integral road gives the same.
+> - **Remove the carry.** Set `q = 0.05`, so $`r = q`$. The formula switches to its zero-carry branch and gives **$14.25**; the integral road gives the same.
 > - **Start from a banked low.** Price with `m = 90`. The lookback is **$17.99**, against **$15.12** for the vanilla struck at $90. Most of the value is already in hand, and the extra for a still lower low shrinks.
 > - **Double the volatility.** Use `sig = 0.40`. The lookback rises to **$28.64**, the vanilla to **$16.80**, the fixed-strike call to **$36.36**. The chart below shows the whole sweep.
 
@@ -863,7 +879,7 @@ Top line: the fixed-strike lookback call, strike $100. Middle: the floating-stri
 > - **Expecting delta near 1.** The lookback always pays, so it is tempting to hedge it like a share. At issue its delta is 0.16: the strike floats with Acme and cancels most of the move.
 > - **Resetting the minimum on a running contract.** A contract that has already seen $90 is worth $17.99, not the $15.98 of a fresh one.
 > - **Copying the dividend-free formula.** Goldman, Sosin and Gatto's original has no yield. With Acme's 2% it gives $17.22 instead of $15.98.
-> - **Dividing by zero carry.** When the bank rate equals the dividend yield, $\sigma^2/(2b)$ is undefined; the zero-carry branch must be used.
+> - **Dividing by zero carry.** When the bank rate equals the dividend yield, $`\sigma^2/(2b)`$ is undefined; the zero-carry branch must be used.
 
 ---
 

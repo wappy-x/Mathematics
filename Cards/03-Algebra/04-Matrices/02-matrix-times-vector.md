@@ -39,7 +39,9 @@ Two roads, one answer: the column road says what a matrix *is*, the row road is 
 
 Write a 2 by 2 matrix row by row as `[[a, b], [c, d]]`, and the vector it eats as (x, y). Then:
 
-$$A\,(x,\,y) \;=\; x\,(a,\,c) \;+\; y\,(b,\,d) \;=\; (a x + b y,\; c x + d y)$$
+```math
+A\,(x,\,y) \;=\; x\,(a,\,c) \;+\; y\,(b,\,d) \;=\; (a x + b y,\; c x + d y)
+```
 
 **Read it aloud:** weigh each column by its own number in the list, then add the weighed columns. The bracket on the right is that answer read across the rows.
 
@@ -47,13 +49,13 @@ The first column is (a, c), not (a, b): a column is read *down* the table. That 
 
 | Symbol | Plain meaning | In our cafe | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | a table of numbers, row by row in square brackets, sized rows × columns | `[[2, 1], [1, 1]]` — days down, products across | more rows means more numbers come out |
-| $a$, $b$, $c$, $d$ | the four entries, read across row 1 then row 2 | 2, 1, 1, 1 | each entry counts one product on one day |
-| $x$, $y$ | the two numbers in the vector: here, the two prices | 4, 3 | raise $x$ and the first column pushes harder |
-| $m$ | how many rows, so how many numbers come out | 2 | one more day, one more taking |
-| $n$ | how many columns, so how many numbers go in | 2 | one more product, one more price |
+| $`A`$ | a table of numbers, row by row in square brackets, sized rows × columns | `[[2, 1], [1, 1]]` — days down, products across | more rows means more numbers come out |
+| $`a`$, $`b`$, $`c`$, $`d`$ | the four entries, read across row 1 then row 2 | 2, 1, 1, 1 | each entry counts one product on one day |
+| $`x`$, $`y`$ | the two numbers in the vector: here, the two prices | 4, 3 | raise $`x`$ and the first column pushes harder |
+| $`m`$ | how many rows, so how many numbers come out | 2 | one more day, one more taking |
+| $`n`$ | how many columns, so how many numbers go in | 2 | one more product, one more price |
 
-So an $m$ by $n$ matrix eats a vector of length $n$ and hands back one of length $m$: columns in, rows out.
+So an $`m`$ by $`n`$ matrix eats a vector of length $`n`$ and hands back one of length $`m`$: columns in, rows out.
 
 ### When it holds
 
@@ -89,9 +91,9 @@ Both roads multiply the same numbers: every entry against the weight of its own 
 <details>
 <summary>Detailed proof: the two roads agree at every size</summary>
 
-Take a table of $m$ rows and $n$ columns and a list of $n$ weights, one per column. Road 1 scales each column by its weight and adds the scaled columns entry by entry. In any row, row i, column 1 leaves (weight 1) × (its entry in row i), column 2 leaves (weight 2) × (its entry in row i), and so on. So row i of the answer holds
+Take a table of $`m`$ rows and $`n`$ columns and a list of $`n`$ weights, one per column. Road 1 scales each column by its weight and adds the scaled columns entry by entry. In any row, row i, column 1 leaves (weight 1) × (its entry in row i), column 2 leaves (weight 2) × (its entry in row i), and so on. So row i of the answer holds
 
-(weight 1) × (row i, column 1) + … + (weight $n$) × (row i, column $n$),
+(weight 1) × (row i, column 1) + … + (weight $`n`$) × (row i, column $`n`$),
 
 which runs along row i pairing each entry with the weight of its own column: road 2's answer for row i. Row i was any row. Two facts did it — scaling a column scales each entry, a sum may be regrouped — and neither mentions the numbers, so this holds at every size.
 
@@ -101,15 +103,21 @@ which runs along row i pairing each entry with the weight of its own column: roa
 
 Turn the cafe around: the till totals are known, $11 and $7, the prices are not. Call the coffee price x and the pastry price y. The two days say:
 
-$$2x + y \;=\; 11, \qquad x + y \;=\; 7$$
+```math
+2x + y \;=\; 11, \qquad x + y \;=\; 7
+```
 
 Those are linear equations: each unknown only multiplied by a number and added. The numbers multiplying them are exactly the cafe's table, so the pair is one statement:
 
-$$[[2,\,1],\,[1,\,1]]\,(x,\,y) \;=\; (11,\,7)$$
+```math
+[[2,\,1],\,[1,\,1]]\,(x,\,y) \;=\; (11,\,7)
+```
 
 Collect the unknowns into one list, x, and the totals into another, b. Any system of linear equations is then one line:
 
-$$A\,x \;=\; b$$
+```math
+A\,x \;=\; b
+```
 
 One row of the table is one equation, one entry of b one till total, one entry of x one unknown. Both letters do double duty: x is one unknown inside the brackets and the whole list outside, b the list of totals and not the matrix entry b.
 

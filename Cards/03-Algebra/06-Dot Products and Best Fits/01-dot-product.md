@@ -34,28 +34,32 @@ flowchart LR
 
 For two vectors with three entries each:
 
-$$u \cdot v = u_1 v_1 + u_2 v_2 + u_3 v_3$$
+```math
+u \cdot v = u_1 v_1 + u_2 v_2 + u_3 v_3
+```
 
 **Read it aloud:** first with first, second with second, third with third; multiply each pair and add.
 
-The small numbers are position labels, not powers: $u_1$ is the first entry of $u$. Two entries or two hundred, the rule is the same. Which list goes first makes no difference, since $u \cdot v = v \cdot u$; which entry meets which makes all of it.
+The small numbers are position labels, not powers: $`u_1`$ is the first entry of $`u`$. Two entries or two hundred, the rule is the same. Which list goes first makes no difference, since $`u \cdot v = v \cdot u`$; which entry meets which makes all of it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | the first list, a vector | the basket, (2, 3, 1) | more of anything, a bigger bill |
-| $v$ | the second list, the same length | the prices, (3, 2, 4) | a price rise lifts the bill |
-| $u_1$, $u_2$, $u_3$, $v_1$, $v_2$, $v_3$ | the entries, paired by position | 2, 3, 1 and 3, 2, 4 | shuffle one list and the total usually moves |
-| $u \cdot v$ | the dot product: paired products, added | 16 dollars | — |
-| $\lvert u\rvert$, $\lvert v\rvert$ | the lengths: $\sqrt{u \cdot u}$ and $\sqrt{v \cdot v}$ | 5, for the leg (3, 4) | the score is unmoved: lengths divide out |
-| $u \cdot v / (\lvert u\rvert\,\lvert v\rvert)$ | the alignment score, never outside −1 to 1 | 1, for (3, 4) and (6, 8) | — |
+| $`u`$ | the first list, a vector | the basket, (2, 3, 1) | more of anything, a bigger bill |
+| $`v`$ | the second list, the same length | the prices, (3, 2, 4) | a price rise lifts the bill |
+| $`u_1`$, $`u_2`$, $`u_3`$, $`v_1`$, $`v_2`$, $`v_3`$ | the entries, paired by position | 2, 3, 1 and 3, 2, 4 | shuffle one list and the total usually moves |
+| $`u \cdot v`$ | the dot product: paired products, added | 16 dollars | — |
+| $`\lvert u\rvert`$, $`\lvert v\rvert`$ | the lengths: $`\sqrt{u \cdot u}`$ and $`\sqrt{v \cdot v}`$ | 5, for the leg (3, 4) | the score is unmoved: lengths divide out |
+| $`u \cdot v / (\lvert u\rvert\,\lvert v\rvert)`$ | the alignment score, never outside −1 to 1 | 1, for (3, 4) and (6, 8) | — |
 
 Three readings come out of that one number.
 
-- **Length.** A vector dotted with itself, square-rooted ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)): $|u| = \sqrt{u \cdot u}$.
-- **Right angle.** For two vectors that are not all zeros, $u \cdot v = 0$ exactly when they point at right angles — **orthogonal**, meaning perpendicular. A list of zeros counts as orthogonal to everything, by convention.
+- **Length.** A vector dotted with itself, square-rooted ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)): $`|u| = \sqrt{u \cdot u}`$.
+- **Right angle.** For two vectors that are not all zeros, $`u \cdot v = 0`$ exactly when they point at right angles — **orthogonal**, meaning perpendicular. A list of zeros counts as orthogonal to everything, by convention.
 - **Alignment.** Divide by both lengths and the sizes cancel, leaving direction alone:
 
-$$\text{alignment score} = \frac{u \cdot v}{|u| \, |v|}$$
+```math
+\text{alignment score} = \frac{u \cdot v}{|u| \, |v|}
+```
 
 The score reads 1 the same way, 0 at a right angle, −1 dead opposite. (It is the cosine of the angle, which wing 05 handles properly in [Law of cosines](../../05-Geometry%20and%20trig/03-Trigonometry/06-law-of-cosines.md).)
 
@@ -86,18 +90,20 @@ Two directions: (3, 4) and (4, −3). Dot them: 3 × 4 = 12, and 4 × (−3) = �
 
 Both are 5 long. Why that zero means a right angle, with no angles used:
 
-Start both arrows from the same point. The gap between their tips is $u - v$, subtracted entry by entry. Pythagoras runs backwards: the corner at the start is a right angle exactly when the squared gap equals the two squared lengths added. Expand it:
+Start both arrows from the same point. The gap between their tips is $`u - v`$, subtracted entry by entry. Pythagoras runs backwards: the corner at the start is a right angle exactly when the squared gap equals the two squared lengths added. Expand it:
 
-$$|u - v|^2 = |u|^2 - 2\,(u \cdot v) + |v|^2$$
+```math
+|u - v|^2 = |u|^2 - 2\,(u \cdot v) + |v|^2
+```
 
 <details>
 <summary>The algebra behind that line</summary>
 
-$u - v$ has entries $u_1 - v_1$, then $u_2 - v_2$, and so on. Dot it with itself and multiply out one position: $(u_1 - v_1)(u_1 - v_1) = u_1 u_1 - 2 u_1 v_1 + v_1 v_1$; every position does the same. Collect three kinds of term: $u$-with-$u$ makes $|u|^2$, $v$-with-$v$ makes $|v|^2$, and the cross terms make $-2\,(u \cdot v)$.
+$`u - v`$ has entries $`u_1 - v_1`$, then $`u_2 - v_2`$, and so on. Dot it with itself and multiply out one position: $`(u_1 - v_1)(u_1 - v_1) = u_1 u_1 - 2 u_1 v_1 + v_1 v_1`$; every position does the same. Collect three kinds of term: $`u`$-with-$`u`$ makes $`|u|^2`$, $`v`$-with-$`v`$ makes $`|v|^2`$, and the cross terms make $`-2\,(u \cdot v)`$.
 
 </details>
 
-The two squared lengths are already there, so the squared gap equals them added **exactly when the middle term vanishes** — when $u \cdot v = 0$.
+The two squared lengths are already there, so the squared gap equals them added **exactly when the middle term vanishes** — when $`u \cdot v = 0`$.
 
 The numbers agree: the tips of (3, 4) and (4, −3) are (−1, 7) apart, squared length **50**, and 25 + 25 is also **50**.
 
@@ -123,14 +129,14 @@ No pair escapes that range, for one reason: a squared length cannot go negative.
 <details>
 <summary>Detailed proof: why the score never escapes −1 to 1</summary>
 
-Take $v$ with some entry not zero, pick any number x, and take x copies of $v$ away from $u$. That result's squared length cannot be negative, and expanding as Step 2 did gives $|u|^2 - 2x\,(u \cdot v) + x^2|v|^2 \ge 0$. The smallest it gets is at $x = (u \cdot v)/|v|^2$; put that in and the line collapses to $(u \cdot v)^2 \le |u|^2|v|^2$. A dot product never exceeds the product of the lengths, so dividing by it pins the score inside −1 to 1. That squared length reaches zero only when $u$ is exactly x copies of $v$, so ±1 belongs to arrows on one line. The bound $(u \cdot v)^2 \le |u|^2|v|^2$ is the **Cauchy–Schwarz inequality**, tested by the check on all twelve directions.
+Take $`v`$ with some entry not zero, pick any number x, and take x copies of $`v`$ away from $`u`$. That result's squared length cannot be negative, and expanding as Step 2 did gives $`|u|^2 - 2x\,(u \cdot v) + x^2|v|^2 \ge 0`$. The smallest it gets is at $`x = (u \cdot v)/|v|^2`$; put that in and the line collapses to $`(u \cdot v)^2 \le |u|^2|v|^2`$. A dot product never exceeds the product of the lengths, so dividing by it pins the score inside −1 to 1. That squared length reaches zero only when $`u`$ is exactly x copies of $`v`$, so ±1 belongs to arrows on one line. The bound $`(u \cdot v)^2 \le |u|^2|v|^2`$ is the **Cauchy–Schwarz inequality**, tested by the check on all twelve directions.
 
 </details>
 
 <details>
 <summary>The same arithmetic on functions</summary>
 
-Replace a list of entries by a function's values across an interval. There are infinitely many, so the sum of paired products becomes an integral of the product, $\int f(x)\,g(x)\,dx$. Length, right angles and the −1 to 1 bound survive the swap. Two functions whose integral comes out zero are called orthogonal — not the same as carrying unrelated information, which is independence, a wing 09 idea. The door into Inner products.
+Replace a list of entries by a function's values across an interval. There are infinitely many, so the sum of paired products becomes an integral of the product, $`\int f(x)\,g(x)\,dx`$. Length, right angles and the −1 to 1 bound survive the swap. Two functions whose integral comes out zero are called orthogonal — not the same as carrying unrelated information, which is independence, a wing 09 idea. The door into Inner products.
 
 </details>
 

@@ -30,50 +30,58 @@ Right, to scale at 50 px per mm: the middle of the capacitor, gap 50 px. The das
 
 ## The formula
 
-Notation first, in words. A charge $q$ is measured in coulombs (C). The **electric field** $\mathbf E$ at a point is the force a small test charge would feel there, per coulomb of test charge, in newtons per coulomb, which is the same as volts per metre (V/m).
+Notation first, in words. A charge $`q`$ is measured in coulombs (C). The **electric field** $`\mathbf E`$ at a point is the force a small test charge would feel there, per coulomb of test charge, in newtons per coulomb, which is the same as volts per metre (V/m).
 
-$\varepsilon_0$, read "epsilon nought", is the permittivity of empty space (a constant of nature that sets how much field a charge makes): 8.8541878188 × 10^−12 F/m (farads per metre), from NIST CODATA 2022. Air is so close to empty space that this card uses $\varepsilon_0$ for it.
+$`\varepsilon_0`$, read "epsilon nought", is the permittivity of empty space (a constant of nature that sets how much field a charge makes): 8.8541878188 × 10^−12 F/m (farads per metre), from NIST CODATA 2022. Air is so close to empty space that this card uses $`\varepsilon_0`$ for it.
 
-**Coulomb's law.** Two charges $q_1$ and $q_2$ a distance $r$ apart push apart (same sign) or pull together (opposite signs) along the line joining them:
+**Coulomb's law.** Two charges $`q_1`$ and $`q_2`$ a distance $`r`$ apart push apart (same sign) or pull together (opposite signs) along the line joining them:
 
-$$F = k\,\frac{q_1 q_2}{r^2}, \qquad k = \frac{1}{4\pi\varepsilon_0}, \qquad E = k\,\frac{Q}{r^2}$$
+```math
+F = k\,\frac{q_1 q_2}{r^2}, \qquad k = \frac{1}{4\pi\varepsilon_0}, \qquad E = k\,\frac{Q}{r^2}
+```
 
-**Read it aloud:** the force grows with each charge and falls with the square of the distance, so a single charge $Q$ makes a field $kQ/r^2$ pointing straight away from it.
+**Read it aloud:** the force grows with each charge and falls with the square of the distance, so a single charge $`Q`$ makes a field $`kQ/r^2`$ pointing straight away from it.
 
-The constant $k$ is 8.987552 × 10^9 N m^2/C^2. At 1 cm from 1 nC the field is 89875.5 V/m.
+The constant $`k`$ is 8.987552 × 10^9 N m^2/C^2. At 1 cm from 1 nC the field is 89875.5 V/m.
 
-**Gauss's law.** Wrap the charge in any closed surface $S$. The flux $\Phi$ is the field crossing the surface outward, added over its whole area ([Surface integrals](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/05-surface-integrals-and-flux.md)):
+**Gauss's law.** Wrap the charge in any closed surface $`S`$. The flux $`\Phi`$ is the field crossing the surface outward, added over its whole area ([Surface integrals](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/05-surface-integrals-and-flux.md)):
 
-$$\Phi = \oint_S \mathbf E \cdot \mathbf n\,dA = \frac{Q_{\text{in}}}{\varepsilon_0}$$
+```math
+\Phi = \oint_S \mathbf E \cdot \mathbf n\,dA = \frac{Q_{\text{in}}}{\varepsilon_0}
+```
 
 **Read it aloud:** the field leaving through a closed skin, added up, is the charge inside divided by epsilon nought, whatever the skin's shape and wherever the charge sits inside it.
 
 For 1 nC inside, the flux is 112.9409 V m (volt-metres, field times area).
 
-**Voltage as potential.** The potential difference from point $a$ to point $b$ is minus the field added along any path between them ([Conservative fields](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/04-conservative-fields-and-potentials.md)):
+**Voltage as potential.** The potential difference from point $`a`$ to point $`b`$ is minus the field added along any path between them ([Conservative fields](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/04-conservative-fields-and-potentials.md)):
 
-$$V(b) - V(a) = -\int_a^b \mathbf E \cdot d\mathbf l$$
+```math
+V(b) - V(a) = -\int_a^b \mathbf E \cdot d\mathbf l
+```
 
 **Read it aloud:** walking with the field, the voltage drops by the field times the distance walked.
 
 What symmetry makes of these:
 
-$$\text{sphere, outside: } E = \frac{kQ}{r^2},\ V = \frac{kQ}{r} \qquad \text{plates: } E = \frac{\sigma}{\varepsilon_0},\ V = E\,d,\ C = \frac{Q}{V} = \frac{\varepsilon_0 A}{d}$$
+```math
+\text{sphere, outside: } E = \frac{kQ}{r^2},\ V = \frac{kQ}{r} \qquad \text{plates: } E = \frac{\sigma}{\varepsilon_0},\ V = E\,d,\ C = \frac{Q}{V} = \frac{\varepsilon_0 A}{d}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $q_1$, $q_2$, $Q$, $Q_{\text{in}}$ | charges, in coulombs; $Q_{\text{in}}$ is the charge inside a surface | 1 nC on each plate | field and voltage grow in step |
-| $F$ | force between two charges, newtons | — | — |
-| $\mathbf E$, $E$ | electric field and its size, V/m | 11294.1 V/m in the gap | — |
-| $\varepsilon_0$, $k$ | permittivity of empty space; Coulomb's constant $1/(4\pi\varepsilon_0)$ | 8.8541878188 × 10^−12 F/m; 8.987552 × 10^9 N m^2/C^2 | larger $\varepsilon_0$, weaker field |
-| $r$, $R$ | distance from a charge or a sphere's centre; the ball's radius | $R$ = 1 cm | field falls as $1/r^2$ |
-| $S$, $\mathbf n$, $dA$ | a closed surface; its outward arrow of length one; a small patch of it | sphere of 2 cm; pillbox | the flux does not change |
-| $\Phi$ | flux: outward field added over the surface, V m | 112.9409 V m for 1 nC | — |
-| $\sigma$, $\rho$ | charge per square metre of plate; charge per cubic metre, for the point form with divergence $\nabla\cdot$ | 100.0 nC/m^2 on the plates | stronger field |
-| $A$, $A_{\text{box}}$, $d$ | plate area; a pillbox face's area; gap | 10 cm × 10 cm; 1 mm | more $A$: more C; more $d$: more V, less C |
-| $V$, $a$, $b$, $d\mathbf l$ | potential, volts; a path's start and end; a small step along it | 11.294 V across the plates | — |
-| $C$ | capacitance: charge stored per volt, farads | 88.54 pF | lower tuned frequency |
-| $\theta$, $d\Omega$ | tilt of a patch from square-on; the solid angle it covers, seen from the charge | — | — |
+| $`q_1`$, $`q_2`$, $`Q`$, $`Q_{\text{in}}`$ | charges, in coulombs; $`Q_{\text{in}}`$ is the charge inside a surface | 1 nC on each plate | field and voltage grow in step |
+| $`F`$ | force between two charges, newtons | — | — |
+| $`\mathbf E`$, $`E`$ | electric field and its size, V/m | 11294.1 V/m in the gap | — |
+| $`\varepsilon_0`$, $`k`$ | permittivity of empty space; Coulomb's constant $`1/(4\pi\varepsilon_0)`$ | 8.8541878188 × 10^−12 F/m; 8.987552 × 10^9 N m^2/C^2 | larger $`\varepsilon_0`$, weaker field |
+| $`r`$, $`R`$ | distance from a charge or a sphere's centre; the ball's radius | $`R`$ = 1 cm | field falls as $`1/r^2`$ |
+| $`S`$, $`\mathbf n`$, $`dA`$ | a closed surface; its outward arrow of length one; a small patch of it | sphere of 2 cm; pillbox | the flux does not change |
+| $`\Phi`$ | flux: outward field added over the surface, V m | 112.9409 V m for 1 nC | — |
+| $`\sigma`$, $`\rho`$ | charge per square metre of plate; charge per cubic metre, for the point form with divergence $`\nabla\cdot`$ | 100.0 nC/m^2 on the plates | stronger field |
+| $`A`$, $`A_{\text{box}}`$, $`d`$ | plate area; a pillbox face's area; gap | 10 cm × 10 cm; 1 mm | more $`A`$: more C; more $`d`$: more V, less C |
+| $`V`$, $`a`$, $`b`$, $`d\mathbf l`$ | potential, volts; a path's start and end; a small step along it | 11.294 V across the plates | — |
+| $`C`$ | capacitance: charge stored per volt, farads | 88.54 pF | lower tuned frequency |
+| $`\theta`$, $`d\Omega`$ | tilt of a patch from square-on; the solid angle it covers, seen from the charge | — | — |
 
 ### When it holds
 
@@ -88,26 +96,28 @@ $$\text{sphere, outside: } E = \frac{kQ}{r^2},\ V = \frac{kQ}{r} \qquad \text{pl
 
 ### Step 0: the field thins out exactly as fast as the area grows
 
-A point charge's field falls as $1/r^2$. A sphere's area grows as $r^2$. Multiply and $r$ cancels: every sphere round the charge carries the same flux. A field line (a line drawn along the field's direction), once started, cannot get lost. That is why only the charge inside counts.
+A point charge's field falls as $`1/r^2`$. A sphere's area grows as $`r^2`$. Multiply and $`r`$ cancels: every sphere round the charge carries the same flux. A field line (a line drawn along the field's direction), once started, cannot get lost. That is why only the charge inside counts.
 
 ### Step 1: one sphere round one charge
 
-Put a sphere of radius $r$ round charge $Q$ at its centre. The field points straight out everywhere, the same size $kQ/r^2$. So the flux is that size times the area:
+Put a sphere of radius $`r`$ round charge $`Q`$ at its centre. The field points straight out everywhere, the same size $`kQ/r^2`$. So the flux is that size times the area:
 
-$$\Phi = \frac{kQ}{r^2}\cdot 4\pi r^2 = 4\pi k Q = \frac{Q}{\varepsilon_0}$$
+```math
+\Phi = \frac{kQ}{r^2}\cdot 4\pi r^2 = 4\pi k Q = \frac{Q}{\varepsilon_0}
+```
 
-That last step is why $k$ is written $1/(4\pi\varepsilon_0)$: the $4\pi$ is a sphere's area, absorbed into the constant once.
+That last step is why $`k`$ is written $`1/(4\pi\varepsilon_0)`$: the $`4\pi`$ is a sphere's area, absorbed into the constant once.
 
 ### Step 2: any closed surface, and charge outside counts zero
 
-Look from the charge at a tiny patch of any surface. The flux through the patch depends only on the cone of directions it covers, called its solid angle (the patch's area seen square-on, divided by $r^2$). A tilted patch farther away covers the same cone as a small square-on patch close in, and passes the same flux. Every direction from the charge leaves the closed surface once more than it enters, so the total is the same as for the sphere.
+Look from the charge at a tiny patch of any surface. The flux through the patch depends only on the cone of directions it covers, called its solid angle (the patch's area seen square-on, divided by $`r^2`$). A tilted patch farther away covers the same cone as a small square-on patch close in, and passes the same flux. Every direction from the charge leaves the closed surface once more than it enters, so the total is the same as for the sphere.
 
 A charge outside is different. Each cone from it enters the surface and leaves it, an equal number of times, and the in and out cancel. With many charges the fields add, so each charge's flux is counted separately, and the flux counts the total charge inside.
 
 <details>
 <summary>Detailed proof: flux through a small patch is charge times solid angle</summary>
 
-A patch of area $dA$ at distance $r$, whose outward arrow $\mathbf n$ makes angle $\theta$ with the line from the charge, passes flux $\frac{kQ}{r^2}\cos\theta\,dA$. Its square-on area is $\cos\theta\,dA$, and $\cos\theta\,dA/r^2$ is the solid angle $d\Omega$ it covers. So the flux is $kQ\,d\Omega$. A closed surface round the charge covers all $4\pi$ of the solid angle once, net: flux $4\pi kQ = Q/\varepsilon_0$. For a charge outside, every cone crosses the surface an even number of times, with the outward and inward crossings alternating, so the net solid angle is 0. Adding over charges proves the law for any static arrangement.
+A patch of area $`dA`$ at distance $`r`$, whose outward arrow $`\mathbf n`$ makes angle $`\theta`$ with the line from the charge, passes flux $`\frac{kQ}{r^2}\cos\theta\,dA`$. Its square-on area is $`\cos\theta\,dA`$, and $`\cos\theta\,dA/r^2`$ is the solid angle $`d\Omega`$ it covers. So the flux is $`kQ\,d\Omega`$. A closed surface round the charge covers all $`4\pi`$ of the solid angle once, net: flux $`4\pi kQ = Q/\varepsilon_0`$. For a charge outside, every cone crosses the surface an even number of times, with the outward and inward crossings alternating, so the net solid angle is 0. Adding over charges proves the law for any static arrangement.
 
 </details>
 
@@ -115,41 +125,45 @@ The code checks this without symmetry. It adds Coulomb's field over the six face
 
 ### Step 3: the same law at a single point
 
-Shrink the surface to a tiny box round a point. The flux per unit volume is the divergence of the field ([Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md)), and the charge per unit volume is the charge density $\rho$. The [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md) turns the surface law into the point law and back:
+Shrink the surface to a tiny box round a point. The flux per unit volume is the divergence of the field ([Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md)), and the charge per unit volume is the charge density $`\rho`$. The [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md) turns the surface law into the point law and back:
 
-$$\nabla\cdot\mathbf E = \frac{\rho}{\varepsilon_0}$$
+```math
+\nabla\cdot\mathbf E = \frac{\rho}{\varepsilon_0}
+```
 
 Field lines start only where there is charge. This is the form Maxwell's equations use.
 
 ### Step 4: the charged sphere
 
-Spread 1 nC evenly over a metal ball of radius 1 cm. Nothing picks out a direction, so the field points straight out and has one size at each distance. Take a sphere of radius $r$ as the surface.
+Spread 1 nC evenly over a metal ball of radius 1 cm. Nothing picks out a direction, so the field points straight out and has one size at each distance. Take a sphere of radius $`r`$ as the surface.
 
-- **Outside**, $r$ > 1 cm, all the charge is inside: $E \cdot 4\pi r^2 = Q/\varepsilon_0$, so $E = kQ/r^2$, exactly as if the charge sat at the centre. At 2 cm: 22468.9 V/m.
-- **Inside**, $r$ < 1 cm, no charge is inside: $E = 0$.
+- **Outside**, $`r`$ > 1 cm, all the charge is inside: $`E \cdot 4\pi r^2 = Q/\varepsilon_0`$, so $`E = kQ/r^2`$, exactly as if the charge sat at the centre. At 2 cm: 22468.9 V/m.
+- **Inside**, $`r`$ < 1 cm, no charge is inside: $`E = 0`$.
 
 The code gets both answers the long way, by adding the Coulomb fields of thin rings round the ball: 22468.9 V/m at 2 cm and 0.0 at 0.5 cm.
 
 ### Step 5: the plates, with a pillbox
 
-Take the top plate. Its charge sits on its inner face, spread evenly at $\sigma = Q/A$. Away from the edges the field must point straight across the gap: a sideways part would have no reason to pick left over right.
+Take the top plate. Its charge sits on its inner face, spread evenly at $`\sigma = Q/A`$. Away from the edges the field must point straight across the gap: a sideways part would have no reason to pick left over right.
 
 Draw a pillbox, a short flat box, with one face inside the metal and one face in the gap, as in the picture. In the metal the field is zero: if it were not, the free charges in the metal would move until it was. The side walls run along the field and pass no flux. Only the face in the gap counts:
 
-$$E \cdot A_{\text{box}} = \frac{\sigma A_{\text{box}}}{\varepsilon_0} \quad\Rightarrow\quad E = \frac{\sigma}{\varepsilon_0}$$
+```math
+E \cdot A_{\text{box}} = \frac{\sigma A_{\text{box}}}{\varepsilon_0} \quad\Rightarrow\quad E = \frac{\sigma}{\varepsilon_0}
+```
 
 With 100.0 nC/m^2, the field is 11294.1 V/m, pointing from the + plate to the − plate. It does not depend on where in the gap the box ends, so the field is the same all the way across.
 
-Another way to see it: each plate alone, as a sheet, gives $\sigma/(2\varepsilon_0)$ on both sides. Between the plates the two halves add. Outside they cancel.
+Another way to see it: each plate alone, as a sheet, gives $`\sigma/(2\varepsilon_0)`$ on both sides. Between the plates the two halves add. Outside they cancel.
 
 ### Step 6: from field to voltage
 
-Static fields of charges have zero curl (no circulation round any point), since each is minus the gradient of $kq/r$, the arrow pointing along its fastest rise. So the voltage between two points does not depend on the path ([Conservative fields](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/04-conservative-fields-and-potentials.md)).
+Static fields of charges have zero curl (no circulation round any point), since each is minus the gradient of $`kq/r`$, the arrow pointing along its fastest rise. So the voltage between two points does not depend on the path ([Conservative fields](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/04-conservative-fields-and-potentials.md)).
 
-- **Plates.** Walk straight across the gap against the field. The field is constant, so the integral is field times distance: $V = Ed$ = 11.294 V, top plate above bottom.
-- **Sphere.** Walk in from very far away, where the potential is taken as zero, to the surface. Adding $kQ/r^2$ from infinity to $R$ gives $V = kQ/R$ = 898.76 V.
+- **Plates.** Walk straight across the gap against the field. The field is constant, so the integral is field times distance: $`V = Ed`$ = 11.294 V, top plate above bottom.
+- **Sphere.** Walk in from very far away, where the potential is taken as zero, to the surface. Adding $`kQ/r^2`$ from infinity to $`R`$ gives $`V = kQ/R`$ = 898.76 V.
 
-Then capacitance is charge per volt: $C = Q/V = \varepsilon_0 A/d$ = 88.54 pF. The same 1 nC that raises the ball to 898.76 V raises the plates to only 11.294 V. The −1 nC on the near plate cancels most of the potential the +1 nC would make alone, and that is why two close plates store so much charge per volt.
+Then capacitance is charge per volt: $`C = Q/V = \varepsilon_0 A/d`$ = 88.54 pF. The same 1 nC that raises the ball to 898.76 V raises the plates to only 11.294 V. The −1 nC on the near plate cancels most of the potential the +1 nC would make alone, and that is why two close plates store so much charge per volt.
 
 ---
 
@@ -173,9 +187,9 @@ The 1 nC on the tuning plates reads 11.294 V on a meter; the capacitor's 88.54 p
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| One sheet's field, $\sigma/(2\varepsilon_0)$, used for the gap | 5.647 V | Both plates push the same way in the gap; their fields add |
-| Coulomb's point-charge field $kQ/d^2$ across the gap | 8987.6 V | The plate's charge is spread over 10 cm, not piled at one point 1 mm away |
-| $kQ/r^2$ inside the ball, at 0.5 cm | 359502.1 V/m | No charge is inside a smaller sphere; the true field is 0.0 |
+| One sheet's field, $`\sigma/(2\varepsilon_0)`$, used for the gap | 5.647 V | Both plates push the same way in the gap; their fields add |
+| Coulomb's point-charge field $`kQ/d^2`$ across the gap | 8987.6 V | The plate's charge is spread over 10 cm, not piled at one point 1 mm away |
+| $`kQ/r^2`$ inside the ball, at 0.5 cm | 359502.1 V/m | No charge is inside a smaller sphere; the true field is 0.0 |
 | The plate formula at a 50 mm gap | 564.7 V | The plates are no longer wide beside the gap; adding Coulomb over them, with the charge held evenly spread, gives 348.5 V, and real metal plates read lower still |
 
 The code prints all four.
@@ -538,9 +552,9 @@ The two outputs match line for line.
 
 Lean proves Gauss's law for a sphere centred on one point charge, the field as minus a gradient, and the plate capacitance.
 
-- Take a charge $q$ and a sphere of any radius $r > 0$ centred on it. Then the outward flux of its Coulomb field through the sphere is $q/\varepsilon_0$.
-- Take a point charge $q$. Then away from the charge, its field is minus the gradient of the potential $kq/r$.
-- Take plates of area $A$, gap $d$ and charge $Q \neq 0$, with field $\sigma/\varepsilon_0$ and $V = Ed$. Then $C = Q/V = \varepsilon_0 A/d$.
+- Take a charge $`q`$ and a sphere of any radius $`r > 0`$ centred on it. Then the outward flux of its Coulomb field through the sphere is $`q/\varepsilon_0`$.
+- Take a point charge $`q`$. Then away from the charge, its field is minus the gradient of the potential $`kq/r`$.
+- Take plates of area $`A`$, gap $`d`$ and charge $`Q \neq 0`$, with field $`\sigma/\varepsilon_0`$ and $`V = Ed`$. Then $`C = Q/V = \varepsilon_0 A/d`$.
 
 Other closed surfaces, charge outside, the charged ball, finite plates and the decimals are left to the Python and Rust checks.
 
@@ -653,25 +667,25 @@ theorem parallel_plate_capacitance (Q A d ε₀ : ℝ) (hQ : Q ≠ 0) :
 ## The usual mistake
 
 > [!warning]
-> **Pulling the field out of the flux integral without symmetry.** Gauss's law always gives the flux, but it gives the field only where symmetry makes the field the same size and square to every piece of the surface. Round a cube, the flux is still 112.9409 V m, but the field varies over each face, and dividing by the cube's area gives only an average, not the field at any point. For finite plates the symmetry is only approximate: at a 50 mm gap, with the charge held evenly spread, the field in the middle is 59.0% of $\sigma/\varepsilon_0$.
+> **Pulling the field out of the flux integral without symmetry.** Gauss's law always gives the flux, but it gives the field only where symmetry makes the field the same size and square to every piece of the surface. Round a cube, the flux is still 112.9409 V m, but the field varies over each face, and dividing by the cube's area gives only an average, not the field at any point. For finite plates the symmetry is only approximate: at a 50 mm gap, with the charge held evenly spread, the field in the middle is 59.0% of $`\sigma/\varepsilon_0`$.
 >
-> - **Counting one plate.** One charged sheet makes $\sigma/(2\varepsilon_0)$. Use that for the gap and the voltage comes out at 5.647 V, half the true 11.294 V.
-> - **Treating the plate as a point.** Coulomb's $kQ/d^2$ across a 1 mm gap predicts 8987.6 V.
-> - **Field inside a hollow or metal ball.** Using $kQ/r^2$ at 0.5 cm gives 359502.1 V/m. No charge is inside that radius, so the field is 0.0.
-> - **Mixing signs.** The field points from + to −; the voltage drops along it. Drop the minus sign in $-\int \mathbf E\cdot d\mathbf l$ and the top plate reads −11.294 V, below the bottom one instead of 11.294 V above it.
+> - **Counting one plate.** One charged sheet makes $`\sigma/(2\varepsilon_0)`$. Use that for the gap and the voltage comes out at 5.647 V, half the true 11.294 V.
+> - **Treating the plate as a point.** Coulomb's $`kQ/d^2`$ across a 1 mm gap predicts 8987.6 V.
+> - **Field inside a hollow or metal ball.** Using $`kQ/r^2`$ at 0.5 cm gives 359502.1 V/m. No charge is inside that radius, so the field is 0.0.
+> - **Mixing signs.** The field points from + to −; the voltage drops along it. Drop the minus sign in $`-\int \mathbf E\cdot d\mathbf l`$ and the top plate reads −11.294 V, below the bottom one instead of 11.294 V above it.
 
 ---
 
 ## Where you meet it in real life
 
-- **Radio tuners.** The classic air-gap tuning capacitor is a stack of plates that turn into and out of mesh. Turning the knob changes the overlapping area $A$, so $C = \varepsilon_0 A/d$ and the tuned frequency change with it.
+- **Radio tuners.** The classic air-gap tuning capacitor is a stack of plates that turn into and out of mesh. Turning the knob changes the overlapping area $`A`$, so $`C = \varepsilon_0 A/d`$ and the tuned frequency change with it.
 - **Touch screens.** A finger near a phone screen changes the capacitance between thin electrodes under the glass; the phone reads the change as a touch.
-- **Capacitor design.** Parts makers shrink $d$ and fill the gap with an insulator to raise $C$; the field $V/d$ in that thin gap sets the voltage rating.
+- **Capacitor design.** Parts makers shrink $`d`$ and fill the gap with an insulator to raise $`C`$; the field $`V/d`$ in that thin gap sets the voltage rating.
 - **Shielding.** A closed metal box has no field inside from charges outside: the free charges in its wall move until the field inside is zero, as in the metal of Step 5. Sensitive radio stages sit in metal cans for this reason.
-- **Lightning rods and sharp points.** On a ball, the surface field $kQ/R^2$ grows fast as $R$ shrinks at a given voltage $kQ/R$: field = voltage / $R$. A sharp tip has a tiny $R$, so the air breaks down there first.
+- **Lightning rods and sharp points.** On a ball, the surface field $`kQ/R^2`$ grows fast as $`R`$ shrinks at a given voltage $`kQ/R`$: field = voltage / $`R`$. A sharp tip has a tiny $`R`$, so the air breaks down there first.
 
 > **Say it back**
-> Coulomb's law gives the field of a point charge, falling as one over distance squared. Because area grows as distance squared, the flux out of any closed surface counts only the charge inside: that is Gauss's law. With a sphere or a flat plate, symmetry turns the law into the field in one line: $kQ/r^2$ outside a ball, $\sigma/\varepsilon_0$ between plates. Adding the field along a path gives the voltage: 11.294 V across the radio's 1 mm gap for 1 nC, so 88.54 pF. The plate formula is a model that holds while the plates are wide beside their gap.
+> Coulomb's law gives the field of a point charge, falling as one over distance squared. Because area grows as distance squared, the flux out of any closed surface counts only the charge inside: that is Gauss's law. With a sphere or a flat plate, symmetry turns the law into the field in one line: $`kQ/r^2`$ outside a ball, $`\sigma/\varepsilon_0`$ between plates. Adding the field along a path gives the voltage: 11.294 V across the radio's 1 mm gap for 1 nC, so 88.54 pF. The plate formula is a model that holds while the plates are wide beside their gap.
 
 ---
 
@@ -695,7 +709,7 @@ This card's charge was told where to sit. On real metal plates the charge arrang
 
 Verified 2026-11-11: every link below resolves to the publisher's page, and the DOI was checked against Crossref for title and first author.
 
-- NIST. "Vacuum electric permittivity", CODATA 2022 recommended value. [NIST reference page](https://physics.nist.gov/cgi-bin/cuu/Value?ep0). The value of $\varepsilon_0$ used throughout.
+- NIST. "Vacuum electric permittivity", CODATA 2022 recommended value. [NIST reference page](https://physics.nist.gov/cgi-bin/cuu/Value?ep0). The value of $`\varepsilon_0`$ used throughout.
 - Griffiths, David J. *Introduction to Electrodynamics*, 5th ed. Cambridge University Press, 2023. [doi:10.1017/9781009397735](https://doi.org/10.1017/9781009397735). Coulomb's law, Gauss's law in both forms, the potential, and the parallel-plate capacitor.
 - OpenStax. *University Physics Volume 2*, section 6.3, "Applying Gauss's Law". [Publisher page](https://openstax.org/books/university-physics-volume-2/pages/6-3-applying-gausss-law). Free; the charged sphere and the charged plane by Gauss's law.
-- OpenStax. *University Physics Volume 2*, section 8.1, "Capacitors and Capacitance". [Publisher page](https://openstax.org/books/university-physics-volume-2/pages/8-1-capacitors-and-capacitance). Free; integrating the plate field to a voltage and reading off $C = \varepsilon_0 A/d$.
+- OpenStax. *University Physics Volume 2*, section 8.1, "Capacitors and Capacitance". [Publisher page](https://openstax.org/books/university-physics-volume-2/pages/8-1-capacitors-and-capacitance). Free; integrating the plate field to a voltage and reading off $`C = \varepsilon_0 A/d`$.

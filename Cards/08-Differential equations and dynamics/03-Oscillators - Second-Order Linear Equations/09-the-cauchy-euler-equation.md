@@ -37,13 +37,17 @@ Orange: the total shift, A x + B/x. Teal: its A x part, growing outward. Dark bl
 
 Reminder: a differential equation links a function to its own rates ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). Here the rates run along the distance x: y' is the shift's change per millimetre outward, y'' the change of that.
 
-$$x^2\,y'' + a\,x\,y' + b\,y = 0 \qquad\xrightarrow{\;y\,=\,x^r\;}\qquad p(r) = r(r-1) + a\,r + b = 0$$
+```math
+x^2\,y'' + a\,x\,y' + b\,y = 0 \qquad\xrightarrow{\;y\,=\,x^r\;}\qquad p(r) = r(r-1) + a\,r + b = 0
+```
 
 **Read it aloud:** replace the second rate by r(r − 1), the first by r, and y by 1; the roots are the powers of x that solve the equation.
 
 The quadratic p(r) is the **indicial equation**, named for its roots, which are indices, that is, powers:
 
-$$r_1 \ne r_2 \text{ real}:\quad y = A\,x^{r_1} + B\,x^{r_2} \qquad\qquad r_1 = r_2 = r:\quad y = (A + B\ln x)\,x^{r}$$
+```math
+r_1 \ne r_2 \text{ real}:\quad y = A\,x^{r_1} + B\,x^{r_2} \qquad\qquad r_1 = r_2 = r:\quad y = (A + B\ln x)\,x^{r}
+```
 
 **Read it aloud:** two powers are mixed in amounts fixed by two conditions; a repeated power is multiplied by a straight line in ln x.
 
@@ -51,14 +55,14 @@ For the pipe, a = 1 and b = −1, so p(r) = r^2 − 1 and the powers are 1 and �
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | distance from the centre line, in mm | 50 (bore) to 100 (outside) | the B/x part fades |
-| $y$, $y'$, $y''$ | outward shift, in µm; its rate per mm; that rate's rate | 9.83 µm at the bore | — |
-| $a$, $b$, $p(r)$ | the equation's constants; the indicial polynomial | a = 1, b = −1; r^2 − 1 | b up: roots merge, then turn complex |
-| $r$, $r_1$, $r_2$ | the trial power; the roots of p(r) | 1 and −1 | — |
-| $A$, $B$ | amounts of each power | 0.02333 µm per mm; 433.33 µm·mm | — |
-| $t$ | ln x, the logarithm of the distance | used in Step 3 | — |
-| $\sigma_r$, $\sigma_\theta$ | radial stress (across the wall), hoop stress (around it), in MPa | −20.00 and 33.33 at the bore | — |
-| $E$, $\nu$, $P$ | steel's stiffness; Poisson ratio, sideways shrink per unit stretch; oil pressure | 200000 MPa; 0.3; 20 MPa | P up: all up in proportion |
+| $`x`$ | distance from the centre line, in mm | 50 (bore) to 100 (outside) | the B/x part fades |
+| $`y`$, $`y'`$, $`y''`$ | outward shift, in µm; its rate per mm; that rate's rate | 9.83 µm at the bore | — |
+| $`a`$, $`b`$, $`p(r)`$ | the equation's constants; the indicial polynomial | a = 1, b = −1; r^2 − 1 | b up: roots merge, then turn complex |
+| $`r`$, $`r_1`$, $`r_2`$ | the trial power; the roots of p(r) | 1 and −1 | — |
+| $`A`$, $`B`$ | amounts of each power | 0.02333 µm per mm; 433.33 µm·mm | — |
+| $`t`$ | ln x, the logarithm of the distance | used in Step 3 | — |
+| $`\sigma_r`$, $`\sigma_\theta`$ | radial stress (across the wall), hoop stress (around it), in MPa | −20.00 and 33.33 at the bore | — |
+| $`E`$, $`\nu`$, $`P`$ | steel's stiffness; Poisson ratio, sideways shrink per unit stretch; oil pressure | 200000 MPa; 0.3; 20 MPa | P up: all up in proportion |
 
 ### When it holds
 
@@ -88,7 +92,9 @@ The ring's forces balance when (x σ_r)' = σ_θ. Substituting, K(x y'' + y' + �
 
 Put y = x^r in:
 
-$$x^2 y'' + a\,x\,y' + b\,y = \bigl(r(r-1) + a\,r + b\bigr)\,x^r.$$
+```math
+x^2 y'' + a\,x\,y' + b\,y = \bigl(r(r-1) + a\,r + b\bigr)\,x^r.
+```
 
 For x > 0, x^r is never zero, so this vanishes for every x exactly when p(r) = 0. For the pipe, r(r − 1) + r − 1 = r^2 − 1: roots 1 and −1, shifts x and 1/x.
 
@@ -100,7 +106,9 @@ The equation is linear, so any mix A x + B/x solves it ([Superposition](01-super
 
 Set t = ln x ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)) and write the shift as Y, a function of t. The chain rule gives x y' = Y' and x^2 y'' = Y'' − Y', primes on Y being rates in t. The equation becomes
 
-$$Y'' + (a - 1)\,Y' + b\,Y = 0,$$
+```math
+Y'' + (a - 1)\,Y' + b\,Y = 0,
+```
 
 a constant-coefficient equation whose characteristic equation, r^2 + (a − 1)r + b = 0, is p(r) again ([The characteristic equation](02-the-characteristic-equation.md)). There e^(rt) is x^r, and at a repeated root t e^(rt) is x^r ln x.
 

@@ -42,51 +42,61 @@ Every arrow back into the loop is one exercise date, and the fit is rebuilt at e
 
 ## The formula
 
-Notation first, in words. Write $S$ for Acme's price, $K$ for the strike, $r$ for the riskless rate, $g$ for the cash the option pays if used right now — the **intrinsic value** — and $C$ for the hold value, the average worth of keeping it. The last two live in the pretend world where every asset drifts at $r$, which is what makes discounted averaging a price ([Stepping an SDE](05-discretisation-schemes-for-sdes.md)).
+Notation first, in words. Write $`S`$ for Acme's price, $`K`$ for the strike, $`r`$ for the riskless rate, $`g`$ for the cash the option pays if used right now — the **intrinsic value** — and $`C`$ for the hold value, the average worth of keeping it. The last two live in the pretend world where every asset drifts at $`r`$, which is what makes discounted averaging a price ([Stepping an SDE](05-discretisation-schemes-for-sdes.md)).
 
 On any exercise date the option is worth the better of two choices:
 
-$$V(S) \;=\; \max\big(g(S),\; C(S)\big), \qquad g(S) = \max(K - S,\, 0)$$
+```math
+V(S) \;=\; \max\big(g(S),\; C(S)\big), \qquad g(S) = \max(K - S,\, 0)
+```
 
-**Read it aloud:** at every date the option's worth $V$ is whichever is larger, the cash now or the value of keeping it.
+**Read it aloud:** at every date the option's worth $`V`$ is whichever is larger, the cash now or the value of keeping it.
 
 The hold value is the part nobody can see:
 
-$$C(S) \;=\; \mathbb{E}\Big[\,e^{-r\delta}\;V(\text{next date's price})\;\Big|\;\text{Acme at } S \text{ now}\Big]$$
+```math
+C(S) \;=\; \mathbb{E}\Big[\,e^{-r\delta}\;V(\text{next date's price})\;\Big|\;\text{Acme at } S \text{ now}\Big]
+```
 
-Here $\delta$ is the gap between exercise dates in years, and $e^{-r\delta}$ shrinks one date's money to the date before. $\mathbb{E}$ means the average over futures. The bar means *given*: average only over futures passing through $S$ now. That bar is the difficulty, since one simulated future passes through $S$ exactly once.
+Here $`\delta`$ is the gap between exercise dates in years, and $`e^{-r\delta}`$ shrinks one date's money to the date before. $`\mathbb{E}`$ means the average over futures. The bar means *given*: average only over futures passing through $`S`$ now. That bar is the difficulty, since one simulated future passes through $`S`$ exactly once.
 
-So replace $C$ with a curve fitted from the simulation itself. Measure the price in strikes, $x = S/K$, so the numbers fed to the fit sit near 1:
+So replace $`C`$ with a curve fitted from the simulation itself. Measure the price in strikes, $`x = S/K`$, so the numbers fed to the fit sit near 1:
 
-$$h(x) \;=\; b_0 + b_1 x + b_2 x^2$$
+```math
+h(x) \;=\; b_0 + b_1 x + b_2 x^2
+```
 
-A parabola stands in for the hold value, its three weights rebuilt at every date. The weights chosen miss the observed cash by as little as possible, squared and summed over the futures **in the money** there, those where cash now, $g$, is above zero:
+A parabola stands in for the hold value, its three weights rebuilt at every date. The weights chosen miss the observed cash by as little as possible, squared and summed over the futures **in the money** there, those where cash now, $`g`$, is above zero:
 
-$$(b_0, b_1, b_2) \;=\; \arg\min_{b} \sum_{i \,\in\, \text{in the money}} \big(Y_i - h(x_i)\big)^2$$
+```math
+(b_0, b_1, b_2) \;=\; \arg\min_{b} \sum_{i \,\in\, \text{in the money}} \big(Y_i - h(x_i)\big)^2
+```
 
-Here $Y$ is the cash a future goes on to collect under the rule built so far, carried back to this date. When the backwards pass ends, each of the $N$ futures has stopped at a date $\tau$ of its own, and the price is the plain average over the futures:
+Here $`Y`$ is the cash a future goes on to collect under the rule built so far, carried back to this date. When the backwards pass ends, each of the $`N`$ futures has stopped at a date $`\tau`$ of its own, and the price is the plain average over the futures:
 
-$$\text{price} \;=\; \frac{1}{N}\sum_{i=1}^{N} e^{-r\tau_i}\,g\big(S_{\tau_i}\big)$$
+```math
+\text{price} \;=\; \frac{1}{N}\sum_{i=1}^{N} e^{-r\tau_i}\,g\big(S_{\tau_i}\big)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price on the date being decided | 88.00 above | falls: a put pays when the share is low |
-| $K$ | the strike, the price the holder may sell at | 100.00 | rises: more cash on exercise, and sooner |
-| $r$, $q$ | riskless rate; dividend yield paid out | 5% and 2% a year | $r$ up: the early-exercise premium grows, since cash taken early earns interest |
-| $\sigma$, $T$ | volatility, how jumpy Acme is; years to the last date | 20% and 1 | both up: the put is dearer |
-| $L$, $N$ | exercise dates; simulated futures | 50 and 100,000 | $L$ up: dearer. $N$ up: smaller error bar, better rule |
-| $g$ | cash now, $\max(K - S, 0)$ | 12.00 at $S = 88$ | — |
-| $C$ | the hold value: what keeping the option is worth | never seen directly; $h$ stands in for it | — |
-| $V$ | the option's worth on a date: the better of the two | estimated at 6.622563 at the start of the year | — |
-| $h$ | the fitted stand-in for $C$, a curve in $x = S/K$ | $15.1872 - 10.8791x$ below, so 5.3960 at $S = 90$ | — |
-| $b_0$, $b_1$, $b_2$ | the fitted weights, rebuilt at every date | 157.9697, −251.4513, 98.0869 at six months | — |
-| $m$ | how many terms the fit is allowed | 3 | rises: better rule, then no change |
-| $Y$ | cash a future goes on to collect, carried back one date | 8.8512 for future 2, month 8 | — |
-| $\delta$, $\tau$ | the gap between exercise dates; the date a future stops | a fiftieth of a year; 0.574373 on average among the futures stopping early | — |
+| $`S`$ | Acme's price on the date being decided | 88.00 above | falls: a put pays when the share is low |
+| $`K`$ | the strike, the price the holder may sell at | 100.00 | rises: more cash on exercise, and sooner |
+| $`r`$, $`q`$ | riskless rate; dividend yield paid out | 5% and 2% a year | $`r`$ up: the early-exercise premium grows, since cash taken early earns interest |
+| $`\sigma`$, $`T`$ | volatility, how jumpy Acme is; years to the last date | 20% and 1 | both up: the put is dearer |
+| $`L`$, $`N`$ | exercise dates; simulated futures | 50 and 100,000 | $`L`$ up: dearer. $`N`$ up: smaller error bar, better rule |
+| $`g`$ | cash now, $`\max(K - S, 0)`$ | 12.00 at $`S = 88`$ | — |
+| $`C`$ | the hold value: what keeping the option is worth | never seen directly; $`h`$ stands in for it | — |
+| $`V`$ | the option's worth on a date: the better of the two | estimated at 6.622563 at the start of the year | — |
+| $`h`$ | the fitted stand-in for $`C`$, a curve in $`x = S/K`$ | $`15.1872 - 10.8791x`$ below, so 5.3960 at $`S = 90`$ | — |
+| $`b_0`$, $`b_1`$, $`b_2`$ | the fitted weights, rebuilt at every date | 157.9697, −251.4513, 98.0869 at six months | — |
+| $`m`$ | how many terms the fit is allowed | 3 | rises: better rule, then no change |
+| $`Y`$ | cash a future goes on to collect, carried back one date | 8.8512 for future 2, month 8 | — |
+| $`\delta`$, $`\tau`$ | the gap between exercise dates; the date a future stops | a fiftieth of a year; 0.574373 on average among the futures stopping early | — |
 
 ### When it holds
 
-- **The futures must be drawn in the pretend world.** Each step multiplies the price by $e^{(r-q-\frac12\sigma^2)\delta\,+\,\sigma\sqrt{\delta}\,Z}$, with $Z$ a bell-curve draw. A real-world drift makes the price wrong however good the rule is.
+- **The futures must be drawn in the pretend world.** Each step multiplies the price by $`e^{(r-q-\frac12\sigma^2)\delta\,+\,\sigma\sqrt{\delta}\,Z}`$, with $`Z`$ a bell-curve draw. A real-world drift makes the price wrong however good the rule is.
 - **Exercise happens only on the dates simulated.** Fifty dates is a **Bermudan** option, not a true American one. The cost is measurable: the same tree gives 6.652120 on fifty dates against 6.660226 exercising at every step.
 - **The curve must bend where the decision is close.** One term — a flat number ignoring the price — returns 6.005504; three terms return 6.622563. And the rule is fitted from noisy data, so too few futures means a worse rule, not merely a wider error bar: the price falls as well as wobbling.
 - **The decision may use only what is known on the date.** Let a future consult its own outcome and the answer is 11.972318, which is not a price: no strategy can earn it.
@@ -103,20 +113,24 @@ But the machine has 100,000 futures, 48,603 of them in the money at that date. S
 
 ### Step 1: a least-squares fit is exactly an average-given-what-is-known
 
-This is the fact the whole method rests on, and it is not an analogy. Among all curves through the cloud, the one with the smallest average squared miss is the conditional average $\mathbb{E}[Y \mid S]$ itself — the very quantity the hold value is defined to be. So fitting by least squares is not an approximation of the right answer; it is a way of computing the right answer, narrowed to whatever family of curves is allowed. Widen the family and the fit closes in. That is why the method is least-squares Monte Carlo (LSM) and not curve-fitting Monte Carlo.
+This is the fact the whole method rests on, and it is not an analogy. Among all curves through the cloud, the one with the smallest average squared miss is the conditional average $`\mathbb{E}[Y \mid S]`$ itself — the very quantity the hold value is defined to be. So fitting by least squares is not an approximation of the right answer; it is a way of computing the right answer, narrowed to whatever family of curves is allowed. Widen the family and the fit closes in. That is why the method is least-squares Monte Carlo (LSM) and not curve-fitting Monte Carlo.
 
 <details>
 <summary>Detailed proof: the conditional average is the least-squares predictor</summary>
 
-Write $M(S)$ for the conditional average $\mathbb{E}[Y \mid S]$ and $F(S)$ for any other curve. Split the miss by adding and subtracting $M(S)$:
-$$\mathbb{E}\big[(Y - F(S))^2\big] = \mathbb{E}\big[(Y - M(S))^2\big] + 2\,\mathbb{E}\big[(Y - M(S))(M(S) - F(S))\big] + \mathbb{E}\big[(M(S) - F(S))^2\big].$$
-The middle term vanishes. Average in two stages, price held fixed first: then $M(S) - F(S)$ is a known number and comes outside, leaving $\mathbb{E}[Y - M(S) \mid S] = 0$. So
-$$\mathbb{E}\big[(Y - F(S))^2\big] = \mathbb{E}\big[(Y - M(S))^2\big] + \mathbb{E}\big[(M(S) - F(S))^2\big] \;\ge\; \mathbb{E}\big[(Y - M(S))^2\big],$$
-with equality only where the two curves agree. The first term is the part of $Y$ no curve in the price can explain; the second is the fit's own error, which shrinks as terms are added. Narrowing the curve to $b_0 + b_1x + b_2x^2$ and averaging over the sample rather than the true distribution turns the minimisation into three linear equations, the **normal equations**, solved in the code by elimination.
+Write $`M(S)`$ for the conditional average $`\mathbb{E}[Y \mid S]`$ and $`F(S)`$ for any other curve. Split the miss by adding and subtracting $`M(S)`$:
+
+$`\displaystyle \mathbb{E}\big[(Y - F(S))^2\big] = \mathbb{E}\big[(Y - M(S))^2\big] + 2\,\mathbb{E}\big[(Y - M(S))(M(S) - F(S))\big] + \mathbb{E}\big[(M(S) - F(S))^2\big].`$
+
+The middle term vanishes. Average in two stages, price held fixed first: then $`M(S) - F(S)`$ is a known number and comes outside, leaving $`\mathbb{E}[Y - M(S) \mid S] = 0`$. So
+
+$`\displaystyle \mathbb{E}\big[(Y - F(S))^2\big] = \mathbb{E}\big[(Y - M(S))^2\big] + \mathbb{E}\big[(M(S) - F(S))^2\big] \;\ge\; \mathbb{E}\big[(Y - M(S))^2\big],`$
+
+with equality only where the two curves agree. The first term is the part of $`Y`$ no curve in the price can explain; the second is the fit's own error, which shrinks as terms are added. Narrowing the curve to $`b_0 + b_1x + b_2x^2`$ and averaging over the sample rather than the true distribution turns the minimisation into three linear equations, the **normal equations**, solved in the code by elimination.
 
 </details>
 
-Three terms are not chosen for beauty. Cash now, $K - S$, is a straight line of slope $-1$; the hold value is a gently curved line above it; the decision falls where they cross. Two or three weights catch that bend without chasing the simulation's noise:
+Three terms are not chosen for beauty. Cash now, $`K - S`$, is a straight line of slope $`-1`$; the hold value is a gently curved line above it; the decision falls where they cross. Two or three weights catch that bend without chasing the simulation's noise:
 
 | Terms in the fit | The shape it can make | LSM price |
 | --- | --- | --- |
@@ -133,9 +147,9 @@ At $130.00 the put pays nothing, so the comparison never fires there. Including 
 
 ### Step 3: carry the cash the future really collects
 
-When a future holds, what travels back is the cash that future really goes on to collect, discounted — not the fitted number $h$. The fit is for deciding, not for valuing.
+When a future holds, what travels back is the cash that future really goes on to collect, discounted — not the fitted number $`h`$. The fit is for deciding, not for valuing.
 
-The reason is that $Y$ then has the right average: given where the future stood, its average across futures is exactly the hold value of the rule being built. Feed the smoothed curve back instead and foresight leaks in at every step, since that curve was built from all the futures at once.
+The reason is that $`Y`$ then has the right average: given where the future stood, its average across futures is exactly the hold value of the rule being built. Feed the smoothed curve back instead and foresight leaks in at every step, since that curve was built from all the futures at once.
 
 ### Step 4: walking backwards keeps the rule legal, so the answer is a floor
 
@@ -169,7 +183,7 @@ In one dimension the tree wins outright: faster, no seed, and the benchmark used
 
 ## Worked numbers, by hand
 
-Eight made-up futures for Acme, exercisable at months 4, 8 and 12, are small enough to check with a pencil. The strike is $100.00 and the rate 5 percent, so one four-month step discounts by $e^{-0.05/3} = 0.983471$. The fit uses two terms here, a straight line, since a line through five points can be solved by hand.
+Eight made-up futures for Acme, exercisable at months 4, 8 and 12, are small enough to check with a pencil. The strike is $100.00 and the rate 5 percent, so one four-month step discounts by $`e^{-0.05/3} = 0.983471`$. The fit uses two terms here, a straight line, since a line through five points can be solved by hand.
 
 | Future | month 4 | month 8 | month 12 | cash at month 12 |
 | --- | --- | --- | --- | --- |
@@ -182,9 +196,9 @@ Eight made-up futures for Acme, exercisable at months 4, 8 and 12, are small eno
 | 7 | 97 | 93 | 99 | 1.00 |
 | 8 | 109 | 104 | 107 | 0.00 |
 
-**Month 8.** Five futures are in the money: 2, 3, 5, 6 and 7. Each one's month-12 cash, discounted once, is its $Y$. The two normal equations from those five points are `[5 4.7200 | 24.5868]` and `[4.7200 4.4602 | 23.1608]`, giving $h(x) = 15.1872 - 10.8791x$.
+**Month 8.** Five futures are in the money: 2, 3, 5, 6 and 7. Each one's month-12 cash, discounted once, is its $`Y`$. The two normal equations from those five points are `[5 4.7200 | 24.5868]` and `[4.7200 4.4602 | 23.1608]`, giving $`h(x) = 15.1872 - 10.8791x`$.
 
-| Future | Acme | carried back, $Y$ | fitted hold | cash now | decision |
+| Future | Acme | carried back, $`Y`$ | fitted hold | cash now | decision |
 | --- | --- | --- | --- | --- | --- |
 | 2 | 94 | 8.8512 | 4.9609 | 6.00 | take |
 | 3 | 99 | 0.0000 | 4.4169 | 1.00 | hold |
@@ -194,9 +208,9 @@ Eight made-up futures for Acme, exercisable at months 4, 8 and 12, are small eno
 
 Two lines there are the whole method. Future 6 is in the money, cash now $4.00, and it **holds** — the curve says $4.7433 — then goes on to collect $11.00. Being in the money is not a reason to exercise. Future 2 takes $6.00 where holding would in fact have paid $8.8512: the rule is right on average, not future by future, which is what deciding without foresight means.
 
-**Month 4.** Four futures are in the money now: 2, 4, 5 and 7, and their $Y$ is the cash decided at month 8, carried back one step. The system `[4 3.7800 | 25.5215]`, `[3.7800 3.5782 | 23.8717]` gives $h(x) = 44.5075 - 40.3462x$ — a steep line, since four points barely pin one down.
+**Month 4.** Four futures are in the money now: 2, 4, 5 and 7, and their $`Y`$ is the cash decided at month 8, carried back one step. The system `[4 3.7800 | 25.5215]`, `[3.7800 3.5782 | 23.8717]` gives $`h(x) = 44.5075 - 40.3462x`$ — a steep line, since four points barely pin one down.
 
-| Future | Acme | carried back, $Y$ | fitted hold | cash now | decision |
+| Future | Acme | carried back, $`Y`$ | fitted hold | cash now | decision |
 | --- | --- | --- | --- | --- | --- |
 | 2 | 98 | 5.9008 | 4.9683 | 2.00 | hold |
 | 4 | 95 | 2.9016 | 6.1786 | 5.00 | hold |
@@ -205,7 +219,7 @@ Two lines there are the whole method. Future 6 is in the money, cash now $4.00, 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| cash if held to month 12 | $\max(100 - S, 0)$, eight futures | 0, 9, 0, 3, 4, 11, 1, 0 |
+| cash if held to month 12 | $`\max(100 - S, 0)`$, eight futures | 0, 9, 0, 3, 4, 11, 1, 0 |
 | month 8, three futures take the cash | futures 2, 5 and 7 | 6.00, 10.00, 7.00 |
 | month 4, one future takes the cash | future 5 | 12.00 |
 | average the eight, each discounted from where it stopped | the method's answer | **4.711585** |
@@ -676,9 +690,9 @@ The two outputs are byte-identical: both languages run the same integer generato
 
 Lean proves Step 1's least-squares fact whenever the cash has a finite average square, and redoes the eight futures' whole-number steps.
 
-- Suppose $Y$ is the cash collected and $F$ any curve in the price, both with a finite average square. Then $F(S)$ never has a smaller average squared miss than $M(S) = \mathbb{E}[Y \mid S]$.
-- Take the same $Y$ and $F$. Then the miss of $F$ splits exactly in two: the part no curve in the price can explain, plus the curve's own error.
-- Take the same $Y$ and $F$. Then $F(S)$ reaches the smallest miss exactly when it equals $M(S)$, except on futures of zero chance.
+- Suppose $`Y`$ is the cash collected and $`F`$ any curve in the price, both with a finite average square. Then $`F(S)`$ never has a smaller average squared miss than $`M(S) = \mathbb{E}[Y \mid S]`$.
+- Take the same $`Y`$ and $`F`$. Then the miss of $`F`$ splits exactly in two: the part no curve in the price can explain, plus the curve's own error.
+- Take the same $`Y`$ and $`F`$. Then $`F(S)`$ reaches the smallest miss exactly when it equals $`M(S)`$, except on futures of zero chance.
 - On the eight made-up futures, the cash at month 12 is 0, 9, 0, 3, 4, 11, 1, 0.
 - Futures 2, 3, 5, 6 and 7 are in the money at month 8, with cash now 6, 1, 10, 4 and 7.
 - Futures 2, 4, 5 and 7 are in the money at month 4, with cash now 2, 5, 12 and 3.

@@ -37,36 +37,42 @@ Orange: the par spread with quarterly premiums, the contract as traded. Green: t
 
 ## The formula
 
-Notation first, in words. The quote is written $s$, as a decimal: 300 bp is 0.03. The model's par spread at a trial hazard is a function of that hazard, written $s_{\text{par}}(\lambda)$: the spread at which the premiums and the payout are worth the same today. The implied hazard is the trial value that makes the model match the screen.
+Notation first, in words. The quote is written $`s`$, as a decimal: 300 bp is 0.03. The model's par spread at a trial hazard is a function of that hazard, written $`s_{\text{par}}(\lambda)`$: the spread at which the premiums and the payout are worth the same today. The implied hazard is the trial value that makes the model match the screen.
 
-$$s_{\text{par}}(\lambda) \;=\; \frac{P(\lambda)}{A(\lambda)} \;=\; (1-R)\,\lambda\;\frac{e^{(r+\lambda)\delta}-1}{(r+\lambda)\delta}, \qquad \text{implied hazard: the one } \lambda \text{ with } s_{\text{par}}(\lambda) = s$$
+```math
+s_{\text{par}}(\lambda) \;=\; \frac{P(\lambda)}{A(\lambda)} \;=\; (1-R)\,\lambda\;\frac{e^{(r+\lambda)\delta}-1}{(r+\lambda)\delta}, \qquad \text{implied hazard: the one } \lambda \text{ with } s_{\text{par}}(\lambda) = s
+```
 
 **Read it aloud:** the fair spread is the share lost in default, times the hazard, times a timing factor a little above one; the implied hazard is the hazard that makes this equal the quote.
 
-The two pieces it comes from, for a flat hazard and a flat rate, with $n$ quarterly premium dates at $\delta, 2\delta, \dots, n\delta = T$:
+The two pieces it comes from, for a flat hazard and a flat rate, with $`n`$ quarterly premium dates at $`\delta, 2\delta, \dots, n\delta = T`$:
 
-$$A(\lambda) = \sum_{j=1}^{n} \delta\, e^{-(r+\lambda)\,j\delta}, \qquad P(\lambda) = (1-R)\int_0^T \lambda\, e^{-\lambda t}\, e^{-rt}\,dt$$
+```math
+A(\lambda) = \sum_{j=1}^{n} \delta\, e^{-(r+\lambda)\,j\delta}, \qquad P(\lambda) = (1-R)\int_0^T \lambda\, e^{-\lambda t}\, e^{-rt}\,dt
+```
 
-In words: $A(\lambda)$ adds up each quarter's premium of one unit a year, weighted by the chance of surviving to pay it and discounted to today. $P(\lambda)$ adds up the loss paid at each possible default time, weighted by the chance of defaulting then and discounted.
+In words: $`A(\lambda)`$ adds up each quarter's premium of one unit a year, weighted by the chance of surviving to pay it and discounted to today. $`P(\lambda)`$ adds up the loss paid at each possible default time, weighted by the chance of defaulting then and discounted.
 
 | Symbol | Plain meaning | In our example | Push it up and the implied hazard… |
 | --- | --- | --- | --- |
-| $s$ | the quoted spread, a decimal per year | 0.03 (300 bp) | rises, without limit |
-| $s_{\text{par}}(\lambda)$ | the model's fair spread at trial hazard $\lambda$ | 303.78 bp at 5% | (the curve being inverted) |
-| $R$ | recovery: the share of the debt paid back after default | 40% | rises, and has no answer at 100% |
-| $\lambda$ | the flat hazard, chance of default per year given survival (say "lambda") | 4.94% | (the answer) |
-| $\lambda_0$ | the triangle's seed, $s/(1-R)$ | 5% | (a starting point only) |
-| $r$ | the riskless rate, continuously compounded | 5% | falls slightly: 4.97% at a zero rate, 4.94% at 5% |
-| $\delta$ | the time between premiums, in years (say "delta") | 0.25 | falls slightly: later premiums need less hazard to match |
-| $T$, $n$ | the contract's length in years, and its number of premium dates | 5 and 20 | unchanged, on a flat curve |
-| $t$, $\tau$ | a point in time; the random time of default (say "tau") | $\tau$ within 5 years: 21.9% | |
-| $A(\lambda)$ | the risky annuity: today's value of one unit a year of premium, paid only while alive | 3.8915 | |
-| $P(\lambda)$ | the protection leg: today's value of the payout, per dollar of notional | 0.116746 | |
-| $g(x)$ | the timing factor $(e^x - 1)/x$, with $x = (r+\lambda)\delta$ | 1.0125 | |
+| $`s`$ | the quoted spread, a decimal per year | 0.03 (300 bp) | rises, without limit |
+| $`s_{\text{par}}(\lambda)`$ | the model's fair spread at trial hazard $`\lambda`$ | 303.78 bp at 5% | (the curve being inverted) |
+| $`R`$ | recovery: the share of the debt paid back after default | 40% | rises, and has no answer at 100% |
+| $`\lambda`$ | the flat hazard, chance of default per year given survival (say "lambda") | 4.94% | (the answer) |
+| $`\lambda_0`$ | the triangle's seed, $`s/(1-R)`$ | 5% | (a starting point only) |
+| $`r`$ | the riskless rate, continuously compounded | 5% | falls slightly: 4.97% at a zero rate, 4.94% at 5% |
+| $`\delta`$ | the time between premiums, in years (say "delta") | 0.25 | falls slightly: later premiums need less hazard to match |
+| $`T`$, $`n`$ | the contract's length in years, and its number of premium dates | 5 and 20 | unchanged, on a flat curve |
+| $`t`$, $`\tau`$ | a point in time; the random time of default (say "tau") | $`\tau`$ within 5 years: 21.9% | |
+| $`A(\lambda)`$ | the risky annuity: today's value of one unit a year of premium, paid only while alive | 3.8915 | |
+| $`P(\lambda)`$ | the protection leg: today's value of the payout, per dollar of notional | 0.116746 | |
+| $`g(x)`$ | the timing factor $`(e^x - 1)/x`$, with $`x = (r+\lambda)\delta`$ | 1.0125 | |
 
-Once the hazard is known, the chance of default within the contract follows from survival, $e^{-\lambda T}$:
+Once the hazard is known, the chance of default within the contract follows from survival, $`e^{-\lambda T}`$:
 
-$$\text{chance of default by } T \;=\; 1 - e^{-\lambda T} \;=\; 1 - e^{-0.0493814 \times 5} \;=\; 21.88\%$$
+```math
+\text{chance of default by } T \;=\; 1 - e^{-\lambda T} \;=\; 1 - e^{-0.0493814 \times 5} \;=\; 21.88\%
+```
 
 ### When it holds
 
@@ -92,9 +98,9 @@ Both vanish if the par spread starts at zero, climbs strictly, and has no ceilin
 
 ### Step 1: the spread curve in closed form, where maturity cancels
 
-With a flat hazard and a flat rate, surviving and discounting combine into one decay, $e^{-(r+\lambda)t}$. The annuity's terms each shrink by the same factor from one quarter to the next, a geometric series; the protection integral is an exponential.
+With a flat hazard and a flat rate, surviving and discounting combine into one decay, $`e^{-(r+\lambda)t}`$. The annuity's terms each shrink by the same factor from one quarter to the next, a geometric series; the protection integral is an exponential.
 
-Both sum in closed form, both carry the factor $1 - e^{-(r+\lambda)T}$, and the division cancels it. What is left is the formula above, $s_{\text{par}}(\lambda) = (1-R)\,\lambda\, g(x)$ with $x = (r+\lambda)\delta$, and no $T$ anywhere.
+Both sum in closed form, both carry the factor $`1 - e^{-(r+\lambda)T}`$, and the division cancels it. What is left is the formula above, $`s_{\text{par}}(\lambda) = (1-R)\,\lambda\, g(x)`$ with $`x = (r+\lambda)\delta`$, and no $`T`$ anywhere.
 
 The credit triangle card derives this timing factor and reads it as the cost of paying late ([The credit triangle](03-the-credit-triangle.md)); the sums are in the folded proof below.
 
@@ -102,35 +108,35 @@ The cancellation has a consequence worth checking. On a flat curve the one-, thr
 
 ### Step 2: the timing factor is above one and rising
 
-The factor $g(x) = (e^x - 1)/x$ is the average of $e^{xu}$ as $u$ runs from 0 to 1. Every value of $e^{xu}$ is positive, and each one grows as $x$ grows, so the average is positive and rising. At $x = 0$ it equals 1, so for any positive $x$ it exceeds 1.
+The factor $`g(x) = (e^x - 1)/x`$ is the average of $`e^{xu}`$ as $`u`$ runs from 0 to 1. Every value of $`e^{xu}`$ is positive, and each one grows as $`x`$ grows, so the average is positive and rising. At $`x = 0`$ it equals 1, so for any positive $`x`$ it exceeds 1.
 
 Where it comes from: premiums are paid at the end of each quarter, a little late, so each one is discounted and survival-weighted a little more than a continuous stream would be. The annuity shrinks, and the fair spread has to rise to make up for it.
 
 ### Step 3: existence, uniqueness and the boundary cases
 
-The par spread is $(1-R)$ times $\lambda$ times $g$. For $R$ below 1 all three are positive when $\lambda$ is, and the last two both rise with $\lambda$. So:
+The par spread is $`(1-R)`$ times $`\lambda`$ times $`g`$. For $`R`$ below 1 all three are positive when $`\lambda`$ is, and the last two both rise with $`\lambda`$. So:
 
-- **Starts at zero.** At $\lambda = 0$ nothing defaults and the fair spread is 0.
+- **Starts at zero.** At $`\lambda = 0`$ nothing defaults and the fair spread is 0.
 - **Rises strictly.** A product of positive rising factors rises.
-- **No ceiling.** Once $r + \lambda \ge 0$, $g$ is at least 1, so the spread is at least $(1-R)\lambda$, which grows without limit.
+- **No ceiling.** Once $`r + \lambda \ge 0`$, $`g`$ is at least 1, so the spread is at least $`(1-R)\lambda`$, which grows without limit.
 - **No gaps.** It is built from exponentials, so it is continuous.
 
-The intermediate value theorem (a continuous curve that starts below a level and ends above it crosses it) gives at least one crossing. Strict rise gives at most one. So every quote above zero has exactly one implied hazard. The boundary cases fall out of the same line: at $R = 1$ the spread is zero everywhere, and above 1 it is negative everywhere. A quote of zero or less meets the curve only at $\lambda = 0$ or nowhere.
+The intermediate value theorem (a continuous curve that starts below a level and ends above it crosses it) gives at least one crossing. Strict rise gives at most one. So every quote above zero has exactly one implied hazard. The boundary cases fall out of the same line: at $`R = 1`$ the spread is zero everywhere, and above 1 it is negative everywhere. A quote of zero or less meets the curve only at $`\lambda = 0`$ or nowhere.
 
 <details>
 <summary>Detailed proof: the sums, the factor, and Newton from the seed</summary>
 
-**The annuity.** With $q = e^{-(r+\lambda)\delta}$, $A = \delta(q + q^2 + \dots + q^n) = \delta\, q\,(1-q^n)/(1-q)$, and $q^n = e^{-(r+\lambda)T}$.
+**The annuity.** With $`q = e^{-(r+\lambda)\delta}`$, $`A = \delta(q + q^2 + \dots + q^n) = \delta\, q\,(1-q^n)/(1-q)`$, and $`q^n = e^{-(r+\lambda)T}`$.
 
-**The protection leg.** $\int_0^T \lambda e^{-(r+\lambda)t}\,dt = \lambda\,(1 - e^{-(r+\lambda)T})/(r+\lambda)$.
+**The protection leg.** $`\int_0^T \lambda e^{-(r+\lambda)t}\,dt = \lambda\,(1 - e^{-(r+\lambda)T})/(r+\lambda)`$.
 
-**The ratio.** $P/A = (1-R)\lambda\,(1-q)/\big((r+\lambda)\,\delta\, q\big)$. Multiply top and bottom by $e^{(r+\lambda)\delta}$: $(1-q)/q = e^{(r+\lambda)\delta} - 1$, which gives $(1-R)\lambda\,(e^x - 1)/x$.
+**The ratio.** $`P/A = (1-R)\lambda\,(1-q)/\big((r+\lambda)\,\delta\, q\big)`$. Multiply top and bottom by $`e^{(r+\lambda)\delta}`$: $`(1-q)/q = e^{(r+\lambda)\delta} - 1`$, which gives $`(1-R)\lambda\,(e^x - 1)/x`$.
 
-**The factor.** $g(x) = \int_0^1 e^{xu}\,du$. Differentiating under the integral, $g'(x) = \int_0^1 u\, e^{xu}\,du > 0$ and $g''(x) = \int_0^1 u^2 e^{xu}\,du > 0$: rising and curving upward for every $x$, negative ones included, so a negative interest rate does not break the rise.
+**The factor.** $`g(x) = \int_0^1 e^{xu}\,du`$. Differentiating under the integral, $`g'(x) = \int_0^1 u\, e^{xu}\,du > 0`$ and $`g''(x) = \int_0^1 u^2 e^{xu}\,du > 0`$: rising and curving upward for every $`x`$, negative ones included, so a negative interest rate does not break the rise.
 
-**Rise and bend of the spread.** With $x = (r+\lambda)\delta$, the slope in $\lambda$ is $(1-R)\big(g + \lambda\delta\, g'\big) > 0$ and the bend is $(1-R)\big(2\delta g' + \lambda\delta^2 g''\big) > 0$ for $\lambda \ge 0$. The curve rises and is convex (it bends upward).
+**Rise and bend of the spread.** With $`x = (r+\lambda)\delta`$, the slope in $`\lambda`$ is $`(1-R)\big(g + \lambda\delta\, g'\big) > 0`$ and the bend is $`(1-R)\big(2\delta g' + \lambda\delta^2 g''\big) > 0`$ for $`\lambda \ge 0`$. The curve rises and is convex (it bends upward).
 
-**The bracket.** $s_{\text{par}}(0) = 0 < s$, and $s_{\text{par}}(\lambda_0) = (1-R)\lambda_0\, g \ge (1-R)\lambda_0 = s$, since $g \ge 1$ when $r \ge 0$. So the answer lies in $[0, \lambda_0]$. With a negative rate, double the top until the spread passes the quote.
+**The bracket.** $`s_{\text{par}}(0) = 0 < s`$, and $`s_{\text{par}}(\lambda_0) = (1-R)\lambda_0\, g \ge (1-R)\lambda_0 = s`$, since $`g \ge 1`$ when $`r \ge 0`$. So the answer lies in $`[0, \lambda_0]`$. With a negative rate, double the top until the spread passes the quote.
 
 **Newton from the seed.** For a rising convex curve, the tangent line lies below the curve. Starting to the right of the crossing, the tangent meets the quote level to the left of where it was but not past the crossing. Each step moves left and never overshoots, so the steps fall steadily onto the answer, and near it the error squares each step.
 
@@ -138,13 +144,13 @@ The intermediate value theorem (a continuous curve that starts below a level and
 
 ### Step 4: the bracket, and two ways to close it
 
-The bracket runs from zero, where the spread is too low, to the triangle's seed $\lambda_0 = s/(1-R)$, where $g \ge 1$ makes the spread at least the quote.
+The bracket runs from zero, where the spread is too low, to the triangle's seed $`\lambda_0 = s/(1-R)`$, where $`g \ge 1`$ makes the spread at least the quote.
 
 **Bisection** tests the middle and keeps the half that still straddles the quote. Each step halves the range: twelve steps cut the five-point range 4,096 times, to 0.00122 percentage points.
 
 **Newton's method** follows the tangent from the seed instead. Because the curve bends upward, it moves left and never overshoots: 5% → 4.938149% → 4.938144%, done in three steps.
 
-A third road needs no calculus. Rearrange the formula as $\lambda = s \,/\, \big((1-R)\,g(x)\big)$, start at the seed, and substitute each answer back in. $g$ barely moves with $\lambda$, so two passes by hand give four figures. The worked numbers below do exactly that.
+A third road needs no calculus. Rearrange the formula as $`\lambda = s \,/\, \big((1-R)\,g(x)\big)`$, start at the seed, and substitute each answer back in. $`g`$ barely moves with $`\lambda`$, so two passes by hand give four figures. The worked numbers below do exactly that.
 
 ---
 
@@ -154,17 +160,17 @@ The promoter: quote 300 bp, recovery 40%, rate 5%, quarterly premiums, five year
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| seed, $\lambda_0 = s/(1-R)$ | $0.03 / 0.60$ | $0.050000$ |
-| one quarter's decay at the seed | $x = (0.05 + 0.05) \times 0.25$ | $0.0250000$ |
-| timing factor | $g = (e^{0.025} - 1)/0.025$ | $1.0126048$ |
-| first pass | $\lambda = 0.05 / 1.0126048$ | $0.049378$ |
-| one quarter's decay again | $x = (0.05 + 0.049378) \times 0.25$ | $0.0248444$ |
-| timing factor again | $g = (e^{0.0248444} - 1)/0.0248444$ | $1.0125257$ |
-| second pass | $\lambda = 0.05 / 1.0125257$ | $0.049381$ |
-| **implied hazard** | stable to six places from here | **$4.94\%$ a year** |
-| five-year default chance | $1 - e^{-0.0493814 \times 5}$ | **$21.88\%$** |
-| risky annuity at the answer | sum of 20 quarters | $3.891532$ |
-| protection leg at the answer | $0.03 \times 3.891532$ | $0.116746$ per dollar |
+| seed, $`\lambda_0 = s/(1-R)`$ | $`0.03 / 0.60`$ | $`0.050000`$ |
+| one quarter's decay at the seed | $`x = (0.05 + 0.05) \times 0.25`$ | $`0.0250000`$ |
+| timing factor | $`g = (e^{0.025} - 1)/0.025`$ | $`1.0126048`$ |
+| first pass | $`\lambda = 0.05 / 1.0126048`$ | $`0.049378`$ |
+| one quarter's decay again | $`x = (0.05 + 0.049378) \times 0.25`$ | $`0.0248444`$ |
+| timing factor again | $`g = (e^{0.0248444} - 1)/0.0248444`$ | $`1.0125257`$ |
+| second pass | $`\lambda = 0.05 / 1.0125257`$ | $`0.049381`$ |
+| **implied hazard** | stable to six places from here | **$`4.94\%`$ a year** |
+| five-year default chance | $`1 - e^{-0.0493814 \times 5}`$ | **$`21.88\%`$** |
+| risky annuity at the answer | sum of 20 quarters | $`3.891532`$ |
+| protection leg at the answer | $`0.03 \times 3.891532`$ | $`0.116746`$ per dollar |
 
 The market is charging for about a one-in-five chance that the promoter defaults within five years. On 10 million dollars, the payout side of the contract is worth 1,167,459.74 dollars today, and so is the premium side at 300 bp. That equality is what "par" means.
 
@@ -172,7 +178,7 @@ The house example on this shelf cross-checks the machinery: a 2% flat hazard giv
 
 ### The bisection, step by step
 
-Bracket $[0, 0.05]$. At each step the midpoint is priced; above 300 bp it becomes the new top, below it the new bottom.
+Bracket $`[0, 0.05]`$. At each step the midpoint is priced; above 300 bp it becomes the new top, below it the new bottom.
 
 | Step | Midpoint (%) | Par spread (bp) | Keep |
 | --- | --- | --- | --- |
@@ -206,7 +212,7 @@ The code prints every one.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer. The hazard is found by **two independent roads and confirmed by a third**. Road 1 prices both legs term by term, the protection integral by Simpson's rule (thin slices under the curve), and bisects from $[0, \lambda_0]$; it never uses the closed form. Road 2 runs Newton on the closed form from the seed, with its slope worked out by hand. Road 3 simulates a million default times at the implied hazard with a hand-written random number generator and averages both legs. It then checks the simulated spread is the 300 bp quote within its sampling error ([Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md)). The checks then sweep the hazard from 0 to 100% on the flat curve and the sloped one to confirm the strict rise, and print every "what breaks" and "try changing" number.
+Nothing imported knows the answer. The hazard is found by **two independent roads and confirmed by a third**. Road 1 prices both legs term by term, the protection integral by Simpson's rule (thin slices under the curve), and bisects from $`[0, \lambda_0]`$; it never uses the closed form. Road 2 runs Newton on the closed form from the seed, with its slope worked out by hand. Road 3 simulates a million default times at the implied hazard with a hand-written random number generator and averages both legs. It then checks the simulated spread is the 300 bp quote within its sampling error ([Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md)). The checks then sweep the hazard from 0 to 100% on the flat curve and the sloped one to confirm the strict rise, and print every "what breaks" and "try changing" number.
 
 ### Python
 
@@ -597,9 +603,9 @@ The two outputs are identical line for line, simulation included, since both gen
 
 Lean proves the closed form, the one-answer guarantee and the bracket, under the conditions in When it holds.
 
-- Take a flat hazard and a flat rate. Then the par spread is $(1-R)\,\lambda\, g(x)$, and the maturity $T$ drops out.
+- Take a flat hazard and a flat rate. Then the par spread is $`(1-R)\,\lambda\, g(x)`$, and the maturity $`T`$ drops out.
 - Suppose recovery is below 100% and the quote is positive, at any flat rate. Then exactly one hazard, zero or above, makes the par spread equal the quote.
-- Suppose also that the rate is at or above zero. Then that hazard is at most the triangle's seed, $s/(1-R)$.
+- Suppose also that the rate is at or above zero. Then that hazard is at most the triangle's seed, $`s/(1-R)`$.
 - The small sums are checked too: 75,000 dollars a quarter, the 5% seed, 4,096 for twelve halvings, and 20 premium dates.
 
 The actual numbers, the sloped curve and Newton's steps are left to the Python and Rust checks.
@@ -865,7 +871,7 @@ example : (5 : ℕ) * 4 = 20 := by norm_num
 > - **The spread is not a default probability.** 300 bp is not a 3% annual chance of default; it is 60% of about 5%. Read it directly and the five-year chance comes out at 13.93% instead of 21.88%.
 > - **The triangle is a seed, not an answer.** It assumes continuous premiums. Kept as the answer it reprices the contract at 303.78 bp, nearly 4 bp off a quote that trades in fractions of a basis point.
 > - **Recovery is an input, not an output.** One quote cannot fix both hazard and recovery. State the recovery used next to every implied hazard.
-> - **A search without a bracket can wander.** Newton from a poor start on a less well-behaved curve can overshoot into negative hazards. The bracket $[0, s/(1-R)]$ always holds the answer here, so start there.
+> - **A search without a bracket can wander.** Newton from a poor start on a less well-behaved curve can overshoot into negative hazards. The bracket $`[0, s/(1-R)]`$ always holds the answer here, so start there.
 
 ---
 

@@ -34,17 +34,21 @@ Orange line: Wilks' prediction, the chi-square law with one degree of freedom. T
 
 ## The formula
 
-Notation first. A hat marks an estimate: $\hat p_1 = 0.45$ is the observed recovery rate on the drug. The likelihood is written $L$ and its natural logarithm $\ell = \ln L$; logs turn the product of many patients' chances into a sum. A chi-square law with $m$ degrees of freedom, written $\chi^2_m$, is the law of a sum of $m$ squared independent standard bell-curve variables ([Chi-square tests](06-chi-square-tests.md)).
+Notation first. A hat marks an estimate: $`\hat p_1 = 0.45`$ is the observed recovery rate on the drug. The likelihood is written $`L`$ and its natural logarithm $`\ell = \ln L`$; logs turn the product of many patients' chances into a sum. A chi-square law with $`m`$ degrees of freedom, written $`\chi^2_m`$, is the law of a sum of $`m`$ squared independent standard bell-curve variables ([Chi-square tests](06-chi-square-tests.md)).
 
 The likelihood ratio and the test statistic:
 
-$$\Lambda = \frac{\text{best likelihood the smaller model allows}}{\text{best likelihood the bigger model allows}}, \qquad W = -2\ln\Lambda = 2\,\big[\ell_{\text{big}} - \ell_{\text{small}}\big]$$
+```math
+\Lambda = \frac{\text{best likelihood the smaller model allows}}{\text{best likelihood the bigger model allows}}, \qquad W = -2\ln\Lambda = 2\,\big[\ell_{\text{big}} - \ell_{\text{small}}\big]
+```
 
 **Read it aloud:** W is twice the log-likelihood the bigger model gains over the smaller one, each fitted as well as it can be.
 
 For two arms with a recovered and a not-recovered cell each, the same number is a sum over the four cells:
 
-$$W = 2\sum_{\text{4 cells}} O \ln\frac{O}{E}$$
+```math
+W = 2\sum_{\text{4 cells}} O \ln\frac{O}{E}
+```
 
 **Read it aloud:** in each cell, the count seen times the log of seen over expected, where "expected" is what the one-rate model predicts; add the four and double.
 
@@ -52,37 +56,41 @@ This four-cell form is often called G, and the test the G-test.
 
 Wilks' rule:
 
-$$W \;\approx\; \chi^2_m \ \text{ when the smaller model is true}, \qquad m = (\text{free parameters, bigger}) - (\text{free parameters, smaller})$$
+```math
+W \;\approx\; \chi^2_m \ \text{ when the smaller model is true}, \qquad m = (\text{free parameters, bigger}) - (\text{free parameters, smaller})
+```
 
 **Read it aloud:** if the smaller model is true, the gain behaves like a chi-square variable whose degrees of freedom count the parameters the smaller model pins down.
 
-Here $m = 2 - 1 = 1$. Reject the smaller model at level $\alpha$ when $W \ge c$, where $c$ is the point the $\chi^2_m$ law exceeds with chance $\alpha$: for $m = 1$ and $\alpha = 0.05$, $c = 3.8415$.
+Here $`m = 2 - 1 = 1`$. Reject the smaller model at level $`\alpha`$ when $`W \ge c`$, where $`c`$ is the point the $`\chi^2_m`$ law exceeds with chance $`\alpha`$: for $`m = 1`$ and $`\alpha = 0.05`$, $`c = 3.8415`$.
 
 The Neyman–Pearson lemma, for two **simple** hypotheses (each fixes every parameter, so each is one exact law):
 
-$$\text{reject when } \frac{L_1(\text{data})}{L_0(\text{data})} \ge c_{\text{NP}}$$
+```math
+\text{reject when } \frac{L_1(\text{data})}{L_0(\text{data})} \ge c_{\text{NP}}
+```
 
-**Read it aloud:** reject the null when the data are at least $c_{\text{NP}}$ times as likely under the alternative as under the null; no other rule with the same or smaller false-alarm rate catches the alternative more often.
+**Read it aloud:** reject the null when the data are at least $`c_{\text{NP}}`$ times as likely under the alternative as under the null; no other rule with the same or smaller false-alarm rate catches the alternative more often.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_1$, $n_1$ | recoveries and patients on the drug | 45, 100 | more recoveries: W grows |
-| $x_2$, $n_2$ | recoveries and patients on placebo | 35, 100 | nearer 45: W shrinks toward 0 |
-| $p_1$, $p_2$ | the true recovery rates on drug and placebo, unknown | unknown | — |
-| $p_0$ | the one shared rate of the smaller model | unknown | — |
-| $\hat p_1$, $\hat p_2$, $\hat p_0$ | the best-fitting rates: observed fractions | 0.45, 0.35, 0.40 | — |
-| $L$, $\ell$, $L_0$, $L_1$ | likelihood, its log, and the likelihoods under a simple null and alternative | $\ell$ = −133.558545 (two rates), −134.602333 (one rate) | — |
-| $\Lambda$ | best likelihood of the smaller model over that of the bigger; between 0 and 1 | 0.352118 | nearer 1: the extra parameter bought little |
-| $W$ | the likelihood ratio statistic, −2 ln Λ | 2.087576 | the smaller model looks worse |
-| $O$, $E$, $D$ | a cell's count seen, the count the one-rate model expects, and the gap O − E | 45, 40, 5 in the first cell | larger gaps: W grows roughly as their squares |
-| $m$, $\chi^2_m$ | parameters given up, and the chi-square law with that many degrees of freedom | 1 | a larger m needs a larger W to reject |
-| $c$, $\alpha$ | the cutoff, and the false-alarm rate it allows | 3.8415, 0.05 | smaller α: larger c, fewer rejections |
-| $z$ | the two-proportion z statistic, the gap in rates over its spread under the null | 1.443376 | its square is Pearson's $X^2$ (written Q on [Chi-square tests](06-chi-square-tests.md)), close to W |
-| $c_{\text{NP}}$ | the Neyman–Pearson threshold: how many times likelier the data must be under the alternative before the null is rejected | 5.4893 at n = 100 | fewer rejections, less power |
+| $`x_1`$, $`n_1`$ | recoveries and patients on the drug | 45, 100 | more recoveries: W grows |
+| $`x_2`$, $`n_2`$ | recoveries and patients on placebo | 35, 100 | nearer 45: W shrinks toward 0 |
+| $`p_1`$, $`p_2`$ | the true recovery rates on drug and placebo, unknown | unknown | — |
+| $`p_0`$ | the one shared rate of the smaller model | unknown | — |
+| $`\hat p_1`$, $`\hat p_2`$, $`\hat p_0`$ | the best-fitting rates: observed fractions | 0.45, 0.35, 0.40 | — |
+| $`L`$, $`\ell`$, $`L_0`$, $`L_1`$ | likelihood, its log, and the likelihoods under a simple null and alternative | $`\ell`$ = −133.558545 (two rates), −134.602333 (one rate) | — |
+| $`\Lambda`$ | best likelihood of the smaller model over that of the bigger; between 0 and 1 | 0.352118 | nearer 1: the extra parameter bought little |
+| $`W`$ | the likelihood ratio statistic, −2 ln Λ | 2.087576 | the smaller model looks worse |
+| $`O`$, $`E`$, $`D`$ | a cell's count seen, the count the one-rate model expects, and the gap O − E | 45, 40, 5 in the first cell | larger gaps: W grows roughly as their squares |
+| $`m`$, $`\chi^2_m`$ | parameters given up, and the chi-square law with that many degrees of freedom | 1 | a larger m needs a larger W to reject |
+| $`c`$, $`\alpha`$ | the cutoff, and the false-alarm rate it allows | 3.8415, 0.05 | smaller α: larger c, fewer rejections |
+| $`z`$ | the two-proportion z statistic, the gap in rates over its spread under the null | 1.443376 | its square is Pearson's $`X^2`$ (written Q on [Chi-square tests](06-chi-square-tests.md)), close to W |
+| $`c_{\text{NP}}`$ | the Neyman–Pearson threshold: how many times likelier the data must be under the alternative before the null is rejected | 5.4893 at n = 100 | fewer rejections, less power |
 
 ### When it holds
 
-- **Nested models.** The smaller model is the bigger one with some parameters pinned, here $p_1 = p_2$. Two unrelated models, say a binomial against a Poisson, have no chi-square rule, and their W can even come out negative.
+- **Nested models.** The smaller model is the bigger one with some parameters pinned, here $`p_1 = p_2`$. Two unrelated models, say a binomial against a Poisson, have no chi-square rule, and their W can even come out negative.
 - **The null value inside the parameter range, not on its edge.** If the bigger model forbids the drug from doing worse than placebo, "no difference" sits on the edge. Then W is 0 about half the time, and the 3.8415 cutoff gives false alarms in 0.0257 of trials, not 0.05.
 - **A smooth model whose possible outcomes do not depend on the parameter, and different parameter values give different laws.** The proof expands the log-likelihood as a parabola; a jump, a moving range of outcomes, or two parameter values giving the same law breaks that step.
 - **Independent patients, and enough of them.** Wilks' rule is a large-sample rule. At 100 per arm and a shared rate of 0.40, the exact false-alarm rate of the 3.8415 cutoff is 0.0514, close to the promised 0.05.
@@ -94,82 +102,93 @@ $$\text{reject when } \frac{L_1(\text{data})}{L_0(\text{data})} \ge c_{\text{NP}
 
 ### Step 0: a bigger model always wins on fit, so measure the win against chance
 
-The bigger model contains the smaller one, so its best fit is at least as good: $W \ge 0$ on every data set. Even when the drug does nothing, the drug arm's own rate chases the noise in its 100 patients and gains a little. Wilks' rule says how much: about 1 on average per pinned parameter, since a $\chi^2_1$ variable averages 1. For this trial the exact average gain under the null is 1.0081. The test asks whether the observed gain is large compared with that.
+The bigger model contains the smaller one, so its best fit is at least as good: $`W \ge 0`$ on every data set. Even when the drug does nothing, the drug arm's own rate chases the noise in its 100 patients and gains a little. Wilks' rule says how much: about 1 on average per pinned parameter, since a $`\chi^2_1`$ variable averages 1. For this trial the exact average gain under the null is 1.0081. The test asks whether the observed gain is large compared with that.
 
 ### Step 1: fit each model and take the log of the ratio
 
-Each patient recovers or not, so an arm with x recoveries in n patients has log-likelihood $x \ln p + (n - x)\ln(1 - p)$, dropping the count of orderings, which is the same in both models and cancels from the ratio. [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md) shows the best rate is the observed fraction. The two-rate model takes 0.45 and 0.35; the one-rate model takes 80/200 = 0.40. The code finds all three again by golden-section search, a method that narrows an interval around the peak without using the formula.
+Each patient recovers or not, so an arm with x recoveries in n patients has log-likelihood $`x \ln p + (n - x)\ln(1 - p)`$, dropping the count of orderings, which is the same in both models and cancels from the ratio. [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md) shows the best rate is the observed fraction. The two-rate model takes 0.45 and 0.35; the one-rate model takes 80/200 = 0.40. The code finds all three again by golden-section search, a method that narrows an interval around the peak without using the formula.
 
-Best log-likelihoods: −133.558545 with two rates, −134.602333 with one. The gain is 1.043788, so $W = 2.087576$.
+Best log-likelihoods: −133.558545 with two rates, −134.602333 with one. The gain is 1.043788, so $`W = 2.087576`$.
 
-The four-cell form follows cell by cell. In the drug arm's recovered cell the gain is $45(\ln 0.45 - \ln 0.40) = 45\ln(45/40)$, and 40 is exactly $E$, the count the one-rate model expects: 100 × 0.40. The other three cells go the same way.
+The four-cell form follows cell by cell. In the drug arm's recovered cell the gain is $`45(\ln 0.45 - \ln 0.40) = 45\ln(45/40)`$, and 40 is exactly $`E`$, the count the one-rate model expects: 100 × 0.40. The other three cells go the same way.
 
 ### Step 2: near the smaller model, the gain is a sum of squares
 
-Write each count as expected plus gap, $O = E + D$. Here every gap is 5 in size: 45 − 40, 55 − 60, 35 − 40, 65 − 60. The logarithm near 1 is almost a parabola: $\ln(1 + u) = u - u^2/2 + u^3/3 - \dots$ With $u = D/E$,
+Write each count as expected plus gap, $`O = E + D`$. Here every gap is 5 in size: 45 − 40, 55 − 60, 35 − 40, 65 − 60. The logarithm near 1 is almost a parabola: $`\ln(1 + u) = u - u^2/2 + u^3/3 - \dots`$ With $`u = D/E`$,
 
-$$O\ln\frac{O}{E} = (E + D)\Big(\frac{D}{E} - \frac{D^2}{2E^2} + \dots\Big) = D + \frac{D^2}{2E} + (\text{terms in } D^3/E^2).$$
+```math
+O\ln\frac{O}{E} = (E + D)\Big(\frac{D}{E} - \frac{D^2}{2E^2} + \dots\Big) = D + \frac{D^2}{2E} + (\text{terms in } D^3/E^2).
+```
 
-In each arm the two gaps cancel, +5 and −5, because both models put exactly 100 patients in that arm. So the $D$ terms add to zero and, after doubling,
+In each arm the two gaps cancel, +5 and −5, because both models put exactly 100 patients in that arm. So the $`D`$ terms add to zero and, after doubling,
 
-$$W \approx \sum_{\text{4 cells}} \frac{D^2}{E} = 25\Big(\frac1{40} + \frac1{60} + \frac1{40} + \frac1{60}\Big) = 2.083333.$$
+```math
+W \approx \sum_{\text{4 cells}} \frac{D^2}{E} = 25\Big(\frac1{40} + \frac1{60} + \frac1{40} + \frac1{60}\Big) = 2.083333.
+```
 
-That is Pearson's $X^2$, the statistic of [Chi-square tests](06-chi-square-tests.md). It differs from W = 2.087576 by 0.004243, the higher-order terms. With equal arms the cubic terms cancel, so this is mostly the quartic term, in $D^4/E^3$. Pearson's test is the likelihood ratio test with the logarithm replaced by its parabola.
+That is Pearson's $`X^2`$, the statistic of [Chi-square tests](06-chi-square-tests.md). It differs from W = 2.087576 by 0.004243, the higher-order terms. With equal arms the cubic terms cancel, so this is mostly the quartic term, in $`D^4/E^3`$. Pearson's test is the likelihood ratio test with the logarithm replaced by its parabola.
 
 ### Step 3: the sum of squares is one squared bell-curve variable
 
-With two arms, the four squared gaps are one number seen four times, so $X^2$ collapses to a single square: $X^2 = z^2$, where
+With two arms, the four squared gaps are one number seen four times, so $`X^2`$ collapses to a single square: $`X^2 = z^2`$, where
 
-$$z = \frac{\hat p_1 - \hat p_2}{\sqrt{\hat p_0(1 - \hat p_0)\,(1/n_1 + 1/n_2)}} = \frac{0.10}{\sqrt{0.24 \times 0.02}} = 1.443376.$$
+```math
+z = \frac{\hat p_1 - \hat p_2}{\sqrt{\hat p_0(1 - \hat p_0)\,(1/n_1 + 1/n_2)}} = \frac{0.10}{\sqrt{0.24 \times 0.02}} = 1.443376.
+```
 
-The top is the gap between the two observed rates. The bottom is that gap's standard deviation when both arms share one rate. When the drug does nothing, the gap averages 0, and by the central limit theorem it is close to a bell curve ([Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). So $z$ is close to a standard normal, its square is close to $\chi^2_1$, and W, which differs from $z^2$ only by small higher-order terms, is close to $\chi^2_1$ too. That is Wilks' rule for this trial, with $m = 1$.
+The top is the gap between the two observed rates. The bottom is that gap's standard deviation when both arms share one rate. When the drug does nothing, the gap averages 0, and by the central limit theorem it is close to a bell curve ([Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). So $`z`$ is close to a standard normal, its square is close to $`\chi^2_1`$, and W, which differs from $`z^2`$ only by small higher-order terms, is close to $`\chi^2_1`$ too. That is Wilks' rule for this trial, with $`m = 1`$.
 
 <details>
 <summary>The algebra behind $X^2 = z^2$</summary>
 
-Write the shared rate as $\hat p_0$ and its complement as $1 - \hat p_0$. The drug arm's recovered gap is $n_1(\hat p_1 - \hat p_0)$. Since $\hat p_0 = (n_1\hat p_1 + n_2\hat p_2)/(n_1 + n_2)$, that gap is $d = n_1 n_2(\hat p_1 - \hat p_2)/(n_1 + n_2)$, and the other three gaps are $\pm d$. The four expected counts are $n_1\hat p_0$, $n_1(1 - \hat p_0)$, $n_2\hat p_0$, $n_2(1 - \hat p_0)$, whose reciprocals add to $(1/n_1 + 1/n_2)/\big(\hat p_0(1 - \hat p_0)\big)$. Multiply by $d^2$:
-$$X^2 = \frac{n_1 n_2(\hat p_1 - \hat p_2)^2}{(n_1 + n_2)\,\hat p_0(1 - \hat p_0)} = \frac{(\hat p_1 - \hat p_2)^2}{\hat p_0(1 - \hat p_0)(1/n_1 + 1/n_2)} = z^2.$$
+Write the shared rate as $`\hat p_0`$ and its complement as $`1 - \hat p_0`$. The drug arm's recovered gap is $`n_1(\hat p_1 - \hat p_0)`$. Since $`\hat p_0 = (n_1\hat p_1 + n_2\hat p_2)/(n_1 + n_2)`$, that gap is $`d = n_1 n_2(\hat p_1 - \hat p_2)/(n_1 + n_2)`$, and the other three gaps are $`\pm d`$. The four expected counts are $`n_1\hat p_0`$, $`n_1(1 - \hat p_0)`$, $`n_2\hat p_0`$, $`n_2(1 - \hat p_0)`$, whose reciprocals add to $`(1/n_1 + 1/n_2)/\big(\hat p_0(1 - \hat p_0)\big)`$. Multiply by $`d^2`$:
+
+$`\displaystyle X^2 = \frac{n_1 n_2(\hat p_1 - \hat p_2)^2}{(n_1 + n_2)\,\hat p_0(1 - \hat p_0)} = \frac{(\hat p_1 - \hat p_2)^2}{\hat p_0(1 - \hat p_0)(1/n_1 + 1/n_2)} = z^2.`$
 
 </details>
 
 ### Step 4: in general, each pinned parameter adds one squared bell curve
 
-**Wilks' theorem.** Suppose the observations are independent draws from a smooth model with k free parameters, different parameter values give different laws, and the set of possible outcomes does not depend on the parameters. The smaller model pins $m$ of them, and the true values lie strictly inside the parameter range. Then, as the number of observations grows, the chance that $W \le w$ tends to the chance that a $\chi^2_m$ variable is at most w, for every w.
+**Wilks' theorem.** Suppose the observations are independent draws from a smooth model with k free parameters, different parameter values give different laws, and the set of possible outcomes does not depend on the parameters. The smaller model pins $`m`$ of them, and the true values lie strictly inside the parameter range. Then, as the number of observations grows, the chance that $`W \le w`$ tends to the chance that a $`\chi^2_m`$ variable is at most w, for every w.
 
-The idea is Steps 2 and 3 in any model. Near its peak the log-likelihood is a parabola. The fitted parameters sit where the bumps of random noise put the peak. Pinning a parameter moves the fit from the peak, and the log-likelihood lost is a squared distance, measured in units of the noise. Each pinned direction contributes one squared, roughly standard normal distance. The folded proof does this for one parameter; the $m$-parameter version runs the same steps with a matrix in place of a number and is proved in Wilks' 1938 paper (Sources).
+The idea is Steps 2 and 3 in any model. Near its peak the log-likelihood is a parabola. The fitted parameters sit where the bumps of random noise put the peak. Pinning a parameter moves the fit from the peak, and the log-likelihood lost is a squared distance, measured in units of the noise. Each pinned direction contributes one squared, roughly standard normal distance. The folded proof does this for one parameter; the $`m`$-parameter version runs the same steps with a matrix in place of a number and is proved in Wilks' 1938 paper (Sources).
 
 <details>
 <summary>Detailed proof: Wilks' rule for one parameter</summary>
 
-Take n independent observations from a model with one parameter; call it p as in the trial, though nothing below uses the binomial form. The null pins $p = p_0$, strictly inside the parameter range. Write $\ell(p)$ for the log-likelihood of all n observations and $\hat p$ for its maximiser.
+Take n independent observations from a model with one parameter; call it p as in the trial, though nothing below uses the binomial form. The null pins $`p = p_0`$, strictly inside the parameter range. Write $`\ell(p)`$ for the log-likelihood of all n observations and $`\hat p`$ for its maximiser.
 
-**The score is a sum of independent pieces.** The slope $\ell'(p_0)$ is a sum of n independent terms, one per observation, each the slope of that observation's log-chance. Because the set of possible outcomes does not move with p, each term averages 0 and has variance $I(p_0)$, assumed positive: the Fisher information per observation ([Fisher information](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)). By the central limit theorem, $\ell'(p_0)/\sqrt{nI(p_0)}$ is close to a standard normal $Z$.
+**The score is a sum of independent pieces.** The slope $`\ell'(p_0)`$ is a sum of n independent terms, one per observation, each the slope of that observation's log-chance. Because the set of possible outcomes does not move with p, each term averages 0 and has variance $`I(p_0)`$, assumed positive: the Fisher information per observation ([Fisher information](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)). By the central limit theorem, $`\ell'(p_0)/\sqrt{nI(p_0)}`$ is close to a standard normal $`Z`$.
 
-**The curvature settles.** The second derivative $\ell''(p)/n$ is an average of n independent terms. By the law of large numbers, near $p_0$ it is close to its expectation, which at $p_0$ equals $-I(p_0)$; smoothness keeps it close on a small interval around $p_0$.
+**The curvature settles.** The second derivative $`\ell''(p)/n`$ is an average of n independent terms. By the law of large numbers, near $`p_0`$ it is close to its expectation, which at $`p_0`$ equals $`-I(p_0)`$; smoothness keeps it close on a small interval around $`p_0`$.
 
-**The fit lands near the truth.** Because different values of p give different laws, the average log-likelihood is highest at $p_0$ in the long run, so $\hat p$ lies near $p_0$ for large n. Because $p_0$ is inside the range, $\hat p$ is an interior peak with $\ell'(\hat p) = 0$.
+**The fit lands near the truth.** Because different values of p give different laws, the average log-likelihood is highest at $`p_0`$ in the long run, so $`\hat p`$ lies near $`p_0`$ for large n. Because $`p_0`$ is inside the range, $`\hat p`$ is an interior peak with $`\ell'(\hat p) = 0`$.
 
-**Expand twice.** Taylor's theorem with the mean-value remainder gives $0 = \ell'(\hat p) = \ell'(p_0) + (\hat p - p_0)\,\ell''(a)$ for some point a between $p_0$ and $\hat p$. So $\hat p - p_0 \approx \ell'(p_0)/\big(nI(p_0)\big)$. Expanding around the peak, where the slope is 0, gives $\ell(p_0) = \ell(\hat p) + \tfrac12(p_0 - \hat p)^2\,\ell''(b)$ for some point b between them. Hence
-$$W = 2\big[\ell(\hat p) - \ell(p_0)\big] = -(\hat p - p_0)^2\,\ell''(b) \approx nI(p_0)(\hat p - p_0)^2 \approx \frac{\ell'(p_0)^2}{nI(p_0)} \approx Z^2.$$
-The errors in each "≈" shrink to 0 as n grows, so W's law tends to that of $Z^2$, which is $\chi^2_1$.
+**Expand twice.** Taylor's theorem with the mean-value remainder gives $`0 = \ell'(\hat p) = \ell'(p_0) + (\hat p - p_0)\,\ell''(a)`$ for some point a between $`p_0`$ and $`\hat p`$. So $`\hat p - p_0 \approx \ell'(p_0)/\big(nI(p_0)\big)`$. Expanding around the peak, where the slope is 0, gives $`\ell(p_0) = \ell(\hat p) + \tfrac12(p_0 - \hat p)^2\,\ell''(b)`$ for some point b between them. Hence
 
-Each hypothesis was used once: fixed outcome set for the score's zero average, identifiability for the fit landing near $p_0$, an interior $p_0$ for the zero slope at $\hat p$, smoothness for both expansions, positive information for dividing by $I(p_0)$. The What breaks section shows the interior condition failing.
+$`\displaystyle W = 2\big[\ell(\hat p) - \ell(p_0)\big] = -(\hat p - p_0)^2\,\ell''(b) \approx nI(p_0)(\hat p - p_0)^2 \approx \frac{\ell'(p_0)^2}{nI(p_0)} \approx Z^2.`$
+
+The errors in each "≈" shrink to 0 as n grows, so W's law tends to that of $`Z^2`$, which is $`\chi^2_1`$.
+
+Each hypothesis was used once: fixed outcome set for the score's zero average, identifiability for the fit landing near $`p_0`$, an interior $`p_0`$ for the zero slope at $`\hat p`$, smoothness for both expansions, positive information for dividing by $`I(p_0)`$. The What breaks section shows the interior condition failing.
 
 </details>
 
 ### Step 5: for two exact laws, the likelihood ratio is the best test there is
 
-Now drop the unknowns. Suppose the placebo's rate is known to be 0.35 and the drug's makers claim exactly 0.45. Look only at the drug arm's count out of 100. Both hypotheses are simple: each is one exact binomial law. The ratio of their chances for a count $x$ is $(0.45/0.35)^x(0.55/0.65)^{100 - x}$, which rises with $x$. So "reject when the ratio is at least $c_{\text{NP}}$" means "reject when the count is at least some cutoff". The lowest cutoff whose false-alarm rate stays at or under 5% is 44 recoveries: false alarms 0.0389, and a trial of a drug that truly works at 0.45 is caught with chance 0.6172, the **power**. The ratio at 44 is 5.4893.
+Now drop the unknowns. Suppose the placebo's rate is known to be 0.35 and the drug's makers claim exactly 0.45. Look only at the drug arm's count out of 100. Both hypotheses are simple: each is one exact binomial law. The ratio of their chances for a count $`x`$ is $`(0.45/0.35)^x(0.55/0.65)^{100 - x}`$, which rises with $`x`$. So "reject when the ratio is at least $`c_{\text{NP}}`$" means "reject when the count is at least some cutoff". The lowest cutoff whose false-alarm rate stays at or under 5% is 44 recoveries: false alarms 0.0389, and a trial of a drug that truly works at 0.45 is caught with chance 0.6172, the **power**. The ratio at 44 is 5.4893.
 
-**Neyman–Pearson lemma.** Let $R^*$ be the set of outcomes where $L_1 \ge c_{\text{NP}}\,L_0$. Any other rejection set R whose false-alarm chance is no larger than that of $R^*$ has power no larger.
+**Neyman–Pearson lemma.** Let $`R^*`$ be the set of outcomes where $`L_1 \ge c_{\text{NP}}\,L_0`$. Any other rejection set R whose false-alarm chance is no larger than that of $`R^*`$ has power no larger.
 
 *Proof.* Split the power difference over outcomes in one set and not the other:
-$$P_1(R^*) - P_1(R) = \sum_{R^*\setminus R} L_1 - \sum_{R\setminus R^*} L_1 \;\ge\; c_{\text{NP}}\sum_{R^*\setminus R} L_0 - c_{\text{NP}}\sum_{R\setminus R^*} L_0 = c_{\text{NP}}\,\big[P_0(R^*) - P_0(R)\big] \;\ge\; 0.$$
-The first inequality holds because inside $R^*$ each outcome has $L_1 \ge c_{\text{NP}}L_0$, and outside it $L_1 < c_{\text{NP}}L_0$. The last holds because R spends no more false-alarm chance than $R^*$. So $R^*$ spends its false-alarm allowance on the outcomes that buy the most power per unit spent.
+```math
+P_1(R^*) - P_1(R) = \sum_{R^*\setminus R} L_1 - \sum_{R\setminus R^*} L_1 \;\ge\; c_{\text{NP}}\sum_{R^*\setminus R} L_0 - c_{\text{NP}}\sum_{R\setminus R^*} L_0 = c_{\text{NP}}\,\big[P_0(R^*) - P_0(R)\big] \;\ge\; 0.
+```
+The first inequality holds because inside $`R^*`$ each outcome has $`L_1 \ge c_{\text{NP}}L_0`$, and outside it $`L_1 < c_{\text{NP}}L_0`$. The last holds because R spends no more false-alarm chance than $`R^*`$. So $`R^*`$ spends its false-alarm allowance on the outcomes that buy the most power per unit spent.
 
 The code checks this by brute force on a smaller trial of 10 patients: the likelihood ratio rule "reject at 7 or more" has false alarms 0.0260 and power 0.1020, and the best power among all 2,048 possible rejection sets with false alarms at most 0.0260 is also 0.1020.
 
-The likelihood ratio test carries this ratio over to hypotheses with free parameters by replacing each likelihood with its best fit. The optimality does not carry over in general; the calibration, Wilks' rule, does. Two other routes agree with it to first order: Pearson's $X^2$ (Step 2) and the two-proportion z test of [Hypothesis tests](03-hypothesis-tests-and-p-values.md), its square root (Step 3).
+The likelihood ratio test carries this ratio over to hypotheses with free parameters by replacing each likelihood with its best fit. The optimality does not carry over in general; the calibration, Wilks' rule, does. Two other routes agree with it to first order: Pearson's $`X^2`$ (Step 2) and the two-proportion z test of [Hypothesis tests](03-hypothesis-tests-and-p-values.md), its square root (Step 3).
 
 ---
 
@@ -179,20 +198,20 @@ The drug trial: 45 of 100 recover on the drug, 35 of 100 on placebo.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| shared rate $\hat p_0$ | 80 / 200 | 0.40 |
-| expected counts $E$ | 100 × 0.40, 100 × 0.60, twice | 40, 60, 40, 60 |
+| shared rate $`\hat p_0`$ | 80 / 200 | 0.40 |
+| expected counts $`E`$ | 100 × 0.40, 100 × 0.60, twice | 40, 60, 40, 60 |
 | drug, recovered | 45 × ln(45/40) = 45 × 0.117783 | 5.300237 |
 | drug, not recovered | 55 × ln(55/60) = 55 × (−0.087011) | −4.785626 |
 | placebo, recovered | 35 × ln(35/40) = 35 × (−0.133531) | −4.673599 |
 | placebo, not recovered | 65 × ln(65/60) = 65 × 0.080043 | 5.202776 |
 | log-likelihood gained | sum of the four | 1.043788 |
-| $W$ | 2 × 1.043788 | 2.087576 |
-| $\Lambda$ | e^(−1.043788) | 0.352118 |
-| degrees of freedom $m$ | 2 parameters − 1 | 1 |
-| cutoff $c$ at 5% | bisection on the $\chi^2_1$ tail | 3.8415 |
-| **p-value** | $P(\chi^2_1 \ge 2.087576) = 2\big(1 - \Phi(\sqrt{2.087576})\big)$ | **0.1485** |
+| $`W`$ | 2 × 1.043788 | 2.087576 |
+| $`\Lambda`$ | e^(−1.043788) | 0.352118 |
+| degrees of freedom $`m`$ | 2 parameters − 1 | 1 |
+| cutoff $`c`$ at 5% | bisection on the $`\chi^2_1`$ tail | 3.8415 |
+| **p-value** | $`P(\chi^2_1 \ge 2.087576) = 2\big(1 - \Phi(\sqrt{2.087576})\big)`$ | **0.1485** |
 
-Here Φ is the standard bell curve's area to the left of a point, and a $\chi^2_1$ variable exceeds w exactly when a standard normal lands more than $\sqrt w$ from 0, on either side.
+Here Φ is the standard bell curve's area to the left of a point, and a $`\chi^2_1`$ variable exceeds w exactly when a standard normal lands more than $`\sqrt w`$ from 0, on either side.
 
 Read back in the trial: if the drug did nothing, a gain in fit this large would appear in about 1 trial in 7. The data do not rule out "no difference". They do not show it either: the observed difference is 0.10, with a standard error of 0.0689, so a real benefit of that size is still quite possible. The exact p-value for this trial, summed over all pairs of counts at the shared rate 0.40, is 0.1519; 20,000 simulated trials give 0.1541 with standard error 0.0026.
 
@@ -200,12 +219,12 @@ Read back in the trial: if the drug did nothing, a gain in fit this large would 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the 2: compare 1.043788 with $\chi^2_1$ | p = 0.3069 | The chi-square rule is for twice the log-likelihood gained |
+| Drop the 2: compare 1.043788 with $`\chi^2_1`$ | p = 0.3069 | The chi-square rule is for twice the log-likelihood gained |
 | Degrees of freedom = 2, the bigger model's parameter count | p = 0.3521 | m is the difference in parameter counts, 2 − 1 |
 | Null on the edge: the bigger model forbids the drug from doing worse, cutoff still 3.8415 | false alarms 0.0257, not 0.05 | Whenever placebo does better, the constrained fit is the shared rate and W = 0; that is about half of all null trials |
 | Two-sided rule "count ≤ 25 or ≥ 45" for the simple test of 0.35 against 0.45 | false alarms 0.0457, power 0.5387 | Spends false alarms on low counts, which the alternative makes rarer; the Neyman–Pearson rule gets power 0.6172 on 0.0389 |
 
-The third row is the interior condition failing. Its law is not $\chi^2_1$ but an even mix of "exactly 0" and $\chi^2_1$, so every tail chance is halved:
+The third row is the interior condition failing. Its law is not $`\chi^2_1`$ but an even mix of "exactly 0" and $`\chi^2_1`$, so every tail chance is halved:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -218,7 +237,7 @@ xychart-beta
     line [25.80, 16.74, 10.99, 8.51, 5.83, 4.25, 3.15, 2.43, 1.81, 1.29, 0.94, 0.74]
 ```
 
-Orange line: the $\chi^2_1$ tail that Wilks' rule would wrongly promise. Teal line: half of it, the rule Herman Chernoff proved for a null on the edge. Dark line: the exact tail of the one-sided model's W for this trial, which follows the teal line. The fix is to read the p-value from the halved law, or equivalently to use the cutoff where the $\chi^2_1$ tail is 0.10.
+Orange line: the $`\chi^2_1`$ tail that Wilks' rule would wrongly promise. Teal line: half of it, the rule Herman Chernoff proved for a null on the edge. Dark line: the exact tail of the one-sided model's W for this trial, which follows the teal line. The fix is to read the p-value from the halved law, or equivalently to use the cutoff where the $`\chi^2_1`$ tail is 0.10.
 
 ---
 
@@ -603,12 +622,12 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the Neyman–Pearson lemma for finitely many outcomes, and two facts about W and $X^2$ for every two-arm trial.
+Lean proves the Neyman–Pearson lemma for finitely many outcomes, and two facts about W and $`X^2`$ for every two-arm trial.
 
-- Take two simple hypotheses on finitely many outcomes, and a threshold $c_{\text{NP}}$ of 0 or more. Then any rejection set with no more false-alarm chance than $R^*$ has no more power.
+- Take two simple hypotheses on finitely many outcomes, and a threshold $`c_{\text{NP}}`$ of 0 or more. Then any rejection set with no more false-alarm chance than $`R^*`$ has no more power.
 - For every trial, the four-cell W is never negative. The bigger model always fits at least as well.
-- Suppose each arm has at least one patient. Then Pearson's $X^2$ equals $z^2$, whatever the recovery counts.
-- The hand arithmetic holds exactly. The shared rate is 0.40, the expected counts are 40 and 60, and $X^2 = z^2 = 25/12$.
+- Suppose each arm has at least one patient. Then Pearson's $`X^2`$ equals $`z^2`$, whatever the recovery counts.
+- The hand arithmetic holds exactly. The shared rate is 0.40, the expected counts are 40 and 60, and $`X^2 = z^2 = 25/12`$.
 
 Wilks' chi-square rule, the decimal values of W and the p-values are left to the Python and Rust checks.
 
@@ -809,14 +828,14 @@ example : Fintype.card (Finset (Fin 11)) = 2048 := by simp
 >
 > - **"The two-rate model fits better, so the drug works."** It always fits better: W ≥ 0 on every data set. The question is only whether 2.09 is more than chance supplies.
 > - **Counting all the parameters.** Degrees of freedom are the parameters given up, not the parameters in the bigger model: 2 instead of 1 turns p = 0.1485 into 0.3521.
-> - **A null on the edge of the range.** One-sided models, variances tested at 0 and mixture weights tested at 0 put the null on the edge; the plain $\chi^2_1$ cutoff then gives 0.0257 false alarms instead of 0.05.
+> - **A null on the edge of the range.** One-sided models, variances tested at 0 and mixture weights tested at 0 put the null on the edge; the plain $`\chi^2_1`$ cutoff then gives 0.0257 false alarms instead of 0.05.
 
 ---
 
 ## Where you meet it in real life
 
-- **Clinical and A/B trials.** Comparing recovery or conversion rates across arms is this test or its parabola, Pearson's $X^2$ on [Chi-square tests](06-chi-square-tests.md); its power at a planned size is the subject of [Power](04-power-and-sample-size.md).
-- **Building regression models.** Statistical software reports "deviance", which is twice a log-likelihood; the drop in deviance when a variable is added is W, compared with $\chi^2_m$.
+- **Clinical and A/B trials.** Comparing recovery or conversion rates across arms is this test or its parabola, Pearson's $`X^2`$ on [Chi-square tests](06-chi-square-tests.md); its power at a planned size is the subject of [Power](04-power-and-sample-size.md).
+- **Building regression models.** Statistical software reports "deviance", which is twice a log-likelihood; the drop in deviance when a variable is added is W, compared with $`\chi^2_m`$.
 - **Genetics.** A LOD score is the likelihood ratio in base-10 logs; linkage between a gene and a marker is traditionally declared at a LOD of 3.
 - **Bank risk checks.** Kupiec's test of a value-at-risk model counts the days losses broke the limit and is a likelihood ratio test with one degree of freedom ([Backtesting VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md)).
 
@@ -828,7 +847,7 @@ example : Fintype.card (Finset (Fin 11)) = 2048 := by simp
 ## What this builds on
 
 - [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the likelihood, and the best-fitting rates 0.45, 0.35 and 0.40 that both sides of the ratio use.
-- [Chi-square tests](06-chi-square-tests.md): the chi-square law, and Pearson's $X^2$, which is this test's quadratic form.
+- [Chi-square tests](06-chi-square-tests.md): the chi-square law, and Pearson's $`X^2`$, which is this test's quadratic form.
 
 ## Where this goes next
 

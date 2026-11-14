@@ -26,38 +26,42 @@ Schematic: widths to scale at 2 px per mm (axis at x 210, plate edges at 110 and
 
 ## The formula
 
-Notation first. $\operatorname{div}$ and $\operatorname{curl}$ are the outflow and the spin of a field at a point, from [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md) and [Stokes' theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/08-stokes-theorem.md). $\partial/\partial t$ is the rate of change at a fixed point, with time $t$ in seconds.
+Notation first. $`\mathrm{div}`$ and $`\mathrm{curl}`$ are the outflow and the spin of a field at a point, from [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md) and [Stokes' theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/08-stokes-theorem.md). $`\partial/\partial t`$ is the rate of change at a fixed point, with time $`t`$ in seconds.
 
-$$\operatorname{div}\mathbf E = \frac{\rho}{\varepsilon_0} \qquad \operatorname{div}\mathbf B = 0 \qquad \operatorname{curl}\mathbf E = -\frac{\partial \mathbf B}{\partial t} \qquad \operatorname{curl}\mathbf B = \mu_0\mathbf J + \mu_0\varepsilon_0\frac{\partial \mathbf E}{\partial t}$$
+```math
+\mathrm{div}\,\mathbf E = \frac{\rho}{\varepsilon_0} \qquad \mathrm{div}\,\mathbf B = 0 \qquad \mathrm{curl}\,\mathbf E = -\frac{\partial \mathbf B}{\partial t} \qquad \mathrm{curl}\,\mathbf B = \mu_0\mathbf J + \mu_0\varepsilon_0\frac{\partial \mathbf E}{\partial t}
+```
 
 **Read it aloud:** electric field spreads out from charge; magnetic field has no charge to spread out from; a changing magnetic field makes the electric field spin; current, and a changing electric field, make the magnetic field spin.
 
-The same four as counts over a closed bag or round a loop. On a surface, $\mathbf n$ is the arrow of length one standing off it and $dS$ a small patch; $d\mathbf l$ is a short step along a loop. $\Phi_E$ and $\Phi_B$ are the fluxes of $\mathbf E$ and $\mathbf B$ through a surface on the loop: the field crossing it, added over its area.
+The same four as counts over a closed bag or round a loop. On a surface, $`\mathbf n`$ is the arrow of length one standing off it and $`dS`$ a small patch; $`d\mathbf l`$ is a short step along a loop. $`\Phi_E`$ and $`\Phi_B`$ are the fluxes of $`\mathbf E`$ and $`\mathbf B`$ through a surface on the loop: the field crossing it, added over its area.
 
-$$\oint_{\text{bag}}\mathbf E\cdot\mathbf n\,dS = \frac{Q_{\text{in}}}{\varepsilon_0} \qquad \oint_{\text{bag}}\mathbf B\cdot\mathbf n\,dS = 0 \qquad \oint_{\text{loop}}\mathbf E\cdot d\mathbf l = -\frac{d\Phi_B}{dt} \qquad \oint_{\text{loop}}\mathbf B\cdot d\mathbf l = \mu_0 I_{\text{through}} + \mu_0\varepsilon_0\frac{d\Phi_E}{dt}$$
+```math
+\oint_{\text{bag}}\mathbf E\cdot\mathbf n\,dS = \frac{Q_{\text{in}}}{\varepsilon_0} \qquad \oint_{\text{bag}}\mathbf B\cdot\mathbf n\,dS = 0 \qquad \oint_{\text{loop}}\mathbf E\cdot d\mathbf l = -\frac{d\Phi_B}{dt} \qquad \oint_{\text{loop}}\mathbf B\cdot d\mathbf l = \mu_0 I_{\text{through}} + \mu_0\varepsilon_0\frac{d\Phi_E}{dt}
+```
 
-Left to right: Gauss's law, Gauss's law for magnetism, Faraday's law, the Ampère–Maxwell law. The last term of the last law is Maxwell's addition; $\varepsilon_0\,\partial\mathbf E/\partial t$ is the displacement current density.
+Left to right: Gauss's law, Gauss's law for magnetism, Faraday's law, the Ampère–Maxwell law. The last term of the last law is Maxwell's addition; $`\varepsilon_0\,\partial\mathbf E/\partial t`$ is the displacement current density.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mathbf E$, $E_0$ | electric field: push per coulomb on a charge at rest, V/m; $E_0$ its value on the axis | 143.8 kV/m in the gap after 1 µs | only its rate of change moves $\mathbf B$ |
-| $\mathbf B$ | magnetic field, in tesla (T) | 25.00 nT at 8 cm | — |
-| $\rho$ | charge density: charge per cubic metre | zero in the gap; the charge sits on the plates | more field spreading out |
-| $\mathbf J$ | current density: current per square metre of cross-section | 10 mA spread over the wire's cross-section; zero in the gap | more spin of $\mathbf B$ |
-| $\varepsilon_0$ | permittivity of vacuum: how much field a coulomb makes | 8.8541878188 pF/m (CODATA 2022) | weaker $\mathbf E$ per coulomb |
-| $\mu_0$ | permeability of vacuum: how much field an ampere makes | 1.25663706127 µN/A² (CODATA 2022) | stronger $\mathbf B$ per ampere |
-| $c$, $f$, $u$, $J_0$, $\theta$ | speed of light $1/\sqrt{\mu_0\varepsilon_0}$; signal frequency, Hz; plate size against wavelength, $u = 2\pi f a/c$; the high-frequency profile of $\mathbf E$ across the plate; an angle used to write $J_0$ as an integral | 299,792,458.0 m/s; 1 GHz; 1.0479; rim 0.7437 of centre | higher $f$, deeper dip at the rim |
-| $\operatorname{div}$, $\operatorname{curl}$, $\partial/\partial t$, $t$, $\mathbf F$, $x$, $y$, $z$ | outflow per volume; spin per area; rate of change; time, s; any field $(F_1, F_2, F_3)$; position | — | — |
-| $\varepsilon_0\,\partial\mathbf E/\partial t$ | displacement current density, A/m² | 1.273 A/m² across the gap | more $\mathbf B$ round the gap |
-| $Q_{\text{in}}$, $I_{\text{through}}$, $I$ | charge inside a closed bag; current crossing a surface; the charging current | 10.00 nC after 1 µs; 10 mA; 10 mA | more field out; more spin |
-| $\Phi_E$, $\Phi_B$, $\mathbf n$, $dS$, $d\mathbf l$ | flux of $\mathbf E$ or $\mathbf B$ through a surface; unit normal; patch; step | $d\Phi_E/dt$ = 1129.4 V·m per µs | more displacement current |
-| $a$, $d$, $r$ | plate radius; gap; distance from the axis | 5 cm; 1 mm; 8 cm and 2.5 cm | bigger $a$ spreads the 10 mA thinner |
+| $`\mathbf E`$, $`E_0`$ | electric field: push per coulomb on a charge at rest, V/m; $`E_0`$ its value on the axis | 143.8 kV/m in the gap after 1 µs | only its rate of change moves $`\mathbf B`$ |
+| $`\mathbf B`$ | magnetic field, in tesla (T) | 25.00 nT at 8 cm | — |
+| $`\rho`$ | charge density: charge per cubic metre | zero in the gap; the charge sits on the plates | more field spreading out |
+| $`\mathbf J`$ | current density: current per square metre of cross-section | 10 mA spread over the wire's cross-section; zero in the gap | more spin of $`\mathbf B`$ |
+| $`\varepsilon_0`$ | permittivity of vacuum: how much field a coulomb makes | 8.8541878188 pF/m (CODATA 2022) | weaker $`\mathbf E`$ per coulomb |
+| $`\mu_0`$ | permeability of vacuum: how much field an ampere makes | 1.25663706127 µN/A² (CODATA 2022) | stronger $`\mathbf B`$ per ampere |
+| $`c`$, $`f`$, $`u`$, $`J_0`$, $`\theta`$ | speed of light $`1/\sqrt{\mu_0\varepsilon_0}`$; signal frequency, Hz; plate size against wavelength, $`u = 2\pi f a/c`$; the high-frequency profile of $`\mathbf E`$ across the plate; an angle used to write $`J_0`$ as an integral | 299,792,458.0 m/s; 1 GHz; 1.0479; rim 0.7437 of centre | higher $`f`$, deeper dip at the rim |
+| $`\mathrm{div}`$, $`\mathrm{curl}`$, $`\partial/\partial t`$, $`t`$, $`\mathbf F`$, $`x`$, $`y`$, $`z`$ | outflow per volume; spin per area; rate of change; time, s; any field $`(F_1, F_2, F_3)`$; position | — | — |
+| $`\varepsilon_0\,\partial\mathbf E/\partial t`$ | displacement current density, A/m² | 1.273 A/m² across the gap | more $`\mathbf B`$ round the gap |
+| $`Q_{\text{in}}`$, $`I_{\text{through}}`$, $`I`$ | charge inside a closed bag; current crossing a surface; the charging current | 10.00 nC after 1 µs; 10 mA; 10 mA | more field out; more spin |
+| $`\Phi_E`$, $`\Phi_B`$, $`\mathbf n`$, $`dS`$, $`d\mathbf l`$ | flux of $`\mathbf E`$ or $`\mathbf B`$ through a surface; unit normal; patch; step | $`d\Phi_E/dt`$ = 1129.4 V·m per µs | more displacement current |
+| $`a`$, $`d`$, $`r`$ | plate radius; gap; distance from the axis | 5 cm; 1 mm; 8 cm and 2.5 cm | bigger $`a`$ spreads the 10 mA thinner |
 
 ### When it holds
 
 - **Charge is conserved.** Every experiment agrees that charge appears or vanishes only by flowing. The displacement term is built on this.
-- **Vacuum.** $\varepsilon_0$ and $\mu_0$ are the constants for empty space, and the card treats the air in the gap as empty space. Inside a solid insulator, part of the charge is bound in its molecules, and the equations gain two extra fields to track it.
-- **Plates wide beside the gap.** The closed form $B = \mu_0 I r/(2\pi a^2)$ in the gap assumes a uniform field there. Here the plate's radius is 50 gaps. The Biot–Savart road in the code adds up the field of the real currents alone (Step 5); it gives 19.78 nT against 20.00 at 2.5 cm, and 38.55 nT against 40.00 at the rim, where the field fringes out past the edge.
+- **Vacuum.** $`\varepsilon_0`$ and $`\mu_0`$ are the constants for empty space, and the card treats the air in the gap as empty space. Inside a solid insulator, part of the charge is bound in its molecules, and the equations gain two extra fields to track it.
+- **Plates wide beside the gap.** The closed form $`B = \mu_0 I r/(2\pi a^2)`$ in the gap assumes a uniform field there. Here the plate's radius is 50 gaps. The Biot–Savart road in the code adds up the field of the real currents alone (Step 5); it gives 19.78 nT against 20.00 at 2.5 cm, and 38.55 nT against 40.00 at the rim, where the field fringes out past the edge.
 - **Slow beside light crossing the plate.** The uniform field also needs the plate small beside the wavelength. At 1 MHz the wavelength is 299.79 m, and the field at the rim dips by 0.2745 parts per million. At 1 GHz the rim field is only 0.7437 of the centre's: outside the range, and the uniform-field formula no longer describes the gap.
 - **Classical scales.** Many charges, distances far above atoms. Single photons and atomic electrons need quantum mechanics.
 
@@ -67,54 +71,58 @@ Left to right: Gauss's law, Gauss's law for magnetism, Faraday's law, the Ampèr
 
 ### Step 0: a curl never has net outflow
 
-Two kinds of count run through the equations: what flows out of a closed bag, and what circulates round a loop. The divergence theorem turns the first into $\operatorname{div}$ at each point; Stokes' theorem turns the second into $\operatorname{curl}$.
+Two kinds of count run through the equations: what flows out of a closed bag, and what circulates round a loop. The divergence theorem turns the first into $`\mathrm{div}`$ at each point; Stokes' theorem turns the second into $`\mathrm{curl}`$.
 
-The repair rests on one fact. Split a bag's skin along a loop into two caps. By Stokes' theorem, both caps carry the same curl flux as the circulation round that loop. Counted outward from the bag, one cap's flux has its sign flipped, so the two cancel. **The flux of any curl out of any closed bag is zero**; at a point, $\operatorname{div}\operatorname{curl} = 0$.
+The repair rests on one fact. Split a bag's skin along a loop into two caps. By Stokes' theorem, both caps carry the same curl flux as the circulation round that loop. Counted outward from the bag, one cap's flux has its sign flipped, so the two cancel. **The flux of any curl out of any closed bag is zero**; at a point, $`\mathrm{div}\,\mathrm{curl} = 0`$.
 
-So whatever stands on the right of "$\operatorname{curl}\mathbf B = \ldots$" must have zero net outflow from every bag. Current alone fails that test at a charging plate. The growing electric field supplies exactly the missing outflow.
+So whatever stands on the right of "$`\mathrm{curl}\,\mathbf B = \ldots`$" must have zero net outflow from every bag. Current alone fails that test at a charging plate. The growing electric field supplies exactly the missing outflow.
 
 <details>
 <summary>The point version: div of curl is zero, term by term</summary>
 
-With $\mathbf F = (F_1, F_2, F_3)$,
+With $`\mathbf F = (F_1, F_2, F_3)`$,
 
-$$\operatorname{div}\operatorname{curl}\mathbf F = \frac{\partial}{\partial x}\Big(\frac{\partial F_3}{\partial y}-\frac{\partial F_2}{\partial z}\Big)+\frac{\partial}{\partial y}\Big(\frac{\partial F_1}{\partial z}-\frac{\partial F_3}{\partial x}\Big)+\frac{\partial}{\partial z}\Big(\frac{\partial F_2}{\partial x}-\frac{\partial F_1}{\partial y}\Big).$$
+$`\displaystyle \mathrm{div}\,\mathrm{curl}\,\mathbf F = \frac{\partial}{\partial x}\Big(\frac{\partial F_3}{\partial y}-\frac{\partial F_2}{\partial z}\Big)+\frac{\partial}{\partial y}\Big(\frac{\partial F_1}{\partial z}-\frac{\partial F_3}{\partial x}\Big)+\frac{\partial}{\partial z}\Big(\frac{\partial F_2}{\partial x}-\frac{\partial F_1}{\partial y}\Big).`$
 
-Each mixed second derivative appears twice with opposite signs, and for smooth fields the order of differentiation does not matter. All six cancel. The code checks this with difference quotients on the field $(\sin yz,\; x^2 z,\; e^x y)$ at (0.3, 0.7, 0.2): 0.000000 to six places.
+Each mixed second derivative appears twice with opposite signs, and for smooth fields the order of differentiation does not matter. All six cancel. The code checks this with difference quotients on the field $`(\sin yz,\; x^2 z,\; e^x y)`$ at (0.3, 0.7, 0.2): 0.000000 to six places.
 
 </details>
 
 ### Step 1: the two bag laws
 
-Gauss's law says the electric flux out of a closed bag is the charge inside divided by $\varepsilon_0$; [Electric fields](04-electrostatics-gauss-and-potential.md) derives it from Coulomb's law. Shrink the bag round a point and the divergence theorem gives $\operatorname{div}\mathbf E = \rho/\varepsilon_0$.
+Gauss's law says the electric flux out of a closed bag is the charge inside divided by $`\varepsilon_0`$; [Electric fields](04-electrostatics-gauss-and-potential.md) derives it from Coulomb's law. Shrink the bag round a point and the divergence theorem gives $`\mathrm{div}\,\mathbf E = \rho/\varepsilon_0`$.
 
-In the capacitor, wrap a bag round the top plate. After 1 µs it holds 10.00 nC, and nearly all its electric flux leaves through the gap. That flux is $Q_{\text{in}}/\varepsilon_0$, so the field there is $Q_{\text{in}}/(\varepsilon_0\pi a^2)$ = 143.8 kV/m.
+In the capacitor, wrap a bag round the top plate. After 1 µs it holds 10.00 nC, and nearly all its electric flux leaves through the gap. That flux is $`Q_{\text{in}}/\varepsilon_0`$, so the field there is $`Q_{\text{in}}/(\varepsilon_0\pi a^2)`$ = 143.8 kV/m.
 
-The magnetic bag law has nothing on the right, because no magnetic charge has ever been found. Lines of $\mathbf B$ close on themselves, like the circles round the capacitor's axis.
+The magnetic bag law has nothing on the right, because no magnetic charge has ever been found. Lines of $`\mathbf B`$ close on themselves, like the circles round the capacitor's axis.
 
 ### Step 2: the two loop laws
 
-Faraday's law says the push round a loop is minus the rate of change of magnetic flux through it; [Magnetic fields](05-magnetism-and-faradays-law.md) has it, minus sign and all. Stokes' theorem gives $\operatorname{curl}\mathbf E = -\partial\mathbf B/\partial t$. In the steadily charging capacitor $\mathbf B$ does not change, so Faraday's law adds nothing until the current alternates fast (the fold at the end of this section).
+Faraday's law says the push round a loop is minus the rate of change of magnetic flux through it; [Magnetic fields](05-magnetism-and-faradays-law.md) has it, minus sign and all. Stokes' theorem gives $`\mathrm{curl}\,\mathbf E = -\partial\mathbf B/\partial t`$. In the steadily charging capacitor $`\mathbf B`$ does not change, so Faraday's law adds nothing until the current alternates fast (the fold at the end of this section).
 
-Ampère's law, as Ampère left it, says the circulation of $\mathbf B$ round a loop is $\mu_0$ times the current through it: $\operatorname{curl}\mathbf B = \mu_0\mathbf J$. Round a long wire it gives $B = \mu_0 I/(2\pi r)$: 25.00 nT at 8 cm.
+Ampère's law, as Ampère left it, says the circulation of $`\mathbf B`$ round a loop is $`\mu_0`$ times the current through it: $`\mathrm{curl}\,\mathbf B = \mu_0\mathbf J`$. Round a long wire it gives $`B = \mu_0 I/(2\pi r)`$: 25.00 nT at 8 cm.
 
 ### Step 3: the old law contradicts itself
 
-Take the divergence of $\operatorname{curl}\mathbf B = \mu_0\mathbf J$. The left side is zero (Step 0), so $\operatorname{div}\mathbf J = 0$: current could never pile up.
+Take the divergence of $`\mathrm{curl}\,\mathbf B = \mu_0\mathbf J`$. The left side is zero (Step 0), so $`\mathrm{div}\,\mathbf J = 0`$: current could never pile up.
 
-Charge conservation says otherwise: current flowing out of a region drains its charge, $\operatorname{div}\mathbf J = -\partial\rho/\partial t$. At the top plate 10 mA flows in and nothing flows out, so its charge rises by 10.00 nC every microsecond.
+Charge conservation says otherwise: current flowing out of a region drains its charge, $`\mathrm{div}\,\mathbf J = -\partial\rho/\partial t`$. At the top plate 10 mA flows in and nothing flows out, so its charge rises by 10.00 nC every microsecond.
 
 The loop in the picture shows the clash in numbers. Its flat surface is cut by the wire: 10 mA, so 25.00 nT. Its bag surface passes through the gap: no conduction current, so 0.00 nT. The two surfaces together close a bag round the top plate. A curl's outflow from that bag is zero; the current's outflow is minus 10 mA. Ampère's old law claims those are equal.
 
 ### Step 4: the repair, and why it has to be this term
 
-Gauss's law ties charge to field: $\rho = \varepsilon_0\operatorname{div}\mathbf E$. Differentiate in time and put it into charge conservation:
+Gauss's law ties charge to field: $`\rho = \varepsilon_0\mathrm{div}\,\mathbf E`$. Differentiate in time and put it into charge conservation:
 
-$$\operatorname{div}\mathbf J = -\frac{\partial\rho}{\partial t} = -\operatorname{div}\Big(\varepsilon_0\frac{\partial\mathbf E}{\partial t}\Big) \quad\Longrightarrow\quad \operatorname{div}\Big(\mathbf J + \varepsilon_0\frac{\partial\mathbf E}{\partial t}\Big) = 0.$$
+```math
+\mathrm{div}\,\mathbf J = -\frac{\partial\rho}{\partial t} = -\mathrm{div}\Big(\varepsilon_0\frac{\partial\mathbf E}{\partial t}\Big) \quad\Longrightarrow\quad \mathrm{div}\Big(\mathbf J + \varepsilon_0\frac{\partial\mathbf E}{\partial t}\Big) = 0.
+```
 
-The combination $\mathbf J + \varepsilon_0\,\partial\mathbf E/\partial t$ never has net outflow from any bag, which is exactly what the right side of the curl law needs. So Maxwell put it there. Through the gap, the new term carries
+The combination $`\mathbf J + \varepsilon_0\,\partial\mathbf E/\partial t`$ never has net outflow from any bag, which is exactly what the right side of the curl law needs. So Maxwell put it there. Through the gap, the new term carries
 
-$$\varepsilon_0\frac{d\Phi_E}{dt} = \varepsilon_0\frac{d}{dt}\Big(\frac{Q_{\text{in}}}{\varepsilon_0}\Big) = \frac{dQ_{\text{in}}}{dt} = I,$$
+```math
+\varepsilon_0\frac{d\Phi_E}{dt} = \varepsilon_0\frac{d}{dt}\Big(\frac{Q_{\text{in}}}{\varepsilon_0}\Big) = \frac{dQ_{\text{in}}}{dt} = I,
+```
 
 10.000 mA, exactly the wire's current. Plate size, gap and fringing all drop out, because Gauss's law ties the flux to the charge. Both surfaces on the loop now give 25.00 nT.
 
@@ -122,11 +130,13 @@ One honest limit on "has to". Charge conservation fixes the outflow of whatever 
 
 ### Step 5: the field inside the gap
 
-The displacement current is spread evenly over the plate, at 1.273 A/m². A loop of radius $r$ inside the plate encloses the share $r^2/a^2$; at 2.5 cm that is 2.500 mA, so
+The displacement current is spread evenly over the plate, at 1.273 A/m². A loop of radius $`r`$ inside the plate encloses the share $`r^2/a^2`$; at 2.5 cm that is 2.500 mA, so
 
-$$B(r) = \frac{\mu_0 I}{2\pi r}\cdot\frac{r^2}{a^2} = \frac{\mu_0 I r}{2\pi a^2}, \qquad B(2.5\text{ cm}) = 20.00\text{ nT}.$$
+```math
+B(r) = \frac{\mu_0 I}{2\pi r}\cdot\frac{r^2}{a^2} = \frac{\mu_0 I r}{2\pi a^2}, \qquad B(2.5\text{ cm}) = 20.00\text{ nT}.
+```
 
-Past the rim all 10 mA is enclosed, and $B$ falls as $1/r$ again: 25.00 nT at 8 cm.
+Past the rim all 10 mA is enclosed, and $`B`$ falls as $`1/r`$ again: 25.00 nT at 8 cm.
 
 The code reaches the same field a second way that never mentions displacement current. The Biot–Savart law adds up the magnetic field of every bit of real current: the two wires, plus the current fanning out over the top plate and in over the bottom one.
 
@@ -136,20 +146,20 @@ So the two roads are two ways of counting one field, not two causes of it: here 
 
 ### Step 6: what the term predicts
 
-In empty space the loop laws become $\operatorname{curl}\mathbf E = -\partial\mathbf B/\partial t$ and $\operatorname{curl}\mathbf B = \mu_0\varepsilon_0\,\partial\mathbf E/\partial t$. A changing field of each kind makes the other, so a disturbance can carry itself through empty space at $1/\sqrt{\mu_0\varepsilon_0}$ = 299,792,458.0 m/s: the speed of light. In the 1850s that combination of the two constants was measured on the bench with charges and currents; today $\varepsilon_0$ is fixed as $1/(\mu_0 c^2)$, so the match is exact by construction. [Electromagnetic waves](08-electromagnetic-waves.md) derives the wave.
+In empty space the loop laws become $`\mathrm{curl}\,\mathbf E = -\partial\mathbf B/\partial t`$ and $`\mathrm{curl}\,\mathbf B = \mu_0\varepsilon_0\,\partial\mathbf E/\partial t`$. A changing field of each kind makes the other, so a disturbance can carry itself through empty space at $`1/\sqrt{\mu_0\varepsilon_0}`$ = 299,792,458.0 m/s: the speed of light. In the 1850s that combination of the two constants was measured on the bench with charges and currents; today $`\varepsilon_0`$ is fixed as $`1/(\mu_0 c^2)`$, so the match is exact by construction. [Electromagnetic waves](08-electromagnetic-waves.md) derives the wave.
 
 <details>
 <summary>Detailed derivation: why the rim field dips at high frequency</summary>
 
-Let the gap's field alternate at frequency $f$, so $\partial^2 E/\partial t^2 = -(2\pi f)^2 E$. Start from a uniform field $E_0$.
+Let the gap's field alternate at frequency $`f`$, so $`\partial^2 E/\partial t^2 = -(2\pi f)^2 E`$. Start from a uniform field $`E_0`$.
 
-Ampère–Maxwell round a loop of radius $r$ in the gap: $2\pi r B = \mu_0\varepsilon_0\,\pi r^2\,\partial E/\partial t$, so $B = (r/2c^2)\,\partial E/\partial t$, using $\mu_0\varepsilon_0 = 1/c^2$.
+Ampère–Maxwell round a loop of radius $`r`$ in the gap: $`2\pi r B = \mu_0\varepsilon_0\,\pi r^2\,\partial E/\partial t`$, so $`B = (r/2c^2)\,\partial E/\partial t`$, using $`\mu_0\varepsilon_0 = 1/c^2`$.
 
-Faraday round a thin rectangle in a plane through the axis, one long side on the axis and one at radius $r$, says the field changes across the plate as fast as $\mathbf B$ changes in time: $\partial E/\partial r = \partial B/\partial t = (r/2c^2)\,\partial^2 E/\partial t^2 = -(2\pi f)^2 r E_0/(2c^2)$. Integrate out from the axis:
+Faraday round a thin rectangle in a plane through the axis, one long side on the axis and one at radius $`r`$, says the field changes across the plate as fast as $`\mathbf B`$ changes in time: $`\partial E/\partial r = \partial B/\partial t = (r/2c^2)\,\partial^2 E/\partial t^2 = -(2\pi f)^2 r E_0/(2c^2)`$. Integrate out from the axis:
 
-$$E(r) \approx E_0\Big(1 - \frac{(2\pi f r)^2}{4c^2}\Big), \qquad \frac{E(a)}{E_0} \approx 1 - \frac{u^2}{4}, \quad u = \frac{2\pi f a}{c}.$$
+$`\displaystyle E(r) \approx E_0\Big(1 - \frac{(2\pi f r)^2}{4c^2}\Big), \qquad \frac{E(a)}{E_0} \approx 1 - \frac{u^2}{4}, \quad u = \frac{2\pi f a}{c}.`$
 
-Feed the corrected field back in and repeat; the corrections build the series $J_0(u) = 1 - u^2/4 + u^4/64 - \ldots$, the Bessel function. At 1 GHz, $u$ = 1.0479: the first correction gives 0.7255, the full series 0.7437, and the integral $J_0(u) = \frac{1}{\pi}\int_0^\pi \cos(u\sin\theta)\,d\theta$ gives 0.7437 too.
+Feed the corrected field back in and repeat; the corrections build the series $`J_0(u) = 1 - u^2/4 + u^4/64 - \ldots`$, the Bessel function. At 1 GHz, $`u`$ = 1.0479: the first correction gives 0.7255, the full series 0.7437, and the integral $`J_0(u) = \frac{1}{\pi}\int_0^\pi \cos(u\sin\theta)\,d\theta`$ gives 0.7437 too.
 
 </details>
 
@@ -157,22 +167,22 @@ Feed the corrected field back in and repeat; the corrections build the series $J
 
 ## Worked numbers, by hand
 
-Plates 5 cm in radius, 1 mm apart, charged by 10 mA. $\varepsilon_0$ = 8.8541878188 pF/m, $\mu_0$ = 1.25663706127 µN/A².
+Plates 5 cm in radius, 1 mm apart, charged by 10 mA. $`\varepsilon_0`$ = 8.8541878188 pF/m, $`\mu_0`$ = 1.25663706127 µN/A².
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| plate area $\pi a^2$ | $\pi \times 0.05^2$ m² | 78.54 cm² |
-| capacitance $\varepsilon_0\pi a^2/d$ | $8.854\text{ pF/m} \times 0.007854\text{ m}^2 / 0.001\text{ m}$ | 69.54 pF |
-| charge after 1 µs | $10\text{ mA} \times 1\text{ µs}$ | 10.00 nC |
-| field in the gap (Gauss) | $10\text{ nC} / (\varepsilon_0 \times 78.54\text{ cm}^2)$ | 143.8 kV/m |
-| voltage across the gap | $143.8\text{ kV/m} \times 1\text{ mm}$ | 143.8 V |
+| plate area $`\pi a^2`$ | $`\pi \times 0.05^2`$ m² | 78.54 cm² |
+| capacitance $`\varepsilon_0\pi a^2/d`$ | $`8.854\text{ pF/m} \times 0.007854\text{ m}^2 / 0.001\text{ m}`$ | 69.54 pF |
+| charge after 1 µs | $`10\text{ mA} \times 1\text{ µs}`$ | 10.00 nC |
+| field in the gap (Gauss) | $`10\text{ nC} / (\varepsilon_0 \times 78.54\text{ cm}^2)`$ | 143.8 kV/m |
+| voltage across the gap | $`143.8\text{ kV/m} \times 1\text{ mm}`$ | 143.8 V |
 | rate of change of the field | the same every microsecond | 143.8 kV/m per µs |
-| $d\Phi_E/dt$ | $143.8\text{ kV/m per µs} \times 78.54\text{ cm}^2$ | 1129.4 V·m per µs |
-| **displacement current** $\varepsilon_0\,d\Phi_E/dt$ | $8.854\text{ pF/m} \times 1129.4\text{ V·m per µs}$ | **10.000 mA** |
-| displacement current density | $10\text{ mA} / 78.54\text{ cm}^2$ | 1.273 A/m² |
-| $B$ at 8 cm, either surface | $\mu_0 \times 10\text{ mA} / (2\pi \times 0.08\text{ m})$ | 25.00 nT |
-| share inside 2.5 cm | $10\text{ mA} \times (2.5/5)^2$ | 2.500 mA |
-| $B$ at 2.5 cm, in the gap | $\mu_0 \times 2.5\text{ mA} / (2\pi \times 0.025\text{ m})$ | 20.00 nT |
+| $`d\Phi_E/dt`$ | $`143.8\text{ kV/m per µs} \times 78.54\text{ cm}^2`$ | 1129.4 V·m per µs |
+| **displacement current** $`\varepsilon_0\,d\Phi_E/dt`$ | $`8.854\text{ pF/m} \times 1129.4\text{ V·m per µs}`$ | **10.000 mA** |
+| displacement current density | $`10\text{ mA} / 78.54\text{ cm}^2`$ | 1.273 A/m² |
+| $`B`$ at 8 cm, either surface | $`\mu_0 \times 10\text{ mA} / (2\pi \times 0.08\text{ m})`$ | 25.00 nT |
+| share inside 2.5 cm | $`10\text{ mA} \times (2.5/5)^2`$ | 2.500 mA |
+| $`B`$ at 2.5 cm, in the gap | $`\mu_0 \times 2.5\text{ mA} / (2\pi \times 0.025\text{ m})`$ | 20.00 nT |
 
 The gap passes 10.000 mA without a single charge crossing it. Counted with the growing field, the current round the circuit is unbroken, and so is the magnetic field round it.
 
@@ -188,15 +198,15 @@ xychart-beta
     line [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
 ```
 
-Orange: Maxwell's equations. The field climbs in a straight line to 40.00 nT at the 5 cm rim as more displacement current is enclosed, then falls as $1/r$ like a wire's. Green, flat along the bottom: Ampère's law without the displacement term, which sees no current in the gap.
+Orange: Maxwell's equations. The field climbs in a straight line to 40.00 nT at the 5 cm rim as more displacement current is enclosed, then falls as $`1/r`$ like a wire's. Green, flat along the bottom: Ampère's law without the displacement term, which sees no current in the gap.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Ampère's law without Maxwell's term, bag surface, 8 cm | 0.00 nT (right: 25.00) | the bag sees no conduction current; the flat surface on the same loop sees 10 mA |
-| Wire formula $\mu_0 I/(2\pi r)$ inside the gap, 2.5 cm | 80.00 nT (right: 20.00) | only 2.500 mA of displacement current passes inside 2.5 cm |
-| Gap formula $\mu_0 I r/(2\pi a^2)$ past the rim, 8 cm | 64.00 nT (right: 25.00) | the displacement current stops at the rim; outside it, all 10 mA is enclosed |
+| Wire formula $`\mu_0 I/(2\pi r)`$ inside the gap, 2.5 cm | 80.00 nT (right: 20.00) | only 2.500 mA of displacement current passes inside 2.5 cm |
+| Gap formula $`\mu_0 I r/(2\pi a^2)`$ past the rim, 8 cm | 64.00 nT (right: 25.00) | the displacement current stops at the rim; outside it, all 10 mA is enclosed |
 | Uniform field across the plates at 1 GHz | rim equal to centre (right: 0.7437 of it) | the plate is no longer small beside the wavelength; Faraday's law bends the field |
 
 ---
@@ -207,7 +217,7 @@ The code computes every number on this card from the plate radius, the gap, the 
 
 They agree within 2% at 2.5 cm and 8 cm, the tolerance the asserts allow; at the rim, where the field fringes, road 2 gives 38.55 nT against 40.00. The 0.1 mm gap shows the difference is the gap's own.
 
-The code also checks $\operatorname{div}\operatorname{curl} = 0$ by difference quotients, that $1/\sqrt{\mu_0\varepsilon_0}$ matches the defined speed of light, and the 1 GHz rim field by a series and by an integral.
+The code also checks $`\mathrm{div}\,\mathrm{curl} = 0`$ by difference quotients, that $`1/\sqrt{\mu_0\varepsilon_0}`$ matches the defined speed of light, and the 1 GHz rim field by a series and by an integral.
 
 ### Python
 
@@ -595,12 +605,12 @@ The two outputs are identical, line for line.
 
 Lean proves Steps 0, 3 and 4 for any smooth fields, at every time and point, and checks the worked numbers.
 
-- Take any smooth field $\mathbf F$. Then $\operatorname{div}\operatorname{curl}\mathbf F = 0$ at every point.
-- Suppose $\mathbf B$ is smooth at every time, $\operatorname{curl}\mathbf B = \mu_0\mathbf J$ everywhere, and charge is conserved. Then $\partial\rho/\partial t = 0$ everywhere, so charge could never pile up.
-- Suppose $\mathbf E$ is smooth in time and space, $\mathbf J$ can be differentiated in space, and Gauss's law and charge conservation hold everywhere. Then $\operatorname{div}(\mathbf J + \varepsilon_0\,\partial\mathbf E/\partial t) = 0$ at every time and point.
+- Take any smooth field $`\mathbf F`$. Then $`\mathrm{div}\,\mathrm{curl}\,\mathbf F = 0`$ at every point.
+- Suppose $`\mathbf B`$ is smooth at every time, $`\mathrm{curl}\,\mathbf B = \mu_0\mathbf J`$ everywhere, and charge is conserved. Then $`\partial\rho/\partial t = 0`$ everywhere, so charge could never pile up.
+- Suppose $`\mathbf E`$ is smooth in time and space, $`\mathbf J`$ can be differentiated in space, and Gauss's law and charge conservation hold everywhere. Then $`\mathrm{div}(\mathbf J + \varepsilon_0\,\partial\mathbf E/\partial t) = 0`$ at every time and point.
 - The plate's radius is 50 gaps, and 10 mA for 1 µs gives 10 nC.
 - A loop of radius 2.5 cm in the gap encloses 2.5 mA. The wire formula there is four times too big: 80 against 20 nT.
-- Past the rim at 8 cm, the gap formula overshoots by the factor $(8/5)^2 = 64/25$.
+- Past the rim at 8 cm, the gap formula overshoots by the factor $`(8/5)^2 = 64/25`$.
 
 The bag and loop forms, the field values in nT and the 1 GHz rim field are left to the Python and Rust checks.
 
@@ -935,7 +945,7 @@ example : ((8 : ℚ) / 5) ^ 2 = 64 / 25 := by norm_num
 > Smaller traps:
 > - **Expecting no magnetic field in the gap.** There is 20.00 nT at 2.5 cm and 40.00 nT at the rim. Ampère's old law says 0.00 nT.
 > - **Using the wire's formula inside the gap.** At 2.5 cm it gives 80.00 nT; the loop encloses only 2.500 mA, so the field is 20.00 nT.
-> - **Using the field instead of its rate.** $\varepsilon_0\Phi_E$ after 1 µs is 10.00 nC: a charge, not a current. Only $\varepsilon_0\,d\Phi_E/dt$ gives the 10.000 mA.
+> - **Using the field instead of its rate.** $`\varepsilon_0\Phi_E`$ after 1 µs is 10.00 nC: a charge, not a current. Only $`\varepsilon_0\,d\Phi_E/dt`$ gives the 10.000 mA.
 > - **Saying Kirchhoff's current law fails at a capacitor.** It holds for the capacitor as a part: 10 mA in at one lead, 10 mA out at the other. Inside, the displacement current carries it across.
 
 ---
@@ -962,7 +972,7 @@ example : ((8 : ℚ) / 5) ^ 2 = 64 / 25 := by norm_num
 
 ## Where this goes next
 
-- [Electromagnetic waves](08-electromagnetic-waves.md): the two loop laws in empty space become the wave equation, with speed $1/\sqrt{\mu_0\varepsilon_0}$.
+- [Electromagnetic waves](08-electromagnetic-waves.md): the two loop laws in empty space become the wave equation, with speed $`1/\sqrt{\mu_0\varepsilon_0}`$.
 - Hodge star (planned): the four equations rewritten as two, with div and curl replaced by one operation on forms.
 - Yang-Mills (planned): field equations of the same pattern, for the forces inside the nucleus.
 
@@ -977,5 +987,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page, and each
 - Maxwell, J. Clerk. "A Dynamical Theory of the Electromagnetic Field." *Philosophical Transactions of the Royal Society of London* 155 (1865): 459–512. [doi:10.1098/rstl.1865.0008](https://doi.org/10.1098/rstl.1865.0008). The full set of field equations with the displacement current, and the speed of the waves they predict.
 - Hertz, H. "Ueber die Ausbreitungsgeschwindigkeit der electrodynamischen Wirkungen." *Annalen der Physik* 270, no. 7 (1888): 551–569. [doi:10.1002/andp.18882700708](https://doi.org/10.1002/andp.18882700708). The measurement that electrical effects spread through space at a finite speed.
 - Bartlett, D. F. "Conduction current and the magnetic field in a circular capacitor." *American Journal of Physics* 58, no. 12 (1990): 1168–1172. [doi:10.1119/1.16247](https://doi.org/10.1119/1.16247). The magnetic field inside a round capacitor worked out from its conduction currents, the comparison road 2 makes in the code.
-- Mohr, P. J., D. B. Newell, B. N. Taylor, and E. Tiesinga. "CODATA recommended values of the fundamental physical constants: 2022." *Reviews of Modern Physics* 97, no. 2 (2025): 025002. [doi:10.1103/RevModPhys.97.025002](https://doi.org/10.1103/RevModPhys.97.025002). The values of $\varepsilon_0$ and $\mu_0$ used throughout.
+- Mohr, P. J., D. B. Newell, B. N. Taylor, and E. Tiesinga. "CODATA recommended values of the fundamental physical constants: 2022." *Reviews of Modern Physics* 97, no. 2 (2025): 025002. [doi:10.1103/RevModPhys.97.025002](https://doi.org/10.1103/RevModPhys.97.025002). The values of $`\varepsilon_0`$ and $`\mu_0`$ used throughout.
 - Griffiths, David J. *Introduction to Electrodynamics*, 5th ed. Cambridge University Press, 2023. [doi:10.1017/9781009397735](https://doi.org/10.1017/9781009397735). The standard route through all four equations, the charging capacitor and the displacement current.

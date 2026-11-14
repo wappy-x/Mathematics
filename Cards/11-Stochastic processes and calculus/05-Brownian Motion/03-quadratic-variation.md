@@ -33,41 +33,47 @@ One sample path, simulated on a grid of 1,000 steps of one millisecond and drawn
 
 ## The formula
 
-Notation from earlier cards, one line each. $W_t$ is the grain's position at time t, Brownian motion started at 0: its increments over separate stretches of time are independent, and an increment over a stretch of length h is normal with mean 0 and variance h. Z stands for a standard normal number, mean 0 and variance 1.
+Notation from earlier cards, one line each. $`W_t`$ is the grain's position at time t, Brownian motion started at 0: its increments over separate stretches of time are independent, and an increment over a stretch of length h is normal with mean 0 and variance h. Z stands for a standard normal number, mean 0 and variance 1.
 
-New notation, in words first. Cut the stretch from time 0 to time t into n equal steps at the times $t_k = k\,t/n$, so each step lasts $\Delta t = t/n$. The increment over step k is $\Delta W_k = W_{t_k} - W_{t_{k-1}}$. The sum of their squares is $Q_n$, and its limit is written $[W]_t$, read "the quadratic variation of W up to time t". Square brackets around a process always mean this limit.
+New notation, in words first. Cut the stretch from time 0 to time t into n equal steps at the times $`t_k = k\,t/n`$, so each step lasts $`\Delta t = t/n`$. The increment over step k is $`\Delta W_k = W_{t_k} - W_{t_{k-1}}`$. The sum of their squares is $`Q_n`$, and its limit is written $`[W]_t`$, read "the quadratic variation of W up to time t". Square brackets around a process always mean this limit.
 
-$$Q_n = \sum_{k=1}^{n} (\Delta W_k)^2, \qquad [W]_t = \lim_{n\to\infty} Q_n = t.$$
+```math
+Q_n = \sum_{k=1}^{n} (\Delta W_k)^2, \qquad [W]_t = \lim_{n\to\infty} Q_n = t.
+```
 
 **Read it aloud:** chop the time into n steps, square each move, add the squares; as the steps shrink, the total settles on the elapsed time.
 
 The limit holds in mean square: the average squared distance between the sum and t goes to zero, at this exact rate:
 
-$$\mathbb{E}[Q_n] = t, \qquad \mathbb{E}\big[(Q_n - t)^2\big] = \frac{2t^2}{n}.$$
+```math
+\mathbb{E}[Q_n] = t, \qquad \mathbb{E}\big[(Q_n - t)^2\big] = \frac{2t^2}{n}.
+```
 
 **Read it aloud:** the sum of squares is right on average at every grid, and its typical error is t times the square root of 2/n.
 
-The contrast is the sum of sizes, $V_n = \sum_{k} |\Delta W_k|$, which grows instead of settling:
+The contrast is the sum of sizes, $`V_n = \sum_{k} |\Delta W_k|`$, which grows instead of settling:
 
-$$\mathbb{E}[V_n] = \sqrt{\frac{2nt}{\pi}}.$$
+```math
+\mathbb{E}[V_n] = \sqrt{\frac{2nt}{\pi}}.
+```
 
 **Read it aloud:** the average length of the path, measured on n steps, grows like the square root of n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $W_t$ | the grain's position at time t, in micrometres | ends path 1 at 1.27 | — |
-| $t$ | the time watched, in seconds | 1 | the quadratic variation grows with it, one for one |
-| $n$, $\Delta t$ | the number of equal steps; the length t/n of each | 1,000 steps of 0.001 s | Q gets closer to t; V gets longer |
-| $t_k$, $k$ | the k-th grid time, k t/n; the step's number | 0.001 s, 0.002 s, … | — |
-| $\Delta W_k$ | the move over step k | at most 0.117547 in size on path 1 | — |
-| $Q_n$ | sum of the squared moves | 1.040456 on path 1 | — |
-| $[W]_t$ | the quadratic variation: the limit of Q | 1 square micrometre | — |
-| $V_n$ | sum of the moves' sizes: the path's length on the grid | 25.693172 on path 1 | — |
-| $Z$ | a standard normal number | moments 1, 3 and 0.797885 | — |
-| $L_n$, $R_n$ | left-point and right-point sums for the square of W | 0.5602 and 2.6411 on path 1 | — |
-| $X_t$, $\mu$, $\sigma$ | a drifting process μt + σW; its drift and its scale | a current of 3 micrometres a second, σ = 1 | drift leaves the limit alone; σ multiplies it by σ^2 |
-| $f$ | a smooth comparison path, sin(2πt) | quadratic variation 0, length 4 | — |
-| $s_k$, $m$, $h_k$, $r$, $D_k$, $\Pi_j$, $e$, $B$, $T_f$, $Q_f$, $\Delta f_k$, $\varphi$ | used only in the Detailed proof: a partition's cut times and how many steps it has; its k-th step length; an earlier time; one squared move minus its step length; the j-th partition; a small tolerance; a bound on the length; f's total variation, its sum of squares and its k-th move; the bell-curve density | halving grids: $\Pi_j$ has steps t/2^j | — |
+| $`W_t`$ | the grain's position at time t, in micrometres | ends path 1 at 1.27 | — |
+| $`t`$ | the time watched, in seconds | 1 | the quadratic variation grows with it, one for one |
+| $`n`$, $`\Delta t`$ | the number of equal steps; the length t/n of each | 1,000 steps of 0.001 s | Q gets closer to t; V gets longer |
+| $`t_k`$, $`k`$ | the k-th grid time, k t/n; the step's number | 0.001 s, 0.002 s, … | — |
+| $`\Delta W_k`$ | the move over step k | at most 0.117547 in size on path 1 | — |
+| $`Q_n`$ | sum of the squared moves | 1.040456 on path 1 | — |
+| $`[W]_t`$ | the quadratic variation: the limit of Q | 1 square micrometre | — |
+| $`V_n`$ | sum of the moves' sizes: the path's length on the grid | 25.693172 on path 1 | — |
+| $`Z`$ | a standard normal number | moments 1, 3 and 0.797885 | — |
+| $`L_n`$, $`R_n`$ | left-point and right-point sums for the square of W | 0.5602 and 2.6411 on path 1 | — |
+| $`X_t`$, $`\mu`$, $`\sigma`$ | a drifting process μt + σW; its drift and its scale | a current of 3 micrometres a second, σ = 1 | drift leaves the limit alone; σ multiplies it by σ^2 |
+| $`f`$ | a smooth comparison path, sin(2πt) | quadratic variation 0, length 4 | — |
+| $`s_k`$, $`m`$, $`h_k`$, $`r`$, $`D_k`$, $`\Pi_j`$, $`e`$, $`B`$, $`T_f`$, $`Q_f`$, $`\Delta f_k`$, $`\varphi`$ | used only in the Detailed proof: a partition's cut times and how many steps it has; its k-th step length; an earlier time; one squared move minus its step length; the j-th partition; a small tolerance; a bound on the length; f's total variation, its sum of squares and its k-th move; the bell-curve density | halving grids: $`\Pi_j`$ has steps t/2^j | — |
 
 ### When it holds
 
@@ -88,15 +94,17 @@ What changes with n is the spread. The squared moves are independent, so their r
 
 ### Step 1: the variance of one squared move
 
-Write a step as $\Delta W_k = \sqrt{\Delta t}\,Z$. Then $(\Delta W_k)^2 = \Delta t\,Z^2$, with average $\Delta t\,\mathbb{E}[Z^2] = \Delta t$ and variance
+Write a step as $`\Delta W_k = \sqrt{\Delta t}\,Z`$. Then $`(\Delta W_k)^2 = \Delta t\,Z^2`$, with average $`\Delta t\,\mathbb{E}[Z^2] = \Delta t`$ and variance
 
-$$\mathrm{Var}\big((\Delta W_k)^2\big) = \Delta t^2\big(\mathbb{E}[Z^4] - \mathbb{E}[Z^2]^2\big) = \Delta t^2\,(3 - 1) = 2\,\Delta t^2.$$
+```math
+\mathrm{Var}\big((\Delta W_k)^2\big) = \Delta t^2\big(\mathbb{E}[Z^4] - \mathbb{E}[Z^2]^2\big) = \Delta t^2\,(3 - 1) = 2\,\Delta t^2.
+```
 
-The fourth moment 3 is the normal's own: integrate the fourth power against the bell curve. The code does that integral by Simpson's rule and gets 3.000000, with $\mathbb{E}[Z^2]$ = 1.000000.
+The fourth moment 3 is the normal's own: integrate the fourth power against the bell curve. The code does that integral by Simpson's rule and gets 3.000000, with $`\mathbb{E}[Z^2]`$ = 1.000000.
 
 ### Step 2: add independent variances
 
-The n squared moves are independent, so their variances add: $\mathrm{Var}(Q_n) = n \cdot 2\,\Delta t^2 = 2t^2/n$. Since $Q_n$ averages t, this is the mean squared error. At n = 1,000 and t = 1 the typical error is the square root of 0.002, which is 0.044721. Path 1's 1.040456 sits 0.9 typical errors above 1.
+The n squared moves are independent, so their variances add: $`\mathrm{Var}(Q_n) = n \cdot 2\,\Delta t^2 = 2t^2/n`$. Since $`Q_n`$ averages t, this is the mean squared error. At n = 1,000 and t = 1 the typical error is the square root of 0.002, which is 0.044721. Path 1's 1.040456 sits 0.9 typical errors above 1.
 
 As n grows the mean squared error goes to 0, which is convergence in mean square. Chebyshev's inequality says the chance of missing t by more than a fixed amount e is at most the variance divided by e^2. So that chance also goes to 0, which is convergence in probability. That is the theorem.
 
@@ -116,11 +124,13 @@ Orange: the simulated root-mean-square error of Q over 400 paths, multiplied by 
 
 The sum of squares is at most the largest move times the sum of sizes, since each square is its own size times itself:
 
-$$Q_n \le \max_k |\Delta W_k| \cdot V_n.$$
+```math
+Q_n \le \max_k |\Delta W_k| \cdot V_n.
+```
 
-A Brownian path is continuous, so as the grid shrinks the largest move goes to 0: on path 1 it is 0.117547 already at 1,000 steps. But $Q_n$ goes to t, which is not 0. The only way the right side can stay above t is for $V_n$ to run off to infinity. So a Brownian path has infinite total variation: the total up-and-down movement of [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md) is infinite on every stretch of time, almost surely.
+A Brownian path is continuous, so as the grid shrinks the largest move goes to 0: on path 1 it is 0.117547 already at 1,000 steps. But $`Q_n`$ goes to t, which is not 0. The only way the right side can stay above t is for $`V_n`$ to run off to infinity. So a Brownian path has infinite total variation: the total up-and-down movement of [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md) is infinite on every stretch of time, almost surely.
 
-The same inequality, read for a curve of finite length, says the opposite. If $V_n$ stays below a fixed length and the largest move goes to 0, then $Q_n$ goes to 0. Every smooth path, and every continuous path of bounded variation, has quadratic variation 0. For $f$ = sin(2πt) the code finds n times Q settling on 2π^2 = 19.7392, so Q itself falls like one over n, while the length stays at 4.
+The same inequality, read for a curve of finite length, says the opposite. If $`V_n`$ stays below a fixed length and the largest move goes to 0, then $`Q_n`$ goes to 0. Every smooth path, and every continuous path of bounded variation, has quadratic variation 0. For $`f`$ = sin(2πt) the code finds n times Q settling on 2π^2 = 19.7392, so Q itself falls like one over n, while the length stays at 4.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -136,44 +146,48 @@ Orange: the path's length on the grid, in micrometres. Green: the sum of squares
 
 ### Step 4: why ordinary calculus fails on the square of W
 
-Ordinary calculus says the change in the square of a smooth curve f is the sum of 2f times its small changes: the chain rule. Test it on Brownian motion with an identity that is pure algebra. For each step, $W_{t_k}^2 - W_{t_{k-1}}^2 = 2W_{t_{k-1}}\Delta W_k + (\Delta W_k)^2$. Sum over the steps from 0 to time 1:
+Ordinary calculus says the change in the square of a smooth curve f is the sum of 2f times its small changes: the chain rule. Test it on Brownian motion with an identity that is pure algebra. For each step, $`W_{t_k}^2 - W_{t_{k-1}}^2 = 2W_{t_{k-1}}\Delta W_k + (\Delta W_k)^2`$. Sum over the steps from 0 to time 1:
 
-$$W_1^2 = \underbrace{\sum_{k} 2\,W_{t_{k-1}}\,\Delta W_k}_{L_n} + Q_n.$$
+```math
+W_1^2 = \underbrace{\sum_{k} 2\,W_{t_{k-1}}\,\Delta W_k}_{L_n} + Q_n.
+```
 
-The chain rule predicts that $L_n$, the left-point sum, approaches $W_1^2$. Instead it misses by $Q_n$, which does not vanish: it goes to 1. On path 1, $W_1^2$ = 1.6006, $L_n$ = 0.5602 and the gap is 1.0405, the path's quadratic variation. Averaged over 400 paths, $L_n$ is 0.0500 with standard error 0.0699: zero, because each $W_{t_{k-1}}$ is known before the step it multiplies, and the step averages 0.
+The chain rule predicts that $`L_n`$, the left-point sum, approaches $`W_1^2`$. Instead it misses by $`Q_n`$, which does not vanish: it goes to 1. On path 1, $`W_1^2`$ = 1.6006, $`L_n`$ = 0.5602 and the gap is 1.0405, the path's quadratic variation. Averaged over 400 paths, $`L_n`$ is 0.0500 with standard error 0.0699: zero, because each $`W_{t_{k-1}}`$ is known before the step it multiplies, and the step averages 0.
 
 A smooth curve escapes because its Q goes to 0, so the chain rule's sum and the true change agree in the limit. Brownian motion does not escape. Its change in the square is the left-point sum plus the elapsed time:
 
-$$W_1^2 = \lim_{n\to\infty} L_n + 1.$$
+```math
+W_1^2 = \lim_{n\to\infty} L_n + 1.
+```
 
 That extra 1 is the dt term of the next shelf, and the start of Itô's calculus ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)).
 
 ### Step 5: the endpoint now matters
 
-For a smooth integrator it does not matter where in each step the integrand is read; every choice gives the same limit. That is the Riemann–Stieltjes integral, the limit of sums of integrand times change in integrator, and it needs an integrator of bounded variation. Brownian motion is not one, by Step 3, and the choice now changes the answer. Read W at the right end of each step instead and the sum is $R_n = L_n + 2Q_n$. On path 1 it is 2.6411; over 400 paths it averages 2.0574, against 0.0500 for the left point. The difference is twice the quadratic variation. The average of the two, $(L_n + R_n)/2$, equals $W_1^2$ exactly: averaging the two ends of each step brings the ordinary chain rule back, at the cost of using the value at the step's end, which is not known when the step begins.
+For a smooth integrator it does not matter where in each step the integrand is read; every choice gives the same limit. That is the Riemann–Stieltjes integral, the limit of sums of integrand times change in integrator, and it needs an integrator of bounded variation. Brownian motion is not one, by Step 3, and the choice now changes the answer. Read W at the right end of each step instead and the sum is $`R_n = L_n + 2Q_n`$. On path 1 it is 2.6411; over 400 paths it averages 2.0574, against 0.0500 for the left point. The difference is twice the quadratic variation. The average of the two, $`(L_n + R_n)/2`$, equals $`W_1^2`$ exactly: averaging the two ends of each step brings the ordinary chain rule back, at the cost of using the value at the step's end, which is not known when the step begins.
 
 The integral against a Brownian path must therefore be defined, not inherited. Itô's choice is the left point: the integrand is fixed before the move, as a bet is placed before the coin lands.
 
 ### Step 6: drift is invisible, scale is not
 
-Add a current that carries the grain at 3 micrometres a second: $X_t$ = 3t + $W_t$. Each move gains 3Δt. Squaring adds $(3\,\Delta t)^2$ per step, n of them, $9t^2/n$ in all, plus a cross term $6\,\Delta t\,W_t$ that also vanishes. At 1,000 steps the formula is 1.0090; 400 paths average 1.0128 with standard error 0.0023. As n grows the current's share goes to 0. Scale is different: σ times W has squared moves σ^2 times larger, so its quadratic variation is σ^2 t. Quadratic variation measures how violently a process shakes, not where it is heading.
+Add a current that carries the grain at 3 micrometres a second: $`X_t`$ = 3t + $`W_t`$. Each move gains 3Δt. Squaring adds $`(3\,\Delta t)^2`$ per step, n of them, $`9t^2/n`$ in all, plus a cross term $`6\,\Delta t\,W_t`$ that also vanishes. At 1,000 steps the formula is 1.0090; 400 paths average 1.0128 with standard error 0.0023. As n grows the current's share goes to 0. Scale is different: σ times W has squared moves σ^2 times larger, so its quadratic variation is σ^2 t. Quadratic variation measures how violently a process shakes, not where it is heading.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** W is a Brownian motion: $W_0 = 0$, continuous paths, independent increments, $W_s - W_r$ normal with mean 0 and variance $s - r$. Fix t > 0. A partition of the stretch from 0 to t is a list of times $0 = s_0 < s_1 < \cdots < s_m = t$; its mesh is its longest step. For a partition, $Q = \sum_k (W_{s_k} - W_{s_{k-1}})^2$ and $V = \sum_k |W_{s_k} - W_{s_{k-1}}|$.
+**Setting.** W is a Brownian motion: $`W_0 = 0`$, continuous paths, independent increments, $`W_s - W_r`$ normal with mean 0 and variance $`s - r`$. Fix t > 0. A partition of the stretch from 0 to t is a list of times $`0 = s_0 < s_1 < \cdots < s_m = t`$; its mesh is its longest step. For a partition, $`Q = \sum_k (W_{s_k} - W_{s_{k-1}})^2`$ and $`V = \sum_k |W_{s_k} - W_{s_{k-1}}|`$.
 
-**Lemma 1 (moments).** For a standard normal, $\mathbb{E}[Z^2] = 1$ and $\mathbb{E}[Z^4] = 3$. *Proof.* Integrate by parts against the density $\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}$, using $\varphi'(z) = -z\,\varphi(z)$: $\mathbb{E}[Z^4] = \int z^3 \cdot z\varphi(z)\,dz = \int 3z^2\varphi(z)\,dz = 3\,\mathbb{E}[Z^2]$, and the same step gives $\mathbb{E}[Z^2] = \int \varphi = 1$.
+**Lemma 1 (moments).** For a standard normal, $`\mathbb{E}[Z^2] = 1`$ and $`\mathbb{E}[Z^4] = 3`$. *Proof.* Integrate by parts against the density $`\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}`$, using $`\varphi'(z) = -z\,\varphi(z)`$: $`\mathbb{E}[Z^4] = \int z^3 \cdot z\varphi(z)\,dz = \int 3z^2\varphi(z)\,dz = 3\,\mathbb{E}[Z^2]`$, and the same step gives $`\mathbb{E}[Z^2] = \int \varphi = 1`$.
 
-**Theorem 1 (mean square).** For partitions with steps $h_k = s_k - s_{k-1}$, $\mathbb{E}[(Q - t)^2] = 2\sum_k h_k^2 \le 2t \cdot \text{mesh}$. Hence $Q \to t$ in mean square, and in probability, along any sequence of partitions whose mesh goes to 0. *Proof.* Write $D_k = (W_{s_k} - W_{s_{k-1}})^2 - h_k$. These terms have mean 0, variance $h_k^2(3 - 1) = 2h_k^2$ by Lemma 1, and are independent because the increments are, so $\mathbb{E}[(\sum_k D_k)^2] = \sum_k 2h_k^2$. And $\sum_k D_k = Q - t$. Finally $\sum_k h_k^2 \le \text{mesh} \cdot \sum_k h_k = \text{mesh} \cdot t$. Chebyshev's inequality turns mean square into probability.
+**Theorem 1 (mean square).** For partitions with steps $`h_k = s_k - s_{k-1}`$, $`\mathbb{E}[(Q - t)^2] = 2\sum_k h_k^2 \le 2t \cdot \text{mesh}`$. Hence $`Q \to t`$ in mean square, and in probability, along any sequence of partitions whose mesh goes to 0. *Proof.* Write $`D_k = (W_{s_k} - W_{s_{k-1}})^2 - h_k`$. These terms have mean 0, variance $`h_k^2(3 - 1) = 2h_k^2`$ by Lemma 1, and are independent because the increments are, so $`\mathbb{E}[(\sum_k D_k)^2] = \sum_k 2h_k^2`$. And $`\sum_k D_k = Q - t`$. Finally $`\sum_k h_k^2 \le \text{mesh} \cdot \sum_k h_k = \text{mesh} \cdot t`$. Chebyshev's inequality turns mean square into probability.
 
-**Theorem 2 (almost surely, when the meshes add up).** If the partitions $\Pi_1, \Pi_2, \ldots$ have meshes whose sum is finite, then $Q(\Pi_j) \to t$ almost surely. *Proof.* For a fixed small number $e > 0$, Chebyshev and Theorem 1 give $P(|Q(\Pi_j) - t| > e) \le 2t\,\text{mesh}(\Pi_j)/e^2$, whose sum over j is finite. By the first Borel–Cantelli lemma, almost surely only finitely many j have $|Q(\Pi_j) - t| > e$. Take e = 1, 1/2, 1/3, … : a countable union of null events is null, so almost surely $Q(\Pi_j) \to t$. The halving grids, with mesh $t/2^j$, qualify.
+**Theorem 2 (almost surely, when the meshes add up).** If the partitions $`\Pi_1, \Pi_2, \ldots`$ have meshes whose sum is finite, then $`Q(\Pi_j) \to t`$ almost surely. *Proof.* For a fixed small number $`e > 0`$, Chebyshev and Theorem 1 give $`P(|Q(\Pi_j) - t| > e) \le 2t\,\text{mesh}(\Pi_j)/e^2`$, whose sum over j is finite. By the first Borel–Cantelli lemma, almost surely only finitely many j have $`|Q(\Pi_j) - t| > e`$. Take e = 1, 1/2, 1/3, … : a countable union of null events is null, so almost surely $`Q(\Pi_j) \to t`$. The halving grids, with mesh $`t/2^j`$, qualify.
 
-**Theorem 3 (infinite variation).** Almost surely, the total variation of W on the stretch from 0 to t is infinite. *Proof.* Take the halving grids. For each, $Q \le \max_k |\Delta W_k| \cdot V$. A continuous path is uniformly continuous on a closed stretch, so $\max_k |\Delta W_k| \to 0$ on every path. On the almost-sure event of Theorem 2, $Q \to t > 0$. If V stayed below some bound B along a subsequence, Q would be at most $B \max_k|\Delta W_k| \to 0$ along it, a contradiction. So $V \to \infty$. The total variation is the supremum of V over all partitions, at least each of these, so it is infinite. Repeat this on every stretch with rational endpoints: countably many null sets, and every stretch of time contains one, so the paths have infinite variation on every stretch at once.
+**Theorem 3 (infinite variation).** Almost surely, the total variation of W on the stretch from 0 to t is infinite. *Proof.* Take the halving grids. For each, $`Q \le \max_k |\Delta W_k| \cdot V`$. A continuous path is uniformly continuous on a closed stretch, so $`\max_k |\Delta W_k| \to 0`$ on every path. On the almost-sure event of Theorem 2, $`Q \to t > 0`$. If V stayed below some bound B along a subsequence, Q would be at most $`B \max_k|\Delta W_k| \to 0`$ along it, a contradiction. So $`V \to \infty`$. The total variation is the supremum of V over all partitions, at least each of these, so it is infinite. Repeat this on every stretch with rational endpoints: countably many null sets, and every stretch of time contains one, so the paths have infinite variation on every stretch at once.
 
-**Theorem 4 (paths of bounded variation have zero quadratic variation).** If f is continuous with finite total variation $T_f < \infty$, then $Q_f \le \max_k |\Delta f_k| \cdot T_f \to 0$ as the mesh shrinks, by uniform continuity. Smooth paths are of bounded variation.
+**Theorem 4 (paths of bounded variation have zero quadratic variation).** If f is continuous with finite total variation $`T_f < \infty`$, then $`Q_f \le \max_k |\Delta f_k| \cdot T_f \to 0`$ as the mesh shrinks, by uniform continuity. Smooth paths are of bounded variation.
 
-**Corollary (the square of W).** For any partition of the stretch from 0 to t, $W_t^2 = \sum_k 2W_{s_{k-1}}\Delta W_k + Q$ and $\sum_k 2W_{s_k}\Delta W_k = \sum_k 2W_{s_{k-1}}\Delta W_k + 2Q$, by expanding $W_{s_k}^2 - W_{s_{k-1}}^2 = (W_{s_k} - W_{s_{k-1}})(W_{s_k} + W_{s_{k-1}})$. By Theorem 1 the left-point sums converge in mean square to $W_t^2 - t$, the right-point sums to $W_t^2 + t$.
+**Corollary (the square of W).** For any partition of the stretch from 0 to t, $`W_t^2 = \sum_k 2W_{s_{k-1}}\Delta W_k + Q`$ and $`\sum_k 2W_{s_k}\Delta W_k = \sum_k 2W_{s_{k-1}}\Delta W_k + 2Q`$, by expanding $`W_{s_k}^2 - W_{s_{k-1}}^2 = (W_{s_k} - W_{s_{k-1}})(W_{s_k} + W_{s_{k-1}})`$. By Theorem 1 the left-point sums converge in mean square to $`W_t^2 - t`$, the right-point sums to $`W_t^2 + t`$.
 
 **Stated, not proved here.** Along any refining sequence of partitions with mesh going to 0, with no condition on the sum of meshes, the convergence is still almost sure; and the supremum of Q over all partitions is infinite almost surely, so the partitions must be fixed before the path is seen. Both are classical, and treated in Mörters and Peres, chapter 1.
 
@@ -611,16 +625,16 @@ The two outputs are identical, digit for digit.
 
 Lean proves Theorems 1, 2 and 3 of the Detailed proof, on grids of equal steps, and checks the worked numbers.
 
-- Take a Brownian motion and $n \ge 1$ equal steps from 0 to t. Then $Q_n$ averages exactly t, and $\mathbb{E}[(Q_n - t)^2] = 2t^2/n$.
+- Take a Brownian motion and $`n \ge 1`$ equal steps from 0 to t. Then $`Q_n`$ averages exactly t, and $`\mathbb{E}[(Q_n - t)^2] = 2t^2/n`$.
 - So the mean squared error goes to 0 as n grows: the sum of squares converges to t in mean square.
-- Take the halving grids, with $2^j$ equal steps. Then, with probability one, the sum of squares on the j-th grid converges to t.
+- Take the halving grids, with $`2^j`$ equal steps. Then, with probability one, the sum of squares on the j-th grid converges to t.
 - Take t > 0. Then, with probability one, the path has infinite total variation on the stretch from 0 to t.
 - Take one second and 1,000 steps. Then the sum of squares averages 1000 × 0.001 = 1, with variance 2/1000.
-- Take one step of length Δt. Then its square has variance $\Delta t^2(3 - 1) = 2\,\Delta t^2$, and n such steps give $2t^2/n$.
-- Take the current of 3 micrometres a second at 1,000 steps. Then $t + \mu^2 t^2/n$ = 1 + 9/1000 = 1.009.
-- Take one step of the path. Then the change in the square is $2W_{t_{k-1}}\Delta W_k + (\Delta W_k)^2$.
+- Take one step of length Δt. Then its square has variance $`\Delta t^2(3 - 1) = 2\,\Delta t^2`$, and n such steps give $`2t^2/n`$.
+- Take the current of 3 micrometres a second at 1,000 steps. Then $`t + \mu^2 t^2/n`$ = 1 + 9/1000 = 1.009.
+- Take one step of the path. Then the change in the square is $`2W_{t_{k-1}}\Delta W_k + (\Delta W_k)^2`$.
 
-The average length $\sqrt{2nt/\pi}$ and every simulated path are left to the Python and Rust checks.
+The average length $`\sqrt{2nt/\pi}`$ and every simulated path are left to the Python and Rust checks.
 
 ```lean
 -- Quadratic variation: for a Brownian motion, the sum of squared increments over n equal steps of [0, t] averages t with mean squared error 2t^2/n, so it converges to t in mean square, almost surely along halving grids, and the path has infinite total variation on [0, t].

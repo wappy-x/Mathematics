@@ -32,41 +32,47 @@ Two notations first, in words. **Stress**, written σ (sigma), is force per area
 
 **Hooke's law**, for steel below its yield stress:
 
-$$\sigma = E\,\varepsilon$$
+```math
+\sigma = E\,\varepsilon
+```
 
 **Read it aloud:** stress is stiffness times strain. E, Young's modulus, is the stress per unit of strain: the steel's stiffness, 200 GPa (gigapascals, billions of pascals).
 
 The **bending relation**, derived below:
 
-$$\kappa = \frac{M}{EI}, \qquad \sigma = -\frac{M\,y}{I}, \qquad \sigma_{\max} = \frac{M}{W}, \quad W = \frac{I}{c}$$
+```math
+\kappa = \frac{M}{EI}, \qquad \sigma = -\frac{M\,y}{I}, \qquad \sigma_{\max} = \frac{M}{W}, \quad W = \frac{I}{c}
+```
 
 **Read it aloud:** the beam curves in proportion to the bending moment over its bending stiffness. The stress grows straight-line with distance from the middle, a squeeze above it and a stretch below it when the beam sags, and is largest at the outer faces.
 
 The **sag equation**, a two-point boundary value problem:
 
-$$EI\,v''(x) = -M(x), \qquad v(0) = v(L) = 0, \qquad \delta = v\!\left(\tfrac{L}{2}\right) = \frac{P L^3}{48\,E I}$$
+```math
+EI\,v''(x) = -M(x), \qquad v(0) = v(L) = 0, \qquad \delta = v\!\left(\tfrac{L}{2}\right) = \frac{P L^3}{48\,E I}
+```
 
 **Read it aloud:** the beam's curvature at each point is the moment there over EI; pin both ends at zero and the mid-span sag is load times span cubed over 48 EI.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P$ | load at mid-span, N | 2000 N | sag and stress rise in proportion |
-| $L$ | span between the pins, m | 4 m | sag rises as $L^3$, stress as $L$ |
-| $x$ | distance along the span from the left pin, m | 0 to 4 m | — |
-| $v(x)$, $\delta$ | sag below the pins at $x$, positive down; $\delta$ is the sag at mid-span | $\delta$ = 8.16 mm | — |
-| $M(x)$ | bending moment: the turning effect the load puts on the beam at $x$, N m | $Px/2$, peak $PL/4$ = 2000 N m | sag and stress rise |
-| $E$ | Young's modulus: the steel's stiffness, Pa | 200 GPa | sag falls; stress unchanged |
-| $I$, $dA$ | second moment of area: the sum of (each small area $dA$ × its distance from the middle squared) over the section, m⁴ | 163.32 cm⁴ | sag falls; stress falls |
-| $y$, $c$ | distance from the neutral axis, up positive; $c$ is the distance to the outer face | $c$ = 50 mm | the size of the stress grows with $\lvert y\rvert$ |
-| $W$ | section modulus $I/c$, m³ | 32.66 cm³ | stress falls |
-| $\sigma$, $F$, $A$ | stress, force $F$ over area $A$, Pa; $\sigma_{\max}$ is its largest value, at the faces; $\sigma_y$ is the yield stress | 61.23 MPa at the faces; $\sigma_y$ = 275 MPa | — |
-| $\varepsilon$ | strain: stretch per length, no units | 0.000306 at the bottom face | — |
-| $\kappa$, $R$ | curvature: one over the radius $R$ the beam bends to, 1/m | $M/EI$, largest at mid-span | — |
+| $`P`$ | load at mid-span, N | 2000 N | sag and stress rise in proportion |
+| $`L`$ | span between the pins, m | 4 m | sag rises as $`L^3`$, stress as $`L`$ |
+| $`x`$ | distance along the span from the left pin, m | 0 to 4 m | — |
+| $`v(x)`$, $`\delta`$ | sag below the pins at $`x`$, positive down; $`\delta`$ is the sag at mid-span | $`\delta`$ = 8.16 mm | — |
+| $`M(x)`$ | bending moment: the turning effect the load puts on the beam at $`x`$, N m | $`Px/2`$, peak $`PL/4`$ = 2000 N m | sag and stress rise |
+| $`E`$ | Young's modulus: the steel's stiffness, Pa | 200 GPa | sag falls; stress unchanged |
+| $`I`$, $`dA`$ | second moment of area: the sum of (each small area $`dA`$ × its distance from the middle squared) over the section, m⁴ | 163.32 cm⁴ | sag falls; stress falls |
+| $`y`$, $`c`$ | distance from the neutral axis, up positive; $`c`$ is the distance to the outer face | $`c`$ = 50 mm | the size of the stress grows with $`\lvert y\rvert`$ |
+| $`W`$ | section modulus $`I/c`$, m³ | 32.66 cm³ | stress falls |
+| $`\sigma`$, $`F`$, $`A`$ | stress, force $`F`$ over area $`A`$, Pa; $`\sigma_{\max}`$ is its largest value, at the faces; $`\sigma_y`$ is the yield stress | 61.23 MPa at the faces; $`\sigma_y`$ = 275 MPa | — |
+| $`\varepsilon`$ | strain: stretch per length, no units | 0.000306 at the bottom face | — |
+| $`\kappa`$, $`R`$ | curvature: one over the radius $`R`$ the beam bends to, 1/m | $`M/EI`$, largest at mid-span | — |
 
 ### When it holds
 
 - **Linear elastic steel, stress below yield.** Past 275 MPa the steel flows and Hooke's law stops. The 100 mm joist reaches yield at a mid-span load of 8983 N. At 12,000 N the formula reports 367 MPa, a stress the steel cannot carry at all. Past 10,343 N the middle of the joist has yielded right through its depth: it turns there like a hinge, and the joist folds.
-- **Small slopes.** Curvature equals $v''$ only while the beam's slope is small. Here the end slope is 0.00612 rad (0.351°), so the error is far below a part in a thousand.
+- **Small slopes.** Curvature equals $`v''`$ only while the beam's slope is small. Here the end slope is 0.00612 rad (0.351°), so the error is far below a part in a thousand.
 - **Slender beam, flat sections stay flat.** The derivation ignores the beam shearing like a deck of cards. That is fair for a 4 m span on a 100 mm deep section; for a short deep beam, shear adds sag the formula leaves out (Timoshenko's correction, in Sources).
 - **Load in the plane of the web, beam held sideways.** An I-section loaded across its strong axis can twist and fall sideways if its top flange is not held by the deck. That is **lateral-torsional buckling**: a stability failure, not a stress or sag failure. It is a relative of the column bowing under end load that [Buckling](08-buckling-and-stability.md) works through.
 - **Pins at both ends.** Ends that are bolted rigidly sag less; the model above assumes they can rotate freely, which is the safe choice when in doubt.
@@ -81,71 +87,77 @@ Bend a ruler into a smile. Its bottom face gets longer and its top face gets sho
 
 ### Step 1: flat sections stay flat, so strain is a straight line in y
 
-Assume each cross-section, flat before bending, stays flat and turns to face the centre of the curve. That is the model's central assumption, and it is checked in practice by strain gauges. A fibre at height $y$ above the neutral axis then follows an arc of radius $R - y$ instead of $R$. Its length changes by the fraction $-y/R$:
+Assume each cross-section, flat before bending, stays flat and turns to face the centre of the curve. That is the model's central assumption, and it is checked in practice by strain gauges. A fibre at height $`y`$ above the neutral axis then follows an arc of radius $`R - y`$ instead of $`R`$. Its length changes by the fraction $`-y/R`$:
 
-$$\varepsilon = -\kappa\,y, \qquad \kappa = 1/R.$$
+```math
+\varepsilon = -\kappa\,y, \qquad \kappa = 1/R.
+```
 
-On a sagging beam, fibres above the axis ($y > 0$) shorten, and those below lengthen.
+On a sagging beam, fibres above the axis ($`y > 0`$) shorten, and those below lengthen.
 
 ### Step 2: Hooke's law makes stress a straight line too
 
-$\sigma = E\varepsilon = -E\kappa y$. Stress is zero at the neutral axis and largest at the faces. That is the triangle in the picture.
+$`\sigma = E\varepsilon = -E\kappa y`$. Stress is zero at the neutral axis and largest at the faces. That is the triangle in the picture.
 
 ### Step 3: no net push puts the neutral axis through the centroid
 
-The beam is bent, not stretched, so the stresses must add up to zero force: $\int \sigma\,dA = -E\kappa \int y\,dA = 0$. So $\int y\,dA = 0$: the neutral axis passes through the section's centroid, the balance point of its area. For a symmetric I, that is mid-depth, 50 mm from each face.
+The beam is bent, not stretched, so the stresses must add up to zero force: $`\int \sigma\,dA = -E\kappa \int y\,dA = 0`$. So $`\int y\,dA = 0`$: the neutral axis passes through the section's centroid, the balance point of its area. For a symmetric I, that is mid-depth, 50 mm from each face.
 
 ### Step 4: the stresses' turning effect is the moment
 
-Each slice of area $dA$ carries force $\sigma\,dA$ at lever arm $y$. Adding the turning effects:
+Each slice of area $`dA`$ carries force $`\sigma\,dA`$ at lever arm $`y`$. Adding the turning effects:
 
-$$M = -\int \sigma\,y\,dA = E\kappa \int y^2\,dA = E I \kappa.$$
+```math
+M = -\int \sigma\,y\,dA = E\kappa \int y^2\,dA = E I \kappa.
+```
 
-The integral $I = \int y^2 dA$ is the second moment of area. It counts each bit of steel by the square of its distance from the axis. That is why an I-section puts most of its steel in the flanges: for the 100 mm I, the two thin flanges give 139.56 of the 163.32 cm⁴, the web only 23.76. Substituting $\kappa = M/(EI)$ into Step 2 gives $\sigma = -My/I$, and at the faces $|\sigma| = Mc/I = M/W$.
+The integral $`I = \int y^2 dA`$ is the second moment of area. It counts each bit of steel by the square of its distance from the axis. That is why an I-section puts most of its steel in the flanges: for the 100 mm I, the two thin flanges give 139.56 of the 163.32 cm⁴, the web only 23.76. Substituting $`\kappa = M/(EI)`$ into Step 2 gives $`\sigma = -My/I`$, and at the faces $`|\sigma| = Mc/I = M/W`$.
 
 ### Step 5: curvature is the second derivative, and two pins fix the shape
 
-For a gently curved line, curvature is the second derivative of height ([Second derivatives](../../06-Calculus%20and%20analysis/02-Derivatives/08-higher-derivatives-and-concavity.md)). With sag $v$ measured downward and a sagging moment taken positive, $EI\,v'' = -M(x)$. The pins say $v(0) = 0$ and $v(L) = 0$: one condition at each end, a boundary value problem ([Boundary value problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)).
+For a gently curved line, curvature is the second derivative of height ([Second derivatives](../../06-Calculus%20and%20analysis/02-Derivatives/08-higher-derivatives-and-concavity.md)). With sag $`v`$ measured downward and a sagging moment taken positive, $`EI\,v'' = -M(x)`$. The pins say $`v(0) = 0`$ and $`v(L) = 0`$: one condition at each end, a boundary value problem ([Boundary value problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)).
 
-The load is shared equally between the pins, so each pushes up with $P/2$. The moment at $x$ on the left half is then $M = Px/2$ ([Newton's laws](01-newtons-laws-work-and-energy.md): the piece of beam to the left of the cut must not turn). Integrating twice and fitting the pins gives
+The load is shared equally between the pins, so each pushes up with $`P/2`$. The moment at $`x`$ on the left half is then $`M = Px/2`$ ([Newton's laws](01-newtons-laws-work-and-energy.md): the piece of beam to the left of the cut must not turn). Integrating twice and fitting the pins gives
 
-$$v(x) = \frac{P\,x\,(3L^2 - 4x^2)}{48\,EI}, \quad 0 \le x \le L/2,$$
+```math
+v(x) = \frac{P\,x\,(3L^2 - 4x^2)}{48\,EI}, \quad 0 \le x \le L/2,
+```
 
-mirrored on the right half. At $x = L/2$ this is $PL^3/(48EI)$.
+mirrored on the right half. At $`x = L/2`$ this is $`PL^3/(48EI)`$.
 
 <details>
 <summary>The two integrations</summary>
 
-On $0 \le x \le L/2$: $EI\,v'' = -Px/2$. Integrate: $EI\,v' = -Px^2/4 + C_1$, with $C_1$ and later $C_2$ the constants of integration. By symmetry the beam is level at mid-span, $v'(L/2) = 0$, so $C_1 = PL^2/16$. Integrate again: $EI\,v = -Px^3/12 + PL^2x/16 + C_2$, and $v(0) = 0$ gives $C_2 = 0$. So $EI\,v = Px(3L^2 - 4x^2)/48$. At $x = L/2$: $P(L/2)(3L^2 - L^2)/48 = PL^3/48$. The end slope is $v'(0) = PL^2/(16EI)$.
+On $`0 \le x \le L/2`$: $`EI\,v'' = -Px/2`$. Integrate: $`EI\,v' = -Px^2/4 + C_1`$, with $`C_1`$ and later $`C_2`$ the constants of integration. By symmetry the beam is level at mid-span, $`v'(L/2) = 0`$, so $`C_1 = PL^2/16`$. Integrate again: $`EI\,v = -Px^3/12 + PL^2x/16 + C_2`$, and $`v(0) = 0`$ gives $`C_2 = 0`$. So $`EI\,v = Px(3L^2 - 4x^2)/48`$. At $`x = L/2`$: $`P(L/2)(3L^2 - L^2)/48 = PL^3/48`$. The end slope is $`v'(0) = PL^2/(16EI)`$.
 
 </details>
 
 ### Step 6: a second road, through energy
 
-The load does work $P\delta/2$ as it sinks (the force grows from zero as the beam takes it up). The bent steel stores energy $\int M^2/(2EI)\,dx$. The two must be equal, so $\delta = \frac{1}{P}\int_0^L M^2/(EI)\,dx$. With $M = Px/2$ on each half, the integral is $P^2L^3/48$, and $\delta = PL^3/(48EI)$ again. The code takes this road numerically, as a check that owes nothing to the shape formula.
+The load does work $`P\delta/2`$ as it sinks (the force grows from zero as the beam takes it up). The bent steel stores energy $`\int M^2/(2EI)\,dx`$. The two must be equal, so $`\delta = \frac{1}{P}\int_0^L M^2/(EI)\,dx`$. With $`M = Px/2`$ on each half, the integral is $`P^2L^3/48`$, and $`\delta = PL^3/(48EI)`$ again. The code takes this road numerically, as a check that owes nothing to the shape formula.
 
-**Why depth wins.** Stress goes as $1/W$, which grows roughly as depth squared. Sag goes as $1/I$, roughly depth cubed. Going from 80 mm to 100 mm deep raises $W$ from 19.43 to 32.66 cm³, but $I$ from 77.70 to 163.32 cm⁴. On a long span with a light load, sag is the binding limit, and depth is the cheapest cure.
+**Why depth wins.** Stress goes as $`1/W`$, which grows roughly as depth squared. Sag goes as $`1/I`$, roughly depth cubed. Going from 80 mm to 100 mm deep raises $`W`$ from 19.43 to 32.66 cm³, but $`I`$ from 77.70 to 163.32 cm⁴. On a long span with a light load, sag is the binding limit, and depth is the cheapest cure.
 
 ---
 
 ## Worked numbers, by hand
 
-The 100 mm I: flanges 55 mm by 5.7 mm, web 4.1 mm thick, rounded corners left out (which makes $I$ a little low, on the safe side).
+The 100 mm I: flanges 55 mm by 5.7 mm, web 4.1 mm thick, rounded corners left out (which makes $`I`$ a little low, on the safe side).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| largest bending moment | $PL/4$ = 2000 × 4 / 4 | 2000 N m |
-| sag limit | $L/360$ = 4000 mm / 360 | 11.11 mm |
+| largest bending moment | $`PL/4`$ = 2000 × 4 / 4 | 2000 N m |
+| sag limit | $`L/360`$ = 4000 mm / 360 | 11.11 mm |
 | stress limit | 0.6 × 275 MPa | 165 MPa |
-| $I$ the sag limit needs | $PL^3/(48E \times 11.11\text{ mm})$ | 120.00 cm⁴ |
-| $W$ the stress limit needs | 2000 N m / 165 MPa | 12.12 cm³ |
-| $I$ of the 100 mm I | flanges 139.56 + web 23.76 | 163.32 cm⁴ |
-| $W$ | 163.32 cm⁴ / 5 cm | 32.66 cm³ |
-| bending stiffness $EI$ | 200 GPa × 163.32 cm⁴ | 326645 N m² |
+| $`I`$ the sag limit needs | $`PL^3/(48E \times 11.11\text{ mm})`$ | 120.00 cm⁴ |
+| $`W`$ the stress limit needs | 2000 N m / 165 MPa | 12.12 cm³ |
+| $`I`$ of the 100 mm I | flanges 139.56 + web 23.76 | 163.32 cm⁴ |
+| $`W`$ | 163.32 cm⁴ / 5 cm | 32.66 cm³ |
+| bending stiffness $`EI`$ | 200 GPa × 163.32 cm⁴ | 326645 N m² |
 | mid-span sag | 2000 × 4³ / (48 × 326645) | **8.16 mm** |
 | face stress | 2000 N m / 32.66 cm³ | **61.23 MPa** |
 | face strain | 61.23 MPa / 200 GPa | 0.000306 |
-| own weight, 7.77 kg/m | adds 5 × (weight per m) × $L^4$ / (384 $EI$) | 0.78 mm, total 8.94 mm |
+| own weight, 7.77 kg/m | adds 5 × (weight per m) × $`L^4`$ / (384 $`EI`$) | 0.78 mm, total 8.94 mm |
 
 The 100 mm I sags 8.94 mm with its own weight included, under the 11.11 mm limit, and its outer faces carry 61.23 MPa, well under 165 MPa: the joist is sized by sag, with stress to spare.
 
@@ -169,8 +181,8 @@ Top curve: the 80 mm I, which crosses the limit over the middle 2 m or so. Middl
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Size by stress only | 80 mm I, sags 17.16 mm | 102.96 MPa passes, but the sag limit, 11.11 mm, is the one that binds |
-| Fit the I-section on its side | $I$ = 15.86 cm⁴, sag 84.09 mm | $I$ counts distance squared; turned over, the flanges sit on the axis |
-| Treat the pinned ends as clamped | 2.04 mm | $PL^3/(192EI)$: a quarter of the true sag, from the wrong boundary conditions |
+| Fit the I-section on its side | $`I`$ = 15.86 cm⁴, sag 84.09 mm | $`I`$ counts distance squared; turned over, the flanges sit on the axis |
+| Treat the pinned ends as clamped | 2.04 mm | $`PL^3/(192EI)`$: a quarter of the true sag, from the wrong boundary conditions |
 | Spread the 2 kN along the span | 5.10 mm, 30.61 MPa | People standing together are a point load; spreading it halves the moment |
 | Use the formula past yield | 367 MPa at 12,000 N | Yield comes at 8983 N; beyond it Hooke's law, and every formula here, stops. Past 10,343 N the joist folds |
 
@@ -182,8 +194,8 @@ The code prints all five.
 
 The code sizes the joist from three candidate sections and then checks its own answer by independent roads.
 
-- $I$ is found twice: from the three-rectangle formula, and by slicing the section into 0.05 mm strips and adding area × distance squared.
-- The mid-span sag is found three ways. The first is the closed form $PL^3/(48EI)$. The second is a finite-difference solution of the boundary value problem $EI\,v'' = -M$ on 400 steps: each $v''$ is replaced by differences of neighbouring sags. Those equations are solved by the Thomas algorithm (the tridiagonal sweep, written out: each equation links only three neighbouring sags). The third is the energy balance, integrated by Simpson's rule (a standard way to add up an integral from evenly spaced samples).
+- $`I`$ is found twice: from the three-rectangle formula, and by slicing the section into 0.05 mm strips and adding area × distance squared.
+- The mid-span sag is found three ways. The first is the closed form $`PL^3/(48EI)`$. The second is a finite-difference solution of the boundary value problem $`EI\,v'' = -M`$ on 400 steps: each $`v''`$ is replaced by differences of neighbouring sags. Those equations are solved by the Thomas algorithm (the tridiagonal sweep, written out: each equation links only three neighbouring sags). The third is the energy balance, integrated by Simpson's rule (a standard way to add up an integral from evenly spaced samples).
 - The finite-difference sag differs from the formula by 0.0001 mm, the size of its grid error.
 - The face stress is checked by slicing too: the strips' stresses must add up to no net push and turn with exactly the 2000 N m moment.
 - The same solver, given the joist's own weight spread along the span, checks the 0.78 mm self-weight sag.
@@ -538,9 +550,9 @@ The two outputs match line for line.
 
 Lean proves the sag formulas exactly, for a pinned beam with any load at mid-span, any span and any bending stiffness.
 
-- Suppose the sag obeys $EI\,v'' = -M$ and is zero at both pins. Then the mid-span sag is $PL^3/(48EI)$.
-- Suppose the same, and take $0 \le x \le L/2$. Then the sag curve is $v(x) = Px(3L^2 - 4x^2)/(48EI)$.
-- Take a load $P$ that is not zero. Then the energy road of Step 6 gives $PL^3/(48EI)$ again.
+- Suppose the sag obeys $`EI\,v'' = -M`$ and is zero at both pins. Then the mid-span sag is $`PL^3/(48EI)`$.
+- Suppose the same, and take $`0 \le x \le L/2`$. Then the sag curve is $`v(x) = Px(3L^2 - 4x^2)/(48EI)`$.
+- Take a load $`P`$ that is not zero. Then the energy road of Step 6 gives $`PL^3/(48EI)`$ again.
 - The worked steps check too: the 2000 N m peak moment, the 165 MPa stress limit, and clamped ends giving a quarter of the sag.
 
 The section sizes, the sags in millimetres, and the finite-difference and Simpson roads are left to the Python and Rust checks.
@@ -747,9 +759,9 @@ example : (192 : ℕ) = 4 * 48 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Checking strength and calling the beam safe.** The 80 mm I carries the three people at 102.96 MPa, well inside 165 MPa, and sags 17.16 mm, more than half as much again as the 11.11 mm limit. Strength depends on $W$, roughly depth squared; sag depends on $I$, roughly depth cubed, and on span cubed. On a long, lightly loaded member, check the sag first.
+> **Checking strength and calling the beam safe.** The 80 mm I carries the three people at 102.96 MPa, well inside 165 MPa, and sags 17.16 mm, more than half as much again as the 11.11 mm limit. Strength depends on $`W`$, roughly depth squared; sag depends on $`I`$, roughly depth cubed, and on span cubed. On a long, lightly loaded member, check the sag first.
 >
-> - **Fitting an I-section on its side.** The same steel gives $I$ = 15.86 cm⁴ instead of 163.32 cm⁴, and the joist sags 84.09 mm.
+> - **Fitting an I-section on its side.** The same steel gives $`I`$ = 15.86 cm⁴ instead of 163.32 cm⁴, and the joist sags 84.09 mm.
 > - **Wrong end conditions.** Treating pins as clamps gives 2.04 mm, a quarter of the true 8.16 mm.
 > - **A crowd at one spot spread over the span.** 5.10 mm and 30.61 MPa, both too low.
 
@@ -758,9 +770,9 @@ example : (192 : ℕ) = 4 * 48 := by decide
 ## Where you meet it in real life
 
 - **Floors and footbridges.** Joists in houses and decks are usually sized by sag, not strength: a floor that bounces is a complaint long before it is a hazard.
-- **Steel tables.** Section tables list $I$ and $W$ for every rolled shape, so the sizing on this card is a lookup: needed $I$ = 120.00 cm⁴, needed $W$ = 12.12 cm³, pick the lightest section above both.
+- **Steel tables.** Section tables list $`I`$ and $`W`$ for every rolled shape, so the sizing on this card is a lookup: needed $`I`$ = 120.00 cm⁴, needed $`W`$ = 12.12 cm³, pick the lightest section above both.
 - **Strain gauges.** A strain gauge glued to the bottom flange reads strain; Hooke's law turns 0.000306 into 61.23 MPa. Bridge load tests work this way.
-- **Ringing and buckling.** The same $EI$ sets how fast the deck vibrates ([Vibration modes](06-vibration-modes-and-resonance.md)) and the load at which a column bows sideways ([Buckling](08-buckling-and-stability.md)).
+- **Ringing and buckling.** The same $`EI`$ sets how fast the deck vibrates ([Vibration modes](06-vibration-modes-and-resonance.md)) and the load at which a column bows sideways ([Buckling](08-buckling-and-stability.md)).
 
 > **Say it back**
 > Stress is force per area and strain is stretch per length; below yield, steel keeps them in proportion, stress equals E times strain. A bent beam has a neutral layer through its centroid, and strain grows straight-line with distance from it. Adding up the stresses' turning effect gives M = EIκ, so stress is −My/I (a squeeze above the axis of a sagging beam) and the curvature is M/EI. Treat curvature as v'', pin both ends, and the 4 m joist under 2 kN sags PL³/48EI: 8.16 mm for the 100 mm I, at 61.23 MPa. The 80 mm I is strong enough but sags 17.16 mm, so on this span sag, not strength, sizes the joist.
@@ -775,7 +787,7 @@ example : (192 : ℕ) = 4 * 48 := by decide
 
 ## Where this goes next
 
-- [Buckling](08-buckling-and-stability.md): the same $EI$ under end compression, where a slender member bends away long before it is crushed.
+- [Buckling](08-buckling-and-stability.md): the same $`EI`$ under end compression, where a slender member bends away long before it is crushed.
 - [Finite elements](../08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): beams, plates and shells of any shape, solved by splitting them into small pieces, each obeying the relations on this card.
 
 This card treats one beam on two pins; how a whole frame of joists, girders and columns shares a crowd's weight, with joints that are neither pins nor clamps, is the question it leaves open.
@@ -787,7 +799,7 @@ This card treats one beam on two pins; how a whole frame of joists, girders and 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Goodno, Barry J., and James M. Gere. *Mechanics of Materials*, 9th ed. Cengage, 2018. [Publisher's page](https://www.cengage.com/c/mechanics-of-materials-9e-goodno-gere/9781337093347). Hooke's law, the flexure formula, the deflection equation and its standard cases. Its property tables are the source for structural steel at E = 200 GPa and 7850 kg/m³.
-- Öchsner, Andreas. "Euler–Bernoulli Beam Theory." In *Classical Beam Theories of Structural Mechanics*. Springer, 2021. [doi:10.1007/978-3-030-76035-9_2](https://doi.org/10.1007/978-3-030-76035-9_2). The plane-sections assumption and the derivation of $EI\,v'' = -M$ set out step by step.
+- Öchsner, Andreas. "Euler–Bernoulli Beam Theory." In *Classical Beam Theories of Structural Mechanics*. Springer, 2021. [doi:10.1007/978-3-030-76035-9_2](https://doi.org/10.1007/978-3-030-76035-9_2). The plane-sections assumption and the derivation of $`EI\,v'' = -M`$ set out step by step.
 - Timoshenko, S. P. "On the Correction for Shear of the Differential Equation for Transverse Vibrations of Prismatic Bars." *Philosophical Magazine* 41 (1921): 744–746. [doi:10.1080/14786442108636264](https://doi.org/10.1080/14786442108636264). The shear correction that matters for short, deep beams and is left out here.
 - NIST. "Standard acceleration of gravity." CODATA recommended values. [NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gn). The 9.80665 m/s² used to turn 2000 N into 203.9 kg.
 - CEN. *EN 1993-1-1:2005, Eurocode 3: Design of steel structures, Part 1-1: General rules and rules for buildings*. Brussels: CEN, 2005. [European Commission Eurocode 3 page](https://eurocodes.jrc.ec.europa.eu/EN-Eurocodes/eurocode-3-design-steel-structures). Its Table 3.1 lists the 275 MPa yield stress of grade S275.

@@ -42,43 +42,49 @@ Orange: the intrinsic spread, total protection over total annuity. Green: the pl
 
 ## The formula
 
-Notation first, in words. The index has $n$ names, numbered by $i$ from 1 to $n$. Each name has its own quoted spread $s_i$. From that quote, exactly as on [Valuing an existing CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md), come two numbers per \$1 of notional: the protection leg $P_i$ (what the payout on default is worth today) and the risky annuity $A_i$ (what 1 a year of fee, paid only while the name survives, is worth today). The sign $\sum$ means "add up over all the names".
+Notation first, in words. The index has $`n`$ names, numbered by $`i`$ from 1 to $`n`$. Each name has its own quoted spread $`s_i`$. From that quote, exactly as on [Valuing an existing CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md), come two numbers per \$1 of notional: the protection leg $`P_i`$ (what the payout on default is worth today) and the risky annuity $`A_i`$ (what 1 a year of fee, paid only while the name survives, is worth today). The sign $`\sum`$ means "add up over all the names".
 
-$$s_I = \frac{\sum_{i=1}^{n} P_i}{\sum_{i=1}^{n} A_i} = \sum_{i=1}^{n} w_i\, s_i, \qquad w_i = \frac{A_i}{\sum_{\ell=1}^{n} A_\ell}$$
+```math
+s_I = \frac{\sum_{i=1}^{n} P_i}{\sum_{i=1}^{n} A_i} = \sum_{i=1}^{n} w_i\, s_i, \qquad w_i = \frac{A_i}{\sum_{\ell=1}^{n} A_\ell}
+```
 
 **Read it aloud:** the index's intrinsic spread is all the protection the index sells divided by all the fee-paying years it expects, which is the same as an average of the names' spreads in which each name is weighted by its own risky annuity.
 
-Two helper formulas. The index trades with a fixed coupon $c$, and the difference is paid in cash on day one, the upfront $U$:
+Two helper formulas. The index trades with a fixed coupon $`c`$, and the difference is paid in cash on day one, the upfront $`U`$:
 
-$$U = \frac{1}{n}\sum_{i=1}^{n}\left(P_i - c\,A_i\right) = (s_I - c)\,\bar A, \qquad \bar A = \frac{1}{n}\sum_{i=1}^{n} A_i$$
+```math
+U = \frac{1}{n}\sum_{i=1}^{n}\left(P_i - c\,A_i\right) = (s_I - c)\,\bar A, \qquad \bar A = \frac{1}{n}\sum_{i=1}^{n} A_i
+```
 
-When name $j$ defaults with recovery $R$, the protection buyer receives $(1-R)/n$ per \$1, and the notional $N$ becomes $N(n-1)/n$. The **skew** compares the screen quote $s_Q$ with the intrinsic spread: $k = s_Q - s_I$.
+When name $`j`$ defaults with recovery $`R`$, the protection buyer receives $`(1-R)/n`$ per \$1, and the notional $`N`$ becomes $`N(n-1)/n`$. The **skew** compares the screen quote $`s_Q`$ with the intrinsic spread: $`k = s_Q - s_I`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $i$, $j$, $\ell$ | number of names; a name's number; the name that defaults; a second name counter inside a sum | 125; 1 to 125; one 300 bp name; 1 to 125 | more names: each default matters less |
-| $s_i$, $\lambda_i$ | name i's quoted spread; the flat hazard (the yearly rate at which a surviving name defaults) that reprices it | 80 or 300 bp; 1.3228% or 4.9381% | raises $s_I$, by $w_i$ per bp |
-| $P_i$, $A_i$ | name i's protection leg and risky annuity, per \$1 | 0.034024, 4.252956 (tight); 0.116746, 3.891532 (wide) | $P_i$ up: $s_I$ up; $A_i$ up: that name weighs more |
-| $w_i$ | name i's weight: its share of the total annuity | all 25 wide names together: 18.62%, against 20% by headcount | |
-| $s_I$, $\bar s$ | intrinsic spread: the coupon that would make the index worth zero; the plain average of the quotes | 120.96 bp; 124 bp | $s_I$ is the answer |
-| $\bar P$, $\bar A$ | index protection leg and annuity per \$1: the averages of $P_i$ and $A_i$ | 0.050568, 4.180671 | |
-| $c$, $U$ | fixed coupon; upfront, cash the buyer pays on day one, per \$1 | 100 bp; 0.8761% | coupon up: $U$ down by $\bar A$ per unit |
-| $s_Q$, $k$ | the index's own quote on the screen; the skew, $k = s_Q - s_I$ | 117 bp; −3.96 bp | $s_Q$ up: $k$ up, one for one |
-| $N$ | notional, the amount of protection bought | \$10,000,000 | scales every dollar figure |
-| $R$, $r$ | recovery, the fraction of a defaulted name's debt still repaid; riskless rate | 40%; 5% | $R$ up: smaller payout per default |
-| $\sum$, $s$, $m$ | add up over the list; any spread, in the proof; the fee-date counter, 1 to 20 | used throughout; used in the proof; 1 to 20 | |
-| $T$, $\Delta$, $\tau$, $\rho$ | years to maturity; quarter length; a name's default time; correlation between names in the check's simulation | 5; 0.25; random; 0 or 20% | $\rho$ changes nothing on this card |
+| $`n`$, $`i`$, $`j`$, $`\ell`$ | number of names; a name's number; the name that defaults; a second name counter inside a sum | 125; 1 to 125; one 300 bp name; 1 to 125 | more names: each default matters less |
+| $`s_i`$, $`\lambda_i`$ | name i's quoted spread; the flat hazard (the yearly rate at which a surviving name defaults) that reprices it | 80 or 300 bp; 1.3228% or 4.9381% | raises $`s_I`$, by $`w_i`$ per bp |
+| $`P_i`$, $`A_i`$ | name i's protection leg and risky annuity, per \$1 | 0.034024, 4.252956 (tight); 0.116746, 3.891532 (wide) | $`P_i`$ up: $`s_I`$ up; $`A_i`$ up: that name weighs more |
+| $`w_i`$ | name i's weight: its share of the total annuity | all 25 wide names together: 18.62%, against 20% by headcount | |
+| $`s_I`$, $`\bar s`$ | intrinsic spread: the coupon that would make the index worth zero; the plain average of the quotes | 120.96 bp; 124 bp | $`s_I`$ is the answer |
+| $`\bar P`$, $`\bar A`$ | index protection leg and annuity per \$1: the averages of $`P_i`$ and $`A_i`$ | 0.050568, 4.180671 | |
+| $`c`$, $`U`$ | fixed coupon; upfront, cash the buyer pays on day one, per \$1 | 100 bp; 0.8761% | coupon up: $`U`$ down by $`\bar A`$ per unit |
+| $`s_Q`$, $`k`$ | the index's own quote on the screen; the skew, $`k = s_Q - s_I`$ | 117 bp; −3.96 bp | $`s_Q`$ up: $`k`$ up, one for one |
+| $`N`$ | notional, the amount of protection bought | \$10,000,000 | scales every dollar figure |
+| $`R`$, $`r`$ | recovery, the fraction of a defaulted name's debt still repaid; riskless rate | 40%; 5% | $`R`$ up: smaller payout per default |
+| $`\sum`$, $`s`$, $`m`$ | add up over the list; any spread, in the proof; the fee-date counter, 1 to 20 | used throughout; used in the proof; 1 to 20 | |
+| $`T`$, $`\Delta`$, $`\tau`$, $`\rho`$ | years to maturity; quarter length; a name's default time; correlation between names in the check's simulation | 5; 0.25; random; 0 or 20% | $`\rho`$ changes nothing on this card |
 
-The single-name legs are the ones from [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): with a flat hazard $\lambda_i$,
+The single-name legs are the ones from [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): with a flat hazard $`\lambda_i`$,
 
-$$P_i = (1-R)\,\frac{\lambda_i}{r+\lambda_i}\left(1 - e^{-(r+\lambda_i)T}\right), \qquad A_i = \sum_{m=1}^{20} \Delta\, e^{-(r+\lambda_i)\,m\Delta}$$
+```math
+P_i = (1-R)\,\frac{\lambda_i}{r+\lambda_i}\left(1 - e^{-(r+\lambda_i)T}\right), \qquad A_i = \sum_{m=1}^{20} \Delta\, e^{-(r+\lambda_i)\,m\Delta}
+```
 
-where $m$ counts the twenty quarterly fee dates, and each quote satisfies $s_i = P_i / A_i$.
+where $`m`$ counts the twenty quarterly fee dates, and each quote satisfies $`s_i = P_i / A_i`$.
 
 ### When it holds
 
-- **Equal weights, same dates, same coupon.** CDX investment grade and iTraxx Europe give each of their 125 names one 125th of the notional, and all names share the index's maturity and fee dates. An index with unequal weights needs $w_i$ built from weight times annuity; the idea survives, the arithmetic changes.
-- **Single-name curves that match the index's terms.** $P_i$ and $A_i$ must be for the index maturity and the index's own recovery convention. Using the names' most liquid five-year quotes for a different index maturity mixes two curves and puts a false gap into the skew.
+- **Equal weights, same dates, same coupon.** CDX investment grade and iTraxx Europe give each of their 125 names one 125th of the notional, and all names share the index's maturity and fee dates. An index with unequal weights needs $`w_i`$ built from weight times annuity; the idea survives, the arithmetic changes.
+- **Single-name curves that match the index's terms.** $`P_i`$ and $`A_i`$ must be for the index maturity and the index's own recovery convention. Using the names' most liquid five-year quotes for a different index maturity mixes two curves and puts a false gap into the skew.
 - **One recovery for every name.** A different recovery changes the hazards behind the same quotes: at 25 percent the intrinsic spread is 121.54 bp instead of 120.96. Names with different recoveries can even reverse the ordering in Step 3.
 - **A seller who pays.** Nothing here prices the protection seller defaulting too.
 - **Correlation does not enter.** The sum rule needs no assumption about how names default together. The check simulates with independent names and with names tied by a 20 percent correlation and gets the same price. Correlation matters only when a contract pays on some losses and not others: [Tranches](05-cdo-tranches-in-outline.md).
@@ -95,42 +101,48 @@ Now write down 125 single-name contracts, each on \$80,000, each at a 100 bp cou
 
 ### Step 1: the legs add
 
-Per \$1 of index notional, name i contributes $1/n$ of its own protection leg and $1/n$ of its own fee leg. The fee leg at coupon $c$ is $c\,A_i$: each quarter the buyer pays $c\,\Delta$ if the name is alive, and $A_i$ is the value of paying $\Delta$ on those terms. So the index legs are averages:
+Per \$1 of index notional, name i contributes $`1/n`$ of its own protection leg and $`1/n`$ of its own fee leg. The fee leg at coupon $`c`$ is $`c\,A_i`$: each quarter the buyer pays $`c\,\Delta`$ if the name is alive, and $`A_i`$ is the value of paying $`\Delta`$ on those terms. So the index legs are averages:
 
-$$\bar P = \frac1n\sum_i P_i, \qquad \text{fee leg} = c\,\bar A.$$
+```math
+\bar P = \frac1n\sum_i P_i, \qquad \text{fee leg} = c\,\bar A.
+```
 
-For the example: $\bar P = (100 \times 0.034024 + 25 \times 0.116746)/125 = 0.050568$ and $\bar A = (100 \times 4.252956 + 25 \times 3.891532)/125 = 4.180671$.
+For the example: $`\bar P = (100 \times 0.034024 + 25 \times 0.116746)/125 = 0.050568`$ and $`\bar A = (100 \times 4.252956 + 25 \times 3.891532)/125 = 4.180671`$.
 
 ### Step 2: the par spread is total protection over total annuity
 
-The par spread of any contract is the fee rate that makes it worth nothing. For the index that means $\bar P - s_I \bar A = 0$, so
+The par spread of any contract is the fee rate that makes it worth nothing. For the index that means $`\bar P - s_I \bar A = 0`$, so
 
-$$s_I = \frac{\bar P}{\bar A} = \frac{\sum_i P_i}{\sum_i A_i}.$$
+```math
+s_I = \frac{\bar P}{\bar A} = \frac{\sum_i P_i}{\sum_i A_i}.
+```
 
-Each name's own quote satisfies $P_i = s_i A_i$. Put that in the top:
+Each name's own quote satisfies $`P_i = s_i A_i`$. Put that in the top:
 
-$$s_I = \frac{\sum_i s_i A_i}{\sum_i A_i} = \sum_i w_i s_i.$$
+```math
+s_I = \frac{\sum_i s_i A_i}{\sum_i A_i} = \sum_i w_i s_i.
+```
 
-The intrinsic spread is an average of the quotes, but weighted by annuity, not by headcount. For the example, $0.050568 / 4.180671 = 0.012096$, which is 120.96 bp.
+The intrinsic spread is an average of the quotes, but weighted by annuity, not by headcount. For the example, $`0.050568 / 4.180671 = 0.012096`$, which is 120.96 bp.
 
 ### Step 3: the weighted average sits below the plain one whenever the quotes differ
 
 A name with a higher spread has a higher hazard. A higher hazard shortens the expected fee stream, so the annuity falls: the 300 bp names have 3.891532 against 4.252956 for the 80 bp names. The names that pull the average up are exactly the ones given less weight. The 25 wide names are 20 percent of the headcount and only 18.62 percent of the annuity.
 
-With one recovery for all names, the result is a strict inequality: $s_I < \bar s$ unless every quote is the same, when $s_I = \bar s$ exactly. The check confirms both: 124 bp on every name gives 124.0000, and every point on the chart has the orange line below the green. It also asserts the premise: the annuity falls at every 20 bp step from 20 to 1,000 bp.
+With one recovery for all names, the result is a strict inequality: $`s_I < \bar s`$ unless every quote is the same, when $`s_I = \bar s`$ exactly. The check confirms both: 124 bp on every name gives 124.0000, and every point on the chart has the orange line below the green. It also asserts the premise: the annuity falls at every 20 bp step from 20 to 1,000 bp.
 
 <details>
 <summary>Detailed proof: the intrinsic spread never exceeds the plain average</summary>
 
-All names share recovery $R$. Write $A(s)$ for the annuity of a name whose flat hazard reprices spread $s$. [Valuing an existing CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md) shows the par spread is strictly increasing in the hazard, and the annuity is strictly decreasing in it, so $A(s)$ is strictly decreasing in $s$.
+All names share recovery $`R`$. Write $`A(s)`$ for the annuity of a name whose flat hazard reprices spread $`s`$. [Valuing an existing CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md) shows the par spread is strictly increasing in the hazard, and the annuity is strictly decreasing in it, so $`A(s)`$ is strictly decreasing in $`s`$.
 
-Let $A^* = A(\bar s)$, a fixed number. Because $\sum_i (s_i - \bar s) = 0$, subtracting $A^*$ from every weight leaves a sum unchanged:
+Let $`A^* = A(\bar s)`$, a fixed number. Because $`\sum_i (s_i - \bar s) = 0`$, subtracting $`A^*`$ from every weight leaves a sum unchanged:
 
-$$\sum_i A_i\,(s_i - \bar s) = \sum_i \left(A_i - A^*\right)(s_i - \bar s).$$
+$`\displaystyle \sum_i A_i\,(s_i - \bar s) = \sum_i \left(A_i - A^*\right)(s_i - \bar s).`$
 
-Look at one term. If $s_i > \bar s$, then $A_i < A^*$: the first bracket is negative and the second positive. If $s_i < \bar s$, the signs swap. Either way the term is at most zero, and it is strictly negative whenever $s_i \ne \bar s$. So the sum is negative unless all quotes are equal. Divide by $\sum_i A_i > 0$:
+Look at one term. If $`s_i > \bar s`$, then $`A_i < A^*`$: the first bracket is negative and the second positive. If $`s_i < \bar s`$, the signs swap. Either way the term is at most zero, and it is strictly negative whenever $`s_i \ne \bar s`$. So the sum is negative unless all quotes are equal. Divide by $`\sum_i A_i > 0`$:
 
-$$s_I - \bar s = \frac{\sum_i A_i (s_i - \bar s)}{\sum_i A_i} < 0.$$
+$`\displaystyle s_I - \bar s = \frac{\sum_i A_i (s_i - \bar s)}{\sum_i A_i} < 0.`$
 
 
 
@@ -138,25 +150,27 @@ $$s_I - \bar s = \frac{\sum_i A_i (s_i - \bar s)}{\sum_i A_i} < 0.$$
 
 ### Step 4: the upfront is the sum of 125 upfronts
 
-With a fixed coupon, each small contract is worth $P_i - c\,A_i$ to the buyer. Add them and divide by $n$:
+With a fixed coupon, each small contract is worth $`P_i - c\,A_i`$ to the buyer. Add them and divide by $`n`$:
 
-$$U = \frac1n\sum_i (P_i - cA_i) = \bar P - c\bar A = (s_I - c)\,\bar A.$$
+```math
+U = \frac1n\sum_i (P_i - cA_i) = \bar P - c\bar A = (s_I - c)\,\bar A.
+```
 
-So the index behaves like one name at spread $s_I$ with annuity $\bar A$. For the example, $(0.012096 - 0.0100) \times 4.180671 = 0.8761$ percent, \$87,614.00 on \$10 million. The check computes it both ways, name by name and in one step, and they agree to twelve decimals.
+So the index behaves like one name at spread $`s_I`$ with annuity $`\bar A`$. For the example, $`(0.012096 - 0.0100) \times 4.180671 = 0.8761`$ percent, \$87,614.00 on \$10 million. The check computes it both ways, name by name and in one step, and they agree to twelve decimals.
 
 The market does not quote the index this way. It treats the index as one name with one flat hazard, and converts a quoted spread to an upfront with the single-name calculator. Fed 120.96 bp, that calculator gives 0.8764 percent, not 0.8761.
 
-The difference is the gap between $\bar A$ and the annuity of one flat name at 120.96 bp: an average of annuities is not the annuity of one name at the average spread. It is tiny here and grows with dispersion.
+The difference is the gap between $`\bar A`$ and the annuity of one flat name at 120.96 bp: an average of annuities is not the annuity of one name at the average spread. It is tiny here and grows with dispersion.
 
 ### Step 5: a default pays one name's loss and shrinks the contract
 
-Suppose one of the 300 bp names defaults. That name's small contract pays its loss, $(1 - R)$ on \$80,000, which is \$48,000 or 0.48 percent of the index notional. Then it ends: the name leaves the index, and the remaining 124 small contracts carry on unchanged. So the index notional falls to \$9,920,000 and the quarterly coupon from \$25,000 to \$24,800. The weights of the survivors do not change; each is still \$80,000, one 125th of the original notional.
+Suppose one of the 300 bp names defaults. That name's small contract pays its loss, $`(1 - R)`$ on \$80,000, which is \$48,000 or 0.48 percent of the index notional. Then it ends: the name leaves the index, and the remaining 124 small contracts carry on unchanged. So the index notional falls to \$9,920,000 and the quarterly coupon from \$25,000 to \$24,800. The weights of the survivors do not change; each is still \$80,000, one 125th of the original notional.
 
 The buyer does not gain the full \$48,000 in value. Before the default, that name's small contract was already worth something, because a 300 bp name was more likely than most to fail: its legs were worth \$6,226.45 to the buyer. The default converts that into \$48,000 of cash, a jump of \$41,773.55. The survivors are on average safer than before, so the intrinsic spread of what is left falls to 119.61 bp.
 
 ### Step 6: correlation cannot move the index price
 
-The legs are expected values: $P_i$ is the average discounted payout over all the ways name i can default, and the same for $A_i$. The expected value of a sum is the sum of expected values, whether or not the parts move together. So the index legs depend only on each name's own survival curve (its chance of having survived to each date).
+The legs are expected values: $`P_i`$ is the average discounted payout over all the ways name i can default, and the same for $`A_i`$. The expected value of a sum is the sum of expected values, whether or not the parts move together. So the index legs depend only on each name's own survival curve (its chance of having survived to each date).
 
 The check tests this. It draws default times for all 125 names on 100,000 paths, first with names independent. Then it ties the names through one common market factor at 20 percent correlation, the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md). It values the index at a 120.96 bp coupon on each path.
 
@@ -164,9 +178,9 @@ Both averages are zero within their noise: the simulated spreads are 121.01 and 
 
 ### Step 7: the skew is the market's price against the names' price
 
-On the screen, the index trades as a contract in its own right, with its own quote $s_Q$. Nothing forces $s_Q$ to equal $s_I$. Hedgers crowd into the index because it is cheaper to trade than 125 names, and push its price around. The difference $k = s_Q - s_I$ is the **skew** (some desks say basis). Quoted as a price, 100 minus the upfront, it flips sign.
+On the screen, the index trades as a contract in its own right, with its own quote $`s_Q`$. Nothing forces $`s_Q`$ to equal $`s_I`$. Hedgers crowd into the index because it is cheaper to trade than 125 names, and push its price around. The difference $`k = s_Q - s_I`$ is the **skew** (some desks say basis). Quoted as a price, 100 minus the upfront, it flips sign.
 
-At a quote of 117 bp, the skew is $117 - 120.96 = -3.96$ bp: index protection costs less than the same protection bought name by name.
+At a quote of 117 bp, the skew is $`117 - 120.96 = -3.96`$ bp: index protection costs less than the same protection bought name by name.
 
 In cash: at 117 bp the flat calculator gives an upfront of 0.7121 percent, \$71,210.89. Buying the 125 names separately costs the intrinsic 0.8761 percent, \$87,614.00. The gap, −\$16,403.11 on \$10 million, is the skew in money.
 
@@ -180,16 +194,16 @@ The index: 125 names, 100 at 80 bp and 25 at 300 bp, recovery 40 percent, riskle
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| 1. Hazards | solve $P/A = 0.0080$ and $0.0300$ | 1.3228%, 4.9381% |
+| 1. Hazards | solve $`P/A = 0.0080`$ and $`0.0300`$ | 1.3228%, 4.9381% |
 | 2. Annuities | twenty-term sums | 4.252956, 3.891532 |
-| 3. Protection legs | $0.60 \cdot \frac{\lambda}{r + \lambda}(1 - e^{-5(r+\lambda)})$ | 0.034024, 0.116746 |
-| 4. Index protection leg | $(100 \times 0.034024 + 25 \times 0.116746)/125$ | 0.050568 |
-| 5. Index annuity | $(100 \times 4.252956 + 25 \times 3.891532)/125$ | 4.180671 |
-| 6. Intrinsic spread | $0.050568 / 4.180671$ | **120.96 bp** |
-| 7. Plain average | $(100 \times 80 + 25 \times 300)/125$ | 124 bp |
-| 8. Upfront at coupon 100 | $(0.012096 - 0.0100) \times 4.180671$ | 0.8761%, \$87,614.00 |
-| 9. Skew at a 117 bp quote | $117 - 120.96$ | **−3.96 bp** |
-| 10. One wide name defaults | $0.60 / 125$ | 0.48%, \$48,000 |
+| 3. Protection legs | $`0.60 \cdot \frac{\lambda}{r + \lambda}(1 - e^{-5(r+\lambda)})`$ | 0.034024, 0.116746 |
+| 4. Index protection leg | $`(100 \times 0.034024 + 25 \times 0.116746)/125`$ | 0.050568 |
+| 5. Index annuity | $`(100 \times 4.252956 + 25 \times 3.891532)/125`$ | 4.180671 |
+| 6. Intrinsic spread | $`0.050568 / 4.180671`$ | **120.96 bp** |
+| 7. Plain average | $`(100 \times 80 + 25 \times 300)/125`$ | 124 bp |
+| 8. Upfront at coupon 100 | $`(0.012096 - 0.0100) \times 4.180671`$ | 0.8761%, \$87,614.00 |
+| 9. Skew at a 117 bp quote | $`117 - 120.96`$ | **−3.96 bp** |
+| 10. One wide name defaults | $`0.60 / 125`$ | 0.48%, \$48,000 |
 
 Buying \$10 million of this index at a 100 bp coupon costs \$87,614.00 on day one if the index trades at its intrinsic value, and \$71,210.89 at a 117 bp screen quote. The 125 names imply 120.96 bp; the headcount average says 124 and is too high.
 
@@ -206,7 +220,7 @@ traded quote     █████████████████████
 | --- | --- | --- |
 | Skew against the plain average | −7.00 bp, not −3.96 | the average overweights the wide names, whose fee streams are short |
 | Upfront from the plain average | 1.0025%, not 0.8761% | same error, carried into cash |
-| Default payout with no recovery | 0.80% of notional, not 0.48% | protection pays the loss, $(1-R)/n$, not the whole $1/n$ |
+| Default payout with no recovery | 0.80% of notional, not 0.48% | protection pays the loss, $`(1-R)/n`$, not the whole $`1/n`$ |
 | Coupon on the original notional after a default | \$25,000 a quarter, not \$24,800 | the defaulted name leaves; fees run on 124/125 of the notional |
 
 ---
@@ -654,10 +668,10 @@ The two outputs agree line for line, the simulations included, because both prog
 
 Lean proves the card's three main facts for any number of names, and checks the card's simple dollar arithmetic.
 
-- Suppose every annuity $A_i$ is above zero and each quote is $s_i = P_i / A_i$. Then the coupon that makes the index worth zero is exactly $s_I$, total protection over total annuity.
-- Take the same names. Then $s_I = \sum_i w_i s_i$, the average of the quotes weighted by annuity.
-- Take the same names and any fixed coupon $c$. Then the upfront is $U = (s_I - c)\,\bar A$.
-- Suppose all names share one recovery, so the annuity $A(s)$ is positive and strictly decreasing in the spread $s > 0$. Then $s_I \le \bar s$, with equality exactly when every quote is the same.
+- Suppose every annuity $`A_i`$ is above zero and each quote is $`s_i = P_i / A_i`$. Then the coupon that makes the index worth zero is exactly $`s_I`$, total protection over total annuity.
+- Take the same names. Then $`s_I = \sum_i w_i s_i`$, the average of the quotes weighted by annuity.
+- Take the same names and any fixed coupon $`c`$. Then the upfront is $`U = (s_I - c)\,\bar A`$.
+- Suppose all names share one recovery, so the annuity $`A(s)`$ is positive and strictly decreasing in the spread $`s > 0`$. Then $`s_I \le \bar s`$, with equality exactly when every quote is the same.
 - Take two models of how names default together, such as independent and correlated, that give each name the same survival curve. Then each index leg is the same in both.
 - The dollar figures check out: the \$80,000 slice, the \$48,000 payout, the \$9,920,000 notional, the quarterly coupons and the 124 bp plain average.
 
@@ -859,7 +873,7 @@ example : ((8000 + 25 * 100 : ℚ)) / 125 = 84 ∧ ((8000 + 25 * 800 : ℚ)) / 1
 > [!warning]
 > **Averaging the quotes.** The index is not worth the average of its names' spreads. It is worth total protection over total annuity, and the annuity is smallest for exactly the names with the biggest spreads. The plain average here says 124 bp against the intrinsic 120.96, and it doubles the apparent skew from −3.96 bp to −7.00 bp.
 >
-> - **Paying the whole slice on default.** A default pays the loss on that name's slice, $(1 - R)/125$ = 0.48 percent, not the slice itself, 0.80 percent.
+> - **Paying the whole slice on default.** A default pays the loss on that name's slice, $`(1 - R)/125`$ = 0.48 percent, not the slice itself, 0.80 percent.
 > - **Keeping the old notional.** After a default the fees run on \$9,920,000: \$24,800 a quarter, not \$25,000.
 > - **Reading the whole payout as profit.** The buyer receives \$48,000, but the defaulted name's legs were already worth \$6,226.45 to it; the gain in value is \$41,773.55.
 > - **Pricing correlation into the index.** Joint defaults change the spread of outcomes, not the average. An index priced higher "because names are correlated" is paying for something the contract does not contain.

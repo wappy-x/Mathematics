@@ -36,48 +36,54 @@ The falling line (orange) meets the three bad years first; it runs dry in year 2
 
 ## The formula
 
-Notation first, in words. A **growth factor** is what one dollar becomes over a year: 1.06 for a 6 percent year, 0.85 for a minus 15 percent year. $G_t$ is year $t$'s growth factor, after inflation. $P_k$ is the growth of the first $k$ years multiplied together, so $P_2 = G_1 G_2$, and $P_0 = 1$ because no years have passed. $W_0$ is the starting pot and $c$ the yearly withdrawal. A capital sigma, Σ, means "add up".
+Notation first, in words. A **growth factor** is what one dollar becomes over a year: 1.06 for a 6 percent year, 0.85 for a minus 15 percent year. $`G_t`$ is year $`t`$'s growth factor, after inflation. $`P_k`$ is the growth of the first $`k`$ years multiplied together, so $`P_2 = G_1 G_2`$, and $`P_0 = 1`$ because no years have passed. $`W_0`$ is the starting pot and $`c`$ the yearly withdrawal. A capital sigma, Σ, means "add up".
 
-$$W_0 \;\ge\; c\,S_n, \qquad S_n \;=\; \sum_{k=1}^{n} \frac{1}{P_{k-1}} \;=\; 1 + \frac{1}{G_1} + \frac{1}{G_1 G_2} + \cdots + \frac{1}{G_1 G_2 \cdots G_{n-1}}$$
+```math
+W_0 \;\ge\; c\,S_n, \qquad S_n \;=\; \sum_{k=1}^{n} \frac{1}{P_{k-1}} \;=\; 1 + \frac{1}{G_1} + \frac{1}{G_1 G_2} + \cdots + \frac{1}{G_1 G_2 \cdots G_{n-1}}
+```
 
-**Read it aloud:** the pot lasts for all $n$ withdrawals exactly when it holds at least the withdrawal times the sum of what each withdrawal costs today, discounted at the growth the pot really earned before it.
+**Read it aloud:** the pot lasts for all $`n`$ withdrawals exactly when it holds at least the withdrawal times the sum of what each withdrawal costs today, discounted at the growth the pot really earned before it.
 
-$S_n$ is the **realised discount sum**: the price, today and counted in withdrawals, of all $n$ withdrawals. Withdrawal $k$ is paid after $k-1$ years of growth, so it costs $1/P_{k-1}$ of a withdrawal today. For the example $W_0/c = 25$, so the pot survives when $S_{30} \le 25$.
+$`S_n`$ is the **realised discount sum**: the price, today and counted in withdrawals, of all $`n`$ withdrawals. Withdrawal $`k`$ is paid after $`k-1`$ years of growth, so it costs $`1/P_{k-1}`$ of a withdrawal today. For the example $`W_0/c = 25`$, so the pot survives when $`S_{30} \le 25`$.
 
-The chance of failure is the chance that this sum is too big. With withdrawal rate $w = c/W_0$:
+The chance of failure is the chance that this sum is too big. With withdrawal rate $`w = c/W_0`$:
 
-$$p(w) \;=\; \Pr\!\big(S_n > 1/w\big), \qquad w^{*} \;=\; \frac{1}{\text{95th percentile of } S_n}$$
+```math
+p(w) \;=\; \Pr\!\big(S_n > 1/w\big), \qquad w^{*} \;=\; \frac{1}{\text{95th percentile of } S_n}
+```
 
-The **safe withdrawal rate** $w^{*}$ is the largest rate whose failure chance is at most 5 percent, a target chosen here; any other target works the same way.
+The **safe withdrawal rate** $`w^{*}`$ is the largest rate whose failure chance is at most 5 percent, a target chosen here; any other target works the same way.
 
-The returns come from a model. Each year the pot holds a share $\pi_t$ in stocks and the rest in bonds, rebalanced continuously so the shares stay put:
+The returns come from a model. Each year the pot holds a share $`\pi_t`$ in stocks and the rest in bonds, rebalanced continuously so the shares stay put:
 
-$$\ln G_t = m + s\,Z_t, \qquad a = \pi_t a_S + (1-\pi_t)\,a_B, \qquad s^2 = \pi_t^2\sigma_S^2 + (1-\pi_t)^2\sigma_B^2, \qquad m = a - \tfrac12 s^2$$
+```math
+\ln G_t = m + s\,Z_t, \qquad a = \pi_t a_S + (1-\pi_t)\,a_B, \qquad s^2 = \pi_t^2\sigma_S^2 + (1-\pi_t)^2\sigma_B^2, \qquad m = a - \tfrac12 s^2
+```
 
-In words: the log of each year's growth is a bell-curve draw; $Z$ is a fresh standard normal number each year. Its centre $m$ is the expected return $a$ less a drag of half the variance. Returns are continuously compounded, so the average growth factor is $e^{a}$, not $1 + a$. The spread $s$ mixes the two assets' volatilities (the jumpiness of their returns). Stocks and bonds are taken as independent of each other.
+In words: the log of each year's growth is a bell-curve draw; $`Z`$ is a fresh standard normal number each year. Its centre $`m`$ is the expected return $`a`$ less a drag of half the variance. Returns are continuously compounded, so the average growth factor is $`e^{a}`$, not $`1 + a`$. The spread $`s`$ mixes the two assets' volatilities (the jumpiness of their returns). Stocks and bonds are taken as independent of each other.
 
 | Symbol | Plain meaning | In our example | Push it up and the failure chance… |
 | --- | --- | --- | --- |
-| $W_0$, $W_k$ | the starting pot; the pot after $k$ years | $1,000,000 | falls |
-| $c$ | the yearly withdrawal, in today's dollars | $40,000 | rises |
-| $w$ | the withdrawal rate, $c$ divided by $W_0$ | 4% | rises: 23.41% at 5% |
-| $n$ | the number of yearly withdrawals | 30 | rises |
-| $G_t$, $G_k$, $G_1$, $G_{29}$, $G_{30}$, $t$ | year $t$'s growth factor after inflation; $G_1$ is the first year's | 0.85 or 1.06 in the story | falls, most of all for early years |
-| $P_k$, $P_0$, $P_{30}$, $k$ | the first $k$ growth factors multiplied; $P_0 = 1$ | 2.961523 after 30 years of the story | falls |
-| $S_n$, $S_{30}$ | the realised discount sum: all withdrawals priced today, in withdrawals | 26.3624 crash first, 14.7415 crash last | the pot fails once it passes 25 |
-| $p$ | the chance of running dry before withdrawal $n$ | 8.36% | — |
-| $\pi_t$ | the share in stocks in year $t$ | 60% | rises here: 14.33% at 90% |
-| $a_S$, $a_B$, $\sigma_S$, $\sigma_B$ | expected yearly real return and volatility: stocks, bonds | 8% and 20%; 3% and 8% | returns lower it, volatilities raise it |
-| $a$, $m$, $s$ | the portfolio's expected return; centre and spread of its yearly log-growth | 0.06; 0.052288; 0.124193 | $m$ lowers it, $s$ raises it |
-| $V_k$, $V_1$, $V_2$, $V_{30}$ | the chance of making $k$ more withdrawals from a pot holding $x$ withdrawals | 1 minus 8.36% at $k$ = 30, $x$ = 25 | — |
+| $`W_0`$, $`W_k`$ | the starting pot; the pot after $`k`$ years | $1,000,000 | falls |
+| $`c`$ | the yearly withdrawal, in today's dollars | $40,000 | rises |
+| $`w`$ | the withdrawal rate, $`c`$ divided by $`W_0`$ | 4% | rises: 23.41% at 5% |
+| $`n`$ | the number of yearly withdrawals | 30 | rises |
+| $`G_t`$, $`G_k`$, $`G_1`$, $`G_{29}`$, $`G_{30}`$, $`t`$ | year $`t`$'s growth factor after inflation; $`G_1`$ is the first year's | 0.85 or 1.06 in the story | falls, most of all for early years |
+| $`P_k`$, $`P_0`$, $`P_{30}`$, $`k`$ | the first $`k`$ growth factors multiplied; $`P_0 = 1`$ | 2.961523 after 30 years of the story | falls |
+| $`S_n`$, $`S_{30}`$ | the realised discount sum: all withdrawals priced today, in withdrawals | 26.3624 crash first, 14.7415 crash last | the pot fails once it passes 25 |
+| $`p`$ | the chance of running dry before withdrawal $`n`$ | 8.36% | — |
+| $`\pi_t`$ | the share in stocks in year $`t`$ | 60% | rises here: 14.33% at 90% |
+| $`a_S`$, $`a_B`$, $`\sigma_S`$, $`\sigma_B`$ | expected yearly real return and volatility: stocks, bonds | 8% and 20%; 3% and 8% | returns lower it, volatilities raise it |
+| $`a`$, $`m`$, $`s`$ | the portfolio's expected return; centre and spread of its yearly log-growth | 0.06; 0.052288; 0.124193 | $`m`$ lowers it, $`s`$ raises it |
+| $`V_k`$, $`V_1`$, $`V_2`$, $`V_{30}`$ | the chance of making $`k`$ more withdrawals from a pot holding $`x`$ withdrawals | 1 minus 8.36% at $`k`$ = 30, $`x`$ = 25 | — |
 
 ### When it holds
 
 - **Withdrawals fixed in today's dollars, at the start of each year.** Take them at the end of each year instead and the same simulation fails 7.66 percent of the time, not 8.54; compare studies only on the same timing.
 - **Independent years.** The model draws each year afresh. If bad years cluster, as they did in the 1930s and 1970s, early losses compound and the true failure chance is higher; if markets bounce back after falls, it is lower.
-- **Bell-shaped log returns.** Real returns have fatter tails, more crashes than a bell curve allows. The theorem $W_0 \ge c S_n$ needs no model at all; only the 8.36 percent does.
+- **Bell-shaped log returns.** Real returns have fatter tails, more crashes than a bell curve allows. The theorem $`W_0 \ge c S_n`$ needs no model at all; only the 8.36 percent does.
 - **Known averages.** The 8 percent and 3 percent expected returns are inputs, not measurements. Lower them and every failure chance on the card rises.
-- **A fixed horizon of 30 years.** A real retirement has an uncertain length. Replacing the fixed $n$ by a life table turns this into the ruin problem of the Sources.
+- **A fixed horizon of 30 years.** A real retirement has an uncertain length. Replacing the fixed $`n`$ by a life table turns this into the ruin problem of the Sources.
 
 ---
 
@@ -89,55 +95,63 @@ A pot that pays out is a promise to fund 30 bills. Each bill can be priced at th
 
 ### Step 1: unroll one year at a time
 
-Let $W_k$ be the pot after $k$ years, just before the next withdrawal. One year is: take out $c$, then grow by $G_k$.
+Let $`W_k`$ be the pot after $`k`$ years, just before the next withdrawal. One year is: take out $`c`$, then grow by $`G_k`$.
 
-$$W_k = (W_{k-1} - c)\,G_k$$
+```math
+W_k = (W_{k-1} - c)\,G_k
+```
 
 Unrolled, this becomes
 
-$$W_k = P_k \Big(W_0 - c\sum_{j=1}^{k} \frac{1}{P_{j-1}}\Big)$$
+```math
+W_k = P_k \Big(W_0 - c\sum_{j=1}^{k} \frac{1}{P_{j-1}}\Big)
+```
 
-Check it on the crash-first story after one year: $P_1 = 0.85$, the sum is 1, and $0.85 \times (1{,}000{,}000 - 40{,}000) = 816{,}000$, the value the recursion gives.
+Check it on the crash-first story after one year: $`P_1 = 0.85`$, the sum is 1, and $`0.85 \times (1{,}000{,}000 - 40{,}000) = 816{,}000`$, the value the recursion gives.
 
 <details>
 <summary>Detailed proof: the unrolled form</summary>
 
-By induction on $k$. For $k = 0$ the sum is empty and $P_0 = 1$, so the formula reads $W_0 = W_0$. Suppose it holds for $k - 1$. Then
-$$W_k = (W_{k-1} - c)\,G_k = \Big(P_{k-1}\big(W_0 - c\textstyle\sum_{j=1}^{k-1} 1/P_{j-1}\big) - c\Big)G_k = P_{k-1}G_k\Big(W_0 - c\textstyle\sum_{j=1}^{k-1} 1/P_{j-1} - c/P_{k-1}\Big).$$
-Since $P_{k-1}G_k = P_k$ and the last term is the $j = k$ term of the sum, this is the formula for $k$.
+By induction on $`k`$. For $`k = 0`$ the sum is empty and $`P_0 = 1`$, so the formula reads $`W_0 = W_0`$. Suppose it holds for $`k - 1`$. Then
+
+$`\displaystyle W_k = (W_{k-1} - c)\,G_k = \Big(P_{k-1}\big(W_0 - c\textstyle\sum_{j=1}^{k-1} 1/P_{j-1}\big) - c\Big)G_k = P_{k-1}G_k\Big(W_0 - c\textstyle\sum_{j=1}^{k-1} 1/P_{j-1} - c/P_{k-1}\Big).`$
+
+Since $`P_{k-1}G_k = P_k`$ and the last term is the $`j = k`$ term of the sum, this is the formula for $`k`$.
 
 </details>
 
 ### Step 2: survival is one inequality
 
-Withdrawal $k+1$ can be paid when $W_k \ge c$. Divide by $P_k$, which is positive, and move the sum across: $W_k \ge c$ exactly when $W_0 \ge c\sum_{j=1}^{k+1} 1/P_{j-1}$.
+Withdrawal $`k+1`$ can be paid when $`W_k \ge c`$. Divide by $`P_k`$, which is positive, and move the sum across: $`W_k \ge c`$ exactly when $`W_0 \ge c\sum_{j=1}^{k+1} 1/P_{j-1}`$.
 
-Every term of the sum is positive, so the sums grow with $k$. The last one, $c\,S_n$, is the largest. If the pot covers it, it covers all the earlier ones. So the pot pays all $n$ withdrawals exactly when $W_0 \ge c\,S_n$. That is the formula, and it holds for any returns whatever, with no model.
+Every term of the sum is positive, so the sums grow with $`k`$. The last one, $`c\,S_n`$, is the largest. If the pot covers it, it covers all the earlier ones. So the pot pays all $`n`$ withdrawals exactly when $`W_0 \ge c\,S_n`$. That is the formula, and it holds for any returns whatever, with no model.
 
 ### Step 3: read sequence risk off the sum
 
-The growth factor $G_t$ sits inside $P_{k-1}$ for every withdrawal $k$ after year $t$. So $G_1$ discounts 29 of the 30 withdrawals, $G_{29}$ discounts one, and $G_{30}$ discounts none. A bad first year inflates 29 terms of $S_{30}$. A bad 29th year inflates one.
+The growth factor $`G_t`$ sits inside $`P_{k-1}`$ for every withdrawal $`k`$ after year $`t`$. So $`G_1`$ discounts 29 of the 30 withdrawals, $`G_{29}`$ discounts one, and $`G_{30}`$ discounts none. A bad first year inflates 29 terms of $`S_{30}`$. A bad 29th year inflates one.
 
-On the story: crash first gives $S_{30} = 26.3624$, above 25, so the pot fails. Crash last gives $S_{30} = 14.7415$, comfortably below. Same growth factors, same product $P_{30} = 2.961523$, different sums. Without withdrawals only $P_{30}$ matters, which is why order is harmless then and decisive now.
+On the story: crash first gives $`S_{30} = 26.3624`$, above 25, so the pot fails. Crash last gives $`S_{30} = 14.7415`$, comfortably below. Same growth factors, same product $`P_{30} = 2.961523`$, different sums. Without withdrawals only $`P_{30}`$ matters, which is why order is harmless then and decisive now.
 
 ### Step 4: the failure chance and its inverse
 
-In the model, $S_n$ is a random number built from 30 random growth factors. The failure chance at rate $w$ is the chance it exceeds $1/w$. This single fact gives the whole curve at once: work out the spread of $S_n$ once, and every withdrawal rate's failure chance is read off it.
+In the model, $`S_n`$ is a random number built from 30 random growth factors. The failure chance at rate $`w`$ is the chance it exceeds $`1/w`$. This single fact gives the whole curve at once: work out the spread of $`S_n`$ once, and every withdrawal rate's failure chance is read off it.
 
-The safe rate inverts the curve. It exists and is unique for any target between 0 and 1. At $w$ near zero, $1/w$ is enormous and the failure chance is near zero. At $w = 1$ or more the first withdrawal empties the pot, since $S_n \ge 1$, and failure is certain. In between the chance rises continuously and strictly, because $S_n$ has a smooth spread with no gaps. So exactly one rate has a failure chance of 5 percent: one over the 95th percentile of $S_n$.
+The safe rate inverts the curve. It exists and is unique for any target between 0 and 1. At $`w`$ near zero, $`1/w`$ is enormous and the failure chance is near zero. At $`w = 1`$ or more the first withdrawal empties the pot, since $`S_n \ge 1`$, and failure is certain. In between the chance rises continuously and strictly, because $`S_n`$ has a smooth spread with no gaps. So exactly one rate has a failure chance of 5 percent: one over the 95th percentile of $`S_n`$.
 
 ### Step 5: the chance with no randomness at all
 
-Simulation estimates the failure chance with noise. A second road computes it directly. Measure the pot in withdrawals, $x = W/c$, and let $V_k(x)$ be the chance of making $k$ more withdrawals from $x$. One withdrawal needs $x \ge 1$. More need that, and then the grown remainder must last one year less:
+Simulation estimates the failure chance with noise. A second road computes it directly. Measure the pot in withdrawals, $`x = W/c`$, and let $`V_k(x)`$ be the chance of making $`k`$ more withdrawals from $`x`$. One withdrawal needs $`x \ge 1`$. More need that, and then the grown remainder must last one year less:
 
-$$V_k(x) = \mathbb{E}\big[\,V_{k-1}\big((x - 1)\,G\big)\big] \text{ for } x \ge 1, \qquad V_k(x) = 0 \text{ for } x < 1$$
+```math
+V_k(x) = \mathbb{E}\big[\,V_{k-1}\big((x - 1)\,G\big)\big] \text{ for } x \ge 1, \qquad V_k(x) = 0 \text{ for } x < 1
+```
 
-The expectation $\mathbb{E}$ is an average over the bell curve of $\ln G$. The code starts from $V_2$, which has a closed form, and steps back to $V_{30}$ on a grid of pot sizes from 0 to 100 withdrawals, 0.1 apart, averaging over 65 points of the bell curve each time. The answer is $1 - V_{30}(25)$. A glide path needs only that each step use its own year's $m$ and $s$.
+The expectation $`\mathbb{E}`$ is an average over the bell curve of $`\ln G`$. The code starts from $`V_2`$, which has a closed form, and steps back to $`V_{30}`$ on a grid of pot sizes from 0 to 100 withdrawals, 0.1 apart, averaging over 65 points of the bell curve each time. The answer is $`1 - V_{30}(25)`$. A glide path needs only that each step use its own year's $`m`$ and $`s`$.
 
 <details>
 <summary>The algebra behind this</summary>
 
-$V_2(x)$ is the chance that $(x - 1)G \ge 1$, that is $\ln G \ge -\ln(x - 1)$. With $\ln G = m + sZ$ this is the chance that $Z \ge (-\ln(x-1) - m)/s$, which by the bell curve's symmetry is $N\big((\ln(x-1) + m)/s\big)$, where N is the normal curve's area to the left. Starting here instead of at the step function $V_1$ keeps the grid from blurring a jump.
+$`V_2(x)`$ is the chance that $`(x - 1)G \ge 1`$, that is $`\ln G \ge -\ln(x - 1)`$. With $`\ln G = m + sZ`$ this is the chance that $`Z \ge (-\ln(x-1) - m)/s`$, which by the bell curve's symmetry is $`N\big((\ln(x-1) + m)/s\big)`$, where N is the normal curve's area to the left. Starting here instead of at the step function $`V_1`$ keeps the grid from blurring a jump.
 
 </details>
 
@@ -153,18 +167,18 @@ The 60/40 pot: stocks 8 percent expected real return and 20 percent volatility, 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| portfolio expected return $a$ | $0.6 \times 0.08 + 0.4 \times 0.03$ | 0.06 |
-| spread squared, $s^2$ | $(0.6 \times 0.20)^2 + (0.4 \times 0.08)^2 = 0.0144 + 0.001024$ | 0.015424 |
-| spread $s$ | square root | 0.124193 |
-| centre $m$ | $0.06 - 0.5 \times 0.015424$ | 0.052288 |
-| median yearly growth | $e^{0.052288} - 1$ | 5.37% |
-| pot in withdrawals, $W_0/c$ | $1{,}000{,}000 / 40{,}000$ | 25 |
-| crash first, year 1 | $(1{,}000{,}000 - 40{,}000) \times 0.85$ | $816,000.00 |
-| year 2 | $(816{,}000 - 40{,}000) \times 0.85$ | $659,600.00 |
-| year 3 | $(659{,}600 - 40{,}000) \times 0.85$ | $526,660.00 |
-| crash first, $S_{30}$ | 30 discounted terms | 26.3624 > 25: runs dry in year 27 |
-| crash last, $S_{30}$ | 30 discounted terms | 14.7415 ≤ 25: ends at $1,215,230.14 |
-| **failure chance, all futures** | $1 - V_{30}(25)$ on the grid | **8.36%** |
+| portfolio expected return $`a`$ | $`0.6 \times 0.08 + 0.4 \times 0.03`$ | 0.06 |
+| spread squared, $`s^2`$ | $`(0.6 \times 0.20)^2 + (0.4 \times 0.08)^2 = 0.0144 + 0.001024`$ | 0.015424 |
+| spread $`s`$ | square root | 0.124193 |
+| centre $`m`$ | $`0.06 - 0.5 \times 0.015424`$ | 0.052288 |
+| median yearly growth | $`e^{0.052288} - 1`$ | 5.37% |
+| pot in withdrawals, $`W_0/c`$ | $`1{,}000{,}000 / 40{,}000`$ | 25 |
+| crash first, year 1 | $`(1{,}000{,}000 - 40{,}000) \times 0.85`$ | $816,000.00 |
+| year 2 | $`(816{,}000 - 40{,}000) \times 0.85`$ | $659,600.00 |
+| year 3 | $`(659{,}600 - 40{,}000) \times 0.85`$ | $526,660.00 |
+| crash first, $`S_{30}`$ | 30 discounted terms | 26.3624 > 25: runs dry in year 27 |
+| crash last, $`S_{30}`$ | 30 discounted terms | 14.7415 ≤ 25: ends at $1,215,230.14 |
+| **failure chance, all futures** | $`1 - V_{30}(25)`$ on the grid | **8.36%** |
 
 A 4 percent withdrawal from this 60/40 pot runs out before its 30th year in 8.36 percent of the model's futures. The simulation of 50,000 retirements says 8.54 percent, with a standard error (the typical size of its random wobble) of 0.13 points. The two roads sit well inside the four standard errors the checks allow.
 
@@ -181,7 +195,7 @@ xychart-beta
     line [5, 5, 5, 5, 5, 5, 5]
 ```
 
-Orange is the grid, green the simulation, and the flat dark line the 5 percent target. The curve crosses the target at a withdrawal rate of **3.64 percent** on the grid; the 95th percentile of the simulated $S_{30}$ gives 3.62 percent. Each half point of withdrawal rate adds more failure than the last: 3.95 to 8.36 percent going from 3.5 to 4.0, then 14.92 to 23.41 going from 4.5 to 5.0.
+Orange is the grid, green the simulation, and the flat dark line the 5 percent target. The curve crosses the target at a withdrawal rate of **3.64 percent** on the grid; the 95th percentile of the simulated $`S_{30}`$ gives 3.62 percent. Each half point of withdrawal rate adds more failure than the last: 3.95 to 8.36 percent going from 3.5 to 4.0, then 14.92 to 23.41 going from 4.5 to 5.0.
 
 ### What breaks if you drop a piece
 
@@ -189,7 +203,7 @@ Orange is the grid, green the simulation, and the flat dark line the 5 percent t
 | --- | --- | --- |
 | Plan as if 6% arrives every year | "safe" rate 6.85%, which really fails 60.82% of the time | The average ignores the spread. A pot that must pay out loses more in a bad year than it gains in a good one. |
 | Plan at the median growth, 5.37%, every year | rate 6.44%, really failing 52.68% | Better, still no spread: half of all futures do worse than the median. |
-| Judge by the average return | both story orders average 3.90%; one runs dry in year 27, one ends at $1,215,230.14 | Once money leaves, order decides, through $S_n$. |
+| Judge by the average return | both story orders average 3.90%; one runs dry in year 27, one ends at $1,215,230.14 | Once money leaves, order decides, through $`S_n`$. |
 | Compare a year-end study with a start-of-year one | 7.66% against 8.54%, same returns | Withdrawing at the year's end lets the money grow a year first. |
 
 ---
@@ -204,7 +218,7 @@ Step 3 gave the weights. Year 1's growth discounts 29 withdrawals, year 15's dis
 
 ### Testing a glide path
 
-A glide path sets $\pi_t$ year by year. Five plans, each a straight line from its first year's stock share to its last, run through both roads:
+A glide path sets $`\pi_t`$ year by year. Five plans, each a straight line from its first year's stock share to its last, run through both roads:
 
 ```
 Failure at 4% over 30 years, survival grid, one █ = 0.5 percentage points
@@ -225,7 +239,7 @@ The flat 30 percent plan fails least of all here, 5.98 percent: at this rate its
 
 ## Code, from first principles, and it actually runs
 
-Both programs take three roads to the failure chance. Road 1 simulates 50,000 pots year by year, with a hand-written random number generator (splitmix64) and bell-curve draws (the Box-Muller method). Road 2 computes $S_{30}$ on the same paths and counts how often it passes 25; it must agree with road 1 path for path. Road 3 is the survival grid of Step 5, with no randomness and a hand-written normal curve. Two further asserts pin the model itself: the simulated growth factors average $e^{a}$, and the grid's closed-form $V_2$ matches the draws. The same code runs the glide paths, the failure curve, the safe rate by bisection (halving an interval until the root is pinned) and by percentile, the two-order story and the what-breaks rows.
+Both programs take three roads to the failure chance. Road 1 simulates 50,000 pots year by year, with a hand-written random number generator (splitmix64) and bell-curve draws (the Box-Muller method). Road 2 computes $`S_{30}`$ on the same paths and counts how often it passes 25; it must agree with road 1 path for path. Road 3 is the survival grid of Step 5, with no randomness and a hand-written normal curve. Two further asserts pin the model itself: the simulated growth factors average $`e^{a}`$, and the grid's closed-form $`V_2`$ matches the draws. The same code runs the glide paths, the failure curve, the safe rate by bisection (halving an interval until the root is pinned) and by percentile, the two-order story and the what-breaks rows.
 
 ### Python
 
@@ -628,14 +642,14 @@ The two outputs agree line for line: both languages use the same generator, seed
 
 Lean proves the survival test of Steps 1 and 2 for any positive growth factors, and checks the two-order story exactly.
 
-- Take any positive growth factors and any withdrawal $c$. Then $W_k = P_k(W_0 - c\,S_k)$, the unrolled form of Step 1.
-- Take any positive growth factors and any withdrawal $c$. Then withdrawal $k+1$ can be paid, $W_k \ge c$, exactly when $W_0 \ge c\,S_{k+1}$.
-- Take any positive growth factors, $c \ge 0$ and $n \ge 1$. Then the pot pays all $n$ withdrawals exactly when $W_0 \ge c\,S_n$.
+- Take any positive growth factors and any withdrawal $`c`$. Then $`W_k = P_k(W_0 - c\,S_k)`$, the unrolled form of Step 1.
+- Take any positive growth factors and any withdrawal $`c`$. Then withdrawal $`k+1`$ can be paid, $`W_k \ge c`$, exactly when $`W_0 \ge c\,S_{k+1}`$.
+- Take any positive growth factors, $`c \ge 0`$ and $`n \ge 1`$. Then the pot pays all $`n`$ withdrawals exactly when $`W_0 \ge c\,S_n`$.
 - Crash first, the pot holds 816,000, then 659,600, then 526,660 dollars after years 1, 2 and 3.
-- Crash first, $S_{30}$ is above 25, and the pot pays withdrawal 26 but not withdrawal 27.
-- Crash last, $S_{30}$ is at most 25, and the pot pays all 30 withdrawals.
-- Both orders give the same $P_{30}$, since the same 30 growth factors are multiplied.
-- The pot holds 25 withdrawals, and the 60/40 pot has $a$ = 0.06, $s^2$ = 0.015424 and $m$ = 0.052288.
+- Crash first, $`S_{30}`$ is above 25, and the pot pays withdrawal 26 but not withdrawal 27.
+- Crash last, $`S_{30}`$ is at most 25, and the pot pays all 30 withdrawals.
+- Both orders give the same $`P_{30}`$, since the same 30 growth factors are multiplied.
+- The pot holds 25 withdrawals, and the 60/40 pot has $`a`$ = 0.06, $`s^2`$ = 0.015424 and $`m`$ = 0.052288.
 
 The failure chances, the safe rate and the glide paths need the random model, so they are left to the Python and Rust checks.
 
@@ -828,7 +842,7 @@ end LifeCycleAndGlidePaths
 ## The usual mistake
 
 > [!warning]
-> **Believing the average return decides whether the money lasts.** It does while nothing is taken out: the final pot is then a product, and a product ignores order. Once withdrawals start, each year's growth is applied to a pot that earlier years have already shrunk or grown, and the survival test $W_0 \ge c S_n$ weighs year 1 twenty-nine times as heavily as year 29. Two retirements with the same average, 3.90 percent, end broke in year 27 and at $1,215,230.14.
+> **Believing the average return decides whether the money lasts.** It does while nothing is taken out: the final pot is then a product, and a product ignores order. Once withdrawals start, each year's growth is applied to a pot that earlier years have already shrunk or grown, and the survival test $`W_0 \ge c S_n`$ weighs year 1 twenty-nine times as heavily as year 29. Two retirements with the same average, 3.90 percent, end broke in year 27 and at $1,215,230.14.
 >
 > Four smaller traps:
 > - **Planning at the average return.** Paying 6.85 percent a year looks safe at a steady 6 percent; in the model it fails 60.82 percent of the time.
@@ -870,7 +884,7 @@ A failure chance ranks glide paths by one number; whether a changing stock share
 Verified 2026-11-14: every link below resolves to the publisher's page.
 
 - Bengen, William P. "Determining Withdrawal Rates Using Historical Data." *Journal of Financial Planning* 7, no. 4 (1994): 171–180. The historical study behind the 4 percent rule.
-- Milevsky, Moshe A., and Chris Robinson. "Self-Annuitization and Ruin in Retirement." *North American Actuarial Journal* 4, no. 4 (2000): 112–124. [doi:10.1080/10920277.2000.10595940](https://doi.org/10.1080/10920277.2000.10595940). The ruin probability of a fixed withdrawal, written as the chance that a sum of discounted withdrawals exceeds the pot: this card's $S_n$.
+- Milevsky, Moshe A., and Chris Robinson. "Self-Annuitization and Ruin in Retirement." *North American Actuarial Journal* 4, no. 4 (2000): 112–124. [doi:10.1080/10920277.2000.10595940](https://doi.org/10.1080/10920277.2000.10595940). The ruin probability of a fixed withdrawal, written as the chance that a sum of discounted withdrawals exceeds the pot: this card's $`S_n`$.
 - Dufresne, Daniel. "The Distribution of a Perpetuity, with Applications to Risk Theory and Pension Funding." *Scandinavian Actuarial Journal* 1990, no. 1: 39–79. [doi:10.1080/03461238.1990.10413872](https://doi.org/10.1080/03461238.1990.10413872). The mathematics of sums of products of random growth factors.
 - Pfau, Wade D., and Michael E. Kitces. "Reducing Retirement Risk with a Rising Equity Glide-Path." SSRN working paper, 2013. [doi:10.2139/ssrn.2324930](https://doi.org/10.2139/ssrn.2324930). The rising glide path tested in the bar chart.
 - Samuelson, Paul A. "Lifetime Portfolio Selection by Dynamic Stochastic Programming." *Review of Economics and Statistics* 51, no. 3 (1969): 239–246. [doi:10.2307/1926559](https://doi.org/10.2307/1926559). Stepping backwards from the last year, the method of the survival grid.

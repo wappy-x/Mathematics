@@ -24,29 +24,35 @@ To scale, 1 mm = 90 units, centre (130, 120); the tips are the `figure,` line of
 
 ## The formula
 
-Notation, in words first. $R_\theta$ is the anticlockwise turn by angle $\theta$ about the centre. $F_\varphi$ is the flip in the mirror line through the centre at angle $\varphi$ above the horizontal. Two moves side by side act right to left, the way matrices multiply ([Moving shapes with matrices](../05-Vectors%20in%20Space/04-transformations-with-matrices.md)): in $F_\psi F_\varphi$, $F_\varphi$ acts first.
+Notation, in words first. $`R_\theta`$ is the anticlockwise turn by angle $`\theta`$ about the centre. $`F_\varphi`$ is the flip in the mirror line through the centre at angle $`\varphi`$ above the horizontal. Two moves side by side act right to left, the way matrices multiply ([Moving shapes with matrices](../05-Vectors%20in%20Space/04-transformations-with-matrices.md)): in $`F_\psi F_\varphi`$, $`F_\varphi`$ acts first.
 
-$$R_\theta = \begin{pmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix}, \qquad F_\varphi = \begin{pmatrix}\cos 2\varphi & \sin 2\varphi\\ \sin 2\varphi & -\cos 2\varphi\end{pmatrix}$$
+```math
+R_\theta = \begin{pmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix}, \qquad F_\varphi = \begin{pmatrix}\cos 2\varphi & \sin 2\varphi\\ \sin 2\varphi & -\cos 2\varphi\end{pmatrix}
+```
 
-$$D_6 = \{\,R_{60k},\; F_{30k} \;:\; k = 0, 1, \dots, 5\,\}, \qquad F_\psi F_\varphi = R_{2(\psi - \varphi)}$$
+```math
+D_6 = \{\,R_{60k},\; F_{30k} \;:\; k = 0, 1, \dots, 5\,\}, \qquad F_\psi F_\varphi = R_{2(\psi - \varphi)}
+```
 
 **Read it aloud:** the snowflake has six turns by multiples of 60° and six flips in lines 30° apart; two flips make a turn by twice the angle between their mirrors.
 
 For a repeating pattern one more line decides which turns can occur. The **trace** of a matrix, written tr, is the sum of its two diagonal entries:
 
-$$\operatorname{tr} R_{360°/n} = 2\cos(360°/n) \in \{-2, -1, 0, 1, 2\} \quad\Longrightarrow\quad n \in \{1, 2, 3, 4, 6\}$$
+```math
+\mathrm{tr}\, R_{360°/n} = 2\cos(360°/n) \in \{-2, -1, 0, 1, 2\} \quad\Longrightarrow\quad n \in \{1, 2, 3, 4, 6\}
+```
 
 **Read it aloud:** on a wall, twice the cosine of the smallest turn is whole, so that turn is a full, half, third, quarter or sixth of a revolution.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $R_\theta$, $R_{60}$ | the turn by angle θ | $R_{60}$: arm to next arm | past 360° it repeats |
-| $F_\varphi$, $F_\psi$, $F_0$, $F_{30}$ | the flip in the mirror at that angle | $F_0$ between arms, $F_{30}$ along one | past 180° the same line |
-| $\theta$ | a turn angle, in degrees | 60° | — |
-| $\varphi$, $\psi$ | two mirror angles | 0° and 30° | a wider gap, a bigger turn |
-| $D_6$, $D_{12}$; $k$ | the twelve moves' group, two names in use; k counts 0 to 5 | 6 turns, 6 flips | — |
-| $n$ | the fold: a turn by 360°/n comes home after n goes | 6 | 5 or 7 breaks the lattice |
-| $\operatorname{tr}$ | trace: the diagonal entries added | tr of $R_{60}$ is 0.5 + 0.5 = 1 | — |
+| $`R_\theta`$, $`R_{60}`$ | the turn by angle θ | $`R_{60}`$: arm to next arm | past 360° it repeats |
+| $`F_\varphi`$, $`F_\psi`$, $`F_0`$, $`F_{30}`$ | the flip in the mirror at that angle | $`F_0`$ between arms, $`F_{30}`$ along one | past 180° the same line |
+| $`\theta`$ | a turn angle, in degrees | 60° | — |
+| $`\varphi`$, $`\psi`$ | two mirror angles | 0° and 30° | a wider gap, a bigger turn |
+| $`D_6`$, $`D_{12}`$; $`k`$ | the twelve moves' group, two names in use; k counts 0 to 5 | 6 turns, 6 flips | — |
+| $`n`$ | the fold: a turn by 360°/n comes home after n goes | 6 | 5 or 7 breaks the lattice |
+| $`\mathrm{tr}`$ | trace: the diagonal entries added | tr of $`R_{60}`$ is 0.5 + 0.5 = 1 | — |
 
 ### When it holds
 
@@ -69,7 +75,7 @@ A distance-keeping move that fixes the centre is pinned by where two neighbourin
 
 ### Step 2: two flips make a turn
 
-Give each point a direction, an angle from the horizontal. The flip $F_\varphi$ sends direction α to 2φ − α, since the mirror sits halfway between a point and its image. Flip again in $F_\psi$: 2ψ − (2φ − α) = α + 2(ψ − φ). Every direction moves by the same amount, so the pair is a turn by 2(ψ − φ).
+Give each point a direction, an angle from the horizontal. The flip $`F_\varphi`$ sends direction α to 2φ − α, since the mirror sits halfway between a point and its image. Flip again in $`F_\psi`$: 2ψ − (2φ − α) = α + 2(ψ − φ). Every direction moves by the same amount, so the pair is a turn by 2(ψ − φ).
 
 Mirrors at 0° and 30° give 60°; in the other order, −60°, that is 300°. Order matters. The turns are half the group; the flips are the other block ([Cosets and Lagrange's theorem](../../03-Algebra/08-Groups/04-cosets-and-lagranges-theorem.md)).
 
@@ -138,7 +144,7 @@ The classical route counts lattice shapes and the turn-and-flip groups each carr
 | --- | --- | --- |
 | where the top tip goes, then its neighbour | 6 × 2 | **12 moves** |
 | flip at 0°, then at 30° | 2 × (30° − 0°) | a turn by 60° |
-| trace of $R_{60}$ | 2 cos 60° = 0.5000 + 0.5000 | 1.0000, whole: fits a wall |
+| trace of $`R_{60}`$ | 2 cos 60° = 0.5000 + 0.5000 | 1.0000, whole: fits a wall |
 | a five-fold turn's trace | 2 cos 72° | 0.6180, not whole |
 | the snowflake wall `*632` | 1 + 0.4167 + 0.3333 + 0.2500 | 2.0000 |
 | sets of marks costing 2 | the hand count | **17** |
@@ -155,7 +161,7 @@ The classical route counts lattice shapes and the turn-and-flip groups each carr
 
 ## Code, from first principles, and it actually runs
 
-Only math's cos, sin, atan2 and degree conversions are imported. Four counts, two roads each: 12 moves by multiplying $R_{60}$ and $F_0$, and by 46656 tip relabellings; 7 strips from all 4096 strips two cells tall and six long, and from Step 3's rules; the turns by whole matrices of determinant 1, and by the trace; 17 walls by Conway's costs, their folds checked against the matrices. In the output `o` is `∘`, `x` is `×`.
+Only math's cos, sin, atan2 and degree conversions are imported. Four counts, two roads each: 12 moves by multiplying $`R_{60}`$ and $`F_0`$, and by 46656 tip relabellings; 7 strips from all 4096 strips two cells tall and six long, and from Step 3's rules; the turns by whole matrices of determinant 1, and by the trace; 17 walls by Conway's costs, their folds checked against the matrices. In the output `o` is `∘`, `x` is `×`.
 
 ### Python
 
@@ -349,9 +355,9 @@ ALL CHECKS PASS
 Lean proves the turn rule for every lattice, the two-flip rule for every pair of mirrors, and the snowflake's count of 12.
 
 - A turn by 360°/n can map a lattice to itself exactly when n is 1, 2, 3, 4 or 6. Each of those five turns does occur.
-- A flip in the mirror at φ, then a flip in the mirror at ψ, is the turn by 2(ψ − φ): $F_\psi F_\varphi = R_{2(\psi - \varphi)}$.
+- A flip in the mirror at φ, then a flip in the mirror at ψ, is the turn by 2(ψ − φ): $`F_\psi F_\varphi = R_{2(\psi - \varphi)}`$.
 - The distance-keeping moves that fix the centre and land the six tips on themselves form a group of exactly 12 moves.
-- The hand numbers come out exactly: 6 × 2 = 12, and the trace of $R_{60}$ is 1.
+- The hand numbers come out exactly: 6 × 2 = 12, and the trace of $`R_{60}`$ is 1.
 - Exactly 7 of the 16 on-off lists obey the strip rules, and each of the 17 listed walls costs 2.
 
 The searches of all 4096 strips and of every set of marks, and the figure, are left to the Python and Rust checks.
@@ -708,7 +714,7 @@ example :
 > **Counting pictures instead of symmetries.** Wallpaper designs are endless; wallpaper groups are 17. Ducks and stars can share one group.
 >
 > - **Forgetting the flips.** A snowflake has 12 symmetries, not 6; a pinwheel, being one-handed, keeps just its turns.
-> - **Reading a product left to right.** $F_{30}F_0$ means $F_0$ first; read backwards it gives 300°, not 60°.
+> - **Reading a product left to right.** $`F_{30}F_0`$ means $`F_0`$ first; read backwards it gives 300°, not 60°.
 > - **Taking a glide for a mirror.** Footprints flipped over the centre line land between two others; the half-repeat slide completes the move.
 
 ---

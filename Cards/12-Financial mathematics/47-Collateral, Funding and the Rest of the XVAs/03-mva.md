@@ -38,49 +38,55 @@ Orange, rising: the average margin at each date, in that date's dollars. Green, 
 
 Notation first, in words.
 
-- $\mathrm{IM}(t)$ is the initial margin posted at date $t$, in years from today.
-- $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
-- $D(t) = e^{-rt}$ is the discount factor that shrinks a date-$t$ dollar to today.
-- $Q(t) = e^{-\lambda t}$ is the chance Northwind is still alive at $t$ when it fails at the yearly rate $\lambda$ (Greek "lambda"), its **hazard**.
-- $s_I$ is the **margin funding spread**: what the bank pays to borrow, minus what the posted margin earns.
+- $`\mathrm{IM}(t)`$ is the initial margin posted at date $`t`$, in years from today.
+- $`\mathbb{E}[\,\cdot\,]`$ is an average over the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
+- $`D(t) = e^{-rt}`$ is the discount factor that shrinks a date-$`t`$ dollar to today.
+- $`Q(t) = e^{-\lambda t}`$ is the chance Northwind is still alive at $`t`$ when it fails at the yearly rate $`\lambda`$ (Greek "lambda"), its **hazard**.
+- $`s_I`$ is the **margin funding spread**: what the bank pays to borrow, minus what the posted margin earns.
 
-$$\mathrm{MVA} = s_I \int_0^T D(t)\,\mathbb{E}\bigl[\mathrm{IM}(t)\bigr]\,Q(t)\,dt$$
+```math
+\mathrm{MVA} = s_I \int_0^T D(t)\,\mathbb{E}\bigl[\mathrm{IM}(t)\bigr]\,Q(t)\,dt
+```
 
 **Read it aloud:** at every instant of the trade's life, pay the spread on the margin expected to be posted, shrink that payment to today, weight it by the chance the trade is still running, and add up.
 
 The margin itself is a 99% ten-day move of the option, sized by its delta:
 
-$$\mathrm{IM}(t) = z_{0.99}\;\Delta(t)\,S(t)\,\sigma\sqrt{h}, \qquad \Delta(t) = e^{-q(T-t)}N\bigl(d_1(t)\bigr)$$
+```math
+\mathrm{IM}(t) = z_{0.99}\;\Delta(t)\,S(t)\,\sigma\sqrt{h}, \qquad \Delta(t) = e^{-q(T-t)}N\bigl(d_1(t)\bigr)
+```
 
-Here $z_{0.99} = 2.326348$ is the 99th percentile of the standard normal, $h = 10/252$ is ten trading days in years, $\sigma$ is Acme's volatility, $q$ its dividend yield, and $d_1$ is as on the Black-Scholes card. $\Delta(t)\,S(t)$ is the option's **dollar delta**: to first order, a 1% rise in Acme adds 1% of it to the option's value. Times $\sigma\sqrt{h}$ it becomes one standard deviation of the option's ten-day change; times $z_{0.99}$ it becomes the 99th percentile of that change.
+Here $`z_{0.99} = 2.326348`$ is the 99th percentile of the standard normal, $`h = 10/252`$ is ten trading days in years, $`\sigma`$ is Acme's volatility, $`q`$ its dividend yield, and $`d_1`$ is as on the Black-Scholes card. $`\Delta(t)\,S(t)`$ is the option's **dollar delta**: to first order, a 1% rise in Acme adds 1% of it to the option's value. Times $`\sigma\sqrt{h}`$ it becomes one standard deviation of the option's ten-day change; times $`z_{0.99}`$ it becomes the 99th percentile of that change.
 
 For this call, and for any claim whose dollar delta is itself a traded price, the average margin in today's dollars stays at its day-one level, so the integral closes:
 
-$$\mathrm{MVA} = s_I \times \mathrm{IM}_0 \times \frac{1 - e^{-\lambda T}}{\lambda}$$
+```math
+\mathrm{MVA} = s_I \times \mathrm{IM}_0 \times \frac{1 - e^{-\lambda T}}{\lambda}
+```
 
 **Read it aloud:** the spread, times today's margin, times the survival-weighted length of the trade in years.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mathrm{MVA}$ | margin valuation adjustment: today's value of the margin's funding cost | \$0.026926 | — |
-| $s_I$ | margin funding spread: borrowing rate minus what posted margin earns | 0.005 (50 bp) | rises in proportion |
-| $\mathrm{IM}(t)$, $\mathrm{IM}_0$ | initial margin at date $t$; at day one | \$5.439166 | rises in proportion |
-| $z_{0.99}$, $N$, $\varphi$ | the 99th percentile of a standard bell curve; the curve's area to the left, and its height | 2.326348 | rises: a stricter rule, more margin |
-| $\Delta(t)$, $d_1$, $q$ | delta: shares that move like one option; the Black-Scholes $d_1$; Acme's dividend yield, 2% | 0.586851 | rises |
-| $S(t)$ | Acme's share price | \$100 today | rises, through dollar delta |
-| $\sigma$, $\sigma_{10}$ | Acme's volatility: yearly wiggle of its log price; the option's ten-day standard deviation in dollars | 0.20; \$2.338071 | rises, nearly in proportion |
-| $h$ | the margin horizon, ten trading days, in years | 10/252 | rises as $\sqrt{h}$ |
-| $D(t)$, $r$ | discount factor $e^{-rt}$; riskless rate | $r$ = 0.05 | — (drops out of the closed form) |
-| $Q(t)$, $\lambda$ | Northwind's survival chance to $t$; its hazard | $\lambda$ = 0.02 | falls slightly: the trade may end early |
-| $T$, $t$ | the trade's life in years; a date inside it | 1 | rises, a little less than in proportion |
-| $C_0$, $R$, $s_F$ | the clean call; recovery; unsecured funding spread (for CVA and FVA, the funding valuation adjustment) | \$9.227006; 0.40; 0.01 | — (comparison only) |
+| $`\mathrm{MVA}`$ | margin valuation adjustment: today's value of the margin's funding cost | \$0.026926 | — |
+| $`s_I`$ | margin funding spread: borrowing rate minus what posted margin earns | 0.005 (50 bp) | rises in proportion |
+| $`\mathrm{IM}(t)`$, $`\mathrm{IM}_0`$ | initial margin at date $`t`$; at day one | \$5.439166 | rises in proportion |
+| $`z_{0.99}`$, $`N`$, $`\varphi`$ | the 99th percentile of a standard bell curve; the curve's area to the left, and its height | 2.326348 | rises: a stricter rule, more margin |
+| $`\Delta(t)`$, $`d_1`$, $`q`$ | delta: shares that move like one option; the Black-Scholes $`d_1`$; Acme's dividend yield, 2% | 0.586851 | rises |
+| $`S(t)`$ | Acme's share price | \$100 today | rises, through dollar delta |
+| $`\sigma`$, $`\sigma_{10}`$ | Acme's volatility: yearly wiggle of its log price; the option's ten-day standard deviation in dollars | 0.20; \$2.338071 | rises, nearly in proportion |
+| $`h`$ | the margin horizon, ten trading days, in years | 10/252 | rises as $`\sqrt{h}`$ |
+| $`D(t)`$, $`r`$ | discount factor $`e^{-rt}`$; riskless rate | $`r`$ = 0.05 | — (drops out of the closed form) |
+| $`Q(t)`$, $`\lambda`$ | Northwind's survival chance to $`t`$; its hazard | $`\lambda`$ = 0.02 | falls slightly: the trade may end early |
+| $`T`$, $`t`$ | the trade's life in years; a date inside it | 1 | rises, a little less than in proportion |
+| $`C_0`$, $`R`$, $`s_F`$ | the clean call; recovery; unsecured funding spread (for CVA and FVA, the funding valuation adjustment) | \$9.227006; 0.40; 0.01 | — (comparison only) |
 
 ### When it holds
 
 - **Received margin cannot be reused.** Under the uncleared-margin rules it is segregated at a custodian. If a rule let the bank lend on Northwind's margin, received would offset posted and MVA would shrink toward zero.
 - **A flat margin spread.** Funding costs move with the bank's own credit. If the spread doubles to 100 bp, MVA doubles to 0.053851.
 - **Delta-normal margin.** The real rule reprices the option. Repriced in full, Northwind posts against a 99% rise in the call, \$6.518167; the bank posts against a 99% fall, \$4.413348. The delta sizing, \$5.44, sits between them because it ignores gamma (the curvature of the option's price). Full repricing would lower the bank's MVA.
-- **Default independent of Acme.** $Q(t)$ multiplies the expected margin only if Northwind's failure does not depend on Acme's price. If it does, the average must be taken jointly, as wrong-way risk does for CVA.
+- **Default independent of Acme.** $`Q(t)`$ multiplies the expected margin only if Northwind's failure does not depend on Acme's price. If it does, the average must be taken jointly, as wrong-way risk does for CVA.
 - **Only Northwind can end the trade early.** The bank's own default is set aside, as on the CVA card. Adding a bank hazard lowers MVA slightly: posting stops sooner.
 
 ---
@@ -95,11 +101,11 @@ The whole idea is a cash flow. Posting \$5.44 means borrowing \$5.44 at the fund
 
 If Northwind stops paying, the bank needs time to notice, dispute, close out and re-hedge. The rules assume ten business days: the **margin period of risk**. Initial margin covers the option's move over that window with 99% confidence.
 
-Over ten days a call moves by about its dollar delta times Acme's percentage move. Acme's ten-day log move is normal with standard deviation $\sigma\sqrt{h}$. So the option's ten-day change is normal with standard deviation $\Delta S \sigma\sqrt{h}$, here \$2.338071. Its 99th percentile is 2.326348 of those: **\$5.439166**. This is delta-normal value at risk (VaR) on one position ([Parametric VaR](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md)).
+Over ten days a call moves by about its dollar delta times Acme's percentage move. Acme's ten-day log move is normal with standard deviation $`\sigma\sqrt{h}`$. So the option's ten-day change is normal with standard deviation $`\Delta S \sigma\sqrt{h}`$, here \$2.338071. Its 99th percentile is 2.326348 of those: **\$5.439166**. This is delta-normal value at risk (VaR) on one position ([Parametric VaR](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md)).
 
 The two margin engines in use are richer versions of this line.
 
-- **ISDA SIMM**, the Standard Initial Margin Model of the International Swaps and Derivatives Association, is what most dealers use between themselves. It takes sensitivities (delta, vega for sensitivity to volatility, and a curvature term for gamma), multiplies each by a published risk weight, and aggregates them across risk types with published correlations. For a single equity delta, the risk weight plays the part of $z_{0.99}\sigma\sqrt{h}$.
+- **ISDA SIMM**, the Standard Initial Margin Model of the International Swaps and Derivatives Association, is what most dealers use between themselves. It takes sensitivities (delta, vega for sensitivity to volatility, and a curvature term for gamma), multiplies each by a published risk weight, and aggregates them across risk types with published correlations. For a single equity delta, the risk weight plays the part of $`z_{0.99}\sigma\sqrt{h}`$.
 - **A VaR-based model** reprices the whole netting set (all trades with one counterparty) under historical or stressed ten-day scenarios and takes the 99% loss. The international baseline asks for exactly this: a one-tailed 99% interval over ten days, calibrated on a period that includes stress, or a standard schedule of percentages of notional.
 
 Conventions verified 2026-09-28 against the BCBS-IOSCO text and MGN20 (the first two Sources): 99% one-tailed, ten business days with daily variation margin, segregated initial margin; 252 trading days a year is this card's choice.
@@ -108,34 +114,38 @@ The simulated check draws 200,000 ten-day moves, sorts them and reads off the 99
 
 ### Step 2: the cost over one short interval
 
-Over a sliver of time at date $t$, the bank pays the spread times the margin times the sliver's length, $s_I\,\mathrm{IM}(t)\,dt$, but only if Northwind is still alive, since a default ends the trade and releases the margin. That payment is a date-$t$ dollar, worth $D(t)$ today. Its value today is $s_I\,D(t)\,\mathrm{IM}(t)\,\mathbf{1}_{\text{alive}}\,dt$, where the last factor is 1 while the trade is running and 0 after.
+Over a sliver of time at date $`t`$, the bank pays the spread times the margin times the sliver's length, $`s_I\,\mathrm{IM}(t)\,dt`$, but only if Northwind is still alive, since a default ends the trade and releases the margin. That payment is a date-$`t`$ dollar, worth $`D(t)`$ today. Its value today is $`s_I\,D(t)\,\mathrm{IM}(t)\,\mathbf{1}_{\text{alive}}\,dt`$, where the last factor is 1 while the trade is running and 0 after.
 
 ### Step 3: average and add up
 
 Average over the pricing world and integrate over the life. If Northwind's default clock is independent of Acme's price, the average of a product splits: expected margin times survival chance. That is the formula:
 
-$$\mathrm{MVA} = s_I \int_0^T D(t)\,\mathbb{E}\bigl[\mathrm{IM}(t)\bigr]\,Q(t)\,dt.$$
+```math
+\mathrm{MVA} = s_I \int_0^T D(t)\,\mathbb{E}\bigl[\mathrm{IM}(t)\bigr]\,Q(t)\,dt.
+```
 
-It has the same skeleton as CVA and FVA. CVA puts expected exposure and the default rate (times the loss fraction $1-R$) where MVA puts expected margin and the spread. FVA puts expected unsecured balance and the unsecured funding spread ([FVA](02-fva.md)).
+It has the same skeleton as CVA and FVA. CVA puts expected exposure and the default rate (times the loss fraction $`1-R`$) where MVA puts expected margin and the spread. FVA puts expected unsecured balance and the unsecured funding spread ([FVA](02-fva.md)).
 
 ### Step 4: the discounted margin is flat, so the integral closes
 
-The margin is $z_{0.99}\sigma\sqrt{h}$ times the dollar delta $\Delta(t)S(t)$. The dollar delta of a call is the price of its share half: $S e^{-q(T-t)}N(d_1)$ is exactly what a contract paying one Acme share at expiry, if Acme finishes above \$100, is worth at date $t$ ([Asset-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md)). The discounted price of a traded claim, averaged in the pricing world, never changes: that is what pricing world means. So $D(t)\,\mathbb{E}[\mathrm{IM}(t)] = \mathrm{IM}_0$ at every date, the green line in the picture.
+The margin is $`z_{0.99}\sigma\sqrt{h}`$ times the dollar delta $`\Delta(t)S(t)`$. The dollar delta of a call is the price of its share half: $`S e^{-q(T-t)}N(d_1)`$ is exactly what a contract paying one Acme share at expiry, if Acme finishes above \$100, is worth at date $`t`$ ([Asset-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md)). The discounted price of a traded claim, averaged in the pricing world, never changes: that is what pricing world means. So $`D(t)\,\mathbb{E}[\mathrm{IM}(t)] = \mathrm{IM}_0`$ at every date, the green line in the picture.
 
-The orange line is the same thing in date-$t$ dollars, $\mathrm{IM}_0 e^{rt}$: 5.44 rising to 5.72. The average margin grows at the riskless rate. Shrinking by $D(t)$ undoes it exactly.
+The orange line is the same thing in date-$`t`$ dollars, $`\mathrm{IM}_0 e^{rt}`$: 5.44 rising to 5.72. The average margin grows at the riskless rate. Shrinking by $`D(t)`$ undoes it exactly.
 
-What remains is the survival integral: $\int_0^T e^{-\lambda t}\,dt = (1 - e^{-\lambda T})/\lambda$, which is 0.990066 years for Northwind. Hence the closed form.
+What remains is the survival integral: $`\int_0^T e^{-\lambda t}\,dt = (1 - e^{-\lambda T})/\lambda`$, which is 0.990066 years for Northwind. Hence the closed form.
 
 <details>
 <summary>Detailed proof: the discounted expected margin equals today's margin</summary>
 
-Let $A(t) = S(t)\,e^{-q(T-t)}N(d_1(t))$. Write $V_A(t)$ for the date-$t$ price of the claim paying $S(T)$ at $T$ if $S(T) > K$ (the \$100 strike), else nothing. Under the pricing world, with the share as the unit of account, the chance $S(T) > K$ given $S(t)$ is $N(d_1(t))$; the share, paying dividends at rate $q$, is worth $S(t)e^{-q(T-t)}$ in date-$t$ dollars as a claim on $S(T)$. So $V_A(t) = A(t)$ (the share-half step of the Black-Scholes derivation).
+Let $`A(t) = S(t)\,e^{-q(T-t)}N(d_1(t))`$. Write $`V_A(t)`$ for the date-$`t`$ price of the claim paying $`S(T)`$ at $`T`$ if $`S(T) > K`$ (the \$100 strike), else nothing. Under the pricing world, with the share as the unit of account, the chance $`S(T) > K`$ given $`S(t)`$ is $`N(d_1(t))`$; the share, paying dividends at rate $`q`$, is worth $`S(t)e^{-q(T-t)}`$ in date-$`t`$ dollars as a claim on $`S(T)`$. So $`V_A(t) = A(t)`$ (the share-half step of the Black-Scholes derivation).
 
-The claim pays nothing before $T$, so $D(t)V_A(t)$ is a martingale in the pricing world: $\mathbb{E}[D(t)V_A(t)] = V_A(0)$ for every $t \le T$. Multiply by the constant $z_{0.99}\sigma\sqrt{h}$: $D(t)\,\mathbb{E}[\mathrm{IM}(t)] = \mathrm{IM}_0$. At $t = T$ the margin is $z_{0.99}\sigma\sqrt{h}\,S(T)$ if Acme finishes above \$100, else zero, and the identity still holds.
+The claim pays nothing before $`T`$, so $`D(t)V_A(t)`$ is a martingale in the pricing world: $`\mathbb{E}[D(t)V_A(t)] = V_A(0)`$ for every $`t \le T`$. Multiply by the constant $`z_{0.99}\sigma\sqrt{h}`$: $`D(t)\,\mathbb{E}[\mathrm{IM}(t)] = \mathrm{IM}_0`$. At $`t = T`$ the margin is $`z_{0.99}\sigma\sqrt{h}\,S(T)`$ if Acme finishes above \$100, else zero, and the identity still holds.
 
 With independent default and a flat hazard,
-$$\mathrm{MVA} = s_I\int_0^T \mathrm{IM}_0\,e^{-\lambda t}\,dt = s_I\,\mathrm{IM}_0\,\frac{1-e^{-\lambda T}}{\lambda}.$$
-Its slope in $T$, holding the margin fixed, is $s_I\,\mathrm{IM}_0\,e^{-\lambda T} > 0$, so MVA grows with maturity but more slowly than in proportion. For a product whose margin profile is not a traded price (a swap, whose margin falls as payments run off), the profile must be integrated date by date; the checks do that here as road 2 and land on the same number.
+
+$`\displaystyle \mathrm{MVA} = s_I\int_0^T \mathrm{IM}_0\,e^{-\lambda t}\,dt = s_I\,\mathrm{IM}_0\,\frac{1-e^{-\lambda T}}{\lambda}.`$
+
+Its slope in $`T`$, holding the margin fixed, is $`s_I\,\mathrm{IM}_0\,e^{-\lambda T} > 0`$, so MVA grows with maturity but more slowly than in proportion. For a product whose margin profile is not a traded price (a swap, whose margin falls as payments run off), the profile must be integrated date by date; the checks do that here as road 2 and land on the same number.
 
 </details>
 
@@ -151,9 +161,9 @@ This route needs no flatness argument, so it works for any product and any margi
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| delta | $e^{-0.02}N(d_1)$, from the Black-Scholes card | 0.586851 |
+| delta | $`e^{-0.02}N(d_1)`$, from the Black-Scholes card | 0.586851 |
 | ten-day standard deviation | 0.586851 × 100 × 0.20 × √(10/252) | \$2.338071 |
-| 99% percentile | $z_{0.99}$ | 2.326348 |
+| 99% percentile | $`z_{0.99}`$ | 2.326348 |
 | initial margin | 2.326348 × 2.338071 | \$5.439166 |
 | hand version | 2.33 × 0.587 × 100 × 0.20 × √(10/252) | \$5.449087 |
 | survival-weighted life | (1 − e^{−0.02})/0.02 | 0.990066 years |
@@ -169,12 +179,12 @@ Posting \$5.44 for a year at 50 bp costs about 2.7 cents, slightly less than 0.5
 | FVA, no collateral | 0.01 × 9.227006 × 0.990066 | \$0.091353 | 0.294742 |
 | MVA | as above | \$0.026926 | — |
 
-All three share the survival factor, so the comparison reduces to one product each: $s_I\,\mathrm{IM}_0$ against $(1-R)\lambda C_0$ for CVA and against $s_F C_0$ for FVA. Setting them equal gives the crossovers.
+All three share the survival factor, so the comparison reduces to one product each: $`s_I\,\mathrm{IM}_0`$ against $`(1-R)\lambda C_0`$ for CVA and against $`s_F C_0`$ for FVA. Setting them equal gives the crossovers.
 
-- **Against CVA:** MVA wins when Northwind's hazard is below $s_I\,\mathrm{IM}_0/((1-R)C_0)$ = 0.004912, about 0.49% a year: a very safe counterparty. The checks find the same point by bisection on the two costs.
-- **Against FVA:** MVA wins when the unsecured funding spread is below $s_I\,\mathrm{IM}_0/C_0$ = 0.002947, about 29 bp.
+- **Against CVA:** MVA wins when Northwind's hazard is below $`s_I\,\mathrm{IM}_0/((1-R)C_0)`$ = 0.004912, about 0.49% a year: a very safe counterparty. The checks find the same point by bisection on the two costs.
+- **Against FVA:** MVA wins when the unsecured funding spread is below $`s_I\,\mathrm{IM}_0/C_0`$ = 0.002947, about 29 bp.
 
-The decisive case is collateral. With daily variation margin (the daily cash that settles each change in the trade's value) and Northwind's \$5.44 of initial margin in hand, the bank loses only when a ten-day move overshoots the margin. That average overshoot, held at its day-one size, is $\sigma_{10}\bigl(\varphi(z_{0.99}) - z_{0.99}(1-N(z_{0.99}))\bigr)$ = \$0.007923, where $\sigma_{10}$ is the \$2.338071 ten-day standard deviation and $\varphi$ the bell curve's height, found again by integration.
+The decisive case is collateral. With daily variation margin (the daily cash that settles each change in the trade's value) and Northwind's \$5.44 of initial margin in hand, the bank loses only when a ten-day move overshoots the margin. That average overshoot, held at its day-one size, is $`\sigma_{10}\bigl(\varphi(z_{0.99}) - z_{0.99}(1-N(z_{0.99}))\bigr)`$ = \$0.007923, where $`\sigma_{10}`$ is the \$2.338071 ten-day standard deviation and $`\varphi`$ the bell curve's height, found again by integration.
 
 CVA falls to 0.60 × 0.007923 × (1 − e^{−0.02}) = \$0.000094. Variation margin also funds the hedge, so FVA falls toward zero ([Collateral](01-collateral-and-the-residual-exposure.md)). MVA does not fall at all: the margin that killed the CVA is the margin being funded.
 
@@ -193,7 +203,7 @@ Same trade, correct MVA 0.026926.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | No survival weight | 0.027196 | Charges for margin posted after Northwind has defaulted and the trade has ended |
-| Margin discounted twice | 0.026266 | Treats \$5.44 as the margin in every future date's dollars, then discounts it: the expected margin already grows at $r$ |
+| Margin discounted twice | 0.026266 | Treats \$5.44 as the margin in every future date's dollars, then discounts it: the expected margin already grows at $`r`$ |
 | One-day horizon instead of ten | 0.008515 | Cuts the margin by √10; the rules use the time to close out, not one day |
 | Whole 5.5% funding rate, not the 50 bp spread | 0.296182 | Forgets the margin earns the collateral rate at the custodian |
 | Received margin netted against posted | 0 | Received margin is segregated; it cannot fund the bank's own posting |
@@ -629,10 +639,10 @@ The two outputs agree line for line.
 
 Lean proves the MVA closed form and its two consequences, for any positive hazard and any trade life.
 
-- Suppose $D(t)\,\mathbb{E}[\mathrm{IM}(t)] = \mathrm{IM}_0$ at every date $t$ from 0 to $T$. Then the MVA integral equals $s_I\,\mathrm{IM}_0\,(1 - e^{-\lambda T})/\lambda$.
-- Take a positive spread and a positive day-one margin. Then MVA rises with $T$, with slope $s_I\,\mathrm{IM}_0\,e^{-\lambda T}$.
-- Take the same spread and margin, and any $T > 0$. Then MVA stays below $s_I\,\mathrm{IM}_0\,T$, the charge with no survival weight.
-- Take $R < 1$, $C_0 > 0$ and $T > 0$. Then MVA exceeds CVA exactly when $\lambda < s_I\,\mathrm{IM}_0/((1-R)C_0)$.
+- Suppose $`D(t)\,\mathbb{E}[\mathrm{IM}(t)] = \mathrm{IM}_0`$ at every date $`t`$ from 0 to $`T`$. Then the MVA integral equals $`s_I\,\mathrm{IM}_0\,(1 - e^{-\lambda T})/\lambda`$.
+- Take a positive spread and a positive day-one margin. Then MVA rises with $`T`$, with slope $`s_I\,\mathrm{IM}_0\,e^{-\lambda T}`$.
+- Take the same spread and margin, and any $`T > 0`$. Then MVA stays below $`s_I\,\mathrm{IM}_0\,T`$, the charge with no survival weight.
+- Take $`R < 1`$, $`C_0 > 0`$ and $`T > 0`$. Then MVA exceeds CVA exactly when $`\lambda < s_I\,\mathrm{IM}_0/((1-R)C_0)`$.
 
 Python and Rust check that the discounted margin really is flat, the margin sizing, and every number on the card.
 

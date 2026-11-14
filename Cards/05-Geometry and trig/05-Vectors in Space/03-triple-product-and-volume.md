@@ -28,33 +28,39 @@ Scale 1 dm = 7 units across and up; depth at half scale on a 30° slant. Dashed 
 
 ## The formula
 
-Notation first, in words. An edge is a vector, a list of three numbers: how far it runs sideways, back and up. Its entries are $a_1$, $a_2$, $a_3$, position labels, not powers.
+Notation first, in words. An edge is a vector, a list of three numbers: how far it runs sideways, back and up. Its entries are $`a_1`$, $`a_2`$, $`a_3`$, position labels, not powers.
 
-The dot · is the dot product: pair the entries, multiply, add. The cross × is the cross product of [Cross product](01-cross-product-and-oriented-area.md): $a \times b$ is an arrow square to both edges whose length is the area of the parallelogram they span.
+The dot · is the dot product: pair the entries, multiply, add. The cross × is the cross product of [Cross product](01-cross-product-and-oriented-area.md): $`a \times b`$ is an arrow square to both edges whose length is the area of the parallelogram they span.
 
-$$V = (a \times b) \cdot c$$
+```math
+V = (a \times b) \cdot c
+```
 
 **Read it aloud:** cross the two floor edges to get the floor as an arrow, then dot that arrow with the third edge.
 
-Entry by entry, it is the determinant of $M$, the 3 by 3 matrix whose rows are the edges ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)):
+Entry by entry, it is the determinant of $`M`$, the 3 by 3 matrix whose rows are the edges ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)):
 
-$$V = \det M = a_1(b_2 c_3 - b_3 c_2) - a_2(b_1 c_3 - b_3 c_1) + a_3(b_1 c_2 - b_2 c_1)$$
+```math
+V = \det M = a_1(b_2 c_3 - b_3 c_2) - a_2(b_1 c_3 - b_3 c_1) + a_3(b_1 c_2 - b_2 c_1)
+```
 
 **Read it aloud:** each entry of a times the 2 by 2 determinant left when its row and column are covered; add, take away, add.
 
-Capacity is $V$ with its sign dropped. Four points $P$, $Q$, $R$, $S$ share a plane exactly when the box on the edges from $P$ is flat:
+Capacity is $`V`$ with its sign dropped. Four points $`P`$, $`Q`$, $`R`$, $`S`$ share a plane exactly when the box on the edges from $`P`$ is flat:
 
-$$\big((Q - P) \times (R - P)\big) \cdot (S - P) = 0$$
+```math
+\big((Q - P) \times (R - P)\big) \cdot (S - P) = 0
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$, $b$, $c$ | the edges from one corner | (20, 0, 0), (5, 15, 0), (4, 3, 12) dm | doubling one doubles the volume |
-| $a_1$, $a_2$, $a_3$ | a's entries; likewise b's and c's | 20, 0, 0 | depends on the entry |
-| $a \times b$ | the floor as an arrow: square to a and b, as long as its area | (0, 0, 300) | more floor, more volume |
-| $h$ | height, measured square to the floor | 12 dm | volume rises in step |
-| $V$ | the triple product: signed volume | 3600 litres | — |
-| $M$ | the 3 by 3 with rows a, b, c | `[[20, 0, 0], [5, 15, 0], [4, 3, 12]]` | — |
-| $P$, $Q$, $R$, $S$ | four points tested for one plane | the lid's corners | S off the plane: non-zero |
+| $`a`$, $`b`$, $`c`$ | the edges from one corner | (20, 0, 0), (5, 15, 0), (4, 3, 12) dm | doubling one doubles the volume |
+| $`a_1`$, $`a_2`$, $`a_3`$ | a's entries; likewise b's and c's | 20, 0, 0 | depends on the entry |
+| $`a \times b`$ | the floor as an arrow: square to a and b, as long as its area | (0, 0, 300) | more floor, more volume |
+| $`h`$ | height, measured square to the floor | 12 dm | volume rises in step |
+| $`V`$ | the triple product: signed volume | 3600 litres | — |
+| $`M`$ | the 3 by 3 with rows a, b, c | `[[20, 0, 0], [5, 15, 0], [4, 3, 12]]` | — |
+| $`P`$, $`Q`$, $`R`$, $`S`$ | four points tested for one plane | the lid's corners | S off the plane: non-zero |
 
 ### When it holds
 
@@ -77,18 +83,18 @@ The floor is the parallelogram on a and b. Their cross product, (0, 0, 300), poi
 
 ### Step 2: the dot product picks out the height
 
-The dot product of two arrows is their lengths times the cosine of the angle between them ([Law of cosines](../03-Trigonometry/06-law-of-cosines.md)). The post c is 13 dm long, and its length times the cosine of its angle with the floor arrow is its rise square to the floor, the height 12 dm. So $(a \times b) \cdot c$ = floor area × height = 300 × 12 = 3600.
+The dot product of two arrows is their lengths times the cosine of the angle between them ([Law of cosines](../03-Trigonometry/06-law-of-cosines.md)). The post c is 13 dm long, and its length times the cosine of its angle with the floor arrow is its rise square to the floor, the height 12 dm. So $`(a \times b) \cdot c`$ = floor area × height = 300 × 12 = 3600.
 
-The sign comes free. Curl the right hand's fingers from a towards b; the thumb points along $a \times b$. A post rising on the thumb's side gives a positive height. Swapping a and b turns the arrow over: −3600, same box, opposite order.
+The sign comes free. Curl the right hand's fingers from a towards b; the thumb points along $`a \times b`$. A post rising on the thumb's side gives a positive height. Swapping a and b turns the arrow over: −3600, same box, opposite order.
 
 ### Step 3: the formula is a determinant
 
-Write $a \times b$ out entry by entry and dot it with c. Six products appear, three added and three taken away: the six terms of the determinant. Cycling the order to b, c, a keeps them; swapping two edges flips every sign.
+Write $`a \times b`$ out entry by entry and dot it with c. Six products appear, three added and three taken away: the six terms of the determinant. Cycling the order to b, c, a keeps them; swapping two edges flips every sign.
 
 <details>
 <summary>Detailed proof: the six terms match</summary>
 
-Write $a$ = (a1, a2, a3), and so on. The cross product is $a \times b$ = (a2 b3 − a3 b2, a3 b1 − a1 b3, a1 b2 − a2 b1). Dotting with c gives
+Write $`a`$ = (a1, a2, a3), and so on. The cross product is $`a \times b`$ = (a2 b3 − a3 b2, a3 b1 − a1 b3, a1 b2 − a2 b1). Dotting with c gives
 
 c1 a2 b3 − c1 a3 b2 + c2 a3 b1 − c2 a1 b3 + c3 a1 b2 − c3 a2 b1.
 
@@ -96,7 +102,7 @@ The determinant formula above, multiplied out, is
 
 a1 b2 c3 − a1 b3 c2 − a2 b1 c3 + a2 b3 c1 + a3 b1 c2 − a3 b2 c1.
 
-Each term of one line is in the other with the same sign (c1 a2 b3 is a2 b3 c1). So $(a \times b) \cdot c$ = det M for any three edges. Renaming a → b → c → a sends each term to another of the same sign, so cyclic orders agree.
+Each term of one line is in the other with the same sign (c1 a2 b3 is a2 b3 c1). So $`(a \times b) \cdot c`$ = det M for any three edges. Renaming a → b → c → a sends each term to another of the same sign, so cyclic orders agree.
 
 </details>
 
@@ -349,7 +355,7 @@ The outputs agree line for line. The cube count is exact here: every row of cube
 Lean proves the formula for every three edges and every four points in space, and checks the crate's numbers exactly.
 
 - For any three edges from one corner, the slanted box on them holds the triple product with its sign dropped, on square axes.
-- The triple product $(a \times b) \cdot c$ is the determinant with rows a, b, c.
+- The triple product $`(a \times b) \cdot c`$ is the determinant with rows a, b, c.
 - Cycling the edges to the order b, c, a keeps the triple product; swapping two edges flips its sign.
 - Any four points P, Q, R, S share a plane exactly when the triple product of the edges from P is zero.
 

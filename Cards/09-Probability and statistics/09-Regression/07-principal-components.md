@@ -39,53 +39,59 @@ The flat orange line is the first component, level: every yield up about 3 bp. T
 
 ## The formula
 
-Notation first, in words. One day's ten yield moves form a **vector**: a list of numbers treated as one object, written $x_t$ for day t. A **direction** is a vector $u$ of length one, so that the sum of its squared entries is 1. Writing $u^T x_t$ means: multiply entry by entry and add up. It is a weighted sum of the day's ten moves, and it measures how far the day went along the direction. The superscript T is the transpose, turning a column into a row. As on the rest of this wing, a hat marks a quantity estimated from data.
+Notation first, in words. One day's ten yield moves form a **vector**: a list of numbers treated as one object, written $`x_t`$ for day t. A **direction** is a vector $`u`$ of length one, so that the sum of its squared entries is 1. Writing $`u^T x_t`$ means: multiply entry by entry and add up. It is a weighted sum of the day's ten moves, and it measures how far the day went along the direction. The superscript T is the transpose, turning a column into a row. As on the rest of this wing, a hat marks a quantity estimated from data.
 
 The covariance matrix gathers every variance and every covariance of the ten maturities into one ten-by-ten table ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)):
 
-$$\hat\Sigma = \frac{1}{n-1}\sum_{t=1}^{n} (x_t - \bar x)(x_t - \bar x)^T$$
+```math
+\hat\Sigma = \frac{1}{n-1}\sum_{t=1}^{n} (x_t - \bar x)(x_t - \bar x)^T
+```
 
 **Read it aloud:** remove the average day from every day, and average the products of every pair of maturities' moves.
 
-An **eigenvector** of $\hat\Sigma$ is a direction that the matrix only stretches, never turns: $\hat\Sigma u_k$ points the same way as $u_k$. The stretch factor $\hat\lambda_k$ is its **eigenvalue** ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)).
+An **eigenvector** of $`\hat\Sigma`$ is a direction that the matrix only stretches, never turns: $`\hat\Sigma u_k`$ points the same way as $`u_k`$. The stretch factor $`\hat\lambda_k`$ is its **eigenvalue** ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)).
 
 The variance of the data along a direction, and the rule for the best directions:
 
-$$\operatorname{Var}\big(u^T x\big) = u^T \hat\Sigma\, u, \qquad \hat\Sigma\, u_k = \hat\lambda_k\, u_k, \qquad \hat\lambda_1 \ge \hat\lambda_2 \ge \dots \ge \hat\lambda_d \ge 0$$
+```math
+\mathrm{Var}\big(u^T x\big) = u^T \hat\Sigma\, u, \qquad \hat\Sigma\, u_k = \hat\lambda_k\, u_k, \qquad \hat\lambda_1 \ge \hat\lambda_2 \ge \dots \ge \hat\lambda_d \ge 0
+```
 
 **Read it aloud:** the spread along any direction is read off the covariance matrix; the directions the matrix only stretches, never turns, are the principal components, and the stretch factor of each is the variance along it.
 
-The share of total variance kept by the first $r$ components:
+The share of total variance kept by the first $`r`$ components:
 
-$$\text{share}(r) = \frac{\hat\lambda_1 + \dots + \hat\lambda_r}{\hat\lambda_1 + \dots + \hat\lambda_d}$$
+```math
+\text{share}(r) = \frac{\hat\lambda_1 + \dots + \hat\lambda_r}{\hat\lambda_1 + \dots + \hat\lambda_d}
+```
 
 **Read it aloud:** the variance along the kept directions, over the variance along all of them.
 
-Each day's position along component k is its **score**, $z_{tk} = u_k^T (x_t - \bar x)$. Keeping two components replaces each day's ten moves with two scores.
+Each day's position along component k is its **score**, $`z_{tk} = u_k^T (x_t - \bar x)`$. Keeping two components replaces each day's ten moves with two scores.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_t$ | day t's moves at every maturity, in bp | day 1: −0.46 at 3 months to −3.57 at 30 years | — |
-| $\bar x$ | the average day | close to 0 at every maturity | shifts every day, changes no spread |
-| $n$ | number of days | 500 | smaller standard errors |
-| $d$ | number of measurements per day | 10 maturities | more directions to share the variance |
-| $\hat\Sigma$ | covariance matrix of the data, d by d | diagonal from 14.06 (3 months) down to 9.39 (5 years) | more variance to explain |
-| $\Sigma$ | the covariance matrix of the model that made the data | eigenvalues 90.25, 13.45, 3.22, then 0.25 seven times | — |
-| $u$, $u_i$, $u^T$ | any direction: ten weights $u_i$, squares summing to 1; $u^T$ is the same list written as a row, for the weighted sum | the best one found at random carries 70.335 | — |
-| $u_k$, $u_1$, $u_2$, $u_3$ | the k-th principal component; its entries are the loadings | $u_1$ ≈ 0.316 at every maturity | — |
-| $c_k$, $c_1, \dots, c_{10}$ | in Step 2: how much of direction $u$ lies along eigenvector k; their squares sum to 1 | for $u = u_1$: $c_1 = 1$, the rest 0 | — |
-| $\hat\lambda_k$, $\lambda_k$ | variance along $u_k$ in the data; the model's true value | 90.556, 14.789, 3.069 | a bigger share for that component |
-| $z_{tk}$, $z_t$ | day t's score on component k; $z_t$ (Step 1), its score on any direction $u$ | day 1: −5.69 on level, −3.01 on slope | — |
-| $r$ | components kept | 2 | share kept rises, never falls |
-| $\text{share}(r)$ | the share of total variance kept by the first r components | 95.66% at r = 2; the model's 95.43% | — |
-| $v_j$, $w_k$ | in the Detailed proof: any r perpendicular directions, and the share of eigenvector k they catch | — | — |
+| $`x_t`$ | day t's moves at every maturity, in bp | day 1: −0.46 at 3 months to −3.57 at 30 years | — |
+| $`\bar x`$ | the average day | close to 0 at every maturity | shifts every day, changes no spread |
+| $`n`$ | number of days | 500 | smaller standard errors |
+| $`d`$ | number of measurements per day | 10 maturities | more directions to share the variance |
+| $`\hat\Sigma`$ | covariance matrix of the data, d by d | diagonal from 14.06 (3 months) down to 9.39 (5 years) | more variance to explain |
+| $`\Sigma`$ | the covariance matrix of the model that made the data | eigenvalues 90.25, 13.45, 3.22, then 0.25 seven times | — |
+| $`u`$, $`u_i`$, $`u^T`$ | any direction: ten weights $`u_i`$, squares summing to 1; $`u^T`$ is the same list written as a row, for the weighted sum | the best one found at random carries 70.335 | — |
+| $`u_k`$, $`u_1`$, $`u_2`$, $`u_3`$ | the k-th principal component; its entries are the loadings | $`u_1`$ ≈ 0.316 at every maturity | — |
+| $`c_k`$, $`c_1, \dots, c_{10}`$ | in Step 2: how much of direction $`u`$ lies along eigenvector k; their squares sum to 1 | for $`u = u_1`$: $`c_1 = 1`$, the rest 0 | — |
+| $`\hat\lambda_k`$, $`\lambda_k`$ | variance along $`u_k`$ in the data; the model's true value | 90.556, 14.789, 3.069 | a bigger share for that component |
+| $`z_{tk}`$, $`z_t`$ | day t's score on component k; $`z_t`$ (Step 1), its score on any direction $`u`$ | day 1: −5.69 on level, −3.01 on slope | — |
+| $`r`$ | components kept | 2 | share kept rises, never falls |
+| $`\text{share}(r)`$ | the share of total variance kept by the first r components | 95.66% at r = 2; the model's 95.43% | — |
+| $`v_j`$, $`w_k`$ | in the Detailed proof: any r perpendicular directions, and the share of eigenvector k they catch | — | — |
 
 ### When it holds
 
 - **All measurements in one unit.** Variance is measured in squared units, so a column quoted in bigger numbers wins. Quote the 30-year yield in percent while the rest stay in bp and the first component ignores it: its 30-year loading falls to 0.0031. With mixed units, standardise each column first, which means working from the correlation matrix.
 - **The average removed.** PCA describes spread about the centre. Run it on yield levels without subtracting the average curve and the "first component" is the average curve itself, claiming 99.961% of a quantity that is mostly the curve's height, not its moves.
 - **Separated eigenvalues.** A direction is pinned down only when its eigenvalue stands clear of its neighbours. Here the seven smallest are all 0.25 in the model: those directions are noise, and two samples of 500 days give fourth components at cosine 0.0327, nearly perpendicular. The cosine of two unit directions is the sum of their entry-by-entry products, ignoring sign: 1 means the same line, 0 means perpendicular.
-- **Enough days.** Every $\hat\lambda_k$ is an estimate. For normal data with separated eigenvalues its standard error is about $\lambda_k$ times the square root of 2/(n − 1): 5.714 on the first eigenvalue here.
+- **Enough days.** Every $`\hat\lambda_k`$ is an estimate. For normal data with separated eigenvalues its standard error is about $`\lambda_k`$ times the square root of 2/(n − 1): 5.714 on the first eigenvalue here.
 - **Flat structure.** PCA finds flat subspaces through the centre of the data. Data lying on a curved surface needs a different tool: Manifold learning.
 
 ---
@@ -96,46 +102,50 @@ Each day's position along component k is its **score**, $z_{tk} = u_k^T (x_t - \
 
 Once the covariance matrix is known, the variance of every weighted sum of the ten yields follows from it, without going back to the data. So "which direction carries the most variance?" is a question about one symmetric table of numbers. The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) says every such table has a set of perpendicular axes along which it only stretches. Along those axes the question answers itself.
 
-### Step 1: the variance along a direction is $u^T \hat\Sigma u$
+### Step 1: the variance along a direction is $`u^T \hat\Sigma u`$
 
-Take a direction $u$ and give each day its score $z_t = u^T (x_t - \bar x)$. The scores average to zero, because the centred days do. Their variance is the average of the squared scores. A square of a weighted sum is a double sum over pairs of maturities:
+Take a direction $`u`$ and give each day its score $`z_t = u^T (x_t - \bar x)`$. The scores average to zero, because the centred days do. Their variance is the average of the squared scores. A square of a weighted sum is a double sum over pairs of maturities:
 
-$$z_t^2 = \sum_{i}\sum_{j} u_i u_j (x_{ti} - \bar x_i)(x_{tj} - \bar x_j)$$
+```math
+z_t^2 = \sum_{i}\sum_{j} u_i u_j (x_{ti} - \bar x_i)(x_{tj} - \bar x_j)
+```
 
-Averaging over days turns each product into entry (i, j) of $\hat\Sigma$, so the variance is $\sum_i \sum_j u_i u_j \hat\Sigma_{ij} = u^T \hat\Sigma u$. The code checks this on the first component: the 500 scores have variance 90.556468, which is $\hat\lambda_1$ to every printed digit.
+Averaging over days turns each product into entry (i, j) of $`\hat\Sigma`$, so the variance is $`\sum_i \sum_j u_i u_j \hat\Sigma_{ij} = u^T \hat\Sigma u`$. The code checks this on the first component: the 500 scores have variance 90.556468, which is $`\hat\lambda_1`$ to every printed digit.
 
 ### Step 2: the top eigenvector wins
 
-By the spectral theorem, $\hat\Sigma$ has ten perpendicular unit eigenvectors $u_1, \dots, u_{10}$, with eigenvalues in falling order. Any direction is a mix of them, $u = c_1 u_1 + \dots + c_{10} u_{10}$, with $c_1^2 + \dots + c_{10}^2 = 1$ because $u$ has length one. Multiplying out, every cross term dies because the eigenvectors are perpendicular:
+By the spectral theorem, $`\hat\Sigma`$ has ten perpendicular unit eigenvectors $`u_1, \dots, u_{10}`$, with eigenvalues in falling order. Any direction is a mix of them, $`u = c_1 u_1 + \dots + c_{10} u_{10}`$, with $`c_1^2 + \dots + c_{10}^2 = 1`$ because $`u`$ has length one. Multiplying out, every cross term dies because the eigenvectors are perpendicular:
 
-$$u^T \hat\Sigma u = \hat\lambda_1 c_1^2 + \hat\lambda_2 c_2^2 + \dots + \hat\lambda_{10} c_{10}^2 \le \hat\lambda_1 (c_1^2 + \dots + c_{10}^2) = \hat\lambda_1$$
+```math
+u^T \hat\Sigma u = \hat\lambda_1 c_1^2 + \hat\lambda_2 c_2^2 + \dots + \hat\lambda_{10} c_{10}^2 \le \hat\lambda_1 (c_1^2 + \dots + c_{10}^2) = \hat\lambda_1
+```
 
-The variance along any direction is a weighted average of the eigenvalues, with weights $c_k^2$. An average cannot beat its largest member. It equals it only when all the weight sits on $u_1$ (or, if the top eigenvalue were tied, on its tied partners). So the first principal component is the top eigenvector, and its variance is $\hat\lambda_1 = 90.556$ bp^2. Two thousand random directions, tried in the code, never do better: the best reaches 70.335.
+The variance along any direction is a weighted average of the eigenvalues, with weights $`c_k^2`$. An average cannot beat its largest member. It equals it only when all the weight sits on $`u_1`$ (or, if the top eigenvalue were tied, on its tied partners). So the first principal component is the top eigenvector, and its variance is $`\hat\lambda_1 = 90.556`$ bp^2. Two thousand random directions, tried in the code, never do better: the best reaches 70.335.
 
 ### Step 3: the next direction is the next eigenvector, and scores do not move together
 
-Ask for the most variance among directions perpendicular to $u_1$. Those directions have $c_1 = 0$, and the same averaging argument gives $\hat\lambda_2$, reached at $u_2$. Continue for $u_3$ and on down.
+Ask for the most variance among directions perpendicular to $`u_1`$. Those directions have $`c_1 = 0`$, and the same averaging argument gives $`\hat\lambda_2`$, reached at $`u_2`$. Continue for $`u_3`$ and on down.
 
-The scores on two components are uncorrelated. Their covariance is $u_j^T \hat\Sigma u_k = \hat\lambda_k\, u_j^T u_k = 0$, because the eigenvectors are perpendicular. In the code the level and slope scores have covariance 0.000000. Uncorrelated is not independent in general; for normal data it is ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)).
+The scores on two components are uncorrelated. Their covariance is $`u_j^T \hat\Sigma u_k = \hat\lambda_k\, u_j^T u_k = 0`$, because the eigenvectors are perpendicular. In the code the level and slope scores have covariance 0.000000. Uncorrelated is not independent in general; for normal data it is ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)).
 
 ### Step 4: total variance is conserved, so shares make sense
 
-The total variance is the sum of the ten maturities' variances, the diagonal of $\hat\Sigma$, called its trace. Turning to the eigenvector axes is a rotation: it moves variance between axes but creates and destroys none. So the trace equals the sum of the eigenvalues: 110.1298 both ways in the code. That is why each eigenvalue divided by the total is a share of something fixed, and why the shares add to 100%.
+The total variance is the sum of the ten maturities' variances, the diagonal of $`\hat\Sigma`$, called its trace. Turning to the eigenvector axes is a rotation: it moves variance between axes but creates and destroys none. So the trace equals the sum of the eigenvalues: 110.1298 both ways in the code. That is why each eigenvalue divided by the total is a share of something fixed, and why the shares add to 100%.
 
 ### Step 5: keeping r components is the best r-dimensional summary
 
-Rebuild each day from its first two scores: $\bar x + z_{t1} u_1 + z_{t2} u_2$. What is lost is the part of the day along $u_3, \dots, u_{10}$. By Pythagoras, the squared length lost is the sum of the squared scores on those eight components, and averaging over days, with the same n − 1 divisor as $\hat\Sigma$, gives $\hat\lambda_3 + \dots + \hat\lambda_{10}$. In the code, the rebuild error averaged that way is 4.784772 bp^2 per day, equal to the sum of the last eight eigenvalues. No other flat two-dimensional summary through the average day loses less.
+Rebuild each day from its first two scores: $`\bar x + z_{t1} u_1 + z_{t2} u_2`$. What is lost is the part of the day along $`u_3, \dots, u_{10}`$. By Pythagoras, the squared length lost is the sum of the squared scores on those eight components, and averaging over days, with the same n − 1 divisor as $`\hat\Sigma`$, gives $`\hat\lambda_3 + \dots + \hat\lambda_{10}`$. In the code, the rebuild error averaged that way is 4.784772 bp^2 per day, equal to the sum of the last eight eigenvalues. No other flat two-dimensional summary through the average day loses less.
 
 <details>
 <summary>Detailed proof: no other r directions keep more variance</summary>
 
-Take any r perpendicular unit directions $v_1, \dots, v_r$. For each eigenvector $u_k$, let $w_k$ be the sum of its squared overlaps $(u_k^T v_j)^2$ over j: the squared length of $u_k$'s shadow on the span of the $v_j$. A shadow is never longer than the vector, so each $w_k$ lies between 0 and 1. Summing the other way round, each $v_j$ has length one, so the $w_k$ add to r.
+Take any r perpendicular unit directions $`v_1, \dots, v_r`$. For each eigenvector $`u_k`$, let $`w_k`$ be the sum of its squared overlaps $`(u_k^T v_j)^2`$ over j: the squared length of $`u_k`$'s shadow on the span of the $`v_j`$. A shadow is never longer than the vector, so each $`w_k`$ lies between 0 and 1. Summing the other way round, each $`v_j`$ has length one, so the $`w_k`$ add to r.
 
-The variance kept by the $v_j$ is $\sum_j v_j^T \hat\Sigma v_j = \sum_k \hat\lambda_k w_k$ (expand each $v_j$ over the eigenvectors, as in Step 2). The top r eigenvectors keep $\hat\lambda_1 + \dots + \hat\lambda_r$. The difference is
+The variance kept by the $`v_j`$ is $`\sum_j v_j^T \hat\Sigma v_j = \sum_k \hat\lambda_k w_k`$ (expand each $`v_j`$ over the eigenvectors, as in Step 2). The top r eigenvectors keep $`\hat\lambda_1 + \dots + \hat\lambda_r`$. The difference is
 
-$$\sum_{k \le r} \hat\lambda_k - \sum_k \hat\lambda_k w_k = \sum_{k \le r} (\hat\lambda_k - \hat\lambda_r)(1 - w_k) + \sum_{k > r} (\hat\lambda_r - \hat\lambda_k)\, w_k \ge 0$$
+$`\displaystyle \sum_{k \le r} \hat\lambda_k - \sum_k \hat\lambda_k w_k = \sum_{k \le r} (\hat\lambda_k - \hat\lambda_r)(1 - w_k) + \sum_{k > r} (\hat\lambda_r - \hat\lambda_k)\, w_k \ge 0`$
 
-Both sums are non-negative term by term, since eigenvalues fall and each $w_k$ lies between 0 and 1. To check the identity, expand the right side and use $\sum_{k \le r} (1 - w_k) = \sum_{k > r} w_k$, which is the statement that the $w_k$ add to r. So no r directions keep more than the top r eigenvalues. Since kept variance plus rebuild error is the fixed trace (Pythagoras, averaged over days), keeping the most variance is the same as losing the least.
+Both sums are non-negative term by term, since eigenvalues fall and each $`w_k`$ lies between 0 and 1. To check the identity, expand the right side and use $`\sum_{k \le r} (1 - w_k) = \sum_{k > r} w_k`$, which is the statement that the $`w_k`$ add to r. So no r directions keep more than the top r eigenvalues. Since kept variance plus rebuild error is the fixed trace (Pythagoras, averaged over days), keeping the most variance is the same as losing the least.
 
 </details>
 
@@ -170,7 +180,7 @@ The model makes each day from three shocks: a level shock with standard deviatio
 
 A Jacobi eigenvalue routine (described under Code) run on the model's covariance returns 90.2500, 13.4500, 3.2200 and 0.2500, to four decimals.
 
-The data give estimates, and every estimate carries an error. From the 500 simulated days, $\hat\lambda_1 = 90.556$ with standard error 5.714, $\hat\lambda_2 = 14.789$ with standard error 0.852, and $\hat\lambda_3 = 3.069$ with standard error 0.204. They sit 0.05, 1.57 and −0.74 standard errors from the truth. Two components keep 95.66% of this sample's variance. Across 200 samples of 500 days, this one and 199 more, that share has standard deviation 0.299 percentage points, which is its standard error, so 95.66% is within one standard error of the model's 95.43%.
+The data give estimates, and every estimate carries an error. From the 500 simulated days, $`\hat\lambda_1 = 90.556`$ with standard error 5.714, $`\hat\lambda_2 = 14.789`$ with standard error 0.852, and $`\hat\lambda_3 = 3.069`$ with standard error 0.204. They sit 0.05, 1.57 and −0.74 standard errors from the truth. Two components keep 95.66% of this sample's variance. Across 200 samples of 500 days, this one and 199 more, that share has standard deviation 0.299 percentage points, which is its standard error, so 95.66% is within one standard error of the model's 95.43%.
 
 In the world of the desk: two numbers a day, how far rates moved overall and how far the curve tilted, carry about 95 parts in every 100 of the day-to-day variance in ten yields.
 
@@ -608,7 +618,7 @@ Lean proves the facts of Steps 2, 4 and 5 for every data set, with any number of
 - The covariance matrix is symmetric: entry (i, j) equals entry (j, i).
 - Take a unit eigenvector of the covariance matrix with the largest eigenvalue. Then the variance of the scores along it equals that eigenvalue.
 - No unit direction carries more variance than that top eigenvector.
-- Take r no larger than d, and any r perpendicular unit directions. Then together they keep at most $\hat\lambda_1 + \dots + \hat\lambda_r$.
+- Take r no larger than d, and any r perpendicular unit directions. Then together they keep at most $`\hat\lambda_1 + \dots + \hat\lambda_r`$.
 - The first r eigenvectors keep exactly that much, so no choice of r directions keeps more.
 - The trace of the covariance matrix equals the sum of its eigenvalues.
 - The shapes' squared lengths are 10, 330 and 132, and the three shapes are perpendicular.

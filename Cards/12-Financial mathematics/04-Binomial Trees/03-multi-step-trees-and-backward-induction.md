@@ -69,43 +69,49 @@ Arrows run forward in time; the numbers were filled in against them, from the ri
 
 ## The formula
 
-Notation first, in words. A node is fixed by two counts: how many steps have passed, and how many of those were up moves. Write the step count below the letter and the up count in brackets after it, so $V$ with a step of 2 and an up count of 1 is the option's worth after two quarters, one up and one down. The step length is written $\Delta t$, read "delta t", and those two letters always travel together; $\Delta$ alone, with no t, means the number of shares held.
+Notation first, in words. A node is fixed by two counts: how many steps have passed, and how many of those were up moves. Write the step count below the letter and the up count in brackets after it, so $`V`$ with a step of 2 and an up count of 1 is the option's worth after two quarters, one up and one down. The step length is written $`\Delta t`$, read "delta t", and those two letters always travel together; $`\Delta`$ alone, with no t, means the number of shares held.
 
-$$V_N(j) = \max\big(S_N(j) - K,\ 0\big), \qquad S_n(j) = S\,u^{\,j}\,d^{\,n-j}$$
+```math
+V_N(j) = \max\big(S_N(j) - K,\ 0\big), \qquad S_n(j) = S\,u^{\,j}\,d^{\,n-j}
+```
 
-$$V_n(j) = e^{-r\Delta t}\Big[p\,V_{n+1}(j+1) + (1-p)\,V_{n+1}(j)\Big]$$
+```math
+V_n(j) = e^{-r\Delta t}\Big[p\,V_{n+1}(j+1) + (1-p)\,V_{n+1}(j)\Big]
+```
 
 **Read it aloud:** the last column is the payoff; every other node is worth the two nodes it leads to, weighted by the risk-neutral coin and pulled back one step of interest.
 
 The trading plan comes off the same pair:
 
-$$\Delta_n(j) = e^{-q\Delta t}\,\frac{V_{n+1}(j+1) - V_{n+1}(j)}{S_{n+1}(j+1) - S_{n+1}(j)}, \qquad B_n(j) = V_n(j) - \Delta_n(j)\,S_n(j)$$
+```math
+\Delta_n(j) = e^{-q\Delta t}\,\frac{V_{n+1}(j+1) - V_{n+1}(j)}{S_{n+1}(j+1) - S_{n+1}(j)}, \qquad B_n(j) = V_n(j) - \Delta_n(j)\,S_n(j)
+```
 
 **Read it aloud:** hold the gap between the option's two possible values divided by the gap between Acme's two possible prices, shaved for the dividends those shares pay meanwhile; borrow the rest.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100 | rises: more to receive |
-| $K$ | the strike, the price you may buy at | $100 | falls: further to climb |
-| $T$, $N$, $n$, $j$ | the life in years; the number of steps; a step count; a count of up moves | 1 year, 4 steps | more steps: a finer picture |
-| $\Delta t$ | one step's length, $T/N$, in years | 0.25 | coarser steps, a rougher price |
-| $u$, $d$ | what Acme multiplies by on an up step and on a down step | 1.105171 and 0.904837 | wider branches, a dearer option |
-| $p$ | the risk-neutral weight on an up step: a price, not a forecast | 0.512599 | up branches count for more |
-| $r$ | the riskless rate, continuously compounded | 5% | rises: paying the strike later costs less today |
-| $q$ | the dividend yield the shares pay out | 2% | falls: dividends leak out of the share price |
-| $\sigma$ | volatility, how jumpy Acme is. Say "sigma". | 20% | rises: wider branches, a dearer option |
-| $V$, $U$, $L$ | the worth at a node, and at the upper and lower nodes it leads to | $8.76 at the root | — |
-| $\Delta$ | shares of Acme held against one option. Say "delta". | 0.5812 today | more of the move comes through |
-| $B$ | cash in the bank at a node; negative means borrowed | −$49.36 today | — |
+| $`S`$ | Acme's price today | $100 | rises: more to receive |
+| $`K`$ | the strike, the price you may buy at | $100 | falls: further to climb |
+| $`T`$, $`N`$, $`n`$, $`j`$ | the life in years; the number of steps; a step count; a count of up moves | 1 year, 4 steps | more steps: a finer picture |
+| $`\Delta t`$ | one step's length, $`T/N`$, in years | 0.25 | coarser steps, a rougher price |
+| $`u`$, $`d`$ | what Acme multiplies by on an up step and on a down step | 1.105171 and 0.904837 | wider branches, a dearer option |
+| $`p`$ | the risk-neutral weight on an up step: a price, not a forecast | 0.512599 | up branches count for more |
+| $`r`$ | the riskless rate, continuously compounded | 5% | rises: paying the strike later costs less today |
+| $`q`$ | the dividend yield the shares pay out | 2% | falls: dividends leak out of the share price |
+| $`\sigma`$ | volatility, how jumpy Acme is. Say "sigma". | 20% | rises: wider branches, a dearer option |
+| $`V`$, $`U`$, $`L`$ | the worth at a node, and at the upper and lower nodes it leads to | $8.76 at the root | — |
+| $`\Delta`$ | shares of Acme held against one option. Say "delta". | 0.5812 today | more of the move comes through |
+| $`B`$ | cash in the bank at a node; negative means borrowed | −$49.36 today | — |
 
-Three helpers feed the formulas. The step length is $\Delta t = T/N$, a quarter-year here. The branch factors are $u = e^{\sigma\sqrt{\Delta t}}$ and $d = 1/u$, the Cox–Ross–Rubinstein choice; why that pair is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md). The weight is $p = (e^{(r-q)\Delta t} - d)/(u - d)$, built on [The risk-neutral probability](02-risk-neutral-probability.md): the number making Acme's average growth on the tree equal the bank's, once dividends are off.
+Three helpers feed the formulas. The step length is $`\Delta t = T/N`$, a quarter-year here. The branch factors are $`u = e^{\sigma\sqrt{\Delta t}}`$ and $`d = 1/u`$, the Cox–Ross–Rubinstein choice; why that pair is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md). The weight is $`p = (e^{(r-q)\Delta t} - d)/(u - d)`$, built on [The risk-neutral probability](02-risk-neutral-probability.md): the number making Acme's average growth on the tree equal the bank's, once dividends are off.
 
 ### When it holds
 
 - **Two prices per step, and only two.** If Acme can gap to a third, the two-equation solve has no answer, the copy misses, and the tree quotes a price nobody can trade at.
-- **The same factors at every node.** A constant volatility and rate keep $u$, $d$ and $p$ the same everywhere, which is what lets the tree fold back on itself. Let them vary and the tree can stop recombining; the walk still works, the node count stops being cheap.
-- **Acme's own growth strictly between the branches**, $d < e^{(r-q)\Delta t} < u$ — the bank's rate less what dividends leak out, not the bank's own factor $e^{r\Delta t}$. Otherwise $p$ falls outside 0 to 1, one branch is free money, and no price is defensible.
-- **Trading at every node, at no cost, in any fraction of a share**, borrowing and lending at $r$. Real costs make the copy dearer than the quoted price.
+- **The same factors at every node.** A constant volatility and rate keep $`u`$, $`d`$ and $`p`$ the same everywhere, which is what lets the tree fold back on itself. Let them vary and the tree can stop recombining; the walk still works, the node count stops being cheap.
+- **Acme's own growth strictly between the branches**, $`d < e^{(r-q)\Delta t} < u`$ — the bank's rate less what dividends leak out, not the bank's own factor $`e^{r\Delta t}`$. Otherwise $`p`$ falls outside 0 to 1, one branch is free money, and no price is defensible.
+- **Trading at every node, at no cost, in any fraction of a share**, borrowing and lending at $`r`$. Real costs make the copy dearer than the quoted price.
 - **A payoff that depends on where you are, not how you got there.** Merging two histories into one node is legal only where they are worth the same from there on, as the merge test in Why it works shows.
 
 ---
@@ -118,26 +124,32 @@ At expiry there is nothing left to model. The option is worth what it pays: Acme
 
 ### Step 1: one step back is the previous card's problem, unchanged
 
-Take any node with one step to go. Acme sits at some price, and next step it is at that price times $u$ or times $d$. The option's two next values, the upper $U$ and the lower $L$, are already written down.
+Take any node with one step to go. Acme sits at some price, and next step it is at that price times $`u`$ or times $`d`$. The option's two next values, the upper $`U`$ and the lower $`L`$, are already written down.
 
-Hold $\Delta$ shares and $B$ dollars in the bank. Over the step, dividends are ploughed back into more shares, so $\Delta$ shares become $\Delta e^{q\Delta t}$ shares, and the bank balance grows to $B e^{r\Delta t}$. Demand that the pile is worth $U$ on an up step and $L$ on a down step. Two demands, two unknowns, one answer:
+Hold $`\Delta`$ shares and $`B`$ dollars in the bank. Over the step, dividends are ploughed back into more shares, so $`\Delta`$ shares become $`\Delta e^{q\Delta t}`$ shares, and the bank balance grows to $`B e^{r\Delta t}`$. Demand that the pile is worth $`U`$ on an up step and $`L`$ on a down step. Two demands, two unknowns, one answer:
 
-$$\Delta = e^{-q\Delta t}\,\frac{U - L}{S u - S d}, \qquad B = e^{-r\Delta t}\,\frac{uL - dU}{u - d}.$$
+```math
+\Delta = e^{-q\Delta t}\,\frac{U - L}{S u - S d}, \qquad B = e^{-r\Delta t}\,\frac{uL - dU}{u - d}.
+```
 
-Assembling that pile today costs $\Delta S + B$, and anything else would be free money, so that cost is the node's value. Multiply out and the two pieces collapse into the weighted average at the top of this card. The weight $p$ falls out of the algebra; nobody chose it as a probability.
+Assembling that pile today costs $`\Delta S + B`$, and anything else would be free money, so that cost is the node's value. Multiply out and the two pieces collapse into the weighted average at the top of this card. The weight $`p`$ falls out of the algebra; nobody chose it as a probability.
 
 <details>
 <summary>Detailed proof: the two-equation solve, and why the rolling copy never needs new money</summary>
 
-Write $S$ for Acme's price at the node. The two demands are
-$$\Delta e^{q\Delta t} S u + B e^{r\Delta t} = U, \qquad \Delta e^{q\Delta t} S d + B e^{r\Delta t} = L.$$
-Subtracting kills the bank term and gives $\Delta e^{q\Delta t} S (u-d) = U - L$, hence the displayed $\Delta$; since $u > d > 0$ and $S > 0$ the divisor is never zero. Substituting back gives $B e^{r\Delta t} = (uL - dU)/(u-d)$. Putting the pair into either demand reproduces it, so a solution exists; subtracting two candidate solutions gives back the same $\Delta$ and $B$, so it is the only one.
+Write $`S`$ for Acme's price at the node. The two demands are
+
+$`\displaystyle \Delta e^{q\Delta t} S u + B e^{r\Delta t} = U, \qquad \Delta e^{q\Delta t} S d + B e^{r\Delta t} = L.`$
+
+Subtracting kills the bank term and gives $`\Delta e^{q\Delta t} S (u-d) = U - L`$, hence the displayed $`\Delta`$; since $`u > d > 0`$ and $`S > 0`$ the divisor is never zero. Substituting back gives $`B e^{r\Delta t} = (uL - dU)/(u-d)`$. Putting the pair into either demand reproduces it, so a solution exists; subtracting two candidate solutions gives back the same $`\Delta`$ and $`B`$, so it is the only one.
 
 Cost today:
-$$\Delta S + B = \frac{e^{-q\Delta t}(U - L)}{u-d} + e^{-r\Delta t}\frac{uL - dU}{u-d} = \frac{e^{-r\Delta t}}{u-d}\Big[e^{(r-q)\Delta t}(U-L) + uL - dU\Big],$$
-where the first term was put over $e^{-r\Delta t}$ by multiplying and dividing by $e^{r\Delta t}$. Collecting the $U$ and $L$ terms gives $e^{-r\Delta t}[pU + (1-p)L]$ with $p = (e^{(r-q)\Delta t} - d)/(u-d)$ exactly.
 
-Now the induction. Suppose every node one step on already carries the cost of copying the option from there to expiry. At the current node buy the $\Delta$ and $B$ above for $V = \Delta S + B$. One step on, whichever way Acme moved, the pile is worth that node's $V$ by construction — exactly what its own hedge costs. The old holdings are sold and the new ones bought with the proceeds, no outside money changing hands: the copy is **self-financing**. The last column is the payoff, the cost of copying over zero remaining steps, so the supposition holds there, and therefore one column at a time back to the root. The two demands force the holdings at every node, so the copy is also the only one.
+$`\displaystyle \Delta S + B = \frac{e^{-q\Delta t}(U - L)}{u-d} + e^{-r\Delta t}\frac{uL - dU}{u-d} = \frac{e^{-r\Delta t}}{u-d}\Big[e^{(r-q)\Delta t}(U-L) + uL - dU\Big],`$
+
+where the first term was put over $`e^{-r\Delta t}`$ by multiplying and dividing by $`e^{r\Delta t}`$. Collecting the $`U`$ and $`L`$ terms gives $`e^{-r\Delta t}[pU + (1-p)L]`$ with $`p = (e^{(r-q)\Delta t} - d)/(u-d)`$ exactly.
+
+Now the induction. Suppose every node one step on already carries the cost of copying the option from there to expiry. At the current node buy the $`\Delta`$ and $`B`$ above for $`V = \Delta S + B`$. One step on, whichever way Acme moved, the pile is worth that node's $`V`$ by construction — exactly what its own hedge costs. The old holdings are sold and the new ones bought with the proceeds, no outside money changing hands: the copy is **self-financing**. The last column is the payoff, the cost of copying over zero remaining steps, so the supposition holds there, and therefore one column at a time back to the root. The two demands force the holdings at every node, so the copy is also the only one.
 
 </details>
 
@@ -149,7 +161,7 @@ The forward version is the one a trader lives: buy the root's holdings for $8.76
 
 ### Step 3: why the tree folds back on itself
 
-Because $d = 1/u$, an up quarter then a down multiplies Acme by one: straight back to $100.00. Up-then-down and down-then-up are different histories arriving at the same price. A tree keeping them apart doubles its ending count every step; a tree merging them gains one. After four steps that is sixteen against five; after fifty, about a thousand trillion against fifty-one. **Recombining** is the name for the merge, and it is what makes trees usable rather than a curiosity.
+Because $`d = 1/u`$, an up quarter then a down multiplies Acme by one: straight back to $100.00. Up-then-down and down-then-up are different histories arriving at the same price. A tree keeping them apart doubles its ending count every step; a tree merging them gains one. After four steps that is sixteen against five; after fifty, about a thousand trillion against fifty-one. **Recombining** is the name for the merge, and it is what makes trees usable rather than a curiosity.
 
 The merge costs some bookkeeping about how many histories reach each node. Two ups out of four can be arranged six ways; the counts across the five ending prices run 1, 4, 6, 4, 1. Those are counts of lattice paths to a corner, read off in [Lattice paths](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md). The backward walk never computes them: merging counts automatically, since each merged node serves both parents.
 
@@ -157,9 +169,11 @@ The merge costs some bookkeeping about how many histories reach each node. Two u
 
 Because the walk is linear, unrolling it gives a single sum over the five ending prices, each weighted by its path count and by the chance of that many ups:
 
-$$V_0 = e^{-rT} \sum_{j=0}^{N} \binom{N}{j}\, p^{\,j}(1-p)^{N-j} \max\big(S u^{\,j} d^{\,N-j} - K,\ 0\big).$$
+```math
+V_0 = e^{-rT} \sum_{j=0}^{N} \binom{N}{j}\, p^{\,j}(1-p)^{N-j} \max\big(S u^{\,j} d^{\,N-j} - K,\ 0\big).
+```
 
-Here $\binom{N}{j}$, said "N choose j", counts the ways to pick which steps were the up moves. The check computes the price this way too and gets 8.760327, the backward walk's figure. The sum is the walk multiplied out; the walk is how to do the sum without writing it down.
+Here $`\binom{N}{j}`$, said "N choose j", counts the ways to pick which steps were the up moves. The check computes the price this way too and gets 8.760327, the backward walk's figure. The sum is the walk multiplied out; the walk is how to do the sum without writing it down.
 
 ### What merging costs when the histories differ
 
@@ -171,32 +185,32 @@ Today's price survives: the two histories meeting there carry equal weight, so t
 
 ### The other route
 
-Instead of rolling back, sum forward: list all sixteen histories, give each the product of its $p$ and $1-p$ weights, multiply by what it pays, add, discount. The check does this too and gets 8.760327. It scales badly — the count doubles every step — but it merges nothing, so it is the honest way to price a contract that pays on the route rather than the destination, and the road that becomes simulation for bigger problems.
+Instead of rolling back, sum forward: list all sixteen histories, give each the product of its $`p`$ and $`1-p`$ weights, multiply by what it pays, add, discount. The check does this too and gets 8.760327. It scales badly — the count doubles every step — but it merges nothing, so it is the honest way to price a contract that pays on the route rather than the destination, and the road that becomes simulation for bigger problems.
 
 ---
 
 ## Worked numbers, by hand
 
-Acme at $S = 100$, strike $K = 100$, riskless rate $r = 5\%$, dividend yield $q = 2\%$, volatility $\sigma = 20\%$, one year in four steps. The arithmetic runs on factors rounded to six figures.
+Acme at $`S = 100`$, strike $`K = 100`$, riskless rate $`r = 5\%`$, dividend yield $`q = 2\%`$, volatility $`\sigma = 20\%`$, one year in four steps. The arithmetic runs on factors rounded to six figures.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| step length | $1 / 4$ | $0.25$ years |
-| up factor | $e^{0.20\sqrt{0.25}} = e^{0.10}$ | $1.105171$ |
-| down factor | $1 / 1.105171$ | $0.904837$ |
-| one step of discounting | $e^{-0.05 \times 0.25}$ | $0.987578$ |
-| the weight | $(e^{0.03 \times 0.25} - 0.904837)/(1.105171 - 0.904837)$ | $0.512599$ |
-| ending prices | $100 \times 1.105171^{\,j} \times 0.904837^{\,4-j}$ | $67.03,\ 81.87,\ 100.00,\ 122.14,\ 149.18$ |
-| ending payoffs | price minus $100$, floored at zero | $0,\ 0,\ 0,\ 22.14,\ 49.18$ |
-| three steps in, three ups | $0.987578 \times (0.512599 \times 49.18 + 0.487401 \times 22.14)$ | $\$35.55$ |
-| three steps in, two ups | $0.987578 \times (0.512599 \times 22.14 + 0.487401 \times 0)$ | $\$11.21$ |
-| two steps in, same rule | from $35.55$ and $11.21$, then from $11.21$ and $0$ | $\$23.39$, $\$5.67$ |
-| one step in, same rule | from $23.39$ and $5.67$, then from $5.67$ and $0$ | $\$14.57$, $\$2.87$ |
-| **today** | $0.987578 \times (0.512599 \times 14.57 + 0.487401 \times 2.87)$ | **$\$8.76$** |
+| step length | $`1 / 4`$ | $`0.25`$ years |
+| up factor | $`e^{0.20\sqrt{0.25}} = e^{0.10}`$ | $`1.105171`$ |
+| down factor | $`1 / 1.105171`$ | $`0.904837`$ |
+| one step of discounting | $`e^{-0.05 \times 0.25}`$ | $`0.987578`$ |
+| the weight | $`(e^{0.03 \times 0.25} - 0.904837)/(1.105171 - 0.904837)`$ | $`0.512599`$ |
+| ending prices | $`100 \times 1.105171^{\,j} \times 0.904837^{\,4-j}`$ | $`67.03,\ 81.87,\ 100.00,\ 122.14,\ 149.18`$ |
+| ending payoffs | price minus $`100`$, floored at zero | $`0,\ 0,\ 0,\ 22.14,\ 49.18`$ |
+| three steps in, three ups | $`0.987578 \times (0.512599 \times 49.18 + 0.487401 \times 22.14)`$ | $`\$35.55`$ |
+| three steps in, two ups | $`0.987578 \times (0.512599 \times 22.14 + 0.487401 \times 0)`$ | $`\$11.21`$ |
+| two steps in, same rule | from $`35.55`$ and $`11.21`$, then from $`11.21`$ and $`0`$ | $`\$23.39`$, $`\$5.67`$ |
+| one step in, same rule | from $`23.39`$ and $`5.67`$, then from $`5.67`$ and $`0`$ | $`\$14.57`$, $`\$2.87`$ |
+| **today** | $`0.987578 \times (0.512599 \times 14.57 + 0.487401 \times 2.87)`$ | **$`\$8.76`$** |
 
-So the four-step tree charges $8.76 for a one-year call on Acme struck at today's price. Three readings confirm it is doing arithmetic and not wishful thinking: rolling back a payoff of "one Acme share" gives $98.019867, which is $S e^{-qT}$ to the last digit; the put on the same tree, $5.863402, sits exactly a forward apart from the call, $8.760327 - 5.863402 = 2.896925$; and the hedge carried forward hits the payoff on all sixteen histories.
+So the four-step tree charges $8.76 for a one-year call on Acme struck at today's price. Three readings confirm it is doing arithmetic and not wishful thinking: rolling back a payoff of "one Acme share" gives $98.019867, which is $`S e^{-qT}`$ to the last digit; the put on the same tree, $5.863402, sits exactly a forward apart from the call, $`8.760327 - 5.863402 = 2.896925`$; and the hedge carried forward hits the payoff on all sixteen histories.
 
-A put is the right to sell one share for $100 in a year. The forward, $S e^{-qT} - K e^{-rT} = 2.896925$, is today's value of a binding deal to buy one share for $100 in a year.
+A put is the right to sell one share for $100 in a year. The forward, $`S e^{-qT} - K e^{-rT} = 2.896925`$, is today's value of a binding deal to buy one share for $100 in a year.
 
 Four steps is still coarse. The continuous formula on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) gives $9.227006 for the same option; one step gave $11.073541; five hundred steps give $9.223118. The tree overshoots and undershoots by turns as steps are added, and why that wobble happens is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md).
 
@@ -269,7 +283,7 @@ Upper line: up, up, down, down. Lower line: down, down, up, up. Same $8.76 at th
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already knows the answer. The price is reached five ways: the backward roll with the weight $p$; the same roll done by solving for shares and cash at every node, where $p$ never appears; a sum over the five ending prices with path counts built from scratch; a walk down all sixteen histories one at a time; and the road-two holdings carried forward down every history, to see whether they land on the payoff. A sixth routine, written for any step count, must return that same four-step price and must land within a cent of the Black-Scholes figure at five hundred steps: that pair is what ties the branch factors to the volatility. The share itself and the put go through the same machine as cross-checks, and every wrong number above is reproduced.
+Nothing is imported that already knows the answer. The price is reached five ways: the backward roll with the weight $`p`$; the same roll done by solving for shares and cash at every node, where $`p`$ never appears; a sum over the five ending prices with path counts built from scratch; a walk down all sixteen histories one at a time; and the road-two holdings carried forward down every history, to see whether they land on the payoff. A sixth routine, written for any step count, must return that same four-step price and must land within a cent of the Black-Scholes figure at five hundred steps: that pair is what ties the branch factors to the volatility. The share itself and the put go through the same machine as cross-checks, and every wrong number above is reproduced.
 
 ### Python
 
@@ -710,7 +724,7 @@ The two outputs match line for line, from two programs that share no code.
 Lean proves three steps of Why it works, whenever Acme's own growth sits strictly between the branches.
 
 - Take any payoff that depends only on Acme's ending price. Then the copy bought for the root's price needs no new money, matches every node's value, and ends at the payoff on every history.
-- Take any node with a step to go, and Acme's price above zero. Then Step 1's two demands have exactly one answer, $\Delta$ and $B$, and that holding costs the node's value $V$.
+- Take any node with a step to go, and Acme's price above zero. Then Step 1's two demands have exactly one answer, $`\Delta`$ and $`B`$, and that holding costs the node's value $`V`$.
 - Take any payoff that depends only on Acme's ending price. Then today's price equals Step 4's single sum over the ending prices, weighted by path counts and the chance of that many ups.
 
 Every dollar figure, the put, the merge test and the 500-step price are left to the Python and Rust checks.
@@ -1063,7 +1077,7 @@ end MultiStepTree
 > **Reading the tree as a forecast.** The up and down factors are not where anyone thinks Acme is going, and the weight 0.512599 is not how likely an up quarter is. They are the numbers that make the copy fund itself. Put a real forecast in — a fair coin, say — and the price changes to $8.19 while the trade that funds the payoff does not change at all. The tree is a costing exercise wearing the clothes of a probability.
 >
 > - **Averaging the ending prices without the path counts.** Five endings, but not five equal futures: the counts are 1, 4, 6, 4, 1. Treat them as equal and the option comes out at $13.57.
-> - **Dropping the dividend.** Acme must drift at $r - q$, not $r$. Leave $q$ out of the weight and the price reads $9.97; leave it out of the hedge as well and a node where Acme has climbed far above the strike holds a whole share instead of 0.9950.
+> - **Dropping the dividend.** Acme must drift at $`r - q`$, not $`r`$. Leave $`q`$ out of the weight and the price reads $9.97; leave it out of the hedge as well and a node where Acme has climbed far above the strike holds a whole share instead of 0.9950.
 > - **Merging histories that are not alike from there on.** A recombining node claims that any route into it leaves you in the same position — false for a payoff that looks at the route, and then the node values go wrong even where the price does not.
 > - **Trusting a coarse tree's price to the cent.** The method is exact for the tree it is given; whether that tree is a good picture of Acme is the next card's question.
 
@@ -1085,12 +1099,12 @@ end MultiStepTree
 ## What this builds on
 
 - [One step](01-one-step-binomial-replication.md): the copy of an option with shares and cash over a single step. This card repeats that solve at every node.
-- [The risk-neutral probability](02-risk-neutral-probability.md): where the weight 0.512599 comes from, and why it is a price rather than a forecast. This card uses it once per node. That card writes the weight as $q$; here the weight is $p$ and $q$ is the dividend yield.
+- [The risk-neutral probability](02-risk-neutral-probability.md): where the weight 0.512599 comes from, and why it is a price rather than a forecast. This card uses it once per node. That card writes the weight as $`q`$; here the weight is $`p`$ and $`q`$ is the dividend yield.
 - [Lattice paths](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the count of routes to a point on a grid, 1, 4, 6, 4, 1 across four steps, which is why five endings are not five equal futures.
 
 ## Where this goes next
 
-- [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md): where $u$ and $d$ come from, and how the price walks from $8.76 toward the continuous answer as steps are added.
+- [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md): where $`u`$ and $`d`$ come from, and how the price walks from $8.76 toward the continuous answer as steps are added.
 - [Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md): the sensitivities read off neighbouring nodes, delta from the first pair and the curvature from the next.
 - [Hedging a quanto](../24-Quantos%20and%20composites/03-quanto-greeks-and-hedging.md): the same backward walk when the payoff is in one currency and the asset in another.
 

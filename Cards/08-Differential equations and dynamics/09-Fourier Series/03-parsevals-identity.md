@@ -34,9 +34,11 @@ Bars (orange): each harmonic's share, the square of its amplitude, 4/n^2 V^2. Li
 
 ## The formula
 
-Notation first, in words. A repeating signal $f$ splits into a cosine amount and a sine amount per whole-number frequency $n$. The shelf's recipe is $a_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\cos(nx)\,dx$ and $b_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\sin(nx)\,dx$, and the series is $a_0/2 + \sum_{n\ge1}\big(a_n\cos nx + b_n\sin nx\big)$. The **energy** $E$ of the signal is the integral of its square over one cycle, divided by π.
+Notation first, in words. A repeating signal $`f`$ splits into a cosine amount and a sine amount per whole-number frequency $`n`$. The shelf's recipe is $`a_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\cos(nx)\,dx`$ and $`b_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\sin(nx)\,dx`$, and the series is $`a_0/2 + \sum_{n\ge1}\big(a_n\cos nx + b_n\sin nx\big)`$. The **energy** $`E`$ of the signal is the integral of its square over one cycle, divided by π.
 
-$$E \;=\; \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)^2\,dx \;=\; \frac{a_0^2}{2} + \sum_{n=1}^{\infty}\big(a_n^2 + b_n^2\big)$$
+```math
+E \;=\; \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)^2\,dx \;=\; \frac{a_0^2}{2} + \sum_{n=1}^{\infty}\big(a_n^2 + b_n^2\big)
+```
 
 **Read it aloud:** square the signal and average it the Fourier way; that equals half the constant term squared plus the squares of every cosine and sine amount.
 
@@ -44,19 +46,19 @@ Halve both sides and the left is the mean power into 1 ohm, 3.2899 W for the saw
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $x$ | the signal, as a function of phase $x$ in radians | $f(x) = x$ volts | energy grows with its square |
-| $n$ | harmonic number: cycles of the tone per cycle of the signal | 1, 2, 3, … | its share shrinks as 1/n^2 |
-| $a_0$ | twice the signal's average level | 0; for the triangle wave $\lvert x\rvert$, π | adds $a_0^2/2$ |
-| $a_n$, $b_n$ | cosine and sine amounts of harmonic $n$ | $a_n = 0$, $b_n = 2(-1)^{n+1}/n$ | each adds its square |
-| $E$ | energy: the integral of the square over a cycle, over π | 2π^2/3 = 6.5797 V^2 | — |
-| $S_N$, $N$ | the series cut after harmonic $N$ | N = 3 keeps 2 sin x − sin 2x + (2/3) sin 3x | shortfall falls like 4/N |
-| $g$, $T$, $\sigma_N$ | proof helpers: a smoothed signal, any mix of harmonics, averaged partial sums | used in the detailed proof | — |
+| $`f`$, $`x`$ | the signal, as a function of phase $`x`$ in radians | $`f(x) = x`$ volts | energy grows with its square |
+| $`n`$ | harmonic number: cycles of the tone per cycle of the signal | 1, 2, 3, … | its share shrinks as 1/n^2 |
+| $`a_0`$ | twice the signal's average level | 0; for the triangle wave $`\lvert x\rvert`$, π | adds $`a_0^2/2`$ |
+| $`a_n`$, $`b_n`$ | cosine and sine amounts of harmonic $`n`$ | $`a_n = 0`$, $`b_n = 2(-1)^{n+1}/n`$ | each adds its square |
+| $`E`$ | energy: the integral of the square over a cycle, over π | 2π^2/3 = 6.5797 V^2 | — |
+| $`S_N`$, $`N`$ | the series cut after harmonic $`N`$ | N = 3 keeps 2 sin x − sin 2x + (2/3) sin 3x | shortfall falls like 4/N |
+| $`g`$, $`T`$, $`\sigma_N`$ | proof helpers: a smoothed signal, any mix of harmonics, averaged partial sums | used in the detailed proof | — |
 
 ### When it holds
 
 - **Finite energy.** The square must have a finite integral over a cycle; for 1/√|x| it is infinite and there is nothing to balance.
 - **The whole family of tones.** Constant, cosines and sines all in. Drop the cosines and the triangle wave |x| shows a ledger of 0.0000 against 6.5797.
-- **One recipe throughout.** The 1/π and the halved $a_0^2$ belong together; mixing scalings gives 5.1677 for π^2/6.
+- **One recipe throughout.** The 1/π and the halved $`a_0^2`$ belong together; mixing scalings gives 5.1677 for π^2/6.
 - **Balance in energy, not point by point.** Near a jump the series still overshoots ([Convergence](02-convergence-jumps-and-gibbs.md)); the spike narrows, so its energy goes to zero.
 
 ---
@@ -69,50 +71,56 @@ The integral of two signals' product over a cycle acts as a dot product ([The do
 
 ### Step 1: a finite stack of harmonics has exactly the ledger's energy
 
-Square the partial sum $S_N$ and integrate. Every cross term between two different harmonics integrates to zero. A sine or cosine squared integrates to π, and the constant $a_0/2$ squared to 2π times $a_0^2/4$. Divide by π:
+Square the partial sum $`S_N`$ and integrate. Every cross term between two different harmonics integrates to zero. A sine or cosine squared integrates to π, and the constant $`a_0/2`$ squared to 2π times $`a_0^2/4`$. Divide by π:
 
-$$\frac{1}{\pi}\int_{-\pi}^{\pi} S_N(x)^2\,dx = \frac{a_0^2}{2} + \sum_{n=1}^{N}\big(a_n^2+b_n^2\big).$$
+```math
+\frac{1}{\pi}\int_{-\pi}^{\pi} S_N(x)^2\,dx = \frac{a_0^2}{2} + \sum_{n=1}^{N}\big(a_n^2+b_n^2\big).
+```
 
-For the sawtooth with $N = 3$: 4 + 1 + 4/9 = 5.4444.
+For the sawtooth with $`N = 3`$: 4 + 1 + 4/9 = 5.4444.
 
 ### Step 2: the leftover is perpendicular to what was kept
 
-The leftover $f - S_N$ has zero product with every harmonic up to $N$: integrating $f$ against sin(nx) gives π $b_n$ by the recipe, and integrating $S_N$ against it gives the same. So $f = S_N + (f - S_N)$ splits into two perpendicular pieces, and
+The leftover $`f - S_N`$ has zero product with every harmonic up to $`N`$: integrating $`f`$ against sin(nx) gives π $`b_n`$ by the recipe, and integrating $`S_N`$ against it gives the same. So $`f = S_N + (f - S_N)`$ splits into two perpendicular pieces, and
 
-$$E = \Big[\frac{a_0^2}{2} + \sum_{n=1}^{N}\big(a_n^2+b_n^2\big)\Big] + \frac{1}{\pi}\int_{-\pi}^{\pi}\big(f - S_N\big)^2\,dx.$$
+```math
+E = \Big[\frac{a_0^2}{2} + \sum_{n=1}^{N}\big(a_n^2+b_n^2\big)\Big] + \frac{1}{\pi}\int_{-\pi}^{\pi}\big(f - S_N\big)^2\,dx.
+```
 
 After three harmonics the sawtooth's leftover, integrated directly, is 1.135292, and 6.579736 − 5.444444 = 1.135292. The leftover is never negative, so the ledger never exceeds the energy: **Bessel's inequality**.
 
 ### Step 3: the leftover's energy goes to zero
 
-Equality needs the leftover's energy to fade. Step 2 makes $S_N$ the best fit among mixes of harmonics up to $N$ (proof below). Some mix follows any continuous repeating signal as closely as wished, and a jump is smoothed over a window holding almost no energy. For the sawtooth the leftover after $N$ harmonics is 0.3807 at $N = 10$, 0.0398 at 100, 0.0040 at 1000.
+Equality needs the leftover's energy to fade. Step 2 makes $`S_N`$ the best fit among mixes of harmonics up to $`N`$ (proof below). Some mix follows any continuous repeating signal as closely as wished, and a jump is smoothed over a window holding almost no energy. For the sawtooth the leftover after $`N`$ harmonics is 0.3807 at $`N = 10`$, 0.0398 at 100, 0.0040 at 1000.
 
 <details>
 <summary>Detailed proof: best fit, Fejér's averages, and smoothing the jump</summary>
 
-**Best fit.** Let $T$ be any mix of harmonics up to $N$. Then $f - T = (f - S_N) + (S_N - T)$, whose second piece is perpendicular to the first by Step 2, so $\int(f-T)^2 = \int(f-S_N)^2 + \int(S_N-T)^2 \ge \int(f-S_N)^2$.
+**Best fit.** Let $`T`$ be any mix of harmonics up to $`N`$. Then $`f - T = (f - S_N) + (S_N - T)`$, whose second piece is perpendicular to the first by Step 2, so $`\int(f-T)^2 = \int(f-S_N)^2 + \int(S_N-T)^2 \ge \int(f-S_N)^2`$.
 
-**Continuous signals (Fejér).** For a continuous repeating $g$, the average $\sigma_N$ of its first $N$ partial sums is $\sigma_N(x) = \frac{1}{2\pi}\int_{-\pi}^{\pi} g(x-t)F_N(t)\,dt$ with the kernel $F_N(t) = \frac{1}{N}\big(\sin(Nt/2)/\sin(t/2)\big)^2$. The kernel is never negative, integrates to 2π, and for $\delta \le |t| \le \pi$ is at most $1/(N\sin^2(\delta/2))$. Given ε > 0, pick δ with $|g(x-t)-g(x)| < \varepsilon$ whenever $|t| < \delta$. Then $|\sigma_N(x) - g(x)| \le \varepsilon + 2\max|g| / (N\sin^2(\delta/2))$ for every $x$, which falls below 2ε once $N$ is large. So $\frac{1}{\pi}\int(g-\sigma_N)^2 \le 8\varepsilon^2$.
+**Continuous signals (Fejér).** For a continuous repeating $`g`$, the average $`\sigma_N`$ of its first $`N`$ partial sums is $`\sigma_N(x) = \frac{1}{2\pi}\int_{-\pi}^{\pi} g(x-t)F_N(t)\,dt`$ with the kernel $`F_N(t) = \frac{1}{N}\big(\sin(Nt/2)/\sin(t/2)\big)^2`$. The kernel is never negative, integrates to 2π, and for $`\delta \le |t| \le \pi`$ is at most $`1/(N\sin^2(\delta/2))`$. Given ε > 0, pick δ with $`|g(x-t)-g(x)| < \varepsilon`$ whenever $`|t| < \delta`$. Then $`|\sigma_N(x) - g(x)| \le \varepsilon + 2\max|g| / (N\sin^2(\delta/2))`$ for every $`x`$, which falls below 2ε once $`N`$ is large. So $`\frac{1}{\pi}\int(g-\sigma_N)^2 \le 8\varepsilon^2`$.
 
-**A jump.** Let $g$ equal $f$ except on a window of width 2δ around the jump, where it runs in a straight line across. For the sawtooth $|f - g| \le 2\pi$, so $\frac1\pi\int(f-g)^2 \le 8\pi\delta$. Since $\sigma_N$ of $g$ is a mix of harmonics below $N$, best fit and $(u+v)^2 \le 2u^2 + 2v^2$ give $\frac1\pi\int(f-S_N)^2 \le \frac2\pi\int(f-g)^2 + \frac2\pi\int(g-\sigma_N)^2 \le 16\pi\delta + 16\varepsilon^2$. Both terms are as small as wished, so Step 2's equation becomes Parseval's identity in the limit. Finitely many jumps are handled alike; every finite-energy signal is covered in Convergence in energy.
+**A jump.** Let $`g`$ equal $`f`$ except on a window of width 2δ around the jump, where it runs in a straight line across. For the sawtooth $`|f - g| \le 2\pi`$, so $`\frac1\pi\int(f-g)^2 \le 8\pi\delta`$. Since $`\sigma_N`$ of $`g`$ is a mix of harmonics below $`N`$, best fit and $`(u+v)^2 \le 2u^2 + 2v^2`$ give $`\frac1\pi\int(f-S_N)^2 \le \frac2\pi\int(f-g)^2 + \frac2\pi\int(g-\sigma_N)^2 \le 16\pi\delta + 16\varepsilon^2`$. Both terms are as small as wished, so Step 2's equation becomes Parseval's identity in the limit. Finitely many jumps are handled alike; every finite-energy signal is covered in Convergence in energy.
 
 </details>
 
 ### Step 4: the sawtooth sums 1/n^2
 
-Left side: $\frac{1}{\pi}\int_{-\pi}^{\pi} x^2\,dx = \frac{1}{\pi}\cdot\frac{2\pi^3}{3} = \frac{2\pi^2}{3}$. Right side: $a_n = 0$ and $b_n^2 = 4/n^2$. So $4\sum 1/n^2 = 2\pi^2/3$, and
+Left side: $`\frac{1}{\pi}\int_{-\pi}^{\pi} x^2\,dx = \frac{1}{\pi}\cdot\frac{2\pi^3}{3} = \frac{2\pi^2}{3}`$. Right side: $`a_n = 0`$ and $`b_n^2 = 4/n^2`$. So $`4\sum 1/n^2 = 2\pi^2/3`$, and
 
-$$\sum_{n=1}^{\infty}\frac{1}{n^2} = \frac{\pi^2}{6} = 1.644934\ldots$$
+```math
+\sum_{n=1}^{\infty}\frac{1}{n^2} = \frac{\pi^2}{6} = 1.644934\ldots
+```
 
 Euler found it in 1734 another way; here it falls out of an energy balance.
 
 ### Step 5: smoothness forces fast decay
 
-The squared coefficients add to a finite number, so the coefficients must shrink. If the signal joins up around the loop and its slope has finite energy, integration by parts gives the slope's coefficients as $n b_n$ and $-n a_n$; Parseval on the slope makes $\sum n^2(a_n^2+b_n^2)$ finite. Each further smooth derivative buys another factor of $n$.
+The squared coefficients add to a finite number, so the coefficients must shrink. If the signal joins up around the loop and its slope has finite energy, integration by parts gives the slope's coefficients as $`n b_n`$ and $`-n a_n`$; Parseval on the slope makes $`\sum n^2(a_n^2+b_n^2)`$ finite. Each further smooth derivative buys another factor of $`n`$.
 
-The sawtooth jumps, and $n\,|b_n| = 2$ for every $n$: its coefficients fall only as 1/n. The triangle wave |x| joins up with a kink, and $n^2|a_n| = 4/\pi = 1.2732$ on odd $n$: 1/n^2. What a cut series misses is the ledger's tail: 0.3807 for the sawtooth after 10 harmonics, 0.0002650 for the triangle. A 1/n fall means a jump; 1/n^2, a kink; faster, a smoother signal.
+The sawtooth jumps, and $`n\,|b_n| = 2`$ for every $`n`$: its coefficients fall only as 1/n. The triangle wave |x| joins up with a kink, and $`n^2|a_n| = 4/\pi = 1.2732`$ on odd $`n`$: 1/n^2. What a cut series misses is the ledger's tail: 0.3807 for the sawtooth after 10 harmonics, 0.0002650 for the triangle. A 1/n fall means a jump; 1/n^2, a kink; faster, a smoother signal.
 
-The triangle's energy is also 2π^2/3, with $a_0 = \pi$ and $a_n = -4/(\pi n^2)$ on odd $n$, so Parseval gives $\sum_{n\ \mathrm{odd}} 1/n^4 = \pi^4/96$. Odd terms are 15/16 of the full sum, so $\sum 1/n^4 = \pi^4/90 = 1.082323$.
+The triangle's energy is also 2π^2/3, with $`a_0 = \pi`$ and $`a_n = -4/(\pi n^2)`$ on odd $`n`$, so Parseval gives $`\sum_{n\ \mathrm{odd}} 1/n^4 = \pi^4/96`$. Odd terms are 15/16 of the full sum, so $`\sum 1/n^4 = \pi^4/90 = 1.082323`$.
 
 The same ledger in complex exponentials is one sum of squared sizes: [The complex form](05-complex-fourier-series-and-the-transform-in-outline.md).
 
@@ -136,7 +144,7 @@ In the resistor: 3.2899 W in all, 2 W from the fundamental, the rest spread over
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | No 1/π in front of the integral | sum of 1/n^2 = 5.1677 | π^3/6: energy and ledger on different scales |
-| $a_0^2$ not halved, triangle wave | sum of 1/n^4 = −2.1646 | The constant counted twice; positives summing negative |
+| $`a_0^2`$ not halved, triangle wave | sum of 1/n^4 = −2.1646 | The constant counted twice; positives summing negative |
 | Sines only, triangle wave | ledger 0.0000 against 6.5797 | An even signal lives in the cosines |
 
 The code prints all three.
@@ -333,10 +341,10 @@ The two outputs match line for line. The ninth-decimal gap, 1.644934066 against 
 
 Lean proves Parseval's identity for every finite-energy signal, the split after any number of harmonics, and the sawtooth's sum.
 
-- Take a signal whose square has a finite integral over one cycle. Then the energy equals $a_0^2/2$ plus the sum of all $a_n^2 + b_n^2$, a finite sum.
-- Take the same signal and any whole number $N$. Then the energy is the ledger after $N$ harmonics plus the leftover's energy. So the ledger never exceeds the energy: Bessel's inequality.
-- Take the sawtooth $f(x) = x$. Then its energy is $2\pi^2/3$ and every cosine amount is 0. Its sine amounts are $b_n = 2(-1)^{n+1}/n$ for $n \ge 1$.
-- The sum $1 + 1/4 + 1/9 + \dots$ equals exactly $\pi^2/6$.
+- Take a signal whose square has a finite integral over one cycle. Then the energy equals $`a_0^2/2`$ plus the sum of all $`a_n^2 + b_n^2`$, a finite sum.
+- Take the same signal and any whole number $`N`$. Then the energy is the ledger after $`N`$ harmonics plus the leftover's energy. So the ledger never exceeds the energy: Bessel's inequality.
+- Take the sawtooth $`f(x) = x`$. Then its energy is $`2\pi^2/3`$ and every cosine amount is 0. Its sine amounts are $`b_n = 2(-1)^{n+1}/n`$ for $`n \ge 1`$.
+- The sum $`1 + 1/4 + 1/9 + \dots`$ equals exactly $`\pi^2/6`$.
 - The sawtooth's shares 4, 1, 4/9 and 1/4 are exact, and so is the ledger 49/9 after three harmonics.
 
 The numerical integrals, decay rates, triangle wave and three mistakes are left to the Python and Rust checks.
@@ -785,10 +793,10 @@ end ParsevalCard
 ## The usual mistake
 
 > [!warning]
-> **Reading Parseval as point-by-point convergence.** The leftover's energy goes to zero; the series need not equal the signal at every phase. The sawtooth's series gives 0 at the jump, not ±π, and overshoots beside it for every $N$; the spike only narrows.
+> **Reading Parseval as point-by-point convergence.** The leftover's energy goes to zero; the series need not equal the signal at every phase. The sawtooth's series gives 0 at the jump, not ±π, and overshoots beside it for every $`N`$; the spike only narrows.
 >
 > - **Mixing scalings.** Forgetting the 1/π sends the sum of 1/n^2 to 5.1677 instead of 1.6449.
-> - **Counting the constant in full.** Using $a_0^2$ instead of $a_0^2/2$ drives the triangle's sum of 1/n^4 to −2.1646.
+> - **Counting the constant in full.** Using $`a_0^2`$ instead of $`a_0^2/2`$ drives the triangle's sum of 1/n^4 to −2.1646.
 > - **Trusting a partial ledger.** Eight harmonics of the sawtooth hold 6.11 of 6.5797: Bessel's inequality alone never proves nothing is missing.
 
 ---
@@ -807,7 +815,7 @@ end ParsevalCard
 
 ## What this builds on
 
-- [Fourier series](01-fourier-series-and-orthogonality.md): the recipe for $a_n$ and $b_n$, and the sawtooth's amounts 2(−1)^(n+1)/n.
+- [Fourier series](01-fourier-series-and-orthogonality.md): the recipe for $`a_n`$ and $`b_n`$, and the sawtooth's amounts 2(−1)^(n+1)/n.
 - [Convergence](02-convergence-jumps-and-gibbs.md): where the series meets the signal point by point, and the overshoot at a jump.
 - [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): length, perpendicularity and Pythagoras, here for signals.
 

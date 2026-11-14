@@ -26,15 +26,19 @@ Drawn to scale, 40 units to one unit of the plane. The car's transform converges
 
 ## The formula
 
-Notation first, in words. A curly L, $\mathcal{L}$, read "the Laplace transform of", turns a signal into a new function, named by the capital letter: $\mathcal{L}[f] = F$. The variable $s$ is a complex number, a point of the plane. Its real part, Re s, sets how fast the weight fades; its imaginary part only turns the weight ([The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md)).
+Notation first, in words. A curly L, $`\mathcal{L}`$, read "the Laplace transform of", turns a signal into a new function, named by the capital letter: $`\mathcal{L}[f] = F`$. The variable $`s`$ is a complex number, a point of the plane. Its real part, Re s, sets how fast the weight fades; its imaginary part only turns the weight ([The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md)).
 
-$$F(s)=\int_0^\infty f(t)e^{-st}dt$$
+```math
+F(s)=\int_0^\infty f(t)e^{-st}dt
+```
 
 **Read it aloud:** F at s is the whole signal from time zero on, each moment weighted by e to the minus s t, added up.
 
 The derivative rule:
 
-$$\mathcal{L}[f'](s)=sF(s)-f(0)$$
+```math
+\mathcal{L}[f'](s)=sF(s)-f(0)
+```
 
 **Read it aloud:** the transform of a rate of change is s times the transform, minus where the signal started.
 
@@ -50,14 +54,14 @@ The pairs on this card:
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | seconds since the signal started | since braking | — |
-| $s$ | the weight's complex rate | 3, and 1 + i | F shrinks |
-| $f$, $F$, $\mathcal{L}$ | a signal from t = 0; its transform; "transform it" | 1; 1/s | — |
-| $a$, $b$ | growth rate in e^(at); turning rate in cos(bt) | −2; 1 | raise a: the half plane shrinks |
-| $v$, $V$ | the car's speed, m/s; its transform | 5e^(−2t); 5/(s + 2) | — |
-| $f'$, $f(0)$ | rate of change of f; its starting value | −10e^(−2t); 5 | — |
-| $T$ | where a check cuts the integral off | 10 | — |
-| $e$, $i$ | base of natural logs; the quarter turn, i^2 = −1 | e^(−st) | — |
+| $`t`$ | seconds since the signal started | since braking | — |
+| $`s`$ | the weight's complex rate | 3, and 1 + i | F shrinks |
+| $`f`$, $`F`$, $`\mathcal{L}`$ | a signal from t = 0; its transform; "transform it" | 1; 1/s | — |
+| $`a`$, $`b`$ | growth rate in e^(at); turning rate in cos(bt) | −2; 1 | raise a: the half plane shrinks |
+| $`v`$, $`V`$ | the car's speed, m/s; its transform | 5e^(−2t); 5/(s + 2) | — |
+| $`f'`$, $`f(0)`$ | rate of change of f; its starting value | −10e^(−2t); 5 | — |
+| $`T`$ | where a check cuts the integral off | 10 | — |
+| $`e`$, $`i`$ | base of natural logs; the quarter turn, i^2 = −1 | e^(−st) | — |
 
 ### When it holds
 
@@ -83,7 +87,9 @@ The size of e^(−st) is e^(−(Re s) t), so for Re s > 0 the weight fades and t
 
 **The wave cos(bt).** Write it as two turning arrows, (e^(ibt) + e^(−ibt))/2: exponentials with a = ±ib, real part 0, so Re s > 0. Adding:
 
-$$\frac{1}{2}\left(\frac{1}{s-ib}+\frac{1}{s+ib}\right)=\frac{s}{s^2+b^2}.$$
+```math
+\frac{1}{2}\left(\frac{1}{s-ib}+\frac{1}{s+ib}\right)=\frac{s}{s^2+b^2}.
+```
 
 The code sums each integral directly and matches all eight table values.
 
@@ -113,11 +119,11 @@ Inside its half plane F is holomorphic (has a complex derivative at every point)
 
 Fix s with Re s = σ > a, set δ = (σ − a)/2, and take complex h with |h| < δ. Then
 
-$$\frac{F(s+h)-F(s)}{h}+\int_0^\infty t f(t) e^{-st}dt=\int_0^\infty f(t)e^{-st} \left(\frac{e^{-ht}-1}{h}+t\right) dt.$$
+$`\displaystyle \frac{F(s+h)-F(s)}{h}+\int_0^\infty t f(t) e^{-st}dt=\int_0^\infty f(t)e^{-st} \left(\frac{e^{-ht}-1}{h}+t\right) dt.`$
 
 By the exponential's power series, |(e^(−ht) − 1)/h + t| ≤ |h| t^2 e^(|h| t)/2. With |f(t)| ≤ M e^(at), the right side is at most
 
-$$\frac{M |h|}{2} \int_0^\infty t^2 e^{-(\sigma-a-|h|) t}dt \le \frac{M |h|}{2} \cdot \frac{2}{\delta^3}=\frac{M |h|}{\delta^3},$$
+$`\displaystyle \frac{M |h|}{2} \int_0^\infty t^2 e^{-(\sigma-a-|h|) t}dt \le \frac{M |h|}{2} \cdot \frac{2}{\delta^3}=\frac{M |h|}{\delta^3},`$
 
 since σ − a − |h| > δ. This tends to 0 as h → 0 from any direction, so F has the complex derivative −∫ t f(t) e^(−st) dt.
 
@@ -127,7 +133,9 @@ since σ − a − |h| > δ. This tends to 0 as h → 0 from any direction, so F
 
 Let f be continuous for t ≥ 0, f' have a transform, and f(t) e^(−st) → 0 as t grows. Integrate by parts, differentiating the weight:
 
-$$\int_0^\infty f'(t)e^{-st}dt=\Big[f(t)e^{-st}\Big]_0^\infty+s \int_0^\infty f(t)e^{-st}dt=-f(0)+sF(s).$$
+```math
+\int_0^\infty f'(t)e^{-st}dt=\Big[f(t)e^{-st}\Big]_0^\infty+s \int_0^\infty f(t)e^{-st}dt=-f(0)+sF(s).
+```
 
 The bracket is 0 at the far end and f(0) at the start.
 
@@ -139,7 +147,9 @@ At a jump the bracket splits and leaves an extra term. The shutter falls by 1 at
 
 Transform both sides of v' = −2v, with v(0) = 5:
 
-$$sV-5=-2V \quad\Longrightarrow\quad V(s)=\frac{5}{s+2}.$$
+```math
+sV-5=-2V \quad\Longrightarrow\quad V(s)=\frac{5}{s+2}.
+```
 
 That is the e^(at) row with a = −2, times 5. So v = 5e^(−2t), and v(1) = 0.676676 m/s. Reading the table backwards rests on Lerch's theorem, stated without proof: continuous signals with equal transforms are equal. The direct way back, an integral up a vertical line inside the half plane (the Bromwich integral), is [Inverting a Laplace transform](07-inverse-laplace-by-residues.md).
 

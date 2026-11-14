@@ -38,7 +38,9 @@ Schematic. The shared step in the middle is the weak spot: a bug there makes bot
 
 A test that checks every input either sees a bug or proves it absent. A test that checks a random sample can miss. The chance it does not miss is
 
-$$P(\text{catch}) \;=\; 1 - \left(1 - \frac{w}{N}\right)^{k}, \qquad \text{mutation score} \;=\; \frac{K}{M}.$$
+```math
+P(\text{catch}) \;=\; 1 - \left(1 - \frac{w}{N}\right)^{k}, \qquad \text{mutation score} \;=\; \frac{K}{M}.
+```
 
 **Read it aloud:** the chance a random test of k inputs catches a bug is one minus the chance that every one of the k draws lands on an input where the bug is silent. A test suite's mutation score is the share of planted bugs it catches.
 
@@ -46,26 +48,26 @@ Here k counts test inputs. It is not the k of an (n, k) code on the Hamming card
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | every input the code can receive | 128 seven-bit words | catch falls: more places to hide |
-| $w$ | inputs on which the bug shows (the two roads disagree) | 1 for a table typo, up to 64 | catch rises fast |
-| $k$ | inputs a random test draws, each uniform over the $N$ | 5 | catch rises towards 1 |
-| $P(\text{catch})$ | chance the random test fails on the bug | 0.0385 when $w = 1$, $k = 5$ | — |
-| $M$ | mutants planted, one at a time | 5 | a finer measure of the test |
-| $K$ | mutants killed: the test failed on them | 5 for T1, T2 and T3 together | score rises |
-| $r$ | the received 7-bit word, positions 1 to 7 | 1001110 | — |
-| $s$ | syndrome: the three check parities (each 0 if its sum is even, 1 if odd) read as a binary number | 6 | names the flipped position |
-| $p$ | a position in the word, 1 to 7 | 6, the flipped bit | — |
+| $`N`$ | every input the code can receive | 128 seven-bit words | catch falls: more places to hide |
+| $`w`$ | inputs on which the bug shows (the two roads disagree) | 1 for a table typo, up to 64 | catch rises fast |
+| $`k`$ | inputs a random test draws, each uniform over the $`N`$ | 5 | catch rises towards 1 |
+| $`P(\text{catch})`$ | chance the random test fails on the bug | 0.0385 when $`w = 1`$, $`k = 5`$ | — |
+| $`M`$ | mutants planted, one at a time | 5 | a finer measure of the test |
+| $`K`$ | mutants killed: the test failed on them | 5 for T1, T2 and T3 together | score rises |
+| $`r`$ | the received 7-bit word, positions 1 to 7 | 1001110 | — |
+| $`s`$ | syndrome: the three check parities (each 0 if its sum is even, 1 if odd) read as a binary number | 6 | names the flipped position |
+| $`p`$ | a position in the word, 1 to 7 | 6, the flipped bit | — |
 | d1 to d4 | the 4 data bits, kept at positions 3, 5, 6, 7 | 0, 1, 0, 0 | — |
-| $A(r)$ | road 1's answer: the lookup table's 4 data bits | 0100 | — |
-| $B(r)$ | road 2's answer: the syndrome decoder's 4 data bits | 0100 | — |
+| $`A(r)`$ | road 1's answer: the lookup table's 4 data bits | 0100 | — |
+| $`B(r)`$ | road 2's answer: the syndrome decoder's 4 data bits | 0100 | — |
 
-The test itself is one line: **pass when $A(r) = B(r)$ for every $r$ checked.** The bits are compared exactly. A floating-point number (a computer's rounded stand-in for a real number) would be compared within a tolerance, the subject of [Tolerances](05-tolerances-and-comparing-computed-numbers.md).
+The test itself is one line: **pass when $`A(r) = B(r)`$ for every $`r`$ checked.** The bits are compared exactly. A floating-point number (a computer's rounded stand-in for a real number) would be compared within a tolerance, the subject of [Tolerances](05-tolerances-and-comparing-computed-numbers.md).
 
 ### When it holds
 
-- **The roads are independent.** Two roads that share code can share a bug. Mutant M5 sits in the shared read-out step: both roads go wrong together, $w = 0$, and the two-roads test passes. Independently written programs have been measured failing together more often than chance predicts, so "independent" means sharing no code, not just written twice.
+- **The roads are independent.** Two roads that share code can share a bug. Mutant M5 sits in the shared read-out step: both roads go wrong together, $`w = 0`$, and the two-roads test passes. Independently written programs have been measured failing together more often than chance predicts, so "independent" means sharing no code, not just written twice.
 - **The draws are uniform over all N inputs.** The formula assumes each test input is any of the 128 words with equal chance. A test that only feeds in the 16 clean codewords never meets a damaged word, so a bug that only touches repairs is invisible to it: the round trip misses M1 to M4.
-- **The bug changes an answer somewhere.** A mutant with $w = 0$, such as skipping the repair when the check bit at position 1 itself is hit, changes no decoded message. No test can catch it, and none needs to. It is called an *equivalent mutant*.
+- **The bug changes an answer somewhere.** A mutant with $`w = 0`$, such as skipping the repair when the check bit at position 1 itself is hit, changes no decoded message. No test can catch it, and none needs to. It is called an *equivalent mutant*.
 - **The mutants look like real bugs.** A score of 5 out of 5 is measured against these five. It says the tests notice typos, swapped indices and forgotten steps. It is not a proof that the decoder is right.
 - **Exact comparison only where the answer is exact.** Bits are exact. Prices, probabilities and integrals are not, and comparing them with `==` gives false alarms; the rule for them is on the Tolerances card.
 
@@ -97,13 +99,17 @@ When the input space is too big to list (every 64-bit float, every price), the t
 
 ### Step 3: the chance a random sample catches a bug
 
-Say the bug shows on $w$ of the $N$ inputs. One random draw lands on a silent input with chance $1 - w/N$. The draws are independent, so all $k$ land on silent inputs with chance $(1 - w/N)^k$, multiplying one factor per draw. The test catches the bug whenever at least one draw does not, which gives
+Say the bug shows on $`w`$ of the $`N`$ inputs. One random draw lands on a silent input with chance $`1 - w/N`$. The draws are independent, so all $`k`$ land on silent inputs with chance $`(1 - w/N)^k`$, multiplying one factor per draw. The test catches the bug whenever at least one draw does not, which gives
 
-$$P(\text{catch}) = 1 - \left(1 - \frac{w}{N}\right)^{k}.$$
+```math
+P(\text{catch}) = 1 - \left(1 - \frac{w}{N}\right)^{k}.
+```
 
 To reach a 99% catch, set the miss chance to 0.01 and solve with logarithms:
 
-$$k \;\ge\; \frac{\ln 0.01}{\ln(1 - w/N)}.$$
+```math
+k \;\ge\; \frac{\ln 0.01}{\ln(1 - w/N)}.
+```
 
 For a bug that shows on one word in 128, that is 588 random draws, far more than the 128 that cover everything. On a small space, listing every input is cheaper than sampling it.
 
@@ -130,7 +136,7 @@ A test is only evidence if it can fail. The direct way to find out is to make it
 
 The five mutants here, each a one-line change:
 
-| Mutant | The change | Words where roads disagree, $w$ |
+| Mutant | The change | Words where roads disagree, $`w`$ |
 | --- | --- | --- |
 | M1 | syndrome bits read in the wrong order | 32 |
 | M2 | check 2 forgets position 7 | 48 |
@@ -183,14 +189,14 @@ The pinned word r = 1001110 through both roads, then through mutant M1, then the
 | check 1, positions 1, 3, 5, 7 | 1 + 0 + 1 + 0 = 2, parity | 0 |
 | check 2, positions 2, 3, 6, 7 | 0 + 0 + 1 + 0 = 1, parity | 1 |
 | check 3, positions 4, 5, 6, 7 | 1 + 1 + 1 + 0 = 3, parity | 1 |
-| syndrome $s$, low bit first | 0 × 1 + 1 × 2 + 1 × 4 | 6 |
+| syndrome $`s`$, low bit first | 0 × 1 + 1 × 2 + 1 × 4 | 6 |
 | road 2: flip position 6 | 1001110 → 1001100 | 1001100 |
-| road 2: read positions 3, 5, 6, 7 | 0, 1, 0, 0 | $B(r) = 0100$ |
+| road 2: read positions 3, 5, 6, 7 | 0, 1, 0, 0 | $`B(r) = 0100`$ |
 | road 1: differences to the 16 codewords | 4 4 3 3 1 5 2 2 5 5 2 6 4 4 3 3 | nearest: 1001100, at 1 |
-| road 1: read positions 3, 5, 6, 7 | 0, 1, 0, 0 | $A(r) = 0100$ |
+| road 1: read positions 3, 5, 6, 7 | 0, 1, 0, 0 | $`A(r) = 0100`$ |
 | M1: syndrome 110 read backwards | 011 read as a plain binary number: 0 × 4 + 1 × 2 + 1 × 1 | 3 |
 | M1: flip position 3 and read out | 1001110 → 1011110 → 1, 1, 1, 0 | 1110, not 0100: **killed by T3** |
-| M3, $w = 1$: one draw misses | 1 − 1/128 | 0.99219 |
+| M3, $`w = 1`$: one draw misses | 1 − 1/128 | 0.99219 |
 | five draws all miss | 0.99219 to the 5th | 0.96154 |
 | **five-word random test catches M3** | 1 − 0.96154 | **0.03846** |
 | draws for a 99% catch | ln 0.01 / ln(127/128) = −4.60517 / −0.0078432 = 587.16, round up | 588 |
@@ -203,7 +209,7 @@ So a random five-word test would let the table typo through with chance 0.96154,
 | --- | --- | --- |
 | Assert the decoder equals itself | kills 0 of 5 | The comparison cannot fail; it is a tautology, not a test |
 | Keep only the round trip on clean codewords | kills 1 of 5 | It never feeds in a damaged word, so the repair logic is never exercised |
-| Keep only the two roads | kills 4 of 5 | M5 lives in the shared read-out, so both roads are wrong together, $w = 0$ |
+| Keep only the two roads | kills 4 of 5 | M5 lives in the shared read-out, so both roads are wrong together, $`w = 0`$ |
 | Sample 5 random words instead of all 128 | catches M3 with chance 0.0385 | A bug on 1 word in 128 needs 588 random draws for a 99% catch |
 
 ---
@@ -614,11 +620,11 @@ The two outputs are identical line for line, including the simulated catch rates
 
 ### Lean
 
-Lean proves the catch formula for every $N$, $w$ and $k$, and the two Hamming facts on all 128 words.
+Lean proves the catch formula for every $`N`$, $`w`$ and $`k`$, and the two Hamming facts on all 128 words.
 
-- Suppose a random test draws $k$ inputs, each uniform over the $N$ inputs and independent of the others. Then it catches a bug that shows on $w$ inputs with chance $1 - (1 - w/N)^k$.
-- Take any codeword and flip its bit at position $p$, for any $p$ from 1 to 7. Then the syndrome is $p$.
-- Take any received word $r$ and any codeword nearest to it. Then that codeword's data bits equal road 2's answer, so $A(r) = B(r)$.
+- Suppose a random test draws $`k`$ inputs, each uniform over the $`N`$ inputs and independent of the others. Then it catches a bug that shows on $`w`$ inputs with chance $`1 - (1 - w/N)^k`$.
+- Take any codeword and flip its bit at position $`p`$, for any $`p`$ from 1 to 7. Then the syndrome is $`p`$.
+- Take any received word $`r`$ and any codeword nearest to it. Then that codeword's data bits equal road 2's answer, so $`A(r) = B(r)`$.
 - The encoder's four basic codewords equal the four columns of the Hamming card's generator matrix.
 - The word 1001110 has check sums 2, 1, 3 and syndrome 6, and road 2 decodes it to 0100.
 - Its distances to the 16 codewords are 4 4 3 3 1 5 2 2 5 5 2 6 4 4 3 3.
@@ -787,7 +793,7 @@ example : 127 ^ 588 * 100 ≤ 128 ^ 588 ∧ 128 ^ 587 < 127 ^ 587 * 100 := by no
 > **Try changing**
 > - Guess first: if M3's typo is moved to the word `0000000`, a clean codeword, does the round trip T1 now catch it? Change `"0000011"` to `"0000000"`. No: T1 calls only road 2, and the typo is in road 1's table. Only T2 can see a bug in the reference road.
 > - Guess first: how often does a 20-word random test catch M3? Change both `5`s in the simulation loop (the draw count and `p_catch(W[m], 5)`) to `20`. The chance rises to about 0.145, the chart's bottom line at k = 20, and the simulation still lands within a few standard errors of the formula.
-> - Guess first: what if M4 skipped the repair only when the syndrome is 1? Change `MUT != "M4"` to `(MUT != "M4" or s > 1)`. Its $w$ drops to 0 and every test passes on it, so the assert on the kill counts fails. Position 1 holds a check bit, so leaving it unrepaired never changes the data: an equivalent mutant.
+> - Guess first: what if M4 skipped the repair only when the syndrome is 1? Change `MUT != "M4"` to `(MUT != "M4" or s > 1)`. Its $`w`$ drops to 0 and every test passes on it, so the assert on the kill counts fails. Position 1 holds a check bit, so leaving it unrepaired never changes the data: an equivalent mutant.
 > - Guess first: does the pinned word alone catch the read-backwards bug M1? Yes. 110 read backwards is 3, and flipping position 3 turns the data into 1110 (the "pin" column of the output).
 
 ---

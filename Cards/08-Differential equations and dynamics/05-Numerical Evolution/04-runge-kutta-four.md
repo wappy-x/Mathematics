@@ -27,28 +27,34 @@ Scale: 130 px per second across, 8.5 px per m/s up. Curve: the exact speed. Dash
 
 ## The formula
 
-Reminder: the law is written $y' = f(t, y)$, read "the rate of y at time t is f", and $h$ is the step size. One RK4 step from time $t_n$ and value $y_n$ is
+Reminder: the law is written $`y' = f(t, y)`$, read "the rate of y at time t is f", and $`h`$ is the step size. One RK4 step from time $`t_n`$ and value $`y_n`$ is
 
-$$y_{n+1} = y_n + \frac{h}{6}\left(k_1 + 2k_2 + 2k_3 + k_4\right),$$
+```math
+y_{n+1} = y_n + \frac{h}{6}\left(k_1 + 2k_2 + 2k_3 + k_4\right),
+```
 
 with the four slopes
 
-$$k_1 = f(t_n, y_n), \qquad k_2 = f\!\left(t_n + \tfrac{h}{2},\ y_n + \tfrac{h}{2}k_1\right),$$
+```math
+k_1 = f(t_n, y_n), \qquad k_2 = f\!\left(t_n + \tfrac{h}{2},\ y_n + \tfrac{h}{2}k_1\right),
+```
 
-$$k_3 = f\!\left(t_n + \tfrac{h}{2},\ y_n + \tfrac{h}{2}k_2\right), \qquad k_4 = f\!\left(t_n + h,\ y_n + h\,k_3\right).$$
+```math
+k_3 = f\!\left(t_n + \tfrac{h}{2},\ y_n + \tfrac{h}{2}k_2\right), \qquad k_4 = f\!\left(t_n + h,\ y_n + h\,k_3\right).
+```
 
 **Read it aloud:** read the slope here, peek at the middle with it, peek at the middle again with the new slope, peek at the end with that one, then move along one-sixth, a third, a third and one-sixth of the four.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t_n$ | the time at the start of step n | 0 s for the first step | — |
-| $y_n$ | the computed value at that time | the speed v, 0 m/s at the door | — |
-| $h$ | the step size: time covered by one step | 2 s | error grows as its fourth power; past 13.93 s the run explodes |
-| $f$ | the rate law: the slope at any time and value | 9.8 − 0.2v, in m/s per s | — |
-| $k_1$ | slope read at the start of the step | 9.8000 | — |
-| $k_2$, $k_3$ | slopes read at the middle, after a trial half-step | 7.8400 and 8.2320 | — |
-| $k_4$ | slope read at the end, after a trial full step | 6.5072 | — |
-| $R$, $z$ | one step's factor on a decaying gap, with z = h × rate | z = −0.4 | R(z) passes 1 at z = −2.7853 and the run diverges |
+| $`t_n`$ | the time at the start of step n | 0 s for the first step | — |
+| $`y_n`$ | the computed value at that time | the speed v, 0 m/s at the door | — |
+| $`h`$ | the step size: time covered by one step | 2 s | error grows as its fourth power; past 13.93 s the run explodes |
+| $`f`$ | the rate law: the slope at any time and value | 9.8 − 0.2v, in m/s per s | — |
+| $`k_1`$ | slope read at the start of the step | 9.8000 | — |
+| $`k_2`$, $`k_3`$ | slopes read at the middle, after a trial half-step | 7.8400 and 8.2320 | — |
+| $`k_4`$ | slope read at the end, after a trial full step | 6.5072 | — |
+| $`R`$, $`z`$ | one step's factor on a decaying gap, with z = h × rate | z = −0.4 | R(z) passes 1 at z = −2.7853 and the run diverges |
 
 The weights over 6 add to 1, so a constant slope moves the value by exactly h times it.
 
@@ -71,7 +77,9 @@ The exact move over one step is h times the average slope across it. No single r
 
 The speed settles at 49 m/s, where 9.8 − 0.2v = 0. The gap g = v − 49 obeys g' = −0.2g: it decays at rate λ = −0.2 per s. Write z = hλ, so z = −0.4 for h = 2 s. Each slope is λ times a trial gap, and one RK4 step multiplies the gap by
 
-$$R(z) = 1 + z + \frac{z^2}{2} + \frac{z^3}{6} + \frac{z^4}{24}.$$
+```math
+R(z) = 1 + z + \frac{z^2}{2} + \frac{z^3}{6} + \frac{z^4}{24}.
+```
 
 <details>
 <summary>The algebra behind R(z)</summary>

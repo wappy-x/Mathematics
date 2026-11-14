@@ -37,46 +37,52 @@ Orange: the true best weights, known only in the laboratory. Green: the weights 
 
 ## The formula
 
-Notation first. A **matrix** is a table of numbers; the **covariance matrix** has one row and one column per stock, each stock's variance (squared wobble) on the diagonal and each pair's covariance (how the two move together) off it. $S^{-1}$ is the inverse of $S$: the matrix that undoes it. $\mathbf 1$ is a column of twenty 1s. A raised T turns a column into a row, so $\mathbf 1^{\top}$ times a column adds up its entries. Returns are in percent per month, so variances are in squared percent per month.
+Notation first. A **matrix** is a table of numbers; the **covariance matrix** has one row and one column per stock, each stock's variance (squared wobble) on the diagonal and each pair's covariance (how the two move together) off it. $`S^{-1}`$ is the inverse of $`S`$: the matrix that undoes it. $`\mathbf 1`$ is a column of twenty 1s. A raised T turns a column into a row, so $`\mathbf 1^{\top}`$ times a column adds up its entries. Returns are in percent per month, so variances are in squared percent per month.
 
 The minimum-variance weights, from the covariance matrix the fund measured:
 
-$$w = \frac{S^{-1}\mathbf 1}{\mathbf 1^{\top} S^{-1}\mathbf 1}$$
+```math
+w = \frac{S^{-1}\mathbf 1}{\mathbf 1^{\top} S^{-1}\mathbf 1}
+```
 
 The shrunk covariance matrix, and the Ledoit-Wolf amount:
 
-$$S^{*} = (1-a)\,S + a\,\tau I, \qquad a = \frac{\min(\bar b^{2},\, d^{2})}{d^{2}}$$
+```math
+S^{*} = (1-a)\,S + a\,\tau I, \qquad a = \frac{\min(\bar b^{2},\, d^{2})}{d^{2}}
+```
 
 **Read it aloud:** keep the fraction one minus a of every measured risk, take the fraction a from a plain target in which every stock has the average variance and no two stocks move together, and choose a as the measured noise divided by the measured distance from the target.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Sigma$ | the true covariance matrix, unknown outside the laboratory. Say "sigma". | a one-market-factor model, below | — |
-| $S$ | the measured covariance matrix: each stock's returns minus its average, multiplied in pairs, averaged over the months | history 1 | — |
-| $n$, $p$ | months of history; number of stocks | 60; 20 | more months: less noise, smaller a |
-| $x_k$ | month k's twenty returns, each minus that stock's average | one month of history 1 | — |
-| $w$ | the weights, one per stock, adding to 1 | stock 1: 56% from history 1 | — |
-| $\tau$, $I$ | the average of the twenty measured variances; the identity matrix (1s on the diagonal, 0s elsewhere) | $\tau$ = 53.2185 | a bigger $\tau$ lifts every shrunk eigenvalue more |
-| $a$ | the shrinkage intensity: how far to move toward the target, between 0 and 1 | 0.0668 | calmer weights, more bias toward equal treatment |
-| $d^2$ | how far the measured matrix sits from the target: squared entries of their difference, summed, divided by $p$ | 13664.5252 | smaller a |
-| $\bar b^2$ | the estimated noise in the measured matrix: how much single months disagree with the average, divided by $n$ twice | 912.8780 | larger a |
-| $v_j$ | direction j, an eigenvector: a fixed mix of the stocks | the market mix, for the largest | — |
-| $\lambda$ | an eigenvalue: the variance along one direction the matrix treats as independent (explained in Step 2) | smallest: 4.09 measured, 8.33 true | — |
-| $S^{*}$ | the shrunk covariance matrix, fed to the same optimiser | history 1 shrunk | — |
+| $`\Sigma`$ | the true covariance matrix, unknown outside the laboratory. Say "sigma". | a one-market-factor model, below | — |
+| $`S`$ | the measured covariance matrix: each stock's returns minus its average, multiplied in pairs, averaged over the months | history 1 | — |
+| $`n`$, $`p`$ | months of history; number of stocks | 60; 20 | more months: less noise, smaller a |
+| $`x_k`$ | month k's twenty returns, each minus that stock's average | one month of history 1 | — |
+| $`w`$ | the weights, one per stock, adding to 1 | stock 1: 56% from history 1 | — |
+| $`\tau`$, $`I`$ | the average of the twenty measured variances; the identity matrix (1s on the diagonal, 0s elsewhere) | $`\tau`$ = 53.2185 | a bigger $`\tau`$ lifts every shrunk eigenvalue more |
+| $`a`$ | the shrinkage intensity: how far to move toward the target, between 0 and 1 | 0.0668 | calmer weights, more bias toward equal treatment |
+| $`d^2`$ | how far the measured matrix sits from the target: squared entries of their difference, summed, divided by $`p`$ | 13664.5252 | smaller a |
+| $`\bar b^2`$ | the estimated noise in the measured matrix: how much single months disagree with the average, divided by $`n`$ twice | 912.8780 | larger a |
+| $`v_j`$ | direction j, an eigenvector: a fixed mix of the stocks | the market mix, for the largest | — |
+| $`\lambda`$ | an eigenvalue: the variance along one direction the matrix treats as independent (explained in Step 2) | smallest: 4.09 measured, 8.33 true | — |
+| $`S^{*}`$ | the shrunk covariance matrix, fed to the same optimiser | history 1 shrunk | — |
 
 The two helper quantities in full, where the double bars mean "square every entry of the matrix and add them up":
 
-$$d^{2} = \frac1p\,\lVert S - \tau I\rVert^{2}, \qquad \bar b^{2} = \frac1{n^{2}}\sum_{k=1}^{n}\frac1p\,\lVert x_k x_k^{\top} - S\rVert^{2}$$
+```math
+d^{2} = \frac1p\,\lVert S - \tau I\rVert^{2}, \qquad \bar b^{2} = \frac1{n^{2}}\sum_{k=1}^{n}\frac1p\,\lVert x_k x_k^{\top} - S\rVert^{2}
+```
 
-In words: $d^2$ is how different the measured matrix is from the dull target. $\bar b^2$ is how much of that difference could be luck: $S$ is an average of $n$ monthly pieces $x_k x_k^{\top}$, and an average of $n$ pieces wobbles by the pieces' own spread divided by $n$.
+In words: $`d^2`$ is how different the measured matrix is from the dull target. $`\bar b^2`$ is how much of that difference could be luck: $`S`$ is an average of $`n`$ monthly pieces $`x_k x_k^{\top}`$, and an average of $`n`$ pieces wobbles by the pieces' own spread divided by $`n`$.
 
-The laboratory market: each stock's monthly return is 0.8%, plus a shared market shock (16% yearly risk) times a sensitivity rising from 0.6 for stock 1 to 1.4 for stock 20, plus the stock's own shock of 10%, 15%, 20% or 25% yearly risk in turn. That fixes the true $\Sigma$ exactly. The code numbers the stocks from 0.
+The laboratory market: each stock's monthly return is 0.8%, plus a shared market shock (16% yearly risk) times a sensitivity rising from 0.6 for stock 1 to 1.4 for stock 20, plus the stock's own shock of 10%, 15%, 20% or 25% yearly risk in turn. That fixes the true $`\Sigma`$ exactly. The code numbers the stocks from 0.
 
 ### When it holds
 
 - **The months are independent draws from one unchanging market.** If the market shifts, old months describe a market that is gone, and shrinkage cannot fix that.
 - **Means are estimated.** The paper assumes returns with a known mean of zero. Here, as in common software, each stock is first centred on its own average; the paper's theorem does not cover that small change.
-- **Returns have finite fourth moments.** The fourth moment is the average of a return's distance from its mean raised to the fourth power. The noise estimate $\bar b^2$ squares squared returns; with very heavy tails it turns erratic, and the intensity with it.
+- **Returns have finite fourth moments.** The fourth moment is the average of a return's distance from its mean raised to the fourth power. The noise estimate $`\bar b^2`$ squares squared returns; with very heavy tails it turns erratic, and the intensity with it.
 - **The target is a sensible guess.** Equal variances and no co-movement is blunt for stocks, which share a market. Here it still lowers portfolio risk, but not the matrix's average entry-by-entry error (1054.18 shrunk against 1052.03 raw).
 - **The optimality is asymptotic.** Ledoit and Wolf prove the rule best among such blends as months and stocks grow together. From one 60-month history it is an estimate with its own noise: here it averages 0.101 against a laboratory best of 0.075.
 
@@ -90,26 +96,28 @@ The optimiser searches every mix of twenty stocks for the lowest measured risk. 
 
 ### Step 1: the reported risk is too low, the true risk too high
 
-Write $w^{\top} S w$ for the variance the measured matrix reports for weights $w$, and $w^{\top} \Sigma w$ for their true variance. The true best weights minimise the second; the fund's weights minimise the first.
+Write $`w^{\top} S w`$ for the variance the measured matrix reports for weights $`w`$, and $`w^{\top} \Sigma w`$ for their true variance. The true best weights minimise the second; the fund's weights minimise the first.
 
-- The fund's reported variance is no higher than what $S$ says about the true best weights, since $w$ is the minimiser under $S$.
-- For fixed weights, $S$ is right on average up to a factor: centring by the sample mean and dividing by $n$ makes the average of $S$ equal to $(n-1)/n$ times $\Sigma$. So on average $S$ rates the true best weights at slightly less than the true minimum.
+- The fund's reported variance is no higher than what $`S`$ says about the true best weights, since $`w`$ is the minimiser under $`S`$.
+- For fixed weights, $`S`$ is right on average up to a factor: centring by the sample mean and dividing by $`n`$ makes the average of $`S`$ equal to $`(n-1)/n`$ times $`\Sigma`$. So on average $`S`$ rates the true best weights at slightly less than the true minimum.
 - Chain the two: **on average the reported risk sits at or below the true minimum.**
-- The fund's weights, held in the true market, carry at least the true minimum, since nothing beats the true best weights under $\Sigma$.
+- The fund's weights, held in the true market, carry at least the true minimum, since nothing beats the true best weights under $`\Sigma`$.
 
 So reported ≤ possible ≤ delivered. The checks see it: 8.52% reported, 10.56% possible, 12.80% delivered, averaged over 300 histories.
 
 ### Step 2: where the noise hides, the smallest eigenvalues
 
-Any covariance matrix splits into independent directions, its **eigenvectors**; each is a fixed mix of the stocks, and its **eigenvalue** $\lambda$ is the variance of that mix. In this market the largest direction is close to the market mix, eigenvalue 482.00; the smallest are mixes that cancel the market out, eigenvalue 8.33.
+Any covariance matrix splits into independent directions, its **eigenvectors**; each is a fixed mix of the stocks, and its **eigenvalue** $`\lambda`$ is the variance of that mix. In this market the largest direction is close to the market mix, eigenvalue 482.00; the smallest are mixes that cancel the market out, eigenvalue 8.33.
 
 Inverting a matrix keeps the directions and replaces every eigenvalue by one over it. So the minimum-variance weights are a sum over directions, each divided by its eigenvalue:
 
-$$S^{-1}\mathbf 1 = \sum_{j=1}^{p} \frac{(v_j^{\top}\mathbf 1)}{\lambda_j}\, v_j$$
+```math
+S^{-1}\mathbf 1 = \sum_{j=1}^{p} \frac{(v_j^{\top}\mathbf 1)}{\lambda_j}\, v_j
+```
 
-where $v_j$ is direction j and $v_j^{\top}\mathbf 1$ is how much of the all-ones column lies along it. The smallest eigenvalues get the largest multipliers. That is where noise does the most harm.
+where $`v_j`$ is direction j and $`v_j^{\top}\mathbf 1`$ is how much of the all-ones column lies along it. The smallest eigenvalues get the largest multipliers. That is where noise does the most harm.
 
-Noise spreads the measured eigenvalues apart. Their sum is the total variance, right on average up to the $(n-1)/n$ factor. The sum of their squares is the matrix's squared size, which on average is the true squared size plus the noise's. Same centre, wider spread: the smallest come out too small, the largest too large. History 1's smallest is 4.09 against a true 8.33; its largest 554.44 against 482.00. The ratio of largest to smallest, which measures how hard the matrix is to invert reliably, grows from 57.8 to 135.7.
+Noise spreads the measured eigenvalues apart. Their sum is the total variance, right on average up to the $`(n-1)/n`$ factor. The sum of their squares is the matrix's squared size, which on average is the true squared size plus the noise's. Same centre, wider spread: the smallest come out too small, the largest too large. History 1's smallest is 4.09 against a true 8.33; its largest 554.44 against 482.00. The ratio of largest to smallest, which measures how hard the matrix is to invert reliably, grows from 57.8 to 135.7.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -126,23 +134,27 @@ Orange: the true eigenvalues, in steps because five stocks share each level of o
 
 ### Step 3: blending moves every eigenvalue toward the average
 
-The target $\tau I$ treats every direction alike: its eigenvalue is $\tau$ in every direction. Blending $S$ with it keeps $S$'s directions and moves each eigenvalue in a straight line toward $\tau$:
+The target $`\tau I`$ treats every direction alike: its eigenvalue is $`\tau`$ in every direction. Blending $`S`$ with it keeps $`S`$'s directions and moves each eigenvalue in a straight line toward $`\tau`$:
 
-$$\lambda^{*} = (1-a)\,\lambda + a\,\tau$$
+```math
+\lambda^{*} = (1-a)\,\lambda + a\,\tau
+```
 
-For history 1: $(1 - 0.0668) \times 4.09 + 0.0668 \times 53.2185$ gives 7.37, close to the true 8.33. The top falls from 554.44 to 520.96. The ratio of largest to smallest drops from 135.7 to 70.7. Any positive $a$ lifts the smallest eigenvalue above zero, so $S^{*}$ can always be inverted, even with fewer months than stocks, when $S$ itself cannot.
+For history 1: $`(1 - 0.0668) \times 4.09 + 0.0668 \times 53.2185`$ gives 7.37, close to the true 8.33. The top falls from 554.44 to 520.96. The ratio of largest to smallest drops from 135.7 to 70.7. Any positive $`a`$ lifts the smallest eigenvalue above zero, so $`S^{*}`$ can always be inverted, even with fewer months than stocks, when $`S`$ itself cannot.
 
-Scaling alone does nothing. Halving $S$ doubles $S^{-1}\mathbf 1$, and the division in the weight formula cancels it. The blend works because it adds the same amount to every direction, which lifts the small ones proportionally more.
+Scaling alone does nothing. Halving $`S`$ doubles $`S^{-1}\mathbf 1`$, and the division in the weight formula cancels it. The blend works because it adds the same amount to every direction, which lifts the small ones proportionally more.
 
 ### Step 4: choosing the amount, noise over total distance
 
-Score a blend by its squared distance from the truth, entry by entry. That score is a parabola in $a$: at $a = 0$ it is the pure noise in $S$; as $a$ grows the noise shrinks but a bias toward the target grows. The bottom of the parabola is at
+Score a blend by its squared distance from the truth, entry by entry. That score is a parabola in $`a`$: at $`a = 0`$ it is the pure noise in $`S`$; as $`a`$ grows the noise shrinks but a bias toward the target grows. The bottom of the parabola is at
 
-$$a_{\text{best}} = \frac{\text{average of } \langle S-\Sigma,\ S-\tau I\rangle}{\text{average of } \lVert S-\tau I\rVert^{2}}$$
+```math
+a_{\text{best}} = \frac{\text{average of } \langle S-\Sigma,\ S-\tau I\rangle}{\text{average of } \lVert S-\tau I\rVert^{2}}
+```
 
-where the angle brackets multiply two matrices entry by entry and add the products. With a fixed target, the top is the noise in $S$ and the bottom is noise plus the distance from truth to target. So the best amount is **the share of the observed distance that is noise**. This is the bias-variance trade from [Bias and variance](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md), applied to a whole matrix at once.
+where the angle brackets multiply two matrices entry by entry and add the products. With a fixed target, the top is the noise in $`S`$ and the bottom is noise plus the distance from truth to target. So the best amount is **the share of the observed distance that is noise**. This is the bias-variance trade from [Bias and variance](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md), applied to a whole matrix at once.
 
-Both averages need the unknown truth. Ledoit and Wolf estimate each from the one history: $d^2$ stands in for the bottom, since it is the observed distance from the target, and $\bar b^2$ stands in for the top, since it measures how much $S$ would wobble from one history to the next. Capping $\bar b^2$ at $d^2$ keeps the intensity at most 1. If $d^2 = 0$, $S$ already equals the target and there is nothing to shrink.
+Both averages need the unknown truth. Ledoit and Wolf estimate each from the one history: $`d^2`$ stands in for the bottom, since it is the observed distance from the target, and $`\bar b^2`$ stands in for the top, since it measures how much $`S`$ would wobble from one history to the next. Capping $`\bar b^2`$ at $`d^2`$ keeps the intensity at most 1. If $`d^2 = 0`$, $`S`$ already equals the target and there is nothing to shrink.
 
 The laboratory finds the best amount two more ways. The formula above, averaged over 300 histories against the known truth, gives 0.075. Trying every amount from 0.00 to 1.00 in steps of 0.01 gives 0.07. The Ledoit-Wolf estimate, from each history alone, averages 0.101.
 
@@ -160,15 +172,15 @@ One line: the entry-by-entry score averaged over 300 histories. It dips below th
 <details>
 <summary>Detailed proof: the parabola and the eigenvalue spread</summary>
 
-**The parabola.** Call the sample error $S - \Sigma$ the noise and $S - \tau I$ the gap. The blend's error is $(1-a)S + a\tau I - \Sigma$, which is the noise minus $a$ times the gap. Its squared size is $\lVert S-\Sigma\rVert^2 - 2a\langle S-\Sigma,\ S-\tau I\rangle + a^2\lVert S-\tau I\rVert^2$. Averaged over histories this is a parabola in $a$ that opens upward whenever the gap is not always zero. Its slope is zero at the ratio in Step 4; clipping to the range 0 to 1 gives the best blend. If the target were fixed rather than built from $S$, the gap would be the noise plus the fixed distance $\Sigma - \tau I$; the noise averages to zero (ignoring the $(n-1)/n$ factor), so the top becomes the average squared noise and the bottom that plus the squared distance: noise over noise plus distance.
+**The parabola.** Call the sample error $`S - \Sigma`$ the noise and $`S - \tau I`$ the gap. The blend's error is $`(1-a)S + a\tau I - \Sigma`$, which is the noise minus $`a`$ times the gap. Its squared size is $`\lVert S-\Sigma\rVert^2 - 2a\langle S-\Sigma,\ S-\tau I\rangle + a^2\lVert S-\tau I\rVert^2`$. Averaged over histories this is a parabola in $`a`$ that opens upward whenever the gap is not always zero. Its slope is zero at the ratio in Step 4; clipping to the range 0 to 1 gives the best blend. If the target were fixed rather than built from $`S`$, the gap would be the noise plus the fixed distance $`\Sigma - \tau I`$; the noise averages to zero (ignoring the $`(n-1)/n`$ factor), so the top becomes the average squared noise and the bottom that plus the squared distance: noise over noise plus distance.
 
-**The spread.** For a symmetric matrix, the sum of its eigenvalues is its trace (the sum of its diagonal) and the sum of their squares is the matrix's squared size, the double-bar sum. If $S$ averages to $\Sigma$, then $\text{avg}\lVert S\rVert^2 = \lVert\Sigma\rVert^2 + \text{avg}\lVert S - \Sigma\rVert^2$, because the cross term averages to zero. So the measured eigenvalues keep the true mean (trace over $p$) but their average sum of squares exceeds the truth's by exactly the noise. Same mean, larger sum of squares: a wider spread.
+**The spread.** For a symmetric matrix, the sum of its eigenvalues is its trace (the sum of its diagonal) and the sum of their squares is the matrix's squared size, the double-bar sum. If $`S`$ averages to $`\Sigma`$, then $`\text{avg}\lVert S\rVert^2 = \lVert\Sigma\rVert^2 + \text{avg}\lVert S - \Sigma\rVert^2`$, because the cross term averages to zero. So the measured eigenvalues keep the true mean (trace over $`p`$) but their average sum of squares exceeds the truth's by exactly the noise. Same mean, larger sum of squares: a wider spread.
 
-**Why $\bar b^2$ estimates the noise.** $S = \frac1n\sum_k x_k x_k^{\top}$. For independent months, the squared error of an average of $n$ pieces is the pieces' average squared deviation divided by $n$. Estimating that average squared deviation by $\frac1n\sum_k\lVert x_k x_k^{\top} - S\rVert^2$ and dividing by $n$ gives $\bar b^2$ (with the $1/p$ scaling shared by $d^2$, which cancels in the ratio). The paper proves that this estimate and $d^2$ converge to their targets as $n$ and $p$ grow together; its Section 3 states the conditions.
+**Why $`\bar b^2`$ estimates the noise.** $`S = \frac1n\sum_k x_k x_k^{\top}`$. For independent months, the squared error of an average of $`n`$ pieces is the pieces' average squared deviation divided by $`n`$. Estimating that average squared deviation by $`\frac1n\sum_k\lVert x_k x_k^{\top} - S\rVert^2`$ and dividing by $`n`$ gives $`\bar b^2`$ (with the $`1/p`$ scaling shared by $`d^2`$, which cancels in the ratio). The paper proves that this estimate and $`d^2`$ converge to their targets as $`n`$ and $`p`$ grow together; its Section 3 states the conditions.
 
 </details>
 
-Other roads exist. Michaud's later remedy resamples: draw many histories from the fitted numbers, optimise each, average the weights. A target with the market factor in it, such as the constant-correlation target of Ledoit and Wolf's second 2004 paper, fits stocks better than $\tau I$; factor structure is [Factor models](05-factor-models-and-apt.md). Shrinking the expected returns rather than the covariance is [Black-Litterman](06-black-litterman.md).
+Other roads exist. Michaud's later remedy resamples: draw many histories from the fitted numbers, optimise each, average the weights. A target with the market factor in it, such as the constant-correlation target of Ledoit and Wolf's second 2004 paper, fits stocks better than $`\tau I`$; factor structure is [Factor models](05-factor-models-and-apt.md). Shrinking the expected returns rather than the covariance is [Black-Litterman](06-black-litterman.md).
 
 ---
 
@@ -178,11 +190,11 @@ History 1, the first five-year draw. All figures in squared percent per month un
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| target level $\tau$ | average of the twenty measured variances | 53.2185 |
-| distance from target $d^2$ | squared entries of $S - \tau I$, summed, over 20 | 13664.5252 |
-| noise estimate $\bar b^2$ | month-by-month disagreement, over 20, over 60 twice | 912.8780 |
-| capped noise $b^2$ | smaller of 912.8780 and 13664.5252 | 912.8780 |
-| intensity $a$ | 912.8780 / 13664.5252 | **0.0668** |
+| target level $`\tau`$ | average of the twenty measured variances | 53.2185 |
+| distance from target $`d^2`$ | squared entries of $`S - \tau I`$, summed, over 20 | 13664.5252 |
+| noise estimate $`\bar b^2`$ | month-by-month disagreement, over 20, over 60 twice | 912.8780 |
+| capped noise $`b^2`$ | smaller of 912.8780 and 13664.5252 | 912.8780 |
+| intensity $`a`$ | 912.8780 / 13664.5252 | **0.0668** |
 | smallest eigenvalue, measured | from history 1 | 4.09 |
 | smallest eigenvalue, shrunk | (1 − 0.0668) × 4.09 + 0.0668 × 53.2185 | **7.37** |
 | true smallest eigenvalue | from the true matrix | 8.33 |
@@ -607,9 +619,9 @@ ALL CHECKS PASS
 
 Lean proves the facts behind Steps 1 and 3, for any number of stocks and any length of history.
 
-- Suppose $S$ averages to $(n-1)/n$ times $\Sigma$, and each set of weights is the minimum-variance mix under its own matrix. Then the reported variance is at most the true minimum on average, and the delivered variance is at least it always.
-- Suppose $v$ is a direction of $S$ with eigenvalue $\lambda$. Then $v$ is still a direction of $S^{*}$, with eigenvalue $(1-a)\lambda + a\tau$.
-- Suppose $S$ is a covariance matrix, perhaps with no inverse, $\tau$ is positive, and $a$ is above 0 and at most 1. Then every eigenvalue of $S^{*}$ is above zero, so $S^{*}$ has an inverse.
+- Suppose $`S`$ averages to $`(n-1)/n`$ times $`\Sigma`$, and each set of weights is the minimum-variance mix under its own matrix. Then the reported variance is at most the true minimum on average, and the delivered variance is at least it always.
+- Suppose $`v`$ is a direction of $`S`$ with eigenvalue $`\lambda`$. Then $`v`$ is still a direction of $`S^{*}`$, with eigenvalue $`(1-a)\lambda + a\tau`$.
+- Suppose $`S`$ is a covariance matrix, perhaps with no inverse, $`\tau`$ is positive, and $`a`$ is above 0 and at most 1. Then every eigenvalue of $`S^{*}`$ is above zero, so $`S^{*}`$ has an inverse.
 
 Step 2's spread, Step 4's parabola, the Ledoit-Wolf amount and every laboratory figure are left to the Python and Rust checks.
 
@@ -747,7 +759,7 @@ theorem shrunk_posDef {p : ℕ} (S : Matrix (Fin p) (Fin p) ℝ) (hS : S.PosSemi
 
 ## What this builds on
 
-- [The efficient frontier](02-efficient-frontier-and-minimum-variance.md): the minimum-variance weights $S^{-1}\mathbf 1$ scaled to add to 1, used here on noisy inputs.
+- [The efficient frontier](02-efficient-frontier-and-minimum-variance.md): the minimum-variance weights $`S^{-1}\mathbf 1`$ scaled to add to 1, used here on noisy inputs.
 - [Bias and variance](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md): accepting some bias to remove more variance, the trade shrinkage makes.
 
 ## Where this goes next

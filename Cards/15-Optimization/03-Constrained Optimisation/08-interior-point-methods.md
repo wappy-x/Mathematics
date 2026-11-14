@@ -28,37 +28,39 @@ Pump C gives whatever A and B leave of the 150 L/s, so every plan is a point in 
 
 ## The formula
 
-Notation first, in words. The plan is $x = (x_1, x_2, x_3)$, the three flows. The cost $f_0(x)$ is minimised, and its least value over all allowed plans is $p^*$. Each limit is written $f_i(x) \le 0$, and its **slack** $s_i = -f_i(x)$ is how far the plan sits inside it. There are $m$ limits and one rule $h(x) = 0$. This card introduces the **barrier weight** $t$, a positive number that says how much the cost counts against the fence, and the **central path** $x^*(t)$, the best plan for each $t$.
+Notation first, in words. The plan is $`x = (x_1, x_2, x_3)`$, the three flows. The cost $`f_0(x)`$ is minimised, and its least value over all allowed plans is $`p^*`$. Each limit is written $`f_i(x) \le 0`$, and its **slack** $`s_i = -f_i(x)`$ is how far the plan sits inside it. There are $`m`$ limits and one rule $`h(x) = 0`$. This card introduces the **barrier weight** $`t`$, a positive number that says how much the cost counts against the fence, and the **central path** $`x^*(t)`$, the best plan for each $`t`$.
 
-$$x^*(t) = \underset{h(x) = 0}{\arg\min} \; \Big( t\, f_0(x) \;-\; \sum_{i=1}^{m} \log s_i(x) \Big), \qquad \lambda_i(t) = \frac{1}{t\, s_i(x^*(t))}, \qquad f_0(x^*(t)) - p^* \;\le\; \frac{m}{t}.$$
+```math
+x^*(t) = \underset{h(x) = 0}{\arg\min} \; \Big( t\, f_0(x) \;-\; \sum_{i=1}^{m} \log s_i(x) \Big), \qquad \lambda_i(t) = \frac{1}{t\, s_i(x^*(t))}, \qquad f_0(x^*(t)) - p^* \;\le\; \frac{m}{t}.
+```
 
-**Read it aloud:** the plan on the central path minimises $t$ times the cost minus the logarithms of all the slacks; one over ($t$ times the slack) is a price for that limit; and with those prices the plan is proved to be within $m/t$ of the best.
+**Read it aloud:** the plan on the central path minimises $`t`$ times the cost minus the logarithms of all the slacks; one over ($`t`$ times the slack) is a price for that limit; and with those prices the plan is proved to be within $`m/t`$ of the best.
 
-The fence $\varphi(x) = -\sum \log s_i(x)$ is the **log barrier**: finite while every slack is positive, infinite as any slack reaches zero. The barrier objective is $\Phi_t(x) = t f_0(x) + \varphi(x)$.
+The fence $`\varphi(x) = -\sum \log s_i(x)`$ is the **log barrier**: finite while every slack is positive, infinite as any slack reaches zero. The barrier objective is $`\Phi_t(x) = t f_0(x) + \varphi(x)`$.
 
-For the pumps, $f_0 = 0.02x_1^2 + 0.03x_2^2 + 0.05x_3^2$ kW and $h(x) = x_1 + x_2 + x_3 - 150$. The head at the hill tank is $0.1x_1 + 0.2x_2 + 0.4x_3$ m, pump C being nearest the hill. The five slacks are head minus 35, 45 minus head, and the three flows.
+For the pumps, $`f_0 = 0.02x_1^2 + 0.03x_2^2 + 0.05x_3^2`$ kW and $`h(x) = x_1 + x_2 + x_3 - 150`$. The head at the hill tank is $`0.1x_1 + 0.2x_2 + 0.4x_3`$ m, pump C being nearest the hill. The five slacks are head minus 35, 45 minus head, and the three flows.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x^*(t)$ | flows of pumps A, B, C; the plan on the central path | start (40, 50, 60) L/s | — |
-| $f_0$, $p^*$ | power drawn, minimised; its least value | 287 kW at the start; 250 kW | — |
-| $a_i$, $k_i$ | pump $i$'s power coefficient; head at the hill tank per L/s from it | 0.02, 0.03, 0.05 kW per (L/s)²; 0.1, 0.2, 0.4 m per L/s | that pump gets less flow; that pump gets more |
-| $f_i \le 0$, $s_i$ | limit $i$; its slack $s_i = -f_i$ | head ≥ 35 m, ≤ 45 m, flows ≥ 0; slacks 3, 7, 40, 50, 60 at the start | — |
-| $m$ | number of limits | 5 | the gap at each $t$ grows |
-| $h$, $\nu$ | the demand rule; its multiplier | $x_1 + x_2 + x_3 - 150 = 0$; $\nu = -1$ kW per L/s at the best plan: one more L/s of demand costs 1 kW, and the sign is minus because $h$ is total minus demand | — |
-| $t$, $t_0$, $\varepsilon$ | barrier weight; its first value; the gap tolerance | $t_0 = 1$, then 10, …, 100,000; $\varepsilon = 10^{-4}$ kW | the plan nears the best; the gap shrinks as $m/t$ |
-| $\varphi$, $\Phi_t$ | log barrier $-\sum \log s_i$; barrier objective $t f_0 + \varphi$ | finite only strictly inside | — |
-| $\lambda_i(t)$ | price of limit $i$ on the path, $1/(t s_i)$ | floor: 10.2531 kW per m at $t = 1$ | — |
-| $\mathcal{L}$, $q(\lambda, \nu)$ | the Lagrangian $f_0 + \sum \lambda_i f_i + \nu h$; its least value over $x$, a floor under $p^*$ | $q$ = 245.9827 kW at $t = 1$ | — |
-| $d$, $\alpha$, $w$ | Newton direction; step length; the rule's Newton multiplier, $t\nu$ | $\alpha$ starts at 1, halves | — |
+| $`x`$, $`x^*(t)`$ | flows of pumps A, B, C; the plan on the central path | start (40, 50, 60) L/s | — |
+| $`f_0`$, $`p^*`$ | power drawn, minimised; its least value | 287 kW at the start; 250 kW | — |
+| $`a_i`$, $`k_i`$ | pump $`i`$'s power coefficient; head at the hill tank per L/s from it | 0.02, 0.03, 0.05 kW per (L/s)²; 0.1, 0.2, 0.4 m per L/s | that pump gets less flow; that pump gets more |
+| $`f_i \le 0`$, $`s_i`$ | limit $`i`$; its slack $`s_i = -f_i`$ | head ≥ 35 m, ≤ 45 m, flows ≥ 0; slacks 3, 7, 40, 50, 60 at the start | — |
+| $`m`$ | number of limits | 5 | the gap at each $`t`$ grows |
+| $`h`$, $`\nu`$ | the demand rule; its multiplier | $`x_1 + x_2 + x_3 - 150 = 0`$; $`\nu = -1`$ kW per L/s at the best plan: one more L/s of demand costs 1 kW, and the sign is minus because $`h`$ is total minus demand | — |
+| $`t`$, $`t_0`$, $`\varepsilon`$ | barrier weight; its first value; the gap tolerance | $`t_0 = 1`$, then 10, …, 100,000; $`\varepsilon = 10^{-4}`$ kW | the plan nears the best; the gap shrinks as $`m/t`$ |
+| $`\varphi`$, $`\Phi_t`$ | log barrier $`-\sum \log s_i`$; barrier objective $`t f_0 + \varphi`$ | finite only strictly inside | — |
+| $`\lambda_i(t)`$ | price of limit $`i`$ on the path, $`1/(t s_i)`$ | floor: 10.2531 kW per m at $`t = 1`$ | — |
+| $`\mathcal{L}`$, $`q(\lambda, \nu)`$ | the Lagrangian $`f_0 + \sum \lambda_i f_i + \nu h`$; its least value over $`x`$, a floor under $`p^*`$ | $`q`$ = 245.9827 kW at $`t = 1`$ | — |
+| $`d`$, $`\alpha`$, $`w`$ | Newton direction; step length; the rule's Newton multiplier, $`t\nu`$ | $`\alpha`$ starts at 1, halves | — |
 
 ### When it holds
 
 - **A strictly inside plan exists.** The barrier is defined only where every slack is positive. Set both head limits to 35 m and the two slacks always add to zero, so no plan has both positive and the method cannot start. That is Slater's condition failing ([Slater's condition](05-slaters-condition-and-duality-gaps.md)); a fixed head belongs in the equality rules.
 - **The problem is convex.** The gap bound needs the plan on the path to minimise the Lagrangian, which needs a convex cost and convex limits. Without them the path can end at a local minimum, and the bound proves nothing.
-- **Every step stays strictly inside.** A full Newton step after raising $t$ from 1 to 10 lands at head 34.3403 m, below the floor. The step length $\alpha$ must be cut until the plan is inside.
-- **The centring is done well.** The bound $m/t$ is exact only at $x^*(t)$. The code centres until Newton's predicted drop in $\Phi_t$ is below $10^{-14}t$ (or $10^{-14}$ while $t < 1$); the gap then matches $m/t$ to $10^{-7}$ kW. The tolerance grows with $t$ because $\Phi_t$ does, and so does its rounding error: a fixed tolerance would sink below the rounding error once $t$ is large.
-- **Smooth cost and limits.** Newton's method needs second derivatives of $f_0$ and every $f_i$.
+- **Every step stays strictly inside.** A full Newton step after raising $`t`$ from 1 to 10 lands at head 34.3403 m, below the floor. The step length $`\alpha`$ must be cut until the plan is inside.
+- **The centring is done well.** The bound $`m/t`$ is exact only at $`x^*(t)`$. The code centres until Newton's predicted drop in $`\Phi_t`$ is below $`10^{-14}t`$ (or $`10^{-14}`$ while $`t < 1`$); the gap then matches $`m/t`$ to $`10^{-7}`$ kW. The tolerance grows with $`t`$ because $`\Phi_t`$ does, and so does its rounding error: a fixed tolerance would sink below the rounding error once $`t`$ is large.
+- **Smooth cost and limits.** Newton's method needs second derivatives of $`f_0`$ and every $`f_i`$.
 
 ---
 
@@ -66,76 +68,86 @@ For the pumps, $f_0 = 0.02x_1^2 + 0.03x_2^2 + 0.05x_3^2$ kW and $h(x) = x_1 + x_
 
 ### Step 0: the fence turns limits into prices
 
-A plan that minimises cost plus fence is in balance: the cost pushes it towards the floor, and the fence pushes back with strength $1/s_i$ from limit $i$. Read each push, divided by $t$, as a price on that limit, and the balance becomes the KKT (Karush–Kuhn–Tucker) checklist for a best plan, except that price times slack equals $1/t$ instead of zero. Because it is a KKT balance, the prices give a dual bound, which misses by $1/t$ per limit.
+A plan that minimises cost plus fence is in balance: the cost pushes it towards the floor, and the fence pushes back with strength $`1/s_i`$ from limit $`i`$. Read each push, divided by $`t`$, as a price on that limit, and the balance becomes the KKT (Karush–Kuhn–Tucker) checklist for a best plan, except that price times slack equals $`1/t`$ instead of zero. Because it is a KKT balance, the prices give a dual bound, which misses by $`1/t`$ per limit.
 
 ### Step 1: inside the fence there are no limits
 
-$\Phi_t$ has only the rule $h(x) = 0$ left. It is smooth and convex wherever every slack is positive, since $-\log$ of a positive linear function curves upwards. So Newton's method with a line search finds its minimiser ([Newton and BFGS](../02-Unconstrained%20Methods/05-newton-and-quasi-newton-bfgs.md)). A step that would cross a limit makes $\Phi_t$ undefined, and the line search refuses it.
+$`\Phi_t`$ has only the rule $`h(x) = 0`$ left. It is smooth and convex wherever every slack is positive, since $`-\log`$ of a positive linear function curves upwards. So Newton's method with a line search finds its minimiser ([Newton and BFGS](../02-Unconstrained%20Methods/05-newton-and-quasi-newton-bfgs.md)). A step that would cross a limit makes $`\Phi_t`$ undefined, and the line search refuses it.
 
 The Newton step solves one linear system, the same shape as the [KKT conditions](02-kkt-conditions.md) for a problem with one rule:
 
-$$\begin{bmatrix} \nabla^2 \Phi_t(x) & \nabla h \\ \nabla h^{\mathsf T} & 0 \end{bmatrix} \begin{bmatrix} d \\ w \end{bmatrix} = \begin{bmatrix} -\nabla \Phi_t(x) \\ 0 \end{bmatrix}.$$
+```math
+\begin{bmatrix} \nabla^2 \Phi_t(x) & \nabla h \\ \nabla h^{\mathsf T} & 0 \end{bmatrix} \begin{bmatrix} d \\ w \end{bmatrix} = \begin{bmatrix} -\nabla \Phi_t(x) \\ 0 \end{bmatrix}.
+```
 
-Here $\nabla$ is the gradient (the list of slopes), $\nabla^2$ is the Hessian (the table of second derivatives), and $\mathsf T$ turns a column into a row. The second row keeps the total flow at 150 L/s. For the pumps it is a 4 by 4 system, solved by elimination.
+Here $`\nabla`$ is the gradient (the list of slopes), $`\nabla^2`$ is the Hessian (the table of second derivatives), and $`\mathsf T`$ turns a column into a row. The second row keeps the total flow at 150 L/s. For the pumps it is a 4 by 4 system, solved by elimination.
 
-### Step 2: the centring condition is the KKT checklist with $1/t$ in place of zero
+### Step 2: the centring condition is the KKT checklist with $`1/t`$ in place of zero
 
-At $x^*(t)$ the gradient of $\Phi_t$ balances the rule:
+At $`x^*(t)`$ the gradient of $`\Phi_t`$ balances the rule:
 
-$$t \nabla f_0 + \sum_i \frac{1}{s_i} \nabla f_i + w \nabla h = 0.$$
+```math
+t \nabla f_0 + \sum_i \frac{1}{s_i} \nabla f_i + w \nabla h = 0.
+```
 
-The gradient of $-\log s_i = -\log(-f_i)$ is $\nabla f_i / s_i$. Divide by $t$ and name $\lambda_i = 1/(t s_i)$ and $\nu = w/t$:
+The gradient of $`-\log s_i = -\log(-f_i)`$ is $`\nabla f_i / s_i`$. Divide by $`t`$ and name $`\lambda_i = 1/(t s_i)`$ and $`\nu = w/t`$:
 
-$$\nabla f_0 + \sum_i \lambda_i \nabla f_i + \nu \nabla h = 0, \qquad \lambda_i > 0, \qquad \lambda_i s_i = \frac{1}{t}.$$
+```math
+\nabla f_0 + \sum_i \lambda_i \nabla f_i + \nu \nabla h = 0, \qquad \lambda_i > 0, \qquad \lambda_i s_i = \frac{1}{t}.
+```
 
-Against the KKT checklist: stationarity holds; every limit holds, strictly; every price is positive. Only complementary slackness, $\lambda_i s_i = 0$, is relaxed to $1/t$. So the central path is KKT relaxed by $1/t$, and the relaxation vanishes as $t$ grows.
+Against the KKT checklist: stationarity holds; every limit holds, strictly; every price is positive. Only complementary slackness, $`\lambda_i s_i = 0`$, is relaxed to $`1/t`$. So the central path is KKT relaxed by $`1/t`$, and the relaxation vanishes as $`t`$ grows.
 
-For the pumps at $t = 1$, the head is 35.0975 m, so the floor's slack is 0.097532 m and its price is $1/0.097532 = 10.2531$ kW per m. Every one of the five products $\lambda_i s_i$ comes out at 1.
+For the pumps at $`t = 1`$, the head is 35.0975 m, so the floor's slack is 0.097532 m and its price is $`1/0.097532 = 10.2531`$ kW per m. Every one of the five products $`\lambda_i s_i`$ comes out at 1.
 
-### Step 3: the prices prove the gap is $m/t$
+### Step 3: the prices prove the gap is $`m/t`$
 
-The [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md) card gives the dual function $q(\lambda, \nu)$: the least value of the Lagrangian $\mathcal{L}(x, \lambda, \nu) = f_0 + \sum \lambda_i f_i + \nu h$ over all $x$. It also gives weak duality: $q(\lambda, \nu) \le p^*$ whenever every $\lambda_i \ge 0$. The reason is one line: at any allowed plan $\tilde x$, $q \le \mathcal{L}(\tilde x, \lambda, \nu) = f_0(\tilde x) + \sum \lambda_i f_i(\tilde x) \le f_0(\tilde x)$, because each $\lambda_i \ge 0$ and each $f_i(\tilde x) \le 0$.
+The [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md) card gives the dual function $`q(\lambda, \nu)`$: the least value of the Lagrangian $`\mathcal{L}(x, \lambda, \nu) = f_0 + \sum \lambda_i f_i + \nu h`$ over all $`x`$. It also gives weak duality: $`q(\lambda, \nu) \le p^*`$ whenever every $`\lambda_i \ge 0`$. The reason is one line: at any allowed plan $`\tilde x`$, $`q \le \mathcal{L}(\tilde x, \lambda, \nu) = f_0(\tilde x) + \sum \lambda_i f_i(\tilde x) \le f_0(\tilde x)`$, because each $`\lambda_i \ge 0`$ and each $`f_i(\tilde x) \le 0`$.
 
-With the path's prices, $\mathcal{L}$ is a sum of convex functions, so convex in $x$, and Step 2 makes its gradient zero at $x^*(t)$. A convex function with zero gradient is at its global minimum, so
+With the path's prices, $`\mathcal{L}`$ is a sum of convex functions, so convex in $`x`$, and Step 2 makes its gradient zero at $`x^*(t)`$. A convex function with zero gradient is at its global minimum, so
 
-$$q(\lambda(t), \nu(t)) = f_0(x^*(t)) + \sum_i \lambda_i f_i + \nu \cdot 0 = f_0(x^*(t)) - \sum_i \lambda_i s_i = f_0(x^*(t)) - \frac{m}{t}.$$
+```math
+q(\lambda(t), \nu(t)) = f_0(x^*(t)) + \sum_i \lambda_i f_i + \nu \cdot 0 = f_0(x^*(t)) - \sum_i \lambda_i s_i = f_0(x^*(t)) - \frac{m}{t}.
+```
 
-So $f_0(x^*(t)) - m/t \le p^* \le f_0(x^*(t))$: the plan is within $m/t$ of the best, with its proof attached.
+So $`f_0(x^*(t)) - m/t \le p^* \le f_0(x^*(t))`$: the plan is within $`m/t`$ of the best, with its proof attached.
 
-### Step 4: raise $t$ tenfold, re-centre from where you are
+### Step 4: raise $`t`$ tenfold, re-centre from where you are
 
-The **barrier method** runs the path in rounds. Start strictly inside at $t = 1$. Centre: run Newton on $\Phi_t$ until its predicted drop is negligible. Stop if $m/t$ is below the tolerance $\varepsilon$. Otherwise multiply $t$ by 10 and centre again, starting from the last centre. The gap is $m/t$ after each round, so the number of rounds is fixed in advance:
+The **barrier method** runs the path in rounds. Start strictly inside at $`t = 1`$. Centre: run Newton on $`\Phi_t`$ until its predicted drop is negligible. Stop if $`m/t`$ is below the tolerance $`\varepsilon`$. Otherwise multiply $`t`$ by 10 and centre again, starting from the last centre. The gap is $`m/t`$ after each round, so the number of rounds is fixed in advance:
 
-$$\text{rounds} = 1 + \Big\lceil \frac{\log\big(m / (t_0\, \varepsilon)\big)}{\log 10} \Big\rceil.$$
+```math
+\text{rounds} = 1 + \Big\lceil \frac{\log\big(m / (t_0\, \varepsilon)\big)}{\log 10} \Big\rceil.
+```
 
-The brackets $\lceil \; \rceil$ round up to a whole number. For $m = 5$, $t_0 = 1$ and $\varepsilon = 10^{-4}$ kW, the formula gives 6 rounds, which is what the code runs.
+The brackets $`\lceil \; \rceil`$ round up to a whole number. For $`m = 5`$, $`t_0 = 1`$ and $`\varepsilon = 10^{-4}`$ kW, the formula gives 6 rounds, which is what the code runs.
 
-Each centring is cheap because it starts near the new centre. The Newton step count is stated here, not proved. The log barrier of linear limits plus a convex quadratic cost is **self-concordant** (its third derivative is bounded by a power of its second). For such functions Nesterov and Nemirovskii proved a bound on Newton steps per round that depends on $m$ and the growth factor, not on $t$ or the data.
+Each centring is cheap because it starts near the new centre. The Newton step count is stated here, not proved. The log barrier of linear limits plus a convex quadratic cost is **self-concordant** (its third derivative is bounded by a power of its second). For such functions Nesterov and Nemirovskii proved a bound on Newton steps per round that depends on $`m`$ and the growth factor, not on $`t`$ or the data.
 
-With a growth factor of $1 + 1/\sqrt{m}$ per round, the total is of order $\sqrt{m} \log(m/(t_0 \varepsilon))$ Newton steps (Boyd and Vandenberghe, §11.5). The pumps take 7 steps in each of the first two rounds and 6 in each of the other four, 38 in all.
+With a growth factor of $`1 + 1/\sqrt{m}`$ per round, the total is of order $`\sqrt{m} \log(m/(t_0 \varepsilon))`$ Newton steps (Boyd and Vandenberghe, §11.5). The pumps take 7 steps in each of the first two rounds and 6 in each of the other four, 38 in all.
 
 ### Step 5: the path ends at the KKT point
 
-As $t$ grows, every product $\lambda_i s_i = 1/t$ shrinks. The floor's slack goes to zero and its price settles at 10 kW per m; the other four slacks stay large, so their prices go to zero. The limit is the KKT point: $(50, 50, 50)$ L/s, floor price 10 kW per m, $\nu = -1$. The method never had to guess which limits bind.
+As $`t`$ grows, every product $`\lambda_i s_i = 1/t`$ shrinks. The floor's slack goes to zero and its price settles at 10 kW per m; the other four slacks stay large, so their prices go to zero. The limit is the KKT point: $`(50, 50, 50)`$ L/s, floor price 10 kW per m, $`\nu = -1`$. The method never had to guess which limits bind.
 
 ---
 
 ## Worked numbers, by hand
 
-Check the certificate at the first stop, $t = 1$, from the plan the code prints: $x^*(1) = (49.6591, 50.0237, 50.3172)$ L/s.
+Check the certificate at the first stop, $`t = 1`$, from the plan the code prints: $`x^*(1) = (49.6591, 50.0237, 50.3172)`$ L/s.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| head at $x^*(1)$ | $0.1 \times 49.6591 + 0.2 \times 50.0237 + 0.4 \times 50.3172$ | 35.0975 m |
+| head at $`x^*(1)`$ | $`0.1 \times 49.6591 + 0.2 \times 50.0237 + 0.4 \times 50.3172`$ | 35.0975 m |
 | five slacks | head − 35; 45 − head; the three flows | 0.097532, 9.902468, 49.659081, 50.023719, 50.317200 |
-| five prices, $\lambda_i = 1/(1 \times s_i)$ | $1/0.097532$, $1/9.902468$, … | 10.2531, 0.1010, 0.0201, 0.0200, 0.0199 |
-| each price times its slack | $10.2531 \times 0.097532$, … | 1 each, $= 1/t$ |
-| $\nu$ from pump A's balance | $1.986363 - 1.025305 + 0.010098 - 0.020137 + \nu = 0$ | $\nu = -0.951019$ |
-| power drawn | $0.02 \times 49.6591^2 + 0.03 \times 50.0237^2 + 0.05 \times 50.3172^2$ | 250.9827 kW |
-| dual bound | $250.9827 - 5 \times 1$ | 245.9827 kW |
-| **gap** | $m/t = 5/1$ | **5 kW** |
+| five prices, $`\lambda_i = 1/(1 \times s_i)`$ | $`1/0.097532`$, $`1/9.902468`$, … | 10.2531, 0.1010, 0.0201, 0.0200, 0.0199 |
+| each price times its slack | $`10.2531 \times 0.097532`$, … | 1 each, $`= 1/t`$ |
+| $`\nu`$ from pump A's balance | $`1.986363 - 1.025305 + 0.010098 - 0.020137 + \nu = 0`$ | $`\nu = -0.951019`$ |
+| power drawn | $`0.02 \times 49.6591^2 + 0.03 \times 50.0237^2 + 0.05 \times 50.3172^2`$ | 250.9827 kW |
+| dual bound | $`250.9827 - 5 \times 1`$ | 245.9827 kW |
+| **gap** | $`m/t = 5/1`$ | **5 kW** |
 
-Pump A's row is $2a_1x_1 - k_1\lambda_1 + k_1\lambda_2 - \lambda_3 + \nu = 0$: marginal power, minus the floor's price for the head it adds, plus the ceiling's, minus its own zero-flow price. The code also minimises the Lagrangian with these prices in closed form, never using $m/t$, and gets the same 245.9827 kW. So the first stop, after 7 Newton steps, proves the best plan draws between 245.9827 and 250.9827 kW. The true 250 kW is 0.9827 kW below the stop.
+Pump A's row is $`2a_1x_1 - k_1\lambda_1 + k_1\lambda_2 - \lambda_3 + \nu = 0`$: marginal power, minus the floor's price for the head it adds, plus the ceiling's, minus its own zero-flow price. The code also minimises the Lagrangian with these prices in closed form, never using $`m/t`$, and gets the same 245.9827 kW. So the first stop, after 7 Newton steps, proves the best plan draws between 245.9827 and 250.9827 kW. The true 250 kW is 0.9827 kW below the stop.
 
 ### What breaks if you drop a piece
 
@@ -143,8 +155,8 @@ Pump A's row is $2a_1x_1 - k_1\lambda_1 + k_1\lambda_2 - \lambda_3 + \nu = 0$: m
 | --- | --- | --- |
 | Start outside: (70, 50, 30) L/s | head 29 m, floor slack −6; barrier undefined | The log of a negative slack does not exist. The method needs a strictly inside start, here (40, 50, 60) with head 38 m. |
 | No strictly inside plan: head window 35 m to 35 m | the two head slacks add to 0 for every plan; at the best plan both are 0 | Slater's condition fails: there is no interior to walk through. Write the fixed head as an equality rule instead. |
-| Take the full Newton step after raising $t$ from 1 to 10 | flows 52.3088, 49.8355, 47.8557; head 34.3403 m; barrier undefined | The step crosses the floor. The line search must halve $\alpha$ until the plan is strictly inside. |
-| Read prices as $1/s_i$, forgetting the $1/t$, at $t = 10$ | floor price 100.2548; "bound" −20012.9858 kW | Ten times too big. The bound is still true, but useless: the prices are no longer the balance of Step 2. |
+| Take the full Newton step after raising $`t`$ from 1 to 10 | flows 52.3088, 49.8355, 47.8557; head 34.3403 m; barrier undefined | The step crosses the floor. The line search must halve $`\alpha`$ until the plan is strictly inside. |
+| Read prices as $`1/s_i`$, forgetting the $`1/t`$, at $`t = 10`$ | floor price 100.2548; "bound" −20012.9858 kW | Ten times too big. The bound is still true, but useless: the prices are no longer the balance of Step 2. |
 
 ---
 
@@ -152,7 +164,7 @@ Pump A's row is $2a_1x_1 - k_1\lambda_1 + k_1\lambda_2 - \lambda_3 + \nu = 0$: m
 
 The puzzle: each round weakens the fence tenfold, yet Newton's method needs about the same work every time. The table follows one run from the start (40, 50, 60) L/s, drawing 287 kW.
 
-| $t$ | flows, L/s | head, m | power, kW | dual bound, kW | gap $m/t$, kW | Newton steps |
+| $`t`$ | flows, L/s | head, m | power, kW | dual bound, kW | gap $`m/t`$, kW | Newton steps |
 | ---: | --- | ---: | ---: | ---: | ---: | ---: |
 | 1 | 49.6591, 50.0237, 50.3172 | 35.0975 | 250.9827 | 245.9827 | 5.00000 | 7 |
 | 10 | 49.9651, 50.0025, 50.0324 | 35.0100 | 250.0998 | 249.5998 | 0.50000 | 7 |
@@ -186,19 +198,19 @@ xychart-beta
     line [245.9827, 249.5998, 249.9600, 249.9960, 249.9996, 250.0000]
 ```
 
-The upper line is the power drawn at each stop on the central path. The lower line is the dual bound proved at that stop. The best plan's 250 kW is trapped between them, and the gap closes as $5/t$.
+The upper line is the power drawn at each stop on the central path. The lower line is the dual bound proved at that stop. The best plan's 250 kW is trapped between them, and the gap closes as $`5/t`$.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code solves the pump problem by the barrier method. It runs Newton's method on $\Phi_t$, each step a 4 by 4 linear system solved by elimination. A halving line search refuses any plan outside the limits, and $t$ rises tenfold until $m/t \le 10^{-4}$ kW. It reaches the answer by three independent roads:
+The code solves the pump problem by the barrier method. It runs Newton's method on $`\Phi_t`$, each step a 4 by 4 linear system solved by elimination. A halving line search refuses any plan outside the limits, and $`t`$ rises tenfold until $`m/t \le 10^{-4}`$ kW. It reaches the answer by three independent roads:
 
 - **Road 1** is the central path itself.
-- **Road 2** computes the dual bound at every stop by minimising the Lagrangian in closed form, never using $m/t$. It asserts that the gap is $m/t$ and that $p^*$ lies between the bound and the power.
-- **Road 3** never uses a barrier: it tries all 32 ways of choosing which limits bind, solves the KKT equations for each, and keeps those with allowed flows and non-negative prices. Exactly one survives, the head floor alone, giving (50, 50, 50) L/s. The barrier's last plan agrees with it to $10^{-4}$ L/s.
+- **Road 2** computes the dual bound at every stop by minimising the Lagrangian in closed form, never using $`m/t`$. It asserts that the gap is $`m/t`$ and that $`p^*`$ lies between the bound and the power.
+- **Road 3** never uses a barrier: it tries all 32 ways of choosing which limits bind, solves the KKT equations for each, and keeps those with allowed flows and non-negative prices. Exactly one survives, the head floor alone, giving (50, 50, 50) L/s. The barrier's last plan agrees with it to $`10^{-4}`$ L/s.
 
-Before the path starts, the script also checks the first Newton step's slope and curvature against central differences of $\Phi_t$, so a wrong gradient or Hessian stops it.
+Before the path starts, the script also checks the first Newton step's slope and curvature against central differences of $`\Phi_t`$, so a wrong gradient or Hessian stops it.
 
 ### Python
 
@@ -570,10 +582,10 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the gap bound $m/t$ for every convex problem, and the pump problem's best plan exactly.
+Lean proves the gap bound $`m/t`$ for every convex problem, and the pump problem's best plan exactly.
 
-- Take a convex cost, convex limits and a linear rule $h(x) = 0$, like total flow minus 150.
-- Suppose $x^*(t)$ minimises $\Phi_t$ exactly over the strictly inside plans that obey the rule. Then its cost is at most $m/t$ above every allowed plan's cost.
+- Take a convex cost, convex limits and a linear rule $`h(x) = 0`$, like total flow minus 150.
+- Suppose $`x^*(t)`$ minimises $`\Phi_t`$ exactly over the strictly inside plans that obey the rule. Then its cost is at most $`m/t`$ above every allowed plan's cost.
 - Lean proves this without prices or derivatives, so it needs no smoothness.
 - The plan of 50 L/s from each pump is allowed, sits on the 35 m floor and draws 250 kW.
 - No allowed plan draws less than 250 kW.
@@ -751,7 +763,7 @@ example : (1 : ℤ) + ⌈Real.log (5 / (1 * (1 / 10000 : ℝ))) / Real.log 10⌉
 > Guess first, then run it. The asserts are pinned to this network, so expect some to stop it.
 > - **Guess first: does a bolder growth factor save work?** Change `GROW` from 10 to 100. Rounds fall from 6 to 4, and Newton steps from 38 to 28: every round takes 7 steps, about as many as a tenfold round, so fewer rounds means less work.
 > - **Guess first: does a timid one?** Set `GROW` to 2. It takes 17 rounds, but only 41 Newton steps, since each re-centring needs just 1 to 4 steps. The total barely moves.
-> - **Guess first: what does a higher floor cost?** Change the floor `35` to `37` in the first constant line. The enumeration finds flows 43, 50.5 and 56.5 L/s, power 273.1 kW and a floor price of 13.1 kW per m. The first-order guess from the old price, $250 + 2 \times 10 = 270$ kW, falls short because the price rises as the floor does. The next assert stops it, since it is pinned to 50 L/s.
+> - **Guess first: what does a higher floor cost?** Change the floor `35` to `37` in the first constant line. The enumeration finds flows 43, 50.5 and 56.5 L/s, power 273.1 kW and a floor price of 13.1 kW per m. The first-order guess from the old price, $`250 + 2 \times 10 = 270`$ kW, falls short because the price rises as the floor does. The next assert stops it, since it is pinned to 50 L/s.
 > - **Guess first: can you start at the answer?** Set `START` to `[50, 50, 50]`. The floor's slack is 0, so the very first Newton step divides by zero and the script stops. An interior point method cannot start on a limit.
 
 ---
@@ -759,11 +771,11 @@ example : (1 : ℤ) + ⌈Real.log (5 / (1 * (1 / 10000 : ℝ))) / Real.log 10⌉
 ## The usual mistake
 
 > [!warning]
-> **Reading the last plan as the answer without its certificate.** A barrier method's plan is always strictly inside, so it is never exactly optimal: at $t = 1$ the pumps draw 250.9827 kW, 0.9827 kW above the best. What makes the answer trustworthy is the gap, $m/t$, backed by the prices $\lambda_i = 1/(t s_i)$. Report the plan with its dual bound, 245.9827 kW at $t = 1$, or the word "optimal" is not earned.
+> **Reading the last plan as the answer without its certificate.** A barrier method's plan is always strictly inside, so it is never exactly optimal: at $`t = 1`$ the pumps draw 250.9827 kW, 0.9827 kW above the best. What makes the answer trustworthy is the gap, $`m/t`$, backed by the prices $`\lambda_i = 1/(t s_i)`$. Report the plan with its dual bound, 245.9827 kW at $`t = 1`$, or the word "optimal" is not earned.
 >
 > - **Starting on or outside a limit.** At (70, 50, 30) the floor's slack is −6 m, and at (50, 50, 50) it is 0; the barrier is undefined at both. Find a strictly inside start first.
-> - **Taking the full Newton step.** After raising $t$ to 10, the full step lands at head 34.3403 m, through the floor. Halve the step until every slack is positive.
-> - **Forgetting the $1/t$ in the prices.** At $t = 10$, $1/s$ gives a floor price of 100.2548 kW per m and a useless bound of −20012.9858 kW.
+> - **Taking the full Newton step.** After raising $`t`$ to 10, the full step lands at head 34.3403 m, through the floor. Halve the step until every slack is positive.
+> - **Forgetting the $`1/t`$ in the prices.** At $`t = 10`$, $`1/s`$ gives a floor price of 100.2548 kW per m and a useless bound of −20012.9858 kW.
 > - **Confusing a barrier with a penalty.** A barrier charges for coming near a limit from inside and keeps every plan allowed; a penalty charges for crossing a limit and lets plans stray outside ([Penalties and augmented Lagrangians](07-penalty-and-augmented-lagrangian-methods.md)).
 
 ---
@@ -773,16 +785,16 @@ example : (1 : ℤ) + ⌈Real.log (5 / (1 * (1 / 10000 : ℝ))) / Real.log 10⌉
 - **Power and water networks.** Optimal power flow, the hourly dispatch of generators within line and voltage limits, is commonly solved by primal-dual interior point methods, the same central path with the KKT system solved directly. Pump scheduling with pressure limits is the same shape.
 - **Linear programming at scale.** Karmarkar's 1984 algorithm revived the field; interior point solvers now compete with the simplex method on very large linear programs: [Interior point for linear programs](../04-Linear%20Programming/08-interior-point-for-lp-and-complexity.md).
 - **Quadratic programs in control and finance.** Model predictive control solves a small quadratic program at every time step, and portfolio problems with budget and position limits are quadratic programs; interior point methods are a standard engine for both.
-- **Semidefinite programs.** For limits on a matrix, minus the log of its determinant plays the part of $-\sum \log s_i$.
+- **Semidefinite programs.** For limits on a matrix, minus the log of its determinant plays the part of $`-\sum \log s_i`$.
 
 > **Say it back**
-> An interior point method replaces each limit by a fence, minus the log of its slack, that blows up at the limit. It minimises $t$ times the cost plus the fence, with Newton's method, while always staying strictly inside. The minimisers for growing $t$ form the central path. On it, $1/(t s_i)$ is a price for each limit, the KKT conditions hold with each price times its slack equal to $1/t$, and those prices prove the plan is within $m/t$ of the best. For the pumps, six rounds and 38 Newton steps bring the gap to 0.00005 kW at 50 L/s from each pump, 250 kW.
+> An interior point method replaces each limit by a fence, minus the log of its slack, that blows up at the limit. It minimises $`t`$ times the cost plus the fence, with Newton's method, while always staying strictly inside. The minimisers for growing $`t`$ form the central path. On it, $`1/(t s_i)`$ is a price for each limit, the KKT conditions hold with each price times its slack equal to $`1/t`$, and those prices prove the plan is within $`m/t`$ of the best. For the pumps, six rounds and 38 Newton steps bring the gap to 0.00005 kW at 50 L/s from each pump, 250 kW.
 
 ---
 
 ## What this builds on
 
-- [KKT conditions](02-kkt-conditions.md): the checklist of stationarity, allowed plan, non-negative prices and complementary slackness. The central path satisfies all four with complementary slackness relaxed to $1/t$.
+- [KKT conditions](02-kkt-conditions.md): the checklist of stationarity, allowed plan, non-negative prices and complementary slackness. The central path satisfies all four with complementary slackness relaxed to $`1/t`$.
 - [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md): the dual function and weak duality, which turn the path's prices into a proved floor under the best cost.
 
 ## Where this goes next
@@ -798,7 +810,7 @@ This card centres fully before each tenfold step, which leaves open how far a me
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Boyd, Stephen, and Lieven Vandenberghe. *Convex Optimization*. Cambridge University Press, 2004. [Publisher page](https://www.cambridge.org/core/books/convex-optimization/17D2FAA54F641A2F62C7CCD01DFA97C4). Chapter 11: the log barrier, the central path, the gap $m/t$ and the barrier method with its step-count bound.
+- Boyd, Stephen, and Lieven Vandenberghe. *Convex Optimization*. Cambridge University Press, 2004. [Publisher page](https://www.cambridge.org/core/books/convex-optimization/17D2FAA54F641A2F62C7CCD01DFA97C4). Chapter 11: the log barrier, the central path, the gap $`m/t`$ and the barrier method with its step-count bound.
 - Nocedal, Jorge, and Stephen J. Wright. *Numerical Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5). Chapter 19: interior point methods for nonlinear programs and the perturbed KKT system.
 - Fiacco, Anthony V., and Garth P. McCormick. *Nonlinear Programming: Sequential Unconstrained Minimization Techniques*. SIAM, 1990 (first published 1968). [doi:10.1137/1.9781611971316](https://doi.org/10.1137/1.9781611971316). The classic development and analysis of the barrier method (SUMT) and its central path.
 - Nesterov, Yurii, and Arkadii Nemirovskii. *Interior-Point Polynomial Algorithms in Convex Programming*. SIAM, 1994. [doi:10.1137/1.9781611970791](https://doi.org/10.1137/1.9781611970791). Self-concordance and the bound on Newton steps stated in Step 4.

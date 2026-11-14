@@ -28,26 +28,30 @@ To scale along the string: 220 px per metre, pins (dots) at x_px 30 and 250. One
 
 Notation first, in words. Position x runs in metres from the nut (x = 0) to the bridge (x = 1). The shape y(x) is the sideways displacement. A prime is a rate along the string: y' is the slope, y'' the rate the slope changes, the bending. The Greek letter λ (lambda) is a number, not yet known.
 
-$$-y'' = \lambda\, y, \qquad y(0) = 0, \qquad y(1) = 0$$
+```math
+-y'' = \lambda\, y, \qquad y(0) = 0, \qquad y(1) = 0
+```
 
 **Read it aloud:** the shape's bending, with its sign flipped, is λ times the shape itself, and the shape is zero at both pins.
 
 A number λ is an **eigenvalue** when some solution y is not zero everywhere; that y is an **eigenfunction**. The theorem lists them all:
 
-$$\lambda_n = n^2\pi^2, \qquad y_n(x) = \sin(n\pi x), \qquad f_n = \frac{c\sqrt{\lambda_n}}{2\pi} = \frac{n\,c}{2}$$
+```math
+\lambda_n = n^2\pi^2, \qquad y_n(x) = \sin(n\pi x), \qquad f_n = \frac{c\sqrt{\lambda_n}}{2\pi} = \frac{n\,c}{2}
+```
 
 **Read it aloud:** the n-th eigenvalue is n squared times pi squared, its shape a sine with n arches, its note n times half the wave speed.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | position along the string, from the nut, in m | 0 to 1 | — |
-| $y$, $y_n$ | the shape: sideways displacement at x; $y_n$ the n-th mode's shape | sin(πx), sin(2πx), sin(3πx) | a louder note, same pitch |
-| $y'$, $y''$ | slope; rate of change of slope, the bending, in 1/m | — | — |
-| $\lambda$, $\lambda_n$ | the number in the equation, in 1/m^2; an eigenvalue when a nonzero shape fits | 9.869604, 39.478418, 88.826440 | more arches, higher note |
-| $n$ | the mode number: how many arches | 1, 2, 3 | higher note, one more node |
-| $c$ | wave speed on the string, in m/s; tension and weight per metre set it | 220 m/s | every note rises in proportion |
-| $f$, $f_n$ | the note's frequency, in Hz (vibrations per second) | 110, 220, 330 Hz | — |
-| $A$, $B$ | the two free constants in a general solution | A = 0 at the nut | — |
+| $`x`$ | position along the string, from the nut, in m | 0 to 1 | — |
+| $`y`$, $`y_n`$ | the shape: sideways displacement at x; $`y_n`$ the n-th mode's shape | sin(πx), sin(2πx), sin(3πx) | a louder note, same pitch |
+| $`y'`$, $`y''`$ | slope; rate of change of slope, the bending, in 1/m | — | — |
+| $`\lambda`$, $`\lambda_n`$ | the number in the equation, in 1/m^2; an eigenvalue when a nonzero shape fits | 9.869604, 39.478418, 88.826440 | more arches, higher note |
+| $`n`$ | the mode number: how many arches | 1, 2, 3 | higher note, one more node |
+| $`c`$ | wave speed on the string, in m/s; tension and weight per metre set it | 220 m/s | every note rises in proportion |
+| $`f`$, $`f_n`$ | the note's frequency, in Hz (vibrations per second) | 110, 220, 330 Hz | — |
+| $`A`$, $`B`$ | the two free constants in a general solution | A = 0 at the nut | — |
 
 ### When it holds
 

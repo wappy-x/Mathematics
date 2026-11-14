@@ -52,49 +52,55 @@ Notation first, in words. A list of numbers, one per asset, is written as a sing
 
 Three lists and one matrix carry the inputs, detailed in the table below:
 
-- $w$ holds the weights;
-- $\mu$ the expected returns;
-- $\mathbf{1}$ three ones;
-- $\Sigma$ (the covariance matrix) every variance and pairwise covariance.
+- $`w`$ holds the weights;
+- $`\mu`$ the expected returns;
+- $`\mathbf{1}`$ three ones;
+- $`\Sigma`$ (the covariance matrix) every variance and pairwise covariance.
 
-The raised $\top$ turns a column into a row, so $w^\top \mu$ means "multiply the two lists entry by entry and add", which is the portfolio's expected return. Likewise $w^\top\Sigma\,w$ is its variance. $\Sigma^{-1}$ is the inverse matrix of $\Sigma$, the matrix that undoes it ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)).
+The raised $`\top`$ turns a column into a row, so $`w^\top \mu`$ means "multiply the two lists entry by entry and add", which is the portfolio's expected return. Likewise $`w^\top\Sigma\,w`$ is its variance. $`\Sigma^{-1}`$ is the inverse matrix of $`\Sigma`$, the matrix that undoes it ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)).
 
-The problem, for a target return $m$:
+The problem, for a target return $`m`$:
 
-$$\text{minimise } w^\top \Sigma\, w \quad \text{subject to} \quad \mathbf{1}^\top w = 1, \quad \mu^\top w = m.$$
+```math
+\text{minimise } w^\top \Sigma\, w \quad \text{subject to} \quad \mathbf{1}^\top w = 1, \quad \mu^\top w = m.
+```
 
 **Read it aloud:** among all splits of the money that invest all of it and expect the target return, find the one with the smallest variance.
 
-The answer uses three numbers built from the inputs, $A = \mathbf{1}^\top\Sigma^{-1}\mathbf{1}$, $B = \mathbf{1}^\top\Sigma^{-1}\mu$, $C = \mu^\top\Sigma^{-1}\mu$, and $\Delta = AC - B^2$. The best weights $w(m)$ and their variance $V(m)$ are:
+The answer uses three numbers built from the inputs, $`A = \mathbf{1}^\top\Sigma^{-1}\mathbf{1}`$, $`B = \mathbf{1}^\top\Sigma^{-1}\mu`$, $`C = \mu^\top\Sigma^{-1}\mu`$, and $`\Delta = AC - B^2`$. The best weights $`w(m)`$ and their variance $`V(m)`$ are:
 
-$$w(m) = \lambda\,\Sigma^{-1}\mathbf{1} + \eta\,\Sigma^{-1}\mu, \qquad \lambda = \frac{C - Bm}{\Delta}, \quad \eta = \frac{Am - B}{\Delta},$$
+```math
+w(m) = \lambda\,\Sigma^{-1}\mathbf{1} + \eta\,\Sigma^{-1}\mu, \qquad \lambda = \frac{C - Bm}{\Delta}, \quad \eta = \frac{Am - B}{\Delta},
+```
 
-$$V(m) = \frac{A m^2 - 2Bm + C}{\Delta} = \frac{1}{A} + \frac{A}{\Delta}\Big(m - \frac{B}{A}\Big)^2.$$
+```math
+V(m) = \frac{A m^2 - 2Bm + C}{\Delta} = \frac{1}{A} + \frac{A}{\Delta}\Big(m - \frac{B}{A}\Big)^2.
+```
 
-**Read it aloud:** the best weights are a blend of two fixed lists, $\Sigma^{-1}\mathbf{1}$ and $\Sigma^{-1}\mu$, in proportions set by the target; the least variance is a parabola in the target, lowest at $B/A$.
+**Read it aloud:** the best weights are a blend of two fixed lists, $`\Sigma^{-1}\mathbf{1}`$ and $`\Sigma^{-1}\mu`$, in proportions set by the target; the least variance is a parabola in the target, lowest at $`B/A`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $w$ | the weights: fraction of the money in each asset, summing to 1; negative means sold short (borrowed and sold) | 6% target: 44.28%, 32.83%, 22.89% | |
-| $\mu$ | expected yearly return of each asset | 8%, 4%, 5% | the frontier weights change; the global minimum-variance portfolio does not, since it never uses $\mu$ |
-| $\sigma$, $\rho$ | each asset's standard deviation, and each pair's correlation | 20%, 6%, 15%; 0.2, 0.1, 0 | higher: the curve usually rises, though not always where that asset is sold short |
-| $\Sigma$ | the covariance matrix: the entry for assets i and j is their correlation times both standard deviations, and the diagonal holds each variance $\sigma^2$ | `[[400, 24, 30], [24, 36, 0], [30, 0, 225]]` in percent squared | |
-| $\mathbf{1}$, $\top$ | the list of ones, so $\mathbf{1}^\top w$ is the sum of the weights; the raised $\top$ turns a column into a row | 1, 1, 1 | |
-| $m$ | the target expected return | 6% | the variance climbs along the parabola above 4.20% |
-| $V$ | the least variance at target $m$; its square root is the standard deviation | 107.1485 percent squared, so 10.35% | |
-| $A$, $B$, $C$ | three numbers made from the inputs: $A = \mathbf{1}^\top\Sigma^{-1}\mathbf{1}$, $B = \mathbf{1}^\top\Sigma^{-1}\mu$, $C = \mu^\top\Sigma^{-1}\mu$ | 0.03232749, 0.13578947, 0.61286550 (percent units) | |
-| $\Delta$ | $AC - B^2$, always positive when the means are not all equal | 0.00137362 | smaller: the parabola gets steeper |
-| $\lambda$, $\eta$ | the Lagrange multipliers: how much half the variance changes as each constraint is loosened by one unit | −146.9631, 42.3519 at 6% | |
-| $w_g$, $m_g$, $V_g$ | the global minimum-variance weights, return and variance: $\Sigma^{-1}\mathbf{1}/A$, $B/A$, $1/A$ | 1.63%, 84.84%, 13.53%; 4.2004%; 30.9334 percent squared | |
-| $s$ | the shift: how the frontier weights change per extra percentage point of target | +23.70, −28.90, +5.20 points | |
+| $`w`$ | the weights: fraction of the money in each asset, summing to 1; negative means sold short (borrowed and sold) | 6% target: 44.28%, 32.83%, 22.89% | |
+| $`\mu`$ | expected yearly return of each asset | 8%, 4%, 5% | the frontier weights change; the global minimum-variance portfolio does not, since it never uses $`\mu`$ |
+| $`\sigma`$, $`\rho`$ | each asset's standard deviation, and each pair's correlation | 20%, 6%, 15%; 0.2, 0.1, 0 | higher: the curve usually rises, though not always where that asset is sold short |
+| $`\Sigma`$ | the covariance matrix: the entry for assets i and j is their correlation times both standard deviations, and the diagonal holds each variance $`\sigma^2`$ | `[[400, 24, 30], [24, 36, 0], [30, 0, 225]]` in percent squared | |
+| $`\mathbf{1}`$, $`\top`$ | the list of ones, so $`\mathbf{1}^\top w`$ is the sum of the weights; the raised $`\top`$ turns a column into a row | 1, 1, 1 | |
+| $`m`$ | the target expected return | 6% | the variance climbs along the parabola above 4.20% |
+| $`V`$ | the least variance at target $`m`$; its square root is the standard deviation | 107.1485 percent squared, so 10.35% | |
+| $`A`$, $`B`$, $`C`$ | three numbers made from the inputs: $`A = \mathbf{1}^\top\Sigma^{-1}\mathbf{1}`$, $`B = \mathbf{1}^\top\Sigma^{-1}\mu`$, $`C = \mu^\top\Sigma^{-1}\mu`$ | 0.03232749, 0.13578947, 0.61286550 (percent units) | |
+| $`\Delta`$ | $`AC - B^2`$, always positive when the means are not all equal | 0.00137362 | smaller: the parabola gets steeper |
+| $`\lambda`$, $`\eta`$ | the Lagrange multipliers: how much half the variance changes as each constraint is loosened by one unit | −146.9631, 42.3519 at 6% | |
+| $`w_g`$, $`m_g`$, $`V_g`$ | the global minimum-variance weights, return and variance: $`\Sigma^{-1}\mathbf{1}/A`$, $`B/A`$, $`1/A`$ | 1.63%, 84.84%, 13.53%; 4.2004%; 30.9334 percent squared | |
+| $`s`$ | the shift: how the frontier weights change per extra percentage point of target | +23.70, −28.90, +5.20 points | |
 
-Two helper facts. The weights move in a straight line as the target moves: $w(m) = w_g + (m - m_g)\,s$, with $s = (A\,\Sigma^{-1}\mu - B\,\Sigma^{-1}\mathbf{1})/\Delta$. And the standard deviation $\sqrt{V(m)}$ against $m$ is a hyperbola (a curve with two straight-line asymptotes: lines it comes ever closer to far from its center), which is the shape in the picture.
+Two helper facts. The weights move in a straight line as the target moves: $`w(m) = w_g + (m - m_g)\,s`$, with $`s = (A\,\Sigma^{-1}\mu - B\,\Sigma^{-1}\mathbf{1})/\Delta`$. And the standard deviation $`\sqrt{V(m)}`$ against $`m`$ is a hyperbola (a curve with two straight-line asymptotes: lines it comes ever closer to far from its center), which is the shape in the picture.
 
 ### When it holds
 
-- **The inputs are known.** The formula treats $\mu$ and $\Sigma$ as exact. They are estimated from history, and small errors in $\mu$ swing the weights hard, because the weights run through $\Sigma^{-1}$. [Estimation error](07-estimation-error-and-shrinkage.md) is the repair.
-- **$\Sigma$ is positive definite:** every non-zero mix has positive variance, so no asset is an exact copy or blend of the others. If one is, $\Sigma$ has no inverse and the formula fails: either some mix is riskless or many weight lists tie for the minimum.
-- **The expected returns are not all equal.** If they are, $\Delta = 0$, every portfolio expects the same return, and only the global minimum-variance portfolio has meaning.
+- **The inputs are known.** The formula treats $`\mu`$ and $`\Sigma`$ as exact. They are estimated from history, and small errors in $`\mu`$ swing the weights hard, because the weights run through $`\Sigma^{-1}`$. [Estimation error](07-estimation-error-and-shrinkage.md) is the repair.
+- **$`\Sigma`$ is positive definite:** every non-zero mix has positive variance, so no asset is an exact copy or blend of the others. If one is, $`\Sigma`$ has no inverse and the formula fails: either some mix is riskless or many weight lists tie for the minimum.
+- **The expected returns are not all equal.** If they are, $`\Delta = 0`$, every portfolio expects the same return, and only the global minimum-variance portfolio has meaning.
 - **Short selling is free and unlimited.** The formula happily returns negative weights (bonds at −24.98% for an 8% target). If shorts are banned, the formula's answer is infeasible and the problem needs a quadratic program: [Quadratic programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/01-quadratic-programs-and-markowitz.md).
 - **One period, and variance is the risk that matters.** Variance punishes gains and losses alike and ignores fat tails (extreme returns that come more often than a bell curve predicts); for skewed payoffs (gains and losses of very different sizes) such as options, the "least-variance" portfolio can hide a crash.
 
@@ -104,29 +110,35 @@ Two helper facts. The weights move in a straight line as the target moves: $w(m)
 
 ### Step 0: a bowl cut by a flat slice
 
-Variance, as a function of the weights, is a bowl: it curves upward in every direction, because $\Sigma$ is positive definite. The two constraints, "invest everything" and "expect $m$", are flat. With three assets, they cut the space of weights down to a single straight line.
+Variance, as a function of the weights, is a bowl: it curves upward in every direction, because $`\Sigma`$ is positive definite. The two constraints, "invest everything" and "expect $`m`$", are flat. With three assets, they cut the space of weights down to a single straight line.
 
 A bowl sliced along a line is a parabola, and a parabola has exactly one lowest point. At that point the bowl's steepest-uphill direction is at right angles to the line: moving along the line does not change the variance to first order. That right-angle condition is what Lagrange multipliers write down ([Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)).
 
 ### Step 1: write the problem with multipliers
 
-Minimise half the variance, $\tfrac12 w^\top\Sigma w$ (the half only tidies the algebra). Attach one multiplier to each constraint:
+Minimise half the variance, $`\tfrac12 w^\top\Sigma w`$ (the half only tidies the algebra). Attach one multiplier to each constraint:
 
-$$L = \tfrac12 w^\top \Sigma w - \lambda(\mathbf{1}^\top w - 1) - \eta(\mu^\top w - m).$$
+```math
+L = \tfrac12 w^\top \Sigma w - \lambda(\mathbf{1}^\top w - 1) - \eta(\mu^\top w - m).
+```
 
-The slope of $\tfrac12 w^\top\Sigma w$ with respect to the weights is $\Sigma w$: for three assets, the first entry is $\Sigma_{11}w_1 + \Sigma_{12}w_2 + \Sigma_{13}w_3$, the rate at which half the variance changes as the shares' weight grows. Setting the slope of this whole expression to zero gives
+The slope of $`\tfrac12 w^\top\Sigma w`$ with respect to the weights is $`\Sigma w`$: for three assets, the first entry is $`\Sigma_{11}w_1 + \Sigma_{12}w_2 + \Sigma_{13}w_3`$, the rate at which half the variance changes as the shares' weight grows. Setting the slope of this whole expression to zero gives
 
-$$\Sigma w = \lambda\,\mathbf{1} + \eta\,\mu.$$
+```math
+\Sigma w = \lambda\,\mathbf{1} + \eta\,\mu.
+```
 
 In words: at the optimum, the variance's slope is a combination of the two constraint directions, so no move that keeps both constraints can lower it.
 
 ### Step 2: undo the matrix, and a two-fund blend falls out
 
-Multiply both sides by $\Sigma^{-1}$:
+Multiply both sides by $`\Sigma^{-1}`$:
 
-$$w = \lambda\,\Sigma^{-1}\mathbf{1} + \eta\,\Sigma^{-1}\mu.$$
+```math
+w = \lambda\,\Sigma^{-1}\mathbf{1} + \eta\,\Sigma^{-1}\mu.
+```
 
-The two lists $\Sigma^{-1}\mathbf{1}$ and $\Sigma^{-1}\mu$ do not depend on the target. Only the two numbers $\lambda$ and $\eta$ do. So every frontier portfolio is a blend of two fixed portfolios. This is **two-fund separation**: a fund family needs to offer only two funds, and every investor on the frontier holds some mix of them. As the target moves, the weights move in straight lines:
+The two lists $`\Sigma^{-1}\mathbf{1}`$ and $`\Sigma^{-1}\mu`$ do not depend on the target. Only the two numbers $`\lambda`$ and $`\eta`$ do. So every frontier portfolio is a blend of two fixed portfolios. This is **two-fund separation**: a fund family needs to offer only two funds, and every investor on the frontier holds some mix of them. As the target moves, the weights move in straight lines:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -143,38 +155,44 @@ Rising line (orange): shares. Falling line (green): bonds. Gentle line (dark blu
 
 ### Step 3: the two constraints fix the two multipliers
 
-Put the blend into the constraints. "Invest everything" is $\mathbf{1}^\top w = 1$; "expect $m$" is $\mu^\top w = m$. Using the names $A$, $B$, $C$:
+Put the blend into the constraints. "Invest everything" is $`\mathbf{1}^\top w = 1`$; "expect $`m`$" is $`\mu^\top w = m`$. Using the names $`A`$, $`B`$, $`C`$:
 
-$$A\lambda + B\eta = 1, \qquad B\lambda + C\eta = m.$$
+```math
+A\lambda + B\eta = 1, \qquad B\lambda + C\eta = m.
+```
 
-Two equations, two unknowns. The determinant (the number that decides whether a 2-by-2 system has one answer) is $AC - B^2 = \Delta$. Solving gives $\lambda = (C - Bm)/\Delta$ and $\eta = (Am - B)/\Delta$, the formula.
+Two equations, two unknowns. The determinant (the number that decides whether a 2-by-2 system has one answer) is $`AC - B^2 = \Delta`$. Solving gives $`\lambda = (C - Bm)/\Delta`$ and $`\eta = (Am - B)/\Delta`$, the formula.
 
 ### Step 4: the variance comes almost free
 
-Multiply $\Sigma w = \lambda\mathbf{1} + \eta\mu$ on the left by $w^\top$:
+Multiply $`\Sigma w = \lambda\mathbf{1} + \eta\mu`$ on the left by $`w^\top`$:
 
-$$V = w^\top\Sigma w = \lambda\,\mathbf{1}^\top w + \eta\,\mu^\top w = \lambda + \eta m = \frac{Am^2 - 2Bm + C}{\Delta}.$$
+```math
+V = w^\top\Sigma w = \lambda\,\mathbf{1}^\top w + \eta\,\mu^\top w = \lambda + \eta m = \frac{Am^2 - 2Bm + C}{\Delta}.
+```
 
-The last step substitutes $\lambda$ and $\eta$. So the least variance is a parabola in the target.
+The last step substitutes $`\lambda`$ and $`\eta`$. So the least variance is a parabola in the target.
 
 ### Step 5: complete the square to find the bottom
 
 Rewrite the parabola:
 
-$$V(m) = \frac{1}{A} + \frac{A}{\Delta}\Big(m - \frac{B}{A}\Big)^2.$$
+```math
+V(m) = \frac{1}{A} + \frac{A}{\Delta}\Big(m - \frac{B}{A}\Big)^2.
+```
 
-The squared bracket is never negative and $A/\Delta$ is positive, so the smallest variance is $1/A$, reached at $m_g = B/A$. At that target $\eta = 0$ and $\lambda = 1/A$, so the weights are $w_g = \Sigma^{-1}\mathbf{1}/A$: the inverse matrix's row sums, rescaled to add to 1. The expected return plays no part in finding it.
+The squared bracket is never negative and $`A/\Delta`$ is positive, so the smallest variance is $`1/A`$, reached at $`m_g = B/A`$. At that target $`\eta = 0`$ and $`\lambda = 1/A`$, so the weights are $`w_g = \Sigma^{-1}\mathbf{1}/A`$: the inverse matrix's row sums, rescaled to add to 1. The expected return plays no part in finding it.
 
-Every target above $m_g$ is efficient: no portfolio beats it on both return and risk. Every target below is beaten by $w_g$ itself, which expects more and risks less.
+Every target above $`m_g`$ is efficient: no portfolio beats it on both return and risk. Every target below is beaten by $`w_g`$ itself, which expects more and risks less.
 
 <details>
 <summary>Detailed proof</summary>
 
-**$\Delta > 0$.** Write $\langle x, y\rangle = x^\top\Sigma^{-1}y$. Because $\Sigma$ is positive definite, so is $\Sigma^{-1}$, and this is an inner product (a way to measure lengths and angles). Cauchy–Schwarz says $\langle \mathbf{1}, \mu\rangle^2 \le \langle \mathbf{1}, \mathbf{1}\rangle\langle \mu, \mu\rangle$, that is $B^2 \le AC$, with equality only when $\mu$ is a multiple of $\mathbf{1}$, meaning all means are equal. So distinct means give $\Delta > 0$ and the 2-by-2 system has exactly one solution.
+**$`\Delta > 0`$.** Write $`\langle x, y\rangle = x^\top\Sigma^{-1}y`$. Because $`\Sigma`$ is positive definite, so is $`\Sigma^{-1}`$, and this is an inner product (a way to measure lengths and angles). Cauchy–Schwarz says $`\langle \mathbf{1}, \mu\rangle^2 \le \langle \mathbf{1}, \mathbf{1}\rangle\langle \mu, \mu\rangle`$, that is $`B^2 \le AC`$, with equality only when $`\mu`$ is a multiple of $`\mathbf{1}`$, meaning all means are equal. So distinct means give $`\Delta > 0`$ and the 2-by-2 system has exactly one solution.
 
-**The stationary point is the global minimum, and the only one.** Let $u$ be any other fully invested portfolio with mean $m$, and $z = u - w(m)$. Then $\mathbf{1}^\top z = 0$ and $\mu^\top z = 0$. Expand: $u^\top\Sigma u = w^\top\Sigma w + 2z^\top\Sigma w + z^\top\Sigma z$. The middle term is $2z^\top(\lambda\mathbf{1} + \eta\mu) = 0$. The last term is positive unless $z = 0$, by positive definiteness. So every other feasible portfolio has strictly larger variance.
+**The stationary point is the global minimum, and the only one.** Let $`u`$ be any other fully invested portfolio with mean $`m`$, and $`z = u - w(m)`$. Then $`\mathbf{1}^\top z = 0`$ and $`\mu^\top z = 0`$. Expand: $`u^\top\Sigma u = w^\top\Sigma w + 2z^\top\Sigma w + z^\top\Sigma z`$. The middle term is $`2z^\top(\lambda\mathbf{1} + \eta\mu) = 0`$. The last term is positive unless $`z = 0`$, by positive definiteness. So every other feasible portfolio has strictly larger variance.
 
-**The efficient branch.** For $m > m_g$, suppose some portfolio has mean $m' \ge m$ and variance at most $V(m)$. Its variance is at least $V(m')$ by the paragraph above, and $V$ is strictly increasing to the right of $m_g$, so $m' = m$, and uniqueness makes it $w(m)$. For $m < m_g$, $w_g$ has higher mean and lower variance, so $w(m)$ is dominated.
+**The efficient branch.** For $`m > m_g`$, suppose some portfolio has mean $`m' \ge m`$ and variance at most $`V(m)`$. Its variance is at least $`V(m')`$ by the paragraph above, and $`V`$ is strictly increasing to the right of $`m_g`$, so $`m' = m`$, and uniqueness makes it $`w(m)`$. For $`m < m_g`$, $`w_g`$ has higher mean and lower variance, so $`w(m)`$ is dominated.
 
 </details>
 
@@ -186,28 +204,28 @@ The same problem, with extra rules such as "no short sales" or "no more than 40%
 
 ## Worked numbers, by hand
 
-Work in percent: returns in percent, variances in percent squared, so a 20% standard deviation becomes a variance of 400. Means $\mu$ = 8, 4, 5.
+Work in percent: returns in percent, variances in percent squared, so a 20% standard deviation becomes a variance of 400. Means $`\mu`$ = 8, 4, 5.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| diagonal of $\Sigma$ | $20^2$, $6^2$, $15^2$ | 400, 36, 225 |
-| off-diagonal of $\Sigma$ | $0.2 \times 20 \times 6$, $0.1 \times 20 \times 15$, $0 \times 6 \times 15$ | 24, 30, 0 |
-| determinant of $\Sigma$ | $400(36 \cdot 225) - 24(24 \cdot 225) + 30(0 - 36 \cdot 30)$ | 3,078,000 |
-| adjugate (determinant times $\Sigma^{-1}$) | the nine 2-by-2 cofactors (each the signed determinant of what is left after deleting one row and one column) | `[[8100, -5400, -1080], [-5400, 89100, 720], [-1080, 720, 13824]]` |
-| determinant times $\Sigma^{-1}\mathbf{1}$ | row sums of the adjugate | 1,620; 84,420; 13,464 |
-| determinant times $A$ | $1620 + 84420 + 13464$ | 99,504 |
-| $w_g$ | each row sum over 99,504 | 1.6281%, 84.8408%, 13.5311% |
-| $V_g = 1/A$ | $3{,}078{,}000 / 99{,}504$ | 30.9334, so standard deviation **5.5618%** |
-| determinant times $\Sigma^{-1}\mu$ | adjugate times (8, 4, 5) | 37,800; 316,800; 63,360 |
-| determinant times $B$ | $37800 + 316800 + 63360$ | 417,960 |
-| $m_g = B/A$ | $417{,}960 / 99{,}504$ | **4.2004%** |
-| determinant times $C$ | $8 \cdot 37800 + 4 \cdot 316800 + 5 \cdot 63360$ | 1,886,400 |
-| $A$, $B$, $C$ | each over 3,078,000 | 0.03232749, 0.13578947, 0.61286550 |
-| $\Delta$ | $AC - B^2$ | 0.00137362 |
-| $\lambda$ at 6% | $(C - 6B)/\Delta$ | −146.9631 |
-| $\eta$ at 6% | $(6A - B)/\Delta$ | 42.3519 |
-| weights at 6% | $\lambda \times$ (row sums) $+\ \eta \times$ (adjugate times $\mu$), over 3,078,000 | 44.2763%, 32.8288%, 22.8950% |
-| $V(6) = \lambda + 6\eta$ | $-146.9631 + 6 \times 42.3519$ | 107.1485, so standard deviation **10.3513%** |
+| diagonal of $`\Sigma`$ | $`20^2`$, $`6^2`$, $`15^2`$ | 400, 36, 225 |
+| off-diagonal of $`\Sigma`$ | $`0.2 \times 20 \times 6`$, $`0.1 \times 20 \times 15`$, $`0 \times 6 \times 15`$ | 24, 30, 0 |
+| determinant of $`\Sigma`$ | $`400(36 \cdot 225) - 24(24 \cdot 225) + 30(0 - 36 \cdot 30)`$ | 3,078,000 |
+| adjugate (determinant times $`\Sigma^{-1}`$) | the nine 2-by-2 cofactors (each the signed determinant of what is left after deleting one row and one column) | `[[8100, -5400, -1080], [-5400, 89100, 720], [-1080, 720, 13824]]` |
+| determinant times $`\Sigma^{-1}\mathbf{1}`$ | row sums of the adjugate | 1,620; 84,420; 13,464 |
+| determinant times $`A`$ | $`1620 + 84420 + 13464`$ | 99,504 |
+| $`w_g`$ | each row sum over 99,504 | 1.6281%, 84.8408%, 13.5311% |
+| $`V_g = 1/A`$ | $`3{,}078{,}000 / 99{,}504`$ | 30.9334, so standard deviation **5.5618%** |
+| determinant times $`\Sigma^{-1}\mu`$ | adjugate times (8, 4, 5) | 37,800; 316,800; 63,360 |
+| determinant times $`B`$ | $`37800 + 316800 + 63360`$ | 417,960 |
+| $`m_g = B/A`$ | $`417{,}960 / 99{,}504`$ | **4.2004%** |
+| determinant times $`C`$ | $`8 \cdot 37800 + 4 \cdot 316800 + 5 \cdot 63360`$ | 1,886,400 |
+| $`A`$, $`B`$, $`C`$ | each over 3,078,000 | 0.03232749, 0.13578947, 0.61286550 |
+| $`\Delta`$ | $`AC - B^2`$ | 0.00137362 |
+| $`\lambda`$ at 6% | $`(C - 6B)/\Delta`$ | −146.9631 |
+| $`\eta`$ at 6% | $`(6A - B)/\Delta`$ | 42.3519 |
+| weights at 6% | $`\lambda \times`$ (row sums) $`+\ \eta \times`$ (adjugate times $`\mu`$), over 3,078,000 | 44.2763%, 32.8288%, 22.8950% |
+| $`V(6) = \lambda + 6\eta`$ | $`-146.9631 + 6 \times 42.3519`$ | 107.1485, so standard deviation **10.3513%** |
 
 So a fund that wants 6 percent a year from these three assets carries at least 10.35 percent of yearly risk; any other 6-percent mix carries more.
 
@@ -217,8 +235,8 @@ Correct answers for comparison: the global minimum-variance portfolio has standa
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Ignore the correlations (use only the diagonal of $\Sigma$) | weights 7.20%, 80.00%, 12.80%; true standard deviation 5.6673% | The shares–bonds correlation of 0.2 makes shares a worse hedge for bonds than they look; the optimiser was told otherwise. |
-| Rescale $\Sigma^{-1}\mu$ instead of $\Sigma^{-1}\mathbf{1}$ | mean 4.5134%, standard deviation 5.7652% | That is a different portfolio (the best reward-to-risk ratio when cash pays zero), not the least-risk one. |
+| Ignore the correlations (use only the diagonal of $`\Sigma`$) | weights 7.20%, 80.00%, 12.80%; true standard deviation 5.6673% | The shares–bonds correlation of 0.2 makes shares a worse hedge for bonds than they look; the optimiser was told otherwise. |
+| Rescale $`\Sigma^{-1}\mu`$ instead of $`\Sigma^{-1}\mathbf{1}`$ | mean 4.5134%, standard deviation 5.7652% | That is a different portfolio (the best reward-to-risk ratio when cash pays zero), not the least-risk one. |
 | Ban shorts by clipping the 8% answer at zero and rescaling | mean 7.2006%, not 8%; standard deviation 15.5863% | Clipping moves the portfolio off the target. Long-only needs a real constrained solve. |
 | Pick the lower branch: target 3.5% | standard deviation 6.5176% | The global minimum-variance portfolio expects 4.2004% at only 5.5618%. The lower half is never worth holding. |
 | Leave gold out, 6% target | 50% shares, 50% bonds; standard deviation 11.0000% | Gold's weak correlation with the rest cuts the risk from 11.00% to 10.35% at no cost in return. |
@@ -229,11 +247,11 @@ Correct answers for comparison: the global minimum-variance portfolio has standa
 
 The code builds the covariance matrix from the standard deviations and correlations. Then it finds the global minimum-variance portfolio and the 6% frontier portfolio by **three independent roads**:
 
-- Road 1 is the closed form through $\Sigma^{-1}$ and $A$, $B$, $C$.
-- Road 2 solves the five Lagrange equations (three slope conditions and two constraints) directly, with no inverse and no $A$, $B$, $C$.
+- Road 1 is the closed form through $`\Sigma^{-1}`$ and $`A`$, $`B`$, $`C`$.
+- Road 2 solves the five Lagrange equations (three slope conditions and two constraints) directly, with no inverse and no $`A`$, $`B`$, $`C`$.
 - Road 3 uses no calculus and no matrix algebra, only the fact that for a fixed target the feasible weights lie on a line, and searches that line for the lowest variance. For the global minimum, road 3 searches twice: along the line for each target, then over targets.
 
-Python inverts $\Sigma$ by elimination and searches by golden section (repeatedly shrinking a bracket around the lowest point). Rust inverts by cofactors and finds the bottom by fitting a parabola through three points. Then every number in the frontier chart, the weights chart and the what-breaks table is printed.
+Python inverts $`\Sigma`$ by elimination and searches by golden section (repeatedly shrinking a bracket around the lowest point). Rust inverts by cofactors and finds the bottom by fitting a parabola through three points. Then every number in the frontier chart, the weights chart and the what-breaks table is printed.
 
 ### Python
 
@@ -420,7 +438,7 @@ try: target 10%               139.0728  -82.7815   43.7086  mean 10.0000%  sd 28
 ALL CHECKS PASS
 ```
 
-The three roads agree to four decimals on every weight. The variance measured directly from the weights, $w^\top\Sigma w$, matches the parabola formula. The global minimum-variance portfolio's 5.5618% sits below bonds' 6%, which the last assert requires.
+The three roads agree to four decimals on every weight. The variance measured directly from the weights, $`w^\top\Sigma w`$, matches the parabola formula. The global minimum-variance portfolio's 5.5618% sits below bonds' 6%, which the last assert requires.
 
 ### Rust
 
@@ -633,16 +651,16 @@ The two outputs are identical line for line. They reach the inverse and the sear
 
 Lean proves the minimum-variance formula, the global minimum-variance portfolio and the efficient branch, for any number of assets and any real weights.
 
-- Suppose $\Sigma$ is positive definite and the expected returns are not all equal. Then $\Delta > 0$.
-- Take those inputs and any target $m$. Then $w(m)$ invests all the money and expects exactly $m$. Its variance is $V(m) = (Am^2 - 2Bm + C)/\Delta$.
-- Take any other fully invested portfolio that expects $m$. Then its variance is strictly larger than $V(m)$.
-- Suppose $\Sigma$ is positive definite, with any expected returns. Then $w_g = \Sigma^{-1}\mathbf{1}/A$ invests all the money, with variance $1/A$ and expected return $B/A$.
-- Take any other fully invested portfolio. Then its variance is strictly larger than $1/A$.
-- Keep the means not all equal, and take a target $m > m_g$. Then any fully invested portfolio expecting at least $m$, with variance at most $V(m)$, is $w(m)$ itself.
-- Take a target $m < m_g$ instead. Then $w_g$ expects more than $m$ and has strictly less variance than $w(m)$.
-- Take the card's $\Sigma$ in percent squared. Then its determinant is 3,078,000, and its adjugate is the one in the hand table.
+- Suppose $`\Sigma`$ is positive definite and the expected returns are not all equal. Then $`\Delta > 0`$.
+- Take those inputs and any target $`m`$. Then $`w(m)`$ invests all the money and expects exactly $`m`$. Its variance is $`V(m) = (Am^2 - 2Bm + C)/\Delta`$.
+- Take any other fully invested portfolio that expects $`m`$. Then its variance is strictly larger than $`V(m)`$.
+- Suppose $`\Sigma`$ is positive definite, with any expected returns. Then $`w_g = \Sigma^{-1}\mathbf{1}/A`$ invests all the money, with variance $`1/A`$ and expected return $`B/A`$.
+- Take any other fully invested portfolio. Then its variance is strictly larger than $`1/A`$.
+- Keep the means not all equal, and take a target $`m > m_g`$. Then any fully invested portfolio expecting at least $`m`$, with variance at most $`V(m)`$, is $`w(m)`$ itself.
+- Take a target $`m < m_g`$ instead. Then $`w_g`$ expects more than $`m`$ and has strictly less variance than $`w(m)`$.
+- Take the card's $`\Sigma`$ in percent squared. Then its determinant is 3,078,000, and its adjugate is the one in the hand table.
 - Take that adjugate. Then its row sums are 1,620, 84,420 and 13,464, which add to 99,504.
-- Take that adjugate and the means 8, 4, 5. Then the products are 37,800, 316,800 and 63,360. So determinant times $B$ is 417,960, and determinant times $C$ is 1,886,400.
+- Take that adjugate and the means 8, 4, 5. Then the products are 37,800, 316,800 and 63,360. So determinant times $`B`$ is 417,960, and determinant times $`C`$ is 1,886,400.
 - Take half shares and half bonds. Then the expected return is 6 percent and the variance 121, a standard deviation of 11 percent.
 
 The decimal weights, the charts and the what-breaks table are left to the Python and Rust checks.
@@ -942,13 +960,13 @@ example : ![(8 : ℚ), 4, 5] ⬝ᵥ ![1 / 2, 1 / 2, 0] = 6 ∧
 ## The usual mistake
 
 > [!warning]
-> **Treating the frontier's weights as reliable.** The formula is exact for the inputs it is given, and the inputs are guesses. Because the weights run through $\Sigma^{-1}$, small changes in expected returns produce large changes in weights. An optimiser fed noisy estimates tends to load up on the assets whose returns were overestimated. The global minimum-variance portfolio suffers least, because it does not use $\mu$ at all; that is one reason minimum-volatility funds exist (volatility is the finance word for standard deviation).
+> **Treating the frontier's weights as reliable.** The formula is exact for the inputs it is given, and the inputs are guesses. Because the weights run through $`\Sigma^{-1}`$, small changes in expected returns produce large changes in weights. An optimiser fed noisy estimates tends to load up on the assets whose returns were overestimated. The global minimum-variance portfolio suffers least, because it does not use $`\mu`$ at all; that is one reason minimum-volatility funds exist (volatility is the finance word for standard deviation).
 >
 > Smaller traps:
 > - **Dropping the correlations.** Standard deviations alone give weights 7.20%, 80.00%, 12.80% and a true risk of 5.6673% instead of 5.5618%. On other inputs the gap is much larger.
-> - **Confusing the minimum-variance portfolio with the best reward-to-risk portfolio.** Rescaling $\Sigma^{-1}\mu$ gives the second one (mean 4.5134%, standard deviation 5.7652%). That portfolio belongs to [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md).
+> - **Confusing the minimum-variance portfolio with the best reward-to-risk portfolio.** Rescaling $`\Sigma^{-1}\mu`$ gives the second one (mean 4.5134%, standard deviation 5.7652%). That portfolio belongs to [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md).
 > - **Clipping negative weights.** The 8% answer shorts bonds. Clipping and rescaling gives a portfolio expecting 7.2006%, which is not the target. Under a long-only rule, 8% is reachable only by holding shares alone, at 20% risk.
-> - **Mixing units.** Standard deviations enter $\Sigma$ squared: 20% becomes 400 in percent squared, or 0.04 in decimals. Putting 20 or 0.20 on the diagonal builds the wrong bowl.
+> - **Mixing units.** Standard deviations enter $`\Sigma`$ squared: 20% becomes 400 in percent squared, or 0.04 in decimals. Putting 20 or 0.20 on the diagonal builds the wrong bowl.
 
 ---
 
@@ -969,12 +987,12 @@ example : ![(8 : ℚ), 4, 5] ⬝ᵥ ![1 / 2, 1 / 2, 0] = 6 ∧
 
 - [Two assets](01-two-asset-portfolio-risk-and-return.md): how two assets' weights, standard deviations and correlation combine into a portfolio's risk. This card does the same for three and asks which mix is best.
 - [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md): the rule that at a constrained minimum the slope is a combination of the constraint directions. Step 1 is that rule.
-- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): undoing $\Sigma$, and the adjugate-over-determinant recipe used by hand.
+- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): undoing $`\Sigma`$, and the adjugate-over-determinant recipe used by hand.
 
 ## Where this goes next
 
 - [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md): add cash at a fixed rate, and the curve gives way to a straight line touching it at one portfolio.
-- [Estimation error](07-estimation-error-and-shrinkage.md): what happens to these weights when $\mu$ and $\Sigma$ are estimated from a few years of data, and how to calm them.
+- [Estimation error](07-estimation-error-and-shrinkage.md): what happens to these weights when $`\mu`$ and $`\Sigma`$ are estimated from a few years of data, and how to calm them.
 - [Quadratic programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/01-quadratic-programs-and-markowitz.md): the same bowl with inequality constraints, solved numerically.
 - [Two goals at once](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/02-multi-objective-trade-offs-and-the-pareto-frontier.md): the frontier as one case of a general idea, the set of choices where one goal cannot improve without the other getting worse.
 
@@ -987,4 +1005,4 @@ The frontier offers a menu of portfolios but no way to choose among them. A risk
 Verified 2026-09-28: every link below resolves to the publisher's page.
 
 - Markowitz, Harry. "Portfolio Selection." *The Journal of Finance* 7, no. 1 (1952): 77–91. [doi:10.1111/j.1540-6261.1952.tb01525.x](https://doi.org/10.1111/j.1540-6261.1952.tb01525.x). The original mean-variance problem and the idea of an efficient set.
-- Merton, Robert C. "An Analytic Derivation of the Efficient Portfolio Frontier." *Journal of Financial and Quantitative Analysis* 7, no. 4 (1972): 1851–1872. [doi:10.2307/2329621](https://doi.org/10.2307/2329621); [publisher page](https://www.cambridge.org/core/journals/journal-of-financial-and-quantitative-analysis/article/abs/an-analytic-derivation-of-the-efficient-portfolio-frontier/E6442B2D13FAAB134C33022936996ADC). The closed form with $A$, $B$, $C$ and the parabola, as derived on this card.
+- Merton, Robert C. "An Analytic Derivation of the Efficient Portfolio Frontier." *Journal of Financial and Quantitative Analysis* 7, no. 4 (1972): 1851–1872. [doi:10.2307/2329621](https://doi.org/10.2307/2329621); [publisher page](https://www.cambridge.org/core/journals/journal-of-financial-and-quantitative-analysis/article/abs/an-analytic-derivation-of-the-efficient-portfolio-frontier/E6442B2D13FAAB134C33022936996ADC). The closed form with $`A`$, $`B`$, $`C`$ and the parabola, as derived on this card.

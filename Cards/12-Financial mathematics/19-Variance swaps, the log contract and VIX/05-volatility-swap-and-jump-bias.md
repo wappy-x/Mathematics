@@ -38,42 +38,50 @@ Orange: the vol swap, a straight line. Green: the variance swap, a curve bending
 
 ## The formula
 
-Notation first, in words. Over a life of $T$ years, the **realised variance** $\bar v$ is the average of the instantaneous variance along the path: $\bar v = \frac1T\int_0^T v_t\,dt$, with $v_t$ the variance at time $t$. Its root $\sigma_R = \sqrt{\bar v}$ is **realised volatility**. $E[\cdot]$ is the average in the pricing world, where every asset grows at the riskless rate; both swaps pay once at expiry, so each fair strike is the plain pricing-world average of what it pays on, with no discount.
+Notation first, in words. Over a life of $`T`$ years, the **realised variance** $`\bar v`$ is the average of the instantaneous variance along the path: $`\bar v = \frac1T\int_0^T v_t\,dt`$, with $`v_t`$ the variance at time $`t`$. Its root $`\sigma_R = \sqrt{\bar v}`$ is **realised volatility**. $`E[\cdot]`$ is the average in the pricing world, where every asset grows at the riskless rate; both swaps pay once at expiry, so each fair strike is the plain pricing-world average of what it pays on, with no discount.
 
-$$K_{\mathrm{vol}} = E\big[\sqrt{\bar v}\,\big] \;\le\; \sqrt{E[\bar v]} = \sqrt{K_{\mathrm{var}}}, \qquad K_{\mathrm{vol}} \approx \sqrt{K_{\mathrm{var}}} - \frac{\mathrm{Var}(\bar v)}{8\,K_{\mathrm{var}}^{3/2}}$$
+```math
+K_{\mathrm{vol}} = E\big[\sqrt{\bar v}\,\big] \;\le\; \sqrt{E[\bar v]} = \sqrt{K_{\mathrm{var}}}, \qquad K_{\mathrm{vol}} \approx \sqrt{K_{\mathrm{var}}} - \frac{\mathrm{Var}(\bar v)}{8\,K_{\mathrm{var}}^{3/2}}
+```
 
 **Read it aloud:** the fair vol strike is the average realised volatility; it can never exceed the root of the fair variance strike, and it falls short by about the spread of realised variance over eight times the variance strike to the power one and a half.
 
-Under Heston, variance is pulled toward a long-run level $\theta$ at speed $\kappa$ and shaken with vol of vol $\xi$. With today's variance $v_0$ equal to $\theta$, the spread of realised variance is exact ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md) derives it):
+Under Heston, variance is pulled toward a long-run level $`\theta`$ at speed $`\kappa`$ and shaken with vol of vol $`\xi`$. With today's variance $`v_0`$ equal to $`\theta`$, the spread of realised variance is exact ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md) derives it):
 
-$$\mathrm{Var}(\bar v) = \frac{\theta\xi^2}{\kappa^2T^2}\Big[T - \frac{1 - e^{-2\kappa T}}{2\kappa} - \frac{1 - e^{-\kappa T}}{\kappa} + \frac{e^{-\kappa T}(1 - e^{-\kappa T})}{\kappa}\Big]$$
+```math
+\mathrm{Var}(\bar v) = \frac{\theta\xi^2}{\kappa^2T^2}\Big[T - \frac{1 - e^{-2\kappa T}}{2\kappa} - \frac{1 - e^{-\kappa T}}{\kappa} + \frac{e^{-\kappa T}(1 - e^{-\kappa T})}{\kappa}\Big]
+```
 
 In words: the vol of vol squared sets the scale, and a fast pull back to the long-run level shrinks it, because swings in variance die out before they add up.
 
-The jump bias. Let $J$ be the log of the factor by which one gap multiplies the price, gaps arriving at rate $\lambda$ a year. The strip's variance strike and the true expected realised variance differ by
+The jump bias. Let $`J`$ be the log of the factor by which one gap multiplies the price, gaps arriving at rate $`\lambda`$ a year. The strip's variance strike and the true expected realised variance differ by
 
-$$K_{\mathrm{strip}} - K_{\mathrm{true}} = 2\lambda\,E\big[e^{J} - 1 - J - \tfrac12 J^2\big] \;\approx\; \frac{\lambda}{3}\,E[J^3]$$
+```math
+K_{\mathrm{strip}} - K_{\mathrm{true}} = 2\lambda\,E\big[e^{J} - 1 - J - \tfrac12 J^2\big] \;\approx\; \frac{\lambda}{3}\,E[J^3]
+```
 
 **Read it aloud:** each gap pays the strip a little more or less than it adds to realised variance, and on average the difference is led by one third of the jump rate times the average cube of the log jump.
 
-With Merton's lognormal jumps of log-mean $\mu_J$ and spread $\delta$, over a diffusion volatility $\sigma$, both strikes are closed forms:
+With Merton's lognormal jumps of log-mean $`\mu_J`$ and spread $`\delta`$, over a diffusion volatility $`\sigma`$, both strikes are closed forms:
 
-$$K_{\mathrm{strip}} = \sigma^2 + 2\lambda\big(e^{\mu_J + \frac12\delta^2} - 1 - \mu_J\big), \qquad K_{\mathrm{true}} = \sigma^2 + \lambda\big(\mu_J^2 + \delta^2\big)$$
+```math
+K_{\mathrm{strip}} = \sigma^2 + 2\lambda\big(e^{\mu_J + \frac12\delta^2} - 1 - \mu_J\big), \qquad K_{\mathrm{true}} = \sigma^2 + \lambda\big(\mu_J^2 + \delta^2\big)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $K_{\mathrm{var}}$, $K_{\mathrm{vol}}$ | fair variance strike; fair vol strike | 0.0400 (20.00%); 19.50% | the vol strike follows the variance strike's root |
-| $\bar v$, $\sigma_R$ | realised variance over the life; its root, realised volatility | random; average 0.0400 | — |
-| $v_t$, $t$, $v_0$, $\theta$, $W_t$ | Heston variance at time $t$ (years from today); its value today; the long-run level it is pulled to; the random shake that drives it | 0.04; 0 to 1; 0.04; 0.04; random | vol strike rises: 21.54% at 0.0484 |
-| $\kappa$ | pull speed back to $\theta$ | 2 | gap shrinks: 19.79% at 4, 19.13% at 1 |
-| $\xi$ | vol of vol: the size of the variance's own shake | 0.3 | gap grows: 0.50 points at 0.3, 2.07 at 0.7 |
-| $\mathrm{Var}(\bar v)$, $m$ | spread of realised variance, as a variance; its mean, the point Step 2 expands around | 0.000343 (sd 0.0185); 0.04 | gap grows in proportion |
-| $T$, $\sigma$ | years to expiry; Merton's no-gap volatility | 1; 20% | — |
-| $\lambda$ | jump rate: gaps per year on average | 0.5 | jump bias grows in proportion |
-| $J$, $\mu_J$, $\delta$ | log size of one gap; its average; its spread | random; −0.10; 0.15 | $\mu_J$ sets the sign: −0.25 points at −0.10, +0.30 at +0.10 |
-| $S_T$, $F$, $F_t$, $X$ | Acme's price at expiry; the forward, today's price grown at the 5% rate less the 2% dividend yield; the forward at time $t$; the ratio $F_t/F$ | random; fixed today; random; starts at 1 | — |
-| $E$, $L(s)$, $s$, $c$, $y$ | pricing-world average; the average of $e^{-s\bar v}$, used in the proof; a positive number; $s/T$; the code's integration variable, $s = e^{2y}$ | —; —; —; —; — | — |
-| $K_{\mathrm{strip}}$, $K_{\mathrm{true}}$, $g$, $f$ | variance priced by the option strip; variance actually expected; a downward-bending function (Step 1); the strip's payoff as a function of $X$ (Step 6) | 0.055074; 0.056250; square root; $2(X-1) - 2\ln X$ | — |
+| $`K_{\mathrm{var}}`$, $`K_{\mathrm{vol}}`$ | fair variance strike; fair vol strike | 0.0400 (20.00%); 19.50% | the vol strike follows the variance strike's root |
+| $`\bar v`$, $`\sigma_R`$ | realised variance over the life; its root, realised volatility | random; average 0.0400 | — |
+| $`v_t`$, $`t`$, $`v_0`$, $`\theta`$, $`W_t`$ | Heston variance at time $`t`$ (years from today); its value today; the long-run level it is pulled to; the random shake that drives it | 0.04; 0 to 1; 0.04; 0.04; random | vol strike rises: 21.54% at 0.0484 |
+| $`\kappa`$ | pull speed back to $`\theta`$ | 2 | gap shrinks: 19.79% at 4, 19.13% at 1 |
+| $`\xi`$ | vol of vol: the size of the variance's own shake | 0.3 | gap grows: 0.50 points at 0.3, 2.07 at 0.7 |
+| $`\mathrm{Var}(\bar v)`$, $`m`$ | spread of realised variance, as a variance; its mean, the point Step 2 expands around | 0.000343 (sd 0.0185); 0.04 | gap grows in proportion |
+| $`T`$, $`\sigma`$ | years to expiry; Merton's no-gap volatility | 1; 20% | — |
+| $`\lambda`$ | jump rate: gaps per year on average | 0.5 | jump bias grows in proportion |
+| $`J`$, $`\mu_J`$, $`\delta`$ | log size of one gap; its average; its spread | random; −0.10; 0.15 | $`\mu_J`$ sets the sign: −0.25 points at −0.10, +0.30 at +0.10 |
+| $`S_T`$, $`F`$, $`F_t`$, $`X`$ | Acme's price at expiry; the forward, today's price grown at the 5% rate less the 2% dividend yield; the forward at time $`t`$; the ratio $`F_t/F`$ | random; fixed today; random; starts at 1 | — |
+| $`E`$, $`L(s)`$, $`s`$, $`c`$, $`y`$ | pricing-world average; the average of $`e^{-s\bar v}`$, used in the proof; a positive number; $`s/T`$; the code's integration variable, $`s = e^{2y}`$ | —; —; —; —; — | — |
+| $`K_{\mathrm{strip}}`$, $`K_{\mathrm{true}}`$, $`g`$, $`f`$ | variance priced by the option strip; variance actually expected; a downward-bending function (Step 1); the strip's payoff as a function of $`X`$ (Step 6) | 0.055074; 0.056250; square root; $`2(X-1) - 2\ln X`$ | — |
 
 ### When it holds
 
@@ -89,29 +97,33 @@ $$K_{\mathrm{strip}} = \sigma^2 + 2\lambda\big(e^{\mu_J + \frac12\delta^2} - 1 -
 
 ### Step 0: the vol swap pays on a bent function of the variance swap's variable
 
-Both contracts settle on the same random number, realised variance $\bar v$. The variance swap pays on it directly, a straight line in $\bar v$. The vol swap pays on its square root. A square root bends downward: from 0.02 to 0.04 it rises 5.86 points, from 0.04 to 0.06 only 4.49. A downward bend loses more on bad draws than it gains on good ones. So averaging over the uncertain outcome must cost the vol swap something.
+Both contracts settle on the same random number, realised variance $`\bar v`$. The variance swap pays on it directly, a straight line in $`\bar v`$. The vol swap pays on its square root. A square root bends downward: from 0.02 to 0.04 it rises 5.86 points, from 0.04 to 0.06 only 4.49. A downward bend loses more on bad draws than it gains on good ones. So averaging over the uncertain outcome must cost the vol swap something.
 
 ### Step 1: Jensen turns the bend into an inequality
 
-For any downward-bending function $g$ and any random $X$, $E[g(X)] \le g(E[X])$, with equality only if $X$ is certain ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). Take $g$ as the square root and $X = \bar v$:
+For any downward-bending function $`g`$ and any random $`X`$, $`E[g(X)] \le g(E[X])`$, with equality only if $`X`$ is certain ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). Take $`g`$ as the square root and $`X = \bar v`$:
 
-$$K_{\mathrm{vol}} = E[\sqrt{\bar v}] \le \sqrt{E[\bar v]} = \sqrt{K_{\mathrm{var}}}.$$
+```math
+K_{\mathrm{vol}} = E[\sqrt{\bar v}] \le \sqrt{E[\bar v]} = \sqrt{K_{\mathrm{var}}}.
+```
 
-The variance strike is the pricing-world average of $\bar v$, fixed by the option strip with no model at all ([The variance swap](03-variance-swap-fair-strike.md)). So the strip hands the vol swap a ceiling, not a price.
+The variance strike is the pricing-world average of $`\bar v`$, fixed by the option strip with no model at all ([The variance swap](03-variance-swap-fair-strike.md)). So the strip hands the vol swap a ceiling, not a price.
 
 ### Step 2: a Taylor expansion sizes the gap
 
-Expand the square root around the mean $m = E[\bar v]$ to second order:
+Expand the square root around the mean $`m = E[\bar v]`$ to second order:
 
-$$\sqrt{x} \approx \sqrt{m} + \frac{x - m}{2\sqrt m} - \frac{(x - m)^2}{8\,m^{3/2}}.$$
+```math
+\sqrt{x} \approx \sqrt{m} + \frac{x - m}{2\sqrt m} - \frac{(x - m)^2}{8\,m^{3/2}}.
+```
 
-Average both sides with $x = \bar v$. The middle term averages to zero, since $\bar v$ averages to $m$. The last term averages to $\mathrm{Var}(\bar v)/(8m^{3/2})$. That is the formula. The eighth is the second derivative of the square root at $m$, $-\tfrac14 m^{-3/2}$, times the half from Taylor's rule.
+Average both sides with $`x = \bar v`$. The middle term averages to zero, since $`\bar v`$ averages to $`m`$. The last term averages to $`\mathrm{Var}(\bar v)/(8m^{3/2})`$. That is the formula. The eighth is the second derivative of the square root at $`m`$, $`-\tfrac14 m^{-3/2}`$, times the half from Taylor's rule.
 
-The rule ignores the third-order term, which carries the lopsidedness of $\bar v$. Realised variance cannot go below zero but can run far above its mean, so its long right tail partly offsets the bend and the rule overstates the gap.
+The rule ignores the third-order term, which carries the lopsidedness of $`\bar v`$. Realised variance cannot go below zero but can run far above its mean, so its long right tail partly offsets the bend and the rule overstates the gap.
 
 ### Step 3: vol of vol sets the spread
 
-Heston's variance follows $dv_t = \kappa(\theta - v_t)\,dt + \xi\sqrt{v_t}\,dW_t$: a pull toward $\theta$ at speed $\kappa$ plus a shake of size $\xi$, with $W_t$ a Brownian motion ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)). The shake is what makes $\bar v$ uncertain. Its spread formula, in The formula above, is proportional to $\xi^2$. At the anchor, $v_0 = \theta = 0.04$, $\kappa = 2$, $\xi = 0.3$, $T = 1$, the spread is 0.000343, a standard deviation of 0.0185 around a mean of 0.04. The eighth-rule then gives 19.46%, a gap of 0.54 points.
+Heston's variance follows $`dv_t = \kappa(\theta - v_t)\,dt + \xi\sqrt{v_t}\,dW_t`$: a pull toward $`\theta`$ at speed $`\kappa`$ plus a shake of size $`\xi`$, with $`W_t`$ a Brownian motion ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)). The shake is what makes $`\bar v`$ uncertain. Its spread formula, in The formula above, is proportional to $`\xi^2`$. At the anchor, $`v_0 = \theta = 0.04`$, $`\kappa = 2`$, $`\xi = 0.3`$, $`T = 1`$, the spread is 0.000343, a standard deviation of 0.0185 around a mean of 0.04. The eighth-rule then gives 19.46%, a gap of 0.54 points.
 
 The correlation between Acme's shake and the variance's shake plays no part: realised variance depends on the variance path alone.
 
@@ -119,9 +131,11 @@ The correlation between Acme's shake and the variance's shake plays no part: rea
 
 The square root can be written as an integral of exponentials:
 
-$$\sqrt{x} = \frac{1}{2\sqrt{\pi}}\int_0^\infty \frac{1 - e^{-s x}}{s^{3/2}}\,ds.$$
+```math
+\sqrt{x} = \frac{1}{2\sqrt{\pi}}\int_0^\infty \frac{1 - e^{-s x}}{s^{3/2}}\,ds.
+```
 
-Put $x = \bar v$ and average inside the integral. What is needed is $L(s) = E[e^{-s\bar v}]$ for each positive $s$. For Heston's variance that average is known in closed form: it is the price of a zero-coupon bond in the Cox-Ingersoll-Ross interest-rate model, with variance in the role of the short rate. One integral over $s$ then gives $K_{\mathrm{vol}}$ with no simulation and no expansion: 19.50%, a gap of 0.498 points. The eighth-rule's 0.54 points overstates it by about 0.04 points, the size of the dropped higher-order terms.
+Put $`x = \bar v`$ and average inside the integral. What is needed is $`L(s) = E[e^{-s\bar v}]`$ for each positive $`s`$. For Heston's variance that average is known in closed form: it is the price of a zero-coupon bond in the Cox-Ingersoll-Ross interest-rate model, with variance in the role of the short rate. One integral over $`s`$ then gives $`K_{\mathrm{vol}}`$ with no simulation and no expansion: 19.50%, a gap of 0.498 points. The eighth-rule's 0.54 points overstates it by about 0.04 points, the size of the dropped higher-order terms.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -138,38 +152,44 @@ Orange: the exact gap from the transform. Green: the eighth-rule. They agree to 
 <details>
 <summary>Detailed proof: the root as an integral, and Heston's transform</summary>
 
-**The integral.** Substitute $u = s x$: the right side becomes $\sqrt{x}\cdot\frac{1}{2\sqrt\pi}\int_0^\infty (1 - e^{-u})\,u^{-3/2}\,du$. Integrate by parts: $\int_0^\infty (1 - e^{-u})u^{-3/2}du = \big[-2u^{-1/2}(1 - e^{-u})\big]_0^\infty + 2\int_0^\infty u^{-1/2}e^{-u}du = 0 + 2\sqrt\pi$. So the right side is $\sqrt x$. Every term is positive, so averaging may pass inside the integral: $E[\sqrt{\bar v}] = \frac{1}{2\sqrt\pi}\int_0^\infty (1 - L(s))\,s^{-3/2}\,ds$.
+**The integral.** Substitute $`u = s x`$: the right side becomes $`\sqrt{x}\cdot\frac{1}{2\sqrt\pi}\int_0^\infty (1 - e^{-u})\,u^{-3/2}\,du`$. Integrate by parts: $`\int_0^\infty (1 - e^{-u})u^{-3/2}du = \big[-2u^{-1/2}(1 - e^{-u})\big]_0^\infty + 2\int_0^\infty u^{-1/2}e^{-u}du = 0 + 2\sqrt\pi`$. So the right side is $`\sqrt x`$. Every term is positive, so averaging may pass inside the integral: $`E[\sqrt{\bar v}] = \frac{1}{2\sqrt\pi}\int_0^\infty (1 - L(s))\,s^{-3/2}\,ds`$.
 
-**The transform.** Write $c = s/T$, gamma $= \sqrt{\kappa^2 + 2\xi^2 c}$, and $D = (\text{gamma} + \kappa)(e^{\text{gamma}\,T} - 1) + 2\,\text{gamma}$. The average of $e^{-c\int_0^T v_t dt}$ solves the pricing equation of a bond whose short rate is $c\,v_t$; the Cox-Ingersoll-Ross solution is
-$$L(s) = \Big(\frac{2\,\text{gamma}\,e^{(\kappa + \text{gamma})T/2}}{D}\Big)^{2\kappa\theta/\xi^2}\exp\Big(-\frac{2c\,(e^{\text{gamma}\,T} - 1)}{D}\,v_0\Big).$$
-Scaling $v_t$ by $c$ turns $\theta$ into $c\theta$ and $\xi$ into $\xi\sqrt c$, which leaves the exponent $2\kappa\theta/\xi^2$ unchanged and puts $c$ inside gamma. The code divides top and bottom by $e^{\text{gamma}\,T}$ so nothing overflows, and substitutes $s = e^{2y}$ so the integral runs over a finite window of $y$ with a smooth integrand.
+**The transform.** Write $`c = s/T`$, gamma $`= \sqrt{\kappa^2 + 2\xi^2 c}`$, and $`D = (\text{gamma} + \kappa)(e^{\text{gamma}\,T} - 1) + 2\,\text{gamma}`$. The average of $`e^{-c\int_0^T v_t dt}`$ solves the pricing equation of a bond whose short rate is $`c\,v_t`$; the Cox-Ingersoll-Ross solution is
+
+$`\displaystyle L(s) = \Big(\frac{2\,\text{gamma}\,e^{(\kappa + \text{gamma})T/2}}{D}\Big)^{2\kappa\theta/\xi^2}\exp\Big(-\frac{2c\,(e^{\text{gamma}\,T} - 1)}{D}\,v_0\Big).`$
+
+Scaling $`v_t`$ by $`c`$ turns $`\theta`$ into $`c\theta`$ and $`\xi`$ into $`\xi\sqrt c`$, which leaves the exponent $`2\kappa\theta/\xi^2`$ unchanged and puts $`c`$ inside gamma. The code divides top and bottom by $`e^{\text{gamma}\,T}`$ so nothing overflows, and substitutes $`s = e^{2y}`$ so the integral runs over a finite window of $`y`$ with a smooth integrand.
 
 </details>
 
 ### Step 5: why no strip can replicate the vol swap
 
-The strip plus a rolling hedge in the forward delivers $\bar v$ exactly on gapless paths, so any payoff linear in $\bar v$ is replicated with no model. $\sqrt{\bar v}$ is not linear. A hedger must hold about $1/(2\sigma)$ of variance swap per unit of vol swap, with $\sigma$ the volatility expected at the time, and that amount changes as volatility moves. Re-sizing it costs money in proportion to vol of vol: the gap, seen from the hedger's side. That is why the vol strike needs a model and the variance strike does not.
+The strip plus a rolling hedge in the forward delivers $`\bar v`$ exactly on gapless paths, so any payoff linear in $`\bar v`$ is replicated with no model. $`\sqrt{\bar v}`$ is not linear. A hedger must hold about $`1/(2\sigma)`$ of variance swap per unit of vol swap, with $`\sigma`$ the volatility expected at the time, and that amount changes as volatility moves. Re-sizing it costs money in proportion to vol of vol: the gap, seen from the hedger's side. That is why the vol strike needs a model and the variance strike does not.
 
 ### Step 6: a gap pays the strip differently from realised variance
 
-The strip's variance strike rests on an identity for the forward $F_t$, the price for delivery at expiry. On a path with no gaps, Itô's lemma (the chain rule for random paths) gives
+The strip's variance strike rests on an identity for the forward $`F_t`$, the price for delivery at expiry. On a path with no gaps, Itô's lemma (the chain rule for random paths) gives
 
-$$2\Big(\frac{S_T}{F} - 1\Big) - 2\ln\frac{S_T}{F} = \text{hedge gains} + T\,\bar v.$$
+```math
+2\Big(\frac{S_T}{F} - 1\Big) - 2\ln\frac{S_T}{F} = \text{hedge gains} + T\,\bar v.
+```
 
 The left side is what the option strip pays ([Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md)). The hedge gains average to zero. So the strip's price equals the expected realised variance.
 
-A gap breaks the chain rule. When the forward jumps by the factor $e^J$, realised variance picks up $J^2$, the squared log return. The strip-plus-hedge position picks up $2(e^J - 1 - J)$. These differ. Expanding the exponential, $2(e^J - 1 - J) = J^2 + \tfrac13J^3 + \tfrac1{12}J^4 + \dots$, so the leftover per gap is $\tfrac13J^3 + \tfrac1{12}J^4 + \dots$. Gaps arrive at rate $\lambda$, so over a year the average leftover is $2\lambda\,E[e^J - 1 - J - \tfrac12J^2]$, the formula. Its leading term is $\tfrac{\lambda}{3}E[J^3]$: downward gaps have negative cubes and pull the strip below the true variance; upward gaps push it above.
+A gap breaks the chain rule. When the forward jumps by the factor $`e^J`$, realised variance picks up $`J^2`$, the squared log return. The strip-plus-hedge position picks up $`2(e^J - 1 - J)`$. These differ. Expanding the exponential, $`2(e^J - 1 - J) = J^2 + \tfrac13J^3 + \tfrac1{12}J^4 + \dots`$, so the leftover per gap is $`\tfrac13J^3 + \tfrac1{12}J^4 + \dots`$. Gaps arrive at rate $`\lambda`$, so over a year the average leftover is $`2\lambda\,E[e^J - 1 - J - \tfrac12J^2]`$, the formula. Its leading term is $`\tfrac{\lambda}{3}E[J^3]`$: downward gaps have negative cubes and pull the strip below the true variance; upward gaps push it above.
 
 <details>
 <summary>Detailed proof: the jump accounting</summary>
 
-Let $X_t = F_t/F$, the forward relative to today's. Hold $2(1 - 1/X_{t-})$ units of forward, rebalanced as it moves; $X_{t-}$ is the value just before any gap. The hedge gains are the sum of that holding times each move in $X$.
+Let $`X_t = F_t/F`$, the forward relative to today's. Hold $`2(1 - 1/X_{t-})`$ units of forward, rebalanced as it moves; $`X_{t-}`$ is the value just before any gap. The hedge gains are the sum of that holding times each move in $`X`$.
 
-Between gaps, Itô's lemma on $f(X) = 2(X - 1) - 2\ln X$ gives $df = (2 - 2/X)\,dX + X^{-2}\,d\langle X\rangle$. The first term is the hedge; the second is $v_t\,dt$, because $d\langle X\rangle = X^2 v_t\,dt$ (the angle brackets mark the accumulated squared moves). Summed over the life, that is $T\bar v$ from the diffusion.
+Between gaps, Itô's lemma on $`f(X) = 2(X - 1) - 2\ln X`$ gives $`df = (2 - 2/X)\,dX + X^{-2}\,d\langle X\rangle`$. The first term is the hedge; the second is $`v_t\,dt`$, because $`d\langle X\rangle = X^2 v_t\,dt`$ (the angle brackets mark the accumulated squared moves). Summed over the life, that is $`T\bar v`$ from the diffusion.
 
-At a gap, $X$ jumps from $X_{t-}$ to $X_{t-}e^J$. The change in $f$ is $2X_{t-}(e^J - 1) - 2J$. The hedge gains $2(1 - 1/X_{t-})\,X_{t-}(e^J - 1) = 2(X_{t-} - 1)(e^J - 1)$. The residual, change in $f$ minus hedge gain, is $2(e^J - 1 - J)$, whatever $X_{t-}$ was. Realised variance gains $J^2$. So
-$$f(X_T) = \text{hedge gains} + T\bar v + \sum_{\text{gaps}}\big[2(e^J - 1 - J) - J^2\big].$$
-The forward has zero average drift in the pricing world, so hedge gains average to zero. Gaps come at rate $\lambda$, independent of their sizes, so the sum averages to $\lambda T\,E[2(e^J - 1 - J) - J^2]$. Divide by $T$: $K_{\mathrm{strip}} = K_{\mathrm{true}} + 2\lambda E[e^J - 1 - J - \tfrac12J^2]$. For lognormal $J$, $E[e^J] = e^{\mu_J + \delta^2/2}$ and $E[J^2] = \mu_J^2 + \delta^2$, which gives the two closed forms.
+At a gap, $`X`$ jumps from $`X_{t-}`$ to $`X_{t-}e^J`$. The change in $`f`$ is $`2X_{t-}(e^J - 1) - 2J`$. The hedge gains $`2(1 - 1/X_{t-})\,X_{t-}(e^J - 1) = 2(X_{t-} - 1)(e^J - 1)`$. The residual, change in $`f`$ minus hedge gain, is $`2(e^J - 1 - J)`$, whatever $`X_{t-}`$ was. Realised variance gains $`J^2`$. So
+
+$`\displaystyle f(X_T) = \text{hedge gains} + T\bar v + \sum_{\text{gaps}}\big[2(e^J - 1 - J) - J^2\big].`$
+
+The forward has zero average drift in the pricing world, so hedge gains average to zero. Gaps come at rate $`\lambda`$, independent of their sizes, so the sum averages to $`\lambda T\,E[2(e^J - 1 - J) - J^2]`$. Divide by $`T`$: $`K_{\mathrm{strip}} = K_{\mathrm{true}} + 2\lambda E[e^J - 1 - J - \tfrac12J^2]`$. For lognormal $`J`$, $`E[e^J] = e^{\mu_J + \delta^2/2}`$ and $`E[J^2] = \mu_J^2 + \delta^2`$, which gives the two closed forms.
 
 </details>
 
@@ -195,35 +215,35 @@ A second road to the vol strike exists: Carr and Lee price a vol swap directly f
 
 ### The vol swap under the Heston anchor
 
-$v_0 = \theta = 0.04$, $\kappa = 2$, $\xi = 0.3$, $T = 1$.
+$`v_0 = \theta = 0.04`$, $`\kappa = 2`$, $`\xi = 0.3`$, $`T = 1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| variance strike | average of $\bar v$ with $v_0 = \theta$ | 0.040000 |
-| its root | $\sqrt{0.04}$ | 20.00% |
+| variance strike | average of $`\bar v`$ with $`v_0 = \theta`$ | 0.040000 |
+| its root | $`\sqrt{0.04}`$ | 20.00% |
 | spread of realised variance | Heston formula | 0.000343 |
-| denominator | $8 \times 0.04^{3/2} = 8 \times 0.008$ | 0.064 |
-| eighth-rule gap | $0.000343 / 0.064$ | 0.00535, i.e. 0.54 points |
-| eighth-rule vol strike | $20.00 - 0.54$ | 19.46% |
+| denominator | $`8 \times 0.04^{3/2} = 8 \times 0.008`$ | 0.064 |
+| eighth-rule gap | $`0.000343 / 0.064`$ | 0.00535, i.e. 0.54 points |
+| eighth-rule vol strike | $`20.00 - 0.54`$ | 19.46% |
 | **exact vol strike** | transform integral | **19.50%** |
-| simulation, 50,000 paths | average of $\sqrt{\bar v}$ | 19.50%, standard error 0.02 |
+| simulation, 50,000 paths | average of $`\sqrt{\bar v}`$ | 19.50%, standard error 0.02 |
 
 Striking at 20.00% instead of 19.50% costs the buyer half a volatility point per dollar of vega notional.
 
 ### The jump bias under the Merton market
 
-$\sigma = 0.20$, $\lambda = 0.5$, $\mu_J = -0.10$, $\delta = 0.15$.
+$`\sigma = 0.20`$, $`\lambda = 0.5`$, $`\mu_J = -0.10`$, $`\delta = 0.15`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average jump factor | $e^{-0.10 + 0.01125} = e^{-0.08875}$ | 0.915075 |
-| strip jump term | $2 \times 0.5 \times (0.915075 - 1 + 0.10)$ | 0.015074 |
-| **strip strike** | $0.04 + 0.015074$ | **0.055074 (23.47%)** |
-| average squared log jump | $0.01 + 0.0225$ | 0.0325 |
-| **true expected variance** | $0.04 + 0.5 \times 0.0325$ | **0.056250 (23.72%)** |
-| jump bias | $0.055074 - 0.056250$ | −0.001176 |
-| third-moment term | $0.5 \times (-0.001 - 0.00675)/3$ | −0.001292 |
-| plus fourth-moment term | $+\,0.5 \times 0.00296875/12$ | −0.001168 |
+| average jump factor | $`e^{-0.10 + 0.01125} = e^{-0.08875}`$ | 0.915075 |
+| strip jump term | $`2 \times 0.5 \times (0.915075 - 1 + 0.10)`$ | 0.015074 |
+| **strip strike** | $`0.04 + 0.015074`$ | **0.055074 (23.47%)** |
+| average squared log jump | $`0.01 + 0.0225`$ | 0.0325 |
+| **true expected variance** | $`0.04 + 0.5 \times 0.0325`$ | **0.056250 (23.72%)** |
+| jump bias | $`0.055074 - 0.056250`$ | −0.001176 |
+| third-moment term | $`0.5 \times (-0.001 - 0.00675)/3`$ | −0.001292 |
+| plus fourth-moment term | $`+\,0.5 \times 0.00296875/12`$ | −0.001168 |
 
 The strip prices a quarter of a volatility point less variance than the jumps deliver on average: a variance swap struck off the strip is cheap for the buyer in a market that gaps down.
 
@@ -233,14 +253,14 @@ The strip prices a quarter of a volatility point less variance than the jumps de
 | --- | --- | --- |
 | Quote the vol swap at the variance strike's root | 20.00% (right: 19.50%) | ignored the bend: Jensen's gap is 0.50 points |
 | Use the eighth-rule at vol of vol 0.7 | gap 2.92 points (right: 2.07) | the dropped higher-order terms are no longer small |
-| Ignore the pull, spread $\xi^2\theta T/3$ | 18.13% (right: 19.50%) | without mean reversion, variance swings add up for the whole year |
-| Treat the strip strike as expected realised variance, Merton market | 23.47% (right: 23.72%) | a gap pays the strip $2(e^J - 1 - J)$, not $J^2$ |
+| Ignore the pull, spread $`\xi^2\theta T/3`$ | 18.13% (right: 19.50%) | without mean reversion, variance swings add up for the whole year |
+| Treat the strip strike as expected realised variance, Merton market | 23.47% (right: 23.72%) | a gap pays the strip $`2(e^J - 1 - J)`$, not $`J^2`$ |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code takes three roads to each answer. For the vol strike: the eighth-rule with Heston's spread formula; the exact transform integral, by Simpson's rule on a smooth integrand; and a simulation of 50,000 variance paths of 100 steps, averaging $\sqrt{\bar v}$. For the jump bias: the closed forms; a numerical strip, integrating 1,600 Merton option prices weighted by one over strike squared; and a simulation of 40,000 years of 252 daily returns, which averages realised variance, the log-contract payoff, and the per-day leftover $2(e^u - 1 - u) - u^2$ of Step 6, with $u$ the day's log return of the forward. The normal curve area, the integrator and the random numbers are written out in both languages. The same no-jump strip returns 0.040000, the house market's variance strike.
+The code takes three roads to each answer. For the vol strike: the eighth-rule with Heston's spread formula; the exact transform integral, by Simpson's rule on a smooth integrand; and a simulation of 50,000 variance paths of 100 steps, averaging $`\sqrt{\bar v}`$. For the jump bias: the closed forms; a numerical strip, integrating 1,600 Merton option prices weighted by one over strike squared; and a simulation of 40,000 years of 252 daily returns, which averages realised variance, the log-contract payoff, and the per-day leftover $`2(e^u - 1 - u) - u^2`$ of Step 6, with $`u`$ the day's log return of the forward. The normal curve area, the integrator and the random numbers are written out in both languages. The same no-jump strip returns 0.040000, the house market's variance strike.
 
 ### Python
 
@@ -674,8 +694,8 @@ Lean proves Jensen's ceiling on the vol strike, the gap leftover of Step 6, and 
 
 - Suppose realised variance is never below zero and has a finite average. Then the fair vol strike is at most the root of the variance strike.
 - When the two are equal, realised variance is certain.
-- Take any forward ratio $X > 0$ just before a gap, and any log jump $J$. Then the change in $f$ minus the hedge gain is $2(e^J - 1 - J)$.
-- Take Merton's lognormal jumps with log-mean $\mu_J$ and spread $\delta$, at rate $\lambda$. Then the closed-form strip strike minus the closed-form true variance is $2\lambda E[e^J - 1 - J - J^2/2]$.
+- Take any forward ratio $`X > 0`$ just before a gap, and any log jump $`J`$. Then the change in $`f`$ minus the hedge gain is $`2(e^J - 1 - J)`$.
+- Take Merton's lognormal jumps with log-mean $`\mu_J`$ and spread $`\delta`$, at rate $`\lambda`$. Then the closed-form strip strike minus the closed-form true variance is $`2\lambda E[e^J - 1 - J - J^2/2]`$.
 - The card's numbers match. Variance of 0.02 or 0.06 at even chance averages 0.04.
 - The variance swap's payoffs on the chart match, from −7.50 at 10% to 12.50 at 30%.
 - The eighth-rule's denominator is 0.064, and the Merton exponent is −0.08875.
@@ -831,7 +851,7 @@ example : (-1 / 10 : ℚ) ^ 4 + 6 * (-1 / 10) ^ 2 * (3 / 20) ^ 2 + 3 * (3 / 20) 
 >
 > Smaller traps:
 > - **Trusting the eighth-rule where vol of vol is high.** At 0.7 it overstates the gap by 0.85 points (2.92 against 2.07).
-> - **Forgetting mean reversion in the spread.** A spread that lets variance swings add up for the whole year, $\xi^2\theta T/3$, prices the vol swap at 18.13% instead of 19.50%.
+> - **Forgetting mean reversion in the spread.** A spread that lets variance swings add up for the whole year, $`\xi^2\theta T/3`$, prices the vol swap at 18.13% instead of 19.50%.
 > - **Reading the strip as the expected realised variance when prices gap.** In the Merton market the strip says 23.47% and the jumps deliver 23.72% on average. The sign follows the jumps' lopsidedness: equity markets gap down, so the strip runs short.
 > - **Hedging a vol swap with a fixed amount of variance swap.** The right amount changes with the level volatility has reached (Step 5).
 
@@ -846,7 +866,7 @@ example : (-1 / 10 : ℚ) ^ 4 + 6 * (-1 / 10) ^ 2 * (3 / 20) ^ 2 + 3 * (3 / 20) 
 - **Options on realised volatility.** Any payoff written on realised volatility rather than variance carries the same gap, and needs the same model of vol of vol.
 
 > **Say it back**
-> A variance swap pays on realised variance and is priced by a strip of options with no model. A vol swap pays on its square root, and a square root bends down, so by Jensen the vol strike sits below the root of the variance strike. The gap is about the spread of realised variance over eight times the variance strike to the three halves, and under the Heston anchor it is half a volatility point. The strip itself is exact only when prices move without gaps: each gap pays the strip $2(e^J - 1 - J)$ but adds only $J^2$ to realised variance. The leftover is led by the jumps' average cube, and with downward gaps the strip runs a quarter point short.
+> A variance swap pays on realised variance and is priced by a strip of options with no model. A vol swap pays on its square root, and a square root bends down, so by Jensen the vol strike sits below the root of the variance strike. The gap is about the spread of realised variance over eight times the variance strike to the three halves, and under the Heston anchor it is half a volatility point. The strip itself is exact only when prices move without gaps: each gap pays the strip $`2(e^J - 1 - J)`$ but adds only $`J^2`$ to realised variance. The leftover is led by the jumps' average cube, and with downward gaps the strip runs a quarter point short.
 
 ---
 

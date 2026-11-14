@@ -31,7 +31,7 @@ n = 4   ##                                         0.85 eV
 n = 5   #                                          0.54 eV
 ```
 
-The box levels grow as n squared and spread apart. The hydrogen levels shrink as one over n squared and crowd together towards zero, the energy of an electron pulled free. The hydrogen electron is held far harder than the boxed one, because the proton's pull squeezes it into a region a few Bohr radii across. The Bohr radius is the atom's natural unit of length. The standard Bohr radius, with the proton held still, is 0.052918 nm; this card lets the proton move too, so its Bohr radius $a_0$ is 0.052947 nm.
+The box levels grow as n squared and spread apart. The hydrogen levels shrink as one over n squared and crowd together towards zero, the energy of an electron pulled free. The hydrogen electron is held far harder than the boxed one, because the proton's pull squeezes it into a region a few Bohr radii across. The Bohr radius is the atom's natural unit of length. The standard Bohr radius, with the proton held still, is 0.052918 nm; this card lets the proton move too, so its Bohr radius $`a_0`$ is 0.052947 nm.
 
 ---
 
@@ -41,30 +41,36 @@ Here θ ("theta") is the angle down from the north pole and φ ("phi") the angle
 
 The equation to solve, with the electric pull of the proton written out:
 
-$$-\frac{\hbar^2}{2\mu}\nabla^2\psi \;-\; \frac{e^2}{4\pi\varepsilon_0\, r}\,\psi \;=\; E\,\psi$$
+```math
+-\frac{\hbar^2}{2\mu}\nabla^2\psi \;-\; \frac{e^2}{4\pi\varepsilon_0\, r}\,\psi \;=\; E\,\psi
+```
 
 Its solutions, and their energies:
 
-$$\psi_{nlm}(r,\theta,\phi) = R_{nl}(r)\,Y_l^m(\theta,\phi), \qquad E_n = -\frac{\mu e^4}{8\varepsilon_0^2 h^2}\,\frac{1}{n^2} = -\frac{13.598287\ \text{eV}}{n^2}$$
+```math
+\psi_{nlm}(r,\theta,\phi) = R_{nl}(r)\,Y_l^m(\theta,\phi), \qquad E_n = -\frac{\mu e^4}{8\varepsilon_0^2 h^2}\,\frac{1}{n^2} = -\frac{13.598287\ \text{eV}}{n^2}
+```
 
-$$n = 1, 2, 3, \dots \qquad l = 0, 1, \dots, n-1 \qquad m = -l, \dots, 0, \dots, l$$
+```math
+n = 1, 2, 3, \dots \qquad l = 0, 1, \dots, n-1 \qquad m = -l, \dots, 0, \dots, l
+```
 
 **Read it aloud:** each state is a distance part times a direction part; the shell number n fixes the energy; l counts the turning of the wave and runs below n; m says how that turning is tilted against the axis and runs from minus l to l.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $E_n$ | energy of shell n, measured from an electron at rest far away; negative means held | $E_2 = -3.399572$ eV, $E_3 = -1.510921$ eV | rises towards 0 as n grows |
-| $n$, $k$ | **shell number**, any whole number from 1; $k$ counts terms in the radial series, which stops at $k = n - l - 1$ | red line: from $n = 3$ to $n = 2$ | energy rises, wave spreads to about $n^2 a_0$ |
-| $l$ | **orbital number**: how much the wave turns, 0 to n − 1; angular momentum $\sqrt{l(l+1)}\,\hbar$ | $l = 0$ or $1$ in shell 2 | in hydrogen, no change of energy |
-| $m$ | **magnetic number**: the turning about the up-down axis, in units of $\hbar$, from −l to l | $m = -1, 0, 1$ when $l = 1$ | no change of energy unless a magnet is near |
-| $\psi$, $R_{nl}$, $Y_l^m$ | the wave; its radial factor (distance only); its angular factor (direction only) | 1s: $R_{10} = 2e^{-r/a_0}$ (in units of $a_0^{-3/2}$), $Y$ round | |
-| $r$, $\theta$, $\phi$, $x$ | distance from the proton; angle down from the pole; angle around the axis; $x = \cos\theta$ | $r$ in Bohr radii | |
-| $\mu$, $m_e$, $m_p$ | **reduced mass** $m_e m_p/(m_e + m_p)$: electron and proton both swing about their centre | $0.99945568\,m_e$ | levels deepen in proportion |
-| $h$, $\hbar$, $c$ | Planck's constant; $\hbar = h/2\pi$; speed of light | $hc = 1239.841984$ eV nm | |
-| $e$, $\varepsilon_0$ | size of the electron's charge (but in $e^{-r/a_0}$, e is 2.718…, the exponential); electric constant | $e$ exact in SI; $\varepsilon_0$ = 8.8541878188 × 10⁻¹² F/m | larger $e$: much deeper levels, as $e^4$ |
-| $a_0$ | **Bohr radius** with the reduced mass, $4\pi\varepsilon_0\hbar^2/(\mu e^2)$: the atom's natural length. CODATA's Bohr radius (CODATA: the international committee that publishes the recommended values of physical constants) has $m_e$ in place of $\mu$ | 0.052947 nm; CODATA's, 0.052918 nm | |
-| $\nabla^2$ | the Laplacian: how much the wave's value differs from its average nearby | | |
-| $\lambda$ | wavelength of the light from a jump, $hc$ over the energy given up | 656.470 nm | |
+| $`E_n`$ | energy of shell n, measured from an electron at rest far away; negative means held | $`E_2 = -3.399572`$ eV, $`E_3 = -1.510921`$ eV | rises towards 0 as n grows |
+| $`n`$, $`k`$ | **shell number**, any whole number from 1; $`k`$ counts terms in the radial series, which stops at $`k = n - l - 1`$ | red line: from $`n = 3`$ to $`n = 2`$ | energy rises, wave spreads to about $`n^2 a_0`$ |
+| $`l`$ | **orbital number**: how much the wave turns, 0 to n − 1; angular momentum $`\sqrt{l(l+1)}\,\hbar`$ | $`l = 0`$ or $`1`$ in shell 2 | in hydrogen, no change of energy |
+| $`m`$ | **magnetic number**: the turning about the up-down axis, in units of $`\hbar`$, from −l to l | $`m = -1, 0, 1`$ when $`l = 1`$ | no change of energy unless a magnet is near |
+| $`\psi`$, $`R_{nl}`$, $`Y_l^m`$ | the wave; its radial factor (distance only); its angular factor (direction only) | 1s: $`R_{10} = 2e^{-r/a_0}`$ (in units of $`a_0^{-3/2}`$), $`Y`$ round | |
+| $`r`$, $`\theta`$, $`\phi`$, $`x`$ | distance from the proton; angle down from the pole; angle around the axis; $`x = \cos\theta`$ | $`r`$ in Bohr radii | |
+| $`\mu`$, $`m_e`$, $`m_p`$ | **reduced mass** $`m_e m_p/(m_e + m_p)`$: electron and proton both swing about their centre | $`0.99945568\,m_e`$ | levels deepen in proportion |
+| $`h`$, $`\hbar`$, $`c`$ | Planck's constant; $`\hbar = h/2\pi`$; speed of light | $`hc = 1239.841984`$ eV nm | |
+| $`e`$, $`\varepsilon_0`$ | size of the electron's charge (but in $`e^{-r/a_0}`$, e is 2.718…, the exponential); electric constant | $`e`$ exact in SI; $`\varepsilon_0`$ = 8.8541878188 × 10⁻¹² F/m | larger $`e`$: much deeper levels, as $`e^4`$ |
+| $`a_0`$ | **Bohr radius** with the reduced mass, $`4\pi\varepsilon_0\hbar^2/(\mu e^2)`$: the atom's natural length. CODATA's Bohr radius (CODATA: the international committee that publishes the recommended values of physical constants) has $`m_e`$ in place of $`\mu`$ | 0.052947 nm; CODATA's, 0.052918 nm | |
+| $`\nabla^2`$ | the Laplacian: how much the wave's value differs from its average nearby | | |
+| $`\lambda`$ | wavelength of the light from a jump, $`hc`$ over the energy given up | 656.470 nm | |
 
 The letters s, p, d stand for l = 0, 1, 2, so "2p" means n = 2, l = 1.
 
@@ -88,62 +94,70 @@ The proton pulls with the same strength at the same distance in every direction.
 
 In round coordinates (spherical coordinates: a distance r and the two angles θ and φ) the Laplacian is (its derivation is the planned card The Laplacian in round coordinates):
 
-$$\nabla^2\psi = \frac{1}{r^2}\frac{\partial}{\partial r}\Big(r^2\frac{\partial\psi}{\partial r}\Big) + \frac{1}{r^2}\Big[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\Big(\sin\theta\,\frac{\partial\psi}{\partial\theta}\Big) + \frac{1}{\sin^2\theta}\frac{\partial^2\psi}{\partial\phi^2}\Big]$$
+```math
+\nabla^2\psi = \frac{1}{r^2}\frac{\partial}{\partial r}\Big(r^2\frac{\partial\psi}{\partial r}\Big) + \frac{1}{r^2}\Big[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\Big(\sin\theta\,\frac{\partial\psi}{\partial\theta}\Big) + \frac{1}{\sin^2\theta}\frac{\partial^2\psi}{\partial\phi^2}\Big]
+```
 
-Try $\psi = R(r)\,Y(\theta,\phi)$. Put it in the equation, multiply by $-2\mu r^2/(\hbar^2 R Y)$, and the terms sort into two groups:
+Try $`\psi = R(r)\,Y(\theta,\phi)`$. Put it in the equation, multiply by $`-2\mu r^2/(\hbar^2 R Y)`$, and the terms sort into two groups:
 
-$$\underbrace{\frac{1}{R}\frac{d}{dr}\Big(r^2\frac{dR}{dr}\Big) + \frac{2\mu r^2}{\hbar^2}\Big(E + \frac{e^2}{4\pi\varepsilon_0 r}\Big)}_{\text{distance only}} \;=\; \underbrace{-\frac{1}{Y}\Big[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\Big(\sin\theta\,\frac{\partial Y}{\partial\theta}\Big) + \frac{1}{\sin^2\theta}\frac{\partial^2 Y}{\partial\phi^2}\Big]}_{\text{direction only}}$$
+```math
+\underbrace{\frac{1}{R}\frac{d}{dr}\Big(r^2\frac{dR}{dr}\Big) + \frac{2\mu r^2}{\hbar^2}\Big(E + \frac{e^2}{4\pi\varepsilon_0 r}\Big)}_{\text{distance only}} \;=\; \underbrace{-\frac{1}{Y}\Big[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\Big(\sin\theta\,\frac{\partial Y}{\partial\theta}\Big) + \frac{1}{\sin^2\theta}\frac{\partial^2 Y}{\partial\phi^2}\Big]}_{\text{direction only}}
+```
 
-Move the electron outwards and only the left side could change; turn it and only the right side could. They are always equal, so neither changes: both are one constant. Write it as $l(l+1)$; Step 2 shows why that form.
+Move the electron outwards and only the left side could change; turn it and only the right side could. They are always equal, so neither changes: both are one constant. Write it as $`l(l+1)`$; Step 2 shows why that form.
 
 ### Step 2: the direction part allows only whole l and m
 
-The φ part must be $\cos m\phi$ or $\sin m\phi$. Going once round the axis brings the electron back to the same place, so the wave must repeat: m is a whole number.
+The φ part must be $`\cos m\phi`$ or $`\sin m\phi`$. Going once round the axis brings the electron back to the same place, so the wave must repeat: m is a whole number.
 
-With $m = 0$, write $x = \cos\theta$. The direction equation becomes exactly Legendre's equation, with l in the place of its n. Its power series stays finite at both poles only if it stops, and it stops only when l is a whole number ([Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md)). With m not zero the same argument, on the associated Legendre equation (Legendre's equation with an extra term for m), adds one condition: m runs from −l to l. So each l has 2l + 1 shapes: one round s shape, three p shapes, five d shapes.
+With $`m = 0`$, write $`x = \cos\theta`$. The direction equation becomes exactly Legendre's equation, with l in the place of its n. Its power series stays finite at both poles only if it stops, and it stops only when l is a whole number ([Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md)). With m not zero the same argument, on the associated Legendre equation (Legendre's equation with an extra term for m), adds one condition: m runs from −l to l. So each l has 2l + 1 shapes: one round s shape, three p shapes, five d shapes.
 
 Nothing in this step used the electric pull. Every round pull, in every atom, nucleus or molecule turning in space, has these same direction shapes.
 
 ### Step 3: the distance part is a one-dimensional problem with an extra push
 
-Set the left side of Step 1 equal to $l(l+1)$ and tidy:
+Set the left side of Step 1 equal to $`l(l+1)`$ and tidy:
 
-$$-\frac{\hbar^2}{2\mu}\,\frac{1}{r^2}\frac{d}{dr}\Big(r^2\frac{dR}{dr}\Big) + \Big[\frac{l(l+1)\hbar^2}{2\mu r^2} - \frac{e^2}{4\pi\varepsilon_0 r}\Big]R = E\,R$$
+```math
+-\frac{\hbar^2}{2\mu}\,\frac{1}{r^2}\frac{d}{dr}\Big(r^2\frac{dR}{dr}\Big) + \Big[\frac{l(l+1)\hbar^2}{2\mu r^2} - \frac{e^2}{4\pi\varepsilon_0 r}\Big]R = E\,R
+```
 
-This is a wave on a line with an effective pull: the electric pull inward, plus an outward push $l(l+1)\hbar^2/(2\mu r^2)$ from the turning. Two ends constrain it. Near the proton the push wins, so $R$ behaves like $r^l$. Far away the pull fades, and a held electron (E below zero) must die off. Write the energy as $E = -13.598287\ \text{eV}/n^2$, with n for now any positive number. Then far out $R$ dies as $e^{-r/(n a_0)}$.
+This is a wave on a line with an effective pull: the electric pull inward, plus an outward push $`l(l+1)\hbar^2/(2\mu r^2)`$ from the turning. Two ends constrain it. Near the proton the push wins, so $`R`$ behaves like $`r^l`$. Far away the pull fades, and a held electron (E below zero) must die off. Write the energy as $`E = -13.598287\ \text{eV}/n^2`$, with n for now any positive number. Then far out $`R`$ dies as $`e^{-r/(n a_0)}`$.
 
 ### Step 4: the series must stop, and that makes n whole
 
-Try $R = r^l e^{-r/(n a_0)}$ times a power series in $r/a_0$. Putting it in Step 3 gives a rule for each term from the one before:
+Try $`R = r^l e^{-r/(n a_0)}`$ times a power series in $`r/a_0`$. Putting it in Step 3 gives a rule for each term from the one before:
 
-$$\frac{\text{term } k+1}{\text{term } k} = \frac{2\,(k + l + 1 - n)}{n\,(k+1)(k + 2l + 2)}\cdot\frac{r}{a_0}$$
+```math
+\frac{\text{term } k+1}{\text{term } k} = \frac{2\,(k + l + 1 - n)}{n\,(k+1)(k + 2l + 2)}\cdot\frac{r}{a_0}
+```
 
-If no term is ever zero, then far out the ratio tends to $2r/(n k a_0)$. That is the series for $e^{2r/(n a_0)}$, so $R$ grows like $e^{+r/(n a_0)}$: the electron would sit at infinity, not in an atom.
+If no term is ever zero, then far out the ratio tends to $`2r/(n k a_0)`$. That is the series for $`e^{2r/(n a_0)}`$, so $`R`$ grows like $`e^{+r/(n a_0)}`$: the electron would sit at infinity, not in an atom.
 
-The only escape is a top bracket of zero: $k + l + 1 - n = 0$ for some whole $k \ge 0$. So **n is a whole number, at least l + 1**, and the series is a polynomial with $n - l - 1$ terms after the first.
+The only escape is a top bracket of zero: $`k + l + 1 - n = 0`$ for some whole $`k \ge 0`$. So **n is a whole number, at least l + 1**, and the series is a polynomial with $`n - l - 1`$ terms after the first.
 
-The checks build these series: n = 2, l = 0 gives $1 - 0.5\,r/a_0$; n = 3, l = 0 gives $1 - 0.666667\,r/a_0 + 0.074074\,(r/a_0)^2$, the textbook $2/27$. With n = 2.5, $R$ at $40a_0$ has a base-10 logarithm of 1.44, against −7.41 for n = 2. The first is the growing wave; the second has died away.
+The checks build these series: n = 2, l = 0 gives $`1 - 0.5\,r/a_0`$; n = 3, l = 0 gives $`1 - 0.666667\,r/a_0 + 0.074074\,(r/a_0)^2`$, the textbook $`2/27`$. With n = 2.5, $`R`$ at $`40a_0`$ has a base-10 logarithm of 1.44, against −7.41 for n = 2. The first is the growing wave; the second has died away.
 
 <details>
 <summary>The algebra behind the term rule, and where 13.6 eV comes from</summary>
 
-Measure r in units of $a_0$ and energy in units of $\hbar^2/(\mu a_0^2)$. Because $a_0 = 4\pi\varepsilon_0\hbar^2/(\mu e^2)$, the pull $e^2/(4\pi\varepsilon_0 r)$ becomes exactly $1/r$ in these units, and Step 3 reads
+Measure r in units of $`a_0`$ and energy in units of $`\hbar^2/(\mu a_0^2)`$. Because $`a_0 = 4\pi\varepsilon_0\hbar^2/(\mu e^2)`$, the pull $`e^2/(4\pi\varepsilon_0 r)`$ becomes exactly $`1/r`$ in these units, and Step 3 reads
 
-$$-\tfrac12\Big(R'' + \tfrac{2}{r}R'\Big) + \Big[\frac{l(l+1)}{2r^2} - \frac1r\Big]R = E\,R.$$
+$`\displaystyle -\tfrac12\Big(R'' + \tfrac{2}{r}R'\Big) + \Big[\frac{l(l+1)}{2r^2} - \frac1r\Big]R = E\,R.`$
 
-Far out only $-\tfrac12 R'' = E R$ survives, so $R$ dies as $e^{-r\sqrt{-2E}}$. Writing $\sqrt{-2E} = 1/n$ means $E = -1/(2n^2)$ in these units. Put $R = r^l e^{-r/n}\,(\text{series})$ in the equation; the series satisfies
+Far out only $`-\tfrac12 R'' = E R`$ survives, so $`R`$ dies as $`e^{-r\sqrt{-2E}}`$. Writing $`\sqrt{-2E} = 1/n`$ means $`E = -1/(2n^2)`$ in these units. Put $`R = r^l e^{-r/n}\,(\text{series})`$ in the equation; the series satisfies
 
-$$(\text{series})'' + 2\Big(\frac{l+1}{r} - \frac1n\Big)(\text{series})' + \frac2r\Big(1 - \frac{l+1}{n}\Big)(\text{series}) = 0.$$
+$`\displaystyle (\text{series})'' + 2\Big(\frac{l+1}{r} - \frac1n\Big)(\text{series})' + \frac2r\Big(1 - \frac{l+1}{n}\Big)(\text{series}) = 0.`$
 
-Collect the coefficient of $r^{k-1}$. Term $k+1$ arrives multiplied by $(k+1)k + 2(l+1)(k+1) = (k+1)(k+2l+2)$, and term $k$ by $-2k/n + 2 - 2(l+1)/n = -2(k+l+1-n)/n$. Their sum is zero, which is the rule in Step 4.
+Collect the coefficient of $`r^{k-1}`$. Term $`k+1`$ arrives multiplied by $`(k+1)k + 2(l+1)(k+1) = (k+1)(k+2l+2)`$, and term $`k`$ by $`-2k/n + 2 - 2(l+1)/n = -2(k+l+1-n)/n`$. Their sum is zero, which is the rule in Step 4.
 
-Back in SI units the energy unit $\hbar^2/(\mu a_0^2)$ is $\mu e^4/(4\varepsilon_0^2 h^2)$, so $E_n = -\mu e^4/(8\varepsilon_0^2 h^2 n^2)$: the formula on this card.
+Back in SI units the energy unit $`\hbar^2/(\mu a_0^2)`$ is $`\mu e^4/(4\varepsilon_0^2 h^2)`$, so $`E_n = -\mu e^4/(8\varepsilon_0^2 h^2 n^2)`$: the formula on this card.
 
 </details>
 
 ### Step 5: count the states in a shell
 
-For each n, l runs from 0 to n − 1, and each l brings 2l + 1 values of m. Shell 2 has $1 + 3 = 4$ states, shell 3 has $1 + 3 + 5 = 9$: shell n has n² states, all at the same energy, because the energy contains n and nothing else. Spin doubles that to 2, 8, 18, 32 places for electrons.
+For each n, l runs from 0 to n − 1, and each l brings 2l + 1 values of m. Shell 2 has $`1 + 3 = 4`$ states, shell 3 has $`1 + 3 + 5 = 9`$: shell n has n² states, all at the same energy, because the energy contains n and nothing else. Spin doubles that to 2, 8, 18, 32 places for electrons.
 
 The energy ignoring l is special to the pure 1/r electric pull. It comes from a second kept quantity that only this pull has, the Laplace–Runge–Lenz vector: an arrow that, for a classical orbit, points from the proton to the orbit's nearest point and never turns. This outline names it and does not derive it; [Symmetry and conservation](08-symmetry-and-conserved-quantities.md) gives the general rule that pairs a symmetry with a kept quantity.
 
@@ -155,19 +169,19 @@ The red line, from n = 3 to n = 2, with the CODATA 2022 constants (in the code).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| reduced mass | $\mu/m_e = 1/(1 + 9.1093837139\times10^{-31}/1.67262192595\times10^{-27})$ | 0.99945568 |
-| energy unit, electron mass | $m_e e^4/(8\varepsilon_0^2 h^2)$ | 13.605693 eV |
-| with the reduced mass | $13.605693 \times 0.99945568$ | 13.598287 eV |
-| shell 2 | $-13.598287/4$ | −3.399572 eV |
-| shell 3 | $-13.598287/9$ | −1.510921 eV |
-| energy given up | $3.399572 - 1.510921$ | 1.888651 eV |
-| wavelength | $hc/1.888651 = 1239.841984/1.888651$ | **656.470 nm** |
+| reduced mass | $`\mu/m_e = 1/(1 + 9.1093837139\times10^{-31}/1.67262192595\times10^{-27})`$ | 0.99945568 |
+| energy unit, electron mass | $`m_e e^4/(8\varepsilon_0^2 h^2)`$ | 13.605693 eV |
+| with the reduced mass | $`13.605693 \times 0.99945568`$ | 13.598287 eV |
+| shell 2 | $`-13.598287/4`$ | −3.399572 eV |
+| shell 3 | $`-13.598287/9`$ | −1.510921 eV |
+| energy given up | $`3.399572 - 1.510921`$ | 1.888651 eV |
+| wavelength | $`hc/1.888651 = 1239.841984/1.888651`$ | **656.470 nm** |
 
 This outline puts the light from that jump at 656.470 nm in vacuum: red, the colour of the glowing tube. The measured line is 656.460 nm in vacuum, so the outline is 0.010 nm long. This red line is called H-alpha, and H-alpha filter makers quote its air wavelength, 656.279 nm. The same rule gives 486.27 nm (blue-green, n = 4 to 2), 121.57 nm (ultraviolet, n = 2 to 1) and the Balmer series limit, 364.71 nm, which the red line's family crowds towards as n runs to infinity.
 
 ### Where the electron is: the radial picture
 
-The chance of finding the electron at distance r grows with the area $4\pi r^2$ of a shell of that radius times the square of $R$. For the three lowest states:
+The chance of finding the electron at distance r grows with the area $`4\pi r^2`$ of a shell of that radius times the square of $`R`$. For the three lowest states:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -180,14 +194,14 @@ xychart-beta
     line [0.00, 0.02, 0.09, 0.17, 0.20, 0.18, 0.13, 0.09, 0.06, 0.03, 0.02, 0.01, 0.01, 0.00, 0.00]
 ```
 
-Orange: 1s (n = 1, l = 0), peaked at one Bohr radius, with mean distance 1.5 Bohr radii. Green: 2s (n = 2, l = 0), with one empty sphere at 2 Bohr radii where its series $1 - 0.5\,r/a_0$ is zero. Dark: 2p (n = 2, l = 1), no empty sphere, peaked at 4. The radial series has $n - l - 1$ terms after the first, so it has $n - l - 1$ empty spheres: that is the count k in the symbol table.
+Orange: 1s (n = 1, l = 0), peaked at one Bohr radius, with mean distance 1.5 Bohr radii. Green: 2s (n = 2, l = 0), with one empty sphere at 2 Bohr radii where its series $`1 - 0.5\,r/a_0`$ is zero. Dark: 2p (n = 2, l = 1), no empty sphere, peaked at 4. The radial series has $`n - l - 1`$ terms after the first, so it has $`n - l - 1`$ empty spheres: that is the count k in the symbol table.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Electron mass in place of the reduced mass | 13.605693 eV; red line 656.112 nm | The proton moves too. The error is about twice the 0.179 nm gap between hydrogen and deuterium (heavy hydrogen), which spectrometers resolve easily. |
-| Energy as 1/n, not 1/n² | red line 547.06 nm, green | The far-away decay fixes $E \propto -1/n^2$; with 1/n the colours are wrong. |
+| Energy as 1/n, not 1/n² | red line 547.06 nm, green | The far-away decay fixes $`E \propto -1/n^2`$; with 1/n the colours are wrong. |
 | Forget m: one shape per l | shell 2 holds 4 electrons, not 8 | Each l has 2l + 1 tilted shapes; neon's full second shell needs all 8. |
 | Trust the outline below 0.0001 eV | one level at n = 2 | Relativity splits shell 2 by 45.26 micro-eV, so the red line is really split into components about 0.0157 nm apart. Outside the model. |
 
@@ -197,7 +211,7 @@ Orange: 1s (n = 1, l = 0), peaked at one Bohr radius, with mean distance 1.5 Boh
 
 The code reaches the levels by three independent roads. Road 1 is the closed form from the CODATA constants, checked against CODATA's own Rydberg energy (13.605693 eV, the energy unit with the electron mass) and Bohr radius; its red line is checked against the measured one. Road 2 builds the radial series term by term and shows it stops only for whole n.
 
-Road 3 never uses the formula: it integrates the radial equation outward from the proton (Numerov's method, a careful step-by-step rule for equations like $u'' = f(r)\,u$, here with $u = rR$) and bisects on the energy (halves the search range again and again) until the wave dies far away. It finds each level for l = 0, 1, 2, and finds none below n = l + 1.
+Road 3 never uses the formula: it integrates the radial equation outward from the proton (Numerov's method, a careful step-by-step rule for equations like $`u'' = f(r)\,u`$, here with $`u = rR`$) and bisects on the energy (halves the search range again and again) until the wave dies far away. It finds each level for l = 0, 1, 2, and finds none below n = l + 1.
 
 Simpson's rule (an area rule that fits short parabolas through the points) then checks the normalisation (the constant that makes the total chance 1), the 1.5 Bohr radius mean distance and the zero overlap of 1s with 2s.
 
@@ -602,13 +616,13 @@ ALL CHECKS PASS
 Lean proves that the radial series stops only for whole n above l, and counts the states in every shell.
 
 - Take any positive trial number n and any whole l. Then the radial series stops exactly when n is a whole number above l.
-- Suppose n is a whole number above l. Then term k of the series is zero exactly when k is larger than $n - l - 1$.
+- Suppose n is a whole number above l. Then term k of the series is zero exactly when k is larger than $`n - l - 1`$.
 - Take any whole n. Then shell n has exactly n² states, with l from 0 to n − 1 and m from −l to l.
 - Take n = 2 and l = 0. Then term 1 is −1/2 and term 2 is 0.
 - Take n = 3 and l = 0. Then term 1 is −2/3 and term 2 is 2/27.
 - Take n = 3 and l = 1. Then term 1 is −1/6 and term 2 is 0.
 - Shells 1 to 4 hold 1, 4, 9 and 16 states, and with spin 2, 8, 18 and 32 electrons.
-- The red line, from shell 3 to shell 2, gives up $1/4 - 1/9 = 5/36$ of the energy unit. The wrong 1/n rule gives 1/6.
+- The red line, from shell 3 to shell 2, gives up $`1/4 - 1/9 = 5/36`$ of the energy unit. The wrong 1/n rule gives 1/6.
 
 Lean starts from Step 4's term rule, so the energies, wavelengths, shooting solve and integrals are left to the Python and Rust checks.
 
@@ -747,7 +761,7 @@ example : (1 : ℚ) / 2 - 1 / 3 = 1 / 6 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **The electron is not on a circle of radius one Bohr radius.** The 1s state is a round cloud with no orbit at all: its turning number l is zero. The Bohr radius is where the chance per unit distance peaks, and the mean distance is 1.5 Bohr radii. The old circular-orbit picture happens to give the right energies, but it gives the ground state a turning of one $\hbar$ where the true value is zero.
+> **The electron is not on a circle of radius one Bohr radius.** The 1s state is a round cloud with no orbit at all: its turning number l is zero. The Bohr radius is where the chance per unit distance peaks, and the mean distance is 1.5 Bohr radii. The old circular-orbit picture happens to give the right energies, but it gives the ground state a turning of one $`\hbar`$ where the true value is zero.
 >
 > - **Electron mass in place of the reduced mass:** 13.605693 eV and a red line at 656.112 nm, wrong in the fourth figure.
 > - **Energy depending on l:** in hydrogen 2s and 2p have the same energy, −3.399572 eV. In atoms with more electrons they differ, so hydrogen's rule must not be carried over to sodium.

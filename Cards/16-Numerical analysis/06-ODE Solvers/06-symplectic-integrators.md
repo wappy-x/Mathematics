@@ -37,42 +37,48 @@ Orange: RK4, whose swing dies away. Green: Verlet, which stays at 20 degrees. Th
 
 ## The formula
 
-Notation first. The **angle** $\theta$ is measured from straight down, in radians. Energies are divided by $mL^2$ (bob mass times rod length squared), so the **momentum** $p$ of [Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md) is just the angular speed $\theta'$, in rad/s. The constant $\omega^2 = g/L$ sets the pace; here $\omega = \pi$ rad/s. The pendulum's equations and energy are
+Notation first. The **angle** $`\theta`$ is measured from straight down, in radians. Energies are divided by $`mL^2`$ (bob mass times rod length squared), so the **momentum** $`p`$ of [Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md) is just the angular speed $`\theta'`$, in rad/s. The constant $`\omega^2 = g/L`$ sets the pace; here $`\omega = \pi`$ rad/s. The pendulum's equations and energy are
 
-$$\theta' = p, \qquad p' = -\omega^2 \sin\theta, \qquad E(\theta, p) = \tfrac12 p^2 + \omega^2 (1 - \cos\theta).$$
+```math
+\theta' = p, \qquad p' = -\omega^2 \sin\theta, \qquad E(\theta, p) = \tfrac12 p^2 + \omega^2 (1 - \cos\theta).
+```
 
-The step is $h$, and $\theta_n$, $p_n$ are the computed values after $n$ steps. One **Verlet step** (velocity Verlet, also called leapfrog or kick–drift–kick) is
+The step is $`h`$, and $`\theta_n`$, $`p_n`$ are the computed values after $`n`$ steps. One **Verlet step** (velocity Verlet, also called leapfrog or kick–drift–kick) is
 
-$$p_{n+1/2} = p_n - \tfrac{h}{2}\,\omega^2 \sin\theta_n, \qquad \theta_{n+1} = \theta_n + h\,p_{n+1/2}, \qquad p_{n+1} = p_{n+1/2} - \tfrac{h}{2}\,\omega^2 \sin\theta_{n+1}.$$
+```math
+p_{n+1/2} = p_n - \tfrac{h}{2}\,\omega^2 \sin\theta_n, \qquad \theta_{n+1} = \theta_n + h\,p_{n+1/2}, \qquad p_{n+1} = p_{n+1/2} - \tfrac{h}{2}\,\omega^2 \sin\theta_{n+1}.
+```
 
 **Read it aloud:** give the speed half a step of pull, move the angle a whole step at that speed, then give the second half of the pull at the new angle.
 
-The step keeps area exactly, and it keeps a **modified energy** $\tilde E$, close to $E$, to within $h^4$:
+The step keeps area exactly, and it keeps a **modified energy** $`\tilde E`$, close to $`E`$, to within $`h^4`$:
 
-$$\tilde E = E + h^2 E_2, \qquad E_2(\theta, p) = \frac{\omega^2 p^2 \cos\theta}{12} - \frac{\omega^4 \sin^2\theta}{24}.$$
+```math
+\tilde E = E + h^2 E_2, \qquad E_2(\theta, p) = \frac{\omega^2 p^2 \cos\theta}{12} - \frac{\omega^4 \sin^2\theta}{24}.
+```
 
 **Read it aloud:** the step conserves the energy plus a small correction of size h squared, and the correction is known in closed form.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | angle from straight down, rad | 20 degrees at release | wider swing, slower swing |
-| $p$ | momentum: here the angular speed $\theta'$, rad/s | 0 at release | — |
-| $\omega$, $L$, $g$, $m$ | pace $\sqrt{g/L}$; rod length; gravity; bob mass | $\pi$ rad/s; 0.9940 m; 9.81 m/s²; any | — |
-| $T_s$ | exact time of one swing, s | 1.007669026 s | — |
-| $h$, $n$ | step; number of steps taken ($\theta_n$, $p_n$: the values after $n$ steps) | $T_s/20$ = 0.0503835 s; up to 20,000,000 | Verlet's band grows as $h^2$ |
-| $z$ | the step in units of the pace, $\omega h$; the spring's rates are $\lambda = \pm i\omega$, so this is the size of [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md)'s $z = h\lambda$ | 0.158284 | RK4's area loss grows as $z^6$ |
-| $E$, $E_0$, $K$, $U$ | energy per $mL^2$, 1/s²; its value at release; its moving and height parts | $E_0$ = 0.595210 | — |
-| $E_2$, $E_4$, $\tilde E$, $\{F, G\}$ | the $h^2$ and $h^4$ corrections; the modified energy; the Poisson bracket they are built from | $\tilde E$ moves 0.00259% of $E_0$ | — |
-| $J$ | area factor of one step: the determinant of its Jacobian, one number (on [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md), $J$ is a matrix of rates) | Verlet 1; RK4 1 − 2.18e-07 | below 1, energy drains |
-| $k_1, \dots, k_4$ | RK4's four slope samples of $p'$ in one step | four sines per step | — |
-| $R(z)$, $u$, $\lambda$, $i$ | RK4's growth factor on $u' = \lambda u$; a small swing as one complex number $u$; its rate $\lambda$; $\sqrt{-1}$ | $J = \lvert R(iz)\rvert^2$ = 1 − 2.1774e-07 | — |
-| $\Lambda$, $T$, $c$ | stretch rate and run length in the global-error bound; the theorem's constant | — | — |
+| $`\theta`$ | angle from straight down, rad | 20 degrees at release | wider swing, slower swing |
+| $`p`$ | momentum: here the angular speed $`\theta'`$, rad/s | 0 at release | — |
+| $`\omega`$, $`L`$, $`g`$, $`m`$ | pace $`\sqrt{g/L}`$; rod length; gravity; bob mass | $`\pi`$ rad/s; 0.9940 m; 9.81 m/s²; any | — |
+| $`T_s`$ | exact time of one swing, s | 1.007669026 s | — |
+| $`h`$, $`n`$ | step; number of steps taken ($`\theta_n`$, $`p_n`$: the values after $`n`$ steps) | $`T_s/20`$ = 0.0503835 s; up to 20,000,000 | Verlet's band grows as $`h^2`$ |
+| $`z`$ | the step in units of the pace, $`\omega h`$; the spring's rates are $`\lambda = \pm i\omega`$, so this is the size of [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md)'s $`z = h\lambda`$ | 0.158284 | RK4's area loss grows as $`z^6`$ |
+| $`E`$, $`E_0`$, $`K`$, $`U`$ | energy per $`mL^2`$, 1/s²; its value at release; its moving and height parts | $`E_0`$ = 0.595210 | — |
+| $`E_2`$, $`E_4`$, $`\tilde E`$, $`\{F, G\}`$ | the $`h^2`$ and $`h^4`$ corrections; the modified energy; the Poisson bracket they are built from | $`\tilde E`$ moves 0.00259% of $`E_0`$ | — |
+| $`J`$ | area factor of one step: the determinant of its Jacobian, one number (on [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md), $`J`$ is a matrix of rates) | Verlet 1; RK4 1 − 2.18e-07 | below 1, energy drains |
+| $`k_1, \dots, k_4`$ | RK4's four slope samples of $`p'`$ in one step | four sines per step | — |
+| $`R(z)`$, $`u`$, $`\lambda`$, $`i`$ | RK4's growth factor on $`u' = \lambda u`$; a small swing as one complex number $`u`$; its rate $`\lambda`$; $`\sqrt{-1}`$ | $`J = \lvert R(iz)\rvert^2`$ = 1 − 2.1774e-07 | — |
+| $`\Lambda`$, $`T`$, $`c`$ | stretch rate and run length in the global-error bound; the theorem's constant | — | — |
 
 ### When it holds
 
 - **No friction and no driving force.** The true motion must keep its energy. The shelf's model rocket loses energy to drag, so there is no energy to keep.
-- **A fixed step.** A step chosen from the state, as an adaptive controller does ([Embedded pairs](03-embedded-pairs-and-adaptive-steps.md)), keeps a different modified energy each step. With $h(1 + 0.2|\theta|)$ the energy falls to 2.92% in 101,589 swings.
-- **A small enough step.** The band is $O(h^2)$ as $h \to 0$, and the theorem needs $h$ below some limit. Above $h = 2/\omega$ Verlet is unstable even on a small swing, and the energy runs away.
+- **A fixed step.** A step chosen from the state, as an adaptive controller does ([Embedded pairs](03-embedded-pairs-and-adaptive-steps.md)), keeps a different modified energy each step. With $`h(1 + 0.2|\theta|)`$ the energy falls to 2.92% in 101,589 swings.
+- **A small enough step.** The band is $`O(h^2)`$ as $`h \to 0`$, and the theorem needs $`h`$ below some limit. Above $`h = 2/\omega`$ Verlet is unstable even on a small swing, and the energy runs away.
 - **A pull that depends on the angle only.** Then kick and drift are each exact shears. A pull that depends on the speed, like air drag, needs another splitting.
 
 ---
@@ -81,66 +87,70 @@ $$\tilde E = E + h^2 E_2, \qquad E_2(\theta, p) = \frac{\omega^2 p^2 \cos\theta}
 
 ### Step 0: keep area, and you follow a nearby frictionless system
 
-The true swing keeps area in the $(\theta, p)$ plane: Liouville's theorem, proved on [Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md). A step that keeps area is called **symplectic**. For a spring, the oscillator card [Symplectic steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md) proves that Verlet's step matrix has determinant 1 and keeps a hidden energy. This card does the same for the pendulum, whose pull $\sin\theta$ is not linear.
+The true swing keeps area in the $`(\theta, p)`$ plane: Liouville's theorem, proved on [Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md). A step that keeps area is called **symplectic**. For a spring, the oscillator card [Symplectic steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md) proves that Verlet's step matrix has determinant 1 and keeps a hidden energy. This card does the same for the pendulum, whose pull $`\sin\theta`$ is not linear.
 
 The plan has three parts. Verlet keeps area exactly. RK4 does not, and the lost area is lost energy. A step that keeps area turns out to be the exact motion of a nearby system, whose energy it keeps.
 
 ### Step 1: kick and drift are shears, even with a sine
 
-A **kick** holds $\theta$ and changes $p$ by $-\tfrac{h}{2}\omega^2\sin\theta$. A **drift** holds $p$ and changes $\theta$ by $hp$. Each is a **shear**: it slides every point along one axis by an amount that depends only on the other coordinate, like pushing the top of a deck of cards sideways. The **Jacobian** of a step is its table of rates: how each output moves when each input moves a little. Its determinant $J$ is the factor by which the step scales small areas ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)).
+A **kick** holds $`\theta`$ and changes $`p`$ by $`-\tfrac{h}{2}\omega^2\sin\theta`$. A **drift** holds $`p`$ and changes $`\theta`$ by $`hp`$. Each is a **shear**: it slides every point along one axis by an amount that depends only on the other coordinate, like pushing the top of a deck of cards sideways. The **Jacobian** of a step is its table of rates: how each output moves when each input moves a little. Its determinant $`J`$ is the factor by which the step scales small areas ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)).
 
-$$J_{\text{kick}} = \det\begin{pmatrix} 1 & 0 \\ -\tfrac{h}{2}\omega^2\cos\theta & 1 \end{pmatrix} = 1, \qquad J_{\text{drift}} = \det\begin{pmatrix} 1 & h \\ 0 & 1 \end{pmatrix} = 1.$$
+```math
+J_{\text{kick}} = \det\begin{pmatrix} 1 & 0 \\ -\tfrac{h}{2}\omega^2\cos\theta & 1 \end{pmatrix} = 1, \qquad J_{\text{drift}} = \det\begin{pmatrix} 1 & h \\ 0 & 1 \end{pmatrix} = 1.
+```
 
-The off-diagonal entry depends on where the pendulum is, but a triangular matrix with 1s on the diagonal always has determinant 1. Determinants multiply along a chain, so the Verlet step has $J = 1 \times 1 \times 1 = 1$ at every state.
+The off-diagonal entry depends on where the pendulum is, but a triangular matrix with 1s on the diagonal always has determinant 1. Determinants multiply along a chain, so the Verlet step has $`J = 1 \times 1 \times 1 = 1`$ at every state.
 
-The code treats each step as a black box and measures $J$ by finite differences. Verlet gives $J - 1$ = 1.99e-13 at release and −3.36e-12 at the bottom: rounding noise.
+The code treats each step as a black box and measures $`J`$ by finite differences. Verlet gives $`J - 1`$ = 1.99e-13 at release and −3.36e-12 at the bottom: rounding noise.
 
 ### Step 2: RK4 shrinks area, and energy goes with it
 
-RK4 gives $J - 1$ = −1.75e-07 at release and −2.24e-07 at the bottom. On a small swing, $\sin\theta \approx \theta$ and the pendulum is a spring. RK4 then multiplies the state by a matrix whose two growth factors are $R(iz)$ and $R(-iz)$, with $R(z) = 1 + z + z^2/2 + z^3/6 + z^4/24$. The determinant is their product:
+RK4 gives $`J - 1`$ = −1.75e-07 at release and −2.24e-07 at the bottom. On a small swing, $`\sin\theta \approx \theta`$ and the pendulum is a spring. RK4 then multiplies the state by a matrix whose two growth factors are $`R(iz)`$ and $`R(-iz)`$, with $`R(z) = 1 + z + z^2/2 + z^3/6 + z^4/24`$. The determinant is their product:
 
-$$J = |R(iz)|^2 = \Big(1 - \tfrac{z^2}{2} + \tfrac{z^4}{24}\Big)^2 + \Big(z - \tfrac{z^3}{6}\Big)^2 = 1 - \frac{z^6}{72} + \frac{z^8}{576}.$$
+```math
+J = |R(iz)|^2 = \Big(1 - \tfrac{z^2}{2} + \tfrac{z^4}{24}\Big)^2 + \Big(z - \tfrac{z^3}{6}\Big)^2 = 1 - \frac{z^6}{72} + \frac{z^8}{576}.
+```
 
-The $z^2$ and $z^4$ terms cancel. That is why RK4 is so accurate per step. The $z^6$ term does not cancel.
+The $`z^2`$ and $`z^4`$ terms cancel. That is why RK4 is so accurate per step. The $`z^6`$ term does not cancel.
 
-A small swing traces an ellipse in the $(\theta, p)$ plane whose area is $2\pi E/\omega$. So the energy shrinks by the same factor $J$ each step. At $z$ = 0.158284 the formula gives $J - 1$ = −2.1774e-07, and the finite differences give −2.18e-07. Over 100,000 swings, 2,000,000 steps, that is a factor 0.6470. The run's last 100,000 swings, by then small, lose energy by the factor 0.6472.
+A small swing traces an ellipse in the $`(\theta, p)`$ plane whose area is $`2\pi E/\omega`$. So the energy shrinks by the same factor $`J`$ each step. At $`z`$ = 0.158284 the formula gives $`J - 1`$ = −2.1774e-07, and the finite differences give −2.18e-07. Over 100,000 swings, 2,000,000 steps, that is a factor 0.6470. The run's last 100,000 swings, by then small, lose energy by the factor 0.6472.
 
 <details>
 <summary>Detailed proof: RK4's growth factor and its determinant</summary>
 
-On the spring $\theta' = p$, $p' = -\omega^2\theta$, write $u = \omega\theta + i p$, with $i = \sqrt{-1}$. Then $u' = -i\omega u$, so the rate law is $u' = \lambda u$ with $\lambda = -i\omega$. One RK4 step on $u' = \lambda u$ multiplies $u$ by $R(h\lambda)$, the first five terms of the exponential series ([Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md)). With $z = \omega h$ that is $R(-iz)$, and the complex conjugate $\bar u$ is multiplied by $R(iz)$.
+On the spring $`\theta' = p`$, $`p' = -\omega^2\theta`$, write $`u = \omega\theta + i p`$, with $`i = \sqrt{-1}`$. Then $`u' = -i\omega u`$, so the rate law is $`u' = \lambda u`$ with $`\lambda = -i\omega`$. One RK4 step on $`u' = \lambda u`$ multiplies $`u`$ by $`R(h\lambda)`$, the first five terms of the exponential series ([Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md)). With $`z = \omega h`$ that is $`R(-iz)`$, and the complex conjugate $`\bar u`$ is multiplied by $`R(iz)`$.
 
-In the real coordinates $(\omega\theta, p)$ the step is a 2-by-2 real matrix with eigenvalues $R(-iz)$ and $R(iz)$, so its determinant is $R(iz)R(-iz) = |R(iz)|^2$. The real part of $R(iz)$ is $1 - z^2/2 + z^4/24$; the imaginary part is $z - z^3/6$. Squaring and adding:
+In the real coordinates $`(\omega\theta, p)`$ the step is a 2-by-2 real matrix with eigenvalues $`R(-iz)`$ and $`R(iz)`$, so its determinant is $`R(iz)R(-iz) = |R(iz)|^2`$. The real part of $`R(iz)`$ is $`1 - z^2/2 + z^4/24`$; the imaginary part is $`z - z^3/6`$. Squaring and adding:
 
-- $z^2$: $-1 + 1 = 0$.
-- $z^4$: $\tfrac14 + \tfrac{1}{12} - \tfrac13 = 0$.
-- $z^6$: $-\tfrac{1}{24} + \tfrac{1}{36} = -\tfrac{1}{72}$.
-- $z^8$: $\tfrac{1}{576}$.
+- $`z^2`$: $`-1 + 1 = 0`$.
+- $`z^4`$: $`\tfrac14 + \tfrac{1}{12} - \tfrac13 = 0`$.
+- $`z^6`$: $`-\tfrac{1}{24} + \tfrac{1}{36} = -\tfrac{1}{72}`$.
+- $`z^8`$: $`\tfrac{1}{576}`$.
 
-A change of coordinates does not change a determinant, so $J = 1 - z^6/72 + z^8/576$ in the $(\theta, p)$ plane too.
+A change of coordinates does not change a determinant, so $`J = 1 - z^6/72 + z^8/576`$ in the $`(\theta, p)`$ plane too.
 
 </details>
 
 ### Step 3: Verlet keeps a modified energy
 
-Verlet's energy is not constant either. It dips at the bottom of every swing and recovers at the ends. The dip has a formula. **Backward error analysis** asks: what slightly different system would this method follow exactly? For a symplectic step the answer is a frictionless system with energy $\tilde E = E + h^2 E_2 + h^4 E_4 + \dots$, and the step keeps $\tilde E$.
+Verlet's energy is not constant either. It dips at the bottom of every swing and recovers at the ends. The dip has a formula. **Backward error analysis** asks: what slightly different system would this method follow exactly? For a symplectic step the answer is a frictionless system with energy $`\tilde E = E + h^2 E_2 + h^4 E_4 + \dots`$, and the step keeps $`\tilde E`$.
 
-Keep only the $h^2$ term. Since $\tilde E$ barely moves, $E_n - E_0 \approx -h^2\big(E_2(\theta_n, p_n) - E_2(\theta_0, p_0)\big)$. At the bottom, $\theta = 0$ and $p^2 \approx 2E_0$. The predicted dip is $h^2\big(\omega^2 \cdot 2E_0/12 + \omega^4\sin^2 20°/24\big)/E_0$ = 0.620% of $E_0$. Over a million swings the measured band is 0.620% wide.
+Keep only the $`h^2`$ term. Since $`\tilde E`$ barely moves, $`E_n - E_0 \approx -h^2\big(E_2(\theta_n, p_n) - E_2(\theta_0, p_0)\big)`$. At the bottom, $`\theta = 0`$ and $`p^2 \approx 2E_0`$. The predicted dip is $`h^2\big(\omega^2 \cdot 2E_0/12 + \omega^4\sin^2 20°/24\big)/E_0`$ = 0.620% of $`E_0`$. Over a million swings the measured band is 0.620% wide.
 
-The modified energy $E + h^2E_2$ moves by only 0.00259% of $E_0$ over the same run, 239 times less. That remainder is the $h^4$ term. Halve the step and the band of $E$ shrinks 4.00-fold, while $E + h^2 E_2$ shrinks 16.0-fold.
+The modified energy $`E + h^2E_2`$ moves by only 0.00259% of $`E_0`$ over the same run, 239 times less. That remainder is the $`h^4`$ term. Halve the step and the band of $`E`$ shrinks 4.00-fold, while $`E + h^2 E_2`$ shrinks 16.0-fold.
 
 <details>
 <summary>Where E₂ comes from: composing the three flows</summary>
 
-Write $E = K + U$ with $K = p^2/2$, the moving part, and $U = \omega^2(1 - \cos\theta)$, the height part. A kick is the exact flow of $U$ alone for time $h/2$; a drift is the exact flow of $K$ alone for time $h$. For two functions F and G of $(\theta, p)$, the **Poisson bracket** $\{F, G\} = F_\theta G_p - F_p G_\theta$, where $F_\theta$ is the slope of F in $\theta$ and $F_p$ its slope in $p$, measures how much two flows fail to commute.
+Write $`E = K + U`$ with $`K = p^2/2`$, the moving part, and $`U = \omega^2(1 - \cos\theta)`$, the height part. A kick is the exact flow of $`U`$ alone for time $`h/2`$; a drift is the exact flow of $`K`$ alone for time $`h`$. For two functions F and G of $`(\theta, p)`$, the **Poisson bracket** $`\{F, G\} = F_\theta G_p - F_p G_\theta`$, where $`F_\theta`$ is the slope of F in $`\theta`$ and $`F_p`$ its slope in $`p`$, measures how much two flows fail to commute.
 
-The Baker–Campbell–Hausdorff formula composes flows. For a symmetric chain, half of $U$, all of $K$, half of $U$, it gives one flow whose energy is
+The Baker–Campbell–Hausdorff formula composes flows. For a symmetric chain, half of $`U`$, all of $`K`$, half of $`U`$, it gives one flow whose energy is
 
-$$\tilde E = K + U + h^2\Big(\tfrac{1}{12}\{K, \{K, U\}\} - \tfrac{1}{24}\{U, \{U, K\}\}\Big) + O(h^4).$$
+$`\displaystyle \tilde E = K + U + h^2\Big(\tfrac{1}{12}\{K, \{K, U\}\} - \tfrac{1}{24}\{U, \{U, K\}\}\Big) + O(h^4).`$
 
-Here $\{K, U\} = -pU'$, so $\{K, \{K, U\}\} = p^2 U''$ and $\{U, \{U, K\}\} = U'^2$. A prime on $U$ means its slope in $\theta$. With $U' = \omega^2\sin\theta$ and $U'' = \omega^2\cos\theta$ this is the card's $E_2$. A symmetric chain has no odd powers of $h$.
+Here $`\{K, U\} = -pU'`$, so $`\{K, \{K, U\}\} = p^2 U''`$ and $`\{U, \{U, K\}\} = U'^2`$. A prime on $`U`$ means its slope in $`\theta`$. With $`U' = \omega^2\sin\theta`$ and $`U'' = \omega^2\cos\theta`$ this is the card's $`E_2`$. A symmetric chain has no odd powers of $`h`$.
 
-Cross-check on the spring ($\omega = 1$, $\sin\theta \approx \theta$): $E + h^2E_2 = E + h^2(p^2/12 - \theta^2/24)$. That is $(1 + h^2/6)$ times the hidden energy $E - h^2\theta^2/8$ of [Symplectic steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md), up to $h^4$. A constant multiple of a kept quantity is kept too.
+Cross-check on the spring ($`\omega = 1`$, $`\sin\theta \approx \theta`$): $`E + h^2E_2 = E + h^2(p^2/12 - \theta^2/24)`$. That is $`(1 + h^2/6)`$ times the hidden energy $`E - h^2\theta^2/8`$ of [Symplectic steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md), up to $`h^4`$. A constant multiple of a kept quantity is kept too.
 
 This card states the formula with its source (the 2003 survey in Sources) and checks it in the code; it does not carry out the expansion.
 
@@ -148,17 +158,17 @@ This card states the formula with its source (the 2003 survey in Sources) and ch
 
 ### Step 4: why the band lasts for ever, in practice
 
-The full series $E_2, E_4, \dots$ does not converge. The theorem cuts it off at the best place.
+The full series $`E_2, E_4, \dots`$ does not converge. The theorem cuts it off at the best place.
 
-**Theorem** (the 1994 paper and the book's chapter IX in Sources). Let the energy be analytic (equal to its Taylor series near every point) and the method symplectic, with a fixed step $h$ below a limit. Then a suitably truncated modified energy changes per step by an amount exponentially small in $1/h$. For Verlet, $|E_n - E_0|$ stays below a constant times $h^2$ for every $n$ with $nh$ up to $e^{c/h}$, for some constant $c > 0$.
+**Theorem** (the 1994 paper and the book's chapter IX in Sources). Let the energy be analytic (equal to its Taylor series near every point) and the method symplectic, with a fixed step $`h`$ below a limit. Then a suitably truncated modified energy changes per step by an amount exponentially small in $`1/h`$. For Verlet, $`|E_n - E_0|`$ stays below a constant times $`h^2`$ for every $`n`$ with $`nh`$ up to $`e^{c/h}`$, for some constant $`c > 0`$.
 
-An exponentially long time in $1/h$ is far beyond any run, which is what "for ever" means here. The card proves the area statement; it states this theorem and measures it.
+An exponentially long time in $`1/h`$ is far beyond any run, which is what "for ever" means here. The card proves the area statement; it states this theorem and measures it.
 
-The global-error bound of [From local error to global error](02-convergence-of-one-step-methods.md) grows like $e^{\Lambda T}$ with the run length $T$. That bound is still true here, but it is far too pessimistic about the energy. The structure of the step, not its order, sets the long run.
+The global-error bound of [From local error to global error](02-convergence-of-one-step-methods.md) grows like $`e^{\Lambda T}`$ with the run length $`T`$. That bound is still true here, but it is far too pessimistic about the energy. The structure of the step, not its order, sets the long run.
 
 ### Step 5: what Verlet does not keep: the clock
 
-On a small swing, Verlet turns the state by an angle $2\arcsin(z/2)$ per step, slightly more than $z$. So its pendulum runs fast. A 20-degree swing has the slower pace $\pi/T_s$, so the effective $z$ is $h\pi/T_s = \pi/20$. The estimate is 1031 extra swings in a million. Counting zero crossings in the run gives 1,001,031 swings: 1031 ahead.
+On a small swing, Verlet turns the state by an angle $`2\arcsin(z/2)`$ per step, slightly more than $`z`$. So its pendulum runs fast. A 20-degree swing has the slower pace $`\pi/T_s`$, so the effective $`z`$ is $`h\pi/T_s = \pi/20`$. The estimate is 1031 extra swings in a million. Counting zero crossings in the run gives 1,001,031 swings: 1031 ahead.
 
 RK4 counts 1,005,891 swings. Its pendulum shrank, and a smaller swing is quicker. Losing energy also spoils its timing.
 
@@ -168,15 +178,15 @@ RK4 counts 1,005,891 swings. Its pendulum shrank, and a smaller swing is quicker
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| rod length | $L = g/\omega^2$ = 9.81/π² | 0.9940 m |
+| rod length | $`L = g/\omega^2`$ = 9.81/π² | 0.9940 m |
 | swing time | π/(ω × AGM(1, cos 10°)), the arithmetic-geometric mean | 1.007669026 s |
-| step | 1.007669026/20 | $h$ = 0.0503835 s |
-| step in units of the pace | $z = \pi h$ | 0.158284 |
-| energy at release | π²(1 − cos 20°) | $E_0$ = 0.595210 |
-| RK4 area factor − 1 | $-z^6/72 + z^8/576$ | −2.1774e-07 |
-| RK4 energy factor per 100,000 swings | $(1 - z^6/72 + z^8/576)^{2{,}000{,}000}$ | 0.6470 |
+| step | 1.007669026/20 | $`h`$ = 0.0503835 s |
+| step in units of the pace | $`z = \pi h`$ | 0.158284 |
+| energy at release | π²(1 − cos 20°) | $`E_0`$ = 0.595210 |
+| RK4 area factor − 1 | $`-z^6/72 + z^8/576`$ | −2.1774e-07 |
+| RK4 energy factor per 100,000 swings | $`(1 - z^6/72 + z^8/576)^{2{,}000{,}000}`$ | 0.6470 |
 | Verlet area factor | 1 × 1 × 1 | **1** |
-| Verlet's dip at the bottom | $h^2(\omega^2 \cdot 2E_0/12 + \omega^4\sin^2 20°/24)/E_0$ | **0.620%** |
+| Verlet's dip at the bottom | $`h^2(\omega^2 \cdot 2E_0/12 + \omega^4\sin^2 20°/24)/E_0`$ | **0.620%** |
 
 After a million swings Verlet's energy is between 99.380% and 100.000% of its start; RK4 keeps 1.349%.
 
@@ -184,10 +194,10 @@ After a million swings Verlet's energy is between 99.380% and 100.000% of its st
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| RK4 at the same 20 steps a swing | reach 2.31° after a million swings; 1.349% of the energy left | $J$ = 1 − 2.18e-07 per step, 20,000,000 times |
-| Verlet with a step $h(1 + 0.2\lvert\theta\rvert)$ that follows the state | energy 2.92% of $E_0$ after 101,589 swings | each step keeps a different modified energy |
-| Forward Euler (one step along the current slope) | over the top after 198 steps, swing 9.9 | $J > 1$: each step stretches area |
-| Trusting Verlet's clock | 1,001,031 swings counted in a million | the angle per step is $2\arcsin(z/2)$, not $z$ |
+| RK4 at the same 20 steps a swing | reach 2.31° after a million swings; 1.349% of the energy left | $`J`$ = 1 − 2.18e-07 per step, 20,000,000 times |
+| Verlet with a step $`h(1 + 0.2\lvert\theta\rvert)`$ that follows the state | energy 2.92% of $`E_0`$ after 101,589 swings | each step keeps a different modified energy |
+| Forward Euler (one step along the current slope) | over the top after 198 steps, swing 9.9 | $`J > 1`$: each step stretches area |
+| Trusting Verlet's clock | 1,001,031 swings counted in a million | the angle per step is $`2\arcsin(z/2)`$, not $`z`$ |
 
 ---
 
@@ -536,10 +546,10 @@ The two outputs match line for line.
 
 Lean proves the area facts of Steps 1 and 2: for Verlet with any pull that depends on the angle only, and for RK4 on a small swing.
 
-- For any pull that depends on the angle only, with a slope everywhere, one Verlet step has $J = 1$ at every state and step.
-- For the pendulum's pull $-\omega^2\sin\theta$, one Verlet step keeps the area of every patch of phase space, large or small.
-- On a small swing, the spring $p' = -\omega^2\theta$, one RK4 step has $J = 1 - z^6/72 + z^8/576$ at every state.
-- The Detailed proof's coefficients check out: $-1 + 1 = 0$, $\tfrac14 + \tfrac{1}{12} - \tfrac13 = 0$, $-\tfrac{1}{24} + \tfrac{1}{36} = -\tfrac{1}{72}$ and $(\tfrac{1}{24})^2 = \tfrac{1}{576}$.
+- For any pull that depends on the angle only, with a slope everywhere, one Verlet step has $`J = 1`$ at every state and step.
+- For the pendulum's pull $`-\omega^2\sin\theta`$, one Verlet step keeps the area of every patch of phase space, large or small.
+- On a small swing, the spring $`p' = -\omega^2\theta`$, one RK4 step has $`J = 1 - z^6/72 + z^8/576`$ at every state.
+- The Detailed proof's coefficients check out: $`-1 + 1 = 0`$, $`\tfrac14 + \tfrac{1}{12} - \tfrac13 = 0`$, $`-\tfrac{1}{24} + \tfrac{1}{36} = -\tfrac{1}{72}`$ and $`(\tfrac{1}{24})^2 = \tfrac{1}{576}`$.
 - The counts check out: 20,000,000 steps in a million swings, 20,000,001 sines for Verlet and 80,000,000 for RK4.
 
 The modified energy, the long-run energy band, the clock's lead and every measured number are left to Python and Rust.
@@ -745,9 +755,9 @@ example : 4 * 20000000 = 80000000 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - Guess first: give RK4 40 steps a swing for the whole million swings. How much energy is left? Change `es, rcross, rpts = run_rk4(20, 1000000)` to `run_rk4(40, 1000000)`. Answer: 87.779%, with a reach of 18.73 degrees, against 1.349% and 2.31 degrees at 20 steps; the asserts written for 20 steps then stop the run. The loss rate falls like $h^5$; it never stops.
-> - Guess first: let the step follow the state only a quarter as much. Does the energy hold? Change `0.2` in `hs = h * (1 + 0.2 * abs(th))` to `0.05`. Answer: no. It falls to 21.00% of $E_0$ after 100,731 swings (the label still says 0.2). Any step chosen from the state breaks the modified energy.
-> - Guess first: halve symplectic Euler's step (one whole kick, then one drift: also area-keeping). Does its band shrink by 2 or by 4? Change `p -= h * W2 * sin(th); th += h * p` to `p -= h / 2 * W2 * sin(th); th += h / 2 * p`. Answer: by 2, from 92.71% to 108.52% of $E_0$ down to 96.22% to 104.09%, now over 50,000 swings. The method keeps area but has order 1, so its band shrinks like $h$, not $h^2$, and stays bounded.
+> - Guess first: give RK4 40 steps a swing for the whole million swings. How much energy is left? Change `es, rcross, rpts = run_rk4(20, 1000000)` to `run_rk4(40, 1000000)`. Answer: 87.779%, with a reach of 18.73 degrees, against 1.349% and 2.31 degrees at 20 steps; the asserts written for 20 steps then stop the run. The loss rate falls like $`h^5`$; it never stops.
+> - Guess first: let the step follow the state only a quarter as much. Does the energy hold? Change `0.2` in `hs = h * (1 + 0.2 * abs(th))` to `0.05`. Answer: no. It falls to 21.00% of $`E_0`$ after 100,731 swings (the label still says 0.2). Any step chosen from the state breaks the modified energy.
+> - Guess first: halve symplectic Euler's step (one whole kick, then one drift: also area-keeping). Does its band shrink by 2 or by 4? Change `p -= h * W2 * sin(th); th += h * p` to `p -= h / 2 * W2 * sin(th); th += h / 2 * p`. Answer: by 2, from 92.71% to 108.52% of $`E_0`$ down to 96.22% to 104.09%, now over 50,000 swings. The method keeps area but has order 1, so its band shrinks like $`h`$, not $`h^2`$, and stays bounded.
 
 ---
 
@@ -756,7 +766,7 @@ example : 4 * 20000000 = 80000000 := by norm_num
 > [!warning]
 > **Trusting a higher order for a long run.** RK4 is 207 times more accurate than Verlet after one swing: 5.378e-06 rad against 1.113e-03 rad. After a million swings RK4's pendulum reaches 2.31 degrees and Verlet's 19.99. Order measures the error per step; area-keeping decides whether those errors pile up.
 >
-> - **Reading "symplectic" as "energy exactly conserved".** Verlet's energy dips by 0.620% at the bottom of every swing. What is kept, to $h^4$, is the modified energy.
+> - **Reading "symplectic" as "energy exactly conserved".** Verlet's energy dips by 0.620% at the bottom of every swing. What is kept, to $`h^4`$, is the modified energy.
 > - **Adding step control to a symplectic method.** With a step that follows the state the energy falls to 2.92% in 101,589 swings.
 > - **Trusting the clock because the energy is right.** Verlet counts 1,001,031 swings in a million.
 > - **Calling RK4's drift harmless because it is slow.** It is 2.18e-07 per step. Over 2,000,000 steps that is a factor 0.6470.
@@ -771,13 +781,13 @@ example : 4 * 20000000 = 80000000 := by norm_num
 - **Statistics.** Hamiltonian Monte Carlo moves a sample with leapfrog steps; the near-constant energy is what keeps its proposals accepted.
 
 > **Say it back**
-> Verlet is a half kick, a drift and a half kick. Each piece is a shear, so the step keeps phase-space area even for the pendulum's sine. A step that keeps area follows a nearby frictionless system exactly, so it keeps a modified energy, and the true energy stays in a band of width proportional to $h^2$, here 0.620%. RK4 shrinks area by $1 - z^6/72$ per step, so its energy drains, to 1.349% after a million swings. Verlet keeps the energy, not the clock, and only with a fixed step.
+> Verlet is a half kick, a drift and a half kick. Each piece is a shear, so the step keeps phase-space area even for the pendulum's sine. A step that keeps area follows a nearby frictionless system exactly, so it keeps a modified energy, and the true energy stays in a band of width proportional to $`h^2`$, here 0.620%. RK4 shrinks area by $`1 - z^6/72`$ per step, so its energy drains, to 1.349% after a million swings. Verlet keeps the energy, not the clock, and only with a fixed step.
 
 ---
 
 ## What this builds on
 
-- [From local error to global error](02-convergence-of-one-step-methods.md): the order of a one-step method and the $e^{\Lambda T}$ bound, which is true but too pessimistic for long runs of a frictionless system.
+- [From local error to global error](02-convergence-of-one-step-methods.md): the order of a one-step method and the $`e^{\Lambda T}`$ bound, which is true but too pessimistic for long runs of a frictionless system.
 - [Symplectic steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): Verlet on a spring, its determinant of 1 and its hidden energy, which this card extends to the pendulum's sine.
 - [Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md): motion from an energy function, and Liouville's theorem that the true motion keeps area.
 

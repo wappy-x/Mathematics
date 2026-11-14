@@ -45,42 +45,50 @@ Evening 1 (orange) sags and ends on 6 chips. Evening 2 (teal) dips to 6 and clim
 
 ## The formula
 
-Notation first, in words. The Greek letter $\omega$ (omega) names one outcome: one full record of 20 results. $X_n$ is the chip count after round $n$; written with the outcome, $X_n(\omega)$ is that count on that evening. The whole family is written $(X_n)$, read "the value at time n", with $n$ running over the rounds 0 to $N$, where $N = 20$ is the last round.
+Notation first, in words. The Greek letter $`\omega`$ (omega) names one outcome: one full record of 20 results. $`X_n`$ is the chip count after round $`n`$; written with the outcome, $`X_n(\omega)`$ is that count on that evening. The whole family is written $`(X_n)`$, read "the value at time n", with $`n`$ running over the rounds 0 to $`N`$, where $`N = 20`$ is the last round.
 
-Each round's result is a step of plus or minus one chip, written $\xi_k$ (xi) for round $k$:
+Each round's result is a step of plus or minus one chip, written $`\xi_k`$ (xi) for round $`k`$:
 
-$$\xi_k(\omega) = \begin{cases} +1 & \text{if round } k \text{ is won} \\ -1 & \text{if round } k \text{ is lost} \end{cases}$$
+```math
+\xi_k(\omega) = \begin{cases} +1 & \text{if round } k \text{ is won} \\ -1 & \text{if round } k \text{ is lost} \end{cases}
+```
 
 The chip count starts at 10 and follows the house rule:
 
-$$X_0 = 10, \qquad X_n = \begin{cases} X_{n-1} + \xi_n & \text{if } X_{n-1} > 0 \\ 0 & \text{if } X_{n-1} = 0 \end{cases} \qquad n = 1, 2, \dots, 20$$
+```math
+X_0 = 10, \qquad X_n = \begin{cases} X_{n-1} + \xi_n & \text{if } X_{n-1} > 0 \\ 0 & \text{if } X_{n-1} = 0 \end{cases} \qquad n = 1, 2, \dots, 20
+```
 
 **Read it aloud:** start at 10 chips; each round add the round's result, unless the chips are already gone, in which case stay at nothing.
 
-Until the chips run out, that is the running total $X_n = 10 + \xi_1 + \xi_2 + \dots + \xi_n$.
+Until the chips run out, that is the running total $`X_n = 10 + \xi_1 + \xi_2 + \dots + \xi_n`$.
 
-The three objects are the same function sliced two ways, and then weighed. The arrow $\mapsto$ reads "is sent to":
+The three objects are the same function sliced two ways, and then weighed. The arrow $`\mapsto`$ reads "is sent to":
 
-$$\underbrace{\omega \mapsto X_n(\omega)}_{\text{fix the round: a random variable}} \qquad \underbrace{n \mapsto X_n(\omega)}_{\text{fix the outcome: a path}}$$
+```math
+\underbrace{\omega \mapsto X_n(\omega)}_{\text{fix the round: a random variable}} \qquad \underbrace{n \mapsto X_n(\omega)}_{\text{fix the outcome: a path}}
+```
 
-$$P_X(A) = P\big(\{\,\omega : (X_0(\omega), X_1(\omega), \dots, X_N(\omega)) \in A\,\}\big)$$
+```math
+P_X(A) = P\big(\{\,\omega : (X_0(\omega), X_1(\omega), \dots, X_N(\omega)) \in A\,\}\big)
+```
 
 **Read it aloud:** the chance of a set of paths is the chance of the set of outcomes whose path lands in it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\omega$ | one outcome: a full record of results | W L L L W L L L L W W W W L W L L L W L | — |
-| $\Omega$ | the set of all outcomes | 1,048,576 records, each with chance 1/1,048,576 | — |
-| $n$, $k$ | round numbers; 0 is sitting down | 0 to 20 | — |
-| $N$ | the last round | 20 | each extra round doubles the outcomes |
-| $\xi_k$ | the result of round $k$: +1 chip or −1 chip | +1 for W, −1 for L | — |
-| $X_n$, $X_7$, $X_{20}$ | chips held after round $n$; a random variable | on evening 1, 7 after round 7 | — |
-| $x$ | a chip count asked about, as in $P(X_n = x)$ | 7, in $P(X_7 = 7)$ | — |
-| $\Gamma$ | the set of all paths some outcome produces | 1,030,558 paths | — |
-| $P$ | chance of a set of outcomes | 1/1,048,576 for each record | — |
-| $A$, $B$ | sets of paths: the question being asked | "at 11 after round 1 and 12 after round 2" | — |
-| $P_X$ | the law of the process: chances over paths | 0.25 for the set $A$ above | — |
-| $\mapsto$ | "is sent to": what a rule returns for an input | $n \mapsto X_n(\omega)$, the path of $\omega$ | — |
+| $`\omega`$ | one outcome: a full record of results | W L L L W L L L L W W W W L W L L L W L | — |
+| $`\Omega`$ | the set of all outcomes | 1,048,576 records, each with chance 1/1,048,576 | — |
+| $`n`$, $`k`$ | round numbers; 0 is sitting down | 0 to 20 | — |
+| $`N`$ | the last round | 20 | each extra round doubles the outcomes |
+| $`\xi_k`$ | the result of round $`k`$: +1 chip or −1 chip | +1 for W, −1 for L | — |
+| $`X_n`$, $`X_7`$, $`X_{20}`$ | chips held after round $`n`$; a random variable | on evening 1, 7 after round 7 | — |
+| $`x`$ | a chip count asked about, as in $`P(X_n = x)`$ | 7, in $`P(X_7 = 7)`$ | — |
+| $`\Gamma`$ | the set of all paths some outcome produces | 1,030,558 paths | — |
+| $`P`$ | chance of a set of outcomes | 1/1,048,576 for each record | — |
+| $`A`$, $`B`$ | sets of paths: the question being asked | "at 11 after round 1 and 12 after round 2" | — |
+| $`P_X`$ | the law of the process: chances over paths | 0.25 for the set $`A`$ above | — |
+| $`\mapsto`$ | "is sent to": what a rule returns for an input | $`n \mapsto X_n(\omega)`$, the path of $`\omega`$ | — |
 
 ### When it holds
 
@@ -101,24 +109,24 @@ The chip count depends on two things: which round, and which evening. Write it a
 
 ### Step 1: each column is a random variable
 
-$X_n$ is a rule: feed it an outcome, it returns a chip count. So it is a random variable, and its table of chances is found by pooling outcomes. For $X_7$: only the first 7 results matter, giving 2^7 = 128 equally likely patterns. Ending on 7 chips means 2 wins and 5 losses, and there are 21 ways to place 2 wins among 7 rounds. So $P(X_7 = 7)$ = 21/128 = 0.1641. Counting all 1,048,576 full records gives 172,032 with $X_7 = 7$, the same 0.1641.
+$`X_n`$ is a rule: feed it an outcome, it returns a chip count. So it is a random variable, and its table of chances is found by pooling outcomes. For $`X_7`$: only the first 7 results matter, giving 2^7 = 128 equally likely patterns. Ending on 7 chips means 2 wins and 5 losses, and there are 21 ways to place 2 wins among 7 rounds. So $`P(X_7 = 7)`$ = 21/128 = 0.1641. Counting all 1,048,576 full records gives 172,032 with $`X_7 = 7`$, the same 0.1641.
 
 ### Step 2: the rows carry a table of chances of their own
 
-Pool outcomes by the path they produce, and add their chances. That is the law $P_X$. Every outcome lands on exactly one path, so the chances add to 1: the law is a genuine probability table, on paths instead of on numbers.
+Pool outcomes by the path they produce, and add their chances. That is the law $`P_X`$. Every outcome lands on exactly one path, so the chances add to 1: the law is a genuine probability table, on paths instead of on numbers.
 
 Outcomes and paths are not the same thing. Once an evening is ruined, the remaining coin tosses leave no trace. So several outcomes share one path. The 1,048,576 outcomes produce 1,030,558 distinct paths.
 
 <details>
 <summary>Detailed proof: the law is a probability table, and it fixes every one-time table</summary>
 
-Let $\Gamma$ be the finite set of paths produced by some outcome. For a set $A$ of paths, the outcomes whose path lies in $A$ form an event, since on a finite outcome set every subset is an event. The law is $P_X(A) = P(\{\omega : \text{path of } \omega \in A\})$.
+Let $`\Gamma`$ be the finite set of paths produced by some outcome. For a set $`A`$ of paths, the outcomes whose path lies in $`A`$ form an event, since on a finite outcome set every subset is an event. The law is $`P_X(A) = P(\{\omega : \text{path of } \omega \in A\})`$.
 
-*Total 1.* Every outcome's path lies in $\Gamma$, so $P_X(\Gamma) = P(\Omega) = 1$.
+*Total 1.* Every outcome's path lies in $`\Gamma`$, so $`P_X(\Gamma) = P(\Omega) = 1`$.
 
-*Adding.* If $A$ and $B$ share no path, no outcome has its path in both, so the two outcome sets are disjoint and $P_X(A \cup B) = P_X(A) + P_X(B)$.
+*Adding.* If $`A`$ and $`B`$ share no path, no outcome has its path in both, so the two outcome sets are disjoint and $`P_X(A \cup B) = P_X(A) + P_X(B)`$.
 
-*One-time tables from the law.* The event $X_n = x$ is the event "the path's entry at round $n$ is $x$". So $P(X_n = x) = P_X(\{\text{paths with entry } x \text{ at round } n\})$. The same holds for any finite list of rounds: $P(X_1 = 11, X_2 = 12)$ is the law of the set of paths passing through 11 and then 12.
+*One-time tables from the law.* The event $`X_n = x`$ is the event "the path's entry at round $`n`$ is $`x`$". So $`P(X_n = x) = P_X(\{\text{paths with entry } x \text{ at round } n\})`$. The same holds for any finite list of rounds: $`P(X_1 = 11, X_2 = 12)`$ is the law of the set of paths passing through 11 and then 12.
 
 This is the image of a probability under a map, as in [Random variables](../../09-Probability%20and%20statistics/02-Random%20Variables/01-random-variables-and-distributions.md), with the map returning a list of 21 numbers instead of one.
 
@@ -128,13 +136,13 @@ This is the image of a probability under a map, as in [Random variables](../../0
 
 The converse fails. Build a second process with exactly the same 21 one-time tables. Each round, throw away the running count and redraw a chip count at random from that round's table, independently of every other round. Column by column, nothing has changed.
 
-Row by row, everything has. For the gambler, $P(X_1 = 11 \text{ and } X_2 = 12)$ = 0.25: the first two rounds must be W W, one pattern in four. For the redrawn process the two rounds are independent, so the chance is the product 0.5 × 0.25 = 0.125. And the gambler's count never moves more than one chip in a round, with chance 1. The redrawn count manages that on all 20 rounds with chance about 1 in 8,000,415.
+Row by row, everything has. For the gambler, $`P(X_1 = 11 \text{ and } X_2 = 12)`$ = 0.25: the first two rounds must be W W, one pattern in four. For the redrawn process the two rounds are independent, so the chance is the product 0.5 × 0.25 = 0.125. And the gambler's count never moves more than one chip in a round, with chance 1. The redrawn count manages that on all 20 rounds with chance about 1 in 8,000,415.
 
 The one-time tables say where the process tends to be at each moment. They say nothing about how one moment is tied to the next. That tie lives only in the law.
 
 ### Step 4: the joint tables are the whole law
 
-With 20 rounds, the law is the joint table of $(X_0, X_1, \dots, X_{20})$, and the tables for smaller lists of rounds are sums over it. These are the **finite-dimensional distributions**: the joint tables for every finite list of times.
+With 20 rounds, the law is the joint table of $`(X_0, X_1, \dots, X_{20})`$, and the tables for smaller lists of rounds are sums over it. These are the **finite-dimensional distributions**: the joint tables for every finite list of times.
 
 For an evening with no last round, there is no single finite table. Kolmogorov's extension theorem says that any family of finite-dimensional tables that agree with each other comes from one law on endless paths. Agree means that summing the table for rounds 1, 2, 3 over round 3 gives the table for rounds 1, 2. This card states it and does not prove it; [Infinitely many coin tosses](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md) states it precisely and outlines the proof, and Durrett's appendix gives it in full.
 
@@ -150,16 +158,16 @@ Evening 1 opens W L L L W L L. Follow it for 7 rounds, then ask about round 7 ac
 | --- | --- | --- |
 | the outcome, first 7 results | read from evening 1 | W L L L W L L |
 | its path to round 7 | 10, then add +1 or −1 each round | 10, 11, 10, 9, 8, 9, 8, 7 |
-| $X_7$ on this evening | 10 + 2 − 5 | 7 |
+| $`X_7`$ on this evening | 10 + 2 − 5 | 7 |
 | all patterns of 7 results | 2^7 | 128 |
 | patterns with 2 wins | 7 × 6 / 2 | 21 |
-| $P(X_7 = 7)$ over all evenings | 21/128 | **0.1641** |
+| $`P(X_7 = 7)`$ over all evenings | 21/128 | **0.1641** |
 | after 4 rounds | patterns with 0 to 4 wins: 1, 4, 6, 4, 1 of 16 | 6, 8, 10, 12, 14 chips |
-| $P(X_1 = 11 \text{ and } X_2 = 12)$ | only W W, one pattern of 4 | **0.25** |
+| $`P(X_1 = 11 \text{ and } X_2 = 12)`$ | only W W, one pattern of 4 | **0.25** |
 
 On evening 1 the gambler held 7 chips after round 7. That value is one draw; across all evenings the gambler holds exactly 7 chips after round 7 about one time in six.
 
-The law of the last count, $X_{20}$, from all 1,048,576 records:
+The law of the last count, $`X_{20}`$, from all 1,048,576 records:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -176,8 +184,8 @@ Only even counts appear: 20 steps of one chip from 10 always land on an even num
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Taking the 21 one-time tables as the law | $P(X_1 = 11 \text{ and } X_2 = 12)$ = 0.125, not 0.25; one-chip moves on every round about 1 in 8,000,415, not certain | the tables drop how one round is tied to the next |
-| Dropping the stop at 0 | $P(X_{20} = 0)$ = 0.0148, not 0.0266, and 0.0059 below zero | the formula is the rule, stop included |
+| Taking the 21 one-time tables as the law | $`P(X_1 = 11 \text{ and } X_2 = 12)`$ = 0.125, not 0.25; one-chip moves on every round about 1 in 8,000,415, not certain | the tables drop how one round is tied to the next |
+| Dropping the stop at 0 | $`P(X_{20} = 0)`$ = 0.0148, not 0.0266, and 0.0059 below zero | the formula is the rule, stop included |
 | Reading five paths as the law | chance that none of 5 evenings is ruined: 0.8739 | a 2.7% event is usually missing from five samples |
 
 The code prints every one.
@@ -544,13 +552,13 @@ The two outputs match line for line. The simulated mean, 9.9908 with standard er
 Lean proves the three facts of Why it works in general, and checks the gambler's hand-worked numbers.
 
 - Take any stochastic process, with any set of times. Then its law is a probability table on whole paths, with total 1.
-- Take any finite list of rounds, with a set of values for each. Then the chance that each $X_n$ lands in its set equals $P_X$ of the matching paths.
+- Take any finite list of rounds, with a set of values for each. Then the chance that each $`X_n`$ lands in its set equals $`P_X`$ of the matching paths.
 - There are two processes with the same one-time table at every round but different laws.
 - Evening 1 gives the orange path at all 21 rounds, with 7 chips after round 7.
-- Take the 128 patterns of 7 results. Then 21 of them end on 7 chips, so $P(X_7 = 7)$ is 21/128.
+- Take the 128 patterns of 7 results. Then 21 of them end on 7 chips, so $`P(X_7 = 7)`$ is 21/128.
 - The fraction 172,032 over 1,048,576 is also 21/128.
 - After 4 rounds, 1, 4, 6, 4 and 1 of the 16 patterns end on 6, 8, 10, 12 and 14 chips.
-- Take the 4 patterns of 2 results. Then only W W gives $X_1 = 11$ and $X_2 = 12$, while the one-time tables multiply to 1/8.
+- Take the 4 patterns of 2 results. Then only W W gives $`X_1 = 11`$ and $`X_2 = 12`$, while the one-time tables multiply to 1/8.
 - Ten losses, then ten wins, is ruined at round 10 and still holds 0 chips after round 20.
 - The 184,756 ways to place 10 wins among 20 rounds, less that one evening, leave 184,755.
 - The reflection count of ruined evenings comes to 27,896.
@@ -709,9 +717,9 @@ end ProcessesAndPaths
 > [!warning]
 > **Treating a sample path as the process.** A path is one evening. The process is all 1,048,576 evenings with their chances. Five paths, none ruined, say nothing about the 2.7% ruin rate: five fair evenings all avoid ruin with chance 0.8739.
 >
-> - **Treating the one-time tables as the whole law.** They fix where the count tends to be, not how it moves. A process redrawn fresh each round has the same tables and gives $P(X_1 = 11 \text{ and } X_2 = 12)$ = 0.125, where the gambler's is 0.25.
+> - **Treating the one-time tables as the whole law.** They fix where the count tends to be, not how it moves. A process redrawn fresh each round has the same tables and gives $`P(X_1 = 11 \text{ and } X_2 = 12)`$ = 0.125, where the gambler's is 0.25.
 > - **Treating an outcome as a path.** Different outcomes can give the same path: after ruin, the remaining tosses leave no trace. 1,048,576 outcomes give 1,030,558 paths.
-> - **Reading "random" into the rule.** $X_n$ is a fixed rule. The chance sits in which outcome occurs, never in the rule.
+> - **Reading "random" into the rule.** $`X_n`$ is a fixed rule. The chance sits in which outcome occurs, never in the rule.
 > - **Reading a drawn line between rounds as data.** The process has values only at whole rounds; the chart's segments are a drawing convention.
 
 ---
@@ -736,7 +744,7 @@ end ProcessesAndPaths
 ## Where this goes next
 
 - [Simple random walk](02-simple-random-walk.md): the chip count without the stop, the running total of fair ±1 steps, and its spread over time.
-- [Filtrations](03-filtrations-and-information.md): what the gambler knows after round $n$, and which questions can be settled by then.
+- [Filtrations](03-filtrations-and-information.md): what the gambler knows after round $`n`$, and which questions can be settled by then.
 - [Markov chains](../03-Markov%20Chains/01-markov-chains.md): processes whose law is fixed by one-step moves from the current state, as the gambler's is.
 - [Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): a process in continuous time, counting calls to a switchboard.
 

@@ -37,32 +37,40 @@ Middle line: the curve. Top line: half of 1/(x − 1). Bottom line: minus half o
 
 ## The formula
 
-$$\frac{1}{x^2-1} = \frac{1/2}{x-1} - \frac{1/2}{x+1}$$
+```math
+\frac{1}{x^2-1} = \frac{1/2}{x-1} - \frac{1/2}{x+1}
+```
 
-$$\int_2^3 \frac{dx}{x^2-1} = \Big[\tfrac12\ln\lvert x-1\rvert - \tfrac12\ln\lvert x+1\rvert\Big]_2^3 = \tfrac12\ln\tfrac32 = 0.202733$$
+```math
+\int_2^3 \frac{dx}{x^2-1} = \Big[\tfrac12\ln\lvert x-1\rvert - \tfrac12\ln\lvert x+1\rvert\Big]_2^3 = \tfrac12\ln\tfrac32 = 0.202733
+```
 
 **Read it aloud:** one over x squared minus one is half of one over x minus one, less half of one over x plus one, so its area from 2 to 3 is half the log of 1.5.
 
 Bars mean size with the sign dropped; square brackets with two limits mean "at the top limit minus at the bottom limit". The degree of a polynomial is its highest power of x. In general, first divide the top P by the bottom Q:
 
-$$\frac{P(x)}{Q(x)} = H(x) + \frac{R(x)}{Q(x)}, \qquad \text{the degree of } R \text{ below the degree of } Q$$
+```math
+\frac{P(x)}{Q(x)} = H(x) + \frac{R(x)}{Q(x)}, \qquad \text{the degree of } R \text{ below the degree of } Q
+```
 
 Then split the remainder part, one piece per power of each factor of Q:
 
-$$\frac{R(x)}{Q(x)} = \sum_{\text{roots } r}\sum_{k=1}^{m} \frac{A}{(x-r)^k} + \sum_{\text{quadratics } q}\sum_{k=1}^{m} \frac{Mx+N}{q(x)^k}$$
+```math
+\frac{R(x)}{Q(x)} = \sum_{\text{roots } r}\sum_{k=1}^{m} \frac{A}{(x-r)^k} + \sum_{\text{quadratics } q}\sum_{k=1}^{m} \frac{Mx+N}{q(x)^k}
+```
 
 **Read it aloud:** a constant over each power of each linear factor, and a straight-line top over each power of each quadratic that will not split.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the input | 2 to 3 | nearing 1, the curve goes to infinity |
-| $P$, $Q$ | top and bottom polynomials | 1 and x^2 − 1 | top as big as bottom: divide first |
-| $H$, $R$ | quotient and remainder of P over Q | for x^3/(x^2 − 1): x and x | H adds 2.5 of the 2.990415 |
-| $A$, $B$ | constants over the linear factors | 1/2 and −1/2 | doubled, the area doubles to 0.405465 |
-| $r$, $k$, $m$ | a root of Q; a power; how often r repeats | r = ±1, m = 1; m = 2 when squared | each extra power adds a piece |
-| $M$, $N$, $q$ | top Mx + N over a quadratic q with no real root | q = x^2 + 1, M = 0, N = −1/2 | N gives an arctangent, M a log |
-| $F$, $C$ | an antiderivative; its free constant | $F$ = ½ ln of size of x − 1, less ½ ln of size of x + 1 | C cancels from any area |
-| $\ln$, $\arctan$ | natural log; the angle whose tangent is the input | ln(3/2) = 0.405465; arctan(1/7) = 0.141897 | both rise with the input |
+| $`x`$ | the input | 2 to 3 | nearing 1, the curve goes to infinity |
+| $`P`$, $`Q`$ | top and bottom polynomials | 1 and x^2 − 1 | top as big as bottom: divide first |
+| $`H`$, $`R`$ | quotient and remainder of P over Q | for x^3/(x^2 − 1): x and x | H adds 2.5 of the 2.990415 |
+| $`A`$, $`B`$ | constants over the linear factors | 1/2 and −1/2 | doubled, the area doubles to 0.405465 |
+| $`r`$, $`k`$, $`m`$ | a root of Q; a power; how often r repeats | r = ±1, m = 1; m = 2 when squared | each extra power adds a piece |
+| $`M`$, $`N`$, $`q`$ | top Mx + N over a quadratic q with no real root | q = x^2 + 1, M = 0, N = −1/2 | N gives an arctangent, M a log |
+| $`F`$, $`C`$ | an antiderivative; its free constant | $`F`$ = ½ ln of size of x − 1, less ½ ln of size of x + 1 | C cancels from any area |
+| $`\ln`$, $`\arctan`$ | natural log; the angle whose tangent is the input | ln(3/2) = 0.405465; arctan(1/7) = 0.141897 | both rise with the input |
 
 ### When it holds
 
@@ -83,7 +91,9 @@ Adding simple fractions gives a rational function. Partial fractions asks which 
 
 Write 1/(x^2 − 1) = A/(x − 1) + B/(x + 1). Multiply both sides by (x − 1)(x + 1):
 
-$$1 = A(x+1) + B(x-1)$$
+```math
+1 = A(x+1) + B(x-1)
+```
 
 This holds for every x, 1 and −1 included. Two roads give the constants.
 
@@ -96,7 +106,9 @@ Setting x = 1 is legitimate here, never in the fractions. Two polynomials that a
 
 The rate of ln x is 1/x for positive x; for negative x, ln(−x) has rate (−1)/(−x) = 1/x too. So on either side of r,
 
-$$\int \frac{A}{x-r}\,dx = A\ln\lvert x-r\rvert + C.$$
+```math
+\int \frac{A}{x-r}\,dx = A\ln\lvert x-r\rvert + C.
+```
 
 With F(x) = ½ ln|x − 1| − ½ ln|x + 1|, the fundamental theorem ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)) gives the area as F(3) − F(2) = 0.202733, worked in the table below.
 
@@ -104,7 +116,9 @@ With F(x) = ½ ln|x − 1| − ½ ln|x + 1|, the fundamental theorem ([Fundament
 
 Fractions over x − 1 and x + 1 combine to a top of degree at most 1, never x^3. Divide: x^3 = x(x^2 − 1) + x, so
 
-$$\frac{x^3}{x^2-1} = x + \frac{x}{x^2-1} = x + \frac{1/2}{x-1} + \frac{1/2}{x+1}.$$
+```math
+\frac{x^3}{x^2-1} = x + \frac{x}{x^2-1} = x + \frac{1/2}{x-1} + \frac{1/2}{x+1}.
+```
 
 On 2 to 3 the x contributes (9 − 4)/2 = 2.5 and the fractions ½ ln(8/3) = 0.490415: total 2.990415.
 
@@ -112,7 +126,9 @@ On 2 to 3 the x contributes (9 − 4)/2 = 2.5 and the fractions ½ ln(8/3) = 0.4
 
 Square the curve. A bottom of degree 4 allows a top of degree up to 3, four numbers, so four constants are needed, two per factor:
 
-$$\frac{1}{(x^2-1)^2} = -\frac{1/4}{x-1} + \frac{1/4}{(x-1)^2} + \frac{1/4}{x+1} + \frac{1/4}{(x+1)^2}$$
+```math
+\frac{1}{(x^2-1)^2} = -\frac{1/4}{x-1} + \frac{1/4}{(x-1)^2} + \frac{1/4}{x+1} + \frac{1/4}{(x+1)^2}
+```
 
 Setting x = 1 and x = −1 in the cleared line gives the squared tops; x = 0 and the x^3 terms give the rest. The squared pieces integrate to fractions, since the rate of −1/(x − 1) is 1/(x − 1)^2. The area from 2 to 3 is 0.044467.
 
@@ -120,7 +136,9 @@ Setting x = 1 and x = −1 in the cleared line gives the squared tops; x = 0 and
 
 Now x^4 − 1 = (x − 1)(x + 1)(x^2 + 1), and x^2 + 1 is never zero, so it cannot split. Its piece gets a top Mx + N:
 
-$$\frac{1}{x^4-1} = \frac{1/4}{x-1} - \frac{1/4}{x+1} - \frac{1/2}{x^2+1}$$
+```math
+\frac{1}{x^4-1} = \frac{1/4}{x-1} - \frac{1/4}{x+1} - \frac{1/2}{x^2+1}
+```
 
 Cover-up gives 1/4 and −1/4; x = 0 gives N = −1/2; the x^3 terms give M = 0. The first two pieces are half the card's curve.
 
@@ -136,7 +154,9 @@ A nonzero M gives a log of q by [Substitution](03-substitution.md); x^2 + 2x + 5
 **Factor.** Every real polynomial factors into linear factors and quadratics with no real root: the fundamental theorem of algebra, proved in the complex analysis wing.
 
 **Separate coprime parts.** If Q = S T with no shared factor, Euclid's algorithm on polynomials finds a and b with a S + b T = 1. Then
-$$\frac{R}{ST} = \frac{R(aS + bT)}{ST} = \frac{Ra}{T} + \frac{Rb}{S}.$$
+
+$`\displaystyle \frac{R}{ST} = \frac{R(aS + bT)}{ST} = \frac{Ra}{T} + \frac{Rb}{S}.`$
+
 Make each fraction proper by division; the polynomial parts cancel, since R/Q was proper. Repeat until each bottom is a single power, (x − r)^m or q^m.
 
 **Peel off powers.** For G/(x − r)^m, divide G by (x − r) repeatedly to write it in powers of (x − r); dividing through by (x − r)^m leaves one constant over each power. For G/q^m, divide by q; each remainder is a straight line.

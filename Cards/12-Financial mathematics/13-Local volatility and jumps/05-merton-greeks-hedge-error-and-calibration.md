@@ -36,61 +36,71 @@ Orange: no gaps, hedged with the Black-Scholes delta. Green: with gaps, hedged w
 
 Notation first, in words.
 
-- Gaps arrive at $\lambda$ (lambda) a year. A gap's log-size has mean $\mu_J$ and spread $\delta$, and $k$ is the average gap as a fraction of the price.
-- $\tau$ (tau) is the years left to expiry.
-- The jump model's price is a sum over $n$, the number of gaps before expiry. Term $n$ is a Black-Scholes price $C_{\mathrm{BS}}$ with its own volatility $\sigma_n$ and yield $q_n$, weighted by $p_n$, the chance of exactly $n$ gaps.
-- $N$ is the bell-curve area to the left of a point and $\varphi$ the curve's height there.
-- $\Delta$ (delta) is the price's slope in the share price, $\Gamma$ (gamma) the change in that slope, $\nu$ (vega) the slope in the diffusion volatility $\sigma$.
+- Gaps arrive at $`\lambda`$ (lambda) a year. A gap's log-size has mean $`\mu_J`$ and spread $`\delta`$, and $`k`$ is the average gap as a fraction of the price.
+- $`\tau`$ (tau) is the years left to expiry.
+- The jump model's price is a sum over $`n`$, the number of gaps before expiry. Term $`n`$ is a Black-Scholes price $`C_{\mathrm{BS}}`$ with its own volatility $`\sigma_n`$ and yield $`q_n`$, weighted by $`p_n`$, the chance of exactly $`n`$ gaps.
+- $`N`$ is the bell-curve area to the left of a point and $`\varphi`$ the curve's height there.
+- $`\Delta`$ (delta) is the price's slope in the share price, $`\Gamma`$ (gamma) the change in that slope, $`\nu`$ (vega) the slope in the diffusion volatility $`\sigma`$.
 
 The price, as [Merton jump-diffusion](04-merton-jump-diffusion.md) left it:
 
-$$C = \sum_{n=0}^{\infty} p_n\, C_{\mathrm{BS}}(S, K, r, q_n, \sigma_n, \tau), \qquad p_n = e^{-\lambda\tau}\frac{(\lambda\tau)^n}{n!}, \qquad \sigma_n^2 = \sigma^2 + \frac{n\delta^2}{\tau}, \qquad q_n = q + \lambda k - \frac{n(\mu_J + \delta^2/2)}{\tau}$$
+```math
+C = \sum_{n=0}^{\infty} p_n\, C_{\mathrm{BS}}(S, K, r, q_n, \sigma_n, \tau), \qquad p_n = e^{-\lambda\tau}\frac{(\lambda\tau)^n}{n!}, \qquad \sigma_n^2 = \sigma^2 + \frac{n\delta^2}{\tau}, \qquad q_n = q + \lambda k - \frac{n(\mu_J + \delta^2/2)}{\tau}
+```
 
 Its three Greeks:
 
-$$\Delta = \sum_{n} p_n e^{-q_n\tau} N(d_{1,n}), \qquad \Gamma = \sum_{n} p_n e^{-q_n\tau}\,\frac{\varphi(d_{1,n})}{S\sigma_n\sqrt{\tau}}, \qquad \nu = \sum_{n} p_n S e^{-q_n\tau}\varphi(d_{1,n})\sqrt{\tau}\,\frac{\sigma}{\sigma_n} = S^2\sigma\tau\,\Gamma$$
+```math
+\Delta = \sum_{n} p_n e^{-q_n\tau} N(d_{1,n}), \qquad \Gamma = \sum_{n} p_n e^{-q_n\tau}\,\frac{\varphi(d_{1,n})}{S\sigma_n\sqrt{\tau}}, \qquad \nu = \sum_{n} p_n S e^{-q_n\tau}\varphi(d_{1,n})\sqrt{\tau}\,\frac{\sigma}{\sigma_n} = S^2\sigma\tau\,\Gamma
+```
 
 **Read it aloud:** each Greek is the chance-weighted sum of the Black-Scholes Greeks of the branches, one branch per possible number of gaps; vega carries one extra factor, because the diffusion volatility reaches each branch only through its wider volatility.
 
-The loss at a gap. The hedger holds $\Delta$ shares and a gap multiplies the share price by $J$, a move of $z = S(J-1)$ dollars; $t$ runs from 0 to 1 along the move:
+The loss at a gap. The hedger holds $`\Delta`$ shares and a gap multiplies the share price by $`J`$, a move of $`z = S(J-1)`$ dollars; $`t`$ runs from 0 to 1 along the move:
 
-$$R(S, J) = C(SJ) - C(S) - S(J-1)\,\Delta = z^2\int_0^1 (1-t)\,\Gamma(S + tz)\,dt$$
+```math
+R(S, J) = C(SJ) - C(S) - S(J-1)\,\Delta = z^2\int_0^1 (1-t)\,\Gamma(S + tz)\,dt
+```
 
 **Read it aloud:** after a gap the call ends up above what its slope predicted, by the squared move times an average of gamma along the way, and the seller of the call loses that much.
 
 The fit: three quoted one-year calls and three unknowns.
 
-$$C(K_i;\ \lambda, \mu_J, \delta) = \text{quote}_i, \qquad K_i = 92.15,\ 100,\ 119.93$$
+```math
+C(K_i;\ \lambda, \mu_J, \delta) = \text{quote}_i, \qquad K_i = 92.15,\ 100,\ 119.93
+```
 
 **Read it aloud:** find the gap rate, mean and spread that reprice all three quotes.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's share price now | $100 | delta climbs |
-| $K$ | strike | $100; quotes at $92.15, $100, $119.93 | delta falls |
-| $\tau$ | time to expiry, in years | 1 | more gaps ahead |
-| $r$, $q$ | bank rate; dividend yield | 5%, 2% | higher $q$ lowers delta |
-| $\sigma$ | diffusion volatility: the wiggle between gaps | 20% | more wiggle error, which faster hedging still shrinks |
-| $\lambda$ | gap rate, gaps per year | 0.5 | the floor under the hedging error rises |
-| $\mu_J$, $\delta$, $k$ | mean and spread of a gap's log-size; $k = e^{\mu_J + \delta^2/2} - 1$, the average gap as a fraction | −0.10, 0.15; −0.084926 | larger $\delta$ or more negative $\mu_J$: bigger gaps, costlier to hedge |
-| $J$, $z$, $R$, $t$ | one gap's multiplier; the dollar move; the hedger's loss at that gap; a point along the move, 0 to 1 | 0.9, −$10, $0.89 | $R$ grows roughly as $z^2$, whichever way $J$ moves from 1 |
-| $n$, $p_n$, $\tilde p_n$ | gaps before expiry; the Poisson chance of $n$; the same chance at the tilted rate $\lambda(1+k)$ | 0.606531 for none, 0.303265 for one | — |
-| $\sigma_n$, $q_n$ | branch $n$'s volatility and yield; $d_{1,n}$ is its Black-Scholes distance to the strike | one set per branch | — |
-| $N$, $\varphi$, $\mathbb{E}$ | bell-curve area to the left; bell-curve height; average over gap sizes | — | — |
-| $C$, $C_{\mathrm{BS}}$ | the jump-model call; a Black-Scholes call with the inputs in brackets | $10.42; $9.23 at 20% | — |
-| $\Delta$, $\Gamma$, $\nu$, $\Theta$ | delta; gamma; vega; theta, the price's change per year of calendar time | 0.599892; 0.016630; 33.259434; — | — |
+| $`S`$ | Acme's share price now | $100 | delta climbs |
+| $`K`$ | strike | $100; quotes at $92.15, $100, $119.93 | delta falls |
+| $`\tau`$ | time to expiry, in years | 1 | more gaps ahead |
+| $`r`$, $`q`$ | bank rate; dividend yield | 5%, 2% | higher $`q`$ lowers delta |
+| $`\sigma`$ | diffusion volatility: the wiggle between gaps | 20% | more wiggle error, which faster hedging still shrinks |
+| $`\lambda`$ | gap rate, gaps per year | 0.5 | the floor under the hedging error rises |
+| $`\mu_J`$, $`\delta`$, $`k`$ | mean and spread of a gap's log-size; $`k = e^{\mu_J + \delta^2/2} - 1`$, the average gap as a fraction | −0.10, 0.15; −0.084926 | larger $`\delta`$ or more negative $`\mu_J`$: bigger gaps, costlier to hedge |
+| $`J`$, $`z`$, $`R`$, $`t`$ | one gap's multiplier; the dollar move; the hedger's loss at that gap; a point along the move, 0 to 1 | 0.9, −$10, $0.89 | $`R`$ grows roughly as $`z^2`$, whichever way $`J`$ moves from 1 |
+| $`n`$, $`p_n`$, $`\tilde p_n`$ | gaps before expiry; the Poisson chance of $`n`$; the same chance at the tilted rate $`\lambda(1+k)`$ | 0.606531 for none, 0.303265 for one | — |
+| $`\sigma_n`$, $`q_n`$ | branch $`n`$'s volatility and yield; $`d_{1,n}`$ is its Black-Scholes distance to the strike | one set per branch | — |
+| $`N`$, $`\varphi`$, $`\mathbb{E}`$ | bell-curve area to the left; bell-curve height; average over gap sizes | — | — |
+| $`C`$, $`C_{\mathrm{BS}}`$ | the jump-model call; a Black-Scholes call with the inputs in brackets | $10.42; $9.23 at 20% | — |
+| $`\Delta`$, $`\Gamma`$, $`\nu`$, $`\Theta`$ | delta; gamma; vega; theta, the price's change per year of calendar time | 0.599892; 0.016630; 33.259434; — | — |
 
 The helper, one per branch:
 
-$$d_{1,n} = \frac{\ln(S/K) + (r - q_n)\tau}{\sigma_n\sqrt{\tau}} + \frac{\sigma_n\sqrt{\tau}}{2}$$
+```math
+d_{1,n} = \frac{\ln(S/K) + (r - q_n)\tau}{\sigma_n\sqrt{\tau}} + \frac{\sigma_n\sqrt{\tau}}{2}
+```
 
-In words: branch $n$'s distance to the strike in units of its own wiggle, as in Black-Scholes.
+In words: branch $`n`$'s distance to the strike in units of its own wiggle, as in Black-Scholes.
 
 ### When it holds
 
 - **Gaps arrive at a steady rate, independent of each other and of the wiggle.** If crashes cluster, the model understates bad years and the true floor is higher.
 - **Gap risk earns no premium.** Merton assumes the pricing world, where every asset earns the bank rate on average, keeps the real gap rate. If investors charge for gaps, a rate fitted to option prices overstates how often Acme really gaps.
-- **The model numbers stay put.** The Greeks hold $\lambda$, $\mu_J$, $\delta$ and $\sigma$ fixed. A refit that moves them, and the fit below shows how easily they move, moves every hedge ratio too.
+- **The model numbers stay put.** The Greeks hold $`\lambda`$, $`\mu_J`$, $`\delta`$ and $`\sigma`$ fixed. A refit that moves them, and the fit below shows how easily they move, moves every hedge ratio too.
 - **The hedge uses shares and cash only.** Other options can absorb part of the gap risk; the floor is a statement about hedging with shares.
 - **No trading costs.** At 1,024 rebalances a year, real costs would swamp everything.
 
@@ -106,20 +116,20 @@ A gap does not shrink when trades get closer together; its size comes from the g
 
 ### Step 1: differentiate the sum one term at a time
 
-The share price $S$ enters each Black-Scholes term only as its spot: $p_n$, $q_n$ and $\sigma_n$ do not depend on $S$. So the slope of the sum is the sum of the slopes. Term $n$'s slope is the Black-Scholes delta with yield $q_n$, $e^{-q_n\tau}N(d_{1,n})$, which gives $\Delta$; once more gives $\Gamma$.
+The share price $`S`$ enters each Black-Scholes term only as its spot: $`p_n`$, $`q_n`$ and $`\sigma_n`$ do not depend on $`S`$. So the slope of the sum is the sum of the slopes. Term $`n`$'s slope is the Black-Scholes delta with yield $`q_n`$, $`e^{-q_n\tau}N(d_{1,n})`$, which gives $`\Delta`$; once more gives $`\Gamma`$.
 
-The diffusion volatility reaches term $n$ only through $\sigma_n$, and from $\sigma_n^2 = \sigma^2 + n\delta^2/\tau$ a small rise in $\sigma$ moves $\sigma_n$ by the fraction $\sigma/\sigma_n$ of it. Term $n$'s Black-Scholes vega, $S e^{-q_n\tau}\varphi(d_{1,n})\sqrt{\tau}$, times $\sigma/\sigma_n$, summed, gives $\nu$. Term by term that equals $S^2\sigma\tau$ times the term's gamma, so the sums agree too.
+The diffusion volatility reaches term $`n`$ only through $`\sigma_n`$, and from $`\sigma_n^2 = \sigma^2 + n\delta^2/\tau`$ a small rise in $`\sigma`$ moves $`\sigma_n`$ by the fraction $`\sigma/\sigma_n`$ of it. Term $`n`$'s Black-Scholes vega, $`S e^{-q_n\tau}\varphi(d_{1,n})\sqrt{\tau}`$, times $`\sigma/\sigma_n`$, summed, gives $`\nu`$. Term by term that equals $`S^2\sigma\tau`$ times the term's gamma, so the sums agree too.
 
-For Acme the series gives $\Delta$ = 0.599892, $\Gamma$ = 0.016630, $\nu$ = 33.259434. Bumping and repricing ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)) gives the same to six decimals.
+For Acme the series gives $`\Delta`$ = 0.599892, $`\Gamma`$ = 0.016630, $`\nu`$ = 33.259434. Bumping and repricing ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)) gives the same to six decimals.
 
 <details>
 <summary>Detailed proof: why the sum may be differentiated term by term</summary>
 
-Since $e^{-q_n\tau} = e^{-q\tau}e^{-\lambda k\tau}(1+k)^n$, the delta weights are $p_n e^{-q_n\tau} = e^{-q\tau}\tilde p_n$, where $\tilde p_n = e^{-\lambda(1+k)\tau}(\lambda(1+k)\tau)^n/n!$ are Poisson chances at the tilted rate $\lambda(1+k)$, summing to 1.
+Since $`e^{-q_n\tau} = e^{-q\tau}e^{-\lambda k\tau}(1+k)^n`$, the delta weights are $`p_n e^{-q_n\tau} = e^{-q\tau}\tilde p_n`$, where $`\tilde p_n = e^{-\lambda(1+k)\tau}(\lambda(1+k)\tau)^n/n!`$ are Poisson chances at the tilted rate $`\lambda(1+k)`$, summing to 1.
 
-So term $n$ of the delta series lies between 0 and $e^{-q\tau}\tilde p_n$ at every share price, and term $n$ of the gamma series between 0 and $e^{-q\tau}\tilde p_n\,\varphi(0)/(S\sigma\sqrt{\tau})$, since $\sigma_n \ge \sigma$. On any band of share prices away from zero these bounds are constants with a finite sum. When the derivative series of a convergent series of smooth functions is bounded term by term by such constants, it converges uniformly and equals the derivative of the sum. The bound $e^{-q\tau}\tilde p_n S\sqrt{\tau}\varphi(0)$ does the same for vega.
+So term $`n`$ of the delta series lies between 0 and $`e^{-q\tau}\tilde p_n`$ at every share price, and term $`n`$ of the gamma series between 0 and $`e^{-q\tau}\tilde p_n\,\varphi(0)/(S\sigma\sqrt{\tau})`$, since $`\sigma_n \ge \sigma`$. On any band of share prices away from zero these bounds are constants with a finite sum. When the derivative series of a convergent series of smooth functions is bounded term by term by such constants, it converges uniformly and equals the derivative of the sum. The bound $`e^{-q\tau}\tilde p_n S\sqrt{\tau}\varphi(0)`$ does the same for vega.
 
-A by-product: $\Delta = e^{-q\tau}\sum_n \tilde p_n N(d_{1,n})$ is a weighted average of numbers between 0 and 1, so it lies between 0 and $e^{-q\tau}$, as a call's delta must.
+A by-product: $`\Delta = e^{-q\tau}\sum_n \tilde p_n N(d_{1,n})`$ is a weighted average of numbers between 0 and 1, so it lies between 0 and $`e^{-q\tau}`$, as a call's delta must.
 
 </details>
 
@@ -127,11 +137,11 @@ Black-Scholes at 20 percent says 0.586851 shares; at the implied volatility that
 
 ### Step 2: the loss at a gap is curvature across the gap
 
-The hedger is short one call, long $\Delta$ shares, with the difference in the bank. A gap multiplies Acme by $J$: the call changes by $C(SJ) - C(S)$, the shares by $S(J-1)\Delta$, and the bank not at all in an instant. The book loses $R$.
+The hedger is short one call, long $`\Delta`$ shares, with the difference in the bank. A gap multiplies Acme by $`J`$: the call changes by $`C(SJ) - C(S)`$, the shares by $`S(J-1)\Delta`$, and the bank not at all in an instant. The book loses $`R`$.
 
-Taylor's theorem with an integral remainder turns $R$ into curvature: the move squared times a weighted average of gamma between the old price and the new. A call's gamma is positive, so $R$ is positive for every gap, up or down.
+Taylor's theorem with an integral remainder turns $`R`$ into curvature: the move squared times a weighted average of gamma between the old price and the new. A call's gamma is positive, so $`R`$ is positive for every gap, up or down.
 
-| Gap multiplier $J$ | Loss by repricing | Loss by curvature integral |
+| Gap multiplier $`J`$ | Loss by repricing | Loss by curvature integral |
 | --- | --- | --- |
 | 0.8 | $3.679890 | $3.679890 |
 | 0.9 | $0.891796 | $0.891796 |
@@ -143,17 +153,19 @@ Doubling a fall from 10 to 20 percent roughly quadruples the loss, $0.89 to $3.6
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-Let $g(t) = C(S + tz)$ for t from 0 to 1, so $g(0) = C(S)$, $g(1) = C(SJ)$, $g'(0) = z\Delta$ and $g''(t) = z^2\Gamma(S + tz)$. Integrating by parts, $\int_0^1 (1-t)g''(t)\,dt = \big[(1-t)g'(t)\big]_0^1 + \int_0^1 g'(t)\,dt = -g'(0) + g(1) - g(0)$. The right side is $C(SJ) - C(S) - z\Delta = R$. With $\Gamma > 0$ on the whole segment and $z \neq 0$, the integral is positive.
+Let $`g(t) = C(S + tz)`$ for t from 0 to 1, so $`g(0) = C(S)`$, $`g(1) = C(SJ)`$, $`g'(0) = z\Delta`$ and $`g''(t) = z^2\Gamma(S + tz)`$. Integrating by parts, $`\int_0^1 (1-t)g''(t)\,dt = \big[(1-t)g'(t)\big]_0^1 + \int_0^1 g'(t)\,dt = -g'(0) + g(1) - g(0)`$. The right side is $`C(SJ) - C(S) - z\Delta = R`$. With $`\Gamma > 0`$ on the whole segment and $`z \neq 0`$, the integral is positive.
 
 </details>
 
 ### Step 3: between gaps the seller collects a jump rent
 
-If the seller loses on every gap, the price must pay the seller between gaps. While nothing gaps, the hedged book grows at a steady rate set by the Greeks: the time decay the seller keeps, minus the gamma cost of the wiggle, plus interest and dividends net of funding. Call it the drift. Gaps arrive at rate $\lambda$, and each costs $R$.
+If the seller loses on every gap, the price must pay the seller between gaps. While nothing gaps, the hedged book grows at a steady rate set by the Greeks: the time decay the seller keeps, minus the gamma cost of the wiggle, plus interest and dividends net of funding. Call it the drift. Gaps arrive at rate $`\lambda`$, and each costs $`R`$.
 
-In the pricing world a position funded at the bank rate earns nothing extra on average, and the hedged book is one. So the drift minus $\lambda$ times the average $R$ over gap sizes, written $\mathbb{E}[R]$, is zero:
+In the pricing world a position funded at the bank rate earns nothing extra on average, and the hedged book is one. So the drift minus $`\lambda`$ times the average $`R`$ over gap sizes, written $`\mathbb{E}[R]`$, is zero:
 
-$$\text{drift} = -\Theta - \tfrac12\sigma^2 S^2\Gamma - (r - q)S\Delta + rC = \lambda\,\mathbb{E}[R(S, J)]$$
+```math
+\text{drift} = -\Theta - \tfrac12\sigma^2 S^2\Gamma - (r - q)S\Delta + rC = \lambda\,\mathbb{E}[R(S, J)]
+```
 
 For Acme today both sides come out at $1.14 a year, equal to six decimals: the left from theta, gamma and delta, the right by averaging the gap loss over the bell curve of gap sizes. Rearranged, this balance is the jump model's pricing equation: Black-Scholes plus one term for gaps.
 
@@ -161,22 +173,22 @@ For Acme today both sides come out at $1.14 a year, equal to six decimals: the l
 
 Without gaps, each step's leftover is half the gamma times the squared move less its expected value, with spread proportional to the step's length. The steps' variances add, so the year's spread falls as one over the square root of the number of steps: four times the steps, half the spread, $1.67, $0.86, $0.42, $0.21.
 
-The gap losses are a separate stream, arriving at rate $\lambda$ with sizes $R$. Their variance for the year is roughly the rate $\lambda\,\mathbb{E}[R^2]$ accumulated over the year, and nothing in it depends on the rebalancing. So the spread falls toward a floor set by the gaps alone: $3.25, $3.02, $2.94, $2.90. That floor is an incomplete market, in dollars.
+The gap losses are a separate stream, arriving at rate $`\lambda`$ with sizes $`R`$. Their variance for the year is roughly the rate $`\lambda\,\mathbb{E}[R^2]`$ accumulated over the year, and nothing in it depends on the rebalancing. So the spread falls toward a floor set by the gaps alone: $3.25, $3.02, $2.94, $2.90. That floor is an incomplete market, in dollars.
 
 <details>
 <summary>Detailed proof: the floor, in outline</summary>
 
-Split the book's change over one rebalancing step into a wiggle part and a gap part. The wiggle part has variance of the order of the step's length squared. The gap part is $-R$ with probability about $\lambda$ times the step's length, so its variance is about $\lambda\,\mathbb{E}[R^2]$ times the step's length. The hedged book is a fair game in the pricing world, so its steps are uncorrelated and their variances add. Over the year the wiggle parts total a constant times the step's length; the gap parts total $\lambda\,\mathbb{E}[R^2]$ summed over the year, whatever the step. As the step shrinks the first vanishes and the second stays.
+Split the book's change over one rebalancing step into a wiggle part and a gap part. The wiggle part has variance of the order of the step's length squared. The gap part is $`-R`$ with probability about $`\lambda`$ times the step's length, so its variance is about $`\lambda\,\mathbb{E}[R^2]`$ times the step's length. The hedged book is a fair game in the pricing world, so its steps are uncorrelated and their variances add. Over the year the wiggle parts total a constant times the step's length; the gap parts total $`\lambda\,\mathbb{E}[R^2]`$ summed over the year, whatever the step. As the step shrinks the first vanishes and the second stays.
 
 </details>
 
 ### Step 5: fitting the three jump numbers, and why the fit is loose
 
-Three one-year quotes, generated by the house jump model so the right answer is known: $14.82 at the $92.15 strike, $10.42 at $100 and $3.57 at $119.93. The outer strikes are the house 25-delta put and call strikes, where the put's delta is −0.25 and the call's is 0.25 ([Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md)). The diffusion volatility stays at 20 percent; the unknowns are $\lambda$, $\mu_J$ and $\delta$.
+Three one-year quotes, generated by the house jump model so the right answer is known: $14.82 at the $92.15 strike, $10.42 at $100 and $3.57 at $119.93. The outer strikes are the house 25-delta put and call strikes, where the put's delta is −0.25 and the call's is 0.25 ([Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md)). The diffusion volatility stays at 20 percent; the unknowns are $`\lambda`$, $`\mu_J`$ and $`\delta`$.
 
 **Existence.** The gaps and their compensating drift spread the final price out without moving its average, and a call gains from spread. So at every strike a jump-model call costs at least the Black-Scholes call at the same diffusion volatility: a $100 quote below $9.23 has no solution. Even above that bar, quotes that allow a riskless profit fit no model, and least squares returns only the nearest fit. These quotes came from the model, so an exact fit exists.
 
-**Boundary cases.** At $\lambda$ = 0 the gaps vanish and $\mu_J$, $\delta$ drop out of every price, so they cannot be recovered at all. At $\delta$ = 0 all gaps are the same size and the model still works. Very many very small gaps blur into extra wiggle.
+**Boundary cases.** At $`\lambda`$ = 0 the gaps vanish and $`\mu_J`$, $`\delta`$ drop out of every price, so they cannot be recovered at all. At $`\delta`$ = 0 all gaps are the same size and the model still works. Very many very small gaps blur into extra wiggle.
 
 **Uniqueness.** Locally there is one answer wherever the three-by-three table of sensitivities, each quote's change per unit change in each parameter, can be inverted. Here it can, barely.
 
@@ -218,14 +230,14 @@ Acme at $100, strike $100, one year, rates 5 and 2 percent, diffusion volatility
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average gap as a fraction, $k$ | $e^{-0.10 + 0.15^2/2} - 1$ | −0.084926 |
-| chance of a gap-free year | $e^{-0.5}$ | 0.606531 |
-| chance of exactly one gap | $0.5\,e^{-0.5}$ | 0.303265 |
+| average gap as a fraction, $`k`$ | $`e^{-0.10 + 0.15^2/2} - 1`$ | −0.084926 |
+| chance of a gap-free year | $`e^{-0.5}`$ | 0.606531 |
+| chance of exactly one gap | $`0.5\,e^{-0.5}`$ | 0.303265 |
 | price | twelve Black-Scholes terms, weighted | $10.416477 |
-| delta | the same weights on each branch's $e^{-q_n\tau}N(d_{1,n})$ | 0.599892 |
+| delta | the same weights on each branch's $`e^{-q_n\tau}N(d_{1,n})`$ | 0.599892 |
 | delta, by bumping a cent | (price at $100.01 − price at $99.99) / 0.02 | 0.599892 |
 | gamma | series; by bumping | 0.016630; 0.016630 |
-| vega | series; by bumping; $100^2 \times 0.20 \times$ gamma | 33.259434 each way |
+| vega | series; by bumping; $`100^2 \times 0.20 \times`$ gamma | 33.259434 each way |
 | loss at a 10 percent gap | price at $90 − $10.416477 + 10 × 0.599892 | $0.891796 |
 | jump rent | 0.5 × average gap loss | $1.136732 a year |
 | **shares to hold per call sold** | | **0.599892** |
@@ -689,12 +701,12 @@ ALL CHECKS PASS
 
 Lean proves the loss at a gap from Step 2 for any call price with a continuous gamma, and the bounds on the jump model's delta.
 
-- Suppose the call's gamma exists and is continuous at every positive share price, and $S$ and $J$ are positive. Then $R$ equals $z^2$ times the integral of $(1-t)\Gamma(S + tz)$ over $t$ from 0 to 1.
-- Suppose also that gamma is positive all along the move and $J \neq 1$. Then $R$ is positive, for a gap up or down.
-- Take a gap rate $\lambda \ge 0$ and $\tau > 0$, with the weights and branches of the formula above. Then the series for $\Delta$ lies between 0 and $e^{-q\tau}$, whatever the other numbers.
+- Suppose the call's gamma exists and is continuous at every positive share price, and $`S`$ and $`J`$ are positive. Then $`R`$ equals $`z^2`$ times the integral of $`(1-t)\Gamma(S + tz)`$ over $`t`$ from 0 to 1.
+- Suppose also that gamma is positive all along the move and $`J \neq 1`$. Then $`R`$ is positive, for a gap up or down.
+- Take a gap rate $`\lambda \ge 0`$ and $`\tau > 0`$, with the weights and branches of the formula above. Then the series for $`\Delta`$ lies between 0 and $`e^{-q\tau}`$, whatever the other numbers.
 - With Acme at $100, gaps of 0.8, 0.9, 1.1 and 1.2 move the price by −$20, −$10, $10 and $20.
-- The vega factor for Acme is $100^2 \times 0.20 \times 1 = 2000$.
-- The chance of exactly one gap is half the chance of none, since $\lambda\tau = 0.5$.
+- The vega factor for Acme is $`100^2 \times 0.20 \times 1 = 2000`$.
+- The chance of exactly one gap is half the chance of none, since $`\lambda\tau = 0.5`$.
 
 The Greek series themselves, the jump rent, the hedging floor and the fit are left to the Python and Rust checks.
 

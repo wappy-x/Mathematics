@@ -46,52 +46,58 @@ Orange: the start. Teal: after 600 s, from the 32-point spectral solution. The r
 
 Notation first, in words.
 
-- $u(x, t)$ is the temperature in C at distance $x$ metres round the ring from the weld, at time $t$ seconds. It solves the **heat equation** $u_t = \alpha u_{xx}$: the rate of change in time equals the diffusivity $\alpha$ times the bend along the ring.
-- The ring is $L$ = 1 m round, so $u(x + L, t) = u(x, t)$.
-- The grid has $N$ points $x_j = jh$, $j = 0, 1, \dots, N - 1$, with spacing $h = L/N$.
-- Mode $k$ is the wave $e^{i q_k x}$, where $i$ is the square root of −1 and $q_k = 2\pi k/L$ is its **wavenumber** in radians per metre. Mode $k$ goes round the ring $k$ times.
-- The start is $u(x, 0) = 20 + 30e^{\cos(2\pi x/L)}$. Its exact **Fourier coefficients** $c_k$ (how much of mode $k$ it holds) are known: $c_k = 30 I_k(1)$ for $k \ne 0$ and $c_0 = 20 + 30 I_0(1)$, with $I_k(1) = \sum_{m \ge 0} (1/2)^{2m+k}/(m!\,(m+k)!)$, a number from a standard power series.
+- $`u(x, t)`$ is the temperature in C at distance $`x`$ metres round the ring from the weld, at time $`t`$ seconds. It solves the **heat equation** $`u_t = \alpha u_{xx}`$: the rate of change in time equals the diffusivity $`\alpha`$ times the bend along the ring.
+- The ring is $`L`$ = 1 m round, so $`u(x + L, t) = u(x, t)`$.
+- The grid has $`N`$ points $`x_j = jh`$, $`j = 0, 1, \dots, N - 1`$, with spacing $`h = L/N`$.
+- Mode $`k`$ is the wave $`e^{i q_k x}`$, where $`i`$ is the square root of −1 and $`q_k = 2\pi k/L`$ is its **wavenumber** in radians per metre. Mode $`k`$ goes round the ring $`k`$ times.
+- The start is $`u(x, 0) = 20 + 30e^{\cos(2\pi x/L)}`$. Its exact **Fourier coefficients** $`c_k`$ (how much of mode $`k`$ it holds) are known: $`c_k = 30 I_k(1)`$ for $`k \ne 0`$ and $`c_0 = 20 + 30 I_0(1)`$, with $`I_k(1) = \sum_{m \ge 0} (1/2)^{2m+k}/(m!\,(m+k)!)`$, a number from a standard power series.
 
 The method computes coefficients from the samples, then does the calculus mode by mode:
 
-$$\hat c_k = \frac{1}{N}\sum_{j=0}^{N-1} u(x_j, 0)\, e^{-i q_k x_j}, \qquad u_j(t) = \sum_{k=-N/2+1}^{N/2} \hat c_k\, e^{-\alpha q_k^2 t}\, e^{i q_k x_j}, \qquad \Big(\frac{du}{dx}\Big)_j = \sum_{k=-N/2+1}^{N/2-1} i q_k\, \hat c_k\, e^{i q_k x_j}.$$
+```math
+\hat c_k = \frac{1}{N}\sum_{j=0}^{N-1} u(x_j, 0)\, e^{-i q_k x_j}, \qquad u_j(t) = \sum_{k=-N/2+1}^{N/2} \hat c_k\, e^{-\alpha q_k^2 t}\, e^{i q_k x_j}, \qquad \Big(\frac{du}{dx}\Big)_j = \sum_{k=-N/2+1}^{N/2-1} i q_k\, \hat c_k\, e^{i q_k x_j}.
+```
 
-**Read it aloud:** the computed coefficient of mode $k$ is the average of the samples, each turned back by that mode's angle; to step the heat forward, shrink each mode by $e^{-\alpha q_k^2 t}$ and add them up; to take a slope, multiply each mode by $i q_k$ and add them up.
+**Read it aloud:** the computed coefficient of mode $`k`$ is the average of the samples, each turned back by that mode's angle; to step the heat forward, shrink each mode by $`e^{-\alpha q_k^2 t}`$ and add them up; to take a slope, multiply each mode by $`i q_k`$ and add them up.
 
 The error has a proved ceiling. At every grid point and every time,
 
-$$\lvert u_j(t) - u(x_j, t)\rvert \le E_N = 2\sum_{\lvert k\rvert \ge N/2} \lvert c_k\rvert, \qquad \text{slope error} \le E_N^{\text{slope}} = 2\sum_{\lvert k\rvert \ge N/2} \lvert q_k\rvert\,\lvert c_k\rvert.$$
+```math
+\lvert u_j(t) - u(x_j, t)\rvert \le E_N = 2\sum_{\lvert k\rvert \ge N/2} \lvert c_k\rvert, \qquad \text{slope error} \le E_N^{\text{slope}} = 2\sum_{\lvert k\rvert \ge N/2} \lvert q_k\rvert\,\lvert c_k\rvert.
+```
 
 **Read it aloud:** the error is at most twice the total size of the modes too fast for the grid.
 
 And smoothness sets that size:
 
-$$\lvert c_k\rvert \le \frac{K}{\lvert k\rvert^{p+1}} \quad\Longrightarrow\quad E_N \text{ shrinks like } N^{-p} \text{ as } N \to \infty.$$
+```math
+\lvert c_k\rvert \le \frac{K}{\lvert k\rvert^{p+1}} \quad\Longrightarrow\quad E_N \text{ shrinks like } N^{-p} \text{ as } N \to \infty.
+```
 
-**Read it aloud:** if the start has $p - 1$ derivatives that join up smoothly round the ring, and the $p$-th has only jumps, the coefficients fall like $1/k^{p+1}$ and the error like $1/N^p$.
+**Read it aloud:** if the start has $`p - 1`$ derivatives that join up smoothly round the ring, and the $`p`$-th has only jumps, the coefficients fall like $`1/k^{p+1}`$ and the error like $`1/N^p`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $u_t$, $u_{xx}$ | temperature, in C; its rate in time; its bend along the ring | 101.548455 C at the weld at the start | — |
-| $x$, $L$ | distance round the ring from the weld; the ring's length | 0 to 1 m; 1 m | slower modes, slower cooling |
-| $t$, $T$ | time; the time asked about | $T$ = 600 s | the ring evens out |
-| $\alpha$ | diffusivity: how fast heat spreads | 1.2e-5 m²/s (illustrative) | every mode fades faster |
-| $N$, $h$, $x_j$, $j$ | number of grid points; spacing $L/N$; the $j$-th point, at $jh$ | 32; 1/32 m | error falls fast, down to rounding |
-| $k$, $q_k$, $i$ | mode number: times round the ring; wavenumber $2\pi k/L$ in rad/m; the square root of −1 | $k$ from −15 to 16 | the mode fades faster |
-| $c_k$, $c_k[f]$, $I_k(1)$ | exact amount of mode $k$ in the start, or in a function $f$; the series that gives it | $c_1$ = 1.695e+01 C; $c_{16}$ = 2.220e-17 C | — |
-| $\hat c_k$, $a_k$, $g_k$ | computed coefficient from the $N$ samples (the hat marks a computed value); amount of mode $k$ at time $t$; its fade factor $e^{-\alpha q_k^2 t}$ | $\hat c_k$ is $c_k$ plus the modes $N$ apart; $g_8$ = 1.257e-08 at 600 s | — |
-| $m$, $n$, $B$, $w$ | counting indexes; in the proof, $B$ is the band of modes the grid keeps and $w$ a number with $w^N = 1$ | mode $k + mN$ aliases onto mode $k$ | — |
-| $E_N$, $E_N^{\text{slope}}$ | proved ceilings on the temperature error and the slope error | 9.150e-17 C; 9.215e-15 C/m at $N$ = 32 | — |
-| $p$, $K$, $\sigma$ | smoothness: derivatives continuous round the ring, plus one with jumps; a constant; the decay rate for an analytic start | $p$ = 1 for the bar bent into a ring; 3 for a start whose third derivative jumps | error falls faster |
-| $r$, $\Delta t$ | finite-difference time step $\Delta t$, and $r = \alpha\Delta t/h^2$ | 24 s; 0.294912 | — |
+| $`u`$, $`u_t`$, $`u_{xx}`$ | temperature, in C; its rate in time; its bend along the ring | 101.548455 C at the weld at the start | — |
+| $`x`$, $`L`$ | distance round the ring from the weld; the ring's length | 0 to 1 m; 1 m | slower modes, slower cooling |
+| $`t`$, $`T`$ | time; the time asked about | $`T`$ = 600 s | the ring evens out |
+| $`\alpha`$ | diffusivity: how fast heat spreads | 1.2e-5 m²/s (illustrative) | every mode fades faster |
+| $`N`$, $`h`$, $`x_j`$, $`j`$ | number of grid points; spacing $`L/N`$; the $`j`$-th point, at $`jh`$ | 32; 1/32 m | error falls fast, down to rounding |
+| $`k`$, $`q_k`$, $`i`$ | mode number: times round the ring; wavenumber $`2\pi k/L`$ in rad/m; the square root of −1 | $`k`$ from −15 to 16 | the mode fades faster |
+| $`c_k`$, $`c_k[f]`$, $`I_k(1)`$ | exact amount of mode $`k`$ in the start, or in a function $`f`$; the series that gives it | $`c_1`$ = 1.695e+01 C; $`c_{16}`$ = 2.220e-17 C | — |
+| $`\hat c_k`$, $`a_k`$, $`g_k`$ | computed coefficient from the $`N`$ samples (the hat marks a computed value); amount of mode $`k`$ at time $`t`$; its fade factor $`e^{-\alpha q_k^2 t}`$ | $`\hat c_k`$ is $`c_k`$ plus the modes $`N`$ apart; $`g_8`$ = 1.257e-08 at 600 s | — |
+| $`m`$, $`n`$, $`B`$, $`w`$ | counting indexes; in the proof, $`B`$ is the band of modes the grid keeps and $`w`$ a number with $`w^N = 1`$ | mode $`k + mN`$ aliases onto mode $`k`$ | — |
+| $`E_N`$, $`E_N^{\text{slope}}`$ | proved ceilings on the temperature error and the slope error | 9.150e-17 C; 9.215e-15 C/m at $`N`$ = 32 | — |
+| $`p`$, $`K`$, $`\sigma`$ | smoothness: derivatives continuous round the ring, plus one with jumps; a constant; the decay rate for an analytic start | $`p`$ = 1 for the bar bent into a ring; 3 for a start whose third derivative jumps | error falls faster |
+| $`r`$, $`\Delta t`$ | finite-difference time step $`\Delta t`$, and $`r = \alpha\Delta t/h^2`$ | 24 s; 0.294912 | — |
 
 ### When it holds
 
 - **Periodic.** The FFT treats the samples as one turn of a repeating pattern. A non-periodic function gets a corner or jump where the ends meet. The bar's start 100 sin(πx), sampled as if it were a ring, has a corner there, and the slope error next to the weld stays near 121 C/m however many points are used.
-- **Smooth.** Each extra continuous derivative buys one more power of $1/N$. Spectral accuracy, error falling faster than any power, needs every derivative continuous. A start with a corner gets order 1.
-- **Linear, with constant coefficients.** Modes stay separate only when the equation does not mix them. A diffusivity that varies round the ring, or a term such as $u^2$, couples modes. Then products are computed on the grid, and their fast parts alias back onto slow modes (see the aliasing step below).
-- **The fast modes are handled.** On an even grid the mode $k = N/2$ (the **Nyquist mode**, the fastest the grid can hold) reads $(-1)^j$ at the grid points. Its slope there is zero, so a slope must drop it. Keeping it at $N$ = 8 puts an imaginary part of up to 4.127480 C/m into a real slope.
-- **Rounding stays small.** A slope multiplies each rounding error by up to the largest wavenumber, $\pi N/L$. So past the point where $E_N$ is negligible, more points make the slope slightly worse: 1.896e-12 C/m at $N$ = 32, 3.650e-12 C/m at $N$ = 64.
+- **Smooth.** Each extra continuous derivative buys one more power of $`1/N`$. Spectral accuracy, error falling faster than any power, needs every derivative continuous. A start with a corner gets order 1.
+- **Linear, with constant coefficients.** Modes stay separate only when the equation does not mix them. A diffusivity that varies round the ring, or a term such as $`u^2`$, couples modes. Then products are computed on the grid, and their fast parts alias back onto slow modes (see the aliasing step below).
+- **The fast modes are handled.** On an even grid the mode $`k = N/2`$ (the **Nyquist mode**, the fastest the grid can hold) reads $`(-1)^j`$ at the grid points. Its slope there is zero, so a slope must drop it. Keeping it at $`N`$ = 8 puts an imaginary part of up to 4.127480 C/m into a real slope.
+- **Rounding stays small.** A slope multiplies each rounding error by up to the largest wavenumber, $`\pi N/L`$. So past the point where $`E_N`$ is negligible, more points make the slope slightly worse: 1.896e-12 C/m at $`N`$ = 32, 3.650e-12 C/m at $`N`$ = 64.
 
 ---
 
@@ -99,78 +105,84 @@ $$\lvert c_k\rvert \le \frac{K}{\lvert k\rvert^{p+1}} \quad\Longrightarrow\quad 
 
 ### Step 0: waves are the shapes that calculus only rescales
 
-The slope of $e^{iqx}$ is $iq\,e^{iqx}$: the same wave, multiplied by a number. Bending it twice gives $-q^2 e^{iqx}$. So in the language of waves, a derivative is a multiplication. Write the temperature as a sum of waves and the heat equation splits into one simple equation per wave. All the work is in getting the waves, and the FFT does that fast.
+The slope of $`e^{iqx}`$ is $`iq\,e^{iqx}`$: the same wave, multiplied by a number. Bending it twice gives $`-q^2 e^{iqx}`$. So in the language of waves, a derivative is a multiplication. Write the temperature as a sum of waves and the heat equation splits into one simple equation per wave. All the work is in getting the waves, and the FFT does that fast.
 
 ### Step 1: the FFT gives the waves through the samples
 
-$N$ samples and $N$ coefficients carry the same information. The sum for $\hat c_k$ is the discrete Fourier transform, and [The fast Fourier transform](09-the-fast-fourier-transform.md) computes it in about $(N/2)\log_2 N$ complex multiplications instead of $N^2$. At $N$ = 32 that is 80 against 1024, counted by the code. The FFT and the direct sum agree to 5.948e-12, a rounding-level difference on unscaled sums of 32 temperatures.
+$`N`$ samples and $`N`$ coefficients carry the same information. The sum for $`\hat c_k`$ is the discrete Fourier transform, and [The fast Fourier transform](09-the-fast-fourier-transform.md) computes it in about $`(N/2)\log_2 N`$ complex multiplications instead of $`N^2`$. At $`N`$ = 32 that is 80 against 1024, counted by the code. The FFT and the direct sum agree to 5.948e-12, a rounding-level difference on unscaled sums of 32 temperatures.
 
-The wave sum with coefficients $\hat c_k$ passes exactly through all $N$ samples. It is the **trigonometric interpolant**: the sum of the $N$ slowest waves that fits the readings. A spectral method treats it as the function.
+The wave sum with coefficients $`\hat c_k`$ passes exactly through all $`N`$ samples. It is the **trigonometric interpolant**: the sum of the $`N`$ slowest waves that fits the readings. A spectral method treats it as the function.
 
-Taking the slope this way is the same as multiplying the list of samples by one fixed $N \times N$ table of weights, the **Fourier differentiation matrix**. The matrix is full, not banded: each point's slope uses points all round the ring, not just its neighbours. The FFT applies that matrix in $O(N\log N)$ operations as $N \to \infty$, instead of $N^2$.
+Taking the slope this way is the same as multiplying the list of samples by one fixed $`N \times N`$ table of weights, the **Fourier differentiation matrix**. The matrix is full, not banded: each point's slope uses points all round the ring, not just its neighbours. The FFT applies that matrix in $`O(N\log N)`$ operations as $`N \to \infty`$, instead of $`N^2`$.
 
 ### Step 2: heat in wave space is exact, with no time steps
 
-Put $u = \sum_k a_k(t)\,e^{i q_k x}$ into $u_t = \alpha u_{xx}$. Each wave's amount obeys its own equation:
+Put $`u = \sum_k a_k(t)\,e^{i q_k x}`$ into $`u_t = \alpha u_{xx}`$. Each wave's amount obeys its own equation:
 
-$$a_k'(t) = -\alpha q_k^2\, a_k(t), \qquad a_k(t) = a_k(0)\, e^{-\alpha q_k^2 t}.$$
+```math
+a_k'(t) = -\alpha q_k^2\, a_k(t), \qquad a_k(t) = a_k(0)\, e^{-\alpha q_k^2 t}.
+```
 
-This is [Separation of variables](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md) on a ring. Cold ends allow only sines; a ring allows sines and cosines, which $e^{iqx}$ carries together. Over 600 s the fade factors are 7.526e-01 for mode 1, 3.208e-01 for mode 2, 1.059e-02 for mode 4 and 1.257e-08 for mode 8.
+This is [Separation of variables](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md) on a ring. Cold ends allow only sines; a ring allows sines and cosines, which $`e^{iqx}`$ carries together. Over 600 s the fade factors are 7.526e-01 for mode 1, 3.208e-01 for mode 2, 1.059e-02 for mode 4 and 1.257e-08 for mode 8.
 
-So the time direction has no error at all, and no stability limit. Finite differences on the same grid have both: a time-step limit $r \le 1/2$ ([Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md)), and an error in each step.
+So the time direction has no error at all, and no stability limit. Finite differences on the same grid have both: a time-step limit $`r \le 1/2`$ ([Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md)), and an error in each step.
 
 ### Step 3: the only error is aliasing
 
-On the grid, mode $k$ and mode $k + N$ take the same values, because $e^{i q_N x_j} = e^{2\pi i j} = 1$. So the samples cannot tell them apart, and the FFT files every fast mode under a slow one:
+On the grid, mode $`k`$ and mode $`k + N`$ take the same values, because $`e^{i q_N x_j} = e^{2\pi i j} = 1`$. So the samples cannot tell them apart, and the FFT files every fast mode under a slow one:
 
-$$\hat c_k = \sum_{m=-\infty}^{\infty} c_{k + mN}.$$
+```math
+\hat c_k = \sum_{m=-\infty}^{\infty} c_{k + mN}.
+```
 
-This is **aliasing**, the same folding by which a whistle sampled too slowly plays back as a lower note ([Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md)). Here it is the whole error budget. Each fast mode $c_k$ with $\lvert k\rvert \ge N/2$ costs twice: once because it is missing from the sum, once because it lands on a slow mode where it does not belong. That gives the bound $E_N$.
+This is **aliasing**, the same folding by which a whistle sampled too slowly plays back as a lower note ([Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md)). Here it is the whole error budget. Each fast mode $`c_k`$ with $`\lvert k\rvert \ge N/2`$ costs twice: once because it is missing from the sum, once because it lands on a slow mode where it does not belong. That gives the bound $`E_N`$.
 
 <details>
 <summary>Detailed proof: the aliasing identity and the error bound</summary>
 
-Let $u(x, 0) = \sum_{n} c_n e^{i q_n x}$ with $\sum_n \lvert c_n\rvert$ finite, so the series converges at every point. Substitute it into the formula for $\hat c_k$ and swap the sums:
+Let $`u(x, 0) = \sum_{n} c_n e^{i q_n x}`$ with $`\sum_n \lvert c_n\rvert`$ finite, so the series converges at every point. Substitute it into the formula for $`\hat c_k`$ and swap the sums:
 
-$$\hat c_k = \sum_n c_n \cdot \frac{1}{N}\sum_{j=0}^{N-1} e^{2\pi i (n - k) j/N}.$$
+$`\displaystyle \hat c_k = \sum_n c_n \cdot \frac{1}{N}\sum_{j=0}^{N-1} e^{2\pi i (n - k) j/N}.`$
 
-The inner sum is a geometric series in $w = e^{2\pi i (n-k)/N}$. If $n - k$ is a multiple of $N$, then $w = 1$ and the average is 1. Otherwise $w \ne 1$, $w^N = 1$, and the sum is $(w^N - 1)/(w - 1) = 0$. So $\hat c_k = \sum_m c_{k+mN}$.
+The inner sum is a geometric series in $`w = e^{2\pi i (n-k)/N}`$. If $`n - k`$ is a multiple of $`N`$, then $`w = 1`$ and the average is 1. Otherwise $`w \ne 1`$, $`w^N = 1`$, and the sum is $`(w^N - 1)/(w - 1) = 0`$. So $`\hat c_k = \sum_m c_{k+mN}`$.
 
-**Temperature.** Write $g_k = e^{-\alpha q_k^2 t}$, which lies between 0 and 1. The exact solution at a grid point is $\sum_n c_n g_n e^{i q_n x_j}$. Call the band $B$ the modes $-N/2 < k \le N/2$. Then
+**Temperature.** Write $`g_k = e^{-\alpha q_k^2 t}`$, which lies between 0 and 1. The exact solution at a grid point is $`\sum_n c_n g_n e^{i q_n x_j}`$. Call the band $`B`$ the modes $`-N/2 < k \le N/2`$. Then
 
-$$u_j(t) - u(x_j, t) = \sum_{k \in B} (\hat c_k - c_k)\, g_k\, e^{i q_k x_j} \;-\; \sum_{n \notin B} c_n g_n e^{i q_n x_j}.$$
+$`\displaystyle u_j(t) - u(x_j, t) = \sum_{k \in B} (\hat c_k - c_k)\, g_k\, e^{i q_k x_j} \;-\; \sum_{n \notin B} c_n g_n e^{i q_n x_j}.`$
 
-Each mode outside $B$ appears once in some $\hat c_k - c_k$, and once in the second sum. Every factor $g$ and every $e^{i\cdot}$ has size at most 1. So the error is at most $2\sum_{n \notin B}\lvert c_n\rvert \le E_N$.
+Each mode outside $`B`$ appears once in some $`\hat c_k - c_k`$, and once in the second sum. Every factor $`g`$ and every $`e^{i\cdot}`$ has size at most 1. So the error is at most $`2\sum_{n \notin B}\lvert c_n\rvert \le E_N`$.
 
-**Slope.** The same split with the band $-N/2 < k < N/2$ and factors $q_k$. A mode $n$ outside the band aliases onto a $k$ with $\lvert q_k\rvert < \lvert q_n\rvert$, so its share is at most $\lvert q_n\rvert\lvert c_n\rvert$, counted twice: at most $E_N^{\text{slope}}$. The Nyquist slot is outside this band, and its mode is counted in $E_N^{\text{slope}}$.
+**Slope.** The same split with the band $`-N/2 < k < N/2`$ and factors $`q_k`$. A mode $`n`$ outside the band aliases onto a $`k`$ with $`\lvert q_k\rvert < \lvert q_n\rvert`$, so its share is at most $`\lvert q_n\rvert\lvert c_n\rvert`$, counted twice: at most $`E_N^{\text{slope}}`$. The Nyquist slot is outside this band, and its mode is counted in $`E_N^{\text{slope}}`$.
 
 </details>
 
 ### Step 4: smoothness decides how fast the fast modes vanish
 
-The coefficient is an average, $c_k = \frac{1}{L}\int_0^L u(x, 0)\, e^{-i q_k x}\,dx$. Integrate by parts. The end terms cancel because the ring has no ends, and
+The coefficient is an average, $`c_k = \frac{1}{L}\int_0^L u(x, 0)\, e^{-i q_k x}\,dx`$. Integrate by parts. The end terms cancel because the ring has no ends, and
 
-$$c_k[f] = \frac{c_k[f']}{i q_k}.$$
+```math
+c_k[f] = \frac{c_k[f']}{i q_k}.
+```
 
-Each derivative that stays continuous round the ring divides the coefficient by another $q_k$. After $p$ steps the $p$-th derivative has only jumps, and one more integration by parts bounds its coefficient by (total jump plus total change) divided by $L\lvert q_k\rvert$. So $\lvert c_k\rvert \le K/\lvert k\rvert^{p+1}$. Adding these from $\lvert k\rvert = N/2$ up gives a tail of size about $N^{-p}$.
+Each derivative that stays continuous round the ring divides the coefficient by another $`q_k`$. After $`p`$ steps the $`p`$-th derivative has only jumps, and one more integration by parts bounds its coefficient by (total jump plus total change) divided by $`L\lvert q_k\rvert`$. So $`\lvert c_k\rvert \le K/\lvert k\rvert^{p+1}`$. Adding these from $`\lvert k\rvert = N/2`$ up gives a tail of size about $`N^{-p}`$.
 
-For an analytic periodic function, one with a convergent power series everywhere, the coefficients fall like $e^{-\sigma\lvert k\rvert}$ for some $\sigma > 0$, so the error falls faster than any power of $1/N$. This half is stated, not proved; Trefethen and Weideman prove it (Sources). The ring's start is better still: $c_k = 30 I_k(1)$ is close to $30 \cdot (1/2)^k/k!$, so the coefficients for $k$ = 4, 8, 16 are 8.211e-02, 2.988e-06 and 2.220e-17 C.
+For an analytic periodic function, one with a convergent power series everywhere, the coefficients fall like $`e^{-\sigma\lvert k\rvert}`$ for some $`\sigma > 0`$, so the error falls faster than any power of $`1/N`$. This half is stated, not proved; Trefethen and Weideman prove it (Sources). The ring's start is better still: $`c_k = 30 I_k(1)`$ is close to $`30 \cdot (1/2)^k/k!`$, so the coefficients for $`k`$ = 4, 8, 16 are 8.211e-02, 2.988e-06 and 2.220e-17 C.
 
 The code measures the rate on three starts, through the error of the interpolant halfway between grid points:
 
-| Start | Smoothness | Error at $N$ = 8, 16, 32, 64, in C | Observed order |
+| Start | Smoothness | Error at $`N`$ = 8, 16, 32, 64, in C | Observed order |
 | --- | --- | --- | --- |
-| the ring, $20 + 30e^{\cos 2\pi x}$ | every derivative continuous | 3.192e-02, 6.608e-07, 4.317e-14, 2.870e-14 | 15.56, 23.87, then rounding |
-| $100\lvert\sin \pi x\rvert^3$ | third derivative jumps, $p$ = 3 | 2.090e-01, 2.592e-02, 3.234e-03, 4.041e-04 | 3.01, 3.00, 3.00 |
-| the bar's start $100\lvert\sin \pi x\rvert$ as a ring | corner at the weld, $p$ = 1 | 7.009e+00, 3.552e+00, 1.782e+00, 8.916e-01 | 0.98, 1.00, 1.00 |
+| the ring, $`20 + 30e^{\cos 2\pi x}`$ | every derivative continuous | 3.192e-02, 6.608e-07, 4.317e-14, 2.870e-14 | 15.56, 23.87, then rounding |
+| $`100\lvert\sin \pi x\rvert^3`$ | third derivative jumps, $`p`$ = 3 | 2.090e-01, 2.592e-02, 3.234e-03, 4.041e-04 | 3.01, 3.00, 3.00 |
+| the bar's start $`100\lvert\sin \pi x\rvert`$ as a ring | corner at the weld, $`p`$ = 1 | 7.009e+00, 3.552e+00, 1.782e+00, 8.916e-01 | 0.98, 1.00, 1.00 |
 
-The observed orders match $p$ to within 0.02 by 64 points. For the smooth start the "order" keeps rising until rounding stops the fall at 32 points. That rising order is what **spectral accuracy** means.
+The observed orders match $`p`$ to within 0.02 by 64 points. For the smooth start the "order" keeps rising until rounding stops the fall at 32 points. That rising order is what **spectral accuracy** means.
 
 ### Step 5: the ring confirms each piece
 
-The slope at the start, the temperature gradient that drives heat round the ring, is steepest at $x$ = 0.143965 m, at 274.926152 C/m.
+The slope at the start, the temperature gradient that drives heat round the ring, is steepest at $`x`$ = 0.143965 m, at 274.926152 C/m.
 
-| $N$ | Spectral slope error, C/m | Bound $E_N^{\text{slope}}$ | Bound ÷ true | Centred difference error, C/m |
+| $`N`$ | Spectral slope error, C/m | Bound $`E_N^{\text{slope}}`$ | Bound ÷ true | Centred difference error, C/m |
 | --- | --- | --- | --- | --- |
 | 4 | 3.302e+01 | 2.642e+02 | 8 | 4.747e+01 |
 | 8 | 8.139e-01 | 9.389e+00 | 11.5 | 6.413e+01 |
@@ -178,7 +190,7 @@ The slope at the start, the temperature gradient that drives heat round the ring
 | 32 | 1.896e-12 | 9.215e-15 | 0.00486 | 4.869e+00 |
 | 64 | 3.650e-12 | 2.185e-41 | 5.99e-30 | 1.227e+00 |
 
-Up to 16 points the bound holds, 8 to 19 times above the true error. From 32 points the true error is rounding, which the bound does not count. The **centred difference** $(u_{j+1} - u_{j-1})/(2h)$ shows orders 1.86, 1.86, 1.99, heading for its order 2: at 64 points it is still off by 1.227e+00 C/m.
+Up to 16 points the bound holds, 8 to 19 times above the true error. From 32 points the true error is rounding, which the bound does not count. The **centred difference** $`(u_{j+1} - u_{j-1})/(2h)`$ shows orders 1.86, 1.86, 1.99, heading for its order 2: at 64 points it is still off by 1.227e+00 C/m.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -194,7 +206,7 @@ Orange: the spectral slope, falling faster with each doubling until rounding sto
 
 The heat solve at 600 s, against the exact series:
 
-| $N$ | Weld at 600 s, C | Largest difference from the exact series, C | Bound $E_N$ | Bound ÷ difference |
+| $`N`$ | Weld at 600 s, C | Largest difference from the exact series, C | Bound $`E_N`$ | Bound ÷ difference |
 | --- | --- | --- | --- | --- |
 | 8 | 86.220992858806 | 1.759e-03 | 3.639e-01 | 207 |
 | 16 | 86.219233587149 | 1.933e-12 | 1.265e-05 | 6.55e+06 |
@@ -211,16 +223,16 @@ The 32-point heat solve to 600 s, reading the weld.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| start at the weld | $20 + 30e^{1}$ | 101.548455 C |
-| start on the far side | $20 + 30e^{-1}$ | 31.036383 C |
-| constant mode less 20, and largest waves | $30 I_0(1)$, $c_1$, $c_2$ | 3.798e+01, 1.695e+01, 4.072e+00 C |
-| fade over 600 s | $e^{-\alpha (2\pi k)^2 \times 600}$ for $k$ = 1, 2, 4 | 7.526e-01, 3.208e-01, 1.059e-02 |
-| weld at 600 s | $c_0 + 2\sum_{k \ge 1} c_k\, e^{-\alpha q_k^2 T}$, with $c_0 = 20 + 30 I_0(1)$ | 86.219233587147 C |
-| largest mode left out | $c_{16}$ | 2.220e-17 C |
-| proved bound | $E_{32}$ | 9.150e-17 C |
+| start at the weld | $`20 + 30e^{1}`$ | 101.548455 C |
+| start on the far side | $`20 + 30e^{-1}`$ | 31.036383 C |
+| constant mode less 20, and largest waves | $`30 I_0(1)`$, $`c_1`$, $`c_2`$ | 3.798e+01, 1.695e+01, 4.072e+00 C |
+| fade over 600 s | $`e^{-\alpha (2\pi k)^2 \times 600}`$ for $`k`$ = 1, 2, 4 | 7.526e-01, 3.208e-01, 1.059e-02 |
+| weld at 600 s | $`c_0 + 2\sum_{k \ge 1} c_k\, e^{-\alpha q_k^2 T}`$, with $`c_0 = 20 + 30 I_0(1)`$ | 86.219233587147 C |
+| largest mode left out | $`c_{16}`$ | 2.220e-17 C |
+| proved bound | $`E_{32}`$ | 9.150e-17 C |
 | largest difference over the ring | against the exact series, summed in doubles | 2.848e-14 C, 2.00 units in the last place |
-| same 32 points, finite differences | 25 steps of 24 s, $r$ = 0.294912 | weld 86.165269 C, error 5.396e-02 C |
-| cost | FFT against direct sum, $N$ = 32 | 80 against 1024 complex multiplications |
+| same 32 points, finite differences | 25 steps of 24 s, $`r`$ = 0.294912 | weld 86.165269 C, error 5.396e-02 C |
+| cost | FFT against direct sum, $`N`$ = 32 | 80 against 1024 complex multiplications |
 
 The weld is at **86.219233587147 C** after ten minutes. Every printed digit is right: the largest difference anywhere on the ring is two steps of the last stored digit, and it is rounding. The second-order grid on the same 32 points misses by 5.396e-02 C.
 
@@ -228,16 +240,16 @@ The weld is at **86.219233587147 C** after ten minutes. Every printed digit is r
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The bar's start $100\sin\pi x$ put through the FFT as if periodic | slope error next to the weld: 119.566, 120.910, 121.246 C/m at $N$ = 16, 32, 64 | not periodic: the ends meet at a corner, the coefficients fall only like $1/k^2$, and the slope never converges near the corner |
-| FFT slots past the middle used as wavenumbers $N/2 + 1, \dots, N - 1$ | slope error 4379.780 C/m at $N$ = 32 | slot 31 holds mode −1, not mode 31; it must be wrapped to $k - N$ |
-| The Nyquist slot kept in the slope | imaginary part up to 4.127480 C/m at $N$ = 8 | the Nyquist slot stands for $\cos(\pi N x/L)$, which has zero slope at every grid point; multiplying by $i q$ invents an imaginary one |
-| $2\pi$ dropped from $q_k$ | slope error 229.691311 C/m; weld at 600 s 100.969607 C | the wavenumber was counted in turns per metre instead of radians per metre, so slopes shrink 2π-fold and heat barely spreads |
+| The bar's start $`100\sin\pi x`$ put through the FFT as if periodic | slope error next to the weld: 119.566, 120.910, 121.246 C/m at $`N`$ = 16, 32, 64 | not periodic: the ends meet at a corner, the coefficients fall only like $`1/k^2`$, and the slope never converges near the corner |
+| FFT slots past the middle used as wavenumbers $`N/2 + 1, \dots, N - 1`$ | slope error 4379.780 C/m at $`N`$ = 32 | slot 31 holds mode −1, not mode 31; it must be wrapped to $`k - N`$ |
+| The Nyquist slot kept in the slope | imaginary part up to 4.127480 C/m at $`N`$ = 8 | the Nyquist slot stands for $`\cos(\pi N x/L)`$, which has zero slope at every grid point; multiplying by $`i q`$ invents an imaginary one |
+| $`2\pi`$ dropped from $`q_k`$ | slope error 229.691311 C/m; weld at 600 s 100.969607 C | the wavenumber was counted in turns per metre instead of radians per metre, so slopes shrink 2π-fold and heat barely spreads |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code writes its own FFT, takes the slope of the ring's start and solves the heat equation in wave space. Four roads lead to the answer: the spectral method; the exact answer (the closed-form slope, and the heat series from the coefficients $30 I_k(1)$); the direct $N^2$ sum against the FFT; and finite differences on the same points, whose 25 steps are redone mode by mode with the growth factor of [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md). Asserts check that the roads agree, that the true errors sit inside the proved bounds, that the rougher starts show orders 3 and 1, and that each mistake in What breaks really breaks the answer.
+The code writes its own FFT, takes the slope of the ring's start and solves the heat equation in wave space. Four roads lead to the answer: the spectral method; the exact answer (the closed-form slope, and the heat series from the coefficients $`30 I_k(1)`$); the direct $`N^2`$ sum against the FFT; and finite differences on the same points, whose 25 steps are redone mode by mode with the growth factor of [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md). Asserts check that the roads agree, that the true errors sit inside the proved bounds, that the rougher starts show orders 3 and 1, and that each mistake in What breaks really breaks the answer.
 
 ### Python
 
@@ -635,12 +647,12 @@ The two outputs match line for line, including the rounding-level errors, becaus
 
 Lean proves the error ceiling, the aliasing rule and the slope rule for every periodic start whose coefficients have a finite total size.
 
-- Take a continuous periodic start whose coefficients $c_k$ have a finite total size, a diffusivity $\alpha \ge 0$ and a time $t \ge 0$. On any even number $N$ of grid points, the heat solve differs from the exact series by at most $E_N$ at every grid point.
-- For the same start, on any $N \ge 1$ grid points, each computed coefficient $\hat c_k$ is the sum of the exact coefficients $c_{k + mN}$ over every whole number $m$.
-- Take a periodic function whose slope exists at every point and is continuous round the ring. Then $c_k[f] = c_k[f']/(i q_k)$ for every mode $k \ne 0$.
-- The counts hold: 80 against 1024 multiplications at $N$ = 32, 32 modes from −15 to 16, slot 31 holding mode −1, and $r$ = 0.294912.
+- Take a continuous periodic start whose coefficients $`c_k`$ have a finite total size, a diffusivity $`\alpha \ge 0`$ and a time $`t \ge 0`$. On any even number $`N`$ of grid points, the heat solve differs from the exact series by at most $`E_N`$ at every grid point.
+- For the same start, on any $`N \ge 1`$ grid points, each computed coefficient $`\hat c_k`$ is the sum of the exact coefficients $`c_{k + mN}`$ over every whole number $`m`$.
+- Take a periodic function whose slope exists at every point and is continuous round the ring. Then $`c_k[f] = c_k[f']/(i q_k)`$ for every mode $`k \ne 0`$.
+- The counts hold: 80 against 1024 multiplications at $`N`$ = 32, 32 modes from −15 to 16, slot 31 holding mode −1, and $`r`$ = 0.294912.
 
-The slope ceiling $E_N^{\text{slope}}$, the rates that smoothness buys, the ring's numbers and the finite-difference run are left to the Python and Rust checks.
+The slope ceiling $`E_N^{\text{slope}}`$, the rates that smoothness buys, the ring's numbers and the finite-difference run are left to the Python and Rust checks.
 
 ```lean
 -- Spectral methods: for a continuous periodic start whose Fourier coefficients have a finite total size, the FFT's computed coefficient of mode k is the sum of the exact coefficients of the modes k + mN, the spectral heat solve on N points is off at every grid point by at most twice the total size of the modes with |k| ≥ N/2, and each coefficient of a function with a continuous derivative is that derivative's coefficient divided by i q_k.
@@ -963,19 +975,19 @@ example : 25 * 24 = 600 ∧ (12 / 1000000 : ℚ) * 24 * 32 ^ 2 = 294912 / 100000
 > [!TIP]
 > **Try changing**
 >
-> - **Guess first:** where does the weld settle after ten hours? Change `600.0` to `36000.0` where `T` is set. Answer: 57.981977661698 C, and the far side 57.981975 C. That is the average, $c_0 = 20 + 30 I_0(1)$, to five decimals: the other modes have all but faded. The finite-difference error grows to 2.818e+01 C only because its 25 steps still stop at 600 s.
-> - **Guess first:** does a smaller time step fix finite differences? Change `n, dt = 32, 24.0` to `n, dt = 32, 12.0` and `range(25)` to `range(50)`. Answer: the error falls to 8.288e-03 C and the finite-difference assert fails. Here $r$ = 0.147456 is near 1/6, where the time and space errors of that scheme cancel ([Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md)). The spectral solve is unchanged: it has no time error to cut.
-> - **Guess first:** what order does a start with a jump in its fifth derivative give? Change `** 3` to `** 5` in the second start. Answer: orders 5.11, 5.03, 5.01, and the order-3 assert fails. Each extra smooth derivative buys one more power of $1/N$.
+> - **Guess first:** where does the weld settle after ten hours? Change `600.0` to `36000.0` where `T` is set. Answer: 57.981977661698 C, and the far side 57.981975 C. That is the average, $`c_0 = 20 + 30 I_0(1)`$, to five decimals: the other modes have all but faded. The finite-difference error grows to 2.818e+01 C only because its 25 steps still stop at 600 s.
+> - **Guess first:** does a smaller time step fix finite differences? Change `n, dt = 32, 24.0` to `n, dt = 32, 12.0` and `range(25)` to `range(50)`. Answer: the error falls to 8.288e-03 C and the finite-difference assert fails. Here $`r`$ = 0.147456 is near 1/6, where the time and space errors of that scheme cancel ([Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md)). The spectral solve is unchanged: it has no time error to cut.
+> - **Guess first:** what order does a start with a jump in its fifth derivative give? Change `** 3` to `** 5` in the second start. Answer: orders 5.11, 5.03, 5.01, and the order-3 assert fails. Each extra smooth derivative buys one more power of $`1/N`$.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Using the FFT on a function that is not periodic.** The FFT always treats the samples as one turn of a repeating pattern. The bar's start $100\sin\pi x$ is zero at both ends, but its slopes there are $+100\pi$ and $-100\pi$ C/m, so the repeated pattern has a corner. The slope next to the weld is then wrong by 119.566, 120.910 and 121.246 C/m at 16, 32 and 64 points: more points do not help. For a bar with cold ends use a sine series ([Separation of variables](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md)); for general ends use Chebyshev points, which cluster near the ends and recover fast convergence.
+> **Using the FFT on a function that is not periodic.** The FFT always treats the samples as one turn of a repeating pattern. The bar's start $`100\sin\pi x`$ is zero at both ends, but its slopes there are $`+100\pi`$ and $`-100\pi`$ C/m, so the repeated pattern has a corner. The slope next to the weld is then wrong by 119.566, 120.910 and 121.246 C/m at 16, 32 and 64 points: more points do not help. For a bar with cold ends use a sine series ([Separation of variables](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md)); for general ends use Chebyshev points, which cluster near the ends and recover fast convergence.
 >
-> - **Reading slot $k$ as wavenumber $k$ all the way up.** Slots above $N/2$ hold negative wavenumbers. Forgetting to wrap them gives a slope error of 4379.780 C/m at 32 points.
-> - **Keeping the Nyquist mode in a slope.** It reads $(-1)^j$ on the grid, with zero slope there. Keeping it puts an imaginary part of up to 4.127480 C/m into a real slope at 8 points.
+> - **Reading slot $`k`$ as wavenumber $`k`$ all the way up.** Slots above $`N/2`$ hold negative wavenumbers. Forgetting to wrap them gives a slope error of 4379.780 C/m at 32 points.
+> - **Keeping the Nyquist mode in a slope.** It reads $`(-1)^j`$ on the grid, with zero slope there. Keeping it puts an imaginary part of up to 4.127480 C/m into a real slope at 8 points.
 > - **Dropping the 2π.** A wavenumber in turns per metre instead of radians per metre gives a slope error of 229.691311 C/m, and leaves the weld at 100.969607 C after ten minutes instead of 86.219233587147 C.
 > - **Expecting more points always to help.** Once the fast modes are below rounding, more points only multiply rounding by a larger wavenumber: the slope error goes from 1.896e-12 to 3.650e-12 C/m between 32 and 64 points.
 
@@ -988,14 +1000,14 @@ example : 25 * 24 = 600 ∧ (12 / 1000000 : ℚ) * 24 * 32 ^ 2 = 294912 / 100000
 - **Option pricing.** [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md) prices options by the same move: go to wave space where the model is simple, then come back with one FFT. Its cosine method gains the same fast convergence when the price distribution is smooth.
 
 > **Say it back**
-> A spectral method writes a periodic function as a sum of waves, using the FFT on evenly spaced samples. In wave space a slope multiplies each wave by $i$ times its wavenumber, and heat shrinks each wave by a fixed factor, so both are done exactly. The only error is aliasing: waves too fast for the grid fold onto slower ones. That error is at most twice the size of the fast waves, and smoothness decides their size: $p$ smooth derivatives give $1/N^p$, a smooth start gives faster than any power. On the heated ring, 32 points give the weld's temperature to the last stored digit, while finite differences on the same points miss by 5.396e-02 C.
+> A spectral method writes a periodic function as a sum of waves, using the FFT on evenly spaced samples. In wave space a slope multiplies each wave by $`i`$ times its wavenumber, and heat shrinks each wave by a fixed factor, so both are done exactly. The only error is aliasing: waves too fast for the grid fold onto slower ones. That error is at most twice the size of the fast waves, and smoothness decides their size: $`p`$ smooth derivatives give $`1/N^p`$, a smooth start gives faster than any power. On the heated ring, 32 points give the weld's temperature to the last stored digit, while finite differences on the same points miss by 5.396e-02 C.
 
 ---
 
 ## What this builds on
 
-- [The fast Fourier transform](09-the-fast-fourier-transform.md): computes the $N$ coefficients in about $(N/2)\log_2 N$ multiplications, which makes the method cheap.
-- [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md): the order-2 method used here as the comparison, with its time-step limit and the $r$ = 1/6 cancellation.
+- [The fast Fourier transform](09-the-fast-fourier-transform.md): computes the $`N`$ coefficients in about $`(N/2)\log_2 N`$ multiplications, which makes the method cheap.
+- [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md): the order-2 method used here as the comparison, with its time-step limit and the $`r`$ = 1/6 cancellation.
 - [Separation of variables](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md): the modes that keep their shape and fade, here on a ring instead of a bar with cold ends.
 - [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): an earlier use of the FFT, in option pricing.
 - [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): aliasing and the Nyquist frequency, which are this method's whole error budget.
@@ -1004,7 +1016,7 @@ example : 25 * 24 = 600 ∧ (12 / 1000000 : ℚ) * 24 * 32 ^ 2 = 294912 / 100000
 
 ## Where this goes next
 
-- [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md): looks at a finite-difference scheme through the same waves, one growth factor per mode; a spectral method uses the exact factor $e^{-\alpha q_k^2 t}$ instead.
+- [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md): looks at a finite-difference scheme through the same waves, one growth factor per mode; a spectral method uses the exact factor $`e^{-\alpha q_k^2 t}`$ instead.
 - [Finite elements](07-finite-elements-galerkin-and-hat-functions.md): the local alternative. Hat functions handle awkward shapes and rough solutions, where global waves lose their fast convergence.
 
 A spectral method needs a periodic, smooth function on a simple shape; how much of its accuracy survives when the solution has a shock or the domain has corners?

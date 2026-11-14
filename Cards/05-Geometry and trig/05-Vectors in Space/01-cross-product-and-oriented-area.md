@@ -26,30 +26,34 @@ Scale 1 m = 40 units. The 10 m edge points out of the page. The arc marks the sl
 
 ## The formula
 
-Notation first, in words. A vector here has three parts: east, north, up. The bottom edge is $u$ = (10, 0, 0) and the sloping edge $v$ = (0, 4.8, 3.6), in metres. Their parts are numbered: $u_1$ east, $u_2$ north, $u_3$ up. The sign ×, read "cross", makes a new vector from two:
+Notation first, in words. A vector here has three parts: east, north, up. The bottom edge is $`u`$ = (10, 0, 0) and the sloping edge $`v`$ = (0, 4.8, 3.6), in metres. Their parts are numbered: $`u_1`$ east, $`u_2`$ north, $`u_3`$ up. The sign ×, read "cross", makes a new vector from two:
 
-$$u \times v = (u_2 v_3 - u_3 v_2,\; u_3 v_1 - u_1 v_3,\; u_1 v_2 - u_2 v_1)$$
+```math
+u \times v = (u_2 v_3 - u_3 v_2,\; u_3 v_1 - u_1 v_3,\; u_1 v_2 - u_2 v_1)
+```
 
 **Read it aloud:** each part is a two-by-two determinant of the other two directions, taken round the cycle east, north, up, east.
 
-Call the answer $w$. Bars mean length, as on [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md). With $\theta$ the angle between the edges, three facts, proved below:
+Call the answer $`w`$. Bars mean length, as on [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md). With $`\theta`$ the angle between the edges, three facts, proved below:
 
-$$w \cdot u = 0, \qquad w \cdot v = 0, \qquad \lvert w\rvert = \lvert u\rvert\,\lvert v\rvert \sin\theta$$
+```math
+w \cdot u = 0, \qquad w \cdot v = 0, \qquad \lvert w\rvert = \lvert u\rvert\,\lvert v\rvert \sin\theta
+```
 
 **Read it aloud:** the new arrow is square to both edges, and its length is one edge times the other's height above it: the parallelogram's area.
 
-Dividing $w$ by its length gives the **unit normal** $n$, length 1, same direction.
+Dividing $`w`$ by its length gives the **unit normal** $`n`$, length 1, same direction.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $v$ | the two edges from one corner, in order | (10, 0, 0) and (0, 4.8, 3.6) m | bigger area; swap them and $w$ reverses |
-| $u_1$, $u_2$, $u_3$, $v_1$, $v_2$, $v_3$ | east, north, up parts | 10, 0, 0 and 0, 4.8, 3.6 | each feeds two parts of $w$ |
-| $w$ | the cross product: the area vector | (0, −36, 48) square metres | — |
-| $\lvert w\rvert$ | its length: the area | 60 square metres | — |
-| $\lvert u\rvert$, $\lvert v\rvert$ | the edge lengths | 10 m and 6 m | area grows in step |
-| $\theta$ | angle between the edges | 90°, sine 1 | area peaks at 90° |
-| $u \cdot v$ | dot product: matching parts multiplied, added | 0 | alignment, not area |
-| $n$ | unit normal | (0, −0.6, 0.8) | direction only |
+| $`u`$, $`v`$ | the two edges from one corner, in order | (10, 0, 0) and (0, 4.8, 3.6) m | bigger area; swap them and $`w`$ reverses |
+| $`u_1`$, $`u_2`$, $`u_3`$, $`v_1`$, $`v_2`$, $`v_3`$ | east, north, up parts | 10, 0, 0 and 0, 4.8, 3.6 | each feeds two parts of $`w`$ |
+| $`w`$ | the cross product: the area vector | (0, −36, 48) square metres | — |
+| $`\lvert w\rvert`$ | its length: the area | 60 square metres | — |
+| $`\lvert u\rvert`$, $`\lvert v\rvert`$ | the edge lengths | 10 m and 6 m | area grows in step |
+| $`\theta`$ | angle between the edges | 90°, sine 1 | area peaks at 90° |
+| $`u \cdot v`$ | dot product: matching parts multiplied, added | 0 | alignment, not area |
+| $`n`$ | unit normal | (0, −0.6, 0.8) | direction only |
 
 ### When it holds
 
@@ -66,46 +70,50 @@ Dividing $w$ by its length gives the **unit normal** $n$, length 1, same directi
 
 Shine a light straight down. The edges' shadows on the ground keep only east and north: (10, 0) and (0, 4.8). A flat parallelogram on edges (a, c) and (b, d) has signed area ad − bc ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The ground shadow: 10 × 4.8 − 0 × 0 = 48, the third part.
 
-Light from the east throws a shadow on the north–up wall, parts taken north then up: the first part. Light from the north uses the up–east wall, and the cycle says up then east: $u_3 v_1 - u_1 v_3$. The middle part only looks reversed; it follows the cycle.
+Light from the east throws a shadow on the north–up wall, parts taken north then up: the first part. Light from the north uses the up–east wall, and the cycle says up then east: $`u_3 v_1 - u_1 v_3`$. The middle part only looks reversed; it follows the cycle.
 
 Steps 1 to 3 prove these three shadow areas form an arrow square to the panel whose length is its area.
 
 ### Step 1: the arrow is square to both edges
 
-Two arrows are square when their dot product is 0. On the panel, $w \cdot v$ = −36 × 4.8 + 48 × 3.6 = −172.8 + 172.8 = 0. In general $w \cdot u$ expands to six products:
+Two arrows are square when their dot product is 0. On the panel, $`w \cdot v`$ = −36 × 4.8 + 48 × 3.6 = −172.8 + 172.8 = 0. In general $`w \cdot u`$ expands to six products:
 
-$$u_1 u_2 v_3 - u_1 u_3 v_2 + u_2 u_3 v_1 - u_2 u_1 v_3 + u_3 u_1 v_2 - u_3 u_2 v_1$$
+```math
+u_1 u_2 v_3 - u_1 u_3 v_2 + u_2 u_3 v_1 - u_2 u_1 v_3 + u_3 u_1 v_2 - u_3 u_2 v_1
+```
 
-Each appears once with plus, once with minus: the sum is 0. Likewise $w \cdot v$. Square to both edges means square to the whole panel.
+Each appears once with plus, once with minus: the sum is 0. Likewise $`w \cdot v`$. Square to both edges means square to the whole panel.
 
 ### Step 2: the length is base times height
 
-Geometry first. Area is base $\lvert u\rvert$ times height, the part of $v$ left after removing its part along $u$ ([Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)). That part has length $u \cdot v / \lvert u\rvert$, so Pythagoras gives the height, and
+Geometry first. Area is base $`\lvert u\rvert`$ times height, the part of $`v`$ left after removing its part along $`u`$ ([Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)). That part has length $`u \cdot v / \lvert u\rvert`$, so Pythagoras gives the height, and
 
-$$\text{area}^2 = \lvert u\rvert^2 \lvert v\rvert^2 - (u \cdot v)^2$$
+```math
+\text{area}^2 = \lvert u\rvert^2 \lvert v\rvert^2 - (u \cdot v)^2
+```
 
-Algebra second. The squares of the three parts of $w$ add to the same right-hand side (folded below). Neither side is negative, so the length of $w$ is the area. In shadows: the area squared is the sum of the shadow areas squared.
+Algebra second. The squares of the three parts of $`w`$ add to the same right-hand side (folded below). Neither side is negative, so the length of $`w`$ is the area. In shadows: the area squared is the sum of the shadow areas squared.
 
 <details>
 <summary>Detailed proof: the squared parts add to the same thing</summary>
 
-Multiply out the product of the two squared lengths: nine terms. Square the dot product: three squares such as $u_1^2 v_1^2$ and three doubled terms such as $2 u_1 v_1 u_2 v_2$.
+Multiply out the product of the two squared lengths: nine terms. Square the dot product: three squares such as $`u_1^2 v_1^2`$ and three doubled terms such as $`2 u_1 v_1 u_2 v_2`$.
 
-Subtract. The matching squares cancel. Group the rest by pairs of directions: $u_1^2 v_2^2 + u_2^2 v_1^2 - 2 u_1 v_1 u_2 v_2 = (u_1 v_2 - u_2 v_1)^2$, and the same for (north, up) and (up, east). These are the squares of the parts of $w$. On the panel: $0^2 + 36^2 + 48^2 = 3600 = 60^2$.
+Subtract. The matching squares cancel. Group the rest by pairs of directions: $`u_1^2 v_2^2 + u_2^2 v_1^2 - 2 u_1 v_1 u_2 v_2 = (u_1 v_2 - u_2 v_1)^2`$, and the same for (north, up) and (up, east). These are the squares of the parts of $`w`$. On the panel: $`0^2 + 36^2 + 48^2 = 3600 = 60^2`$.
 
 </details>
 
 ### Step 3: the sine form
 
-The dot product gives $u \cdot v = \lvert u\rvert\,\lvert v\rvert \cos\theta$. Put that into Step 2 and use $\cos^2\theta + \sin^2\theta = 1$ ([Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md)). The sine is never negative from 0° to 180°, so the length is $\lvert u\rvert\,\lvert v\rvert \sin\theta$: here 10 × 6 × 1 = 60.
+The dot product gives $`u \cdot v = \lvert u\rvert\,\lvert v\rvert \cos\theta`$. Put that into Step 2 and use $`\cos^2\theta + \sin^2\theta = 1`$ ([Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md)). The sine is never negative from 0° to 180°, so the length is $`\lvert u\rvert\,\lvert v\rvert \sin\theta`$: here 10 × 6 × 1 = 60.
 
 ### Step 4: the direction follows the right-hand rule
 
-A normal could point either way; the formula picks one. Stack $u$, $v$, $w$ as the rows of a three-by-three. Along the bottom row its cofactors are the parts of $w$. A cofactor is the two-by-two determinant left when an entry's row and column are covered, with signs alternating. So the determinant is $w \cdot w$: positive unless the edges are parallel.
+A normal could point either way; the formula picks one. Stack $`u`$, $`v`$, $`w`$ as the rows of a three-by-three. Along the bottom row its cofactors are the parts of $`w`$. A cofactor is the two-by-two determinant left when an entry's row and column are covered, with signs alternating. So the determinant is $`w \cdot w`$: positive unless the edges are parallel.
 
 Positive means the three keep the handedness of east, north, up ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The check expands along the top row instead: 3600.
 
-In the hand: fingers along $u$, curl towards $v$, thumb along $w$: up and south here. Swapping the edges flips every sign: $v \times u$ = (0, 36, −48).
+In the hand: fingers along $`u`$, curl towards $`v`$, thumb along $`w`$: up and south here. Swapping the edges flips every sign: $`v \times u`$ = (0, 36, −48).
 
 With any third edge in the bottom row, the same determinant is a box's volume: [Triple product](03-triple-product-and-volume.md).
 
@@ -132,7 +140,7 @@ The code's second case turns the panel to run 8 m east, 6 m north. All three par
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Middle part written $u_1 v_3 - u_3 v_1$ | (0, 36, 48); dot with $v$ is 345.6 | cycle broken: not square to the panel |
+| Middle part written $`u_1 v_3 - u_3 v_1`$ | (0, 36, 48); dot with $`v`$ is 345.6 | cycle broken: not square to the panel |
 | Edges taken in the other order | (0, 36, −48) | same area, front facing the ground |
 | Dot product used as the area | 0 | square edges: dot product 0, full area |
 | Half-panel triangle left unhalved | 60 instead of 30 square metres | a triangle is half the parallelogram |
@@ -329,12 +337,12 @@ The two outputs match line for line.
 
 Lean proves the card's three facts and the right-hand rule for every pair of edges in three dimensions, not just the panel.
 
-- For any edges $u$ and $v$, the arrow $w = u \times v$ is square to both: $w \cdot u = 0$ and $w \cdot v = 0$.
-- The length of $w$ is $\lvert u\rvert\,\lvert v\rvert \sin\theta$, the parallelogram's area.
-- The squares of the three parts of $w$ add to $\lvert u\rvert^2 \lvert v\rvert^2 - (u \cdot v)^2$.
-- The determinant with rows $u$, $v$, $w$ equals $w \cdot w$, so it is positive whenever the edges are not parallel.
-- Swapping the edges reverses the arrow: $v \times u = -(u \times v)$.
-- The card's own sums: $w$ = (0, −36, 48), 3600 = 60², the 6 m edge, the determinant 3600, case 2, and the broken middle part's 345.6.
+- For any edges $`u`$ and $`v`$, the arrow $`w = u \times v`$ is square to both: $`w \cdot u = 0`$ and $`w \cdot v = 0`$.
+- The length of $`w`$ is $`\lvert u\rvert\,\lvert v\rvert \sin\theta`$, the parallelogram's area.
+- The squares of the three parts of $`w`$ add to $`\lvert u\rvert^2 \lvert v\rvert^2 - (u \cdot v)^2`$.
+- The determinant with rows $`u`$, $`v`$, $`w`$ equals $`w \cdot w`$, so it is positive whenever the edges are not parallel.
+- Swapping the edges reverses the arrow: $`v \times u = -(u \times v)`$.
+- The card's own sums: $`w`$ = (0, −36, 48), 3600 = 60², the 6 m edge, the determinant 3600, case 2, and the broken middle part's 345.6.
 
 The unit normal, the tilt road, the 36.87° angle, the half triangle and the figure coordinates are left to the Python and Rust checks.
 
@@ -456,9 +464,9 @@ example : (![0, 36, 48] : Fin 3 → ℚ) ⬝ᵥ ![0, 24/5, 18/5] = 1728/5 := by
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Slide the top edge along the bottom.** Set case 1's `v` to `(3.0, 4.8, 3.6)`, a leaning parallelogram. The height is unchanged, so the area stays 60 and $w$ stays (0, −36, 48); every assert passes.
-> - **Swap the edges.** Exchange `u` and `v` in case 1: $w$ becomes (0, 36, −48), area 60. The second assert stops the run, because the tilt road assumes the first edge is level.
-> - **Break the cycle.** Write the middle part of `cross` as `u[0]*v[2] - u[2]*v[0]`. The length is still 60, but $w$ = (0, 36, 48) faces north and the second assert stops the run.
+> - **Slide the top edge along the bottom.** Set case 1's `v` to `(3.0, 4.8, 3.6)`, a leaning parallelogram. The height is unchanged, so the area stays 60 and $`w`$ stays (0, −36, 48); every assert passes.
+> - **Swap the edges.** Exchange `u` and `v` in case 1: $`w`$ becomes (0, 36, −48), area 60. The second assert stops the run, because the tilt road assumes the first edge is level.
+> - **Break the cycle.** Write the middle part of `cross` as `u[0]*v[2] - u[2]*v[0]`. The length is still 60, but $`w`$ = (0, 36, 48) faces north and the second assert stops the run.
 
 ---
 

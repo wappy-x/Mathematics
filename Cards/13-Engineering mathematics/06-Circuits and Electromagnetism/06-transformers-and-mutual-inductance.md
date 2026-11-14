@@ -24,42 +24,46 @@ Schematic, not to scale: the mains drives 83.4 mA into the 1,150-turn primary; t
 
 ## The formula
 
-Notation first. $N_1$ and $N_2$ are the turns on the primary and secondary. Their ratio is $n = N_1/N_2$. Voltages and currents are **phasors**: complex numbers carrying the rms (root-mean-square, the steady value with the same heating effect) size and the timing of a sine wave ([Phasors](02-phasors-and-impedance.md)).
+Notation first. $`N_1`$ and $`N_2`$ are the turns on the primary and secondary. Their ratio is $`n = N_1/N_2`$. Voltages and currents are **phasors**: complex numbers carrying the rms (root-mean-square, the steady value with the same heating effect) size and the timing of a sine wave ([Phasors](02-phasors-and-impedance.md)).
 
-Engineers write $j$ for the square root of −1; the rest of the library writes $i$. Here $n$ is the turns ratio, not the turns per metre of [Magnetic fields](05-magnetism-and-faradays-law.md), and $k$, below, is the coupling coefficient.
+Engineers write $`j`$ for the square root of −1; the rest of the library writes $`i`$. Here $`n`$ is the turns ratio, not the turns per metre of [Magnetic fields](05-magnetism-and-faradays-law.md), and $`k`$, below, is the coupling coefficient.
 
 The ideal rule:
 
-$$\frac{V_1}{V_2} = \frac{N_1}{N_2} = n, \qquad \frac{I_1}{I_2} = \frac{1}{n}, \qquad Z_{\text{in}} = \frac{V_1}{I_1} = n^2 Z_L$$
+```math
+\frac{V_1}{V_2} = \frac{N_1}{N_2} = n, \qquad \frac{I_1}{I_2} = \frac{1}{n}, \qquad Z_{\text{in}} = \frac{V_1}{I_1} = n^2 Z_L
+```
 
 **Read it aloud:** the voltage goes down by the turns ratio, the current goes up by the same ratio, and a load seen through the transformer looks bigger by the ratio squared.
 
-The real rule, two coils with self-inductances $L_1$, $L_2$ and mutual inductance $M$:
+The real rule, two coils with self-inductances $`L_1`$, $`L_2`$ and mutual inductance $`M`$:
 
-$$Z_{\text{in}} = j\omega L_1 + \frac{(\omega M)^2}{Z_L + j\omega L_2}, \qquad M = k\sqrt{L_1 L_2}$$
+```math
+Z_{\text{in}} = j\omega L_1 + \frac{(\omega M)^2}{Z_L + j\omega L_2}, \qquad M = k\sqrt{L_1 L_2}
+```
 
-**Read it aloud:** the primary looks like its own coil, plus the load reflected across by the mutual inductance. When every line of flux links both coils (coupling coefficient $k = 1$, in the table below), this is exactly the ideal $n^2 Z_L$ in parallel with the primary's own inductance $L_1$.
+**Read it aloud:** the primary looks like its own coil, plus the load reflected across by the mutual inductance. When every line of flux links both coils (coupling coefficient $`k = 1`$, in the table below), this is exactly the ideal $`n^2 Z_L`$ in parallel with the primary's own inductance $`L_1`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V_1$, $V_2$ | rms voltage across the primary and secondary (lowercase $v_1$, $v_2$: the value at one instant) | 230 V, 12.0 V | $V_1$ up: $V_2$ up in proportion |
-| $I_1$, $I_2$ | rms current in the primary and secondary (lowercase $i_1$, $i_2$: the value at one instant) | 83.4 mA (62.6 mA ideal), 1.2 A | $I_2$ up: $I_1$ up by $I_2/n$ |
-| $N_1$, $N_2$, $n$ | turns on each coil; the turns ratio $N_1/N_2$ | 1,150, 60, 19.1667 | $n$ up: $V_2$ falls, $Z_{\text{in}}$ grows as $n^2$ |
-| $\Phi$ | flux through one turn of the core, in webers (Wb) | peak 0.9003 mWb | the iron saturates past about 2 T |
-| $B$, $A$ | flux density (flux per area, in tesla, T); core cross-section | peak 1.2004 T; 7.5 cm² | $B$ up: core losses rise, then saturation |
-| $\Lambda$ | permeance: flux the core carries per ampere-turn (amps times turns) | 22.6843 µH | magnetising current falls |
-| $L_1$, $L_2$ | self-inductance of each coil: its own flux linkage per amp, $N^2\Lambda$ | 30 H, 0.0817 H | $L_1$ up: closer to ideal |
-| $M$ | mutual inductance: flux linkage in one coil per amp in the other, $N_1N_2\Lambda$ | 1.5652 H | — |
-| $k$ | coupling coefficient $M/\sqrt{L_1L_2}$: share of flux linking both coils | 1 (0.97 when leaky) | $k$ below 1: $V_2$ sags |
-| $Z_L = R + jX$ | load impedance: the chime's resistance $R$ plus $j$ times its reactance $X$ | $6 + j8$ Ω ($R$ = 6 Ω, $X$ = 8 Ω), size 10 Ω | $I_2$ falls |
-| $Z_{\text{in}}$ | impedance the mains sees at the primary | ideal $2204.17 + j2938.89$ Ω | $I_1$ falls |
-| $\omega$, $f$, $t$ | angular frequency $2\pi f$; frequency; time | 314.16 rad/s; 50 Hz | the same turns carry less flux |
+| $`V_1`$, $`V_2`$ | rms voltage across the primary and secondary (lowercase $`v_1`$, $`v_2`$: the value at one instant) | 230 V, 12.0 V | $`V_1`$ up: $`V_2`$ up in proportion |
+| $`I_1`$, $`I_2`$ | rms current in the primary and secondary (lowercase $`i_1`$, $`i_2`$: the value at one instant) | 83.4 mA (62.6 mA ideal), 1.2 A | $`I_2`$ up: $`I_1`$ up by $`I_2/n`$ |
+| $`N_1`$, $`N_2`$, $`n`$ | turns on each coil; the turns ratio $`N_1/N_2`$ | 1,150, 60, 19.1667 | $`n`$ up: $`V_2`$ falls, $`Z_{\text{in}}`$ grows as $`n^2`$ |
+| $`\Phi`$ | flux through one turn of the core, in webers (Wb) | peak 0.9003 mWb | the iron saturates past about 2 T |
+| $`B`$, $`A`$ | flux density (flux per area, in tesla, T); core cross-section | peak 1.2004 T; 7.5 cm² | $`B`$ up: core losses rise, then saturation |
+| $`\Lambda`$ | permeance: flux the core carries per ampere-turn (amps times turns) | 22.6843 µH | magnetising current falls |
+| $`L_1`$, $`L_2`$ | self-inductance of each coil: its own flux linkage per amp, $`N^2\Lambda`$ | 30 H, 0.0817 H | $`L_1`$ up: closer to ideal |
+| $`M`$ | mutual inductance: flux linkage in one coil per amp in the other, $`N_1N_2\Lambda`$ | 1.5652 H | — |
+| $`k`$ | coupling coefficient $`M/\sqrt{L_1L_2}`$: share of flux linking both coils | 1 (0.97 when leaky) | $`k`$ below 1: $`V_2`$ sags |
+| $`Z_L = R + jX`$ | load impedance: the chime's resistance $`R`$ plus $`j`$ times its reactance $`X`$ | $`6 + j8`$ Ω ($`R`$ = 6 Ω, $`X`$ = 8 Ω), size 10 Ω | $`I_2`$ falls |
+| $`Z_{\text{in}}`$ | impedance the mains sees at the primary | ideal $`2204.17 + j2938.89`$ Ω | $`I_1`$ falls |
+| $`\omega`$, $`f`$, $`t`$ | angular frequency $`2\pi f`$; frequency; time | 314.16 rad/s; 50 Hz | the same turns carry less flux |
 
 ### When it holds
 
 - **The flux is changing.** Faraday's law turns a *changing* flux into voltage. On direct current the secondary gives 0 V once the current settles, and only the winding's resistance limits the primary. With a 100 Ω primary winding, 230 V DC drives 2.3 A and 529 W of heat into a box rated 15 VA.
-- **Every line of flux links both coils.** Flux that leaks round one coil and misses the other is **leakage**. At $k$ = 0.97 the open secondary gives 11.64 V, and with the chime connected, 10.3468 V, not 12.
-- **The iron has plenty of inductance.** The current ratio needs the magnetising current to be small. With $L_1$ = 30 H that current is 24.4 mA, and the primary draws 83.4 mA, not the ideal 62.6 mA.
+- **Every line of flux links both coils.** Flux that leaks round one coil and misses the other is **leakage**. At $`k`$ = 0.97 the open secondary gives 11.64 V, and with the chime connected, 10.3468 V, not 12.
+- **The iron has plenty of inductance.** The current ratio needs the magnetising current to be small. With $`L_1`$ = 30 H that current is 24.4 mA, and the primary draws 83.4 mA, not the ideal 62.6 mA.
 - **The iron is not saturated.** Iron carries flux easily only up to a little below 2 T. The turns are chosen to keep the peak at 1.2 T. Halve the frequency and the peak flux doubles.
 - **No resistance or core loss.** Real windings heat, and the iron warms a little on every cycle. The card leaves both out, so its 8.64 W in equals 8.64 W out.
 
@@ -73,97 +77,111 @@ The two coils share no wire. They share one thing: the flux in the iron. Every t
 
 ### Step 1: the voltage ratio, from Faraday
 
-Faraday's law ([Magnetic fields](05-magnetism-and-faradays-law.md)) says a loop around a changing flux $\Phi$ has a voltage $d\Phi/dt$ around it. A coil of $N$ turns adds $N$ such loops:
+Faraday's law ([Magnetic fields](05-magnetism-and-faradays-law.md)) says a loop around a changing flux $`\Phi`$ has a voltage $`d\Phi/dt`$ around it. A coil of $`N`$ turns adds $`N`$ such loops:
 
-$$v_1 = N_1 \frac{d\Phi}{dt}, \qquad v_2 = N_2 \frac{d\Phi}{dt} \quad\Longrightarrow\quad \frac{v_1}{v_2} = \frac{N_1}{N_2}.$$
+```math
+v_1 = N_1 \frac{d\Phi}{dt}, \qquad v_2 = N_2 \frac{d\Phi}{dt} \quad\Longrightarrow\quad \frac{v_1}{v_2} = \frac{N_1}{N_2}.
+```
 
-The sign that Lenz's law adds (the induced voltage opposes the change in flux) is the same on both coils and cancels in the ratio. The rate $d\Phi/dt$ cancels too. So the voltage ratio holds at every instant, for any wave shape, and needs only the shared flux.
+The sign that Lenz's law adds (the induced voltage opposes the change in flux) is the same on both coils and cancels in the ratio. The rate $`d\Phi/dt`$ cancels too. So the voltage ratio holds at every instant, for any wave shape, and needs only the shared flux.
 
 For the doorbell: 1,150 turns on 230 V is 5 turns per volt, so each turn carries 0.2 V. Sixty turns give 12.0 V.
 
 ### Step 2: the current ratio, from what the iron needs
 
-Current in a coil pushes flux round the core. The push is **ampere-turns**: amps times turns. The primary current pushes one way; the secondary current, flowing out to the load, pushes the other (that is Lenz's law: induced current opposes the change). The net push sets the flux through the permeance $\Lambda$, the core's flux per ampere-turn:
+Current in a coil pushes flux round the core. The push is **ampere-turns**: amps times turns. The primary current pushes one way; the secondary current, flowing out to the load, pushes the other (that is Lenz's law: induced current opposes the change). The net push sets the flux through the permeance $`\Lambda`$, the core's flux per ampere-turn:
 
-$$N_1 i_1 - N_2 i_2 = \frac{\Phi}{\Lambda}.$$
+```math
+N_1 i_1 - N_2 i_2 = \frac{\Phi}{\Lambda}.
+```
 
-Good iron has a large $\Lambda$, so the right side is small. In the ideal limit it is zero, and $N_1 I_1 = N_2 I_2$. The current ratio is the turns ratio upside down: 1.2 A × 60 / 1,150 = 62.6 mA.
+Good iron has a large $`\Lambda`$, so the right side is small. In the ideal limit it is zero, and $`N_1 I_1 = N_2 I_2`$. The current ratio is the turns ratio upside down: 1.2 A × 60 / 1,150 = 62.6 mA.
 
-Power agrees. Volts down by $n$ and amps up by $n$ leave volts times amps unchanged: 230 V × 62.6 mA = 12 V × 1.2 A = 14.4 VA. A transformer cannot make power, so if the voltage drops the current has to rise.
+Power agrees. Volts down by $`n`$ and amps up by $`n`$ leave volts times amps unchanged: 230 V × 62.6 mA = 12 V × 1.2 A = 14.4 VA. A transformer cannot make power, so if the voltage drops the current has to rise.
 
 The small right side does not vanish in a real core. It is the **magnetising current**, the current the mains spends keeping the flux swinging, even with no load. Step 4 computes it.
 
 ### Step 3: the same coils, as mutual inductance
 
-Circuit equations do not mention flux. They use inductances. A coil's **self-inductance** $L$ is the flux linkage (flux times turns) it makes in itself per amp. Its **mutual inductance** $M$ to another coil is the flux linkage it makes in that coil per amp. One ampere-turn makes $\Lambda$ of flux, so
+Circuit equations do not mention flux. They use inductances. A coil's **self-inductance** $`L`$ is the flux linkage (flux times turns) it makes in itself per amp. Its **mutual inductance** $`M`$ to another coil is the flux linkage it makes in that coil per amp. One ampere-turn makes $`\Lambda`$ of flux, so
 
-$$L_1 = N_1^2\Lambda, \qquad L_2 = N_2^2\Lambda, \qquad M = N_1N_2\Lambda.$$
+```math
+L_1 = N_1^2\Lambda, \qquad L_2 = N_2^2\Lambda, \qquad M = N_1N_2\Lambda.
+```
 
-The primary's 30 H gives $\Lambda$ = 22.6843 µH, $L_2$ = 0.0817 H and $M$ = 1.5652 H. Then $M^2 = L_1L_2$ exactly. The ratio $k = M/\sqrt{L_1L_2}$ is the **coupling coefficient**, and shared flux means $k = 1$. When some flux leaks, $M$ is smaller, $k < 1$, and Step 1's ratio no longer holds exactly.
+The primary's 30 H gives $`\Lambda`$ = 22.6843 µH, $`L_2`$ = 0.0817 H and $`M`$ = 1.5652 H. Then $`M^2 = L_1L_2`$ exactly. The ratio $`k = M/\sqrt{L_1L_2}`$ is the **coupling coefficient**, and shared flux means $`k = 1`$. When some flux leaks, $`M`$ is smaller, $`k < 1`$, and Step 1's ratio no longer holds exactly.
 
 With the primary current flowing in and the secondary current flowing out, each coil's voltage is its own inductance's share plus the other coil's:
 
-$$v_1 = L_1\frac{di_1}{dt} - M\frac{di_2}{dt}, \qquad v_2 = M\frac{di_1}{dt} - L_2\frac{di_2}{dt}.$$
+```math
+v_1 = L_1\frac{di_1}{dt} - M\frac{di_2}{dt}, \qquad v_2 = M\frac{di_1}{dt} - L_2\frac{di_2}{dt}.
+```
 
 ### Step 4: the reflected impedance
 
-At one frequency each $d/dt$ becomes multiplication by $j\omega$ ([Phasors](02-phasors-and-impedance.md)). The load sets $V_2 = Z_L I_2$. The second equation gives the secondary current from the primary current:
+At one frequency each $`d/dt`$ becomes multiplication by $`j\omega`$ ([Phasors](02-phasors-and-impedance.md)). The load sets $`V_2 = Z_L I_2`$. The second equation gives the secondary current from the primary current:
 
-$$I_2 = \frac{j\omega M}{Z_L + j\omega L_2}\,I_1.$$
+```math
+I_2 = \frac{j\omega M}{Z_L + j\omega L_2}\,I_1.
+```
 
-Put that into the first equation and divide by $I_1$:
+Put that into the first equation and divide by $`I_1`$:
 
-$$Z_{\text{in}} = \frac{V_1}{I_1} = j\omega L_1 + \frac{(\omega M)^2}{Z_L + j\omega L_2}.$$
+```math
+Z_{\text{in}} = \frac{V_1}{I_1} = j\omega L_1 + \frac{(\omega M)^2}{Z_L + j\omega L_2}.
+```
 
-The second term is the load **reflected** to the primary. When $k = 1$ this tidies into a parallel pair: the primary's own inductance $j\omega L_1$ beside $n^2 Z_L$.
+The second term is the load **reflected** to the primary. When $`k = 1`$ this tidies into a parallel pair: the primary's own inductance $`j\omega L_1`$ beside $`n^2 Z_L`$.
 
 <details>
 <summary>Detailed proof: with k = 1, the input impedance is n²Z_L in parallel with jωL₁</summary>
 
-Put $(\omega M)^2 = \omega^2 L_1L_2$ over the common denominator:
+Put $`(\omega M)^2 = \omega^2 L_1L_2`$ over the common denominator:
 
-$$Z_{\text{in}} = \frac{j\omega L_1 (Z_L + j\omega L_2) + \omega^2 L_1 L_2}{Z_L + j\omega L_2} = \frac{j\omega L_1 Z_L}{Z_L + j\omega L_2}.$$
+$`\displaystyle Z_{\text{in}} = \frac{j\omega L_1 (Z_L + j\omega L_2) + \omega^2 L_1 L_2}{Z_L + j\omega L_2} = \frac{j\omega L_1 Z_L}{Z_L + j\omega L_2}.`$
 
-The $\omega^2L_1L_2$ terms cancel. Now $L_2 = L_1/n^2$. Multiply top and bottom by $n^2$:
+The $`\omega^2L_1L_2`$ terms cancel. Now $`L_2 = L_1/n^2`$. Multiply top and bottom by $`n^2`$:
 
-$$Z_{\text{in}} = \frac{(j\omega L_1)(n^2 Z_L)}{n^2 Z_L + j\omega L_1},$$
+$`\displaystyle Z_{\text{in}} = \frac{(j\omega L_1)(n^2 Z_L)}{n^2 Z_L + j\omega L_1},`$
 
-which is the parallel-resistor rule, product over sum, for $n^2Z_L$ and $j\omega L_1$. As $L_1$ grows the $j\omega L_1$ branch carries less and less current and $Z_{\text{in}} \to n^2 Z_L$. The same algebra gives $V_2 = V_1/n$ exactly, whatever $L_1$ is.
+which is the parallel-resistor rule, product over sum, for $`n^2Z_L`$ and $`j\omega L_1`$. As $`L_1`$ grows the $`j\omega L_1`$ branch carries less and less current and $`Z_{\text{in}} \to n^2 Z_L`$. The same algebra gives $`V_2 = V_1/n`$ exactly, whatever $`L_1`$ is.
 
 </details>
 
-So the two ideal limits are different. Shared flux ($k = 1$) alone fixes the voltage ratio. The current ratio and $n^2 Z_L$ also need $L_1$ to be large. For the doorbell, $\omega L_1$ = 9,425 Ω sits in parallel with the reflected 3,674 Ω, which is why the magnetising current is a large share of the total.
+So the two ideal limits are different. Shared flux ($`k = 1`$) alone fixes the voltage ratio. The current ratio and $`n^2 Z_L`$ also need $`L_1`$ to be large. For the doorbell, $`\omega L_1`$ = 9,425 Ω sits in parallel with the reflected 3,674 Ω, which is why the magnetising current is a large share of the total.
 
 ### Step 5: the turns ratio sets the voltage; the turns count sets the flux
 
-Why 1,150 and 60, and not 115 and 6? The ratio is the same. But Step 1 read backwards gives the flux the core must carry. With $v_1 = \sqrt2\,V_1\cos\omega t$, the flux is $\Phi = \Phi_{\text{peak}}\sin\omega t$ with
+Why 1,150 and 60, and not 115 and 6? The ratio is the same. But Step 1 read backwards gives the flux the core must carry. With $`v_1 = \sqrt2\,V_1\cos\omega t`$, the flux is $`\Phi = \Phi_{\text{peak}}\sin\omega t`$ with
 
-$$\Phi_{\text{peak}} = \frac{\sqrt2\,V_1}{\omega N_1}, \qquad B_{\text{peak}} = \frac{\Phi_{\text{peak}}}{A}.$$
+```math
+\Phi_{\text{peak}} = \frac{\sqrt2\,V_1}{\omega N_1}, \qquad B_{\text{peak}} = \frac{\Phi_{\text{peak}}}{A}.
+```
 
-That is 0.9003 mWb, or 1.2004 T in a 7.5 cm² core. Designers write it as $V = 4.44\,f N A B_{\text{peak}}$, where 4.44 is $\sqrt2\,\pi$ rounded. Fewer turns mean more flux per turn. With 115 turns the core would need 12 T, six times what iron can carry.
+That is 0.9003 mWb, or 1.2004 T in a 7.5 cm² core. Designers write it as $`V = 4.44\,f N A B_{\text{peak}}`$, where 4.44 is $`\sqrt2\,\pi`$ rounded. Fewer turns mean more flux per turn. With 115 turns the core would need 12 T, six times what iron can carry.
 
 ---
 
 ## Worked numbers, by hand
 
-The doorbell: 230 V at 50 Hz, $N_1$ = 1,150, $N_2$ = 60, chime $Z_L = 6 + j8$ Ω (a solenoid: 6 Ω of wire and 8 Ω of reactance), primary inductance $L_1$ = 30 H, core 7.5 cm².
+The doorbell: 230 V at 50 Hz, $`N_1`$ = 1,150, $`N_2`$ = 60, chime $`Z_L = 6 + j8`$ Ω (a solenoid: 6 Ω of wire and 8 Ω of reactance), primary inductance $`L_1`$ = 30 H, core 7.5 cm².
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| turns ratio $n$ | 1,150 ÷ 60 | 19.1667 |
-| secondary voltage $V_2$ | 230 ÷ 19.1667 | 12.0 V |
-| chime current $I_2$ | 12 ÷ $\sqrt{6^2 + 8^2}$ = 12 ÷ 10 | 1.2 A |
+| turns ratio $`n`$ | 1,150 ÷ 60 | 19.1667 |
+| secondary voltage $`V_2`$ | 230 ÷ 19.1667 | 12.0 V |
+| chime current $`I_2`$ | 12 ÷ $`\sqrt{6^2 + 8^2}`$ = 12 ÷ 10 | 1.2 A |
 | chime power | 1.2² × 6 | 8.64 W |
 | chime volt-amperes | 12 × 1.2 | 14.4 VA |
-| ideal primary current | 1.2 ÷ 19.1667 | 62.6087 mA, 53.13° behind $V_1$ |
-| ideal $Z_{\text{in}} = n^2Z_L$ | 367.36 × (6 + j8) | 2204.17 + j2938.89 Ω |
+| ideal primary current | 1.2 ÷ 19.1667 | 62.6087 mA, 53.13° behind $`V_1`$ |
+| ideal $`Z_{\text{in}} = n^2Z_L`$ | 367.36 × (6 + j8) | 2204.17 + j2938.89 Ω |
 | its size | 367.36 × 10 | 3,673.61 Ω |
-| magnetising current | 230 ÷ (314.16 × 30) | 24.4038 mA, a quarter cycle behind $V_1$ |
-| real $Z_{\text{in}}$ | 2204.17 + j2938.89 Ω in parallel with j9,424.78 Ω | 1241.38 + j2461.61 Ω |
-| **primary current** | 230 ÷ size of real $Z_{\text{in}}$ | **83.4267 mA**, 63.24° behind $V_1$ |
-| peak flux density | $\sqrt2$ × 230 ÷ (314.16 × 1,150 × 0.00075) | 1.2004 T |
+| magnetising current | 230 ÷ (314.16 × 30) | 24.4038 mA, a quarter cycle behind $`V_1`$ |
+| real $`Z_{\text{in}}`$ | 2204.17 + j2938.89 Ω in parallel with j9,424.78 Ω | 1241.38 + j2461.61 Ω |
+| **primary current** | 230 ÷ size of real $`Z_{\text{in}}`$ | **83.4267 mA**, 63.24° behind $`V_1`$ |
+| peak flux density | $`\sqrt2`$ × 230 ÷ (314.16 × 1,150 × 0.00075) | 1.2004 T |
 
-The chime gets its 12 V and 1.2 A. The mains supplies 83.4 mA, of which the chime's share is 62.6 mA. The 24.4 mA of magnetising current is a quarter cycle behind $V_1$. The chime's share is 53.13° behind it, because the chime is partly a coil. So the two are 36.87° apart, and they combine as two sides of a triangle, not end to end: 83.4 mA, less than their 87.0 mA sum.
+The chime gets its 12 V and 1.2 A. The mains supplies 83.4 mA, of which the chime's share is 62.6 mA. The 24.4 mA of magnetising current is a quarter cycle behind $`V_1`$. The chime's share is 53.13° behind it, because the chime is partly a coil. So the two are 36.87° apart, and they combine as two sides of a triangle, not end to end: 83.4 mA, less than their 87.0 mA sum.
 
 ```
 primary current, mA
@@ -178,11 +196,11 @@ Power still balances: the mains delivers 8.64 W, all of it into the chime's 6 Ω
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Turns ratio upside down, $V_2 = nV_1$ | 4,408.33 V | That is a step-up transformer; the chime burns out |
-| Reflect by $n$, not $n^2$ | 191.67 Ω | Voltage up by $n$ *and* current down by $n$: the impedance ratio is $n \times n$ |
-| Current scaled like voltage, $I_1 = nI_2$ | 23 A | The mains would supply 5,290 VA for a 14.4 VA load: power from nowhere |
+| Turns ratio upside down, $`V_2 = nV_1`$ | 4,408.33 V | That is a step-up transformer; the chime burns out |
+| Reflect by $`n`$, not $`n^2`$ | 191.67 Ω | Voltage up by $`n`$ *and* current down by $`n`$: the impedance ratio is $`n \times n`$ |
+| Current scaled like voltage, $`I_1 = nI_2`$ | 23 A | The mains would supply 5,290 VA for a 14.4 VA load: power from nowhere |
 | Same ratio, fewer turns: 115 and 6 | peak 12.0042 T | Ten times the flux per turn; iron saturates near 2 T and the primary current soars |
-| Ignore the magnetising current | 62.6087 mA | The real primary draws 83.4267 mA; $L_1$ = 30 H is not infinite |
+| Ignore the magnetising current | 62.6087 mA | The real primary draws 83.4267 mA; $`L_1`$ = 30 H is not infinite |
 
 ---
 
@@ -192,7 +210,7 @@ The script builds the doorbell transformer and reaches the primary current and t
 
 - **Road 1** is phasor algebra: the ideal rule and the coupled-coil formula of Step 4, with the parallel form as a cross-check.
 - **Road 2** simulates the physics of Steps 1 and 2 directly. It steps the core flux forward from Faraday's law and the chime's current from its own resistance and inductance, by fourth-order Runge–Kutta (RK4, a standard step-by-step solver). It gets the primary current from the ampere-turn balance. It takes the secondary voltage from Step 1's turns rule, so it is not a road to that voltage.
-- **Road 3** simulates the coils as $L_1$, $L_2$ and $M$ from Step 3, which also lets the coupling leak ($k$ = 0.97).
+- **Road 3** simulates the coils as $`L_1`$, $`L_2`$ and $`M`$ from Step 3, which also lets the coupling leak ($`k`$ = 0.97).
 
 Both simulations start from rest at a voltage peak, run 20 cycles, and read each wave's size and timing from the last cycle. Python uses its built-in complex numbers; Rust writes a small complex type out.
 
@@ -563,17 +581,17 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the ideal rule, the voltage rule at every instant and the $k = 1$ coil equations, for any turns and load.
+Lean proves the ideal rule, the voltage rule at every instant and the $`k = 1`$ coil equations, for any turns and load.
 
-- Suppose every turn sees the same changing flux, with $N_1 I_1 = N_2 I_2$ and a load $Z_L$. Then $V_1/V_2 = n$, $I_1/I_2 = 1/n$ and $Z_{\text{in}} = n^2 Z_L$.
-- Suppose each turn sees the same flux $\Phi$, and $\Phi$ is changing at time $t$. Then $v_1/v_2 = N_1/N_2$ at that instant, for any wave shape.
-- Suppose $k = 1$ and $L_2 = L_1/n^2$, with Step 4's phasor coil equations and a load $Z_L$. Then $V_2 = V_1/n$ exactly, whatever $L_1$ is.
-- Take the same coils. Then $Z_{\text{in}}$ matches Step 4's formula and equals $n^2 Z_L$ in parallel with $j\omega L_1$.
-- The doorbell gives 12 V, 1.2 A, 8.64 W and 14.4 VA. Its ideal $Z_{\text{in}}$ is $2204.17 + j2938.89$ Ω.
+- Suppose every turn sees the same changing flux, with $`N_1 I_1 = N_2 I_2`$ and a load $`Z_L`$. Then $`V_1/V_2 = n`$, $`I_1/I_2 = 1/n`$ and $`Z_{\text{in}} = n^2 Z_L`$.
+- Suppose each turn sees the same flux $`\Phi`$, and $`\Phi`$ is changing at time $`t`$. Then $`v_1/v_2 = N_1/N_2`$ at that instant, for any wave shape.
+- Suppose $`k = 1`$ and $`L_2 = L_1/n^2`$, with Step 4's phasor coil equations and a load $`Z_L`$. Then $`V_2 = V_1/n`$ exactly, whatever $`L_1`$ is.
+- Take the same coils. Then $`Z_{\text{in}}`$ matches Step 4's formula and equals $`n^2 Z_L`$ in parallel with $`j\omega L_1`$.
+- The doorbell gives 12 V, 1.2 A, 8.64 W and 14.4 VA. Its ideal $`Z_{\text{in}}`$ is $`2204.17 + j2938.89`$ Ω.
 - The ideal primary current is 62.6 mA, and 230 V times it is again 14.4 VA.
 - The usual mistakes give 4,408.33 V, 191.67 Ω, 23 A and 5,290 VA.
 
-The magnetising current, leakage at $k$ = 0.97, the flux in the iron and both simulations are left to the Python and Rust checks.
+The magnetising current, leakage at $`k`$ = 0.97, the flux in the iron and both simulations are left to the Python and Rust checks.
 
 ```lean
 -- Transformers: when two coils share one changing flux, voltage divides by the turns ratio, current multiplies by it, and the load is seen scaled by its square.
@@ -702,10 +720,10 @@ example : (230 : ℚ) * (1150 / 60) = 13225 / 3 ∧ (10 : ℚ) * (1150 / 60) = 5
 
 > [!TIP]
 > **Try changing**
-> - Guess first: set `f` to 60 Hz, as in North America. $V_2$ stays 12.0 V. The peak flux density falls to 1.0004 T and the magnetising current to 20.3365 mA: the same voltage needs less flux when it changes faster.
-> - Guess first: set `N2` to 30. $V_2$ halves to 6.0 V, and the chime current halves with it.
+> - Guess first: set `f` to 60 Hz, as in North America. $`V_2`$ stays 12.0 V. The peak flux density falls to 1.0004 T and the magnetising current to 20.3365 mA: the same voltage needs less flux when it changes faster.
+> - Guess first: set `N2` to 30. $`V_2`$ halves to 6.0 V, and the chime current halves with it.
 > - Guess first: set `L1` to 300 H, a core with ten times the permeance. The primary current falls to 64.5776 mA, within 2 mA of the ideal 62.6087 mA.
-> - Guess first: how far the chime's voltage drops if the coupling leaks to $k$ = 0.97. Change `coil_road(1.0)` to `coil_road(0.97)`. The `3 coils |V2|` line falls from 12.0 V to 10.3468 V, and the L–M assert stops the run, since the phasor road still has $k$ = 1. The `k = 0.97` lines already give 11.64 V with nothing connected: leakage acts like an inductor in series with the load.
+> - Guess first: how far the chime's voltage drops if the coupling leaks to $`k`$ = 0.97. Change `coil_road(1.0)` to `coil_road(0.97)`. The `3 coils |V2|` line falls from 12.0 V to 10.3468 V, and the L–M assert stops the run, since the phasor road still has $`k`$ = 1. The `k = 0.97` lines already give 11.64 V with nothing connected: leakage acts like an inductor in series with the load.
 
 ---
 
@@ -715,10 +733,10 @@ example : (230 : ℚ) * (1150 / 60) = 13225 / 3 ∧ (10 : ℚ) * (1150 / 60) = 5
 > **Treating the transformer as a power amplifier, or the current as following the voltage.** A step-down transformer lowers voltage and *raises* current by the same ratio. The chime's 1.2 A comes from 62.6 mA on the mains, not from 1.2 A, and certainly not from 23 A. Power in equals power out, less the losses: 8.64 W on each side here.
 >
 > Smaller traps:
-> - **Reflecting by $n$ instead of $n^2$.** The chime's 10 Ω looks like 3,673.61 Ω from the mains, not 191.67 Ω.
+> - **Reflecting by $`n`$ instead of $`n^2`$.** The chime's 10 Ω looks like 3,673.61 Ω from the mains, not 191.67 Ω.
 > - **Choosing turns by the ratio alone.** 115 and 6 turns give the same 12 V on paper, but the core would need 12.0042 T. The turns count sets the flux; the ratio sets the voltage.
 > - **Connecting to DC.** A transformer needs changing flux. On 230 V DC the chime gets nothing and a 100 Ω primary winding draws 2.3 A and burns 529 W.
-> - **Assuming 12 V under load.** With leakage ($k$ = 0.97) the open-circuit 11.64 V sags to 10.3468 V when the chime rings.
+> - **Assuming 12 V under load.** With leakage ($`k`$ = 0.97) the open-circuit 11.64 V sags to 10.3468 V when the chime rings.
 
 ---
 
@@ -726,9 +744,9 @@ example : (230 : ℚ) * (1150 / 60) = 13225 / 3 ∧ (10 : ℚ) * (1150 / 60) = 5
 
 - **Doorbells, thermostats and garden lights.** Each runs on 8 to 24 V from a small transformer like this one, so the wiring to the button is safe to touch.
 - **The street transformer.** The distribution grid runs at thousands of volts to keep currents and cable heating low, and a transformer on the pole or in a green box steps it down to 230 V.
-- **Audio and radio.** A loudspeaker of 8 Ω behind a valve amplifier, or an antenna fed through a matching coil, is made to look like the impedance the source wants by choosing $n$ so that $n^2Z_L$ fits.
+- **Audio and radio.** A loudspeaker of 8 Ω behind a valve amplifier, or an antenna fed through a matching coil, is made to look like the impedance the source wants by choosing $`n`$ so that $`n^2Z_L`$ fits.
 - **Isolation.** No wire joins the two coils, so a fault on the mains side cannot reach the low-voltage side by conduction. Medical equipment and bathroom shaver sockets rely on this.
-- **Wireless phone chargers.** Two flat coils facing each other form a transformer with large leakage, $k$ well below 1, which is why they run at high frequency and lose more power than a wire.
+- **Wireless phone chargers.** Two flat coils facing each other form a transformer with large leakage, $`k`$ well below 1, which is why they run at high frequency and lose more power than a wire.
 
 > **Say it back**
 > Two coils on one core share one changing flux, so each turn gets the same voltage and the voltage ratio is the turns ratio. The iron needs almost no net ampere-turns, so the current ratio is the turns ratio upside down, and in the ideal transformer volts times amps is the same on both sides. A load seen through the transformer is multiplied by the turns ratio squared: the chime's 10 Ω looks like 3,674 Ω. A real core adds a magnetising current, 24.4 mA here, which raises the mains current from 62.6 mA to 83.4 mA. The turns count, not just the ratio, sets how hard the iron works.
@@ -738,8 +756,8 @@ example : (230 : ℚ) * (1150 / 60) = 13225 / 3 ∧ (10 : ℚ) * (1150 / 60) = 5
 ## What this builds on
 
 - [Magnetic fields](05-magnetism-and-faradays-law.md): Faraday's law, a changing flux induces a voltage, and Lenz's law for its sign. This card applies it to many turns on one core.
-- [Phasors](02-phasors-and-impedance.md): sine waves as complex numbers and impedance as $R + jX$, which turn the coil equations into the algebra of Step 4.
-- [Kirchhoff's laws](01-kirchhoffs-laws-and-equivalent-circuits.md): loop voltages and the series and parallel rules used to read $Z_{\text{in}}$ as a parallel pair.
+- [Phasors](02-phasors-and-impedance.md): sine waves as complex numbers and impedance as $`R + jX`$, which turn the coil equations into the algebra of Step 4.
+- [Kirchhoff's laws](01-kirchhoffs-laws-and-equivalent-circuits.md): loop voltages and the series and parallel rules used to read $`Z_{\text{in}}`$ as a parallel pair.
 
 ## Where this goes next
 

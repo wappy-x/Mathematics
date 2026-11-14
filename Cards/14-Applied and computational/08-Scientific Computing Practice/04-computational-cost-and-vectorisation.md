@@ -49,24 +49,26 @@ The two top bars are equal: arrays do not reduce the arithmetic. In the lower gr
 
 ## The formula
 
-$$\text{cost} \approx s \cdot D + e \cdot E, \qquad E = k\,n, \qquad D = \begin{cases} k\,n & \text{loop, path by path} \\ k\,\lceil n/b \rceil & \text{arrays, } b \text{ paths at a time} \\ 0 & \text{compiled loop} \end{cases}$$
+```math
+\text{cost} \approx s \cdot D + e \cdot E, \qquad E = k\,n, \qquad D = \begin{cases} k\,n & \text{loop, path by path} \\ k\,\lceil n/b \rceil & \text{arrays, } b \text{ paths at a time} \\ 0 & \text{compiled loop} \end{cases}
+```
 
 **Read it aloud:** the cost is the price of each interpreter step times the number of steps, plus the price of each element operation times the number of those; the element operations are always k per path, but the steps are k per path in a loop and only k per batch with arrays.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | paths simulated | 1,000,000 | E grows in step; D grows with it for a loop, not for one array |
-| $k$ | element operations per path: 15 instructions plus 1 add to the total | 16 | E and D both grow in step |
-| $b$ | paths launched together in one array, the **chunk size** | 1,000,000 (one chunk); also 100 and 10,000 | fewer steps, but b numbers held in memory at once |
-| $E$ | **element operations**: arithmetic or logic on one number | 16,000,000 | — |
-| $D$ | **interpreter steps**: instructions the interpreter reads and launches | loop 16,000,000; arrays 16 | — |
-| $s$ | price of one interpreter step | not measured on this card | the loop suffers, arrays barely notice |
-| $e$ | price of one element operation in compiled code | not measured on this card | every version suffers equally |
-| $\lceil x \rceil$ | x rounded up to a whole number | ⌈1,000,000 / 100⌉ = 10,000 chunks | — |
-| $p$ | exact probability that a path ends at least £16 up | 0.029971 | — |
-| $h$ | hits: paths that end at least £16 up | 30,037 | — |
+| $`n`$ | paths simulated | 1,000,000 | E grows in step; D grows with it for a loop, not for one array |
+| $`k`$ | element operations per path: 15 instructions plus 1 add to the total | 16 | E and D both grow in step |
+| $`b`$ | paths launched together in one array, the **chunk size** | 1,000,000 (one chunk); also 100 and 10,000 | fewer steps, but b numbers held in memory at once |
+| $`E`$ | **element operations**: arithmetic or logic on one number | 16,000,000 | — |
+| $`D`$ | **interpreter steps**: instructions the interpreter reads and launches | loop 16,000,000; arrays 16 | — |
+| $`s`$ | price of one interpreter step | not measured on this card | the loop suffers, arrays barely notice |
+| $`e`$ | price of one element operation in compiled code | not measured on this card | every version suffers equally |
+| $`\lceil x \rceil`$ | x rounded up to a whole number | ⌈1,000,000 / 100⌉ = 10,000 chunks | — |
+| $`p`$ | exact probability that a path ends at least £16 up | 0.029971 | — |
+| $`h`$ | hits: paths that end at least £16 up | 30,037 | — |
 | SE | standard error: the typical size of the gap between h/n and p, √(p(1 − p)/n) | 0.000171 | shrinks as n grows |
-| $2^{64}$ | the number of different 64-coin sequences | the bottom of the fraction p | — |
+| $`2^{64}`$ | the number of different 64-coin sequences | the bottom of the fraction p | — |
 
 The prices s and e depend on the machine, so this card counts D and E and never times them; [Big-O](../01-Algorithms%20and%20Growth/01-big-o-and-growth-rates.md) explains why counts, not stopwatch readings, are the honest measure.
 
@@ -96,7 +98,9 @@ Inside a row the order matters, because each instruction uses the one before. Ac
 
 Every cell is computed once, whichever way the grid is walked. So
 
-$$E = k\,n = 16 \times 1{,}000{,}000 = 16{,}000{,}000.$$
+```math
+E = k\,n = 16 \times 1{,}000{,}000 = 16{,}000{,}000.
+```
 
 The code counts E as it goes, adding 1 per cell in the loop and adding the array's length per array instruction, and both counts come out at 16,000,000. Vectorising (rewriting a loop as array work) never removes arithmetic. It only moves the repetition from the interpreter into compiled code.
 
@@ -104,7 +108,9 @@ The code counts E as it goes, adding 1 per cell in the loop and adding the array
 
 In the loop the interpreter launches every cell separately, so D = k n = 16,000,000. In array work it launches one whole column per step. With the paths cut into chunks of b, there are ⌈n/b⌉ chunks and k steps for each:
 
-$$D = k \lceil n/b \rceil.$$
+```math
+D = k \lceil n/b \rceil.
+```
 
 For b = 100 that is 16 × 10,000 = 160,000 steps; for b = 10,000, 1,600; for one chunk of all 1,000,000 paths, 16. Setting b = 1 gives back the loop's 16,000,000, which is why a loop is just arrays of length one. The code counts D both ways and meets the formula at each b.
 
@@ -132,7 +138,9 @@ The Python script does ask the interpreter itself for one confirmation. Python o
 
 A path ends at least £16 up when it has at least 40 heads among 64 fair coins. Each of the 2⁶⁴ head-and-tail sequences is equally likely. The number of sequences with exactly j heads is entry j of row 64 of Pascal's triangle (each row made by adding neighbours in the row above). Adding entries 40 to 64 gives 552,859,891,708,071,949 sequences, so
 
-$$p = \frac{552{,}859{,}891{,}708{,}071{,}949}{2^{64}} = 0.029971,$$
+```math
+p = \frac{552{,}859{,}891{,}708{,}071{,}949}{2^{64}} = 0.029971,
+```
 
 and 1,000,000 paths should give about 29,970.6 hits.
 
@@ -532,10 +540,10 @@ The two outputs match line for line.
 
 Lean proves the counts of Steps 1 and 2 for any paths and chunk size, the exact count of Step 4, and the worked numbers.
 
-- Take $k$ instructions on $n$ independent paths, and a chunk size $b \ge 1$. Then the loop and the arrays find the same value for every path.
-- Take $k$ instructions on $n$ paths, and a chunk size $b \ge 1$. Then the loop and the arrays each do exactly $E = k\,n$ element operations.
-- Take $k$ instructions on $n$ paths. Then the loop launches $D = k\,n$ interpreter steps.
-- Take $k$ instructions on $n$ paths in chunks of $b \ge 1$. Then the arrays launch $D = k \lceil n/b \rceil$ interpreter steps.
+- Take $`k`$ instructions on $`n`$ independent paths, and a chunk size $`b \ge 1`$. Then the loop and the arrays find the same value for every path.
+- Take $`k`$ instructions on $`n`$ paths, and a chunk size $`b \ge 1`$. Then the loop and the arrays each do exactly $`E = k\,n`$ element operations.
+- Take $`k`$ instructions on $`n`$ paths. Then the loop launches $`D = k\,n`$ interpreter steps.
+- Take $`k`$ instructions on $`n`$ paths in chunks of $`b \ge 1`$. Then the arrays launch $`D = k \lceil n/b \rceil`$ interpreter steps.
 - Arrays in chunks of one path give the same values, steps and element operations as the loop.
 - Count the 64-coin sequences with at least 40 heads. Then the count is entries 40 to 64 of row 64 of Pascal's triangle, added: 552,859,891,708,071,949.
 - The worked counts hold: 16 per path, 16,000,000 in all, and 16, 1,600 or 160,000 array steps.

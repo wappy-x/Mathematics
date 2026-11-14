@@ -37,44 +37,50 @@ One line: volga of the call at each strike. It dips just below zero between $101
 
 ## The formula
 
-The notation $\partial C / \partial \sigma$ means the rate at which the price changes as volatility moves while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Applying it twice gives the second derivative.
+The notation $`\partial C / \partial \sigma`$ means the rate at which the price changes as volatility moves while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Applying it twice gives the second derivative.
 
-$$\text{Volga} \;=\; \frac{\partial^2 C}{\partial \sigma^2} \;=\; \frac{\partial \mathcal{V}}{\partial \sigma} \;=\; \mathcal{V}\,\frac{d_1\,d_2}{\sigma}$$
+```math
+\text{Volga} \;=\; \frac{\partial^2 C}{\partial \sigma^2} \;=\; \frac{\partial \mathcal{V}}{\partial \sigma} \;=\; \mathcal{V}\,\frac{d_1\,d_2}{\sigma}
+```
 
 **Read it aloud:** volga is vega, times the product of the two Black-Scholes distances, divided by volatility.
 
 | Symbol | Plain meaning | In our example | Push it up and volga… |
 | --- | --- | --- | --- |
-| $C$ | the call's price today | \$9.23 | (the output's parent) |
-| $S$ | Acme's share price today | \$100 | moves the option relative to the strike; see $m$ |
-| $K$ | the strike, the price the call lets its holder pay | \$100 | falls to its lowest near $F$, then climbs |
-| $r$, $q$ | the riskless rate and Acme's dividend yield, continuously compounded | 5%, 2% | shift $F$, and with it the zero band |
-| $T$ | time to expiry, in years | 1 | widens the band where volga is negative |
-| $\sigma$ | volatility: the yearly spread of Acme's log price | 20% | at a fixed strike, can flip the sign: 40% gives −3.24 |
-| $F$ | the forward price, $S\,e^{(r-q)T}$: the fair price today for delivery at $T$ | \$103.05 | (the centre of the zero band) |
-| $m$ | log distance from strike to forward, $\ln(F/K)$ | 0.03 | the further from 0, the larger volga |
-| $d_1$, $d_2$ | distances to the strike in units of $\sigma\sqrt{T}$, as on the Black–Scholes call card | 0.25, 0.05 | their product sets the sign |
-| $\varphi$, $N$ | the bell curve's height, and its area to the left of a point | $\varphi(d_1) = 0.3867$ | |
-| $\mathcal{V}$ | vega, $\partial C / \partial \sigma$, per unit of volatility | 37.90 | scales volga up |
-| $\Delta\sigma$ | a move in volatility | 0.05 | the gain from it grows as its square |
+| $`C`$ | the call's price today | \$9.23 | (the output's parent) |
+| $`S`$ | Acme's share price today | \$100 | moves the option relative to the strike; see $`m`$ |
+| $`K`$ | the strike, the price the call lets its holder pay | \$100 | falls to its lowest near $`F`$, then climbs |
+| $`r`$, $`q`$ | the riskless rate and Acme's dividend yield, continuously compounded | 5%, 2% | shift $`F`$, and with it the zero band |
+| $`T`$ | time to expiry, in years | 1 | widens the band where volga is negative |
+| $`\sigma`$ | volatility: the yearly spread of Acme's log price | 20% | at a fixed strike, can flip the sign: 40% gives −3.24 |
+| $`F`$ | the forward price, $`S\,e^{(r-q)T}`$: the fair price today for delivery at $`T`$ | \$103.05 | (the centre of the zero band) |
+| $`m`$ | log distance from strike to forward, $`\ln(F/K)`$ | 0.03 | the further from 0, the larger volga |
+| $`d_1`$, $`d_2`$ | distances to the strike in units of $`\sigma\sqrt{T}`$, as on the Black–Scholes call card | 0.25, 0.05 | their product sets the sign |
+| $`\varphi`$, $`N`$ | the bell curve's height, and its area to the left of a point | $`\varphi(d_1) = 0.3867`$ | |
+| $`\mathcal{V}`$ | vega, $`\partial C / \partial \sigma`$, per unit of volatility | 37.90 | scales volga up |
+| $`\Delta\sigma`$ | a move in volatility | 0.05 | the gain from it grows as its square |
 
 The helpers, unchanged from the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \mathcal{V} = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}.$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \mathcal{V} = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}.
+```
 
-In words: call $\sigma\sqrt{T}$ the spread. $d_1$ and $d_2$ sit half a spread either side of $m/(\sigma\sqrt{T})$, the forward's distance from the strike in spread units. Vega is the share price discounted at the dividend yield, times the bell curve's height at $d_1$, times the square root of time.
+In words: call $`\sigma\sqrt{T}`$ the spread. $`d_1`$ and $`d_2`$ sit half a spread either side of $`m/(\sigma\sqrt{T})`$, the forward's distance from the strike in spread units. Vega is the share price discounted at the dividend yield, times the bell curve's height at $`d_1`$, times the square root of time.
 
 A second form, derived in Step 4, carries the whole sign story:
 
-$$d_1\,d_2 \;=\; \frac{m^2}{\sigma^2 T} \;-\; \frac{\sigma^2 T}{4}$$
+```math
+d_1\,d_2 \;=\; \frac{m^2}{\sigma^2 T} \;-\; \frac{\sigma^2 T}{4}
+```
 
-**Read it aloud:** the squared distance from the forward, in spread units, minus a quarter of the variance. Here $\sigma^2 T$ is the variance of Acme's log price over the option's life. Volga is positive exactly when the strike sits further than half the variance, $\tfrac12\sigma^2 T$, from the forward in log terms.
+**Read it aloud:** the squared distance from the forward, in spread units, minus a quarter of the variance. Here $`\sigma^2 T`$ is the variance of Acme's log price over the option's life. Volga is positive exactly when the strike sits further than half the variance, $`\tfrac12\sigma^2 T`$, from the forward in log terms.
 
 ### When it holds
 
-- **Black-Scholes prices.** The formula differentiates the Black-Scholes price. A model with a volatility smile (implied volatility, the $\sigma$ that makes Black-Scholes match an option's market price, differs by strike) gives a different second derivative; the formula remains the market's standard way to quote the number.
+- **Black-Scholes prices.** The formula differentiates the Black-Scholes price. A model with a volatility smile (implied volatility, the $`\sigma`$ that makes Black-Scholes match an option's market price, differs by strike) gives a different second derivative; the formula remains the market's standard way to quote the number.
 - **Volatility as an input, not a state.** Volga measures how the price would bend if the one volatility number were changed. Treating it as the payoff from random volatility needs that randomness to be independent of Acme's own shocks; with correlation, vanna, the rate at which delta changes as volatility moves, enters as well ([Vanna](06-vanna.md)).
-- **Small moves.** Half volga times $\Delta\sigma^2$ is a second-order estimate. For the \$130 call it is off by 0.14 cents on a 5-point move and by 0.48 cents on a 10-point move.
+- **Small moves.** Half volga times $`\Delta\sigma^2`$ is a second-order estimate. For the \$130 call it is off by 0.14 cents on a 5-point move and by 0.48 cents on a 10-point move.
 - **Units stated.** The formula is per unit of volatility squared. Per vol point squared, divide by 10,000: the house figure is 0.000237.
 
 ---
@@ -83,66 +89,74 @@ $$d_1\,d_2 \;=\; \frac{m^2}{\sigma^2 T} \;-\; \frac{\sigma^2 T}{4}$$
 
 ### Step 0: volga is the slope of vega, and only one piece of vega moves
 
-Vega is already on its own card: $\mathcal{V} = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}$. When volatility moves, the share price, the dividend discount and the time stay put. Only $d_1$ moves, and with it the bell curve's height $\varphi(d_1)$.
+Vega is already on its own card: $`\mathcal{V} = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}`$. When volatility moves, the share price, the dividend discount and the time stay put. Only $`d_1`$ moves, and with it the bell curve's height $`\varphi(d_1)`$.
 
-So volga is vega's fixed part, $S\,e^{-qT}\sqrt{T}$, times how fast $\varphi(d_1)$ changes as $\sigma$ moves. That rate is a chain of two slopes: how the bell curve's height changes with its argument, and how the argument $d_1$ changes with $\sigma$.
+So volga is vega's fixed part, $`S\,e^{-qT}\sqrt{T}`$, times how fast $`\varphi(d_1)`$ changes as $`\sigma`$ moves. That rate is a chain of two slopes: how the bell curve's height changes with its argument, and how the argument $`d_1`$ changes with $`\sigma`$.
 
 ### Step 1: the bell curve's slope is minus the point times the height
 
-The bell curve's height is $\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}$. Differentiating the exponent gives $-x$, so $\varphi'(x) = -x\,\varphi(x)$. To the right of zero the curve falls; to the left it rises; at zero it is flat.
+The bell curve's height is $`\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}`$. Differentiating the exponent gives $`-x`$, so $`\varphi'(x) = -x\,\varphi(x)`$. To the right of zero the curve falls; to the left it rises; at zero it is flat.
 
 ### Step 2: raising volatility pulls d1 by minus d2 over sigma
 
-Write $d_1$ with the forward inside it: $d_1 = \dfrac{m}{\sigma\sqrt{T}} + \dfrac{\sigma\sqrt{T}}{2}$, with $m = \ln(F/K)$. Raising $\sigma$ shrinks the first term and grows the second. The net rate is
+Write $`d_1`$ with the forward inside it: $`d_1 = \dfrac{m}{\sigma\sqrt{T}} + \dfrac{\sigma\sqrt{T}}{2}`$, with $`m = \ln(F/K)`$. Raising $`\sigma`$ shrinks the first term and grows the second. The net rate is
 
-$$\frac{\partial d_1}{\partial \sigma} \;=\; -\frac{m}{\sigma^2\sqrt{T}} + \frac{\sqrt{T}}{2} \;=\; -\frac{d_2}{\sigma}.$$
+```math
+\frac{\partial d_1}{\partial \sigma} \;=\; -\frac{m}{\sigma^2\sqrt{T}} + \frac{\sqrt{T}}{2} \;=\; -\frac{d_2}{\sigma}.
+```
 
-The last step uses $d_2 = \dfrac{m}{\sigma\sqrt{T}} - \dfrac{\sigma\sqrt{T}}{2}$; multiply it by $-1/\sigma$ and the two terms match.
+The last step uses $`d_2 = \dfrac{m}{\sigma\sqrt{T}} - \dfrac{\sigma\sqrt{T}}{2}`$; multiply it by $`-1/\sigma`$ and the two terms match.
 
 ### Step 3: chain the slopes
 
-Multiply the fixed part, the bell curve's slope at $d_1$, and $d_1$'s slope in $\sigma$:
+Multiply the fixed part, the bell curve's slope at $`d_1`$, and $`d_1`$'s slope in $`\sigma`$:
 
-$$\frac{\partial \mathcal{V}}{\partial \sigma} = S\,e^{-qT}\sqrt{T}\,\bigl(-d_1\,\varphi(d_1)\bigr)\Bigl(-\frac{d_2}{\sigma}\Bigr) = \mathcal{V}\,\frac{d_1\,d_2}{\sigma}.$$
+```math
+\frac{\partial \mathcal{V}}{\partial \sigma} = S\,e^{-qT}\sqrt{T}\,\bigl(-d_1\,\varphi(d_1)\bigr)\Bigl(-\frac{d_2}{\sigma}\Bigr) = \mathcal{V}\,\frac{d_1\,d_2}{\sigma}.
+```
 
 The two minus signs cancel. That is the formula.
 
 ### Step 4: the sign lives in d1 times d2
 
-Vega and $\sigma$ are positive, so volga has the sign of $d_1 d_2$. Since $d_1$ and $d_2$ are $m/(\sigma\sqrt{T})$ plus and minus half a spread, their product is a difference of squares: $m^2/(\sigma^2 T) - \sigma^2 T/4$. It is zero when $|m| = \tfrac12\sigma^2 T$, which puts the two zero strikes at
+Vega and $`\sigma`$ are positive, so volga has the sign of $`d_1 d_2`$. Since $`d_1`$ and $`d_2`$ are $`m/(\sigma\sqrt{T})`$ plus and minus half a spread, their product is a difference of squares: $`m^2/(\sigma^2 T) - \sigma^2 T/4`$. It is zero when $`|m| = \tfrac12\sigma^2 T`$, which puts the two zero strikes at
 
-$$K = F\,e^{\pm\sigma^2 T/2}: \qquad \$101.01 \text{ (where } d_2 = 0) \quad\text{and}\quad \$105.13 \text{ (where } d_1 = 0).$$
+```math
+K = F\,e^{\pm\sigma^2 T/2}: \qquad \$101.01 \text{ (where } d_2 = 0) \quad\text{and}\quad \$105.13 \text{ (where } d_1 = 0).
+```
 
-Between them $d_1$ is positive and $d_2$ negative, so volga is negative. Outside them the two distances share a sign and volga is positive. The deepest point of the dip is near the forward, where $m = 0$, $d_1 = \sigma\sqrt{T}/2 = 0.10$, $d_2 = -0.10$, and volga is $-\mathcal{V}\sigma T/4 = -1.95$.
+Between them $`d_1`$ is positive and $`d_2`$ negative, so volga is negative. Outside them the two distances share a sign and volga is positive. The deepest point of the dip is near the forward, where $`m = 0`$, $`d_1 = \sigma\sqrt{T}/2 = 0.10`$, $`d_2 = -0.10`$, and volga is $`-\mathcal{V}\sigma T/4 = -1.95`$.
 
-The house option, struck at \$100, sits just outside the band: $m = 0.03$ beats half the variance, 0.02, so its volga is positive and small, 2.37.
+The house option, struck at \$100, sits just outside the band: $`m = 0.03`$ beats half the variance, 0.02, so its volga is positive and small, 2.37.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** In the Black-Scholes model with dividend yield $q$, $\partial^2 C/\partial\sigma^2 = \mathcal{V}\,d_1 d_2/\sigma$, the same for the put, and $d_1 d_2 = m^2/(\sigma^2 T) - \sigma^2 T/4$.
+**Claim.** In the Black-Scholes model with dividend yield $`q`$, $`\partial^2 C/\partial\sigma^2 = \mathcal{V}\,d_1 d_2/\sigma`$, the same for the put, and $`d_1 d_2 = m^2/(\sigma^2 T) - \sigma^2 T/4`$.
 
-1. $\partial C/\partial\sigma = \mathcal{V} = S e^{-qT}\varphi(d_1)\sqrt{T}$, proved on the vega card. It uses the identity $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$, which makes the two $N$ terms' $\sigma$-derivatives collapse into one.
-2. With $a = m/\sqrt{T}$, $d_1 = a/\sigma + \sigma\sqrt{T}/2$ and $d_2 = a/\sigma - \sigma\sqrt{T}/2$.
-3. $\partial d_1/\partial\sigma = -a/\sigma^2 + \sqrt{T}/2 = -(a/\sigma - \sigma\sqrt{T}/2)/\sigma = -d_2/\sigma$.
-4. $\varphi'(x) = -x\varphi(x)$, so $\partial\varphi(d_1)/\partial\sigma = -d_1\varphi(d_1)\cdot(-d_2/\sigma) = \varphi(d_1)\,d_1 d_2/\sigma$.
-5. $S$, $q$, $T$ do not depend on $\sigma$, so $\partial\mathcal{V}/\partial\sigma = \mathcal{V}\,d_1 d_2/\sigma$.
-6. Put-call parity: $P = C - S e^{-qT} + K e^{-rT}$. The two added terms contain no $\sigma$, so the put's second $\sigma$-derivative equals the call's.
-7. $d_1 d_2 = (a/\sigma)^2 - (\sigma\sqrt{T}/2)^2 = m^2/(\sigma^2 T) - \sigma^2 T/4$. It vanishes at $m = \pm\sigma^2 T/2$, that is $K = F e^{\mp\sigma^2 T/2}$, and is negative strictly between. $\blacksquare$
+1. $`\partial C/\partial\sigma = \mathcal{V} = S e^{-qT}\varphi(d_1)\sqrt{T}`$, proved on the vega card. It uses the identity $`S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)`$, which makes the two $`N`$ terms' $`\sigma`$-derivatives collapse into one.
+2. With $`a = m/\sqrt{T}`$, $`d_1 = a/\sigma + \sigma\sqrt{T}/2`$ and $`d_2 = a/\sigma - \sigma\sqrt{T}/2`$.
+3. $`\partial d_1/\partial\sigma = -a/\sigma^2 + \sqrt{T}/2 = -(a/\sigma - \sigma\sqrt{T}/2)/\sigma = -d_2/\sigma`$.
+4. $`\varphi'(x) = -x\varphi(x)`$, so $`\partial\varphi(d_1)/\partial\sigma = -d_1\varphi(d_1)\cdot(-d_2/\sigma) = \varphi(d_1)\,d_1 d_2/\sigma`$.
+5. $`S`$, $`q`$, $`T`$ do not depend on $`\sigma`$, so $`\partial\mathcal{V}/\partial\sigma = \mathcal{V}\,d_1 d_2/\sigma`$.
+6. Put-call parity: $`P = C - S e^{-qT} + K e^{-rT}`$. The two added terms contain no $`\sigma`$, so the put's second $`\sigma`$-derivative equals the call's.
+7. $`d_1 d_2 = (a/\sigma)^2 - (\sigma\sqrt{T}/2)^2 = m^2/(\sigma^2 T) - \sigma^2 T/4`$. It vanishes at $`m = \pm\sigma^2 T/2`$, that is $`K = F e^{\mp\sigma^2 T/2}`$, and is negative strictly between. $`\blacksquare`$
 
 </details>
 
 ### Step 5: why the far option gains from volatility of volatility
 
-Suppose the year's volatility is not known: it will be 15 or 25 percent, even odds, fixed for the year and unrelated to which way Acme moves. For each outcome the Black-Scholes price is right, so the option is worth the average of the two prices. Expand each price around 20 percent: the slope terms, $\pm\mathcal{V}\,\Delta\sigma$, cancel in the average; the bend terms, $\tfrac12\,\text{volga}\,\Delta\sigma^2$, add. So
+Suppose the year's volatility is not known: it will be 15 or 25 percent, even odds, fixed for the year and unrelated to which way Acme moves. For each outcome the Black-Scholes price is right, so the option is worth the average of the two prices. Expand each price around 20 percent: the slope terms, $`\pm\mathcal{V}\,\Delta\sigma`$, cancel in the average; the bend terms, $`\tfrac12\,\text{volga}\,\Delta\sigma^2`$, add. So
 
-$$\tfrac12\bigl[C(\sigma + \Delta\sigma) + C(\sigma - \Delta\sigma)\bigr] \;\approx\; C(\sigma) + \tfrac12\,\text{Volga}\,\Delta\sigma^2.$$
+```math
+\tfrac12\bigl[C(\sigma + \Delta\sigma) + C(\sigma - \Delta\sigma)\bigr] \;\approx\; C(\sigma) + \tfrac12\,\text{Volga}\,\Delta\sigma^2.
+```
 
 That is the whole reason volga has a price. An option with positive volga is a convex bet on volatility: uncertainty about volatility is worth money to its holder.
 
 Why is the far option convex and the forward option not? A far-out call pays only if Acme travels a long way, many spreads. Its price behaves like a tail of the bell curve, and a tail wakes up faster than proportionally as the spread widens: going from 15 to 20 percent adds less than going from 20 to 25.
 
-At the forward, the call is worth $S e^{-qT}\bigl[N(\sigma\sqrt{T}/2) - N(-\sigma\sqrt{T}/2)\bigr]$, the bell curve's area in a narrow window around zero. The curve is nearly flat there, so the area grows almost in proportion to $\sigma$: vega hardly changes, and the slight flattening of the bell's top makes the bend a touch negative.
+At the forward, the call is worth $`S e^{-qT}\bigl[N(\sigma\sqrt{T}/2) - N(-\sigma\sqrt{T}/2)\bigr]`$, the bell curve's area in a narrow window around zero. The curve is nearly flat there, so the area grows almost in proportion to $`\sigma`$: vega hardly changes, and the slight flattening of the bell's top makes the bend a touch negative.
 
 <details>
 <summary>Volga and a volatility that wanders all year</summary>
@@ -157,22 +171,22 @@ A second road to the number needs no formula at all: price the option by averagi
 
 ## Worked numbers, by hand
 
-House market: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$.
+House market: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$ | $(0 + (0.05 - 0.02 + 0.02) \times 1)/0.20$ | 0.25 |
-| $d_2$ | $0.25 - 0.20$ | 0.05 |
-| $d_1 d_2$ | $0.25 \times 0.05$ | 0.0125 |
-| $\varphi(d_1)$ | $e^{-0.03125}/\sqrt{2\pi}$ | 0.386668 |
-| $e^{-qT}$ | $e^{-0.02}$ | 0.980199 |
-| vega | $100 \times 0.980199 \times 0.386668 \times 1$ | 37.901158 |
-| vega over $\sigma$ | $37.901158 / 0.20$ | 189.505788 |
-| **volga** | $189.505788 \times 0.0125$ | **2.368822** |
-| per vol point squared | $2.368822 / 10{,}000$ | 0.000237 |
-| sign check by $m$ | $\ln(F/K) = 0.03$ against $\tfrac12\sigma^2 T = 0.02$ | positive |
+| $`d_1`$ | $`(0 + (0.05 - 0.02 + 0.02) \times 1)/0.20`$ | 0.25 |
+| $`d_2`$ | $`0.25 - 0.20`$ | 0.05 |
+| $`d_1 d_2`$ | $`0.25 \times 0.05`$ | 0.0125 |
+| $`\varphi(d_1)`$ | $`e^{-0.03125}/\sqrt{2\pi}`$ | 0.386668 |
+| $`e^{-qT}`$ | $`e^{-0.02}`$ | 0.980199 |
+| vega | $`100 \times 0.980199 \times 0.386668 \times 1`$ | 37.901158 |
+| vega over $`\sigma`$ | $`37.901158 / 0.20`$ | 189.505788 |
+| **volga** | $`189.505788 \times 0.0125`$ | **2.368822** |
+| per vol point squared | $`2.368822 / 10{,}000`$ | 0.000237 |
+| sign check by $`m`$ | $`\ln(F/K) = 0.03`$ against $`\tfrac12\sigma^2 T = 0.02`$ | positive |
 
-In the world: raise Acme's volatility from 20 to 21 percent and vega climbs by about $0.01 \times 2.37$. Vega recomputed at 21 percent is 37.921380; the volga estimate, 37.924846, is off by 0.0035 because volga itself is falling as volatility rises.
+In the world: raise Acme's volatility from 20 to 21 percent and vega climbs by about $`0.01 \times 2.37`$. Vega recomputed at 21 percent is 37.921380; the volga estimate, 37.924846, is off by 0.0035 because volga itself is falling as volatility rises.
 
 At the forward strike, $103.05, the same arithmetic gives vega 38.909236 and volga −1.945462: a bend of about 5 percent of vega per unit of volatility, which is almost none per vol point.
 
@@ -180,10 +194,10 @@ At the forward strike, $103.05, the same arithmetic gives vega 38.909236 and vol
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Sign slip: $\partial d_1/\partial\sigma = +d_2/\sigma$ | −2.368822 | Right size, wrong direction; the sign story on the whole chart flips |
-| $d_1^2$ in place of $d_1 d_2$ | 11.844112 | Five times too big, and never negative: it hides the dip near the forward |
+| Sign slip: $`\partial d_1/\partial\sigma = +d_2/\sigma`$ | −2.368822 | Right size, wrong direction; the sign story on the whole chart flips |
+| $`d_1^2`$ in place of $`d_1 d_2`$ | 11.844112 | Five times too big, and never negative: it hides the dip near the forward |
 | Reading volga per unit as per vol point | vega at 21%: 40.269980 (right: 37.921380) | Added a full unit's worth of volga for a one-point move |
-| Putting the zero at the forward | volga at $F$: −1.945462, not 0 | The zeros sit half a variance either side of $F$; the forward is the bottom of the dip |
+| Putting the zero at the forward | volga at $`F`$: −1.945462, not 0 | The zeros sit half a variance either side of $`F`$; the forward is the bottom of the dip |
 
 ---
 
@@ -191,7 +205,7 @@ At the forward strike, $103.05, the same arithmetic gives vega 38.909236 and vol
 
 **The mystery:** two options, one market, one volatility forecast of 20 percent, and one of them is worth more only because the forecast is uncertain.
 
-Replace the sure 20 percent with 15 or 25 percent, even odds. For each strike: the price at 20 percent, the average of the two prices, and the gain, set against half volga times $\Delta\sigma^2$ with $\Delta\sigma = 0.05$.
+Replace the sure 20 percent with 15 or 25 percent, even odds. For each strike: the price at 20 percent, the average of the two prices, and the gain, set against half volga times $`\Delta\sigma^2`$ with $`\Delta\sigma = 0.05`$.
 
 | Strike | Price at 20% | Average of 15% and 25% | Gain (cents) | Half volga times Δσ squared (cents) |
 | --- | --- | --- | --- | --- |
@@ -226,9 +240,9 @@ Read the $80 row as the put's story too: the $80 call's volga equals the $80 put
 
 ## Code, from first principles, and it actually runs
 
-The check takes three independent roads to the house volga. Road 1 is the closed form $\mathcal{V} d_1 d_2/\sigma$. Road 2 nudges volatility by 0.00001 either way and measures how vega changes. Road 3 uses no Black-Scholes formula: it prices the call and the put by averaging the payoff over the bell curve (Simpson's rule, with the payoff's switch-on point found by bisection), does that at five volatilities around 20 percent, and measures the bend, with Richardson's trick to cancel the step-size error.
+The check takes three independent roads to the house volga. Road 1 is the closed form $`\mathcal{V} d_1 d_2/\sigma`$. Road 2 nudges volatility by 0.00001 either way and measures how vega changes. Road 3 uses no Black-Scholes formula: it prices the call and the put by averaging the payoff over the bell curve (Simpson's rule, with the payoff's switch-on point found by bisection), does that at five volatilities around 20 percent, and measures the bend, with Richardson's trick to cancel the step-size error.
 
-It then finds the two zero strikes by bisection on road 2 and compares them with $F e^{\pm\sigma^2 T/2}$, runs the uncertain-volatility table, and reproduces every "what breaks" number and every charted point.
+It then finds the two zero strikes by bisection on road 2 and compares them with $`F e^{\pm\sigma^2 T/2}`$, runs the uncertain-volatility table, and reproduces every "what breaks" number and every charted point.
 
 ### Python
 
@@ -397,11 +411,11 @@ chart, volga  92.22 118.13 122.50 101.90 64.79 26.69 2.37 -0.23 18.42 51.48 89.5
 ALL CHECKS PASS
 ```
 
-Three roads, one number: 2.368822 from the formula, from the vega bump and from the bent price, call and put alike. The zeros found by bisection sit on $F e^{\pm\sigma^2 T/2}$ to six decimals.
+Three roads, one number: 2.368822 from the formula, from the vega bump and from the bent price, call and put alike. The zeros found by bisection sit on $`F e^{\pm\sigma^2 T/2}`$ to six decimals.
 
 ### Rust
 
-Same checks, same inputs. Rust has no `erf`, so $N$ is built by adding slices under the bell curve. No crates.
+Same checks, same inputs. Rust has no `erf`, so $`N`$ is built by adding slices under the bell curve. No crates.
 
 ```rust
 // Volga -- the same check as volga_check.py, in Rust.  Standard library only.
@@ -596,13 +610,13 @@ The two outputs agree line for line at the printed precision.
 
 Lean proves the volga formula, its second form and its sign rule for every positive share price, strike, volatility and time.
 
-- Take $S$, $K$, $\sigma$ and $T$ all above zero. Then the call's volga, the second derivative of its price in volatility, is $\mathcal{V} d_1 d_2/\sigma$.
+- Take $`S`$, $`K`$, $`\sigma`$ and $`T`$ all above zero. Then the call's volga, the second derivative of its price in volatility, is $`\mathcal{V} d_1 d_2/\sigma`$.
 - Under the same conditions, the put on the same share, strike and date has exactly the same volga.
-- Take the same conditions, with $m = \ln(F/K)$ and $F = S\,e^{(r-q)T}$. Then $d_1 d_2 = m^2/(\sigma^2 T) - \sigma^2 T/4$.
-- Take the same conditions. Then volga is positive exactly when $|m| > \tfrac12\sigma^2 T$, a strike far from the forward.
-- Take the same conditions. Then volga is negative exactly when $|m| < \tfrac12\sigma^2 T$, a strike near the forward.
-- For the house option, $d_1 = 0.25$ and $d_1 d_2 = 0.0125$ exactly.
-- For the house option, $m = 0.03$ exactly, and that beats half the variance, 0.02.
+- Take the same conditions, with $`m = \ln(F/K)`$ and $`F = S\,e^{(r-q)T}`$. Then $`d_1 d_2 = m^2/(\sigma^2 T) - \sigma^2 T/4`$.
+- Take the same conditions. Then volga is positive exactly when $`|m| > \tfrac12\sigma^2 T`$, a strike far from the forward.
+- Take the same conditions. Then volga is negative exactly when $`|m| < \tfrac12\sigma^2 T`$, a strike near the forward.
+- For the house option, $`d_1 = 0.25`$ and $`d_1 d_2 = 0.0125`$ exactly.
+- For the house option, $`m = 0.03`$ exactly, and that beats half the variance, 0.02.
 - The second form gives the same house product, 0.0125.
 
 Decimal values such as volga 2.368822, the zero strikes and the uncertain-volatility gains are left to the Python and Rust checks.
@@ -934,8 +948,8 @@ example : (3 / 100 : ℚ) ^ 2 / ((1 / 5) ^ 2 * 1) - (1 / 5) ^ 2 * 1 / 4 = 1 / 80
 > Guess the sign first. Then run it.
 > - **Double the volatility.** Set `SIG = 0.40` for the house strike. Volga turns negative, **−3.235826**: half the variance is now 0.08, which beats the house strike's log distance of 0.03, so $100 sits inside the dip.
 > - **Go far out.** Call `volga(130.0, SIG)`. It is **149.079413**, more than sixty times the house number, on an option worth a seventh as much.
-> - **Go deep in.** Call `volga(80.0, SIG)`. It is **122.497937**. A deep in-the-money call carries the far-out put's volga, since parity adds only terms without $\sigma$.
-> - **Widen the uncertainty.** Average the \$130 call at 10 and 30 percent instead. The gain is **75.02** cents; half volga times $0.10^2$ predicts **74.54**. Doubling $\Delta\sigma$ roughly quadruples the gain, as the square promises.
+> - **Go deep in.** Call `volga(80.0, SIG)`. It is **122.497937**. A deep in-the-money call carries the far-out put's volga, since parity adds only terms without $`\sigma`$.
+> - **Widen the uncertainty.** Average the \$130 call at 10 and 30 percent instead. The gain is **75.02** cents; half volga times $`0.10^2`$ predicts **74.54**. Doubling $`\Delta\sigma`$ roughly quadruples the gain, as the square promises.
 
 ---
 
@@ -946,7 +960,7 @@ example : (3 / 100 : ℚ) ^ 2 / ((1 / 5) ^ 2 * 1) - (1 / 5) ^ 2 * 1 / 4 = 1 / 80
 >
 > Smaller traps:
 > - **Units.** Volga per unit of volatility squared is 2.368822; per vol point squared it is 0.000237. Mixing them predicts vega at 21 percent as 40.27 instead of 37.92.
-> - **Dropping the sign.** Writing $d_1^2$, or losing the minus in $\partial d_1/\partial\sigma$, gives 11.84 or −2.37 and erases the dip near the forward.
+> - **Dropping the sign.** Writing $`d_1^2`$, or losing the minus in $`\partial d_1/\partial\sigma`$, gives 11.84 or −2.37 and erases the dip near the forward.
 > - **A bump too coarse.** A three-point second difference of the price with a step of 0.001 misses the house number in the fourth decimal; the check needs the two-step Richardson combination to agree to six.
 > - **Reading the gain as free.** Positive volga is paid for: markets that expect volatility to move charge more for the wings, which is one source of the volatility smile.
 
@@ -961,13 +975,13 @@ example : (3 / 100 : ℚ) ^ 2 / ((1 / 5) ^ 2 * 1) - (1 / 5) ^ 2 * 1 / 4 = 1 / 80
 - **Stochastic volatility models.** Models in which volatility wanders produce a smile whose curvature grows with the volatility of volatility; volga is the Black-Scholes number that measures an option's exposure to that.
 
 > **Say it back**
-> Volga is the rate at which vega changes when volatility changes, the second derivative of the price in volatility. In Black-Scholes it equals vega times $d_1 d_2$ over volatility. The product $d_1 d_2$ is negative only in a narrow band of strikes within half a variance of the forward, and large and positive in the wings. If volatility is uncertain, an option gains about half its volga times the squared move. So wing options are convex bets on volatility, and options at the forward are almost straight ones.
+> Volga is the rate at which vega changes when volatility changes, the second derivative of the price in volatility. In Black-Scholes it equals vega times $`d_1 d_2`$ over volatility. The product $`d_1 d_2`$ is negative only in a narrow band of strikes within half a variance of the forward, and large and positive in the wings. If volatility is uncertain, an option gains about half its volga times the squared move. So wing options are convex bets on volatility, and options at the forward are almost straight ones.
 
 ---
 
 ## What this builds on
 
-- [Vega](03-vega.md): the slope this card differentiates, $S e^{-qT}\varphi(d_1)\sqrt{T}$, and the per-unit versus per-point convention.
+- [Vega](03-vega.md): the slope this card differentiates, $`S e^{-qT}\varphi(d_1)\sqrt{T}`$, and the per-unit versus per-point convention.
 - [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): holding every input still but one, and the chain rule used in Step 3.
 
 ## Where this goes next

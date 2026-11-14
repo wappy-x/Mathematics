@@ -38,38 +38,44 @@ Orange: the fast stroke, no heat lost, ending at 705.7 kPa. Green: the slow stro
 
 ## The formula
 
-Notation first, in words. $U$ is the energy stored inside the air, in the jiggling and spinning of its molecules. $Q$ is heat put into the air. $W$ is work done on the air, by the handle and by the outside air behind the piston. $S$ is entropy, in joules per kelvin. A $\Delta$ means "change in".
+Notation first, in words. $`U`$ is the energy stored inside the air, in the jiggling and spinning of its molecules. $`Q`$ is heat put into the air. $`W`$ is work done on the air, by the handle and by the outside air behind the piston. $`S`$ is entropy, in joules per kelvin. A $`\Delta`$ means "change in".
 
-$$\Delta U = Q + W, \qquad W = -\int p\, dV$$
+```math
+\Delta U = Q + W, \qquad W = -\int p\, dV
+```
 
-$$\Delta S_{\text{air}} + \Delta S_{\text{room}} = S_{\text{gen}} \;\ge\; 0, \qquad dS = \frac{\delta Q_{\text{rev}}}{T}$$
+```math
+\Delta S_{\text{air}} + \Delta S_{\text{room}} = S_{\text{gen}} \;\ge\; 0, \qquad dS = \frac{\delta Q_{\text{rev}}}{T}
+```
 
 **Read it aloud:** the air's stored energy changes by the heat that came in plus the work that was done on it; and the entropy of the air plus the entropy of the room can only go up, by an amount called the entropy generated, where entropy changes by each small piece of heat divided by the temperature at which it moves gently.
 
-Here $\delta Q_{\text{rev}}$ is a small piece of heat moved **reversibly**: across no temperature difference, so slowly that a tiny nudge could send it back. For the air, treated as an **ideal gas** (molecules that only collide, so $pV = nRT$), both stored quantities have a formula:
+Here $`\delta Q_{\text{rev}}`$ is a small piece of heat moved **reversibly**: across no temperature difference, so slowly that a tiny nudge could send it back. For the air, treated as an **ideal gas** (molecules that only collide, so $`pV = nRT`$), both stored quantities have a formula:
 
-$$U = n c_v T, \qquad S = n c_v \ln T + n R \ln V + \text{const}$$
+```math
+U = n c_v T, \qquad S = n c_v \ln T + n R \ln V + \text{const}
+```
 
-Some books write $\Delta U = Q - W$ with $W$ the work done *by* the gas. Same physics, opposite sign on $W$. This card counts work done *on* the air as positive.
+Some books write $`\Delta U = Q - W`$ with $`W`$ the work done *by* the gas. Same physics, opposite sign on $`W`$. This card counts work done *on* the air as positive.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $U$, $\Delta U$ | energy stored in the air, J; its change | fast stroke: +56.32 J | — |
-| $Q$; $\delta Q$ | heat into the air, J, negative when heat leaves; a small piece of it | 0 on the fast stroke; −56.32 J cooling | more heat in, hotter air |
-| $W$ | work done on the air, J: by the handle, plus 22.80 J from the outside air pushing on the back of the piston | 56.32 J fast; 42.14 J slow | more work in, hotter air |
-| $p$ | absolute pressure of the air, Pa | 101.3 kPa to 705.7 kPa | more force on the handle |
-| $V$; $V_1$, $V_2$; $r$ | air volume, m^3; start and end; ratio $V_1/V_2$ | 300 and 75 cm^3; $r$ = 4 | higher $r$: hotter air, more work |
-| $T$; $T_1$, $T_2$; $T_0$; $T_h$, $T_c$ | absolute temperature, K; start, end of fast stroke; room; any hotter and colder body | 293.15 K, 510.40 K; room 293.15 K | — |
-| $n$ | amount of air, mol | 12.4714 mmol | every energy scales with it |
-| $R$ | gas constant, J/(mol K), CODATA 2018, exact | 8.314462618 | — |
-| $c_v$; $\gamma$ | heat to warm one mole by 1 K at fixed volume, $\tfrac52 R$ for air; $\gamma = (c_v + R)/c_v$ | 20.786 J/(mol K); 1.4 | higher $c_v$: same work, less heating |
-| $S$, $\Delta S$ | entropy, J/K; its change | air: −143.75 mJ/K on cooling | — |
-| $S_{\text{gen}}$ | entropy generated: rise in the total, J/K | 48.37 mJ/K | more lost work, $T_0 S_{\text{gen}}$ |
+| $`U`$, $`\Delta U`$ | energy stored in the air, J; its change | fast stroke: +56.32 J | — |
+| $`Q`$; $`\delta Q`$ | heat into the air, J, negative when heat leaves; a small piece of it | 0 on the fast stroke; −56.32 J cooling | more heat in, hotter air |
+| $`W`$ | work done on the air, J: by the handle, plus 22.80 J from the outside air pushing on the back of the piston | 56.32 J fast; 42.14 J slow | more work in, hotter air |
+| $`p`$ | absolute pressure of the air, Pa | 101.3 kPa to 705.7 kPa | more force on the handle |
+| $`V`$; $`V_1`$, $`V_2`$; $`r`$ | air volume, m^3; start and end; ratio $`V_1/V_2`$ | 300 and 75 cm^3; $`r`$ = 4 | higher $`r`$: hotter air, more work |
+| $`T`$; $`T_1`$, $`T_2`$; $`T_0`$; $`T_h`$, $`T_c`$ | absolute temperature, K; start, end of fast stroke; room; any hotter and colder body | 293.15 K, 510.40 K; room 293.15 K | — |
+| $`n`$ | amount of air, mol | 12.4714 mmol | every energy scales with it |
+| $`R`$ | gas constant, J/(mol K), CODATA 2018, exact | 8.314462618 | — |
+| $`c_v`$; $`\gamma`$ | heat to warm one mole by 1 K at fixed volume, $`\tfrac52 R`$ for air; $`\gamma = (c_v + R)/c_v`$ | 20.786 J/(mol K); 1.4 | higher $`c_v`$: same work, less heating |
+| $`S`$, $`\Delta S`$ | entropy, J/K; its change | air: −143.75 mJ/K on cooling | — |
+| $`S_{\text{gen}}`$ | entropy generated: rise in the total, J/K | 48.37 mJ/K | more lost work, $`T_0 S_{\text{gen}}`$ |
 
 ### When it holds
 
 - **A closed system.** The tyre valve stays shut below 801.3 kPa, so the same air stays in the barrel. Once the valve opens, air carries energy out with it and the balance needs a flow term, as the energy budget in [Continuity and Bernoulli](01-continuity-and-bernoulli.md) has.
-- **An ideal gas with fixed $c_v$.** Air at a few bar and up to about 500 K fits well. Hotter, $c_v$ creeps up and the fixed-$\gamma$ formulas run a little hot; at hundreds of bar molecules crowd each other and $pV = nRT$ drifts.
+- **An ideal gas with fixed $`c_v`$.** Air at a few bar and up to about 500 K fits well. Hotter, $`c_v`$ creeps up and the fixed-$`\gamma`$ formulas run a little hot; at hundreds of bar molecules crowd each other and $`pV = nRT`$ drifts.
 - **A fast stroke loses no heat.** True for a half-second push. A stroke spread over a minute is nearly at room temperature the whole way. The fast-stroke formula would still say 510.40 K, against the true end near 293.15 K: a model used outside its range.
 - **The air is uniform.** Pressure and temperature are taken as the same all through the barrel. A violent shove sends pressure waves and eddies through the air, which generate entropy of their own. Then the true end temperature and work are higher than the reversible numbers here.
 
@@ -81,66 +87,76 @@ Some books write $\Delta U = Q - W$ with $W$ the work done *by* the gas. Same ph
 
 Energy is a ledger that always balances: what the handle puts in and what heat takes out add up to the change in the air's stored energy. Entropy is a second ledger that is never paid back. Heat moving from hot to cold, friction and sudden shoves all add to it, and nothing removes it from the total.
 
-Both $U$ and $S$ are **state quantities**: fixed once you know the air's volume and temperature, however it got there. Heat and work are not. They depend on the path, and the pump shows it.
+Both $`U`$ and $`S`$ are **state quantities**: fixed once you know the air's volume and temperature, however it got there. Heat and work are not. They depend on the path, and the pump shows it.
 
 ### Step 1: work is a line integral, so it depends on the path
 
-The air pushes back on the piston with its pressure times the piston's area. Moving the piston in a small distance sweeps out area times distance of volume, so a small step of the stroke takes work $-p\,dV$, positive because $dV$ is negative. Over the stroke, $W = -\int p\,dV$, a line integral along the path the air takes in the $(V, p)$ plane ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). Two routes to the same end, two different answers:
+The air pushes back on the piston with its pressure times the piston's area. Moving the piston in a small distance sweeps out area times distance of volume, so a small step of the stroke takes work $`-p\,dV`$, positive because $`dV`$ is negative. Over the stroke, $`W = -\int p\,dV`$, a line integral along the path the air takes in the $`(V, p)`$ plane ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). Two routes to the same end, two different answers:
 
-- **Slow, at 20 °C:** $p = nRT_0/V$, so $W = nRT_0 \ln r$ = 42.14 J. The air's energy is unchanged, so all 42.14 J leaves as heat as it goes.
+- **Slow, at 20 °C:** $`p = nRT_0/V`$, so $`W = nRT_0 \ln r`$ = 42.14 J. The air's energy is unchanged, so all 42.14 J leaves as heat as it goes.
 - **Fast, then cooled:** 56.32 J on the stroke, then 56.32 J of heat out while the handle is held.
 
-Both end at 75 cm^3 and 20 °C, and both have $\Delta U = 0$. Only the split between heat and work differs. That is the first law: $Q$ and $W$ depend on the path, their sum does not.
+Both end at 75 cm^3 and 20 °C, and both have $`\Delta U = 0`$. Only the split between heat and work differs. That is the first law: $`Q`$ and $`W`$ depend on the path, their sum does not.
 
 ### Step 2: the fast stroke, with no heat
 
-With $Q = 0$, the first law for one small step of the stroke reads $dU = -p\,dV$. With $U = n c_v T$ and $p = nRT/V$:
+With $`Q = 0`$, the first law for one small step of the stroke reads $`dU = -p\,dV`$. With $`U = n c_v T`$ and $`p = nRT/V`$:
 
-$$n c_v\, dT = -\frac{nRT}{V}\, dV \quad\Longrightarrow\quad \frac{dT}{T} = -\frac{R}{c_v}\,\frac{dV}{V}.$$
+```math
+n c_v\, dT = -\frac{nRT}{V}\, dV \quad\Longrightarrow\quad \frac{dT}{T} = -\frac{R}{c_v}\,\frac{dV}{V}.
+```
 
-Integrate both sides: $\ln T + (R/c_v)\ln V$ stays fixed, so $T V^{\gamma - 1}$ stays fixed, with $\gamma - 1 = R/c_v = 0.4$ for air. Then $T_2 = T_1 r^{0.4}$ = 510.40 K, and the work is the energy gained, $n c_v (T_2 - T_1)$ = 56.32 J. The code also walks this equation along the stroke in 2,000 small steps and lands on the same numbers.
+Integrate both sides: $`\ln T + (R/c_v)\ln V`$ stays fixed, so $`T V^{\gamma - 1}`$ stays fixed, with $`\gamma - 1 = R/c_v = 0.4`$ for air. Then $`T_2 = T_1 r^{0.4}`$ = 510.40 K, and the work is the energy gained, $`n c_v (T_2 - T_1)`$ = 56.32 J. The code also walks this equation along the stroke in 2,000 small steps and lands on the same numbers.
 
 ### Step 3: why heat divided by temperature is a state quantity
 
-The heat taken in by the air on a gentle step is $\delta Q = n c_v\, dT + (nRT/V)\, dV$. Could there be a "heat content", some function of $T$ and $V$, whose small change is this? If so, its two partial derivatives would be $n c_v$ and $nRT/V$, and the mixed partials (the derivative by one variable, then by the other, in either order) would agree ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). They do not:
+The heat taken in by the air on a gentle step is $`\delta Q = n c_v\, dT + (nRT/V)\, dV`$. Could there be a "heat content", some function of $`T`$ and $`V`$, whose small change is this? If so, its two partial derivatives would be $`n c_v`$ and $`nRT/V`$, and the mixed partials (the derivative by one variable, then by the other, in either order) would agree ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). They do not:
 
-$$\frac{\partial (n c_v)}{\partial V} = 0, \qquad \frac{\partial}{\partial T}\!\left(\frac{nRT}{V}\right) = \frac{nR}{V}.$$
+```math
+\frac{\partial (n c_v)}{\partial V} = 0, \qquad \frac{\partial}{\partial T}\!\left(\frac{nRT}{V}\right) = \frac{nR}{V}.
+```
 
-So "how much heat is in the air" has no answer. Divide by $T$ first and the two pieces become $n c_v/T$ and $nR/V$. Now both mixed partials are 0, so a function does exist:
+So "how much heat is in the air" has no answer. Divide by $`T`$ first and the two pieces become $`n c_v/T`$ and $`nR/V`$. Now both mixed partials are 0, so a function does exist:
 
-$$S(T, V) = n c_v \ln T + n R \ln V + \text{const}.$$
+```math
+S(T, V) = n c_v \ln T + n R \ln V + \text{const}.
+```
 
-That function is the entropy. Dividing by the temperature is exactly what turns heat, which depends on the path, into a change of something the air has. Squeezing at 20 °C takes the air's entropy down by $nR\ln 4$ = 143.75 mJ/K. Cooling at fixed volume from 510.40 K takes it down by $n c_v \ln(510.40/293.15)$, the same 143.75 mJ/K. The two routes agree because $S$ is a state quantity.
+That function is the entropy. Dividing by the temperature is exactly what turns heat, which depends on the path, into a change of something the air has. Squeezing at 20 °C takes the air's entropy down by $`nR\ln 4`$ = 143.75 mJ/K. Cooling at fixed volume from 510.40 K takes it down by $`n c_v \ln(510.40/293.15)`$, the same 143.75 mJ/K. The two routes agree because $`S`$ is a state quantity.
 
 ### Step 4: the second law, and what it rules out
 
-The second law says: **the total entropy of everything taking part never falls.** It is not proved from anything simpler. It is the distilled result of every experiment so far, and it has an older, equal form: heat never flows by itself from cold to hot. A small piece of heat $\delta Q$ leaving a body at $T_h$ for one at $T_c$ changes the total by
+The second law says: **the total entropy of everything taking part never falls.** It is not proved from anything simpler. It is the distilled result of every experiment so far, and it has an older, equal form: heat never flows by itself from cold to hot. A small piece of heat $`\delta Q`$ leaving a body at $`T_h`$ for one at $`T_c`$ changes the total by
 
-$$\delta Q\left(\frac{1}{T_c} - \frac{1}{T_h}\right),$$
+```math
+\delta Q\left(\frac{1}{T_c} - \frac{1}{T_h}\right),
+```
 
-which is positive exactly when $T_h > T_c$. So the entropy form contains the older one. The reverse also holds, but building entropy out of the older form takes a longer argument.
+which is positive exactly when $`T_h > T_c`$. So the entropy form contains the older one. The reverse also holds, but building entropy out of the older form takes a longer argument.
 
 The cool-down obeys it. The air loses 143.75 mJ/K. The room takes in 56.32 J at 293.15 K and gains 192.12 mJ/K. The total rises by 48.37 mJ/K, so it is allowed. Run it backwards, with the room heating the air back to 510.40 K, and the total would fall by 48.37 mJ/K. That never happens.
 
 Two claims, each ruled out by the same count:
 
-- **"An insulated pump that ends the squeeze at 450 K."** The room's entropy is unchanged. The air's change is $n c_v \ln(450/293.15) - nR\ln 4$ = −32.65 mJ/K, so the total falls: impossible. With no heat out, no stroke can end cooler than 510.40 K.
+- **"An insulated pump that ends the squeeze at 450 K."** The room's entropy is unchanged. The air's change is $`n c_v \ln(450/293.15) - nR\ln 4`$ = −32.65 mJ/K, so the total falls: impossible. With no heat out, no stroke can end cooler than 510.40 K.
 - **"The squeeze, back at 20 °C, for 35 J."** The 35 J goes to the room as heat, and 35 J ÷ 293.15 K is too little to cover the air's −143.75 mJ/K. The total falls by 24.36 mJ/K: impossible.
 
 ### Step 5: the lost-work rule
 
-Add the two ledgers. The room's entropy change is the heat it receives over its temperature, $-Q/T_0$. The second ledger then says $-Q/T_0 = S_{\text{gen}} - \Delta S_{\text{air}}$. Put that $Q$ into the first law:
+Add the two ledgers. The room's entropy change is the heat it receives over its temperature, $`-Q/T_0`$. The second ledger then says $`-Q/T_0 = S_{\text{gen}} - \Delta S_{\text{air}}`$. Put that $`Q`$ into the first law:
 
-$$W = \Delta U - T_0\,\Delta S_{\text{air}} + T_0\, S_{\text{gen}}.$$
+```math
+W = \Delta U - T_0\,\Delta S_{\text{air}} + T_0\, S_{\text{gen}}.
+```
 
-The first two terms depend only on where the air starts and ends. So the cheapest route is the one that generates no entropy, and every other route pays $T_0 S_{\text{gen}}$ more.
+The first two terms depend only on where the air starts and ends. So the cheapest route is the one that generates no entropy, and every other route pays $`T_0 S_{\text{gen}}`$ more.
 
-For the pump: $\Delta U = 0$ and $\Delta S_{\text{air}}$ = −143.75 mJ/K, so the floor is 42.14 J. The fast stroke and cool-down generate 48.37 mJ/K, so they cost 293.15 K × 48.37 mJ/K = 14.18 J more: 56.32 J. The code computes the 14.18 J both ways, from the works and from the entropy, and they agree to the last digit.
+For the pump: $`\Delta U = 0`$ and $`\Delta S_{\text{air}}`$ = −143.75 mJ/K, so the floor is 42.14 J. The fast stroke and cool-down generate 48.37 mJ/K, so they cost 293.15 K × 48.37 mJ/K = 14.18 J more: 56.32 J. The code computes the 14.18 J both ways, from the works and from the entropy, and they agree to the last digit.
 
 <details>
 <summary>Where the 35 J claim went wrong, in one line</summary>
 
-The minimum is $W \ge \Delta U - T_0 \Delta S_{\text{air}} = 0 + 293.15 \times 0.14375$ = 42.14 J. Any claim below that needs $S_{\text{gen}} < 0$. The slow stroke reaches the floor only in the limit: heat has to cross a temperature difference to flow at all, so a real slow stroke generates a little entropy too.
+The minimum is $`W \ge \Delta U - T_0 \Delta S_{\text{air}} = 0 + 293.15 \times 0.14375`$ = 42.14 J. Any claim below that needs $`S_{\text{gen}} < 0`$. The slow stroke reaches the floor only in the limit: heat has to cross a temperature difference to flow at all, so a real slow stroke generates a little entropy too.
 
 </details>
 
@@ -152,17 +168,17 @@ Air: 300 cm^3 at 101,325 Pa and 293.15 K, squeezed to 75 cm^3; room at 293.15 K.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| amount of air, $n = pV/(RT)$ | $101{,}325 \times 300\times10^{-6} / (8.314462618 \times 293.15)$ | 12.4714 mmol |
-| heat capacity, $n c_v$ | $0.0124714 \times 2.5 \times 8.314462618$ | 259.23 mJ/K |
-| $r^{0.4}$ | $4^{0.4}$ | 1.7411 |
-| end temperature, fast | $293.15 \times 1.7411$ | 510.40 K |
-| end pressure, fast | $101.3 \times 4^{1.4}$ | 705.7 kPa |
-| work, fast | $0.25923 \times (510.40 - 293.15)$ | 56.32 J |
-| work, slow | $0.0124714 \times 8.314462618 \times 293.15 \times \ln 4$ | 42.14 J |
-| air entropy change | $-0.25923 \times \ln(510.40 / 293.15)$ | −143.75 mJ/K |
-| room entropy change, cool-down | $56.32 / 293.15$ | +192.12 mJ/K |
-| entropy generated | $192.12 - 143.75$ | 48.37 mJ/K |
-| **lost work** | $293.15 \times 0.04837$ | **14.18 J** |
+| amount of air, $`n = pV/(RT)`$ | $`101{,}325 \times 300\times10^{-6} / (8.314462618 \times 293.15)`$ | 12.4714 mmol |
+| heat capacity, $`n c_v`$ | $`0.0124714 \times 2.5 \times 8.314462618`$ | 259.23 mJ/K |
+| $`r^{0.4}`$ | $`4^{0.4}`$ | 1.7411 |
+| end temperature, fast | $`293.15 \times 1.7411`$ | 510.40 K |
+| end pressure, fast | $`101.3 \times 4^{1.4}`$ | 705.7 kPa |
+| work, fast | $`0.25923 \times (510.40 - 293.15)`$ | 56.32 J |
+| work, slow | $`0.0124714 \times 8.314462618 \times 293.15 \times \ln 4`$ | 42.14 J |
+| air entropy change | $`-0.25923 \times \ln(510.40 / 293.15)`$ | −143.75 mJ/K |
+| room entropy change, cool-down | $`56.32 / 293.15`$ | +192.12 mJ/K |
+| entropy generated | $`192.12 - 143.75`$ | 48.37 mJ/K |
+| **lost work** | $`293.15 \times 0.04837`$ | **14.18 J** |
 
 The fast stroke costs 14.18 J more than it has to, and that 14.18 J ends up as warmth in the room that no machine can fully turn back into work.
 
@@ -170,10 +186,10 @@ The fast stroke costs 14.18 J more than it has to, and that 14.18 J ends up as w
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Celsius in $T V^{0.4}$ | 34.82 °C, not 237.25 °C | The rule is about absolute temperature; 0 °C is not zero energy |
-| Boyle's rule $pV$ = const for the fast stroke | 405.3 kPa and 214.9 N, not 705.7 kPa and 427.2 N | That rule assumes the air stays at 20 °C; a fast stroke heats it |
-| Air's entropy change taken as its heat over room temperature | total change 0.00 mJ/K, not 48.37 | $Q/T$ counts only for reversible heat; the air cooled from 510.40 K, not at 293.15 K |
-| Sign of $W$ flipped | air "cools" to 75.90 K | Work done on the air adds energy; the convention was mixed |
+| Celsius in $`T V^{0.4}`$ | 34.82 °C, not 237.25 °C | The rule is about absolute temperature; 0 °C is not zero energy |
+| Boyle's rule $`pV`$ = const for the fast stroke | 405.3 kPa and 214.9 N, not 705.7 kPa and 427.2 N | That rule assumes the air stays at 20 °C; a fast stroke heats it |
+| Air's entropy change taken as its heat over room temperature | total change 0.00 mJ/K, not 48.37 | $`Q/T`$ counts only for reversible heat; the air cooled from 510.40 K, not at 293.15 K |
+| Sign of $`W`$ flipped | air "cools" to 75.90 K | Work done on the air adds energy; the convention was mixed |
 
 ---
 
@@ -210,10 +226,10 @@ The total only climbs, and it climbs fastest at the start, when the temperature 
 
 The script reaches each key number by two independent roads:
 
-- The end temperature and work come from the closed form $T V^{0.4}$ = const and from a 2,000-step RK4 walk along the stroke (RK4: a standard step-by-step method for differential equations, from [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)).
-- The slow-stroke work comes from $nRT_0\ln r$ and from Simpson's rule on $\int p\,dV$ (adding the integrand at evenly spaced points with weights 1, 4, 2, 4, …, 1, as in [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)).
-- The air's entropy change comes from the logarithm and from adding $\delta Q/T$ over 100,000 small cooling steps.
-- The lost work comes from the two works and from $T_0 S_{\text{gen}}$.
+- The end temperature and work come from the closed form $`T V^{0.4}`$ = const and from a 2,000-step RK4 walk along the stroke (RK4: a standard step-by-step method for differential equations, from [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)).
+- The slow-stroke work comes from $`nRT_0\ln r`$ and from Simpson's rule on $`\int p\,dV`$ (adding the integrand at evenly spaced points with weights 1, 4, 2, 4, …, 1, as in [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)).
+- The air's entropy change comes from the logarithm and from adding $`\delta Q/T`$ over 100,000 small cooling steps.
+- The lost work comes from the two works and from $`T_0 S_{\text{gen}}`$.
 
 It also prints the ruled-out claims, the "what breaks" numbers, the bar lengths and the chart points.
 
@@ -593,10 +609,10 @@ The two outputs match line for line.
 
 Lean proves the main results of Steps 3 to 5, for all values meeting each bullet's conditions.
 
-- Suppose $\Delta U = Q + W$, the room at $T_0 > 0$ gains entropy $-Q/T_0$, and $S_{\text{gen}} \ge 0$. Then $W = \Delta U - T_0\,\Delta S_{\text{air}} + T_0\,S_{\text{gen}}$. So $W$ is never below $\Delta U - T_0\,\Delta S_{\text{air}}$. Lean takes the two laws as given, as the card does.
-- Suppose a piece of heat $\delta Q > 0$ leaves a body at $T_h > 0$ for one at $T_c > 0$. Then the total entropy change, $\delta Q(1/T_c - 1/T_h)$, is positive exactly when $T_h > T_c$.
-- Take an ideal gas with $n$, $c_v$ and $R$ all positive. Then no heat content $f(T, V)$ has partial derivatives $n c_v$ and $nRT/V$ at every positive $T$ and $V$.
-- Take the same gas, with $T$ and $V$ positive. Then $n c_v/T$ and $nR/V$ are the partial derivatives of $S = n c_v \ln T + n R \ln V$.
+- Suppose $`\Delta U = Q + W`$, the room at $`T_0 > 0`$ gains entropy $`-Q/T_0`$, and $`S_{\text{gen}} \ge 0`$. Then $`W = \Delta U - T_0\,\Delta S_{\text{air}} + T_0\,S_{\text{gen}}`$. So $`W`$ is never below $`\Delta U - T_0\,\Delta S_{\text{air}}`$. Lean takes the two laws as given, as the card does.
+- Suppose a piece of heat $`\delta Q > 0`$ leaves a body at $`T_h > 0`$ for one at $`T_c > 0`$. Then the total entropy change, $`\delta Q(1/T_c - 1/T_h)`$, is positive exactly when $`T_h > T_c`$.
+- Take an ideal gas with $`n`$, $`c_v`$ and $`R`$ all positive. Then no heat content $`f(T, V)`$ has partial derivatives $`n c_v`$ and $`nRT/V`$ at every positive $`T`$ and $`V`$.
+- Take the same gas, with $`T`$ and $`V`$ positive. Then $`n c_v/T`$ and $`nR/V`$ are the partial derivatives of $`S = n c_v \ln T + n R \ln V`$.
 - Lean also checks three whole numbers: the volume ratio 4, the 801,325 Pa valve point and the 25 cm^3 chart step.
 
 The other numbers, such as the 14.18 J of lost work, are left to the Python and Rust checks.
@@ -712,8 +728,8 @@ example : (100 : ℕ) - 75 = 25 := by decide
 
 > [!TIP]
 > **Try changing**
-> - Guess first: squeeze twice as far, to 37.5 cm^3. Does the end temperature double? Set `V2 = 37.5e-6`. It reaches 673.5 K, not double: the rise goes with $r^{0.4}$. On the real pump the tyre valve opens first, at 801.3 kPa, so this is a sealed barrel's answer.
-> - Guess first: pump helium, whose molecules cannot spin, so $c_v = \tfrac32 R$. Hotter or cooler than air? Set `CV = 1.5 * R`. The end temperature reads 738.7 K: less heat capacity, so the work heats it more. The end pressure reads 1021.3 kPa, so on the real pump the tyre valve would already be open: this too is a sealed barrel's answer. Then the pressure assert stops the run, because it still has air's 1.4 written in.
+> - Guess first: squeeze twice as far, to 37.5 cm^3. Does the end temperature double? Set `V2 = 37.5e-6`. It reaches 673.5 K, not double: the rise goes with $`r^{0.4}`$. On the real pump the tyre valve opens first, at 801.3 kPa, so this is a sealed barrel's answer.
+> - Guess first: pump helium, whose molecules cannot spin, so $`c_v = \tfrac32 R`$. Hotter or cooler than air? Set `CV = 1.5 * R`. The end temperature reads 738.7 K: less heat capacity, so the work heats it more. The end pressure reads 1021.3 kPa, so on the real pump the tyre valve would already be open: this too is a sealed barrel's answer. Then the pressure assert stops the run, because it still has air's 1.4 written in.
 > - Guess first: a claim of 45 J for the squeeze back to 20 °C. Allowed? Change the 35.0 in `claim_b` to 45.0. The total becomes +9.76 mJ/K: allowed, because 45 J is above the 42.14 J floor. The last assert stops the run, since the claim is no longer ruled out.
 
 ---
@@ -723,8 +739,8 @@ example : (100 : ℕ) - 75 = 25 := by decide
 > [!warning]
 > **Reading "entropy only grows" as "nothing's entropy can fall."** The air's entropy fell by 143.75 mJ/K during the cool-down, and nothing was broken. The law is about the total of everything taking part. The room gained 192.12 mJ/K, so the total rose by 48.37 mJ/K. A fridge, a growing crystal and a living cell all lower their own entropy by raising someone else's by more.
 >
-> - **Celsius in a temperature formula.** $T V^{0.4}$ with 20 °C gives 34.82 °C, not 237.25 °C. Every formula on this card uses kelvin.
-> - **Mixing the sign of $W$.** Read $W$ as work done by the air and the first law makes the fast stroke cool the air to 75.90 K.
+> - **Celsius in a temperature formula.** $`T V^{0.4}`$ with 20 °C gives 34.82 °C, not 237.25 °C. Every formula on this card uses kelvin.
+> - **Mixing the sign of $`W`$.** Read $`W`$ as work done by the air and the first law makes the fast stroke cool the air to 75.90 K.
 > - **Boyle's rule for a fast stroke.** It gives 405.3 kPa and a 214.9 N push at the end; the real fast stroke needs 427.2 N.
 > - **Dividing the actual heat by a temperature on an irreversible path.** Taking the air's entropy change as −56.32 J ÷ 293.15 K makes the cool-down generate 0.00 mJ/K. Entropy changes are found along a reversible path between the same two states.
 
@@ -745,7 +761,7 @@ example : (100 : ℕ) - 75 = 25 := by decide
 ## What this builds on
 
 - [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the mixed-partials test that shows heat has no state function and heat over temperature does.
-- [Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md): work as $-\int p\,dV$ along a path, and why two paths between the same ends give two answers.
+- [Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md): work as $`-\int p\,dV`$ along a path, and why two paths between the same ends give two answers.
 
 ## Where this goes next
 
@@ -761,6 +777,6 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Clausius, R. "Ueber verschiedene für die Anwendung bequeme Formen der Hauptgleichungen der mechanischen Wärmetheorie." *Annalen der Physik* 201, no. 7 (1865): 353–400. [doi:10.1002/andp.18652010702](https://doi.org/10.1002/andp.18652010702). The paper that names entropy and defines it as reversible heat over temperature.
 - Lieb, Elliott H., and Jakob Yngvason. "The Physics and Mathematics of the Second Law of Thermodynamics." *Physics Reports* 310, no. 1 (1999): 1–96. [doi:10.1016/S0370-1573(98)00082-9](https://doi.org/10.1016/S0370-1573(98)00082-9). What the second law assumes, and why entropy exists as a state function.
-- Bejan, Adrian. "Entropy Generation Minimization: The New Thermodynamics of Finite-Size Devices and Finite-Time Processes." *Journal of Applied Physics* 79, no. 3 (1996): 1191–1218. [doi:10.1063/1.362674](https://doi.org/10.1063/1.362674). The lost-work rule, $T_0 S_{\text{gen}}$, used as an engineering design tool.
-- Tiesinga, E., P. J. Mohr, D. B. Newell, and B. N. Taylor. "CODATA Recommended Values of the Fundamental Physical Constants: 2018." *Reviews of Modern Physics* 93 (2021): 025010. [doi:10.1103/RevModPhys.93.025010](https://doi.org/10.1103/RevModPhys.93.025010). The gas constant $R$ = 8.314462618 J/(mol K), exact.
-- *University Physics Volume 2*, sections 3.6 "Adiabatic Processes for an Ideal Gas" and 4.6 "Entropy." OpenStax, Rice University. [Section 3.6](https://openstax.org/books/university-physics-volume-2/pages/3-6-adiabatic-processes-for-an-ideal-gas), [section 4.6](https://openstax.org/books/university-physics-volume-2/pages/4-6-entropy). The $T V^{\gamma-1}$ rule and the entropy of an ideal gas, in standard notation.
+- Bejan, Adrian. "Entropy Generation Minimization: The New Thermodynamics of Finite-Size Devices and Finite-Time Processes." *Journal of Applied Physics* 79, no. 3 (1996): 1191–1218. [doi:10.1063/1.362674](https://doi.org/10.1063/1.362674). The lost-work rule, $`T_0 S_{\text{gen}}`$, used as an engineering design tool.
+- Tiesinga, E., P. J. Mohr, D. B. Newell, and B. N. Taylor. "CODATA Recommended Values of the Fundamental Physical Constants: 2018." *Reviews of Modern Physics* 93 (2021): 025010. [doi:10.1103/RevModPhys.93.025010](https://doi.org/10.1103/RevModPhys.93.025010). The gas constant $`R`$ = 8.314462618 J/(mol K), exact.
+- *University Physics Volume 2*, sections 3.6 "Adiabatic Processes for an Ideal Gas" and 4.6 "Entropy." OpenStax, Rice University. [Section 3.6](https://openstax.org/books/university-physics-volume-2/pages/3-6-adiabatic-processes-for-an-ideal-gas), [section 4.6](https://openstax.org/books/university-physics-volume-2/pages/4-6-entropy). The $`T V^{\gamma-1}`$ rule and the entropy of an ideal gas, in standard notation.

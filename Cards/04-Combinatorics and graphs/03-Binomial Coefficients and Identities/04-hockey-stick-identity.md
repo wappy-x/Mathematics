@@ -36,22 +36,26 @@ flowchart LR
 
 One term per row of the triangle, with C(n, k) the count of ways to choose k items from n:
 
-$$C(k,k) + C(k+1,k) + C(k+2,k) + \cdots + C(n,k) = C(n+1,k+1)$$
+```math
+C(k,k) + C(k+1,k) + C(k+2,k) + \cdots + C(n,k) = C(n+1,k+1)
+```
 
 **Read it aloud:** add one column of the triangle from its top entry down to any row; the total is the entry one row further down and one column right.
 
 Capital sigma is shorthand for that instruction: add the terms as the row counter runs from the number below the sign up to the one above ([The binomial theorem](02-binomial-theorem.md)).
 
-$$\sum_{i=k}^{n} C(i,k) = C(n+1,k+1)$$
+```math
+\sum_{i=k}^{n} C(i,k) = C(n+1,k+1)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $k$ | the column, fixed all the way down | 2, the pairs column | a diagonal starting lower |
-| $n$ | the shaft's last row | 6 | a longer shaft, a bigger blade |
-| $i$ | the running row, $k$ to $n$ | 2, 3, 4, 5, 6 | — |
-| $C(i,k)$ | a shaft entry: picks of $k$ from $i$ | C(4,2) = 6 | — |
-| $C(n+1,k+1)$ | the blade: picks of $k+1$ from $n+1$ | C(7,3) = 35 | — |
-| $\sum$ | add the terms, $i$ from $k$ to $n$ | 1 + 3 + 6 + 10 + 15 | — |
+| $`k`$ | the column, fixed all the way down | 2, the pairs column | a diagonal starting lower |
+| $`n`$ | the shaft's last row | 6 | a longer shaft, a bigger blade |
+| $`i`$ | the running row, $`k`$ to $`n`$ | 2, 3, 4, 5, 6 | — |
+| $`C(i,k)`$ | a shaft entry: picks of $`k`$ from $`i`$ | C(4,2) = 6 | — |
+| $`C(n+1,k+1)`$ | the blade: picks of $`k+1`$ from $`n+1`$ | C(7,3) = 35 | — |
+| $`\sum`$ | add the terms, $`i`$ from $`k`$ to $`n`$ | 1 + 3 + 6 + 10 + 15 | — |
 
 ### When it holds
 
@@ -68,7 +72,9 @@ $$\sum_{i=k}^{n} C(i,k) = C(n+1,k+1)$$
 
 Pascal's rule says each entry is the sum of the two above it: C(i+1, k+1) = C(i, k) + C(i, k+1) ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). Move one term across:
 
-$$C(i,k) = C(i+1,k+1) - C(i,k+1)$$
+```math
+C(i,k) = C(i+1,k+1) - C(i,k+1)
+```
 
 Every shaft entry is now a gap between two entries of the column to its right. Here the shaft is column 2, and column 3 holds 1, 4, 10, 20, 35 in rows 3 to 7.
 
@@ -99,7 +105,7 @@ Nothing in the argument used the number 2 or the number 6: it runs down any colu
 
 Fix whole numbers n and k with n ≥ k. Pascal's rule rearranged gives C(i, k) = C(i+1, k+1) − C(i, k+1) for every row i from k to n. Add those lines:
 
-$$\sum_{i=k}^{n} C(i,k) = \sum_{i=k}^{n} \bigl( C(i+1,k+1) - C(i,k+1) \bigr)$$
+$`\displaystyle \sum_{i=k}^{n} C(i,k) = \sum_{i=k}^{n} \bigl( C(i+1,k+1) - C(i,k+1) \bigr)`$
 
 The right-hand side adds C(k+1, k+1) through C(n+1, k+1) and takes away C(k, k+1) through C(n, k+1). Everything from C(k+1, k+1) to C(n, k+1) stands in both lists and cancels, leaving C(n+1, k+1) added and C(k, k+1) taken away. That last term asks for k+1 items from a pool of k, so it counts none, and the total is C(n+1, k+1).
 

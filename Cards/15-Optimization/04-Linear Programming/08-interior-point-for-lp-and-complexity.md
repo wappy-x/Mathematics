@@ -26,41 +26,45 @@ The shaded region is every plan that fits the stock, drawn to scale. Simplex hop
 
 ## The formula
 
-Notation first, in words. As on [Linear programs](01-linear-programs-and-polyhedra.md), the problem is written with equalities: a leftover variable is added for each resource, so the plan is $x = (x_1, \dots, x_5)$: tables, chairs, and leftover timber, labour and finish. The profits are $c$, the resource use per unit is the matrix $A$ (one row per resource) and the stock is $b$.
+Notation first, in words. As on [Linear programs](01-linear-programs-and-polyhedra.md), the problem is written with equalities: a leftover variable is added for each resource, so the plan is $`x = (x_1, \dots, x_5)`$: tables, chairs, and leftover timber, labour and finish. The profits are $`c`$, the resource use per unit is the matrix $`A`$ (one row per resource) and the stock is $`b`$.
 
-As on [LP duality](04-lp-duality-and-complementary-slackness.md), $y$ holds a price for each resource, and a column's **surplus** is what its resources are worth at prices $y$, minus what it earns. That card writes the surplus $r = A^\mathsf{T} y - c$, and [Shadow prices](05-sensitivity-and-shadow-prices.md) calls it the reduced cost. Interior-point texts write it $s$, and so does this card: $s = A^\mathsf{T} y - c$. The slacks $s$ of those two cards are the leftovers $x_3$ to $x_5$ here. A leftover column's surplus is just that resource's price, so $s_3$ to $s_5$ are $y_1$ to $y_3$.
+As on [LP duality](04-lp-duality-and-complementary-slackness.md), $`y`$ holds a price for each resource, and a column's **surplus** is what its resources are worth at prices $`y`$, minus what it earns. That card writes the surplus $`r = A^\mathsf{T} y - c`$, and [Shadow prices](05-sensitivity-and-shadow-prices.md) calls it the reduced cost. Interior-point texts write it $`s`$, and so does this card: $`s = A^\mathsf{T} y - c`$. The slacks $`s`$ of those two cards are the leftovers $`x_3`$ to $`x_5`$ here. A leftover column's surplus is just that resource's price, so $`s_3`$ to $`s_5`$ are $`y_1`$ to $`y_3`$.
 
-$$\text{maximise } c^\mathsf{T} x \text{ subject to } Ax = b,\; x \ge 0; \qquad \text{the central path: } Ax = b,\quad A^\mathsf{T} y - s = c,\quad x_j s_j = \mu \text{ for every } j,\quad x, s > 0.$$
+```math
+\text{maximise } c^\mathsf{T} x \text{ subject to } Ax = b,\; x \ge 0; \qquad \text{the central path: } Ax = b,\quad A^\mathsf{T} y - s = c,\quad x_j s_j = \mu \text{ for every } j,\quad x, s > 0.
+```
 
-One Newton step towards the path point at $\sigma\mu$ solves
+One Newton step towards the path point at $`\sigma\mu`$ solves
 
-$$A\,dx = 0, \qquad A^\mathsf{T} dy - ds = 0, \qquad s_j\,dx_j + x_j\,ds_j = \sigma\mu - x_j s_j,$$
+```math
+A\,dx = 0, \qquad A^\mathsf{T} dy - ds = 0, \qquad s_j\,dx_j + x_j\,ds_j = \sigma\mu - x_j s_j,
+```
 
-and the gap $x^\mathsf{T} s = b^\mathsf{T} y - c^\mathsf{T} x$ after a step of length $\alpha$ is exactly $(1 - \alpha(1 - \sigma))$ times the gap before.
+and the gap $`x^\mathsf{T} s = b^\mathsf{T} y - c^\mathsf{T} x`$ after a step of length $`\alpha`$ is exactly $`(1 - \alpha(1 - \sigma))`$ times the gap before.
 
 **Read it aloud:** keep the plan feasible and the prices feasible, ask every quantity times its surplus to equal the same small number μ, take a Newton step that aims at a fraction σ of today's μ, and the gap between the prices' ceiling and the plan's profit shrinks by the factor one minus α times one minus σ.
 
-The optimality conditions of the linear program (LP) are the same three lines with $x_j s_j = 0$: complementary slackness, from [LP duality](04-lp-duality-and-complementary-slackness.md). For tables and chairs it is that card's $x_j r_j = 0$; for the three leftovers it is its rule that a resource with stock to spare has price zero. The central path relaxes that to $x_j s_j = \mu$. It is the same path as the barrier card's $x^*(t)$, with $\mu = 1/t$ ([Interior point methods](../03-Constrained%20Optimisation/08-interior-point-methods.md)). Here μ is the average product $x^\mathsf{T} s / n$, not the strong-convexity μ of shelf 01.
+The optimality conditions of the linear program (LP) are the same three lines with $`x_j s_j = 0`$: complementary slackness, from [LP duality](04-lp-duality-and-complementary-slackness.md). For tables and chairs it is that card's $`x_j r_j = 0`$; for the three leftovers it is its rule that a resource with stock to spare has price zero. The central path relaxes that to $`x_j s_j = \mu`$. It is the same path as the barrier card's $`x^*(t)`$, with $`\mu = 1/t`$ ([Interior point methods](../03-Constrained%20Optimisation/08-interior-point-methods.md)). Here μ is the average product $`x^\mathsf{T} s / n`$, not the strong-convexity μ of shelf 01.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_j$ | the plan: tables, chairs, leftover timber, labour, finish | start (10, 10, 100, 80, 34); ends at 32 tables, 16 chairs | — |
-| $c$, $A$, $b$ | profit per unit; resource use per unit, one row per resource; stock | $c$ = (19, 20, 0, 0, 0) £; rows (4, 2), (3, 1), (1, 2) plus leftovers; $b$ = (160, 120, 64) | more stock: the best profit rises by the price |
-| $y$ | price per unit of each resource | start (5, 5, 5); ends (3, 0, 7) £ per m, h, l | the ceiling $b^\mathsf{T} y$ rises |
-| $s$, $s_j$ | surplus $A^\mathsf{T} y - c$ ($r$ on LP duality): resources' worth at prices $y$ minus profit | start (21, 5, 5, 5, 5) | prices overcharge more |
-| $x^\mathsf{T} s$ | the gap: ceiling $b^\mathsf{T} y$ minus profit $c^\mathsf{T} x$; $\text{gap}_0$ is its value when the short step starts | 1330 at the start; 0.000001 at the end | the proof is weaker: the ceiling sits further above the profit |
-| $n$, $m$ | number of variables; number of resource rows | 5; 3 | each step costs more |
-| $\mu$ | average product $x^\mathsf{T} s / n$; the path's parameter, $1/t$ on the barrier card | 266 at the start | the path point sits further inside |
-| $\sigma$ | centring fraction: the step aims at $\sigma\mu$ | 0.1; 0.8211 for the short step | each step cuts the gap less |
-| $dx$, $dy$, $ds$; $D$, $M$ | Newton direction; weights $x_j / s_j$; the $m \times m$ matrix $A D A^\mathsf{T}$ | see Worked numbers | — |
-| $\alpha$, $\eta$ | step length; fraction of the largest safe step taken | $\alpha$ = 0.4878 at step 0; $\eta$ = 0.9 | longer steps, fewer iterations |
-| $k$, $\varepsilon$, $\theta$ | iteration, from $k = 0$ at the start; stopping tolerance on the gap; width of the short step's neighbourhood | 13 iterations; gap below $10^{-8}$ times (1 + profit); $\theta$ = 0.4 | — |
-| $d$, $L$ | Klee–Minty dimension; bits needed to write the LP's data | $d$ = 2 to 40 | simplex pivots $2^d - 1$; interior bound grows like $L$ |
+| $`x`$, $`x_j`$ | the plan: tables, chairs, leftover timber, labour, finish | start (10, 10, 100, 80, 34); ends at 32 tables, 16 chairs | — |
+| $`c`$, $`A`$, $`b`$ | profit per unit; resource use per unit, one row per resource; stock | $`c`$ = (19, 20, 0, 0, 0) £; rows (4, 2), (3, 1), (1, 2) plus leftovers; $`b`$ = (160, 120, 64) | more stock: the best profit rises by the price |
+| $`y`$ | price per unit of each resource | start (5, 5, 5); ends (3, 0, 7) £ per m, h, l | the ceiling $`b^\mathsf{T} y`$ rises |
+| $`s`$, $`s_j`$ | surplus $`A^\mathsf{T} y - c`$ ($`r`$ on LP duality): resources' worth at prices $`y`$ minus profit | start (21, 5, 5, 5, 5) | prices overcharge more |
+| $`x^\mathsf{T} s`$ | the gap: ceiling $`b^\mathsf{T} y`$ minus profit $`c^\mathsf{T} x`$; $`\text{gap}_0`$ is its value when the short step starts | 1330 at the start; 0.000001 at the end | the proof is weaker: the ceiling sits further above the profit |
+| $`n`$, $`m`$ | number of variables; number of resource rows | 5; 3 | each step costs more |
+| $`\mu`$ | average product $`x^\mathsf{T} s / n`$; the path's parameter, $`1/t`$ on the barrier card | 266 at the start | the path point sits further inside |
+| $`\sigma`$ | centring fraction: the step aims at $`\sigma\mu`$ | 0.1; 0.8211 for the short step | each step cuts the gap less |
+| $`dx`$, $`dy`$, $`ds`$; $`D`$, $`M`$ | Newton direction; weights $`x_j / s_j`$; the $`m \times m`$ matrix $`A D A^\mathsf{T}`$ | see Worked numbers | — |
+| $`\alpha`$, $`\eta`$ | step length; fraction of the largest safe step taken | $`\alpha`$ = 0.4878 at step 0; $`\eta`$ = 0.9 | longer steps, fewer iterations |
+| $`k`$, $`\varepsilon`$, $`\theta`$ | iteration, from $`k = 0`$ at the start; stopping tolerance on the gap; width of the short step's neighbourhood | 13 iterations; gap below $`10^{-8}`$ times (1 + profit); $`\theta`$ = 0.4 | — |
+| $`d`$, $`L`$ | Klee–Minty dimension; bits needed to write the LP's data | $`d`$ = 2 to 40 | simplex pivots $`2^d - 1`$; interior bound grows like $`L`$ |
 
 ### When it holds
 
-- **A plan and prices strictly inside.** This version starts from $x > 0$ with $Ax = b$ and $s > 0$. Add a limit that leaves only one allowed plan and no strictly inside start exists: the central path is empty. Solvers then use an infeasible-start or self-dual form, which also reports when an LP has no plan or no ceiling (Wright).
-- **Rows of $A$ independent.** Each step solves $M\,dy = \text{right side}$. Write the timber limit twice and $M$ is singular: the step is undefined. Presolve, a solver's clean-up pass before the first step, removes such rows.
+- **A plan and prices strictly inside.** This version starts from $`x > 0`$ with $`Ax = b`$ and $`s > 0`$. Add a limit that leaves only one allowed plan and no strictly inside start exists: the central path is empty. Solvers then use an infeasible-start or self-dual form, which also reports when an LP has no plan or no ceiling (Wright).
+- **Rows of $`A`$ independent.** Each step solves $`M\,dy = \text{right side}`$. Write the timber limit twice and $`M`$ is singular: the step is undefined. Presolve, a solver's clean-up pass before the first step, removes such rows.
 - **Steps that stop short of the edge.** The direction can push a quantity or a surplus through zero. Take every full step and the plan leaves the region: after 2 full steps it uses 24.4441 m more timber than exists.
 - **A fraction σ below one.** With σ = 1 every step only re-centres: the gap stays at 1330 forever.
 - **A unique best corner, if a corner is wanted.** With tied best plans the method stops inside the tied edge, not at a corner.
@@ -71,80 +75,88 @@ The optimality conditions of the linear program (LP) are the same three lines wi
 
 ### Step 0: walk on the prices' proof, not on the corners
 
-The idea in words. A plan $x$ and prices $y$ that both obey their limits bracket the best profit: profit below, ceiling above. The gap between them is a sum of products, each quantity times its surplus. Simplex keeps this gap at zero at every corner it visits, with prices that break some limit, and walks until the prices become valid. An interior point method does the opposite. It keeps both the plan and the prices valid from the start, with every product strictly positive. Then it shrinks all the products together, evenly, so no quantity or surplus is forced to zero before its time. Shrinking them evenly keeps the plan away from the edges, and the steps long.
+The idea in words. A plan $`x`$ and prices $`y`$ that both obey their limits bracket the best profit: profit below, ceiling above. The gap between them is a sum of products, each quantity times its surplus. Simplex keeps this gap at zero at every corner it visits, with prices that break some limit, and walks until the prices become valid. An interior point method does the opposite. It keeps both the plan and the prices valid from the start, with every product strictly positive. Then it shrinks all the products together, evenly, so no quantity or surplus is forced to zero before its time. Shrinking them evenly keeps the plan away from the edges, and the steps long.
 
 ### Step 1: the gap is a sum of products
 
-If $Ax = b$ and $s = A^\mathsf{T} y - c$, then
+If $`Ax = b`$ and $`s = A^\mathsf{T} y - c`$, then
 
-$$b^\mathsf{T} y - c^\mathsf{T} x = (Ax)^\mathsf{T} y - c^\mathsf{T} x = x^\mathsf{T}(A^\mathsf{T} y - c) = x^\mathsf{T} s = \sum_j x_j s_j.$$
+```math
+b^\mathsf{T} y - c^\mathsf{T} x = (Ax)^\mathsf{T} y - c^\mathsf{T} x = x^\mathsf{T}(A^\mathsf{T} y - c) = x^\mathsf{T} s = \sum_j x_j s_j.
+```
 
-With $x \ge 0$ and $s \ge 0$, every term is non-negative, so the ceiling is at least the profit: weak duality from [LP duality](04-lp-duality-and-complementary-slackness.md). At the start, $b^\mathsf{T} y$ = 1720, $c^\mathsf{T} x$ = 390 and $x^\mathsf{T} s$ = 1330, as the product form says.
+With $`x \ge 0`$ and $`s \ge 0`$, every term is non-negative, so the ceiling is at least the profit: weak duality from [LP duality](04-lp-duality-and-complementary-slackness.md). At the start, $`b^\mathsf{T} y`$ = 1720, $`c^\mathsf{T} x`$ = 390 and $`x^\mathsf{T} s`$ = 1330, as the product form says.
 
 ### Step 2: Newton's method on the bent conditions
 
-The conditions on the central path are $n + m + n$ equations in $x$, $y$, $s$. Two blocks are linear and already hold. The third, $x_j s_j = \sigma\mu$, is curved. Newton's method replaces it by its tangent: $(x_j + dx_j)(s_j + ds_j) \approx x_j s_j + s_j dx_j + x_j ds_j$, dropping the small product $dx_j\,ds_j$. That gives the system in The formula.
+The conditions on the central path are $`n + m + n`$ equations in $`x`$, $`y`$, $`s`$. Two blocks are linear and already hold. The third, $`x_j s_j = \sigma\mu`$, is curved. Newton's method replaces it by its tangent: $`(x_j + dx_j)(s_j + ds_j) \approx x_j s_j + s_j dx_j + x_j ds_j`$, dropping the small product $`dx_j\,ds_j`$. That gives the system in The formula.
 
-To solve it, the second block says $ds = A^\mathsf{T} dy$. The third then gives $dx_j = (\sigma\mu - x_j s_j - x_j\,ds_j)/s_j$, where $\sigma\mu - x_j s_j$ is how far the product $x_j s_j$ falls short of its target. Putting that into $A\,dx = 0$ leaves one $m \times m$ system:
+To solve it, the second block says $`ds = A^\mathsf{T} dy`$. The third then gives $`dx_j = (\sigma\mu - x_j s_j - x_j\,ds_j)/s_j`$, where $`\sigma\mu - x_j s_j`$ is how far the product $`x_j s_j`$ falls short of its target. Putting that into $`A\,dx = 0`$ leaves one $`m \times m`$ system:
 
-$$\big(A D A^\mathsf{T}\big)\,dy = A\,\big((\sigma\mu - x_j s_j) / s_j\big)_j, \qquad D = \text{diag}(x_j / s_j).$$
+```math
+\big(A D A^\mathsf{T}\big)\,dy = A\,\big((\sigma\mu - x_j s_j) / s_j\big)_j, \qquad D = \text{diag}(x_j / s_j).
+```
 
-For the workshop $M = A D A^\mathsf{T}$ is 3 by 3, solved by elimination. Every iteration costs one such solve. That cost, about $m^3/3$ multiply-adds plus forming $M$, is the price of an interior point step. A simplex pivot updates one tableau and is far cheaper.
+For the workshop $`M = A D A^\mathsf{T}`$ is 3 by 3, solved by elimination. Every iteration costs one such solve. That cost, about $`m^3/3`$ multiply-adds plus forming $`M`$, is the price of an interior point step. A simplex pivot updates one tableau and is far cheaper.
 
 ### Step 3: the gap falls by an exact factor
 
-Take a step $\alpha$ along $(dx, dy, ds)$. The new gap is
+Take a step $`\alpha`$ along $`(dx, dy, ds)`$. The new gap is
 
-$$\sum_j (x_j + \alpha dx_j)(s_j + \alpha ds_j) = x^\mathsf{T} s + \alpha \sum_j (s_j dx_j + x_j ds_j) + \alpha^2\, dx^\mathsf{T} ds.$$
+```math
+\sum_j (x_j + \alpha dx_j)(s_j + \alpha ds_j) = x^\mathsf{T} s + \alpha \sum_j (s_j dx_j + x_j ds_j) + \alpha^2\, dx^\mathsf{T} ds.
+```
 
-The middle sum is $\sum_j (\sigma\mu - x_j s_j) = n\sigma\mu - n\mu$. The last term is zero: $dx^\mathsf{T} ds = dx^\mathsf{T} A^\mathsf{T} dy = (A\,dx)^\mathsf{T} dy = 0$. So the new gap is $n\mu\,(1 - \alpha(1 - \sigma))$, exactly, for any step. Newton's dropped term does no harm to the gap, because it sums to zero.
+The middle sum is $`\sum_j (\sigma\mu - x_j s_j) = n\sigma\mu - n\mu`$. The last term is zero: $`dx^\mathsf{T} ds = dx^\mathsf{T} A^\mathsf{T} dy = (A\,dx)^\mathsf{T} dy = 0`$. So the new gap is $`n\mu\,(1 - \alpha(1 - \sigma))`$, exactly, for any step. Newton's dropped term does no harm to the gap, because it sums to zero.
 
 Two consequences. With σ = 1 the gap never moves. With σ = 0.1 and a full step, it falls tenfold. The only thing that stops a full step is the edge, which is why the plan should sit near the central path, where all products are similar and none is about to hit zero first.
 
 ### Step 4: the short step, and a count that is proved
 
-The **short-step method** fixes $\theta = 0.4$ and $\sigma = 1 - 0.4/\sqrt{n}$ and always takes $\alpha = 1$. It needs a start in the neighbourhood $\lVert (x_j s_j / \mu - 1)_j \rVert \le 0.4$: every product within 40 percent of the average, in the root-sum-of-squares sense.
+The **short-step method** fixes $`\theta = 0.4`$ and $`\sigma = 1 - 0.4/\sqrt{n}`$ and always takes $`\alpha = 1`$. It needs a start in the neighbourhood $`\lVert (x_j s_j / \mu - 1)_j \rVert \le 0.4`$: every product within 40 percent of the average, in the root-sum-of-squares sense.
 
-**Lemma (stated, not proved here).** If the current point is in that neighbourhood, the full step keeps every $x_j$ and $s_j$ positive and lands back in the neighbourhood. This is Monteiro and Adler's 1989 result; Wright gives the proof in chapter 5. It rests on bounding the dropped products $dx_j\,ds_j$ by the neighbourhood's width.
+**Lemma (stated, not proved here).** If the current point is in that neighbourhood, the full step keeps every $`x_j`$ and $`s_j`$ positive and lands back in the neighbourhood. This is Monteiro and Adler's 1989 result; Wright gives the proof in chapter 5. It rests on bounding the dropped products $`dx_j\,ds_j`$ by the neighbourhood's width.
 
-Given the lemma, the count follows from Step 3. Each step multiplies the gap by exactly σ, so after $k$ steps it is $\sigma^k$ times the first gap. It falls below $\varepsilon$ once $k \ge \ln(\text{gap}_0 / \varepsilon) / (-\ln \sigma)$. Since $-\ln \sigma = -\ln(1 - 0.4/\sqrt{n}) \ge 0.4/\sqrt{n}$,
+Given the lemma, the count follows from Step 3. Each step multiplies the gap by exactly σ, so after $`k`$ steps it is $`\sigma^k`$ times the first gap. It falls below $`\varepsilon`$ once $`k \ge \ln(\text{gap}_0 / \varepsilon) / (-\ln \sigma)`$. Since $`-\ln \sigma = -\ln(1 - 0.4/\sqrt{n}) \ge 0.4/\sqrt{n}`$,
 
-$$k \;\le\; \Big\lceil \frac{\sqrt{n}}{0.4}\, \ln \frac{\text{gap}_0}{\varepsilon} \Big\rceil.$$
+```math
+k \;\le\; \Big\lceil \frac{\sqrt{n}}{0.4}\, \ln \frac{\text{gap}_0}{\varepsilon} \Big\rceil.
+```
 
-For the workshop, $n = 5$ gives σ = 0.8211. Two centring steps bring the start into the neighbourhood with the gap still 1330. The exact count is predicted as 96, the code takes 96, and the bound is 104.9806. The worst neighbourhood width met on the way is 0.1290, well inside 0.4.
+For the workshop, $`n = 5`$ gives σ = 0.8211. Two centring steps bring the start into the neighbourhood with the gap still 1330. The exact count is predicted as 96, the code takes 96, and the bound is 104.9806. The worst neighbourhood width met on the way is 0.1290, well inside 0.4.
 
 ### Step 5: from a gap to polynomial time
 
-The bound grows like $\sqrt{n}$ times the logarithm of the accuracy. To get an exact answer, not just a small gap, use the data's size. If the LP's whole-number data take $L$ bits to write, every corner's coordinates are fractions whose denominators are at most about $2^L$ (Cramer's rule). So two corners with different profits differ by at least a fixed power of $2^{-L}$. Once the gap is smaller than that, rounding to the nearest corner gives the exact best corner.
+The bound grows like $`\sqrt{n}`$ times the logarithm of the accuracy. To get an exact answer, not just a small gap, use the data's size. If the LP's whole-number data take $`L`$ bits to write, every corner's coordinates are fractions whose denominators are at most about $`2^L`$ (Cramer's rule). So two corners with different profits differ by at least a fixed power of $`2^{-L}`$. Once the gap is smaller than that, rounding to the nearest corner gives the exact best corner.
 
-Then $\ln(\text{gap}_0/\varepsilon)$ is of order $L$, and the count is of order $\sqrt{n}\,L$ iterations, each at most of order $n^3$ operations. That is $O(n^{3.5} L)$ arithmetic operations, the bound Karmarkar proved for his 1984 method: polynomial in the size of the input. Khachiyan's ellipsoid method had shown in 1979 that a polynomial bound exists; interior point methods made one fast in practice.
+Then $`\ln(\text{gap}_0/\varepsilon)`$ is of order $`L`$, and the count is of order $`\sqrt{n}\,L`$ iterations, each at most of order $`n^3`$ operations. That is $`O(n^{3.5} L)`$ arithmetic operations, the bound Karmarkar proved for his 1984 method: polynomial in the size of the input. Khachiyan's ellipsoid method had shown in 1979 that a polynomial bound exists; interior point methods made one fast in practice.
 
 ### Step 6: the simplex method's worst case
 
-Simplex has no such bound. [The simplex method](03-simplex-method.md) already runs Dantzig's rule on a small Klee–Minty cube; this step gives the cube for every $d$. Klee and Minty built, for each $d$, an LP in $d$ variables: maximise $\sum_j 10^{d-j} x_j$ subject to $2\sum_{j<i} 10^{i-j} x_j + x_i \le 100^{i-1}$ and $x \ge 0$. Its region is a squashed cube with $2^d$ corners, and Dantzig's rule (enter the column with the largest profit per unit) visits every one of them: $2^d - 1$ pivots. The code runs that rule for $d$ up to 10 and gets exactly $2^d - 1$ each time. Later authors built similar traps for many other pivot rules (Bertsimas and Tsitsiklis, chapter 3).
+Simplex has no such bound. [The simplex method](03-simplex-method.md) already runs Dantzig's rule on a small Klee–Minty cube; this step gives the cube for every $`d`$. Klee and Minty built, for each $`d`$, an LP in $`d`$ variables: maximise $`\sum_j 10^{d-j} x_j`$ subject to $`2\sum_{j<i} 10^{i-j} x_j + x_i \le 100^{i-1}`$ and $`x \ge 0`$. Its region is a squashed cube with $`2^d`$ corners, and Dantzig's rule (enter the column with the largest profit per unit) visits every one of them: $`2^d - 1`$ pivots. The code runs that rule for $`d`$ up to 10 and gets exactly $`2^d - 1`$ each time. Later authors built similar traps for many other pivot rules (Bertsimas and Tsitsiklis, chapter 3).
 
-The interior point code runs on the same cubes with each $x_j$ measured in units of $100^{j-1}$, which keeps the numbers near 1. A change of units multiplies each $x_j$ by a constant and divides its surplus $s_j$ by the same constant, so every product $x_j s_j$ and every step is unchanged. Changing units can change which column Dantzig's rule picks, so simplex runs on the original cube.
+The interior point code runs on the same cubes with each $`x_j`$ measured in units of $`100^{j-1}`$, which keeps the numbers near 1. A change of units multiplies each $`x_j`$ by a constant and divides its surplus $`s_j`$ by the same constant, so every product $`x_j s_j`$ and every step is unchanged. Changing units can change which column Dantzig's rule picks, so simplex runs on the original cube.
 
 ---
 
 ## Worked numbers, by hand
 
-Step $k = 0$ on the workshop, from the plan of 10 tables and 10 chairs and prices of £5 on everything.
+Step $`k = 0`$ on the workshop, from the plan of 10 tables and 10 chairs and prices of £5 on everything.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| leftovers | $160 - 40 - 20$; $120 - 30 - 10$; $64 - 10 - 20$ | 100, 80, 34 |
-| surplus $s = A^\mathsf{T} y - c$ | tables $(4 + 3 + 1) \times 5 - 19$; chairs $(2 + 1 + 2) \times 5 - 20$; leftovers: the prices | 21, 5, 5, 5, 5 |
-| gap $x^\mathsf{T} s$ | $10 \times 21 + 10 \times 5 + (100 + 80 + 34) \times 5$ | 1330 |
-| same gap as ceiling minus profit | $(160 + 120 + 64) \times 5 - (190 + 200)$ | $1720 - 390 = 1330$ |
-| $\mu$, and the target $\sigma\mu$ | $1330 / 5$; $0.1 \times 266$ | 266; 26.6 |
-| $M = A D A^\mathsf{T}$, $D = x_j / s_j$ | e.g. top left: $16 \times 10/21 + 4 \times 2 + 20$ | rows (35.6190, 9.7143, 9.9048), (9.7143, 22.2857, 5.4286), (9.9048, 5.4286, 15.2762) |
-| solve for the price change $dy$ | elimination on $M$ | (−2.9871, −3.4601, 0.1045) |
-| surplus change $ds = A^\mathsf{T} dy$ | tables $4(-2.9871) + 3(-3.4601) + 0.1045$ | (−22.2239, −9.2252, −2.9871, −3.4601, 0.1045) |
-| plan change $dx_j = (26.6 - x_j s_j - x_j ds_j)/s_j$ | tables $(26.6 - 210 + 222.239)/21$ | (1.8495, 13.7705, −34.9389, −19.3189, −29.3904) |
-| largest safe step | chairs' surplus: $5 / 9.2252$ | 0.5420 |
-| step taken, $\alpha = 0.9 \times$ safe | $0.9 \times 0.5420$ | 0.4878 |
-| **new gap** | $1330 \times (1 - 0.4878 \times 0.9)$ | **746.1121** |
+| leftovers | $`160 - 40 - 20`$; $`120 - 30 - 10`$; $`64 - 10 - 20`$ | 100, 80, 34 |
+| surplus $`s = A^\mathsf{T} y - c`$ | tables $`(4 + 3 + 1) \times 5 - 19`$; chairs $`(2 + 1 + 2) \times 5 - 20`$; leftovers: the prices | 21, 5, 5, 5, 5 |
+| gap $`x^\mathsf{T} s`$ | $`10 \times 21 + 10 \times 5 + (100 + 80 + 34) \times 5`$ | 1330 |
+| same gap as ceiling minus profit | $`(160 + 120 + 64) \times 5 - (190 + 200)`$ | $`1720 - 390 = 1330`$ |
+| $`\mu`$, and the target $`\sigma\mu`$ | $`1330 / 5`$; $`0.1 \times 266`$ | 266; 26.6 |
+| $`M = A D A^\mathsf{T}`$, $`D = x_j / s_j`$ | e.g. top left: $`16 \times 10/21 + 4 \times 2 + 20`$ | rows (35.6190, 9.7143, 9.9048), (9.7143, 22.2857, 5.4286), (9.9048, 5.4286, 15.2762) |
+| solve for the price change $`dy`$ | elimination on $`M`$ | (−2.9871, −3.4601, 0.1045) |
+| surplus change $`ds = A^\mathsf{T} dy`$ | tables $`4(-2.9871) + 3(-3.4601) + 0.1045`$ | (−22.2239, −9.2252, −2.9871, −3.4601, 0.1045) |
+| plan change $`dx_j = (26.6 - x_j s_j - x_j ds_j)/s_j`$ | tables $`(26.6 - 210 + 222.239)/21`$ | (1.8495, 13.7705, −34.9389, −19.3189, −29.3904) |
+| largest safe step | chairs' surplus: $`5 / 9.2252`$ | 0.5420 |
+| step taken, $`\alpha = 0.9 \times`$ safe | $`0.9 \times 0.5420`$ | 0.4878 |
+| **new gap** | $`1330 \times (1 - 0.4878 \times 0.9)`$ | **746.1121** |
 
 The first step cuts the proved gap from £1,330 to £746.11, and the run's table below shows 746.112091, so Step 3's factor holds to every digit. The step was cut short by the chairs' surplus. Prices are falling fast, and a full step would have priced chairs' resources below their £20 profit, which voids the ceiling.
 
@@ -161,9 +173,9 @@ The first step cuts the proved gap from £1,330 to £746.11, and the run's table
 
 ## How the gap closes, step by step
 
-The puzzle: the early steps are cut short by the edges, yet the method finishes in 13. The table follows one run from the start, σ = 0.1, η = 0.9. Profit is $c^\mathsf{T} x$, the ceiling is $b^\mathsf{T} y$, and the gap is their difference.
+The puzzle: the early steps are cut short by the edges, yet the method finishes in 13. The table follows one run from the start, σ = 0.1, η = 0.9. Profit is $`c^\mathsf{T} x`$, the ceiling is $`b^\mathsf{T} y`$, and the gap is their difference.
 
-| $k$ | tables | chairs | profit, £ | ceiling, £ | gap, £ | step $\alpha$ |
+| $`k`$ | tables | chairs | profit, £ | ceiling, £ | gap, £ | step $`\alpha`$ |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 0 | 10.0000 | 10.0000 | 390.0000 | 1720.0000 | 1330.000000 | 0.4878 |
 | 1 | 10.9022 | 16.7171 | 541.4839 | 1287.5959 | 746.112091 | 0.6282 |
@@ -191,11 +203,11 @@ xychart-beta
     line [3.12, 2.87, 2.51, 2.22, 1.74, 1.22, 0.72, -0.09, -0.95, -1.87, -2.85, -3.85, -4.85, -5.85]
 ```
 
-The line is the base-10 logarithm of the gap $x^\mathsf{T} s$ at each iteration. It bends from a shallow slope to a straight drop of one unit per step once full steps are allowed.
+The line is the base-10 logarithm of the gap $`x^\mathsf{T} s`$ at each iteration. It bends from a shallow slope to a straight drop of one unit per step once full steps are allowed.
 
 The same method on the Klee–Minty cubes, with simplex beside it:
 
-| $d$ | simplex pivots, Dantzig's rule | $2^d - 1$ | interior point iterations |
+| $`d`$ | simplex pivots, Dantzig's rule | $`2^d - 1`$ | interior point iterations |
 | ---: | ---: | ---: | ---: |
 | 2 | 3 | 3 | 11 |
 | 4 | 15 | 15 | 12 |
@@ -205,13 +217,13 @@ The same method on the Klee–Minty cubes, with simplex beside it:
 | 20 | not run | 1048575 | 15 |
 | 40 | not run | 1099511627775 | 16 |
 
-Simplex doubles with every added dimension. The interior point count creeps up by about one per doubling of $d$. The often-quoted "about 20 iterations whatever the size" is a rule of thumb, not a constant: here the count is 11 to 16 and still grows slowly with size. Every run ends at $x_d$ = 1.000000 in the new units, the cube's best corner.
+Simplex doubles with every added dimension. The interior point count creeps up by about one per doubling of $`d`$. The often-quoted "about 20 iterations whatever the size" is a rule of thumb, not a constant: here the count is 11 to 16 and still grows slowly with size. Every run ends at $`x_d`$ = 1.000000 in the new units, the cube's best corner.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code runs the primal-dual method on the workshop with every Newton step written out: the surplus, the matrix $M = A D A^\mathsf{T}$ built by hand and solved by elimination, the largest safe step and 0.9 of it. It reaches the answer by three independent roads. Road 1 is the interior point method itself. Road 2 lists every corner of the region in exact fractions, crossing each pair of limit lines and keeping those that fit. Road 3 checks the prices (3, 0, 7) exactly: they cover each product's profit and their ceiling equals the best corner's £928, so the best corner is proved optimal and the interior point answer must meet it. It then prints the four breaks, the short-step count against its prediction, and both methods on Klee–Minty cubes. The simplex tableau stays in whole numbers, because every Klee–Minty pivot element is 1, and the code asserts that.
+The code runs the primal-dual method on the workshop with every Newton step written out: the surplus, the matrix $`M = A D A^\mathsf{T}`$ built by hand and solved by elimination, the largest safe step and 0.9 of it. It reaches the answer by three independent roads. Road 1 is the interior point method itself. Road 2 lists every corner of the region in exact fractions, crossing each pair of limit lines and keeping those that fit. Road 3 checks the prices (3, 0, 7) exactly: they cover each product's profit and their ceiling equals the best corner's £928, so the best corner is proved optimal and the interior point answer must meet it. It then prints the four breaks, the short-step count against its prediction, and both methods on Klee–Minty cubes. The simplex tableau stays in whole numbers, because every Klee–Minty pivot element is 1, and the code asserts that.
 
 ### Python
 
@@ -630,13 +642,13 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the gap rules for every linear program in equality form, and the short step's count for every $n$.
+Lean proves the gap rules for every linear program in equality form, and the short step's count for every $`n`$.
 
-- If $Ax = b$ and $s = A^\mathsf{T} y - c$, the prices' ceiling minus the profit equals the sum of products $x_j s_j$.
-- So when every $x_j$ and $s_j$ is at least zero, the ceiling is at least the profit.
-- Start from a plan and prices strictly inside, and solve the Newton system aimed at $\sigma\mu$. A step of any length $\alpha$ multiplies the gap by exactly $1 - \alpha(1 - \sigma)$.
-- Take $\sigma = 1 - 0.4/\sqrt{n}$, and let $k$ be at least $\sqrt{n}/0.4$ times $\ln(\text{gap}_0/\varepsilon)$. Then the gap $\sigma^k \text{gap}_0$ is at most $\varepsilon$.
-- The workshop's hand arithmetic holds exactly: the start plan, its surplus, the gap 1330, the corners, the prices (3, 0, 7), the tie at £1216, and each $2^d - 1$.
+- If $`Ax = b`$ and $`s = A^\mathsf{T} y - c`$, the prices' ceiling minus the profit equals the sum of products $`x_j s_j`$.
+- So when every $`x_j`$ and $`s_j`$ is at least zero, the ceiling is at least the profit.
+- Start from a plan and prices strictly inside, and solve the Newton system aimed at $`\sigma\mu`$. A step of any length $`\alpha`$ multiplies the gap by exactly $`1 - \alpha(1 - \sigma)`$.
+- Take $`\sigma = 1 - 0.4/\sqrt{n}`$, and let $`k`$ be at least $`\sqrt{n}/0.4`$ times $`\ln(\text{gap}_0/\varepsilon)`$. Then the gap $`\sigma^k \text{gap}_0`$ is at most $`\varepsilon`$.
+- The workshop's hand arithmetic holds exactly: the start plan, its surplus, the gap 1330, the corners, the prices (3, 0, 7), the tie at £1216, and each $`2^d - 1`$.
 
 The short step's neighbourhood lemma, the simplex pivot counts and every iteration count are left to the Python and Rust checks.
 
@@ -812,14 +824,14 @@ example : 2 ^ 80 - 1 = 1208925819614629174706175 := by norm_num
 > - **Guess first: does a less greedy σ help?** Change the default `sigma=0.1` in `ipm` to `0.3`. The workshop takes 17 iterations instead of 13, and the cubes take 16 to 19. Aiming at a point further inside buys safety the method did not need.
 > - **Guess first: what about a bolder η?** Change the default `eta=0.9` to `0.99`. The workshop takes 11 iterations and every cube 10 or 11. Stepping closer to the edge pays here; on badly scaled problems it can stall.
 > - **Guess first: does a start near a corner cost much?** Set `X0` to `[1.0, 1.0, 154.0, 116.0, 61.0]`: 1 table and 1 chair. It takes 14 iterations, one more than from (10, 10).
-> - **Guess first: how far can the cube grow?** Add `80` to the list of sizes. The interior point method takes 16 iterations at $d$ = 80; simplex would need $2^{80} - 1$ = 1208925819614629174706175 pivots.
+> - **Guess first: how far can the cube grow?** Add `80` to the list of sizes. The interior point method takes 16 iterations at $`d`$ = 80; simplex would need $`2^{80} - 1`$ = 1208925819614629174706175 pivots.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Reading "polynomial time" as "faster than simplex".** The polynomial bound is a worst case, and simplex's exponential worst case needs a contrived problem. On the workshop, simplex reaches the best corner in a handful of pivots, each one a cheap tableau update, while each of the 13 interior point iterations solves a fresh system in $M = A D A^\mathsf{T}$. The proved short step is slower still: 96 iterations. Interior point wins on very large sparse problems (mostly zeros) and where simplex stalls on many tied corners. Measure in iterations times cost per iteration, never in iterations alone.
+> **Reading "polynomial time" as "faster than simplex".** The polynomial bound is a worst case, and simplex's exponential worst case needs a contrived problem. On the workshop, simplex reaches the best corner in a handful of pivots, each one a cheap tableau update, while each of the 13 interior point iterations solves a fresh system in $`M = A D A^\mathsf{T}`$. The proved short step is slower still: 96 iterations. Interior point wins on very large sparse problems (mostly zeros) and where simplex stalls on many tied corners. Measure in iterations times cost per iteration, never in iterations alone.
 >
 > - **Reading the last plan as a corner.** The method ends strictly inside. With a unique best corner the plan is within rounding of it, (32.0000, 16.0000) here. With tied profits, chairs at £38, it stops at (9.1177, 27.4411), inside the best edge, where no corner rule applies.
 > - **Taking full Newton steps.** After 2 full steps the plan claims £998.4004 by using −24.4441 m of leftover timber. Cut every step to stay strictly inside.
@@ -830,7 +842,7 @@ example : 2 ^ 80 - 1 = 1208925819614629174706175 := by norm_num
 
 ## Where you meet it in real life
 
-- **Large planning models.** Airline fleet assignment, electricity dispatch and supply-chain LPs with millions of variables are often solved by interior point codes, which exploit the zeros in $A$ (most products use few resources) when forming and solving $A D A^\mathsf{T}$.
+- **Large planning models.** Airline fleet assignment, electricity dispatch and supply-chain LPs with millions of variables are often solved by interior point codes, which exploit the zeros in $`A`$ (most products use few resources) when forming and solving $`A D A^\mathsf{T}`$.
 - **Commercial and open-source LP solvers.** They ship both simplex and interior point methods, often run side by side, and finish an interior point solve with crossover, a few simplex pivots to an exact corner.
 - **Integer programming.** [Branch and bound](../05-Integer%20and%20Combinatorial%20Optimisation/03-branch-and-bound.md) solves one LP per node and re-solves after each small change, which is where simplex's warm start wins.
 - **Cones and matrices.** The same primal-dual step, with products of matrices in place of products of numbers, is how [Semidefinite programs](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md) are solved.
@@ -843,13 +855,13 @@ example : 2 ^ 80 - 1 = 1208925819614629174706175 := by norm_num
 ## What this builds on
 
 - [The simplex method](03-simplex-method.md): the corner-walking method compared here, its tableau and Dantzig's entering rule, which the Klee–Minty cube defeats.
-- [Interior point methods](../03-Constrained%20Optimisation/08-interior-point-methods.md): the log barrier, the central path $x^*(t)$ and the gap $m/t$. This card's $\mu$ is $1/t$, and the primal-dual step replaces the barrier's centring rounds by one Newton step per cut.
-- [LP duality](04-lp-duality-and-complementary-slackness.md): prices $y$, weak duality and complementary slackness, the conditions the central path relaxes.
+- [Interior point methods](../03-Constrained%20Optimisation/08-interior-point-methods.md): the log barrier, the central path $`x^*(t)`$ and the gap $`m/t`$. This card's $`\mu`$ is $`1/t`$, and the primal-dual step replaces the barrier's centring rounds by one Newton step per cut.
+- [LP duality](04-lp-duality-and-complementary-slackness.md): prices $`y`$, weak duality and complementary slackness, the conditions the central path relaxes.
 
 ## Where this goes next
 
 - [Branch and bound](../05-Integer%20and%20Combinatorial%20Optimisation/03-branch-and-bound.md): whole-number plans by splitting into cases, each case one LP, re-solved from the last answer.
-- [Semidefinite programs](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md): the primal-dual interior point idea with matrices in place of the vectors $x$ and $s$.
+- [Semidefinite programs](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md): the primal-dual interior point idea with matrices in place of the vectors $`x`$ and $`s`$.
 
 Whether some algorithm solves every linear program in a number of steps bounded by a polynomial in the number of variables and limits alone, with no dependence on the bits of the data, is unsolved as of 2026-11-11, and so is whether any pivot rule makes simplex polynomial.
 
@@ -860,7 +872,7 @@ Whether some algorithm solves every linear program in a number of steps bounded 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Wright, Stephen J. *Primal-Dual Interior-Point Methods*. SIAM, 1997. [doi:10.1137/1.9781611971453](https://doi.org/10.1137/1.9781611971453). The primal-dual step, the short-step neighbourhood lemma and its iteration bound (chapter 5), and the infeasible-start and self-dual variants.
-- Monteiro, Renato D. C., and Ilan Adler. "Interior Path Following Primal-Dual Algorithms. Part I: Linear Programming." *Mathematical Programming* 44 (1989): 27–41. [doi:10.1007/BF01587075](https://doi.org/10.1007/BF01587075). The short-step method with σ = 1 − θ/√n and its $O(\sqrt{n}\,L)$ iteration count.
-- Karmarkar, N. "A New Polynomial-Time Algorithm for Linear Programming." *Combinatorica* 4, no. 4 (1984): 373–395. [doi:10.1007/BF02579150](https://doi.org/10.1007/BF02579150). The first interior point method for LP with a polynomial bound, $O(n^{3.5} L)$ operations.
+- Monteiro, Renato D. C., and Ilan Adler. "Interior Path Following Primal-Dual Algorithms. Part I: Linear Programming." *Mathematical Programming* 44 (1989): 27–41. [doi:10.1007/BF01587075](https://doi.org/10.1007/BF01587075). The short-step method with σ = 1 − θ/√n and its $`O(\sqrt{n}\,L)`$ iteration count.
+- Karmarkar, N. "A New Polynomial-Time Algorithm for Linear Programming." *Combinatorica* 4, no. 4 (1984): 373–395. [doi:10.1007/BF02579150](https://doi.org/10.1007/BF02579150). The first interior point method for LP with a polynomial bound, $`O(n^{3.5} L)`$ operations.
 - Bertsimas, Dimitris, and John N. Tsitsiklis. *Introduction to Linear Optimization*. Athena Scientific, 1997. [Publisher page](http://www.athenasc.com/linoptbook.html). The simplex method's worst case on the Klee–Minty cube, the ellipsoid method and interior point methods side by side.
 - Spielman, Daniel A., and Shang-Hua Teng. "Smoothed Analysis of Algorithms: Why the Simplex Algorithm Usually Takes Polynomial Time." *Journal of the ACM* 51, no. 3 (2004): 385–463. [doi:10.1145/990308.990310](https://doi.org/10.1145/990308.990310). Why simplex is fast in practice despite Klee–Minty: tiny random changes to the data make its expected pivot count polynomial.

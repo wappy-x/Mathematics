@@ -39,44 +39,48 @@ The two boxes that say "positive" hold 198 people. Only the left one, 99 people,
 
 ## The formula
 
-Notation from earlier cards, one line each. $P(A)$ is read "the chance of A". $P(A \mid B)$ is read "the chance of A given B": the chance of A counted only among the cases where B happened ([Conditional probability](05-conditional-probability.md)). $A^c$ is read "not A": every case where A fails ([The rules](03-probability-rules-and-complements.md)).
+Notation from earlier cards, one line each. $`P(A)`$ is read "the chance of A". $`P(A \mid B)`$ is read "the chance of A given B": the chance of A counted only among the cases where B happened ([Conditional probability](05-conditional-probability.md)). $`A^c`$ is read "not A": every case where A fails ([The rules](03-probability-rules-and-complements.md)).
 
-Name the two events. $H$ is the claim under test: "this person carries the condition". $E$ is the evidence: "this person tested positive".
+Name the two events. $`H`$ is the claim under test: "this person carries the condition". $`E`$ is the evidence: "this person tested positive".
 
-$$P(H \mid E) = \frac{P(E \mid H)\,P(H)}{P(E)}, \qquad P(E) = P(E \mid H)\,P(H) + P(E \mid H^c)\,P(H^c)$$
+```math
+P(H \mid E) = \frac{P(E \mid H)\,P(H)}{P(E)}, \qquad P(E) = P(E \mid H)\,P(H) + P(E \mid H^c)\,P(H^c)
+```
 
 **Read it aloud:** the chance of the cause given the evidence is the chance of the evidence given the cause, times the base rate of the cause, divided by the total chance of seeing the evidence at all.
 
 The second formula is the law of total probability: a positive result arrives either from a carrier or from someone clear, and the two routes add.
 
-The same rule has a second form that is often easier to use. The **odds** of an event are its chance divided by the chance it fails: odds of 1 to 99 mean 1 case for every 99 against. Write $O(H)$ for the odds of $H$ before the test and $O(H \mid E)$ for the odds after it:
+The same rule has a second form that is often easier to use. The **odds** of an event are its chance divided by the chance it fails: odds of 1 to 99 mean 1 case for every 99 against. Write $`O(H)`$ for the odds of $`H`$ before the test and $`O(H \mid E)`$ for the odds after it:
 
-$$O(H \mid E) = L \times O(H), \qquad L = \frac{P(E \mid H)}{P(E \mid H^c)}, \qquad O(H) = \frac{P(H)}{P(H^c)}$$
+```math
+O(H \mid E) = L \times O(H), \qquad L = \frac{P(E \mid H)}{P(E \mid H^c)}, \qquad O(H) = \frac{P(H)}{P(H^c)}
+```
 
 **Read it aloud:** the odds after the evidence are the odds before it, multiplied by how many times more often the evidence turns up when the claim is true than when it is false.
 
-That multiplier $L$ is called the **likelihood ratio**: the standard name for this one comparison of two chances of the same evidence. For the test, $L = 0.99 / 0.01 = 99$. Odds of 1 to 99 times 99 are odds of 1 to 1. Even odds: 50 percent. To turn odds $O$ back into a chance, compute $O / (1 + O)$.
+That multiplier $`L`$ is called the **likelihood ratio**: the standard name for this one comparison of two chances of the same evidence. For the test, $`L = 0.99 / 0.01 = 99`$. Odds of 1 to 99 times 99 are odds of 1 to 1. Even odds: 50 percent. To turn odds $`O`$ back into a chance, compute $`O / (1 + O)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $H$ | the claim under test | "carries the condition" | — |
-| $E$ | the evidence observed | "tested positive" | — |
-| $H^c$ | not $H$: the claim fails | "is clear" | — |
-| $H_i$, $H_j$, $i$, $j$, $n$ | one of $n$ claims that do not overlap and cover every case, counted by $i$ or $j$ (the general form) | carrier, clear: $n = 2$ | — |
-| $P(H)$ | the base rate: chance of $H$ before any evidence | 0.01 | rises, and steeply at first: 2 percent gives 66.89 percent |
-| $P(E \mid H)$ | the test's hit rate: chance of a positive for a carrier | 0.99 | rises a little: already near 1 |
-| $P(E \mid H^c)$ | the false-alarm rate: chance of a positive for someone clear | 0.01 | falls: more of the positives are false |
-| $P(E)$ | total chance of a positive result | 0.0198 | — (it is computed, not chosen) |
-| $P(H \mid E)$ | the answer: chance of $H$ once $E$ is seen | 0.50 | — |
-| $O(H)$ | odds of $H$ before the evidence | 1 to 99, or 0.010101 | the odds after rise in proportion |
-| $L$ | the likelihood ratio | 99 | rises: stronger evidence |
-| $O(H \mid E)$ | odds of $H$ after the evidence | 1 to 1 | — |
+| $`H`$ | the claim under test | "carries the condition" | — |
+| $`E`$ | the evidence observed | "tested positive" | — |
+| $`H^c`$ | not $`H`$: the claim fails | "is clear" | — |
+| $`H_i`$, $`H_j`$, $`i`$, $`j`$, $`n`$ | one of $`n`$ claims that do not overlap and cover every case, counted by $`i`$ or $`j`$ (the general form) | carrier, clear: $`n = 2`$ | — |
+| $`P(H)`$ | the base rate: chance of $`H`$ before any evidence | 0.01 | rises, and steeply at first: 2 percent gives 66.89 percent |
+| $`P(E \mid H)`$ | the test's hit rate: chance of a positive for a carrier | 0.99 | rises a little: already near 1 |
+| $`P(E \mid H^c)`$ | the false-alarm rate: chance of a positive for someone clear | 0.01 | falls: more of the positives are false |
+| $`P(E)`$ | total chance of a positive result | 0.0198 | — (it is computed, not chosen) |
+| $`P(H \mid E)`$ | the answer: chance of $`H`$ once $`E`$ is seen | 0.50 | — |
+| $`O(H)`$ | odds of $`H`$ before the evidence | 1 to 99, or 0.010101 | the odds after rise in proportion |
+| $`L`$ | the likelihood ratio | 99 | rises: stronger evidence |
+| $`O(H \mid E)`$ | odds of $`H`$ after the evidence | 1 to 1 | — |
 
 ### When it holds
 
-- **The evidence must be possible.** $P(E)$ sits in a denominator; if a positive result has chance 0, the rule divides by zero and says nothing.
+- **The evidence must be possible.** $`P(E)`$ sits in a denominator; if a positive result has chance 0, the rule divides by zero and says nothing.
 - **The base rate must belong to the people being tested.** The 1 percent describes the general public. A person sent in with symptoms comes from a group where the rate may be 10 percent, and then the same positive means 91.67 percent.
-- **The claims must cover every case, without overlap.** Here that is carrier or clear. If three causes can produce the evidence and one is left out of $P(E)$, the denominator is too small and the answer too large.
+- **The claims must cover every case, without overlap.** Here that is carrier or clear. If three causes can produce the evidence and one is left out of $`P(E)`$, the denominator is too small and the answer too large.
 - **The hit rate and false-alarm rate must be stable across the group.** A test that misses more often in early cases has no single hit rate, and one number for it misleads.
 - **Chaining two results needs them to be independent given the person's true state.** Retesting the same blood sample repeats the same error; Worked numbers shows the price.
 
@@ -90,33 +94,39 @@ The 99 people who carry the condition *and* test positive are a single group. Co
 
 ### Step 1: write the overlap both ways
 
-The conditional-probability card defines $P(A \mid B) = P(A \text{ and } B) / P(B)$ whenever $P(B) > 0$. Multiply out, once with $H$ as the condition and once with $E$:
+The conditional-probability card defines $`P(A \mid B) = P(A \text{ and } B) / P(B)`$ whenever $`P(B) > 0`$. Multiply out, once with $`H`$ as the condition and once with $`E`$:
 
-$$P(H \text{ and } E) = P(E \mid H)\,P(H) \qquad\text{and}\qquad P(H \text{ and } E) = P(H \mid E)\,P(E).$$
+```math
+P(H \text{ and } E) = P(E \mid H)\,P(H) \qquad\text{and}\qquad P(H \text{ and } E) = P(H \mid E)\,P(E).
+```
 
-Both right-hand sides equal the same chance, so they equal each other: $P(H \mid E)\,P(E) = P(E \mid H)\,P(H)$.
+Both right-hand sides equal the same chance, so they equal each other: $`P(H \mid E)\,P(E) = P(E \mid H)\,P(H)`$.
 
-In the example the overlap is $0.99 \times 0.01 = 0.0099$: 99 people in 10,000.
+In the example the overlap is $`0.99 \times 0.01 = 0.0099`$: 99 people in 10,000.
 
 ### Step 2: divide by the chance of the evidence
 
-Divide both sides by $P(E)$, which is allowed because it is not zero. That gives the first formula. Nothing physical was reversed. Two descriptions of one joint chance were set equal and one was solved for.
+Divide both sides by $`P(E)`$, which is allowed because it is not zero. That gives the first formula. Nothing physical was reversed. Two descriptions of one joint chance were set equal and one was solved for.
 
 ### Step 3: find the chance of the evidence by splitting it
 
-$P(E)$ is rarely given directly. Split the positives by who they are. Every positive comes from a carrier or from someone clear, never both:
+$`P(E)`$ is rarely given directly. Split the positives by who they are. Every positive comes from a carrier or from someone clear, never both:
 
-$$P(E) = P(E \text{ and } H) + P(E \text{ and } H^c) = P(E \mid H)\,P(H) + P(E \mid H^c)\,P(H^c).$$
+```math
+P(E) = P(E \text{ and } H) + P(E \text{ and } H^c) = P(E \mid H)\,P(H) + P(E \mid H^c)\,P(H^c).
+```
 
-In the example: $0.99 \times 0.01 + 0.01 \times 0.99 = 0.0099 + 0.0099 = 0.0198$. The true positives and the false positives are exactly equal, which is why the answer lands on one half.
+In the example: $`0.99 \times 0.01 + 0.01 \times 0.99 = 0.0099 + 0.0099 = 0.0198`$. The true positives and the false positives are exactly equal, which is why the answer lands on one half.
 
 ### Step 4: the odds form, where the denominator cancels
 
-Write Step 2 twice, once for $H$ and once for $H^c$, and divide one by the other. Both have the same denominator $P(E)$, and it cancels:
+Write Step 2 twice, once for $`H`$ and once for $`H^c`$, and divide one by the other. Both have the same denominator $`P(E)`$, and it cancels:
 
-$$\frac{P(H \mid E)}{P(H^c \mid E)} = \frac{P(E \mid H)}{P(E \mid H^c)} \times \frac{P(H)}{P(H^c)}.$$
+```math
+\frac{P(H \mid E)}{P(H^c \mid E)} = \frac{P(E \mid H)}{P(E \mid H^c)} \times \frac{P(H)}{P(H^c)}.
+```
 
-That is $O(H \mid E) = L \times O(H)$. The odds form needs no total: it keeps the base rate and the strength of the evidence as two separate factors. The base rate sets where the odds start. The test only multiplies.
+That is $`O(H \mid E) = L \times O(H)`$. The odds form needs no total: it keeps the base rate and the strength of the evidence as two separate factors. The base rate sets where the odds start. The test only multiplies.
 
 This makes the base rate's weight visible. A likelihood ratio of 99 is strong evidence. It moves odds of 1 to 99 up to 1 to 1. It cannot move them to 99 to 1, because it started so far down.
 
@@ -129,19 +139,21 @@ The code checks this by counting all 1,000,000 equally likely cases: 9,900 have 
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** Let $H_1, \dots, H_n$ be events that do not overlap, cover every case, and each have positive chance. Let $E$ be an event with $P(E) > 0$. Then for each $i$,
-$$P(H_i \mid E) = \frac{P(E \mid H_i)\,P(H_i)}{\sum_{j=1}^{n} P(E \mid H_j)\,P(H_j)},$$
+**Claim.** Let $`H_1, \dots, H_n`$ be events that do not overlap, cover every case, and each have positive chance. Let $`E`$ be an event with $`P(E) > 0`$. Then for each $`i`$,
+
+$`\displaystyle P(H_i \mid E) = \frac{P(E \mid H_i)\,P(H_i)}{\sum_{j=1}^{n} P(E \mid H_j)\,P(H_j)},`$
+
 and these answers add up to 1.
 
-**Proof.** By the definition of conditional probability, $P(H_i \text{ and } E) = P(E \mid H_i)\,P(H_i)$, since $P(H_i) > 0$. The events "$H_j$ and $E$" for $j = 1, \dots, n$ do not overlap, because the $H_j$ do not. Together they make up $E$, because the $H_j$ cover every case. By the addition rule for events that do not overlap, $P(E) = \sum_j P(H_j \text{ and } E) = \sum_j P(E \mid H_j)\,P(H_j)$. Then $P(H_i \mid E) = P(H_i \text{ and } E) / P(E)$ is the stated fraction. Adding over $i$ gives the sum over $j$ divided by itself: 1.
+**Proof.** By the definition of conditional probability, $`P(H_i \text{ and } E) = P(E \mid H_i)\,P(H_i)`$, since $`P(H_i) > 0`$. The events "$`H_j`$ and $`E`$" for $`j = 1, \dots, n`$ do not overlap, because the $`H_j`$ do not. Together they make up $`E`$, because the $`H_j`$ cover every case. By the addition rule for events that do not overlap, $`P(E) = \sum_j P(H_j \text{ and } E) = \sum_j P(E \mid H_j)\,P(H_j)`$. Then $`P(H_i \mid E) = P(H_i \text{ and } E) / P(E)`$ is the stated fraction. Adding over $`i`$ gives the sum over $`j`$ divided by itself: 1.
 
-**The odds form.** Take $n = 2$ with $H_1 = H$ and $H_2 = H^c$, and suppose $P(E \mid H^c) > 0$. Dividing the two fractions cancels the shared denominator and leaves $O(H \mid E) = L \times O(H)$.
+**The odds form.** Take $`n = 2`$ with $`H_1 = H`$ and $`H_2 = H^c`$, and suppose $`P(E \mid H^c) > 0`$. Dividing the two fractions cancels the shared denominator and leaves $`O(H \mid E) = L \times O(H)`$.
 
-**Edge cases.** If $P(E \mid H^c) = 0$ the evidence cannot occur without $H$: the fraction gives $P(H \mid E) = 1$ and the odds are not a finite number. If $P(H) = 0$, the overlap is at most $P(H) = 0$, so $P(H \mid E) = 0$ for any evidence with $P(E) > 0$: a claim given zero chance at the start can never be revived by this rule.
+**Edge cases.** If $`P(E \mid H^c) = 0`$ the evidence cannot occur without $`H`$: the fraction gives $`P(H \mid E) = 1`$ and the odds are not a finite number. If $`P(H) = 0`$, the overlap is at most $`P(H) = 0`$, so $`P(H \mid E) = 0`$ for any evidence with $`P(E) > 0`$: a claim given zero chance at the start can never be revived by this rule.
 
 </details>
 
-**The other road: count, do not divide.** The tree in the overview is Bayes' rule written in whole people. Take a round number of cases, split them by the base rate, split each branch by the test's rates, and read off the share of positives that sit under $H$. Psychologists call these counts **natural frequencies**; people given them solve problems like this one far more often than people given percentages. The same counting sits behind [Conditional probability](05-conditional-probability.md).
+**The other road: count, do not divide.** The tree in the overview is Bayes' rule written in whole people. Take a round number of cases, split them by the base rate, split each branch by the test's rates, and read off the share of positives that sit under $`H`$. Psychologists call these counts **natural frequencies**; people given them solve problems like this one far more often than people given percentages. The same counting sits behind [Conditional probability](05-conditional-probability.md).
 
 ---
 
@@ -151,18 +163,18 @@ The screening test: base rate 1 percent, hit rate 99 percent, false-alarm rate 1
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| overlap, carrier and positive | $0.99 \times 0.01$ | 0.0099 |
-| clear and positive | $0.01 \times 0.99$ | 0.0099 |
-| $P(E)$, any positive | $0.0099 + 0.0099$ | 0.0198 |
-| $P(H \mid E)$ | $0.0099 / 0.0198$ | 0.50 |
-| $O(H)$, odds before | $0.01 / 0.99$ | 1 to 99 |
-| $L$, likelihood ratio | $0.99 / 0.01$ | 99 |
-| $O(H \mid E)$, odds after | $99 \times (1/99)$ | 1 to 1 |
-| **answer** | $1 / (1 + 1)$ | **0.50** |
+| overlap, carrier and positive | $`0.99 \times 0.01`$ | 0.0099 |
+| clear and positive | $`0.01 \times 0.99`$ | 0.0099 |
+| $`P(E)`$, any positive | $`0.0099 + 0.0099`$ | 0.0198 |
+| $`P(H \mid E)`$ | $`0.0099 / 0.0198`$ | 0.50 |
+| $`O(H)`$, odds before | $`0.01 / 0.99`$ | 1 to 99 |
+| $`L`$, likelihood ratio | $`0.99 / 0.01`$ | 99 |
+| $`O(H \mid E)`$, odds after | $`99 \times (1/99)`$ | 1 to 1 |
+| **answer** | $`1 / (1 + 1)`$ | **0.50** |
 
 A positive result from this test, on a person drawn from the general public, means a 50 percent chance of carrying the condition: about 1 positive in 2 is a false alarm.
 
-**The house example, as a cross-check.** Two dice at a board game give 36 equally likely outcomes. Let $H$ be "the first die shows 6" and $E$ be "the total is 10". Then $P(E \mid H) = 1/6$, because the second die must show 4. $P(H) = 1/6$. Three outcomes total 10, namely (4, 6), (5, 5) and (6, 4), so $P(E) = 3/36$. Bayes gives $(1/6)(1/6) / (3/36) = 1/3$. Listing the three outcomes directly gives 1 in 3 with a first-die 6. Both checks count all 36 outcomes and agree: 0.333333.
+**The house example, as a cross-check.** Two dice at a board game give 36 equally likely outcomes. Let $`H`$ be "the first die shows 6" and $`E`$ be "the total is 10". Then $`P(E \mid H) = 1/6`$, because the second die must show 4. $`P(H) = 1/6`$. Three outcomes total 10, namely (4, 6), (5, 5) and (6, 4), so $`P(E) = 3/36`$. Bayes gives $`(1/6)(1/6) / (3/36) = 1/3`$. Listing the three outcomes directly gives 1 in 3 with a first-die 6. Both checks count all 36 outcomes and agree: 0.333333.
 
 ### The picture: the same test at other base rates
 
@@ -183,9 +195,9 @@ Correct answer: 0.50.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Read the hit rate as the answer | 0.99 | That is $P(E \mid H)$, the chance of a positive for a carrier: the question turned the wrong way round. |
-| Leave the clear people's positives out of $P(E)$ | 1.00 | The denominator counts only true positives, so every positive looks real. The 99 false alarms vanished. |
-| Multiply the chance, not the odds, by $L$ | 0.99 here; 1.98 at a 2 percent base rate (right: 0.668919) | The likelihood ratio multiplies odds. Applied to a chance it can exceed 1, which no chance can. |
+| Read the hit rate as the answer | 0.99 | That is $`P(E \mid H)`$, the chance of a positive for a carrier: the question turned the wrong way round. |
+| Leave the clear people's positives out of $`P(E)`$ | 1.00 | The denominator counts only true positives, so every positive looks real. The 99 false alarms vanished. |
+| Multiply the chance, not the odds, by $`L`$ | 0.99 here; 1.98 at a 2 percent base rate (right: 0.668919) | The likelihood ratio multiplies odds. Applied to a chance it can exceed 1, which no chance can. |
 | Count a retest of the same sample as a second test | 0.99 (right: 0.50) | Step 5 needs errors independent given the true state. A retest repeats the first error, so the second positive carries no new information. |
 
 Both checks below print every number in these tables.
@@ -608,18 +620,18 @@ The simulation found 8,011 positives among 400,000 people, 4,020 of them carrier
 
 Lean proves Bayes' rule, its odds form and the second-result rule for all events that meet their conditions, plus the card's numbers.
 
-- Take claims $H_1, \dots, H_n$ that do not overlap, cover every case and have positive chances, with $P(E) > 0$. Then $P(H_i \mid E)$ is $P(E \mid H_i) P(H_i)$ divided by the sum of all such products.
-- Under the same conditions, the answers for all $n$ claims add up to 1.
-- Suppose $P(H)$, $P(H^c)$, $P(E)$ and $P(E \mid H^c)$ are all above 0. Then $O(H \mid E) = L \times O(H)$.
+- Take claims $`H_1, \dots, H_n`$ that do not overlap, cover every case and have positive chances, with $`P(E) > 0`$. Then $`P(H_i \mid E)`$ is $`P(E \mid H_i) P(H_i)`$ divided by the sum of all such products.
+- Under the same conditions, the answers for all $`n`$ claims add up to 1.
+- Suppose $`P(H)`$, $`P(H^c)`$, $`P(E)`$ and $`P(E \mid H^c)`$ are all above 0. Then $`O(H \mid E) = L \times O(H)`$.
 - Suppose two results are independent given the true state, and the odds-form conditions hold for each result and for both together. Then the odds after both equal the second result's likelihood ratio times the odds after the first.
 - In the tree, 99 of the 100 carriers and 99 of the 9,900 clear people test positive: 198 in all.
-- $P(E) = 0.99 \times 0.01 + 0.01 \times 0.99 = 0.0198$.
-- $P(H \mid E) = 0.0099 / 0.0198 = 1/2$.
+- $`P(E) = 0.99 \times 0.01 + 0.01 \times 0.99 = 0.0198`$.
+- $`P(H \mid E) = 0.0099 / 0.0198 = 1/2`$.
 - The likelihood ratio is 0.99 / 0.01 = 99, and odds of 1 to 99 times 99 are 1 to 1: a chance of 1/2.
 - At a 2 percent base rate the answer is 99/148, and at 10 percent it is 11/12.
 - Two independent positives give odds of 99 and a chance of 99/100, and 9,801 of 9,900 counted cases agree.
 - Of the 36 dice outcomes, 3 total 10, and 1 of those has a first-die 6.
-- On the dice, Bayes gives $(1/6)(1/6) / (3/36) = 1/3$.
+- On the dice, Bayes gives $`(1/6)(1/6) / (3/36) = 1/3`$.
 
 The decimals, the simulation, the mistake table, the chart, the court example and the "try" rows are left to the Python and Rust checks.
 
@@ -763,9 +775,9 @@ example : ((1 / 6 : ℚ) * (1 / 6)) / (3 / 36) = 1 / 3 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Turning the condition round without the base rate.** "The test is 99 percent accurate, so a positive means 99 percent" confuses $P(E \mid H)$ with $P(H \mid E)$. The first is a fact about the test. The second depends on how common the condition is among the people tested, and here it is 50 percent. In a 1978 survey of 60 doctors and medical students at Harvard teaching hospitals, the commonest answer to a problem of this kind was 95 percent where the right one was about 2 percent.
+> **Turning the condition round without the base rate.** "The test is 99 percent accurate, so a positive means 99 percent" confuses $`P(E \mid H)`$ with $`P(H \mid E)`$. The first is a fact about the test. The second depends on how common the condition is among the people tested, and here it is 50 percent. In a 1978 survey of 60 doctors and medical students at Harvard teaching hospitals, the commonest answer to a problem of this kind was 95 percent where the right one was about 2 percent.
 >
-> - **In court.** "The chance an innocent person matches the evidence is 1 in 10,000" is $P(E \mid H^c)$. It is not the chance the defendant is innocent. In a city of a million, about 100 innocent people match. Reading one as the other is called the prosecutor's fallacy.
+> - **In court.** "The chance an innocent person matches the evidence is 1 in 10,000" is $`P(E \mid H^c)`$. It is not the chance the defendant is innocent. In a city of a million, about 100 innocent people match. Reading one as the other is called the prosecutor's fallacy.
 
 ---
 

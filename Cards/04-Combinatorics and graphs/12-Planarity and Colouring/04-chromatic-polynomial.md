@@ -37,26 +37,30 @@ The row's 24 schemes split with nothing over: 18 keep rooms 4 and 1 apart, 6 let
 
 ## The formula
 
-Notation first, in words. $P(G, q)$ counts the proper colourings of a network $G$ from $q$ colours: no line joins two dots of one colour. $G - e$ is $G$ with one line $e$ rubbed out (**deletion**); $G/e$ is $G$ with $e$'s ends fused into one dot, keeping their other lines (**contraction**).
+Notation first, in words. $`P(G, q)`$ counts the proper colourings of a network $`G`$ from $`q`$ colours: no line joins two dots of one colour. $`G - e`$ is $`G`$ with one line $`e`$ rubbed out (**deletion**); $`G/e`$ is $`G`$ with $`e`$'s ends fused into one dot, keeping their other lines (**contraction**).
 
-$$P(G, q) = P(G - e, q) - P(G/e, q)$$
+```math
+P(G, q) = P(G - e, q) - P(G/e, q)
+```
 
 **Read it aloud:** a network's colourings are its colourings with one line rubbed out, less the ones giving that line's ends the same colour.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | the network: rooms as dots, walls as lines | the courtyard ring | more lines, fewer colourings |
-| $q$ | colours in stock, a whole number | 3 | climbs, near $q^n$ |
-| $n$ | dots in the network | 4 | raises the highest power |
-| $P(G, q)$ | proper colourings of $G$ | 18 | — |
-| $e$ | the line picked | the wall from room 4 to 1 | — |
-| $G - e$, $G/e$ | that line gone; its ends fused | the row, 24; the triangle, 6 | — |
+| $`G`$ | the network: rooms as dots, walls as lines | the courtyard ring | more lines, fewer colourings |
+| $`q`$ | colours in stock, a whole number | 3 | climbs, near $`q^n`$ |
+| $`n`$ | dots in the network | 4 | raises the highest power |
+| $`P(G, q)`$ | proper colourings of $`G`$ | 18 | — |
+| $`e`$ | the line picked | the wall from room 4 to 1 | — |
+| $`G - e`$, $`G/e`$ | that line gone; its ends fused | the row, 24; the triangle, 6 | — |
 
 Two shapes answer without the recurrence, both settled below: a row of n rooms — any tree, in fact, meaning one piece and no round trip — and a ring of n rooms.
 
-$$P(\text{a row of } n \text{ rooms}, q) = q(q-1)^{n-1}, \qquad P(\text{a ring of } n \text{ rooms}, q) = (q-1)^n + (-1)^n(q-1)$$
+```math
+P(\text{a row of } n \text{ rooms}, q) = q(q-1)^{n-1}, \qquad P(\text{a ring of } n \text{ rooms}, q) = (q-1)^n + (-1)^n(q-1)
+```
 
-So $(q-1)$ is added when n is even and subtracted when n is odd — the difference between a four-room ring, which two tins paint, and a five-room ring, which they cannot.
+So $`(q-1)`$ is added when n is even and subtracted when n is odd — the difference between a four-room ring, which two tins paint, and a five-room ring, which they cannot.
 
 ### When it holds
 
@@ -83,13 +87,13 @@ The camps fill the row: 24 = 18 + 6. Nothing in the argument needed four rooms, 
 <details>
 <summary>Detailed proof, in full</summary>
 
-Call the chosen line's two dots its **ends**, and take a proper colouring of $G - e$: its ends differ or agree, never both.
+Call the chosen line's two dots its **ends**, and take a proper colouring of $`G - e`$: its ends differ or agree, never both.
 
-**Ends differ.** That line is the only one of $G$ missing from $G - e$, and the colouring respects it, so it colours $G$ properly; every proper colouring of $G$ is one of these. That camp is $P(G, q)$.
+**Ends differ.** That line is the only one of $`G`$ missing from $`G - e`$, and the colouring respects it, so it colours $`G`$ properly; every proper colouring of $`G`$ is one of these. That camp is $`P(G, q)`$.
 
-**Ends agree.** Give the fused dot of $G/e$ the shared colour and every other dot the colour it had. It is proper: a dot joined to the fused dot was joined in $G$ to an end, and that line survives in $G - e$. Handing the colour back to both ends undoes the step, so the pairing is one for one and that camp is $P(G/e, q)$. Hence $P(G - e, q) = P(G, q) + P(G/e, q)$.
+**Ends agree.** Give the fused dot of $`G/e`$ the shared colour and every other dot the colour it had. It is proper: a dot joined to the fused dot was joined in $`G`$ to an end, and that line survives in $`G - e`$. Handing the colour back to both ends undoes the step, so the pairing is one for one and that camp is $`P(G/e, q)`$. Hence $`P(G - e, q) = P(G, q) + P(G/e, q)`$.
 
-**A polynomial.** Induct on the lines. With none, every dot is free and the count is $q^n$. Otherwise both smaller networks have fewer lines, so their counts are polynomials of highest power $n$ and $n - 1$ with a 1 in front; subtracting leaves $q^n$ alone, and the next coefficient down comes to minus the number of lines.
+**A polynomial.** Induct on the lines. With none, every dot is free and the count is $`q^n`$. Otherwise both smaller networks have fewer lines, so their counts are polynomials of highest power $`n`$ and $`n - 1`$ with a 1 in front; subtracting leaves $`q^n`$ alone, and the next coefficient down comes to minus the number of lines.
 
 </details>
 
@@ -99,7 +103,9 @@ A row has no round trip, so it is a tree ([Trees](../10-Trees%20and%20Cheapest%2
 
 A ring closes on itself, so no such walk exists and the recurrence works instead:
 
-$$P(\text{ring of 4}, q) = q(q-1)^3 - q(q-1)(q-2) = q^4 - 4q^3 + 6q^2 - 3q$$
+```math
+P(\text{ring of 4}, q) = q(q-1)^3 - q(q-1)(q-2) = q^4 - 4q^3 + 6q^2 - 3q
+```
 
 At q = 3 that is 24 − 6 = 18: highest power 4, the rooms, and next coefficient −4, the walls, as the folded proof promises.
 
@@ -108,9 +114,11 @@ One wall out of a ring of n rooms leaves a row of n, fusing its ends a ring of n
 <details>
 <summary>The ring formula by induction</summary>
 
-The triangle is the base: $(q-1)^3 - (q-1) = (q-1)\big[(q-1)^2 - 1\big] = q(q-1)(q-2)$. If the form holds for $n - 1$ rooms, then
-$$q(q-1)^{n-1} - \big[(q-1)^{n-1} + (-1)^{n-1}(q-1)\big] = (q-1)^n + (-1)^n(q-1),$$
-since subtracting $(-1)^{n-1}$ adds $(-1)^n$: the claim for $n$.
+The triangle is the base: $`(q-1)^3 - (q-1) = (q-1)\big[(q-1)^2 - 1\big] = q(q-1)(q-2)`$. If the form holds for $`n - 1`$ rooms, then
+
+$`\displaystyle q(q-1)^{n-1} - \big[(q-1)^{n-1} + (-1)^{n-1}(q-1)\big] = (q-1)^n + (-1)^n(q-1),`$
+
+since subtracting $`(-1)^{n-1}`$ adds $`(-1)^n`$: the claim for $`n`$.
 
 </details>
 
@@ -353,11 +361,11 @@ The two outputs match line for line.
 
 Lean proves the recurrence and the polynomial claim for every finite network, and the ring formula for every ring.
 
-- Deletion and contraction: $P(G, q) = P(G - e, q) - P(G/e, q)$, for any line $e$ and any whole number $q$.
-- The count is a polynomial in $q$ with whole-number coefficients. Its highest power is $q^n$ with a 1 in front.
+- Deletion and contraction: $`P(G, q) = P(G - e, q) - P(G/e, q)`$, for any line $`e`$ and any whole number $`q`$.
+- The count is a polynomial in $`q`$ with whole-number coefficients. Its highest power is $`q^n`$ with a 1 in front.
 - The next coefficient down is minus the number of lines.
-- A ring of $n$ rooms, $n$ at least 3, has $(q-1)^n + (-1)^n(q-1)$ proper colourings.
-- A row of $n$ rooms has $q(q-1)^{n-1}$, proved on the way to the ring.
+- A ring of $`n`$ rooms, $`n`$ at least 3, has $`(q-1)^n + (-1)^n(q-1)`$ proper colourings.
+- A row of $`n`$ rooms has $`q(q-1)^{n-1}`$, proved on the way to the ring.
 - The card's counts at three tins: row 24, ring 18, triangle 6, three-room row 12, hatch plan 6, five-room ring 30.
 - Two tins give rings of 3, 4 and 5 rooms the counts 0, 2 and 0.
 

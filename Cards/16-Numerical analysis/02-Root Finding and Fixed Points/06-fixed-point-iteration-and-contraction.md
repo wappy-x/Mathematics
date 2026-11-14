@@ -19,7 +19,7 @@ Same equation, same start. One rule converges and the other never does. The diff
 
 **Near its fixed point, a rule multiplies each error by its slope there: the iteration converges when that slope is smaller than 1 in size, one step then bounds the remaining error, and blending the rule with the current guess can bring the slope near zero.**
 
-**What kind of fact this is:** three theorems, proved on this card in Why it works: the error ratio tends to the slope at the fixed point, the sharper $q/(1+q)$ one-step bound, and the effect of relaxation. The contraction theorem itself, with the $q/(1-q)$ bound, is proved on [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md) and used here.
+**What kind of fact this is:** three theorems, proved on this card in Why it works: the error ratio tends to the slope at the fixed point, the sharper $`q/(1+q)`$ one-step bound, and the effect of relaxation. The contraction theorem itself, with the $`q/(1-q)`$ bound, is proved on [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md) and used here.
 
 ### The picture: three ways to press the reservoir's equation
 
@@ -40,52 +40,60 @@ Orange: Rule A, a straight fall: each press lowers the line by the same amount, 
 
 ## The formula
 
-Notation first, in words. The unknown is the depth $x$, in metres. A **fixed point** of a rule $g$ is a number that the rule leaves alone: $g(x^*) = x^*$. **Fixed-point iteration** applies the rule again and again, $x_{k+1} = g(x_k)$; each application is one **press**. As on [Newton and secant](02-newton-and-secant-with-convergence-orders.md), $x_k$ is the guess after $k$ presses and $e_k = x_k - x^*$ is its error. New here is the **step** $d_k = x_k - x_{k-1}$: how far press $k$ moved the guess. The step is known; the error is not.
+Notation first, in words. The unknown is the depth $`x`$, in metres. A **fixed point** of a rule $`g`$ is a number that the rule leaves alone: $`g(x^*) = x^*`$. **Fixed-point iteration** applies the rule again and again, $`x_{k+1} = g(x_k)`$; each application is one **press**. As on [Newton and secant](02-newton-and-secant-with-convergence-orders.md), $`x_k`$ is the guess after $`k`$ presses and $`e_k = x_k - x^*`$ is its error. New here is the **step** $`d_k = x_k - x_{k-1}`$: how far press $`k`$ moved the guess. The step is known; the error is not.
 
 The reservoir's balance and its two rearrangements:
 
-$$a\sqrt{x} + b\,x^{3/2} = Q, \qquad g_A(x) = \left(\frac{Q - a\sqrt{x}}{b}\right)^{2/3}, \qquad g_B(x) = \left(\frac{Q - b\,x^{3/2}}{a}\right)^{2}$$
+```math
+a\sqrt{x} + b\,x^{3/2} = Q, \qquad g_A(x) = \left(\frac{Q - a\sqrt{x}}{b}\right)^{2/3}, \qquad g_B(x) = \left(\frac{Q - b\,x^{3/2}}{a}\right)^{2}
+```
 
 **Read it aloud:** the pipe's flow plus the notch's flow equals the inflow; Rule A solves that for the notch's depth, Rule B for the pipe's.
 
 The rate law. Near the fixed point, each error is the slope there times the one before:
 
-$$e_{k+1} \approx g'(x^*)\,e_k$$
+```math
+e_{k+1} \approx g'(x^*)\,e_k
+```
 
 **Read it aloud:** the next error is about the rule's slope at the fixed point times the current error, sign included.
 
-The one-step bounds. If $g$ maps an interval $I$ into itself, and its slope stays between $-q$ and $q$ there with $q < 1$, then
+The one-step bounds. If $`g`$ maps an interval $`I`$ into itself, and its slope stays between $`-q`$ and $`q`$ there with $`q < 1`$, then
 
-$$|e_k| \le \frac{q}{1-q}\,|d_k| \quad\text{always}, \qquad |e_k| \le \frac{q}{1+q}\,|d_k| \quad\text{if } g \text{ is decreasing on } I$$
+```math
+|e_k| \le \frac{q}{1-q}\,|d_k| \quad\text{always}, \qquad |e_k| \le \frac{q}{1+q}\,|d_k| \quad\text{if } g \text{ is decreasing on } I
+```
 
 **Read it aloud:** the error is at most q over one minus q times the last step, and at most q over one plus q times the last step when the guesses alternate sides.
 
-Relaxation. Blend the rule with the current guess, using a weight $\omega$ (the Greek letter omega):
+Relaxation. Blend the rule with the current guess, using a weight $`\omega`$ (the Greek letter omega):
 
-$$g_\omega(x) = (1 - \omega)\,x + \omega\,g(x), \qquad g_\omega'(x^*) = 1 - \omega\,\bigl(1 - g'(x^*)\bigr), \qquad \text{best } \omega = \frac{1}{1 - g'(x^*)}$$
+```math
+g_\omega(x) = (1 - \omega)\,x + \omega\,g(x), \qquad g_\omega'(x^*) = 1 - \omega\,\bigl(1 - g'(x^*)\bigr), \qquad \text{best } \omega = \frac{1}{1 - g'(x^*)}
+```
 
 **Read it aloud:** the relaxed rule moves only a share omega of the way to where the plain rule points; its slope at the fixed point is one minus omega times one minus the old slope, and it is zero for the best omega.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x^*$ | depth in metres; the steady depth, a fixed point | $x^*$ = 2.863799747400086 m | — |
-| $Q$, $a$, $b$ | inflow in m³/s; pipe and notch coefficients (illustrative) | 30; 12; 2 | more inflow, deeper $x^*$ |
-| $g$, $g_A$, $g_B$ | a rule pressed again and again; the reservoir's two rules | $g_A(2)$ = 3.488166 | — |
-| $x_k$, $k$ | the guess after $k$ presses, from $x_0$ = 2 | $x_{20}$ = 2.863118 | — |
-| $e_k$, $d_k$ | error $x_k - x^*$; step $x_k - x_{k-1}$ | $e_{20}$ = −6.81e-4; $d_{20}$ = −1.66e-3 | — |
-| $g'(x^*)$ | the rule's slope at the fixed point: the rate | A: −0.698373; B: −1.431900 | nearer 1 in size, slower; past 1, no convergence |
-| $q$, $I$ | worst slope size on the interval $I$: the contraction factor | 0.757210 on $I$ = [2, 3.5] | looser bounds, more presses promised |
-| $\hat q_k$ | "q-hat": the signed step ratio $d_k / d_{k-1}$, an estimate of $g'(x^*)$ | −0.6984 at $k$ = 20 | — |
-| $\omega$, $g_\omega$ | relaxation weight, `w` in the code; the relaxed rule | 0.410682 for Rule B | past the best value, overshoot |
-| $i$, $L$, $M$, $N$ | the mortgage's monthly rate, loan, monthly payment and number of payments | 0.001666649458585; \$300,000; \$1,271.56; 300 | — |
-| $\xi_k$, $s$, $c$, $\delta$, $n$ | helpers: a point the mean value theorem gives; a slope in Step 0; a slope bound below 1 and a radius in the proof; a press count | $n$ = 57 presses promised for 1e-6 m | — |
+| $`x`$, $`x^*`$ | depth in metres; the steady depth, a fixed point | $`x^*`$ = 2.863799747400086 m | — |
+| $`Q`$, $`a`$, $`b`$ | inflow in m³/s; pipe and notch coefficients (illustrative) | 30; 12; 2 | more inflow, deeper $`x^*`$ |
+| $`g`$, $`g_A`$, $`g_B`$ | a rule pressed again and again; the reservoir's two rules | $`g_A(2)`$ = 3.488166 | — |
+| $`x_k`$, $`k`$ | the guess after $`k`$ presses, from $`x_0`$ = 2 | $`x_{20}`$ = 2.863118 | — |
+| $`e_k`$, $`d_k`$ | error $`x_k - x^*`$; step $`x_k - x_{k-1}`$ | $`e_{20}`$ = −6.81e-4; $`d_{20}`$ = −1.66e-3 | — |
+| $`g'(x^*)`$ | the rule's slope at the fixed point: the rate | A: −0.698373; B: −1.431900 | nearer 1 in size, slower; past 1, no convergence |
+| $`q`$, $`I`$ | worst slope size on the interval $`I`$: the contraction factor | 0.757210 on $`I`$ = [2, 3.5] | looser bounds, more presses promised |
+| $`\hat q_k`$ | "q-hat": the signed step ratio $`d_k / d_{k-1}`$, an estimate of $`g'(x^*)`$ | −0.6984 at $`k`$ = 20 | — |
+| $`\omega`$, $`g_\omega`$ | relaxation weight, `w` in the code; the relaxed rule | 0.410682 for Rule B | past the best value, overshoot |
+| $`i`$, $`L`$, $`M`$, $`N`$ | the mortgage's monthly rate, loan, monthly payment and number of payments | 0.001666649458585; \$300,000; \$1,271.56; 300 | — |
+| $`\xi_k`$, $`s`$, $`c`$, $`\delta`$, $`n`$ | helpers: a point the mean value theorem gives; a slope in Step 0; a slope bound below 1 and a radius in the proof; a press count | $`n`$ = 57 presses promised for 1e-6 m | — |
 
 ### When it holds
 
 - **The rule maps the interval into itself.** Rule B can send a depth outside the range where the equation makes sense. At 6.2491 m the notch alone would carry 31.2431 m³/s, more than flows in. Rule B squares a negative number there and returns 0.0107 m as if nothing were wrong.
-- **The worst slope on the interval is below 1 in size.** Rule A's is 0.757210 on [2, 3.5]. Rule B's slope is −1.431900 at the answer, so no interval around $x^*$ works, and its errors grow.
-- **The slope is continuous near $x^*$.** The rate law needs it. Where the rule has a corner at the fixed point, no single ratio is promised.
-- **The rule is decreasing, for the sharper bound.** The $q/(1+q)$ bound needs the guesses to land on alternate sides of $x^*$. The mortgage rule below has slope +0.770281, so only $q/(1-q)$ applies to it.
+- **The worst slope on the interval is below 1 in size.** Rule A's is 0.757210 on [2, 3.5]. Rule B's slope is −1.431900 at the answer, so no interval around $`x^*`$ works, and its errors grow.
+- **The slope is continuous near $`x^*`$.** The rate law needs it. Where the rule has a corner at the fixed point, no single ratio is promised.
+- **The rule is decreasing, for the sharper bound.** The $`q/(1+q)`$ bound needs the guesses to land on alternate sides of $`x^*`$. The mortgage rule below has slope +0.770281, so only $`q/(1-q)`$ applies to it.
 - **Errors stay above rounding.** The bounds are proved for exact arithmetic. In doubles, Rule A's step is exactly 0 from step 99, so the step bound claims an error of 0; the true error is 1.09e-16 m. That is the best a double can do, since Rule A rests on the double nearest the true depth, but no stopping test can see below the spacing of doubles, 4.44e-16 m here.
 
 ---
@@ -94,68 +102,70 @@ $$g_\omega(x) = (1 - \omega)\,x + \omega\,g(x), \qquad g_\omega'(x^*) = 1 - \ome
 
 ### Step 0: near the answer, a rule is a multiplication
 
-Zoom in on the fixed point and the rule's graph looks straight. A straight rule through $x^*$ with slope $s$ sends an error $e$ to $s\,e$. So every press multiplies the error by the same number. Its size decides convergence; its sign decides whether the guesses creep in from one side or swing across.
+Zoom in on the fixed point and the rule's graph looks straight. A straight rule through $`x^*`$ with slope $`s`$ sends an error $`e`$ to $`s\,e`$. So every press multiplies the error by the same number. Its size decides convergence; its sign decides whether the guesses creep in from one side or swing across.
 
-The step is the difference of two errors, $d_k = e_k - e_{k-1}$. Once each error is a fixed multiple of the last, the step is a fixed multiple of the error. So one visible number, the step, pins down the invisible one, the error.
+The step is the difference of two errors, $`d_k = e_k - e_{k-1}`$. Once each error is a fixed multiple of the last, the step is a fixed multiple of the error. So one visible number, the step, pins down the invisible one, the error.
 
 ### Step 1: one equation, two rules, reciprocal slopes
 
-Rule A and Rule B undo each other: $g_B(g_A(x)) = x$ wherever both are defined. Two functions that undo each other have reciprocal slopes at a shared point. So
+Rule A and Rule B undo each other: $`g_B(g_A(x)) = x`$ wherever both are defined. Two functions that undo each other have reciprocal slopes at a shared point. So
 
-$$g_B'(x^*) = \frac{1}{g_A'(x^*)} = \frac{1}{-0.698373} = -1.431900$$
+```math
+g_B'(x^*) = \frac{1}{g_A'(x^*)} = \frac{1}{-0.698373} = -1.431900
+```
 
 At most one of the two can contract. Which one does is decided by the physics, not the algebra. At the steady depth the pipe's flow changes more slowly with depth than the notch's flow does. Rule A asks the notch to absorb the pipe's changes, so it damps them. Rule B asks the pipe to absorb the notch's changes, so it amplifies them.
 
-For Rule A, differentiating and using $g_A(x^*) = x^*$ gives $g_A'(x^*) = -a/(3b\,x^*)$ = −0.698373. A difference quotient on $g_A$ itself gives the same, to six digits.
+For Rule A, differentiating and using $`g_A(x^*) = x^*`$ gives $`g_A'(x^*) = -a/(3b\,x^*)`$ = −0.698373. A difference quotient on $`g_A`$ itself gives the same, to six digits.
 
 ### Step 2: the error ratio tends to the slope at the fixed point
 
-By the mean value theorem (a chord's slope equals the curve's slope at some point between its ends), $e_{k+1} = g(x_k) - g(x^*) = g'(\xi_k)\,e_k$ for some $\xi_k$ between $x_k$ and $x^*$. As $x_k$ closes in, $\xi_k$ is squeezed onto $x^*$.
+By the mean value theorem (a chord's slope equals the curve's slope at some point between its ends), $`e_{k+1} = g(x_k) - g(x^*) = g'(\xi_k)\,e_k`$ for some $`\xi_k`$ between $`x_k`$ and $`x^*`$. As $`x_k`$ closes in, $`\xi_k`$ is squeezed onto $`x^*`$.
 
 The [Fixed points of a map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md) card turns this into the local test: a slope below 1 in size attracts nearby guesses, above 1 repels them. It also reads Newton's method as a rule whose slope at the root is zero.
 
 <details>
 <summary>Detailed proof: the ratio of successive errors tends to g'(x*)</summary>
 
-**Assume** $g$ has a continuous derivative near $x^*$, $g(x^*) = x^*$, and $|g'(x^*)| < 1$.
+**Assume** $`g`$ has a continuous derivative near $`x^*`$, $`g(x^*) = x^*`$, and $`|g'(x^*)| < 1`$.
 
-**Convergence from a close start.** Set $c = (1 + |g'(x^*)|)/2$, which is below 1. By continuity there is a $\delta > 0$ with $|g'(x)| \le c$ whenever $|x - x^*| \le \delta$. For such $x$, the mean value theorem gives $|g(x) - x^*| \le c\,|x - x^*| \le \delta$. So the interval $[x^* - \delta, x^* + \delta]$ maps into itself and $g$ contracts it by $c$. By the contraction theorem the guesses converge to $x^*$.
+**Convergence from a close start.** Set $`c = (1 + |g'(x^*)|)/2`$, which is below 1. By continuity there is a $`\delta > 0`$ with $`|g'(x)| \le c`$ whenever $`|x - x^*| \le \delta`$. For such $`x`$, the mean value theorem gives $`|g(x) - x^*| \le c\,|x - x^*| \le \delta`$. So the interval $`[x^* - \delta, x^* + \delta]`$ maps into itself and $`g`$ contracts it by $`c`$. By the contraction theorem the guesses converge to $`x^*`$.
 
-**The ratio.** If some $e_k = 0$, every later error is 0. Otherwise $e_{k+1}/e_k = g'(\xi_k)$ with $|\xi_k - x^*| \le |e_k| \to 0$. Since $g'$ is continuous, $g'(\xi_k) \to g'(x^*)$. $\blacksquare$
+**The ratio.** If some $`e_k = 0`$, every later error is 0. Otherwise $`e_{k+1}/e_k = g'(\xi_k)`$ with $`|\xi_k - x^*| \le |e_k| \to 0`$. Since $`g'`$ is continuous, $`g'(\xi_k) \to g'(x^*)`$. $`\blacksquare`$
 
 </details>
 
-The code's ratio column reads −0.7228, −0.6907, −0.7083, then −0.6977 at $k$ = 10 and −0.6984 at $k$ = 20, closing on −0.698373 from both sides.
+The code's ratio column reads −0.7228, −0.6907, −0.7083, then −0.6977 at $`k`$ = 10 and −0.6984 at $`k`$ = 20, closing on −0.698373 from both sides.
 
 ### Step 3: certify the factor on an interval
 
 The rate is the slope at the answer, which is unknown. A guarantee needs the worst slope over a region known to hold the answer. The contraction theorem, proved on [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md), then promises exactly one fixed point in it and convergence from any start in it.
 
-For Rule A on $I$ = [2, 3.5], two checks:
+For Rule A on $`I`$ = [2, 3.5], two checks:
 
-1. **It maps $I$ into itself.** $g_A$ is decreasing, so the image runs from $g_A(3.5)$ = 2.424451 to $g_A(2)$ = 3.488166. Both lie inside [2, 3.5].
-2. **The worst slope.** On a fine grid, $|g_A'|$ peaks at the left end: $q$ = 0.757210 at $x$ = 2. As a cross-check, the steepest chord between any two grid points is 0.756943, just under it.
+1. **It maps $`I`$ into itself.** $`g_A`$ is decreasing, so the image runs from $`g_A(3.5)`$ = 2.424451 to $`g_A(2)`$ = 3.488166. Both lie inside [2, 3.5].
+2. **The worst slope.** On a fine grid, $`|g_A'|`$ peaks at the left end: $`q`$ = 0.757210 at $`x`$ = 2. As a cross-check, the steepest chord between any two grid points is 0.756943, just under it.
 
-The worst slope, 0.757210, is larger than the rate, 0.698373. Use $q$ for guarantees and the slope at the answer for predictions.
+The worst slope, 0.757210, is larger than the rate, 0.698373. Use $`q`$ for guarantees and the slope at the answer for predictions.
 
 A Lipschitz constant is a bound on how much a function can stretch distances ([Uniform continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)). The contraction factor is a Lipschitz constant below 1, and a bound on the slope is the usual way to find one.
 
 ### Step 4: bound the error from one step
 
-The [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md) card proves the general bound $|e_k| \le q/(1-q)\,|d_k|$. With $q$ = 0.757210 the multiplier is 3.118789. It holds for every contraction, but here it is loose: at $k$ = 20 it is 7.58 times the true error.
+The [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md) card proves the general bound $`|e_k| \le q/(1-q)\,|d_k|`$. With $`q`$ = 0.757210 the multiplier is 3.118789. It holds for every contraction, but here it is loose: at $`k`$ = 20 it is 7.58 times the true error.
 
-A decreasing rule does better. If $x_{k-1}$ is below $x^*$, then $x_k = g(x_{k-1})$ is above $g(x^*) = x^*$. So the fixed point always lies between the last two guesses, and the error is less than the whole step. Counting more carefully gives the sharper multiplier $q/(1+q)$ = 0.430916. At $k$ = 20 it is only 1.05 times the true error.
+A decreasing rule does better. If $`x_{k-1}`$ is below $`x^*`$, then $`x_k = g(x_{k-1})`$ is above $`g(x^*) = x^*`$. So the fixed point always lies between the last two guesses, and the error is less than the whole step. Counting more carefully gives the sharper multiplier $`q/(1+q)`$ = 0.430916. At $`k`$ = 20 it is only 1.05 times the true error.
 
 <details>
 <summary>Detailed proof: for a decreasing contraction, |e_k| ≤ q/(1+q) |d_k|</summary>
 
-**Assume** $g$ maps $I$ into itself, $x^*$ and the guesses lie in $I$, and $-q \le g'(x) \le 0$ on $I$ with $q < 1$.
+**Assume** $`g`$ maps $`I`$ into itself, $`x^*`$ and the guesses lie in $`I`$, and $`-q \le g'(x) \le 0`$ on $`I`$ with $`q < 1`$.
 
-By the mean value theorem, $e_k = g'(\xi)\,e_{k-1}$ for a point $\xi$ in $I$. So $e_k$ and $e_{k-1}$ have opposite signs (or $e_k = 0$), and $|e_k| \le q\,|e_{k-1}|$, which gives $|e_{k-1}| \ge |e_k|/q$.
+By the mean value theorem, $`e_k = g'(\xi)\,e_{k-1}`$ for a point $`\xi`$ in $`I`$. So $`e_k`$ and $`e_{k-1}`$ have opposite signs (or $`e_k = 0`$), and $`|e_k| \le q\,|e_{k-1}|`$, which gives $`|e_{k-1}| \ge |e_k|/q`$.
 
-Numbers of opposite sign add in size when subtracted: $|d_k| = |e_k - e_{k-1}| = |e_k| + |e_{k-1}|$. Therefore
+Numbers of opposite sign add in size when subtracted: $`|d_k| = |e_k - e_{k-1}| = |e_k| + |e_{k-1}|`$. Therefore
 
-$$|d_k| \ge |e_k| + \frac{|e_k|}{q} = \frac{1+q}{q}\,|e_k|, \qquad |e_k| \le \frac{q}{1+q}\,|d_k|. \qquad \blacksquare$$
+$`\displaystyle |d_k| \ge |e_k| + \frac{|e_k|}{q} = \frac{1+q}{q}\,|e_k|, \qquad |e_k| \le \frac{q}{1+q}\,|d_k|. \qquad \blacksquare`$
 
 </details>
 
@@ -163,35 +173,37 @@ The code checks the sharper bound at each of the first 39 steps. In practice it 
 
 | Test | Presses |
 | --- | --- |
-| first-step bound $q^n/(1-q)\,\lvert d_1 \rvert$, worked out after the first press | 57 |
-| $q/(1+q)$ times the latest step | 39 |
-| true error, known only because the checks know $x^*$ | 39 |
+| first-step bound $`q^n/(1-q)\,\lvert d_1 \rvert`$, worked out after the first press | 57 |
+| $`q/(1+q)`$ times the latest step | 39 |
+| true error, known only because the checks know $`x^*`$ | 39 |
 
-The sharper bound stops on exactly the press where the truth arrives, and it never relied on knowing $x^*$.
+The sharper bound stops on exactly the press where the truth arrives, and it never relied on knowing $`x^*`$.
 
 ### Step 5: estimate the factor from the steps themselves
 
-Near the fixed point, each step is the slope times the last one, because $d_{k+1} = e_{k+1} - e_k \approx g'(x^*)\,(e_k - e_{k-1})$. So the signed step ratio $\hat q_k = d_k/d_{k-1}$ estimates the slope, at no extra cost.
+Near the fixed point, each step is the slope times the last one, because $`d_{k+1} = e_{k+1} - e_k \approx g'(x^*)\,(e_k - e_{k-1})`$. So the signed step ratio $`\hat q_k = d_k/d_{k-1}`$ estimates the slope, at no extra cost.
 
-Solve $e_k = \hat q\,e_{k-1}$ and $d_k = e_k - e_{k-1}$ for $e_k$:
+Solve $`e_k = \hat q\,e_{k-1}`$ and $`d_k = e_k - e_{k-1}`$ for $`e_k`$:
 
-$$e_k \approx \frac{\hat q_k}{\hat q_k - 1}\,d_k$$
+```math
+e_k \approx \frac{\hat q_k}{\hat q_k - 1}\,d_k
+```
 
-The code's estimate column matches the true error, sign included: −6.81e-4 against −6.81e-4 at $k$ = 20. This is the same algebra as Aitken's correction on [When to stop](03-stopping-criteria-and-error-estimates.md). It is an estimate, not a bound: early on, when the ratio still wobbles, it can be off.
+The code's estimate column matches the true error, sign included: −6.81e-4 against −6.81e-4 at $`k`$ = 20. This is the same algebra as Aitken's correction on [When to stop](03-stopping-criteria-and-error-estimates.md). It is an estimate, not a bound: early on, when the ratio still wobbles, it can be off.
 
 ### Step 6: relaxation repairs a bad rule
 
-The relaxed rule $g_\omega(x) = x + \omega\,(g(x) - x)$ has the same fixed points as $g$ when $\omega \ne 0$. The reason: $g_\omega(x) = x$ exactly when $g(x) = x$. Its slope at $x^*$ is $1 - \omega\,(1 - g'(x^*))$. Choose $\omega = 1/(1 - g'(x^*))$ and that slope is zero. This works for any slope except exactly 1.
+The relaxed rule $`g_\omega(x) = x + \omega\,(g(x) - x)`$ has the same fixed points as $`g`$ when $`\omega \ne 0`$. The reason: $`g_\omega(x) = x`$ exactly when $`g(x) = x`$. Its slope at $`x^*`$ is $`1 - \omega\,(1 - g'(x^*))`$. Choose $`\omega = 1/(1 - g'(x^*))`$ and that slope is zero. This works for any slope except exactly 1.
 
-The slope at the answer is unknown, so estimate it where the iteration starts. One nudge of Rule B at 2 m gives slope −1.434972, so $\omega$ = 1/(1 + 1.434972) = 0.410682. The relaxed slope at the true answer is then 0.001262. From the second press on, each press removes all but about a thousandth of the error:
+The slope at the answer is unknown, so estimate it where the iteration starts. One nudge of Rule B at 2 m gives slope −1.434972, so $`\omega`$ = 1/(1 + 1.434972) = 0.410682. The relaxed slope at the true answer is then 0.001262. From the second press on, each press removes all but about a thousandth of the error:
 
 8.64e-1, 4.88e-3, 6.68e-6, 8.43e-9, 1.06e-11, 1.30e-14, 3.35e-16.
 
-The divergent Rule B now beats the convergent Rule A by a wide margin. Re-estimating $\omega$ at every press drives the slope to zero and the order to 2. That is Steffensen's method: the Aitken correction from [When to stop](03-stopping-criteria-and-error-estimates.md), applied after every two presses. With the exact slope each time, it is Newton's method on $x - g(x) = 0$.
+The divergent Rule B now beats the convergent Rule A by a wide margin. Re-estimating $`\omega`$ at every press drives the slope to zero and the order to 2. That is Steffensen's method: the Aitken correction from [When to stop](03-stopping-criteria-and-error-estimates.md), applied after every two presses. With the exact slope each time, it is Newton's method on $`x - g(x) = 0`$.
 
-**The shelf's mortgage.** A 25-year loan of \$300,000 is repaid at \$1,271.56 a month. Its monthly rate solves $i = g(i)$, with $g(i) = \frac{M}{L}\bigl(1 - (1+i)^{-N}\bigr)$, as on [When to stop](03-stopping-criteria-and-error-estimates.md). Here $i$ is the monthly rate, $L$ the loan, $M$ the payment and $N$ = 300 the number of payments. The rate is 0.001666649458585 a month.
+**The shelf's mortgage.** A 25-year loan of \$300,000 is repaid at \$1,271.56 a month. Its monthly rate solves $`i = g(i)`$, with $`g(i) = \frac{M}{L}\bigl(1 - (1+i)^{-N}\bigr)`$, as on [When to stop](03-stopping-criteria-and-error-estimates.md). Here $`i`$ is the monthly rate, $`L`$ the loan, $`M`$ the payment and $`N`$ = 300 the number of payments. The rate is 0.001666649458585 a month.
 
-There the slope is +0.770281, so the plain rule creeps in from one side and needs 80 presses to reach 1e-12. Relaxation now means $\omega$ above 1: stride further than the rule points. The step ratio at press 10 is 0.745428, so $\omega$ = 3.928158, and the run reaches 1e-12 at press 18.
+There the slope is +0.770281, so the plain rule creeps in from one side and needs 80 presses to reach 1e-12. Relaxation now means $`\omega`$ above 1: stride further than the rule points. The step ratio at press 10 is 0.745428, so $`\omega`$ = 3.928158, and the run reaches 1e-12 at press 18.
 
 ---
 
@@ -201,14 +213,14 @@ The reservoir, Rule A from 2 m, then Rule B relaxed.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| first press of Rule A | $g_A(2) = ((30 - 12\sqrt 2)/2)^{2/3}$ | 3.488166 m |
-| slope at the answer | $-12/(3 \times 2 \times 2.863800)$ | −0.698373 |
-| worst slope on [2, 3.5] | $\lvert g_A'(2) \rvert$ | 0.757210 |
-| sharper multiplier | $0.757210 / (1 + 0.757210)$ | 0.430916 |
-| bound at press 20 | $0.430916 \times 1.66\text{e-}3$ | 7.14e-4 m |
-| true error at press 20 | $x_{20} - x^*$, from the code's table | **−6.81e-4 m** |
-| relaxation weight for Rule B | $1 / (1 + 1.434972)$ | 0.410682 |
-| relaxed slope at the answer | $1 - 0.410682 \times (1 + 1.431900)$ | **0.001262** |
+| first press of Rule A | $`g_A(2) = ((30 - 12\sqrt 2)/2)^{2/3}`$ | 3.488166 m |
+| slope at the answer | $`-12/(3 \times 2 \times 2.863800)`$ | −0.698373 |
+| worst slope on [2, 3.5] | $`\lvert g_A'(2) \rvert`$ | 0.757210 |
+| sharper multiplier | $`0.757210 / (1 + 0.757210)`$ | 0.430916 |
+| bound at press 20 | $`0.430916 \times 1.66\text{e-}3`$ | 7.14e-4 m |
+| true error at press 20 | $`x_{20} - x^*`$, from the code's table | **−6.81e-4 m** |
+| relaxation weight for Rule B | $`1 / (1 + 1.434972)`$ | 0.410682 |
+| relaxed slope at the answer | $`1 - 0.410682 \times (1 + 1.431900)`$ | **0.001262** |
 
 After 20 presses of Rule A the depth is known to under a millimetre. The one-step bound, 7.14e-4 m, proves it without knowing the answer, and overstates the true error by only 5 percent. Relaxed Rule B gets there by its second press.
 
@@ -217,8 +229,8 @@ After 20 presses of Rule A the depth is known to under a millimetre. The one-ste
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Press Rule B as it stands | 2.0000, 4.1152, 1.2291, 5.1660, …, then hops between 6.2491 and 0.0107 for ever | its slope at the answer is −1.431900, so errors grow; the squaring then hides a negative flow and fakes a two-step cycle |
-| Over-relax Rule B with $\omega$ = 0.9 | errors 0.8638, 1.0399, 1.1458, … 2.0288 after 10 presses | the relaxed slope is −1.1887: past the best weight, each press overshoots further |
-| Use $q/(1-q)$ on an alternating run | bound 7.58 times the true error at press 20 | true, but it ignores that the answer lies between the last two guesses |
+| Over-relax Rule B with $`\omega`$ = 0.9 | errors 0.8638, 1.0399, 1.1458, … 2.0288 after 10 presses | the relaxed slope is −1.1887: past the best weight, each press overshoots further |
+| Use $`q/(1-q)`$ on an alternating run | bound 7.58 times the true error at press 20 | true, but it ignores that the answer lies between the last two guesses |
 | Ask for an error below rounding | Rule A's step is 0 from step 99, so the step bound claims 0; the true error is 1.09e-16 m | the bound is proved for exact arithmetic; the computed rule has its own fixed point, here the double nearest the true depth |
 
 The code prints all four.
@@ -227,12 +239,12 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The code finds the steady depth by four independent roads. Cardano's formula (the closed-form solution of a cubic) solves the balance as a cubic in $\sqrt{x}$. Bisection halves a bracket on outflow minus inflow, using only signs. Rule A is pressed 150 times. These three agree to 15 decimal places. The fourth road settles the last digit. It squares the balance into the cubic $b^2x^3 + 2ab\,x^2 + a^2x = Q^2$ and takes one Newton step from road 2, with the cubic computed in double-double arithmetic (each number carried as the sum of two doubles, about 32 digits). That gives the true depth to about 1e-30 m, the reference for every error the code prints.
+The code finds the steady depth by four independent roads. Cardano's formula (the closed-form solution of a cubic) solves the balance as a cubic in $`\sqrt{x}`$. Bisection halves a bracket on outflow minus inflow, using only signs. Rule A is pressed 150 times. These three agree to 15 decimal places. The fourth road settles the last digit. It squares the balance into the cubic $`b^2x^3 + 2ab\,x^2 + a^2x = Q^2`$ and takes one Newton step from road 2, with the cubic computed in double-double arithmetic (each number carried as the sum of two doubles, about 32 digits). That gives the true depth to about 1e-30 m, the reference for every error the code prints.
 
 Rule A ends on the double nearest the true depth, 1.09e-16 m above it. Cardano and bisection both stop 7.79e-16 m low. That close to the root, the computed outflow minus inflow is rounding noise: it is exactly 0 at the next double up, so a sign test cannot place the root more finely. The code then:
 
 - checks the slope at the answer two ways;
-- certifies $q$ on [2, 3.5] by slopes and by chords;
+- certifies $`q`$ on [2, 3.5] by slopes and by chords;
 - tests the sharper bound at every step;
 - relaxes Rule B and runs the mortgage;
 - runs the failures.
@@ -599,14 +611,14 @@ The two outputs match line for line.
 
 Lean proves the rate law, the sharper one-step bound and relaxation for every rule that meets their conditions, and checks the card's whole-number examples.
 
-- Let a rule $g$ have a continuous slope near a fixed point $x^*$, with $|g'(x^*)| < 1$. Then every start close enough to $x^*$ converges to it.
-- From such a start, if no guess lands exactly on $x^*$, the ratio $e_{k+1}/e_k$ tends to $g'(x^*)$, sign included.
-- Let a decreasing rule map an interval $I$ into itself, with slope between $-q$ and 0 there and $q < 1$. Then, from any start in $I$, the fixed point lies between the last two guesses, and $|e_k| \le \frac{q}{1+q}\,|d_k|$ after every press.
-- For any weight $\omega \ne 0$, the relaxed rule $g_\omega$ has exactly the same fixed points as $g$.
-- The relaxed rule's slope at $x^*$ is $1 - \omega\,(1 - g'(x^*))$. When $g'(x^*) \ne 1$, the weight $\omega = 1/(1 - g'(x^*))$ makes it zero.
+- Let a rule $`g`$ have a continuous slope near a fixed point $`x^*`$, with $`|g'(x^*)| < 1`$. Then every start close enough to $`x^*`$ converges to it.
+- From such a start, if no guess lands exactly on $`x^*`$, the ratio $`e_{k+1}/e_k`$ tends to $`g'(x^*)`$, sign included.
+- Let a decreasing rule map an interval $`I`$ into itself, with slope between $`-q`$ and 0 there and $`q < 1`$. Then, from any start in $`I`$, the fixed point lies between the last two guesses, and $`|e_k| \le \frac{q}{1+q}\,|d_k|`$ after every press.
+- For any weight $`\omega \ne 0`$, the relaxed rule $`g_\omega`$ has exactly the same fixed points as $`g`$.
+- The relaxed rule's slope at $`x^*`$ is $`1 - \omega\,(1 - g'(x^*))`$. When $`g'(x^*) \ne 1`$, the weight $`\omega = 1/(1 - g'(x^*))`$ makes it zero.
 - The hand arithmetic holds exactly: at inflow 40 m³/s the depth 4 m balances, both rules leave it alone, and their slopes there are −1/2 and −2.
 
-The reservoir's decimals, the worst slope $q$, the step-ratio estimate, the mortgage and the rounding floor are left to the Python and Rust checks.
+The reservoir's decimals, the worst slope $`q`$, the step-ratio estimate, the mortgage and the rounding floor are left to the Python and Rust checks.
 
 ```lean
 -- Fixed points: near a fixed point where the rule's slope is continuous and below 1 in size, pressing the rule converges and the ratio of successive errors tends to that slope; a decreasing contraction puts the fixed point between the last two guesses with error at most q/(1+q) times the last step; and relaxing a rule keeps its fixed points and sets its slope to 1 - ω(1 - g'(x*)), which is zero for ω = 1/(1 - g'(x*)).
@@ -870,8 +882,8 @@ end FixedPointContraction
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The checks print each answer on a `try:` line. The asserts are pinned to this card's numbers, so some changes stop the run at an assert.
-> - **Raise the inflow to 40 m³/s.** Guess first: does Rule A get faster or slower? Change `Q, a, b = 30.0, 12.0, 2.0` to `Q, a, b = 40.0, 12.0, 2.0`. The steady depth becomes exactly 4 m, and the slope $-a/(3b\,x^*)$ becomes −0.500000, so Rule A converges faster. The interval assert stops the run, because $g_A(2)$ now lands outside [2, 3.5].
-> - **Relax Rule A too.** Guess first: what weight makes its slope zero? $1/(1 + 0.698373)$, about 0.589. Change `xa = press(gA, 2.0, 150)` to `xa = press(gA, 2.0, 150, 0.589)`. The errors run 1.27e-2, 2.61e-6, 8.90e-10: thousands of times smaller per press. The run then stops with a division by zero, because a step reaches exactly 0 and the estimate column divides by it.
+> - **Raise the inflow to 40 m³/s.** Guess first: does Rule A get faster or slower? Change `Q, a, b = 30.0, 12.0, 2.0` to `Q, a, b = 40.0, 12.0, 2.0`. The steady depth becomes exactly 4 m, and the slope $`-a/(3b\,x^*)`$ becomes −0.500000, so Rule A converges faster. The interval assert stops the run, because $`g_A(2)`$ now lands outside [2, 3.5].
+> - **Relax Rule A too.** Guess first: what weight makes its slope zero? $`1/(1 + 0.698373)`$, about 0.589. Change `xa = press(gA, 2.0, 150)` to `xa = press(gA, 2.0, 150, 0.589)`. The errors run 1.27e-2, 2.61e-6, 8.90e-10: thousands of times smaller per press. The run then stops with a division by zero, because a step reaches exactly 0 and the estimate column divides by it.
 > - **Make the pipe the main route.** Guess first: which rule wins with `Q, a, b = 30.0, 30.0, 1.0`? Now the pipe's flow changes faster with depth than the notch's at the answer, 0.940151 m. Rule B contracts and Rule A runs away, to a false fixed point at 23.858 m where the cube root of a negative number is squared. The assert that the roads agree stops the run.
 
 ---
@@ -882,7 +894,7 @@ end FixedPointContraction
 > **Trusting the algebra to pick the rearrangement.** Rule A and Rule B are the same equation, correctly rearranged. One converges and the other ends up hopping between 6.2491 m and 0.0107 m for ever. The algebra cannot tell them apart; the slope at the answer can. Check it, or estimate it from a nudge, before pressing.
 >
 > - **Using the slope at the answer as the guarantee.** 0.698373 is the eventual rate. The guarantee needs the worst slope on the interval, 0.757210.
-> - **Pushing the weight further for more speed.** $\omega$ = 0.410682 makes Rule B converge in six presses; $\omega$ = 0.9 makes it diverge, with error 2.0288 after 10 presses.
+> - **Pushing the weight further for more speed.** $`\omega`$ = 0.410682 makes Rule B converge in six presses; $`\omega`$ = 0.9 makes it diverge, with error 2.0288 after 10 presses.
 > - **Reading small steps as small errors on a creeping rule.** On the mortgage, with slope +0.770281, the guesses approach from one side and the error is several times the step, as [When to stop](03-stopping-criteria-and-error-estimates.md) shows.
 > - **Asking for more than the doubles can give.** Rule A's steps reach exactly 0 at step 99, so the step bound claims an error of 0; the true error is 1.09e-16 m. A sign test does worse: bisection stops 7.79e-16 m low.
 
@@ -892,7 +904,7 @@ end FixedPointContraction
 
 - **Reservoirs and channels.** Steady pool levels, and the depth of flow in a channel, come from balance equations like this one. Engineers rearrange them into forms that contract, as here.
 - **Loan rates and bond yields.** The shelf's mortgage rate is a fixed point. [Yield from price](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md) is the finance wing's first use of the same idea.
-- **Large linear systems.** Jacobi and Gauss–Seidel iterations press a rule on a whole vector. Their rate is the largest size of an eigenvalue of the rule's matrix, the vector version of $|g'(x^*)|$. Successive over-relaxation is this card's $\omega$, applied to every unknown.
+- **Large linear systems.** Jacobi and Gauss–Seidel iterations press a rule on a whole vector. Their rate is the largest size of an eigenvalue of the rule's matrix, the vector version of $`|g'(x^*)|`$. Successive over-relaxation is this card's $`\omega`$, applied to every unknown.
 - **Implicit steps in simulations.** An implicit time step defines the next state through an equation in itself. When the step is small enough, pressing that equation is a contraction, and it is often solved that way.
 - **Planning under discounting.** Value iteration in planning and the PageRank calculation press rules whose contraction factor is a discount or damping factor.
 
@@ -903,15 +915,15 @@ end FixedPointContraction
 
 ## What this builds on
 
-- [Newton and secant](02-newton-and-secant-with-convergence-orders.md): the notation $x^*$, $x_k$, $e_k$ and order, and the order-2 behaviour that relaxation with an exact weight reaches.
-- [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): Banach's theorem on an interval and the $q/(1-q)$ bounds, proved there and used here in one line.
+- [Newton and secant](02-newton-and-secant-with-convergence-orders.md): the notation $`x^*`$, $`x_k`$, $`e_k`$ and order, and the order-2 behaviour that relaxation with an exact weight reaches.
+- [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): Banach's theorem on an interval and the $`q/(1-q)`$ bounds, proved there and used here in one line.
 - [Uniform continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md): the Lipschitz constant, which the contraction factor is.
 - [Fixed points of a map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md): the slope test for attracting and repelling fixed points, and Newton read as a map with slope zero.
 
 ## Where this goes next
 
 - [Newton in several unknowns, and Broyden when a Jacobian is too expensive](07-newton-for-systems-and-broyden.md): many unknowns at once, where the slope becomes a matrix and the best relaxation becomes Newton's step.
-- [Every root at once](08-polynomial-roots-and-companion-matrices.md): every root of a polynomial at once; the reservoir's cubic in $\sqrt{x}$, for example, has two more roots, both complex, which that card's companion matrix would return together.
+- [Every root at once](08-polynomial-roots-and-companion-matrices.md): every root of a polynomial at once; the reservoir's cubic in $`\sqrt{x}`$, for example, has two more roots, both complex, which that card's companion matrix would return together.
 
 See also on this shelf: [Brent's method](05-brent-and-safeguarded-methods.md), a bracket that keeps a fast method from running away, the safety net a relaxed iteration lacks.
 

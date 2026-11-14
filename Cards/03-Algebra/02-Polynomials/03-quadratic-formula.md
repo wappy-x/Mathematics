@@ -46,32 +46,38 @@ The arch is the ball's height, the flat line 15 metres. They meet at 1 second go
 
 A **quadratic** is any equation written as a squared term, a plain term and a number, adding to zero:
 
-$$a x^2 + b x + c = 0$$
+```math
+a x^2 + b x + c = 0
+```
 
-The letter $x$ is the unknown; here it is the time $t$ in seconds. The numbers $a$, $b$ and $c$ are the coefficients ([Polynomials](01-polynomials.md)). Only $a$ has a condition: not zero. A zero $a$ kills the squared term and leaves a straight-line equation ([Linear equations](../01-Letters%20and%20Equations/02-linear-equations.md)).
+The letter $`x`$ is the unknown; here it is the time $`t`$ in seconds. The numbers $`a`$, $`b`$ and $`c`$ are the coefficients ([Polynomials](01-polynomials.md)). Only $`a`$ has a condition: not zero. A zero $`a`$ kills the squared term and leaves a straight-line equation ([Linear equations](../01-Letters%20and%20Equations/02-linear-equations.md)).
 
 The answers are
 
-$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+```math
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+```
 
-**Read it aloud:** start with minus $b$; add the square root of $b$ squared minus four $a c$ for one answer, subtract it for the other; divide each by two $a$.
+**Read it aloud:** start with minus $`b`$; add the square root of $`b`$ squared minus four $`a c`$ for one answer, subtract it for the other; divide each by two $`a`$.
 
 The plus-or-minus sign is not a hedge: it is two answers on one line.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the unknown being solved for | the time in seconds | — |
-| $t$ | seconds since the kick | 1 and 3 | — |
-| $a$ | the number in front of the squared term | 5 | the arch narrows, the answers close in |
-| $b$ | the number in front of the plain term | -20 | the pair slides sideways along the arch |
-| $c$ | the number standing alone | 15 | both walk toward the middle, then vanish |
-| $D$ | the discriminant, under the square root | 100 | the answers pull further apart |
+| $`x`$ | the unknown being solved for | the time in seconds | — |
+| $`t`$ | seconds since the kick | 1 and 3 | — |
+| $`a`$ | the number in front of the squared term | 5 | the arch narrows, the answers close in |
+| $`b`$ | the number in front of the plain term | -20 | the pair slides sideways along the arch |
+| $`c`$ | the number standing alone | 15 | both walk toward the middle, then vanish |
+| $`D`$ | the discriminant, under the square root | 100 | the answers pull further apart |
 
 One helper, already inside the formula:
 
-$$D = b^2 - 4ac$$
+```math
+D = b^2 - 4ac
+```
 
-Square $b$, then subtract four times $a$ times $c$. Work it out first: it settles the answer's shape before any root is taken.
+Square $`b`$, then subtract four times $`a`$ times $`c`$. Work it out first: it settles the answer's shape before any root is taken.
 
 ```mermaid
 flowchart TD
@@ -83,9 +89,9 @@ flowchart TD
 
 ### When it holds
 
-- **$a$ is not zero.** With no squared term the formula divides by zero. Solve the straight-line equation instead ([Linear equations](../01-Letters%20and%20Equations/02-linear-equations.md)).
+- **$`a`$ is not zero.** With no squared term the formula divides by zero. Solve the straight-line equation instead ([Linear equations](../01-Letters%20and%20Equations/02-linear-equations.md)).
 - **The unknown is squared, and no higher.** Completing the square cannot absorb a cubed term, so higher degrees need other methods, and some have no formula at all ([Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md)).
-- **$D$ is not below zero, for answers on the number line.** At 25 metres $D = -100$, nothing on the number line squares to a negative, and the formula gives no time.
+- **$`D`$ is not below zero, for answers on the number line.** At 25 metres $`D = -100`$, nothing on the number line squares to a negative, and the formula gives no time.
 
 ---
 
@@ -103,17 +109,21 @@ Divide 5t^2 - 20t + 15 = 0 by 5:
 
 t^2 - 4t + 3 = 0.
 
-Same equation, squared term now alone. With letters, divide by $a$:
+Same equation, squared term now alone. With letters, divide by $`a`$:
 
-$$x^2 + \frac{b}{a}x + \frac{c}{a} = 0$$
+```math
+x^2 + \frac{b}{a}x + \frac{c}{a} = 0
+```
 
 ### Step 2: add the missing corner, then take it straight back off
 
 A perfect square opens out like this, where h is whatever sits inside the bracket:
 
-$$(x + h)^2 = x^2 + 2hx + h^2$$
+```math
+(x + h)^2 = x^2 + 2hx + h^2
+```
 
-The middle term is that inside number doubled, times $x$. So the number is half the middle coefficient, and the leftover is it squared.
+The middle term is that inside number doubled, times $`x`$. So the number is half the middle coefficient, and the leftover is it squared.
 
 On the numbers: half of -4 is -2, and (t - 2)^2 = t^2 - 4t + 4 — what we have, plus 4. So t^2 - 4t + 3 = 0 becomes (t - 2)^2 - 4 + 3 = 0, and (t - 2)^2 = 1.
 
@@ -121,11 +131,15 @@ Step 0 finishes it: t = 1 and t = 3.
 
 On the letters: half of b/a is b/(2a), and the leftover is its square:
 
-$$\left(x + \frac{b}{2a}\right)^2 - \frac{b^2}{4a^2} + \frac{c}{a} = 0$$
+```math
+\left(x + \frac{b}{2a}\right)^2 - \frac{b^2}{4a^2} + \frac{c}{a} = 0
+```
 
 ### Step 3: move the loose numbers across
 
-$$\left(x + \frac{b}{2a}\right)^2 = \frac{b^2}{4a^2} - \frac{c}{a} = \frac{b^2 - 4ac}{4a^2}$$
+```math
+\left(x + \frac{b}{2a}\right)^2 = \frac{b^2}{4a^2} - \frac{c}{a} = \frac{b^2 - 4ac}{4a^2}
+```
 
 <details>
 <summary>Putting those two fractions over one line</summary>
@@ -136,13 +150,17 @@ Give them the same bottom: multiply top and bottom of c/a by 4a and it becomes 4
 
 ### Step 4: take the square root of both sides, both signs
 
-The bottom is 4a^2, whose square root is 2a. (If $a$ is negative the root is -2a, and the plus-or-minus covers it.)
+The bottom is 4a^2, whose square root is 2a. (If $`a`$ is negative the root is -2a, and the plus-or-minus covers it.)
 
-$$x + \frac{b}{2a} = \pm\,\frac{\sqrt{b^2 - 4ac}}{2a}$$
+```math
+x + \frac{b}{2a} = \pm\,\frac{\sqrt{b^2 - 4ac}}{2a}
+```
 
 Take b/(2a) off both sides. Both pieces sit over 2a, so they join up:
 
-$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+```math
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+```
 
 That is the formula: those four steps done on letters instead of numbers.
 
@@ -175,18 +193,18 @@ The ball at 15 metres is 5t^2 - 20t + 15 = 0, so a = 5, b = -20 and c = 15.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $b$ squared | (-20) × (-20) | 400 |
-| four $a c$ | 4 × 5 × 15 | 300 |
+| $`b`$ squared | (-20) × (-20) | 400 |
+| four $`a c`$ | 4 × 5 × 15 | 300 |
 | the discriminant | 400 - 300 | 100 |
 | its square root | the number that squares to 100 | 10 |
-| minus $b$ | -(-20) | 20 |
-| two $a$ | 2 × 5 | 10 |
+| minus $`b`$ | -(-20) | 20 |
+| two $`a`$ | 2 × 5 | 10 |
 | the minus answer | (20 - 10) / 10 | **1** |
 | the plus answer | (20 + 10) / 10 | **3** |
 
 15 metres is passed twice: at 1 second climbing, 3 seconds falling. Sum and product agree: 1 + 3 = 4 is -b/a = 20/5, and 1 × 3 = 3 is c/a = 15/5.
 
-Two more heights, only $c$ changing.
+Two more heights, only $`c`$ changing.
 
 - **20 metres.** 5t^2 - 20t + 20 = 0, discriminant 400 - 400 = 0. One answer, t = 20/10 = 2: the top of the arch.
 - **25 metres.** 5t^2 - 20t + 25 = 0, discriminant 400 - 500 = -100. Below zero, no answer: this kick does not reach 25 metres.
@@ -195,9 +213,9 @@ Two more heights, only $c$ changing.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Using $b$ where the formula says minus $b$ | t = -3.00 and -1.00 | b is -20, so minus b is +20. Both answers land before the kick. |
-| Dividing only the square root by two $a$ | t = 19.00 and 21.00 | The 2a sits under the whole top, brackets and all. |
-| Rooting $b$ squared and four $a c$ apart | t = 1.73 and 2.27 | The root of a difference is not the difference of the roots. |
+| Using $`b`$ where the formula says minus $`b`$ | t = -3.00 and -1.00 | b is -20, so minus b is +20. Both answers land before the kick. |
+| Dividing only the square root by two $`a`$ | t = 19.00 and 21.00 | The 2a sits under the whole top, brackets and all. |
+| Rooting $`b`$ squared and four $`a c`$ apart | t = 1.73 and 2.27 | The root of a difference is not the difference of the roots. |
 
 Both checks print all three. The third is dangerous: 1.73 and 2.27 straddle the top of the arch and look reasonable.
 
@@ -393,11 +411,11 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the formula, the answer count and the sum and product for every quadratic with $a$ not zero.
+Lean proves the formula, the answer count and the sum and product for every quadratic with $`a`$ not zero.
 
-- When $D$ is not below zero, a number solves $a x^2 + b x + c = 0$ exactly when it is one of the formula's two answers.
-- $D$ above zero gives exactly two answers on the number line, $D$ exactly zero gives one, $-b/(2a)$, and $D$ below zero gives none.
-- The formula's two answers add to $-b/a$ and multiply to $c/a$.
+- When $`D`$ is not below zero, a number solves $`a x^2 + b x + c = 0`$ exactly when it is one of the formula's two answers.
+- $`D`$ above zero gives exactly two answers on the number line, $`D`$ exactly zero gives one, $`-b/(2a)`$, and $`D`$ below zero gives none.
+- The formula's two answers add to $`-b/a`$ and multiply to $`c/a`$.
 
 The ball's decimal times, the third mistake and the square root built by Newton's method are left to the Python and Rust checks.
 

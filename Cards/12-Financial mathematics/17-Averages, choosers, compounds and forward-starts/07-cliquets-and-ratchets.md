@@ -44,37 +44,43 @@ Orange: the capped coupon, flat at −5% below a −5% return, following the ret
 
 ## The formula
 
-$$V = 100\,e^{-rT}\,\mathbb{E}\!\left[\max\!\Big(\sum_{i=1}^{4} c_i,\; 0\Big)\right], \qquad c_i = \min\!\big(\max(R_i,\,-5\%),\;5\%\big), \qquad R_i = \frac{S_{t_i}}{S_{t_{i-1}}} - 1$$
+```math
+V = 100\,e^{-rT}\,\mathbb{E}\!\left[\max\!\Big(\sum_{i=1}^{4} c_i,\; 0\Big)\right], \qquad c_i = \min\!\big(\max(R_i,\,-5\%),\;5\%\big), \qquad R_i = \frac{S_{t_i}}{S_{t_{i-1}}} - 1
+```
 
 **Read it aloud:** clip each quarter's return to between −5% and +5%, add the four clipped returns, floor the total at zero, and take the average of that payout over the model's paths, discounted from year end to today.
 
-The symbol $\mathbb{E}$ is the average over the paths of the risk-neutral world, where every asset grows at the riskless rate ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). The large sigma sign adds the four quarters.
+The symbol $`\mathbb{E}`$ is the average over the paths of the risk-neutral world, where every asset grows at the riskless rate ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). The large sigma sign adds the four quarters.
 
-Without the caps and floors the payout is $100\sum_i \max(R_i, 0)$, and that version has a closed form:
+Without the caps and floors the payout is $`100\sum_i \max(R_i, 0)`$, and that version has a closed form:
 
-$$V_{\text{uncapped}} = 4 \times 100\, e^{-r(T-\tau)}\, C_1(1,\tau), \qquad C_1(k,\tau) = e^{-q\tau}N(d_1) - k\,e^{-r\tau}N(d_2)$$
+```math
+V_{\text{uncapped}} = 4 \times 100\, e^{-r(T-\tau)}\, C_1(1,\tau), \qquad C_1(k,\tau) = e^{-q\tau}N(d_1) - k\,e^{-r\tau}N(d_2)
+```
 
-$$d_1 = \frac{-\ln k + (r - q + \tfrac12\sigma^2)\tau}{\sigma\sqrt{\tau}}, \qquad d_2 = d_1 - \sigma\sqrt{\tau}$$
+```math
+d_1 = \frac{-\ln k + (r - q + \tfrac12\sigma^2)\tau}{\sigma\sqrt{\tau}}, \qquad d_2 = d_1 - \sigma\sqrt{\tau}
+```
 
-In words: $C_1$ is the Black-Scholes call on a share worth $1, struck at $k$, running one quarter. Each quarter's uncapped coupon is worth that, per dollar of notional, discounted for the three quarters between its end and the year-end payment.
+In words: $`C_1`$ is the Black-Scholes call on a share worth $1, struck at $`k`$, running one quarter. Each quarter's uncapped coupon is worth that, per dollar of notional, discounted for the three quarters between its end and the year-end payment.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | the cliquet's price today | $3.50 flat, $4.07 local vol, $4.40 Heston | is the answer |
-| $S$, $S_{t_i}$ | Acme's price; $S_{t_i}$ is its price on reset date $t_i$ | $100 today | leaves the flat and Heston prices unchanged: only ratios enter |
-| $t_i$, $T$ | the reset dates, in years; $T$ is the last one, when the note pays | 0, 0.25, 0.5, 0.75, 1 | more resets in the year: more coupons |
-| $\tau$ | one quarter, the life of each leg | 0.25 year | each leg's return spreads wider |
-| $i$ | the quarter's number, 1 to 4 | | |
-| $R_i$ | Acme's return over quarter $i$ | +8%, −3%, +2%, −7% on the sample path | |
-| $c_i$ | the coupon of quarter $i$, $R_i$ clipped to ±5% | +5%, −3%, +2%, −5% | |
-| $r$ | riskless rate, continuously compounded | 5% | rises: +$0.15 per percentage point |
-| $q$ | dividend yield, continuously compounded | 2% | falls: quarterly returns drift lower |
-| $\sigma$ | flat volatility, the flat model's only dial | 20% | **falls**: −$0.02 per vol point |
-| $C_1$, $k$ | Black-Scholes call on a $1 share, strike $k$, life one quarter | 0.043359 at $k = 1$ | |
-| $d_1$, $d_2$ | the two standardised distances of the call formula | 0.125, 0.025 | |
-| $N(x)$ | the bell-curve area to the left of $x$ | $N(d_1) = 0.5497$ | |
+| $`V`$ | the cliquet's price today | $3.50 flat, $4.07 local vol, $4.40 Heston | is the answer |
+| $`S`$, $`S_{t_i}`$ | Acme's price; $`S_{t_i}`$ is its price on reset date $`t_i`$ | $100 today | leaves the flat and Heston prices unchanged: only ratios enter |
+| $`t_i`$, $`T`$ | the reset dates, in years; $`T`$ is the last one, when the note pays | 0, 0.25, 0.5, 0.75, 1 | more resets in the year: more coupons |
+| $`\tau`$ | one quarter, the life of each leg | 0.25 year | each leg's return spreads wider |
+| $`i`$ | the quarter's number, 1 to 4 | | |
+| $`R_i`$ | Acme's return over quarter $`i`$ | +8%, −3%, +2%, −7% on the sample path | |
+| $`c_i`$ | the coupon of quarter $`i`$, $`R_i`$ clipped to ±5% | +5%, −3%, +2%, −5% | |
+| $`r`$ | riskless rate, continuously compounded | 5% | rises: +$0.15 per percentage point |
+| $`q`$ | dividend yield, continuously compounded | 2% | falls: quarterly returns drift lower |
+| $`\sigma`$ | flat volatility, the flat model's only dial | 20% | **falls**: −$0.02 per vol point |
+| $`C_1`$, $`k`$ | Black-Scholes call on a $1 share, strike $`k`$, life one quarter | 0.043359 at $`k = 1`$ | |
+| $`d_1`$, $`d_2`$ | the two standardised distances of the call formula | 0.125, 0.025 | |
+| $`N(x)`$ | the bell-curve area to the left of $`x`$ | $`N(d_1) = 0.5497`$ | |
 
-The negative push on $\sigma$ is not a typo. It is the first sign that this contract does not behave like an option.
+The negative push on $`\sigma`$ is not a typo. It is the first sign that this contract does not behave like an option.
 
 ### When it holds
 
@@ -94,24 +100,26 @@ Every coupon is a ratio of two Acme prices. Double Acme's price on every date an
 
 ### Step 1: the uncapped note is four forward-start calls
 
-The payout $100\sum_i \max(R_i, 0)$ is a sum. The average of a sum is the sum of the averages, in any model. So the uncapped note is worth four legs, one per quarter.
+The payout $`100\sum_i \max(R_i, 0)`$ is a sum. The average of a sum is the sum of the averages, in any model. So the uncapped note is worth four legs, one per quarter.
 
-Take one leg. At the start of its quarter, Acme stands at $S_{t_{i-1}}$ and the leg pays $100\max(S_{t_i}/S_{t_{i-1}} - 1, 0)$ at year end. Divide Acme's price by its level at the reset: the leg is 100 calls on a share worth $1, struck at $1, running one quarter.
+Take one leg. At the start of its quarter, Acme stands at $`S_{t_{i-1}}`$ and the leg pays $`100\max(S_{t_i}/S_{t_{i-1}} - 1, 0)`$ at year end. Divide Acme's price by its level at the reset: the leg is 100 calls on a share worth $1, struck at $1, running one quarter.
 
-In the flat model that is worth $100\,C_1(1,\tau)$ at the reset, if paid at the quarter's end. Paying at year end instead costs interest from $t_i$ to $T$. The reset value is a fixed number, the same on every path, so taking it back to today costs interest from $0$ to $t_{i-1}$. The two gaps always add to three quarters, so the discount is $e^{-r(T-\tau)}$: 0.963194.
+In the flat model that is worth $`100\,C_1(1,\tau)`$ at the reset, if paid at the quarter's end. Paying at year end instead costs interest from $`t_i`$ to $`T`$. The reset value is a fixed number, the same on every path, so taking it back to today costs interest from $`0`$ to $`t_{i-1}`$. The two gaps always add to three quarters, so the discount is $`e^{-r(T-\tau)}`$: 0.963194.
 
-One leg is $100 \times 0.963194 \times 0.043359 = \$4.18$, the same for every quarter. Four legs: $16.71.
+One leg is $`100 \times 0.963194 \times 0.043359 = \$4.18`$, the same for every quarter. Four legs: $16.71.
 
-The sibling card's forward-start call is struck on a share, not on $100 of cash, so its waiting period is discounted at the dividend yield $q$ instead of $r$. Its house number, a call reset at half a year and expiring at one, is $6.244873; the check reproduces it with the same $C_1$.
+The sibling card's forward-start call is struck on a share, not on $100 of cash, so its waiting period is discounted at the dividend yield $`q`$ instead of $`r`$. Its house number, a call reset at half a year and expiring at one, is $6.244873; the check reproduces it with the same $`C_1`$.
 
 <details>
 <summary>Detailed proof: the uncapped identity, and why each leg is the same</summary>
 
-Call one leg's value the price today of $100\max(R_i, 0)$ paid at $T$. In the risk-neutral world a payment $x$ at $T$ is worth $e^{-rT}\mathbb{E}[x]$, and averages add, so $V_{\text{uncapped}}$ is the sum of the four leg values. That holds in every model.
+Call one leg's value the price today of $`100\max(R_i, 0)`$ paid at $`T`$. In the risk-neutral world a payment $`x`$ at $`T`$ is worth $`e^{-rT}\mathbb{E}[x]`$, and averages add, so $`V_{\text{uncapped}}`$ is the sum of the four leg values. That holds in every model.
 
-In the flat model, $S_{t_i}/S_{t_{i-1}} = \exp\big((r - q - \tfrac12\sigma^2)\tau + \sigma\sqrt{\tau}\,Z_i\big)$ with $Z$ a standard bell-curve draw, a fresh one each quarter, independent of everything before the reset. So $\mathbb{E}[\max(R_i, 0)]$ is the same number for every quarter: the undiscounted average payoff of a call on a $1 share struck at $1 over one quarter, which is $e^{r\tau}C_1(1,\tau)$ by the Black-Scholes formula. Then
-$$\text{one leg} = 100\,e^{-rT}\,e^{r\tau}\,C_1(1,\tau) = 100\,e^{-r(T-\tau)}\,C_1(1,\tau).$$
-Summing four equal legs gives the formula. In a model where the return's spread depends on the path, such as Heston, $\mathbb{E}[\max(R_i, 0)]$ still exists and the sum still holds; only the closed form for each leg is lost.
+In the flat model, $`S_{t_i}/S_{t_{i-1}} = \exp\big((r - q - \tfrac12\sigma^2)\tau + \sigma\sqrt{\tau}\,Z_i\big)`$ with $`Z`$ a standard bell-curve draw, a fresh one each quarter, independent of everything before the reset. So $`\mathbb{E}[\max(R_i, 0)]`$ is the same number for every quarter: the undiscounted average payoff of a call on a $1 share struck at $1 over one quarter, which is $`e^{r\tau}C_1(1,\tau)`$ by the Black-Scholes formula. Then
+
+$`\displaystyle \text{one leg} = 100\,e^{-rT}\,e^{r\tau}\,C_1(1,\tau) = 100\,e^{-r(T-\tau)}\,C_1(1,\tau).`$
+
+Summing four equal legs gives the formula. In a model where the return's spread depends on the path, such as Heston, $`\mathbb{E}[\max(R_i, 0)]`$ still exists and the sum still holds; only the closed form for each leg is lost.
 
 </details>
 
@@ -119,7 +127,9 @@ Summing four equal legs gives the formula. In a model where the return's spread 
 
 A clipped return can be rebuilt from options on the same return:
 
-$$\min\!\big(\max(R,\,-5\%),\,5\%\big) = R \;-\; \max(R - 5\%,\,0) \;+\; \max(-5\% - R,\,0)$$
+```math
+\min\!\big(\max(R,\,-5\%),\,5\%\big) = R \;-\; \max(R - 5\%,\,0) \;+\; \max(-5\% - R,\,0)
+```
 
 Check it on three returns. At +8%: 8% − 3% + 0 = 5%. At −7%: −7% − 0 + 2% = −5%. At +2%: 2% − 0 + 0 = 2%.
 
@@ -127,9 +137,9 @@ So holding one quarter's coupon is holding the quarter's return, **short** a for
 
 ### Step 3: the global floor is a put on the sum of the coupons
 
-For any total $x$, $\max(x, 0) = x + \max(-x, 0)$. The global floor adds a put, struck at zero, on the sum of four coupons. This put is not linear in the quarters. Its value depends on how the four coupons move together, so no quarter can be priced alone.
+For any total $`x`$, $`\max(x, 0) = x + \max(-x, 0)`$. The global floor adds a put, struck at zero, on the sum of four coupons. This put is not linear in the quarters. Its value depends on how the four coupons move together, so no quarter can be priced alone.
 
-It is also most of the price: $0.42 of the flat $3.50 is the coupons, the rest is the floor. Since $\max(\sum c_i, 0)$ lies between $\sum c_i$ and $\sum \max(c_i, 0)$ on every path, the price must lie between $0.42 and $7.87, the what-breaks rows below; $3.50 does.
+It is also most of the price: $0.42 of the flat $3.50 is the coupons, the rest is the floor. Since $`\max(\sum c_i, 0)`$ lies between $`\sum c_i`$ and $`\sum \max(c_i, 0)`$ on every path, the price must lie between $0.42 and $7.87, the what-breaks rows below; $3.50 does.
 
 In the flat model the four quarters are independent and identical. A single quarter's coupon has a known distribution: 29.58% of the time it sits on the floor, 32.21% of the time on the cap, and 38.21% of the time in between.
 
@@ -179,21 +189,21 @@ Same distribution on each date; different joins between dates. A cliquet's payou
 
 ## Worked numbers, by hand
 
-House market, one quarter: $\tau = 0.25$, $\sigma = 20\%$, so a quarter's typical move is 10%.
+House market, one quarter: $`\tau = 0.25`$, $`\sigma = 20\%`$, so a quarter's typical move is 10%.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$ | $(0 + (0.05 - 0.02 + 0.02) \times 0.25) / 0.10$ | 0.125 |
-| $d_2$ | $0.125 - 0.10$ | 0.025 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.549738, 0.509973 |
-| $C_1(1, 0.25)$ | $e^{-0.005} \times 0.549738 - e^{-0.0125} \times 0.509973$ | 0.043359 |
-| discount $e^{-r(T-\tau)}$ | $e^{-0.05 \times 0.75}$ | 0.963194 |
-| one uncapped leg | $100 \times 0.963194 \times 0.043359$ | $4.18 |
-| **uncapped cliquet** | $4 \times 4.176301$ | **$16.71** |
-| chance a quarter's coupon hits −5% | $N\big((\ln 0.95 - 0.0025)/0.10\big)$, read on the check's grid | 0.295766 |
-| chance it hits +5% | one minus the same at $\ln 1.05$, on the grid | 0.322144 |
+| $`d_1`$ | $`(0 + (0.05 - 0.02 + 0.02) \times 0.25) / 0.10`$ | 0.125 |
+| $`d_2`$ | $`0.125 - 0.10`$ | 0.025 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.549738, 0.509973 |
+| $`C_1(1, 0.25)`$ | $`e^{-0.005} \times 0.549738 - e^{-0.0125} \times 0.509973`$ | 0.043359 |
+| discount $`e^{-r(T-\tau)}`$ | $`e^{-0.05 \times 0.75}`$ | 0.963194 |
+| one uncapped leg | $`100 \times 0.963194 \times 0.043359`$ | $4.18 |
+| **uncapped cliquet** | $`4 \times 4.176301`$ | **$16.71** |
+| chance a quarter's coupon hits −5% | $`N\big((\ln 0.95 - 0.0025)/0.10\big)`$, read on the check's grid | 0.295766 |
+| chance it hits +5% | one minus the same at $`\ln 1.05`$, on the grid | 0.322144 |
 | average clipped coupon | grid sum over the quarter's distribution | 0.1112% |
-| capped, no global floor | $100 \times e^{-0.05} \times 4 \times 0.001112$ | $0.42 |
+| capped, no global floor | $`100 \times e^{-0.05} \times 4 \times 0.001112`$ | $0.42 |
 | **capped with the global floor, flat model** | four-fold convolution | **$3.50** |
 
 The capped note costs far less than the uncapped one: the holder has given up every quarterly gain above 5% and taken losses down to −5%, keeping only a floor on the total.
@@ -204,7 +214,7 @@ The capped note costs far less than the uncapped one: the holder has given up ev
 | --- | --- | --- |
 | Drop the global floor | $0.42 (right: $3.50) | The floor is most of the value; the clipped coupons nearly cancel |
 | Floor each quarter at 0 instead of −5%, no global floor | $7.87 | That is a strip of call spreads: losses never count, so the price more than doubles |
-| Discount each uncapped leg's wait at $q$, as if the $100 were a share | $16.89 (right: $16.71) | The notional is cash fixed today; only a share-struck forward-start waits at $q$ |
+| Discount each uncapped leg's wait at $`q`$, as if the $100 were a share | $16.89 (right: $16.71) | The notional is cash fixed today; only a share-struck forward-start waits at $`q`$ |
 | Flat 20% when the market's future smiles look like Heston's | $3.50 (right: $4.40) | No forward skew, so the 95% put is too cheap and the 105% call too dear |
 | Local volatility when the market looks like Heston | $4.07 (right: $4.40) | Right vanillas, forward skew too flat |
 
@@ -634,7 +644,7 @@ ALL CHECKS PASS
 Lean proves the facts on this card that hold in every model, for any number of quarters.
 
 - The uncapped cliquet's price is the sum of its forward-start legs' prices, when each leg's payout has a finite average.
-- Take a quarter's return $R$, a local floor $f$ and a local cap $c$, with $f \le c$. Then $\min(\max(R, f), c) = R - \max(R - c, 0) + \max(f - R, 0)$.
+- Take a quarter's return $`R`$, a local floor $`f`$ and a local cap $`c`$, with $`f \le c`$. Then $`\min(\max(R, f), c) = R - \max(R - c, 0) + \max(f - R, 0)`$.
 - The cliquet's price lies between the price of its coupons alone and the price with each quarter floored at zero.
 - On the sample path the coupons are +5%, −3%, +2% and −5%. They add to −1%, so the holder is paid nothing.
 - Step 2's three checks, at +8%, −7% and +2%, come out as the card says.
@@ -787,7 +797,7 @@ example : ∀ i ∈ Finset.Icc 1 4, (4 - i) + (i - 1) = 3 := by decide
 >
 > Four smaller traps:
 > - **Reading vega off a flat model.** It says −$0.02 per vol point: nearly no risk. The risk is in the skew of future smiles, which the flat model cannot move.
-> - **Treating the uncapped legs as share-struck forward-starts.** The $100 notional is cash, so each leg waits at $r$. Waiting at $q$ gives $16.89 instead of $16.71.
+> - **Treating the uncapped legs as share-struck forward-starts.** The $100 notional is cash, so each leg waits at $`r`$. Waiting at $`q`$ gives $16.89 instead of $16.71.
 > - **Forgetting the global floor makes the quarters interact.** Without it the price is a sum over quarters: $0.42. With it, a model of the joint path is needed.
 > - **Comparing two models on separate random numbers.** Their errors add: about $0.023 on the gap here. Driving both with the same shocks cuts it to $0.004.
 

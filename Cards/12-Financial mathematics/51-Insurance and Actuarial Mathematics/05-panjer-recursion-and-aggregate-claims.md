@@ -35,51 +35,57 @@ Each bar is the chance of one exact total on the $10,000 grid, sampled every $50
 
 ## The formula
 
-Notation first, in words. Count money in grid units of $10,000, so every total is a whole number. Write $q_j$ for the chance that one claim is $j$ units, and $p_k$ for the chance that the year's total is exactly $k$ units. The claim count is Poisson (the standard law for independent arrivals) with mean $\lambda$.
+Notation first, in words. Count money in grid units of $10,000, so every total is a whole number. Write $`q_j`$ for the chance that one claim is $`j`$ units, and $`p_k`$ for the chance that the year's total is exactly $`k`$ units. The claim count is Poisson (the standard law for independent arrivals) with mean $`\lambda`$.
 
-$$p_0 = e^{-\lambda(1-q_0)}, \qquad p_k = \frac{\lambda}{k}\sum_{j=1}^{\min(k,\,m)} j\,q_j\,p_{k-j} \quad (k = 1, 2, 3, \dots)$$
+```math
+p_0 = e^{-\lambda(1-q_0)}, \qquad p_k = \frac{\lambda}{k}\sum_{j=1}^{\min(k,\,m)} j\,q_j\,p_{k-j} \quad (k = 1, 2, 3, \dots)
+```
 
 **Read it aloud:** the chance of a total of k units is the claim rate over k, times a sum over claim sizes j of j, times the chance of a size-j claim, times the chance already found for the remaining k minus j units.
 
-Once the $p_k$ are in hand, any tail is a subtraction. With the threshold at $t$ grid units, and $\lfloor t\rfloor$ meaning $t$ rounded down to a whole number:
+Once the $`p_k`$ are in hand, any tail is a subtraction. With the threshold at $`t`$ grid units, and $`\lfloor t\rfloor`$ meaning $`t`$ rounded down to a whole number:
 
-$$P(S > t\,h) = 1 - \sum_{k=0}^{\lfloor t\rfloor} p_k$$
+```math
+P(S > t\,h) = 1 - \sum_{k=0}^{\lfloor t\rfloor} p_k
+```
 
 **Read it aloud:** the chance of beating the threshold is one minus the chances of every total at or below it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | the year's total large claims, in dollars | mean $420,000 | — |
-| $K$ | the same total counted in grid units, so $S = hK$ | mean 42 | — |
-| $N$, $n$ | the number of large claims in the year, and one particular value of it | mean 20 | — |
-| $\lambda$ | the Poisson mean: expected number of claims | 20 | the tail at 120% of the mean falls: bigger books (portfolios of policies) are relatively steadier |
-| $h$ | the grid unit | $10,000 | a finer grid tracks the real sizes more closely but needs more steps |
-| $X$, $q_j$, $q_0$ | one claim's size in units, the chance it equals $j$, and the chance it is zero | $q_1 = 0.5$, $q_2 = 0.3$, $q_5 = 0.2$, $q_0 = 0$ | more weight on big sizes fattens the tail |
-| $p_k$, $p_0$ | chance the year's total is exactly $k$ units; $p_0$ is a total of zero | $p_0 = e^{-20}$ | — |
-| $k$, $j$ | a total, and one claim's size, in units | $k$ up to 200 | — |
-| $m$ | the largest claim size, in units | 5 | each step's sum gets longer |
-| $t$ | the threshold, in units | 50.4, which is $504,000 | the tail shrinks |
-| $a$, $b$ | the claim count's two constants in the Panjer family | $a = 0$, $b = 20$ for Poisson | $a > 0$ spreads the count and fattens the tail |
-| $e^{-x}$ | the exponential of minus $x$ | $e^{-20}$ is 2.061154 in units of $10^{-9}$ | — |
-| $P(\cdot)$ | the chance of the event inside the brackets | $P(K \le 50) = 0.7765595112$ | — |
-| $\mathrm{E}[\cdot]$ | the average (expected value) of what is inside the brackets | $\mathrm{E}[X] = 2.1$ units | — |
+| $`S`$ | the year's total large claims, in dollars | mean $420,000 | — |
+| $`K`$ | the same total counted in grid units, so $`S = hK`$ | mean 42 | — |
+| $`N`$, $`n`$ | the number of large claims in the year, and one particular value of it | mean 20 | — |
+| $`\lambda`$ | the Poisson mean: expected number of claims | 20 | the tail at 120% of the mean falls: bigger books (portfolios of policies) are relatively steadier |
+| $`h`$ | the grid unit | $10,000 | a finer grid tracks the real sizes more closely but needs more steps |
+| $`X`$, $`q_j`$, $`q_0`$ | one claim's size in units, the chance it equals $`j`$, and the chance it is zero | $`q_1 = 0.5`$, $`q_2 = 0.3`$, $`q_5 = 0.2`$, $`q_0 = 0`$ | more weight on big sizes fattens the tail |
+| $`p_k`$, $`p_0`$ | chance the year's total is exactly $`k`$ units; $`p_0`$ is a total of zero | $`p_0 = e^{-20}`$ | — |
+| $`k`$, $`j`$ | a total, and one claim's size, in units | $`k`$ up to 200 | — |
+| $`m`$ | the largest claim size, in units | 5 | each step's sum gets longer |
+| $`t`$ | the threshold, in units | 50.4, which is $504,000 | the tail shrinks |
+| $`a`$, $`b`$ | the claim count's two constants in the Panjer family | $`a = 0`$, $`b = 20`$ for Poisson | $`a > 0`$ spreads the count and fattens the tail |
+| $`e^{-x}`$ | the exponential of minus $`x`$ | $`e^{-20}`$ is 2.061154 in units of $`10^{-9}`$ | — |
+| $`P(\cdot)`$ | the chance of the event inside the brackets | $`P(K \le 50) = 0.7765595112`$ | — |
+| $`\mathrm{E}[\cdot]`$ | the average (expected value) of what is inside the brackets | $`\mathrm{E}[X] = 2.1`$ units | — |
 
-Two helper facts. The mean total is $\lambda\,\mathrm{E}[X]$: 20 claims of 2.1 units, 42 units, $420,000. The variance (the average squared distance from the mean) is $\lambda\,\mathrm{E}[X^2]$, here 134 square units, a standard deviation (its square root) of 11.58 units.
+Two helper facts. The mean total is $`\lambda\,\mathrm{E}[X]`$: 20 claims of 2.1 units, 42 units, $420,000. The variance (the average squared distance from the mean) is $`\lambda\,\mathrm{E}[X^2]`$, here 134 square units, a standard deviation (its square root) of 11.58 units.
 
-The recursion belongs to a family. Any claim count whose chances obey $P(N = n) = (a + b/n)\,P(N = n-1)$ gives
+The recursion belongs to a family. Any claim count whose chances obey $`P(N = n) = (a + b/n)\,P(N = n-1)`$ gives
 
-$$p_k = \frac{1}{1 - a\,q_0}\sum_{j=1}^{\min(k,\,m)}\Big(a + \frac{b\,j}{k}\Big)\,q_j\,p_{k-j}$$
+```math
+p_k = \frac{1}{1 - a\,q_0}\sum_{j=1}^{\min(k,\,m)}\Big(a + \frac{b\,j}{k}\Big)\,q_j\,p_{k-j}
+```
 
 **Read it aloud:** the same short sum, with the weight on each claim size split into a flat part a and a size-proportional part b j over k.
 
-The family is called the (a, b, 0) class; the 0 says the rule starts from $P(N = 0)$. Apart from a count that is always zero, it holds exactly three members: Poisson ($a = 0$, $b = \lambda$), binomial ($a < 0$) and negative binomial ($a > 0$). The last one models a book where some drivers are more accident-prone than others.
+The family is called the (a, b, 0) class; the 0 says the rule starts from $`P(N = 0)`$. Apart from a count that is always zero, it holds exactly three members: Poisson ($`a = 0`$, $`b = \lambda`$), binomial ($`a < 0`$) and negative binomial ($`a > 0`$). The last one models a book where some drivers are more accident-prone than others.
 
 ### When it holds
 
 - **A Poisson count, or another member of the (a, b, 0) class.** Claims that cluster, such as a hailstorm writing off a car park, make the count more spread out than Poisson. The Poisson answer then understates the tail: a negative binomial count with the same mean of 20 moves 22.34 percent to 28.45 percent.
 - **Claim sizes independent of each other and of the count.** If a bad year brings both more claims and bigger ones, the recursion computes the distribution of a different book.
 - **Sizes on a grid.** Real claims are not whole multiples of $10,000. Rounding them onto a grid is a separate approximation, with its own error; the recursion is exact for the gridded sizes and nothing else.
-- **A starting value the computer can hold.** $p_0 = e^{-\lambda(1-q_0)}$ must not underflow. The insurer's whole book at 2,500 claims a year gives $p_0 = e^{-2500}$, far below about $e^{-744}$, the smallest positive number a standard 64-bit floating-point number can hold. So it is stored as 0, and every later $p_k$ follows it to 0.
+- **A starting value the computer can hold.** $`p_0 = e^{-\lambda(1-q_0)}`$ must not underflow. The insurer's whole book at 2,500 claims a year gives $`p_0 = e^{-2500}`$, far below about $`e^{-744}`$, the smallest positive number a standard 64-bit floating-point number can hold. So it is stored as 0, and every later $`p_k`$ follows it to 0.
 
 ---
 
@@ -87,60 +93,66 @@ The family is called the (a, b, 0) class; the 0 says the rule starts from $P(N =
 
 ### Step 0: count the total's units by the claim they came from
 
-Take the quantity that equals the total when the total is exactly $k$, and zero otherwise. Its average is $k\,p_k$. That total is a sum of claim sizes, so it is also the sum, over the year's claims, of "this claim's size, if the total is k". A Poisson count has one special property: picking one of the year's claims is the same, on average, as adding one fresh claim to an independent year, with weight $\lambda$.
+Take the quantity that equals the total when the total is exactly $`k`$, and zero otherwise. Its average is $`k\,p_k`$. That total is a sum of claim sizes, so it is also the sum, over the year's claims, of "this claim's size, if the total is k". A Poisson count has one special property: picking one of the year's claims is the same, on average, as adding one fresh claim to an independent year, with weight $`\lambda`$.
 
-The fresh claim has size $j$ with chance $q_j$, and the independent year must supply the other $k - j$ units, with chance $p_{k-j}$. That gives $k\,p_k = \lambda \sum_j j\,q_j\,p_{k-j}$.
+The fresh claim has size $`j`$ with chance $`q_j`$, and the independent year must supply the other $`k - j`$ units, with chance $`p_{k-j}`$. That gives $`k\,p_k = \lambda \sum_j j\,q_j\,p_{k-j}`$.
 
 The steps below make each of those sentences exact.
 
 ### Step 1: the Poisson ratio
 
-The Poisson chance of $n$ claims is $e^{-\lambda}\lambda^n/n!$. Dividing by the chance of $n - 1$ claims leaves $\lambda/n$, so
+The Poisson chance of $`n`$ claims is $`e^{-\lambda}\lambda^n/n!`$. Dividing by the chance of $`n - 1`$ claims leaves $`\lambda/n`$, so
 
-$$n\,P(N = n) = \lambda\,P(N = n-1).$$
+```math
+n\,P(N = n) = \lambda\,P(N = n-1).
+```
 
-With $\lambda = 20$: 21 times the chance of 21 claims equals 20 times the chance of 20 claims. This is the "add a fresh claim, weight $\lambda$" of Step 0.
+With $`\lambda = 20`$: 21 times the chance of 21 claims equals 20 times the chance of 20 claims. This is the "add a fresh claim, weight $`\lambda`$" of Step 0.
 
 ### Step 2: with the count fixed, each claim carries an equal share
 
-Fix the count at $n$. The total $K$ is the sum of $n$ claim sizes, and the claims are interchangeable, so each contributes the same amount to the average of that quantity. That average is therefore $n$ times the first claim's share. The first claim is $j$ units with chance $q_j$, and the other $n - 1$ claims must then add to $k - j$:
+Fix the count at $`n`$. The total $`K`$ is the sum of $`n`$ claim sizes, and the claims are interchangeable, so each contributes the same amount to the average of that quantity. That average is therefore $`n`$ times the first claim's share. The first claim is $`j`$ units with chance $`q_j`$, and the other $`n - 1`$ claims must then add to $`k - j`$:
 
-$$\mathrm{E}\big[K\,\mathbf 1\{K = k\}\,\big|\,N = n\big] = n\sum_{j} j\,q_j\,P(\text{$n-1$ claims total } k - j).$$
+```math
+\mathrm{E}\big[K\,\mathbf 1\{K = k\}\,\big|\,N = n\big] = n\sum_{j} j\,q_j\,P(n-1\text{ claims total } k - j).
+```
 
 The bold 1 with braces is an indicator: 1 when the event inside happens, 0 when it does not.
 
 ### Step 3: average over the count and let the ratio do the work
 
-Weight Step 2 by the chance of $n$ claims and add over $n$. Step 1 turns each $n\,P(N = n)$ into $\lambda\,P(N = n-1)$. What is left, for each $j$, is the chance of $n - 1$ claims times the chance they total $k - j$, added over every $n$: that is exactly $p_{k-j}$. So
+Weight Step 2 by the chance of $`n`$ claims and add over $`n`$. Step 1 turns each $`n\,P(N = n)`$ into $`\lambda\,P(N = n-1)`$. What is left, for each $`j`$, is the chance of $`n - 1`$ claims times the chance they total $`k - j`$, added over every $`n`$: that is exactly $`p_{k-j}`$. So
 
-$$k\,p_k = \lambda\sum_{j=1}^{\min(k,\,m)} j\,q_j\,p_{k-j}.$$
+```math
+k\,p_k = \lambda\sum_{j=1}^{\min(k,\,m)} j\,q_j\,p_{k-j}.
+```
 
-Divide by $k$ and the recursion is proved. The sum starts at $j = 1$ because a size-zero claim contributes nothing to the total's units.
+Divide by $`k`$ and the recursion is proved. The sum starts at $`j = 1`$ because a size-zero claim contributes nothing to the total's units.
 
 ### Step 4: the starting value
 
-A total of zero needs every claim to be zero units. With $n$ claims that has chance $q_0^n$; averaging over the Poisson count gives $e^{-\lambda}\sum_n (\lambda q_0)^n/n! = e^{-\lambda(1-q_0)}$. Here no claim is zero, $q_0 = 0$, and $p_0 = e^{-20}$: the chance of a year with no large claims at all.
+A total of zero needs every claim to be zero units. With $`n`$ claims that has chance $`q_0^n`$; averaging over the Poisson count gives $`e^{-\lambda}\sum_n (\lambda q_0)^n/n! = e^{-\lambda(1-q_0)}`$. Here no claim is zero, $`q_0 = 0`$, and $`p_0 = e^{-20}`$: the chance of a year with no large claims at all.
 
 ### Step 5: why it is fast and exact
 
-Each $p_k$ uses only earlier values, so the calculation runs forward from zero with no guessing and no truncation of the count. Each step is a sum of at most $m$ terms, here 5. Reaching total $k$ costs about $k$ times $m$ multiplications. Brute force over the count convolves the size distribution with itself once per claim count (it finds the chances for the total of 1 claim, then 2 claims, and so on): about $k$ times more work, and the same answer.
+Each $`p_k`$ uses only earlier values, so the calculation runs forward from zero with no guessing and no truncation of the count. Each step is a sum of at most $`m`$ terms, here 5. Reaching total $`k`$ costs about $`k`$ times $`m`$ multiplications. Brute force over the count convolves the size distribution with itself once per claim count (it finds the chances for the total of 1 claim, then 2 claims, and so on): about $`k`$ times more work, and the same answer.
 
 <details>
 <summary>Detailed proof: the generating-function route, and the (a, b, 0) family</summary>
 
-**Generating functions.** Put $Q(z) = \sum_j q_j z^j$ for one claim and $P(z) = \sum_k p_k z^k$ for the year, for $0 \le z < 1$. Independent claims multiply generating functions, so $n$ claims give $Q(z)^n$. Averaging over a Poisson count gives $P(z) = \sum_n e^{-\lambda}\lambda^n Q(z)^n/n! = e^{\lambda(Q(z) - 1)}$. At $z = 0$ this is $p_0 = e^{\lambda(q_0 - 1)}$.
+**Generating functions.** Put $`Q(z) = \sum_j q_j z^j`$ for one claim and $`P(z) = \sum_k p_k z^k`$ for the year, for $`0 \le z < 1`$. Independent claims multiply generating functions, so $`n`$ claims give $`Q(z)^n`$. Averaging over a Poisson count gives $`P(z) = \sum_n e^{-\lambda}\lambda^n Q(z)^n/n! = e^{\lambda(Q(z) - 1)}`$. At $`z = 0`$ this is $`p_0 = e^{\lambda(q_0 - 1)}`$.
 
-Differentiate: $P'(z) = \lambda\,Q'(z)\,P(z)$. On the left the coefficient of $z^{k-1}$ is $k\,p_k$. On the right, $Q'(z) = \sum_{j\ge1} j\,q_j z^{j-1}$ times $P(z) = \sum_\ell p_\ell z^\ell$ has coefficient $\sum_{j=1}^{k} j\,q_j\,p_{k-j}$ at $z^{k-1}$. Two power series that agree on an interval have equal coefficients, so $k\,p_k = \lambda\sum_j j\,q_j\,p_{k-j}$. Both series have non-negative coefficients adding to one, so they and their derivatives converge for $|z| < 1$.
+Differentiate: $`P'(z) = \lambda\,Q'(z)\,P(z)`$. On the left the coefficient of $`z^{k-1}`$ is $`k\,p_k`$. On the right, $`Q'(z) = \sum_{j\ge1} j\,q_j z^{j-1}`$ times $`P(z) = \sum_\ell p_\ell z^\ell`$ has coefficient $`\sum_{j=1}^{k} j\,q_j\,p_{k-j}`$ at $`z^{k-1}`$. Two power series that agree on an interval have equal coefficients, so $`k\,p_k = \lambda\sum_j j\,q_j\,p_{k-j}`$. Both series have non-negative coefficients adding to one, so they and their derivatives converge for $`|z| < 1`$.
 
-**The (a, b, 0) family.** Suppose $P(N = n) = (a + b/n)\,P(N = n-1)$ for $n \ge 1$. Write $q^{*n}_k$ for the chance that $n$ claims total $k$. Two facts about $n$ interchangeable claims: $q^{*n}_k = \sum_j q_j\,q^{*(n-1)}_{k-j}$ (split off the first claim), and $\frac{1}{n}q^{*n}_k = \sum_j \frac{j}{k}\,q_j\,q^{*(n-1)}_{k-j}$ (each claim carries $1/n$ of the total on average, as in Step 2). Then for $k \ge 1$
+**The (a, b, 0) family.** Suppose $`P(N = n) = (a + b/n)\,P(N = n-1)`$ for $`n \ge 1`$. Write $`q^{*n}_k`$ for the chance that $`n`$ claims total $`k`$. Two facts about $`n`$ interchangeable claims: $`q^{*n}_k = \sum_j q_j\,q^{*(n-1)}_{k-j}`$ (split off the first claim), and $`\frac{1}{n}q^{*n}_k = \sum_j \frac{j}{k}\,q_j\,q^{*(n-1)}_{k-j}`$ (each claim carries $`1/n`$ of the total on average, as in Step 2). Then for $`k \ge 1`$
 
-$$p_k = \sum_{n\ge1}\Big(a + \frac{b}{n}\Big)P(N = n-1)\,q^{*n}_k = \sum_{j\ge0}\Big(a + \frac{b\,j}{k}\Big)q_j \sum_{n\ge1} P(N = n-1)\,q^{*(n-1)}_{k-j} = \sum_{j\ge0}\Big(a + \frac{b\,j}{k}\Big)q_j\,p_{k-j}.$$
+$`\displaystyle p_k = \sum_{n\ge1}\Big(a + \frac{b}{n}\Big)P(N = n-1)\,q^{*n}_k = \sum_{j\ge0}\Big(a + \frac{b\,j}{k}\Big)q_j \sum_{n\ge1} P(N = n-1)\,q^{*(n-1)}_{k-j} = \sum_{j\ge0}\Big(a + \frac{b\,j}{k}\Big)q_j\,p_{k-j}.`$
 
-The $j = 0$ term is $a\,q_0\,p_k$; moving it to the left gives the factor $1/(1 - a q_0)$. Poisson has $a = 0$, $b = \lambda$, which returns the card's formula. The negative binomial with mean 20 and variance 60 used in the checks has $a = 2/3$, $b = 6$, and its $p_0$ is its chance of no claims, $3^{-10}$.
+The $`j = 0`$ term is $`a\,q_0\,p_k`$; moving it to the left gives the factor $`1/(1 - a q_0)`$. Poisson has $`a = 0`$, $`b = \lambda`$, which returns the card's formula. The negative binomial with mean 20 and variance 60 used in the checks has $`a = 2/3`$, $`b = 6`$, and its $`p_0`$ is its chance of no claims, $`3^{-10}`$.
 
 </details>
 
-A second road reaches the same numbers with no recursion. Split the 20 expected claims by size: a Poisson count of claims, sorted into bins independently, gives independent Poisson counts in each bin. So the year holds a Poisson(10) number (a Poisson count with mean 10) of $10,000 claims, an independent Poisson(6) number of $20,000 claims and an independent Poisson(4) number of $50,000 claims. The total is $n_1 + 2n_2 + 5n_5$ units. Adding the chances of every triple with a given total gives the distribution directly.
+A second road reaches the same numbers with no recursion. Split the 20 expected claims by size: a Poisson count of claims, sorted into bins independently, gives independent Poisson counts in each bin. So the year holds a Poisson(10) number (a Poisson count with mean 10) of $10,000 claims, an independent Poisson(6) number of $20,000 claims and an independent Poisson(4) number of $50,000 claims. The total is $`n_1 + 2n_2 + 5n_5`$ units. Adding the chances of every triple with a given total gives the distribution directly.
 
 The third road, summing over the claim count, is the definition of the compound distribution in [Aggregate claims](04-collective-risk-and-compound-poisson.md).
 
@@ -148,7 +160,7 @@ The third road, summing over the claim count, is the definition of the compound 
 
 ## Worked numbers, by hand
 
-The insurer's large claims: $\lambda = 20$, grid $h = $10,000, sizes 1, 2 and 5 units with chances 0.5, 0.3 and 0.2.
+The insurer's large claims: $`\lambda = 20`$, grid $h = $10,000, sizes 1, 2 and 5 units with chances 0.5, 0.3 and 0.2.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -156,15 +168,15 @@ The insurer's large claims: $\lambda = 20$, grid $h = $10,000, sizes 1, 2 and 5 
 | mean total | 20 × 2.1 | 42 units, $420,000 |
 | threshold | 1.2 × 42 | 50.4 units, $504,000 |
 | what counts as a breach | totals are whole units | 51 units or more |
-| $p_0$ | $e^{-20}$ | 2.061154 × $10^{-9}$ |
-| $p_1$ | (20 / 1) × (1 × 0.5 × $p_0$) | 10 $p_0$ |
-| $p_2$ | (20 / 2) × (1 × 0.5 × 10 $p_0$ + 2 × 0.3 × $p_0$) | 56 $p_0$ |
-| $p_2$, by the split | two $10,000 claims, 10 × 10 / 2 = 50 $p_0$; or one $20,000 claim, 6 $p_0$ | 56 $p_0$ |
-| $p_3$ | (20 / 3) × (1 × 0.5 × 56 $p_0$ + 2 × 0.3 × 10 $p_0$) | 226.666667 $p_0$ |
-| $p_4$ to $p_{50}$ | the same step 47 more times | chance of 50 units or less, 0.7765595112 |
+| $`p_0`$ | $`e^{-20}`$ | 2.061154 × $`10^{-9}`$ |
+| $`p_1`$ | (20 / 1) × (1 × 0.5 × $`p_0`$) | 10 $`p_0`$ |
+| $`p_2`$ | (20 / 2) × (1 × 0.5 × 10 $`p_0`$ + 2 × 0.3 × $`p_0`$) | 56 $`p_0`$ |
+| $`p_2`$, by the split | two $10,000 claims, 10 × 10 / 2 = 50 $`p_0`$; or one $20,000 claim, 6 $`p_0`$ | 56 $`p_0`$ |
+| $`p_3`$ | (20 / 3) × (1 × 0.5 × 56 $`p_0`$ + 2 × 0.3 × 10 $`p_0`$) | 226.666667 $`p_0`$ |
+| $`p_4`$ to $`p_{50}`$ | the same step 47 more times | chance of 50 units or less, 0.7765595112 |
 | **the tail** | 1 − 0.7765595112 | **0.223440, or 22.34%** |
 
-In $p_3$ the size-5 term is absent: a $50,000 claim cannot fit inside a $30,000 total. From a total of 5 units on, it joins the sum.
+In $`p_3`$ the size-5 term is absent: a $50,000 claim cannot fit inside a $30,000 total. From a total of 5 units on, it joins the sum.
 
 The large claims break a $504,000 budget in about 22 years out of 100. A budget broken only one year in twenty sits much higher: $600,000 is still beaten 6.38 percent of the time, and $630,000, 150 percent of the mean, 4.08 percent.
 
@@ -175,8 +187,8 @@ The large claims break a $504,000 budget in about 22 years out of 100. A budget 
 | A bell curve with the right mean and spread, at 120% | 23.40% | Near the middle it is off by about a point; the real total is lumpy and skewed |
 | The same bell curve at 150% of the mean | 3.48%, against 4.08% | The bell curve's tail is too thin, and the gap widens further out |
 | $500,000 counted as breaking a $504,000 budget | 24.79% | The total sits on a $10,000 grid; 50 units does not beat 50.4 |
-| The weight $j$ dropped from the sum | chances adding to 0.002029, not 1 | Without $j$ the recursion is no longer the Poisson ratio at work |
-| The whole book at 2,500 claims a year | every chance 0.000000 | $e^{-2500}$ underflows; start from a smaller $\lambda$ and combine, or work in logarithms |
+| The weight $`j`$ dropped from the sum | chances adding to 0.002029, not 1 | Without $`j`$ the recursion is no longer the Poisson ratio at work |
+| The whole book at 2,500 claims a year | every chance 0.000000 | $`e^{-2500}`$ underflows; start from a smaller $`\lambda`$ and combine, or work in logarithms |
 
 The code prints every number in this table.
 
@@ -220,9 +232,9 @@ Both programs build the distribution of the year's total four independent ways:
 
 The first three agree to ten decimal places, because each is exact. The checks then:
 
-- confirm that the distribution's own mean and variance equal $\lambda\,\mathrm{E}[X]$ and $\lambda\,\mathrm{E}[X^2]$;
+- confirm that the distribution's own mean and variance equal $`\lambda\,\mathrm{E}[X]`$ and $`\lambda\,\mathrm{E}[X^2]`$;
 - run the negative binomial member of the family against its closed-form count chances;
-- confirm that 25 claims a year with one in five settling at zero reproduce both years (which tests every $q_0$ term);
+- confirm that 25 claims a year with one in five settling at zero reproduce both years (which tests every $`q_0`$ term);
 - print every mistake on the card.
 
 The bell curve's area is computed by Simpson's rule (a standard way to add up the area under a curve in thin slices), not taken from a library.
@@ -629,12 +641,12 @@ The two outputs match line for line, the simulated years included: both language
 
 ### Lean
 
-Lean proves the card's formulas for any claim sizes on the grid, with $p_k$ built as the sum over the claim count.
+Lean proves the card's formulas for any claim sizes on the grid, with $`p_k`$ built as the sum over the claim count.
 
-- Take a Poisson count with mean $\lambda$, claim sizes up to $m$ units, and a total $k \ge 1$. Then $p_k = (\lambda/k)\sum_{j=1}^{\min(k,m)} j\,q_j\,p_{k-j}$.
-- Take the same Poisson count and claim sizes. Then the starting value is $p_0 = e^{-\lambda(1-q_0)}$.
-- Take any claim count in the (a, b, 0) class, and a total $k \ge 1$. Then $p_k = \sum_{j=1}^{\min(k,m)} (a + bj/k)\,q_j\,p_{k-j} / (1 - a q_0)$.
-- The hand-worked numbers hold: a mean claim of 2.1 units, a mean total of 42 units, and $p_1, p_2, p_3$ as in the table.
+- Take a Poisson count with mean $`\lambda`$, claim sizes up to $`m`$ units, and a total $`k \ge 1`$. Then $`p_k = (\lambda/k)\sum_{j=1}^{\min(k,m)} j\,q_j\,p_{k-j}`$.
+- Take the same Poisson count and claim sizes. Then the starting value is $`p_0 = e^{-\lambda(1-q_0)}`$.
+- Take any claim count in the (a, b, 0) class, and a total $`k \ge 1`$. Then $`p_k = \sum_{j=1}^{\min(k,m)} (a + bj/k)\,q_j\,p_{k-j} / (1 - a q_0)`$.
+- The hand-worked numbers hold: a mean claim of 2.1 units, a mean total of 42 units, and $`p_1, p_2, p_3`$ as in the table.
 
 The 22.34 percent tail, the bell curve and the simulation are left to the Python and Rust checks.
 
@@ -1007,16 +1019,16 @@ example : (2 : ℚ) / (1 + 2) = 2 / 3 ∧ (10 - 1 : ℚ) * 2 / (1 + 2) = 6 ∧
 > **Treating the year's total as a bell curve because it is a sum of many claims.** A sum of 20 claims on average, with a random count and a few $50,000 claims, is still lumpy and skewed to the right. The bell curve with the right mean and spread says 23.40 percent at the $504,000 budget, close to the true 22.34 percent. That closeness is the trap. At 150 percent of the mean it says 3.48 percent where the truth is 4.08 percent, and at $700,000 it says 0.78 percent against 1.27 percent. Capital is set in exactly that far tail.
 >
 > - **Budget boundaries on a grid.** Totals move in $10,000 steps. Beating $504,000 means 51 units or more; counting 50 units as a breach gives 24.79 percent.
-> - **Dropping the weight $j$.** The recursion without $j$ produces chances that add to 0.002029, not 1. Checking that the $p_k$ add to one catches it at once.
-> - **Feeding the whole book in at once.** With 2,500 claims a year, $e^{-2500}$ is below the smallest positive 64-bit floating-point number, so $p_0$ and every later $p_k$ come out 0. The fix is to compute for a fraction of the rate and combine, or to carry logarithms.
-> - **Forgetting zero-size claims in $p_0$.** If some reported claims settle at nothing, $q_0 > 0$ and the start is $e^{-\lambda(1-q_0)}$, not $e^{-\lambda}$: a year with claims can still total zero.
+> - **Dropping the weight $`j`$.** The recursion without $`j`$ produces chances that add to 0.002029, not 1. Checking that the $`p_k`$ add to one catches it at once.
+> - **Feeding the whole book in at once.** With 2,500 claims a year, $`e^{-2500}`$ is below the smallest positive 64-bit floating-point number, so $`p_0`$ and every later $`p_k`$ come out 0. The fix is to compute for a fraction of the rate and combine, or to carry logarithms.
+> - **Forgetting zero-size claims in $`p_0`$.** If some reported claims settle at nothing, $`q_0 > 0`$ and the start is $`e^{-\lambda(1-q_0)}`$, not $`e^{-\lambda}`$: a year with claims can still total zero.
 
 ---
 
 ## Where you meet it in real life
 
 - **Setting capital for an insurer.** Solvency rules ask how much money covers a bad year at a stated confidence. For a line of business with a count and a size model, the recursion gives the tail exactly instead of by simulation.
-- **Pricing stop-loss and excess-of-loss reinsurance.** A cover that pays the part of the year's total above a line is priced from the same $p_k$; see [Credibility and reinsurance](08-credibility-and-reinsurance.md).
+- **Pricing stop-loss and excess-of-loss reinsurance.** A cover that pays the part of the year's total above a line is priced from the same $`p_k`$; see [Credibility and reinsurance](08-credibility-and-reinsurance.md).
 - **Operational risk at banks.** Loss-distribution models for fraud and system failures pair a count with a size, and the aggregate is computed the same way.
 - **Credit portfolio models.** CreditRisk+, a published portfolio credit model, uses a Panjer-type recursion to get the distribution of default losses on a grid of exposure bands.
 - **Ruin over many years.** A single year's total feeds the question of whether surplus survives a run of years, the subject of [Ruin](06-ruin-theory-and-lundberg.md).

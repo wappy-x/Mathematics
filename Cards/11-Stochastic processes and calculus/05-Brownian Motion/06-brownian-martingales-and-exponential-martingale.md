@@ -43,54 +43,60 @@ The flat lines are the right wall at +3 and the left wall at −2. This grain di
 
 ## The formula
 
-Notation first, with one-line reminders. $W_t$ is the grain's position at time $t$, Brownian motion as [Brownian motion](01-brownian-motion.md) built it: it starts at 0, and its move over any later stretch of length $t - s$ is a normal draw with mean 0 and variance $t - s$, independent of the past.
+Notation first, with one-line reminders. $`W_t`$ is the grain's position at time $`t`$, Brownian motion as [Brownian motion](01-brownian-motion.md) built it: it starts at 0, and its move over any later stretch of length $`t - s`$ is a normal draw with mean 0 and variance $`t - s`$, independent of the past.
 
-The filtration $\mathcal{F}_s$ is what is known by time $s$: the path up to then. A martingale satisfies $E[X_t \mid \mathcal{F}_s] = X_s$ for every $s < t$ ([Martingales](../02-Martingales/01-martingales.md)).
+The filtration $`\mathcal{F}_s`$ is what is known by time $`s`$: the path up to then. A martingale satisfies $`E[X_t \mid \mathcal{F}_s] = X_s`$ for every $`s < t`$ ([Martingales](../02-Martingales/01-martingales.md)).
 
 The three martingales:
 
-$$W_t, \qquad W_t^2 - t, \qquad M_t = \exp\!\big(\theta W_t - \tfrac12\theta^2 t\big) \text{ for any fixed number } \theta.$$
+```math
+W_t, \qquad W_t^2 - t, \qquad M_t = \exp\!\big(\theta W_t - \tfrac12\theta^2 t\big) \text{ for any fixed number } \theta.
+```
 
 **Read it aloud:** the position is fair; the squared position is fair once the clock is taken off; the exponential of θ times the position is fair once the clock times half θ squared is taken off.
 
-The walls sit at $-a$ and $+b$, with $a = 2$ and $b = 3$. The exit time $\tau$ (Greek "tau") is the first time the grain touches either wall. It is a stopping time: at any moment, the path so far shows whether the exit has happened. Stopping each martingale at $\tau$ gives:
+The walls sit at $`-a`$ and $`+b`$, with $`a = 2`$ and $`b = 3`$. The exit time $`\tau`$ (Greek "tau") is the first time the grain touches either wall. It is a stopping time: at any moment, the path so far shows whether the exit has happened. Stopping each martingale at $`\tau`$ gives:
 
-$$P(W_\tau = b) = \frac{a}{a+b}, \qquad E[\tau] = ab, \qquad E\big[e^{-\lambda \tau_b}\big] = e^{-b\sqrt{2\lambda}}.$$
+```math
+P(W_\tau = b) = \frac{a}{a+b}, \qquad E[\tau] = ab, \qquad E\big[e^{-\lambda \tau_b}\big] = e^{-b\sqrt{2\lambda}}.
+```
 
 **Read it aloud:** the right-exit chance is the left distance over the width; the mean exit time is the product of the distances; the discounted value of reaching level b, with no left wall, is e to the minus b root two lambda.
 
-In the last formula $\tau_b$ is the first time the grain reaches $+b$, with the left wall removed. The number $\lambda$ (Greek "lambda") is a rate per second.
+In the last formula $`\tau_b`$ is the first time the grain reaches $`+b`$, with the left wall removed. The number $`\lambda`$ (Greek "lambda") is a rate per second.
 
-Read $E[e^{-\lambda \tau_b}]$ in either of two ways. It is the chance the grain reaches $+b$ before an independent random clock rings, the tracker losing the grain at rate $\lambda$. It is also the price today of 1 dollar paid at the moment of crossing, discounted continuously at rate $\lambda$.
+Read $`E[e^{-\lambda \tau_b}]`$ in either of two ways. It is the chance the grain reaches $`+b`$ before an independent random clock rings, the tracker losing the grain at rate $`\lambda`$. It is also the price today of 1 dollar paid at the moment of crossing, discounted continuously at rate $`\lambda`$.
 
-The third martingale supplies it with $\theta = \sqrt{2\lambda}$, the value that makes $\tfrac12\theta^2 = \lambda$.
+The third martingale supplies it with $`\theta = \sqrt{2\lambda}`$, the value that makes $`\tfrac12\theta^2 = \lambda`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $W_t$, $W_s$ | the grain's position at time t (or s), in micrometres; Brownian motion | 3.01 at the exit in the picture | — |
-| $t$, $s$, $u$, $n$ | times in seconds, with s the earlier one; u a possible value of $\tau_b$ in The other door; n a fixed time that caps a stopping time in Step 4 | — | — |
-| $\mathcal{F}_s$ | what is known by time s: the path up to s | — | — |
-| $a$, $b$, $c$, $p$ | distance from the start to the left wall, and to the right wall; c = (b − a)/2, the interval's midpoint; p the chance of leaving by the right wall | 2 and 3; c = 0.5; p = 0.4 | a up: right exit likelier, longer wait; b up: right exit less likely, longer wait |
-| $\tau$, $\tau_b$ | the exit time, first touch of either wall; and the first time the grain reaches +b with no left wall | 6 seconds on average; $\tau_b$ is finite with probability 1 but has an infinite average | — |
-| $\theta$ | the tilt inside the exponential martingale, per micrometre | 0.2 | — |
-| $\lambda$ | the tracker-loss rate, or discount rate, per second | 0.02 | the crossing is worth less: 0.548812 falls |
-| $M_t$, $M_T$, $X_t$, $X_n$ | the exponential martingale, at time t or a final time T; X is any martingale | M starts at 1 and averages 1 | — |
-| $D$, $v$ | the move $W_t - W_s$ after time s: normal, mean 0, variance v = t − s | — | — |
-| $\rho$, $\rho_k$ | in the detailed proof: a stopping time no later than n, and it rounded up to a grid of step $2^{-k}$ | — | — |
-| $E$, $P$ | average over all paths, and probability | — | — |
-| $h$ | the step of the lattice walk in the code, in micrometres; each step takes h^2 seconds | 1 down to 0.0625 | — |
+| $`W_t`$, $`W_s`$ | the grain's position at time t (or s), in micrometres; Brownian motion | 3.01 at the exit in the picture | — |
+| $`t`$, $`s`$, $`u`$, $`n`$ | times in seconds, with s the earlier one; u a possible value of $`\tau_b`$ in The other door; n a fixed time that caps a stopping time in Step 4 | — | — |
+| $`\mathcal{F}_s`$ | what is known by time s: the path up to s | — | — |
+| $`a`$, $`b`$, $`c`$, $`p`$ | distance from the start to the left wall, and to the right wall; c = (b − a)/2, the interval's midpoint; p the chance of leaving by the right wall | 2 and 3; c = 0.5; p = 0.4 | a up: right exit likelier, longer wait; b up: right exit less likely, longer wait |
+| $`\tau`$, $`\tau_b`$ | the exit time, first touch of either wall; and the first time the grain reaches +b with no left wall | 6 seconds on average; $`\tau_b`$ is finite with probability 1 but has an infinite average | — |
+| $`\theta`$ | the tilt inside the exponential martingale, per micrometre | 0.2 | — |
+| $`\lambda`$ | the tracker-loss rate, or discount rate, per second | 0.02 | the crossing is worth less: 0.548812 falls |
+| $`M_t`$, $`M_T`$, $`X_t`$, $`X_n`$ | the exponential martingale, at time t or a final time T; X is any martingale | M starts at 1 and averages 1 | — |
+| $`D`$, $`v`$ | the move $`W_t - W_s`$ after time s: normal, mean 0, variance v = t − s | — | — |
+| $`\rho`$, $`\rho_k`$ | in the detailed proof: a stopping time no later than n, and it rounded up to a grid of step $`2^{-k}`$ | — | — |
+| $`E`$, $`P`$ | average over all paths, and probability | — | — |
+| $`h`$ | the step of the lattice walk in the code, in micrometres; each step takes h^2 seconds | 1 down to 0.0625 | — |
 
-The interval also has its own discounted exit value, from the same martingale used twice. It uses cosh, the hyperbolic cosine: $\cosh x$ is the average of $e^{x}$ and $e^{-x}$.
+The interval also has its own discounted exit value, from the same martingale used twice. It uses cosh, the hyperbolic cosine: $`\cosh x`$ is the average of $`e^{x}`$ and $`e^{-x}`$.
 
-$$E\big[e^{-\lambda\tau}\big] = \frac{\cosh\big(\theta\,(b-a)/2\big)}{\cosh\big(\theta\,(a+b)/2\big)}, \qquad \theta = \sqrt{2\lambda}.$$
+```math
+E\big[e^{-\lambda\tau}\big] = \frac{\cosh\big(\theta\,(b-a)/2\big)}{\cosh\big(\theta\,(a+b)/2\big)}, \qquad \theta = \sqrt{2\lambda}.
+```
 
 In words: the top uses the start's distance from the interval's midpoint, the bottom uses the half-width. Here it is 0.891257.
 
 ### When it holds
 
 - **Independent normal moves with mean 0.** Every proof below uses only that the move after time s is a fresh normal draw with mean 0. A grain pushed by a current (a drift) breaks all three as written: W is no longer fair, and the 0.4, the 6 seconds and the 0.548812 all change.
-- **Variance equal to elapsed time.** The clock correction in $W_t^2 - t$ assumes variance 1 per second. With spread $\sigma^2$ per second (σ, "sigma", sets how hard the grain is knocked), the fair game is $W_t^2 - \sigma^2 t$, and the mean exit time becomes $ab/\sigma^2$.
-- **A stopping time that is bounded, or a stopped martingale that is bounded.** Inside the interval, stopped W and stopped $M_t$ stay bounded, and $W_t^2 - t$ is handled by monotone convergence, so the averages pass through (Steps 5 to 8). At a single level with no left wall, W stopped at $\tau_b$ has no lower bound, and optional stopping fails: the grain always arrives at +3, so $E[W_{\tau_b}] = 3$, not 0. The exponential survives there because its stopped value never exceeds $e^{\theta b}$.
+- **Variance equal to elapsed time.** The clock correction in $`W_t^2 - t`$ assumes variance 1 per second. With spread $`\sigma^2`$ per second (σ, "sigma", sets how hard the grain is knocked), the fair game is $`W_t^2 - \sigma^2 t`$, and the mean exit time becomes $`ab/\sigma^2`$.
+- **A stopping time that is bounded, or a stopped martingale that is bounded.** Inside the interval, stopped W and stopped $`M_t`$ stay bounded, and $`W_t^2 - t`$ is handled by monotone convergence, so the averages pass through (Steps 5 to 8). At a single level with no left wall, W stopped at $`\tau_b`$ has no lower bound, and optional stopping fails: the grain always arrives at +3, so $`E[W_{\tau_b}] = 3`$, not 0. The exponential survives there because its stopped value never exceeds $`e^{\theta b}`$.
 - **Continuous paths.** The grain lands exactly on the wall at the exit. A path with jumps, or a path watched only on a grid, overshoots, and the 0.4 and 6 seconds become approximations.
 
 ---
@@ -99,54 +105,62 @@ In words: the top uses the start's distance from the interval's midpoint, the bo
 
 ### Step 0: one fresh normal draw does all the work
 
-From time s on, write $W_t = W_s + D$. The move $D$ is normal, mean 0, variance $t - s$, and independent of $\mathcal{F}_s$. So the average of any function of $W_t$, given the past, is an average over $D$ alone, with $W_s$ held fixed as a known number. Each martingale below is one such average.
+From time s on, write $`W_t = W_s + D`$. The move $`D`$ is normal, mean 0, variance $`t - s`$, and independent of $`\mathcal{F}_s`$. So the average of any function of $`W_t`$, given the past, is an average over $`D`$ alone, with $`W_s`$ held fixed as a known number. Each martingale below is one such average.
 
 ### Step 1: the position is fair
 
-$$E[W_t \mid \mathcal{F}_s] = W_s + E[D] = W_s.$$
+```math
+E[W_t \mid \mathcal{F}_s] = W_s + E[D] = W_s.
+```
 
-The average of the known part is itself; the fresh draw averages 0. Each $W_t$ also has a finite average size, at most $\sqrt{t}$, so W is a martingale.
+The average of the known part is itself; the fresh draw averages 0. Each $`W_t`$ also has a finite average size, at most $`\sqrt{t}`$, so W is a martingale.
 
 ### Step 2: the square grows by the clock, so subtract the clock
 
-$$W_t^2 = W_s^2 + 2W_sD + D^2, \qquad E[W_t^2 \mid \mathcal{F}_s] = W_s^2 + 0 + (t - s).$$
+```math
+W_t^2 = W_s^2 + 2W_sD + D^2, \qquad E[W_t^2 \mid \mathcal{F}_s] = W_s^2 + 0 + (t - s).
+```
 
-The middle term averages 0 because $W_s$ is known and $D$ averages 0. The last term averages its variance, $t - s$. So the square climbs by exactly the elapsed time, on average.
+The middle term averages 0 because $`W_s`$ is known and $`D`$ averages 0. The last term averages its variance, $`t - s`$. So the square climbs by exactly the elapsed time, on average.
 
-Take the clock off both sides and $E[W_t^2 - t \mid \mathcal{F}_s] = W_s^2 - s$. The same $t$ is the quadratic variation $[W]_t$ of [Quadratic variation](03-quadratic-variation.md): the sum of squared moves along the path, which piles up at rate 1 per second.
+Take the clock off both sides and $`E[W_t^2 - t \mid \mathcal{F}_s] = W_s^2 - s`$. The same $`t`$ is the quadratic variation $`[W]_t`$ of [Quadratic variation](03-quadratic-variation.md): the sum of squared moves along the path, which piles up at rate 1 per second.
 
 ### Step 3: the exponential creeps up, so discount the creep
 
-The average of $e^{\theta D}$ for a normal D with variance v is $e^{\theta^2 v/2}$, more than 1. Bending upward ($e^x$ is convex) magnifies up-moves more than it shrinks down-moves.
+The average of $`e^{\theta D}`$ for a normal D with variance v is $`e^{\theta^2 v/2}`$, more than 1. Bending upward ($`e^x`$ is convex) magnifies up-moves more than it shrinks down-moves.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-With v = t − s, the density of $D$ is $e^{-x^2/(2v)}/\sqrt{2\pi v}$. Then
-$$\theta x - \frac{x^2}{2v} = -\frac{(x - \theta v)^2}{2v} + \frac{\theta^2 v}{2}.$$
-The first piece, integrated against $1/\sqrt{2\pi v}$, is the area under a bell curve centred at $\theta v$: exactly 1. The second piece is a constant. So $E[e^{\theta D}] = e^{\theta^2 v/2}$.
+With v = t − s, the density of $`D`$ is $`e^{-x^2/(2v)}/\sqrt{2\pi v}`$. Then
+
+$`\displaystyle \theta x - \frac{x^2}{2v} = -\frac{(x - \theta v)^2}{2v} + \frac{\theta^2 v}{2}.`$
+
+The first piece, integrated against $`1/\sqrt{2\pi v}`$, is the area under a bell curve centred at $`\theta v`$: exactly 1. The second piece is a constant. So $`E[e^{\theta D}] = e^{\theta^2 v/2}`$.
 
 </details>
 
 Then
 
-$$E\big[e^{\theta W_t} \mid \mathcal{F}_s\big] = e^{\theta W_s}\,E\big[e^{\theta D}\big] = e^{\theta W_s}\,e^{\theta^2 (t-s)/2}.$$
+```math
+E\big[e^{\theta W_t} \mid \mathcal{F}_s\big] = e^{\theta W_s}\,E\big[e^{\theta D}\big] = e^{\theta W_s}\,e^{\theta^2 (t-s)/2}.
+```
 
-Multiply both sides by $e^{-\theta^2 t/2}$ and $E[M_t \mid \mathcal{F}_s] = M_s$. The correction $-\tfrac12\theta^2 t$ is exactly the creep, priced in advance. The three properties are proved, from Step 0 and nothing else.
+Multiply both sides by $`e^{-\theta^2 t/2}`$ and $`E[M_t \mid \mathcal{F}_s] = M_s`$. The correction $`-\tfrac12\theta^2 t`$ is exactly the creep, priced in advance. The three properties are proved, from Step 0 and nothing else.
 
 ### Step 4: stopping a fair game at a bounded time keeps it fair
 
-[Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md) proved, for games in whole rounds, that a martingale stopped at a stopping time no later than a fixed round N keeps its starting average. The same holds in continuous time for a continuous martingale and a stopping time no later than a fixed time n: $E[X_{\tau \wedge n}] = E[X_0]$, where $\tau \wedge n$ means whichever of $\tau$ and n comes first. The proof is in the callout.
+[Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md) proved, for games in whole rounds, that a martingale stopped at a stopping time no later than a fixed round N keeps its starting average. The same holds in continuous time for a continuous martingale and a stopping time no later than a fixed time n: $`E[X_{\tau \wedge n}] = E[X_0]`$, where $`\tau \wedge n`$ means whichever of $`\tau`$ and n comes first. The proof is in the callout.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let X be a martingale with continuous paths and $\rho \le n$ a stopping time (here $\rho = \tau \wedge n$). For each k, round $\rho$ up to the grid of step $2^{-k}$: $\rho_k$ is the first grid time strictly after $\rho$, capped at n. Each $\rho_k$ is a stopping time for the grid process $(X_{j2^{-k}})$, since for grid times before n, $\{\rho_k \le j2^{-k}\}$ is $\{\rho < j2^{-k}\}$, known by grid time $j2^{-k}$. It takes finitely many values, all at most n.
+Let X be a martingale with continuous paths and $`\rho \le n`$ a stopping time (here $`\rho = \tau \wedge n`$). For each k, round $`\rho`$ up to the grid of step $`2^{-k}`$: $`\rho_k`$ is the first grid time strictly after $`\rho`$, capped at n. Each $`\rho_k`$ is a stopping time for the grid process $`(X_{j2^{-k}})`$, since for grid times before n, $`\{\rho_k \le j2^{-k}\}`$ is $`\{\rho < j2^{-k}\}`$, known by grid time $`j2^{-k}`$. It takes finitely many values, all at most n.
 
-1. **Discrete optional stopping on the grid.** The grid process is a martingale in whole steps. By the discrete theorem, $E[X_{\rho_k}] = E[X_0]$. The same theorem, applied to events of the stopped past, gives more: $X_{\rho_k} = E[X_n \mid \mathcal{F}_{\rho_k}]$.
-2. **The rounded values are uniformly integrable.** Conditional expectations of one integrable variable $X_n$, over any family of sigma-algebras (collections of events that count as known), are uniformly integrable: no part of their average escapes to infinity ([Uniform integrability](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)).
-3. **Convergence along paths.** $\rho_k$ decreases to $\rho$, and paths are continuous, so $X_{\rho_k} \to X_\rho$ on every path.
-4. **Pass the limit through the average.** Almost-sure convergence plus uniform integrability gives convergence of averages (Vitali's theorem, proved in [Uniform integrability](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)). So $E[X_\rho] = \lim E[X_{\rho_k}] = E[X_0]$.
+1. **Discrete optional stopping on the grid.** The grid process is a martingale in whole steps. By the discrete theorem, $`E[X_{\rho_k}] = E[X_0]`$. The same theorem, applied to events of the stopped past, gives more: $`X_{\rho_k} = E[X_n \mid \mathcal{F}_{\rho_k}]`$.
+2. **The rounded values are uniformly integrable.** Conditional expectations of one integrable variable $`X_n`$, over any family of sigma-algebras (collections of events that count as known), are uniformly integrable: no part of their average escapes to infinity ([Uniform integrability](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)).
+3. **Convergence along paths.** $`\rho_k`$ decreases to $`\rho`$, and paths are continuous, so $`X_{\rho_k} \to X_\rho`$ on every path.
+4. **Pass the limit through the average.** Almost-sure convergence plus uniform integrability gives convergence of averages (Vitali's theorem, proved in [Uniform integrability](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)). So $`E[X_\rho] = \lim E[X_{\rho_k}] = E[X_0]`$.
 
 Karatzas and Shreve, chapter 1, give the same argument for right-continuous martingales.
 
@@ -154,49 +168,59 @@ Karatzas and Shreve, chapter 1, give the same argument for right-continuous mart
 
 ### Step 5: the exit comes, and its side is 0.4
 
-First, the exit is sure to come. Apply Step 4 to $W^2 - t$ at $\tau \wedge n$: $E[\tau \wedge n] = E[W_{\tau\wedge n}^2]$. Before the exit the grain is within 3 of the start, so the right side is at most 9.
+First, the exit is sure to come. Apply Step 4 to $`W^2 - t`$ at $`\tau \wedge n`$: $`E[\tau \wedge n] = E[W_{\tau\wedge n}^2]`$. Before the exit the grain is within 3 of the start, so the right side is at most 9.
 
-Let n grow: $\tau \wedge n$ rises to $\tau$, and monotone convergence gives $E[\tau] \le 9$. Monotone convergence says that when quantities rise to a limit on every path, their averages rise to the limit's average ([The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)). A finite average forces $\tau$ to be finite on all but a zero-probability set of paths.
+Let n grow: $`\tau \wedge n`$ rises to $`\tau`$, and monotone convergence gives $`E[\tau] \le 9`$. Monotone convergence says that when quantities rise to a limit on every path, their averages rise to the limit's average ([The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)). A finite average forces $`\tau`$ to be finite on all but a zero-probability set of paths.
 
-Now apply Step 4 to W: $E[W_{\tau\wedge n}] = 0$. The stopped position stays between −2 and +3, and it converges to $W_\tau$, which is −2 or +3. Bounded convergence passes the limit through: $E[W_\tau] = 0$. Bounded convergence says that when quantities stay between fixed bounds and converge on every path, their averages converge too; it is a case of [Dominated convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md). Write p for the chance of the right wall:
+Now apply Step 4 to W: $`E[W_{\tau\wedge n}] = 0`$. The stopped position stays between −2 and +3, and it converges to $`W_\tau`$, which is −2 or +3. Bounded convergence passes the limit through: $`E[W_\tau] = 0`$. Bounded convergence says that when quantities stay between fixed bounds and converge on every path, their averages converge too; it is a case of [Dominated convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md). Write p for the chance of the right wall:
 
-$$3p - 2(1 - p) = 0, \qquad p = \frac{2}{5} = 0.4.$$
+```math
+3p - 2(1 - p) = 0, \qquad p = \frac{2}{5} = 0.4.
+```
 
 The fair game gives no edge to either wall in average position. The near wall is hit more often (3 times in 5) because a hit there is worth less distance.
 
 ### Step 6: the mean exit time is a times b
 
-Return to $E[\tau \wedge n] = E[W_{\tau\wedge n}^2]$ and let n grow. The left side rises to $E[\tau]$ (monotone convergence); the right side is bounded by 9 and converges (bounded convergence). So
+Return to $`E[\tau \wedge n] = E[W_{\tau\wedge n}^2]`$ and let n grow. The left side rises to $`E[\tau]`$ (monotone convergence); the right side is bounded by 9 and converges (bounded convergence). So
 
-$$E[\tau] = E[W_\tau^2] = 0.4 \times 9 + 0.6 \times 4 = 6 \text{ seconds}.$$
+```math
+E[\tau] = E[W_\tau^2] = 0.4 \times 9 + 0.6 \times 4 = 6 \text{ seconds}.
+```
 
-In general $\tfrac{a}{a+b}b^2 + \tfrac{b}{a+b}a^2 = ab$. The fair square converts a question about time into a question about where the grain ends.
+In general $`\tfrac{a}{a+b}b^2 + \tfrac{b}{a+b}a^2 = ab`$. The fair square converts a question about time into a question about where the grain ends.
 
 ### Step 7: the exponential prices the crossing of one level
 
-Take away the left wall. First, $\tau_b$ is finite. Reaching +3 before a wall at −a is one way of reaching +3, so the chance of ever reaching +3 is at least $a/(a+3)$ for every a, and therefore 1.
+Take away the left wall. First, $`\tau_b`$ is finite. Reaching +3 before a wall at −a is one way of reaching +3, so the chance of ever reaching +3 is at least $`a/(a+3)`$ for every a, and therefore 1.
 
-Choose $\theta = \sqrt{2\lambda} = 0.2$, so $M_t = e^{0.2W_t - 0.02t}$. Stopped at $\tau_b \wedge t$, it lies between 0 and $e^{0.2 \times 3}$: the position never passes 3 and the clock term only shrinks it. Step 4 gives $E[M_{\tau_b \wedge t}] = 1$. As t grows, each path's value tends to $e^{0.6 - 0.02\tau_b}$. Bounded convergence:
+Choose $`\theta = \sqrt{2\lambda} = 0.2`$, so $`M_t = e^{0.2W_t - 0.02t}`$. Stopped at $`\tau_b \wedge t`$, it lies between 0 and $`e^{0.2 \times 3}`$: the position never passes 3 and the clock term only shrinks it. Step 4 gives $`E[M_{\tau_b \wedge t}] = 1`$. As t grows, each path's value tends to $`e^{0.6 - 0.02\tau_b}`$. Bounded convergence:
 
-$$e^{0.6}\,E\big[e^{-0.02\,\tau_b}\big] = 1, \qquad E\big[e^{-0.02\,\tau_b}\big] = e^{-0.6} = 0.548812.$$
+```math
+e^{0.6}\,E\big[e^{-0.02\,\tau_b}\big] = 1, \qquad E\big[e^{-0.02\,\tau_b}\big] = e^{-0.6} = 0.548812.
+```
 
-So the grain reaches +3 while still tracked about 55% of the time: a random clock at rate λ, independent of the grain, outlasts a time u with chance $e^{-\lambda u}$, and averaging that over $\tau_b$ is the left side.
+So the grain reaches +3 while still tracked about 55% of the time: a random clock at rate λ, independent of the grain, outlasts a time u with chance $`e^{-\lambda u}`$, and averaging that over $`\tau_b`$ is the left side.
 
 ### Step 8: both walls at once, and the mean time hidden inside
 
-Average $M_t$ with $\theta$ and with $-\theta$, each shifted by the midpoint $c = (b - a)/2 = 0.5$:
+Average $`M_t`$ with $`\theta`$ and with $`-\theta`$, each shifted by the midpoint $`c = (b - a)/2 = 0.5`$:
 
-$$e^{-\lambda t}\cosh\big(\theta(W_t - c)\big) = \tfrac12 e^{-\theta c} M^{(\theta)}_t + \tfrac12 e^{\theta c} M^{(-\theta)}_t,$$
+```math
+e^{-\lambda t}\cosh\big(\theta(W_t - c)\big) = \tfrac12 e^{-\theta c} M^{(\theta)}_t + \tfrac12 e^{\theta c} M^{(-\theta)}_t,
+```
 
-where $M^{(\pm\theta)}$ is $M_t$ with $\pm\theta$ in place of θ. A sum of martingales is a martingale. At the exit, $W_\tau - c$ is +2.5 or −2.5, and cosh takes the same value at both. Bounded stopping as before:
+where $`M^{(\pm\theta)}`$ is $`M_t`$ with $`\pm\theta`$ in place of θ. A sum of martingales is a martingale. At the exit, $`W_\tau - c`$ is +2.5 or −2.5, and cosh takes the same value at both. Bounded stopping as before:
 
-$$E[e^{-\lambda\tau}]\cosh(2.5\theta) = \cosh(-0.5\theta), \qquad E[e^{-0.02\tau}] = \frac{\cosh 0.1}{\cosh 0.5} = 0.891257.$$
+```math
+E[e^{-\lambda\tau}]\cosh(2.5\theta) = \cosh(-0.5\theta), \qquad E[e^{-0.02\tau}] = \frac{\cosh 0.1}{\cosh 0.5} = 0.891257.
+```
 
-For small λ this is about $1 - \lambda E[\tau]$, so $(1 - E[e^{-\lambda\tau}])/\lambda$ tends to the mean exit time. At λ = 1e-6 the code prints 6.0000. The exponential martingale contains the square one.
+For small λ this is about $`1 - \lambda E[\tau]`$, so $`(1 - E[e^{-\lambda\tau}])/\lambda`$ tends to the mean exit time. At λ = 1e-6 the code prints 6.0000. The exponential martingale contains the square one.
 
 ### The other door
 
-The reflection principle of [Reflection principle](04-reflection-principle-and-running-maximum.md) gives the law of $\tau_b$ directly, as the density $b\,e^{-b^2/(2u)}/\sqrt{2\pi u^3}$ at time u. Averaging $e^{-\lambda u}$ against it is an integral, with no martingale in sight. The code does it by Simpson's rule and lands on 0.548812 again.
+The reflection principle of [Reflection principle](04-reflection-principle-and-running-maximum.md) gives the law of $`\tau_b`$ directly, as the density $`b\,e^{-b^2/(2u)}/\sqrt{2\pi u^3}`$ at time u. Averaging $`e^{-\lambda u}`$ against it is an integral, with no martingale in sight. The code does it by Simpson's rule and lands on 0.548812 again.
 
 ---
 
@@ -206,11 +230,11 @@ Walls at −2 and +3 micrometres, tracker-loss rate λ = 0.02 per second.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| right-wall chance, from $E[W_\tau] = 0$ | $3p - 2(1-p) = 0$, so $p = 2/5$ | 0.4 |
+| right-wall chance, from $`E[W_\tau] = 0`$ | $`3p - 2(1-p) = 0`$, so $`p = 2/5`$ | 0.4 |
 | left-wall chance | 1 − 0.4 | 0.6 |
-| mean exit time, from $E[W_\tau^2 - \tau] = 0$ | 0.4 × 9 + 0.6 × 4 | 6 seconds |
-| tilt for the tracker | $\theta = \sqrt{2 \times 0.02}$ | 0.2 |
-| chance of reaching +3 before the tracker drops it | $e^{-3 \times 0.2} = e^{-0.6}$ | 0.548812 |
+| mean exit time, from $`E[W_\tau^2 - \tau] = 0`$ | 0.4 × 9 + 0.6 × 4 | 6 seconds |
+| tilt for the tracker | $`\theta = \sqrt{2 \times 0.02}`$ | 0.2 |
+| chance of reaching +3 before the tracker drops it | $`e^{-3 \times 0.2} = e^{-0.6}`$ | 0.548812 |
 | interval: midpoint offset and half-width, times θ | 0.2 × 0.5 and 0.2 × 2.5 | 0.1 and 0.5 |
 | cosh of each | cosh 0.1 and cosh 0.5 | 1.005004 and 1.127626 |
 | **discounted exit value of the interval** | 1.005004 / 1.127626 | **0.891257** |
@@ -221,12 +245,12 @@ The grain leaves on the right 2 times in 5, after 6 seconds on average. With the
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Treat $W_t^2$ as fair, as the ordinary chain rule suggests | $E[W_\tau^2] = 0$; the true value is 6.000000 | the square of a wandering point climbs by the clock; the missing −t is the dt term ordinary calculus drops |
-| Drop the ½: take $\theta = \sqrt{\lambda}$ | 0.654251 instead of 0.548812 | $M_t$ is fair only when the clock term is exactly half θ squared |
-| Optional stopping for W at one level, no left wall | $E[W_{\tau_b}] = 0$ claimed; it is 3 with probability 1. $E[\tau_b] = 9$ claimed; averaging $\tau_b$ over paths that arrive by 100, 10,000 and 1,000,000 seconds (the rest counted as 0) gives 16.01, 230.47, 2384.66, still growing | W stopped at $\tau_b$ has no lower bound, so the limit cannot pass through the average. The mean time is infinite even though every path arrives |
+| Treat $`W_t^2`$ as fair, as the ordinary chain rule suggests | $`E[W_\tau^2] = 0`$; the true value is 6.000000 | the square of a wandering point climbs by the clock; the missing −t is the dt term ordinary calculus drops |
+| Drop the ½: take $`\theta = \sqrt{\lambda}`$ | 0.654251 instead of 0.548812 | $`M_t`$ is fair only when the clock term is exactly half θ squared |
+| Optional stopping for W at one level, no left wall | $`E[W_{\tau_b}] = 0`$ claimed; it is 3 with probability 1. $`E[\tau_b] = 9`$ claimed; averaging $`\tau_b`$ over paths that arrive by 100, 10,000 and 1,000,000 seconds (the rest counted as 0) gives 16.01, 230.47, 2384.66, still growing | W stopped at $`\tau_b`$ has no lower bound, so the limit cannot pass through the average. The mean time is infinite even though every path arrives |
 | Swap the sides: right chance b/(a+b) | 0.600000 instead of 0.4 | the far wall is the less likely one, not the more likely |
 
-These partial means track $3\sqrt{2T/\pi} - 9$ for a cut at T seconds: 14.94, 230.37, 2384.65. Pushing the left wall out to −20, −200 and −2000 shows the same thing: mean exit times of 60, 600 and 6000 seconds, while the chance of reaching +3 first climbs to 0.869565, 0.985222, 0.998502. Arrival becomes certain; the wait becomes unbounded.
+These partial means track $`3\sqrt{2T/\pi} - 9`$ for a cut at T seconds: 14.94, 230.37, 2384.65. Pushing the left wall out to −20, −200 and −2000 shows the same thing: mean exit times of 60, 600 and 6000 seconds, while the chance of reaching +3 first climbs to 0.869565, 0.985222, 0.998502. Arrival becomes certain; the wait becomes unbounded.
 
 ---
 
@@ -421,7 +445,7 @@ ALL CHECKS PASS
 
 Reading the run. The lattice gets 0.4 and 6 seconds exactly at every step. Its discount errors shrink fourfold each time h halves: −0.0006582 to −0.0000026 for the interval, −0.0010976 to −0.0000043 for the single level. Simpson's rule lands on 0.548812.
 
-On the 0.01-second grid the three identities pass: $E[W_\tau] = 0.0034$ (standard error 0.0251), $E[W_\tau^2 - \tau] = 0.0094$ (0.0551), and the exponential averages 1.0008 (0.0051). The standard error is the typical size of the simulation's random error, so each identity sits well within one standard error of its target.
+On the 0.01-second grid the three identities pass: $`E[W_\tau] = 0.0034`$ (standard error 0.0251), $`E[W_\tau^2 - \tau] = 0.0094`$ (0.0551), and the exponential averages 1.0008 (0.0051). The standard error is the typical size of the simulation's random error, so each identity sits well within one standard error of its target.
 
 The mean exit time is 6.5503 on the coarse grid and 6.2954 on the fine one, closing on 6: a grid notices the exit late. The same overshoot lowers the discount (0.8822 and 0.8864 against 0.891257). The identities use the grid's own exit, so they stay exact.
 
@@ -633,14 +657,14 @@ The two outputs agree line for line, simulation included: the same generator, th
 
 Lean proves the three fair games and all three exit formulas, for every θ, every pair of walls and every rate.
 
-- Suppose W starts at 0 and each move D is normal, mean 0, variance v, independent of the past. Then $W_t$, $W_t^2 - t$ and $M_t$ are martingales, for every fixed θ.
-- Suppose also the paths are continuous, with walls at $-a$ and $+b$ for any $a, b > 0$. Then $P(W_\tau = b) = a/(a+b)$.
-- Take the same walls. Then the exit is sure to come, and $E[\tau] = ab$.
-- Take continuous paths, a level $b > 0$ and a rate $\lambda > 0$, with no left wall. Then $E\big[e^{-\lambda \tau_b}\big] = e^{-b\sqrt{2\lambda}}$.
-- Take any a and b with $a + b$ not 0. Then $\tfrac{a}{a+b}b^2 + \tfrac{b}{a+b}a^2 = ab$.
+- Suppose W starts at 0 and each move D is normal, mean 0, variance v, independent of the past. Then $`W_t`$, $`W_t^2 - t`$ and $`M_t`$ are martingales, for every fixed θ.
+- Suppose also the paths are continuous, with walls at $`-a`$ and $`+b`$ for any $`a, b > 0`$. Then $`P(W_\tau = b) = a/(a+b)`$.
+- Take the same walls. Then the exit is sure to come, and $`E[\tau] = ab`$.
+- Take continuous paths, a level $`b > 0`$ and a rate $`\lambda > 0`$, with no left wall. Then $`E\big[e^{-\lambda \tau_b}\big] = e^{-b\sqrt{2\lambda}}`$.
+- Take any a and b with $`a + b`$ not 0. Then $`\tfrac{a}{a+b}b^2 + \tfrac{b}{a+b}a^2 = ab`$.
 - The worked numbers: the right-wall chance 0.4, the left-wall chance 0.6 and the mean exit time of 6 seconds.
-- The tilt $\sqrt{2 \times 0.02} = 0.2$, half its square 0.02, and the exponent 3 × 0.2 = 0.6.
-- The interval's midpoint 0.5 and half-width 2.5, times θ, give 0.1 and 0.5. At the exit, $W_\tau - c$ is +2.5 or −2.5.
+- The tilt $`\sqrt{2 \times 0.02} = 0.2`$, half its square 0.02, and the exponent 3 × 0.2 = 0.6.
+- The interval's midpoint 0.5 and half-width 2.5, times θ, give 0.1 and 0.5. At the exit, $`W_\tau - c`$ is +2.5 or −2.5.
 - The wrong right-wall chance b/(a+b) is 0.6.
 - With the left wall at −20, −200 and −2000, the mean exit times are 60, 600 and 6000 seconds.
 - For the same walls, the right-wall chances are 20/23, 200/203 and 2000/2003.
@@ -1493,20 +1517,20 @@ example : (20 : ℚ) / (20 + 3) = 20 / 23 ∧ (200 : ℚ) / (200 + 3) = 200 / 20
 > **Try changing**
 > Guess first, then run it.
 > - **Move the left wall to −20.** Guess the mean exit time and the right-wall chance. The answer: 60 seconds and 0.869565. The mean time is still a times b.
-> - **Forget the ½ in θ.** Set the tilt to $\sqrt{\lambda}$. The tracker chance comes out at 0.654251 instead of 0.548812.
+> - **Forget the ½ in θ.** Set the tilt to $`\sqrt{\lambda}`$. The tracker chance comes out at 0.654251 instead of 0.548812.
 > - **Coarsen the grid.** Compare the two simulation blocks. At 0.04 seconds the mean exit time is 6.5503; at 0.01 it is 6.2954. Quartering the step roughly halves the overshoot, as a bias proportional to the square root of the step would.
-> - **Shrink λ toward 0.** At λ = 1e-6, $(1 - E[e^{-\lambda\tau}])/\lambda$ prints 6.0000: the discount's slope at zero is the mean exit time.
+> - **Shrink λ toward 0.** At λ = 1e-6, $`(1 - E[e^{-\lambda\tau}])/\lambda`$ prints 6.0000: the discount's slope at zero is the mean exit time.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Applying optional stopping to an unbounded wait.** Stop W when it first reaches +3, with no left wall, and its stopped value is 3 with probability 1: average 3, not 0. The stopping time has no bound and the stopped process has no floor, so Step 4 does not apply. The same slip "proves" a mean wait of 9 seconds; the true mean is infinite. The exponential martingale is safe at the same time only because its stopped value stays below $e^{\theta b}$.
+> **Applying optional stopping to an unbounded wait.** Stop W when it first reaches +3, with no left wall, and its stopped value is 3 with probability 1: average 3, not 0. The stopping time has no bound and the stopped process has no floor, so Step 4 does not apply. The same slip "proves" a mean wait of 9 seconds; the true mean is infinite. The exponential martingale is safe at the same time only because its stopped value stays below $`e^{\theta b}`$.
 >
 > Smaller traps:
-> - **Ordinary calculus on $W_t^2$.** The chain rule says the square's change is 2W times W's change, which averages 0. It misses the variance term: the square climbs by the clock, and the fair game is $W_t^2 - t$.
-> - **The exponential without its correction.** $e^{\theta W_t}$ alone averages $e^{\theta^2 t/2}$, so it is not fair. A fair game exponentiated is not a fair game.
+> - **Ordinary calculus on $`W_t^2`$.** The chain rule says the square's change is 2W times W's change, which averages 0. It misses the variance term: the square climbs by the clock, and the fair game is $`W_t^2 - t`$.
+> - **The exponential without its correction.** $`e^{\theta W_t}`$ alone averages $`e^{\theta^2 t/2}`$, so it is not fair. A fair game exponentiated is not a fair game.
 > - **"Fair" read as "cannot win".** The grain reaches the right wall 40% of the time and a single level 100% of the time. Fair means the average stopped position is the start, nothing more.
 > - **Trusting a grid's exit time.** Monitored every 0.01 seconds, the simulated mean exit is 6.2954, not 6. The grid is late, by an amount that shrinks with the square root of the step.
 
@@ -1515,13 +1539,13 @@ example : (20 : ℚ) / (20 + 3) = 20 / 23 ∧ (200 : ℚ) / (200 + 3) = 200 / 20
 ## Where you meet it in real life
 
 - **Particle tracking in microscopes.** The mean time to leave a region, a × b divided by the spread per second, can be turned round to estimate how fast particles diffuse from how long they stay in a field of view.
-- **Barrier and one-touch options.** The value $e^{-b\sqrt{2\lambda}}$ is the core of a contract paying 1 dollar when a price first touches a level; with drift and volatility added it becomes the closed-form one-touch price.
+- **Barrier and one-touch options.** The value $`e^{-b\sqrt{2\lambda}}`$ is the core of a contract paying 1 dollar when a price first touches a level; with drift and volatility added it becomes the closed-form one-touch price.
 - **Sequential testing.** Wald's test stops sampling when evidence crosses an upper or lower boundary; its error rates and expected sample size come from the same two identities, side and time, applied to a random walk.
 - **Discrete monitoring.** Barrier contracts checked once a day overshoot like the simulation's grid; Broadie, Glasserman and Kou correct for it by shifting the barrier by a multiple of the step's square root.
 - **Gambler's ruin.** The coin-flip version, with chance a/(a+b) and mean duration a × b rounds, is the lattice road of this card at step 1: [Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md).
 
 > **Say it back**
-> A Brownian grain's next move is a fresh normal draw with mean 0 and variance equal to the elapsed time. From that alone, three processes are fair: the position, the squared position minus the clock, and the exponential of θ times the position minus half θ squared times the clock. Stopping each at the exit from an interval gives the side (left distance over width, 0.4), the mean time (the product of the distances, 6 seconds) and the discounted exit value. With one level and no floor, the position stops being usable, but the bounded exponential still prices the crossing at $e^{-b\sqrt{2\lambda}}$, 0.548812 here.
+> A Brownian grain's next move is a fresh normal draw with mean 0 and variance equal to the elapsed time. From that alone, three processes are fair: the position, the squared position minus the clock, and the exponential of θ times the position minus half θ squared times the clock. Stopping each at the exit from an interval gives the side (left distance over width, 0.4), the mean time (the product of the distances, 6 seconds) and the discounted exit value. With one level and no floor, the position stops being usable, but the bounded exponential still prices the crossing at $`e^{-b\sqrt{2\lambda}}`$, 0.548812 here.
 
 ---
 
@@ -1533,7 +1557,7 @@ example : (20 : ℚ) / (20 + 3) = 20 / 23 ∧ (200 : ℚ) / (200 + 3) = 200 / 20
 
 ## Where this goes next
 
-- [Changing the measure](../07-Changing%20Measure/01-change-of-measure-and-density-processes.md): $M_T$ is positive with average 1, so it can reweight every path; under the new weights the grain acquires a drift of θ per second.
+- [Changing the measure](../07-Changing%20Measure/01-change-of-measure-and-density-processes.md): $`M_T`$ is positive with average 1, so it can reweight every path; under the new weights the grain acquires a drift of θ per second.
 - [Geometric Brownian motion](07-geometric-brownian-motion.md): the exponential martingale times a steady growth factor is the standard model of a share price.
 
 Every fair game here was built from a grain with no drift; what a positive martingale with average 1 does when it is used to reweight the paths, and why the reweighted grain drifts, is the question [Changing the measure](../07-Changing%20Measure/01-change-of-measure-and-density-processes.md) answers.

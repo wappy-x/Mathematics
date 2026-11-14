@@ -33,34 +33,36 @@ The middle bar sits under the top one. The distance between them, $1.80 on deliv
 
 ## The formula
 
-$$y \;=\; r + u - \frac{\ln(F/S)}{T}$$
+```math
+y \;=\; r + u - \frac{\ln(F/S)}{T}
+```
 
 **Read it aloud:** the convenience yield is interest plus storage, minus the growth the market forward actually shows over spot, measured per year.
 
-It is the carry formula from [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md), $F = S\,e^{(r+u-y)T}$, solved for the one letter nobody quotes. Here $e^{z}$ is the growth factor of continuous compounding at rate $z$, and $\ln$, the natural log, undoes it.
+It is the carry formula from [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md), $`F = S\,e^{(r+u-y)T}`$, solved for the one letter nobody quotes. Here $`e^{z}`$ is the growth factor of continuous compounding at rate $`z`$, and $`\ln`$, the natural log, undoes it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | the **market forward**: the price quoted today for delivery at $T$ | $84 | $y$ falls: the market charges more for waiting, so holding is worth less |
-| $S$ | the **spot price**: today's price for a barrel delivered now | $80 | $y$ rises: the same forward now shows less growth |
-| $r$ | the **interest rate**, continuously compounded: what borrowed money costs per year | 5% | $y$ rises one for one |
-| $u$ | the **storage cost**, a yearly fraction of the barrel's value | 2% | $y$ rises one for one |
-| $T$ | time to delivery, in years | 1 | $y$ moves toward $r + u$: the same growth over spot is spread over more years |
-| $y$ | the **convenience yield**: what holding the barrel is worth, as a yearly rate of its value | 2.12% | is the answer |
-| $C$ | the **carry ceiling**, $S\,e^{(r+u)T}$: the forward with no convenience at all | $85.80 | $y$ rises with $\ln C$ |
-| $G$ | the **gap** $C - F$, in delivery-day dollars | $1.80 | $y$ rises |
-| $x$ | the gap as a share of the ceiling, $G/C$ | 0.020986 | $y$ rises, and $y \approx x/T$ while $x$ is small |
-| $f$ | the forward a given yield implies, $f(y) = S\,e^{(r+u-y)T}$; used in the proof | $f(0.021210) = 84$ | — |
+| $`F`$ | the **market forward**: the price quoted today for delivery at $`T`$ | $84 | $`y`$ falls: the market charges more for waiting, so holding is worth less |
+| $`S`$ | the **spot price**: today's price for a barrel delivered now | $80 | $`y`$ rises: the same forward now shows less growth |
+| $`r`$ | the **interest rate**, continuously compounded: what borrowed money costs per year | 5% | $`y`$ rises one for one |
+| $`u`$ | the **storage cost**, a yearly fraction of the barrel's value | 2% | $`y`$ rises one for one |
+| $`T`$ | time to delivery, in years | 1 | $`y`$ moves toward $`r + u`$: the same growth over spot is spread over more years |
+| $`y`$ | the **convenience yield**: what holding the barrel is worth, as a yearly rate of its value | 2.12% | is the answer |
+| $`C`$ | the **carry ceiling**, $`S\,e^{(r+u)T}`$: the forward with no convenience at all | $85.80 | $`y`$ rises with $`\ln C`$ |
+| $`G`$ | the **gap** $`C - F`$, in delivery-day dollars | $1.80 | $`y`$ rises |
+| $`x`$ | the gap as a share of the ceiling, $`G/C`$ | 0.020986 | $`y`$ rises, and $`y \approx x/T`$ while $`x`$ is small |
+| $`f`$ | the forward a given yield implies, $`f(y) = S\,e^{(r+u-y)T}`$; used in the proof | $`f(0.021210) = 84`$ | — |
 
-Two helper facts, each one line. The forward in terms of the ceiling: $F = C\,e^{-yT}$, so the convenience yield is the rate at which the market forward is "discounted" below the ceiling. And the same thing with the gap alone: $y = -\ln(1 - x)/T$, which for a small gap is nearly $x/T$: here 2.10% against the exact 2.12%.
+Two helper facts, each one line. The forward in terms of the ceiling: $`F = C\,e^{-yT}`$, so the convenience yield is the rate at which the market forward is "discounted" below the ceiling. And the same thing with the gap alone: $`y = -\ln(1 - x)/T`$, which for a small gap is nearly $`x/T`$: here 2.10% against the exact 2.12%.
 
 ### When it holds
 
-- **Rates quoted continuously compounded, per year, as decimals.** Mix a 5% annual rate with continuous compounding and $y$ moves by the difference, about 0.12 points at these numbers.
-- **Storage as a fraction of value.** The shelf's convention. If storage is quoted in dollars per barrel, convert it first or $y$ absorbs the conversion error.
-- **A forward you could actually trade against spot.** If the forward and spot are for different grades or places (Brent against a Gulf Coast barrel), $y$ also absorbs the freight and quality difference.
-- **$T$ not too short.** $y$ divides by $T$, so a one-cent error in a one-month quote moves $y$ by 0.15 points. At a year it moves it by 0.012 points.
-- **Storage actually available at $u$.** When tanks are full, true storage costs more than the quoted $u$. The forward can then rise above the ceiling and the implied $y$ goes negative: the formula is flagging a wrong $u$, not a negative benefit.
+- **Rates quoted continuously compounded, per year, as decimals.** Mix a 5% annual rate with continuous compounding and $`y`$ moves by the difference, about 0.12 points at these numbers.
+- **Storage as a fraction of value.** The shelf's convention. If storage is quoted in dollars per barrel, convert it first or $`y`$ absorbs the conversion error.
+- **A forward you could actually trade against spot.** If the forward and spot are for different grades or places (Brent against a Gulf Coast barrel), $`y`$ also absorbs the freight and quality difference.
+- **$`T`$ not too short.** $`y`$ divides by $`T`$, so a one-cent error in a one-month quote moves $`y`$ by 0.15 points. At a year it moves it by 0.012 points.
+- **Storage actually available at $`u`$.** When tanks are full, true storage costs more than the quoted $`u`$. The forward can then rise above the ceiling and the implied $`y`$ goes negative: the formula is flagging a wrong $`u`$, not a negative benefit.
 
 ---
 
@@ -68,53 +70,57 @@ Two helper facts, each one line. The forward in terms of the ceiling: $F = C\,e^
 
 ### Step 0: the carry trade is one-sided
 
-Two trades police a forward price. The first, **cash-and-carry**, buys spot, stores it and sells forward. Anyone with cash and a tank can run it, so it caps the forward at the ceiling $C$.
+Two trades police a forward price. The first, **cash-and-carry**, buys spot, stores it and sells forward. Anyone with cash and a tank can run it, so it caps the forward at the ceiling $`C`$.
 
 The second, **reverse cash-and-carry**, sells spot, banks the money and buys forward. Only someone holding the commodity can run it, and holders have reasons not to. So there is a ceiling and no matching floor. The convenience yield is the name for how far below the ceiling the market chooses to sit.
 
 ### Step 1: the ceiling
 
-The storage card builds $C = S\,e^{(r+u)T}$ by financing and storing one barrel: [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md). Here $80\,e^{0.07} = 85.80$. A forward above that would be free money for anyone with a tank.
+The storage card builds $`C = S\,e^{(r+u)T}`$ by financing and storing one barrel: [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md). Here $`80\,e^{0.07} = 85.80`$. A forward above that would be free money for anyone with a tank.
 
 ### Step 2: write the gap as a rate
 
-The market forward is $F = 84$, below $C$. Write the shortfall the way interest and storage are written, as a continuously compounded rate $y$ taken off the ceiling:
+The market forward is $`F = 84`$, below $`C`$. Write the shortfall the way interest and storage are written, as a continuously compounded rate $`y`$ taken off the ceiling:
 
-$$F = C\,e^{-yT} = S\,e^{(r+u-y)T}.$$
+```math
+F = C\,e^{-yT} = S\,e^{(r+u-y)T}.
+```
 
-This is the definition of $y$. Nothing new has been assumed. Before solving, the terms: with $S > 0$, $F > 0$ and $T > 0$, exactly one $y$ exists; $F = C$ gives $y = 0$, $F > C$ gives $y < 0$, and $T = 0$ or $F \le 0$ gives none. Step 4 proves each.
+This is the definition of $`y`$. Nothing new has been assumed. Before solving, the terms: with $`S > 0`$, $`F > 0`$ and $`T > 0`$, exactly one $`y`$ exists; $`F = C`$ gives $`y = 0`$, $`F > C`$ gives $`y < 0`$, and $`T = 0`$ or $`F \le 0`$ gives none. Step 4 proves each.
 
 ### Step 3: solve for it
 
-Divide both sides by $S$: $F/S = e^{(r+u-y)T}$. Take the natural log of both sides ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)): $\ln(F/S) = (r+u-y)T$. Divide by $T$ and move $y$ to the left ([Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md)):
+Divide both sides by $`S`$: $`F/S = e^{(r+u-y)T}`$. Take the natural log of both sides ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)): $`\ln(F/S) = (r+u-y)T`$. Divide by $`T`$ and move $`y`$ to the left ([Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md)):
 
-$$y = r + u - \frac{\ln(F/S)}{T}.$$
+```math
+y = r + u - \frac{\ln(F/S)}{T}.
+```
 
-With the numbers: $\ln(84/80) = 0.048790$, so $y = 0.07 - 0.048790 = 0.021210$.
+With the numbers: $`\ln(84/80) = 0.048790`$, so $`y = 0.07 - 0.048790 = 0.021210`$.
 
 ### Step 4: one answer, always, and the boundary cases
 
-For a fixed delivery date ($T > 0$), the formula takes every positive forward to exactly one yield, and every yield comes from exactly one forward.
+For a fixed delivery date ($`T > 0`$), the formula takes every positive forward to exactly one yield, and every yield comes from exactly one forward.
 
-- **It exists.** The natural log is defined for every positive number, so any positive $F$ gives a $y$.
-- **It is unique.** The log only climbs, so a higher $F$ always gives a lower $y$. Two different forwards can never share a yield.
-- **At the ceiling, $F = C$:** $y = 0$. The market prices no benefit to holding.
-- **At spot, $F = S$:** $y = r + u = 7\%$. The benefit exactly pays interest and storage; the curve is flat.
-- **Above the ceiling, $F = 86.50$:** $y = -0.81\%$. Cash-and-carry now makes money, so either it is being done and the quote will fall, or storage costs more than $u$.
-- **Toward zero, $F = 1$:** $y = 445\%$. As the forward shrinks to nothing, $y$ climbs without limit.
-- **$T = 0$:** no answer. The forward must equal spot and carries no information about $y$.
-- **$F \le 0$:** no answer. The log is undefined. Crude did settle below zero in April 2020; this log model cannot describe that, and a different one is needed.
+- **It exists.** The natural log is defined for every positive number, so any positive $`F`$ gives a $`y`$.
+- **It is unique.** The log only climbs, so a higher $`F`$ always gives a lower $`y`$. Two different forwards can never share a yield.
+- **At the ceiling, $`F = C`$:** $`y = 0`$. The market prices no benefit to holding.
+- **At spot, $`F = S`$:** $`y = r + u = 7\%`$. The benefit exactly pays interest and storage; the curve is flat.
+- **Above the ceiling, $`F = 86.50`$:** $`y = -0.81\%`$. Cash-and-carry now makes money, so either it is being done and the quote will fall, or storage costs more than $`u`$.
+- **Toward zero, $`F = 1`$:** $`y = 445\%`$. As the forward shrinks to nothing, $`y`$ climbs without limit.
+- **$`T = 0`$:** no answer. The forward must equal spot and carries no information about $`y`$.
+- **$`F \le 0`$:** no answer. The log is undefined. Crude did settle below zero in April 2020; this log model cannot describe that, and a different one is needed.
 
 <details>
 <summary>Detailed proof: every yield is hit by exactly one forward</summary>
 
-Fix $S > 0$, $r$, $u$ and $T > 0$. Define $f(y) = S\,e^{(r+u-y)T}$, the forward a given yield implies.
+Fix $`S > 0`$, $`r`$, $`u`$ and $`T > 0`$. Define $`f(y) = S\,e^{(r+u-y)T}`$, the forward a given yield implies.
 
-*Strictly falling.* If $y_1 < y_2$ then $(r+u-y_1)T > (r+u-y_2)T$, and $e^z$ strictly increases, so $f(y_1) > f(y_2)$. A strictly falling function never takes the same value twice: at most one $y$ per $F$.
+*Strictly falling.* If $`y_1 < y_2`$ then $`(r+u-y_1)T > (r+u-y_2)T`$, and $`e^z`$ strictly increases, so $`f(y_1) > f(y_2)`$. A strictly falling function never takes the same value twice: at most one $`y`$ per $`F`$.
 
-*Every positive value.* $e^z$ takes every positive value exactly once as $z$ runs over all real numbers; its inverse is $\ln$. For a given $F > 0$ set $z = \ln(F/S)$ and $y = r + u - z/T$. Then $f(y) = S\,e^{z} = F$. So at least one $y$ per $F$.
+*Every positive value.* $`e^z`$ takes every positive value exactly once as $`z`$ runs over all real numbers; its inverse is $`\ln`$. For a given $`F > 0`$ set $`z = \ln(F/S)`$ and $`y = r + u - z/T`$. Then $`f(y) = S\,e^{z} = F`$. So at least one $`y`$ per $`F`$.
 
-Together: $f$ is a one-to-one match between all real yields and all positive forwards, and the formula on this card is its inverse. The limits follow from the log's: as $F \to 0$, $\ln(F/S) \to -\infty$ and $y \to +\infty$; as $F \to \infty$, $y \to -\infty$. The slope is $dy/dF = -1/(F\,T)$, never zero, which is the uniqueness again in calculus form, and at $F = 84$, $T = 1$ it is $-0.011905$: each dollar on the forward moves $y$ by 1.19 points.
+Together: $`f`$ is a one-to-one match between all real yields and all positive forwards, and the formula on this card is its inverse. The limits follow from the log's: as $`F \to 0`$, $`\ln(F/S) \to -\infty`$ and $`y \to +\infty`$; as $`F \to \infty`$, $`y \to -\infty`$. The slope is $`dy/dF = -1/(F\,T)`$, never zero, which is the uniqueness again in calculus form, and at $`F = 84`$, $`T = 1`$ it is $`-0.011905`$: each dollar on the forward moves $`y`$ by 1.19 points.
 
 </details>
 
@@ -132,24 +138,24 @@ Interest is paid by a borrower. Storage is paid to a tank owner. Nobody pays the
 
 A holder who has no use for the oil collects nothing by holding it; for them the right move is the reverse trade and the $1.80. The number belongs to the market, read off the forward, and it changes whenever the forward does.
 
-A second route to the same number goes through the gap alone. With $x = G/C = 0.020986$, the series $-\ln(1-x) = x + x^2/2 + x^3/3 + \dots$ adds up to 0.021210. The code takes that road without calling a log, and a third that never takes a log at all.
+A second route to the same number goes through the gap alone. With $`x = G/C = 0.020986`$, the series $`-\ln(1-x) = x + x^2/2 + x^3/3 + \dots`$ adds up to 0.021210. The code takes that road without calling a log, and a third that never takes a log at all.
 
 ---
 
 ## Worked numbers, by hand
 
-Crude: $S = 80$, $r = 5\%$, $u = 2\%$, $T = 1$ year, market forward $F = 84$.
+Crude: $`S = 80`$, $`r = 5\%`$, $`u = 2\%`$, $`T = 1`$ year, market forward $`F = 84`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| interest plus storage | $0.05 + 0.02$ | $0.07$ |
-| carry ceiling $C$ | $80 \times e^{0.07}$ | $\$85.80$ |
-| gap $G$, delivery day | $85.80 - 84$ | $\$1.80$ |
-| gap, today's dollars | $1.80 \times e^{-0.05}$ | $\$1.71$ |
-| growth shown by the market | $\ln(84/80)$ | $0.048790$ |
-| divide by $T$ | $0.048790 / 1$ | $0.048790$ |
-| **convenience yield** $y$ | $0.07 - 0.048790$ | **$0.021210 = 2.12\%$** |
-| rebuild the forward | $80 \times e^{0.07 - 0.021210}$ | $\$84.00$ |
+| interest plus storage | $`0.05 + 0.02`$ | $`0.07`$ |
+| carry ceiling $`C`$ | $`80 \times e^{0.07}`$ | $`\$85.80`$ |
+| gap $`G`$, delivery day | $`85.80 - 84`$ | $`\$1.80`$ |
+| gap, today's dollars | $`1.80 \times e^{-0.05}`$ | $`\$1.71`$ |
+| growth shown by the market | $`\ln(84/80)`$ | $`0.048790`$ |
+| divide by $`T`$ | $`0.048790 / 1`$ | $`0.048790`$ |
+| **convenience yield** $`y`$ | $`0.07 - 0.048790`$ | **$`0.021210 = 2.12\%`$** |
+| rebuild the forward | $`80 \times e^{0.07 - 0.021210}`$ | $`\$84.00`$ |
 
 The market is saying that a barrel in a tank this year is worth 2.12% of its value more than a barrel on a contract. In the inventory table below, that is the comfortable state.
 
@@ -159,10 +165,10 @@ Correct answer 2.12%:
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Leave storage out | 0.12% | That is $y - u$, the net yield, not the convenience yield |
-| Use $F/S - 1$ for $\ln(F/S)$ | 2.00% | Simple growth mixed with continuously compounded rates |
-| Flip the log to $\ln(S/F)$ | 11.88% | A forward above spot now reads as scarcity |
-| Enter a year as $T = 12$ | 6.59% | Months typed where years belong: the gap is spread twelve times too thin |
+| Leave storage out | 0.12% | That is $`y - u`$, the net yield, not the convenience yield |
+| Use $`F/S - 1`$ for $`\ln(F/S)`$ | 2.00% | Simple growth mixed with continuously compounded rates |
+| Flip the log to $`\ln(S/F)`$ | 11.88% | A forward above spot now reads as scarcity |
+| Enter a year as $`T = 12`$ | 6.59% | Months typed where years belong: the gap is spread twelve times too thin |
 
 ---
 
@@ -172,7 +178,7 @@ The spot price did not move and the carry costs did not move. Only the forward d
 
 Four illustrative states of the same crude market, spot $80 in each, one-year forward as quoted (constructed to show the pattern, not taken from a date):
 
-| Inventory state | Forward | Implied $y$ | What the curve is saying |
+| Inventory state | Forward | Implied $`y`$ | What the curve is saying |
 | --- | --- | --- | --- |
 | Glut: tanks nearly full | $85.50 | 0.35% | Holding is barely worth anything; the forward sits near the ceiling |
 | Comfortable | $84.00 | 2.12% | The card's example |
@@ -205,13 +211,13 @@ xychart-beta
 
 The falling line is the implied yield; the flat line is zero. The falling line crosses 7.00% at a forward of $80, where the forward equals spot, and crosses zero just below $86, at the ceiling of $85.80.
 
-Everything left of $80 is a forward below spot: backwardation (a curve that slopes down), the subject of [Contango and backwardation](04-contango-backwardation-and-roll-yield.md). The line bends slightly upward: each dollar off the forward adds a little more yield than the last, because $dy/dF = -1/(FT)$ grows as $F$ shrinks.
+Everything left of $80 is a forward below spot: backwardation (a curve that slopes down), the subject of [Contango and backwardation](04-contango-backwardation-and-roll-yield.md). The line bends slightly upward: each dollar off the forward adds a little more yield than the last, because $`dy/dF = -1/(FT)`$ grows as $`F`$ shrinks.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs reach the implied yield by three roads that share no step. Road 1 is the closed form, one logarithm. Road 2 is bisection: guess a yield, run the carry formula forwards, and halve the interval until the forward lands on $84; it never takes a log. Road 3 turns the dollar gap into a share of the ceiling and sums the series for $-\ln(1-x)$ by hand.
+Both programs reach the implied yield by three roads that share no step. Road 1 is the closed form, one logarithm. Road 2 is bisection: guess a yield, run the carry formula forwards, and halve the interval until the forward lands on $84; it never takes a log. Road 3 turns the dollar gap into a share of the ceiling and sums the series for $`-\ln(1-x)`$ by hand.
 
 Then the code checks the slope by bumping the forward a cent, confirms that the yield falls strictly across the chart's forwards (the uniqueness claim, on the page's own numbers), and prints every boundary case, every wrong answer, the inventory states and the chart points.
 
@@ -354,7 +360,7 @@ chart, y %       12.13  10.82   9.53   8.26   7.00   5.76   4.53   3.32   2.12  
 ALL CHECKS PASS
 ```
 
-Three roads, one yield, agreeing to twelve decimals. The first term of the series alone, $G/C$, gives 2.10%: a quick estimate that is good while the gap is small. The gold row runs the same formula on the gold forward with no storage and recovers the 1% lease rate: see [Gold forward](01-gold-forward-and-the-lease-rate.md). The ceiling row prints −0.000000: zero, landed on from a hair below by rounding in the last binary digit.
+Three roads, one yield, agreeing to twelve decimals. The first term of the series alone, $`G/C`$, gives 2.10%: a quick estimate that is good while the gap is small. The gold row runs the same formula on the gold forward with no storage and recovers the 1% lease rate: see [Gold forward](01-gold-forward-and-the-lease-rate.md). The ceiling row prints −0.000000: zero, landed on from a hair below by rounding in the last binary digit.
 
 ### Rust
 
@@ -510,12 +516,12 @@ The two outputs agree byte for byte.
 
 Lean proves the card's main claims for every positive spot, positive forward and positive delivery time, not just the crude example.
 
-- Suppose $S > 0$, $F > 0$ and $T > 0$. Then a yield $y$ makes the carry formula hit $F$ exactly when $y = r + u - \ln(F/S)/T$.
-- Take $S > 0$ and $T > 0$, and let $f(y) = S\,e^{(r+u-y)T}$. Then $f$ strictly falls and takes every positive value, so each positive forward comes from exactly one yield.
-- Take the same $S$, $F$ and $T$. Then a forward at the carry ceiling $C$ gives $y = 0$, and a forward at spot gives $y = r + u$.
-- Take the same $S$, $F$ and $T$. Then $F > C$ exactly when $y < 0$: only a forward above the carry ceiling gives a negative yield.
-- Take $S = F = 80$, $r = 5\%$, $u = 2\%$ and $T = 1$. Then $y = 7\%$.
-- Take $F = 84$ and use $F/S - 1$ in place of $\ln(F/S)$. Then the wrong answer comes out at 2.00%.
+- Suppose $`S > 0`$, $`F > 0`$ and $`T > 0`$. Then a yield $`y`$ makes the carry formula hit $`F`$ exactly when $`y = r + u - \ln(F/S)/T`$.
+- Take $`S > 0`$ and $`T > 0`$, and let $`f(y) = S\,e^{(r+u-y)T}`$. Then $`f`$ strictly falls and takes every positive value, so each positive forward comes from exactly one yield.
+- Take the same $`S`$, $`F`$ and $`T`$. Then a forward at the carry ceiling $`C`$ gives $`y = 0`$, and a forward at spot gives $`y = r + u`$.
+- Take the same $`S`$, $`F`$ and $`T`$. Then $`F > C`$ exactly when $`y < 0`$: only a forward above the carry ceiling gives a negative yield.
+- Take $`S = F = 80`$, $`r = 5\%`$, $`u = 2\%`$ and $`T = 1`$. Then $`y = 7\%`$.
+- Take $`F = 84`$ and use $`F/S - 1`$ in place of $`\ln(F/S)`$. Then the wrong answer comes out at 2.00%.
 
 The decimals, such as the 2.12% yield, the slope and the chart points, are left to the Python and Rust checks.
 
@@ -612,31 +618,31 @@ example : (1 / 20 : ℚ) + 1 / 50 - (84 / 80 - 1) / 1 = 1 / 50 := by
 > **Treating the convenience yield as a cash flow.** Nobody pays it and nobody receives it. A fund that buys barrels and stores them does not earn 2.12% a year; it earns nothing from holding and pays the storage. The number is the value that holders with a use for the oil place on having it, inferred from what they refuse to sell. Put it into a cash-flow model as income and the model shows a return that no one can collect.
 >
 > Four smaller traps:
-> - **Leaving storage out.** $r - \ln(F/S)/T$ gives 0.12%, which is the convenience yield net of storage. Both numbers are used in practice; say which one is quoted.
-> - **One yield for every delivery date.** Each forward gives its own $y$. A six-month quote at 82 gives 2.06%, not 2.12%. The yields across dates form a curve of their own, and seasonal commodities bend it hard: [Seasonal curves](05-seasonality-and-the-gas-curve.md).
-> - **Reading a short-dated yield too precisely.** At one month, a one-cent error in the quote moves $y$ by 0.15 points. Front-month yields jump around for this reason alone.
+> - **Leaving storage out.** $`r - \ln(F/S)/T`$ gives 0.12%, which is the convenience yield net of storage. Both numbers are used in practice; say which one is quoted.
+> - **One yield for every delivery date.** Each forward gives its own $`y`$. A six-month quote at 82 gives 2.06%, not 2.12%. The yields across dates form a curve of their own, and seasonal commodities bend it hard: [Seasonal curves](05-seasonality-and-the-gas-curve.md).
+> - **Reading a short-dated yield too precisely.** At one month, a one-cent error in the quote moves $`y`$ by 0.15 points. Front-month yields jump around for this reason alone.
 > - **Taking a negative yield at face value.** Below zero, the forward is above the carry ceiling. That means the storage number is wrong, usually because tanks are full. In April 2020 the expiring US crude future at Cushing, Oklahoma settled below zero dollars, largely because storage at the delivery point was close to full.
 
 ---
 
 ## Where you meet it in real life
 
-- **Oil desks.** A trader reading the one-year spread (the forward minus spot) is reading the convenience yield with $r$ and $u$ held in their head. A falling forward against a steady spot is the market reporting that stocks are drawing down.
+- **Oil desks.** A trader reading the one-year spread (the forward minus spot) is reading the convenience yield with $`r`$ and $`u`$ held in their head. A falling forward against a steady spot is the market reporting that stocks are drawing down.
 - **Metals and the lease rate.** For gold, holding is cheap and the lease market is deep, so the convenience yield equals the rate at which gold can be lent out: [Gold forward](01-gold-forward-and-the-lease-rate.md).
 - **Grain after harvest.** Right after harvest the bins are full and the implied yield is small; before the next harvest it rises. The yield carries the seasons: [Seasonal curves](05-seasonality-and-the-gas-curve.md).
 - **Commodity pricing models.** Eduardo Schwartz and Rajna Gibson in 1990 made the convenience yield a random quantity of its own, pulled back toward an average, alongside a random spot price. The pull-back idea is the subject of [A spot price that reverts](06-mean-reverting-spot-and-the-futures-curve.md).
-- **Inventory policy.** A refiner deciding whether to hold extra crude compares its own value of having it with the market's $y$. If its own value is lower, the reverse trade is worth doing.
+- **Inventory policy.** A refiner deciding whether to hold extra crude compares its own value of having it with the market's $`y`$. If its own value is lower, the reverse trade is worth doing.
 
 > **Say it back**
-> The carry ceiling is spot grown at interest plus storage: $85.80 for crude at $80. The market forward sits below it, at $84, because only holders can run the trade that would close the gap, and they need their oil. Writing that gap as a yearly rate gives the convenience yield: 5% plus 2%, minus $\ln(84/80)$, which is 2.12%. Every positive forward gives exactly one such rate; lower forwards give higher rates, and the rate climbs when stocks run short. Nobody pays it: it is the value of holding the physical, read off the price.
+> The carry ceiling is spot grown at interest plus storage: $85.80 for crude at $80. The market forward sits below it, at $84, because only holders can run the trade that would close the gap, and they need their oil. Writing that gap as a yearly rate gives the convenience yield: 5% plus 2%, minus $`\ln(84/80)`$, which is 2.12%. Every positive forward gives exactly one such rate; lower forwards give higher rates, and the rate climbs when stocks run short. Nobody pays it: it is the value of holding the physical, read off the price.
 
 ---
 
 ## What this builds on
 
-- [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md): the ceiling $S\,e^{(r+u)T}$ and the cash-and-carry trade that enforces it. This card measures how far below it the market sits.
-- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the natural log undoes $e^z$, which is what turns the carry formula inside out.
-- [Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md): moving $y$ to one side, the whole of Step 3.
+- [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md): the ceiling $`S\,e^{(r+u)T}`$ and the cash-and-carry trade that enforces it. This card measures how far below it the market sits.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the natural log undoes $`e^z`$, which is what turns the carry formula inside out.
+- [Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md): moving $`y`$ to one side, the whole of Step 3.
 
 ## Where this goes next
 
@@ -654,4 +660,4 @@ Verified 2026-09-27: every link below resolves to the publisher's page.
 - Fama, Eugene F., and Kenneth R. French. "Commodity Futures Prices: Some Evidence on Forecast Power, Premiums, and the Theory of Storage." *Journal of Business* 60, no. 1 (1987): 55–73. [doi:10.1086/296385](https://doi.org/10.1086/296385). Tests the theory of storage on futures prices: the spread behaves as the convenience yield predicts across inventory levels.
 - Gibson, Rajna, and Eduardo S. Schwartz. "Stochastic Convenience Yield and the Pricing of Oil Contingent Claims." *Journal of Finance* 45, no. 3 (1990): 959–976. [doi:10.1111/j.1540-6261.1990.tb05114.x](https://doi.org/10.1111/j.1540-6261.1990.tb05114.x). The convenience yield implied from oil futures, then modelled as a random quantity that reverts.
 - Pindyck, Robert S. "The Dynamics of Commodity Spot and Futures Markets: A Primer." *Energy Journal* 22, no. 3 (2001): 1–29. [doi:10.5547/ISSN0195-6574-EJ-Vol22-No3-1](https://doi.org/10.5547/ISSN0195-6574-EJ-Vol22-No3-1). How inventories, spot, futures and the convenience yield move together, with oil and gas examples.
-- Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The textbook statement of $F = S\,e^{(r+u-y)T}$ and of the convenience yield as the number that reconciles it with the market.
+- Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The textbook statement of $`F = S\,e^{(r+u-y)T}`$ and of the convenience yield as the number that reconciles it with the market.

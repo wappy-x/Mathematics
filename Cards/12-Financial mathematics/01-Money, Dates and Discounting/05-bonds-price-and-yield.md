@@ -38,40 +38,44 @@ Going the other way — a price is quoted, and the yield has to be dug back out 
 
 Two pieces of shorthand first, both in words.
 
-A **discount factor** is what one dollar due later is worth today. Written $D(t)$, read "D of t", where $t$ counts the years until the dollar lands. With one payment a year at a yield $y$, waiting $t$ years divides the value by $(1+y)$ once per year: $D(t) = 1/(1+y)^t$. A dollar due in five years at five percent is worth $0.783526 today. Where that comes from is [Discount factors](01-compounding-and-discount-factors.md).
+A **discount factor** is what one dollar due later is worth today. Written $`D(t)`$, read "D of t", where $`t`$ counts the years until the dollar lands. With one payment a year at a yield $`y`$, waiting $`t`$ years divides the value by $`(1+y)`$ once per year: $`D(t) = 1/(1+y)^t`$. A dollar due in five years at five percent is worth $0.783526 today. Where that comes from is [Discount factors](01-compounding-and-discount-factors.md).
 
-The second is the **annuity factor**, written $a_N(y)$: the value today of one dollar a year for $N$ years, which is just the discount factors added up. The count of payments sits low and to the right, the rate goes in brackets, and $a$ on its own is the short form where only one is in play. It is the closed form proved on [Annuities](03-annuities-and-loans.md): one short formula in place of adding the factors one by one.
+The second is the **annuity factor**, written $`a_N(y)`$: the value today of one dollar a year for $`N`$ years, which is just the discount factors added up. The count of payments sits low and to the right, the rate goes in brackets, and $`a`$ on its own is the short form where only one is in play. It is the closed form proved on [Annuities](03-annuities-and-loans.md): one short formula in place of adding the factors one by one.
 
 The price, payment by payment:
 
-$$P \;=\; \sum_{t=1}^{N} \frac{c}{(1+y)^{t}} \;+\; \frac{F}{(1+y)^{N}}$$
+```math
+P \;=\; \sum_{t=1}^{N} \frac{c}{(1+y)^{t}} \;+\; \frac{F}{(1+y)^{N}}
+```
 
 **Read it aloud:** every coupon and the face, each one shrunk by the yield for as long as it has to be waited for, all added together.
 
 The coupons are the same number every year, so they collapse into the annuity factor:
 
-$$P \;=\; c \cdot a_N(y) \;+\; F\,(1+y)^{-N}, \qquad a_N(y) \;=\; \frac{1-(1+y)^{-N}}{y}$$
+```math
+P \;=\; c \cdot a_N(y) \;+\; F\,(1+y)^{-N}, \qquad a_N(y) \;=\; \frac{1-(1+y)^{-N}}{y}
+```
 
-The closed form divides by $y$, so it needs a yield that is not zero. At $y = 0$ nothing shrinks, $a_N(0) = N$, and the price is the cash added up: $1,300.
+The closed form divides by $`y`$, so it needs a yield that is not zero. At $`y = 0`$ nothing shrinks, $`a_N(0) = N`$, and the price is the cash added up: $1,300.
 
 | Symbol | Plain meaning | In the house bond | Push it up and the price… |
 | --- | --- | --- | --- |
-| $P$ | the price: what the contract sells for today | $1,043.29 | — |
-| $F$ | the face: the lump handed back at maturity | $1,000 | rises |
-| $c$ | the coupon: the fixed cash paid each year | $60 | rises |
-| $y$ | the yield: the one rate every payment is discounted at | 5% | falls, always |
-| $N$ | how many payments are still to come | 5 | moves further from face, either way |
-| $t$ | which payment: years of waiting until it lands | 1 to 5 | that one payment is worth less |
-| $D(t)$ | the discount factor: what one dollar due in $t$ years is worth now | $D(5) = 0.783526$ | — |
-| $a_N(y)$, short form $a$ | the annuity factor: one dollar a year for $N$ years, valued today | 4.329477 | the coupons are worth more |
-| $v$ | one year's discount factor, $1/(1+y)$; shorthand inside the proof | 0.952381 | — |
-| $A$ | accrued interest: coupon earned by the seller, not yet paid | $30.25 half-way through a year | the buyer hands over more cash |
-| $w$ | the fraction of the current coupon period already run | 184/365 = 0.504110 | accrued interest rises |
+| $`P`$ | the price: what the contract sells for today | $1,043.29 | — |
+| $`F`$ | the face: the lump handed back at maturity | $1,000 | rises |
+| $`c`$ | the coupon: the fixed cash paid each year | $60 | rises |
+| $`y`$ | the yield: the one rate every payment is discounted at | 5% | falls, always |
+| $`N`$ | how many payments are still to come | 5 | moves further from face, either way |
+| $`t`$ | which payment: years of waiting until it lands | 1 to 5 | that one payment is worth less |
+| $`D(t)`$ | the discount factor: what one dollar due in $`t`$ years is worth now | $`D(5) = 0.783526`$ | — |
+| $`a_N(y)`$, short form $`a`$ | the annuity factor: one dollar a year for $`N`$ years, valued today | 4.329477 | the coupons are worth more |
+| $`v`$ | one year's discount factor, $`1/(1+y)`$; shorthand inside the proof | 0.952381 | — |
+| $`A`$ | accrued interest: coupon earned by the seller, not yet paid | $30.25 half-way through a year | the buyer hands over more cash |
+| $`w`$ | the fraction of the current coupon period already run | 184/365 = 0.504110 | accrued interest rises |
 
 ### When it holds
 
 - **Every payment arrives in full and on time.** A borrower who can miss one is worth less than this; a chance of default has to be priced with a survival curve (the chance that the borrower is still paying at each date), and that is [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md).
-- **The same rate does for every date.** Real markets charge a different rate for one-year money than for five-year money. The single $y$ is a summary of the whole set, fitted to this contract; borrow it to price a different bond and the answer is wrong.
+- **The same rate does for every date.** Real markets charge a different rate for one-year money than for five-year money. The single $`y`$ is a summary of the whole set, fitted to this contract; borrow it to price a different bond and the answer is wrong.
 - **The rate is quoted for the period the coupons arrive in.** Annual coupons want an annual yield. The same 6% paid twice a year, discounted at 2.5% a half-year, prices at $1,043.76, not $1,043.29: half of every coupon lands six months early, and 2.5% twice over compounds to 5.0625% a year, which takes part of that back.
 - **Nothing can end the contract early.** An issuer with the right to repay early will use it when rates fall, which caps the price: [Callable bonds](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md).
 - **The payments sit exactly one period apart.** Between two coupon dates the calendar takes over and a day count decides how much of the next coupon has been earned: [Day counts](02-day-counts-and-dates.md).
@@ -88,40 +92,52 @@ So the price of the bundle is the sum of the prices of the pieces. If it were no
 
 ### Step 1: each dated dollar already has a price
 
-At a yield of 5%, one dollar due in a year is worth $1/1.05 = 0.952381$ today, and one due in five years is worth $0.783526$. That is the discount factor $D(t)$, and it is the only pricing instrument needed.
+At a yield of 5%, one dollar due in a year is worth $`1/1.05 = 0.952381`$ today, and one due in five years is worth $`0.783526`$. That is the discount factor $`D(t)`$, and it is the only pricing instrument needed.
 
-Multiply each promised payment by its own factor: $60 \times 0.952381 = 57.14$ for the first coupon, down to $1060 \times 0.783526 = 830.54$ for the last payment, which carries the face. Five numbers, added: **$1,043.29**.
+Multiply each promised payment by its own factor: $`60 \times 0.952381 = 57.14`$ for the first coupon, down to $`1060 \times 0.783526 = 830.54`$ for the last payment, which carries the face. Five numbers, added: **$1,043.29**.
 
 ### Step 2: the coupons are the same number five times, so they collapse
 
-Every one of the five years carries the same $60 coupon; only the last payment has the face bolted onto it. So the coupons together are worth $60 \times (D(1)+D(2)+D(3)+D(4)+D(5))$, and that bracket is the annuity factor $a_5(0.05) = 4.329477$. So the price splits into two pieces:
+Every one of the five years carries the same $60 coupon; only the last payment has the face bolted onto it. So the coupons together are worth $`60 \times (D(1)+D(2)+D(3)+D(4)+D(5))`$, and that bracket is the annuity factor $`a_5(0.05) = 4.329477`$. So the price splits into two pieces:
 
-$$P \;=\; \underbrace{60 \times 4.329477}_{\text{the coupon stream, } \$259.77} \;+\; \underbrace{1000 \times 0.783526}_{\text{the face, } \$783.53}$$
+```math
+P \;=\; \underbrace{60 \times 4.329477}_{\text{the coupon stream, } \$259.77} \;+\; \underbrace{1000 \times 0.783526}_{\text{the face, } \$783.53}
+```
 
-The bracket is a geometric series: each term is the one before it times $1/(1+y)$. That is what gives the closed form.
+The bracket is a geometric series: each term is the one before it times $`1/(1+y)`$. That is what gives the closed form.
 
 <details>
 <summary>Detailed proof: the annuity factor, and why par is exact</summary>
 
-**The annuity factor.** Write $v = 1/(1+y)$. The factors to be added are $v, v^2, \dots, v^N$. Call the sum $a$. Multiply it by $v$ and every term shifts up one place:
-$$a = v + v^2 + \dots + v^N, \qquad v\,a = v^2 + v^3 + \dots + v^{N+1}.$$
-Subtract the second from the first and everything in the middle cancels, leaving $a - v a = v - v^{N+1}$, so $a(1-v) = v(1 - v^{N})$. Now $1 - v = y/(1+y)$ and $v = 1/(1+y)$, so dividing gives
-$$a_N(y) = \frac{1-(1+y)^{-N}}{y}.$$
-At $N=5$ and $y=0.05$ that is $(1 - 0.783526)/0.05 = 4.329477$.
+**The annuity factor.** Write $`v = 1/(1+y)`$. The factors to be added are $`v, v^2, \dots, v^N`$. Call the sum $`a`$. Multiply it by $`v`$ and every term shifts up one place:
 
-**Par is exact, not approximate.** Start from $P = c\,a + F(1+y)^{-N}$ and split the coupon into the interest the market demands on the face, $y \times F$, plus whatever is left over:
-$$P = (yF)\,a + (c - yF)\,a + F(1+y)^{-N}.$$
-The first piece is $yF \cdot \dfrac{1-(1+y)^{-N}}{y} = F\left(1 - (1+y)^{-N}\right)$, and the $y$ cancels exactly. Add the face term and the two $(1+y)^{-N}$ pieces cancel too:
-$$P = F + (c - yF)\,a_N(y).$$
-Every symbol on the right is known, and $a$ is positive. So the sign of $P - F$ is the sign of $c - yF$ and nothing else. $\blacksquare$
+$`\displaystyle a = v + v^2 + \dots + v^N, \qquad v\,a = v^2 + v^3 + \dots + v^{N+1}.`$
+
+Subtract the second from the first and everything in the middle cancels, leaving $`a - v a = v - v^{N+1}`$, so $`a(1-v) = v(1 - v^{N})`$. Now $`1 - v = y/(1+y)`$ and $`v = 1/(1+y)`$, so dividing gives
+
+$`\displaystyle a_N(y) = \frac{1-(1+y)^{-N}}{y}.`$
+
+At $`N=5`$ and $`y=0.05`$ that is $`(1 - 0.783526)/0.05 = 4.329477`$.
+
+**Par is exact, not approximate.** Start from $`P = c\,a + F(1+y)^{-N}`$ and split the coupon into the interest the market demands on the face, $`y \times F`$, plus whatever is left over:
+
+$`\displaystyle P = (yF)\,a + (c - yF)\,a + F(1+y)^{-N}.`$
+
+The first piece is $`yF \cdot \dfrac{1-(1+y)^{-N}}{y} = F\left(1 - (1+y)^{-N}\right)`$, and the $`y`$ cancels exactly. Add the face term and the two $`(1+y)^{-N}`$ pieces cancel too:
+
+$`\displaystyle P = F + (c - yF)\,a_N(y).`$
+
+Every symbol on the right is known, and $`a`$ is positive. So the sign of $`P - F`$ is the sign of $`c - yF`$ and nothing else. $`\blacksquare`$
 
 </details>
 
 ### Step 3: premium, par and discount are one subtraction
 
-That last line is the reading rule, and it is worth saying in words. The market demands $y$ on every dollar lent. On $1,000 of face at 5% that is $50 a year. The contract pays $60. The extra $10 a year is the only reason the price is not exactly the face, and $10 a year for five years is worth $10 \times 4.329477 = 43.29$ today.
+That last line is the reading rule, and it is worth saying in words. The market demands $`y`$ on every dollar lent. On $1,000 of face at 5% that is $50 a year. The contract pays $60. The extra $10 a year is the only reason the price is not exactly the face, and $10 a year for five years is worth $`10 \times 4.329477 = 43.29`$ today.
 
-$$1{,}043.29 \;=\; 1{,}000 \;+\; 10 \times 4.329477$$
+```math
+1{,}043.29 \;=\; 1{,}000 \;+\; 10 \times 4.329477
+```
 
 Three cases, and no others:
 
@@ -129,7 +145,7 @@ Three cases, and no others:
 - **Coupon equal to the yield** — nothing is left over, the price is the face exactly: **par**. The house bond priced at a 6% yield comes out at $1,000.000000, to every decimal the machine has.
 - **Coupon below the yield** — the contract underpays, and the price falls below face to make up the difference: a **discount**.
 
-None of that is convention. It is one subtraction, $c - yF$, multiplied by a positive number.
+None of that is convention. It is one subtraction, $`c - yF`$, multiplied by a positive number.
 
 ### Step 4: the test that the price is right — spend it
 
@@ -141,7 +157,7 @@ So $1,043.29 in an account and the bond are the same object. Anyone selling the 
 
 The account's balances after each coupon are $1,043.29, $1,035.46, $1,027.23, $1,018.59, $1,009.52 and $1,000.00 — and those are exactly the bond's prices with five, four, three, two, one and no coupons left. The checks compute both lists separately and compare them.
 
-**The other route.** A careful market does not use one rate for all five dates; it uses a different rate per date and discounts each payment on its own. The single $y$ is then whatever flat rate reproduces the same total, which is the same move [NPV and IRR](04-net-present-value-and-irr.md) makes for a project's cash flows. Finding that flat rate from a quoted price is [Yield from price](07-yield-from-price.md).
+**The other route.** A careful market does not use one rate for all five dates; it uses a different rate per date and discounts each payment on its own. The single $`y`$ is then whatever flat rate reproduces the same total, which is the same move [NPV and IRR](04-net-present-value-and-irr.md) makes for a project's cash flows. Finding that flat rate from a quoted price is [Yield from price](07-yield-from-price.md).
 
 ---
 
@@ -151,15 +167,15 @@ The house bond: face $1,000, a 6% coupon paid once a year, five years to run, ma
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| year 1 coupon | $60 \times 0.952381$ | 57.14 |
-| year 2 coupon | $60 \times 0.907029$ | 54.42 |
-| year 3 coupon | $60 \times 0.863838$ | 51.83 |
-| year 4 coupon | $60 \times 0.822702$ | 49.36 |
-| year 5, coupon and face together | $1060 \times 0.783526$ | 830.54 |
+| year 1 coupon | $`60 \times 0.952381`$ | 57.14 |
+| year 2 coupon | $`60 \times 0.907029`$ | 54.42 |
+| year 3 coupon | $`60 \times 0.863838`$ | 51.83 |
+| year 4 coupon | $`60 \times 0.822702`$ | 49.36 |
+| year 5, coupon and face together | $`1060 \times 0.783526`$ | 830.54 |
 | **price** | the five added | **$1,043.29** |
-| the same, in two pieces: the coupons | $60 \times 4.329477$ | 259.77 |
-| and the face | $1000 \times 0.783526$ | 783.53 |
-| the premium, checked a third way | $10 \times 4.329477$ | 43.29 |
+| the same, in two pieces: the coupons | $`60 \times 4.329477`$ | 259.77 |
+| and the face | $`1000 \times 0.783526`$ | 783.53 |
+| the premium, checked a third way | $`10 \times 4.329477`$ | 43.29 |
 
 A buyer hands over $1,043.29 and is repaid $1,000. The $43.29 apparently thrown away is the price of five years of $10-a-year overpayment, and it comes back in the coupons.
 
@@ -221,7 +237,7 @@ Now the 15 September puzzle. A buyer settling that day is buying a bond whose ne
 Two prices, and every market quotes one and charges the other:
 
 - The **dirty price** (also called the invoice price) is the honest value of everything still to come, on the settlement day: **$1,069.27**. This is the cash that changes hands.
-- **Accrued interest** is the seller's earned share of the coming coupon: the coupon times the fraction of the period already run, $A = c \times w$. From 15 March to 15 September 2026 is 184 days of a 365-day coupon year, so $w = 0.504110$ and $A = 60 \times 0.504110 = 30.25$.
+- **Accrued interest** is the seller's earned share of the coming coupon: the coupon times the fraction of the period already run, $`A = c \times w`$. From 15 March to 15 September 2026 is 184 days of a 365-day coupon year, so $`w = 0.504110`$ and $`A = 60 \times 0.504110 = 30.25`$.
 - The **clean price** is the dirty price minus the accrued interest: **$1,039.03**. This is the number on the screen.
 
 The reason for the split is readability. The dirty price sawtooths: it climbs all year and drops by $60 on every coupon date, which would make a price chart useless. Subtracting the accrued interest takes the sawtooth out. What is left still drifts, because the pull to par is in it, but it no longer drops $60 once a year. Here the clean price, $1,039.03, sits between the two coupon-date values either side of it, $1,043.29 and $1,035.46 — a check the code makes.
@@ -626,9 +642,9 @@ The two outputs match line for line.
 
 Lean proves the closed form and the premium, par and discount rule for any bond, then checks the house bond in exact fractions.
 
-- Suppose the yield is not zero and not $-1$. Then the price equals the coupon times the annuity factor, plus the face times $D(N)$.
-- Take the same yield. Then the price also equals the face plus $c - yF$ times the annuity factor.
-- Suppose the yield is above $-1$ and at least one payment remains. Then the price is above, equal to or below face exactly when $c$ is above, equal to or below $yF$.
+- Suppose the yield is not zero and not $`-1`$. Then the price equals the coupon times the annuity factor, plus the face times $`D(N)`$.
+- Take the same yield. Then the price also equals the face plus $`c - yF`$ times the annuity factor.
+- Suppose the yield is above $`-1`$ and at least one payment remains. Then the price is above, equal to or below face exactly when $`c`$ is above, equal to or below $`yF`$.
 - The house bond prices at exactly $1,000 at a 6% yield, and at exactly $1,300 with no discounting.
 - At 5% it prices within half a cent of $1,043.29, and equals $1,000 plus $10 times the annuity factor exactly.
 - Spending that price at 5%, paying out $60 a year, leaves exactly $1,000 after five years.
@@ -828,13 +844,13 @@ example : (6049 / 200 : ℚ) ≤ 60 * (184 / 365) ∧ (60 : ℚ) * (184 / 365) <
 - **Company debt.** The same arithmetic with one extra question: whether the payments arrive at all. That gap between a government's yield and a company's is the credit spread.
 
 > **Say it back**
-> A bond is a handful of dated promises: a fixed coupon each year and the face at the end. Its price is what those promises are worth today, each one divided by $(1+y)$ once for every year of waiting, where $y$ is the market's yield. The coupons are the same number every year, so they collapse into an annuity factor, and the price becomes the face plus whatever the coupon pays above the yield. That leftover decides everything: coupon above the yield is a premium, equal is par, below is a discount. Between coupon dates the quoted price leaves out the seller's earned share of the coming coupon; the cash paid puts it back.
+> A bond is a handful of dated promises: a fixed coupon each year and the face at the end. Its price is what those promises are worth today, each one divided by $`(1+y)`$ once for every year of waiting, where $`y`$ is the market's yield. The coupons are the same number every year, so they collapse into an annuity factor, and the price becomes the face plus whatever the coupon pays above the yield. That leftover decides everything: coupon above the yield is a premium, equal is par, below is a discount. Between coupon dates the quoted price leaves out the seller's earned share of the coming coupon; the cash paid puts it back.
 
 ---
 
 ## What this builds on
 
-- [Discount factors](01-compounding-and-discount-factors.md): the price today of one dollar due later, $D(5) = 0.783526$ here, which every payment on this card is multiplied by.
+- [Discount factors](01-compounding-and-discount-factors.md): the price today of one dollar due later, $`D(5) = 0.783526`$ here, which every payment on this card is multiplied by.
 - [Annuities](03-annuities-and-loans.md): the annuity factor, 4.329477 here, which is the only reason five coupons can be priced with one multiplication.
 - [Day counts](02-day-counts-and-dates.md): what 184 days out of 365 means, and why a market has to agree on the count before it can agree on a price.
 

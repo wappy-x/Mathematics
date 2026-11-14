@@ -44,61 +44,69 @@ Orange: the natural spline. Teal: the not-a-knot spline. Dark: the monotone sche
 
 A spline can be written through its second derivatives or through its slopes. This card uses slopes, because every scheme here is the same kind of curve with different slopes.
 
-Notation, in words. The quoted maturities are the **knots** $t_0 < t_1 < \dots < t_n$, here $n = 7$ gaps from 1 to 15 years. The quote at $t_i$ is $y_i$. Gap $i$ runs from $t_i$ to $t_{i+1}$; its length is $h_i$, and its **gap slope** is $\Delta_i = (y_{i+1} - y_i)/h_i$: how fast the quotes rise across it. The fitted curve is $S(t)$, and its slope at knot $i$ is $s_i$. [Cubic splines](05-splines.md) wrote the curve as $s(t)$ and the chord slope as $g_i$; here the small $s_i$ are slopes, so the curve is a capital $S$ and the chord slope is $\Delta_i$.
+Notation, in words. The quoted maturities are the **knots** $`t_0 < t_1 < \dots < t_n`$, here $`n = 7`$ gaps from 1 to 15 years. The quote at $`t_i`$ is $`y_i`$. Gap $`i`$ runs from $`t_i`$ to $`t_{i+1}`$; its length is $`h_i`$, and its **gap slope** is $`\Delta_i = (y_{i+1} - y_i)/h_i`$: how fast the quotes rise across it. The fitted curve is $`S(t)`$, and its slope at knot $`i`$ is $`s_i`$. [Cubic splines](05-splines.md) wrote the curve as $`s(t)`$ and the chord slope as $`g_i`$; here the small $`s_i`$ are slopes, so the curve is a capital $`S`$ and the chord slope is $`\Delta_i`$.
 
-On gap $i$, with $p = (t - t_i)/h_i$ the fraction of the gap already passed:
+On gap $`i`$, with $`p = (t - t_i)/h_i`$ the fraction of the gap already passed:
 
-$$S(t) = y_i\,(1 - 3p^2 + 2p^3) + h_i s_i\,(p - 2p^2 + p^3) + y_{i+1}\,(3p^2 - 2p^3) + h_i s_{i+1}\,(p^3 - p^2)$$
+```math
+S(t) = y_i\,(1 - 3p^2 + 2p^3) + h_i s_i\,(p - 2p^2 + p^3) + y_{i+1}\,(3p^2 - 2p^3) + h_i s_{i+1}\,(p^3 - p^2)
+```
 
-**Read it aloud:** on each gap, the curve is the one cubic that starts at the left quote with slope $s_i$ and ends at the right quote with slope $s_{i+1}$.
+**Read it aloud:** on each gap, the curve is the one cubic that starts at the left quote with slope $`s_i`$ and ends at the right quote with slope $`s_{i+1}`$.
 
-This is the **Hermite cubic**: four facts (two values, two slopes) fix four coefficients. Every scheme on this card is a Hermite cubic on each gap. The schemes differ only in how they choose the slopes $s_i$.
+This is the **Hermite cubic**: four facts (two values, two slopes) fix four coefficients. Every scheme on this card is a Hermite cubic on each gap. The schemes differ only in how they choose the slopes $`s_i`$.
 
-**The spline's slopes.** At each inner knot, the curvature $S''$ from the left gap must equal the curvature from the right gap. That gives, for $i = 1, \dots, n-1$:
+**The spline's slopes.** At each inner knot, the curvature $`S''`$ from the left gap must equal the curvature from the right gap. That gives, for $`i = 1, \dots, n-1`$:
 
-$$h_i\,s_{i-1} + 2(h_{i-1} + h_i)\,s_i + h_{i-1}\,s_{i+1} = 3\,(h_i\,\Delta_{i-1} + h_{i-1}\,\Delta_i)$$
+```math
+h_i\,s_{i-1} + 2(h_{i-1} + h_i)\,s_i + h_{i-1}\,s_{i+1} = 3\,(h_i\,\Delta_{i-1} + h_{i-1}\,\Delta_i)
+```
 
 **Read it aloud:** each slope is tied to its two neighbours so that the bending matches across every knot.
 
-That is $n - 1$ equations for $n + 1$ slopes. The end condition adds two more.
+That is $`n - 1`$ equations for $`n + 1`$ slopes. The end condition adds two more.
 
 | End condition | Equation at the left end (the right end mirrors it) | What it assumes |
 | --- | --- | --- |
-| Natural | $2s_0 + s_1 = 3\Delta_0$, which says $S''(t_0) = 0$ | the curve stops bending at the last quote |
-| Clamped | $s_0$ = a slope supplied from outside | the slope at each end is known |
-| Not-a-knot | $S'''$, the third derivative, is the same on the first two gaps | nothing beyond smoothness: one cubic covers the first two gaps |
+| Natural | $`2s_0 + s_1 = 3\Delta_0`$, which says $`S''(t_0) = 0`$ | the curve stops bending at the last quote |
+| Clamped | $`s_0`$ = a slope supplied from outside | the slope at each end is known |
+| Not-a-knot | $`S'''`$, the third derivative, is the same on the first two gaps | nothing beyond smoothness: one cubic covers the first two gaps |
 
 **The monotone scheme's slopes.** Each slope comes from its two neighbouring gap slopes alone:
 
-$$s_i = \frac{3\,(h_{i-1} + h_i)}{\dfrac{2h_i + h_{i-1}}{\Delta_{i-1}} + \dfrac{h_i + 2h_{i-1}}{\Delta_i}} \quad\text{when } \Delta_{i-1}\Delta_i > 0, \qquad s_i = 0 \text{ otherwise}$$
+```math
+s_i = \frac{3\,(h_{i-1} + h_i)}{\dfrac{2h_i + h_{i-1}}{\Delta_{i-1}} + \dfrac{h_i + 2h_{i-1}}{\Delta_i}} \quad\text{when } \Delta_{i-1}\Delta_i > 0, \qquad s_i = 0 \text{ otherwise}
+```
 
 **Read it aloud:** where the quotes keep rising (or keep falling) through a knot, the slope there is a weighted harmonic mean of the two gap slopes; where they stop or turn, the slope is zero.
 
-The **harmonic mean** of two numbers is the reciprocal of the average of their reciprocals; it sits close to the smaller number. This rule is Fritsch and Butland's; many numerical libraries ship it under the name PCHIP (piecewise cubic Hermite interpolating polynomial). The guarantee comes from two ratios for each gap: $\alpha_i = s_i/\Delta_i$ and $\beta_i = s_{i+1}/\Delta_i$.
+The **harmonic mean** of two numbers is the reciprocal of the average of their reciprocals; it sits close to the smaller number. This rule is Fritsch and Butland's; many numerical libraries ship it under the name PCHIP (piecewise cubic Hermite interpolating polynomial). The guarantee comes from two ratios for each gap: $`\alpha_i = s_i/\Delta_i`$ and $`\beta_i = s_{i+1}/\Delta_i`$.
 
-$$\Delta_i > 0,\quad 0 \le \alpha_i \le 3,\quad 0 \le \beta_i \le 3 \quad\Longrightarrow\quad S \text{ never falls on gap } i$$
+```math
+\Delta_i > 0,\quad 0 \le \alpha_i \le 3,\quad 0 \le \beta_i \le 3 \quad\Longrightarrow\quad S \text{ never falls on gap } i
+```
 
 **Read it aloud:** if the quotes rise across a gap, and each end slope is between zero and three times the gap slope, then the cubic on that gap rises too.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $t_i$ | maturity in years; the quoted maturities (knots) | 1, 2, 3, 4, 5, 7, 10, 15 | — |
-| $n$ | the number of gaps | 7 | more equations; the same method |
-| $y_i$ | the quoted forward rate at $t_i$, % a year | 3.50 at 2 years, 3.55 at 3 years | the curve passes higher |
-| $h_i$ | gap length $t_{i+1} - t_i$, years; on equal gaps, the spacing $h$ | 1 year from 2 to 3 | wider gaps: larger errors, like $h^1$ to $h^4$ |
-| $\Delta_i$ | gap slope: rise of the quotes per year across gap $i$ | 0.0500 points a year, 2 to 3 years | steeper climb |
-| $s_i$ | the curve's slope at knot $i$, points a year | spline $-0.0818$, monotone $0.0000$ at 2 years | the curve leaves the knot more steeply |
-| $p$ | fraction of the gap already passed, 0 to 1 | 0.35 at 2.35 years | moves the point across the gap |
-| $S(t)$ | the fitted forward rate at $t$; $S'$, $S''$, $S'''$ its first three derivatives | 3.4673 (spline), 3.5067 (monotone) at 2.35 years | — |
-| $\alpha_i$, $\beta_i$ | left and right end slope, each divided by the gap slope | spline −1.6351 and 8.7228; monotone 0.0000 and 1.8667 | outside 0 to 3, a dip or a hump is possible |
-| $f$ | a known smooth curve used to measure errors | $4.60 - 1.10\,e^{-(t-1)/4}$ | — |
-| $a$, $b$ | the two weights inside the harmonic mean, each between 1/3 and 2/3 | equal at 3 years, where both gaps are 1 year | more weight on that side's gap slope |
-| $g(p)$, $p^*$, $Q$ | in the proof: the slope divided by $\Delta_i$, where it is lowest, and the test that its lowest value is not negative | — | — |
+| $`t`$, $`t_i`$ | maturity in years; the quoted maturities (knots) | 1, 2, 3, 4, 5, 7, 10, 15 | — |
+| $`n`$ | the number of gaps | 7 | more equations; the same method |
+| $`y_i`$ | the quoted forward rate at $`t_i`$, % a year | 3.50 at 2 years, 3.55 at 3 years | the curve passes higher |
+| $`h_i`$ | gap length $`t_{i+1} - t_i`$, years; on equal gaps, the spacing $`h`$ | 1 year from 2 to 3 | wider gaps: larger errors, like $`h^1`$ to $`h^4`$ |
+| $`\Delta_i`$ | gap slope: rise of the quotes per year across gap $`i`$ | 0.0500 points a year, 2 to 3 years | steeper climb |
+| $`s_i`$ | the curve's slope at knot $`i`$, points a year | spline $`-0.0818`$, monotone $`0.0000`$ at 2 years | the curve leaves the knot more steeply |
+| $`p`$ | fraction of the gap already passed, 0 to 1 | 0.35 at 2.35 years | moves the point across the gap |
+| $`S(t)`$ | the fitted forward rate at $`t`$; $`S'`$, $`S''`$, $`S'''`$ its first three derivatives | 3.4673 (spline), 3.5067 (monotone) at 2.35 years | — |
+| $`\alpha_i`$, $`\beta_i`$ | left and right end slope, each divided by the gap slope | spline −1.6351 and 8.7228; monotone 0.0000 and 1.8667 | outside 0 to 3, a dip or a hump is possible |
+| $`f`$ | a known smooth curve used to measure errors | $`4.60 - 1.10\,e^{-(t-1)/4}`$ | — |
+| $`a`$, $`b`$ | the two weights inside the harmonic mean, each between 1/3 and 2/3 | equal at 3 years, where both gaps are 1 year | more weight on that side's gap slope |
+| $`g(p)`$, $`p^*`$, $`Q`$ | in the proof: the slope divided by $`\Delta_i`$, where it is lowest, and the test that its lowest value is not negative | — | — |
 
 ### When it holds
 
-- **The knots are sorted and distinct.** A repeated maturity makes some $h_i$ zero, and every formula above divides by it.
-- **Natural ends assume the curve stops bending at the ends.** If the true curve bends there, the error near the ends falls only like $h^2$ instead of $h^4$: order 2.00 in the checks.
+- **The knots are sorted and distinct.** A repeated maturity makes some $`h_i`$ zero, and every formula above divides by it.
+- **Natural ends assume the curve stops bending at the ends.** If the true curve bends there, the error near the ends falls only like $`h^2`$ instead of $`h^4`$: order 2.00 in the checks.
 - **Clamped ends assume the end slopes are right.** A guessed slope enters the error at first order: clamping the test curve flat gives order 1.00.
 - **Not-a-knot needs at least four quotes.** It merges the first two gaps and the last two into single cubics, so with fewer than three gaps there is nothing left to fit.
 - **The monotone guarantee needs monotone data on the gap.** Where the quotes turn, the scheme sets the slope to zero, so the curve has a flat top or bottom exactly at a quote, and its accuracy drops near that knot.
@@ -115,11 +123,11 @@ So every question on this card is a question about slopes: a dip comes from a sl
 
 ### Step 1: the spline leaves two slopes free, and the end condition is a guess about them
 
-The spline card sets up the curvature-matching system and proves its solution has two continuous derivatives ([Cubic splines](05-splines.md)). In slope form it is the equation in The formula. There are $n - 1$ inner knots and $n + 1$ slopes, so two slopes are free. No data fill them: the data stop at the ends. So any choice is an assumption about the curve outside the data.
+The spline card sets up the curvature-matching system and proves its solution has two continuous derivatives ([Cubic splines](05-splines.md)). In slope form it is the equation in The formula. There are $`n - 1`$ inner knots and $`n + 1`$ slopes, so two slopes are free. No data fill them: the data stop at the ends. So any choice is an assumption about the curve outside the data.
 
 - **Natural.** Set the curvature to zero at both ends. A thin flexible strip of wood bent through pins, the drafting spline the method is named after, does exactly this: nothing holds its ends, so it leaves them straight. Among all curves through the data with two continuous derivatives, the natural spline has the least total squared curvature, which is why it looks calm ([Cubic splines](05-splines.md) proves it in Step 4; de Boor, below).
 - **Clamped.** Supply the end slopes. If they are the true slopes, nothing has been guessed. Here the desk clamps both ends flat, at slope 0, saying the curve is level before one year and after fifteen years.
-- **Not-a-knot.** Demand that the third derivative not jump at $t_1$ or $t_{n-1}$. A cubic's third derivative is constant, so the first two gaps become one cubic: $t_1$ is still a data point, but no longer a joint. That is the name. It assumes only that the curve is smooth near the ends.
+- **Not-a-knot.** Demand that the third derivative not jump at $`t_1`$ or $`t_{n-1}`$. A cubic's third derivative is constant, so the first two gaps become one cubic: $`t_1`$ is still a data point, but no longer a joint. That is the name. It assumes only that the curve is smooth near the ends.
 
 On the eight quotes the three end conditions give different end slopes:
 
@@ -134,9 +142,9 @@ The end condition changes the dip, from −3.82 bp to −5.33 bp. It does not re
 
 ### Step 2: what each guess costs, measured
 
-To measure accuracy, the checks use a curve whose every value is known, $f(t) = 4.60 - 1.10\,e^{-(t-1)/4}$, a forward curve rising from 3.50 toward 4.60. They sample it on equal gaps of width $h$ from 1 to 15 years, fit each scheme, and record the largest true error at nine evenly spaced points inside each gap.
+To measure accuracy, the checks use a curve whose every value is known, $`f(t) = 4.60 - 1.10\,e^{-(t-1)/4}`$, a forward curve rising from 3.50 toward 4.60. They sample it on equal gaps of width $`h`$ from 1 to 15 years, fit each scheme, and record the largest true error at nine evenly spaced points inside each gap.
 
-| Gaps $n$ | $h$ (years) | Natural | Clamped, true slopes | Not-a-knot | Monotone | Clamped flat | Clamped bound |
+| Gaps $`n`$ | $`h`$ (years) | Natural | Clamped, true slopes | Not-a-knot | Monotone | Clamped flat | Clamped bound |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 7 | 2.0000 | 1.308e-02 | 1.603e-04 | 1.156e-03 | 4.181e-03 | 9.320e-02 | 8.952e-04 |
 | 14 | 1.0000 | 3.342e-03 | 1.066e-05 | 9.324e-05 | 6.243e-04 | 4.666e-02 | 5.595e-05 |
@@ -144,15 +152,15 @@ To measure accuracy, the checks use a curve whose every value is known, $f(t) = 
 | 56 | 0.2500 | 2.104e-04 | 4.325e-08 | 4.417e-07 | 1.121e-05 | 1.167e-02 | 2.186e-07 |
 | 112 | 0.1250 | 5.262e-05 | 2.718e-09 | 2.852e-08 | 1.434e-06 | 5.834e-03 | 1.366e-08 |
 
-Errors are in percentage points, all true errors. The **observed order** from 56 to 112 gaps is $\log_2$ of the ratio of the two errors: natural 2.00, clamped 3.99, not-a-knot 3.95, monotone 2.97, clamped flat 1.00.
+Errors are in percentage points, all true errors. The **observed order** from 56 to 112 gaps is $`\log_2`$ of the ratio of the two errors: natural 2.00, clamped 3.99, not-a-knot 3.95, monotone 2.97, clamped flat 1.00.
 
-- **Clamped with true slopes** is the best case. Hall and Meyer proved the sharp bound: the error is at most $\tfrac{5}{384}\,h^4$ times the largest size of $f''''$ ([Hall and Meyer](https://doi.org/10.1016/0021-9045(76)90040-X)). The last column is that bound, and at 112 gaps it is 5.03 times the true error.
+- **Clamped with true slopes** is the best case. Hall and Meyer proved the sharp bound: the error is at most $`\tfrac{5}{384}\,h^4`$ times the largest size of $`f''''`$ ([Hall and Meyer](https://doi.org/10.1016/0021-9045(76)90040-X)). The last column is that bound, and at 112 gaps it is 5.03 times the true error.
 - **Not-a-knot** keeps order 4 without being told any slope, which is why many libraries use it by default. Its error is still larger than the clamped spline's at every size here.
-- **Natural** drops to order 2. The test curve bends at both ends, the natural spline insists it does not, and that $h^2$ error near the ends dominates.
+- **Natural** drops to order 2. The test curve bends at both ends, the natural spline insists it does not, and that $`h^2`$ error near the ends dominates.
 - **Clamped flat** drops to order 1. A wrong end slope is a first-order error, worse than any other choice in the table.
 - **Monotone** runs at order 3 on these equal gaps: its slopes come from neighbouring gap slopes, not from a global solve, and are less accurate.
 
-The rule from [The interpolation error theorem](03-polynomial-interpolation-error.md) carries over: each power of $h$ is paid for by smoothness, and a wrong assumption at an end breaks the bargain.
+The rule from [The interpolation error theorem](03-polynomial-interpolation-error.md) carries over: each power of $`h`$ is paid for by smoothness, and a wrong assumption at an end breaks the bargain.
 
 An exact claim is also run in floating point. Clamped (with true slopes) and not-a-knot splines reproduce any cubic exactly. On a cubic through the eight maturities the checks find largest errors of 8.9e-16 and 1.8e-15, rounding only. The natural spline misses by 3.4e-02, because a cubic's curvature at the ends is not zero.
 
@@ -173,65 +181,67 @@ Orange: natural ends, slope 2. Teal: not-a-knot, slope 4. Dark: the monotone sch
 
 Look at the inner equation at the 2-year knot. The gaps on both sides are one year long, so it reads
 
-$$s_0 + 4s_1 + s_2 = 3(\Delta_0 + \Delta_1).$$
+```math
+s_0 + 4s_1 + s_2 = 3(\Delta_0 + \Delta_1).
+```
 
-The right-hand side is small: the quotes rise only 0.0500 points across the two gaps together. But the 3-year slope $s_2$ is large, because the next gap climbs 0.7000 points a year and the curvature must match there too. The equation then forces $s_1$ negative: the curve leaves the 2-year quote heading down.
+The right-hand side is small: the quotes rise only 0.0500 points across the two gaps together. But the 3-year slope $`s_2`$ is large, because the next gap climbs 0.7000 points a year and the curvature must match there too. The equation then forces $`s_1`$ negative: the curve leaves the 2-year quote heading down.
 
-A curve that starts down and must end up at 3.55 crosses below 3.50 on the way. In the ratios of The formula: on the 2-to-3-year gap the natural spline has $\alpha = -1.6351$ and $\beta = 8.7228$. Both are outside 0 to 3.
+A curve that starts down and must end up at 3.55 crosses below 3.50 on the way. In the ratios of The formula: on the 2-to-3-year gap the natural spline has $`\alpha = -1.6351`$ and $`\beta = 8.7228`$. Both are outside 0 to 3.
 
 This is a global effect. Every slope is tied to every other through the chain of equations. The end condition only changes the far end of that chain. The same chain spreads any change: raise the 4-year quote by 1 bp and the natural spline moves by +0.0422 bp at 1.5 years and −0.1128 bp at 12.5 years, far from the quote that moved.
 
 ### Step 4: the slope range that forbids a dip
 
-The theorem: on a gap with $\Delta_i > 0$, if $0 \le \alpha_i \le 3$ and $0 \le \beta_i \le 3$, the Hermite cubic never falls.
+The theorem: on a gap with $`\Delta_i > 0`$, if $`0 \le \alpha_i \le 3`$ and $`0 \le \beta_i \le 3`$, the Hermite cubic never falls.
 
-The idea of the proof. Divide the curve's slope by $\Delta_i$; what is left is a quadratic in $p$ whose values at the two ends are $\alpha_i$ and $\beta_i$, both at least zero. If the quadratic bends down, it stays above its lower end. If it bends up, its lowest point is a simple expression in $\alpha$ and $\beta$, and on the square $0 \le \alpha, \beta \le 3$ that expression is never negative. The fold has the algebra.
+The idea of the proof. Divide the curve's slope by $`\Delta_i`$; what is left is a quadratic in $`p`$ whose values at the two ends are $`\alpha_i`$ and $`\beta_i`$, both at least zero. If the quadratic bends down, it stays above its lower end. If it bends up, its lowest point is a simple expression in $`\alpha`$ and $`\beta`$, and on the square $`0 \le \alpha, \beta \le 3`$ that expression is never negative. The fold has the algebra.
 
 <details>
 <summary>Detailed proof: the square of safe slopes</summary>
 
-Differentiate the Hermite cubic and divide by $\Delta_i$. With $\alpha = \alpha_i$ and $\beta = \beta_i$:
+Differentiate the Hermite cubic and divide by $`\Delta_i`$. With $`\alpha = \alpha_i`$ and $`\beta = \beta_i`$:
 
-$$\frac{S'(t)}{\Delta_i} = g(p) = (3\alpha + 3\beta - 6)\,p^2 + (6 - 4\alpha - 2\beta)\,p + \alpha.$$
+$`\displaystyle \frac{S'(t)}{\Delta_i} = g(p) = (3\alpha + 3\beta - 6)\,p^2 + (6 - 4\alpha - 2\beta)\,p + \alpha.`$
 
-Check the ends: $g(0) = \alpha$ and $g(1) = \beta$. Both are at least zero by assumption.
+Check the ends: $`g(0) = \alpha`$ and $`g(1) = \beta`$. Both are at least zero by assumption.
 
-**Case 1: $\alpha + \beta \le 2$.** The $p^2$ coefficient is zero or negative, so $g$ is a straight line or bends down. Such a function is never below the smaller of its end values on $[0, 1]$. So $g \ge 0$.
+**Case 1: $`\alpha + \beta \le 2`$.** The $`p^2`$ coefficient is zero or negative, so $`g`$ is a straight line or bends down. Such a function is never below the smaller of its end values on $`[0, 1]`$. So $`g \ge 0`$.
 
-**Case 2: $\alpha + \beta > 2$.** Now $g$ bends up, with its lowest point at
+**Case 2: $`\alpha + \beta > 2`$.** Now $`g`$ bends up, with its lowest point at
 
-$$p^* = \frac{2\alpha + \beta - 3}{3(\alpha + \beta - 2)}.$$
+$`\displaystyle p^* = \frac{2\alpha + \beta - 3}{3(\alpha + \beta - 2)}.`$
 
-If $p^*$ is outside $(0, 1)$, the lowest value on $[0, 1]$ is at an end, and both ends are at least zero. So suppose $0 < p^* < 1$. That happens exactly when $2\alpha + \beta > 3$ and $\alpha + 2\beta > 3$. The lowest value is
+If $`p^*`$ is outside $`(0, 1)`$, the lowest value on $`[0, 1]`$ is at an end, and both ends are at least zero. So suppose $`0 < p^* < 1`$. That happens exactly when $`2\alpha + \beta > 3`$ and $`\alpha + 2\beta > 3`$. The lowest value is
 
-$$g(p^*) = \alpha - \frac{(2\alpha + \beta - 3)^2}{3(\alpha + \beta - 2)},$$
+$`\displaystyle g(p^*) = \alpha - \frac{(2\alpha + \beta - 3)^2}{3(\alpha + \beta - 2)},`$
 
-and multiplying out shows $g(p^*) \ge 0$ exactly when
+and multiplying out shows $`g(p^*) \ge 0`$ exactly when
 
-$$Q(\alpha, \beta) = 6\alpha + 6\beta - 9 - \alpha^2 - \alpha\beta - \beta^2 \ge 0.$$
+$`\displaystyle Q(\alpha, \beta) = 6\alpha + 6\beta - 9 - \alpha^2 - \alpha\beta - \beta^2 \ge 0.`$
 
-The points with $\alpha \le 3$, $\beta \le 3$, $2\alpha + \beta \ge 3$ and $\alpha + 2\beta \ge 3$ form a four-sided region with corners $(1, 1)$, $(3, 0)$, $(3, 3)$ and $(0, 3)$. The function $Q$ bends down in every direction, because $\alpha^2 + \alpha\beta + \beta^2$ is positive for every nonzero $(\alpha, \beta)$. A function that bends down in every direction takes its smallest value on such a region at a corner. At each of the four corners $Q = 0$. So $Q \ge 0$ on the whole region, and $g(p) \ge 0$ for every $p$ in the gap. ∎
+The points with $`\alpha \le 3`$, $`\beta \le 3`$, $`2\alpha + \beta \ge 3`$ and $`\alpha + 2\beta \ge 3`$ form a four-sided region with corners $`(1, 1)`$, $`(3, 0)`$, $`(3, 3)`$ and $`(0, 3)`$. The function $`Q`$ bends down in every direction, because $`\alpha^2 + \alpha\beta + \beta^2`$ is positive for every nonzero $`(\alpha, \beta)`$. A function that bends down in every direction takes its smallest value on such a region at a corner. At each of the four corners $`Q = 0`$. So $`Q \ge 0`$ on the whole region, and $`g(p) \ge 0`$ for every $`p`$ in the gap. ∎
 
-The square is not the whole safe region. Fritsch and Carlson give the exact region: it follows the ellipse $Q = 0$ and reaches past the square where one ratio is large and the other small ([Fritsch and Carlson](https://doi.org/10.1137/0717021)). The square is the simplest piece to aim at.
+The square is not the whole safe region. Fritsch and Carlson give the exact region: it follows the ellipse $`Q = 0`$ and reaches past the square where one ratio is large and the other small ([Fritsch and Carlson](https://doi.org/10.1137/0717021)). The square is the simplest piece to aim at.
 
 </details>
 
-The checks confirm the theorem from the other side: they find the 2-to-3-year gap's lowest point by solving $S' = 0$ exactly, and again by sampling 4,001 points. Both roads give 3.4601% for the natural spline and 3.5000% for the monotone scheme. A scan of 14,001 points from 1 to 15 years also asserts that the monotone curve never falls anywhere.
+The checks confirm the theorem from the other side: they find the 2-to-3-year gap's lowest point by solving $`S' = 0`$ exactly, and again by sampling 4,001 points. Both roads give 3.4601% for the natural spline and 3.5000% for the monotone scheme. A scan of 14,001 points from 1 to 15 years also asserts that the monotone curve never falls anywhere.
 
 ### Step 5: the harmonic mean always lands in the square
 
-Write the slope rule as $s_i = 1 / (a/\Delta_{i-1} + b/\Delta_i)$ with $a = \frac{2h_i + h_{i-1}}{3(h_{i-1} + h_i)}$ and $b = 1 - a$. Both weights lie between 1/3 and 2/3, whatever the gap lengths.
+Write the slope rule as $`s_i = 1 / (a/\Delta_{i-1} + b/\Delta_i)`$ with $`a = \frac{2h_i + h_{i-1}}{3(h_{i-1} + h_i)}`$ and $`b = 1 - a`$. Both weights lie between 1/3 and 2/3, whatever the gap lengths.
 
-When both gap slopes are positive, dropping the $b$ term makes the denominator smaller, so $s_i < \Delta_{i-1}/a \le 3\Delta_{i-1}$. In the same way, $s_i < 3\Delta_i$. So every slope is between zero and three times each neighbouring gap slope: $\alpha$ and $\beta$ are in the square on every gap. Where the quotes are flat or turn, $s_i = 0$, which is also in the square.
+When both gap slopes are positive, dropping the $`b`$ term makes the denominator smaller, so $`s_i < \Delta_{i-1}/a \le 3\Delta_{i-1}`$. In the same way, $`s_i < 3\Delta_i`$. So every slope is between zero and three times each neighbouring gap slope: $`\alpha`$ and $`\beta`$ are in the square on every gap. Where the quotes are flat or turn, $`s_i = 0`$, which is also in the square.
 
-The end slopes use a one-sided three-point estimate, set to zero if its sign disagrees with the end gap, and cut to $3\Delta$ if the next gap turns. That keeps the two end gaps in the square too.
+The end slopes use a one-sided three-point estimate, set to zero if its sign disagrees with the end gap, and cut to $`3\Delta`$ if the next gap turns. That keeps the two end gaps in the square too.
 
 Two more facts follow from the formula.
 
-- **It is local.** $s_i$ depends on two gap slopes only. Raise the 4-year quote by 1 bp and the monotone curve moves by +0.0000 bp at 1.5 years and at 12.5 years, exactly zero, against +0.0422 and −0.1128 bp for the natural spline.
-- **It costs smoothness.** The curvature is no longer matched at the knots. At 4 years the monotone curve's $S''$ jumps by +2.4660 points a year per year squared; the spline's jumps by 3.0e-15, rounding only. The slope is still continuous.
+- **It is local.** $`s_i`$ depends on two gap slopes only. Raise the 4-year quote by 1 bp and the monotone curve moves by +0.0000 bp at 1.5 years and at 12.5 years, exactly zero, against +0.0422 and −0.1128 bp for the natural spline.
+- **It costs smoothness.** The curvature is no longer matched at the knots. At 4 years the monotone curve's $`S''`$ jumps by +2.4660 points a year per year squared; the spline's jumps by 3.0e-15, rounding only. The slope is still continuous.
 
-Cost, in flops (one addition, subtraction, multiplication or division) at $n = 7$. The spline's slope equations form a tridiagonal system (each row touches only its neighbours). Building the natural spline's rows takes $9n - 4$ = 59 flops, and [The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md) solves for the 8 slopes in $8n + 1$ = 57 more: 116 in all. Not-a-knot adds one entry in the first and last rows, removed by one extra elimination step. The monotone scheme needs no system: $3n$ = 21 flops for the gap lengths and slopes, then at most 10 per knot, $13n + 10$ = 101 in all. Both grow in proportion to $n$; the monotone scheme gains reach, not speed.
+Cost, in flops (one addition, subtraction, multiplication or division) at $`n = 7`$. The spline's slope equations form a tridiagonal system (each row touches only its neighbours). Building the natural spline's rows takes $`9n - 4`$ = 59 flops, and [The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md) solves for the 8 slopes in $`8n + 1`$ = 57 more: 116 in all. Not-a-knot adds one entry in the first and last rows, removed by one extra elimination step. The monotone scheme needs no system: $`3n`$ = 21 flops for the gap lengths and slopes, then at most 10 per knot, $`13n + 10`$ = 101 in all. Both grow in proportion to $`n`$; the monotone scheme gains reach, not speed.
 
 ---
 
@@ -260,7 +270,7 @@ The monotone curve never prices a forward below the quotes around it; the spline
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Natural ends on a curve that bends at its ends | error 5.262e-05 at 112 gaps, order 2.00 | $S'' = 0$ is false at the ends; the end error is order $h^2$ |
+| Natural ends on a curve that bends at its ends | error 5.262e-05 at 112 gaps, order 2.00 | $`S'' = 0`$ is false at the ends; the end error is order $`h^2`$ |
 | Clamped flat ends, slope 0, when the true slope is not 0 | error 5.834e-03 at 112 gaps, order 1.00 | a wrong slope is a first-order error |
 | Monotone shape, but plain average slopes with no limit | slope 0.3750 at 3 years, β = 7.50, lowest 3.4804%, −1.96 bp | β above 3 leaves the square; the cubic dips |
 | A spline where the curve must not dip | lowest 3.4601%, −3.99 bp | spline slopes are set globally; α = −1.6351 |
@@ -269,7 +279,7 @@ The monotone curve never prices a forward below the quotes around it; the spline
 
 ## Code, from first principles, and it actually runs
 
-The programs fit the eight quotes four ways: natural, clamped flat and not-a-knot splines, and the monotone scheme. All four are evaluated through one Hermite cubic routine. They take three independent roads. Road 1 solves the spline for its slopes. Road 2 solves it again for its second derivatives, a different linear system, and converts them to slopes; the two agree to 1.1e-16. The 2-to-3-year gap's lowest point is found by solving $S' = 0$ and again on a fine grid, and a scan from 1 to 15 years asserts that the monotone curve never falls. Last, a known smooth curve and a known cubic give true errors, observed orders and the Hall-Meyer bound. The elimination, the slope rules and the root solve are written out.
+The programs fit the eight quotes four ways: natural, clamped flat and not-a-knot splines, and the monotone scheme. All four are evaluated through one Hermite cubic routine. They take three independent roads. Road 1 solves the spline for its slopes. Road 2 solves it again for its second derivatives, a different linear system, and converts them to slopes; the two agree to 1.1e-16. The 2-to-3-year gap's lowest point is found by solving $`S' = 0`$ and again on a fine grid, and a scan from 1 to 15 years asserts that the monotone curve never falls. Last, a known smooth curve and a known cubic give true errors, observed orders and the Hall-Meyer bound. The elimination, the slope rules and the root solve are written out.
 
 ### Python
 
@@ -673,13 +683,13 @@ ALL CHECKS PASS
 
 Lean proves the monotone guarantee and the harmonic-mean slope rule for every gap and all quotes, and checks the card's hand numbers exactly.
 
-- The Hermite cubic starts at the left quote with slope $s_i$ and ends at the right quote with slope $s_{i+1}$.
-- If the quotes rise across a gap, and $\alpha$ and $\beta$ lie between 0 and 3, the Hermite cubic never falls on that gap.
+- The Hermite cubic starts at the left quote with slope $`s_i`$ and ends at the right quote with slope $`s_{i+1}`$.
+- If the quotes rise across a gap, and $`\alpha`$ and $`\beta`$ lie between 0 and 3, the Hermite cubic never falls on that gap.
 - Take a knot where the quotes keep rising, or keep falling, through it. For any gap lengths, the harmonic-mean slope there divided by either neighbouring gap slope is strictly between 0 and 3.
 - The monotone slopes are exactly 0 at 2 years, 7/75 (0.0933) at 3 years and 0.05 at 5 years.
-- On the 2-to-3-year gap, $\beta$ = 28/15 (1.8667), inside the square.
+- On the 2-to-3-year gap, $`\beta`$ = 28/15 (1.8667), inside the square.
 - The monotone curve reads 3.5067% at 2.35 years, to four decimals.
-- Plain averaging gives a 3-year slope of 0.3750 and $\beta$ = 7.50, outside the square.
+- Plain averaging gives a 3-year slope of 0.3750 and $`\beta`$ = 7.50, outside the square.
 
 The end conditions, the spline's dip, the end-slope rule, the error orders and every rounding check are left to the Python and Rust checks.
 
@@ -892,7 +902,7 @@ end SplineShape
 > - **Picking the most accurate end condition and assuming it is the safest.** Not-a-knot has order 3.95 on smooth data, and the largest dip here: −5.33 bp, plus +3.45 bp above the top quote.
 > - **Clamping the ends flat because the curve looks flat.** On the test curve the error falls only at order 1.00 and stays at 5.834e-03 with 112 gaps, against 2.718e-09 with the true slopes.
 > - **Taking any local slope rule as monotone.** Averaging the two gap slopes gives β = 7.50 on the 2-to-3-year gap and a dip of −1.96 bp. The limit to the square is the whole point.
-> - **Differentiating a monotone curve twice.** Its curvature jumps at each knot: by 2.4660 at 4 years. A quantity built from $S''$ will step there.
+> - **Differentiating a monotone curve twice.** Its curvature jumps at each knot: by 2.4660 at 4 years. A quantity built from $`S''`$ will step there.
 
 ---
 

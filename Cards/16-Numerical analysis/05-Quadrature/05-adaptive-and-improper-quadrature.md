@@ -42,43 +42,49 @@ The four panels around 18:00 get 20 points per hour. The twelve quiet night hour
 
 ## The formula
 
-Notation from [Trapezoid, midpoint and Simpson](01-newton-cotes-and-composite-rules.md): a rule's **nodes** are the points where it samples $f$, its **weights** say how much each sample counts, and its **degree of exactness** is the highest degree of polynomial it integrates exactly. The 7-point Gauss rule, exact to degree 13, comes from [Gaussian quadrature](03-gaussian-quadrature.md).
+Notation from [Trapezoid, midpoint and Simpson](01-newton-cotes-and-composite-rules.md): a rule's **nodes** are the points where it samples $`f`$, its **weights** say how much each sample counts, and its **degree of exactness** is the highest degree of polynomial it integrates exactly. The 7-point Gauss rule, exact to degree 13, comes from [Gaussian quadrature](03-gaussian-quadrature.md).
 
-On one panel $[a, b]$, write $c = (a+b)/2$ for its centre and $h = (b-a)/2$ for its half-width. Two rules use the same 15 points:
+On one panel $`[a, b]`$, write $`c = (a+b)/2`$ for its centre and $`h = (b-a)/2`$ for its half-width. Two rules use the same 15 points:
 
-$$K = h \sum_{i=1}^{15} w_i\, f(c + h x_i), \qquad G = h \sum_{j=1}^{7} v_j\, f(c + h x_{2j})$$
+```math
+K = h \sum_{i=1}^{15} w_i\, f(c + h x_i), \qquad G = h \sum_{j=1}^{7} v_j\, f(c + h x_{2j})
+```
 
 The panel's error estimate, and the rule for the whole interval:
 
-$$\text{estimate} = |K - G|, \qquad \text{split the worst panel until } \sum_{\text{panels}} |K - G| \le \tau$$
+```math
+\text{estimate} = |K - G|, \qquad \text{split the worst panel until } \sum_{\text{panels}} |K - G| \le \tau
+```
 
 Two substitutions make awkward integrals finite and smooth:
 
-$$\int_0^\infty f(x)\,dx = \int_0^1 f\!\left(\frac{u}{1-u}\right)\frac{du}{(1-u)^2}, \qquad \int_0^1 f(x)\,dx = \int_0^1 f(u^2)\,2u\,du$$
+```math
+\int_0^\infty f(x)\,dx = \int_0^1 f\!\left(\frac{u}{1-u}\right)\frac{du}{(1-u)^2}, \qquad \int_0^1 f(x)\,dx = \int_0^1 f(u^2)\,2u\,du
+```
 
 **Read it aloud:** the Kronrod sum K samples a panel at 15 points, the Gauss sum G reuses 7 of them, and their gap estimates the error. Keep splitting the panel with the biggest gap until the gaps add up to less than tau, after rewriting any infinite range or end spike in a new variable u on a finite interval.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $x$, $I$ | the integrand, its variable, and its true integral over one panel | the load; Planck's $x^3/(e^x - 1)$ | — |
-| $L(t)$, $t$ | the load in MW at time $t$ in hours; its integral over the day is the exact energy | $2 + 8/(1 + ((t-18)/0.25)^2)$; exact energy 54.1721241571 MWh | — |
-| $[a, b]$, $c$, $h$ | one panel, its centre and its half-width | first panel 0 to 24 hours: 12 hours and 12 hours | wider: more error in that panel |
-| $x_i$ | the 15 Kronrod nodes on $[-1, 1]$, in increasing order; $x_2, x_4, \dots, x_{14}$ are the 7 Gauss nodes | 0, ±0.2078, …, ±0.9915 | — |
-| $w_i$, $v_j$ | Kronrod weights and Gauss weights | at the centre, 0.2095 and 0.4180 | — |
-| $K$, $G$ | the 15-point Kronrod sum and the 7-point Gauss sum on a panel | first panel: 50.0744320662 and 50.0348993221 MWh | — |
-| $\lvert K - G \rvert$ | the panel's error estimate | first panel: 3.953e-2 MWh | that panel is split sooner |
-| $\tau$ | tolerance: the allowed sum of estimates. Say "tau". | 1e-3 MWh, one kilowatt-hour | fewer function values, a looser answer |
-| $u$ | the new variable in a substitution | $u = x/(1+x)$ for Planck; $u = \sqrt{x}$ for $1/\sqrt{x}$ | — |
-| $p$, $m$ | the power of an end spike $x^{-p}$, and the power in the substitution $x = u^m$ | $p$ = 1/2, $m$ = 2 | a bigger $p$ needs a bigger $m$ |
-| $P_7$, $E_8$, $q$, $s$, $r$ | in the proof: the Legendre polynomial of degree 7, the polynomial whose roots are the 8 new nodes, and helper polynomials | — | — |
+| $`f`$, $`x`$, $`I`$ | the integrand, its variable, and its true integral over one panel | the load; Planck's $`x^3/(e^x - 1)`$ | — |
+| $`L(t)`$, $`t`$ | the load in MW at time $`t`$ in hours; its integral over the day is the exact energy | $`2 + 8/(1 + ((t-18)/0.25)^2)`$; exact energy 54.1721241571 MWh | — |
+| $`[a, b]`$, $`c`$, $`h`$ | one panel, its centre and its half-width | first panel 0 to 24 hours: 12 hours and 12 hours | wider: more error in that panel |
+| $`x_i`$ | the 15 Kronrod nodes on $`[-1, 1]`$, in increasing order; $`x_2, x_4, \dots, x_{14}`$ are the 7 Gauss nodes | 0, ±0.2078, …, ±0.9915 | — |
+| $`w_i`$, $`v_j`$ | Kronrod weights and Gauss weights | at the centre, 0.2095 and 0.4180 | — |
+| $`K`$, $`G`$ | the 15-point Kronrod sum and the 7-point Gauss sum on a panel | first panel: 50.0744320662 and 50.0348993221 MWh | — |
+| $`\lvert K - G \rvert`$ | the panel's error estimate | first panel: 3.953e-2 MWh | that panel is split sooner |
+| $`\tau`$ | tolerance: the allowed sum of estimates. Say "tau". | 1e-3 MWh, one kilowatt-hour | fewer function values, a looser answer |
+| $`u`$ | the new variable in a substitution | $`u = x/(1+x)`$ for Planck; $`u = \sqrt{x}`$ for $`1/\sqrt{x}`$ | — |
+| $`p`$, $`m`$ | the power of an end spike $`x^{-p}`$, and the power in the substitution $`x = u^m`$ | $`p`$ = 1/2, $`m`$ = 2 | a bigger $`p`$ needs a bigger $`m`$ |
+| $`P_7`$, $`E_8`$, $`q`$, $`s`$, $`r`$ | in the proof: the Legendre polynomial of degree 7, the polynomial whose roots are the 8 new nodes, and helper polynomials | — | — |
 
 ### When it holds
 
 - **The integrand can be evaluated anywhere.** Adaptivity chooses its own points. Fixed meter readings every ten minutes cannot be split, and their trapezoid sum is off by 1.003e-3 MWh.
-- **The integrand is smooth on each final panel.** Where it is not, as $1/\sqrt{x}$ at 0, splitting still converges, but slowly: 1395 values for 1e-8. A substitution does it with 15.
+- **The integrand is smooth on each final panel.** Where it is not, as $`1/\sqrt{x}`$ at 0, splitting still converges, but slowly: 1395 values for 1e-8. A substitution does it with 15.
 - **Every feature shows up in the first samples.** A surge 36 seconds wide that falls between the first 15 nodes is invisible: the estimate reads 1.996e-5 and the true error is −1.248e-1 MWh. Start from more panels, or put a panel edge at any known event.
-- **The tolerance is above rounding level.** At $\tau$ = 1e-6 the answer already agrees with the closed form to rounding level. Asking for 1e-12 costs 735 values and buys nothing.
-- **For an infinite range, $f(x)$ falls at least as fast as $1/x^2$.** The mapped integrand equals $f(x)(1+x)^2$, so it stays finite at $u = 1$ only then. Planck's integrand falls like $x^3 e^{-x}$, far faster.
+- **The tolerance is above rounding level.** At $`\tau`$ = 1e-6 the answer already agrees with the closed form to rounding level. Asking for 1e-12 costs 735 values and buys nothing.
+- **For an infinite range, $`f(x)`$ falls at least as fast as $`1/x^2`$.** The mapped integrand equals $`f(x)(1+x)^2`$, so it stays finite at $`u = 1`$ only then. Planck's integrand falls like $`x^3 e^{-x}`$, far faster.
 
 ---
 
@@ -86,7 +92,7 @@ $$\int_0^\infty f(x)\,dx = \int_0^1 f\!\left(\frac{u}{1-u}\right)\frac{du}{(1-u)
 
 ### Step 0: the error lives where the curve bends
 
-A rule with degree of exactness 13 is nearly exact on any panel where $f$ looks like a polynomial of degree 13. The flat night hours are such a panel. The surge is not.
+A rule with degree of exactness 13 is nearly exact on any panel where $`f`$ looks like a polynomial of degree 13. The flat night hours are such a panel. The surge is not.
 
 The total error is the sum of the panel errors. So new function values cut the total most in the panel with the largest error. The method needs an error estimate for each panel and a rule for which panel to split.
 
@@ -94,56 +100,58 @@ The total error is the sum of the panel errors. So new function values cut the t
 
 To estimate the error of a rule, compare it with a better rule. A second Gauss rule would cost new points: a 15-point Gauss rule shares only the centre with the 7-point one.
 
-The Kronrod idea keeps the 7 Gauss nodes and adds 8 new ones. That leaves 8 free node positions and 15 free weights: 23 numbers. A rule with 23 free numbers can match 23 conditions, the integrals of $1, x, \dots, x^{22}$. Symmetry adds one more for free: the nodes and weights are mirror images about 0, so the rule gives 0 for the odd power $x^{23}$, and so does the true integral. So the 15-point Kronrod rule is exact to degree 23, and its error estimate comes from the same 15 function values.
+The Kronrod idea keeps the 7 Gauss nodes and adds 8 new ones. That leaves 8 free node positions and 15 free weights: 23 numbers. A rule with 23 free numbers can match 23 conditions, the integrals of $`1, x, \dots, x^{22}`$. Symmetry adds one more for free: the nodes and weights are mirror images about 0, so the rule gives 0 for the odd power $`x^{23}`$, and so does the true integral. So the 15-point Kronrod rule is exact to degree 23, and its error estimate comes from the same 15 function values.
 
 The code checks the table three ways:
 
-- the Gauss nodes from Newton's method on the Legendre polynomial $P_7$ match the table with a gap of 0;
+- the Gauss nodes from Newton's method on the Legendre polynomial $`P_7`$ match the table with a gap of 0;
 - the Kronrod weights, solved from 8 moment equations, match with a gap of 8.327e-17;
-- on $[-1, 1]$ the Gauss rule's error on $x^{12}$ is −2.776e-17 and on $x^{14}$ is −1.855e-4; the Kronrod rule's error on $x^{22}$ is −4.163e-17, on $x^{23}$ is 0.000e0 and on $x^{24}$ is 5.733e-9.
+- on $`[-1, 1]`$ the Gauss rule's error on $`x^{12}`$ is −2.776e-17 and on $`x^{14}`$ is −1.855e-4; the Kronrod rule's error on $`x^{22}`$ is −4.163e-17, on $`x^{23}`$ is 0.000e0 and on $`x^{24}`$ is 5.733e-9.
 
 So the degrees are exactly 13 and 23.
 
 <details>
 <summary>Detailed proof: why the 8 new nodes give degree 23</summary>
 
-Write $P_7$ for the Legendre polynomial whose roots are the Gauss nodes, and $E_8$ for the monic polynomial whose roots are the 8 new nodes. Choose the 15 weights so that the rule is exact on every polynomial of degree 14 or less. Fifteen distinct nodes always allow this (the interpolatory weights).
+Write $`P_7`$ for the Legendre polynomial whose roots are the Gauss nodes, and $`E_8`$ for the monic polynomial whose roots are the 8 new nodes. Choose the 15 weights so that the rule is exact on every polynomial of degree 14 or less. Fifteen distinct nodes always allow this (the interpolatory weights).
 
-Take any polynomial $q$ of degree at most 22. Divide it by $P_7 E_8$, which has degree 15:
+Take any polynomial $`q`$ of degree at most 22. Divide it by $`P_7 E_8`$, which has degree 15:
 
-$$q = s\,P_7 E_8 + r, \qquad \deg s \le 7, \quad \deg r \le 14.$$
+$`\displaystyle q = s\,P_7 E_8 + r, \qquad \deg s \le 7, \quad \deg r \le 14.`$
 
-The product $P_7 E_8$ is zero at all 15 nodes, so the rule gives 0 for $s P_7 E_8$. It is exact on $r$. So the rule is exact on $q$ if and only if
+The product $`P_7 E_8`$ is zero at all 15 nodes, so the rule gives 0 for $`s P_7 E_8`$. It is exact on $`r`$. So the rule is exact on $`q`$ if and only if
 
-$$\int_{-1}^{1} s(x)\,P_7(x)\,E_8(x)\,dx = 0 \quad \text{for every } s \text{ of degree} \le 7.$$
+$`\displaystyle \int_{-1}^{1} s(x)\,P_7(x)\,E_8(x)\,dx = 0 \quad \text{for every } s \text{ of degree} \le 7.`$
 
-That is 8 linear conditions on the 8 free coefficients of $E_8$. For the Legendre case they have a unique solution, the Stieltjes polynomial. That its 8 roots are real, inside $(-1, 1)$ and interlaced with the Gauss nodes is a separate theorem for the Legendre case, stated here without proof. The paper on computing Kronrod rules in the Sources shows how to find them.
+That is 8 linear conditions on the 8 free coefficients of $`E_8`$. For the Legendre case they have a unique solution, the Stieltjes polynomial. That its 8 roots are real, inside $`(-1, 1)`$ and interlaced with the Gauss nodes is a separate theorem for the Legendre case, stated here without proof. The paper on computing Kronrod rules in the Sources shows how to find them.
 
-The last degree comes from symmetry. For $q$ of degree 23 the quotient $s$ has degree 8, and its extra term $x^8$ contributes $x^8 P_7 E_8$. That is an odd function, since $P_7$ is odd and $x^8$ and $E_8$ are even (the new nodes come in pairs $\pm x$), so its integral over $[-1, 1]$ is 0. The condition still holds, and the rule is exact to degree 23. The code's $x^{24}$ test shows it fails at degree 24.
+The last degree comes from symmetry. For $`q`$ of degree 23 the quotient $`s`$ has degree 8, and its extra term $`x^8`$ contributes $`x^8 P_7 E_8`$. That is an odd function, since $`P_7`$ is odd and $`x^8`$ and $`E_8`$ are even (the new nodes come in pairs $`\pm x`$), so its integral over $`[-1, 1]`$ is 0. The condition still holds, and the rule is exact to degree 23. The code's $`x^{24}`$ test shows it fails at degree 24.
 
 </details>
 
 ### Step 2: the gap between the rules estimates the worse rule's error
 
-Write $I$ for the true integral on a panel. Then
+Write $`I`$ for the true integral on a panel. Then
 
-$$K - G = (I - G) - (I - K).$$
+```math
+K - G = (I - G) - (I - K).
+```
 
-On a panel where $f$ is smooth, $K$ is far more accurate than $G$. So $|K - G|$ is close to the error of $G$, the worse rule. The method still returns $K$.
+On a panel where $`f`$ is smooth, $`K`$ is far more accurate than $`G`$. So $`|K - G|`$ is close to the error of $`G`$, the worse rule. The method still returns $`K`$.
 
-On the load at $\tau$ = 1e-3, the nine $G$ values add to 54.1721831077 MWh, a true error of 5.895e-5. The estimate is 5.897e-5: almost exactly $G$'s error. The returned $K$ sum has a true error of 3.797e-10. The estimate is 155297 times the true error, which is safe but pessimistic. Library codes such as QUADPACK rescale the gap to cut this waste.
+On the load at $`\tau`$ = 1e-3, the nine $`G`$ values add to 54.1721831077 MWh, a true error of 5.895e-5. The estimate is 5.897e-5: almost exactly $`G`$'s error. The returned $`K`$ sum has a true error of 3.797e-10. The estimate is 155297 times the true error, which is safe but pessimistic. Library codes such as QUADPACK rescale the gap to cut this waste.
 
-On a panel where neither rule sees the shape, both miss together. The first panel, the whole day, gives $K$ = 50.0744320662 and $G$ = 50.0348993221. The estimate is 3.953e-2 MWh, but the true error is 4.098 MWh. The estimate is too small, and the method continues only because 3.953e-2 is above $\tau$.
+On a panel where neither rule sees the shape, both miss together. The first panel, the whole day, gives $`K`$ = 50.0744320662 and $`G`$ = 50.0348993221. The estimate is 3.953e-2 MWh, but the true error is 4.098 MWh. The estimate is too small, and the method continues only because 3.953e-2 is above $`\tau`$.
 
 ### Step 3: always split the worst panel
 
-Each round, the method halves the panel with the largest estimate and runs both rules on each half, for 30 new values. It stops when the estimates add up to $\tau$ or less.
+Each round, the method halves the panel with the largest estimate and runs both rules on each half, for 30 new values. It stops when the estimates add up to $`\tau`$ or less.
 
-On a smooth panel, halving pays off fast. By the Gauss error formula from [Gaussian quadrature](03-gaussian-quadrature.md), the error on a panel of half-width $h$ is a constant times $h^{15}$ times the 14th derivative of $f$ somewhere in the panel. Halving $h$ divides it by about 2 to the 15th. A panel that still straddles the surge keeps a large estimate and is split again.
+On a smooth panel, halving pays off fast. By the Gauss error formula from [Gaussian quadrature](03-gaussian-quadrature.md), the error on a panel of half-width $`h`$ is a constant times $`h^{15}`$ times the 14th derivative of $`f`$ somewhere in the panel. Halving $`h`$ divides it by about 2 to the 15th. A panel that still straddles the surge keeps a large estimate and is split again.
 
 The cost grows slowly as the tolerance tightens:
 
-| Tolerance $\tau$ (MWh) | Function values | Panels | Estimate | True error |
+| Tolerance $`\tau`$ (MWh) | Function values | Panels | Estimate | True error |
 | --- | ---: | ---: | --- | --- |
 | 1e-3 | 255 | 9 | 5.897e-5 | 3.797e-10 |
 | 1e-6 | 315 | 11 | 1.346e-7 | 0.000e0 |
@@ -161,19 +169,21 @@ Uniform panels with the same 15-point rule, for comparison:
 | 16 | 240 | 4.419e-7 | 8.0 |
 | 32 | 480 | 3.798e-10 | 10.2 |
 
-The observed order is log2 of the drop in error when the panels double. The theorem's order for the 15-point rule is 24 (each panel's error falls like $h^{25}$, and there are about $1/h$ panels), reached only once panels are much narrower than the surge; here rounding level arrives first. Uniform panels need 480 values to match what adaptivity did with 255.
+The observed order is log2 of the drop in error when the panels double. The theorem's order for the 15-point rule is 24 (each panel's error falls like $`h^{25}`$, and there are about $`1/h`$ panels), reached only once panels are much narrower than the surge; here rounding level arrives first. Uniform panels need 480 values to match what adaptivity did with 255.
 
 ### Step 4: an infinite range becomes a finite one
 
-Substitute $x = u/(1-u)$. As $u$ runs from 0 toward 1, $x$ runs from 0 toward infinity. The slope is $dx/du = 1/(1-u)^2$, so the substitution rule from calculus gives the first identity in The formula. Since $1/(1-u) = 1 + x$, the new integrand is $f(x)(1+x)^2$.
+Substitute $`x = u/(1-u)`$. As $`u`$ runs from 0 toward 1, $`x`$ runs from 0 toward infinity. The slope is $`dx/du = 1/(1-u)^2`$, so the substitution rule from calculus gives the first identity in The formula. Since $`1/(1-u) = 1 + x`$, the new integrand is $`f(x)(1+x)^2`$.
 
-Planck's law says how a hot body's radiation is spread over photon energies. Measure the photon energy $x$ in units of the thermal energy: Boltzmann's constant times the temperature. The total radiation is then proportional to
+Planck's law says how a hot body's radiation is spread over photon energies. Measure the photon energy $`x`$ in units of the thermal energy: Boltzmann's constant times the temperature. The total radiation is then proportional to
 
-$$\int_0^\infty \frac{x^3}{e^x - 1}\,dx = \frac{\pi^4}{15} = 6.49393940227.$$
+```math
+\int_0^\infty \frac{x^3}{e^x - 1}\,dx = \frac{\pi^4}{15} = 6.49393940227.
+```
 
-The mapped integrand is finite on $[0, 1)$ and falls to 0 as $u \to 1$. Near $x = 0$ the formula reads 0/0, but the integrand tends to 0 like $x^2$, and no node of a Gauss or Kronrod rule sits on an end of its panel. So neither end is ever evaluated.
+The mapped integrand is finite on $`[0, 1)`$ and falls to 0 as $`u \to 1`$. Near $`x = 0`$ the formula reads 0/0, but the integrand tends to 0 like $`x^2`$, and no node of a Gauss or Kronrod rule sits on an end of its panel. So neither end is ever evaluated.
 
-The adaptive run on the mapped integral, at $\tau$ = 1e-10, used 285 values. Its estimate was 1.112e-11 and its true error 8.882e-16.
+The adaptive run on the mapped integral, at $`\tau`$ = 1e-10, used 285 values. Its estimate was 1.112e-11 and its true error 8.882e-16.
 
 The other approach, cutting the range off, needs a known tail:
 
@@ -187,15 +197,15 @@ At x = 40 the missing part is so small that rounding in the total blurs its thir
 
 ### Step 5: an end spike becomes a constant
 
-The integral of $1/\sqrt{x}$ from 0 to 1 is 2. The integrand goes infinite at 0, and no polynomial looks like it there.
+The integral of $`1/\sqrt{x}`$ from 0 to 1 is 2. The integrand goes infinite at 0, and no polynomial looks like it there.
 
-Uniform panels crawl. With 1, 4, 16 and 64 panels the errors are −4.568e-2, −2.284e-2, −1.142e-2 and −5.710e-3. Each fourfold refinement only halves the error: an order of 0.5 in $h$, against 24 for a smooth integrand.
+Uniform panels crawl. With 1, 4, 16 and 64 panels the errors are −4.568e-2, −2.284e-2, −1.142e-2 and −5.710e-3. Each fourfold refinement only halves the error: an order of 0.5 in $`h`$, against 24 for a smooth integrand.
 
-The reason is scaling. On the first panel $[0, 2h]$, the integrand is the same shape at every size, so the rule misses the same fraction of that panel's area, $2\sqrt{2h}$. The error shrinks like $\sqrt{h}$ however small $h$ gets. Adaptivity keeps halving that first panel and reaches 1e-8 after 1395 values.
+The reason is scaling. On the first panel $`[0, 2h]`$, the integrand is the same shape at every size, so the rule misses the same fraction of that panel's area, $`2\sqrt{2h}`$. The error shrinks like $`\sqrt{h}`$ however small $`h`$ gets. Adaptivity keeps halving that first panel and reaches 1e-8 after 1395 values.
 
-Substitute $x = u^2$. Then $dx = 2u\,du$ and $1/\sqrt{x} = 1/u$, so the new integrand is $2u/u = 2$, a constant. One panel of 15 values gives the answer with error 0.000e0.
+Substitute $`x = u^2`$. Then $`dx = 2u\,du`$ and $`1/\sqrt{x} = 1/u`$, so the new integrand is $`2u/u = 2`$, a constant. One panel of 15 values gives the answer with error 0.000e0.
 
-In general a spike like $x^{-p}$, with $p$ below 1, becomes bounded under $x = u^m$ once $m(1-p) \ge 1$, since the new integrand is $m\,u^{m(1-p)-1}$. The **tanh-sinh** (double exponential) rule applies one substitution that flattens both ends of any interval at once; the double exponential paper in the Sources introduced it. **Clenshaw–Curtis** rules, whose points are cosines, offer another nested pair: doubling the points reuses the old ones, which gives an error estimate as cheaply as Kronrod's.
+In general a spike like $`x^{-p}`$, with $`p`$ below 1, becomes bounded under $`x = u^m`$ once $`m(1-p) \ge 1`$, since the new integrand is $`m\,u^{m(1-p)-1}`$. The **tanh-sinh** (double exponential) rule applies one substitution that flattens both ends of any interval at once; the double exponential paper in the Sources introduced it. **Clenshaw–Curtis** rules, whose points are cosines, offer another nested pair: doubling the points reuses the old ones, which gives an error estimate as cheaply as Kronrod's.
 
 ---
 
@@ -206,13 +216,13 @@ The load: 2 MW plus a surge to 10 MW at 18:00, tolerance one kilowatt-hour.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | exact energy | 48 + 2(atan 24 + atan 72) | 54.1721241571 MWh |
-| first panel, 0 to 24 hours | $K - G$ = 50.0744320662 − 50.0348993221 | estimate 3.953e-2 > 1e-3: split |
+| first panel, 0 to 24 hours | $`K - G`$ = 50.0744320662 − 50.0348993221 | estimate 3.953e-2 > 1e-3: split |
 | its true error | 54.1721241571 − 50.0744320662 | 4.098 MWh |
 | keep splitting the worst panel | stop at 9 panels | estimates add to 5.897e-5 ≤ 1e-3 |
 | function values | 15 × (2 × 9 − 1) | 255 |
 | sampling near 18:00 | 15 ÷ 0.75 hours | 20.00 points per hour |
 | sampling at night | 15 ÷ 12 hours | 1.25 points per hour |
-| **answer** | sum of the nine $K$ values | **54.1721241575 MWh**, true error 3.797e-10 |
+| **answer** | sum of the nine $`K`$ values | **54.1721241575 MWh**, true error 3.797e-10 |
 
 The energy is known far better than the kilowatt-hour asked for, and most of the 255 values went to the surge.
 
@@ -220,7 +230,7 @@ Planck, out to infinity:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| map $x = u/(1-u)$ | adaptive on $[0, 1)$, $\tau$ = 1e-10 | 285 values |
+| map $`x = u/(1-u)`$ | adaptive on $`[0, 1)`$, $`\tau`$ = 1e-10 | 285 values |
 | integral | against π^4/15 = 6.49393940227 | 6.49393940227, true error 8.882e-16 |
 | Stefan–Boltzmann constant | 2π × (Boltzmann's constant)^4 × integral ÷ ((Planck's constant)^3 × (speed of light)^2) | 5.670374419e-8 W/(m^2 K^4) |
 | the sun's surface at 5772 K | constant × 5772^4 | **62.9 MW per m^2** |
@@ -234,7 +244,7 @@ Every square metre of the sun's surface radiates about 62.9 megawatts. The const
 | One starting panel on a surge 36 seconds wide (half-width 0.005 hours) | 48.000868 against 48.125619 MWh: true error −1.248e-1, estimate 1.996e-5 | all 15 first nodes missed the surge, so both rules agreed on the wrong answer |
 | Return the Gauss sums instead of the Kronrod sums | 54.1721831077 MWh, true error 5.895e-5 | the estimate measures the worse rule; return the better one |
 | Cut Planck's range off at x = 10 | 6.43192189678, missing 6.202e-2 | the tail beyond the cut was never counted |
-| Uniform panels on $1/\sqrt{x}$, 64 panels | true error −5.710e-3 | the spike sets an order of 0.5; no amount of refinement fixes the first panel |
+| Uniform panels on $`1/\sqrt{x}`$, 64 panels | true error −5.710e-3 | the spike sets an order of 0.5; no amount of refinement fixes the first panel |
 
 Starting from 24 hourly panels fixes the first row: 600 values, true error −2.605e-6.
 
@@ -242,7 +252,7 @@ Starting from 24 hourly panels fixes the first row: 600 values, true error −2.
 
 ## Code, from first principles, and it actually runs
 
-The code checks the Gauss–Kronrod table three ways (Newton's method on $P_7$, 8 moment equations, exactness on powers of $x$), then runs the adaptive method on the load, Planck's integral and $1/\sqrt{x}$. Every answer meets an independent road: a closed form (atan, π^4/15 or 2), with uniform panels, a ten-minute trapezoid sum or a cut-off range as a third. The Python adds left to right with its own `total`, because its built-in `sum` rounds more carefully than Rust's loop and the outputs must match digit for digit.
+The code checks the Gauss–Kronrod table three ways (Newton's method on $`P_7`$, 8 moment equations, exactness on powers of $`x`$), then runs the adaptive method on the load, Planck's integral and $`1/\sqrt{x}`$. Every answer meets an independent road: a closed form (atan, π^4/15 or 2), with uniform panels, a ten-minute trapezoid sum or a cut-off range as a third. The Python adds left to right with its own `total`, because its built-in `sum` rounds more carefully than Rust's loop and the outputs must match digit for digit.
 
 ### Python
 
@@ -647,14 +657,14 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's two substitutions for any integrand, and the general spike rule for every $p$ between 0 and 1.
+Lean proves the card's two substitutions for any integrand, and the general spike rule for every $`p`$ between 0 and 1.
 
-- $\int_0^\infty f(x)\,dx = \int_0^1 f\!\left(\frac{u}{1-u}\right)\frac{du}{(1-u)^2}$ for any integrand $f$ with a finite integral.
-- If $|f(x)| \le C/(1+x)^2$ for every $x \ge 0$, with $C$ a constant, the mapped integrand stays at most $C$ in size on $[0, 1)$.
-- $\int_0^1 f(x)\,dx = \int_0^1 f(u^2)\,2u\,du$ for any integrand $f$ with a finite integral.
-- For a spike $x^{-p}$ with $0 < p < 1$ and $m(1-p) \ge 1$, the substitution $x = u^m$ gives the new integrand $m\,u^{m(1-p)-1}$.
-- That new integrand lies between 0 and $m$ on $(0, 1]$, and its integral from 0 to 1 equals that of $x^{-p}$.
-- For $1/\sqrt{x}$, $p$ = 1/2 and $m$ = 2 give $m(1-p) = 1$, so the new integrand is the constant 2.
+- $`\int_0^\infty f(x)\,dx = \int_0^1 f\!\left(\frac{u}{1-u}\right)\frac{du}{(1-u)^2}`$ for any integrand $`f`$ with a finite integral.
+- If $`|f(x)| \le C/(1+x)^2`$ for every $`x \ge 0`$, with $`C`$ a constant, the mapped integrand stays at most $`C`$ in size on $`[0, 1)`$.
+- $`\int_0^1 f(x)\,dx = \int_0^1 f(u^2)\,2u\,du`$ for any integrand $`f`$ with a finite integral.
+- For a spike $`x^{-p}`$ with $`0 < p < 1`$ and $`m(1-p) \ge 1`$, the substitution $`x = u^m`$ gives the new integrand $`m\,u^{m(1-p)-1}`$.
+- That new integrand lies between 0 and $`m`$ on $`(0, 1]`$, and its integral from 0 to 1 equals that of $`x^{-p}`$.
+- For $`1/\sqrt{x}`$, $`p`$ = 1/2 and $`m`$ = 2 give $`m(1-p) = 1`$, so the new integrand is the constant 2.
 - The card's counts check out: 255, 315, 405 and 735 values for 9, 11, 14 and 25 panels, and 480 for 32 uniform panels.
 - So do 600 values from 24 hourly panels, 20 and 1.25 points per hour, and 145 ten-minute readings.
 
@@ -843,7 +853,7 @@ example : 24 * 6 + 1 = 145 := by decide
 > Guess first, then run the Python.
 > - **Where the first panels fall.** In section 5, change `start=24` to `start=3`. Guess first: do three 8-hour panels find the 36-second surge at 18:00? They do not: true error −0.1229 MWh after 45 values, and an assert stops the run. With `start=2`, the second panel's centre node sits exactly on 18:00, and the error drops to −2.05e-7 after 480 values.
 > - **A sharper surge.** Change `surge(0.25), surge_exact(0.25)` to `surge(0.05), surge_exact(0.05)`, a 3-minute half-width. Guess first: how many more values? The run needs 345 values and 12 panels, with true error 4.128e-7, still inside one kilowatt-hour. An assert then stops the run, because the check expects 1e-9.
-> - **A divergent tail.** In `mapped`, replace `planck(t / (1 - t))` with `1 / (1 + t / (1 - t))`, whose integral to infinity diverges. Guess first: what does the method report? The mapped integrand is $1/(1-u)$, unbounded at $u = 1$. The method keeps splitting toward 1 until a node rounds onto $u = 1$, and Python stops with a division by zero.
+> - **A divergent tail.** In `mapped`, replace `planck(t / (1 - t))` with `1 / (1 + t / (1 - t))`, whose integral to infinity diverges. Guess first: what does the method report? The mapped integrand is $`1/(1-u)`$, unbounded at $`u = 1`$. The method keeps splitting toward 1 until a node rounds onto $`u = 1`$, and Python stops with a division by zero.
 
 ---
 
@@ -854,7 +864,7 @@ example : 24 * 6 + 1 = 145 := by decide
 >
 > - **Trusting the estimate as a size.** On the first panel of the load the estimate was 3.953e-2 against a true error of 4.098. On resolved panels it overstates instead: 5.897e-5 against 3.797e-10.
 > - **Cutting off infinity by eye.** A cut at x = 10 loses 6.202e-2 of Planck's 6.49393940227.
-> - **Refining harder at a spike.** 64 uniform panels on $1/\sqrt{x}$ are still off by 5.710e-3; the substitution $x = u^2$ is exact with 15 values.
+> - **Refining harder at a spike.** 64 uniform panels on $`1/\sqrt{x}`$ are still off by 5.710e-3; the substitution $`x = u^2`$ is exact with 15 values.
 
 ---
 
@@ -863,10 +873,10 @@ example : 24 * 6 + 1 = 145 := by decide
 - **Scientific libraries.** The general-purpose integrators in common numerical libraries descend from QUADPACK, which splits the worst panel. Its infinite-range routine uses this 15-point Kronrod pair after a map to a finite interval; its general-purpose finite-range routine uses a 21-point pair.
 - **Physics constants and spectra.** Radiation, heat capacity and particle-statistics integrals run from 0 to infinity, as Planck's does, and are computed after a map to a finite interval.
 - **Energy and metering.** Energy from a load model is an integral over the day with sharp events; adaptivity puts the effort on the events.
-- **Engineering loads.** Stress near a crack tip or the field near a sharp edge behaves like a power of the distance, $1/\sqrt{x}$ included, and is integrated after a substitution like $x = u^2$.
+- **Engineering loads.** Stress near a crack tip or the field near a sharp edge behaves like a power of the distance, $`1/\sqrt{x}`$ included, and is integrated after a substitution like $`x = u^2`$.
 
 > **Say it back**
-> Adaptive quadrature cuts an interval into panels and estimates each panel's error by the gap between a 7-point Gauss rule and a 15-point Kronrod rule that reuses its points. It splits the panel with the largest gap until the gaps add up to less than the tolerance, so points gather where the function changes fast. The gap measures the worse rule, so the method returns the better one, and the gap can miss a feature that no sample sees. An infinite range becomes finite under $x = u/(1-u)$, and an end spike like $1/\sqrt{x}$ becomes a constant under $x = u^2$.
+> Adaptive quadrature cuts an interval into panels and estimates each panel's error by the gap between a 7-point Gauss rule and a 15-point Kronrod rule that reuses its points. It splits the panel with the largest gap until the gaps add up to less than the tolerance, so points gather where the function changes fast. The gap measures the worse rule, so the method returns the better one, and the gap can miss a feature that no sample sees. An infinite range becomes finite under $`x = u/(1-u)`$, and an end spike like $`1/\sqrt{x}`$ becomes a constant under $`x = u^2`$.
 
 ---
 
@@ -879,7 +889,7 @@ example : 24 * 6 + 1 = 145 := by decide
 ## Where this goes next
 
 - [Many dimensions](06-multidimensional-and-monte-carlo-quadrature.md): when the integral has many variables, panels multiply too fast and random sampling takes over.
-- The other cards on this shelf: [Trapezoid, midpoint and Simpson](01-newton-cotes-and-composite-rules.md) for the simplest rules, [Weighted Gauss rules](04-gauss-hermite-and-weighted-rules.md) for building an awkward factor such as $e^{-x}$ into the weights instead of a substitution, and [Quasi-Monte Carlo and sparse grids](07-quasi-monte-carlo-and-sparse-grids.md) for evenly spread points in many dimensions.
+- The other cards on this shelf: [Trapezoid, midpoint and Simpson](01-newton-cotes-and-composite-rules.md) for the simplest rules, [Weighted Gauss rules](04-gauss-hermite-and-weighted-rules.md) for building an awkward factor such as $`e^{-x}`$ into the weights instead of a substitution, and [Quasi-Monte Carlo and sparse grids](07-quasi-monte-carlo-and-sparse-grids.md) for evenly spread points in many dimensions.
 
 The question this card leaves open: when the error estimate itself cannot be trusted, as with the hidden surge, what can certify an integral?
 

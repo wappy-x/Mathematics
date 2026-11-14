@@ -29,63 +29,73 @@ xychart-beta
     line [0.00, 0.12, 0.04, 0.17, 0.53, 0.93, 0.08, 0.65, 0.05, 0.26, 1.96, 0.08, 0.13, 0.06, 4.62, 5.21, 7.20, 6.48, 7.81, 8.49, 18.47]
 ```
 
-Three lines, one sample path of the price drawn on a grid of 10,000 steps (seed 20260930 in the code). Orange: the gain from actually trading, added up trade by trade. Green, almost on top of it: the Ito answer $10(W_t^2 - t)$ dollars, from Step 5 below. Dark blue: what ordinary calculus predicts, $10 W_t^2$, which can never go below zero. The share ends the year at $127.18. The trades made $8.66; ordinary calculus claims $18.47. The gap, about $10 a year, is the share's quadratic variation at work.
+Three lines, one sample path of the price drawn on a grid of 10,000 steps (seed 20260930 in the code). Orange: the gain from actually trading, added up trade by trade. Green, almost on top of it: the Ito answer $`10(W_t^2 - t)`$ dollars, from Step 5 below. Dark blue: what ordinary calculus predicts, $`10 W_t^2`$, which can never go below zero. The share ends the year at $127.18. The trades made $8.66; ordinary calculus claims $18.47. The gap, about $10 a year, is the share's quadratic variation at work.
 
 ---
 
 ## The formula
 
-Notation first, in words. [Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md) $W_t$, read "the random walk seen from far away", is the wandering part of the price. The share's price is $S_t = 100 + \sigma W_t$ dollars, with $t$ in years and $\sigma = 20$ dollars per square-root year. What is known by time $t$, the whole price history so far, is written $\mathcal F_t$. A **strategy** $H_t$ is the number of shares held at time $t$.
+Notation first, in words. [Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md) $`W_t`$, read "the random walk seen from far away", is the wandering part of the price. The share's price is $`S_t = 100 + \sigma W_t`$ dollars, with $`t`$ in years and $`\sigma = 20`$ dollars per square-root year. What is known by time $`t`$, the whole price history so far, is written $`\mathcal F_t`$. A **strategy** $`H_t`$ is the number of shares held at time $`t`$.
 
-A **simple strategy** trades at finitely many fixed times $0 = t_0 < t_1 < \dots < t_n = T$. Between $t_k$ and $t_{k+1}$ it holds a fixed number $H_k$ of shares, and $H_k$ may use everything known at $t_k$, nothing later. Its Ito integral is the sum of holding times move:
+A **simple strategy** trades at finitely many fixed times $`0 = t_0 < t_1 < \dots < t_n = T`$. Between $`t_k`$ and $`t_{k+1}`$ it holds a fixed number $`H_k`$ of shares, and $`H_k`$ may use everything known at $`t_k`$, nothing later. Its Ito integral is the sum of holding times move:
 
-$$I_T = \int_0^T H_t \, dW_t = \sum_{k=0}^{n-1} H_k \left( W_{t_{k+1}} - W_{t_k} \right).$$
+```math
+I_T = \int_0^T H_t \, dW_t = \sum_{k=0}^{n-1} H_k \left( W_{t_{k+1}} - W_{t_k} \right).
+```
 
 **Read it aloud:** the Ito integral of a strategy is each holding times the price move that follows it, added up.
 
-The trader's gain in dollars is $G_T = \sigma I_T$. The symbol $dW_t$ is shorthand for the sum and its limit, never a derivative: the path has no slope. Stopping the sum at an earlier time $t$ gives $I_t$.
+The trader's gain in dollars is $`G_T = \sigma I_T`$. The symbol $`dW_t`$ is shorthand for the sum and its limit, never a derivative: the path has no slope. Stopping the sum at an earlier time $`t`$ gives $`I_t`$.
 
 Two theorems hold for every bounded simple strategy. The first is the **isometry** (Greek for "same size"):
 
-$$E\left[ I_T^2 \right] = E\left[ \int_0^T H_t^2 \, dt \right].$$
+```math
+E\left[ I_T^2 \right] = E\left[ \int_0^T H_t^2 \, dt \right].
+```
 
-**Read it aloud:** the variance of the integral is the average of the squared holding, added up over the time it is held. The dollar gain's variance is $\sigma^2$ times that.
+**Read it aloud:** the variance of the integral is the average of the squared holding, added up over the time it is held. The dollar gain's variance is $`\sigma^2`$ times that.
 
-The second is the **martingale property**: for any earlier time $s$,
+The second is the **martingale property**: for any earlier time $`s`$,
 
-$$E\left[ I_T \mid \mathcal F_s \right] = I_s, \qquad \text{so} \qquad E[I_T] = 0.$$
+```math
+E\left[ I_T \mid \mathcal F_s \right] = I_s, \qquad \text{so} \qquad E[I_T] = 0.
+```
 
 **Read it aloud:** the best forecast of the final gain, given today's information, is the gain so far; on average, trading on a driftless price makes nothing.
 
-A general strategy $H_t$, fixed by $\mathcal F_t$ at each $t$ with $E[\int_0^T H_t^2\,dt]$ finite, is approached in mean square by simple strategies $H^{(m)}$ (the average squared gap, $E[\int_0^T (H_t - H^{(m)}_t)^2\,dt]$, shrinks to zero), and
+A general strategy $`H_t`$, fixed by $`\mathcal F_t`$ at each $`t`$ with $`E[\int_0^T H_t^2\,dt]`$ finite, is approached in mean square by simple strategies $`H^{(m)}`$ (the average squared gap, $`E[\int_0^T (H_t - H^{(m)}_t)^2\,dt]`$, shrinks to zero), and
 
-$$\int_0^T H_t \, dW_t = \lim_{m \to \infty} \int_0^T H^{(m)}_t \, dW_t,$$
+```math
+\int_0^T H_t \, dW_t = \lim_{m \to \infty} \int_0^T H^{(m)}_t \, dW_t,
+```
 
-the limit taken in mean square. Both theorems survive it. The pictured strategy, $H_t = W_t$, gives
+the limit taken in mean square. Both theorems survive it. The pictured strategy, $`H_t = W_t`$, gives
 
-$$\int_0^T W_t \, dW_t = \frac{W_T^2 - T}{2}.$$
+```math
+\int_0^T W_t \, dW_t = \frac{W_T^2 - T}{2}.
+```
 
 **Read it aloud:** holding as many shares as the walk stands above zero earns half its final square, less half the elapsed time.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $s$, $u$, $T$ | time in years; an earlier time; a time inside a stretch, in the proof; the horizon | $T = 1$ year | longer horizon: more variance |
-| $W$, $W_t$, $W_T$, $D_k$, $D_j$, $dW_t$ | Brownian motion: the price's wandering part; $D_k$ its move over stretch $k$; $dW_t$ the integral's shorthand | $W_T = 1.3589$ on the pictured path | — |
-| $S_t$ | the share price, $100 + \sigma W_t$ dollars | $100 today, $127.18 at year end on the path | — |
-| $\sigma$ | dollars of price per unit of $W$ | $20 per square-root year | every gain scales up with it |
-| $H$, $K$, $H_t$, $H_k$, $H_j$, $c$, $X$ | strategies; shares held at time $t$, or over stretch $k$; $c$ a bound on the holding; $X$ the product $H_j D_j H_k$ in the proof | 2, then 1 or 0; or $W_t$ | variance grows with its square |
-| $t_k$, $k$, $n$, $\Delta t$ | trading times; the stretch number; how many stretches; one stretch's length, $T/n$ | 2 stretches of half a year | finer trading: sums approach the integral |
-| $\mathcal F_t$ | what is known by time $t$: the price history so far | the price at the half-year | — |
-| $I_t$, $I_s$, $I_T$ | the Ito integral up to time $t$ (or $s$, or $T$), in units of $W$ | $(W_T^2 - T)/2$ for $H = W$ | — |
-| $G_T$ | the trader's gain in dollars, $\sigma I_T$ | $8.66 on the pictured path | — |
-| $E$ | the average over all price paths | $E[G_T] = 0$ | — |
-| $H^{(m)}$, $H^{(l)}$, $m$, $l$ | the $m$-th (or $l$-th) simple strategy approaching $H$ | $W$ read at $m$ equally spaced times | larger $m$: closer to the integral |
+| $`t`$, $`s`$, $`u`$, $`T`$ | time in years; an earlier time; a time inside a stretch, in the proof; the horizon | $`T = 1`$ year | longer horizon: more variance |
+| $`W`$, $`W_t`$, $`W_T`$, $`D_k`$, $`D_j`$, $`dW_t`$ | Brownian motion: the price's wandering part; $`D_k`$ its move over stretch $`k`$; $`dW_t`$ the integral's shorthand | $`W_T = 1.3589`$ on the pictured path | — |
+| $`S_t`$ | the share price, $`100 + \sigma W_t`$ dollars | $100 today, $127.18 at year end on the path | — |
+| $`\sigma`$ | dollars of price per unit of $`W`$ | $20 per square-root year | every gain scales up with it |
+| $`H`$, $`K`$, $`H_t`$, $`H_k`$, $`H_j`$, $`c`$, $`X`$ | strategies; shares held at time $`t`$, or over stretch $`k`$; $`c`$ a bound on the holding; $`X`$ the product $`H_j D_j H_k`$ in the proof | 2, then 1 or 0; or $`W_t`$ | variance grows with its square |
+| $`t_k`$, $`k`$, $`n`$, $`\Delta t`$ | trading times; the stretch number; how many stretches; one stretch's length, $`T/n`$ | 2 stretches of half a year | finer trading: sums approach the integral |
+| $`\mathcal F_t`$ | what is known by time $`t`$: the price history so far | the price at the half-year | — |
+| $`I_t`$, $`I_s`$, $`I_T`$ | the Ito integral up to time $`t`$ (or $`s`$, or $`T`$), in units of $`W`$ | $`(W_T^2 - T)/2`$ for $`H = W`$ | — |
+| $`G_T`$ | the trader's gain in dollars, $`\sigma I_T`$ | $8.66 on the pictured path | — |
+| $`E`$ | the average over all price paths | $`E[G_T] = 0`$ | — |
+| $`H^{(m)}`$, $`H^{(l)}`$, $`m`$, $`l`$ | the $`m`$-th (or $`l`$-th) simple strategy approaching $`H`$ | $`W`$ read at $`m`$ equally spaced times | larger $`m`$: closer to the integral |
 
 ### When it holds
 
 - **The holding is fixed before the move it multiplies.** Read the holding at the end of each stretch instead and the hold-the-excess strategy averages $20, not $0. A rule that buys in the second half only when the second half will rise averages $5.64. Neither is a strategy anyone can follow.
-- **The integrator is Brownian motion for the information used.** Each future move must be independent of $\mathcal F_t$. A trader who knows tomorrow's news is not trading against Brownian motion for her own information, and the zero mean goes.
-- **The strategy's mean square is finite**, $E[\int_0^T H_t^2\,dt] < \infty$. Then the integral exists, the isometry holds and the gain is a fair game. Strategies with only $\int_0^T H_t^2\,dt$ finite on each path still have an integral, built by stopping it before it grows large, but it can fail to be a martingale: continuous-time doubling lives there. This card states that case without proof; Karatzas and Shreve, Chapter 3, Section 2, builds the extension.
+- **The integrator is Brownian motion for the information used.** Each future move must be independent of $`\mathcal F_t`$. A trader who knows tomorrow's news is not trading against Brownian motion for her own information, and the zero mean goes.
+- **The strategy's mean square is finite**, $`E[\int_0^T H_t^2\,dt] < \infty`$. Then the integral exists, the isometry holds and the gain is a fair game. Strategies with only $`\int_0^T H_t^2\,dt`$ finite on each path still have an integral, built by stopping it before it grows large, but it can fail to be a martingale: continuous-time doubling lives there. This card states that case without proof; Karatzas and Shreve, Chapter 3, Section 2, builds the extension.
 - **The holding is read at the left end of each stretch by definition.** Reading it at the midpoint defines a different integral, the Stratonovich integral, with different values: a convention, not an error, but not this one.
 
 ---
@@ -94,56 +104,62 @@ $$\int_0^T W_t \, dW_t = \frac{W_T^2 - T}{2}.$$
 
 ### Step 0: a known holding times a fresh move is a fair bet
 
-At time $t_k$ the holding $H_k$ is already decided. The move that follows, $W_{t_{k+1}} - W_{t_k}$, is independent of everything known at $t_k$, has mean zero and has variance $t_{k+1} - t_k$. A fixed number times a fair move is fair. Everything on this card comes from that fact, stretch by stretch.
+At time $`t_k`$ the holding $`H_k`$ is already decided. The move that follows, $`W_{t_{k+1}} - W_{t_k}`$, is independent of everything known at $`t_k`$, has mean zero and has variance $`t_{k+1} - t_k`$. A fixed number times a fair move is fair. Everything on this card comes from that fact, stretch by stretch.
 
 ### Step 1: why the ordinary integral fails for a Brownian path
 
 The [Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md) card integrates against a function whose total variation is finite: the distance it travels, the sizes of its moves added up, stays bounded as the grid is refined. Then every choice of evaluation point gives the same limit. The [The Lebesgue-Stieltjes integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md) card needs the same thing: a measure built from a monotone function, or a difference of two.
 
-A Brownian path fails both. Its distance travelled, $\sum \lvert W_{t_{k+1}} - W_{t_k} \rvert$, grows without bound as the grid is refined: the [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md) card proves the total variation infinite (its Theorem 3) and shows that the evaluation point then changes the answer (its Step 5). On one path the code measures 2.86 at 10 steps, 7.65 at 100, 24.51 at 1,000 and 79.24 at 10,000, against the average $\sqrt{2n/\pi}$.
+A Brownian path fails both. Its distance travelled, $`\sum \lvert W_{t_{k+1}} - W_{t_k} \rvert`$, grows without bound as the grid is refined: the [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md) card proves the total variation infinite (its Theorem 3) and shows that the evaluation point then changes the answer (its Step 5). On one path the code measures 2.86 at 10 steps, 7.65 at 100, 24.51 at 1,000 and 79.24 at 10,000, against the average $`\sqrt{2n/\pi}`$.
 
-The squares behave differently. The [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md) card shows $\sum (W_{t_{k+1}} - W_{t_k})^2 \to T$; on the same path it reads 1.2141, 0.9014, 0.9492 and 0.9808. That finite, nonzero sum is what splits the evaluation points. The right-end sum minus the left-end sum is
+The squares behave differently. The [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md) card shows $`\sum (W_{t_{k+1}} - W_{t_k})^2 \to T`$; on the same path it reads 1.2141, 0.9014, 0.9492 and 0.9808. That finite, nonzero sum is what splits the evaluation points. The right-end sum minus the left-end sum is
 
-$$\sum_k \left( W_{t_{k+1}} - W_{t_k} \right) \left( W_{t_{k+1}} - W_{t_k} \right) = \sum_k \left( W_{t_{k+1}} - W_{t_k} \right)^2 \to T.$$
+```math
+\sum_k \left( W_{t_{k+1}} - W_{t_k} \right) \left( W_{t_{k+1}} - W_{t_k} \right) = \sum_k \left( W_{t_{k+1}} - W_{t_k} \right)^2 \to T.
+```
 
-For $H = W$ the two readings differ by a year's quadratic variation, $20 \times 1 = 20$ dollars, however fine the grid. There is no single limit; trading picks the left end.
+For $`H = W`$ the two readings differ by a year's quadratic variation, $`20 \times 1 = 20`$ dollars, however fine the grid. There is no single limit; trading picks the left end.
 
 ### Step 2: the simple integral is a fair game
 
-Take a bounded simple strategy and an earlier time $s$. Insert $s$ into the list of trading times; splitting a stretch in two and holding the same shares on both halves changes no sum. Now every stretch after $s$ has the form $H_k (W_{t_{k+1}} - W_{t_k})$ with $t_k \ge s$. Given $\mathcal F_{t_k}$, the holding is known and comes outside the average, by "taking out what is known" ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)):
+Take a bounded simple strategy and an earlier time $`s`$. Insert $`s`$ into the list of trading times; splitting a stretch in two and holding the same shares on both halves changes no sum. Now every stretch after $`s`$ has the form $`H_k (W_{t_{k+1}} - W_{t_k})`$ with $`t_k \ge s`$. Given $`\mathcal F_{t_k}`$, the holding is known and comes outside the average, by "taking out what is known" ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)):
 
-$$E\left[ H_k (W_{t_{k+1}} - W_{t_k}) \mid \mathcal F_{t_k} \right] = H_k \, E\left[ W_{t_{k+1}} - W_{t_k} \right] = 0.$$
+```math
+E\left[ H_k (W_{t_{k+1}} - W_{t_k}) \mid \mathcal F_{t_k} \right] = H_k \, E\left[ W_{t_{k+1}} - W_{t_k} \right] = 0.
+```
 
-Averaging further back to $\mathcal F_s$ (the tower rule) keeps it zero. Every stretch after $s$ contributes zero on average, and the stretches before $s$ are known, so $E[I_T \mid \mathcal F_s] = I_s$. This is the discrete martingale transform, with the coin replaced by Brownian moves.
+Averaging further back to $`\mathcal F_s`$ (the tower rule) keeps it zero. Every stretch after $`s`$ contributes zero on average, and the stretches before $`s`$ are known, so $`E[I_T \mid \mathcal F_s] = I_s`$. This is the discrete martingale transform, with the coin replaced by Brownian moves.
 
 ### Step 3: the isometry for simple strategies
 
-Write $D_k = W_{t_{k+1}} - W_{t_k}$. Square the sum:
+Write $`D_k = W_{t_{k+1}} - W_{t_k}`$. Square the sum:
 
-$$I_T^2 = \sum_k H_k^2 D_k^2 + 2 \sum_{j < k} H_j D_j H_k D_k.$$
+```math
+I_T^2 = \sum_k H_k^2 D_k^2 + 2 \sum_{j < k} H_j D_j H_k D_k.
+```
 
-**Square terms.** Given $\mathcal F_{t_k}$, $H_k^2$ is known and $D_k^2$ averages $t_{k+1} - t_k$. So $E[H_k^2 D_k^2] = E[H_k^2](t_{k+1} - t_k)$.
+**Square terms.** Given $`\mathcal F_{t_k}`$, $`H_k^2`$ is known and $`D_k^2`$ averages $`t_{k+1} - t_k`$. So $`E[H_k^2 D_k^2] = E[H_k^2](t_{k+1} - t_k)`$.
 
-**Cross terms.** For $j < k$, everything except $D_k$ is known at $t_k$: $H_j$, $D_j$ and $H_k$. Take it out of the average, and $D_k$ averages zero. Every cross term vanishes.
+**Cross terms.** For $`j < k`$, everything except $`D_k`$ is known at $`t_k`$: $`H_j`$, $`D_j`$ and $`H_k`$. Take it out of the average, and $`D_k`$ averages zero. Every cross term vanishes.
 
-What is left is $\sum_k E[H_k^2](t_{k+1} - t_k) = E[\int_0^T H_t^2\,dt]$, the isometry. The cross terms die for the same reason as in Step 2: a fresh move is uncorrelated with everything already known.
+What is left is $`\sum_k E[H_k^2](t_{k+1} - t_k) = E[\int_0^T H_t^2\,dt]`$, the isometry. The cross terms die for the same reason as in Step 2: a fresh move is uncorrelated with everything already known.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** A probability space carries a filtration $\mathcal F_t$ and a Brownian motion $W$ for it: $W_t$ is fixed by $\mathcal F_t$, and for $u > t$ the move $W_u - W_t$ is independent of $\mathcal F_t$, normal with mean 0 and variance $u - t$. A simple strategy has times $0 = t_0 < \dots < t_n = T$ and holdings $H_k$ fixed by $\mathcal F_{t_k}$ with $\lvert H_k \rvert \le c$ for one constant $c$.
+**Setting.** A probability space carries a filtration $`\mathcal F_t`$ and a Brownian motion $`W`$ for it: $`W_t`$ is fixed by $`\mathcal F_t`$, and for $`u > t`$ the move $`W_u - W_t`$ is independent of $`\mathcal F_t`$, normal with mean 0 and variance $`u - t`$. A simple strategy has times $`0 = t_0 < \dots < t_n = T`$ and holdings $`H_k`$ fixed by $`\mathcal F_{t_k}`$ with $`\lvert H_k \rvert \le c`$ for one constant $`c`$.
 
-**Refinement.** Adding a time $u$ inside $(t_k, t_{k+1})$ and holding $H_k$ on both halves leaves the sum unchanged, since $H_k(W_{t_{k+1}} - W_u) + H_k(W_u - W_{t_k}) = H_k(W_{t_{k+1}} - W_{t_k})$; $H_k$ is still fixed by $\mathcal F_u \supseteq \mathcal F_{t_k}$. So any finite set of times, including $s$ and $t$, may be assumed to be trading times.
+**Refinement.** Adding a time $`u`$ inside $`(t_k, t_{k+1})`$ and holding $`H_k`$ on both halves leaves the sum unchanged, since $`H_k(W_{t_{k+1}} - W_u) + H_k(W_u - W_{t_k}) = H_k(W_{t_{k+1}} - W_{t_k})`$; $`H_k`$ is still fixed by $`\mathcal F_u \supseteq \mathcal F_{t_k}`$. So any finite set of times, including $`s`$ and $`t`$, may be assumed to be trading times.
 
-**Integrable.** $\lvert H_k D_k \rvert \le c \lvert D_k \rvert$ and $(H_k D_k)^2 \le c^2 D_k^2$, both with finite averages. A finite sum of square-integrable terms is square-integrable, so $I_t$ has a finite mean and mean square.
+**Integrable.** $`\lvert H_k D_k \rvert \le c \lvert D_k \rvert`$ and $`(H_k D_k)^2 \le c^2 D_k^2`$, both with finite averages. A finite sum of square-integrable terms is square-integrable, so $`I_t`$ has a finite mean and mean square.
 
-**Adapted.** With $t$ a trading time, $I_t$ is a finite sum of products of quantities fixed by $\mathcal F_t$.
+**Adapted.** With $`t`$ a trading time, $`I_t`$ is a finite sum of products of quantities fixed by $`\mathcal F_t`$.
 
-**Martingale.** Let $s < t$ be trading times. $I_t - I_s = \sum_{s \le t_k < t} H_k D_k$. For each such $k$: $E[H_k D_k \mid \mathcal F_{t_k}] = H_k E[D_k \mid \mathcal F_{t_k}] = H_k E[D_k] = 0$, using that $H_k$ is bounded and fixed by $\mathcal F_{t_k}$, then independence. The tower rule with $\mathcal F_s \subseteq \mathcal F_{t_k}$ gives $E[H_k D_k \mid \mathcal F_s] = 0$. Summing, $E[I_t \mid \mathcal F_s] = I_s$. Taking $s = 0$, $E[I_t] = I_0 = 0$.
+**Martingale.** Let $`s < t`$ be trading times. $`I_t - I_s = \sum_{s \le t_k < t} H_k D_k`$. For each such $`k`$: $`E[H_k D_k \mid \mathcal F_{t_k}] = H_k E[D_k \mid \mathcal F_{t_k}] = H_k E[D_k] = 0`$, using that $`H_k`$ is bounded and fixed by $`\mathcal F_{t_k}`$, then independence. The tower rule with $`\mathcal F_s \subseteq \mathcal F_{t_k}`$ gives $`E[H_k D_k \mid \mathcal F_s] = 0`$. Summing, $`E[I_t \mid \mathcal F_s] = I_s`$. Taking $`s = 0`$, $`E[I_t] = I_0 = 0`$.
 
-**Isometry.** $E[H_k^2 D_k^2] = E[H_k^2 E[D_k^2 \mid \mathcal F_{t_k}]] = E[H_k^2](t_{k+1} - t_k)$. For $j < k$, $X = H_j D_j H_k$ is fixed by $\mathcal F_{t_k}$ and integrable (it is bounded by $c^2 \lvert D_j \rvert$), so $E[X D_k] = E[X E[D_k \mid \mathcal F_{t_k}]] = 0$. Expanding the finite square, $E[I_T^2] = \sum_k E[H_k^2](t_{k+1} - t_k) = E[\int_0^T H_t^2\,dt]$, the last step because $H_t^2 = H_k^2$ on the whole stretch.
+**Isometry.** $`E[H_k^2 D_k^2] = E[H_k^2 E[D_k^2 \mid \mathcal F_{t_k}]] = E[H_k^2](t_{k+1} - t_k)`$. For $`j < k`$, $`X = H_j D_j H_k`$ is fixed by $`\mathcal F_{t_k}`$ and integrable (it is bounded by $`c^2 \lvert D_j \rvert`$), so $`E[X D_k] = E[X E[D_k \mid \mathcal F_{t_k}]] = 0`$. Expanding the finite square, $`E[I_T^2] = \sum_k E[H_k^2](t_{k+1} - t_k) = E[\int_0^T H_t^2\,dt]`$, the last step because $`H_t^2 = H_k^2`$ on the whole stretch.
 
-**Linearity.** For simple $H$ and $K$, put both on a common list of times: the integral of $H - K$ is the integral of $H$ minus the integral of $K$, and constants come outside. Applied to $H - K$, the isometry says $E[(\int H\,dW - \int K\,dW)^2] = E[\int_0^T (H_t - K_t)^2\,dt]$: two strategies close in mean square have integrals close in mean square. Step 4 runs on this.
+**Linearity.** For simple $`H`$ and $`K`$, put both on a common list of times: the integral of $`H - K`$ is the integral of $`H`$ minus the integral of $`K`$, and constants come outside. Applied to $`H - K`$, the isometry says $`E[(\int H\,dW - \int K\,dW)^2] = E[\int_0^T (H_t - K_t)^2\,dt]`$: two strategies close in mean square have integrals close in mean square. Step 4 runs on this.
 
 </details>
 
@@ -151,30 +167,36 @@ What is left is $\sum_k E[H_k^2](t_{k+1} - t_k) = E[\int_0^T H_t^2\,dt]$, the is
 
 The isometry is a ruler: the root-mean-square gap between two integrals equals the root-mean-square gap between their strategies over time. The extension uses it in four steps. This card gives each step's idea; the complete argument is in Øksendal, Chapter 3, and Karatzas and Shreve, Chapter 3, Section 2.
 
-1. **Approximate.** Every strategy fixed by $\mathcal F_t$ with $E[\int_0^T H_t^2\,dt] < \infty$ is a mean-square limit of bounded simple strategies $H^{(m)}$. For a continuous bounded $H$, freeze it at the left end of each of $m$ equal stretches; the frozen strategy is simple, and continuity makes the gap shrink. Bounded, then general strategies follow by truncation and smoothing.
-2. **Cauchy.** By the proof's linearity line, the mean-square gap between the integrals of $H^{(m)}$ and $H^{(l)}$ equals that between the strategies, which shrinks as $m, l$ grow. The integrals crowd together.
-3. **Limit.** Random variables with a finite mean square form a complete space (the measure wing's $L^2$), so a crowding sequence converges; the limit is the Ito integral. Another approximating sequence gives the same limit, by the same ruler.
-4. **Keep the theorems.** Mean squares and conditional averages are continuous in mean square. The isometry and the martingale property pass from each $H^{(m)}$ to the limit.
+1. **Approximate.** Every strategy fixed by $`\mathcal F_t`$ with $`E[\int_0^T H_t^2\,dt] < \infty`$ is a mean-square limit of bounded simple strategies $`H^{(m)}`$. For a continuous bounded $`H`$, freeze it at the left end of each of $`m`$ equal stretches; the frozen strategy is simple, and continuity makes the gap shrink. Bounded, then general strategies follow by truncation and smoothing.
+2. **Cauchy.** By the proof's linearity line, the mean-square gap between the integrals of $`H^{(m)}`$ and $`H^{(l)}`$ equals that between the strategies, which shrinks as $`m, l`$ grow. The integrals crowd together.
+3. **Limit.** Random variables with a finite mean square form a complete space (the measure wing's $`L^2`$), so a crowding sequence converges; the limit is the Ito integral. Another approximating sequence gives the same limit, by the same ruler.
+4. **Keep the theorems.** Mean squares and conditional averages are continuous in mean square. The isometry and the martingale property pass from each $`H^{(m)}`$ to the limit.
 
-One more step, which uses [Doob's inequalities](../02-Martingales/05-doob-inequalities.md), makes $t \mapsto I_t$ a continuous path rather than a separate limit for each $t$: Doob's maximal inequality controls the largest gap along the whole year by the gap at the end.
+One more step, which uses [Doob's inequalities](../02-Martingales/05-doob-inequalities.md), makes $`t \mapsto I_t`$ a continuous path rather than a separate limit for each $`t`$: Doob's maximal inequality controls the largest gap along the whole year by the gap at the end.
 
-### Step 5: the integral of $W$ against itself
+### Step 5: the integral of $`W`$ against itself
 
-Take the simple strategy that freezes $W$ at the left end of each stretch, $H^{(n)}_t = W_{t_k}$. Each piece obeys an algebra identity that has nothing random in it:
+Take the simple strategy that freezes $`W`$ at the left end of each stretch, $`H^{(n)}_t = W_{t_k}`$. Each piece obeys an algebra identity that has nothing random in it:
 
-$$W_{t_k} D_k = \tfrac12 \left( W_{t_{k+1}}^2 - W_{t_k}^2 \right) - \tfrac12 D_k^2.$$
+```math
+W_{t_k} D_k = \tfrac12 \left( W_{t_{k+1}}^2 - W_{t_k}^2 \right) - \tfrac12 D_k^2.
+```
 
-Add over $k$. The first part telescopes to $\tfrac12 W_T^2$; the second is half the quadratic variation:
+Add over $`k`$. The first part telescopes to $`\tfrac12 W_T^2`$; the second is half the quadratic variation:
 
-$$\sum_k W_{t_k} D_k = \tfrac12 W_T^2 - \tfrac12 \sum_k D_k^2.$$
+```math
+\sum_k W_{t_k} D_k = \tfrac12 W_T^2 - \tfrac12 \sum_k D_k^2.
+```
 
-The sum of squares has mean $T$ and variance $2T^2/n$, so it tends to $T$ in mean square, and $\int_0^T W_t\,dW_t = (W_T^2 - T)/2$. The gap between the sum and its limit has mean square $T^2/(2n)$; in dollars the root-mean-square gap is $20T/\sqrt{2n}$, which the code checks at three step sizes.
+The sum of squares has mean $`T`$ and variance $`2T^2/n`$, so it tends to $`T`$ in mean square, and $`\int_0^T W_t\,dW_t = (W_T^2 - T)/2`$. The gap between the sum and its limit has mean square $`T^2/(2n)`$; in dollars the root-mean-square gap is $`20T/\sqrt{2n}`$, which the code checks at three step sizes.
 
-A second road checks the isometry. $W_T$ is normal with variance $T$, so $E[W_T^4] = 3T^2$ and
+A second road checks the isometry. $`W_T`$ is normal with variance $`T`$, so $`E[W_T^4] = 3T^2`$ and
 
-$$E\left[ \left( \tfrac{W_T^2 - T}{2} \right)^2 \right] = \tfrac14 \left( 3T^2 - 2T^2 + T^2 \right) = \tfrac{T^2}{2} = \int_0^T E[W_t^2]\,dt = \int_0^T t\,dt.$$
+```math
+E\left[ \left( \tfrac{W_T^2 - T}{2} \right)^2 \right] = \tfrac14 \left( 3T^2 - 2T^2 + T^2 \right) = \tfrac{T^2}{2} = \int_0^T E[W_t^2]\,dt = \int_0^T t\,dt.
+```
 
-The ordinary chain rule would give $\tfrac12 W_T^2$ and drop the $-\tfrac12 T$. That term is the price of the path's roughness, and [Ito's lemma](02-itos-lemma.md) turns it into a rule for every smooth function of $W$.
+The ordinary chain rule would give $`\tfrac12 W_T^2`$ and drop the $`-\tfrac12 T`$. That term is the price of the path's roughness, and [Ito's lemma](02-itos-lemma.md) turns it into a rule for every smooth function of $`W`$.
 
 ---
 
@@ -184,25 +206,25 @@ The **half-year rule**: hold 2 shares for the first half-year; at the half-year 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| first half: holding squared times time | $2^2 \times 0.5$ | 2 |
-| second half: chance the price is at least $100 | symmetry of $W_{1/2}$ about 0 | 0.5 |
-| second half: average holding squared times time | $0.5 \times 1^2 \times 0.5$ | 0.25 |
-| $E[\int_0^1 H_t^2\,dt]$ | 2 + 0.25 | 2.25 |
-| variance of the gain $G_1 = 20 I_1$ | $20^2 \times 2.25$ | 900 |
-| typical size of the gain | $\sqrt{900}$ | $30 |
+| first half: holding squared times time | $`2^2 \times 0.5`$ | 2 |
+| second half: chance the price is at least $100 | symmetry of $`W_{1/2}`$ about 0 | 0.5 |
+| second half: average holding squared times time | $`0.5 \times 1^2 \times 0.5`$ | 0.25 |
+| $`E[\int_0^1 H_t^2\,dt]`$ | 2 + 0.25 | 2.25 |
+| variance of the gain $`G_1 = 20 I_1`$ | $`20^2 \times 2.25`$ | 900 |
+| typical size of the gain | $`\sqrt{900}`$ | $30 |
 | average gain | martingale property | **$0** |
 
 Read in the world: the rule wins or loses about $30 in a typical year and averages nothing. Looking at the half-year price changes the spread, never the average.
 
-The hold-the-excess strategy, $H_t = W_t$ shares: $E[\int_0^1 W_t^2\,dt] = 0.5$, so the variance of the dollar gain is $400 \times 0.5 = 200$, a typical size of about \$14.14, and the average is \$0. Ordinary calculus promises $10 W_1^2$, which averages \$10 and is never negative.
+The hold-the-excess strategy, $`H_t = W_t`$ shares: $`E[\int_0^1 W_t^2\,dt] = 0.5`$, so the variance of the dollar gain is $`400 \times 0.5 = 200`$, a typical size of about \$14.14, and the average is \$0. Ordinary calculus promises $`10 W_1^2`$, which averages \$10 and is never negative.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Holding read at the end of each stretch, $H = W$ | mean gain $20 exact; $20.0525 ± 0.0719 simulated | the holding uses the move it multiplies: the sum picks up the quadratic variation |
+| Holding read at the end of each stretch, $`H = W`$ | mean gain $20 exact; $20.0525 ± 0.0719 simulated | the holding uses the move it multiplies: the sum picks up the quadratic variation |
 | Second-half bet placed only when the second half will rise | mean $5.641896 exact; $5.6173 ± 0.0414 simulated | not fixed before the move: it sees the future |
-| Ordinary chain rule, $\int W\,dW = \tfrac12 W^2$ | mean gain $10 exact; $10.0575 ± 0.0708 simulated | drops $-\tfrac12 T$: the dt term from the squared moves |
+| Ordinary chain rule, $`\int W\,dW = \tfrac12 W^2`$ | mean gain $10 exact; $10.0575 ± 0.0708 simulated | drops $`-\tfrac12 T`$: the dt term from the squared moves |
 | Stieltjes integral against the path | total variation 2.86, 7.65, 24.51, 79.24 at 10 to 10,000 steps | the path has infinite variation, so no Stieltjes limit exists |
 
 The code prints all four.
@@ -219,13 +241,13 @@ xychart-beta
     line [4.47, 1.41, 0.45]
 ```
 
-Orange: the root-mean-square gap between the left-end trading sum and the Ito answer, from 2,000 simulated paths at each step size. Green: the formula $20T/\sqrt{2n}$. Ten times more trades cut the gap by a factor of $\sqrt{10}$.
+Orange: the root-mean-square gap between the left-end trading sum and the Ito answer, from 2,000 simulated paths at each step size. Green: the formula $`20T/\sqrt{2n}`$. Ten times more trades cut the gap by a factor of $`\sqrt{10}`$.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Three roads. The formulas give the isometry values. Exact enumeration replaces Brownian motion by a coin-toss walk with steps of size $\sqrt{\Delta t}$ and visits every path in whole numbers (up to 65,536), checking the mean, the isometry and a zero future average after every history. The walk is not Brownian motion, but its squared steps are exactly $\Delta t$, so Step 5's identity holds on every path. A seeded simulation of Brownian motion (SplitMix64 and Box-Muller, written out, 40,000 paths of 100 steps) prints every average with its standard error, the error at three step sizes, and the variations and chart of one 10,000-step path.
+Three roads. The formulas give the isometry values. Exact enumeration replaces Brownian motion by a coin-toss walk with steps of size $`\sqrt{\Delta t}`$ and visits every path in whole numbers (up to 65,536), checking the mean, the isometry and a zero future average after every history. The walk is not Brownian motion, but its squared steps are exactly $`\Delta t`$, so Step 5's identity holds on every path. A seeded simulation of Brownian motion (SplitMix64 and Box-Muller, written out, 40,000 paths of 100 steps) prints every average with its standard error, the error at three step sizes, and the variations and chart of one 10,000-step path.
 
 ### Python
 
@@ -617,11 +639,11 @@ The two outputs match line for line.
 
 Lean proves both theorems for every bounded simple strategy, and Step 5's identity on every path.
 
-- Suppose $W$ is a Brownian motion for $\mathcal F_t$, and each bounded holding $H_k$ is fixed by $\mathcal F_{t_k}$. Then $E[I_T^2] = E[\int_0^T H_t^2\,dt]$, the isometry.
-- Take the same setting and any earlier time $s$. Then $E[I_T \mid \mathcal F_s] = I_s$, and $E[I_T] = 0$.
-- Take any path with $W_{t_0} = 0$, cut into $n$ stretches. Then $\sum_k W_{t_k} D_k = \tfrac12 W_T^2 - \tfrac12 \sum_k D_k^2$.
+- Suppose $`W`$ is a Brownian motion for $`\mathcal F_t`$, and each bounded holding $`H_k`$ is fixed by $`\mathcal F_{t_k}`$. Then $`E[I_T^2] = E[\int_0^T H_t^2\,dt]`$, the isometry.
+- Take the same setting and any earlier time $`s`$. Then $`E[I_T \mid \mathcal F_s] = I_s`$, and $`E[I_T] = 0`$.
+- Take any path with $`W_{t_0} = 0`$, cut into $`n`$ stretches. Then $`\sum_k W_{t_k} D_k = \tfrac12 W_T^2 - \tfrac12 \sum_k D_k^2`$.
 - The half-year rule's numbers are exact: 2 + 0.25 = 2.25, a dollar variance of 900, and a typical gain of \$30.
-- So are the hold-the-excess variance, 200, and the 2-step coin-toss walk: mean gain 0 and $E[I_T^2] = 2.25$.
+- So are the hold-the-excess variance, 200, and the 2-step coin-toss walk: mean gain 0 and $`E[I_T^2] = 2.25`$.
 
 Lean has no general Ito integral yet; the limits in Steps 1, 4 and 5, and every simulation, are left to the Python and Rust checks.
 
@@ -1073,7 +1095,7 @@ example : (1 / 2 : ℚ) * 18 / 4 = 9 / 4 := by norm_num
 > Guess first, then run it.
 > - **Peek in the enumeration.** Change `(x[h] > 0)` to `(x[n] > x[h])` in the half-year rule. Guess: the rule now buys only before a rise, so the mean gain is no longer zero, and the first assert stops the run.
 > - **Right end instead of left.** In the main simulation loop, change `left += w * dw; right` to `left += (w + dw) * dw; right`. The "left endpoint" mean jumps to about $20, and its assert fails by hundreds of standard errors.
-> - **Midpoint.** In the step-size loop, change `rng.normal(); left += w * dw` to `rng.normal(); left += (w + 0.5 * dw) * dw`. That sum equals $\tfrac12 W_T^2$ exactly, the Stratonovich answer, so its gap from the Ito answer is $\tfrac12 T$ and stops shrinking: the step-size assert fails.
+> - **Midpoint.** In the step-size loop, change `rng.normal(); left += w * dw` to `rng.normal(); left += (w + 0.5 * dw) * dw`. That sum equals $`\tfrac12 W_T^2`$ exactly, the Stratonovich answer, so its gap from the Ito answer is $`\tfrac12 T`$ and stops shrinking: the step-size assert fails.
 > - **Another seed.** Change `SplitMix64(20260930)` to `SplitMix64(42)`. Guess: every simulated number moves by about its standard error, the exact and enumerated lines do not change at all, and every assert still passes.
 
 ---
@@ -1081,11 +1103,11 @@ example : (1 / 2 : ℚ) * 18 / 4 = 9 / 4 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **"$\int W\,dW = \tfrac12 W^2$, as in ordinary calculus."** The ordinary rule assumes squared small moves vanish. For Brownian motion they add up to the elapsed time, so the Ito integral is $\tfrac12(W_T^2 - T)$. On the pictured path that is $8.66 earned, not $18.47; on average $0, not $10.
+> **"$`\int W\,dW = \tfrac12 W^2`$, as in ordinary calculus."** The ordinary rule assumes squared small moves vanish. For Brownian motion they add up to the elapsed time, so the Ito integral is $`\tfrac12(W_T^2 - T)`$. On the pictured path that is $8.66 earned, not $18.47; on average $0, not $10.
 >
-> - **Reading $dW_t$ as a derivative.** $W$ has no slope, so $\int H\,dW$ is not $\int H\,(dW/dt)\,dt$. The symbol names a limit of sums.
-> - **Reading the holding late.** Any evaluation point other than the left end of each stretch gives a different integral. The right end adds \$20 a year on average for $H = W$; the midpoint adds \$10.
-> - **Taking the isometry path by path.** It is an identity of averages: $E[I_T^2] = E[\int H_t^2\,dt]$. On one path, $I_T^2$ and $\int_0^T H_t^2\,dt$ are two different random numbers; only their averages agree.
+> - **Reading $`dW_t`$ as a derivative.** $`W`$ has no slope, so $`\int H\,dW`$ is not $`\int H\,(dW/dt)\,dt`$. The symbol names a limit of sums.
+> - **Reading the holding late.** Any evaluation point other than the left end of each stretch gives a different integral. The right end adds \$20 a year on average for $`H = W`$; the midpoint adds \$10.
+> - **Taking the isometry path by path.** It is an identity of averages: $`E[I_T^2] = E[\int H_t^2\,dt]`$. On one path, $`I_T^2`$ and $`\int_0^T H_t^2\,dt`$ are two different random numbers; only their averages agree.
 > - **Calling a fair game unwinnable.** The half-year rule makes or loses about $30 in a typical year. Zero mean says nothing about a single year.
 
 ---
@@ -1096,22 +1118,22 @@ example : (1 / 2 : ℚ) * 18 / 4 = 9 / 4 := by norm_num
 - **Noise in a physical system.** A particle buffeted by molecules, or a circuit with thermal noise, is written as a [Stochastic differential equations](04-stochastic-differential-equations.md) equation; its noise term is an Ito integral.
 
 > **Say it back**
-> A strategy's gain is holding times price move, added up, with each holding fixed before its move. The Ito integral is that sum's limit as trading gets finer. A Brownian path has infinite variation, so the ordinary Stieltjes integral does not exist, and the left-end reading is a choice that matches trading. For finitely many trades the gain is a fair game, and its variance is the average squared holding added over time: the isometry. That identity carries the integral, and both theorems, to every strategy with a finite mean square, and it shows why $\int W\,dW$ is $\tfrac12(W_T^2 - T)$.
+> A strategy's gain is holding times price move, added up, with each holding fixed before its move. The Ito integral is that sum's limit as trading gets finer. A Brownian path has infinite variation, so the ordinary Stieltjes integral does not exist, and the left-end reading is a choice that matches trading. For finitely many trades the gain is a fair game, and its variance is the average squared holding added over time: the isometry. That identity carries the integral, and both theorems, to every strategy with a finite mean square, and it shows why $`\int W\,dW`$ is $`\tfrac12(W_T^2 - T)`$.
 
 ---
 
 ## What this builds on
 
-- [Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md): the price's wandering part $W$, whose moves are independent, with mean zero and variance equal to the elapsed time.
-- [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): the squared moves of $W$ add up to $t$; that is the $-\tfrac12 T$ and the left-right gap.
+- [Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md): the price's wandering part $`W`$, whose moves are independent, with mean zero and variance equal to the elapsed time.
+- [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): the squared moves of $`W`$ add up to $`t`$; that is the $`-\tfrac12 T`$ and the left-right gap.
 - [Betting on a martingale](../02-Martingales/02-predictable-bets-and-the-martingale-transform.md): stakes fixed before a fair round keep the game fair; the simple Ito integral is that sum with Brownian moves.
 - [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): an integral as the limit of sums over finer grids.
-- [Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md): integrating against a function of bounded variation, the integral that fails for $W$.
+- [Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md): integrating against a function of bounded variation, the integral that fails for $`W`$.
 - [The Lebesgue-Stieltjes integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): integrating against a measure built from a monotone function, which a Brownian path is not.
 
 ## Where this goes next
 
-- [Ito's lemma](02-itos-lemma.md): the chain rule for a smooth function of $W$, with the extra half-second-derivative term that Step 5 found for $W^2$.
+- [Ito's lemma](02-itos-lemma.md): the chain rule for a smooth function of $`W`$, with the extra half-second-derivative term that Step 5 found for $`W^2`$.
 - [Martingale representation](../07-Changing%20Measure/04-martingale-representation-theorem.md): the converse. Every fair game with a finite mean square, built on one Brownian motion's information, is a constant plus the Ito integral of some strategy.
 
 The integral adds up a strategy's gains; what it leaves open is how a smooth function of the price itself changes, and Ito's lemma answers that with one extra term.
@@ -1124,4 +1146,4 @@ Verified 2026-10-06: every link below resolves to the publisher's page.
 
 - Itô, Kiyosi. "Stochastic integral." *Proceedings of the Imperial Academy* 20, no. 8 (1944): 519–524. [doi:10.3792/pia/1195572786](https://doi.org/10.3792/pia/1195572786). The paper that defined the integral with the left-end reading.
 - Øksendal, Bernt. *Stochastic Differential Equations: An Introduction with Applications*, 6th ed. Springer, 2003. [doi:10.1007/978-3-642-14394-6](https://doi.org/10.1007/978-3-642-14394-6). Chapter 3: the construction from elementary strategies, the isometry and the extension by limits.
-- Karatzas, Ioannis, and Steven E. Shreve. *Brownian Motion and Stochastic Calculus*, 2nd ed. Springer, Graduate Texts in Mathematics 113, 1998. [doi:10.1007/978-1-4612-0949-2](https://doi.org/10.1007/978-1-4612-0949-2). Chapter 3, Section 2: the construction in full, the continuous version, and the extension to strategies with $\int_0^T H_t^2\,dt$ finite on each path.
+- Karatzas, Ioannis, and Steven E. Shreve. *Brownian Motion and Stochastic Calculus*, 2nd ed. Springer, Graduate Texts in Mathematics 113, 1998. [doi:10.1007/978-1-4612-0949-2](https://doi.org/10.1007/978-1-4612-0949-2). Chapter 3, Section 2: the construction in full, the continuous version, and the extension to strategies with $`\int_0^T H_t^2\,dt`$ finite on each path.

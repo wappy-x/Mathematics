@@ -39,34 +39,40 @@ Notation first, in words.
 - A **rational function** is a ratio f = P/Q of polynomials with no common factor; deg P is the degree of P, its highest power.
 - A root p of Q is a pole; its **order** m is how many times (s − p) divides Q, and order 1 is **simple**.
 - A function has a **zero of order n** at p when it equals (s − p)^n times a function holomorphic (complex-differentiable) and nonzero at p; for P/Q, that is (s − p) dividing the top n times.
-- The coefficient of 1/(s − p)^k at p is written $c_{-k}$, as in the Laurent series, and $Q'$ is the derivative of Q.
+- The coefficient of 1/(s − p)^k at p is written $`c_{-k}`$, as in the Laurent series, and $`Q'`$ is the derivative of Q.
 
-$$\frac{P(s)}{Q(s)} = \sum_{\text{poles } p}\ \sum_{k=1}^{m} \frac{c_{-k}(p)}{(s-p)^k}, \qquad \deg P < \deg Q$$
+```math
+\frac{P(s)}{Q(s)} = \sum_{\text{poles } p}\ \sum_{k=1}^{m} \frac{c_{-k}(p)}{(s-p)^k}, \qquad \deg P < \deg Q
+```
 
 **Read it aloud:** when the top has lower degree, the ratio is the sum over every pole of its principal part, one term per unit of order.
 
 At a simple pole no expansion is needed:
 
-$$c_{-1}(p) = \frac{P(p)}{Q'(p)}$$
+```math
+c_{-1}(p) = \frac{P(p)}{Q'(p)}
+```
 
 **Read it aloud:** the top over the slope of the bottom, both at the pole.
 
-This is the **cover-up rule**: cover the factor (s − p), evaluate the rest at p. At a pole of order m, write f(s) = g(s)/(s − p)^m, with $g$ holomorphic (complex-differentiable) near p and g(p) ≠ 0. Then
+This is the **cover-up rule**: cover the factor (s − p), evaluate the rest at p. At a pole of order m, write f(s) = g(s)/(s − p)^m, with $`g`$ holomorphic (complex-differentiable) near p and g(p) ≠ 0. Then
 
-$$c_{-m+j}(p) = \frac{g^{(j)}(p)}{j!}, \qquad j = 0, 1, \dots, m-1$$
+```math
+c_{-m+j}(p) = \frac{g^{(j)}(p)}{j!}, \qquad j = 0, 1, \dots, m-1
+```
 
 **Read it aloud:** the coefficients are the first m Taylor coefficients of g at the pole.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | the complex input; s = iω is shaking at frequency ω | test points 3 and 1 + 0.5i | near a pole, blows up |
-| $\omega$ | angular frequency, radians per unit time | resonances at 1 and 2 | past 2, dies away |
-| $f$, $P$, $Q$ | the ratio, its top, its bottom | G; 1; s^4 + 5s^2 + 4 | — |
-| $Q'$ | the derivative of Q | Q'(i) = 6i | smaller coefficient |
-| $p$ | a pole: a root of Q not cancelled by P | ±i, ±2i | — |
-| $m$, $n$ | order of a pole, of a zero | 1 for G; 2 for F = 1/(s^2 + 1)^2 | more terms |
-| $c_{-k}$, $k$, $j$ | coefficient of 1/(s − p)^k; counters | at i: −0.166667i | stronger resonance |
-| $g$, $j!$ | f with the pole factored out; 1 × 2 × … × j | for F at i, 1/(s + i)^2 | — |
+| $`s`$ | the complex input; s = iω is shaking at frequency ω | test points 3 and 1 + 0.5i | near a pole, blows up |
+| $`\omega`$ | angular frequency, radians per unit time | resonances at 1 and 2 | past 2, dies away |
+| $`f`$, $`P`$, $`Q`$ | the ratio, its top, its bottom | G; 1; s^4 + 5s^2 + 4 | — |
+| $`Q'`$ | the derivative of Q | Q'(i) = 6i | smaller coefficient |
+| $`p`$ | a pole: a root of Q not cancelled by P | ±i, ±2i | — |
+| $`m`$, $`n`$ | order of a pole, of a zero | 1 for G; 2 for F = 1/(s^2 + 1)^2 | more terms |
+| $`c_{-k}`$, $`k`$, $`j`$ | coefficient of 1/(s − p)^k; counters | at i: −0.166667i | stronger resonance |
+| $`g`$, $`j!`$ | f with the pole factored out; 1 × 2 × … × j | for F at i, 1/(s + i)^2 | — |
 
 ### When it holds
 
@@ -365,7 +371,7 @@ The two outputs match line for line.
 Lean proves the main theorem for all complex polynomials, the cover-up rule at every simple pole, and the worked numbers exactly.
 
 - With no common factor and deg P < deg Q, P/Q is the sum of its principal parts wherever Q(s) ≠ 0.
-- Each coefficient is a Taylor coefficient of g: $c_{-k}(p) = g^{(m-k)}(p)/(m-k)!$, with m the order of the pole p.
+- Each coefficient is a Taylor coefficient of g: $`c_{-k}(p) = g^{(m-k)}(p)/(m-k)!`$, with m the order of the pole p.
 - At a simple pole p, (s − p)P(s)/Q(s) tends to P(p)/Q'(p) as s tends to p.
 - A zero of order n of a function holomorphic at p is a pole of order n of its reciprocal.
 - Q'(i) = 6i and Q'(2i) = −12i, so the coefficients are −i/6 at i and i/12 at 2i.

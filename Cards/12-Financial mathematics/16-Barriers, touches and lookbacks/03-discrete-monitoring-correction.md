@@ -38,32 +38,36 @@ Orange line: the shifted-barrier formula. Teal line: a trinomial tree that check
 
 ## The formula
 
-$$V_m(H) \;\approx\; V\!\left(H\,e^{-\beta\,\sigma\sqrt{\Delta t}}\right), \qquad \Delta t = \frac{T}{m}, \qquad \beta = -\frac{\zeta(1/2)}{\sqrt{2\pi}} \approx 0.5826$$
+```math
+V_m(H) \;\approx\; V\!\left(H\,e^{-\beta\,\sigma\sqrt{\Delta t}}\right), \qquad \Delta t = \frac{T}{m}, \qquad \beta = -\frac{\zeta(1/2)}{\sqrt{2\pi}} \approx 0.5826
+```
 
 **Read it aloud:** the price with m checks equals the continuous price at a barrier moved away from the spot by 0.5826 of one period's typical move.
 
-For a barrier **above** the spot, the sign flips: $H\,e^{+\beta\sigma\sqrt{\Delta t}}$. The rule in words is the same both ways: move the barrier away from where the price is now.
+For a barrier **above** the spot, the sign flips: $`H\,e^{+\beta\sigma\sqrt{\Delta t}}`$. The rule in words is the same both ways: move the barrier away from where the price is now.
 
 The continuous price itself comes from the sibling card. For a down-and-out call with the barrier at or below the strike, it is the vanilla call minus a weighted mirror-image call:
 
-$$V(H) = C(S) - \left(\frac{H}{S}\right)^{2\lambda} C\!\left(\frac{H^2}{S}\right), \qquad \lambda = \frac{r - q - \tfrac12\sigma^2}{\sigma^2}$$
+```math
+V(H) = C(S) - \left(\frac{H}{S}\right)^{2\lambda} C\!\left(\frac{H^2}{S}\right), \qquad \lambda = \frac{r - q - \tfrac12\sigma^2}{\sigma^2}
+```
 
-In words: the plain call, minus the value of the paths that touched $H$, which the mirror trick counts as a call struck from the reflected spot $H^2/S$.
+In words: the plain call, minus the value of the paths that touched $`H`$, which the mirror trick counts as a call struck from the reflected spot $`H^2/S`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V_m$, $V$ | price of the down-and-out call with m checks; the continuous-monitoring price, read as a function of the barrier level | $9.15 daily; $9.13 continuous at $80 | — |
-| $H$ | the barrier: the price that kills the option | $80 | falls: the tripwire sits closer |
-| $H^*$ | the shifted barrier fed to the continuous formula, $H e^{-\beta\sigma\sqrt{\Delta t}}$ | $79.41 | — |
-| $m$ | number of checks over the life | 252 (trading days) | falls toward $9.13: more chances to be caught |
-| $\Delta t$ | time between checks, in years | 1/252 | rises: more dips go unseen |
-| $a$, $b$ | log distances of two consecutive closes above the barrier, ln(close / H) | closes at $81 and $81 (Step 1) | the dip chance between them falls fast |
-| $\beta$ | the average overshoot of a random walk past a far level, in units of one step's typical size | 0.5826 | rises: a bigger shift |
-| $\zeta$ | the Riemann zeta function; $\zeta(1/2)$ is the alternating-sum value built in the checks | −1.460355 | — |
-| $\sigma$ | volatility: the typical yearly size of Acme's moves | 20% | a bigger shift, and a cheaper knock-out |
-| $S$, $K$ | today's price and the strike | $100, $100 | $S$ up: further from the barrier |
-| $r$, $q$, $T$ | riskless rate, dividend yield, life in years | 5%, 2%, 1 | — |
-| $C$, $\lambda$ | Black–Scholes call as a function of the spot; drift of the log price in units of variance | 9.227006; 2λ = 0.5 | — |
+| $`V_m`$, $`V`$ | price of the down-and-out call with m checks; the continuous-monitoring price, read as a function of the barrier level | $9.15 daily; $9.13 continuous at $80 | — |
+| $`H`$ | the barrier: the price that kills the option | $80 | falls: the tripwire sits closer |
+| $`H^*`$ | the shifted barrier fed to the continuous formula, $`H e^{-\beta\sigma\sqrt{\Delta t}}`$ | $79.41 | — |
+| $`m`$ | number of checks over the life | 252 (trading days) | falls toward $9.13: more chances to be caught |
+| $`\Delta t`$ | time between checks, in years | 1/252 | rises: more dips go unseen |
+| $`a`$, $`b`$ | log distances of two consecutive closes above the barrier, ln(close / H) | closes at $81 and $81 (Step 1) | the dip chance between them falls fast |
+| $`\beta`$ | the average overshoot of a random walk past a far level, in units of one step's typical size | 0.5826 | rises: a bigger shift |
+| $`\zeta`$ | the Riemann zeta function; $`\zeta(1/2)`$ is the alternating-sum value built in the checks | −1.460355 | — |
+| $`\sigma`$ | volatility: the typical yearly size of Acme's moves | 20% | a bigger shift, and a cheaper knock-out |
+| $`S`$, $`K`$ | today's price and the strike | $100, $100 | $`S`$ up: further from the barrier |
+| $`r`$, $`q`$, $`T`$ | riskless rate, dividend yield, life in years | 5%, 2%, 1 | — |
+| $`C`$, $`\lambda`$ | Black–Scholes call as a function of the spot; drift of the log price in units of variance | 9.227006; 2λ = 0.5 | — |
 
 ### When it holds
 
@@ -83,9 +87,11 @@ The contract sees 252 prices a year. Between two closes, the price keeps moving.
 
 ### Step 1: how often a dip goes unseen
 
-Between two closes the log price is a **Brownian bridge**: a random path pinned at both ends. For a bridge, the chance of dipping to the barrier has a closed form. With the two closes at log distances $a$ and $b$ above the barrier:
+Between two closes the log price is a **Brownian bridge**: a random path pinned at both ends. For a bridge, the chance of dipping to the barrier has a closed form. With the two closes at log distances $`a`$ and $`b`$ above the barrier:
 
-$$\Pr(\text{dip to } H \text{ between closes}) = e^{-2ab/(\sigma^2\Delta t)}$$
+```math
+\Pr(\text{dip to } H \text{ between closes}) = e^{-2ab/(\sigma^2\Delta t)}
+```
 
 Two closes at $81 give a dip chance of 0.143070. Two closes at $82 give 0.000461. Missed touches live within a day's move of the barrier. Only paths that close near $80 can have an unseen dip.
 
@@ -93,19 +99,21 @@ This is also why the continuous contract touches more often. Prices use the pric
 
 ### Step 2: a daily walk crosses the barrier with an overshoot
 
-The daily closes form a **random walk**: a running sum of independent steps, each roughly normal with typical size $\sigma\sqrt{\Delta t}$, one day's wiggle. A continuous path that crosses $80$ touches it exactly. A daily walk that crosses does so between closes, and its first close below the barrier lands under it by some amount. That amount is the **overshoot**.
+The daily closes form a **random walk**: a running sum of independent steps, each roughly normal with typical size $`\sigma\sqrt{\Delta t}`$, one day's wiggle. A continuous path that crosses $`80`$ touches it exactly. A daily walk that crosses does so between closes, and its first close below the barrier lands under it by some amount. That amount is the **overshoot**.
 
-So a daily contract that finally sees a close below $80$ is, on average, looking at a price one overshoot below $80$. Its knock-out event is close to a continuous path touching that lower level. The daily contract with barrier $H$ therefore behaves like a continuous contract with the barrier moved down by the average overshoot.
+So a daily contract that finally sees a close below $`80`$ is, on average, looking at a price one overshoot below $`80`$. Its knock-out event is close to a continuous path touching that lower level. The daily contract with barrier $`H`$ therefore behaves like a continuous contract with the barrier moved down by the average overshoot.
 
 ### Step 3: the average overshoot is 0.5826 of one step
 
 For a walk with normal steps, heading for a level many steps away, the average overshoot settles to a fixed fraction of one step's typical size. David Siegmund computed it:
 
-$$\beta = -\frac{\zeta(1/2)}{\sqrt{2\pi}} = 0.582597$$
+```math
+\beta = -\frac{\zeta(1/2)}{\sqrt{2\pi}} = 0.582597
+```
 
-The **Riemann zeta function** $\zeta$ appears because the overshoot is built from sums over all step counts n of terms in $1/\sqrt{n}$, and $\sum 1/n^{s}$ is what $\zeta(s)$ means. At $s = 1/2$ that sum diverges, and the zeta function is its standard finite continuation. The checks build $\zeta(1/2) = -1.460355$ from the alternating sum $1 - 1/\sqrt2 + 1/\sqrt3 - \dots$, and reach the same 0.582597 by a second road, an integral from Siegmund's work.
+The **Riemann zeta function** $`\zeta`$ appears because the overshoot is built from sums over all step counts n of terms in $`1/\sqrt{n}`$, and $`\sum 1/n^{s}`$ is what $`\zeta(s)`$ means. At $`s = 1/2`$ that sum diverges, and the zeta function is its standard finite continuation. The checks build $`\zeta(1/2) = -1.460355`$ from the alternating sum $`1 - 1/\sqrt2 + 1/\sqrt3 - \dots`$, and reach the same 0.582597 by a second road, an integral from Siegmund's work.
 
-In log price, one day's wiggle is $\sigma\sqrt{\Delta t} = 0.012599$. The shift is 0.5826 of that, 0.007340. The barrier moves from $\ln 80$ to $\ln 80 - 0.007340$, which is $80\,e^{-0.007340} = 79.414944$.
+In log price, one day's wiggle is $`\sigma\sqrt{\Delta t} = 0.012599`$. The shift is 0.5826 of that, 0.007340. The barrier moves from $`\ln 80`$ to $`\ln 80 - 0.007340`$, which is $`80\,e^{-0.007340} = 79.414944`$.
 
 ### Step 4: nothing else changes
 
@@ -114,13 +122,13 @@ The payoff at expiry depends only on the final price, not on the check schedule.
 <details>
 <summary>Detailed proof: from the walk's overshoot to the shifted barrier in the price</summary>
 
-Work in log price: $x_t = \ln(S_t/S)$, barrier $b = \ln(H/S) < 0$. Under the pricing measure, $x$ is Brownian motion with drift $r - q - \tfrac12\sigma^2$ and volatility $\sigma$. The closes $x_{k\Delta t}$ form a random walk with normal steps.
+Work in log price: $`x_t = \ln(S_t/S)`$, barrier $`b = \ln(H/S) < 0`$. Under the pricing measure, $`x`$ is Brownian motion with drift $`r - q - \tfrac12\sigma^2`$ and volatility $`\sigma`$. The closes $`x_{k\Delta t}`$ form a random walk with normal steps.
 
-1. **Rescale.** Divide by $\sigma\sqrt{\Delta t}$. The walk now has steps of size about 1 plus a drift that vanishes as the checks multiply, and the barrier sits at $b/(\sigma\sqrt{\Delta t})$ steps, which runs off to minus infinity as $\Delta t \to 0$.
-2. **Corrected diffusion approximation** (Siegmund and Yuh, 1982). For such a walk, the chance of crossing a far level c within m steps equals the chance that Brownian motion with the same drift crosses c plus ρ, where ρ is the walk's limiting mean overshoot, up to an error smaller than $1/\sqrt m$.
-3. **The constant.** Renewal theory gives the limiting mean overshoot as $\rho = \mathbb{E}[L^2] / (2\,\mathbb{E}[L])$, where L is a ladder height: the amount by which the walk beats its previous record each time it sets a new one. Spitzer's identity evaluates these moments for normal steps, and the result is $\rho = -\zeta(1/2)/\sqrt{2\pi}$, equal to Siegmund's integral $-\frac1\pi\int_0^\infty x^{-2}\ln\!\big(2(1-e^{-x^2/2})/x^2\big)\,dx$. Both roads are computed in the checks.
-4. **Undo the rescaling.** An overshoot of $\beta$ steps is $\beta\sigma\sqrt{\Delta t}$ in log price. The discrete survival event $\{\text{every close} > b\}$ has the probability, to first order, of the continuous event $\{\text{path stays above } b - \beta\sigma\sqrt{\Delta t}\}$.
-5. **From probabilities to prices.** The price is a discounted average of the expiry payoff over surviving paths. Broadie, Glasserman and Kou carry step 4 through that average, with the payoff attached, and show $V_m(H) = V(H e^{\mp\beta\sigma\sqrt{\Delta t}}) + o(1/\sqrt m)$: the leftover shrinks faster than one over the root of the number of checks.
+1. **Rescale.** Divide by $`\sigma\sqrt{\Delta t}`$. The walk now has steps of size about 1 plus a drift that vanishes as the checks multiply, and the barrier sits at $`b/(\sigma\sqrt{\Delta t})`$ steps, which runs off to minus infinity as $`\Delta t \to 0`$.
+2. **Corrected diffusion approximation** (Siegmund and Yuh, 1982). For such a walk, the chance of crossing a far level c within m steps equals the chance that Brownian motion with the same drift crosses c plus ρ, where ρ is the walk's limiting mean overshoot, up to an error smaller than $`1/\sqrt m`$.
+3. **The constant.** Renewal theory gives the limiting mean overshoot as $`\rho = \mathbb{E}[L^2] / (2\,\mathbb{E}[L])`$, where L is a ladder height: the amount by which the walk beats its previous record each time it sets a new one. Spitzer's identity evaluates these moments for normal steps, and the result is $`\rho = -\zeta(1/2)/\sqrt{2\pi}`$, equal to Siegmund's integral $`-\frac1\pi\int_0^\infty x^{-2}\ln\!\big(2(1-e^{-x^2/2})/x^2\big)\,dx`$. Both roads are computed in the checks.
+4. **Undo the rescaling.** An overshoot of $`\beta`$ steps is $`\beta\sigma\sqrt{\Delta t}`$ in log price. The discrete survival event $`\{\text{every close} > b\}`$ has the probability, to first order, of the continuous event $`\{\text{path stays above } b - \beta\sigma\sqrt{\Delta t}\}`$.
+5. **From probabilities to prices.** The price is a discounted average of the expiry payoff over surviving paths. Broadie, Glasserman and Kou carry step 4 through that average, with the payoff attached, and show $`V_m(H) = V(H e^{\mp\beta\sigma\sqrt{\Delta t}}) + o(1/\sqrt m)`$: the leftover shrinks faster than one over the root of the number of checks.
 
 </details>
 
@@ -132,7 +140,7 @@ A daily contract can be priced directly, without the shift. A trinomial tree ([T
 
 ## Worked numbers, by hand
 
-House market: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$, barrier $H = 80$, 252 daily checks.
+House market: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$, barrier $`H = 80`$, 252 daily checks.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -600,11 +608,11 @@ The two outputs match line for line, simulation included: both programs draw the
 
 Lean proves that discrete monitoring adds worth for any number of checks, and that the shift moves the barrier away from the spot.
 
-- Suppose the price is lognormal with steady volatility and no jumps, the barrier sits below the spot, and $m \ge 1$. Then a down-and-out call checked at $m$ evenly spaced closes is worth strictly more than under continuous monitoring.
-- The alternating sum $1 - 1/\sqrt2 + 1/\sqrt3 - \dots$, divided by $1 - \sqrt2$, settles on $\zeta(1/2)$.
-- The overshoot constant $\beta$ is positive.
-- Take any $m \ge 1$ and $\sigma > 0$. Then the shifted down barrier lies strictly below $H$, and the shifted up barrier strictly above $H$.
-- Suppose the number of checks $m$ grows without end. Then the shifted barrier $H^*$ returns to $H$.
+- Suppose the price is lognormal with steady volatility and no jumps, the barrier sits below the spot, and $`m \ge 1`$. Then a down-and-out call checked at $`m`$ evenly spaced closes is worth strictly more than under continuous monitoring.
+- The alternating sum $`1 - 1/\sqrt2 + 1/\sqrt3 - \dots`$, divided by $`1 - \sqrt2`$, settles on $`\zeta(1/2)`$.
+- The overshoot constant $`\beta`$ is positive.
+- Take any $`m \ge 1`$ and $`\sigma > 0`$. Then the shifted down barrier lies strictly below $`H`$, and the shifted up barrier strictly above $`H`$.
+- Suppose the number of checks $`m`$ grows without end. Then the shifted barrier $`H^*`$ returns to $`H`$.
 
 The shifted formula's accuracy, the value 0.5826 and every dollar figure are left to the Python and Rust checks.
 
@@ -1225,7 +1233,7 @@ example : 2 * 100000 = 200000 := by norm_num
 >
 > Smaller traps:
 > - **Shifting the wrong way.** The barrier always moves away from the spot: down for a down barrier, up for an up barrier. Toward the spot gives 9.111362, worse than no shift at all.
-> - **Using the life instead of the gap.** The shift uses $\sigma\sqrt{\Delta t}$, one period's wiggle. Using $\sigma\sqrt{T}$ gives 9.225207, nearly the plain call.
+> - **Using the life instead of the gap.** The shift uses $`\sigma\sqrt{\Delta t}`$, one period's wiggle. Using $`\sigma\sqrt{T}`$ gives 9.225207, nearly the plain call.
 > - **Mixing clocks.** Δt must be measured on the same clock as σ. If volatility is quoted per trading year of 252 days, one close is 1/252; counting 1/365 with the same σ understates the shift.
 > - **Trusting a raw simulation.** With 200,000 paths the raw average carries a standard error of 0.023282, larger than the effect. Use a control variate ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)). A simulation checked only at the closes prices the daily contract; pricing the continuous one by simulation needs the bridge dip chance of Step 1 ([Quasi-Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
 

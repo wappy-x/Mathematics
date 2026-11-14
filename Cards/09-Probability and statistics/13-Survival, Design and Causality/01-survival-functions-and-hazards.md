@@ -35,44 +35,52 @@ The single line is the survival curve of the cohort's model. It falls steeply in
 
 ## The formula
 
-Notation first, in words. A capital $T$ is a patient's lifetime from diagnosis, in years: a random variable, a quantity settled by chance. A lower-case $t$ is one fixed time. $S(t)$ is the survival function, $f(t)$ the density of $T$ (how thickly deaths are packed near time $t$), $h(t)$ the hazard and $H(t)$ the **cumulative hazard**, the hazard added up from diagnosis to $t$. The bar in $P(A \mid B)$ reads "given".
+Notation first, in words. A capital $`T`$ is a patient's lifetime from diagnosis, in years: a random variable, a quantity settled by chance. A lower-case $`t`$ is one fixed time. $`S(t)`$ is the survival function, $`f(t)`$ the density of $`T`$ (how thickly deaths are packed near time $`t`$), $`h(t)`$ the hazard and $`H(t)`$ the **cumulative hazard**, the hazard added up from diagnosis to $`t`$. The bar in $`P(A \mid B)`$ reads "given".
 
-$$S(t) = P(T > t), \qquad h(t) = \lim_{\Delta \to 0}\frac{P(t < T \le t + \Delta \mid T > t)}{\Delta} = \frac{f(t)}{S(t)}$$
+```math
+S(t) = P(T > t), \qquad h(t) = \lim_{\Delta \to 0}\frac{P(t < T \le t + \Delta \mid T > t)}{\Delta} = \frac{f(t)}{S(t)}
+```
 
-$$H(t) = \int_0^t h(u)\,du, \qquad S(t) = e^{-H(t)}$$
+```math
+H(t) = \int_0^t h(u)\,du, \qquad S(t) = e^{-H(t)}
+```
 
 **Read it aloud:** survival is the chance of living past t; the hazard is the chance of dying in the next short while among those alive at t, per unit of time; and survival is e to the minus the hazard piled up so far.
 
 Two helper formulas follow from these. The chance of lasting from one time to a later one, given alive at the first, uses only the hazard in between:
 
-$$P(T > t \mid T > s) = \frac{S(t)}{S(s)} = e^{-[H(t) - H(s)]}$$
+```math
+P(T > t \mid T > s) = \frac{S(t)}{S(s)} = e^{-[H(t) - H(s)]}
+```
 
 And a study that watches each patient for a while, some to death and some not, estimates a constant hazard by deaths over time watched:
 
-$$\hat\lambda = \frac{D}{E} = \frac{\text{deaths seen}}{\text{person-years watched}}$$
+```math
+\hat\lambda = \frac{D}{E} = \frac{\text{deaths seen}}{\text{person-years watched}}
+```
 
 The hat marks an estimate made from data.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$ | a patient's lifetime from diagnosis, in years; a random variable | unknown in advance | — |
-| $t$, $s$ | fixed times since diagnosis, in years | $t$ = 5, $s$ = 2 | later $t$: survival lower |
-| $S(t)$ | survival: the chance of being alive past $t$ | $S(5)$ = 0.4274 | — |
-| $f(t)$ | density: deaths per year near $t$, as a share of everyone diagnosed | $f = h \times S$ | — |
-| $h(t)$ | hazard: deaths per patient-year among those still alive at $t$ | 0.30 in year 1, 0.10 in year 5 | survival falls faster |
-| $H(t)$ | cumulative hazard: the hazard added up from 0 to $t$ | $H(5)$ = 0.85 | survival falls as e to the minus it |
-| $\Delta$ | a short slice of time, in years | 0.001 for the hazard limit in Step 1, 0.0001 for the slice product in Step 2, 0.01 in the simulation | smaller: the slice product closes on $e^{-H}$ |
-| $q_j$ | the chance of dying during year j, given alive at its start | 0.2592 in year 1 | — |
-| $C$ | censoring time: when watching this patient stops | study close or dropout | later: more deaths seen |
-| $G(y)$ | the chance that watching has not stopped before $y$: $P(C \ge y)$ | used only in the folded proof of Step 5 | — |
-| $Y$, $y$, $\delta$ | the record: $Y$ is the lesser of $T$ and $C$, and $y$ one recorded value of it; $\delta$ is 1 if the death was seen, 0 if censored | $y$ = 2.5 years, $\delta$ = 0 | — |
-| $\lambda$ | a hazard that stays constant over time, per year | estimated 0.1423 | survival falls faster |
-| $D$, $E$ | deaths seen, and person-years watched | 4 and 28.10 | more deaths: higher rate; more time: lower |
+| $`T`$ | a patient's lifetime from diagnosis, in years; a random variable | unknown in advance | — |
+| $`t`$, $`s`$ | fixed times since diagnosis, in years | $`t`$ = 5, $`s`$ = 2 | later $`t`$: survival lower |
+| $`S(t)`$ | survival: the chance of being alive past $`t`$ | $`S(5)`$ = 0.4274 | — |
+| $`f(t)`$ | density: deaths per year near $`t`$, as a share of everyone diagnosed | $`f = h \times S`$ | — |
+| $`h(t)`$ | hazard: deaths per patient-year among those still alive at $`t`$ | 0.30 in year 1, 0.10 in year 5 | survival falls faster |
+| $`H(t)`$ | cumulative hazard: the hazard added up from 0 to $`t`$ | $`H(5)`$ = 0.85 | survival falls as e to the minus it |
+| $`\Delta`$ | a short slice of time, in years | 0.001 for the hazard limit in Step 1, 0.0001 for the slice product in Step 2, 0.01 in the simulation | smaller: the slice product closes on $`e^{-H}`$ |
+| $`q_j`$ | the chance of dying during year j, given alive at its start | 0.2592 in year 1 | — |
+| $`C`$ | censoring time: when watching this patient stops | study close or dropout | later: more deaths seen |
+| $`G(y)`$ | the chance that watching has not stopped before $`y`$: $`P(C \ge y)`$ | used only in the folded proof of Step 5 | — |
+| $`Y`$, $`y`$, $`\delta`$ | the record: $`Y`$ is the lesser of $`T`$ and $`C`$, and $`y`$ one recorded value of it; $`\delta`$ is 1 if the death was seen, 0 if censored | $`y`$ = 2.5 years, $`\delta`$ = 0 | — |
+| $`\lambda`$ | a hazard that stays constant over time, per year | estimated 0.1423 | survival falls faster |
+| $`D`$, $`E`$ | deaths seen, and person-years watched | 4 and 28.10 | more deaths: higher rate; more time: lower |
 
 ### When it holds
 
-- **No chance concentrated at one instant.** If 5% of patients die on the day of surgery, survival across that day is 1 − 0.05 = 0.9500, not $e^{-0.05}$ = 0.9512. At a jump, survival multiplies by one minus the jump's chance; the exponential covers only the smooth stretches.
-- **Survival above zero.** The hazard divides by $S(t)$, so it is defined only while someone can still be alive.
+- **No chance concentrated at one instant.** If 5% of patients die on the day of surgery, survival across that day is 1 − 0.05 = 0.9500, not $`e^{-0.05}`$ = 0.9512. At a jump, survival multiplies by one minus the jump's chance; the exponential covers only the smooth stretches.
+- **Survival above zero.** The hazard divides by $`S(t)`$, so it is defined only while someone can still be alive.
 - **Censoring that says nothing about the outlook.** A patient who stops being watched must have the same hazard afterwards as those still watched. If the sickest drop out, the estimate of five-year survival reads 0.5920 against a truth of 0.4270; What breaks shows it.
 - **One clock for everyone.** Time counts from diagnosis, not from a calendar date. A patient enrolled two years after diagnosis joins a group already selected for surviving two years, and needs separate handling (delayed entry).
 
@@ -82,79 +90,85 @@ The hat marks an estimate made from data.
 
 ### Step 0: surviving five years is surviving each year in turn
 
-A patient alive at five years was alive at the end of year one, then survived year two given alive at its start, and so on. Chances of this chained kind multiply: $P(A \text{ and } B) = P(A)\,P(B \mid A)$, applied four times.
+A patient alive at five years was alive at the end of year one, then survived year two given alive at its start, and so on. Chances of this chained kind multiply: $`P(A \text{ and } B) = P(A)\,P(B \mid A)`$, applied four times.
 
-$$S(5) = (1 - q_1)(1 - q_2)(1 - q_3)(1 - q_4)(1 - q_5)$$
+```math
+S(5) = (1 - q_1)(1 - q_2)(1 - q_3)(1 - q_4)(1 - q_5)
+```
 
-Each $q_j$ is the chance of dying in year j among those alive at its start. For the cohort they are 0.2592, 0.1813, 0.1393, 0.0952 and 0.0952. This product is a life table. Cutting time into ever thinner slices turns it into the formula.
+Each $`q_j`$ is the chance of dying in year j among those alive at its start. For the cohort they are 0.2592, 0.1813, 0.1393, 0.0952 and 0.0952. This product is a life table. Cutting time into ever thinner slices turns it into the formula.
 
 ### Step 1: the hazard is the per-slice death chance, per unit of time
 
-Take a slice of length $\Delta$ starting at $t$. Among patients alive at $t$, the chance of dying inside the slice is
+Take a slice of length $`\Delta`$ starting at $`t`$. Among patients alive at $`t`$, the chance of dying inside the slice is
 
-$$P(t < T \le t + \Delta \mid T > t) = \frac{S(t) - S(t + \Delta)}{S(t)}.$$
+```math
+P(t < T \le t + \Delta \mid T > t) = \frac{S(t) - S(t + \Delta)}{S(t)}.
+```
 
-The top is the share of all patients who die inside the slice; dividing by $S(t)$ keeps only those still alive. Divide by $\Delta$ and let the slice shrink. The top over $\Delta$ tends to the density $f(t)$, since the density is minus the slope of $S$. So the hazard is $f(t)/S(t)$.
+The top is the share of all patients who die inside the slice; dividing by $`S(t)`$ keeps only those still alive. Divide by $`\Delta`$ and let the slice shrink. The top over $`\Delta`$ tends to the density $`f(t)`$, since the density is minus the slope of $`S`$. So the hazard is $`f(t)/S(t)`$.
 
 At 1.5 years, with a slice of 0.001 years, the conditional chance divided by the slice length is 0.199980; the year-two hazard is 0.20. A hazard is a rate, deaths per patient-year, not a probability: for a very sick group it can exceed 1 per year, while every chance stays below 1.
 
 ### Step 2: add the hazard up and survival falls out
 
-Rearranged, Step 1 says $f(t) = h(t)\,S(t)$: the share of everyone dying near $t$ is the rate among the living times the share still living. Since $f$ is minus the slope of $S$, the slope of $S$ is $-h(t)\,S(t)$. The slope of $\ln S$ is the slope of $S$ divided by $S$, which is $-h(t)$.
+Rearranged, Step 1 says $`f(t) = h(t)\,S(t)`$: the share of everyone dying near $`t`$ is the rate among the living times the share still living. Since $`f`$ is minus the slope of $`S`$, the slope of $`S`$ is $`-h(t)\,S(t)`$. The slope of $`\ln S`$ is the slope of $`S`$ divided by $`S`$, which is $`-h(t)`$.
 
-Everyone is alive at diagnosis, so $S(0) = 1$ and $\ln S(0) = 0$. Adding up the slope from 0 to $t$ gives $\ln S(t) = -H(t)$, so $S(t) = e^{-H(t)}$. [Weibull and hazards](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md) already proved this for any lifetime whose density is continuous; the proof below also allows the hazard to jump, as the cohort's does at each anniversary of diagnosis.
+Everyone is alive at diagnosis, so $`S(0) = 1`$ and $`\ln S(0) = 0`$. Adding up the slope from 0 to $`t`$ gives $`\ln S(t) = -H(t)`$, so $`S(t) = e^{-H(t)}`$. [Weibull and hazards](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md) already proved this for any lifetime whose density is continuous; the proof below also allows the hazard to jump, as the cohort's does at each anniversary of diagnosis.
 
-The same result comes from Step 0. With slices of length $\Delta$, survival is a product of $1 - h\Delta$ factors. The logarithm of each factor is close to $-h\Delta$, and their sum is close to $-H(t)$. The code multiplies 50,000 slices of 0.0001 years without calling the exponential and gets 0.427411 at five years, against $e^{-0.85}$ = 0.427415.
+The same result comes from Step 0. With slices of length $`\Delta`$, survival is a product of $`1 - h\Delta`$ factors. The logarithm of each factor is close to $`-h\Delta`$, and their sum is close to $`-H(t)`$. The code multiplies 50,000 slices of 0.0001 years without calling the exponential and gets 0.427411 at five years, against $`e^{-0.85}`$ = 0.427415.
 
 <details>
 <summary>Detailed proof: survival equals e to the minus the cumulative hazard</summary>
 
-Assume $T > 0$ has a density $f$ that is continuous except at finitely many times (the cohort's hazard jumps at each anniversary of diagnosis), and $S(t) > 0$. Then $S(t) = 1 - \int_0^t f(u)\,du$ is continuous, and at every time where $f$ is continuous the fundamental theorem of calculus gives $S'(t) = -f(t)$.
+Assume $`T > 0`$ has a density $`f`$ that is continuous except at finitely many times (the cohort's hazard jumps at each anniversary of diagnosis), and $`S(t) > 0`$. Then $`S(t) = 1 - \int_0^t f(u)\,du`$ is continuous, and at every time where $`f`$ is continuous the fundamental theorem of calculus gives $`S'(t) = -f(t)`$.
 
-At such a time, $\frac{d}{dt}\ln S(t) = S'(t)/S(t) = -f(t)/S(t) = -h(t)$ by the chain rule. On each stretch between the jump times, $\ln S$ is continuous and has slope $-h$, so its change across the stretch is minus the integral of $h$ over it. Adding the stretches, and using $\ln S(0) = \ln 1 = 0$, gives $\ln S(t) = -\int_0^t h(u)\,du = -H(t)$.
+At such a time, $`\frac{d}{dt}\ln S(t) = S'(t)/S(t) = -f(t)/S(t) = -h(t)`$ by the chain rule. On each stretch between the jump times, $`\ln S`$ is continuous and has slope $`-h`$, so its change across the stretch is minus the integral of $`h`$ over it. Adding the stretches, and using $`\ln S(0) = \ln 1 = 0`$, gives $`\ln S(t) = -\int_0^t h(u)\,du = -H(t)`$.
 
-The formula can fail only where the proof used an assumption. If $T$ has a chance sitting at one instant, say 0.05 on the day of surgery, $S$ drops by a factor 1 − 0.05 there; the slope argument never sees the drop, and $e^{-0.05}$ overstates survival across it. If $S(t) = 0$ the hazard is undefined beyond $t$.
+The formula can fail only where the proof used an assumption. If $`T`$ has a chance sitting at one instant, say 0.05 on the day of surgery, $`S`$ drops by a factor 1 − 0.05 there; the slope argument never sees the drop, and $`e^{-0.05}`$ overstates survival across it. If $`S(t) = 0`$ the hazard is undefined beyond $`t`$.
 
-For the cohort, $h$ is 0.30, 0.20, 0.15, 0.10 and 0.10 in years one to five, so $H(5)$ is 0.30 + 0.20 + 0.15 + 0.10 + 0.10 = 0.85 and $S(5) = e^{-0.85}$ = 0.4274. Year by year, $1 - q_j = e^{-h}$ in a year of constant hazard, which returns Step 0's life table.
+For the cohort, $`h`$ is 0.30, 0.20, 0.15, 0.10 and 0.10 in years one to five, so $`H(5)`$ is 0.30 + 0.20 + 0.15 + 0.10 + 0.10 = 0.85 and $`S(5) = e^{-0.85}`$ = 0.4274. Year by year, $`1 - q_j = e^{-h}`$ in a year of constant hazard, which returns Step 0's life table.
 
 </details>
 
 ### Step 3: the past is paid for
 
-Given alive at time $s$, the chance of reaching a later time $t$ is $S(t)/S(s)$, by the definition of a conditional chance: being alive at $t$ already includes being alive at $s$. Both are exponentials, so the ratio is $e^{-[H(t) - H(s)]}$. Only the hazard still ahead counts.
+Given alive at time $`s`$, the chance of reaching a later time $`t`$ is $`S(t)/S(s)`$, by the definition of a conditional chance: being alive at $`t`$ already includes being alive at $`s`$. Both are exponentials, so the ratio is $`e^{-[H(t) - H(s)]}`$. Only the hazard still ahead counts.
 
-A patient alive at two years faces $0.15 + 0.10 + 0.10 = 0.35$ of cumulative hazard to reach five, so the chance is $e^{-0.35}$ = 0.7047. A constant hazard of 0.17 per year gives the same five-year survival, 0.4274, since $5 \times 0.17 = 0.85$. For it, the two-year survivor's chance is only 0.6005. Equal survival at one time does not mean equal outlooks later: the shape of the hazard decides.
+A patient alive at two years faces $`0.15 + 0.10 + 0.10 = 0.35`$ of cumulative hazard to reach five, so the chance is $`e^{-0.35}`$ = 0.7047. A constant hazard of 0.17 per year gives the same five-year survival, 0.4274, since $`5 \times 0.17 = 0.85`$. For it, the two-year survivor's chance is only 0.6005. Equal survival at one time does not mean equal outlooks later: the shape of the hazard decides.
 
 ### Step 4: what a censored record says
 
-Each patient has a lifetime $T$ and a censoring time $C$, when watching stops: the study's close, or a move away. The record holds the earlier of the two, $Y$, and a flag $\delta$: 1 if the death was seen, 0 if watching stopped first.
+Each patient has a lifetime $`T`$ and a censoring time $`C`$, when watching stops: the study's close, or a move away. The record holds the earlier of the two, $`Y`$, and a flag $`\delta`$: 1 if the death was seen, 0 if watching stopped first.
 
-A death seen at $y$ says the patient lived to $y$ and died there. Its contribution to the chance of the records is the density, $f(y) = h(y)\,S(y)$. A censored record at $y$ says only that the patient was alive at $y$. Its contribution is $S(y)$, with no death factor. That is the only honest reading: the lifetime might end one day later or thirty years later.
+A death seen at $`y`$ says the patient lived to $`y`$ and died there. Its contribution to the chance of the records is the density, $`f(y) = h(y)\,S(y)`$. A censored record at $`y`$ says only that the patient was alive at $`y`$. Its contribution is $`S(y)`$, with no death factor. That is the only honest reading: the lifetime might end one day later or thirty years later.
 
 This needs the censoring to be **independent** of the lifetime: when a patient leaves carries no information about how long they would have lived. The chances of the censoring times then form a separate factor that does not involve the hazard, and it can be set aside.
 
 ### Step 5: deaths over time watched
 
-Put the pieces together. Using $S = e^{-H}$, patient i contributes $h(y)^{\delta}\,e^{-H(y)}$, where the power $\delta$ keeps the death factor only for a seen death. The log of the chance of all the records, called the **log-likelihood** ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)), is
+Put the pieces together. Using $`S = e^{-H}`$, patient i contributes $`h(y)^{\delta}\,e^{-H(y)}`$, where the power $`\delta`$ keeps the death factor only for a seen death. The log of the chance of all the records, called the **log-likelihood** ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)), is
 
-$$\sum_{\text{deaths}} \ln h(Y) \;-\; \sum_{\text{everyone}} H(Y).$$
+```math
+\sum_{\text{deaths}} \ln h(Y) \;-\; \sum_{\text{everyone}} H(Y).
+```
 
-Take a constant hazard $\lambda$. Then $H(Y) = \lambda Y$, and the log-likelihood is $D \ln\lambda - \lambda E$: $D$ deaths seen, $E$ the total time watched over all patients. Its slope in $\lambda$ is $D/\lambda - E$, zero at $\hat\lambda = D/E$. Every patient, censored or not, adds to $E$; only seen deaths add to $D$.
+Take a constant hazard $`\lambda`$. Then $`H(Y) = \lambda Y`$, and the log-likelihood is $`D \ln\lambda - \lambda E`$: $`D`$ deaths seen, $`E`$ the total time watched over all patients. Its slope in $`\lambda`$ is $`D/\lambda - E`$, zero at $`\hat\lambda = D/E`$. Every patient, censored or not, adds to $`E`$; only seen deaths add to $`D`$.
 
-The standard error, written se, is the typical size of an estimate's error. The curvature of the log-likelihood at its peak is $-D/\hat\lambda^2$. One over the square root of minus the curvature is the standard error ([Fisher information](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)), so it is about $\hat\lambda/\sqrt{D}$. Precision grows with deaths seen, not with patients enrolled.
+The standard error, written se, is the typical size of an estimate's error. The curvature of the log-likelihood at its peak is $`-D/\hat\lambda^2`$. One over the square root of minus the curvature is the standard error ([Fisher information](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)), so it is about $`\hat\lambda/\sqrt{D}`$. Precision grows with deaths seen, not with patients enrolled.
 
 When the hazard changes by year, the log-likelihood splits into one such piece per year. The estimate for year j is deaths in that year over person-years lived in it, and survival is rebuilt as e to the minus their sum. The simulation below does exactly that.
 
 <details>
 <summary>Detailed proof: the censored records' chances</summary>
 
-Suppose $T$ and $C$ are independent, $T$ has density $f$ and survival $S$, and $G(y) = P(C \ge y)$. A seen death in a short stretch near $y$ needs $T$ in the stretch and $C \ge T$; by independence its chance is about $f(y)\,G(y)$ times the stretch length. A censoring at $y$ needs $C$ at $y$ and $T > y$; its chance is $P(C \text{ at } y)\,S(y)$.
+Suppose $`T`$ and $`C`$ are independent, $`T`$ has density $`f`$ and survival $`S`$, and $`G(y) = P(C \ge y)`$. A seen death in a short stretch near $`y`$ needs $`T`$ in the stretch and $`C \ge T`$; by independence its chance is about $`f(y)\,G(y)`$ times the stretch length. A censoring at $`y`$ needs $`C`$ at $`y`$ and $`T > y`$; its chance is $`P(C \text{ at } y)\,S(y)`$.
 
-Over independent patients the chances multiply. Every factor built from $C$ alone, $G(y)$ or $P(C \text{ at } y)$, is the same whatever the hazard, so the hazard that best explains the records maximises $\prod_{\text{deaths}} f(Y) \prod_{\text{censored}} S(Y)$. With $f = hS$ this is $\prod h(Y)^{\delta} e^{-H(Y)}$. If $C$ depends on $T$, the factorisation fails and the $C$-factors no longer drop out.
+Over independent patients the chances multiply. Every factor built from $`C`$ alone, $`G(y)`$ or $`P(C \text{ at } y)`$, is the same whatever the hazard, so the hazard that best explains the records maximises $`\prod_{\text{deaths}} f(Y) \prod_{\text{censored}} S(Y)`$. With $`f = hS`$ this is $`\prod h(Y)^{\delta} e^{-H(Y)}`$. If $`C`$ depends on $`T`$, the factorisation fails and the $`C`$-factors no longer drop out.
 
 </details>
 
-The estimate of survival at a time from the records without any model for the hazard, one step at each death, is [Kaplan-Meier](02-kaplan-meier.md). It is Step 0's product with each $q_j$ estimated from the patients still watched.
+The estimate of survival at a time from the records without any model for the hazard, one step at each death, is [Kaplan-Meier](02-kaplan-meier.md). It is Step 0's product with each $`q_j`$ estimated from the patients still watched.
 
 ---
 
@@ -164,17 +178,17 @@ A pilot study watches ten patients. Four deaths are seen, at 0.4, 1.3, 2.1 and 3
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| deaths seen, $D$ | four seen deaths | 4 |
-| person-years, $E$ | 0.4 + 1.0 + 1.3 + 2.1 + 2.5 + 3.0 + 3.6 + 4.2 + 5.0 + 5.0 | 28.10 |
-| hazard, $\hat\lambda = D/E$ | 4 / 28.10 | 0.1423 per year |
-| its standard error | 0.1423 / $\sqrt{4}$ | 0.0712 |
+| deaths seen, $`D`$ | four seen deaths | 4 |
+| person-years, $`E`$ | 0.4 + 1.0 + 1.3 + 2.1 + 2.5 + 3.0 + 3.6 + 4.2 + 5.0 + 5.0 | 28.10 |
+| hazard, $`\hat\lambda = D/E`$ | 4 / 28.10 | 0.1423 per year |
+| its standard error | 0.1423 / $`\sqrt{4}`$ | 0.0712 |
 | cumulative hazard at 5 years | 5 × 0.1423 | 0.7117 |
-| standard error of five-year survival | $e^{-0.7117}$ × 5 × 0.0712 = 0.4908 × 5 × 0.0712 | 0.1747 |
-| **five-year survival** | $e^{-0.7117}$ | **0.4908** (se 0.1747) |
+| standard error of five-year survival | $`e^{-0.7117}`$ × 5 × 0.0712 = 0.4908 × 5 × 0.0712 | 0.1747 |
+| **five-year survival** | $`e^{-0.7117}`$ | **0.4908** (se 0.1747) |
 
 About half the patients are estimated to be alive at five years, and with four deaths the standard error is 0.1747: the pilot cannot tell 30% from 70%.
 
-That error is carried over from the rate's error by the delta method ([Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)): survival $e^{-5\lambda}$ moves by 5 × 0.4908 per unit of rate, so its error is that slope times the rate's 0.0712. The code reaches the same rate a second way, by searching for the peak of the log-likelihood patient by patient without the formula $D/E$.
+That error is carried over from the rate's error by the delta method ([Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)): survival $`e^{-5\lambda}`$ moves by 5 × 0.4908 per unit of rate, so its error is that slope times the rate's 0.0712. The code reaches the same rate a second way, by searching for the peak of the log-likelihood patient by patient without the formula $`D/E`$.
 
 ### What breaks if you drop a piece
 
@@ -183,7 +197,7 @@ That error is carried over from the rate's error by the delta method ([Delta met
 | Censored patients counted as survivors | 0.6000 | Four of them left before five years and might have died later |
 | Censored-before-five patients thrown away | 0.3333 | Only the known outcomes remain, and the early deaths are all known |
 | Censored records counted as deaths | 0.1687 | The rate becomes 10 / 28.10 = 0.3559, a death for every record |
-| Hazard × 5 years read as a chance of death | 0.7117, against a true 0.5092 | A rate over a long stretch overshoots; the chance is 1 − $e^{-H}$ |
+| Hazard × 5 years read as a chance of death | 0.7117, against a true 0.5092 | A rate over a long stretch overshoots; the chance is 1 − $`e^{-H}`$ |
 | Dropouts who are the sickest (simulation) | 0.5920 (se 0.0141), against a truth of 0.4270 | Independent censoring dropped: the deaths that would show the risk leave the records |
 
 The first four rows come from the pilot's records; the last row drops the independence hypothesis in the 2,000-patient simulation.
@@ -209,10 +223,10 @@ Orange: the true survival curve. Green: the estimate from yearly deaths over per
 
 Both scripts take four roads:
 
-- The closed form $e^{-H}$.
+- The closed form $`e^{-H}`$.
 - A product of 50,000 survived slices that never calls the exponential.
-- The pilot's rate twice: the formula $D/E$, and a golden-section search (a shrinking bracket around the peak) over the log-likelihood summed patient by patient.
-- 2,000 simulated patients from a SplitMix64 random-number generator with seed 2026. Each enters the study at a random time over three years, the study closes at year six, and dropouts come at 0.08 per year. Each patient lives slice by slice, dying in a slice of 0.01 years with chance $h \times 0.01$. The simulation never uses the survival formula, so it tests the formula.
+- The pilot's rate twice: the formula $`D/E`$, and a golden-section search (a shrinking bracket around the peak) over the log-likelihood summed patient by patient.
+- 2,000 simulated patients from a SplitMix64 random-number generator with seed 2026. Each enters the study at a random time over three years, the study closes at year six, and dropouts come at 0.08 per year. Each patient lives slice by slice, dying in a slice of 0.01 years with chance $`h \times 0.01`$. The simulation never uses the survival formula, so it tests the formula.
 
 The simulated truth is 0.4270 rather than 0.4274 because deaths happen in whole slices of 0.01 years; the scripts compute it as the slice product. Simulated numbers carry a standard error, and the asserts allow four of them.
 
@@ -568,10 +582,10 @@ The two outputs match line for line: both languages draw the same numbers from t
 
 Lean proves the survival formula for every positive lifetime with a density, and the deaths-over-time rule for any study with a death seen.
 
-- Take a lifetime that is always positive, with a density continuous except at finitely many times. Then $S(t) = e^{-H(t)}$ at every $t \ge 0$ where $S(t)$ is above zero.
-- Take the same lifetime and times $0 \le s \le t$, with $S(t)$ above zero. Then $P(T > t \mid T > s) = S(t)/S(s) = e^{-[H(t) - H(s)]}$.
-- Suppose at least one death is seen, over a positive number of person-years. Then the log-likelihood $D \ln\lambda - \lambda E$ is highest at $\hat\lambda = D/E$, and lower at every other positive $\lambda$.
-- The card's hand sums hold exactly, such as $H(5) = 0.85$, $E = 28.10$ and $D/E = 4/28.10$.
+- Take a lifetime that is always positive, with a density continuous except at finitely many times. Then $`S(t) = e^{-H(t)}`$ at every $`t \ge 0`$ where $`S(t)`$ is above zero.
+- Take the same lifetime and times $`0 \le s \le t`$, with $`S(t)`$ above zero. Then $`P(T > t \mid T > s) = S(t)/S(s) = e^{-[H(t) - H(s)]}`$.
+- Suppose at least one death is seen, over a positive number of person-years. Then the log-likelihood $`D \ln\lambda - \lambda E`$ is highest at $`\hat\lambda = D/E`$, and lower at every other positive $`\lambda`$.
+- The card's hand sums hold exactly, such as $`H(5) = 0.85`$, $`E = 28.10`$ and $`D/E = 4/28.10`$.
 
 The Python and Rust checks cover the rest: why censored records give this log-likelihood, the decimals, and the simulation.
 
@@ -773,8 +787,8 @@ example : (6 / 10 : ℚ) = 3 / 5 ∧ (2 / (10 - 4) : ℚ) = 1 / 3 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **A flat hazard with the same five-year survival.** The line `constant 0.17` already prints it: $S(5)$ = 0.4274 again, but the two-year survivor's chance of reaching five falls from 0.7047 to 0.6005. Survival at one time does not fix the hazard's shape.
-> - **More dropouts.** Change the dropout rate `0.08` to `0.30`. Fewer deaths are seen, the standard error of $S(5)$ grows, and the estimate still lands within a few standard errors of 0.4270: independent censoring costs precision, not accuracy.
+> - **A flat hazard with the same five-year survival.** The line `constant 0.17` already prints it: $`S(5)`$ = 0.4274 again, but the two-year survivor's chance of reaching five falls from 0.7047 to 0.6005. Survival at one time does not fix the hazard's shape.
+> - **More dropouts.** Change the dropout rate `0.08` to `0.30`. Fewer deaths are seen, the standard error of $`S(5)`$ grows, and the estimate still lands within a few standard errors of 0.4270: independent censoring costs precision, not accuracy.
 > - **Milder leaking.** Change the leave chance `0.5` to `0.1`. The upward bias shrinks to under two standard errors, and the last assert stops the run: a small bias hides inside the noise of 2,000 patients, which is why it is dangerous.
 
 ---
@@ -806,7 +820,7 @@ example : (6 / 10 : ℚ) = 3 / 5 ∧ (2 / (10 - 4) : ℚ) = 1 / 3 := by norm_num
 
 ## What this builds on
 
-- [Weibull and hazards](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md): the hazard and cumulative hazard, survival as a run of survived slices, and the proof that $S = e^{-H}$ for any lifetime whose density is continuous; this card adds hazards that jump, the life table and censored records.
+- [Weibull and hazards](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md): the hazard and cumulative hazard, survival as a run of survived slices, and the proof that $`S = e^{-H}`$ for any lifetime whose density is continuous; this card adds hazards that jump, the life table and censored records.
 
 ## Where this goes next
 

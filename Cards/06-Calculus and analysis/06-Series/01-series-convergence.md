@@ -36,39 +36,43 @@ The rising line is the running total after n payments; the flat line is 2,000. T
 
 ## The formula
 
-Notation first, in words. The terms form a sequence ([Sequences](../01-Limits%20and%20Continuity/03-sequences-and-limits.md)), written $a_k$ with $k$ counting them. The running total of the first $n$ is $S_n$, the $n$th **partial sum**. The sigma sign with infinity on top means "the limit of the partial sums":
+Notation first, in words. The terms form a sequence ([Sequences](../01-Limits%20and%20Continuity/03-sequences-and-limits.md)), written $`a_k`$ with $`k`$ counting them. The running total of the first $`n`$ is $`S_n`$, the $`n`$th **partial sum**. The sigma sign with infinity on top means "the limit of the partial sums":
 
-$$\sum_{k=1}^{\infty} a_k \;=\; \lim_{n\to\infty} S_n, \qquad S_n = a_1 + a_2 + \dots + a_n$$
+```math
+\sum_{k=1}^{\infty} a_k \;=\; \lim_{n\to\infty} S_n, \qquad S_n = a_1 + a_2 + \dots + a_n
+```
 
 **Read it aloud:** the infinite sum is whatever the running total heads for as more and more terms are counted.
 
-If that limit is a real number $S$, the series **converges** to $S$. If not, it **diverges** and has no sum.
+If that limit is a real number $`S`$, the series **converges** to $`S`$. If not, it **diverges** and has no sum.
 
-In a **geometric series** each term is the one before times a fixed **ratio** $r$. With first term $a$:
+In a **geometric series** each term is the one before times a fixed **ratio** $`r`$. With first term $`a`$:
 
-$$a + ar + ar^2 + \dots + ar^{n-1} \;=\; \frac{a\,(1-r^n)}{1-r} \ \text{ when } r \ne 1, \qquad a + ar + ar^2 + \dots \;=\; \frac{a}{1-r} \ \text{ when } -1<r<1$$
+```math
+a + ar + ar^2 + \dots + ar^{n-1} \;=\; \frac{a\,(1-r^n)}{1-r} \ \text{ when } r \ne 1, \qquad a + ar + ar^2 + \dots \;=\; \frac{a}{1-r} \ \text{ when } -1<r<1
+```
 
 **Read it aloud:** forever, the geometric series adds to its first term over one minus its ratio.
 
-The perpetuity is geometric: $a = 100/1.05$ and $r = 1/1.05$, so the sum is $100/0.05 = 2000$. The part still missing after $n$ payments, the **tail**, is $R_n = a r^n/(1-r) = 2000/1.05^n$.
+The perpetuity is geometric: $`a = 100/1.05`$ and $`r = 1/1.05`$, so the sum is $`100/0.05 = 2000`$. The part still missing after $`n`$ payments, the **tail**, is $`R_n = a r^n/(1-r) = 2000/1.05^n`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a_k$ | the $k$th term: one payment's value today | 100/1.05^k | later totals rise |
-| $k$ | which term, counting from 1 | the payment's year | — |
-| $n$ | how many terms are added | 100 years | the total nears 2,000 |
-| $S_n$ | the $n$th partial sum: the running total | 1,984.79 after 100 years | — |
-| $S$ | the sum: the limit of the partial sums | 2,000 | — |
-| $a$ | the first term of a geometric series | 95.238095 | the sum scales with it |
-| $r$ | each term ÷ the one before | 1/1.05 = 0.952381 | the sum grows; at 1 there is no sum |
-| $R_n$ | the tail: sum minus partial sum | 15.21 after 100 years | — |
+| $`a_k`$ | the $`k`$th term: one payment's value today | 100/1.05^k | later totals rise |
+| $`k`$ | which term, counting from 1 | the payment's year | — |
+| $`n`$ | how many terms are added | 100 years | the total nears 2,000 |
+| $`S_n`$ | the $`n`$th partial sum: the running total | 1,984.79 after 100 years | — |
+| $`S`$ | the sum: the limit of the partial sums | 2,000 | — |
+| $`a`$ | the first term of a geometric series | 95.238095 | the sum scales with it |
+| $`r`$ | each term ÷ the one before | 1/1.05 = 0.952381 | the sum grows; at 1 there is no sum |
+| $`R_n`$ | the tail: sum minus partial sum | 15.21 after 100 years | — |
 
 ### When it holds
 
 The definition applies to every series. The geometric formula needs more:
 
 - **A fixed ratio.** Same payment, same rate. If the rate drifts, the formula is only an estimate; the partial sums still decide.
-- **A ratio strictly between −1 and 1.** At $r = 1$ the totals grow without limit; at $r = -1$ they flip between two values forever.
+- **A ratio strictly between −1 and 1.** At $`r = 1`$ the totals grow without limit; at $`r = -1`$ they flip between two values forever.
 - **The right first term.** Count a payment made today as well and the answer is 2,100: a different contract.
 
 ---
@@ -77,55 +81,57 @@ The definition applies to every series. The geometric formula needs more:
 
 ### Step 0: settle the finite sum first, then let n grow
 
-An infinite sum cannot be computed directly; a finite one can. So find $S_n$ as a formula in $n$, then ask what it heads for.
+An infinite sum cannot be computed directly; a finite one can. So find $`S_n`$ as a formula in $`n`$, then ask what it heads for.
 
 ### Step 1: the finite geometric sum, by shifting and subtracting
 
-Write the first $n$ terms, then the same line multiplied by $r$:
+Write the first $`n`$ terms, then the same line multiplied by $`r`$:
 
-$S_n = a + ar + \dots + ar^{n-1}$ and $rS_n = ar + ar^2 + \dots + ar^n$.
+$`S_n = a + ar + \dots + ar^{n-1}`$ and $`rS_n = ar + ar^2 + \dots + ar^n`$.
 
-Every term but two appears in both lines. Subtract: $S_n - rS_n = a - ar^n$. When $r$ is not 1, divide by $1 - r$:
+Every term but two appears in both lines. Subtract: $`S_n - rS_n = a - ar^n`$. When $`r`$ is not 1, divide by $`1 - r`$:
 
-$$S_n = \frac{a\,(1 - r^n)}{1 - r}$$
+```math
+S_n = \frac{a\,(1 - r^n)}{1 - r}
+```
 
-For the perpetuity that is $2000 \times (1 - 1/1.05^n)$: at $n = 100$, 15.21 is missing and $S_{100} = 1984.79$. No infinity was used yet.
+For the perpetuity that is $`2000 \times (1 - 1/1.05^n)`$: at $`n = 100`$, 15.21 is missing and $`S_{100} = 1984.79`$. No infinity was used yet.
 
 ### Step 2: the power r^n shrinks to zero
 
-Only $r^n = 1/1.05^n$ changes with $n$, and $1.05^n$ grows past any number: each year adds at least 0.05, so after $n$ years it is at least $1 + 0.05n$.
+Only $`r^n = 1/1.05^n`$ changes with $`n`$, and $`1.05^n`$ grows past any number: each year adds at least 0.05, so after $`n`$ years it is at least $`1 + 0.05n`$.
 
-The tolerance game makes the limit concrete. To land within 1 of 2,000, the tail $2000/1.05^n$ must be at most 1, so $1.05^n$ must reach 2,000: first at $n = 156$. Within one cent needs $n = 251$. Any tolerance is met from some year on and stays met, because the tail only shrinks. That is what "converges to 2,000" means.
+The tolerance game makes the limit concrete. To land within 1 of 2,000, the tail $`2000/1.05^n`$ must be at most 1, so $`1.05^n`$ must reach 2,000: first at $`n = 156`$. Within one cent needs $`n = 251`$. Any tolerance is met from some year on and stays met, because the tail only shrinks. That is what "converges to 2,000" means.
 
 <details>
 <summary>Detailed proof: the geometric series converges to a/(1 − r)</summary>
 
-Let $q = |r| < 1$. If $q = 0$ the tail is 0. Otherwise write $1/q = 1 + b$ with $b > 0$. By induction, $(1 + b)^n \ge 1 + nb$: true at $n = 1$, and multiplying both sides by $1 + b$ gives $(1+b)^{n+1} \ge 1 + (n+1)b + nb^2$. So $q^n \le 1/(1 + nb)$.
+Let $`q = |r| < 1`$. If $`q = 0`$ the tail is 0. Otherwise write $`1/q = 1 + b`$ with $`b > 0`$. By induction, $`(1 + b)^n \ge 1 + nb`$: true at $`n = 1`$, and multiplying both sides by $`1 + b`$ gives $`(1+b)^{n+1} \ge 1 + (n+1)b + nb^2`$. So $`q^n \le 1/(1 + nb)`$.
 
-The tail is $|R_n| = |a|\,q^n/(1-r)$ in size, at most $|a|/((1 - r)(1 + nb))$. Given any tolerance $\varepsilon > 0$, choose a count N with $1 + Nb > |a|/((1-r)\varepsilon)$. Then every $n \ge N$ has $|S - S_n| = |R_n| < \varepsilon$, which is the definition of $S_n \to a/(1-r)$.
+The tail is $`|R_n| = |a|\,q^n/(1-r)`$ in size, at most $`|a|/((1 - r)(1 + nb))`$. Given any tolerance $`\varepsilon > 0`$, choose a count N with $`1 + Nb > |a|/((1-r)\varepsilon)`$. Then every $`n \ge N`$ has $`|S - S_n| = |R_n| < \varepsilon`$, which is the definition of $`S_n \to a/(1-r)`$.
 
-If $|r| \ge 1$ and $a \ne 0$, every term has size at least $|a|$, so by Step 3 the series diverges.
+If $`|r| \ge 1`$ and $`a \ne 0`$, every term has size at least $`|a|`$, so by Step 3 the series diverges.
 
 </details>
 
-A shortcut reaches 2,000 in one line. A year from now the holder receives 100 and still owns a perpetuity worth $S$, so $S = (100 + S)/1.05$ and $S = 100/0.05 = 2000$. It is valid only because $S$ is now known to exist. The usual mistake, below, shows the same move failing on a divergent series.
+A shortcut reaches 2,000 in one line. A year from now the holder receives 100 and still owns a perpetuity worth $`S`$, so $`S = (100 + S)/1.05`$ and $`S = 100/0.05 = 2000`$. It is valid only because $`S`$ is now known to exist. The usual mistake, below, shows the same move failing on a divergent series.
 
 ### Step 3: the term test, which rules series out
 
-If the totals settle on $S$, then $S_n$ and $S_{n-1}$ both head for $S$, and their difference, the $n$th term, heads for 0. Turned round: **if the terms do not shrink to 0, the series diverges.** This is the **term test**.
+If the totals settle on $`S`$, then $`S_n`$ and $`S_{n-1}`$ both head for $`S`$, and their difference, the $`n`$th term, heads for 0. Turned round: **if the terms do not shrink to 0, the series diverges.** This is the **term test**.
 
 Let the payments grow 5% a year, matching the rate. The second, 105, is worth 105 ÷ 1.05^2 = 95.24 today, like the first. Every term is 95.238095 and the total after 100 years is 9,523.81, growing forever. The terms never approach 0, so the term test rules the series out. The ratio is exactly 1.
 
 <details>
 <summary>Detailed proof: the term test</summary>
 
-Suppose $S_n \to S$. Given $\varepsilon > 0$, choose a count N so that $|S_n - S| < \varepsilon/2$ for all $n \ge N$. For $n \ge N + 1$ both $S_n$ and $S_{n-1}$ are within $\varepsilon/2$ of $S$, so $|a_n| = |S_n - S_{n-1}| < \varepsilon$. Hence $a_n \to 0$.
+Suppose $`S_n \to S`$. Given $`\varepsilon > 0`$, choose a count N so that $`|S_n - S| < \varepsilon/2`$ for all $`n \ge N`$. For $`n \ge N + 1`$ both $`S_n`$ and $`S_{n-1}`$ are within $`\varepsilon/2`$ of $`S`$, so $`|a_n| = |S_n - S_{n-1}| < \varepsilon`$. Hence $`a_n \to 0`$.
 
 </details>
 
 ### Step 4: the term test cannot rule a series in
 
-Terms shrinking to 0 are needed, not enough. The **harmonic series** $1 + 1/2 + 1/3 + 1/4 + \dots$ has terms heading for 0 and no sum.
+Terms shrinking to 0 are needed, not enough. The **harmonic series** $`1 + 1/2 + 1/3 + 1/4 + \dots`$ has terms heading for 0 and no sum.
 
 Group its terms in blocks that double in length. 1/3 and 1/4 are each at least 1/4, so together at least 1/2. 1/5 to 1/8 are each at least 1/8: again at least 1/2. Every block adds at least a half.
 
@@ -472,7 +478,7 @@ example : (1 : ℚ) / 3 + 1 / 4 ≥ 1 / 2 ∧ (1 : ℚ) / 5 + 1 / 6 + 1 / 7 + 1 
 ## The usual mistake
 
 > [!warning]
-> **Treating an infinite sum as a number before knowing it exists.** The self-similar trick works on the perpetuity only because Step 2 proved the totals settle. Apply it to $1 + 2 + 4 + 8 + \dots$: calling the total $S$ gives $S = 1 + 2S$, so $S = -1$. A sum of positive numbers cannot be negative: the totals grow without limit, so there was never a number to solve for.
+> **Treating an infinite sum as a number before knowing it exists.** The self-similar trick works on the perpetuity only because Step 2 proved the totals settle. Apply it to $`1 + 2 + 4 + 8 + \dots`$: calling the total $`S`$ gives $`S = 1 + 2S`$, so $`S = -1`$. A sum of positive numbers cannot be negative: the totals grow without limit, so there was never a number to solve for.
 >
 > - **Shrinking terms taken as proof of convergence.** The harmonic series has terms heading for 0 and no sum.
 > - **Subtracting the rate instead of dividing by one plus it.** Ratio 0.95 in place of 1/1.05 gives 1,900.00, not 2,000.

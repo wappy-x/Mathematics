@@ -38,52 +38,47 @@ Orange bars are the forecasts given the month. The green line is the forecast gi
 
 ## The formula
 
-Notation, as a reminder. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the sets we allow ourselves to measure, and a measure of total size 1. A sub-sigma-algebra $\mathcal{G} \subseteq \mathcal{F}$ is a smaller collection of events: the ones a given piece of information can settle. A quantity is $\mathcal{G}$-measurable when its value is settled by that information. For an integrable $X$, meaning $\int \lvert X \rvert \, dP$ is finite, the **conditional expectation** $E[X \mid \mathcal{G}]$ is the $\mathcal{G}$-measurable, integrable quantity with
+Notation, as a reminder. A probability space $`(\Omega, \mathcal{F}, P)`$ is a set of outcomes, the sets we allow ourselves to measure, and a measure of total size 1. A sub-sigma-algebra $`\mathcal{G} \subseteq \mathcal{F}`$ is a smaller collection of events: the ones a given piece of information can settle. A quantity is $`\mathcal{G}`$-measurable when its value is settled by that information. For an integrable $`X`$, meaning $`\int \lvert X \rvert \, dP`$ is finite, the **conditional expectation** $`E[X \mid \mathcal{G}]`$ is the $`\mathcal{G}`$-measurable, integrable quantity with
 
-$$\int_A E[X \mid \mathcal{G}] \, dP \;=\; \int_A X \, dP \qquad \text{for every } A \in \mathcal{G},$$
+```math
+\int_A E[X \mid \mathcal{G}] \, dP \;=\; \int_A X \, dP \qquad \text{for every } A \in \mathcal{G},
+```
 
-and any two such quantities agree almost surely, written a.s.: except on a set of probability zero ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)). This is the **defining identity**. The indicator $1_A$ is one on A and zero off it, and $x^+ = \max(x, 0)$ is the positive part.
+and any two such quantities agree almost surely, written a.s.: except on a set of probability zero ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)). This is the **defining identity**. The indicator $`1_A`$ is one on A and zero off it, and $`x^+ = \max(x, 0)`$ is the positive part.
 
-On the gauge, $\Omega$ has 48 outcomes: 12 months, dry or wet, gauge error −3 or +1. $P$ gives each 1/48. $\mathcal{M}$ is the information "which month", with 4096 events, every union of months. $\mathcal{S}$ is "which season", with 16 events. Every season is a union of months, so $\mathcal{S} \subseteq \mathcal{M}$.
+On the gauge, $`\Omega`$ has 48 outcomes: 12 months, dry or wet, gauge error −3 or +1. $`P`$ gives each 1/48. $`\mathcal{M}`$ is the information "which month", with 4096 events, every union of months. $`\mathcal{S}`$ is "which season", with 16 events. Every season is a union of months, so $`\mathcal{S} \subseteq \mathcal{M}`$.
 
-**The rules.** Let $X$ and $Y$ be integrable, $a$ and $b$ numbers, and $\mathcal{H} \subseteq \mathcal{G}$ sub-sigma-algebras of $\mathcal{F}$. Every line holds almost surely.
+**The rules.** Let $`X`$ and $`Y`$ be integrable, $`a`$ and $`b`$ numbers, and $`\mathcal{H} \subseteq \mathcal{G}`$ sub-sigma-algebras of $`\mathcal{F}`$. Every line holds almost surely.
 
-$$\begin{aligned}
-&\text{linearity:} && E[aX + bY \mid \mathcal{G}] = a\,E[X \mid \mathcal{G}] + b\,E[Y \mid \mathcal{G}] \\
-&\text{order:} && X \le Y \;\Rightarrow\; E[X \mid \mathcal{G}] \le E[Y \mid \mathcal{G}] \\
-&\text{tower:} && E\big[E[X \mid \mathcal{G}] \mid \mathcal{H}\big] = E[X \mid \mathcal{H}] = E\big[E[X \mid \mathcal{H}] \mid \mathcal{G}\big] \\
-&\text{taking out what is known:} && Z \ \mathcal{G}\text{-measurable},\ ZX \text{ integrable} \;\Rightarrow\; E[ZX \mid \mathcal{G}] = Z\,E[X \mid \mathcal{G}] \\
-&\text{dropping what is independent:} && X \text{ independent of } \mathcal{G} \;\Rightarrow\; E[X \mid \mathcal{G}] = E[X] \\
-&\text{conditional Jensen:} && \varphi \text{ convex},\ \varphi(X) \text{ integrable} \;\Rightarrow\; \varphi\big(E[X \mid \mathcal{G}]\big) \le E[\varphi(X) \mid \mathcal{G}] \\
-&\text{monotone convergence:} && 0 \le X_n \uparrow X \;\Rightarrow\; E[X_n \mid \mathcal{G}] \uparrow E[X \mid \mathcal{G}] \\
-&\text{dominated convergence:} && X_n \to X \text{ a.s.},\ \lvert X_n \rvert \le W,\ W \text{ integrable} \;\Rightarrow\; E[X_n \mid \mathcal{G}] \to E[X \mid \mathcal{G}]
-\end{aligned}$$
+```math
+\begin{aligned} &\text{linearity:} && E[aX + bY \mid \mathcal{G}] = a\,E[X \mid \mathcal{G}] + b\,E[Y \mid \mathcal{G}] \\ &\text{order:} && X \le Y \;\Rightarrow\; E[X \mid \mathcal{G}] \le E[Y \mid \mathcal{G}] \\ &\text{tower:} && E\big[E[X \mid \mathcal{G}] \mid \mathcal{H}\big] = E[X \mid \mathcal{H}] = E\big[E[X \mid \mathcal{H}] \mid \mathcal{G}\big] \\ &\text{taking out what is known:} && Z \ \mathcal{G}\text{-measurable},\ ZX \text{ integrable} \;\Rightarrow\; E[ZX \mid \mathcal{G}] = Z\,E[X \mid \mathcal{G}] \\ &\text{dropping what is independent:} && X \text{ independent of } \mathcal{G} \;\Rightarrow\; E[X \mid \mathcal{G}] = E[X] \\ &\text{conditional Jensen:} && \varphi \text{ convex},\ \varphi(X) \text{ integrable} \;\Rightarrow\; \varphi\big(E[X \mid \mathcal{G}]\big) \le E[\varphi(X) \mid \mathcal{G}] \\ &\text{monotone convergence:} && 0 \le X_n \uparrow X \;\Rightarrow\; E[X_n \mid \mathcal{G}] \uparrow E[X \mid \mathcal{G}] \\ &\text{dominated convergence:} && X_n \to X \text{ a.s.},\ \lvert X_n \rvert \le W,\ W \text{ integrable} \;\Rightarrow\; E[X_n \mid \mathcal{G}] \to E[X \mid \mathcal{G}] \end{aligned}
+```
 
 **Read it aloud:** conditional averaging is linear and keeps order; fine then coarse is coarse; a factor the information knows comes out; a quantity it knows nothing about becomes its plain mean; a convex curve of the forecast is at most the forecast of the curve; and both limit theorems pass inside under their usual hypotheses.
 
-Taking $\mathcal{H}$ to be the trivial information, only $\varnothing$ and $\Omega$, turns the tower into $E\big[E[X \mid \mathcal{G}]\big] = E[X]$: the average forecast is the average.
+Taking $`\mathcal{H}`$ to be the trivial information, only $`\varnothing`$ and $`\Omega`$, turns the tower into $`E\big[E[X \mid \mathcal{G}]\big] = E[X]`$: the average forecast is the average.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$, $P$ | the outcomes; the events we measure; the probability | 48 outcomes; every subset; 1/48 each | — |
-| $X$, $Y$ | integrable quantities | $X$: rainfall in the month, 15 to 140 mm, mean 55 | a wetter month lifts its season's forecast by a third of the rise |
-| $N$ | the gauge error, independent of the weather and the date | −3 or +1 mm, mean −1 | a larger mean shifts every forecast of the reading by the same amount |
-| $\mathcal{G}$, $\mathcal{H}$ | information: sub-sigma-algebras, $\mathcal{H} \subseteq \mathcal{G}$ for the tower | $\mathcal{M}$, the month; $\mathcal{S}$, the season | finer information, forecasts closer to the truth |
-| $\mathcal{M}$, $\mathcal{S}$ | knowing the month; knowing the season | 4096 events; 16 events | — |
-| $E[X \mid \mathcal{G}]$ | the conditional expectation: the forecast of $X$ given $\mathcal{G}$ | given $\mathcal{S}$: 30, 60, 90, 40 mm | — |
-| $A$, $1_A$ | an event the information can see; one on A, zero off it | "winter or summer" | — |
-| $Z$, $ZX$, $ZM$, $U$, $V$ | a factor and its products; umbrellas per mm by season; umbrellas per mm by weather | $U$ = 4, 3, 1, 2; $V$ = 1 dry, 3 wet | a bigger known factor scales its season's forecast |
-| $\varphi$ | a convex function: every chord lies on or above its graph | $(x - 50)^+$, a flood payout; $x^2$ | a sharper bend, a wider gap |
-| $X_n$, $W$ | a sequence of quantities; an integrable bound on all of them | $\min(X, c)$ for a gauge of capacity c mm; a burst of height n | — |
-| $a$, $b$, $c$, $n$ | fixed numbers in linearity; gauge capacity; burst height | 1 and 1 for the reading $X + N$; 20 to 140 mm; 2 to 64 | — |
-| $M$, $M_n$, $K$, $B$, $B_k$, $Z_k$, $Z^{\pm}$, $X^{\pm}$, $D_n$, $L$, $I$, $e$, $r$, $s_r$, $N_r$ | in the proofs: a forecast, and the forecast of $X_n$; its coarse forecast; an event in $\mathcal{G}$; the event that the forecast is below −1/k; simple known factors rising to $Z$; the positive and negative parts, $Z = Z^+ - Z^-$; the worst error from step n on; the limit of its forecasts; an interval and an end it excludes; a rational point, its supporting slope, its null exceptional set | winter: $M$ = 30 | — |
+| $`\Omega`$, $`\mathcal{F}`$, $`P`$ | the outcomes; the events we measure; the probability | 48 outcomes; every subset; 1/48 each | — |
+| $`X`$, $`Y`$ | integrable quantities | $`X`$: rainfall in the month, 15 to 140 mm, mean 55 | a wetter month lifts its season's forecast by a third of the rise |
+| $`N`$ | the gauge error, independent of the weather and the date | −3 or +1 mm, mean −1 | a larger mean shifts every forecast of the reading by the same amount |
+| $`\mathcal{G}`$, $`\mathcal{H}`$ | information: sub-sigma-algebras, $`\mathcal{H} \subseteq \mathcal{G}`$ for the tower | $`\mathcal{M}`$, the month; $`\mathcal{S}`$, the season | finer information, forecasts closer to the truth |
+| $`\mathcal{M}`$, $`\mathcal{S}`$ | knowing the month; knowing the season | 4096 events; 16 events | — |
+| $`E[X \mid \mathcal{G}]`$ | the conditional expectation: the forecast of $`X`$ given $`\mathcal{G}`$ | given $`\mathcal{S}`$: 30, 60, 90, 40 mm | — |
+| $`A`$, $`1_A`$ | an event the information can see; one on A, zero off it | "winter or summer" | — |
+| $`Z`$, $`ZX`$, $`ZM`$, $`U`$, $`V`$ | a factor and its products; umbrellas per mm by season; umbrellas per mm by weather | $`U`$ = 4, 3, 1, 2; $`V`$ = 1 dry, 3 wet | a bigger known factor scales its season's forecast |
+| $`\varphi`$ | a convex function: every chord lies on or above its graph | $`(x - 50)^+`$, a flood payout; $`x^2`$ | a sharper bend, a wider gap |
+| $`X_n`$, $`W`$ | a sequence of quantities; an integrable bound on all of them | $`\min(X, c)`$ for a gauge of capacity c mm; a burst of height n | — |
+| $`a`$, $`b`$, $`c`$, $`n`$ | fixed numbers in linearity; gauge capacity; burst height | 1 and 1 for the reading $`X + N`$; 20 to 140 mm; 2 to 64 | — |
+| $`M`$, $`M_n`$, $`K`$, $`B`$, $`B_k`$, $`Z_k`$, $`Z^{\pm}`$, $`X^{\pm}`$, $`D_n`$, $`L`$, $`I`$, $`e`$, $`r`$, $`s_r`$, $`N_r`$ | in the proofs: a forecast, and the forecast of $`X_n`$; its coarse forecast; an event in $`\mathcal{G}`$; the event that the forecast is below −1/k; simple known factors rising to $`Z`$; the positive and negative parts, $`Z = Z^+ - Z^-`$; the worst error from step n on; the limit of its forecasts; an interval and an end it excludes; a rational point, its supporting slope, its null exceptional set | winter: $`M`$ = 30 | — |
 
 ### When it holds
 
-- **Integrable quantities.** The defining identity needs $\int_A X \, dP$ finite. Nonnegative quantities with infinite mean have a conditional expectation that may take the value $+\infty$, and monotone convergence works for them; the signed rules need integrability.
-- **Nested information for the tower.** With $\mathcal{H} \subseteq \mathcal{G}$ the order of averaging does not matter. With two unrelated pieces of information it does: averaging the two-month forecasts within seasons gives winter 65/2 mm, not 30.
+- **Integrable quantities.** The defining identity needs $`\int_A X \, dP`$ finite. Nonnegative quantities with infinite mean have a conditional expectation that may take the value $`+\infty`$, and monotone convergence works for them; the signed rules need integrability.
+- **Nested information for the tower.** With $`\mathcal{H} \subseteq \mathcal{G}`$ the order of averaging does not matter. With two unrelated pieces of information it does: averaging the two-month forecasts within seasons gives winter 65/2 mm, not 30.
 - **A factor the information settles.** Umbrellas per mm that depend on the season come out. Umbrellas per mm that depend on whether the year is wet do not: the forecast of sales is 72 in winter, not 2 × 30 = 60.
-- **Independence of the whole information.** The error must be independent of every event in $\mathcal{G}$. An evaporation loss of 4 mm in summer makes the summer error average −5, not the year's −2.
+- **Independence of the whole information.** The error must be independent of every event in $`\mathcal{G}`$. An evaporation loss of 4 mm in summer makes the summer error average −5, not the year's −2.
 - **A dominating integrable bound for dominated convergence.** A burst of height n on the first 1/n of the season tends to 0 at every later instant, yet its forecast for the early half stays 2 for every n.
 
 ---
@@ -92,23 +87,23 @@ Taking $\mathcal{H}$ to be the trivial information, only $\varnothing$ and $\Ome
 
 ### Step 0: the defining identity is a test, and passing it is enough
 
-Each rule claims that the right-hand side is the conditional expectation of the left. Uniqueness means a proof needs only three checks on the right-hand side: the information $\mathcal{G}$ settles it; it is integrable; its integral over every event in $\mathcal{G}$ equals the left-hand quantity's. Nothing is divided by the probability of an event, so the rules hold even when the information is a continuous reading. On the gauge the test is finite: the code runs it on all 16 season events or all 4096 month events.
+Each rule claims that the right-hand side is the conditional expectation of the left. Uniqueness means a proof needs only three checks on the right-hand side: the information $`\mathcal{G}`$ settles it; it is integrable; its integral over every event in $`\mathcal{G}`$ equals the left-hand quantity's. Nothing is divided by the probability of an event, so the rules hold even when the information is a continuous reading. On the gauge the test is finite: the code runs it on all 16 season events or all 4096 month events.
 
 ### Step 1: linearity and order
 
-Integrals over an event are linear, so a combination of forecasts passes the test for the same combination of quantities. For order: if $X \ge 0$ but its forecast were below some negative level on an event of positive probability that the information sees, the integral of $X$ over that event would be negative. Applied to $-\lvert X \rvert \le X \le \lvert X \rvert$, order gives $\lvert E[X \mid \mathcal{G}] \rvert \le E[\lvert X \rvert \mid \mathcal{G}]$, used in Step 7.
+Integrals over an event are linear, so a combination of forecasts passes the test for the same combination of quantities. For order: if $`X \ge 0`$ but its forecast were below some negative level on an event of positive probability that the information sees, the integral of $`X`$ over that event would be negative. Applied to $`-\lvert X \rvert \le X \le \lvert X \rvert`$, order gives $`\lvert E[X \mid \mathcal{G}] \rvert \le E[\lvert X \rvert \mid \mathcal{G}]`$, used in Step 7.
 
 ### Step 2: the tower
 
-Forecast the fine forecast with coarse information. The result is settled by the coarse information. Over a coarse event its integral equals the fine forecast's, by the coarse identity, and that equals the integral of $X$, by the fine identity. The fine identity applies because a coarse event is also a fine one; that is the only use of nesting. On the gauge the month forecasts 25, 30, 35 average to 30, and the six winter rainfall values 15, 35, 18, 42, 21, 49 average to 30 directly.
+Forecast the fine forecast with coarse information. The result is settled by the coarse information. Over a coarse event its integral equals the fine forecast's, by the coarse identity, and that equals the integral of $`X`$, by the fine identity. The fine identity applies because a coarse event is also a fine one; that is the only use of nesting. On the gauge the month forecasts 25, 30, 35 average to 30, and the six winter rainfall values 15, 35, 18, 42, 21, 49 average to 30 directly.
 
 ### Step 3: taking out what is known
 
-For a known factor that is the indicator of an event $B$ in $\mathcal{G}$, integrating over $A$ with the factor is integrating over $A \cap B$, which is again an event the information sees, so the identity carries over. Sums of indicators follow by linearity, and every known factor is a limit of such sums, so monotone convergence finishes. On the gauge: 4 × 30 = 120 umbrellas in winter, then 180, 90 and 80.
+For a known factor that is the indicator of an event $`B`$ in $`\mathcal{G}`$, integrating over $`A`$ with the factor is integrating over $`A \cap B`$, which is again an event the information sees, so the identity carries over. Sums of indicators follow by linearity, and every known factor is a limit of such sums, so monotone convergence finishes. On the gauge: 4 × 30 = 120 umbrellas in winter, then 180, 90 and 80.
 
 ### Step 4: dropping what is independent
 
-If $X$ is independent of every event $A$ in $\mathcal{G}$, the integral of $X$ over $A$ splits as $P(A)$ times $E[X]$ ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)), which is the integral of the constant $E[X]$ over $A$. A constant is settled by any information, so it passes. On the gauge the error forecast is −1 in every month, and by linearity the reading's forecasts are 29, 59, 89, 39.
+If $`X`$ is independent of every event $`A`$ in $`\mathcal{G}`$, the integral of $`X`$ over $`A`$ splits as $`P(A)`$ times $`E[X]`$ ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)), which is the integral of the constant $`E[X]`$ over $`A`$. A constant is settled by any information, so it passes. On the gauge the error forecast is −1 in every month, and by linearity the reading's forecasts are 29, 59, 89, 39.
 
 ### Step 5: conditional Jensen, one line at a time
 
@@ -116,15 +111,15 @@ A convex curve has a supporting line at every point, a straight line through the
 
 The unconditional proof used one line, at the mean; here the forecast varies with the outcome, so each outcome needs its own line, and uncountably many null sets can add up to positive probability. So use only the lines at rational points: countably many null sets make a null set, and a continuous convex curve is the highest of those lines everywhere.
 
-On the gauge, a flood payout of $(X - 50)^+$: the spring forecast of the payout is 17, the payout at the spring forecast 10. For the square the gap is the spread within the season, 163.33 in winter.
+On the gauge, a flood payout of $`(X - 50)^+`$: the spring forecast of the payout is 17, the payout at the spring forecast 10. For the square the gap is the spread within the season, 163.33 in winter.
 
 ### Step 6: conditional monotone convergence
 
-If $0 \le X_n$ rise to $X$, their forecasts rise too, by order, to a limit settled by $\mathcal{G}$. The ordinary monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)), applied to both sides of each defining identity, shows the limit passes the test for $X$. On the gauge, a gauge of capacity c mm records $\min(X, c)$; the winter forecast rises 18.83, 28.17, 30.00 and stays, while summer needs a capacity of 140 to reach 90.
+If $`0 \le X_n`$ rise to $`X`$, their forecasts rise too, by order, to a limit settled by $`\mathcal{G}`$. The ordinary monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)), applied to both sides of each defining identity, shows the limit passes the test for $`X`$. On the gauge, a gauge of capacity c mm records $`\min(X, c)`$; the winter forecast rises 18.83, 28.17, 30.00 and stays, while summer needs a capacity of 140 to reach 90.
 
 ### Step 7: conditional dominated convergence
 
-Bound the forecast error by the forecast of the worst later error, $D_n$, which falls to 0 and stays below twice the bound $W$. Those forecasts fall to a limit whose mean is at most $E[D_n]$ for every n, by the tower, and $E[D_n] \to 0$ by the ordinary dominated convergence theorem. A nonnegative quantity with mean 0 is 0 almost surely.
+Bound the forecast error by the forecast of the worst later error, $`D_n`$, which falls to 0 and stays below twice the bound $`W`$. Those forecasts fall to a limit whose mean is at most $`E[D_n]`$ for every n, by the tower, and $`E[D_n] \to 0`$ by the ordinary dominated convergence theorem. A nonnegative quantity with mean 0 is 0 almost surely.
 
 ### The picture: a gauge that overflows, with growing capacity
 
@@ -145,33 +140,33 @@ Orange is winter, green spring, dark blue summer, gold autumn. Each line rises a
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $\mathcal{H} \subseteq \mathcal{G} \subseteq \mathcal{F}$ are sigma-algebras on a probability space. **Uniqueness**, used throughout: two $\mathcal{G}$-measurable integrable quantities with equal integrals over every $A \in \mathcal{G}$ agree a.s. ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)). Each part names a candidate and checks it.
+**Setting.** $`\mathcal{H} \subseteq \mathcal{G} \subseteq \mathcal{F}`$ are sigma-algebras on a probability space. **Uniqueness**, used throughout: two $`\mathcal{G}`$-measurable integrable quantities with equal integrals over every $`A \in \mathcal{G}`$ agree a.s. ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)). Each part names a candidate and checks it.
 
-**1. Linearity.** $aE[X \mid \mathcal{G}] + bE[Y \mid \mathcal{G}]$ is $\mathcal{G}$-measurable and integrable, with integral $a\int_A X + b\int_A Y = \int_A (aX + bY)$ over each $A \in \mathcal{G}$.
+**1. Linearity.** $`aE[X \mid \mathcal{G}] + bE[Y \mid \mathcal{G}]`$ is $`\mathcal{G}`$-measurable and integrable, with integral $`a\int_A X + b\int_A Y = \int_A (aX + bY)`$ over each $`A \in \mathcal{G}`$.
 
-**2. Order.** Let $X \ge 0$ a.s. and $M = E[X \mid \mathcal{G}]$. For $B_k = \{M < -1/k\} \in \mathcal{G}$: $0 \le \int_{B_k} X = \int_{B_k} M \le -P(B_k)/k$, so $P(B_k) = 0$, and $\{M < 0\} = \bigcup_k B_k$ is null. For $X \le Y$ apply this to $Y - X$. From $-\lvert X \rvert \le X \le \lvert X \rvert$: $\lvert E[X \mid \mathcal{G}] \rvert \le E[\lvert X \rvert \mid \mathcal{G}]$ a.s. A $\mathcal{G}$-measurable $X$ passes its own test: $E[X \mid \mathcal{G}] = X$ a.s.
+**2. Order.** Let $`X \ge 0`$ a.s. and $`M = E[X \mid \mathcal{G}]`$. For $`B_k = \{M < -1/k\} \in \mathcal{G}`$: $`0 \le \int_{B_k} X = \int_{B_k} M \le -P(B_k)/k`$, so $`P(B_k) = 0`$, and $`\{M < 0\} = \bigcup_k B_k`$ is null. For $`X \le Y`$ apply this to $`Y - X`$. From $`-\lvert X \rvert \le X \le \lvert X \rvert`$: $`\lvert E[X \mid \mathcal{G}] \rvert \le E[\lvert X \rvert \mid \mathcal{G}]`$ a.s. A $`\mathcal{G}`$-measurable $`X`$ passes its own test: $`E[X \mid \mathcal{G}] = X`$ a.s.
 
-**3. Tower.** Let $M = E[X \mid \mathcal{G}]$ and $K = E[M \mid \mathcal{H}]$, which is $\mathcal{H}$-measurable and integrable. For $A \in \mathcal{H}$: $\int_A K = \int_A M$ (definition of $K$) $= \int_A X$ (definition of $M$, as $A \in \mathcal{G}$). So $K = E[X \mid \mathcal{H}]$ a.s. The other order: $E[X \mid \mathcal{H}]$ is $\mathcal{G}$-measurable; use part 2's last line.
+**3. Tower.** Let $`M = E[X \mid \mathcal{G}]`$ and $`K = E[M \mid \mathcal{H}]`$, which is $`\mathcal{H}`$-measurable and integrable. For $`A \in \mathcal{H}`$: $`\int_A K = \int_A M`$ (definition of $`K`$) $`= \int_A X`$ (definition of $`M`$, as $`A \in \mathcal{G}`$). So $`K = E[X \mid \mathcal{H}]`$ a.s. The other order: $`E[X \mid \mathcal{H}]`$ is $`\mathcal{G}`$-measurable; use part 2's last line.
 
-**4. Taking out what is known.** Let $Z$ be $\mathcal{G}$-measurable with $X$ and $ZX$ integrable; put $M = E[X \mid \mathcal{G}]$. (a) $Z = 1_B$, $B \in \mathcal{G}$: for $A \in \mathcal{G}$, $\int_A 1_B M = \int_{A \cap B} M = \int_{A \cap B} X = \int_A 1_B X$, as $A \cap B \in \mathcal{G}$. (b) $Z$ simple and $\mathcal{G}$-measurable: linearity of the integral over the finitely many indicators. (c) $Z \ge 0$, $X \ge 0$: then $M \ge 0$ a.s. by part 2. Choose simple $\mathcal{G}$-measurable $0 \le Z_k \uparrow Z$ ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). For $A \in \mathcal{G}$, (b) gives $\int_A Z_k M = \int_A Z_k X$; monotone convergence on each side gives $\int_A ZM = \int_A ZX$, which is finite. So $ZM$ is integrable, $\mathcal{G}$-measurable, and passes the test: $E[ZX \mid \mathcal{G}] = ZM$ a.s. (d) General: write $Z = Z^+ - Z^-$ and $X = X^+ - X^-$. Each product $Z^{\pm}X^{\pm}$ is at most $\lvert ZX \rvert$, hence integrable, and (c) gives $E[Z^{\pm}X^{\pm} \mid \mathcal{G}] = Z^{\pm}E[X^{\pm} \mid \mathcal{G}]$. Add the four with their signs and use parts 1 and $M = E[X^+ \mid \mathcal{G}] - E[X^- \mid \mathcal{G}]$.
+**4. Taking out what is known.** Let $`Z`$ be $`\mathcal{G}`$-measurable with $`X`$ and $`ZX`$ integrable; put $`M = E[X \mid \mathcal{G}]`$. (a) $`Z = 1_B`$, $`B \in \mathcal{G}`$: for $`A \in \mathcal{G}`$, $`\int_A 1_B M = \int_{A \cap B} M = \int_{A \cap B} X = \int_A 1_B X`$, as $`A \cap B \in \mathcal{G}`$. (b) $`Z`$ simple and $`\mathcal{G}`$-measurable: linearity of the integral over the finitely many indicators. (c) $`Z \ge 0`$, $`X \ge 0`$: then $`M \ge 0`$ a.s. by part 2. Choose simple $`\mathcal{G}`$-measurable $`0 \le Z_k \uparrow Z`$ ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). For $`A \in \mathcal{G}`$, (b) gives $`\int_A Z_k M = \int_A Z_k X`$; monotone convergence on each side gives $`\int_A ZM = \int_A ZX`$, which is finite. So $`ZM`$ is integrable, $`\mathcal{G}`$-measurable, and passes the test: $`E[ZX \mid \mathcal{G}] = ZM`$ a.s. (d) General: write $`Z = Z^+ - Z^-`$ and $`X = X^+ - X^-`$. Each product $`Z^{\pm}X^{\pm}`$ is at most $`\lvert ZX \rvert`$, hence integrable, and (c) gives $`E[Z^{\pm}X^{\pm} \mid \mathcal{G}] = Z^{\pm}E[X^{\pm} \mid \mathcal{G}]`$. Add the four with their signs and use parts 1 and $`M = E[X^+ \mid \mathcal{G}] - E[X^- \mid \mathcal{G}]`$.
 
-**5. Independence.** Suppose $\sigma(X)$, the events decided by $X$, is independent of $\mathcal{G}$. For $A \in \mathcal{G}$, $1_A$ is a function of an event independent of $X$, so $E[1_A X] = E[1_A]E[X] = P(A)E[X]$ ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). The constant $E[X]$ is $\mathcal{G}$-measurable and $\int_A E[X] \, dP = P(A)E[X]$. By uniqueness, $E[X \mid \mathcal{G}] = E[X]$ a.s.
+**5. Independence.** Suppose $`\sigma(X)`$, the events decided by $`X`$, is independent of $`\mathcal{G}`$. For $`A \in \mathcal{G}`$, $`1_A`$ is a function of an event independent of $`X`$, so $`E[1_A X] = E[1_A]E[X] = P(A)E[X]`$ ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). The constant $`E[X]`$ is $`\mathcal{G}`$-measurable and $`\int_A E[X] \, dP = P(A)E[X]`$. By uniqueness, $`E[X \mid \mathcal{G}] = E[X]`$ a.s.
 
-**6. Conditional Jensen.** Let $\varphi : \mathbb{R} \to \mathbb{R}$ be convex, $X$ and $\varphi(X)$ integrable. $\varphi$ is continuous, and at each rational $r$ has a slope $s_r$ with $\varphi(x) \ge \varphi(r) + s_r(x - r)$ for all $x$ ([Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md), Detailed proof parts 2 and 3). For rationals $r$ in $[x - 1, x + 1]$ the slopes $s_r$ lie between the chord slopes on $[x - 2, x - 1]$ and $[x + 1, x + 2]$, so as $r \to x$, $\varphi(r) + s_r(x - r) \to \varphi(x)$: $\varphi$ is the sup of its rational supporting lines. For each $r$, parts 1 and 2 give $E[\varphi(X) \mid \mathcal{G}] \ge \varphi(r) + s_r(E[X \mid \mathcal{G}] - r)$ outside a null set $N_r$. Outside the null union of the $N_r$, take the sup over $r$. For $\varphi$ convex on an open interval $I$ holding the values of $X$, use rationals in $I$. Part 2 puts $E[X \mid \mathcal{G}]$ in the closure of $I$ a.s.; on $B = \{E[X \mid \mathcal{G}] = e\} \in \mathcal{G}$ for an excluded end $e$, the identity gives $\int_B (X - e) = 0$ with $X - e$ of one sign, so $P(B) = 0$.
+**6. Conditional Jensen.** Let $`\varphi : \mathbb{R} \to \mathbb{R}`$ be convex, $`X`$ and $`\varphi(X)`$ integrable. $`\varphi`$ is continuous, and at each rational $`r`$ has a slope $`s_r`$ with $`\varphi(x) \ge \varphi(r) + s_r(x - r)`$ for all $`x`$ ([Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md), Detailed proof parts 2 and 3). For rationals $`r`$ in $`[x - 1, x + 1]`$ the slopes $`s_r`$ lie between the chord slopes on $`[x - 2, x - 1]`$ and $`[x + 1, x + 2]`$, so as $`r \to x`$, $`\varphi(r) + s_r(x - r) \to \varphi(x)`$: $`\varphi`$ is the sup of its rational supporting lines. For each $`r`$, parts 1 and 2 give $`E[\varphi(X) \mid \mathcal{G}] \ge \varphi(r) + s_r(E[X \mid \mathcal{G}] - r)`$ outside a null set $`N_r`$. Outside the null union of the $`N_r`$, take the sup over $`r`$. For $`\varphi`$ convex on an open interval $`I`$ holding the values of $`X`$, use rationals in $`I`$. Part 2 puts $`E[X \mid \mathcal{G}]`$ in the closure of $`I`$ a.s.; on $`B = \{E[X \mid \mathcal{G}] = e\} \in \mathcal{G}`$ for an excluded end $`e`$, the identity gives $`\int_B (X - e) = 0`$ with $`X - e`$ of one sign, so $`P(B) = 0`$.
 
-**7. Conditional monotone convergence.** Let $0 \le X_n \uparrow X$ a.s. with $X$ integrable, and $M_n = E[X_n \mid \mathcal{G}]$. By part 2, $0 \le M_1 \le M_2 \le \dots \le E[X \mid \mathcal{G}]$ outside a countable union of null sets. Let $M = \lim M_n$ there and 0 elsewhere; it is $\mathcal{G}$-measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)) and integrable, being at most $E[X \mid \mathcal{G}]$. For $A \in \mathcal{G}$, the monotone convergence theorem on each side gives $\int_A M = \lim_n \int_A M_n = \lim_n \int_A X_n = \int_A X$. By uniqueness $M = E[X \mid \mathcal{G}]$ a.s.
+**7. Conditional monotone convergence.** Let $`0 \le X_n \uparrow X`$ a.s. with $`X`$ integrable, and $`M_n = E[X_n \mid \mathcal{G}]`$. By part 2, $`0 \le M_1 \le M_2 \le \dots \le E[X \mid \mathcal{G}]`$ outside a countable union of null sets. Let $`M = \lim M_n`$ there and 0 elsewhere; it is $`\mathcal{G}`$-measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)) and integrable, being at most $`E[X \mid \mathcal{G}]`$. For $`A \in \mathcal{G}`$, the monotone convergence theorem on each side gives $`\int_A M = \lim_n \int_A M_n = \lim_n \int_A X_n = \int_A X`$. By uniqueness $`M = E[X \mid \mathcal{G}]`$ a.s.
 
-**8. Conditional dominated convergence.** Let $X_n \to X$ a.s. and $\lvert X_n \rvert \le W$, $W$ integrable. Put $D_n = \sup_{k \ge n} \lvert X_k - X \rvert$: measurable, $0 \le D_n \le 2W$, $D_n \downarrow 0$ a.s. By parts 1 and 2, $\lvert E[X_n \mid \mathcal{G}] - E[X \mid \mathcal{G}] \rvert \le E[D_n \mid \mathcal{G}]$, which falls a.s. to a limit $L \ge 0$. For every n, $E[L] \le E\big[E[D_n \mid \mathcal{G}]\big] = E[D_n]$ (part 2, and part 3 with trivial $\mathcal{H}$), and $E[D_n] \to 0$ by the dominated convergence theorem. So $L = 0$ a.s.
+**8. Conditional dominated convergence.** Let $`X_n \to X`$ a.s. and $`\lvert X_n \rvert \le W`$, $`W`$ integrable. Put $`D_n = \sup_{k \ge n} \lvert X_k - X \rvert`$: measurable, $`0 \le D_n \le 2W`$, $`D_n \downarrow 0`$ a.s. By parts 1 and 2, $`\lvert E[X_n \mid \mathcal{G}] - E[X \mid \mathcal{G}] \rvert \le E[D_n \mid \mathcal{G}]`$, which falls a.s. to a limit $`L \ge 0`$. For every n, $`E[L] \le E\big[E[D_n \mid \mathcal{G}]\big] = E[D_n]`$ (part 2, and part 3 with trivial $`\mathcal{H}`$), and $`E[D_n] \to 0`$ by the dominated convergence theorem. So $`L = 0`$ a.s.
 
 </details>
 
-A second road to the tower, for square-integrable $X$, sees conditional expectation as the nearest $\mathcal{G}$-measurable quantity in mean square: projecting onto a smaller space after a larger one is projecting onto the smaller one. That road is [Conditional expectation as a projection](03-conditional-expectation-as-projection.md); the proof above needs only integrability.
+A second road to the tower, for square-integrable $`X`$, sees conditional expectation as the nearest $`\mathcal{G}`$-measurable quantity in mean square: projecting onto a smaller space after a larger one is projecting onto the smaller one. That road is [Conditional expectation as a projection](03-conditional-expectation-as-projection.md); the proof above needs only integrability.
 
 ---
 
 ## Worked numbers, by hand
 
-Winter holds 12 of the 48 outcomes. The gauge error does not change $X$, so six rainfall values, each twice, carry the arithmetic.
+Winter holds 12 of the 48 outcomes. The gauge error does not change $`X`$, so six rainfall values, each twice, carry the arithmetic.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -185,7 +180,7 @@ Winter holds 12 of the 48 outcomes. The gauge error does not change $X$, so six 
 | expected sales over the year | (120 + 180 + 90 + 80)/4 | 117.5 |
 | gauge error forecast, any month | (−3 + 1)/2 | −1 |
 | reading forecast, by season | 30 − 1, 60 − 1, 90 − 1, 40 − 1 | 29, 59, 89, 39 |
-| spring flood payout, $(X - 50)^+$ | 0, 20; 0, 34; 0, 48, averaged: 102/6 | **17**, against 10 at the forecast |
+| spring flood payout, $`(X - 50)^+`$ | 0, 20; 0, 34; 0, 48, averaged: 102/6 | **17**, against 10 at the forecast |
 
 Expected sales are 117.5 umbrellas a month over the year, and 120 in a winter month.
 
@@ -194,12 +189,12 @@ Expected sales are 117.5 umbrellas a month over the year, and 120 in a winter mo
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Tower with information that does not nest: two-month blocks, averaged within seasons | 65/2, 115/2, 85, 45 against 30, 60, 90, 40 | February shares a block with March, so the winter average imports spring rain |
-| Pulling out a factor the season does not settle: $V$ = 1 dry, 3 wet | $E[VX \mid \mathcal{S}]$ = 72, 144, 216, 96 against 60, 120, 180, 80 | $V$ is high exactly when rain is; within a season they move together |
-| Dropping an error that depends on the season: 4 mm evaporation in summer | summer error forecast −5, against the year's −2 | the error is not independent of $\mathcal{S}$ |
-| Multiplying plain means, $E[U]E[X]$ | 137.5 against 117.5 | $U$ is high in dry seasons; pull it out season by season, then average |
-| Limits with no integrable bound: a burst $X_n$ = n on the first 1/n of the season | early-half forecast 2 for n = 2 to 64, while $X_n \to 0$ at every later instant; capped at 4 it falls, 2, 2, 1, 1/2, 1/4, 1/8 | the burst's area stays 1; nothing integrable lies above all the bursts |
+| Pulling out a factor the season does not settle: $`V`$ = 1 dry, 3 wet | $`E[VX \mid \mathcal{S}]`$ = 72, 144, 216, 96 against 60, 120, 180, 80 | $`V`$ is high exactly when rain is; within a season they move together |
+| Dropping an error that depends on the season: 4 mm evaporation in summer | summer error forecast −5, against the year's −2 | the error is not independent of $`\mathcal{S}`$ |
+| Multiplying plain means, $`E[U]E[X]`$ | 137.5 against 117.5 | $`U`$ is high in dry seasons; pull it out season by season, then average |
+| Limits with no integrable bound: a burst $`X_n`$ = n on the first 1/n of the season | early-half forecast 2 for n = 2 to 64, while $`X_n \to 0`$ at every later instant; capped at 4 it falls, 2, 2, 1, 1/2, 1/4, 1/8 | the burst's area stays 1; nothing integrable lies above all the bursts |
 
-For the burst, $\Omega$ is the season as the interval `[0, 1)` under length, and the information is "early half or late half". The early-half forecast is the burst's area, 1, over the half's length, 1/2; the late-half forecast is 0.
+For the burst, $`\Omega`$ is the season as the interval `[0, 1)` under length, and the information is "early half or late half". The early-half forecast is the burst's area, 1, over the half's length, 1/2; the late-half forecast is 0.
 
 ---
 
@@ -592,14 +587,14 @@ The two outputs match line for line.
 
 Lean proves all eight rules for any probability space and any integrable quantities, and checks the card's hand counts.
 
-- Take integrable X and Y, numbers a and b, and any sub-sigma-algebra $\mathcal{G}$. Then linearity holds a.s.
-- Suppose also $X \le Y$ a.s. Then $E[X \mid \mathcal{G}] \le E[Y \mid \mathcal{G}]$ a.s.
-- Take sub-sigma-algebras $\mathcal{H} \subseteq \mathcal{G}$. Then the tower holds a.s., in both orders.
-- Suppose Z is $\mathcal{G}$-measurable and ZX is integrable. Then $E[ZX \mid \mathcal{G}] = Z\,E[X \mid \mathcal{G}]$ a.s.
-- Suppose X is independent of $\mathcal{G}$. Then $E[X \mid \mathcal{G}] = E[X]$ a.s.
-- Suppose $\varphi$ is convex on the whole line and $\varphi(X)$ is integrable. Then $\varphi\big(E[X \mid \mathcal{G}]\big) \le E[\varphi(X) \mid \mathcal{G}]$ a.s.
-- Suppose $0 \le X_n \uparrow X$ a.s., with X integrable. Then $E[X_n \mid \mathcal{G}] \uparrow E[X \mid \mathcal{G}]$ a.s.
-- Suppose $X_n \to X$ a.s. and $\lvert X_n \rvert \le W$, with W integrable. Then $E[X_n \mid \mathcal{G}] \to E[X \mid \mathcal{G}]$ a.s.
+- Take integrable X and Y, numbers a and b, and any sub-sigma-algebra $`\mathcal{G}`$. Then linearity holds a.s.
+- Suppose also $`X \le Y`$ a.s. Then $`E[X \mid \mathcal{G}] \le E[Y \mid \mathcal{G}]`$ a.s.
+- Take sub-sigma-algebras $`\mathcal{H} \subseteq \mathcal{G}`$. Then the tower holds a.s., in both orders.
+- Suppose Z is $`\mathcal{G}`$-measurable and ZX is integrable. Then $`E[ZX \mid \mathcal{G}] = Z\,E[X \mid \mathcal{G}]`$ a.s.
+- Suppose X is independent of $`\mathcal{G}`$. Then $`E[X \mid \mathcal{G}] = E[X]`$ a.s.
+- Suppose $`\varphi`$ is convex on the whole line and $`\varphi(X)`$ is integrable. Then $`\varphi\big(E[X \mid \mathcal{G}]\big) \le E[\varphi(X) \mid \mathcal{G}]`$ a.s.
+- Suppose $`0 \le X_n \uparrow X`$ a.s., with X integrable. Then $`E[X_n \mid \mathcal{G}] \uparrow E[X \mid \mathcal{G}]`$ a.s.
+- Suppose $`X_n \to X`$ a.s. and $`\lvert X_n \rvert \le W`$, with W integrable. Then $`E[X_n \mid \mathcal{G}] \to E[X \mid \mathcal{G}]`$ a.s.
 - The winter forecast comes out 30 both ways, and the four season forecasts average to 55.
 - Umbrella sales forecasts are 120, 180, 90 and 80, with yearly mean 117.5 against the wrong 137.5.
 - The error forecast is −1, the reading forecasts are 29, 59, 89 and 39, and the spring flood payout is 17 against 10.
@@ -895,7 +890,7 @@ example : ∀ n : ℕ, 2 ≤ n → (n : ℚ) * (1 / n) / (1 / 2) = 2 := by
 > **Try changing**
 > Guess first, then run the Python.
 > - **An error tied to one month.** Change `N` to `lambda p: (-3, 1)[p[2]] - 4 * (p[0] == 6)`, a June evaporation loss. Guess whether it still drops out. The error forecasts read −1 except June's −5, the year's mean becomes −4/3, and the run stops at the assert on the reading: an error tied to the date is not its plain mean.
-> - **A factor that does not vary.** Set `U = [2, 2, 2, 2]`. Guess the gap between $E[UX]$ and $E[U]E[X]$. There is none, 110.0 each: a constant factor cannot move with the rain.
+> - **A factor that does not vary.** Set `U = [2, 2, 2, 2]`. Guess the gap between $`E[UX]`$ and $`E[U]E[X]`$. There is none, 110.0 each: a constant factor cannot move with the rain.
 > - **A higher flood threshold.** Replace `x - 50` by `x - 100` in `flood`. Guess the spring payout. It is 0 on both sides, and the run stops at the strict-gap assert: no spring value reaches 100 mm, so the payout is flat on all of them, and a straight curve has no Jensen gap. Summer still shows one, 13 against 0.
 
 ---
@@ -903,10 +898,10 @@ example : ∀ n : ℕ, 2 ≤ n → (n : ℚ) * (1 / n) / (1 / 2) = 2 := by
 ## The usual mistake
 
 > [!warning]
-> **Pulling out a factor that the information does not settle.** "Forecast sales = umbrella rate × rain forecast" is right only when the rate is known from the information. A rate that rises in wet years is not known from the season and moves with the rain: the winter forecast is 72 umbrellas, not 60. The test is whether $\mathcal{G}$ settles the factor, not whether it looks constant.
+> **Pulling out a factor that the information does not settle.** "Forecast sales = umbrella rate × rain forecast" is right only when the rate is known from the information. A rate that rises in wet years is not known from the season and moves with the rain: the winter forecast is 72 umbrellas, not 60. The test is whether $`\mathcal{G}`$ settles the factor, not whether it looks constant.
 >
 > - **Towers across information that does not nest.** Two-month blocks are neither finer nor coarser than seasons, and give 65/2 mm for winter instead of 30.
-> - **Independence of part of the information only.** An error that depends on the season is not independent of $\mathcal{S}$: −5 in summer against −2 over the year.
+> - **Independence of part of the information only.** An error that depends on the season is not independent of $`\mathcal{S}`$: −5 in summer against −2 over the year.
 > - **Dropping "almost surely".** Each rule may fail on a set of probability zero. On the gauge every outcome has probability 1/48, so a.s. means everywhere; on a continuous space it does not, which is why conditional Jensen uses only countably many lines.
 > - **Limits inside with no bound.** The burst's early-half forecast is 2 for every n; capped at 4, it falls to 0.
 

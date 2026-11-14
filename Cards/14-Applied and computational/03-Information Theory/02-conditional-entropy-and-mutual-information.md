@@ -42,49 +42,57 @@ Bars: the uncertainty about rain left after each reading. Upper flat line: 0.88 
 Notation first, in words.
 
 - As on [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md), capital letters name the two readings and P(X = x, Y = y) is one cell of their joint table.
-- As on [Entropy](01-entropy.md), H(Y) is the entropy of Y in bits: the average of $-\log_2$ of the chance of what happens, with $\log_2$ the logarithm to base 2.
+- As on [Entropy](01-entropy.md), H(Y) is the entropy of Y in bits: the average of $`-\log_2`$ of the chance of what happens, with $`\log_2`$ the logarithm to base 2.
 - A capital sigma, Σ, means: add one term for every value.
 
 This card introduces three new symbols.
 
-- $H(X, Y)$ is the **joint entropy**, the entropy of the pair.
-- $H(Y \mid X)$, read "H of Y given X", is the **conditional entropy**.
-- $I(X; Y)$, read "I of X and Y", is the **mutual information**.
+- $`H(X, Y)`$ is the **joint entropy**, the entropy of the pair.
+- $`H(Y \mid X)`$, read "H of Y given X", is the **conditional entropy**.
+- $`I(X; Y)`$, read "I of X and Y", is the **mutual information**.
 
-$$H(Y \mid X) = \sum_x P(X = x)\, H(Y \mid X = x), \qquad H(Y \mid X = x) = -\sum_y P(Y = y \mid X = x)\,\log_2 P(Y = y \mid X = x)$$
+```math
+H(Y \mid X) = \sum_x P(X = x)\, H(Y \mid X = x), \qquad H(Y \mid X = x) = -\sum_y P(Y = y \mid X = x)\,\log_2 P(Y = y \mid X = x)
+```
 
 **Read it aloud:** for each reading, work out the entropy of rain among the mornings with that reading, then average those entropies, weighting each reading by how often it occurs.
 
-$$I(X; Y) = H(Y) - H(Y \mid X) = H(X) - H(X \mid Y) = H(X) + H(Y) - H(X, Y)$$
+```math
+I(X; Y) = H(Y) - H(Y \mid X) = H(X) - H(X \mid Y) = H(X) + H(Y) - H(X, Y)
+```
 
 **Read it aloud:** the information one signal carries about another is how much it lowers the other's uncertainty, and the drop comes out the same whichever signal you start from.
 
 The engine under both is the **chain rule**:
 
-$$H(X, Y) = H(X) + H(Y \mid X)$$
+```math
+H(X, Y) = H(X) + H(Y \mid X)
+```
 
 **Read it aloud:** the uncertainty of the pair is the uncertainty of the first reading plus what is still uncertain about the second once the first is known.
 
 And the inequality the job asks for, **conditioning never increases entropy**:
 
-$$H(Y \mid X) \le H(Y), \quad\text{equivalently}\quad I(X; Y) \ge 0,$$
+```math
+H(Y \mid X) \le H(Y), \quad\text{equivalently}\quad I(X; Y) \ge 0,
+```
 
 with equality exactly when X and Y are independent.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the signal you see: this morning's barometer | falling, steady or rising | — |
-| $Y$ | the thing you want: rain tomorrow | rain or dry | — |
-| $x$, $y$ | one particular value of each | x = falling, y = rain | picks a different row or column |
+| $`X`$ | the signal you see: this morning's barometer | falling, steady or rising | — |
+| $`Y`$ | the thing you want: rain tomorrow | rain or dry | — |
+| $`x`$, $`y`$ | one particular value of each | x = falling, y = rain | picks a different row or column |
 | P(X = x, Y = y), p(x, y) | joint chance: one cell of the table; Step 4 shortens it to p(x, y), and the chance of each reading alone to p(x), p(y) | falling and rain: 0.16 | a heavier cell pulls the two together |
 | P(Y = y \| X = x) | the chance of y among mornings with reading x | P(rain \| falling) = 0.64 | nearer 0 or 1: that reading settles rain |
-| $\log_2$, ln, Σ | logarithm to base 2, so answers are in bits; ln is the natural logarithm, used in Step 4 on any positive number t; Σ adds over every value | — | — |
-| $H(Y)$, $H(X)$, $h(p)$ | entropy of rain alone, and of the barometer alone; h(p) is the entropy of a yes-or-no event with chance p | H(Y) = h(0.30) = 0.8813 bits; H(X) = 1.5395 | p nearer 0.5: more uncertainty |
-| $H(Y \mid X = x)$ | uncertainty about rain left after one particular reading | falling 0.9427, steady 0.8024, rising 0.4690 | can sit above H(Y) |
-| $H(Y \mid X)$ | conditional entropy: those, averaged by how often each reading occurs; $H(X \mid Y)$ is the same with the roles swapped | 0.7374 bits; H(X \| Y) = 1.3956 | a sharper barometer: lower |
-| $H(X, Y)$ | joint entropy: uncertainty of the pair | 2.2769 bits | — |
-| $I(X; Y)$ | mutual information: uncertainty removed, in bits; $I(Y; X \mid Z)$ is the same computed within each value of Z, then averaged | 0.1439 bits | a sharper barometer: higher, up to H(Y) |
-| $Z$ | the reading as it arrives in town after the radio | 90% arrive right; I(Z; Y) = 0.0993 bits | a cleaner link: closer to 0.1439 |
+| $`\log_2`$, ln, Σ | logarithm to base 2, so answers are in bits; ln is the natural logarithm, used in Step 4 on any positive number t; Σ adds over every value | — | — |
+| $`H(Y)`$, $`H(X)`$, $`h(p)`$ | entropy of rain alone, and of the barometer alone; h(p) is the entropy of a yes-or-no event with chance p | H(Y) = h(0.30) = 0.8813 bits; H(X) = 1.5395 | p nearer 0.5: more uncertainty |
+| $`H(Y \mid X = x)`$ | uncertainty about rain left after one particular reading | falling 0.9427, steady 0.8024, rising 0.4690 | can sit above H(Y) |
+| $`H(Y \mid X)`$ | conditional entropy: those, averaged by how often each reading occurs; $`H(X \mid Y)`$ is the same with the roles swapped | 0.7374 bits; H(X \| Y) = 1.3956 | a sharper barometer: lower |
+| $`H(X, Y)`$ | joint entropy: uncertainty of the pair | 2.2769 bits | — |
+| $`I(X; Y)`$ | mutual information: uncertainty removed, in bits; $`I(Y; X \mid Z)`$ is the same computed within each value of Z, then averaged | 0.1439 bits | a sharper barometer: higher, up to H(Y) |
+| $`Z`$ | the reading as it arrives in town after the radio | 90% arrive right; I(Z; Y) = 0.0993 bits | a cleaner link: closer to 0.1439 |
 
 ### When it holds
 
@@ -100,7 +108,7 @@ with equality exactly when X and Y are independent.
 
 ### Step 0: entropy averages surprise, so conditioning is an average of averages
 
-Entropy is the average surprise, $-\log_2$ of the chance of what happened. Once the barometer is read, the forecaster's chances change to the chances within that reading's row of the table. So the surprise left is an ordinary entropy, computed row by row, and the overall amount left is those row entropies averaged by how often each row occurs. That is the same "average within groups, then average the group answers" move as the tower rule on [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md).
+Entropy is the average surprise, $`-\log_2`$ of the chance of what happened. Once the barometer is read, the forecaster's chances change to the chances within that reading's row of the table. So the surprise left is an ordinary entropy, computed row by row, and the overall amount left is those row entropies averaged by how often each row occurs. That is the same "average within groups, then average the group answers" move as the tower rule on [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md).
 
 The rest follows from one fact: the log of a product is the sum of the logs.
 
@@ -108,25 +116,31 @@ The rest follows from one fact: the log of a product is the sum of the logs.
 
 The chance of "falling and rain" is the chance of falling times the chance of rain given falling: 0.16 = 0.25 × 0.64. In general,
 
-$$P(X = x, Y = y) = P(X = x)\,P(Y = y \mid X = x).$$
+```math
+P(X = x, Y = y) = P(X = x)\,P(Y = y \mid X = x).
+```
 
-Take $-\log_2$ of both sides. The product becomes a sum: the surprise of the pair is the surprise of the reading plus the surprise of the rain given the reading.
+Take $`-\log_2`$ of both sides. The product becomes a sum: the surprise of the pair is the surprise of the reading plus the surprise of the rain given the reading.
 
 ### Step 2: the chain rule
 
-Average that sum over every cell of the table, weighting each cell by its chance. The left side averages to $H(X, Y)$. The first term on the right depends only on x, so its average is $H(X)$. The second term, averaged within each row and then across rows, is Step 0's $H(Y \mid X)$. So
+Average that sum over every cell of the table, weighting each cell by its chance. The left side averages to $`H(X, Y)`$. The first term on the right depends only on x, so its average is $`H(X)`$. The second term, averaged within each row and then across rows, is Step 0's $`H(Y \mid X)`$. So
 
-$$H(X, Y) = H(X) + H(Y \mid X).$$
+```math
+H(X, Y) = H(X) + H(Y \mid X).
+```
 
 On the barometer: 1.5395 + 0.7374 = 2.2769 bits, which is the entropy of the six cells computed directly.
 
 ### Step 3: the drop is the same from either side
 
-Split the pair the other way round, rain first: $H(X, Y) = H(Y) + H(X \mid Y)$. Two expressions for one number are equal:
+Split the pair the other way round, rain first: $`H(X, Y) = H(Y) + H(X \mid Y)`$. Two expressions for one number are equal:
 
-$$H(X) + H(Y \mid X) = H(Y) + H(X \mid Y).$$
+```math
+H(X) + H(Y \mid X) = H(Y) + H(X \mid Y).
+```
 
-Move terms across: $H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)$. The barometer removes 0.1439 bits from rain, and rain removes 0.1439 bits from the barometer, even though the two start from very different amounts, 0.8813 and 1.5395.
+Move terms across: $`H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)`$. The barometer removes 0.1439 bits from rain, and rain removes 0.1439 bits from the barometer, even though the two start from very different amounts, 0.8813 and 1.5395.
 
 ```
 the pair, 2.2769 bits, split two ways (█ first reading, ▒ what is left)
@@ -134,38 +148,42 @@ barometer, then rain   ███████████████████
 rain, then barometer   ██████████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒   0.8813 + 1.3956
 ```
 
-Both bars have the same length. The top bar starts with the longer piece, the barometer's 1.5395 bits against rain's 0.8813, and ends with the shorter one, 0.7374 against 1.3956, by exactly the same amount. The mutual information is what the two readings share: counted once in the pair, and twice if you add the two separate entropies. That gives the third form, $I = H(X) + H(Y) - H(X, Y)$, and with Step 1 written into it, a fourth:
+Both bars have the same length. The top bar starts with the longer piece, the barometer's 1.5395 bits against rain's 0.8813, and ends with the shorter one, 0.7374 against 1.3956, by exactly the same amount. The mutual information is what the two readings share: counted once in the pair, and twice if you add the two separate entropies. That gives the third form, $`I = H(X) + H(Y) - H(X, Y)`$, and with Step 1 written into it, a fourth:
 
-$$I(X; Y) = \sum_{x, y} P(X = x, Y = y)\,\log_2 \frac{P(X = x, Y = y)}{P(X = x)\,P(Y = y)}.$$
+```math
+I(X; Y) = \sum_{x, y} P(X = x, Y = y)\,\log_2 \frac{P(X = x, Y = y)}{P(X = x)\,P(Y = y)}.
+```
 
 Each term compares a real cell with the cell you would expect if the barometer and rain had nothing to do with each other.
 
 ### Step 4: conditioning never increases entropy
 
-The proof needs one fact about the natural logarithm: $\ln t \le t - 1$ for every positive t, with equality only at t = 1. The curve $\ln t$ touches the straight line $t - 1$ at t = 1 and bends away below it everywhere else.
+The proof needs one fact about the natural logarithm: $`\ln t \le t - 1`$ for every positive t, with equality only at t = 1. The curve $`\ln t`$ touches the straight line $`t - 1`$ at t = 1 and bends away below it everywhere else.
 
 Turn the fourth form upside down inside the log. Writing p(x, y) for P(X = x, Y = y), and p(x), p(y) for the chances of each reading alone, and adding only over cells with p(x, y) above zero,
 
-$$-I(X; Y) = \sum p(x, y)\,\log_2 \frac{p(x)\,p(y)}{p(x, y)} \;\le\; \frac{1}{\ln 2}\sum p(x, y)\left(\frac{p(x)\,p(y)}{p(x, y)} - 1\right) = \frac{1}{\ln 2}\left(\sum p(x)\,p(y) - 1\right) \le 0.$$
+```math
+-I(X; Y) = \sum p(x, y)\,\log_2 \frac{p(x)\,p(y)}{p(x, y)} \;\le\; \frac{1}{\ln 2}\sum p(x, y)\left(\frac{p(x)\,p(y)}{p(x, y)} - 1\right) = \frac{1}{\ln 2}\left(\sum p(x)\,p(y) - 1\right) \le 0.
+```
 
-The last step holds because $\sum p(x)\,p(y)$ over all cells is $1 \times 1 = 1$, and over only some of them it is at most 1. So $I(X; Y) \ge 0$, which is $H(Y \mid X) \le H(Y)$. Equality needs every ratio to be 1: every cell equals its row chance times its column chance, which is independence.
+The last step holds because $`\sum p(x)\,p(y)`$ over all cells is $`1 \times 1 = 1`$, and over only some of them it is at most 1. So $`I(X; Y) \ge 0`$, which is $`H(Y \mid X) \le H(Y)`$. Equality needs every ratio to be 1: every cell equals its row chance times its column chance, which is independence.
 
 Why can one reading still raise the uncertainty? Because rain after a falling barometer is 64%, nearer a coin toss than 30% is. The guarantee is about the average: the calmer steady and rising rows pull it back down, and the proof above says they always pull hard enough.
 
 ### Step 5: a noisy radio can only lose information
 
-Suppose 90% of readings arrive in town as sent, and a wrong one is equally likely to be either of the other two. Call the received reading Z. The forecaster now learns about rain from Z, and $I(Z; Y) = 0.0993$ bits, less than 0.1439.
+Suppose 90% of readings arrive in town as sent, and a wrong one is equally likely to be either of the other two. Call the received reading Z. The forecaster now learns about rain from Z, and $`I(Z; Y) = 0.0993`$ bits, less than 0.1439.
 
-That always happens, provided the radio's mistakes depend only on the reading and not on the weather. This is the **data processing inequality**: if Z is made from X alone, then $I(Z; Y) \le I(X; Y)$. No processing of a signal, clever or careless, adds information about anything else, such as tomorrow's rain.
+That always happens, provided the radio's mistakes depend only on the reading and not on the weather. This is the **data processing inequality**: if Z is made from X alone, then $`I(Z; Y) \le I(X; Y)`$. No processing of a signal, clever or careless, adds information about anything else, such as tomorrow's rain.
 
 <details>
 <summary>The proof, in four lines, from Steps 2 and 4</summary>
 
-Write $I(Y; X \mid Z)$ for mutual information computed within each value of Z and then averaged, exactly as Step 0 averaged entropies. The chain rule of Step 2, applied to the information the pair (X, Z) carries about Y, splits it two ways:
+Write $`I(Y; X \mid Z)`$ for mutual information computed within each value of Z and then averaged, exactly as Step 0 averaged entropies. The chain rule of Step 2, applied to the information the pair (X, Z) carries about Y, splits it two ways:
 
-$I(Y; X, Z) = I(Y; X) + I(Y; Z \mid X) = I(Y; Z) + I(Y; X \mid Z).$
+$`I(Y; X, Z) = I(Y; X) + I(Y; Z \mid X) = I(Y; Z) + I(Y; X \mid Z).`$
 
-Once X is known, Z is X plus radio noise that ignores the weather, so Z adds nothing about Y: $I(Y; Z \mid X) = 0$. Step 4, applied within each value of Z, gives $I(Y; X \mid Z) \ge 0$. So $I(Y; X) \ge I(Y; Z)$.
+Once X is known, Z is X plus radio noise that ignores the weather, so Z adds nothing about Y: $`I(Y; Z \mid X) = 0`$. Step 4, applied within each value of Z, gives $`I(Y; X \mid Z) \ge 0`$. So $`I(Y; X) \ge I(Y; Z)`$.
 
 </details>
 
@@ -216,8 +234,8 @@ The short-record row breaks the first item of "When it holds": the true mutual i
 
 The script builds the 100-morning table and reaches the mutual information **four independent ways**:
 
-1. row by row, as $H(Y) - H(Y \mid X)$;
-2. through the joint entropy, as $H(X) + H(Y) - H(X, Y)$;
+1. row by row, as $`H(Y) - H(Y \mid X)`$;
+2. through the joint entropy, as $`H(X) + H(Y) - H(X, Y)`$;
 3. as the direct sum over the six cells;
 4. by drawing 200,000 synthetic mornings from the table with a SplitMix64 random-number generator (seed 2026, written out in both languages) and counting.
 
@@ -582,10 +600,10 @@ The two outputs match line for line, simulated numbers included, because both pr
 
 Lean proves the chain rule, the symmetry and "conditioning never increases entropy" for every joint table on two readings with finitely many values.
 
-- Take a joint table whose chances are each at least 0 and add to 1. Then $H(Y \mid X) \le H(Y)$, so $I(X; Y) \ge 0$.
-- Take the same table. Then $H(Y \mid X) = H(Y)$ exactly when every cell equals its row chance times its column chance.
-- Take the same table. Then $H(X, Y) = H(X) + H(Y \mid X)$, the chain rule.
-- Take the same table. Then $H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)$, and both equal $H(X) + H(Y) - H(X, Y)$.
+- Take a joint table whose chances are each at least 0 and add to 1. Then $`H(Y \mid X) \le H(Y)`$, so $`I(X; Y) \ge 0`$.
+- Take the same table. Then $`H(Y \mid X) = H(Y)`$ exactly when every cell equals its row chance times its column chance.
+- Take the same table. Then $`H(X, Y) = H(X) + H(Y \mid X)`$, the chain rule.
+- Take the same table. Then $`H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)`$, and both equal $`H(X) + H(Y) - H(X, Y)`$.
 - The 100 mornings add up: rows of 25, 45 and 30, with 30 rainy mornings in all.
 - The chance of falling and rain splits as 0.16 = 0.25 × 0.64, as in Step 1.
 - In the Try changing table `[6, 14], [15, 35], [9, 21]`, each cell is row total times column total over 100.
@@ -847,7 +865,7 @@ example : 6 * 100 = 20 * 30 ∧ 14 * 100 = 20 * 70 ∧ 15 * 100 = 50 * 30 ∧ 35
 ## The usual mistake
 
 > [!warning]
-> **Believing every reading must reduce uncertainty.** It need not. A falling barometer moves the forecaster from 0.8813 to 0.9427 bits, because 64% rain is a closer call than 30%. The theorem is $H(Y \mid X) \le H(Y)$, an average over readings weighted by how often they occur. A forecaster who learns one surprising fact can honestly be less sure than before.
+> **Believing every reading must reduce uncertainty.** It need not. A falling barometer moves the forecaster from 0.8813 to 0.9427 bits, because 64% rain is a closer call than 30%. The theorem is $`H(Y \mid X) \le H(Y)`$, an average over readings weighted by how often they occur. A forecaster who learns one surprising fact can honestly be less sure than before.
 >
 > Smaller traps:
 > - **Swapping the two conditional entropies.** H(Y | X) is 0.7374 bits; H(X | Y) is 1.3956. Only their drops from H(Y) and H(X) are equal, both 0.1439.
@@ -888,7 +906,7 @@ This card measured what a reading tells, given the table; how close a real link 
 
 Verified 2026-11-11: every link below resolves to the publisher's or the book's own page.
 
-- Shannon, C. E. "A Mathematical Theory of Communication." *Bell System Technical Journal* 27, no. 3 (1948): 379–423. [doi:10.1002/j.1538-7305.1948.tb01338.x](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x). The origin of conditional entropy, the chain rule and the inequality $H(Y \mid X) \le H(Y)$.
+- Shannon, C. E. "A Mathematical Theory of Communication." *Bell System Technical Journal* 27, no. 3 (1948): 379–423. [doi:10.1002/j.1538-7305.1948.tb01338.x](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x). The origin of conditional entropy, the chain rule and the inequality $`H(Y \mid X) \le H(Y)`$.
 - Cover, Thomas M., and Joy A. Thomas. *Elements of Information Theory*, 2nd ed. Wiley, 2006. [Publisher page](https://www.wiley.com/en-us/Elements+of+Information+Theory%2C+2nd+Edition-p-9780471241959). Chapter 2: joint and conditional entropy, mutual information, the chain rules and the data processing inequality, in the form used here.
 - MacKay, David J. C. *Information Theory, Inference, and Learning Algorithms*. Cambridge University Press, 2003. [The book's page, with the full text](https://www.inference.org.uk/itila/book.html). Chapter 8: joint, conditional and mutual information on small tables, including a single outcome that raises the uncertainty while the average falls.
 - Paninski, Liam. "Estimation of Entropy and Mutual Information." *Neural Computation* 15, no. 6 (2003): 1191–1253. [doi:10.1162/089976603321780272](https://doi.org/10.1162/089976603321780272). Why estimates from short records are biased upward, and the first-order (Miller–Madow) correction quoted in The usual mistake.

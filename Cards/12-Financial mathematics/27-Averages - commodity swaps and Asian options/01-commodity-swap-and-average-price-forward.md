@@ -40,42 +40,48 @@ Bars: the strip, today's price for each month's average. Line: the fixed price, 
 
 ## The formula
 
-Notation first, in words. The months are numbered $i$ = 1 to $n$, with $n$ = 12. Month $i$ settles at $t_i = i/12$ years. The **discount factor** $D(t_i) = e^{-r t_i}$ is what one dollar paid at $t_i$ is worth today, with $r$ the riskless rate, continuously compounded. The strip price for month $i$ is $F_i$. The fixed price is $K$, and $Q$ is the barrels per month. A capital sigma, $\sum_{i=1}^{n}$, means "add the following over the months 1 to $n$".
+Notation first, in words. The months are numbered $`i`$ = 1 to $`n`$, with $`n`$ = 12. Month $`i`$ settles at $`t_i = i/12`$ years. The **discount factor** $`D(t_i) = e^{-r t_i}`$ is what one dollar paid at $`t_i`$ is worth today, with $`r`$ the riskless rate, continuously compounded. The strip price for month $`i`$ is $`F_i`$. The fixed price is $`K`$, and $`Q`$ is the barrels per month. A capital sigma, $`\sum_{i=1}^{n}`$, means "add the following over the months 1 to $`n`$".
 
-Month $i$'s floating payment uses the average of its $m$ daily prices, $S_{i,1}$ to $S_{i,m}$:
+Month $`i`$'s floating payment uses the average of its $`m`$ daily prices, $`S_{i,1}`$ to $`S_{i,m}`$:
 
-$$\bar S_i = \frac{1}{m}\sum_{j=1}^{m} S_{i,j}.$$
+```math
+\bar S_i = \frac{1}{m}\sum_{j=1}^{m} S_{i,j}.
+```
 
 The value of the swap today, to the side paying fixed, and the fixed price that sets it to zero:
 
-$$V = Q\sum_{i=1}^{n} D(t_i)\,\big(F_i - K\big), \qquad K^\ast = \frac{\sum_{i=1}^{n} D(t_i)\,F_i}{\sum_{i=1}^{n} D(t_i)}.$$
+```math
+V = Q\sum_{i=1}^{n} D(t_i)\,\big(F_i - K\big), \qquad K^\ast = \frac{\sum_{i=1}^{n} D(t_i)\,F_i}{\sum_{i=1}^{n} D(t_i)}.
+```
 
 **Read it aloud:** each month is worth its barrels times the gap between its strip price and the fixed price, shrunk to today's money; the fair fixed price is the strip averaged with the discount factors as weights.
 
-The bottom of $K^\ast$ has a name. The sum $A = \sum_{i=1}^{n} D(t_i)$ is the **annuity**: today's value of one dollar paid at each of the twelve month ends. After the strip moves to new prices $F'_i$, with new fair fixed price $K'$, the old swap's value takes two equal forms:
+The bottom of $`K^\ast`$ has a name. The sum $`A = \sum_{i=1}^{n} D(t_i)`$ is the **annuity**: today's value of one dollar paid at each of the twelve month ends. After the strip moves to new prices $`F'_i`$, with new fair fixed price $`K'`$, the old swap's value takes two equal forms:
 
-$$V = Q\sum_{i=1}^{n} D(t_i)\,\big(F'_i - K\big) = Q\,\big(K' - K\big)\,A.$$
+```math
+V = Q\sum_{i=1}^{n} D(t_i)\,\big(F'_i - K\big) = Q\,\big(K' - K\big)\,A.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | value of the swap today to the side paying fixed | 0 at the start; $234,666.66 after the strip moves | is the answer |
-| $K$ | the fixed price written in the contract | $101.98 | $V$ falls by $Q\,A$ per dollar |
-| $K^\ast$, $K'$ | the fair fixed price today; the fair fixed price after the strip moves | $101.98; $103.99 | — |
-| $F_i$, $F'_i$ | today's strip price for month $i$'s average; the same after the move | $100.00 to $104.00; $103 to $105 | $V$ rises by $Q\,D(t_i)$ per dollar |
-| $\bar S_i$ | month $i$'s average of its daily prices, known only at month end | the number on the supplier's bill | — |
-| $S_{i,j}$, $f$ | the published price on pricing day $j$ of month $i$; today's forward price for one such day | — | — |
-| $n$, $i$ | number of months; which month | 12 | — |
-| $m$, $j$, $k$ | pricing days in a month; which day; days already fixed | 22; —; 11 in the mid-month mark | more days: a smoother average, same value |
-| $Q$ | barrels per month | 10,000 | scales $V$ |
-| $t_i$, $D(t_i)$, $r$ | settlement date in years; its discount factor $e^{-r t_i}$; the riskless rate | $1/12$ and 0.99584 for month 1; 5% | $r$ up: later months weigh less |
-| $A$ | the annuity, $\sum D(t_i)$ | 11.68 | — |
-| $\sigma$ | volatility of the jet fuel price, used only by the simulation | 20% and 40% | no effect on $V$ or $K^\ast$ |
+| $`V`$ | value of the swap today to the side paying fixed | 0 at the start; $234,666.66 after the strip moves | is the answer |
+| $`K`$ | the fixed price written in the contract | $101.98 | $`V`$ falls by $`Q\,A`$ per dollar |
+| $`K^\ast`$, $`K'`$ | the fair fixed price today; the fair fixed price after the strip moves | $101.98; $103.99 | — |
+| $`F_i`$, $`F'_i`$ | today's strip price for month $`i`$'s average; the same after the move | $100.00 to $104.00; $103 to $105 | $`V`$ rises by $`Q\,D(t_i)`$ per dollar |
+| $`\bar S_i`$ | month $`i`$'s average of its daily prices, known only at month end | the number on the supplier's bill | — |
+| $`S_{i,j}`$, $`f`$ | the published price on pricing day $`j`$ of month $`i`$; today's forward price for one such day | — | — |
+| $`n`$, $`i`$ | number of months; which month | 12 | — |
+| $`m`$, $`j`$, $`k`$ | pricing days in a month; which day; days already fixed | 22; —; 11 in the mid-month mark | more days: a smoother average, same value |
+| $`Q`$ | barrels per month | 10,000 | scales $`V`$ |
+| $`t_i`$, $`D(t_i)`$, $`r`$ | settlement date in years; its discount factor $`e^{-r t_i}`$; the riskless rate | $`1/12`$ and 0.99584 for month 1; 5% | $`r`$ up: later months weigh less |
+| $`A`$ | the annuity, $`\sum D(t_i)`$ | 11.68 | — |
+| $`\sigma`$ | volatility of the jet fuel price, used only by the simulation | 20% and 40% | no effect on $`V`$ or $`K^\ast`$ |
 
 ### When it holds
 
 - **Rates known today.** The discount factors are fixed numbers. If rates move with the fuel price and the hedge is a daily-margined futures contract, a small convexity gap opens ([Futures](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md)); for a one-year fuel swap it is small.
 - **The strip quotes the same index.** The formula prices the average the strip quotes. An airline that hedges jet fuel with heating oil prices carries **basis risk**, the gap between two related prices, and no formula on this card removes it.
-- **No default.** Each side is assumed to pay. The chance that one side fails is priced separately, as a charge on the value $V$.
+- **No default.** Each side is assumed to pay. The chance that one side fails is priced separately, as a charge on the value $`V`$.
 - **Dates fixed in advance.** Pricing days and payment dates are set by the contract and do not depend on the price.
 - **A straight-line payoff.** Add a cap, a floor or a right to extend, and volatility returns: that is the Asian option of [The Asian option desks trade](03-arithmetic-asian-option.md).
 
@@ -91,20 +97,20 @@ Every payment in the swap is a fixed number of barrels times either a fixed pric
 
 ### Step 1: one day's price, paid at month end
 
-Take the promise "pay one barrel's price on pricing day $j$ of month $i$, in cash, at the month's end $t_i$". Write $f$ for the forward price today for that day's price. A forward is a contract that trades that day's price for $f$ at no cost today, so the promise is worth the same as $f$ dollars paid at $t_i$, which is $D(t_i)\,f$ today.
+Take the promise "pay one barrel's price on pricing day $`j`$ of month $`i`$, in cash, at the month's end $`t_i`$". Write $`f`$ for the forward price today for that day's price. A forward is a contract that trades that day's price for $`f`$ at no cost today, so the promise is worth the same as $`f`$ dollars paid at $`t_i`$, which is $`D(t_i)\,f`$ today.
 
 The only wrinkle is timing: the forward settles on the pricing day, the swap a little later at month end. Holding slightly fewer forwards and banking the proceeds until month end fixes it; the folded proof below does the arithmetic.
 
 <details>
 <summary>Detailed proof: one day's price, paid later</summary>
 
-Let pricing day $j$ of month $i$ fall at date $d$, in years, before the payment date $t_i$. Today, enter $e^{-r(t_i - d)}$ forward contracts on day $d$'s price at forward price $f$, costing nothing. On day $d$ they pay $e^{-r(t_i - d)}\,(S_{i,j} - f)$. Bank it at rate $r$ until $t_i$: it grows to exactly $S_{i,j} - f$. So "receive $S_{i,j}$ at $t_i$" equals this position plus "receive $f$ at $t_i$". The position cost nothing; receiving $f$ at $t_i$ is worth $D(t_i)\,f$ today. If the promise traded at any other price, selling the dearer side and buying the cheaper would lock in a riskless profit. Rates known today are used once, in the fixed count $e^{-r(t_i - d)}$.
+Let pricing day $`j`$ of month $`i`$ fall at date $`d`$, in years, before the payment date $`t_i`$. Today, enter $`e^{-r(t_i - d)}`$ forward contracts on day $`d`$'s price at forward price $`f`$, costing nothing. On day $`d`$ they pay $`e^{-r(t_i - d)}\,(S_{i,j} - f)`$. Bank it at rate $`r`$ until $`t_i`$: it grows to exactly $`S_{i,j} - f`$. So "receive $`S_{i,j}`$ at $`t_i`$" equals this position plus "receive $`f`$ at $`t_i`$". The position cost nothing; receiving $`f`$ at $`t_i`$ is worth $`D(t_i)\,f`$ today. If the promise traded at any other price, selling the dearer side and buying the cheaper would lock in a riskless profit. Rates known today are used once, in the fixed count $`e^{-r(t_i - d)}`$.
 
 </details>
 
 ### Step 2: the average is worth the average of the forwards
 
-Month $i$ pays $\bar S_i$, the average of $m$ daily prices. An average is a sum divided by $m$, a straight line again. So its value is the average of the $m$ pieces from Step 1: $D(t_i)$ times the average of the daily forward prices. That average of forwards is what the strip quotes as $F_i$. The month is worth $D(t_i)\,F_i$ per barrel.
+Month $`i`$ pays $`\bar S_i`$, the average of $`m`$ daily prices. An average is a sum divided by $`m`$, a straight line again. So its value is the average of the $`m`$ pieces from Step 1: $`D(t_i)`$ times the average of the daily forward prices. That average of forwards is what the strip quotes as $`F_i`$. The month is worth $`D(t_i)\,F_i`$ per barrel.
 
 This is why the month is an **Asian forward** rather than a European one. A European forward settles on one date's price, and its value uses the forward for that date. An Asian forward settles on an average, and its value uses the average of the forwards for all its dates.
 
@@ -114,19 +120,19 @@ A European forward on the month-end price keeps all 10,000 barrels exposed until
 
 ### Step 3: add the months, and set the value to zero
 
-The floating leg is worth $Q \sum D(t_i)\,F_i$. The fixed leg, $K$ per barrel on $Q$ barrels each month, is worth $Q\,K \sum D(t_i)$. Their difference is $V$. Setting $V$ = 0 and solving for $K$ gives $K^\ast$.
+The floating leg is worth $`Q \sum D(t_i)\,F_i`$. The fixed leg, $`K`$ per barrel on $`Q`$ barrels each month, is worth $`Q\,K \sum D(t_i)`$. Their difference is $`V`$. Setting $`V`$ = 0 and solving for $`K`$ gives $`K^\ast`$.
 
-The weights $D(t_i)/A$ are positive and add to 1, so $K^\ast$ is a true average of the strip. The early months weigh more because their money arrives sooner. On a rising strip, in **contango**, the cheap early months pull $K^\ast$ below the plain average: $101.98, not $102.00.
+The weights $`D(t_i)/A`$ are positive and add to 1, so $`K^\ast`$ is a true average of the strip. The early months weigh more because their money arrives sooner. On a rising strip, in **contango**, the cheap early months pull $`K^\ast`$ below the plain average: $101.98, not $102.00.
 
 ### Step 4: after the strip moves, the mark
 
-The **mark** is the value of a contract already written, at today's prices. The contract is written; $K$ is fixed. A later morning brings a new strip $F'_i$. Steps 1 to 3 still price each month, now with $F'_i$: the value is $Q \sum D(t_i)(F'_i - K)$, the discounted sum of the twelve gaps between the new strip and the old fixed price.
+The **mark** is the value of a contract already written, at today's prices. The contract is written; $`K`$ is fixed. A later morning brings a new strip $`F'_i`$. Steps 1 to 3 still price each month, now with $`F'_i`$: the value is $`Q \sum D(t_i)(F'_i - K)`$, the discounted sum of the twelve gaps between the new strip and the old fixed price.
 
-A second road gives the same number with no sum over gaps. Enter a new swap in the opposite direction at today's fair fixed price $K'$: it costs nothing. The two floating legs now cancel. What remains is receiving $K'$ and paying $K$ on $Q$ barrels every month, a fixed stream worth $Q\,(K' - K)\,A$. The two expressions agree because $K'$ was defined to make $\sum D(t_i)(F'_i - K') = 0$.
+A second road gives the same number with no sum over gaps. Enter a new swap in the opposite direction at today's fair fixed price $`K'`$: it costs nothing. The two floating legs now cancel. What remains is receiving $`K'`$ and paying $`K`$ on $`Q`$ barrels every month, a fixed stream worth $`Q\,(K' - K)\,A`$. The two expressions agree because $`K'`$ was defined to make $`\sum D(t_i)(F'_i - K') = 0`$.
 
 ### Step 5: a month already under way
 
-Part-way through month 1, $k$ of its $m$ prices are published. Each published daily price is a **fixing**. Those are banked: they are numbers, not prices to hedge. The month's expected average becomes $(k \times \text{banked average} + (m - k) \times F'_1)/m$, and only the $(m - k)/m$ share still moves with the market. Everything else is Step 4 with discount factors counted from the new date.
+Part-way through month 1, $`k`$ of its $`m`$ prices are published. Each published daily price is a **fixing**. Those are banked: they are numbers, not prices to hedge. The month's expected average becomes $`(k \times \text{banked average} + (m - k) \times F'_1)/m`$, and only the $`(m - k)/m`$ share still moves with the market. Everything else is Step 4 with discount factors counted from the new date.
 
 The same weighted average appears on interest-rate curves: the fixed rate on a par swap is the discount-weighted average of the forward rates ([Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md)). A commodity swap is that construction with fuel prices where the forward rates were.
 
@@ -134,21 +140,21 @@ The same weighted average appears on interest-rate curves: the fixed rate on a p
 
 ## Worked numbers, by hand
 
-The jet fuel swap: $Q$ = 10,000 barrels, $n$ = 12 months, $r$ = 5%, strip $100.00 to $104.00 in equal steps.
+The jet fuel swap: $`Q`$ = 10,000 barrels, $`n`$ = 12 months, $`r`$ = 5%, strip $100.00 to $104.00 in equal steps.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| month 1's discount factor | $e^{-0.05 \times 1/12}$ | 0.99584 |
-| month 12's discount factor | $e^{-0.05 \times 1}$ | 0.95123 |
-| annuity $A$ | 0.99584 + 0.99170 + … + 0.95123 | 11.6806 |
+| month 1's discount factor | $`e^{-0.05 \times 1/12}`$ | 0.99584 |
+| month 12's discount factor | $`e^{-0.05 \times 1}`$ | 0.95123 |
+| annuity $`A`$ | 0.99584 + 0.99170 + … + 0.95123 | 11.6806 |
 | weighted strip | 0.99584 × 100.00 + … + 0.95123 × 104.00 | 1191.207 |
-| fair fixed price $K^\ast$ | 1191.207 ÷ 11.6806 | **$101.98** |
-| check by root finding | the $K$ at which $V$ = 0 | $101.98 |
+| fair fixed price $`K^\ast`$ | 1191.207 ÷ 11.6806 | **$101.98** |
+| check by root finding | the $`K`$ at which $`V`$ = 0 | $101.98 |
 | plain average, for comparison | (100.00 + … + 104.00) ÷ 12 | $102.00 |
 
-Month by month at $K$ = $101.98. The last column is the month's **delta**: dollars gained per $1 rise in that month's strip price, $Q\,D(t_i)$.
+Month by month at $`K`$ = $101.98. The last column is the month's **delta**: dollars gained per $1 rise in that month's strip price, $`Q\,D(t_i)`$.
 
-| Month | Strip $F_i$ | $D(t_i)$ | Gap $F_i - K$ | Present value of the gap, $ | Delta, $ per $1 |
+| Month | Strip $`F_i`$ | $`D(t_i)`$ | Gap $`F_i - K`$ | Present value of the gap, $ | Delta, $ per $1 |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 100.00 | 0.99584 | −1.9819 | −19,736.94 | 9,958.42 |
 | 2 | 100.36 | 0.99170 | −1.6219 | −16,084.75 | 9,917.01 |
@@ -188,10 +194,10 @@ That afternoon jet fuel rallies. The front month rises $3 and the twelfth month 
 
 | Road | Arithmetic | Value to the airline |
 | --- | --- | --- |
-| New fair fixed price $K'$ | the new strip, discount-weighted | $103.99 |
-| Gap $K' - K$ | 103.99 − 101.98 | $2.01 |
-| Twelve discounted gaps | $Q \sum D(t_i)(F'_i - K)$ | $234,666.66 |
-| Offsetting swap | $Q\,(K' - K)\,A$ = 10,000 × 2.009034 × 11.680570 | $234,666.66 |
+| New fair fixed price $`K'`$ | the new strip, discount-weighted | $103.99 |
+| Gap $`K' - K`$ | 103.99 − 101.98 | $2.01 |
+| Twelve discounted gaps | $`Q \sum D(t_i)(F'_i - K)`$ | $234,666.66 |
+| Offsetting swap | $`Q\,(K' - K)\,A`$ = 10,000 × 2.009034 × 11.680570 | $234,666.66 |
 
 The airline could close the position at this price: enter the opposite swap at $103.99 and collect the $2.01 difference on 10,000 barrels for twelve months.
 
@@ -202,9 +208,9 @@ Now eleven of month 1's 22 pricing days are published, averaging $102.60, and th
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | month 1's expected average | (11 × 102.60 + 11 × 103.00) ÷ 22 | $102.80 |
-| month 1's discount factor, from the new date | $e^{-0.05 \times 11/264}$ | 0.997919 |
+| month 1's discount factor, from the new date | $`e^{-0.05 \times 11/264}`$ | 0.997919 |
 | the mark, by months | Step 4 with month 1's average replaced | $233,160.22 |
-| the mark, by offsetting swap | the same, as $Q\,(K' - K)\,A$ from the new date | $233,160.22 |
+| the mark, by offsetting swap | the same, as $`Q\,(K' - K)\,A`$ from the new date | $233,160.22 |
 | the mark, simulated from the new date | 20,000 path pairs at 20% volatility | $233,724.43, standard error $911.44 |
 | month 1's delta, by bumping its forward $1 | half of its barrels still float | $4,989.59 |
 
@@ -228,7 +234,7 @@ A European forward on the month-end price would sit at 10,000 barrels until the 
 | Greek | Meaning | Value at the start |
 | --- | --- | --- |
 | Delta, parallel | dollars gained per $1 rise in every month of the strip | $116,805.70 |
-| Delta, month $i$ | dollars per $1 rise in month $i$ alone: $Q\,D(t_i)$ | $9,958.42 for month 1, $9,512.29 for month 12 |
+| Delta, month $`i`$ | dollars per $1 rise in month $`i`$ alone: $`Q\,D(t_i)`$ | $9,958.42 for month 1, $9,512.29 for month 12 |
 | Gamma | change in delta per $1 move | 0: the value is a straight line in the strip |
 | Vega | change per unit of volatility | 0; the simulated value at the fair price is $912.12 (standard error $976.36) at 20% and $3,548.74 (standard error $3,904.16) at 40%, both zero within noise |
 | Rho | change if rates rise 1 percentage point | −$419.72: the airline's gains lie in the later months, which rates shrink most |
@@ -651,9 +657,9 @@ The two outputs match line for line. Bisection lands on the weighted strip to si
 
 Lean proves the card's three pricing facts, for every number of months, settlement dates and strip that meet each fact's conditions.
 
-- Suppose there is at least one month and $Q > 0$. Then $V = 0$ exactly when $K = K^\ast$, the strip averaged with discount factors as weights.
-- Take the contract's fixed price $K$ and a new strip $F'_i$. Then $Q\sum D(t_i)(F'_i - K)$ equals $Q\,(K' - K)\,A$, the offsetting swap's value.
-- Suppose the strip never falls from one month to the next, settlement dates come in order, and $r \ge 0$. Then $K^\ast$ is at most the plain average.
+- Suppose there is at least one month and $`Q > 0`$. Then $`V = 0`$ exactly when $`K = K^\ast`$, the strip averaged with discount factors as weights.
+- Take the contract's fixed price $`K`$ and a new strip $`F'_i`$. Then $`Q\sum D(t_i)(F'_i - K)`$ equals $`Q\,(K' - K)\,A`$, the offsetting swap's value.
+- Suppose the strip never falls from one month to the next, settlement dates come in order, and $`r \ge 0`$. Then $`K^\ast`$ is at most the plain average.
 - The card's strip, $100.00 to $104.00 in equal steps, has a plain average of exactly $102.00.
 - With 22, 11 or 0 fixings left of 22, month 1 has 10,000, 5,000 or 0 barrels still exposed.
 
@@ -803,7 +809,7 @@ example : (10000 : ℚ) * 11 / 22 = 5000 ∧ (10000 : ℚ) * 22 / 22 = 10000 ∧
 - [Contango and backwardation](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md): how to read a strip, and why a rising one pulls the fixed price below the plain average.
 - [Valuing an old currency forward](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/04-fx-forward-value-after-inception.md): the discounted-gap mark for a currency forward, with the discount factor taken in the currency the gap is paid in.
 - [An old forward](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md): one forward's mark as the discounted gap; this card adds twelve of them.
-- [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md): discount factors, and the par rate as a discount-weighted average of forwards, the same construction as $K^\ast$.
+- [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md): discount factors, and the par rate as a discount-weighted average of forwards, the same construction as $`K^\ast`$.
 
 ## Where this goes next
 

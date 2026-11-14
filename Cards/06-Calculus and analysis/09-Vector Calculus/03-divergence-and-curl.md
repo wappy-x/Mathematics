@@ -26,32 +26,38 @@ To scale: dashed squares 20 m across at 5 units per metre; arrows from the dots 
 
 ## The formula
 
-Notation first, in words. A **vector field** $F$ puts an arrow at every point. Here $F$ is the wind, with east, north and upward parts $P$, $Q$, $R$ in m/s. The point sits $x$ m east, $y$ m north and $z$ m up from the mast. Its divergence is written $\operatorname{div} F$, its curl $\operatorname{curl} F$; many books write $\nabla \cdot F$ and $\nabla \times F$, "del dot F" and "del cross F".
+Notation first, in words. A **vector field** $`F`$ puts an arrow at every point. Here $`F`$ is the wind, with east, north and upward parts $`P`$, $`Q`$, $`R`$ in m/s. The point sits $`x`$ m east, $`y`$ m north and $`z`$ m up from the mast. Its divergence is written $`\mathrm{div}\, F`$, its curl $`\mathrm{curl}\, F`$; many books write $`\nabla \cdot F`$ and $`\nabla \times F`$, "del dot F" and "del cross F".
 
-$$\operatorname{div} F = \frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}$$
+```math
+\mathrm{div}\, F = \frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}
+```
 
 **Read it aloud:** add each part's rate of change along its own direction.
 
-$$\operatorname{curl} F = \left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z},\ \frac{\partial P}{\partial z}-\frac{\partial R}{\partial x},\ \frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)$$
+```math
+\mathrm{curl}\, F = \left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z},\ \frac{\partial P}{\partial z}-\frac{\partial R}{\partial x},\ \frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)
+```
 
 **Read it aloud:** for each axis, the turning in the plane at right angles to it: one cross rate minus the other.
 
-The curl is a vector along the spin axis, by the right-hand rule: fingers with the turning, thumb along the curl. A flat wind, unchanging with height, keeps only the last part, $\partial Q/\partial x - \partial P/\partial y$, pointing up for anticlockwise turning seen from above. The card's wind:
+The curl is a vector along the spin axis, by the right-hand rule: fingers with the turning, thumb along the curl. A flat wind, unchanging with height, keeps only the last part, $`\partial Q/\partial x - \partial P/\partial y`$, pointing up for anticlockwise turning seen from above. The card's wind:
 
-$$P = 3 + 0.0003\,(x^2 - y^2) + x^3/400000, \qquad Q = 0.0006\,xy, \qquad R = 0$$
+```math
+P = 3 + 0.0003\,(x^2 - y^2) + x^3/400000, \qquad Q = 0.0006\,xy, \qquad R = 0
+```
 
 Each rate is m/s per metre, so divergence and curl are **per second**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$; $P$, $Q$, $R$ | the wind; its east, north, up parts, m/s | at S: 3.640, 0, 0 | neither number moves for a steady extra breeze |
-| $x$, $y$, $z$ | metres east, north, up from the mast | S (40, 0), E (0, 50) | — |
-| $\partial P/\partial x$, $\partial Q/\partial y$ | own-direction rates, per second | at S: 0.036, 0.024 | more divergence |
-| $\partial Q/\partial x$, $\partial P/\partial y$ | cross rates, per second | at E: 0.030, −0.030 | — |
-| $\operatorname{div} F$ | net outflow per unit area (volume, in space) | 0.06 at S | negative means gathering in |
-| $\operatorname{curl} F$ | circulation per unit area, along the spin axis | (0, 0, 0.06) at E | faster turning |
-| $\ell$, $\Phi$, $\Gamma$ | a small square's side; outflow across its edges; circulation along them | side 10 m: 0.0600625 at S, 0.06 at E, per unit area | — |
-| $\omega$ | spin rate of a tiny patch of air, rad/s | 0.03 at E | half the curl |
+| $`F`$; $`P`$, $`Q`$, $`R`$ | the wind; its east, north, up parts, m/s | at S: 3.640, 0, 0 | neither number moves for a steady extra breeze |
+| $`x`$, $`y`$, $`z`$ | metres east, north, up from the mast | S (40, 0), E (0, 50) | — |
+| $`\partial P/\partial x`$, $`\partial Q/\partial y`$ | own-direction rates, per second | at S: 0.036, 0.024 | more divergence |
+| $`\partial Q/\partial x`$, $`\partial P/\partial y`$ | cross rates, per second | at E: 0.030, −0.030 | — |
+| $`\mathrm{div}\, F`$ | net outflow per unit area (volume, in space) | 0.06 at S | negative means gathering in |
+| $`\mathrm{curl}\, F`$ | circulation per unit area, along the spin axis | (0, 0, 0.06) at E | faster turning |
+| $`\ell`$, $`\Phi`$, $`\Gamma`$ | a small square's side; outflow across its edges; circulation along them | side 10 m: 0.0600625 at S, 0.06 at E, per unit area | — |
+| $`\omega`$ | spin rate of a tiny patch of air, rad/s | 0.03 at E | half the curl |
 
 ### When it holds
 
@@ -71,42 +77,48 @@ Near a spot, the wind is the spot's own wind plus the four rates times the dista
 
 ### Step 1: outflow across a small square gives the divergence
 
-Draw a square of side $\ell$ round the spot. Air leaves through the east edge at the east wind there, times $\ell$, and enters through the west edge likewise. The pair nets the change of $P$ across the square, times $\ell$: about $(\partial P/\partial x)\,\ell^2$. North and south give $(\partial Q/\partial y)\,\ell^2$. Divide the outflow $\Phi$ by the area:
+Draw a square of side $`\ell`$ round the spot. Air leaves through the east edge at the east wind there, times $`\ell`$, and enters through the west edge likewise. The pair nets the change of $`P`$ across the square, times $`\ell`$: about $`(\partial P/\partial x)\,\ell^2`$. North and south give $`(\partial Q/\partial y)\,\ell^2`$. Divide the outflow $`\Phi`$ by the area:
 
-$$\frac{\Phi}{\ell^2} \to \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} \quad \text{as } \ell \to 0.$$
+```math
+\frac{\Phi}{\ell^2} \to \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} \quad \text{as } \ell \to 0.
+```
 
-At S, edge sums with no derivatives give 0.061 for a 40 m square, 0.06025 for 20 m, 0.0600625 for 10 m, 0.060015625 for 5 m. The gap, from the $x^3$ term, falls four-fold as the side halves; to land within 0.0001 of 0.06, a 10 m square suffices. In space, a cube adds $\partial R/\partial z$.
+At S, edge sums with no derivatives give 0.061 for a 40 m square, 0.06025 for 20 m, 0.0600625 for 10 m, 0.060015625 for 5 m. The gap, from the $`x^3`$ term, falls four-fold as the side halves; to land within 0.0001 of 0.06, a 10 m square suffices. In space, a cube adds $`\partial R/\partial z`$.
 
 ### Step 2: circulation round a small square gives the curl
 
-Walk the square anticlockwise, adding each edge's along-edge wind times its length: the **circulation** $\Gamma$ ([Line integrals of a field](02-line-integrals.md)). The east edge, walked north, collects $Q$; the west edge, walked south, gives it back. The pair nets about $(\partial Q/\partial x)\,\ell^2$. The south edge is walked east and the north edge west, netting about $-(\partial P/\partial y)\,\ell^2$. So
+Walk the square anticlockwise, adding each edge's along-edge wind times its length: the **circulation** $`\Gamma`$ ([Line integrals of a field](02-line-integrals.md)). The east edge, walked north, collects $`Q`$; the west edge, walked south, gives it back. The pair nets about $`(\partial Q/\partial x)\,\ell^2`$. The south edge is walked east and the north edge west, netting about $`-(\partial P/\partial y)\,\ell^2`$. So
 
-$$\frac{\Gamma}{\ell^2} \to \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \quad \text{as } \ell \to 0.$$
+```math
+\frac{\Gamma}{\ell^2} \to \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \quad \text{as } \ell \to 0.
+```
 
 At E, 0.030 − (−0.030) = 0.06, and the edge sums give 0.06 at every side, since this wind's curl changes evenly across the square. The other two curl parts are the same walk in the other two planes, anticlockwise seen from each axis's tip: the cross product's cyclic order ([Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)).
 
 <details>
 <summary>Detailed proof: the square ratios tend to the formulas</summary>
 
-With continuous rates the wind at offset $(u, v)$ is the spot's wind plus $(a u + b v,\ c u + d v)$, with $a, b, c, d$ the rates $\partial P/\partial x$, $\partial P/\partial y$, $\partial Q/\partial x$, $\partial Q/\partial y$, plus a remainder: for any $\varepsilon > 0$ some $\delta > 0$ keeps it at most $\varepsilon \cdot r$ at offsets of length $r < \delta$.
+With continuous rates the wind at offset $`(u, v)`$ is the spot's wind plus $`(a u + b v,\ c u + d v)`$, with $`a, b, c, d`$ the rates $`\partial P/\partial x`$, $`\partial P/\partial y`$, $`\partial Q/\partial x`$, $`\partial Q/\partial y`$, plus a remainder: for any $`\varepsilon > 0`$ some $`\delta > 0`$ keeps it at most $`\varepsilon \cdot r`$ at offsets of length $`r < \delta`$.
 
-Take $\ell < \delta$. The constant wind cancels on opposite edges. The linear part gives exactly $(a + d)\ell^2$ of outflow, since east minus west is $\int_{-\ell/2}^{\ell/2} a\ell\,dv$, and $(c - b)\ell^2$ of circulation. Edge points lie within $\ell/\sqrt{2}$ of the spot, so the remainder adds at most $4\ell \cdot \varepsilon\ell/\sqrt{2} < 3\varepsilon\ell^2$. So both ratios lie within $3\varepsilon$ of $a + d$ and $c - b$, for any $\varepsilon > 0$. Cubes run the same way.
+Take $`\ell < \delta`$. The constant wind cancels on opposite edges. The linear part gives exactly $`(a + d)\ell^2`$ of outflow, since east minus west is $`\int_{-\ell/2}^{\ell/2} a\ell\,dv`$, and $`(c - b)\ell^2`$ of circulation. Edge points lie within $`\ell/\sqrt{2}`$ of the spot, so the remainder adds at most $`4\ell \cdot \varepsilon\ell/\sqrt{2} < 3\varepsilon\ell^2`$. So both ratios lie within $`3\varepsilon`$ of $`a + d`$ and $`c - b`$, for any $`\varepsilon > 0`$. Cubes run the same way.
 
 </details>
 
 ### Step 3: the curl is twice the spin
 
-Lay two short straws on the air at E. The east straw's tip sits where the north wind is stronger, $\partial Q/\partial x$ being 0.030 per second, so it turns anticlockwise at 0.030 rad/s. The north straw's tip sits where the east wind is weaker, $\partial P/\partial y$ being −0.030, so it too turns anticlockwise at 0.030. Their average is the spin $\omega$ of a tiny patch: 0.03 rad/s, a turn in 209.4 s. The curl adds the two instead:
+Lay two short straws on the air at E. The east straw's tip sits where the north wind is stronger, $`\partial Q/\partial x`$ being 0.030 per second, so it turns anticlockwise at 0.030 rad/s. The north straw's tip sits where the east wind is weaker, $`\partial P/\partial y`$ being −0.030, so it too turns anticlockwise at 0.030. Their average is the spin $`\omega`$ of a tiny patch: 0.03 rad/s, a turn in 209.4 s. The curl adds the two instead:
 
-$$\operatorname{curl} F = 2\omega.$$
+```math
+\mathrm{curl}\, F = 2\omega.
+```
 
-Rigid turning at $\omega$ gives both straws $\omega$, hence curl $2\omega$. Carried on the wind for 0.01 s in the code, each straw turns at 0.030000 rad/s.
+Rigid turning at $`\omega`$ gives both straws $`\omega`$, hence curl $`2\omega`$. Carried on the wind for 0.01 s in the code, each straw turns at 0.030000 rad/s.
 
 ### Step 4: a spin with a level axis
 
-A breeze of 3 m/s at the ground, gaining 1 m/s per 10 m of height, has $P = 3 + z/10$ and nothing else. Its one rate is $\partial P/\partial z$, 0.1 per second, so its curl is (0, 0.1, 0), pointing north: faster air on top rolls it about a level north–south axis at 0.05 rad/s. A square walked in the east–up plane gives 0.1 per unit area.
+A breeze of 3 m/s at the ground, gaining 1 m/s per 10 m of height, has $`P = 3 + z/10`$ and nothing else. Its one rate is $`\partial P/\partial z`$, 0.1 per second, so its curl is (0, 0.1, 0), pointing north: faster air on top rolls it about a level north–south axis at 0.05 rad/s. A square walked in the east–up plane gives 0.1 per unit area.
 
-A cross-check with [Line integrals of a field](02-line-integrals.md): its wind force $(y/10, -1)$ N has curl −0.1 N/m. The anticlockwise walk round its 40 m by 30 m field collects −120 J, curl times area. Side by side, small squares' inner edges cancel: that is [Green's theorem](06-greens-theorem.md).
+A cross-check with [Line integrals of a field](02-line-integrals.md): its wind force $`(y/10, -1)`$ N has curl −0.1 N/m. The anticlockwise walk round its 40 m by 30 m field collects −120 J, curl times area. Side by side, small squares' inner edges cancel: that is [Green's theorem](06-greens-theorem.md).
 
 ---
 
@@ -131,7 +143,7 @@ At S a patch of air grows by 0.06 of its area each second, fed from above. At E 
 | --- | --- | --- |
 | Curl read as the spin rate | 0.06 rad/s, a turn in 104.7 s, truly 209.4 s | Curl adds the straws' rates; spin averages them |
 | Cross rates added at E | 0.000, not 0.060 | Opposite edges are walked opposite ways |
-| Order swapped, $\partial P/\partial y - \partial Q/\partial x$ | −0.060: clockwise | The order fixes the right-hand direction |
+| Order swapped, $`\partial P/\partial y - \partial Q/\partial x`$ | −0.060: clockwise | The order fixes the right-hand direction |
 
 The code prints all three.
 
@@ -343,11 +355,11 @@ The two outputs match line for line.
 Lean proves the square limits for any flat wind with continuous rates, and checks the card's wind at S and E.
 
 - Take a flat wind whose rates are continuous near the spot.
-- As the square round the spot shrinks, its outflow per unit area tends to the divergence, $\partial P/\partial x + \partial Q/\partial y$.
-- Its anticlockwise circulation per unit area tends to the curl, $\partial Q/\partial x - \partial P/\partial y$.
+- As the square round the spot shrinks, its outflow per unit area tends to the divergence, $`\partial P/\partial x + \partial Q/\partial y`$.
+- Its anticlockwise circulation per unit area tends to the curl, $`\partial Q/\partial x - \partial P/\partial y`$.
 - At S the own-direction rates are 0.036 and 0.024, and both cross rates are 0.
 - At E the own-direction rates are both 0, and the cross rates are 0.030 and −0.030.
-- For every side $\ell$, the outflow round S per unit area is exactly $0.06 + \ell^2/1600000$.
+- For every side $`\ell`$, the outflow round S per unit area is exactly $`0.06 + \ell^2/1600000`$.
 - For every side, the circulation round E per unit area is exactly 0.06.
 - The hand numbers hold: winds of 3.640 and 2.250 m/s, the four square ratios, and the spin of 0.03.
 - The two mistakes at E come out at 0 and −0.06, and the line-integrals walk gives −120 J.
@@ -641,7 +653,7 @@ example : (-(1 : ℚ) / 10) * 40 * 30 = -120 := by norm_num
 > **Curl is not wind going round in circles.** At E the wind blows straight east at 2.250 m/s, yet its curl is 0.06 per second: the turning lives in how the wind changes across space. Conversely, water circling a drain far from its centre has zero curl; [Conservative fields](04-conservative-fields-and-potentials.md) shows what that costs.
 >
 > - **Strong wind is not a source.** The wind at S is 3.640 m/s, the divergence 0.06 per second: change of speed matters, not speed.
-> - **Zero both is not stillness.** A wind of $(0.01x, -0.01y)$ m/s has divergence 0 and curl 0, yet stretches a square east–west and squeezes it north–south. Two numbers cannot hold all four rates.
+> - **Zero both is not stillness.** A wind of $`(0.01x, -0.01y)`$ m/s has divergence 0 and curl 0, yet stretches a square east–west and squeezes it north–south. Two numbers cannot hold all four rates.
 
 ---
 

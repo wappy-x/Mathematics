@@ -44,45 +44,51 @@ Upside's bar is never longer than Swing's. At 6 percent it is shorter: Swing has
 
 ## The formula
 
-Notation first, in words. $A$ and $B$ are the one-year returns of two funds, in percent, before they are known. $F_A(t)$ is the **cumulative distribution function** (CDF) of $A$: the chance that $A$ ends at or below the threshold $t$ ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). $E[\cdot]$ is the average, weighted by probability. $u$ is a utility. $A \succeq_1 B$ reads "A first-order dominates B"; $A \succeq_2 B$ reads "A second-order dominates B".
+Notation first, in words. $`A`$ and $`B`$ are the one-year returns of two funds, in percent, before they are known. $`F_A(t)`$ is the **cumulative distribution function** (CDF) of $`A`$: the chance that $`A`$ ends at or below the threshold $`t`$ ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). $`E[\cdot]`$ is the average, weighted by probability. $`u`$ is a utility. $`A \succeq_1 B`$ reads "A first-order dominates B"; $`A \succeq_2 B`$ reads "A second-order dominates B".
 
-**First order.** For every increasing utility $u$, meaning more return never scores less:
+**First order.** For every increasing utility $`u`$, meaning more return never scores less:
 
-$$A \succeq_1 B \iff E[u(A)] \ge E[u(B)] \text{ for every increasing } u \iff F_A(t) \le F_B(t) \text{ for every } t$$
+```math
+A \succeq_1 B \iff E[u(A)] \ge E[u(B)] \text{ for every increasing } u \iff F_A(t) \le F_B(t) \text{ for every } t
+```
 
 **Read it aloud:** A wins for every investor who prefers more to less exactly when, at every threshold, A is no more likely than B to end at or below it.
 
-**Second order.** Write $(x)^+$ for $\max(x, 0)$: $x$ when positive, zero otherwise. The **shortfall** of $A$ below a cutoff $k$ is the average amount by which $A$ falls short of $k$, counting zero when it does not:
+**Second order.** Write $`(x)^+`$ for $`\max(x, 0)`$: $`x`$ when positive, zero otherwise. The **shortfall** of $`A`$ below a cutoff $`k`$ is the average amount by which $`A`$ falls short of $`k`$, counting zero when it does not:
 
-$$P_A(k) = E\big[(k - A)^+\big] = \int_{-\infty}^{k} F_A(t)\,dt$$
+```math
+P_A(k) = E\big[(k - A)^+\big] = \int_{-\infty}^{k} F_A(t)\,dt
+```
 
-The second equality, proved in Step 2, says the shortfall is the area under the CDF up to $k$. Then, for every utility $u$ that is increasing and **concave** (its slope never rises, which is what risk aversion means in the expected-utility model):
+The second equality, proved in Step 2, says the shortfall is the area under the CDF up to $`k`$. Then, for every utility $`u`$ that is increasing and **concave** (its slope never rises, which is what risk aversion means in the expected-utility model):
 
-$$A \succeq_2 B \iff E[u(A)] \ge E[u(B)] \text{ for every increasing concave } u \iff P_A(k) \le P_B(k) \text{ for every } k$$
+```math
+A \succeq_2 B \iff E[u(A)] \ge E[u(B)] \text{ for every increasing concave } u \iff P_A(k) \le P_B(k) \text{ for every } k
+```
 
 **Read it aloud:** A wins for every risk-averse investor who prefers more to less exactly when, at every cutoff, A's average shortfall is no larger than B's.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $B$ | the two funds' one-year returns, in percent | Upside and Swing | — |
-| $t$, $k$ | a threshold return (t for the CDF, k for the shortfall cutoff) | −2, 2, 6, 8 | tests a higher slice of outcomes |
-| $F_A(t)$, $F_B(t)$ | chance of ending at or below $t$ | Swing at 6: 1.00; Upside at 6: 0.50 | a higher CDF is the worse fund |
-| $P_A(k)$, $P_B(k)$ | average shortfall below $k$: area under the CDF up to $k$ | Steady at 8: 6.00; Upside at 8: 5.00 | a higher shortfall is the worse fund |
-| $(x)^+$ | $x$ if positive, else zero | $(2 - (-2))^+ = 4$ | — |
-| $E[\cdot]$ | average weighted by probability | $E[\text{Upside}] = 3$ | — |
-| $u$, $u'$, $u''$ | a utility; its slope; the change in its slope | $u(r) = \ln(100 + r)$ | — |
-| $\succeq_1$, $\succeq_2$ | first- and second-order dominance | Upside $\succeq_1$ Swing; Steady $\succeq_2$ Swing | — |
-| $a$, $b$ | lowest and highest return either fund can produce | −2 and 8 | — |
-| $\mu$, $\sigma$ | mean and spread (standard deviation) of a normally distributed fund | 8% and 15% | more mean helps; more spread hurts risk-averse investors |
-| $N(x)$, $\varphi(x)$ | the normal curve's area to the left of $x$, and its height at $x$ | $N(-0.2667) = 0.3949$ | — |
-| $z$ | distance from the mean in spreads, $(k - \mu)/\sigma$ | $(4 - 8)/15 = -0.2667$ | — |
+| $`A`$, $`B`$ | the two funds' one-year returns, in percent | Upside and Swing | — |
+| $`t`$, $`k`$ | a threshold return (t for the CDF, k for the shortfall cutoff) | −2, 2, 6, 8 | tests a higher slice of outcomes |
+| $`F_A(t)`$, $`F_B(t)`$ | chance of ending at or below $`t`$ | Swing at 6: 1.00; Upside at 6: 0.50 | a higher CDF is the worse fund |
+| $`P_A(k)`$, $`P_B(k)`$ | average shortfall below $`k`$: area under the CDF up to $`k`$ | Steady at 8: 6.00; Upside at 8: 5.00 | a higher shortfall is the worse fund |
+| $`(x)^+`$ | $`x`$ if positive, else zero | $`(2 - (-2))^+ = 4`$ | — |
+| $`E[\cdot]`$ | average weighted by probability | $`E[\text{Upside}] = 3`$ | — |
+| $`u`$, $`u'`$, $`u''`$ | a utility; its slope; the change in its slope | $`u(r) = \ln(100 + r)`$ | — |
+| $`\succeq_1`$, $`\succeq_2`$ | first- and second-order dominance | Upside $`\succeq_1`$ Swing; Steady $`\succeq_2`$ Swing | — |
+| $`a`$, $`b`$ | lowest and highest return either fund can produce | −2 and 8 | — |
+| $`\mu`$, $`\sigma`$ | mean and spread (standard deviation) of a normally distributed fund | 8% and 15% | more mean helps; more spread hurts risk-averse investors |
+| $`N(x)`$, $`\varphi(x)`$ | the normal curve's area to the left of $`x`$, and its height at $`x`$ | $`N(-0.2667) = 0.3949`$ | — |
+| $`z`$ | distance from the mean in spreads, $`(k - \mu)/\sigma`$ | $`(4 - 8)/15 = -0.2667`$ | — |
 
 ### When it holds
 
 - **Same horizon, same money, fees included.** A one-year return against a two-year return, or a gross return against a net one, compares different things; convert first.
 - **Known probabilities.** The tests are theorems about the stated distributions. Estimated from a short history, a cutoff where two shortfalls nearly touch can flip with a few more years of data.
 - **Investors judge only the final outcome, by expected utility.** Someone who scores gains and losses from a reference point, or bends probabilities, as in [Prospect theory in outline](06-prospect-theory-in-outline.md), sits outside both classes and can choose a dominated fund.
-- **Risk aversion, for second order only.** A lottery buyer has a utility that bends upward somewhere and sits outside the class; Steady $\succeq_2$ Swing says nothing about that buyer.
+- **Risk aversion, for second order only.** A lottery buyer has a utility that bends upward somewhere and sits outside the class; Steady $`\succeq_2`$ Swing says nothing about that buyer.
 - **Finite averages.** The utility side compares averages, so it covers only utilities whose averages exist. With returns heavy enough that some are infinite, the tests rank the funds for the utilities that remain.
 
 ---
@@ -93,31 +99,37 @@ $$A \succeq_2 B \iff E[u(A)] \ge E[u(B)] \text{ for every increasing concave } u
 
 The class "every increasing utility" is too big to test member by member. But every member is a weighted sum of very simple members, so testing the simple ones tests every sum of them.
 
-For first order the pieces are **threshold bets**: score 1 if the return beats $t$, else 0. For second order the pieces are **capped investors**: score the return, but never more than $k$. Each piece's average is a value of the CDF or of the shortfall. That is why the tests contain no utility.
+For first order the pieces are **threshold bets**: score 1 if the return beats $`t`$, else 0. For second order the pieces are **capped investors**: score the return, but never more than $`k`$. Each piece's average is a value of the CDF or of the shortfall. That is why the tests contain no utility.
 
 ### Step 1: first order is the CDF test
 
-A threshold bet $u(r) = 1$ if $r > t$, else 0, is increasing. Its average for fund $A$ is the chance $A$ beats $t$, which is $1 - F_A(t)$. So if A is to win for every increasing utility, it must win for this one: $F_A(t) \le F_B(t)$. That is one direction.
+A threshold bet $`u(r) = 1`$ if $`r > t`$, else 0, is increasing. Its average for fund $`A`$ is the chance $`A`$ beats $`t`$, which is $`1 - F_A(t)`$. So if A is to win for every increasing utility, it must win for this one: $`F_A(t) \le F_B(t)`$. That is one direction.
 
-For the other, write a smooth increasing utility as its lowest value plus a stack of threshold bets, one for each thin slice of thresholds between $a$ and $b$, weighted by the slope $u'(t)$:
+For the other, write a smooth increasing utility as its lowest value plus a stack of threshold bets, one for each thin slice of thresholds between $`a`$ and $`b`$, weighted by the slope $`u'(t)`$:
 
-$$u(x) = u(a) + \int_a^b u'(t)\,[x > t]\,dt$$
+```math
+u(x) = u(a) + \int_a^b u'(t)\,[x > t]\,dt
+```
 
-The bracket $[x > t]$ is 1 when true, 0 when false. Average both sides, and the bracket averages to $1 - F(t)$:
+The bracket $`[x > t]`$ is 1 when true, 0 when false. Average both sides, and the bracket averages to $`1 - F(t)`$:
 
-$$E[u(A)] - E[u(B)] = \int_a^b u'(t)\,\big(F_B(t) - F_A(t)\big)\,dt$$
+```math
+E[u(A)] - E[u(B)] = \int_a^b u'(t)\,\big(F_B(t) - F_A(t)\big)\,dt
+```
 
 Every factor is at least zero when the CDF test holds, so the difference is at least zero. A kinked or stepped utility is the same stack with some steps concentrated at points. The test is exact in both directions.
 
-On the funds: the threshold bet at $t = 2$ scores Steady 0.00, Swing 0.50, Upside 0.50. A money-lover who only cares about beating 2 percent prefers Swing, so Steady does not first-order dominate Swing.
+On the funds: the threshold bet at $`t = 2`$ scores Steady 0.00, Swing 0.50, Upside 0.50. A money-lover who only cares about beating 2 percent prefers Swing, so Steady does not first-order dominate Swing.
 
 ### Step 2: the shortfall is the area under the CDF
 
-For one outcome $x$, the shortfall below $k$ is $(k - x)^+$: the length of the stretch of thresholds from $x$ up to $k$. As a sum of thresholds:
+For one outcome $`x`$, the shortfall below $`k`$ is $`(k - x)^+`$: the length of the stretch of thresholds from $`x`$ up to $`k`$. As a sum of thresholds:
 
-$$(k - x)^+ = \int_{-\infty}^{k} [x \le t]\,dt$$
+```math
+(k - x)^+ = \int_{-\infty}^{k} [x \le t]\,dt
+```
 
-Average over the fund's outcomes: the bracket averages to $F(t)$, so $P(k) = \int_{-\infty}^{k} F(t)\,dt$. On Swing at $k = 4$: the CDF is 0 up to −2 and 0.50 from −2 to 4, an area of $0.50 \times 6 = 3$; directly, Swing falls short of 4 by 6 half the time, an average of 3.
+Average over the fund's outcomes: the bracket averages to $`F(t)`$, so $`P(k) = \int_{-\infty}^{k} F(t)\,dt`$. On Swing at $`k = 4`$: the CDF is 0 up to −2 and 0.50 from −2 to 4, an area of $`0.50 \times 6 = 3`$; directly, Swing falls short of 4 by 6 half the time, an average of 3.
 
 The chart traces the three shortfall curves. Between the returns a fund can produce, each curve is a straight line, so the knots at −2, 2, 6 and 8 are the only places a comparison can change.
 
@@ -136,36 +148,38 @@ Orange: Steady. Green: Swing. Dark blue: Upside. Steady never lies above Swing: 
 
 ### Step 3: second order is the shortfall test
 
-A capped investor $u(r) = \min(r, k)$ is increasing and concave. Its average is $k - P(k)$, because capping a return at $k$ removes exactly its shortfall below $k$ from $k$: $\min(r, k) = k - (k - r)^+$. So a fund that wins for every risk-averse investor must win for each capped one, and $P_A(k) \le P_B(k)$ follows. That is one direction.
+A capped investor $`u(r) = \min(r, k)`$ is increasing and concave. Its average is $`k - P(k)`$, because capping a return at $`k`$ removes exactly its shortfall below $`k`$ from $`k`$: $`\min(r, k) = k - (k - r)^+`$. So a fund that wins for every risk-averse investor must win for each capped one, and $`P_A(k) \le P_B(k)`$ follows. That is one direction.
 
-For the other, take a smooth increasing concave $u$ on $[a, b]$. Taylor's theorem with its remainder written as an integral rewrites it as a line plus a stack of capped pieces, weighted by $-u''(k)$: minus the rate at which the slope changes, which concavity makes non-negative. Averaging gives the identity the code checks:
+For the other, take a smooth increasing concave $`u`$ on $`[a, b]`$. Taylor's theorem with its remainder written as an integral rewrites it as a line plus a stack of capped pieces, weighted by $`-u''(k)`$: minus the rate at which the slope changes, which concavity makes non-negative. Averaging gives the identity the code checks:
 
-$$E[u(A)] - E[u(B)] = u'(b)\,\big(E[A] - E[B]\big) + \int_a^b \big(-u''(k)\big)\,\big(P_B(k) - P_A(k)\big)\,dk$$
+```math
+E[u(A)] - E[u(B)] = u'(b)\,\big(E[A] - E[B]\big) + \int_a^b \big(-u''(k)\big)\,\big(P_B(k) - P_A(k)\big)\,dk
+```
 
-At the top cutoff $b$ every outcome falls short, so $P(b) = b - E[\cdot]$ and $E[A] - E[B] = P_B(b) - P_A(b)$. When the shortfall test holds, every term is a product of non-negative numbers. The difference is at least zero.
+At the top cutoff $`b`$ every outcome falls short, so $`P(b) = b - E[\cdot]`$ and $`E[A] - E[B] = P_B(b) - P_A(b)`$. When the shortfall test holds, every term is a product of non-negative numbers. The difference is at least zero.
 
-For log utility on wealth, $u(r) = \ln(100 + r)$, Steady against Swing: the direct average difference is 0.000769527, and the identity gives 0.000769527.
+For log utility on wealth, $`u(r) = \ln(100 + r)`$, Steady against Swing: the direct average difference is 0.000769527, and the identity gives 0.000769527.
 
 <details>
 <summary>Detailed proof: the identity, kinked utilities, and why four cutoffs suffice</summary>
 
-**The identity.** For $x$ in $[a, b]$, $u(x) = u(b) - \int_x^b u'(s)\,ds$ and $u'(s) = u'(b) - \int_s^b u''(k)\,dk$. Substituting and swapping the order of integration gives $\int_x^b u'(s)\,ds = u'(b)(b - x) - \int_x^b u''(k)(k - x)\,dk$. So $u(x) = u(b) + u'(b)(x - b) + \int_a^b u''(k)\,(k - x)^+\,dk$. Averaging over $A$, then over $B$, and subtracting gives the identity in Step 3, with $E[(k - A)^+] = P_A(k)$.
+**The identity.** For $`x`$ in $`[a, b]`$, $`u(x) = u(b) - \int_x^b u'(s)\,ds`$ and $`u'(s) = u'(b) - \int_s^b u''(k)\,dk`$. Substituting and swapping the order of integration gives $`\int_x^b u'(s)\,ds = u'(b)(b - x) - \int_x^b u''(k)(k - x)\,dk`$. So $`u(x) = u(b) + u'(b)(x - b) + \int_a^b u''(k)\,(k - x)^+\,dk`$. Averaging over $`A`$, then over $`B`$, and subtracting gives the identity in Step 3, with $`E[(k - A)^+] = P_A(k)`$.
 
-**Kinked utilities.** A concave increasing $u$ need not have a second derivative. On a fund with finitely many outcomes $s_1 < \dots < s_m$, only $u$'s values there matter. The slopes between neighbouring outcomes, $d_1, \dots, d_{m-1}$, are non-negative and fall. Then $u$ agrees on the outcomes with $u(s_1) + d_{m-1}(r - s_1) + \sum_{j=2}^{m-1} (d_{j-1} - d_j)\,(\min(r, s_j) - s_1)$: a rising line plus non-negative multiples of capped investors. Each capped piece is ranked by the shortfall test; the line is ranked by the mean, which is the shortfall at the top cutoff. So the sum is ranked.
+**Kinked utilities.** A concave increasing $`u`$ need not have a second derivative. On a fund with finitely many outcomes $`s_1 < \dots < s_m`$, only $`u`$'s values there matter. The slopes between neighbouring outcomes, $`d_1, \dots, d_{m-1}`$, are non-negative and fall. Then $`u`$ agrees on the outcomes with $`u(s_1) + d_{m-1}(r - s_1) + \sum_{j=2}^{m-1} (d_{j-1} - d_j)\,(\min(r, s_j) - s_1)`$: a rising line plus non-negative multiples of capped investors. Each capped piece is ranked by the shortfall test; the line is ranked by the mean, which is the shortfall at the top cutoff. So the sum is ranked.
 
-**Four cutoffs suffice.** Below every outcome both shortfalls are zero. Between neighbouring outcomes each shortfall is a straight line in $k$, so their difference is too, and a straight line that is non-negative at both ends is non-negative between. Above every outcome the difference is the constant $E[A] - E[B]$. So checking the outcomes themselves checks every real $k$. The same holds for CDFs, which are constant between outcomes.
+**Four cutoffs suffice.** Below every outcome both shortfalls are zero. Between neighbouring outcomes each shortfall is a straight line in $`k`$, so their difference is too, and a straight line that is non-negative at both ends is non-negative between. Above every outcome the difference is the constant $`E[A] - E[B]`$. So checking the outcomes themselves checks every real $`k`$. The same holds for CDFs, which are constant between outcomes.
 
 </details>
 
 ### Step 4: first order implies second order
 
-If $F_A(t) \le F_B(t)$ at every $t$, the areas under the two CDFs up to any $k$ are ordered the same way, so $P_A(k) \le P_B(k)$. In utility terms: every increasing concave utility is an increasing utility, so winning for the bigger class includes winning for the smaller. Upside against Swing shows it on the chart: Upside's shortfall is never above Swing's.
+If $`F_A(t) \le F_B(t)`$ at every $`t`$, the areas under the two CDFs up to any $`k`$ are ordered the same way, so $`P_A(k) \le P_B(k)`$. In utility terms: every increasing concave utility is an increasing utility, so winning for the bigger class includes winning for the smaller. Upside against Swing shows it on the chart: Upside's shortfall is never above Swing's.
 
 ### Step 5: equal means, and what second order then says
 
 Steady and Swing have the same mean, 2 percent. Swing is Steady plus a coin flip of ±4 points that averages zero: a **mean-preserving spread**.
 
-Rothschild and Stiglitz proved that with equal means, $A \succeq_2 B$ holds exactly when $B$ is $A$ plus noise that averages zero given $A$. This card states that equivalence and does not prove it; the construction of the noise is in their paper, listed under Sources. Without equal means the reading fails: Upside has more spread than Steady and a higher mean, and neither dominates.
+Rothschild and Stiglitz proved that with equal means, $`A \succeq_2 B`$ holds exactly when $`B`$ is $`A`$ plus noise that averages zero given $`A`$. This card states that equivalence and does not prove it; the construction of the noise is in their paper, listed under Sources. Without equal means the reading fails: Upside has more spread than Steady and a higher mean, and neither dominates.
 
 An alternative route to first order runs through quantiles: sort each fund's outcomes from worst to best, and first-order dominance says A's outcome at every rank is at least B's. The code takes that route as a second test for first order.
 
@@ -177,11 +191,11 @@ The funds, per $100 for one year, even odds where there are two outcomes.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| means | Steady 2; Swing $(-2 + 6)/2$; Upside $(-2 + 8)/2$ | 2.00, 2.00, 3.00 |
+| means | Steady 2; Swing $`(-2 + 6)/2`$; Upside $`(-2 + 8)/2`$ | 2.00, 2.00, 3.00 |
 | spreads | Steady 0; Swing half of 8; Upside half of 10 | 0.00, 4.00, 5.00 |
-| Upside vs Swing, CDFs at −2, 2, 6, 8 | Upside 0.50, 0.50, 0.50, 1.00 against Swing 0.50, 0.50, 1.00, 1.00 | never higher: **Upside $\succeq_1$ Swing** |
+| Upside vs Swing, CDFs at −2, 2, 6, 8 | Upside 0.50, 0.50, 0.50, 1.00 against Swing 0.50, 0.50, 1.00, 1.00 | never higher: **Upside $`\succeq_1`$ Swing** |
 | Steady vs Swing, CDF at 2 | Steady 1.00 against Swing 0.50 | first order fails |
-| Steady vs Swing, shortfalls at −2, 2, 6, 8 | Steady 0, 0, 4, 6 against Swing 0, 2, 4, 6 | never higher: **Steady $\succeq_2$ Swing** |
+| Steady vs Swing, shortfalls at −2, 2, 6, 8 | Steady 0, 0, 4, 6 against Swing 0, 2, 4, 6 | never higher: **Steady $`\succeq_2`$ Swing** |
 | Steady vs Upside, shortfall at 2 | Steady 0.00 against Upside 2.00 | Upside cannot dominate |
 | Steady vs Upside, shortfall at 8 | Steady 6.00 against Upside 5.00 | Steady cannot dominate: **neither** |
 | a witness for each side | capped at 2: Steady 2.00, Upside 0.00; linear: Steady 2.00, Upside 3.00 | two risk-averse investors disagree |
@@ -190,22 +204,24 @@ Two risk-averse investors disagreeing is what "not ranked" means.
 
 ### The shelf's house example
 
-A saver chooses between a 4 percent deposit and a fund whose return is normally distributed with mean $\mu$ = 8 percent and spread $\sigma$ = 15 percent. For a normal fund, the shortfall has a closed form: with $z = (k - \mu)/\sigma$,
+A saver chooses between a 4 percent deposit and a fund whose return is normally distributed with mean $`\mu`$ = 8 percent and spread $`\sigma`$ = 15 percent. For a normal fund, the shortfall has a closed form: with $`z = (k - \mu)/\sigma`$,
 
-$$P(k) = \sigma\,\varphi(z) + (k - \mu)\,N(z)$$
+```math
+P(k) = \sigma\,\varphi(z) + (k - \mu)\,N(z)
+```
 
-where $N$ is the normal curve's area to the left and $\varphi$ its height.
+where $`N`$ is the normal curve's area to the left and $`\varphi`$ its height.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| chance the fund ends below 4% | $N((4 - 8)/15) = N(-0.2667)$ | 0.3949 |
-| deposit's shortfall at 4 | $(4 - 4)^+$ | 0.0000 |
-| fund's shortfall at 4 | $15\,\varphi(-0.2667) - 4\,N(-0.2667)$ | 4.1957 |
-| deposit's shortfall at 30 | $30 - 4$ | 26.0000 |
+| chance the fund ends below 4% | $`N((4 - 8)/15) = N(-0.2667)`$ | 0.3949 |
+| deposit's shortfall at 4 | $`(4 - 4)^+`$ | 0.0000 |
+| fund's shortfall at 4 | $`15\,\varphi(-0.2667) - 4\,N(-0.2667)`$ | 4.1957 |
+| deposit's shortfall at 30 | $`30 - 4`$ | 26.0000 |
 | fund's shortfall at 30 | same formula | 22.4741 |
 | verdict | the curves cross | **neither dominates** |
 
-The fund's higher mean wins for a linear investor, 8 against 4. An investor capped at 4 percent scores the fund at $4 - 4.1957 = -0.1957$ and the deposit at 4. A normal fund always has some chance of ending below any sure rate, so it never dominates a deposit, whatever its mean.
+The fund's higher mean wins for a linear investor, 8 against 4. An investor capped at 4 percent scores the fund at $`4 - 4.1957 = -0.1957`$ and the deposit at 4. A normal fund always has some chance of ending below any sure rate, so it never dominates a deposit, whatever its mean.
 
 ### What breaks if you drop a piece
 
@@ -618,9 +634,9 @@ The two outputs agree line for line.
 
 Lean proves both dominance tests and the shortfall's area formula for any two funds, and checks the worked numbers.
 
-- First order. Take two funds $A$ and $B$, counting only utilities whose averages exist. Then $A \succeq_1 B$ exactly when $F_A(t) \le F_B(t)$ at every threshold $t$.
-- Second order. Take two funds with finite averages, counting only utilities whose averages exist. Then $A \succeq_2 B$ exactly when $P_A(k) \le P_B(k)$ at every cutoff $k$.
-- Take any fund $A$ and any cutoff $k$. Then the shortfall $P_A(k)$ is the area under the CDF up to $k$.
+- First order. Take two funds $`A`$ and $`B`$, counting only utilities whose averages exist. Then $`A \succeq_1 B`$ exactly when $`F_A(t) \le F_B(t)`$ at every threshold $`t`$.
+- Second order. Take two funds with finite averages, counting only utilities whose averages exist. Then $`A \succeq_2 B`$ exactly when $`P_A(k) \le P_B(k)`$ at every cutoff $`k`$.
+- Take any fund $`A`$ and any cutoff $`k`$. Then the shortfall $`P_A(k)`$ is the area under the CDF up to $`k`$.
 - The worked numbers hold: the means, the CDFs and shortfalls at −2, 2, 6 and 8, and the two disagreeing witnesses.
 - Swing's shortfall at 4 is 3, the same as the area under its CDF.
 

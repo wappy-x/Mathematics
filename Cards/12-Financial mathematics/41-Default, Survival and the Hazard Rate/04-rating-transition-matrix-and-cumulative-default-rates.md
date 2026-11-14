@@ -35,50 +35,60 @@ Orange: a borrower that starts Solid. It bends upward: each year more Solid borr
 
 ## The formula
 
-Notation first, in words. A **matrix** is a table of numbers, named by one capital letter; the one here is $P$. The number in row $i$, column $j$ is written $p_{ij}$: the chance of moving from grade $i$ to grade $j$ in one year. Grades are labelled S (Solid), H (Shaky) and D (Default), so $p_{SD}$ is the one-year default chance of a Solid borrower. $P^T$ means $T$ copies of $P$ multiplied together, by the row-times-column rule of [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md).
+Notation first, in words. A **matrix** is a table of numbers, named by one capital letter; the one here is $`P`$. The number in row $`i`$, column $`j`$ is written $`p_{ij}`$: the chance of moving from grade $`i`$ to grade $`j`$ in one year. Grades are labelled S (Solid), H (Shaky) and D (Default), so $`p_{SD}`$ is the one-year default chance of a Solid borrower. $`P^T`$ means $`T`$ copies of $`P`$ multiplied together, by the row-times-column rule of [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md).
 
-$$P = \begin{pmatrix} p_{SS} & p_{SH} & p_{SD} \\ p_{HS} & p_{HH} & p_{HD} \\ 0 & 0 & 1 \end{pmatrix} = \begin{pmatrix} 0.90 & 0.09 & 0.01 \\ 0.10 & 0.80 & 0.10 \\ 0 & 0 & 1 \end{pmatrix}$$
+```math
+P = \begin{pmatrix} p_{SS} & p_{SH} & p_{SD} \\ p_{HS} & p_{HH} & p_{HD} \\ 0 & 0 & 1 \end{pmatrix} = \begin{pmatrix} 0.90 & 0.09 & 0.01 \\ 0.10 & 0.80 & 0.10 \\ 0 & 0 & 1 \end{pmatrix}
+```
 
 Each row adds to 1: a borrower must end the year somewhere. The bottom row says Default is **absorbing**: once there, always there.
 
 The theorem of the card:
 
-$$\text{chance of being in grade } j \text{ after } T \text{ years, from grade } i \;=\; \big(P^T\big)_{ij}, \qquad \mathrm{PD}_i(T) = \big(P^T\big)_{iD}$$
+```math
+\text{chance of being in grade } j \text{ after } T \text{ years, from grade } i \;=\; \big(P^T\big)_{ij}, \qquad \mathrm{PD}_i(T) = \big(P^T\big)_{iD}
+```
 
 **Read it aloud:** to find where a borrower can be in T years, multiply T copies of the one-year table together and read row i; the Default entry of that row is the chance it has defaulted by year T.
 
 The two-year case written out, one term per road:
 
-$$\mathrm{PD}_S(2) = p_{SS}\,p_{SD} + p_{SH}\,p_{HD} + p_{SD}\cdot 1 = 0.90 \times 0.01 + 0.09 \times 0.10 + 0.01 = 0.028$$
+```math
+\mathrm{PD}_S(2) = p_{SS}\,p_{SD} + p_{SH}\,p_{HD} + p_{SD}\cdot 1 = 0.90 \times 0.01 + 0.09 \times 0.10 + 0.01 = 0.028
+```
 
 A **hazard** is a default rate per year among borrowers still alive.
 
 The average hazard a cumulative default chance implies, for anyone who wants a single flat rate that reproduces it ([The hazard rate](02-hazard-rate-and-survival-probability.md)):
 
-$$\bar\lambda_i(T) = -\frac{\ln\big(1 - \mathrm{PD}_i(T)\big)}{T}$$
+```math
+\bar\lambda_i(T) = -\frac{\ln\big(1 - \mathrm{PD}_i(T)\big)}{T}
+```
 
 **Read it aloud:** the flat yearly hazard that gives the same T-year default chance is minus the log of the survival chance, divided by the years.
 
 Where the table comes from, the **cohort estimator**:
 
-$$\hat p_{ij} = \frac{N_{ij}}{N_i}$$
+```math
+\hat p_{ij} = \frac{N_{ij}}{N_i}
+```
 
 **Read it aloud:** of the borrowers who started the year in grade i, the fraction that ended it in grade j.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P$ | the one-year transition matrix | the 3-by-3 table above | — |
-| $p_{ij}$, $p_{SD}$, $p_{SH}$, $p_{HD}$ | chance of moving from grade i to grade j in one year | 0.01, 0.09, 0.10 | more default: PD rises at every horizon |
-| $i$, $j$ | a starting grade and an ending grade: S, H or D | S → D | — |
-| $T$ | the horizon, in whole years | 2, 5 | PD rises |
-| $P^T$ | T copies of the table multiplied together: every T-year move | Solid row at 5 years: 0.6496, 0.2424, 0.1081 | — |
-| $\mathrm{PD}_i(T)$ | cumulative default chance (PD, probability of default): defaulted by year T, starting in grade i | 0.0280 at 2 years, 0.1081 at 5 | — |
-| $\bar\lambda_i(T)$ | the flat yearly hazard that reproduces that cumulative default chance ("lambda bar") | 2.29% a year, Solid, 5 years | — |
-| $Q$ | the living part of the table: rows and columns S and H only | 0.90, 0.09 / 0.10, 0.80 | — |
-| $\mu_1$, $\mu_2$ | the two eigenvalues of Q ("mu"): the yearly factors by which the living mixes shrink | 0.957238, 0.742762 | a larger mu1 means slower long-run default |
-| $A$ | the weight on mu1 in Solid's survival | 1.152753 | — |
-| $N_i$, $N_{ij}$, $N_S$, $N_{SS}$, $N_{SH}$, $N_{SD}$ | cohort counts: borrowers starting the year in grade i, and those among them ending in j | 1,000 Solid; 90 of them end Shaky | — |
-| $\hat p_{ij}$, $p_{Sj}$ | the cohort estimate of p_ij ("p hat"); p_Sj is any entry of Solid's row | 90 / 1,000 = 0.09 | — |
+| $`P`$ | the one-year transition matrix | the 3-by-3 table above | — |
+| $`p_{ij}`$, $`p_{SD}`$, $`p_{SH}`$, $`p_{HD}`$ | chance of moving from grade i to grade j in one year | 0.01, 0.09, 0.10 | more default: PD rises at every horizon |
+| $`i`$, $`j`$ | a starting grade and an ending grade: S, H or D | S → D | — |
+| $`T`$ | the horizon, in whole years | 2, 5 | PD rises |
+| $`P^T`$ | T copies of the table multiplied together: every T-year move | Solid row at 5 years: 0.6496, 0.2424, 0.1081 | — |
+| $`\mathrm{PD}_i(T)`$ | cumulative default chance (PD, probability of default): defaulted by year T, starting in grade i | 0.0280 at 2 years, 0.1081 at 5 | — |
+| $`\bar\lambda_i(T)`$ | the flat yearly hazard that reproduces that cumulative default chance ("lambda bar") | 2.29% a year, Solid, 5 years | — |
+| $`Q`$ | the living part of the table: rows and columns S and H only | 0.90, 0.09 / 0.10, 0.80 | — |
+| $`\mu_1`$, $`\mu_2`$ | the two eigenvalues of Q ("mu"): the yearly factors by which the living mixes shrink | 0.957238, 0.742762 | a larger mu1 means slower long-run default |
+| $`A`$ | the weight on mu1 in Solid's survival | 1.152753 | — |
+| $`N_i`$, $`N_{ij}`$, $`N_S`$, $`N_{SS}`$, $`N_{SH}`$, $`N_{SD}`$ | cohort counts: borrowers starting the year in grade i, and those among them ending in j | 1,000 Solid; 90 of them end Shaky | — |
+| $`\hat p_{ij}`$, $`p_{Sj}`$ | the cohort estimate of p_ij ("p hat"); p_Sj is any entry of Solid's row | 90 / 1,000 = 0.09 | — |
 
 ### When it holds
 
@@ -100,21 +110,25 @@ The whole method rests on one assumption: where a borrower goes next year depend
 
 To go from Solid to Default in two years, a borrower passes through some grade k at the end of year one. The three middle grades are separate cases, so their chances add (the law of total probability: split by cases, weight each, add). Within one case, "reach k, then go from k to D" is a chain of two steps, and under the Markov assumption the second step's chance does not depend on how the borrower reached k. So the chances multiply:
 
-$$\big(P^2\big)_{SD} = \sum_{k} p_{Sk}\,p_{kD} = \underbrace{0.90 \times 0.01}_{\text{Solid, then default}} + \underbrace{0.09 \times 0.10}_{\text{Shaky, then default}} + \underbrace{0.01 \times 1}_{\text{default, stays}} = 0.028$$
+```math
+\big(P^2\big)_{SD} = \sum_{k} p_{Sk}\,p_{kD} = \underbrace{0.90 \times 0.01}_{\text{Solid, then default}} + \underbrace{0.09 \times 0.10}_{\text{Shaky, then default}} + \underbrace{0.01 \times 1}_{\text{default, stays}} = 0.028
+```
 
-The sum over k of row-entry times column-entry is exactly the row-times-column rule for the matrix product. The same rule fills every other entry of $P^2$: Solid's row is 0.819 Solid, 0.153 Shaky, 0.028 Default.
+The sum over k of row-entry times column-entry is exactly the row-times-column rule for the matrix product. The same rule fills every other entry of $`P^2`$: Solid's row is 0.819 Solid, 0.153 Shaky, 0.028 Default.
 
 ### Step 2: any number of years is a power
 
-The same argument splits a stretch of $s + t$ years at year s:
+The same argument splits a stretch of $`s + t`$ years at year s:
 
-$$P^{s+t} = P^s\,P^t$$
+```math
+P^{s+t} = P^s\,P^t
+```
 
-This is the **Chapman–Kolmogorov equation**: the chance of each long move is a sum over where the borrower stands at the split. Taking s = 1 repeatedly gives $P^T$ for any T, by induction (prove it for T = 1, then show T implies T + 1).
+This is the **Chapman–Kolmogorov equation**: the chance of each long move is a sum over where the borrower stands at the split. Taking s = 1 repeatedly gives $`P^T`$ for any T, by induction (prove it for T = 1, then show T implies T + 1).
 
 ### Step 3: the Default column is cumulative because Default is absorbing
 
-$\big(P^T\big)_{SD}$ is the chance of *being in* Default at year T. Because nothing leaves Default, being in Default at T is the same event as having defaulted at some year up to T. So the Default column of $P^T$ is the cumulative default chance, not the chance of defaulting in year T itself. The year-T chance alone is the difference $\mathrm{PD}(T) - \mathrm{PD}(T-1)$.
+$`\big(P^T\big)_{SD}`$ is the chance of *being in* Default at year T. Because nothing leaves Default, being in Default at T is the same event as having defaulted at some year up to T. So the Default column of $`P^T`$ is the cumulative default chance, not the chance of defaulting in year T itself. The year-T chance alone is the difference $`\mathrm{PD}(T) - \mathrm{PD}(T-1)`$.
 
 That is why 2.80% beats 2%. Of 1,000 Solid borrowers, 10 default in year one. Of the 990 still alive, 900 are Solid and 90 are Shaky. In year two the 900 produce 9 defaults and the 90 produce 9 more. Year two's 18 defaults are nearly double year one's 10, because 90 borrowers now sit in the grade that defaults ten times as often.
 
@@ -122,13 +136,17 @@ That is why 2.80% beats 2%. Of 1,000 Solid borrowers, 10 default in year one. Of
 
 Drop the Default row and column, keeping the living block
 
-$$Q = \begin{pmatrix} 0.90 & 0.09 \\ 0.10 & 0.80 \end{pmatrix}.$$
+```math
+Q = \begin{pmatrix} 0.90 & 0.09 \\ 0.10 & 0.80 \end{pmatrix}.
+```
 
-A living borrower's chance of still being alive after T years is its row sum of $Q^T$. The diagonalisation card ([Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)) shows that every entry of $Q^T$ is a fixed mix of $\mu_1^T$ and $\mu_2^T$, where $\mu_1$ and $\mu_2$ are the **eigenvalues** of Q: the two numbers by which Q scales its two special mixes of grades. For a 2-by-2 table they are the roots of a quadratic,
+A living borrower's chance of still being alive after T years is its row sum of $`Q^T`$. The diagonalisation card ([Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)) shows that every entry of $`Q^T`$ is a fixed mix of $`\mu_1^T`$ and $`\mu_2^T`$, where $`\mu_1`$ and $`\mu_2`$ are the **eigenvalues** of Q: the two numbers by which Q scales its two special mixes of grades. For a 2-by-2 table they are the roots of a quadratic,
 
-$$\mu_{1,2} = \frac{(0.90 + 0.80) \pm \sqrt{(0.90 - 0.80)^2 + 4 \times 0.09 \times 0.10}}{2} = 0.957238,\; 0.742762.$$
+```math
+\mu_{1,2} = \frac{(0.90 + 0.80) \pm \sqrt{(0.90 - 0.80)^2 + 4 \times 0.09 \times 0.10}}{2} = 0.957238,\; 0.742762.
+```
 
-So Solid's survival is $A\,\mu_1^T + (1 - A)\,\mu_2^T$. Two facts fix A: survival is 1 at T = 0, and 0.99 at T = 1. That gives A = 1.152753, and at T = 5 the default chance is 0.108053, the same as the matrix power.
+So Solid's survival is $`A\,\mu_1^T + (1 - A)\,\mu_2^T`$. Two facts fix A: survival is 1 at T = 0, and 0.99 at T = 1. That gives A = 1.152753, and at T = 5 the default chance is 0.108053, the same as the matrix power.
 
 <details>
 <summary>Detailed proof: why survival is a mix of two powers</summary>
@@ -139,23 +157,23 @@ For Solid's survival s(T), call the numbers A and B. At T = 0, Q^0 is the identi
 
 </details>
 
-The closed form tells the long-run story. The smaller eigenvalue's term dies away fast, so after a decade survival shrinks by almost exactly $\mu_1$ each year. Solid and Shaky borrowers alike end up with a yearly default chance near $1 - \mu_1 = 4.28\%$: long enough, and the starting grade is forgotten.
+The closed form tells the long-run story. The smaller eigenvalue's term dies away fast, so after a decade survival shrinks by almost exactly $`\mu_1`$ each year. Solid and Shaky borrowers alike end up with a yearly default chance near $`1 - \mu_1 = 4.28\%`$: long enough, and the starting grade is forgotten.
 
 ### Step 5: the average hazard, and why it is unique
 
-The flat-hazard survival formula says $1 - \mathrm{PD} = e^{-\bar\lambda T}$.
+The flat-hazard survival formula says $`1 - \mathrm{PD} = e^{-\bar\lambda T}`$.
 
 Try a flat hazard h, for a horizon T above 0.
 
-- **Existence.** The default chance $1 - e^{-hT}$ is 0 at h = 0 and climbs towards 1 as h grows without limit, passing every value in between. So any cumulative default chance strictly between 0 and 1 is reached by some h.
+- **Existence.** The default chance $`1 - e^{-hT}`$ is 0 at h = 0 and climbs towards 1 as h grows without limit, passing every value in between. So any cumulative default chance strictly between 0 and 1 is reached by some h.
 - **Uniqueness.** It only ever climbs as h grows, so it cannot hit the same value twice. One answer.
 - **Boundaries.** A default chance of 0 gives h = 0. A default chance of 1 needs an infinite hazard: no finite answer. Anything outside 0 to 1 is not a probability.
 
-Taking logs gives the formula: $\bar\lambda_S(5) = -\ln(1 - 0.108053)/5 = 0.022870$, or **2.29% a year**. It is an average only. The year-by-year default chance for a Solid borrower rises from 1.00% in year one to 3.19% in year five; the flat 2.29% is the one rate that lands on the same five-year total.
+Taking logs gives the formula: $`\bar\lambda_S(5) = -\ln(1 - 0.108053)/5 = 0.022870`$, or **2.29% a year**. It is an average only. The year-by-year default chance for a Solid borrower rises from 1.00% in year one to 3.19% in year five; the flat 2.29% is the one rate that lands on the same five-year total.
 
 ### Step 6: where the table comes from
 
-Line up every borrower graded Solid on 1 January. Count them ($N_S$) and count where each is a year later ($N_{SS}$, $N_{SH}$, $N_{SD}$). The fraction $N_{Sj}/N_S$ is the **cohort estimate** of $p_{Sj}$; with 1,000 Solid borrowers of which 900 stay, 90 slip and 10 default, it returns the league's own row. This fraction is also the maximum-likelihood estimate: of all tables, it is the one under which the observed counts were most probable.
+Line up every borrower graded Solid on 1 January. Count them ($`N_S`$) and count where each is a year later ($`N_{SS}`$, $`N_{SH}`$, $`N_{SD}`$). The fraction $`N_{Sj}/N_S`$ is the **cohort estimate** of $`p_{Sj}`$; with 1,000 Solid borrowers of which 900 stay, 90 slip and 10 default, it returns the league's own row. This fraction is also the maximum-likelihood estimate: of all tables, it is the one under which the observed counts were most probable.
 
 <details>
 <summary>The continuous-time version: generators, and why annual tables are not the end</summary>
@@ -170,12 +188,12 @@ The other route to the same numbers is to follow borrowers rather than tables: s
 
 ## Worked numbers, by hand
 
-The three-grade league, starting Solid. Each year uses the first-step split: default this year directly, or move and face the new grade's remaining years. In symbols, $\mathrm{PD}_S(T+1) = p_{SD} + p_{SS}\,\mathrm{PD}_S(T) + p_{SH}\,\mathrm{PD}_H(T)$, and the same split for Shaky.
+The three-grade league, starting Solid. Each year uses the first-step split: default this year directly, or move and face the new grade's remaining years. In symbols, $`\mathrm{PD}_S(T+1) = p_{SD} + p_{SS}\,\mathrm{PD}_S(T) + p_{SH}\,\mathrm{PD}_H(T)`$, and the same split for Shaky.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Year 1 | $p_{SD}$ | 0.010000 |
-| Shaky, year 1 | $p_{HD}$ | 0.100000 |
+| Year 1 | $`p_{SD}`$ | 0.010000 |
+| Shaky, year 1 | $`p_{HD}`$ | 0.100000 |
 | Year 2 | 0.01 + 0.90 × 0.010000 + 0.09 × 0.100000 | 0.028000 |
 | Shaky, year 2 | 0.10 + 0.10 × 0.010000 + 0.80 × 0.100000 | 0.181000 |
 | Year 3 | 0.01 + 0.90 × 0.028000 + 0.09 × 0.181000 | 0.051490 |
@@ -621,9 +639,9 @@ The two outputs are identical, byte for byte.
 
 Lean proves the card's theorem and the average hazard for any finite set of grades, and checks the league's exact numbers.
 
-- Suppose only today's grade matters and the same table $P$ applies every year. Then a borrower starting in grade $i$ is in grade $j$ after $T$ years with chance $(P^T)_{ij}$.
-- Take the same model, with Default absorbing. Then the Default entry of row $i$ of $P^T$ is $\mathrm{PD}_i(T)$, the chance of default by year T.
-- Take a horizon T above 0 and a cumulative default chance from 0 up to, but not including, 1. Then exactly one flat hazard reproduces it: $\bar\lambda = -\ln(1 - \mathrm{PD})/T$.
+- Suppose only today's grade matters and the same table $`P`$ applies every year. Then a borrower starting in grade $`i`$ is in grade $`j`$ after $`T`$ years with chance $`(P^T)_{ij}`$.
+- Take the same model, with Default absorbing. Then the Default entry of row $`i`$ of $`P^T`$ is $`\mathrm{PD}_i(T)`$, the chance of default by year T.
+- Take a horizon T above 0 and a cumulative default chance from 0 up to, but not including, 1. Then exactly one flat hazard reproduces it: $`\bar\lambda = -\ln(1 - \mathrm{PD})/T`$.
 - Take the league. Then Solid's two-year default chance is exactly 0.028, and its five-year default chance is exactly 0.10805311.
 - The two-year table, the hand table's years 3 and 4, the 10 and 18 defaults and the cohort estimate 0.09 also check.
 
@@ -954,7 +972,7 @@ example : (90 : ℚ) / 1000 = 9/100 := by norm_num
 
 ## What this builds on
 
-- [The hazard rate](02-hazard-rate-and-survival-probability.md): survival as $e^{-\lambda T}$ for a flat hazard, which Step 5 runs backwards to get the average hazard.
+- [The hazard rate](02-hazard-rate-and-survival-probability.md): survival as $`e^{-\lambda T}`$ for a flat hazard, which Step 5 runs backwards to get the average hazard.
 - [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): the row-times-column rule that Step 1 shows is a sum over the middle grade.
 - [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): why a matrix power is a mix of eigenvalue powers, the closed form in Step 4.
 - [Markov chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md): the memoryless assumption, absorbing states and Chapman–Kolmogorov in general.

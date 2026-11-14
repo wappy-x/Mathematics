@@ -31,51 +31,57 @@ xychart-beta
     line [-16.26, -16.26, -16.26, -16.26, -16.26, -16.26, -16.26]
 ```
 
-Orange: the plain total. It climbs about one step (a factor of ten) for every tenfold growth in ticks. Green: the bound $(n-1)u$, the first-order form of the $\gamma_{n-1}$ bound proved below, always above orange. Dark blue: Kahan's total, flat at −16.26. Pairwise lands on exactly the same values as Kahan here. The relative error is the error divided by the exact total.
+Orange: the plain total. It climbs about one step (a factor of ten) for every tenfold growth in ticks. Green: the bound $`(n-1)u`$, the first-order form of the $`\gamma_{n-1}`$ bound proved below, always above orange. Dark blue: Kahan's total, flat at −16.26. Pairwise lands on exactly the same values as Kahan here. The relative error is the error divided by the exact total.
 
 ---
 
 ## The formula
 
-Two tools come from [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md). The unit roundoff $u = 2^{-53}$ is the most one rounding can cost, relative to its result. The standard model says one machine addition returns $\mathrm{fl}(a + b) = (a + b)(1 + \delta)$ with $|\delta| \le u$. Write $\gamma_k = ku/(1 - ku)$, which is about $ku$.
+Two tools come from [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md). The unit roundoff $`u = 2^{-53}`$ is the most one rounding can cost, relative to its result. The standard model says one machine addition returns $`\mathrm{fl}(a + b) = (a + b)(1 + \delta)`$ with $`|\delta| \le u`$. Write $`\gamma_k = ku/(1 - ku)`$, which is about $`ku`$.
 
-For $n$ numbers $x_1, \dots, x_n$ with exact total $S$, the computed total $\hat S$ ("S hat") obeys these bounds:
+For $`n`$ numbers $`x_1, \dots, x_n`$ with exact total $`S`$, the computed total $`\hat S`$ ("S hat") obeys these bounds:
 
-$$\text{plain: } |\hat S - S| \le u\sum_{k=2}^{n} |\hat T_k| \le \gamma_{n-1}\sum_{i=1}^{n} |x_i|$$
+```math
+\text{plain: } |\hat S - S| \le u\sum_{k=2}^{n} |\hat T_k| \le \gamma_{n-1}\sum_{i=1}^{n} |x_i|
+```
 
-$$\text{pairwise: } |\hat S - S| \le \gamma_{L}\sum_{i=1}^{n} |x_i|, \quad L = \lceil \log_2 n \rceil \qquad \text{Kahan: } |\hat S - S| \le \big(2u + O(nu^2)\big)\sum_{i=1}^{n} |x_i|$$
+```math
+\text{pairwise: } |\hat S - S| \le \gamma_{L}\sum_{i=1}^{n} |x_i|, \quad L = \lceil \log_2 n \rceil \qquad \text{Kahan: } |\hat S - S| \le \big(2u + O(nu^2)\big)\sum_{i=1}^{n} |x_i|
+```
 
-**Read it aloud:** the plain sum can lose up to u of every partial total, which adds up to about n times u of the whole; the pairwise sum loses about one u per level of the tree; Kahan's sum loses about two u in all, whatever n is (the $O(nu^2)$ part is far smaller, for n below about $1/u$).
+**Read it aloud:** the plain sum can lose up to u of every partial total, which adds up to about n times u of the whole; the pairwise sum loses about one u per level of the tree; Kahan's sum loses about two u in all, whatever n is (the $`O(nu^2)`$ part is far smaller, for n below about $`1/u`$).
 
-Welford's update keeps a running mean $\mu_k$ and a running sum of squared distances $M_k$:
+Welford's update keeps a running mean $`\mu_k`$ and a running sum of squared distances $`M_k`$:
 
-$$\mu_k = \mu_{k-1} + \frac{x_k - \mu_{k-1}}{k}, \qquad M_k = M_{k-1} + (x_k - \mu_{k-1})(x_k - \mu_k), \qquad \sigma^2 = \frac{M_n}{n}$$
+```math
+\mu_k = \mu_{k-1} + \frac{x_k - \mu_{k-1}}{k}, \qquad M_k = M_{k-1} + (x_k - \mu_{k-1})(x_k - \mu_k), \qquad \sigma^2 = \frac{M_n}{n}
+```
 
 **Read it aloud:** nudge the mean a k-th of the way toward each new reading, add the reading's distance from the old mean times its distance from the new mean, and divide the final total by the count.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$, $n$ | the $i$-th number added, and how many there are | every $x_i$ is the stored 0.1; $n$ = 10,000,000 | more ticks, more roundings |
-| $S$, $\hat S$ | the exact total of the stored numbers, and the computed total | $S$ = 1,000,000 + 5.551e-11; plain $\hat S$ = 999999.9998389754 | — |
-| $T_k$, $\hat T_k$ | the exact and the computed partial total after $k$ numbers | both about $0.1k$ m after $k$ ticks | larger totals, larger roundings |
-| $u$, $\mathrm{fl}$ | unit roundoff: the most one rounding costs, relative; $\mathrm{fl}(\cdot)$ is the machine's rounded result | 1.110e-16 in doubles; 5.960e-8 in singles | every bound grows |
-| $\delta_k$, $\eta_i$ | the relative error of the $k$-th addition; the total relative change it makes to term $i$ | at most $u$; each late tick loses 2.328e-11 m | — |
-| $\gamma_k$ | $ku/(1 - ku)$: the bound after $k$ roundings in a row | $\gamma_{24} \times 10^6$ = 2.665e-9 | grows with $k$ |
-| $L$ | levels in the pairwise tree, $\lceil \log_2 n \rceil$ | 24 | grows only with the log of $n$ |
-| $t$, $y$, $s$, $c$, $r$ | Kahan's running total, the corrected next term, the new total, the correction, and the part rounding lost | $c$ holds minus the part of $y$ that rounding dropped | — |
-| $E$ | the power of two at the bottom of a range $[2^E, 2^{E+1})$ | $E$ = 19: totals from 524,288 to 1,048,576 | the gap $2^{E-52}$ doubles |
-| $\mu_k$, $M_k$ | Welford's running mean and running sum of squared distances | $\mu$ ends 1.358e-7 Pa below 101,325 | — |
-| $\sigma^2$ | the variance: the mean squared distance from the mean | 3.25 Pa² | — |
-| $\kappa$ | the condition number of the variance: how much it magnifies relative errors in the readings | 56205 | the textbook formula's error grows as $\kappa^2$ |
+| $`x_i`$, $`n`$ | the $`i`$-th number added, and how many there are | every $`x_i`$ is the stored 0.1; $`n`$ = 10,000,000 | more ticks, more roundings |
+| $`S`$, $`\hat S`$ | the exact total of the stored numbers, and the computed total | $`S`$ = 1,000,000 + 5.551e-11; plain $`\hat S`$ = 999999.9998389754 | — |
+| $`T_k`$, $`\hat T_k`$ | the exact and the computed partial total after $`k`$ numbers | both about $`0.1k`$ m after $`k`$ ticks | larger totals, larger roundings |
+| $`u`$, $`\mathrm{fl}`$ | unit roundoff: the most one rounding costs, relative; $`\mathrm{fl}(\cdot)`$ is the machine's rounded result | 1.110e-16 in doubles; 5.960e-8 in singles | every bound grows |
+| $`\delta_k`$, $`\eta_i`$ | the relative error of the $`k`$-th addition; the total relative change it makes to term $`i`$ | at most $`u`$; each late tick loses 2.328e-11 m | — |
+| $`\gamma_k`$ | $`ku/(1 - ku)`$: the bound after $`k`$ roundings in a row | $`\gamma_{24} \times 10^6`$ = 2.665e-9 | grows with $`k`$ |
+| $`L`$ | levels in the pairwise tree, $`\lceil \log_2 n \rceil`$ | 24 | grows only with the log of $`n`$ |
+| $`t`$, $`y`$, $`s`$, $`c`$, $`r`$ | Kahan's running total, the corrected next term, the new total, the correction, and the part rounding lost | $`c`$ holds minus the part of $`y`$ that rounding dropped | — |
+| $`E`$ | the power of two at the bottom of a range $`[2^E, 2^{E+1})`$ | $`E`$ = 19: totals from 524,288 to 1,048,576 | the gap $`2^{E-52}`$ doubles |
+| $`\mu_k`$, $`M_k`$ | Welford's running mean and running sum of squared distances | $`\mu`$ ends 1.358e-7 Pa below 101,325 | — |
+| $`\sigma^2`$ | the variance: the mean squared distance from the mean | 3.25 Pa² | — |
+| $`\kappa`$ | the condition number of the variance: how much it magnifies relative errors in the readings | 56205 | the textbook formula's error grows as $`\kappa^2`$ |
 
-The [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md) card already runs Kahan's sum on a million 0.1s and proves that Welford's update gives the right $M_n$. This card proves the bounds, adds pairwise summation, and measures each method against its bound.
+The [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md) card already runs Kahan's sum on a million 0.1s and proves that Welford's update gives the right $`M_n`$. This card proves the bounds, adds pairwise summation, and measures each method against its bound.
 
 ### When it holds
 
-- **Round to nearest.** The standard model needs the default rounding mode. With rounding always up or always down, every $u$ doubles.
-- **The order of operations is kept.** In exact arithmetic Kahan's correction $(s - t) - y$ is zero. A compiler allowed to rearrange sums (a "fast maths" switch) deletes it. What is left is a plain sum, which the compiler may also reorder; kept in order, it reads the plain 999999.9998389754.
-- **The bounds are relative to $\sum |x_i|$, not to $|S|$.** When large terms of both signs cancel, even Kahan fails: on 1, 1e100, 1, −1e100 it returns 0.0, not 2. Its bound there is 4.441e84, so the bound still holds.
-- **$nu$ well below 1.** The plain bound needs $(n-1)u < 1$. In singles, $(n-1)u$ is more than a half at ten million ticks, so that bound promises almost nothing.
+- **Round to nearest.** The standard model needs the default rounding mode. With rounding always up or always down, every $`u`$ doubles.
+- **The order of operations is kept.** In exact arithmetic Kahan's correction $`(s - t) - y`$ is zero. A compiler allowed to rearrange sums (a "fast maths" switch) deletes it. What is left is a plain sum, which the compiler may also reorder; kept in order, it reads the plain 999999.9998389754.
+- **The bounds are relative to $`\sum |x_i|`$, not to $`|S|`$.** When large terms of both signs cancel, even Kahan fails: on 1, 1e100, 1, −1e100 it returns 0.0, not 2. Its bound there is 4.441e84, so the bound still holds.
+- **$`nu`$ well below 1.** The plain bound needs $`(n-1)u < 1`$. In singles, $`(n-1)u`$ is more than a half at ten million ticks, so that bound promises almost nothing.
 - **Exact readings.** Welford fixes the formula, not the data. A reading rounded on the way in stays rounded.
 
 ---
@@ -88,74 +94,80 @@ A double is a point on a grid, and the grid's gap doubles at every power of two.
 
 ### Step 1: the plain sum's bound
 
-Write $\hat T_k$ for the computed partial total. Each step obeys the standard model:
+Write $`\hat T_k`$ for the computed partial total. Each step obeys the standard model:
 
-$$\hat T_k = (\hat T_{k-1} + x_k)(1 + \delta_k), \qquad |\delta_k| \le u.$$
+```math
+\hat T_k = (\hat T_{k-1} + x_k)(1 + \delta_k), \qquad |\delta_k| \le u.
+```
 
-So step $k$ adds an error of exactly $\delta_k(\hat T_{k-1} + x_k)$, and these errors add up with nothing lost:
+So step $`k`$ adds an error of exactly $`\delta_k(\hat T_{k-1} + x_k)`$, and these errors add up with nothing lost:
 
-$$\hat S - S = \sum_{k=2}^{n} \delta_k(\hat T_{k-1} + x_k).$$
+```math
+\hat S - S = \sum_{k=2}^{n} \delta_k(\hat T_{k-1} + x_k).
+```
 
-Each term is the rounding error of one addition. With round to nearest it is at most half a gap at the result, so at most $u|\hat T_k|$. So $|\hat S - S| \le u \sum |\hat T_k|$. Each $|\hat T_k|$ is, to first order, at most $\sum |x_i|$, and there are $n - 1$ of them. That gives $(n-1)u\sum|x_i|$; the exact form with $\gamma_{n-1}$ comes from the product of the $(1 + \delta_k)$ factors.
+Each term is the rounding error of one addition. With round to nearest it is at most half a gap at the result, so at most $`u|\hat T_k|`$. So $`|\hat S - S| \le u \sum |\hat T_k|`$. Each $`|\hat T_k|`$ is, to first order, at most $`\sum |x_i|`$, and there are $`n - 1`$ of them. That gives $`(n-1)u\sum|x_i|`$; the exact form with $`\gamma_{n-1}`$ comes from the product of the $`(1 + \delta_k)`$ factors.
 
-For the tracker, $\sum |T_k| = 0.1 \times (2 + 3 + \dots + n)$:
+For the tracker, $`\sum |T_k| = 0.1 \times (2 + 3 + \dots + n)`$:
 
 | Quantity | Value | True error ÷ bound |
 | --- | --- | --- |
 | true error | −1.610e-4 | — |
-| $u \sum T_k$, using exact partial totals (each within 1.110e-3 of $\hat T_k$) | 5.551e-4 | 0.290 |
-| $\gamma_{n-1} \sum x_i$ | 1.110e-3 | 0.145 |
+| $`u \sum T_k`$, using exact partial totals (each within 1.110e-3 of $`\hat T_k`$) | 5.551e-4 | 0.290 |
+| $`\gamma_{n-1} \sum x_i`$ | 1.110e-3 | 0.145 |
 
 The first bound shows that order matters. Every partial total is charged once, so small partial totals help: for terms of one sign, add the small ones first.
 
-The same algebra says $\hat S$ is the exact total of slightly changed terms $x_i(1 + \eta_i)$, with $|\eta_i| \le \gamma_{n-1}$. That is a small backward error: a tiny change to the inputs explains the output exactly ([Forward and backward error](06-forward-and-backward-error.md)). A sum of positive numbers has condition number 1 ([Conditioning and stability](05-conditioning-and-stability.md)), so here the whole error is the method's fault.
+The same algebra says $`\hat S`$ is the exact total of slightly changed terms $`x_i(1 + \eta_i)`$, with $`|\eta_i| \le \gamma_{n-1}`$. That is a small backward error: a tiny change to the inputs explains the output exactly ([Forward and backward error](06-forward-and-backward-error.md)). A sum of positive numbers has condition number 1 ([Conditioning and stability](05-conditioning-and-stability.md)), so here the whole error is the method's fault.
 
 ### Step 2: why the true error is smaller, range by range
 
-Inside one range $[2^E, 2^{E+1})$ the gap is fixed at $2^{E-52}$, and every total is a whole number of gaps. So every tick adds the same amount: 0.1 rounded to a whole number of gaps. From 524,288 on, each tick adds 0.1 minus 2.328e-11. That is under half the worst case, 5.821e-11, and every tick loses the same amount.
+Inside one range $`[2^E, 2^{E+1})`$ the gap is fixed at $`2^{E-52}`$, and every total is a whole number of gaps. So every tick adds the same amount: 0.1 rounded to a whole number of gaps. From 524,288 on, each tick adds 0.1 minus 2.328e-11. That is under half the worst case, 5.821e-11, and every tick loses the same amount.
 
 This gives a second road to the plain total. Walk the ranges one at a time: in each, find the rounded step, and count how many steps reach the next power of two. The one step that crosses a power of two lands on the next range's coarser grid, so the walk rounds that step on its own. A short loop over the ranges reproduces 999999.9998389754 to the bit, with no ten-million-step loop.
 
 ### Step 3: pairwise summation
 
-Add $x_1 + x_2$, $x_3 + x_4$, and so on. Then add those sums in pairs, and repeat. Each number now passes through at most $L = \lceil \log_2 n \rceil$ additions, not $n - 1$. Apply Step 1 to each number's path through the tree:
+Add $`x_1 + x_2`$, $`x_3 + x_4`$, and so on. Then add those sums in pairs, and repeat. Each number now passes through at most $`L = \lceil \log_2 n \rceil`$ additions, not $`n - 1`$. Apply Step 1 to each number's path through the tree:
 
-$$|\hat S - S| \le \gamma_L \sum |x_i|.$$
+```math
+|\hat S - S| \le \gamma_L \sum |x_i|.
+```
 
-For ten million ticks $L$ = 24, and the bound is 2.665e-9. The true error is −5.551e-11, a ratio of 0.021. The cost is the same $n - 1$ additions as the plain sum. A streaming version keeps a stack of at most $L$ partial sums.
+For ten million ticks $`L`$ = 24, and the bound is 2.665e-9. The true error is −5.551e-11, a ratio of 0.021. The cost is the same $`n - 1`$ additions as the plain sum. A streaming version keeps a stack of at most $`L`$ partial sums.
 
 ### Step 4: Kahan's correction catches the lost part exactly
 
-After $s = \mathrm{fl}(t + y)$, the lost part is $r = (t + y) - s$. Kahan computes $c = (s - t) - y$. When $|t| \ge |y|$, both subtractions are exact, so $c = -r$ exactly. The next step adds $y = \mathrm{fl}(x - c)$, about $x + r$: the lost part goes back in.
+After $`s = \mathrm{fl}(t + y)`$, the lost part is $`r = (t + y) - s`$. Kahan computes $`c = (s - t) - y`$. When $`|t| \ge |y|`$, both subtractions are exact, so $`c = -r`$ exactly. The next step adds $`y = \mathrm{fl}(x - c)`$, about $`x + r`$: the lost part goes back in.
 
 <details>
 <summary>Detailed proof: when |t| ≥ |y|, the correction c equals minus the lost part, with no rounding</summary>
 
-1. **$r$ is a double.** $t + y$ is a whole multiple of the smaller of the two gaps at $t$ and $y$. So is $s$. If $|t + y|$ is small enough to have a finer gap than that, the signs differ and $|y| > |t|/2$, so $t + y$ is exact (item 2's third case) and $s = t + y$. Otherwise $s$ sits on a grid at least that coarse. So $r$ is a whole multiple of that gap too. Also $t$ is itself a double, and $s$ is the double nearest $t + y$, so $|r| \le |(t + y) - t| = |y|$. A whole multiple of $y$'s gap no larger than $|y|$ fits in 53 bits.
-2. **$s - t$ is exact.** The Sterbenz lemma ([Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md)) says two doubles within a factor of 2 subtract exactly. If $t$ and $y$ have the same sign, $s$ lies between $t$ and $2t$. If their signs differ and $|y| \le |t|/2$, $s$ lies between $t/2$ and $t$. In both cases Sterbenz applies. If their signs differ and $|y| > |t|/2$, then $t$ and $-y$ are within a factor of 2, so $t + y$ is exact, $s = t + y$, and $s - t = y$.
-3. **$(s - t) - y$ is exact.** Its exact value is $s - t - y = -r$, a double by item 1. A result that is already a double is returned unrounded.
+1. **$`r`$ is a double.** $`t + y`$ is a whole multiple of the smaller of the two gaps at $`t`$ and $`y`$. So is $`s`$. If $`|t + y|`$ is small enough to have a finer gap than that, the signs differ and $`|y| > |t|/2`$, so $`t + y`$ is exact (item 2's third case) and $`s = t + y`$. Otherwise $`s`$ sits on a grid at least that coarse. So $`r`$ is a whole multiple of that gap too. Also $`t`$ is itself a double, and $`s`$ is the double nearest $`t + y`$, so $`|r| \le |(t + y) - t| = |y|`$. A whole multiple of $`y`$'s gap no larger than $`|y|`$ fits in 53 bits.
+2. **$`s - t`$ is exact.** The Sterbenz lemma ([Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md)) says two doubles within a factor of 2 subtract exactly. If $`t`$ and $`y`$ have the same sign, $`s`$ lies between $`t`$ and $`2t`$. If their signs differ and $`|y| \le |t|/2`$, $`s`$ lies between $`t/2`$ and $`t`$. In both cases Sterbenz applies. If their signs differ and $`|y| > |t|/2`$, then $`t`$ and $`-y`$ are within a factor of 2, so $`t + y`$ is exact, $`s = t + y`$, and $`s - t = y`$.
+3. **$`(s - t) - y`$ is exact.** Its exact value is $`s - t - y = -r`$, a double by item 1. A result that is already a double is returned unrounded.
 
-For the tracker, $|t| \ge |y|$ from the second tick on.
+For the tracker, $`|t| \ge |y|`$ from the second tick on.
 
 </details>
 
-The corrections are exact, so the error comes from two other places. First, the corrected term $y = \mathrm{fl}(x - c)$ is itself rounded, losing up to about $u|x_k|$ on each term; over all the terms that is the first $u\sum|x_i|$. Second, the lost part of the final addition, at most $u$ times the total, is never added back: the second $u$. The rounding of $y$ also touches the tiny lost part carried inside it, about $u^2$ times the total on each term. That is the $O(nu^2)$ part. The full proof is in Higham's book, section 4.3 (Sources). This card states it and checks the run against it.
+The corrections are exact, so the error comes from two other places. First, the corrected term $`y = \mathrm{fl}(x - c)`$ is itself rounded, losing up to about $`u|x_k|`$ on each term; over all the terms that is the first $`u\sum|x_i|`$. Second, the lost part of the final addition, at most $`u`$ times the total, is never added back: the second $`u`$. The rounding of $`y`$ also touches the tiny lost part carried inside it, about $`u^2`$ times the total on each term. That is the $`O(nu^2)`$ part. The full proof is in Higham's book, section 4.3 (Sources). This card states it and checks the run against it.
 
-For the tracker, $2u\sum|x_i|$ = 2.220e-10 and $nu^2\sum|x_i|$ = 1.2e-19. The true error is −5.551e-11, a ratio of 0.250. That is no more than rounding the exact total once: it is within the half gap, 5.821e-11.
+For the tracker, $`2u\sum|x_i|`$ = 2.220e-10 and $`nu^2\sum|x_i|`$ = 1.2e-19. The true error is −5.551e-11, a ratio of 0.250. That is no more than rounding the exact total once: it is within the half gap, 5.821e-11.
 
 ### Step 5: Welford's update avoids the large squares
 
-The variance of the readings is the mean squared distance from their mean ([Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md)). The textbook one-pass formula is $\sigma^2 = \big(\sum x^2 - (\sum x)^2/n\big)/n$. It subtracts two huge, nearly equal sums to find a small difference.
+The variance of the readings is the mean squared distance from their mean ([Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md)). The textbook one-pass formula is $`\sigma^2 = \big(\sum x^2 - (\sum x)^2/n\big)/n`$. It subtracts two huge, nearly equal sums to find a small difference.
 
-The condition number of the variance is $\kappa = \sqrt{1 + \mu^2/\sigma^2}$, from Chan, Golub and LeVeque (Sources). It measures how much a relative wobble in the readings moves the variance. Here $\kappa$ = 56205. The textbook formula squares it: its error bound is of order $nu\kappa^2$.
+The condition number of the variance is $`\kappa = \sqrt{1 + \mu^2/\sigma^2}`$, from Chan, Golub and LeVeque (Sources). It measures how much a relative wobble in the readings moves the variance. Here $`\kappa`$ = 56205. The textbook formula squares it: its error bound is of order $`nu\kappa^2`$.
 
-Welford's update never squares a raw reading. It squares distances from the mean, a few pascals, so no huge numbers cancel. The [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md) card proves it returns the right $M_n$. Its error bound is of order $nu\kappa$: one power of $\kappa$, not two.
+Welford's update never squares a raw reading. It squares distances from the mean, a few pascals, so no huge numbers cancel. The [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md) card proves it returns the right $`M_n`$. Its error bound is of order $`nu\kappa`$: one power of $`\kappa`$, not two.
 
 | Method | Passes | Variance | Relative error | Bound, of order | Error ÷ bound |
 | --- | --- | --- | --- | --- | --- |
-| textbook | 1 | 3.604521600000 | 1.091e-1 | $nu\kappa^2$ = 3.507e0 | 3.11e-2 |
-| two-pass | 2 | 3.250000000000 | 0.000e0 | $nu + (nu\kappa)^2$ = 5.004e-9 | 0.00e0 |
-| Welford | 1 | 3.250000000001 | 4.323e-13 | $nu\kappa$ = 6.240e-5 | 6.93e-9 |
+| textbook | 1 | 3.604521600000 | 1.091e-1 | $`nu\kappa^2`$ = 3.507e0 | 3.11e-2 |
+| two-pass | 2 | 3.250000000000 | 0.000e0 | $`nu + (nu\kappa)^2`$ = 5.004e-9 | 0.00e0 |
+| Welford | 1 | 3.250000000001 | 4.323e-13 | $`nu\kappa`$ = 6.240e-5 | 6.93e-9 |
 
 The bounds drop small constant factors, so they show scale, not exact limits. The two-pass result is exact here because every reading, mean and distance is a whole number of quarter pascals. The textbook result is wrong in the first decimal place while looking plausible.
 
@@ -168,12 +180,12 @@ The tracker in doubles, then in singles.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | stored tick | 0.1 has no exact binary form | 0.1 + 5.551e-18 |
-| exact total $S$ | 10,000,000 × stored tick | 1,000,000 + 5.551e-11 |
-| gap near 1,000,000 | $2^{19-52}$ | 1.164e-10; half gap 5.821e-11 |
+| exact total $`S`$ | 10,000,000 × stored tick | 1,000,000 + 5.551e-11 |
+| gap near 1,000,000 | $`2^{19-52}`$ | 1.164e-10; half gap 5.821e-11 |
 | plain: one late tick | 0.1 rounded to a whole number of gaps | 0.1 − 2.328e-11 |
 | plain total | ten million rounded additions | 999999.9998389754, error −1.610e-4 |
-| plain bound | $\gamma_{n-1} \times 10^6$ | 1.110e-3, ratio 0.145 |
-| Kahan bound | $2u \times 10^6$ | 2.220e-10 |
+| plain bound | $`\gamma_{n-1} \times 10^6`$ | 1.110e-3, ratio 0.145 |
+| Kahan bound | $`2u \times 10^6`$ | 2.220e-10 |
 | single: one late tick | above 524,288 the gap is 0.0625, and 0.1 rounds to 2 gaps | 0.125, +25.00% |
 | single plain total | | 1087937.0, error 87936.9851 |
 | Kahan total, doubles | | **1000000.0000000000, error −5.551e-11** |
@@ -184,16 +196,16 @@ Kahan's total is the nearest double to the exact total of the stored ticks. Its 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Kahan with the correction $c$ removed | 999999.9998389754 | this is the plain sum: every lost part stays lost. A compiler that deletes $c$ leaves a plain sum too, perhaps reordered |
+| Kahan with the correction $`c`$ removed | 999999.9998389754 | this is the plain sum: every lost part stays lost. A compiler that deletes $`c`$ leaves a plain sum too, perhaps reordered |
 | plain sum in singles | 1087937.0, 8.79% too far | from 524,288 on each 0.1 rounds to 0.125 |
-| Kahan on 1, 1e100, 1, −1e100 | 0.0, true total 2 | the bound is relative to $\sum|x_i|$, here 2e100; the sum is ill-conditioned (tiny changes in the terms move it hugely) |
-| textbook one-pass variance | 3.604521600000 Pa², 10.91% high | $\kappa^2$ = 3.159e9 magnifies the rounding in $\sum x^2$ |
+| Kahan on 1, 1e100, 1, −1e100 | 0.0, true total 2 | the bound is relative to $`\sum\lvert x_i\rvert`$, here 2e100; the sum is ill-conditioned (tiny changes in the terms move it hugely) |
+| textbook one-pass variance | 3.604521600000 Pa², 10.91% high | $`\kappa^2`$ = 3.159e9 magnifies the rounding in $`\sum x^2`$ |
 
 ---
 
 ## How it moves: the tick that changes size
 
-In doubles the plain total falls short. In singles it overshoots by 8.79%. Why the difference? In each range $[2^E, 2^{E+1})$, a tick adds 0.1 rounded to the gap of that range. Singles have 23 fraction bits ([IEEE 754](02-ieee-floating-point.md)), so $E$ = 19 gives a gap of $2^{19-23}$ = 0.0625. The rounded tick changes size each time the total passes a power of two.
+In doubles the plain total falls short. In singles it overshoots by 8.79%. Why the difference? In each range $`[2^E, 2^{E+1})`$, a tick adds 0.1 rounded to the gap of that range. Singles have 23 fraction bits ([IEEE 754](02-ieee-floating-point.md)), so $`E`$ = 19 gives a gap of $`2^{19-23}`$ = 0.0625. The rounded tick changes size each time the total passes a power of two.
 
 | Range starts at | Gap | One tick adds | Off by |
 | --- | --- | --- | --- |
@@ -221,7 +233,7 @@ The 6.25% shortfall runs from 131,072 to 524,288. Then the 25% overshoot runs fr
 
 ## Code, from first principles, and it actually runs
 
-The scripts add ten million ticks by the plain, pairwise and Kahan methods, in doubles and in singles. Every error is a true error, measured against the exact total of the stored ticks: in fractions in Python and in whole units of $2^{-60}$ in Rust. The range walk of Step 2 is a second, independent road to each plain total, and the asserts demand the same bits. Each bound is printed beside its true error with their ratio. The variance part runs the textbook, two-pass and Welford methods on ten million barometer readings. Their exact variance is found two ways, from the 25 distinct readings in exact arithmetic and from a closed form. Python rounds to singles by packing into 32 bits; Rust converts with `as f32`.
+The scripts add ten million ticks by the plain, pairwise and Kahan methods, in doubles and in singles. Every error is a true error, measured against the exact total of the stored ticks: in fractions in Python and in whole units of $`2^{-60}`$ in Rust. The range walk of Step 2 is a second, independent road to each plain total, and the asserts demand the same bits. Each bound is printed beside its true error with their ratio. The variance part runs the textbook, two-pass and Welford methods on ten million barometer readings. Their exact variance is found two ways, from the 25 distinct readings in exact arithmetic and from a closed form. Python rounds to singles by packing into 32 bits; Rust converts with `as f32`.
 
 ### Python
 
@@ -616,11 +628,11 @@ ALL CHECKS PASS
 
 Lean proves the plain and pairwise bounds of Steps 1 and 3, and that Welford's update is exact without rounding.
 
-- If every addition obeys the standard model and $(n-1)u < 1$, the plain left-to-right total of any $n$ numbers obeys $|\hat S - S| \le \gamma_{n-1}\sum|x_i|$.
-- If every addition obeys the standard model and $Lu < 1$, the pairwise total of $2^L$ numbers obeys $|\hat S - S| \le \gamma_L\sum|x_i|$. Fewer numbers are padded with zeros, which change neither sum.
-- After $n \ge 1$ readings, Welford's $\mu_n$ is the mean of the readings, and $M_n$ is the sum of squared distances from it, so $\sigma^2 = M_n/n$.
+- If every addition obeys the standard model and $`(n-1)u < 1`$, the plain left-to-right total of any $`n`$ numbers obeys $`|\hat S - S| \le \gamma_{n-1}\sum|x_i|`$.
+- If every addition obeys the standard model and $`Lu < 1`$, the pairwise total of $`2^L`$ numbers obeys $`|\hat S - S| \le \gamma_L\sum|x_i|`$. Fewer numbers are padded with zeros, which change neither sum.
+- After $`n \ge 1`$ readings, Welford's $`\mu_n`$ is the mean of the readings, and $`M_n`$ is the sum of squared distances from it, so $`\sigma^2 = M_n/n`$.
 - The barometer cycle has mean exactly 101,325 Pa and variance exactly 3.25 Pa², matching the closed form.
-- Ten million ticks need $L$ = 24 levels, and in singles above 524,288 a tick of 0.1 rounds to 0.125, 25% too much.
+- Ten million ticks need $`L`$ = 24 levels, and in singles above 524,288 a tick of 0.1 rounds to 0.125, 25% too much.
 
 Kahan's correction, the rounding bounds for Kahan and Welford, and every measured total and error are left to the Python and Rust checks.
 
@@ -929,20 +941,20 @@ example : |(2 : ℚ) / 16 - 1 / 10| < |(1 : ℚ) / 16 - 1 / 10| ∧
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program when a claim is false.
 > - **Remove Kahan's correction.** Change `c = r(r(s - t) - y)` to `c = 0.0`. Guess first: what does Kahan's total become? 999999.9998389754, the plain total, and the assert that Kahan is the exact total rounded once stops the run.
-> - **Tick 0.125 m instead of 0.1 m.** Set `x = 0.125`. Guess first: how big is the plain error? Zero: 0.125 is $2^{-3}$, every partial total is stored exactly, and all three totals read 1250000.0000000000. The assert that plain is far worse than Kahan stops the run.
+> - **Tick 0.125 m instead of 0.1 m.** Set `x = 0.125`. Guess first: how big is the plain error? Zero: 0.125 is $`2^{-3}`$, every partial total is stored exactly, and all three totals read 1250000.0000000000. The assert that plain is far worse than Kahan stops the run.
 > - **Reorder the cancelling list.** Make `bad` read `[1e100, -1e100, 1.0, 1.0]`. Guess first: what does Kahan return? 2.0, the right answer, and the assert expecting 0.0 stops the run. With mixed signs, order decides.
-> - **Measure pressure from zero.** Change `101325.0` in `reading` to `0.0`. Guess first: how wrong is the textbook variance now? Not at all: it reads 3.250000000000, since $\kappa$ = 1. The assert expecting it to fail stops the run.
+> - **Measure pressure from zero.** Change `101325.0` in `reading` to `0.0`. Guess first: how wrong is the textbook variance now? Not at all: it reads 3.250000000000, since $`\kappa`$ = 1. The assert expecting it to fail stops the run.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **"Each addition is accurate to u, so the total is accurate to about u."** Each addition is accurate to $u$ of its own result. Ten million of those losses add up. The tracker's plain total is off by 1.610e-4 m, while one rounding near 1,000,000 costs at most 5.821e-11: over a million times less. The bound $(n-1)u$ grows with every tick.
+> **"Each addition is accurate to u, so the total is accurate to about u."** Each addition is accurate to $`u`$ of its own result. Ten million of those losses add up. The tracker's plain total is off by 1.610e-4 m, while one rounding near 1,000,000 costs at most 5.821e-11: over a million times less. The bound $`(n-1)u`$ grows with every tick.
 >
-> - **Trusting fast-maths compiler settings with Kahan.** The compiler sees $(s - t) - y$ as zero and deletes it. The total falls back to a plain sum, perhaps reordered: 999999.9998389754 if the order is kept.
-> - **Using Kahan on cancelling data.** On 1, 1e100, 1, −1e100 it returns 0.0. Its promise is relative to $\sum|x_i|$; when the terms cancel, the problem itself is ill-conditioned.
-> - **Saving memory with the textbook variance.** One pass of $\sum x$ and $\sum x^2$ gives 3.604521600000 Pa². Welford's update is also one pass and gives 3.250000000001.
+> - **Trusting fast-maths compiler settings with Kahan.** The compiler sees $`(s - t) - y`$ as zero and deletes it. The total falls back to a plain sum, perhaps reordered: 999999.9998389754 if the order is kept.
+> - **Using Kahan on cancelling data.** On 1, 1e100, 1, −1e100 it returns 0.0. Its promise is relative to $`\sum|x_i|`$; when the terms cancel, the problem itself is ill-conditioned.
+> - **Saving memory with the textbook variance.** One pass of $`\sum x`$ and $`\sum x^2`$ gives 3.604521600000 Pa². Welford's update is also one pass and gives 3.250000000001.
 > - **A single-precision running total.** On a small chip the tracker reads 1087937.0 m. Holding the total in a double cuts the drift from 8.79% to 1.610e-4 m; Kahan's correction, even in singles, reads 1000000.0.
 
 ---
@@ -951,9 +963,9 @@ example : |(2 : ℚ) / 16 - 1 / 10| < |(1 : ℚ) / 16 - 1 / 10| ∧
 
 - **Fitness trackers and utility meters.** A lifetime odometer adds a small reading to a large total millions of times. The plain total drifts. Holding it in a double cuts the drift from 8.79% to 1.610e-4 m; Kahan's correction, in doubles or in singles, holds it to one rounding.
 - **Python's built-in `sum`.** Since Python 3.12, `sum` of floats carries a compensation term in the style of Kahan, so it no longer shows the plain total's drift. `math.fsum` goes further and returns the correctly rounded total.
-- **Graphics cards and parallel machines.** Many processors add a long array in a tree, each pair at once. That is pairwise summation, so the error grows with $\log_2 n$, not $n$.
-- **Monitoring dashboards.** A server that reports the mean and spread of response times keeps three numbers per metric: count, $\mu$ and $M$. Each new reading updates them by Welford's rule, and the raw readings are never stored.
-- **Scientific instruments.** Pressure, temperature and voltage readings sit far from zero with a small spread, so $\kappa$ is large. Welford's update, or subtracting a typical value first, keeps the spread accurate.
+- **Graphics cards and parallel machines.** Many processors add a long array in a tree, each pair at once. That is pairwise summation, so the error grows with $`\log_2 n`$, not $`n`$.
+- **Monitoring dashboards.** A server that reports the mean and spread of response times keeps three numbers per metric: count, $`\mu`$ and $`M`$. Each new reading updates them by Welford's rule, and the raw readings are never stored.
+- **Scientific instruments.** Pressure, temperature and voltage readings sit far from zero with a small spread, so $`\kappa`$ is large. Welford's update, or subtracting a typical value first, keeps the spread accurate.
 
 > **Say it back**
 > Every addition rounds the running total to the grid at that total, and loses up to u of it. Ten million additions can lose up to ten million times u; the tracker's plain total is off by 1.610e-4. Pairwise addition puts each number through only 24 roundings. Kahan's correction catches each lost part exactly and adds it back. Both land on the nearest double to the true total. Welford's update finds a mean and variance in one pass by squaring only distances from the mean, so its error grows with κ, not κ².
@@ -962,7 +974,7 @@ example : |(2 : ℚ) / 16 - 1 / 10| < |(1 : ℚ) / 16 - 1 / 10| ∧
 
 ## What this builds on
 
-- [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md): the unit roundoff $u$, the standard model and the Sterbenz lemma, which together give every bound and the exactness of Kahan's correction.
+- [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md): the unit roundoff $`u`$, the standard model and the Sterbenz lemma, which together give every bound and the exactness of Kahan's correction.
 - [Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md): what a variance is, and the shortcut formula that becomes the unstable textbook method here.
 - [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md): Kahan's sum and Welford's update in practice, with the proof that Welford's update gives the right sum of squares.
 
@@ -981,6 +993,6 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Kahan, W. "Further remarks on reducing truncation errors." *Communications of the ACM* 8, no. 1 (1965): 40. [doi:10.1145/363707.363723](https://doi.org/10.1145/363707.363723). The compensated summation loop.
 - Higham, N. J. "The Accuracy of Floating Point Summation." *SIAM Journal on Scientific Computing* 14, no. 4 (1993): 783–799. [doi:10.1137/0914050](https://doi.org/10.1137/0914050). The bounds for plain, pairwise and compensated summation, compared side by side.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2nd ed. SIAM, 2002. [doi:10.1137/1.9780898718027](https://doi.org/10.1137/1.9780898718027). Chapter 4 proves the summation bounds, including Kahan's $2u + O(nu^2)$ in section 4.3.
+- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2nd ed. SIAM, 2002. [doi:10.1137/1.9780898718027](https://doi.org/10.1137/1.9780898718027). Chapter 4 proves the summation bounds, including Kahan's $`2u + O(nu^2)`$ in section 4.3.
 - Welford, B. P. "Note on a Method for Calculating Corrected Sums of Squares and Products." *Technometrics* 4, no. 3 (1962): 419–420. [doi:10.1080/00401706.1962.10490022](https://doi.org/10.1080/00401706.1962.10490022). The one-pass update for the mean and the sum of squared distances.
-- Chan, T. F., Golub, G. H., and LeVeque, R. J. "Algorithms for Computing the Sample Variance: Analysis and Recommendations." *The American Statistician* 37, no. 3 (1983): 242–247. [doi:10.1080/00031305.1983.10483115](https://doi.org/10.1080/00031305.1983.10483115). The condition number $\kappa$ of the variance and the error bounds of order $nu\kappa^2$, $nu\kappa$ and $nu + (nu\kappa)^2$.
+- Chan, T. F., Golub, G. H., and LeVeque, R. J. "Algorithms for Computing the Sample Variance: Analysis and Recommendations." *The American Statistician* 37, no. 3 (1983): 242–247. [doi:10.1080/00031305.1983.10483115](https://doi.org/10.1080/00031305.1983.10483115). The condition number $`\kappa`$ of the variance and the error bounds of order $`nu\kappa^2`$, $`nu\kappa`$ and $`nu + (nu\kappa)^2`$.

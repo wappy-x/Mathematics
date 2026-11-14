@@ -42,57 +42,67 @@ The upper line is the arithmetic ticket, the lower the geometric. Below the stri
 
 Notation first, in words.
 
-- A bar over a letter is the average of that quantity across the paths drawn, so $\bar X$ is the average payoff.
-- A capital E with square brackets holds a quantity's *true* average, so $E[Y]$ is what the companion is really worth, known before a path is drawn.
-- Two words carried over from probability: $\operatorname{var}$ is how widely a quantity scatters about its own average, $\operatorname{cov}$ how two of them scatter together ([Variance reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md)).
-- The house writes $N(x)$ for the bell-curve area to the left of $x$; $N^{-1}(u)$ runs it backwards, returning the point with area $u$ to its left. That area climbs strictly from 0 to 1, so each $u$ between them has exactly one such point and the two ends have none — which is why the code's draws never reach them.
+- A bar over a letter is the average of that quantity across the paths drawn, so $`\bar X`$ is the average payoff.
+- A capital E with square brackets holds a quantity's *true* average, so $`E[Y]`$ is what the companion is really worth, known before a path is drawn.
+- Two words carried over from probability: $`\mathrm{var}`$ is how widely a quantity scatters about its own average, $`\mathrm{cov}`$ how two of them scatter together ([Variance reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md)).
+- The house writes $`N(x)`$ for the bell-curve area to the left of $`x`$; $`N^{-1}(u)`$ runs it backwards, returning the point with area $`u`$ to its left. That area climbs strictly from 0 to 1, so each $`u`$ between them has exactly one such point and the two ends have none — which is why the code's draws never reach them.
 
-**Mirrors.** One bell-curve shock $Z$, used twice:
+**Mirrors.** One bell-curve shock $`Z`$, used twice:
 
-$$\tfrac{1}{2}\Bigl[\,X(Z) + X(-Z)\,\Bigr] \;\; \text{counts as one observation}$$
+```math
+\tfrac{1}{2}\Bigl[\,X(Z) + X(-Z)\,\Bigr] \;\; \text{counts as one observation}
+```
 
 **Read it aloud:** price the path, price it again with every shock's sign flipped, average the two, and treat that average as one draw.
 
-**A control variate.** Alongside each path's payoff $X$, compute a companion payoff $Y$ on the very same path:
+**A control variate.** Alongside each path's payoff $`X`$, compute a companion payoff $`Y`$ on the very same path:
 
-$$\text{estimate} \;=\; \bar X \;-\; \beta\left(\bar Y - E[Y]\right), \qquad \beta \;=\; \frac{\operatorname{cov}(X,\,Y)}{\operatorname{var}(Y)}$$
+```math
+\text{estimate} \;=\; \bar X \;-\; \beta\left(\bar Y - E[Y]\right), \qquad \beta \;=\; \frac{\mathrm{cov}(X,\,Y)}{\mathrm{var}(Y)}
+```
 
 **Read it aloud:** the plain average, minus a slope times however far the companion's own average slipped from its known value.
 
-And what the slope buys, where $\rho$ is the correlation between payoff and companion:
+And what the slope buys, where $`\rho`$ is the correlation between payoff and companion:
 
-$$\operatorname{var}\left(X - \beta\,Y\right) \;=\; \left(1 - \rho^{2}\right)\operatorname{var}(X)$$
+```math
+\mathrm{var}\left(X - \beta\,Y\right) \;=\; \left(1 - \rho^{2}\right)\mathrm{var}(X)
+```
 
 **Read it aloud:** with the best slope, what is left scatters only one minus the correlation squared as widely as the plain payoff.
 
-**Stratification.** Cut the bell curve into $m$ slices of equal chance and draw inside each one:
+**Stratification.** Cut the bell curve into $`m`$ slices of equal chance and draw inside each one:
 
-$$Z_j \;=\; N^{-1}\!\left(\frac{\,j - 1 + U_j\,}{m}\right), \qquad j = 1, 2, \ldots, m$$
+```math
+Z_j \;=\; N^{-1}\!\left(\frac{\,j - 1 + U_j\,}{m}\right), \qquad j = 1, 2, \ldots, m
+```
 
-**Read it aloud:** give every slice of the bell curve its own draw, instead of letting chance decide how many land where. Each $U_j$ is an even draw between 0 and 1, sliding that slice's shock across it.
+**Read it aloud:** give every slice of the bell curve its own draw, instead of letting chance decide how many land where. Each $`U_j`$ is an even draw between 0 and 1, sliding that slice's shock across it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | one path's discounted payment on the contract priced | 7.5661 on path one | the estimate rises with its average |
-| $Y$ | the companion's payment on that same path | 7.0477 on path one | — |
-| $E[Y]$ | the companion's true value, known in closed form | 7.063568 | the correction pulls the answer down |
-| $\beta$ | the slope: how much of the companion's slip to subtract | 1.015133 | past the best slope the bar widens again |
-| $\rho$ | how tightly payoff and companion move together | 0.999597 | the bar shrinks toward nothing |
-| $n$ | payoff evaluations the sampler is allowed | 16000 | every bar shrinks like one over its root |
-| $m$ | equal-chance slices the bell curve is cut into | 8000 | the sliced bar beats that law |
-| $Z$ | one bell-curve shock: average 0, spread 1 | −0.241969 on path one | that leg ends higher |
-| $U_j$ | an evenly spread fraction drawn inside one slice | — | the draw slides up its slice |
-| $G$ | the geometric average of the two observed prices | 107.4091 on path one | the companion pays more |
-| $\sigma$ | volatility, how jumpy Acme is. Say "sigma". | 20% | every bar widens |
-| $N^{-1}(u)$ | the shock with $u$ of the bell curve below it | — | — |
+| $`X`$ | one path's discounted payment on the contract priced | 7.5661 on path one | the estimate rises with its average |
+| $`Y`$ | the companion's payment on that same path | 7.0477 on path one | — |
+| $`E[Y]`$ | the companion's true value, known in closed form | 7.063568 | the correction pulls the answer down |
+| $`\beta`$ | the slope: how much of the companion's slip to subtract | 1.015133 | past the best slope the bar widens again |
+| $`\rho`$ | how tightly payoff and companion move together | 0.999597 | the bar shrinks toward nothing |
+| $`n`$ | payoff evaluations the sampler is allowed | 16000 | every bar shrinks like one over its root |
+| $`m`$ | equal-chance slices the bell curve is cut into | 8000 | the sliced bar beats that law |
+| $`Z`$ | one bell-curve shock: average 0, spread 1 | −0.241969 on path one | that leg ends higher |
+| $`U_j`$ | an evenly spread fraction drawn inside one slice | — | the draw slides up its slice |
+| $`G`$ | the geometric average of the two observed prices | 107.4091 on path one | the companion pays more |
+| $`\sigma`$ | volatility, how jumpy Acme is. Say "sigma". | 20% | every bar widens |
+| $`N^{-1}(u)`$ | the shock with $`u`$ of the bell curve below it | — | — |
 
 The companion's closed form is the one piece this card borrows rather than derives: a geometric average of a wiggling price is itself lognormal — its logarithm follows the bell curve — which is what makes it tractable.
 
 <details>
 <summary>The companion's own formula, in full</summary>
 
-The logarithm of a geometric average is the average of the logarithms, so it is a bell-curve quantity: log spread 0.158114, smaller than one price's because the first leg's wiggle is shared by both. The price is then the usual two-term subtraction of the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), with the geometric average's own average standing in for the share price, and $e^{-rT}$ discounting one year at the 5% rate:
-$$e^{-rT}\Bigl(102.020134 \times 0.581428 \;-\; 100 \times 0.518916\Bigr) \;=\; 7.063568$$
+The logarithm of a geometric average is the average of the logarithms, so it is a bell-curve quantity: log spread 0.158114, smaller than one price's because the first leg's wiggle is shared by both. The price is then the usual two-term subtraction of the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), with the geometric average's own average standing in for the share price, and $`e^{-rT}`$ discounting one year at the 5% rate:
+
+$`\displaystyle e^{-rT}\Bigl(102.020134 \times 0.581428 \;-\; 100 \times 0.518916\Bigr) \;=\; 7.063568`$
+
 The grid road in the code reaches 7.063562 using none of this, which is how the card knows the formula is right.
 
 </details>
@@ -100,7 +110,7 @@ The grid road in the code reaches 7.063562 using none of this, which is how the 
 ### When it holds
 
 - **Mirrors need a payoff that moves one way.** The ticket pays more whenever a shock is larger, so a path and its mirror err in opposite directions and the pair is at most half as noisy as one path: measured mirror correlation −0.464432 on the ticket, −0.440678 on a plain call. A payoff that rises at *both* ends fails the test, and the trick then costs accuracy.
-- **A control's value must be known exactly; correlation is all it otherwise needs.** An error there biases the answer by slope times error. The bar falls by the factor $1 - \rho^{2}$ and nothing else about the companion matters, so a badly fitted slope wastes the gain without bending the answer.
+- **A control's value must be known exactly; correlation is all it otherwise needs.** An error there biases the answer by slope times error. The bar falls by the factor $`1 - \rho^{2}`$ and nothing else about the companion matters, so a badly fitted slope wastes the gain without bending the answer.
 - **Slicing pays only in the direction it is done.** Slices in several directions multiply, so one direction is affordable and twelve are not — Step 4 measures the collapse from one shock to two.
 - **None of the three moves the target.** Each changes only the spread of what is averaged, and the run measures all four against prices computed with no sampling at all.
 
@@ -118,7 +128,9 @@ That freedom is the whole subject: hold the target, attack the scatter. The thre
 
 Split a payoff's noise into the part that flips sign when the shock flips and the part that does not. Averaging a path with its mirror keeps the second and deletes the first:
 
-$$\operatorname{var}\!\left(\tfrac{1}{2}\left[X(Z) + X(-Z)\right]\right) \;=\; \tfrac{1}{2}\operatorname{var}(X) \;+\; \tfrac{1}{2}\operatorname{cov}\!\left(X(Z),\, X(-Z)\right)$$
+```math
+\mathrm{var}\!\left(\tfrac{1}{2}\left[X(Z) + X(-Z)\right]\right) \;=\; \tfrac{1}{2}\mathrm{var}(X) \;+\; \tfrac{1}{2}\mathrm{cov}\!\left(X(Z),\, X(-Z)\right)
+```
 
 If the payoff never falls as the shock rises, a path and its mirror move in opposite directions, so that covariance cannot be positive: one pair is at most half as noisy as one path. Since a pair costs two payoff evaluations, the worst case is breaking even.
 
@@ -128,7 +140,7 @@ The measured mirror correlation is −0.464432 on the ticket: the bar goes from 
 
 Now the strong one. Suppose a second contract, priced on the same paths, has a known true value. Its simulated average will have slipped from that value, and the slip is pure sampling error. If the two contracts move together, the paths that pushed the companion high pushed the other one high too.
 
-So subtract the slip, scaled. Choosing the scale is one line of calculus: the spread of $X - \beta Y$ is an upward parabola in $\beta$, smallest where its derivative vanishes, which lands on the regression slope of payoff on companion. Substituting back gives the shrinkage $1 - \rho^{2}$.
+So subtract the slip, scaled. Choosing the scale is one line of calculus: the spread of $`X - \beta Y`$ is an upward parabola in $`\beta`$, smallest where its derivative vanishes, which lands on the regression slope of payoff on companion. Substituting back gives the shrinkage $`1 - \rho^{2}`$.
 
 Two things make it safe. The quantity subtracted has true average zero, so the corrected estimate aims at the same price *whatever* slope is used. And the shrinkage depends on nothing but the correlation, so choosing a control is purely a hunt for something correlated whose answer is known.
 
@@ -155,13 +167,15 @@ Which direction, then? The code slices where the path *ends*, leaving how it got
 <details>
 <summary>Detailed proof: the two variance results</summary>
 
-**Mirrors.** Since $-Z$ has the same bell-curve law as $Z$, the two halves of a pair have equal spreads, and $\operatorname{var}(A+B) = \operatorname{var}(A) + \operatorname{var}(B) + 2\operatorname{cov}(A,B)$ divided by two squared gives the identity in the body.
+**Mirrors.** Since $`-Z`$ has the same bell-curve law as $`Z`$, the two halves of a pair have equal spreads, and $`\mathrm{var}(A+B) = \mathrm{var}(A) + \mathrm{var}(B) + 2\mathrm{cov}(A,B)`$ divided by two squared gives the identity in the body.
 
-For the sign of that covariance, suppose the payoff never decreases as the shock increases, and compare $X(Z_1) - X(Z_2)$ with $X(-Z_1) - X(-Z_2)$ for two independent shocks: when the first is positive the second cannot be, because flipping the signs reverses the shocks' order. The product is therefore never positive, and averaging it gives exactly $2\operatorname{cov}(X(Z), X(-Z)) \le 0$ — equality only when the payoff ignores the shock's sign. With several shocks, like the ticket's two, the comparison runs one shock at a time with the others averaged out, and each step keeps the sign.
+For the sign of that covariance, suppose the payoff never decreases as the shock increases, and compare $`X(Z_1) - X(Z_2)`$ with $`X(-Z_1) - X(-Z_2)`$ for two independent shocks: when the first is positive the second cannot be, because flipping the signs reverses the shocks' order. The product is therefore never positive, and averaging it gives exactly $`2\mathrm{cov}(X(Z), X(-Z)) \le 0`$ — equality only when the payoff ignores the shock's sign. With several shocks, like the ticket's two, the comparison runs one shock at a time with the others averaged out, and each step keeps the sign.
 
-**The control.** Write $f(\beta) = \operatorname{var}(X - \beta Y) = \operatorname{var}(X) - 2\beta\operatorname{cov}(X,Y) + \beta^{2}\operatorname{var}(Y)$, an upward parabola whose derivative vanishes at $\beta = \operatorname{cov}(X,Y)/\operatorname{var}(Y)$. Substituting back,
-$$f(\beta) = \operatorname{var}(X) - \frac{\operatorname{cov}(X,Y)^{2}}{\operatorname{var}(Y)} = \left(1 - \rho^{2}\right)\operatorname{var}(X).$$
-No lean appears at any slope, since the average of $\bar Y - E[Y]$ is zero, so the corrected estimate's average is the price. Slicing's free directions scatter exactly as before, which is why its gain stays in the direction sliced.
+**The control.** Write $`f(\beta) = \mathrm{var}(X - \beta Y) = \mathrm{var}(X) - 2\beta\mathrm{cov}(X,Y) + \beta^{2}\mathrm{var}(Y)`$, an upward parabola whose derivative vanishes at $`\beta = \mathrm{cov}(X,Y)/\mathrm{var}(Y)`$. Substituting back,
+
+$`\displaystyle f(\beta) = \mathrm{var}(X) - \frac{\mathrm{cov}(X,Y)^{2}}{\mathrm{var}(Y)} = \left(1 - \rho^{2}\right)\mathrm{var}(X).`$
+
+No lean appears at any slope, since the average of $`\bar Y - E[Y]`$ is zero, so the corrected estimate's average is the price. Slicing's free directions scatter exactly as before, which is why its gain stays in the direction sliced.
 
 </details>
 
@@ -182,7 +196,7 @@ Acme at $100.00, strike $100.00, riskless rate 5%, dividend yield 2%, volatility
 | the same, by a grid over both shocks | 801 points along each shock, no formula used | 7.063562 |
 | the ticket, by that same grid | the only road it has | 7.212942 |
 | what the control leaves to sample | 7.212942 − 7.063568 | **0.149374** |
-| path one's two prices, then its two averages | at six months and twelve; sum halved, then $\sqrt{97.1203 \times 118.7878}$ | 97.1203, 118.7878; 107.9540, 107.4091 |
+| path one's two prices, then its two averages | at six months and twelve; sum halved, then $`\sqrt{97.1203 \times 118.7878}`$ | 97.1203, 118.7878; 107.9540, 107.4091 |
 | the two discounted payments, ticket then companion | 0.5184 apart | 7.5661 and 7.0477 |
 | the gap across 16,000 paths | average, largest, smallest | 0.150983, 4.722786, 0.000000 |
 | slope and correlation on those paths | how much companion to subtract, how tightly they track | 1.015133 and 0.999597 |
@@ -652,12 +666,12 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 
 Lean proves the control, mirror and twin results for every payoff and price meeting their conditions.
 
-- Take a payoff $X$ and a companion $Y$ on the same path, each with a finite $\operatorname{var}$. Then $\operatorname{var}(X - \beta Y) = (1 - \rho^2)\operatorname{var}(X)$.
-- Take the same $X$ and $Y$, and any slope $c$. Then $\operatorname{var}(X - c\,Y)$ is never below $\operatorname{var}(X - \beta Y)$.
-- Take the same $X$ and $Y$, and any slope. Then subtracting that slope times the companion's slip from $E[Y]$ leaves the true average of $X$ unchanged.
-- Take a shock $Z$ whose law survives a sign flip, and a payoff $X$ with finite $\operatorname{var}$ that never falls as $Z$ rises. Then the mirrored pair's $\operatorname{var}$ is $\tfrac{1}{2}\operatorname{var}(X) + \tfrac{1}{2}\operatorname{cov}(X(Z), X(-Z))$.
+- Take a payoff $`X`$ and a companion $`Y`$ on the same path, each with a finite $`\mathrm{var}`$. Then $`\mathrm{var}(X - \beta Y) = (1 - \rho^2)\mathrm{var}(X)`$.
+- Take the same $`X`$ and $`Y`$, and any slope $`c`$. Then $`\mathrm{var}(X - c\,Y)`$ is never below $`\mathrm{var}(X - \beta Y)`$.
+- Take the same $`X`$ and $`Y`$, and any slope. Then subtracting that slope times the companion's slip from $`E[Y]`$ leaves the true average of $`X`$ unchanged.
+- Take a shock $`Z`$ whose law survives a sign flip, and a payoff $`X`$ with finite $`\mathrm{var}`$ that never falls as $`Z`$ rises. Then the mirrored pair's $`\mathrm{var}`$ is $`\tfrac{1}{2}\mathrm{var}(X) + \tfrac{1}{2}\mathrm{cov}(X(Z), X(-Z))`$.
 - Under those conditions, that covariance is never positive, so one pair is at most half as noisy as one path.
-- Take two prices $a, b \ge 0$, any strike $K$ and a discount $D \ge 0$. Then the ticket pays at least the geometric companion.
+- Take two prices $`a, b \ge 0`$, any strike $`K`$ and a discount $`D \ge 0`$. Then the ticket pays at least the geometric companion.
 
 Slicing, the ticket's two-shock mirror, and every measured price, correlation and error bar are left to the Python and Rust checks.
 

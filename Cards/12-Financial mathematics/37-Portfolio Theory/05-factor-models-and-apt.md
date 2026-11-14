@@ -42,7 +42,7 @@ Orange: Fund A's actual return over the bank. Green: the factor fit, the interce
 
 ## The formula
 
-Notation first, in words. A subscript $i$ names the fund, a subscript $t$ the month. "Over the bank" means the fund's return minus what cash in the bank earned that month; the model is written in those **excess returns**.
+Notation first, in words. A subscript $`i`$ names the fund, a subscript $`t`$ the month. "Over the bank" means the fund's return minus what cash in the bank earned that month; the model is written in those **excess returns**.
 
 The three factors have short names from Eugene Fama and Kenneth French, who proposed them in 1993:
 
@@ -52,36 +52,42 @@ The three factors have short names from Eugene Fama and Kenneth French, who prop
 
 Each costs nothing to hold: SMB and HML are long one basket and short another, and MKT is the market bought with money borrowed from the bank. To be **long** is to own; to be **short** is to sell borrowed shares, and that sale pays for the long side.
 
-$$y_{i,t} = \alpha_i + b_{iM}\,\text{MKT}_t + b_{iS}\,\text{SMB}_t + b_{iH}\,\text{HML}_t + \varepsilon_{i,t}$$
+```math
+y_{i,t} = \alpha_i + b_{iM}\,\text{MKT}_t + b_{iS}\,\text{SMB}_t + b_{iH}\,\text{HML}_t + \varepsilon_{i,t}
+```
 
 **Read it aloud:** a fund's return over the bank this month is a fixed intercept, plus its exposure to each factor times what that factor did, plus a part that is the fund's alone.
 
-Stack the exposures of several funds as the rows of a table $B$ (a **matrix**: a grid of numbers, one row per fund, one column per factor). Write $\Sigma$ for the funds' covariance matrix (how their returns move together), $\Omega$ for the factors' covariance matrix and $D$ for the specific parts'. Then:
+Stack the exposures of several funds as the rows of a table $`B`$ (a **matrix**: a grid of numbers, one row per fund, one column per factor). Write $`\Sigma`$ for the funds' covariance matrix (how their returns move together), $`\Omega`$ for the factors' covariance matrix and $`D`$ for the specific parts'. Then:
 
-$$\Sigma = B\,\Omega\,B^{\mathsf T} + D$$
+```math
+\Sigma = B\,\Omega\,B^{\mathsf T} + D
+```
 
 **Read it aloud:** how funds move together equals how their shared factors move together, seen through each fund's exposures, plus how their own parts move together.
 
-$B^{\mathsf T}$ is $B$ turned on its side, rows swapped for columns. And the pricing line of APT, with $E[\,\cdot\,]$ the expected value (the long-run average) and $\lambda_M$, $\lambda_S$, $\lambda_H$ the reward each factor pays per unit of loading:
+$`B^{\mathsf T}`$ is $`B`$ turned on its side, rows swapped for columns. And the pricing line of APT, with $`E[\,\cdot\,]`$ the expected value (the long-run average) and $`\lambda_M`$, $`\lambda_S`$, $`\lambda_H`$ the reward each factor pays per unit of loading:
 
-$$E[y_i] = b_{iM}\lambda_M + b_{iS}\lambda_S + b_{iH}\lambda_H$$
+```math
+E[y_i] = b_{iM}\lambda_M + b_{iS}\lambda_S + b_{iH}\lambda_H
+```
 
 **Read it aloud:** a fund's expected return over the bank is its exposure to each factor times the reward that factor pays, and nothing else.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y_i$, $i$, $j$, $t$ | fund $i$'s return over the bank in month $t$, in percent; $j$ names a second fund | Fund A, month 1: 6.79 | — |
-| $X$, $\theta$ | the regression's table of ones and factor columns; its four unknowns | 8 rows, 4 columns; 0.20, 1.2, 0.4, −0.3 | — |
-| $\alpha_i$ | the intercept: return with every factor at zero | Fund A 0.20, Fund B −0.10 | more return not paid for by factors |
-| $b_{iM}$, $b_{iS}$, $b_{iH}$, $b_i$ | the fund's **loadings**: its exposure to market, size, value | Fund A 1.2, 0.4, −0.3 | the fund swings harder with that factor |
-| $f$, $g$ | the three factor returns as a column; $g$ is each minus its mean, the surprise | month 1: $f$ = 4.5, 2.2, 2.3; $g$ = 4, 2, 2 | — |
-| $\varepsilon_i$, $\varepsilon$ | the fund's specific return, left after the factors | Fund A: +1 or −1 each month | more risk only diversification removes |
-| $\Sigma$ | the funds' covariance matrix, in squared percent | Fund A 25.04, A with B 14.44 | the funds swing more, or more together |
-| $B$ | loadings of all funds, one row each | rows 1.2, 0.4, −0.3 and 0.8, −0.2, 0.5 | more shared risk |
-| $\Omega$ | the factors' covariance matrix | 16, 4, 4 down the diagonal, 0 elsewhere | every fund with that exposure swings more |
-| $D$, $D_{ij}$ | covariance of the specific parts, $D_{ij}$ for funds $i$ and $j$; diagonal if they are unrelated | 1.00 and 0.25, 0 between | more specific risk |
-| $\lambda_M$, $\lambda_S$, $\lambda_H$, $\lambda$, $\mu$ | the **risk premium**: expected factor return, the reward per unit loading; $\mu$ lists expected excess returns | 0.50, 0.20, 0.30 a month | higher expected return for every exposed fund |
-| $w$, $N$, $n$ | portfolio weights, one per fund; the number of funds in a basket, or of portfolios in a proof | half in A, half in B; 1 to 400 funds | more funds: specific risk shrinks as $1/\sqrt{N}$ |
+| $`y_i`$, $`i`$, $`j`$, $`t`$ | fund $`i`$'s return over the bank in month $`t`$, in percent; $`j`$ names a second fund | Fund A, month 1: 6.79 | — |
+| $`X`$, $`\theta`$ | the regression's table of ones and factor columns; its four unknowns | 8 rows, 4 columns; 0.20, 1.2, 0.4, −0.3 | — |
+| $`\alpha_i`$ | the intercept: return with every factor at zero | Fund A 0.20, Fund B −0.10 | more return not paid for by factors |
+| $`b_{iM}`$, $`b_{iS}`$, $`b_{iH}`$, $`b_i`$ | the fund's **loadings**: its exposure to market, size, value | Fund A 1.2, 0.4, −0.3 | the fund swings harder with that factor |
+| $`f`$, $`g`$ | the three factor returns as a column; $`g`$ is each minus its mean, the surprise | month 1: $`f`$ = 4.5, 2.2, 2.3; $`g`$ = 4, 2, 2 | — |
+| $`\varepsilon_i`$, $`\varepsilon`$ | the fund's specific return, left after the factors | Fund A: +1 or −1 each month | more risk only diversification removes |
+| $`\Sigma`$ | the funds' covariance matrix, in squared percent | Fund A 25.04, A with B 14.44 | the funds swing more, or more together |
+| $`B`$ | loadings of all funds, one row each | rows 1.2, 0.4, −0.3 and 0.8, −0.2, 0.5 | more shared risk |
+| $`\Omega`$ | the factors' covariance matrix | 16, 4, 4 down the diagonal, 0 elsewhere | every fund with that exposure swings more |
+| $`D`$, $`D_{ij}`$ | covariance of the specific parts, $`D_{ij}`$ for funds $`i`$ and $`j`$; diagonal if they are unrelated | 1.00 and 0.25, 0 between | more specific risk |
+| $`\lambda_M`$, $`\lambda_S`$, $`\lambda_H`$, $`\lambda`$, $`\mu`$ | the **risk premium**: expected factor return, the reward per unit loading; $`\mu`$ lists expected excess returns | 0.50, 0.20, 0.30 a month | higher expected return for every exposed fund |
+| $`w`$, $`N`$, $`n`$ | portfolio weights, one per fund; the number of funds in a basket, or of portfolios in a proof | half in A, half in B; 1 to 400 funds | more funds: specific risk shrinks as $`1/\sqrt{N}`$ |
 
 "Squared percent" is the unit of a variance when returns are in percent; its square root, the **volatility**, is back in percent.
 
@@ -104,15 +110,15 @@ That is a large saving. For 500 funds, every pair's covariance is 125250 numbers
 
 ### Step 1: fit the loadings by least squares
 
-The loadings are the regression coefficients of the fund's returns on the three factor returns. Least squares picks the intercept and loadings that make the sum of squared leftovers smallest; the conditions for that minimum are the **normal equations**, $X^{\mathsf T} X \theta = X^{\mathsf T} y$, where $X$ holds a column of ones and the three factor columns and $\theta$ lists the four unknowns ([Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md)).
+The loadings are the regression coefficients of the fund's returns on the three factor returns. Least squares picks the intercept and loadings that make the sum of squared leftovers smallest; the conditions for that minimum are the **normal equations**, $`X^{\mathsf T} X \theta = X^{\mathsf T} y`$, where $`X`$ holds a column of ones and the three factor columns and $`\theta`$ lists the four unknowns ([Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md)).
 
 In this record each factor sits a fixed step above or below its average: market 4 points, size and value 2 points each. Every combination appears once, so the three factor columns are uncorrelated. Then each loading can be read off alone: the fund's average in that factor's up months, minus its average in the down months, divided by the factor's own up-minus-down gap. For the market that is 5.59 minus −4.01, over a gap of 8 points: 1.2. The intercept is what the fund averaged beyond the factor averages times the loadings.
 
-A consequence of the minimum: the leftover $\varepsilon$ is uncorrelated with every factor inside the record. Otherwise some multiple of that factor could be moved into the fit and shrink the squares further.
+A consequence of the minimum: the leftover $`\varepsilon`$ is uncorrelated with every factor inside the record. Otherwise some multiple of that factor could be moved into the fit and shrink the squares further.
 
 ### Step 2: covariance splits into factor and specific parts
 
-Write two funds as factor part plus specific part. Covariance is **bilinear**: it spreads over sums on both sides, like multiplying out brackets. Four products appear. The two mixing one fund's factor part with the other's specific part are zero, by Step 1's consequence. What survives is the covariance of the factor parts, $b_i^{\mathsf T}\Omega\, b_j$ with $b_i$ fund $i$'s row of loadings, plus the covariance of the specific parts. Across all pairs at once that is $\Sigma = B\Omega B^{\mathsf T} + D$.
+Write two funds as factor part plus specific part. Covariance is **bilinear**: it spreads over sums on both sides, like multiplying out brackets. Four products appear. The two mixing one fund's factor part with the other's specific part are zero, by Step 1's consequence. What survives is the covariance of the factor parts, $`b_i^{\mathsf T}\Omega\, b_j`$ with $`b_i`$ fund $`i`$'s row of loadings, plus the covariance of the specific parts. Across all pairs at once that is $`\Sigma = B\Omega B^{\mathsf T} + D`$.
 
 For Fund A alone, with the factors uncorrelated, the variance is each loading squared times its factor's variance, plus the specific variance.
 
@@ -129,19 +135,19 @@ The factors explain 24.04 of 25.04, the **R-squared** of 0.9601. For Fund B it i
 <details>
 <summary>Detailed proof: the covariance split</summary>
 
-Let $f$ be the column of the three factor returns and $b_i$ fund $i$'s column of loadings, so $y_i = \alpha_i + b_i^{\mathsf T} f + \varepsilon_i$. Constants do not move, so they drop out of every covariance. Bilinearity gives
-$\operatorname{Cov}(y_i, y_j) = \operatorname{Cov}(b_i^{\mathsf T} f, b_j^{\mathsf T} f) + \operatorname{Cov}(b_i^{\mathsf T} f, \varepsilon_j) + \operatorname{Cov}(\varepsilon_i, b_j^{\mathsf T} f) + \operatorname{Cov}(\varepsilon_i, \varepsilon_j)$.
-The first term is $\sum_{k}\sum_{l} b_{ik} b_{jl} \operatorname{Cov}(f_k, f_l) = b_i^{\mathsf T}\Omega b_j$. The middle two are sums of loadings times $\operatorname{Cov}(f_k, \varepsilon_j)$, each zero by assumption (and exactly zero in a least-squares sample, since the residual is orthogonal to every centred factor column). The last is $D_{ij}$. Collecting $i$ and $j$ over all funds gives $\Sigma = B\Omega B^{\mathsf T} + D$. Nothing here needs normal distributions or independence; zero covariance between factors and specific parts is the whole requirement. That $D$ is diagonal is a separate assumption, about specific parts across funds.
+Let $`f`$ be the column of the three factor returns and $`b_i`$ fund $`i`$'s column of loadings, so $`y_i = \alpha_i + b_i^{\mathsf T} f + \varepsilon_i`$. Constants do not move, so they drop out of every covariance. Bilinearity gives
+$`\mathrm{Cov}(y_i, y_j) = \mathrm{Cov}(b_i^{\mathsf T} f, b_j^{\mathsf T} f) + \mathrm{Cov}(b_i^{\mathsf T} f, \varepsilon_j) + \mathrm{Cov}(\varepsilon_i, b_j^{\mathsf T} f) + \mathrm{Cov}(\varepsilon_i, \varepsilon_j)`$.
+The first term is $`\sum_{k}\sum_{l} b_{ik} b_{jl} \mathrm{Cov}(f_k, f_l) = b_i^{\mathsf T}\Omega b_j`$. The middle two are sums of loadings times $`\mathrm{Cov}(f_k, \varepsilon_j)`$, each zero by assumption (and exactly zero in a least-squares sample, since the residual is orthogonal to every centred factor column). The last is $`D_{ij}`$. Collecting $`i`$ and $`j`$ over all funds gives $`\Sigma = B\Omega B^{\mathsf T} + D`$. Nothing here needs normal distributions or independence; zero covariance between factors and specific parts is the whole requirement. That $`D`$ is diagonal is a separate assumption, about specific parts across funds.
 
 </details>
 
 ### Step 3: a portfolio's risk from three exposures
 
-A portfolio's loadings are the weighted average of its funds' loadings. Half in A, half in B has loadings 1.0, 0.1 and 0.1. Its variance is the factor part through those three numbers, plus the specific part $w^{\mathsf T} D\, w$: 16.3925 squared percent. Computing the variance straight from the portfolio's eight monthly returns gives 16.3925 again. Risk systems run on this shortcut: a thousand-stock portfolio is summarised by a few exposures and one specific number.
+A portfolio's loadings are the weighted average of its funds' loadings. Half in A, half in B has loadings 1.0, 0.1 and 0.1. Its variance is the factor part through those three numbers, plus the specific part $`w^{\mathsf T} D\, w`$: 16.3925 squared percent. Computing the variance straight from the portfolio's eight monthly returns gives 16.3925 again. Risk systems run on this shortcut: a thousand-stock portfolio is summarised by a few exposures and one specific number.
 
 ### Step 4: specific risk diversifies, factor risk does not
 
-Spread money equally over $N$ funds whose specific parts are unrelated, each with specific volatility 1 percent. The basket's specific variance is $N$ copies of $1/N^2$, so its specific volatility is $1/\sqrt{N}$.
+Spread money equally over $`N`$ funds whose specific parts are unrelated, each with specific volatility 1 percent. The basket's specific variance is $`N`$ copies of $`1/N^2`$, so its specific volatility is $`1/\sqrt{N}`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -152,20 +158,20 @@ xychart-beta
     line [1.000, 0.500, 0.250, 0.125, 0.050]
 ```
 
-Orange: $1/\sqrt{N}$. The code draws 2000 random baskets at each size and lands within about two percent of this line: 0.987, 0.501, 0.251, 0.124, 0.051. Factor risk does not shrink this way: every fund in the basket feels the same market month.
+Orange: $`1/\sqrt{N}`$. The code draws 2000 random baskets at each size and lands within about two percent of this line: 0.987, 0.501, 0.251, 0.124, 0.051. Factor risk does not shrink this way: every fund in the basket feels the same market month.
 
 ### Step 5: no arbitrage forces the pricing line
 
-Suppose a well-diversified portfolio Q has Fund A's loadings, 1.2, 0.4 and −0.3, no specific part left, and is priced so that it is expected to earn 0.80 percent a month over the bank. Build a copy from the factors themselves: 1.2 units of MKT, 0.4 of SMB, minus 0.3 of HML, financed at the bank. Each factor costs nothing to hold, so the copy costs nothing and earns $1.2\lambda_M + 0.4\lambda_S - 0.3\lambda_H$ = 0.59 on average.
+Suppose a well-diversified portfolio Q has Fund A's loadings, 1.2, 0.4 and −0.3, no specific part left, and is priced so that it is expected to earn 0.80 percent a month over the bank. Build a copy from the factors themselves: 1.2 units of MKT, 0.4 of SMB, minus 0.3 of HML, financed at the bank. Each factor costs nothing to hold, so the copy costs nothing and earns $`1.2\lambda_M + 0.4\lambda_S - 0.3\lambda_H`$ = 0.59 on average.
 
 Buy Q, sell the copy. Net cost: zero. Net factor exposure: zero. Each month the factor surprises cancel, and what is left is 0.80 minus 0.59: 0.2100, in every one of the eight months. A sure profit for nothing is an **arbitrage**. Traders would buy Q until its price rose and its expected return fell to 0.59. So in a market without arbitrage, a diversified portfolio's expected excess return is its loadings times the premia: the APT line.
 
 <details>
 <summary>Detailed proof: exact pricing when specific risk is gone</summary>
 
-Take $n$ tradable portfolios whose excess returns are $y = \mu + B g$ exactly, with $\mu$ the column of expected excess returns and $g$ the factor surprises (factor returns minus their means). A zero-cost position puts weights $w$ in the portfolios and $-\sum w$ in the bank; its payoff per unit of notional is $w^{\mathsf T} y = w^{\mathsf T}\mu + (B^{\mathsf T} w)^{\mathsf T} g$. If $B^{\mathsf T} w = 0$ the payoff is the constant $w^{\mathsf T}\mu$; no arbitrage forces it to be zero, or $w$ or $-w$ would be free money. So $\mu$ is perpendicular to every $w$ with $B^{\mathsf T} w = 0$. In linear algebra, the vectors perpendicular to all such $w$ are exactly the combinations of $B$'s columns. Hence $\mu = B\lambda$ for some column $\lambda$ of premia, unique when $B$'s columns are independent. When the factors are themselves tradable returns, as MKT, SMB and HML are, each factor's own loading row is a single 1, so its premium $\lambda$ is its expected return.
+Take $`n`$ tradable portfolios whose excess returns are $`y = \mu + B g`$ exactly, with $`\mu`$ the column of expected excess returns and $`g`$ the factor surprises (factor returns minus their means). A zero-cost position puts weights $`w`$ in the portfolios and $`-\sum w`$ in the bank; its payoff per unit of notional is $`w^{\mathsf T} y = w^{\mathsf T}\mu + (B^{\mathsf T} w)^{\mathsf T} g`$. If $`B^{\mathsf T} w = 0`$ the payoff is the constant $`w^{\mathsf T}\mu`$; no arbitrage forces it to be zero, or $`w`$ or $`-w`$ would be free money. So $`\mu`$ is perpendicular to every $`w`$ with $`B^{\mathsf T} w = 0`$. In linear algebra, the vectors perpendicular to all such $`w`$ are exactly the combinations of $`B`$'s columns. Hence $`\mu = B\lambda`$ for some column $`\lambda`$ of premia, unique when $`B`$'s columns are independent. When the factors are themselves tradable returns, as MKT, SMB and HML are, each factor's own loading row is a single 1, so its premium $`\lambda`$ is its expected return.
 
-With specific risk left in, a factor-neutral portfolio still carries $w^{\mathsf T}\varepsilon$, and no arbitrage alone does not force its mean to zero. Ross (1976) argued, and later work made precise, that if specific parts are uncorrelated with bounded variance, the pricing errors $\mu_i - b_i^{\mathsf T}\lambda$ have a bounded sum of squares however many assets there are, so most assets lie close to the line. Chamberlain and Rothschild (1983) extended this to specific parts with limited correlation.
+With specific risk left in, a factor-neutral portfolio still carries $`w^{\mathsf T}\varepsilon`$, and no arbitrage alone does not force its mean to zero. Ross (1976) argued, and later work made precise, that if specific parts are uncorrelated with bounded variance, the pricing errors $`\mu_i - b_i^{\mathsf T}\lambda`$ have a bounded sum of squares however many assets there are, so most assets lie close to the line. Chamberlain and Rothschild (1983) extended this to specific parts with limited correlation.
 
 </details>
 
@@ -199,14 +205,14 @@ Of Fund A's 0.79 percent a month over the bank, 0.59 is the going rate for its m
 | --- | --- | --- |
 | Market-only regression, leftover called specific | specific variance 2.00, not 1.00; intercept 0.190 | size and value moves are counted as the fund's own |
 | Market-only covariance of A and B | 14.44 becomes 15.36 | A's small-growth tilt and B's big-value tilt partly offset; one factor misses it |
-| Specific parts assumed unrelated when both funds hold the same industry | model 14.44, true 14.94 | the shared industry is an omitted factor hiding in $D$ |
+| Specific parts assumed unrelated when both funds hold the same industry | model 14.44, true 14.94 | the shared industry is an omitted factor hiding in $`D`$ |
 | Intercept read as the average return | 0.79 instead of 0.20 | factor premia counted as skill |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script builds the eight-month record, fits both funds by two roads that share no arithmetic: solving the normal equations by Gaussian elimination (removing one unknown at a time), and the up-minus-down averages from the hand table. The covariance is computed twice: through $B\Omega B^{\mathsf T} + D$, and straight from the funds' monthly returns. A third road checks the arbitrage month by month. A random-number generator written in the script checks the $1/\sqrt{N}$ law by simulation and runs a second case: 600 random months with the same true loadings, where the fit lands near 1.2, 0.4, −0.3 but not on them (the intercept comes out 0.274, not 0.20). That gap is estimation error, the subject of [Estimation error](07-estimation-error-and-shrinkage.md).
+The script builds the eight-month record, fits both funds by two roads that share no arithmetic: solving the normal equations by Gaussian elimination (removing one unknown at a time), and the up-minus-down averages from the hand table. The covariance is computed twice: through $`B\Omega B^{\mathsf T} + D`$, and straight from the funds' monthly returns. A third road checks the arbitrage month by month. A random-number generator written in the script checks the $`1/\sqrt{N}`$ law by simulation and runs a second case: 600 random months with the same true loadings, where the fit lands near 1.2, 0.4, −0.3 but not on them (the intercept comes out 0.274, not 0.20). That gap is estimation error, the subject of [Estimation error](07-estimation-error-and-shrinkage.md).
 
 ### Python
 
@@ -625,10 +631,10 @@ The two outputs agree line for line, including the simulated rows: both scripts 
 
 Lean proves the card's three general results for any number of funds and factors, and checks the Step 0 counts.
 
-- Suppose every factor and specific part has finite variance, and each specific part is uncorrelated with every factor. Then $\Sigma = B\,\Omega\,B^{\mathsf T} + D$.
+- Suppose every factor and specific part has finite variance, and each specific part is uncorrelated with every factor. Then $`\Sigma = B\,\Omega\,B^{\mathsf T} + D`$.
 - The covariance split needs no normal distributions and no independence.
-- Take portfolios with excess returns exactly $\mu + B g$, where no zero-cost position earns a sure profit. Then $\mu = B\lambda$ for some column $\lambda$ of premia.
-- Take $N$ funds with unrelated specific parts, each of specific volatility $\sigma$. Then the equal-weight basket has specific volatility $\sigma/\sqrt{N}$.
+- Take portfolios with excess returns exactly $`\mu + B g`$, where no zero-cost position earns a sure profit. Then $`\mu = B\lambda`$ for some column $`\lambda`$ of premia.
+- Take $`N`$ funds with unrelated specific parts, each of specific volatility $`\sigma`$. Then the equal-weight basket has specific volatility $`\sigma/\sqrt{N}`$.
 - For 500 funds, every pair's covariance is 125250 numbers. The three-factor model needs 2006.
 
 The fitted loadings, the eight-month record, the arbitrage payoff and the random simulations are left to the Python and Rust checks.
@@ -785,7 +791,7 @@ example : 500 * 3 + 6 + 500 = 2006 := by norm_num
 > **Reading a fitted intercept as skill, or a good fit as proof the factors are priced.** The regression fits any record; R-squared of 0.96 says the factors explain the swings, not the average. The intercept is skill only if the premia are the right ones and the record is long enough to tell. Fund A's 0.20 would be 0.190 against the market alone, and the 600-month case shows how far an estimate drifts from the truth even with a long record.
 >
 > - **Treating the market-only leftover as specific risk.** Fund A's specific variance comes out at 2.00 instead of 1.00, and a diversified book of such funds keeps a size and value risk the manager thinks is gone.
-> - **Assuming $D$ is diagonal by default.** Two funds in the same industry share a driver the three factors miss: the model says 14.44, the truth is 14.94.
+> - **Assuming $`D`$ is diagonal by default.** Two funds in the same industry share a driver the three factors miss: the model says 14.44, the truth is 14.94.
 > - **Treating SMB and HML as properties of the fund.** They are returns of long-short baskets. A loading of 0.4 on SMB says how the fund moves with that basket, not the size of the companies it holds.
 > - **Applying the APT line to one stock exactly.** The line is exact only for diversified portfolios; single assets can sit off it by their specific risk.
 
@@ -794,7 +800,7 @@ example : 500 * 3 + 6 + 500 = 2006 := by norm_num
 ## Where you meet it in real life
 
 - **Fund performance review.** Analysts regress a fund's monthly returns on the Fama–French factors from Kenneth French's public data library and report the intercept, net of factor exposure, as the fund's alpha.
-- **Risk systems at asset managers.** Commercial equity risk models are factor models with dozens of factors (industries, countries, styles). A portfolio's risk report is $B\Omega B^{\mathsf T} + D$ evaluated at its exposures.
+- **Risk systems at asset managers.** Commercial equity risk models are factor models with dozens of factors (industries, countries, styles). A portfolio's risk report is $`B\Omega B^{\mathsf T} + D`$ evaluated at its exposures.
 - **Factor funds.** "Value" and "small-cap" index funds sell the factor exposures themselves, so an investor can buy the premium without paying for a stock picker.
 - **Hedging.** A manager who wants stock-specific bets only sells the market, size and value exposures, leaving specific risk: a factor-neutral book, the portfolio Q argument in reverse.
 - **Covariance estimation.** A factor structure is a standard target for shrinking a noisy sample covariance ([Estimation error](07-estimation-error-and-shrinkage.md)), and the same exposures feed the risk budgets of [Risk parity](08-risk-parity-and-alternative-weightings.md).

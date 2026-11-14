@@ -39,34 +39,40 @@ Orange: the second-order vanna-volga curve, the one this card recommends. Green:
 
 The first-order reading is a weighted average of the three pillar vols:
 
-$$\sigma^{(1)}(K) = y_1(K)\,\sigma_1 + y_2(K)\,\sigma_2 + y_3(K)\,\sigma_3$$
+```math
+\sigma^{(1)}(K) = y_1(K)\,\sigma_1 + y_2(K)\,\sigma_2 + y_3(K)\,\sigma_3
+```
 
 with weights built from logarithms of strike ratios:
 
-$$y_1(K) = \frac{\ln\frac{K_2}{K}\,\ln\frac{K_3}{K}}{\ln\frac{K_2}{K_1}\,\ln\frac{K_3}{K_1}},\qquad y_2(K) = \frac{\ln\frac{K}{K_1}\,\ln\frac{K_3}{K}}{\ln\frac{K_2}{K_1}\,\ln\frac{K_3}{K_2}},\qquad y_3(K) = \frac{\ln\frac{K}{K_1}\,\ln\frac{K}{K_2}}{\ln\frac{K_3}{K_1}\,\ln\frac{K_3}{K_2}}.$$
+```math
+y_1(K) = \frac{\ln\frac{K_2}{K}\,\ln\frac{K_3}{K}}{\ln\frac{K_2}{K_1}\,\ln\frac{K_3}{K_1}},\qquad y_2(K) = \frac{\ln\frac{K}{K_1}\,\ln\frac{K_3}{K}}{\ln\frac{K_2}{K_1}\,\ln\frac{K_3}{K_2}},\qquad y_3(K) = \frac{\ln\frac{K}{K_1}\,\ln\frac{K}{K_2}}{\ln\frac{K_3}{K_1}\,\ln\frac{K_3}{K_2}}.
+```
 
 The second-order reading, the one to use, corrects it:
 
-$$\sigma(K) = \sigma_2 + \frac{-\sigma_2 + \sqrt{\sigma_2^2 + d_1(K)\,d_2(K)\,\big(2\sigma_2 D_1(K) + D_2(K)\big)}}{d_1(K)\,d_2(K)}$$
+```math
+\sigma(K) = \sigma_2 + \frac{-\sigma_2 + \sqrt{\sigma_2^2 + d_1(K)\,d_2(K)\,\big(2\sigma_2 D_1(K) + D_2(K)\big)}}{d_1(K)\,d_2(K)}
+```
 
 **Read it aloud:** "Start from the at-the-money vol. Average the three pillar vols with log-strike weights to get the first-order shift. Then bend that shift slightly for the curvature of each option's value in volatility, which is the square root."
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $K$ | the strike being read: the rate written into the contract, dollars per euro | 1.15 | moves along the curve |
-| $K_1$, $K_2$, $K_3$ | the pillar strikes: 25-delta put, at the money (delta-neutral straddle), 25-delta call | 1.052466, 1.127847, 1.201425 | shifts the whole curve sideways |
-| $\sigma_1$, $\sigma_2$, $\sigma_3$ | the pillar vols, one quote each | 10.75%, 10.00%, 9.75% | raises the curve most near that pillar |
-| $\sigma(K)$, $e$ | the curve's volatility at strike $K$, and its gap $e = \sigma(K) - \sigma_2$ from the at-the-money vol; $\sigma^{(1)}(K)$ is the first-order reading | 9.8780% at 1.15 | (the output) |
-| $y_1$, $y_2$, $y_3$ | the log-strike weights; they always add up to 1 | −0.092931, 0.886860, 0.206071 | a pillar with a bigger weight pulls harder |
-| $D_1$ | the first-order shift away from the at-the-money vol: $\sigma^{(1)}(K) - \sigma_2$ | −0.001212 | raises $\sigma(K)$ almost one for one |
-| $D_2$ | the second-order term: $y_1\,d_1(K_1)d_2(K_1)(\sigma_1-\sigma_2)^2 + y_3\,d_1(K_3)d_2(K_3)(\sigma_3-\sigma_2)^2$ | −1.543932 millionths | raises $\sigma(K)$ slightly |
-| $d_1$, $d_2$ | the Black-Scholes distances, always taken at the at-the-money vol $\sigma_2$: $d_1(x) = \big(\ln(F/x) + \tfrac12\sigma_2^2T\big)/(\sigma_2\sqrt{T})$, $d_2(x) = d_1(x) - \sigma_2\sqrt{T}$ | $d_1(K)\,d_2(K)$ = 0.057289 at 1.15 | sets how strongly curvature bends the reading |
-| $F$ | the forward rate, $S\,e^{(r_d-r_f)T}$ | 1.122221 | moves the pillar strikes with it |
-| $S$, $r_d$, $r_f$, $T$ | spot rate, dollar rate, euro rate (continuously compounded), years to expiry | 1.10, 5%, 3%, 1 | through $F$ and the pillars |
-| $x_1$, $x_2$, $x_3$, $\nu$, $\phi$ | the full vanna-volga price's weights; vega, the change in an option's value per unit of volatility; the bell-curve height | −0.115838, 0.870240, 0.246905 at 1.15 | (used in Why it works) |
-| $k$ and $w$ | log-moneyness $\ln(K/F)$ and total variance $\sigma^2T$, the coordinates of the calendar test | $k$ = 0.3: $w$ times 100 = 1.320809 for one year | (used in the breakage checks) |
+| $`K`$ | the strike being read: the rate written into the contract, dollars per euro | 1.15 | moves along the curve |
+| $`K_1`$, $`K_2`$, $`K_3`$ | the pillar strikes: 25-delta put, at the money (delta-neutral straddle), 25-delta call | 1.052466, 1.127847, 1.201425 | shifts the whole curve sideways |
+| $`\sigma_1`$, $`\sigma_2`$, $`\sigma_3`$ | the pillar vols, one quote each | 10.75%, 10.00%, 9.75% | raises the curve most near that pillar |
+| $`\sigma(K)`$, $`e`$ | the curve's volatility at strike $`K`$, and its gap $`e = \sigma(K) - \sigma_2`$ from the at-the-money vol; $`\sigma^{(1)}(K)`$ is the first-order reading | 9.8780% at 1.15 | (the output) |
+| $`y_1`$, $`y_2`$, $`y_3`$ | the log-strike weights; they always add up to 1 | −0.092931, 0.886860, 0.206071 | a pillar with a bigger weight pulls harder |
+| $`D_1`$ | the first-order shift away from the at-the-money vol: $`\sigma^{(1)}(K) - \sigma_2`$ | −0.001212 | raises $`\sigma(K)`$ almost one for one |
+| $`D_2`$ | the second-order term: $`y_1\,d_1(K_1)d_2(K_1)(\sigma_1-\sigma_2)^2 + y_3\,d_1(K_3)d_2(K_3)(\sigma_3-\sigma_2)^2`$ | −1.543932 millionths | raises $`\sigma(K)`$ slightly |
+| $`d_1`$, $`d_2`$ | the Black-Scholes distances, always taken at the at-the-money vol $`\sigma_2`$: $`d_1(x) = \big(\ln(F/x) + \tfrac12\sigma_2^2T\big)/(\sigma_2\sqrt{T})`$, $`d_2(x) = d_1(x) - \sigma_2\sqrt{T}`$ | $`d_1(K)\,d_2(K)`$ = 0.057289 at 1.15 | sets how strongly curvature bends the reading |
+| $`F`$ | the forward rate, $`S\,e^{(r_d-r_f)T}`$ | 1.122221 | moves the pillar strikes with it |
+| $`S`$, $`r_d`$, $`r_f`$, $`T`$ | spot rate, dollar rate, euro rate (continuously compounded), years to expiry | 1.10, 5%, 3%, 1 | through $`F`$ and the pillars |
+| $`x_1`$, $`x_2`$, $`x_3`$, $`\nu`$, $`\phi`$ | the full vanna-volga price's weights; vega, the change in an option's value per unit of volatility; the bell-curve height | −0.115838, 0.870240, 0.246905 at 1.15 | (used in Why it works) |
+| $`k`$ and $`w`$ | log-moneyness $`\ln(K/F)`$ and total variance $`\sigma^2T`$, the coordinates of the calendar test | $`k`$ = 0.3: $`w`$ times 100 = 1.320809 for one year | (used in the breakage checks) |
 
-The product $d_1(K)\,d_2(K)$ decides how much the correction matters. It is zero at the at-the-money pillar and small near it. It grows like the square of the log-distance from the forward. So the square root does almost nothing between the pillars and a great deal in the wings.
+The product $`d_1(K)\,d_2(K)`$ decides how much the correction matters. It is zero at the at-the-money pillar and small near it. It grows like the square of the log-distance from the forward. So the square root does almost nothing between the pillars and a great deal in the wings.
 
 Conventions verified 27 Sep 2026 against the house cards: pillars on spot delta with the premium in dollars; at the money as the delta-neutral straddle; the butterfly read as a smile strangle ([The broker butterfly](02-market-strangle-and-smile-strangle.md)). A different delta convention moves the pillar strikes and so every number here.
 
@@ -85,30 +91,34 @@ Conventions verified 27 Sep 2026 against the house cards: pillars on spot delta 
 
 The vanna-volga price ([Vanna-volga pricing](04-vanna-volga-pricing.md)) values any option as its flat-vol price plus the market cost of a hedge. The hedge is three pillar options, in amounts chosen so the hedge carries the same vega, vanna and volga as the target ([Vanna and volga](03-vanna-and-volga-on-the-smile.md)). Vanna is how vega changes with the exchange rate; volga is how vega changes with volatility.
 
-Apply that price to a plain call at strike $K$. The answer is a dollar price. Every dollar price of a call inside its no-arbitrage bounds has exactly one Black-Scholes volatility that reproduces it (for a currency the formula is Garman-Kohlhagen: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md)). Do that at every strike and a smile appears. Castagna and Mercurio's contribution is to skip the price and the root finder: the weights have a closed form, and expanding the price in small vol gaps gives the vol directly.
+Apply that price to a plain call at strike $`K`$. The answer is a dollar price. Every dollar price of a call inside its no-arbitrage bounds has exactly one Black-Scholes volatility that reproduces it (for a currency the formula is Garman-Kohlhagen: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md)). Do that at every strike and a smile appears. Castagna and Mercurio's contribution is to skip the price and the root finder: the weights have a closed form, and expanding the price in small vol gaps gives the vol directly.
 
 ### Step 1: the hedge weights are log-strike weights
 
-Write $x_1$, $x_2$, $x_3$ for the amounts of the three pillar calls, all valued at the flat vol $\sigma_2$. They solve three equations: matched vega, matched vanna, matched volga.
+Write $`x_1`$, $`x_2`$, $`x_3`$ for the amounts of the three pillar calls, all valued at the flat vol $`\sigma_2`$. They solve three equations: matched vega, matched vanna, matched volga.
 
-For a Black-Scholes call at one vol, vanna and volga are vega times something simple. Vanna is vega times $-d_2/(S\sigma_2\sqrt{T})$. Volga is vega times $d_1d_2/\sigma_2$. Divide each equation by the target's vega and set $u_i = x_i\,\nu(K_i)/\nu(K)$. The three equations become
+For a Black-Scholes call at one vol, vanna and volga are vega times something simple. Vanna is vega times $`-d_2/(S\sigma_2\sqrt{T})`$. Volga is vega times $`d_1d_2/\sigma_2`$. Divide each equation by the target's vega and set $`u_i = x_i\,\nu(K_i)/\nu(K)`$. The three equations become
 
-$$u_1 + u_2 + u_3 = 1,\qquad \sum_i u_i\,d_2(K_i) = d_2(K),\qquad \sum_i u_i\,d_1(K_i)d_2(K_i) = d_1(K)d_2(K).$$
+```math
+u_1 + u_2 + u_3 = 1,\qquad \sum_i u_i\,d_2(K_i) = d_2(K),\qquad \sum_i u_i\,d_1(K_i)d_2(K_i) = d_1(K)d_2(K).
+```
 
-Now look at what the $d$'s are as functions of the log-strike $\ln K$. $d_2$ is a straight line in $\ln K$. $d_1d_2$ is a parabola in $\ln K$: its leading term is $(\ln K)^2/(\sigma_2^2T)$. So the three equations say: the combination $u$ reproduces a constant, a straight line and a parabola in $\ln K$. Any combination that does that reproduces every parabola in $\ln K$. There is exactly one such combination of three points: the Lagrange weights, the weights that fit a parabola through three points. Those are $y_1$, $y_2$, $y_3$ in The formula. So
+Now look at what the $`d`$'s are as functions of the log-strike $`\ln K`$. $`d_2`$ is a straight line in $`\ln K`$. $`d_1d_2`$ is a parabola in $`\ln K`$: its leading term is $`(\ln K)^2/(\sigma_2^2T)`$. So the three equations say: the combination $`u`$ reproduces a constant, a straight line and a parabola in $`\ln K`$. Any combination that does that reproduces every parabola in $`\ln K`$. There is exactly one such combination of three points: the Lagrange weights, the weights that fit a parabola through three points. Those are $`y_1`$, $`y_2`$, $`y_3`$ in The formula. So
 
-$$x_i(K) = \frac{\nu(K)}{\nu(K_i)}\,y_i(K).$$
+```math
+x_i(K) = \frac{\nu(K)}{\nu(K_i)}\,y_i(K).
+```
 
 At 1.15 the 3×3 solve gives −0.115838, 0.870240 and 0.246905. The closed form gives the same three numbers.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $z = \ln K$ and $z_i = \ln K_i$. With $a = \ln F + \tfrac12\sigma_2^2T$ and $b = \sigma_2\sqrt{T}$, $d_1 = (a - z)/b$ and $d_2 = d_1 - b$. So $d_2$ is affine in $z$, and $d_1d_2 = d_1^2 - b\,d_1 = (a-z)^2/b^2 - (a-z)$, a quadratic in $z$ with leading coefficient $1/b^2 \ne 0$.
+Let $`z = \ln K`$ and $`z_i = \ln K_i`$. With $`a = \ln F + \tfrac12\sigma_2^2T`$ and $`b = \sigma_2\sqrt{T}`$, $`d_1 = (a - z)/b`$ and $`d_2 = d_1 - b`$. So $`d_2`$ is affine in $`z`$, and $`d_1d_2 = d_1^2 - b\,d_1 = (a-z)^2/b^2 - (a-z)`$, a quadratic in $`z`$ with leading coefficient $`1/b^2 \ne 0`$.
 
-Black-Scholes gives $\partial_S d_1 = \partial_S d_2 = 1/(S b)$ and $\partial_\sigma d_1 = -d_2/\sigma$, $\partial_\sigma d_2 = -d_1/\sigma$. Differentiating vega, $\nu = S e^{-r_fT}\phi(d_1)\sqrt{T}$, gives vanna $= -\nu\,d_2/(S b)$ and volga $= \nu\,d_1d_2/\sigma$. Dividing the three matching equations by $\nu(K)$ and by the constants $-1/(Sb)$ and $1/\sigma$ leaves the system for $u$ in Step 1.
+Black-Scholes gives $`\partial_S d_1 = \partial_S d_2 = 1/(S b)`$ and $`\partial_\sigma d_1 = -d_2/\sigma`$, $`\partial_\sigma d_2 = -d_1/\sigma`$. Differentiating vega, $`\nu = S e^{-r_fT}\phi(d_1)\sqrt{T}`$, gives vanna $`= -\nu\,d_2/(S b)`$ and volga $`= \nu\,d_1d_2/\sigma`$. Dividing the three matching equations by $`\nu(K)`$ and by the constants $`-1/(Sb)`$ and $`1/\sigma`$ leaves the system for $`u`$ in Step 1.
 
-The span of $1$, $d_2(z)$ and $d_1d_2(z)$ is the space of all quadratics in $z$, since the three have degrees 0, 1 and 2. So the system says $\sum_i u_i\,p(z_i) = p(z)$ for every quadratic $p(z)$. Take for $p(z)$ each Lagrange basis polynomial $\ell_j(z)$, the quadratic equal to 1 at one pillar's log-strike and 0 at the other two. That gives $u_j = \ell_j(z)$. Since $\ell_1(z) = (z - z_2)(z - z_3)/((z_1 - z_2)(z_1 - z_3))$, and $z - z_2 = \ln(K/K_2)$, this is $y_1$. The same for $y_2$, $y_3$. The three pillars have distinct strikes, so the system has exactly this one solution.
+The span of $`1`$, $`d_2(z)`$ and $`d_1d_2(z)`$ is the space of all quadratics in $`z`$, since the three have degrees 0, 1 and 2. So the system says $`\sum_i u_i\,p(z_i) = p(z)`$ for every quadratic $`p(z)`$. Take for $`p(z)`$ each Lagrange basis polynomial $`\ell_j(z)`$, the quadratic equal to 1 at one pillar's log-strike and 0 at the other two. That gives $`u_j = \ell_j(z)`$. Since $`\ell_1(z) = (z - z_2)(z - z_3)/((z_1 - z_2)(z_1 - z_3))`$, and $`z - z_2 = \ln(K/K_2)`$, this is $`y_1`$. The same for $`y_2`$, $`y_3`$. The three pillars have distinct strikes, so the system has exactly this one solution.
 
 </details>
 
@@ -116,44 +126,52 @@ The span of $1$, $d_2(z)$ and $d_1d_2(z)$ is the space of all quadratics in $z$,
 
 The target call priced by vanna-volga is
 
-$$C(K) = C_{BS}(K, \sigma_2) + \sum_i x_i(K)\,\big[C_{BS}(K_i, \sigma_i) - C_{BS}(K_i, \sigma_2)\big],$$
+```math
+C(K) = C_{BS}(K, \sigma_2) + \sum_i x_i(K)\,\big[C_{BS}(K_i, \sigma_i) - C_{BS}(K_i, \sigma_2)\big],
+```
 
-where $C_{BS}(K,\sigma)$ is the Garman-Kohlhagen call price at strike $K$ and vol $\sigma$. Each bracket is a pillar's market price minus its flat-vol price. For small vol gaps it is close to vega times the gap: $\nu(K_i)(\sigma_i - \sigma_2)$. Put in $x_i = y_i\,\nu(K)/\nu(K_i)$ and the pillar vegas cancel:
+where $`C_{BS}(K,\sigma)`$ is the Garman-Kohlhagen call price at strike $`K`$ and vol $`\sigma`$. Each bracket is a pillar's market price minus its flat-vol price. For small vol gaps it is close to vega times the gap: $`\nu(K_i)(\sigma_i - \sigma_2)`$. Put in $`x_i = y_i\,\nu(K)/\nu(K_i)`$ and the pillar vegas cancel:
 
-$$C(K) \approx C_{BS}(K,\sigma_2) + \nu(K)\sum_i y_i(\sigma_i - \sigma_2).$$
+```math
+C(K) \approx C_{BS}(K,\sigma_2) + \nu(K)\sum_i y_i(\sigma_i - \sigma_2).
+```
 
-The call at its own smile vol is, to the same order, $C_{BS}(K,\sigma_2) + \nu(K)(\sigma(K) - \sigma_2)$. Match the two, divide by $\nu(K)$, and use $y_1 + y_2 + y_3 = 1$:
+The call at its own smile vol is, to the same order, $`C_{BS}(K,\sigma_2) + \nu(K)(\sigma(K) - \sigma_2)`$. Match the two, divide by $`\nu(K)`$, and use $`y_1 + y_2 + y_3 = 1`$:
 
-$$\sigma(K) \approx \sigma_2 + D_1(K) = y_1\sigma_1 + y_2\sigma_2 + y_3\sigma_3.$$
+```math
+\sigma(K) \approx \sigma_2 + D_1(K) = y_1\sigma_1 + y_2\sigma_2 + y_3\sigma_3.
+```
 
 The first-order vanna-volga smile is the parabola in log-strike through the three quotes.
 
 ### Step 3: second order — keep the curvature, solve a quadratic
 
-Take one more term in each expansion. A price's second derivative in vol is volga, which is vega times $d_1d_2/\sigma_2$. The pillar brackets become $\nu(K_i)\big[(\sigma_i-\sigma_2) + \tfrac{1}{2\sigma_2}d_1d_2(K_i)(\sigma_i-\sigma_2)^2\big]$. Summed with the weights, the hedge side is $\nu(K)\big[D_1 + D_2/(2\sigma_2)\big]$. The target side, with $e = \sigma(K) - \sigma_2$, is $\nu(K)\big[e + \tfrac{1}{2\sigma_2}d_1d_2(K)\,e^2\big]$. Setting them equal gives a quadratic in the gap $e$:
+Take one more term in each expansion. A price's second derivative in vol is volga, which is vega times $`d_1d_2/\sigma_2`$. The pillar brackets become $`\nu(K_i)\big[(\sigma_i-\sigma_2) + \tfrac{1}{2\sigma_2}d_1d_2(K_i)(\sigma_i-\sigma_2)^2\big]`$. Summed with the weights, the hedge side is $`\nu(K)\big[D_1 + D_2/(2\sigma_2)\big]`$. The target side, with $`e = \sigma(K) - \sigma_2`$, is $`\nu(K)\big[e + \tfrac{1}{2\sigma_2}d_1d_2(K)\,e^2\big]`$. Setting them equal gives a quadratic in the gap $`e`$:
 
-$$\frac{d_1d_2(K)}{2\sigma_2}\,e^2 + e - \Big(D_1 + \frac{D_2}{2\sigma_2}\Big) = 0.$$
+```math
+\frac{d_1d_2(K)}{2\sigma_2}\,e^2 + e - \Big(D_1 + \frac{D_2}{2\sigma_2}\Big) = 0.
+```
 
-Its roots are $e = \big(-\sigma_2 \pm \sqrt{\sigma_2^2 + d_1d_2(K)(2\sigma_2D_1 + D_2)}\big)/d_1d_2(K)$. That is the formula.
+Its roots are $`e = \big(-\sigma_2 \pm \sqrt{\sigma_2^2 + d_1d_2(K)(2\sigma_2D_1 + D_2)}\big)/d_1d_2(K)`$. That is the formula.
 
-**Existence, uniqueness, boundary cases.** A real root exists exactly when the number under the square root is not negative. Of the two roots, only the plus sign shrinks to the first-order answer $D_1$ as the smile flattens; the minus root runs off to about $-2\sigma_2/(d_1d_2)$, a nonsense vol, so the plus root is the unique sensible one.
+**Existence, uniqueness, boundary cases.** A real root exists exactly when the number under the square root is not negative. Of the two roots, only the plus sign shrinks to the first-order answer $`D_1`$ as the smile flattens; the minus root runs off to about $`-2\sigma_2/(d_1d_2)`$, a nonsense vol, so the plus root is the unique sensible one.
 
-When $d_1d_2(K) = 0$ the formula reads 0/0. That happens at the at-the-money pillar and at the strike where $d_2 = 0$, just below the forward. There the quadratic is linear and the answer is its limit, $\sigma_2 + D_1 + D_2/(2\sigma_2)$. The checks take that branch at the pillar and read back 10.00% exactly.
+When $`d_1d_2(K) = 0`$ the formula reads 0/0. That happens at the at-the-money pillar and at the strike where $`d_2 = 0`$, just below the forward. There the quadratic is linear and the answer is its limit, $`\sigma_2 + D_1 + D_2/(2\sigma_2)`$. The checks take that branch at the pillar and read back 10.00% exactly.
 
 ### Step 4: why it breaks past the pillars
 
 Between the pillars the weights are modest and the vol gaps small, so the expansions of Steps 2 and 3 are accurate. Outside, two things fail.
 
-The weights stop being an average: past $K_3$, $y_2$ turns negative while $y_1$ and $y_3$ grow like the square of the log-distance, so the first-order curve is a parabola in $\ln K$, with one lowest point and a climb after it, and the second-order curve follows it, slightly bent.
+The weights stop being an average: past $`K_3`$, $`y_2`$ turns negative while $`y_1`$ and $`y_3`$ grow like the square of the log-distance, so the first-order curve is a parabola in $`\ln K`$, with one lowest point and a climb after it, and the second-order curve follows it, slightly bent.
 
-And $d_1(K)\,d_2(K)$ grows without bound, so if $2\sigma_2D_1 + D_2$ is negative enough the square root's argument crosses zero and the quadratic of Step 3 has no real root.
+And $`d_1(K)\,d_2(K)`$ grows without bound, so if $`2\sigma_2D_1 + D_2`$ is negative enough the square root's argument crosses zero and the quadratic of Step 3 has no real root.
 
 Neither step ever asks whether call prices are convex in strike or whether total variance grows with expiry, the two no-arbitrage tests of [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md). The worked numbers below show all three failures.
 
 <details>
 <summary>Why log-strikes and not strikes?</summary>
 
-Three reasons. The Black-Scholes distances $d_1$ and $d_2$ are straight lines in $\ln K$, not in $K$, so the matching equations of Step 1 are polynomial only in $\ln K$. Exchange rates move by percentages, so a log-strike treats 1.10 to 1.21 the same as 1.00 to 1.10. And flipping the quote, euros per dollar instead of dollars per euro, turns $\ln K$ into $-\ln K$; a parabola in $\ln K$ stays a parabola, so the curve survives the flip.
+Three reasons. The Black-Scholes distances $`d_1`$ and $`d_2`$ are straight lines in $`\ln K`$, not in $`K`$, so the matching equations of Step 1 are polynomial only in $`\ln K`$. Exchange rates move by percentages, so a log-strike treats 1.10 to 1.21 the same as 1.00 to 1.10. And flipping the quote, euros per dollar instead of dollars per euro, turns $`\ln K`$ into $`-\ln K`$; a parabola in $`\ln K`$ stays a parabola, so the curve survives the flip.
 
 </details>
 
@@ -165,19 +183,19 @@ House market: spot 1.10, dollar rate 5%, euro rate 3%, one year. Pillars 1.05246
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| gaps between pillars | $\ln(K_2/K_1)$, $\ln(K_3/K_2)$, $\ln(K_3/K_1)$ | 0.069174, 0.063198, 0.132373 |
-| gaps from 1.15 | $\ln(1.15/K_1)$, $\ln(1.15/K_2)$, $\ln(1.15/K_3)$ | 0.088626, 0.019452, −0.043747 |
-| $y_1$ | $(-0.019452)(0.043747)\,/\,(0.069174 \times 0.132373)$ | −0.092931 |
-| $y_2$ | $(0.088626)(0.043747)\,/\,(0.069174 \times 0.063198)$ | 0.886860 |
-| $y_3$ | $(0.088626)(0.019452)\,/\,(0.132373 \times 0.063198)$ | 0.206071 |
-| first order | $-0.092931 \times 10.75\% + 0.886860 \times 10.00\% + 0.206071 \times 9.75\%$ | 9.8788% |
-| $D_1$ | $9.8788\% - 10.00\%$ | −0.001212 |
-| $d_1d_2$ at the pillars | at $K_1$ and $K_3$, at the 10% vol | 0.409334, 0.462601 |
-| $D_2$ | $-0.092931 \times 0.409334 \times 0.0075^2 + 0.206071 \times 0.462601 \times 0.0025^2$ | −1.543932 millionths |
-| $d_1d_2$ at 1.15 | at the 10% vol | 0.057289 |
-| under the root | $0.01 + 0.057289 \times (2 \times 0.10 \times (-0.001212) + D_2)$ | 0.009986 |
+| gaps between pillars | $`\ln(K_2/K_1)`$, $`\ln(K_3/K_2)`$, $`\ln(K_3/K_1)`$ | 0.069174, 0.063198, 0.132373 |
+| gaps from 1.15 | $`\ln(1.15/K_1)`$, $`\ln(1.15/K_2)`$, $`\ln(1.15/K_3)`$ | 0.088626, 0.019452, −0.043747 |
+| $`y_1`$ | $`(-0.019452)(0.043747)\,/\,(0.069174 \times 0.132373)`$ | −0.092931 |
+| $`y_2`$ | $`(0.088626)(0.043747)\,/\,(0.069174 \times 0.063198)`$ | 0.886860 |
+| $`y_3`$ | $`(0.088626)(0.019452)\,/\,(0.132373 \times 0.063198)`$ | 0.206071 |
+| first order | $`-0.092931 \times 10.75\% + 0.886860 \times 10.00\% + 0.206071 \times 9.75\%`$ | 9.8788% |
+| $`D_1`$ | $`9.8788\% - 10.00\%`$ | −0.001212 |
+| $`d_1d_2`$ at the pillars | at $`K_1`$ and $`K_3`$, at the 10% vol | 0.409334, 0.462601 |
+| $`D_2`$ | $`-0.092931 \times 0.409334 \times 0.0075^2 + 0.206071 \times 0.462601 \times 0.0025^2`$ | −1.543932 millionths |
+| $`d_1d_2`$ at 1.15 | at the 10% vol | 0.057289 |
+| under the root | $`0.01 + 0.057289 \times (2 \times 0.10 \times (-0.001212) + D_2)`$ | 0.009986 |
 | its square root | unrounded 0.09993009 | 0.099930 |
-| **second order** | $0.10 + (-0.00006991)/0.057289 = 0.10 - 0.001220$ | **9.8780%** |
+| **second order** | $`0.10 + (-0.00006991)/0.057289 = 0.10 - 0.001220`$ | **9.8780%** |
 
 The vol at 1.15 is 9.8780%, between 10.00% and 9.75% as it should be. The square root moved the first-order answer by less than a thousandth of a vol point.
 
@@ -189,7 +207,7 @@ The full vanna-volga price of the 1.15 call, from the 3×3 hedge, is 0.030655 do
 | --- | --- | --- |
 | Build all three pillar strikes at the 10% vol | 9.8721% at 1.15 (right: 9.8780%) | Each 25-delta strike depends on its own vol. At 10% the pillars sit at the wrong strikes, and the parabola runs through the right vols at the wrong places. |
 | Use the first order in the far put wing | 18.6244% at 0.80 (second order: 13.1466%) | The parabola in log-strike climbs fast; the square root is what tames it out there. |
-| Drop $D_2$ | 10.7335% at 1.40 (right: 10.7717%) | Small inside the pillars, the curvature term is worth four hundredths of a point in the wing. |
+| Drop $`D_2`$ | 10.7335% at 1.40 (right: 10.7717%) | Small inside the pillars, the curvature term is worth four hundredths of a point in the wing. |
 
 ### Past the last pillar: the wing bends the wrong way
 
@@ -199,7 +217,7 @@ In money, the 1.40 call is worth 0.000943 dollars per euro on the curve and 0.00
 
 ### The butterfly test: passed here, not promised
 
-A smile is free of butterfly arbitrage when call prices bend upward in strike. The measure is the density: the dollar rate compounded forward, $e^{r_dT}$, times the second derivative of the call price in strike. It is the market's probability density for the rate at expiry, and it must never be negative.
+A smile is free of butterfly arbitrage when call prices bend upward in strike. The measure is the density: the dollar rate compounded forward, $`e^{r_dT}`$, times the second derivative of the call price in strike. It is the market's probability density for the rate at expiry, and it must never be negative.
 
 On the house quotes the density stays positive on the whole range 0.80 to 1.60; its lowest value there is 0.013168. That is luck of the quotes, not a property of the method.
 
@@ -207,7 +225,7 @@ Steepen the risk reversal to −3% (vols 11.75%, 10.00%, 8.75%; the call pillar 
 
 ### The calendar test: nothing links two expiries
 
-The calendar test fixes a log-moneyness $k$ and asks that total variance $w = \sigma^2T$ never falls as expiry lengthens. Vanna-volga builds each expiry from that expiry's three quotes alone. Take a six-month market quoted at 12.00% at the money, −1.00% risk reversal, +1.00% butterfly, next to the one-year house quotes.
+The calendar test fixes a log-moneyness $`k`$ and asks that total variance $`w = \sigma^2T`$ never falls as expiry lengthens. Vanna-volga builds each expiry from that expiry's three quotes alone. Take a six-month market quoted at 12.00% at the money, −1.00% risk reversal, +1.00% butterfly, next to the one-year house quotes.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -219,13 +237,13 @@ xychart-beta
     line [1.69, 1.55, 1.15, 0.72, 0.93, 1.36, 1.55, 1.63]
 ```
 
-Orange: one year. Green: six months. At the money the six-month line sits well below, 0.723730 against 1.007593 (times 100), as it must. Between $k$ = 0.10 and 0.20 the green line crosses above: at $k$ = 0.3 it is 1.549041 against 1.320809. Selling the six-month and buying the one-year there is a calendar spread with a negative price.
+Orange: one year. Green: six months. At the money the six-month line sits well below, 0.723730 against 1.007593 (times 100), as it must. Between $`k`$ = 0.10 and 0.20 the green line crosses above: at $`k`$ = 0.3 it is 1.549041 against 1.320809. Selling the six-month and buying the one-year there is a calendar spread with a negative price.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the house pillars from the quotes, then read the vol at 1.15 and 1.40 by two independent roads. Road 1 is the closed form of this card. Road 2 is the full vanna-volga price: the 3×3 hedge solved by Cramer's rule (each weight a ratio of two 3×3 determinants) with no closed form for the weights, the pillars' market-minus-model gaps added, and the price inverted to a vol by halving. The 3×3 weights are also checked against the closed-form weights $\nu(K)y_i/\nu(K_i)$. Then the scripts push the curve into the wings, run the butterfly test by second differences, run the calendar test against a six-month market, and print every number and chart point on this card. The bell-curve area comes from an all-positive series for the error function in Python and from Simpson slices in Rust.
+The scripts build the house pillars from the quotes, then read the vol at 1.15 and 1.40 by two independent roads. Road 1 is the closed form of this card. Road 2 is the full vanna-volga price: the 3×3 hedge solved by Cramer's rule (each weight a ratio of two 3×3 determinants) with no closed form for the weights, the pillars' market-minus-model gaps added, and the price inverted to a vol by halving. The 3×3 weights are also checked against the closed-form weights $`\nu(K)y_i/\nu(K_i)`$. Then the scripts push the curve into the wings, run the butterfly test by second differences, run the calendar test against a six-month market, and print every number and chart point on this card. The bell-curve area comes from an all-positive series for the error function in Python and from Simpson slices in Rust.
 
 ### Python
 
@@ -655,9 +673,9 @@ The two outputs agree line for line.
 
 Lean proves three exact facts behind the curve, for any positive spot, vol and expiry and any three distinct positive pillar strikes.
 
-- Take any positive strike $K$ and amounts $x_1$, $x_2$, $x_3$ of the three pillar calls, all at one flat vol. Then they match a call's vega, vanna and volga at $K$ exactly when $x_i = \nu(K)y_i(K)/\nu(K_i)$.
-- Take any positive strike $K$. Then the log-strike weights add up to 1: $y_1(K) + y_2(K) + y_3(K) = 1$.
-- Suppose the skew is moderate: $\sigma_2 + d_1d_2(\sigma_i - \sigma_2) \ge 0$ at both outer pillars. Then the second-order curve reads $\sigma_1$, $\sigma_2$, $\sigma_3$ exactly at $K_1$, $K_2$, $K_3$.
+- Take any positive strike $`K`$ and amounts $`x_1`$, $`x_2`$, $`x_3`$ of the three pillar calls, all at one flat vol. Then they match a call's vega, vanna and volga at $`K`$ exactly when $`x_i = \nu(K)y_i(K)/\nu(K_i)`$.
+- Take any positive strike $`K`$. Then the log-strike weights add up to 1: $`y_1(K) + y_2(K) + y_3(K) = 1`$.
+- Suppose the skew is moderate: $`\sigma_2 + d_1d_2(\sigma_i - \sigma_2) \ge 0`$ at both outer pillars. Then the second-order curve reads $`\sigma_1`$, $`\sigma_2`$, $`\sigma_3`$ exactly at $`K_1`$, $`K_2`$, $`K_3`$.
 
 Every number, the approximation's accuracy, the wings and both arbitrage tests are left to the Python and Rust checks.
 
@@ -990,7 +1008,7 @@ end VannaVolgaSmile
 > **Try changing**
 > Guess the direction first. Then run it.
 > - **Flatten the smile.** Set the house risk reversal and butterfly to 0 in `market(1.0, 0.10, -0.01, 0.0025)`. Every weight still exists, but every vol gap is zero, so the curve reads 10.00% at every strike. The first assert fails: with the vols changed, the 25-delta strikes move off 1.052466 and 1.201425.
-> - **Drop the butterfly on the six-month market to +0.25%.** Guess: less curvature, less wing. The calendar assert fails; the two expiries no longer cross at $k$ = 0.3.
+> - **Drop the butterfly on the six-month market to +0.25%.** Guess: less curvature, less wing. The calendar assert fails; the two expiries no longer cross at $`k`$ = 0.3.
 > - **Replace log-strikes with strikes in `ys`.** The curve still passes through the three quotes, but at 1.15 it no longer agrees with the full vanna-volga price and the road 1 against road 2 assert fails: the theorem of Step 1 is a statement about log-strikes.
 
 ---
@@ -1001,8 +1019,8 @@ end VannaVolgaSmile
 > **Treating the curve as a smile model.** It is an interpolation with a derivation behind it. Between the 25-delta pillars it is excellent: 9.8780% at 1.15, identical to the full vanna-volga price. Past them it extrapolates a parabola in log-strike that no quote supports: 10.7717% at 1.40 where the market's own direction says below 9.75%. Price a 1.40 call off it and the premium, 0.000943 against 0.000466 flat, is the parabola's opinion.
 >
 > Smaller traps:
-> - **Assuming no arbitrage because the inputs have none.** Clean quotes can give a negative density (−0.959924 with a −3% risk reversal) or crossing expiries (1.549041 at six months against 1.320809 at a year, at $k$ = 0.3). Run both tests on the curves themselves.
-> - **Evaluating $d_1$ and $d_2$ at the target's own vol.** Every $d$ in the formula is at the at-the-money vol $\sigma_2$. Using the answer inside its own formula makes it circular and changes the wing.
+> - **Assuming no arbitrage because the inputs have none.** Clean quotes can give a negative density (−0.959924 with a −3% risk reversal) or crossing expiries (1.549041 at six months against 1.320809 at a year, at $`k`$ = 0.3). Run both tests on the curves themselves.
+> - **Evaluating $`d_1`$ and $`d_2`$ at the target's own vol.** Every $`d`$ in the formula is at the at-the-money vol $`\sigma_2`$. Using the answer inside its own formula makes it circular and changes the wing.
 > - **Taking the minus root, or ignoring a negative square root.** The minus root is not a second smile; it is nonsense. A negative argument means the method has run out, not that a vol of zero applies.
 
 ---

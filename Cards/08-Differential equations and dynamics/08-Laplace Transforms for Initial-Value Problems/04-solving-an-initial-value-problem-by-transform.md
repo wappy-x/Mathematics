@@ -40,30 +40,36 @@ Orange: the travel y, every half second. Teal: the resting point under the push,
 
 ## The formula
 
-Reminders: a curly L, $\mathcal{L}$, reads "the Laplace transform of", and a capital names the result, so $Y = \mathcal{L}[y]$ ([The Laplace transform](01-the-laplace-transform.md)). Acceleration transforms to s^2 Y − s y(0) − y'(0), velocity to sY − y(0) ([Transforming a derivative](02-transforms-of-derivatives.md)). From rest, both starting values are 0.
+Reminders: a curly L, $`\mathcal{L}`$, reads "the Laplace transform of", and a capital names the result, so $`Y = \mathcal{L}[y]`$ ([The Laplace transform](01-the-laplace-transform.md)). Acceleration transforms to s^2 Y − s y(0) − y'(0), velocity to sY − y(0) ([Transforming a derivative](02-transforms-of-derivatives.md)). From rest, both starting values are 0.
 
 The method for y'' + b y' + k y = f(t), in three moves:
 
-$$\bigl(s^2 + b s + k\bigr)\,Y(s) \;=\; F(s) + (s + b)\,y(0) + y'(0)$$
+```math
+\bigl(s^2 + b s + k\bigr)\,Y(s) \;=\; F(s) + (s + b)\,y(0) + y'(0)
+```
 
-$$Y(s) \;=\; \frac{F(s) + (s + b)\,y(0) + y'(0)}{s^2 + b s + k}, \qquad y(t) = \mathcal{L}^{-1}[Y](t)$$
+```math
+Y(s) \;=\; \frac{F(s) + (s + b)\,y(0) + y'(0)}{s^2 + b s + k}, \qquad y(t) = \mathcal{L}^{-1}[Y](t)
+```
 
 **Read it aloud:** the characteristic polynomial, s^2 + bs + k, times the transform equals the push's transform plus the starting values; divide, then find the signal with that transform.
 
 For the test mass, b = 2, k = 5, F(s) = 10/s, and the starting values are 0:
 
-$$Y(s) = \frac{10}{s\,(s^2 + 2s + 5)} = \frac{2}{s} - \frac{2s + 4}{s^2 + 2s + 5}, \qquad y(t) = 2 - e^{-t}\,(2\cos 2t + \sin 2t)$$
+```math
+Y(s) = \frac{10}{s\,(s^2 + 2s + 5)} = \frac{2}{s} - \frac{2s + 4}{s^2 + 2s + 5}, \qquad y(t) = 2 - e^{-t}\,(2\cos 2t + \sin 2t)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since the ram started, in s | 0 to 10 s | y settles toward 2 m |
-| $y$, $y'$, $y''$ | travel from rest (m), velocity (m/s), acceleration (m/s^2) | start at 0 and 0 | — |
-| $b$, $k$ | damping and stiffness per kg: 2 per s, and 5 per s^2 | 2 and 5 | b: less overshoot; k: less final travel, 10/k |
-| $f$, $F$ | the push per kg, in m/s^2; its transform | f = 10; F = 10/s | every part of y scales with it |
-| $s$, $Y$ | the transform's variable, per second; the travel's transform | Y = 10/(s(s^2 + 2s + 5)) | — |
-| $\mathcal{L}^{-1}$ | "the signal whose transform is" | turns 2/s into 2 | — |
-| $A$, $C$, $D$ | partial-fraction numerators: A over s, Cs + D over the quadratic | 2, −2, −4 | — |
-| $h$ | the step size of the numerical check, in s | 0.1 and 0.05 | error grows like h^4 |
+| $`t`$ | time since the ram started, in s | 0 to 10 s | y settles toward 2 m |
+| $`y`$, $`y'`$, $`y''`$ | travel from rest (m), velocity (m/s), acceleration (m/s^2) | start at 0 and 0 | — |
+| $`b`$, $`k`$ | damping and stiffness per kg: 2 per s, and 5 per s^2 | 2 and 5 | b: less overshoot; k: less final travel, 10/k |
+| $`f`$, $`F`$ | the push per kg, in m/s^2; its transform | f = 10; F = 10/s | every part of y scales with it |
+| $`s`$, $`Y`$ | the transform's variable, per second; the travel's transform | Y = 10/(s(s^2 + 2s + 5)) | — |
+| $`\mathcal{L}^{-1}`$ | "the signal whose transform is" | turns 2/s into 2 | — |
+| $`A`$, $`C`$, $`D`$ | partial-fraction numerators: A over s, Cs + D over the quadratic | 2, −2, −4 | — |
+| $`h`$ | the step size of the numerical check, in s | 0.1 and 0.05 | error grows like h^4 |
 
 ### When it holds
 
@@ -92,13 +98,17 @@ Derivatives become multiplication, so the equation becomes algebra. Two continuo
 
 From rest the acceleration becomes s^2 Y, the velocity sY. The steady 10 N per kg is 10 times the constant signal 1, whose transform is 1/s. So
 
-$$s^2 Y + 2sY + 5Y = \frac{10}{s}$$
+```math
+s^2 Y + 2sY + 5Y = \frac{10}{s}
+```
 
 ### Step 2: solve the algebra
 
 Collect: (s^2 + 2s + 5) Y = 10/s. The bracket is the characteristic polynomial, the same one whose roots −1 ± 2i (i is the square root of −1) gave the free oscillation ([Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)). Divide:
 
-$$Y(s) = \frac{10}{s\,(s^2 + 2s + 5)}$$
+```math
+Y(s) = \frac{10}{s\,(s^2 + 2s + 5)}
+```
 
 Each factor below the line becomes one piece of the motion: s, from the push, gives the constant 2; the quadratic, from the machine, gives the decay e^(−t) and the turning at 2 per s.
 
@@ -106,7 +116,9 @@ Each factor below the line becomes one piece of the motion: s, from the push, gi
 
 The quadratic has no real roots, so its piece takes a first-degree numerator ([Inverting](03-inverting-by-partial-fractions.md)):
 
-$$\frac{10}{s\,(s^2 + 2s + 5)} = \frac{A}{s} + \frac{Cs + D}{s^2 + 2s + 5}$$
+```math
+\frac{10}{s\,(s^2 + 2s + 5)} = \frac{A}{s} + \frac{Cs + D}{s^2 + 2s + 5}
+```
 
 Multiply through by the denominator: 10 = A(s^2 + 2s + 5) + (Cs + D)s. At s = 0 this reads 10 = 5A, so A = 2. Matching the s^2 terms, 0 = A + C, so C = −2. Matching the s terms, 0 = 2A + D, so D = −4.
 
@@ -116,7 +128,9 @@ Write s^2 + 2s + 5 as (s + 1)^2 + 4. Multiplying a signal by e^(−t) replaces s
 
 So (s + 1)/((s + 1)^2 + 4) comes from e^(−t) cos 2t, and 2/((s + 1)^2 + 4) from e^(−t) sin 2t. Split the numerator to match: −2s − 4 = −2(s + 1) − 2. Then
 
-$$Y = \frac{2}{s} - 2\,\frac{s+1}{(s+1)^2+4} - \frac{2}{(s+1)^2+4}$$
+```math
+Y = \frac{2}{s} - 2\,\frac{s+1}{(s+1)^2+4} - \frac{2}{(s+1)^2+4}
+```
 
 and term by term, y = 2 − 2e^(−t) cos 2t − e^(−t) sin 2t.
 
@@ -174,7 +188,7 @@ Partial fractions give (2s + 1)/(s^2 + 1) + (−2s − 5)/(s^2 + 2s + 5), so y =
 
 ## Code, from first principles, and it actually runs
 
-Three roads, on two pushes: the steady 10 and the swing's 10 cos t. Road one is the transform, its partial fractions solved by elimination. Road two is undetermined coefficients. Road three steps the motion with Runge-Kutta 4 (four slope samples per step, averaged; [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)); halving $h$ cuts its error about 16 times, the method's order 4. The peak comes from scanning road three's path.
+Three roads, on two pushes: the steady 10 and the swing's 10 cos t. Road one is the transform, its partial fractions solved by elimination. Road two is undetermined coefficients. Road three steps the motion with Runge-Kutta 4 (four slope samples per step, averaged; [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)); halving $`h`$ cuts its error about 16 times, the method's order 4. The peak comes from scanning road three's path.
 
 ### Python
 

@@ -41,47 +41,53 @@ The climbing line is the Bermudan price, each on a binomial tree of about 2,000 
 
 Notation first, in words:
 
-- $K$ is the strike, $r$ the riskless rate and $S_{t_k}$ Acme's price on the $k$-th listed date.
-- The listed dates are written $t_1 < t_2 < \dots < t_m$, the last one being expiry, and $\Delta_k = t_{k+1} - t_k$ is the gap after the $k$-th.
-- The option's worth on the $k$-th listed date, when Acme stands at price $s$, is $V_k(s)$.
-- The payoff of exercising at price $s$ is $g(s) = \max(K - s, 0)$ for a put.
-- A **risk-neutral expectation** (the average over Acme's possible prices in the pricing world where everything drifts at the bank rate less the dividend) is written $\mathbb{E}$; the bar inside it, read "given", fixes the price on the current date.
+- $`K`$ is the strike, $`r`$ the riskless rate and $`S_{t_k}`$ Acme's price on the $`k`$-th listed date.
+- The listed dates are written $`t_1 < t_2 < \dots < t_m`$, the last one being expiry, and $`\Delta_k = t_{k+1} - t_k`$ is the gap after the $`k`$-th.
+- The option's worth on the $`k`$-th listed date, when Acme stands at price $`s`$, is $`V_k(s)`$.
+- The payoff of exercising at price $`s`$ is $`g(s) = \max(K - s, 0)`$ for a put.
+- A **risk-neutral expectation** (the average over Acme's possible prices in the pricing world where everything drifts at the bank rate less the dividend) is written $`\mathbb{E}`$; the bar inside it, read "given", fixes the price on the current date.
 
-$$V_m(s) = g(s), \qquad V_k(s) = \max\Big(\,g(s)\,,\;\; e^{-r\Delta_k}\,\mathbb{E}\big[\,V_{k+1}(S_{t_{k+1}}) \;\big|\; S_{t_k} = s\,\big]\Big)$$
+```math
+V_m(s) = g(s), \qquad V_k(s) = \max\Big(\,g(s)\,,\;\; e^{-r\Delta_k}\,\mathbb{E}\big[\,V_{k+1}(S_{t_{k+1}}) \;\big|\; S_{t_k} = s\,\big]\Big)
+```
 
-$$P_B = e^{-r t_1}\,\mathbb{E}\big[\,V_1(S_{t_1})\,\big]$$
+```math
+P_B = e^{-r t_1}\,\mathbb{E}\big[\,V_1(S_{t_1})\,\big]
+```
 
 **Read it aloud:** on the last date the option is its payoff; on each earlier listed date it is the better of cashing in and holding to the next listed date, where holding is the discounted average of what it will be worth there; today's price is the discounted average of its worth on the first listed date.
 
-Between two listed dates there is no choice, so nothing but a European roll-back happens there. On a tree that means the ordinary step-by-step average, with the $\max$ applied only at the steps that fall on a listed date.
+Between two listed dates there is no choice, so nothing but a European roll-back happens there. On a tree that means the ordinary step-by-step average, with the $`\max`$ applied only at the steps that fall on a listed date.
 
-The theorem the recursion carries, for two lists $D$ and $D'$ where every date of $D$ is also in $D'$:
+The theorem the recursion carries, for two lists $`D`$ and $`D'`$ where every date of $`D`$ is also in $`D'`$:
 
-$$P_E \;\le\; P_B(D) \;\le\; P_B(D') \;\le\; P_A$$
+```math
+P_E \;\le\; P_B(D) \;\le\; P_B(D') \;\le\; P_A
+```
 
 **Read it aloud:** a list of dates is worth at least the European and at most the American, and adding dates never lowers the price.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $s$, $S_{t_k}$ | Acme's price today; a price level; Acme's price on date $t_k$ | $100.00 today | the put is worth less: less shortfall to sell into |
-| $K$ | the strike, the price the put may sell at | $100.00 | the put is worth more |
-| $r$ | the riskless rate, continuously compounded | 5% | the dates are worth more: cash taken early earns interest |
-| $q$ | the dividend yield Acme pays out | 2% | the dates are worth less: holding the share pays |
-| $\sigma$, $T$ | volatility, how jumpy Acme is (say "sigma"); the option's life in years | 20%; 1 | every price rises |
-| $D$, $m$ | the list of exercise dates; how many there are | quarter ends; 4 | more dates: the price climbs toward the American |
-| $t_k$, $t_1$, $k$, $\Delta_k$ | the $k$-th listed date in years, $t_1$ the first; the gap to the next one | 0.25, 0.5, 0.75, 1; gaps of 0.25 | — |
-| $g$ | what exercising pays: $\max(K - s, 0)$ for a put | $13.19 at the $86.81 node of the hand tree below | — |
-| $u$, $d$ | the tree's up and down factors: each step multiplies Acme's price by one of them | 1.151910 and 0.868123 on the hand tree | — |
-| $p$ | the tree's weight on an up step: a price weight, not a forecast | 0.517959 on the hand tree | — |
-| $V_k$ | the option's worth on the $k$-th listed date, as a function of price | $V_4 = g$ | — |
-| $\mathbb{E}$ | the risk-neutral average over Acme's possible prices | — | — |
-| $P_E$, $P_B$, $P_A$ | European, Bermudan and American prices today | $6.33, $6.57, $6.66 | — |
+| $`S`$, $`s`$, $`S_{t_k}`$ | Acme's price today; a price level; Acme's price on date $`t_k`$ | $100.00 today | the put is worth less: less shortfall to sell into |
+| $`K`$ | the strike, the price the put may sell at | $100.00 | the put is worth more |
+| $`r`$ | the riskless rate, continuously compounded | 5% | the dates are worth more: cash taken early earns interest |
+| $`q`$ | the dividend yield Acme pays out | 2% | the dates are worth less: holding the share pays |
+| $`\sigma`$, $`T`$ | volatility, how jumpy Acme is (say "sigma"); the option's life in years | 20%; 1 | every price rises |
+| $`D`$, $`m`$ | the list of exercise dates; how many there are | quarter ends; 4 | more dates: the price climbs toward the American |
+| $`t_k`$, $`t_1`$, $`k`$, $`\Delta_k`$ | the $`k`$-th listed date in years, $`t_1`$ the first; the gap to the next one | 0.25, 0.5, 0.75, 1; gaps of 0.25 | — |
+| $`g`$ | what exercising pays: $`\max(K - s, 0)`$ for a put | $13.19 at the $86.81 node of the hand tree below | — |
+| $`u`$, $`d`$ | the tree's up and down factors: each step multiplies Acme's price by one of them | 1.151910 and 0.868123 on the hand tree | — |
+| $`p`$ | the tree's weight on an up step: a price weight, not a forecast | 0.517959 on the hand tree | — |
+| $`V_k`$ | the option's worth on the $`k`$-th listed date, as a function of price | $`V_4 = g`$ | — |
+| $`\mathbb{E}`$ | the risk-neutral average over Acme's possible prices | — | — |
+| $`P_E`$, $`P_B`$, $`P_A`$ | European, Bermudan and American prices today | $6.33, $6.57, $6.66 | — |
 
 ### When it holds
 
 - **The dates are fixed in the contract and known today.** A list that one side may change later is a different contract, with its own option inside.
 - **The holder exercises well.** The seller must be funded for the best rule the holder could follow, so the price assumes that rule. A holder who exercises badly gets less; the seller still charged for the best.
-- **The model behind the averages.** The numbers here assume Acme follows geometric Brownian motion (a log-price that drifts steadily and wiggles like a bell curve) with constant $r$, $q$ and $\sigma$. The recursion itself holds in any model; the numbers change with the model.
+- **The model behind the averages.** The numbers here assume Acme follows geometric Brownian motion (a log-price that drifts steadily and wiggles like a bell curve) with constant $`r`$, $`q`$ and $`\sigma`$. The recursion itself holds in any model; the numbers change with the model.
 - **Listed dates fall on steps of the tree.** A date between two steps gets rounded, which prices a slightly different contract. Each tree here is sized so every date lands on a step.
 - **A reason to exercise early.** For a call on a share paying no dividend, no listed date is ever used, and the Bermudan equals the European ([Merton's theorem](02-mertons-no-early-exercise-theorem.md)).
 
@@ -93,19 +99,19 @@ $$P_E \;\le\; P_B(D) \;\le\; P_B(D') \;\le\; P_A$$
 
 A holder with more exercise dates can do everything a holder with fewer can do: ignore the extra dates. So an extra date can add value and can never remove it. The price is the value of the best exercise rule, and a longer list only enlarges the set of rules to choose from.
 
-The seller's side pins the price down. Whoever sold the option must be ready for whichever rule the holder follows, including the one that costs the seller most. So the seller charges for the best rule, and that is what $P_B$ is.
+The seller's side pins the price down. Whoever sold the option must be ready for whichever rule the holder follows, including the one that costs the seller most. So the seller charges for the best rule, and that is what $`P_B`$ is.
 
 ### Step 1: on the last date there is nothing to choose
 
-At expiry the option pays $g(S_T)$ and ends. So $V_m = g$. This is the same starting row as any European or American roll-back.
+At expiry the option pays $`g(S_T)`$ and ends. So $`V_m = g`$. This is the same starting row as any European or American roll-back.
 
 ### Step 2: between listed dates, the option is a European option
 
-On a day not on the list the holder can only hold. From one listed date to the next, the option behaves like a European option that pays $V_{k+1}$ on date $t_{k+1}$. Its value is the discounted risk-neutral average of that payment, by the same replication argument that prices every European claim: shares and cash, rebalanced, reproduce the payment, so they must cost the same. That is the holding branch of the formula.
+On a day not on the list the holder can only hold. From one listed date to the next, the option behaves like a European option that pays $`V_{k+1}`$ on date $`t_{k+1}`$. Its value is the discounted risk-neutral average of that payment, by the same replication argument that prices every European claim: shares and cash, rebalanced, reproduce the payment, so they must cost the same. That is the holding branch of the formula.
 
 ### Step 3: on a listed date, keep the larger number
 
-On a listed date the holder faces two sums: $g(s)$ in hand, or the holding value from Step 2. A rational holder takes the larger. A seller holding the larger sum is covered either way; charging less would leave some rule the seller cannot pay.
+On a listed date the holder faces two sums: $`g(s)`$ in hand, or the holding value from Step 2. A rational holder takes the larger. A seller holding the larger sum is covered either way; charging less would leave some rule the seller cannot pay.
 
 The general statement is the Snell envelope ([Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md)). It says the price of a right to stop is the smallest process (a value that moves through time) lying above the payoff whose discounted average never rises. A Bermudan applies it to a list of dates.
 
@@ -113,30 +119,32 @@ The comparison draws a line. On each listed date there is a highest price at whi
 
 ### Step 4: one date returns the European price exactly
 
-Put $m = 1$: the only listed date is expiry. There is no earlier $\max$, and the recursion reads $P_B = e^{-rT}\,\mathbb{E}[g(S_T)]$. That is the definition of the European put, term for term.
+Put $`m = 1`$: the only listed date is expiry. There is no earlier $`\max`$, and the recursion reads $`P_B = e^{-rT}\,\mathbb{E}[g(S_T)]`$. That is the definition of the European put, term for term.
 
 On the tree the gate never opens, and the walk is the European walk: 6.329109. The closed form gives 6.330081, and the code's price grid, which adds up bell-curve weights and knows nothing of trees, gives 6.330017. The tree's shortfall of a tenth of a cent is its step error, the same in every row of the card ([Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md)).
 
 ### Step 5: more dates never cost less
 
-Every exercise rule that uses only the dates in $D$ is also a rule for $D'$, since those dates are in $D'$ too. The best over a bigger set of rules is at least the best over the smaller set, so $P_B(D) \le P_B(D')$. The European is the list with expiry alone, and the American is the list with every date, so both ends of the sandwich follow.
+Every exercise rule that uses only the dates in $`D`$ is also a rule for $`D'`$, since those dates are in $`D'`$ too. The best over a bigger set of rules is at least the best over the smaller set, so $`P_B(D) \le P_B(D')`$. The European is the list with expiry alone, and the American is the list with every date, so both ends of the sandwich follow.
 
 <details>
 <summary>Detailed proof</summary>
 
-A **stopping rule** is a way of choosing an exercise date that uses only prices seen so far: "exercise on the first listed date Acme is below the strike" qualifies; "exercise on the date of the year's low" does not, since that date is known only later. Write $\mathcal{R}(D)$ for the stopping rules whose dates lie in $D$ and always include expiry as a last resort. By Steps 1 to 3 and backward induction on $k$, $V_k(s)$ is the largest discounted average payoff over rules in $\mathcal{R}(D)$ that start at $t_k$ with Acme at $s$: on the last date it is the payoff; on an earlier date the best rule either stops now, worth $g(s)$, or continues, and the best continuation is worth the discounted average of $V_{k+1}$ by the induction hypothesis. So $P_B(D) = \max$ over $\mathcal{R}(D)$ of the discounted average payoff.
+A **stopping rule** is a way of choosing an exercise date that uses only prices seen so far: "exercise on the first listed date Acme is below the strike" qualifies; "exercise on the date of the year's low" does not, since that date is known only later. Write $`\mathcal{R}(D)`$ for the stopping rules whose dates lie in $`D`$ and always include expiry as a last resort. By Steps 1 to 3 and backward induction on $`k`$, $`V_k(s)`$ is the largest discounted average payoff over rules in $`\mathcal{R}(D)`$ that start at $`t_k`$ with Acme at $`s`$: on the last date it is the payoff; on an earlier date the best rule either stops now, worth $`g(s)`$, or continues, and the best continuation is worth the discounted average of $`V_{k+1}`$ by the induction hypothesis. So $`P_B(D) = \max`$ over $`\mathcal{R}(D)`$ of the discounted average payoff.
 
-If $D \subseteq D'$ then $\mathcal{R}(D) \subseteq \mathcal{R}(D')$, and a maximum over a larger set is no smaller. Equality is possible: an added date that is never worth using adds nothing, as for a call on a share paying no dividend. On a fixed tree the argument is exact. Comparing lists priced on different trees, as the chart does, also mixes in the trees' step errors, which here are about a tenth of a cent and all of one sign.
+If $`D \subseteq D'`$ then $`\mathcal{R}(D) \subseteq \mathcal{R}(D')`$, and a maximum over a larger set is no smaller. Equality is possible: an added date that is never worth using adds nothing, as for a call on a share paying no dividend. On a fixed tree the argument is exact. Comparing lists priced on different trees, as the chart does, also mixes in the trees' step errors, which here are about a tenth of a cent and all of one sign.
 
 </details>
 
 ### Step 6: what one added date is worth
 
-Start from the European and add one date $t_1$ before expiry. On that date the holder compares $g(S_{t_1})$ with the European put that still has $T - t_1$ to run, written $P_E(t_1, S_{t_1})$. The new right pays the excess, where there is one, and nothing elsewhere:
+Start from the European and add one date $`t_1`$ before expiry. On that date the holder compares $`g(S_{t_1})`$ with the European put that still has $`T - t_1`$ to run, written $`P_E(t_1, S_{t_1})`$. The new right pays the excess, where there is one, and nothing elsewhere:
 
-$$P_B(\{t_1, T\}) - P_E = e^{-r t_1}\,\mathbb{E}\Big[\big(g(S_{t_1}) - P_E(t_1, S_{t_1})\big)^+\Big]$$
+```math
+P_B(\{t_1, T\}) - P_E = e^{-r t_1}\,\mathbb{E}\Big[\big(g(S_{t_1}) - P_E(t_1, S_{t_1})\big)^+\Big]
+```
 
-The $(\,\cdot\,)^+$ keeps a positive number and turns a negative one to zero. Every term is a closed form or a one-dimensional average, so this price needs no tree at all. At six months the excess is positive below $88.09, the critical price where the two sums tie. The date is worth 0.159552, giving 6.489633 for the two-date put, against 6.488807 on the tree.
+The $`(\,\cdot\,)^+`$ keeps a positive number and turns a negative one to zero. Every term is a closed form or a one-dimensional average, so this price needs no tree at all. At six months the excess is positive below $88.09, the critical price where the two sums tie. The date is worth 0.159552, giving 6.489633 for the two-date put, against 6.488807 on the tree.
 
 Placement matters as well as count. The same single extra date at three months is worth less, 6.398166 in all: early on, the put is rarely deep enough to beat holding. At nine months it gives 6.481936. Six months is close to the best single spot, which falls a little later.
 
@@ -164,21 +172,21 @@ On the quarterly put, a rule fitted on 40,000 simulated paths and run on 100,000
 
 ## Worked numbers, by hand
 
-A 2,000-step tree is not a hand calculation, so shrink it to two steps of half a year each, with the listed dates at six months and at expiry. Same Acme: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$.
+A 2,000-step tree is not a hand calculation, so shrink it to two steps of half a year each, with the listed dates at six months and at expiry. Same Acme: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| up factor $u$ | $e^{0.20 \times \sqrt{0.5}}$ | 1.151910 |
-| down factor $d$ | $1/u$ | 0.868123 |
-| up chance $p$, a price weight, not a forecast | $(e^{0.03 \times 0.5} - 0.868123)/(1.151910 - 0.868123)$ | 0.517959 |
-| half-year discount | $e^{-0.05 \times 0.5}$ | 0.975310 |
-| Acme after one down step | $100 \times 0.868123$ | $86.81 |
-| Acme after two down steps | $100 \times 0.868123^2$ | $75.36 |
-| the put pays there | $100 - 75.36$ | $24.64 |
-| holding at $86.81, six months in | $0.975310 \times (1 - 0.517959) \times 24.64$ | $11.58 |
-| exercising at $86.81 | $100 - 86.81$ | **$13.19: exercise wins** |
-| Bermudan today | $0.975310 \times (1 - 0.517959) \times 13.19$ | **$6.20** |
-| European today, no comparison | $0.975310 \times (1 - 0.517959) \times 11.58$ | $5.45 |
+| up factor $`u`$ | $`e^{0.20 \times \sqrt{0.5}}`$ | 1.151910 |
+| down factor $`d`$ | $`1/u`$ | 0.868123 |
+| up chance $`p`$, a price weight, not a forecast | $`(e^{0.03 \times 0.5} - 0.868123)/(1.151910 - 0.868123)`$ | 0.517959 |
+| half-year discount | $`e^{-0.05 \times 0.5}`$ | 0.975310 |
+| Acme after one down step | $`100 \times 0.868123`$ | $86.81 |
+| Acme after two down steps | $`100 \times 0.868123^2`$ | $75.36 |
+| the put pays there | $`100 - 75.36`$ | $24.64 |
+| holding at $86.81, six months in | $`0.975310 \times (1 - 0.517959) \times 24.64`$ | $11.58 |
+| exercising at $86.81 | $`100 - 86.81`$ | **$13.19: exercise wins** |
+| Bermudan today | $`0.975310 \times (1 - 0.517959) \times 13.19`$ | **$6.20** |
+| European today, no comparison | $`0.975310 \times (1 - 0.517959) \times 11.58`$ | $5.45 |
 
 Every node above the strike pays nothing, so only the down branch carries value. The comparison at $86.81 is the one line that separates the two prices: the holder who may act at six months takes $13.19 now rather than a position worth $11.58. Two steps are far too coarse for the real price; with 2,000 steps the same contract is 6.488807.
 
@@ -612,7 +620,7 @@ The two outputs agree line for line, the simulation included, because both use t
 
 Lean proves the card's theorem on a binomial tree, for any payoff and any lists of listed steps.
 
-- Suppose the tree's weight on an up step, $p$, lies between 0 and 1, and every date of $D$ is in $D'$. Then $P_E \le P_B(D) \le P_B(D') \le P_A$.
+- Suppose the tree's weight on an up step, $`p`$, lies between 0 and 1, and every date of $`D`$ is in $`D'`$. Then $`P_E \le P_B(D) \le P_B(D') \le P_A`$.
 - Take the last day as the only listed date. Then the Bermudan price equals the European price exactly.
 - Take every step of the tree as a listed date. Then the Bermudan price equals the American price exactly.
 

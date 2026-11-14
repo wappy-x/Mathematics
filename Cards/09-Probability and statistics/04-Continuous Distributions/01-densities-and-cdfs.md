@@ -28,19 +28,25 @@ The curve is drawn to scale from the `figure,` lines the code prints. The shaded
 
 ## The formula
 
-Notation first, in words. As on earlier cards, $X$ is a random variable, here tomorrow's return in percent, and $x$ is one value it might take; P(A) is the chance of the event A.
+Notation first, in words. As on earlier cards, $`X`$ is a random variable, here tomorrow's return in percent, and $`x`$ is one value it might take; P(A) is the chance of the event A.
 
 A density is written f(x), read "the density at x". The CDF is written F(x), read "the chance that X is at most x". The long S of an integral, from the calculus wing, adds up area.
 
-$$P(a \le X \le b) = \int_a^b f(x)\,dx$$
+```math
+P(a \le X \le b) = \int_a^b f(x)\,dx
+```
 
 **Read it aloud:** the chance that tomorrow's return lands between a and b is the area under the density from a to b.
 
-$$F(x) = P(X \le x) = \int_{-\infty}^{x} f(t)\,dt$$
+```math
+F(x) = P(X \le x) = \int_{-\infty}^{x} f(t)\,dt
+```
 
 **Read it aloud:** the CDF at x is all the area under the density from the far left up to x.
 
-$$f(x) = F'(x), \qquad P(a < X \le b) = F(b) - F(a)$$
+```math
+f(x) = F'(x), \qquad P(a < X \le b) = F(b) - F(a)
+```
 
 **Read it aloud:** the density is the slope of the CDF (wherever the density is continuous), and the chance of any window is the CDF at its right end minus the CDF at its left end.
 
@@ -48,23 +54,25 @@ A function qualifies as a density on two conditions: it is never negative, and i
 
 This card's example uses one particular density, the bell shape, whose formula the [Normal](04-normal-distribution.md) card derives:
 
-$$f(x) = \frac{1}{\sigma\sqrt{2\pi}}\; e^{-x^2/(2\sigma^2)}$$
+```math
+f(x) = \frac{1}{\sigma\sqrt{2\pi}}\; e^{-x^2/(2\sigma^2)}
+```
 
 Here σ (the Greek letter sigma) is the spread, 1.2 percentage points; π and e are the usual constants. In words: the height falls off with the square of the distance from 0, measured against the spread; the constant in front is exactly what makes the total area 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | tomorrow's return, not yet known | a percentage change | — |
-| $x$ | one value on the return axis | −2 | F(x) rises, never falls |
-| $f$ | the density: chance per percentage point of width near x | f(−2) = 0.0829, f(0) = 0.332 | more chance crowds near that x |
-| $F$ | the CDF: chance that X is at most x | F(−2) = 0.0478, F(0) = 0.5 | — |
-| $a$, $b$ | the two ends of a window of returns | −12 and −2 on road 1 of the code | a wider window holds more area |
-| $t$ | a stand-in that runs along the axis inside the integral | from far left up to x | — |
-| $\sigma$ | the spread of the bell, in percentage points | 1.2 | fatter tails: at 1.5 the chance below −2 rises to 0.0912 |
-| $\pi$ | the circle constant, circumference over diameter | inside the constant | — |
-| $e$ | the base of natural logarithms | inside the bell | — |
-| $h$ | the width of one thin strip of the axis | 0.5 by hand, 0.001 for the slope | a strip's chance grows in proportion |
-| $z$ | the cut measured in spreads, x divided by σ | −2 / 1.2 = −1.667 | — |
+| $`X`$ | tomorrow's return, not yet known | a percentage change | — |
+| $`x`$ | one value on the return axis | −2 | F(x) rises, never falls |
+| $`f`$ | the density: chance per percentage point of width near x | f(−2) = 0.0829, f(0) = 0.332 | more chance crowds near that x |
+| $`F`$ | the CDF: chance that X is at most x | F(−2) = 0.0478, F(0) = 0.5 | — |
+| $`a`$, $`b`$ | the two ends of a window of returns | −12 and −2 on road 1 of the code | a wider window holds more area |
+| $`t`$ | a stand-in that runs along the axis inside the integral | from far left up to x | — |
+| $`\sigma`$ | the spread of the bell, in percentage points | 1.2 | fatter tails: at 1.5 the chance below −2 rises to 0.0912 |
+| $`\pi`$ | the circle constant, circumference over diameter | inside the constant | — |
+| $`e`$ | the base of natural logarithms | inside the bell | — |
+| $`h`$ | the width of one thin strip of the axis | 0.5 by hand, 0.001 for the slope | a strip's chance grows in proportion |
+| $`z`$ | the cut measured in spreads, x divided by σ | −2 / 1.2 = −1.667 | — |
 
 ### When it holds
 
@@ -93,7 +101,9 @@ The code runs this with 400,000 simulated days. In the bin from −2.25 to −1.
 
 The event "X at most b" splits into "X at most a" and "X between a and b", which cannot both happen. By Step 0,
 
-$$F(b) = F(a) + P(a < X \le b),$$
+```math
+F(b) = F(a) + P(a < X \le b),
+```
 
 so the chance of a window is F(b) − F(a). Three facts follow. F never falls, since chances are not negative. F runs from 0 at the far left to 1 at the far right. And one table of F answers every window question: the chance of a day between −1 and +1 is F(1) − F(−1) = 0.595.
 

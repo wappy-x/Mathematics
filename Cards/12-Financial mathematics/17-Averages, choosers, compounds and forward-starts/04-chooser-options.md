@@ -39,40 +39,44 @@ First line, rising: the call's value on the choice date. Second line, falling: t
 
 ## The formula
 
-A little notation first. $C(S, K, T)$ means the Black-Scholes price of a call on a share now at $S$, with strike $K$ and $T$ years to run; $P(S, K, T)$ is the matching put. The choice date is $\tau$ years from today (the Greek letter tau).
+A little notation first. $`C(S, K, T)`$ means the Black-Scholes price of a call on a share now at $`S`$, with strike $`K`$ and $`T`$ years to run; $`P(S, K, T)`$ is the matching put. The choice date is $`\tau`$ years from today (the Greek letter tau).
 
-$$V = C(S,\,K,\,T) \;+\; e^{-q(T-\tau)}\,P\!\left(S,\,K',\,\tau\right), \qquad K' = K\,e^{-(r-q)(T-\tau)}$$
+```math
+V = C(S,\,K,\,T) \;+\; e^{-q(T-\tau)}\,P\!\left(S,\,K',\,\tau\right), \qquad K' = K\,e^{-(r-q)(T-\tau)}
+```
 
 **Read it aloud:** a simple chooser is the full-life call, plus a slightly smaller amount of a put that expires on the choice date, struck at the strike pulled back by the carry (the bank rate minus the dividend yield) over the remaining life.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | price today of the simple chooser | $13.34 | is the answer |
-| $S$, $S_\tau$ | Acme's price today; its price on the choice date | $100 | rises: the call leg gains more than the put leg loses |
-| $K$ | the strike: the price at which the call buys, or the put sells, one share; shared by both legs | $100 | falls slightly: the call leg loses more than the put leg gains |
-| $T$ | years until both legs expire | 1 | rises: the call leg gains time; the put leg shrinks a little |
-| $\tau$ | years until the choice date | 0.5 | rises: more is known before choosing, so the price rises |
-| $r$, $q$ | bank rate and dividend yield, continuously compounded | 5% and 2% | $r$ up: rises; $q$ up: falls. Together they set the carry, and so $K'$ |
-| $\sigma$ | Acme's volatility: the spread of its yearly log return | 20% | rises sharply: both legs gain |
-| $C$, $P$ | Black-Scholes call and put prices, with the three inputs in brackets | $9.23 and $6.33 for one year | — |
-| $K'$ | the put leg's strike, $K e^{-(r-q)(T-\tau)}$ | $98.51 | — |
-| $d_1$, $d_2$, $N$, $E$ | the put leg's Black-Scholes distances; $N$ is the bell-curve area to the left of a point; $E$ is an average in the pretend (risk-neutral) world, where every asset grows at the bank rate | 0.2828, 0.1414 | — |
-| $e^{-q(T-\tau)}$ | how many put legs: the dividend drag over the time after the choice date | 0.9900 | — |
-| $S^*$ | the critical price: on the choice date, above it the call is worth more, below it the put | $98.51 | — |
+| $`V`$ | price today of the simple chooser | $13.34 | is the answer |
+| $`S`$, $`S_\tau`$ | Acme's price today; its price on the choice date | $100 | rises: the call leg gains more than the put leg loses |
+| $`K`$ | the strike: the price at which the call buys, or the put sells, one share; shared by both legs | $100 | falls slightly: the call leg loses more than the put leg gains |
+| $`T`$ | years until both legs expire | 1 | rises: the call leg gains time; the put leg shrinks a little |
+| $`\tau`$ | years until the choice date | 0.5 | rises: more is known before choosing, so the price rises |
+| $`r`$, $`q`$ | bank rate and dividend yield, continuously compounded | 5% and 2% | $`r`$ up: rises; $`q`$ up: falls. Together they set the carry, and so $`K'`$ |
+| $`\sigma`$ | Acme's volatility: the spread of its yearly log return | 20% | rises sharply: both legs gain |
+| $`C`$, $`P`$ | Black-Scholes call and put prices, with the three inputs in brackets | $9.23 and $6.33 for one year | — |
+| $`K'`$ | the put leg's strike, $`K e^{-(r-q)(T-\tau)}`$ | $98.51 | — |
+| $`d_1`$, $`d_2`$, $`N`$, $`E`$ | the put leg's Black-Scholes distances; $`N`$ is the bell-curve area to the left of a point; $`E`$ is an average in the pretend (risk-neutral) world, where every asset grows at the bank rate | 0.2828, 0.1414 | — |
+| $`e^{-q(T-\tau)}`$ | how many put legs: the dividend drag over the time after the choice date | 0.9900 | — |
+| $`S^*`$ | the critical price: on the choice date, above it the call is worth more, below it the put | $98.51 | — |
 
-The put leg's distances are the Black-Scholes ones with strike $K'$ and life $\tau$:
+The put leg's distances are the Black-Scholes ones with strike $`K'`$ and life $`\tau`$:
 
-$$d_1 = \frac{\ln(S/K') + (r - q + \tfrac12\sigma^2)\,\tau}{\sigma\sqrt{\tau}}, \qquad d_2 = d_1 - \sigma\sqrt{\tau}$$
+```math
+d_1 = \frac{\ln(S/K') + (r - q + \tfrac12\sigma^2)\,\tau}{\sigma\sqrt{\tau}}, \qquad d_2 = d_1 - \sigma\sqrt{\tau}
+```
 
-In words: $d_2$ counts how far Acme must travel to reach $K'$ by the choice date, in units of its spread over that time; $d_1$ is one spread further.
+In words: $`d_2`$ counts how far Acme must travel to reach $`K'`$ by the choice date, in units of its spread over that time; $`d_1`$ is one spread further.
 
 ### When it holds
 
 - **Both legs are European.** Parity is an exact equation only for options used on the expiry day. If either leg can be used early, parity becomes a pair of inequalities and the split into a call plus a put fails.
 - **One strike and one expiry for both legs.** With different strikes or dates the cash in the parity equation no longer matches, and the chooser becomes the complex chooser below, with no two-option split.
-- **A known, continuous dividend yield and a known bank rate over the life.** With cash dividends paid after the choice date, the $e^{-q(T-\tau)}$ drag and the strike $K'$ are replaced by the present value of those dividends; using the yield version then misprices the put leg.
-- **The Black-Scholes model prices the two pieces.** The split itself is model-free. With a volatility smile (market volatility that differs by strike and expiry), price the call at the volatility for strike $K$ and one year, and the put leg at the volatility for strike $K'$ and six months; one flat $\sigma$ is off by roughly each leg's vega (price change per point of volatility) times its volatility error.
-- **The holder picks the dearer option.** A holder who picks by forecast rather than by value gets a payoff worth less than $V$.
+- **A known, continuous dividend yield and a known bank rate over the life.** With cash dividends paid after the choice date, the $`e^{-q(T-\tau)}`$ drag and the strike $`K'`$ are replaced by the present value of those dividends; using the yield version then misprices the put leg.
+- **The Black-Scholes model prices the two pieces.** The split itself is model-free. With a volatility smile (market volatility that differs by strike and expiry), price the call at the volatility for strike $`K`$ and one year, and the put leg at the volatility for strike $`K'`$ and six months; one flat $`\sigma`$ is off by roughly each leg's vega (price change per point of volatility) times its volatility error.
+- **The holder picks the dearer option.** A holder who picks by forecast rather than by value gets a payoff worth less than $`V`$.
 
 ---
 
@@ -84,9 +88,11 @@ On the choice date the holder owns the better of a call and a put. The differenc
 
 ### Step 1: on the choice date the chooser is worth the dearer leg
 
-On the choice date both legs have a market price, $C_\tau$ for the call and $P_\tau$ for the put, each with $T - \tau$ years left. The holder can declare either and sell it at once. So the chooser is worth
+On the choice date both legs have a market price, $`C_\tau`$ for the call and $`P_\tau`$ for the put, each with $`T - \tau`$ years left. The holder can declare either and sell it at once. So the chooser is worth
 
-$$V_\tau = \max(C_\tau,\; P_\tau).$$
+```math
+V_\tau = \max(C_\tau,\; P_\tau).
+```
 
 Picking the dearer is the only rational choice: picking the cheaper one is the same as picking the dearer and throwing money away.
 
@@ -94,46 +100,52 @@ Picking the dearer is the only rational choice: picking the cheaper one is the s
 
 Put-call parity, on [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md), holds on every date, not only today. On the choice date it reads
 
-$$C_\tau - P_\tau = S_\tau\,e^{-q(T-\tau)} - K\,e^{-r(T-\tau)}.$$
+```math
+C_\tau - P_\tau = S_\tau\,e^{-q(T-\tau)} - K\,e^{-r(T-\tau)}.
+```
 
 The right side is a share held to expiry, less its leaked dividends, minus the strike discounted back from expiry. Solve for the put and put it into Step 1:
 
-$$\max(C_\tau, P_\tau) = C_\tau + \max\!\left(0,\; K e^{-r(T-\tau)} - S_\tau e^{-q(T-\tau)}\right).$$
+```math
+\max(C_\tau, P_\tau) = C_\tau + \max\!\left(0,\; K e^{-r(T-\tau)} - S_\tau e^{-q(T-\tau)}\right).
+```
 
 The first term is the call. The second is zero when the call is the better leg, and exactly the put's advantage when it is not.
 
 ### Step 3: the top-up is a put that expires on the choice date
 
-Pull $e^{-q(T-\tau)}$ out of the second term:
+Pull $`e^{-q(T-\tau)}`$ out of the second term:
 
-$$K e^{-r(T-\tau)} - S_\tau e^{-q(T-\tau)} = e^{-q(T-\tau)}\left(K e^{-(r-q)(T-\tau)} - S_\tau\right) = e^{-q(T-\tau)}\,(K' - S_\tau).$$
+```math
+K e^{-r(T-\tau)} - S_\tau e^{-q(T-\tau)} = e^{-q(T-\tau)}\left(K e^{-(r-q)(T-\tau)} - S_\tau\right) = e^{-q(T-\tau)}\,(K' - S_\tau).
+```
 
-So the top-up pays, on the choice date, $e^{-q(T-\tau)}$ units of $\max(K' - S_\tau, 0)$. That is the payoff of a put struck at $K'$ that expires on the choice date, held in quantity $e^{-q(T-\tau)}$.
+So the top-up pays, on the choice date, $`e^{-q(T-\tau)}`$ units of $`\max(K' - S_\tau, 0)`$. That is the payoff of a put struck at $`K'`$ that expires on the choice date, held in quantity $`e^{-q(T-\tau)}`$.
 
-The same algebra says where the two legs cross. The put is picked when $S_\tau < K'$, so the critical price is $S^* = K'$. For Acme, $K' = 100\,e^{-0.03 \times 0.5}$ = $98.51. In words: the holder picks the call exactly when the forward price for the remaining six months, $S_\tau e^{(r-q)(T-\tau)}$, is above the strike. Not when the share is above the strike. Carry decides, not the spot price.
+The same algebra says where the two legs cross. The put is picked when $`S_\tau < K'`$, so the critical price is $`S^* = K'`$. For Acme, $`K' = 100\,e^{-0.03 \times 0.5}`$ = $98.51. In words: the holder picks the call exactly when the forward price for the remaining six months, $`S_\tau e^{(r-q)(T-\tau)}`$, is above the strike. Not when the share is above the strike. Carry decides, not the spot price.
 
 ### Step 4: price the two pieces today
 
-The call piece is the call held from today to expiry, whatever happens on the choice date: its price today is $C(S, K, T)$. The put piece is a put on Acme expiring on the choice date: its price today is $P(S, K', \tau)$, times the quantity $e^{-q(T-\tau)}$. Adding them gives the formula. Both prices come straight from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) and [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md).
+The call piece is the call held from today to expiry, whatever happens on the choice date: its price today is $`C(S, K, T)`$. The put piece is a put on Acme expiring on the choice date: its price today is $`P(S, K', \tau)`$, times the quantity $`e^{-q(T-\tau)}`$. Adding them gives the formula. Both prices come straight from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) and [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md).
 
 <details>
 <summary>Detailed proof</summary>
 
 Work in the pretend world where every asset grows at the bank rate (the risk-neutral measure), so any price today is the discounted pretend-world average of what it is worth later.
 
-1. On the choice date the chooser is worth $\max(C_\tau, P_\tau)$ (Step 1), so $V = e^{-r\tau}\,E[\max(C_\tau, P_\tau)]$, where $E$ is the pretend-world average.
-2. Parity on the choice date (Step 2) gives $\max(C_\tau, P_\tau) = C_\tau + e^{-q(T-\tau)}\max(K' - S_\tau, 0)$, path by path, with nothing assumed about how Acme moves.
-3. Averages add, so $V = e^{-r\tau}E[C_\tau] + e^{-q(T-\tau)}\,e^{-r\tau}E[\max(K' - S_\tau, 0)]$.
-4. $C_\tau$ is itself the discounted average of the call's final payoff, $e^{-r(T-\tau)}E_\tau[\max(S_T - K, 0)]$. Averaging an average taken later gives the plain average (the tower rule), so $e^{-r\tau}E[C_\tau] = e^{-rT}E[\max(S_T - K, 0)] = C(S, K, T)$.
-5. The second average is by definition the price of a put struck at $K'$ expiring at $\tau$: $e^{-r\tau}E[\max(K' - S_\tau, 0)] = P(S, K', \tau)$.
+1. On the choice date the chooser is worth $`\max(C_\tau, P_\tau)`$ (Step 1), so $`V = e^{-r\tau}\,E[\max(C_\tau, P_\tau)]`$, where $`E`$ is the pretend-world average.
+2. Parity on the choice date (Step 2) gives $`\max(C_\tau, P_\tau) = C_\tau + e^{-q(T-\tau)}\max(K' - S_\tau, 0)`$, path by path, with nothing assumed about how Acme moves.
+3. Averages add, so $`V = e^{-r\tau}E[C_\tau] + e^{-q(T-\tau)}\,e^{-r\tau}E[\max(K' - S_\tau, 0)]`$.
+4. $`C_\tau`$ is itself the discounted average of the call's final payoff, $`e^{-r(T-\tau)}E_\tau[\max(S_T - K, 0)]`$. Averaging an average taken later gives the plain average (the tower rule), so $`e^{-r\tau}E[C_\tau] = e^{-rT}E[\max(S_T - K, 0)] = C(S, K, T)`$.
+5. The second average is by definition the price of a put struck at $`K'`$ expiring at $`\tau`$: $`e^{-r\tau}E[\max(K' - S_\tau, 0)] = P(S, K', \tau)`$.
 
-Steps 1 to 5 use only parity and averaging, so the split holds in any model with a known rate and yield. Black-Scholes enters only to evaluate $C$ and $P$. Some texts move the discount factors inside the put instead: $P(S e^{-q(T-\tau)}, K e^{-r(T-\tau)}, \tau)$, priced with the same yield. Expanding both gives the same number, because the ratio of spot to strike, and so every $d$, is unchanged.
+Steps 1 to 5 use only parity and averaging, so the split holds in any model with a known rate and yield. Black-Scholes enters only to evaluate $`C`$ and $`P`$. Some texts move the discount factors inside the put instead: $`P(S e^{-q(T-\tau)}, K e^{-r(T-\tau)}, \tau)`$, priced with the same yield. Expanding both gives the same number, because the ratio of spot to strike, and so every $`d`$, is unchanged.
 
 </details>
 
 ### Step 5: the choice date slides the price from the call to both legs
 
-Move the choice date and the price moves between two anchors. With the choice made today, $\tau = 0$, the holder picks the dearer option today: the $9.23 call, since Acme's forward is above the strike. With the choice made on the expiry day, $\tau = T$, the holder simply takes whichever pays, which is the call and the put together, $15.56. Every date in between lies on this curve:
+Move the choice date and the price moves between two anchors. With the choice made today, $`\tau = 0`$, the holder picks the dearer option today: the $9.23 call, since Acme's forward is above the strike. With the choice made on the expiry day, $`\tau = T`$, the holder simply takes whichever pays, which is the call and the put together, $15.56. Every date in between lies on this curve:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -144,13 +156,13 @@ xychart-beta
     line [9.23, 10.48, 11.42, 12.15, 12.78, 13.34, 13.85, 14.32, 14.76, 15.17, 15.56]
 ```
 
-One line: the chooser's price today for each choice date, from the $9.23 call at zero to the $15.56 call-plus-put at one year. The curve rises fastest early: waiting a tenth of a year lifts the price from $9.23 to $10.48, while the last tenth adds less than half a dollar, from $15.17 to $15.56. The put leg is an option on the first $\tau$ years of news, and like any option its value grows roughly with the square root of its life.
+One line: the chooser's price today for each choice date, from the $9.23 call at zero to the $15.56 call-plus-put at one year. The curve rises fastest early: waiting a tenth of a year lifts the price from $9.23 to $10.48, while the last tenth adds less than half a dollar, from $15.17 to $15.56. The put leg is an option on the first $`\tau`$ years of news, and like any option its value grows roughly with the square root of its life.
 
 ### The complex chooser: different strikes or dates
 
-A **complex chooser** lets the two legs differ. Take a call struck at $105 and a put struck at $95, both expiring in one year, with the choice at six months. On the choice date it is still worth $\max(C_\tau, P_\tau)$, but parity no longer applies: parity links a call and a put on the *same* strike, so there is no call-plus-put split.
+A **complex chooser** lets the two legs differ. Take a call struck at $105 and a put struck at $95, both expiring in one year, with the choice at six months. On the choice date it is still worth $`\max(C_\tau, P_\tau)`$, but parity no longer applies: parity links a call and a put on the *same* strike, so there is no call-plus-put split.
 
-The critical price must be found by solving $C_\tau = P_\tau$ numerically. A root exists and is unique: as the choice-date price rises the call leg rises and the put leg falls, and the gap runs from negative near zero to positive for large prices. For this contract it is $98.15.
+The critical price must be found by solving $`C_\tau = P_\tau`$ numerically. A root exists and is unique: as the choice-date price rises the call leg rises and the put leg falls, and the gap runs from negative near zero to positive for large prices. For this contract it is $98.15.
 
 Pricing then means averaging the dearer leg over every choice-date price, which the code does two ways: $10.03 by integration over the bell curve, $10.08 by simulation with a standard error (the typical size of the simulation's random error) of $0.04. The price sits between the better of the two plain options, $6.99, and both together, $11.27.
 
@@ -162,18 +174,18 @@ A second road to the simple chooser needs no parity at all: simulate Acme to the
 
 ## Worked numbers, by hand
 
-Acme: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, choice date $\tau = 0.5$ year.
+Acme: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year, choice date $`\tau = 0.5`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the one-year call $C(S, K, T)$ | from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) | $9.2270 |
-| put leg strike $K'$ | 100 × e^(−0.03 × 0.5) = 100 × e^(−0.015) | $98.5112 |
-| $d_2$ of the put leg | (ln(S/K′) + (r − q − σ^2/2)τ) / (σ√τ) = (0.015 + 0.01 × 0.5) / (0.20 × √0.5) | 0.1414 |
-| $d_1$ of the put leg | d2 + σ√τ = 0.1414 + 0.1414 | 0.2828 |
+| the one-year call $`C(S, K, T)`$ | from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) | $9.2270 |
+| put leg strike $`K'`$ | 100 × e^(−0.03 × 0.5) = 100 × e^(−0.015) | $98.5112 |
+| $`d_2`$ of the put leg | (ln(S/K′) + (r − q − σ^2/2)τ) / (σ√τ) = (0.015 + 0.01 × 0.5) / (0.20 × √0.5) | 0.1414 |
+| $`d_1`$ of the put leg | d2 + σ√τ = 0.1414 + 0.1414 | 0.2828 |
 | N(−d2), N(−d1) | bell-curve table | 0.4438, 0.3886 |
 | cash half | 98.5112 × e^(−0.025) × 0.4438 | $42.6368 |
 | share half | 100 × e^(−0.01) × 0.3886 | $38.4782 |
-| put leg $P(S, K', \tau)$ | 42.6368 − 38.4782 | $4.1587 |
+| put leg $`P(S, K', \tau)`$ | 42.6368 − 38.4782 | $4.1587 |
 | how many put legs | e^(−0.02 × 0.5) | 0.9900 |
 | scaled put leg | 0.9900 × 4.1587 | $4.1173 |
 | **chooser** | 9.2270 + 4.1173 | **$13.3443** |
@@ -186,11 +198,11 @@ Same contract, right answer $13.34. Every wrong number is printed by both checks
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Strike the put leg at $K$ | $14.01 | The legs cross where the forward meets the strike, $98.51, not at $100 |
-| Drop the $e^{-q(T-\tau)}$ in front of the put leg | $13.39 | The put's edge over the call is measured in shares that leak dividends for six more months |
-| Use the no-dividend textbook form, $C + P(S, K e^{-r(T-\tau)}, \tau)$ | $12.97 | Right only when $q = 0$; with a yield both the strike and the quantity move |
-| Choose today: price the better option now | $9.23 | That is a chooser with $\tau = 0$; waiting six months for news is worth $4.12 |
-| Price it as the call plus the put | $15.56 | That is a chooser with $\tau = T$; the holder gives up one leg on the choice date |
+| Strike the put leg at $`K`$ | $14.01 | The legs cross where the forward meets the strike, $98.51, not at $100 |
+| Drop the $`e^{-q(T-\tau)}`$ in front of the put leg | $13.39 | The put's edge over the call is measured in shares that leak dividends for six more months |
+| Use the no-dividend textbook form, $`C + P(S, K e^{-r(T-\tau)}, \tau)`$ | $12.97 | Right only when $`q = 0`$; with a yield both the strike and the quantity move |
+| Choose today: price the better option now | $9.23 | That is a chooser with $`\tau = 0`$; waiting six months for news is worth $4.12 |
+| Price it as the call plus the put | $15.56 | That is a chooser with $`\tau = T`$; the holder gives up one leg on the choice date |
 
 ### The Greeks
 
@@ -414,7 +426,7 @@ chart, chooser      18.71  14.36  10.51   7.31   6.31   9.46  13.19  17.36  21.8
 ALL CHECKS PASS
 ```
 
-Four roads, one price. The integral lands on the formula to six decimals, and its root finder puts the kink at $98.51, exactly $K'$. The tree is $13.3443 to four decimals. The simulation, $13.40, is within two standard errors, and it picks the call on 55.7% of paths against the formula's 55.6%.
+Four roads, one price. The integral lands on the formula to six decimals, and its root finder puts the kink at $98.51, exactly $`K'`$. The tree is $13.3443 to four decimals. The simulation, $13.40, is within two standard errors, and it picks the call on 55.7% of paths against the formula's 55.6%.
 
 ### Rust
 
@@ -649,9 +661,9 @@ ALL CHECKS PASS
 
 Lean proves the split, the critical price and the averaging step, for any inputs where parity holds on the choice date.
 
-- Suppose put-call parity holds on the choice date. Then $\max(C_\tau, P_\tau) = C_\tau + e^{-q(T-\tau)}\max(K' - S_\tau, 0)$.
-- Suppose the same parity holds. Then the put is the dearer leg exactly when $S_\tau < K'$.
-- Suppose parity holds on every path in the pretend world, and $C_\tau$ and $P_\tau$ have finite averages. Then the chooser's price is the discounted average of $C_\tau$, plus $e^{-q(T-\tau)}$ times the put leg's price.
+- Suppose put-call parity holds on the choice date. Then $`\max(C_\tau, P_\tau) = C_\tau + e^{-q(T-\tau)}\max(K' - S_\tau, 0)`$.
+- Suppose the same parity holds. Then the put is the dearer leg exactly when $`S_\tau < K'`$.
+- Suppose parity holds on every path in the pretend world, and $`C_\tau`$ and $`P_\tau`$ have finite averages. Then the chooser's price is the discounted average of $`C_\tau`$, plus $`e^{-q(T-\tau)}`$ times the put leg's price.
 
 Step 4's tower rule, the Black-Scholes prices and every dollar figure are left to the Python and Rust checks.
 
@@ -751,8 +763,8 @@ theorem chooser_price_eq_call_price_add_put_price
 > **Treating the chooser as a call plus a put.** It is not. The holder keeps one leg, not both. The straddle, the call and put bought together, costs $15.56; the chooser costs $13.34. The chooser equals the straddle only when the choice is made on the expiry day, which is no choice at all.
 >
 > Smaller traps:
-> - **Striking the put leg at $K$.** The legs cross at $K' = 98.51$, where the six-month forward equals the strike. Using $K$ gives $14.01.
-> - **Copying the no-dividend formula.** $C + P(S, K e^{-r(T-\tau)}, \tau)$ is the version most tables print. With Acme's 2% yield it gives $12.97 instead of $13.34.
+> - **Striking the put leg at $`K`$.** The legs cross at $`K' = 98.51`$, where the six-month forward equals the strike. Using $`K`$ gives $14.01.
+> - **Copying the no-dividend formula.** $`C + P(S, K e^{-r(T-\tau)}, \tau)`$ is the version most tables print. With Acme's 2% yield it gives $12.97 instead of $13.34.
 > - **Giving the put leg the full year.** The put leg expires on the choice date. After that date the chosen option is the ordinary call or put, already counted in the call leg.
 > - **Picking by forecast.** A holder who declares "call" because the news looks good, while the put is worth more, gives away the difference on the spot. The price assumes the dearer leg is picked.
 
@@ -773,7 +785,7 @@ theorem chooser_price_eq_call_price_add_put_price
 ## What this builds on
 
 - [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the equation that fixes the gap between a call and a put. Applied on the choice date it does all the work.
-- [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the price of the put leg, with strike $K'$ and life $\tau$.
+- [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the price of the put leg, with strike $`K'`$ and life $`\tau`$.
 - [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the simulation road, here with a decision taken halfway along each path.
 
 ## Where this goes next

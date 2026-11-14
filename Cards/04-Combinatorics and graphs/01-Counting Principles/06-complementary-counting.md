@@ -31,24 +31,28 @@ The branches share no password and together hold every one, so either is the top
 
 ## The formula
 
-Notation first, in words. A capital letter names a collection of objects; bars around it count them, so $\lvert S\rvert$ reads "how many objects are in S". A bar over a letter means "not": everything in the surrounding collection that the named set leaves out. That leftover set is the **complement** ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)), the word used from here on.
+Notation first, in words. A capital letter names a collection of objects; bars around it count them, so $`\lvert S\rvert`$ reads "how many objects are in S". A bar over a letter means "not": everything in the surrounding collection that the named set leaves out. That leftover set is the **complement** ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)), the word used from here on.
 
-$$\lvert A\rvert = \lvert S\rvert - \lvert \overline{A}\rvert$$
+```math
+\lvert A\rvert = \lvert S\rvert - \lvert \overline{A}\rvert
+```
 
 **Read it aloud:** the objects a rule allows are everything, minus the objects the rule refuses.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | the whole collection, rule ignored | every 6-character password, 2,176,782,336 | the allowed count rises one for one |
-| $A$ | the objects the rule allows | passwords holding at least one digit | — |
-| $\overline{A}$ | the complement: everything in $S$ that $A$ leaves out | letters-only passwords, 308,915,776 | the allowed count falls one for one |
-| $\lvert A\rvert$ | bars count the objects inside | 1,867,866,560 | — |
-| $n$ | symbols allowed in one slot | 36 in all, 26 of them letters | an extra letter raises both counts, an extra digit only the total |
-| $k$ | slots to fill | 6 | one more slot multiplies the total by 36, the complement by 26 |
+| $`S`$ | the whole collection, rule ignored | every 6-character password, 2,176,782,336 | the allowed count rises one for one |
+| $`A`$ | the objects the rule allows | passwords holding at least one digit | — |
+| $`\overline{A}`$ | the complement: everything in $`S`$ that $`A`$ leaves out | letters-only passwords, 308,915,776 | the allowed count falls one for one |
+| $`\lvert A\rvert`$ | bars count the objects inside | 1,867,866,560 | — |
+| $`n`$ | symbols allowed in one slot | 36 in all, 26 of them letters | an extra letter raises both counts, an extra digit only the total |
+| $`k`$ | slots to fill | 6 | one more slot multiplies the total by 36, the complement by 26 |
 
-Both counts on the right are strings with repetition ([Strings with repetition](02-strings-and-powers.md)), one factor of $n$ per slot:
+Both counts on the right are strings with repetition ([Strings with repetition](02-strings-and-powers.md)), one factor of $`n`$ per slot:
 
-$$\lvert S\rvert = n^k = 36^6, \qquad \lvert \overline{A}\rvert = 26^6$$
+```math
+\lvert S\rvert = n^k = 36^6, \qquad \lvert \overline{A}\rvert = 26^6
+```
 
 The squad example below uses C(n, k), read "n choose k": the ways to take k things from n when order does not matter ([Combinations, n choose k](05-n-choose-k.md)).
 
@@ -71,9 +75,11 @@ Take one password, `mk4tzp`, and hold it against the rule. It carries a digit or
 
 When a collection splits into groups that cannot overlap, the group sizes add — the rule of sum ([The rules of sum and product](01-rules-of-sum-and-product.md)). Step 0 makes the allowed and refused piles such a split, so
 
-$$\lvert A\rvert + \lvert \overline{A}\rvert = \lvert S\rvert$$
+```math
+\lvert A\rvert + \lvert \overline{A}\rvert = \lvert S\rvert
+```
 
-Move one term across and the method is finished: $\lvert A\rvert = \lvert S\rvert - \lvert \overline{A}\rvert$. Everything below is about which pile is cheaper to count.
+Move one term across and the method is finished: $`\lvert A\rvert = \lvert S\rvert - \lvert \overline{A}\rvert`$. Everything below is about which pile is cheaper to count.
 
 ### Step 2: why the refused pile is the cheap one
 

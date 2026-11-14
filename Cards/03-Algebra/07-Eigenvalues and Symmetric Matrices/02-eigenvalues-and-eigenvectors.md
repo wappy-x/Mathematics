@@ -18,7 +18,7 @@ Two patterns are easy here: it leaves the 600-to-400 split alone and halves an i
 
 **A square matrix usually has a few patterns it only rescales, and finding them replaces its mixing with one multiplication per pattern.**
 
-**What kind of fact this is:** a definition, carrying one theorem proved below — a 2 by 2 matrix's eigenvalues are exactly the roots of the quadratic $\det(A - \lambda I) = 0$.
+**What kind of fact this is:** a definition, carrying one theorem proved below — a 2 by 2 matrix's eigenvalues are exactly the roots of the quadratic $`\det(A - \lambda I) = 0`$.
 
 ### The picture: two patterns kept
 
@@ -37,32 +37,38 @@ The top two leave on the line they arrived on. The third does not.
 
 A matrix hands a column of numbers back as another column. The definition picks those returning along the same line:
 
-$$A v = \lambda v, \qquad v \ne 0$$
+```math
+A v = \lambda v, \qquad v \ne 0
+```
 
 **Read it aloud:** the matrix does to this pattern what multiplying by one plain number does.
 
-$A$ is the matrix, $v$ the pattern as a column of two numbers, and the plain number is the Greek letter lambda, $\lambda$; $v \ne 0$ means the pattern is never all zeros.
+$`A`$ is the matrix, $`v`$ the pattern as a column of two numbers, and the plain number is the Greek letter lambda, $`\lambda`$; $`v \ne 0`$ means the pattern is never all zeros.
 
 The eigenvalues are then the numbers solving
 
-$$\det(A - \lambda I) = 0$$
+```math
+\det(A - \lambda I) = 0
+```
 
-$I$ is the identity matrix `[[1, 0], [0, 1]]`, which changes no column. $\det$ is the determinant: what a matrix does to area, zero meaning the picture was flattened ([Determinants](../05-Solving%20Systems/04-determinants.md)). Take lambda off both diagonal entries; ask which values flatten the plane.
+$`I`$ is the identity matrix `[[1, 0], [0, 1]]`, which changes no column. $`\det`$ is the determinant: what a matrix does to area, zero meaning the picture was flattened ([Determinants](../05-Solving%20Systems/04-determinants.md)). Take lambda off both diagonal entries; ask which values flatten the plane.
 
 Write the matrix as `[[a, b], [c, d]]`. That determinant is a quadratic in the eigenvalue:
 
-$$\lambda^2 - (a + d)\lambda + (ad - bc) = 0$$
+```math
+\lambda^2 - (a + d)\lambda + (ad - bc) = 0
+```
 
 Lambda squared, minus the **trace** (the diagonal entries added, a + d) times lambda, plus the determinant: the **characteristic polynomial**. The fleet's trace is 1.5, determinant 0.5.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the matrix, square | `[[0.8, 0.3], [0.2, 0.7]]` | new rules, new patterns |
-| $a$, $b$, $c$, $d$ | its entries, row by row | 0.8, 0.3, 0.2, 0.7 | a bigger trace, bigger factors |
-| $v$ | a pattern it only rescales | (3, 2) or (1, −1) | a multiple is the same pattern |
-| $\lambda$ | that pattern's stretch factor | 1 or 0.5 | size above 1 grows, below 1 fades; negative flips |
-| $I$ | the identity matrix | `[[1, 0], [0, 1]]` | — |
-| $\det$ | the determinant, ad − bc | 0.5 | — |
+| $`A`$ | the matrix, square | `[[0.8, 0.3], [0.2, 0.7]]` | new rules, new patterns |
+| $`a`$, $`b`$, $`c`$, $`d`$ | its entries, row by row | 0.8, 0.3, 0.2, 0.7 | a bigger trace, bigger factors |
+| $`v`$ | a pattern it only rescales | (3, 2) or (1, −1) | a multiple is the same pattern |
+| $`\lambda`$ | that pattern's stretch factor | 1 or 0.5 | size above 1 grows, below 1 fades; negative flips |
+| $`I`$ | the identity matrix | `[[1, 0], [0, 1]]` | — |
+| $`\det`$ | the determinant, ad − bc | 0.5 | — |
 
 Its **discriminant**, the part under the root in the quadratic formula ([The quadratic formula](../02-Polynomials/03-quadratic-formula.md)), is (a + d)^2 − 4(ad − bc): here 1.5 × 1.5 − 4 × 0.5 = 0.25, positive, so two real factors.
 
@@ -78,11 +84,13 @@ Its **discriminant**, the part under the root in the quadratic formula ([The qua
 
 ### Step 0: subtract the stretch
 
-Move everything to one side. Since $\lambda v$ is $\lambda I v$, both terms multiply $v$ by a matrix and join:
+Move everything to one side. Since $`\lambda v`$ is $`\lambda I v`$, both terms multiply $`v`$ by a matrix and join:
 
-$$(A - \lambda I)\,v = 0$$
+```math
+(A - \lambda I)\,v = 0
+```
 
-Call $A - \lambda I$ the shift: the matrix with lambda taken off both diagonal entries.
+Call $`A - \lambda I`$ the shift: the matrix with lambda taken off both diagonal entries.
 
 ### Step 1: only a flattening matrix kills a pattern
 
@@ -101,7 +109,9 @@ With p = a − lambda, q = b, r = c, s = d − lambda, that is the shifted deter
 
 The shift is `[[a - lambda, b], [c, d - lambda]]`, with determinant (a − lambda)(d − lambda) − bc:
 
-$$\lambda^2 - (a + d)\lambda + (ad - bc) = 0$$
+```math
+\lambda^2 - (a + d)\lambda + (ad - bc) = 0
+```
 
 For the fleet: trace 1.5, determinant 0.5, discriminant 0.25, root 0.5. The quadratic formula gives (1.5 ± 0.5) / 2: **1 and 0.5**.
 

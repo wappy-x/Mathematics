@@ -36,32 +36,38 @@ The loop re-aims the lines; an independent list reaches the same points.
 
 ## The formula
 
-Write the survey lines $a_1$ and $a_2$, the straightened pair $q_1$ and $q_2$. The bars $\lVert \cdot \rVert$ mean length: the square root of a vector dotted with itself ([The dot product](01-dot-product.md)).
+Write the survey lines $`a_1`$ and $`a_2`$, the straightened pair $`q_1`$ and $`q_2`$. The bars $`\lVert \cdot \rVert`$ mean length: the square root of a vector dotted with itself ([The dot product](01-dot-product.md)).
 
-$$q_1 = \frac{a_1}{\lVert a_1 \rVert}$$
+```math
+q_1 = \frac{a_1}{\lVert a_1 \rVert}
+```
 
-$$\text{leftover} = a_2 - (a_2 \cdot q_1)\, q_1, \qquad q_2 = \frac{\text{leftover}}{\lVert \text{leftover} \rVert}$$
+```math
+\text{leftover} = a_2 - (a_2 \cdot q_1)\, q_1, \qquad q_2 = \frac{\text{leftover}}{\lVert \text{leftover} \rVert}
+```
 
 **Read it aloud:** keep the first line, shrunk to one unit; from the second subtract the piece already running along the first, and shrink what is left.
 
-A third line subtracts two shadows, $a_3 - (a_3 \cdot q_1)\, q_1 - (a_3 \cdot q_2)\, q_2$, then divides by its length; a fourth, three.
+A third line subtracts two shadows, $`a_3 - (a_3 \cdot q_1)\, q_1 - (a_3 \cdot q_2)\, q_2`$, then divides by its length; a fourth, three.
 
-What the work buys, for any point $b$:
+What the work buys, for any point $`b`$:
 
-$$b = (b \cdot q_1)\, q_1 + (b \cdot q_2)\, q_2$$
+```math
+b = (b \cdot q_1)\, q_1 + (b \cdot q_2)\, q_2
+```
 
 **Read it aloud:** every point is its own shadow on each straightened direction, added back together — no equations, just dot products.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a_1$, $a_2$ | the survey lines to start from | (3, 1) and (2, 2) | — |
-| $q_1$, $q_2$ | the straightened directions: perpendicular, one unit long | (0.948683, 0.316228) and (-0.316228, 0.948683) | — |
-| $\lVert \cdot \rVert$ | the square root of a vector dotted with itself | length of (3, 1) is 3.162278 | — |
-| $u \cdot v$ | the dot product: multiply matching entries, add | (2, 2) dotted with $q_1$ is 2.529822 | a longer shadow |
-| $b$ | a point to locate | the stake at (4, 2) | — |
-| $c_1$, $c_2$ | the coordinates of $b$: how far along each | 4.427189 and 0.632456 | the point slides along it |
-| $Q$ | the 2 × 2 matrix with $q_1$, $q_2$ as columns | rows [0.948683, -0.316228] and [0.316228, 0.948683] | — |
-| $Q^{\mathsf T}$, $I$ | $Q$ with rows and columns swapped; the identity, 1s on the diagonal, 0s elsewhere | $Q^{\mathsf T}Q = I$ | — |
+| $`a_1`$, $`a_2`$ | the survey lines to start from | (3, 1) and (2, 2) | — |
+| $`q_1`$, $`q_2`$ | the straightened directions: perpendicular, one unit long | (0.948683, 0.316228) and (-0.316228, 0.948683) | — |
+| $`\lVert \cdot \rVert`$ | the square root of a vector dotted with itself | length of (3, 1) is 3.162278 | — |
+| $`u \cdot v`$ | the dot product: multiply matching entries, add | (2, 2) dotted with $`q_1`$ is 2.529822 | a longer shadow |
+| $`b`$ | a point to locate | the stake at (4, 2) | — |
+| $`c_1`$, $`c_2`$ | the coordinates of $`b`$: how far along each | 4.427189 and 0.632456 | the point slides along it |
+| $`Q`$ | the 2 × 2 matrix with $`q_1`$, $`q_2`$ as columns | rows [0.948683, -0.316228] and [0.316228, 0.948683] | — |
+| $`Q^{\mathsf T}`$, $`I`$ | $`Q`$ with rows and columns swapped; the identity, 1s on the diagonal, 0s elsewhere | $`Q^{\mathsf T}Q = I`$ | — |
 
 ### When it holds
 
@@ -80,15 +86,17 @@ Subtract a vector's shadow on a direction and the leftover is perpendicular to t
 
 ### Step 1: the first direction only needs shrinking
 
-Nothing to be perpendicular to yet. Divide $a_1$ by its own length: same direction, length 1. That division is **normalising**.
+Nothing to be perpendicular to yet. Divide $`a_1`$ by its own length: same direction, length 1. That division is **normalising**.
 
 ### Step 2: the leftover is perpendicular
 
-Dot $q_1$ with the leftover. The dot product splits over subtraction:
+Dot $`q_1`$ with the leftover. The dot product splits over subtraction:
 
-$$q_1 \cdot (a_2 - (a_2 \cdot q_1)\, q_1) = q_1 \cdot a_2 - (a_2 \cdot q_1)\,(q_1 \cdot q_1)$$
+```math
+q_1 \cdot (a_2 - (a_2 \cdot q_1)\, q_1) = q_1 \cdot a_2 - (a_2 \cdot q_1)\,(q_1 \cdot q_1)
+```
 
-And $q_1 \cdot q_1 = 1$: a vector dotted with itself is its length squared, and $q_1$ has length 1. So the two terms are equal, the difference is zero — a right angle out of arithmetic. Any other length for $q_1$ and the cancellation fails.
+And $`q_1 \cdot q_1 = 1`$: a vector dotted with itself is its length squared, and $`q_1`$ has length 1. So the two terms are equal, the difference is zero — a right angle out of arithmetic. Any other length for $`q_1`$ and the cancellation fails.
 
 Scaling the leftover afterwards multiplies both entries by the same positive number, so a zero dot product stays zero: perpendicular still, and one unit long.
 
@@ -96,11 +104,13 @@ Further down the list the same cancellation runs against every finished directio
 
 ### Step 3: coordinates become dot products
 
-Suppose $b$ sits at $c_1 q_1 + c_2 q_2$. Dot both sides with $q_1$:
+Suppose $`b`$ sits at $`c_1 q_1 + c_2 q_2`$. Dot both sides with $`q_1`$:
 
-$$b \cdot q_1 = c_1 (q_1 \cdot q_1) + c_2 (q_2 \cdot q_1) = c_1 \times 1 + c_2 \times 0 = c_1$$
+```math
+b \cdot q_1 = c_1 (q_1 \cdot q_1) + c_2 (q_2 \cdot q_1) = c_1 \times 1 + c_2 \times 0 = c_1
+```
 
-The second direction contributes nothing, being perpendicular, so $c_1$ is $b \cdot q_1$; the same argument gives $c_2$ — two dot products, no system. The cross terms vanish the same way in $b \cdot b = c_1^2 + c_2^2$, Pythagoras in new coordinates.
+The second direction contributes nothing, being perpendicular, so $`c_1`$ is $`b \cdot q_1`$; the same argument gives $`c_2`$ — two dot products, no system. The cross terms vanish the same way in $`b \cdot b = c_1^2 + c_2^2`$, Pythagoras in new coordinates.
 
 ### Step 4: same site, and a zero leftover
 
@@ -108,11 +118,13 @@ Each straightened direction is built from the original lines, and each original 
 
 ### Step 5: the orthogonal matrix
 
-Put the two directions side by side as the columns of a square matrix $Q$. The transpose $Q^{\mathsf T}$ swaps rows and columns, so its rows are those directions. Every entry of $Q^{\mathsf T}Q$ is one of the dot products above: row two, column one is $q_2 \cdot q_1$, or 0.000000.
+Put the two directions side by side as the columns of a square matrix $`Q`$. The transpose $`Q^{\mathsf T}`$ swaps rows and columns, so its rows are those directions. Every entry of $`Q^{\mathsf T}Q`$ is one of the dot products above: row two, column one is $`q_2 \cdot q_1`$, or 0.000000.
 
-$$Q^{\mathsf T}Q = I$$
+```math
+Q^{\mathsf T}Q = I
+```
 
-A square matrix with that property is **orthogonal** — a poor name, since the columns must be unit length too. Its inverse is its transpose. And multiplying two points by $Q$ before dotting them sends their entries through $Q^{\mathsf T}Q$, which is $I$: the dot product is unchanged, so lengths and angles survive.
+A square matrix with that property is **orthogonal** — a poor name, since the columns must be unit length too. Its inverse is its transpose. And multiplying two points by $`Q`$ before dotting them sends their entries through $`Q^{\mathsf T}Q`$, which is $`I`$: the dot product is unchanged, so lengths and angles survive.
 
 So it cannot stretch or squash; it turns the plane or flips it.
 
@@ -120,7 +132,7 @@ The determinant is the number that says how much a matrix stretches area, with a
 
 Ours has determinant 1.000000, a turn, like the quarter turn with columns (0, 1) and (-1, 0). The flip with columns (1, 0) and (0, -1) has determinant -1.000000, the mirror. Determinant 1 alone is not enough: doubling one axis and halving the other gives it.
 
-Two doors, named and left alone: $Q$ beside the mixing numbers that rebuild the original lines is the **QR factorisation** (QR); the complex twin of an orthogonal matrix is **unitary**.
+Two doors, named and left alone: $`Q`$ beside the mixing numbers that rebuild the original lines is the **QR factorisation** (QR); the complex twin of an orthogonal matrix is **unitary**.
 
 And the code takes each shadow's size from the running leftover, **modified** Gram-Schmidt, not from the original line, **classical**. The two are equal exactly, but modified holds the right angles better in floating point, the computer's rounded arithmetic.
 
@@ -132,25 +144,25 @@ Printed to six decimals; the exact values are perpendicular and unit length.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| length of $a_1$ | square root of 3 × 3 + 1 × 1 | 3.162278 |
-| $q_1$ | (3, 1) divided by 3.162278 | (0.948683, 0.316228) |
-| $a_2 \cdot q_1$ | (2 × 0.948683) + (2 × 0.316228) | 2.529822 |
-| the shadow | 2.529822 × $q_1$ | (2.400000, 0.800000) |
+| length of $`a_1`$ | square root of 3 × 3 + 1 × 1 | 3.162278 |
+| $`q_1`$ | (3, 1) divided by 3.162278 | (0.948683, 0.316228) |
+| $`a_2 \cdot q_1`$ | (2 × 0.948683) + (2 × 0.316228) | 2.529822 |
+| the shadow | 2.529822 × $`q_1`$ | (2.400000, 0.800000) |
 | the leftover | (2, 2) − (2.400000, 0.800000) | (-0.400000, 1.200000) |
 | its length | square root of 0.400000 × 0.400000 + 1.200000 × 1.200000 | 1.264911 |
-| $q_2$ | (-0.400000, 1.200000) divided by 1.264911 | **(-0.316228, 0.948683)** |
-| right-angle check | $q_1 \cdot q_2$ | **0.000000** |
+| $`q_2`$ | (-0.400000, 1.200000) divided by 1.264911 | **(-0.316228, 0.948683)** |
+| right-angle check | $`q_1 \cdot q_2`$ | **0.000000** |
 
 Both have length 1.000000: orthonormal.
 
-Now locate the stake at $b$ = (4, 2).
+Now locate the stake at $`b`$ = (4, 2).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $c_1$, which is $b \cdot q_1$ | (4 × 0.948683) + (2 × 0.316228) | 4.427189 |
-| $c_2$, which is $b \cdot q_2$ | (4 × −0.316228) + (2 × 0.948683) | 0.632456 |
-| rebuild | 4.427189 × $q_1$ + 0.632456 × $q_2$ | **(4.000000, 2.000000)** |
-| Pythagoras | $b \cdot b$ against $c_1^2 + c_2^2$ | 20.000000 and 20.000000 |
+| $`c_1`$, which is $`b \cdot q_1`$ | (4 × 0.948683) + (2 × 0.316228) | 4.427189 |
+| $`c_2`$, which is $`b \cdot q_2`$ | (4 × −0.316228) + (2 × 0.948683) | 0.632456 |
+| rebuild | 4.427189 × $`q_1`$ + 0.632456 × $`q_2`$ | **(4.000000, 2.000000)** |
+| Pythagoras | $`b \cdot b`$ against $`c_1^2 + c_2^2`$ | 20.000000 and 20.000000 |
 | the raw lines, solved | 3x + 2y = 4 and x + 2y = 2 | 1.000000 and 0.500000 |
 
 On the skewed lines that pair cost a solved system.
@@ -159,7 +171,7 @@ On the skewed lines that pair cost a solved system.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Shadow on raw (3, 1), not unit $q_1$ | leftover (-22.000000, -6.000000) | Its size needs dividing by $a_1 \cdot a_1$, 10 here |
+| Shadow on raw (3, 1), not unit $`q_1`$ | leftover (-22.000000, -6.000000) | Its size needs dividing by $`a_1 \cdot a_1`$, 10 here |
 | Never scaled to one | the stake rebuilds at (41.680000, 14.960000) | The shortcut needs a direction dotted with itself to be 1 |
 | (6, 2) second, twice the first | leftover (0.000000, 0.000000) | Nothing is left pointing anywhere new |
 
@@ -371,9 +383,9 @@ Lean proves the card's facts for every independent list of real lines, of any si
 
 - The loop, taking off a shadow for every finished direction, gives directions that are orthonormal: perpendicular and one unit long.
 - Those directions reach exactly the points the original lines reach.
-- Every point $b$ the list reaches rebuilds from one dot product per direction: $b = (b \cdot q_1)\, q_1 + (b \cdot q_2)\, q_2 + \dots$
+- Every point $`b`$ the list reaches rebuilds from one dot product per direction: $`b = (b \cdot q_1)\, q_1 + (b \cdot q_2)\, q_2 + \dots`$
 - A leftover is the zero vector exactly when the line was already a mix of the finished directions.
-- A square matrix $Q$ with orthonormal columns has $Q^{\mathsf T}Q = I$.
+- A square matrix $`Q`$ with orthonormal columns has $`Q^{\mathsf T}Q = I`$.
 - It also re-checks the card's numbers exactly: the survey lines, the stake, the determinants, the mast and the three mistakes.
 
 The six-decimal values and the second road, solving the equations, are left to the Python and Rust checks.
@@ -567,7 +579,7 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 >
 > - **Perpendicular is half of it.** Skip the scaling and the directions still meet at right angles, but the stake rebuilds at (41.680000, 14.960000), not (4.000000, 2.000000).
 > - **Dividing by the wrong thing.** On a raw line the shadow's size needs dividing by that line dotted with itself, 10 here; forget it and the leftover is (-22.000000, -6.000000).
-> - **Reading "orthogonal matrix" as "columns at right angles".** Without unit length, $Q^{\mathsf T}Q$ is a diagonal of squared lengths, not $I$.
+> - **Reading "orthogonal matrix" as "columns at right angles".** Without unit length, $`Q^{\mathsf T}Q`$ is a diagonal of squared lengths, not $`I`$.
 
 ---
 
@@ -579,7 +591,7 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 - **Symmetric matrices.** The spectral theorem hands a symmetric matrix its own perpendicular directions, and needs an orthonormal basis to say so ([The spectral theorem](../07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)).
 
 > **Say it back**
-> Two survey lines, (3, 1) and (2, 2), are a skewed basis, so locating a peg means solving equations. Gram-Schmidt keeps the first, shrunk to length 1, then subtracts from the second the shadow it casts on the first; shrinking that leftover, (-0.400000, 1.200000), gives the second direction. The stake at (4, 2) sits 4.427189 along one and 0.632456 along the other: two dot products, no equations. Stacked as columns they give $Q^{\mathsf T}Q = I$.
+> Two survey lines, (3, 1) and (2, 2), are a skewed basis, so locating a peg means solving equations. Gram-Schmidt keeps the first, shrunk to length 1, then subtracts from the second the shadow it casts on the first; shrinking that leftover, (-0.400000, 1.200000), gives the second direction. The stake at (4, 2) sits 4.427189 along one and 0.632456 along the other: two dot products, no equations. Stacked as columns they give $`Q^{\mathsf T}Q = I`$.
 
 ---
 

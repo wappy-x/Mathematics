@@ -37,50 +37,60 @@ Orange: the 2-year tent. Green: the 5-year tent. Dark blue: the 10-year tent. Th
 
 ## The formula
 
-Notation first, in words. Cash flows fall at the end of whole years, $t = 1, 2, \dots, 10$. The **zero rate** $z(t)$ is the continuously compounded rate for money lent from today to year $t$ with nothing paid in between. The **discount factor** $D(t) = e^{-z(t)\,t}$ is the price today of one dollar paid at year $t$. The bond's price adds up its discounted cash flows. A tent is written $w_k(t)$: its height at maturity $t$, for the tent whose pillar is $k$ years.
+Notation first, in words. Cash flows fall at the end of whole years, $`t = 1, 2, \dots, 10`$. The **zero rate** $`z(t)`$ is the continuously compounded rate for money lent from today to year $`t`$ with nothing paid in between. The **discount factor** $`D(t) = e^{-z(t)\,t}`$ is the price today of one dollar paid at year $`t`$. The bond's price adds up its discounted cash flows. A tent is written $`w_k(t)`$: its height at maturity $`t`$, for the tent whose pillar is $`k`$ years.
 
-$$P = \sum_{t} CF_t\, e^{-z(t)\,t}$$
+```math
+P = \sum_{t} CF_t\, e^{-z(t)\,t}
+```
 
 **Read it aloud:** the bond is worth each payment times today's price of a dollar at that date, added up.
 
-The key-rate DV01 for pillar $k$, the definition:
+The key-rate DV01 for pillar $`k`$, the definition:
 
-$$KR_k = -\,\frac{P\bigl(z + \delta\,w_k\bigr) - P\bigl(z - \delta\,w_k\bigr)}{2}, \qquad \delta = 0.0001$$
+```math
+KR_k = -\,\frac{P\bigl(z + \delta\,w_k\bigr) - P\bigl(z - \delta\,w_k\bigr)}{2}, \qquad \delta = 0.0001
+```
 
 **Read it aloud:** lift the zero curve by one tent's worth of a basis point, then lower it by the same, reprice both times, and take half the loss.
 
 The same number by hand, one cash flow at a time:
 
-$$KR_k \approx \delta \sum_{t} w_k(t)\; t\; CF_t\, D(t)$$
+```math
+KR_k \approx \delta \sum_{t} w_k(t)\; t\; CF_t\, D(t)
+```
 
-**Read it aloud:** each payment loses its time, times its present value, times one basis point; the tent says how much of that loss belongs to pillar $k$.
+**Read it aloud:** each payment loses its time, times its present value, times one basis point; the tent says how much of that loss belongs to pillar $`k`$.
 
-The sum rule, and the hedge. The hedges are **par swaps**, whose fixed rate makes them worth zero today, with the fund paying fixed. The swap maturing in $j$ years ($j = 2, 5, 10$) gains $m_{kj}$ per dollar of notional per basis point of tent $k$:
+The sum rule, and the hedge. The hedges are **par swaps**, whose fixed rate makes them worth zero today, with the fund paying fixed. The swap maturing in $`j`$ years ($`j = 2, 5, 10`$) gains $`m_{kj}`$ per dollar of notional per basis point of tent $`k`$:
 
-$$KR_2 + KR_5 + KR_{10} = \text{DV01}, \qquad \sum_{j} m_{kj}\,h_j = KR_k \ \text{ for } k = 2, 5, 10$$
+```math
+KR_2 + KR_5 + KR_{10} = \text{DV01}, \qquad \sum_{j} m_{kj}\,h_j = KR_k \ \text{ for } k = 2, 5, 10
+```
 
 **Read it aloud:** the pillar risks add up to the whole risk; choose the swap notionals so that at every pillar the swaps gain what the bond loses.
 
-Divide a key-rate DV01 by the price and by $\delta$ and dollars become years: the **key-rate duration**. The bond's are 0.2776, 3.6665 and 2.1381, adding up to its duration of 6.0823 ([Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md)). Hedges are sized in dollars, so the card works in dollars.
+Divide a key-rate DV01 by the price and by $`\delta`$ and dollars become years: the **key-rate duration**. The bond's are 0.2776, 3.6665 and 2.1381, adding up to its duration of 6.0823 ([Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md)). Hedges are sized in dollars, so the card works in dollars.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | when a cash flow is paid, in years | 1 to 7 for the bond | its flow's loss per dollar of value grows in step |
-| $CF_t$ | the cash flow paid at year $t$ | 500,000 a year; 10,500,000 at year 7 | its loss per bp grows in step |
-| $z(t)$ | zero rate to year $t$, continuously compounded | 4.5863% at 7 years | price falls |
-| $D(t)$ | price today of one dollar paid at year $t$ | $D(7) = 0.72539293$ | price rises |
-| $P$ | the bond's price | 10,187,765.52 dollars | — |
-| $\delta$ | one basis point | 0.0001 | every DV01 grows in step |
-| $w_k(t)$, $k$ | height of the tent for pillar $k$ at maturity $t$; pillars at 2, 5, 10 years | $w_5(7) = 0.60$, $w_{10}(7) = 0.40$ | moves risk toward pillar $k$ |
-| $KR_k$ | key-rate DV01: dollars lost per bp of tent $k$ | 282.83, 3,735.38, 2,178.25 | — |
-| $m_{kj}$, $j$ | gain per bp of tent $k$, per dollar of notional, of the swap maturing in $j$ years | 711.82 per million for the 10-year swap at the 10-year pillar | less notional needed |
-| $h_j$ | notional of swap $j$, paying fixed; negative means receiving fixed | 8,091,656.15 on the 5-year | — |
-| $a_k$ | the move at pillar $k$ in a tent-shaped move, in decimal | −0.0020 to +0.0020 (±20 bp) in the random test | — |
-| $S_n$, $n$ | par rate of an $n$-year swap: the fixed rate that makes it worth zero today | 4.40%, 4.65%, 4.71% for 2, 5, 10 years | — |
+| $`t`$ | when a cash flow is paid, in years | 1 to 7 for the bond | its flow's loss per dollar of value grows in step |
+| $`CF_t`$ | the cash flow paid at year $`t`$ | 500,000 a year; 10,500,000 at year 7 | its loss per bp grows in step |
+| $`z(t)`$ | zero rate to year $`t`$, continuously compounded | 4.5863% at 7 years | price falls |
+| $`D(t)`$ | price today of one dollar paid at year $`t`$ | $`D(7) = 0.72539293`$ | price rises |
+| $`P`$ | the bond's price | 10,187,765.52 dollars | — |
+| $`\delta`$ | one basis point | 0.0001 | every DV01 grows in step |
+| $`w_k(t)`$, $`k`$ | height of the tent for pillar $`k`$ at maturity $`t`$; pillars at 2, 5, 10 years | $`w_5(7) = 0.60`$, $`w_{10}(7) = 0.40`$ | moves risk toward pillar $`k`$ |
+| $`KR_k`$ | key-rate DV01: dollars lost per bp of tent $`k`$ | 282.83, 3,735.38, 2,178.25 | — |
+| $`m_{kj}`$, $`j`$ | gain per bp of tent $`k`$, per dollar of notional, of the swap maturing in $`j`$ years | 711.82 per million for the 10-year swap at the 10-year pillar | less notional needed |
+| $`h_j`$ | notional of swap $`j`$, paying fixed; negative means receiving fixed | 8,091,656.15 on the 5-year | — |
+| $`a_k`$ | the move at pillar $`k`$ in a tent-shaped move, in decimal | −0.0020 to +0.0020 (±20 bp) in the random test | — |
+| $`S_n`$, $`n`$ | par rate of an $`n`$-year swap: the fixed rate that makes it worth zero today | 4.40%, 4.65%, 4.71% for 2, 5, 10 years | — |
 
 The tents, in symbols:
 
-$$w_2(t) = \begin{cases} 1 & t \le 2 \\ \tfrac{5-t}{3} & 2 \le t \le 5 \\ 0 & t \ge 5 \end{cases} \qquad w_5(t) = \begin{cases} \tfrac{t-2}{3} & 2 \le t \le 5 \\ \tfrac{10-t}{5} & 5 \le t \le 10 \\ 0 & \text{otherwise} \end{cases} \qquad w_{10}(t) = \begin{cases} 0 & t \le 5 \\ \tfrac{t-5}{5} & 5 \le t \le 10 \\ 1 & t \ge 10 \end{cases}$$
+```math
+w_2(t) = \begin{cases} 1 & t \le 2 \\ \tfrac{5-t}{3} & 2 \le t \le 5 \\ 0 & t \ge 5 \end{cases} \qquad w_5(t) = \begin{cases} \tfrac{t-2}{3} & 2 \le t \le 5 \\ \tfrac{10-t}{5} & 5 \le t \le 10 \\ 0 & \text{otherwise} \end{cases} \qquad w_{10}(t) = \begin{cases} 0 & t \le 5 \\ \tfrac{t-5}{5} & 5 \le t \le 10 \\ 1 & t \ge 10 \end{cases}
+```
 
 In words: each tent climbs from the pillar before, peaks at its own, and falls to the pillar after.
 
@@ -102,13 +112,13 @@ A curve move is ten numbers here, one per year, and dozens in a real market. Key
 
 ### Step 1: one cash flow's loss per basis point
 
-A cash flow at year $t$ is worth $CF_t\,e^{-z(t)\,t}$. Raise its zero rate by $\delta$ and the value is multiplied by $e^{-t\delta}$, which is $1 - t\delta$ to first order. So the flow loses $t \times CF_t \times D(t) \times \delta$. Later payments lose more per dollar of value, in proportion to how far away they are.
+A cash flow at year $`t`$ is worth $`CF_t\,e^{-z(t)\,t}`$. Raise its zero rate by $`\delta`$ and the value is multiplied by $`e^{-t\delta}`$, which is $`1 - t\delta`$ to first order. So the flow loses $`t \times CF_t \times D(t) \times \delta`$. Later payments lose more per dollar of value, in proportion to how far away they are.
 
 The bond's final payment: 7 × 10,500,000 × 0.72539293 × 0.0001 = 5,331.64 dollars per basis point. The six coupons lose between 47.98 and 227.96 each.
 
 ### Step 2: split each flow's loss by the tents
 
-Raise only tent $k$ by $\delta$. The zero rate at year $t$ moves by $w_k(t)\,\delta$, so that flow loses $w_k(t)$ times its full loss. Add over the flows: that is the mapping formula. The final payment at 7 years sends 0.60 of its 5,331.64 to the 5-year pillar, 3,198.98, and 0.40 to the 10-year pillar, 2,132.66.
+Raise only tent $`k`$ by $`\delta`$. The zero rate at year $`t`$ moves by $`w_k(t)\,\delta`$, so that flow loses $`w_k(t)`$ times its full loss. Add over the flows: that is the mapping formula. The final payment at 7 years sends 0.60 of its 5,331.64 to the 5-year pillar, 3,198.98, and 0.40 to the 10-year pillar, 2,132.66.
 
 ```
 bond's key-rate DV01, dollars lost per 1bp, one block = 100 dollars
@@ -121,22 +131,22 @@ The 2-year pillar collects only the first four coupons, and only part of the thi
 
 ### Step 3: the pillars add up to the whole
 
-At every maturity the three tents add to 1: between 2 and 5 years, for instance, $\tfrac{5-t}{3} + \tfrac{t-2}{3} = 1$. So raising all three tents by a basis point raises every zero rate by exactly a basis point: the parallel move. Each flow's first-order loss is shared out with weights that add to 1, so the three key-rate DV01s add to the parallel DV01. On the bond: 282.83 + 3,735.38 + 2,178.25 = 6,196.46, which the code also finds by bumping every zero rate at once.
+At every maturity the three tents add to 1: between 2 and 5 years, for instance, $`\tfrac{5-t}{3} + \tfrac{t-2}{3} = 1`$. So raising all three tents by a basis point raises every zero rate by exactly a basis point: the parallel move. Each flow's first-order loss is shared out with weights that add to 1, so the three key-rate DV01s add to the parallel DV01. On the bond: 282.83 + 3,735.38 + 2,178.25 = 6,196.46, which the code also finds by bumping every zero rate at once.
 
 <details>
 <summary>Detailed proof: the sum rule, and why a zeroed book is flat</summary>
 
-Write the value as a function of the ten zero rates, $V(z_1, \dots, z_{10})$. For a move $\Delta z$, Taylor's theorem gives $V(z + \Delta z) - V(z) = \sum_t \frac{\partial V}{\partial z_t}\,\Delta z_t + O(\lVert\Delta z\rVert^2)$, where the last term shrinks like the square of the move.
+Write the value as a function of the ten zero rates, $`V(z_1, \dots, z_{10})`$. For a move $`\Delta z`$, Taylor's theorem gives $`V(z + \Delta z) - V(z) = \sum_t \frac{\partial V}{\partial z_t}\,\Delta z_t + O(\lVert\Delta z\rVert^2)`$, where the last term shrinks like the square of the move.
 
-**Sum rule.** Tent $k$ is the move $\Delta z_t = \delta\,w_k(t)$. Its first-order loss is $KR_k = -\delta\sum_t \frac{\partial V}{\partial z_t} w_k(t)$; the central difference in the definition equals this up to a term of order $\delta^2$. Adding over $k$ and swapping the two sums, $\sum_k KR_k = -\delta\sum_t \frac{\partial V}{\partial z_t}\sum_k w_k(t) = -\delta\sum_t \frac{\partial V}{\partial z_t}$, since the inner sum is 1 at every $t$. The right side is the first-order loss for a parallel move of $\delta$: the DV01.
+**Sum rule.** Tent $`k`$ is the move $`\Delta z_t = \delta\,w_k(t)`$. Its first-order loss is $`KR_k = -\delta\sum_t \frac{\partial V}{\partial z_t} w_k(t)`$; the central difference in the definition equals this up to a term of order $`\delta^2`$. Adding over $`k`$ and swapping the two sums, $`\sum_k KR_k = -\delta\sum_t \frac{\partial V}{\partial z_t}\sum_k w_k(t) = -\delta\sum_t \frac{\partial V}{\partial z_t}`$, since the inner sum is 1 at every $`t`$. The right side is the first-order loss for a parallel move of $`\delta`$: the DV01.
 
-**Flat book.** A move built from tents is $\Delta z_t = \sum_k a_k\,w_k(t)$, where $a_k$ is the move at pillar $k$ in decimal. Its first-order value change is $\sum_t \frac{\partial V}{\partial z_t}\sum_k a_k w_k(t) = -\sum_k \frac{a_k}{\delta} KR_k$, by the same swap of sums. If the book's three key-rate DV01s are all zero, the first-order change is zero for every choice of $a_2, a_5, a_{10}$, and what remains is of order $\lVert\Delta z\rVert^2$. A move that is not a sum of tents, like the 7-year kink, is not covered by this argument, and the kink's loss confirms it.
+**Flat book.** A move built from tents is $`\Delta z_t = \sum_k a_k\,w_k(t)`$, where $`a_k`$ is the move at pillar $`k`$ in decimal. Its first-order value change is $`\sum_t \frac{\partial V}{\partial z_t}\sum_k a_k w_k(t) = -\sum_k \frac{a_k}{\delta} KR_k`$, by the same swap of sums. If the book's three key-rate DV01s are all zero, the first-order change is zero for every choice of $`a_2, a_5, a_{10}`$, and what remains is of order $`\lVert\Delta z\rVert^2`$. A move that is not a sum of tents, like the 7-year kink, is not covered by this argument, and the kink's loss confirms it.
 
 </details>
 
 ### Step 4: the hedges have key-rate DV01s too
 
-Paying fixed on a par swap means receiving the floating leg, worth $1 - D(n)$ per dollar of notional, and paying $S_n$ each year up to $n$ ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)). That is short a bond with coupon $S_n$: it gains when rates rise, and Step 2 applies unchanged.
+Paying fixed on a par swap means receiving the floating leg, worth $`1 - D(n)`$ per dollar of notional, and paying $`S_n`$ each year up to $`n`$ ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)). That is short a bond with coupon $`S_n`$: it gains when rates rise, and Step 2 applies unchanged.
 
 The results, per million of notional, gained per basis point of each tent:
 
@@ -183,21 +193,21 @@ Key rates can also be taken on the par quotes: bump the quoted swap rates in ten
 
 ## Worked numbers, by hand
 
-The curve: the par swap quotes of [Swap DV01](../28-Swaps/03-swap-dv01-and-hedging.md), 4.20 percent at one year rising to 4.71 percent at ten, bootstrapped to discount factors ($D(5) = 0.79621728$, the same on both cards) and turned into zero rates by $z(t) = -\ln D(t)/t$.
+The curve: the par swap quotes of [Swap DV01](../28-Swaps/03-swap-dv01-and-hedging.md), 4.20 percent at one year rising to 4.71 percent at ten, bootstrapped to discount factors ($`D(5) = 0.79621728`$, the same on both cards) and turned into zero rates by $`z(t) = -\ln D(t)/t`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| 7-year zero rate | $-\ln(0.72539293)/7$ | 4.5863% |
-| bond price | coupons and face, each times its $D(t)$ | 10,187,765.52 |
-| final payment's loss per bp | $7 \times 10{,}500{,}000 \times 0.72539293 \times 0.0001$ | 5,331.64 |
+| 7-year zero rate | $`-\ln(0.72539293)/7`$ | 4.5863% |
+| bond price | coupons and face, each times its $`D(t)`$ | 10,187,765.52 |
+| final payment's loss per bp | $`7 \times 10{,}500{,}000 \times 0.72539293 \times 0.0001`$ | 5,331.64 |
 | its split, 0.60 and 0.40 | to the 5-year and 10-year pillars | 3,198.98 and 2,132.66 |
 | 2-year pillar | coupons 1 to 4, their 2-year shares | 282.83 |
-| 5-year pillar | $43.74 + 111.24 + 199.05 + 182.37 + 3{,}198.98$ | 3,735.38 |
-| 10-year pillar | $45.59 + 2{,}132.66$ | 2,178.25 |
-| sum, equal to the parallel DV01 | $282.83 + 3{,}735.38 + 2{,}178.25$ | 6,196.46 |
-| 10-year swap, pay fixed | $2{,}178.25 / 711.82$ per million | **3,060,087.83** |
-| 5-year swap, pay fixed | $(3{,}735.38 - 247.61) / 431.03$ per million | **8,091,656.15** |
-| 2-year swap, receive fixed | $11.53 / 195.78$ per million | **58,918.14** |
+| 5-year pillar | $`43.74 + 111.24 + 199.05 + 182.37 + 3{,}198.98`$ | 3,735.38 |
+| 10-year pillar | $`45.59 + 2{,}132.66`$ | 2,178.25 |
+| sum, equal to the parallel DV01 | $`282.83 + 3{,}735.38 + 2{,}178.25`$ | 6,196.46 |
+| 10-year swap, pay fixed | $`2{,}178.25 / 711.82`$ per million | **3,060,087.83** |
+| 5-year swap, pay fixed | $`(3{,}735.38 - 247.61) / 431.03`$ per million | **8,091,656.15** |
+| 2-year swap, receive fixed | $`11.53 / 195.78`$ per million | **58,918.14** |
 
 Paying fixed on about 8.1 million of 5-year swaps and 3.1 million of 10-year, and receiving on a sliver of 2-year, leaves a book that loses nothing, to first order, whichever pillar moves.
 
@@ -409,7 +419,7 @@ try: 7-year bond at a 3% coupon, 10y pillar DV01 2,119.39
 ALL CHECKS PASS
 ```
 
-The two hedge solutions differ by 6 cents on the 2-year swap and 45 cents on the 10-year: the bumped table carries an error of order $\delta^2$ that the mapped table does not, one or two parts in ten million.
+The two hedge solutions differ by 6 cents on the 2-year swap and 45 cents on the 10-year: the bumped table carries an error of order $`\delta^2`$ that the mapped table does not, one or two parts in ten million.
 
 ### Rust
 

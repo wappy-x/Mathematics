@@ -22,9 +22,11 @@ The price: equal address steps do not cover equal ground. A patch 0.5 km deep an
 
 Reminders: a double or triple integral totals a quantity patch by patch over a region ([Double integrals](01-double-integrals.md)). The Jacobian matrix of a map holds its partial derivatives, each output's rate per unit of each input ([Chain rule in several variables](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)). Its determinant, det, is a linear map's signed area factor; the bars take its size.
 
-$T$ sends an address $(u, v)$ to a place $(x, y)$. $S$ is the region of addresses, $D$ the places it covers, $f$ the quantity totalled. In the table below, z is height, ρ distance from a centre, φ the angle down from the vertical.
+$`T`$ sends an address $`(u, v)`$ to a place $`(x, y)`$. $`S`$ is the region of addresses, $`D`$ the places it covers, $`f`$ the quantity totalled. In the table below, z is height, ρ distance from a centre, φ the angle down from the vertical.
 
-$$\iint_D f(x,y)\,dx\,dy \;=\; \iint_S f\big(T(u,v)\big)\,\big|\det J_T(u,v)\big|\,du\,dv$$
+```math
+\iint_D f(x,y)\,dx\,dy \;=\; \iint_S f\big(T(u,v)\big)\,\big|\det J_T(u,v)\big|\,du\,dv
+```
 
 **Read it aloud:** the total over places equals the total over addresses, each weighted by the quantity at its place and by the ground its patch covers.
 
@@ -36,20 +38,22 @@ $$\iint_D f(x,y)\,dx\,dy \;=\; \iint_S f\big(T(u,v)\big)\,\big|\det J_T(u,v)\big
 
 On the valley, depth f = 20 + 10r mm, r in km:
 
-$$\int_0^{\pi/3}\!\!\int_0^3 (20 + 10r)\,r\,dr\,d\theta \;=\; \frac{\pi}{3}\,(90 + 90) \;=\; 60\pi \;=\; 188.495559\ \text{mm km}^2$$
+```math
+\int_0^{\pi/3}\!\!\int_0^3 (20 + 10r)\,r\,dr\,d\theta \;=\; \frac{\pi}{3}\,(90 + 90) \;=\; 60\pi \;=\; 188.495559\ \text{mm km}^2
+```
 
 One millimetre over one square kilometre is 1,000 cubic metres: 188,496 cubic metres.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | place: km east and north of the outlet | the valley floor | — |
-| $r$, $\theta$ | distance from the outlet; angle from the east edge, radians | 0 to 3 km, 0 to π/3 | larger r: more ground per patch |
-| $f$ | the quantity totalled, here rain depth in mm | 20 + 10r | total grows in proportion |
-| $u$, $v$, $S$ | general addresses; their region | r, θ; a rectangle | — |
-| $D$, $T$ | the places; the map onto them | the fan; polar map | — |
-| $J_T$ | Jacobian matrix of T; its determinant's size is the stretch | r | each patch counts more |
-| $z$, $\rho$, $\phi$ | height; distance from a centre; angle down from vertical | tank; raindrop radius 2 mm | — |
-| $dA$, $dV$ | one small patch's area or volume | r dr dθ | — |
+| $`x`$, $`y`$ | place: km east and north of the outlet | the valley floor | — |
+| $`r`$, $`\theta`$ | distance from the outlet; angle from the east edge, radians | 0 to 3 km, 0 to π/3 | larger r: more ground per patch |
+| $`f`$ | the quantity totalled, here rain depth in mm | 20 + 10r | total grows in proportion |
+| $`u`$, $`v`$, $`S`$ | general addresses; their region | r, θ; a rectangle | — |
+| $`D`$, $`T`$ | the places; the map onto them | the fan; polar map | — |
+| $`J_T`$ | Jacobian matrix of T; its determinant's size is the stretch | r | each patch counts more |
+| $`z`$, $`\rho`$, $`\phi`$ | height; distance from a centre; angle down from vertical | tank; raindrop radius 2 mm | — |
+| $`dA`$, $`dV`$ | one small patch's area or volume | r dr dθ | — |
 
 ### When it holds
 
@@ -81,7 +85,9 @@ A ring slice between radii r1 and r2 through angle Δθ has area (r2^2 − r1^2)
 
 Nudge r and the place moves along (cos θ, sin θ), 1 km per km. Nudge θ and it moves along (−r sin θ, r cos θ), r km per radian, at right angles. The area factor is the determinant of these columns:
 
-$$J_T = \begin{pmatrix}\cos\theta & -r\sin\theta\\ \sin\theta & r\cos\theta\end{pmatrix},\qquad \det J_T = r\cos^2\theta + r\sin^2\theta = r.$$
+```math
+J_T = \begin{pmatrix}\cos\theta & -r\sin\theta\\ \sin\theta & r\cos\theta\end{pmatrix},\qquad \det J_T = r\cos^2\theta + r\sin^2\theta = r.
+```
 
 Built from difference quotients alone at r = 2.25 km and 25 degrees, it prints 2.250000. For columns not at right angles the determinant still measures the slanted parallelogram, so the theorem uses it, not a product of lengths.
 

@@ -40,31 +40,35 @@ Schematic, not to scale. A Arcade, B Bus Station, C Cathedral, M Market, E East 
 
 ## The formula
 
-Notation first, in words. The map has $n$ stations and $m$ routes, here 10 and 18. Its **adjacency matrix** $A$ is the square table with $A_{vw} = 1$ when a route joins stations $v$ and $w$, and 0 otherwise. The **distance** $d(v, w)$ is the fewest routes a rider needs to get from $v$ to $w$. For two stations $s$ and $t$ (start and target), $\sigma_{st}$ ("sigma") counts the shortest rides from $s$ to $t$, and $\sigma_{st}(v)$ counts those that pass through station $v$.
+Notation first, in words. The map has $`n`$ stations and $`m`$ routes, here 10 and 18. Its **adjacency matrix** $`A`$ is the square table with $`A_{vw} = 1`$ when a route joins stations $`v`$ and $`w`$, and 0 otherwise. The **distance** $`d(v, w)`$ is the fewest routes a rider needs to get from $`v`$ to $`w`$. For two stations $`s`$ and $`t`$ (start and target), $`\sigma_{st}`$ ("sigma") counts the shortest rides from $`s`$ to $`t`$, and $`\sigma_{st}(v)`$ counts those that pass through station $`v`$.
 
 The four scores:
 
-$$\deg(v) = \sum_w A_{vw}, \qquad c(v) = \frac{n-1}{\sum_w d(v, w)}, \qquad b(v) = \sum_{s < t,\; s, t \ne v} \frac{\sigma_{st}(v)}{\sigma_{st}},$$
+```math
+\deg(v) = \sum_w A_{vw}, \qquad c(v) = \frac{n-1}{\sum_w d(v, w)}, \qquad b(v) = \sum_{s < t,\; s, t \ne v} \frac{\sigma_{st}(v)}{\sigma_{st}},
+```
 
-$$\pi(j) = \frac{0.15}{n} + 0.85 \sum_i \pi(i)\, P_{ij}.$$
+```math
+\pi(j) = \frac{0.15}{n} + 0.85 \sum_i \pi(i)\, P_{ij}.
+```
 
 **Read it aloud:** degree counts the routes at a station. Closeness is one over the average distance to everyone else. Betweenness adds up, over every pair of other stations, the share of their shortest rides that pass through. PageRank is a station's share of the random jumps plus 85% of the share flowing in along the trips that end there.
 
-PageRank is [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md)'s random surfer with jumps. Here it runs on the trip logs instead of web links, and its answer is written $\pi$, as in [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md). The 0.85 is the damping factor, which [PageRank by power iteration](02-power-iteration-and-the-damping-factor.md) names $\alpha$ and studies.
+PageRank is [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md)'s random surfer with jumps. Here it runs on the trip logs instead of web links, and its answer is written $`\pi`$, as in [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md). The 0.85 is the damping factor, which [PageRank by power iteration](02-power-iteration-and-the-damping-factor.md) names $`\alpha`$ and studies.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $m$ | how many stations; how many routes | 10; 18 | more stations give more pairs to count; more routes shorten distances and share out betweenness |
-| $A_{vw}$ | 1 if a route joins $v$ and $w$, else 0 | $A_{\text{FH}} = 1$ | a new 1 is a new route: degree rises at both ends |
-| $\deg(v)$ | **degree**: routes at station $v$ | Market 6 | on a two-way map, PageRank rises with it |
-| $d(v, w)$, $k$ | **distance**: fewest routes from $v$ to $w$; $k$ is a count of routes, as in layer $k$ of a search or the power $A^k$ | Fountain to Quay: 3 | closeness falls |
-| $c(v)$ | **closeness**: $n - 1$ over the distance sum | Fountain 9/14 = 0.643 | — |
-| $s$, $t$, $v$ | start, target, and a station that might lie between | Arcade, Riverside, Hill Top | — |
-| $\sigma_{st}$, $\sigma_{st}(v)$ | shortest rides from $s$ to $t$; those through $v$ | Market to Hill Top: 2 rides, 1 through Fountain | more rides through $v$, more betweenness |
-| $b(v)$, $\delta_s(v)$ | **betweenness**: summed shares of shortest rides through $v$; $\delta_s(v)$ ("delta") is the part collected from rides starting at $s$ | Hill Top 14 | — |
-| $P_{ij}$ | chance the next trip from $i$ ends at $j$: 1 over the number of logged routes out of $i$, if riders go from $i$ to $j$ | $P_{\text{HR}} = 1/3$ | more routes out of $i$ give each a smaller share |
-| $\pi(j)$ | **PageRank**: long-run share of a ridden bike's stops spent at $j$ | Riverside 0.151 | — |
-| 0.85, $\alpha$ | the **damping factor**: chance a bike's next trip follows a logged route; the next card calls it $\alpha$ | 0.85 | nearer 1, the jumps fade and rank pools at the river |
+| $`n`$, $`m`$ | how many stations; how many routes | 10; 18 | more stations give more pairs to count; more routes shorten distances and share out betweenness |
+| $`A_{vw}`$ | 1 if a route joins $`v`$ and $`w`$, else 0 | $`A_{\text{FH}} = 1`$ | a new 1 is a new route: degree rises at both ends |
+| $`\deg(v)`$ | **degree**: routes at station $`v`$ | Market 6 | on a two-way map, PageRank rises with it |
+| $`d(v, w)`$, $`k`$ | **distance**: fewest routes from $`v`$ to $`w`$; $`k`$ is a count of routes, as in layer $`k`$ of a search or the power $`A^k`$ | Fountain to Quay: 3 | closeness falls |
+| $`c(v)`$ | **closeness**: $`n - 1`$ over the distance sum | Fountain 9/14 = 0.643 | — |
+| $`s`$, $`t`$, $`v`$ | start, target, and a station that might lie between | Arcade, Riverside, Hill Top | — |
+| $`\sigma_{st}`$, $`\sigma_{st}(v)`$ | shortest rides from $`s`$ to $`t`$; those through $`v`$ | Market to Hill Top: 2 rides, 1 through Fountain | more rides through $`v`$, more betweenness |
+| $`b(v)`$, $`\delta_s(v)`$ | **betweenness**: summed shares of shortest rides through $`v`$; $`\delta_s(v)`$ ("delta") is the part collected from rides starting at $`s`$ | Hill Top 14 | — |
+| $`P_{ij}`$ | chance the next trip from $`i`$ ends at $`j`$: 1 over the number of logged routes out of $`i`$, if riders go from $`i`$ to $`j`$ | $`P_{\text{HR}} = 1/3`$ | more routes out of $`i`$ give each a smaller share |
+| $`\pi(j)`$ | **PageRank**: long-run share of a ridden bike's stops spent at $`j`$ | Riverside 0.151 | — |
+| 0.85, $`\alpha`$ | the **damping factor**: chance a bike's next trip follows a logged route; the next card calls it $`\alpha`$ | 0.85 | nearer 1, the jumps fade and rank pools at the river |
 
 ### When it holds
 
@@ -91,58 +95,62 @@ Nothing forces these to agree. A station can have many links that all lead into 
 
 ### Step 1: degree counts the ends of routes
 
-Degree is the row sum of $A$: Market's row has six 1s. Every route has two ends, so adding all degrees counts each route twice:
+Degree is the row sum of $`A`$: Market's row has six 1s. Every route has two ends, so adding all degrees counts each route twice:
 
-$$\sum_v \deg(v) = 2m = 36.$$
+```math
+\sum_v \deg(v) = 2m = 36.
+```
 
-Dividing by $n - 1 = 9$, the most links a station could have, gives Market 6/9 = 0.667: it links to two thirds of the map. The check counts degree twice, once from the rows of $A$ and once down the list of eighteen routes.
+Dividing by $`n - 1 = 9`$, the most links a station could have, gives Market 6/9 = 0.667: it links to two thirds of the map. The check counts degree twice, once from the rows of $`A`$ and once down the list of eighteen routes.
 
 ### Step 2: distances come out in layers
 
 Closeness needs every distance. **Breadth-first search** (spreading outward one route at a time) finds them. From Fountain: layer 0 is Fountain. Layer 1 is everything one route away: Arcade, Cathedral, Market, Guildhall, Hill Top. Layer 2 is everything new one route beyond that: Bus Station, East Gate, Riverside. Layer 3 is Quay.
 
-Why the layers are exact distances: a station first reached in layer $k$ has a ride of $k$ routes, by the way it was reached. If it had a ride of fewer routes, the station before it on that ride would sit in an earlier layer, and the search would have reached it sooner. So layer number = distance.
+Why the layers are exact distances: a station first reached in layer $`k`$ has a ride of $`k`$ routes, by the way it was reached. If it had a ride of fewer routes, the station before it on that ride would sit in an earlier layer, and the search would have reached it sooner. So layer number = distance.
 
-A second road comes from [The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): the entry $(A^k)_{vw}$ counts walks of exactly $k$ routes from $v$ to $w$. The distance is the first $k$ at which that count is above zero, because the shortest walk between two stations never repeats one. The check computes every distance both ways and they match.
+A second road comes from [The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): the entry $`(A^k)_{vw}`$ counts walks of exactly $`k`$ routes from $`v`$ to $`w`$. The distance is the first $`k`$ at which that count is above zero, because the shortest walk between two stations never repeats one. The check computes every distance both ways and they match.
 
-Closeness is then $n - 1$ over the distance sum, which is one over the average distance. Fountain's distances add to 14, so its average distance is 14/9 and its closeness is 9/14 = 0.643.
+Closeness is then $`n - 1`$ over the distance sum, which is one over the average distance. Fountain's distances add to 14, so its average distance is 14/9 and its closeness is 9/14 = 0.643.
 
 ### Step 3: shortest rides through a station multiply
 
-Betweenness needs, for each pair, the number of shortest rides through $v$. Listing rides is slow, but there is a shortcut:
+Betweenness needs, for each pair, the number of shortest rides through $`v`$. Listing rides is slow, but there is a shortcut:
 
-$$\sigma_{st}(v) = \sigma_{sv} \times \sigma_{vt} \quad \text{when } d(s, v) + d(v, t) = d(s, t), \text{ and } 0 \text{ otherwise.}$$
+```math
+\sigma_{st}(v) = \sigma_{sv} \times \sigma_{vt} \quad \text{when } d(s, v) + d(v, t) = d(s, t), \text{ and } 0 \text{ otherwise.}
+```
 
-**Proof.** Cut a shortest ride from $s$ to $t$ at $v$. The first piece is a ride from $s$ to $v$. If a shorter one existed, swapping it in would give a ride from $s$ to $t$ shorter than the shortest, which is impossible. So the first piece is a shortest ride to $v$, and the same holds for the second piece.
+**Proof.** Cut a shortest ride from $`s`$ to $`t`$ at $`v`$. The first piece is a ride from $`s`$ to $`v`$. If a shorter one existed, swapping it in would give a ride from $`s`$ to $`t`$ shorter than the shortest, which is impossible. So the first piece is a shortest ride to $`v`$, and the same holds for the second piece.
 
-Going the other way, any shortest $s$-to-$v$ ride followed by any shortest $v$-to-$t$ ride has $d(s, v) + d(v, t)$ routes. When that sum equals $d(s, t)$, the joined ride is a shortest one. Each choice of first and second piece gives a different ride, so the count multiplies. If the sum is bigger than $d(s, t)$, no shortest ride visits $v$.
+Going the other way, any shortest $`s`$-to-$`v`$ ride followed by any shortest $`v`$-to-$`t`$ ride has $`d(s, v) + d(v, t)`$ routes. When that sum equals $`d(s, t)`$, the joined ride is a shortest one. Each choice of first and second piece gives a different ride, so the count multiplies. If the sum is bigger than $`d(s, t)`$, no shortest ride visits $`v`$.
 
-Example: Market to Hill Top is 2 routes, by Fountain or by Guildhall, so $\sigma = 2$. Through Fountain: $1 \times 1$ ride. Fountain's share of that pair is 1/2.
+Example: Market to Hill Top is 2 routes, by Fountain or by Guildhall, so $`\sigma = 2`$. Through Fountain: $`1 \times 1`$ ride. Fountain's share of that pair is 1/2.
 
 ### Step 4: Hill Top's 14 is a count of town-to-river pairs
 
-There are 36 pairs of stations not including Hill Top. Every ride from one of the 7 town stations to Riverside or Quay must cross Hill Top, since it is the only station linked to both sides. That is $7 \times 2 = 14$ pairs, each giving Hill Top a share of 1.
+There are 36 pairs of stations not including Hill Top. Every ride from one of the 7 town stations to Riverside or Quay must cross Hill Top, since it is the only station linked to both sides. That is $`7 \times 2 = 14`$ pairs, each giving Hill Top a share of 1.
 
-No other pair uses it. Riverside and Quay are joined directly. Inside the town, Hill Top's only neighbours, Fountain and Guildhall, are already linked, so a detour through Hill Top is never shortest. So $b(\text{Hill Top}) = 14$, from only 3 routes.
+No other pair uses it. Riverside and Quay are joined directly. Inside the town, Hill Top's only neighbours, Fountain and Guildhall, are already linked, so a detour through Hill Top is never shortest. So $`b(\text{Hill Top}) = 14`$, from only 3 routes.
 
 Riverside scores 8 the same way: every ride to Quay from the other 8 stations passes through it.
 
 ### Step 5: one search per station is enough
 
-Listing every shortest ride takes as long as there are rides, and on a city grid the number of rides between two corners grows exponentially with distance. The **backward-pass method**, published in 2001, avoids the list. From each start $s$ it does one breadth-first search that also counts rides, then walks back from the farthest stations, passing each station's share of credit to the stations just before it on shortest rides. Step 3 makes that bookkeeping exact.
+Listing every shortest ride takes as long as there are rides, and on a city grid the number of rides between two corners grows exponentially with distance. The **backward-pass method**, published in 2001, avoids the list. From each start $`s`$ it does one breadth-first search that also counts rides, then walks back from the farthest stations, passing each station's share of credit to the stations just before it on shortest rides. Step 3 makes that bookkeeping exact.
 
 <details>
 <summary>Detailed proof: the backward pass</summary>
 
-Fix a start $s$. Write $\delta_s(v)$ for the total share of shortest rides from $s$ that pass through $v$, summed over all targets $t$. Call $v$ a **predecessor** of $w$ when a route joins them and $d(s, w) = d(s, v) + 1$.
+Fix a start $`s`$. Write $`\delta_s(v)`$ for the total share of shortest rides from $`s`$ that pass through $`v`$, summed over all targets $`t`$. Call $`v`$ a **predecessor** of $`w`$ when a route joins them and $`d(s, w) = d(s, v) + 1`$.
 
-A shortest ride from $s$ to $t$ through $v$ leaves $v$ along one route, to some station $w$ that has $v$ as a predecessor. The share of shortest $s$-to-$w$ rides that use $v$ just before $w$ is $\sigma_{sv} / \sigma_{sw}$, by Step 3. So $v$ gets that fraction of $w$'s own credit, plus that fraction of the pair $(s, w)$ itself:
+A shortest ride from $`s`$ to $`t`$ through $`v`$ leaves $`v`$ along one route, to some station $`w`$ that has $`v`$ as a predecessor. The share of shortest $`s`$-to-$`w`$ rides that use $`v`$ just before $`w`$ is $`\sigma_{sv} / \sigma_{sw}`$, by Step 3. So $`v`$ gets that fraction of $`w`$'s own credit, plus that fraction of the pair $`(s, w)`$ itself:
 
-$$\delta_s(v) = \sum_{w:\ v \text{ a predecessor of } w} \frac{\sigma_{sv}}{\sigma_{sw}} \bigl(1 + \delta_s(w)\bigr).$$
+$`\displaystyle \delta_s(v) = \sum_{w:\ v \text{ a predecessor of } w} \frac{\sigma_{sv}}{\sigma_{sw}} \bigl(1 + \delta_s(w)\bigr).`$
 
-The farthest stations have no successors, so their credit is 0. Walk backward through the layers and every $\delta_s(v)$ is known by the time it is needed. Summing $\delta_s(v)$ over all starts $s$ counts each unordered pair twice, once from each end, so $b(v)$ is half the total.
+The farthest stations have no successors, so their credit is 0. Walk backward through the layers and every $`\delta_s(v)`$ is known by the time it is needed. Summing $`\delta_s(v)`$ over all starts $`s`$ counts each unordered pair twice, once from each end, so $`b(v)`$ is half the total.
 
-Each breadth-first search looks along each route twice, once from each end: $2m$ checks. There are $n$ searches, so the cost is $n \times 2m$ route checks. For the ten stations that is $10 \times 36 = 360$, and the check counts exactly 360. For the city's 1,200 stations it is 1,200 searches, each still looking along each route twice: the work grows like $n$ times $m$, while a full list of rides can grow far faster.
+Each breadth-first search looks along each route twice, once from each end: $`2m`$ checks. There are $`n`$ searches, so the cost is $`n \times 2m`$ route checks. For the ten stations that is $`10 \times 36 = 360`$, and the check counts exactly 360. For the city's 1,200 stations it is 1,200 searches, each still looking along each route twice: the work grows like $`n`$ times $`m`$, while a full list of rides can grow far faster.
 
 </details>
 
@@ -152,15 +160,17 @@ The check runs both roads: the backward pass, and a brute-force list of all 56 s
 
 Step 5 of [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) defines PageRank and [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md) proves one answer exists. What is new here is how it differs from the other three.
 
-**On a two-way map, PageRank is almost degree.** Without jumps, a walk on a two-way map spends $\deg(v)/2m$ of its time at $v$: Market 6/36 = 0.167. With the jumps, Market's PageRank is 0.147, pulled a little towards the fair 1/10, and Market still wins. On two-way routes, PageRank mostly repeats degree.
+**On a two-way map, PageRank is almost degree.** Without jumps, a walk on a two-way map spends $`\deg(v)/2m`$ of its time at $`v`$: Market 6/36 = 0.167. With the jumps, Market's PageRank is 0.147, pulled a little towards the fair 1/10, and Market still wins. On two-way routes, PageRank mostly repeats degree.
 
 **One-way trips change it.** In the trip logs, Hill Top sends bikes to Fountain, Guildhall and Riverside, one third each. Riverside's only trips go to Quay, and Quay's only trips go back to Riverside. So a bike that reaches the river stays there, except for the 15% of trips that jump. Riverside's balance equation, the formula above with its two incoming trips, reads
 
-$$\pi(\text{R}) = 0.015 + 0.85 \left( \frac{\pi(\text{H})}{3} + \pi(\text{Q}) \right).$$
+```math
+\pi(\text{R}) = 0.015 + 0.85 \left( \frac{\pi(\text{H})}{3} + \pi(\text{Q}) \right).
+```
 
 Hill Top's third is small, but Quay sends back everything it gets. Riverside comes out at 0.151, the top score. Quay, fed only by Riverside, is just behind at 0.144. That is what the operator sees: bikes pile up at the bottom of the hill, and trucks must carry them back up.
 
-The check finds $\pi$ three ways: by repeating the one-trip update 200 times, by solving the ten balance equations exactly, and by following 20,000 simulated bikes for 50 trips each, drawn from a SplitMix64 generator (a small, repeatable source of random numbers) started from seed 2026.
+The check finds $`\pi`$ three ways: by repeating the one-trip update 200 times, by solving the ten balance equations exactly, and by following 20,000 simulated bikes for 50 trips each, drawn from a SplitMix64 generator (a small, repeatable source of random numbers) started from seed 2026.
 
 ---
 
@@ -182,14 +192,14 @@ Fountain's betweenness, pair by pair. Only pairs whose shortest rides can pass t
 
 Of the 36 pairs that don't include Fountain, it carries 8.333 pairs' worth of shortest rides: second only to Hill Top's 14, and tied with Guildhall by symmetry.
 
-And Riverside's PageRank balance, from the solved shares $\pi(\text{H}) = 0.050318$ and $\pi(\text{Q}) = 0.143669$:
+And Riverside's PageRank balance, from the solved shares $`\pi(\text{H}) = 0.050318`$ and $`\pi(\text{Q}) = 0.143669`$:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| 1 | Hill Top's third: $0.050318 / 3$ | 0.016773 |
-| 2 | Plus all of Quay's: $0.016773 + 0.143669$ | 0.160442 |
+| 1 | Hill Top's third: $`0.050318 / 3`$ | 0.016773 |
+| 2 | Plus all of Quay's: $`0.016773 + 0.143669`$ | 0.160442 |
 | 3 | Times 0.85 | 0.136376 |
-| 4 | Plus the jumps: $0.15 / 10 = 0.015$ | **0.151376** |
+| 4 | Plus the jumps: $`0.15 / 10 = 0.015`$ | **0.151376** |
 
 About 15 in every 100 bike stops end at Riverside, against a fair share of 10.
 
@@ -208,9 +218,9 @@ About 15 in every 100 bike stops end at Riverside, against a fair share of 10.
 
 The script builds the ten-station map and computes every score by at least two independent roads.
 
-- Degree comes from the rows of $A$ and from counting down the route list.
-- Distances come from breadth-first search and from powers of $A$.
-- Betweenness comes from the backward pass and from listing all 56 shortest rides; the pass counts its own route checks against the promised $n \times 2m$.
+- Degree comes from the rows of $`A`$ and from counting down the route list.
+- Distances come from breadth-first search and from powers of $`A`$.
+- Betweenness comes from the backward pass and from listing all 56 shortest rides; the pass counts its own route checks against the promised $`n \times 2m`$.
 - PageRank comes from repeated updates, an exact solve and 20,000 simulated bikes, with a tolerance of four standard errors on the simulation, and Riverside's balance equation is checked by hand arithmetic.
 
 The Python and Rust programs print identical output.
@@ -603,13 +613,13 @@ ALL CHECKS PASS
 
 Lean proves the facts of Steps 1, 2 and 3 for every finite two-way map, and checks the ten-station numbers.
 
-- Take any two-way map. Then all the degrees add up to $2m$, twice the number of routes.
-- Take stations $v$ and $w$ joined by some ride. Then $d(v, w)$ is the first $k$ at which $(A^k)_{vw}$ is above zero.
-- Take a start $s$, target $t$ and station $v$ with $d(s, v) + d(v, t) = d(s, t)$. Then $\sigma_{st}(v) = \sigma_{sv} \times \sigma_{vt}$.
-- Take $s$, $t$ and $v$ where that sum differs from $d(s, t)$. Then $\sigma_{st}(v) = 0$.
+- Take any two-way map. Then all the degrees add up to $`2m`$, twice the number of routes.
+- Take stations $`v`$ and $`w`$ joined by some ride. Then $`d(v, w)`$ is the first $`k`$ at which $`(A^k)_{vw}`$ is above zero.
+- Take a start $`s`$, target $`t`$ and station $`v`$ with $`d(s, v) + d(v, t) = d(s, t)`$. Then $`\sigma_{st}(v) = \sigma_{sv} \times \sigma_{vt}`$.
+- Take $`s`$, $`t`$ and $`v`$ where that sum differs from $`d(s, t)`$. Then $`\sigma_{st}(v) = 0`$.
 - The degrees from Arcade to Quay are 4, 4, 3, 6, 3, 5, 5, 3, 2 and 1. They add to 36, and the map has 18 routes.
 - Market has more routes than any other station.
-- From Fountain, the powers of $A$ give distances 1, 2, 1, 1, 2, 1, 1, 2 and 3 to the other nine stations. They add to 14.
+- From Fountain, the powers of $`A`$ give distances 1, 2, 1, 1, 2, 1, 1, 2 and 3 to the other nine stations. They add to 14.
 - Market to Hill Top has two shortest rides of 2 routes, and one passes through Fountain.
 - Arcade to Guildhall has three shortest rides of 2 routes, and one passes through Fountain.
 
@@ -814,15 +824,15 @@ end CentralityAndPagerank
 
 ## What this builds on
 
-- [The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): the table $A$, and its powers counting walks, which gives the second road to every distance.
-- [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): the balance equations, and the proof that a chain where every state can reach every other has exactly one long-run mix $\pi$.
-- [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): the walk's degree-over-$2m$ shares, and PageRank as the same walk with jumps.
+- [The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): the table $`A`$, and its powers counting walks, which gives the second road to every distance.
+- [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): the balance equations, and the proof that a chain where every state can reach every other has exactly one long-run mix $`\pi`$.
+- [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): the walk's degree-over-$`2m`$ shares, and PageRank as the same walk with jumps.
 
 ---
 
 ## Where this goes next
 
-- [PageRank by power iteration](02-power-iteration-and-the-damping-factor.md): how to compute $\pi$ for millions of nodes by repeating one update, how fast it settles, and why the damping factor $\alpha$ = 0.85 is needed.
+- [PageRank by power iteration](02-power-iteration-and-the-damping-factor.md): how to compute $`\pi`$ for millions of nodes by repeating one update, how fast it settles, and why the damping factor $`\alpha`$ = 0.85 is needed.
 - [Small worlds and hubs](04-small-world-and-scale-free-models.md): what degree looks like across a whole network, and why real networks have a few nodes with far more links than the rest.
 
 This card scored ten stations by hand-sized searches; it leaves open whether the full 1,200-station map can be ranked as cheaply, and what its scores say about how the city's network is built.

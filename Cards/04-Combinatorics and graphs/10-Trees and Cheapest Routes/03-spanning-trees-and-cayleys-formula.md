@@ -34,27 +34,29 @@ One of the sixteen plans; each dotted road would close a loop.
 
 ## The formula
 
-Notation first. A map is two lists: $V$ its places, $E$ its joined pairs, with $n$ and $m$ counting each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). The map is $G$. Some places with some of the roads between them make a **subgraph**; one using every place **spans** the map. Write $T$ for a spanning subgraph with no loop: it always holds $n - 1$ roads.
+Notation first. A map is two lists: $`V`$ its places, $`E`$ its joined pairs, with $`n`$ and $`m`$ counting each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). The map is $`G`$. Some places with some of the roads between them make a **subgraph**; one using every place **spans** the map. Write $`T`$ for a spanning subgraph with no loop: it always holds $`n - 1`$ roads.
 
-The map with every pair joined is the **complete map** $K_n$, so the six costed roads are $K_4$. Write $\tau(G)$, "tau of G", for the spanning trees $G$ has. Arthur Cayley, 1889:
+The map with every pair joined is the **complete map** $`K_n`$, so the six costed roads are $`K_4`$. Write $`\tau(G)`$, "tau of G", for the spanning trees $`G`$ has. Arthur Cayley, 1889:
 
-$$\tau(K_n) = n^{\,n-2}$$
+```math
+\tau(K_n) = n^{\,n-2}
+```
 
 **Read it aloud:** with n named places and every pair available to join, the loop-free layouts reaching all of them number n to the power n − 2: n − 2 copies of n multiplied together.
 
-So 4 × 4 = 16 for four villages, 5 × 5 × 5 = 125 for five. The proof writes each layout as a word of $n - 2$ names: its **Prüfer code**.
+So 4 × 4 = 16 for four villages, 5 × 5 × 5 = 125 for five. The proof writes each layout as a word of $`n - 2`$ names: its **Prüfer code**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$, $V$, $E$ | map, places, joined pairs | villages, costed roads | — |
-| $n$, $m$ | places and roads, counted | 4 and 6 | steeply more layouts |
-| $T$, $n - 1$ | a spanning tree and its roads | Ayle-Brook, Brook-Crag, Crag-Dale; 3 | one road per place |
-| $K_n$, $K_4$ | the complete map, all pairs joined | the six costed roads | — |
-| $\tau(G)$ | spanning trees $G$ has | 16 on $K_4$, 8 when sparse | — |
+| $`G`$, $`V`$, $`E`$ | map, places, joined pairs | villages, costed roads | — |
+| $`n`$, $`m`$ | places and roads, counted | 4 and 6 | steeply more layouts |
+| $`T`$, $`n - 1`$ | a spanning tree and its roads | Ayle-Brook, Brook-Crag, Crag-Dale; 3 | one road per place |
+| $`K_n`$, $`K_4`$ | the complete map, all pairs joined | the six costed roads | — |
+| $`\tau(G)`$ | spanning trees $`G`$ has | 16 on $`K_4`$, 8 when sparse | — |
 
 ### When it holds
 
-- **In one piece.** Otherwise there is no spanning tree, only one tree per piece — a spanning forest — and $\tau(G)$ is 0.
+- **In one piece.** Otherwise there is no spanning tree, only one tree per piece — a spanning forest — and $`\tau(G)`$ is 0.
 - **Every pair joinable, for Cayley.** Where only six of the ten roads between five villages exist, the layouts number 8, not 125; sparser maps take Kirchhoff's determinant, in Why it works.
 - **Named places.** Cayley counts labelled layouts: four villages, 2 shapes, 16 plans. Rub the names out and only the 2 shapes are left, which this formula does not count.
 
@@ -72,7 +74,7 @@ Hunting for loops is slow; flooding is fast. Mark the start, then every place on
 
 On a sparser five-village map, only Ayle-Brook, Ayle-Crag, Brook-Crag, Brook-Dale, Crag-Dale and Dale-Ember can be built. Flooding from Ayle marks in rings — 0 Ayle, 1 Brook and Crag, 2 Dale, 3 Ember — and keeps Ayle-Brook, Ayle-Crag, Brook-Dale, Dale-Ember: four roads for five villages.
 
-Every place but the start keeps one road, so the count is always $n - 1$, and no kept road closes a loop, since each lands on an unmarked place. Places left unmarked prove the map was in pieces.
+Every place but the start keeps one road, so the count is always $`n - 1`$, and no kept road closes a loop, since each lands on an unmarked place. Places left unmarked prove the map was in pieces.
 
 ### Step 2: counting by listing, and where listing gives out
 
@@ -84,13 +86,13 @@ Heinz Prüfer's 1918 proof gives one. Repeatedly remove the **dead end** — a p
 
 Take the line Ayle-Brook-Crag-Dale. Its dead ends are Ayle and Dale, so remove Ayle and write Brook. What remains is Brook-Crag-Dale: remove Brook, write Crag. Two places left, stop. The word is Brook Crag.
 
-Each removal writes one letter and they stop two places short, so the word holds $n - 2$ letters from $n$ names. Write the neighbour, never the dead end: the star centred on Ayle codes as Ayle Ayle.
+Each removal writes one letter and they stop two places short, so the word holds $`n - 2`$ letters from $`n`$ names. Write the neighbour, never the dead end: the star centred on Ayle codes as Ayle Ayle.
 
 ### Step 4: every word is a layout, so counting words counts layouts
 
 Run it backwards. A place's road count is one more than the times its name appears, so a place never named is a dead end. Then, letter by letter: take the place first in the alphabet still owed just one road, join it to that letter's place, knock one off both. At the end, join the two places still owed a road. Brook Crag returns the line it came from.
 
-Decoding undoes encoding step for step, so layouts and words pair off one for one: a bijection ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). Words are easy — $n - 2$ slots, any of $n$ names each — so $n^{\,n-2}$ words, and that many layouts.
+Decoding undoes encoding step for step, so layouts and words pair off one for one: a bijection ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). Words are easy — $`n - 2`$ slots, any of $`n`$ names each — so $`n^{\,n-2}`$ words, and that many layouts.
 
 <details>
 <summary>Detailed proof: decoding never sticks, and the two directions undo each other</summary>
@@ -151,7 +153,7 @@ The code prints the 20 and the 125, and splits the 16 plans into the 2 shapes: 4
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The layouts are counted twice by methods sharing no arithmetic: every choice of $n - 1$ roads tested, and every Prüfer word decoded. A determinant is the third method; one flood both tests whether the roads reach everyone and builds Step 1's tree.
+Nothing is imported. The layouts are counted twice by methods sharing no arithmetic: every choice of $`n - 1`$ roads tested, and every Prüfer word decoded. A determinant is the third method; one flood both tests whether the roads reach everyone and builds Step 1's tree.
 
 ### Python
 

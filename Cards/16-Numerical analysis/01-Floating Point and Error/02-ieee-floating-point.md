@@ -28,38 +28,33 @@ Schematic, not to scale: the sign is 1 bit, the exponent 11 bits and the fractio
 
 ## The formula
 
-A double has a sign bit $s$, an exponent field $e$ (an 11-bit whole number from 0 to 2047) and a fraction field $f$ (a 52-bit whole number). The exponent field decides which of four kinds the pattern is.
+A double has a sign bit $`s`$, an exponent field $`e`$ (an 11-bit whole number from 0 to 2047) and a fraction field $`f`$ (a 52-bit whole number). The exponent field decides which of four kinds the pattern is.
 
-$$
-x =
-\begin{cases}
-(-1)^{s} \times \left(1 + \dfrac{f}{2^{52}}\right) \times 2^{\,e-1023} & 1 \le e \le 2046 \quad \text{(normal)} \\[2mm]
-(-1)^{s} \times \dfrac{f}{2^{52}} \times 2^{-1022} & e = 0 \quad \text{(zero if } f = 0\text{, subnormal otherwise)} \\[2mm]
-\pm\infty \text{ if } f = 0, \quad \text{NaN if } f \ne 0 & e = 2047
-\end{cases}
-$$
+```math
+x = \begin{cases} (-1)^{s} \times \left(1 + \dfrac{f}{2^{52}}\right) \times 2^{\,e-1023} & 1 \le e \le 2046 \quad \text{(normal)} \\[2mm] (-1)^{s} \times \dfrac{f}{2^{52}} \times 2^{-1022} & e = 0 \quad \text{(zero if } f = 0\text{, subnormal otherwise)} \\[2mm] \pm\infty \text{ if } f = 0, \quad \text{NaN if } f \ne 0 & e = 2047 \end{cases}
+```
 
 **Read it aloud:** for an ordinary number, the sign, times a front number between 1 and 2 whose binary digits after the point are the fraction field, times two raised to the exponent field minus 1023; the two end values of the exponent field are kept for tiny numbers, zero, infinity and "not a number".
 
-A real number $x$ that is not a double is stored as a neighbour $\hat{x}$. On the first card $\hat{x}$ was read "the computed x"; here it is the stored double. In the default mode, round to nearest, the promise is
+A real number $`x`$ that is not a double is stored as a neighbour $`\hat{x}`$. On the first card $`\hat{x}`$ was read "the computed x"; here it is the stored double. In the default mode, round to nearest, the promise is
 
-$$
+```math
 |\hat{x} - x| \le \tfrac{1}{2}\,\mathrm{ulp}(x), \qquad \mathrm{ulp}(x) = 2^{\max(E,\,-1022) - 52}.
-$$
+```
 
 **Read it aloud:** the stored number is never further from the true one than half the gap between neighbouring doubles at that size.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | sign bit: 0 for plus, 1 for minus | 0 for 0.1 + 0.2 | flips the sign |
-| $e$ | exponent field, 11 bits read as a whole number | 1021 for 0.1 + 0.2 | each step up doubles the number |
-| $f$ | fraction field, 52 bits read as a whole number | 900719925474100 for 0.1 + 0.2; 900719925474099 for the stored 0.3 | the front number creeps from 1 toward 2 |
-| $E$ | the power of two with $2^E \le \lvert x \rvert < 2^{E+1}$; for a normal double it is $e - 1023$ | −2, since 0.3 is between 0.25 and 0.5 | the gap between neighbours doubles |
-| $x$ | the real number wanted | one tenth | — |
-| $\hat{x}$ | the double actually stored for $x$ | 7205759403792794 / 2^56 for one tenth | — |
-| $\mathrm{ulp}(x)$ | unit in the last place: the gap between neighbouring doubles at the size of $x$ | 2^−56 at one tenth; 1.164e-10 at 1,000,000 | doubles at every power of two |
-| $u$ | unit roundoff, $2^{-53}$: the largest relative error of one rounding to nearest, for normal numbers (Step 3) | 2^−53 | — |
-| $a$, $b$; $y$; $p$, $q$; $z$, $\hat{z}$ | the two doubles either side of $x$ (Step 3); a second double (Step 4); the random top and bottom of a test fraction, and an exact result with its rounded value (Step 3's proof) | $a$ = 7205759403792793 / 2^56 and $b$ = 7205759403792794 / 2^56 around one tenth; $y = 2^{-1022}$ | — |
+| $`s`$ | sign bit: 0 for plus, 1 for minus | 0 for 0.1 + 0.2 | flips the sign |
+| $`e`$ | exponent field, 11 bits read as a whole number | 1021 for 0.1 + 0.2 | each step up doubles the number |
+| $`f`$ | fraction field, 52 bits read as a whole number | 900719925474100 for 0.1 + 0.2; 900719925474099 for the stored 0.3 | the front number creeps from 1 toward 2 |
+| $`E`$ | the power of two with $`2^E \le \lvert x \rvert < 2^{E+1}`$; for a normal double it is $`e - 1023`$ | −2, since 0.3 is between 0.25 and 0.5 | the gap between neighbours doubles |
+| $`x`$ | the real number wanted | one tenth | — |
+| $`\hat{x}`$ | the double actually stored for $`x`$ | 7205759403792794 / 2^56 for one tenth | — |
+| $`\mathrm{ulp}(x)`$ | unit in the last place: the gap between neighbouring doubles at the size of $`x`$ | 2^−56 at one tenth; 1.164e-10 at 1,000,000 | doubles at every power of two |
+| $`u`$ | unit roundoff, $`2^{-53}`$: the largest relative error of one rounding to nearest, for normal numbers (Step 3) | 2^−53 | — |
+| $`a`$, $`b`$; $`y`$; $`p`$, $`q`$; $`z`$, $`\hat{z}`$ | the two doubles either side of $`x`$ (Step 3); a second double (Step 4); the random top and bottom of a test fraction, and an exact result with its rounded value (Step 3's proof) | $`a`$ = 7205759403792793 / 2^56 and $`b`$ = 7205759403792794 / 2^56 around one tenth; $`y = 2^{-1022}`$ | — |
 
 ### When it holds
 
@@ -82,7 +77,7 @@ Sixty-four bits make 2^64 patterns, so almost every real number is missing. The 
 Scientific notation writes 300 as 3 × 10^2: a front number and a power of the base. A double does the same in base two. Take 0.1 + 0.2 from the picture:
 
 - The **sign** bit is 0, so the number is positive.
-- The **exponent field** 01111111101 is 1021. Subtract the **bias** (a fixed offset) of 1023 to get $E = -2$: multiply by 2^−2, a quarter.
+- The **exponent field** 01111111101 is 1021. Subtract the **bias** (a fixed offset) of 1023 to get $`E = -2`$: multiply by 2^−2, a quarter.
 - The **fraction field** holds the binary digits after the point of a front number between 1 and 2.
 
 The leading 1 of the front number is not stored. Every normal number in base two starts with a 1, so writing it would waste a bit. This is the **hidden bit**, and it gives 53 significant bits from 52 stored ones.
@@ -108,22 +103,22 @@ The standard also lists a fifth mode, ties away from zero. It is required only f
 
 ### Step 3: rounding to nearest costs at most half a gap
 
-Take a real $x$ between two neighbouring doubles $a < x < b$. They are one ulp apart, so $(x - a) + (b - x) = \mathrm{ulp}(x)$. The smaller of the two distances is at most half the sum. Round to nearest picks that one, so $|\hat{x} - x| \le \tfrac12\,\mathrm{ulp}(x)$.
+Take a real $`x`$ between two neighbouring doubles $`a < x < b`$. They are one ulp apart, so $`(x - a) + (b - x) = \mathrm{ulp}(x)`$. The smaller of the two distances is at most half the sum. Round to nearest picks that one, so $`|\hat{x} - x| \le \tfrac12\,\mathrm{ulp}(x)`$.
 
-For a normal $x$, $|x| \ge 2^E$ and the gap is $2^{E-52}$. Divide the half-gap by $|x|$:
+For a normal $`x`$, $`|x| \ge 2^E`$ and the gap is $`2^{E-52}`$. Divide the half-gap by $`|x|`$:
 
-$$
+```math
 \frac{|\hat{x} - x|}{|x|} \le \frac{2^{E-53}}{2^{E}} = 2^{-53}.
-$$
+```
 
-That number, 2^−53, is the **unit roundoff**, written $u$. [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md) turns it into the standard error model for every operation.
+That number, 2^−53, is the **unit roundoff**, written $`u`$. [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md) turns it into the standard error model for every operation.
 
 <details>
 <summary>Detailed proof: every basic operation keeps the same promise</summary>
 
-The standard requires each of $+$, $-$, $\times$, $\div$ and square root to return the exact answer to its stored inputs, rounded once by the current mode. So the result of one operation is $\hat{z}$ for the exact $z$, and Step 3 applies to $z$ directly: $|\hat{z} - z| \le \tfrac12\,\mathrm{ulp}(z)$ in round to nearest, and less than one ulp in the other modes.
+The standard requires each of $`+`$, $`-`$, $`\times`$, $`\div`$ and square root to return the exact answer to its stored inputs, rounded once by the current mode. So the result of one operation is $`\hat{z}`$ for the exact $`z`$, and Step 3 applies to $`z`$ directly: $`|\hat{z} - z| \le \tfrac12\,\mathrm{ulp}(z)`$ in round to nearest, and less than one ulp in the other modes.
 
-The code tests the requirement. It draws 20,000 fractions $p/q$, with $p$ and $q$ random whole numbers below 2^53. Each is a double already, so the machine's $p \div q$ is one rounding of the exact fraction. The scripts round the same fraction with whole-number arithmetic only. Half the draws are scaled by 2^−1022 to land 5042 results among the subnormals. There are 0 disagreements.
+The code tests the requirement. It draws 20,000 fractions $`p/q`$, with $`p`$ and $`q`$ random whole numbers below 2^53. Each is a double already, so the machine's $`p \div q`$ is one rounding of the exact fraction. The scripts round the same fraction with whole-number arithmetic only. Half the draws are scaled by 2^−1022 to land 5042 results among the subnormals. There are 0 disagreements.
 
 </details>
 
@@ -135,16 +130,16 @@ The smallest positive normal double is 2^−1022, about 2.2250738585072014e-308,
 
 The exponent field 0 fills the hole. There the hidden bit is 0, not 1, and the scale stays at 2^−1022. The result is a run of **subnormal** numbers, evenly spaced 2^−1074 apart, down to the smallest, 5e-324. Halving 1 a total of 1074 times reaches it; one more halving gives zero. This filling-in is called **gradual underflow**.
 
-Gradual underflow keeps one simple law true: **$x - y$ computes to zero only when $x = y$.** Take $x = 1.5 \times 2^{-1022}$ and $y = 2^{-1022}$. The difference is 2^−1023, about 1.1125369292536007e-308. It is subnormal, and stored exactly. Hardware that flushes subnormals to zero returns 0.0, so a test `if x != y: divide by x - y` divides by zero.
+Gradual underflow keeps one simple law true: **$`x - y`$ computes to zero only when $`x = y`$.** Take $`x = 1.5 \times 2^{-1022}`$ and $`y = 2^{-1022}`$. The difference is 2^−1023, about 1.1125369292536007e-308. It is subnormal, and stored exactly. Hardware that flushes subnormals to zero returns 0.0, so a test `if x != y: divide by x - y` divides by zero.
 
 <details>
 <summary>Detailed proof: with subnormals, a difference of two different doubles is never zero</summary>
 
-Every finite double is a whole multiple of 2^−1074: the normal ones are $(2^{52} + f) \times 2^{E-52}$ with $E \ge -1022$, and the subnormal ones are $f \times 2^{-1074}$. So $x - y$ is an exact whole multiple of 2^−1074.
+Every finite double is a whole multiple of 2^−1074: the normal ones are $`(2^{52} + f) \times 2^{E-52}`$ with $`E \ge -1022`$, and the subnormal ones are $`f \times 2^{-1074}`$. So $`x - y`$ is an exact whole multiple of 2^−1074.
 
-If $|x - y| < 2^{-1022}$, that multiple has fewer than 53 bits, so it is a subnormal double itself and is stored with no rounding at all. It is not zero when $x \ne y$.
+If $`|x - y| < 2^{-1022}`$, that multiple has fewer than 53 bits, so it is a subnormal double itself and is stored with no rounding at all. It is not zero when $`x \ne y`$.
 
-If $|x - y| \ge 2^{-1022}$, the exact difference is a normal-sized number. Round to nearest returns a double within half an ulp of it, and that double is at least 2^−1022 in size, not zero. Either way $x \ne y$ gives a nonzero computed $x - y$.
+If $`|x - y| \ge 2^{-1022}`$, the exact difference is a normal-sized number. Round to nearest returns a double within half an ulp of it, and that double is at least 2^−1022 in size, not zero. Either way $`x \ne y`$ gives a nonzero computed $`x - y`$.
 
 </details>
 
@@ -154,8 +149,8 @@ The price is precision. A subnormal has leading zeros where a normal number has 
 
 The exponent field 2047 is not a number at all.
 
-- **Infinity** is field 2047 with $f = 0$. The largest double times 2 gives the pattern 0x7ff0000000000000, infinity. It behaves like a limit: 1 divided by infinity is 0.0.
-- **NaN** ("not a number") is field 2047 with $f \ne 0$. It answers questions with no sensible value, such as infinity minus infinity. NaN spreads: NaN + 1 is NaN.
+- **Infinity** is field 2047 with $`f = 0`$. The largest double times 2 gives the pattern 0x7ff0000000000000, infinity. It behaves like a limit: 1 divided by infinity is 0.0.
+- **NaN** ("not a number") is field 2047 with $`f \ne 0`$. It answers questions with no sensible value, such as infinity minus infinity. NaN spreads: NaN + 1 is NaN.
 - **Every `==`, `<` and `>` test with NaN is false.** NaN == NaN, NaN < 1 and NaN > 1 all print "no". The bad value cannot slip through a test and look like a number.
 - **Zero has a sign.** 1e-200 × −1e-200 is too small even for a subnormal, so it **underflows** (rounds to zero), and keeps the sign: the result is −0.0, sign bit 1. The test −0.0 == 0.0 is true, but the bit patterns differ.
 
@@ -169,9 +164,9 @@ Decode the 64 bits of 0.1 + 0.2, then round the exact sum three ways.
 | --- | --- | --- |
 | sign bit | 0 | plus |
 | exponent field | 01111111101 in binary | 1021 |
-| power of two | $E = 1021 - 1023$ | −2 |
+| power of two | $`E = 1021 - 1023`$ | −2 |
 | fraction field | the last 52 bits as a whole number | 900719925474100 |
-| whole significand | $2^{52} + f$, the hidden bit put back | 5404319552844596 |
+| whole significand | $`2^{52} + f`$, the hidden bit put back | 5404319552844596 |
 | stored value | 5404319552844596 / 2^54 | 0.3000000000000000444089209850062616169452667236328125 |
 | stored 0.3 | the same exponent, fraction one less | 900719925474099 |
 | exact sum of the stored inputs | 0.1 and 0.2 as whole numbers over 2^56, added | 21617278211378382 / 2^56 |
@@ -609,9 +604,9 @@ The two outputs are identical, including the random test.
 
 Lean proves the card's three rounding facts, taking a double to be any value of the card's formula with exponent field 0 to 2046.
 
-- Round to nearest costs at most half a gap: $|\hat{x} - x| \le \tfrac12\,\mathrm{ulp}(x)$ whenever $|x|$ is at most the largest double. This holds for any nearest double, so for either choice at a tie.
-- In the normal range, from 2^−1022 up to the largest double, the relative error of rounding to nearest is at most the unit roundoff $u = 2^{-53}$.
-- With subnormals, the nearest double to $x - y$ is never zero when $x$ and $y$ are two different doubles.
+- Round to nearest costs at most half a gap: $`|\hat{x} - x| \le \tfrac12\,\mathrm{ulp}(x)`$ whenever $`|x|`$ is at most the largest double. This holds for any nearest double, so for either choice at a tie.
+- In the normal range, from 2^−1022 up to the largest double, the relative error of rounding to nearest is at most the unit roundoff $`u = 2^{-53}`$.
+- With subnormals, the nearest double to $`x - y`$ is never zero when $`x`$ and $`y`$ are two different doubles.
 - The fields of 0.1 + 0.2 decode to 5404319552844596 / 2^54, and the stored 0.3 sits one gap, 2^−54, below it.
 - One tenth times 2^56 lies 0.6 of a gap above 7205759403792793. The exact sum 21617278211378382 / 2^56 is a tie, and its even neighbour is 5404319552844596 / 2^54.
 - 2^53 + 1 is halfway between 2^53 and 2^53 + 2, and fraction field 1638 has 11 bits.
@@ -976,12 +971,12 @@ end IEEEFloatingPoint
 
 ## What this builds on
 
-- [Absolute and relative error](01-absolute-and-relative-error.md): the hat notation $\hat{x}$ for a computed value, and error measured as a size or as a fraction of the true value. This card bounds both for one rounding.
+- [Absolute and relative error](01-absolute-and-relative-error.md): the hat notation $`\hat{x}`$ for a computed value, and error measured as a size or as a fraction of the true value. This card bounds both for one rounding.
 - [Floating point](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/01-floating-point-in-practice.md): the pitfalls in practice: why 0.1 + 0.2 is not 0.3 in a check script, and how to compare computed numbers. This card is the format underneath.
 
 ## Where this goes next
 
-- [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md): the gap next to 1, the unit roundoff $u = 2^{-53}$ from Step 3 turned into a model for every operation, and the digits a subtraction destroys.
+- [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md): the gap next to 1, the unit roundoff $`u = 2^{-53}`$ from Step 3 turned into a model for every operation, and the digits a subtraction destroys.
 - [Adding a million numbers without losing the small ones](07-summation-kahan-and-welford.md): the tracker's total, repaired by carrying the lost low bits forward.
 - [Interval arithmetic](09-interval-arithmetic-in-outline.md): the round-down and round-up modes of Step 2 put to work, to carry a range that is sure to hold the true answer.
 

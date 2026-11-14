@@ -26,42 +26,52 @@ Drawn at 1 m = 7 units. A position is a pair in brackets, metres across from the
 
 ## The formula
 
-θ (theta), β (beta) and φ (phi) name angles. $\sin^2\theta$ means $(\sin\theta)^2$, the sine's value squared. As on [The unit circle](02-radians-and-the-unit-circle.md), turning θ counterclockwise from due east on a circle of radius 1 reaches a point cos θ across and sin θ up; either can be negative.
+θ (theta), β (beta) and φ (phi) name angles. $`\sin^2\theta`$ means $`(\sin\theta)^2`$, the sine's value squared. As on [The unit circle](02-radians-and-the-unit-circle.md), turning θ counterclockwise from due east on a circle of radius 1 reaches a point cos θ across and sin θ up; either can be negative.
 
-$$\sin^2\theta+\cos^2\theta=1$$
+```math
+\sin^2\theta+\cos^2\theta=1
+```
 
-$$\sin(\theta+\beta)=\sin\theta\cos\beta+\cos\theta\sin\beta, \qquad \cos(\theta+\beta)=\cos\theta\cos\beta-\sin\theta\sin\beta$$
+```math
+\sin(\theta+\beta)=\sin\theta\cos\beta+\cos\theta\sin\beta, \qquad \cos(\theta+\beta)=\cos\theta\cos\beta-\sin\theta\sin\beta
+```
 
 **Read it aloud:** sine squared plus cosine squared is one; the sine of a sum crosses the pairs and adds, the cosine matches them and subtracts.
 
-$$\sin 2\theta=2\sin\theta\cos\theta, \qquad \cos 2\theta=\cos^2\theta-\sin^2\theta=2\cos^2\theta-1=1-2\sin^2\theta$$
+```math
+\sin 2\theta=2\sin\theta\cos\theta, \qquad \cos 2\theta=\cos^2\theta-\sin^2\theta=2\cos^2\theta-1=1-2\sin^2\theta
+```
 
-$$\sin\tfrac{\theta}{2}=\pm\sqrt{\tfrac{1-\cos\theta}{2}}, \qquad \cos\tfrac{\theta}{2}=\pm\sqrt{\tfrac{1+\cos\theta}{2}}$$
+```math
+\sin\tfrac{\theta}{2}=\pm\sqrt{\tfrac{1-\cos\theta}{2}}, \qquad \cos\tfrac{\theta}{2}=\pm\sqrt{\tfrac{1+\cos\theta}{2}}
+```
 
 **Read it aloud:** double angles are the sum formulas with equal angles; half angles are those read backwards, signed by where the half angle points.
 
-$$h=L_1\sin\theta+L_2\sin(\theta+\beta)=P\sin\theta+Q\cos\theta=R\sin(\theta+\varphi)$$
+```math
+h=L_1\sin\theta+L_2\sin(\theta+\beta)=P\sin\theta+Q\cos\theta=R\sin(\theta+\varphi)
+```
 
 **Read it aloud:** two booms' rises make one arm's rise: the pivot-to-tip distance times the sine of the boom's angle plus an offset.
 
-Here $P=L_1+L_2\cos\beta$ and $Q=L_2\sin\beta$, $R=\sqrt{P^2+Q^2}=\sqrt{L_1^2+L_2^2+2L_1L_2\cos\beta}$, and $\varphi$ is the angle with cosine $P/R$ and sine $Q/R$.
+Here $`P=L_1+L_2\cos\beta`$ and $`Q=L_2\sin\beta`$, $`R=\sqrt{P^2+Q^2}=\sqrt{L_1^2+L_2^2+2L_1L_2\cos\beta}`$, and $`\varphi`$ is the angle with cosine $`P/R`$ and sine $`Q/R`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | main boom's angle above level | 40° | the tip climbs until 82.63° |
-| $\beta$ | knuckle's bend: how much steeper the jib points | 30° | $R$ shrinks, $\varphi$ grows |
-| $L_1$, $L_2$ | main boom's and jib's lengths | 30 m, 10 m | $R$ grows |
-| $\sin$, $\cos$ | up and across at that angle on a circle of radius 1 | 0.642788, 0.766044 at 40° | stay within −1 to 1 |
-| $h$ | tip's height above the pivot | 28.68 m | — |
-| $P$, $Q$ | tip's distance along the main boom's line, and square to it (at right angles) | 38.6603 m, 5 m | — |
-| $R$ | pivot-to-tip distance: the single sine's size | 38.98 m | the peak rises |
-| $\varphi$ | offset: angle at the pivot from main boom to line R | 7.37° | the peak comes sooner |
+| $`\theta`$ | main boom's angle above level | 40° | the tip climbs until 82.63° |
+| $`\beta`$ | knuckle's bend: how much steeper the jib points | 30° | $`R`$ shrinks, $`\varphi`$ grows |
+| $`L_1`$, $`L_2`$ | main boom's and jib's lengths | 30 m, 10 m | $`R`$ grows |
+| $`\sin`$, $`\cos`$ | up and across at that angle on a circle of radius 1 | 0.642788, 0.766044 at 40° | stay within −1 to 1 |
+| $`h`$ | tip's height above the pivot | 28.68 m | — |
+| $`P`$, $`Q`$ | tip's distance along the main boom's line, and square to it (at right angles) | 38.6603 m, 5 m | — |
+| $`R`$ | pivot-to-tip distance: the single sine's size | 38.98 m | the peak rises |
+| $`\varphi`$ | offset: angle at the pivot from main boom to line R | 7.37° | the peak comes sooner |
 
 ### When it holds
 
 - **Every angle, one unit.** Negative angles and angles past a full turn obey them too, in degrees or radians, one unit per formula.
 - **Half angles need a sign.** The root gives the size only; a half angle between 90° and 270° has a negative cosine, though the root is positive.
-- **A locked, rigid arm.** If the bend changes as the boom moves, no single sine fits. If $R$ is 0, equal booms folded flat back, no offset exists.
+- **A locked, rigid arm.** If the bend changes as the boom moves, no single sine fits. If $`R`$ is 0, equal booms folded flat back, no offset exists.
 
 ---
 
@@ -69,17 +79,17 @@ Here $P=L_1+L_2\cos\beta$ and $Q=L_2\sin\beta$, $R=\sqrt{P^2+Q^2}=\sqrt{L_1^2+L_
 
 ### Step 0: split the jib into along and across
 
-Split the jib into a piece along the main boom's line, $L_2\cos\beta$ long, and a piece square to it, $L_2\sin\beta$ long. Turning the main boom by θ carries both; the jib's rise is the sum of theirs.
+Split the jib into a piece along the main boom's line, $`L_2\cos\beta`$ long, and a piece square to it, $`L_2\sin\beta`$ long. Turning the main boom by θ carries both; the jib's rise is the sum of theirs.
 
 ### Step 1: the Pythagorean identity, because every point of the circle is one unit out
 
-Drop a line from the point at angle θ to the east–west line through the centre: a right triangle with legs cos θ and sin θ, signs dropped, and the radius 1 as its longest side. [Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md) gives $\cos^2\theta+\sin^2\theta=1$. Squares erase signs, so every quarter of the circle obeys it; on an axis, 0 and ±1 do too. At 40°, 0.642788 squared plus 0.766044 squared gives 1.000000.
+Drop a line from the point at angle θ to the east–west line through the centre: a right triangle with legs cos θ and sin θ, signs dropped, and the radius 1 as its longest side. [Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md) gives $`\cos^2\theta+\sin^2\theta=1`$. Squares erase signs, so every quarter of the circle obeys it; on an axis, 0 and ±1 do too. At 40°, 0.642788 squared plus 0.766044 squared gives 1.000000.
 
 ### Step 2: the addition formulas, read off the jib
 
-The along piece points at θ: it rises $L_2\cos\beta\sin\theta$ and runs $L_2\cos\beta\cos\theta$ across. The square piece points at θ + 90°. A quarter turn counterclockwise turns an arrow (a vector) cos θ across and sin θ up into one −sin θ across and cos θ up, so the square piece rises $L_2\sin\beta\cos\theta$ and runs $-L_2\sin\beta\sin\theta$: it leans back.
+The along piece points at θ: it rises $`L_2\cos\beta\sin\theta`$ and runs $`L_2\cos\beta\cos\theta`$ across. The square piece points at θ + 90°. A quarter turn counterclockwise turns an arrow (a vector) cos θ across and sin θ up into one −sin θ across and cos θ up, so the square piece rises $`L_2\sin\beta\cos\theta`$ and runs $`-L_2\sin\beta\sin\theta`$: it leans back.
 
-The whole jib points at θ + β. Add the pieces' rises and runs, divide by $L_2$, and both addition formulas appear; the cosine's minus is the lean back. For the crane, sin 70° comes out 0.939693.
+The whole jib points at θ + β. Add the pieces' rises and runs, divide by $`L_2`$, and both addition formulas appear; the cosine's minus is the lean back. For the crane, sin 70° comes out 0.939693.
 
 <details>
 <summary>Detailed proof: every angle, not only the crane's</summary>
@@ -89,28 +99,32 @@ The whole jib points at θ + β. Add the pieces' rises and runs, divide by $L_2$
 **Turning keeps sums.** A turn keeps lengths and angles, so parallelograms stay parallelograms: a turned sum of arrows is the sum of the turned arrows, stretches included.
 
 **The formulas.** The unit arrow at β is cos β east arrows plus sin β north arrows. Turned by θ, east becomes (cos θ, sin θ), north becomes (−sin θ, cos θ), and the arrow at β becomes the arrow at θ + β:
-$$\big(\cos(\theta+\beta),\sin(\theta+\beta)\big)=\cos\beta\,(\cos\theta,\sin\theta)+\sin\beta\,(-\sin\theta,\cos\theta)$$
-First places give the cosine formula, second places the sine formula, for any sizes of θ and β. Putting −β for β, with $\cos(-\beta)=\cos\beta$ and $\sin(-\beta)=-\sin\beta$, gives the difference formulas.
+
+$`\displaystyle \big(\cos(\theta+\beta),\sin(\theta+\beta)\big)=\cos\beta\,(\cos\theta,\sin\theta)+\sin\beta\,(-\sin\theta,\cos\theta)`$
+
+First places give the cosine formula, second places the sine formula, for any sizes of θ and β. Putting −β for β, with $`\cos(-\beta)=\cos\beta`$ and $`\sin(-\beta)=-\sin\beta`$, gives the difference formulas.
 
 </details>
 
 ### Step 3: double angles, by making the two angles equal
 
-Put θ for β: $\sin 2\theta=2\sin\theta\cos\theta$ and $\cos 2\theta=\cos^2\theta-\sin^2\theta$. Step 1 trades one square for the other, giving the other two spellings. Raised alone from 40° to 80°, the main boom's head climbs to 29.54 m, worked from the 40° numbers.
+Put θ for β: $`\sin 2\theta=2\sin\theta\cos\theta`$ and $`\cos 2\theta=\cos^2\theta-\sin^2\theta`$. Step 1 trades one square for the other, giving the other two spellings. Raised alone from 40° to 80°, the main boom's head climbs to 29.54 m, worked from the 40° numbers.
 
 ### Step 4: half angles, by reading a double angle backwards
 
-Put $\tfrac{\theta}{2}$ for θ in $\cos 2\theta=1-2\sin^2\theta$: $\cos\theta=1-2\sin^2\tfrac{\theta}{2}$, so $\sin^2\tfrac{\theta}{2}=\tfrac{1-\cos\theta}{2}$. The spelling $2\cos^2\theta-1$ gives the cosine's version. Lowered to 20°, the main boom's head sits at 10.26 m.
+Put $`\tfrac{\theta}{2}`$ for θ in $`\cos 2\theta=1-2\sin^2\theta`$: $`\cos\theta=1-2\sin^2\tfrac{\theta}{2}`$, so $`\sin^2\tfrac{\theta}{2}=\tfrac{1-\cos\theta}{2}`$. The spelling $`2\cos^2\theta-1`$ gives the cosine's version. Lowered to 20°, the main boom's head sits at 10.26 m.
 
 ### Step 5: fold the crane's two sines into one
 
 Expand the jib's rise with Step 2 and gather terms:
 
-$$h=L_1\sin\theta+L_2(\sin\theta\cos\beta+\cos\theta\sin\beta)=(L_1+L_2\cos\beta)\sin\theta+(L_2\sin\beta)\cos\theta$$
+```math
+h=L_1\sin\theta+L_2(\sin\theta\cos\beta+\cos\theta\sin\beta)=(L_1+L_2\cos\beta)\sin\theta+(L_2\sin\beta)\cos\theta
+```
 
-That is $P\sin\theta+Q\cos\theta$. Divide $P$ and $Q$ by $R=\sqrt{P^2+Q^2}$: the quotients' squares add to 1, so they are the across and up of a point on the circle of radius 1, at some angle φ: Step 1 backwards. Then $P\sin\theta+Q\cos\theta=R(\sin\theta\cos\varphi+\cos\theta\sin\varphi)=R\sin(\theta+\varphi)$, Step 2 backwards. Expanding $P^2+Q^2$ leaves $L_2^2(\cos^2\beta+\sin^2\beta)$, which Step 1 turns into $L_2^2$: hence the second form of $R$.
+That is $`P\sin\theta+Q\cos\theta`$. Divide $`P`$ and $`Q`$ by $`R=\sqrt{P^2+Q^2}`$: the quotients' squares add to 1, so they are the across and up of a point on the circle of radius 1, at some angle φ: Step 1 backwards. Then $`P\sin\theta+Q\cos\theta=R(\sin\theta\cos\varphi+\cos\theta\sin\varphi)=R\sin(\theta+\varphi)`$, Step 2 backwards. Expanding $`P^2+Q^2`$ leaves $`L_2^2(\cos^2\beta+\sin^2\beta)`$, which Step 1 turns into $`L_2^2`$: hence the second form of $`R`$.
 
-A sine never exceeds 1, so the tip peaks at $R$ when θ + φ is 90°. Finding φ from its sine is [Inverse trig](05-inverse-trig-and-solving-equations.md); what $R$ and $\varphi$ do to a graph is [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md).
+A sine never exceeds 1, so the tip peaks at $`R`$ when θ + φ is 90°. Finding φ from its sine is [Inverse trig](05-inverse-trig-and-solving-equations.md); what $`R`$ and $`\varphi`$ do to a graph is [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md).
 
 ---
 
@@ -125,11 +139,11 @@ A sine never exceeds 1, so the tip peaks at $R$ when θ + φ is 90°. Finding φ
 | tip reach | 30 × 0.766044 + 10 × 0.342020 | 26.4015 m |
 | boom alone at 80° | 30 × 2 × 0.642788 × 0.766044 | 29.5442 m |
 | boom alone at 20° | 30 × the root of (1 − 0.766044) ÷ 2 | 10.2606 m |
-| $P$, $Q$ | 30 + 10 × 0.866025, and 10 × 0.5 | 38.6603 m, 5 m |
-| $R$ | the root of 30^2 + 10^2 + 2 × 30 × 10 × 0.866025 | 38.9822 m |
-| $\varphi$ | the angle whose sine is 5 ÷ 38.9822 | 7.3693° |
+| $`P`$, $`Q`$ | 30 + 10 × 0.866025, and 10 × 0.5 | 38.6603 m, 5 m |
+| $`R`$ | the root of 30^2 + 10^2 + 2 × 30 × 10 × 0.866025 | 38.9822 m |
+| $`\varphi`$ | the angle whose sine is 5 ÷ 38.9822 | 7.3693° |
 | one sine | 38.9822 × sin 47.3693° | 28.6806 m |
-| highest tip | $R$, with the boom at 90° − 7.3693° | **38.9822 m at 82.6307°** |
+| highest tip | $`R`$, with the boom at 90° − 7.3693° | **38.9822 m at 82.6307°** |
 
 With the knuckle locked, the tip never rises above 38.98 m, reached with the main boom at 82.63°.
 
@@ -140,7 +154,7 @@ With the knuckle locked, the tip never rises above 38.98 m, reached with the mai
 | sin 70° as sin 40° + sin 30° | 1.142788; tip at 30.7115 m | No sine exceeds 1 |
 | Plus in the cosine formula | cos 70° as 0.984808; reach 32.8294 m | That is cos 10° |
 | Twice the angle, twice the height | 38.5673 m at 80° | The true height is 29.5442 m |
-| $R$ as the booms laid straight | 40 m | The bend shortens it to 38.9822 m |
+| $`R`$ as the booms laid straight | 40 m | The bend shortens it to 38.9822 m |
 
 ---
 
@@ -344,12 +358,12 @@ Lean proves the card's identities for every angle, in radians, and the fold for 
 
 - The sine of a sum crosses the pairs and adds; the cosine of a sum matches them and subtracts.
 - Sine squared plus cosine squared is one.
-- $\sin 2\theta=2\sin\theta\cos\theta$, and $\cos 2\theta$ has all three spellings.
-- The half-angle roots give the sizes of $\sin\tfrac{\theta}{2}$ and $\cos\tfrac{\theta}{2}$, not their signs.
-- If $R$ is not 0, an offset $\varphi$ exists with cosine $P/R$ and sine $Q/R$.
-- At every boom angle, the tip's height equals $P\sin\theta+Q\cos\theta$ and also $R\sin(\theta+\varphi)$.
-- $R$ also equals $\sqrt{L_1^2+L_2^2+2L_1L_2\cos\beta}$. The tip never rises above $R$, and reaches $R$ when θ + φ is 90°.
-- The card's own sums: $Q$ = 5 m at a 30° bend, and $R$ = 40 m with the knuckle straightened.
+- $`\sin 2\theta=2\sin\theta\cos\theta`$, and $`\cos 2\theta`$ has all three spellings.
+- The half-angle roots give the sizes of $`\sin\tfrac{\theta}{2}`$ and $`\cos\tfrac{\theta}{2}`$, not their signs.
+- If $`R`$ is not 0, an offset $`\varphi`$ exists with cosine $`P/R`$ and sine $`Q/R`$.
+- At every boom angle, the tip's height equals $`P\sin\theta+Q\cos\theta`$ and also $`R\sin(\theta+\varphi)`$.
+- $`R`$ also equals $`\sqrt{L_1^2+L_2^2+2L_1L_2\cos\beta}`$. The tip never rises above $`R`$, and reaches $`R`$ when θ + φ is 90°.
+- The card's own sums: $`Q`$ = 5 m at a 30° bend, and $`R`$ = 40 m with the knuckle straightened.
 
 The 40° crane's numbers, finding φ from its sine, and road 2's halved angles are left to the Python and Rust checks.
 
@@ -470,8 +484,8 @@ example : (30 : ℝ) + 10 * cos 0 = 40 ∧ (10 : ℝ) * sin 0 = 0 := by
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts compare roads, not fixed numbers.
-> - **A jib as long as the main boom.** Set `L2` to `30.0`. Pivot, knuckle and tip then make a triangle with two equal sides, so φ is half the bend: $R$ = 57.9555 m, $\varphi$ = 15°.
-> - **Straighten the knuckle.** Set `BEND` to `0.0` and `S30, C30` to `0.0, 1.0`: one straight arm, $R$ = 40 m, $\varphi$ = 0°.
+> - **A jib as long as the main boom.** Set `L2` to `30.0`. Pivot, knuckle and tip then make a triangle with two equal sides, so φ is half the bend: $`R`$ = 57.9555 m, $`\varphi`$ = 15°.
+> - **Straighten the knuckle.** Set `BEND` to `0.0` and `S30, C30` to `0.0, 1.0`: one straight arm, $`R`$ = 40 m, $`\varphi`$ = 0°.
 > - **Drop the minus.** Change `c * C30 - s * S30` to `c * C30 + s * S30`: road 1's reach becomes 32.8294 m and the first assert stops the run.
 
 ---
@@ -504,7 +518,7 @@ example : (30 : ℝ) + 10 * cos 0 = 40 ∧ (10 : ℝ) * sin 0 = 0 := by
 
 ## Where this goes next
 
-- [Law of cosines](06-law-of-cosines.md): $R$'s formula, in any triangle.
+- [Law of cosines](06-law-of-cosines.md): $`R`$'s formula, in any triangle.
 - [Derivatives of sine and cosine](../../06-Calculus%20and%20analysis/02-Derivatives/04-derivatives-of-trig-functions.md): the sum formula splits a sine's small step.
 - [Trig substitution](../../06-Calculus%20and%20analysis/04-Integrals/06-trig-substitution.md): the Pythagorean identity clears square roots.
 - [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): multiplying adds angles.
@@ -514,7 +528,7 @@ example : (30 : ℝ) + 10 * cos 0 = 40 ∧ (10 : ℝ) * sin 0 = 0 := by
 - [AC power](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/09-power-and-three-phase.md): waves folded into one.
 - Dirichlet and Fejer kernels: long sums of cosines collapsed.
 
-This card found $R$ from two lengths and a bend, unmeasured; why that expression gives the third side of every triangle is [Law of cosines](06-law-of-cosines.md).
+This card found $`R`$ from two lengths and a bend, unmeasured; why that expression gives the third side of every triangle is [Law of cosines](06-law-of-cosines.md).
 
 ---
 

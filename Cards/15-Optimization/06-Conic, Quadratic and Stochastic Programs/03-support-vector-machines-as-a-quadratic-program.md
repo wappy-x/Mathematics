@@ -30,43 +30,47 @@ Across is metres east, up is metres north. The shaded strip is the widest straig
 
 ## The formula
 
-Number the houses $i = 1, \dots, 60$. House $i$ stands at $x_i$, a point (east, north) in metres, and carries a label $y_i$: $+1$ for Northfield, $-1$ for Southgate. A road is described by a vector $w$ and a number $b$. The **score** of a spot $x$ is $w^T x + b$: zero on the centre line, $+1$ on the north kerb, $-1$ on the south kerb. Here $x$ is data. The unknowns are $w$ and $b$.
+Number the houses $`i = 1, \dots, 60`$. House $`i`$ stands at $`x_i`$, a point (east, north) in metres, and carries a label $`y_i`$: $`+1`$ for Northfield, $`-1`$ for Southgate. A road is described by a vector $`w`$ and a number $`b`$. The **score** of a spot $`x`$ is $`w^T x + b`$: zero on the centre line, $`+1`$ on the north kerb, $`-1`$ on the south kerb. Here $`x`$ is data. The unknowns are $`w`$ and $`b`$.
 
-$$\begin{aligned} \min_{w,\,b}\quad & \tfrac12\lVert w\rVert^2 \\ \text{subject to}\quad & y_i\,(w^T x_i + b) \ge 1, \quad i = 1, \dots, 60. \end{aligned}$$
+```math
+\begin{aligned} \min_{w,\,b}\quad & \tfrac12\lVert w\rVert^2 \\ \text{subject to}\quad & y_i\,(w^T x_i + b) \ge 1, \quad i = 1, \dots, 60. \end{aligned}
+```
 
-**Read it aloud:** make the vector $w$ as short as possible, while every house scores at least $+1$ if it is in Northfield and at most $-1$ if it is in Southgate.
+**Read it aloud:** make the vector $`w`$ as short as possible, while every house scores at least $`+1`$ if it is in Northfield and at most $`-1`$ if it is in Southgate.
 
-The road's width is $2/\lVert w\rVert$, so the shortest $w$ is the widest road. With the unknowns stacked as $(w_1, w_2, b)$, this is the shelf's quadratic program $\tfrac12 z^T Q z + c^T z$ with $Q = \text{diag}(1, 1, 0)$ and $c = 0$ ([Quadratic programs](01-quadratic-programs-and-markowitz.md)). The zero in $Q$ says that sliding the road sideways costs nothing, so $Q$ is only positive semidefinite, $Q \succeq 0$. The problem is still convex.
+The road's width is $`2/\lVert w\rVert`$, so the shortest $`w`$ is the widest road. With the unknowns stacked as $`(w_1, w_2, b)`$, this is the shelf's quadratic program $`\tfrac12 z^T Q z + c^T z`$ with $`Q = \text{diag}(1, 1, 0)`$ and $`c = 0`$ ([Quadratic programs](01-quadratic-programs-and-markowitz.md)). The zero in $`Q`$ says that sliding the road sideways costs nothing, so $`Q`$ is only positive semidefinite, $`Q \succeq 0`$. The problem is still convex.
 
-Give house $i$ a price $\lambda_i \ge 0$ on its limit. The **dual**, built in Why it works, is another quadratic program, in the 60 prices:
+Give house $`i`$ a price $`\lambda_i \ge 0`$ on its limit. The **dual**, built in Why it works, is another quadratic program, in the 60 prices:
 
-$$\begin{aligned} \max_{\lambda}\quad & q(\lambda) = \sum_{i=1}^{60} \lambda_i - \tfrac12 \sum_{i=1}^{60}\sum_{j=1}^{60} \lambda_i \lambda_j\, y_i y_j\, x_i^T x_j \\ \text{subject to}\quad & \lambda_i \ge 0, \qquad \sum_{i=1}^{60} \lambda_i y_i = 0, \end{aligned}$$
+```math
+\begin{aligned} \max_{\lambda}\quad & q(\lambda) = \sum_{i=1}^{60} \lambda_i - \tfrac12 \sum_{i=1}^{60}\sum_{j=1}^{60} \lambda_i \lambda_j\, y_i y_j\, x_i^T x_j \\ \text{subject to}\quad & \lambda_i \ge 0, \qquad \sum_{i=1}^{60} \lambda_i y_i = 0, \end{aligned}
+```
 
-and the road comes back from the prices as $w = \sum_i \lambda_i y_i x_i$.
+and the road comes back from the prices as $`w = \sum_i \lambda_i y_i x_i`$.
 
-**Read it aloud:** price the houses so both estates' prices total the same, and make the prices' sum minus half the squared length of $w$ as large as possible.
+**Read it aloud:** price the houses so both estates' prices total the same, and make the prices' sum minus half the squared length of $`w`$ as large as possible.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$, $y_i$ | house $i$'s position (east, north) in metres, and its label: $+1$ Northfield, $-1$ Southgate | house 10: (40.6, 50.7), $+1$ | — |
-| $n$ | the number of houses | 60 | more limits, never a wider road |
-| $w$ | the road's direction vector: it points across the road, and its entries are score per metre | (0.084615, 0.123077) | a longer $w$ means a narrower road |
-| $b$ | the offset: slides the road sideways without turning it | −8.675385 | the road shifts south-west |
-| $s_i$ | house $i$'s clearance score, $y_i(w^T x_i + b)$; at least 1 means clear of the road | 1 for the three kerb houses | — |
-| $\lVert w\rVert$, $2/\lVert w\rVert$ | the length of $w$ (per metre), and the road's width (metres) | 0.149358 and 13.3907 m | — |
-| $\lambda_i$ | house $i$'s price: how hard its limit pushes on the road | 0.011154, 0.001231, 0.009923, and 57 zeros | — |
-| $\mathcal{L}$, $q(\lambda)$ | the Lagrangian (cost minus priced limits) and the dual function | — | — |
-| $p^\star$, $d^\star$ | the best primal value and the best dual value | both 0.011153846 | — |
-| $Q$, $c$, $z$ | the shelf's quadratic-program form: matrix, linear term, unknowns $(w_1, w_2, b)$ | diag(1, 1, 0), 0 | — |
-| $\Lambda$, $D$ | Step 4: the price total on each estate, and the distance between the two hulls' nearest points | 0.011154 and 13.3907 m | a larger $D$ means a wider road |
-| $k$, $C$ | the solver's step count; the price per metre of trespass in the soft-margin version | 294 steps; $C$ = 1, 10, 100 | larger $C$ trusts every label more |
+| $`x_i`$, $`y_i`$ | house $`i`$'s position (east, north) in metres, and its label: $`+1`$ Northfield, $`-1`$ Southgate | house 10: (40.6, 50.7), $`+1`$ | — |
+| $`n`$ | the number of houses | 60 | more limits, never a wider road |
+| $`w`$ | the road's direction vector: it points across the road, and its entries are score per metre | (0.084615, 0.123077) | a longer $`w`$ means a narrower road |
+| $`b`$ | the offset: slides the road sideways without turning it | −8.675385 | the road shifts south-west |
+| $`s_i`$ | house $`i`$'s clearance score, $`y_i(w^T x_i + b)`$; at least 1 means clear of the road | 1 for the three kerb houses | — |
+| $`\lVert w\rVert`$, $`2/\lVert w\rVert`$ | the length of $`w`$ (per metre), and the road's width (metres) | 0.149358 and 13.3907 m | — |
+| $`\lambda_i`$ | house $`i`$'s price: how hard its limit pushes on the road | 0.011154, 0.001231, 0.009923, and 57 zeros | — |
+| $`\mathcal{L}`$, $`q(\lambda)`$ | the Lagrangian (cost minus priced limits) and the dual function | — | — |
+| $`p^\star`$, $`d^\star`$ | the best primal value and the best dual value | both 0.011153846 | — |
+| $`Q`$, $`c`$, $`z`$ | the shelf's quadratic-program form: matrix, linear term, unknowns $`(w_1, w_2, b)`$ | diag(1, 1, 0), 0 | — |
+| $`\Lambda`$, $`D`$ | Step 4: the price total on each estate, and the distance between the two hulls' nearest points | 0.011154 and 13.3907 m | a larger $`D`$ means a wider road |
+| $`k`$, $`C`$ | the solver's step count; the price per metre of trespass in the soft-margin version | 294 steps; $`C`$ = 1, 10, 100 | larger $`C`$ trusts every label more |
 
 ### When it holds
 
-- **The two estates can be split by a straight line.** Move one Southgate house into Northfield and no road clears every house: all 27,000 candidate roads fail, and the dual's value climbs without limit. The soft margin, with price $C$, is the fix (What breaks).
+- **The two estates can be split by a straight line.** Move one Southgate house into Northfield and no road clears every house: all 27,000 candidate roads fail, and the dual's value climbs without limit. The soft margin, with price $`C`$, is the fix (What breaks).
 - **Both coordinates in the same unit.** Width is ordinary length; with one axis in kilometres, "widest" would mean something else.
-- **A straight road is wanted.** A curved one needs a kernel, a replacement for the dot product $x_i^T x_j$ that measures how alike two houses are. It slots into the dual because the dual uses houses only through $x_i^T x_j$.
-- **At least one house on each side.** With no Southgate house, every limit can be met with $w = 0$, and the "road" is infinitely wide.
+- **A straight road is wanted.** A curved one needs a kernel, a replacement for the dot product $`x_i^T x_j`$ that measures how alike two houses are. It slots into the dual because the dual uses houses only through $`x_i^T x_j`$.
+- **At least one house on each side.** With no Southgate house, every limit can be met with $`w = 0`$, and the "road" is infinitely wide.
 
 ---
 
@@ -74,77 +78,83 @@ and the road comes back from the prices as $w = \sum_i \lambda_i y_i x_i$.
 
 ### Step 0: fix the scale, and width becomes length
 
-Doubling $w$ and $b$ draws the same centre line. So pick the scale where the nearest houses score exactly $\pm 1$. Then each kerb is the line where the score is $+1$ or $-1$.
+Doubling $`w`$ and $`b`$ draws the same centre line. So pick the scale where the nearest houses score exactly $`\pm 1`$. Then each kerb is the line where the score is $`+1`$ or $`-1`$.
 
-The distance from a point to the line $w^T x + b = 0$ is $|w^T x + b| / \lVert w\rVert$ ([Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md) proves it for a plane in space, and the same proof works for a line on a flat map). Each kerb is therefore $1/\lVert w\rVert$ from the centre, and the road is $2/\lVert w\rVert$ wide. A wider road is a shorter $w$.
+The distance from a point to the line $`w^T x + b = 0`$ is $`|w^T x + b| / \lVert w\rVert`$ ([Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md) proves it for a plane in space, and the same proof works for a line on a flat map). Each kerb is therefore $`1/\lVert w\rVert`$ from the centre, and the road is $`2/\lVert w\rVert`$ wide. A wider road is a shorter $`w`$.
 
-Minimising $\tfrac12\lVert w\rVert^2$ instead of $2/\lVert w\rVert$ gives the same road and a smooth bowl. Each limit $y_i(w^T x_i + b) \ge 1$ is a straight-line limit on $(w, b)$. A bowl under straight-line limits is a convex quadratic program, and because $\lVert w\rVert^2$ is strictly convex in $w$, the best $w$ is unique.
+Minimising $`\tfrac12\lVert w\rVert^2`$ instead of $`2/\lVert w\rVert`$ gives the same road and a smooth bowl. Each limit $`y_i(w^T x_i + b) \ge 1`$ is a straight-line limit on $`(w, b)`$. A bowl under straight-line limits is a convex quadratic program, and because $`\lVert w\rVert^2`$ is strictly convex in $`w`$, the best $`w`$ is unique.
 
 ### Step 1: price every limit, and the dual appears
 
-Charge $\lambda_i \ge 0$ for each unit by which house $i$ falls short of a score of 1. The Lagrangian is the cost minus the priced limits:
+Charge $`\lambda_i \ge 0`$ for each unit by which house $`i`$ falls short of a score of 1. The Lagrangian is the cost minus the priced limits:
 
-$$\mathcal{L}(w, b, \lambda) = \tfrac12\lVert w\rVert^2 - \sum_i \lambda_i\,\bigl(y_i(w^T x_i + b) - 1\bigr).$$
+```math
+\mathcal{L}(w, b, \lambda) = \tfrac12\lVert w\rVert^2 - \sum_i \lambda_i\,\bigl(y_i(w^T x_i + b) - 1\bigr).
+```
 
-The dual function $q(\lambda)$ is the smallest $\mathcal{L}$ can be made by choosing $w$ and $b$ freely, with the prices held fixed.
+The dual function $`q(\lambda)`$ is the smallest $`\mathcal{L}`$ can be made by choosing $`w`$ and $`b`$ freely, with the prices held fixed.
 
-- **In $w$:** $\mathcal{L}$ is a bowl, so set its gradient to zero: $w - \sum_i \lambda_i y_i x_i = 0$. The best road direction is a price-weighted sum of the houses.
-- **In $b$:** $\mathcal{L}$ is a straight line in $b$ with slope $-\sum_i \lambda_i y_i$. Unless that slope is zero, $b$ can drive $\mathcal{L}$ to $-\infty$. So a useful price list must give the two estates equal totals: $\sum_i \lambda_i y_i = 0$.
+- **In $`w`$:** $`\mathcal{L}`$ is a bowl, so set its gradient to zero: $`w - \sum_i \lambda_i y_i x_i = 0`$. The best road direction is a price-weighted sum of the houses.
+- **In $`b`$:** $`\mathcal{L}`$ is a straight line in $`b`$ with slope $`-\sum_i \lambda_i y_i`$. Unless that slope is zero, $`b`$ can drive $`\mathcal{L}`$ to $`-\infty`$. So a useful price list must give the two estates equal totals: $`\sum_i \lambda_i y_i = 0`$.
 
-Put $w = \sum_i \lambda_i y_i x_i$ back in. The $b$ term is gone, and what is left is the $q(\lambda)$ in The formula. Maximising the Lagrangian over the prices while its slope in $w$ and $b$ is held at zero is Wolfe's general form of a dual, so this problem in the prices is also called the **Wolfe dual**.
+Put $`w = \sum_i \lambda_i y_i x_i`$ back in. The $`b`$ term is gone, and what is left is the $`q(\lambda)`$ in The formula. Maximising the Lagrangian over the prices while its slope in $`w`$ and $`b`$ is held at zero is Wolfe's general form of a dual, so this problem in the prices is also called the **Wolfe dual**.
 
 ### Step 2: every price list gives a floor (weak duality)
 
-Take any road $(w, b)$ that clears every house, and any prices with $\lambda \ge 0$ and $\sum_i \lambda_i y_i = 0$. Each priced limit $\lambda_i(s_i - 1)$ is at least zero, so $\mathcal{L} \le \tfrac12\lVert w\rVert^2$. And $q(\lambda)$ is the smallest $\mathcal{L}$ can be. So
+Take any road $`(w, b)`$ that clears every house, and any prices with $`\lambda \ge 0`$ and $`\sum_i \lambda_i y_i = 0`$. Each priced limit $`\lambda_i(s_i - 1)`$ is at least zero, so $`\mathcal{L} \le \tfrac12\lVert w\rVert^2`$. And $`q(\lambda)`$ is the smallest $`\mathcal{L}`$ can be. So
 
-$$q(\lambda) \le \tfrac12\lVert w\rVert^2.$$
+```math
+q(\lambda) \le \tfrac12\lVert w\rVert^2.
+```
 
-Any price list is a floor under every road. If one price list's floor equals one road's cost, nothing can beat that road. That is the certificate the code prints: $p^\star = d^\star = 0.011153846$.
+Any price list is a floor under every road. If one price list's floor equals one road's cost, nothing can beat that road. That is the certificate the code prints: $`p^\star = d^\star = 0.011153846`$.
 
 ### Step 3: a zero gap forces prices off the kerb to zero
 
-When $w$ is built from the prices, the gap between the two problems is a sum of terms that cannot be negative:
+When $`w`$ is built from the prices, the gap between the two problems is a sum of terms that cannot be negative:
 
-$$\tfrac12\lVert w\rVert^2 - q(\lambda) = \sum_i \lambda_i\,(s_i - 1).$$
+```math
+\tfrac12\lVert w\rVert^2 - q(\lambda) = \sum_i \lambda_i\,(s_i - 1).
+```
 
-Each term is a price, at least zero, times a clearance surplus, at least zero. A zero total therefore needs every term to be zero. Any house with surplus, standing off its kerb, must have price $\lambda_i = 0$. This is **complementary slackness**, one of the KKT conditions (the optimality conditions for problems with limits). It is how support vectors are read off the multipliers: the houses with $\lambda_i > 0$ are on a kerb.
+Each term is a price, at least zero, times a clearance surplus, at least zero. A zero total therefore needs every term to be zero. Any house with surplus, standing off its kerb, must have price $`\lambda_i = 0`$. This is **complementary slackness**, one of the KKT conditions (the optimality conditions for problems with limits). It is how support vectors are read off the multipliers: the houses with $`\lambda_i > 0`$ are on a kerb.
 
 <details>
 <summary>Detailed proof: the gap identity</summary>
 
-With $w = \sum_i \lambda_i y_i x_i$, the dual function is $q(\lambda) = \sum_i \lambda_i - \tfrac12\lVert w\rVert^2$, because $\lVert w\rVert^2 = \sum_i\sum_j \lambda_i\lambda_j y_i y_j x_i^T x_j$. So
+With $`w = \sum_i \lambda_i y_i x_i`$, the dual function is $`q(\lambda) = \sum_i \lambda_i - \tfrac12\lVert w\rVert^2`$, because $`\lVert w\rVert^2 = \sum_i\sum_j \lambda_i\lambda_j y_i y_j x_i^T x_j`$. So
 
-$$\tfrac12\lVert w\rVert^2 - q(\lambda) = \lVert w\rVert^2 - \sum_i \lambda_i = \sum_i \lambda_i y_i\, w^T x_i - \sum_i \lambda_i.$$
+$`\displaystyle \tfrac12\lVert w\rVert^2 - q(\lambda) = \lVert w\rVert^2 - \sum_i \lambda_i = \sum_i \lambda_i y_i\, w^T x_i - \sum_i \lambda_i.`$
 
-The middle step writes $\lVert w\rVert^2 = w^T w = \sum_i \lambda_i y_i\, w^T x_i$. Add $b\sum_i \lambda_i y_i$, which is zero:
+The middle step writes $`\lVert w\rVert^2 = w^T w = \sum_i \lambda_i y_i\, w^T x_i`$. Add $`b\sum_i \lambda_i y_i`$, which is zero:
 
-$$= \sum_i \lambda_i\bigl(y_i(w^T x_i + b) - 1\bigr) = \sum_i \lambda_i (s_i - 1).$$
+$`\displaystyle = \sum_i \lambda_i\bigl(y_i(w^T x_i + b) - 1\bigr) = \sum_i \lambda_i (s_i - 1).`$
 
-If the road clears every house, each $s_i - 1 \ge 0$, and each $\lambda_i \ge 0$, so every term is at least zero.
+If the road clears every house, each $`s_i - 1 \ge 0`$, and each $`\lambda_i \ge 0`$, so every term is at least zero.
 
 </details>
 
-The converse direction, that a zero-gap pair always exists, is **strong duality**. This card states it without proof: for a convex quadratic program whose straight-line limits can all be met, $d^\star = p^\star$ and the best prices exist (Boyd and Vandenberghe, sections 5.2.3 and 5.5, in Sources). The general theorem, strong duality under Slater's condition (some point meets every limit with room to spare), is on [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md). Here the code exhibits the pair, which is all the certificate needs.
+The converse direction, that a zero-gap pair always exists, is **strong duality**. This card states it without proof: for a convex quadratic program whose straight-line limits can all be met, $`d^\star = p^\star`$ and the best prices exist (Boyd and Vandenberghe, sections 5.2.3 and 5.5, in Sources). The general theorem, strong duality under Slater's condition (some point meets every limit with room to spare), is on [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md). Here the code exhibits the pair, which is all the certificate needs.
 
-At the answer, Northfield's prices total the same as Southgate's, 0.011154 = 0.001231 + 0.009923, and all prices sum to $\lVert w\rVert^2$ = 0.022308, because the gap is zero.
+At the answer, Northfield's prices total the same as Southgate's, 0.011154 = 0.001231 + 0.009923, and all prices sum to $`\lVert w\rVert^2`$ = 0.022308, because the gap is zero.
 
 ### Step 4: the dual is the nearest-points problem
 
-Divide each estate's prices by its total, 0.011154. Then $w$ is that total times the gap between two weighted averages: a point inside Northfield's **convex hull** (the smallest convex region holding all its houses) and a point inside Southgate's.
+Divide each estate's prices by its total, 0.011154. Then $`w`$ is that total times the gap between two weighted averages: a point inside Northfield's **convex hull** (the smallest convex region holding all its houses) and a point inside Southgate's.
 
-Call the price total on each estate $\Lambda$ and the distance between the two averaged points $D$. Then $\sum_i \lambda_i = 2\Lambda$ and $\lVert w\rVert = \Lambda D$, so $q = 2\Lambda - \tfrac12 \Lambda^2 D^2$.
+Call the price total on each estate $`\Lambda`$ and the distance between the two averaged points $`D`$. Then $`\sum_i \lambda_i = 2\Lambda`$ and $`\lVert w\rVert = \Lambda D`$, so $`q = 2\Lambda - \tfrac12 \Lambda^2 D^2`$.
 
-For a fixed $D$ the best total is $\Lambda = 2/D^2$, which makes $q = 2/D^2$. Maximising $q$ therefore means making $D$ as small as possible: pick the two nearest points of the hulls.
+For a fixed $`D`$ the best total is $`\Lambda = 2/D^2`$, which makes $`q = 2/D^2`$. Maximising $`q`$ therefore means making $`D`$ as small as possible: pick the two nearest points of the hulls.
 
-Then $\lVert w\rVert = 2/D$, so the road's width is exactly $D$. Boyd and Vandenberghe (section 8.6, in Sources) give this nearest-points reading of the dual.
+Then $`\lVert w\rVert = 2/D`$, so the road's width is exactly $`D`$. Boyd and Vandenberghe (section 8.6, in Sources) give this nearest-points reading of the dual.
 
 For these houses the nearest Northfield point is house 10 itself, (40.60, 50.70). The nearest Southgate point is (33.01, 39.67), a mix of 0.8897 of house 57 and 0.1103 of house 34, lying on the edge between them. The two points are 13.3907 m apart, which is the width again. The price ratio 0.009923 : 0.001231 is that 0.8897 : 0.1103 mix.
 
 ### Step 5: the method, and how fast it gets there
 
-The code solves the dual by **sequential minimal optimisation** (SMO): change two prices at a time. Moving a single price would break $\sum_i \lambda_i y_i = 0$, but two prices moved together can keep it. Each step picks the pair whose prices most want to move, measured by the KKT violation (how far the worst pair is from satisfying the optimality conditions). It moves them the exact best distance along their line, stopping at zero if a price would go negative.
+The code solves the dual by **sequential minimal optimisation** (SMO): change two prices at a time. Moving a single price would break $`\sum_i \lambda_i y_i = 0`$, but two prices moved together can keep it. Each step picks the pair whose prices most want to move, measured by the KKT violation (how far the worst pair is from satisfying the optimality conditions). It moves them the exact best distance along their line, stopping at zero if a price would go negative.
 
-Iterations count from $k = 0$ with every $\lambda_i = 0$. The stopping test is violation below $10^{-9}$. This run stops at $k = 294$.
+Iterations count from $`k = 0`$ with every $`\lambda_i = 0`$. The stopping test is violation below $`10^{-9}`$. This run stops at $`k = 294`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -172,12 +182,12 @@ Take the three kerb houses from the picture and check the road from them alone. 
 | south kerb direction, 57 to 34 | (68.6 − 28.6, 15.2 − 42.7) | (40.0, −27.5) |
 | turn it square, divide by 2.5 | (27.5, 40.0) / 2.5 | (11, 16) |
 | from house 57 to house 10 | (40.6 − 28.6, 50.7 − 42.7) | (12.0, 8.0) |
-| length of (11, 16) | $\sqrt{121 + 256} = \sqrt{377}$ | 19.4165 |
+| length of (11, 16) | $`\sqrt{121 + 256} = \sqrt{377}`$ | 19.4165 |
 | climb from kerb to kerb along (11, 16) | (11 × 12.0 + 16 × 8.0) / 19.4165 | **13.3907 m** |
-| length of $w$ | 2 / 13.3907 | 0.149358 |
-| $w$, pointing along (11, 16) | 0.149358 × (11, 16) / 19.4165 | (0.084615, 0.123077) |
-| $b$, so house 10 scores +1 | 1 − (0.084615 × 40.6 + 0.123077 × 50.7) | −8.675385 |
-| total price on each estate | $\lVert w\rVert^2 / 2$ = 0.022308 / 2 | 0.011154 |
+| length of $`w`$ | 2 / 13.3907 | 0.149358 |
+| $`w`$, pointing along (11, 16) | 0.149358 × (11, 16) / 19.4165 | (0.084615, 0.123077) |
+| $`b`$, so house 10 scores +1 | 1 − (0.084615 × 40.6 + 0.123077 × 50.7) | −8.675385 |
+| total price on each estate | $`\lVert w\rVert^2 / 2`$ = 0.022308 / 2 | 0.011154 |
 | foot of the square from house 10 onto the south kerb, as a share of the way from 57 to 34 | (12.0 × 40.0 + 8.0 × (−27.5)) / (40.0² + 27.5²) | 0.1103: the nearest Southgate point is 0.8897 of house 57 and 0.1103 of house 34 |
 | split of Southgate's total | 0.8897 and 0.1103 of 0.011154 | 0.009923 and 0.001231 |
 | check: Northfield total = Southgate total | 0.001231 + 0.009923 | 0.011154 |
@@ -190,20 +200,20 @@ A house whose estate record is lost stands at (60.0, 45.0). Its score is 1.9400,
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Keep the hard limits after one Southgate house is moved to (60.0, 45.0) | 0 of 27,000 roads clear every house; soft-margin dual value 2.9116, 29.0163, 290.0636 at $C$ = 1, 10, 100 | The hypothesis that a line splits the estates fails. The primal has no feasible point, and the dual grows without limit as the trespass price rises |
-| Read the width as $1/\lVert w\rVert$ | 6.6953 m | That is centre line to kerb, half the road |
+| Keep the hard limits after one Southgate house is moved to (60.0, 45.0) | 0 of 27,000 roads clear every house; soft-margin dual value 2.9116, 29.0163, 290.0636 at $`C`$ = 1, 10, 100 | The hypothesis that a line splits the estates fails. The primal has no feasible point, and the dual grows without limit as the trespass price rises |
+| Read the width as $`1/\lVert w\rVert`$ | 6.6953 m | That is centre line to kerb, half the road |
 | Draw the road square to the line joining the two estates' average positions, through their midpoint | 4.5548 m wide | Averages use all 60 houses; the widest road depends only on the nearest ones |
-| Take $b$ from house 0, which has price zero | $b$ = −12.0485; 10 houses on the wrong side | $b = y_i - w^T x_i$ holds only for a house on a kerb |
+| Take $`b`$ from house 0, which has price zero | $`b`$ = −12.0485; 10 houses on the wrong side | $`b = y_i - w^T x_i`$ holds only for a house on a kerb |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the same 60 houses from a SplitMix64 random-number generator written out, seed 2026: positions rounded down to 10 cm, each at least 4 m from the surveyor's line $3x + 4y = 300$. Three independent roads reach the answer:
+Both programs build the same 60 houses from a SplitMix64 random-number generator written out, seed 2026: positions rounded down to 10 cm, each at least 4 m from the surveyor's line $`3x + 4y = 300`$. Three independent roads reach the answer:
 
 - **The method:** the dual solved by SMO.
 - **Enumeration:** every road with one house on each kerb, or two on one kerb and one on the other, 27,000 in all, each checked against all 60 houses; the best road always has this form.
-- **The certificate:** primal and dual values, feasibility, $\sum_i \lambda_i y_i$, complementary slackness and the distance between the hulls.
+- **The certificate:** primal and dual values, feasibility, $`\sum_i \lambda_i y_i`$, complementary slackness and the distance between the hulls.
 
 No optimisation or linear-algebra library is imported.
 
@@ -586,12 +596,12 @@ The two outputs match line for line.
 
 Lean proves the two theorems from Why it works for any houses and labels, and checks the hand arithmetic exactly.
 
-- Take prices that are all at least zero, with equal totals on the two estates. Their dual value $q(\lambda)$ is at most $\tfrac12\lVert w\rVert^2$ for every road that clears every house.
-- Suppose $w = \sum_i \lambda_i y_i x_i$ and the totals balance. Then, for any offset $b$, the gap $\tfrac12\lVert w\rVert^2 - q(\lambda)$ equals $\sum_i \lambda_i (s_i - 1)$.
-- Suppose such a road clears every house and its gap is zero. Then no road that clears every house has a shorter $w$, so none is wider.
-- In that case every house off its kerb, with clearance score $s_i$ above 1, has price zero.
-- The hand numbers hold exactly as fractions. The kerb houses score +1, −1 and −1, the prices build $w$, and both estates' totals match.
-- The gap is exactly zero, with $p^\star = d^\star = 377/33800$. The width squared is $260^2/377$, and the lost record scores exactly 1.94.
+- Take prices that are all at least zero, with equal totals on the two estates. Their dual value $`q(\lambda)`$ is at most $`\tfrac12\lVert w\rVert^2`$ for every road that clears every house.
+- Suppose $`w = \sum_i \lambda_i y_i x_i`$ and the totals balance. Then, for any offset $`b`$, the gap $`\tfrac12\lVert w\rVert^2 - q(\lambda)`$ equals $`\sum_i \lambda_i (s_i - 1)`$.
+- Suppose such a road clears every house and its gap is zero. Then no road that clears every house has a shorter $`w`$, so none is wider.
+- In that case every house off its kerb, with clearance score $`s_i`$ above 1, has price zero.
+- The hand numbers hold exactly as fractions. The kerb houses score +1, −1 and −1, the prices build $`w`$, and both estates' totals match.
+- The gap is exactly zero, with $`p^\star = d^\star = 377/33800`$. The width squared is $`260^2/377`$, and the lost record scores exactly 1.94.
 
 Building the 60 houses, the SMO solver, the 27,000-road search and the soft margin are left to the Python and Rust checks.
 
@@ -805,7 +815,7 @@ example : (11 / 130 : ℚ) * 60 + (16 / 130) * 45 + (-11278 / 1300) = 97 / 50 :=
 > - **Guess first: does a far-off house matter?** Move house 0 to the site's corner, `(0.0, 100.0)`. The road stays 13.3907 m with the same support vectors 10, 34 and 57. Only the solver's path changes: 171 steps instead of 294.
 > - **Guess first: what happens if a near-kerb house moves into the road?** House 13 stands 0.1442 m outside the north kerb with price zero. Move it to `(42.0, 49.0)`. It becomes a support vector, house 10 drops out, and the road narrows to 12.7830 m.
 > - **Guess first: does looser stopping change the road?** Set `tol=1e-3` in `smo`. The width moves by under 2 mm, in the third decimal place, and that is enough for the roads-agree assert to stop the run.
-> - **Guess first: what does the trespass price buy?** Raise $C$ in the soft-margin loop. The dual value grows in step with $C$, because no road clears the moved house at any price.
+> - **Guess first: what does the trespass price buy?** Raise $`C`$ in the soft-margin loop. The dual value grows in step with $`C`$, because no road clears the moved house at any price.
 
 ---
 
@@ -814,10 +824,10 @@ example : (11 / 130 : ℚ) * 60 + (16 / 130) * 45 + (-11278 / 1300) = 97 / 50 :=
 > [!warning]
 > **Thinking every house shapes the road.** It is natural to expect the road to sit between the two estates' centres, with all 60 houses having a say. A road drawn that way, square to the line joining the averages, is only 4.5548 m wide, against 13.3907 m. The widest road is set by three houses alone. The dual says so exactly: 57 of the 60 prices are zero.
 >
-> - **Width read as $1/\lVert w\rVert$.** That gives 6.6953 m, the half road from centre line to kerb.
-> - **Offset taken from any house.** $b = y_i - w^T x_i$ only for a house on a kerb. From house 0, price zero, it gives −12.0485 and puts 10 houses on the wrong side.
+> - **Width read as $`1/\lVert w\rVert`$.** That gives 6.6953 m, the half road from centre line to kerb.
+> - **Offset taken from any house.** $`b = y_i - w^T x_i`$ only for a house on a kerb. From house 0, price zero, it gives −12.0485 and puts 10 houses on the wrong side.
 > - **Close is not the same as support.** House 13 is 0.1442 m outside the north kerb, yet its price is 0. Support vectors are read off the prices, not off a distance cut-off.
-> - **Hard limits on data that a line cannot split.** With one house moved across, 0 of 27,000 candidate roads work, and the dual value runs away: 290.0636 at $C = 100$.
+> - **Hard limits on data that a line cannot split.** With one house moved across, 0 of 27,000 candidate roads work, and the dual value runs away: 290.0636 at $`C = 100`$.
 
 ---
 
@@ -829,21 +839,21 @@ example : (11 / 130 : ℚ) * 60 + (16 / 130) * 45 + (-11278 / 1300) = 97 / 50 :=
 - **SVM software.** Standard solvers are refinements of the SMO method used here. A large soft-margin problem can instead be trained by stochastic gradient on the hinge loss, which charges each house its shortfall below a score of 1, or zero if it has none ([Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md)).
 
 > **Say it back**
-> The widest straight road between two labelled groups is the shortest vector $w$ that gives every point a score of at least 1 on its own side, and the road is $2/\lVert w\rVert$ wide. That is a convex quadratic program. Pricing each point's limit gives a dual program whose value can never exceed the road's cost, so a matching pair proves the road is best. The gap is a sum of price times surplus, so a zero gap forces every point off the kerb to have price zero. The points with positive prices are the support vectors: here three houses out of 60 fix a road 13.39 m wide.
+> The widest straight road between two labelled groups is the shortest vector $`w`$ that gives every point a score of at least 1 on its own side, and the road is $`2/\lVert w\rVert`$ wide. That is a convex quadratic program. Pricing each point's limit gives a dual program whose value can never exceed the road's cost, so a matching pair proves the road is best. The gap is a sum of price times surplus, so a zero gap forces every point off the kerb to have price zero. The points with positive prices are the support vectors: here three houses out of 60 fix a road 13.39 m wide.
 
 ---
 
 ## What this builds on
 
-- [Quadratic programs](01-quadratic-programs-and-markowitz.md): the form $\tfrac12 z^T Q z + c^T z$ under straight-line limits, which the widest road fills with $Q = \text{diag}(1, 1, 0)$.
+- [Quadratic programs](01-quadratic-programs-and-markowitz.md): the form $`\tfrac12 z^T Q z + c^T z`$ under straight-line limits, which the widest road fills with $`Q = \text{diag}(1, 1, 0)`$.
 - [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md): the dual function, weak duality in general, and the theorem that the gap closes for convex problems under Slater's condition, which this card states for its quadratic program.
 - [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md): another straight-line classifier, which draws the line where the data are most likely instead of where the gap is widest.
 - [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): the classifier, the distance to a line, the soft margin and kernels, used here as given.
 
 ## Where this goes next
 
-- [Second-order cone programs](04-second-order-cone-programs.md), the next card: limits shaped like cones, which hold a road-width constraint written with $\lVert w\rVert$ directly instead of squared.
-- [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md): the same kind of trade-off with an $\lVert w\rVert_1$ penalty, which picks out a few features the way the dual picks out a few houses.
+- [Second-order cone programs](04-second-order-cone-programs.md), the next card: limits shaped like cones, which hold a road-width constraint written with $`\lVert w\rVert`$ directly instead of squared.
+- [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md): the same kind of trade-off with an $`\lVert w\rVert_1`$ penalty, which picks out a few features the way the dual picks out a few houses.
 - [Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md): how the soft-margin problem is trained when the houses number in millions and the 60-by-60 table of dot products cannot be built.
 - [Robust and chance constraints](10-robust-and-chance-constrained-optimisation.md): a road that stays clear even when each house's surveyed position is off by a known amount.
 
@@ -856,7 +866,7 @@ The question this card leaves open is how fast a pair-at-a-time method like SMO 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Boser, B. E., Guyon, I. M. and Vapnik, V. N. "A training algorithm for optimal margin classifiers." *Proceedings of the Fifth Annual Workshop on Computational Learning Theory* (1992), 144–152. [doi:10.1145/130385.130401](https://doi.org/10.1145/130385.130401). The maximum-margin classifier posed as a quadratic program and solved through its dual.
-- Cortes, C. and Vapnik, V. "Support-vector networks." *Machine Learning* 20 (1995), 273–297. [doi:10.1007/BF00994018](https://doi.org/10.1007/BF00994018). The soft margin, with the trespass price $C$, used in What breaks.
+- Cortes, C. and Vapnik, V. "Support-vector networks." *Machine Learning* 20 (1995), 273–297. [doi:10.1007/BF00994018](https://doi.org/10.1007/BF00994018). The soft margin, with the trespass price $`C`$, used in What breaks.
 - Boyd, S. and Vandenberghe, L. *Convex Optimization.* Cambridge University Press, 2004. [doi:10.1017/CBO9780511804441](https://doi.org/10.1017/CBO9780511804441). Weak and strong duality and the KKT conditions (chapter 5), and the separating-road problem with its convex-hull dual (section 8.6).
 - Keerthi, S. S., Shevade, S. K., Bhattacharyya, C. and Murthy, K. R. K. "Improvements to Platt's SMO algorithm for SVM classifier design." *Neural Computation* 13, no. 3 (2001), 637–649. [doi:10.1162/089976601300014493](https://doi.org/10.1162/089976601300014493). The most-violating-pair rule the code uses.
 - Keerthi, S. S. and Gilbert, E. G. "Convergence of a generalized SMO algorithm for SVM classifier design." *Machine Learning* 46 (2002), 351–360. [doi:10.1023/A:1012431217818](https://doi.org/10.1023/A:1012431217818). The proof that SMO stops for any positive tolerance.

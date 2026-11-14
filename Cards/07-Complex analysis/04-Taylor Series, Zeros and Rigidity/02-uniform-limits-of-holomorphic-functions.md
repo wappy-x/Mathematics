@@ -12,7 +12,7 @@ At z = 1 the tower stands 1 + 1/4 + 1/9 + … = π^2/6 = 1.644934 high. At z = �
 
 Floor n never measures more than 1/n^2 on the disc, and those ceilings have a finite total, so after N floors the rest is under 1/N at every point at once. That is the Weierstrass M-test, and "at every point at once" is uniform convergence.
 
-On the real line an even limit of smooth curves can have a corner. In the plane it cannot: inside the disc the tower's complex derivative is the stack of the floors' derivatives, 1.386294 = 2 ln 2 at z = 1/2. From here the tower is called $f$, and its first N floors added up $S_N$.
+On the real line an even limit of smooth curves can have a corner. In the plane it cannot: inside the disc the tower's complex derivative is the stack of the floors' derivatives, 1.386294 = 2 ln 2 at z = 1/2. From here the tower is called $`f`$, and its first N floors added up $`S_N`$.
 
 **When holomorphic functions converge uniformly on every closed disc inside an open region, the limit is holomorphic there, and its derivatives are the limits of their derivatives.**
 
@@ -28,33 +28,37 @@ To scale: 80 units per 1, 0 at (180, 120). The points 1 and −1 sit at (260, 12
 
 ## The formula
 
-Notation first, in words. $\max$ over a set means the largest value there. An open region is a set of points in the plane that holds a small disc round each of its points, so it has no rim of its own. A **closed disc inside** an open region is a disc, rim included, that sits wholly in the region.
+Notation first, in words. $`\max`$ over a set means the largest value there. An open region is a set of points in the plane that holds a small disc round each of its points, so it has no rim of its own. A **closed disc inside** an open region is a disc, rim included, that sits wholly in the region.
 
-$$\max_{|z| \le 1} \big|f(z) - S_N(z)\big| \;\le\; \sum_{n > N} M_n \;<\; \frac{1}{N}, \qquad M_n = \frac{1}{n^2}$$
+```math
+\max_{|z| \le 1} \big|f(z) - S_N(z)\big| \;\le\; \sum_{n > N} M_n \;<\; \frac{1}{N}, \qquad M_n = \frac{1}{n^2}
+```
 
 **Read it aloud:** the worst gap anywhere on the disc between the tower and its first N floors is at most the sum of the remaining ceilings, which is under one over N.
 
-$$f'(z_0) \;=\; \frac{1}{2\pi i}\oint_{|\zeta - z_0| = \rho} \frac{f(\zeta)}{(\zeta - z_0)^2}\,d\zeta \;=\; \lim_{N\to\infty} S_N'(z_0) \;=\; \sum_{n=1}^{\infty} \frac{z_0^{\,n-1}}{n}$$
+```math
+f'(z_0) \;=\; \frac{1}{2\pi i}\oint_{|\zeta - z_0| = \rho} \frac{f(\zeta)}{(\zeta - z_0)^2}\,d\zeta \;=\; \lim_{N\to\infty} S_N'(z_0) \;=\; \sum_{n=1}^{\infty} \frac{z_0^{\,n-1}}{n}
+```
 
 **Read it aloud:** the slope of the tower at a point inside is an average of its values round a small circle, and it equals the stack of the floors' slopes.
 
-The two are linked by the **Cauchy estimate**: the error in the slope at $z_0$ is at most the worst error in value round the circle, divided by $\rho$.
+The two are linked by the **Cauchy estimate**: the error in the slope at $`z_0`$ is at most the worst error in value round the circle, divided by $`\rho`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$, $n$, $N$ | a point of the disc; a floor's number; how many floors are kept | z = 1/2; N = 10 | past the rim, floors blow up |
-| $f$, $S_N$ | the finished tower; its first N floors added up | f(1) = 1.644934 | more floors, a smaller gap everywhere |
-| $M_n$ | the ceiling: floor n's largest size on the disc | 1/n^2 | a ceiling like 1/n no longer adds up |
-| $U$, $K$ | an open region; a closed, bounded piece of it | the open unit disc | — |
-| $z_0$, $\rho$, $\zeta$ | the point; the circle's radius round it; a point on that circle | 1/2; 0.4 | a sharper estimate, until the circle leaves the disc |
-| $f'$, $S_N'$ | complex derivatives (slopes) of the tower and of its first N floors | f'(1/2) = 1.386294 | — |
-| $s$, $\sigma$ | zeta's complex input; a real number above 1 | s = 2 + 3i; σ = 2 | larger σ, smaller ceilings |
-| $c$, $R$, $r$, $E_N$, $k$, $h$, $b$, $G$ | Detailed proof only: centre, radius, smaller radius; worst gap on the rim; derivative order; a small step; values on a circle and their Cauchy integral | — | — |
+| $`z`$, $`n`$, $`N`$ | a point of the disc; a floor's number; how many floors are kept | z = 1/2; N = 10 | past the rim, floors blow up |
+| $`f`$, $`S_N`$ | the finished tower; its first N floors added up | f(1) = 1.644934 | more floors, a smaller gap everywhere |
+| $`M_n`$ | the ceiling: floor n's largest size on the disc | 1/n^2 | a ceiling like 1/n no longer adds up |
+| $`U`$, $`K`$ | an open region; a closed, bounded piece of it | the open unit disc | — |
+| $`z_0`$, $`\rho`$, $`\zeta`$ | the point; the circle's radius round it; a point on that circle | 1/2; 0.4 | a sharper estimate, until the circle leaves the disc |
+| $`f'`$, $`S_N'`$ | complex derivatives (slopes) of the tower and of its first N floors | f'(1/2) = 1.386294 | — |
+| $`s`$, $`\sigma`$ | zeta's complex input; a real number above 1 | s = 2 + 3i; σ = 2 | larger σ, smaller ceilings |
+| $`c`$, $`R`$, $`r`$, $`E_N`$, $`k`$, $`h`$, $`b`$, $`G`$ | Detailed proof only: centre, radius, smaller radius; worst gap on the rim; derivative order; a small step; values on a circle and their Cauchy integral | — | — |
 
 ### When it holds
 
-- **Holomorphic approximations on an open region $U$.** A real interval is not enough: sin(nx)/n shrinks evenly on the line, yet its slope at 0 stays 1.
-- **Uniform on every closed disc inside $U$, not point by point.** Evenness lets the limit pass through the integral in Step 2.
+- **Holomorphic approximations on an open region $`U`$.** A real interval is not enough: sin(nx)/n shrinks evenly on the line, yet its slope at 0 stays 1.
+- **Uniform on every closed disc inside $`U`$, not point by point.** Evenness lets the limit pass through the integral in Step 2.
 - **The conclusion is for the open region only.** The tower is continuous on the closed disc, but its slope series at the rim point 1 never settles.
 - **Uniform on the whole region is not required.** Each closed disc inside is enough.
 
@@ -68,27 +72,27 @@ A holomorphic function's value at a point is an average of its values round a ci
 
 ### Step 1: the ceilings make the tower converge evenly
 
-On the closed disc $|z| \le 1$, so $|z^n/n^2| \le 1/n^2$. Each 1/n^2 is below 1/((n − 1)n) = 1/(n − 1) − 1/n, and those differences telescope: everything past floor N totals less than 1/N. By the M-test the partial sums converge uniformly on the closed disc.
+On the closed disc $`|z| \le 1`$, so $`|z^n/n^2| \le 1/n^2`$. Each 1/n^2 is below 1/((n − 1)n) = 1/(n − 1) − 1/n, and those differences telescope: everything past floor N totals less than 1/N. By the M-test the partial sums converge uniformly on the closed disc.
 
 After 10 floors the worst gap is 0.095166 against the promise 0.1. It sits at z = 1, since every coefficient is positive.
 
 ### Step 2: the limit keeps Cauchy's formula
 
-Cauchy's formula holds for each polynomial $S_N$ on the circle of radius 0.4 round 1/2: at a point z inside, $S_N(z)$ is the loop integral of $S_N(\zeta)/(\zeta - z)$, divided by $2\pi i$.
+Cauchy's formula holds for each polynomial $`S_N`$ on the circle of radius 0.4 round 1/2: at a point z inside, $`S_N(z)`$ is the loop integral of $`S_N(\zeta)/(\zeta - z)`$, divided by $`2\pi i`$.
 
-Swap in $f$: the integrand (the function inside the integral) moves by at most the worst gap divided by z's distance to the circle. The circle has length $2\pi\rho$, so the integrals differ by at most the worst gap times $\rho$ over that distance (length times maximum, [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md)).
+Swap in $`f`$: the integrand (the function inside the integral) moves by at most the worst gap divided by z's distance to the circle. The circle has length $`2\pi\rho`$, so the integrals differ by at most the worst gap times $`\rho`$ over that distance (length times maximum, [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md)).
 
-The gap goes to 0, so $f$ inside the circle is Cauchy's integral of its own values.
+The gap goes to 0, so $`f`$ inside the circle is Cauchy's integral of its own values.
 
 ### Step 3: a Cauchy integral is holomorphic
 
-Differentiating under the integral sign works for any continuous values on the circle, holomorphic or not, and $f$ is continuous as a uniform limit of continuous functions. So $f$ has a complex derivative inside the circle, and every point of the open disc has such a circle round it.
+Differentiating under the integral sign works for any continuous values on the circle, holomorphic or not, and $`f`$ is continuous as a uniform limit of continuous functions. So $`f`$ has a complex derivative inside the circle, and every point of the open disc has such a circle round it.
 
 ### Step 4: the slopes follow, with a bound
 
-The derivative formula applied to $f - S_N$ gives the Cauchy estimate. With $\rho$ = 0.4 and a gap below 1/10, the slope of 10 floors at 1/2 is within 0.25 of the truth; the actual error is 0.000165. The bound shrinks with N, so $S_N'$, the stack of floor slopes $z^{n-1}/n$, tends to $f'$.
+The derivative formula applied to $`f - S_N`$ gives the Cauchy estimate. With $`\rho`$ = 0.4 and a gap below 1/10, the slope of 10 floors at 1/2 is within 0.25 of the truth; the actual error is 0.000165. The bound shrinks with N, so $`S_N'`$, the stack of floor slopes $`z^{n-1}/n`$, tends to $`f'`$.
 
-Multiplied by z, the stack is z + z^2/2 + z^3/3 + …, which is −log(1 − z) ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)). So $f'(z) = -\log(1 - z)/z$: at 1/2 that is 2 ln 2 = 1.386294, and at i/2 it is 0.927295 + 0.223144i.
+Multiplied by z, the stack is z + z^2/2 + z^3/3 + …, which is −log(1 − z) ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)). So $`f'(z) = -\log(1 - z)/z`$: at 1/2 that is 2 ln 2 = 1.386294, and at i/2 it is 0.927295 + 0.223144i.
 
 ### Step 5: the rim is left out
 
@@ -96,22 +100,22 @@ At z = 1 the floor slopes are 1, 1/2, 1/3, …: the harmonic series, 7.485471 af
 
 ### Step 6: why the zeta function will be holomorphic
 
-The zeta function, zeta(s), is the sum of $n^{-s}$ over n = 1, 2, 3, …. Each floor $n^{-s} = e^{-s\ln n}$ is holomorphic in $s$, with size $n^{-\text{Re}\,s}$, where Re s is the real part of s. At s = 2 + 3i, floor 5 is 0.004627 + 0.039732i, of size 0.040000 = 1/5^2.
+The zeta function, zeta(s), is the sum of $`n^{-s}`$ over n = 1, 2, 3, …. Each floor $`n^{-s} = e^{-s\ln n}`$ is holomorphic in $`s`$, with size $`n^{-\text{Re}\,s}`$, where Re s is the real part of s. At s = 2 + 3i, floor 5 is 0.004627 + 0.039732i, of size 0.040000 = 1/5^2.
 
-Any closed disc inside Re s > 1 sits in a half-plane Re s ≥ σ with σ > 1, whose ceilings $n^{-\sigma}$ add up; so zeta is holomorphic there.
+Any closed disc inside Re s > 1 sits in a half-plane Re s ≥ σ with σ > 1, whose ceilings $`n^{-\sigma}`$ add up; so zeta is holomorphic there.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** Each $S_N$ is holomorphic on the open region $U$, and $\max_K |f - S_N| \to 0$ for every closed bounded $K$ inside $U$.
+**Setting.** Each $`S_N`$ is holomorphic on the open region $`U`$, and $`\max_K |f - S_N| \to 0`$ for every closed bounded $`K`$ inside $`U`$.
 
 **Continuity.** A uniform limit of continuous functions is continuous ([Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md)).
 
-**Cauchy's formula in the limit.** Fix a closed disc $|\zeta - c| \le R$ in $U$ and $|z - c| \le r < R$. For each $N$, $S_N(z) = \frac{1}{2\pi i}\oint \frac{S_N(\zeta)}{\zeta - z}d\zeta$. The same integral with $f$ differs by at most $R\,E_N/(R - r)$, where $E_N = \max_{|\zeta - c| = R}|f - S_N|$. Letting $N \to \infty$ gives the formula for $f$.
+**Cauchy's formula in the limit.** Fix a closed disc $`|\zeta - c| \le R`$ in $`U`$ and $`|z - c| \le r < R`$. For each $`N`$, $`S_N(z) = \frac{1}{2\pi i}\oint \frac{S_N(\zeta)}{\zeta - z}d\zeta`$. The same integral with $`f`$ differs by at most $`R\,E_N/(R - r)`$, where $`E_N = \max_{|\zeta - c| = R}|f - S_N|`$. Letting $`N \to \infty`$ gives the formula for $`f`$.
 
-**Holomorphy.** For continuous $b$ on the circle, $G(z) = \frac{1}{2\pi i}\oint \frac{b(\zeta)}{\zeta - z}d\zeta$ has difference quotients $\frac{1}{2\pi i}\oint \frac{b(\zeta)\,d\zeta}{(\zeta - z - h)(\zeta - z)}$, whose integrands converge uniformly as $h \to 0$. So $G$ has a complex derivative, and $f = G$ with $b = f$.
+**Holomorphy.** For continuous $`b`$ on the circle, $`G(z) = \frac{1}{2\pi i}\oint \frac{b(\zeta)}{\zeta - z}d\zeta`$ has difference quotients $`\frac{1}{2\pi i}\oint \frac{b(\zeta)\,d\zeta}{(\zeta - z - h)(\zeta - z)}`$, whose integrands converge uniformly as $`h \to 0`$. So $`G`$ has a complex derivative, and $`f = G`$ with $`b = f`$.
 
-**Derivatives.** The $k$-th derivative formula applied to $f - S_N$ gives $\max_{|z - c| \le r} |f^{(k)} - S_N^{(k)}| \le \frac{k!\,R}{(R - r)^{k+1}} E_N \to 0$. Finitely many such discs cover $K$.
+**Derivatives.** The $`k`$-th derivative formula applied to $`f - S_N`$ gives $`\max_{|z - c| \le r} |f^{(k)} - S_N^{(k)}| \le \frac{k!\,R}{(R - r)^{k+1}} E_N \to 0`$. Finitely many such discs cover $`K`$.
 
 </details>
 
@@ -337,9 +341,9 @@ Lean proves the main theorem for every open region, and the tower's bound and sl
 
 - If holomorphic functions converge uniformly on every closed disc inside an open region, the limit is holomorphic there.
 - For every k, their k-th derivatives then converge to the limit's k-th derivative, uniformly on a small disc round each point.
-- For N ≥ 1 and any z with $|z| \le 1$, the gap $|f(z) - S_N(z)|$ is at most the sum of the remaining ceilings.
+- For N ≥ 1 and any z with $`|z| \le 1`$, the gap $`|f(z) - S_N(z)|`$ is at most the sum of the remaining ceilings.
 - That sum of ceilings is under 1/N, so one bound serves every point of the closed disc.
-- At every z with $|z| < 1$, the tower's complex derivative is the stack of the floors' slopes $z^{n-1}/n$.
+- At every z with $`|z| < 1`$, the tower's complex derivative is the stack of the floors' slopes $`z^{n-1}/n`$.
 - At z = 1/2 that slope is exactly 2 ln 2.
 - The hand arithmetic holds exactly: the telescoping step, the even floors' quarter, the Cauchy estimate 0.25 and the figure's coordinates.
 

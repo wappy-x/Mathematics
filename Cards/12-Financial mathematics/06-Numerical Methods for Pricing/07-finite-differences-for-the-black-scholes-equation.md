@@ -34,25 +34,31 @@ Nothing in that chart knows the Black-Scholes formula. It appears only as a refe
 
 ## The formula
 
-Notation first, in words. Prices are measured in logs: $x$ is the natural log of the price divided by the strike, 0 at the strike, negative below and positive above. Time runs backwards, as time still to go: $\tau$, read "tau", the years remaining, 0 on expiry day and 1 today.
+Notation first, in words. Prices are measured in logs: $`x`$ is the natural log of the price divided by the strike, 0 at the strike, negative below and positive above. Time runs backwards, as time still to go: $`\tau`$, read "tau", the years remaining, 0 on expiry day and 1 today.
 
-A value at one grid point is $V$, its price node $i$ written below and its time row $n$ above. Between nodes the steps are $h$ across and $k$ up. The bank rate is $r$, the dividend yield $q$, and the volatility $\sigma$, read "sigma".
+A value at one grid point is $`V`$, its price node $`i`$ written below and its time row $`n`$ above. Between nodes the steps are $`h`$ across and $`k`$ up. The bank rate is $`r`$, the dividend yield $`q`$, and the volatility $`\sigma`$, read "sigma".
 
 In those coordinates the Black-Scholes equation reads
 
-$$\frac{\partial V}{\partial \tau} \;=\; a\,\frac{\partial^2 V}{\partial x^2} \;+\; b\,\frac{\partial V}{\partial x} \;-\; r\,V, \qquad a = \tfrac12\sigma^2, \quad b = r - q - \tfrac12\sigma^2 .$$
+```math
+\frac{\partial V}{\partial \tau} \;=\; a\,\frac{\partial^2 V}{\partial x^2} \;+\; b\,\frac{\partial V}{\partial x} \;-\; r\,V, \qquad a = \tfrac12\sigma^2, \quad b = r - q - \tfrac12\sigma^2 .
+```
 
-The curly-d symbols are partial derivatives: $\partial V/\partial \tau$ is how fast the value changes as the time to go grows, holding the price still, $\partial V/\partial x$ is its slope across prices, and $\partial^2 V/\partial x^2$ is its curvature across prices ([Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)).
+The curly-d symbols are partial derivatives: $`\partial V/\partial \tau`$ is how fast the value changes as the time to go grows, holding the price still, $`\partial V/\partial x`$ is its slope across prices, and $`\partial^2 V/\partial x^2`$ is its curvature across prices ([Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)).
 
 **Read it aloud:** give the option one more instant of life and its value gains three things — curvature spread by volatility, a sideways slide from the drift, a steady drain at the bank rate.
 
 Replace the derivatives by differences, multiply through by the time step, and two ratios carry everything:
 
-$$\nu = \frac{a\,k}{h^2}, \qquad \eta = \frac{b\,k}{2h}.$$
+```math
+\nu = \frac{a\,k}{h^2}, \qquad \eta = \frac{b\,k}{2h}.
+```
 
-The scheme is one line, with a dial $\theta$, read "theta", deciding how much of the right-hand side is charged to the new row instead of the old:
+The scheme is one line, with a dial $`\theta`$, read "theta", deciding how much of the right-hand side is charged to the new row instead of the old:
 
-$$-\theta(\nu-\eta)\,V_{i-1}^{n+1} + \big(1 + \theta(2\nu + r k)\big)V_i^{n+1} - \theta(\nu+\eta)\,V_{i+1}^{n+1} \;=\; V_i^{n} + (1-\theta)\Big[(\nu-\eta)V_{i-1}^{n} - (2\nu + r k)V_i^{n} + (\nu+\eta)V_{i+1}^{n}\Big].$$
+```math
+-\theta(\nu-\eta)\,V_{i-1}^{n+1} + \big(1 + \theta(2\nu + r k)\big)V_i^{n+1} - \theta(\nu+\eta)\,V_{i+1}^{n+1} \;=\; V_i^{n} + (1-\theta)\Big[(\nu-\eta)V_{i-1}^{n} - (2\nu + r k)V_i^{n} + (\nu+\eta)V_{i+1}^{n}\Big].
+```
 
 **Read it aloud:** the new value, tied to its two new neighbours, equals the old value nudged by its two old neighbours, the dial setting how the nudge splits between rows.
 
@@ -60,27 +66,29 @@ Three settings have names. At 0 the scheme is **explicit**: the left side is the
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | the option's value at one grid point | starts as the payoff, ends at 9.227084 | — |
-| $i$, $n$ | which price node, which time row | 0 to 200 each | — |
-| $S$, $K$ | Acme's price and the strike | 100.00 and 100.00 | rises with the price, falls with the strike |
-| $x$ | log-moneyness: the log of price over strike | 0 at the strike; the grid runs −1 to +1, so 36.79 to 271.83 | wider grid, coarser cells, worse answer |
-| $\tau$ | time still to go, in years | 0 on the bottom row, 1 on the top | — |
-| $h$, $k$ | the step across, the step up | 0.010000 and 0.005000 | faster runs, cruder prices |
-| $M$, $N$ | price cells, time steps | 200 and 200 | error falls like the square of the step |
-| $\theta$ | how much of the nudge the new row carries | 0, one half, or 1 | at one half and above, no explosion is possible |
-| $\nu$ | the spreading ratio, read "nu" | 1.000000 | past one half the explicit scheme detonates |
-| $\eta$ | the sliding ratio, read "eta" | 0.002500 | the drift's share of a step |
-| $a$, $b$ | spreading and sliding coefficients | 0.020000 and 0.010000 | — |
-| $r$, $q$, $\sigma$, $T$ | bank rate, dividend yield, volatility, the option's life | 5%, 2%, 20%, 1 year | — |
+| $`V`$ | the option's value at one grid point | starts as the payoff, ends at 9.227084 | — |
+| $`i`$, $`n`$ | which price node, which time row | 0 to 200 each | — |
+| $`S`$, $`K`$ | Acme's price and the strike | 100.00 and 100.00 | rises with the price, falls with the strike |
+| $`x`$ | log-moneyness: the log of price over strike | 0 at the strike; the grid runs −1 to +1, so 36.79 to 271.83 | wider grid, coarser cells, worse answer |
+| $`\tau`$ | time still to go, in years | 0 on the bottom row, 1 on the top | — |
+| $`h`$, $`k`$ | the step across, the step up | 0.010000 and 0.005000 | faster runs, cruder prices |
+| $`M`$, $`N`$ | price cells, time steps | 200 and 200 | error falls like the square of the step |
+| $`\theta`$ | how much of the nudge the new row carries | 0, one half, or 1 | at one half and above, no explosion is possible |
+| $`\nu`$ | the spreading ratio, read "nu" | 1.000000 | past one half the explicit scheme detonates |
+| $`\eta`$ | the sliding ratio, read "eta" | 0.002500 | the drift's share of a step |
+| $`a`$, $`b`$ | spreading and sliding coefficients | 0.020000 and 0.010000 | — |
+| $`r`$, $`q`$, $`\sigma`$, $`T`$ | bank rate, dividend yield, volatility, the option's life | 5%, 2%, 20%, 1 year | — |
 
-Two edges finish the setup, because at the outermost live node the difference formula reaches for a neighbour that is not there. Far below its strike a call is worthless; far above it is worth a share, dividend-shrunk, minus the discounted strike. Here $x_{\min} = -1$ and $x_{\max} = +1$ are the grid's lowest and highest log prices.
+Two edges finish the setup, because at the outermost live node the difference formula reaches for a neighbour that is not there. Far below its strike a call is worthless; far above it is worth a share, dividend-shrunk, minus the discounted strike. Here $`x_{\min} = -1`$ and $`x_{\max} = +1`$ are the grid's lowest and highest log prices.
 
-$$V(x_{\min}, \tau) = 0, \qquad V(x_{\max}, \tau) = K e^{x_{\max}} e^{-q\tau} - K e^{-r\tau}.$$
+```math
+V(x_{\min}, \tau) = 0, \qquad V(x_{\max}, \tau) = K e^{x_{\max}} e^{-q\tau} - K e^{-r\tau}.
+```
 
 ### When it holds
 
 - **The equation is Black-Scholes.** Constant bank rate, dividend yield and volatility, no jumps in the price, hedging at every instant. Let jumpiness vary and the grid still runs, but the two ratios change from node to node ([Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
-- **The grid is wide enough for its edges to be true.** Five times $\sigma\sqrt{T}$ either side is the −1 to +1 used here; squeezed to −0.2 and +0.2 the same scheme comes out at 8.901907.
+- **The grid is wide enough for its edges to be true.** Five times $`\sigma\sqrt{T}`$ either side is the −1 to +1 used here; squeezed to −0.2 and +0.2 the same scheme comes out at 8.901907.
 - **Explicit steps keep the spreading ratio at or under one half.** Break that and the price does not drift off, it detonates: −1.17e+93 on this grid.
 - **The cells resolve the payoff.** The kink at the strike falls inside one cell, which needs the payoff averaged across it; left as the payoff at the node, the same grid misses by thirty times as much. Second-order accuracy assumes smooth curvature, and the kink is where that assumption is thinnest.
 
@@ -96,7 +104,7 @@ That equation is **local**: it ties the value at a point to the value beside it 
 
 ### Step 1: straighten the equation before touching it
 
-In the raw price the equation carries the coefficients $\tfrac12\sigma^2 S^2$ and $(r-q)S$, different at every price level, so the arithmetic and the stability rule would change from node to node. Putting the log of price over strike in place of the price makes both constant, and spaces the nodes evenly in percentage terms: one cell is 1% of the price everywhere on the grid.
+In the raw price the equation carries the coefficients $`\tfrac12\sigma^2 S^2`$ and $`(r-q)S`$, different at every price level, so the arithmetic and the stability rule would change from node to node. Putting the log of price over strike in place of the price makes both constant, and spaces the nodes evenly in percentage terms: one cell is 1% of the price everywhere on the grid.
 
 Time is changed for another reason. The payoff is known at the end, so the equation runs backwards in the calendar; measuring time as years still to go turns that into forwards.
 
@@ -104,7 +112,9 @@ Time is changed for another reason. The payoff is known at the end, so the equat
 <summary>The algebra of the change of variables, if you want it</summary>
 
 The chain rule gives three replacements: the calendar derivative flips sign, the price times the price-derivative becomes the log-derivative, and the price squared times the second price-derivative becomes the second log-derivative minus the first. Substituting and collecting leaves
-$$V_\tau = \tfrac12\sigma^2 V_{xx} + \left(r - q - \tfrac12\sigma^2\right)V_x - rV,$$
+
+$`\displaystyle V_\tau = \tfrac12\sigma^2 V_{xx} + \left(r - q - \tfrac12\sigma^2\right)V_x - rV,`$
+
 subscripts standing for derivatives. The half-sigma-squared in the sliding coefficient is the same drag that sits in the formula card's drift: a log grows more slowly than the thing it measures.
 
 </details>
@@ -113,7 +123,9 @@ subscripts standing for derivatives. The half-sigma-squared in the sliding coeff
 
 Three values in a row give curvature, two give a slope:
 
-$$\frac{\partial^2 V}{\partial x^2} \approx \frac{V_{i+1} - 2V_i + V_{i-1}}{h^2}, \qquad \frac{\partial V}{\partial x} \approx \frac{V_{i+1} - V_{i-1}}{2h}.$$
+```math
+\frac{\partial^2 V}{\partial x^2} \approx \frac{V_{i+1} - 2V_i + V_{i-1}}{h^2}, \qquad \frac{\partial V}{\partial x} \approx \frac{V_{i+1} - V_{i-1}}{2h}.
+```
 
 Both are wrong by an amount proportional to the square of the step. Centring them kills the error terms of the step's own size, which is why they straddle the node instead of leaning to one side.
 
@@ -150,15 +162,17 @@ Far above the strike exercise is near certain: the holder effectively owns a sha
 
 For any dial setting above 0, each row is 199 equations in 199 unknowns. Every equation mentions a node and its two neighbours only, so the matrix has three non-zero bands and nothing else: it is **tridiagonal**.
 
-That needs no general elimination ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)). One sweep down removes each equation's lower neighbour, one sweep back up reads the answers off: the **Thomas algorithm**, a fixed few operations per node instead of the cube of the node count. The diagonal entry $1 + \theta(2\nu + r k)$ always beats the two off-diagonal ones in size, so the sweep never divides by anything near zero.
+That needs no general elimination ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)). One sweep down removes each equation's lower neighbour, one sweep back up reads the answers off: the **Thomas algorithm**, a fixed few operations per node instead of the cube of the node count. The diagonal entry $`1 + \theta(2\nu + r k)`$ always beats the two off-diagonal ones in size, so the sweep never divides by anything near zero.
 
 ### Step 6: why one of the three explodes
 
-A scheme is stable when the small errors always present in it shrink as it runs. The sharpest thing a grid can hold is the checkerboard: plus, minus, plus, minus on consecutive nodes. For it the second difference is exactly $-4/h^2$ times the value and the centred first difference is exactly zero, the neighbours two apart being equal, so the drift drops out and one step multiplies the checkerboard by
+A scheme is stable when the small errors always present in it shrink as it runs. The sharpest thing a grid can hold is the checkerboard: plus, minus, plus, minus on consecutive nodes. For it the second difference is exactly $`-4/h^2`$ times the value and the centred first difference is exactly zero, the neighbours two apart being equal, so the drift drops out and one step multiplies the checkerboard by
 
-$$\frac{1 - (1-\theta)(4\nu + r k)}{1 + \theta\,(4\nu + r k)}.$$
+```math
+\frac{1 - (1-\theta)(4\nu + r k)}{1 + \theta\,(4\nu + r k)}.
+```
 
-At dial 0 that is $1 - 4\nu - r k$, about −3 at a spreading ratio of 1.000000: the checkerboard triples and flips sign every step, and the run below does exactly that.
+At dial 0 that is $`1 - 4\nu - r k`$, about −3 at a spreading ratio of 1.000000: the checkerboard triples and flips sign every step, and the run below does exactly that.
 
 Holding the multiplier's size at or below 1 needs a spreading ratio of one half, so at least 400 time steps here instead of 200. At dial 1 the numerator is 1 and the denominator exceeds 1 for every ratio, so the checkerboard always shrinks whatever the step: **unconditionally stable**. At one half the multiplier is about −1/3 here — shrinking, but changing sign each step.
 
@@ -179,7 +193,9 @@ The arithmetic assumes the value has ordinary curvature across three nodes. On t
 
 The repair is standard practice. The strike's own cell runs half a step either side of the strike, and the payoff across it averages to
 
-$$\frac{1}{h}\int_{-h/2}^{h/2} K\left(e^{u}-1\right)^{+}du \;=\; \frac{K\left(e^{h/2} - 1 - h/2\right)}{h} \;=\; 0.125209 .$$
+```math
+\frac{1}{h}\int_{-h/2}^{h/2} K\left(e^{u}-1\right)^{+}du \;=\; \frac{K\left(e^{h/2} - 1 - h/2\right)}{h} \;=\; 0.125209 .
+```
 
 Giving that one node 0.125209 instead of 0 leaves every other node alone and moves the 200-by-200 answer from 9.224711 to 9.227084: from a quarter of a cent wrong to eight thousandths. Desks add a second repair, **Rannacher startup**: the first two steps taken fully implicit, damping the ringing, the sign-flipping wobble, that a kink sets off.
 
@@ -195,15 +211,15 @@ The grid: log-moneyness from −1 to +1, Acme from 36.79 to 271.83, in 200 cells
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| step across, $h$ | 2 ÷ 200 | 0.010000 |
-| step up, $k$ | 1 ÷ 200 | 0.005000 |
-| spreading coefficient, $a$ | 0.5 × 0.20^2 | 0.020000 |
-| sliding coefficient, $b$ | 0.05 − 0.02 − 0.02 | 0.010000 |
-| spreading ratio, $\nu$ | 0.020000 × 0.005 ÷ 0.0001 | 1.000000 |
-| sliding ratio, $\eta$ | 0.010000 × 0.005 ÷ 0.02 | 0.002500 |
-| the drain per step, $r k$ | 0.05 × 0.005 | 0.000250 |
+| step across, $`h`$ | 2 ÷ 200 | 0.010000 |
+| step up, $`k`$ | 1 ÷ 200 | 0.005000 |
+| spreading coefficient, $`a`$ | 0.5 × 0.20^2 | 0.020000 |
+| sliding coefficient, $`b`$ | 0.05 − 0.02 − 0.02 | 0.010000 |
+| spreading ratio, $`\nu`$ | 0.020000 × 0.005 ÷ 0.0001 | 1.000000 |
+| sliding ratio, $`\eta`$ | 0.010000 × 0.005 ÷ 0.02 | 0.002500 |
+| the drain per step, $`r k`$ | 0.05 × 0.005 | 0.000250 |
 | the strike cell's average payoff | 100 (e^0.005 − 1 − 0.005) ÷ 0.01 | 0.125209 |
-| Crank-Nicolson row | the implicit sides halved, middle $1 + \nu + r k/2$ | −0.498750, 2.000125, −0.501250 |
+| Crank-Nicolson row | the implicit sides halved, middle $`1 + \nu + r k/2`$ | −0.498750, 2.000125, −0.501250 |
 | **the top row's middle node** | 200 sweeps later | **9.227084** |
 
 Those three numbers are the coefficients of the unknown below, here and above, in each of the 199 equations solved every step. The formula's answer is 9.227006, so the grid is out by 0.000079: eight thousandths of a cent.
@@ -212,7 +228,7 @@ One step can be checked with a pencil, using the explicit scheme on a grid with 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| explicit weights, spreading ratio 0.4 | $\nu-\eta$, $1-2\nu-r k$, $\nu+\eta$ | 0.399000, 0.199900, 0.401000 |
+| explicit weights, spreading ratio 0.4 | $`\nu-\eta`$, $`1-2\nu-r k`$, $`\nu+\eta`$ | 0.399000, 0.199900, 0.401000 |
 | the node below the strike | a call below its strike pays nothing | 0.000000 |
 | the node above the strike | 100 (e^0.01 − 1) | 1.005017 |
 | **first step at the strike node** | 0.399 × 0 + 0.1999 × 0.125209 + 0.401 × 1.005017 | **0.428041** |
@@ -690,13 +706,13 @@ The two outputs agree line for line, including the 94-digit nonsense the unstabl
 
 ### Lean
 
-Lean proves Step 6's stability facts and the worked ratios, on a row with no edges, for positive steps and $r \ge 0$.
+Lean proves Step 6's stability facts and the worked ratios, on a row with no edges, for positive steps and $`r \ge 0`$.
 
-- Suppose the dial $\theta$ is at least one half. Then one step multiplies every wiggle by $(1 - (1-\theta)p)/(1 + \theta p)$, with $p$ from Step 6.
+- Suppose the dial $`\theta`$ is at least one half. Then one step multiplies every wiggle by $`(1 - (1-\theta)p)/(1 + \theta p)`$, with $`p`$ from Step 6.
 - At those dials that factor never has size above 1, whatever the steps: the scheme is unconditionally stable.
-- Take any dial at 0 or above. Then one step multiplies the checkerboard by Step 6's multiplier, and the sliding ratio $\eta$ drops out.
-- Suppose the dial is 0 and the spreading ratio $\nu$ is above one half. Then one step multiplies the checkerboard by $1 - 4\nu - rk$, which has size above 1.
-- Take the 200-by-200 grid. Then $\nu = 1$, $\eta = 0.0025$ and $rk = 0.00025$, exactly as the worked numbers say.
+- Take any dial at 0 or above. Then one step multiplies the checkerboard by Step 6's multiplier, and the sliding ratio $`\eta`$ drops out.
+- Suppose the dial is 0 and the spreading ratio $`\nu`$ is above one half. Then one step multiplies the checkerboard by $`1 - 4\nu - rk`$, which has size above 1.
+- Take the 200-by-200 grid. Then $`\nu = 1`$, $`\eta = 0.0025`$ and $`rk = 0.00025`$, exactly as the worked numbers say.
 - The Crank-Nicolson row −0.498750, 2.000125, −0.501250 is exact, and so are the 500-step explicit weights 0.399000, 0.199900, 0.401000.
 - On this grid the checkerboard multipliers are exactly −12001/4000 for explicit steps, about −3, and −8001/24001 for Crank-Nicolson, about −1/3.
 

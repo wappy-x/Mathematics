@@ -38,43 +38,51 @@ Orange: today's six-month smile, read off the surface. Green: local volatility's
 
 ## The formula
 
-Notation first, in words. $S_t$ is Acme's price $t$ years from today; $r$ = 5% and $q$ = 2% are the riskless rate and dividend yield; $T$ is an expiry in years and $V_0$ a contract's price today. The local volatility $\sigma_{\text{loc}}(S, t)$ is one number for each price $S$ and date $t$.
+Notation first, in words. $`S_t`$ is Acme's price $`t`$ years from today; $`r`$ = 5% and $`q`$ = 2% are the riskless rate and dividend yield; $`T`$ is an expiry in years and $`V_0`$ a contract's price today. The local volatility $`\sigma_{\text{loc}}(S, t)`$ is one number for each price $`S`$ and date $`t`$.
 
-$dW_t$ is the random shock over a short step $dt$, a bell-curve draw with spread $\sqrt{dt}$ ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). $\mathbb{E}$ is the average in the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
+$`dW_t`$ is the random shock over a short step $`dt`$, a bell-curve draw with spread $`\sqrt{dt}`$ ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). $`\mathbb{E}`$ is the average in the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
 
-$$dS_t = (r - q)\,S_t\,dt + \sigma_{\text{loc}}(S_t, t)\,S_t\,dW_t, \qquad V_0 = e^{-rT}\,\mathbb{E}\big[\text{payoff at } T\big]$$
+```math
+dS_t = (r - q)\,S_t\,dt + \sigma_{\text{loc}}(S_t, t)\,S_t\,dW_t, \qquad V_0 = e^{-rT}\,\mathbb{E}\big[\text{payoff at } T\big]
+```
 
 **Read it aloud:** Acme drifts at the riskless rate less its dividend yield, its volatility at each instant is looked up in a fixed table by where it stands and what the date is, and a contract is worth its average payoff in that world, discounted to today.
 
-Black-Scholes is the special case of a flat table. The table comes from the surface ([Local volatility in implied-vol terms](02-local-volatility-from-implied-volatility.md)). Gyöngy's theorem says such a table exists for any model without jumps: if $\sigma_t$ is that model's volatility, even a random one, its local-volatility twin uses, at price $K$ and date $T$,
+Black-Scholes is the special case of a flat table. The table comes from the surface ([Local volatility in implied-vol terms](02-local-volatility-from-implied-volatility.md)). Gyöngy's theorem says such a table exists for any model without jumps: if $`\sigma_t`$ is that model's volatility, even a random one, its local-volatility twin uses, at price $`K`$ and date $`T`$,
 
-$$\sigma_{\text{loc}}^2(K, T) = \mathbb{E}\big[\,\sigma_T^2 \;\big|\; S_T = K\,\big]$$
+```math
+\sigma_{\text{loc}}^2(K, T) = \mathbb{E}\big[\,\sigma_T^2 \;\big|\; S_T = K\,\big]
+```
 
-**Read it aloud:** the twin's squared volatility at price $K$ on date $T$ is the average squared volatility of the paths that arrive at $K$ on that date; twin and model then give the same price to every plain call and put.
+**Read it aloud:** the twin's squared volatility at price $`K`$ on date $`T`$ is the average squared volatility of the paths that arrive at $`K`$ on that date; twin and model then give the same price to every plain call and put.
 
-A forward start pays on two dates: it fixes its strike on the reset date $t_1$, as a fraction $\kappa$ of Acme's price that day, and pays at $T$. $C_{\text{BS}}$(price, strike, years, volatility) is the Black-Scholes call:
+A forward start pays on two dates: it fixes its strike on the reset date $`t_1`$, as a fraction $`\kappa`$ of Acme's price that day, and pays at $`T`$. $`C_{\text{BS}}`$(price, strike, years, volatility) is the Black-Scholes call:
 
-$$\text{payoff} = \max\!\big(S_T - \kappa\,S_{t_1},\; 0\big), \qquad \text{at one flat volatility } \sigma:\quad V_0 = S_0\,e^{-q t_1}\,C_{\text{BS}}\big(1,\ \kappa,\ T - t_1,\ \sigma\big)$$
+```math
+\text{payoff} = \max\!\big(S_T - \kappa\,S_{t_1},\; 0\big), \qquad \text{at one flat volatility } \sigma:\quad V_0 = S_0\,e^{-q t_1}\,C_{\text{BS}}\big(1,\ \kappa,\ T - t_1,\ \sigma\big)
+```
 
-**Read it aloud:** on the reset date the contract becomes $S_{t_1}$ copies of a call on one dollar's worth of Acme struck at $\kappa$ dollars, so at one flat volatility it is worth today's value of receiving $S_{t_1}$ times that call's price.
+**Read it aloud:** on the reset date the contract becomes $`S_{t_1}`$ copies of a call on one dollar's worth of Acme struck at $`\kappa`$ dollars, so at one flat volatility it is worth today's value of receiving $`S_{t_1}`$ times that call's price.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_t$, $S_T$, $S_0$, $S_{t_1}$ | Acme's price: any level; at time $t$; at expiry; today; on the reset date | $100 today | — |
-| $K$, $T$ | a call's strike; its expiry in years | $80 to $120; 1 year, and 0.5 | call falls; rises |
-| $t$, $dt$, $dW_t$, $Z$ | a date in years; a short step; the shock $Z\sqrt{dt}$ over it, $Z$ a standard bell-curve draw | steps of 0.01 year | smaller $dt$: less simulation bias |
-| $r$, $q$ | riskless rate and dividend yield, continuously compounded | 5%, 2% | move the forward price $S_0 e^{(r-q)t}$ |
-| $\sigma_{\text{loc}}(S, t)$ | local volatility: Acme's volatility when at $S$ on date $t$ | 19.99% at $100 half a year out; 33.39% at $70 | raises prices whose paths pass there |
-| $\sigma$, $\sigma_t$ | one flat volatility; the volatility of another model at time $t$, perhaps random | 20%; a coin flip between 40% and 15% | the forward start rises with $\sigma$ |
-| $\mathbb{E}$, $\mathbb{E}[\,\cdot \mid S_T = K\,]$ | the pricing-world average; the same over the paths ending at $K$ | — | — |
-| $V_0$, $C$ | today's price of a contract; C(K, T), a call's price by strike and expiry; $C_{\text{BS}}$ the Black-Scholes call | 9.227006 for the $100 call | — |
-| $t_1$, $\kappa$ | the reset date; the strike as a fraction of Acme's price that day | 0.5 year; 1, and 0.8 to 1.2 | $\kappa$ up: the forward start falls |
-| $w$, $x$ | total implied variance, implied volatility squared times $T$, at log-strike $x = \ln(K/100)$ | 0.04 at $x = 0$, one year | option prices rise |
-| $\theta$, $\varphi$, $\rho$, $\eta$ | the surface's dials: total variance at $100, tilt scale, lean, tilt size | $0.04T$; $\eta/\sqrt{\theta}$; −0.7; 0.5 | $\eta$ up, or $\rho$ more negative: steeper skew |
+| $`S`$, $`S_t`$, $`S_T`$, $`S_0`$, $`S_{t_1}`$ | Acme's price: any level; at time $`t`$; at expiry; today; on the reset date | $100 today | — |
+| $`K`$, $`T`$ | a call's strike; its expiry in years | $80 to $120; 1 year, and 0.5 | call falls; rises |
+| $`t`$, $`dt`$, $`dW_t`$, $`Z`$ | a date in years; a short step; the shock $`Z\sqrt{dt}`$ over it, $`Z`$ a standard bell-curve draw | steps of 0.01 year | smaller $`dt`$: less simulation bias |
+| $`r`$, $`q`$ | riskless rate and dividend yield, continuously compounded | 5%, 2% | move the forward price $`S_0 e^{(r-q)t}`$ |
+| $`\sigma_{\text{loc}}(S, t)`$ | local volatility: Acme's volatility when at $`S`$ on date $`t`$ | 19.99% at $100 half a year out; 33.39% at $70 | raises prices whose paths pass there |
+| $`\sigma`$, $`\sigma_t`$ | one flat volatility; the volatility of another model at time $`t`$, perhaps random | 20%; a coin flip between 40% and 15% | the forward start rises with $`\sigma`$ |
+| $`\mathbb{E}`$, $`\mathbb{E}[\,\cdot \mid S_T = K\,]`$ | the pricing-world average; the same over the paths ending at $`K`$ | — | — |
+| $`V_0`$, $`C`$ | today's price of a contract; C(K, T), a call's price by strike and expiry; $`C_{\text{BS}}`$ the Black-Scholes call | 9.227006 for the $100 call | — |
+| $`t_1`$, $`\kappa`$ | the reset date; the strike as a fraction of Acme's price that day | 0.5 year; 1, and 0.8 to 1.2 | $`\kappa`$ up: the forward start falls |
+| $`w`$, $`x`$ | total implied variance, implied volatility squared times $`T`$, at log-strike $`x = \ln(K/100)`$ | 0.04 at $`x = 0`$, one year | option prices rise |
+| $`\theta`$, $`\varphi`$, $`\rho`$, $`\eta`$ | the surface's dials: total variance at $100, tilt scale, lean, tilt size | $`0.04T`$; $`\eta/\sqrt{\theta}`$; −0.7; 0.5 | $`\eta`$ up, or $`\rho`$ more negative: steeper skew |
 
 The surface has the shape Gatheral and Jacquier call SSVI (surface stochastic-volatility-inspired), centred on today's price so that the $100 strike sits at 20% at every expiry:
 
-$$w(x, T) = \frac{\theta}{2}\Big(1 + \rho\,\varphi\,x + \sqrt{(\varphi x + \rho)^2 + 1 - \rho^2}\Big), \qquad \theta = 0.04\,T, \quad \varphi = \frac{\eta}{\sqrt{\theta}}$$
+```math
+w(x, T) = \frac{\theta}{2}\Big(1 + \rho\,\varphi\,x + \sqrt{(\varphi x + \rho)^2 + 1 - \rho^2}\Big), \qquad \theta = 0.04\,T, \quad \varphi = \frac{\eta}{\sqrt{\theta}}
+```
 
 In words: a rounded V in log-strike, leaning toward low strikes, whose tilt shrinks like one over the square root of expiry, so short options carry the steepest skew, as in equity markets.
 
@@ -92,17 +100,19 @@ In words: a rounded V in log-strike, leaning toward low strikes, whose tilt shri
 
 ### Step 0: plain options see one date at a time
 
-A call struck at $K$ pays according to where Acme ends on one date, so its price is the discounted average of that payoff over Acme's distribution on that date. Two models that give Acme the same distribution on every date give the same price to every plain option, however differently they join the dates.
+A call struck at $`K`$ pays according to where Acme ends on one date, so its price is the discounted average of that payoff over Acme's distribution on that date. Two models that give Acme the same distribution on every date give the same price to every plain option, however differently they join the dates.
 
 Local volatility is fitted to those one-date distributions, all of them, and joins the dates by the simplest rule available: volatility depends on price and date, nothing else.
 
 ### Step 1: price by simulating paths
 
-Step the log of Acme's price forward by $dt$ = 0.01 year, reading the volatility from the table at the current price and date:
+Step the log of Acme's price forward by $`dt`$ = 0.01 year, reading the volatility from the table at the current price and date:
 
-$$\ln S_{t+dt} = \ln S_t + \big(r - q - \tfrac12\,\sigma_{\text{loc}}^2\big)\,dt + \sigma_{\text{loc}}(S_t, t)\,\sqrt{dt}\;Z$$
+```math
+\ln S_{t+dt} = \ln S_t + \big(r - q - \tfrac12\,\sigma_{\text{loc}}^2\big)\,dt + \sigma_{\text{loc}}(S_t, t)\,\sqrt{dt}\;Z
+```
 
-This is the Euler–Maruyama scheme ([Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md)) on the log; the $-\tfrac12\sigma_{\text{loc}}^2$ keeps the average price on the forward. The table is read between its 601 log-strikes by a straight line.
+This is the Euler–Maruyama scheme ([Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md)) on the log; the $`-\tfrac12\sigma_{\text{loc}}^2`$ keeps the average price on the forward. The table is read between its 601 log-strikes by a straight line.
 
 The run takes 20,000 paths, 10,000 sets of draws and their mirror images, from the recurrence of [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md). A path and its mirror are not independent, so every standard error here comes from the 10,000 pair averages.
 
@@ -114,7 +124,9 @@ The flat paths alone price the forward start at 6.2112, standard error 0.0497, a
 
 Dupire's forward equation moves call prices forward in expiry ([Dupire local volatility](01-dupire-local-volatility.md)):
 
-$$\frac{\partial C}{\partial T} = \tfrac12\,\sigma_{\text{loc}}^2(K, T)\,K^2\,\frac{\partial^2 C}{\partial K^2} - (r - q)\,K\,\frac{\partial C}{\partial K} - q\,C, \qquad C(K, 0) = \max(S_0 - K,\ 0)$$
+```math
+\frac{\partial C}{\partial T} = \tfrac12\,\sigma_{\text{loc}}^2(K, T)\,K^2\,\frac{\partial^2 C}{\partial K^2} - (r - q)\,K\,\frac{\partial C}{\partial K} - q\,C, \qquad C(K, 0) = \max(S_0 - K,\ 0)
+```
 
 **Read it aloud:** a call gains value with expiry at the local variance at its strike times the bend of prices across strikes, less a carry term; at expiry zero every call is worth what it pays now.
 
@@ -122,7 +134,7 @@ The grid, 601 log-strikes by 100 time steps, is marched by Crank–Nicolson ([Pr
 
 ### Step 3: why every plain option comes back
 
-The table was made by solving this equation for $\sigma_{\text{loc}}$ with the surface's prices put in for C. So the surface's prices satisfy it. The equation and its starting row fix one answer, so marching it returns the surface.
+The table was made by solving this equation for $`\sigma_{\text{loc}}`$ with the surface's prices put in for C. So the surface's prices satisfy it. The equation and its starting row fix one answer, so marching it returns the surface.
 
 The grid does: its largest gap is 0.001666 at six months, and its one-year $100 call is 9.227526 against the surface's 9.227006. Simulated paths obey the same equation, for the reason in Step 4, and return 9.2472 at $100, inside one standard error of 0.0262, and within four cents at every strike.
 
@@ -137,20 +149,22 @@ The twin prices every plain option as the coin-flip model does, yet it is a diff
 <details>
 <summary>Detailed proof: why the twin matches every plain call</summary>
 
-Let $dS_t = (r-q)S_t\,dt + \sigma_t S_t\,dW_t$ with any random volatility $\sigma_t$, and $C(K, T) = e^{-rT}\,\mathbb{E}[(S_T - K)^+]$.
+Let $`dS_t = (r-q)S_t\,dt + \sigma_t S_t\,dW_t`$ with any random volatility $`\sigma_t`$, and $`C(K, T) = e^{-rT}\,\mathbb{E}[(S_T - K)^+]`$.
 
-1. Itô's lemma stretched over the kink of $(S - K)^+$ (Tanaka's formula) gives $d(S_t - K)^+ = \mathbf{1}\{S_t > K\}\,dS_t + \tfrac12\,\sigma_t^2 S_t^2\,\delta(S_t - K)\,dt$, where $\mathbf{1}\{S_t > K\}$ is 1 when $S_t > K$ and 0 otherwise, and $\delta(S_t - K)$ is a spike that picks out the paths standing at $K$ ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)).
-2. Average, with $p(K, T)$ the density of $S_T$: $\partial_T\,\mathbb{E}[(S_T - K)^+] = (r - q)\,\mathbb{E}[S_T\mathbf{1}\{S_T > K\}] + \tfrac12 K^2\,\mathbb{E}[\sigma_T^2 \mid S_T = K]\,p(K, T)$.
-3. In call prices, $\mathbb{E}[S_T\mathbf{1}\{S_T > K\}] = e^{rT}(C - K\,\partial_K C)$ and $p = e^{rT}\,\partial_{KK} C$ ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). With $\partial_T C = -rC + e^{-rT}\,\partial_T\mathbb{E}[(S_T - K)^+]$:
-$$\partial_T C = \tfrac12\,\mathbb{E}[\sigma_T^2 \mid S_T = K]\,K^2\,\partial_{KK} C - (r - q)K\,\partial_K C - qC.$$
-4. That is Dupire's forward equation with local variance $\mathbb{E}[\sigma_T^2 \mid S_T = K]$. The local-volatility model with that table obeys the same equation from the same start, $C(K, 0) = (S_0 - K)^+$, since for it the average is the table itself.
+1. Itô's lemma stretched over the kink of $`(S - K)^+`$ (Tanaka's formula) gives $`d(S_t - K)^+ = \mathbf{1}\{S_t > K\}\,dS_t + \tfrac12\,\sigma_t^2 S_t^2\,\delta(S_t - K)\,dt`$, where $`\mathbf{1}\{S_t > K\}`$ is 1 when $`S_t > K`$ and 0 otherwise, and $`\delta(S_t - K)`$ is a spike that picks out the paths standing at $`K`$ ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)).
+2. Average, with $`p(K, T)`$ the density of $`S_T`$: $`\partial_T\,\mathbb{E}[(S_T - K)^+] = (r - q)\,\mathbb{E}[S_T\mathbf{1}\{S_T > K\}] + \tfrac12 K^2\,\mathbb{E}[\sigma_T^2 \mid S_T = K]\,p(K, T)`$.
+3. In call prices, $`\mathbb{E}[S_T\mathbf{1}\{S_T > K\}] = e^{rT}(C - K\,\partial_K C)`$ and $`p = e^{rT}\,\partial_{KK} C`$ ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). With $`\partial_T C = -rC + e^{-rT}\,\partial_T\mathbb{E}[(S_T - K)^+]`$:
+
+$`\displaystyle \partial_T C = \tfrac12\,\mathbb{E}[\sigma_T^2 \mid S_T = K]\,K^2\,\partial_{KK} C - (r - q)K\,\partial_K C - qC.`$
+
+4. That is Dupire's forward equation with local variance $`\mathbb{E}[\sigma_T^2 \mid S_T = K]`$. The local-volatility model with that table obeys the same equation from the same start, $`C(K, 0) = (S_0 - K)^+`$, since for it the average is the table itself.
 5. One equation, one start, one solution: the calls agree at every strike and expiry. Gyöngy (1986) proves more, that the whole one-date distributions agree, for volatility bounded and kept away from zero; the density version of the computation is the Fokker–Planck equation ([Fokker-Planck](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md)).
 
 </details>
 
 ### Step 5: the forward start sees two dates
 
-The at-the-money forward start pays $\max(S_1 - S_{0.5}, 0)$ at one year. Its price depends on how Acme's prices at six months and at a year hang together, which Step 0 says no plain option fixes. Two roads under local volatility:
+The at-the-money forward start pays $`\max(S_1 - S_{0.5}, 0)`$ at one year. Its price depends on how Acme's prices at six months and at a year hang together, which Step 0 says no plain option fixes. Two roads under local volatility:
 
 - **Simulation.** The same paths, reading Acme at the halfway step: 6.0894, standard error 0.0179.
 - **Split at the reset.** Where Acme can stand at six months is read off the density the surface implies ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)); from each of 35 reset levels a grid march prices the second half-year's call; Simpson's rule, a weighted sum over evenly spaced levels, totals the products: 6.083342.
@@ -189,7 +203,7 @@ $110.52  █████████████████           16.93%
 $122.14  ███████████████             14.63%
 ```
 
-Averaged over where Acme may stand, it is 20.03%, no lower than today's. But the forward start holds $S_{0.5}$ copies of a call on one dollar's worth of Acme, and the rises carry the most copies and the lowest volatilities. Weighted by Acme's price the average is 19.40%, the 19.41% the price implies.
+Averaged over where Acme may stand, it is 20.03%, no lower than today's. But the forward start holds $`S_{0.5}`$ copies of a call on one dollar's worth of Acme, and the rises carry the most copies and the lowest volatilities. Weighted by Acme's price the average is 19.40%, the 19.41% the price implies.
 
 The flat forward smile and the cheap forward start are one fault: volatility fixed by price and date makes tomorrow's smile whatever slice of the table Acme lands on: lower after a rise, higher after a fall, and shallower than today's. Putting randomness back into volatility while keeping every plain price is the road of [Stochastic-local volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md).
 
@@ -655,9 +669,9 @@ The two outputs match line for line: both programs do the same arithmetic in the
 Lean proves why plain prices cannot fix the forward start, and its price at one flat volatility, for every strike, expiry and reset date.
 
 - Suppose two models give Acme the same distribution on every date. Then they give the same price to every plain call, put and one-date payoff.
-- Take any strike fraction $\kappa > 0$. Then two ways of joining Acme's prices on the reset date and at expiry agree on each date, yet price the forward start differently.
-- Suppose $\sigma > 0$ is one flat volatility, with $0 < t_1 < T$, $S_0 > 0$ and $\kappa > 0$. Then the forward start is worth $S_0 e^{-q t_1} C_{\text{BS}}(1, \kappa, T - t_1, \sigma)$.
-- Take log-strike $x = 0$, the $100 strike. Then the surface's total implied variance is $0.04T$ at every expiry, so its volatility is 20%.
+- Take any strike fraction $`\kappa > 0`$. Then two ways of joining Acme's prices on the reset date and at expiry agree on each date, yet price the forward start differently.
+- Suppose $`\sigma > 0`$ is one flat volatility, with $`0 < t_1 < T`$, $`S_0 > 0`$ and $`\kappa > 0`$. Then the forward start is worth $`S_0 e^{-q t_1} C_{\text{BS}}(1, \kappa, T - t_1, \sigma)`$.
+- Take log-strike $`x = 0`$, the $100 strike. Then the surface's total implied variance is $`0.04T`$ at every expiry, so its volatility is 20%.
 
 The local-volatility table, both pricing roads, Gyöngy's twin, the flatter forward smile and every number are left to the Python and Rust checks.
 

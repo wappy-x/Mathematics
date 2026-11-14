@@ -34,15 +34,19 @@ Turn then flip leaves corner 0 at 3; flip then turn leaves it at 1. Both are amo
 
 ## The formula
 
-Notation first, in words. The collection takes a capital letter, $G$, its members small letters, $a$, $b$, $c$, so a rule is written once and means every member.
+Notation first, in words. The collection takes a capital letter, $`G`$, its members small letters, $`a`$, $`b`$, $`c`$, so a rule is written once and means every member.
 
-The operation is a dot: $a \cdot b$ means combine the two, and for moves it means do $b$ first, then $a$ ([Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)). The do-nothing member is $e$, and the undo of $a$ is $a^{-1}$, where the raised −1 is a label meaning undo, not divide.
+The operation is a dot: $`a \cdot b`$ means combine the two, and for moves it means do $`b`$ first, then $`a`$ ([Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)). The do-nothing member is $`e`$, and the undo of $`a`$ is $`a^{-1}`$, where the raised −1 is a label meaning undo, not divide.
 
 Four rules make such a collection a group, each holding for all its members:
 
-$$a \cdot b \in G, \qquad (a \cdot b) \cdot c = a \cdot (b \cdot c)$$
+```math
+a \cdot b \in G, \qquad (a \cdot b) \cdot c = a \cdot (b \cdot c)
+```
 
-$$e \cdot a = a \cdot e = a, \qquad a^{-1} \cdot a = a \cdot a^{-1} = e$$
+```math
+e \cdot a = a \cdot e = a, \qquad a^{-1} \cdot a = a \cdot a^{-1} = e
+```
 
 Those four are called **closed**, **associative**, **identity** and **inverses**, in that order.
 
@@ -50,13 +54,13 @@ Those four are called **closed**, **associative**, **identity** and **inverses**
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
-| $G$ | the collection, and its letter | the tile's eight moves | another collection may fail a rule |
-| $a$, $b$, $c$ | any members, so one rule covers all | any of the eight moves | — |
-| $\cdot$ | the operation: two members into a third | one move, then the other | a different question |
-| $e$ | the identity, which changes nothing | the tile set down unmoved | 0 for adding, 1 for multiplying |
-| $a^{-1}$ | the inverse, which undoes $a$ | turning back as it came | a reciprocal only under multiplication |
+| $`G`$ | the collection, and its letter | the tile's eight moves | another collection may fail a rule |
+| $`a`$, $`b`$, $`c`$ | any members, so one rule covers all | any of the eight moves | — |
+| $`\cdot`$ | the operation: two members into a third | one move, then the other | a different question |
+| $`e`$ | the identity, which changes nothing | the tile set down unmoved | 0 for adding, 1 for multiplying |
+| $`a^{-1}`$ | the inverse, which undoes $`a`$ | turning back as it came | a reciprocal only under multiplication |
 
-If $a \cdot b = b \cdot a$ for every pair — order does not matter — the group is **abelian**: a bonus, not a fifth rule. Addition qualifies, the tile does not.
+If $`a \cdot b = b \cdot a`$ for every pair — order does not matter — the group is **abelian**: a bonus, not a fifth rule. Addition qualifies, the tile does not.
 
 ### When it holds
 

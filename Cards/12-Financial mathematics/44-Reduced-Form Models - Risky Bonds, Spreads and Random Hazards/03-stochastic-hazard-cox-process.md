@@ -39,57 +39,67 @@ Orange, green and dark blue: three hazard paths drawn by the code below, read ev
 
 ## The formula
 
-Notation first, in words. The hazard at time $t$ (in years) is $\lambda_t$ (Greek "lambda"); today's value is $\lambda_0$. A small d in front of a quantity means its change over a tiny time step. $W$ is Brownian motion, a random walk whose change over a step is a bell-curve draw with spread the square root of the step ([Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md)). The hazard moves by
+Notation first, in words. The hazard at time $`t`$ (in years) is $`\lambda_t`$ (Greek "lambda"); today's value is $`\lambda_0`$. A small d in front of a quantity means its change over a tiny time step. $`W`$ is Brownian motion, a random walk whose change over a step is a bell-curve draw with spread the square root of the step ([Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md)). The hazard moves by
 
-$$d\lambda_t = \kappa\,(\theta - \lambda_t)\,dt + \sigma\sqrt{\lambda_t}\,dW_t.$$
+```math
+d\lambda_t = \kappa\,(\theta - \lambda_t)\,dt + \sigma\sqrt{\lambda_t}\,dW_t.
+```
 
-Here $\kappa$ ("kappa") is the pull speed, $\theta$ ("theta") the long-run level and $\sigma$ the volatility.
+Here $`\kappa`$ ("kappa") is the pull speed, $`\theta`$ ("theta") the long-run level and $`\sigma`$ the volatility.
 
-**Read it aloud:** each instant, the hazard closes a fraction $\kappa$ of its gap to the long-run level, plus a random shock whose size grows with the square root of the hazard.
+**Read it aloud:** each instant, the hazard closes a fraction $`\kappa`$ of its gap to the long-run level, plus a random shock whose size grows with the square root of the hazard.
 
 This is the Cox-Ingersoll-Ross (CIR) equation with the hazard in place of the interest rate ([Cox-Ingersoll-Ross](../30-Short-Rate%20Models/03-cox-ingersoll-ross-model.md)). The square root keeps the hazard from going below zero, which a default rate must never do.
 
-Survival to year $T$ is the average, over hazard paths, of e to the minus the area under the path. Write $\Lambda_T$ (capital lambda) for that area, the hazard added up from today to $T$, and $\mathrm{E}$ for the average (expectation):
+Survival to year $`T`$ is the average, over hazard paths, of e to the minus the area under the path. Write $`\Lambda_T`$ (capital lambda) for that area, the hazard added up from today to $`T`$, and $`\mathrm{E}`$ for the average (expectation):
 
-$$Q(T) = \mathrm{E}\!\left[e^{-\Lambda_T}\right], \qquad \Lambda_T = \int_0^T \lambda_t\,dt.$$
+```math
+Q(T) = \mathrm{E}\!\left[e^{-\Lambda_T}\right], \qquad \Lambda_T = \int_0^T \lambda_t\,dt.
+```
 
 For the square-root hazard the average has a closed form:
 
-$$Q(T) = A(T)\,e^{-B(T)\,\lambda_0},$$
+```math
+Q(T) = A(T)\,e^{-B(T)\,\lambda_0},
+```
 
-$$B(T) = \frac{2\,(e^{\gamma T} - 1)}{(\gamma+\kappa)(e^{\gamma T}-1) + 2\gamma}, \qquad A(T) = \left[\frac{2\gamma\,e^{(\gamma+\kappa)T/2}}{(\gamma+\kappa)(e^{\gamma T}-1) + 2\gamma}\right]^{\nu}, \qquad \gamma = \sqrt{\kappa^2 + 2\sigma^2}, \quad \nu = \frac{2\kappa\theta}{\sigma^2}.$$
+```math
+B(T) = \frac{2\,(e^{\gamma T} - 1)}{(\gamma+\kappa)(e^{\gamma T}-1) + 2\gamma}, \qquad A(T) = \left[\frac{2\gamma\,e^{(\gamma+\kappa)T/2}}{(\gamma+\kappa)(e^{\gamma T}-1) + 2\gamma}\right]^{\nu}, \qquad \gamma = \sqrt{\kappa^2 + 2\sigma^2}, \quad \nu = \frac{2\kappa\theta}{\sigma^2}.
+```
 
 **Read it aloud:** survival is a level factor, set by the hazard's settings and the horizon, times e to the minus (a sensitivity times today's hazard).
 
-And the inequality that says which way randomness pushes ($\mathrm{Var}$ is the variance), from [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md):
+And the inequality that says which way randomness pushes ($`\mathrm{Var}`$ is the variance), from [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md):
 
-$$Q(T) \;\ge\; e^{-\mathrm{E}[\Lambda_T]}, \qquad Q(T) - e^{-\mathrm{E}[\Lambda_T]} \approx \tfrac12\,\mathrm{Var}[\Lambda_T]\;e^{-\mathrm{E}[\Lambda_T]}.$$
+```math
+Q(T) \;\ge\; e^{-\mathrm{E}[\Lambda_T]}, \qquad Q(T) - e^{-\mathrm{E}[\Lambda_T]} \approx \tfrac12\,\mathrm{Var}[\Lambda_T]\;e^{-\mathrm{E}[\Lambda_T]}.
+```
 
 **Read it aloud:** averaging e to the minus the area gives more than e to the minus the average area, and the excess is about half the area's variance, scaled by the flat survival.
 
 | Symbol | Plain meaning | In our example | Push it up and five-year survival… |
 | --- | --- | --- | --- |
-| $\lambda$, $\lambda_t$, $\lambda_0$ | the hazard: default rate among survivors, per year; at time t; today | 2% today | falls |
-| $\kappa$ | pull speed: fraction of the gap to the long-run level closed per year. Say "kappa". | 0.5 | falls toward the flat 0.9048: the hazard strays less |
-| $\theta$ | long-run level the hazard is pulled toward. Say "theta". | 2% | falls |
-| $\sigma$ | volatility of the hazard: shock size is $\sigma$ times the square root of the hazard | 10%, so a shock of 1.4142 points a year at 2% | rises: more spread, bigger Jensen gap |
-| $W$ | Brownian motion, the source of the random shocks | a fresh draw each step | — |
-| $t$, $T$ | a time in years; the horizon | T = 5 | falls with T |
-| $\Lambda_T$, $\Lambda_t$ | area under the hazard from today to T. Say "capital lambda". | averages 0.1 | falls |
-| $Q$ | survival: chance Northwind has not defaulted by T | 0.905665 | — |
-| $A$, $B$, $\gamma$, $\nu$ | level factor; sensitivity to today's hazard; helper $\sqrt{\kappa^2+2\sigma^2}$; Feller ratio $2\kappa\theta/\sigma^2$ | 0.939106; 1.812959; 0.519615; 2 | — |
-| $\tau$, $\xi$ | Northwind's default date; an exponential clock with average 1, independent of the hazard. Say "tau", "xi". | random | — |
-| $\mathrm{E}$, $\mathrm{Var}$ | average and variance over hazard paths | Var of area 0.001857 | — |
-| $r$, $R$ | riskless rate, continuously compounded; recovery, fraction of face paid at default | 5%; 40% | — |
+| $`\lambda`$, $`\lambda_t`$, $`\lambda_0`$ | the hazard: default rate among survivors, per year; at time t; today | 2% today | falls |
+| $`\kappa`$ | pull speed: fraction of the gap to the long-run level closed per year. Say "kappa". | 0.5 | falls toward the flat 0.9048: the hazard strays less |
+| $`\theta`$ | long-run level the hazard is pulled toward. Say "theta". | 2% | falls |
+| $`\sigma`$ | volatility of the hazard: shock size is $`\sigma`$ times the square root of the hazard | 10%, so a shock of 1.4142 points a year at 2% | rises: more spread, bigger Jensen gap |
+| $`W`$ | Brownian motion, the source of the random shocks | a fresh draw each step | — |
+| $`t`$, $`T`$ | a time in years; the horizon | T = 5 | falls with T |
+| $`\Lambda_T`$, $`\Lambda_t`$ | area under the hazard from today to T. Say "capital lambda". | averages 0.1 | falls |
+| $`Q`$ | survival: chance Northwind has not defaulted by T | 0.905665 | — |
+| $`A`$, $`B`$, $`\gamma`$, $`\nu`$ | level factor; sensitivity to today's hazard; helper $`\sqrt{\kappa^2+2\sigma^2}`$; Feller ratio $`2\kappa\theta/\sigma^2`$ | 0.939106; 1.812959; 0.519615; 2 | — |
+| $`\tau`$, $`\xi`$ | Northwind's default date; an exponential clock with average 1, independent of the hazard. Say "tau", "xi". | random | — |
+| $`\mathrm{E}`$, $`\mathrm{Var}`$ | average and variance over hazard paths | Var of area 0.001857 | — |
+| $`r`$, $`R`$ | riskless rate, continuously compounded; recovery, fraction of face paid at default | 5%; 40% | — |
 
-The sensitivity $B$ is the key companion number. A flat hazard has sensitivity $T$, five: a one-point rise in today's hazard lowers log survival by 0.05. Here it is 1.81, because the pull drags the far years back to 2% whatever today brings.
+The sensitivity $`B`$ is the key companion number. A flat hazard has sensitivity $`T`$, five: a one-point rise in today's hazard lowers log survival by 0.05. Here it is 1.81, because the pull drags the far years back to 2% whatever today brings.
 
 ### When it holds
 
 - **Hazard independent of interest rates.** The discount factor and the survival chance multiply only when rates and hazard move separately. If Northwind weakens when rates rise, the average of the product is not the product of the averages, and every leg on this card is off by that covariance.
 - **Hazard independent of what is owed.** When default grows likelier exactly as the exposure grows (wrong-way risk), the same factoring fails; see [Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md).
 - **Constant settings fitted to prices.** Four constant settings cannot match every CDS curve. A market curve that bends is mispriced by the fitting error unless the long-run level is allowed to change with time. The settings are also pricing-world numbers, fitted to CDS quotes, not to a history of defaults ([Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md)).
-- **Feller for a strictly positive hazard.** When $2\kappa\theta \ge \sigma^2$ the hazard never touches zero. Below it, paths touch zero and bounce; the survival formula still holds, since it never needed the hazard to stay off zero.
+- **Feller for a strictly positive hazard.** When $`2\kappa\theta \ge \sigma^2`$ the hazard never touches zero. Below it, paths touch zero and bounce; the survival formula still holds, since it never needed the hazard to stay off zero.
 
 ---
 
@@ -101,50 +111,54 @@ Suppose Northwind's hazard path for the next five years were announced. Then sur
 
 ### Step 1: build the default date from the path and an exponential clock
 
-Draw a number $\xi$ from the exponential distribution with average 1, independent of the hazard: the chance that $\xi$ exceeds any level x is $e^{-x}$. Declare that Northwind defaults at the first moment the area under the hazard, $\Lambda_t$, climbs past $\xi$. That date is $\tau$.
+Draw a number $`\xi`$ from the exponential distribution with average 1, independent of the hazard: the chance that $`\xi`$ exceeds any level x is $`e^{-x}`$. Declare that Northwind defaults at the first moment the area under the hazard, $`\Lambda_t`$, climbs past $`\xi`$. That date is $`\tau`$.
 
-Given the path, Northwind is alive at $T$ exactly when the area so far has not yet reached the clock: $\Lambda_T < \xi$. The chance of that is $e^{-\Lambda_T}$. Averaging over paths gives $Q(T) = \mathrm{E}[e^{-\Lambda_T}]$. With a flat hazard the area is $0.02 \times T$ and this is the old answer; the same recipe simulates one default date on [Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md).
+Given the path, Northwind is alive at $`T`$ exactly when the area so far has not yet reached the clock: $`\Lambda_T < \xi`$. The chance of that is $`e^{-\Lambda_T}`$. Averaging over paths gives $`Q(T) = \mathrm{E}[e^{-\Lambda_T}]`$. With a flat hazard the area is $`0.02 \times T`$ and this is the old answer; the same recipe simulates one default date on [Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md).
 
 <details>
 <summary>Detailed proof: the construction has the hazard it claims, and survival is the average</summary>
 
-**Survival.** Condition on the whole hazard path. Write $P$ for a probability and a vertical bar for "given". The clock $\xi$ is independent of it, so $P(\tau > T \mid \text{path}) = P(\xi > \Lambda_T \mid \text{path}) = e^{-\Lambda_T}$. The **tower rule** (the average of conditional averages is the plain average) gives $P(\tau > T) = \mathrm{E}[e^{-\Lambda_T}]$.
+**Survival.** Condition on the whole hazard path. Write $`P`$ for a probability and a vertical bar for "given". The clock $`\xi`$ is independent of it, so $`P(\tau > T \mid \text{path}) = P(\xi > \Lambda_T \mid \text{path}) = e^{-\Lambda_T}`$. The **tower rule** (the average of conditional averages is the plain average) gives $`P(\tau > T) = \mathrm{E}[e^{-\Lambda_T}]`$.
 
-**The hazard is $\lambda_t$.** Given the path, the chance of defaulting in a short stretch after $t$, having survived to $t$, is $(e^{-\Lambda_t} - e^{-\Lambda_{t+h}})/e^{-\Lambda_t} = 1 - e^{-(\Lambda_{t+h} - \Lambda_t)}$. For small h the area gained is about $\lambda_t h$, so this is about $\lambda_t h$: the rate among survivors is $\lambda_t$, as required.
+**The hazard is $`\lambda_t`$.** Given the path, the chance of defaulting in a short stretch after $`t`$, having survived to $`t`$, is $`(e^{-\Lambda_t} - e^{-\Lambda_{t+h}})/e^{-\Lambda_t} = 1 - e^{-(\Lambda_{t+h} - \Lambda_t)}`$. For small h the area gained is about $`\lambda_t h`$, so this is about $`\lambda_t h`$: the rate among survivors is $`\lambda_t`$, as required.
 
-**Doubly stochastic.** Given the path, defaults arrive as a Poisson process with rate $\lambda_t$, and default is its first jump: Poisson given the path, random on top. Lando (1998) set this out for credit.
+**Doubly stochastic.** Given the path, defaults arrive as a Poisson process with rate $`\lambda_t`$, and default is its first jump: Poisson given the path, random on top. Lando (1998) set this out for credit.
 
 </details>
 
 ### Step 2: the average is a CIR bond price
 
-Now compare two averages. The CIR card prices a zero-coupon bond (one payment of 1 at $T$, nothing before) as $\mathrm{E}[e^{-\int_0^T r_t\,dt}]$: e to the minus the area under a square-root, mean-reverting interest rate. Survival here is $\mathrm{E}[e^{-\Lambda_T}]$: e to the minus the area under a square-root, mean-reverting hazard. Same equation for the process, same average. So the same formula answers both, with the hazard's settings in place of the rate's.
+Now compare two averages. The CIR card prices a zero-coupon bond (one payment of 1 at $`T`$, nothing before) as $`\mathrm{E}[e^{-\int_0^T r_t\,dt}]`$: e to the minus the area under a square-root, mean-reverting interest rate. Survival here is $`\mathrm{E}[e^{-\Lambda_T}]`$: e to the minus the area under a square-root, mean-reverting hazard. Same equation for the process, same average. So the same formula answers both, with the hazard's settings in place of the rate's.
 
-The proof's shape, from [Cox-Ingersoll-Ross](../30-Short-Rate%20Models/03-cox-ingersoll-ross-model.md): survival, as a function of today's hazard and the time left, obeys a partial differential equation whose coefficients are each a constant plus a constant times the hazard. Guessing $A e^{-B\lambda_0}$ splits it into two ordinary ones:
+The proof's shape, from [Cox-Ingersoll-Ross](../30-Short-Rate%20Models/03-cox-ingersoll-ross-model.md): survival, as a function of today's hazard and the time left, obeys a partial differential equation whose coefficients are each a constant plus a constant times the hazard. Guessing $`A e^{-B\lambda_0}`$ splits it into two ordinary ones:
 
-$$B' = 1 - \kappa B - \tfrac12\sigma^2 B^2, \qquad (\ln A)' = -\kappa\theta B, \qquad B(0) = 0,\; A(0) = 1,$$
+```math
+B' = 1 - \kappa B - \tfrac12\sigma^2 B^2, \qquad (\ln A)' = -\kappa\theta B, \qquad B(0) = 0,\; A(0) = 1,
+```
 
-a prime marking the rate of change in the horizon. The first is a Riccati equation (a rate of change that is a quadratic in the unknown). Its roots bring in $\gamma$, and solving it gives $B$; integrating $B$ gives $A$. The CIR card carries both solutions in full. The code below never uses them: road 2 steps these two equations forward numerically and lands on the formula to ten decimals.
+a prime marking the rate of change in the horizon. The first is a Riccati equation (a rate of change that is a quadratic in the unknown). Its roots bring in $`\gamma`$, and solving it gives $`B`$; integrating $`B`$ gives $`A`$. The CIR card carries both solutions in full. The code below never uses them: road 2 steps these two equations forward numerically and lands on the formula to ten decimals.
 
 ### Step 3: why randomness raises survival
 
-The expected hazard at time $t$ is $\theta + (\lambda_0 - \theta)e^{-\kappa t}$. Northwind starts at the long-run level, so the expected hazard is 2% at every date, and the expected area over five years is exactly 0.1. A careless reading says survival is therefore $e^{-0.1} = 0.9048$, as for the flat hazard.
+The expected hazard at time $`t`$ is $`\theta + (\lambda_0 - \theta)e^{-\kappa t}`$. Northwind starts at the long-run level, so the expected hazard is 2% at every date, and the expected area over five years is exactly 0.1. A careless reading says survival is therefore $`e^{-0.1} = 0.9048`$, as for the flat hazard.
 
-It is not, because e to the minus x is **convex**: its graph bends upward, so a chord between two points lies above the curve. Average an area of 0.05 and an area of 0.15: $\tfrac12(e^{-0.05} + e^{-0.15})$ beats $e^{-0.1}$, because the good path gains more survival than the bad path loses.
+It is not, because e to the minus x is **convex**: its graph bends upward, so a chord between two points lies above the curve. Average an area of 0.05 and an area of 0.15: $`\tfrac12(e^{-0.05} + e^{-0.15})`$ beats $`e^{-0.1}`$, because the good path gains more survival than the bad path loses.
 
-Jensen's inequality is that statement for any spread of outcomes: $\mathrm{E}[e^{-\Lambda}] \ge e^{-\mathrm{E}[\Lambda]}$, with equality only when the area is certain. So a random hazard with the same mean gives more survival, never less.
+Jensen's inequality is that statement for any spread of outcomes: $`\mathrm{E}[e^{-\Lambda}] \ge e^{-\mathrm{E}[\Lambda]}`$, with equality only when the area is certain. So a random hazard with the same mean gives more survival, never less.
 
 How much more? Expand e to the minus x around the mean area to second order: the first-order term averages to zero, the second leaves half the variance times the flat survival.
 
-The area's variance comes from the hazard's own variance and how long a shock lingers: a shock at time s decays at rate $\kappa$, so it adds to the area for about $1/\kappa$ years.
+The area's variance comes from the hazard's own variance and how long a shock lingers: a shock at time s decays at rate $`\kappa`$, so it adds to the area for about $`1/\kappa`$ years.
 
 A Simpson integral in the code works that out and gets a variance of 0.001857. Half of it, times 0.904837, is 0.000840. The exact gap from the closed form is 0.000827. The last 0.000015, in log terms, is the third-order piece: the area's distribution leans to the right.
 
 <details>
 <summary>The algebra behind the variance of the area</summary>
 
-Given the hazard at time s, the expected hazard at a later time u is $\theta + (\lambda_s - \theta)e^{-\kappa(u-s)}$, so a shock at s is remembered with weight $e^{-\kappa(u-s)}$. The covariance of the hazards at s and u (s before u) is therefore $e^{-\kappa(u-s)}\,\mathrm{Var}[\lambda_s]$. The variance of an area is the double integral of the covariances; doing the inner integral over u from s to T:
-$$\mathrm{Var}[\Lambda_T] = 2\int_0^T \mathrm{Var}[\lambda_s]\,\frac{1 - e^{-\kappa(T-s)}}{\kappa}\,ds, \qquad \mathrm{Var}[\lambda_s] = \frac{\lambda_0\sigma^2}{\kappa}\left(e^{-\kappa s} - e^{-2\kappa s}\right) + \frac{\theta\sigma^2}{2\kappa}\left(1 - e^{-\kappa s}\right)^2.$$
+Given the hazard at time s, the expected hazard at a later time u is $`\theta + (\lambda_s - \theta)e^{-\kappa(u-s)}`$, so a shock at s is remembered with weight $`e^{-\kappa(u-s)}`$. The covariance of the hazards at s and u (s before u) is therefore $`e^{-\kappa(u-s)}\,\mathrm{Var}[\lambda_s]`$. The variance of an area is the double integral of the covariances; doing the inner integral over u from s to T:
+
+$`\displaystyle \mathrm{Var}[\Lambda_T] = 2\int_0^T \mathrm{Var}[\lambda_s]\,\frac{1 - e^{-\kappa(T-s)}}{\kappa}\,ds, \qquad \mathrm{Var}[\lambda_s] = \frac{\lambda_0\sigma^2}{\kappa}\left(e^{-\kappa s} - e^{-2\kappa s}\right) + \frac{\theta\sigma^2}{2\kappa}\left(1 - e^{-\kappa s}\right)^2.`$
+
 The second formula is the CIR variance from the CIR card. At one year it gives a standard deviation of 1.1244 points: in a year, Northwind's hazard typically sits a point or more away from 2%.
 
 </details>
@@ -180,17 +194,17 @@ Brigo and Alfonsi (2005) fit a shifted version of this model to CDS quotes and p
 
 ## Worked numbers, by hand
 
-Northwind: today's hazard $\lambda_0$ = 2%, long-run level $\theta$ = 2%, pull speed $\kappa$ = 0.5, volatility $\sigma$ = 10%, five years.
+Northwind: today's hazard $`\lambda_0`$ = 2%, long-run level $`\theta`$ = 2%, pull speed $`\kappa`$ = 0.5, volatility $`\sigma`$ = 10%, five years.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Feller ratio $\nu$ | 2 × 0.5 × 0.02 / (0.1 × 0.1) | 2: the hazard never touches zero |
-| $\gamma$ | square root of 0.25 + 2 × 0.01 | 0.519615 |
-| $e^{\gamma T}$ | e to the 5 × 0.519615 | 13.437862 |
-| denominator | $(\gamma+\kappa)(e^{\gamma T}-1) + 2\gamma$ | 13.721064 |
-| $B(5)$ | $2(e^{\gamma T}-1)$ over the denominator | 1.812959 |
-| bracket in $A$ | $2\gamma\,e^{(\gamma+\kappa)T/2}$ over the denominator | 0.969075 |
-| $A(5)$ | 0.969075 squared | 0.939106 |
+| Feller ratio $`\nu`$ | 2 × 0.5 × 0.02 / (0.1 × 0.1) | 2: the hazard never touches zero |
+| $`\gamma`$ | square root of 0.25 + 2 × 0.01 | 0.519615 |
+| $`e^{\gamma T}`$ | e to the 5 × 0.519615 | 13.437862 |
+| denominator | $`(\gamma+\kappa)(e^{\gamma T}-1) + 2\gamma`$ | 13.721064 |
+| $`B(5)`$ | $`2(e^{\gamma T}-1)`$ over the denominator | 1.812959 |
+| bracket in $`A`$ | $`2\gamma\,e^{(\gamma+\kappa)T/2}`$ over the denominator | 0.969075 |
+| $`A(5)`$ | 0.969075 squared | 0.939106 |
 | today's-hazard factor | e to the minus 1.812959 × 0.02 | 0.964390 |
 | **five-year survival** | 0.939106 × 0.964390 | **0.905665** |
 | flat 2% hazard | e to the minus 0.1 | 0.904837 |
@@ -205,8 +219,8 @@ Correct five-year survival 0.905665.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Put the average hazard into the flat formula | 0.904837 | Jensen ignored: the average of e to the minus the area is not e to the minus the average area |
-| Drop the power $\nu$ on $A$ | 0.934566 | Power 1 instead of 2: the level factor acts as if the long-run hazard were half its value |
-| Write $\gamma$ with $\sigma^2$ instead of $2\sigma^2$ | 0.934249 | The Riccati roots move, so both $A$ and $B$ are wrong |
+| Drop the power $`\nu`$ on $`A`$ | 0.934566 | Power 1 instead of 2: the level factor acts as if the long-run hazard were half its value |
+| Write $`\gamma`$ with $`\sigma^2`$ instead of $`2\sigma^2`$ | 0.934249 | The Riccati roots move, so both $`A`$ and $`B`$ are wrong |
 | Freeze the hazard at its year-5 value for all five years | 0.907016 | Survival needs the area under the whole path, not one endpoint times five; the endpoint varies more than the path's average |
 
 The last row is checked twice: the formula for the average of e to the minus five times the year-5 hazard gives 0.907016, and the simulated paths give 0.907006.
@@ -229,7 +243,7 @@ xychart-beta
 
 Orange: the random hazard, pulled back to 2%. Green: a flat hazard held at today's value for five years. The lines cross near 2%, where the two models agree to about a basis point.
 
-From 2% to 3%, the flat spread climbs from 121.06 to 181.81 bp; the random one only from 120.01 to 143.61 bp, since its sensitivity $B(5)$ is 1.81 years, not five.
+From 2% to 3%, the flat spread climbs from 121.06 to 181.81 bp; the random one only from 120.01 to 143.61 bp, since its sensitivity $`B(5)`$ is 1.81 years, not five.
 
 At a hazard of zero today the flat model says Northwind is riskless; the random one still charges 73.37 bp, because the hazard is expected to climb back.
 
@@ -661,13 +675,13 @@ The two outputs agree line for line, including the simulations, since both langu
 
 Lean proves the survival average, the Jensen gap and the closed form's two equations, for any nonnegative hazard and any settings with nonzero volatility.
 
-- Take $T \ge 0$ and an exponential clock $\xi$ with average 1, independent of the area $\Lambda_T$ under a nonnegative hazard. Then the chance that $\Lambda_T < \xi$ is $\mathrm{E}[e^{-\Lambda_T}]$.
-- Suppose the hazard is never negative and $\Lambda_T$ has a finite average, with $T \ge 0$. Then $\mathrm{E}[e^{-\Lambda_T}] \ge e^{-\mathrm{E}[\Lambda_T]}$.
-- Take any pull speed $\kappa$, long-run level $\theta$ and volatility $\sigma \ne 0$. Then the card's $A$ and $B$ satisfy $B(0) = 0$ and $A(0) = 1$.
-- Take the same settings. Then $B' = 1 - \kappa B - \tfrac12\sigma^2 B^2$ at every horizon.
-- Take the same settings. Then $(\ln A)' = -\kappa\theta B$ at every horizon.
-- The Feller ratio $\nu$ is 2, 8, 8/9 and 1/2 at volatilities 10%, 5%, 15% and 20%.
-- Five years at an average hazard of 2% give an expected area of 0.1, and $\gamma^2 = 0.27$.
+- Take $`T \ge 0`$ and an exponential clock $`\xi`$ with average 1, independent of the area $`\Lambda_T`$ under a nonnegative hazard. Then the chance that $`\Lambda_T < \xi`$ is $`\mathrm{E}[e^{-\Lambda_T}]`$.
+- Suppose the hazard is never negative and $`\Lambda_T`$ has a finite average, with $`T \ge 0`$. Then $`\mathrm{E}[e^{-\Lambda_T}] \ge e^{-\mathrm{E}[\Lambda_T]}`$.
+- Take any pull speed $`\kappa`$, long-run level $`\theta`$ and volatility $`\sigma \ne 0`$. Then the card's $`A`$ and $`B`$ satisfy $`B(0) = 0`$ and $`A(0) = 1`$.
+- Take the same settings. Then $`B' = 1 - \kappa B - \tfrac12\sigma^2 B^2`$ at every horizon.
+- Take the same settings. Then $`(\ln A)' = -\kappa\theta B`$ at every horizon.
+- The Feller ratio $`\nu`$ is 2, 8, 8/9 and 1/2 at volatilities 10%, 5%, 15% and 20%.
+- Five years at an average hazard of 2% give an expected area of 0.1, and $`\gamma^2 = 0.27`$.
 
 The closed form's match with simulation, every survival figure and the par spreads are left to the Python and Rust checks.
 
@@ -885,7 +899,7 @@ example : (1 / 2 : ℚ) ^ 2 + 2 * (10 / 100) ^ 2 = 27 / 100 := by norm_num
 > Three smaller traps:
 > - **Reading a CDS quote as evidence about volatility.** The par spread moved 1.04 bp when volatility went from 0 to 10%. A fitted volatility from CDS quotes alone is noise; it needs an option price.
 > - **Freezing the hazard at a future value.** Using the year-5 hazard for all five years gives 0.907016, too high, because one endpoint varies more than the average over the whole path.
-> - **Feeding a rate model's shock size into $\sigma$.** $\sigma$ multiplies the square root of the hazard. At a 2% hazard, 10% volatility is a shock of 1.4142 points a year; typing that 1.4142% as $\sigma$ gives a nearly flat hazard.
+> - **Feeding a rate model's shock size into $`\sigma`$.** $`\sigma`$ multiplies the square root of the hazard. At a 2% hazard, 10% volatility is a shock of 1.4142 points a year; typing that 1.4142% as $`\sigma`$ gives a nearly flat hazard.
 
 ---
 
@@ -897,7 +911,7 @@ example : (1 / 2 : ℚ) ^ 2 + 2 * (10 / 100) ^ 2 = 27 / 100 := by norm_num
 - **Risky bond pricing.** The bond on [A risky bond from the hazard curve](01-pricing-a-defaultable-bond-from-the-survival-curve.md) needs only a survival curve; feed it this one and the same coupons are priced with a wandering hazard.
 
 > **Say it back**
-> A Cox process is a default clock whose hazard is itself random. Given the hazard's path, survival is e to the minus the area under it; the survival chance is the average of that over paths. With a square-root, mean-reverting hazard, the average is the CIR bond formula, $A(T)e^{-B(T)\lambda_0}$. Because e to the minus x curves upward, the average beats the flat answer: 0.9057 against 0.9048 for Northwind, by about half the area's variance. The par spread barely moves, so the pull speed and volatility must be fitted to prices that see the spread move, such as options.
+> A Cox process is a default clock whose hazard is itself random. Given the hazard's path, survival is e to the minus the area under it; the survival chance is the average of that over paths. With a square-root, mean-reverting hazard, the average is the CIR bond formula, $`A(T)e^{-B(T)\lambda_0}`$. Because e to the minus x curves upward, the average beats the flat answer: 0.9057 against 0.9048 for Northwind, by about half the area's variance. The par spread barely moves, so the pull speed and volatility must be fitted to prices that see the spread move, such as options.
 
 ---
 
@@ -907,7 +921,7 @@ example : (1 / 2 : ℚ) ^ 2 + 2 * (10 / 100) ^ 2 = 27 / 100 := by norm_num
 - [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): the two legs and the par spread, built from a survival curve, and the 121.06 bp flat answer.
 - [Cox-Ingersoll-Ross](../30-Short-Rate%20Models/03-cox-ingersoll-ross-model.md): the square-root process and the closed form, solved there for interest rates.
 - [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): why the average of a curved function differs from the function of the average, and in which direction.
-- [Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): what an equation driven by $W$ means, and how to simulate one step by step.
+- [Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): what an equation driven by $`W`$ means, and how to simulate one step by step.
 
 ## Where this goes next
 

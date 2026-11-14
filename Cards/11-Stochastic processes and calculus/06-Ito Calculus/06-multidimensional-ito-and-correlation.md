@@ -38,50 +38,58 @@ Upper line: share A. Lower line: share B. One sample path, read monthly from eac
 
 ## The formula
 
-Notation first. Brownian motion $W_t$ is the random walk seen from far away, with time $t$ in years ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). Its step $dW_t$ is shorthand for an Ito integral, never a derivative: the path has no slope ([The Ito integral](01-ito-integral.md)). The covariation $[X,Y]_t$ is the limit of the summed products of matching small steps of two processes ([Ito's product rule](03-ito-product-rule.md)). New here: several Brownian motions, labelled by a raised number, $W^1_t$ and $W^2_t$. The raised numbers are labels, not powers; a square is written with brackets, $(dW^1_t)^2$.
+Notation first. Brownian motion $`W_t`$ is the random walk seen from far away, with time $`t`$ in years ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). Its step $`dW_t`$ is shorthand for an Ito integral, never a derivative: the path has no slope ([The Ito integral](01-ito-integral.md)). The covariation $`[X,Y]_t`$ is the limit of the summed products of matching small steps of two processes ([Ito's product rule](03-ito-product-rule.md)). New here: several Brownian motions, labelled by a raised number, $`W^1_t`$ and $`W^2_t`$. The raised numbers are labels, not powers; a square is written with brackets, $`(dW^1_t)^2`$.
 
-**Correlated Brownian motions, built by Cholesky.** Start from two independent Brownian motions $Z^1_t$ and $Z^2_t$. Set
+**Correlated Brownian motions, built by Cholesky.** Start from two independent Brownian motions $`Z^1_t`$ and $`Z^2_t`$. Set
 
-$$W^1_t = Z^1_t, \qquad W^2_t = \rho\,Z^1_t + \sqrt{1-\rho^2}\;Z^2_t.$$
+```math
+W^1_t = Z^1_t, \qquad W^2_t = \rho\,Z^1_t + \sqrt{1-\rho^2}\;Z^2_t.
+```
 
-Both are Brownian motions, with covariation $[W^1, W^2]_t = \rho\,t$. The weights are the rows of the Cholesky factor $L$ of the covariance table $\Sigma$, which has 1 on its diagonal and $\rho$ off it. In the shorthand of [Ito's lemma](02-itos-lemma.md) the multiplication table gains one entry:
+Both are Brownian motions, with covariation $`[W^1, W^2]_t = \rho\,t`$. The weights are the rows of the Cholesky factor $`L`$ of the covariance table $`\Sigma`$, which has 1 on its diagonal and $`\rho`$ off it. In the shorthand of [Ito's lemma](02-itos-lemma.md) the multiplication table gains one entry:
 
-$$dW^1_t\,dW^2_t = \rho\,dt, \qquad (dW^i_t)^2 = dt, \qquad dt\,dW^i_t = 0, \qquad (dt)^2 = 0.$$
+```math
+dW^1_t\,dW^2_t = \rho\,dt, \qquad (dW^i_t)^2 = dt, \qquad dt\,dW^i_t = 0, \qquad (dt)^2 = 0.
+```
 
-**The multidimensional Ito formula.** Let each of $d$ processes move by its own drift and its own noise, $dX^i_t = \mu_i\,dt + \sigma_i\,dW^i_t$, for $i$ from 1 to $d$. The drift $\mu_i$ and noise size $\sigma_i$ may be numbers or may depend on time and the path so far. The noises have correlations $\rho_{ij}$ (with $\rho_{ii} = 1$). Take a smooth function $f(t, x_1, \dots, x_d)$, with $f_t$ its slope in time, $f_i$ its slope in $x_i$, and $f_{ij}$ its second slope, in $x_i$ then $x_j$. Then
+**The multidimensional Ito formula.** Let each of $`d`$ processes move by its own drift and its own noise, $`dX^i_t = \mu_i\,dt + \sigma_i\,dW^i_t`$, for $`i`$ from 1 to $`d`$. The drift $`\mu_i`$ and noise size $`\sigma_i`$ may be numbers or may depend on time and the path so far. The noises have correlations $`\rho_{ij}`$ (with $`\rho_{ii} = 1`$). Take a smooth function $`f(t, x_1, \dots, x_d)`$, with $`f_t`$ its slope in time, $`f_i`$ its slope in $`x_i`$, and $`f_{ij}`$ its second slope, in $`x_i`$ then $`x_j`$. Then
 
-$$df = f_t\,dt + \sum_{i} f_i\,dX^i_t + \frac12 \sum_{i}\sum_{j} f_{ij}\,\sigma_i\sigma_j\rho_{ij}\,dt.$$
+```math
+df = f_t\,dt + \sum_{i} f_i\,dX^i_t + \frac12 \sum_{i}\sum_{j} f_{ij}\,\sigma_i\sigma_j\rho_{ij}\,dt.
+```
 
 **Read it aloud:** the function changes by its time slope, plus each slope times that process's change, plus half of every second slope times the matching pair of noise sizes and their correlation.
 
-**The product of the two shares.** With $P_t = A_t B_t$, the formula gives
+**The product of the two shares.** With $`P_t = A_t B_t`$, the formula gives
 
-$$\frac{dP_t}{P_t} = (\mu_1 + \mu_2 + \rho\,\sigma_1\sigma_2)\,dt + \sigma_1\,dW^1_t + \sigma_2\,dW^2_t, \qquad E[P_T] = A_0 B_0\,e^{(\mu_1+\mu_2+\rho\sigma_1\sigma_2)T}.$$
+```math
+\frac{dP_t}{P_t} = (\mu_1 + \mu_2 + \rho\,\sigma_1\sigma_2)\,dt + \sigma_1\,dW^1_t + \sigma_2\,dW^2_t, \qquad E[P_T] = A_0 B_0\,e^{(\mu_1+\mu_2+\rho\sigma_1\sigma_2)T}.
+```
 
-The product's own volatility is $v = \sqrt{\sigma_1^2 + \sigma_2^2 + 2\rho\,\sigma_1\sigma_2}$. Strictly, a price times a price is in dollars squared; the card writes it with a dollar sign for short.
+The product's own volatility is $`v = \sqrt{\sigma_1^2 + \sigma_2^2 + 2\rho\,\sigma_1\sigma_2}`$. Strictly, a price times a price is in dollars squared; the card writes it with a dollar sign for short.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A_t$, $B_t$, $A_0$, $B_0$ | the two share prices at time $t$; today | \$100 and \$50 today | the product scales with each |
-| $\mu_1$, $\mu_2$, $\mu_i$ | drifts: average growth rate per year | 0.08 and 0.05 | the product's drift rises one for one |
-| $\sigma_1$, $\sigma_2$, $\sigma_i$ | volatilities: size of each yearly wobble | 0.20 and 0.30 | the cross term grows as $\rho$ times their product |
-| $\rho$, $\rho_{ij}$, $\Sigma$, $L$ | correlation of the noises; of noises i and j; covariance table per year; its lower-triangular Cholesky factor, $L L^{\top} = \Sigma$ | $\rho$ = 0.5; $L$ has rows `(1, 0)` and `(0.5, 0.866025)` | more shared news; the product drifts faster |
-| $W_t$, $dW_t$, $W^1_t$, $W^2_t$, $dW^1_t$, $dW^2_t$, $W^i_t$ | Brownian motions driving A and B, and their small steps | each starts at 0 | — |
-| $Z^1_t$, $Z^2_t$, $U$, $V$, $UV$, $c$ | independent Brownian motions: shared news, B's own news; in the proof, one slice's two independent bell-curve draws, their product, and the weight $\sqrt{1-\rho^2}$ | $c$ = 0.866025 | — |
-| $[X,Y]_t$, $[W^1, W^2]_t$ | covariation: running total of products of matching small steps | $[W^1, W^2]_1$ = 0.5 | — |
-| $P_t$, $R_t$, $v$, $A_1$, $B_1$ | the product $A_t B_t$; the ratio $A_t / B_t$; the product's volatility; prices at one year | \$5,000 and 2 today; $v$ = 0.435890 | — |
-| $X^i_t$, $X_t$, $Y_t$, $d$, $i$, $j$ | general Ito processes; how many there are; labels running from 1 to $d$ | $X^1 = A$, $X^2 = B$, $d$ = 2 | — |
-| $f$, $f_t$, $f_i$, $f_{ij}$, $f_{12}$, $f_{21}$, $x_i$, $x_j$, $e$ | a smooth function; its time slope; its slope in $x_i$; its second slope in $x_i$ then $x_j$; the base of natural logs | for $x_1 x_2$: $f_{12}$ = 1 | bigger second slopes, bigger correction |
-| $t$, $s$, $T$, $dt$, $n$, $k$, $\Delta t$, $\Delta W^i_k$, $\Delta X^i$, $\Delta f$ | time; an earlier start time; the horizon; a short slice; grid steps; which step; one step's length; step k of noise i; one slice's change in process i and in $f$ | $T$ = 1 year | — |
-| $N(x)$, $E[\,\cdot\,]$ | bell-curve area to the left of $x$; the average over all outcomes | $N(-0.149120)$ = 0.440729 | — |
+| $`A_t`$, $`B_t`$, $`A_0`$, $`B_0`$ | the two share prices at time $`t`$; today | \$100 and \$50 today | the product scales with each |
+| $`\mu_1`$, $`\mu_2`$, $`\mu_i`$ | drifts: average growth rate per year | 0.08 and 0.05 | the product's drift rises one for one |
+| $`\sigma_1`$, $`\sigma_2`$, $`\sigma_i`$ | volatilities: size of each yearly wobble | 0.20 and 0.30 | the cross term grows as $`\rho`$ times their product |
+| $`\rho`$, $`\rho_{ij}`$, $`\Sigma`$, $`L`$ | correlation of the noises; of noises i and j; covariance table per year; its lower-triangular Cholesky factor, $`L L^{\top} = \Sigma`$ | $`\rho`$ = 0.5; $`L`$ has rows `(1, 0)` and `(0.5, 0.866025)` | more shared news; the product drifts faster |
+| $`W_t`$, $`dW_t`$, $`W^1_t`$, $`W^2_t`$, $`dW^1_t`$, $`dW^2_t`$, $`W^i_t`$ | Brownian motions driving A and B, and their small steps | each starts at 0 | — |
+| $`Z^1_t`$, $`Z^2_t`$, $`U`$, $`V`$, $`UV`$, $`c`$ | independent Brownian motions: shared news, B's own news; in the proof, one slice's two independent bell-curve draws, their product, and the weight $`\sqrt{1-\rho^2}`$ | $`c`$ = 0.866025 | — |
+| $`[X,Y]_t`$, $`[W^1, W^2]_t`$ | covariation: running total of products of matching small steps | $`[W^1, W^2]_1`$ = 0.5 | — |
+| $`P_t`$, $`R_t`$, $`v`$, $`A_1`$, $`B_1`$ | the product $`A_t B_t`$; the ratio $`A_t / B_t`$; the product's volatility; prices at one year | \$5,000 and 2 today; $`v`$ = 0.435890 | — |
+| $`X^i_t`$, $`X_t`$, $`Y_t`$, $`d`$, $`i`$, $`j`$ | general Ito processes; how many there are; labels running from 1 to $`d`$ | $`X^1 = A`$, $`X^2 = B`$, $`d`$ = 2 | — |
+| $`f`$, $`f_t`$, $`f_i`$, $`f_{ij}`$, $`f_{12}`$, $`f_{21}`$, $`x_i`$, $`x_j`$, $`e`$ | a smooth function; its time slope; its slope in $`x_i`$; its second slope in $`x_i`$ then $`x_j`$; the base of natural logs | for $`x_1 x_2`$: $`f_{12}`$ = 1 | bigger second slopes, bigger correction |
+| $`t`$, $`s`$, $`T`$, $`dt`$, $`n`$, $`k`$, $`\Delta t`$, $`\Delta W^i_k`$, $`\Delta X^i`$, $`\Delta f`$ | time; an earlier start time; the horizon; a short slice; grid steps; which step; one step's length; step k of noise i; one slice's change in process i and in $`f`$ | $`T`$ = 1 year | — |
+| $`N(x)`$, $`E[\,\cdot\,]`$ | bell-curve area to the left of $`x`$; the average over all outcomes | $`N(-0.149120)`$ = 0.440729 | — |
 
 ### When it holds
 
-- **The correlation lies between $-1$ and 1; in more dimensions $\Sigma$ is positive definite** (every mix of the noises has positive variance). At $\rho$ = 1.2 the Cholesky entry is the square root of a negative number, and the construction stops.
+- **The correlation lies between $`-1`$ and 1; in more dimensions $`\Sigma`$ is positive definite** (every mix of the noises has positive variance). At $`\rho`$ = 1.2 the Cholesky entry is the square root of a negative number, and the construction stops.
 - **The coefficients use only the past and are integrable,** as on [Ito's lemma](02-itos-lemma.md). A coefficient that peeks ahead breaks the left-end sums.
-- **$f$ has continuous second slopes, mixed ones included.** At a kink the formula needs an extra term, as in one dimension.
+- **$`f`$ has continuous second slopes, mixed ones included.** At a kink the formula needs an extra term, as in one dimension.
 - **The paths are continuous.** Jumps add their products to every covariation: [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
-- **$\rho$ is the correlation of the noises over short steps, not of yearly prices.** Using a yearly price correlation in its place mixes up two numbers that differ: here the yearly prices $A_1$ and $B_1$ have correlation 0.491245 against $\rho$ = 0.5, and the gap grows with the volatilities and the horizon.
+- **$`\rho`$ is the correlation of the noises over short steps, not of yearly prices.** Using a yearly price correlation in its place mixes up two numbers that differ: here the yearly prices $`A_1`$ and $`B_1`$ have correlation 0.491245 against $`\rho`$ = 0.5, and the gap grows with the volatilities and the horizon.
 
 ---
 
@@ -89,17 +97,19 @@ The product's own volatility is $v = \sqrt{\sigma_1^2 + \sigma_2^2 + 2\rho\,\sig
 
 ### Step 0: shared news plus own news
 
-Split share B's noise into two independent parts: the news A hears, and news only B hears. Give the shared news one weight and the own news a weight $c$. B's covariance with A's noise is then the shared weight per year, since the own news is independent of A, and its variance is the shared weight squared plus $c^2$. Covariance 0.5 fixes the shared weight at $\rho$ = 0.5, and variance 1 fixes $c = \sqrt{1 - 0.25}$ = 0.866025.
+Split share B's noise into two independent parts: the news A hears, and news only B hears. Give the shared news one weight and the own news a weight $`c`$. B's covariance with A's noise is then the shared weight per year, since the own news is independent of A, and its variance is the shared weight squared plus $`c^2`$. Covariance 0.5 fixes the shared weight at $`\rho`$ = 0.5, and variance 1 fixes $`c = \sqrt{1 - 0.25}`$ = 0.866025.
 
 ### Step 1: the mix is a Brownian motion with the right correlation
 
-Take $W^2_t = \rho Z^1_t + \sqrt{1-\rho^2}\,Z^2_t$. It starts at 0, and its paths are continuous because both parts are. Its step over any stretch is a fixed mix of two independent bell-curve steps, so it is bell-shaped and independent of earlier steps (mixing bell curves keeps them bell-shaped: [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). Its variance over a time $t$ is $\rho^2 t + (1-\rho^2)t = t$. Those are the defining properties of Brownian motion. And
+Take $`W^2_t = \rho Z^1_t + \sqrt{1-\rho^2}\,Z^2_t`$. It starts at 0, and its paths are continuous because both parts are. Its step over any stretch is a fixed mix of two independent bell-curve steps, so it is bell-shaped and independent of earlier steps (mixing bell curves keeps them bell-shaped: [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). Its variance over a time $`t`$ is $`\rho^2 t + (1-\rho^2)t = t`$. Those are the defining properties of Brownian motion. And
 
-$$\operatorname{Cov}(W^1_t, W^2_t) = \operatorname{Cov}(Z^1_t,\;\rho Z^1_t + \sqrt{1-\rho^2}\,Z^2_t) = \rho\,t,$$
+```math
+\mathrm{Cov}(W^1_t, W^2_t) = \mathrm{Cov}(Z^1_t,\;\rho Z^1_t + \sqrt{1-\rho^2}\,Z^2_t) = \rho\,t,
+```
 
-because $Z^2$ is independent of $Z^1$. Over a year both have variance 1, so the correlation is $\rho$.
+because $`Z^2`$ is independent of $`Z^1`$. Over a year both have variance 1, so the correlation is $`\rho`$.
 
-In $d$ dimensions the recipe is the same. Row i of $L$ mixes the first i independent noises, so each new share brings one new source of news, and $L L^{\top} = \Sigma$ makes every pair's covariance right.
+In $`d`$ dimensions the recipe is the same. Row i of $`L`$ mixes the first i independent noises, so each new share brings one new source of news, and $`L L^{\top} = \Sigma`$ makes every pair's covariance right.
 
 ### The picture: the mix, drawn to scale
 
@@ -109,24 +119,26 @@ Scale: 150 drawing units per unit of noise. B's arrow ends at (135, 70.10): 0.5 
 
 ### Step 2: two correlated noises multiply to their correlation per unit of time
 
-Cut a year into $n$ steps of length $\Delta t$, and write $\Delta W^1_k$ and $\Delta W^2_k$ for the two steps over slice k. Each product $\Delta W^1_k \Delta W^2_k$ has average $\rho\,\Delta t$ and variance $(1+\rho^2)\,\Delta t^2$, independently across slices. So the sum has average $\rho T$ and variance $(1+\rho^2)\,T\,\Delta t$, which shrinks to zero as the grid gets finer:
+Cut a year into $`n`$ steps of length $`\Delta t`$, and write $`\Delta W^1_k`$ and $`\Delta W^2_k`$ for the two steps over slice k. Each product $`\Delta W^1_k \Delta W^2_k`$ has average $`\rho\,\Delta t`$ and variance $`(1+\rho^2)\,\Delta t^2`$, independently across slices. So the sum has average $`\rho T`$ and variance $`(1+\rho^2)\,T\,\Delta t`$, which shrinks to zero as the grid gets finer:
 
-$$[W^1, W^2]_T = \lim \sum_k \Delta W^1_k\,\Delta W^2_k = \rho\,T.$$
+```math
+[W^1, W^2]_T = \lim \sum_k \Delta W^1_k\,\Delta W^2_k = \rho\,T.
+```
 
-That is the new table entry. At $\rho = 0$ independent noises do not interact at second order; at $\rho = 1$ they are one noise and the entry is $(dW)^2 = dt$. On one fine path (Road C) the sum is 0.682714 at 16 steps and 0.531024 at 4,096, each within two predicted spreads (0.279508 and 0.017469) of 0.5.
+That is the new table entry. At $`\rho = 0`$ independent noises do not interact at second order; at $`\rho = 1`$ they are one noise and the entry is $`(dW)^2 = dt`$. On one fine path (Road C) the sum is 0.682714 at 16 steps and 0.531024 at 4,096, each within two predicted spreads (0.279508 and 0.017469) of 0.5.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write a single slice's steps through the construction: $\Delta W^1 = \sqrt{\Delta t}\,U$ and $\Delta W^2 = \sqrt{\Delta t}\,(\rho U + c V)$, with $c = \sqrt{1-\rho^2}$ and $U$, $V$ independent standard bell-curve draws. Then
+Write a single slice's steps through the construction: $`\Delta W^1 = \sqrt{\Delta t}\,U`$ and $`\Delta W^2 = \sqrt{\Delta t}\,(\rho U + c V)`$, with $`c = \sqrt{1-\rho^2}`$ and $`U`$, $`V`$ independent standard bell-curve draws. Then
 
-$$\Delta W^1 \Delta W^2 = \Delta t\,(\rho U^2 + c\,U V).$$
+$`\displaystyle \Delta W^1 \Delta W^2 = \Delta t\,(\rho U^2 + c\,U V).`$
 
-The average of $U^2$ is 1 and of $UV$ is 0, so the average of the product is $\rho\,\Delta t$.
+The average of $`U^2`$ is 1 and of $`UV`$ is 0, so the average of the product is $`\rho\,\Delta t`$.
 
-For the variance, square: $(\rho U^2 + cUV)^2 = \rho^2 U^4 + 2\rho c\,U^3 V + c^2 U^2 V^2$. A standard bell curve has fourth moment 3, so the averages are $3\rho^2$, 0 and $c^2$. The average square is $\Delta t^2(3\rho^2 + 1 - \rho^2) = \Delta t^2(1 + 2\rho^2)$. Subtracting the squared average $\rho^2\Delta t^2$ leaves the variance $(1+\rho^2)\,\Delta t^2$.
+For the variance, square: $`(\rho U^2 + cUV)^2 = \rho^2 U^4 + 2\rho c\,U^3 V + c^2 U^2 V^2`$. A standard bell curve has fourth moment 3, so the averages are $`3\rho^2`$, 0 and $`c^2`$. The average square is $`\Delta t^2(3\rho^2 + 1 - \rho^2) = \Delta t^2(1 + 2\rho^2)`$. Subtracting the squared average $`\rho^2\Delta t^2`$ leaves the variance $`(1+\rho^2)\,\Delta t^2`$.
 
-Brownian steps over different slices are independent, so the variances add: the sum over $n$ slices has average $n\rho\Delta t = \rho T$ and variance $n(1+\rho^2)\Delta t^2 = (1+\rho^2)\,T\,\Delta t$. As $\Delta t \to 0$ the sum converges to $\rho T$ in mean square, and so in probability (Chebyshev's inequality). The same argument from any start time s gives $\rho\,(t - s)$ over a stretch from s to t, which is the statement $[W^1, W^2]_t = \rho t$. The proof is complete.
+Brownian steps over different slices are independent, so the variances add: the sum over $`n`$ slices has average $`n\rho\Delta t = \rho T`$ and variance $`n(1+\rho^2)\Delta t^2 = (1+\rho^2)\,T\,\Delta t`$. As $`\Delta t \to 0`$ the sum converges to $`\rho T`$ in mean square, and so in probability (Chebyshev's inequality). The same argument from any start time s gives $`\rho\,(t - s)`$ over a stretch from s to t, which is the statement $`[W^1, W^2]_t = \rho t`$. The proof is complete.
 
 </details>
 
@@ -134,64 +146,70 @@ Brownian steps over different slices are independent, so the variances add: the 
 
 Over one slice, a smooth function of two processes changes, to second order, by
 
-$$\Delta f \approx f_t\,\Delta t + f_1\,\Delta X^1 + f_2\,\Delta X^2 + \tfrac12 f_{11}(\Delta X^1)^2 + f_{12}\,\Delta X^1\Delta X^2 + \tfrac12 f_{22}(\Delta X^2)^2.$$
+```math
+\Delta f \approx f_t\,\Delta t + f_1\,\Delta X^1 + f_2\,\Delta X^2 + \tfrac12 f_{11}(\Delta X^1)^2 + f_{12}\,\Delta X^1\Delta X^2 + \tfrac12 f_{22}(\Delta X^2)^2.
+```
 
-In school calculus the last three terms vanish in the limit. Here each step $\Delta X^i$ is about $\sigma_i \Delta W^i$, of size the square root of $\Delta t$, so a product of two steps has size $\Delta t$, like the drift, and survives. Summed over slices, $(\Delta X^i)^2$ adds up to $\sigma_i^2\,dt$ by quadratic variation ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)).
+In school calculus the last three terms vanish in the limit. Here each step $`\Delta X^i`$ is about $`\sigma_i \Delta W^i`$, of size the square root of $`\Delta t`$, so a product of two steps has size $`\Delta t`$, like the drift, and survives. Summed over slices, $`(\Delta X^i)^2`$ adds up to $`\sigma_i^2\,dt`$ by quadratic variation ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)).
 
-The cross product $\Delta X^1 \Delta X^2$ adds up to $\sigma_1\sigma_2\rho\,dt$, by Step 2. In the formula's double sum the mixed slope appears twice, as $f_{12}$ and $f_{21}$, each with a half; together they make the single $f_{12}$ above. Smaller pieces add up to nothing, and the first-order sums, slopes taken at each slice's start, become Ito integrals.
+The cross product $`\Delta X^1 \Delta X^2`$ adds up to $`\sigma_1\sigma_2\rho\,dt`$, by Step 2. In the formula's double sum the mixed slope appears twice, as $`f_{12}`$ and $`f_{21}`$, each with a half; together they make the single $`f_{12}`$ above. Smaller pieces add up to nothing, and the first-order sums, slopes taken at each slice's start, become Ito integrals.
 
 <details>
 <summary>Detailed proof: what is shown here, and what is cited</summary>
 
-**Shown.** Take $f$ with bounded, continuous first and second slopes, and constant $\mu_i$, $\sigma_i$. On a grid, write the total change of $f$ as the sum of its changes over the slices, and expand each by Taylor's theorem with remainder. The first-order sums $\sum_k f_i(t_k, X_{t_k})\,\Delta X^i_k$ are left-end sums and converge to the Ito integrals $\int f_i\,dX^i$, by the construction on [The Ito integral](01-ito-integral.md).
+**Shown.** Take $`f`$ with bounded, continuous first and second slopes, and constant $`\mu_i`$, $`\sigma_i`$. On a grid, write the total change of $`f`$ as the sum of its changes over the slices, and expand each by Taylor's theorem with remainder. The first-order sums $`\sum_k f_i(t_k, X_{t_k})\,\Delta X^i_k`$ are left-end sums and converge to the Ito integrals $`\int f_i\,dX^i`$, by the construction on [The Ito integral](01-ito-integral.md).
 
-For each second-order sum, compare $\sum_k f_{ij}(t_k, X_{t_k})\,\Delta X^i_k\Delta X^j_k$ with $\sum_k f_{ij}(t_k, X_{t_k})\,\sigma_i\sigma_j\rho_{ij}\,\Delta t$. Slice by slice, their difference has an average given the past of order $\Delta t^2$ (from the drift) and a variance of order $\Delta t^2$ (the moment calculation of Step 2), and its centred parts are uncorrelated across slices. Summed over $n$ slices, bias and variance are both of order $\Delta t$ and vanish. The second sum is a Riemann sum and converges to $\int f_{ij}\sigma_i\sigma_j\rho_{ij}\,dt$.
+For each second-order sum, compare $`\sum_k f_{ij}(t_k, X_{t_k})\,\Delta X^i_k\Delta X^j_k`$ with $`\sum_k f_{ij}(t_k, X_{t_k})\,\sigma_i\sigma_j\rho_{ij}\,\Delta t`$. Slice by slice, their difference has an average given the past of order $`\Delta t^2`$ (from the drift) and a variance of order $`\Delta t^2`$ (the moment calculation of Step 2), and its centred parts are uncorrelated across slices. Summed over $`n`$ slices, bias and variance are both of order $`\Delta t`$ and vanish. The second sum is a Riemann sum and converges to $`\int f_{ij}\sigma_i\sigma_j\rho_{ij}\,dt`$.
 
 Each Taylor remainder is at most the squared step times the largest change of a second slope within the slice; the squared steps add to a finite total, and that largest change shrinks to zero because the second slopes are continuous on the bounded region the path visits. So the remainders sum to zero in probability.
 
-**Cited.** The general case, with coefficients that depend on time and the path and with unbounded $f$, needs localisation: stopping the processes before they leave a bounded region. It is in Øksendal, Chapter 4, and Karatzas and Shreve, Section 3.3 (Sources).
+**Cited.** The general case, with coefficients that depend on time and the path and with unbounded $`f`$, needs localisation: stopping the processes before they leave a bounded region. It is in Øksendal, Chapter 4, and Karatzas and Shreve, Section 3.3 (Sources).
 
 </details>
 
 ### Step 4: the product of the two prices
 
-Take $f(x_1, x_2) = x_1 x_2$, with $X^1 = A$ and $X^2 = B$. Its slopes: $f_1 = x_2$, $f_2 = x_1$, $f_{11} = f_{22} = 0$, and $f_{12} = f_{21} = 1$. The noise sizes are $\sigma_1 A_t$ and $\sigma_2 B_t$. The formula gives
+Take $`f(x_1, x_2) = x_1 x_2`$, with $`X^1 = A`$ and $`X^2 = B`$. Its slopes: $`f_1 = x_2`$, $`f_2 = x_1`$, $`f_{11} = f_{22} = 0`$, and $`f_{12} = f_{21} = 1`$. The noise sizes are $`\sigma_1 A_t`$ and $`\sigma_2 B_t`$. The formula gives
 
-$$dP_t = B_t\,dA_t + A_t\,dB_t + \rho\,\sigma_1\sigma_2\,A_t B_t\,dt.$$
+```math
+dP_t = B_t\,dA_t + A_t\,dB_t + \rho\,\sigma_1\sigma_2\,A_t B_t\,dt.
+```
 
-This is the product rule of [Ito's product rule](03-ito-product-rule.md), its covariation term now carrying the correlation. Divide by $P_t$ and substitute $dA_t/A_t = \mu_1 dt + \sigma_1 dW^1_t$, and the same for B: the drift is $\mu_1 + \mu_2 + \rho\sigma_1\sigma_2$. The noise $\sigma_1 dW^1_t + \sigma_2 dW^2_t$ has variance per unit of time $\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2$ by the table, which gives $v$. With a constant relative drift the average grows as e to the drift times the time, which gives $E[P_T]$.
+This is the product rule of [Ito's product rule](03-ito-product-rule.md), its covariation term now carrying the correlation. Divide by $`P_t`$ and substitute $`dA_t/A_t = \mu_1 dt + \sigma_1 dW^1_t`$, and the same for B: the drift is $`\mu_1 + \mu_2 + \rho\sigma_1\sigma_2`$. The noise $`\sigma_1 dW^1_t + \sigma_2 dW^2_t`$ has variance per unit of time $`\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2`$ by the table, which gives $`v`$. With a constant relative drift the average grows as e to the drift times the time, which gives $`E[P_T]`$.
 
 ### Step 5: the ratio, a second use
 
-Take $f(x_1, x_2) = x_1 / x_2$, the price of A measured in shares of B. Its slopes: $f_1 = 1/x_2$, $f_2 = -x_1/x_2^2$, $f_{11} = 0$, $f_{12} = -1/x_2^2$, $f_{22} = 2x_1/x_2^3$. Putting them in and dividing by $R_t = A_t/B_t$:
+Take $`f(x_1, x_2) = x_1 / x_2`$, the price of A measured in shares of B. Its slopes: $`f_1 = 1/x_2`$, $`f_2 = -x_1/x_2^2`$, $`f_{11} = 0`$, $`f_{12} = -1/x_2^2`$, $`f_{22} = 2x_1/x_2^3`$. Putting them in and dividing by $`R_t = A_t/B_t`$:
 
-$$\frac{dR_t}{R_t} = (\mu_1 - \mu_2 + \sigma_2^2 - \rho\,\sigma_1\sigma_2)\,dt + \sigma_1\,dW^1_t - \sigma_2\,dW^2_t.$$
+```math
+\frac{dR_t}{R_t} = (\mu_1 - \mu_2 + \sigma_2^2 - \rho\,\sigma_1\sigma_2)\,dt + \sigma_1\,dW^1_t - \sigma_2\,dW^2_t.
+```
 
-Correlation now lowers the drift: 0.08 − 0.05 + 0.09 − 0.03 = 0.09, so $E[R_1] = 2e^{0.09}$ = 2.188349. The $\sigma_2^2$ term comes from dividing by a noisy price, and is why an asset measured in units of another changes drift.
+Correlation now lowers the drift: 0.08 − 0.05 + 0.09 − 0.03 = 0.09, so $`E[R_1] = 2e^{0.09}`$ = 2.188349. The $`\sigma_2^2`$ term comes from dividing by a noisy price, and is why an asset measured in units of another changes drift.
 
 ### The other route
 
-Each price solves its own equation by one-dimensional Ito, $A_T = A_0 e^{(\mu_1 - \sigma_1^2/2)T + \sigma_1 W^1_T}$ and the same for B ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Their product's exponent is bell-shaped with variance $(\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2)T$. The average of $e$ to a bell-curve quantity is $e$ to its mean plus half its variance, which leaves exactly $\rho\sigma_1\sigma_2$ in the exponent.
+Each price solves its own equation by one-dimensional Ito, $`A_T = A_0 e^{(\mu_1 - \sigma_1^2/2)T + \sigma_1 W^1_T}`$ and the same for B ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Their product's exponent is bell-shaped with variance $`(\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2)T`$. The average of $`e`$ to a bell-curve quantity is $`e`$ to its mean plus half its variance, which leaves exactly $`\rho\sigma_1\sigma_2`$ in the exponent.
 
 ---
 
 ## Worked numbers, by hand
 
-Share A at \$100, $\mu_1$ = 0.08, $\sigma_1$ = 0.20; share B at \$50, $\mu_2$ = 0.05, $\sigma_2$ = 0.30; $\rho$ = 0.5; one year.
+Share A at \$100, $`\mu_1`$ = 0.08, $`\sigma_1`$ = 0.20; share B at \$50, $`\mu_2`$ = 0.05, $`\sigma_2`$ = 0.30; $`\rho`$ = 0.5; one year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Cholesky entries | $\rho$; $\sqrt{1 - 0.25}$ | 0.5; 0.866025 |
-| cross term | $\rho\sigma_1\sigma_2 = 0.5 \times 0.20 \times 0.30$ | 0.03 |
-| drift of the product | $\mu_1 + \mu_2 + 0.03 = 0.13 + 0.03$ | 0.16 |
-| average product after one year | $5{,}000 \times e^{0.16}$ | **\$5,867.55** |
-| same, cross term dropped | $5{,}000 \times e^{0.13}$ | \$5,694.14 |
-| the difference | covariance of $A_1$ and $B_1$ | \$173.41 |
-| product's variance per year | $0.04 + 0.09 + 2 \times 0.03$ | 0.19 |
-| product's volatility | $\sqrt{0.19}$ | 0.435890 |
-| log drift | $0.16 - 0.19/2$ | 0.065 |
-| middle outcome | $5{,}000 \times e^{0.065}$ | \$5,335.80 |
-| chance the product ends below \$5,000 | $N(-0.065 / 0.435890) = N(-0.149120)$ | 0.440729 |
+| Cholesky entries | $`\rho`$; $`\sqrt{1 - 0.25}`$ | 0.5; 0.866025 |
+| cross term | $`\rho\sigma_1\sigma_2 = 0.5 \times 0.20 \times 0.30`$ | 0.03 |
+| drift of the product | $`\mu_1 + \mu_2 + 0.03 = 0.13 + 0.03`$ | 0.16 |
+| average product after one year | $`5{,}000 \times e^{0.16}`$ | **\$5,867.55** |
+| same, cross term dropped | $`5{,}000 \times e^{0.13}`$ | \$5,694.14 |
+| the difference | covariance of $`A_1`$ and $`B_1`$ | \$173.41 |
+| product's variance per year | $`0.04 + 0.09 + 2 \times 0.03`$ | 0.19 |
+| product's volatility | $`\sqrt{0.19}`$ | 0.435890 |
+| log drift | $`0.16 - 0.19/2`$ | 0.065 |
+| middle outcome | $`5{,}000 \times e^{0.065}`$ | \$5,335.80 |
+| chance the product ends below \$5,000 | $`N(-0.065 / 0.435890) = N(-0.149120)`$ | 0.440729 |
 
 The average product grows to \$5,867.55, of which \$173.41 is the correlation's doing: the shares tend to be high together. Yet the product ends below where it started about 44% of the time; a few large outcomes pull the average up, and the middle outcome, \$5,335.80, sits well below it.
 
@@ -199,9 +217,9 @@ The average product grows to \$5,867.55, of which \$173.41 is the correlation's 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The ordinary product rule, no cross term | average product 5,694.14; true 5,867.55, simulated 5,892.36 (standard error, se, 19.32) | treated the noises as independent: $E[AB] = E[A]E[B]$ only when $\rho = 0$ |
-| The ordinary rule for $W^1_t W^2_t$ | average 0 at one year; true 0.5, simulated 0.510292 (se 0.008067) | the dropped entry $dW^1 dW^2 = \rho\,dt$ |
-| Mixing with weights $\rho$ and $1 - \rho$ | B's noise has variance 0.5 (simulated 0.506811, se 0.005125) and correlation 0.707107 with A | the weights' squares must add to 1; $0.25 + 0.25$ does not |
+| The ordinary product rule, no cross term | average product 5,694.14; true 5,867.55, simulated 5,892.36 (standard error, se, 19.32) | treated the noises as independent: $`E[AB] = E[A]E[B]`$ only when $`\rho = 0`$ |
+| The ordinary rule for $`W^1_t W^2_t`$ | average 0 at one year; true 0.5, simulated 0.510292 (se 0.008067) | the dropped entry $`dW^1 dW^2 = \rho\,dt`$ |
+| Mixing with weights $`\rho`$ and $`1 - \rho`$ | B's noise has variance 0.5 (simulated 0.506811, se 0.005125) and correlation 0.707107 with A | the weights' squares must add to 1; $`0.25 + 0.25`$ does not |
 | Euler steps of the product without the cross term | average error 166.72 at 4,096 steps a year, not shrinking; predicted 173.41 | the missing drift, 0.03 a year, compounds whatever the step size |
 
 The third row fails quietly: its covariance with A is still right, 0.506063 simulated against 0.5, so a covariance check alone passes.
@@ -644,15 +662,15 @@ xychart-beta
     line [154.79, 73.36, 38.38, 17.82, 9.73]
 ```
 
-Upper line: without the cross term; the error levels off near the predicted 173.41. Lower line: with the cross term $\rho\sigma_1\sigma_2$; the error halves each time the grid gets 4 times finer, from 154.79 to 9.73.
+Upper line: without the cross term; the error levels off near the predicted 173.41. Lower line: with the cross term $`\rho\sigma_1\sigma_2`$; the error halves each time the grid gets 4 times finer, from 154.79 to 9.73.
 
 ### Lean
 
-Lean proves the Cholesky construction, the new table entry and the product's drift, for every correlation from $-1$ to 1.
+Lean proves the Cholesky construction, the new table entry and the product's drift, for every correlation from $`-1`$ to 1.
 
-- Take independent Brownian motions $Z^1_t$ and $Z^2_t$, and $\rho$ between $-1$ and 1. Then $W^2_t = \rho Z^1_t + \sqrt{1-\rho^2}\,Z^2_t$ is a Brownian motion. Its covariance with $Z^1_t$ is $\rho\,t$ at every time $t$.
-- Take the same $Z^1_t$ and $W^2_t$, and $n$ equal steps from 0 to $T$, each of length $\Delta t$. Then the summed products of matching steps have average $\rho T$ and variance $(1+\rho^2)\,T\,\Delta t$. That variance shrinks to zero as the grid gets finer.
-- Take $f = x_1 x_2$, the product of the two shares, for any drifts, volatilities and correlation. Then the formula's $dt$ part is $(\mu_1 + \mu_2 + \rho\sigma_1\sigma_2)\,A_t B_t$.
+- Take independent Brownian motions $`Z^1_t`$ and $`Z^2_t`$, and $`\rho`$ between $`-1`$ and 1. Then $`W^2_t = \rho Z^1_t + \sqrt{1-\rho^2}\,Z^2_t`$ is a Brownian motion. Its covariance with $`Z^1_t`$ is $`\rho\,t`$ at every time $`t`$.
+- Take the same $`Z^1_t`$ and $`W^2_t`$, and $`n`$ equal steps from 0 to $`T`$, each of length $`\Delta t`$. Then the summed products of matching steps have average $`\rho T`$ and variance $`(1+\rho^2)\,T\,\Delta t`$. That variance shrinks to zero as the grid gets finer.
+- Take $`f = x_1 x_2`$, the product of the two shares, for any drifts, volatilities and correlation. Then the formula's $`dt`$ part is $`(\mu_1 + \mu_2 + \rho\sigma_1\sigma_2)\,A_t B_t`$.
 - The worked numbers hold as exact fractions: the cross term 0.03, the drift 0.16, the product's variance 0.19 and the ratio drift 0.09.
 
 Lean has no Ito integral, so the general formula, the average product and ratio, and every simulation are left to the Python and Rust checks.
@@ -1157,18 +1175,18 @@ example : ∀ ρ : ℚ, 3 * ρ ^ 2 + (1 - ρ ^ 2) - ρ ^ 2 = 1 + ρ ^ 2 := by in
 ## The usual mistake
 
 > [!warning]
-> **Treating two noisy prices as if their wobbles never meet.** The cross term $\rho\sigma_1\sigma_2\,dt$ is of the same size as the drifts. Dropping it puts the average product at \$5,694.14 instead of \$5,867.55, and an Euler simulation built that way is still off by 166.72 on average at 4,096 steps a year.
+> **Treating two noisy prices as if their wobbles never meet.** The cross term $`\rho\sigma_1\sigma_2\,dt`$ is of the same size as the drifts. Dropping it puts the average product at \$5,694.14 instead of \$5,867.55, and an Euler simulation built that way is still off by 166.72 on average at 4,096 steps a year.
 >
-> - **Mixing with weights $\rho$ and $1-\rho$.** The own-news weight is $\sqrt{1-\rho^2}$ = 0.866025, not 0.5. With 0.5, B's noise has variance 0.5 per year, and its correlation with A is 0.707107 instead of 0.5.
-> - **Adding volatilities.** The product's volatility is 0.435890, not 0.20 + 0.30 = 0.50. Variances add, with twice the covariance; volatilities do not, unless $\rho$ = 1.
-> - **Reading $dW^1\,dW^2 = \rho\,dt$ as exact on a grid.** On one path at 16 steps a year the sum is 0.682714. It is $\rho$ only in the limit, with a spread of $\sqrt{(1+\rho^2)\,\Delta t}$ on any finite grid.
+> - **Mixing with weights $`\rho`$ and $`1-\rho`$.** The own-news weight is $`\sqrt{1-\rho^2}`$ = 0.866025, not 0.5. With 0.5, B's noise has variance 0.5 per year, and its correlation with A is 0.707107 instead of 0.5.
+> - **Adding volatilities.** The product's volatility is 0.435890, not 0.20 + 0.30 = 0.50. Variances add, with twice the covariance; volatilities do not, unless $`\rho`$ = 1.
+> - **Reading $`dW^1\,dW^2 = \rho\,dt`$ as exact on a grid.** On one path at 16 steps a year the sum is 0.682714. It is $`\rho`$ only in the limit, with a spread of $`\sqrt{(1+\rho^2)\,\Delta t}`$ on any finite grid.
 
 ---
 
 ## Where you meet it in real life
 
 - **Foreign shares in dollars.** A euro share's dollar price is the euro price times the exchange rate. Its drift picks up the correlation term of Step 4, and pricing it is [The quanto adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md).
-- **Spread and exchange options.** The right to swap one asset for another is priced in units of the second asset, the ratio of Step 5, whose volatility is $\sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2}$: [Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md).
+- **Spread and exchange options.** The right to swap one asset for another is priced in units of the second asset, the ratio of Step 5, whose volatility is $`\sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2}`$: [Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md).
 - **Simulating a portfolio.** Risk systems that simulate many prices build their noises from independent draws with a Cholesky factor, as in Road D; [Correlated paths](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md) does it for pricing.
 - **Physics and engineering.** A particle in a plane, or a system with several noisy inputs, is driven by several Brownian motions at once; the formula gives how any smooth function of its state moves.
 
@@ -1199,7 +1217,7 @@ This card showed how a function of several correlated prices moves; the open que
 Verified 2026-10-06: every link below resolves, and the DOI registry (Crossref) names the work given for each DOI.
 
 - Itô, Kiyosi. "On a Formula Concerning Stochastic Differentials." *Nagoya Mathematical Journal* 3 (1951): 55–65. [doi:10.1017/S0027763000012216](https://doi.org/10.1017/S0027763000012216). The original statement of the formula, for several processes at once.
-- Kunita, Hiroshi, and Shinzo Watanabe. "On Square Integrable Martingales." *Nagoya Mathematical Journal* 30 (1967): 209–245. [doi:10.1017/S0027763000012484](https://doi.org/10.1017/S0027763000012484). The covariation of two martingales, the bracket written $[X,Y]_t$ here.
+- Kunita, Hiroshi, and Shinzo Watanabe. "On Square Integrable Martingales." *Nagoya Mathematical Journal* 30 (1967): 209–245. [doi:10.1017/S0027763000012484](https://doi.org/10.1017/S0027763000012484). The covariation of two martingales, the bracket written $`[X,Y]_t`$ here.
 - Øksendal, Bernt. *Stochastic Differential Equations: An Introduction with Applications*, 6th ed. Springer, 2003. [doi:10.1007/978-3-642-14394-6](https://doi.org/10.1007/978-3-642-14394-6). Chapter 4: the multidimensional Itô formula for processes driven by several independent Brownian motions.
 - Karatzas, Ioannis, and Steven E. Shreve. *Brownian Motion and Stochastic Calculus*, 2nd ed. Springer, 1998, Graduate Texts in Mathematics 113. [doi:10.1007/978-1-4612-0949-2](https://doi.org/10.1007/978-1-4612-0949-2). Section 3.3, the change-of-variable formula for several continuous semimartingales, with localisation.
 - Margrabe, William. "The Value of an Option to Exchange One Asset for Another." *The Journal of Finance* 33, no. 1 (1978): 177–186. [doi:10.1111/j.1540-6261.1978.tb03397.x](https://doi.org/10.1111/j.1540-6261.1978.tb03397.x). The ratio of two correlated prices, and its volatility, put to work.

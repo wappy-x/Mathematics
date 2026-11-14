@@ -38,42 +38,48 @@ The orange line is the electron in the 1 nm box. The green line is the same elec
 
 ## The formula
 
-A reminder from [States as vectors](02-state-vectors-operators-and-measurement.md): the state is a wavefunction ψ(x), and $|\psi(x)|^2$ is the probability density of finding the particle at $x$. Each measurable quantity is an operator, written with a hat. Here a hat means an operator, not an estimate (as in wing 09) and not a transform. Position $\hat x$ multiplies ψ by $x$. Momentum $\hat p$ takes the slope, $\hat p\,\psi = -i\hbar\,\psi'$, where $i$ is the square root of −1 (the signals shelf writes $j$).
+A reminder from [States as vectors](02-state-vectors-operators-and-measurement.md): the state is a wavefunction ψ(x), and $`|\psi(x)|^2`$ is the probability density of finding the particle at $`x`$. Each measurable quantity is an operator, written with a hat. Here a hat means an operator, not an estimate (as in wing 09) and not a transform. Position $`\hat x`$ multiplies ψ by $`x`$. Momentum $`\hat p`$ takes the slope, $`\hat p\,\psi = -i\hbar\,\psi'`$, where $`i`$ is the square root of −1 (the signals shelf writes $`j`$).
 
-$$\sigma_x\,\sigma_p \;\ge\; \frac{\hbar}{2}, \qquad\text{because}\qquad [\hat x,\hat p] = \hat x\hat p - \hat p\hat x = i\hbar .$$
+```math
+\sigma_x\,\sigma_p \;\ge\; \frac{\hbar}{2}, \qquad\text{because}\qquad [\hat x,\hat p] = \hat x\hat p - \hat p\hat x = i\hbar .
+```
 
-**Read it aloud:** the spread in position times the spread in momentum is at least half of h-bar, because applying position then momentum, or momentum then position, to a state gives answers that differ by $i\hbar$ times the state.
+**Read it aloud:** the spread in position times the spread in momentum is at least half of h-bar, because applying position then momentum, or momentum then position, to a state gives answers that differ by $`i\hbar`$ times the state.
 
 The spreads are standard deviations, the root-mean-square distance from the mean:
 
-$$\sigma_x^2 = \int (x-\bar x)^2\,|\psi|^2\,dx, \qquad \sigma_p^2 = \big\|(\hat p-\bar p)\,\psi\big\|^2 .$$
+```math
+\sigma_x^2 = \int (x-\bar x)^2\,|\psi|^2\,dx, \qquad \sigma_p^2 = \big\|(\hat p-\bar p)\,\psi\big\|^2 .
+```
 
-The same theorem in signal language, with time $t$ for position and frequency $f$ for momentum, is Gabor's limit, used on [Spectrograms](../05-Signals/09-short-time-fourier-and-spectrograms.md):
+The same theorem in signal language, with time $`t`$ for position and frequency $`f`$ for momentum, is Gabor's limit, used on [Spectrograms](../05-Signals/09-short-time-fourier-and-spectrograms.md):
 
-$$\sigma_t\,\sigma_f \;\ge\; \frac{1}{4\pi}.$$
+```math
+\sigma_t\,\sigma_f \;\ge\; \frac{1}{4\pi}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\psi(x)$ | the wavefunction; $\lvert\psi\rvert^2$ is where the electron is likely to be | $\sqrt{2/L}\,\sin(\pi x/L)$ inside the box | — |
-| $\hat x$, $\hat p$, $i$ | position operator (multiply by $x$); momentum operator ($-i\hbar$ times the slope); the square root of −1 | — | — |
-| $\hbar$ | reduced Planck constant, $h/2\pi$, exact in SI | 1.054572 × 10⁻³⁴ J s | the floor rises |
-| $L$, $a$ | the box width; $a = \pi/L$, the lowest state's wavenumber | 1 nm; 3.141593 per nm | $L$ up: $\sigma_x$ up, $\sigma_p$ down, product unchanged |
-| $m_e$, $E$, $k_BT$ | electron mass; kinetic energy $\langle p^2\rangle/2m_e$, where $\langle p^2\rangle$ is the mean of $p^2$; thermal energy at 300 K | 9.109384 × 10⁻³¹ kg; 0.376030 eV; 0.025852 eV | — |
-| $\bar x$, $\bar p$ | mean position, mean momentum | $L/2$; 0 | — |
-| $\sigma_x$, $\sigma_p$ | position spread, momentum spread (standard deviations) | 0.180756 nm; 3.313035 × 10⁻²⁵ kg m/s | the other may shrink, down to the floor |
-| $[\hat A,\hat B]$ | the commutator $\hat A\hat B-\hat B\hat A$: how much order matters | $[\hat x,\hat p]=i\hbar$ | — |
-| $\langle u,v\rangle$, $\lVert u\rVert$ | inner product $\int u^\ast v\,dx$ ($u^\ast$ is the complex conjugate); length $\sqrt{\langle u,u\rangle}$ | — | — |
-| $u$, $v$, $\mu$ | the two vectors in the proof: $(\hat x-\bar x)\psi$ and $(\hat p-\bar p)\psi$; $\mu$, the positive number with $v = i\mu u$ on the floor | lengths 0.180756 nm and 3.313035 × 10⁻²⁵ kg m/s | — |
-| $k$, $\varphi(k)$ | wavenumber, $p/\hbar$; the Fourier transform of ψ, the amplitude for wavenumber $k$ | $\lvert\varphi(0)\rvert^2$ = 0.810569 nm | — |
-| $t$, $f$, $\omega$, $\sigma_t$, $\sigma_f$ | time; frequency in hertz; angular frequency $2\pi f$ in rad/s; the spreads of time and frequency for a sound | 32.48 ms; 2.45 Hz | one up, the other may come down |
+| $`\psi(x)`$ | the wavefunction; $`\lvert\psi\rvert^2`$ is where the electron is likely to be | $`\sqrt{2/L}\,\sin(\pi x/L)`$ inside the box | — |
+| $`\hat x`$, $`\hat p`$, $`i`$ | position operator (multiply by $`x`$); momentum operator ($`-i\hbar`$ times the slope); the square root of −1 | — | — |
+| $`\hbar`$ | reduced Planck constant, $`h/2\pi`$, exact in SI | 1.054572 × 10⁻³⁴ J s | the floor rises |
+| $`L`$, $`a`$ | the box width; $`a = \pi/L`$, the lowest state's wavenumber | 1 nm; 3.141593 per nm | $`L`$ up: $`\sigma_x`$ up, $`\sigma_p`$ down, product unchanged |
+| $`m_e`$, $`E`$, $`k_BT`$ | electron mass; kinetic energy $`\langle p^2\rangle/2m_e`$, where $`\langle p^2\rangle`$ is the mean of $`p^2`$; thermal energy at 300 K | 9.109384 × 10⁻³¹ kg; 0.376030 eV; 0.025852 eV | — |
+| $`\bar x`$, $`\bar p`$ | mean position, mean momentum | $`L/2`$; 0 | — |
+| $`\sigma_x`$, $`\sigma_p`$ | position spread, momentum spread (standard deviations) | 0.180756 nm; 3.313035 × 10⁻²⁵ kg m/s | the other may shrink, down to the floor |
+| $`[\hat A,\hat B]`$ | the commutator $`\hat A\hat B-\hat B\hat A`$: how much order matters | $`[\hat x,\hat p]=i\hbar`$ | — |
+| $`\langle u,v\rangle`$, $`\lVert u\rVert`$ | inner product $`\int u^\ast v\,dx`$ ($`u^\ast`$ is the complex conjugate); length $`\sqrt{\langle u,u\rangle}`$ | — | — |
+| $`u`$, $`v`$, $`\mu`$ | the two vectors in the proof: $`(\hat x-\bar x)\psi`$ and $`(\hat p-\bar p)\psi`$; $`\mu`$, the positive number with $`v = i\mu u`$ on the floor | lengths 0.180756 nm and 3.313035 × 10⁻²⁵ kg m/s | — |
+| $`k`$, $`\varphi(k)`$ | wavenumber, $`p/\hbar`$; the Fourier transform of ψ, the amplitude for wavenumber $`k`$ | $`\lvert\varphi(0)\rvert^2`$ = 0.810569 nm | — |
+| $`t`$, $`f`$, $`\omega`$, $`\sigma_t`$, $`\sigma_f`$ | time; frequency in hertz; angular frequency $`2\pi f`$ in rad/s; the spreads of time and frequency for a sound | 32.48 ms; 2.45 Hz | one up, the other may come down |
 
 ### When it holds
 
-- **Spreads are standard deviations.** The box's full width is not its spread. Use 1 nm as $\sigma_x$ and the floor drops to 0.527 × 10⁻²⁵ kg m/s, far below the true 3.313.
-- **The particle lives on a line, or the wavefunction is zero at the walls.** On a ring there is no honest "multiply by $x$", because $x$ jumps where the ring closes. An electron carrying one whole wave round a 1 nm ring has $\sigma_p = 0$ and $\sigma_x$ = 0.288675 nm, a product of 0. The ring needs an angle version of the theorem.
+- **Spreads are standard deviations.** The box's full width is not its spread. Use 1 nm as $`\sigma_x`$ and the floor drops to 0.527 × 10⁻²⁵ kg m/s, far below the true 3.313.
+- **The particle lives on a line, or the wavefunction is zero at the walls.** On a ring there is no honest "multiply by $`x`$", because $`x`$ jumps where the ring closes. An electron carrying one whole wave round a 1 nm ring has $`\sigma_p = 0`$ and $`\sigma_x`$ = 0.288675 nm, a product of 0. The ring needs an angle version of the theorem.
 - **Both spreads exist.** A wavefunction with a jump, such as a flat ψ that switches on at the walls, has an infinite momentum spread. The theorem then holds trivially and says nothing.
-- **Slow electrons.** The kinetic energy $\langle p^2\rangle/2m_e$ assumes speeds far below light. Shrink the box to 1 fm (a nucleus) and the same formula gives a speed spread of 1213 times the speed of light: the theorem still holds, but the energy needs relativity.
-- **This outline leaves out** the careful treatment of the domains of $\hat x$ and $\hat p$, mixed states, and the energy–time relation, which is a different statement because time is not an operator.
+- **Slow electrons.** The kinetic energy $`\langle p^2\rangle/2m_e`$ assumes speeds far below light. Shrink the box to 1 fm (a nucleus) and the same formula gives a speed spread of 1213 times the speed of light: the theorem still holds, but the energy needs relativity.
+- **This outline leaves out** the careful treatment of the domains of $`\hat x`$ and $`\hat p`$, mixed states, and the energy–time relation, which is a different statement because time is not an operator.
 
 ---
 
@@ -81,46 +87,54 @@ $$\sigma_t\,\sigma_f \;\ge\; \frac{1}{4\pi}.$$
 
 ### Step 0: two spreads are two lengths, and order matters
 
-The position spread is the length of one vector, $u = (\hat x - \bar x)\psi$. The momentum spread is the length of another, $v = (\hat p - \bar p)\psi$. The Cauchy–Schwarz inequality says the product of two lengths is at least the size of their inner product.
+The position spread is the length of one vector, $`u = (\hat x - \bar x)\psi`$. The momentum spread is the length of another, $`v = (\hat p - \bar p)\psi`$. The Cauchy–Schwarz inequality says the product of two lengths is at least the size of their inner product.
 
-So the whole proof comes down to showing that $\langle u, v\rangle$ can never be small. It cannot, because swapping the order of $\hat x$ and $\hat p$ changes the answer by a fixed amount, $i\hbar$, and that fixed amount ends up as the imaginary part of $\langle u, v\rangle$.
+So the whole proof comes down to showing that $`\langle u, v\rangle`$ can never be small. It cannot, because swapping the order of $`\hat x`$ and $`\hat p`$ changes the answer by a fixed amount, $`i\hbar`$, and that fixed amount ends up as the imaginary part of $`\langle u, v\rangle`$.
 
 ### Step 1: position and momentum do not commute
 
-Apply both orders to any ψ. Taking the slope of $x\psi$ uses the product rule:
+Apply both orders to any ψ. Taking the slope of $`x\psi`$ uses the product rule:
 
-$$\hat x\hat p\,\psi = -i\hbar\,x\psi', \qquad \hat p\hat x\,\psi = -i\hbar\,(x\psi)' = -i\hbar\,(\psi + x\psi').$$
+```math
+\hat x\hat p\,\psi = -i\hbar\,x\psi', \qquad \hat p\hat x\,\psi = -i\hbar\,(x\psi)' = -i\hbar\,(\psi + x\psi').
+```
 
-Subtract: $[\hat x,\hat p]\,\psi = i\hbar\,\psi$. The $x\psi'$ terms cancel, and what is left is the extra ψ the product rule produced. Shifting $\hat x$ and $\hat p$ by the constants $\bar x$ and $\bar p$ changes nothing, so $[\hat x-\bar x,\ \hat p-\bar p] = i\hbar$ too.
+Subtract: $`[\hat x,\hat p]\,\psi = i\hbar\,\psi`$. The $`x\psi'`$ terms cancel, and what is left is the extra ψ the product rule produced. Shifting $`\hat x`$ and $`\hat p`$ by the constants $`\bar x`$ and $`\bar p`$ changes nothing, so $`[\hat x-\bar x,\ \hat p-\bar p] = i\hbar`$ too.
 
 ### Step 2: each spread is the length of a vector
 
-$\sigma_x^2 = \int (x-\bar x)^2|\psi|^2 dx = \langle u,u\rangle$ straight from the definition. For momentum, $\hat p$ can be moved from one side of an inner product to the other: integrate by parts, and the boundary terms vanish because ψ is zero at the walls. So $\sigma_p^2 = \langle\psi,(\hat p-\bar p)^2\psi\rangle = \langle v,v\rangle$. In the box, the code finds these two lengths as 0.180756 nm and 3.313035 × 10⁻²⁵ kg m/s, by sums on a grid, matching the formulas $\sigma_x = L\sqrt{1/12 - 1/(2\pi^2)}$ and $\sigma_p = \pi\hbar/L$.
+$`\sigma_x^2 = \int (x-\bar x)^2|\psi|^2 dx = \langle u,u\rangle`$ straight from the definition. For momentum, $`\hat p`$ can be moved from one side of an inner product to the other: integrate by parts, and the boundary terms vanish because ψ is zero at the walls. So $`\sigma_p^2 = \langle\psi,(\hat p-\bar p)^2\psi\rangle = \langle v,v\rangle`$. In the box, the code finds these two lengths as 0.180756 nm and 3.313035 × 10⁻²⁵ kg m/s, by sums on a grid, matching the formulas $`\sigma_x = L\sqrt{1/12 - 1/(2\pi^2)}`$ and $`\sigma_p = \pi\hbar/L`$.
 
 ### Step 3: the commutator fixes the imaginary part of the pairing
 
 Move each operator across in the same way as Step 2:
 
-$$\langle u,v\rangle - \langle v,u\rangle = \langle\psi,\,[\hat x-\bar x,\ \hat p-\bar p]\,\psi\rangle = i\hbar.$$
+```math
+\langle u,v\rangle - \langle v,u\rangle = \langle\psi,\,[\hat x-\bar x,\ \hat p-\bar p]\,\psi\rangle = i\hbar.
+```
 
-Swapping the two sides of an inner product conjugates it, $\langle v,u\rangle = \langle u,v\rangle^\ast$. A number minus its conjugate is $2i$ times its imaginary part. So
+Swapping the two sides of an inner product conjugates it, $`\langle v,u\rangle = \langle u,v\rangle^\ast`$. A number minus its conjugate is $`2i`$ times its imaginary part. So
 
-$$\operatorname{Im}\langle u,v\rangle = \frac{\hbar}{2}\quad\text{for every state.}$$
+```math
+\mathrm{Im}\langle u,v\rangle = \frac{\hbar}{2}\quad\text{for every state.}
+```
 
-For the box the code computes the pairing directly, $-\hbar\int (x-\bar x)\,\psi\,\psi'\,dx$, and gets 0.500000 ħ.
+For the box the code computes the pairing directly, $`-\hbar\int (x-\bar x)\,\psi\,\psi'\,dx`$, and gets 0.500000 ħ.
 
 ### Step 4: Cauchy–Schwarz finishes it
 
-$$\sigma_x\,\sigma_p = \lVert u\rVert\,\lVert v\rVert \;\ge\; |\langle u,v\rangle| \;\ge\; |\operatorname{Im}\langle u,v\rangle| = \frac{\hbar}{2}.$$
+```math
+\sigma_x\,\sigma_p = \lVert u\rVert\,\lVert v\rVert \;\ge\; |\langle u,v\rangle| \;\ge\; |\mathrm{Im}\langle u,v\rangle| = \frac{\hbar}{2}.
+```
 
-The first step is Cauchy–Schwarz, proved for ordinary arrows on [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md); the same proof runs for this complex inner product. The second says a complex number is at least as large as its imaginary part. In the box, the left side is 0.567862 ħ. There the pairing is purely imaginary, so the whole gap above 0.5 ħ comes from the first step: $u$ and $v$ do not point the same way.
+The first step is Cauchy–Schwarz, proved for ordinary arrows on [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md); the same proof runs for this complex inner product. The second says a complex number is at least as large as its imaginary part. In the box, the left side is 0.567862 ħ. There the pairing is purely imaginary, so the whole gap above 0.5 ħ comes from the first step: $`u`$ and $`v`$ do not point the same way.
 
 <details>
 <summary>The same proof for any two quantities (Robertson, 1929)</summary>
 
-Replace $\hat x$ and $\hat p$ by any two operators $\hat A$ and $\hat B$ that can be moved across an inner product. Steps 2 to 4 run unchanged and give
+Replace $`\hat x`$ and $`\hat p`$ by any two operators $`\hat A`$ and $`\hat B`$ that can be moved across an inner product. Steps 2 to 4 run unchanged and give
 
-$$\sigma_A\,\sigma_B \;\ge\; \tfrac12\,\big|\langle\psi,[\hat A,\hat B]\,\psi\rangle\big| .$$
+$`\displaystyle \sigma_A\,\sigma_B \;\ge\; \tfrac12\,\big|\langle\psi,[\hat A,\hat B]\,\psi\rangle\big| .`$
 
 When the commutator is a constant, as for position and momentum, the floor is the same for every state. When it is another operator, as for two components of spin on [Spin one-half](06-spin-and-two-state-systems.md), the floor depends on the state. When the two operators commute, the floor is zero and both can be sharp together.
 
@@ -128,9 +142,11 @@ When the commutator is a constant, as for position and momentum, the floor is th
 
 ### Step 5: the Gaussian, and only the Gaussian, sits on the floor
 
-Both inequalities in Step 4 become equalities only if $v$ is a purely imaginary multiple of $u$: $v = i\mu\,u$ with $\mu > 0$. Written out, that is $-i\hbar\psi' - \bar p\psi = i\mu(x-\bar x)\psi$, a first-order equation whose solution is a bell curve:
+Both inequalities in Step 4 become equalities only if $`v`$ is a purely imaginary multiple of $`u`$: $`v = i\mu\,u`$ with $`\mu > 0`$. Written out, that is $`-i\hbar\psi' - \bar p\psi = i\mu(x-\bar x)\psi`$, a first-order equation whose solution is a bell curve:
 
-$$\psi(x) \propto \exp\!\Big(-\frac{(x-\bar x)^2}{4\sigma_x^2} + \frac{i\,\bar p\,x}{\hbar}\Big).$$
+```math
+\psi(x) \propto \exp\!\Big(-\frac{(x-\bar x)^2}{4\sigma_x^2} + \frac{i\,\bar p\,x}{\hbar}\Big).
+```
 
 Give the Gaussian the box state's position spread, 0.180756 nm. Its momentum spread comes out at 2.917114 × 10⁻²⁵ kg m/s, exactly the floor ħ/(2σ_x), and its product is 0.500000 ħ. Every other shape sits above:
 
@@ -146,13 +162,15 @@ Higher levels have more wiggles, so more momentum for the same box. [The quantum
 
 ### Step 6: the Fourier reading, and the guitar string
 
-A wave $e^{ikx}$ is a state of definite momentum: $\hat p\,e^{ikx} = \hbar k\,e^{ikx}$. Any ψ is a blend of these waves, and the amount of each is the Fourier transform ([The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md)):
+A wave $`e^{ikx}`$ is a state of definite momentum: $`\hat p\,e^{ikx} = \hbar k\,e^{ikx}`$. Any ψ is a blend of these waves, and the amount of each is the Fourier transform ([The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md)):
 
-$$\varphi(k) = \int \psi(x)\,e^{-ikx}\,dx, \qquad \text{probability per unit } k = \frac{|\varphi(k)|^2}{2\pi}.$$
+```math
+\varphi(k) = \int \psi(x)\,e^{-ikx}\,dx, \qquad \text{probability per unit } k = \frac{|\varphi(k)|^2}{2\pi}.
+```
 
-So the momentum spread is $\hbar$ times the spread of the transform. The code takes this road too: it sums $k^2|\varphi(k)|^2$ (adding the far tail, beyond $k = 400a$, in closed form) and gets 3.313035 × 10⁻²⁵ kg m/s again. The uncertainty principle is therefore a fact about Fourier transforms: a function narrow in $x$ has a transform wide in $k$, with $\sigma_x\sigma_k \ge 1/2$.
+So the momentum spread is $`\hbar`$ times the spread of the transform. The code takes this road too: it sums $`k^2|\varphi(k)|^2`$ (adding the far tail, beyond $`k = 400a`$, in closed form) and gets 3.313035 × 10⁻²⁵ kg m/s again. The uncertainty principle is therefore a fact about Fourier transforms: a function narrow in $`x`$ has a transform wide in $`k`$, with $`\sigma_x\sigma_k \ge 1/2`$.
 
-Now set the electron beside a guitar string. Rename $x$ as time $t$ and $k$ as angular frequency $\omega = 2\pi f$. "Multiply by $t$" and "$-i$ times the slope in time" fail to commute by exactly $i$, and Steps 1 to 4 give $\sigma_t\,\sigma_\omega \ge 1/2$, that is $\sigma_t\,\sigma_f \ge 1/(4\pi)$ = 0.079577. A note heard for a short time cannot have a sharp pitch.
+Now set the electron beside a guitar string. Rename $`x`$ as time $`t`$ and $`k`$ as angular frequency $`\omega = 2\pi f`$. "Multiply by $`t`$" and "$`-i`$ times the slope in time" fail to commute by exactly $`i`$, and Steps 1 to 4 give $`\sigma_t\,\sigma_\omega \ge 1/2`$, that is $`\sigma_t\,\sigma_f \ge 1/(4\pi)`$ = 0.079577. A note heard for a short time cannot have a sharp pitch.
 
 The low E string of a guitar is 82.41 Hz. The next fret up, F, is 87.31 Hz. To keep a note's frequency spread to half that gap, 2.45 Hz, the note must last with a time spread of at least 32.48 ms.
 
@@ -164,20 +182,20 @@ Take a shorter slice of sound and its spectrum blurs E and F into one hump, howe
 
 ## Worked numbers, by hand
 
-Electron in a hard-walled box, $L$ = 1 nm, lowest state $\psi = \sqrt{2/L}\,\sin(\pi x/L)$. Constants from CODATA 2022.
+Electron in a hard-walled box, $`L`$ = 1 nm, lowest state $`\psi = \sqrt{2/L}\,\sin(\pi x/L)`$. Constants from CODATA 2022.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| mean position $\bar x$ | the state is symmetric about the middle | $L/2$ |
-| $\sigma_x$ | $L\sqrt{1/12 - 1/(2\pi^2)} = 1\text{ nm}\times\sqrt{0.032673}$ | 0.180756 nm |
-| mean momentum $\bar p$ | left and right equally likely | 0 |
-| $\sigma_p$ | $\pi\hbar/L = 3.141593 \times 1.054572\times10^{-34} / 10^{-9}$ | 3.313035 × 10⁻²⁵ kg m/s |
-| product | $0.180756\times10^{-9} \times 3.313035\times10^{-25} / \hbar$ | 0.567862 ħ |
-| floor for this $\sigma_x$ | $\hbar / (2 \times 0.180756\times10^{-9})$ | 2.917114 × 10⁻²⁵ kg m/s |
-| actual over floor | $3.313035 / 2.917114$ | 1.135724 |
-| speed spread | $\sigma_p / m_e = 3.313035\times10^{-25} / 9.109384\times10^{-31}$ | 363.69 km/s |
-| **kinetic energy** | $\sigma_p^2 / 2m_e$, in eV | **0.376030 eV** |
-| against room heat | $0.376030 / 0.025852$ | 14.55 |
+| mean position $`\bar x`$ | the state is symmetric about the middle | $`L/2`$ |
+| $`\sigma_x`$ | $`L\sqrt{1/12 - 1/(2\pi^2)} = 1\text{ nm}\times\sqrt{0.032673}`$ | 0.180756 nm |
+| mean momentum $`\bar p`$ | left and right equally likely | 0 |
+| $`\sigma_p`$ | $`\pi\hbar/L = 3.141593 \times 1.054572\times10^{-34} / 10^{-9}`$ | 3.313035 × 10⁻²⁵ kg m/s |
+| product | $`0.180756\times10^{-9} \times 3.313035\times10^{-25} / \hbar`$ | 0.567862 ħ |
+| floor for this $`\sigma_x`$ | $`\hbar / (2 \times 0.180756\times10^{-9})`$ | 2.917114 × 10⁻²⁵ kg m/s |
+| actual over floor | $`3.313035 / 2.917114`$ | 1.135724 |
+| speed spread | $`\sigma_p / m_e = 3.313035\times10^{-25} / 9.109384\times10^{-31}`$ | 363.69 km/s |
+| **kinetic energy** | $`\sigma_p^2 / 2m_e`$, in eV | **0.376030 eV** |
+| against room heat | $`0.376030 / 0.025852`$ | 14.55 |
 
 So holding an electron in one nanometre forces it to move, with 0.376 eV of energy that cannot be removed. That is 14.55 times the thermal energy at room temperature, so heat does not wash it out: the size of the box, not the temperature, sets the electron's energy. It is the lowest level on [Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md), reached here from the momentum spread alone.
 
@@ -185,17 +203,17 @@ So holding an electron in one nanometre forces it to move, with 0.376 eV of ener
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The box width 1 nm used as $\sigma_x$ | floor 0.527286 × 10⁻²⁵ kg m/s | The width is not a standard deviation; the floor is far too low to be useful |
-| $h$ written for $\hbar$ | floor 18.328767 × 10⁻²⁵ kg m/s | Larger than the real 3.313035: the actual state would break the "law", so the law was copied wrong |
-| Mean momentum used for the spread | energy 0.000000 eV | $\bar p = 0$, but $\sigma_p$ is not; the electron is never at rest |
-| Ring instead of a line (a hypothesis fails) | product 0.000000 ħ | On a ring, multiplying by $x$ is not a proper operator, and $[\hat x,\hat p] = i\hbar$ breaks at the seam |
-| Box shrunk to 1 fm, energy as $p^2/2m_e$ | speed spread 1213.155118 × light | The theorem holds; the slow-electron energy formula does not |
+| The box width 1 nm used as $`\sigma_x`$ | floor 0.527286 × 10⁻²⁵ kg m/s | The width is not a standard deviation; the floor is far too low to be useful |
+| $`h`$ written for $`\hbar`$ | floor 18.328767 × 10⁻²⁵ kg m/s | Larger than the real 3.313035: the actual state would break the "law", so the law was copied wrong |
+| Mean momentum used for the spread | energy 0.000000 eV | $`\bar p = 0`$, but $`\sigma_p`$ is not; the electron is never at rest |
+| Ring instead of a line (a hypothesis fails) | product 0.000000 ħ | On a ring, multiplying by $`x`$ is not a proper operator, and $`[\hat x,\hat p] = i\hbar`$ breaks at the seam |
+| Box shrunk to 1 fm, energy as $`p^2/2m_e`$ | speed spread 1213.155118 × light | The theorem holds; the slow-electron energy formula does not |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script takes three independent roads to the electron's momentum spread: the formula $\pi\hbar/L$; sums in position space, with the slope taken by a finite difference; and sums in momentum space over the Fourier transform, whose closed form is first checked against a direct numerical transform. It also computes the commutator pairing directly, finds the ring's momentum spread by the same sums, puts a Gaussian on the floor, measures the guitar burst's spectrum by direct sums, and works every number in "What breaks". Simpson's rule (adding thin slices of area, weighted 1, 4, 2, 4, …) is written out; nothing imported knows the answer.
+The script takes three independent roads to the electron's momentum spread: the formula $`\pi\hbar/L`$; sums in position space, with the slope taken by a finite difference; and sums in momentum space over the Fourier transform, whose closed form is first checked against a direct numerical transform. It also computes the commutator pairing directly, finds the ring's momentum spread by the same sums, puts a Gaussian on the floor, measures the guitar burst's spectrum by direct sums, and works every number in "What breaks". Simpson's rule (adding thin slices of area, weighted 1, 4, 2, 4, …) is written out; nothing imported knows the answer.
 
 ### Python
 
@@ -628,9 +646,9 @@ ALL CHECKS PASS
 
 Lean proves the uncertainty principle for every state on a line or in a box, of any width.
 
-- Take ψ on a line with a slope everywhere, area 1 under $|\psi|^2$, and finite $\sigma_x$ and $\sigma_p$. Then $\sigma_x\sigma_p \ge \hbar/2$.
-- Take a box with ψ zero at both walls, no jumps, a slope inside, area 1 under $|\psi|^2$, and finite $\sigma_p$. Then $\sigma_x\sigma_p \ge \hbar/2$, with every integral taken over the box.
-- Take the lowest state's formulas for $\sigma_x$ and $\sigma_p$ from Step 2, for any width $L$. Then their product is strictly above $\hbar/2$.
+- Take ψ on a line with a slope everywhere, area 1 under $`|\psi|^2`$, and finite $`\sigma_x`$ and $`\sigma_p`$. Then $`\sigma_x\sigma_p \ge \hbar/2`$.
+- Take a box with ψ zero at both walls, no jumps, a slope inside, area 1 under $`|\psi|^2`$, and finite $`\sigma_p`$. Then $`\sigma_x\sigma_p \ge \hbar/2`$, with every integral taken over the box.
+- Take the lowest state's formulas for $`\sigma_x`$ and $`\sigma_p`$ from Step 2, for any width $`L`$. Then their product is strictly above $`\hbar/2`$.
 
 The box's spread formulas, its 0.567862 ħ, the Gaussian, the Fourier road and the guitar are left to the Python and Rust checks.
 
@@ -899,12 +917,12 @@ end
 ## The usual mistake
 
 > [!warning]
-> **Reading it as clumsy measurement.** The principle is often told as "looking at the electron knocks it". That is not what the proof uses. The spreads $\sigma_x$ and $\sigma_p$ belong to the state itself: measure position on many identical boxes and you get one spread, measure momentum on many others and you get the other. No measurement disturbs anything in Steps 1 to 4. The 0.376030 eV of motion is there whether or not anyone looks.
+> **Reading it as clumsy measurement.** The principle is often told as "looking at the electron knocks it". That is not what the proof uses. The spreads $`\sigma_x`$ and $`\sigma_p`$ belong to the state itself: measure position on many identical boxes and you get one spread, measure momentum on many others and you get the other. No measurement disturbs anything in Steps 1 to 4. The 0.376030 eV of motion is there whether or not anyone looks.
 >
 > Four smaller traps:
-> - **Using the width for the spread.** 1 nm is the box, not $\sigma_x$. The floor then comes out at 0.527286 × 10⁻²⁵ kg m/s instead of 2.917114.
-> - **$h$ for $\hbar$.** The floor jumps to 18.328767 × 10⁻²⁵ kg m/s, which the real electron, at 3.313035, would break.
-> - **Zero mean, so zero motion.** $\bar p = 0$ gives a kinetic energy of 0.000000 eV if you use the mean. The spread gives 0.376030 eV.
+> - **Using the width for the spread.** 1 nm is the box, not $`\sigma_x`$. The floor then comes out at 0.527286 × 10⁻²⁵ kg m/s instead of 2.917114.
+> - **$`h`$ for $`\hbar`$.** The floor jumps to 18.328767 × 10⁻²⁵ kg m/s, which the real electron, at 3.313035, would break.
+> - **Zero mean, so zero motion.** $`\bar p = 0`$ gives a kinetic energy of 0.000000 eV if you use the mean. The spread gives 0.376030 eV.
 > - **Applying it to angles on a ring.** One wave round a 1 nm ring has a product of 0.000000 ħ. That breaks nothing: the position operator on a ring is not the one in the proof.
 
 ---
@@ -912,19 +930,19 @@ end
 ## Where you meet it in real life
 
 - **Quantum dots.** The colour of a nanocrystal in a display is set by its size, because squeezing the electron raises its confinement energy: 0.376 eV at 1 nm, against 0.025852 eV of room heat.
-- **Why atoms have a size.** An electron pulled toward a proton gains energy by getting closer, but pays in momentum spread. Held within a distance $r$ of the proton, its confinement energy is about $\hbar^2/(2m_er^2)$. Balancing that against the electric pull gives a radius of 0.052918 nm and an energy of −13.605693 eV: the Bohr radius, and hydrogen's binding energy of 13.6 eV to three figures. Both hold the proton still; [Hydrogen in outline](07-the-hydrogen-atom-in-outline.md) lets it move too, which changes the fourth figure.
+- **Why atoms have a size.** An electron pulled toward a proton gains energy by getting closer, but pays in momentum spread. Held within a distance $`r`$ of the proton, its confinement energy is about $`\hbar^2/(2m_er^2)`$. Balancing that against the electric pull gives a radius of 0.052918 nm and an energy of −13.605693 eV: the Bohr radius, and hydrogen's binding energy of 13.6 eV to three figures. Both hold the proton still; [Hydrogen in outline](07-the-hydrogen-atom-in-outline.md) lets it move too, which changes the fourth figure.
 - **Tuners and spectrograms.** Telling E2 from F2 in a spectrum needs a time spread of at least 32.48 ms, a burst lasting about four time spreads, 129.92 ms. At exactly that spread the two peaks only just merge into one flat-topped hump; a dip between them needs a longer burst still. A spectrogram's slice length trades time detail against pitch detail by the same floor ([Spectrograms](../05-Signals/09-short-time-fourier-and-spectrograms.md)).
 - **Radar, sonar and lasers.** A short pulse locates a target sharply in range but spreads over a wide band of frequencies. A laser pulse on the Gaussian floor is called transform-limited.
 
 > **Say it back**
-> Position and momentum are operators that give different answers in different orders: $\hat x\hat p - \hat p\hat x = i\hbar$. That fixed difference becomes the imaginary part of a pairing between two vectors whose lengths are the two spreads, and Cauchy–Schwarz then forces $\sigma_x\sigma_p \ge \hbar/2$. An electron held in 1 nm therefore has a momentum spread of 3.313 × 10⁻²⁵ kg m/s and 0.376 eV of motion it cannot lose. Because momentum amplitudes are the Fourier transform of the wavefunction, the same floor, written $\sigma_t\sigma_f \ge 1/(4\pi)$, limits how short and how pure a guitar note can be. Only a Gaussian sits exactly on the floor.
+> Position and momentum are operators that give different answers in different orders: $`\hat x\hat p - \hat p\hat x = i\hbar`$. That fixed difference becomes the imaginary part of a pairing between two vectors whose lengths are the two spreads, and Cauchy–Schwarz then forces $`\sigma_x\sigma_p \ge \hbar/2`$. An electron held in 1 nm therefore has a momentum spread of 3.313 × 10⁻²⁵ kg m/s and 0.376 eV of motion it cannot lose. Because momentum amplitudes are the Fourier transform of the wavefunction, the same floor, written $`\sigma_t\sigma_f \ge 1/(4\pi)`$, limits how short and how pure a guitar note can be. Only a Gaussian sits exactly on the floor.
 
 ---
 
 ## What this builds on
 
 - [States as vectors](02-state-vectors-operators-and-measurement.md): the wavefunction as a vector, the inner product, and operators for position and momentum. This card uses all three and adds what happens when two operators do not commute.
-- [Spectrograms](../05-Signals/09-short-time-fourier-and-spectrograms.md): the time–frequency floor $\sigma_t\sigma_f \ge 1/(4\pi)$ was stated there and used to bound a spectrogram's blur; Step 6 here proves it.
+- [Spectrograms](../05-Signals/09-short-time-fourier-and-spectrograms.md): the time–frequency floor $`\sigma_t\sigma_f \ge 1/(4\pi)`$ was stated there and used to bound a spectrogram's blur; Step 6 here proves it.
 - [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): the transform that turns a wavefunction into momentum amplitudes, and the Gaussian that comes back as a Gaussian.
 
 ## Where this goes next
@@ -942,7 +960,7 @@ This card leaves open how the floor bends when the particle is not on a line but
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Heisenberg, W. "Über den anschaulichen Inhalt der quantentheoretischen Kinematik und Mechanik." *Zeitschrift für Physik* 43 (1927): 172–198. [doi:10.1007/BF01397280](https://doi.org/10.1007/BF01397280). The original argument, from the measurement of an electron's position by light.
-- Kennard, E. H. "Zur Quantenmechanik einfacher Bewegungstypen." *Zeitschrift für Physik* 44 (1927): 326–352. [doi:10.1007/BF01391200](https://doi.org/10.1007/BF01391200). The exact inequality $\sigma_x\sigma_p \ge \hbar/2$ with standard deviations, and the Gaussian as the case of equality.
+- Kennard, E. H. "Zur Quantenmechanik einfacher Bewegungstypen." *Zeitschrift für Physik* 44 (1927): 326–352. [doi:10.1007/BF01391200](https://doi.org/10.1007/BF01391200). The exact inequality $`\sigma_x\sigma_p \ge \hbar/2`$ with standard deviations, and the Gaussian as the case of equality.
 - Robertson, H. P. "The Uncertainty Principle." *Physical Review* 34 (1929): 163–164. [doi:10.1103/PhysRev.34.163](https://doi.org/10.1103/PhysRev.34.163). The commutator form for any two quantities, the proof in Steps 1 to 4.
 - Gabor, D. "Theory of communication. Part 1: The analysis of information." *Journal of the Institution of Electrical Engineers, Part III* 93 (1946): 429–441. [doi:10.1049/ji-3-2.1946.0074](https://doi.org/10.1049/ji-3-2.1946.0074). The same floor for signals, time against frequency, and the Gaussian pulse that meets it.
 - Mohr, P. J., et al. "CODATA recommended values of the fundamental physical constants: 2022." *Reviews of Modern Physics* 97 (2025). [doi:10.1103/RevModPhys.97.025002](https://doi.org/10.1103/RevModPhys.97.025002). The values of ħ, the electron mass, the electronvolt, the Boltzmann constant and the electric constant used here.

@@ -26,27 +26,31 @@ To scale, 90 units per unit length. Here g(z) = z^2 + 1. Filled dots mark extrem
 
 ## The formula
 
-Notation first, in words. A **region** D is an open set in the plane, in one piece; its **boundary** $\partial D$ is its edge; D with its edge is its **closure**. "Max" is the largest value over a set.
+Notation first, in words. A **region** D is an open set in the plane, in one piece; its **boundary** $`\partial D`$ is its edge; D with its edge is its **closure**. "Max" is the largest value over a set.
 
-$$\max_{z \text{ in closure of } D} \lvert f(z)\rvert = \max_{z \text{ on } \partial D} \lvert f(z)\rvert = M$$
+```math
+\max_{z \text{ in closure of } D} \lvert f(z)\rvert = \max_{z \text{ on } \partial D} \lvert f(z)\rvert = M
+```
 
 **Read it aloud:** the largest modulus of f over the region and its edge equals the largest over the edge alone, called M.
 
-The engine is the mean-value form of Cauchy's formula. Take any circle of radius r about a that lies, with its inside, in D; the point $a + re^{it}$ walks once round it as t runs from 0 to $2\pi$:
+The engine is the mean-value form of Cauchy's formula. Take any circle of radius r about a that lies, with its inside, in D; the point $`a + re^{it}`$ walks once round it as t runs from 0 to $`2\pi`$:
 
-$$f(a) = \frac{1}{2\pi}\int_0^{2\pi} f\!\left(a + r e^{it}\right)dt$$
+```math
+f(a) = \frac{1}{2\pi}\int_0^{2\pi} f\!\left(a + r e^{it}\right)dt
+```
 
 **Read it aloud:** the value at the centre is the average of the values round the circle.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $g$ | holomorphic functions under study | e^z and z^2 + 1 | — |
-| $z$, $a$, $\zeta$ | a point; a circle's centre; the point walking the circle | a = 0 | — |
-| $r$, $t$, $\rho$ | a circle's radius; the angle round it; the radius of the peak's disc | r = 1 | larger r, larger largest modulus |
-| $D$, $\partial D$ | the region and its edge | the open unit disc | larger region, M never smaller |
-| $M$ | the largest modulus on the edge | e, and 2 | — |
-| $h$, $m$, $\alpha$ | in the proof: f turned to be real at a; that value; the turn | m = 1, $\alpha$ = 1 | — |
-| $s$ | a disc map fixing 0 (Schwarz) | (e^z − 1)/(e − 1) | — |
+| $`f`$, $`g`$ | holomorphic functions under study | e^z and z^2 + 1 | — |
+| $`z`$, $`a`$, $`\zeta`$ | a point; a circle's centre; the point walking the circle | a = 0 | — |
+| $`r`$, $`t`$, $`\rho`$ | a circle's radius; the angle round it; the radius of the peak's disc | r = 1 | larger r, larger largest modulus |
+| $`D`$, $`\partial D`$ | the region and its edge | the open unit disc | larger region, M never smaller |
+| $`M`$ | the largest modulus on the edge | e, and 2 | — |
+| $`h`$, $`m`$, $`\alpha`$ | in the proof: f turned to be real at a; that value; the turn | m = 1, $`\alpha`$ = 1 | — |
+| $`s`$ | a disc map fixing 0 (Schwarz) | (e^z − 1)/(e − 1) | — |
 
 ### When it holds
 
@@ -63,9 +67,11 @@ $$f(a) = \frac{1}{2\pi}\int_0^{2\pi} f\!\left(a + r e^{it}\right)dt$$
 
 Cauchy's integral formula ([Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)), round a circle about a:
 
-$$f(a) = \frac{1}{2\pi i}\oint \frac{f(\zeta)}{\zeta - a}\,d\zeta.$$
+```math
+f(a) = \frac{1}{2\pi i}\oint \frac{f(\zeta)}{\zeta - a}\,d\zeta.
+```
 
-Walk the circle as $\zeta = a + re^{it}$. Then $d\zeta = ire^{it}\,dt$ and $\zeta - a = re^{it}$; both cancel, leaving the mean-value form.
+Walk the circle as $`\zeta = a + re^{it}`$. Then $`d\zeta = ire^{it}\,dt`$ and $`\zeta - a = re^{it}`$; both cancel, leaving the mean-value form.
 
 For e^z at a = 0 and r = 1 the average is 1 = e^0. The trapezoid sum, the plain average of f at n equally spaced points on the circle, misses with 4 points by 0.041691470, with 8 points by 0.000024802, with 16 by less than 0.000000001.
 
@@ -73,9 +79,11 @@ For e^z at a = 0 and r = 1 the average is 1 = e^0. The trapezoid sum, the plain 
 
 The triangle inequality says the modulus of a sum is at most the sum of the moduli. Summed round the circle, the modulus of an average is at most the average modulus, which is at most the largest:
 
-$$\lvert f(a)\rvert \le \frac{1}{2\pi}\int_0^{2\pi} \lvert f(a + re^{it})\rvert\,dt \le \max_{t} \lvert f(a + re^{it})\rvert.$$
+```math
+\lvert f(a)\rvert \le \frac{1}{2\pi}\int_0^{2\pi} \lvert f(a + re^{it})\rvert\,dt \le \max_{t} \lvert f(a + re^{it})\rvert.
+```
 
-For e^z round the unit circle: 1 ≤ 1.266066 ≤ 2.718282. The middle number, the average of e^cos t, also comes from the series $\sum 1/(4^k (k!)^2)$.
+For e^z round the unit circle: 1 ≤ 1.266066 ≤ 2.718282. The middle number, the average of e^cos t, also comes from the series $`\sum 1/(4^k (k!)^2)`$.
 
 ### Step 3: a peak, even a flat one, makes f constant near it
 
@@ -84,13 +92,13 @@ Suppose |f| ≤ |f(a)| on some disc about a. Then both inequalities of Step 2 ar
 <details>
 <summary>Detailed proof: a local maximum forces local constancy</summary>
 
-Suppose $\lvert f(z)\rvert \le m = \lvert f(a)\rvert$ for all z within distance $\rho$ of a. If m = 0, f is 0 on that disc.
+Suppose $`\lvert f(z)\rvert \le m = \lvert f(a)\rvert`$ for all z within distance $`\rho`$ of a. If m = 0, f is 0 on that disc.
 
-If m > 0, turn f: let $h = \alpha f$ with $\alpha = \overline{f(a)}/m$, a number of modulus 1. Then $h(a) = m$, a positive real number, and $\lvert h\rvert \le m$ on the disc. For each $r < \rho$, the mean-value form for h, real parts taken, gives
+If m > 0, turn f: let $`h = \alpha f`$ with $`\alpha = \overline{f(a)}/m`$, a number of modulus 1. Then $`h(a) = m`$, a positive real number, and $`\lvert h\rvert \le m`$ on the disc. For each $`r < \rho`$, the mean-value form for h, real parts taken, gives
 
-$$\frac{1}{2\pi}\int_0^{2\pi} \left[m - \mathrm{Re}\,h(a + re^{it})\right]dt = 0.$$
+$`\displaystyle \frac{1}{2\pi}\int_0^{2\pi} \left[m - \mathrm{Re}\,h(a + re^{it})\right]dt = 0.`$
 
-The bracket is continuous and never negative, since a real part never exceeds the modulus, which never exceeds m. With integral 0 it is 0 everywhere: a positive value at one angle would stay positive on a small arc and make the integral positive. So $\mathrm{Re}\,h = m$ at every point of the circle. Then $m^2 + (\mathrm{Im}\,h)^2 = \lvert h\rvert^2 \le m^2$ forces $\mathrm{Im}\,h = 0$, so $h = m$ on the circle. This holds for every $r < \rho$, so $h = m$ and $f = f(a)$ on the whole disc.
+The bracket is continuous and never negative, since a real part never exceeds the modulus, which never exceeds m. With integral 0 it is 0 everywhere: a positive value at one angle would stay positive on a small arc and make the integral positive. So $`\mathrm{Re}\,h = m`$ at every point of the circle. Then $`m^2 + (\mathrm{Im}\,h)^2 = \lvert h\rvert^2 \le m^2`$ forces $`\mathrm{Im}\,h = 0`$, so $`h = m`$ on the circle. This holds for every $`r < \rho`$, so $`h = m`$ and $`f = f(a)`$ on the whole disc.
 
 </details>
 
@@ -115,7 +123,7 @@ If f has no zeros on the closure, 1/f is holomorphic inside and continuous up to
 
 **Proof.** s(z)/z fills its hole at 0 with s'(0), since the Taylor series of s starts s'(0)z ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). On the circle of radius r < 1 its modulus is below 1/r, so by Step 5 it is below 1/r inside. Let r rise to 1: |s(z)/z| ≤ 1. Equality inside is an interior maximum, so Step 4 makes the quotient constant.
 
-**Example.** $s(z) = (e^z - 1)/(e - 1)$ maps the disc into itself, as the series of e^z − 1 shows. Its s'(0) = 1/(e − 1) = 0.581977, and |s(0.5)| = 0.377541 ≤ 0.5.
+**Example.** $`s(z) = (e^z - 1)/(e - 1)`$ maps the disc into itself, as the series of e^z − 1 shows. Its s'(0) = 1/(e − 1) = 0.581977, and |s(0.5)| = 0.377541 ≤ 0.5.
 
 </details>
 

@@ -35,51 +35,59 @@ The one line is the principal repaid against the index ratio on the maturity dat
 
 ## The formula
 
-Notation first, in words. Prices are per 100 of original face, the market's quoting unit; a $1,000 holding is ten times as much. A subscript names a date: $I_s$ is the index ratio on the settlement day. $\sum_{k=1}^{n}$ means "add the terms for k = 1, 2, up to n". The real yield $y$ is a yearly rate paid in two halves, so one half-year grows money by $1 + y/2$. **Accrued interest** $A$ is the part of the next coupon the seller has already earned; the **clean price** $P$ is the quote without it.
+Notation first, in words. Prices are per 100 of original face, the market's quoting unit; a $1,000 holding is ten times as much. A subscript names a date: $`I_s`$ is the index ratio on the settlement day. $`\sum_{k=1}^{n}`$ means "add the terms for k = 1, 2, up to n". The real yield $`y`$ is a yearly rate paid in two halves, so one half-year grows money by $`1 + y/2`$. **Accrued interest** $`A`$ is the part of the next coupon the seller has already earned; the **clean price** $`P`$ is the quote without it.
 
 The real price, clean plus accrued, from the Treasury's rule:
 
-$$P + A \;=\; \frac{1}{1 + \frac{r}{s}\cdot\frac{y}{2}}\left[\frac{c}{2} \;+\; \sum_{k=1}^{n}\frac{c/2}{(1+y/2)^{k}} \;+\; \frac{100}{(1+y/2)^{n}}\right]$$
+```math
+P + A \;=\; \frac{1}{1 + \frac{r}{s}\cdot\frac{y}{2}}\left[\frac{c}{2} \;+\; \sum_{k=1}^{n}\frac{c/2}{(1+y/2)^{k}} \;+\; \frac{100}{(1+y/2)^{n}}\right]
+```
 
 **Read it aloud:** discount the next half-coupon, the later half-coupons and the final 100 at the real yield, all in dollars of the dated day.
 
 The cash that changes hands:
 
-$$\text{invoice} \;=\; \frac{F}{100}\; I_s\,(P + A)$$
+```math
+\text{invoice} \;=\; \frac{F}{100}\; I_s\,(P + A)
+```
 
 **Read it aloud:** scale the real price by the index ratio on the settlement day, then by the size of the holding.
 
 The payments the buyer receives:
 
-$$\text{coupon at date } t = \frac{F}{100}\cdot\frac{c}{2}\cdot I_t, \qquad \text{principal at maturity} = F\,\max(I_T,\,1)$$
+```math
+\text{coupon at date } t = \frac{F}{100}\cdot\frac{c}{2}\cdot I_t, \qquad \text{principal at maturity} = F\,\max(I_T,\,1)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | original face: the amount bought, in dated-day dollars | $1,000 | invoice grows in proportion |
-| $c$ | real coupon: dollars a year per 100 of original face | 1, paid as 0.50 twice a year | price rises |
-| $y$ | real yield: the yearly return in constant buying power, compounded twice a year | 1.02% | price falls, about 0.95 dollars per $1,000 for each 0.01 point |
-| $P$, $A$ | real clean price and real accrued interest, per 100 | 99.810901 and 0.043478 | — |
-| $I$, $I_s$, $I_t$, $I_T$ | index ratio: reference index on a date over the base; at settlement, a coupon date, maturity | 1.00150 at settlement, 1.01161 on 15 Jan 2027 | invoice and every payment rise in proportion |
-| $R$, $R_b$ | reference index for a date; the base, for the dated date | 320.90 and 320.42 | — |
-| $M_0$, $M_1$ | CPI-U of the third and second months before the date's month | 320.000 and 320.930 for July | — |
-| $t$, $D$ | calendar day of the date; days in its month | 31 and 31 | — |
-| $r$, $s$ | days from settlement to the next coupon; days in that half-year | 168 and 184 | — |
-| $n$, $X_k$ | whole half-years after the next coupon, to maturity; the real amount of payment k, counting the next coupon as k = 0 | 19; 0.50 each, 100.50 at maturity | more payments to discount |
-| $\pi$, $g$ | breakeven inflation: the yearly inflation rate that makes a linker and an ordinary bond pay the same; g is one half-year of it, the square root of 1 + π | 2.5% | no change to the invoice at a fixed real yield |
-| $y_n$ | nominal yield: the yield in ordinary dollars, by Fisher | 3.5172% | — |
+| $`F`$ | original face: the amount bought, in dated-day dollars | $1,000 | invoice grows in proportion |
+| $`c`$ | real coupon: dollars a year per 100 of original face | 1, paid as 0.50 twice a year | price rises |
+| $`y`$ | real yield: the yearly return in constant buying power, compounded twice a year | 1.02% | price falls, about 0.95 dollars per $1,000 for each 0.01 point |
+| $`P`$, $`A`$ | real clean price and real accrued interest, per 100 | 99.810901 and 0.043478 | — |
+| $`I`$, $`I_s`$, $`I_t`$, $`I_T`$ | index ratio: reference index on a date over the base; at settlement, a coupon date, maturity | 1.00150 at settlement, 1.01161 on 15 Jan 2027 | invoice and every payment rise in proportion |
+| $`R`$, $`R_b`$ | reference index for a date; the base, for the dated date | 320.90 and 320.42 | — |
+| $`M_0`$, $`M_1`$ | CPI-U of the third and second months before the date's month | 320.000 and 320.930 for July | — |
+| $`t`$, $`D`$ | calendar day of the date; days in its month | 31 and 31 | — |
+| $`r`$, $`s`$ | days from settlement to the next coupon; days in that half-year | 168 and 184 | — |
+| $`n`$, $`X_k`$ | whole half-years after the next coupon, to maturity; the real amount of payment k, counting the next coupon as k = 0 | 19; 0.50 each, 100.50 at maturity | more payments to discount |
+| $`\pi`$, $`g`$ | breakeven inflation: the yearly inflation rate that makes a linker and an ordinary bond pay the same; g is one half-year of it, the square root of 1 + π | 2.5% | no change to the invoice at a fixed real yield |
+| $`y_n`$ | nominal yield: the yield in ordinary dollars, by Fisher | 3.5172% | — |
 
 The reference index for any day, the Treasury's rule:
 
-$$R \;=\; M_0 + \frac{t-1}{D}\,(M_1 - M_0), \qquad I \;=\; \frac{R}{R_b}$$
+```math
+R \;=\; M_0 + \frac{t-1}{D}\,(M_1 - M_0), \qquad I \;=\; \frac{R}{R_b}
+```
 
-In words: on the first of the month, use the CPI of three months earlier; each later day moves an equal step towards the next month's CPI. Both $R$ and $I$ are cut to six decimals, then rounded to five.
+In words: on the first of the month, use the CPI of three months earlier; each later day moves an equal step towards the next month's CPI. Both $`R`$ and $`I`$ are cut to six decimals, then rounded to five.
 
 ### When it holds
 
-- **Payments are fixed in real terms.** The formula prices a stream of known real amounts. The deflation floor breaks that: if $I_T$ ends below 1 the principal is not $F I_T$. At today's ratio of 1.00150 the floor is far out of reach, and its value needs a model of inflation ([Inflation caps and floors in outline](05-inflation-options-in-outline.md)).
-- **One real yield for every date.** A single $y$ is a quote, not a model. With a real yield curve each payment has its own rate; the single $y$ is the one rate that gives the same price, a kind of average of the curve.
+- **Payments are fixed in real terms.** The formula prices a stream of known real amounts. The deflation floor breaks that: if $`I_T`$ ends below 1 the principal is not $`F I_T`$. At today's ratio of 1.00150 the floor is far out of reach, and its value needs a model of inflation ([Inflation caps and floors in outline](05-inflation-options-in-outline.md)).
+- **One real yield for every date.** A single $`y`$ is a quote, not a model. With a real yield curve each payment has its own rate; the single $`y`$ is the one rate that gives the same price, a kind of average of the curve.
 - **The index is the contract's index.** Protection is against lagged CPI-U, not a household's own prices, and not the last three months of inflation, which the lag leaves unpaid until later.
-- **Quoted with the Treasury's stub rule.** The part-period to the next coupon is discounted with simple interest, the factor $1 + \frac{r}{s}\cdot\frac{y}{2}$. A compound stub gives $1,000.0426 instead of $1,000.0416: a tenth of a cent here, more on large trades.
+- **Quoted with the Treasury's stub rule.** The part-period to the next coupon is discounted with simple interest, the factor $`1 + \frac{r}{s}\cdot\frac{y}{2}`$. A compound stub gives $1,000.0426 instead of $1,000.0416: a tenth of a cent here, more on large trades.
 
 **Conventions verified 28 Sep 2026** against 31 CFR 356, Appendix B, and TreasuryDirect: three-month lag, daily interpolation, truncation to six decimals then rounding to five, semiannual coupons on adjusted principal, the maturity floor at original face.
 
@@ -97,7 +105,7 @@ What moves is the exchange rate between dated-day dollars and today's dollars. T
 
 CPI-U for a month is published in the middle of the following month. A coupon due on 15 January needs its index then, so it cannot wait for January's CPI. The Treasury therefore reads the index three months late: the reference index for 1 July is April's CPI, and for 1 August it is May's.
 
-Between the firsts of months it walks in a straight line. On 15 July 2026, fourteen days into July, it is $320.000 + \frac{14}{31}(320.930 - 320.000) = 320.42$. That is the base, $R_b$. On 31 July it is thirty days along: 320.90. The ratio is $320.90 / 320.42 = 1.0014980\ldots$, cut to 1.001498 and rounded to **1.00150**.
+Between the firsts of months it walks in a straight line. On 15 July 2026, fourteen days into July, it is $`320.000 + \frac{14}{31}(320.930 - 320.000) = 320.42`$. That is the base, $`R_b`$. On 31 July it is thirty days along: 320.90. The ratio is $`320.90 / 320.42 = 1.0014980\ldots`$, cut to 1.001498 and rounded to **1.00150**.
 
 The daily walk exists so that a bond sold on any day carries the right amount of inflation. Without it, the index would jump on the first of each month and a buyer could time the jump.
 
@@ -105,39 +113,43 @@ The daily walk exists so that a bond sold on any day carries the right amount of
 
 The coupon on 15 January 2027 uses October and November 2026: a reference index of 324.14 and a ratio of 1.01161. On $1,000 face it pays $5.00 × 1.01161 = $5.05805, which is $5.06 after cash rounding. Divide it by its own ratio and $5.00 returns. That is what "fixed in real terms" means.
 
-The principal follows the same rule, with one exception: at maturity it is at least the original face, $F\max(I_T, 1)$.
+The principal follows the same rule, with one exception: at maturity it is at least the original face, $`F\max(I_T, 1)`$.
 
 ### Step 3: price in real terms, convert at today's ratio
 
-A buyer today pays today's dollars. Each future payment is its real amount times a ratio not yet known. Suppose inflation runs at a steady rate $\pi$. Each future ratio is today's ratio grown by inflation, and an ordinary dollar discount rate is, by Fisher ([Real rates](01-real-rates-and-the-fisher-equation.md)), the real rate grown by the same inflation. The inflation on top and the inflation underneath cancel, payment by payment, and what is left is $I_s$ times the real price.
+A buyer today pays today's dollars. Each future payment is its real amount times a ratio not yet known. Suppose inflation runs at a steady rate $`\pi`$. Each future ratio is today's ratio grown by inflation, and an ordinary dollar discount rate is, by Fisher ([Real rates](01-real-rates-and-the-fisher-equation.md)), the real rate grown by the same inflation. The inflation on top and the inflation underneath cancel, payment by payment, and what is left is $`I_s`$ times the real price.
 
 When inflation is uncertain, the nominal road needs a model of how rates and the index move together; the real-yield quote does not. So the market needs no inflation forecast to quote a linker. It quotes the real yield, and the invoice follows. At 2.5% inflation and at 3.5% inflation the invoice is the same $1,000.0416: raising expected inflation raises the nominal yield by as much as it raises the future payments.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-Write $g = \sqrt{1+\pi}$ for one half-year of inflation. Payment number k, counted from the next coupon at $k = 0$, is due $r/s + k$ half-years from settlement, so its ratio is $I_s\,g^{r/s+k}$. Fisher gives the nominal growth per half-year as $(1 + y/2)\,g$, and the stub grows by $(1 + \frac{r}{s}\cdot\frac{y}{2})\,g^{r/s}$. The nominal value of the real amount $X_k$ due at payment k is then
-$$\frac{X_k\, I_s\, g^{r/s+k}}{\left(1 + \frac{r}{s}\cdot\frac{y}{2}\right) g^{r/s}\,(1+y/2)^k\, g^k} \;=\; I_s\,\frac{X_k}{\left(1 + \frac{r}{s}\cdot\frac{y}{2}\right)(1+y/2)^k}.$$
-Every power of g cancels. Adding over all the payments gives $I_s(P + A)$, whatever $\pi$ is. The nominal yield is $y_n = 2\big((1+y/2)\,g - 1\big) = 3.5172\%$ at $\pi = 2.5\%$.
+Write $`g = \sqrt{1+\pi}`$ for one half-year of inflation. Payment number k, counted from the next coupon at $`k = 0`$, is due $`r/s + k`$ half-years from settlement, so its ratio is $`I_s\,g^{r/s+k}`$. Fisher gives the nominal growth per half-year as $`(1 + y/2)\,g`$, and the stub grows by $`(1 + \frac{r}{s}\cdot\frac{y}{2})\,g^{r/s}`$. The nominal value of the real amount $`X_k`$ due at payment k is then
+
+$`\displaystyle \frac{X_k\, I_s\, g^{r/s+k}}{\left(1 + \frac{r}{s}\cdot\frac{y}{2}\right) g^{r/s}\,(1+y/2)^k\, g^k} \;=\; I_s\,\frac{X_k}{\left(1 + \frac{r}{s}\cdot\frac{y}{2}\right)(1+y/2)^k}.`$
+
+Every power of g cancels. Adding over all the payments gives $`I_s(P + A)`$, whatever $`\pi`$ is. The nominal yield is $`y_n = 2\big((1+y/2)\,g - 1\big) = 3.5172\%`$ at $`\pi = 2.5\%`$.
 
 </details>
 
 ### Step 4: the inverse, from quoted price to real yield
 
-Traders quote the real clean price $P$ and read off $y$. Before solving, three facts about the equation.
+Traders quote the real clean price $`P`$ and read off $`y`$. Before solving, three facts about the equation.
 
-- **Existence.** As $y$ falls towards −200%, one half-year's growth $1 + y/2$ falls towards zero and the price grows without limit. As $y$ grows, the dirty price falls towards zero, so the clean price falls towards $-A$. Any quote above $-A$, which includes every positive price, is reached.
-- **Uniqueness.** Every term falls as $y$ rises, so the price falls steadily and crosses each level once.
-- **Boundary cases.** Negative real yields are allowed and have traded; the Treasury's auction rules accept them. At $y = 0$ the formula's shortcut for the sum divides by zero, so the code uses its limit: n undiscounted half-coupons. At $y = c$, on a coupon date, the price is exactly 100.
+- **Existence.** As $`y`$ falls towards −200%, one half-year's growth $`1 + y/2`$ falls towards zero and the price grows without limit. As $`y`$ grows, the dirty price falls towards zero, so the clean price falls towards $`-A`$. Any quote above $`-A`$, which includes every positive price, is reached.
+- **Uniqueness.** Every term falls as $`y`$ rises, so the price falls steadily and crosses each level once.
+- **Boundary cases.** Negative real yields are allowed and have traded; the Treasury's auction rules accept them. At $`y = 0`$ the formula's shortcut for the sum divides by zero, so the code uses its limit: n undiscounted half-coupons. At $`y = c`$, on a coupon date, the price is exactly 100.
 
 Bisection halves a bracket from −50% to 50% two hundred times. Newton's method starts at 5% and follows the slope. Both return 1.0200000000% from the clean price 99.810901.
 
 <details>
 <summary>Detailed proof: one real yield for each price</summary>
 
-Write $z = 1 + y/2 > 0$ and $\rho = r/s$ with $0 < \rho \le 1$. The dirty price is
-$$f(y) = \sum_{k=0}^{n}\frac{X_k}{(1 + \rho\,y/2)\,z^{k}},$$
-with $X_k = c/2$ for $k < n$ and $X_n = c/2 + 100$, all positive. Each denominator is positive and increasing in $y$ on $y > -2$: $z > 0$ there, and $1 + \rho y/2 > 1 - \rho \ge 0$. So $f(y)$ is continuous and strictly decreasing. As $y \to -2$, $z \to 0$ and the term with $k = n$ exceeds any bound. As $y \to \infty$ every term tends to zero. By the intermediate value theorem, $f(y) = p$ has a solution for every $p > 0$; strict decrease makes it unique. The clean price is $f(y) - A$ with $A$ fixed, so the same holds for any clean quote above $-A$. Bisection keeps a bracket with the price above the target at one end and below at the other, and halves it; after 200 halvings the bracket is below the spacing of machine numbers.
+Write $`z = 1 + y/2 > 0`$ and $`\rho = r/s`$ with $`0 < \rho \le 1`$. The dirty price is
+
+$`\displaystyle f(y) = \sum_{k=0}^{n}\frac{X_k}{(1 + \rho\,y/2)\,z^{k}},`$
+
+with $`X_k = c/2`$ for $`k < n`$ and $`X_n = c/2 + 100`$, all positive. Each denominator is positive and increasing in $`y`$ on $`y > -2`$: $`z > 0`$ there, and $`1 + \rho y/2 > 1 - \rho \ge 0`$. So $`f(y)`$ is continuous and strictly decreasing. As $`y \to -2`$, $`z \to 0`$ and the term with $`k = n`$ exceeds any bound. As $`y \to \infty`$ every term tends to zero. By the intermediate value theorem, $`f(y) = p`$ has a solution for every $`p > 0`$; strict decrease makes it unique. The clean price is $`f(y) - A`$ with $`A`$ fixed, so the same holds for any clean quote above $`-A`$. Bisection keeps a bracket with the price above the target at one end and below at the other, and halves it; after 200 halvings the bracket is below the spacing of machine numbers.
 
 </details>
 
@@ -158,13 +170,13 @@ The 10-year linker: 1% real coupon, dated 15 July 2026, maturing 15 July 2036, s
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| base index, 15 July | $320.000 + \frac{14}{31}(0.930)$ | 320.42000 |
-| settlement index, 31 July | $320.000 + \frac{30}{31}(0.930)$ | 320.90000 |
-| index ratio $I_s$ | $320.90 / 320.42$, cut and rounded | 1.00150 |
-| days $s$ and $r$ | 15 Jul to 15 Jan; 31 Jul to 15 Jan | 184 and 168 |
-| real accrued $A$ | $\frac{184-168}{184}\times 0.50$ | 0.043478 |
-| real dirty $P + A$ | 20 real payments at 1.0051 per half-year, simple stub | 99.854379 |
-| real clean $P$, the quote | 99.854379 − 0.043478 | 99.810901 |
+| base index, 15 July | $`320.000 + \frac{14}{31}(0.930)`$ | 320.42000 |
+| settlement index, 31 July | $`320.000 + \frac{30}{31}(0.930)`$ | 320.90000 |
+| index ratio $`I_s`$ | $`320.90 / 320.42`$, cut and rounded | 1.00150 |
+| days $`s`$ and $`r`$ | 15 Jul to 15 Jan; 31 Jul to 15 Jan | 184 and 168 |
+| real accrued $`A`$ | $`\frac{184-168}{184}\times 0.50`$ | 0.043478 |
+| real dirty $`P + A`$ | 20 real payments at 1.0051 per half-year, simple stub | 99.854379 |
+| real clean $`P`$, the quote | 99.854379 − 0.043478 | 99.810901 |
 | nominal clean, $1,000 face | 10 × 1.00150 × 99.810901 | $999.6062 |
 | nominal accrued | 10 × 1.00150 × 0.043478 | $0.4354 |
 | **invoice** | 999.6062 + 0.4354 | **$1,000.0416** |
@@ -629,11 +641,11 @@ The two outputs agree line for line.
 
 Lean proves that inflation cancels, that each price has one yield, and the deflation floor, for all linkers, then checks the card's index numbers.
 
-- Take any real amounts $X_k$, any real yield $y$, and steady inflation $\pi > -1$. Then the indexed payments, discounted at the Fisher nominal yield, are worth exactly $I_s(P + A)$, whatever $\pi$ is.
-- Take a real coupon $c > 0$, $n \ge 1$, $0 < r/s \le 1$, and the Treasury's simple stub. Then every positive real dirty price comes from exactly one real yield above −200%.
-- Take original face $F \ge 0$ and any final index ratio $I_T$. Then the principal $F\max(I_T, 1)$ is at least $F$. It equals $F I_T$ when $I_T \ge 1$, and $F$ when $I_T \le 1$.
+- Take any real amounts $`X_k`$, any real yield $`y`$, and steady inflation $`\pi > -1`$. Then the indexed payments, discounted at the Fisher nominal yield, are worth exactly $`I_s(P + A)`$, whatever $`\pi`$ is.
+- Take a real coupon $`c > 0`$, $`n \ge 1`$, $`0 < r/s \le 1`$, and the Treasury's simple stub. Then every positive real dirty price comes from exactly one real yield above −200%.
+- Take original face $`F \ge 0`$ and any final index ratio $`I_T`$. Then the principal $`F\max(I_T, 1)`$ is at least $`F`$. It equals $`F I_T`$ when $`I_T \ge 1`$, and $`F`$ when $`I_T \le 1`$.
 - Take the Treasury's own rule-text example. Then the reference index on 15 April is 154.63333, and the index ratio a day later is 1.00011.
-- Take the card's invented CPI-U levels. Then the base is 320.42000, the two index ratios are 1.00150 and 1.01161, and $s$ and $r$ are 184 and 168.
+- Take the card's invented CPI-U levels. Then the base is 320.42000, the two index ratios are 1.00150 and 1.01161, and $`s`$ and $`r`$ are 184 and 168.
 - Take $1,000 of original face. Then the real accrued per 100 is exactly 1/23, and the first coupon is exactly $5.05805.
 - Take final index ratios 0.95 and 1.30. Then $1,000 of original face repays $1,000 and $1,300.
 

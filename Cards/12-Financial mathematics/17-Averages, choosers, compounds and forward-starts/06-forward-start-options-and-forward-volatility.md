@@ -39,43 +39,49 @@ First line: reset at $90, so the kink sits at $90. Second line: reset at $100. T
 
 ## The formula
 
-Notation first, in words. $t_1$ is the reset date and $T$ the expiry, both in years from today; $\tau = T - t_1$ is the life the option has once its strike is set. $S_{t_1}$ is Acme's price on the reset date, and $\alpha$ is the agreed multiple, so the strike will be $K = \alpha\,S_{t_1}$. The payoff at expiry is $\max(S_T - \alpha S_{t_1},\,0)$.
+Notation first, in words. $`t_1`$ is the reset date and $`T`$ the expiry, both in years from today; $`\tau = T - t_1`$ is the life the option has once its strike is set. $`S_{t_1}`$ is Acme's price on the reset date, and $`\alpha`$ is the agreed multiple, so the strike will be $`K = \alpha\,S_{t_1}`$. The payoff at expiry is $`\max(S_T - \alpha S_{t_1},\,0)`$.
 
-$$C_{\text{fs}} \;=\; S\,e^{-q t_1}\;c, \qquad c \;=\; e^{-q\tau}N(d_1) \;-\; \alpha\,e^{-r\tau}N(d_2)$$
+```math
+C_{\text{fs}} \;=\; S\,e^{-q t_1}\;c, \qquad c \;=\; e^{-q\tau}N(d_1) \;-\; \alpha\,e^{-r\tau}N(d_2)
+```
 
-$$d_1 = \frac{-\ln\alpha + \left(r - q + \tfrac12\sigma^2\right)\tau}{\sigma\sqrt{\tau}}, \qquad d_2 = d_1 - \sigma\sqrt{\tau}$$
+```math
+d_1 = \frac{-\ln\alpha + \left(r - q + \tfrac12\sigma^2\right)\tau}{\sigma\sqrt{\tau}}, \qquad d_2 = d_1 - \sigma\sqrt{\tau}
+```
 
 **Read it aloud:** price an ordinary call on a share worth one dollar, struck at the multiple, over the life left after the reset; that is how many shares the contract is worth on the reset date; buy that many shares today, less the dividends they will earn on the way.
 
-In words, $c$ is the Black-Scholes call of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) with the share set to 1 and the strike to $\alpha$, so $\ln(S/K)$ becomes $-\ln\alpha$, which is zero at the money. $d_2$ counts how far the strike sits below the expected finish, in units of the spread $\sigma\sqrt{\tau}$; $d_1$ is one spread further.
+In words, $`c`$ is the Black-Scholes call of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) with the share set to 1 and the strike to $`\alpha`$, so $`\ln(S/K)`$ becomes $`-\ln\alpha`$, which is zero at the money. $`d_2`$ counts how far the strike sits below the expected finish, in units of the spread $`\sigma\sqrt{\tau}`$; $`d_1`$ is one spread further.
 
-The forward volatility comes from two quoted implied volatilities, $\sigma_1$ to the reset and $\sigma_2$ to expiry, through their total variances $w_1 = \sigma_1^2 t_1$ and $w_2 = \sigma_2^2 T$:
+The forward volatility comes from two quoted implied volatilities, $`\sigma_1`$ to the reset and $`\sigma_2`$ to expiry, through their total variances $`w_1 = \sigma_1^2 t_1`$ and $`w_2 = \sigma_2^2 T`$:
 
-$$\sigma_f = \sqrt{\frac{w_2 - w_1}{T - t_1}}$$
+```math
+\sigma_f = \sqrt{\frac{w_2 - w_1}{T - t_1}}
+```
 
-In words: the variance the far quote carries beyond the near one, spread over the years between them ([Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md) proves it). The forward-start formula takes $\sigma = \sigma_f$.
+In words: the variance the far quote carries beyond the near one, spread over the years between them ([Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md) proves it). The forward-start formula takes $`\sigma = \sigma_f`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C_{\text{fs}}$ | price today of the forward-start call | $6.74 at 21.82%; $6.24 at flat 20% | is the answer |
-| $S$, $S_{t_1}$, $S_T$ | Acme's price today, on the reset date, at expiry | $100; unknown; unknown | $S$ up: rises in exact proportion |
-| $\alpha$, $K$ | the strike multiple; the strike $K = \alpha S_{t_1}$ once set | 1; unknown today | $\alpha$ up: falls; 1.10 gives $3.01 |
-| $t_1$, $T$, $\tau$ | reset date; expiry; life after the reset, $T - t_1$ | 0.5; 1; 0.5 years | $t_1$ down with $T$ fixed: rises; reset at 0.25 gives $7.84 at flat 20% |
-| $r$, $q$ | riskless rate and dividend yield, continuously compounded | 5% and 2% | $r$ up: rises a little; $q$ up: falls |
-| $\sigma$, $\sigma_f$ | volatility between reset and expiry; the forward volatility the quotes imply for it | 21.82% | rises: $0.27 per volatility point |
-| $\sigma_1$, $\sigma_2$, $w_1$, $w_2$ | implied volatility to the reset and to expiry; their total variances, volatility squared times years | 18%, 20%; 0.016200, 0.040000 | $\sigma_2$ up: $\sigma_f$ up; $\sigma_1$ up: $\sigma_f$ down |
-| $c$ | the unit call: an ordinary call on a one-dollar share struck at $\alpha$, over $\tau$ | 0.068075 | rises with $\sigma$ |
-| $e^{-q t_1}$ | the waiting drag: shares to hold today to own one share at the reset, dividends reinvested | 0.990050 | — |
-| $d_1$, $d_2$ | distances of the strike, in spreads; share-counted and cash-counted | 0.176777, 0.035355 at 20% | — |
-| $N$, $\varphi$ | the bell-curve area to the left of a point; the bell curve's height | $N(d_1)$ = 0.570158 at 20% | — |
-| $Z_1$, $Z_2$, $R$ | independent standard bell-curve draws for the two half-years; the ratio $R = S_T / S_{t_1}$ | — | — |
+| $`C_{\text{fs}}`$ | price today of the forward-start call | $6.74 at 21.82%; $6.24 at flat 20% | is the answer |
+| $`S`$, $`S_{t_1}`$, $`S_T`$ | Acme's price today, on the reset date, at expiry | $100; unknown; unknown | $`S`$ up: rises in exact proportion |
+| $`\alpha`$, $`K`$ | the strike multiple; the strike $`K = \alpha S_{t_1}`$ once set | 1; unknown today | $`\alpha`$ up: falls; 1.10 gives $3.01 |
+| $`t_1`$, $`T`$, $`\tau`$ | reset date; expiry; life after the reset, $`T - t_1`$ | 0.5; 1; 0.5 years | $`t_1`$ down with $`T`$ fixed: rises; reset at 0.25 gives $7.84 at flat 20% |
+| $`r`$, $`q`$ | riskless rate and dividend yield, continuously compounded | 5% and 2% | $`r`$ up: rises a little; $`q`$ up: falls |
+| $`\sigma`$, $`\sigma_f`$ | volatility between reset and expiry; the forward volatility the quotes imply for it | 21.82% | rises: $0.27 per volatility point |
+| $`\sigma_1`$, $`\sigma_2`$, $`w_1`$, $`w_2`$ | implied volatility to the reset and to expiry; their total variances, volatility squared times years | 18%, 20%; 0.016200, 0.040000 | $`\sigma_2`$ up: $`\sigma_f`$ up; $`\sigma_1`$ up: $`\sigma_f`$ down |
+| $`c`$ | the unit call: an ordinary call on a one-dollar share struck at $`\alpha`$, over $`\tau`$ | 0.068075 | rises with $`\sigma`$ |
+| $`e^{-q t_1}`$ | the waiting drag: shares to hold today to own one share at the reset, dividends reinvested | 0.990050 | — |
+| $`d_1`$, $`d_2`$ | distances of the strike, in spreads; share-counted and cash-counted | 0.176777, 0.035355 at 20% | — |
+| $`N`$, $`\varphi`$ | the bell-curve area to the left of a point; the bell curve's height | $`N(d_1)`$ = 0.570158 at 20% | — |
+| $`Z_1`$, $`Z_2`$, $`R`$ | independent standard bell-curve draws for the two half-years; the ratio $`R = S_T / S_{t_1}`$ | — | — |
 
 ### When it holds
 
-- **Log returns bell-curved after the reset, at a volatility fixed in advance.** If volatility itself moves at random, the forward-start price depends on the smile the market will quote on the reset date, not only on $\sigma_f$; pricing at $\sigma_f$ then misses by the value of that future smile.
+- **Log returns bell-curved after the reset, at a volatility fixed in advance.** If volatility itself moves at random, the forward-start price depends on the smile the market will quote on the reset date, not only on $`\sigma_f`$; pricing at $`\sigma_f`$ then misses by the value of that future smile.
 - **A strike set as a multiple of the share price.** A strike fixed in dollars today is an ordinary call, and the first half-year's moves then matter.
-- **Known dividend yield and rates until the reset.** The waiting drag $e^{-q t_1}$ assumes a known dividend stream; a dividend cut before the reset makes the contract worth more than the formula says, and the parcel bought today falls short.
-- **A flat smile at the reset.** At the money, the right volatility is the at-the-money forward volatility. For $\alpha$ far from one, a skewed market prices the unit call at a different volatility.
+- **Known dividend yield and rates until the reset.** The waiting drag $`e^{-q t_1}`$ assumes a known dividend stream; a dividend cut before the reset makes the contract worth more than the formula says, and the parcel bought today falls short.
+- **A flat smile at the reset.** At the money, the right volatility is the at-the-money forward volatility. For $`\alpha`$ far from one, a skewed market prices the unit call at a different volatility.
 
 ---
 
@@ -83,40 +89,46 @@ In words: the variance the far quote carries beyond the near one, spread over th
 
 ### Step 0: on the reset date, the contract becomes an ordinary call
 
-Stand on the reset date. Acme is at some price, $S_{t_1}$. The strike is now set, at $\alpha S_{t_1}$, and $\tau$ years remain. Nothing about the contract is unusual any more: it is an ordinary European call. Everything before the reset date only decided how big that call is. So the plan is: value the contract on the reset date, then ask what that value costs today.
+Stand on the reset date. Acme is at some price, $`S_{t_1}`$. The strike is now set, at $`\alpha S_{t_1}`$, and $`\tau`$ years remain. Nothing about the contract is unusual any more: it is an ordinary European call. Everything before the reset date only decided how big that call is. So the plan is: value the contract on the reset date, then ask what that value costs today.
 
 ### Step 1: an ordinary call scales with its share
 
-Suppose Acme's share and the strike are both doubled. Every future price of the share doubles too, because the model moves prices by percentages. So every payoff doubles, and the call's value doubles. The same holds for any factor. In the formula: $S$ and $K$ enter $d_1$ and $d_2$ only through their ratio $S/K$, and outside they multiply $N(d_1)$ and $N(d_2)$. Scale both by the same number and the $d$s do not move, while the whole price scales.
+Suppose Acme's share and the strike are both doubled. Every future price of the share doubles too, because the model moves prices by percentages. So every payoff doubles, and the call's value doubles. The same holds for any factor. In the formula: $`S`$ and $`K`$ enter $`d_1`$ and $`d_2`$ only through their ratio $`S/K`$, and outside they multiply $`N(d_1)`$ and $`N(d_2)`$. Scale both by the same number and the $`d`$s do not move, while the whole price scales.
 
-So an at-the-money call on a share at $S_{t_1}$ is worth $S_{t_1}$ times the same call on a share at one dollar: $S_{t_1}\,c$. The unit call $c$ contains no $S_{t_1}$ at all. It is known today. With flat 20 percent, $c = 0.063076$; at the forward volatility, $c = 0.068075$. The checks confirm the scaling directly: the Black-Scholes call at Acme $40, struck at $40, divided by 40, gives 0.068075; at $250, struck at $250, the same.
+So an at-the-money call on a share at $`S_{t_1}`$ is worth $`S_{t_1}`$ times the same call on a share at one dollar: $`S_{t_1}\,c`$. The unit call $`c`$ contains no $`S_{t_1}`$ at all. It is known today. With flat 20 percent, $`c = 0.063076`$; at the forward volatility, $`c = 0.068075`$. The checks confirm the scaling directly: the Black-Scholes call at Acme $40, struck at $40, divided by 40, gives 0.068075; at $250, struck at $250, the same.
 
 ### Step 2: a known number of shares on the reset date costs shares today
 
-On the reset date the contract is worth $c$ shares. That is certain; only the share price is not. The price today of anything paid on the reset date is the discounted average of it in the pricing world. Averaging in two stages is legitimate: first average over the second half-year with the reset price held fixed, then average over the reset price. That is the tower rule of [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md). The inner average is Step 1's answer, $S_{t_1}\,c$. The outer average asks the price of $c$ shares delivered at $t_1$.
+On the reset date the contract is worth $`c`$ shares. That is certain; only the share price is not. The price today of anything paid on the reset date is the discounted average of it in the pricing world. Averaging in two stages is legitimate: first average over the second half-year with the reset price held fixed, then average over the reset price. That is the tower rule of [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md). The inner average is Step 1's answer, $`S_{t_1}\,c`$. The outer average asks the price of $`c`$ shares delivered at $`t_1`$.
 
-A share delivered at $t_1$ costs $S\,e^{-q t_1}$ today: buy $e^{-q t_1}$ of a share, reinvest every dividend, and it grows into exactly one share by $t_1$. So
+A share delivered at $`t_1`$ costs $`S\,e^{-q t_1}`$ today: buy $`e^{-q t_1}`$ of a share, reinvest every dividend, and it grows into exactly one share by $`t_1`$. So
 
-$$C_{\text{fs}} = S\,e^{-q t_1}\,c = 100 \times 0.990050 \times 0.063076 = 6.244873 \text{ at flat 20\%}.$$
+```math
+C_{\text{fs}} = S\,e^{-q t_1}\,c = 100 \times 0.990050 \times 0.063076 = 6.244873 \text{ at flat 20\%}.
+```
 
-The argument is also a trade. Buy $c\,e^{-q t_1}$ shares today, 0.067397 shares at the forward volatility, costing $6.74. Reinvest the dividends. On the reset date the parcel has grown to $c$ shares, worth exactly the ordinary call the contract has just become, wherever Acme is. Sell the parcel and buy that call. No daily adjustment, no view on direction. Within the model, a contract selling above $6.74 is sold against the parcel, and one below is bought. The one assumption is that the call on the reset date costs $c\,S_{t_1}$, which holds only if the market then prices it at $\sigma_f$.
+The argument is also a trade. Buy $`c\,e^{-q t_1}`$ shares today, 0.067397 shares at the forward volatility, costing $6.74. Reinvest the dividends. On the reset date the parcel has grown to $`c`$ shares, worth exactly the ordinary call the contract has just become, wherever Acme is. Sell the parcel and buy that call. No daily adjustment, no view on direction. Within the model, a contract selling above $6.74 is sold against the parcel, and one below is bought. The one assumption is that the call on the reset date costs $`c\,S_{t_1}`$, which holds only if the market then prices it at $`\sigma_f`$.
 
 <details>
 <summary>Detailed proof: the two-stage average, written out</summary>
 
-In the pricing world, with $Z_1$ and $Z_2$ independent standard bell-curve draws,
-$$S_{t_1} = S\,e^{(r - q - \frac12\sigma_1^2)t_1 + \sigma_1\sqrt{t_1}\,Z_1}, \qquad S_T = S_{t_1}\,e^{(r - q - \frac12\sigma^2)\tau + \sigma\sqrt{\tau}\,Z_2}.$$
-The ratio $R = S_T/S_{t_1}$ depends on $Z_2$ only, so it is independent of $S_{t_1}$: Brownian moves over separate periods are independent. The payoff factors as $S_{t_1}\max(R - \alpha, 0)$. The price is
-$$e^{-rT}\,\mathbb{E}\big[S_{t_1}\max(R - \alpha, 0)\big] = e^{-rT}\,\mathbb{E}[S_{t_1}]\;\mathbb{E}[\max(R-\alpha,0)],$$
-because the average of a product of independent quantities is the product of their averages. The first average is the forward, $S\,e^{(r-q)t_1}$, whatever $\sigma_1$ is. The second, discounted by $e^{-r\tau}$, is the Black-Scholes call on a one-dollar share struck at $\alpha$: $e^{-r\tau}\,\mathbb{E}[\max(R - \alpha, 0)] = c$. Multiply: $e^{-rT} \cdot S e^{(r-q)t_1} \cdot e^{r\tau} c = S\,e^{-q t_1}\,c$, since $-rT + r t_1 + r\tau = 0$. The first half-year's volatility $\sigma_1$ has dropped out entirely.
+In the pricing world, with $`Z_1`$ and $`Z_2`$ independent standard bell-curve draws,
+
+$`\displaystyle S_{t_1} = S\,e^{(r - q - \frac12\sigma_1^2)t_1 + \sigma_1\sqrt{t_1}\,Z_1}, \qquad S_T = S_{t_1}\,e^{(r - q - \frac12\sigma^2)\tau + \sigma\sqrt{\tau}\,Z_2}.`$
+
+The ratio $`R = S_T/S_{t_1}`$ depends on $`Z_2`$ only, so it is independent of $`S_{t_1}`$: Brownian moves over separate periods are independent. The payoff factors as $`S_{t_1}\max(R - \alpha, 0)`$. The price is
+
+$`\displaystyle e^{-rT}\,\mathbb{E}\big[S_{t_1}\max(R - \alpha, 0)\big] = e^{-rT}\,\mathbb{E}[S_{t_1}]\;\mathbb{E}[\max(R-\alpha,0)],`$
+
+because the average of a product of independent quantities is the product of their averages. The first average is the forward, $`S\,e^{(r-q)t_1}`$, whatever $`\sigma_1`$ is. The second, discounted by $`e^{-r\tau}`$, is the Black-Scholes call on a one-dollar share struck at $`\alpha`$: $`e^{-r\tau}\,\mathbb{E}[\max(R - \alpha, 0)] = c`$. Multiply: $`e^{-rT} \cdot S e^{(r-q)t_1} \cdot e^{r\tau} c = S\,e^{-q t_1}\,c`$, since $`-rT + r t_1 + r\tau = 0`$. The first half-year's volatility $`\sigma_1`$ has dropped out entirely.
 
 </details>
 
 ### Step 3: only the volatility after the reset is in the price
 
-The proof shows where the risk lives. $\sigma_1$, the volatility up to the reset, cancelled: before the reset, a rise in Acme raises the strike by the same percentage, so the option stays exactly at the money. Its value scales with Acme, as a parcel of shares does, and a parcel of shares carries no volatility risk. The contract is exposed only to the volatility between $t_1$ and $T$.
+The proof shows where the risk lives. $`\sigma_1`$, the volatility up to the reset, cancelled: before the reset, a rise in Acme raises the strike by the same percentage, so the option stays exactly at the money. Its value scales with Acme, as a parcel of shares does, and a parcel of shares carries no volatility risk. The contract is exposed only to the volatility between $`t_1`$ and $`T`$.
 
-The market does not quote that volatility directly. It quotes 18 percent to six months and 20 percent to one year. The one-year quote blends both halves, and the six-month quote prices the first. Total variances add, so the second half alone carries $(0.040000 - 0.016200)/0.5 = 0.047600$ per year, whose square root is $\sigma_f = 0.218174$: 21.82 percent. That is the fair volatility for the forward-start, not 20 and not 18. The price is $100 \times 0.990050 \times 0.068075 = 6.739732$, or $6.74.
+The market does not quote that volatility directly. It quotes 18 percent to six months and 20 percent to one year. The one-year quote blends both halves, and the six-month quote prices the first. Total variances add, so the second half alone carries $`(0.040000 - 0.016200)/0.5 = 0.047600`$ per year, whose square root is $`\sigma_f = 0.218174`$: 21.82 percent. That is the fair volatility for the forward-start, not 20 and not 18. The price is $`100 \times 0.990050 \times 0.068075 = 6.739732`$, or $6.74.
 
 The checks confirm this by a road that uses no Black-Scholes formula: they average the payoff over both half-years directly, 18 percent then 21.82 percent, and get $6.74. With 40 percent in the first half they get $6.74 again. The same two-stage model prices the one-year ordinary call at 9.227006, the 20 percent Black-Scholes price, so the model matches both market quotes, and the forward-start price it gives is forced.
 
@@ -124,11 +136,11 @@ The checks confirm this by a road that uses no Black-Scholes formula: they avera
 
 A dealer quotes the contract at $6.74. Which forward volatility does that price imply? Before solving, three questions.
 
-**Existence.** The price moves continuously in $\sigma$. As $\sigma$ falls to zero, Acme's second-half ratio becomes certain, $R = e^{(r-q)\tau}$, and the unit call becomes $e^{-q\tau} - \alpha e^{-r\tau}$; the price tends to the floor $S e^{-q t_1}\max(e^{-q\tau} - \alpha e^{-r\tau}, 0) = 1.459326$. As $\sigma$ grows without bound, $N(d_1) \to 1$ and $N(d_2) \to 0$, and the price tends to the ceiling $S e^{-q t_1} e^{-q\tau} = S e^{-qT} = 98.019867$: one share delivered at expiry. Every quote strictly between $1.46 and $98.02 is reached.
+**Existence.** The price moves continuously in $`\sigma`$. As $`\sigma`$ falls to zero, Acme's second-half ratio becomes certain, $`R = e^{(r-q)\tau}`$, and the unit call becomes $`e^{-q\tau} - \alpha e^{-r\tau}`$; the price tends to the floor $`S e^{-q t_1}\max(e^{-q\tau} - \alpha e^{-r\tau}, 0) = 1.459326`$. As $`\sigma`$ grows without bound, $`N(d_1) \to 1`$ and $`N(d_2) \to 0`$, and the price tends to the ceiling $`S e^{-q t_1} e^{-q\tau} = S e^{-qT} = 98.019867`$: one share delivered at expiry. Every quote strictly between $1.46 and $98.02 is reached.
 
-**Uniqueness.** The slope of the unit call in $\sigma$ is its vega, $e^{-q\tau}\,\varphi(d_1)\sqrt{\tau}$, where $\varphi$ is the bell-curve height; it is positive for every $\sigma$. So the price rises strictly with volatility and no two volatilities give the same price.
+**Uniqueness.** The slope of the unit call in $`\sigma`$ is its vega, $`e^{-q\tau}\,\varphi(d_1)\sqrt{\tau}`$, where $`\varphi`$ is the bell-curve height; it is positive for every $`\sigma`$. So the price rises strictly with volatility and no two volatilities give the same price.
 
-**Boundaries.** A quote at or below $1.46 has no volatility: even a certain second half pays that much. A quote at or above $98.02 has none either: no option on a share is worth more than the share. A floor of zero is not the right floor: here the at-the-money forward sits above the strike ($r > q$), so the option is worth something even with no volatility at all.
+**Boundaries.** A quote at or below $1.46 has no volatility: even a certain second half pays that much. A quote at or above $98.02 has none either: no option on a share is worth more than the share. A floor of zero is not the right floor: here the at-the-money forward sits above the strike ($`r > q`$), so the option is worth something even with no volatility at all.
 
 With those settled, bisection (halving a bracket of volatilities until it closes) on the $6.74 quote returns 0.218174, the same number the total-variance subtraction gave. Two independent roads, one forward volatility.
 
@@ -147,15 +159,15 @@ The line is the forward-start price at each forward volatility. It rises steadil
 
 ## Worked numbers, by hand
 
-House market: $S = 100$, $r = 5\%$, $q = 2\%$, reset $t_1 = 0.5$, expiry $T = 1$, at the money ($\alpha = 1$). First with volatility flat at 20 percent, the shelf's cross-check number.
+House market: $`S = 100`$, $`r = 5\%`$, $`q = 2\%`$, reset $`t_1 = 0.5`$, expiry $`T = 1`$, at the money ($`\alpha = 1`$). First with volatility flat at 20 percent, the shelf's cross-check number.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| life after the reset, $\tau$ | 1 − 0.5 | 0.5 |
-| $d_1$ | (0 + (0.05 − 0.02 + 0.02) × 0.5) / (0.20 × √0.5) | 0.176777 |
-| $d_2$ | 0.176777 − 0.20 × √0.5 | 0.035355 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.570158, 0.514102 |
-| unit call $c$ | e^−0.01 × 0.570158 − e^−0.025 × 0.514102 | 0.063076 |
+| life after the reset, $`\tau`$ | 1 − 0.5 | 0.5 |
+| $`d_1`$ | (0 + (0.05 − 0.02 + 0.02) × 0.5) / (0.20 × √0.5) | 0.176777 |
+| $`d_2`$ | 0.176777 − 0.20 × √0.5 | 0.035355 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.570158, 0.514102 |
+| unit call $`c`$ | e^−0.01 × 0.570158 − e^−0.025 × 0.514102 | 0.063076 |
 | waiting drag | e^(−0.02 × 0.5) | 0.990050 |
 | **price, flat 20%** | 100 × 0.990050 × 0.063076 | **$6.24** (6.244873) |
 
@@ -163,10 +175,10 @@ Now with the market's term structure, 18 percent to six months and 20 percent to
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| total variance to the reset, $w_1$ | 0.18^2 × 0.5 | 0.016200 |
-| total variance to expiry, $w_2$ | 0.20^2 × 1 | 0.040000 |
-| forward volatility, $\sigma_f$ | √((0.040000 − 0.016200) / 0.5) | 0.218174 |
-| unit call $c$ at $\sigma_f$ | same recipe, σ = 0.218174 | 0.068075 |
+| total variance to the reset, $`w_1`$ | 0.18^2 × 0.5 | 0.016200 |
+| total variance to expiry, $`w_2`$ | 0.20^2 × 1 | 0.040000 |
+| forward volatility, $`\sigma_f`$ | √((0.040000 − 0.016200) / 0.5) | 0.218174 |
+| unit call $`c`$ at $`\sigma_f`$ | same recipe, σ = 0.218174 | 0.068075 |
 | shares to buy today | 0.068075 × 0.990050 | 0.067397 |
 | **price** | 100 × 0.067397 | **$6.74** (6.739732) |
 
@@ -180,8 +192,8 @@ Same contract, term-structure market, right answer $6.74. Every wrong number is 
 | --- | --- | --- |
 | Use the one-year quote, 20% | $6.24 | The one-year quote averages a calm first half into it; the option only sees the second |
 | Use the six-month quote, 18% | $5.70 | That volatility belongs to the half-year the option ignores |
-| Run the unit call over the full year | $9.82 | Nothing is at risk before the reset; only $\tau$ counts |
-| Discount the waiting period at $r$ | $6.64 | The contract waits for a share, not for cash; a share earns dividends, $q$ |
+| Run the unit call over the full year | $9.82 | Nothing is at risk before the reset; only $`\tau`$ counts |
+| Discount the waiting period at $`r`$ | $6.64 | The contract waits for a share, not for cash; a share earns dividends, $`q`$ |
 | Leave out the waiting drag | $6.81 | Charges for the dividends paid before the reset, which the contract's holder never receives |
 | Price a plain one-year call struck at $100 today | $9.23 | Keeps the first half-year's move, which the forward-start gives back |
 
@@ -197,7 +209,7 @@ Sensitivities by bumping the formula at the forward volatility.
 | rho | dollars per point of the riskless rate | 0.245271 |
 | theta | dollars per year as the calendar runs toward the reset | +0.134795 |
 
-Gamma is zero because the price is a straight line in $S$. Theta is positive, and equals $q$ times the price exactly: before the reset the contract is a parcel of shares, and a parcel of shares collects its dividends as time passes.
+Gamma is zero because the price is a straight line in $`S`$. Theta is positive, and equals $`q`$ times the price exactly: before the reset the contract is a parcel of shares, and a parcel of shares collects its dividends as time passes.
 
 ---
 
@@ -649,11 +661,11 @@ The two outputs agree line for line at six decimals, including the simulation, w
 
 Lean proves the card's three main facts, for every input that meets each fact's conditions.
 
-- Suppose Acme follows the two-stage model, with $S > 0$, $\alpha > 0$, $\sigma > 0$ and $0 < t_1 < T$. Then the payoff's discounted average equals $S\,e^{-q t_1}\,c$, whatever $\sigma_1$ is.
-- Suppose the strike is $\alpha$ times the share price, with $\alpha > 0$ and the share price above zero. Then the ordinary call is worth the share price times $c$.
-- Suppose $S > 0$, $\alpha > 0$ and $0 < t_1 < T$. Then the forward-start price rises strictly with $\sigma$. It reaches exactly the prices strictly between the floor and the ceiling.
+- Suppose Acme follows the two-stage model, with $`S > 0`$, $`\alpha > 0`$, $`\sigma > 0`$ and $`0 < t_1 < T`$. Then the payoff's discounted average equals $`S\,e^{-q t_1}\,c`$, whatever $`\sigma_1`$ is.
+- Suppose the strike is $`\alpha`$ times the share price, with $`\alpha > 0`$ and the share price above zero. Then the ordinary call is worth the share price times $`c`$.
+- Suppose $`S > 0`$, $`\alpha > 0`$ and $`0 < t_1 < T`$. Then the forward-start price rises strictly with $`\sigma`$. It reaches exactly the prices strictly between the floor and the ceiling.
 
-The forward-volatility formula $\sigma_f$, the bisection, the simulation and every dollar figure are left to the Python and Rust checks.
+The forward-volatility formula $`\sigma_f`$, the bisection, the simulation and every dollar figure are left to the Python and Rust checks.
 
 ```lean
 -- Forward-start options: in the Black-Scholes model a call whose strike is set at the reset date as a multiple of the share price then is worth today S e^(-q t₁) times the unit call on a one-dollar share over the life after the reset, whatever the volatility before the reset, and that price rises strictly with the forward volatility onto exactly the interval between its floor and ceiling, so each quote there gives back one forward volatility.
@@ -1188,7 +1200,7 @@ example : max ((118 : ℤ) - 1 * 110) 0 = 8 := by decide
 >
 > Smaller traps:
 > - **Letting the option live from today.** Running the unit call over the full year gives $9.82. Before the reset the strike moves with the share, so no volatility is being bought.
-> - **Discounting the wait at the riskless rate.** $e^{-r t_1}$ in place of $e^{-q t_1}$ gives $6.64. What is delivered at the reset is a share, carried as a share.
+> - **Discounting the wait at the riskless rate.** $`e^{-r t_1}`$ in place of $`e^{-q t_1}`$ gives $6.64. What is delivered at the reset is a share, carried as a share.
 > - **Taking delta to be zero because the strike floats.** Delta before the reset is 0.0674 shares per share: the parcel of shares. It is gamma that is zero.
 > - **Treating the reset price as a risk.** Where Acme stands on the reset date changes the size of the call, not its value per share. That is why a parcel of shares, bought once, covers the contract until the reset.
 
@@ -1210,7 +1222,7 @@ example : max ((118 : ℤ) - 1 * 110) 0 = 8 := by decide
 ## What this builds on
 
 - [Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md): total variances add, so two quotes give the volatility between their expiries, 21.82 percent here.
-- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the ordinary call the contract becomes on the reset date, and the unit call $c$.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the ordinary call the contract becomes on the reset date, and the unit call $`c`$.
 - [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md): averaging in two stages, first over the second half-year and then over the reset price.
 
 ## Where this goes next

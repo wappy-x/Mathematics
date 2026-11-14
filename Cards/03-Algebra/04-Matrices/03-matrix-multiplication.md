@@ -31,32 +31,34 @@ Solid arrows: the two steps. Dotted: the table replacing them.
 
 ## The formula
 
-Shorthand, in words: the entry in row $i$, column $j$ of $A$ is written $A_{ij}$ — letter, row, column, that order always. The product of $A$ and $B$ is written $AB$, nothing between.
+Shorthand, in words: the entry in row $`i`$, column $`j`$ of $`A`$ is written $`A_{ij}`$ — letter, row, column, that order always. The product of $`A`$ and $`B`$ is written $`AB`$, nothing between.
 
 The rule for every entry of the answer:
 
-$$(AB)_{ij} = A_{i1}B_{1j} + A_{i2}B_{2j} + \dots + A_{in}B_{nj}$$
+```math
+(AB)_{ij} = A_{i1}B_{1j} + A_{i2}B_{2j} + \dots + A_{in}B_{nj}
+```
 
-**Read it aloud:** slide a finger across row $i$ of the left matrix and down column $j$ of the right at the same speed, multiply each pair, add the results.
+**Read it aloud:** slide a finger across row $`i`$ of the left matrix and down column $`j`$ of the right at the same speed, multiply each pair, add the results.
 
 That is the dot product of [Matrix times vector](02-matrix-times-vector.md), once per row-and-column pairing.
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
-| $A$ | left matrix: grams per product, rows beans/flour | `[[20, 0], [0, 60]]` | gram totals change |
-| $B$ | right matrix: products per day, columns Mon/Tue | `[[2, 1], [1, 1]]` | daily totals change |
-| $C$ | a third matrix, right of both, so acting first | `[[4], [4]]`, four of each day | monthly totals change |
-| $AB$, $BA$, $BC$ | a product, in that order | $AB$ is `[[40, 20], [60, 60]]`, $BA$ is `[[40, 60], [20, 60]]` | the answer changes |
-| $A_{ij}$ | the entry at row $i$, column $j$ | $A$ row 2, column 1 is 0: no flour in a brew | — |
-| $i$, $j$, and $m$, $n$, $p$ | row, column; the sizes | $A$ is 2 × 2, $C$ is 2 × 1 | — |
+| $`A`$ | left matrix: grams per product, rows beans/flour | `[[20, 0], [0, 60]]` | gram totals change |
+| $`B`$ | right matrix: products per day, columns Mon/Tue | `[[2, 1], [1, 1]]` | daily totals change |
+| $`C`$ | a third matrix, right of both, so acting first | `[[4], [4]]`, four of each day | monthly totals change |
+| $`AB`$, $`BA`$, $`BC`$ | a product, in that order | $`AB`$ is `[[40, 20], [60, 60]]`, $`BA`$ is `[[40, 60], [20, 60]]` | the answer changes |
+| $`A_{ij}`$ | the entry at row $`i`$, column $`j`$ | $`A`$ row 2, column 1 is 0: no flour in a brew | — |
+| $`i`$, $`j`$, and $`m`$, $`n`$, $`p`$ | row, column; the sizes | $`A`$ is 2 × 2, $`C`$ is 2 × 1 | — |
 
-**The size rule.** With $A$ of size $m$ × $n$ ($m$ rows, $n$ columns) and $B$ of size $n$ × $p$, $AB$ exists and is $m$ × $p$. The inner numbers must match, or there is no product.
+**The size rule.** With $`A`$ of size $`m`$ × $`n`$ ($`m`$ rows, $`n`$ columns) and $`B`$ of size $`n`$ × $`p`$, $`AB`$ exists and is $`m`$ × $`p`$. The inner numbers must match, or there is no product.
 
 ### When it holds
 
 - **The inner numbers match.** Padding a table to force a product invents numbers.
 - **The middle labels agree, in the same order** — here brews and loaves. Sizes can match while labels do not, and then the arithmetic means nothing.
-- **The entries are plain numbers**, so sums and products regroup freely: the grouping rule, $(AB)C = A(BC)$ in Step 5, rests on that.
+- **The entries are plain numbers**, so sums and products regroup freely: the grouping rule, $`(AB)C = A(BC)`$ in Step 5, rests on that.
 - **One fixed table per step.** A brew takes 20 g whether the workshop makes one or ten.
 
 ---
@@ -81,7 +83,7 @@ Stack the two days side by side: the grams-per-day table `[[40, 20], [60, 60]]`,
 
 ### Step 3: the size rule is part of the recipe, not an extra rule
 
-Pairing a row with a column entry by entry needs equal lengths: a row is as long as the matrix has columns, a column as long as it has rows. So the left's column count must equal the right's row count, and the answer has one entry per row of the left and column of the right: $m$ × $p$.
+Pairing a row with a column entry by entry needs equal lengths: a row is as long as the matrix has columns, a column as long as it has rows. So the left's column count must equal the right's row count, and the answer has one entry per row of the left and column of the right: $`m`$ × $`p`$.
 
 ### Step 4: the order carries the meaning
 
@@ -91,31 +93,31 @@ Both matrices here happen to be 2 × 2, so the flipped arithmetic still runs, gi
 
 ### Step 5: brackets do not carry meaning
 
-Chain on a third matrix: $C$ counts each weekday in a four-week month, four Mondays and four Tuesdays, the column `[[4], [4]]`. It stands right of the others, so it acts first.
+Chain on a third matrix: $`C`$ counts each weekday in a four-week month, four Mondays and four Tuesdays, the column `[[4], [4]]`. It stands right of the others, so it acts first.
 
 Two routes to the month's list. Grams per day first, then the days: `[[40, 20], [60, 60]]` times `[[4], [4]]` gives `[[240], [480]]`. Or products per month first — `[[2, 1], [1, 1]]` times `[[4], [4]]` gives `[[12], [8]]`, twelve brews and eight loaves — then the recipes: `[[240], [480]]`.
 
-Both give 240 g of beans and 480 g of flour, and must: each is "do $C$, then $B$, then $A$". Order carries meaning; grouping does not.
+Both give 240 g of beans and 480 g of flour, and must: each is "do $`C`$, then $`B`$, then $`A`$". Order carries meaning; grouping does not.
 
 <details>
 <summary>Detailed proof: why the grouping never matters</summary>
 
 Expand one entry both ways.
 
-An entry of $(AB)C$ adds, over the days, a grams-per-day figure times that weekday's count. Each such figure is a sum over the products. So multiplying out leaves one term per product-and-day pairing: grams per unit, times units that day, times that day's count.
+An entry of $`(AB)C`$ adds, over the days, a grams-per-day figure times that weekday's count. Each such figure is a sum over the products. So multiplying out leaves one term per product-and-day pairing: grams per unit, times units that day, times that day's count.
 
-An entry of $A(BC)$ groups the same multiplication the other way, over the products first, and multiplies out to the same terms for the same pairings.
+An entry of $`A(BC)`$ groups the same multiplication the other way, over the products first, and multiplies out to the same terms for the same pairings.
 
-One identical list either way, and a finite sum totals the same in any order, so $(AB)C = A(BC)$ whenever the sizes fit.
+One identical list either way, and a finite sum totals the same in any order, so $`(AB)C = A(BC)`$ whenever the sizes fit.
 
 </details>
 
 <details>
 <summary>One column times one row, and why it is worth knowing</summary>
 
-Take column 1 of $A$, one brew's ingredients (20, 0) standing up, and row 1 of $B$, brews each day (2, 1) lying down. Multiply tall by wide: out comes a 2 × 2 grid, `[[40, 20], [0, 0]]`, the whole brew business. A column times a row, a grid instead of one number, is an **outer product**.
+Take column 1 of $`A`$, one brew's ingredients (20, 0) standing up, and row 1 of $`B`$, brews each day (2, 1) lying down. Multiply tall by wide: out comes a 2 × 2 grid, `[[40, 20], [0, 0]]`, the whole brew business. A column times a row, a grid instead of one number, is an **outer product**.
 
-Column 2 of $A$ against row 2 of $B$ gives the loaves, `[[0, 0], [60, 60]]`; added, the grids give $AB$. So the product reads entry by entry, or slice by slice, and the code does both.
+Column 2 of $`A`$ against row 2 of $`B`$ gives the loaves, `[[0, 0], [60, 60]]`; added, the grids give $`AB`$. So the product reads entry by entry, or slice by slice, and the code does both.
 
 </details>
 
@@ -131,8 +133,8 @@ A second route reaches the recipe from the other end: compose two rules that kee
 | beans on Tuesday | 20×1 + 0×1 | 20 |
 | flour on Monday | 0×2 + 60×1 | 60 |
 | flour on Tuesday | 0×1 + 60×1 | 60 |
-| the grams-per-day table, $AB$ | rows beans/flour, columns Mon/Tue | **`[[40, 20], [60, 60]]`** |
-| four weeks of it, $(AB)C$ | `[[40, 20], [60, 60]]` × `[[4], [4]]` | **`[[240], [480]]`** |
+| the grams-per-day table, $`AB`$ | rows beans/flour, columns Mon/Tue | **`[[40, 20], [60, 60]]`** |
+| four weeks of it, $`(AB)C`$ | `[[40, 20], [60, 60]]` × `[[4], [4]]` | **`[[240], [480]]`** |
 
 Monday takes 40 g of beans and 60 g of flour, Tuesday 20 g and 60 g; four weeks, 240 g and 480 g.
 
@@ -152,9 +154,9 @@ The flour bars match, one loaf a day; the beans bars do not, since Monday runs t
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Multiplying entry by entry | `[[40, 0], [0, 60]]` | Tuesday's beans and Monday's flour vanish |
-| Flipping the order to $BA$ | `[[40, 60], [20, 60]]` | The arithmetic runs; the labels stop meaning anything |
+| Flipping the order to $`BA`$ | `[[40, 60], [20, 60]]` | The arithmetic runs; the labels stop meaning anything |
 | Stopping after the first product | `[[40, 20], [0, 0]]` | Only the brew half is counted |
-| $C$ on the left of $AB$ | no product at all | 2 × 1 then 2 × 2: inner numbers 1 and 2 |
+| $`C`$ on the left of $`AB`$ | no product at all | 2 × 1 then 2 × 2: inner numbers 1 and 2 |
 
 The code prints all four.
 
@@ -367,12 +369,12 @@ The two outputs match line for line.
 
 Lean proves the three rules for every size that fits and any plain-number entries, not just the workshop's tables.
 
-- One table does "$B$, then $A$" on every list fed in exactly when each entry is a row of $A$ against a column of $B$.
-- The grouping never matters: $(AB)C = A(BC)$ whenever the sizes fit.
-- The order can matter: for square tables of every size from 2 × 2 up, some pair gives $AB$ different from $BA$.
-- The workshop's numbers match the card: $AB$, $BA$, $BC$, both groupings of the month, the outer products, and the entry-by-entry mistake.
+- One table does "$`B`$, then $`A`$" on every list fed in exactly when each entry is a row of $`A`$ against a column of $`B`$.
+- The grouping never matters: $`(AB)C = A(BC)`$ whenever the sizes fit.
+- The order can matter: for square tables of every size from 2 × 2 up, some pair gives $`AB`$ different from $`BA`$.
+- The workshop's numbers match the card: $`AB`$, $`BA`$, $`BC`$, both groupings of the month, the outer products, and the entry-by-entry mistake.
 
-Showing that $C$ on the left of $AB$ is no product, and printing the tables, are left to the Python and Rust checks.
+Showing that $`C`$ on the left of $`AB`$ is no product, and printing the tables, are left to the Python and Rust checks.
 
 ```lean
 -- Matrix multiplication: the row-by-column rule is the only table that does "B, then A" in one step, grouping a chain never changes it, order can change it at every square size from 2 up, and the card's workshop numbers come out as it says.
@@ -493,11 +495,11 @@ example : vecMulVec (fun i => (recipe * schedule) i 1) (fun j => month 1 j) = !!
 ## The usual mistake
 
 > [!warning]
-> **Assuming $AB$ and $BA$ are the same thing.** With ordinary numbers 3 × 7 and 7 × 3 both give 21; matrices are not like that. Here $AB$ is `[[40, 20], [60, 60]]` and $BA$ is `[[40, 60], [20, 60]]`: same tables, other order, different answer. The order says which step happens first.
+> **Assuming $`AB`$ and $`BA`$ are the same thing.** With ordinary numbers 3 × 7 and 7 × 3 both give 21; matrices are not like that. Here $`AB`$ is `[[40, 20], [60, 60]]` and $`BA`$ is `[[40, 60], [20, 60]]`: same tables, other order, different answer. The order says which step happens first.
 >
 > - **Multiplying entry by entry** gives `[[40, 0], [0, 60]]`: nothing was added.
 > - **Stopping after the first product** gives `[[40, 20], [0, 0]]`: row against column means multiply *and add*.
-> - **Treating the size rule as a formality.** $C$ on the left of $AB$ is no product — not a zero, not an error.
+> - **Treating the size rule as a formality.** $`C`$ on the left of $`AB`$ is no product — not a zero, not an error.
 > - **Losing the labels.** Rows come from the left matrix, columns from the right.
 
 ---
@@ -516,7 +518,7 @@ example : vecMulVec (fun i => (recipe * schedule) i 1) (fun j => month 1 j) = !!
 ## What this builds on
 
 - [Matrix times vector](02-matrix-times-vector.md): one matrix acting on one list of numbers, done here once per column of the second matrix.
-- [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one function inside another, inner first. That order is where $AB$ against $BA$ comes from.
+- [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one function inside another, inner first. That order is where $`AB`$ against $`BA`$ comes from.
 
 ## Where this goes next
 

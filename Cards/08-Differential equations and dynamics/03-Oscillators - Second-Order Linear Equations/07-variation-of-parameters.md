@@ -39,11 +39,15 @@ A second-order linear equation in standard form is y'' + p(t) y' + q(t) y = g(t)
 
 Try y = u1 y1 + u2 y2 with weights u1 and u2 that vary in time. Their rates must be
 
-$$u_1' = -\frac{y_2\,g}{W}, \qquad u_2' = \frac{y_1\,g}{W}$$
+```math
+u_1' = -\frac{y_2\,g}{W}, \qquad u_2' = \frac{y_1\,g}{W}
+```
 
 Integrating from time 0, with s running over the earlier times, gives a **particular solution**: one solution of the forced equation.
 
-$$y_p(t) = -y_1(t)\int_0^t \frac{y_2(s)\,g(s)}{W(s)}\,ds \;+\; y_2(t)\int_0^t \frac{y_1(s)\,g(s)}{W(s)}\,ds$$
+```math
+y_p(t) = -y_1(t)\int_0^t \frac{y_2(s)\,g(s)}{W(s)}\,ds \;+\; y_2(t)\int_0^t \frac{y_1(s)\,g(s)}{W(s)}\,ds
+```
 
 **Read it aloud:** weigh the forcing against the other free motion, divide by the Wronskian, add up from the start, and use the running total as the weight on each free motion, with a minus sign on the first.
 
@@ -51,18 +55,20 @@ It starts at 0 with velocity 0. Every solution is y = c1 y1 + c2 y2 + y_p, the c
 
 For the cart, y1 = cos t, y2 = sin t, W = cos^2 t + sin^2 t = 1 and g = sec t:
 
-$$u_1 = \ln\cos t, \qquad u_2 = t, \qquad y_p = \cos t\,\ln\cos t + t\sin t$$
+```math
+u_1 = \ln\cos t, \qquad u_2 = t, \qquad y_p = \cos t\,\ln\cos t + t\sin t
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $s$ | time in s; s is an earlier moment inside an integral | 0 to 1.5 s | — |
-| $y$, $y'$, $y''$ | displacement in m, velocity in m/s, acceleration in m/s^2 | y'' + y = sec t | — |
-| $p$, $q$, $g$ | damping, stiffness, forcing | 0, 1, sec t | doubling g doubles y_p |
-| $y_1$, $y_2$ | two free motions, neither a multiple of the other | cos t, sin t | — |
-| $W$ | the Wronskian, y1 y2' − y2 y1' | 1 | rescaling y1 or y2 rescales W; y_p is unchanged |
-| $u_1$, $u_2$ | the time-varying weights on y1 and y2 | ln cos t and t | — |
-| $y_p$ | a particular solution, starting at 0 with velocity 0 | cos t ln cos t + t sin t | — |
-| $c_1$, $c_2$ | constant weights that fix the start | 2 and −1 in the second case | move only the free part |
+| $`t`$, $`s`$ | time in s; s is an earlier moment inside an integral | 0 to 1.5 s | — |
+| $`y`$, $`y'`$, $`y''`$ | displacement in m, velocity in m/s, acceleration in m/s^2 | y'' + y = sec t | — |
+| $`p`$, $`q`$, $`g`$ | damping, stiffness, forcing | 0, 1, sec t | doubling g doubles y_p |
+| $`y_1`$, $`y_2`$ | two free motions, neither a multiple of the other | cos t, sin t | — |
+| $`W`$ | the Wronskian, y1 y2' − y2 y1' | 1 | rescaling y1 or y2 rescales W; y_p is unchanged |
+| $`u_1`$, $`u_2`$ | the time-varying weights on y1 and y2 | ln cos t and t | — |
+| $`y_p`$ | a particular solution, starting at 0 with velocity 0 | cos t ln cos t + t sin t | — |
+| $`c_1`$, $`c_2`$ | constant weights that fix the start | 2 and −1 in the second case | move only the free part |
 
 ### When it holds
 
@@ -82,7 +88,9 @@ With constant weights, y is a free motion and ignores the motor. Two unknown fun
 
 The product rule differentiates y = u1 y1 + u2 y2:
 
-$$y' = u_1 y_1' + u_2 y_2' + \left(u_1' y_1 + u_2' y_2\right)$$
+```math
+y' = u_1 y_1' + u_2 y_2' + \left(u_1' y_1 + u_2' y_2\right)
+```
 
 Require the bracket to be zero: u1' y1 + u2' y2 = 0. The velocity keeps its fixed-weight form, and no second derivative of u1 or u2 will appear.
 
@@ -94,7 +102,9 @@ Differentiate again and substitute into y'' + p y' + q y. The terms carrying u1 
 
 Steps 1 and 2 give two linear equations in the two rates:
 
-$$\begin{aligned} y_1 u_1' + y_2 u_2' &= 0 \\ y_1' u_1' + y_2' u_2' &= g \end{aligned}$$
+```math
+\begin{aligned} y_1 u_1' + y_2 u_2' &= 0 \\ y_1' u_1' + y_2' u_2' &= g \end{aligned}
+```
 
 Their determinant is W. Cramer's rule, which solves a two-by-two system by ratios of determinants, gives u1' = −y2 g / W and u2' = y1 g / W. W never vanishes for an independent pair, so the division is always safe.
 

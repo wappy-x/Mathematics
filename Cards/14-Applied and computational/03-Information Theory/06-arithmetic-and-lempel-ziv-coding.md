@@ -30,33 +30,39 @@ Drawn to scale. Each row is the ruler from 0 to 1. Cloud always takes the first 
 
 Notation first, in words. The message is n days long, here n = 30. The days are x_1, x_2, …, x_n, each one C, S or R. p(x) is the chance of reading x on one day: 0.8, 0.1 or 0.1. W is the width of the message's slice of the ruler, and L is its low end. ℓ, read "ell", is the number of bits sent, and k counts the digits of a binary fraction. ⌈y⌉ means y rounded **up** to a whole number. H is the entropy of one day, from the [Entropy](01-entropy.md) card. Three letters change meaning from the [Huffman coding](05-source-coding-and-huffman.md) card, where L was the average length, n the number of symbols and k the block size.
 
-$$W = p(x_1)\,p(x_2)\cdots p(x_n), \qquad \ell = \left\lceil \log_2 \frac{1}{W} \right\rceil$$
+```math
+W = p(x_1)\,p(x_2)\cdots p(x_n), \qquad \ell = \left\lceil \log_2 \frac{1}{W} \right\rceil
+```
 
 **Read it aloud:** the slice is as wide as the chances of the days multiplied together, and the code needs log2 of one over that width, rounded up.
 
 Averaged over all messages of n independent days, that gives the promise:
 
-$$\frac{\text{average } \ell}{n} \lt H + \frac{1}{n}$$
+```math
+\frac{\text{average } \ell}{n} \lt H + \frac{1}{n}
+```
 
 **Read it aloud:** the cost per day is less than the entropy plus one bit shared out over the whole message.
 
 For LZ78, c is the number of phrases the message splits into and i counts them, 1 to c. Phrase i is sent as a pointer to an earlier phrase, which takes ⌈log2 i⌉ bits, plus one new reading, which takes 2 bits:
 
-$$\text{LZ78 bits} = \sum_{i=1}^{c} \left( \lceil \log_2 i \rceil + 2 \right) \quad \text{(less 2 if the last phrase needs no new reading)}$$
+```math
+\text{LZ78 bits} = \sum_{i=1}^{c} \left( \lceil \log_2 i \rceil + 2 \right) \quad \text{(less 2 if the last phrase needs no new reading)}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | days in the message | 30 | more bits in total; the 1-bit overhead is shared more thinly |
-| $x_j$ | the reading on day j | C, C, S, C, C, … | — |
-| $p(x)$ | the chance of reading x on one day | 0.8 for C, 0.1 for S and R | a likelier day costs fewer bits |
-| $W$ | width of the message's slice: its chance | about 1 in 212 million | a wider slice needs fewer bits |
-| $L$ | low end of the slice | 0.512 after five days | — |
-| $k$ | digits in a binary fraction; its grid step is 2^−k | 5 for five days | a finer grid reaches narrower slices |
-| $\ell$ | bits sent: the smallest k whose step fits in the slice | 28 | — |
-| $\lceil y \rceil$ | y rounded up to a whole number | ⌈27.6578⌉ = 28 | — |
-| $H$ | entropy: average bits of news per day | 0.9219 | the floor for any code rises |
-| $c$ | phrases in the LZ78 dictionary | 11 for the month | more pointers to pay for |
-| $i$ | which phrase, counted from 1 | 1 to 11 | later pointers need more bits |
+| $`n`$ | days in the message | 30 | more bits in total; the 1-bit overhead is shared more thinly |
+| $`x_j`$ | the reading on day j | C, C, S, C, C, … | — |
+| $`p(x)`$ | the chance of reading x on one day | 0.8 for C, 0.1 for S and R | a likelier day costs fewer bits |
+| $`W`$ | width of the message's slice: its chance | about 1 in 212 million | a wider slice needs fewer bits |
+| $`L`$ | low end of the slice | 0.512 after five days | — |
+| $`k`$ | digits in a binary fraction; its grid step is 2^−k | 5 for five days | a finer grid reaches narrower slices |
+| $`\ell`$ | bits sent: the smallest k whose step fits in the slice | 28 | — |
+| $`\lceil y \rceil`$ | y rounded up to a whole number | ⌈27.6578⌉ = 28 | — |
+| $`H`$ | entropy: average bits of news per day | 0.9219 | the floor for any code rises |
+| $`c`$ | phrases in the LZ78 dictionary | 11 for the month | more pointers to pay for |
+| $`i`$ | which phrase, counted from 1 | 1 to 11 | later pointers need more bits |
 
 ### When it holds
 
@@ -98,7 +104,9 @@ If several messages are sent back to back with no length, the receiver also need
 
 For n independent days, the chance of a message is its width W. The average code length is the sum, over every message, of W × ⌈log2(1/W)⌉. Rounding up adds less than 1, so
 
-$$\text{average } \ell \lt \sum W \left(\log_2 \frac{1}{W} + 1\right) = nH + 1.$$
+```math
+\text{average } \ell \lt \sum W \left(\log_2 \frac{1}{W} + 1\right) = nH + 1.
+```
 
 The middle sum is the average surprise of the whole message. Surprises of independent days add, so it is n times one day's average, nH ([Entropy](01-entropy.md)). The last sum of W is 1, since the slices cover the ruler. Divide by n: the cost per day is below H + 1/n.
 
@@ -571,10 +579,10 @@ ALL CHECKS PASS
 
 Lean proves the three steps of arithmetic coding for any chances and any message length, and checks the worked numbers.
 
-- Take chances that add up to 1, and $n \ge 1$ independent days. Then the average cost per day is below $H + 1/n$.
-- The widths of all slices for messages of $n$ days add up to 1, so the slices cover the ruler.
-- Take a slice from $L$ to $L + W$, with $W \gt 0$. Then some binary fraction with $\lceil \log_2 (1/W) \rceil$ digits lies inside it.
-- Take the month. Then its width is $8^{24}$ out of $10^{30}$, it needs 28 bits, and its code lies in its slice.
+- Take chances that add up to 1, and $`n \ge 1`$ independent days. Then the average cost per day is below $`H + 1/n`$.
+- The widths of all slices for messages of $`n`$ days add up to 1, so the slices cover the ruler.
+- Take a slice from $`L`$ to $`L + W`$, with $`W \gt 0`$. Then some binary fraction with $`\lceil \log_2 (1/W) \rceil`$ digits lies inside it.
+- Take the month. Then its width is $`8^{24}`$ out of $`10^{30}`$, it needs 28 bits, and its code lies in its slice.
 - Take the first five days. Then the slices narrow as in the table, the width needs 5 bits, and 0.10001 lies inside.
 - Huffman's 36 bits, 48 bits one day at a time, and LZ78's 49 bits for the month also check.
 

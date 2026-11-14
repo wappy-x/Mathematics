@@ -26,40 +26,46 @@ Drawn at 1 km = 20 units, depot at the lower left. J, the junction of routes A a
 
 ## The formula
 
-Reminder: a point (x, y) is $x$ km east of the depot and $y$ km north. The slope $m$ is rise over run between two points of the line:
+Reminder: a point (x, y) is $`x`$ km east of the depot and $`y`$ km north. The slope $`m`$ is rise over run between two points of the line:
 
-$$m = \frac{y_2 - y_1}{x_2 - x_1}$$
+```math
+m = \frac{y_2 - y_1}{x_2 - x_1}
+```
 
 **Read it aloud:** the slope is the northward change divided by the eastward change.
 
 Then one line can be written three ways:
 
-$$y = mx + k \qquad\qquad ax + by = p \qquad\qquad (x, y) = (x_0, y_0) + t\,(u, v)$$
+```math
+y = mx + k \qquad\qquad ax + by = p \qquad\qquad (x, y) = (x_0, y_0) + t\,(u, v)
+```
 
 **Read it aloud:** north equals slope times east plus a starting height; or a fixed mix of east and north; or a start point plus some multiple of one step.
 
-These are the **slope-intercept form** ($k$ is where the line crosses the north axis), the **general form**, and the **parametric form**, where one dial, $t$, walks along the line. Route A is y = 0.5x, x − 2y = 0, and (0, 0) + t(10, 5), with t = 0 at the depot and t = 1 at E. Route B is y = −2x + 15, 2x + y = 15, and (3, 9) + s(4, −8).
+These are the **slope-intercept form** ($`k`$ is where the line crosses the north axis), the **general form**, and the **parametric form**, where one dial, $`t`$, walks along the line. Route A is y = 0.5x, x − 2y = 0, and (0, 0) + t(10, 5), with t = 0 at the depot and t = 1 at E. Route B is y = −2x + 15, 2x + y = 15, and (3, 9) + s(4, −8).
 
-For two lines with slopes $m_1$ and $m_2$:
+For two lines with slopes $`m_1`$ and $`m_2`$:
 
-- **Parallel** (never meeting): $m_1 = m_2$ and different $k$.
-- **Perpendicular** (crossing square): $m_1 m_2 = -1$.
+- **Parallel** (never meeting): $`m_1 = m_2`$ and different $`k`$.
+- **Perpendicular** (crossing square): $`m_1 m_2 = -1`$.
 - **Where they meet**, for ax + by = p and cx + dy = q:
 
-$$x = \frac{pd - bq}{ad - bc} \qquad y = \frac{aq - cp}{ad - bc}$$
+```math
+x = \frac{pd - bq}{ad - bc} \qquad y = \frac{aq - cp}{ad - bc}
+```
 
 **Read it aloud:** each coordinate is a cross-multiplied difference divided by the **crossing number**, ad − bc.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$; $x_1$, $y_1$, $x_2$, $y_2$ | km east and north; two known points | J is (6, 3) | a different point |
-| $m$, $m_1$, $m_2$ | slope: km north per km east | A 0.5, B −2, C 0.5 | a steeper road |
-| $k$ | where the line crosses the north axis | A 0, B 15, C 5 | the road slides north |
-| $a$, $b$, $p$ | first line's general form | A: 1, −2, 0 | — |
-| $c$, $d$, $q$ | second line's general form | B: 2, 1, 15 | — |
-| $ad - bc$ | the crossing number | A with B 5; A with C 0 | 0 means no single crossing |
-| $t$, $s$ | dials along routes A and B: 0 at the start, 1 at the end | 0.6 and 0.75 at J | further along |
-| $x_0$, $y_0$; $u$, $v$ | parametric start point and step | A: (0, 0) and (10, 5) | — |
+| $`x`$, $`y`$; $`x_1`$, $`y_1`$, $`x_2`$, $`y_2`$ | km east and north; two known points | J is (6, 3) | a different point |
+| $`m`$, $`m_1`$, $`m_2`$ | slope: km north per km east | A 0.5, B −2, C 0.5 | a steeper road |
+| $`k`$ | where the line crosses the north axis | A 0, B 15, C 5 | the road slides north |
+| $`a`$, $`b`$, $`p`$ | first line's general form | A: 1, −2, 0 | — |
+| $`c`$, $`d`$, $`q`$ | second line's general form | B: 2, 1, 15 | — |
+| $`ad - bc`$ | the crossing number | A with B 5; A with C 0 | 0 means no single crossing |
+| $`t`$, $`s`$ | dials along routes A and B: 0 at the start, 1 at the end | 0.6 and 0.75 at J | further along |
+| $`x_0`$, $`y_0`$; $`u`$, $`v`$ | parametric start point and step | A: (0, 0) and (10, 5) | — |
 
 ### When it holds
 
@@ -78,30 +84,30 @@ Under any two points of route A draw the right triangle: one side east, one nort
 
 ### Step 1: the three forms say the same thing
 
-Take a known point on the line, $(x_1, y_1)$. Any other point (x, y) is on the line exactly when its rise over run from the known point is $m$: $y - y_1 = m(x - x_1)$. Multiply out and collect the constant: y = mx + k with $k = y_1 - m x_1$. For route B, k = 9 − (−2)(3) = 15.
+Take a known point on the line, $`(x_1, y_1)`$. Any other point (x, y) is on the line exactly when its rise over run from the known point is $`m`$: $`y - y_1 = m(x - x_1)`$. Multiply out and collect the constant: y = mx + k with $`k = y_1 - m x_1`$. For route B, k = 9 − (−2)(3) = 15.
 
-Move the letters to one side for the general form: y = −2x + 15 becomes 2x + y = 15. Going back, the slope is −a/b, here −2/1; when $b$ is 0 the line is vertical.
+Move the letters to one side for the general form: y = −2x + 15 becomes 2x + y = 15. Going back, the slope is −a/b, here −2/1; when $`b`$ is 0 the line is vertical.
 
-For the parametric form, start at $(x_0, y_0)$ and add $t$ copies of the step (u, v). Each step has rise over run v/u, which is the slope: 5/10 = 0.5 for route A.
+For the parametric form, start at $`(x_0, y_0)`$ and add $`t`$ copies of the step (u, v). Each step has rise over run v/u, which is the slope: 5/10 = 0.5 for route A.
 
 ### Step 2: equal slopes never meet, unless they are one line
 
-Route A is y = 0.5x and the ring road is y = 0.5x + 5. At x = 0, 4 and 8 the gap is 5, 5, 5 km. A gap that never changes never closes, so equal slopes with different $k$ never meet: the lines are **parallel**.
+Route A is y = 0.5x and the ring road is y = 0.5x + 5. At x = 0, 4 and 8 the gap is 5, 5, 5 km. A gap that never changes never closes, so equal slopes with different $`k`$ never meet: the lines are **parallel**.
 
 The crossing number agrees: equal slopes −a/b = −c/d mean ad − bc = 0, as for routes A and C.
 
 ### Step 3: slopes that multiply to −1 cross square
 
-Slide both lines through one point; slopes do not change. Step 1 km east along each: one reaches height $m_1$, the other $m_2$. The corner is square exactly when Pythagoras holds for the triangle of the two steps and the gap between their ends. The distance formula turns that into $m_1 m_2 = -1$.
+Slide both lines through one point; slopes do not change. Step 1 km east along each: one reaches height $`m_1`$, the other $`m_2`$. The corner is square exactly when Pythagoras holds for the triangle of the two steps and the gap between their ends. The distance formula turns that into $`m_1 m_2 = -1`$.
 
 <details>
 <summary>Detailed proof</summary>
 
-Put the shared point at (0, 0); the steps end at U = $(1, m_1)$ and W = $(1, m_2)$. By the distance formula the squared sides are $1 + m_1^2$, $1 + m_2^2$ and, from U to W, $(m_1 - m_2)^2$. By Pythagoras and its converse, the corner is square exactly when
+Put the shared point at (0, 0); the steps end at U = $`(1, m_1)`$ and W = $`(1, m_2)`$. By the distance formula the squared sides are $`1 + m_1^2`$, $`1 + m_2^2`$ and, from U to W, $`(m_1 - m_2)^2`$. By Pythagoras and its converse, the corner is square exactly when
 
-$$1 + m_1^2 + 1 + m_2^2 = m_1^2 - 2 m_1 m_2 + m_2^2$$
+$`\displaystyle 1 + m_1^2 + 1 + m_2^2 = m_1^2 - 2 m_1 m_2 + m_2^2`$
 
-The squares cancel, leaving $2 = -2 m_1 m_2$: $m_1 m_2 = -1$. Every step reverses, so the test works both ways.
+The squares cancel, leaving $`2 = -2 m_1 m_2`$: $`m_1 m_2 = -1`$. Every step reverses, so the test works both ways.
 
 </details>
 

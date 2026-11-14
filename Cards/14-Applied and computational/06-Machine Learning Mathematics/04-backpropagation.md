@@ -38,49 +38,55 @@ Left to right is the forward pass: each hidden unit adds its weighted inputs and
 
 ## The formula
 
-A reminder from the earlier cards. A unit adds up its weighted inputs and passes the sum through a squashing function ([The perceptron and its stack](03-perceptron-and-neural-networks.md)). A loss scores one prediction against the truth ([Loss and empirical risk](01-loss-functions-and-empirical-risk.md)). Here the hidden units squash with tanh, an S-shaped curve from −1 to 1, and the output does not squash at all. The loss is half the squared miss between the prediction $\hat y$ and the true value $y$, $\ell = \tfrac12(\hat y - y)^2$. The half makes its slope come out as the plain miss, $\hat y - y$.
+A reminder from the earlier cards. A unit adds up its weighted inputs and passes the sum through a squashing function ([The perceptron and its stack](03-perceptron-and-neural-networks.md)). A loss scores one prediction against the truth ([Loss and empirical risk](01-loss-functions-and-empirical-risk.md)). Here the hidden units squash with tanh, an S-shaped curve from −1 to 1, and the output does not squash at all. The loss is half the squared miss between the prediction $`\hat y`$ and the true value $`y`$, $`\ell = \tfrac12(\hat y - y)^2`$. The half makes its slope come out as the plain miss, $`\hat y - y`$.
 
-In the 2-3-1 network, $x_1$ and $x_2$ are the order's two inputs. Hidden unit $j$ has a weight $w_{ji}$ from input $i$ and a bias $b_j$; its sum is $z_j$ and its output $h_j$. The output unit has a weight $v_j$ from hidden unit $j$ and a bias $c$. The forward pass, for hidden units $j = 1, 2, 3$:
+In the 2-3-1 network, $`x_1`$ and $`x_2`$ are the order's two inputs. Hidden unit $`j`$ has a weight $`w_{ji}`$ from input $`i`$ and a bias $`b_j`$; its sum is $`z_j`$ and its output $`h_j`$. The output unit has a weight $`v_j`$ from hidden unit $`j`$ and a bias $`c`$. The forward pass, for hidden units $`j = 1, 2, 3`$:
 
-$$z_j = b_j + w_{j1}x_1 + w_{j2}x_2, \qquad h_j = \tanh z_j, \qquad \hat y = c + v_1h_1 + v_2h_2 + v_3h_3.$$
+```math
+z_j = b_j + w_{j1}x_1 + w_{j2}x_2, \qquad h_j = \tanh z_j, \qquad \hat y = c + v_1h_1 + v_2h_2 + v_3h_3.
+```
 
-One new notation, in words first: the **backpropagated error** $\delta$ ("delta") of a unit is how much the loss moves per unit change in that unit's sum. This card introduces it; later cards on the shelf use it freely. Backpropagation is three lines:
+One new notation, in words first: the **backpropagated error** $`\delta`$ ("delta") of a unit is how much the loss moves per unit change in that unit's sum. This card introduces it; later cards on the shelf use it freely. Backpropagation is three lines:
 
-$$\delta_{\text{out}} = \hat y - y, \qquad \delta_j = v_j\,\delta_{\text{out}}\,\bigl(1 - h_j^2\bigr), \qquad \frac{\partial \ell}{\partial w_{ji}} = \delta_j\,x_i, \quad \frac{\partial \ell}{\partial v_j} = \delta_{\text{out}}\,h_j.$$
+```math
+\delta_{\text{out}} = \hat y - y, \qquad \delta_j = v_j\,\delta_{\text{out}}\,\bigl(1 - h_j^2\bigr), \qquad \frac{\partial \ell}{\partial w_{ji}} = \delta_j\,x_i, \quad \frac{\partial \ell}{\partial v_j} = \delta_{\text{out}}\,h_j.
+```
 
 **Read it aloud:** the output's error is the miss; a hidden unit's error is the output's error, carried back along the weight joining them and scaled by the unit's own slope; and a weight's derivative is the error at the unit it feeds times the value it carried in.
 
-A bias is a weight whose input is always 1, so $\partial\ell/\partial b_j = \delta_j$ and $\partial\ell/\partial c = \delta_{\text{out}}$.
+A bias is a weight whose input is always 1, so $`\partial\ell/\partial b_j = \delta_j`$ and $`\partial\ell/\partial c = \delta_{\text{out}}`$.
 
-For a network of many layers, the same three lines read layer by layer. Number the layers $l = 1, 2, \dots$; layer $l$ has weight matrix $W^{(l)}$, sums $z^{(l)}$, outputs $a^{(l)} = f(z^{(l)})$, and the inputs are $a^{(0)}$. Then
+For a network of many layers, the same three lines read layer by layer. Number the layers $`l = 1, 2, \dots`$; layer $`l`$ has weight matrix $`W^{(l)}`$, sums $`z^{(l)}`$, outputs $`a^{(l)} = f(z^{(l)})`$, and the inputs are $`a^{(0)}`$. Then
 
-$$\delta^{(l)} = \Bigl(\bigl(W^{(l+1)}\bigr)^{\mathsf T}\,\delta^{(l+1)}\Bigr) \odot f'\bigl(z^{(l)}\bigr), \qquad \frac{\partial \ell}{\partial W^{(l)}} = \delta^{(l)}\,\bigl(a^{(l-1)}\bigr)^{\mathsf T}.$$
+```math
+\delta^{(l)} = \Bigl(\bigl(W^{(l+1)}\bigr)^{\mathsf T}\,\delta^{(l+1)}\Bigr) \odot f'\bigl(z^{(l)}\bigr), \qquad \frac{\partial \ell}{\partial W^{(l)}} = \delta^{(l)}\,\bigl(a^{(l-1)}\bigr)^{\mathsf T}.
+```
 
 **Read it aloud:** each layer's errors are the next layer's errors sent back through the transposed weights, then multiplied entry by entry by the layer's own slopes; and a layer's weight gradient pairs every error with every input that fed it.
 
-The perceptron card's layer matrices $W_1$ and $W_2$ are $W^{(1)}$ and $W^{(2)}$ here; its bias vector $b_1$ holds this card's $b_1$, $b_2$, $b_3$, and its $b_2$ is this card's $c$.
+The perceptron card's layer matrices $`W_1`$ and $`W_2`$ are $`W^{(1)}`$ and $`W^{(2)}`$ here; its bias vector $`b_1`$ holds this card's $`b_1`$, $`b_2`$, $`b_3`$, and its $`b_2`$ is this card's $`c`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_1$, $x_2$; $y$ | the order's inputs: basket in £100s, items in tens; the true next-month spend in £100s | 1.0 and 0.5; 1.2 | $x_1$ is a factor of $\partial\ell/\partial w_{11} = \delta_1 x_1$, but $\delta_1$ moves with it, so the slope does not grow in proportion |
-| $w_{ji}$, $b_j$ | weight from input $i$ into hidden unit $j$; that unit's bias | $w_{11} = 0.5$; $b_1 = 0.1$ | moves $z_j$ |
-| $z_j$ | hidden unit $j$'s sum, before squashing | $z_1 = 0.4$ | the slope $1 - h_j^2$ shrinks as $z_j$ moves away from 0 |
-| $h_j$, $\tanh$ | the unit's output, $\tanh z_j$; tanh's slope is $1 - \tanh^2$ | $h_1 = 0.379949$ | — |
-| $v_j$, $c$ | weight from hidden unit $j$ to the output; the output's bias | $v_1 = 0.7$; $c = 0.6$ | a bigger $v_j$ sends more error back to unit $j$ |
-| $\hat y$ | the prediction, in £100s ("y-hat") | 0.450059, about £45.01 | — |
-| $\ell$ | the loss, $\tfrac12(\hat y - y)^2$ | 0.281206 | — |
-| $\delta_{\text{out}}$, $\delta_j$ | the backpropagated error at the output and at hidden unit $j$ | −0.749941; $\delta_1 = -0.449175$ | every gradient scales with $\delta_{\text{out}}$ |
-| $\Delta$; $\eta$ | the nudge in a central difference; the learning rate, how far one training step moves along the gradient | $10^{-5}$; 0.1 | $\Delta$: truncation error, the error that comes from the nudge's size, grows. $\eta$: bigger drop, until the step overshoots |
-| $\partial\ell/\partial w$, $\sum$, $e$ | a partial derivative: the loss's slope against one weight, all others held still; add over the index beneath; the base of natural logarithms | $\partial\ell/\partial w_{11} = -0.449175$ | — |
-| $n$, $H$, $P$ | inputs, hidden units, and weights plus biases in all | 2, 3, 13; for the shop 12, 16, 225 | backprop's cost grows like $P$, nudging's like $P$ squared |
-| $W^{(l)}$, $z^{(l)}$, $a^{(l)}$, $\delta^{(l)}$, $f$, $f'$, $\odot$, ${}^{\mathsf T}$ | general form: layer $l$'s weight matrix, sums, outputs and errors; the squashing function and its slope; multiply entry by entry; transpose (rows become columns) | here $W^{(2)}$ is the row (0.7, −0.5, 0.4) | — |
+| $`x_1`$, $`x_2`$; $`y`$ | the order's inputs: basket in £100s, items in tens; the true next-month spend in £100s | 1.0 and 0.5; 1.2 | $`x_1`$ is a factor of $`\partial\ell/\partial w_{11} = \delta_1 x_1`$, but $`\delta_1`$ moves with it, so the slope does not grow in proportion |
+| $`w_{ji}`$, $`b_j`$ | weight from input $`i`$ into hidden unit $`j`$; that unit's bias | $`w_{11} = 0.5`$; $`b_1 = 0.1`$ | moves $`z_j`$ |
+| $`z_j`$ | hidden unit $`j`$'s sum, before squashing | $`z_1 = 0.4`$ | the slope $`1 - h_j^2`$ shrinks as $`z_j`$ moves away from 0 |
+| $`h_j`$, $`\tanh`$ | the unit's output, $`\tanh z_j`$; tanh's slope is $`1 - \tanh^2`$ | $`h_1 = 0.379949`$ | — |
+| $`v_j`$, $`c`$ | weight from hidden unit $`j`$ to the output; the output's bias | $`v_1 = 0.7`$; $`c = 0.6`$ | a bigger $`v_j`$ sends more error back to unit $`j`$ |
+| $`\hat y`$ | the prediction, in £100s ("y-hat") | 0.450059, about £45.01 | — |
+| $`\ell`$ | the loss, $`\tfrac12(\hat y - y)^2`$ | 0.281206 | — |
+| $`\delta_{\text{out}}`$, $`\delta_j`$ | the backpropagated error at the output and at hidden unit $`j`$ | −0.749941; $`\delta_1 = -0.449175`$ | every gradient scales with $`\delta_{\text{out}}`$ |
+| $`\Delta`$; $`\eta`$ | the nudge in a central difference; the learning rate, how far one training step moves along the gradient | $`10^{-5}`$; 0.1 | $`\Delta`$: truncation error, the error that comes from the nudge's size, grows. $`\eta`$: bigger drop, until the step overshoots |
+| $`\partial\ell/\partial w`$, $`\sum`$, $`e`$ | a partial derivative: the loss's slope against one weight, all others held still; add over the index beneath; the base of natural logarithms | $`\partial\ell/\partial w_{11} = -0.449175`$ | — |
+| $`n`$, $`H`$, $`P`$ | inputs, hidden units, and weights plus biases in all | 2, 3, 13; for the shop 12, 16, 225 | backprop's cost grows like $`P`$, nudging's like $`P`$ squared |
+| $`W^{(l)}`$, $`z^{(l)}`$, $`a^{(l)}`$, $`\delta^{(l)}`$, $`f`$, $`f'`$, $`\odot`$, $`{}^{\mathsf T}`$ | general form: layer $`l`$'s weight matrix, sums, outputs and errors; the squashing function and its slope; multiply entry by entry; transpose (rows become columns) | here $`W^{(2)}`$ is the row (0.7, −0.5, 0.4) | — |
 
 ### When it holds
 
-- **Every step has a slope where it sits.** A ReLU unit, which outputs $\max(z, 0)$, has a kink at $z = 0$ and no slope there. Switch the hidden units to ReLU, set unit 3's bias so that $z_3 = 0$, and backpropagation, using the usual convention of slope 0, reports 0 for $w_{31}$. A central difference reports −0.114000, the average of the two sides, 0 and −0.228000. Neither is "the" derivative, because there is none.
-- **The forward values are kept, at the same weights.** The backward pass reads every $z_j$ and $h_j$ from the forward pass, so memory grows with units times orders processed together. Change the weights in between and the gradient belongs to a network that no longer exists.
+- **Every step has a slope where it sits.** A ReLU unit, which outputs $`\max(z, 0)`$, has a kink at $`z = 0`$ and no slope there. Switch the hidden units to ReLU, set unit 3's bias so that $`z_3 = 0`$, and backpropagation, using the usual convention of slope 0, reports 0 for $`w_{31}`$. A central difference reports −0.114000, the average of the two sides, 0 and −0.228000. Neither is "the" derivative, because there is none.
+- **The forward values are kept, at the same weights.** The backward pass reads every $`z_j`$ and $`h_j`$ from the forward pass, so memory grows with units times orders processed together. Change the weights in between and the gradient belongs to a network that no longer exists.
 - **One number at the end.** One backward sweep gives the slopes of one output, the loss. A network with many outputs whose separate slopes are all wanted needs one sweep per output.
-- **The gradient is local.** It is the slope at the current weights only. A step of $\eta = 0.1$ along it was predicted, from the slope alone, to cut the loss by 0.165866. The real cut was 0.140231, because the surface curves.
+- **The gradient is local.** It is the slope at the current weights only. A step of $`\eta = 0.1`$ along it was predicted, from the slope alone, to cut the loss by 0.165866. The real cut was 0.140231, because the surface curves.
 
 ---
 
@@ -88,11 +94,11 @@ The perceptron card's layer matrices $W_1$ and $W_2$ are $W^{(1)}$ and $W^{(2)}$
 
 ### Step 0: the loss reaches a weight through a chain, and most of the chain is shared
 
-Follow $w_{11}$. It changes $z_1$, which changes $h_1$, which changes $\hat y$, which changes the loss. Nothing else. The chain rule says the loss's slope with respect to $w_{11}$ is the product of the four local slopes along that chain ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)).
+Follow $`w_{11}`$. It changes $`z_1`$, which changes $`h_1`$, which changes $`\hat y`$, which changes the loss. Nothing else. The chain rule says the loss's slope with respect to $`w_{11}`$ is the product of the four local slopes along that chain ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)).
 
-Now follow $w_{12}$. Its chain is $w_{12} \to z_1 \to h_1 \to \hat y \to \ell$: the same as $w_{11}$'s from $z_1$ onwards. Every weight in the network ends its chain with $\hat y \to \ell$. So most of every product has already been computed for some other weight.
+Now follow $`w_{12}`$. Its chain is $`w_{12} \to z_1 \to h_1 \to \hat y \to \ell`$: the same as $`w_{11}`$'s from $`z_1`$ onwards. Every weight in the network ends its chain with $`\hat y \to \ell`$. So most of every product has already been computed for some other weight.
 
-Backpropagation computes each shared tail once, starting from the loss, and stores it at the unit where the tails meet. That stored number is $\delta$. A weight's slope is then its stored $\delta$ times the one local slope left at the front of its chain.
+Backpropagation computes each shared tail once, starting from the loss, and stores it at the unit where the tails meet. That stored number is $`\delta`$. A weight's slope is then its stored $`\delta`$ times the one local slope left at the front of its chain.
 
 ### Step 1: each step has a simple local slope
 
@@ -100,87 +106,91 @@ Read each line of the forward pass and ask how its output moves when one input m
 
 | Step | Moves with | Local slope |
 | --- | --- | --- |
-| $\ell = \tfrac12(\hat y - y)^2$ | $\hat y$ | $\hat y - y$ |
-| $\hat y = c + \sum_j v_j h_j$ | $h_j$; $v_j$ | $v_j$; $h_j$ |
-| $h_j = \tanh z_j$ | $z_j$ | $1 - h_j^2$ |
-| $z_j = b_j + \sum_i w_{ji} x_i$ | $w_{ji}$; $b_j$ | $x_i$; 1 |
+| $`\ell = \tfrac12(\hat y - y)^2`$ | $`\hat y`$ | $`\hat y - y`$ |
+| $`\hat y = c + \sum_j v_j h_j`$ | $`h_j`$; $`v_j`$ | $`v_j`$; $`h_j`$ |
+| $`h_j = \tanh z_j`$ | $`z_j`$ | $`1 - h_j^2`$ |
+| $`z_j = b_j + \sum_i w_{ji} x_i`$ | $`w_{ji}`$; $`b_j`$ | $`x_i`$; 1 |
 
 Two of these deserve a word. The slope of a sum with respect to one weight is the input that weight multiplies: double the weight and the sum gains one more copy of that input. And tanh's slope can be read from tanh's own output, so the backward pass never recomputes tanh.
 
 <details>
 <summary>Why tanh's slope is 1 − tanh²</summary>
 
-By definition $\tanh z = (e^z - e^{-z})/(e^z + e^{-z})$. The top's slope is the bottom, and the bottom's slope is the top. The quotient rule gives
+By definition $`\tanh z = (e^z - e^{-z})/(e^z + e^{-z})`$. The top's slope is the bottom, and the bottom's slope is the top. The quotient rule gives
 
-$$\frac{d}{dz}\tanh z = \frac{(e^z + e^{-z})^2 - (e^z - e^{-z})^2}{(e^z + e^{-z})^2} = 1 - \tanh^2 z.$$
+$`\displaystyle \frac{d}{dz}\tanh z = \frac{(e^z + e^{-z})^2 - (e^z - e^{-z})^2}{(e^z + e^{-z})^2} = 1 - \tanh^2 z.`$
 
-At $z_1 = 0.4$, $h_1 = 0.379949$, so the slope is $1 - 0.379949^2 = 0.855639$.
+At $`z_1 = 0.4`$, $`h_1 = 0.379949`$, so the slope is $`1 - 0.379949^2 = 0.855639`$.
 
 </details>
 
 ### Step 2: multiply along the chain, starting from the loss
 
-For $w_{11}$ the four slopes are $\hat y - y$, then $v_1$, then $1 - h_1^2$, then $x_1$:
+For $`w_{11}`$ the four slopes are $`\hat y - y`$, then $`v_1`$, then $`1 - h_1^2`$, then $`x_1`$:
 
-$$\frac{\partial \ell}{\partial w_{11}} = (\hat y - y)\cdot v_1 \cdot (1 - h_1^2)\cdot x_1.$$
+```math
+\frac{\partial \ell}{\partial w_{11}} = (\hat y - y)\cdot v_1 \cdot (1 - h_1^2)\cdot x_1.
+```
 
-Multiplication does not care about order, but storage does. Group from the loss end. The first factor is $\delta_{\text{out}}$. The first three together are $\delta_1$. Then
+Multiplication does not care about order, but storage does. Group from the loss end. The first factor is $`\delta_{\text{out}}`$. The first three together are $`\delta_1`$. Then
 
-$$\frac{\partial \ell}{\partial w_{11}} = \underbrace{\underbrace{(\hat y - y)}_{\delta_{\text{out}}}\cdot v_1 \cdot (1 - h_1^2)}_{\delta_1}\cdot\, x_1 = \delta_1\,x_1.$$
+```math
+\frac{\partial \ell}{\partial w_{11}} = \underbrace{\underbrace{(\hat y - y)}_{\delta_{\text{out}}}\cdot v_1 \cdot (1 - h_1^2)}_{\delta_1}\cdot\, x_1 = \delta_1\,x_1.
+```
 
-The weight $w_{12}$ gets $\delta_1 x_2$, the bias $b_1$ gets $\delta_1$, and the output weight $v_1$ gets $\delta_{\text{out}} h_1$. Four slopes from one stored $\delta_1$ and one stored $\delta_{\text{out}}$. That is the whole method.
+The weight $`w_{12}`$ gets $`\delta_1 x_2`$, the bias $`b_1`$ gets $`\delta_1`$, and the output weight $`v_1`$ gets $`\delta_{\text{out}} h_1`$. Four slopes from one stored $`\delta_1`$ and one stored $`\delta_{\text{out}}`$. That is the whole method.
 
 ### Step 3: where paths fork, the slopes add
 
 In the 2-3-1 network each hidden unit feeds a single output, so each chain is a single path. In a deeper network a unit feeds several units in the next layer, and a nudge to it reaches the loss along several routes. The chain rule for several variables handles this: the total slope is the sum over routes of the product along each route.
 
-Backpropagation does that sum at each unit. A unit's $\delta$ is the sum, over the units it feeds, of their $\delta$ times the weight joining them, all times the unit's own slope. Written for a whole layer at once, that sum is the matrix product $(W^{(l+1)})^{\mathsf T}\delta^{(l+1)}$ in the general formula. For our network, layer 2 is the single output, $W^{(2)}$ is the row $(v_1, v_2, v_3)$, and its transpose times $\delta_{\text{out}}$ is the column of $v_j\,\delta_{\text{out}}$. Multiply each entry by its unit's slope $1 - h_j^2$ and out come $\delta_1$, $\delta_2$, $\delta_3$.
+Backpropagation does that sum at each unit. A unit's $`\delta`$ is the sum, over the units it feeds, of their $`\delta`$ times the weight joining them, all times the unit's own slope. Written for a whole layer at once, that sum is the matrix product $`(W^{(l+1)})^{\mathsf T}\delta^{(l+1)}`$ in the general formula. For our network, layer 2 is the single output, $`W^{(2)}`$ is the row $`(v_1, v_2, v_3)`$, and its transpose times $`\delta_{\text{out}}`$ is the column of $`v_j\,\delta_{\text{out}}`$. Multiply each entry by its unit's slope $`1 - h_j^2`$ and out come $`\delta_1`$, $`\delta_2`$, $`\delta_3`$.
 
 This is reverse-mode differentiation, the method on [Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md), where a pricing program is recorded as a numbered list of steps and swept backwards. A network is that list arranged in layers, so the sweep can be done a layer at a time, as matrix products.
 
 ### Step 4: what it costs, counted
 
-The backward pass does a small fixed amount of work per weight, the same kind of work the forward pass did, so it costs about as much as the forward pass. The code counts every multiplication in both passes except inside the squashing function: tanh and its slope $1 - h_j^2$ are treated as one step each and left out of the count.
+The backward pass does a small fixed amount of work per weight, the same kind of work the forward pass did, so it costs about as much as the forward pass. The code counts every multiplication in both passes except inside the squashing function: tanh and its slope $`1 - h_j^2`$ are treated as one step each and left out of the count.
 
-For a network with $n$ inputs, $H$ hidden units and one output, the forward pass costs $(n+1)H + 2$ multiplications and the backward pass $(n+3)H$. Together that is $(2n+4)H + 2$, exactly twice $P = nH + 2H + 1$, the number of weights and biases. **Two multiplications per parameter, for every slope at once.**
+For a network with $`n`$ inputs, $`H`$ hidden units and one output, the forward pass costs $`(n+1)H + 2`$ multiplications and the backward pass $`(n+3)H`$. Together that is $`(2n+4)H + 2`$, exactly twice $`P = nH + 2H + 1`$, the number of weights and biases. **Two multiplications per parameter, for every slope at once.**
 
-A central difference needs two forward passes per parameter: $2P$ passes of $(n+1)H + 2$ each. Divide one bill by the other and the ratio is the cost of one forward pass. It grows with the network. For the shop's 12-16-1 network the ratio is 210.0; for 12-64-1, 834.0. Real networks have millions of weights, which is why nobody trains them by nudging.
+A central difference needs two forward passes per parameter: $`2P`$ passes of $`(n+1)H + 2`$ each. Divide one bill by the other and the ratio is the cost of one forward pass. It grows with the network. For the shop's 12-16-1 network the ratio is 210.0; for 12-64-1, 834.0. Real networks have millions of weights, which is why nobody trains them by nudging.
 
 ---
 
 ## Worked numbers, by hand
 
-The order: $x_1 = 1.0$ (basket £100), $x_2 = 0.5$ (5 items), true spend $y = 1.2$ (£120). Weights as in the picture.
+The order: $`x_1 = 1.0`$ (basket £100), $`x_2 = 0.5`$ (5 items), true spend $`y = 1.2`$ (£120). Weights as in the picture.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $z_1$ | $0.1 + 0.5 \times 1.0 + (-0.4) \times 0.5$ | 0.4 |
-| $h_1$ | $\tanh 0.4$ | 0.379949 |
-| $h_2$, $h_3$ | $\tanh 0.5$, $\tanh(-0.5)$, from $z_2 = 0.5$ and $z_3 = -0.5$ | 0.462117, −0.462117 |
-| $\hat y$ | $0.6 + 0.7 \times 0.379949 - 0.5 \times 0.462117 + 0.4 \times (-0.462117)$ | 0.450059 |
-| loss $\ell$ | $\tfrac12 (0.450059 - 1.2)^2$ | 0.281206 |
-| $\delta_{\text{out}}$ | $0.450059 - 1.2$ | −0.749941 |
-| error arriving at unit 1 | $v_1\,\delta_{\text{out}} = 0.7 \times (-0.749941)$ | −0.524959 |
-| unit 1's slope | $1 - 0.379949^2$ | 0.855639 |
-| $\delta_1$ | $-0.524959 \times 0.855639$ | −0.449175 |
-| $\partial\ell/\partial w_{11}$ | $\delta_1 \times x_1 = -0.449175 \times 1.0$ | **−0.449175** |
-| check: central difference, $\Delta = 10^{-5}$ | $\bigl(\ell(w_{11} + \Delta) - \ell(w_{11} - \Delta)\bigr) / (2\Delta)$ | −0.4491751254 |
+| $`z_1`$ | $`0.1 + 0.5 \times 1.0 + (-0.4) \times 0.5`$ | 0.4 |
+| $`h_1`$ | $`\tanh 0.4`$ | 0.379949 |
+| $`h_2`$, $`h_3`$ | $`\tanh 0.5`$, $`\tanh(-0.5)`$, from $`z_2 = 0.5`$ and $`z_3 = -0.5`$ | 0.462117, −0.462117 |
+| $`\hat y`$ | $`0.6 + 0.7 \times 0.379949 - 0.5 \times 0.462117 + 0.4 \times (-0.462117)`$ | 0.450059 |
+| loss $`\ell`$ | $`\tfrac12 (0.450059 - 1.2)^2`$ | 0.281206 |
+| $`\delta_{\text{out}}`$ | $`0.450059 - 1.2`$ | −0.749941 |
+| error arriving at unit 1 | $`v_1\,\delta_{\text{out}} = 0.7 \times (-0.749941)`$ | −0.524959 |
+| unit 1's slope | $`1 - 0.379949^2`$ | 0.855639 |
+| $`\delta_1`$ | $`-0.524959 \times 0.855639`$ | −0.449175 |
+| $`\partial\ell/\partial w_{11}`$ | $`\delta_1 \times x_1 = -0.449175 \times 1.0`$ | **−0.449175** |
+| check: central difference, $`\Delta = 10^{-5}`$ | $`\bigl(\ell(w_{11} + \Delta) - \ell(w_{11} - \Delta)\bigr) / (2\Delta)`$ | −0.4491751254 |
 
-The slope is negative, so raising $w_{11}$ lowers the loss. That makes sense: the network predicts £45.01 against a true £120, and a bigger $w_{11}$ raises $h_1$, which reaches the output through the positive weight $v_1 = 0.7$ and lifts the prediction.
+The slope is negative, so raising $`w_{11}`$ lowers the loss. That makes sense: the network predicts £45.01 against a true £120, and a bigger $`w_{11}`$ raises $`h_1`$, which reaches the output through the positive weight $`v_1 = 0.7`$ and lifts the prediction.
 
-The check is the [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) card's central difference: nudge one weight each way, rerun the network, divide by the span. Its error shrinks with the square of the nudge until rounding takes over; at $10^{-5}$ it agrees with backpropagation to within $10^{-9}$ on all 13 parameters. This comparison is called a **gradient check**, and it is how backpropagation code is tested.
+The check is the [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) card's central difference: nudge one weight each way, rerun the network, divide by the span. Its error shrinks with the square of the nudge until rounding takes over; at $`10^{-5}`$ it agrees with backpropagation to within $`10^{-9}`$ on all 13 parameters. This comparison is called a **gradient check**, and it is how backpropagation code is tested.
 
 ### What breaks if you drop a piece
 
-Correct answer $\partial\ell/\partial w_{11} = -0.449175$.
+Correct answer $`\partial\ell/\partial w_{11} = -0.449175`$.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Skip tanh's slope $1 - h_1^2$ | −0.524959 | Treats the unit as if it did not squash; the error grows where a unit is near its flat ends, at ±1 |
-| Read the slope at $h_1$ instead of $z_1$: $1 - \tanh^2(h_1)$ | −0.455914 | The slope belongs to the point the function was evaluated at, $z_1 = 0.4$ |
+| Skip tanh's slope $`1 - h_1^2`$ | −0.524959 | Treats the unit as if it did not squash; the error grows where a unit is near its flat ends, at ±1 |
+| Read the slope at $`h_1`$ instead of $`z_1`$: $`1 - \tanh^2(h_1)`$ | −0.455914 | The slope belongs to the point the function was evaluated at, $`z_1 = 0.4`$ |
 | Check with a forward difference, nudge 0.1 | −0.414808 | One-sided nudge, too big: the truncation error swamps the check |
-| Step uphill: add $\eta$ times the gradient | loss 0.473064 instead of 0.140975 | The gradient points uphill; training subtracts it |
-| ReLU unit on its kink ($z_3 = 0$): $\partial\ell/\partial w_{31}$ | backprop 0, central difference −0.114000 | No slope exists there; each method reports a convention |
+| Step uphill: add $`\eta`$ times the gradient | loss 0.473064 instead of 0.140975 | The gradient points uphill; training subtracts it |
+| ReLU unit on its kink ($`z_3 = 0`$): $`\partial\ell/\partial w_{31}`$ | backprop 0, central difference −0.114000 | No slope exists there; each method reports a convention |
 
 Every number in the table is printed by the code below.
 
@@ -188,7 +198,7 @@ Every number in the table is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the 2-3-1 network from scratch, with every multiplication outside the squashing function passed through a counter. They take **three independent roads** to all 13 slopes. The first is backpropagation. The second is forward mode: each value carries its own derivative with respect to one chosen parameter, which costs one pass per parameter. The third is a central difference with nudge $10^{-5}$. Then they take one training step, reproduce every "what breaks" number, and count the multiplications for one gradient on four network sizes, asserting each count against its formula.
+The scripts build the 2-3-1 network from scratch, with every multiplication outside the squashing function passed through a counter. They take **three independent roads** to all 13 slopes. The first is backpropagation. The second is forward mode: each value carries its own derivative with respect to one chosen parameter, which costs one pass per parameter. The third is a central difference with nudge $`10^{-5}`$. Then they take one training step, reproduce every "what breaks" number, and count the multiplications for one gradient on four network sizes, asserting each count against its formula.
 
 ### Python
 
@@ -378,7 +388,7 @@ network   params  forward  backprop  fwd mode   central  ratio
 ALL CHECKS PASS
 ```
 
-All three roads give the same 13 slopes: forward mode to the last printed digit, the central difference to within $10^{-9}$. The step with $\eta = 0.1$ halves the loss, from 0.281206 to 0.140975.
+All three roads give the same 13 slopes: forward mode to the last printed digit, the central difference to within $`10^{-9}`$. The step with $`\eta = 0.1`$ halves the loss, from 0.281206 to 0.140975.
 
 ### Rust
 
@@ -615,11 +625,11 @@ The two outputs are identical line for line.
 
 Lean proves the backward-pass formulas and the cost count, for any number of inputs and of tanh hidden units.
 
-- Take any weights, biases and order, and move one weight $w_{ji}$ alone. Then the loss's slope is exactly $\delta_j x_i$.
-- Move one hidden bias $b_j$ alone. Then the loss's slope is $\delta_j$.
-- Move one output weight $v_j$ alone. Then the loss's slope is $\delta_{\text{out}} h_j$.
-- Move the output bias $c$ alone. Then the loss's slope is $\delta_{\text{out}} = \hat y - y$.
-- Take $n$ inputs and $H$ hidden units. Then one forward pass plus one backward pass costs $2P$ multiplications.
+- Take any weights, biases and order, and move one weight $`w_{ji}`$ alone. Then the loss's slope is exactly $`\delta_j x_i`$.
+- Move one hidden bias $`b_j`$ alone. Then the loss's slope is $`\delta_j`$.
+- Move one output weight $`v_j`$ alone. Then the loss's slope is $`\delta_{\text{out}} h_j`$.
+- Move the output bias $`c`$ alone. Then the loss's slope is $`\delta_{\text{out}} = \hat y - y`$.
+- Take $`n`$ inputs and $`H`$ hidden units. Then one forward pass plus one backward pass costs $`2P`$ multiplications.
 - The cost table's counts for all four networks, and for the 20,000 orders, come out as printed.
 
 The worked numbers, the three roads to the slopes, the training step and the ReLU kink are left to the Python and Rust checks.
@@ -863,10 +873,10 @@ example : centralCost 12 64 = 1496196 := by norm_num [centralCost, paramCount, f
 
 > [!TIP]
 > **Try changing**
-> - Guess first: with 32 hidden units, how many times dearer is the nudging gradient than backpropagation? Change `(12, 64)` to `(12, 32)` in the cost loop. The last row of the edited script's cost table reads 12-32-1, ratio 418.0: the cost of one forward pass, $13 \times 32 + 2$ multiplications, nearly twice the 210.0 of 12-16-1.
-> - Guess first: flip the sign of the step, adding $\eta$ times the gradient. The loss climbs from 0.281206 to 0.473064 instead of falling to 0.140975.
-> - Guess first: drop tanh's slope by changing the default `slip=None` to `slip="no slope"` in `backward`. The slope for $w_{11}$ becomes −0.524959, and the asserts fail.
-> - Guess first: switch the hidden units to ReLU and set unit 3's bias so that $z_3 = 0$. Backpropagation says 0 for $w_{31}$; the central difference says −0.114000, half the slope from the right, −0.228000.
+> - Guess first: with 32 hidden units, how many times dearer is the nudging gradient than backpropagation? Change `(12, 64)` to `(12, 32)` in the cost loop. The last row of the edited script's cost table reads 12-32-1, ratio 418.0: the cost of one forward pass, $`13 \times 32 + 2`$ multiplications, nearly twice the 210.0 of 12-16-1.
+> - Guess first: flip the sign of the step, adding $`\eta`$ times the gradient. The loss climbs from 0.281206 to 0.473064 instead of falling to 0.140975.
+> - Guess first: drop tanh's slope by changing the default `slip=None` to `slip="no slope"` in `backward`. The slope for $`w_{11}`$ becomes −0.524959, and the asserts fail.
+> - Guess first: switch the hidden units to ReLU and set unit 3's bias so that $`z_3 = 0`$. Backpropagation says 0 for $`w_{31}`$; the central difference says −0.114000, half the slope from the right, −0.228000.
 
 ---
 
@@ -877,7 +887,7 @@ example : centralCost 12 64 = 1496196 := by norm_num [centralCost, paramCount, f
 >
 > Smaller traps, each with the wrong number it gives here:
 > - **Dropping the squashing slope:** −0.524959 instead of −0.449175.
-> - **Taking the slope at the output instead of the sum,** $1 - \tanh^2(h)$ for $1 - h^2$: −0.455914. Close enough to pass a careless eye, wrong enough to fail a gradient check.
+> - **Taking the slope at the output instead of the sum,** $`1 - \tanh^2(h)`$ for $`1 - h^2`$: −0.455914. Close enough to pass a careless eye, wrong enough to fail a gradient check.
 > - **Checking with a big one-sided nudge:** a forward difference with nudge 0.1 gives −0.414808 and makes correct code look broken.
 > - **Gradient-checking at a kink:** backpropagation says 0, the central difference −0.114000, and neither is wrong, because no derivative exists there. Check away from kinks.
 

@@ -26,39 +26,45 @@ Drawn to scale: 1 km = 4 units. Inner arc: the bearing, clockwise from north. Ou
 
 ## The formula
 
-Notation first, in words. A grid point $(x, y)$ is $x$ km east and $y$ km north of the radar; a negative $y$ means south. A polar point $(r, \theta)$, read "r, theta", is $r$ km from the radar in the direction $\theta$. Mathematics measures $\theta$ from east, turning anticlockwise, as on the unit circle.
+Notation first, in words. A grid point $`(x, y)`$ is $`x`$ km east and $`y`$ km north of the radar; a negative $`y`$ means south. A polar point $`(r, \theta)`$, read "r, theta", is $`r`$ km from the radar in the direction $`\theta`$. Mathematics measures $`\theta`$ from east, turning anticlockwise, as on the unit circle.
 
-$$x = r\cos\theta, \qquad y = r\sin\theta$$
+```math
+x = r\cos\theta, \qquad y = r\sin\theta
+```
 
 **Read it aloud:** the east offset is the range times the cosine of the angle; the north offset is the range times its sine.
 
 Going back, for any point other than the centre:
 
-$$r = \sqrt{x^2 + y^2}, \qquad \theta = \alpha,\ \alpha + 180°\ \text{or}\ \alpha + 360°, \qquad \alpha = \arctan\frac{y}{x}$$
+```math
+r = \sqrt{x^2 + y^2}, \qquad \theta = \alpha,\ \alpha + 180°\ \text{or}\ \alpha + 360°, \qquad \alpha = \arctan\frac{y}{x}
+```
 
-**Read it aloud:** the range is Pythagoras; the angle is the arctangent of north over east, plus a half turn if the point lies west, or a full turn if it lies east and south. Due north or south, $x$ is zero and the angle is 90° or 270°.
+**Read it aloud:** the range is Pythagoras; the angle is the arctangent of north over east, plus a half turn if the point lies west, or a full turn if it lies east and south. Due north or south, $`x`$ is zero and the angle is 90° or 270°.
 
-A bearing $b$ starts at north and turns clockwise; $\theta$ starts at east and turns anticlockwise:
+A bearing $`b`$ starts at north and turns clockwise; $`\theta`$ starts at east and turns anticlockwise:
 
-$$\theta = 90° - b, \qquad x = r\sin b, \qquad y = r\cos b$$
+```math
+\theta = 90° - b, \qquad x = r\sin b, \qquad y = r\cos b
+```
 
 **Read it aloud:** the maths angle is ninety degrees minus the bearing, wrapped into one turn; with a bearing, sine gives east and cosine gives north.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r$ | range: straight distance from the radar, never negative | 40 km | the point slides outward |
-| $\theta$ | maths angle: from east, anticlockwise | 330° | the point swings anticlockwise |
-| $b$ | bearing: from north, clockwise | 120° | the point swings clockwise |
-| $x$ | east offset, negative for west | 34.64 km | the point moves east |
-| $y$ | north offset, negative for south | −20 km | the point moves north |
-| $\alpha$ | the angle a plain arctangent returns, between −90° and 90° | −30° for plane 1, 53.13° for plane 2 | — |
-| $k$ | a whole number of turns | 0 | adding $360°k$ to $\theta$ names the same point |
+| $`r`$ | range: straight distance from the radar, never negative | 40 km | the point slides outward |
+| $`\theta`$ | maths angle: from east, anticlockwise | 330° | the point swings anticlockwise |
+| $`b`$ | bearing: from north, clockwise | 120° | the point swings clockwise |
+| $`x`$ | east offset, negative for west | 34.64 km | the point moves east |
+| $`y`$ | north offset, negative for south | −20 km | the point moves north |
+| $`\alpha`$ | the angle a plain arctangent returns, between −90° and 90° | −30° for plane 1, 53.13° for plane 2 | — |
+| $`k`$ | a whole number of turns | 0 | adding $`360°k`$ to $`\theta`$ names the same point |
 
 ### When it holds
 
-- **Range is never negative.** Some books let a negative $r$ mean "back through the centre", which adds a sign case.
-- **Angles repeat every turn.** $\theta$ and $\theta + 360°k$ name one point, so fix a window: 0° up to, not including, 360°.
-- **The centre has no direction.** At $r = 0$ every angle names the same spot.
+- **Range is never negative.** Some books let a negative $`r`$ mean "back through the centre", which adds a sign case.
+- **Angles repeat every turn.** $`\theta`$ and $`\theta + 360°k`$ name one point, so fix a window: 0° up to, not including, 360°.
+- **The centre has no direction.** At $`r = 0`$ every angle names the same spot.
 - **The ground is flat.** Radar measures slant range to a plane aloft; the ground distance is shorter.
 - **One angle convention at a time.** A bearing in the maths-angle formula mirrors the map across the north-east diagonal.
 
@@ -68,42 +74,42 @@ $$\theta = 90° - b, \qquad x = r\sin b, \qquad y = r\cos b$$
 
 ### Step 0: a direction is a point on the unit circle
 
-[The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md) defines $\cos\theta$ and $\sin\theta$ as the east and north offsets of the point at angle $\theta$ on a circle of radius 1. Every direction has such a point, and its offsets carry the right signs.
+[The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md) defines $`\cos\theta`$ and $`\sin\theta`$ as the east and north offsets of the point at angle $`\theta`$ on a circle of radius 1. Every direction has such a point, and its offsets carry the right signs.
 
 ### Step 1: scale the direction by the range
 
-Going $r$ km in direction $\theta$ reaches the unit-circle point stretched $r$ times, so $x = r\cos\theta$ and $y = r\sin\theta$. No triangle is needed, so no quadrant, or quarter of the grid, is special: a southward point gets its negative $y$ from the sine. For the plane, cos 330° is $\sqrt{3}/2$ and sin 330° is −1/2, so $x = 20\sqrt{3}$, about 34.64 km, and $y = −20$ km.
+Going $`r`$ km in direction $`\theta`$ reaches the unit-circle point stretched $`r`$ times, so $`x = r\cos\theta`$ and $`y = r\sin\theta`$. No triangle is needed, so no quadrant, or quarter of the grid, is special: a southward point gets its negative $`y`$ from the sine. For the plane, cos 330° is $`\sqrt{3}/2`$ and sin 330° is −1/2, so $`x = 20\sqrt{3}`$, about 34.64 km, and $`y = −20`$ km.
 
 ### Step 2: the range comes back by Pythagoras
 
-The two offsets are the legs of a right triangle whose long side is the range ([Distance and midpoint](01-distance-and-midpoint.md)). So $r^2 = x^2 + y^2$, and since $r$ is never negative, $r = \sqrt{x^2 + y^2}$.
+The two offsets are the legs of a right triangle whose long side is the range ([Distance and midpoint](01-distance-and-midpoint.md)). So $`r^2 = x^2 + y^2`$, and since $`r`$ is never negative, $`r = \sqrt{x^2 + y^2}`$.
 
 ### Step 3: the angle needs both signs, not one ratio
 
-Dividing, $y/x = \tan\theta$. But (−30, −40) and (30, 40) share the ratio 4/3 and point opposite ways. A plain arctangent answers only between −90° and 90°, the eastern half, so a western point comes back reversed. The repair reads the signs: $x$ negative, add 180°; $x$ positive and $y$ negative, add 360°.
+Dividing, $`y/x = \tan\theta`$. But (−30, −40) and (30, 40) share the ratio 4/3 and point opposite ways. A plain arctangent answers only between −90° and 90°, the eastern half, so a western point comes back reversed. The repair reads the signs: $`x`$ negative, add 180°; $`x`$ positive and $`y`$ negative, add 360°.
 
-A second road never divides. Cosine is $x/r$. Arccosine undoes cosine and returns an angle from 0° to 180°, the northern half. If $y$ is negative the point is the mirror image in the southern half: 360° minus the arccosine. The code runs both roads.
+A second road never divides. Cosine is $`x/r`$. Arccosine undoes cosine and returns an angle from 0° to 180°, the northern half. If $`y`$ is negative the point is the mirror image in the southern half: 360° minus the arccosine. The code runs both roads.
 
 <details>
 <summary>Detailed proof: the two conversions undo each other</summary>
 
-Take a point other than the centre, with $r > 0$. The point $(x/r, y/r)$ is 1 from the centre, so it sits on the unit circle at an angle $\theta$ with $\cos\theta = x/r$, $\sin\theta = y/r$. Only one window angle does: two with equal cosines are mirror images across the east axis, with opposite sines.
+Take a point other than the centre, with $`r > 0`$. The point $`(x/r, y/r)`$ is 1 from the centre, so it sits on the unit circle at an angle $`\theta`$ with $`\cos\theta = x/r`$, $`\sin\theta = y/r`$. Only one window angle does: two with equal cosines are mirror images across the east axis, with opposite sines.
 
-Arccosine's angle has cosine $x/r$ and a non-negative sine: it is $\theta$ when $y \ge 0$, and its mirror is $\theta$ when $y < 0$. With $x > 0$, $\alpha$ has positive cosine and $\tan\alpha = y/x$, so it is $\theta$ up to a whole turn. With $x < 0$, $\alpha + 180°$ flips both offsets' signs to match. Step 1 on $(r, \theta)$ returns $(x, y)$.
+Arccosine's angle has cosine $`x/r`$ and a non-negative sine: it is $`\theta`$ when $`y \ge 0`$, and its mirror is $`\theta`$ when $`y < 0`$. With $`x > 0`$, $`\alpha`$ has positive cosine and $`\tan\alpha = y/x`$, so it is $`\theta`$ up to a whole turn. With $`x < 0`$, $`\alpha + 180°`$ flips both offsets' signs to match. Step 1 on $`(r, \theta)`$ returns $`(x, y)`$.
 
 </details>
 
 ### Step 4: a bearing is the same angle, measured the other way
 
-Turning clockwise instead of anticlockwise flips the angle's sign; starting at north instead of east adds 90°. So $\theta = 90° - b$, wrapped into one turn: bearing 120° gives −30°, which is 330°. Since $\cos(90° - b) = \sin b$ and $\sin(90° - b) = \cos b$, east is $r\sin b$ and north is $r\cos b$.
+Turning clockwise instead of anticlockwise flips the angle's sign; starting at north instead of east adds 90°. So $`\theta = 90° - b`$, wrapped into one turn: bearing 120° gives −30°, which is 330°. Since $`\cos(90° - b) = \sin b`$ and $`\sin(90° - b) = \cos b`$, east is $`r\sin b`$ and north is $`r\cos b`$.
 
 ### Step 5: a curve is a range for each angle
 
-Fix $r$ at 40 and let $\theta$ run: a circle, which a grid writes $x^2 + y^2 = 1600$. Fix $\theta$ at 330° and let $r$ run: a ray from the radar through plane 1.
+Fix $`r`$ at 40 and let $`\theta`$ run: a circle, which a grid writes $`x^2 + y^2 = 1600`$. Fix $`\theta`$ at 330° and let $`r`$ run: a ray from the radar through plane 1.
 
-A coverage zone gives a range for each direction. An antenna facing east might reach $r = 25(1 + \cos\theta)$ km: 50 km ahead, 25 km to either side, nothing behind. That heart-shaped curve is a **cardioid**. To plot it, pick angles, compute $r$ for each, and convert by Step 1.
+A coverage zone gives a range for each direction. An antenna facing east might reach $`r = 25(1 + \cos\theta)`$ km: 50 km ahead, 25 km to either side, nothing behind. That heart-shaped curve is a **cardioid**. To plot it, pick angles, compute $`r`$ for each, and convert by Step 1.
 
-Multiply $r \le 25(1 + \cos\theta)$ by $r$ and replace $r\cos\theta$ with $x$: a point is inside when $r^2 \le 25(r + x)$, with no angle left.
+Multiply $`r \le 25(1 + \cos\theta)`$ by $`r`$ and replace $`r\cos\theta`$ with $`x`$: a point is inside when $`r^2 \le 25(r + x)`$, with no angle left.
 
 ---
 
@@ -124,9 +130,9 @@ The contact is 34.64 km east and 20 km south of the radar. The second plane is 5
 
 ### The picture: the coverage curve
 
-The antenna faces east. Reach $r = 25(1 + \cos\theta)$ at a few angles:
+The antenna faces east. Reach $`r = 25(1 + \cos\theta)`$ at a few angles:
 
-| $\theta$ | 0° | 60° | 90° | 120° | 180° |
+| $`\theta`$ | 0° | 60° | 90° | 120° | 180° |
 | --- | --- | --- | --- | --- | --- |
 | reach, km | 50 | 37.5 | 25 | 12.5 | 0 |
 
@@ -140,8 +146,8 @@ Drawn to scale: 1 km = 3 units, radar at the crossing of the axes. The shaded he
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Bearing put straight into $x = r\cos\theta$ | 20 km west, 34.64 km north | A bearing starts at north and turns clockwise |
-| Plain arctangent for plane 2 | 53.13°, bearing 36.87°: north-east | $y/x$ is the same for opposite points |
+| Bearing put straight into $`x = r\cos\theta`$ | 20 km west, 34.64 km north | A bearing starts at north and turns clockwise |
+| Plain arctangent for plane 2 | 53.13°, bearing 36.87°: north-east | $`y/x`$ is the same for opposite points |
 | 330 fed to a cosine that expects radians | 39.65 km west, 5.30 km south | 330 radians is dozens of turns, not 330° |
 
 The code prints all three.
@@ -150,7 +156,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Every answer is reached by two roads. To the grid: through the maths angle, and straight from the bearing. Back: arctangent of $y/x$ with the sign repair, and arccosine of $x/r$ with the southern mirror. Coverage: the polar test, and the grid test with no angle.
+Every answer is reached by two roads. To the grid: through the maths angle, and straight from the bearing. Back: arctangent of $`y/x`$ with the sign repair, and arccosine of $`x/r`$ with the southern mirror. Coverage: the polar test, and the grid test with no angle.
 
 ### Python
 
@@ -332,8 +338,8 @@ Lean proves the card's conversions and coverage test for every point, not just t
 
 - Start from any range above zero and an angle from 0° up to, not including, 360°. Cosine and sine give the grid offsets; Pythagoras and the sign-aware arctangent bring back the same range and angle.
 - Start from any grid point other than the centre. The sign-aware arctangent gives an angle in that window, and cosine and sine give back the same point.
-- For any bearing $b$, the maths angle $90° - b$, wrapped into one turn, lands in the window. East is then $r\sin b$ and north is $r\cos b$.
-- A point at range $r$, never negative, is inside the cardioid exactly when $r^2 \le 25(r + x)$, with $r$ from Pythagoras: no angle left.
+- For any bearing $`b`$, the maths angle $`90° - b`$, wrapped into one turn, lands in the window. East is then $`r\sin b`$ and north is $`r\cos b`$.
+- A point at range $`r`$, never negative, is inside the cardioid exactly when $`r^2 \le 25(r + x)`$, with $`r`$ from Pythagoras: no angle left.
 - The card's own sums: bearing 120° to 330°, plane 1's offsets, both ranges, the reach table, and the grid test for each plane.
 
 The arccosine road, decimal values such as 233.13°, the mistakes table and the figure coordinates are left to the Python and Rust checks.
@@ -599,11 +605,11 @@ example : (40 : ℤ) ^ 2 = 1600 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Trusting a plain arctangent for the angle.** The ratio $y/x$ cannot tell a point from its opposite: (−30, −40) and (30, 40) both give 4/3. A plain arctangent answers 53.13°, north-east, for a plane that is south-west at 233.13°. Keep both signs, or use a two-argument arctangent that takes $y$ and $x$ separately.
+> **Trusting a plain arctangent for the angle.** The ratio $`y/x`$ cannot tell a point from its opposite: (−30, −40) and (30, 40) both give 4/3. A plain arctangent answers 53.13°, north-east, for a plane that is south-west at 233.13°. Keep both signs, or use a two-argument arctangent that takes $`y`$ and $`x`$ separately.
 >
-> - **A bearing is not the maths angle.** Putting 120° into $x = r\cos\theta$ places the plane 20 km west and 34.64 km north.
+> - **A bearing is not the maths angle.** Putting 120° into $`x = r\cos\theta`$ places the plane 20 km west and 34.64 km north.
 > - **Degrees into a radian cosine.** Most software expects radians; 330 read that way gives 39.65 km west, 5.30 km south.
-> - **Asking the centre for a direction.** At $r = 0$ no angle is correct; software that returns one has chosen a convention.
+> - **Asking the centre for a direction.** At $`r = 0`$ no angle is correct; software that returns one has chosen a convention.
 
 ---
 

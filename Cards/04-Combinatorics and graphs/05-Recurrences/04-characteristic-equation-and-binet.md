@@ -35,37 +35,47 @@ Each point is the two before it added together, and the climb steepens because e
 
 ## The formula
 
-The term at step $n$ is written a(n), and a two-term step rule makes each term a fixed mix of the two behind it ([Recurrences](01-recurrences-and-fibonacci.md)):
+The term at step $`n`$ is written a(n), and a two-term step rule makes each term a fixed mix of the two behind it ([Recurrences](01-recurrences-and-fibonacci.md)):
 
-$$a(n) = c_1\,a(n-1) + c_2\,a(n-2)$$
+```math
+a(n) = c_1\,a(n-1) + c_2\,a(n-2)
+```
 
-The weights c1 and c2 never change. Now the guess: let $r$ be a growth rate and try the sequence whose term at step $n$ is r^n, r multiplied in n times. The rule collapses to one equation, its **characteristic equation**:
+The weights c1 and c2 never change. Now the guess: let $`r`$ be a growth rate and try the sequence whose term at step $`n`$ is r^n, r multiplied in n times. The rule collapses to one equation, its **characteristic equation**:
 
-$$r^2 = c_1 r + c_2$$
+```math
+r^2 = c_1 r + c_2
+```
 
 **Read it aloud:** a sequence multiplying by r each step obeys the rule exactly when r squared equals the first weight times r, plus the second.
 
-By the quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)), if the roots $r$ and $s$ differ, every solution is
+By the quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)), if the roots $`r`$ and $`s`$ differ, every solution is
 
-$$a(n) = A\,r^n + B\,s^n$$
+```math
+a(n) = A\,r^n + B\,s^n
+```
 
-and if the quadratic is one bracket squared, a single root $r$ standing twice, every solution is
+and if the quadratic is one bracket squared, a single root $`r`$ standing twice, every solution is
 
-$$a(n) = (A + Bn)\,r^n$$
+```math
+a(n) = (A + Bn)\,r^n
+```
 
-$A$ and $B$ come from a(0) and a(1): two equations, two unknowns ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
+$`A`$ and $`B`$ come from a(0) and a(1): two equations, two unknowns ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, in a(n) | the step, and its term | a hallway n tiles long | a bigger count |
-| $c_1$, $c_2$ | fixed weights on the two behind | both 1 | faster growth |
-| $r$, $s$, here $\varphi$ and $\psi$ (phi, psi) | growth rates: roots of the quadratic | 1.6180339887, −0.6180339887 | past 1, it climbs |
-| $A$, $B$ | how much of each root sequence is mixed in | 1/√5, −1/√5 | scales that piece |
-| $F$ | Fibonacci: F(0) = 0, F(1) = 1 | F(11) = 89 | — |
+| $`n`$, in a(n) | the step, and its term | a hallway n tiles long | a bigger count |
+| $`c_1`$, $`c_2`$ | fixed weights on the two behind | both 1 | faster growth |
+| $`r`$, $`s`$, here $`\varphi`$ and $`\psi`$ (phi, psi) | growth rates: roots of the quadratic | 1.6180339887, −0.6180339887 | past 1, it climbs |
+| $`A`$, $`B`$ | how much of each root sequence is mixed in | 1/√5, −1/√5 | scales that piece |
+| $`F`$ | Fibonacci: F(0) = 0, F(1) = 1 | F(11) = 89 | — |
 
 Fitted to the Fibonacci start, the mixture is **Binet's formula**:
 
-$$F(n) = \frac{\varphi^n - \psi^n}{\sqrt{5}}, \qquad \varphi = \frac{1+\sqrt{5}}{2}, \qquad \psi = \frac{1-\sqrt{5}}{2}$$
+```math
+F(n) = \frac{\varphi^n - \psi^n}{\sqrt{5}}, \qquad \varphi = \frac{1+\sqrt{5}}{2}, \qquad \psi = \frac{1-\sqrt{5}}{2}
+```
 
 A Fibonacci number is one geometric sequence minus another — one climbing by the golden ratio, one shrinking and flipping sign — over the square root of 5 ([Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)), which cancels from the answer.
 
@@ -95,15 +105,19 @@ Guess, reduce, split on the roots, fit the constants.
 
 The rule ties three consecutive terms with the same weights. A sequence multiplying by one number each step gives all three a common factor, and cancelling it turns an endless family of equations into one. Put a(n) = r^n in:
 
-$$r^n = c_1 r^{n-1} + c_2 r^{n-2}$$
+```math
+r^n = c_1 r^{n-1} + c_2 r^{n-2}
+```
 
-Every term holds r^(n−2); divide it out, since r = 0 only gives the all-zero sequence. What survives is r^2 = c1 r + c2. Both hallway weights are 1, so r^2 = r + 1, and the quadratic formula returns (1 ± √5)/2, the $\varphi$ and $\psi$ above.
+Every term holds r^(n−2); divide it out, since r = 0 only gives the all-zero sequence. What survives is r^2 = c1 r + c2. Both hallway weights are 1, so r^2 = r + 1, and the quadratic formula returns (1 ± √5)/2, the $`\varphi`$ and $`\psi`$ above.
 
 ### Step 1: mixtures of solutions are solutions
 
 If the sequences u and v obey the rule, so does any mixture:
 
-$$A\,u(n) + B\,v(n) = A\bigl(c_1 u(n-1) + c_2 u(n-2)\bigr) + B\bigl(c_1 v(n-1) + c_2 v(n-2)\bigr)$$
+```math
+A\,u(n) + B\,v(n) = A\bigl(c_1 u(n-1) + c_2 u(n-2)\bigr) + B\bigl(c_1 v(n-1) + c_2 v(n-2)\bigr)
+```
 
 Regrouped by weight rather than by sequence, the right side is c1 times the mixture one step back plus c2 times it two back.
 
@@ -111,11 +125,13 @@ Regrouped by weight rather than by sequence, the right side is c1 times the mixt
 
 A mixture has two free constants, a two-term rule two free starting values. Match them:
 
-$$A + B = a(0), \qquad A\,r + B\,s = a(1)$$
+```math
+A + B = a(0), \qquad A\,r + B\,s = a(1)
+```
 
-Substituting the first into the second gives A(r − s) = a(1) − s·a(0), which fixes $A$ where the roots differ, and $B$ with it.
+Substituting the first into the second gives A(r − s) = a(1) − s·a(0), which fixes $`A`$ where the roots differ, and $`B`$ with it.
 
-Fibonacci: A + B = 0 and A$\varphi$ + B$\psi$ = 1, so A($\varphi$ − $\psi$) = 1. Since $\varphi$ − $\psi$ = √5, A = 1/√5 and B = −1/√5 — Binet's formula.
+Fibonacci: A + B = 0 and A$`\varphi`$ + B$`\psi`$ = 1, so A($`\varphi`$ − $`\psi`$) = 1. Since $`\varphi`$ − $`\psi`$ = √5, A = 1/√5 and B = −1/√5 — Binet's formula.
 
 A second rule in whole numbers: a(n) = 5a(n−1) − 6a(n−2) from 2 and 5. Its r^2 − 5r + 6 = 0 has roots 2 and 3, and the fit A + B = 2, 2A + 3B = 5 gives A = B = 1. So a(n) = 2^n + 3^n: 2, 5, 13, 35, 97, the list the rule builds.
 
@@ -130,13 +146,15 @@ Two sequences obeying the rule and agreeing at steps 0 and 1 agree everywhere, b
 
 A root standing twice means the quadratic is one bracket squared. Call that root r: then c1 = 2r and c2 = −r^2. It supplies r^n, and no second root supplies another; n·r^n fills the gap:
 
-$$c_1 (n-1) r^{n-1} + c_2 (n-2) r^{n-2} = 2(n-1)r^{n} - (n-2)r^{n} = n\,r^n$$
+```math
+c_1 (n-1) r^{n-1} + c_2 (n-2) r^{n-2} = 2(n-1)r^{n} - (n-2)r^{n} = n\,r^n
+```
 
 Exactly what the rule demands. Worked: a(n) = 4a(n−1) − 4a(n−2) gives r^2 = 4r − 4, whose only root is 2, standing twice. From 1 and 6, A = 1 and (A + B) × 2 = 6, so B = 2, and (1 + 2n)·2^n runs 1, 6, 20, 56, 144, 352, 832, 1920; 2^n alone reaches 128 at step 7.
 
 ### Step 4: why rounding the big root is exact
 
-$\psi$ = −0.6180339887… is under 1 in size, so its powers shrink; over √5 that piece starts at 0.4472135955 and only falls. It never reaches half a unit, so φ^n/√5 always rounds to F(n): at step 10 it is 55.0036361232, and 0.0036361232 is thrown away.
+$`\psi`$ = −0.6180339887… is under 1 in size, so its powers shrink; over √5 that piece starts at 0.4472135955 and only falls. It never reaches half a unit, so φ^n/√5 always rounds to F(n): at step 10 it is 55.0036361232, and 0.0036361232 is thrown away.
 
 Two other roads reach this closed form: splitting a fraction, on [Solving a recurrence with a generating function](../07-Generating%20Functions/03-generating-functions-solve-recurrences.md), and a 2 by 2 matrix with these roots as eigenvalues, on [A recurrence is a matrix](06-recurrences-as-matrix-powers.md). An eigenvalue is the stretch along a direction the matrix does not turn.
 

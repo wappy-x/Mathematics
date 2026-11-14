@@ -41,54 +41,64 @@ First line (orange): realised variance, measured inside each day. Second line (g
 
 ## The formula
 
-Notation first, in words. Trading days are counted by $t$. $r_t$ is day $t$'s log return as a decimal, 0.01 for 1%.
+Notation first, in words. Trading days are counted by $`t`$. $`r_t`$ is day $`t`$'s log return as a decimal, 0.01 for 1%.
 
-A forecast *for* day $t+1$ is made at day $t$'s close, and carries the subscript $t+1$: $e_{t+1}$ for EWMA, $g_{t+1}$ for GARCH, $p_{t+1}$ for lagged realised. $\lambda$ (lambda) is EWMA's carry, 0.94. GARCH's weights are $\omega$ (omega), a small floor; $\alpha$ (alpha), on the squared move; and $\beta$ (beta), on the old forecast.
+A forecast *for* day $`t+1`$ is made at day $`t`$'s close, and carries the subscript $`t+1`$: $`e_{t+1}`$ for EWMA, $`g_{t+1}`$ for GARCH, $`p_{t+1}`$ for lagged realised. $`\lambda`$ (lambda) is EWMA's carry, 0.94. GARCH's weights are $`\omega`$ (omega), a small floor; $`\alpha`$ (alpha), on the squared move; and $`\beta`$ (beta), on the old forecast.
 
-Day $t$ is cut into $m$ intraday pieces $x_{t,1}, \dots, x_{t,m}$, counted by $j$, which add up to $r_t$; the big sigma, $\sum$, adds over $j$ from 1 to $m$. The three rules:
+Day $`t`$ is cut into $`m`$ intraday pieces $`x_{t,1}, \dots, x_{t,m}`$, counted by $`j`$, which add up to $`r_t`$; the big sigma, $`\sum`$, adds over $`j`$ from 1 to $`m`$. The three rules:
 
-$$e_{t+1} = \lambda\, e_t + (1-\lambda)\, r_t^2 \qquad \text{(EWMA)}$$
+```math
+e_{t+1} = \lambda\, e_t + (1-\lambda)\, r_t^2 \qquad \text{(EWMA)}
+```
 
-$$g_{t+1} = \omega + \alpha\, r_t^2 + \beta\, g_t \qquad \text{(GARCH(1,1))}$$
+```math
+g_{t+1} = \omega + \alpha\, r_t^2 + \beta\, g_t \qquad \text{(GARCH(1,1))}
+```
 
-$$p_{t+1} = RV_t = \sum_{j=1}^{m} x_{t,j}^2 \qquad \text{(lagged realised variance)}$$
+```math
+p_{t+1} = RV_t = \sum_{j=1}^{m} x_{t,j}^2 \qquad \text{(lagged realised variance)}
+```
 
 **Read it aloud:** EWMA keeps 94% of today's forecast and adds 6% of today's squared move; GARCH adds a small floor, a tenth of today's squared move and 85% of today's forecast; the realised rule says tomorrow will look like today, measured from inside today.
 
-Scoring over $n$ finished days, with $f_t$ any forecast for day $t$, uses two averages: MSE, the mean squared error, and QLIKE, short for quasi-likelihood loss:
+Scoring over $`n`$ finished days, with $`f_t`$ any forecast for day $`t`$, uses two averages: MSE, the mean squared error, and QLIKE, short for quasi-likelihood loss:
 
-$$\text{MSE} = \frac{1}{n}\sum_{t} \left(f_t - RV_t\right)^2, \qquad \text{QLIKE} = \frac{1}{n}\sum_{t} \left(\frac{RV_t}{f_t} - \ln\frac{RV_t}{f_t} - 1\right)$$
+```math
+\text{MSE} = \frac{1}{n}\sum_{t} \left(f_t - RV_t\right)^2, \qquad \text{QLIKE} = \frac{1}{n}\sum_{t} \left(\frac{RV_t}{f_t} - \ln\frac{RV_t}{f_t} - 1\right)
+```
 
 **Read it aloud:** MSE is the average squared miss; QLIKE is the average of a penalty on the ratio of measured to forecast variance, which is zero when the two match.
 
-Looking several days ahead, $E_t[\ \cdot\ ]$ means "the average over everything that can still happen, given what is known at day $t$'s close". For GARCH:
+Looking several days ahead, $`E_t[\ \cdot\ ]`$ means "the average over everything that can still happen, given what is known at day $`t`$'s close". For GARCH:
 
-$$E_t\!\left[g_{t+k}\right] = \bar h + \rho^{\,k-1}\left(g_{t+1} - \bar h\right), \qquad \rho = \alpha + \beta, \qquad \bar h = \frac{\omega}{1-\rho}$$
+```math
+E_t\!\left[g_{t+k}\right] = \bar h + \rho^{\,k-1}\left(g_{t+1} - \bar h\right), \qquad \rho = \alpha + \beta, \qquad \bar h = \frac{\omega}{1-\rho}
+```
 
-**Read it aloud:** the expected forecast $k$ days out starts at tomorrow's forecast and closes its gap to the long-run level by a factor $\rho$ each day; EWMA's stays flat.
+**Read it aloud:** the expected forecast $`k`$ days out starts at tomorrow's forecast and closes its gap to the long-run level by a factor $`\rho`$ each day; EWMA's stays flat.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r_t$, $t$, $s$ | day $t$'s log return, as a decimal; $t$ and $s$ count trading days | day 5: 0.03 | a bigger squared move lifts every forecast for the next day |
-| $x_{t,j}$, $m$, $j$, $\sum$ | the $m$ pieces of day $t$'s return, measured inside the day, counted by $j$; they add up to $r_t$; $\sum$ adds them | 4 pieces a day | more pieces: a less noisy measurement |
-| $RV_t$, $Y$ | realised variance: the sum of the squared pieces, known at day $t$'s close; $Y$ is any such yardstick | day 5: 4.75 | the lagged-realised forecast for the next day rises one for one |
-| $h_t$, $h$, $E_t$ | $h_t$ is the true variance of day $t$'s return given all that was known the evening before; $E_t$ averages over what can still happen after day $t$'s close | $h_t$ is never observed | the target every forecast aims at |
-| $e_t$ | the EWMA forecast for day $t$ | day 9: 2.51 | — |
-| $g_t$ | the GARCH forecast for day $t$ | day 9: 2.64 | — |
-| $p_t$ | the lagged-realised forecast for day $t$: day $t-1$'s realised variance | day 9: 1.19 | — |
-| $f_t$, $f$, $n$ | any forecast for day $t$ ($f$ when the day is understood); the number of scored days | days 2 to 8, so 7 | a bigger miss raises both scores |
-| $\lambda$ | EWMA's carry: the share of today's forecast kept | 0.94 | a smoother, slower forecast |
-| $\omega$ | GARCH's daily floor | 0.00001, which is 0.1000 in percent-squared | a higher long-run level |
-| $\alpha$, $\beta$ | GARCH's weight on today's squared move, and on today's forecast | 0.10 and 0.85 | $\alpha$ up: jumpier; $\beta$ up: longer memory |
-| $\rho$, $\bar h$, $k$, $M_k$ | persistence $\alpha+\beta$; the long-run variance; days ahead; $M_k$ is shorthand for $E_t[g_{t+k}]$ | 0.95; 2.00; 1 to 20 | $\rho$ toward 1: a shock fades more slowly |
+| $`r_t`$, $`t`$, $`s`$ | day $`t`$'s log return, as a decimal; $`t`$ and $`s`$ count trading days | day 5: 0.03 | a bigger squared move lifts every forecast for the next day |
+| $`x_{t,j}`$, $`m`$, $`j`$, $`\sum`$ | the $`m`$ pieces of day $`t`$'s return, measured inside the day, counted by $`j`$; they add up to $`r_t`$; $`\sum`$ adds them | 4 pieces a day | more pieces: a less noisy measurement |
+| $`RV_t`$, $`Y`$ | realised variance: the sum of the squared pieces, known at day $`t`$'s close; $`Y`$ is any such yardstick | day 5: 4.75 | the lagged-realised forecast for the next day rises one for one |
+| $`h_t`$, $`h`$, $`E_t`$ | $`h_t`$ is the true variance of day $`t`$'s return given all that was known the evening before; $`E_t`$ averages over what can still happen after day $`t`$'s close | $`h_t`$ is never observed | the target every forecast aims at |
+| $`e_t`$ | the EWMA forecast for day $`t`$ | day 9: 2.51 | — |
+| $`g_t`$ | the GARCH forecast for day $`t`$ | day 9: 2.64 | — |
+| $`p_t`$ | the lagged-realised forecast for day $`t`$: day $`t-1`$'s realised variance | day 9: 1.19 | — |
+| $`f_t`$, $`f`$, $`n`$ | any forecast for day $`t`$ ($`f`$ when the day is understood); the number of scored days | days 2 to 8, so 7 | a bigger miss raises both scores |
+| $`\lambda`$ | EWMA's carry: the share of today's forecast kept | 0.94 | a smoother, slower forecast |
+| $`\omega`$ | GARCH's daily floor | 0.00001, which is 0.1000 in percent-squared | a higher long-run level |
+| $`\alpha`$, $`\beta`$ | GARCH's weight on today's squared move, and on today's forecast | 0.10 and 0.85 | $`\alpha`$ up: jumpier; $`\beta`$ up: longer memory |
+| $`\rho`$, $`\bar h`$, $`k`$, $`M_k`$ | persistence $`\alpha+\beta`$; the long-run variance; days ahead; $`M_k`$ is shorthand for $`E_t[g_{t+k}]`$ | 0.95; 2.00; 1 to 20 | $`\rho`$ toward 1: a shock fades more slowly |
 
 All three forecasts start on day 1 at the same guess, the **seed**, 2.00.
 
 ### When it holds
 
 - **Variance persists from day to day.** Calm follows calm and storm follows storm: **volatility clustering**. Without it every rule chases noise, and a long plain average forecasts best.
-- **GARCH needs $\alpha + \beta$ below 1.** At exactly 1 there is no long-run level: the formula for $\bar h$ divides by zero, and the expected forecast climbs by $\omega$ every day (see What breaks). With $\omega > 0$ and $\alpha, \beta \ge 0$ the forecast stays positive.
-- **The weights are fixed before the scored days.** Fitting $\lambda$, $\alpha$ or $\beta$ on the scored days grades a rule on its own homework.
+- **GARCH needs $`\alpha + \beta`$ below 1.** At exactly 1 there is no long-run level: the formula for $`\bar h`$ divides by zero, and the expected forecast climbs by $`\omega`$ every day (see What breaks). With $`\omega > 0`$ and $`\alpha, \beta \ge 0`$ the forecast stays positive.
+- **The weights are fixed before the scored days.** Fitting $`\lambda`$, $`\alpha`$ or $`\beta`$ on the scored days grades a rule on its own homework.
 - **The realised measure covers the same stretch of time as the return.** If the pieces skip the overnight gap, or bid-ask bounce (trades flipping between the buying and the selling price) inflates them, realised variance measures something else.
 - **QLIKE needs positive numbers.** A zero forecast or a day with zero realised variance puts a zero inside a logarithm; MSE has no such limit.
 - **Up and down moves count alike.** Both rules square the return, so +3% and −3% move them equally. Shares usually get jumpier after falls than after rises (the **leverage effect**); asymmetric GARCH versions add a term for it.
@@ -99,22 +109,24 @@ All three forecasts start on day 1 at the same guess, the **seed**, 2.00.
 
 ### Step 0: a squared return is a noisy but honest reading of variance
 
-Take a day whose return averages zero and has variance $h_t$. The square of that return then averages exactly $h_t$: that is what variance means when the average is zero. A day's average return is tiny next to a typical move, so the zero is a fine approximation. One square is a very noisy reading, but it is not biased up or down.
+Take a day whose return averages zero and has variance $`h_t`$. The square of that return then averages exactly $`h_t`$: that is what variance means when the average is zero. A day's average return is tiny next to a typical move, so the zero is a fine approximation. One square is a very noisy reading, but it is not biased up or down.
 
 Variance also lingers from day to day. So an average of recent squared returns, weighted toward the newest, forecasts tomorrow's variance. The three rules differ only in their weights.
 
 ### Step 1: EWMA is a weighted average whose weights shrink by λ per day back
 
-Put the EWMA rule into itself, over and over. After $n$ days,
+Put the EWMA rule into itself, over and over. After $`n`$ days,
 
-$$e_{n+1} = \lambda^{n} e_1 + (1-\lambda)\sum_{j=1}^{n} \lambda^{\,n-j}\, r_j^2 .$$
+```math
+e_{n+1} = \lambda^{n} e_1 + (1-\lambda)\sum_{j=1}^{n} \lambda^{\,n-j}\, r_j^2 .
+```
 
-The newest square gets weight 0.06. The one before gets 0.06 × 0.94, and each older one 0.94 times less again. The weights on the squares and the seed's weight, $\lambda^n$, add up to exactly 1. So the forecast is a true weighted average: never negative, always in units of variance.
+The newest square gets weight 0.06. The one before gets 0.06 × 0.94, and each older one 0.94 times less again. The weights on the squares and the seed's weight, $`\lambda^n`$, add up to exactly 1. So the forecast is a true weighted average: never negative, always in units of variance.
 
 <details>
 <summary>The algebra behind the weights</summary>
 
-The squares' weights are $(1-\lambda)(1 + \lambda + \lambda^2 + \dots + \lambda^{n-1})$. The bracket is a geometric series: it equals $(1-\lambda^n)/(1-\lambda)$. Multiplied by $(1-\lambda)$ it gives $1 - \lambda^n$. Add the seed's weight $\lambda^n$ and the total is 1.
+The squares' weights are $`(1-\lambda)(1 + \lambda + \lambda^2 + \dots + \lambda^{n-1})`$. The bracket is a geometric series: it equals $`(1-\lambda^n)/(1-\lambda)`$. Multiplied by $`(1-\lambda)`$ it gives $`1 - \lambda^n`$. Add the seed's weight $`\lambda^n`$ and the total is 1.
 
 </details>
 
@@ -124,65 +136,69 @@ On Acme, the seed still carries weight 0.6096 after eight days. In a short recor
 
 The same unrolling for GARCH gives
 
-$$g_{n+1} = \omega\,\frac{1-\beta^{n}}{1-\beta} + \alpha\sum_{j=1}^{n} \beta^{\,n-j}\, r_j^2 + \beta^{n} g_1 .$$
+```math
+g_{n+1} = \omega\,\frac{1-\beta^{n}}{1-\beta} + \alpha\sum_{j=1}^{n} \beta^{\,n-j}\, r_j^2 + \beta^{n} g_1 .
+```
 
 The seed's weight after eight days is 0.2725, so GARCH forgets its start faster than EWMA. The code again gets day 9 both ways: 2.6401.
 
-Now the long-run level. Suppose the forecast has settled around an average $\bar h$. By Step 0 the average squared return is then $\bar h$ as well. Averaging the GARCH rule gives $\bar h = \omega + \alpha\bar h + \beta\bar h$, so $\bar h = \omega / (1 - \alpha - \beta)$. For Acme that is 0.1000 / 0.05 = 2.00 in percent-squared: a daily volatility of 1.4142%, and 22.45% a year on 252 trading days.
+Now the long-run level. Suppose the forecast has settled around an average $`\bar h`$. By Step 0 the average squared return is then $`\bar h`$ as well. Averaging the GARCH rule gives $`\bar h = \omega + \alpha\bar h + \beta\bar h`$, so $`\bar h = \omega / (1 - \alpha - \beta)`$. For Acme that is 0.1000 / 0.05 = 2.00 in percent-squared: a daily volatility of 1.4142%, and 22.45% a year on 252 trading days.
 
-EWMA is GARCH with $\omega = 0$, $\alpha = 1 - \lambda$ and $\beta = \lambda$. Then $\alpha + \beta = 1$ exactly. There is no floor, and no long-run level to return to.
+EWMA is GARCH with $`\omega = 0`$, $`\alpha = 1 - \lambda`$ and $`\beta = \lambda`$. Then $`\alpha + \beta = 1`$ exactly. There is no floor, and no long-run level to return to.
 
 ### Step 3: several days ahead, GARCH drifts home and EWMA stays put
 
-Stand at day 8's close. Day 9's GARCH forecast is known: 2.6401. Day 10's depends on day 9's return, not yet known, but by Step 0 its square averages 2.6401. So the expected forecast for day 10 is $\omega + (\alpha + \beta) \times 2.6401$, that is $\omega + \rho \times 2.6401$.
+Stand at day 8's close. Day 9's GARCH forecast is known: 2.6401. Day 10's depends on day 9's return, not yet known, but by Step 0 its square averages 2.6401. So the expected forecast for day 10 is $`\omega + (\alpha + \beta) \times 2.6401`$, that is $`\omega + \rho \times 2.6401`$.
 
-Subtract $\bar h = \omega + \rho\bar h$ from both sides: the gap to the long-run level shrinks by the factor $\rho$. Each further day repeats the step, which gives the formula. A gap halves in 13.51 trading days, since $0.95^{13.51}$ is one half.
+Subtract $`\bar h = \omega + \rho\bar h`$ from both sides: the gap to the long-run level shrinks by the factor $`\rho`$. Each further day repeats the step, which gives the formula. A gap halves in 13.51 trading days, since $`0.95^{13.51}`$ is one half.
 
-EWMA under the same argument gives $\lambda e + (1-\lambda)e = e$: its expected forecast is flat, 2.51 at every horizon.
+EWMA under the same argument gives $`\lambda e + (1-\lambda)e = e`$: its expected forecast is flat, 2.51 at every horizon.
 
 <details>
 <summary>Detailed proof: the k-day GARCH forecast</summary>
 
-Assume $E[r_s \mid \text{known before day } s] = 0$ and $E[r_s^2 \mid \text{known before day } s] = g_s$ for every day $s$ (a day index, like $t$), with all these averages finite. Write $M_k$ for $E_t[g_{t+k}]$, $k \ge 1$.
+Assume $`E[r_s \mid \text{known before day } s] = 0`$ and $`E[r_s^2 \mid \text{known before day } s] = g_s`$ for every day $`s`$ (a day index, like $`t`$), with all these averages finite. Write $`M_k`$ for $`E_t[g_{t+k}]`$, $`k \ge 1`$.
 
-$M_1 = g_{t+1}$, because $g_{t+1}$ is built from day $t$'s close.
+$`M_1 = g_{t+1}`$, because $`g_{t+1}`$ is built from day $`t`$'s close.
 
-For $k \ge 1$: $g_{t+k+1} = \omega + \alpha r_{t+k}^2 + \beta g_{t+k}$. Average given day $t$'s close. Averaging first given day $t+k-1$'s close, then given day $t$'s (the **tower property**: an average of a finer average is the coarser average), turns $E_t[r_{t+k}^2]$ into $E_t[g_{t+k}] = M_k$. So $M_{k+1} = \omega + \alpha M_k + \beta M_k = \omega + \rho M_k$.
+For $`k \ge 1`$: $`g_{t+k+1} = \omega + \alpha r_{t+k}^2 + \beta g_{t+k}`$. Average given day $`t`$'s close. Averaging first given day $`t+k-1`$'s close, then given day $`t`$'s (the **tower property**: an average of a finer average is the coarser average), turns $`E_t[r_{t+k}^2]`$ into $`E_t[g_{t+k}] = M_k`$. So $`M_{k+1} = \omega + \alpha M_k + \beta M_k = \omega + \rho M_k`$.
 
-With $\bar h = \omega/(1-\rho)$, $\omega = (1-\rho)\bar h$, so $M_{k+1} - \bar h = \rho (M_k - \bar h)$. By induction $M_k - \bar h = \rho^{k-1}(M_1 - \bar h)$, which is the formula. No bell-curve shape is used, only the two averages. For EWMA the same steps give $M_{k+1} = \lambda M_k + (1-\lambda) M_k = M_k$.
+With $`\bar h = \omega/(1-\rho)`$, $`\omega = (1-\rho)\bar h`$, so $`M_{k+1} - \bar h = \rho (M_k - \bar h)`$. By induction $`M_k - \bar h = \rho^{k-1}(M_1 - \bar h)`$, which is the formula. No bell-curve shape is used, only the two averages. For EWMA the same steps give $`M_{k+1} = \lambda M_k + (1-\lambda) M_k = M_k`$.
 
 </details>
 
-The code reaches the 10-day-ahead GARCH forecast three ways: the formula, 2.4034; stepping $M_{k+1} = \omega + \rho M_k$ ten times, 2.4034; and simulating 20,000 GARCH futures with its own random numbers, 2.4024.
+The code reaches the 10-day-ahead GARCH forecast three ways: the formula, 2.4034; stepping $`M_{k+1} = \omega + \rho M_k`$ ten times, 2.4034; and simulating 20,000 GARCH futures with its own random numbers, 2.4024.
 
 ### Step 4: why realised variance is a fair yardstick
 
-The target, $h_t$, is never seen. Two stand-ins are the day's squared return and its realised variance. Both average $h_t$; they differ in noise.
+The target, $`h_t`$, is never seen. Two stand-ins are the day's squared return and its realised variance. Both average $`h_t`$; they differ in noise.
 
-Suppose a day is cut into $m$ pieces, each bell-curve shaped with variance $h_t/m$. Then the realised variance has variance $2h_t^2/m$. With one piece, the squared daily return itself, that is $2h_t^2$: 8.00 when $h_t$ is 2.00. Four pieces give 2.00; sixteen give 0.50. The code simulates 40,000 days and finds 7.9293, 2.0425 and 0.5007. Cutting the day finer buys a sharper yardstick, until bid-ask bounce adds noise of its own.
+Suppose a day is cut into $`m`$ pieces, each bell-curve shaped with variance $`h_t/m`$. Then the realised variance has variance $`2h_t^2/m`$. With one piece, the squared daily return itself, that is $`2h_t^2`$: 8.00 when $`h_t`$ is 2.00. Four pieces give 2.00; sixteen give 0.50. The code simulates 40,000 days and finds 7.9293, 2.0425 and 0.5007. Cutting the day finer buys a sharper yardstick, until bid-ask bounce adds noise of its own.
 
-A noisy yardstick does not tilt the contest. For any forecast $f$ made before the day, with the yardstick $Y$ averaging $h$,
+A noisy yardstick does not tilt the contest. For any forecast $`f`$ made before the day, with the yardstick $`Y`$ averaging $`h`$,
 
-$$E\left[(f - Y)^2\right] = E\left[(f - h)^2\right] + E\left[(Y - h)^2\right].$$
+```math
+E\left[(f - Y)^2\right] = E\left[(f - h)^2\right] + E\left[(Y - h)^2\right].
+```
 
 The noise term on the right is the same for every forecast. So, averaged over many days, ranking forecasts by MSE against realised variance ranks them as MSE against the unseen truth would. QLIKE shares this property. Not every score does: Patton (2011) shows that some popular scores, such as the squared miss in volatility rather than variance, can prefer the wrong forecast when the yardstick is noisy.
 
 <details>
 <summary>Detailed proof: the noise of realised variance, and the fair split</summary>
 
-**Noise.** Let the pieces be independent bell-curve draws with average 0 and variance $h/m$. A bell-curve draw $x$ with average 0 and variance $h/m$ has $E[x^4] = 3(h/m)^2$, so $x^2$ has variance $3(h/m)^2 - (h/m)^2 = 2(h/m)^2$. The $m$ squares are independent, so their variances add: $m \cdot 2(h/m)^2 = 2h^2/m$. Their average is $m \cdot h/m = h$.
+**Noise.** Let the pieces be independent bell-curve draws with average 0 and variance $`h/m`$. A bell-curve draw $`x`$ with average 0 and variance $`h/m`$ has $`E[x^4] = 3(h/m)^2`$, so $`x^2`$ has variance $`3(h/m)^2 - (h/m)^2 = 2(h/m)^2`$. The $`m`$ squares are independent, so their variances add: $`m \cdot 2(h/m)^2 = 2h^2/m`$. Their average is $`m \cdot h/m = h`$.
 
-**Fair split.** Write $f - Y = (f - h) - (Y - h)$ and square: $(f-h)^2 + (Y-h)^2 - 2(f-h)(Y-h)$. Given what was known when $f$ was made, $f - h$ is fixed and $Y - h$ averages zero, so the cross term averages zero. Averaging over days gives the displayed identity, provided the squares have finite averages.
+**Fair split.** Write $`f - Y = (f - h) - (Y - h)`$ and square: $`(f-h)^2 + (Y-h)^2 - 2(f-h)(Y-h)`$. Given what was known when $`f`$ was made, $`f - h`$ is fixed and $`Y - h`$ averages zero, so the cross term averages zero. Averaging over days gives the displayed identity, provided the squares have finite averages.
 
-**QLIKE.** For two forecasts $f$ and $f'$ fixed in advance, the gap in $\ln f + Y/f$ is $\ln(f/f') + Y(1/f - 1/f')$. Its average replaces $Y$ by $h$, so the expected gap is the same whether scored against $Y$ or against $h$. QLIKE as written differs from $\ln f + Y/f$ by $-\ln Y - 1$, the same for every forecast, so it ranks identically.
+**QLIKE.** For two forecasts $`f`$ and $`f'`$ fixed in advance, the gap in $`\ln f + Y/f`$ is $`\ln(f/f') + Y(1/f - 1/f')`$. Its average replaces $`Y`$ by $`h`$, so the expected gap is the same whether scored against $`Y`$ or against $`h`$. QLIKE as written differs from $`\ln f + Y/f`$ by $`-\ln Y - 1`$, the same for every forecast, so it ranks identically.
 
 </details>
 
 ### Step 5: the two scores punish different misses
 
-MSE counts a miss in variance units, so one wild day such as day 5 dominates it. QLIKE looks at the ratio of measured to forecast variance. Forecast half of what came, and the day's penalty is 0.3069. Forecast double, and it is 0.1931. Under-forecasting costs more, and for a risk desk it is the costlier failure. The code checks that the QLIKE gap between GARCH and EWMA equals the gap in $\ln f + RV/f$: 0.024210 both ways.
+MSE counts a miss in variance units, so one wild day such as day 5 dominates it. QLIKE looks at the ratio of measured to forecast variance. Forecast half of what came, and the day's penalty is 0.3069. Forecast double, and it is 0.1931. Under-forecasting costs more, and for a risk desk it is the costlier failure. The code checks that the QLIKE gap between GARCH and EWMA equals the gap in $`\ln f + RV/f`$: 0.024210 both ways.
 
-On this card the weights are fixed in advance. In practice GARCH's $\omega$, $\alpha$ and $\beta$ are chosen by maximum likelihood on earlier data (the weights under which those past returns were most probable), the route [GARCH](../../09-Probability%20and%20statistics/12-Time%20Series/06-garch-and-volatility-clustering.md) follows.
+On this card the weights are fixed in advance. In practice GARCH's $`\omega`$, $`\alpha`$ and $`\beta`$ are chosen by maximum likelihood on earlier data (the weights under which those past returns were most probable), the route [GARCH](../../09-Probability%20and%20statistics/12-Time%20Series/06-garch-and-volatility-clustering.md) follows.
 
 ---
 
@@ -192,12 +208,12 @@ Acme's day 1 return is +1.00%; its four intraday pieces are 0.55%, −0.05%, 0.4
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| EWMA for day 2 | $0.94 \times 2.00 + 0.06 \times 1.00^2$ | 1.94 |
-| GARCH for day 2 | $0.10 + 0.10 \times 1.00^2 + 0.85 \times 2.00$ | 1.90 |
-| realised variance, day 1 | $0.55^2 + 0.05^2 + 0.40^2 + 0.10^2$ | 0.4750 |
+| EWMA for day 2 | $`0.94 \times 2.00 + 0.06 \times 1.00^2`$ | 1.94 |
+| GARCH for day 2 | $`0.10 + 0.10 \times 1.00^2 + 0.85 \times 2.00`$ | 1.90 |
+| realised variance, day 1 | $`0.55^2 + 0.05^2 + 0.40^2 + 0.10^2`$ | 0.4750 |
 | lagged realised for day 2 | day 1's realised variance | 0.4750 |
-| EWMA for day 9 | $0.94 \times 2.5220 + 0.06 \times 1.50^2$ | 2.5057 |
-| GARCH for day 9 | $0.10 + 0.10 \times 1.50^2 + 0.85 \times 2.7236$ | 2.6401 |
+| EWMA for day 9 | $`0.94 \times 2.5220 + 0.06 \times 1.50^2`$ | 2.5057 |
+| GARCH for day 9 | $`0.10 + 0.10 \times 1.50^2 + 0.85 \times 2.7236`$ | 2.6401 |
 | as daily volatility | square roots | 1.5829% and 1.6248% |
 | MSE, days 2 to 8 | EWMA, GARCH, lagged realised | 2.7804, 3.0992, 4.3680 |
 | QLIKE, days 2 to 8 | EWMA, GARCH, lagged realised | 0.4377, 0.4619, 2.1655 |
@@ -207,9 +223,9 @@ On this record EWMA edges GARCH, and both beat yesterday's realised variance. Se
 
 ### A longer race, where the truth is known
 
-The code builds 2,500 trading days from the GARCH rule itself, each cut into four intraday pieces, after 250 warm-up days. Here the true $h_t$ is known, so each score can be taken against realised variance and against the truth. GARCH's forecast *is* the truth in this world.
+The code builds 2,500 trading days from the GARCH rule itself, each cut into four intraday pieces, after 250 warm-up days. Here the true $`h_t`$ is known, so each score can be taken against realised variance and against the truth. GARCH's forecast *is* the truth in this world.
 
-| Rule | MSE vs realised | MSE vs truth | $\ln f + RV/f$ | $\ln f + h/f$ |
+| Rule | MSE vs realised | MSE vs truth | $`\ln f + RV/f`$ | $`\ln f + h/f`$ |
 | --- | --- | --- | --- | --- |
 | EWMA | 2.2521 | 0.1403 | 1.6193 | 1.6185 |
 | GARCH | 2.1175 | 0.0000 | 1.5935 | 1.5942 |
@@ -221,8 +237,8 @@ Against realised variance, even the perfect forecast scores 2.1175: nearly all o
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $\lambda$ and $1-\lambda$ swapped | day 6 forecast 8.4825, not 2.3874 | 94% weight on one squared move: the forecast is that day's noise |
-| $\beta$ = 0.90, so $\alpha + \beta = 1$ | day 9 3.3175; 20 days ahead 5.2175, still rising | no long-run level; the floor $\omega$ piles up every day |
+| $`\lambda`$ and $`1-\lambda`$ swapped | day 6 forecast 8.4825, not 2.3874 | 94% weight on one squared move: the forecast is that day's noise |
+| $`\beta`$ = 0.90, so $`\alpha + \beta = 1`$ | day 9 3.3175; 20 days ahead 5.2175, still rising | no long-run level; the floor $`\omega`$ piles up every day |
 | forecast scored against its own day | MSE 0.0000 | the lagged-realised "forecast" was given the answer: peeking |
 | ten days as 10 × tomorrow's GARCH | 26.4006, not 25.1367 | the expected forecast drifts toward 2.00, so the days are not equal |
 | a 365-day year for annual volatility | 31.04%, not 25.79% | variance adds over trading days, 252 of them |
@@ -712,12 +728,12 @@ The two outputs match line for line, simulations included: both run the same gen
 
 Lean proves the forecast algebra and the QLIKE penalty, for any weights and any returns, and checks the hand-worked numbers.
 
-- Suppose the expected forecasts obey $M_{k+1} = \omega + \alpha M_k + \beta M_k$, with $\alpha + \beta$ below 1. Then $M_k = \bar h + \rho^{\,k-1}(M_1 - \bar h)$ for every $k \ge 1$.
-- Take any $\lambda$ and any returns. Then $e_{n+1}$ equals the unrolled sum in Step 1.
-- The seed's weight $\lambda^n$ and the squares' weights add up to exactly 1, for any $\lambda$.
-- Take positive $RV$ and $f$. Then the QLIKE penalty is never negative, and it is zero exactly when $RV = f$.
+- Suppose the expected forecasts obey $`M_{k+1} = \omega + \alpha M_k + \beta M_k`$, with $`\alpha + \beta`$ below 1. Then $`M_k = \bar h + \rho^{\,k-1}(M_1 - \bar h)`$ for every $`k \ge 1`$.
+- Take any $`\lambda`$ and any returns. Then $`e_{n+1}`$ equals the unrolled sum in Step 1.
+- The seed's weight $`\lambda^n`$ and the squares' weights add up to exactly 1, for any $`\lambda`$.
+- Take positive $`RV`$ and $`f`$. Then the QLIKE penalty is never negative, and it is zero exactly when $`RV = f`$.
 - The worked numbers check: EWMA 1.94 and GARCH 1.90 for day 2, day 1's realised variance 0.4750, and the long-run level 2.00.
-- Take $\lambda$ = 0.94, with $\alpha = 1 - \lambda$ and $\beta = \lambda$. Then $\alpha + \beta$ is exactly 1.
+- Take $`\lambda`$ = 0.94, with $`\alpha = 1 - \lambda`$ and $`\beta = \lambda`$. Then $`\alpha + \beta`$ is exactly 1.
 
 The tower-property step behind the GARCH rule, the scores, the day 9 forecasts and the simulations are left to the Python and Rust checks.
 
@@ -840,7 +856,7 @@ example : (1 - 94 / 100 : ℚ) + 94 / 100 = 1 := by norm_num
 > Guess first, then run it.
 > - **A slower EWMA.** Set `LAM` to `0.97`. Guess: better or worse? On the eight days EWMA's scores improve and it pulls further ahead of GARCH. In the 2,500-day race it falls further behind. Eight days cannot choose a parameter.
 > - **A different seed.** Set the seed from `0.0002` to `0.0004`. Guess which rule minds more. EWMA, whose seed still weighs 0.6096 after eight days, ends day 8 well above GARCH. GARCH now beats EWMA on both scores, and yesterday's realised variance has the lowest MSE of the three.
-> - **No long-run level.** Set `BETA` to `0.90`. Guess what happens to $\bar h$. Python stops with a division by zero at the anchor line; there is no level to return to.
+> - **No long-run level.** Set `BETA` to `0.90`. Guess what happens to $`\bar h`$. Python stops with a division by zero at the anchor line; there is no level to return to.
 > - **Fewer simulated futures.** Set `paths` to `200`. Guess whether 1% is tight enough. The simulated 10-day forecast wanders away from the formula and the assert stops the run.
 
 ---
@@ -850,16 +866,16 @@ example : (1 - 94 / 100 : ℚ) + 94 / 100 = 1 := by norm_num
 > [!warning]
 > **Treating realised variance as the true variance.** It is a measurement, and a noisy one. In the race, the forecast equal to the truth still scored an MSE of 2.1175 against realised variance, all of it yardstick noise. A single day's miss says almost nothing about a rule; only averages over many days, with a fair score, rank rules.
 >
-> - **Peeking.** A forecast for day $t$ must use nothing from day $t$. Score yesterday's realised variance against itself and the MSE is 0.0000: a perfect score for a rule that saw the answer.
-> - **Swapping the weights.** EWMA keeps $\lambda$ = 0.94 of the old forecast and takes 0.06 of the new square. Swapped, the day 6 forecast is 8.4825, a copy of one day's noise.
+> - **Peeking.** A forecast for day $`t`$ must use nothing from day $`t`$. Score yesterday's realised variance against itself and the MSE is 0.0000: a perfect score for a rule that saw the answer.
+> - **Swapping the weights.** EWMA keeps $`\lambda`$ = 0.94 of the old forecast and takes 0.06 of the new square. Swapped, the day 6 forecast is 8.4825, a copy of one day's noise.
 > - **Scaling a GARCH forecast flat.** Ten days of variance is the sum of ten expected days, 25.1367, not 10 × tomorrow's, 26.4006. The gap grows with the horizon.
-> - **Annualising with calendar days.** Variance accrues on trading days: $\sqrt{252}$, not $\sqrt{365}$. The day 9 GARCH forecast is 25.79% a year, not 31.04%.
+> - **Annualising with calendar days.** Variance accrues on trading days: $`\sqrt{252}`$, not $`\sqrt{365}`$. The day 9 GARCH forecast is 25.79% a year, not 31.04%.
 
 ---
 
 ## Where you meet it in real life
 
-- **Value at risk.** RiskMetrics' EWMA with $\lambda$ = 0.94 was widely adopted as the volatility input to banks' value-at-risk systems; a book's one-day value at risk scales with the forecast's square root ([Parametric VaR](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md)).
+- **Value at risk.** RiskMetrics' EWMA with $`\lambda`$ = 0.94 was widely adopted as the volatility input to banks' value-at-risk systems; a book's one-day value at risk scales with the forecast's square root ([Parametric VaR](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md)).
 - **Option desks.** A forecast of realised variance, set against the market's implied volatility, the volatility that today's option prices assume ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)), is the case for buying or selling options. The book's vega, its dollars per volatility point ([Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md)) turns a forecast miss into dollars.
 - **Hedging.** How much gamma (the rate at which a hedge ratio drifts as the price moves) to carry overnight depends on how big tomorrow's move is likely to be; the hedge itself is built in [Hedging three Greeks at once](02-delta-gamma-vega-hedging.md).
 - **Variance swaps.** These contracts pay realised variance measured from daily closes, the one-piece version of this card's yardstick ([Realised variance](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md)).
@@ -887,7 +903,7 @@ A forecast says how big a normal tomorrow is; the open question is what the book
 
 Verified 2026-09-28: every link below resolves to the publisher's page.
 
-- Bollerslev, Tim. "Generalized Autoregressive Conditional Heteroskedasticity." *Journal of Econometrics* 31, no. 3 (1986): 307–327. [doi:10.1016/0304-4076(86)90063-1](https://doi.org/10.1016/0304-4076(86)90063-1). The GARCH rule, its long-run level and the condition $\alpha + \beta < 1$.
-- J.P. Morgan and Reuters. *RiskMetrics Technical Document*, fourth edition, 1996. [MSCI copy](https://www.msci.com/documents/10199/5915b101-4206-4ba0-aee2-3449d5c7e95a). The EWMA rule and the daily choice $\lambda$ = 0.94.
+- Bollerslev, Tim. "Generalized Autoregressive Conditional Heteroskedasticity." *Journal of Econometrics* 31, no. 3 (1986): 307–327. [doi:10.1016/0304-4076(86)90063-1](https://doi.org/10.1016/0304-4076(86)90063-1). The GARCH rule, its long-run level and the condition $`\alpha + \beta < 1`$.
+- J.P. Morgan and Reuters. *RiskMetrics Technical Document*, fourth edition, 1996. [MSCI copy](https://www.msci.com/documents/10199/5915b101-4206-4ba0-aee2-3449d5c7e95a). The EWMA rule and the daily choice $`\lambda`$ = 0.94.
 - Andersen, Torben G., Tim Bollerslev, Francis X. Diebold, and Paul Labys. "Modeling and Forecasting Realized Volatility." *Econometrica* 71, no. 2 (2003): 579–625. [Econometric Society page](https://www.econometricsociety.org/publications/econometrica/2003/03/01/modeling-and-forecasting-realized-volatility). Realised variance from intraday returns as measurement and as forecast input.
 - Patton, Andrew J. "Volatility Forecast Comparison Using Imperfect Volatility Proxies." *Journal of Econometrics* 160, no. 1 (2011): 246–256. [doi:10.1016/j.jeconom.2010.03.034](https://doi.org/10.1016/j.jeconom.2010.03.034). Which scores rank forecasts correctly against a noisy yardstick: MSE and QLIKE do.

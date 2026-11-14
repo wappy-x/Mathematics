@@ -38,52 +38,58 @@ The bars are the seven days. With each day weighing 1/7, the lowest line is the 
 
 ## The formula
 
-Notation first. A measure space $(\Omega, \mathcal F, \mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
+Notation first. A measure space $`(\Omega, \mathcal F, \mu)`$ is a set of points $`\Omega`$, the collection $`\mathcal F`$ of sets we allow ourselves to measure, and a measure $`\mu`$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
 
-For the week, $\Omega$ is the seven days, $\mathcal F$ is every set of days, and two measures are in play: **counting measure**, each day weighing 1, and the **uniform probability**, each day weighing 1/7. The integral $\int f\,d\mu$, read "the integral of f against mu", is here the weighted sum of the seven values.
+For the week, $`\Omega`$ is the seven days, $`\mathcal F`$ is every set of days, and two measures are in play: **counting measure**, each day weighing 1, and the **uniform probability**, each day weighing 1/7. The integral $`\int f\,d\mu`$, read "the integral of f against mu", is here the weighted sum of the seven values.
 
-A property holds **almost everywhere**, written a.e., when it fails only on a set of measure zero, a **null set** ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Double bars $\lVert f\rVert$ denote a size.
+A property holds **almost everywhere**, written a.e., when it fails only on a set of measure zero, a **null set** ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Double bars $`\lVert f\rVert`$ denote a size.
 
-For a measurable $f$ and an exponent $p$ with $1 \le p < \infty$, the **p-norm** is
+For a measurable $`f`$ and an exponent $`p`$ with $`1 \le p < \infty`$, the **p-norm** is
 
-$$\lVert f\rVert_p = \Big(\int \lvert f\rvert^p\,d\mu\Big)^{1/p}.$$
+```math
+\lVert f\rVert_p = \Big(\int \lvert f\rvert^p\,d\mu\Big)^{1/p}.
+```
 
 **Read it aloud:** take the size of f at each point, raise it to the power p, integrate against mu, and take the p-th root.
 
-For $p = \infty$ the norm is the **essential supremum**, the smallest ceiling that f breaks only on a set of measure zero:
+For $`p = \infty`$ the norm is the **essential supremum**, the smallest ceiling that f breaks only on a set of measure zero:
 
-$$\lVert f\rVert_\infty = \inf\{\, M \ge 0 : \mu(\lvert f\rvert > M) = 0 \,\}.$$
+```math
+\lVert f\rVert_\infty = \inf\{\, M \ge 0 : \mu(\lvert f\rvert > M) = 0 \,\}.
+```
 
 **Read it aloud:** the least height M such that the set where the size of f climbs above M has measure zero.
 
-The space $\mathcal L^p(\mu)$ is every measurable function with $\lVert f\rVert_p < \infty$. The space $L^p(\mu)$ is the same collection with a.e.-equal functions counted as one: its elements are **classes** $[f]$, each the set of functions equal to f almost everywhere. With $\mathcal N$ the functions that are zero a.e., $[f] = f + \mathcal N$.
+The space $`\mathcal L^p(\mu)`$ is every measurable function with $`\lVert f\rVert_p < \infty`$. The space $`L^p(\mu)`$ is the same collection with a.e.-equal functions counted as one: its elements are **classes** $`[f]`$, each the set of functions equal to f almost everywhere. With $`\mathcal N`$ the functions that are zero a.e., $`[f] = f + \mathcal N`$.
 
-Two exponents $p$ and $q$ are **conjugate** when
+Two exponents $`p`$ and $`q`$ are **conjugate** when
 
-$$\frac1p + \frac1q = 1, \qquad\text{that is}\qquad q = \frac{p}{p-1},$$
+```math
+\frac1p + \frac1q = 1, \qquad\text{that is}\qquad q = \frac{p}{p-1},
+```
 
 with 1 and ∞ counted as a conjugate pair. So 2 pairs with 2, and 3 with 3/2. Conjugate pairs are the exponents that [Holder's inequality](02-holders-inequality.md) can pair; Step 6 shows why no other pair can work.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal F$ | the points; the sets we may measure | the 7 days; every set of days | more points, more to add |
-| $\mu$ | the measure: a size for each measurable set | counting (1 a day) or uniform (1/7 a day) | multiply it by c and the p-norm grows by c^(1/p) |
-| $f$, $g$ | measurable functions with real values | the week's speeds; the constant 5 | — |
-| $v$, $u$, $s$ | the week; a gust $u(t) = 8t$; a spike $s(t) = 1/\sqrt t$ | 3, 5, 8, 2, 6, 4, 7 m/s; 0 to 8 m/s in one hour; unbounded near 0 | — |
-| $p$ | the exponent, 1 or more | 1, 2, 3 | big values count for more |
-| $\lVert f\rVert_p$ | the p-norm | 14.25 counting, 5.385 uniform, at p = 2 | — |
-| $\lVert f\rVert_\infty$, $M$, $S$ | the essential supremum; a candidate ceiling; its value in the proof | 8 m/s, despite a 40 m/s glitch | — |
-| $q$ | the conjugate exponent, p/(p − 1) | 2 for p = 2; 3/2 for p = 3; ∞ for p = 1 | p up, q down toward 1 |
-| $\mathcal N$, $[f]$, $L^p$ | functions zero a.e.; f's class; the space of classes | the glitch indicator lies in $\mathcal N$ | — |
-| $a$, $b$, $c$ | real scalars; a factor multiplying the measure | a = 2; c = 1/7 turns counting into uniform | a: norm grows by the size of a |
-| $\lambda$, $t$ | length, Lebesgue measure; time in hours | the hour [0, 1] | — |
-| $A$, $n$, $h$, $\varepsilon$, $C$ | proof helpers: a set, a whole-number index, a non-negative function, a threshold, a constant | A = where the size of f exceeds M | — |
+| $`\Omega`$, $`\mathcal F`$ | the points; the sets we may measure | the 7 days; every set of days | more points, more to add |
+| $`\mu`$ | the measure: a size for each measurable set | counting (1 a day) or uniform (1/7 a day) | multiply it by c and the p-norm grows by c^(1/p) |
+| $`f`$, $`g`$ | measurable functions with real values | the week's speeds; the constant 5 | — |
+| $`v`$, $`u`$, $`s`$ | the week; a gust $`u(t) = 8t`$; a spike $`s(t) = 1/\sqrt t`$ | 3, 5, 8, 2, 6, 4, 7 m/s; 0 to 8 m/s in one hour; unbounded near 0 | — |
+| $`p`$ | the exponent, 1 or more | 1, 2, 3 | big values count for more |
+| $`\lVert f\rVert_p`$ | the p-norm | 14.25 counting, 5.385 uniform, at p = 2 | — |
+| $`\lVert f\rVert_\infty`$, $`M`$, $`S`$ | the essential supremum; a candidate ceiling; its value in the proof | 8 m/s, despite a 40 m/s glitch | — |
+| $`q`$ | the conjugate exponent, p/(p − 1) | 2 for p = 2; 3/2 for p = 3; ∞ for p = 1 | p up, q down toward 1 |
+| $`\mathcal N`$, $`[f]`$, $`L^p`$ | functions zero a.e.; f's class; the space of classes | the glitch indicator lies in $`\mathcal N`$ | — |
+| $`a`$, $`b`$, $`c`$ | real scalars; a factor multiplying the measure | a = 2; c = 1/7 turns counting into uniform | a: norm grows by the size of a |
+| $`\lambda`$, $`t`$ | length, Lebesgue measure; time in hours | the hour [0, 1] | — |
+| $`A`$, $`n`$, $`h`$, $`\varepsilon`$, $`C`$ | proof helpers: a set, a whole-number index, a non-negative function, a threshold, a constant | A = where the size of f exceeds M | — |
 
 ### When it holds
 
 A definition, so nothing can fail; each piece earns its place:
 
-- **Measurability.** Without it $\lvert f\rvert^p$ has no integral.
+- **Measurability.** Without it $`\lvert f\rvert^p`$ has no integral.
 - **An exponent of at least 1.** Below 1 the triangle inequality fails: Step 2.
 - **Classes, not functions.** Otherwise the glitch alone, a nonzero function, has norm zero.
 - **Any measure.** Counting measure gives sequence spaces, length gives functions on the line, a probability gives random quantities with a finite p-th moment.
@@ -98,25 +104,29 @@ A size for functions should behave like the length of an arrow: grow in proporti
 
 ### Step 1: the root makes the size scale
 
-Double every speed. The sum of squares goes from 203 to 812, four times as much. The square root goes from 14.2478 to 28.4956, exactly twice. In general $\lvert af\rvert^p = \lvert a\rvert^p \lvert f\rvert^p$, so the integral grows by $\lvert a\rvert^p$ and its p-th root by $\lvert a\rvert$:
+Double every speed. The sum of squares goes from 203 to 812, four times as much. The square root goes from 14.2478 to 28.4956, exactly twice. In general $`\lvert af\rvert^p = \lvert a\rvert^p \lvert f\rvert^p`$, so the integral grows by $`\lvert a\rvert^p`$ and its p-th root by $`\lvert a\rvert`$:
 
-$$\lVert af\rVert_p = \lvert a\rvert\,\lVert f\rVert_p.$$
+```math
+\lVert af\rVert_p = \lvert a\rvert\,\lVert f\rVert_p.
+```
 
 The root also keeps the units: m/s under the uniform probability; under counting, where each day weighs 1 day, the p-norm is in m/s·day^(1/p), so the 1-norm 35 is in m/s·days and the 2-norm 14.2478 in m/s·day^(1/2).
 
 ### Step 2: why the exponent starts at 1
 
-Let f be 1 on Monday and 0 elsewhere, g be 1 on Tuesday and 0 elsewhere, and count days. At p = 1/2 each has size $1^{1/2}$ squared, 1. Their sum is 1 on two days, of size $(1 + 1)^2 = 4$. The size of the sum beats the sum of the sizes, 4 > 2, so the triangle inequality fails.
+Let f be 1 on Monday and 0 elsewhere, g be 1 on Tuesday and 0 elsewhere, and count days. At p = 1/2 each has size $`1^{1/2}`$ squared, 1. Their sum is 1 on two days, of size $`(1 + 1)^2 = 4`$. The size of the sum beats the sum of the sizes, 4 > 2, so the triangle inequality fails.
 
-For $p \ge 1$ the triangle inequality holds, because $t^p$ bends upward exactly then; [Minkowski's inequality](03-minkowskis-inequality.md) proves it.
+For $`p \ge 1`$ the triangle inequality holds, because $`t^p`$ bends upward exactly then; [Minkowski's inequality](03-minkowskis-inequality.md) proves it.
 
 ### Step 3: p = ∞ is the limit, and why "essential"
 
-Watch the week's norm as p grows. Under counting measure it falls from 35 toward 8; under the uniform probability it rises from 5 toward 8. Both are squeezed: every term is at most $8^p$ and one term equals it, so
+Watch the week's norm as p grows. Under counting measure it falls from 35 toward 8; under the uniform probability it rises from 5 toward 8. Both are squeezed: every term is at most $`8^p`$ and one term equals it, so
 
-$$8 \le \lVert v\rVert_p \le 7^{1/p}\cdot 8 \quad\text{(counting)}, \qquad 7^{-1/p}\cdot 8 \le \lVert v\rVert_p \le 8 \quad\text{(uniform)},$$
+```math
+8 \le \lVert v\rVert_p \le 7^{1/p}\cdot 8 \quad\text{(counting)}, \qquad 7^{-1/p}\cdot 8 \le \lVert v\rVert_p \le 8 \quad\text{(uniform)},
+```
 
-and $7^{1/p}$ tends to 1. At p = 32 the bounds are 8.5016 and 7.5280.
+and $`7^{1/p}`$ tends to 1. At p = 32 the bounds are 8.5016 and 7.5280.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -130,23 +140,25 @@ xychart-beta
 
 The falling line is counting measure, the rising line the uniform probability. Both close on 8 from opposite sides, because the week weighs 7 under counting and 1 under the probability.
 
-Now move to a continuous record: a gust whose speed climbs steadily from 0 to 8 m/s over one hour, $u(t) = 8t$ for t in [0, 1], with length $\lambda$ as the measure. Its norms are $8/(p+1)^{1/p}$: 4 at p = 1, 4.6188 at p = 2, 5.0397 at p = 3, and 7.9449 at p = 1000, climbing to 8.
+Now move to a continuous record: a gust whose speed climbs steadily from 0 to 8 m/s over one hour, $`u(t) = 8t`$ for t in [0, 1], with length $`\lambda`$ as the measure. Its norms are $`8/(p+1)^{1/p}`$: 4 at p = 1, 4.6188 at p = 2, 5.0397 at p = 3, and 7.9449 at p = 1000, climbing to 8.
 
 Add the logger's glitch: 40 m/s at the instant t = 0.5. The plain supremum, the largest value taken, jumps to 40. No p-norm moves, since a set of length 0 carries no integral, so their limit stays 8.
 
 The essential supremum agrees: the speed exceeds 7 on a set of length 0.125 and exceeds 8 on a set of length 0, so the least ceiling broken only on a null set is 8.
 
-On any finite measure $\lVert f\rVert_p \to \lVert f\rVert_\infty$ (Detailed proof, part 8). Under counting measure no nonempty set is null, so the essential supremum is the maximum.
+On any finite measure $`\lVert f\rVert_p \to \lVert f\rVert_\infty`$ (Detailed proof, part 8). Under counting measure no nonempty set is null, so the essential supremum is the maximum.
 
 ### Step 4: L^p is closed under sums
 
-If f and g have finite p-norm, does f + g? At every point $\lvert f + g\rvert$ is at most twice the larger of $\lvert f\rvert$ and $\lvert g\rvert$, so
+If f and g have finite p-norm, does f + g? At every point $`\lvert f + g\rvert`$ is at most twice the larger of $`\lvert f\rvert`$ and $`\lvert g\rvert`$, so
 
-$$\lvert f+g\rvert^p \le 2^p\big(\lvert f\rvert^p + \lvert g\rvert^p\big).$$
+```math
+\lvert f+g\rvert^p \le 2^p\big(\lvert f\rvert^p + \lvert g\rvert^p\big).
+```
 
-Integrate: the left side is finite whenever the right is. With Step 1, $\mathcal L^p(\mu)$ is a vector space, closed under adding and scaling ([Vector spaces and subspaces](../../03-Algebra/03-Vectors/02-vector-spaces-and-subspaces.md)). Minkowski's inequality replaces this crude bound with the sharp one, $\lVert f+g\rVert_p \le \lVert f\rVert_p + \lVert g\rVert_p$.
+Integrate: the left side is finite whenever the right is. With Step 1, $`\mathcal L^p(\mu)`$ is a vector space, closed under adding and scaling ([Vector spaces and subspaces](../../03-Algebra/03-Vectors/02-vector-spaces-and-subspaces.md)). Minkowski's inequality replaces this crude bound with the sharp one, $`\lVert f+g\rVert_p \le \lVert f\rVert_p + \lVert g\rVert_p`$.
 
-Not every function is in. The spike $s(t) = 1/\sqrt t$ on (0, 1] has 1-norm 2. But $s^2 = 1/t$ puts ln 2 = 0.6931 on every halving, 1/2 to 1, 1/4 to 1/2, and on forever: 27.73 by $2^{-40}$ and no end. The spike is in $L^1$, not in $L^2$.
+Not every function is in. The spike $`s(t) = 1/\sqrt t`$ on (0, 1] has 1-norm 2. But $`s^2 = 1/t`$ puts ln 2 = 0.6931 on every halving, 1/2 to 1, 1/4 to 1/2, and on forever: 27.73 by $`2^{-40}`$ and no end. The spike is in $`L^1`$, not in $`L^2`$.
 
 ### Step 5: a.e.-equal functions become one element
 
@@ -154,44 +166,46 @@ A space small enough to list in full: Monday and Tuesday weigh 1 each, the glitc
 
 Three facts make classes behave on every measure:
 
-- **The functions zero a.e. form a subspace.** The union of two null sets is null, so $\mathcal N$ is closed under sums and scaling.
-- **Norm zero means zero a.e.** If $\int \lvert f\rvert^p\,d\mu = 0$, Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) gives the set where $\lvert f\rvert^p \ge 1/n$ measure 0 for every n, and those countably many null sets cover everywhere f is nonzero.
-- **The norm and the operations ignore representatives.** Changing f on a null set changes no integral ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md), Detailed proof, part 5), and if e and e' are zero a.e., $(f + e) + (g + e') = (f + g) + (e + e')$ with $e + e'$ still in $\mathcal N$. On the listed space all 256 choices of representatives add into the class predicted.
+- **The functions zero a.e. form a subspace.** The union of two null sets is null, so $`\mathcal N`$ is closed under sums and scaling.
+- **Norm zero means zero a.e.** If $`\int \lvert f\rvert^p\,d\mu = 0`$, Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) gives the set where $`\lvert f\rvert^p \ge 1/n`$ measure 0 for every n, and those countably many null sets cover everywhere f is nonzero.
+- **The norm and the operations ignore representatives.** Changing f on a null set changes no integral ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md), Detailed proof, part 5), and if e and e' are zero a.e., $`(f + e) + (g + e') = (f + g) + (e + e')`$ with $`e + e'`$ still in $`\mathcal N`$. On the listed space all 256 choices of representatives add into the class predicted.
 
-So $L^p(\mu)$, the classes, is a vector space, and the p-norm on it is zero only at the zero class. With Minkowski's triangle inequality it is a **normed space**: a vector space with a size obeying Steps 0 to 2.
+So $`L^p(\mu)`$, the classes, is a vector space, and the p-norm on it is zero only at the zero class. With Minkowski's triangle inequality it is a **normed space**: a vector space with a size obeying Steps 0 to 2.
 
 ### Step 6: why conjugate exponents
 
-A pairing bound, the integral of $\lvert fg\rvert$ at most a constant times $\lVert f\rVert_p\lVert g\rVert_q$, links L^p and L^q. Which p and q allow one constant for every measure? Multiply the measure by c: the integral of $\lvert fg\rvert$ grows by c, $\lVert f\rVert_p$ by $c^{1/p}$, and $\lVert g\rVert_q$ by $c^{1/q}$. Their ratio grows by
+A pairing bound, the integral of $`\lvert fg\rvert`$ at most a constant times $`\lVert f\rVert_p\lVert g\rVert_q`$, links L^p and L^q. Which p and q allow one constant for every measure? Multiply the measure by c: the integral of $`\lvert fg\rvert`$ grows by c, $`\lVert f\rVert_p`$ by $`c^{1/p}`$, and $`\lVert g\rVert_q`$ by $`c^{1/q}`$. Their ratio grows by
 
-$$c^{\,1 - 1/p - 1/q}.$$
+```math
+c^{\,1 - 1/p - 1/q}.
+```
 
 Unless the exponent is 0, sending c toward 0 or infinity makes the ratio as large as anyone likes, and no constant can serve.
 
-Take the week and g the constant 1. For p = 2 and q = 2 the ratio is 0.9285 at weights 1/7, 1, 7 and 49. For p = 3 and q = 3/2 it is 0.8775 at all four. For p = 2 and q = 3, not conjugate, it runs 0.9285, 1.2842, 1.7761, 2.4565, growing as $c^{1/6}$. The best constant for conjugate pairs is 1, which is [Holder's inequality](02-holders-inequality.md).
+Take the week and g the constant 1. For p = 2 and q = 2 the ratio is 0.9285 at weights 1/7, 1, 7 and 49. For p = 3 and q = 3/2 it is 0.8775 at all four. For p = 2 and q = 3, not conjugate, it runs 0.9285, 1.2842, 1.7761, 2.4565, growing as $`c^{1/6}`$. The best constant for conjugate pairs is 1, which is [Holder's inequality](02-holders-inequality.md).
 
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, $(\Omega, \mathcal F, \mu)$ is a measure space, $f$ and $g$ are measurable with real values, and $a$, $b$ are real numbers. Facts used: **(I1)** for non-negative measurable functions the integral adds, scales by non-negative constants and respects order ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)); **(I2)** a non-negative function that is zero off a null set has integral 0 ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md), part 5); **(I3)** Markov: for a non-negative measurable function h and a threshold $\varepsilon > 0$, $\mu(h \ge \varepsilon) \le \frac1\varepsilon\int h\,d\mu$ ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)); **(I4)** a countable union of null sets is null, by countable subadditivity ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); **(I5)** a continuous function of a measurable function is measurable, so $\lvert f\rvert^p$ is.
+Throughout, $`(\Omega, \mathcal F, \mu)`$ is a measure space, $`f`$ and $`g`$ are measurable with real values, and $`a`$, $`b`$ are real numbers. Facts used: **(I1)** for non-negative measurable functions the integral adds, scales by non-negative constants and respects order ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)); **(I2)** a non-negative function that is zero off a null set has integral 0 ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md), part 5); **(I3)** Markov: for a non-negative measurable function h and a threshold $`\varepsilon > 0`$, $`\mu(h \ge \varepsilon) \le \frac1\varepsilon\int h\,d\mu`$ ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)); **(I4)** a countable union of null sets is null, by countable subadditivity ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); **(I5)** a continuous function of a measurable function is measurable, so $`\lvert f\rvert^p`$ is.
 
-**1. Scaling.** $\lvert af\rvert^p = \lvert a\rvert^p\lvert f\rvert^p$ pointwise; by (I1) $\int\lvert af\rvert^p = \lvert a\rvert^p\int\lvert f\rvert^p$; take p-th roots. For $p = \infty$: $\lvert af\rvert > \lvert a\rvert M$ exactly where $\lvert f\rvert > M$ (for $a \ne 0$), so the admissible ceilings scale by $\lvert a\rvert$.
+**1. Scaling.** $`\lvert af\rvert^p = \lvert a\rvert^p\lvert f\rvert^p`$ pointwise; by (I1) $`\int\lvert af\rvert^p = \lvert a\rvert^p\int\lvert f\rvert^p`$; take p-th roots. For $`p = \infty`$: $`\lvert af\rvert > \lvert a\rvert M`$ exactly where $`\lvert f\rvert > M`$ (for $`a \ne 0`$), so the admissible ceilings scale by $`\lvert a\rvert`$.
 
-**2. Closure under sums.** Pointwise $\lvert f+g\rvert \le \lvert f\rvert + \lvert g\rvert \le 2\max(\lvert f\rvert, \lvert g\rvert)$, so $\lvert f+g\rvert^p \le 2^p\max(\lvert f\rvert^p, \lvert g\rvert^p) \le 2^p(\lvert f\rvert^p + \lvert g\rvert^p)$. By (I1), $\int\lvert f+g\rvert^p \le 2^p(\int\lvert f\rvert^p + \int\lvert g\rvert^p) < \infty$. For $p = \infty$: off the union of the null sets where $\lvert f\rvert > \lVert f\rVert_\infty$ and $\lvert g\rvert > \lVert g\rVert_\infty$ (null by part 5), $\lvert f + g\rvert \le \lVert f\rVert_\infty + \lVert g\rVert_\infty$. With 1, $\mathcal L^p(\mu)$ is a vector space for $1 \le p \le \infty$.
+**2. Closure under sums.** Pointwise $`\lvert f+g\rvert \le \lvert f\rvert + \lvert g\rvert \le 2\max(\lvert f\rvert, \lvert g\rvert)`$, so $`\lvert f+g\rvert^p \le 2^p\max(\lvert f\rvert^p, \lvert g\rvert^p) \le 2^p(\lvert f\rvert^p + \lvert g\rvert^p)`$. By (I1), $`\int\lvert f+g\rvert^p \le 2^p(\int\lvert f\rvert^p + \int\lvert g\rvert^p) < \infty`$. For $`p = \infty`$: off the union of the null sets where $`\lvert f\rvert > \lVert f\rVert_\infty`$ and $`\lvert g\rvert > \lVert g\rVert_\infty`$ (null by part 5), $`\lvert f + g\rvert \le \lVert f\rVert_\infty + \lVert g\rVert_\infty`$. With 1, $`\mathcal L^p(\mu)`$ is a vector space for $`1 \le p \le \infty`$.
 
-**3. The null functions.** Let $\mathcal N$ be the measurable functions zero a.e. The zero function is in it. If $f = 0$ off a null set $Z$ and $g = 0$ off a null set $Z'$, then $af + bg = 0$ off $Z \cup Z'$, which is null by (I4). So $\mathcal N$ is a subspace of $\mathcal L^p(\mu)$; each member has norm 0, by (I2) for finite p and by definition for $p = \infty$.
+**3. The null functions.** Let $`\mathcal N`$ be the measurable functions zero a.e. The zero function is in it. If $`f = 0`$ off a null set $`Z`$ and $`g = 0`$ off a null set $`Z'`$, then $`af + bg = 0`$ off $`Z \cup Z'`$, which is null by (I4). So $`\mathcal N`$ is a subspace of $`\mathcal L^p(\mu)`$; each member has norm 0, by (I2) for finite p and by definition for $`p = \infty`$.
 
-**4. Norm zero means zero a.e.** Suppose $\int\lvert f\rvert^p = 0$. By (I3), $\mu(\lvert f\rvert^p \ge 1/n) \le n \cdot 0 = 0$ for every whole number $n \ge 1$. The set where $f \ne 0$ is the union over n of those sets, null by (I4). For $p = \infty$: $\lVert f\rVert_\infty = 0$ means $\mu(\lvert f\rvert > 0) = 0$ by part 5.
+**4. Norm zero means zero a.e.** Suppose $`\int\lvert f\rvert^p = 0`$. By (I3), $`\mu(\lvert f\rvert^p \ge 1/n) \le n \cdot 0 = 0`$ for every whole number $`n \ge 1`$. The set where $`f \ne 0`$ is the union over n of those sets, null by (I4). For $`p = \infty`$: $`\lVert f\rVert_\infty = 0`$ means $`\mu(\lvert f\rvert > 0) = 0`$ by part 5.
 
-**5. The essential supremum is attained.** Let $S = \lVert f\rVert_\infty$, finite. For each n some admissible M is below $S + 1/n$, and $\{\lvert f\rvert > S + 1/n\} \subseteq \{\lvert f\rvert > M\}$, which is null. The set $\{\lvert f\rvert > S\}$ is the union over n of these, null by (I4). So $\lvert f\rvert \le S$ a.e.
+**5. The essential supremum is attained.** Let $`S = \lVert f\rVert_\infty`$, finite. For each n some admissible M is below $`S + 1/n`$, and $`\{\lvert f\rvert > S + 1/n\} \subseteq \{\lvert f\rvert > M\}`$, which is null. The set $`\{\lvert f\rvert > S\}`$ is the union over n of these, null by (I4). So $`\lvert f\rvert \le S`$ a.e.
 
-**6. The norm ignores representatives.** If $f = g$ off a null set $Z$, then $\lvert f\rvert^p = \lvert g\rvert^p$ off $Z$. Splitting each over $Z$ and its complement, the pieces on $Z$ have integral 0 by (I2), so by (I1) both integrals equal the common integral off $Z$. For $p = \infty$, the sets $\{\lvert f\rvert > M\}$ and $\{\lvert g\rvert > M\}$ differ only inside $Z$, so one is null exactly when the other is.
+**6. The norm ignores representatives.** If $`f = g`$ off a null set $`Z`$, then $`\lvert f\rvert^p = \lvert g\rvert^p`$ off $`Z`$. Splitting each over $`Z`$ and its complement, the pieces on $`Z`$ have integral 0 by (I2), so by (I1) both integrals equal the common integral off $`Z`$. For $`p = \infty`$, the sets $`\{\lvert f\rvert > M\}`$ and $`\{\lvert g\rvert > M\}`$ differ only inside $`Z`$, so one is null exactly when the other is.
 
-**7. The quotient.** Define $[f] + [g] = [f + g]$ and $a[f] = [af]$. These do not depend on the representatives: if $f' = f + e$ and $g' = g + e'$ with $e, e' \in \mathcal N$, then $f' + g' = (f+g) + (e + e')$ and $af' = af + ae$, and part 3 puts $e + e'$ and $a\,e$ in $\mathcal N$. The vector-space rules hold for classes because they hold for representatives. By 6 the norm $\lVert [f]\rVert_p = \lVert f\rVert_p$ is well defined; by 4 it is zero only on $[0] = \mathcal N$; by 1 it scales. The triangle inequality is [Minkowski's inequality](03-minkowskis-inequality.md) for $1 \le p < \infty$ and part 2 for $p = \infty$.
+**7. The quotient.** Define $`[f] + [g] = [f + g]`$ and $`a[f] = [af]`$. These do not depend on the representatives: if $`f' = f + e`$ and $`g' = g + e'`$ with $`e, e' \in \mathcal N`$, then $`f' + g' = (f+g) + (e + e')`$ and $`af' = af + ae`$, and part 3 puts $`e + e'`$ and $`a\,e`$ in $`\mathcal N`$. The vector-space rules hold for classes because they hold for representatives. By 6 the norm $`\lVert [f]\rVert_p = \lVert f\rVert_p`$ is well defined; by 4 it is zero only on $`[0] = \mathcal N`$; by 1 it scales. The triangle inequality is [Minkowski's inequality](03-minkowskis-inequality.md) for $`1 \le p < \infty`$ and part 2 for $`p = \infty`$.
 
-**8. The limit p → ∞.** Let $\mu(\Omega)$ be finite and $S = \lVert f\rVert_\infty$ finite. Upper: $\lvert f\rvert^p \le S^p$ a.e. by 5, so by (I1), (I2) $\lVert f\rVert_p \le S\,\mu(\Omega)^{1/p}$, which tends to S (or equals 0 if $\mu(\Omega) = 0$). Lower: for $M < S$ the set $A = \{\lvert f\rvert > M\}$ has $\mu(A) > 0$, else M would be admissible; $\lvert f\rvert^p \ge M^p\mathbf 1_A$, so $\lVert f\rVert_p \ge M\mu(A)^{1/p}$, which tends to M. So every limit point of $\lVert f\rVert_p$ lies between M and S for every $M < S$, and the limit is S. If $S = \infty$, the lower bound alone holds for every M, and $\lVert f\rVert_p \to \infty$.
+**8. The limit p → ∞.** Let $`\mu(\Omega)`$ be finite and $`S = \lVert f\rVert_\infty`$ finite. Upper: $`\lvert f\rvert^p \le S^p`$ a.e. by 5, so by (I1), (I2) $`\lVert f\rVert_p \le S\,\mu(\Omega)^{1/p}`$, which tends to S (or equals 0 if $`\mu(\Omega) = 0`$). Lower: for $`M < S`$ the set $`A = \{\lvert f\rvert > M\}`$ has $`\mu(A) > 0`$, else M would be admissible; $`\lvert f\rvert^p \ge M^p\mathbf 1_A`$, so $`\lVert f\rVert_p \ge M\mu(A)^{1/p}`$, which tends to M. So every limit point of $`\lVert f\rVert_p`$ lies between M and S for every $`M < S`$, and the limit is S. If $`S = \infty`$, the lower bound alone holds for every M, and $`\lVert f\rVert_p \to \infty`$.
 
-**9. Conjugates.** Under $c\mu$ the three quantities scale by c, $c^{1/p}$ and $c^{1/q}$ (by (I1) and a p-th root). A bound with one constant $C$ for every $c > 0$ keeps $c^{1 - 1/p - 1/q}$ times a fixed positive ratio below $C$, which forces $1 - 1/p - 1/q = 0$.
+**9. Conjugates.** Under $`c\mu`$ the three quantities scale by c, $`c^{1/p}`$ and $`c^{1/q}`$ (by (I1) and a p-th root). A bound with one constant $`C`$ for every $`c > 0`$ keeps $`c^{1 - 1/p - 1/q}`$ times a fixed positive ratio below $`C`$, which forces $`1 - 1/p - 1/q = 0`$.
 
 </details>
 
@@ -225,7 +239,7 @@ In the world: the week's energy matches a steady 5.70 m/s, not the average 5, an
 | Exponent 1/2 | Monday plus Tuesday has size 4 > 1 + 1 | the triangle inequality fails below p = 1 |
 | Plain supremum for p = ∞ | 40 m/s from one glitched instant | a null set moved the size; the p-norms say 8 |
 | No root | doubling the week turns 203 into 812, four times | the size scaled by 2^p, not 2 |
-| Assume every function lies in every L^p | the spike's 1/t piles up 6.93, 13.86, 27.73 down to 2^-10, 2^-20, 2^-40 | $s$ is in $L^1$, not in $L^2$ |
+| Assume every function lies in every L^p | the spike's 1/t piles up 6.93, 13.86, 27.73 down to 2^-10, 2^-20, 2^-40 | $`s`$ is in $`L^1`$, not in $`L^2`$ |
 
 The code prints all four.
 
@@ -233,7 +247,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows a norm. The week's power sums take two roads: point by point, and by slicing at each height level, adding the rise in the p-th power times the number of days at or above that level. The uniform norms come directly, with a scaling check against $7^{-1/p}$ times the counting norms; the split 29 = 25 + 4 is exact.
+Nothing imported knows a norm. The week's power sums take two roads: point by point, and by slicing at each height level, adding the rise in the p-th power times the number of days at or above that level. The uniform norms come directly, with a scaling check against $`7^{-1/p}`$ times the counting norms; the split 29 = 25 + 4 is exact.
 
 The gust's norms come from the formula and from a midpoint sum on 100000 cells; the glitched gust is stored as straight pieces, the glitch one of length 0, and its plain supremum and essential supremum are both computed from those pieces; the spike is summed over 60 halvings; the a.e. classes are listed in full with all 256 representative sums.
 
@@ -619,8 +633,8 @@ Lean proves three facts behind the p-norm on any measure, for every exponent fro
 
 - Two measurable functions equal almost everywhere have the same p-norm.
 - A measurable function has p-norm zero exactly when it is zero almost everywhere.
-- Suppose $f$ and $g$ have finite p-norm, and $a$, $b$ are real. Then $af + bg$ has finite p-norm.
-- Take a measurable $f$ and a real $a$. Then $\lVert af\rVert_p = \lvert a\rvert\,\lVert f\rVert_p$.
+- Suppose $`f`$ and $`g`$ have finite p-norm, and $`a`$, $`b`$ are real. Then $`af + bg`$ has finite p-norm.
+- Take a measurable $`f`$ and a real $`a`$. Then $`\lVert af\rVert_p = \lvert a\rvert\,\lVert f\rVert_p`$.
 - The week's sums of speeds, squares and cubes are 35, 203 and 1295. Divided by 7 they give 5, 29 and 185.
 - The week's largest speed, its ∞-norm, is 8.
 - The deviations from the mean 5 have squares summing to 28, and 29 = 25 + 4.
@@ -708,7 +722,7 @@ example : (1 : ℚ) - 1 / 2 - 1 / 3 = 1 / 6 := by norm_num
 > Guess first, then run the Python.
 > - **A calmer Sunday.** Change the last 7 in `V` to 1. Guess: the sum drops to 29 and the uniform 1-norm to 29/7 = 4.1429; the ∞-norm stays 8, since Wednesday still sets it. The second assert then stops the run: the deviations are still taken from 5, and the mean of squares splits as squared mean plus squared deviation only about the true mean, now 29/7.
 > - **Weigh the glitch.** Change `W3 = [1, 1, 0]` to `[1, 1, 1]`. Guess: the instant now counts, no two triples agree a.e., the run lists eight classes of one, and the class assert stops it.
-> - **Mis-predict the growth rate.** In the last assert replace `1 / 3` with `1 / 4`. Guess: the pair p = 2, q = 3 still grows as $c^{1/6}$, not $c^{1/4}$, so the scaling assert stops the run.
+> - **Mis-predict the growth rate.** In the last assert replace `1 / 3` with `1 / 4`. Guess: the pair p = 2, q = 3 still grows as $`c^{1/6}`$, not $`c^{1/4}`$, so the scaling assert stops the run.
 
 ---
 
@@ -719,7 +733,7 @@ example : (1 : ℚ) - 1 / 2 - 1 / 3 = 1 / 6 := by norm_num
 >
 > - **The plain maximum for p = ∞.** The glitched gust has maximum 40 m/s, essential supremum 8.
 > - **Assuming bigger p gives a bigger norm.** Under the uniform probability, yes: 5, 5.39, 5.70. Under counting, the opposite: 35, 14.25, 10.90; [Jensen's inequality](04-jensens-inequality.md) proves the probability direction.
-> - **Assuming the spaces coincide.** The spike $1/\sqrt t$ is in $L^1$ of the unit interval and not in $L^2$.
+> - **Assuming the spaces coincide.** The spike $`1/\sqrt t`$ is in $`L^1`$ of the unit interval and not in $`L^2`$.
 
 ---
 

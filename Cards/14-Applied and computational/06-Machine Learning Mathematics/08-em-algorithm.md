@@ -38,38 +38,44 @@ Bars (orange): the orders counted in each £10 band. Line (green): how many orde
 
 ## The formula
 
-Notation first, in words. Order $i$ has spend $x_i$ pounds, for $i$ from 1 to $n = 20{,}000$. The humps are bell curves ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)): $k = 1$ is top-up, $k = 2$ weekly.
+Notation first, in words. Order $`i`$ has spend $`x_i`$ pounds, for $`i`$ from 1 to $`n = 20{,}000`$. The humps are bell curves ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)): $`k = 1`$ is top-up, $`k = 2`$ weekly.
 
-Bell $k$ has a centre $\mu_k$ (mu, its mean spend), a spread $\sigma_k$ (sigma, its standard deviation) and a **mixing weight** $\alpha_k$ (alpha, its share of orders), with $\alpha_1 + \alpha_2 = 1$. Its height at spend $x$ is $f(x;\mu,\sigma)$. The **responsibility** $r_{ik}$ is the chance, under the current fit, that order $i$ came from bell $k$. Σ means "add over all orders".
+Bell $`k`$ has a centre $`\mu_k`$ (mu, its mean spend), a spread $`\sigma_k`$ (sigma, its standard deviation) and a **mixing weight** $`\alpha_k`$ (alpha, its share of orders), with $`\alpha_1 + \alpha_2 = 1`$. Its height at spend $`x`$ is $`f(x;\mu,\sigma)`$. The **responsibility** $`r_{ik}`$ is the chance, under the current fit, that order $`i`$ came from bell $`k`$. Σ means "add over all orders".
 
 **The fit is judged by** the log-likelihood (ln of the chance of all the data, as on [Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)):
 
-$$\ell(\theta) = \sum_{i=1}^{n} \ln\big(\alpha_1 f(x_i;\mu_1,\sigma_1) + \alpha_2 f(x_i;\mu_2,\sigma_2)\big)$$
+```math
+\ell(\theta) = \sum_{i=1}^{n} \ln\big(\alpha_1 f(x_i;\mu_1,\sigma_1) + \alpha_2 f(x_i;\mu_2,\sigma_2)\big)
+```
 
-**E-step**, with the current $\theta$ held fixed:
+**E-step**, with the current $`\theta`$ held fixed:
 
-$$r_{ik} = \frac{\alpha_k\, f(x_i;\mu_k,\sigma_k)}{\alpha_1 f(x_i;\mu_1,\sigma_1) + \alpha_2 f(x_i;\mu_2,\sigma_2)}$$
+```math
+r_{ik} = \frac{\alpha_k\, f(x_i;\mu_k,\sigma_k)}{\alpha_1 f(x_i;\mu_1,\sigma_1) + \alpha_2 f(x_i;\mu_2,\sigma_2)}
+```
 
-**M-step**, with the responsibilities held fixed, for each bell $k$:
+**M-step**, with the responsibilities held fixed, for each bell $`k`$:
 
-$$n_k = \sum_i r_{ik}, \qquad \alpha_k = \frac{n_k}{n}, \qquad \mu_k = \frac{1}{n_k}\sum_i r_{ik}\,x_i, \qquad \sigma_k^2 = \frac{1}{n_k}\sum_i r_{ik}\,(x_i-\mu_k)^2$$
+```math
+n_k = \sum_i r_{ik}, \qquad \alpha_k = \frac{n_k}{n}, \qquad \mu_k = \frac{1}{n_k}\sum_i r_{ik}\,x_i, \qquad \sigma_k^2 = \frac{1}{n_k}\sum_i r_{ik}\,(x_i-\mu_k)^2
+```
 
 **Read it aloud:** split each order between the bells in proportion to share times height; refit each bell's share, mean and spread as weighted counts and averages; repeat until nothing moves, and the log-likelihood never falls on the way.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$, $n$ | order $i$'s spend in pounds; the number of orders | £1.97 to £136.81; $n$ = 20,000 | more orders: estimates closer to the truth (200 orders put the weekly mean at £72.26) |
-| $k$ | which bell: 1 top-up, 2 weekly | — | — |
-| $\alpha_k$ | mixing weight: the share of orders bell $k$ produces | $\alpha_2$ = 0.3456 fitted | a bigger $\alpha_2$ tilts every order towards weekly |
-| $\mu_k$ | bell $k$'s centre: its mean spend | £24.84 and £69.69 | that bell slides right |
-| $\sigma_k$ | bell $k$'s spread: its standard deviation | £6.04 and £15.15 | that bell widens and claims more far-off orders |
-| $f(x;\mu,\sigma)$ | the bell-curve height (normal density) at spend $x$ | — | — |
-| $r_{ik}$ | responsibility: chance order $i$ came from bell $k$, given the current fit | $r_{i2}$ = 0.419 for a £40 order | — |
-| $n_k$ | soft count: the responsibilities added up, orders counted fractionally | 2.508618 weekly among six orders, by hand | — |
-| $\theta$ | all five numbers ($\alpha_2$, $\mu_1$, $\sigma_1$, $\mu_2$, $\sigma_2$) together; $\theta_{\text{old}}$ and $\theta_{\text{new}}$ are the fit before and after one round | settles after 48 rounds | — |
-| $\ell(\theta)$ | log-likelihood: ln of the chance of all the orders under $\theta$ | −82,765.3 at the fit | higher is a better fit |
-| $a$, $b$; $r_1$, $r_2$ | for one order, the two parts inside the logarithm (share times height); any two weights that are positive and add to 1 | for £40 at the fit, $b/(a+b)$ = 0.419 | — |
-| $B$ | the lower bound on $\ell$ that each round pushes up (Why it works) | −25.584238 after one round, by hand | — |
+| $`x_i`$, $`n`$ | order $`i`$'s spend in pounds; the number of orders | £1.97 to £136.81; $`n`$ = 20,000 | more orders: estimates closer to the truth (200 orders put the weekly mean at £72.26) |
+| $`k`$ | which bell: 1 top-up, 2 weekly | — | — |
+| $`\alpha_k`$ | mixing weight: the share of orders bell $`k`$ produces | $`\alpha_2`$ = 0.3456 fitted | a bigger $`\alpha_2`$ tilts every order towards weekly |
+| $`\mu_k`$ | bell $`k`$'s centre: its mean spend | £24.84 and £69.69 | that bell slides right |
+| $`\sigma_k`$ | bell $`k`$'s spread: its standard deviation | £6.04 and £15.15 | that bell widens and claims more far-off orders |
+| $`f(x;\mu,\sigma)`$ | the bell-curve height (normal density) at spend $`x`$ | — | — |
+| $`r_{ik}`$ | responsibility: chance order $`i`$ came from bell $`k`$, given the current fit | $`r_{i2}`$ = 0.419 for a £40 order | — |
+| $`n_k`$ | soft count: the responsibilities added up, orders counted fractionally | 2.508618 weekly among six orders, by hand | — |
+| $`\theta`$ | all five numbers ($`\alpha_2`$, $`\mu_1`$, $`\sigma_1`$, $`\mu_2`$, $`\sigma_2`$) together; $`\theta_{\text{old}}`$ and $`\theta_{\text{new}}`$ are the fit before and after one round | settles after 48 rounds | — |
+| $`\ell(\theta)`$ | log-likelihood: ln of the chance of all the orders under $`\theta`$ | −82,765.3 at the fit | higher is a better fit |
+| $`a`$, $`b`$; $`r_1`$, $`r_2`$ | for one order, the two parts inside the logarithm (share times height); any two weights that are positive and add to 1 | for £40 at the fit, $`b/(a+b)`$ = 0.419 | — |
+| $`B`$ | the lower bound on $`\ell`$ that each round pushes up (Why it works) | −25.584238 after one round, by hand | — |
 
 ### When it holds
 
@@ -91,44 +97,48 @@ EM puts a probability where the 0-or-1 label would be and runs the same three li
 
 ### Step 1: the E-step is Bayes' rule
 
-Before seeing an order's spend, the chance it is a weekly shop is $\alpha_2$, the share. After seeing the spend $x$, [Bayes' rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md) multiplies that prior chance by how well the weekly bell explains $x$, its height $f(x;\mu_2,\sigma_2)$, and divides by the total over both bells. That is the E-step formula. The name: the responsibility is the expected value of the hidden 0-or-1 label, so this is the **E**xpectation step.
+Before seeing an order's spend, the chance it is a weekly shop is $`\alpha_2`$, the share. After seeing the spend $`x`$, [Bayes' rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md) multiplies that prior chance by how well the weekly bell explains $`x`$, its height $`f(x;\mu_2,\sigma_2)`$, and divides by the total over both bells. That is the E-step formula. The name: the responsibility is the expected value of the hidden 0-or-1 label, so this is the **E**xpectation step.
 
 ### Step 2: the M-step is weighted maximum likelihood
 
-Hold the responsibilities fixed and treat order $i$ as $r_{i2}$ of a weekly order plus $r_{i1}$ of a top-up. The weekly bell's weighted log-likelihood is $\sum_i r_{i2}\ln f(x_i;\mu_2,\sigma_2)$. Its slope in $\mu_2$ is $\sum_i r_{i2}(x_i-\mu_2)/\sigma_2^2$, zero exactly when $\mu_2 = \sum_i r_{i2}x_i / n_2$, the weighted average.
+Hold the responsibilities fixed and treat order $`i`$ as $`r_{i2}`$ of a weekly order plus $`r_{i1}`$ of a top-up. The weekly bell's weighted log-likelihood is $`\sum_i r_{i2}\ln f(x_i;\mu_2,\sigma_2)`$. Its slope in $`\mu_2`$ is $`\sum_i r_{i2}(x_i-\mu_2)/\sigma_2^2`$, zero exactly when $`\mu_2 = \sum_i r_{i2}x_i / n_2`$, the weighted average.
 
-The normal-model algebra on Maximum likelihood, with each order counted $r_{i2}$ times, gives the weighted average squared gap for $\sigma_2^2$. Maximising $n_1\ln\alpha_1 + n_2\ln\alpha_2$ with $\alpha_1+\alpha_2=1$ gives $\alpha_k = n_k/n$. This step **M**aximises, hence the name.
+The normal-model algebra on Maximum likelihood, with each order counted $`r_{i2}`$ times, gives the weighted average squared gap for $`\sigma_2^2`$. Maximising $`n_1\ln\alpha_1 + n_2\ln\alpha_2`$ with $`\alpha_1+\alpha_2=1`$ gives $`\alpha_k = n_k/n`$. This step **M**aximises, hence the name.
 
 ### Step 3: a lower bound that touches the curve
 
-The trouble with $\ell$ is the logarithm of a *sum*, which has no tidy maximum. The fix is an inequality. Write the two parts inside the logarithm for one order as $a = \alpha_1 f(x;\mu_1,\sigma_1)$ and $b = \alpha_2 f(x;\mu_2,\sigma_2)$. For any two weights $r_1, r_2$ that are positive and add to 1:
+The trouble with $`\ell`$ is the logarithm of a *sum*, which has no tidy maximum. The fix is an inequality. Write the two parts inside the logarithm for one order as $`a = \alpha_1 f(x;\mu_1,\sigma_1)`$ and $`b = \alpha_2 f(x;\mu_2,\sigma_2)`$. For any two weights $`r_1, r_2`$ that are positive and add to 1:
 
-$$\ln(a+b) \;\ge\; r_1 \ln\frac{a}{r_1} + r_2\ln\frac{b}{r_2},$$
+```math
+\ln(a+b) \;\ge\; r_1 \ln\frac{a}{r_1} + r_2\ln\frac{b}{r_2},
+```
 
-with equality exactly when $r_1 = a/(a+b)$ and $r_2 = b/(a+b)$. Those are the E-step's responsibilities. This is [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) for the logarithm; the fold proves it in two lines.
+with equality exactly when $`r_1 = a/(a+b)`$ and $`r_2 = b/(a+b)`$. Those are the E-step's responsibilities. This is [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) for the logarithm; the fold proves it in two lines.
 
-Add the right-hand side over all orders and call it $B$. With the responsibilities frozen, $B$ is a sum of *logarithms of single bells*, and the M-step of Step 2 maximises it exactly. (The $-r\ln r$ pieces do not involve $\theta$ and come along unchanged.)
+Add the right-hand side over all orders and call it $`B`$. With the responsibilities frozen, $`B`$ is a sum of *logarithms of single bells*, and the M-step of Step 2 maximises it exactly. (The $`-r\ln r`$ pieces do not involve $`\theta`$ and come along unchanged.)
 
 <details>
 <summary>Proof of the inequality, from ln y ≤ y − 1</summary>
 
-The curve $\ln y$ lies below its tangent line at $y = 1$, so $\ln y \le y - 1$ for every $y > 0$, with equality only at $y = 1$. Put $S = a + b$. Then
+The curve $`\ln y`$ lies below its tangent line at $`y = 1`$, so $`\ln y \le y - 1`$ for every $`y > 0`$, with equality only at $`y = 1`$. Put $`S = a + b`$. Then
 
-$$r_1\ln\frac{a}{r_1} + r_2\ln\frac{b}{r_2} - \ln S = r_1\ln\frac{a}{r_1 S} + r_2\ln\frac{b}{r_2 S} \le r_1\Big(\frac{a}{r_1 S}-1\Big) + r_2\Big(\frac{b}{r_2 S}-1\Big) = \frac{a+b}{S} - 1 = 0.$$
+$`\displaystyle r_1\ln\frac{a}{r_1} + r_2\ln\frac{b}{r_2} - \ln S = r_1\ln\frac{a}{r_1 S} + r_2\ln\frac{b}{r_2 S} \le r_1\Big(\frac{a}{r_1 S}-1\Big) + r_2\Big(\frac{b}{r_2 S}-1\Big) = \frac{a+b}{S} - 1 = 0.`$
 
-The first equality uses $r_1 + r_2 = 1$. Equality throughout needs $a/(r_1 S) = 1$ and $b/(r_2 S) = 1$, that is $r_1 = a/S$ and $r_2 = b/S$.
+The first equality uses $`r_1 + r_2 = 1`$. Equality throughout needs $`a/(r_1 S) = 1`$ and $`b/(r_2 S) = 1`$, that is $`r_1 = a/S`$ and $`r_2 = b/S`$.
 
 </details>
 
 ### Step 4: the sandwich
 
-Call the fit before a round $\theta_{\text{old}}$ and after it $\theta_{\text{new}}$. Then
+Call the fit before a round $`\theta_{\text{old}}`$ and after it $`\theta_{\text{new}}`$. Then
 
-$$\ell(\theta_{\text{new}}) \;\ge\; B(\theta_{\text{new}}) \;\ge\; B(\theta_{\text{old}}) \;=\; \ell(\theta_{\text{old}}).$$
+```math
+\ell(\theta_{\text{new}}) \;\ge\; B(\theta_{\text{new}}) \;\ge\; B(\theta_{\text{old}}) \;=\; \ell(\theta_{\text{old}}).
+```
 
-Read right to left. The E-step chose the weights that make the bound touch $\ell$ at the old fit, so $B(\theta_{\text{old}}) = \ell(\theta_{\text{old}})$. The M-step moved to the top of $B$, so $B$ went up or stayed. And $B$ never sits above $\ell$ anywhere. So $\ell$ went up or stayed. That is the whole proof that EM climbs.
+Read right to left. The E-step chose the weights that make the bound touch $`\ell`$ at the old fit, so $`B(\theta_{\text{old}}) = \ell(\theta_{\text{old}})`$. The M-step moved to the top of $`B`$, so $`B`$ went up or stayed. And $`B`$ never sits above $`\ell`$ anywhere. So $`\ell`$ went up or stayed. That is the whole proof that EM climbs.
 
-On the six orders worked by hand below: $\ell$ before the round is −26.375554, the bound before is also −26.375554 (it touches), the bound after is −25.584238, and $\ell$ after is −25.564328. The check confirms the climb in every one of the 48 rounds on the 20,000 orders: rounds where the log-likelihood fell, 0 of 48.
+On the six orders worked by hand below: $`\ell`$ before the round is −26.375554, the bound before is also −26.375554 (it touches), the bound after is −25.584238, and $`\ell`$ after is −25.564328. The check confirms the climb in every one of the 48 rounds on the 20,000 orders: rounds where the log-likelihood fell, 0 of 48.
 
 ### Step 5: what climbing does not promise
 
@@ -140,20 +150,20 @@ A climber that only goes up stops where the ground is flat. From the start used 
 
 Six orders, small enough to follow every number: £15, £22, £28, £40, £60 and £75. Start with share 0.5, centres £20 and £60, both spreads £10.
 
-With equal shares and spreads the odds that an order is weekly come out neatly. The ratio of the bell heights is $e^{-(x-60)^2/200} \big/ e^{-(x-20)^2/200}$, and $(x-20)^2 - (x-60)^2 = 80x - 3200$, so the odds are $e^{0.4(x-40)}$: even at £40, halfway between the centres. Then $r = \text{odds}/(1+\text{odds})$.
+With equal shares and spreads the odds that an order is weekly come out neatly. The ratio of the bell heights is $`e^{-(x-60)^2/200} \big/ e^{-(x-20)^2/200}`$, and $`(x-20)^2 - (x-60)^2 = 80x - 3200`$, so the odds are $`e^{0.4(x-40)}`$: even at £40, halfway between the centres. Then $`r = \text{odds}/(1+\text{odds})`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| E: order £15 | odds $e^{0.4 \times (-25)}$ = 0.000045 | $r$ = 0.000045 |
-| E: order £22 | odds $e^{0.4 \times (-18)}$ = 0.000747 | $r$ = 0.000746 |
-| E: order £28 | odds $e^{0.4 \times (-12)}$ = 0.008230 | $r$ = 0.008163 |
-| E: order £40 | odds $e^{0}$ = 1 | $r$ = 0.500000 |
-| E: order £60 | odds $e^{0.4 \times 20}$ = 2980.957987 | $r$ = 0.999665 |
-| E: order £75 | odds $e^{0.4 \times 35}$ = 1202604.284165 | $r$ = 0.999999 |
-| M: soft counts | add the $r$: weekly $n_2$; top-up $6 - n_2$ | 2.508618 and 3.491382 |
+| E: order £15 | odds $`e^{0.4 \times (-25)}`$ = 0.000045 | $`r`$ = 0.000045 |
+| E: order £22 | odds $`e^{0.4 \times (-18)}`$ = 0.000747 | $`r`$ = 0.000746 |
+| E: order £28 | odds $`e^{0.4 \times (-12)}`$ = 0.008230 | $`r`$ = 0.008163 |
+| E: order £40 | odds $`e^{0}`$ = 1 | $`r`$ = 0.500000 |
+| E: order £60 | odds $`e^{0.4 \times 20}`$ = 2980.957987 | $`r`$ = 0.999665 |
+| E: order £75 | odds $`e^{0.4 \times 35}`$ = 1202604.284165 | $`r`$ = 0.999999 |
+| M: soft counts | add the $`r`$: weekly $`n_2`$; top-up $`6 - n_2`$ | 2.508618 and 3.491382 |
 | M: weekly share | 2.508618 / 6 | 0.4181 |
-| M: weekly mean | $\sum r x$ = 155.225462, then / 2.508618 | £61.88 |
-| M: top-up mean | $\sum (1-r) x$ = 84.774538, then / 3.491382 | £24.28 |
+| M: weekly mean | $`\sum r x`$ = 155.225462, then / 2.508618 | £61.88 |
+| M: top-up mean | $`\sum (1-r) x`$ = 84.774538, then / 3.491382 | £24.28 |
 | M: spreads | same weighting on the squared gaps from each new mean | £8.10 and £13.03 |
 | ln-likelihood | before the round → after | −26.375554 → −25.564328 |
 | **settled** | repeat until no number moves by 0.000000001 | **18 rounds: share 0.3332, top-up £26.27 (spread £9.22), weekly £67.48 (spread £7.56)** |
@@ -182,7 +192,7 @@ Same 20,000 orders, same start unless stated. The right answer: share 0.3456, we
 | Hard labels: give each order wholly to its likelier bell (the [k-means](06-k-means-and-clustering.md) habit) | share 0.3371, weekly £70.61, spread £14.18; ln-likelihood −82,789.6 | Overlap orders are handed out whole: every order below the even-odds point goes wholly to top-up, so the weekly bell loses its lower tail, narrows and slides right |
 | Leave the share out of the E-step | share 0.4028, weekly £64.05, spread £19.97; ln-likelihood −83,089.0 | Bayes' rule without its prior: overlap orders are pushed to the rarer weekly bell, which widens and slides left |
 | Start both bells identical: share 0.5, both at £40, spread £20 | both bells £40.35, spread £23.62, after 2 rounds; ln-likelihood −91,624.7 | Every order is split 50–50, both bells get identical refits, and the tie is never broken |
-| Needle start: share 0.05, weekly bell at £130, spread £2 | weekly spread by round 5.8776, 6.7367, 5.9419, 3.9810, 1.1081, then $1.75 \times 10^{-12}$, then exactly 0, ending on the single £136.81 order | The narrow bell crawls onto the largest order and shrinks to nothing. The ln-likelihood climbs towards plus infinity: −91,626.0 to −91,624.2 over five rounds, then a jump to −91,597.2 as the spread nears zero. Once the spread is exactly 0 the bell formula divides by zero, so no further round can be computed |
+| Needle start: share 0.05, weekly bell at £130, spread £2 | weekly spread by round 5.8776, 6.7367, 5.9419, 3.9810, 1.1081, then $`1.75 \times 10^{-12}`$, then exactly 0, ending on the single £136.81 order | The narrow bell crawls onto the largest order and shrinks to nothing. The ln-likelihood climbs towards plus infinity: −91,626.0 to −91,624.2 over five rounds, then a jump to −91,597.2 as the spread nears zero. Once the spread is exactly 0 the bell formula divides by zero, so no further round can be computed |
 
 The last row is the deepest: a bell of spread zero on one order has infinite height, so a mixture's likelihood has no top, and EM is climbing honestly when it falls in.
 
@@ -630,12 +640,12 @@ The two outputs are identical line for line.
 
 ### Lean
 
-Lean proves that no EM round lowers the log-likelihood for any two-bell fit, and proves the inequality behind the bound $B$.
+Lean proves that no EM round lowers the log-likelihood for any two-bell fit, and proves the inequality behind the bound $`B`$.
 
 - Take any orders that do not all have the same spend, and a fit whose two shares and two spreads are above zero. Then the log-likelihood after one EM round is at least the log-likelihood before it.
-- Take positive parts $a$, $b$ and weights $r_1$, $r_2$ that are positive and add to 1. Then $\ln(a+b) \ge r_1 \ln(a/r_1) + r_2 \ln(b/r_2)$.
-- Take the same $a$, $b$, $r_1$, $r_2$. Then the two sides are equal exactly when $r_1 = a/(a+b)$ and $r_2 = b/(a+b)$, the E-step's responsibilities.
-- Take the six orders worked by hand. Then the odds are $e^{0.4(x-40)}$, the £40 order is split evenly, and £155.225462 plus £84.774538 is £240.
+- Take positive parts $`a`$, $`b`$ and weights $`r_1`$, $`r_2`$ that are positive and add to 1. Then $`\ln(a+b) \ge r_1 \ln(a/r_1) + r_2 \ln(b/r_2)`$.
+- Take the same $`a`$, $`b`$, $`r_1`$, $`r_2`$. Then the two sides are equal exactly when $`r_1 = a/(a+b)`$ and $`r_2 = b/(a+b)`$, the E-step's responsibilities.
+- Take the six orders worked by hand. Then the odds are $`e^{0.4(x-40)}`$, the £40 order is split evenly, and £155.225462 plus £84.774538 is £240.
 
 The fitted numbers, the 48 rounds, the slopes and every row of What breaks are left to the Python and Rust checks.
 
@@ -1005,7 +1015,7 @@ end EMCard
 
 - [Principal components](07-principal-components-and-dimension-reduction.md): there the shop's orders carry 12 numbers each, and principal components squeeze them to a few directions, where a mixture is often fitted. This card uses one number, the spend, and draws its own synthetic orders, so its spends are not that card's basket values.
 - [Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the yardstick EM climbs, and the M-step's formulas, which are its normal-model answers with weights. It also shows the unbounded likelihood behind the needle start.
-- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve each kind of shopper is modelled by, and its height $f(x;\mu,\sigma)$.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve each kind of shopper is modelled by, and its height $`f(x;\mu,\sigma)`$.
 
 ## Where this goes next
 

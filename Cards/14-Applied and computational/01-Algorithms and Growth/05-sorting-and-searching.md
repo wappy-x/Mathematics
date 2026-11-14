@@ -47,7 +47,9 @@ Merge sort and binary search already run, with code, as the two worked examples 
 
 Notation first, in words. n is the number of tracks. n! ("n factorial") is n × (n − 1) × … × 2 × 1, the number of orders n different tracks can arrive in ([Factorials](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/03-factorial.md)). log2 x is the power of 2 that gives x: how many times x can be halved before it reaches 1. C(n) is the number of comparisons a sorting method makes on n tracks, in its worst case.
 
-$$C(n) \;\ge\; \log_2 n! \;\approx\; n\log_2 n \;-\; n\log_2 e$$
+```math
+C(n) \;\ge\; \log_2 n! \;\approx\; n\log_2 n \;-\; n\log_2 e
+```
 
 **Read it aloud:** any method that sorts n different items only by comparing pairs needs at least log2 of n factorial comparisons on its worst input, and also on average over all n! inputs, and that number is a little under n log2 n.
 
@@ -55,28 +57,28 @@ Each method has its own count. Square brackets that close at the top, ⌈x⌉, r
 
 | Method | Comparisons | Eight tracks | 1,000,000 tracks |
 | --- | --- | ---: | ---: |
-| the floor, any method | $\log_2 n!$ | 15.2992 | 18,488,884.8 |
-| merge sort, worst order | $n\lceil\log_2 n\rceil - 2^{\lceil\log_2 n\rceil} + 1$ | 17 | 18,951,425 |
-| quicksort, average over all orders | $2(n+1)H_n - 4n$ | 16.9214 | 24,785,482.2 |
-| quicksort, order already sorted | $n(n-1)/2$ | 28 | 499,999,500,000 |
-| binary search, most looks | $\lfloor\log_2 n\rfloor + 1$ | 4 | 20 |
+| the floor, any method | $`\log_2 n!`$ | 15.2992 | 18,488,884.8 |
+| merge sort, worst order | $`n\lceil\log_2 n\rceil - 2^{\lceil\log_2 n\rceil} + 1`$ | 17 | 18,951,425 |
+| quicksort, average over all orders | $`2(n+1)H_n - 4n`$ | 16.9214 | 24,785,482.2 |
+| quicksort, order already sorted | $`n(n-1)/2`$ | 28 | 499,999,500,000 |
+| binary search, most looks | $`\lfloor\log_2 n\rfloor + 1`$ | 4 | 20 |
 
 In the shorthand of [Big-O](01-big-o-and-growth-rates.md), where Θ(g) means "grows exactly like g, up to a constant, for large n": the floor, merge sort and average quicksort are all Θ(n log n), quicksort's worst case is Θ(n²), and binary search is Θ(log n).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many tracks | 8, then 1,000,000 | every count grows |
-| $n!$ | how many arrival orders n different tracks have | 40,320 | the floor rises by log2 of the factor |
-| $\log_2 x$, $\ln x$ | the power of 2 that gives x: how many halvings take x down to 1; ln x, the natural log, is the power of e that gives x | log2 40,320 = 15.2992 | — |
-| $C(n)$ | comparisons a sort makes on its worst input | 17 for merge sort | — |
-| $e$, $\pi$ | the base of natural logs; the circle number | both appear in Stirling's estimate | — |
-| $\lceil x\rceil$, $\lfloor x\rfloor$ | x rounded up, x rounded down | ⌈15.2992⌉ = 16 | — |
-| $H_n$ | 1 + 1/2 + … + 1/n | H_8 = 2.7179 | quicksort's average rises |
-| $k$ | number of yes-or-no questions asked | 3 for three tracks | 2^k more orders can be told apart |
-| $d$ | how deep one end point sits in the question tree | 2 or 3 in the picture | that order costs more |
-| $L$ | how many end points a question tree has | at least 40,320 for eight tracks | the average depth rises |
-| $i$, $j$ | two tracks' ranks in the final order, i below j | 1 for the shortest, 8 for the longest | — |
-| $g$, $m$ | the gap j − i between two ranks, and m = g + 1 | gap 7, m = 8 for shortest against longest | the pair is less likely to be compared |
+| $`n`$ | how many tracks | 8, then 1,000,000 | every count grows |
+| $`n!`$ | how many arrival orders n different tracks have | 40,320 | the floor rises by log2 of the factor |
+| $`\log_2 x`$, $`\ln x`$ | the power of 2 that gives x: how many halvings take x down to 1; ln x, the natural log, is the power of e that gives x | log2 40,320 = 15.2992 | — |
+| $`C(n)`$ | comparisons a sort makes on its worst input | 17 for merge sort | — |
+| $`e`$, $`\pi`$ | the base of natural logs; the circle number | both appear in Stirling's estimate | — |
+| $`\lceil x\rceil`$, $`\lfloor x\rfloor`$ | x rounded up, x rounded down | ⌈15.2992⌉ = 16 | — |
+| $`H_n`$ | 1 + 1/2 + … + 1/n | H_8 = 2.7179 | quicksort's average rises |
+| $`k`$ | number of yes-or-no questions asked | 3 for three tracks | 2^k more orders can be told apart |
+| $`d`$ | how deep one end point sits in the question tree | 2 or 3 in the picture | that order costs more |
+| $`L`$ | how many end points a question tree has | at least 40,320 for eight tracks | the average depth rises |
+| $`i`$, $`j`$ | two tracks' ranks in the final order, i below j | 1 for the shortest, 8 for the longest | — |
+| $`g`$, $`m`$ | the gap j − i between two ranks, and m = g + 1 | gap 7, m = 8 for shortest against longest | the pair is less likely to be compared |
 
 ### When it holds
 
@@ -121,7 +123,9 @@ On all 40,320 orders merge sort averages 15.7333 comparisons and quicksort 16.92
 
 log2 n! is log2 1 + log2 2 + … + log2 n. [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md) says n! is close to the square root of 2πn times (n/e)^n, which turns into
 
-$$\log_2 n! \approx n\log_2 n - n\log_2 e + \tfrac12\log_2(2\pi n).$$
+```math
+\log_2 n! \approx n\log_2 n - n\log_2 e + \tfrac12\log_2(2\pi n).
+```
 
 For the library both the exact sum and Stirling's estimate give 18,488,884.8, against n log2 n = 19,931,568.6. So the floor is Θ(n log n): no comparison sort can grow more slowly than n log n.
 
@@ -137,14 +141,16 @@ Number the tracks by their rank in the final order, 1 for the shortest. Take two
 
 When every arrival order is equally likely, each of those j − i + 1 ranks is equally likely to be chosen first. So i and j are compared with probability 2/(j − i + 1). Add that up over all pairs:
 
-$$\sum_{i<j}\frac{2}{j-i+1} \;=\; 2(n+1)H_n - 4n.$$
+```math
+\sum_{i<j}\frac{2}{j-i+1} \;=\; 2(n+1)H_n - 4n.
+```
 
 <details>
 <summary>Detailed proof: adding up the pairs</summary>
 
 Group the pairs by their gap g = j − i. There are n − g pairs with gap g, each compared with probability 2/(g + 1). Write m = g + 1, which runs from 2 to n:
 
-$$\sum_{m=2}^{n}\frac{2(n+1-m)}{m} = 2(n+1)\sum_{m=2}^{n}\frac1m - 2(n-1) = 2(n+1)(H_n - 1) - 2(n-1) = 2(n+1)H_n - 4n.$$
+$`\displaystyle \sum_{m=2}^{n}\frac{2(n+1-m)}{m} = 2(n+1)\sum_{m=2}^{n}\frac1m - 2(n-1) = 2(n+1)(H_n - 1) - 2(n-1) = 2(n+1)H_n - 4n.`$
 
 </details>
 
@@ -586,7 +592,7 @@ Lean proves the floor and quicksort's average for every n, and checks the worked
 
 - Take any comparison sort, written as a tree of questions, that puts n different tracks in order. Then some arrival order makes it ask at least log2 n! questions.
 - Take the same sort. Then its comparisons, averaged over all n! arrival orders, are at least log2 n!.
-- Take quicksort with the first track as pivot, on n different tracks. Then over all n! arrival orders it averages exactly $2(n+1)H_n - 4n$ comparisons.
+- Take quicksort with the first track as pivot, on n different tracks. Then over all n! arrival orders it averages exactly $`2(n+1)H_n - 4n`$ comparisons.
 - Eight tracks have 8! = 40,320 orders. Since 2^15 = 32,768 is too few, the floor rounds up to 16.
 - Three tracks have 3! = 6 orders, more than the 2^2 = 4 end points two questions reach.
 - Quicksort, first track as pivot, makes 13 comparisons on the eight tracks and 28 on the eight in order.

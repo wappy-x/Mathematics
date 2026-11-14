@@ -35,52 +35,60 @@ Bars: the height each bin reports, as a fraction of the converter's full scale. 
 
 ## The formula
 
-Notation first. Engineers on this shelf write $j$ for the square root of −1; the rest of the library writes $i$. The block holds samples $x[n]$, with $n$ counting from 0 to $N-1$, taken $f_s$ times a second ([Sampling](01-sampling-and-the-nyquist-theorem.md)). The DFT turns them into outputs $X[k]$, one per bin $k$, by turning sample $n$ through $k \times n$ steps of $1/N$ of a circle and adding ([The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md) builds it and proves the inverse):
+Notation first. Engineers on this shelf write $`j`$ for the square root of −1; the rest of the library writes $`i`$. The block holds samples $`x[n]`$, with $`n`$ counting from 0 to $`N-1`$, taken $`f_s`$ times a second ([Sampling](01-sampling-and-the-nyquist-theorem.md)). The DFT turns them into outputs $`X[k]`$, one per bin $`k`$, by turning sample $`n`$ through $`k \times n`$ steps of $`1/N`$ of a circle and adding ([The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md) builds it and proves the inverse):
 
-$$X[k] = \sum_{n=0}^{N-1} x[n]\, w^{kn}, \qquad w = e^{-j2\pi/N}.$$
+```math
+X[k] = \sum_{n=0}^{N-1} x[n]\, w^{kn}, \qquad w = e^{-j2\pi/N}.
+```
 
 This card adds three things: what frequency each bin is, how wide it is, and how to compute all of them fast.
 
 **Bin width.**
 
-$$\Delta f = \frac{f_s}{N} = \frac{1}{T_{\text{rec}}}, \qquad f_k = k\,\Delta f \quad \text{for } 0 \le k \le N/2.$$
+```math
+\Delta f = \frac{f_s}{N} = \frac{1}{T_{\text{rec}}}, \qquad f_k = k\,\Delta f \quad \text{for } 0 \le k \le N/2.
+```
 
-**Read it aloud:** bins are spaced by the sampling rate over the block length, which is one over the record's duration; bin $k$ sits at $k$ bin widths.
+**Read it aloud:** bins are spaced by the sampling rate over the block length, which is one over the record's duration; bin $`k`$ sits at $`k`$ bin widths.
 
-**The split.** Let $E[k]$ be the DFT of the even-numbered samples $x[0], x[2], x[4], \dots$ and $O[k]$ the DFT of the odd-numbered ones, each $N/2$ long. Then for $k = 0$ to $N/2 - 1$
+**The split.** Let $`E[k]`$ be the DFT of the even-numbered samples $`x[0], x[2], x[4], \dots`$ and $`O[k]`$ the DFT of the odd-numbered ones, each $`N/2`$ long. Then for $`k = 0`$ to $`N/2 - 1`$
 
-$$X[k] = E[k] + w^k\, O[k], \qquad X[k + N/2] = E[k] - w^k\, O[k].$$
+```math
+X[k] = E[k] + w^k\, O[k], \qquad X[k + N/2] = E[k] - w^k\, O[k].
+```
 
-**Read it aloud:** each output is the even half's output plus the odd half's output turned by $w^k$; the output half a block further on uses the same two numbers with a minus sign.
+**Read it aloud:** each output is the even half's output plus the odd half's output turned by $`w^k`$; the output half a block further on uses the same two numbers with a minus sign.
 
 **The cost.** Splitting again and again, down to single samples, takes
 
-$$M(N) = \frac{N}{2}\log_2 N \quad \text{multiplications, against } N^2 \text{ for the sum.}$$
+```math
+M(N) = \frac{N}{2}\log_2 N \quad \text{multiplications, against } N^2 \text{ for the sum.}
+```
 
-**Reading a height.** A steady tone that fits a whole number of cycles in the block shows up in its bin with height $A = 2\lvert X[k]\rvert / N$.
+**Reading a height.** A steady tone that fits a whole number of cycles in the block shows up in its bin with height $`A = 2\lvert X[k]\rvert / N`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f_s$ | sampling rate, samples per second | 44.1 kHz | bins get wider, for the same $N$ |
-| $N$ | block length, samples per block (a power of 2 here) | 1024 | bins get narrower; more work |
-| $T_{\text{rec}}$ | record length, $N/f_s$ | 23.22 ms | bins get narrower |
-| $\Delta f$ | bin width, the spacing between bins | 43.07 Hz | — |
-| $k$, $f_k$ | bin number; that bin's frequency, $k\,\Delta f$ | bin 8 is 344.53 Hz | past $N/2$, bins mirror lower ones |
-| $x[n]$; $n$, $m$ | sample $n$, in units of full scale; sample counters; in the split, samples $2m$ and $2m+1$ | the chord's voltage | — |
-| $X[k]$ | output $k$ of the DFT, a complex number | $X[8] = -64.1640 - 55.8147j$ | — |
-| $w$, $j$ | one step of $1/N$ of a circle clockwise, $e^{-j2\pi/N}$; the square root of −1 | $w^8 = 0.9988 - 0.0491j$ | — |
-| $E[k]$, $O[k]$ | DFTs of the even and odd samples, $N/2$ long | $E[8] = -31.8308 - 27.9011j$, $O[8] = -30.9247 - 29.4665j$ | — |
-| $\log_2 N$ | number of halvings from $N$ samples down to 1 | 10 | one more level per doubling |
-| $M(N)$ | multiplications the FFT needs | 5120 | grows a little faster than $N$ |
-| $A$ | a tone's height read from its bin, $2\lvert X[k]\rvert/N$ | E4 is 0.15; the long block reads 0.101 | — |
+| $`f_s`$ | sampling rate, samples per second | 44.1 kHz | bins get wider, for the same $`N`$ |
+| $`N`$ | block length, samples per block (a power of 2 here) | 1024 | bins get narrower; more work |
+| $`T_{\text{rec}}`$ | record length, $`N/f_s`$ | 23.22 ms | bins get narrower |
+| $`\Delta f`$ | bin width, the spacing between bins | 43.07 Hz | — |
+| $`k`$, $`f_k`$ | bin number; that bin's frequency, $`k\,\Delta f`$ | bin 8 is 344.53 Hz | past $`N/2`$, bins mirror lower ones |
+| $`x[n]`$; $`n`$, $`m`$ | sample $`n`$, in units of full scale; sample counters; in the split, samples $`2m`$ and $`2m+1`$ | the chord's voltage | — |
+| $`X[k]`$ | output $`k`$ of the DFT, a complex number | $`X[8] = -64.1640 - 55.8147j`$ | — |
+| $`w`$, $`j`$ | one step of $`1/N`$ of a circle clockwise, $`e^{-j2\pi/N}`$; the square root of −1 | $`w^8 = 0.9988 - 0.0491j`$ | — |
+| $`E[k]`$, $`O[k]`$ | DFTs of the even and odd samples, $`N/2`$ long | $`E[8] = -31.8308 - 27.9011j`$, $`O[8] = -30.9247 - 29.4665j`$ | — |
+| $`\log_2 N`$ | number of halvings from $`N`$ samples down to 1 | 10 | one more level per doubling |
+| $`M(N)`$ | multiplications the FFT needs | 5120 | grows a little faster than $`N`$ |
+| $`A`$ | a tone's height read from its bin, $`2\lvert X[k]\rvert/N`$ | E4 is 0.15; the long block reads 0.101 | — |
 
 ### When it holds
 
-- **The record length sets the resolution**, the smallest gap between two tones that still shows as two peaks: about $1/T_{\text{rec}}$, one bin of the unpadded block. Padding with zeros adds bins, not resolution. The 1024-sample block shows three peaks for six strings, because most neighbouring strings sit less than one bin apart.
+- **The record length sets the resolution**, the smallest gap between two tones that still shows as two peaks: about $`1/T_{\text{rec}}`$, one bin of the unpadded block. Padding with zeros adds bins, not resolution. The 1024-sample block shows three peaks for six strings, because most neighbouring strings sit less than one bin apart.
 - **Each tone fits a whole number of cycles in the block.** Then it lands in one bin. Otherwise it leaks into its neighbours: a tone of height 1 at bin 10.5 reads 0.652 and 0.622 in bins 10 and 11, and still 0.023 ten bins away. Tapering the block to reduce this is [Windows](03-windows-and-spectral-leakage.md).
 - **The tones are steady across the block.** A real string fades and its pitch wobbles. Over 23 ms that barely matters; over 0.37 s the fading spreads each peak a little.
 - **N is a power of 2, for this even–odd split.** The 441,000-sample recording is not. Pad it with zeros to 524,288 = 2¹⁹, or split by other factors (3, 5, 7), which the same idea also handles.
-- **Bins above N/2 are mirrors.** For real samples, bin $N-k$ holds the conjugate of bin $k$ (the same number with the sign of its $j$ part flipped). Bin $N/2$ is the Nyquist frequency, 22,050 Hz; nothing above it is a new frequency ([Sampling](01-sampling-and-the-nyquist-theorem.md)).
+- **Bins above N/2 are mirrors.** For real samples, bin $`N-k`$ holds the conjugate of bin $`k`$ (the same number with the sign of its $`j`$ part flipped). Bin $`N/2`$ is the Nyquist frequency, 22,050 Hz; nothing above it is a new frequency ([Sampling](01-sampling-and-the-nyquist-theorem.md)).
 
 ---
 
@@ -88,35 +96,39 @@ $$M(N) = \frac{N}{2}\log_2 N \quad \text{multiplications, against } N^2 \text{ f
 
 ### Step 0: half-size transforms cost a quarter each
 
-The sum needs $N^2$ multiplications, one per pair of sample and bin. A transform of half the length needs a quarter of that. Two of them, one for the even samples and one for the odd, need half. If the full answer can be built from those two halves cheaply, the work is halved. And each half can be split again. That is the whole fast transform; the rest is checking that the halves really do combine, and counting.
+The sum needs $`N^2`$ multiplications, one per pair of sample and bin. A transform of half the length needs a quarter of that. Two of them, one for the even samples and one for the odd, need half. If the full answer can be built from those two halves cheaply, the work is halved. And each half can be split again. That is the whole fast transform; the rest is checking that the halves really do combine, and counting.
 
 ### Step 1: bin k is k whole cycles per record
 
-The DFT measures sample $n$ against $w^{kn}$, a pointer that makes $k$ full turns over the $N$ samples. The block lasts $T_{\text{rec}} = N/f_s$ seconds. So bin $k$ is the wave that makes $k$ cycles in $T_{\text{rec}}$ seconds: $k/T_{\text{rec}} = k f_s/N$ hertz. For the 1024 block, 1/0.02322 s = 43.07 Hz per bin.
+The DFT measures sample $`n`$ against $`w^{kn}`$, a pointer that makes $`k`$ full turns over the $`N`$ samples. The block lasts $`T_{\text{rec}} = N/f_s`$ seconds. So bin $`k`$ is the wave that makes $`k`$ cycles in $`T_{\text{rec}}`$ seconds: $`k/T_{\text{rec}} = k f_s/N`$ hertz. For the 1024 block, 1/0.02322 s = 43.07 Hz per bin.
 
-Why can two tones less than a bin apart not be told apart? Two tones $\Delta f$ apart drift apart by exactly one cycle over the record. That is the smallest drift for which the two tones, multiplied together and summed over the block, cancel, by the root-of-unity fact (equal steps that go around a circle a whole number of times add up to zero) on [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md). E2 and B2 are 41.06 Hz apart; over 23.22 ms they drift only 0.95 cycles apart, less than one, so the block cannot tell them apart cleanly. Over 0.3715 s they drift 15.26 cycles apart, and separate.
+Why can two tones less than a bin apart not be told apart? Two tones $`\Delta f`$ apart drift apart by exactly one cycle over the record. That is the smallest drift for which the two tones, multiplied together and summed over the block, cancel, by the root-of-unity fact (equal steps that go around a circle a whole number of times add up to zero) on [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md). E2 and B2 are 41.06 Hz apart; over 23.22 ms they drift only 0.95 cycles apart, less than one, so the block cannot tell them apart cleanly. Over 0.3715 s they drift 15.26 cycles apart, and separate.
 
-Seen as a [Change of basis](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the $N$ waves $w^{kn}$ are perpendicular directions in the space of blocks, and the DFT gives each block's address in them. There are only $N$ such directions for $N$ samples, spread evenly from 0 to $f_s$. More directions need more samples.
+Seen as a [Change of basis](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the $`N`$ waves $`w^{kn}`$ are perpendicular directions in the space of blocks, and the DFT gives each block's address in them. There are only $`N`$ such directions for $`N`$ samples, spread evenly from 0 to $`f_s`$. More directions need more samples.
 
 ### Step 2: the even and odd halves combine
 
-Split the sum into even samples, $n = 2m$, and odd ones, $n = 2m+1$:
+Split the sum into even samples, $`n = 2m`$, and odd ones, $`n = 2m+1`$:
 
-$$X[k] = \sum_{m=0}^{N/2-1} x[2m]\,(w^2)^{mk} \;+\; w^k \sum_{m=0}^{N/2-1} x[2m+1]\,(w^2)^{mk}.$$
+```math
+X[k] = \sum_{m=0}^{N/2-1} x[2m]\,(w^2)^{mk} \;+\; w^k \sum_{m=0}^{N/2-1} x[2m+1]\,(w^2)^{mk}.
+```
 
-Now $w^2 = e^{-j2\pi/(N/2)}$ is exactly the step for a block of $N/2$. So the first sum is $E[k]$, the DFT of the even samples, and the second is $O[k]$, the DFT of the odd samples. The odd samples sit one slot later, which costs one extra turn, $w^k$. That gives $X[k] = E[k] + w^k O[k]$.
+Now $`w^2 = e^{-j2\pi/(N/2)}`$ is exactly the step for a block of $`N/2`$. So the first sum is $`E[k]`$, the DFT of the even samples, and the second is $`O[k]`$, the DFT of the odd samples. The odd samples sit one slot later, which costs one extra turn, $`w^k`$. That gives $`X[k] = E[k] + w^k O[k]`$.
 
-Two facts give the other half of the outputs free. $E$ and $O$ repeat every $N/2$ bins, since $(w^2)^{N/2} = 1$. And $w^{k + N/2} = -w^k$, since $w^{N/2}$ is half a turn, −1. So $X[k + N/2] = E[k] - w^k O[k]$. One product, $w^k O[k]$, serves two outputs. This pair of outputs from one product is called a **butterfly**.
+Two facts give the other half of the outputs free. $`E`$ and $`O`$ repeat every $`N/2`$ bins, since $`(w^2)^{N/2} = 1`$. And $`w^{k + N/2} = -w^k`$, since $`w^{N/2}`$ is half a turn, −1. So $`X[k + N/2] = E[k] - w^k O[k]`$. One product, $`w^k O[k]`$, serves two outputs. This pair of outputs from one product is called a **butterfly**.
 
-For the chord, bin 8: $E[8] = -31.8308 - 27.9011j$, $O[8] = -30.9247 - 29.4665j$, $w^8 = 0.9988 - 0.0491j$. Adding gives $X[8] = -64.1640 - 55.8147j$, and subtracting gives $X[520] = 0.5025 + 0.0125j$. The sum written out in full gives the same two numbers.
+For the chord, bin 8: $`E[8] = -31.8308 - 27.9011j`$, $`O[8] = -30.9247 - 29.4665j`$, $`w^8 = 0.9988 - 0.0491j`$. Adding gives $`X[8] = -64.1640 - 55.8147j`$, and subtracting gives $`X[520] = 0.5025 + 0.0125j`$. The sum written out in full gives the same two numbers.
 
 ### Step 3: count the multiplications
 
-Let $M(N)$ be the multiplications for a block of $N$. One split does two half-size transforms and $N/2$ turns:
+Let $`M(N)`$ be the multiplications for a block of $`N`$. One split does two half-size transforms and $`N/2`$ turns:
 
-$$M(N) = 2\,M(N/2) + N/2, \qquad M(1) = 0.$$
+```math
+M(N) = 2\,M(N/2) + N/2, \qquad M(1) = 0.
+```
 
-Each level of splitting holds blocks that add up to $N$ samples, so each level costs $N/2$ turns in all. Halving 1024 down to 1 takes $\log_2 1024 = 10$ levels. So $M(1024) = 512 \times 10 = 5120$.
+Each level of splitting holds blocks that add up to $`N`$ samples, so each level costs $`N/2`$ turns in all. Halving 1024 down to 1 takes $`\log_2 1024 = 10`$ levels. So $`M(1024) = 512 \times 10 = 5120`$.
 
 ```mermaid
 flowchart LR
@@ -131,21 +143,21 @@ Read the chain right to left: the FFT starts from single samples and stitches pa
 <details>
 <summary>Detailed proof: M(N) = (N/2) log₂ N</summary>
 
-Take $N = 2^L$. Claim: $M(2^L) = 2^{L-1} L$. For $L = 0$ both sides are 0. If it holds for $L - 1$, then
+Take $`N = 2^L`$. Claim: $`M(2^L) = 2^{L-1} L`$. For $`L = 0`$ both sides are 0. If it holds for $`L - 1`$, then
 
-$$M(2^L) = 2\,M(2^{L-1}) + 2^{L-1} = 2 \cdot 2^{L-2}(L-1) + 2^{L-1} = 2^{L-1}(L - 1 + 1) = 2^{L-1} L.$$
+$`\displaystyle M(2^L) = 2\,M(2^{L-1}) + 2^{L-1} = 2 \cdot 2^{L-2}(L-1) + 2^{L-1} = 2^{L-1}(L - 1 + 1) = 2^{L-1} L.`$
 
-So it holds for every $L$, by induction. Some of these turns are by $w^0 = 1$ and need no real work; fast codes skip them, and the count here keeps them so it matches the code exactly.
+So it holds for every $`L`$, by induction. Some of these turns are by $`w^0 = 1`$ and need no real work; fast codes skip them, and the count here keeps them so it matches the code exactly.
 
 </details>
 
 ### Step 4: reading a real signal's spectrum
 
-The chord's samples are real numbers. For real samples, bin $N - k$ holds the conjugate of bin $k$, so bins $N/2 + 1$ to $N - 1$ repeat bins below $N/2$ in mirror image. Only bins 0 to $N/2$ carry information. Bin $k$ is at $k f_s / N$ hertz, and a tone that fits the block shows a height $2\lvert X[k]\rvert/N$: the 2 because its mirror twin carries the other half.
+The chord's samples are real numbers. For real samples, bin $`N - k`$ holds the conjugate of bin $`k`$, so bins $`N/2 + 1`$ to $`N - 1`$ repeat bins below $`N/2`$ in mirror image. Only bins 0 to $`N/2`$ carry information. Bin $`k`$ is at $`k f_s / N`$ hertz, and a tone that fits the block shows a height $`2\lvert X[k]\rvert/N`$: the 2 because its mirror twin carries the other half.
 
 A tone of height 1 placed exactly on bin 10, at 430.66 Hz, reads 1.000000 in bin 10 and 0.000000 in bin 11. A real chord does not fit the bins, so its heights come out lower and smeared: E4 sits at bin 122.46 of the long block, nearly halfway, and reads 0.101 for a true 0.15. Its frequency is still right to within half a bin.
 
-Running the transform backwards takes the same FFT with $w$ replaced by its conjugate, then a division by $N$. The code does this and gets every sample back.
+Running the transform backwards takes the same FFT with $`w`$ replaced by its conjugate, then a division by $`N`$. The code does this and gets every sample back.
 
 ---
 
@@ -191,8 +203,8 @@ Six strings, six peaks, each within 1.25 Hz of the truth, less than half a bin. 
 | --- | --- | --- |
 | Name the notes from the 1024 block | 3 peaks; E4 at 344.53 Hz, 76.6 cents sharp | The bins, 43.07 Hz, are as wide as the gaps between strings, 39.29 to 82.69 Hz |
 | Pad the 1024 samples with zeros to 16,384, for 2.69 Hz bins | 8 peaks: E2 at 69.98 Hz, and two at 21.53 and 395.67 Hz that are no string | Padding adds bins, not record; the smear is still 43 Hz wide |
-| Stitch the top half with + instead of − | outputs wrong by up to 177.60 | $w^{N/2} = -1$: half a turn flips the odd half's sign |
-| Leave out the turn $w^k$ on the odd half | outputs wrong by up to 247.04 | The odd samples are one slot late, and that delay is a turn |
+| Stitch the top half with + instead of − | outputs wrong by up to 177.60 | $`w^{N/2} = -1`$: half a turn flips the odd half's sign |
+| Leave out the turn $`w^k`$ on the odd half | outputs wrong by up to 247.04 | The odd samples are one slot late, and that delay is a turn |
 | Read bin 1016 of 1024 as a frequency | 43,755.47 Hz | It is the mirror of bin 8, 344.53 Hz |
 
 ---
@@ -547,9 +559,9 @@ The two outputs match line for line.
 
 Lean proves the split and its cost for every power-of-2 block, and the mirror rule for every block.
 
-- Take $N$ a power of 2, at least 2, and a bin $k$ from 0 to $N/2 - 1$. Then $X[k] = E[k] + w^k O[k]$ and $X[k + N/2] = E[k] - w^k O[k]$.
-- Suppose $M(1) = 0$ and $M(N) = 2\,M(N/2) + N/2$ for every even $N$. Then $M(N) = (N/2)\log_2 N$ for every $N$ that is a power of 2.
-- Take real samples and any bin $k$ from 0 to $N$. Then bin $N - k$ holds the conjugate of bin $k$.
+- Take $`N`$ a power of 2, at least 2, and a bin $`k`$ from 0 to $`N/2 - 1`$. Then $`X[k] = E[k] + w^k O[k]`$ and $`X[k + N/2] = E[k] - w^k O[k]`$.
+- Suppose $`M(1) = 0`$ and $`M(N) = 2\,M(N/2) + N/2`$ for every even $`N`$. Then $`M(N) = (N/2)\log_2 N`$ for every $`N`$ that is a power of 2.
+- Take real samples and any bin $`k`$ from 0 to $`N`$. Then bin $`N - k`$ holds the conjugate of bin $`k`$.
 - The worked counts check out: 5,120 against 1,048,576 for 1024 samples, 114,688 for 16,384, and a speed-up of 204.8.
 - Bin 1016 of 1024 is the mirror of bin 8.
 
@@ -754,10 +766,10 @@ example : 1024 - 1016 = 8 := by norm_num
 > [!warning]
 > **Thinking more bins means more detail.** Padding the block with zeros, or asking for a bigger FFT, gives more bins, closer together. It does not give finer detail. Padding the 1024 chord samples to 16,384 gives bins 2.69 Hz apart, but the picture is the same 43 Hz smear drawn more smoothly: eight peaks, E2 at 69.98 Hz, and two peaks that are no string at all. Only a longer record, 16,384 real samples, gives six true peaks.
 >
-> - **Reading the top half.** Bins $N/2 + 1$ to $N - 1$ are mirrors. Bin 1016 of 1024 is not 43,755.47 Hz; it is the twin of bin 8, 344.53 Hz.
+> - **Reading the top half.** Bins $`N/2 + 1`$ to $`N - 1`$ are mirrors. Bin 1016 of 1024 is not 43,755.47 Hz; it is the twin of bin 8, 344.53 Hz.
 > - **Taking a bin's height at face value.** A tone between two bins reads low: a tone of height 1 at bin 10.5 reads 0.652. The frequency is right to half a bin; the height can be a third low.
 > - **Thinking the FFT is an approximation.** It is the same sum, rearranged. The FFT and the sum written out agree to 10⁻⁹ here; the difference is rounding.
-> - **Dropping the sign in the butterfly.** The top half is $E - w^k O$. With a plus sign the outputs come out wrong by up to 177.60.
+> - **Dropping the sign in the butterfly.** The top half is $`E - w^k O`$. With a plus sign the outputs come out wrong by up to 177.60.
 
 ---
 
@@ -776,7 +788,7 @@ example : 1024 - 1016 = 8 := by norm_num
 
 ## What this builds on
 
-- [Sampling](01-sampling-and-the-nyquist-theorem.md): the sampling rate $f_s$, the Nyquist frequency $f_s/2$, and why bins above $N/2$ are mirrors.
+- [Sampling](01-sampling-and-the-nyquist-theorem.md): the sampling rate $`f_s`$, the Nyquist frequency $`f_s/2`$, and why bins above $`N/2`$ are mirrors.
 - [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): the transform itself, built from roots of unity, with its inverse and energy identity proved.
 - [Change of basis](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the DFT as a block's address in a basis of waves.
 - [Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): smearing becomes multiplication bin by bin, which the FFT makes cheap.

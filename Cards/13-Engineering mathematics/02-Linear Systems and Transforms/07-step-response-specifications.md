@@ -50,11 +50,15 @@ Engineers write j for the square root of −1; the rest of the library writes i.
 
 The door obeys Newton's second law. The drive pushes with K_p times the distance still to go, minus b times the speed (velocity feedback, which also lumps in rail friction); the spring pulls back with k_s times the position:
 
-$$m\,\ddot x + b\,\dot x + (K_p + k_s)\,x = K_p\, r \qquad\Longrightarrow\qquad \omega_n = \sqrt{\frac{K_p + k_s}{m}},\quad \zeta = \frac{b}{2\,m\,\omega_n}.$$
+```math
+m\,\ddot x + b\,\dot x + (K_p + k_s)\,x = K_p\, r \qquad\Longrightarrow\qquad \omega_n = \sqrt{\frac{K_p + k_s}{m}},\quad \zeta = \frac{b}{2\,m\,\omega_n}.
+```
 
 The dots are time derivatives: one dot is speed, two is acceleration. With σ = ζω_n and ω_d = ω_n√(1 − ζ^2), the poles are −σ ± jω_d, and the four numbers are
 
-$$t_p = \frac{\pi}{\omega_d},\qquad M_p = e^{-\pi\sigma/\omega_d} = e^{-\pi\zeta/\sqrt{1-\zeta^2}},\qquad t_s \approx \frac{4}{\sigma},\qquad t_r = \frac{f(\zeta)}{\omega_n},\qquad e_{ss} = r - \frac{K_p}{K_p + k_s}\,r.$$
+```math
+t_p = \frac{\pi}{\omega_d},\qquad M_p = e^{-\pi\sigma/\omega_d} = e^{-\pi\zeta/\sqrt{1-\zeta^2}},\qquad t_s \approx \frac{4}{\sigma},\qquad t_r = \frac{f(\zeta)}{\omega_n},\qquad e_{ss} = r - \frac{K_p}{K_p + k_s}\,r.
+```
 
 **Read it aloud:** the door peaks after half a ring period; the fraction it overshoots by depends only on the damping ratio; it settles in about four decay times; its rise time is a fixed number for that damping ratio divided by the natural frequency; and it stops short by the share of the command that the spring holds back.
 
@@ -62,20 +66,20 @@ The function f(ζ) is the 10–90% rise time of a system with ω_n = 1 rad/s. It
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $t$ | panel position, at time t after the command | the trace in the chart | — |
-| $r$ | commanded travel, the step's height | 450 mm | every position and the error scale with it |
-| $m$, $b$ | panel mass; damping from velocity feedback and the rail | 40 kg; 300 N s/m | m slows everything; b cuts overshoot and slows the rise |
-| $K_p$, $k_s$ | drive force per metre still to go; closing spring stiffness | 960 N/m; 40 N/m | K_p shrinks the error, speeds the rise, adds overshoot |
-| $k$ | total stiffness K_p + k_s, so ω_n = √(k/m) | 1000 N/m | ω_n rises and ζ falls |
-| $y_{\infty}$, $e_{ss}$ | final position; steady error r minus final position | 432.00 mm; 18.00 mm | — |
-| $\zeta$ | damping ratio: how hard the motion is braked compared with its stiffness | 0.75 | less overshoot, slower rise |
-| $\omega_n$ | natural frequency: the poles' distance from the origin | 5 rad/s | every time on the trace shrinks in proportion |
-| $\sigma$, $\omega_d$ | decay rate and ring frequency: minus the real part and the imaginary part of the poles | 3.75 1/s; 3.3072 rad/s | σ: faster settling; ω_d: earlier peak |
-| $t_r$, $t_p$ | 10–90% rise time; time of the first peak | 0.4575 s; 0.9499 s | — |
-| $f(\zeta)$ | 10–90% rise time of the same-ζ system with ω_n = 1 rad/s, as a pure number | 2.2875 at ζ = 0.75 | slower rise |
-| $M_p$ | overshoot, as a fraction of the final position | 2.84% | — |
-| $t_s$ | 2% settling time: last exit from the band | 1.1485 s | — |
-| $s$, $j$ | Laplace variable; square root of −1 | poles −3.75 ± 3.3072j | — |
+| $`x`$, $`t`$ | panel position, at time t after the command | the trace in the chart | — |
+| $`r`$ | commanded travel, the step's height | 450 mm | every position and the error scale with it |
+| $`m`$, $`b`$ | panel mass; damping from velocity feedback and the rail | 40 kg; 300 N s/m | m slows everything; b cuts overshoot and slows the rise |
+| $`K_p`$, $`k_s`$ | drive force per metre still to go; closing spring stiffness | 960 N/m; 40 N/m | K_p shrinks the error, speeds the rise, adds overshoot |
+| $`k`$ | total stiffness K_p + k_s, so ω_n = √(k/m) | 1000 N/m | ω_n rises and ζ falls |
+| $`y_{\infty}`$, $`e_{ss}`$ | final position; steady error r minus final position | 432.00 mm; 18.00 mm | — |
+| $`\zeta`$ | damping ratio: how hard the motion is braked compared with its stiffness | 0.75 | less overshoot, slower rise |
+| $`\omega_n`$ | natural frequency: the poles' distance from the origin | 5 rad/s | every time on the trace shrinks in proportion |
+| $`\sigma`$, $`\omega_d`$ | decay rate and ring frequency: minus the real part and the imaginary part of the poles | 3.75 1/s; 3.3072 rad/s | σ: faster settling; ω_d: earlier peak |
+| $`t_r`$, $`t_p`$ | 10–90% rise time; time of the first peak | 0.4575 s; 0.9499 s | — |
+| $`f(\zeta)`$ | 10–90% rise time of the same-ζ system with ω_n = 1 rad/s, as a pure number | 2.2875 at ζ = 0.75 | slower rise |
+| $`M_p`$ | overshoot, as a fraction of the final position | 2.84% | — |
+| $`t_s`$ | 2% settling time: last exit from the band | 1.1485 s | — |
+| $`s`$, $`j`$ | Laplace variable; square root of −1 | poles −3.75 ± 3.3072j | — |
 | \|p\| | a pole's distance from the origin; equal to ω_n | 5 rad/s | faster rise; for this door, a smaller steady error |
 
 ### When it holds
@@ -99,7 +103,9 @@ Equivalently, every feature is a function of where the two poles sit. For this d
 
 Divide the position by its final value. The second-order card solves the equation; the result, with σ for the decay rate and ω_d for the ring frequency, is
 
-$$\frac{x(t)}{y_\infty} = 1 - e^{-\sigma t}\left(\cos\omega_d t + \frac{\sigma}{\omega_d}\sin\omega_d t\right).$$
+```math
+\frac{x(t)}{y_\infty} = 1 - e^{-\sigma t}\left(\cos\omega_d t + \frac{\sigma}{\omega_d}\sin\omega_d t\right).
+```
 
 **Read it aloud:** the door heads for 1, minus a ring at frequency ω_d that dies like e^(−σt).
 
@@ -109,13 +115,17 @@ Write k = K_p + k_s = 1000 N/m for the total stiffness. For the door, 4mk − b^
 
 The speed is the derivative of the trace. The cosine terms cancel and what is left is
 
-$$\dot x(t) = y_\infty\,\frac{\omega_n^2}{\omega_d}\,e^{-\sigma t}\sin\omega_d t.$$
+```math
+\dot x(t) = y_\infty\,\frac{\omega_n^2}{\omega_d}\,e^{-\sigma t}\sin\omega_d t.
+```
 
 The speed is first zero again when ω_d t = π. That instant is the peak, t_p = π/ω_d = 0.9499 s. Put it into the trace: cos π = −1 and sin π = 0, so x/y∞ = 1 + e^(−πσ/ω_d). The overshoot is e^(−3.5622), which is 2.84%.
 
 The ratio σ/ω_d depends only on the angle of the pole seen from the origin. Draw a line from the origin to the pole −3.75 + 3.3072j: its angle from the negative real axis is arccos ζ, since cos of that angle is σ/ω_n = ζ. So every pole on one ray from the origin gives the same overshoot. The spec "under 5%" is a ray: solve e^(−πζ/√(1−ζ^2)) = 0.05 for ζ,
 
-$$\zeta_{\min} = \frac{-\ln 0.05}{\sqrt{\pi^2 + (\ln 0.05)^2}} = \frac{2.9957}{4.3410} = 0.6901,$$
+```math
+\zeta_{\min} = \frac{-\ln 0.05}{\sqrt{\pi^2 + (\ln 0.05)^2}} = \frac{2.9957}{4.3410} = 0.6901,
+```
 
 and the poles must lie within arccos 0.6901 = 0.8092 rad = 46.36° of the negative real axis.
 

@@ -36,7 +36,9 @@ Upper (orange) line: the ratio sin x / x. Lower (teal) line: the rate ratio cos 
 
 The limit notation from [Limits](../01-Limits%20and%20Continuity/01-limits.md): lim (x → a) f(x) = L reads "f(x) heads for L as x heads for a". The rule, for a ratio of two functions:
 
-$$\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)} = L$$
+```math
+\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)} = L
+```
 
 **Read it aloud:** if top and bottom both head for 0, or both blow up, and the ratio of their rates heads for L, then the ratio itself heads for L.
 
@@ -44,13 +46,13 @@ The two limits agree; the two ratios need not agree anywhere. At x = 0.1 the rat
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the input, moving toward $a$ | 0.1 radians; then 10 | nearer $a$: nearer $L$, in both examples |
-| $a$ | where $x$ heads: a number, or infinity | 0; infinity | — |
-| $f$ | top of the ratio | sin x; then x | bigger ratio |
-| $g$ | bottom of the ratio | x; then e^x | smaller ratio |
-| $f'$, $g'$ | each one's rate, taken separately | cos x and 1; then 1 and e^x | their ratio is what the rule reads |
-| $L$ | the limit both ratios share | 1; then 0 | — |
-| $c$ | an in-between point where ratio and rate ratio agree exactly | 0.057729 when x = 0.1 | moves toward $a$ with $x$ |
+| $`x`$ | the input, moving toward $`a`$ | 0.1 radians; then 10 | nearer $`a`$: nearer $`L`$, in both examples |
+| $`a`$ | where $`x`$ heads: a number, or infinity | 0; infinity | — |
+| $`f`$ | top of the ratio | sin x; then x | bigger ratio |
+| $`g`$ | bottom of the ratio | x; then e^x | smaller ratio |
+| $`f'`$, $`g'`$ | each one's rate, taken separately | cos x and 1; then 1 and e^x | their ratio is what the rule reads |
+| $`L`$ | the limit both ratios share | 1; then 0 | — |
+| $`c`$ | an in-between point where ratio and rate ratio agree exactly | 0.057729 when x = 0.1 | moves toward $`a`$ with $`x`$ |
 
 Both rates are per unit of x, which cancels, so the rate ratio has the ratio's units; here, bare numbers.
 
@@ -74,7 +76,9 @@ The mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) gives on
 
 Set f(a) = g(a) = 0; since both head for 0, this makes both unbroken at a. Fix x near a and build a helper h(t) = f(t) g(x) − g(t) f(x), for t from a to x. At t = a both terms are 0; at t = x they cancel. So h starts and ends at 0, and Rolle's theorem (the equal-ends case of the mean value theorem) gives a point c between a and x where the rate of h is 0:
 
-$$f'(c)\,g(x) = g'(c)\,f(x) \quad\text{so}\quad \frac{f(x)}{g(x)} = \frac{f'(c)}{g'(c)}$$
+```math
+f'(c)\,g(x) = g'(c)\,f(x) \quad\text{so}\quad \frac{f(x)}{g(x)} = \frac{f'(c)}{g'(c)}
+```
 
 Dividing is legal: if g(x) were 0, Rolle would give g a zero rate between a and x, which is forbidden.
 

@@ -28,36 +28,42 @@ Drawn to scale, 1 cm = 12 units. Ticks mark three equal 15 cm sides: the cut edg
 
 ## The formula
 
-Notation first, in words. The Greek letter theta, $\theta$, is the angle in radians: a length over a length, so the centimetres cancel: a plain number, tagged rad as a reminder. Degrees are written as the word. The arc is $s$, the sector's area $A$, the radius $r$, and $\pi$ is circumference over diameter.
+Notation first, in words. The Greek letter theta, $`\theta`$, is the angle in radians: a length over a length, so the centimetres cancel: a plain number, tagged rad as a reminder. Degrees are written as the word. The arc is $`s`$, the sector's area $`A`$, the radius $`r`$, and $`\pi`$ is circumference over diameter.
 
-$$\theta = \frac{s}{r}$$
+```math
+\theta = \frac{s}{r}
+```
 
 **Read it aloud:** the angle in radians is the arc it cuts, divided by the radius.
 
-$$\theta = \text{degrees} \times \frac{\pi}{180}, \qquad \text{degrees} = \theta \times \frac{180}{\pi}$$
+```math
+\theta = \text{degrees} \times \frac{\pi}{180}, \qquad \text{degrees} = \theta \times \frac{180}{\pi}
+```
 
 **Read it aloud:** degrees times pi over 180 give radians; radians times 180 over pi give degrees.
 
-$$s = r\,\theta, \qquad A = \tfrac12\, r^2\, \theta$$
+```math
+s = r\,\theta, \qquad A = \tfrac12\, r^2\, \theta
+```
 
 **Read it aloud:** the arc is the radius times the angle; the sector's area is half the radius squared times the angle.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r$ | the radius: centre to rim | 15 cm | arc grows in step, area with its square |
+| $`r`$ | the radius: centre to rim | 15 cm | arc grows in step, area with its square |
 | degrees | the same angle, 360 to a turn | 60° | a wider slice |
-| $\theta$ | the same angle in radians | 1.047 rad, exactly $\pi$/3 | arc and area grow in step |
-| $s$ | the arc: length of crust | 15.71 cm | at a fixed radius, a wider angle |
-| $A$ | the sector's area: pizza on the slice | 117.81 cm^2 | — |
-| $\pi$ | circumference over diameter | 3.141593 | fixed for every circle |
+| $`\theta`$ | the same angle in radians | 1.047 rad, exactly $`\pi`$/3 | arc and area grow in step |
+| $`s`$ | the arc: length of crust | 15.71 cm | at a fixed radius, a wider angle |
+| $`A`$ | the sector's area: pizza on the slice | 117.81 cm^2 | — |
+| $`\pi`$ | circumference over diameter | 3.141593 | fixed for every circle |
 
-Landmarks: 30° is $\pi$/6 = 0.524 rad, 45° is $\pi$/4 = 0.785, 90° is $\pi$/2 = 1.571, 180° is $\pi$ = 3.142, and a full turn is 2$\pi$ = 6.283 rad. One radian is 57.30°.
+Landmarks: 30° is $`\pi`$/6 = 0.524 rad, 45° is $`\pi`$/4 = 0.785, 90° is $`\pi`$/2 = 1.571, 180° is $`\pi`$ = 3.142, and a full turn is 2$`\pi`$ = 6.283 rad. One radian is 57.30°.
 
 ### When it holds
 
-- **The angle is in radians.** Put 60 in for $\theta$ and the slice gets 900 cm of crust.
+- **The angle is in radians.** Put 60 in for $`\theta`$ and the slice gets 900 cm of crust.
 - **The slice is cut from the centre.** Both straight edges must be radii; a square-cut party slice is no sector.
-- **At most one turn, for area.** Past 2$\pi$ the arc formula still gives the distance a spinning rim travels, but the area formula counts pizza twice.
+- **At most one turn, for area.** Past 2$`\pi`$ the arc formula still gives the distance a spinning rim travels, but the area formula counts pizza twice.
 
 ---
 
@@ -90,35 +96,43 @@ Two numbers in one gap of width 1/n differ by at most 1/n, for every n however l
 
 ### Step 2: a full turn is 2π radians
 
-The whole rim, $2\pi r$, divided by the radius gives $2\pi$, about 6.283. So 360° is $2\pi$ radians, 180° is $\pi$ radians, and one degree is $\pi$/180 of a radian: $\theta$ = 60 × $\pi$/180 = $\pi$/3 = 1.047 rad. One radian is 180/$\pi$ = 57.30°, a little narrower than the slice, so the slice's crust is a little longer than its 15 cm edge.
+The whole rim, $`2\pi r`$, divided by the radius gives $`2\pi`$, about 6.283. So 360° is $`2\pi`$ radians, 180° is $`\pi`$ radians, and one degree is $`\pi`$/180 of a radian: $`\theta`$ = 60 × $`\pi`$/180 = $`\pi`$/3 = 1.047 rad. One radian is 180/$`\pi`$ = 57.30°, a little narrower than the slice, so the slice's crust is a little longer than its 15 cm edge.
 
 ### Step 3: the arc formula, and where π went
 
-A slice of $\theta$ radians is the share $\theta$/(2$\pi$) of a turn, so by Step 1:
+A slice of $`\theta`$ radians is the share $`\theta`$/(2$`\pi`$) of a turn, so by Step 1:
 
-$$s = \frac{\theta}{2\pi} \times 2\pi r = r\,\theta.$$
+```math
+s = \frac{\theta}{2\pi} \times 2\pi r = r\,\theta.
+```
 
-The $2\pi$ above and below cancel. In degrees the same step gives
+The $`2\pi`$ above and below cancel. In degrees the same step gives
 
-$$s = \frac{\text{degrees}}{360} \times 2\pi r = \frac{\pi\, r \times \text{degrees}}{180},$$
+```math
+s = \frac{\text{degrees}}{360} \times 2\pi r = \frac{\pi\, r \times \text{degrees}}{180},
+```
 
-and nothing cancels: a formula in degrees carries the factor $\pi$/180 forever. The radian is the unit that makes that factor 1. For the slice, $s$ = 15 × 1.047 = 15.71 cm.
+and nothing cancels: a formula in degrees carries the factor $`\pi`$/180 forever. The radian is the unit that makes that factor 1. For the slice, $`s`$ = 15 × 1.047 = 15.71 cm.
 
 ### Step 4: the area formula, two ways
 
-The sector is the same share of the whole area, $\pi r^2$:
+The sector is the same share of the whole area, $`\pi r^2`$:
 
-$$A = \frac{\theta}{2\pi} \times \pi r^2 = \tfrac12\, r^2\, \theta.$$
+```math
+A = \frac{\theta}{2\pi} \times \pi r^2 = \tfrac12\, r^2\, \theta.
+```
 
-The $\pi$ cancels and a half is left: ½ × 15 × 15 × 1.047 = 117.81 cm^2.
+The $`\pi`$ cancels and a half is left: ½ × 15 × 15 × 1.047 = 117.81 cm^2.
 
 The half has a picture. Cut the sector into thin slivers from the centre, each nearly a triangle with the radius for height and a stretch of crust for base. The bases add up to the arc, so
 
-$$A = \tfrac12\, r\, s,$$
+```math
+A = \tfrac12\, r\, s,
+```
 
-which is $\tfrac12 r^2 \theta$ once $s = r\theta$ is put in: a sector has the area of a triangle with the arc for base and the radius for height. The code's 4096 slivers give 117.81 cm^2.
+which is $`\tfrac12 r^2 \theta`$ once $`s = r\theta`$ is put in: a sector has the area of a triangle with the arc for base and the radius for height. The code's 4096 slivers give 117.81 cm^2.
 
-A second road starts from the circle of radius 1, where an angle in radians is its own arc, and enlarges it by $r$: [The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md).
+A second road starts from the circle of radius 1, where an angle in radians is its own arc, and enlarges it by $`r`$: [The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md).
 
 ---
 
@@ -126,7 +140,7 @@ A second road starts from the circle of radius 1, where an angle in radians is i
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| convert to radians | 60 × $\pi$ ÷ 180 | 1.047 rad |
+| convert to radians | 60 × $`\pi`$ ÷ 180 | 1.047 rad |
 | arc, the crust | 15 × 1.047 | **15.71 cm** |
 | sector, the pizza on it | ½ × 15 × 15 × 1.047 | **117.81 cm^2** |
 | check: a sixth of the rim | 94.25 ÷ 6 | 15.71 cm |
@@ -136,14 +150,14 @@ Either road, one slice carries 15.71 cm of crust and 117.81 cm^2 of pizza.
 
 ### A second case: a slice cut by crust length
 
-A slice with exactly 20 cm of crust spans $\theta$ = 20 ÷ 15 = 1.333 rad, which is 1.333 × 180/$\pi$ = 76.39°. Its area needs no angle: $A$ = ½ × 15 × 20 = 150 cm^2. No $\pi$ appears until degrees are wanted. The code reaches 76.39° again by walking 20 cm along its chords.
+A slice with exactly 20 cm of crust spans $`\theta`$ = 20 ÷ 15 = 1.333 rad, which is 1.333 × 180/$`\pi`$ = 76.39°. Its area needs no angle: $`A`$ = ½ × 15 × 20 = 150 cm^2. No $`\pi`$ appears until degrees are wanted. The code reaches 76.39° again by walking 20 cm along its chords.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| 60 put into $s = r\theta$ | 900 cm of crust | 60 is degrees; the formula wants 1.047 |
-| The half left off | 235.62 cm^2 | $r^2\theta$ is two slices' worth |
+| 60 put into $`s = r\theta`$ | 900 cm of crust | 60 is degrees; the formula wants 1.047 |
+| The half left off | 235.62 cm^2 | $`r^2\theta`$ is two slices' worth |
 | 30 cm taken as the radius | 31.42 cm and 471.24 cm^2 | 30 cm is the diameter |
 | The chord taken for the crust | 15.00 cm | the straight line misses the bulge |
 
@@ -151,7 +165,7 @@ A slice with exactly 20 cm of crust spans $\theta$ = 20 ÷ 15 = 1.333 rad, which
 
 ## Code, from first principles, and it actually runs
 
-Road one converts 60° to radians and applies the formulas. Road two uses no $\pi$ and no angle. It puts the pizza on a grid, centre at (0, 0), each point named by how far across and up it lies. Triangles with three equal sides fix the slice's far corner, and the next slice's. Twelve rounds of halving follow: each chord's midpoint, pushed out to the rim, splits its piece in two. The 4096 chords per 60° add up, by Pythagoras, to the crust, and their thin triangles to the slice. Walking one radius along them, at 60/4096 of a degree per piece, sizes the radian. Four asserts compare the roads.
+Road one converts 60° to radians and applies the formulas. Road two uses no $`\pi`$ and no angle. It puts the pizza on a grid, centre at (0, 0), each point named by how far across and up it lies. Triangles with three equal sides fix the slice's far corner, and the next slice's. Twelve rounds of halving follow: each chord's midpoint, pushed out to the rim, splits its piece in two. The 4096 chords per 60° add up, by Pythagoras, to the crust, and their thin triangles to the slice. Walking one radius along them, at 60/4096 of a degree per piece, sizes the radian. Four asserts compare the roads.
 
 ### Python
 
@@ -349,12 +363,12 @@ The outputs match line for line. The chord totals climb to the formula from belo
 
 Lean proves the arc formula, the sector formula and Step 0 for every radius and angle, with the sector up to one full turn.
 
-- The arc cut by an angle of $\theta$ radians is $r\theta$ long, measured as the total of ever shorter chords along it.
+- The arc cut by an angle of $`\theta`$ radians is $`r\theta`$ long, measured as the total of ever shorter chords along it.
 - That arc formula holds past one full turn too, as the distance the rim travels.
-- The sector's area is $\tfrac12 r^2\theta$ for any angle from 0 up to one full turn, $2\pi$.
+- The sector's area is $`\tfrac12 r^2\theta`$ for any angle from 0 up to one full turn, $`2\pi`$.
 - Arc over radius comes out the same on circles of every size, so it can measure the angle.
 
-It also checks the card's sums exactly, in terms of $\pi$: 60° as $\pi$/3, the slice, the second case and the mistakes. The decimals, the chord walk and the figure are left to the Python and Rust checks.
+It also checks the card's sums exactly, in terms of $`\pi`$: 60° as $`\pi`$/3, the slice, the second case and the mistakes. The decimals, the chord walk and the figure are left to the Python and Rust checks.
 
 ```lean
 -- Radians: on a circle of radius r centred at the corner, the arc cut by an angle of θ radians has length r × θ, the sector it cuts has area r² × θ / 2 when θ is at most one turn, and arc over radius does not depend on the circle's size.
@@ -599,9 +613,9 @@ example : (15 : ℚ) ^ 2 * 60 / 2 = 6750 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Putting degrees into a radian formula.** $s = r\theta$ with 60 for $\theta$ gives 900 cm: nine metres of crust on one slice. The radian has absorbed the factor $\pi$/180, so degrees fed in give an answer 57.30 times too big. Convert first: 60° is 1.047 rad. Programming languages and spreadsheets take radians too.
+> **Putting degrees into a radian formula.** $`s = r\theta`$ with 60 for $`\theta`$ gives 900 cm: nine metres of crust on one slice. The radian has absorbed the factor $`\pi`$/180, so degrees fed in give an answer 57.30 times too big. Convert first: 60° is 1.047 rad. Programming languages and spreadsheets take radians too.
 >
-> - **Dropping the half.** $r^2\theta$ gives 235.62 cm^2, two slices' worth.
+> - **Dropping the half.** $`r^2\theta`$ gives 235.62 cm^2, two slices' worth.
 > - **Radius for diameter.** Taking the 30 cm width as the radius doubles the crust to 31.42 cm and quadruples the area to 471.24 cm^2.
 > - **Triangle for sector.** The triangle of the two cuts and the chord holds 97.43 cm^2; the slice holds 117.81 cm^2.
 
@@ -610,7 +624,7 @@ example : (15 : ℚ) ^ 2 * 60 / 2 = 6750 := by norm_num
 ## Where you meet it in real life
 
 - **Pie charts.** Each share is a sector: one sixth of the total gets 60° and one sixth of the disc.
-- **Wheels.** A wheel of radius $r$ turning $\theta$ radians rolls $r\theta$ along the ground: the rim unrolled onto the road.
+- **Wheels.** A wheel of radius $`r`$ turning $`\theta`$ radians rolls $`r\theta`$ along the ground: the rim unrolled onto the road.
 - **Cones.** A paper cone is a rolled-up sector whose arc becomes the base's rim ([Pyramids, cones and spheres](05-pyramids-cones-and-spheres.md)).
 
 > **Say it back**
@@ -620,7 +634,7 @@ example : (15 : ℚ) ^ 2 * 60 / 2 = 6750 := by norm_num
 
 ## What this builds on
 
-- [Circles](01-circle-circumference-and-area.md): the circumference $2\pi r$ and area $\pi r^2$ that every slice takes a share of, and $\pi$ itself.
+- [Circles](01-circle-circumference-and-area.md): the circumference $`2\pi r`$ and area $`\pi r^2`$ that every slice takes a share of, and $`\pi`$ itself.
 
 ## Where this goes next
 

@@ -35,46 +35,52 @@ One line: the expected profit for each batch size, with demand averaging 120 and
 
 ## The formula
 
-This card introduces four letters, used across the shelf: the **demand rate** $D$ (units used per year), the **order cost** $K$ (the fixed cost of one delivery, whatever its size), the **holding cost** $h$ (the cost of keeping one unit in stock for a year) and the **order size** $Q$.
+This card introduces four letters, used across the shelf: the **demand rate** $`D`$ (units used per year), the **order cost** $`K`$ (the fixed cost of one delivery, whatever its size), the **holding cost** $`h`$ (the cost of keeping one unit in stock for a year) and the **order size** $`Q`$.
 
 The economic order quantity (EOQ), the best delivery size for steady demand:
 
-$$Q^* = \sqrt{\frac{2KD}{h}}$$
+```math
+Q^* = \sqrt{\frac{2KD}{h}}
+```
 
 The reorder point, the stock level that triggers the next order:
 
-$$R = \mu_L + z\,\sigma_L, \qquad z = \Phi^{-1}(\alpha)$$
+```math
+R = \mu_L + z\,\sigma_L, \qquad z = \Phi^{-1}(\alpha)
+```
 
 The one-shot order is called the newsvendor model, after newspaper sellers, who stock each day's paper once.
 
-The critical fractile, which fixes the one-shot order $Q^*$ for the croissants:
+The critical fractile, which fixes the one-shot order $`Q^*`$ for the croissants:
 
-$$F(Q^*) = \frac{c_u}{c_u + c_o}$$
+```math
+F(Q^*) = \frac{c_u}{c_u + c_o}
+```
 
-**Read it aloud:** order the square root of twice the order cost times the yearly demand, over the holding cost; reorder when stock falls to the demand you expect during the wait plus $z$ spreads of it; and for a one-shot order, stock up until the chance demand stays at or below your stock equals the missed-sale cost's share of both costs.
+**Read it aloud:** order the square root of twice the order cost times the yearly demand, over the holding cost; reorder when stock falls to the demand you expect during the wait plus $`z`$ spreads of it; and for a one-shot order, stock up until the chance demand stays at or below your stock equals the missed-sale cost's share of both costs.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $D$ | demand rate: cases of butter used per year | 5,200 (100 a week for 52 weeks) | $Q^*$ rises, with the square root |
-| $K$ | order cost: the fixed cost of one delivery | £125 | $Q^*$ rises: fewer, bigger deliveries |
-| $h$ | holding cost: keeping one case for a year (cold room, money tied up) | £2.60 | $Q^*$ falls: smaller, more frequent deliveries |
-| $Q$, $Q^*$ | order size; the best order size | $Q^*$ = 707.1 cases of butter; 140.23 croissants | — |
-| $C(Q)$ | yearly cost of ordering plus holding, for order size $Q$ | £1,838.48 at $Q^*$ | — |
-| $t_L$ | lead time: weeks from placing an order to its arrival | 2 weeks | $R$ rises |
-| $\mu_L$, $\sigma_L$, $\sigma_{\text{week}}$ | mean and spread (standard deviation) of the demand during the lead time; the spread of one week's demand | 200 and 28.28 cases; 20 cases a week | $R$ rises |
-| $\alpha$, $z$ | service level: the chance a cycle has no stock-out; $z = \Phi^{-1}(\alpha)$, its normal quantile | 0.95; $z$ = 1.645 | $R$ rises, faster as $\alpha$ nears 1 |
-| $s$, $R$ | safety stock $z\sigma_L$; reorder point $\mu_L + s$ | 46.52; 246.52, so order at 247 cases | — |
-| $p$, $c$, $v$ | croissant price; cost to bake one; value of a leftover | £2.80; £0.70; £0 | — |
-| $c_u$, $c_o$ | underage cost $p - c$: profit lost per missed sale; overage cost $c - v$: money lost per leftover | £2.10; £0.70 | $c_u$ up: bake more. $c_o$ up: bake fewer |
-| $\mu$, $\sigma$, $F$, $\Phi$, $\varphi$, $G$, $u$ | croissant demand's mean and spread; $F(x)$, the chance demand is at most $x$; $\Phi$ and $\varphi$, the standard bell curve's area to the left and height; $G(z) = \varphi(z) - z(1 - \Phi(z))$, the standard normal loss function: the expected shortfall past $z$, in spreads; $u$, a standard bell-curve draw | 120 and 30; $G(1.645)$ = 0.0209 | — |
+| $`D`$ | demand rate: cases of butter used per year | 5,200 (100 a week for 52 weeks) | $`Q^*`$ rises, with the square root |
+| $`K`$ | order cost: the fixed cost of one delivery | £125 | $`Q^*`$ rises: fewer, bigger deliveries |
+| $`h`$ | holding cost: keeping one case for a year (cold room, money tied up) | £2.60 | $`Q^*`$ falls: smaller, more frequent deliveries |
+| $`Q`$, $`Q^*`$ | order size; the best order size | $`Q^*`$ = 707.1 cases of butter; 140.23 croissants | — |
+| $`C(Q)`$ | yearly cost of ordering plus holding, for order size $`Q`$ | £1,838.48 at $`Q^*`$ | — |
+| $`t_L`$ | lead time: weeks from placing an order to its arrival | 2 weeks | $`R`$ rises |
+| $`\mu_L`$, $`\sigma_L`$, $`\sigma_{\text{week}}`$ | mean and spread (standard deviation) of the demand during the lead time; the spread of one week's demand | 200 and 28.28 cases; 20 cases a week | $`R`$ rises |
+| $`\alpha`$, $`z`$ | service level: the chance a cycle has no stock-out; $`z = \Phi^{-1}(\alpha)`$, its normal quantile | 0.95; $`z`$ = 1.645 | $`R`$ rises, faster as $`\alpha`$ nears 1 |
+| $`s`$, $`R`$ | safety stock $`z\sigma_L`$; reorder point $`\mu_L + s`$ | 46.52; 246.52, so order at 247 cases | — |
+| $`p`$, $`c`$, $`v`$ | croissant price; cost to bake one; value of a leftover | £2.80; £0.70; £0 | — |
+| $`c_u`$, $`c_o`$ | underage cost $`p - c`$: profit lost per missed sale; overage cost $`c - v`$: money lost per leftover | £2.10; £0.70 | $`c_u`$ up: bake more. $`c_o`$ up: bake fewer |
+| $`\mu`$, $`\sigma`$, $`F`$, $`\Phi`$, $`\varphi`$, $`G`$, $`u`$ | croissant demand's mean and spread; $`F(x)`$, the chance demand is at most $`x`$; $`\Phi`$ and $`\varphi`$, the standard bell curve's area to the left and height; $`G(z) = \varphi(z) - z(1 - \Phi(z))`$, the standard normal loss function: the expected shortfall past $`z`$, in spreads; $`u`$, a standard bell-curve draw | 120 and 30; $`G(1.645)`$ = 0.0209 | — |
 
 ### When it holds
 
-- **Demand is steady and known (EOQ).** If butter use swings with the seasons, one fixed $Q^*$ is wrong for most of the year. Each season needs its own order size.
-- **Each delivery costs the same $K$, and holding cost grows in proportion to stock and time.** A bulk discount on large orders breaks the smooth cost curve. Each price band then has to be costed separately and compared.
-- **Weeks of demand are independent, and lead-time demand is close to a bell curve (reorder point).** If a busy week tends to follow a busy week, the true $\sigma_L$ is bigger than $\sigma_{\text{week}}\sqrt{t_L}$, and stock-outs come more often than the promised 5%.
-- **One selling period, leftovers worth $v$, and the demand curve $F$ is right (newsvendor).** If the shop's demand has two humps, 80 on a quiet day and 160 on a market day, a bell curve fitted to it (mean 120, spread 40) says bake 147. The true best is 160: an expected £224.00 a day against £214.90.
-- **A missed sale is lost, not delayed.** If customers wait for the next batch instead, $c_u$ becomes the cost of making them wait, and the waiting line is a job for [Queues](07-queueing-theory-and-littles-law.md).
+- **Demand is steady and known (EOQ).** If butter use swings with the seasons, one fixed $`Q^*`$ is wrong for most of the year. Each season needs its own order size.
+- **Each delivery costs the same $`K`$, and holding cost grows in proportion to stock and time.** A bulk discount on large orders breaks the smooth cost curve. Each price band then has to be costed separately and compared.
+- **Weeks of demand are independent, and lead-time demand is close to a bell curve (reorder point).** If a busy week tends to follow a busy week, the true $`\sigma_L`$ is bigger than $`\sigma_{\text{week}}\sqrt{t_L}`$, and stock-outs come more often than the promised 5%.
+- **One selling period, leftovers worth $`v`$, and the demand curve $`F`$ is right (newsvendor).** If the shop's demand has two humps, 80 on a quiet day and 160 on a market day, a bell curve fitted to it (mean 120, spread 40) says bake 147. The true best is 160: an expected £224.00 a day against £214.90.
+- **A missed sale is lost, not delayed.** If customers wait for the next batch instead, $`c_u`$ becomes the cost of making them wait, and the waiting line is a job for [Queues](07-queueing-theory-and-littles-law.md).
 
 ---
 
@@ -86,13 +92,15 @@ More stock means fewer deliveries, or fewer missed sales. It also means more mon
 
 ### Step 1: write the yearly cost of an order size
 
-A delivery of $Q$ cases arrives. Stock then falls steadily to zero, the next delivery arrives, and the pattern repeats: a sawtooth. Stock runs from $Q$ down to 0 in a straight line, so on average $Q/2$ cases are in the cold room. Holding them costs $hQ/2$ a year.
+A delivery of $`Q`$ cases arrives. Stock then falls steadily to zero, the next delivery arrives, and the pattern repeats: a sawtooth. Stock runs from $`Q`$ down to 0 in a straight line, so on average $`Q/2`$ cases are in the cold room. Holding them costs $`hQ/2`$ a year.
 
-The warehouse needs $D$ cases a year, $Q$ at a time, so it places $D/Q$ orders a year. Ordering costs $KD/Q$ a year. The total is
+The warehouse needs $`D`$ cases a year, $`Q`$ at a time, so it places $`D/Q`$ orders a year. Ordering costs $`KD/Q`$ a year. The total is
 
-$$C(Q) = \frac{KD}{Q} + \frac{hQ}{2}.$$
+```math
+C(Q) = \frac{KD}{Q} + \frac{hQ}{2}.
+```
 
-The first term falls as $Q$ grows; the second rises. The chart shows both for the butter.
+The first term falls as $`Q`$ grows; the second rises. The chart shows both for the butter.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -105,57 +113,63 @@ xychart-beta
     line [3250, 2167, 1625, 1300, 1083, 929, 812, 722, 650, 591, 542, 500, 464]
 ```
 
-Top line: the total $C(Q)$. Rising straight line: holding, $hQ/2$. Falling curve: ordering, $KD/Q$. The total bottoms out near 700 cases, where the other two lines cross.
+Top line: the total $`C(Q)`$. Rising straight line: holding, $`hQ/2`$. Falling curve: ordering, $`KD/Q`$. The total bottoms out near 700 cases, where the other two lines cross.
 
 ### Step 2: find the bottom with the derivative
 
 The [Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md) card's test says a best value sits where the slope changes sign. The slope of the cost is
 
-$$C'(Q) = -\frac{KD}{Q^2} + \frac{h}{2}.$$
+```math
+C'(Q) = -\frac{KD}{Q^2} + \frac{h}{2}.
+```
 
-For small $Q$ the first term wins and the slope is negative: bigger deliveries save money. For large $Q$ the slope is positive. It is zero at exactly one point:
+For small $`Q`$ the first term wins and the slope is negative: bigger deliveries save money. For large $`Q`$ the slope is positive. It is zero at exactly one point:
 
-$$\frac{KD}{Q^2} = \frac{h}{2} \quad\Longrightarrow\quad Q^* = \sqrt{\frac{2KD}{h}}.$$
+```math
+\frac{KD}{Q^2} = \frac{h}{2} \quad\Longrightarrow\quad Q^* = \sqrt{\frac{2KD}{h}}.
+```
 
-Multiply both sides of $KD/Q^2 = h/2$ by $Q$ and it reads $KD/Q^* = hQ^*/2$. **At the best order size, the yearly ordering cost equals the yearly holding cost.** For the butter, each is £919.24.
+Multiply both sides of $`KD/Q^2 = h/2`$ by $`Q`$ and it reads $`KD/Q^* = hQ^*/2`$. **At the best order size, the yearly ordering cost equals the yearly holding cost.** For the butter, each is £919.24.
 
-The bottom is very flat. Divide $C(Q)$ by $C(Q^*) = \sqrt{2KDh}$ and it becomes $\tfrac12(Q/Q^* + Q^*/Q)$. An order 20% too big costs only 1.67% extra; one 20% too small costs 2.50% extra. So $Q^*$ can be rounded to whatever a truck or pallet holds without real loss.
+The bottom is very flat. Divide $`C(Q)`$ by $`C(Q^*) = \sqrt{2KDh}`$ and it becomes $`\tfrac12(Q/Q^* + Q^*/Q)`$. An order 20% too big costs only 1.67% extra; one 20% too small costs 2.50% extra. So $`Q^*`$ can be rounded to whatever a truck or pallet holds without real loss.
 
 ### Step 3: the reorder point covers the wait
 
-Butter takes $t_L$ = 2 weeks to arrive. The warehouse must order while it still has enough to last the wait. On average the wait uses 200 cases. But a week's use varies, with a spread of 20 cases around its 100. EOQ used only the average rate, 100 a week; the reorder point and its safety stock absorb the week-to-week spread.
+Butter takes $`t_L`$ = 2 weeks to arrive. The warehouse must order while it still has enough to last the wait. On average the wait uses 200 cases. But a week's use varies, with a spread of 20 cases around its 100. EOQ used only the average rate, 100 a week; the reorder point and its safety stock absorb the week-to-week spread.
 
-How much does two weeks' use spread? Not 40. The variance is the spread squared. For independent weeks, **variances add, spreads don't**: the variance is $20^2 + 20^2 = 800$, so the spread is $\sqrt{800}$ = 28.28 cases. In general $\sigma_L = \sigma_{\text{week}}\sqrt{t_L}$.
+How much does two weeks' use spread? Not 40. The variance is the spread squared. For independent weeks, **variances add, spreads don't**: the variance is $`20^2 + 20^2 = 800`$, so the spread is $`\sqrt{800}`$ = 28.28 cases. In general $`\sigma_L = \sigma_{\text{week}}\sqrt{t_L}`$.
 
-Now pick a service level: the chance a cycle gets through the wait without running out. At $\alpha$ = 0.95, the [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md) card gives $z = \Phi^{-1}(0.95)$ = 1.645. Reorder at $R = 200 + 1.645 \times 28.28$ = 246.52, so at 247 cases. The extra 46.52 over the average is the **safety stock**: stock held only to absorb bad weeks.
+Now pick a service level: the chance a cycle gets through the wait without running out. At $`\alpha`$ = 0.95, the [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md) card gives $`z = \Phi^{-1}(0.95)`$ = 1.645. Reorder at $`R = 200 + 1.645 \times 28.28`$ = 246.52, so at 247 cases. The extra 46.52 over the average is the **safety stock**: stock held only to absorb bad weeks.
 
 ### Step 4: a stock-out is not the same as a missed case
 
-The service level counts cycles: 5% of them run short. But a short cycle is usually short by only a little. The expected shortfall past the reorder point is $\sigma_L\,G(z)$ = 0.5909 cases per cycle, out of 707.1 delivered. So the **fill rate**, the share of all demand served from the shelf, is $1 - 0.5909/707.1$ = 0.99916.
+The service level counts cycles: 5% of them run short. But a short cycle is usually short by only a little. The expected shortfall past the reorder point is $`\sigma_L\,G(z)`$ = 0.5909 cases per cycle, out of 707.1 delivered. So the **fill rate**, the share of all demand served from the shelf, is $`1 - 0.5909/707.1`$ = 0.99916.
 
 With 7.35 cycles a year, a stock-out comes about once every 2.72 years. Say which number is promised: "95% of cycles" and "99.9% of cases" describe the same warehouse.
 
 ### Step 5: the one-shot order and the critical fractile
 
-The croissants are different. There is no next delivery: what isn't sold by closing is lost. So think about the last croissant in the batch, the $Q$th one.
+The croissants are different. There is no next delivery: what isn't sold by closing is lost. So think about the last croissant in the batch, the $`Q`$th one.
 
-- It sells if demand is more than $Q$. That has chance $1 - F(Q)$, and earns $c_u$ = £2.10 that would otherwise be missed.
-- It is left over if demand is at most $Q$. That has chance $F(Q)$, and loses $c_o$ = £0.70.
+- It sells if demand is more than $`Q`$. That has chance $`1 - F(Q)`$, and earns $`c_u`$ = £2.10 that would otherwise be missed.
+- It is left over if demand is at most $`Q`$. That has chance $`F(Q)`$, and loses $`c_o`$ = £0.70.
 
-Baking it is worth $(1 - F(Q))\,c_u - F(Q)\,c_o$ on average. That is positive while $F(Q) < c_u/(c_u + c_o)$. As $Q$ grows, $F(Q)$ only rises, so the gain is positive at first and then turns negative. Stop at the crossing:
+Baking it is worth $`(1 - F(Q))\,c_u - F(Q)\,c_o`$ on average. That is positive while $`F(Q) < c_u/(c_u + c_o)`$. As $`Q`$ grows, $`F(Q)`$ only rises, so the gain is positive at first and then turns negative. Stop at the crossing:
 
-$$F(Q^*) = \frac{c_u}{c_u + c_o} = \frac{2.10}{2.80} = 0.75.$$
+```math
+F(Q^*) = \frac{c_u}{c_u + c_o} = \frac{2.10}{2.80} = 0.75.
+```
 
-This ratio is the **critical fractile**. For bell-curve demand, $Q^* = \mu + \sigma\,\Phi^{-1}(0.75) = 120 + 30 \times 0.6745$ = 140.23. At that point both sides of the trade are worth 0.5250 pounds: the last croissant is exactly break-even.
+This ratio is the **critical fractile**. For bell-curve demand, $`Q^* = \mu + \sigma\,\Phi^{-1}(0.75) = 120 + 30 \times 0.6745`$ = 140.23. At that point both sides of the trade are worth 0.5250 pounds: the last croissant is exactly break-even.
 
 <details>
 <summary>Why expected sales are $\mu - \sigma G(z)$</summary>
 
-Sales are demand minus the shortfall: $\min(\text{demand}, Q) = \text{demand} - \max(\text{demand} - Q, 0)$. Write demand as $\mu + \sigma u$, where $u$ follows the standard bell curve, and let $z = (Q - \mu)/\sigma$. The expected shortfall is
+Sales are demand minus the shortfall: $`\min(\text{demand}, Q) = \text{demand} - \max(\text{demand} - Q, 0)`$. Write demand as $`\mu + \sigma u`$, where $`u`$ follows the standard bell curve, and let $`z = (Q - \mu)/\sigma`$. The expected shortfall is
 
-$$\sigma\int_z^\infty (u - z)\,\varphi(u)\,du = \sigma\left(\varphi(z) - z\,(1 - \Phi(z))\right) = \sigma\,G(z),$$
+$`\displaystyle \sigma\int_z^\infty (u - z)\,\varphi(u)\,du = \sigma\left(\varphi(z) - z\,(1 - \Phi(z))\right) = \sigma\,G(z),`$
 
-because $\int_z^\infty u\,\varphi(u)\,du = \varphi(z)$: the height $\varphi$ has slope $-u\varphi(u)$. So expected sales are $\mu - \sigma G(z)$. The same $G$ gave the butter's shortfall per cycle in Step 4.
+because $`\int_z^\infty u\,\varphi(u)\,du = \varphi(z)`$: the height $`\varphi`$ has slope $`-u\varphi(u)`$. So expected sales are $`\mu - \sigma G(z)`$. The same $`G`$ gave the butter's shortfall per cycle in Step 4.
 
 </details>
 
@@ -165,17 +179,17 @@ because $\int_z^\infty u\,\varphi(u)\,du = \varphi(z)$: the height $\varphi$ has
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| butter: $2KD$ | $2 \times 125 \times 5{,}200$ | 1,300,000 |
-| divide by $h$ | $1{,}300{,}000 / 2.60$ | 500,000 |
-| $Q^*$ | $\sqrt{500{,}000}$ | 707.1 cases |
-| holding $= $ ordering | $2.60 \times 707.1/2$ and $125 \times 5{,}200/707.1$ | £919.24 each |
-| deliveries | $5{,}200/707.1$ | 7.35 a year, every 7.07 weeks |
-| lead-time spread | $\sqrt{20^2 + 20^2} = \sqrt{800}$ | 28.28 cases |
-| reorder point | $200 + 1.645 \times 28.28$ | 246.52, order at 247 |
-| croissants: fractile | $2.10/(2.10 + 0.70)$ | 0.75 |
-| $Q^*$ | $120 + 0.6745 \times 30 = 120 + 20.23$ | 140.23, bake 140 |
-| expected sold at 140 | $120 - 30 \times G(20/30) = 120 - 30 \times 0.1511$ | 115.47 (24.53 left, 4.53 sales missed) |
-| expected profit | $2.80 \times 115.47 - 0.70 \times 140 = 323.31 - 98.00$ | **£225.31 a day** |
+| butter: $`2KD`$ | $`2 \times 125 \times 5{,}200`$ | 1,300,000 |
+| divide by $`h`$ | $`1{,}300{,}000 / 2.60`$ | 500,000 |
+| $`Q^*`$ | $`\sqrt{500{,}000}`$ | 707.1 cases |
+| holding $= $ ordering | $`2.60 \times 707.1/2`$ and $`125 \times 5{,}200/707.1`$ | £919.24 each |
+| deliveries | $`5{,}200/707.1`$ | 7.35 a year, every 7.07 weeks |
+| lead-time spread | $`\sqrt{20^2 + 20^2} = \sqrt{800}`$ | 28.28 cases |
+| reorder point | $`200 + 1.645 \times 28.28`$ | 246.52, order at 247 |
+| croissants: fractile | $`2.10/(2.10 + 0.70)`$ | 0.75 |
+| $`Q^*`$ | $`120 + 0.6745 \times 30 = 120 + 20.23`$ | 140.23, bake 140 |
+| expected sold at 140 | $`120 - 30 \times G(20/30) = 120 - 30 \times 0.1511`$ | 115.47 (24.53 left, 4.53 sales missed) |
+| expected profit | $`2.80 \times 115.47 - 0.70 \times 140 = 323.31 - 98.00`$ | **£225.31 a day** |
 
 Baking 140 croissants, the shop expects 24.53 to go to waste and still beats baking the average by £6.82 a day.
 
@@ -183,11 +197,11 @@ Baking 140 croissants, the shop expects 24.53 to go to waste and still beats bak
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the 2: $\sqrt{KD/h}$ | 500 cases, £1,950.00 a year | 6.07% too costly. Small, because the cost curve is flat near its bottom |
+| Drop the 2: $`\sqrt{KD/h}`$ | 500 cases, £1,950.00 a year | 6.07% too costly. Small, because the cost curve is flat near its bottom |
 | Holding cost per week, demand per year | 5,099 cases, £6,756.20 a year | Holding looks 52 times cheaper than it is. Units must match |
-| One week's spread for a two-week wait | safety stock 32.90; stock-outs in 12.24% of cycles | The spread grows with $\sqrt{t_L}$; the promised 5% is broken |
+| One week's spread for a two-week wait | safety stock 32.90; stock-outs in 12.24% of cycles | The spread grows with $`\sqrt{t_L}`$; the promised 5% is broken |
 | Bake the average | 120 croissants, £218.49 a day | £6.82 a day lost: missing costs three times wasting |
-| Fractile upside down, $c_o/(c_u + c_o)$ = 0.25 | 99.77 croissants, £196.98 a day | Bakes for the cheap mistake instead of the dear one |
+| Fractile upside down, $`c_o/(c_u + c_o)`$ = 0.25 | 99.77 croissants, £196.98 a day | Bakes for the cheap mistake instead of the dear one |
 | Bell curve on two-humped demand | 147 croissants, £214.90 (best: 160, £224.00) | The model's demand curve is wrong, so its quantile is too |
 
 Every number in this table is printed by both checks.
@@ -196,7 +210,7 @@ Every number in this table is printed by both checks.
 
 ## Code, from first principles, and it actually runs
 
-The script works through the butter and the croissants and takes at least two roads to each answer. The EOQ formula meets a scan of every whole order size from 1 to 3,000. The reorder point's formula meets a simulation of 200,000 cycles, each built from two random weeks of demand, which also checks that the spreads combine as $\sqrt{t_L}$. The critical fractile meets a scan of 0 to 250 croissants scored by Simpson's rule (adding up thin slices under the demand curve, with no $G$), and a simulation of 200,000 days.
+The script works through the butter and the croissants and takes at least two roads to each answer. The EOQ formula meets a scan of every whole order size from 1 to 3,000. The reorder point's formula meets a simulation of 200,000 cycles, each built from two random weeks of demand, which also checks that the spreads combine as $`\sqrt{t_L}`$. The critical fractile meets a scan of 0 to 250 croissants scored by Simpson's rule (adding up thin slices under the demand curve, with no $`G`$), and a simulation of 200,000 days.
 
 The bell-curve area comes from its power series, the quantile from repeated halving, and random numbers from SplitMix64 with seed 2026 turned into bell-curve draws by the Box–Muller formula. All data are synthetic.
 
@@ -576,16 +590,16 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the EOQ and the critical fractile for any positive $K$, $D$, $h$ and any demand curve, and checks the worked numbers.
+Lean proves the EOQ and the critical fractile for any positive $`K`$, $`D`$, $`h`$ and any demand curve, and checks the worked numbers.
 
-- Take positive $K$, $D$ and $h$. Then $Q^* = \sqrt{2KD/h}$ gives the lowest $C(Q)$, and every other positive $Q$ costs strictly more.
-- Take positive $K$, $D$ and $h$. Then ordering cost $KD/Q^*$ equals holding cost $hQ^*/2$, and $C(Q^*) = \sqrt{2KDh}$.
-- Take any positive order size $Q$. Then $C(Q) = C(Q^*)\,(Q/Q^* + Q^*/Q)/2$, the flat bottom of Step 2.
-- Take $v < p$, any demand with a finite mean, and $Q^*$ with $F(Q^*) = c_u/(c_u + c_o)$. Then no batch $Q$ has higher expected profit than $Q^*$.
-- For the butter, $2KD$ = 1,300,000 and $2KD/h$ = 500,000, so $Q^*$ is between 707 and 708.
+- Take positive $`K`$, $`D`$ and $`h`$. Then $`Q^* = \sqrt{2KD/h}`$ gives the lowest $`C(Q)`$, and every other positive $`Q`$ costs strictly more.
+- Take positive $`K`$, $`D`$ and $`h`$. Then ordering cost $`KD/Q^*`$ equals holding cost $`hQ^*/2`$, and $`C(Q^*) = \sqrt{2KDh}`$.
+- Take any positive order size $`Q`$. Then $`C(Q) = C(Q^*)\,(Q/Q^* + Q^*/Q)/2`$, the flat bottom of Step 2.
+- Take $`v < p`$, any demand with a finite mean, and $`Q^*`$ with $`F(Q^*) = c_u/(c_u + c_o)`$. Then no batch $`Q`$ has higher expected profit than $`Q^*`$.
+- For the butter, $`2KD`$ = 1,300,000 and $`2KD/h`$ = 500,000, so $`Q^*`$ is between 707 and 708.
 - Two independent weeks with spread 20 give variance 800. The croissants' fractile is 0.75, the flipped one 0.25, and baking 140 costs £98.
 
-The reorder point, the bell-curve quantiles, $G$ and the simulations are left to the Python and Rust checks.
+The reorder point, the bell-curve quantiles, $`G`$ and the simulations are left to the Python and Rust checks.
 
 ```lean
 -- Stock: the order size √(2KD/h) is the one cheapest yearly order size, where ordering cost equals holding cost, and a one-shot order whose demand curve reaches (p - c)/((p - c) + (c - v)) maximizes expected profit.
@@ -754,8 +768,8 @@ example : (7 / 10 : ℚ) * 140 = 98 := by norm_num
 > **Try changing**
 > The asserts are pinned to the shop's numbers, so each edit below stops the run at an assert; the new answer prints just before it. The `try:` lines at the end of the output show the same answers without editing.
 > - Guess first: a charity shop will take leftover croissants for £0.35 each. More or fewer? Set `v = 0.35`. The overage cost halves, the fractile rises to 0.8571 and the batch grows to 152.03: bake 152.
-> - Guess first: the delivery fee doubles to £250. Does the best delivery double? Set `K = 250`. $Q^*$ = 1,000 cases: it grows by $\sqrt2$, not 2.
-> - Guess first: the warehouse promises 99% of cycles instead of 95%. Set `alpha = 0.99`. Now $z$ = 2.3263 and the reorder point climbs from 246.52 to 265.80.
+> - Guess first: the delivery fee doubles to £250. Does the best delivery double? Set `K = 250`. $`Q^*`$ = 1,000 cases: it grows by $`\sqrt2`$, not 2.
+> - Guess first: the warehouse promises 99% of cycles instead of 95%. Set `alpha = 0.99`. Now $`z`$ = 2.3263 and the reorder point climbs from 246.52 to 265.80.
 > - Guess first: demand becomes steadier, spread 15 instead of 30. Set `sg = 15`. The batch shrinks to 130.12: less spread means less cover above the average.
 
 ---
@@ -767,9 +781,9 @@ example : (7 / 10 : ℚ) * 140 = 98 := by norm_num
 >
 > Four smaller traps:
 > - **Adding spreads over the lead time.** Spreads of independent weeks combine as a square root; variances add. Using one week's spread for a two-week wait leaves a safety stock of 32.90 and stock-outs in 12.24% of cycles, not 5%.
-> - **Mixed time units.** $D$ per year with $h$ per week gives 5,099 cases instead of 707.1. Put every cost and rate on the same clock.
+> - **Mixed time units.** $`D`$ per year with $`h`$ per week gives 5,099 cases instead of 707.1. Put every cost and rate on the same clock.
 > - **Mixing up the service level and the fill rate.** 0.95 of cycles without a stock-out is not 95% of cases served. Here the fill rate is 0.99916.
-> - **Treating $Q^*$ as precise.** The cost curve is flat near its bottom: a delivery 20% too large costs 1.67% more. Round to what the truck carries. Spend the effort on getting $D$, $K$ and $h$ right instead.
+> - **Treating $`Q^*`$ as precise.** The cost curve is flat near its bottom: a delivery 20% too large costs 1.67% more. Round to what the truck carries. Spend the effort on getting $`D`$, $`K`$ and $`h`$ right instead.
 
 ---
 
@@ -782,13 +796,13 @@ example : (7 / 10 : ℚ) * 140 = 98 := by norm_num
 - **Warehouse and pharmacy stock systems.** "Order when it falls below the minimum" is a reorder point. Ordering a fixed amount each time is the EOQ, often rounded to a pallet.
 
 > **Say it back**
-> Stock trades two costs against each other. For steady demand, the best order size makes the yearly ordering cost equal the yearly holding cost, which gives $Q^* = \sqrt{2KD/h}$; for the butter, 707 cases. Because a delivery takes time, you reorder at the expected demand during the wait plus a safety stock of $z$ spreads, with spreads growing as the square root of the wait. For a one-shot order, keep adding units while the last one is more likely to sell than not, weighted by what each mistake costs: stop where the demand curve reaches $c_u/(c_u + c_o)$. For the croissants that is 140, not the average 120.
+> Stock trades two costs against each other. For steady demand, the best order size makes the yearly ordering cost equal the yearly holding cost, which gives $`Q^* = \sqrt{2KD/h}`$; for the butter, 707 cases. Because a delivery takes time, you reorder at the expected demand during the wait plus a safety stock of $`z`$ spreads, with spreads growing as the square root of the wait. For a one-shot order, keep adding units while the last one is more likely to sell than not, weighted by what each mistake costs: stop where the demand curve reaches $`c_u/(c_u + c_o)`$. For the croissants that is 140, not the average 120.
 
 ---
 
 ## What this builds on
 
-- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): turns a chance into a cutoff. It gives $z$ = 1.645 for the reorder point and 0.6745 for the croissants, and the code finds both by the same halving search.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): turns a chance into a cutoff. It gives $`z`$ = 1.645 for the reorder point and 0.6745 for the croissants, and the code finds both by the same halving search.
 - [Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md): a best value sits where the slope changes sign. Step 2 uses it to find the bottom of the yearly cost.
 
 ## Where this goes next

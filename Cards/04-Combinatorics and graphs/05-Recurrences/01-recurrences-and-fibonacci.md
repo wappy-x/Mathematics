@@ -35,9 +35,11 @@ Every floor goes down one branch only, so the counts add.
 
 ## The formula
 
-Notation first, in words. $T(n)$ names the number in position n of a sequence: the brackets are an address, not a multiplication. Here n is a hallway's length and T(n) counts its floors; an unnamed sequence has terms a(n).
+Notation first, in words. $`T(n)`$ names the number in position n of a sequence: the brackets are an address, not a multiplication. Here n is a hallway's length and T(n) counts its floors; an unnamed sequence has terms a(n).
 
-$$T(n) = T(n-1) + T(n-2) \quad \text{for } n \ge 3, \qquad T(1) = 1, \quad T(2) = 2$$
+```math
+T(n) = T(n-1) + T(n-2) \quad \text{for } n \ge 3, \qquad T(1) = 1, \quad T(2) = 2
+```
 
 **Read it aloud:** the floors at length n number those one tile shorter plus those two tiles shorter, with two counts by hand to start.
 
@@ -45,18 +47,20 @@ The rule on the left is the **step rule**; the fixed T(1) and T(2) beside it are
 
 The same machinery counts elsewhere. Ten discs of different sizes stand on one peg, largest at the bottom, two empty pegs beside it. Move the stack to the far peg, one disc per move, never a larger disc onto a smaller. This puzzle is the Tower of Hanoi. Write h(n) for the fewest moves:
 
-$$h(n) = 2\,h(n-1) + 1 \quad \text{for } n \ge 1, \qquad h(0) = 0$$
+```math
+h(n) = 2\,h(n-1) + 1 \quad \text{for } n \ge 1, \qquad h(0) = 0
+```
 
 **Read it aloud:** shift the top n − 1 discs to the spare peg, move the largest once, shift the n − 1 back on top.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the position: a hallway's length, or a disc count | 10 | the count grows fast: 55 at 9 tiles, 89 at 10 |
-| $T(n)$ | ways a 2 × n hallway takes 1 × 2 tiles | T(10) = 89 | — |
-| $T(1)$, $T(2)$ | the seeds, fixed before the rule starts | 1 and 2 | move a seed, every later term moves |
-| $F(n)$ | the nth Fibonacci number, seeds 1 and 1 | F(11) = 89 | — |
-| $h(n)$ | fewest moves shifting n discs across | h(10) = 1023 | one disc more than doubles the work |
-| $a(n)$ | a term of an unnamed sequence | — | — |
+| $`n`$ | the position: a hallway's length, or a disc count | 10 | the count grows fast: 55 at 9 tiles, 89 at 10 |
+| $`T(n)`$ | ways a 2 × n hallway takes 1 × 2 tiles | T(10) = 89 | — |
+| $`T(1)`$, $`T(2)`$ | the seeds, fixed before the rule starts | 1 and 2 | move a seed, every later term moves |
+| $`F(n)`$ | the nth Fibonacci number, seeds 1 and 1 | F(11) = 89 | — |
+| $`h(n)`$ | fewest moves shifting n discs across | h(10) = 1023 | one disc more than doubles the work |
+| $`a(n)`$ | a term of an unnamed sequence | — | — |
 
 ### When it holds
 

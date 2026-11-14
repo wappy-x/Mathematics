@@ -51,36 +51,44 @@ The bank angle φ, pitch angle θ and heading ψ give the attitude. A dot over a
 
 **Body-axis equations.** Forces, then moments, then attitude:
 
-$$m(\dot u + qw - rv) = X - mg\sin\theta, \quad m(\dot v + ru - pw) = Y + mg\cos\theta\sin\phi, \quad m(\dot w + pv - qu) = Z + mg\cos\theta\cos\phi$$
+```math
+m(\dot u + qw - rv) = X - mg\sin\theta, \quad m(\dot v + ru - pw) = Y + mg\cos\theta\sin\phi, \quad m(\dot w + pv - qu) = Z + mg\cos\theta\cos\phi
+```
 
-$$I_x\dot p - I_{xz}\dot r + (I_z - I_y)qr - I_{xz}pq = L, \quad I_y\dot q + (I_x - I_z)rp + I_{xz}(p^2 - r^2) = M, \quad I_z\dot r - I_{xz}\dot p + (I_y - I_x)pq + I_{xz}qr = N$$
+```math
+I_x\dot p - I_{xz}\dot r + (I_z - I_y)qr - I_{xz}pq = L, \quad I_y\dot q + (I_x - I_z)rp + I_{xz}(p^2 - r^2) = M, \quad I_z\dot r - I_{xz}\dot p + (I_y - I_x)pq + I_{xz}qr = N
+```
 
-$$\dot\phi = p + (q\sin\phi + r\cos\phi)\tan\theta, \qquad \dot\theta = q\cos\phi - r\sin\phi$$
+```math
+\dot\phi = p + (q\sin\phi + r\cos\phi)\tan\theta, \qquad \dot\theta = q\cos\phi - r\sin\phi
+```
 
 **The small-disturbance split.** About steady level flight at airspeed V, called **trim** (steady flight with the forces and moments balanced), with u, w, q, θ, β, p, r, φ now meaning small changes from that flight:
 
-$$\begin{bmatrix}\dot u\\ \dot w\\ \dot q\\ \dot\theta\end{bmatrix} = \begin{bmatrix}X_u & X_w & 0 & -g\\ Z_u & Z_w & V & 0\\ M_u & M_w & M_q & 0\\ 0 & 0 & 1 & 0\end{bmatrix}\begin{bmatrix}u\\ w\\ q\\ \theta\end{bmatrix}, \qquad \begin{bmatrix}\dot\beta\\ \dot r\\ \dot p\\ \dot\phi\end{bmatrix} = \begin{bmatrix}Y_\beta & -\cos\alpha_0 & \sin\alpha_0 & g\cos\alpha_0/V\\ N_\beta & N_r & N_p & 0\\ L_\beta & L_r & L_p & 0\\ 0 & \tan\alpha_0 & 1 & 0\end{bmatrix}\begin{bmatrix}\beta\\ r\\ p\\ \phi\end{bmatrix}$$
+```math
+\begin{bmatrix}\dot u\\ \dot w\\ \dot q\\ \dot\theta\end{bmatrix} = \begin{bmatrix}X_u & X_w & 0 & -g\\ Z_u & Z_w & V & 0\\ M_u & M_w & M_q & 0\\ 0 & 0 & 1 & 0\end{bmatrix}\begin{bmatrix}u\\ w\\ q\\ \theta\end{bmatrix}, \qquad \begin{bmatrix}\dot\beta\\ \dot r\\ \dot p\\ \dot\phi\end{bmatrix} = \begin{bmatrix}Y_\beta & -\cos\alpha_0 & \sin\alpha_0 & g\cos\alpha_0/V\\ N_\beta & N_r & N_p & 0\\ L_\beta & L_r & L_p & 0\\ 0 & \tan\alpha_0 & 1 & 0\end{bmatrix}\begin{bmatrix}\beta\\ r\\ p\\ \phi\end{bmatrix}
+```
 
-Call the two matrices $A_{lon}$ and $A_{lat}$. Each mode is an eigenvalue $\lambda$ of one of them.
+Call the two matrices $`A_{lon}`$ and $`A_{lat}`$. Each mode is an eigenvalue $`\lambda`$ of one of them.
 
 **Read it aloud:** mass times the rate of change of velocity, as seen from the turning aircraft, equals the forces; spin inertia times the rate of change of rotation equals the moments; and once the knock is small, the up-and-down freedoms and the sideways freedoms obey two separate linear systems whose eigenvalues are the modes.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u, v, w$ | velocity along the nose, right wing and floor, m/s; a dot is a rate per second | trim: V cos α0, 0, V sin α0 | — |
-| $p, q, r$; $\boldsymbol\omega$, $\mathbf H$ | roll, pitch and yaw rates, rad/s; $\boldsymbol\omega$ is the turn rate (p, q, r) as one arrow; $\mathbf H$ is the spin arrow (angular momentum) | 0 in trim | — |
-| $\phi, \theta, \psi$ | bank, pitch and heading angles, rad | trim pitch 0.0803 rad | — |
-| $X, Y, Z$ | air and engine forces along the axes, N | balance gravity in trim | — |
-| $L, M, N$ | rolling, pitching and yawing moments, N·m (here L is a moment, not the loop gain of shelf 03) | zero in trim | — |
-| $m$, $g$ | mass, kg; gravity, m/s² | g 9.8146, the data set's 32.2 ft/s² | — |
-| $I_x, I_y, I_z, I_{xz}$ | resistance to roll, pitch and yaw, kg·m²; $I_{xz}$ couples roll with yaw | absorbed into the derivatives below | — |
-| $V, \alpha, \beta$ | airspeed; angle of attack (air from below the nose); sideslip (air from the side). $\alpha_0$ is trim | 235.909 m/s; $\alpha_0$ = 0.0803 rad = 4.60° | V up stiffens the short period |
-| $X_u, Z_w, M_w, M_q$ … | **derivatives**: change in force over mass, or moment over inertia, per unit change of one variable | $Z_w$ −0.3151 /s, $M_w$ −0.003366 /(m s), $M_q$ −0.4285 /s | $M_w$ more negative: faster short period |
-| $Y_\beta, N_\beta, L_\beta, N_r$ … | the same for the sideways set | $N_\beta$ 0.598 /s², $L_\beta$ −3.05 /s², $N_r$ −0.115 /s | $N_r$ more negative: better-damped Dutch roll |
-| $A_{lon}, A_{lat}, \lambda$ | the two 4×4 matrices; an eigenvalue, per second | $\lambda$ = −0.37194 ± 0.88754j | real part above 0: the mode grows |
-| $\sigma, \omega_d$; $\omega_n, \zeta$ | decay rate, /s, and swing rate, rad/s, of a pair $\lambda = -\sigma \pm j\omega_d$; natural frequency, rad/s, and damping ratio | Dutch roll 0.03294, 0.94665; $\omega_n$, $\zeta$: short period 0.9623, 0.3865, Dutch roll 0.9472, 0.0348 | σ or ζ up: the swing dies sooner |
+| $`u, v, w`$ | velocity along the nose, right wing and floor, m/s; a dot is a rate per second | trim: V cos α0, 0, V sin α0 | — |
+| $`p, q, r`$; $`\boldsymbol\omega`$, $`\mathbf H`$ | roll, pitch and yaw rates, rad/s; $`\boldsymbol\omega`$ is the turn rate (p, q, r) as one arrow; $`\mathbf H`$ is the spin arrow (angular momentum) | 0 in trim | — |
+| $`\phi, \theta, \psi`$ | bank, pitch and heading angles, rad | trim pitch 0.0803 rad | — |
+| $`X, Y, Z`$ | air and engine forces along the axes, N | balance gravity in trim | — |
+| $`L, M, N`$ | rolling, pitching and yawing moments, N·m (here L is a moment, not the loop gain of shelf 03) | zero in trim | — |
+| $`m`$, $`g`$ | mass, kg; gravity, m/s² | g 9.8146, the data set's 32.2 ft/s² | — |
+| $`I_x, I_y, I_z, I_{xz}`$ | resistance to roll, pitch and yaw, kg·m²; $`I_{xz}`$ couples roll with yaw | absorbed into the derivatives below | — |
+| $`V, \alpha, \beta`$ | airspeed; angle of attack (air from below the nose); sideslip (air from the side). $`\alpha_0`$ is trim | 235.909 m/s; $`\alpha_0`$ = 0.0803 rad = 4.60° | V up stiffens the short period |
+| $`X_u, Z_w, M_w, M_q`$ … | **derivatives**: change in force over mass, or moment over inertia, per unit change of one variable | $`Z_w`$ −0.3151 /s, $`M_w`$ −0.003366 /(m s), $`M_q`$ −0.4285 /s | $`M_w`$ more negative: faster short period |
+| $`Y_\beta, N_\beta, L_\beta, N_r`$ … | the same for the sideways set | $`N_\beta`$ 0.598 /s², $`L_\beta`$ −3.05 /s², $`N_r`$ −0.115 /s | $`N_r`$ more negative: better-damped Dutch roll |
+| $`A_{lon}, A_{lat}, \lambda`$ | the two 4×4 matrices; an eigenvalue, per second | $`\lambda`$ = −0.37194 ± 0.88754j | real part above 0: the mode grows |
+| $`\sigma, \omega_d`$; $`\omega_n, \zeta`$ | decay rate, /s, and swing rate, rad/s, of a pair $`\lambda = -\sigma \pm j\omega_d`$; natural frequency, rad/s, and damping ratio | Dutch roll 0.03294, 0.94665; $`\omega_n`$, $`\zeta`$: short period 0.9623, 0.3865, Dutch roll 0.9472, 0.0348 | σ or ζ up: the swing dies sooner |
 
-A complex pair $\lambda = -\sigma \pm j\omega_d$ gives $\omega_n = |\lambda|$ and $\zeta = \sigma/|\lambda|$, as in [Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md). Here j is the square root of −1, as engineers write it. The rest of the library writes i.
+A complex pair $`\lambda = -\sigma \pm j\omega_d`$ gives $`\omega_n = |\lambda|`$ and $`\zeta = \sigma/|\lambda|`$, as in [Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md). Here j is the square root of −1, as engineers write it. The rest of the library writes i.
 
 The longitudinal numbers are quoted in axes lined up with the trim airflow, which is the standard choice. The lateral ones are in axes along the fuselage, which sits 4.60° nose-up. That tilt is where the cos α0, sin α0 and tan α0 come from.
 
@@ -103,18 +111,20 @@ Two facts do all the work. First, if every change is small, a product of two cha
 
 Newton's second law holds in axes that do not rotate. The aircraft's own axes turn with rate ω = (p, q, r). A velocity measured in turning axes changes for two reasons: it really changes, and the axes swing under it. The rate seen from the ground is
 
-$$\frac{d\mathbf V}{dt}\Big|_{\text{ground}} = \dot{\mathbf V} + \boldsymbol\omega \times \mathbf V.$$
+```math
+\frac{d\mathbf V}{dt}\Big|_{\text{ground}} = \dot{\mathbf V} + \boldsymbol\omega \times \mathbf V.
+```
 
 The cross product gives the extra terms qw − rv, ru − pw and pv − qu. The same rule applied to the spin arrow, the angular momentum, gives the moment equations. That is the rule of [Precession](03-gyroscopes-and-precession.md), torque equals the rate of change of the spin arrow, written in turning axes, with the inertias of [Rotation](02-rigid-body-rotation-and-moment-of-inertia.md). Gravity points straight down, and three turns through ψ, θ and φ carry it into body axes. That gives the sin θ and cos θ terms.
 
 <details>
 <summary>Detailed derivation: the moment equations</summary>
 
-The aircraft is symmetric about its x–z plane, so the only off-axis inertia is $I_{xz}$. The spin arrow is
+The aircraft is symmetric about its x–z plane, so the only off-axis inertia is $`I_{xz}`$. The spin arrow is
 
-$$\mathbf H = (I_x p - I_{xz} r,\; I_y q,\; I_z r - I_{xz} p).$$
+$`\displaystyle \mathbf H = (I_x p - I_{xz} r,\; I_y q,\; I_z r - I_{xz} p).`$
 
-The moment equals $\dot{\mathbf H} + \boldsymbol\omega \times \mathbf H$. The x part of the cross product is $q(I_z r - I_{xz}p) - r I_y q = (I_z - I_y)qr - I_{xz}pq$. The y part is $r(I_x p - I_{xz} r) - p(I_z r - I_{xz}p) = (I_x - I_z)rp + I_{xz}(p^2 - r^2)$. The z part is $pI_y q - q(I_x p - I_{xz} r) = (I_y - I_x)pq + I_{xz}qr$. Add $\dot{\mathbf H}$ and these are the three moment equations above.
+The moment equals $`\dot{\mathbf H} + \boldsymbol\omega \times \mathbf H`$. The x part of the cross product is $`q(I_z r - I_{xz}p) - r I_y q = (I_z - I_y)qr - I_{xz}pq`$. The y part is $`r(I_x p - I_{xz} r) - p(I_z r - I_{xz}p) = (I_x - I_z)rp + I_{xz}(p^2 - r^2)`$. The z part is $`pI_y q - q(I_x p - I_{xz} r) = (I_y - I_x)pq + I_{xz}qr`$. Add $`\dot{\mathbf H}`$ and these are the three moment equations above.
 
 </details>
 
@@ -124,7 +134,7 @@ Write each variable as its trim value plus a small change: forward speed V plus 
 
 Watch the heave equation. The term qu is a small q times the large trim speed V, so it survives as **V q**. That term is the whole reason the nose bobs: pitching the nose up swings the velocity arrow downwards relative to the body, which is the same as the air arriving from further below. The term pv is small times small, so it goes. Gravity's −g sin θ becomes −g θ.
 
-The air forces are smooth functions of the state. To first order each is a slope times a change: $Z = Z_{\text{trim}} + m(Z_u u + Z_w w + \dots)$. Divide by the mass or the inertia and the slopes become the derivatives in the table. They are measured in wind tunnels and flight tests. The inertias are absorbed into them, which is why no inertia appears in the matrices.
+The air forces are smooth functions of the state. To first order each is a slope times a change: $`Z = Z_{\text{trim}} + m(Z_u u + Z_w w + \dots)`$. Divide by the mass or the inertia and the slopes become the derivatives in the table. They are measured in wind tunnels and flight tests. The inertias are absorbed into them, which is why no inertia appears in the matrices.
 
 ### Step 3: the mirror kills the cross terms
 
@@ -136,7 +146,7 @@ The code writes its air forces with no cross terms, as this argument allows, so 
 
 ### Step 4: modes are eigenvalues
 
-A linear system $\dot x = Ax$, where x now stands for the set's four variables, not the nose axis, moves as a sum of patterns $e^{\lambda t}$, one for each eigenvalue λ of A ([The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md)): a complex pair swings, a real λ decays or grows.
+A linear system $`\dot x = Ax`$, where x now stands for the set's four variables, not the nose axis, moves as a sum of patterns $`e^{\lambda t}`$, one for each eigenvalue λ of A ([The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md)): a complex pair swings, a real λ decays or grows.
 
 The longitudinal set has two pairs: the **short period**, a fast pitch bob at nearly constant speed, and the **phugoid**, a slow trade of height for speed. The lateral set has one pair, the **Dutch roll**, where yaw and roll swing together, and two real roots: **roll subsidence**, a roll rate dying away, and the **spiral**, a slow tightening or loosening of a bank.
 
@@ -146,24 +156,24 @@ Because the modes are so far apart in speed, two-state approximations can work. 
 
 ## Worked numbers, by hand
 
-Short-period approximation, from the second and third rows of $A_{lon}$, with states (w, q):
+Short-period approximation, from the second and third rows of $`A_{lon}`$, with states (w, q):
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| trace, $Z_w + M_q$ | −0.3151 + (−0.4285) | −0.7436 /s |
-| determinant, $Z_w M_q - V M_w$ | (−0.3151)(−0.4285) − (235.909)(−0.003366) | 0.9291 /s² |
-| $\omega_n = \sqrt{\det}$ | √0.9291 | 0.9639 rad/s |
-| $\zeta = -\text{trace}/(2\omega_n)$ | 0.7436 / (2 × 0.9639) | 0.3857 |
-| period, $2\pi/\sqrt{\det - \text{trace}^2/4}$ | 2π / √(0.9291 − 0.7436²/4) | 7.07 s |
+| trace, $`Z_w + M_q`$ | −0.3151 + (−0.4285) | −0.7436 /s |
+| determinant, $`Z_w M_q - V M_w`$ | (−0.3151)(−0.4285) − (235.909)(−0.003366) | 0.9291 /s² |
+| $`\omega_n = \sqrt{\det}`$ | √0.9291 | 0.9639 rad/s |
+| $`\zeta = -\text{trace}/(2\omega_n)`$ | 0.7436 / (2 × 0.9639) | 0.3857 |
+| period, $`2\pi/\sqrt{\det - \text{trace}^2/4}`$ | 2π / √(0.9291 − 0.7436²/4) | 7.07 s |
 | full 4×4, from the code | eigenvalues −0.37194 ± 0.88754j | ω_n 0.9623, ζ 0.3865, 7.08 s |
 | Dutch roll 2×2, states (β, r): trace | −0.0558 + (−0.115) | −0.1708 /s |
 | determinant | (−0.0558)(−0.115) − (−0.9968)(0.598) | 0.6025 /s² |
-| $\omega_n$, $\zeta$, period | √0.6025; 0.1708 / (2 × 0.7762) | 0.7762 rad/s, 0.1100, 8.14 s |
+| $`\omega_n`$, $`\zeta`$, period | √0.6025; 0.1708 / (2 × 0.7762) | 0.7762 rad/s, 0.1100, 8.14 s |
 | full 4×4, from the code | eigenvalues −0.03294 ± 0.94665j | **ω_n 0.9472 rad/s, ζ 0.0348, period 6.64 s** |
 
 **The short period swings every 7.08 s with ζ 0.3865, and the Dutch roll every 6.64 s with ζ 0.0348.** The pitch bob is well damped and half-gone in 1.86 s. The Dutch roll halves only every 21.05 s, a little over three swings, so passengers feel a slow wallow. That is why large jets carry a **yaw damper**: a feedback loop that moves the rudder against the yaw rate.
 
-The 2×2 short period nearly matches the full set: ω_n 0.9639 against 0.9623. The 2×2 Dutch roll does not: 8.14 s against 6.64 s, and three times too well damped. The reason is $L_\beta$ = −3.05: every degree of sideslip rolls the jet hard, and the roll feeds back into the sideslip through the gravity term. Freezing roll removed half the mode. Set $L_\beta$ to 0 in the code and the full Dutch roll moves to 8.04 s and ζ 0.1340, close to the 2×2.
+The 2×2 short period nearly matches the full set: ω_n 0.9639 against 0.9623. The 2×2 Dutch roll does not: 8.14 s against 6.64 s, and three times too well damped. The reason is $`L_\beta`$ = −3.05: every degree of sideslip rolls the jet hard, and the roll feeds back into the sideslip through the gravity term. Freezing roll removed half the mode. Set $`L_\beta`$ to 0 in the code and the full Dutch roll moves to 8.04 s and ζ 0.1340, close to the 2×2.
 
 All five modes, from the code:
 
@@ -180,7 +190,7 @@ All five modes, from the code:
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drop the V q term: Newton's law in body axes as if they did not turn | short period 0.4258 rad/s with ζ 0.9707, barely swinging; phugoid ζ −0.2508, doubling every 18.17 s | the turning-axes term ω × V carries the restoring swing; without it the model is wrong and even unstable |
-| Dutch roll from the 2-state (β, r) model | ζ 0.1100, period 8.14 s (right: 0.0348, 6.64 s) | roll was frozen, but $L_\beta$ = −3.05 makes sideslip roll the jet hard |
+| Dutch roll from the 2-state (β, r) model | ζ 0.1100, period 8.14 s (right: 0.0348, 6.64 s) | roll was frozen, but $`L_\beta`$ = −3.05 makes sideslip roll the jet hard |
 | Read ω = 0.9472 rad/s as hertz | period 1.06 s (right: 6.64 s) | rad/s needs a 2π: the period is 2π/ω_d |
 | Linear sets after a 15° side gust | angle of attack stays put; the nonlinear equations give 3.150°, with a 46.69° bank | far outside small disturbances, dropped products are no longer small |
 
@@ -203,7 +213,7 @@ peak change in angle of attack after a side gust
  15 deg   ████████████████████████████████████████    3.150 deg
 ```
 
-A square law would give 25 and 225 times. The 5° case gives 24.5: the coupling is second order, exactly the terms Step 2 dropped. It comes mainly from one of them, the product $pv$ in the heave equation: rolling while slipping sideways swings the sideways speed into the floor direction, which changes the angle of attack. Drop that one product and the 5° case falls from 0.408° to 0.106°. By 15° even the square law fails, because a 46.69° bank is far from level flight.
+A square law would give 25 and 225 times. The 5° case gives 24.5: the coupling is second order, exactly the terms Step 2 dropped. It comes mainly from one of them, the product $`pv`$ in the heave equation: rolling while slipping sideways swings the sideways speed into the floor direction, which changes the angle of attack. Drop that one product and the 5° case falls from 0.408° to 0.106°. By 15° even the square law fails, because a 46.69° bank is far from level flight.
 
 ---
 
@@ -213,9 +223,9 @@ The code reaches the modes by **three independent roads**.
 
 - Road 1 takes the published 4×4 matrices, builds each characteristic polynomial (the polynomial whose roots are the eigenvalues) by the Faddeev–LeVerrier recursion, and finds its roots by the Durand–Kerner iteration.
 - Road 2 writes the nonlinear body-axis equations, with the turning-axes terms, gravity and the attitude equations. It then takes their slopes by finite differences at trim. They reproduce the published matrices, the cos α0, sin α0, g cos α0/V and tan α0 entries included, and the slopes across the two blocks come out zero; its air forces have no cross terms by construction, so that zero tests the turning-axes and gravity terms.
-- Road 3 flies the nonlinear equations by fourth-order Runge–Kutta (RK4) after a 0.1° nudge, records the motion once a second for 300 s, and fits the modes to the record. A sum of four modes obeys a fixed four-term recurrence, and the roots of that recurrence are $e^{\lambda \cdot 1\,\text{s}}$. That is Prony's method, the flight-test engineer's road.
+- Road 3 flies the nonlinear equations by fourth-order Runge–Kutta (RK4) after a 0.1° nudge, records the motion once a second for 300 s, and fits the modes to the record. A sum of four modes obeys a fixed four-term recurrence, and the roots of that recurrence are $`e^{\lambda \cdot 1\,\text{s}}`$. That is Prony's method, the flight-test engineer's road.
 
-The nonlinear model leaves out the second-order spin terms such as $(I_z - I_y)qr$, which would need the inertias.
+The nonlinear model leaves out the second-order spin terms such as $`(I_z - I_y)qr`$, which would need the inertias.
 
 ### Python
 
@@ -614,8 +624,8 @@ ALL CHECKS PASS
 Lean proves the mirror split, the turning-axes moment terms and the 2×2 trace and determinant formulas, for any aircraft numbers.
 
 - Suppose reflecting the aircraft keeps the rates of u, w, q, θ and flips the rates of v, r, p, φ. Then, linearised about a trim with v, r, p, φ all zero, neither set feeds the other.
-- Take the spin arrow $\mathbf H$ of an aircraft symmetric about its x–z plane, as in the moment derivation. Then $\boldsymbol\omega \times \mathbf H$ gives exactly the three turning-axes terms of the moment equations.
-- Suppose a real 2×2 matrix has a complex pair $\lambda = -\sigma \pm j\omega_d$, with $\omega_d > 0$. Then $\omega_n = \sqrt{\det}$, $\zeta = -\text{trace}/(2\omega_n)$ and $\omega_d = \sqrt{\det - \text{trace}^2/4}$.
+- Take the spin arrow $`\mathbf H`$ of an aircraft symmetric about its x–z plane, as in the moment derivation. Then $`\boldsymbol\omega \times \mathbf H`$ gives exactly the three turning-axes terms of the moment equations.
+- Suppose a real 2×2 matrix has a complex pair $`\lambda = -\sigma \pm j\omega_d`$, with $`\omega_d > 0`$. Then $`\omega_n = \sqrt{\det}`$, $`\zeta = -\text{trace}/(2\omega_n)`$ and $`\omega_d = \sqrt{\det - \text{trace}^2/4}`$.
 
 Every number, the force and attitude equations, the 4×4 eigenvalues and the flights are left to the Python and Rust checks.
 
@@ -747,9 +757,9 @@ theorem two_by_two_mode_from_trace_and_det
 
 > [!TIP]
 > **Try changing**
-> - Guess first: halve the pitch stiffness $M_w$, as moving the centre of gravity aft does. Faster or slower bob? Call `lon_with(MW / 2)`. The short period slows to 10.05 s and ζ rises to 0.5120, with the half-life unchanged at 1.86 s.
-> - Guess first: flip the sign of $M_w$, a centre of gravity behind the neutral point (the centre-of-gravity position where $M_w$ is zero). Call `lon_with(-MW)`. The short-period pair splits into two real roots, and one grows: the nose diverges, doubling in 1.33 s. Only a flight computer can fly that.
-> - Guess first: a yaw damper that makes $N_r$ −0.6 instead of −0.115. Call `lat_with(-0.6, -3.05)`. The Dutch roll damping ratio rises from 0.0348 to 0.2101, and the half-life falls from 21.05 s to 3.62 s.
+> - Guess first: halve the pitch stiffness $`M_w`$, as moving the centre of gravity aft does. Faster or slower bob? Call `lon_with(MW / 2)`. The short period slows to 10.05 s and ζ rises to 0.5120, with the half-life unchanged at 1.86 s.
+> - Guess first: flip the sign of $`M_w`$, a centre of gravity behind the neutral point (the centre-of-gravity position where $`M_w`$ is zero). Call `lon_with(-MW)`. The short-period pair splits into two real roots, and one grows: the nose diverges, doubling in 1.33 s. Only a flight computer can fly that.
+> - Guess first: a yaw damper that makes $`N_r`$ −0.6 instead of −0.115. Call `lat_with(-0.6, -3.05)`. The Dutch roll damping ratio rises from 0.0348 to 0.2101, and the half-life falls from 21.05 s to 3.62 s.
 > - Guess first: remove the roll-from-sideslip slope, `lat_with(-0.115, 0)`. The Dutch roll becomes 8.04 s with ζ 0.1340, close to the 2×2 answer.
 
 ---
@@ -769,8 +779,8 @@ theorem two_by_two_mode_from_trace_and_det
 ## Where you meet it in real life
 
 - **Aircraft certification and flight test.** Test pilots kick the rudder or pulse the elevator. Engineers then fit the short period and Dutch roll to the record, the third road in the code, and compare them with the handling-qualities limits.
-- **Yaw dampers and autopilots.** The jet's Dutch roll ζ of 0.0348 is why airliners carry a yaw damper. Autopilot pitch and roll loops are designed on $A_{lon}$ and $A_{lat}$.
-- **Fly-by-wire fighters.** Some are built with $M_w$ of the wrong sign, the diverging short period in Try changing, for agility. The flight computer supplies the missing stiffness many times a second.
+- **Yaw dampers and autopilots.** The jet's Dutch roll ζ of 0.0348 is why airliners carry a yaw damper. Autopilot pitch and roll loops are designed on $`A_{lon}`$ and $`A_{lat}`$.
+- **Fly-by-wire fighters.** Some are built with $`M_w`$ of the wrong sign, the diverging short period in Try changing, for agility. The flight computer supplies the missing stiffness many times a second.
 - **Ships, cars, drones and rockets.** The same six equations, with water, tyres, rotors or thrust in place of wings, and the same split wherever there is a mirror plane.
 
 > **Say it back**
@@ -788,7 +798,7 @@ theorem two_by_two_mode_from_trace_and_det
 
 - [Vibration modes](06-vibration-modes-and-resonance.md): the next card. It applies the same eigenvalue idea to a structure that rings in a few shapes at a few frequencies, the flexible wing this card left out.
 - [Stability of a state-space model](../04-State%20Space%20and%20Optimal%20Control/05-hurwitz-schur-and-lyapunov-stability.md): tests that certify all eigenvalues sit in the left half-plane without computing them.
-- [The LQR](../04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md): choosing feedback gains, such as a yaw damper's, on a linear model like $A_{lat}$.
+- [The LQR](../04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md): choosing feedback gains, such as a yaw damper's, on a linear model like $`A_{lat}`$.
 
 This card leaves one question open: how much damping should each mode have before a pilot rates the aircraft good to fly?
 

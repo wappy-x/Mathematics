@@ -28,7 +28,9 @@ To scale: 95.49 px per m across, 120 px per cm up. Solid and dashed humps: C sin
 
 Notation first, in words. An end condition pins a value, a slope, or a mix of the two to a target. At the foot, x = 0:
 
-$$\alpha_0\,y(0) + \beta_0\,y'(0) = \gamma_0,$$
+```math
+\alpha_0\,y(0) + \beta_0\,y'(0) = \gamma_0,
+```
 
 and at the top, x = L, the same with subscript L. **Read it aloud:** so much value plus so much slope must equal the target.
 
@@ -38,26 +40,30 @@ and at the top, x = L, the same with subscript L. **Read it aloud:** so much val
 
 With a value given at each end:
 
-$$y = A\cos x + B\sin x, \qquad A = y_0, \qquad A\cos L + B\sin L = y_L.$$
+```math
+y = A\cos x + B\sin x, \qquad A = y_0, \qquad A\cos L + B\sin L = y_L.
+```
 
 **Read it aloud:** every solution mixes cos and sin; the foot fixes the cos amount, the top constrains the sin amount.
 
 The **determinant** is the number that must be nonzero for two linear equations to have exactly one answer; for coefficients 1, 0 and cos L, sin L it is
 
-$$D = \sin L.$$
+```math
+D = \sin L.
+```
 
 **Read it aloud:** the top steers B only through sin L. If D is not 0, one answer: B = (y_L − y_0 cos L) / sin L. If D = 0, every B works when y_L = y_0 cos L, and none otherwise.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | height, in m | 0 to 1, or 0 to π | — |
-| $y$, $y'$, $y''$ | shift in cm, slope in cm per m, curvature | y(0) = 0 | — |
-| $L$ | strut length, in m | 1 or π | near π, B grows huge |
-| $A$, $B$, $C$ | amounts of cos and sin; C free | A = 0, B = 1.188395 | — |
-| $y_0$, $y_L$ | targets at foot and top, in cm | 0 and 1 | B grows with $y_L$ |
-| $D$ | determinant | sin 1 = 0.841471 | — |
-| $\alpha$, $\beta$, $\gamma$ | weights on value and slope, and the target | Robin top: 1, 1 m, 1 cm | — |
-| $u$, $v$ | solutions of the equation with nothing on the right, starting at value 1, slope 0 and value 0, slope 1 | cos x, sin x | — |
+| $`x`$ | height, in m | 0 to 1, or 0 to π | — |
+| $`y`$, $`y'`$, $`y''`$ | shift in cm, slope in cm per m, curvature | y(0) = 0 | — |
+| $`L`$ | strut length, in m | 1 or π | near π, B grows huge |
+| $`A`$, $`B`$, $`C`$ | amounts of cos and sin; C free | A = 0, B = 1.188395 | — |
+| $`y_0`$, $`y_L`$ | targets at foot and top, in cm | 0 and 1 | B grows with $`y_L`$ |
+| $`D`$ | determinant | sin 1 = 0.841471 | — |
+| $`\alpha`$, $`\beta`$, $`\gamma`$ | weights on value and slope, and the target | Robin top: 1, 1 m, 1 cm | — |
+| $`u`$, $`v`$ | solutions of the equation with nothing on the right, starting at value 1, slope 0 and value 0, slope 1 | cos x, sin x | — |
 
 ### When it holds
 

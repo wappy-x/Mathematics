@@ -36,56 +36,66 @@ Upper line: the American put, from the 2,000-step tree. Lower line: the European
 
 ## The formula
 
-Notation first, in words. $P$ is the American put's price as a pricer computes it. A tree node is named by two counts, steps taken from today and how many were up moves: $V_n(j)$ is the put's worth there and $S_n(j)$ is Acme's price. One step lasts $\Delta t$ years, one two-thousandth of a year here. Delta, gamma and theta are written $\Delta$, $\Gamma$ and $\Theta$; $\Delta t$ is one symbol, not delta times a time.
+Notation first, in words. $`P`$ is the American put's price as a pricer computes it. A tree node is named by two counts, steps taken from today and how many were up moves: $`V_n(j)`$ is the put's worth there and $`S_n(j)`$ is Acme's price. One step lasts $`\Delta t`$ years, one two-thousandth of a year here. Delta, gamma and theta are written $`\Delta`$, $`\Gamma`$ and $`\Theta`$; $`\Delta t`$ is one symbol, not delta times a time.
 
-Delta and gamma off the nodes, as on [Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md). Two steps in, $h_+ = S_2(2) - S_2(1)$ and $h_- = S_2(1) - S_2(0)$ are the dollar gaps above and below the middle node:
+Delta and gamma off the nodes, as on [Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md). Two steps in, $`h_+ = S_2(2) - S_2(1)`$ and $`h_- = S_2(1) - S_2(0)`$ are the dollar gaps above and below the middle node:
 
-$$\Delta \approx \frac{V_1(1) - V_1(0)}{S_1(1) - S_1(0)}, \qquad \Gamma \approx \frac{2}{h_+ + h_-}\left(\frac{V_2(2) - V_2(1)}{h_+} - \frac{V_2(1) - V_2(0)}{h_-}\right)$$
+```math
+\Delta \approx \frac{V_1(1) - V_1(0)}{S_1(1) - S_1(0)}, \qquad \Gamma \approx \frac{2}{h_+ + h_-}\left(\frac{V_2(2) - V_2(1)}{h_+} - \frac{V_2(1) - V_2(0)}{h_-}\right)
+```
 
 **Read it aloud:** delta is the gap between the put's two worths one step in over the gap between Acme's two prices there; gamma is how much that slope changes, per dollar, across the three nodes two steps in.
 
-The middle node two steps in sits at today's price again, so it gives theta: $\Theta \approx (V_2(1) - V_0(0))/(2\Delta t)$.
+The middle node two steps in sits at today's price again, so it gives theta: $`\Theta \approx (V_2(1) - V_0(0))/(2\Delta t)`$.
 
-The tree has no volatility or rate direction to read a slope along, so vega $\mathcal{V}$ and rho $\rho$ come from pricing twice more:
+The tree has no volatility or rate direction to read a slope along, so vega $`\mathcal{V}`$ and rho $`\rho`$ come from pricing twice more:
 
-$$\mathcal{V} \approx \frac{P(\sigma + \varepsilon) - P(\sigma - \varepsilon)}{2\varepsilon}, \qquad \rho \approx \frac{P(r + \varepsilon) - P(r - \varepsilon)}{2\varepsilon}, \qquad \varepsilon = 0.01$$
+```math
+\mathcal{V} \approx \frac{P(\sigma + \varepsilon) - P(\sigma - \varepsilon)}{2\varepsilon}, \qquad \rho \approx \frac{P(r + \varepsilon) - P(r - \varepsilon)}{2\varepsilon}, \qquad \varepsilon = 0.01
+```
 
 **Read it aloud:** price the put one volatility point higher and one lower, and divide the difference by the two points between them; the same for the rate.
 
 Where exercising now is optimal, the exercise region, the put is worth its payoff:
 
-$$P = K - S \quad\Longrightarrow\quad \Delta = -1, \qquad \Gamma = 0$$
+```math
+P = K - S \quad\Longrightarrow\quad \Delta = -1, \qquad \Gamma = 0
+```
 
 **Read it aloud:** an exercised put is the strike minus the share price, so it loses a dollar for every dollar Acme gains, and its slope never bends.
 
-At the edge of that region, the exercise boundary $S^*$, gamma jumps from 0 to
+At the edge of that region, the exercise boundary $`S^*`$, gamma jumps from 0 to
 
-$$\Gamma(S^{*}\text{, from above}) = \frac{2\,(rK - qS^*)}{\sigma^2 {S^*}^2}$$
+```math
+\Gamma(S^{*}\text{, from above}) = \frac{2\,(rK - qS^*)}{\sigma^2 {S^*}^2}
+```
 
 **Read it aloud:** twice the carry that exercise would earn, interest on the strike minus dividends on the share, over the volatility squared times the boundary price squared.
 
-The inverse. Given a quote $Q$, the implied volatility $\sigma_{\text{imp}}$ is the volatility at which the pricer returns $Q$. Write $P(0^+)$ for the limit of the price as volatility falls to zero:
+The inverse. Given a quote $`Q`$, the implied volatility $`\sigma_{\text{imp}}`$ is the volatility at which the pricer returns $`Q`$. Write $`P(0^+)`$ for the limit of the price as volatility falls to zero:
 
-$$P(\sigma_{\text{imp}}) = Q, \qquad \text{exactly one solution when } \max\left(K - S,\ P(0^+)\right) < Q < K$$
+```math
+P(\sigma_{\text{imp}}) = Q, \qquad \text{exactly one solution when } \max\left(K - S,\ P(0^+)\right) < Q < K
+```
 
 **Read it aloud:** the implied volatility reproduces the quote, and there is exactly one when the quote sits above both the exercise value and the zero-volatility price, and below the strike.
 
-$P(0^+)$ is the best discounted payoff of a share drifting at $r - q$ with no noise. At $S = K = 100$ it is 0, since a rising share never pays a put.
+$`P(0^+)`$ is the best discounted payoff of a share drifting at $`r - q`$ with no noise. At $`S = K = 100`$ it is 0, since a rising share never pays a put.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P$ | the American put's price from a pricer | $6.660226 on the 2,000-step tree | — |
-| $S$, $K$ | Acme's price today; the strike the put may sell at | $100 and $100 | $S$ up: put cheaper, delta toward 0 |
-| $r$, $q$ | the riskless rate; Acme's dividend yield, both continuously compounded | 0.05 and 0.02 | $r$ up: early exercise more tempting |
-| $\sigma$ | volatility, how jumpy Acme is. Say "sigma". | 0.20 | price up, strictly, where the put is held |
-| $T$, $\Delta t$ | the put's life in years; one tree step | 1; 1/2000 | — |
-| $V_n(j)$, $S_n(j)$ | the put's worth and Acme's price at a node: steps taken, up moves among them | $V_0(0)$ = 6.660226 | — |
-| $h_+$, $h_-$ | dollar gaps from the middle node two steps in to its neighbours | under a dollar each | wider: more bias in gamma |
-| $\Delta$, $\Gamma$ | delta: dollars gained per dollar Acme gains; gamma: delta gained per dollar | −0.423041 and 0.021484 | — |
-| $\Theta$, $\mathcal{V}$, $\rho$ | theta: dollars per year of calendar; vega: dollars per 1.00 of volatility; rho: dollars per 1.00 of rate | −2.694609, 38.031884, −34.369887 | — |
-| $\varepsilon$ | the bump size for vega and rho | 0.01 | smaller: less bias, more tree jitter |
-| $S^*$ | the exercise boundary today: at or below it, exercise at once | between $77.88 and $78.27 | — |
-| $Q$, $\sigma_{\text{imp}}$ | a quoted price; the volatility that reproduces it | 6.660226; 0.200000 | $Q$ up: $\sigma_{\text{imp}}$ up |
+| $`P`$ | the American put's price from a pricer | $6.660226 on the 2,000-step tree | — |
+| $`S`$, $`K`$ | Acme's price today; the strike the put may sell at | $100 and $100 | $`S`$ up: put cheaper, delta toward 0 |
+| $`r`$, $`q`$ | the riskless rate; Acme's dividend yield, both continuously compounded | 0.05 and 0.02 | $`r`$ up: early exercise more tempting |
+| $`\sigma`$ | volatility, how jumpy Acme is. Say "sigma". | 0.20 | price up, strictly, where the put is held |
+| $`T`$, $`\Delta t`$ | the put's life in years; one tree step | 1; 1/2000 | — |
+| $`V_n(j)`$, $`S_n(j)`$ | the put's worth and Acme's price at a node: steps taken, up moves among them | $`V_0(0)`$ = 6.660226 | — |
+| $`h_+`$, $`h_-`$ | dollar gaps from the middle node two steps in to its neighbours | under a dollar each | wider: more bias in gamma |
+| $`\Delta`$, $`\Gamma`$ | delta: dollars gained per dollar Acme gains; gamma: delta gained per dollar | −0.423041 and 0.021484 | — |
+| $`\Theta`$, $`\mathcal{V}`$, $`\rho`$ | theta: dollars per year of calendar; vega: dollars per 1.00 of volatility; rho: dollars per 1.00 of rate | −2.694609, 38.031884, −34.369887 | — |
+| $`\varepsilon`$ | the bump size for vega and rho | 0.01 | smaller: less bias, more tree jitter |
+| $`S^*`$ | the exercise boundary today: at or below it, exercise at once | between $77.88 and $78.27 | — |
+| $`Q`$, $`\sigma_{\text{imp}}`$ | a quoted price; the volatility that reproduces it | 6.660226; 0.200000 | $`Q`$ up: $`\sigma_{\text{imp}}`$ up |
 
 ### When it holds
 
@@ -130,15 +140,19 @@ Delta does not jump at the boundary. Smooth pasting makes the held price meet th
 
 Just above the boundary the put is held, so the Black–Scholes equation holds. With the Greeks written in, it says the hedged put earns the riskless rate:
 
-$$\Theta + (r - q)\,S\,\Delta + \tfrac12\sigma^2 S^2\,\Gamma = r\,P$$
+```math
+\Theta + (r - q)\,S\,\Delta + \tfrac12\sigma^2 S^2\,\Gamma = r\,P
+```
 
-Approach the boundary from above. The price tends to $K - S^*$. Delta tends to −1, by smooth pasting. Theta tends to 0: the exercised price does not depend on the date, and theta is continuous across the boundary. Only gamma is left:
+Approach the boundary from above. The price tends to $`K - S^*`$. Delta tends to −1, by smooth pasting. Theta tends to 0: the exercised price does not depend on the date, and theta is continuous across the boundary. Only gamma is left:
 
-$$\tfrac12\sigma^2 {S^*}^2\,\Gamma = r(K - S^*) + (r - q)S^* = rK - qS^*$$
+```math
+\tfrac12\sigma^2 {S^*}^2\,\Gamma = r(K - S^*) + (r - q)S^* = rK - qS^*
+```
 
-The right side is the **carry** of exercising: exercise swaps a share paying $qS^*$ a year in dividends for $K$ of cash earning $r \times K$. The left side is the held put's income from volatility, half the variance times gamma. On the boundary they balance. That is what the boundary is: the last price at which volatility income still pays for the carry lost by waiting.
+The right side is the **carry** of exercising: exercise swaps a share paying $`qS^*`$ a year in dividends for $`K`$ of cash earning $`r \times K`$. The left side is the held put's income from volatility, half the variance times gamma. On the boundary they balance. That is what the boundary is: the last price at which volatility income still pays for the carry lost by waiting.
 
-Below, gamma is 0; just above, it is $2(rK - qS^*)/(\sigma^2 {S^*}^2)$, positive because exercise happens only where the carry favours it. At the grid's last exercised price, $77.880078, the carry is 3.442398 a year, $\sigma^2 {S^*}^2$ is 242.612264, and the formula gives 0.028378. The grid's gamma one node above, at $78.270454, is 0.028329, found by differencing prices and never by this formula.
+Below, gamma is 0; just above, it is $`2(rK - qS^*)/(\sigma^2 {S^*}^2)`$, positive because exercise happens only where the carry favours it. At the grid's last exercised price, $77.880078, the carry is 3.442398 a year, $`\sigma^2 {S^*}^2`$ is 242.612264, and the formula gives 0.028378. The grid's gamma one node above, at $78.270454, is 0.028329, found by differencing prices and never by this formula.
 
 <details>
 <summary>Detailed proof: why theta vanishes at the boundary, and what is taken as given</summary>
@@ -151,34 +165,34 @@ Given the two limits, the display is exact: the equation holds at every held poi
 
 ### Step 5: the price rises strictly with volatility where the put is held
 
-This makes an implied volatility well defined. Compare a lower volatility $\sigma_{\text{low}}$ with a higher one $\sigma_{\text{high}}$ (names used only in this step).
+This makes an implied volatility well defined. Compare a lower volatility $`\sigma_{\text{low}}`$ with a higher one $`\sigma_{\text{high}}`$ (names used only in this step).
 
 **Convexity.** Acme's future price is today's times a random factor independent of today's price, so each exercise rule gives a payoff that curves upward in today's price. The American price is the best over all rules, and the best of upward-curving functions curves upward: gamma is 0 or more. In the held region it is strictly positive, a known property taken here as given; the grid shows it at every held price charted below.
 
-**Comparison.** Run the higher-volatility world but exercise by the lower-volatility rule. Along that path the lower-volatility price, discounted, drifts upward at exactly $\tfrac12(\sigma_{\text{high}}^2 - \sigma_{\text{low}}^2) S^2 \Gamma$: its own equation cancels everything else. So it starts below what the borrowed rule collects, and the higher-volatility price, the best over all rules, is higher still.
+**Comparison.** Run the higher-volatility world but exercise by the lower-volatility rule. Along that path the lower-volatility price, discounted, drifts upward at exactly $`\tfrac12(\sigma_{\text{high}}^2 - \sigma_{\text{low}}^2) S^2 \Gamma`$: its own equation cancels everything else. So it starts below what the borrowed rule collects, and the higher-volatility price, the best over all rules, is higher still.
 
 <details>
 <summary>Detailed proof: strict increase in volatility</summary>
 
-Let $P_{\text{low}}$ be the put's price at $\sigma_{\text{low}}$, let the share follow the risk-neutral model at $\sigma_{\text{high}}$, and let the stopping time, tau, be the first date at which $P_{\text{low}}$ equals the payoff, or the expiry if that never happens. Before it the share is in the held region of the lower problem, where $P_{\text{low}}$ satisfies $\Theta + (r - q) S \Delta + \tfrac12\sigma_{\text{low}}^2 S^2 \Gamma - rP_{\text{low}} = 0$. Ito's lemma for the discounted $P_{\text{low}}$ under $\sigma_{\text{high}}$ leaves a drift of $\tfrac12(\sigma_{\text{high}}^2 - \sigma_{\text{low}}^2) S^2\,\Gamma_{\text{low}}$, discounted, plus a martingale. Taking expectations up to tau:
+Let $`P_{\text{low}}`$ be the put's price at $`\sigma_{\text{low}}`$, let the share follow the risk-neutral model at $`\sigma_{\text{high}}`$, and let the stopping time, tau, be the first date at which $`P_{\text{low}}`$ equals the payoff, or the expiry if that never happens. Before it the share is in the held region of the lower problem, where $`P_{\text{low}}`$ satisfies $`\Theta + (r - q) S \Delta + \tfrac12\sigma_{\text{low}}^2 S^2 \Gamma - rP_{\text{low}} = 0`$. Ito's lemma for the discounted $`P_{\text{low}}`$ under $`\sigma_{\text{high}}`$ leaves a drift of $`\tfrac12(\sigma_{\text{high}}^2 - \sigma_{\text{low}}^2) S^2\,\Gamma_{\text{low}}`$, discounted, plus a martingale. Taking expectations up to tau:
 
-$$P_{\text{low}}(S, 0) = \mathbb{E}_{\text{high}}\!\left[e^{-r\tau}(K - S_\tau)^+\right] - \mathbb{E}_{\text{high}}\!\left[\int_0^{\tau} e^{-rs}\,\tfrac12(\sigma_{\text{high}}^2 - \sigma_{\text{low}}^2) S_s^2\,\Gamma_{\text{low}}\,ds\right].$$
+$`\displaystyle P_{\text{low}}(S, 0) = \mathbb{E}_{\text{high}}\!\left[e^{-r\tau}(K - S_\tau)^+\right] - \mathbb{E}_{\text{high}}\!\left[\int_0^{\tau} e^{-rs}\,\tfrac12(\sigma_{\text{high}}^2 - \sigma_{\text{low}}^2) S_s^2\,\Gamma_{\text{low}}\,ds\right].`$
 
-The first term is at most $P_{\text{high}}(S, 0)$, the supremum over all stopping times. The integral is non-negative by convexity; if $S$ starts in the held region, tau is positive almost surely and, with gamma strictly positive there, the integral is strictly positive. So $P_{\text{low}} < P_{\text{high}}$. This is the argument of El Karoui, Jeanblanc-Picqué and Shreve (1998), specialised to the put.
+The first term is at most $`P_{\text{high}}(S, 0)`$, the supremum over all stopping times. The integral is non-negative by convexity; if $`S`$ starts in the held region, tau is positive almost surely and, with gamma strictly positive there, the integral is strictly positive. So $`P_{\text{low}} < P_{\text{high}}`$. This is the argument of El Karoui, Jeanblanc-Picqué and Shreve (1998), specialised to the put.
 
 </details>
 
-At $S = K = 100$ the tree's price climbs at every step of the opening chart. At $70 it reads 30.000000 at volatility 0.10 and at 0.20, then 30.157820 at 0.30 and 31.613439 at 0.40: flat while $70 is in the exercise region, exactly where the theorem promises nothing.
+At $`S = K = 100`$ the tree's price climbs at every step of the opening chart. At $70 it reads 30.000000 at volatility 0.10 and at 0.20, then 30.157820 at 0.30 and 31.613439 at 0.40: flat while $70 is in the exercise region, exactly where the theorem promises nothing.
 
 ### Step 6: existence, uniqueness, and the edges
 
-The price is continuous in volatility. As volatility falls to zero it tends to $P(0^+)$, which is 0 at the money; the tree gives 0.060987 at 0.01. As volatility grows without limit, Acme is driven towards zero and the put tends to the full strike; the tree gives 65.437436 at 2.00. A continuous curve crosses every level between its limits, so an implied volatility exists; Step 5 makes it unique.
+The price is continuous in volatility. As volatility falls to zero it tends to $`P(0^+)`$, which is 0 at the money; the tree gives 0.060987 at 0.01. As volatility grows without limit, Acme is driven towards zero and the put tends to the full strike; the tree gives 65.437436 at 2.00. A continuous curve crosses every level between its limits, so an implied volatility exists; Step 5 makes it unique.
 
 The edges, stated before solving:
 
-- **Below the floor**, $\max(K - S, P(0^+))$: no volatility works.
+- **Below the floor**, $`\max(K - S, P(0^+))`$: no volatility works.
 - **At the floor, at the money**: a quote of 0 is a limit, never reached; no volatility works.
-- **At or above the strike**: no volatility works; the put never pays more than $K$.
+- **At or above the strike**: no volatility works; the put never pays more than $`K`$.
 - **At the floor, deep in the money**, where it is the exercise value: an interval works. At $70 a quote of $30 is matched by 0.10 and 0.20 alike.
 
 Bisection then solves. The bracket 0.01 to 2.00 straddles the quote; price the middle, keep the half that still straddles, repeat until the bracket is a billionth wide. The tree returns 0.200000. The grid, solved by the secant method (Newton's method with the slope taken from the last two guesses), returns 0.199989. Bisection needs no vega and cannot leave its bracket, whatever lattice jitter the price carries.
@@ -189,13 +203,13 @@ A faster road inverts the Barone-Adesi–Whaley closed-form approximation instea
 
 ## Worked numbers, by hand
 
-The house American put: $S = K = 100$, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%, one year.
+The house American put: $`S = K = 100`$, $`r`$ = 5%, $`q`$ = 2%, $`\sigma`$ = 20%, one year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | early-exercise premium | 6.660226 − 6.330081 | $0.330145 |
-| price one volatility point up | tree at $\sigma$ = 0.21 | $7.040707 |
-| price one volatility point down | tree at $\sigma$ = 0.19 | $6.280069 |
+| price one volatility point up | tree at $`\sigma`$ = 0.21 | $7.040707 |
+| price one volatility point down | tree at $`\sigma`$ = 0.19 | $6.280069 |
 | vega | (7.040707 − 6.280069) / 0.02 | 38.031884 |
 | per volatility point | 38.031884 / 100 | $0.380319 |
 | theta per day | −2.694609 / 365 | −$0.007382 |
@@ -681,9 +695,9 @@ The two outputs agree line for line at the printed precision.
 
 Lean proves the results of Steps 3, 4 and 6, for any price map with the properties named below.
 
-- Suppose the price is continuous in volatility, rises strictly where the put is held, and tends to $K$ as volatility grows without limit. Then each quote $Q$ with $\max(K - S, P(0^+)) < Q < K$ has exactly one implied volatility.
-- Suppose the price equals $K - S$ at every share price near $S$. Then delta is exactly −1 and gamma exactly 0 at $S$.
-- Suppose the Black–Scholes equation holds just above $S^*$, and price, delta and theta tend to $K - S^*$, −1 and 0. Then gamma tends to $2(rK - qS^*)/(\sigma^2 {S^*}^2)$ as the share price falls to $S^*$.
+- Suppose the price is continuous in volatility, rises strictly where the put is held, and tends to $`K`$ as volatility grows without limit. Then each quote $`Q`$ with $`\max(K - S, P(0^+)) < Q < K`$ has exactly one implied volatility.
+- Suppose the price equals $`K - S`$ at every share price near $`S`$. Then delta is exactly −1 and gamma exactly 0 at $`S`$.
+- Suppose the Black–Scholes equation holds just above $`S^*`$, and price, delta and theta tend to $`K - S^*`$, −1 and 0. Then gamma tends to $`2(rK - qS^*)/(\sigma^2 {S^*}^2)`$ as the share price falls to $`S^*`$.
 
 The node and bump Greeks, the implied volatilities found by bisection, and every dollar figure are left to the Python and Rust checks.
 
@@ -851,7 +865,7 @@ theorem american_put_gamma_jump_at_boundary
 
 ## Where this goes next
 
-Nothing on the ladder builds on this card directly; it closes the American shelf. Its siblings carry the same tools sideways: [Bermudan options](03-bermudan-options.md) for exercise on set dates only, and [Merton's theorem](02-mertons-no-early-exercise-theorem.md) for when the matching call carries no premium to hedge. The question left open is how the boundary $S^*$ itself shifts when volatility or rates move, which decides when a desk exercises; [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md) studies that boundary as an object in its own right.
+Nothing on the ladder builds on this card directly; it closes the American shelf. Its siblings carry the same tools sideways: [Bermudan options](03-bermudan-options.md) for exercise on set dates only, and [Merton's theorem](02-mertons-no-early-exercise-theorem.md) for when the matching call carries no premium to hedge. The question left open is how the boundary $`S^*`$ itself shifts when volatility or rates move, which decides when a desk exercises; [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md) studies that boundary as an object in its own right.
 
 ---
 
@@ -863,4 +877,4 @@ Verified 2026-11-13: every link below resolves to the publisher's page.
 - Brennan, Michael J., and Eduardo S. Schwartz. "The Valuation of American Put Options." *Journal of Finance* 32, no. 2 (1977): 449–462. [doi:10.2307/2326779](https://doi.org/10.2307/2326779). Finite differences for the American put, with exercise enforced after each time step: the second pricer.
 - Hull, John, and Alan White. "The Use of the Control Variate Technique in Option Pricing." *Journal of Financial and Quantitative Analysis* 23, no. 3 (1988): 237–251. [doi:10.2307/2331065](https://doi.org/10.2307/2331065). The European-error correction tested in the what-breaks table.
 - El Karoui, Nicole, Monique Jeanblanc-Picqué, and Steven E. Shreve. "Robustness of the Black and Scholes Formula." *Mathematical Finance* 8, no. 2 (1998): 93–126. [doi:10.1111/1467-9965.00047](https://doi.org/10.1111/1467-9965.00047). Convexity and monotonicity in volatility, American options included: the argument of Step 5.
-- Kim, In Joon. "The Analytic Valuation of American Options." *Review of Financial Studies* 3, no. 4 (1990): 547–572. [doi:10.1093/rfs/3.4.547](https://doi.org/10.1093/rfs/3.4.547). The exercise boundary's properties and the early-exercise premium as an integral of the carry $rK - qS$ over the exercise region.
+- Kim, In Joon. "The Analytic Valuation of American Options." *Review of Financial Studies* 3, no. 4 (1990): 547–572. [doi:10.1093/rfs/3.4.547](https://doi.org/10.1093/rfs/3.4.547). The exercise boundary's properties and the early-exercise premium as an integral of the carry $`rK - qS`$ over the exercise region.

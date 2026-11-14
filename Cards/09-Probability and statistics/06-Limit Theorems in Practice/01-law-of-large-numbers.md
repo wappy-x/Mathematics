@@ -35,48 +35,56 @@ Orange: the running average of one seeded run. Green and dark: the shop's band, 
 
 ## The formula
 
-A reminder of the wing's notation. $P(A)$ is the chance of an event $A$. A random variable is written with a capital letter; here $X_i$ is the face on roll number $i$. $E[X]$ is the expectation, the long-run average, and $\mathrm{Var}(X)$ is the variance, the average squared distance from the mean.
+A reminder of the wing's notation. $`P(A)`$ is the chance of an event $`A`$. A random variable is written with a capital letter; here $`X_i`$ is the face on roll number $`i`$. $`E[X]`$ is the expectation, the long-run average, and $`\mathrm{Var}(X)`$ is the variance, the average squared distance from the mean.
 
-Two new names. The total of the first $n$ rolls is $S_n = X_1 + X_2 + \dots + X_n$. The average of the first $n$ rolls is written $\bar{X}_n$, read "X-bar n":
+Two new names. The total of the first $`n`$ rolls is $`S_n = X_1 + X_2 + \dots + X_n`$. The average of the first $`n`$ rolls is written $`\bar{X}_n`$, read "X-bar n":
 
-$$\bar{X}_n = \frac{S_n}{n} = \frac{X_1 + X_2 + \dots + X_n}{n}$$
+```math
+\bar{X}_n = \frac{S_n}{n} = \frac{X_1 + X_2 + \dots + X_n}{n}
+```
 
-Write $\mu$ (Greek mu) for the mean of one roll, $E[X_i]$, here 3.5, and $\sigma^2$ (sigma squared) for its variance, here 35/12; $\sigma$ is the standard deviation. The average has the same mean as one roll and one $n$-th of its variance:
+Write $`\mu`$ (Greek mu) for the mean of one roll, $`E[X_i]`$, here 3.5, and $`\sigma^2`$ (sigma squared) for its variance, here 35/12; $`\sigma`$ is the standard deviation. The average has the same mean as one roll and one $`n`$-th of its variance:
 
-$$E[\bar{X}_n] = \mu, \qquad \mathrm{Var}(\bar{X}_n) = \frac{\sigma^2}{n}$$
+```math
+E[\bar{X}_n] = \mu, \qquad \mathrm{Var}(\bar{X}_n) = \frac{\sigma^2}{n}
+```
 
-Pick a tolerance $\varepsilon$ (Greek epsilon), here 0.1. Chebyshev's inequality, applied to the average, turns its variance into a guarantee:
+Pick a tolerance $`\varepsilon`$ (Greek epsilon), here 0.1. Chebyshev's inequality, applied to the average, turns its variance into a guarantee:
 
-$$P\big(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon\big) \le \frac{\sigma^2}{n\,\varepsilon^2}$$
+```math
+P\big(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon\big) \le \frac{\sigma^2}{n\,\varepsilon^2}
+```
 
-**Read it aloud:** the chance that the average of $n$ rolls misses the mean by at least $\varepsilon$ is at most the variance of one roll divided by $n$ times $\varepsilon$ squared.
+**Read it aloud:** the chance that the average of $`n`$ rolls misses the mean by at least $`\varepsilon`$ is at most the variance of one roll divided by $`n`$ times $`\varepsilon`$ squared.
 
-The right side shrinks to zero as $n$ grows, for every fixed $\varepsilon$. So the left side does too. That limit is the weak law of large numbers:
+The right side shrinks to zero as $`n`$ grows, for every fixed $`\varepsilon`$. So the left side does too. That limit is the weak law of large numbers:
 
-$$P\big(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon\big) \to 0 \quad \text{as } n \to \infty, \text{ for every } \varepsilon > 0$$
+```math
+P\big(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon\big) \to 0 \quad \text{as } n \to \infty, \text{ for every } \varepsilon > 0
+```
 
-**Read it aloud:** however small the tolerance, the chance of missing by that much goes to zero as the rolls pile up. The name for this kind of limit is **convergence in probability**: $\bar{X}_n$ converges in probability to $\mu$.
+**Read it aloud:** however small the tolerance, the chance of missing by that much goes to zero as the rolls pile up. The name for this kind of limit is **convergence in probability**: $`\bar{X}_n`$ converges in probability to $`\mu`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_i$, $i$ | the face on roll number $i$: one draw | 1 to 6, each with chance 1/6 | — |
-| $Z_i$ | the error of one draw, $X_i - \mu$ | −2.5 to 2.5 | — |
-| $n$ | the number of draws averaged | 1,000 rolls | the miss bound falls like $1/n$ |
-| $S_n$ | the total of the first $n$ draws | about 3,500 | its spread grows like $\sqrt{n}$ |
-| $\bar{X}_n$ | the average of the first $n$ draws, $S_n / n$ | 3.395 in the pictured run | its spread shrinks like $1/\sqrt{n}$ |
-| $\mu$ | the mean of one draw, $E[X_i]$ | 3.5 | the target moves; the law is unchanged |
-| $\sigma^2$, $\sigma$ | the variance of one draw, and its standard deviation | 35/12 = 2.9167, and 1.708 | the miss bound rises in proportion to $\sigma^2$ |
-| $\sigma / \sqrt{n}$ | the standard deviation of the average: its spread | 0.054 | — |
-| $\varepsilon$ | the tolerance, Greek epsilon | 0.1 | the miss bound falls like $1/\varepsilon^2$ |
-| $\delta$ | the miss chance allowed, Greek delta | 0.05 | the rolls needed fall like $1/\delta$ |
-| $A$, $P(A)$ | an event, and its chance | "the average misses by 0.1 or more": 0.0654 exactly | — |
+| $`X_i`$, $`i`$ | the face on roll number $`i`$: one draw | 1 to 6, each with chance 1/6 | — |
+| $`Z_i`$ | the error of one draw, $`X_i - \mu`$ | −2.5 to 2.5 | — |
+| $`n`$ | the number of draws averaged | 1,000 rolls | the miss bound falls like $`1/n`$ |
+| $`S_n`$ | the total of the first $`n`$ draws | about 3,500 | its spread grows like $`\sqrt{n}`$ |
+| $`\bar{X}_n`$ | the average of the first $`n`$ draws, $`S_n / n`$ | 3.395 in the pictured run | its spread shrinks like $`1/\sqrt{n}`$ |
+| $`\mu`$ | the mean of one draw, $`E[X_i]`$ | 3.5 | the target moves; the law is unchanged |
+| $`\sigma^2`$, $`\sigma`$ | the variance of one draw, and its standard deviation | 35/12 = 2.9167, and 1.708 | the miss bound rises in proportion to $`\sigma^2`$ |
+| $`\sigma / \sqrt{n}`$ | the standard deviation of the average: its spread | 0.054 | — |
+| $`\varepsilon`$ | the tolerance, Greek epsilon | 0.1 | the miss bound falls like $`1/\varepsilon^2`$ |
+| $`\delta`$ | the miss chance allowed, Greek delta | 0.05 | the rolls needed fall like $`1/\delta`$ |
+| $`A`$, $`P(A)`$ | an event, and its chance | "the average misses by 0.1 or more": 0.0654 exactly | — |
 
 ### When it holds
 
-- **Independent draws.** Each roll must carry no information about the others. Record one roll and copy it 1,000 times: each copy still has the fair-die law, but the average is that one face, never within 0.1 of 3.5. The chance of a miss is 1 at every $n$.
+- **Independent draws.** Each roll must carry no information about the others. Record one roll and copy it 1,000 times: each copy still has the fair-die law, but the average is that one face, never within 0.1 of 3.5. The chance of a miss is 1 at every $`n`$.
 - **A finite mean.** There must be a long-run average to settle on. The Cauchy law ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) has none: the average of 1,000 Cauchy draws lands outside −1 to 1 about half the time, exactly as often as one draw does.
-- **A finite variance, for this proof.** Chebyshev needs $\sigma^2$. The law itself survives with a finite mean alone (Khinchin's weak law), but its proof needs cutting large values off, done with measure in wing 10.
-- **A fixed $n$ and a fixed $\varepsilon$.** The bound speaks about one sample size at a time. It says nothing about every later average staying inside the band together, and nothing about stopping the rolls once the average looks good.
+- **A finite variance, for this proof.** Chebyshev needs $`\sigma^2`$. The law itself survives with a finite mean alone (Khinchin's weak law), but its proof needs cutting large values off, done with measure in wing 10.
+- **A fixed $`n`$ and a fixed $`\varepsilon`$.** The bound speaks about one sample size at a time. It says nothing about every later average staying inside the band together, and nothing about stopping the rolls once the average looks good.
 - **The same mean for every draw.** A die that wears as it rolls has a moving mean; the average then settles on the average of the means, not on 3.5.
 
 ---
@@ -87,59 +95,64 @@ $$P\big(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon\big) \to 0 \quad \text{as 
 
 A 6 followed by a 1 averages 3.5. Over many rolls, faces above 3.5 are offset by faces below it. The question is how fast.
 
-Independence gives the answer. Square the total's error, and the cross terms between different rolls average to zero; only the $n$ squared errors of single rolls remain. So the total's spread grows only like the square root of $n$. Dividing by $n$ then crushes it. Chebyshev's inequality converts that small spread into a small chance of a miss.
+Independence gives the answer. Square the total's error, and the cross terms between different rolls average to zero; only the $`n`$ squared errors of single rolls remain. So the total's spread grows only like the square root of $`n`$. Dividing by $`n`$ then crushes it. Chebyshev's inequality converts that small spread into a small chance of a miss.
 
 ### Step 1: the average aims at the right place
 
-The expectation of a sum is the sum of the expectations, independent or not. So $E[S_n] = n\mu$ and $E[\bar{X}_n] = n\mu / n = \mu$. For 1,000 rolls the average aims at 3.5. The exact law of the sum of 1,000 dice, computed in the code, gives the same 3.5.
+The expectation of a sum is the sum of the expectations, independent or not. So $`E[S_n] = n\mu`$ and $`E[\bar{X}_n] = n\mu / n = \mu`$. For 1,000 rolls the average aims at 3.5. The exact law of the sum of 1,000 dice, computed in the code, gives the same 3.5.
 
 ### Step 2: one roll's variance
 
-The mean square of a face is $(1 + 4 + 9 + 16 + 25 + 36)/6 = 15.1667$. Subtract the squared mean, 12.25, to get $\sigma^2 = 2.9167$, which is 35/12. The same number comes from the closed form for a fair die numbered 1 to 6: (6 × 6 − 1)/12.
+The mean square of a face is $`(1 + 4 + 9 + 16 + 25 + 36)/6 = 15.1667`$. Subtract the squared mean, 12.25, to get $`\sigma^2 = 2.9167`$, which is 35/12. The same number comes from the closed form for a fair die numbered 1 to 6: (6 × 6 − 1)/12.
 
 ### Step 3: the variance of the total grows like n
 
-The variance of a sum is the sum of the variances plus twice the covariance of every pair, the average product of the two draws' errors ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent rolls have covariance zero, so every pair term vanishes and $\mathrm{Var}(S_n) = n\sigma^2$. The total's spread is $\sigma\sqrt{n}$: 54.01 for 1,000 rolls.
+The variance of a sum is the sum of the variances plus twice the covariance of every pair, the average product of the two draws' errors ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent rolls have covariance zero, so every pair term vanishes and $`\mathrm{Var}(S_n) = n\sigma^2`$. The total's spread is $`\sigma\sqrt{n}`$: 54.01 for 1,000 rolls.
 
 ### Step 4: the variance of the average shrinks like 1/n
 
-Dividing a random quantity by $n$ divides its variance by $n^2$. So $\mathrm{Var}(\bar{X}_n) = n\sigma^2 / n^2 = \sigma^2 / n$. For 1,000 rolls that is 0.002917, a spread of 0.054: the house figure for this shelf.
+Dividing a random quantity by $`n`$ divides its variance by $`n^2`$. So $`\mathrm{Var}(\bar{X}_n) = n\sigma^2 / n^2 = \sigma^2 / n`$. For 1,000 rolls that is 0.002917, a spread of 0.054: the house figure for this shelf.
 
 ### Step 5: Chebyshev turns the spread into a guarantee
 
-Chebyshev's inequality ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) says any random quantity with a finite variance lands at least $\varepsilon$ from its mean with chance at most its variance divided by $\varepsilon^2$. Apply it to the average, whose variance is $\sigma^2 / n$:
+Chebyshev's inequality ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) says any random quantity with a finite variance lands at least $`\varepsilon`$ from its mean with chance at most its variance divided by $`\varepsilon^2`$. Apply it to the average, whose variance is $`\sigma^2 / n`$:
 
-$$P\big(\lvert \bar{X}_{1000} - 3.5 \rvert \ge 0.1\big) \le \frac{2.9167}{1000 \times 0.01} = 0.2917$$
+```math
+P\big(\lvert \bar{X}_{1000} - 3.5 \rvert \ge 0.1\big) \le \frac{2.9167}{1000 \times 0.01} = 0.2917
+```
 
 A miss has chance at most 0.2917. A hit, landing strictly inside 3.4 to 3.6, has chance at least 0.7083. That is the shop's guarantee.
 
 ### Step 6: let n grow
 
-The bound $\sigma^2 / (n\varepsilon^2)$ goes to zero as $n$ grows, for any fixed $\varepsilon$. So does the chance of a miss, since it sits below the bound and above zero. That is the weak law.
+The bound $`\sigma^2 / (n\varepsilon^2)`$ goes to zero as $`n`$ grows, for any fixed $`\varepsilon`$. So does the chance of a miss, since it sits below the bound and above zero. That is the weak law.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** Let $X_1, X_2, \dots$ be independent, each with mean $\mu$ and variance $\sigma^2$, both finite. Fix $n \ge 1$ and $\varepsilon > 0$.
+**Setting.** Let $`X_1, X_2, \dots`$ be independent, each with mean $`\mu`$ and variance $`\sigma^2`$, both finite. Fix $`n \ge 1`$ and $`\varepsilon > 0`$.
 
-**Mean.** By linearity of expectation, $E[S_n] = \sum_{i=1}^{n} E[X_i] = n\mu$, so $E[\bar{X}_n] = \mu$.
+**Mean.** By linearity of expectation, $`E[S_n] = \sum_{i=1}^{n} E[X_i] = n\mu`$, so $`E[\bar{X}_n] = \mu`$.
 
-**Variance.** Write $Z_i = X_i - \mu$, so each $Z_i$ has mean 0 and $E[Z_i^2] = \sigma^2$. Then $S_n - n\mu = \sum_i Z_i$, and squaring the sum gives $n$ square terms and $n(n-1)$ cross terms:
-$$E\Big[\big(\textstyle\sum_i Z_i\big)^2\Big] = \sum_{i} E[Z_i^2] + \sum_{i \ne j} E[Z_i Z_j].$$
-For $i \ne j$, independence gives $E[Z_i Z_j] = E[Z_i]\,E[Z_j] = 0$. So $\mathrm{Var}(S_n) = n\sigma^2$, and dividing by $n^2$ gives $\mathrm{Var}(\bar{X}_n) = \sigma^2 / n$. Only the vanishing of the cross terms was used: uncorrelated draws with a common mean and variance are enough.
+**Variance.** Write $`Z_i = X_i - \mu`$, so each $`Z_i`$ has mean 0 and $`E[Z_i^2] = \sigma^2`$. Then $`S_n - n\mu = \sum_i Z_i`$, and squaring the sum gives $`n`$ square terms and $`n(n-1)`$ cross terms:
 
-**Chebyshev.** Applied to $\bar{X}_n$, whose mean is $\mu$ and variance $\sigma^2/n$:
-$$P\big(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon\big) \le \frac{\sigma^2}{n\varepsilon^2}.$$
+$`\displaystyle E\Big[\big(\textstyle\sum_i Z_i\big)^2\Big] = \sum_{i} E[Z_i^2] + \sum_{i \ne j} E[Z_i Z_j].`$
 
-**Limit.** The left side lies between 0 and $\sigma^2 / (n\varepsilon^2)$, and the right side tends to 0 as $n$ grows. So the left side tends to 0. As $\varepsilon$ was arbitrary, $\bar{X}_n$ converges in probability to $\mu$.
+For $`i \ne j`$, independence gives $`E[Z_i Z_j] = E[Z_i]\,E[Z_j] = 0`$. So $`\mathrm{Var}(S_n) = n\sigma^2`$, and dividing by $`n^2`$ gives $`\mathrm{Var}(\bar{X}_n) = \sigma^2 / n`$. Only the vanishing of the cross terms was used: uncorrelated draws with a common mean and variance are enough.
 
-**Sample size.** To make the miss chance at most a chosen $\delta$ (Greek delta) between 0 and 1, it is enough that $\sigma^2 / (n\varepsilon^2) \le \delta$, that is $n \ge \sigma^2 / (\delta\varepsilon^2)$. Rounding up gives the smallest $n$ this bound certifies. It need not be the smallest $n$ that actually works.
+**Chebyshev.** Applied to $`\bar{X}_n`$, whose mean is $`\mu`$ and variance $`\sigma^2/n`$:
+
+$`\displaystyle P\big(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon\big) \le \frac{\sigma^2}{n\varepsilon^2}.`$
+
+**Limit.** The left side lies between 0 and $`\sigma^2 / (n\varepsilon^2)`$, and the right side tends to 0 as $`n`$ grows. So the left side tends to 0. As $`\varepsilon`$ was arbitrary, $`\bar{X}_n`$ converges in probability to $`\mu`$.
+
+**Sample size.** To make the miss chance at most a chosen $`\delta`$ (Greek delta) between 0 and 1, it is enough that $`\sigma^2 / (n\varepsilon^2) \le \delta`$, that is $`n \ge \sigma^2 / (\delta\varepsilon^2)`$. Rounding up gives the smallest $`n`$ this bound certifies. It need not be the smallest $`n`$ that actually works.
 
 </details>
 
 ### The rate: how fast the average settles
 
-Two rates run side by side. The spread of the average falls like $1/\sqrt{n}$: 0.108 at 250 rolls, 0.054 at 1,000, 0.027 at 4,000. Quadrupling the rolls halves the spread. The Chebyshev bound on a miss falls faster, like $1/n$, because it is built from the variance, the spread squared.
+Two rates run side by side. The spread of the average falls like $`1/\sqrt{n}`$: 0.108 at 250 rolls, 0.054 at 1,000, 0.027 at 4,000. Quadrupling the rolls halves the spread. The Chebyshev bound on a miss falls faster, like $`1/n`$, because it is built from the variance, the spread squared.
 
 The true chance of a miss falls faster still. The chart puts Chebyshev's ceiling beside the exact miss chance, computed from the full law of the sum.
 
@@ -153,18 +166,18 @@ xychart-beta
     line [0.58, 0.42, 0.32, 0.25, 0.19, 0.15, 0.12, 0.10, 0.08, 0.07]
 ```
 
-Orange, top: Chebyshev's ceiling $\sigma^2/(n\varepsilon^2)$, capped at 1; up to 291 rolls it says nothing. Green, bottom: the exact chance of a miss. The exact curve always sits under the ceiling and falls away from it.
+Orange, top: Chebyshev's ceiling $`\sigma^2/(n\varepsilon^2)`$, capped at 1; up to 291 rolls it says nothing. Green, bottom: the exact chance of a miss. The exact curve always sits under the ceiling and falls away from it.
 
-The gap costs rolls. To push the miss chance to 5% or less, Chebyshev asks for $n \ge 2.9167 / (0.05 \times 0.01)$. That rounds up to 5,834 rolls: the bound there is 0.049994, and at 5,833 it is 0.050003.
+The gap costs rolls. To push the miss chance to 5% or less, Chebyshev asks for $`n \ge 2.9167 / (0.05 \times 0.01)`$. That rounds up to 5,834 rolls: the bound there is 0.049994, and at 5,833 it is 0.050003.
 
-The exact law gets under 5% at 1,117 rolls, with a miss chance of 0.0497. It wobbles back above 5% for a few sizes. The sum can only take whole-number values, and the band's edges fall between them differently at each $n$. From 1,131 rolls on it stays below, checked to 1,200.
+The exact law gets under 5% at 1,117 rolls, with a miss chance of 0.0497. It wobbles back above 5% for a few sizes. The sum can only take whole-number values, and the band's edges fall between them differently at each $`n`$. From 1,131 rolls on it stays below, checked to 1,200.
 
 Chebyshev's figure is safe for every law with this variance, and far more cautious than this one needs. Sharper tools recover the gap: the shape of the error ([Central limit theorem](02-central-limit-theorem.md)) and tails that fall exponentially ([Concentration](06-concentration-inequalities-hoeffding-and-chernoff.md)).
 
 <details>
 <summary>The strong law, stated</summary>
 
-The weak law speaks about one $n$ at a time. The **strong law** speaks about a whole infinite run. With probability 1, the running average of independent draws from one law with a finite mean eventually settles on $\mu$ and stays within any tolerance from some roll on. It rules out a run that keeps wandering out of the band forever. Its proof needs probability built on measure, which is wing 10's subject; this card states it and does not use it. The simulated runs below are evidence for it, not proof.
+The weak law speaks about one $`n`$ at a time. The **strong law** speaks about a whole infinite run. With probability 1, the running average of independent draws from one law with a finite mean eventually settles on $`\mu`$ and stays within any tolerance from some roll on. It rules out a run that keeps wandering out of the band forever. Its proof needs probability built on measure, which is wing 10's subject; this card states it and does not use it. The simulated runs below are evidence for it, not proof.
 
 </details>
 
@@ -191,10 +204,10 @@ The simulation agrees: in 4,000 seeded runs of 1,000 rolls, a share of 0.9348 hi
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| One roll copied 1,000 times, not independent | miss chance 1.000 at every $n$; the average's variance stays 2.9167 | no new information arrives, so nothing cancels |
+| One roll copied 1,000 times, not independent | miss chance 1.000 at every $`n`$; the average's variance stays 2.9167 | no new information arrives, so nothing cancels |
 | Cauchy draws, no mean | share of averages outside −1 to 1: 0.4875 at one draw, 0.4995 at 1,000, standard error 0.0112 | there is no mean to settle on |
-| Variance of the average taken as $\sigma^2/n^2$ | a "bound" of 0.000292, under the true miss chance 0.0654 | dividing by $n$ divides variance by $n^2$, but the sum's variance grew by $n$ first |
-| Chebyshev at 100 or 200 rolls | a ceiling of 1.00; the exact miss chance is 0.58 and 0.42 | true, and empty: the bound helps only once $n\varepsilon^2$ passes $\sigma^2$ |
+| Variance of the average taken as $`\sigma^2/n^2`$ | a "bound" of 0.000292, under the true miss chance 0.0654 | dividing by $`n`$ divides variance by $`n^2`$, but the sum's variance grew by $`n`$ first |
+| Chebyshev at 100 or 200 rolls | a ceiling of 1.00; the exact miss chance is 0.58 and 0.42 | true, and empty: the bound helps only once $`n\varepsilon^2`$ passes $`\sigma^2`$ |
 
 The code prints all four.
 
@@ -202,7 +215,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the chance of a hit by three independent roads. Road 1 is Chebyshev's bound from the variance alone. Road 2 is the exact law of the sum of 1,000 dice, built one die at a time. The chance of each total after one more roll is the average of six earlier chances. Road 3 rolls 4,000 runs of 1,000 dice from SplitMix64, a short, well-tested recipe for pseudo-random whole numbers written out in both languages, so both draw the same rolls. Whether an average misses is tested in whole numbers, $5 \lvert 2S_n - 7n \rvert \ge n$, so no rounding decides a boundary case. The rate chart, the sample sizes, the Cauchy draws and the broken cases come from the same runs.
+The scripts reach the chance of a hit by three independent roads. Road 1 is Chebyshev's bound from the variance alone. Road 2 is the exact law of the sum of 1,000 dice, built one die at a time. The chance of each total after one more roll is the average of six earlier chances. Road 3 rolls 4,000 runs of 1,000 dice from SplitMix64, a short, well-tested recipe for pseudo-random whole numbers written out in both languages, so both draw the same rolls. Whether an average misses is tested in whole numbers, $`5 \lvert 2S_n - 7n \rvert \ge n`$, so no rounding decides a boundary case. The rate chart, the sample sizes, the Cauchy draws and the broken cases come from the same runs.
 
 ### Python
 
@@ -626,9 +639,9 @@ The two outputs match line for line.
 
 Lean proves the card's three rules for independent draws with a common mean and finite variance, and checks the worked arithmetic.
 
-- Suppose the draws $X_i$ are independent, each with mean $\mu$ and the same finite variance $\sigma^2$. Then $E[\bar{X}_n] = \mu$ and $\mathrm{Var}(\bar{X}_n) = \sigma^2 / n$, for every $n$ of at least 1.
-- Take the same draws, $n$ of at least 1, and a tolerance $\varepsilon$ above 0. Then $P(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon) \le \sigma^2 / (n \varepsilon^2)$.
-- Take the same draws and any tolerance $\varepsilon$ above 0. Then $P(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon) \to 0$ as $n$ grows: the weak law.
+- Suppose the draws $`X_i`$ are independent, each with mean $`\mu`$ and the same finite variance $`\sigma^2`$. Then $`E[\bar{X}_n] = \mu`$ and $`\mathrm{Var}(\bar{X}_n) = \sigma^2 / n`$, for every $`n`$ of at least 1.
+- Take the same draws, $`n`$ of at least 1, and a tolerance $`\varepsilon`$ above 0. Then $`P(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon) \le \sigma^2 / (n \varepsilon^2)`$.
+- Take the same draws and any tolerance $`\varepsilon`$ above 0. Then $`P(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon) \to 0`$ as $`n`$ grows: the weak law.
 - The fair die's numbers: variance 35/12, miss bound 7/24 at 1,000 rolls, and guaranteed hit 17/24.
 - The sample sizes: the bound certifies 5,834 rolls but not 5,833, and it stays above 1 up to 291 rolls.
 - The whole-number miss test at 1,000 rolls: totals 3,401 to 3,599 hit; 3,400 and 3,600 miss.
@@ -813,7 +826,7 @@ example : 1000 ≤ 5 * |2 * (3400 : ℤ) - 7 * 1000| ∧ 1000 ≤ 5 * |2 * (3600
 ## The usual mistake
 
 > [!warning]
-> **Reading the law as "things even out".** The law says the average settles. It does not say the total does, and it does not say a run of low rolls is owed high ones (the gambler's fallacy). The dice have no memory. The gap between the total and 3.5 times the number of rolls typically grows: its spread is 17.08 at 100 rolls, 54.01 at 1,000 and 170.78 at 10,000. The average settles only because that growing gap is divided by an $n$ that grows faster.
+> **Reading the law as "things even out".** The law says the average settles. It does not say the total does, and it does not say a run of low rolls is owed high ones (the gambler's fallacy). The dice have no memory. The gap between the total and 3.5 times the number of rolls typically grows: its spread is 17.08 at 100 rolls, 54.01 at 1,000 and 170.78 at 10,000. The average settles only because that growing gap is divided by an $`n`$ that grows faster.
 >
 > - **Taking Chebyshev's 0.7083 as the chance of a hit.** It is a floor valid for every law with variance 35/12. The fair die's exact chance is 0.9346.
 > - **Taking 5,834 as the rolls needed.** It is what the bound certifies. The exact law is under a 5% miss from 1,131 rolls on.
@@ -831,7 +844,7 @@ example : 1000 ≤ 5 * |2 * (3400 : ℤ) - 7 * 1000| ∧ 1000 ≤ 5 * |2 * (3600
 - **Machine learning.** Training on random batches works because a batch average of errors settles near the full average ([Stochastic gradient](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md)).
 
 > **Say it back**
-> The average of many independent draws has the same mean as one draw and one $n$-th of its variance. Chebyshev's inequality turns that small variance into a small chance of missing the mean by any fixed tolerance, and that chance goes to zero as the draws pile up. For 1,000 rolls of a fair die, the average lands within 0.1 of 3.5 with chance at least 0.7083 by the bound, and 0.9346 exactly. The law fails when the draws are copies of each other or have no mean, as with the Cauchy law. It is about the average, never about the total evening out.
+> The average of many independent draws has the same mean as one draw and one $`n`$-th of its variance. Chebyshev's inequality turns that small variance into a small chance of missing the mean by any fixed tolerance, and that chance goes to zero as the draws pile up. For 1,000 rolls of a fair die, the average lands within 0.1 of 3.5 with chance at least 0.7083 by the bound, and 0.9346 exactly. The law fails when the draws are copies of each other or have no mean, as with the Cauchy law. It is about the average, never about the total evening out.
 
 ---
 

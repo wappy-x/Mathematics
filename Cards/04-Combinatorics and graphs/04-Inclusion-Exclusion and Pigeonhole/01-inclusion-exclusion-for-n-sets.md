@@ -34,17 +34,21 @@ Each arrow names the damage the next box repairs.
 
 ## The formula
 
-Notation first. Bars count members: $\lvert A\rvert$ is the size of a set A. The cup ∪ means "in at least one", and what it collects is the union; the cap ∩ means "in all", an overlap ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)). Sigma is the add-up sign, and C(n, j), "n choose j", counts the ways to pick j from n.
+Notation first. Bars count members: $`\lvert A\rvert`$ is the size of a set A. The cup ∪ means "in at least one", and what it collects is the union; the cap ∩ means "in all", an overlap ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)). Sigma is the add-up sign, and C(n, j), "n choose j", counts the ways to pick j from n.
 
-Call the sets $A_i$, numbered 1 up to $n$: breakfast, parking, spa, so $n$ is 3. Layer j takes the sets j at a time and adds up those overlaps' sizes.
+Call the sets $`A_i`$, numbered 1 up to $`n`$: breakfast, parking, spa, so $`n`$ is 3. Layer j takes the sets j at a time and adds up those overlaps' sizes.
 
-$$S_j = \sum_{1 \le i_1 < i_2 < \cdots < i_j \le n} \lvert A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_j}\rvert$$
+```math
+S_j = \sum_{1 \le i_1 < i_2 < \cdots < i_j \le n} \lvert A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_j}\rvert
+```
 
 **Read it aloud:** count what lies in all j of the sets chosen, for every choice of j sets.
 
-Layer 1 is 120, layer 2 45, layer 3 the lone triple, 5. Layer j holds C(n, j) counts, so the layers hold $2^n - 1$ in all.
+Layer 1 is 120, layer 2 45, layer 3 the lone triple, 5. Layer j holds C(n, j) counts, so the layers hold $`2^n - 1`$ in all.
 
-$$\lvert A_1 \cup A_2 \cup \cdots \cup A_n\rvert = S_1 - S_2 + S_3 - \cdots + (-1)^{n+1} S_n$$
+```math
+\lvert A_1 \cup A_2 \cup \cdots \cup A_n\rvert = S_1 - S_2 + S_3 - \cdots + (-1)^{n+1} S_n
+```
 
 **Read it aloud:** the count in at least one set is the layers added and subtracted in turn, starting with a plus.
 
@@ -52,17 +56,17 @@ What lies in *none* of them is the pool of 100 minus that union: 20 guests.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A_i$ | one of the sets combined | breakfast, parking, spa | — |
-| $n$ | how many sets | 3 here, 4 in the sieve below | the overlap list doubles |
-| $\lvert A\rvert$ | the size of a set | breakfast holds 50 | the union grows, by less |
-| $S_j$ | layer j: the j-at-a-time overlaps, added | 120, 45, 5 | odd layers lift, even lower |
-| $k$ | how many sets a member sits in | all-three guest: k = 3 | more repairs, net 1 |
+| $`A_i`$ | one of the sets combined | breakfast, parking, spa | — |
+| $`n`$ | how many sets | 3 here, 4 in the sieve below | the overlap list doubles |
+| $`\lvert A\rvert`$ | the size of a set | breakfast holds 50 | the union grows, by less |
+| $`S_j`$ | layer j: the j-at-a-time overlaps, added | 120, 45, 5 | odd layers lift, even lower |
+| $`k`$ | how many sets a member sits in | all-three guest: k = 3 | more repairs, net 1 |
 
 ### When it holds
 
 - **Finite sets.** Every layer must be a whole number; subtracting one infinite count from another settles nothing.
 - **Sets, not tallies.** Nine breakfasts make one member of the breakfast set; repeated rows break layer 1 before the repairs begin.
-- **Every overlap knowable.** It asks for $2^n - 1$ counts: 7 for three sets, 15 for four, doubling after. Out of reach, the sum is cut short and becomes a bound ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
+- **Every overlap knowable.** It asks for $`2^n - 1`$ counts: 7 for three sets, 15 for four, doubling after. Out of reach, the sum is cut short and becomes a bound ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
 
 ---
 
@@ -76,34 +80,36 @@ Take the guest who took breakfast and parking, not the spa. Layer 1 counts them 
 
 ### Step 1: how often one member is counted
 
-Write $k$ for how many sets a member belongs to; that guest's $k$ is 2. Which overlaps hold them? Only those built from their own sets — an overlap naming the spa cannot hold a guest who skipped it.
+Write $`k`$ for how many sets a member belongs to; that guest's $`k`$ is 2. Which overlaps hold them? Only those built from their own sets — an overlap naming the spa cannot hold a guest who skipped it.
 
 So the layer-j overlaps holding a member are the ways to choose j of their own k sets: C(k, j) of them. For this guest that is C(2, 1) = 2 in layer 1 and C(2, 2) = 1 in layer 2.
 
-That is what makes n sets no harder than three: only a member's own $k$ matters.
+That is what makes n sets no harder than three: only a member's own $`k`$ matters.
 
 ### Step 2: the alternating sum of those counts is 1
 
 A member in k sets therefore contributes
 
-$$C(k, 1) - C(k, 2) + C(k, 3) - \cdots + (-1)^{k+1} C(k, k)$$
+```math
+C(k, 1) - C(k, 2) + C(k, 3) - \cdots + (-1)^{k+1} C(k, k)
+```
 
-which comes to 1 for every $k$ of 1 or more. Off Pascal's triangle: 1; 2 − 1 = 1; 3 − 3 + 1 = 1; 4 − 6 + 4 − 1 = 1. The code runs it to $k$ = 8. The binomial theorem is the reason ([Alternating sums](../03-Binomial%20Coefficients%20and%20Identities/06-alternating-sums-and-binomial-inversion.md)).
+which comes to 1 for every $`k`$ of 1 or more. Off Pascal's triangle: 1; 2 − 1 = 1; 3 − 3 + 1 = 1; 4 − 6 + 4 − 1 = 1. The code runs it to $`k`$ = 8. The binomial theorem is the reason ([Alternating sums](../03-Binomial%20Coefficients%20and%20Identities/06-alternating-sums-and-binomial-inversion.md)).
 
 <details>
 <summary>Detailed proof: why the alternating sum collapses</summary>
 
-The binomial theorem expands $(1 + x)^k$ as $C(k, 0) + C(k, 1)x + \cdots + C(k, k)x^k$. Set x to −1: the left side is $(1 - 1)^k$, which is 0 for every k of 1 or more.
+The binomial theorem expands $`(1 + x)^k`$ as $`C(k, 0) + C(k, 1)x + \cdots + C(k, k)x^k`$. Set x to −1: the left side is $`(1 - 1)^k`$, which is 0 for every k of 1 or more.
 
-$$0 = C(k, 0) - C(k, 1) + C(k, 2) - \cdots + (-1)^k C(k, k)$$
+$`\displaystyle 0 = C(k, 0) - C(k, 1) + C(k, 2) - \cdots + (-1)^k C(k, k)`$
 
-C(k, 0) is 1, one way to choose nothing. Move it across and multiply by −1: what remains is the member's contribution, 1 for any k, with no mention of n. Added over the pool, that is the theorem. Only k = 0 is excluded, $(1-1)^0$ being 1.
+C(k, 0) is 1, one way to choose nothing. Move it across and multiply by −1: what remains is the member's contribution, 1 for any k, with no mention of n. Added over the pool, that is the theorem. Only k = 0 is excluded, $`(1-1)^0`$ being 1.
 
 </details>
 
 ### Step 3: members in no set never appear
 
-If $k$ is 0 the member lies in no set, so in no overlap, so in no layer: it contributes 0. The 20 who bought nothing never enter the sum.
+If $`k`$ is 0 the member lies in no set, so in no overlap, so in no layer: it contributes 0. The 20 who bought nothing never enter the sum.
 
 ### Step 4: take the union off the pool
 

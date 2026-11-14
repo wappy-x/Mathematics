@@ -39,52 +39,60 @@ Orange: the sampled run, which ends 2.73 μm to the left. Green: plus one spread
 
 ## The formula
 
-Notation first, in words. A process is written $(X_t)$, read "the value at time t" ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). Brownian motion gets its own letter, $W_t$, after Norbert Wiener: the grain's position, in μm, t seconds after it was first seen. $N(0, v)$ is the normal law, the bell curve, with mean 0 and variance v ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). A **standard Brownian motion** is a process with four properties:
+Notation first, in words. A process is written $`(X_t)`$, read "the value at time t" ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). Brownian motion gets its own letter, $`W_t`$, after Norbert Wiener: the grain's position, in μm, t seconds after it was first seen. $`N(0, v)`$ is the normal law, the bell curve, with mean 0 and variance v ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). A **standard Brownian motion** is a process with four properties:
 
-$$W_0 = 0, \qquad W_t - W_s \sim N(0,\; t - s) \ \text{ for } s < t,$$
+```math
+W_0 = 0, \qquad W_t - W_s \sim N(0,\; t - s) \ \text{ for } s < t,
+```
 
-with increments over non-overlapping stretches of time independent, and every path $t \mapsto W_t$ continuous.
+with increments over non-overlapping stretches of time independent, and every path $`t \mapsto W_t`$ continuous.
 
 **Read it aloud:** the grain starts at zero; its move between any two times is a bell curve centred on zero with variance equal to the time between them; moves over separate stretches have nothing to do with each other; and the grain never jumps.
 
-The question on this card uses only the second property, with $s = 0$. Write $\Phi(z)$ for the chance that a bell curve with mean 0 and variance 1 lands below z (the standard normal cumulative distribution):
+The question on this card uses only the second property, with $`s = 0`$. Write $`\Phi(z)`$ for the chance that a bell curve with mean 0 and variance 1 lands below z (the standard normal cumulative distribution):
 
-$$P(W_{10} > 5) = 1 - \Phi\!\left(\frac{5}{\sqrt{10}}\right) = 1 - \Phi(1.5811) = 0.0569$$
+```math
+P(W_{10} > 5) = 1 - \Phi\!\left(\frac{5}{\sqrt{10}}\right) = 1 - \Phi(1.5811) = 0.0569
+```
 
 **Read it aloud:** the position at 10 seconds is a bell curve with spread root 10; 5 μm is 1.5811 spreads out, and the chance of landing beyond that is the bell curve's right tail.
 
 Two consequences of the four properties follow at once. Positions at two times share their past, so they move together:
 
-$$\operatorname{Cov}(W_s, W_t) = \min(s, t)$$
+```math
+\mathrm{Cov}(W_s, W_t) = \min(s, t)
+```
 
 **Read it aloud:** the covariance of two positions is the earlier of the two times. For 4 and 10 seconds it is 4, and the correlation (the covariance divided by the two spreads, 2 and root 10) is the square root of 4/10, 0.6325.
 
 And the grain forgets how it got where it is. Given that it sits at 2 μm at 4 seconds, the remaining 6 seconds are a fresh bell curve with variance 6:
 
-$$P(W_{10} > 5 \mid W_4 = 2) = P\big(N(0, 6) > 3\big) = 0.1103$$
+```math
+P(W_{10} > 5 \mid W_4 = 2) = P\big(N(0, 6) > 3\big) = 0.1103
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $W_t$, $W_s$, $W_0$, $W_4$, $W_{10}$ | Brownian motion: the grain's position at time t (or 0, 4, 10 s), in μm | 0 at the start; −2.73 at 10 s on the charted run | — |
-| $t$, $s$, $t_i$ | times in seconds, s the earlier; $t_i$ one of a list of times | 10 and 4 | more time, wider bell curve, larger tail chance |
-| $W_t - W_s$ | the increment: the move between s and t | the move from 4 s to 10 s | — |
-| $N(0, v)$ | the normal law with mean 0 and variance v | N(0, 10) for the position at 10 s | — |
-| $\sigma$ | spread rate: root of the variance added per second; the standard motion has 1 | 1 μm per root second | every spread scales by it |
-| $a$ | the level asked about | 5 μm | tail chance falls |
-| $z$ | the level in units of spread, a over root t | 1.5811 | tail chance falls |
-| $\Phi$, $\varphi$ | standard normal cumulative chance, and its density (bell-curve height) | Φ(1.5811) = 0.9431 | — |
-| $\operatorname{Cov}(W_s, W_t)$ | covariance: how far two positions move together | 4 | — |
-| $n$ | steps per second of the approximating walk | 4 up to 4096 | walk gets closer to the limit |
-| $\xi_i$ | one step of the walk, +1 or −1 with equal chance | one coin toss | — |
-| $S^{(n)}_t$ | the scaled walk: the sum of the first nt steps, divided by root n | its position at 10 s | — |
-| $m_i(n)$, $D_i$, $r$, $k$, $\lfloor\cdot\rfloor$ | used only in the Detailed proof: the steps taken by time $t_i$; the walk's i-th increment; the steps in the i-th window; how many times are fixed; the floor, rounding down | 4n steps by 4 s | — |
+| $`W_t`$, $`W_s`$, $`W_0`$, $`W_4`$, $`W_{10}`$ | Brownian motion: the grain's position at time t (or 0, 4, 10 s), in μm | 0 at the start; −2.73 at 10 s on the charted run | — |
+| $`t`$, $`s`$, $`t_i`$ | times in seconds, s the earlier; $`t_i`$ one of a list of times | 10 and 4 | more time, wider bell curve, larger tail chance |
+| $`W_t - W_s`$ | the increment: the move between s and t | the move from 4 s to 10 s | — |
+| $`N(0, v)`$ | the normal law with mean 0 and variance v | N(0, 10) for the position at 10 s | — |
+| $`\sigma`$ | spread rate: root of the variance added per second; the standard motion has 1 | 1 μm per root second | every spread scales by it |
+| $`a`$ | the level asked about | 5 μm | tail chance falls |
+| $`z`$ | the level in units of spread, a over root t | 1.5811 | tail chance falls |
+| $`\Phi`$, $`\varphi`$ | standard normal cumulative chance, and its density (bell-curve height) | Φ(1.5811) = 0.9431 | — |
+| $`\mathrm{Cov}(W_s, W_t)`$ | covariance: how far two positions move together | 4 | — |
+| $`n`$ | steps per second of the approximating walk | 4 up to 4096 | walk gets closer to the limit |
+| $`\xi_i`$ | one step of the walk, +1 or −1 with equal chance | one coin toss | — |
+| $`S^{(n)}_t`$ | the scaled walk: the sum of the first nt steps, divided by root n | its position at 10 s | — |
+| $`m_i(n)`$, $`D_i`$, $`r`$, $`k`$, $`\lfloor\cdot\rfloor`$ | used only in the Detailed proof: the steps taken by time $`t_i`$; the walk's i-th increment; the steps in the i-th window; how many times are fixed; the floor, rounding down | 4n steps by 4 s | — |
 
 ### When it holds
 
 - **Independent increments.** The molecules must not remember. If each kick tends to repeat the last one, three times in four, the walk still converges to a bell curve, but with variance 30 at 10 seconds instead of 10 (29.96 at 100 steps a second), and the tail chance is 0.1807, not 0.0569.
 - **Many small kicks with finite variance.** The bell curve comes from the central limit theorem. Kicks with no finite variance, or rare large jumps, give other limits: [Levy processes](../09-Beyond%20Brownian/01-levy-processes.md).
 - **Steps of one over root n.** Any other scaling makes the limit freeze at zero or blow up; the code prints both.
-- **No drift and a fixed spread rate.** A current in the water adds a straight-line drift, and a different liquid changes $\sigma$; the position is then $\sigma W_t$ plus the drift, and the variance per second is $\sigma$ squared, not 1.
+- **No drift and a fixed spread rate.** A current in the water adds a straight-line drift, and a different liquid changes $`\sigma`$; the position is then $`\sigma W_t`$ plus the drift, and the variance per second is $`\sigma`$ squared, not 1.
 
 ---
 
@@ -96,9 +104,11 @@ A displacement over 10 seconds is a sum of an enormous number of independent kic
 
 ### Step 1: a walk with n steps a second, each of size one over root n
 
-Start from the simple random walk ([Simple random walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md)): steps $\xi_i$ of +1 or −1, fair and independent. Take n steps every second and shrink each to one over root n micrometres. After t seconds the walk has taken nt steps, and its position is
+Start from the simple random walk ([Simple random walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md)): steps $`\xi_i`$ of +1 or −1, fair and independent. Take n steps every second and shrink each to one over root n micrometres. After t seconds the walk has taken nt steps, and its position is
 
-$$S^{(n)}_t = \frac{\xi_1 + \xi_2 + \cdots + \xi_{nt}}{\sqrt{n}}$$
+```math
+S^{(n)}_t = \frac{\xi_1 + \xi_2 + \cdots + \xi_{nt}}{\sqrt{n}}
+```
 
 **Read it aloud:** add up the coin tosses so far and divide by the root of the steps per second.
 
@@ -108,7 +118,7 @@ The root is not a choice. Steps of one over n give variance 0.1000 at 10 seconds
 
 ### Step 2: at one time, the central limit theorem gives the bell curve
 
-At a fixed time t, the scaled walk is a sum of nt independent steps, scaled so that its variance is t. The central limit theorem says its law approaches $N(0, t)$ as n grows. Even at one step a second the match is close.
+At a fixed time t, the scaled walk is a sum of nt independent steps, scaled so that its variance is t. The central limit theorem says its law approaches $`N(0, t)`$ as n grows. Even at one step a second the match is close.
 
 ### The picture: ten coin tosses against the bell curve
 
@@ -122,30 +132,30 @@ xychart-beta
     line [0.17, 1.03, 4.17, 11.34, 20.66, 25.23, 20.66, 11.34, 4.17, 1.03, 0.17]
 ```
 
-Orange bars: the exact chance, in percent, of each position after ten fair 1 μm steps, one a second. Green line: the density of $N(0, 10)$ at each position times 2, the gap between neighbouring positions, so that it gives the chance of a 2 μm-wide strip. With only ten steps the two are close everywhere; the largest gap is at 0, 24.61% against 25.23%.
+Orange bars: the exact chance, in percent, of each position after ten fair 1 μm steps, one a second. Green line: the density of $`N(0, 10)`$ at each position times 2, the gap between neighbouring positions, so that it gives the chance of a 2 μm-wide strip. With only ten steps the two are close everywhere; the largest gap is at 0, 24.61% against 25.23%.
 
 The walk can only stand at even positions after ten steps, so "more than 5" means 6 or more. Its chance is 0.0547, against the limit 0.0569.
 
 ### Step 3: separate stretches use separate tosses, so increments are independent
 
-The move from 4 to 10 seconds is built from the tosses numbered 4n + 1 to 10n. The position at 4 seconds is built from the first 4n. No toss is shared, so the two are independent for every n, and they stay independent in the limit. Each increment is again a scaled sum, so the central limit theorem makes it $N(0, t - s)$. That gives the first three properties at any finite list of times.
+The move from 4 to 10 seconds is built from the tosses numbered 4n + 1 to 10n. The position at 4 seconds is built from the first 4n. No toss is shared, so the two are independent for every n, and they stay independent in the limit. Each increment is again a scaled sum, so the central limit theorem makes it $`N(0, t - s)`$. That gives the first three properties at any finite list of times.
 
 <details>
 <summary>Detailed proof: the scaled walk converges to the Brownian law at any finite set of times</summary>
 
-Fix times $0 = t_0 < t_1 < \cdots < t_k$ and write $m_i(n) = \lfloor n t_i \rfloor$, the number of steps taken by time $t_i$ (the floor rounds down, for times that are not multiples of one over n).
+Fix times $`0 = t_0 < t_1 < \cdots < t_k`$ and write $`m_i(n) = \lfloor n t_i \rfloor`$, the number of steps taken by time $`t_i`$ (the floor rounds down, for times that are not multiples of one over n).
 
-**Increments.** The i-th increment of the scaled walk is $D_i = (\xi_{m_{i-1}+1} + \cdots + \xi_{m_i})/\sqrt{n}$. Its steps are disjoint from those of every other increment, so $D_1, \dots, D_k$ are independent for every n.
+**Increments.** The i-th increment of the scaled walk is $`D_i = (\xi_{m_{i-1}+1} + \cdots + \xi_{m_i})/\sqrt{n}`$. Its steps are disjoint from those of every other increment, so $`D_1, \dots, D_k`$ are independent for every n.
 
-**Each one is asymptotically normal.** Let $r = m_i - m_{i-1}$, the number of steps in the i-th window. Then $D_i = \sqrt{r/n}\,(\xi_{m_{i-1}+1} + \cdots + \xi_{m_i})/\sqrt{r}$. As n grows, r grows without bound and $r/n \to t_i - t_{i-1}$. The central limit theorem (wing 09, proved in wing 10 by characteristic functions: [The central limit theorem, proved](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md)) sends the second factor to $N(0,1)$ in distribution: its chance of falling below any level approaches the bell curve's ([Convergence in distribution](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md)). A constant tending to a limit times a sequence converging in distribution converges to the product (Slutsky's lemma, on the same card), so $D_i \to N(0, t_i - t_{i-1})$.
+**Each one is asymptotically normal.** Let $`r = m_i - m_{i-1}`$, the number of steps in the i-th window. Then $`D_i = \sqrt{r/n}\,(\xi_{m_{i-1}+1} + \cdots + \xi_{m_i})/\sqrt{r}`$. As n grows, r grows without bound and $`r/n \to t_i - t_{i-1}`$. The central limit theorem (wing 09, proved in wing 10 by characteristic functions: [The central limit theorem, proved](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md)) sends the second factor to $`N(0,1)`$ in distribution: its chance of falling below any level approaches the bell curve's ([Convergence in distribution](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md)). A constant tending to a limit times a sequence converging in distribution converges to the product (Slutsky's lemma, on the same card), so $`D_i \to N(0, t_i - t_{i-1})`$.
 
-**Jointly.** The characteristic function of a random vector is the average of a point on the unit circle, turned by a weighted sum of its entries; it pins down the vector's law ([Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)). The characteristic function of the vector $(D_1, \dots, D_k)$ is the product of the separate ones, because they are independent. Each factor converges to that of $N(0, t_i - t_{i-1})$, so the product converges to the characteristic function of independent normals with those variances. Lévy's continuity theorem (proved on that card) turns this into convergence in distribution of the vector.
+**Jointly.** The characteristic function of a random vector is the average of a point on the unit circle, turned by a weighted sum of its entries; it pins down the vector's law ([Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)). The characteristic function of the vector $`(D_1, \dots, D_k)`$ is the product of the separate ones, because they are independent. Each factor converges to that of $`N(0, t_i - t_{i-1})`$, so the product converges to the characteristic function of independent normals with those variances. Lévy's continuity theorem (proved on that card) turns this into convergence in distribution of the vector.
 
-**Positions.** The positions are partial sums: $S^{(n)}_{t_j} = D_1 + \cdots + D_j$. Summing is a continuous map, so the vector of positions converges to the vector of partial sums of independent normals. That vector has $W_0 = 0$, independent increments and $W_{t_j} - W_{t_i} \sim N(0, t_j - t_i)$: the first three properties of Brownian motion, at the chosen times.
+**Positions.** The positions are partial sums: $`S^{(n)}_{t_j} = D_1 + \cdots + D_j`$. Summing is a continuous map, so the vector of positions converges to the vector of partial sums of independent normals. That vector has $`W_0 = 0`$, independent increments and $`W_{t_j} - W_{t_i} \sim N(0, t_j - t_i)`$: the first three properties of Brownian motion, at the chosen times.
 
-**Covariance.** For $s \le t$, write $W_t = W_s + (W_t - W_s)$. The increment is independent of $W_s$ and has mean 0, so $\operatorname{Cov}(W_s, W_t) = \operatorname{Var}(W_s) + 0 = s = \min(s, t)$.
+**Covariance.** For $`s \le t`$, write $`W_t = W_s + (W_t - W_s)`$. The increment is independent of $`W_s`$ and has mean 0, so $`\mathrm{Cov}(W_s, W_t) = \mathrm{Var}(W_s) + 0 = s = \min(s, t)`$.
 
-**Fresh start.** Given $W_4 = 2$, the event $W_{10} > 5$ is the event $W_{10} - W_4 > 3$. The increment is independent of $W_4$, so conditioning does not change its law, $N(0, 6)$, and the chance is $1 - \Phi(3/\sqrt{6}) = 0.1103$.
+**Fresh start.** Given $`W_4 = 2`$, the event $`W_{10} > 5`$ is the event $`W_{10} - W_4 > 3`$. The increment is independent of $`W_4`$, so conditioning does not change its law, $`N(0, 6)`$, and the chance is $`1 - \Phi(3/\sqrt{6}) = 0.1103`$.
 
 </details>
 
@@ -155,7 +165,7 @@ The code computes the walk's exact chance of "more than 5 μm" at n = 4, 16, 64,
 
 Its size is predictable. At these n the level 5 is itself a position the walk can stand on. "More than 5" leaves that point out, while the bell curve, spread smoothly, would count half of it.
 
-The point carries chance about the density of $N(0, 10)$ at 5, which is $\varphi(z)/\sqrt{10}$, times the gap between positions, 2 over root n, so the walk falls short by about $\varphi(z)/\sqrt{10}$ over root n. The prediction gives −0.0361 for error times root n; the exact law gives −0.0332, −0.0346, −0.0353, −0.0357, −0.0359 and −0.0360, closing in on it.
+The point carries chance about the density of $`N(0, 10)`$ at 5, which is $`\varphi(z)/\sqrt{10}`$, times the gap between positions, 2 over root n, so the walk falls short by about $`\varphi(z)/\sqrt{10}`$ over root n. The prediction gives −0.0361 for error times root n; the exact law gives −0.0332, −0.0346, −0.0353, −0.0357, −0.0359 and −0.0360, closing in on it.
 
 ### The picture: the walk's shortfall against steps per second
 
@@ -174,13 +184,13 @@ Each bar is the exact walk's error with its sign dropped. Each is very nearly ha
 
 The fourth property, continuous paths, is not a statement about finitely many times, and no finite computation checks it. This card states it with sources.
 
-Norbert Wiener built a process with all four properties in 1923. A standard modern route (Durrett, section 7.1) first builds the bell curves at every time that is a fraction with a power of 2 below, then uses Kolmogorov's continuity theorem: because $E[(W_t - W_s)^4] = 3(t - s)^2$ (the average fourth power of a move is three times the squared time elapsed), the values at those fractions join up into a continuous path almost surely (with probability 1).
+Norbert Wiener built a process with all four properties in 1923. A standard modern route (Durrett, section 7.1) first builds the bell curves at every time that is a fraction with a power of 2 below, then uses Kolmogorov's continuity theorem: because $`E[(W_t - W_s)^4] = 3(t - s)^2`$ (the average fourth power of a move is three times the squared time elapsed), the values at those fractions join up into a continuous path almost surely (with probability 1).
 
 Donsker's theorem (Durrett, section 8.1) then says the whole scaled walk, joined by straight lines, converges in distribution to Brownian motion as a random curve, not only at finitely many times. This card has proved the convergence at finitely many times and cites the rest.
 
 What the continuity buys and what it does not: the path never jumps, yet with probability 1 it has no slope anywhere. That roughness is [Brownian paths](02-scaling-and-path-roughness.md), and the fact that its squared moves add up to elapsed time is [Quadratic variation](03-quadratic-variation.md).
 
-A second road to the same object starts from the covariance: a process whose values at any finite set of times are jointly normal with mean 0 and covariance $\min(s, t)$, and whose paths are continuous, is a standard Brownian motion. Independent increments follow, because for jointly normal values zero covariance means independence.
+A second road to the same object starts from the covariance: a process whose values at any finite set of times are jointly normal with mean 0 and covariance $`\min(s, t)`$, and whose paths are continuous, is a standard Brownian motion. Independent increments follow, because for jointly normal values zero covariance means independence.
 
 ---
 
@@ -416,7 +426,7 @@ chart, 2 x density (%) 0.17 1.03 4.17 11.34 20.66 25.23 20.66 11.34 4.17 1.03 0.
 ALL CHECKS PASS
 ```
 
-The three roads agree. The simulated chance is 0.0570, standard error 0.0007, against 0.0569. The 2,415 paths with $W_4$ between 1.9 and 2.1 give 0.1085, standard error 0.0063, against 0.1103. The covariance of $W_4$ with the later increment, 0.0289, is under two standard errors from 0.
+The three roads agree. The simulated chance is 0.0570, standard error 0.0007, against 0.0569. The 2,415 paths with $`W_4`$ between 1.9 and 2.1 give 0.1085, standard error 0.0063, against 0.1103. The covariance of $`W_4`$ with the later increment, 0.0289, is under two standard errors from 0.
 
 ### Rust
 
@@ -643,8 +653,8 @@ The two outputs match line for line: the generator is integer arithmetic, and bo
 Lean proves the walk's convergence at finitely many times, the covariance rule and the walk's variance, for every step rate n.
 
 - Take fair, independent steps of +1 or −1, n a second, each one over root n μm. Then at any finite list of times, the vector of positions converges in distribution to Brownian motion's.
-- Suppose $W$ starts at 0, moves over separate stretches are independent, and the move from $s$ to $t$ is $N(0, t - s)$. Then $\operatorname{Cov}(W_s, W_t) = \min(s, t)$, with no need for continuous paths.
-- Take the same walk at any n, and a time $t$ at which it has taken a whole number of steps. Then the variance of its position at $t$ is exactly $t$.
+- Suppose $`W`$ starts at 0, moves over separate stretches are independent, and the move from $`s`$ to $`t`$ is $`N(0, t - s)`$. Then $`\mathrm{Cov}(W_s, W_t) = \min(s, t)`$, with no need for continuous paths.
+- Take the same walk at any n, and a time $`t`$ at which it has taken a whole number of steps. Then the variance of its position at $`t`$ is exactly $`t`$.
 - Ten fair 1 μm steps end beyond 5 μm in exactly 56 of 1024 equally likely runs, and back at 0 in 252.
 - Ten fair 1 μm steps have variance exactly 10. Steps of one over n, at n = 100, give variance exactly 0.1 at 10 seconds.
 - The covariance of the 4 s and 10 s positions is 4, the earlier time.
@@ -1128,7 +1138,7 @@ example : (1000 : ℚ) * (1 / 100) ^ 2 = 1 / 10 := by norm_num
 - [Brownian paths](02-scaling-and-path-roughness.md): speeding time up by c stretches space by root c, and the path has no slope anywhere.
 - [Reflection principle](04-reflection-principle-and-running-maximum.md): the chance the grain touches 5 μm at some time before 10 seconds, not only at the end.
 - [Brownian bridge](05-brownian-bridge.md): the path pinned at both ends.
-- [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md): $W_t$, its square minus t, and an exponential of it are fair games.
+- [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md): $`W_t`$, its square minus t, and an exponential of it are fair games.
 - [Geometric Brownian motion](07-geometric-brownian-motion.md): the exponential of a drifting Brownian motion, the standard model of a share price.
 - [Levy processes](../09-Beyond%20Brownian/01-levy-processes.md): independent increments without the bell curve, allowing jumps.
 - [The geometric Asian call](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): an average of Brownian positions is still normal, with variance from the min(s, t) covariance.

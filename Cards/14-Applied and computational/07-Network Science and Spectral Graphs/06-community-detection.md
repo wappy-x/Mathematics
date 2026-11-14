@@ -28,41 +28,45 @@ Schematic, not to scale. Solid lines are division fixtures, so each hexagon is a
 
 ## The formula
 
-Notation first, in words. The network has clubs $i$ and $j$ and **adjacency** $A_{ij}$: 1 if $i$ and $j$ played, 0 if not ([Bipartite graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md) and its shelf set up graphs). Club $i$'s **degree** $k_i$ is how many fixtures it played. The network has $m$ lines in all.
+Notation first, in words. The network has clubs $`i`$ and $`j`$ and **adjacency** $`A_{ij}`$: 1 if $`i`$ and $`j`$ played, 0 if not ([Bipartite graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md) and its shelf set up graphs). Club $`i`$'s **degree** $`k_i`$ is how many fixtures it played. The network has $`m`$ lines in all.
 
-A split puts club $i$ in group $c_i$, and $\delta(c_i, c_j)$ is 1 when $i$ and $j$ share a group, 0 when they don't. This card introduces **modularity**, written $Q$. (On other shelves $Q$ is an order size or a queue; here it is only modularity.)
+A split puts club $`i`$ in group $`c_i`$, and $`\delta(c_i, c_j)`$ is 1 when $`i`$ and $`j`$ share a group, 0 when they don't. This card introduces **modularity**, written $`Q`$. (On other shelves $`Q`$ is an order size or a queue; here it is only modularity.)
 
-$$Q \;=\; \frac{1}{2m}\sum_{i,j}\Big[A_{ij} - \frac{k_i k_j}{2m}\Big]\,\delta(c_i, c_j) \;=\; \sum_{c}\Big[\frac{L_c}{m} - \Big(\frac{d_c}{2m}\Big)^2\Big]$$
+```math
+Q \;=\; \frac{1}{2m}\sum_{i,j}\Big[A_{ij} - \frac{k_i k_j}{2m}\Big]\,\delta(c_i, c_j) \;=\; \sum_{c}\Big[\frac{L_c}{m} - \Big(\frac{d_c}{2m}\Big)^2\Big]
+```
 
 **Read it aloud:** for every pair of clubs in the same group, take "did they play" minus "how often would they play by chance", and add it up; equivalently, for each group, the share of all fixtures that sit inside it minus the share chance would put inside it.
 
-The second form uses two counts per group $c$: $L_c$, the fixtures inside it, and $d_c$, the total degree of its clubs. The greedy merge needs one more formula. When groups $a$ and $b$ are joined, with $l_{ab}$ fixtures between them, the score changes by
+The second form uses two counts per group $`c`$: $`L_c`$, the fixtures inside it, and $`d_c`$, the total degree of its clubs. The greedy merge needs one more formula. When groups $`a`$ and $`b`$ are joined, with $`l_{ab}`$ fixtures between them, the score changes by
 
-$$\Delta Q_{ab} \;=\; \frac{l_{ab}}{m} \;-\; \frac{d_a\, d_b}{2m^2}$$
+```math
+\Delta Q_{ab} \;=\; \frac{l_{ab}}{m} \;-\; \frac{d_a\, d_b}{2m^2}
+```
 
 **Read it aloud:** joining two groups gains the share of fixtures that run between them, and loses what chance would have run between them anyway.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$, $j$ | two clubs | A1 and A5 | — |
-| $A_{ij}$ | 1 if clubs $i$ and $j$ played, 0 if not | A1 and A5: 1 | more lines inside groups, $Q$ rises |
-| $k_i$ | club $i$'s degree: its fixtures | A1: 6, A5: 5 | busier clubs are expected to meet more by chance |
-| $m$ | fixtures in the whole network | 76 | — |
-| $c_i$ | the group the split puts club $i$ in | A1 in group A | — |
-| $\delta(c_i, c_j)$ | 1 if $i$ and $j$ share a group, else 0 | A1, C5: 0 | — |
-| $Q$ | modularity: inside share minus chance share | 0.5391 for the divisions | higher means a sharper split |
-| $c$ | one group of the split | division C | — |
-| $L_c$ | fixtures inside group $c$ | 15 in each division | $Q$ rises by $1/m$ per extra inside line |
-| $d_c$ | total degree of group $c$'s clubs | A 36, B 38, C 40, D 38 | a bigger group pays a bigger chance charge |
-| $a$, $b$ | two groups about to be joined | A1 alone, A5 alone | — |
-| $l_{ab}$, $\Delta Q_{ab}$ | lines between $a$ and $b$; the change in $Q$ if they join | 1; 0.0106 | more lines between, a bigger gain |
+| $`i`$, $`j`$ | two clubs | A1 and A5 | — |
+| $`A_{ij}`$ | 1 if clubs $`i`$ and $`j`$ played, 0 if not | A1 and A5: 1 | more lines inside groups, $`Q`$ rises |
+| $`k_i`$ | club $`i`$'s degree: its fixtures | A1: 6, A5: 5 | busier clubs are expected to meet more by chance |
+| $`m`$ | fixtures in the whole network | 76 | — |
+| $`c_i`$ | the group the split puts club $`i`$ in | A1 in group A | — |
+| $`\delta(c_i, c_j)`$ | 1 if $`i`$ and $`j`$ share a group, else 0 | A1, C5: 0 | — |
+| $`Q`$ | modularity: inside share minus chance share | 0.5391 for the divisions | higher means a sharper split |
+| $`c`$ | one group of the split | division C | — |
+| $`L_c`$ | fixtures inside group $`c`$ | 15 in each division | $`Q`$ rises by $`1/m`$ per extra inside line |
+| $`d_c`$ | total degree of group $`c`$'s clubs | A 36, B 38, C 40, D 38 | a bigger group pays a bigger chance charge |
+| $`a`$, $`b`$ | two groups about to be joined | A1 alone, A5 alone | — |
+| $`l_{ab}`$, $`\Delta Q_{ab}`$ | lines between $`a`$ and $`b`$; the change in $`Q`$ if they join | 1; 0.0106 | more lines between, a bigger gain |
 
 ### When it holds
 
 - **Plain lines, one per pair, no direction.** The formula above counts a fixture as present or absent. Repeat fixtures, home-and-away arrows or trip counts need the weighted or directed versions, which change the chance term.
-- **The chance model keeps each club's degree.** That is the baseline $Q$ beats. If the real "chance" is different, say clubs only ever play nearby clubs, then a high $Q$ may just be geography, not structure.
+- **The chance model keeps each club's degree.** That is the baseline $`Q`$ beats. If the real "chance" is different, say clubs only ever play nearby clubs, then a high $`Q`$ may just be geography, not structure.
 - **Groups big enough to see.** Modularity has a **resolution limit**: in a ring of 30 five-club cliques, each joined to the next by one line, merging the cliques in pairs scores 0.8879 against 0.8758 for the cliques alone. Small, real groups get swallowed.
-- **A high score is not proof of groups.** 76 fixtures placed at random among 24 clubs, with no divisions at all, still give a greedy split with $Q$ = 0.2326.
+- **A high score is not proof of groups.** 76 fixtures placed at random among 24 clubs, with no divisions at all, still give a greedy split with $`Q`$ = 0.2326.
 - **Greedy promises nothing.** It reaches a split no single join can improve. With 24 cup ties instead of 16 it misses the divisions: 0.4347 against 0.4630.
 
 ---
@@ -77,39 +81,45 @@ The fix is to compare against a baseline. Ask how many fixtures *would* fall ins
 
 ### Step 1: how often two clubs meet by chance
 
-Cut every fixture into two halves, one held by each club. There are $2m$ halves, 152 here, and club $i$ holds $k_i$ of them. Now shuffle and re-pair the halves at random. This is the **configuration model**: a random network in which every club keeps its degree.
+Cut every fixture into two halves, one held by each club. There are $`2m`$ halves, 152 here, and club $`i`$ holds $`k_i`$ of them. Now shuffle and re-pair the halves at random. This is the **configuration model**: a random network in which every club keeps its degree.
 
-Take one of club $i$'s halves. It pairs with one of the other halves, and $k_j$ of them belong to club $j$, so the chance it lands on club $j$ is about $k_j / 2m$. Club $i$ has $k_i$ halves, so the expected number of fixtures between $i$ and $j$ is
+Take one of club $`i`$'s halves. It pairs with one of the other halves, and $`k_j`$ of them belong to club $`j`$, so the chance it lands on club $`j`$ is about $`k_j / 2m`$. Club $`i`$ has $`k_i`$ halves, so the expected number of fixtures between $`i`$ and $`j`$ is
 
-$$\frac{k_i\, k_j}{2m}.$$
+```math
+\frac{k_i\, k_j}{2m}.
+```
 
-That is the subtracted term. For A1 (6 fixtures) and A5 (5 fixtures), chance expects $30/152$ of a fixture, well under one. They actually met once. (The exact chance uses $2m - 1$ in the bottom; for large networks the difference vanishes, and the standard definition uses $2m$.)
+That is the subtracted term. For A1 (6 fixtures) and A5 (5 fixtures), chance expects $`30/152`$ of a fixture, well under one. They actually met once. (The exact chance uses $`2m - 1`$ in the bottom; for large networks the difference vanishes, and the standard definition uses $`2m`$.)
 
 ### Step 2: the pair sum becomes a sum over groups
 
-Add $A_{ij} - k_i k_j / 2m$ over every ordered pair $i, j$ that share group $c$. The $A_{ij}$ part counts each inside fixture twice, once from each end: $2L_c$. The $k_i k_j$ part factors as $(\sum k_i)(\sum k_j) = d_c^2$. So group $c$ contributes $2L_c - d_c^2 / 2m$, and dividing by $2m$ gives
+Add $`A_{ij} - k_i k_j / 2m`$ over every ordered pair $`i, j`$ that share group $`c`$. The $`A_{ij}`$ part counts each inside fixture twice, once from each end: $`2L_c`$. The $`k_i k_j`$ part factors as $`(\sum k_i)(\sum k_j) = d_c^2`$. So group $`c`$ contributes $`2L_c - d_c^2 / 2m`$, and dividing by $`2m`$ gives
 
-$$\frac{L_c}{m} - \Big(\frac{d_c}{2m}\Big)^2.$$
+```math
+\frac{L_c}{m} - \Big(\frac{d_c}{2m}\Big)^2.
+```
 
-The first term is the share of fixtures inside $c$. The second is the share that chance would put inside $c$: a random half lands in $c$ with probability $d_c / 2m$, and both halves of a fixture do so with that probability squared. That proves the two forms of the formula agree. The check computes both on the divisions and gets the same integer, exactly.
+The first term is the share of fixtures inside $`c`$. The second is the share that chance would put inside $`c`$: a random half lands in $`c`$ with probability $`d_c / 2m`$, and both halves of a fixture do so with that probability squared. That proves the two forms of the formula agree. The check computes both on the divisions and gets the same integer, exactly.
 
 ### Step 3: what one merge changes
 
-Join groups $a$ and $b$. The new group has $L_a + L_b + l_{ab}$ fixtures inside and total degree $d_a + d_b$. Every other group is untouched. So
+Join groups $`a`$ and $`b`$. The new group has $`L_a + L_b + l_{ab}`$ fixtures inside and total degree $`d_a + d_b`$. Every other group is untouched. So
 
-$$\Delta Q_{ab} = \frac{L_a + L_b + l_{ab}}{m} - \frac{(d_a + d_b)^2}{4m^2} - \frac{L_a}{m} + \frac{d_a^2}{4m^2} - \frac{L_b}{m} + \frac{d_b^2}{4m^2} = \frac{l_{ab}}{m} - \frac{2\,d_a d_b}{4m^2}.$$
+```math
+\Delta Q_{ab} = \frac{L_a + L_b + l_{ab}}{m} - \frac{(d_a + d_b)^2}{4m^2} - \frac{L_a}{m} + \frac{d_a^2}{4m^2} - \frac{L_b}{m} + \frac{d_b^2}{4m^2} = \frac{l_{ab}}{m} - \frac{2\,d_a d_b}{4m^2}.
+```
 
-That is the merge formula. Two things follow. A join of two groups with no fixtures between them always lowers $Q$, so only touching pairs need checking. And the gain depends only on four numbers, $l_{ab}$, $d_a$, $d_b$ and $m$, so each step is cheap to evaluate. The check recomputes $Q$ from scratch after each of the 23 merges and confirms the change equals this formula exactly.
+That is the merge formula. Two things follow. A join of two groups with no fixtures between them always lowers $`Q`$, so only touching pairs need checking. And the gain depends only on four numbers, $`l_{ab}`$, $`d_a`$, $`d_b`$ and $`m`$, so each step is cheap to evaluate. The check recomputes $`Q`$ from scratch after each of the 23 merges and confirms the change equals this formula exactly.
 
 ### Step 4: the greedy merge
 
 The method from [Greedy](../01-Algorithms%20and%20Growth/08-greedy-algorithms-and-matroids.md), applied to groups:
 
-1. Start with every club in a group of its own. Then $L_c = 0$ for every group and $Q = -\sum_i k_i^2 / 4m^2$, here −0.0425.
-2. For every pair of touching groups, compute $\Delta Q_{ab}$.
+1. Start with every club in a group of its own. Then $`L_c = 0`$ for every group and $`Q = -\sum_i k_i^2 / 4m^2`$, here −0.0425.
+2. For every pair of touching groups, compute $`\Delta Q_{ab}`$.
 3. Join the pair with the biggest gain; ties go to the pair listed first.
-4. Repeat until one group is left, recording $Q$ after each join.
-5. Report the split where $Q$ peaked.
+4. Repeat until one group is left, recording $`Q`$ after each join.
+5. Report the split where $`Q`$ peaked.
 
 Here the peak comes at four groups, at the same moment the best available gain first drops to zero or below.
 
@@ -123,16 +133,16 @@ On a 9-club mini league, three divisions of three plus three cup ties, the check
 
 ## Worked numbers, by hand
 
-The divisions as a split, and the first greedy join. Each division has $L_c = 15$ inside fixtures.
+The divisions as a split, and the first greedy join. Each division has $`L_c = 15`$ inside fixtures.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| total degree | $36 + 38 + 40 + 38$ | 152, which is $2m$ |
-| inside share | $(15 + 15 + 15 + 15) / 76$ | 0.7895 |
-| chance share | $(36^2 + 38^2 + 40^2 + 38^2) / 152^2 = 5784 / 23104$ | 0.2503 |
-| $Q$ of the divisions | $60/76 - 5784/23104$, unrounded | **0.5391** |
-| $Q$ with every club alone | $-\sum k_i^2 / 152^2$ | −0.0425 |
-| first join, A1 + A5 | $1/76 - (6 \times 5)/(2 \times 76^2)$ | 0.0106 |
+| total degree | $`36 + 38 + 40 + 38`$ | 152, which is $`2m`$ |
+| inside share | $`(15 + 15 + 15 + 15) / 76`$ | 0.7895 |
+| chance share | $`(36^2 + 38^2 + 40^2 + 38^2) / 152^2 = 5784 / 23104`$ | 0.2503 |
+| $`Q`$ of the divisions | $`60/76 - 5784/23104`$, unrounded | **0.5391** |
+| $`Q`$ with every club alone | $`-\sum k_i^2 / 152^2`$ | −0.0425 |
+| first join, A1 + A5 | $`1/76 - (6 \times 5)/(2 \times 76^2)`$ | 0.0106 |
 
 So 79% of fixtures sit inside the divisions where chance would put 25% there: the divisions beat chance by 0.5391 of all fixtures. The first join goes to A1 and A5. They met once, and their degree product, 6 × 5 = 30, is the smallest of any pair that met, so their meeting is the least explained by chance. Several pairs share that product; ties go to the pair listed first.
 
@@ -147,9 +157,9 @@ xychart-beta
     line [-0.0425, -0.0319, -0.0113, 0.0193, 0.0600, 0.1082, 0.1188, 0.1394, 0.1700, 0.2087, 0.2537, 0.2643, 0.2839, 0.3125, 0.3500, 0.3936, 0.4042, 0.4248, 0.4554, 0.4941, 0.5391, 0.4602, 0.3681, 0.0000]
 ```
 
-The one line is $Q$ after each join, read left to right as groups disappear. It climbs for 20 joins, peaks at 0.5391 with four groups, then falls: joining two divisions to make three groups gives 0.4602, two groups 0.3681, one group 0.
+The one line is $`Q`$ after each join, read left to right as groups disappear. It climbs for 20 joins, peaks at 0.5391 with four groups, then falls: joining two divisions to make three groups gives 0.4602, two groups 0.3681, one group 0.
 
-The four groups at the peak are exactly A1 to A6, B1 to B6, C1 to C6 and D1 to D6. All 24 clubs are grouped with exactly their division-mates. As a last check, the best single move of one club to another group, C2 to division B, would lower $Q$ by 0.0425: the answer is a local peak.
+The four groups at the peak are exactly A1 to A6, B1 to B6, C1 to C6 and D1 to D6. All 24 clubs are grouped with exactly their division-mates. As a last check, the best single move of one club to another group, C2 to division B, would lower $`Q`$ by 0.0425: the answer is a local peak.
 
 ### Testing against planted divisions
 
@@ -172,18 +182,18 @@ With 8 cup ties the divisions always come back. At 16, the main example's number
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drop the chance term: score only the inside share | one big group 1.0000, the divisions 0.7895 | Lumping everything together always wins; the score cannot see groups |
-| Chance term $k_i k_j / m$ instead of $k_i k_j / 2m$ | the divisions 0.2888 | Chance is charged double, so every group looks weak |
+| Chance term $`k_i k_j / m`$ instead of $`k_i k_j / 2m`$ | the divisions 0.2888 | Chance is charged double, so every group looks weak |
 | Trust greedy with 24 cup ties | greedy 0.4347, divisions 0.4630 | C2 has 3 cup ties into division B; greedy joins it there and never undoes it. Moving C2 back gives 0.4630 |
-| Read a positive $Q$ as proof of groups | 76 random fixtures: 4 groups, $Q$ 0.2326 | Random networks have chance clumps, and greedy finds them |
-| Trust the peak on many small groups | ring of 30 cliques: pairs 0.8879, singles 0.8758 | The resolution limit: the chance charge shrinks as $m$ grows, so merging small groups pays |
+| Read a positive $`Q`$ as proof of groups | 76 random fixtures: 4 groups, $`Q`$ 0.2326 | Random networks have chance clumps, and greedy finds them |
+| Trust the peak on many small groups | ring of 30 cliques: pairs 0.8879, singles 0.8758 | The resolution limit: the chance charge shrinks as $`m`$ grows, so merging small groups pays |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script builds the league from a written-out SplitMix64 generator, so Python and Rust print the same numbers. It keeps $Q$ as an exact integer over $4m^2$, so no rounding can blur a comparison.
+The script builds the league from a written-out SplitMix64 generator, so Python and Rust print the same numbers. It keeps $`Q`$ as an exact integer over $`4m^2`$, so no rounding can blur a comparison.
 
-It reaches the answers by four independent roads. First, $Q$ by the pair sum against $Q$ by the group sum. Second, the merge formula against a fresh count of $Q$ after every join, plus the first join worked by hand from the degrees. Third, greedy against brute force over all 21147 splits of a 9-club mini league. Fourth, greedy against the planted divisions, on the main league and on 120 seeded leagues. Then it prints every "what breaks" number.
+It reaches the answers by four independent roads. First, $`Q`$ by the pair sum against $`Q`$ by the group sum. Second, the merge formula against a fresh count of $`Q`$ after every join, plus the first join worked by hand from the degrees. Third, greedy against brute force over all 21147 splits of a 9-club mini league. Fourth, greedy against the planted divisions, on the main league and on 120 seeded leagues. Then it prints every "what breaks" number.
 
 ### Python
 
@@ -575,15 +585,15 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the merge formula and both forms of $Q$ for every network of plain lines and every split, and checks the league's numbers.
+Lean proves the merge formula and both forms of $`Q`$ for every network of plain lines and every split, and checks the league's numbers.
 
-- Take any network of plain lines, any split, and two different groups $a$ and $b$. Then joining them changes $Q$ by exactly $\Delta Q_{ab} = l_{ab}/m - d_a d_b/(2m^2)$.
-- Take any network of plain lines and any split. Then the pair sum for $Q$ equals the sum over groups of $L_c/m - (d_c/2m)^2$.
-- Put all the clubs in one big group. Then $Q = 0$, in any network of plain lines.
-- Take the league. Then $m = 76$, each division has $L_c = 15$, and the $d_c$ are 36, 38, 40 and 38.
-- Take the divisions as the split. Then $Q = 60/76 - 5784/23104 = 1557/2888$, which is 0.5391.
-- Take every club alone. Then $\sum_i k_i^2 = 982$, so $Q = -982/23104$, which is −0.0425.
-- Take the first join, A1 and A5. Then they met once, with degrees 6 and 5, and $\Delta Q = 61/5776$, which is 0.0106.
+- Take any network of plain lines, any split, and two different groups $`a`$ and $`b`$. Then joining them changes $`Q`$ by exactly $`\Delta Q_{ab} = l_{ab}/m - d_a d_b/(2m^2)`$.
+- Take any network of plain lines and any split. Then the pair sum for $`Q`$ equals the sum over groups of $`L_c/m - (d_c/2m)^2`$.
+- Put all the clubs in one big group. Then $`Q = 0`$, in any network of plain lines.
+- Take the league. Then $`m = 76`$, each division has $`L_c = 15`$, and the $`d_c`$ are 36, 38, 40 and 38.
+- Take the divisions as the split. Then $`Q = 60/76 - 5784/23104 = 1557/2888`$, which is 0.5391.
+- Take every club alone. Then $`\sum_i k_i^2 = 982`$, so $`Q = -982/23104`$, which is −0.0425.
+- Take the first join, A1 and A5. Then they met once, with degrees 6 and 5, and $`\Delta Q = 61/5776`$, which is 0.0106.
 - As arithmetic, the halved denominator gives 0.2888 and the 6-cycle split gives −0.5000.
 - There are 21147 ways to split 9 clubs into groups. In the ring of 30 cliques pairs beat singles; in a ring of 20, singles win.
 
@@ -813,8 +823,8 @@ end CommunityDetection
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this league, so some changes stop the program on purpose.
-> - **Guess first: does greedy survive a different cup draw?** Set `SEED, TIES = 8, 16`. No. D4 drew three cup ties against division B, and greedy puts it there: $Q$ 0.5055 against 0.5387 for the true divisions (the first `try:` line), and the planted-divisions assert stops the run.
-> - **Guess first: what do fewer cup ties do to $Q$?** Set `SEED, TIES = 2026, 8`. The divisions now score 0.6322, and greedy still finds all four (the second `try:` line).
+> - **Guess first: does greedy survive a different cup draw?** Set `SEED, TIES = 8, 16`. No. D4 drew three cup ties against division B, and greedy puts it there: $`Q`$ 0.5055 against 0.5387 for the true divisions (the first `try:` line), and the planted-divisions assert stops the run.
+> - **Guess first: what do fewer cup ties do to $`Q`$?** Set `SEED, TIES = 2026, 8`. The divisions now score 0.6322, and greedy still finds all four (the second `try:` line).
 > - **Guess first: does a shorter ring of cliques still get merged?** Set `RING = 20`. No: each clique alone scores 0.8591, pairs 0.8545 (the last `try:` line), and the resolution-limit assert stops the run. The limit only bites once the network is big enough.
 
 ---
@@ -822,24 +832,24 @@ end CommunityDetection
 ## The usual mistake
 
 > [!warning]
-> **Treating the highest-$Q$ split as the true groups.** Modularity measures excess over one chance model, and greedy only climbs it. Random fixtures with no divisions still score 0.2326, and a ring of 30 clean cliques scores higher, 0.8879 against 0.8758, when the cliques are wrongly paired. Believe a split when it beats what the method finds on random networks with the same degrees, and survives small changes to the data.
+> **Treating the highest-$`Q`$ split as the true groups.** Modularity measures excess over one chance model, and greedy only climbs it. Random fixtures with no divisions still score 0.2326, and a ring of 30 clean cliques scores higher, 0.8879 against 0.8758, when the cliques are wrongly paired. Believe a split when it beats what the method finds on random networks with the same degrees, and survives small changes to the data.
 >
 > - **Leaving out the chance term.** The inside share alone gives one big group a score of 1.0000, above the divisions' 0.7895.
-> - **Halving the denominator.** Writing $k_i k_j / m$ for the chance term drops the divisions from 0.5391 to 0.2888.
+> - **Halving the denominator.** Writing $`k_i k_j / m`$ for the chance term drops the divisions from 0.5391 to 0.2888.
 > - **Assuming greedy found the best split.** With 24 cup ties it stops at 0.4347; the divisions score 0.4630. A cleanup pass that tries moving single clubs repairs this case.
-> - **Reading the two sides of a bipartite network as communities.** No line lies inside either side, so a 6-cycle split into its two sides scores $Q$ = −0.5000: the opposite of a community.
+> - **Reading the two sides of a bipartite network as communities.** No line lies inside either side, so a 6-cycle split into its two sides scores $`Q`$ = −0.5000: the opposite of a community.
 
 ---
 
 ## Where you meet it in real life
 
 - **Sports schedules.** Girvan and Newman tested their community method on the US college football Division I schedule for the 2000 season, where conferences of around 8 to 12 teams play each other more often. Their method found the conferences with high accuracy: the real version of this card's league.
-- **Bike-share systems.** A city's 1,200 stations, joined by the number of trips between them, split the same way into zones whose stations trade riders mostly with each other. The weighted version of $Q$ counts trips instead of single lines.
+- **Bike-share systems.** A city's 1,200 stations, joined by the number of trips between them, split the same way into zones whose stations trade riders mostly with each other. The weighted version of $`Q`$ counts trips instead of single lines.
 - **Social networks.** In a network of 5,000 people, the communities are friend circles, workplaces and clubs: dense inside, thin between.
 - **Science and nature.** Girvan and Newman also split a network of scientists who wrote papers together, and a food web of who eats whom, and found informative divisions in both.
 
 > **Say it back**
-> Modularity scores a split of a network into groups. It takes the share of lines that fall inside the groups and subtracts the share that would fall inside by chance, if every node kept its degree and partners were paired at random. Joining two groups changes the score by the share of lines between them minus $d_a d_b / 2m^2$, so a greedy merge can climb it cheaply, one join at a time. On a synthetic 24-club league it recovers the four divisions at $Q$ = 0.5391, but with more cross-division ties it can lock in a wrong join, it finds groups in random networks, and it swallows small groups in big networks.
+> Modularity scores a split of a network into groups. It takes the share of lines that fall inside the groups and subtracts the share that would fall inside by chance, if every node kept its degree and partners were paired at random. Joining two groups changes the score by the share of lines between them minus $`d_a d_b / 2m^2`$, so a greedy merge can climb it cheaply, one join at a time. On a synthetic 24-club league it recovers the four divisions at $`Q`$ = 0.5391, but with more cross-division ties it can lock in a wrong join, it finds groups in random networks, and it swallows small groups in big networks.
 
 ---
 
@@ -863,7 +873,7 @@ How should a score for groups be built so that it does not swallow small groups 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Girvan, M., and M. E. J. Newman. "Community structure in social and biological networks." *Proceedings of the National Academy of Sciences* 99 (2002): 7821–7826. [doi:10.1073/pnas.122653799](https://doi.org/10.1073/pnas.122653799). Community detection tested on networks with known groups, including the college football schedule.
-- Newman, M. E. J., and M. Girvan. "Finding and evaluating community structure in networks." *Physical Review E* 69 (2004): 026113. [doi:10.1103/PhysRevE.69.026113](https://doi.org/10.1103/PhysRevE.69.026113). The definition of modularity $Q$.
+- Newman, M. E. J., and M. Girvan. "Finding and evaluating community structure in networks." *Physical Review E* 69 (2004): 026113. [doi:10.1103/PhysRevE.69.026113](https://doi.org/10.1103/PhysRevE.69.026113). The definition of modularity $`Q`$.
 - Newman, M. E. J. "Fast algorithm for detecting community structure in networks." *Physical Review E* 69 (2004): 066133. [doi:10.1103/PhysRevE.69.066133](https://doi.org/10.1103/PhysRevE.69.066133). The greedy merge and its gain formula.
 - Fortunato, S., and M. Barthélemy. "Resolution limit in community detection." *Proceedings of the National Academy of Sciences* 104 (2007): 36–41. [doi:10.1073/pnas.0605965104](https://doi.org/10.1073/pnas.0605965104). The resolution limit and the ring of cliques.
 - Brandes, U., and others. "On modularity clustering." *IEEE Transactions on Knowledge and Data Engineering* 20 (2008): 172–188. [doi:10.1109/TKDE.2007.190689](https://doi.org/10.1109/TKDE.2007.190689). Finding the split with the highest modularity is NP-hard.

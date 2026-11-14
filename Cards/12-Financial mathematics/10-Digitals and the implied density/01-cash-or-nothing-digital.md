@@ -37,44 +37,46 @@ The bars are the payoff on expiry day: nothing at or below $100, one dollar abov
 
 ## The formula
 
-$$\text{call} = e^{-rT}\,N(d_2), \qquad \text{put} = e^{-rT}\,N(-d_2), \qquad d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}$$
+```math
+\text{call} = e^{-rT}\,N(d_2), \qquad \text{put} = e^{-rT}\,N(-d_2), \qquad d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}
+```
 
 **Read it aloud:** the chance the share finishes above the strike in the pretend world, times what a dollar on expiry day is worth today; the put swaps "above" for "below".
 
 | Symbol | Plain meaning | In our example | Push it up and the call digital… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100 | rises: the share starts further past the line |
-| $S_T$ | Acme's price on expiry day, unknown today | — | — |
-| $K$ | the strike: the line the share must finish above | $100 | falls: a higher line is harder to clear |
-| $T$ | time to expiry, in years | 1 | at this strike it barely moves: see theta below |
-| $r$ | the riskless rate, continuously compounded | 5% | mostly rises here: the drift lifts the chance more than the heavier discount takes away |
-| $q$ | Acme's dividend yield | 2% | falls: dividends leak out of the price, so it drifts up less |
-| $\sigma$ | volatility: how jumpy Acme is, per year | 20% | falls at this strike: more jumpiness drags the typical finish down |
-| $Z$ | a standard bell-curve draw: average 0, spread 1 | — | — |
-| $N(x)$ | the area under the standard bell curve to the left of $x$: a chance between 0 and 1 | $N(0.05) = 0.519939$ | — |
-| $\varphi(x)$ | the bell curve's height at $x$ | — | — |
-| $d_2$, $d_1$ | how far the typical finish sits past the strike, in units of $\sigma\sqrt{T}$; $d_1 = d_2 + \sigma\sqrt{T}$ | 0.05 and 0.25 | — |
-| $e^{-rT}$, $D(T)$ | the discount factor: today's worth of $1 due at $T$ | 0.951229 | — |
+| $`S`$ | Acme's price today | $100 | rises: the share starts further past the line |
+| $`S_T`$ | Acme's price on expiry day, unknown today | — | — |
+| $`K`$ | the strike: the line the share must finish above | $100 | falls: a higher line is harder to clear |
+| $`T`$ | time to expiry, in years | 1 | at this strike it barely moves: see theta below |
+| $`r`$ | the riskless rate, continuously compounded | 5% | mostly rises here: the drift lifts the chance more than the heavier discount takes away |
+| $`q`$ | Acme's dividend yield | 2% | falls: dividends leak out of the price, so it drifts up less |
+| $`\sigma`$ | volatility: how jumpy Acme is, per year | 20% | falls at this strike: more jumpiness drags the typical finish down |
+| $`Z`$ | a standard bell-curve draw: average 0, spread 1 | — | — |
+| $`N(x)`$ | the area under the standard bell curve to the left of $`x`$: a chance between 0 and 1 | $`N(0.05) = 0.519939`$ | — |
+| $`\varphi(x)`$ | the bell curve's height at $`x`$ | — | — |
+| $`d_2`$, $`d_1`$ | how far the typical finish sits past the strike, in units of $`\sigma\sqrt{T}`$; $`d_1 = d_2 + \sigma\sqrt{T}`$ | 0.05 and 0.25 | — |
+| $`e^{-rT}`$, $`D(T)`$ | the discount factor: today's worth of $1 due at $`T`$ | 0.951229 | — |
 
-The helper $d_2$ is the pilot card's: its top line is where Acme's logarithm is headed in the pretend world, measured from the strike, and its bottom line, $\sigma\sqrt{T}$, is the spread of that journey. $d_1$ appears only in the Greeks and in the asset-or-nothing sibling. Here it is one spread-unit further along.
+The helper $`d_2`$ is the pilot card's: its top line is where Acme's logarithm is headed in the pretend world, measured from the strike, and its bottom line, $`\sigma\sqrt{T}`$, is the spread of that journey. $`d_1`$ appears only in the Greeks and in the asset-or-nothing sibling. Here it is one spread-unit further along.
 
 **The Greeks** (how the price moves when one input is nudged, each by its own formula and checked by nudging the price in the code):
 
 | Greek | What it measures | Formula | House value |
 | --- | --- | --- | --- |
-| delta | change per $1 rise in Acme | $e^{-rT}\varphi(d_2)/(S\sigma\sqrt{T})$ | 0.018951 |
-| gamma | change in delta per $1 rise | $-e^{-rT}\varphi(d_2)\,d_1/(S^2\sigma^2 T)$ | −0.000237 |
-| vega | change per 1.00 of volatility | $-e^{-rT}\varphi(d_2)\,d_1/\sigma$ | −0.473764 |
-| theta | change per year of passing time | $r\,\text{call} - e^{-rT}\varphi(d_2)\,\partial d_2/\partial T$ | 0.015254 |
-| rho | change per 1.00 of rate | $-T\,\text{call} + e^{-rT}\varphi(d_2)\sqrt{T}/\sigma$ | 1.400477 |
+| delta | change per $1 rise in Acme | $`e^{-rT}\varphi(d_2)/(S\sigma\sqrt{T})`$ | 0.018951 |
+| gamma | change in delta per $1 rise | $`-e^{-rT}\varphi(d_2)\,d_1/(S^2\sigma^2 T)`$ | −0.000237 |
+| vega | change per 1.00 of volatility | $`-e^{-rT}\varphi(d_2)\,d_1/\sigma`$ | −0.473764 |
+| theta | change per year of passing time | $`r\,\text{call} - e^{-rT}\varphi(d_2)\,\partial d_2/\partial T`$ | 0.015254 |
+| rho | change per 1.00 of rate | $`-T\,\text{call} + e^{-rT}\varphi(d_2)\sqrt{T}/\sigma`$ | 1.400477 |
 
-Here $\partial d_2/\partial T = \big((r - q - \tfrac12\sigma^2)T - \ln(S/K)\big) / (2\sigma T^{3/2})$: how fast $d_2$ changes as the time to expiry grows. Delta is nearly two cents per dollar of Acme at the money. Vega and gamma are negative here, the opposite sign to an ordinary call: an ordinary call gains from a wider spread of outcomes, but this contract's payoff stops growing at $1, so a wider spread only drags the typical finish down. Why the Greeks behave this way, and how they explode near expiry, is [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md).
+Here $`\partial d_2/\partial T = \big((r - q - \tfrac12\sigma^2)T - \ln(S/K)\big) / (2\sigma T^{3/2})`$: how fast $`d_2`$ changes as the time to expiry grows. Delta is nearly two cents per dollar of Acme at the money. Vega and gamma are negative here, the opposite sign to an ordinary call: an ordinary call gains from a wider spread of outcomes, but this contract's payoff stops growing at $1, so a wider spread only drags the typical finish down. Why the Greeks behave this way, and how they explode near expiry, is [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md).
 
 ### When it holds
 
 - **Acme's price follows the Black–Scholes model: logarithm bell-shaped, one fixed volatility.** Real markets quote a different volatility at each strike (the skew). A digital is the product the skew moves most; the correction term is on [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md). Price with one volatility in a skewed market and the answer is off by that term.
 - **No jumps.** A share that can gap overnight puts real weight in the tails the bell curve thins out, and the chance above the line moves with it.
-- **A single riskless rate to expiry.** With a curve of rates, replace $e^{-rT}$ by the discount factor $D(T)$ read off the curve for the payment date.
+- **A single riskless rate to expiry.** With a curve of rates, replace $`e^{-rT}`$ by the discount factor $`D(T)`$ read off the curve for the payment date.
 - **Paid on expiry day, judged on the closing price only.** A contract paying the moment the line is first touched is a different product, [One-touch and no-touch](../16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md), and costs more.
 - **A hedge that can be adjusted continuously.** The price is the cost of a copy made by trading. Near expiry, with Acme close to $100, the copy needs huge, fast trades, and the model price stops being a cost anyone can achieve.
 
@@ -92,28 +94,34 @@ This contract pays 1 when Acme finishes above $100 and 0 otherwise. The average 
 
 In the risk-neutral world, Acme's logarithm on expiry day is bell-shaped ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)):
 
-$$\ln S_T = \ln S + (r - q - \tfrac12\sigma^2)\,T + \sigma\sqrt{T}\,Z.$$
+```math
+\ln S_T = \ln S + (r - q - \tfrac12\sigma^2)\,T + \sigma\sqrt{T}\,Z.
+```
 
-The middle term is the drift: bank rate, minus dividends, minus a volatility drag. For Acme it is 0.05 − 0.02 − 0.02 = 0.01. The last term is the random shove, with spread $\sigma\sqrt{T} = 0.20$.
+The middle term is the drift: bank rate, minus dividends, minus a volatility drag. For Acme it is 0.05 − 0.02 − 0.02 = 0.01. The last term is the random shove, with spread $`\sigma\sqrt{T} = 0.20`$.
 
-The typical finish, the **median** (the price with half the outcomes above it and half below), is where the shove is zero: $S\,e^{(r-q-\frac12\sigma^2)T}$, which is $101.005017. That already says the chance above $100 is a little over one half.
+The typical finish, the **median** (the price with half the outcomes above it and half below), is where the shove is zero: $`S\,e^{(r-q-\frac12\sigma^2)T}`$, which is $101.005017. That already says the chance above $100 is a little over one half.
 
 ### Step 2: the finish above the line is a bell-curve draw above a cut-off
 
-Acme finishes above $K$ exactly when its logarithm finishes above $\ln K$. Put Step 1 into that inequality and solve for $Z$: the event is $Z > -d_2$. The bell curve is symmetric, so the chance of landing above $-d_2$ equals the chance of landing below $+d_2$, which is $N(d_2)$.
+Acme finishes above $`K`$ exactly when its logarithm finishes above $`\ln K`$. Put Step 1 into that inequality and solve for $`Z`$: the event is $`Z > -d_2`$. The bell curve is symmetric, so the chance of landing above $`-d_2`$ equals the chance of landing below $`+d_2`$, which is $`N(d_2)`$.
 
-For Acme, $d_2 = 0.01 / 0.20 = 0.05$ and $N(0.05) = 0.519939$.
+For Acme, $`d_2 = 0.01 / 0.20 = 0.05`$ and $`N(0.05) = 0.519939`$.
 
 <details>
 <summary>Detailed proof: the chance above the strike is N(d2)</summary>
 
-Start from $S_T > K$. Logarithms keep order, so this is $\ln S_T > \ln K$. Substitute Step 1:
-$$\ln S + (r - q - \tfrac12\sigma^2)T + \sigma\sqrt{T}\,Z > \ln K.$$
-Move everything except the shove to the right and divide by $\sigma\sqrt{T}$, which is positive, so the inequality keeps its direction:
-$$Z > \frac{\ln K - \ln S - (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}} = -d_2.$$
-The chance that $Z > -d_2$ is the area under the bell curve to the right of $-d_2$. The bell curve is a mirror image of itself about zero, $\varphi(-x) = \varphi(x)$, so the area right of $-d_2$ equals the area left of $+d_2$, which is $N(d_2)$ by definition.
+Start from $`S_T > K`$. Logarithms keep order, so this is $`\ln S_T > \ln K`$. Substitute Step 1:
 
-The same mirror gives the put. The chance that $Z < -d_2$ is $N(-d_2)$, and since the whole area is 1, $N(-d_2) = 1 - N(d_2)$. For Acme that is 0.480061.
+$`\displaystyle \ln S + (r - q - \tfrac12\sigma^2)T + \sigma\sqrt{T}\,Z > \ln K.`$
+
+Move everything except the shove to the right and divide by $`\sigma\sqrt{T}`$, which is positive, so the inequality keeps its direction:
+
+$`\displaystyle Z > \frac{\ln K - \ln S - (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}} = -d_2.`$
+
+The chance that $`Z > -d_2`$ is the area under the bell curve to the right of $`-d_2`$. The bell curve is a mirror image of itself about zero, $`\varphi(-x) = \varphi(x)`$, so the area right of $`-d_2`$ equals the area left of $`+d_2`$, which is $`N(d_2)`$ by definition.
+
+The same mirror gives the put. The chance that $`Z < -d_2`$ is $`N(-d_2)`$, and since the whole area is 1, $`N(-d_2) = 1 - N(d_2)`$. For Acme that is 0.480061.
 
 Landing exactly on the strike has chance zero, because a bell curve puts no weight on a single point. So "above" and "at or above" price the same inside the model.
 
@@ -121,43 +129,47 @@ Landing exactly on the strike has chance zero, because a bell curve puts no weig
 
 ### Step 3: discount
 
-The dollar arrives in a year. Today it is worth $e^{-rT} = 0.951229$. The call digital is
+The dollar arrives in a year. Today it is worth $`e^{-rT} = 0.951229`$. The call digital is
 
-$$e^{-rT}N(d_2) = 0.951229 \times 0.519939 = 0.494581.$$
+```math
+e^{-rT}N(d_2) = 0.951229 \times 0.519939 = 0.494581.
+```
 
-**$N(d_2)$ is the priced-in chance of exercise**, the same factor that sits in the cash half of the Black–Scholes call.
+**$`N(d_2)`$ is the priced-in chance of exercise**, the same factor that sits in the cash half of the Black–Scholes call.
 
 ### Step 4: call plus put is one discounted dollar, with no model at all
 
-Hold the call digital and the put digital together. On expiry day exactly one of them pays, whatever Acme does, so the pair pays $1 for certain. A certain dollar next year costs $e^{-rT}$ today, or free money appears. So
+Hold the call digital and the put digital together. On expiry day exactly one of them pays, whatever Acme does, so the pair pays $1 for certain. A certain dollar next year costs $`e^{-rT}`$ today, or free money appears. So
 
-$$\text{call} + \text{put} = e^{-rT}.$$
+```math
+\text{call} + \text{put} = e^{-rT}.
+```
 
-No volatility, no bell curve, no drift entered that argument. The model version agrees: $e^{-rT}N(d_2) + e^{-rT}N(-d_2) = e^{-rT}$, because the two chances add to one. For Acme, 0.494581 + 0.456648 = 0.951229.
+No volatility, no bell curve, no drift entered that argument. The model version agrees: $`e^{-rT}N(d_2) + e^{-rT}N(-d_2) = e^{-rT}`$, because the two chances add to one. For Acme, 0.494581 + 0.456648 = 0.951229.
 
 ### Step 5: why the chance is not the real chance
 
-The drift in Step 1 is the bank rate, not the rate investors expect Acme to grow at. That is not an error. The price comes from the cost of copying the contract with shares and cash, and the copy does not care where Acme is really headed. So $N(d_2)$ is a **priced-in chance**: the chance a pricing formula needs, not a forecast. If Acme is really expected to return 8 percent a year, dividends included, the real chance of finishing above $100 is 0.579260, and the price is still 0.494581.
+The drift in Step 1 is the bank rate, not the rate investors expect Acme to grow at. That is not an error. The price comes from the cost of copying the contract with shares and cash, and the copy does not care where Acme is really headed. So $`N(d_2)`$ is a **priced-in chance**: the chance a pricing formula needs, not a forecast. If Acme is really expected to return 8 percent a year, dividends included, the real chance of finishing above $100 is 0.579260, and the price is still 0.494581.
 
 ### The other doors
 
-Two other routes reach the same number. The call price falls as the strike rises, and the rate of fall is the digital: a tight spread of two calls, one struck just below $100 and one just above, pays a ramp that shrinks to this step. The code does it with strikes 99.99 and 100.01 and lands on 0.494581; the method, and what it adds when volatility depends on the strike, is [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md). And the ordinary call is a share-paying digital minus $K$ cash-paying digitals: 58.685115 − 100 × 0.494581 = 9.227006, the pilot's price. The share-paying half is [Asset-or-nothing digital](02-asset-or-nothing-digital.md).
+Two other routes reach the same number. The call price falls as the strike rises, and the rate of fall is the digital: a tight spread of two calls, one struck just below $100 and one just above, pays a ramp that shrinks to this step. The code does it with strikes 99.99 and 100.01 and lands on 0.494581; the method, and what it adds when volatility depends on the strike, is [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md). And the ordinary call is a share-paying digital minus $`K`$ cash-paying digitals: 58.685115 − 100 × 0.494581 = 9.227006, the pilot's price. The share-paying half is [Asset-or-nothing digital](02-asset-or-nothing-digital.md).
 
 ---
 
 ## Worked numbers, by hand
 
-House market: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year.
+House market: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\ln(S/K)$ | $\ln 1$ | 0 |
-| drift, $r - q - \tfrac12\sigma^2$ | 0.05 − 0.02 − 0.02 | 0.01 |
-| spread, $\sigma\sqrt{T}$ | 0.20 × 1 | 0.20 |
-| $d_2$ | (0 + 0.01) / 0.20 | 0.05 |
-| $N(d_2)$, chance above | bell-curve area left of 0.05 | 0.519939 |
-| $N(-d_2)$, chance below | 1 − 0.519939 | 0.480061 |
-| $e^{-rT}$ | $e^{-0.05}$ | 0.951229 |
+| $`\ln(S/K)`$ | $`\ln 1`$ | 0 |
+| drift, $`r - q - \tfrac12\sigma^2`$ | 0.05 − 0.02 − 0.02 | 0.01 |
+| spread, $`\sigma\sqrt{T}`$ | 0.20 × 1 | 0.20 |
+| $`d_2`$ | (0 + 0.01) / 0.20 | 0.05 |
+| $`N(d_2)`$, chance above | bell-curve area left of 0.05 | 0.519939 |
+| $`N(-d_2)`$, chance below | 1 − 0.519939 | 0.480061 |
+| $`e^{-rT}`$ | $`e^{-0.05}`$ | 0.951229 |
 | **call digital** | 0.951229 × 0.519939 | **0.494581** |
 | **put digital** | 0.951229 × 0.480061 | **0.456648** |
 | call + put | 0.494581 + 0.456648 | 0.951229 |
@@ -171,7 +183,7 @@ Correct call digital: 0.494581.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Forget the discount | 0.519939 | A chance is not a price: the dollar comes in a year |
-| Use $N(d_1)$ for $N(d_2)$ | 0.569507 | $N(d_1)$ belongs to the share-paying digital, not the cash one |
+| Use $`N(d_1)`$ for $`N(d_2)`$ | 0.569507 | $`N(d_1)`$ belongs to the share-paying digital, not the cash one |
 | Use the real-world chance, 8% return | 0.551009 | The price is the cost of a copy, not a forecast |
 | Forget the 2% dividend | 0.532325 | Dividends leave the share price, so the drift is lower than the bank rate |
 | Price the put as 1 − call | 0.505419 (right: 0.456648) | The pair sums to the discount factor, not to 1 |
@@ -182,7 +194,7 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the call digital by four roads. The formula uses a bell-curve area built by Simpson's rule (adding thin slices under the curve). The second road never mentions $d_2$: it adds up the risk-neutral density of Acme's price, the chance per dollar of finishing at each price, from $100 upward. The third is a 200,000-path Monte Carlo simulation ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)) that counts the finishes above $100, driven by a whole-number recurrence both languages compute exactly. The fourth is a tight call spread. The put is priced separately, by the density summed below $100, and call plus put is checked against the discount factor. Each Greek is checked by nudging its input. Every number on the card, the chart points included, is printed.
+The scripts reach the call digital by four roads. The formula uses a bell-curve area built by Simpson's rule (adding thin slices under the curve). The second road never mentions $`d_2`$: it adds up the risk-neutral density of Acme's price, the chance per dollar of finishing at each price, from $100 upward. The third is a 200,000-path Monte Carlo simulation ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)) that counts the finishes above $100, driven by a whole-number recurrence both languages compute exactly. The fourth is a tight call spread. The put is priced separately, by the density summed below $100, and call plus put is checked against the discount factor. Each Greek is checked by nudging its input. Every number on the card, the chart points included, is printed.
 
 ### Python
 
@@ -562,12 +574,12 @@ The two outputs match line for line, the simulation included: the random numbers
 
 Lean proves both digital prices whenever price, strike, volatility and time are positive, and the call-plus-put rule with no model.
 
-- Suppose Acme's finish is as in Step 1, with $Z$ a standard bell-curve draw, and $S$, $K$, $\sigma$, $T$ all positive. Then the call digital, the discounted average of its payoff, is $e^{-rT}N(d_2)$.
-- Take the same model. Then the put digital, paying when Acme finishes at or below the strike, is $e^{-rT}N(-d_2)$.
-- Take the same model. Then $e^{-rT}N(d_2) + e^{-rT}N(-d_2) = e^{-rT}$, because the two chances add to one.
-- Take any finishing price at all, any rate and any time. Then the call digital plus the put digital is $e^{-rT}$.
-- Take any number $x$. Then the bell-curve mirror gives $N(-x) = 1 - N(x)$.
-- Take the house market. Then the drift is 0.01, $d_2$ is 0.05 and $d_1$ is 0.25.
+- Suppose Acme's finish is as in Step 1, with $`Z`$ a standard bell-curve draw, and $`S`$, $`K`$, $`\sigma`$, $`T`$ all positive. Then the call digital, the discounted average of its payoff, is $`e^{-rT}N(d_2)`$.
+- Take the same model. Then the put digital, paying when Acme finishes at or below the strike, is $`e^{-rT}N(-d_2)`$.
+- Take the same model. Then $`e^{-rT}N(d_2) + e^{-rT}N(-d_2) = e^{-rT}`$, because the two chances add to one.
+- Take any finishing price at all, any rate and any time. Then the call digital plus the put digital is $`e^{-rT}`$.
+- Take any number $`x`$. Then the bell-curve mirror gives $`N(-x) = 1 - N(x)`$.
+- Take the house market. Then the drift is 0.01, $`d_2`$ is 0.05 and $`d_1`$ is 0.25.
 - Take the house prices. Then 0.494581 + 0.456648 = 0.951229, and 1 − 0.519939 = 0.480061.
 
 The bell-curve areas, the Greeks, the density sum, the simulation and the call spread are left to the Python and Rust checks.
@@ -737,7 +749,7 @@ example : (1 : ℚ) - 519939 / 1000000 = 480061 / 1000000 := by norm_num
 > **Reading 0.519939 as the chance that Acme really finishes above $100.** It is the chance in the pretend world where Acme grows at the bank rate less dividends. If investors expect an 8 percent return, the real chance is 0.579260. Discount that and the "price" is 0.551009, too dear: anyone could sell at that price, build the copy for 0.494581, and keep the difference. The digital's price reveals what the market charges for the bet, not what it forecasts.
 >
 > - **Forgetting the discount.** 0.519939 is a chance, not a price. The dollar is a year away, and the price is 0.494581.
-> - **Swapping $d_2$ for $d_1$.** $e^{-rT}N(d_1)$ gives 0.569507. $N(d_1)$ belongs to the share-paying asset-or-nothing digital.
+> - **Swapping $`d_2`$ for $`d_1`$.** $`e^{-rT}N(d_1)`$ gives 0.569507. $`N(d_1)`$ belongs to the share-paying asset-or-nothing digital.
 > - **Making the pair sum to 1.** Call and put sum to the discount factor, 0.951229. The put priced as 1 − 0.494581 comes out at 0.505419 against a true 0.456648.
 > - **Trusting the model at the line near expiry.** Inside the model, landing exactly on $100 has chance zero. In a real contract a share pinned near the strike at the close decides the whole payout, and the wording "above" or "at or above" matters.
 
@@ -753,19 +765,19 @@ example : (1 : ℚ) - 519939 / 1000000 = 480061 / 1000000 := by norm_num
 - **Backing out volatility or strike.** A quoted digital price can be turned back into the volatility or strike that produces it: [Digital inverses](06-digital-inverses-vol-and-strike.md).
 
 > **Say it back**
-> A cash-or-nothing digital pays a fixed dollar if the share finishes above the strike, and nothing otherwise. Its price is the discount factor times the chance of finishing above, $e^{-rT}N(d_2)$, and the put is the same with $N(-d_2)$. Holding both guarantees the dollar, so they sum to the discount factor in any model. The chance inside is priced in, taken in a world where the share grows at the bank rate, and it is not a forecast. For Acme the call costs 0.494581 and the put 0.456648.
+> A cash-or-nothing digital pays a fixed dollar if the share finishes above the strike, and nothing otherwise. Its price is the discount factor times the chance of finishing above, $`e^{-rT}N(d_2)`$, and the put is the same with $`N(-d_2)`$. Holding both guarantees the dollar, so they sum to the discount factor in any model. The chance inside is priced in, taken in a world where the share grows at the bank rate, and it is not a forecast. For Acme the call costs 0.494581 and the put 0.456648.
 
 ---
 
 ## What this builds on
 
-- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the pretend-world recipe, $d_2$, and the call split into a share half and a cash half; this card is the cash half sold alone.
-- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its area $N(x)$ and its mirror symmetry, which turns "above $-d_2$" into $N(d_2)$.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the pretend-world recipe, $`d_2`$, and the call split into a share half and a cash half; this card is the cash half sold alone.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its area $`N(x)`$ and its mirror symmetry, which turns "above $`-d_2`$" into $`N(d_2)`$.
 - [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing by simulating many finishes and averaging the payoff, with an error bar; here the average is a count.
 
 ## Where this goes next
 
-- [Asset-or-nothing digital](02-asset-or-nothing-digital.md): the share-paying twin, priced with $N(d_1)$, and the call rebuilt from the two.
+- [Asset-or-nothing digital](02-asset-or-nothing-digital.md): the share-paying twin, priced with $`N(d_1)`$, and the call rebuilt from the two.
 - [Digital inverses](06-digital-inverses-vol-and-strike.md): the formula run backwards, with its existence and uniqueness cases.
 - [One-touch and no-touch](../16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md): the dollar paid on touching the line, any time before expiry.
 - [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): the same contract on a currency pair, as desks quote it.
@@ -779,7 +791,7 @@ This card priced a payout of cash; what changes when the payout is the share its
 
 Verified 24 Sep 2026: every link below resolves to the publisher's page.
 
-- Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The copying argument and the $N(d_2)$ term.
+- Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The copying argument and the $`N(d_2)`$ term.
 - Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). Adds the dividend yield used here.
 - Breeden, Douglas T., and Robert H. Litzenberger. "Prices of State-Contingent Claims Implicit in Option Prices." *Journal of Business* 51, no. 4 (1978): 621–651. [doi:10.1086/296025](https://doi.org/10.1086/296025). A payout above a level as the strike slope of call prices: the call-spread road.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). Binary options in the exotic-options chapter, with the cash-or-nothing formula.

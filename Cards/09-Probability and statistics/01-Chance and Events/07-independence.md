@@ -28,52 +28,62 @@ The dime's strip cuts the quarter's half in the same proportion as it cuts the w
 
 ## The formula
 
-Two pieces of notation from earlier on this shelf. $P(A)$ is the chance of the event A, read "the chance of A" ([Sample spaces and events](02-sample-spaces-and-events.md)). $P(A \mid B)$ is the chance of A once B is known to have happened, read "the chance of A given B" ([Conditional probability](05-conditional-probability.md)). The cap sign $A \cap B$ means "both A and B happen".
+Two pieces of notation from earlier on this shelf. $`P(A)`$ is the chance of the event A, read "the chance of A" ([Sample spaces and events](02-sample-spaces-and-events.md)). $`P(A \mid B)`$ is the chance of A once B is known to have happened, read "the chance of A given B" ([Conditional probability](05-conditional-probability.md)). The cap sign $`A \cap B`$ means "both A and B happen".
 
-$$P(A \cap B) = P(A)\,P(B)$$
+```math
+P(A \cap B) = P(A)\,P(B)
+```
 
 **Read it aloud:** the chance that both happen is the chance of the first times the chance of the second.
 
-When $P(B)$ is above zero, dividing both sides by it gives the version that matches the word:
+When $`P(B)`$ is above zero, dividing both sides by it gives the version that matches the word:
 
-$$P(A \mid B) = P(A)$$
+```math
+P(A \mid B) = P(A)
+```
 
 **Read it aloud:** learning B leaves the chance of A unchanged.
 
-For a list of events $A_1, A_2, \dots, A_k$ there are two different claims. **Pairwise independent** means every two of them pass the product rule. **Mutually independent** means every choice of two or more passes:
+For a list of events $`A_1, A_2, \dots, A_k`$ there are two different claims. **Pairwise independent** means every two of them pass the product rule. **Mutually independent** means every choice of two or more passes:
 
-$$P(A_{1} \cap A_{2} \cap \cdots \cap A_{k}) = P(A_{1})\,P(A_{2}) \cdots P(A_{k}) \quad\text{for every sub-list of two or more}$$
+```math
+P(A_{1} \cap A_{2} \cap \cdots \cap A_{k}) = P(A_{1})\,P(A_{2}) \cdots P(A_{k}) \quad\text{for every sub-list of two or more}
+```
 
-For three events that is four equations: three pairs and one triple. For $k$ events it is $2^k - k - 1$.
+For three events that is four equations: three pairs and one triple. For $`k`$ events it is $`2^k - k - 1`$.
 
-**Conditional independence** is the same product rule applied after a fact $G$ is known:
+**Conditional independence** is the same product rule applied after a fact $`G`$ is known:
 
-$$P(A \cap B \mid G) = P(A \mid G)\,P(B \mid G)$$
+```math
+P(A \cap B \mid G) = P(A \mid G)\,P(B \mid G)
+```
 
 A **Simpson reversal** is about pooled rates. Mint X's overall acceptance rate is a weighted average of its rates on quarters and on dimes:
 
-$$\text{pooled rate of X} = w_X\,x_Q + (1 - w_X)\,x_D$$
+```math
+\text{pooled rate of X} = w_X\,x_Q + (1 - w_X)\,x_D
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $B$ | two events: sets of outcomes | quarter heads; dime heads | a bigger event overlaps more |
-| $P(A)$, $P$, $p$ | the chance of an event, a number from 0 to 1; $p$ when it stands alone | 0.5 for each coin | the product P(A)P(B) grows with it |
-| $A \cap B$ | both events happen | both coins heads, chance 0.25 | independence needs it to equal the product |
-| $P(A \mid B)$ | the chance of A once B is known | 0.5: the dime says nothing | above P(A) means B favours A |
-| $A^c$ | "not A", the complement: A fails | quarter tails | independence of A and B carries over to it |
-| $C$ | a third event | the two coins match | three events need four checks, not three |
-| $A_1$, $A_2$, $k$ | a list of $k$ events, numbered | three separate coins | each extra event roughly doubles the checks |
-| $G$, $M$ | a fact known first; $M$ = "at least one head" | which coin came out of the bag; M covers 3 of 4 outcomes | conditioning can make or break independence |
-| $H_1$, $H_2$ | first and second toss of the bag coin land heads | chance 0.7 each | they rise and fall together |
-| $q$ | the bent coin's chance of heads | 0.9 | the further from 0.5, the stronger the link between tosses |
-| $n$ | tosses in a row | 1 to 8 on the chart | the independence shortcut falls further behind |
-| $x_Q$, $x_D$, $y_Q$, $y_D$, $w_X$, $w_Y$ | mint X's and Y's acceptance rates on quarters and dimes; each mint's share of quarters | 0.9, 0.625, 0.85, 0.6; shares 0.2 and 0.8 | unequal shares let the pooled rates reverse |
+| $`A`$, $`B`$ | two events: sets of outcomes | quarter heads; dime heads | a bigger event overlaps more |
+| $`P(A)`$, $`P`$, $`p`$ | the chance of an event, a number from 0 to 1; $`p`$ when it stands alone | 0.5 for each coin | the product P(A)P(B) grows with it |
+| $`A \cap B`$ | both events happen | both coins heads, chance 0.25 | independence needs it to equal the product |
+| $`P(A \mid B)`$ | the chance of A once B is known | 0.5: the dime says nothing | above P(A) means B favours A |
+| $`A^c`$ | "not A", the complement: A fails | quarter tails | independence of A and B carries over to it |
+| $`C`$ | a third event | the two coins match | three events need four checks, not three |
+| $`A_1`$, $`A_2`$, $`k`$ | a list of $`k`$ events, numbered | three separate coins | each extra event roughly doubles the checks |
+| $`G`$, $`M`$ | a fact known first; $`M`$ = "at least one head" | which coin came out of the bag; M covers 3 of 4 outcomes | conditioning can make or break independence |
+| $`H_1`$, $`H_2`$ | first and second toss of the bag coin land heads | chance 0.7 each | they rise and fall together |
+| $`q`$ | the bent coin's chance of heads | 0.9 | the further from 0.5, the stronger the link between tosses |
+| $`n`$ | tosses in a row | 1 to 8 on the chart | the independence shortcut falls further behind |
+| $`x_Q`$, $`x_D`$, $`y_Q`$, $`y_D`$, $`w_X`$, $`w_Y`$ | mint X's and Y's acceptance rates on quarters and dimes; each mint's share of quarters | 0.9, 0.625, 0.85, 0.6; shares 0.2 and 0.8 | unequal shares let the pooled rates reverse |
 
 ### When it holds
 
 - **A definition, tested by the product rule.** It is a property of the chances assigned, not of the objects. Two physical coins are given independent chances because neither can feel the other; a coin and its own record never pass the test.
 - **One set of chances.** Change the chances, for example by learning a fact, and independence must be checked again: the two coins are independent, but not once "at least one head" is known.
-- **Division needs a possible event.** The form $P(A \mid B) = P(A)$ needs $P(B)$ above zero. The product form needs nothing, so an impossible event is independent of everything.
+- **Division needs a possible event.** The form $`P(A \mid B) = P(A)`$ needs $`P(B)`$ above zero. The product form needs nothing, so an impossible event is independent of everything.
 - **Three or more events need every sub-list.** Pairwise checks miss a link that only shows up in the triple.
 
 ---
@@ -86,23 +96,27 @@ $$\text{pooled rate of X} = w_X\,x_Q + (1 - w_X)\,x_D$$
 
 ### Step 1: from "learning B changes nothing" to the product
 
-The conditional-probability card defines $P(A \mid B) = P(A \cap B) / P(B)$ when $P(B)$ is above zero. Set it equal to $P(A)$ and multiply both sides by $P(B)$:
+The conditional-probability card defines $`P(A \mid B) = P(A \cap B) / P(B)`$ when $`P(B)`$ is above zero. Set it equal to $`P(A)`$ and multiply both sides by $`P(B)`$:
 
-$$P(A \cap B) = P(A)\,P(B)$$
+```math
+P(A \cap B) = P(A)\,P(B)
+```
 
-The steps also run backwards, so the two forms agree whenever $P(B)$ is above zero. The product form is the definition for two reasons: it is symmetric, saying in one line that neither event informs the other, and it needs no division, so it still makes sense when $P(B) = 0$. For the coins: $P(A \cap B) = 0.25$ and $0.5 \times 0.5 = 0.25$, so the quarter and the dime are independent. Given the dime shows heads, the quarter is heads with chance 0.25 / 0.5 = 0.5.
+The steps also run backwards, so the two forms agree whenever $`P(B)`$ is above zero. The product form is the definition for two reasons: it is symmetric, saying in one line that neither event informs the other, and it needs no division, so it still makes sense when $`P(B) = 0`$. For the coins: $`P(A \cap B) = 0.25`$ and $`0.5 \times 0.5 = 0.25`$, so the quarter and the dime are independent. Given the dime shows heads, the quarter is heads with chance 0.25 / 0.5 = 0.5.
 
 ### Step 2: complements come for free
 
 If A and B are independent, so are A and "not B". The event A splits into the part inside B and the part outside, so
 
-$$P(A \cap B^c) = P(A) - P(A \cap B) = P(A) - P(A)P(B) = P(A)\,(1 - P(B)) = P(A)\,P(B^c)$$
+```math
+P(A \cap B^c) = P(A) - P(A \cap B) = P(A) - P(A)P(B) = P(A)\,(1 - P(B)) = P(A)\,P(B^c)
+```
 
-The last step uses the complement rule, $P(B^c) = 1 - P(B)$ ([The rules](03-probability-rules-and-complements.md)). On the coins: quarter heads and dime tails has chance 0.25, and 0.5 × 0.5 = 0.25. Swapping roles gives "not A" with B, and doing it twice gives "not A" with "not B".
+The last step uses the complement rule, $`P(B^c) = 1 - P(B)`$ ([The rules](03-probability-rules-and-complements.md)). On the coins: quarter heads and dime tails has chance 0.25, and 0.5 × 0.5 = 0.25. Swapping roles gives "not A" with B, and doing it twice gives "not A" with "not B".
 
 ### Step 3: a coin and its own outcome
 
-An event with chance $p$ is independent of itself only if $p = p \times p$, which forces $p = 0$ or $p = 1$. So the quarter's heads and the quarter's heads again, with chance 0.5, are dependent: the joint chance is 0.5, the product is 0.25.
+An event with chance $`p`$ is independent of itself only if $`p = p \times p`$, which forces $`p = 0`$ or $`p = 1`$. So the quarter's heads and the quarter's heads again, with chance 0.5, are dependent: the joint chance is 0.5, the product is 0.25.
 
 The other extreme is just as dependent. "Quarter heads" and "quarter tails" cannot both happen, so their joint chance is 0, while the product is 0.25. Two events that exclude each other, each with a chance above zero, are never independent: learning one happened makes the other impossible. **Disjoint is the opposite of independent, not a kind of it.**
 
@@ -118,11 +132,13 @@ Conditional independence and plain independence do not imply each other. Each di
 
 **Independent, then dependent.** The quarter and the dime are independent. Now learn M: at least one coin shows heads. Three outcomes remain, equally likely. The quarter is heads in 2 of them, chance 2/3; the dime likewise. Both heads is 1 of the 3, chance 1/3. The product would be 4/9, about 0.4444. Given M, a tails on the dime forces heads on the quarter.
 
-**Dependent, then independent.** A bag holds a fair coin and a bent coin that lands heads with chance $q = 0.9$. Draw one blind, with chance 0.5 each, and toss it twice. Given which coin was drawn, the two tosses are independent: $0.5 \times 0.5 = 0.25$ for the fair coin, $0.9 \times 0.9 = 0.81$ for the bent one. Without knowing the coin, add over the two ways:
+**Dependent, then independent.** A bag holds a fair coin and a bent coin that lands heads with chance $`q = 0.9`$. Draw one blind, with chance 0.5 each, and toss it twice. Given which coin was drawn, the two tosses are independent: $`0.5 \times 0.5 = 0.25`$ for the fair coin, $`0.9 \times 0.9 = 0.81`$ for the bent one. Without knowing the coin, add over the two ways:
 
-$$P(H_1) = 0.5 \times 0.5 + 0.5 \times 0.9 = 0.7 \qquad P(H_1 \cap H_2) = 0.5 \times 0.25 + 0.5 \times 0.81 = 0.53$$
+```math
+P(H_1) = 0.5 \times 0.5 + 0.5 \times 0.9 = 0.7 \qquad P(H_1 \cap H_2) = 0.5 \times 0.25 + 0.5 \times 0.81 = 0.53
+```
 
-The product would be $0.7 \times 0.7 = 0.49$, not 0.53. A first head is evidence that the bent coin came out, so it raises the chance of a second head from 0.7 to 0.53 / 0.7, about 0.7571. The tosses share a hidden cause, the coin drawn: fixing it makes them independent, averaging over it makes them dependent. The update is Bayes' rule ([Bayes' rule](06-bayes-rule.md)).
+The product would be $`0.7 \times 0.7 = 0.49`$, not 0.53. A first head is evidence that the bent coin came out, so it raises the chance of a second head from 0.7 to 0.53 / 0.7, about 0.7571. The tosses share a hidden cause, the coin drawn: fixing it makes them independent, averaging over it makes them dependent. The update is Bayes' rule ([Bayes' rule](06-bayes-rule.md)).
 
 ### Step 6: a Simpson reversal
 
@@ -133,7 +149,7 @@ Two mints, X and Y, strike quarters and dimes. A counting machine accepts each c
 | X | 90 of 100, rate 0.9000 | 250 of 400, rate 0.6250 | 340 of 500, rate 0.6800 |
 | Y | 340 of 400, rate 0.8500 | 60 of 100, rate 0.6000 | 400 of 500, rate 0.8000 |
 
-X beats Y on quarters and on dimes, yet Y beats X overall. Each pooled rate is a weighted average, and the weights differ: X struck mostly dimes, the harder coin, a quarter share of $w_X = 0.2$; Y mostly quarters, $w_Y = 0.8$. Coin type and mint are dependent, and without that dependence no reversal is possible.
+X beats Y on quarters and on dimes, yet Y beats X overall. Each pooled rate is a weighted average, and the weights differ: X struck mostly dimes, the harder coin, a quarter share of $`w_X = 0.2`$; Y mostly quarters, $`w_Y = 0.8`$. Coin type and mint are dependent, and without that dependence no reversal is possible.
 
 The pooled gap, −0.1200, splits into the gaps inside each coin type, worth +0.0300, and the different mix, worth −0.1500. Give both mints the same mix, say half quarters and half dimes, and X comes out ahead, 0.7625 against 0.7250.
 
@@ -142,15 +158,15 @@ The pooled gap, −0.1200, splits into the gaps inside each coin type, worth +0.
 <details>
 <summary>Detailed proof</summary>
 
-**Complements in a longer list.** Suppose $A_1, \dots, A_k$ are mutually independent and $A_1$ is replaced by its complement. Take any sub-list that contains $A_1$, and let D be the event that all the other members of the sub-list happen. Mutual independence gives $P(D)$ as the product of their chances, and $P(D \cap A_1) = P(D)\,P(A_1)$. Then $P(D \cap A_1^c) = P(D) - P(D \cap A_1) = P(D)\,(1 - P(A_1))$, which is the product rule for the new sub-list. Sub-lists without $A_1$ are untouched. Repeat one event at a time: any mix of events and complements from a mutually independent list is mutually independent.
+**Complements in a longer list.** Suppose $`A_1, \dots, A_k`$ are mutually independent and $`A_1`$ is replaced by its complement. Take any sub-list that contains $`A_1`$, and let D be the event that all the other members of the sub-list happen. Mutual independence gives $`P(D)`$ as the product of their chances, and $`P(D \cap A_1) = P(D)\,P(A_1)`$. Then $`P(D \cap A_1^c) = P(D) - P(D \cap A_1) = P(D)\,(1 - P(A_1))`$, which is the product rule for the new sub-list. Sub-lists without $`A_1`$ are untouched. Repeat one event at a time: any mix of events and complements from a mutually independent list is mutually independent.
 
-**The pooled gap, split in two.** Write the pooled rates as $w_X x_Q + (1 - w_X) x_D$ and $w_Y y_Q + (1 - w_Y) y_D$. Add and subtract Y's rates weighted by X's mix:
+**The pooled gap, split in two.** Write the pooled rates as $`w_X x_Q + (1 - w_X) x_D`$ and $`w_Y y_Q + (1 - w_Y) y_D`$. Add and subtract Y's rates weighted by X's mix:
 
-$$\text{X} - \text{Y} = \underbrace{w_X (x_Q - y_Q) + (1 - w_X)(x_D - y_D)}_{\text{inside each coin type}} + \underbrace{(w_X - w_Y)(y_Q - y_D)}_{\text{different mix}}$$
+$`\displaystyle \text{X} - \text{Y} = \underbrace{w_X (x_Q - y_Q) + (1 - w_X)(x_D - y_D)}_{\text{inside each coin type}} + \underbrace{(w_X - w_Y)(y_Q - y_D)}_{\text{different mix}}`$
 
-Check it on the mints: $0.2 \times 0.05 + 0.8 \times 0.025 = 0.03$, and $(0.2 - 0.8)(0.85 - 0.6) = -0.15$; the sum, −0.12, is 0.68 − 0.80.
+Check it on the mints: $`0.2 \times 0.05 + 0.8 \times 0.025 = 0.03`$, and $`(0.2 - 0.8)(0.85 - 0.6) = -0.15`$; the sum, −0.12, is 0.68 − 0.80.
 
-**No reversal under independence.** Coin type independent of mint means $P(\text{quarter} \mid X) = P(\text{quarter} \mid Y)$, that is $w_X = w_Y$. The second term is then zero. If X is ahead inside both coin types, both differences in the first term are positive and their weights are between 0 and 1 and add to 1, so the first term is positive. X stays ahead overall. A reversal needs $w_X \ne w_Y$, and it needs the mix term to outweigh the within-type term.
+**No reversal under independence.** Coin type independent of mint means $`P(\text{quarter} \mid X) = P(\text{quarter} \mid Y)`$, that is $`w_X = w_Y`$. The second term is then zero. If X is ahead inside both coin types, both differences in the first term are positive and their weights are between 0 and 1 and add to 1, so the first term is positive. X stays ahead overall. A reversal needs $`w_X \ne w_Y`$, and it needs the mix term to outweigh the within-type term.
 
 </details>
 
@@ -177,7 +193,7 @@ Two coins show two heads about 1 time in 4. The bag coin shows two heads 53 time
 
 ### The picture: the shortcut falls behind
 
-Assume the bag coin's tosses are independent with chance 0.7 each, and the chance of $n$ heads in a row is $0.7^n$. The truth is $0.5 \times 0.5^n + 0.5 \times 0.9^n$.
+Assume the bag coin's tosses are independent with chance 0.7 each, and the chance of $`n`$ heads in a row is $`0.7^n`$. The truth is $`0.5 \times 0.5^n + 0.5 \times 0.9^n`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -545,7 +561,7 @@ The two outputs are identical line for line.
 
 Lean proves the two-event facts for any chances, and checks the card's coin and mint numbers exactly.
 
-- Suppose $P(B)$ is above zero. Then A and B are independent exactly when $P(A \mid B) = P(A)$.
+- Suppose $`P(B)`$ is above zero. Then A and B are independent exactly when $`P(A \mid B) = P(A)`$.
 - If A and B are independent, so are A and "not B".
 - Suppose both mints have the same quarter share, and X beats Y on quarters and on dimes. Then X beats Y on the pooled rate.
 - The card's counts hold exactly: the two coins, the match event, "at least one head", the bag coin, the mint table and 8,543 squared.

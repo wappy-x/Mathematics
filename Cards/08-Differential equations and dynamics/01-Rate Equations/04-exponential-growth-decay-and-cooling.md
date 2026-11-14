@@ -36,34 +36,40 @@ Orange: the coffee, T = 20 + 60e^(−0.1t). Teal: the room, 20 C. The gap betwee
 
 Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)", and y(0) = y0 is the starting value ([A differential equation](01-what-a-differential-equation-says.md)). Here the rate is k times the amount:
 
-$$y' = k\,y,\qquad y(0) = y_0 \qquad\Longleftrightarrow\qquad y(t) = y_0\,e^{kt}$$
+```math
+y' = k\,y,\qquad y(0) = y_0 \qquad\Longleftrightarrow\qquad y(t) = y_0\,e^{kt}
+```
 
 **Read it aloud:** if the rate is always k times the amount, the amount at time t is the starting amount times e to the power k t, and that is the only possibility.
 
-On the account, $y$ is the balance, $y_0$ = 5,000 and $k$ = 0.04 per year, so y(10) = 5000e^(0.4) = 7,459.12 dollars.
+On the account, $`y`$ is the balance, $`y_0`$ = 5,000 and $`k`$ = 0.04 per year, so y(10) = 5000e^(0.4) = 7,459.12 dollars.
 
-Cooling measures from the room. With $T$ the coffee's temperature and $A$ the room's:
+Cooling measures from the room. With $`T`$ the coffee's temperature and $`A`$ the room's:
 
-$$T' = k\,(T - A)\qquad\Longrightarrow\qquad T(t) = A + (T_0 - A)\,e^{kt}$$
+```math
+T' = k\,(T - A)\qquad\Longrightarrow\qquad T(t) = A + (T_0 - A)\,e^{kt}
+```
 
 **Read it aloud:** the temperature is the room plus the starting gap, shrunk by the exponential.
 
 Two waiting times follow by setting the factor e^(kt) to one half or to two:
 
-$$t_{1/2} = \frac{\ln 2}{-k}\ \ (k<0),\qquad t_2 = \frac{\ln 2}{k}\ \ (k>0)$$
+```math
+t_{1/2} = \frac{\ln 2}{-k}\ \ (k<0),\qquad t_2 = \frac{\ln 2}{k}\ \ (k>0)
+```
 
 **Read it aloud:** half-life and doubling time are ln 2 divided by the size of k.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since the start | years for the account and carbon, minutes for the coffee | — |
-| $y$, $y_0$ | the amount, and the amount at the start | balance, 5,000 dollars at the start | every later amount scales with it |
-| $y'$ | the amount's rate of change | 200 dollars a year at the start | — |
-| $k$ | rate constant, in one over time; positive grows, negative decays | 0.04 per year; −0.000121 per year; −0.1 per minute | faster growth, or slower decay |
-| $e$ | the number 2.71828…, whose power e^x has rate e^x | e^0.4 = 1.491825 | — |
-| $C$ | a constant fixed by the start | equals y0 | — |
-| $T$, $T_0$, $A$ | coffee temperature, its start, the room | T0 = 80 C, A = 20 C | a warmer room holds the coffee warmer |
-| $t_{1/2}$, $t_2$ | half-life and doubling time | 5,730 years; 17.33 years | — |
+| $`t`$ | time since the start | years for the account and carbon, minutes for the coffee | — |
+| $`y`$, $`y_0`$ | the amount, and the amount at the start | balance, 5,000 dollars at the start | every later amount scales with it |
+| $`y'`$ | the amount's rate of change | 200 dollars a year at the start | — |
+| $`k`$ | rate constant, in one over time; positive grows, negative decays | 0.04 per year; −0.000121 per year; −0.1 per minute | faster growth, or slower decay |
+| $`e`$ | the number 2.71828…, whose power e^x has rate e^x | e^0.4 = 1.491825 | — |
+| $`C`$ | a constant fixed by the start | equals y0 | — |
+| $`T`$, $`T_0`$, $`A`$ | coffee temperature, its start, the room | T0 = 80 C, A = 20 C | a warmer room holds the coffee warmer |
+| $`t_{1/2}`$, $`t_2`$ | half-life and doubling time | 5,730 years; 17.33 years | — |
 
 ### When it holds
 
@@ -88,7 +94,9 @@ The rate of e^(kt) is k e^(kt), by the chain rule, since e^x is its own rate. So
 
 Take any solution y, and set u(t) = e^(−kt)y(t). The product rule gives the rate of u:
 
-$$u' = -k\,e^{-kt}\,y + e^{-kt}\,y' = e^{-kt}\,(y' - k\,y) = 0.$$
+```math
+u' = -k\,e^{-kt}\,y + e^{-kt}\,y' = e^{-kt}\,(y' - k\,y) = 0.
+```
 
 The bracket is zero because y solves the equation. A function whose rate is zero on an interval is a constant C. At t = 0, u = y0, so C = y0 and y(t) = y0e^(kt). The start fixes the answer completely.
 

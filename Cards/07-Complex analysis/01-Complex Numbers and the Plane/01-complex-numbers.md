@@ -26,35 +26,41 @@ To scale, 20 units per km, depot at 0. The dotted arc, radius 5 km, is the quart
 
 ## The formula
 
-Notation first, in words. A complex number is written $z = a + bi$, with $a$ and $b$ ordinary real numbers. The **real part**, $\mathrm{Re}\,z$, is $a$, the east coordinate; the **imaginary part**, $\mathrm{Im}\,z$, is $b$, the north coordinate. The set of all complex numbers is written $\mathbb{C}$. A second number is $w = c + di$.
+Notation first, in words. A complex number is written $`z = a + bi`$, with $`a`$ and $`b`$ ordinary real numbers. The **real part**, $`\mathrm{Re}\,z`$, is $`a`$, the east coordinate; the **imaginary part**, $`\mathrm{Im}\,z`$, is $`b`$, the north coordinate. The set of all complex numbers is written $`\mathbb{C}`$. A second number is $`w = c + di`$.
 
-$$i^2 = -1, \qquad (a + bi) + (c + di) = (a + c) + (b + d)i$$
+```math
+i^2 = -1, \qquad (a + bi) + (c + di) = (a + c) + (b + d)i
+```
 
-$$(a + bi)(c + di) = (ac - bd) + (ad + bc)i$$
+```math
+(a + bi)(c + di) = (ac - bd) + (ad + bc)i
+```
 
 **Read it aloud:** i squared is minus one; add part by part; the product's east part is ac minus bd, its north part ad plus bc.
 
-As bare pairs, $i$ is $(0, 1)$. Setting $c = 0$, $d = 1$ gives the case that carries the geometry:
+As bare pairs, $`i`$ is $`(0, 1)`$. Setting $`c = 0`$, $`d = 1`$ gives the case that carries the geometry:
 
-$$i\,(a + bi) = -b + ai$$
+```math
+i\,(a + bi) = -b + ai
+```
 
 **Read it aloud:** times i, the point (a, b) moves to (−b, a), a quarter turn anticlockwise about 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$ | the new number, the point (0, 1), with $i^2 = -1$ | 0 + 1i | — |
-| $z$ | a complex number: the drone, in km | 3 + 4i | the product moves with it |
-| $a$, $b$ | real and imaginary parts, $\mathrm{Re}\,z$ and $\mathrm{Im}\,z$ | 3 and 4 | the point moves east, north |
-| $w$ | the multiplier | 1 + 2i | a bigger stretch |
-| $c$, $d$ | real and imaginary parts of $w$ | 1 and 2 | more of z, more of iz |
-| $\mathbb{C}$ | the set of all complex numbers, the whole plane | — | — |
-| $x$ | the unknown in $x^2 + 2x + 5 = 0$ | −1 + 2i | — |
+| $`i`$ | the new number, the point (0, 1), with $`i^2 = -1`$ | 0 + 1i | — |
+| $`z`$ | a complex number: the drone, in km | 3 + 4i | the product moves with it |
+| $`a`$, $`b`$ | real and imaginary parts, $`\mathrm{Re}\,z`$ and $`\mathrm{Im}\,z`$ | 3 and 4 | the point moves east, north |
+| $`w`$ | the multiplier | 1 + 2i | a bigger stretch |
+| $`c`$, $`d`$ | real and imaginary parts of $`w`$ | 1 and 2 | more of z, more of iz |
+| $`\mathbb{C}`$ | the set of all complex numbers, the whole plane | — | — |
+| $`x`$ | the unknown in $`x^2 + 2x + 5 = 0`$ | −1 + 2i | — |
 
 ### When it holds
 
 - **A definition, so always:** any two real numbers make a complex number, and any two complex numbers add and multiply.
-- **Real numbers sit inside unchanged:** a real number $a$ is the point $a + 0i$ on the east-west line, and two of them multiply as before, (2 + 0i)(−3 + 0i) = −6.
-- **No "bigger than":** no ordering of complex numbers respects multiplying, since any square, $i^2$ included, would then be positive. Only distances from 0 compare.
+- **Real numbers sit inside unchanged:** a real number $`a`$ is the point $`a + 0i`$ on the east-west line, and two of them multiply as before, (2 + 0i)(−3 + 0i) = −6.
+- **No "bigger than":** no ordering of complex numbers respects multiplying, since any square, $`i^2`$ included, would then be positive. Only distances from 0 compare.
 - **Quarter turn needs equal units:** stretch one axis and the turn becomes a skew.
 
 ---
@@ -69,50 +75,54 @@ The drone's position is the ordered pair (3, 4) ([Ordered pairs and the Cartesia
 
 Multiply out term by term, as with any two brackets:
 
-$$(a + bi)(c + di) = ac + adi + bci + bd\,i^2 = (ac - bd) + (ad + bc)i$$
+```math
+(a + bi)(c + di) = ac + adi + bci + bd\,i^2 = (ac - bd) + (ad + bc)i
+```
 
-The last term, $bd\,i^2$, becomes $-bd$: the whole of the new rule. For the drone and $w = 1 + 2i$: ac = 3, bd = 8, ad = 6, bc = 4. The product is $(3 - 8) + (6 + 4)i = -5 + 10i$.
+The last term, $`bd\,i^2`$, becomes $`-bd`$: the whole of the new rule. For the drone and $`w = 1 + 2i`$: ac = 3, bd = 8, ad = 6, bc = 4. The product is $`(3 - 8) + (6 + 4)i = -5 + 10i`$.
 
-No choice was made: the ordinary laws plus $i^2 = -1$ leave only this rule.
+No choice was made: the ordinary laws plus $`i^2 = -1`$ leave only this rule.
 
 ### Step 2: times i is a quarter turn
 
-Put $c = 0$ and $d = 1$: $i(a + bi) = -b + ai$. The drone (3, 4) goes to (−4, 3).
+Put $`c = 0`$ and $`d = 1`$: $`i(a + bi) = -b + ai`$. The drone (3, 4) goes to (−4, 3).
 
-The length from 0 is unchanged, $\sqrt{(-b)^2 + a^2} = \sqrt{a^2 + b^2}$: both points are 5 km out. The two arrows meet at a square corner, since their dot product, east times east plus north times north, is $a(-b) + b(a) = 0$ ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). Same length, square corner, anticlockwise: a quarter turn.
+The length from 0 is unchanged, $`\sqrt{(-b)^2 + a^2} = \sqrt{a^2 + b^2}`$: both points are 5 km out. The two arrows meet at a square corner, since their dot product, east times east plus north times north, is $`a(-b) + b(a) = 0`$ ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). Same length, square corner, anticlockwise: a quarter turn.
 
-Turn four times and the drone is home: −4 + 3i, −3 − 4i, 4 − 3i, then 3 + 4i. Two quarter turns make a half turn, which points the arrow backwards: multiplying by −1. That is why $i \times i = -1$.
+Turn four times and the drone is home: −4 + 3i, −3 − 4i, 4 − 3i, then 3 + 4i. Two quarter turns make a half turn, which points the arrow backwards: multiplying by −1. That is why $`i \times i = -1`$.
 
 ### Step 3: multiplying by w is turn and add
 
-Since $w = c + di$, the distributive law gives $zw = c\,z + d\,(iz)$: c copies of the drone, plus d copies of the drone turned a quarter. For $w = 1 + 2i$:
+Since $`w = c + di`$, the distributive law gives $`zw = c\,z + d\,(iz)`$: c copies of the drone, plus d copies of the drone turned a quarter. For $`w = 1 + 2i`$:
 
-$$zw = 1\,(3 + 4i) + 2\,(-4 + 3i) = -5 + 10i$$
+```math
+zw = 1\,(3 + 4i) + 2\,(-4 + 3i) = -5 + 10i
+```
 
 This road uses only adding and the quarter turn, never Step 1's rule, and lands on the same point: the dashed line in the picture. Every product turns and stretches; the turn as an angle is [Polar form](03-polar-form-and-argument.md).
 
 ### Step 4: the usual laws survive
 
-Order does not matter: $wz = zw = -5 + 10i$. Grouping does not matter: $(zw)\,i$ and $z\,(wi)$ both come to −10 − 5i. Multiplying spreads over adding, and every number except 0 has a reciprocal. A number system obeying all of these is a **field**: $\mathbb{C}$ is one, as the real numbers are.
+Order does not matter: $`wz = zw = -5 + 10i`$. Grouping does not matter: $`(zw)\,i`$ and $`z\,(wi)`$ both come to −10 − 5i. Multiplying spreads over adding, and every number except 0 has a reciprocal. A number system obeying all of these is a **field**: $`\mathbb{C}`$ is one, as the real numbers are.
 
 <details>
 <summary>Detailed proof: the field laws for pairs</summary>
 
-Write $z = (a, b)$, $w = (c, d)$, $u = (e, f)$, with the product $(a, b)(c, d) = (ac - bd,\ ad + bc)$.
+Write $`z = (a, b)`$, $`w = (c, d)`$, $`u = (e, f)`$, with the product $`(a, b)(c, d) = (ac - bd,\ ad + bc)`$.
 
-**Order.** $(c, d)(a, b) = (ca - db,\ cb + da)$: the same two numbers.
+**Order.** $`(c, d)(a, b) = (ca - db,\ cb + da)`$: the same two numbers.
 
-**Grouping.** Expanded, $(zw)u$ and $z(wu)$ both have east part $ace - bde - adf - bcf$ and north part $acf - bdf + ade + bce$.
+**Grouping.** Expanded, $`(zw)u`$ and $`z(wu)`$ both have east part $`ace - bde - adf - bcf`$ and north part $`acf - bdf + ade + bce`$.
 
-**Spreading.** Each part of the product is a sum of (a part of $z$) times (a part of $w$), and real multiplying spreads over adding, so $z(w + u) = zw + zu$.
+**Spreading.** Each part of the product is a sum of (a part of $`z`$) times (a part of $`w`$), and real multiplying spreads over adding, so $`z(w + u) = zw + zu`$.
 
-**Reciprocals.** For $(a, b) \ne (0, 0)$, $a^2 + b^2 > 0$ and $(a, b)\bigl(a/(a^2 + b^2),\ -b/(a^2 + b^2)\bigr) = (1, 0)$.
+**Reciprocals.** For $`(a, b) \ne (0, 0)`$, $`a^2 + b^2 > 0`$ and $`(a, b)\bigl(a/(a^2 + b^2),\ -b/(a^2 + b^2)\bigr) = (1, 0)`$.
 
 </details>
 
 ### Step 5: equations with no real root now have roots
 
-Take $x^2 + 2x + 5 = 0$. The quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) needs the square root of the discriminant, $2^2 - 4 \times 5 = -16$, which has none on the real line. In $\mathbb{C}$ it has one, $4i$, since $(4i)^2 = 16\,i^2 = -16$. The roots are $-1 \pm 2i$.
+Take $`x^2 + 2x + 5 = 0`$. The quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) needs the square root of the discriminant, $`2^2 - 4 \times 5 = -16`$, which has none on the real line. In $`\mathbb{C}`$ it has one, $`4i`$, since $`(4i)^2 = 16\,i^2 = -16`$. The roots are $`-1 \pm 2i`$.
 
 Check −1 + 2i: its square is −3 − 4i, twice it is −2 + 4i, and the three terms sum to 0. Every non-constant polynomial has a complex root: [The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md). Rafael Bombelli first wrote down rules for adding and multiplying such numbers, in his *Algebra* of 1572.
 
@@ -138,7 +148,7 @@ The drone lands at −5 + 10i: one copy of where it is, plus two of its quarter 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Multiplying part by part | 3 + 8i, not −5 + 10i | The cross terms ad and bc were lost |
-| $i^2$ taken as +1 | 11 + 10i, not −5 + 10i | bd was added, not subtracted |
+| $`i^2`$ taken as +1 | 11 + 10i, not −5 + 10i | bd was added, not subtracted |
 | Turned the wrong way, (b, −a) | 4 − 3i, not −4 + 3i | A clockwise turn: times −i |
 
 The code prints all three.
@@ -147,7 +157,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The code builds complex numbers from pairs, importing nothing. The product takes two roads: Step 1's pair rule, and turn-and-add. The quarter turn is checked by geometry: same length, zero dot product. A second case solves $x^2 + 2x + 5 = 0$. The first line prints the picture's coordinates.
+The code builds complex numbers from pairs, importing nothing. The product takes two roads: Step 1's pair rule, and turn-and-add. The quarter turn is checked by geometry: same length, zero dot product. A second case solves $`x^2 + 2x + 5 = 0`$. The first line prints the picture's coordinates.
 
 ### Python
 
@@ -345,7 +355,7 @@ Lean proves the rules for adding and multiplying, and the quarter turn, for all 
 - Turn and add, z + 2(iz), also lands on −5 + 10i.
 - Four quarter turns give −4 + 3i, −3 − 4i, 4 − 3i, then 3 + 4i again.
 - On the real axis, (2 + 0i)(−3 + 0i) = −6. Grouping does not matter: (zw)i and z(wi) are both −10 − 5i.
-- $(4i)^2 = -16$, $(-1 + 2i)^2 = -3 - 4i$, and both −1 + 2i and −1 − 2i solve $x^2 + 2x + 5 = 0$.
+- $`(4i)^2 = -16`$, $`(-1 + 2i)^2 = -3 - 4i`$, and both −1 + 2i and −1 − 2i solve $`x^2 + 2x + 5 = 0`$.
 - The three mistakes give 3 + 8i, 11 + 10i and 4 − 3i, and none is the right answer.
 
 The figure's coordinates, the quadratic formula's working and the printed decimals are left to the Python and Rust checks.
@@ -471,11 +481,11 @@ example : I * ((3 : ℂ) + 4 * I) ≠ 4 - 3 * I := by
 ## The usual mistake
 
 > [!warning]
-> **Multiplying the parts separately.** Adding goes part by part, so multiplying that way is tempting: 3 + 8i. But each part of one factor meets both parts of the other, and the north parts make $bd\,i^2 = -bd$. The product is −5 + 10i.
+> **Multiplying the parts separately.** Adding goes part by part, so multiplying that way is tempting: 3 + 8i. But each part of one factor meets both parts of the other, and the north parts make $`bd\,i^2 = -bd`$. The product is −5 + 10i.
 >
-> - **Dropping the minus from $i^2$.** Treating $bd\,i^2$ as $+bd$ gives 11 + 10i.
+> - **Dropping the minus from $`i^2`$.** Treating $`bd\,i^2`$ as $`+bd`$ gives 11 + 10i.
 > - **Turning the wrong way.** Times i sends (a, b) to (−b, a), anticlockwise; (b, −a) gives 4 − 3i, which is times −i.
-> - **Calling $\mathbb{C}$ "the most complete number system".** It holds every polynomial root, but gave up order to get there. Larger systems exist: the quaternions, which give up the rule that order of multiplying does not matter.
+> - **Calling $`\mathbb{C}`$ "the most complete number system".** It holds every polynomial root, but gave up order to get there. Larger systems exist: the quaternions, which give up the rule that order of multiplying does not matter.
 > - **Reading "imaginary" as unreal.** i is the point (0, 1), as concrete as −1.
 
 ---

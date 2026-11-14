@@ -40,9 +40,11 @@ Three ways to hand out the gold, two runners left for the silver each time: 3 ×
 
 ## The formula
 
-Two pieces of notation first, in words. The factorial of a whole number, written $n!$ and read "n factorial", is that number times every whole number below it down to 1 ([Factorials](03-factorial.md)); 5! is 5 × 4 × 3 × 2 × 1 = 120. This card's count is written $P(n,k)$, read "n permute k": the ways to fill $k$ places, in order, from a pool of $n$ things.
+Two pieces of notation first, in words. The factorial of a whole number, written $`n!`$ and read "n factorial", is that number times every whole number below it down to 1 ([Factorials](03-factorial.md)); 5! is 5 × 4 × 3 × 2 × 1 = 120. This card's count is written $`P(n,k)`$, read "n permute k": the ways to fill $`k`$ places, in order, from a pool of $`n`$ things.
 
-$$P(n,k) = n(n-1)(n-2)\cdots(n-k+1) = \frac{n!}{(n-k)!}$$
+```math
+P(n,k) = n(n-1)(n-2)\cdots(n-k+1) = \frac{n!}{(n-k)!}
+```
 
 **Read it aloud:** begin at the size of the pool and multiply the next number down each time, one factor per place, stopping when the places run out.
 
@@ -50,12 +52,12 @@ The left-hand product is the **falling factorial**: a factorial stopped early. T
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the pool: how many things there are to pick from | 8 runners | climbs fast: every factor grows |
-| $k$ | how many places are filled, with order counted | 3 medals | one more factor in the product |
-| $P(n,k)$ | the number of ordered picks | 336 podiums | — |
-| $n!$ | the factorial: the orders of all $n$ things | 8! = 40,320 | — |
-| $(n-k)!$ | the orders of the things left out, divided off | 5! = 120 | more divided away, count falls |
-| $n-k+1$ | the last factor: the pool left at the final place | 8 − 3 + 1 = 6 | — |
+| $`n`$ | the pool: how many things there are to pick from | 8 runners | climbs fast: every factor grows |
+| $`k`$ | how many places are filled, with order counted | 3 medals | one more factor in the product |
+| $`P(n,k)`$ | the number of ordered picks | 336 podiums | — |
+| $`n!`$ | the factorial: the orders of all $`n`$ things | 8! = 40,320 | — |
+| $`(n-k)!`$ | the orders of the things left out, divided off | 5! = 120 | more divided away, count falls |
+| $`n-k+1`$ | the last factor: the pool left at the final place | 8 − 3 + 1 = 6 | — |
 
 ### When it holds
 
@@ -78,32 +80,32 @@ The only new thing here is that the second number is smaller. Gold: eight runner
 
 ### Step 1: where the last factor comes from
 
-The first place faces the whole pool, the second one fewer, the third two fewer. At the final place every earlier place has taken one thing, so the pool has shrunk by one less than the number of places: it stands at $n-k+1$. For the medals, 8 − 3 + 1 = 6, the bronze count above.
+The first place faces the whole pool, the second one fewer, the third two fewer. At the final place every earlier place has taken one thing, so the pool has shrunk by one less than the number of places: it stands at $`n-k+1`$. For the medals, 8 − 3 + 1 = 6, the bronze count above.
 
-The product $n(n-1)(n-2)\cdots(n-k+1)$ therefore has exactly $k$ factors — one per place, not one per runner.
+The product $`n(n-1)(n-2)\cdots(n-k+1)`$ therefore has exactly $`k`$ factors — one per place, not one per runner.
 
 ### Step 2: the same product, written with factorials
 
 All eight in a full finishing order: 8! = 40,320, that is 8 × 7 × 6 × 5 × 4 × 3 × 2 × 1. The first three factors are the podium count; the tail 5 × 4 × 3 × 2 × 1 = 120 is 5!, the orders of the five who missed out.
 
-Divide the tail away: 40,320 ÷ 120 = 336, which is $P(n,k) = n!/(n-k)!$. The product is what a person multiplies; the ratio is what a formula quotes, as in 20! ÷ 15! = 1,860,480 below.
+Divide the tail away: 40,320 ÷ 120 = 336, which is $`P(n,k) = n!/(n-k)!`$. The product is what a person multiplies; the ratio is what a formula quotes, as in 20! ÷ 15! = 1,860,480 below.
 
 ### Step 3: an ordered pick is a one-to-one map
 
 Name the places: first medal, second, third. An ordered pick hands each place a runner and repeats none — a one-to-one function from the three places into the eight runners; *injective* is the standard word ([One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)).
 
-So $P(n,k)$ answers a question with no medals in it: how many one-to-one maps run from a set of $k$ things into a set of $n$. Drop the one-to-one demand and every map counts, the string count 8 × 8 × 8 = 512 ([Strings with repetition](02-strings-and-powers.md)); the gap to 336 is the maps that repeat a runner.
+So $`P(n,k)`$ answers a question with no medals in it: how many one-to-one maps run from a set of $`k`$ things into a set of $`n`$. Drop the one-to-one demand and every map counts, the string count 8 × 8 × 8 = 512 ([Strings with repetition](02-strings-and-powers.md)); the gap to 336 is the maps that repeat a runner.
 
 <details>
 <summary>Detailed proof: induction on the number of places</summary>
 
-The claim: for a pool of $n$ and $k$ places with $0 \le k \le n$, the ordered picks number $n(n-1)\cdots(n-k+1)$, a product of $k$ factors.
+The claim: for a pool of $`n`$ and $`k`$ places with $`0 \le k \le n`$, the ordered picks number $`n(n-1)\cdots(n-k+1)`$, a product of $`k`$ factors.
 
 **Base.** There is one way to fill no places: the empty list; a product of no factors is 1 by convention, so the two agree.
 
-**Step.** Suppose the claim holds for $k-1$ places from a pool of any size. Take $k$ places and a pool of $n$. The first place can be filled $n$ ways. Fix one, and the remaining $k-1$ places draw on a pool of $n-1$, which by supposition goes $(n-1)(n-2)\cdots(n-k+1)$ ways. That is still $k-1$ factors, starting one lower and ending at $(n-1)-(k-1)+1 = n-k+1$. That count is the same whichever thing went first, so the rule of product gives $n(n-1)\cdots(n-k+1)$. ∎
+**Step.** Suppose the claim holds for $`k-1`$ places from a pool of any size. Take $`k`$ places and a pool of $`n`$. The first place can be filled $`n`$ ways. Fix one, and the remaining $`k-1`$ places draw on a pool of $`n-1`$, which by supposition goes $`(n-1)(n-2)\cdots(n-k+1)`$ ways. That is still $`k-1`$ factors, starting one lower and ending at $`(n-1)-(k-1)+1 = n-k+1`$. That count is the same whichever thing went first, so the rule of product gives $`n(n-1)\cdots(n-k+1)`$. ∎
 
-The step is an identity in its own right: $P(n,k) = n \times P(n-1,k-1)$, one place filled and a smaller pick left behind. It is the third road the code takes at the larger size: 20 × P(19, 4) = 1,860,480.
+The step is an identity in its own right: $`P(n,k) = n \times P(n-1,k-1)`$, one place filled and a smaller pick left behind. It is the third road the code takes at the larger size: 20 × P(19, 4) = 1,860,480.
 
 </details>
 
@@ -342,9 +344,9 @@ The two outputs match line for line.
 
 Lean proves these facts for any pool and any number of places, and checks the card's worked numbers too.
 
-- With no more places than things, the one-to-one maps from $k$ places into a pool of $n$ number $n(n-1)\cdots(n-k+1)$, which equals $n!/(n-k)!$.
-- One place filled, then a smaller pick: $P(n,k) = n \times P(n-1,k-1)$, whenever there is at least one place.
-- With no more places than things, the count is also the ways to choose which $k$ things are used, times $k!$.
+- With no more places than things, the one-to-one maps from $`k`$ places into a pool of $`n`$ number $`n(n-1)\cdots(n-k+1)`$, which equals $`n!/(n-k)!`$.
+- One place filled, then a smaller pick: $`P(n,k) = n \times P(n-1,k-1)`$, whenever there is at least one place.
+- With no more places than things, the count is also the ways to choose which $`k`$ things are used, times $`k!`$.
 
 Writing out all 336 podiums and counting them one by one is left to the Python and Rust checks.
 

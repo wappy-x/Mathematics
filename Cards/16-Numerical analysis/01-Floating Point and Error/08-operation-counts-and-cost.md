@@ -37,43 +37,49 @@ The steep orange line is Cramer's rule with cofactor determinants: it climbs fas
 
 ## The formula
 
-The system is $Mx = b$. One flop count per method, exact for every n:
+The system is $`Mx = b`$. One flop count per method, exact for every n:
 
-$$E(n) = \tfrac{2}{3}n^3 + \tfrac{3}{2}n^2 - \tfrac{7}{6}n, \qquad D(n) = \tfrac{2}{3}n^3 - \tfrac{1}{2}n^2 + \tfrac{5}{6}n - 1, \qquad K(n) = (n+1)\,D(n) + n$$
+```math
+E(n) = \tfrac{2}{3}n^3 + \tfrac{3}{2}n^2 - \tfrac{7}{6}n, \qquad D(n) = \tfrac{2}{3}n^3 - \tfrac{1}{2}n^2 + \tfrac{5}{6}n - 1, \qquad K(n) = (n+1)\,D(n) + n
+```
 
 **Read it aloud:** elimination costs about two thirds of n cubed flops; one determinant by elimination costs about the same; Cramer's rule needs n + 1 determinants plus n divisions, so it costs about n times more.
 
-$$C(1) = 0, \qquad C(n) = n\,C(n-1) + 2n - 1, \qquad C(n)/n! \to e \text{ as } n \to \infty$$
+```math
+C(1) = 0, \qquad C(n) = n\,C(n-1) + 2n - 1, \qquad C(n)/n! \to e \text{ as } n \to \infty
+```
 
 **Read it aloud:** a cofactor determinant of size n costs n determinants of size n − 1, plus n multiplies and n − 1 adds; that adds up to about e times n factorial.
 
 The memory side has one number per method, its **arithmetic intensity** q: flops done per number fetched from main memory.
 
-$$\text{flops per second} \le \min(P,\ q\,W)$$
+```math
+\text{flops per second} \le \min(P,\ q\,W)
+```
 
 **Read it aloud:** a method runs no faster than the machine's peak, and no faster than the rate memory can feed it numbers times the flops each number feeds.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the number of unknowns, and the matrix's side | 20 | every count grows; Cramer's grows fastest |
-| $M$, $M_i$ | the system's matrix, $200(I - A)$: $A$ holds what each industry buys from each other per dollar of output, $I$ is the identity; $M_i$ is $M$ with column i replaced by $b$ | 20 by 20, 200 on the diagonal | — |
-| $x$ | the unknowns: each industry's output, in billions of dollars | 11 to 30 | — |
-| $b$ | the right side: 200 times household demand | first entry 346 | — |
-| $E(n)$ | flops to solve by elimination and back substitution | 5,910 | grows like $n^3$ |
-| $D(n)$, $K(n)$ | flops for one determinant by elimination; for Cramer's rule with such determinants | 5,149; 108,149 | D grows like $n^3$, K like $n^4$ |
-| $k$, $m$, $i$ | in Why it works: the column being cleared; the rows below it, $n - k$; a row in back substitution | first column: m = n − 1 | — |
-| $C(n)$ | flops for one determinant by cofactor expansion; $n! = 1 \times 2 \times \dots \times n$, $e = 2.718281828459$ | 6,613,313,319,248,079,999 | grows faster than any power of n |
-| $q$ | arithmetic intensity: flops per number fetched | plain loop 1.92, tiled 13.71 | the method gets closer to the peak $P$ |
-| $t$, $S$; $A$, $B$, $C$ in Step 4 | tile side: the loop works on $t$ by $t$ blocks; S is the cache size in numbers; in Step 4 only, $C = AB$ is the product of two new n by n matrices | 16; 1,280; 48 by 48 | fewer fetches, while the tiles fit in the cache |
-| $P$ | the machine's peak flops per second, illustrative | 100 Gflop/s | a higher ceiling, only for methods with high $q$ |
-| $W$ | numbers per second main memory can deliver, illustrative | 2.50e9 (20 GB/s) | memory-bound methods speed up |
+| $`n`$ | the number of unknowns, and the matrix's side | 20 | every count grows; Cramer's grows fastest |
+| $`M`$, $`M_i`$ | the system's matrix, $`200(I - A)`$: $`A`$ holds what each industry buys from each other per dollar of output, $`I`$ is the identity; $`M_i`$ is $`M`$ with column i replaced by $`b`$ | 20 by 20, 200 on the diagonal | — |
+| $`x`$ | the unknowns: each industry's output, in billions of dollars | 11 to 30 | — |
+| $`b`$ | the right side: 200 times household demand | first entry 346 | — |
+| $`E(n)`$ | flops to solve by elimination and back substitution | 5,910 | grows like $`n^3`$ |
+| $`D(n)`$, $`K(n)`$ | flops for one determinant by elimination; for Cramer's rule with such determinants | 5,149; 108,149 | D grows like $`n^3`$, K like $`n^4`$ |
+| $`k`$, $`m`$, $`i`$ | in Why it works: the column being cleared; the rows below it, $`n - k`$; a row in back substitution | first column: m = n − 1 | — |
+| $`C(n)`$ | flops for one determinant by cofactor expansion; $`n! = 1 \times 2 \times \dots \times n`$, $`e = 2.718281828459`$ | 6,613,313,319,248,079,999 | grows faster than any power of n |
+| $`q`$ | arithmetic intensity: flops per number fetched | plain loop 1.92, tiled 13.71 | the method gets closer to the peak $`P`$ |
+| $`t`$, $`S`$; $`A`$, $`B`$, $`C`$ in Step 4 | tile side: the loop works on $`t`$ by $`t`$ blocks; S is the cache size in numbers; in Step 4 only, $`C = AB`$ is the product of two new n by n matrices | 16; 1,280; 48 by 48 | fewer fetches, while the tiles fit in the cache |
+| $`P`$ | the machine's peak flops per second, illustrative | 100 Gflop/s | a higher ceiling, only for methods with high $`q`$ |
+| $`W`$ | numbers per second main memory can deliver, illustrative | 2.50e9 (20 GB/s) | memory-bound methods speed up |
 
 ### When it holds
 
-- **The matrix is dense: every entry may be nonzero.** For a tridiagonal matrix (nonzeros only on and beside the diagonal) elimination needs a fixed handful of flops per row, so its count grows like n, not like $2n^3/3$; counting as if dense overstates the work.
+- **The matrix is dense: every entry may be nonzero.** For a tridiagonal matrix (nonzeros only on and beside the diagonal) elimination needs a fixed handful of flops per row, so its count grows like n, not like $`2n^3/3`$; counting as if dense overstates the work.
 - **Every flop costs the same.** A division takes longer than an add on most chips, and comparisons and row swaps for pivoting are not counted. The count ranks methods; it is not a stopwatch.
-- **The leading term needs a large n.** At n = 5, $2n^3/3$ gives 83.3 against the exact 115.
-- **Flops decide only when q is high.** If q is below the machine balance $P/W$, here 40 flops per number, memory decides. A matrix times a vector has q = 1.77 at n = 20, so its flop count says little about its speed.
+- **The leading term needs a large n.** At n = 5, $`2n^3/3`$ gives 83.3 against the exact 115.
+- **Flops decide only when q is high.** If q is below the machine balance $`P/W`$, here 40 flops per number, memory decides. A matrix times a vector has q = 1.77 at n = 20, so its flop count says little about its speed.
 - **The data outgrows the cache.** The 20 by 20 matrix is 400 numbers, 3,200 bytes, and sits in the fastest memory a chip has. Memory traffic starts to decide only for large n.
 
 ---
@@ -82,89 +88,89 @@ $$\text{flops per second} \le \min(P,\ q\,W)$$
 
 ### Step 0: a method is nested loops, and loops can be counted
 
-Every method here is a set of nested loops with a few flops in the innermost body. The flop count is the sum of that body's flops over every pass. Sums of 1, of k and of $k^2$ give polynomials in n, so the count of a loop method is a polynomial. A method that calls itself on smaller pieces, like cofactor expansion, gives a recurrence instead.
+Every method here is a set of nested loops with a few flops in the innermost body. The flop count is the sum of that body's flops over every pass. Sums of 1, of k and of $`k^2`$ give polynomials in n, so the count of a loop method is a polynomial. A method that calls itself on smaller pieces, like cofactor expansion, gives a recurrence instead.
 
-Big-O ([Big-O](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/01-big-o-and-growth-rates.md)) keeps only the fastest-growing term: elimination is $O(n^3)$ as $n \to \infty$. This card keeps every term, because at n = 20 the small terms still matter. The computing wing already counts the operations in a loop and shows arrays and compiled loops beating plain code ([Cost in practice](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/04-computational-cost-and-vectorisation.md)); this card counts linear-algebra methods and memory traffic.
+Big-O ([Big-O](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/01-big-o-and-growth-rates.md)) keeps only the fastest-growing term: elimination is $`O(n^3)`$ as $`n \to \infty`$. This card keeps every term, because at n = 20 the small terms still matter. The computing wing already counts the operations in a loop and shows arrays and compiled loops beating plain code ([Cost in practice](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/04-computational-cost-and-vectorisation.md)); this card counts linear-algebra methods and memory traffic.
 
-### Step 1: elimination costs about $2n^3/3$ flops
+### Step 1: elimination costs about $`2n^3/3`$ flops
 
-Clearing column k leaves $m = n - k$ rows below the pivot (the entry used to clear the column). Each of those rows costs one division for its multiplier, then a multiply and a subtract for each of the m entries to its right and one more pair for the right side.
+Clearing column k leaves $`m = n - k`$ rows below the pivot (the entry used to clear the column). Each of those rows costs one division for its multiplier, then a multiply and a subtract for each of the m entries to its right and one more pair for the right side.
 
-Back substitution then finds the unknowns from the bottom up. Row i needs $n - i$ multiply-subtract pairs and one division.
+Back substitution then finds the unknowns from the bottom up. Row i needs $`n - i`$ multiply-subtract pairs and one division.
 
 | Part | Flops | At n = 20 |
 | --- | --- | --- |
-| multipliers | $\sum m = n(n-1)/2$ | 190 |
-| row updates | $2\sum m^2 = (n-1)n(2n-1)/3$ | 4,940 |
-| right side | $2\sum m = n(n-1)$ | 380 |
-| back substitution | $\sum (2(n-i)+1) = n^2$ | 400 |
-| **total** | $E(n)$ | **5,910** |
+| multipliers | $`\sum m = n(n-1)/2`$ | 190 |
+| row updates | $`2\sum m^2 = (n-1)n(2n-1)/3`$ | 4,940 |
+| right side | $`2\sum m = n(n-1)`$ | 380 |
+| back substitution | $`\sum (2(n-i)+1) = n^2`$ | 400 |
+| **total** | $`E(n)`$ | **5,910** |
 
 <details>
 <summary>Detailed proof: the four parts add to E(n)</summary>
 
-Use $\sum_{m=1}^{n-1} m = n(n-1)/2$ and $\sum_{m=1}^{n-1} m^2 = (n-1)n(2n-1)/6$, both proved by induction on n.
+Use $`\sum_{m=1}^{n-1} m = n(n-1)/2`$ and $`\sum_{m=1}^{n-1} m^2 = (n-1)n(2n-1)/6`$, both proved by induction on n.
 
 Put everything over 6:
 
-$3(n^2 - n) + 2(2n^3 - 3n^2 + n) + 6(n^2 - n) + 6n^2 = 4n^3 + 9n^2 - 7n.$
+$`3(n^2 - n) + 2(2n^3 - 3n^2 + n) + 6(n^2 - n) + 6n^2 = 4n^3 + 9n^2 - 7n.`$
 
-Divide by 6: $E(n) = \tfrac{2}{3}n^3 + \tfrac{3}{2}n^2 - \tfrac{7}{6}n$. Row swaps for pivoting move numbers but do no arithmetic, so they add no flops.
+Divide by 6: $`E(n) = \tfrac{2}{3}n^3 + \tfrac{3}{2}n^2 - \tfrac{7}{6}n`$. Row swaps for pivoting move numbers but do no arithmetic, so they add no flops.
 
 </details>
 
 ### Step 2: Cramer's rule repeats the solve n + 1 times
 
-Cramer's rule says $x_i = \det(M_i) / \det(M)$, where $M_i$ is $M$ with column i replaced by $b$. That is n + 1 determinants and n divisions.
+Cramer's rule says $`x_i = \det(M_i) / \det(M)`$, where $`M_i`$ is $`M`$ with column i replaced by $`b`$. That is n + 1 determinants and n divisions.
 
-A determinant by elimination drops the right side and back substitution and multiplies the n diagonal entries instead, n − 1 flops: 190 + 4,940 + 19 = 5,149. Then $K(20) = 21 \times 5{,}149 + 20 = 108{,}149$.
+A determinant by elimination drops the right side and back substitution and multiplies the n diagonal entries instead, n − 1 flops: 190 + 4,940 + 19 = 5,149. Then $`K(20) = 21 \times 5{,}149 + 20 = 108{,}149`$.
 
-Each determinant costs about as much as a whole solve, so Cramer's rule costs about n times more: 18.3 times at n = 20, 998.0 times at n = 1,000. Its count grows like $2n^4/3$.
+Each determinant costs about as much as a whole solve, so Cramer's rule costs about n times more: 18.3 times at n = 20, 998.0 times at n = 1,000. Its count grows like $`2n^4/3`$.
 
 ### Step 3: cofactor expansion grows like e times n factorial
 
 Cofactor expansion along the top row multiplies each of the n top entries by the determinant of its **minor**: the matrix left after deleting that entry's row and column. That gives n determinants of size n − 1, then n multiplies and n − 1 adds or subtracts:
 
-$C(n) = n\,C(n-1) + 2n - 1$, with $C(1) = 0$ and $C(2) = 3$, the familiar $ad - bc$.
+$`C(n) = n\,C(n-1) + 2n - 1`$, with $`C(1) = 0`$ and $`C(2) = 3`$, the familiar $`ad - bc`$.
 
-Divide by $n!$ and the recurrence becomes a sum, which tends to e.
+Divide by $`n!`$ and the recurrence becomes a sum, which tends to e.
 
 <details>
 <summary>Detailed proof: C(n) / n! tends to e</summary>
 
-Dividing the recurrence by $n!$ gives $\dfrac{C(n)}{n!} = \dfrac{C(n-1)}{(n-1)!} + \dfrac{2n-1}{n!}$. Unroll it from $C(1) = 0$:
+Dividing the recurrence by $`n!`$ gives $`\dfrac{C(n)}{n!} = \dfrac{C(n-1)}{(n-1)!} + \dfrac{2n-1}{n!}`$. Unroll it from $`C(1) = 0`$:
 
-$$\frac{C(n)}{n!} = \sum_{k=2}^{n} \frac{2k-1}{k!} = 2\sum_{k=2}^{n} \frac{1}{(k-1)!} - \sum_{k=2}^{n} \frac{1}{k!}.$$
+$`\displaystyle \frac{C(n)}{n!} = \sum_{k=2}^{n} \frac{2k-1}{k!} = 2\sum_{k=2}^{n} \frac{1}{(k-1)!} - \sum_{k=2}^{n} \frac{1}{k!}.`$
 
-As $n \to \infty$ the first sum tends to $2(e - 1)$ and the second to $e - 2$, since $e = \sum_{k \ge 0} 1/k!$. The difference is $2e - 2 - e + 2 = e$. Every term is positive, so $C(n) < e \cdot n!$ for every n.
+As $`n \to \infty`$ the first sum tends to $`2(e - 1)`$ and the second to $`e - 2`$, since $`e = \sum_{k \ge 0} 1/k!`$. The difference is $`2e - 2 - e + 2 = e`$. Every term is positive, so $`C(n) < e \cdot n!`$ for every n.
 
 </details>
 
-At n = 20: $C(20) = 6{,}613{,}313{,}319{,}248{,}079{,}999$, and $C(20)/20! = 2.718281828459$, equal to e to every printed digit. Cramer's rule needs 21 of these plus 20 divisions: 1.39e20 flops. A factorial beats every power of n ([Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md) shows the same race between adding and multiplying), so no machine rescues this method.
+At n = 20: $`C(20) = 6{,}613{,}313{,}319{,}248{,}079{,}999`$, and $`C(20)/20! = 2.718281828459`$, equal to e to every printed digit. Cramer's rule needs 21 of these plus 20 divisions: 1.39e20 flops. A factorial beats every power of n ([Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md) shows the same race between adding and multiplying), so no machine rescues this method.
 
 ### Step 4: memory traffic, counted with arithmetic intensity
 
 A chip does arithmetic only on numbers held close to it, in a small fast memory called the **cache**. Fetching a number from main memory is far slower than a flop. So a method has two counts: flops, and numbers fetched. Their ratio is the intensity q.
 
-- **Matrix times vector:** each of the $n^2$ matrix entries is used once, for one multiply and one add. At n = 20 that is 780 flops on 440 numbers, q = 1.77. No loop order can raise it.
-- **Matrix times matrix:** $3n^2$ numbers feed about $2n^3$ flops (exactly $n^2(2n-1)$: each entry of the product takes n multiplies and n − 1 adds), so q could reach about 2n/3: 15,600 flops on 1,200 numbers at n = 20, q = 13.00. Whether a loop reaches it depends on reuse.
+- **Matrix times vector:** each of the $`n^2`$ matrix entries is used once, for one multiply and one add. At n = 20 that is 780 flops on 440 numbers, q = 1.77. No loop order can raise it.
+- **Matrix times matrix:** $`3n^2`$ numbers feed about $`2n^3`$ flops (exactly $`n^2(2n-1)`$: each entry of the product takes n multiplies and n − 1 adds), so q could reach about 2n/3: 15,600 flops on 1,200 numbers at n = 20, q = 13.00. Whether a loop reaches it depends on reuse.
 
-Here $A$ and $B$ are any two n by n matrices and $C = AB$ is their product; they are not the industry table or the cofactor count. The plain triple loop walks down a column of B for every entry of C. Once B is larger than the cache, each of its numbers is gone before it is used again: about $n^3$ fetches for $2n^3$ flops, q close to 2.
+Here $`A`$ and $`B`$ are any two n by n matrices and $`C = AB`$ is their product; they are not the industry table or the cofactor count. The plain triple loop walks down a column of B for every entry of C. Once B is larger than the cache, each of its numbers is gone before it is used again: about $`n^3`$ fetches for $`2n^3`$ flops, q close to 2.
 
-A **tiled** loop works on $t$ by $t$ blocks. It keeps one tile of A, one of B and one of C in the cache and does all $2t^3$ flops those tiles allow, so each fetched number feeds about t flops. Fetches fall to about $2n^3/t + n^2$.
+A **tiled** loop works on $`t`$ by $`t`$ blocks. It keeps one tile of A, one of B and one of C in the cache and does all $`2t^3`$ flops those tiles allow, so each fetched number feeds about t flops. Fetches fall to about $`2n^3/t + n^2`$.
 
-Both loops start each entry of C at zero and add all n products into it, so they count one add more per entry than $n^2(2n-1)$: $2n^3$ flops, 221,184 at n = 48.
+Both loops start each entry of C at zero and add all n products into it, so they count one add more per entry than $`n^2(2n-1)`$: $`2n^3`$ flops, 221,184 at n = 48.
 
 | Loop, n = 48, cache of 1,280 numbers | Flops | Numbers fetched | Model | q |
 | --- | ---: | ---: | ---: | ---: |
-| plain triple loop | 221,184 | 115,200 | $n^3 + 2n^2$ = 115,200 | 1.92 |
-| tiled, t = 16 | 221,184 | 16,128 | $2n^3/t + n^2$ = 16,128 | 13.71 |
+| plain triple loop | 221,184 | 115,200 | $`n^3 + 2n^2`$ = 115,200 | 1.92 |
+| tiled, t = 16 | 221,184 | 16,128 | $`2n^3/t + n^2`$ = 16,128 | 13.71 |
 
-A 1981 theorem limits how far tiling can go (Sources). With a cache of S numbers, any order of the standard $2n^3$ flops fetches at least a fixed multiple of $n^3/\sqrt{S}$ numbers. It is stated here without proof. Tiling with $t$ about $\sqrt{S/3}$ reaches that rate, up to a constant.
+A 1981 theorem limits how far tiling can go (Sources). With a cache of S numbers, any order of the standard $`2n^3`$ flops fetches at least a fixed multiple of $`n^3/\sqrt{S}`$ numbers. It is stated here without proof. Tiling with $`t`$ about $`\sqrt{S/3}`$ reaches that rate, up to a constant.
 
 ### Step 5: the roofline, and why a tuned library wins
 
-The **roofline** is the bound $\min(P, qW)$ drawn against q: a sloping roof where memory limits the rate, then a flat roof at the peak. Put the intensity into the formula $\min(P, qW)$. On an illustrative machine with P = 100 Gflop/s and W = 2.50e9 numbers per second (20 GB/s, 8 bytes a number), the **balance** $P/W$ is 40 flops per number. Below it, memory decides.
+The **roofline** is the bound $`\min(P, qW)`$ drawn against q: a sloping roof where memory limits the rate, then a flat roof at the peak. Put the intensity into the formula $`\min(P, qW)`$. On an illustrative machine with P = 100 Gflop/s and W = 2.50e9 numbers per second (20 GB/s, 8 bytes a number), the **balance** $`P/W`$ is 40 flops per number. Below it, memory decides.
 
 ```
 Best possible rate, Gflop/s, illustrative machine (peak 100)
@@ -173,7 +179,7 @@ tiled, t = 16, q = 13.71      ██████████████        
 tiled, t = 64, n = 1000       ████████████████████████████████████████ 100.00
 ```
 
-All three bars do about $2n^3$ flops. The third assumes a larger cache, one that holds three 64 by 64 tiles. A tuned library, such as a BLAS (Basic Linear Algebra Subprograms) built for one chip, tiles for each level of cache and adds vector instructions (one instruction doing several flops at once) and several cores, which this model leaves out. LAPACK, the standard dense solver library, rewrites elimination so most of its flops happen inside matrix-times-matrix steps, where q is high. The flop count is the same as your loop's; the fetches are not.
+All three bars do about $`2n^3`$ flops. The third assumes a larger cache, one that holds three 64 by 64 tiles. A tuned library, such as a BLAS (Basic Linear Algebra Subprograms) built for one chip, tiles for each level of cache and adds vector instructions (one instruction doing several flops at once) and several cores, which this model leaves out. LAPACK, the standard dense solver library, rewrites elimination so most of its flops happen inside matrix-times-matrix steps, where q is high. The flop count is the same as your loop's; the fetches are not.
 
 ---
 
@@ -185,7 +191,7 @@ All three bars do about $2n^3$ flops. The third assumes a larger cache, one that
 | one determinant by elimination | 190 + 4,940 + 19 | 5,149 |
 | Cramer, determinants by elimination | 21 × 5,149 + 20 | 108,149 |
 | ratio to elimination | 108,149 / 5,910 | 18.3 |
-| one cofactor determinant | $C(20)$, about e × 20! | 6,613,313,319,248,079,999 |
+| one cofactor determinant | $`C(20)`$, about e × 20! | 6,613,313,319,248,079,999 |
 | Cramer, determinants by cofactors | 21 × C(20) + 20 | 1.39e20 |
 | illustrative time at 1e11 flops/s | 1.39e20 / 1e11 seconds, in years | 44.0 years |
 | elimination at the same rate | 5,910 / 1e11 | 5.91e-8 s |
@@ -210,7 +216,7 @@ The counts grow at different rates, so the gap depends on n:
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Count only multiplies and divides | 3,060 flops at n = 20, not 5,910 | The adds and subtracts are nearly half the work. Older books count a multiply-add pair as one operation, hence "$n^3/3$" |
+| Count only multiplies and divides | 3,060 flops at n = 20, not 5,910 | The adds and subtracts are nearly half the work. Older books count a multiply-add pair as one operation, hence "$`n^3/3`$" |
 | Keep only the leading term at n = 5 | 83.3, not 115 | Lower terms are large when n is small |
 | Treat Cramer's rule as cheap once determinants are cheap | 108,149, 18.3 times elimination | It still needs n + 1 determinants, each as costly as a whole solve |
 | Equal flops means equal cost | 115,200 numbers fetched against 16,128, both for 221,184 flops | The plain loop's q of 1.92 is far below the balance of 40, so memory decides |
@@ -626,12 +632,12 @@ The two outputs are identical line for line. The solves use only +, −, × and 
 
 ### Lean
 
-Lean proves the flop formulas exactly for every size n, and that the cofactor count approaches e times $n!$.
+Lean proves the flop formulas exactly for every size n, and that the cofactor count approaches e times $`n!`$.
 
-- Elimination with back substitution costs exactly $E(n) = \tfrac{2}{3}n^3 + \tfrac{3}{2}n^2 - \tfrac{7}{6}n$ flops, for every n.
-- For every n of at least 1, one determinant by elimination costs exactly $D(n)$ flops, and Cramer's rule with such determinants costs $K(n) = (n+1)\,D(n) + n$.
-- The cofactor count $C(n)$ divided by $n!$ tends to e as n grows, and $C(n) < e \cdot n!$ for every n.
-- The hand arithmetic at n = 20 holds exactly: 5,910, 5,149 and 108,149 flops, $C(20)$, and 138,879,579,704,209,679,999 flops for Cramer's rule by cofactors.
+- Elimination with back substitution costs exactly $`E(n) = \tfrac{2}{3}n^3 + \tfrac{3}{2}n^2 - \tfrac{7}{6}n`$ flops, for every n.
+- For every n of at least 1, one determinant by elimination costs exactly $`D(n)`$ flops, and Cramer's rule with such determinants costs $`K(n) = (n+1)\,D(n) + n`$.
+- The cofactor count $`C(n)`$ divided by $`n!`$ tends to e as n grows, and $`C(n) < e \cdot n!`$ for every n.
+- The hand arithmetic at n = 20 holds exactly: 5,910, 5,149 and 108,149 flops, $`C(20)`$, and 138,879,579,704,209,679,999 flops for Cramer's rule by cofactors.
 - So do the cofactor counts for n = 1 to 8 and the 3,060 count of multiplies and divides.
 - So do the memory numbers: 221,184 flops, the models' 115,200 and 16,128 fetches, and the intensity counts 780, 440, 15,600 and 1,200.
 
@@ -861,7 +867,7 @@ example : 20 * (2 * 20 - 1) = 780 ∧ 20 ^ 2 + 2 * 20 = 440 ∧
 > **Treating a formula as a method.** Cramer's rule is a true formula for the answer and a fine tool for proofs. As a way to compute it, it costs 1.39e20 flops at n = 20 with cofactor determinants, and 18.3 times elimination even with good ones. The formula says what the answer is; the flop count says whether you can afford it.
 >
 > - **Counting multiplies only.** It gives 3,060 at n = 20, not 5,910; check which convention a book uses before comparing counts.
-> - **Trusting the leading term at small n.** $2n^3/3$ gives 83.3 at n = 5, against 115.
+> - **Trusting the leading term at small n.** $`2n^3/3`$ gives 83.3 at n = 5, against 115.
 > - **Equal flops, equal time.** Two loops with 221,184 flops each fetch 115,200 and 16,128 numbers. Count the fetches too.
 > - **Timing a toy size.** A 20 by 20 matrix is 3,200 bytes and never leaves the cache, so it hides the memory traffic that decides at n = 1,000.
 
@@ -874,22 +880,22 @@ example : 20 * (2 * 20 - 1) = 780 ∧ 20 ^ 2 + 2 * 20 = 440 ∧
 - **Machine-learning hardware.** Chips for neural networks are judged by peak flops and by memory bandwidth together, because a matrix product reaches its peak only when tiled for high intensity.
 
 > **Say it back**
-> A flop is one add, subtract, multiply or divide, and a method's flop count is a formula in the size n. Elimination costs about $2n^3/3$ flops, 5,910 at n = 20; Cramer's rule costs about n times more with good determinants and about e times n factorial with cofactor ones, 1.39e20. Compare counts at the size you really have, not by their leading terms alone. Then count the numbers fetched from memory: a method doing only a flop or two per fetch runs at memory speed. A tuned library does the same flops as your loop but tiles them so each fetched number is used many times.
+> A flop is one add, subtract, multiply or divide, and a method's flop count is a formula in the size n. Elimination costs about $`2n^3/3`$ flops, 5,910 at n = 20; Cramer's rule costs about n times more with good determinants and about e times n factorial with cofactor ones, 1.39e20. Compare counts at the size you really have, not by their leading terms alone. Then count the numbers fetched from memory: a method doing only a flop or two per fetch runs at memory speed. A tuned library does the same flops as your loop but tiles them so each fetched number is used many times.
 
 ---
 
 ## What this builds on
 
-- [Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): why a count that multiplies at each step, like $n!$, leaves every polynomial behind.
+- [Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): why a count that multiplies at each step, like $`n!`$, leaves every polynomial behind.
 - [Cost in practice](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/04-computational-cost-and-vectorisation.md): counting the operations in a loop, and why array and compiled code beat plain interpreted loops.
-- [Big-O](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/01-big-o-and-growth-rates.md): the growth-rate language, $O(n^3)$ against $O(n!)$, that this card uses with every term kept.
+- [Big-O](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/01-big-o-and-growth-rates.md): the growth-rate language, $`O(n^3)`$ against $`O(n!)`$, that this card uses with every term kept.
 - [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): the row moves whose flops Step 1 counts.
 - [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): cofactor expansion and the staircase determinant, the two roads Cramer's rule can take.
 
 ## Where this goes next
 
-- [The fast Fourier transform](../07-PDE%20Solvers/09-the-fast-fourier-transform.md): the same counting turns a transform's flops from growing like $n^2$ to growing like $n \log_2 n$, by splitting the sum in half.
-- [LU with partial pivoting](../03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): elimination stored as factors, so each new right side costs about $2n^2$ flops instead of $2n^3/3$.
+- [The fast Fourier transform](../07-PDE%20Solvers/09-the-fast-fourier-transform.md): the same counting turns a transform's flops from growing like $`n^2`$ to growing like $`n \log_2 n`$, by splitting the sum in half.
+- [LU with partial pivoting](../03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): elimination stored as factors, so each new right side costs about $`2n^2`$ flops instead of $`2n^3/3`$.
 
 This card counts flops and fetches but not accuracy: when do two methods with the same count give answers of different quality?
 
@@ -903,4 +909,4 @@ Verified 2026-11-11: every link below resolves to the publisher's page. Each DOI
 - Anderson, E., Z. Bai, C. Bischof, et al. *LAPACK Users' Guide*, 3rd ed. SIAM, 1999. [doi:10.1137/1.9780898719604](https://doi.org/10.1137/1.9780898719604). How the standard dense solvers are blocked to spend their flops in matrix products.
 - Dongarra, Jack J., Jeremy Du Croz, Sven Hammarling, and Iain S. Duff. "A Set of Level 3 Basic Linear Algebra Subprograms." *ACM Transactions on Mathematical Software* 16, no. 1 (1990): 1–17. [doi:10.1145/77626.79170](https://doi.org/10.1145/77626.79170). The matrix-times-matrix routines and why their high intensity matters.
 - Hong, Jia-Wei, and H. T. Kung. "I/O Complexity: The Red-Blue Pebble Game." *Proceedings of the 13th Annual ACM Symposium on Theory of Computing* (1981): 326–333. [doi:10.1145/800076.802486](https://doi.org/10.1145/800076.802486). The lower bound on memory traffic for matrix multiplication stated in Step 4.
-- Williams, Samuel, Andrew Waterman, and David Patterson. "Roofline: An Insightful Visual Performance Model for Multicore Architectures." *Communications of the ACM* 52, no. 4 (2009): 65–76. [doi:10.1145/1498765.1498785](https://doi.org/10.1145/1498765.1498785). The bound $\min(P, qW)$ and the machine balance.
+- Williams, Samuel, Andrew Waterman, and David Patterson. "Roofline: An Insightful Visual Performance Model for Multicore Architectures." *Communications of the ACM* 52, no. 4 (2009): 65–76. [doi:10.1145/1498765.1498785](https://doi.org/10.1145/1498765.1498785). The bound $`\min(P, qW)`$ and the machine balance.

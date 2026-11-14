@@ -26,32 +26,38 @@ To scale: 280 units per metre across, 130 per centimetre up. Solid: the pluck. D
 
 ## The formula
 
-Notation first. The height is $u(x,t)$ in cm, at place $x$ metres from the left end and time $t$ seconds. A subscript is a rate with the other variable held still ([A partial differential equation](01-what-a-pde-says.md)): $u_t$ is a point's speed, $u_{tt}$ its acceleration, $u_x$ the slope, $u_{xx}$ the bending. The string obeys $u_{tt} = c^2 u_{xx}$, with wave speed $c$; u = 0 at both ends, x = 0 and x = $L$; it starts at rest in the pluck shape $f(x)$. A large sigma, Σ, adds the terms for n = 1, 2, 3 and on.
+Notation first. The height is $`u(x,t)`$ in cm, at place $`x`$ metres from the left end and time $`t`$ seconds. A subscript is a rate with the other variable held still ([A partial differential equation](01-what-a-pde-says.md)): $`u_t`$ is a point's speed, $`u_{tt}`$ its acceleration, $`u_x`$ the slope, $`u_{xx}`$ the bending. The string obeys $`u_{tt} = c^2 u_{xx}`$, with wave speed $`c`$; u = 0 at both ends, x = 0 and x = $`L`$; it starts at rest in the pluck shape $`f(x)`$. A large sigma, Σ, adds the terms for n = 1, 2, 3 and on.
 
-$$u(x,t) = \sum_{n=1}^{\infty} b_n \sin\frac{n\pi x}{L}\,\cos(\omega_n t), \qquad \omega_n = \frac{n\pi c}{L}, \qquad b_n = \frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\,dx$$
+```math
+u(x,t) = \sum_{n=1}^{\infty} b_n \sin\frac{n\pi x}{L}\,\cos(\omega_n t), \qquad \omega_n = \frac{n\pi c}{L}, \qquad b_n = \frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\,dx
+```
 
 **Read it aloud:** the height is a sum of sine shapes with 1, 2, 3 … arches; shape n swings at n times the base rate, and its size is twice the average of the pluck times that sine.
 
-In hertz, harmonic n swings n c/(2L) times a second: 0.5, 1.0, 1.5 Hz here. For a triangle of height $h$ pulled at the middle, Step 3 gives
+In hertz, harmonic n swings n c/(2L) times a second: 0.5, 1.0, 1.5 Hz here. For a triangle of height $`h`$ pulled at the middle, Step 3 gives
 
-$$b_n = \frac{8h}{n^2\pi^2}\sin\frac{n\pi}{2}$$
+```math
+b_n = \frac{8h}{n^2\pi^2}\sin\frac{n\pi}{2}
+```
 
 which is +0.810569, 0, −0.090063, 0, +0.032423 cm for h = 1 cm. With the string's mass per metre taken as 1, its energy is
 
-$$E = \frac{1}{2}\int_0^L \left(u_t^2 + c^2 u_x^2\right)dx = \sum_{n=1}^{\infty} \frac{L}{4}\,\omega_n^2\, b_n^2$$
+```math
+E = \frac{1}{2}\int_0^L \left(u_t^2 + c^2 u_x^2\right)dx = \sum_{n=1}^{\infty} \frac{L}{4}\,\omega_n^2\, b_n^2
+```
 
 **Read it aloud:** energy is half the squared speed plus half the squared stretch, added along the string, or harmonic by harmonic.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $u_t$, $u_x$, $u_{tt}$, $u_{xx}$ | height; speed; slope; acceleration; bending | 1 cm at the middle at t = 0 | — |
-| $x$, $t$ | place, m; time, s | 0 to 1 m; 0.25 s | — |
-| $c$, $L$ | wave speed; length | 1 m/s; 1 m | faster c, shorter L: higher pitch |
-| $f$, $h$, $a$ | pluck shape; height; pull point | triangle; 1 cm; 0.5 m | larger h: amplitudes up in step |
-| $X$, $q$ | a harmonic's shape part and time part | sines; cosines | — |
-| $n$, $\omega_n$ | harmonic number; its angular frequency, rad/s | 1, 3, 5; nπ | higher pitch, smaller amplitude |
-| $b_n$ | amplitude of harmonic n | 0.810569, 0, −0.090063 cm | a louder harmonic |
-| $E$ | energy: motion plus stretch | 2 | — it never changes |
+| $`u`$, $`u_t`$, $`u_x`$, $`u_{tt}`$, $`u_{xx}`$ | height; speed; slope; acceleration; bending | 1 cm at the middle at t = 0 | — |
+| $`x`$, $`t`$ | place, m; time, s | 0 to 1 m; 0.25 s | — |
+| $`c`$, $`L`$ | wave speed; length | 1 m/s; 1 m | faster c, shorter L: higher pitch |
+| $`f`$, $`h`$, $`a`$ | pluck shape; height; pull point | triangle; 1 cm; 0.5 m | larger h: amplitudes up in step |
+| $`X`$, $`q`$ | a harmonic's shape part and time part | sines; cosines | — |
+| $`n`$, $`\omega_n`$ | harmonic number; its angular frequency, rad/s | 1, 3, 5; nπ | higher pitch, smaller amplitude |
+| $`b_n`$ | amplitude of harmonic n | 0.810569, 0, −0.090063 cm | a louder harmonic |
+| $`E`$ | energy: motion plus stretch | 2 | — it never changes |
 
 ### When it holds
 
@@ -70,7 +76,7 @@ The wave equation is linear: a sum of solutions is a solution ([Superposition](.
 
 ### Step 1: separate place from time
 
-Guess u = X(x) q(t): a fixed shape $X$ scaled by a time factor $q$, as on [Separation of variables](04-separation-of-variables-for-the-heat-equation.md). The equation becomes q''/q = c^2 X''/X. The left side depends only on time, the right only on place, so both equal one constant, written −ω^2. Then q'' = −ω^2 q, an oscillator, and X'' = −(ω/c)^2 X. Heat has one time derivative, so its time factor decayed; here there are two, so it swings.
+Guess u = X(x) q(t): a fixed shape $`X`$ scaled by a time factor $`q`$, as on [Separation of variables](04-separation-of-variables-for-the-heat-equation.md). The equation becomes q''/q = c^2 X''/X. The left side depends only on time, the right only on place, so both equal one constant, written −ω^2. Then q'' = −ω^2 q, an oscillator, and X'' = −(ω/c)^2 X. Heat has one time derivative, so its time factor decayed; here there are two, so it swings.
 
 ### Step 2: the fixed ends choose the frequencies
 
@@ -83,7 +89,7 @@ At t = 0 every cosine is 1, so the pluck must equal the sum of b_n sin(nπx/L). 
 <details>
 <summary>The algebra behind b_n</summary>
 
-On the 1 m string, integrate by parts twice. The pluck is straight either side of the pull point $a$, where its slope falls by h/(a(1 − a)). The integral of f sin(nπx) becomes that fall times sin(nπa) over n^2 π^2, so b_n = 2h sin(nπa)/(n^2 π^2 a(1 − a)). At a = 0.5 the fall is 4h, giving the formula above. At a = 0.25, b_2 = 32h/(12π^2).
+On the 1 m string, integrate by parts twice. The pluck is straight either side of the pull point $`a`$, where its slope falls by h/(a(1 − a)). The integral of f sin(nπx) becomes that fall times sin(nπa) over n^2 π^2, so b_n = 2h sin(nπa)/(n^2 π^2 a(1 − a)). At a = 0.5 the fall is 4h, giving the formula above. At a = 0.25, b_2 = 32h/(12π^2).
 
 </details>
 
@@ -112,7 +118,7 @@ Two motions with the same start and tied ends differ by a motion that starts fla
 <details>
 <summary>Detailed proof</summary>
 
-Let $u$ be twice continuously differentiable, with u_tt = c^2 u_xx on 0 ≤ x ≤ L and u = 0 at both ends. Then E'(t) = ∫ (u_t u_tt + c^2 u_x u_xt) dx, and by parts ∫ u_x u_xt dx = [u_x u_t] from 0 to L − ∫ u_xx u_t dx. The ends are fixed for all t, so u_t = 0 there and E'(t) = ∫ u_t (u_tt − c^2 u_xx) dx = 0.
+Let $`u`$ be twice continuously differentiable, with u_tt = c^2 u_xx on 0 ≤ x ≤ L and u = 0 at both ends. Then E'(t) = ∫ (u_t u_tt + c^2 u_x u_xt) dx, and by parts ∫ u_x u_xt dx = [u_x u_t] from 0 to L − ∫ u_xx u_t dx. The ends are fixed for all t, so u_t = 0 there and E'(t) = ∫ u_t (u_tt − c^2 u_xx) dx = 0.
 
 If u and v solve the problem with the same data, w = u − v has w(x,0) = 0, hence w_x(x,0) = 0, and w_t(x,0) = 0, so its energy is 0 at t = 0 and so for all t. The integrand is continuous and never negative, so w_t = w_x = 0 everywhere, w is constant, and w(0,t) = 0 makes it 0.
 
@@ -356,8 +362,8 @@ The two outputs match line for line.
 
 Lean proves three facts for every string length, wave speed and pull point, plus the hand arithmetic.
 
-- Take harmonic n, the shape $\sin(n\pi x/L)$ times $\cos(\omega_n t)$. Then it obeys $u_{tt} = c^2 u_{xx}$ and stays at 0 at both ends.
-- Suppose the string is pulled aside by h at a point a between the ends, and n is 1 or more. Then $b_n = \dfrac{2hL^2\sin(n\pi a/L)}{n^2\pi^2 a(L-a)}$. With L = 1 this is the card's formula for the 1 m string.
+- Take harmonic n, the shape $`\sin(n\pi x/L)`$ times $`\cos(\omega_n t)`$. Then it obeys $`u_{tt} = c^2 u_{xx}`$ and stays at 0 at both ends.
+- Suppose the string is pulled aside by h at a point a between the ends, and n is 1 or more. Then $`b_n = \dfrac{2hL^2\sin(n\pi a/L)}{n^2\pi^2 a(L-a)}`$. With L = 1 this is the card's formula for the 1 m string.
 - Take two motions of the string, each twice continuously differentiable. Suppose both obey the wave equation, hold both ends at 0, and start with the same shape and speed. Then they are one motion, at every place and every time.
 - The hand arithmetic is exact, from the slope of 2 cm/m to the energy of 2 and the 0.5 cm middle.
 

@@ -38,7 +38,9 @@ The sloping line is the option's profit per euro; the flat line is zero, break e
 
 ## The formula
 
-$$C = S\,e^{-r_f T}\,N(d_1) - K\,e^{-r_d T}\,N(d_2), \qquad P = K\,e^{-r_d T}\,N(-d_2) - S\,e^{-r_f T}\,N(-d_1)$$
+```math
+C = S\,e^{-r_f T}\,N(d_1) - K\,e^{-r_d T}\,N(d_2), \qquad P = K\,e^{-r_d T}\,N(-d_2) - S\,e^{-r_f T}\,N(-d_1)
+```
 
 **Read it aloud:** the euro received, discounted at the euro rate, weighted by its chance counted in euros, minus the dollars handed over, discounted at the dollar rate, weighted by its chance counted in dollars.
 
@@ -46,32 +48,34 @@ Both prices come out in domestic currency per one unit of foreign notional: US d
 
 | Symbol | Plain meaning | In our example | Push it up and the call… |
 | --- | --- | --- | --- |
-| $S$, $S_T$ | the spot rate: dollars per euro today, and on expiry day | 1.1000 today | rises: the euro is dearer to start with |
-| $K$ | the strike: dollars paid per euro if the option is used | 1.1000 | falls: more dollars to hand over |
-| $T$, $t$ | time to expiry, in years; $t$ is any moment before it | 1 | rises here: more time for a big move |
-| $r_d$ | the domestic rate: what dollars earn, continuously compounded | 5% | rises: the forward climbs and the dollars paid later cost less today |
-| $r_f$, $q$ | the foreign rate: what euros earn, continuously compounded; $q$ is a share's dividend yield, the slot $r_f$ fills | 3% | falls: the euro "dividend" leaks value out of the spot |
-| $\sigma$ | volatility: how jumpy EURUSD is, per square root of a year. Say "sigma". | 10% | rises: bigger moves, and the downside is capped |
-| $F$ | the forward rate, $S\,e^{(r_d - r_f)T}$: the rate agreed today for exchange at $T$ | 1.122221 | rises: the euro is dearer for delivery |
-| $D_d$, $D_f$ | discount factors $e^{-r_d T}$ and $e^{-r_f T}$: today's value of one dollar, or one euro, due at $T$ | 0.951229, 0.970446 | — |
-| $N(x)$ | the bell-curve area to the left of $x$: a probability between 0 and 1 | — | — |
-| $d_1$, $d_2$ | the forward's distance above the strike, $\ln(F/K) = 0.02$, in units of $\sigma\sqrt{T}$, plus and minus half a unit | 0.25 and 0.15 | — |
-| $C$, $P$ | the EUR call / USD put, and the EUR put / USD call, in dollars per euro | 0.053556, 0.032418 | — |
-| $Z$, $\varphi(z)$ | one standard bell-curve draw, and the curve's height $e^{-z^2/2}/\sqrt{2\pi}$ | — | — |
+| $`S`$, $`S_T`$ | the spot rate: dollars per euro today, and on expiry day | 1.1000 today | rises: the euro is dearer to start with |
+| $`K`$ | the strike: dollars paid per euro if the option is used | 1.1000 | falls: more dollars to hand over |
+| $`T`$, $`t`$ | time to expiry, in years; $`t`$ is any moment before it | 1 | rises here: more time for a big move |
+| $`r_d`$ | the domestic rate: what dollars earn, continuously compounded | 5% | rises: the forward climbs and the dollars paid later cost less today |
+| $`r_f`$, $`q`$ | the foreign rate: what euros earn, continuously compounded; $`q`$ is a share's dividend yield, the slot $`r_f`$ fills | 3% | falls: the euro "dividend" leaks value out of the spot |
+| $`\sigma`$ | volatility: how jumpy EURUSD is, per square root of a year. Say "sigma". | 10% | rises: bigger moves, and the downside is capped |
+| $`F`$ | the forward rate, $`S\,e^{(r_d - r_f)T}`$: the rate agreed today for exchange at $`T`$ | 1.122221 | rises: the euro is dearer for delivery |
+| $`D_d`$, $`D_f`$ | discount factors $`e^{-r_d T}`$ and $`e^{-r_f T}`$: today's value of one dollar, or one euro, due at $`T`$ | 0.951229, 0.970446 | — |
+| $`N(x)`$ | the bell-curve area to the left of $`x`$: a probability between 0 and 1 | — | — |
+| $`d_1`$, $`d_2`$ | the forward's distance above the strike, $`\ln(F/K) = 0.02`$, in units of $`\sigma\sqrt{T}`$, plus and minus half a unit | 0.25 and 0.15 | — |
+| $`C`$, $`P`$ | the EUR call / USD put, and the EUR put / USD call, in dollars per euro | 0.053556, 0.032418 | — |
+| $`Z`$, $`\varphi(z)`$ | one standard bell-curve draw, and the curve's height $`e^{-z^2/2}/\sqrt{2\pi}`$ | — | — |
 
 The two helpers:
 
-$$d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: the top of $d_2$ is how far the log of the spot is expected to travel past the strike in the pricing world below; the bottom is one year's worth of wiggle. $d_1$ is one wiggle unit more. The forward form, $C = D_d\,[F\,N(d_1) - K\,N(d_2)]$, is the same price written from the forward instead of the spot.
+In words: the top of $`d_2`$ is how far the log of the spot is expected to travel past the strike in the pricing world below; the bottom is one year's worth of wiggle. $`d_1`$ is one wiggle unit more. The forward form, $`C = D_d\,[F\,N(d_1) - K\,N(d_2)]`$, is the same price written from the forward instead of the spot.
 
 ### When it holds
 
-- **Constant volatility.** The market charges a different vol at each strike, the smile; one flat $\sigma$ misprices options away from the money. Desks keep this formula as the quoting language and feed it the smile's vol per strike: [Implied vol for a currency option](07-fx-implied-volatility.md).
+- **Constant volatility.** The market charges a different vol at each strike, the smile; one flat $`\sigma`$ misprices options away from the money. Desks keep this formula as the quoting language and feed it the smile's vol per strike: [Implied vol for a currency option](07-fx-implied-volatility.md).
 - **Constant, known interest rates.** A rate move shifts the forward, and the price follows it. Long-dated currency options need random rates.
 - **No jumps.** A pegged currency that devalues overnight breaks the smooth wandering the bell curve assumes; the formula underprices the crash.
-- **Covered interest parity holds.** The model's forward is $S\,e^{(r_d-r_f)T}$. Since 2008 the traded forward has differed from it by a spread, the cross-currency basis; desks price off the traded forward, which is the Black-76 form of the formula.
-- **Negative rates are allowed.** Nothing in the derivation needs $r_d$ or $r_f$ above zero; euro rates sat below zero from 2014 to 2022.
+- **Covered interest parity holds.** The model's forward is $`S\,e^{(r_d-r_f)T}`$. Since 2008 the traded forward has differed from it by a spread, the cross-currency basis; desks price off the traded forward, which is the Black-76 form of the formula.
+- **Negative rates are allowed.** Nothing in the derivation needs $`r_d`$ or $`r_f`$ above zero; euro rates sat below zero from 2014 to 2022.
 - **European exercise, no frictions.** Used only on expiry day, with money free to cross the border. Capital controls break the replication.
 
 ---
@@ -86,89 +90,93 @@ The shortcut that computes the cost: **pretend every asset, counted in dollars, 
 
 ### Step 1: a euro on deposit is a share that pays a dividend
 
-To own 1 euro in one year, nobody buys a whole euro today. Buying $e^{-r_f T}$ euros and leaving them on deposit at 3 percent grows them to exactly 1 euro. That is $D_f = 0.970446$ euros, costing $S\,D_f = 1.10 \times 0.970446$ dollars today.
+To own 1 euro in one year, nobody buys a whole euro today. Buying $`e^{-r_f T}`$ euros and leaving them on deposit at 3 percent grows them to exactly 1 euro. That is $`D_f = 0.970446`$ euros, costing $`S\,D_f = 1.10 \times 0.970446`$ dollars today.
 
-A share with a steady dividend yield $q$, dividends reinvested, behaves the same way: $e^{-qT}$ shares today become one share at $T$. So the euro is a share with dividend yield $q = r_f$, paid in euros. Everywhere Black-Scholes writes $e^{-qT}$ next to the spot, the currency formula writes $e^{-r_f T}$.
+A share with a steady dividend yield $`q`$, dividends reinvested, behaves the same way: $`e^{-qT}`$ shares today become one share at $`T`$. So the euro is a share with dividend yield $`q = r_f`$, paid in euros. Everywhere Black-Scholes writes $`e^{-qT}`$ next to the spot, the currency formula writes $`e^{-r_f T}`$.
 
 ### Step 2: spot drifts at the rate gap
 
-In dollars, the euro deposit is worth $S_t\,e^{r_f t}$ at time $t$: the spot rate times the growing pile of euros. It is a traded asset, so in the pricing world its dollar value must grow at $r_d$. The deposit supplies $r_f$ of that growth itself. The spot rate supplies the rest: it drifts at $r_d - r_f$.
+In dollars, the euro deposit is worth $`S_t\,e^{r_f t}`$ at time $`t`$: the spot rate times the growing pile of euros. It is a traded asset, so in the pricing world its dollar value must grow at $`r_d`$. The deposit supplies $`r_f`$ of that growth itself. The spot rate supplies the rest: it drifts at $`r_d - r_f`$.
 
-With lognormal wandering at volatility $\sigma$ (see [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)):
+With lognormal wandering at volatility $`\sigma`$ (see [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)):
 
-$$S_T = S\,\exp\!\Big((r_d - r_f - \tfrac12\sigma^2)\,T + \sigma\sqrt{T}\,Z\Big).$$
+```math
+S_T = S\,\exp\!\Big((r_d - r_f - \tfrac12\sigma^2)\,T + \sigma\sqrt{T}\,Z\Big).
+```
 
-The $-\tfrac12\sigma^2$ corrects for the average of a lognormal running ahead of its median. With it, the average of $S_T$ is $S\,e^{(r_d-r_f)T} = F$, which is the forward from covered interest parity ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)). The check computes both: the brute-force average of $S_T$ is 1.122221, and the parity forward is 1.122221. It also averages the deposit's dollar value and discounts it: 1.100000, today's spot, as a fairly priced asset must.
+The $`-\tfrac12\sigma^2`$ corrects for the average of a lognormal running ahead of its median. With it, the average of $`S_T`$ is $`S\,e^{(r_d-r_f)T} = F`$, which is the forward from covered interest parity ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)). The check computes both: the brute-force average of $`S_T`$ is 1.122221, and the parity forward is 1.122221. It also averages the deposit's dollar value and discounts it: 1.100000, today's spot, as a fairly priced asset must.
 
 Dollar rates at 5 percent, euro rates at 3 percent: the euro drifts up by 2 percent a year in the pricing world. That is no forecast. It is the rate gap, which any deposit arbitrage enforces.
 
 ### Step 3: split the payoff into two legs
 
-On expiry day the call pays $\max(S_T - K, 0)$ dollars per euro. Split it:
+On expiry day the call pays $`\max(S_T - K, 0)`$ dollars per euro. Split it:
 
-- the **euro leg**: receive one euro, worth $S_T$ dollars, if $S_T > K$;
-- the **dollar leg**: hand over $K$ dollars, if $S_T > K$.
+- the **euro leg**: receive one euro, worth $`S_T`$ dollars, if $`S_T > K`$;
+- the **dollar leg**: hand over $`K`$ dollars, if $`S_T > K`$.
 
-The option finishes above the strike when $Z > -d_2$, and the bell curve's symmetry makes that chance $N(d_2)$. So the dollar leg is worth $K\,D_d\,N(d_2)$: $1.10 \times 0.951229 \times 0.559618 = 0.585557$ dollars.
+The option finishes above the strike when $`Z > -d_2`$, and the bell curve's symmetry makes that chance $`N(d_2)`$. So the dollar leg is worth $`K\,D_d\,N(d_2)`$: $`1.10 \times 0.951229 \times 0.559618 = 0.585557`$ dollars.
 
 ### Step 4: the euro leg gets its own probability
 
-A euro is worth more in exactly the futures where it is received, the ones where the euro rose. Averaging "one euro, if above the strike" weights each good future by the euro's value there. That weighting slides the bell curve right by one wiggle unit, $\sigma\sqrt{T}$, and the chance becomes $N(d_1)$. The euro leg is $S\,D_f\,N(d_1) = 1.10 \times 0.970446 \times 0.598706 = 0.639113$ dollars.
+A euro is worth more in exactly the futures where it is received, the ones where the euro rose. Averaging "one euro, if above the strike" weights each good future by the euro's value there. That weighting slides the bell curve right by one wiggle unit, $`\sigma\sqrt{T}`$, and the chance becomes $`N(d_1)`$. The euro leg is $`S\,D_f\,N(d_1) = 1.10 \times 0.970446 \times 0.598706 = 0.639113`$ dollars.
 
-Subtract: $0.639113 - 0.585557 = 0.053556$ dollars per euro. That is the formula.
+Subtract: $`0.639113 - 0.585557 = 0.053556`$ dollars per euro. That is the formula.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write $v = \sigma\sqrt{T}$ and $m = (r_d - r_f - \tfrac12\sigma^2)T$, so $S_T = S\,e^{m + vZ}$ and the option pays when $Z > -d_2$, with $d_2 = (\ln(S/K) + m)/v$.
+Write $`v = \sigma\sqrt{T}`$ and $`m = (r_d - r_f - \tfrac12\sigma^2)T`$, so $`S_T = S\,e^{m + vZ}`$ and the option pays when $`Z > -d_2`$, with $`d_2 = (\ln(S/K) + m)/v`$.
 
-The price is $C = D_d \int_{-d_2}^{\infty} (S\,e^{m + vz} - K)\,\varphi(z)\,dz$.
+The price is $`C = D_d \int_{-d_2}^{\infty} (S\,e^{m + vz} - K)\,\varphi(z)\,dz`$.
 
-The dollar leg: $D_d\,K \int_{-d_2}^{\infty} \varphi(z)\,dz = K\,D_d\,N(d_2)$, since the curve is symmetric.
+The dollar leg: $`D_d\,K \int_{-d_2}^{\infty} \varphi(z)\,dz = K\,D_d\,N(d_2)`$, since the curve is symmetric.
 
-The euro leg: $D_d\,S\,e^{m}\int_{-d_2}^{\infty} e^{vz}\,\varphi(z)\,dz$. Complete the square: $vz - \tfrac12 z^2 = \tfrac12 v^2 - \tfrac12(z - v)^2$, so $e^{vz}\varphi(z) = e^{v^2/2}\,\varphi(z - v)$. Substitute $u = z - v$; the lower limit $-d_2$ becomes $-d_2 - v = -d_1$, and the integral is $e^{v^2/2}N(d_1)$.
+The euro leg: $`D_d\,S\,e^{m}\int_{-d_2}^{\infty} e^{vz}\,\varphi(z)\,dz`$. Complete the square: $`vz - \tfrac12 z^2 = \tfrac12 v^2 - \tfrac12(z - v)^2`$, so $`e^{vz}\varphi(z) = e^{v^2/2}\,\varphi(z - v)`$. Substitute $`u = z - v`$; the lower limit $`-d_2`$ becomes $`-d_2 - v = -d_1`$, and the integral is $`e^{v^2/2}N(d_1)`$.
 
-Collect the constants: $D_d\,e^{m}\,e^{v^2/2} = e^{-r_d T}\,e^{(r_d - r_f)T} = e^{-r_f T} = D_f$. The euro leg is $S\,D_f\,N(d_1)$.
+Collect the constants: $`D_d\,e^{m}\,e^{v^2/2} = e^{-r_d T}\,e^{(r_d - r_f)T} = e^{-r_f T} = D_f`$. The euro leg is $`S\,D_f\,N(d_1)`$.
 
-So $C = S\,D_f\,N(d_1) - K\,D_d\,N(d_2)$. The put is the same integral over $Z < -d_2$ with payoff $K - S_T$, giving $P = K\,D_d\,N(-d_2) - S\,D_f\,N(-d_1)$. $\blacksquare$
+So $`C = S\,D_f\,N(d_1) - K\,D_d\,N(d_2)`$. The put is the same integral over $`Z < -d_2`$ with payoff $`K - S_T`$, giving $`P = K\,D_d\,N(-d_2) - S\,D_f\,N(-d_1)`$. $`\blacksquare`$
 
 </details>
 
 ### Step 5: parity with two discount factors
 
-A call bought and a put sold at the same strike pay $S_T - K$ dollars on every path: receive a euro, hand over $K$ dollars. That is a forward contract, so its value today needs no model:
+A call bought and a put sold at the same strike pay $`S_T - K`$ dollars on every path: receive a euro, hand over $`K`$ dollars. That is a forward contract, so its value today needs no model:
 
-$$C - P = S\,D_f - K\,D_d.$$
+```math
+C - P = S\,D_f - K\,D_d.
+```
 
-Two discount factors, one per currency: the euro leg at the euro rate, the dollar leg at the dollar rate. For the house example, $1.10 \times 0.970446 - 1.10 \times 0.951229 = 0.021138$, and the call minus an independently averaged put is 0.021138. See [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) for the share version.
+Two discount factors, one per currency: the euro leg at the euro rate, the dollar leg at the dollar rate. For the house example, $`1.10 \times 0.970446 - 1.10 \times 0.951229 = 0.021138`$, and the call minus an independently averaged put is 0.021138. See [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) for the share version.
 
 ### The other door: Black-76 on the forward
 
-Substitute $S\,D_f = F\,D_d$, which is covered interest parity rewritten. The formula becomes $C = D_d\,[F\,N(d_1) - K\,N(d_2)]$ with $d_1 = (\ln(F/K) + \tfrac12\sigma^2 T)/(\sigma\sqrt{T})$: Black's 1976 formula for an option on a forward, discounted at the domestic rate. The code prices it this way from $F = 1.122221$ and gets 0.053556 again. Desks prefer this form, because the traded forward already carries both rates and the basis: [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md).
+Substitute $`S\,D_f = F\,D_d`$, which is covered interest parity rewritten. The formula becomes $`C = D_d\,[F\,N(d_1) - K\,N(d_2)]`$ with $`d_1 = (\ln(F/K) + \tfrac12\sigma^2 T)/(\sigma\sqrt{T})`$: Black's 1976 formula for an option on a forward, discounted at the domestic rate. The code prices it this way from $`F = 1.122221`$ and gets 0.053556 again. Desks prefer this form, because the traded forward already carries both rates and the basis: [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md).
 
 ---
 
 ## Worked numbers, by hand
 
-EURUSD: $S = 1.10$, $K = 1.10$, $r_d = 5\%$ (USD), $r_f = 3\%$ (EUR), $\sigma = 10\%$, $T = 1$ year.
+EURUSD: $`S = 1.10`$, $`K = 1.10`$, $`r_d = 5\%`$ (USD), $`r_f = 3\%`$ (EUR), $`\sigma = 10\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\ln(S/K)$ | $\ln 1$ | 0 |
-| drift plus half variance | $0.05 - 0.03 + 0.005$ | 0.025 |
-| one wiggle unit, $\sigma\sqrt{T}$ | $0.10 \times 1$ | 0.10 |
-| $d_1$ | $0.025 / 0.10$ | 0.25 |
-| $d_2$ | $0.25 - 0.10$ | 0.15 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.598706, 0.559618 |
-| $D_f = e^{-0.03}$ | euro discount | 0.970446 |
-| $D_d = e^{-0.05}$ | dollar discount | 0.951229 |
-| euro leg | $1.10 \times 0.970446 \times 0.598706$ | 0.639113 |
-| dollar leg | $1.10 \times 0.951229 \times 0.559618$ | 0.585557 |
-| **EUR call / USD put** | $0.639113 - 0.585557$ | **0.053556 USD per EUR** |
-| in USD pips | $0.053556 \times 10{,}000$ | 536 |
-| as a share of the EUR notional | $0.053556 / 1.10$ | 4.87% |
-| on EUR 10 million | $0.053556 \times 10{,}000{,}000$ | USD 535,558 |
-| EUR put / USD call | same legs, $N(-d_2)$ and $N(-d_1)$ | 0.032418 |
+| $`\ln(S/K)`$ | $`\ln 1`$ | 0 |
+| drift plus half variance | $`0.05 - 0.03 + 0.005`$ | 0.025 |
+| one wiggle unit, $`\sigma\sqrt{T}`$ | $`0.10 \times 1`$ | 0.10 |
+| $`d_1`$ | $`0.025 / 0.10`$ | 0.25 |
+| $`d_2`$ | $`0.25 - 0.10`$ | 0.15 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.598706, 0.559618 |
+| $`D_f = e^{-0.03}`$ | euro discount | 0.970446 |
+| $`D_d = e^{-0.05}`$ | dollar discount | 0.951229 |
+| euro leg | $`1.10 \times 0.970446 \times 0.598706`$ | 0.639113 |
+| dollar leg | $`1.10 \times 0.951229 \times 0.559618`$ | 0.585557 |
+| **EUR call / USD put** | $`0.639113 - 0.585557`$ | **0.053556 USD per EUR** |
+| in USD pips | $`0.053556 \times 10{,}000`$ | 536 |
+| as a share of the EUR notional | $`0.053556 / 1.10`$ | 4.87% |
+| on EUR 10 million | $`0.053556 \times 10{,}000{,}000`$ | USD 535,558 |
+| EUR put / USD call | same legs, $`N(-d_2)`$ and $`N(-d_1)`$ | 0.032418 |
 
 So insuring a 10-million-euro bill against a rising euro, for one year, at today's rate, costs about 536 thousand dollars: 5.36 US cents on each euro of cover, or 4.87% of the notional's value. The same quantity has four names on a dealing screen, which is its own card: [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md).
 
@@ -181,7 +189,7 @@ Correct answer 0.053556 dollars per euro.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Rates the wrong way round: dollar rate on the spot, euro rate on the strike | 0.032418 | 40% light. With spot at the strike, it lands exactly on the put's price. |
-| Euro rate left out, $r_f = 0$ | 0.074855 | The euro is priced as a share with no dividend, so the forward is overstated |
+| Euro rate left out, $`r_f = 0`$ | 0.074855 | The euro is priced as a share with no dividend, so the forward is overstated |
 | Black-76 on the forward, discounted at the euro rate | 0.054638 | The premium is dollars paid today; only the dollar rate discounts it |
 
 Every number in the table is printed by both checks.
@@ -204,7 +212,7 @@ The falling line is the EUR call; the rising line is the EUR put. They cross at 
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the price by **four independent roads**: the formula; a brute-force average of the payoff over the bell curve by Simpson's rule, which uses no $d_1$ or $d_2$; Black-76 on the forward built from covered interest parity; and a 2,000-step coin-flip tree whose steps grow at $r_d - r_f$. Then they price the put by its own average and test parity with two discount factors, check that the average future spot equals the parity forward and that the euro deposit is fairly priced, bump the spot to confirm the spot delta, and reproduce every "what breaks" number and chart point. Two cross-checks tie the card to its neighbours: the house share market, $S = K = 100$, $r_d = 5\%$, $r_f = 2\%$, $\sigma = 20\%$, must give the share call 9.227006 of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md); and a second currency case, EURUSD 1.20, dollar rate 4%, euro rate 2%, vol 10%, must give 0.059012.
+The scripts reach the price by **four independent roads**: the formula; a brute-force average of the payoff over the bell curve by Simpson's rule, which uses no $`d_1`$ or $`d_2`$; Black-76 on the forward built from covered interest parity; and a 2,000-step coin-flip tree whose steps grow at $`r_d - r_f`$. Then they price the put by its own average and test parity with two discount factors, check that the average future spot equals the parity forward and that the euro deposit is fairly priced, bump the spot to confirm the spot delta, and reproduce every "what breaks" number and chart point. Two cross-checks tie the card to its neighbours: the house share market, $`S = K = 100`$, $`r_d = 5\%`$, $`r_f = 2\%`$, $`\sigma = 20\%`$, must give the share call 9.227006 of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md); and a second currency case, EURUSD 1.20, dollar rate 4%, euro rate 2%, vol 10%, must give 0.059012.
 
 ### Python
 
@@ -376,7 +384,7 @@ chart, put in pips        212.07   245.84   283.19   324.18   368.87   417.26   
 ALL CHECKS PASS
 ```
 
-The four roads agree to six decimals, except the tree, which sits just below at 0.053550 and closes the gap as steps are added. The spot delta, $D_f\,N(d_1) = 0.581012$, is how many euros the dealer holds on deposit per euro of option; bumping the spot confirms it.
+The four roads agree to six decimals, except the tree, which sits just below at 0.053550 and closes the gap as steps are added. The spot delta, $`D_f\,N(d_1) = 0.581012`$, is how many euros the dealer holds on deposit per euro of option; bumping the spot confirms it.
 
 ### Rust
 
@@ -568,11 +576,11 @@ The two outputs agree line for line at the printed precision, from two different
 
 Lean proves the call price, the put price, the forward and parity, for any positive spot, strike, volatility and expiry, and any rates.
 
-- Suppose the spot on expiry day is $S_T$ as in Step 2, with $S$, $K$, $\sigma$, $T$ all positive. Then the call's average payoff, discounted at the dollar rate, is $S\,D_f\,N(d_1) - K\,D_d\,N(d_2)$.
-- Take the same model. Then the put's average payoff, discounted at the dollar rate, is $K\,D_d\,N(-d_2) - S\,D_f\,N(-d_1)$.
-- Take the same model. Then the average of $S_T$ is the parity forward $F = S\,e^{(r_d - r_f)T}$.
-- Take the same model. Then call minus put is $S\,D_f - K\,D_d$.
-- The house example's $d_1 = 0.25$ and $d_2 = 0.15$ come out exactly, and 535.56 pips is 0.053556 dollars per euro.
+- Suppose the spot on expiry day is $`S_T`$ as in Step 2, with $`S`$, $`K`$, $`\sigma`$, $`T`$ all positive. Then the call's average payoff, discounted at the dollar rate, is $`S\,D_f\,N(d_1) - K\,D_d\,N(d_2)`$.
+- Take the same model. Then the put's average payoff, discounted at the dollar rate, is $`K\,D_d\,N(-d_2) - S\,D_f\,N(-d_1)`$.
+- Take the same model. Then the average of $`S_T`$ is the parity forward $`F = S\,e^{(r_d - r_f)T}`$.
+- Take the same model. Then call minus put is $`S\,D_f - K\,D_d`$.
+- The house example's $`d_1 = 0.25`$ and $`d_2 = 0.15`$ come out exactly, and 535.56 pips is 0.053556 dollars per euro.
 
 The Black-76 form, the coin-flip tree, the spot delta and every printed price, such as 0.053556, are left to the Python and Rust checks.
 
@@ -903,9 +911,9 @@ example : (53556 / 100 : ℚ) * (1 / 10000) = 53556 / 1000000 := by norm_num
 > **Try changing**
 > Guess the direction first.
 > - **Set the euro rate equal to the dollar rate**, `rf = 0.05`. The forward falls to spot, and with spot at the strike the call and the put cost the same: **0.041726** each.
-> - **Shorten to three months**, `T = 0.25`. The call falls to **0.024552**, a little under half the one-year price, not a quarter: the wiggle grows with $\sqrt{T}$, and $\sqrt{0.25} = 0.5$.
+> - **Shorten to three months**, `T = 0.25`. The call falls to **0.024552**, a little under half the one-year price, not a quarter: the wiggle grows with $`\sqrt{T}`$, and $`\sqrt{0.25} = 0.5`$.
 > - **Double the vol**, `vol = 0.20`. The call rises to **0.095178**. Vol is the input the market argues about.
-> - **Raise the strike to 1.20.** The call drops to **0.016574** and the put rises to **0.090559**; call minus put still equals $S\,D_f - K\,D_d$.
+> - **Raise the strike to 1.20.** The call drops to **0.016574** and the put rises to **0.090559**; call minus put still equals $`S\,D_f - K\,D_d`$.
 
 ---
 
@@ -916,7 +924,7 @@ example : (53556 / 100 : ℚ) * (1 / 10000) = 53556 / 1000000 := by norm_num
 >
 > Four smaller traps:
 > - **Domestic means the quote currency, not home.** USDJPY is yen per dollar, so the yen is domestic and the dollar is foreign, even for a desk in New York. The currency conventions card: [Reading a currency quote](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/01-currency-quotes-and-cross-rates.md).
-> - **Hedging with $N(d_1)$ euros.** The spot delta is $D_f\,N(d_1) = 0.581012$, not $N(d_1) = 0.598706$. Desks quote four different deltas for one option: [Four deltas for one option](04-fx-delta-conventions.md).
+> - **Hedging with $`N(d_1)`$ euros.** The spot delta is $`D_f\,N(d_1) = 0.581012`$, not $`N(d_1) = 0.598706`$. Desks quote four different deltas for one option: [Four deltas for one option](04-fx-delta-conventions.md).
 > - **Strikes quoted by delta.** An FX screen shows vols at "25 delta", not at 1.1000, so a delta has to become a strike before this formula runs: [Strike from delta](06-fx-strike-from-delta.md). "At the money" has three meanings too: [Three meanings of at-the-money](05-at-the-money-conventions.md).
 > - **Money-market rates fed in raw.** Deposit rates are quoted simple, on a 360- or 365-day year. The formula wants continuously compounded rates for the option's own dates. A mismatch moves the forward, and the forward moves the price.
 
@@ -927,25 +935,25 @@ example : (53556 / 100 : ℚ) * (1 / 10000) = 53556 / 1000000 := by norm_num
 - **Every vanilla currency option on a dealer's screen.** Banks quote FX options as a vol, then convert to a premium through this formula. Conventions verified 2026-09-27: EURUSD is quoted as US dollars per euro, so the dollar is domestic; a pip is 0.0001 of the quote; USD and EUR deposit rates are simple, actual/360.
 - **Corporate hedging.** An importer paying euros buys EUR calls, as the Boston firm did; an exporter receiving euros buys EUR puts. The premium is the price of a worst-case rate.
 - **Reading the rate gap.** When the foreign rate exceeds the domestic one, the forward sits below spot and calls on the foreign currency are cheap. The chart above shows it in pips.
-- **Barriers and touches on currencies.** The drift $r_d - r_f$ and the two discount factors carry straight into the reflection prices of [Knock-out and knock-in](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md).
+- **Barriers and touches on currencies.** The drift $`r_d - r_f`$ and the two discount factors carry straight into the reflection prices of [Knock-out and knock-in](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md).
 - **Paying in a third currency.** A quanto pays a foreign asset's return in another currency at a fixed rate, and its forward picks up a correlation term on top of this card's drift: [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md).
 
 > **Say it back**
-> A euro on deposit earns euro interest, so the euro is a share whose dividend yield is the euro rate. In the pricing world counted in dollars, spot drifts at the dollar rate minus the euro rate, and its average lands on the interest-parity forward. The call is the euro leg, discounted at the euro rate and weighted by $N(d_1)$, minus the dollar leg, discounted at the dollar rate and weighted by $N(d_2)$. Written from the forward, it is Black-76 discounted at the dollar rate. Swap the two rates and the price is wrong by about 40 percent in the house example.
+> A euro on deposit earns euro interest, so the euro is a share whose dividend yield is the euro rate. In the pricing world counted in dollars, spot drifts at the dollar rate minus the euro rate, and its average lands on the interest-parity forward. The call is the euro leg, discounted at the euro rate and weighted by $`N(d_1)`$, minus the dollar leg, discounted at the dollar rate and weighted by $`N(d_2)`$. Written from the forward, it is Black-76 discounted at the dollar rate. Swap the two rates and the price is wrong by about 40 percent in the house example.
 
 ---
 
 ## What this builds on
 
-- [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): the forward $S\,e^{(r_d-r_f)T}$ that the pricing world's average must land on.
+- [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): the forward $`S\,e^{(r_d-r_f)T}`$ that the pricing world's average must land on.
 - [Reading a currency quote](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/01-currency-quotes-and-cross-rates.md): which currency is the price and which is the thing, and what a pip is.
-- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the share formula this card relabels, with $q$ becoming $r_f$.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the share formula this card relabels, with $`q`$ becoming $`r_f`$.
 - [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the mirror option, here the EUR put / USD call.
 - [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the forward form, and the road desks price on.
 - [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): why averaging in a pretend world and discounting gives a price.
 - [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the model-free link between call and put, here with one discount factor per currency.
-- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve and its area $N(x)$.
-- [Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): why the average of $S_T$ needs the $-\tfrac12\sigma^2$ correction.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve and its area $`N(x)`$.
+- [Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): why the average of $`S_T`$ needs the $`-\tfrac12\sigma^2`$ correction.
 - [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the wandering exchange rate, a drift plus random kicks in log space.
 
 ## Where this goes next

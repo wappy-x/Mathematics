@@ -40,30 +40,34 @@ The bent line is the two legs drawn as arrows, tail to head: out to (3, 4), then
 
 A vector is written as its numbers in order inside round brackets: (3, 4). That notation is used from here on.
 
-Name the two runs. Let $u$ = (3, 4) be the first leg and $v$ = (2, -1) the second. The numbers inside get slot numbers: $u_1$ = 3 and $u_2$ = 4, $v_1$ = 2 and $v_2$ = -1. The small number says which slot, not a power. The proper name for the number in a slot is a **component**, which is the word the code below uses.
+Name the two runs. Let $`u`$ = (3, 4) be the first leg and $`v`$ = (2, -1) the second. The numbers inside get slot numbers: $`u_1`$ = 3 and $`u_2`$ = 4, $`v_1`$ = 2 and $`v_2`$ = -1. The small number says which slot, not a power. The proper name for the number in a slot is a **component**, which is the word the code below uses.
 
 Adding, slot against matching slot:
 
-$$u + v = (u_1 + v_1, \; u_2 + v_2)$$
+```math
+u + v = (u_1 + v_1, \; u_2 + v_2)
+```
 
-Scaling, where $a$ is a **scalar** — one plain number, not a list:
+Scaling, where $`a`$ is a **scalar** — one plain number, not a list:
 
-$$a u = (a u_1, \; a u_2)$$
+```math
+a u = (a u_1, \; a u_2)
+```
 
 **Read it aloud:** to add, add the firsts and add the seconds; to scale, multiply every number by the same amount.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | the first vector: the first leg of the ride | (3, 4) | the finish moves with it |
-| $v$ | the second vector: the second leg | (2, -1) | the two legs count equally |
-| $u_1$, $u_2$ | the numbers inside the first vector, east then north | 3 and 4 | only that slot changes |
-| $v_1$, $v_2$ | the numbers inside the second vector | 2 and -1 | only that slot changes |
-| $u + v$ | the two legs added, slot by slot | (5, 3) | — |
-| $a$ | a scalar: one plain number, not a list | 2 | the arrow gets longer, same direction |
-| $a u$ | the scaled vector: every slot multiplied by $a$ | (6, 8) | — |
-| $n$ | how many numbers the list holds | 2 | a longer list; the two rules do not change |
+| $`u`$ | the first vector: the first leg of the ride | (3, 4) | the finish moves with it |
+| $`v`$ | the second vector: the second leg | (2, -1) | the two legs count equally |
+| $`u_1`$, $`u_2`$ | the numbers inside the first vector, east then north | 3 and 4 | only that slot changes |
+| $`v_1`$, $`v_2`$ | the numbers inside the second vector | 2 and -1 | only that slot changes |
+| $`u + v`$ | the two legs added, slot by slot | (5, 3) | — |
+| $`a`$ | a scalar: one plain number, not a list | 2 | the arrow gets longer, same direction |
+| $`a u`$ | the scaled vector: every slot multiplied by $`a`$ | (6, 8) | — |
+| $`n`$ | how many numbers the list holds | 2 | a longer list; the two rules do not change |
 
-Two numbers is not special. A vector holding $n$ numbers lives in R^n, said "R n": R for the real numbers, the raised $n$ for how many are in the list. R^2 is the flat map, R^3 the room you are sitting in, R^4 and upward no picture at all — n-dimensional just means n numbers. The two rules run down a longer list and are otherwise identical.
+Two numbers is not special. A vector holding $`n`$ numbers lives in R^n, said "R n": R for the real numbers, the raised $`n`$ for how many are in the list. R^2 is the flat map, R^3 the room you are sitting in, R^4 and upward no picture at all — n-dimensional just means n numbers. The two rules run down a longer list and are otherwise identical.
 
 One vector gets its own name. The **zero vector**, written 0, is all zeros: (0, 0) in R^2, (0, 0, 0) in R^3. It is the ride that never left the shop. Add it to anything and nothing moves.
 

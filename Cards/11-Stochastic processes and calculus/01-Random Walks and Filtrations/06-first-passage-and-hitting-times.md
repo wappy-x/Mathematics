@@ -28,46 +28,52 @@ One sample match from the seeded generator in the code (seed 7, the first match 
 
 ## The formula
 
-Notation first, in words. The score after n rounds is written $S_n$: Ana's total winnings in dollars, the simple random walk of [Simple random walk](02-simple-random-walk.md). Each round it moves up one dollar with probability $p$ and down one dollar with probability $q = 1 - p$. The Greek letter tau, $\tau_a$, is the first round on which the score equals the level $a$. The return time $T$ is the first round, after round 0, on which the score is level again.
+Notation first, in words. The score after n rounds is written $`S_n`$: Ana's total winnings in dollars, the simple random walk of [Simple random walk](02-simple-random-walk.md). Each round it moves up one dollar with probability $`p`$ and down one dollar with probability $`q = 1 - p`$. The Greek letter tau, $`\tau_a`$, is the first round on which the score equals the level $`a`$. The return time $`T`$ is the first round, after round 0, on which the score is level again.
 
-$$\tau_a = \min\{\,n \ge 1 : S_n = a\,\}, \qquad T = \tau_0, \qquad \tau_a = \infty \text{ if the score never gets there.}$$
+```math
+\tau_a = \min\{\,n \ge 1 : S_n = a\,\}, \qquad T = \tau_0, \qquad \tau_a = \infty \text{ if the score never gets there.}
+```
 
 **Read it aloud:** the hitting time of a level is the first round the score stands on it; if that never happens, the hitting time is infinite.
 
-Whether it arrives, for a target $a$ of 1 or more:
+Whether it arrives, for a target $`a`$ of 1 or more:
 
-$$P(\tau_a < \infty) = \begin{cases} 1 & p \ge \tfrac12 \\ (p/q)^a & p < \tfrac12 \end{cases} \qquad\qquad P(T < \infty) = 1 - \lvert p - q \rvert.$$
+```math
+P(\tau_a < \infty) = \begin{cases} 1 & p \ge \tfrac12 \\ (p/q)^a & p < \tfrac12 \end{cases} \qquad\qquad P(T < \infty) = 1 - \lvert p - q \rvert.
+```
 
 **Read it aloud:** a fair walk, or one tilted towards the target, gets there for sure; one tilted away loses a factor p over q per level; and the chance of ever coming back is one minus the gap between p and q.
 
 How long, for the fair coin:
 
-$$P(T > 2n) = u_{2n} = \binom{2n}{n}\frac{1}{2^{2n}}, \qquad E[T] = \infty.$$
+```math
+P(T > 2n) = u_{2n} = \binom{2n}{n}\frac{1}{2^{2n}}, \qquad E[T] = \infty.
+```
 
 **Read it aloud:** the chance of no return in 2n rounds equals the chance of a tie at round 2n; and the average return time is infinite.
 
-The binomial coefficient $\binom{2n}{n}$ counts the ways to choose which n of 2n rounds Ana wins. The return time is always even: a tie needs as many wins as losses.
+The binomial coefficient $`\binom{2n}{n}`$ counts the ways to choose which n of 2n rounds Ana wins. The return time is always even: a tie needs as many wins as losses.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_n$, $S_{2n}$ | the score after n rounds: Ana's winnings in dollars | starts at 0 | — |
-| $n$ | rounds played: the clock | 10, 100, 1,000 | fewer matches still waiting |
-| $p$ | chance Ana wins a round | 0.5; tilted: 0.4, 0.6 | upward targets come sooner |
-| $q$ | chance Ben wins a round, 1 − p | 0.5 | upward targets may be missed |
-| $a$ | the target level, in dollars | +1, +3 | a tilted-away walk arrives less often |
-| $\tau_a$, $\tau_1$ | hitting time: first round the score equals a | at least 1 round | — |
-| $T$ | return time: first round after 0 with the score level | 16 in the picture | — |
-| $b$ | depth of a temporary floor at −b dollars | 10, 100, 1,000 | the capped wait grows with it |
-| $h$ | chance the score ever climbs one level | 1 when fair; 0.666667 at p = 0.4 | — |
-| $u_{2n}$, $u_0$, $u_2$, $u_4$, $u_6$, $u_8$, $u_{10}$ | chance of a tie at round 2n, and of no return by then | $u_{10}$ = 0.246094 | — |
-| $N$ | half the cap: the wait is cut off at 2N rounds | cap 10: N = 5 | capped average grows like √N |
-| $k$ | a whole-number counter inside steps and proofs: a round, a number of returns, half a final score, or a factor's place | — | — |
-| $M(j)$ | in the reflection proof: the number of (2n − 1)-round matches whose net change is j | $M(1)$, half of $\binom{2n}{n}$ | — |
-| $s$ | the dial of the generating function: the chance of a first return at round 2n is weighted by s to the power 2n | s = 1 adds up the chances themselves | — |
+| $`S_n`$, $`S_{2n}`$ | the score after n rounds: Ana's winnings in dollars | starts at 0 | — |
+| $`n`$ | rounds played: the clock | 10, 100, 1,000 | fewer matches still waiting |
+| $`p`$ | chance Ana wins a round | 0.5; tilted: 0.4, 0.6 | upward targets come sooner |
+| $`q`$ | chance Ben wins a round, 1 − p | 0.5 | upward targets may be missed |
+| $`a`$ | the target level, in dollars | +1, +3 | a tilted-away walk arrives less often |
+| $`\tau_a`$, $`\tau_1`$ | hitting time: first round the score equals a | at least 1 round | — |
+| $`T`$ | return time: first round after 0 with the score level | 16 in the picture | — |
+| $`b`$ | depth of a temporary floor at −b dollars | 10, 100, 1,000 | the capped wait grows with it |
+| $`h`$ | chance the score ever climbs one level | 1 when fair; 0.666667 at p = 0.4 | — |
+| $`u_{2n}`$, $`u_0`$, $`u_2`$, $`u_4`$, $`u_6`$, $`u_8`$, $`u_{10}`$ | chance of a tie at round 2n, and of no return by then | $`u_{10}`$ = 0.246094 | — |
+| $`N`$ | half the cap: the wait is cut off at 2N rounds | cap 10: N = 5 | capped average grows like √N |
+| $`k`$ | a whole-number counter inside steps and proofs: a round, a number of returns, half a final score, or a factor's place | — | — |
+| $`M(j)`$ | in the reflection proof: the number of (2n − 1)-round matches whose net change is j | $`M(1)`$, half of $`\binom{2n}{n}`$ | — |
+| $`s`$ | the dial of the generating function: the chance of a first return at round 2n is weighted by s to the power 2n | s = 1 adds up the chances themselves | — |
 
 ### When it holds
 
-- **Steps of exactly one dollar.** The score cannot jump a level, so reaching +3 means reaching +1, +2, +3 in turn. With larger steps it can leap past, and the power $(p/q)^a$ is wrong.
+- **Steps of exactly one dollar.** The score cannot jump a level, so reaching +3 means reaching +1, +2, +3 in turn. With larger steps it can leap past, and the power $`(p/q)^a`$ is wrong.
 - **Independent rounds with the same p.** After each hit the game restarts afresh, which the first-step equations use. If the chance drifts from round to round, the formulas do not apply.
 - **Exact fairness, for the sure return and the infinite mean.** At p = 0.4 or 0.6 the chance of ever being level again drops to 0.8. At p = 0.6 the wait to reach +1 has a finite average of 5 rounds.
 - **No floor and no deadline.** A gambler with 10 chips who stops at 0 or 11 plays 10 rounds on average. The infinite mean needs unlimited credit and time.
@@ -85,24 +91,26 @@ The tosses after a hit are new coins, untouched by it, so the game restarts afre
 
 ### Step 1: the chance of ever climbing one level solves a quadratic
 
-Let $h$ be the chance that the score ever reaches +1. With chance p Ana wins round 1 and is there. With chance q she loses it; from −1 the score must climb two levels, each a fresh copy of the first, with chance h times h.
+Let $`h`$ be the chance that the score ever reaches +1. With chance p Ana wins round 1 and is there. With chance q she loses it; from −1 the score must climb two levels, each a fresh copy of the first, with chance h times h.
 
-$$h = p + q\,h^2.$$
+```math
+h = p + q\,h^2.
+```
 
-It factors as $(h - 1)(q\,h - p) = 0$, so h is 1 or p/q. The equation cannot choose; a floor can. Ask for +1 before a floor at −b: that is gambler's ruin, with answer b/(b + 1) for the fair coin. A match that reaches +1 dips only so far first, so a deep enough floor never interferes. Hence h is the limit as b grows: 1 for the fair coin, p/q when p is below one half (0.666667 at p = 0.4).
+It factors as $`(h - 1)(q\,h - p) = 0`$, so h is 1 or p/q. The equation cannot choose; a floor can. Ask for +1 before a floor at −b: that is gambler's ruin, with answer b/(b + 1) for the fair coin. A match that reaches +1 dips only so far first, so a deep enough floor never interferes. Hence h is the limit as b grows: 1 for the fair coin, p/q when p is below one half (0.666667 at p = 0.4).
 
-Reaching +a is a climbs of one level in a row, so $P(\tau_a < \infty) = h^a$. At p = 0.4 the chance of ever being $3 ahead is 0.296296.
+Reaching +a is a climbs of one level in a row, so $`P(\tau_a < \infty) = h^a`$. At p = 0.4 the chance of ever being $3 ahead is 0.296296.
 
 <details>
 <summary>Detailed proof: the fresh start and the moving floor</summary>
 
 **Fresh start.** Whether the first hit of +1 is at round k is decided by tosses 1 to k. Later tosses are independent of those, with the same law. Summing over k, the chance of reaching +1 and then climbing once more is the sum of P(first hit at k) times h, that is h times h. Downward climbs work the same way.
 
-**First step.** Condition on round 1 (the law of total probability, from [Conditional probability](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/05-conditional-probability.md)): up gives chance 1, down needs two fresh climbs, chance $h^2$. Hence $h = p + q\,h^2$.
+**First step.** Condition on round 1 (the law of total probability, from [Conditional probability](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/05-conditional-probability.md)): up gives chance 1, down needs two fresh climbs, chance $`h^2`$. Hence $`h = p + q\,h^2`$.
 
-**Moving floor.** Let E(b) be the event that the score reaches +1 before −b. Steps are ±1, so to reach −(b + 1) the score must first touch −b; hence E(b) is contained in E(b + 1). A match with $\tau_1 = k$ has a lowest score on rounds 0 to k; any floor −b below that puts the match in E(b). So the union of the events E(b) is the event that $\tau_1$ is finite, and continuity of probability along an increasing sequence ([Continuity and subadditivity](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $P(\tau_1 < \infty) = \lim_b P(E(b))$.
+**Moving floor.** Let E(b) be the event that the score reaches +1 before −b. Steps are ±1, so to reach −(b + 1) the score must first touch −b; hence E(b) is contained in E(b + 1). A match with $`\tau_1 = k`$ has a lowest score on rounds 0 to k; any floor −b below that puts the match in E(b). So the union of the events E(b) is the event that $`\tau_1`$ is finite, and continuity of probability along an increasing sequence ([Continuity and subadditivity](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $`P(\tau_1 < \infty) = \lim_b P(E(b))`$.
 
-**The limit.** [Gambler's ruin](04-gamblers-ruin.md) gives P(E(b)) = b/(b + 1) when p = q, and $(1 - (q/p)^b)/(1 - (q/p)^{b+1})$ otherwise. Fair: the limit is 1. When p > q, q/p is below 1, its powers shrink to 0, and the limit is 1. When p < q, divide top and bottom by $(q/p)^{b+1}$: the limit is p/q. Then $P(\tau_a < \infty) = h^a$, by a fresh climbs in a row.
+**The limit.** [Gambler's ruin](04-gamblers-ruin.md) gives P(E(b)) = b/(b + 1) when p = q, and $`(1 - (q/p)^b)/(1 - (q/p)^{b+1})`$ otherwise. Fair: the limit is 1. When p > q, q/p is below 1, its powers shrink to 0, and the limit is 1. When p < q, divide top and bottom by $`(q/p)^{b+1}`$: the limit is p/q. Then $`P(\tau_a < \infty) = h^a`$, by a fresh climbs in a row.
 
 </details>
 
@@ -110,7 +118,9 @@ Reaching +a is a climbs of one level in a row, so $P(\tau_a < \infty) = h^a$. At
 
 After round 1 the score is +1 (chance p) or −1 (chance q). From +1, getting back is one level downward: Step 1 with p and q swapped gives chance 1 if q ≥ p, else q/p. From −1 it is 1 if p ≥ q, else p/q. So
 
-$$P(T < \infty) = p\cdot\min(1, q/p) + q\cdot\min(1, p/q) = 2\min(p, q) = 1 - \lvert p - q\rvert.$$
+```math
+P(T < \infty) = p\cdot\min(1, q/p) + q\cdot\min(1, p/q) = 2\min(p, q) = 1 - \lvert p - q\rvert.
+```
 
 using p + q = 1. For the fair coin it is 1: the walk is **recurrent**, meaning it comes back for sure. Each return restarts the game, so it comes back again and again, infinitely often. At p = 0.4 the chance is 0.8, and at least k returns has chance 0.8 to the power k: after a few returns the walk leaves for good, which is called **transient**.
 
@@ -118,13 +128,15 @@ Inside walls at +b and −b, the fair score is level again before a wall with ch
 
 ### Step 3: the chance of still waiting after 2n rounds is the chance of a tie at 2n
 
-The reflection principle of [Reflection principle](05-reflection-principle-for-walks.md) gives the law. Count the 2n-round matches in which Ana stays strictly ahead. Reflection turns the count into a telescoping sum, which collapses to half the ways to tie at round 2n. Adding the mirror case, Ben ahead, gives $\binom{2n}{n}$ of the $2^{2n}$ matches never level after the start:
+The reflection principle of [Reflection principle](05-reflection-principle-for-walks.md) gives the law. Count the 2n-round matches in which Ana stays strictly ahead. Reflection turns the count into a telescoping sum, which collapses to half the ways to tie at round 2n. Adding the mirror case, Ben ahead, gives $`\binom{2n}{n}`$ of the $`2^{2n}`$ matches never level after the start:
 
-$$P(T > 2n) = u_{2n}.$$
+```math
+P(T > 2n) = u_{2n}.
+```
 
-Differences give the first-return chances, $P(T = 2n) = u_{2n-2} - u_{2n}$: 1/2, 1/8, 1/16 and 5/128 for rounds 2, 4, 6 and 8.
+Differences give the first-return chances, $`P(T = 2n) = u_{2n-2} - u_{2n}`$: 1/2, 1/8, 1/16 and 5/128 for rounds 2, 4, 6 and 8.
 
-The wait for +1 has the same law, one round earlier. The return time is round 1 plus a one-level wait back to 0, which by the mirror has the law of $\tau_1$. So $P(\tau_1 = 2n - 1) = P(T = 2n)$: 1/2, 1/8, 1/16 and 5/128 for rounds 1, 3, 5 and 7. The code confirms both laws on all 65,536 matches of 16 rounds.
+The wait for +1 has the same law, one round earlier. The return time is round 1 plus a one-level wait back to 0, which by the mirror has the law of $`\tau_1`$. So $`P(\tau_1 = 2n - 1) = P(T = 2n)`$: 1/2, 1/8, 1/16 and 5/128 for rounds 1, 3, 5 and 7. The code confirms both laws on all 65,536 matches of 16 rounds.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -135,30 +147,32 @@ xychart-beta
     line [1.00, 0.25, 0.18, 0.14, 0.13, 0.11, 0.10, 0.10, 0.09, 0.08, 0.08]
 ```
 
-The line is the chance of no return yet, at every tenth round, to two places. It drops fast, then crawls: 0.25 at round 10, 0.08 at round 100. By [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md), $u_{2n}$ is close to one over the square root of π n: at round 1,000, so n = 500, that gives 0.025231 against the true 0.025225.
+The line is the chance of no return yet, at every tenth round, to two places. It drops fast, then crawls: 0.25 at round 10, 0.08 at round 100. By [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md), $`u_{2n}`$ is close to one over the square root of π n: at round 1,000, so n = 500, that gives 0.025231 against the true 0.025225.
 
 <details>
 <summary>Detailed proof: the reflection count, and the first-return law</summary>
 
-Call a match of 2n rounds **Ana-ahead** if the score is positive on every round 1 to 2n. Such a match wins round 1 and then runs 2n − 1 rounds from +1 without touching 0. Fix its final score 2k, with k from 1 to n. Write $M(j)$ for the number of (2n − 1)-round matches whose net change is j.
+Call a match of 2n rounds **Ana-ahead** if the score is positive on every round 1 to 2n. Such a match wins round 1 and then runs 2n − 1 rounds from +1 without touching 0. Fix its final score 2k, with k from 1 to n. Write $`M(j)`$ for the number of (2n − 1)-round matches whose net change is j.
 
-Matches from +1 to 2k: $M(2k - 1)$ of them. Those that touch 0: reflect the part before the first touch in the level 0. That swaps them one for one with matches from −1 to 2k, of which there are $M(2k + 1)$ (the reflection principle). So Ana-ahead matches ending at 2k number $M(2k - 1) - M(2k + 1)$.
+Matches from +1 to 2k: $`M(2k - 1)`$ of them. Those that touch 0: reflect the part before the first touch in the level 0. That swaps them one for one with matches from −1 to 2k, of which there are $`M(2k + 1)`$ (the reflection principle). So Ana-ahead matches ending at 2k number $`M(2k - 1) - M(2k + 1)`$.
 
-Sum over k from 1 to n. Each negative term cancels the next positive one, and $M(2n + 1) = 0$, leaving $M(1)$: matches of 2n − 1 rounds with n wins and n − 1 losses, which is $\binom{2n-1}{n}$, half of $\binom{2n}{n}$. Adding the mirror Ben-ahead matches gives $\binom{2n}{n}$ matches never level after the start, and dividing by $2^{2n}$ gives $P(T > 2n) = u_{2n}$.
+Sum over k from 1 to n. Each negative term cancels the next positive one, and $`M(2n + 1) = 0`$, leaving $`M(1)`$: matches of 2n − 1 rounds with n wins and n − 1 losses, which is $`\binom{2n-1}{n}`$, half of $`\binom{2n}{n}`$. Adding the mirror Ben-ahead matches gives $`\binom{2n}{n}`$ matches never level after the start, and dividing by $`2^{2n}`$ gives $`P(T > 2n) = u_{2n}`$.
 
-T is even, so $P(T = 2n) = P(T > 2n - 2) - P(T > 2n) = u_{2n-2} - u_{2n}$. With $u_0$ = 1 and each $u_{2n}$ equal to the one before times (2n − 1)/(2n), this gives 1/2, 1/8, 1/16, 5/128.
+T is even, so $`P(T = 2n) = P(T > 2n - 2) - P(T > 2n) = u_{2n-2} - u_{2n}`$. With $`u_0`$ = 1 and each $`u_{2n}`$ equal to the one before times (2n − 1)/(2n), this gives 1/2, 1/8, 1/16, 5/128.
 
 </details>
 
 ### Step 4: the average wait is infinite, by two roads
 
-**Road one: a floor only shortens the wait.** Reaching +1 or −b, whichever comes first, never takes longer than reaching +1. By [Gambler's ruin](04-gamblers-ruin.md), a fair game starting 1 below the top and b above the floor lasts 1 × b rounds on average. So the average wait for +1 is at least b, for every b, and $E[\tau_1] = \infty$. The return time is one round plus a wait of this kind, so $E[T] = \infty$ too.
+**Road one: a floor only shortens the wait.** Reaching +1 or −b, whichever comes first, never takes longer than reaching +1. By [Gambler's ruin](04-gamblers-ruin.md), a fair game starting 1 below the top and b above the floor lasts 1 × b rounds on average. So the average wait for +1 is at least b, for every b, and $`E[\tau_1] = \infty`$. The return time is one round plus a wait of this kind, so $`E[T] = \infty`$ too.
 
 The house example is b = 10: a gambler with 10 chips who stops at 0 or 11 reaches 11 with chance 0.909091 and plays 10 rounds on average. Without the floor the wait only grows.
 
-**Road two: add up the chances of still waiting.** A count's average is the sum of the chances that it exceeds 0, 1, 2 and so on (the tail sum of [Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)). Cut the wait off at 2N rounds; T is even, so each $u_{2n}$ appears twice:
+**Road two: add up the chances of still waiting.** A count's average is the sum of the chances that it exceeds 0, 1, 2 and so on (the tail sum of [Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)). Cut the wait off at 2N rounds; T is even, so each $`u_{2n}`$ appears twice:
 
-$$E[\min(T, 2N)] = 2\sum_{n=0}^{N-1} u_{2n} = 2(2N - 1)\,u_{2N-2} \;\ge\; \sqrt{N}.$$
+```math
+E[\min(T, 2N)] = 2\sum_{n=0}^{N-1} u_{2n} = 2(2N - 1)\,u_{2N-2} \;\ge\; \sqrt{N}.
+```
 
 The capped average grows like the square root of the cap, so the uncapped average is infinite.
 
@@ -176,23 +190,23 @@ Each bar is the exact capped average for one cap, to two places. It never settle
 <details>
 <summary>Detailed proof: the tail sum, the square-root floor and the closed form</summary>
 
-**Tail sum.** A count X equals the number of k ≥ 0 with k < X; averaging, E[X] is the sum of P(X > k). For min(T, 2N), T even gives P(T > 2n + 1) = P(T > 2n) = $u_{2n}$.
+**Tail sum.** A count X equals the number of k ≥ 0 with k < X; averaging, E[X] is the sum of P(X > k). For min(T, 2N), T even gives P(T > 2n + 1) = P(T > 2n) = $`u_{2n}`$.
 
-**Square-root floor.** $u_{2n}$ is the product of the factors (2k − 1)/(2k) for k = 1 to n. For k ≥ 2, $(2k-1)^2 = 4k^2 - 4k + 1 > (2k)(2k - 2)$, so (2k − 1)/(2k) exceeds (2k − 2)/(2k − 1).
+**Square-root floor.** $`u_{2n}`$ is the product of the factors (2k − 1)/(2k) for k = 1 to n. For k ≥ 2, $`(2k-1)^2 = 4k^2 - 4k + 1 > (2k)(2k - 2)`$, so (2k − 1)/(2k) exceeds (2k − 2)/(2k − 1).
 
-Write $u_{2n}^2$ as the product times itself. In the second copy keep the factor 1/2 for k = 1 and shrink each later factor to (2k − 2)/(2k − 1). Pairing factor k of the first copy with the shrunk one leaves (2k − 2)/(2k) = (k − 1)/k, and those telescope to 1/n. So $u_{2n}^2 \ge \tfrac12 \cdot \tfrac12 \cdot \tfrac1n$ and $u_{2n} \ge 1/(2\sqrt{n})$.
+Write $`u_{2n}^2`$ as the product times itself. In the second copy keep the factor 1/2 for k = 1 and shrink each later factor to (2k − 2)/(2k − 1). Pairing factor k of the first copy with the shrunk one leaves (2k − 2)/(2k) = (k − 1)/k, and those telescope to 1/n. So $`u_{2n}^2 \ge \tfrac12 \cdot \tfrac12 \cdot \tfrac1n`$ and $`u_{2n} \ge 1/(2\sqrt{n})`$.
 
-Then the capped average is at least 2 plus the sum of $1/\sqrt{n}$ for n = 1 to N − 1. That is at least the sum for n = 1 to N, which is at least N times $1/\sqrt{N}$, that is √N.
+Then the capped average is at least 2 plus the sum of $`1/\sqrt{n}`$ for n = 1 to N − 1. That is at least the sum for n = 1 to N, which is at least N times $`1/\sqrt{N}`$, that is √N.
 
-**Closed form.** By induction, $u_0 + u_2 + \dots + u_{2m} = (2m + 1)\,u_{2m}$: true at m = 0, and adding $u_{2m+2}$ to $(2m + 1)u_{2m} = (2m + 2)u_{2m+2}$ gives $(2m + 3)u_{2m+2}$.
+**Closed form.** By induction, $`u_0 + u_2 + \dots + u_{2m} = (2m + 1)\,u_{2m}`$: true at m = 0, and adding $`u_{2m+2}`$ to $`(2m + 1)u_{2m} = (2m + 2)u_{2m+2}`$ gives $`(2m + 3)u_{2m+2}`$.
 
-**Road one, in full.** On every match, $\min(\tau_1, \tau_{-b}) \le \tau_1$, allowing the value ∞. Averages of variables that are never negative keep that order (monotonicity of the integral, from [The integral of a non-negative function](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so $E[\tau_1] \ge b$. After round 1 the score is ±1 and the remaining wait is a copy of $\tau_1$ or its mirror, so $E[T] = 1 + E[\tau_1] = \infty$.
+**Road one, in full.** On every match, $`\min(\tau_1, \tau_{-b}) \le \tau_1`$, allowing the value ∞. Averages of variables that are never negative keep that order (monotonicity of the integral, from [The integral of a non-negative function](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so $`E[\tau_1] \ge b`$. After round 1 the score is ±1 and the remaining wait is a copy of $`\tau_1`$ or its mirror, so $`E[T] = 1 + E[\tau_1] = \infty`$.
 
 </details>
 
 ### The other door: generating functions
 
-The classical route packs the first-return chances into one power series in s, the generating function, equal to $1 - \sqrt{1 - s^2}$. At s = 1 it is 1: sure return. Its slope there is infinite: infinite mean. Feller, under Sources, takes this door.
+The classical route packs the first-return chances into one power series in s, the generating function, equal to $`1 - \sqrt{1 - s^2}`$. At s = 1 it is 1: sure return. Its slope there is infinite: infinite mean. Feller, under Sources, takes this door.
 
 ---
 
@@ -202,14 +216,14 @@ Fair coin; cap the wait at 10 rounds, so N = 5.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $u_2$, no tie yet after 2 rounds | 1/2 | 0.5 |
-| $u_4$ | 0.5 × 3/4 | 0.375 |
-| $u_6$ | 0.375 × 5/6 | 0.3125 |
-| $u_8$ | 0.3125 × 7/8 | 0.273438 |
-| $u_{10}$, still waiting after 10 rounds | 0.273438 × 9/10 | 0.246094 |
-| P(T = 8), level first at round 8 | $u_6 - u_8$ = 0.3125 − 0.273438 | 5/128 |
+| $`u_2`$, no tie yet after 2 rounds | 1/2 | 0.5 |
+| $`u_4`$ | 0.5 × 3/4 | 0.375 |
+| $`u_6`$ | 0.375 × 5/6 | 0.3125 |
+| $`u_8`$ | 0.3125 × 7/8 | 0.273438 |
+| $`u_{10}`$, still waiting after 10 rounds | 0.273438 × 9/10 | 0.246094 |
+| P(T = 8), level first at round 8 | $`u_6 - u_8`$ = 0.3125 − 0.273438 | 5/128 |
 | capped average, E[min(T, 10)] | 2 × (1 + 0.5 + 0.375 + 0.3125 + 0.273438) | 4.921875 |
-| same, closed form | 2 × 9 × $u_8$ | 4.921875 |
+| same, closed form | 2 × 9 × $`u_8`$ | 4.921875 |
 | square-root floor, √N | √5 | 2.236068 |
 | **house cross-check: 10 chips, stop at 0 or 11** | chance of 11 is 10/11; rounds on average 10 × 1 | **0.909091 and 10 rounds** |
 
@@ -660,12 +674,12 @@ The two outputs agree line for line. The simulation lands within about two stand
 
 Lean proves the arrival chances, the infinite fair mean and the reflection count, for independent rounds with steps of one dollar.
 
-- Take a fair coin, independent rounds, and any level $a$: above, below or at the start. Then $P(\tau_a < \infty) = 1$ and $E[\tau_a] = \infty$.
-- Take independent rounds, up one dollar with chance $p$ and down with chance $q$, and a target $a$ of 1 or more. Then $P(\tau_a < \infty)$ is 1 when $p \ge 1/2$, and $(p/q)^a$ when $p < 1/2$.
-- Take the same rounds, with any $p$. Then $P(T < \infty) = 1 - \lvert p - q \rvert$.
-- Take the $2^{2n}$ fair matches of 2n rounds. Then exactly $\binom{2n}{n}$ of them are never level after the start: the count behind $P(T > 2n) = u_{2n}$.
+- Take a fair coin, independent rounds, and any level $`a`$: above, below or at the start. Then $`P(\tau_a < \infty) = 1`$ and $`E[\tau_a] = \infty`$.
+- Take independent rounds, up one dollar with chance $`p`$ and down with chance $`q`$, and a target $`a`$ of 1 or more. Then $`P(\tau_a < \infty)`$ is 1 when $`p \ge 1/2`$, and $`(p/q)^a`$ when $`p < 1/2`$.
+- Take the same rounds, with any $`p`$. Then $`P(T < \infty) = 1 - \lvert p - q \rvert`$.
+- Take the $`2^{2n}`$ fair matches of 2n rounds. Then exactly $`\binom{2n}{n}`$ of them are never level after the start: the count behind $`P(T > 2n) = u_{2n}`$.
 - The small counts hold: 2 of the 4 matches of 2 rounds, 6 of 16 for 4 rounds, and 70 of 256 for 8 rounds.
-- The worked numbers hold: $u_2$ to $u_{10}$, and the capped average 4.921875 at cap 10.
+- The worked numbers hold: $`u_2`$ to $`u_{10}`$, and the capped average 4.921875 at cap 10.
 - The first-return chances 1/2, 1/8, 1/16 and 5/128 hold, and so does 6435/32768 for no return in 16 rounds.
 - At p = 0.4 the chances 2/3 of climbing one level, 8/27 of reaching +3, and 4/5 of coming back hold.
 - The pictured match falls to −7 at round 7, and is first level again at round 16.

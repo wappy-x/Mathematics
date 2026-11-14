@@ -48,54 +48,66 @@ The orange line is Hull-White: one shock, 13.2982 basis points on the short rate
 
 ## The formula
 
-Notation first, in words. A small random step is written $dW_t$: the step of a **Brownian motion**, a random walk whose steps are independent and Normal with variance equal to the time elapsed. Two Brownian motions can be correlated: $dW^1_t\,dW^2_t = \rho\,dt$ says their steps move together with correlation $\rho$. The symbol $d$ in front of anything means its change over a short time $dt$.
+Notation first, in words. A small random step is written $`dW_t`$: the step of a **Brownian motion**, a random walk whose steps are independent and Normal with variance equal to the time elapsed. Two Brownian motions can be correlated: $`dW^1_t\,dW^2_t = \rho\,dt`$ says their steps move together with correlation $`\rho`$. The symbol $`d`$ in front of anything means its change over a short time $`dt`$.
 
 **G2++**, the two-factor Gaussian model (Gaussian: its factors are Normal):
 
-$$r_t = x_t + y_t + \varphi(t),\qquad dx_t = -a\,x_t\,dt + \sigma\,dW^1_t,\qquad dy_t = -b\,y_t\,dt + \eta\,dW^2_t,\qquad dW^1_t\,dW^2_t = \rho\,dt$$
+```math
+r_t = x_t + y_t + \varphi(t),\qquad dx_t = -a\,x_t\,dt + \sigma\,dW^1_t,\qquad dy_t = -b\,y_t\,dt + \eta\,dW^2_t,\qquad dW^1_t\,dW^2_t = \rho\,dt
+```
 
 **Read it aloud:** the short rate is a fast-fading random part plus a slow-fading random part plus a fixed curve that makes today's bond prices come out right.
 
-What it implies for how two maturities $u$ and $v$ move together:
+What it implies for how two maturities $`u`$ and $`v`$ move together:
 
-$$C(u,v) = \sigma^2 B_a(u)B_a(v) + \eta^2 B_b(u)B_b(v) + \rho\,\sigma\eta\,\big[B_a(u)B_b(v) + B_b(u)B_a(v)\big],\qquad \mathrm{corr}(u,v) = \frac{C(u,v)}{\sqrt{C(u,u)\,C(v,v)}}$$
+```math
+C(u,v) = \sigma^2 B_a(u)B_a(v) + \eta^2 B_b(u)B_b(v) + \rho\,\sigma\eta\,\big[B_a(u)B_b(v) + B_b(u)B_a(v)\big],\qquad \mathrm{corr}(u,v) = \frac{C(u,v)}{\sqrt{C(u,u)\,C(v,v)}}
+```
 
-$$B_c(u) = \frac{1 - e^{-cu}}{c}$$
+```math
+B_c(u) = \frac{1 - e^{-cu}}{c}
+```
 
 **Read it aloud:** each maturity's move is a mix of the two shocks, weighted by how long each shock lasts inside that maturity; two maturities with different mixes cannot move in perfect step.
 
 **Black-Karasinski**, one factor, lognormal:
 
-$$d\ln r_t = \big[\theta(t) - a\ln r_t\big]\,dt + \sigma\,dW_t$$
+```math
+d\ln r_t = \big[\theta(t) - a\ln r_t\big]\,dt + \sigma\,dW_t
+```
 
 **Read it aloud:** the logarithm of the short rate is pulled toward a moving target and shaken by one shock, so the rate itself is always positive.
 
 **Black-Derman-Toy**, one factor, a tree with one-year steps:
 
-$$r_{i,j} = U_i\,e^{\sigma(2j - i)}$$
+```math
+r_{i,j} = U_i\,e^{\sigma(2j - i)}
+```
 
-**Read it aloud:** at year $i$, the rate after $j$ up-moves is the year's middle rate scaled up or down by a fixed log-step; each year's middle rate is chosen so the tree prices today's bond of the next maturity exactly.
+**Read it aloud:** at year $`i`$, the rate after $`j`$ up-moves is the year's middle rate scaled up or down by a fixed log-step; each year's middle rate is chosen so the tree prices today's bond of the next maturity exactly.
 
-A swap starting in one year and paying annually for $n$ years has par rate (the fixed rate that makes it worth zero today, [The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)):
+A swap starting in one year and paying annually for $`n`$ years has par rate (the fixed rate that makes it worth zero today, [The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)):
 
-$$S_n = \frac{P(1) - P(1+n)}{P(2) + P(3) + \dots + P(1+n)}$$
+```math
+S_n = \frac{P(1) - P(1+n)}{P(2) + P(3) + \dots + P(1+n)}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r_t$ | the short rate: the overnight interest rate at time t | 4% today on the house curve | every bond cheaper |
-| $x_t$, $y_t$ | the two G2++ factors, fast and slow; both start at 0 | the twist needs x = +56.0659 bp, y = −15.4086 bp | x lifts the short end most; y lifts the whole curve |
-| $\varphi(t)$, $\theta(t)$ | fixed functions of time, chosen so today's curve comes out exactly | whatever the house curve demands | the forward curve (the rates fixed today for borrowing over future periods) shifts |
-| $a$, $b$ | reversion speeds, per year: how fast each factor fades back to 0 | G2++: 1 and 0.08; Hull-White: 0.3 | that shock dies sooner; long yields feel it less |
-| $\sigma$, $\eta$ | size of each shock; $\sigma$ in rate units per root-year for Gaussian models, a log-volatility for lognormal ones | G2++: 0.012 and 0.007; Hull-White 0.01; Black-Derman-Toy 0.20 | more of that shock |
-| $\rho$ | correlation between the two G2++ shocks | −0.2 | maturities move more alike |
-| $W_t$, $W^1_t$, $W^2_t$, $dW_t$, $dt$ | Brownian motions, the random drivers; a small step of one, over a short time $dt$ | one for one-factor models, two for G2++ | — |
-| $B_c(u)$ | loading: how far a u-year bond's log price falls per unit rise in a factor that fades at speed c | B_1(2) = 0.864665, B_0.08(10) = 6.883388 | — |
-| $u$, $v$, $t$, $s$, $w$, $T$, $P(u)$ | maturities and times in years; $P(u)$ is today's price of 1 paid at year u | 2 and 10; P(2) = 0.918629 | — |
-| $C(u,v)$, $V$ | the rate at which the u-year and v-year bonds' log prices co-vary, per year; $V$ is the total variance of a bond's log price | gives corr(2, 10) = 0.877124 | — |
-| $S_n$, $n$ | par rate of the swap from year 1 to year 1 + n | 4.5293% for n = 2, 4.8029% for n = 9 | — |
-| $U_i$, $i$, $j$ | Black-Derman-Toy: year $i$'s middle node rate; $j$ counts up-moves | 4.2214% at year 0 | — |
+| $`r_t`$ | the short rate: the overnight interest rate at time t | 4% today on the house curve | every bond cheaper |
+| $`x_t`$, $`y_t`$ | the two G2++ factors, fast and slow; both start at 0 | the twist needs x = +56.0659 bp, y = −15.4086 bp | x lifts the short end most; y lifts the whole curve |
+| $`\varphi(t)`$, $`\theta(t)`$ | fixed functions of time, chosen so today's curve comes out exactly | whatever the house curve demands | the forward curve (the rates fixed today for borrowing over future periods) shifts |
+| $`a`$, $`b`$ | reversion speeds, per year: how fast each factor fades back to 0 | G2++: 1 and 0.08; Hull-White: 0.3 | that shock dies sooner; long yields feel it less |
+| $`\sigma`$, $`\eta`$ | size of each shock; $`\sigma`$ in rate units per root-year for Gaussian models, a log-volatility for lognormal ones | G2++: 0.012 and 0.007; Hull-White 0.01; Black-Derman-Toy 0.20 | more of that shock |
+| $`\rho`$ | correlation between the two G2++ shocks | −0.2 | maturities move more alike |
+| $`W_t`$, $`W^1_t`$, $`W^2_t`$, $`dW_t`$, $`dt`$ | Brownian motions, the random drivers; a small step of one, over a short time $`dt`$ | one for one-factor models, two for G2++ | — |
+| $`B_c(u)`$ | loading: how far a u-year bond's log price falls per unit rise in a factor that fades at speed c | B_1(2) = 0.864665, B_0.08(10) = 6.883388 | — |
+| $`u`$, $`v`$, $`t`$, $`s`$, $`w`$, $`T`$, $`P(u)`$ | maturities and times in years; $`P(u)`$ is today's price of 1 paid at year u | 2 and 10; P(2) = 0.918629 | — |
+| $`C(u,v)`$, $`V`$ | the rate at which the u-year and v-year bonds' log prices co-vary, per year; $`V`$ is the total variance of a bond's log price | gives corr(2, 10) = 0.877124 | — |
+| $`S_n`$, $`n`$ | par rate of the swap from year 1 to year 1 + n | 4.5293% for n = 2, 4.8029% for n = 9 | — |
+| $`U_i`$, $`i`$, $`j`$ | Black-Derman-Toy: year $`i`$'s middle node rate; $`j`$ counts up-moves | 4.2214% at year 0 | — |
 
-A u-year yield is the rate y with price $e^{-yu}$, so a yield move is minus the log-price move divided by u. Dividing by a positive number changes no correlation: yields and bonds of the same maturities share the same correlations.
+A u-year yield is the rate y with price $`e^{-yu}`$, so a yield move is minus the log-price move divided by u. Dividing by a positive number changes no correlation: yields and bonds of the same maturities share the same correlations.
 
 ### When it holds
 
@@ -114,47 +126,52 @@ A bond price tomorrow is a function of the model's random state tomorrow. If tha
 
 ### Step 1: one factor makes every yield move in fixed proportion
 
-In Hull-White a u-year bond is priced $P = A(u)e^{-B(u)r}$, with $B(u) = (1 - e^{-au})/a$ ([Hull-White](04-hull-white-model.md)). Its yield is $-\ln P/u$, so a short-rate move $\Delta r$ moves the u-year yield by $B(u)/u \times \Delta r$, plus a part that depends only on the calendar.
+In Hull-White a u-year bond is priced $`P = A(u)e^{-B(u)r}`$, with $`B(u) = (1 - e^{-au})/a`$ ([Hull-White](04-hull-white-model.md)). Its yield is $`-\ln P/u`$, so a short-rate move $`\Delta r`$ moves the u-year yield by $`B(u)/u \times \Delta r`$, plus a part that depends only on the calendar.
 
-At speed 0.3 the 2-year yield loading $B(u)/u$ is 0.751981 and the 10-year is 0.316738. A 10 basis point rise at 2 years needs $\Delta r$ = 13.2982 basis points, which lifts the 10-year by 4.21. Every loading is positive, so every yield moves the same way. The 10-year can never fall while the 2-year rises.
+At speed 0.3 the 2-year yield loading $`B(u)/u`$ is 0.751981 and the 10-year is 0.316738. A 10 basis point rise at 2 years needs $`\Delta r`$ = 13.2982 basis points, which lifts the 10-year by 4.21. Every loading is positive, so every yield moves the same way. The 10-year can never fall while the 2-year rises.
 
 The same holds for any one-factor model. In Black-Karasinski and Black-Derman-Toy the proportions change with the rate's level, but at each instant they are still proportions of one shock.
 
 ### Step 2: two factors give each maturity its own mix
 
-In G2++ the short rate is $x_t + y_t + \varphi(t)$. Each factor is an Ornstein-Uhlenbeck process (a random walk pulled back toward 0), the same kind that drives Hull-White. A unit rise in the fast factor today raises the short rate by 1 now and by $e^{-a s}$ in $s$ years; summed over a bond's life that is $B_a(u) = \int_0^u e^{-as}\,ds$. So the u-year bond price is
+In G2++ the short rate is $`x_t + y_t + \varphi(t)`$. Each factor is an Ornstein-Uhlenbeck process (a random walk pulled back toward 0), the same kind that drives Hull-White. A unit rise in the fast factor today raises the short rate by 1 now and by $`e^{-a s}`$ in $`s`$ years; summed over a bond's life that is $`B_a(u) = \int_0^u e^{-as}\,ds`$. So the u-year bond price is
 
-$$P(u) = P_0(u)\,\exp\!\big(-B_a(u)\,x - B_b(u)\,y + \text{a fixed correction}\big)$$
+```math
+P(u) = P_0(u)\,\exp\!\big(-B_a(u)\,x - B_b(u)\,y + \text{a fixed correction}\big)
+```
 
-where $P_0(u)$ is today's price, and the u-year yield moves by $\big(B_a(u)\,x + B_b(u)\,y\big)/u$.
+where $`P_0(u)`$ is today's price, and the u-year yield moves by $`\big(B_a(u)\,x + B_b(u)\,y\big)/u`$.
 
 The fast factor, fading at speed 1, is almost spent after two years: its 2-year loading per year of maturity is 0.432332, its 10-year loading 0.099995. The slow factor at speed 0.08 barely fades: 0.924101 and 0.688339. Two maturities, two unknowns. To put the 2-year up 10 and the 10-year down 5:
 
-$$0.432332\,x + 0.924101\,y = 10,\qquad 0.099995\,x + 0.688339\,y = -5$$
+```math
+0.432332\,x + 0.924101\,y = 10,\qquad 0.099995\,x + 0.688339\,y = -5
+```
 
 The determinant (the number that says whether two equations pin two unknowns) is 0.205185, not zero, so there is exactly one answer: x = 56.0659, y = −15.4086 basis points. Fast up, slow down. The short end rises because the fast factor dominates there; the long end falls because only the slow factor reaches it.
 
 <details>
 <summary>Detailed proof: the G2++ bond price and when two maturities really have two directions</summary>
 
-Solve each factor from time $t$: $x_s = x_t e^{-a(s-t)} + \sigma\int_t^s e^{-a(s-w)}dW^1_w$, and the same for $y_t$ with $b$ and $\eta$. Integrate the short rate from $t$ to $T$ and swap the order of integration: the random part of $\int_t^T r_s\,ds$ is $B_a(T-t)x_t + B_b(T-t)y_t + \sigma\int_t^T B_a(T-w)dW^1_w + \eta\int_t^T B_b(T-w)dW^2_w$. The last two terms are Normal with mean 0 and variance $V = \int_0^{T-t}[\sigma^2B_a^2 + \eta^2B_b^2 + 2\rho\sigma\eta B_aB_b]$, the cross term coming from $dW^1\,dW^2 = \rho\,dt$.
+Solve each factor from time $`t`$: $`x_s = x_t e^{-a(s-t)} + \sigma\int_t^s e^{-a(s-w)}dW^1_w`$, and the same for $`y_t`$ with $`b`$ and $`\eta`$. Integrate the short rate from $`t`$ to $`T`$ and swap the order of integration: the random part of $`\int_t^T r_s\,ds`$ is $`B_a(T-t)x_t + B_b(T-t)y_t + \sigma\int_t^T B_a(T-w)dW^1_w + \eta\int_t^T B_b(T-w)dW^2_w`$. The last two terms are Normal with mean 0 and variance $`V = \int_0^{T-t}[\sigma^2B_a^2 + \eta^2B_b^2 + 2\rho\sigma\eta B_aB_b]`$, the cross term coming from $`dW^1\,dW^2 = \rho\,dt`$.
 
-For a Normal $Z$ with mean 0 and variance $V$, the average of $e^{-Z}$ is $e^{V/2}$, so the bond price is the exponential of minus the fixed part, minus $B_a x_t + B_b y_t$, plus $V/2$. Choosing $\varphi$ as today's forward rate plus half the derivative of $V$ makes the price at time 0 equal today's market price.
+For a Normal $`Z`$ with mean 0 and variance $`V`$, the average of $`e^{-Z}`$ is $`e^{V/2}`$, so the bond price is the exponential of minus the fixed part, minus $`B_a x_t + B_b y_t`$, plus $`V/2`$. Choosing $`\varphi`$ as today's forward rate plus half the derivative of $`V`$ makes the price at time 0 equal today's market price.
 
-Only the state terms are random, so over a short step the log price of the u-year bond moves by $-\sigma B_a(u)\,dW^1 - \eta B_b(u)\,dW^2$. Multiply two such moves and keep the $dt$ terms: that is $C(u,v)\,dt$. For maturities u and v, stack the two shock loadings into a 2 by 2 array; the determinant of their covariance is
-$$C(u,u)C(v,v) - C(u,v)^2 = \sigma^2\eta^2(1-\rho^2)\,\big[B_a(u)B_b(v) - B_a(v)B_b(u)\big]^2.$$
+Only the state terms are random, so over a short step the log price of the u-year bond moves by $`-\sigma B_a(u)\,dW^1 - \eta B_b(u)\,dW^2`$. Multiply two such moves and keep the $`dt`$ terms: that is $`C(u,v)\,dt`$. For maturities u and v, stack the two shock loadings into a 2 by 2 array; the determinant of their covariance is
 
-For yields, divide both sides by $u^2v^2$; the sign is unchanged.
+$`\displaystyle C(u,u)C(v,v) - C(u,v)^2 = \sigma^2\eta^2(1-\rho^2)\,\big[B_a(u)B_b(v) - B_a(v)B_b(u)\big]^2.`$
 
-The bracket is $\int_0^u\!\int_u^v\big(e^{-as}e^{-bw} - e^{-bs}e^{-aw}\big)\,dw\,ds$. For $s < w$ the integrand is $e^{-as-bw}(1 - e^{(a-b)(s-w)})$, which has one strict sign when $a \ne b$, so the bracket is not zero when $0 < u < v$.
+For yields, divide both sides by $`u^2v^2`$; the sign is unchanged.
 
-Hence with $\sigma, \eta > 0$, $|\rho| < 1$ and $a \ne b$, the determinant is positive and $|\mathrm{corr}(u,v)| < 1$. Set $\rho = \pm1$, $a = b$, or either volatility to 0 and the determinant is 0: correlation ±1 again.
+The bracket is $`\int_0^u\!\int_u^v\big(e^{-as}e^{-bw} - e^{-bs}e^{-aw}\big)\,dw\,ds`$. For $`s < w`$ the integrand is $`e^{-as-bw}(1 - e^{(a-b)(s-w)})`$, which has one strict sign when $`a \ne b`$, so the bracket is not zero when $`0 < u < v`$.
+
+Hence with $`\sigma, \eta > 0`$, $`|\rho| < 1`$ and $`a \ne b`$, the determinant is positive and $`|\mathrm{corr}(u,v)| < 1`$. Set $`\rho = \pm1`$, $`a = b`$, or either volatility to 0 and the determinant is 0: correlation ±1 again.
 
 </details>
 
 ### Step 3: correlation below one, and its size
 
-Combine the two shocks through $C(u,u)$: the 2-year yield moves with volatility 74.39 basis points a year and the 10-year with 47.27. Their correlation from the formula is 0.877124. The determinant identity from the proof gives the same covariance determinant two ways, 2.8518e-10 both times; a positive determinant is exactly the statement that the correlation is below one.
+Combine the two shocks through $`C(u,u)`$: the 2-year yield moves with volatility 74.39 basis points a year and the 10-year with 47.27. Their correlation from the formula is 0.877124. The determinant identity from the proof gives the same covariance determinant two ways, 2.8518e-10 both times; a positive determinant is exactly the statement that the correlation is below one.
 
 The correlation falls with distance from the 2-year: 98.82% with the 3-year, 94.38% with the 5-year, 87.71% with the 10-year. In Hull-White every entry is 100%.
 
@@ -172,7 +189,7 @@ The orange line is Hull-White, Black-Karasinski and Black-Derman-Toy: all one-fa
 
 ### Step 4: from yields to swaption correlations
 
-A swaption's value hangs on its swap rate, not on one yield. The swap rate $S_n$ is a ratio of bond prices, so its move is found by the quotient rule (the derivative of a ratio). The rule uses the fact from Step 2 that a unit rise in a factor lowers each bond's price by its loading times its price.
+A swaption's value hangs on its swap rate, not on one yield. The swap rate $`S_n`$ is a ratio of bond prices, so its move is found by the quotient rule (the derivative of a ratio). The rule uses the fact from Step 2 that a unit rise in a factor lowers each bond's price by its loading times its price.
 
 On the house curve the swap from year 1 to year 3 has par rate 4.5293% and the swap from year 1 to year 10 has 4.8029%. Traders call these the 1y-into-2y and 1y-into-9y swaps: they start in 1 year and run 2 and 9 years. The 2-year swap rate moves 0.167886 per unit of the fast factor, and a bump-and-reprice gives the same 0.167886.
 
@@ -184,7 +201,7 @@ That is higher than the 2-year against 10-year yield correlation of 0.877. Both 
 
 A Gaussian short rate is Normal, so some of its paths go negative. Pull a Hull-White rate toward 1% at speed 0.3 with 1% volatility, starting at 1%: after 10 years it is Normal with mean 1%, and the chance it sits below zero is 21.90%. A simulation of 100,000 paths finds 21.77%.
 
-Black-Karasinski makes $\ln r_t$ the Gaussian process instead. The exponential of any finite number is positive, so $r_t > 0$ on every path.
+Black-Karasinski makes $`\ln r_t`$ the Gaussian process instead. The exponential of any finite number is positive, so $`r_t > 0`$ on every path.
 
 The price is paid elsewhere: the integral of a lognormal rate has no known distribution, so there is no closed-form bond price and every bond is priced on a tree ([The Hull-White tree](06-hull-white-trinomial-tree.md) builds the lattice for the Gaussian case; Black-Karasinski runs the same lattice in log-rate).
 
@@ -192,17 +209,19 @@ And the volatility now scales with the level: a fixed log-volatility means large
 
 ### Step 6: Black-Derman-Toy, the tree that came first
 
-Black, Derman and Toy (1990) built the lognormal tree first. Each year the rate moves up or down with probability one half, and neighbouring rates in the same year differ by a factor $e^{2\sigma}$. The middle rate $U_i$ is solved each year so the tree prices the next zero bond exactly.
+Black, Derman and Toy (1990) built the lognormal tree first. Each year the rate moves up or down with probability one half, and neighbouring rates in the same year differ by a factor $`e^{2\sigma}`$. The middle rate $`U_i`$ is solved each year so the tree prices the next zero bond exactly.
 
-The code builds it with $\sigma$ = 0.20 on the house curve. Year 0 is forced: $U_0 = 1/P(1) - 1$, which is 4.2214%. Year 1 is 3.5766% or 5.3357%; year 3 runs from 2.4740% to 8.2138%. Rolling a bond back through the tree reproduces every house price: 0.959496, 0.918629, 0.878115, 0.838425.
+The code builds it with $`\sigma`$ = 0.20 on the house curve. Year 0 is forced: $`U_0 = 1/P(1) - 1`$, which is 4.2214%. Year 1 is 3.5766% or 5.3357%; year 3 runs from 2.4740% to 8.2138%. Rolling a bond back through the tree reproduces every house price: 0.959496, 0.918629, 0.878115, 0.838425.
 
 At year 1 there are two states. In the up state the 2-year swap rate is 5.4358% and the 3-year 5.5169%; in the down state 3.6455% and 3.7027%. Both rise together. With two states any two quantities have correlation +1 or −1; one factor again.
 
 Black-Derman-Toy's weakness is structural. In its continuous-time limit,
 
-$$d\ln r_t = \Big[\theta(t) + \frac{\sigma'(t)}{\sigma(t)}\ln r_t\Big]dt + \sigma(t)\,dW_t,$$
+```math
+d\ln r_t = \Big[\theta(t) + \frac{\sigma'(t)}{\sigma(t)}\ln r_t\Big]dt + \sigma(t)\,dW_t,
+```
 
-where $\sigma'(t)$ is the rate of change of the volatility. The pull back to the middle is the ratio $\sigma'(t)/\sigma(t)$: the model reverts only if its volatility falls with time. Fit the volatility curve and the reversion comes with it. Black-Karasinski separates the two by giving reversion its own speed $a$.
+where $`\sigma'(t)`$ is the rate of change of the volatility. The pull back to the middle is the ratio $`\sigma'(t)/\sigma(t)`$: the model reverts only if its volatility falls with time. Fit the volatility curve and the reversion comes with it. Black-Karasinski separates the two by giving reversion its own speed $`a`$.
 
 Another route to more than one factor is to stop modelling one short rate and model the whole forward curve: [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md) does that, with as many factors as the data support.
 
@@ -233,7 +252,7 @@ A desk running Hull-White reads a 2-year hedge of a 10-year bond as perfect. G2+
 | set ρ = −1 | correlation 1.000000 | the two shocks become one; G2++ is a one-factor model again |
 | give both factors speed 0.08 | correlation 1.000000 | equal speeds give every maturity the same mix |
 | drop ρ, treat the shocks as independent | 0.908174 instead of 0.877124 | the cross term in C(u,v) is gone |
-| quote the yield correlation for swaptions | 0.877124 instead of 0.979129 | swap rates share their start and their annuity (the bond-price sum under $S_n$); their correlation is higher |
+| quote the yield correlation for swaptions | 0.877124 instead of 0.979129 | swap rates share their start and their annuity (the bond-price sum under $`S_n`$); their correlation is higher |
 
 ---
 
@@ -651,9 +670,9 @@ The two outputs agree line for line: both programs use the same generator, the s
 
 Lean proves the card's three correlation facts for bond log prices, for every parameter value the card allows.
 
-- Suppose $a, b > 0$ with $a \ne b$, $\sigma, \eta > 0$, $|\rho| < 1$ and $0 < u < v$. Then $|\mathrm{corr}(u,v)| < 1$: the two maturities never move in perfect step.
-- Take any speeds, shock sizes, shock correlation and maturities $u$ and $v$. Then the covariance determinant equals $\sigma^2\eta^2(1-\rho^2)$ times the bracket squared.
-- Take Hull-White with $a > 0$, $\sigma > 0$ and maturities $u, v > 0$. Then $\mathrm{corr}(u,v) = 1$ exactly.
+- Suppose $`a, b > 0`$ with $`a \ne b`$, $`\sigma, \eta > 0`$, $`|\rho| < 1`$ and $`0 < u < v`$. Then $`|\mathrm{corr}(u,v)| < 1`$: the two maturities never move in perfect step.
+- Take any speeds, shock sizes, shock correlation and maturities $`u`$ and $`v`$. Then the covariance determinant equals $`\sigma^2\eta^2(1-\rho^2)`$ times the bracket squared.
+- Take Hull-White with $`a > 0`$, $`\sigma > 0`$ and maturities $`u, v > 0`$. Then $`\mathrm{corr}(u,v) = 1`$ exactly.
 
 The bond price formula, the worked numbers, swap rate correlations, the trees and negative rates are left to the Python and Rust checks.
 
@@ -874,7 +893,7 @@ end TwoFactorShortRate
 
 ## What this builds on
 
-- [Hull-White](04-hull-white-model.md): the one-factor model with a fitted curve and the loading $B(u)$; G2++ is two of them added together.
+- [Hull-White](04-hull-white-model.md): the one-factor model with a fitted curve and the loading $`B(u)`$; G2++ is two of them added together.
 
 ---
 

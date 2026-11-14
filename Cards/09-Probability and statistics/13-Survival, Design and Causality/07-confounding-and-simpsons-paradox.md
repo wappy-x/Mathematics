@@ -35,43 +35,49 @@ Six bars, read in pairs. In the open departments women lead, 79.7 against 62.5 p
 
 ## The formula
 
-Notation first, in words. $A$ is the event "admitted". A letter $g$ names a group of applicants: W for women, M for men. A letter $d$ names a department, or a kind of department: O for open, S for selective. $P(A \mid g)$, read "the chance of A given g", is the admission rate within group $g$ ([Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md)). Three shorthands carry the card:
+Notation first, in words. $`A`$ is the event "admitted". A letter $`g`$ names a group of applicants: W for women, M for men. A letter $`d`$ names a department, or a kind of department: O for open, S for selective. $`P(A \mid g)`$, read "the chance of A given g", is the admission rate within group $`g`$ ([Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md)). Three shorthands carry the card:
 
-- $r_{g,d} = P(A \mid g, d)$, the admission rate of group $g$ inside department $d$;
-- $w_{g,d} = P(d \mid g)$, the share of group $g$'s applications that went to $d$, its **mix**;
-- $p_g = P(A \mid g)$, group $g$'s **pooled** rate, all departments together.
+- $`r_{g,d} = P(A \mid g, d)`$, the admission rate of group $`g`$ inside department $`d`$;
+- $`w_{g,d} = P(d \mid g)`$, the share of group $`g`$'s applications that went to $`d`$, its **mix**;
+- $`p_g = P(A \mid g)`$, group $`g`$'s **pooled** rate, all departments together.
 
 The pooled rate is the law of total probability:
 
-$$p_g = \sum_d w_{g,d}\, r_{g,d}$$
+```math
+p_g = \sum_d w_{g,d}\, r_{g,d}
+```
 
 **Read it aloud:** a group's overall admission rate is its department rates, averaged with weights set by where that group applied.
 
-The fair comparison gives both groups the same weights. Take $w_d = P(d)$, the share of all applicants who applied to $d$, and define the **standardised** rate:
+The fair comparison gives both groups the same weights. Take $`w_d = P(d)`$, the share of all applicants who applied to $`d`$, and define the **standardised** rate:
 
-$$s_g = \sum_d w_d\, r_{g,d}, \qquad s_W - s_M = \sum_d w_d\,\big(r_{W,d} - r_{M,d}\big)$$
+```math
+s_g = \sum_d w_d\, r_{g,d}, \qquad s_W - s_M = \sum_d w_d\,\big(r_{W,d} - r_{M,d}\big)
+```
 
 **Read it aloud:** compare women and men department by department, then average those gaps with one set of weights, the whole pool's mix.
 
-A helper formula says how big a confounder's effect can be. If admission depended on the department only, so that both groups had the same rate $r_d$ inside each department, the pooled gap would still be
+A helper formula says how big a confounder's effect can be. If admission depended on the department only, so that both groups had the same rate $`r_d`$ inside each department, the pooled gap would still be
 
-$$p_W - p_M = \sum_d \big(w_{W,d} - w_{M,d}\big)\, r_d \;=\; \big(w_{W,S} - w_{M,S}\big)\,\big(r_S - r_O\big) \text{ with two kinds.}$$
+```math
+p_W - p_M = \sum_d \big(w_{W,d} - w_{M,d}\big)\, r_d \;=\; \big(w_{W,S} - w_{M,S}\big)\,\big(r_S - r_O\big) \text{ with two kinds.}
+```
 
 In words: the difference in mix times the difference in department rates. Either factor zero, and the gap vanishes.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the event "admitted" | 1,198 men and 557 women | — |
-| $g$, W, M | the group compared: women or men | W and M | — |
-| $d$, O, S | a department, or a kind: open or selective | A to F; O = A and B, S = C to F | — |
-| $r_{g,d}$ | admission rate of group $g$ inside department $d$ | $r_{W,O}$ = 0.7970, $r_{M,O}$ = 0.6245 | that group's pooled rate rises |
-| $w_{g,d}$ | group $g$'s mix: share of its applications to $d$ | $w_{W,S}$ = 0.9275, $w_{M,S}$ = 0.4853 | more weight on that department's rate |
-| $p_g$, $p_W$, $p_M$ | pooled rate of a group | 0.3035 and 0.4452 | — |
-| $w_d$, $w_O$, $w_S$ | share of all applicants who applied to $d$ | $w_O$ = 0.3354, $w_S$ = 0.6646 | that department counts more in the fair comparison |
-| $s_g$, $s_W$, $s_M$ | standardised rate: the group's department rates on the pool's mix | 0.4434 and 0.3789 | — |
-| $r_d$, $r_O$, $r_S$ | admission rate of a department, both groups together | 0.6397 and 0.2606 | a bigger spread between them means more room for confounding |
-| $n$, $n_g$, $n_W$, $n_M$ | a count of applicants; $n_g$ counts group $g$ | $n_W$ = 1,835, $n_M$ = 2,691 | smaller standard errors |
-| $n_{g,d}$, $a_{g,d}$ | in the folded proof: applicants of group $g$ in department $d$, and how many of them were admitted | women in open departments: 133 and 106 | — |
+| $`A`$ | the event "admitted" | 1,198 men and 557 women | — |
+| $`g`$, W, M | the group compared: women or men | W and M | — |
+| $`d`$, O, S | a department, or a kind: open or selective | A to F; O = A and B, S = C to F | — |
+| $`r_{g,d}`$ | admission rate of group $`g`$ inside department $`d`$ | $`r_{W,O}`$ = 0.7970, $`r_{M,O}`$ = 0.6245 | that group's pooled rate rises |
+| $`w_{g,d}`$ | group $`g`$'s mix: share of its applications to $`d`$ | $`w_{W,S}`$ = 0.9275, $`w_{M,S}`$ = 0.4853 | more weight on that department's rate |
+| $`p_g`$, $`p_W`$, $`p_M`$ | pooled rate of a group | 0.3035 and 0.4452 | — |
+| $`w_d`$, $`w_O`$, $`w_S`$ | share of all applicants who applied to $`d`$ | $`w_O`$ = 0.3354, $`w_S`$ = 0.6646 | that department counts more in the fair comparison |
+| $`s_g`$, $`s_W`$, $`s_M`$ | standardised rate: the group's department rates on the pool's mix | 0.4434 and 0.3789 | — |
+| $`r_d`$, $`r_O`$, $`r_S`$ | admission rate of a department, both groups together | 0.6397 and 0.2606 | a bigger spread between them means more room for confounding |
+| $`n`$, $`n_g`$, $`n_W`$, $`n_M`$ | a count of applicants; $`n_g`$ counts group $`g`$ | $`n_W`$ = 1,835, $`n_M`$ = 2,691 | smaller standard errors |
+| $`n_{g,d}`$, $`a_{g,d}`$ | in the folded proof: applicants of group $`g`$ in department $`d`$, and how many of them were admitted | women in open departments: 133 and 106 | — |
 | SE | standard error: typical size of chance error in an estimate | 1.4 points on the pooled gap | smaller with more applicants |
 
 ### When it holds
@@ -93,7 +99,7 @@ A pooled rate mixes department rates with the group's own weights. Two groups wi
 
 ### Step 1: the pooled rate is a mix-weighted average
 
-Each application went to exactly one department, so the event "admitted" splits into admitted-to-O and admitted-to-S, which cannot both happen. Chances of such separate pieces add. Each piece is a chained chance, handled by the multiplication rule: $P(A \text{ and } d \mid g) = P(d \mid g)\,P(A \mid g, d)$. Adding over departments gives $p_g = \sum_d w_{g,d}\, r_{g,d}$.
+Each application went to exactly one department, so the event "admitted" splits into admitted-to-O and admitted-to-S, which cannot both happen. Chances of such separate pieces add. Each piece is a chained chance, handled by the multiplication rule: $`P(A \text{ and } d \mid g) = P(d \mid g)\,P(A \mid g, d)`$. Adding over departments gives $`p_g = \sum_d w_{g,d}\, r_{g,d}`$.
 
 For men: 0.5147 × 0.6245 + 0.4853 × 0.2550 = 0.4452. For women: 0.0725 × 0.7970 + 0.9275 × 0.2650 = 0.3035. Both match the direct counts, 1,198 of 2,691 and 557 of 1,835.
 
@@ -107,7 +113,7 @@ Drawn to scale from the checks' `figure` line. The solid line joins the women's 
 
 ### Step 2: a confounder makes a gap from nothing
 
-Suppose the departments paid no attention to sex, so that $r_{W,d} = r_{M,d} = r_d$. The pooled gap is then $\sum_d (w_{W,d} - w_{M,d})\,r_d$. With two kinds, the mixes each add to one, so $w_{W,O} - w_{M,O} = -(w_{W,S} - w_{M,S})$, and the sum collapses to $(w_{W,S} - w_{M,S})(r_S - r_O)$.
+Suppose the departments paid no attention to sex, so that $`r_{W,d} = r_{M,d} = r_d`$. The pooled gap is then $`\sum_d (w_{W,d} - w_{M,d})\,r_d`$. With two kinds, the mixes each add to one, so $`w_{W,O} - w_{M,O} = -(w_{W,S} - w_{M,S})`$, and the sum collapses to $`(w_{W,S} - w_{M,S})(r_S - r_O)`$.
 
 That product is the definition of confounding at work. The first factor is the link between the third variable and the group. The second is the link between the third variable and the outcome. Both must be non-zero. At Berkeley they are 0.9275 − 0.4853 and 0.2606 − 0.6397, and the product is **−16.76 points**: a sex-blind admissions process, fed these application patterns, would show women 16.76 points behind.
 
@@ -117,32 +123,34 @@ The checks build that world. SplitMix64, a small random number generator written
 
 The real rates differ by sex inside departments, so the pooled gap has two parts. The split is proved on [Independence](../01-Chance%20and%20Events/07-independence.md): add and subtract the men's rates weighted by the women's mix.
 
-$$p_W - p_M = \underbrace{\sum_d w_{W,d}\,\big(r_{W,d} - r_{M,d}\big)}_{\text{inside departments}} + \underbrace{\sum_d \big(w_{W,d} - w_{M,d}\big)\, r_{M,d}}_{\text{different mix}}$$
+```math
+p_W - p_M = \underbrace{\sum_d w_{W,d}\,\big(r_{W,d} - r_{M,d}\big)}_{\text{inside departments}} + \underbrace{\sum_d \big(w_{W,d} - w_{M,d}\big)\, r_{M,d}}_{\text{different mix}}
+```
 
 At Berkeley: −14.16 = +2.18 + (−16.34) points. The departments' own gaps favour women by 2.18 points on the women's mix. Where the women applied costs 16.34. The same card proves the other half: if the two mixes are equal, the second term is zero, and a group ahead in every department is ahead overall. A reversal needs different mixes, and it needs the mix term to outweigh the other.
 
 ### Step 4: put both groups on one mix
 
-The standardised rate $s_g$ replaces each group's own mix with the pool's. On two kinds of department, the pool's shares are 0.3354 open and 0.6646 selective:
+The standardised rate $`s_g`$ replaces each group's own mix with the pool's. On two kinds of department, the pool's shares are 0.3354 open and 0.6646 selective:
 
-$s_W$ = 0.3354 × 0.7970 + 0.6646 × 0.2650 = 0.4434, and $s_M$ = 0.3354 × 0.6245 + 0.6646 × 0.2550 = 0.3789.
+$`s_W`$ = 0.3354 × 0.7970 + 0.6646 × 0.2650 = 0.4434, and $`s_M`$ = 0.3354 × 0.6245 + 0.6646 × 0.2550 = 0.3789.
 
 Women come out **6.4 points ahead** (SE 1.6). Split all six departments instead and the standardised gap is **+4.3 points** (SE 1.8): standardised rates 0.4300 for women and 0.3873 for men.
 
-The same number has a second road, which treats applicants rather than departments. Give each applicant of group $g$ in department $d$ the weight $w_d / w_{g,d}$: large where that group is scarce compared with the pool, small where it is common. Each group's weighted admission rate is its standardised rate. The checks compute it from all 4,526 individual records, and it agrees with the formula to the last printed digit on both splits.
+The same number has a second road, which treats applicants rather than departments. Give each applicant of group $`g`$ in department $`d`$ the weight $`w_d / w_{g,d}`$: large where that group is scarce compared with the pool, small where it is common. Each group's weighted admission rate is its standardised rate. The checks compute it from all 4,526 individual records, and it agrees with the formula to the last printed digit on both splits.
 
 <details>
 <summary>Detailed proof: reweighting applicants gives the standardised rate, and its standard error</summary>
 
-Let $n_g$ be the number of applicants in group $g$, $n_{g,d}$ the number in department $d$, and $a_{g,d}$ the number admitted there. Then $w_{g,d} = n_{g,d}/n_g$ and $r_{g,d} = a_{g,d}/n_{g,d}$.
+Let $`n_g`$ be the number of applicants in group $`g`$, $`n_{g,d}`$ the number in department $`d`$, and $`a_{g,d}`$ the number admitted there. Then $`w_{g,d} = n_{g,d}/n_g`$ and $`r_{g,d} = a_{g,d}/n_{g,d}`$.
 
-Every applicant of group $g$ in department $d$ carries the weight $w_d / w_{g,d} = w_d\, n_g / n_{g,d}$. The weights of the $n_{g,d}$ such applicants add to $w_d\, n_g$. Over all departments they add to $n_g \sum_d w_d = n_g$, since the pool's shares add to one.
+Every applicant of group $`g`$ in department $`d`$ carries the weight $`w_d / w_{g,d} = w_d\, n_g / n_{g,d}`$. The weights of the $`n_{g,d}`$ such applicants add to $`w_d\, n_g`$. Over all departments they add to $`n_g \sum_d w_d = n_g`$, since the pool's shares add to one.
 
-The admitted among them contribute $a_{g,d}$ times the weight, which is $w_d\, n_g\, r_{g,d}$. Dividing the weighted admitted by the total weight:
+The admitted among them contribute $`a_{g,d}`$ times the weight, which is $`w_d\, n_g\, r_{g,d}`$. Dividing the weighted admitted by the total weight:
 
-$$\frac{\sum_d w_d\, n_g\, r_{g,d}}{n_g} = \sum_d w_d\, r_{g,d} = s_g.$$
+$`\displaystyle \frac{\sum_d w_d\, n_g\, r_{g,d}}{n_g} = \sum_d w_d\, r_{g,d} = s_g.`$
 
-For the standard error, treat each department's decisions as a chance process, so each rate is an estimate with variance $r(1-r)/n$, where $n$ is the number of applicants behind it. The departments' estimates are independent, and so are the two sexes' within one department. The variance of a sum of independent pieces is the sum of their variances, and a weight $w_d$ multiplies a variance by $w_d^2$. So the standardised gap has variance $\sum_d w_d^2\,\big[r_{W,d}(1-r_{W,d})/n_{W,d} + r_{M,d}(1-r_{M,d})/n_{M,d}\big]$, and its square root is the SE printed by the checks. The 4,526 applicants are the whole year's applicants, not a sample; the SE describes how much the decisions could plausibly have varied, not a sampling error.
+For the standard error, treat each department's decisions as a chance process, so each rate is an estimate with variance $`r(1-r)/n`$, where $`n`$ is the number of applicants behind it. The departments' estimates are independent, and so are the two sexes' within one department. The variance of a sum of independent pieces is the sum of their variances, and a weight $`w_d`$ multiplies a variance by $`w_d^2`$. So the standardised gap has variance $`\sum_d w_d^2\,\big[r_{W,d}(1-r_{W,d})/n_{W,d} + r_{M,d}(1-r_{M,d})/n_{M,d}\big]`$, and its square root is the SE printed by the checks. The 4,526 applicants are the whole year's applicants, not a sample; the SE describes how much the decisions could plausibly have varied, not a sampling error.
 
 </details>
 
@@ -586,7 +594,7 @@ Lean proves the card's three formulas for any counts, and checks the Berkeley nu
 
 - A group's pooled rate equals its department rates, averaged with weights set by its own mix. This holds for any number of departments.
 - Take two kinds of department, with both groups at the same rate inside each kind. Then the pooled gap is the difference in selective shares times the difference in the two kinds' rates.
-- Take a common mix adding to one, a group with applicants in every department, and each applicant weighted by $w_d / w_{g,d}$. Then the group's weighted admission rate is its standardised rate.
+- Take a common mix adding to one, a group with applicants in every department, and each applicant weighted by $`w_d / w_{g,d}`$. Then the group's weighted admission rate is its standardised rate.
 - The six departments add up to the two kinds, and to 4,526 applicants.
 - Women are ahead in the open kind and in the selective kind, yet behind overall.
 - Each pooled rate equals its mix-weighted average. The pooled gap splits into a positive part inside departments and a negative mix part.
@@ -806,7 +814,7 @@ example :
 ## Where this goes next
 
 - [Conditioning on a partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md): the departments are the cells of a partition, and each stratum rate is a cell average; the measure wing rebuilds that conditioning so it reaches a confounder measured on a scale, such as a grade, whose every exact value has chance zero.
-- [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): Step 4's applicant weights $w_d / w_{g,d}$ are a ratio of two mixes; there the same reweighting turns an average under one model into an average under another.
+- [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): Step 4's applicant weights $`w_d / w_{g,d}`$ are a ratio of two mixes; there the same reweighting turns an average under one model into an average under another.
 
 The design answers sit earlier on this shelf: [Randomised experiments](04-randomised-experiments-and-ab-tests.md) equalises every mix at once by lottery, [Blocking and factorial designs](05-blocking-and-factorial-designs.md) fixes a known confounder by randomising within each stratum, and [Permutation tests](06-permutation-tests.md) tests a gap by reshuffling the labels, valid exactly when a lottery assigned them.
 

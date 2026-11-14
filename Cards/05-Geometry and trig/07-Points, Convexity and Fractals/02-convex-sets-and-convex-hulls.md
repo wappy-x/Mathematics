@@ -28,34 +28,40 @@ Scale 1 m = 12 units, corner post at (40, 216). Dashed: a fence dented in to G.
 
 Points scale and add coordinate by coordinate, as vectors do; ∈ reads "is in"; turn is twice a triangle's signed area, from [Shoelace formula](01-polygon-area-and-orientation.md).
 
-A region $S$ is convex when
+A region $`S`$ is convex when
 
-$$(1 - t)\,u + t\,v \in S \quad\text{for every two points } u, v \in S \text{ and every } t \text{ from 0 to 1}.$$
+```math
+(1 - t)\,u + t\,v \in S \quad\text{for every two points } u, v \in S \text{ and every } t \text{ from 0 to 1}.
+```
 
 **Read it aloud:** every step of a straight walk between two points of the region stays in the region.
 
-For a set $P$ of $n$ trees, each written $p_i$, the hull is
+For a set $`P`$ of $`n`$ trees, each written $`p_i`$, the hull is
 
-$$\mathrm{hull}(P) = \{\, w_1 p_1 + w_2 p_2 + \dots + w_n p_n \;:\; \text{every } w_i \ge 0,\ \ w_1 + w_2 + \dots + w_n = 1 \,\}.$$
+```math
+\mathrm{hull}(P) = \{\, w_1 p_1 + w_2 p_2 + \dots + w_n p_n \;:\; \text{every } w_i \ge 0,\ \ w_1 + w_2 + \dots + w_n = 1 \,\}.
+```
 
 **Read it aloud:** the hull is every weighted average of the trees, with weights never negative and adding to one.
 
 Every algorithm here runs on one test:
 
-$$\mathrm{turn}(a, b, c) = (b_x - a_x)(c_y - a_y) - (b_y - a_y)(c_x - a_x).$$
+```math
+\mathrm{turn}(a, b, c) = (b_x - a_x)(c_y - a_y) - (b_y - a_y)(c_x - a_x).
+```
 
 **Read it aloud:** walking a to b to c, positive means a left bend, negative a right bend, zero straight on.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | a region of the plane | the paddock | — |
-| $u$, $v$ | two points of the region | trees A and H | — |
-| $t$ | fraction of the way from $u$ to $v$ | 1/2: midpoint (6.5, 4.0) | slides towards $v$ |
-| $P$, $n$ | the trees; how many | A to H; 8 | a new tree grows the hull or leaves it alone |
-| $p_i$, $w_i$ | the i-th tree; its weight | G = 0.4043 F + 0.4255 B + 0.1702 D | pulls the average to that tree |
-| $\mathrm{hull}(P)$ | the convex hull | polygon F A B C D E, 196 square metres | — |
-| $\mathrm{turn}(a, b, c)$ | twice the signed area of triangle a, b, c | turn(F, A, B) = 76 | sharper left bend |
-| $a_x$, $a_y$ | across and up coordinates of a | F: 0 and 6 | — |
+| $`S`$ | a region of the plane | the paddock | — |
+| $`u`$, $`v`$ | two points of the region | trees A and H | — |
+| $`t`$ | fraction of the way from $`u`$ to $`v`$ | 1/2: midpoint (6.5, 4.0) | slides towards $`v`$ |
+| $`P`$, $`n`$ | the trees; how many | A to H; 8 | a new tree grows the hull or leaves it alone |
+| $`p_i`$, $`w_i`$ | the i-th tree; its weight | G = 0.4043 F + 0.4255 B + 0.1702 D | pulls the average to that tree |
+| $`\mathrm{hull}(P)`$ | the convex hull | polygon F A B C D E, 196 square metres | — |
+| $`\mathrm{turn}(a, b, c)`$ | twice the signed area of triangle a, b, c | turn(F, A, B) = 76 | sharper left bend |
+| $`a_x`$, $`a_y`$ | across and up coordinates of a | F: 0 and 6 | — |
 
 ### When it holds
 
@@ -100,7 +106,7 @@ Sort the trees left to right and walk along them, keeping a chain. When a tree a
 
 That builds the **lower chain**; right to left builds the **upper chain**; joined, they are the hull: **Andrew's monotone chain** (1979). Both chains bend only left, so the loop is convex by Step 1, and every dropped tree ends inside it.
 
-Sorting is the slow part, about $n \log_2 n$ comparisons, where $\log_2 n$ counts how many times $n$ halves down to 1; each tree then joins and leaves a chain at most once.
+Sorting is the slow part, about $`n \log_2 n`$ comparisons, where $`\log_2 n`$ counts how many times $`n`$ halves down to 1; each tree then joins and leaves a chain at most once.
 
 <details>
 <summary>Detailed proof: a dropped tree is never a lower corner</summary>
@@ -113,7 +119,7 @@ Sorted by x, kept tree a is at or left of m, newcomer p at or right. If turn(a, 
 
 Stretch a string from the leftmost tree, F, to any other. Whenever a tree lies to its right, swing the string to it. When none does, every tree is in the convex half-plane on the string's left, so the whole hull is: the string lies along a hull edge.
 
-Walk to its far end and repeat until back at F. This is **gift wrapping** (Jarvis, 1973). Each hull edge costs one pass over all $n$ trees.
+Walk to its far end and repeat until back at F. This is **gift wrapping** (Jarvis, 1973). Each hull edge costs one pass over all $`n`$ trees.
 
 A brute force agrees: of 56 ordered pairs, only AB, BC, CD, DE, EF and FA have every tree on the left.
 

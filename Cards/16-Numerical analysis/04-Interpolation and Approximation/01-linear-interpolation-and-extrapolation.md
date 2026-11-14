@@ -39,36 +39,42 @@ First line (curved): the model tide. Second line (straight): the line through th
 
 The time t sits between two reading times a and b, a fraction s of the way along:
 
-$$s = \frac{t-a}{b-a}, \qquad L(t) = (1-s)\,H(a) + s\,H(b)$$
+```math
+s = \frac{t-a}{b-a}, \qquad L(t) = (1-s)\,H(a) + s\,H(b)
+```
 
 **Read it aloud:** the line's value is a weighted average of the two readings, with weight 1 − s on the earlier one and s on the later one.
 
 The error, for any time t, with h = b − a the spacing:
 
-$$H(t) - L(t) = \tfrac12\,H''(\xi)\,(t-a)(t-b), \qquad |H(t) - L(t)| \le \frac{M h^2}{8} \quad \text{for } a \le t \le b$$
+```math
+H(t) - L(t) = \tfrac12\,H''(\xi)\,(t-a)(t-b), \qquad |H(t) - L(t)| \le \frac{M h^2}{8} \quad \text{for } a \le t \le b
+```
 
 **Read it aloud:** the line misses by half the curve's bend at some point ξ times the product of the distances to the two readings; between the readings that product is at most a quarter of h squared.
 
-In two dimensions, with four corner readings $H_{00}, H_{01}, H_{10}, H_{11}$ (first index: time a or b; second: place $x_0$ or $x_1$), **bilinear interpolation** is:
+In two dimensions, with four corner readings $`H_{00}, H_{01}, H_{10}, H_{11}`$ (first index: time a or b; second: place $`x_0`$ or $`x_1`$), **bilinear interpolation** is:
 
-$$B = (1-s)(1-r)\,H_{00} + (1-s)\,r\,H_{01} + s\,(1-r)\,H_{10} + s\,r\,H_{11}, \qquad |H - B| \le \frac{M_t h_t^2 + M_x h_x^2}{8}$$
+```math
+B = (1-s)(1-r)\,H_{00} + (1-s)\,r\,H_{01} + s\,(1-r)\,H_{10} + s\,r\,H_{11}, \qquad |H - B| \le \frac{M_t h_t^2 + M_x h_x^2}{8}
+```
 
 **Read it aloud:** weight each corner by how close the point is to it in each direction, and the error is at most the sum of the two one-direction bounds.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time, in hours after midnight | 9 + 1/3 (9:20 am) | moves along the line |
-| $H(t)$, $H(t, x)$ | the true water height above chart datum, in m; x adds the place | 2.2925 m at 9:20 at the mouth | — |
-| $a$, $b$ | the two reading times | 9 and 10 | — |
-| $h$, $h_t$, $h_x$ | the spacing between readings: in time, and in distance | 1 hour; 6 km | the bound grows like the square |
-| $s$, $r$ | fraction of the way from the first reading to the second, in time and in distance | 1/3 and 1/3 | more weight on the later or farther reading |
-| $L(t)$; $H(t) - L(t)$ | the line's value, the interpolated height; and its true error | 2.3012 m; −0.0087 m | — |
-| $H''$ | the second derivative: how fast the slope changes, the curve's bend | runs from −0.0245 to 0.2015 m/h² on [9, 10] | larger error |
-| $M$, $M_t$, $M_x$ | an assumed ceiling on the size of the bend: in time, and in distance | 0.2015 m/h²; 0.002015 m/km² | larger bound |
-| $\xi$ | (xi) a point between the readings where the error formula reads the bend | 9.4424 h | — |
-| $x$, $x_0$, $x_1$ | distance up the estuary, in km, and the two gauges | 2; 0 (mouth) and 6 (town quay) | — |
-| $B$, $H_{00} \dots H_{11}$ | the bilinear value, and the four corner readings | 2.4774 m; 2.5956, 3.1285, 1.7126, 2.2324 m | — |
-| $\delta$ | an error in a reading itself | none: the model's readings are exact | the line moves by up to δ inside, up to 7.00 δ at 1 pm |
+| $`t`$ | time, in hours after midnight | 9 + 1/3 (9:20 am) | moves along the line |
+| $`H(t)`$, $`H(t, x)`$ | the true water height above chart datum, in m; x adds the place | 2.2925 m at 9:20 at the mouth | — |
+| $`a`$, $`b`$ | the two reading times | 9 and 10 | — |
+| $`h`$, $`h_t`$, $`h_x`$ | the spacing between readings: in time, and in distance | 1 hour; 6 km | the bound grows like the square |
+| $`s`$, $`r`$ | fraction of the way from the first reading to the second, in time and in distance | 1/3 and 1/3 | more weight on the later or farther reading |
+| $`L(t)`$; $`H(t) - L(t)`$ | the line's value, the interpolated height; and its true error | 2.3012 m; −0.0087 m | — |
+| $`H''`$ | the second derivative: how fast the slope changes, the curve's bend | runs from −0.0245 to 0.2015 m/h² on [9, 10] | larger error |
+| $`M`$, $`M_t`$, $`M_x`$ | an assumed ceiling on the size of the bend: in time, and in distance | 0.2015 m/h²; 0.002015 m/km² | larger bound |
+| $`\xi`$ | (xi) a point between the readings where the error formula reads the bend | 9.4424 h | — |
+| $`x`$, $`x_0`$, $`x_1`$ | distance up the estuary, in km, and the two gauges | 2; 0 (mouth) and 6 (town quay) | — |
+| $`B`$, $`H_{00} \dots H_{11}`$ | the bilinear value, and the four corner readings | 2.4774 m; 2.5956, 3.1285, 1.7126, 2.2324 m | — |
+| $`\delta`$ | an error in a reading itself | none: the model's readings are exact | the line moves by up to δ inside, up to 7.00 δ at 1 pm |
 
 ### When it holds
 

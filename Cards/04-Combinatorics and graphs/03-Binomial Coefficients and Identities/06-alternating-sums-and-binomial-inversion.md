@@ -34,33 +34,37 @@ A perfect pairing: each added pick has one subtracted partner, so the total is 1
 
 ## The formula
 
-Two pieces of shorthand, both already on this shelf. C(n, k) counts the ways to pick k things from n when order is ignored, read "n choose k". The Greek capital sigma, $\sum$, with a starting value under it and a stopping value over it, means "add these as k runs from first to last" ([The binomial theorem](02-binomial-theorem.md)).
+Two pieces of shorthand, both already on this shelf. C(n, k) counts the ways to pick k things from n when order is ignored, read "n choose k". The Greek capital sigma, $`\sum`$, with a starting value under it and a stopping value over it, means "add these as k runs from first to last" ([The binomial theorem](02-binomial-theorem.md)).
 
-$$\sum_{k=0}^{n} (-1)^k\, C(n,k) \;=\; C(n,0) - C(n,1) + C(n,2) - \cdots \;=\; 0 \qquad (n \ge 1)$$
+```math
+\sum_{k=0}^{n} (-1)^k\, C(n,k) \;=\; C(n,0) - C(n,1) + C(n,2) - \cdots \;=\; 0 \qquad (n \ge 1)
+```
 
 **Read it aloud:** walk along a row of the triangle adding and subtracting in turn; past the top row the total is nothing.
 
 That zero unlocks a pair of sums that undo each other, binomial inversion:
 
-$$b_n = \sum_{k=0}^{n} C(n,k)\, a_k \qquad\Longleftrightarrow\qquad a_n = \sum_{k=0}^{n} (-1)^{n-k}\, C(n,k)\, b_k$$
+```math
+b_n = \sum_{k=0}^{n} C(n,k)\, a_k \qquad\Longleftrightarrow\qquad a_n = \sum_{k=0}^{n} (-1)^{n-k}\, C(n,k)\, b_k
+```
 
 **Read it aloud:** if each loose count is the exact counts weighted by a row, each exact count is the loose counts weighted by that row, signs alternating and the last term positive.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | tunes in the pool, and the row number | 5 | longer rows, larger counts |
-| $k$ | the index along the row | 0 to 5 | — |
-| $\sum$ | add the terms as $k$ runs from below to above | k from 0 to 5 | — |
-| $C(n,k)$ | picks of k tunes from n, order ignored | C(5,2) = 10 | climbs to mid-row, then falls |
-| $(-1)^k$ | the sign: plus on even k, minus on odd | −1 at k = 3 | — |
-| $a_k$, $a_j$, $a_n$ | the exact count: setlists using all k tunes | 1, 1, 2, 6, 24, 120 | every loose count rises |
-| $b_n$, $b_k$ | the loose count: setlists a pool of n allows | 1, 2, 5, 16, 65, 326 | — |
-| $k!$ | "k factorial", 1 × 2 × ⋯ × k, with 0! = 1: the running orders of k tunes, so $a_k = k!$ | 5! = 120 | each step up multiplies it by the new k |
+| $`n`$ | tunes in the pool, and the row number | 5 | longer rows, larger counts |
+| $`k`$ | the index along the row | 0 to 5 | — |
+| $`\sum`$ | add the terms as $`k`$ runs from below to above | k from 0 to 5 | — |
+| $`C(n,k)`$ | picks of k tunes from n, order ignored | C(5,2) = 10 | climbs to mid-row, then falls |
+| $`(-1)^k`$ | the sign: plus on even k, minus on odd | −1 at k = 3 | — |
+| $`a_k`$, $`a_j`$, $`a_n`$ | the exact count: setlists using all k tunes | 1, 1, 2, 6, 24, 120 | every loose count rises |
+| $`b_n`$, $`b_k`$ | the loose count: setlists a pool of n allows | 1, 2, 5, 16, 65, 326 | — |
+| $`k!`$ | "k factorial", 1 × 2 × ⋯ × k, with 0! = 1: the running orders of k tunes, so $`a_k = k!`$ | 5! = 120 | each step up multiplies it by the new k |
 
 ### When it holds
 
 - **At least one thing to toggle.** Row 0 is a single 1, so its alternating sum is 1, not 0 — and that lone 1 survives to deliver the answer.
-- **Both sequences indexed from 0, and the sign written $(-1)^{n-k}$.** Drop the k = 0 term and the five-tune count reads 121; write $(-1)^k$ and every recovered count flips on odd rows.
+- **Both sequences indexed from 0, and the sign written $`(-1)^{n-k}`$.** Drop the k = 0 term and the five-tune count reads 121; write $`(-1)^k`$ and every recovered count flips on odd rows.
 - **Only adding and subtracting.** No division anywhere, so this holds for any quantities that add: counts, dollars, remainders on a clock.
 
 ---
@@ -83,28 +87,34 @@ The binomial theorem expands (x + y)^n into terms C(n, k) x^(n−k) y^k added ov
 
 ### Step 3: the forward sum, and what undoing it means
 
-Sort the setlists from n tunes by the pick each uses: C(n, k) picks of size k, each carrying $a_k$ setlists. Adding over the sizes gives the forward sum
+Sort the setlists from n tunes by the pick each uses: C(n, k) picks of size k, each carrying $`a_k`$ setlists. Adding over the sizes gives the forward sum
 
-$$b_n = C(n,0)\,a_0 + C(n,1)\,a_1 + \cdots + C(n,n)\,a_n.$$
+```math
+b_n = C(n,0)\,a_0 + C(n,1)\,a_1 + \cdots + C(n,n)\,a_n.
+```
 
-For five tunes the groups hold 1, 5, 20, 60, 120 and 120 setlists, adding to 326. Undoing means recovering $a_n$ from the loose counts alone.
+For five tunes the groups hold 1, 5, 20, 60, 120 and 120 setlists, adding to 326. Undoing means recovering $`a_n`$ from the loose counts alone.
 
 ### Step 4: substitute, swap the order, and watch the row cancel
 
-Put the forward sum inside the claimed inverse. Each loose count is itself a sum over sizes, so the result is a double sum; the question is what weight each $a_j$ carries.
+Put the forward sum inside the claimed inverse. Each loose count is itself a sum over sizes, so the result is a double sum; the question is what weight each $`a_j`$ carries.
 
 Choosing k tunes from n and then j of those k is the same act as choosing the j first and the other k − j from the n − j left over. So the nested picks count the other way round. That pulls a constant clear and leaves an alternating sum over the whole of row n − j. By Step 1 that sum is 0 unless the row is the top one, which happens only at j = n.
 
-So every $a_j$ vanishes but $a_n$, weight 1: the inverse hands back what went in. At n = 5 the terms −1 + 10 − 50 + 160 − 325 + 326 come to 120.
+So every $`a_j`$ vanishes but $`a_n`$, weight 1: the inverse hands back what went in. At n = 5 the terms −1 + 10 − 50 + 160 − 325 + 326 come to 120.
 
 <details>
 <summary>Detailed proof: the two sums undo each other</summary>
 
-Take $b_k = \sum_{j=0}^{k} C(k,j)\, a_j$ and put it inside the signed sum. Both indices run over the pairs with j ≤ k ≤ n, so the order can be swapped:
-$$\sum_{k=0}^{n} (-1)^{n-k} C(n,k)\, b_k = \sum_{j=0}^{n} a_j \sum_{k=j}^{n} (-1)^{n-k} C(n,k)\, C(k,j).$$
+Take $`b_k = \sum_{j=0}^{k} C(k,j)\, a_j`$ and put it inside the signed sum. Both indices run over the pairs with j ≤ k ≤ n, so the order can be swapped:
+
+$`\displaystyle \sum_{k=0}^{n} (-1)^{n-k} C(n,k)\, b_k = \sum_{j=0}^{n} a_j \sum_{k=j}^{n} (-1)^{n-k} C(n,k)\, C(k,j).`$
+
 Nested picks counted the other way round give C(n,k) C(k,j) = C(n,j) C(n−j, k−j). Apply it and substitute i = k − j, turning the sign (−1)^(n−k) into (−1)^((n−j)−i):
-$$\sum_{k=j}^{n} (-1)^{n-k} C(n,k) C(k,j) = C(n,j) \sum_{i=0}^{n-j} (-1)^{(n-j)-i} C(n-j,\, i).$$
-The inner sum is a full row with alternating signs, differing from Step 1's only by a factor of (−1)^(n−j), which cannot change a zero. So it is 0 unless j = n, where it is 1: only that term survives, weight C(n,n) = 1, leaving $a_n$. The same argument with the signs on the other transform gives the converse.
+
+$`\displaystyle \sum_{k=j}^{n} (-1)^{n-k} C(n,k) C(k,j) = C(n,j) \sum_{i=0}^{n-j} (-1)^{(n-j)-i} C(n-j,\, i).`$
+
+The inner sum is a full row with alternating signs, differing from Step 1's only by a factor of (−1)^(n−j), which cannot change a zero. So it is 0 unless j = n, where it is 1: only that term survives, weight C(n,n) = 1, leaving $`a_n`$. The same argument with the signs on the other transform gives the converse.
 
 </details>
 

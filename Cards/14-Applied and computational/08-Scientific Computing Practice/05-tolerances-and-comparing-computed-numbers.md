@@ -38,36 +38,40 @@ The allowed gap, 4.370e-9, sits near the middle of the window, several powers of
 
 ## The formula
 
-$$|a - b| \;\le\; \max\!\big(\tau_r \cdot \max(|a|,\,|b|),\;\; \tau_a\big)$$
+```math
+|a - b| \;\le\; \max\!\big(\tau_r \cdot \max(|a|,\,|b|),\;\; \tau_a\big)
+```
 
 **Read it aloud:** the gap between the two numbers is no bigger than a fixed share of the larger one, or a fixed small amount, whichever allows more.
 
 The tolerance is then chosen from two sizes the reader can work out:
 
-$$10\,\kappa\,n\,u \;\;\le\;\; \tau_r \;\;\le\;\; \frac{\Delta}{10\,|b|}$$
+```math
+10\,\kappa\,n\,u \;\;\le\;\; \tau_r \;\;\le\;\; \frac{\Delta}{10\,|b|}
+```
 
 **Read it aloud:** the relative tolerance sits at least ten times above the worst rounding noise and at least ten times below the smallest mistake that matters, measured as a share of the answer.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$ | the computed number | 4.369999999999999 | — |
-| $b$ | the number it should be | 4.37 | a relative tolerance allows more |
-| $\tau_r$ | relative tolerance: the allowed gap as a share of the larger number. Say "tau r". | 1e-9 | more passes; mistakes start to slip through |
-| $\tau_a$ | absolute tolerance: a floor on the allowed gap, for answers near zero | 1e-12 | more passes near zero |
-| $u$ | unit roundoff: the largest relative error of one rounding, $2^{-53}$ | 1.110e-16 | — |
-| $n$ | how many roundings went into $a$ | 5: three prices stored, two additions | the noise grows; $\tau_r$ must rise |
-| $\kappa$ | condition number: how much the sum magnifies relative errors in its inputs ([Cancellation](02-catastrophic-cancellation-and-safe-formulas.md)). Say "kappa". | 1, since all prices are positive | the noise grows; near zero it is unbounded |
-| $\Delta$ | the smallest mistake worth catching. Say "delta". | £0.01, one penny | $\tau_r$ may rise |
-| $\Sigma\lvert x\rvert$ | the size of the inputs: their sizes added up | 4.37 | the noise and the floor $\tau_a$ grow |
+| $`a`$ | the computed number | 4.369999999999999 | — |
+| $`b`$ | the number it should be | 4.37 | a relative tolerance allows more |
+| $`\tau_r`$ | relative tolerance: the allowed gap as a share of the larger number. Say "tau r". | 1e-9 | more passes; mistakes start to slip through |
+| $`\tau_a`$ | absolute tolerance: a floor on the allowed gap, for answers near zero | 1e-12 | more passes near zero |
+| $`u`$ | unit roundoff: the largest relative error of one rounding, $`2^{-53}`$ | 1.110e-16 | — |
+| $`n`$ | how many roundings went into $`a`$ | 5: three prices stored, two additions | the noise grows; $`\tau_r`$ must rise |
+| $`\kappa`$ | condition number: how much the sum magnifies relative errors in its inputs ([Cancellation](02-catastrophic-cancellation-and-safe-formulas.md)). Say "kappa". | 1, since all prices are positive | the noise grows; near zero it is unbounded |
+| $`\Delta`$ | the smallest mistake worth catching. Say "delta". | £0.01, one penny | $`\tau_r`$ may rise |
+| $`\Sigma\lvert x\rvert`$ | the size of the inputs: their sizes added up | 4.37 | the noise and the floor $`\tau_a`$ grow |
 
-For the receipt, the window for $\tau_r$ runs from 5.551e-15 to 2.288e-4. The library's 1e-9 sits inside it with room on both sides. Python's own `math.isclose` uses the same first formula, with $\tau_r$ = 1e-9 and no floor unless asked.
+For the receipt, the window for $`\tau_r`$ runs from 5.551e-15 to 2.288e-4. The library's 1e-9 sits inside it with room on both sides. Python's own `math.isclose` uses the same first formula, with $`\tau_r`$ = 1e-9 and no floor unless asked.
 
 ### When it holds
 
-- **The noise is rounding, not method error.** A computed integral, a coin-flip tree or a simulation is off by far more than $n u$. Its tolerance comes from the method's own error, or for a simulation from a few standard errors, the typical size of its random error ([Seeds](03-reproducible-simulation-and-seeds.md)). Use 1e-9 there and correct code fails.
-- **The number of roundings is known roughly.** The rule is safe while $\kappa n$ stays below about 9.01e5, at full margin. A loop of many millions of additions needs a larger $\tau_r$, or the bound must be checked by measuring the error.
-- **The answer is not near zero.** Relative error means nothing when the answer is 0, so the floor $\tau_a$ takes over. The floor must be set from the size of the *inputs*, not of the answer: the default 1e-12 covers $n\,\Sigma\lvert x\rvert$ up to about 900.7, and bigger computations need $10\,n\,u\,\Sigma\lvert x\rvert$.
-- **The mistake you care about is bigger than the noise.** If $\Delta/|b|$ is below $10\kappa n u$, the window is empty: no tolerance can tell right from wrong, and the computation itself must be made more accurate first.
+- **The noise is rounding, not method error.** A computed integral, a coin-flip tree or a simulation is off by far more than $`n u`$. Its tolerance comes from the method's own error, or for a simulation from a few standard errors, the typical size of its random error ([Seeds](03-reproducible-simulation-and-seeds.md)). Use 1e-9 there and correct code fails.
+- **The number of roundings is known roughly.** The rule is safe while $`\kappa n`$ stays below about 9.01e5, at full margin. A loop of many millions of additions needs a larger $`\tau_r`$, or the bound must be checked by measuring the error.
+- **The answer is not near zero.** Relative error means nothing when the answer is 0, so the floor $`\tau_a`$ takes over. The floor must be set from the size of the *inputs*, not of the answer: the default 1e-12 covers $`n\,\Sigma\lvert x\rvert`$ up to about 900.7, and bigger computations need $`10\,n\,u\,\Sigma\lvert x\rvert`$.
+- **The mistake you care about is bigger than the noise.** If $`\Delta/|b|`$ is below $`10\kappa n u`$, the window is empty: no tolerance can tell right from wrong, and the computation itself must be made more accurate first.
 - **The quantity is not a whole number.** Counts, pennies held as integers and bit patterns involve no rounding. Test those with `==`, and a tolerance there would only hide mistakes.
 
 ---
@@ -84,39 +88,39 @@ A tolerance anywhere in that gap tells the two apart. `==` sits at the bottom ed
 
 ### Step 1: one rounding is off by at most u, as a share
 
-Each stored number and each arithmetic answer is the true answer rounded once, off by at most $u = 2^{-53}$, about 1.110e-16, as a share of itself ([Floating point](01-floating-point-in-practice.md)). So 0.99 is stored as a number within $0.99\,u$ of 0.99, and each addition adds at most $u$ times its own answer.
+Each stored number and each arithmetic answer is the true answer rounded once, off by at most $`u = 2^{-53}`$, about 1.110e-16, as a share of itself ([Floating point](01-floating-point-in-practice.md)). So 0.99 is stored as a number within $`0.99\,u`$ of 0.99, and each addition adds at most $`u`$ times its own answer.
 
 ### Step 2: in a sum, the shares add up
 
-[Floating point](01-floating-point-in-practice.md) proves the bound for a running sum, to first order: each addition costs at most $u$ times the running total, and no running total is bigger than $\Sigma\lvert x\rvert$. Storing a price costs at most $u$ times that price, which is smaller still. So $n$ roundings of either kind cost at most $n\,u\,\Sigma\lvert x\rvert$.
+[Floating point](01-floating-point-in-practice.md) proves the bound for a running sum, to first order: each addition costs at most $`u`$ times the running total, and no running total is bigger than $`\Sigma\lvert x\rvert`$. Storing a price costs at most $`u`$ times that price, which is smaller still. So $`n`$ roundings of either kind cost at most $`n\,u\,\Sigma\lvert x\rvert`$.
 
-For the receipt: 5 roundings, $u$ = 1.110e-16 and $\Sigma\lvert x\rvert$ = 4.37 give a bound of 2.426e-15. The check measures the true errors exactly, in whole pennies over powers of two: −7.816e-16 in the rung-up order, 1.066e-16 dearest first. Both sit under the bound.
+For the receipt: 5 roundings, $`u`$ = 1.110e-16 and $`\Sigma\lvert x\rvert`$ = 4.37 give a bound of 2.426e-15. The check measures the true errors exactly, in whole pennies over powers of two: −7.816e-16 in the rung-up order, 1.066e-16 dearest first. Both sit under the bound.
 
 The bound is a worst case. The roundings usually partly cancel, so the real error is often far smaller, but a tolerance should cover the worst case.
 
 ### Step 3: the noise grows with the numbers, so the tolerance must too
 
-The bound $n u \Sigma\lvert x\rvert$ is proportional to the size of the numbers. Ring the same receipt up 100,000 times and add every item: the total should be £437,000. The machine gets 436999.99999984, off by 1.612e-7, under its bound of 1.456e-5. An absolute tolerance of 1e-9 fails this correct sum. A relative tolerance of 1e-9 allows 4.370e-4 at this size and passes it.
+The bound $`n u \Sigma\lvert x\rvert`$ is proportional to the size of the numbers. Ring the same receipt up 100,000 times and add every item: the total should be £437,000. The machine gets 436999.99999984, off by 1.612e-7, under its bound of 1.456e-5. An absolute tolerance of 1e-9 fails this correct sum. A relative tolerance of 1e-9 allows 4.370e-4 at this size and passes it.
 
-This is why $\tau_r$ is a share of the larger number. It reads the same at £4.37 and at £437,000, the way the noise does. Using the larger of $\lvert a\rvert$ and $\lvert b\rvert$ makes the test give the same answer whichever number is called "computed".
+This is why $`\tau_r`$ is a share of the larger number. It reads the same at £4.37 and at £437,000, the way the noise does. Using the larger of $`\lvert a\rvert`$ and $`\lvert b\rvert`$ makes the test give the same answer whichever number is called "computed".
 
 ### Step 4: near zero, the share fails and a floor takes over
 
 Refund all three items: take 0.99, 1.19 and 2.19 off the total of 4.369999999999999. The answer should be 0. The machine gets −8.882e-16.
 
-A relative test against 0 allows $\tau_r \times 8.882\text{e-}16$, which is smaller than the gap itself. So it fails, at any $\tau_r$ below 1. The trouble is that the noise was made while the numbers were near £4.37 and has nothing to do with the tiny answer. In the Cancellation card's terms, $\kappa = \Sigma\lvert x\rvert / \lvert\text{answer}\rvert$ is enormous.
+A relative test against 0 allows $`\tau_r \times 8.882\text{e-}16`$, which is smaller than the gap itself. So it fails, at any $`\tau_r`$ below 1. The trouble is that the noise was made while the numbers were near £4.37 and has nothing to do with the tiny answer. In the Cancellation card's terms, $`\kappa = \Sigma\lvert x\rvert / \lvert\text{answer}\rvert`$ is enormous.
 
-The fix is the floor $\tau_a$, set from the inputs. Here 8 roundings over inputs of total size 8.74 (£4.37 up, £4.37 down) give a worst noise near $8 u \times 8.74$. Ten times that is 7.763e-14, below the library's 1e-12, so the floor covers it.
+The fix is the floor $`\tau_a`$, set from the inputs. Here 8 roundings over inputs of total size 8.74 (£4.37 up, £4.37 down) give a worst noise near $`8 u \times 8.74`$. Ten times that is 7.763e-14, below the library's 1e-12, so the floor covers it.
 
-A fixed floor runs out on big inputs. Refund all 100,000 receipts from Step 3, item by item, and the leftover is 1.320e-11. Nothing is wrong, yet it is over 1e-12, so the default fails it. There 600,003 roundings over inputs of size 874,000 (£437,000 up, £437,000 down) call for a floor of $10\,n\,u\,\Sigma\lvert x\rvert$ = 5.822e-4. That is still far below a penny, and the leftover passes it.
+A fixed floor runs out on big inputs. Refund all 100,000 receipts from Step 3, item by item, and the leftover is 1.320e-11. Nothing is wrong, yet it is over 1e-12, so the default fails it. There 600,003 roundings over inputs of size 874,000 (£437,000 up, £437,000 down) call for a floor of $`10\,n\,u\,\Sigma\lvert x\rvert`$ = 5.822e-4. That is still far below a penny, and the leftover passes it.
 
 ### Step 5: put the tolerance in the middle of the window
 
-The tolerance needs margin on both sides, and the sides are measured in powers of ten. So the natural place is the middle on a log scale. On the receipt the window for $\tau_r$ runs from 5.551e-15 to 2.288e-4, and its middle is 1.127e-9. The library rounds this to 1e-9.
+The tolerance needs margin on both sides, and the sides are measured in powers of ten. So the natural place is the middle on a log scale. On the receipt the window for $`\tau_r`$ runs from 5.551e-15 to 2.288e-4, and its middle is 1.127e-9. The library rounds this to 1e-9.
 
-How much rounding does 1e-9 cover? Divide by $u$: 9.01e6 roundings in the worst case at $\kappa = 1$, or 9.01e5 with the tenfold margin. In general it covers $\kappa n$ up to 9.01e5.
+How much rounding does 1e-9 cover? Divide by $`u`$: 9.01e6 roundings in the worst case at $`\kappa = 1`$, or 9.01e5 with the tenfold margin. In general it covers $`\kappa n`$ up to 9.01e5.
 
-The floor 1e-12 covers $n\,\Sigma\lvert x\rvert$ up to $10^{-12}/(10u)$ = 900.7. So the library's default is relative 1e-9 with a floor of 1e-12, for any comparison inside both limits. Outside them, the tolerance comes from the formula, with the floor $10\,n\,u\,\Sigma\lvert x\rvert$.
+The floor 1e-12 covers $`n\,\Sigma\lvert x\rvert`$ up to $`10^{-12}/(10u)`$ = 900.7. So the library's default is relative 1e-9 with a floor of 1e-12, for any comparison inside both limits. Outside them, the tolerance comes from the formula, with the floor $`10\,n\,u\,\Sigma\lvert x\rvert`$.
 
 ---
 
@@ -129,10 +133,10 @@ The receipt, rung-up order, compared with 4.37 at the library's default.
 | total in pennies, no rounding | 99 + 119 + 219 | 437 |
 | machine total | 0.99 + 1.19 + 2.19 | 4.369999999999999 |
 | exact error of that total | measured in whole numbers | −7.816e-16 |
-| worst-case noise, $n u \Sigma\lvert x\rvert$ | 5 × 1.110e-16 × 4.37 | 2.426e-15 |
-| lowest safe $\tau_r$, $10\kappa n u$ | 10 × 1 × 5 × 1.110e-16 | 5.551e-15 |
-| highest safe $\tau_r$, $\Delta / (10\lvert b\rvert)$ | 0.01 / (10 × 4.37) | 2.288e-4 |
-| allowed gap at $\tau_r$ = 1e-9 | 1e-9 × 4.37 | 4.370e-9 |
+| worst-case noise, $`n u \Sigma\lvert x\rvert`$ | 5 × 1.110e-16 × 4.37 | 2.426e-15 |
+| lowest safe $`\tau_r`$, $`10\kappa n u`$ | 10 × 1 × 5 × 1.110e-16 | 5.551e-15 |
+| highest safe $`\tau_r`$, $`\Delta / (10\lvert b\rvert)`$ | 0.01 / (10 × 4.37) | 2.288e-4 |
+| allowed gap at $`\tau_r`$ = 1e-9 | 1e-9 × 4.37 | 4.370e-9 |
 | actual gap | 4.37 − 4.369999999999999 | 8.882e-16 |
 | **verdict** | 8.882e-16 ≤ 4.370e-9 | **pass** |
 
@@ -154,7 +158,7 @@ The full sweep, from the check:
 | Test with `==` | dearest-first sum passes, rung-up sum fails | The verdict depends on the order of addition, not on the code being right |
 | Absolute 1e-9 on £437,000 | correct total fails, off by 1.612e-7 | The noise grows with the size of the numbers; a fixed allowance does not |
 | Relative 1e-9 with no floor, on the refund | −8.882e-16 judged not equal to 0 | Near zero, a share of the answer is a share of nothing |
-| Floor 1e-12 on 100,000 receipts refunded | correct leftover 1.320e-11 fails | Near zero the noise grows with the inputs; a fixed floor covers $n\,\Sigma\lvert x\rvert$ only up to 900.7 |
+| Floor 1e-12 on 100,000 receipts refunded | correct leftover 1.320e-11 fails | Near zero the noise grows with the inputs; a fixed floor covers $`n\,\Sigma\lvert x\rvert`$ only up to 900.7 |
 | Tolerance of 2p | the 98p typo, 4.359999999999999, passes | The tolerance sits above the smallest mistake worth catching |
 
 A sixth trap sits at the edge of the window. A tolerance of exactly one penny caught the typo, but only because 4.37 − 4.359999999999999 came out at 0.010000000000000675, a hair over 0.01. A tolerance equal to the mistake leaves the verdict to the last bit.
@@ -571,9 +575,9 @@ The two outputs match line for line. Both languages store and add numbers by the
 
 Lean proves three of the card's claims for all real numbers, and redoes the whole-number examples in pennies.
 
-- Suppose $\tau_r$ sits in the window and the floor $\tau_a$ is below $\Delta$, with $0 < \Delta \le \lvert b\rvert$. Then every $a$ within $\kappa n u \lvert b\rvert$ of $b$ passes, and every wrong value $w$ at least $\Delta$ from $b$ fails.
-- Take any nonzero leftover $a$ and any $\tau_r$ below 1. Then a relative test of $a$ against 0, with no floor, fails.
-- Take any tolerance above 0. Then some $a$, $b$ and $c$ have $a$ close to $b$ and $b$ close to $c$, yet $a$ not close to $c$.
+- Suppose $`\tau_r`$ sits in the window and the floor $`\tau_a`$ is below $`\Delta`$, with $`0 < \Delta \le \lvert b\rvert`$. Then every $`a`$ within $`\kappa n u \lvert b\rvert`$ of $`b`$ passes, and every wrong value $`w`$ at least $`\Delta`$ from $`b`$ fails.
+- Take any nonzero leftover $`a`$ and any $`\tau_r`$ below 1. Then a relative test of $`a`$ against 0, with no floor, fails.
+- Take any tolerance above 0. Then some $`a`$, $`b`$ and $`c`$ have $`a`$ close to $`b`$ and $`b`$ close to $`c`$, yet $`a`$ not close to $`c`$.
 - In whole pennies, 99 + 119 + 219 is exactly 437, and the 98p typo gives 436, one penny short.
 - With half a penny allowed, 4.366 is close to 4.370 and 4.370 to 4.374, but 4.366 is not close to 4.374.
 - The £437,000 total of 100,000 receipts and the 600,003 roundings in their refund come out right.
@@ -717,14 +721,14 @@ example : (3 * 100000 + 3) + 3 * 100000 = 600003 := by decide
 
 ## What this builds on
 
-- [Floating point](01-floating-point-in-practice.md): why each stored number and each operation is off by at most $u$, and what an ulp is.
-- [Cancellation](02-catastrophic-cancellation-and-safe-formulas.md): the condition number $\kappa$, and why subtracting nearly equal numbers leaves noise that is huge compared with the answer. That is why the floor exists.
+- [Floating point](01-floating-point-in-practice.md): why each stored number and each operation is off by at most $`u`$, and what an ulp is.
+- [Cancellation](02-catastrophic-cancellation-and-safe-formulas.md): the condition number $`\kappa`$, and why subtracting nearly equal numbers leaves noise that is huge compared with the answer. That is why the floor exists.
 
 ## Where this goes next
 
 - [Two roads and a mutation](06-testing-numerical-code-two-roads-and-mutations.md): a tolerance passes correct code; that card shows the check also fails when the maths is broken on purpose.
 - [When to stop](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/03-stopping-criteria-and-error-estimates.md): choosing a stopping tolerance for an iteration, where the noise is the method's own error rather than rounding.
-- Also on this shelf: [Seeds](03-reproducible-simulation-and-seeds.md) fixes a simulation's random numbers so its tolerance can be stated, [Cost in practice](04-computational-cost-and-vectorisation.md) counts the operations that set $n$, and [The check script](07-writing-a-check-script.md) holds numbers as printed on a card to half a unit in their last digit, the printed-number branch of this rule.
+- Also on this shelf: [Seeds](03-reproducible-simulation-and-seeds.md) fixes a simulation's random numbers so its tolerance can be stated, [Cost in practice](04-computational-cost-and-vectorisation.md) counts the operations that set $`n`$, and [The check script](07-writing-a-check-script.md) holds numbers as printed on a card to half a unit in their last digit, the printed-number branch of this rule.
 
 The question this card leaves open is what to do when the window is empty: when the noise of a long computation reaches the size of the mistakes that matter.
 

@@ -30,38 +30,44 @@ Each bar is the bracket after k halvings. The dashed line is the rate, 5.2627%. 
 
 Four pieces, in words first.
 
-- The **gap** $g(r)$ is the value today of the payments at yearly rate $r$, minus the loan. The rate is wanted where the gap is zero.
-- A **bracket** $[a, b]$ is two rates with gaps of opposite sign.
-- One **halving** tests the midpoint $m$ and keeps the half that is still a bracket.
+- The **gap** $`g(r)`$ is the value today of the payments at yearly rate $`r`$, minus the loan. The rate is wanted where the gap is zero.
+- A **bracket** $`[a, b]`$ is two rates with gaps of opposite sign.
+- One **halving** tests the midpoint $`m`$ and keeps the half that is still a bracket.
 - The **stopping test** mixes an absolute and a relative tolerance.
 
-$$g(r) = M \sum_{n=1}^{N} \frac{1}{(1+i)^{n}} - L, \qquad i = \frac{r}{12}$$
+```math
+g(r) = M \sum_{n=1}^{N} \frac{1}{(1+i)^{n}} - L, \qquad i = \frac{r}{12}
+```
 
 **Read it aloud:** the gap is each payment shrunk by the monthly rate once for every month it waits, added up, minus the loan.
 
-$$m = \frac{a+b}{2}, \qquad [a, b] \leftarrow \begin{cases} [a, m] & \text{if } g(a) \text{ and } g(m) \text{ differ in sign} \\ [m, b] & \text{otherwise} \end{cases}$$
+```math
+m = \frac{a+b}{2}, \qquad [a, b] \leftarrow \begin{cases} [a, m] & \text{if } g(a) \text{ and } g(m) \text{ differ in sign} \\ [m, b] & \text{otherwise} \end{cases}
+```
 
 **Read it aloud:** test the middle, and keep the half whose ends still disagree in sign.
 
-$$\text{stop when } \frac{b-a}{2} \le t_{\text{abs}} + t_{\text{rel}}\,\lvert m\rvert, \qquad K = \left\lceil \log_2 \frac{b_0 - a_0}{2\,(t_{\text{abs}} + t_{\text{rel}} \min(\lvert a_0\rvert, \lvert b_0\rvert))} \right\rceil$$
+```math
+\text{stop when } \frac{b-a}{2} \le t_{\text{abs}} + t_{\text{rel}}\,\lvert m\rvert, \qquad K = \left\lceil \log_2 \frac{b_0 - a_0}{2\,(t_{\text{abs}} + t_{\text{rel}} \min(\lvert a_0\rvert, \lvert b_0\rvert))} \right\rceil
+```
 
 **Read it aloud:** stop when half the bracket is inside the tolerance; the number of halvings this costs is the starting width over twice the smallest tolerance, counted in powers of two and rounded up.
 
-Here $a_0$ and $b_0$ are the starting ends, and the ceiling brackets ⌈ ⌉ mean "round up to a whole number". The formula for $K$ holds when the bracket does not contain zero. When it does, drop the relative part.
+Here $`a_0`$ and $`b_0`$ are the starting ends, and the ceiling brackets ⌈ ⌉ mean "round up to a whole number". The formula for $`K`$ holds when the bracket does not contain zero. When it does, drop the relative part.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $g(r)$ | the gap: payments valued at rate $r$, minus the loan | $177,615.17 at 1%, −$159,466.19 at 15% | — |
-| $r$, $r^{*}$ | the yearly rate, compounded monthly; $r^{*}$ is the true root | 5.2627472583% at the root | the gap falls |
-| $i$ | the monthly rate, $r/12$; on this card a rate, not $\sqrt{-1}$ | one twelfth of the yearly rate | the gap falls |
-| $M$, $L$, $N$, $n$ | the payment, the loan, the number of months, and which month | $1,800, $300,000, 300, 1 to 300 | a bigger payment raises the rate |
-| $a$, $b$ | the ends of the bracket, gaps of opposite sign; $a_0$, $b_0$ at the start, $a_k$, $b_k$ after k halvings | 1% and 15% at the start | a wider bracket costs more halvings |
-| $m$, $m_k$ | the midpoint, tested next; $m_k$ after k halvings is the answer returned | 8% first; 5.262741% at the end | — |
-| $k$ | halvings done so far | 0 to 16 | the bracket halves each time |
-| $K$ | halvings promised before the start | 16 | — |
-| $T$ | the least the tolerance can be inside the bracket, $t_{\text{abs}} + t_{\text{rel}} \min(\lvert a_0\rvert, \lvert b_0\rvert)$ | 1.100e-06 | fewer halvings |
-| $t_{\text{abs}}$ | absolute tolerance: error allowed in rate units | 1e-06, a millionth | fewer halvings |
-| $t_{\text{rel}}$ | relative tolerance: error allowed per unit of the answer | 1e-05 | fewer halvings |
+| $`g(r)`$ | the gap: payments valued at rate $`r`$, minus the loan | $177,615.17 at 1%, −$159,466.19 at 15% | — |
+| $`r`$, $`r^{*}`$ | the yearly rate, compounded monthly; $`r^{*}`$ is the true root | 5.2627472583% at the root | the gap falls |
+| $`i`$ | the monthly rate, $`r/12`$; on this card a rate, not $`\sqrt{-1}`$ | one twelfth of the yearly rate | the gap falls |
+| $`M`$, $`L`$, $`N`$, $`n`$ | the payment, the loan, the number of months, and which month | $1,800, $300,000, 300, 1 to 300 | a bigger payment raises the rate |
+| $`a`$, $`b`$ | the ends of the bracket, gaps of opposite sign; $`a_0`$, $`b_0`$ at the start, $`a_k`$, $`b_k`$ after k halvings | 1% and 15% at the start | a wider bracket costs more halvings |
+| $`m`$, $`m_k`$ | the midpoint, tested next; $`m_k`$ after k halvings is the answer returned | 8% first; 5.262741% at the end | — |
+| $`k`$ | halvings done so far | 0 to 16 | the bracket halves each time |
+| $`K`$ | halvings promised before the start | 16 | — |
+| $`T`$ | the least the tolerance can be inside the bracket, $`t_{\text{abs}} + t_{\text{rel}} \min(\lvert a_0\rvert, \lvert b_0\rvert)`$ | 1.100e-06 | fewer halvings |
+| $`t_{\text{abs}}`$ | absolute tolerance: error allowed in rate units | 1e-06, a millionth | fewer halvings |
+| $`t_{\text{rel}}`$ | relative tolerance: error allowed per unit of the answer | 1e-05 | fewer halvings |
 | ulp | unit in the last place: the gap from a double to the next one | 6.939e-18 near 5.26% | sets the floor |
 
 ### When it holds
@@ -99,30 +105,32 @@ The search has limits. Two roots close together, or a root where the gap touches
 
 ### Step 2: the error bound, and the step count in advance
 
-Each halving cuts the width exactly in two. After k halvings the bracket is $(b_0 - a_0)/2^k$ wide. The root is inside it, and the midpoint is at most half the width from any point inside. So
+Each halving cuts the width exactly in two. After k halvings the bracket is $`(b_0 - a_0)/2^k`$ wide. The root is inside it, and the midpoint is at most half the width from any point inside. So
 
-$$\lvert m_k - r^{*}\rvert \le \frac{b_0 - a_0}{2^{k+1}},$$
+```math
+\lvert m_k - r^{*}\rvert \le \frac{b_0 - a_0}{2^{k+1}},
+```
 
-where $m_k$ is the midpoint after k halvings and $r^{*}$ is the true rate. This bound does not depend on the function at all.
+where $`m_k`$ is the midpoint after k halvings and $`r^{*}`$ is the true rate. This bound does not depend on the function at all.
 
-The stopping test asks for that half-width to be at most $t_{\text{abs}} + t_{\text{rel}}\lvert m\rvert$. Why mix the two?
+The stopping test asks for that half-width to be at most $`t_{\text{abs}} + t_{\text{rel}}\lvert m\rvert`$. Why mix the two?
 
 - **Absolute alone** fails when the tolerance is below the spacing of doubles at the answer, and that spacing grows with the answer. Near 5.26% the doubles are 6.939e-18 apart, so a tolerance of 1e-20 can never be met.
 - **Relative alone** fails at a zero answer. The allowed error shrinks with the answer, so the test never passes.
 - **Mixed** behaves like relative for large answers and like absolute near zero.
 
-To count in advance, use the smallest the tolerance can be. Inside [1%, 15%], $\lvert m\rvert$ is at least 1%. So the tolerance is at least $T = 10^{-6} + 10^{-5} \times 0.01 = 1.100 \times 10^{-6}$. Solving the bound for k gives the formula for $K$: log2 of 63636.4 is 15.958, which rounds up to **16**. The run stops after 16 halvings, as promised.
+To count in advance, use the smallest the tolerance can be. Inside [1%, 15%], $`\lvert m\rvert`$ is at least 1%. So the tolerance is at least $`T = 10^{-6} + 10^{-5} \times 0.01 = 1.100 \times 10^{-6}`$. Solving the bound for k gives the formula for $`K`$: log2 of 63636.4 is 15.958, which rounds up to **16**. The run stops after 16 halvings, as promised.
 
 <details>
 <summary>Detailed proof: the bound, and why K halvings are always enough</summary>
 
-Let $g$ be continuous on $[a_0, b_0]$ with $g(a_0)$ and $g(b_0)$ of opposite sign. Halving keeps a sub-interval with ends of opposite sign, so by induction every bracket $[a_k, b_k]$ has that property. By the intermediate value theorem, each contains a root. The brackets are nested, so one root $r^{*}$ lies in all of them (the nested-interval argument on the Intermediate value theorem card).
+Let $`g`$ be continuous on $`[a_0, b_0]`$ with $`g(a_0)`$ and $`g(b_0)`$ of opposite sign. Halving keeps a sub-interval with ends of opposite sign, so by induction every bracket $`[a_k, b_k]`$ has that property. By the intermediate value theorem, each contains a root. The brackets are nested, so one root $`r^{*}`$ lies in all of them (the nested-interval argument on the Intermediate value theorem card).
 
-The width is exactly $(b_0 - a_0)/2^k$, since each step keeps one half. The midpoint $m_k$ is within half the width of every point of $[a_k, b_k]$, including $r^{*}$. That gives the bound.
+The width is exactly $`(b_0 - a_0)/2^k`$, since each step keeps one half. The midpoint $`m_k`$ is within half the width of every point of $`[a_k, b_k]`$, including $`r^{*}`$. That gives the bound.
 
-Now suppose $0 < a_0$, so every midpoint is at least $a_0$. Then $t_{\text{abs}} + t_{\text{rel}}\lvert m_k\rvert \ge t_{\text{abs}} + t_{\text{rel}}\,a_0 = T$. If $k \ge K = \lceil \log_2((b_0 - a_0)/(2T)) \rceil$, then $2^{k+1} \ge (b_0 - a_0)/T$, so the half-width $(b_0 - a_0)/2^{k+1} \le T$, and the test passes. The case $b_0 < 0$ is the mirror image with $\lvert b_0\rvert$. If the bracket contains zero, $\lvert m_k\rvert$ can be tiny, so only $T = t_{\text{abs}}$ is safe. The test may pass earlier than $K$, never later. $\blacksquare$
+Now suppose $`0 < a_0`$, so every midpoint is at least $`a_0`$. Then $`t_{\text{abs}} + t_{\text{rel}}\lvert m_k\rvert \ge t_{\text{abs}} + t_{\text{rel}}\,a_0 = T`$. If $`k \ge K = \lceil \log_2((b_0 - a_0)/(2T)) \rceil`$, then $`2^{k+1} \ge (b_0 - a_0)/T`$, so the half-width $`(b_0 - a_0)/2^{k+1} \le T`$, and the test passes. The case $`b_0 < 0`$ is the mirror image with $`\lvert b_0\rvert`$. If the bracket contains zero, $`\lvert m_k\rvert`$ can be tiny, so only $`T = t_{\text{abs}}`$ is safe. The test may pass earlier than $`K`$, never later. $`\blacksquare`$
 
-This is exact arithmetic. In floating point the midpoint $(a + b)/2$ is computed with one rounding, which keeps it inside $[a, b]$ for doubles of the same sign, so the computed signs at the two ends stay opposite. That is not the same as holding the root: Step 3 shows where the computed signs stop being right, and where the halving must stop.
+This is exact arithmetic. In floating point the midpoint $`(a + b)/2`$ is computed with one rounding, which keeps it inside $`[a, b]`$ for doubles of the same sign, so the computed signs at the two ends stay opposite. That is not the same as holding the root: Step 3 shows where the computed signs stop being right, and where the halving must stop.
 
 </details>
 
@@ -134,11 +142,11 @@ Keep halving with no tolerance at all, and the bracket shrinks until its two end
 
 The checks confirm that the two final ends are neighbours, by adding one to the bit pattern of the lower end. So a bisection loop always ends, if it also stops when the midpoint equals an end.
 
-The floor in the answer is not the floor in the rate. The gap $g$ itself is computed with rounding error in 300 additions. Near the root its sign is decided by that noise. A halving that reads a wrong sign keeps the wrong half, so at the floor the final bracket need not hold the true rate at all: the invariant of Step 0 holds in exact arithmetic, not for computed signs. Here the final bracket is one ulp wide, yet the 54-step answer differs from the secant answer by −3.192e-16, far more than one ulp. The last few halvings sort rounding noise, not the rate. This is a conditioning question, taken up on [When to stop](03-stopping-criteria-and-error-estimates.md).
+The floor in the answer is not the floor in the rate. The gap $`g`$ itself is computed with rounding error in 300 additions. Near the root its sign is decided by that noise. A halving that reads a wrong sign keeps the wrong half, so at the floor the final bracket need not hold the true rate at all: the invariant of Step 0 holds in exact arithmetic, not for computed signs. Here the final bracket is one ulp wide, yet the 54-step answer differs from the secant answer by −3.192e-16, far more than one ulp. The last few halvings sort rounding noise, not the rate. This is a conditioning question, taken up on [When to stop](03-stopping-criteria-and-error-estimates.md).
 
 ### Step 4: what each halving buys
 
-Each halving costs one evaluation of $g$, here 300 terms. The whole run costs 2 end values plus 16 midpoints: 18 evaluations. Each halving halves the guaranteed error, one bit of the bound, whatever the function looks like. The true error is not promised to fall every step.
+Each halving costs one evaluation of $`g`$, here 300 terms. The whole run costs 2 end values plus 16 midpoints: 18 evaluations. Each halving halves the guaranteed error, one bit of the bound, whatever the function looks like. The true error is not promised to fall every step.
 
 That is slow beside a step that uses the slope, as on [Newton and secant](02-newton-and-secant-with-convergence-orders.md). Near a simple root, Newton's step roughly doubles the correct digits each time, and the secant step comes close. Yet bisection's guarantee is the best possible. Among methods that see only function values, no method has a better worst case on every continuous function with a sign change; Sikorski proved this in 1982 (Sources). Bisection trades speed for a promise.
 
@@ -160,7 +168,7 @@ The straight line is the bound, half the bracket width: it falls by the same amo
 
 ## Worked numbers, by hand
 
-Loan $300,000, payment $1,800, 300 months, bracket [1%, 15%], $t_{\text{abs}} = 10^{-6}$, $t_{\text{rel}} = 10^{-5}$.
+Loan $300,000, payment $1,800, 300 months, bracket [1%, 15%], $`t_{\text{abs}} = 10^{-6}`$, $`t_{\text{rel}} = 10^{-5}`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -543,11 +551,11 @@ ALL CHECKS PASS
 Lean proves the error bound and the step count in exact arithmetic, for every continuous function and every bracket with a sign change.
 
 - If the function is continuous on the bracket and the ends have opposite signs, one root lies inside every bracket the halving keeps.
-- After k halvings the bracket is exactly $(b_0 - a_0)/2^k$ wide.
-- The midpoint after k halvings is within $(b_0 - a_0)/2^{k+1}$ of that root, whatever the function looks like.
-- For a bracket that does not contain zero, with $T$ above zero, every k of at least $K$ passes the mixed stopping test.
+- After k halvings the bracket is exactly $`(b_0 - a_0)/2^k`$ wide.
+- The midpoint after k halvings is within $`(b_0 - a_0)/2^{k+1}`$ of that root, whatever the function looks like.
+- For a bracket that does not contain zero, with $`T`$ above zero, every k of at least $`K`$ passes the mixed stopping test.
 - For a bracket that may contain zero, the count with the absolute tolerance alone is enough, whatever the relative tolerance.
-- The hand arithmetic holds exactly: $T$ = 1.100e-06, $K$ = 16, the first four midpoints and widths, the outward search steps, and the 18 evaluations.
+- The hand arithmetic holds exactly: $`T`$ = 1.100e-06, $`K`$ = 16, the first four midpoints and widths, the outward search steps, and the 18 evaluations.
 
 The gap values, the outward search's signs, the floor of neighbouring doubles and the breaks are left to the Python and Rust checks.
 

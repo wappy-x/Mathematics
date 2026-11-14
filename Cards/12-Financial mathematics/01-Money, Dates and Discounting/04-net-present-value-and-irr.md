@@ -36,36 +36,42 @@ The sloping line is the kit's NPV at each rate; the flat line is zero. At the sh
 
 ## The formula
 
-Notation first, in words. Each amount of cash carries the date it lands on: $c_i$ is the cash at date $i$, counted in whole years from today, with money received counted plus and money paid counted minus. So the kit's list is minus 100.00, then 60.00, then 60.00. The tall sigma is an instruction to add the terms as $i$ runs over the dates.
+Notation first, in words. Each amount of cash carries the date it lands on: $`c_i`$ is the cash at date $`i`$, counted in whole years from today, with money received counted plus and money paid counted minus. So the kit's list is minus 100.00, then 60.00, then 60.00. The tall sigma is an instruction to add the terms as $`i`$ runs over the dates.
 
-$$V(y) \;=\; \sum_{i=0}^{n} \frac{c_i}{(1+y)^i}$$
+```math
+V(y) \;=\; \sum_{i=0}^{n} \frac{c_i}{(1+y)^i}
+```
 
 **Read it aloud:** today's cash is left alone; each later amount is divided by the growth factor for its own date; the results are added up.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $c_i$ | the cash at date $i$: in counts plus, out counts minus | −100.00, 60.00, 60.00 | a bigger saving lifts the value, but by less than its face |
-| $i$ | which date, counted in whole years from today | 0, 1, 2 | — |
-| $n$ | the last date carrying any cash | 2 | more dates, more terms to add |
-| $y$ | the rate used to compare money across dates, as a decimal | 0.08 | the value falls: later money counts for less |
-| $(1+y)^i$ | the growth factor over $i$ years: what a dollar today becomes | 1.08, then 1.1664 | — |
-| $V$ | the value of the whole list, in today's money | $7.00 | — |
-| $y^\ast$ | the rate that makes $V$ zero: the IRR | 0.13066239 | more cash in, or sooner, and the project bears a dearer bank |
-| $W_i$ | the bank balance after date $i$'s cash has moved | −100.00, −48.00, 8.16 | — |
+| $`c_i`$ | the cash at date $`i`$: in counts plus, out counts minus | −100.00, 60.00, 60.00 | a bigger saving lifts the value, but by less than its face |
+| $`i`$ | which date, counted in whole years from today | 0, 1, 2 | — |
+| $`n`$ | the last date carrying any cash | 2 | more dates, more terms to add |
+| $`y`$ | the rate used to compare money across dates, as a decimal | 0.08 | the value falls: later money counts for less |
+| $`(1+y)^i`$ | the growth factor over $`i`$ years: what a dollar today becomes | 1.08, then 1.1664 | — |
+| $`V`$ | the value of the whole list, in today's money | $7.00 | — |
+| $`y^\ast`$ | the rate that makes $`V`$ zero: the IRR | 0.13066239 | more cash in, or sooner, and the project bears a dearer bank |
+| $`W_i`$ | the bank balance after date $`i`$'s cash has moved | −100.00, −48.00, 8.16 | — |
 
 The IRR is written as one short demand:
 
-$$V(y^\ast) = 0$$
+```math
+V(y^\ast) = 0
+```
 
-Written out for the kit, with $z$ standing for one year's growth factor, $z = 1 + y$:
+Written out for the kit, with $`z`$ standing for one year's growth factor, $`z = 1 + y`$:
 
-$$-100 + \frac{60}{z} + \frac{60}{z^{2}} = 0 \qquad\Longleftrightarrow\qquad 5z^{2} - 3z - 3 = 0$$
+```math
+-100 + \frac{60}{z} + \frac{60}{z^{2}} = 0 \qquad\Longleftrightarrow\qquad 5z^{2} - 3z - 3 = 0
+```
 
-Multiplying the left-hand equation by $z^2$ and dividing by −20 gives the right-hand one. With cash at only three dates the break-even growth factor is the positive root of that quadratic, $z = (3 + \sqrt{69})/10 = 1.1306624$, and the rate is that less 1: no searching is needed. For a longer list the equation is a polynomial in $z$ of higher degree, and a search is the only way in.
+Multiplying the left-hand equation by $`z^2`$ and dividing by −20 gives the right-hand one. With cash at only three dates the break-even growth factor is the positive root of that quadratic, $`z = (3 + \sqrt{69})/10 = 1.1306624`$, and the rate is that less 1: no searching is needed. For a longer list the equation is a polynomial in $`z`$ of higher degree, and a search is the only way in.
 
 ### When it holds
 
-- **One rate for every date.** The formula uses a single $y$ for the whole life. When money costs more for longer terms, each amount takes its own discount factor from the curve ([Discount factors](01-compounding-and-discount-factors.md)); flattening a sloped curve to one number misprices the far-off amounts most.
+- **One rate for every date.** The formula uses a single $`y`$ for the whole life. When money costs more for longer terms, each amount takes its own discount factor from the curve ([Discount factors](01-compounding-and-discount-factors.md)); flattening a sloped curve to one number misprices the far-off amounts most.
 - **Cash, dated, and certain.** Amounts are money actually moving, not accounting profit, and they are known. Feed in forecasts and the answer is only as sound as the forecasts.
 - **Whole years here; real calendars need a rule.** Dates on this card are anniversaries. Actual payment dates need a day-count convention to turn them into fractions of a year ([Day counts](02-day-counts-and-dates.md)), and choosing the wrong one shifts the answer by a few cents on short trades and more on long ones.
 - **The list is the difference the project makes.** Every amount is what changes if the project goes ahead, against a stated alternative. Money already spent changes nothing and belongs in neither list.
@@ -80,11 +86,11 @@ Multiplying the left-hand equation by $z^2$ and dividing by −20 gives the righ
 
 ### Step 0: a dollar is only a dollar once you say when
 
-The bank is the machine that converts dates. A dollar left there for a year becomes $1 + y$ dollars, so $i$ years turn a dollar into $(1+y)^i$ dollars. Run that backwards: a dollar promised at date $i$ is worth exactly $1/(1+y)^i$ today, because that much cash, banked now, grows into the promised dollar. Nothing about the project is needed for this, only the bank.
+The bank is the machine that converts dates. A dollar left there for a year becomes $`1 + y`$ dollars, so $`i`$ years turn a dollar into $`(1+y)^i`$ dollars. Run that backwards: a dollar promised at date $`i`$ is worth exactly $`1/(1+y)^i`$ today, because that much cash, banked now, grows into the promised dollar. Nothing about the project is needed for this, only the bank.
 
 ### Step 1: amounts can be added once they all sit at the same date
 
-Money at different dates cannot be added, any more than metres can be added to seconds. Move every amount to one common date and the obstacle goes. Each amount can be banked or borrowed on its own, so the moves do not interfere: shrinking the whole list to today and adding is legitimate, and the sum is $V(y)$.
+Money at different dates cannot be added, any more than metres can be added to seconds. Move every amount to one common date and the obstacle goes. Each amount can be banked or borrowed on its own, so the moves do not interfere: shrinking the whole list to today and adding is legitimate, and the sum is $`V(y)`$.
 
 ### Step 2: the value is real money, not a score
 
@@ -95,27 +101,33 @@ That $8.16 is the whole gain, sitting at year two. Shrink it back: $8.16 divided
 <details>
 <summary>Detailed proof: the value is the extra money at the end</summary>
 
-Let $W_i$ be the balance after date $i$'s cash has moved, starting from $W_0 = c_0$ against a balance of zero for doing nothing. Between dates the bank applies its factor, then the project's cash arrives:
-$$W_i = W_{i-1}\,(1+y) + c_i .$$
-Divide both sides by $(1+y)^i$:
-$$\frac{W_i}{(1+y)^i} = \frac{W_{i-1}}{(1+y)^{i-1}} + \frac{c_i}{(1+y)^i}.$$
-Each step adds one term of the sum and nothing else, so after the last date
-$$\frac{W_n}{(1+y)^n} = \sum_{i=0}^{n} \frac{c_i}{(1+y)^i} = V(y), \qquad\text{that is}\qquad W_n = (1+y)^n\,V(y).$$
-Since $(1+y)^n$ is positive for $y > -1$, the end balance and the value today always carry the same sign: a positive NPV is extra money in the account at the end, and that is what "worth doing" means. A negative balance along the way is borrowing, which the assumptions allow.
+Let $`W_i`$ be the balance after date $`i`$'s cash has moved, starting from $`W_0 = c_0`$ against a balance of zero for doing nothing. Between dates the bank applies its factor, then the project's cash arrives:
 
-Two consequences come free. Adding two projects adds their values, because the sums add term by term; and doubling every amount doubles the value while leaving every root of $V$ exactly where it was. That second one is the crack the IRR falls through: the value records the size of the gain and the rate cannot.
+$`\displaystyle W_i = W_{i-1}\,(1+y) + c_i .`$
+
+Divide both sides by $`(1+y)^i`$:
+
+$`\displaystyle \frac{W_i}{(1+y)^i} = \frac{W_{i-1}}{(1+y)^{i-1}} + \frac{c_i}{(1+y)^i}.`$
+
+Each step adds one term of the sum and nothing else, so after the last date
+
+$`\displaystyle \frac{W_n}{(1+y)^n} = \sum_{i=0}^{n} \frac{c_i}{(1+y)^i} = V(y), \qquad\text{that is}\qquad W_n = (1+y)^n\,V(y).`$
+
+Since $`(1+y)^n`$ is positive for $`y > -1`$, the end balance and the value today always carry the same sign: a positive NPV is extra money in the account at the end, and that is what "worth doing" means. A negative balance along the way is borrowing, which the assumptions allow.
+
+Two consequences come free. Adding two projects adds their values, because the sums add term by term; and doubling every amount doubles the value while leaving every root of $`V`$ exactly where it was. That second one is the crack the IRR falls through: the value records the size of the gain and the rate cannot.
 
 </details>
 
 ### Step 3: the same equation, read backwards
 
-Fix the cash and let the rate move. Then $V$ is a function of $y$, drawn as the sloping line in the picture above. Reading it one way — rate in, value out — prices the project. Reading it the other way — demand $V = 0$, solve for the rate — asks what the project is worth *as a rate*: the flat rate at which it exactly breaks even. That solved rate is the IRR. Every quoted yield in this wing is such a solved rate.
+Fix the cash and let the rate move. Then $`V`$ is a function of $`y`$, drawn as the sloping line in the picture above. Reading it one way — rate in, value out — prices the project. Reading it the other way — demand $`V = 0`$, solve for the rate — asks what the project is worth *as a rate*: the flat rate at which it exactly breaks even. That solved rate is the IRR. Every quoted yield in this wing is such a solved rate.
 
 ### Step 4: why the kit has exactly one break-even rate
 
 Three plain facts settle it for the kit's sign pattern: one payment out today, then nothing but payments in.
 
-The value falls whenever the rate rises. Every later amount is positive and divided by $(1+y)^i$, which grows with $y$; the outlay at date 0 is not divided by anything and does not move. So $V$ is strictly falling: no flat stretches, no bumps.
+The value falls whenever the rate rises. Every later amount is positive and divided by $`(1+y)^i`$, which grows with $`y`$; the outlay at date 0 is not divided by anything and does not move. So $`V`$ is strictly falling: no flat stretches, no bumps.
 
 The two ends straddle zero. Push the rate down towards −100 percent and the divisors shrink towards zero, so the value grows without limit. Push the rate up and every later amount is crushed towards nothing, leaving the outlay: the value tends to −$100.00.
 
@@ -124,15 +136,15 @@ A function that falls without pause, starts above zero and ends below it, crosse
 <details>
 <summary>Detailed proof: one outlay, then inflows, gives exactly one rate</summary>
 
-Let $c_0 < 0$, let every later $c_i$ be at least zero with at least one strictly positive, and read $V$ on rates $y > -1$.
+Let $`c_0 < 0`$, let every later $`c_i`$ be at least zero with at least one strictly positive, and read $`V`$ on rates $`y > -1`$.
 
-**Strictly falling.** For $i \ge 1$ the term $c_i (1+y)^{-i}$ has derivative $-i\,c_i (1+y)^{-i-1}$, which is at most zero and strictly negative for the terms with $c_i > 0$. The date 0 term is a constant and has no derivative to contribute. So the slope $V'(y)$ is negative everywhere on $y > -1$.
+**Strictly falling.** For $`i \ge 1`$ the term $`c_i (1+y)^{-i}`$ has derivative $`-i\,c_i (1+y)^{-i-1}`$, which is at most zero and strictly negative for the terms with $`c_i > 0`$. The date 0 term is a constant and has no derivative to contribute. So the slope $`V'(y)`$ is negative everywhere on $`y > -1`$.
 
-**The ends.** As $y \to -1$ from above, $(1+y)^{-i} \to +\infty$ for every $i \ge 1$, and some $c_i$ is strictly positive, so $V(y) \to +\infty$. As $y \to \infty$, every term with $i \ge 1$ tends to zero, so $V(y) \to c_0 < 0$.
+**The ends.** As $`y \to -1`$ from above, $`(1+y)^{-i} \to +\infty`$ for every $`i \ge 1`$, and some $`c_i`$ is strictly positive, so $`V(y) \to +\infty`$. As $`y \to \infty`$, every term with $`i \ge 1`$ tends to zero, so $`V(y) \to c_0 < 0`$.
 
-**The crossing.** $V$ is continuous on $(-1, \infty)$, so by the intermediate value theorem — a continuous function that changes sign must pass through zero on the way — it takes the value zero somewhere; strict decrease forbids a second such point. Hence exactly one $y^\ast$.
+**The crossing.** $`V`$ is continuous on $`(-1, \infty)`$, so by the intermediate value theorem — a continuous function that changes sign must pass through zero on the way — it takes the value zero somewhere; strict decrease forbids a second such point. Hence exactly one $`y^\ast`$.
 
-**The sign rule that follows.** Strict decrease also means $V(y) > 0$ exactly when $y < y^\ast$. For this sign pattern, and only for it, "the project is worth doing at rate $y$" and "the IRR beats $y$" are the same statement. Change the sign pattern and the equivalence goes; change the size of the project and it survives, which is why the IRR can agree about a single project and still rank two projects wrongly.
+**The sign rule that follows.** Strict decrease also means $`V(y) > 0`$ exactly when $`y < y^\ast`$. For this sign pattern, and only for it, "the project is worth doing at rate $`y`$" and "the IRR beats $`y`$" are the same statement. Change the sign pattern and the equivalence goes; change the size of the project and it survives, which is why the IRR can agree about a single project and still rank two projects wrongly.
 
 </details>
 
@@ -140,13 +152,13 @@ Let $c_0 < 0$, let every later $c_i$ be at least zero with at least one strictly
 
 Nothing above survives a late payment out. Suppose the kit had to be stripped out and the waste disposed of: the list becomes −$100.00 today, $230.00 at year one, −$132.00 at year two. The cash now switches direction twice, and so does the answer: the value is zero at 10 percent **and** at 20 percent, positive only between them, negative on both sides. Two break-even rates, so "the return" does not exist; the next section draws it.
 
-The number of changes of direction is the ceiling, not the count: that is Descartes' rule of signs, read on the polynomial in $z$. A list can switch twice and have no break-even rate at all: −$100.00, $150.00, −$100.00 is never worth doing at any rate, and its best value, over every rate there is, is −$43.75.
+The number of changes of direction is the ceiling, not the count: that is Descartes' rule of signs, read on the polynomial in $`z`$. A list can switch twice and have no break-even rate at all: −$100.00, $150.00, −$100.00 is never worth doing at any rate, and its best value, over every rate there is, is −$43.75.
 
-A polynomial of degree $n$ has $n$ roots, real or not, and a root counts as a rate only when it is real and puts the growth factor above zero.
+A polynomial of degree $`n`$ has $`n`$ roots, real or not, and a root counts as a rate only when it is real and puts the growth factor above zero.
 
 That is the practical half of the IRR: it exists and is unique for the ordinary shape of a project, and must be handled with care for anything else. Norstrøm's test on the running balances, in the sources, settles more cases. The everyday version is to look at the list and count the changes of direction. If there is more than one, price the thing at the rate money actually costs instead.
 
-The other route to the same ranking skips the shrinking entirely: run the ledger of Step 2 for each project and carry every balance to one common date. It gives the same order, since the balance at date $n$ is the value today multiplied by $(1+y)^n$ — one positive factor, the same for every project brought to that date.
+The other route to the same ranking skips the shrinking entirely: run the ledger of Step 2 for each project and carry every balance to one common date. It gives the same order, since the balance at date $`n`$ is the value today multiplied by $`(1+y)^n`$ — one positive factor, the same for every project brought to that date.
 
 Where the root must be searched for rather than solved, bisection (halving a range of rates that is known to hold the root, again and again) is the safe worker and Newton's method the fast one ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)); the bond version of that search, brackets and all, is [Yield from price](07-yield-from-price.md).
 
@@ -166,7 +178,7 @@ The kit, at the shop's 8 percent.
 | both savings | 55.555556 + 51.440329 | 106.995885 |
 | **NPV** | 106.995885 − 100.00 | **6.995885, or $7.00** |
 | the same by the ledger | −100.00 → −48.00 → 8.16, then 8.16 ÷ 1.1664 | **6.995885** |
-| break-even rate | the positive root of $5z^2 - 3z - 3 = 0$, less 1 | **13.066239 percent** |
+| break-even rate | the positive root of $`5z^2 - 3z - 3 = 0`$, less 1 | **13.066239 percent** |
 
 Fitting the kit adds $7.00 in today's money, which is the same thing as $8.16 in the bank two years from now, on top of what the $100.00 would have earned sitting in the bank.
 
@@ -645,11 +657,11 @@ The two outputs match line for line. Both languages build their powers by repeat
 
 Lean proves Step 2's ledger and Step 4's single break-even rate in general, not just for the kit.
 
-- Take any list of cash $c_0, \dots, c_n$ and a rate $y$ above −1. Then $W_n = (1+y)^n V(y)$, so the end balance and the value carry the same sign.
-- Suppose the cash today is negative, every later amount is zero or more, and at least one is positive. Then exactly one rate above −1 makes $V$ zero.
-- Take a list of that same shape. Then $V(y)$ is above zero exactly when $y$ is below that break-even rate.
+- Take any list of cash $`c_0, \dots, c_n`$ and a rate $`y`$ above −1. Then $`W_n = (1+y)^n V(y)`$, so the end balance and the value carry the same sign.
+- Suppose the cash today is negative, every later amount is zero or more, and at least one is positive. Then exactly one rate above −1 makes $`V`$ zero.
+- Take a list of that same shape. Then $`V(y)`$ is above zero exactly when $`y`$ is below that break-even rate.
 - Take the kit at 8 percent. Then exact fractions give its value as 5100/729, about $7.00, by shrinking and by the ledger.
-- Take the quadratic $5z^2 - 3z - 3 = 0$. Then $z = (3+\sqrt{69})/10$ solves it exactly.
+- Take the quadratic $`5z^2 - 3z - 3 = 0`$. Then $`z = (3+\sqrt{69})/10`$ solves it exactly.
 - Exact fractions also confirm the wrong answers in the mistakes table, the bigger kit, and the cleanup and doomed lists.
 
 Decimals, the bisection and Newton searches, the scan for crossings, and the house bond are left to the Python and Rust checks.

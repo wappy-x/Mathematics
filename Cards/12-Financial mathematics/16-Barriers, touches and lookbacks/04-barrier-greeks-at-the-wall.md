@@ -36,38 +36,44 @@ Orange (upper) line: the down-and-out call with its barrier at $80. Green (lower
 
 The sibling card [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md) proves the price. For a down-and-out call whose strike sits at or above the barrier it is the plain call minus a mirror-image call:
 
-$$V(S) = C(S) - \left(\frac{B}{S}\right)^{a} C\!\left(\frac{B^2}{S}\right), \qquad a = \frac{2(r-q)}{\sigma^2} - 1.$$
+```math
+V(S) = C(S) - \left(\frac{B}{S}\right)^{a} C\!\left(\frac{B^2}{S}\right), \qquad a = \frac{2(r-q)}{\sigma^2} - 1.
+```
 
 **Read it aloud:** the knock-out is worth the plain call, minus a plain call on a mirror-image share priced at the barrier squared over today's price, scaled by a weight that corrects for drift.
 
-Differentiating once in $S$ gives the delta; this card writes a prime for "rate of change as Acme's price moves" ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md) is the second one):
+Differentiating once in $`S`$ gives the delta; this card writes a prime for "rate of change as Acme's price moves" ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md) is the second one):
 
-$$V'(S) = \Delta(S) + \left(\frac{B}{S}\right)^{a}\left[\frac{a}{S}\,C(x) + \frac{x}{S}\,\Delta(x)\right], \qquad x = \frac{B^2}{S}.$$
+```math
+V'(S) = \Delta(S) + \left(\frac{B}{S}\right)^{a}\left[\frac{a}{S}\,C(x) + \frac{x}{S}\,\Delta(x)\right], \qquad x = \frac{B^2}{S}.
+```
 
 **Read it aloud:** the knock-out's delta is the plain delta plus a positive extra, because every dollar Acme rises also moves it away from the wall.
 
-At the wall itself, $S = B$, the mirror share equals the real one and the expressions collapse to two short lines:
+At the wall itself, $`S = B`$, the mirror share equals the real one and the expressions collapse to two short lines:
 
-$$V'(B) = 2\,\Delta(B) + \frac{a\,C(B)}{B}, \qquad V''(B) = -\,\frac{1+a}{B}\,V'(B), \qquad \frac{\partial V}{\partial \sigma}\Big|_{S=B} = 0.$$
+```math
+V'(B) = 2\,\Delta(B) + \frac{a\,C(B)}{B}, \qquad V''(B) = -\,\frac{1+a}{B}\,V'(B), \qquad \frac{\partial V}{\partial \sigma}\Big|_{S=B} = 0.
+```
 
 **Read it aloud:** at the wall the hedge is about twice the plain call's hedge there, the gamma is that hedge times a negative constant, and the vega is exactly zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100, then $90, $82 | delta rises, except near the wall, where it dips then climbs |
-| $K$ | strike, the price the holder may pay | $100 | delta falls |
-| $B$ | the down barrier: touch it and the call dies | $80 | the wall moves closer and its effects spread |
-| $H$ | an up barrier, for the reverse knock-out below | $120 | the reverse option's hedge relaxes |
-| $r$, $q$ | bank rate and dividend yield, continuously compounded | 5%, 2% | they set $a$ |
-| $\sigma$ | volatility: the yearly spread of Acme's log-price | 20% | more touches, more chance of finishing high |
-| $T$ | years to expiry | 1 | the wall's delta jump grows for this option |
-| $a$ | drift exponent of the mirror weight | 0.5 | the mirror term weighs less away from the wall |
-| $x$ | the mirror price, $B^2/S$ | 64 at $S = 100$ | — |
-| $V$ | the down-and-out call's price | $9.13 | — |
-| $C$ | the plain Black-Scholes call's price at a given spot | $9.23 at 100 | — |
-| $\Delta$, $\Gamma$, $\nu$ | the plain call's delta, gamma and vega at a given spot | 0.587, 0.019, 37.9 at 100 | — |
+| $`S`$ | Acme's price today | $100, then $90, $82 | delta rises, except near the wall, where it dips then climbs |
+| $`K`$ | strike, the price the holder may pay | $100 | delta falls |
+| $`B`$ | the down barrier: touch it and the call dies | $80 | the wall moves closer and its effects spread |
+| $`H`$ | an up barrier, for the reverse knock-out below | $120 | the reverse option's hedge relaxes |
+| $`r`$, $`q`$ | bank rate and dividend yield, continuously compounded | 5%, 2% | they set $`a`$ |
+| $`\sigma`$ | volatility: the yearly spread of Acme's log-price | 20% | more touches, more chance of finishing high |
+| $`T`$ | years to expiry | 1 | the wall's delta jump grows for this option |
+| $`a`$ | drift exponent of the mirror weight | 0.5 | the mirror term weighs less away from the wall |
+| $`x`$ | the mirror price, $`B^2/S`$ | 64 at $`S = 100`$ | — |
+| $`V`$ | the down-and-out call's price | $9.13 | — |
+| $`C`$ | the plain Black-Scholes call's price at a given spot | $9.23 at 100 | — |
+| $`\Delta`$, $`\Gamma`$, $`\nu`$ | the plain call's delta, gamma and vega at a given spot | 0.587, 0.019, 37.9 at 100 | — |
 
-The plain call's Greeks come from the [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md) shelf: delta $e^{-qT}N(d_1)$, gamma $e^{-qT}\varphi(d_1)/(S\sigma\sqrt T)$ and vega $S e^{-qT}\varphi(d_1)\sqrt T$, where $d_1 = [\ln(S/K) + (r - q + \tfrac12\sigma^2)T]/(\sigma\sqrt T)$, N is the bell-curve area to the left and φ its height. Vega here is per unit of $\sigma$: 37.9 means $0.379 per volatility point.
+The plain call's Greeks come from the [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md) shelf: delta $`e^{-qT}N(d_1)`$, gamma $`e^{-qT}\varphi(d_1)/(S\sigma\sqrt T)`$ and vega $`S e^{-qT}\varphi(d_1)\sqrt T`$, where $`d_1 = [\ln(S/K) + (r - q + \tfrac12\sigma^2)T]/(\sigma\sqrt T)`$, N is the bell-curve area to the left and φ its height. Vega here is per unit of $`\sigma`$: 37.9 means $0.379 per volatility point.
 
 ### When it holds
 
@@ -82,33 +88,37 @@ The plain call's Greeks come from the [Vega](../09-The%20Greeks%2C%20one%20each/
 
 ### Step 0: the Greeks of a knock-out are derivatives of a difference
 
-The knock-out is the plain call minus a mirror term. Both pieces are smooth functions of Acme's price, so their derivatives exist everywhere above the wall and follow the usual rules: product rule for the weight $(B/S)^a$, chain rule for the mirror price $x = B^2/S$. Nothing about the wall is special until $S = B$, where the two pieces are equal and the price is pinned to zero. The price is pinned there. Its slope is not. That single fact produces everything below. Read as chances: the plain call counts every path, the mirror term removes the paths that touch the wall, so the knock-out is the plain payoff weighted by the chance of surviving.
+The knock-out is the plain call minus a mirror term. Both pieces are smooth functions of Acme's price, so their derivatives exist everywhere above the wall and follow the usual rules: product rule for the weight $`(B/S)^a`$, chain rule for the mirror price $`x = B^2/S`$. Nothing about the wall is special until $`S = B`$, where the two pieces are equal and the price is pinned to zero. The price is pinned there. Its slope is not. That single fact produces everything below. Read as chances: the plain call counts every path, the mirror term removes the paths that touch the wall, so the knock-out is the plain payoff weighted by the chance of surviving.
 
 ### Step 1: the delta carries a positive extra
 
-The mirror term falls as $S$ rises: the weight $(B/S)^a$ shrinks, and the mirror price $x = B^2/S$ moves down, away from the strike. Subtracting something that falls adds to the slope. So the knock-out's delta is the plain delta plus the two terms in the square bracket, both positive when $a > 0$, as here.
+The mirror term falls as $`S`$ rises: the weight $`(B/S)^a`$ shrinks, and the mirror price $`x = B^2/S`$ moves down, away from the strike. Subtracting something that falls adds to the slope. So the knock-out's delta is the plain delta plus the two terms in the square bracket, both positive when $`a > 0`$, as here.
 
 In words: a dollar up is worth more to the knock-out than to the plain call, because it buys both a move towards the strike and a move away from the wall. At $100 that makes 0.601 against 0.587. At $82 it makes 0.380 against 0.224.
 
 ### Step 2: at the wall, the delta is about twice the plain delta
 
-Put $S = B$. The weight is 1, the mirror price is $B$, and the chain rule contributes a factor of $-1$. The mirror term's slope becomes $-\Delta(B) - aC(B)/B$, and subtracting it gives
+Put $`S = B`$. The weight is 1, the mirror price is $`B`$, and the chain rule contributes a factor of $`-1`$. The mirror term's slope becomes $`-\Delta(B) - aC(B)/B`$, and subtracting it gives
 
-$$V'(B) = 2\,\Delta(B) + \frac{a\,C(B)}{B}.$$
+```math
+V'(B) = 2\,\Delta(B) + \frac{a\,C(B)}{B}.
+```
 
 The plain call at $80 has delta 0.189, so the knock-out holds about 0.379 shares plus a small drift term of 0.010: 0.389 in total. This is a finite number. What it means is not small: the price is zero at the wall, so a position worth nothing needs 0.389 shares of hedge. One step past the wall the option no longer exists and its delta is zero. **The hedge changes by 0.389 shares across zero distance.** That jump is the explosion: in the limit, gamma at the touch is infinite.
 
 ### Step 3: gamma turns negative before the wall
 
-Differentiate the delta once more. At $S = B$ the terms regroup into
+Differentiate the delta once more. At $`S = B`$ the terms regroup into
 
-$$V''(B) = -\,\frac{1+a}{B}\,V'(B).$$
+```math
+V''(B) = -\,\frac{1+a}{B}\,V'(B).
+```
 
-The wall delta is positive, and $1 + a$ is positive whenever $a > -1$, that is whenever the bank rate beats the dividend yield, as 5% beats 2% here. So the gamma at the wall is negative: $-0.0073$ for the house option. Negative gamma means the delta rises as Acme falls. The hedge that bottomed near 38 shares at $82 climbs back to 39 at the wall. A bank that sold this option therefore holds positive gamma near the wall (it is long gamma), which sounds like a gift, until the wall is touched and the whole hedge must be dumped.
+The wall delta is positive, and $`1 + a`$ is positive whenever $`a > -1`$, that is whenever the bank rate beats the dividend yield, as 5% beats 2% here. So the gamma at the wall is negative: $`-0.0073`$ for the house option. Negative gamma means the delta rises as Acme falls. The hedge that bottomed near 38 shares at $82 climbs back to 39 at the wall. A bank that sold this option therefore holds positive gamma near the wall (it is long gamma), which sounds like a gift, until the wall is touched and the whole hedge must be dumped.
 
 ### Step 4: vega is zero at the wall
 
-At $S = B$ the price is zero for every volatility, so its derivative in $\sigma$ is zero. Near the wall two effects fight. More volatility raises the chance of climbing past the strike; it also raises the chance of touching $80$. For the house down-and-out the first wins at every price above the wall, but by less and less near it: vega is 34.4 at $100 and 5.4 at $82, against the plain call's 37.9 and 24.3.
+At $`S = B`$ the price is zero for every volatility, so its derivative in $`\sigma`$ is zero. Near the wall two effects fight. More volatility raises the chance of climbing past the strike; it also raises the chance of touching $`80`$. For the house down-and-out the first wins at every price above the wall, but by less and less near it: vega is 34.4 at $100 and 5.4 at $82, against the plain call's 37.9 and 24.3.
 
 ### Step 5: the reverse knock-out, where both effects are violent
 
@@ -127,22 +137,22 @@ With one week left the hedge is 3.78 shares per option, on an option that pays a
 <details>
 <summary>Detailed proof: delta, gamma and vega of the down-and-out formula</summary>
 
-Write $p = (B/S)^a$ and $x = B^2/S$, so the mirror term is $M = p\,C(x)$. Then
-$p' = -a\,p/S$, $p'' = a(a+1)\,p/S^2$, $x' = -x/S$, $x'' = 2x/S^2$.
+Write $`p = (B/S)^a`$ and $`x = B^2/S`$, so the mirror term is $`M = p\,C(x)`$. Then
+$`p' = -a\,p/S`$, $`p'' = a(a+1)\,p/S^2`$, $`x' = -x/S`$, $`x'' = 2x/S^2`$.
 
-Product and chain rule: $M' = p'\,C(x) + p\,\Delta(x)\,x'$ and
-$M'' = p''\,C(x) + 2p'\,\Delta(x)\,x' + p\,\Gamma(x)\,x'^2 + p\,\Delta(x)\,x''$.
-The knock-out's delta is $\Delta(S) - M'$ and its gamma is $\Gamma(S) - M''$.
+Product and chain rule: $`M' = p'\,C(x) + p\,\Delta(x)\,x'`$ and
+$`M'' = p''\,C(x) + 2p'\,\Delta(x)\,x' + p\,\Gamma(x)\,x'^2 + p\,\Delta(x)\,x''`$.
+The knock-out's delta is $`\Delta(S) - M'`$ and its gamma is $`\Gamma(S) - M''`$.
 
-At $S = B$: $p = 1$, $x = B$, $x' = -1$, $x'' = 2/B$, $p' = -a/B$, $p'' = a(a+1)/B^2$. So
-$M'(B) = -aC(B)/B - \Delta(B)$, giving $V'(B) = 2\Delta(B) + aC(B)/B$; and
-$M''(B) = a(a+1)C(B)/B^2 + 2a\Delta(B)/B + \Gamma(B) + 2\Delta(B)/B$, giving
-$V''(B) = -\big[a(a+1)C(B)/B^2 + 2(a+1)\Delta(B)/B\big] = -\tfrac{1+a}{B}\big[aC(B)/B + 2\Delta(B)\big] = -\tfrac{1+a}{B}V'(B)$.
+At $`S = B`$: $`p = 1`$, $`x = B`$, $`x' = -1`$, $`x'' = 2/B`$, $`p' = -a/B`$, $`p'' = a(a+1)/B^2`$. So
+$`M'(B) = -aC(B)/B - \Delta(B)`$, giving $`V'(B) = 2\Delta(B) + aC(B)/B`$; and
+$`M''(B) = a(a+1)C(B)/B^2 + 2a\Delta(B)/B + \Gamma(B) + 2\Delta(B)/B`$, giving
+$`V''(B) = -\big[a(a+1)C(B)/B^2 + 2(a+1)\Delta(B)/B\big] = -\tfrac{1+a}{B}\big[aC(B)/B + 2\Delta(B)\big] = -\tfrac{1+a}{B}V'(B)`$.
 The plain gamma cancels exactly.
 
-Vega: $a$ depends on $\sigma$, with $\partial a/\partial\sigma = -4(r-q)/\sigma^3$. So $\partial p/\partial\sigma = p\,\ln(B/S)\,\partial a/\partial\sigma$ and
-$\partial M/\partial\sigma = p\,\ln(B/S)\,(\partial a/\partial\sigma)\,C(x) + p\,\nu(x)$.
-At $S = B$ the logarithm is zero and $p = 1$, $x = B$, so $\partial M/\partial\sigma = \nu(B)$, the plain vega, and the knock-out's vega is $\nu(B) - \nu(B) = 0$.
+Vega: $`a`$ depends on $`\sigma`$, with $`\partial a/\partial\sigma = -4(r-q)/\sigma^3`$. So $`\partial p/\partial\sigma = p\,\ln(B/S)\,\partial a/\partial\sigma`$ and
+$`\partial M/\partial\sigma = p\,\ln(B/S)\,(\partial a/\partial\sigma)\,C(x) + p\,\nu(x)`$.
+At $`S = B`$ the logarithm is zero and $`p = 1`$, $`x = B`$, so $`\partial M/\partial\sigma = \nu(B)`$, the plain vega, and the knock-out's vega is $`\nu(B) - \nu(B) = 0`$.
 
 </details>
 
@@ -150,12 +160,12 @@ At $S = B$ the logarithm is zero and $p = 1$, $x = B$, so $\partial M/\partial\s
 
 **Barrier shift.** The seller prices and hedges the contract as if the wall were further away: for the reverse knock-out, at $122 instead of $120. With a month left that costs the buyer a little: $2.41 instead of $2.39. The payoff comes at the real wall. When Acme touches $120 the real contract dies, but the shifted one on the seller's books is still worth $2.99. The seller holds a hedge of 1.45 shares against it, so that reserve covers buying the shares back at up to $2.06 each above the wall. The delta jump is still there. It has been moved to a price the contract never reaches, and paid for in advance. The daily-monitoring shift on [Daily monitoring](03-discrete-monitoring-correction.md) is the same device used for a different reason.
 
-**Static replication, in outline.** Replace the share hedge with options that are worth the same as the knock-out on the wall. In the special market where $r = q$, the mirror term is exactly $K/B$ puts struck at $B^2/K$ (a put is the right to sell Acme at its strike): for the house option, 1.25 puts struck at $64. The package "one call at $100 minus 1.25 puts at $64" pays the call if the wall is never touched, since the puts expire worthless above $80. At the wall the call alone and the 1.25 puts together are both worth $1.16, so the package can be closed for nothing. No shares to dump. With $r \neq q$ the mirror weight is not constant and the replication needs a strip of puts or options of several maturities, which is what Derman, Ergener and Kani and Carr, Ellis and Gupta work out.
+**Static replication, in outline.** Replace the share hedge with options that are worth the same as the knock-out on the wall. In the special market where $`r = q`$, the mirror term is exactly $`K/B`$ puts struck at $`B^2/K`$ (a put is the right to sell Acme at its strike): for the house option, 1.25 puts struck at $64. The package "one call at $100 minus 1.25 puts at $64" pays the call if the wall is never touched, since the puts expire worthless above $80. At the wall the call alone and the 1.25 puts together are both worth $1.16, so the package can be closed for nothing. No shares to dump. With $`r \neq q`$ the mirror weight is not constant and the replication needs a strip of puts or options of several maturities, which is what Derman, Ergener and Kani and Carr, Ellis and Gupta work out.
 
 <details>
 <summary>Why 1.25 puts at $64 match the mirror call when r = q</summary>
 
-With $r = q$ the exponent is $a = -1$, so the mirror term is $(S/B)\,C(B^2/S)$. Put-call symmetry with no drift says a call equals $K$ over the price times a put at the mirrored strike: $C(y, K) = (K/y)\,P(y, y^2/K)$. Scale both arguments of the put by $S^2/B^2$ (option prices scale with price and strike together) and $(S/B)\,C(B^2/S, K) = (K/B)\,P(S, B^2/K)$.
+With $`r = q`$ the exponent is $`a = -1`$, so the mirror term is $`(S/B)\,C(B^2/S)`$. Put-call symmetry with no drift says a call equals $`K`$ over the price times a put at the mirrored strike: $`C(y, K) = (K/y)\,P(y, y^2/K)`$. Scale both arguments of the put by $`S^2/B^2`$ (option prices scale with price and strike together) and $`(S/B)\,C(B^2/S, K) = (K/B)\,P(S, B^2/K)`$.
 
 </details>
 
@@ -165,19 +175,19 @@ A second road to all of these Greeks is the grid: solve the pricing equation on 
 
 ## Worked numbers, by hand
 
-House market: $S = K = 100$, $B = 80$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$.
+House market: $`S = K = 100`$, $`B = 80`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| drift exponent $a$ | $2(0.05 - 0.02)/0.04 - 1$ | 0.5 |
-| mirror price $x$ | $80^2 / 100$ | 64 |
-| mirror weight | $(80/100)^{0.5}$ | 0.894427 |
-| mirror term | $0.894427 \times C(64)$, with $C(64) = 0.104759$ | 0.093699 |
-| price | $9.227006 - 0.093699$ | $9.13 |
-| plain delta at the wall | $\Delta(80)$, doubled | 0.378989 |
-| drift piece | $0.5 \times 1.530756 / 80$ | 0.009567 |
-| **wall delta** | $0.378989 + 0.009567$ | **0.388556** |
-| **wall gamma** | $-(1.5/80) \times 0.388556$ | **−0.007285** |
+| drift exponent $`a`$ | $`2(0.05 - 0.02)/0.04 - 1`$ | 0.5 |
+| mirror price $`x`$ | $`80^2 / 100`$ | 64 |
+| mirror weight | $`(80/100)^{0.5}`$ | 0.894427 |
+| mirror term | $`0.894427 \times C(64)`$, with $`C(64) = 0.104759`$ | 0.093699 |
+| price | $`9.227006 - 0.093699`$ | $9.13 |
+| plain delta at the wall | $`\Delta(80)`$, doubled | 0.378989 |
+| drift piece | $`0.5 \times 1.530756 / 80`$ | 0.009567 |
+| **wall delta** | $`0.378989 + 0.009567`$ | **0.388556** |
+| **wall gamma** | $`-(1.5/80) \times 0.388556`$ | **−0.007285** |
 | hedge per dollar of option at $80.10 | delta divided by the price, 0.038820 | 9.99 shares |
 
 At $80.10 the hedge holds about 10 shares for every dollar of premium, and all of them must go one dime lower.
@@ -197,14 +207,14 @@ Delta and gamma across the approach, with vega at the two ends:
 | --- | --- | --- |
 | Hedge the knock-out at $82 with the plain delta | 0.224 shares (right: 0.380) | ignores that each dollar up also moves Acme away from the wall |
 | Bump the price by $5 each side at $82 | delta 0.270 (right: 0.380) | the lower bump at $77 lands past the wall, where the price is zero |
-| Bump volatility but hold $a$ fixed, at $100 | vega 34.76 (right: 34.44) | $a$ contains $\sigma^2$; the mirror weight moves with volatility too |
+| Bump volatility but hold $`a`$ fixed, at $100 | vega 34.76 (right: 34.44) | $`a`$ contains $`\sigma^2`$; the mirror weight moves with volatility too |
 | Use the plain vega at $82 | 24.34 (right: 5.43) | most of the volatility gain is eaten by extra touches |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script prices the house down-and-out call and reaches every Greek by three independent roads: the formula differentiated by hand, bump-and-revalue on the formula ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)), and a Crank-Nicolson grid (a mesh of prices stepped back through time, with the price held at zero on the wall) that never sees the formula. The reverse knock-out is priced by its mirror formula and checked against its own grid. A fourth road, static replication with $r = q$, checks the mirror term against real puts. Asserts compare formula against grid, the two-line wall formulas against the general ones, and the replication at the wall; mutating the drift exponent, the gamma algebra or the vega's dependence on $a$ each makes an assert fail.
+The script prices the house down-and-out call and reaches every Greek by three independent roads: the formula differentiated by hand, bump-and-revalue on the formula ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)), and a Crank-Nicolson grid (a mesh of prices stepped back through time, with the price held at zero on the wall) that never sees the formula. The reverse knock-out is priced by its mirror formula and checked against its own grid. A fourth road, static replication with $`r = q`$, checks the mirror term against real puts. Asserts compare formula against grid, the two-line wall formulas against the general ones, and the replication at the wall; mutating the drift exponent, the gamma algebra or the vega's dependence on $`a`$ each makes an assert fail.
 
 ### Python
 
@@ -629,14 +639,14 @@ The two outputs are identical line for line, from two different normal CDFs and 
 
 ### Lean
 
-Lean proves the delta, gamma and vega formulas of Steps 1 to 4, for any smooth plain-call price $C$ and any $a$.
+Lean proves the delta, gamma and vega formulas of Steps 1 to 4, for any smooth plain-call price $`C`$ and any $`a`$.
 
-- Take any share price $S$ above zero. Then the knock-out's delta is exactly the $V'(S)$ formula above: the plain delta plus the mirror extra.
-- Take $S = B$. Then the price is zero, and the delta is $V'(B) = 2\,\Delta(B) + a\,C(B)/B$.
-- Take $S = B$ again. Then the gamma is $V''(B) = -\frac{1+a}{B}\,V'(B)$: the plain gamma cancels exactly.
-- Take $S = B$, with $a = 2(r-q)/\sigma^2 - 1$ moving with $\sigma$. Then the vega is zero, at every volatility.
-- Take the house market. Then $a$ = 0.5, the mirror price at $100 is 64, and $(1+a)/B$ = 3/160.
-- Take $r = q$ = 2%. Then $a = -1$, $K/B$ = 1.25 and $B^2/K$ = 64, as the static hedge needs.
+- Take any share price $`S`$ above zero. Then the knock-out's delta is exactly the $`V'(S)`$ formula above: the plain delta plus the mirror extra.
+- Take $`S = B`$. Then the price is zero, and the delta is $`V'(B) = 2\,\Delta(B) + a\,C(B)/B`$.
+- Take $`S = B`$ again. Then the gamma is $`V''(B) = -\frac{1+a}{B}\,V'(B)`$: the plain gamma cancels exactly.
+- Take $`S = B`$, with $`a = 2(r-q)/\sigma^2 - 1`$ moving with $`\sigma`$. Then the vega is zero, at every volatility.
+- Take the house market. Then $`a`$ = 0.5, the mirror price at $100 is 64, and $`(1+a)/B`$ = 3/160.
+- Take $`r = q`$ = 2%. Then $`a = -1`$, $`K/B`$ = 1.25 and $`B^2/K`$ = 64, as the static hedge needs.
 
 The Black-Scholes call itself, the Greeks' values, the grid, the reverse knock-out and the barrier shift are left to the Python and Rust checks.
 
@@ -800,7 +810,7 @@ example : (100 : ℝ) / 80 = 5 / 4 ∧ (80 : ℝ) ^ 2 / 100 = 64 := by norm_num
 >
 > - **Bumping across the wall.** A $5 bump at $82 gives delta 0.270 instead of 0.380. Near a barrier, use a one-sided bump on the live side, or a bump smaller than the distance to the wall.
 > - **Assuming vega is always positive.** For a plain option it is. The reverse knock-out at $115 with a month left has vega −42.16: the holder is short volatility without knowing it.
-> - **Freezing $a$ when bumping volatility.** The mirror weight depends on $\sigma$; holding it fixed gives 34.76 instead of 34.44 at $100.
+> - **Freezing $`a`$ when bumping volatility.** The mirror weight depends on $`\sigma`$; holding it fixed gives 34.76 instead of 34.44 at $100.
 > - **Hedging a knock-out with the plain delta.** At $82 that is 0.224 shares where 0.380 are needed.
 
 ---

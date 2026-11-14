@@ -38,26 +38,32 @@ Two bowls, neither dipping to zero along this one line of mixes. Positive defini
 
 A mix is a pair of weights, a vector in round brackets: (0.5, 0.5) is half and half. Written across the page rather than down it, they are transposed, marked with a raised T. The form multiplies the weights as a row, the matrix, then the weights as a column.
 
-$$f(x) = x^T A x = a x_1^2 + 2 b x_1 x_2 + c x_2^2$$
+```math
+f(x) = x^T A x = a x_1^2 + 2 b x_1 x_2 + c x_2^2
+```
 
 **Read it aloud:** each weight squared times that asset's variance, plus twice the weights multiplied together times the covariance.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $a$, $b$, $c$ | the symmetric matrix: first variance, covariance in both corners, second variance | `[[4, 1], [1, 9]]` | a bigger covariance lifts mixes whose weights share a sign |
-| $x$, $x_1$, $x_2$, $x^T$, $f(x)$ | the mix, its weights, the weights as a row, and the number handed back | (0.5, 0.5) scores 3.750000 | doubling both weights quadruples the score |
-| $\lambda_1$, $\lambda_2$, $y_1$, $y_2$ | the eigenvalues, each the stretch along one of the matrix's own perpendicular directions, and the mix measured along those directions | 9.192582, 3.807418 | both above zero is positive definite |
-| $w$ | the weight in asset one, the rest in asset two | 8/11, or 0.727273 | the variance falls to 3.181818, then climbs |
+| $`A`$, $`a`$, $`b`$, $`c`$ | the symmetric matrix: first variance, covariance in both corners, second variance | `[[4, 1], [1, 9]]` | a bigger covariance lifts mixes whose weights share a sign |
+| $`x`$, $`x_1`$, $`x_2`$, $`x^T`$, $`f(x)`$ | the mix, its weights, the weights as a row, and the number handed back | (0.5, 0.5) scores 3.750000 | doubling both weights quadruples the score |
+| $`\lambda_1`$, $`\lambda_2`$, $`y_1`$, $`y_2`$ | the eigenvalues, each the stretch along one of the matrix's own perpendicular directions, and the mix measured along those directions | 9.192582, 3.807418 | both above zero is positive definite |
+| $`w`$ | the weight in asset one, the rest in asset two | 8/11, or 0.727273 | the variance falls to 3.181818, then climbs |
 
-The determinant is the diagonal product minus the corner product, $a c - b^2$, here 35, and equals the eigenvalues multiplied. The trace is the diagonal sum, $a + c$, here 13, and equals them added. So the eigenvalues solve
+The determinant is the diagonal product minus the corner product, $`a c - b^2`$, here 35, and equals the eigenvalues multiplied. The trace is the diagonal sum, $`a + c`$, here 13, and equals them added. So the eigenvalues solve
 
-$$\lambda^2 - 13 \lambda + 35 = 0,$$
+```math
+\lambda^2 - 13 \lambda + 35 = 0,
+```
 
 giving 9.192582 and 3.807418. Forcing all the money in, the second weight being 1 minus the first, leaves one letter:
 
-$$f(w) = 11 w^2 - 16 w + 9,$$
+```math
+f(w) = 11 w^2 - 16 w + 9,
+```
 
-with 11 for $a - 2b + c$, -16 for $2b - 2c$, 9 for $c$.
+with 11 for $`a - 2b + c`$, -16 for $`2b - 2c`$, 9 for $`c`$.
 
 ### When it holds
 
@@ -75,31 +81,37 @@ The form feeds the same weights in twice, as a row and as a column. Every matrix
 
 ### Step 1: multiply it out, and watch the 2 appear
 
-Matrix times column first: row one gives $a x_1 + b x_2$, row two $b x_1 + c x_2$. Dot it with the weights as a row:
+Matrix times column first: row one gives $`a x_1 + b x_2`$, row two $`b x_1 + c x_2`$. Dot it with the weights as a row:
 
-$$x_1(a x_1 + b x_2) + x_2(b x_1 + c x_2) = a x_1^2 + b x_1 x_2 + b x_1 x_2 + c x_2^2.$$
+```math
+x_1(a x_1 + b x_2) + x_2(b x_1 + c x_2) = a x_1^2 + b x_1 x_2 + b x_1 x_2 + c x_2^2.
+```
 
-The cross product arrives twice, once from each corner, and the copies add to $2 b x_1 x_2$. That 2 is the most-dropped piece of the formula. In numbers: 4 × 0.25 + 2 × 1 × 0.25 + 9 × 0.25 = 3.750000.
+The cross product arrives twice, once from each corner, and the copies add to $`2 b x_1 x_2`$. That 2 is the most-dropped piece of the formula. In numbers: 4 × 0.25 + 2 × 1 × 0.25 + 9 × 0.25 = 3.750000.
 
 ### Step 2: why this is the variance of a mix
 
-Each month's blended departure is $x_1$ times the first plus $x_2$ times the second. Square and average over the eight months: the squares give $x_1^2$ times the first variance and $x_2^2$ times the second, the cross terms twice $x_1 x_2$ times the covariance. The form is not a model of a mix's variance; it is that variance written out.
+Each month's blended departure is $`x_1`$ times the first plus $`x_2`$ times the second. Square and average over the eight months: the squares give $`x_1^2`$ times the first variance and $`x_2^2`$ times the second, the cross terms twice $`x_1 x_2`$ times the covariance. The form is not a model of a mix's variance; it is that variance written out.
 
 ### Step 3: the eigenvalue test, by measuring along the matrix's own directions
 
-[The spectral theorem](04-spectral-theorem.md) gives a symmetric matrix two perpendicular directions of its own, each one unit long, along which it only stretches, by an eigenvalue ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)). Measure the mix along them rather than asset by asset ([Change of basis](01-change-of-basis.md)), as readings $y_1$ and $y_2$. The cross term disappears:
+[The spectral theorem](04-spectral-theorem.md) gives a symmetric matrix two perpendicular directions of its own, each one unit long, along which it only stretches, by an eigenvalue ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)). Measure the mix along them rather than asset by asset ([Change of basis](01-change-of-basis.md)), as readings $`y_1`$ and $`y_2`$. The cross term disappears:
 
-$$f = \lambda_1 y_1^2 + \lambda_2 y_2^2.$$
+```math
+f = \lambda_1 y_1^2 + \lambda_2 y_2^2.
+```
 
 Squares are never negative, so both eigenvalues above zero puts every mix but all zeros above zero. Backwards, an eigenvalue at or below zero leaves the score at zero or below along its own direction.
 
 ### Step 4: the two-entry test, by completing the square
 
-Eigenvalues are work. For a 2 by 2, rewrite the form as a square plus a leftover, $a$ not zero:
+Eigenvalues are work. For a 2 by 2, rewrite the form as a square plus a leftover, $`a`$ not zero:
 
-$$a x_1^2 + 2 b x_1 x_2 + c x_2^2 = a \left( x_1 + \frac{b}{a} x_2 \right)^2 + \frac{a c - b^2}{a} x_2^2.$$
+```math
+a x_1^2 + 2 b x_1 x_2 + c x_2^2 = a \left( x_1 + \frac{b}{a} x_2 \right)^2 + \frac{a c - b^2}{a} x_2^2.
+```
 
-Each piece is a number times a square. If $a$ and the determinant are above zero, so are both multipliers, and the total vanishes only when both squares do: $x_2 = 0$, then $x_1 = 0$. Our 4 and 35 pass.
+Each piece is a number times a square. If $`a`$ and the determinant are above zero, so are both multipliers, and the total vanishes only when both squares do: $`x_2 = 0`$, then $`x_1 = 0`$. Our 4 and 35 pass.
 
 ```mermaid
 flowchart LR
@@ -120,7 +132,7 @@ D: above zero on every mix but all zeros. E: both eigenvalues above zero. S: fir
 
 **E and D:** Step 3, forwards and backwards. **S gives D:** the completed square vanishes only at all zeros.
 
-**D gives S:** the mix (1, 0) scores $a$ and $(-b/a, 1)$ scores $(a c - b^2)/a$; both above zero, so the determinant is too.
+**D gives S:** the mix (1, 0) scores $`a`$ and $`(-b/a, 1)`$ scores $`(a c - b^2)/a`$; both above zero, so the determinant is too.
 
 E and S agree through D. D and E argue alike at any size; S is the 2 by 2 case of a chain of top-left determinants, Sylvester's criterion.
 
@@ -139,9 +151,11 @@ E and S agree through D. D and E argue alike at any size; S is the 2 by 2 case o
 
 No mix escapes risk, so which comes closest? Force the weights to add to 1 and complete the square:
 
-$$11 w^2 - 16 w + 9 = 11 \left( w - \frac{8}{11} \right)^2 + \frac{35}{11}.$$
+```math
+11 w^2 - 16 w + 9 = 11 \left( w - \frac{8}{11} \right)^2 + \frac{35}{11}.
+```
 
-A square is never negative, so the score never falls below 35/11, which is 3.181818, and only $w = 8/11$, or 0.727273, reaches it: 8 parts to 3. A proof, not a search, though the code scans 10001 mixes and finds nothing lower. Calculus finds the same weight ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)).
+A square is never negative, so the score never falls below 35/11, which is 3.181818, and only $`w = 8/11`$, or 0.727273, reaches it: 8 parts to 3. A proof, not a search, though the code scans 10001 mixes and finds nothing lower. Calculus finds the same weight ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)).
 
 ---
 
@@ -151,7 +165,7 @@ A square is never negative, so the score never falls below 35/11, which is 3.181
 | --- | --- | --- |
 | half and half, two ways | 4 × 0.25 + 2 × 1 × 0.25 + 9 × 0.25, and the blended departures squared and averaged | **3.750000** |
 | determinant, trace | 4 × 9 - 1 × 1, and 4 + 9 | 35, 13 |
-| eigenvalues | roots of $\lambda^2 - 13 \lambda + 35 = 0$ | 9.192582, 3.807418 |
+| eigenvalues | roots of $`\lambda^2 - 13 \lambda + 35 = 0`$ | 9.192582, 3.807418 |
 | the calmest mix, 8 parts to 3 | floor of 11 (w - 8/11) squared + 35/11 | **3.181818** at 0.727273 |
 
 Each asset is riskier alone than the blend: 3.181818 against 4 and 9, and none reaches zero.
@@ -377,12 +391,12 @@ The two outputs match line for line.
 
 Lean proves the three tests agree for every real symmetric 2 by 2 matrix, and the eigenvalue test at every size.
 
-- The formula: weights as a row, times the matrix, times weights as a column, give $a x_1^2 + 2 b x_1 x_2 + c x_2^2$.
+- The formula: weights as a row, times the matrix, times weights as a column, give $`a x_1^2 + 2 b x_1 x_2 + c x_2^2`$.
 - For a symmetric 2 by 2 matrix, a score above zero for every mix but all zeros means both eigenvalues are above zero, and back.
 - The same score test means the first entry and the determinant are both above zero, and back.
 - At any size, a symmetric matrix is positive definite exactly when every eigenvalue is above zero.
 - The card's numbers, exactly: variances 4 and 9, covariance 1, half and half 15/4, determinant 35, trace 13.
-- The completed square $11 (w - 8/11)^2 + 35/11$, so the calmest fully invested mix scores 35/11.
+- The completed square $`11 (w - 8/11)^2 + 35/11`$, so the calmest fully invested mix scores 35/11.
 - The counter-examples: `[[1, 2], [2, 1]]` scores -2 at (1, -1), and `[[-4, -1], [-1, -9]]` scores -15/4 despite determinant 35.
 
 The decimal eigenvalues, the repeated multiplying and the scan of 10001 mixes are left to the Python and Rust checks.
@@ -609,7 +623,7 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 ## Where this goes next
 
 - [Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md): second derivatives, gathered in a symmetric matrix whose quadratic form models a curved surface near a point.
-- [The singular value decomposition](06-singular-value-decomposition.md): for any matrix $M$, the product $M^T M$, whose quadratic form is a squared length and so never below zero.
+- [The singular value decomposition](06-singular-value-decomposition.md): for any matrix $`M`$, the product $`M^T M`$, whose quadratic form is a squared length and so never below zero.
 - [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): vibration modes, where the springs' stored energy is a quadratic form, above zero for every displacement.
 - [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): bell shapes, whose tilted distance from the centre is a quadratic form with oval level curves.
 - [Correlated paths](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): linked returns, built from a triangular factor that exists exactly when the correlation matrix is positive definite.

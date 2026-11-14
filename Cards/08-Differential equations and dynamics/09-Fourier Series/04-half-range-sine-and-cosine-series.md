@@ -26,32 +26,40 @@ Scale: 150 units per metre across, 40 per centimetre up. Solid: the real string.
 
 ## The formula
 
-Notation first, in words. The string's shape is $f$: at position $x$ metres from the left end, it stands f(x) centimetres aside. Its length is $L$. The **odd extension** $F_o$ copies $f$ onto the left half upside down; the **even extension** $F_e$ copies it upright. For x between −L and 0:
+Notation first, in words. The string's shape is $`f`$: at position $`x`$ metres from the left end, it stands f(x) centimetres aside. Its length is $`L`$. The **odd extension** $`F_o`$ copies $`f`$ onto the left half upside down; the **even extension** $`F_e`$ copies it upright. For x between −L and 0:
 
-$$F_o(x) = -f(-x), \qquad F_e(x) = f(-x)$$
+```math
+F_o(x) = -f(-x), \qquad F_e(x) = f(-x)
+```
 
 Both then repeat every 2L. Σ adds a term for each n = 1, 2, 3 and on.
 
-$$b_n = \frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\,dx, \qquad a_n = \frac{2}{L}\int_0^L f(x)\cos\frac{n\pi x}{L}\,dx$$
+```math
+b_n = \frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\,dx, \qquad a_n = \frac{2}{L}\int_0^L f(x)\cos\frac{n\pi x}{L}\,dx
+```
 
-$$f(x) = \sum_{n=1}^{\infty} b_n \sin\frac{n\pi x}{L} = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos\frac{n\pi x}{L} \quad \text{for } 0 < x < L$$
+```math
+f(x) = \sum_{n=1}^{\infty} b_n \sin\frac{n\pi x}{L} = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos\frac{n\pi x}{L} \quad \text{for } 0 < x < L
+```
 
 **Read it aloud:** each coefficient is twice the average of the shape times its mode; adding the modes back rebuilds the shape.
 
 For the triangle, with L = 1 m, integration by parts gives:
 
-$$b_n = \frac{8\sin(n\pi/2)}{n^2\pi^2}, \qquad a_n = \frac{4\,\big(2\cos(n\pi/2) - 1 - (-1)^n\big)}{n^2\pi^2}, \qquad a_0 = 1$$
+```math
+b_n = \frac{8\sin(n\pi/2)}{n^2\pi^2}, \qquad a_n = \frac{4\,\big(2\cos(n\pi/2) - 1 - (-1)^n\big)}{n^2\pi^2}, \qquad a_0 = 1
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | position, metres from the left end | 0 to 1 m | walks along the triangle |
-| $L$ | length of the string or rod | 1 m | every mode stretches to fit |
-| $f$ | the shape: pull in cm, or °C above the room | 1 at x = 0.5 m | every coefficient scales with it |
-| $n$ | mode number: n half-waves fit in the length | 1, 3, 5 carry the string | coefficients shrink like 1/n^2 |
-| $b_n$ | sine coefficient, cm | b1 = 0.8106, b3 = −0.0901 | a bigger share of that mode |
-| $a_n$, $a_0$ | cosine coefficients; a0/2 is the average | a0 = 1, a2 = −0.4053 | a bigger share of that mode |
-| $F_o$, $F_e$ | the odd and even extensions, period 2L | the two dashed pictures | they agree with f on 0 to L |
-| $N$ | how many modes a partial sum keeps | 1, 3, 5, 99 | the sum closes on f |
+| $`x`$ | position, metres from the left end | 0 to 1 m | walks along the triangle |
+| $`L`$ | length of the string or rod | 1 m | every mode stretches to fit |
+| $`f`$ | the shape: pull in cm, or °C above the room | 1 at x = 0.5 m | every coefficient scales with it |
+| $`n`$ | mode number: n half-waves fit in the length | 1, 3, 5 carry the string | coefficients shrink like 1/n^2 |
+| $`b_n`$ | sine coefficient, cm | b1 = 0.8106, b3 = −0.0901 | a bigger share of that mode |
+| $`a_n`$, $`a_0`$ | cosine coefficients; a0/2 is the average | a0 = 1, a2 = −0.4053 | a bigger share of that mode |
+| $`F_o`$, $`F_e`$ | the odd and even extensions, period 2L | the two dashed pictures | they agree with f on 0 to L |
+| $`N`$ | how many modes a partial sum keeps | 1, 3, 5, 99 | the sum closes on f |
 
 Here sin(nπ/2) is 1, −1, 1 on n = 1, 3, 5 and 0 on even n; the cosine coefficients vanish except at n = 2, 6, 10.
 
@@ -72,7 +80,7 @@ Reflection builds a function of period 2L equal to f on 0 to L. Its full series,
 
 ### Step 1: the odd reflection kills every cosine
 
-Over the full period, $a_n$ is 1/L times the integral from −L to L of the extension against cos(nπx/L), and $b_n$ the same with sin. An odd function times the even cosine is odd: its left half cancels its right half, so every cosine coefficient is 0. Times the odd sine it is even: the halves are equal, and the doubling turns 1/L into 2/L.
+Over the full period, $`a_n`$ is 1/L times the integral from −L to L of the extension against cos(nπx/L), and $`b_n`$ the same with sin. An odd function times the even cosine is odd: its left half cancels its right half, so every cosine coefficient is 0. Times the odd sine it is even: the halves are equal, and the doubling turns 1/L into 2/L.
 
 <details>
 <summary>The algebra behind this</summary>
@@ -100,11 +108,11 @@ Split at the peak. The right half mirrors the left, and mirroring a mode multipl
 
 Take L = 1 and k = nπ. On the right half put x = 1 − u, so f = 2u. Since sin(nπ − ku) = −(−1)^n sin(ku) and cos(nπ − ku) = (−1)^n cos(ku),
 
-$$b_n = 2\big(1 - (-1)^n\big) I, \quad a_n = 2\big(1 + (-1)^n\big) J,$$
+$`\displaystyle b_n = 2\big(1 - (-1)^n\big) I, \quad a_n = 2\big(1 + (-1)^n\big) J,`$
 
 with I and J the integrals of 2u sin(ku) and 2u cos(ku) from 0 to ½. By parts, u sin(ku) and u cos(ku) have antiderivatives −u cos(ku)/k + sin(ku)/k^2 and u sin(ku)/k + cos(ku)/k^2. Doubling and evaluating from 0 to ½:
 
-$$I = -\frac{\cos(n\pi/2)}{n\pi} + \frac{2\sin(n\pi/2)}{n^2\pi^2}, \qquad J = \frac{\sin(n\pi/2)}{n\pi} + \frac{2\big(\cos(n\pi/2) - 1\big)}{n^2\pi^2}.$$
+$`\displaystyle I = -\frac{\cos(n\pi/2)}{n\pi} + \frac{2\sin(n\pi/2)}{n^2\pi^2}, \qquad J = \frac{\sin(n\pi/2)}{n\pi} + \frac{2\big(\cos(n\pi/2) - 1\big)}{n^2\pi^2}.`$
 
 For odd n, cos(nπ/2) = 0, so the sine coefficient is 4I = 8 sin(nπ/2)/(n^2π^2) and the cosine coefficient is 0. For even n, the sine coefficient is 0 and sin(nπ/2) = 0, so the cosine coefficient is 4J = 8(cos(nπ/2) − 1)/(n^2π^2): zero when 4 divides n, −16/(n^2π^2) otherwise. Both cases fit the single cosine formula above. Finally a0 = 2 times the triangle's area, 2 × ½ × 1 × 1 = 1.
 
@@ -358,11 +366,11 @@ The two outputs agree line for line.
 Lean proves the reflection rule and the end conditions for every length, and the triangle's coefficients and middle sums exactly.
 
 - Take any length L above 0 and any shape f that can be integrated on 0 to L. Then the odd extension has every full-period cosine coefficient 0.
-- With the same L and f, the odd extension's full-period sine coefficients are exactly $b_n$, for every n.
-- With the same L and f, the even extension has every full-period sine coefficient 0. Its full-period cosine coefficients are exactly $a_n$, $a_0$ included.
+- With the same L and f, the odd extension's full-period sine coefficients are exactly $`b_n`$, for every n.
+- With the same L and f, the even extension has every full-period sine coefficient 0. Its full-period cosine coefficients are exactly $`a_n`$, $`a_0`$ included.
 - Take any L above 0, any coefficients and any number of modes N. Then the sine partial sum is 0 at x = 0 and at x = L.
 - With the same choices, the cosine partial sum has slope 0 at x = 0 and at x = L.
-- Take the triangle, with L = 1. Then for every n from 1 up, $b_n$ and $a_n$ equal the by-parts formulas above, and $a_0 = 1$.
+- Take the triangle, with L = 1. Then for every n from 1 up, $`b_n`$ and $`a_n`$ equal the by-parts formulas above, and $`a_0 = 1`$.
 - At the middle, x = 0.5, the sine series adds up to exactly 1, the peak.
 - At the middle, a0/2 plus the cosine series also adds up to exactly 1.
 - The hand arithmetic holds exactly: a0 as twice the area, which low modes vanish, and the −16 in a2.

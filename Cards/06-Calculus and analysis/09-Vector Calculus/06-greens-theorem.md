@@ -24,34 +24,40 @@ To scale, 30 units per metre, north up. Chevrons show the anticlockwise walk; th
 
 ## The formula
 
-Notation first, in words. A field $F$ has east part $P$ and north part $Q$ at the point $x$ metres east, $y$ north. $P_y$, short for $\partial P/\partial y$, is how fast $P$ changes per metre north, a partial derivative ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)); $Q_x$ is how fast $Q$ changes per metre east. The region is $R$, its fence $C$. A circle on the integral sign marks a loop.
+Notation first, in words. A field $`F`$ has east part $`P`$ and north part $`Q`$ at the point $`x`$ metres east, $`y`$ north. $`P_y`$, short for $`\partial P/\partial y`$, is how fast $`P`$ changes per metre north, a partial derivative ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)); $`Q_x`$ is how fast $`Q`$ changes per metre east. The region is $`R`$, its fence $`C`$. A circle on the integral sign marks a loop.
 
-$$\oint_C P\,dx + Q\,dy \;=\; \iint_R \left(Q_x - P_y\right) dA$$
+```math
+\oint_C P\,dx + Q\,dy \;=\; \iint_R \left(Q_x - P_y\right) dA
+```
 
 **Read it aloud:** the work round the fence, walked with the region on the left, equals the curl added over every small patch inside.
 
-A line integral ([Line integrals of a field](02-line-integrals.md)) equals a double integral ([Double integrals](../08-Multiple%20Integrals/01-double-integrals.md)). The flux form counts flow across the fence, with $n$ the outward direction, length 1, and $ds$ a small length of fence:
+A line integral ([Line integrals of a field](02-line-integrals.md)) equals a double integral ([Double integrals](../08-Multiple%20Integrals/01-double-integrals.md)). The flux form counts flow across the fence, with $`n`$ the outward direction, length 1, and $`ds`$ a small length of fence:
 
-$$\oint_C F\cdot n\,ds \;=\; \oint_C P\,dy - Q\,dx \;=\; \iint_R \left(P_x + Q_y\right) dA$$
+```math
+\oint_C F\cdot n\,ds \;=\; \oint_C P\,dy - Q\,dx \;=\; \iint_R \left(P_x + Q_y\right) dA
+```
 
 **Read it aloud:** net flow out equals the divergence, the spreading-out per square metre, added inside.
 
-With the field $(-y/2,\ x/2)$, curl 1, the first form measures area:
+With the field $`(-y/2,\ x/2)`$, curl 1, the first form measures area:
 
-$$A \;=\; \tfrac12 \oint_C x\,dy - y\,dx \;=\; \tfrac12 \sum_{\text{fences}} \left(x_i\,y_{i+1} - x_{i+1}\,y_i\right)$$
+```math
+A \;=\; \tfrac12 \oint_C x\,dy - y\,dx \;=\; \tfrac12 \sum_{\text{fences}} \left(x_i\,y_{i+1} - x_{i+1}\,y_i\right)
+```
 
 **Read it aloud:** half the loop integral of x dy minus y dx is the area, one shoelace term per fence.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$, $P$, $Q$ | the field, its east and north parts, newtons | wind $(-y^2/20,\ x^2/20)$ | more work round the loop |
-| $x$, $y$, $dA$ | metres east and north; a small patch of area | 0 to 6 each way | — |
-| $R$, $C$ | the region; its fence, walked with the region on the left | the house; five fences | — |
-| $P_y$, $Q_x$ | P's rate per metre north, Q's per metre east | $-y/10$, $x/10$ | — |
-| $Q_x - P_y$ | curl: the swirl per square metre | $(x + y)/10$ | more work round the loop |
-| $P_x + Q_y$ | divergence: spreading-out per square metre | 1 for $(x/2, y/2)$ | more flow out |
-| $n$, $ds$ | outward direction, length 1; a small length of fence | $(1, 0)$ on the east fence | — |
-| $A$, $x_i$, $y_i$ | the area; post i's position, in walking order, the first following the last | 30; post 3 is (6, 4) | — |
+| $`F`$, $`P`$, $`Q`$ | the field, its east and north parts, newtons | wind $`(-y^2/20,\ x^2/20)`$ | more work round the loop |
+| $`x`$, $`y`$, $`dA`$ | metres east and north; a small patch of area | 0 to 6 each way | — |
+| $`R`$, $`C`$ | the region; its fence, walked with the region on the left | the house; five fences | — |
+| $`P_y`$, $`Q_x`$ | P's rate per metre north, Q's per metre east | $`-y/10`$, $`x/10`$ | — |
+| $`Q_x - P_y`$ | curl: the swirl per square metre | $`(x + y)/10`$ | more work round the loop |
+| $`P_x + Q_y`$ | divergence: spreading-out per square metre | 1 for $`(x/2, y/2)`$ | more flow out |
+| $`n`$, $`ds`$ | outward direction, length 1; a small length of fence | $`(1, 0)`$ on the east fence | — |
+| $`A`$, $`x_i`$, $`y_i`$ | the area; post i's position, in walking order, the first following the last | 30; post 3 is (6, 4) | — |
 
 Curl is newtons per metre; times square metres, it gives joules, like the work on the left.
 
@@ -68,17 +74,19 @@ Curl is newtons per metre; times square metres, it gives joules, like the work o
 
 ### Step 0: the fundamental theorem, twice
 
-Adding a rate over an interval gives the change between its ends ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)). On a rectangle, adding $P_y$ northward compares P on the top and bottom fences; adding $Q_x$ eastward compares Q on the right and left. Those four fences are the loop.
+Adding a rate over an interval gives the change between its ends ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)). On a rectangle, adding $`P_y`$ northward compares P on the top and bottom fences; adding $`Q_x`$ eastward compares Q on the right and left. Those four fences are the loop.
 
 ### Step 1: the proof on a rectangle
 
-Take the rectangle from $x = a$ to $x = b$ and $y = c$ to $y = d$, walked anticlockwise. The P part sees only east-west motion: the bottom walked east, the top west.
+Take the rectangle from $`x = a`$ to $`x = b`$ and $`y = c`$ to $`y = d`$, walked anticlockwise. The P part sees only east-west motion: the bottom walked east, the top west.
 
-$$\oint P\,dx = \int_a^b P(x, c)\,dx - \int_a^b P(x, d)\,dx = -\int_a^b \big(P(x, d) - P(x, c)\big)\,dx.$$
+```math
+\oint P\,dx = \int_a^b P(x, c)\,dx - \int_a^b P(x, d)\,dx = -\int_a^b \big(P(x, d) - P(x, c)\big)\,dx.
+```
 
-At each fixed $x$, the fundamental theorem turns the bracket into $P_y$ added from $y = c$ to $y = d$: the P part is minus the double integral of $P_y$. The Q part, right fence north and left fence south, becomes the double integral of $Q_x$ the same way. Adding gives the formula, nothing approximated.
+At each fixed $`x`$, the fundamental theorem turns the bracket into $`P_y`$ added from $`y = c`$ to $`y = d`$: the P part is minus the double integral of $`P_y`$. The Q part, right fence north and left fence south, becomes the double integral of $`Q_x`$ the same way. Adding gives the formula, nothing approximated.
 
-On the 6 m by 4 m rectangle, with wind $P = -y^2/20$, $Q = x^2/20$ newtons, the bottom and left fences give 0 J. The right gives 36/20 N over 4 m, 7.2 J; the top, walked west against −0.8 N, 4.8 J. Inside, $-P_y = y/10$ adds to 4.8 and $Q_x = x/10$ to 7.2: 12 J both ways.
+On the 6 m by 4 m rectangle, with wind $`P = -y^2/20`$, $`Q = x^2/20`$ newtons, the bottom and left fences give 0 J. The right gives 36/20 N over 4 m, 7.2 J; the top, walked west against −0.8 N, 4.8 J. Inside, $`-P_y = y/10`$ adds to 4.8 and $`Q_x = x/10`$ to 7.2: 12 J both ways.
 
 ### Step 2: cut and glue
 
@@ -87,9 +95,11 @@ Set the roof triangle on the rectangle. The rectangle walks the dashed fence wes
 <details>
 <summary>Detailed proof: a region between two graphs</summary>
 
-Let the region be the points with $a \le x \le b$ and $g(x) \le y \le h(x)$: a continuous floor never above a continuous roof. Vertical sides have $dx = 0$. The floor, walked east, and the roof, walked west, give
-$$\oint_C P\,dx = -\int_a^b \big(P(x, h(x)) - P(x, g(x))\big)\,dx = -\int_a^b \int_{g(x)}^{h(x)} P_y(x, y)\,dy\,dx = -\iint_R P_y\,dA,$$
-by the fundamental theorem in $y$, which needs $P_y$ continuous. If the region is also the points between a left edge $x = k(y)$ and a right edge $x = m(y)$, the same argument, with the right edge walked north, gives $\oint_C Q\,dy = \iint_R Q_x\,dA$. The house is both kinds: above y = 4 it runs from $x = 3(y - 4)/2$ to $x = 6 - 3(y - 4)/2$.
+Let the region be the points with $`a \le x \le b`$ and $`g(x) \le y \le h(x)`$: a continuous floor never above a continuous roof. Vertical sides have $`dx = 0`$. The floor, walked east, and the roof, walked west, give
+
+$`\displaystyle \oint_C P\,dx = -\int_a^b \big(P(x, h(x)) - P(x, g(x))\big)\,dx = -\int_a^b \int_{g(x)}^{h(x)} P_y(x, y)\,dy\,dx = -\iint_R P_y\,dA,`$
+
+by the fundamental theorem in $`y`$, which needs $`P_y`$ continuous. If the region is also the points between a left edge $`x = k(y)`$ and a right edge $`x = m(y)`$, the same argument, with the right edge walked north, gives $`\oint_C Q\,dy = \iint_R Q_x\,dA`$. The house is both kinds: above y = 4 it runs from $`x = 3(y - 4)/2`$ to $`x = 6 - 3(y - 4)/2`$.
 
 Other regions are cut into pieces of both kinds; shared cuts cancel as in Step 2. An arbitrary smooth fence needs a limit argument with ε and δ, carried out in Apostol, Volume 2.
 
@@ -97,13 +107,13 @@ Other regions are cut into pieces of both kinds; shared cuts cancel as in Step 2
 
 ### Step 3: the flux form is the same theorem, turned a quarter
 
-With the region on the left, outward is to the right. A small step $(dx, dy)$ turned a quarter right is $(dy, -dx)$, so the flow out through it is $P\,dy - Q\,dx$. That is the circulation of a turned field with east part −Q and north part P, whose curl is $P_x + Q_y$: the original divergence.
+With the region on the left, outward is to the right. A small step $`(dx, dy)`$ turned a quarter right is $`(dy, -dx)`$, so the flow out through it is $`P\,dy - Q\,dx`$. That is the circulation of a turned field with east part −Q and north part P, whose curl is $`P_x + Q_y`$: the original divergence.
 
 ### Step 4: area, and the shoelace formula
 
-The field $(-y/2,\ x/2)$ has $Q_x = 1/2$, $P_y = -1/2$: curl 1, so its loop integral is the area.
+The field $`(-y/2,\ x/2)`$ has $`Q_x = 1/2`$, $`P_y = -1/2`$: curl 1, so its loop integral is the area.
 
-From post i to post i + 1, walk $x = x_i + t\,(x_{i+1} - x_i)$, $y = y_i + t\,(y_{i+1} - y_i)$ as a clock t runs from 0 to 1. In $x\,dy - y\,dx$ the terms carrying t cancel, leaving $x_i\,y_{i+1} - x_{i+1}\,y_i$: one fence, one shoelace term. Half of 0 + 24 + 24 + 12 + 0 is 30 square metres. The same integral is the outward flux of $(x/2,\ y/2)$, divergence 1.
+From post i to post i + 1, walk $`x = x_i + t\,(x_{i+1} - x_i)`$, $`y = y_i + t\,(y_{i+1} - y_i)`$ as a clock t runs from 0 to 1. In $`x\,dy - y\,dx`$ the terms carrying t cancel, leaving $`x_i\,y_{i+1} - x_{i+1}\,y_i`$: one fence, one shoelace term. Half of 0 + 24 + 24 + 12 + 0 is 30 square metres. The same integral is the outward flux of $`(x/2,\ y/2)`$, divergence 1.
 
 A road with no calculus counts whole squares inside the fence: 26 of side 1 m, 29.6 square metres from 10 cm squares, 29.96 from 1 cm squares, within 0.05 of 30.
 
@@ -111,7 +121,7 @@ A road with no calculus counts whole squares inside the fence: 26 of side 1 m, 2
 
 ## Worked numbers, by hand
 
-The wind's curl is $Q_x - P_y = x/10 + y/10$.
+The wind's curl is $`Q_x - P_y = x/10 + y/10`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -131,13 +141,15 @@ The wind's curl is $Q_x - P_y = x/10 + y/10$.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Fence walked clockwise | area −30 square metres | region on the right; every term flips |
-| Curl taken as $P_y - Q_x$ | −16.6 J | the east part's northward rate is the one subtracted |
+| Curl taken as $`P_y - Q_x`$ | −16.6 J | the east part's northward rate is the one subtracted |
 | Vortex centred at (3, 3) | 6.283185 J round, curl 0 inside | undefined at (3, 3): smoothness fails |
-| The half dropped | 60 square metres | the curl of $(-y,\ x)$ is 2, not 1 |
+| The half dropped | 60 square metres | the curl of $`(-y,\ x)`$ is 2, not 1 |
 
 The vortex swirls round (3, 3):
 
-$$V = \left(\frac{-(y - 3)}{(x - 3)^2 + (y - 3)^2},\ \frac{x - 3}{(x - 3)^2 + (y - 3)^2}\right).$$
+```math
+V = \left(\frac{-(y - 3)}{(x - 3)^2 + (y - 3)^2},\ \frac{x - 3}{(x - 3)^2 + (y - 3)^2}\right).
+```
 
 Its curl is 0 wherever defined; difference quotients at 120 inside points confirm it. Yet a lap collects 6.283185 J, which is 2π: at (3, 3) the field has no value.
 
@@ -348,8 +360,8 @@ The two outputs match line for line.
 Lean proves Green's theorem on every rectangle, the P part on every region between two graphs, and the shoelace term on every straight fence.
 
 - Take any rectangle and any field whose partial rates are continuous everywhere in it, fence included. Walked once anticlockwise, the work round the fence equals the curl added over the rectangle.
-- Take a region between a continuous floor and a roof never below it, with P and $P_y$ continuous there. P added along the floor, minus along the roof, equals minus $P_y$ added inside.
-- Take a straight fence from one post to the next. Along it, the field $(-y/2,\ x/2)$ does work of exactly half the shoelace term $x_i\,y_{i+1} - x_{i+1}\,y_i$.
+- Take a region between a continuous floor and a roof never below it, with P and $`P_y`$ continuous there. P added along the floor, minus along the roof, equals minus $`P_y`$ added inside.
+- Take a straight fence from one post to the next. Along it, the field $`(-y/2,\ x/2)`$ does work of exactly half the shoelace term $`x_i\,y_{i+1} - x_{i+1}\,y_i`$.
 - The hand arithmetic holds exactly: shoelace terms 0, 24, 24, 12, 0, the 30 square metres, −30 clockwise, and 60 with the half dropped.
 - The wind's arithmetic holds exactly: 12 J round the rectangle, 16.6 J round the house and inside, and the shared fence y = 4 cancelling.
 
@@ -627,7 +639,7 @@ example : (12:ℚ) + 23 / 5 = 83 / 5 ∧ (24:ℚ) / 5 + -(24 / 5) = 0 := by norm
 > **Checking the field only along the fence.** The theorem needs the field smooth inside too. The vortex is smooth on the fence, with zero curl wherever defined, yet does 2π J per lap: one bad point at (3, 3).
 >
 > - **Walking the wrong way.** Clockwise, the area comes out −30 square metres and the wind's work −16.6 J.
-> - **Dropping the half.** The field $(-y,\ x)$ has curl 2, so its loop gives 60, twice the area.
+> - **Dropping the half.** The field $`(-y,\ x)`$ has curl 2, so its loop gives 60, twice the area.
 > - **Forgetting a pond.** A hole's fence, walked clockwise, is part of the boundary too.
 
 ---

@@ -44,44 +44,52 @@ Each bar counts the lotteries whose gap falls within $2.50 of its centre; a gap 
 
 ## The formula
 
-Notation first, in words. The visitors are numbered 1 to $N$, and $y_i$ is what visitor $i$ spent. An **assignment** $a$ is one possible lottery outcome: a list of which $n$ visitors see the new page. $T(a)$ is the gap that assignment would show: the new group's average minus the old group's. The observed assignment gives the observed gap, $T_{obs}$. The sign $\#$ means "the number of".
+Notation first, in words. The visitors are numbered 1 to $`N`$, and $`y_i`$ is what visitor $`i`$ spent. An **assignment** $`a`$ is one possible lottery outcome: a list of which $`n`$ visitors see the new page. $`T(a)`$ is the gap that assignment would show: the new group's average minus the old group's. The observed assignment gives the observed gap, $`T_{obs}`$. The sign $`\#`$ means "the number of".
 
-$$p \;=\; \frac{\#\{\,a \;:\; |T(a)| \ge |T_{obs}|\,\}}{M}, \qquad M = \binom{N}{n}$$
+```math
+p \;=\; \frac{\#\{\,a \;:\; |T(a)| \ge |T_{obs}|\,\}}{M}, \qquad M = \binom{N}{n}
+```
 
 **Read it aloud:** the p-value is the share of all possible lottery outcomes whose gap is at least as far from zero as the gap actually seen.
 
-The count $M = \binom{N}{n}$, read "N choose n" and written C(N, n) in the counting cards, is the number of ways to pick which $n$ of the $N$ visitors see the new page: 12,870 here. The observed assignment is one of them, so it counts itself and $p$ is never zero.
+The count $`M = \binom{N}{n}`$, read "N choose n" and written C(N, n) in the counting cards, is the number of ways to pick which $`n`$ of the $`N`$ visitors see the new page: 12,870 here. The observed assignment is one of them, so it counts itself and $`p`$ is never zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | visitors in the test | 16 | more lotteries, finer p-values |
-| $n$ | visitors the lottery sends to the new page | 8 | — |
-| $y_i$, $i$ | dollars spent by visitor number $i$ | $0 to $95 | — |
-| $a$ | one assignment: which $n$ visitors see the new page | the one drawn, or any other | — |
-| $M$ | how many assignments the lottery could make | 12,870 | the smallest possible p-value shrinks |
-| $T(a)$ | the gap under assignment $a$: new mean minus old mean | one value per assignment | — |
-| $s$ | the new group's dollar total | 188 | the gap grows |
-| $T_{obs}$ | the gap actually seen | $19.00 | $p$ falls |
-| $p$ | the p-value | 0.0426 | — |
-| $S^2$, $\bar y$ | spending's variance across all $N$ visitors (divisor $N-1$), and their mean | 560.40 dollars squared and $14.00; the variance sets the $11.84 spread | the shuffle law widens |
-| $\sigma^2$ | in the folded proof: the variance of one amount drawn at random, divisor $N$ | 15/16 of $S^2$ | — |
-| $R$, $b$ | random shuffles drawn when $M$ is too large to list, and how many reach $T_{obs}$ | 20,000 and 881 | more shuffles tighten the estimate of $p$ |
-| $\hat p$ | the p-value estimated from the $R$ shuffles | 0.0441 | — |
-| $\alpha$ | the test's level: the false-alarm rate it promises not to exceed | 0.05 | more false alarms allowed, more real effects caught |
+| $`N`$ | visitors in the test | 16 | more lotteries, finer p-values |
+| $`n`$ | visitors the lottery sends to the new page | 8 | — |
+| $`y_i`$, $`i`$ | dollars spent by visitor number $`i`$ | $0 to $95 | — |
+| $`a`$ | one assignment: which $`n`$ visitors see the new page | the one drawn, or any other | — |
+| $`M`$ | how many assignments the lottery could make | 12,870 | the smallest possible p-value shrinks |
+| $`T(a)`$ | the gap under assignment $`a`$: new mean minus old mean | one value per assignment | — |
+| $`s`$ | the new group's dollar total | 188 | the gap grows |
+| $`T_{obs}`$ | the gap actually seen | $19.00 | $`p`$ falls |
+| $`p`$ | the p-value | 0.0426 | — |
+| $`S^2`$, $`\bar y`$ | spending's variance across all $`N`$ visitors (divisor $`N-1`$), and their mean | 560.40 dollars squared and $14.00; the variance sets the $11.84 spread | the shuffle law widens |
+| $`\sigma^2`$ | in the folded proof: the variance of one amount drawn at random, divisor $`N`$ | 15/16 of $`S^2`$ | — |
+| $`R`$, $`b`$ | random shuffles drawn when $`M`$ is too large to list, and how many reach $`T_{obs}`$ | 20,000 and 881 | more shuffles tighten the estimate of $`p`$ |
+| $`\hat p`$ | the p-value estimated from the $`R`$ shuffles | 0.0441 | — |
+| $`\alpha`$ | the test's level: the false-alarm rate it promises not to exceed | 0.05 | more false alarms allowed, more real effects caught |
 
 The gap itself:
 
-$$T(a) \;=\; \frac{1}{n}\sum_{i \in a} y_i \;-\; \frac{1}{N-n}\sum_{i \notin a} y_i$$
+```math
+T(a) \;=\; \frac{1}{n}\sum_{i \in a} y_i \;-\; \frac{1}{N-n}\sum_{i \notin a} y_i
+```
 
 In words: the average of the visitors in the new group minus the average of the rest.
 
 Two helpers. The shuffle law is centred on zero, with spread (standard deviation, SD)
 
-$$\operatorname{SD}\big(T\big) \;=\; \sqrt{S^2\left(\frac{1}{n} + \frac{1}{N-n}\right)}, \qquad S^2 = \frac{1}{N-1}\sum_{i=1}^{N} (y_i - \bar y)^2$$
+```math
+\mathrm{SD}\big(T\big) \;=\; \sqrt{S^2\left(\frac{1}{n} + \frac{1}{N-n}\right)}, \qquad S^2 = \frac{1}{N-1}\sum_{i=1}^{N} (y_i - \bar y)^2
+```
 
-which is $11.84 here: the spread of the gap across all the lotteries, found without listing them. When $M$ is too large to list, draw $R$ random shuffles and report
+which is $11.84 here: the spread of the gap across all the lotteries, found without listing them. When $`M`$ is too large to list, draw $`R`$ random shuffles and report
 
-$$\hat p \;=\; \frac{b + 1}{R + 1}$$
+```math
+\hat p \;=\; \frac{b + 1}{R + 1}
+```
 
 with the observed assignment counted as one more shuffle, so the estimate is never zero either.
 
@@ -111,24 +119,24 @@ The weaker claim "the two pages have the same average spend" does not fill in th
 
 ### Step 2: every assignment was equally likely
 
-The lottery chose 8 of 16 visitors with every choice equally likely: each of the $M = 12{,}870$ assignments had chance $1/M$. So the observed gap $T_{obs}$ is one draw, at random, from the list of 12,870 gaps.
+The lottery chose 8 of 16 visitors with every choice equally likely: each of the $`M = 12{,}870`$ assignments had chance $`1/M`$. So the observed gap $`T_{obs}`$ is one draw, at random, from the list of 12,870 gaps.
 
 The list has a symmetry here. Swapping every label turns a gap of +$19.00 into −$19.00, because both groups hold 8. So the 274 assignments with a gap of +$19.00 or more are matched by 274 with a gap of −$19.00 or less.
 
 ### Step 3: the guarantee, by ranking
 
-If $T_{obs}$ is a random draw from the list, how often does it land in the top 5% of the list by size? At most 5% of the time, because the top 5% of a list holds at most 5% of its entries. The p-value is exactly the rank of the draw, as a share of the list, counted from the top.
+If $`T_{obs}`$ is a random draw from the list, how often does it land in the top 5% of the list by size? At most 5% of the time, because the top 5% of a list holds at most 5% of its entries. The p-value is exactly the rank of the draw, as a share of the list, counted from the top.
 
 On this data: the p-value is at or below 0.05 for 548 of the 12,870 assignments, a rate of 0.0426. That rate is below 0.05, as promised. The t-test's own 5% rule, applied to all the same assignments, fires on 92 of them, a rate of 0.0071. On data this lumpy the t-test's 5% is really under 1%.
 
 <details>
 <summary>Detailed proof: a false alarm at level α happens at most α of the time</summary>
 
-Fix the $N$ amounts. Under the sharp null they do not depend on the assignment. For each assignment $a$, let $p(a)$ be the share of assignments $b$ with $|T(b)| \ge |T(a)|$. Pick any level α between 0 and 1. The **false alarms** are the assignments with $p(a) \le \alpha$.
+Fix the $`N`$ amounts. Under the sharp null they do not depend on the assignment. For each assignment $`a`$, let $`p(a)`$ be the share of assignments $`b`$ with $`|T(b)| \ge |T(a)|`$. Pick any level α between 0 and 1. The **false alarms** are the assignments with $`p(a) \le \alpha`$.
 
-If there are none, their chance is 0. Otherwise let $a^*$ be the false alarm with the smallest $|T|$. Every assignment $b$ with $|T(b)| \ge |T(a^*)|$ has at most as many assignments reaching it as $a^*$ has, so $p(b) \le p(a^*) \le \alpha$: $b$ is a false alarm too. Every false alarm has $|T| \ge |T(a^*)|$, by the choice of $a^*$. So the false alarms are exactly the assignments with $|T(b)| \ge |T(a^*)|$, and there are $M \cdot p(a^*)$ of them.
+If there are none, their chance is 0. Otherwise let $`a^*`$ be the false alarm with the smallest $`|T|`$. Every assignment $`b`$ with $`|T(b)| \ge |T(a^*)|`$ has at most as many assignments reaching it as $`a^*`$ has, so $`p(b) \le p(a^*) \le \alpha`$: $`b`$ is a false alarm too. Every false alarm has $`|T| \ge |T(a^*)|`$, by the choice of $`a^*`$. So the false alarms are exactly the assignments with $`|T(b)| \ge |T(a^*)|`$, and there are $`M \cdot p(a^*)`$ of them.
 
-The lottery picks each assignment with chance $1/M$, so the chance of a false alarm is $M \cdot p(a^*) / M = p(a^*) \le \alpha$. Nothing about the shape of the $y_i$ was used. The step "at most as many beating it" needs ties counted on both sides, which is why the count uses "at least as far", not "further".
+The lottery picks each assignment with chance $`1/M`$, so the chance of a false alarm is $`M \cdot p(a^*) / M = p(a^*) \le \alpha`$. Nothing about the shape of the $`y_i`$ was used. The step "at most as many beating it" needs ties counted on both sides, which is why the count uses "at least as far", not "further".
 
 </details>
 
@@ -140,22 +148,22 @@ The shape of the data still matters for **power**, the chance of detecting a rea
 
 ### Step 5: the spread of the shuffle law, by formula
 
-The shuffle law is centred on zero: over all lotteries, each group's average is, on average, the average of all $N$ visitors. Its spread has a closed form, the helper formula above. It gives $11.84, the same as listing all 12,870 gaps.
+The shuffle law is centred on zero: over all lotteries, each group's average is, on average, the average of all $`N`$ visitors. Its spread has a closed form, the helper formula above. It gives $11.84, the same as listing all 12,870 gaps.
 
 <details>
 <summary>Detailed proof: the spread of the shuffle law</summary>
 
-Write $s$ for the new group's total. Then $T = s\left(\frac1n + \frac1{N-n}\right) - \frac{\text{total}}{N-n}$, so the spread of $T$ is $\frac{N}{n(N-n)}$ times the spread of $s$. The total $s$ is $n$ draws without putting back from the $N$ amounts. One draw has variance $\sigma^2 = \frac{N-1}{N} S^2$. Two different draws have covariance $-\sigma^2/(N-1)$: the $N$ draws of a full sweep add to a fixed total, whose variance is zero, and that pins the covariance. So the variance of $s$ is $n\sigma^2 - n(n-1)\,\sigma^2/(N-1) = n\sigma^2 \frac{N-n}{N-1} = \frac{n(N-n)}{N} S^2$. Multiply by $\left(\frac{N}{n(N-n)}\right)^2$: the variance of $T$ is $\frac{N}{n(N-n)} S^2 = S^2\left(\frac1n + \frac1{N-n}\right)$.
+Write $`s`$ for the new group's total. Then $`T = s\left(\frac1n + \frac1{N-n}\right) - \frac{\text{total}}{N-n}`$, so the spread of $`T`$ is $`\frac{N}{n(N-n)}`$ times the spread of $`s`$. The total $`s`$ is $`n`$ draws without putting back from the $`N`$ amounts. One draw has variance $`\sigma^2 = \frac{N-1}{N} S^2`$. Two different draws have covariance $`-\sigma^2/(N-1)`$: the $`N`$ draws of a full sweep add to a fixed total, whose variance is zero, and that pins the covariance. So the variance of $`s`$ is $`n\sigma^2 - n(n-1)\,\sigma^2/(N-1) = n\sigma^2 \frac{N-n}{N-1} = \frac{n(N-n)}{N} S^2`$. Multiply by $`\left(\frac{N}{n(N-n)}\right)^2`$: the variance of $`T`$ is $`\frac{N}{n(N-n)} S^2 = S^2\left(\frac1n + \frac1{N-n}\right)`$.
 
 </details>
 
-The t-test's standard error has the same form with a different variance: the spread within each group, pooled, in place of $S^2$, the spread of all sixteen amounts together. That gives the t-test's $11.15 against the shuffle law's $11.84.
+The t-test's standard error has the same form with a different variance: the spread within each group, pooled, in place of $`S^2`$, the spread of all sixteen amounts together. That gives the t-test's $11.15 against the shuffle law's $11.84.
 
-Under the sharp null the within-group variance averages exactly $S^2$ over all lotteries, so both aim at the same spread, and the bigger difference is the shape. Laying a bell curve with the shuffle law's own spread over the two-humped shuffle law puts the gap at 1.6052 spreads out and gives a p-value of 0.1084, far from the exact 0.0426. The spread was right; the bell was wrong.
+Under the sharp null the within-group variance averages exactly $`S^2`$ over all lotteries, so both aim at the same spread, and the bigger difference is the shape. Laying a bell curve with the shuffle law's own spread over the two-humped shuffle law puts the gap at 1.6052 spreads out and gives a p-value of 0.1084, far from the exact 0.0426. The spread was right; the bell was wrong.
 
 ### Step 6: when the list is too long, sample it
 
-With 50 visitors on each page the list of assignments is longer than any computer can hold. Draw $R$ random shuffles instead, count the $b$ that reach the observed gap, and report $(b+1)/(R+1)$. That estimate is itself a random number, with standard error $\sqrt{\hat p(1-\hat p)/R}$.
+With 50 visitors on each page the list of assignments is longer than any computer can hold. Draw $`R`$ random shuffles instead, count the $`b`$ that reach the observed gap, and report $`(b+1)/(R+1)`$. That estimate is itself a random number, with standard error $`\sqrt{\hat p(1-\hat p)/R}`$.
 
 Here 20,000 shuffles give 881 hits: 0.0440, standard error 0.0015, within about one standard error of the exact 0.0426. Adding the observed assignment as one more shuffle makes 0.0441 and keeps the answer from ever being zero, which a finite sample could otherwise report (Phipson and Smyth, below).
 
@@ -171,11 +179,11 @@ A second road to the exact count never lists an assignment. Count, for each doll
 | new-page mean | (22 + 0 + 95 + 0 + 22 + 27 + 0 + 22) ÷ 8 = 188 ÷ 8 | $23.50 |
 | observed gap | 23.50 − 4.50 | **$19.00** |
 | pooled total | 188 + 36 | $224 |
-| gap for a new-group total $s$ | $s$ ÷ 8 − (224 − $s$) ÷ 8 = (2$s$ − 224) ÷ 8 | — |
-| "as extreme" means | gap ≥ 19 or ≤ −19, so $s$ ≥ 188 or $s$ ≤ 36 | two tails |
+| gap for a new-group total $`s`$ | $`s`$ ÷ 8 − (224 − $`s`$) ÷ 8 = (2$`s`$ − 224) ÷ 8 | — |
+| "as extreme" means | gap ≥ 19 or ≤ −19, so $`s`$ ≥ 188 or $`s`$ ≤ 36 | two tails |
 | possible lotteries | C(16, 8) = 16! ÷ (8! × 8!) | 12,870 |
-| lotteries with $s$ ≥ 188 | counted; each must include the $95 visitor | 274 |
-| lotteries with $s$ ≤ 36 | the mirror image, labels swapped | 274 |
+| lotteries with $`s`$ ≥ 188 | counted; each must include the $95 visitor | 274 |
+| lotteries with $`s`$ ≤ 36 | the mirror image, labels swapped | 274 |
 | **p-value** | (274 + 274) ÷ 12,870 | **0.0426** |
 
 If the new page changed nobody's spending, a lottery would produce a gap this large about 1 time in 23. That is evidence against "no change", not the chance that the page does nothing, and the $19.00 itself is uncertain by a standard error of $11.15.
@@ -568,8 +576,8 @@ The two outputs match line for line.
 Lean proves the guarantee and the spread formula for any number of visitors, and the counts for the card's sixteen.
 
 - Take any amounts, and a p-value that counts ties as extreme. Then at any level α, false alarms are at most a share α of the assignments.
-- Suppose both groups hold at least one visitor. Then the shuffle law has mean 0 and spread $\sqrt{S^2(1/n + 1/(N-n))}$.
-- Suppose both groups hold the same number of visitors. Then as many assignments give a gap of $t$ or more as give $-t$ or less.
+- Suppose both groups hold at least one visitor. Then the shuffle law has mean 0 and spread $`\sqrt{S^2(1/n + 1/(N-n))}`$.
+- Suppose both groups hold the same number of visitors. Then as many assignments give a gap of $`t`$ or more as give $`-t`$ or less.
 - There are 12,870 possible lotteries. The new-page total is $188, the old-page total $36, and the observed gap $19.00.
 - 274 lotteries give a new-group total of $188 or more, and 274 give $36 or less: 548 in all.
 - Counting only totals strictly beyond $188 or $36 drops the ties and leaves 478 lotteries.
@@ -881,7 +889,7 @@ example : (((univ : Finset (Fin 16)).powersetCard 8).filter
 > - **Shuffling data no lottery produced.** Visitors who picked their own page carry their reasons with them. A shuffle then tests a lottery that never happened.
 > - **Treating "no effect" as "equal averages".** The test's guarantee is for the sharp null. Equal averages with unequal spread give a 5% test that fires 28.9% of the time.
 > - **Dropping the ties.** Counting only gaps strictly beyond $19.00 gives 0.0371, not 0.0426.
-> - **Reporting a p-value of zero from sampled shuffles.** No shuffle beating the observed gap means $p$ is below about $1/(R+1)$, not zero.
+> - **Reporting a p-value of zero from sampled shuffles.** No shuffle beating the observed gap means $`p`$ is below about $`1/(R+1)`$, not zero.
 
 ---
 
@@ -914,5 +922,5 @@ A permutation test earns its guarantee from the lottery; what a comparison is wo
 Verified 2026-09-29: every link below resolves to the publisher's page.
 
 - Ernst, Michael D. "Permutation Methods: A Basis for Exact Inference." *Statistical Science* 19(4), 2004, 676–685. [doi:10.1214/088342304000000396](https://doi.org/10.1214/088342304000000396). The randomisation argument, exactness, and the difference between randomisation and population models.
-- Phipson, Belinda, and Gordon K. Smyth. "Permutation P-values Should Never Be Zero: Calculating Exact P-values When Permutations Are Randomly Drawn." *Statistical Applications in Genetics and Molecular Biology* 9(1), 2010. [doi:10.2202/1544-6115.1585](https://doi.org/10.2202/1544-6115.1585). Why sampled shuffles report $(b+1)/(R+1)$.
+- Phipson, Belinda, and Gordon K. Smyth. "Permutation P-values Should Never Be Zero: Calculating Exact P-values When Permutations Are Randomly Drawn." *Statistical Applications in Genetics and Molecular Biology* 9(1), 2010. [doi:10.2202/1544-6115.1585](https://doi.org/10.2202/1544-6115.1585). Why sampled shuffles report $`(b+1)/(R+1)`$.
 - Good, Phillip I. *Permutation, Parametric and Bootstrap Tests of Hypotheses*, 3rd ed. Springer, 2005. [doi:10.1007/b138696](https://doi.org/10.1007/b138696). Permutation tests set beside the t-test and the bootstrap, with the exchangeability condition.

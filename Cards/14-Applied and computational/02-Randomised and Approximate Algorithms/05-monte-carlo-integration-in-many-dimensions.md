@@ -44,38 +44,42 @@ Each block is 0.1 of volume. The darts land next to the truth. The grids jump ar
 
 The estimate from darts, and its error bar, carried over from [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md):
 
-$$\hat V = 2^d \times \frac{K}{N}, \qquad \mathrm{SE} = \frac{\sigma}{\sqrt N}, \qquad \sigma = 2^d\sqrt{p\,(1-p)}$$
+```math
+\hat V = 2^d \times \frac{K}{N}, \qquad \mathrm{SE} = \frac{\sigma}{\sqrt N}, \qquad \sigma = 2^d\sqrt{p\,(1-p)}
+```
 
 **Read it aloud:** the volume is the box's volume times the fraction of darts that landed inside, and its typical miss is the spread of one dart's score divided by the square root of the number of darts.
 
-The comparison this card is about. A grid of N points in d dimensions has $m = N^{1/d}$ points per axis, spaced $h = 2/m$ apart.
+The comparison this card is about. A grid of N points in d dimensions has $`m = N^{1/d}`$ points per axis, spaced $`h = 2/m`$ apart.
 
-The midpoint rule (score the centre of each small box and add up) misses by about $C h^2$. Simpson's rule (a weighted version that fits curves through the points) misses by about $C h^4$, as [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md) shows in one dimension. Written in N, those errors become:
+The midpoint rule (score the centre of each small box and add up) misses by about $`C h^2`$. Simpson's rule (a weighted version that fits curves through the points) misses by about $`C h^4`$, as [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md) shows in one dimension. Written in N, those errors become:
 
-$$\text{darts: } \frac{\sigma}{\sqrt N} = \sigma N^{-1/2}, \qquad \text{midpoint grid: } C\,N^{-2/d}, \qquad \text{Simpson grid: } C\,N^{-4/d}$$
+```math
+\text{darts: } \frac{\sigma}{\sqrt N} = \sigma N^{-1/2}, \qquad \text{midpoint grid: } C\,N^{-2/d}, \qquad \text{Simpson grid: } C\,N^{-4/d}
+```
 
 **Read it aloud:** the darts' error falls with the square root of the points in every dimension; a grid's falls with the points raised to two over d, or four over d, a power that shrinks as the dimension grows.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $d$, $2^d$ | the dimension: how many coordinates each point has; $2^d$ is the box's volume | 10; 1,024 | the ball's share of the box collapses; a grid gets coarser |
-| $x_1, \dots, x_d$ | one point's coordinates, each between −1 and 1 | 10 random numbers per dart | — |
-| $V_d$ | the ball's true volume | 2.550164 | — |
-| $p$ | the ball's share of the box, $V_d / 2^d$ | 0.00249039, about 1 in 402 | smaller error relative to the answer |
-| $N$ | number of darts, or of grid points | 100,000 | smaller error |
-| $K$ | darts that landed inside the ball | 268 | — |
-| $\hat V$ | the estimate (the hat marks an estimate) | 2.7443 | — |
-| $\sigma$, $s$ | spread of one dart's score, which is 1,024 or 0; $s$ is the same spread measured from the run | 51.0379; 52.9403 | wider error bar |
-| $\mathrm{SE}$ | standard error: the estimate's typical miss | 0.1614 true, 0.1674 from the run | — |
-| $m$, $h$ | grid points per axis, and their spacing | 3.1623 per axis for 100,000 points | more points per axis: smaller grid error |
-| $C$, $e$ | a constant set by how sharply the integrand bends, not by $N$; $e$ is Euler's number, the base of natural logarithms, used in the smooth test | — | larger grid error |
+| $`d`$, $`2^d`$ | the dimension: how many coordinates each point has; $`2^d`$ is the box's volume | 10; 1,024 | the ball's share of the box collapses; a grid gets coarser |
+| $`x_1, \dots, x_d`$ | one point's coordinates, each between −1 and 1 | 10 random numbers per dart | — |
+| $`V_d`$ | the ball's true volume | 2.550164 | — |
+| $`p`$ | the ball's share of the box, $`V_d / 2^d`$ | 0.00249039, about 1 in 402 | smaller error relative to the answer |
+| $`N`$ | number of darts, or of grid points | 100,000 | smaller error |
+| $`K`$ | darts that landed inside the ball | 268 | — |
+| $`\hat V`$ | the estimate (the hat marks an estimate) | 2.7443 | — |
+| $`\sigma`$, $`s`$ | spread of one dart's score, which is 1,024 or 0; $`s`$ is the same spread measured from the run | 51.0379; 52.9403 | wider error bar |
+| $`\mathrm{SE}`$ | standard error: the estimate's typical miss | 0.1614 true, 0.1674 from the run | — |
+| $`m`$, $`h`$ | grid points per axis, and their spacing | 3.1623 per axis for 100,000 points | more points per axis: smaller grid error |
+| $`C`$, $`e`$ | a constant set by how sharply the integrand bends, not by $`N`$; $`e`$ is Euler's number, the base of natural logarithms, used in the smooth test | — | larger grid error |
 
 ### When it holds
 
 - **Independent darts, spread evenly over the box.** The estimate aims at whatever the darts actually sample. A generator that favours the centre would report a bigger ball, and more darts would not fix it.
-- **σ finite, and not huge next to the answer.** The rate σ/√N has no $d$ in it, but σ does. In 20 dimensions the ball fills about 1 part in 40,631,628 of its box: 100,000 darts hit it 0 times and report a volume of 0.0000.
-- **A smooth integrand, for the grid's rates.** The $h^2$ and $h^4$ errors need a bounded second or fourth derivative. The ball's edge is a jump from 1,024 to 0, so a grid does worse than $N^{-2/d}$ there, and erratically: 0.0000, 3.4856, 1.0000, 3.0708, 3.2255.
-- **Cost counted in points.** Each dart costs 10 random numbers, so the work per dart grows with $d$, but only in proportion. The error formula counts darts, not numbers.
+- **σ finite, and not huge next to the answer.** The rate σ/√N has no $`d`$ in it, but σ does. In 20 dimensions the ball fills about 1 part in 40,631,628 of its box: 100,000 darts hit it 0 times and report a volume of 0.0000.
+- **A smooth integrand, for the grid's rates.** The $`h^2`$ and $`h^4`$ errors need a bounded second or fourth derivative. The ball's edge is a jump from 1,024 to 0, so a grid does worse than $`N^{-2/d}`$ there, and erratically: 0.0000, 3.4856, 1.0000, 3.0708, 3.2255.
+- **Cost counted in points.** Each dart costs 10 random numbers, so the work per dart grows with $`d`$, but only in proportion. The error formula counts darts, not numbers.
 
 ---
 
@@ -87,7 +91,7 @@ An average of independent draws gets more accurate with the number of draws. How
 
 ### Step 1: the volume is an average score
 
-Score each dart 1,024 if it lands inside the ball and 0 if not. The chance of landing inside is the ball's share of the box, $p$, so the long-run average score is $1{,}024 \times p = V_d$.
+Score each dart 1,024 if it lands inside the ball and 0 if not. The chance of landing inside is the ball's share of the box, $`p`$, so the long-run average score is $`1{,}024 \times p = V_d`$.
 
 The volume is an average, and [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md) estimates averages: take the plain average of N scores, with standard error σ/√N. Here σ = 1,024 × √(p(1 − p)) = 51.0379, so 100,000 darts give a true standard error of 0.1614.
 
@@ -99,30 +103,30 @@ The code tests this. It runs 200 batches of 1,000 darts in 2, 5 and 10 dimension
 
 ### Step 3: a grid of N points has N^(1/d) per axis
 
-A grid with $m$ points along each of $d$ axes has $N = m^d$ points, so $m = N^{1/d}$. In 10 dimensions, 59,049 points is only 3 per axis and 60,466,176 points is only 6. The spacing $h = 2/m$ therefore shrinks like $N^{-1/d}$: doubling the points per axis multiplies the points by 1,024.
+A grid with $`m`$ points along each of $`d`$ axes has $`N = m^d`$ points, so $`m = N^{1/d}`$. In 10 dimensions, 59,049 points is only 3 per axis and 60,466,176 points is only 6. The spacing $`h = 2/m`$ therefore shrinks like $`N^{-1/d}`$: doubling the points per axis multiplies the points by 1,024.
 
 ### Step 4: the one-dimensional error bounds become N^(−2/d) and N^(−4/d)
 
-[Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md) proves that the midpoint rule's error is at most a constant times $h^2$, and Simpson's at most a constant times $h^4$. Those bounds carry over to a grid of boxes in $d$ dimensions with the same powers of $h$ (the fold below says why). Substitute $h \propto N^{-1/d}$:
+[Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md) proves that the midpoint rule's error is at most a constant times $`h^2`$, and Simpson's at most a constant times $`h^4`$. Those bounds carry over to a grid of boxes in $`d`$ dimensions with the same powers of $`h`$ (the fold below says why). Substitute $`h \propto N^{-1/d}`$:
 
-- midpoint error ∝ $h^2$ ∝ $N^{-2/d}$,
-- Simpson error ∝ $h^4$ ∝ $N^{-4/d}$,
-- darts error ∝ $N^{-1/2}$, in every dimension.
+- midpoint error ∝ $`h^2`$ ∝ $`N^{-2/d}`$,
+- Simpson error ∝ $`h^4`$ ∝ $`N^{-4/d}`$,
+- darts error ∝ $`N^{-1/2}`$, in every dimension.
 
-The code measures the midpoint rate on a smooth test, $e^{x_1 + \dots + x_{10}}/(e-1)^{10}$ over the box from 0 to 1, whose true integral is 1.
+The code measures the midpoint rate on a smooth test, $`e^{x_1 + \dots + x_{10}}/(e-1)^{10}`$ over the box from 0 to 1, whose true integral is 1.
 
 Going from 3 to 6 points per axis multiplies the points by 1,024 and cuts the miss from 0.04520 to 0.01150: only 3.93 times. That is a measured rate of 0.197 against the predicted 0.200. The same 1,024 times as many darts would cut their error 32.00 times.
 
 <details>
 <summary>Why the midpoint error stays h² in d dimensions</summary>
 
-Take one small box of the grid, side $h$, with centre $c$. Taylor's theorem in several variables writes the integrand near $c$ as its value at $c$, plus a slope term for each coordinate, plus terms in the squared distances from $c$ that are at most a constant times $h^2$ in size.
+Take one small box of the grid, side $`h`$, with centre $`c`$. Taylor's theorem in several variables writes the integrand near $`c`$ as its value at $`c`$, plus a slope term for each coordinate, plus terms in the squared distances from $`c`$ that are at most a constant times $`h^2`$ in size.
 
-Integrate over the box. The value at $c$ gives the midpoint rule's term: value times box volume. Each slope term integrates to zero, because the box is symmetric about its centre: every point on one side has a mirror point on the other. What is left is at most a constant times $h^2$ times the box's volume.
+Integrate over the box. The value at $`c`$ gives the midpoint rule's term: value times box volume. Each slope term integrates to zero, because the box is symmetric about its centre: every point on one side has a mirror point on the other. What is left is at most a constant times $`h^2`$ times the box's volume.
 
-Add up all the boxes. Their volumes add to the volume of the region, so the total error is at most a constant times $h^2$.
+Add up all the boxes. Their volumes add to the volume of the region, so the total error is at most a constant times $`h^2`$.
 
-Simpson's rule needs one more fact. Symmetry still removes the odd terms, and its weights, 1, 4 and 1 along each axis, also integrate the squared terms exactly, so the first term left is fourth order: $h^4$. The constants depend on the derivatives and on $d$, but the power of $h$ does not.
+Simpson's rule needs one more fact. Symmetry still removes the odd terms, and its weights, 1, 4 and 1 along each axis, also integrate the squared terms exactly, so the first term left is fourth order: $`h^4`$. The constants depend on the derivatives and on $`d`$, but the power of $`h`$ does not.
 
 </details>
 
@@ -147,7 +151,7 @@ In costs: one more correct decimal place means a tenth of the error. In 10 dimen
 
 ### Step 6: an edge makes the grid worse still
 
-The ball's score jumps from 1,024 to 0 at its surface, so no derivative is bounded there and Step 4's rates do not apply. The grid's error now comes from the boxes the surface cuts through, and that error can shrink as slowly as $h$, which is $N^{-1/d}$: a power of 0.10 in 10 dimensions.
+The ball's score jumps from 1,024 to 0 at its surface, so no derivative is bounded there and Step 4's rates do not apply. The grid's error now comes from the boxes the surface cuts through, and that error can shrink as slowly as $`h`$, which is $`N^{-1/d}`$: a power of 0.10 in 10 dimensions.
 
 Worse, a grid in high dimensions sees the ball through a few thin shells. With 4 points per axis, every coordinate is ±1/4 or ±3/4.
 
@@ -192,7 +196,7 @@ Every number in that table is printed by both programs below.
 
 ## Code, from first principles, and it actually runs
 
-The volume of the 10-dimensional ball is reached four independent ways. The closed form builds $V_d$ by the step $V_d = V_{d-2} \times 2\pi/d$. Slicing builds it as a chain of one-dimensional integrals, each done by Simpson's rule.
+The volume of the 10-dimensional ball is reached four independent ways. The closed form builds $`V_d`$ by the step $`V_d = V_{d-2} \times 2\pi/d`$. Slicing builds it as a chain of one-dimensional integrals, each done by Simpson's rule.
 
 Darts use a SplitMix64 generator written out in each language, so Python and Rust draw the same numbers. Grids are counted exactly, twice: once by walking every grid point and dropping a branch as soon as it leaves the ball, and once by tallying the sums of squares coordinate by coordinate.
 
@@ -617,9 +621,9 @@ The two outputs are identical line for line.
 Lean proves the σ/√N law, the estimate's aim and the comparison of powers, in every dimension, and checks the whole-number arithmetic.
 
 - Take independent darts spread evenly over the box, and any score with finite σ. Then the average of N scores has standard error exactly σ/√N.
-- Score a dart 1 inside the ball and 0 outside. Then the estimate $2^d \times K/N$ averages exactly the ball's volume.
-- Compare the darts' error $\sigma N^{-1/2}$ with the midpoint grid's $C N^{-2/d}$. Then the darts win for all large enough N, whatever positive σ and C, exactly when $d > 4$.
-- Compare the darts' error $\sigma N^{-1/2}$ with the Simpson grid's $C N^{-4/d}$. Then the darts win for all large enough N, whatever positive σ and C, exactly when $d > 8$.
+- Score a dart 1 inside the ball and 0 outside. Then the estimate $`2^d \times K/N`$ averages exactly the ball's volume.
+- Compare the darts' error $`\sigma N^{-1/2}`$ with the midpoint grid's $`C N^{-2/d}`$. Then the darts win for all large enough N, whatever positive σ and C, exactly when $`d > 4`$.
+- Compare the darts' error $`\sigma N^{-1/2}`$ with the Simpson grid's $`C N^{-4/d}`$. Then the darts win for all large enough N, whatever positive σ and C, exactly when $`d > 8`$.
 - The box's volume 1,024, the grid sizes, the 605-times budget, the two shells in Step 6 and the costs in Step 5 also check.
 
 The grids' error rates themselves, the seeded run, the smooth test and every decimal are left to the Python and Rust checks.

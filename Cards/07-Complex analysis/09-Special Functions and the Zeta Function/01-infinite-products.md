@@ -40,34 +40,42 @@ To scale: 60 units per 1, 0 at (180, 140). Open circles: zeros of sin(πz), one 
 
 ## The formula
 
-A capital pi, $\prod$, means multiply the terms, as sigma means add them. The product **converges** when its partial products approach a limit that is not zero; Step 2 says why zero counts as divergence.
+A capital pi, $`\prod`$, means multiply the terms, as sigma means add them. The product **converges** when its partial products approach a limit that is not zero; Step 2 says why zero counts as divergence.
 
-$$P_N = \prod_{n=1}^{N} (1 + a_n), \qquad \log P_N = \sum_{n=1}^{N} \log(1 + a_n)$$
+```math
+P_N = \prod_{n=1}^{N} (1 + a_n), \qquad \log P_N = \sum_{n=1}^{N} \log(1 + a_n)
+```
 
 **Read it aloud:** the balance after N years is the product of the yearly factors, and its logarithm is the sum of their logarithms.
 
-$$S = \sum_{n=1}^{\infty} |a_n| < \infty \;\Longrightarrow\; P_N \to P \ne 0 \text{ (no factor zero)}, \qquad 1 + S \le P \le e^{S} \text{ when every } a_n \ge 0$$
+```math
+S = \sum_{n=1}^{\infty} |a_n| < \infty \;\Longrightarrow\; P_N \to P \ne 0 \text{ (no factor zero)}, \qquad 1 + S \le P \le e^{S} \text{ when every } a_n \ge 0
+```
 
 **Read it aloud:** if the sizes of the small parts have a finite total, the product settles on a nonzero limit; for positive parts it lies between one plus that total and e to it.
 
-$$\sin(\pi z) = \pi z \prod_{n=1}^{\infty} \left(1 - \frac{z^2}{n^2}\right)$$
+```math
+\sin(\pi z) = \pi z \prod_{n=1}^{\infty} \left(1 - \frac{z^2}{n^2}\right)
+```
 
 **Read it aloud:** sine of π z is π z times, over every whole number n, one minus z squared over n squared.
 
 At z = i each factor is 1 + 1/n^2 and sin(πi) = i sinh(π) ([The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md)): the account. At z = 1/2 each factor is 1 − 1/(4n^2); turned upside down, that is Wallis:
 
-$$\frac{\pi}{2} = \prod_{n=1}^{\infty} \frac{4n^2}{4n^2 - 1}$$
+```math
+\frac{\pi}{2} = \prod_{n=1}^{\infty} \frac{4n^2}{4n^2 - 1}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a_n$ | factor n's small part: year n's rate | 1/n^2 | settles later, or never |
-| $n$, $N$ | a year; how many years are kept | N = 10 | closer to the limit |
-| $P_N$, $P$ | balance per dollar after N years; its limit | 3.342847; 3.676078 | — |
-| $\prod$ | multiply the terms | — | — |
-| $S$ | total size of the small parts, the sum of $\lvert a_n \rvert$ | 1.644934 | the limit may reach e^S |
-| $\log$ | principal logarithm; on positive numbers, ln | ln 3.676078 = 1.301846 | — |
-| $z$ | a point of the plane | i, 1/2, 1/4 + i/2 | a whole number gives a zero factor |
-| $\sinh$ | hyperbolic sine | sinh(π)/π = 3.676078 | — |
+| $`a_n`$ | factor n's small part: year n's rate | 1/n^2 | settles later, or never |
+| $`n`$, $`N`$ | a year; how many years are kept | N = 10 | closer to the limit |
+| $`P_N`$, $`P`$ | balance per dollar after N years; its limit | 3.342847; 3.676078 | — |
+| $`\prod`$ | multiply the terms | — | — |
+| $`S`$ | total size of the small parts, the sum of $`\lvert a_n \rvert`$ | 1.644934 | the limit may reach e^S |
+| $`\log`$ | principal logarithm; on positive numbers, ln | ln 3.676078 = 1.301846 | — |
+| $`z`$ | a point of the plane | i, 1/2, 1/4 + i/2 | a whole number gives a zero factor |
+| $`\sinh`$ | hyperbolic sine | sinh(π)/π = 3.676078 | — |
 
 ### When it holds
 
@@ -90,7 +98,7 @@ For a complex number a of size at most 1/2, the series log(1 + a) = a − a^2/2 
 
 ### Step 2: a finite total gives a convergent sum of logs
 
-If $S$ is finite, the parts shrink to 0, so past some year every |a_n| is at most 1/2 and each |log(1 + a_n)| at most 3|a_n|/2. By comparison ([Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) the logs converge to some L, and P_N tends to e^L times the early factors. Since e^L is never zero, neither is P. A product sliding to zero is a log sum running to minus infinity: divergence.
+If $`S`$ is finite, the parts shrink to 0, so past some year every |a_n| is at most 1/2 and each |log(1 + a_n)| at most 3|a_n|/2. By comparison ([Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) the logs converge to some L, and P_N tends to e^L times the early factors. Since e^L is never zero, neither is P. A product sliding to zero is a log sum running to minus infinity: divergence.
 
 ### Step 3: for positive parts the test runs both ways
 
@@ -107,14 +115,15 @@ Equal zeros do not make equal functions. The product's logarithmic derivative, i
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** Let $g(z) = \pi z \prod_{n \ge 1}(1 - z^2/n^2)$. By Step 4, differentiating its log sum term by term gives $g'(z)/g(z) = 1/z + \sum_{n \ge 1} 2z/(z^2 - n^2)$ at every z that is not a whole number.
+**Setting.** Let $`g(z) = \pi z \prod_{n \ge 1}(1 - z^2/n^2)`$. By Step 4, differentiating its log sum term by term gives $`g'(z)/g(z) = 1/z + \sum_{n \ge 1} 2z/(z^2 - n^2)`$ at every z that is not a whole number.
 
-**Partial fractions of the cotangent.** Fix such a z. Integrate $\pi\cot(\pi w)/(w^2 - z^2)$ anticlockwise round the square with corners $(M + \tfrac12)(\pm 1 \pm i)$. There cot stays bounded while $|w^2 - z^2|$ grows like $M^2$ along a path of length $8M + 4$, so the integral tends to 0.
+**Partial fractions of the cotangent.** Fix such a z. Integrate $`\pi\cot(\pi w)/(w^2 - z^2)`$ anticlockwise round the square with corners $`(M + \tfrac12)(\pm 1 \pm i)`$. There cot stays bounded while $`|w^2 - z^2|`$ grows like $`M^2`$ along a path of length $`8M + 4`$, so the integral tends to 0.
 
-**The residues.** Near $w = n$, $\pi\cot(\pi w) \approx 1/(w - n)$, giving residue $1/(n^2 - z^2)$; at $w = \pm z$ the two residues sum to $\pi\cot(\pi z)/z$. By the residue theorem ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)), letting $M \to \infty$:
-$$\frac{\pi\cot(\pi z)}{z} + \sum_{n = -\infty}^{\infty} \frac{1}{n^2 - z^2} = 0, \quad\text{so}\quad \pi\cot(\pi z) = \frac1z + \sum_{n \ge 1}\frac{2z}{z^2 - n^2}.$$
+**The residues.** Near $`w = n`$, $`\pi\cot(\pi w) \approx 1/(w - n)`$, giving residue $`1/(n^2 - z^2)`$; at $`w = \pm z`$ the two residues sum to $`\pi\cot(\pi z)/z`$. By the residue theorem ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)), letting $`M \to \infty`$:
 
-**The constant.** Since $\pi\cot(\pi z)$ is also sine's logarithmic derivative, $g/\sin(\pi z)$ has derivative 0 off the whole numbers, a connected set, so it is a constant; near 0 both behave like $\pi z$, so it is 1.
+$`\displaystyle \frac{\pi\cot(\pi z)}{z} + \sum_{n = -\infty}^{\infty} \frac{1}{n^2 - z^2} = 0, \quad\text{so}\quad \pi\cot(\pi z) = \frac1z + \sum_{n \ge 1}\frac{2z}{z^2 - n^2}.`$
+
+**The constant.** Since $`\pi\cot(\pi z)`$ is also sine's logarithmic derivative, $`g/\sin(\pi z)`$ has derivative 0 off the whole numbers, a connected set, so it is a constant; near 0 both behave like $`\pi z`$, so it is 1.
 
 </details>
 

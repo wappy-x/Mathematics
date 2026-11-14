@@ -41,49 +41,57 @@ The top line (orange) prices the pool on one path, rates sitting on today's forw
 
 ## The formula
 
-Two definitions sit side by side. First the z-spread, on one path. The **forward rate** $f_t$ is the one-year rate that today's curve locks in for year $t+1$; along that single path the pool's payments are $\bar C_t$, fixed numbers once the path is fixed.
+Two definitions sit side by side. First the z-spread, on one path. The **forward rate** $`f_t`$ is the one-year rate that today's curve locks in for year $`t+1`$; along that single path the pool's payments are $`\bar C_t`$, fixed numbers once the path is fixed.
 
-$$P = \sum_{t=1}^{30} \bar C_t \, D(t)\, e^{-z t}$$
+```math
+P = \sum_{t=1}^{30} \bar C_t \, D(t)\, e^{-z t}
+```
 
-**Read it aloud:** the market price equals every payment along the forward path, discounted on the curve and then shrunk once more at the constant extra rate $z$.
+**Read it aloud:** the market price equals every payment along the forward path, discounted on the curve and then shrunk once more at the constant extra rate $`z`$.
 
-Then the OAS, over many paths. A **short rate** $r$ is the one-year interest rate that will hold in a given future year; the model lets it wander, and on each path the pool's payments $C_t$ follow the homeowners' reaction to it.
+Then the OAS, over many paths. A **short rate** $`r`$ is the one-year interest rate that will hold in a given future year; the model lets it wander, and on each path the pool's payments $`C_t`$ follow the homeowners' reaction to it.
 
-$$P = \mathbb{E}\left[\,\sum_{t=1}^{30} C_t \; e^{-(r_0 + s) - (r_1 + s) - \cdots - (r_{t-1} + s)}\right]$$
+```math
+P = \mathbb{E}\left[\,\sum_{t=1}^{30} C_t \; e^{-(r_0 + s) - (r_1 + s) - \cdots - (r_{t-1} + s)}\right]
+```
 
-**Read it aloud:** the market price equals the average, over all the rate paths the model allows, of every payment discounted along its own path at that path's short rates plus one constant extra rate $s$.
+**Read it aloud:** the market price equals the average, over all the rate paths the model allows, of every payment discounted along its own path at that path's short rates plus one constant extra rate $`s`$.
 
 The difference is the option's cost as a rate:
 
-$$\text{option cost} = z - s$$
+```math
+\text{option cost} = z - s
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the OAS… |
 | --- | --- | --- | --- |
-| $P$ | the pool's market price per $100 of balance | $103.06 | falls: a dearer pool pays less over the curve |
-| $s$ | the option-adjusted spread, added to every short rate on every path | 59.94 bp | — |
-| $z$ | the z-spread, added to every zero rate on one path | 110.12 bp | — (it does not move with the OAS; both come from $P$) |
-| $C_t$, $\bar C_t$, $t$ | the pool's cash at the end of year $t$ (1 to 30) on one rate path: interest, scheduled principal, early repayment; $\bar C_t$ is the same on the single forward path | $35.21 in year 1 | — |
-| $a_i$, $i$, $j$ | the tree's centre rate in year $i+1$, fitted to the curve; $i$ counts steps taken, $j$ how many of them went up | 3.55% in year 1 | — |
-| $g$, $c$, $n$ | the scheduled principal per $1 of balance, set by the coupon $c$ = 6% and the $n$ years left | 0.012649 in year 1 | — |
-| $r$ | the short rate: the one-year rate holding in a given year, on a given path | 3.55% today; 4.44% or 2.86% next year | — |
-| $D(t)$ | today's discount factor for $t$ years, $e^{-(\text{zero rate})\,t}$ | 0.965123 for one year | — |
-| $f_t$ | the forward rate for year $t+1$, locked in by today's curve | 5.05% for year 16 | — |
-| $p(r)$ | the share of the remaining balance repaid early in a year when the short rate is $r$ | 28.30% at 3.55% | falls: fast repayment at par hurts a pool bought above par |
-| $\sigma$ | the model's rate volatility: how widely the short rate can spread, as a proportion | 22% | falls: a wider spread of rates makes the option dearer |
-| $\mathbb{E}$, $w_t$ | the average over the model's rate paths, each path weighted by its chance; $w_t$ is that average for year $t$ alone | 20,000 paths, or the whole tree | — |
+| $`P`$ | the pool's market price per $100 of balance | $103.06 | falls: a dearer pool pays less over the curve |
+| $`s`$ | the option-adjusted spread, added to every short rate on every path | 59.94 bp | — |
+| $`z`$ | the z-spread, added to every zero rate on one path | 110.12 bp | — (it does not move with the OAS; both come from $`P`$) |
+| $`C_t`$, $`\bar C_t`$, $`t`$ | the pool's cash at the end of year $`t`$ (1 to 30) on one rate path: interest, scheduled principal, early repayment; $`\bar C_t`$ is the same on the single forward path | $35.21 in year 1 | — |
+| $`a_i`$, $`i`$, $`j`$ | the tree's centre rate in year $`i+1`$, fitted to the curve; $`i`$ counts steps taken, $`j`$ how many of them went up | 3.55% in year 1 | — |
+| $`g`$, $`c`$, $`n`$ | the scheduled principal per $1 of balance, set by the coupon $`c`$ = 6% and the $`n`$ years left | 0.012649 in year 1 | — |
+| $`r`$ | the short rate: the one-year rate holding in a given year, on a given path | 3.55% today; 4.44% or 2.86% next year | — |
+| $`D(t)`$ | today's discount factor for $`t`$ years, $`e^{-(\text{zero rate})\,t}`$ | 0.965123 for one year | — |
+| $`f_t`$ | the forward rate for year $`t+1`$, locked in by today's curve | 5.05% for year 16 | — |
+| $`p(r)`$ | the share of the remaining balance repaid early in a year when the short rate is $`r`$ | 28.30% at 3.55% | falls: fast repayment at par hurts a pool bought above par |
+| $`\sigma`$ | the model's rate volatility: how widely the short rate can spread, as a proportion | 22% | falls: a wider spread of rates makes the option dearer |
+| $`\mathbb{E}`$, $`w_t`$ | the average over the model's rate paths, each path weighted by its chance; $`w_t`$ is that average for year $`t`$ alone | 20,000 paths, or the whole tree | — |
 
 The prepayment rule is the one piece of behaviour the model assumes:
 
-$$p(r) = 8\% + 14 \times \max(0,\; 5\% - r)$$
+```math
+p(r) = 8\% + 14 \times \max(0,\; 5\% - r)
+```
 
 In words: 8% of the balance leaves every year whatever happens, and each percentage point the short rate sits below 5% sends another 14 points of the balance away. At 5% or above, only the 8% leaves. The kink at 5%, one point below the 6% coupon, is where refinancing starts to pay.
 
 ### When it holds
 
-- **The rate model is right about volatility.** The OAS depends on $\sigma$: at 22% it is 59.94 basis points, at 30% it is 37.47. Two desks with different volatilities quote different OAS for the same pool at the same price. An OAS is a statement about the pool *and* the model.
+- **The rate model is right about volatility.** The OAS depends on $`\sigma`$: at 22% it is 59.94 basis points, at 30% it is 37.47. Two desks with different volatilities quote different OAS for the same pool at the same price. An OAS is a statement about the pool *and* the model.
 - **The prepayment rule is right.** Homeowners are not option traders. The rule is a fitted description of how they behave, and when behaviour shifts (tighter lending, a housing boom) the cash flows shift and the OAS with them. A callable bond, where the issuer calls when it pays to, avoids this problem: its rule comes from the tree itself ([Callable bonds](01-callable-bonds-and-yield-to-worst.md)).
 - **The tree reprices today's curve.** If the model's rates do not reprice plain zero-coupon bonds exactly, curve error leaks into the spread. Here an unfitted tree moves the OAS from 59.94 to 73.07 basis points.
-- **The spread is only a discount.** $s$ shifts the discounting, never the rates homeowners react to. Let it move prepayment too and the answer drifts to 74.59 basis points: a different, unintended definition.
+- **The spread is only a discount.** $`s`$ shifts the discounting, never the rates homeowners react to. Let it move prepayment too and the answer drifts to 74.59 basis points: a different, unintended definition.
 - **One constant spread.** The OAS is flat across years and paths. Whatever the market charges for liquidity, credit or model doubt gets squeezed into that one number.
 
 ---
@@ -104,51 +112,57 @@ That lopsidedness is an option. The homeowner repays at par — exactly $1 for e
 
 ### Step 2: build rate paths that reprice today's curve
 
-The model here is a **binomial tree** of short rates: each year the rate steps up or down, each with chance one half, and the up and down moves recombine so that after $i$ years there are $i+1$ possible rates. The rate in year $i+1$ after $j$ up-steps is
+The model here is a **binomial tree** of short rates: each year the rate steps up or down, each with chance one half, and the up and down moves recombine so that after $`i`$ years there are $`i+1`$ possible rates. The rate in year $`i+1`$ after $`j`$ up-steps is
 
-$$r_{i,j} = a_i \, e^{\sigma (2j - i)}$$
+```math
+r_{i,j} = a_i \, e^{\sigma (2j - i)}
+```
 
-where $a_i$ is the tree's centre in that year. This shape, with rates spread proportionally around a moving centre, is the Black–Derman–Toy model; it keeps rates positive.
+where $`a_i`$ is the tree's centre in that year. This shape, with rates spread proportionally around a moving centre, is the Black–Derman–Toy model; it keeps rates positive.
 
-The centres are not guessed. Each $a_i$ is solved, one year at a time, so that the tree prices a zero-coupon bond maturing in year $i+1$ at exactly today's $D(i+1)$. The tool is a running table of **state prices**: the price today of $1 paid only if the path reaches a given node. Each year every node's state price is discounted at that node's rate and split half to each child. A year's state prices add up to the tree's price of a zero-coupon bond, and one search per year makes that sum hit the curve.
+The centres are not guessed. Each $`a_i`$ is solved, one year at a time, so that the tree prices a zero-coupon bond maturing in year $`i+1`$ at exactly today's $`D(i+1)`$. The tool is a running table of **state prices**: the price today of $1 paid only if the path reaches a given node. Each year every node's state price is discounted at that node's rate and split half to each child. A year's state prices add up to the tree's price of a zero-coupon bond, and one search per year makes that sum hit the curve.
 
-A tree fitted this way reprices every plain bond on today's curve, so any spread it later finds belongs to the pool, not to the curve. Set $\sigma = 0$ and the fitted tree collapses to one path whose rates are exactly the forward rates $f_t$ — the checks confirm it to 12 decimals.
+A tree fitted this way reprices every plain bond on today's curve, so any spread it later finds belongs to the pool, not to the curve. Set $`\sigma = 0`$ and the fitted tree collapses to one path whose rates are exactly the forward rates $`f_t`$ — the checks confirm it to 12 decimals.
 
 ### Step 3: price the pool backwards, per dollar of balance
 
 The pool's balance depends on its whole history: how much prepaid in every earlier year. That looks like it needs every path separately. It does not, because every cash flow is proportional to the balance. A node's value per $1 of balance still owed depends only on that node's rate and what can happen afterwards. So one number per node is enough.
 
-At a node in year $i+1$ with short rate $r$, let $g$ be the scheduled principal per $1$ of balance and $p = p(r)$. One dollar of balance pays, at the year's end, interest $c = 0.06$, scheduled principal $g$, and early repayment $p(1-g)$. What is left, $(1-g)(1-p)$, carries on and is worth the average of the two children's values per dollar, $V_{\text{up}}$ and $V_{\text{down}}$. Discount the lot at $r + s$ to get $V$, this node's value per dollar of balance:
+At a node in year $`i+1`$ with short rate $`r`$, let $`g`$ be the scheduled principal per $`1`$ of balance and $`p = p(r)`$. One dollar of balance pays, at the year's end, interest $`c = 0.06`$, scheduled principal $`g`$, and early repayment $`p(1-g)`$. What is left, $`(1-g)(1-p)`$, carries on and is worth the average of the two children's values per dollar, $`V_{\text{up}}`$ and $`V_{\text{down}}`$. Discount the lot at $`r + s`$ to get $`V`$, this node's value per dollar of balance:
 
-$$V = e^{-(r+s)}\Big[\,c + g + p(1-g) + (1-g)(1-p)\,\tfrac12\big(V_{\text{up}} + V_{\text{down}}\big)\Big]$$
+```math
+V = e^{-(r+s)}\Big[\,c + g + p(1-g) + (1-g)(1-p)\,\tfrac12\big(V_{\text{up}} + V_{\text{down}}\big)\Big]
+```
 
 Start from zero after year 30 and walk back to today. The pool's price is 100 times the value at today's single node.
 
 <details>
 <summary>Where the scheduled principal comes from</summary>
 
-A 30-year loan with fixed yearly payments pays the same total each year. With coupon $c$ and $n$ years left, the part of that payment which repays principal, per $1 of balance, is $g = c / ((1+c)^n - 1)$. With 30 years left that is $0.06/(1.06^{30} - 1) = 0.012649$: $1.26 on $100. It grows every year as the interest part shrinks. It depends only on the loan's age, never on the rate path, which is why it can sit inside the per-dollar value.
+A 30-year loan with fixed yearly payments pays the same total each year. With coupon $`c`$ and $`n`$ years left, the part of that payment which repays principal, per $1 of balance, is $`g = c / ((1+c)^n - 1)`$. With 30 years left that is $`0.06/(1.06^{30} - 1) = 0.012649`$: $1.26 on $100. It grows every year as the interest part shrinks. It depends only on the loan's age, never on the rate path, which is why it can sit inside the per-dollar value.
 
 </details>
 
 ### Step 4: exactly one spread fits the price
 
-The spread enters only the discounting, never the cash flows. So the model price is a sum over years of a positive weight times $e^{-st}$:
+The spread enters only the discounting, never the cash flows. So the model price is a sum over years of a positive weight times $`e^{-st}`$:
 
-$$\text{price}(s) = \sum_{t=1}^{30} w_t\, e^{-st}, \qquad w_t > 0$$
+```math
+\text{price}(s) = \sum_{t=1}^{30} w_t\, e^{-st}, \qquad w_t > 0
+```
 
-Each term shrinks as $s$ rises, so the price falls strictly, from infinity down to zero: every positive market price is met exactly once. The boundary cases: a price above the model price at $s = 0$ gives a negative OAS, which happens for pools of the safest loans or with a model that overstates the option; a price of zero or less has no spread at all.
+Each term shrinks as $`s`$ rises, so the price falls strictly, from infinity down to zero: every positive market price is met exactly once. The boundary cases: a price above the model price at $`s = 0`$ gives a negative OAS, which happens for pools of the safest loans or with a model that overstates the option; a price of zero or less has no spread at all.
 
 <details>
 <summary>Detailed proof: one and only one OAS for each positive price</summary>
 
-**The weights.** Collect the average over paths year by year: $w_t$ is the average of $C_t\,e^{-(r_0 + \cdots + r_{t-1})}$ across paths. Every $C_t > 0$, because a live loan always pays at least its interest, and every exponential is positive, so $w_t > 0$. The weights do not depend on $s$, because prepayment reacts to $r$ alone. The simulation road in the code computes exactly these weights, once, and then solves.
+**The weights.** Collect the average over paths year by year: $`w_t`$ is the average of $`C_t\,e^{-(r_0 + \cdots + r_{t-1})}`$ across paths. Every $`C_t > 0`$, because a live loan always pays at least its interest, and every exponential is positive, so $`w_t > 0`$. The weights do not depend on $`s`$, because prepayment reacts to $`r`$ alone. The simulation road in the code computes exactly these weights, once, and then solves.
 
-**Continuity and strict fall.** $\text{price}(s)$ is a finite sum of continuous functions, so it is continuous. Its slope is $-\sum_t t\,w_t\,e^{-st} < 0$, so no two spreads give the same price.
+**Continuity and strict fall.** $`\text{price}(s)`$ is a finite sum of continuous functions, so it is continuous. Its slope is $`-\sum_t t\,w_t\,e^{-st} < 0`$, so no two spreads give the same price.
 
-**Full range.** As $s \to +\infty$ every term goes to zero. As $s \to -\infty$ every term grows without bound. By the intermediate value theorem the continuous, strictly falling function takes every value in $(0, \infty)$ exactly once.
+**Full range.** As $`s \to +\infty`$ every term goes to zero. As $`s \to -\infty`$ every term grows without bound. By the intermediate value theorem the continuous, strictly falling function takes every value in $`(0, \infty)`$ exactly once.
 
-**Where it fails.** If the spread fed into prepayment (the mistake in Worked numbers), the weights would depend on $s$. The price usually still falls with $s$ but is no longer a clean sum of exponentials, and uniqueness has to be checked case by case. With a cash flow of the wrong sign, a fee paid out, uniqueness can fail outright.
+**Where it fails.** If the spread fed into prepayment (the mistake in Worked numbers), the weights would depend on $`s`$. The price usually still falls with $`s`$ but is no longer a clean sum of exponentials, and uniqueness has to be checked case by case. With a cash flow of the wrong sign, a fee paid out, uniqueness can fail outright.
 
 </details>
 
@@ -156,7 +170,7 @@ The search itself is bisection: bracket the spread between −5% and +30%, halve
 
 ### Step 5: the z-spread is the OAS at zero volatility
 
-Set $\sigma = 0$. The tree becomes the single forward path, prepayment follows $p(f_t)$, and the OAS formula turns into the z-spread formula term for term. The checks confirm it: at $\sigma = 0$ the tree's spread is 110.1237 basis points, the one-path sum's is 110.1237.
+Set $`\sigma = 0`$. The tree becomes the single forward path, prepayment follows $`p(f_t)`$, and the OAS formula turns into the z-spread formula term for term. The checks confirm it: at $`\sigma = 0`$ the tree's spread is 110.1237 basis points, the one-path sum's is 110.1237.
 
 Now turn volatility up. Rates spread out, prepayment surges on the low paths and cannot fall below 8% on the high ones, and the pool — sold at a premium, so every early dollar returned at par is a loss — is worth less at any given spread. A lower price curve crosses the market price further left: the OAS falls.
 
@@ -174,7 +188,7 @@ The falling line (orange) is the OAS at each volatility. The flat line (green) i
 
 ### Step 6: the second road, by simulation
 
-The tree walks backwards. A simulation walks forwards. Draw a path: flip a coin each year for up or down, read the rate off the same tree, and follow the actual balance — $100 at the start, shrinking by scheduled principal and prepayment year after year. Record each year's cash flow times the path's discount $e^{-(r_0 + \cdots + r_{t-1})}$. Average over 20,000 paths (10,000 drawn, each paired with its mirror image, which flips every coin and cuts the noise). That gives the weights $w_t$ of Step 4 directly, and the OAS comes from the same bisection.
+The tree walks backwards. A simulation walks forwards. Draw a path: flip a coin each year for up or down, read the rate off the same tree, and follow the actual balance — $100 at the start, shrinking by scheduled principal and prepayment year after year. Record each year's cash flow times the path's discount $`e^{-(r_0 + \cdots + r_{t-1})}`$. Average over 20,000 paths (10,000 drawn, each paired with its mirror image, which flips every coin and cuts the noise). That gives the weights $`w_t`$ of Step 4 directly, and the OAS comes from the same bisection.
 
 The simulation never uses the per-dollar trick. It lands at 59.94 basis points, within a hundredth of a basis point of the tree. Real mortgage desks simulate, because real prepayment depends on the path's history (a pool that has refinanced once is slower to do it again), which a recombining tree cannot hold.
 
@@ -187,19 +201,19 @@ The curve's zero rates run in a straight line from 3.55% at one year through 4.0
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | short rate this year | today's one-year zero rate | 3.55% |
-| prepayment rate | $8\% + 14 \times (5\% - 3.55\%)$ | 28.30% |
-| interest on $100 | $100 \times 6\%$ | $6.00 |
-| scheduled principal | $100 \times 0.06 / (1.06^{30} - 1)$ | $1.2649 |
-| early repayment | $28.30\% \times (100 - 1.2649)$ | $27.9420 |
-| year-1 cash flow | $6 + 1.2649 + 27.9420$ | $35.2069 |
-| discounted on the curve, then at the z-spread | $35.2069 \times 0.965123 \times 0.989048$ | $33.6069 |
-| next year's short rate, up or down | $a_1 e^{\pm 0.22}$ from the fitted tree | 4.44% or 2.86% |
-| next year's prepayment, up or down | $p(4.44\%)$, $p(2.86\%)$ | 15.78% or 37.93% |
+| prepayment rate | $`8\% + 14 \times (5\% - 3.55\%)`$ | 28.30% |
+| interest on $100 | $`100 \times 6\%`$ | $6.00 |
+| scheduled principal | $`100 \times 0.06 / (1.06^{30} - 1)`$ | $1.2649 |
+| early repayment | $`28.30\% \times (100 - 1.2649)`$ | $27.9420 |
+| year-1 cash flow | $`6 + 1.2649 + 27.9420`$ | $35.2069 |
+| discounted on the curve, then at the z-spread | $`35.2069 \times 0.965123 \times 0.989048`$ | $33.6069 |
+| next year's short rate, up or down | $`a_1 e^{\pm 0.22}`$ from the fitted tree | 4.44% or 2.86% |
+| next year's prepayment, up or down | $`p(4.44\%)`$, $`p(2.86\%)`$ | 15.78% or 37.93% |
 | all 30 years on the forward path, spread 0 | code | $107.03 |
 | all 30 years on the tree, spread 0 | code | $105.11 |
 | z-spread that brings the forward path to $103.06 | bisection | 110.12 bp |
 | **OAS that brings the tree to $103.06** | bisection | **59.94 bp** |
-| option cost as a spread | $110.1237 - 59.9366$ | 50.19 bp |
+| option cost as a spread | $`110.1237 - 59.9366`$ | 50.19 bp |
 | option cost as a price | forward path at 59.94 bp, minus $103.06 | $1.77 |
 
 The pool pays 60 basis points over the curve for its credit, liquidity and model risk; the other 50 of the headline 110 are rent the investor collects for the refinancing option sold to homeowners, and the model prices that option at $1.77 per $100.
@@ -211,7 +225,7 @@ The true OAS is 59.94 basis points. Each row keeps the market price at $103.06 a
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Reading the z-spread as the OAS | 110.12 bp | 50 basis points of option cost counted as reward: the pool looks 1.77 dollars cheaper than it is |
-| Letting the spread move prepayment too | 74.59 bp | homeowners were made to refinance off $r + s$, a rate nobody offers them; fewer prepay, the model values the pool higher, the spread overshoots |
+| Letting the spread move prepayment too | 74.59 bp | homeowners were made to refinance off $`r + s`$, a rate nobody offers them; fewer prepay, the model values the pool higher, the spread overshoots |
 | Tree not fitted to the curve (centre held at 3.55%) | 73.07 bp | the tree's rates sit below the forwards, so it misprices even a plain bond; the error lands in the spread |
 | Only 20 simulated paths | 49.94 bp | ten basis points of noise; other seeds give anything from 40 to 72. Twenty paths cannot average the low-rate tails where the option lives |
 
@@ -626,9 +640,9 @@ The two outputs agree line for line.
 
 Lean proves that exactly one spread fits each positive price, for any number of years and any positive weights.
 
-- Take any positive weights $w_t$ over $n \ge 1$ years. Then $\text{price}(s)$ falls strictly as $s$ rises, so no two spreads give the same price.
-- Suppose the same weights. Then a market price $P > 0$ is met by exactly one spread, and a price $P \le 0$ by none.
-- Take a coupon $c > 0$, a loan of $n$ years and no prepayment, with $g$ set by the years left. Then every year's payment is the same, $c / (1 - (1+c)^{-n})$ per dollar of balance.
+- Take any positive weights $`w_t`$ over $`n \ge 1`$ years. Then $`\text{price}(s)`$ falls strictly as $`s`$ rises, so no two spreads give the same price.
+- Suppose the same weights. Then a market price $`P > 0`$ is met by exactly one spread, and a price $`P \le 0`$ by none.
+- Take a coupon $`c > 0`$, a loan of $`n`$ years and no prepayment, with $`g`$ set by the years left. Then every year's payment is the same, $`c / (1 - (1+c)^{-n})`$ per dollar of balance.
 - The zero rates of 3.55, 4.00 and 5.00 percent are exact. So are the year-16 forward rate of 5.05 percent and the prepayment rates of 28.30 and 8.00 percent.
 - The year-1 cash flow of 35.2069 dollars and the option cost of 50.1871 basis points are exact sums.
 

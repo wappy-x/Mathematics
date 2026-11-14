@@ -39,44 +39,50 @@ The single line is the bumped delta's accuracy, from the run below. Shrinking th
 
 ## The formula
 
-Notation first, in words. $V$ is the pricer, so $V(S+h)$ means "run it with the share price moved to $S+h$, every other input untouched". $S$ is Acme's price today, 100 dollars; $h$ is the bump, in the same dollars. Each prime mark counts one more slope against the share price: one prime is delta, two is gamma, and three, written $V'''$, is the rate at which gamma changes.
+Notation first, in words. $`V`$ is the pricer, so $`V(S+h)`$ means "run it with the share price moved to $`S+h`$, every other input untouched". $`S`$ is Acme's price today, 100 dollars; $`h`$ is the bump, in the same dollars. Each prime mark counts one more slope against the share price: one prime is delta, two is gamma, and three, written $`V'''`$, is the rate at which gamma changes.
 
-$$\Delta \;\approx\; \frac{V(S+h) - V(S-h)}{2h}, \qquad \Gamma \;\approx\; \frac{V(S+h) - 2V(S) + V(S-h)}{h^{2}}$$
+```math
+\Delta \;\approx\; \frac{V(S+h) - V(S-h)}{2h}, \qquad \Gamma \;\approx\; \frac{V(S+h) - 2V(S) + V(S-h)}{h^{2}}
+```
 
 **Read it aloud:** price it a little above and a little below, then divide the difference by how far apart those prices were; for the second, ask by how much the up-move and the down-move fail to cancel.
 
-The first is the **central difference**: both ways, over the full distance $2h$. Two one-sided cousins cost one extra pricer call instead of two: forward, $(V(S+h) - V(S))/h$, and backward, $(V(S) - V(S-h))/h$. Both are worse, by exactly the amount Why it works gives.
+The first is the **central difference**: both ways, over the full distance $`2h`$. Two one-sided cousins cost one extra pricer call instead of two: forward, $`(V(S+h) - V(S))/h`$, and backward, $`(V(S) - V(S-h))/h`$. Both are worse, by exactly the amount Why it works gives.
 
 The error left in the central difference is two terms pulling opposite ways:
 
-$$\text{error}(h) \;\approx\; \underbrace{\frac{h^{2}}{6}\bigl|V'''\bigr|}_{\text{the curve bends}} \;+\; \underbrace{\frac{\varepsilon\,|V|}{h}}_{\text{the digits run out}}$$
+```math
+\text{error}(h) \;\approx\; \underbrace{\frac{h^{2}}{6}\bigl|V'''\bigr|}_{\text{the curve bends}} \;+\; \underbrace{\frac{\varepsilon\,|V|}{h}}_{\text{the digits run out}}
+```
 
 Setting the slope of that sum to zero, then rounding away what is specific to the pricer, gives a rule of thumb for a smooth one:
 
-$$h^{*}_{\Delta} \approx \varepsilon^{1/3}\,S \approx 6.055\times10^{-4}\ \text{dollars}, \qquad h^{*}_{\Gamma} \approx \varepsilon^{1/4}\,S \approx 1.221\times10^{-2}\ \text{dollars}$$
+```math
+h^{*}_{\Delta} \approx \varepsilon^{1/3}\,S \approx 6.055\times10^{-4}\ \text{dollars}, \qquad h^{*}_{\Gamma} \approx \varepsilon^{1/4}\,S \approx 1.221\times10^{-2}\ \text{dollars}
+```
 
 **A cube root of the machine's smallest gap for a first slope, a fourth root for a second: one part in a million of the share price for delta, one part in ten thousand for gamma.**
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | the pricer: any code that turns inputs into a price | $V(100) = 9.227006$ dollars | carries a bigger rounding scrap |
-| $S$ | the input being bumped, here Acme's price today | 100 dollars | needs a proportionally bigger bump |
-| $h$ | the **bump**: how far the input is shifted, in its own units | 1 dollar, a 1 percent bump | gains bias; shrink it and it gains noise |
-| $\Delta$ | **delta**: dollars of price per dollar of share | 0.586851 | is the answer |
-| $\Gamma$ | **gamma**: how fast delta changes per dollar of share | 0.018951 | bends the curve harder, biasing any bump |
-| $V'''$ | **speed**: how fast gamma changes per dollar of share | −0.000426 | biases even a two-sided bump |
-| $\varepsilon$ | the smallest relative gap between stored numbers. Say "epsilon". | 2.220e-16 | means a noisier pricer, so a bigger best bump |
-| $K$, $r$, $q$, $T$, $\sigma$ | strike, bank rate, dividend yield, years left, volatility | 100 dollars, 5%, 2%, 1, 20% | each can be bumped in its turn |
-| $d_1$ | Acme's distance from the strike in wiggle units of $\sigma\sqrt{T}$, plus one such unit | 0.2500 | — |
-| $N$, $\phi$ | the bell curve's area to the left of a point, and its height there | written out in the code | — |
+| $`V`$ | the pricer: any code that turns inputs into a price | $`V(100) = 9.227006`$ dollars | carries a bigger rounding scrap |
+| $`S`$ | the input being bumped, here Acme's price today | 100 dollars | needs a proportionally bigger bump |
+| $`h`$ | the **bump**: how far the input is shifted, in its own units | 1 dollar, a 1 percent bump | gains bias; shrink it and it gains noise |
+| $`\Delta`$ | **delta**: dollars of price per dollar of share | 0.586851 | is the answer |
+| $`\Gamma`$ | **gamma**: how fast delta changes per dollar of share | 0.018951 | bends the curve harder, biasing any bump |
+| $`V'''`$ | **speed**: how fast gamma changes per dollar of share | −0.000426 | biases even a two-sided bump |
+| $`\varepsilon`$ | the smallest relative gap between stored numbers. Say "epsilon". | 2.220e-16 | means a noisier pricer, so a bigger best bump |
+| $`K`$, $`r`$, $`q`$, $`T`$, $`\sigma`$ | strike, bank rate, dividend yield, years left, volatility | 100 dollars, 5%, 2%, 1, 20% | each can be bumped in its turn |
+| $`d_1`$ | Acme's distance from the strike in wiggle units of $`\sigma\sqrt{T}`$, plus one such unit | 0.2500 | — |
+| $`N`$, $`\phi`$ | the bell curve's area to the left of a point, and its height there | written out in the code | — |
 
-Closed forms, used here only as a score to beat: delta is $e^{-qT}N(d_1)$, or 0.586851; gamma is $e^{-qT}\phi(d_1)/(S\sigma\sqrt{T})$, or 0.018951.
+Closed forms, used here only as a score to beat: delta is $`e^{-qT}N(d_1)`$, or 0.586851; gamma is $`e^{-qT}\phi(d_1)/(S\sigma\sqrt{T})`$, or 0.018951.
 
 ### When it holds
 
 - **The pricer bends smoothly between the bumped inputs.** A kink or jump inside the bracket gives the slope of neither side. An option at expiry kinks exactly at the strike.
 - **Nothing else changes between the two calls.** Same model, grid, dates, draws. Refit to market prices in between and the answer belongs to a refitted model: legitimate, but a different question.
-- **Each price is right to about $\varepsilon|V|$.** For this nine-dollar option that scrap is 0.000000000000002 dollars. A simulation's error is its sampling wobble instead, more than ten million million times larger.
+- **Each price is right to about $`\varepsilon|V|`$.** For this nine-dollar option that scrap is 0.000000000000002 dollars. A simulation's error is its sampling wobble instead, more than ten million million times larger.
 - **A simulated pricer reuses its draws.** Fresh numbers on the second leg bury the bump, and no affordable number of extra paths digs it out.
 - **The payoff moves continuously with the input.** A payoff that jumps, such as a fixed sum paid above the strike, breaks shared draws and needs its own treatment ([Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md)).
 
@@ -107,20 +113,30 @@ Two things follow. The error now falls like the bump **squared**, so a decade of
 <details>
 <summary>Detailed proof: where both error terms come from</summary>
 
-Write $V$, $\Delta$, $\Gamma$, $V'''$, $V''''$ for the price and its first four slopes at $S$. For a bump small enough that the price curve is smooth from $S-h$ to $S+h$, Taylor's theorem gives
-$$V(S \pm h) = V \pm h\Delta + \tfrac12 h^{2}\Gamma \pm \tfrac16 h^{3}V''' + \tfrac1{24}h^{4}V'''' + \cdots$$
-**One-sided.** Take the plus version, subtract $V$, divide by $h$:
-$$\frac{V(S+h) - V(S)}{h} = \Delta + \tfrac12 h\Gamma + O(h^{2}).$$
-The leading error is $\tfrac12 h\Gamma$, first order in the bump, so halving the bump only halves it. The minus version gives $-\tfrac12 h\Gamma$: same size, opposite sign.
-**Central.** Subtract the two expansions from each other. Even powers of $h$ share a sign and cancel; odd powers double:
-$$V(S+h) - V(S-h) = 2h\Delta + \tfrac13 h^{3}V''' + O(h^{5}).$$
-Divide by $2h$:
-$$\frac{V(S+h) - V(S-h)}{2h} = \Delta + \tfrac16 h^{2}V''' + O(h^{4}).$$
-The $\Gamma$ term is gone. That cancellation is the whole reason the extra pricer call earns its keep.
+Write $`V`$, $`\Delta`$, $`\Gamma`$, $`V'''`$, $`V''''`$ for the price and its first four slopes at $`S`$. For a bump small enough that the price curve is smooth from $`S-h`$ to $`S+h`$, Taylor's theorem gives
+
+$`\displaystyle V(S \pm h) = V \pm h\Delta + \tfrac12 h^{2}\Gamma \pm \tfrac16 h^{3}V''' + \tfrac1{24}h^{4}V'''' + \cdots`$
+
+**One-sided.** Take the plus version, subtract $`V`$, divide by $`h`$:
+
+$`\displaystyle \frac{V(S+h) - V(S)}{h} = \Delta + \tfrac12 h\Gamma + O(h^{2}).`$
+
+The leading error is $`\tfrac12 h\Gamma`$, first order in the bump, so halving the bump only halves it. The minus version gives $`-\tfrac12 h\Gamma`$: same size, opposite sign.
+**Central.** Subtract the two expansions from each other. Even powers of $`h`$ share a sign and cancel; odd powers double:
+
+$`\displaystyle V(S+h) - V(S-h) = 2h\Delta + \tfrac13 h^{3}V''' + O(h^{5}).`$
+
+Divide by $`2h`$:
+
+$`\displaystyle \frac{V(S+h) - V(S-h)}{2h} = \Delta + \tfrac16 h^{2}V''' + O(h^{4}).`$
+
+The $`\Gamma`$ term is gone. That cancellation is the whole reason the extra pricer call earns its keep.
 **Gamma.** Add the expansions instead, and the odd powers cancel:
-$$V(S+h) + V(S-h) = 2V + h^{2}\Gamma + \tfrac1{12}h^{4}V'''' + O(h^{6}),$$
-so subtracting $2V$ and dividing by $h^{2}$ leaves $\Gamma + \tfrac1{12}h^{2}V''''$.
-**Rounding.** Each stored price carries an error of at most about $\varepsilon|V|$, attached to the price rather than the difference, so it does not shrink when the bump does. Two land in the central numerator and are divided by $2h$: noise of about $\varepsilon|V|/h$. The gamma numerator carries up to four, divided by $h^{2}$: noise of about $4\varepsilon|V|/h^{2}$. Hence gamma's larger bump.
+
+$`\displaystyle V(S+h) + V(S-h) = 2V + h^{2}\Gamma + \tfrac1{12}h^{4}V'''' + O(h^{6}),`$
+
+so subtracting $`2V`$ and dividing by $`h^{2}`$ leaves $`\Gamma + \tfrac1{12}h^{2}V''''`$.
+**Rounding.** Each stored price carries an error of at most about $`\varepsilon|V|`$, attached to the price rather than the difference, so it does not shrink when the bump does. Two land in the central numerator and are divided by $`2h`$: noise of about $`\varepsilon|V|/h`$. The gamma numerator carries up to four, divided by $`h^{2}`$: noise of about $`4\varepsilon|V|/h^{2}`$. Hence gamma's larger bump.
 
 </details>
 
@@ -132,9 +148,11 @@ A computer keeps about sixteen significant digits, so a stored price is the true
 
 ### Step 4: balance the two arms and the best bump is a cube root
 
-One arm falls like the bump squared, the other rises like one over the bump, so their sum falls, turns and rises. Setting the slope of $\tfrac16 h^2|V'''| + \varepsilon|V|/h$ to zero gives $\tfrac13 h|V'''| = \varepsilon|V|/h^{2}$, so
+One arm falls like the bump squared, the other rises like one over the bump, so their sum falls, turns and rises. Setting the slope of $`\tfrac16 h^2|V'''| + \varepsilon|V|/h`$ to zero gives $`\tfrac13 h|V'''| = \varepsilon|V|/h^{2}`$, so
 
-$$h^{*}_{\Delta} = \left(\frac{3\,\varepsilon\,|V|}{|V'''|}\right)^{1/3}.$$
+```math
+h^{*}_{\Delta} = \left(\frac{3\,\varepsilon\,|V|}{|V'''|}\right)^{1/3}.
+```
 
 For this option that is 2.434e-04 dollars against the sweep's best decade, 1.000e-04: a factor of two out, close enough for a rule about rounding. Replacing the unknown ratio of price to speed by the cube of the share price, right up to a modest constant for anything option-shaped, leaves 6.055e-04 dollars.
 
@@ -151,11 +169,11 @@ A one-sided bump balances the bump against one over the bump, so its best goes a
 
 Everything above assumed the pricer's error is the machine's rounding. The 200000-path run below prices this option at 9.220900 dollars, standard error 0.030879 (the typical distance between a simulated price and the true one) — more than ten million million times worse than the scrap.
 
-Reprice with **fresh** random numbers and the difference carries the noise of both legs, which dividing by $2h$ magnifies by one over the bump. At a one-cent bump that is a standard error of 2.187948 on a true value of 0.586851, and the run returns −2.866855. No reasonable number of extra paths rescues it.
+Reprice with **fresh** random numbers and the difference carries the noise of both legs, which dividing by $`2h`$ magnifies by one over the bump. At a one-cent bump that is a standard error of 2.187948 on a true value of 0.586851, and the run returns −2.866855. No reasonable number of extra paths rescues it.
 
 **Use the same draws for both legs and the problem disappears.** Each simulated path is then the same path, started a little higher and a little lower, so the difference of its two payoffs is not the difference of two independent random things: it is the change in one thing. In the run the standard error barely moves as the bump falls from 5 dollars to one cent — 0.001223, 0.001271, 0.001282, 0.001283 — and at the smallest bump it is 1705.6 times tighter than fresh draws, for the cost of resetting the generator.
 
-It cannot run away, either: one path's two payoffs differ by at most the gap between its two starting prices times how far that path multiplied the share, so dividing by $2h$ has nothing left to magnify. That caps the standard error here at one over the square root of the path count, 0.002236, and the run comes in under it.
+It cannot run away, either: one path's two payoffs differ by at most the gap between its two starting prices times how far that path multiplied the share, so dividing by $`2h`$ has nothing left to magnify. That caps the standard error here at one over the square root of the path count, 0.002236, and the run comes in under it.
 
 That trick is **common random numbers**, the phrase used from here on, and one line about spread explains it: the spread of a difference is the spread of one leg, plus the spread of the other, minus twice the amount the two move together. Independent draws make that last quantity zero; shared draws make it large and positive, so the subtraction cancels most of the wobble before the division can magnify it.
 
@@ -173,14 +191,14 @@ The house market, bumped by 1 dollar: the bump a desk would type without thinkin
 | price at the middle | the pricer at 100 dollars | 9.227006 |
 | price down | the pricer at 99 dollars | 8.649699 |
 | the difference | 9.823260 − 8.649699, on the pricer's full digits | 1.173560 |
-| divide by the full gap, $2h = 2$ | 1.173560 / 2 | **0.586780** |
-| the closed form, as a score | $e^{-qT}N(d_1)$ | 0.586851 |
+| divide by the full gap, $`2h = 2`$ | 1.173560 / 2 | **0.586780** |
+| the closed form, as a score | $`e^{-qT}N(d_1)`$ | 0.586851 |
 | the miss | 0.586780 − 0.586851 | **−7.103e-05** |
-| the miss, predicted | one sixth of $h^2$ times speed, −0.000426 / 6 | −7.106e-05 |
+| the miss, predicted | one sixth of $`h^2`$ times speed, −0.000426 / 6 | −7.106e-05 |
 
 A lazy 1 percent bump already gives delta to within a ten-thousandth, tighter than any market quotes an option. **Central differences are forgiving. One-sided ones are not.** At the best bump, 1.000e-04 dollars, the same recipe gives 0.586851146167: 10.26 correct digits by the run's count.
 
-The same three prices give gamma, by adding instead of subtracting. On the pricer's full digits $V(101) - 2V(100) + V(99)$ is 0.018947785514, and dividing by $h^2 = 1$ leaves it unchanged, against a closed-form 0.018951.
+The same three prices give gamma, by adding instead of subtracting. On the pricer's full digits $`V(101) - 2V(100) + V(99)`$ is 0.018947785514, and dividing by $`h^2 = 1`$ leaves it unchanged, against a closed-form 0.018951.
 
 ### What breaks if you drop a piece
 
@@ -188,7 +206,7 @@ Same option, correct delta 0.586851, correct gamma 0.018951.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Divide by $h$ instead of $2h$ | 1.173560 | The prices are 2 dollars apart, not 1. Twice too big: a single call's delta cannot pass 1, but in a portfolio total nothing looks wrong |
+| Divide by $`h`$ instead of $`2h`$ | 1.173560 | The prices are 2 dollars apart, not 1. Twice too big: a single call's delta cannot pass 1, but in a portfolio total nothing looks wrong |
 | Bump one way only, same 1 dollar | 0.596254 | High by 0.009403, half a bump of gamma: the bend never cancelled |
 | Bump half the share price, 50 dollars | 0.520280 | 11 percent low: the average slope from 50 to 150 dollars |
 | Reuse the delta-sized bump for gamma | 0.035527 | Gamma divides the scrap by the bump *squared*, so this is nearly double the true 0.018951 |
@@ -676,11 +694,11 @@ Four roads, one delta: the tree lands 0.000006 from the closed form having never
 
 ### Lean
 
-Lean proves the three bounds behind the bump for every smooth pricer, every bump $h > 0$, and every shared path.
+Lean proves the three bounds behind the bump for every smooth pricer, every bump $`h > 0`$, and every shared path.
 
-- Suppose the pricer has delta, gamma and speed from $S-h$ to $S+h$, with speed never above $M$ in size. Then the central difference misses the true delta by at most $h^2 M/6$.
-- Suppose the same holds from $S$ to $S+h$ only. Then the forward difference equals delta plus $h\Gamma/2$, to within $h^2 M/6$.
-- Take one shared path that multiplies the share by $a \ge 0$, and a call payoff scaled by $D \ge 0$. Then the path's two payoffs, differenced and divided by $2h$, are at most $Da$ in size, however small $h$ is.
+- Suppose the pricer has delta, gamma and speed from $`S-h`$ to $`S+h`$, with speed never above $`M`$ in size. Then the central difference misses the true delta by at most $`h^2 M/6`$.
+- Suppose the same holds from $`S`$ to $`S+h`$ only. Then the forward difference equals delta plus $`h\Gamma/2`$, to within $`h^2 M/6`$.
+- Take one shared path that multiplies the share by $`a \ge 0`$, and a call payoff scaled by $`D \ge 0`$. Then the path's two payoffs, differenced and divided by $`2h`$, are at most $`Da`$ in size, however small $`h`$ is.
 
 The rounding error, the cube-root best bump, gamma's bump size, and every number in the runs are left to the Python and Rust checks.
 

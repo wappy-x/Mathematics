@@ -36,51 +36,59 @@ Upper line: the one-year call. Vega sits between 28.92 and 39.10 cents per volat
 
 ## The formula
 
-Notation first, in words. $C(\sigma)$ is the Black–Scholes call price at volatility $\sigma$, and $C_{\text{mkt}}$ is the quoted price. The guess after n Newton steps is $\sigma_n$. Vega, the slope of price against volatility, is written $\mathcal{V}$. The Newton step is:
+Notation first, in words. $`C(\sigma)`$ is the Black–Scholes call price at volatility $`\sigma`$, and $`C_{\text{mkt}}`$ is the quoted price. The guess after n Newton steps is $`\sigma_n`$. Vega, the slope of price against volatility, is written $`\mathcal{V}`$. The Newton step is:
 
-$$\sigma_{n+1} = \sigma_n - \frac{C(\sigma_n) - C_{\text{mkt}}}{\mathcal{V}(\sigma_n)}, \qquad \mathcal{V}(\sigma) = S\,e^{-qT}\,\varphi(d_1)\,\sqrt{T}$$
+```math
+\sigma_{n+1} = \sigma_n - \frac{C(\sigma_n) - C_{\text{mkt}}}{\mathcal{V}(\sigma_n)}, \qquad \mathcal{V}(\sigma) = S\,e^{-qT}\,\varphi(d_1)\,\sqrt{T}
+```
 
 **Read it aloud:** the next guess is this guess, minus the price gap in dollars divided by the dollars one unit of volatility buys.
 
 The start that makes Newton safe is where vega is largest:
 
-$$\sigma_c = \sqrt{\frac{2\,\lvert \ln(F/K)\rvert}{T}}, \qquad F = S\,e^{(r-q)T}$$
+```math
+\sigma_c = \sqrt{\frac{2\,\lvert \ln(F/K)\rvert}{T}}, \qquad F = S\,e^{(r-q)T}
+```
 
 **Read it aloud:** start at the volatility whose squared total over the option's life is twice the log-distance from the forward to the strike.
 
-And the width of the answer, for a quote whose bid and ask are $w$ dollars apart:
+And the width of the answer, for a quote whose bid and ask are $`w`$ dollars apart:
 
-$$\Delta\sigma \approx \frac{w}{\mathcal{V}(\sigma_*)}$$
+```math
+\Delta\sigma \approx \frac{w}{\mathcal{V}(\sigma_*)}
+```
 
 **Read it aloud:** the uncertainty in the volatility is the width of the quote divided by vega at the answer.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C(\sigma)$ | the call's Black–Scholes price at volatility $\sigma$ | $9.227005508154 at 0.20 | — |
-| $C_{\text{mkt}}$ | the quoted price the model must reproduce | $9.227005508154 | rises: so does the implied volatility |
-| $\sigma$ | volatility, as a decimal. Say "sigma". | the unknown | — |
-| $\sigma_n$, $\sigma_{n+1}$ | the guess after n steps, and the next one | 0.50, then 0.196282594886 | — |
-| $\sigma_*$ | the true answer: the volatility whose price is the quote | 0.20 | — |
-| $\sigma_c$ | the start where vega peaks | 0.244948974278 | — |
-| $\mathcal{V}$ | vega: dollars gained per 1.00 of volatility | $37.901157510017 at the answer | rises: the answer is sharper |
-| $w$, $\Delta\sigma$ | the bid-ask width in dollars, and the volatility width it implies | 0.05 and 0.1319 points | wider quote: fuzzier answer |
-| $S$, $K$, $T$ | spot, strike, years to expiry | 100, 100, 1 | — |
-| $r$, $q$ | cash rate and dividend yield, continuously compounded | 0.05 and 0.02 | — |
-| $F$ | the forward: the price agreed today for delivery at $T$ | $S$ grown at $r - q$ for a year | — |
-| $d_1$, $d_2$, $\varphi$ | the Black–Scholes call's two distances, and the bell-curve height | see below | — |
+| $`C(\sigma)`$ | the call's Black–Scholes price at volatility $`\sigma`$ | $9.227005508154 at 0.20 | — |
+| $`C_{\text{mkt}}`$ | the quoted price the model must reproduce | $9.227005508154 | rises: so does the implied volatility |
+| $`\sigma`$ | volatility, as a decimal. Say "sigma". | the unknown | — |
+| $`\sigma_n`$, $`\sigma_{n+1}`$ | the guess after n steps, and the next one | 0.50, then 0.196282594886 | — |
+| $`\sigma_*`$ | the true answer: the volatility whose price is the quote | 0.20 | — |
+| $`\sigma_c`$ | the start where vega peaks | 0.244948974278 | — |
+| $`\mathcal{V}`$ | vega: dollars gained per 1.00 of volatility | $37.901157510017 at the answer | rises: the answer is sharper |
+| $`w`$, $`\Delta\sigma`$ | the bid-ask width in dollars, and the volatility width it implies | 0.05 and 0.1319 points | wider quote: fuzzier answer |
+| $`S`$, $`K`$, $`T`$ | spot, strike, years to expiry | 100, 100, 1 | — |
+| $`r`$, $`q`$ | cash rate and dividend yield, continuously compounded | 0.05 and 0.02 | — |
+| $`F`$ | the forward: the price agreed today for delivery at $`T`$ | $`S`$ grown at $`r - q`$ for a year | — |
+| $`d_1`$, $`d_2`$, $`\varphi`$ | the Black–Scholes call's two distances, and the bell-curve height | see below | — |
 
-The helpers, written with the forward so the log-distance $\ln(F/K)$ stands alone:
+The helpers, written with the forward so the log-distance $`\ln(F/K)`$ stands alone:
 
-$$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \varphi(z) = \frac{e^{-z^2/2}}{\sqrt{2\pi}}$$
+```math
+d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \varphi(z) = \frac{e^{-z^2/2}}{\sqrt{2\pi}}
+```
 
-In words: $d_1$ and $d_2$ are the Black–Scholes call's distances from the strike measured in units of total volatility $\sigma\sqrt{T}$ ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)), and $\varphi$ is the height of the standard bell curve.
+In words: $`d_1`$ and $`d_2`$ are the Black–Scholes call's distances from the strike measured in units of total volatility $`\sigma\sqrt{T}`$ ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)), and $`\varphi`$ is the height of the standard bell curve.
 
 ### When it holds
 
 - **The quote lies strictly between the call's floor and ceiling.** Here that is between $2.896924880604 and $98.019867330676. A quote outside has no volatility behind it; bisection on a quote of $2.80 walks to the bottom of its bracket and reports 0.010000000000.
 - **The option is European and the inputs match the market's.** Rates, dividends and the forward must be the ones the quote was made with ([Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md)). An American put carries early-exercise value, and inverting it with this formula books that value as volatility.
 - **Vega has not underflowed.** Newton divides by it. At a 5 percent guess on the one-week 5-delta call (strike $104.767812, whose call delta is 0.05; see Step 4) it is 0.000000001569; far enough out it is exactly zero in the standard 64-bit arithmetic computers use, and the division fails outright. The bracket is the cure.
-- **The width is small against the price's curvature.** The division $w/\mathcal{V}$ uses the tangent line. At the money it matches the exact bid and ask volatilities to four decimals; on the one-week 5-delta call it says 3.4962 points where the exact answer is 3.6117.
+- **The width is small against the price's curvature.** The division $`w/\mathcal{V}`$ uses the tangent line. At the money it matches the exact bid and ask volatilities to four decimals; on the one-week 5-delta call it says 3.4962 points where the exact answer is 3.6117.
 
 ---
 
@@ -90,7 +98,7 @@ In words: $d_1$ and $d_2$ are the Black–Scholes call's distances from the stri
 
 The call's price strictly climbs with volatility, because vega is a share price times a bell-curve height times a square root, all positive. A strictly climbing curve meets a level at most once: uniqueness.
 
-For existence, look at the ends. As volatility shrinks to zero the share stops wandering and the call is worth what it pays on the forward, discounted: $S e^{-qT} - K e^{-rT}$, or zero if that is negative. For Acme, $2.896924880604. As volatility grows without bound, almost every outcome is a near-worthless share or a huge one, the strike stops mattering, and the call is worth the share it may deliver: $S e^{-qT}$, here $98.019867330676.
+For existence, look at the ends. As volatility shrinks to zero the share stops wandering and the call is worth what it pays on the forward, discounted: $`S e^{-qT} - K e^{-rT}`$, or zero if that is negative. For Acme, $2.896924880604. As volatility grows without bound, almost every outcome is a near-worthless share or a huge one, the strike stops mattering, and the call is worth the share it may deliver: $`S e^{-qT}`$, here $98.019867330676.
 
 The price moves continuously between these two, so every quote strictly inside is met exactly once ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). A quote on or outside an edge is rejected, not solved.
 
@@ -106,55 +114,57 @@ Read the guesses 0.196282594886, 0.200000465889, 0.200000000000: the count of co
 
 How fast vega itself changes with volatility decides whether Newton overshoots. That rate — traders call it **vomma** — has a clean form:
 
-$$\frac{d\mathcal{V}}{d\sigma} = \mathcal{V}\,\frac{d_1 d_2}{\sigma}, \qquad d_1 d_2 = \frac{\ln(F/K)^2}{\sigma^2 T} - \frac{\sigma^2 T}{4}$$
+```math
+\frac{d\mathcal{V}}{d\sigma} = \mathcal{V}\,\frac{d_1 d_2}{\sigma}, \qquad d_1 d_2 = \frac{\ln(F/K)^2}{\sigma^2 T} - \frac{\sigma^2 T}{4}
+```
 
-Vega is positive, so the sign is the sign of $d_1 d_2$. The first term shrinks as volatility grows and the second grows, so $d_1 d_2$ is positive for small volatility, zero at exactly one point, and negative after. Setting it to zero gives $\sigma^2 T = 2\lvert\ln(F/K)\rvert$, which is $\sigma_c$.
+Vega is positive, so the sign is the sign of $`d_1 d_2`$. The first term shrinks as volatility grows and the second grows, so $`d_1 d_2`$ is positive for small volatility, zero at exactly one point, and negative after. Setting it to zero gives $`\sigma^2 T = 2\lvert\ln(F/K)\rvert`$, which is $`\sigma_c`$.
 
-Read the other way round: below $\sigma_c$, vega rises with volatility and the price curve is **convex** (bending upward, lying above every tangent line). Above $\sigma_c$ vega falls and the curve is **concave** (bending downward, lying below every tangent). At $\sigma_c$ vega is at its peak. For the house call $\ln(F/K) = (r - q)T = 0.03$, and $\sigma_c = \sqrt{2 \times 0.03 / 1}$ = 0.244948974278.
+Read the other way round: below $`\sigma_c`$, vega rises with volatility and the price curve is **convex** (bending upward, lying above every tangent line). Above $`\sigma_c`$ vega falls and the curve is **concave** (bending downward, lying below every tangent). At $`\sigma_c`$ vega is at its peak. For the house call $`\ln(F/K) = (r - q)T = 0.03`$, and $`\sigma_c = \sqrt{2 \times 0.03 / 1}`$ = 0.244948974278.
 
 <details>
 <summary>The algebra behind vomma</summary>
 
-Vega is $S e^{-qT}\varphi(d_1)\sqrt{T}$, and the bell curve's slope is $\varphi'(z) = -z\,\varphi(z)$. So $d\mathcal{V}/d\sigma = -\mathcal{V}\, d_1\, (\partial d_1/\partial\sigma)$.
+Vega is $`S e^{-qT}\varphi(d_1)\sqrt{T}`$, and the bell curve's slope is $`\varphi'(z) = -z\,\varphi(z)`$. So $`d\mathcal{V}/d\sigma = -\mathcal{V}\, d_1\, (\partial d_1/\partial\sigma)`$.
 
-Write $d_1 = \ln(F/K)/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}$. Then $\partial d_1/\partial\sigma = -\ln(F/K)/(\sigma^2\sqrt{T}) + \tfrac12\sqrt{T}$, which is $-\tfrac{1}{\sigma}\big(\ln(F/K)/(\sigma\sqrt{T}) - \tfrac12\sigma\sqrt{T}\big) = -d_2/\sigma$.
+Write $`d_1 = \ln(F/K)/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}`$. Then $`\partial d_1/\partial\sigma = -\ln(F/K)/(\sigma^2\sqrt{T}) + \tfrac12\sqrt{T}`$, which is $`-\tfrac{1}{\sigma}\big(\ln(F/K)/(\sigma\sqrt{T}) - \tfrac12\sigma\sqrt{T}\big) = -d_2/\sigma`$.
 
-Substituting, $d\mathcal{V}/d\sigma = \mathcal{V} d_1 d_2/\sigma$. Multiplying out $d_1 d_2 = (a + b)(a - b) = a^2 - b^2$ with $a = \ln(F/K)/(\sigma\sqrt{T})$ and $b = \tfrac12\sigma\sqrt{T}$ gives the second formula.
+Substituting, $`d\mathcal{V}/d\sigma = \mathcal{V} d_1 d_2/\sigma`$. Multiplying out $`d_1 d_2 = (a + b)(a - b) = a^2 - b^2`$ with $`a = \ln(F/K)/(\sigma\sqrt{T})`$ and $`b = \tfrac12\sigma\sqrt{T}`$ gives the second formula.
 
 </details>
 
 ### Step 3: Newton from the peak never overshoots
 
-Start at $\sigma_c$. Suppose the answer lies below it, as for the house quote. The start prices too high, so Newton steps down.
+Start at $`\sigma_c`$. Suppose the answer lies below it, as for the house quote. The start prices too high, so Newton steps down.
 
-On the convex side the curve lies above its tangent, so where the tangent reaches the quote the curve is still at or above it: the new guess is still at or above the answer. Each step moves down and none passes the answer. A sequence that only falls and cannot pass a floor settles, and it can only settle where the price gap is zero. If the answer lies above $\sigma_c$, the mirror argument runs on the concave side, climbing.
+On the convex side the curve lies above its tangent, so where the tangent reaches the quote the curve is still at or above it: the new guess is still at or above the answer. Each step moves down and none passes the answer. A sequence that only falls and cannot pass a floor settles, and it can only settle where the price gap is zero. If the answer lies above $`\sigma_c`$, the mirror argument runs on the concave side, climbing.
 
-The code checks this on the one-week 5-delta call. From $\sigma_c$ = 2.1872 the guesses fall every step and reach 0.20 in 8 trips. The start also sidesteps the flat-vega trap: every guess sits between the answer and the peak, where vega is at least its value at the answer.
+The code checks this on the one-week 5-delta call. From $`\sigma_c`$ = 2.1872 the guesses fall every step and reach 0.20 in 8 trips. The start also sidesteps the flat-vega trap: every guess sits between the answer and the peak, where vega is at least its value at the answer.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write $g(\sigma) = C(\sigma) - C_{\text{mkt}}$, so $g' = \mathcal{V} > 0$ and $g'' = \mathcal{V} d_1 d_2/\sigma$. Step 2 shows $g'' \ge 0$ on $(0, \sigma_c]$ and $g'' \le 0$ on $[\sigma_c, \infty)$.
+Write $`g(\sigma) = C(\sigma) - C_{\text{mkt}}`$, so $`g' = \mathcal{V} > 0`$ and $`g'' = \mathcal{V} d_1 d_2/\sigma`$. Step 2 shows $`g'' \ge 0`$ on $`(0, \sigma_c]`$ and $`g'' \le 0`$ on $`[\sigma_c, \infty)`$.
 
-**Case $\sigma_* < \sigma_c$.** Claim: every $\sigma_n$ lies in $[\sigma_*, \sigma_c]$ and $\sigma_{n+1} \le \sigma_n$. True at $n = 0$. If $\sigma_n$ is in that interval then $g(\sigma_n) \ge 0$, so $\sigma_{n+1} = \sigma_n - g(\sigma_n)/g'(\sigma_n) \le \sigma_n$. On the convex interval the curve lies above each tangent: $g(\sigma) \ge g(\sigma_n) + g'(\sigma_n)(\sigma - \sigma_n)$ for every $\sigma$ in $[\sigma_*, \sigma_n]$. Suppose $\sigma_{n+1} < \sigma_*$. The tangent is zero at $\sigma_{n+1}$ and climbs with slope $g'(\sigma_n) > 0$, so at $\sigma_*$ it is positive, while $g(\sigma_*) = 0$: the curve would lie below its tangent, a contradiction. So $\sigma_{n+1} \ge \sigma_*$.
+**Case $`\sigma_* < \sigma_c`$.** Claim: every $`\sigma_n`$ lies in $`[\sigma_*, \sigma_c]`$ and $`\sigma_{n+1} \le \sigma_n`$. True at $`n = 0`$. If $`\sigma_n`$ is in that interval then $`g(\sigma_n) \ge 0`$, so $`\sigma_{n+1} = \sigma_n - g(\sigma_n)/g'(\sigma_n) \le \sigma_n`$. On the convex interval the curve lies above each tangent: $`g(\sigma) \ge g(\sigma_n) + g'(\sigma_n)(\sigma - \sigma_n)`$ for every $`\sigma`$ in $`[\sigma_*, \sigma_n]`$. Suppose $`\sigma_{n+1} < \sigma_*`$. The tangent is zero at $`\sigma_{n+1}`$ and climbs with slope $`g'(\sigma_n) > 0`$, so at $`\sigma_*`$ it is positive, while $`g(\sigma_*) = 0`$: the curve would lie below its tangent, a contradiction. So $`\sigma_{n+1} \ge \sigma_*`$.
 
-The sequence falls and is bounded below, so it has a limit, call it L, in $[\sigma_*, \sigma_c]$. The step shrinks to zero, and $g'$ is at least $g'(\sigma_*) > 0$ on the interval, so $g(\sigma_n) = g'(\sigma_n)(\sigma_n - \sigma_{n+1})$ tends to zero; by continuity $g(L) = 0$, and uniqueness makes L the answer $\sigma_*$.
+The sequence falls and is bounded below, so it has a limit, call it L, in $`[\sigma_*, \sigma_c]`$. The step shrinks to zero, and $`g'`$ is at least $`g'(\sigma_*) > 0`$ on the interval, so $`g(\sigma_n) = g'(\sigma_n)(\sigma_n - \sigma_{n+1})`$ tends to zero; by continuity $`g(L) = 0`$, and uniqueness makes L the answer $`\sigma_*`$.
 
-**Case $\sigma_* > \sigma_c$.** The same argument with every inequality reversed: the start prices too low, the curve lies below its tangents on the concave side, the guesses climb and never pass $\sigma_*$.
+**Case $`\sigma_* > \sigma_c`$.** The same argument with every inequality reversed: the start prices too low, the curve lies below its tangents on the concave side, the guesses climb and never pass $`\sigma_*`$.
 
-**Case $\sigma_* = \sigma_c$.** The first guess is the answer.
+**Case $`\sigma_* = \sigma_c`$.** The first guess is the answer.
 
-**Case $K = F$.** Then $\sigma_c = 0$ and the curve is concave everywhere. Any positive start below the answer climbs without passing it, by the second case's argument.
+**Case $`K = F`$.** Then $`\sigma_c = 0`$ and the curve is concave everywhere. Any positive start below the answer climbs without passing it, by the second case's argument.
 
 </details>
 
-Manaster and Koehler gave this start in 1982, and it is still the textbook fix. Newton converges from anywhere between the answer and $\sigma_c$; outside that stretch it is not guaranteed to.
+Manaster and Koehler gave this start in 1982, and it is still the textbook fix. Newton converges from anywhere between the answer and $`\sigma_c`$; outside that stretch it is not guaranteed to.
 
 ### Step 4: where vega is flat, a careless start dies
 
 Now start at 5 percent: a plausible guess for a quiet stock. On the one-year house quote nothing goes wrong: at the money a year out, even a low volatility leaves the price responsive, and Newton arrives in 5 trips.
 
-On a one-week option the picture of vega above explains the rest. One week is taken as $T = 1/52$ year.
+On a one-week option the picture of vega above explains the rest. One week is taken as $`T = 1/52`$ year.
 
 Take the one-week **20-delta** call: the strike whose call delta — the share-equivalent the call carries — is 0.20, found as on [Strike from delta](03-strike-from-delta.md). It is $102.459385, priced at $0.305628 at 20 percent volatility.
 
@@ -162,7 +172,7 @@ At a 5 percent guess the price is $0.305572 too low and vega is 0.016098190330 d
 
 The one-week **5-delta** call, strike $104.767812, fares worse. At the 5 percent guess vega is 0.000000001569. One step lands at 36549384.536295.
 
-Both starts sat on the convex side below the answer, where the tangent lies under the curve and aims too far. The flatter the tangent, the further it aims. Short expiry makes it flat because the total volatility $\sigma\sqrt{T}$ is small, so a strike a few dollars away is many units of it from the money, deep in the bell curve's tail.
+Both starts sat on the convex side below the answer, where the tangent lies under the curve and aims too far. The flatter the tangent, the further it aims. Short expiry makes it flat because the total volatility $`\sigma\sqrt{T}`$ is small, so a strike a few dollars away is many units of it from the money, deep in the bell curve's tail.
 
 ### Step 5: the bracket is the net
 
@@ -188,9 +198,9 @@ From the same careless 5 percent start, the guarded solver solves the one-week 2
 
 ### Step 6: the answer is only as sharp as the quote
 
-A market does not print one price. It prints a bid and an ask, and the true price lies somewhere between. Near the answer, the tangent line says price changes by $\mathcal{V}\,\Delta\sigma$ when volatility changes by $\Delta\sigma$. Run backwards, a price range of width $w$ is a volatility range of width about $w / \mathcal{V}$.
+A market does not print one price. It prints a bid and an ask, and the true price lies somewhere between. Near the answer, the tangent line says price changes by $`\mathcal{V}\,\Delta\sigma`$ when volatility changes by $`\Delta\sigma`$. Run backwards, a price range of width $`w`$ is a volatility range of width about $`w / \mathcal{V}`$.
 
-Vega is quoted per 1.00 of volatility, and a **volatility point** is 0.01, one percent. So the width in points is $100\,w/\mathcal{V}$. With a 5-cent width:
+Vega is quoted per 1.00 of volatility, and a **volatility point** is 0.01, one percent. So the width in points is $`100\,w/\mathcal{V}`$. With a 5-cent width:
 
 | Option | Mid price | Vega per point | Width over vega, points | Exact ask vol minus bid vol, points |
 | --- | --- | --- | --- | --- |
@@ -215,24 +225,24 @@ The same 5 cents is a tenth of a point on the one-year call and several points o
 
 Jäckel's "Let's Be Rational" reshapes the price before solving: it divides out the discounting, rewrites the strike as a log-distance from the forward, draws a starting guess from rational functions fitted to that shape, and needs two steps of a higher-order cousin of Newton to reach full double precision. It is what fast libraries use. It is named here and not built; the residual, the slope and the curvature above are still its raw material.
 
-For quotes near the money, Brenner and Subrahmanyam's approximation — the at-the-money call is roughly $S\sigma\sqrt{T/(2\pi)}$, solved for $\sigma$ — gives a start with no solving at all.
+For quotes near the money, Brenner and Subrahmanyam's approximation — the at-the-money call is roughly $`S\sigma\sqrt{T/(2\pi)}`$, solved for $`\sigma`$ — gives a start with no solving at all.
 
 ---
 
 ## Worked numbers, by hand
 
-The house quote: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $T = 1$ year, $C_{\text{mkt}}$ = $9.227005508154. Newton from 0.50:
+The house quote: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`T = 1`$ year, $`C_{\text{mkt}}`$ = $9.227005508154. Newton from 0.50:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| price gap at 0.50 | $C(0.50) - 9.227005508154$ | +11.319467764849 |
-| vega at 0.50 | $S e^{-qT}\varphi(d_1)\sqrt{T}$ | 37.269737 |
+| price gap at 0.50 | $`C(0.50) - 9.227005508154`$ | +11.319467764849 |
+| vega at 0.50 | $`S e^{-qT}\varphi(d_1)\sqrt{T}`$ | 37.269737 |
 | step 1 | 0.50 − 11.319467764849 / 37.269737 | 0.196282594886 |
 | gap and vega there | | −0.140876951526 and 37.891834 |
 | step 2 | 0.196282594886 + 0.140876951526 / 37.891834 | 0.200000465889 |
 | gap and vega there | | +0.000017657724 and 37.901159 |
 | step 3 | 0.200000465889 − 0.000017657724 / 37.901159 | **0.200000000000** |
-| from $\sigma_c$ = 0.244948974278 instead | never overshoots | 4 trips |
+| from $`\sigma_c`$ = 0.244948974278 instead | never overshoots | 4 trips |
 | by bisection on 0.01 to 5.00 | 43 halvings | 0.200000000000 |
 | the house put, $6.330080627550 | same routine | 0.200000000000 |
 | width of a 5-cent quote | 100 × 0.05 / 37.901157510017 | 0.1319 points |
@@ -441,7 +451,7 @@ chart, cents per point, 1w    0.00   0.10   0.94   3.53   5.53   3.83   1.25   0
 ALL CHECKS PASS
 ```
 
-Newton from 0.50 and from $\sigma_c$ each take four prices. Bisection needs 43 halvings and cannot fail. The low start dies on both one-week wing calls, and the guarded solver rescues each with one fallback.
+Newton from 0.50 and from $`\sigma_c`$ each take four prices. Bisection needs 43 halvings and cannot fail. The low start dies on both one-week wing calls, and the guarded solver rescues each with one fallback.
 
 ### Rust
 
@@ -665,15 +675,15 @@ The two outputs agree line for line at every printed digit.
 Lean proves Steps 0, 2 and 3 for any call with a positive share price, strike and time to expiry.
 
 - Suppose the quote lies strictly between the call's floor and ceiling. Then exactly one positive volatility gives the quote as its Black–Scholes price.
-- Take any positive volatility $\sigma$. Then vomma, the slope of vega against volatility, is $\mathcal{V} d_1 d_2/\sigma$.
-- Take any positive volatility $\sigma$. Then $d_1 d_2 = \ln(F/K)^2/(\sigma^2 T) - \sigma^2 T/4$.
-- Take any positive volatility $\sigma$. Then $d_1 d_2 \ge 0$ exactly when $\sigma \le \sigma_c$, so vega rises up to $\sigma_c$ and falls after it.
-- Suppose the quote lies inside the edges and the answer $\sigma_*$ is at most $\sigma_c$. Then Newton from $\sigma_c$ never rises and never drops below $\sigma_*$.
-- Suppose instead $\sigma_*$ is at least $\sigma_c$. Then Newton from $\sigma_c$ never falls and never passes $\sigma_*$.
-- Either way, Newton's guesses from $\sigma_c$ converge to the answer $\sigma_*$.
-- The house call's numbers match: $\ln(F/K) = 0.03$, $\sigma_c^2 = 0.06$, and $d_1 = 0.25$ at the answer.
-- Both forms of $d_1 d_2$ give 0.0125 there.
-- Bisection on the bracket 0.01 to 5.00 needs 43 halvings, not 42, to get under $10^{-12}$.
+- Take any positive volatility $`\sigma`$. Then vomma, the slope of vega against volatility, is $`\mathcal{V} d_1 d_2/\sigma`$.
+- Take any positive volatility $`\sigma`$. Then $`d_1 d_2 = \ln(F/K)^2/(\sigma^2 T) - \sigma^2 T/4`$.
+- Take any positive volatility $`\sigma`$. Then $`d_1 d_2 \ge 0`$ exactly when $`\sigma \le \sigma_c`$, so vega rises up to $`\sigma_c`$ and falls after it.
+- Suppose the quote lies inside the edges and the answer $`\sigma_*`$ is at most $`\sigma_c`$. Then Newton from $`\sigma_c`$ never rises and never drops below $`\sigma_*`$.
+- Suppose instead $`\sigma_*`$ is at least $`\sigma_c`$. Then Newton from $`\sigma_c`$ never falls and never passes $`\sigma_*`$.
+- Either way, Newton's guesses from $`\sigma_c`$ converge to the answer $`\sigma_*`$.
+- The house call's numbers match: $`\ln(F/K) = 0.03`$, $`\sigma_c^2 = 0.06`$, and $`d_1 = 0.25`$ at the answer.
+- Both forms of $`d_1 d_2`$ give 0.0125 there.
+- Bisection on the bracket 0.01 to 5.00 needs 43 halvings, not 42, to get under $`10^{-12}`$.
 
 The guarded solver, every price and vega value, the trip counts and the bid-ask widths are left to the Python and Rust checks.
 
@@ -1336,7 +1346,7 @@ end ImpliedVolNewtonBisection
 > **Try changing**
 > Guess first, then run.
 > - **A low start at the money.** Change the house run's start from 0.50 to 0.05. Guess: trouble? No: the one-year at-the-money call has vega to spare, and Newton lands on 0.200000 in 5 trips, as the table's first row shows.
-> - **Start the 5-delta at the peak.** The table already does it: from $\sigma_c$ = 2.1872 the guesses fall every step and arrive in 8 trips, against a first step to 36549384.536295 from 0.05.
+> - **Start the 5-delta at the peak.** The table already does it: from $`\sigma_c`$ = 2.1872 the guesses fall every step and arrive in 8 trips, against a first step to 36549384.536295 from 0.05.
 > - **Delete the net.** Remove the line in `guarded` that takes the midpoint. Guess which assert fires. It is "every safe road lands": the one-week wing calls fly out of the bracket and never come back.
 > - **Start at a fixed 0.10 instead of the peak.** Make `s_peak` return 0.1. "vega peaks at sigma_c" fires first. Delete it and "from sigma_c: never overshoots" fails: 0.10 is below the 5-delta's answer on the convex side, and the first step jumps past it.
 

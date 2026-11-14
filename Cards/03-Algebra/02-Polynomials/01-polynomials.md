@@ -35,29 +35,35 @@ The line is the height. It meets zero twice, at 0 and at 4 seconds: the two root
 
 Biggest power first, each power of the letter carrying a plain number in front:
 
-$$h(t) = -5t^2 + 20t$$
+```math
+h(t) = -5t^2 + 20t
+```
 
-**Read it aloud:** the height after $t$ seconds is twenty times the seconds, minus five times the seconds squared.
+**Read it aloud:** the height after $`t`$ seconds is twenty times the seconds, minus five times the seconds squared.
 
-Each piece is a **term**, and the number in front is its **coefficient**. No term here stands alone without a $t$, so the **constant term** is 0: the ball starts on the grass.
+Each piece is a **term**, and the number in front is its **coefficient**. No term here stands alone without a $`t`$, so the **constant term** is 0: the ball starts on the grass.
 
 | Symbol | Plain meaning | In the ball's flight | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | the letter, the input; seconds since the kick | 0 to 4 | later in the flight |
-| $h$ | what comes back; metres above the grass | 15 at 1 second | — |
-| $n$ | the **degree**: the biggest power present | 2 | more bends, wilder far end |
-| $r$ | a **root**: an input giving 0 | 0 and 4 | — |
-| $s$ | seconds either side of the top | 0, 1 or 2 | the ball is lower |
-| $a$ | first piece of a two-term bracket | 2, in (2 + $s$) | — |
-| $b$ | second piece of a two-term bracket | $s$, in (2 + $s$) | — |
+| $`t`$ | the letter, the input; seconds since the kick | 0 to 4 | later in the flight |
+| $`h`$ | what comes back; metres above the grass | 15 at 1 second | — |
+| $`n`$ | the **degree**: the biggest power present | 2 | more bends, wilder far end |
+| $`r`$ | a **root**: an input giving 0 | 0 and 4 | — |
+| $`s`$ | seconds either side of the top | 0, 1 or 2 | the ball is lower |
+| $`a`$ | first piece of a two-term bracket | 2, in (2 + $`s`$) | — |
+| $`b`$ | second piece of a two-term bracket | $`s`$, in (2 + $`s`$) | — |
 
 Two products turn up often enough to know on sight.
 
-$$(a + b)^2 = a^2 + 2ab + b^2$$
+```math
+(a + b)^2 = a^2 + 2ab + b^2
+```
 
 Squaring a two-term bracket gives the two squares **and**, between them, twice the product. That middle term is the one people drop.
 
-$$(a - b)(a + b) = a^2 - b^2$$
+```math
+(a - b)(a + b) = a^2 - b^2
+```
 
 A difference times a sum leaves the two squares: the middle terms cancel.
 
@@ -80,7 +86,7 @@ Raise the letter to a whole-number power. Multiply by a number. Add. That is the
 
 ### Step 1: putting a number in is arithmetic
 
-Substitute the seconds for $t$ and work the two terms out separately. They pull against each other.
+Substitute the seconds for $`t`$ and work the two terms out separately. They pull against each other.
 
 The 20t piece climbs in even steps: 20, 40, 60, 80 metres at 1, 2, 3 and 4 seconds. The 5t^2 piece starts smaller and climbs faster: 5, 20, 45, 80. Subtract and you get 15, 20, 15, 0 — the flight. At 4 seconds the squared piece has caught up exactly, both are 80, and the ball is down.
 
@@ -98,7 +104,7 @@ Look far out and the top power wins. At 10 seconds 20t is 200 but 5t^2 is 500, s
 | 1 | a number times the letter, plus a plain number | a straight line, no bends |
 | 2 | a squared term as well | one bend, up then down or down then up |
 
-Degree 3 adds a cubed term and a second bend, and so on up: a polynomial of degree $n$ bends at most $n$ − 1 times and crosses zero at most $n$ times — the job of [Roots and factors](05-roots-and-the-factor-theorem.md).
+Degree 3 adds a cubed term and a second bend, and so on up: a polynomial of degree $`n`$ bends at most $`n`$ − 1 times and crosses zero at most $`n`$ times — the job of [Roots and factors](05-roots-and-the-factor-theorem.md).
 
 ### Step 3: adding is collecting like terms, and the degree can fall
 
@@ -116,17 +122,19 @@ Multiply 5t by (4 − t): 5t × 4 = 20t, and 5t × (−t) = −5t^2. That is the
 
 Add two polynomials, or multiply them, and another polynomial comes back. The family is closed under both, which earns polynomials a name of their own in [Rings](../09-Rings%20and%20Fields/01-rings.md).
 
-Now put the squaring pattern to work. Why is the flight symmetric, 15, 20, 15? Write the time as 2 + $s$, meaning $s$ seconds either side of the top, and expand the square with $a$ = 2 and $b$ = $s$:
+Now put the squaring pattern to work. Why is the flight symmetric, 15, 20, 15? Write the time as 2 + $`s`$, meaning $`s`$ seconds either side of the top, and expand the square with $`a`$ = 2 and $`b`$ = $`s`$:
 
-$$h(2 + s) = 20(2 + s) - 5(4 + 4s + s^2) = 40 + 20s - 20 - 20s - 5s^2 = 20 - 5s^2$$
+```math
+h(2 + s) = 20(2 + s) - 5(4 + 4s + s^2) = 40 + 20s - 20 - 20s - 5s^2 = 20 - 5s^2
+```
 
-The $s$ terms cancel, and what is left depends on $s$ squared, which does not care which side of the top you stepped. One second before and one after both give 20 − 5 = 15 metres. That is why the heights read 15, 20, 15.
+The $`s`$ terms cancel, and what is left depends on $`s`$ squared, which does not care which side of the top you stepped. One second before and one after both give 20 − 5 = 15 metres. That is why the heights read 15, 20, 15.
 
-The roots drop out of the second pattern. The ball is down when 20 − 5$s$^2 = 0, so when 4 − $s$^2 = 0, and a^2 − b^2 = (a − b)(a + b) turns that into (2 − $s$)(2 + $s$): zero when $s$ is 2 or −2, two seconds after the top or two before. In seconds since the kick, 4 and 0.
+The roots drop out of the second pattern. The ball is down when 20 − 5$`s`$^2 = 0, so when 4 − $`s`$^2 = 0, and a^2 − b^2 = (a − b)(a + b) turns that into (2 − $`s`$)(2 + $`s`$): zero when $`s`$ is 2 or −2, two seconds after the top or two before. In seconds since the kick, 4 and 0.
 
 ### Step 5: a root is an input, not an output
 
-Put 4 in: 80 − 80 = 0. So $r$ = 4 is a root. The 4 is a time and the 0 is a height, and it is the time that gets the name. On the chart the roots are where the line meets the axis.
+Put 4 in: 80 − 80 = 0. So $`r`$ = 4 is a root. The 4 is a time and the 0 is a height, and it is the time that gets the name. On the chart the roots are where the line meets the axis.
 
 The other route: leave 5t(4 − t) in brackets. A product is zero only when a piece of it is, so 5t = 0 or 4 − t = 0 — both roots by inspection. That is [Factoring](02-factoring-quadratics.md).
 
@@ -154,7 +162,7 @@ To two decimals.
 | --- | --- | --- |
 | Reading 5t^2 as (5t)^2 | −165.00 at 3 seconds | The power sits on the letter alone: square the seconds, then multiply by 5 — 45.00 |
 | Multiplying 5t × (4 − t) as 5 × 4 and t × (−t) | 11.00 at 3 seconds | That reads 20 − t^2. Every term must meet every term: 5t × 4 = 20t, then 5t × (−t) = −5t^2 |
-| Reading (2 + $s$)^2 as 4 + $s$^2 | 35.00 at 3 seconds, where $s$ = 1 | The middle term 2ab is missing |
+| Reading (2 + $`s`$)^2 as 4 + $`s`$^2 | 35.00 at 3 seconds, where $`s`$ = 1 | The middle term 2ab is missing |
 
 The code prints all three.
 
@@ -361,7 +369,7 @@ Lean proves the degree rules for every polynomial with ordinary numbers as coeff
 
 - Multiplying two polynomials adds their degrees.
 - Adding two polynomials never pushes the degree above the bigger of the two degrees.
-- $(a + b)^2 = a^2 + 2ab + b^2$ and $(a - b)(a + b) = a^2 - b^2$, whatever numbers $a$ and $b$ are.
+- $`(a + b)^2 = a^2 + 2ab + b^2`$ and $`(a - b)(a + b) = a^2 - b^2`$, whatever numbers $`a`$ and $`b`$ are.
 
 The half-second heights, the second road and the level point at 0.375 seconds are left to the Python and Rust checks.
 

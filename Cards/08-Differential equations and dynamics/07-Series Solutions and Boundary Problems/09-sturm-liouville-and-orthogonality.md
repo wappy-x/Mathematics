@@ -28,26 +28,30 @@ To scale: 280 px per metre across, 100 px per unit up. Dashed: sin(πx). Dotted:
 
 Notation first: y' is the slope along the string, and (p y')' the rate of change of p times the slope. A **mode** is a nonzero shape y solving the equation below with the end conditions; its number λ is its **eigenvalue**. The Sturm-Liouville form:
 
-$$-\big(p(x)\,y'\big)' + q(x)\,y = \lambda\, w(x)\, y, \qquad a < x < b .$$
+```math
+-\big(p(x)\,y'\big)' + q(x)\,y = \lambda\, w(x)\, y, \qquad a < x < b .
+```
 
 **Read it aloud:** minus the rate of (stiffness times slope), plus the potential times the shape, equals the eigenvalue times the weight times the shape.
 
-The left side is $L$ for short. Each end has one condition: y = 0, or p y' = 0, or a fixed real ratio of the two. The conclusion:
+The left side is $`L`$ for short. Each end has one condition: y = 0, or p y' = 0, or a fixed real ratio of the two. The conclusion:
 
-$$\int_a^b w(x)\,y_m(x)\,y_n(x)\,dx = 0 \quad (m \ne n), \qquad c_n = \frac{\int_a^b w\,f\,y_n\,dx}{\int_a^b w\,y_n^{2}\,dx}.$$
+```math
+\int_a^b w(x)\,y_m(x)\,y_n(x)\,dx = 0 \quad (m \ne n), \qquad c_n = \frac{\int_a^b w\,f\,y_n\,dx}{\int_a^b w\,y_n^{2}\,dx}.
+```
 
 **Read it aloud:** two different modes, multiplied and weighted, integrate to zero; the amount of mode n in a shape f is their weighted overlap over the mode's weighted size.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $r$, $a$, $b$ | position: m along the string, drum radii from the centre; ends a and b | 0 to 1 on both | — |
-| $y$, $y_n$, $u$, $v$ | a mode's shape; mode number n; two modes compared | sin(nπx); J0(j1 r) | — |
-| $p$, $B$ | stiffness; B is the slope coefficient it is built from | p = 1 string, p = r drum | higher eigenvalues |
-| $q$, $L$ | a potential, like springs under the string; L is the left side | q = 0 on both | eigenvalues shift up |
-| $w$ | the weight: how much each point counts | w = 1 string, w = r drum | lower eigenvalues |
-| $\lambda$, $\lambda_n$, $\mu$ | eigenvalues: the square of each mode's wave number | n^2 π^2 string; j1^2 drum | a faster mode |
-| $f$, $c_n$, $N$ | a starting shape, in cm; amount of mode n; modes kept | x(1 − x); c1 = 0.258012 | closer to f |
-| $J_0$, $J_1$, $j_1$, $j_2$ | Bessel's functions of order 0 and 1; J0's first two zeros | 2.404825558, 5.520078110 | — |
+| $`x`$, $`r`$, $`a`$, $`b`$ | position: m along the string, drum radii from the centre; ends a and b | 0 to 1 on both | — |
+| $`y`$, $`y_n`$, $`u`$, $`v`$ | a mode's shape; mode number n; two modes compared | sin(nπx); J0(j1 r) | — |
+| $`p`$, $`B`$ | stiffness; B is the slope coefficient it is built from | p = 1 string, p = r drum | higher eigenvalues |
+| $`q`$, $`L`$ | a potential, like springs under the string; L is the left side | q = 0 on both | eigenvalues shift up |
+| $`w`$ | the weight: how much each point counts | w = 1 string, w = r drum | lower eigenvalues |
+| $`\lambda`$, $`\lambda_n`$, $`\mu`$ | eigenvalues: the square of each mode's wave number | n^2 π^2 string; j1^2 drum | a faster mode |
+| $`f`$, $`c_n`$, $`N`$ | a starting shape, in cm; amount of mode n; modes kept | x(1 − x); c1 = 0.258012 | closer to f |
+| $`J_0`$, $`J_1`$, $`j_1`$, $`j_2`$ | Bessel's functions of order 0 and 1; J0's first two zeros | 2.404825558, 5.520078110 | — |
 
 ### When it holds
 
@@ -66,7 +70,7 @@ A symmetric matrix A, with u · Av equal to v · Au for all vectors u and v, has
 
 ### Step 1: put the equation in the form
 
-Take y'' + B(x) y' + (a multiple of y) = −λ y. Multiply through by $p$ = e raised to the integral of B. Then p' = p B, so p y'' + p B y' is (p y')', the product rule backwards. Whatever now multiplies λ is the weight.
+Take y'' + B(x) y' + (a multiple of y) = −λ y. Multiply through by $`p`$ = e raised to the integral of B. Then p' = p B, so p y'' + p B y' is (p y')', the product rule backwards. Whatever now multiplies λ is the weight.
 
 The drum's ring modes solve y'' + (1/r) y' + λ y = 0, with y(1) = 0 at the rim. B = 1/r integrates to ln r, so p = r: (r y')' + λ r y = 0, with weight r, the overview's circumference factor. The string already has p = w = 1.
 
@@ -74,7 +78,9 @@ The drum's ring modes solve y'' + (1/r) y' + λ y = 0, with y(1) = 0 at the rim.
 
 Take shapes u and v with the same end conditions. Integrate u (p v')' by parts twice ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)); each round moves a derivative from v to u and leaves an end term, and the middle pieces p u' v' cancel:
 
-$$\int_a^b (u\,Lv - v\,Lu)\,dx = \Big[\,p\,(u'v - u\,v')\,\Big]_a^b .$$
+```math
+\int_a^b (u\,Lv - v\,Lu)\,dx = \Big[\,p\,(u'v - u\,v')\,\Big]_a^b .
+```
 
 This is **Lagrange's identity**; q u v appears on both sides and drops out. At a pinned end u = v = 0, so the bracket is 0; at the drum's centre p = r = 0 kills it.
 
@@ -82,7 +88,9 @@ This is **Lagrange's identity**; q u v appears on both sides and drops out. At a
 
 Let u be a mode with eigenvalue λ and v one with eigenvalue μ. Then Lu = λ w u and Lv = μ w v. The identity's right side is 0, so
 
-$$(\mu - \lambda)\int_a^b w\,u\,v\,dx = 0 .$$
+```math
+(\mu - \lambda)\int_a^b w\,u\,v\,dx = 0 .
+```
 
 If μ ≠ λ the weighted integral must vanish. On the drum, λ = j1^2 and μ = j2^2, and the integral of r J0(j1 r) J0(j2 r) is 0.
 
@@ -92,7 +100,7 @@ Suppose a mode y were complex, with eigenvalue λ. Since p, q and w are real, it
 
 ### Step 5: read off the amounts of each mode
 
-If f = c1 y1 + c2 y2 + …, multiply by w y_n and integrate. By Step 3 every term dies but the one with y_n, leaving c_n times the integral of w y_n^2. Divide: that is the formula for $c_n$, the same move that finds a vector's components along perpendicular axes.
+If f = c1 y1 + c2 y2 + …, multiply by w y_n and integrate. By Step 3 every term dies but the one with y_n, leaving c_n times the integral of w y_n^2. Divide: that is the formula for $`c_n`$, the same move that finds a vector's components along perpendicular axes.
 
 Whether the sum rebuilds f with nothing missing is a separate claim, **completeness**. It holds for regular problems (finite interval, p and w positive on all of it, ends included) and for the drum; the proof is on Compact and symmetric.
 

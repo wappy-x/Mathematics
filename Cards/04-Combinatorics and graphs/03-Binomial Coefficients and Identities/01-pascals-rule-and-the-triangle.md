@@ -37,24 +37,28 @@ The branches add to the whole: 6 + 4 = 10.
 
 C(n, k) counts the ways to choose k items from n when order is ignored, read "n choose k" ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)). One convention makes the ends of a row behave: a count of something impossible is zero, so C(n, k) = 0 whenever k is below 0 or above n.
 
-$$C(n, k) = C(n-1, k-1) + C(n-1, k)$$
+```math
+C(n, k) = C(n-1, k-1) + C(n-1, k)
+```
 
 **Read it aloud:** the picks of size k are the picks that keep one singled-out item, plus the picks that leave it out.
 
 Adding a whole row gives the second statement:
 
-$$C(n, 0) + C(n, 1) + \cdots + C(n, n) = 2^n$$
+```math
+C(n, 0) + C(n, 1) + \cdots + C(n, n) = 2^n
+```
 
 **Read it aloud:** counting picks size by size and adding gives the same total as one yes-or-no answer per item.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | items available | 5 songs | longer rows, bigger counts |
-| $k$ | items in one pick | 2 | climbs to mid-row, then falls |
-| $C(n,k)$ | picks of $k$ from $n$ | C(5,2) = 10 | — |
-| $C(n-1,k-1)$ | picks keeping the singled-out item | C(4,1) = 4 | — |
-| $C(n-1,k)$ | picks leaving it out | C(4,2) = 6 | — |
-| $2^n$ | 2 multiplied in $n$ times | 32 | doubles per item |
+| $`n`$ | items available | 5 songs | longer rows, bigger counts |
+| $`k`$ | items in one pick | 2 | climbs to mid-row, then falls |
+| $`C(n,k)`$ | picks of $`k`$ from $`n`$ | C(5,2) = 10 | — |
+| $`C(n-1,k-1)`$ | picks keeping the singled-out item | C(4,1) = 4 | — |
+| $`C(n-1,k)`$ | picks leaving it out | C(4,2) = 6 | — |
+| $`2^n`$ | 2 multiplied in $`n`$ times | 32 | doubles per item |
 
 ### When it holds
 

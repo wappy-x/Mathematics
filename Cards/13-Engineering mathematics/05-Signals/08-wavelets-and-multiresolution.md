@@ -34,37 +34,43 @@ Each rung halves the resolution. The detail box beside it holds exactly what the
 
 ## The formula
 
-Notation first. The scanned row is $x[n]$, pixel number $n$, with $N$ pixels in all. Level $j$ is the rung of the ladder, from 1 (finest) to $J$ (coarsest); here $j$ is a level number, not the square root of −1 used elsewhere on this shelf. $k$ counts positions along a level. The row itself is level 0, so $s_0[n] = x[n]$.
+Notation first. The scanned row is $`x[n]`$, pixel number $`n`$, with $`N`$ pixels in all. Level $`j`$ is the rung of the ladder, from 1 (finest) to $`J`$ (coarsest); here $`j`$ is a level number, not the square root of −1 used elsewhere on this shelf. $`k`$ counts positions along a level. The row itself is level 0, so $`s_0[n] = x[n]`$.
 
-$$s_j[k] = \frac{s_{j-1}[2k] + s_{j-1}[2k+1]}{\sqrt2},\qquad d_j[k] = \frac{s_{j-1}[2k] - s_{j-1}[2k+1]}{\sqrt2}$$
+```math
+s_j[k] = \frac{s_{j-1}[2k] + s_{j-1}[2k+1]}{\sqrt2},\qquad d_j[k] = \frac{s_{j-1}[2k] - s_{j-1}[2k+1]}{\sqrt2}
+```
 
-$$s_{j-1}[2k] = \frac{s_j[k] + d_j[k]}{\sqrt2},\qquad s_{j-1}[2k+1] = \frac{s_j[k] - d_j[k]}{\sqrt2}$$
+```math
+s_{j-1}[2k] = \frac{s_j[k] + d_j[k]}{\sqrt2},\qquad s_{j-1}[2k+1] = \frac{s_j[k] - d_j[k]}{\sqrt2}
+```
 
-$$\hat d_j[k] = \begin{cases} d_j[k] & \text{if } |d_j[k]| > T\\ 0 & \text{otherwise}\end{cases},\qquad T = \hat\sigma\sqrt{2\ln N},\qquad \hat\sigma = \frac{\operatorname{median}\,|d_1[k]|}{0.6745}$$
+```math
+\hat d_j[k] = \begin{cases} d_j[k] & \text{if } |d_j[k]| > T\\ 0 & \text{otherwise}\end{cases},\qquad T = \hat\sigma\sqrt{2\ln N},\qquad \hat\sigma = \frac{\mathrm{median}\,|d_1[k]|}{0.6745}
+```
 
 **Read it aloud:** take neighbours in pairs, keep their sum and their difference, each divided by root two, and repeat on the sums; to clean the row, zero every difference smaller than the noise level times the square root of two times the natural log of N, and run the pairing backwards.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x[n]$ | the scanned row: grey level of pixel $n$, 0 black to 255 white | 512 pixels; paper 215, ink 50 | — |
-| $N$ | how many pixels in the row | 512 | $T$ rises slowly, as $\sqrt{2\ln N}$ |
-| $j,\ J$ | the rung of the ladder, and the deepest rung | $J$ = 3: 150, 75 and 37.5 dpi | the coarse picture gets coarser; wide features move into the details |
-| $k$ | position along a rung | 0 to 255 at level 1 | — |
-| $s_j[k]$ | the **coarse picture** at level $j$: a pair sum, divided by $\sqrt2$ | 64 numbers at 37.5 dpi | — |
-| $d_j[k]$ | the **detail** at level $j$: a pair difference, divided by $\sqrt2$ | 145.0 at the left edge of the ink in the hand block | — |
-| $\hat d_j[k]$ | the detail after the threshold: kept if large, zero if small | 14, 26 and 21 kept at levels 1, 2, 3 | — |
-| $a,\ b$ | two neighbouring pixels, as one pair (Why it works, Step 1) | 239 and 34, pixels 40 and 41 | their sum and difference grow with them |
-| $t$ | a trial level for one bell-curve draw (the fold in Step 5) | 3.5322 | fewer noise draws exceed it |
-| $\sigma$ | the noise's standard deviation, in grey levels | 16 | more speckle; $T$ must rise with it |
-| $\hat\sigma$ | the estimate of $\sigma$ from the finest details | 17.82 | — |
-| $T$ | the **threshold**: details smaller than this are zeroed | 62.95 | less noise survives, and more faint features are erased |
+| $`x[n]`$ | the scanned row: grey level of pixel $`n`$, 0 black to 255 white | 512 pixels; paper 215, ink 50 | — |
+| $`N`$ | how many pixels in the row | 512 | $`T`$ rises slowly, as $`\sqrt{2\ln N}`$ |
+| $`j,\ J`$ | the rung of the ladder, and the deepest rung | $`J`$ = 3: 150, 75 and 37.5 dpi | the coarse picture gets coarser; wide features move into the details |
+| $`k`$ | position along a rung | 0 to 255 at level 1 | — |
+| $`s_j[k]`$ | the **coarse picture** at level $`j`$: a pair sum, divided by $`\sqrt2`$ | 64 numbers at 37.5 dpi | — |
+| $`d_j[k]`$ | the **detail** at level $`j`$: a pair difference, divided by $`\sqrt2`$ | 145.0 at the left edge of the ink in the hand block | — |
+| $`\hat d_j[k]`$ | the detail after the threshold: kept if large, zero if small | 14, 26 and 21 kept at levels 1, 2, 3 | — |
+| $`a,\ b`$ | two neighbouring pixels, as one pair (Why it works, Step 1) | 239 and 34, pixels 40 and 41 | their sum and difference grow with them |
+| $`t`$ | a trial level for one bell-curve draw (the fold in Step 5) | 3.5322 | fewer noise draws exceed it |
+| $`\sigma`$ | the noise's standard deviation, in grey levels | 16 | more speckle; $`T`$ must rise with it |
+| $`\hat\sigma`$ | the estimate of $`\sigma`$ from the finest details | 17.82 | — |
+| $`T`$ | the **threshold**: details smaller than this are zeroed | 62.95 | less noise survives, and more faint features are erased |
 
 ### When it holds
 
-- **The noise is independent from pixel to pixel, with one size everywhere** (called white noise). If the scanner's optics smear the noise across neighbours, the finest details see less of it, $\hat\sigma$ comes out low, and speckle survives the threshold.
+- **The noise is independent from pixel to pixel, with one size everywhere** (called white noise). If the scanner's optics smear the noise across neighbours, the finest details see less of it, $`\hat\sigma`$ comes out low, and speckle survives the threshold.
 - **The page is mostly flat between edges.** Text is: paper, ink, paper. A photograph or a halftone pattern spreads into many middle-sized details, and zeroing them blurs the picture.
-- **The features you care about stand well above $T$.** A faint pencil line, 40 grey levels darker than the paper and 3 pixels wide, has a largest detail of only 42.4, under $T$ = 62.95. The threshold treats it as noise: it comes back at 204.1 instead of 175.
-- **The row length is a multiple of $2^J$.** 512 is 64 × 8. Otherwise the last pairs have no partner, and the row must be padded.
+- **The features you care about stand well above $`T`$.** A faint pencil line, 40 grey levels darker than the paper and 3 pixels wide, has a largest detail of only 42.4, under $`T`$ = 62.95. The threshold treats it as noise: it comes back at 204.1 instead of 175.
+- **The row length is a multiple of $`2^J`$.** 512 is 64 × 8. Otherwise the last pairs have no partner, and the row must be padded.
 - **The √2 stays in.** Without it, the noise shrinks at every level and one threshold can no longer fit all levels; the error goes to 27.22.
 
 ---
@@ -79,24 +85,24 @@ The wavelet idea is to choose 512 other perpendicular directions in which the pa
 
 ### Step 1: one pair is a rotation by 45 degrees
 
-Take two neighbouring pixels $a$ and $b$. Replace them with $(a + b)/\sqrt2$ and $(a - b)/\sqrt2$. These are the coordinates of the point $(a, b)$ along two new axes, the directions $(1, 1)/\sqrt2$ and $(1, -1)/\sqrt2$. Both have length 1 and their dot product is zero, so the new axes are the old ones turned through 45 degrees.
+Take two neighbouring pixels $`a`$ and $`b`$. Replace them with $`(a + b)/\sqrt2`$ and $`(a - b)/\sqrt2`$. These are the coordinates of the point $`(a, b)`$ along two new axes, the directions $`(1, 1)/\sqrt2`$ and $`(1, -1)/\sqrt2`$. Both have length 1 and their dot product is zero, so the new axes are the old ones turned through 45 degrees.
 
-A rotation keeps every length: $\bigl((a+b)/\sqrt2\bigr)^2 + \bigl((a-b)/\sqrt2\bigr)^2 = a^2 + b^2$. And it can be undone: add the two new numbers and divide by $\sqrt2$ to get $a$, subtract to get $b$. That is the second line of the formula.
+A rotation keeps every length: $`\bigl((a+b)/\sqrt2\bigr)^2 + \bigl((a-b)/\sqrt2\bigr)^2 = a^2 + b^2`$. And it can be undone: add the two new numbers and divide by $`\sqrt2`$ to get $`a`$, subtract to get $`b`$. That is the second line of the formula.
 
-Per pair, the sum says how bright the pair is overall and the difference says how much they disagree. Two paper pixels give a large sum and a difference near zero. A paper pixel next to an ink pixel gives a large difference: the 165 grey levels between them, divided by $\sqrt2$.
+Per pair, the sum says how bright the pair is overall and the difference says how much they disagree. Two paper pixels give a large sum and a difference near zero. A paper pixel next to an ink pixel gives a large difference: the 165 grey levels between them, divided by $`\sqrt2`$.
 
 ### Step 2: the ladder, and why each rung rebuilds exactly
 
 Pair the whole row: 256 sums make the coarse picture at 150 dpi, and 256 differences make the level-1 detail. Pair the 256 sums the same way, and again. This is the **multiresolution ladder**: the row seen at 300, 150, 75 and 37.5 dpi, with the detail between neighbouring rungs kept separately. Each rung is a set of separate pair rotations, so undoing the rungs from the bottom up returns the row exactly. The check confirms this to 1e-9 grey levels, and finds the energy (the sum of squares) is 21208941.0 in pixels and 21208941.0 in coefficients.
 
-Unfold the ladder and each final number is one dot product of the row with a fixed pattern. A level-$j$ detail uses an up-down step $2^j$ pixels wide: $+1/\sqrt{2^j}$ on the first half, $-1/\sqrt{2^j}$ on the second. A coarse number uses a flat box $2^J$ pixels wide. These are the **Haar wavelets** and the **scaling boxes**. They are perpendicular and of length 1: an orthonormal basis, so each coordinate is one dot product, as on the [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md) card. The check builds all 512 patterns, confirms they are orthonormal to 1e-12, and that the dot products equal the ladder's numbers to 1e-9.
+Unfold the ladder and each final number is one dot product of the row with a fixed pattern. A level-$`j`$ detail uses an up-down step $`2^j`$ pixels wide: $`+1/\sqrt{2^j}`$ on the first half, $`-1/\sqrt{2^j}`$ on the second. A coarse number uses a flat box $`2^J`$ pixels wide. These are the **Haar wavelets** and the **scaling boxes**. They are perpendicular and of length 1: an orthonormal basis, so each coordinate is one dot product, as on the [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md) card. The check builds all 512 patterns, confirms they are orthonormal to 1e-12, and that the dot products equal the ladder's numbers to 1e-9.
 
-The patterns nest: a box is two half-width boxes side by side, and an up-down step is a half-width box minus its neighbour. This **two-scale relation** is why the ladder needs only pairs, about $2N$ additions instead of $N^2$ multiplications.
+The patterns nest: a box is two half-width boxes side by side, and an up-down step is a half-width box minus its neighbour. This **two-scale relation** is why the ladder needs only pairs, about $`2N`$ additions instead of $`N^2`$ multiplications.
 
 <details>
 <summary>The same ladder as a pair of filters and a rate change</summary>
 
-A low-pass filter keeps slow changes and removes fast ones; a high-pass filter does the opposite. Each rung is a two-tap low-pass filter with weights $(1/\sqrt2, 1/\sqrt2)$ and a two-tap high-pass filter with weights $(1/\sqrt2, -1/\sqrt2)$ ([Digital filters](04-digital-filters-fir-and-iir.md)). Each is followed by keeping one output in two ([Changing rate](05-resampling-decimation-and-interpolation.md)). Neither short filter is a good low-pass or high-pass, so each half-rate channel is full of aliases: tones folded down by dropping every second sample. The aliases cancel exactly when the two channels are recombined, because the rebuild in Step 1 recovers each pair $a$ and $b$ without error.
+A low-pass filter keeps slow changes and removes fast ones; a high-pass filter does the opposite. Each rung is a two-tap low-pass filter with weights $`(1/\sqrt2, 1/\sqrt2)`$ and a two-tap high-pass filter with weights $`(1/\sqrt2, -1/\sqrt2)`$ ([Digital filters](04-digital-filters-fir-and-iir.md)). Each is followed by keeping one output in two ([Changing rate](05-resampling-decimation-and-interpolation.md)). Neither short filter is a good low-pass or high-pass, so each half-rate channel is full of aliases: tones folded down by dropping every second sample. The aliases cancel exactly when the two channels are recombined, because the rebuild in Step 1 recovers each pair $`a`$ and $`b`$ without error.
 
 A pair of filters with this property is a **perfect-reconstruction filter bank**. Longer filters with the same property exist; the Daubechies family is the best known, and its four-tap member keeps straight-line ramps out of the details, which Haar does not. Their construction is proved in the harmonic analysis wing.
 
@@ -104,9 +110,9 @@ A pair of filters with this property is a **perfect-reconstruction filter bank**
 
 ### Step 3: the noise is the same size in every coefficient
 
-Each coefficient is a dot product of the row with a pattern of length 1. Noise that is independent from pixel to pixel, with standard deviation $\sigma$, gives each such dot product a standard deviation of $\sigma$ times the pattern's length: $\sigma$ again. Different patterns are perpendicular, so their noise is uncorrelated. In short, rotating white noise gives white noise of the same size.
+Each coefficient is a dot product of the row with a pattern of length 1. Noise that is independent from pixel to pixel, with standard deviation $`\sigma`$, gives each such dot product a standard deviation of $`\sigma`$ times the pattern's length: $`\sigma`$ again. Different patterns are perpendicular, so their noise is uncorrelated. In short, rotating white noise gives white noise of the same size.
 
-The check runs 2000 rows of pure noise with $\sigma$ = 1 through the ladder. The detail coefficients come out with standard deviation 0.999, 1.001 and 1.000 at levels 1, 2 and 3. Drop the $\sqrt2$, using plain averages and half-differences instead, and they come out at 0.706, 0.500 and 0.354: the noise shrinks with every rung, and no single threshold suits them all.
+The check runs 2000 rows of pure noise with $`\sigma`$ = 1 through the ladder. The detail coefficients come out with standard deviation 0.999, 1.001 and 1.000 at levels 1, 2 and 3. Drop the $`\sqrt2`$, using plain averages and half-differences instead, and they come out at 0.706, 0.500 and 0.354: the noise shrinks with every rung, and no single threshold suits them all.
 
 ### Step 4: the page is a few large details
 
@@ -116,16 +122,16 @@ A row with this property is called **sparse** in the wavelet basis. [Compressed 
 
 ### Step 5: where to put the threshold
 
-Noise coefficients are bell-curve draws of size $\sigma$. The largest of $N$ such draws grows only slowly with $N$: it seldom goes far past $\sigma\sqrt{2\ln N}$, though it does pass it now and then. For $N$ = 512 that multiplier is 3.5322. So a threshold of $\sigma$ times 3.5322 zeroes nearly every pure-noise coefficient. In 2000 rows of pure noise, each with 256 + 128 + 64 details, the check counts 336 details above the multiplier, about one for every six rows; the bell curve's tail predicts 369.2.
+Noise coefficients are bell-curve draws of size $`\sigma`$. The largest of $`N`$ such draws grows only slowly with $`N`$: it seldom goes far past $`\sigma\sqrt{2\ln N}`$, though it does pass it now and then. For $`N`$ = 512 that multiplier is 3.5322. So a threshold of $`\sigma`$ times 3.5322 zeroes nearly every pure-noise coefficient. In 2000 rows of pure noise, each with 256 + 128 + 64 details, the check counts 336 details above the multiplier, about one for every six rows; the bell curve's tail predicts 369.2.
 
-The noise level itself comes from the data. Most level-1 details are pure noise, since most pixel pairs do not straddle an edge. The median of their sizes is robust to the few edge details, and for a bell curve the median size is 0.6745 $\sigma$. Here $\hat\sigma$ = 17.82 against a true 16: the edges still push it up a little, so $T$ = 62.95 is slightly cautious.
+The noise level itself comes from the data. Most level-1 details are pure noise, since most pixel pairs do not straddle an edge. The median of their sizes is robust to the few edge details, and for a bell curve the median size is 0.6745 $`\sigma`$. Here $`\hat\sigma`$ = 17.82 against a true 16: the edges still push it up a little, so $`T`$ = 62.95 is slightly cautious.
 
-A 1994 theorem (the fourth source below) is about the soft form of this rule (see What breaks). It shows that, for any signal, the soft rule comes within a factor of about $2\ln N$ of an oracle that knows which coefficients are signal. On a sparse signal the oracle's error is small, so the soft rule's is too. This card quotes that bound for the soft rule only. For the hard rule used here, the check measures the result directly, and on this page it does far better than the soft rule. The proof belongs to the harmonic analysis wing.
+A 1994 theorem (the fourth source below) is about the soft form of this rule (see What breaks). It shows that, for any signal, the soft rule comes within a factor of about $`2\ln N`$ of an oracle that knows which coefficients are signal. On a sparse signal the oracle's error is small, so the soft rule's is too. This card quotes that bound for the soft rule only. For the hard rule used here, the check measures the result directly, and on this page it does far better than the soft rule. The proof belongs to the harmonic analysis wing.
 
 <details>
 <summary>Why the largest of N bell-curve draws is about root of 2 ln N</summary>
 
-The chance that one standard bell-curve draw exceeds $t$ is about $e^{-t^2/2}$, up to a slowly varying factor. With $N$ draws, the expected number above $t$ is about $N e^{-t^2/2}$. Set that to 1 and solve: $t^2 = 2\ln N$. The check integrates the exact tail by Simpson's rule (a standard way to add up the area under a curve from evenly spaced points) to get the 369.2 above.
+The chance that one standard bell-curve draw exceeds $`t`$ is about $`e^{-t^2/2}`$, up to a slowly varying factor. With $`N`$ draws, the expected number above $`t`$ is about $`N e^{-t^2/2}`$. Set that to 1 and solve: $`t^2 = 2\ln N`$. The check integrates the exact tail by Simpson's rule (a standard way to add up the area under a curve from evenly spaced points) to get the 369.2 above.
 
 </details>
 
@@ -133,7 +139,7 @@ The chance that one standard bell-curve draw exceeds $t$ is about $e^{-t^2/2}$, 
 
 ## Worked numbers, by hand
 
-The hand block is pixels 40 to 47. On the clean page they are paper, four pixels of ink (the second stem of the first "m"), then paper: 215, 50, 50, 50, 50, 215, 215, 215. The scanner delivered 239, 34, 52, 45, 40, 220, 225, 220. All arithmetic divides by $\sqrt2$ = 1.4142.
+The hand block is pixels 40 to 47. On the clean page they are paper, four pixels of ink (the second stem of the first "m"), then paper: 215, 50, 50, 50, 50, 215, 215, 215. The scanner delivered 239, 34, 52, 45, 40, 220, 225, 220. All arithmetic divides by $`\sqrt2`$ = 1.4142.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -170,11 +176,11 @@ The orange line is the clean page: paper at 215, four ink stems at 50. The green
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Soft threshold: shrink every kept detail by $T$ as well | error 22.08; ink reads 95.0, not 50 | every edge detail lost 62.95, so the ink fades to grey |
-| Plain average and half-difference, same $T$ | error 27.22 | without the √2 the coarse details shrink, fall under $T$, and real edges are erased |
-| Threshold at $T = \hat\sigma$ instead of $\hat\sigma\sqrt{2\ln N}$ | error 14.57 | many pure-noise details now beat the threshold, so most of the speckle stays |
+| Soft threshold: shrink every kept detail by $`T`$ as well | error 22.08; ink reads 95.0, not 50 | every edge detail lost 62.95, so the ink fades to grey |
+| Plain average and half-difference, same $`T`$ | error 27.22 | without the √2 the coarse details shrink, fall under $`T`$, and real edges are erased |
+| Threshold at $`T = \hat\sigma`$ instead of $`\hat\sigma\sqrt{2\ln N}`$ | error 14.57 | many pure-noise details now beat the threshold, so most of the speckle stays |
 | Average each pixel with its neighbours instead | error 21.08 | the noise falls, but every edge is smeared across three pixels |
-| A pencil line 40 grey levels darker than the paper | reads 204.1, not 175 | its largest detail, 42.4, is under $T$: a real feature fainter than the noise floor is erased with the noise |
+| A pencil line 40 grey levels darker than the paper | reads 204.1, not 175 | its largest detail, 42.4, is under $`T`$: a real feature fainter than the noise floor is erased with the noise |
 
 ```
 error against the clean page, grey levels (20 marks = 27.22)
@@ -582,18 +588,18 @@ ALL CHECKS PASS
 
 Lean proves the ladder facts from Why it works for every row, and checks the worked numbers.
 
-- Take a row of $N$ pixels, with $N$ a multiple of $2^J$. Then running the pairing backwards from $s_J$ and the details returns every pixel exactly.
-- Take the same row. Then its energy in pixels equals the energy of the coarse picture $s_J$ plus the energy of all the details.
-- Suppose the pixel noise values are independent, each with the same standard deviation $\sigma$. Then every detail and every coarse number of the noise has standard deviation $\sigma$ too.
-- Suppose the row is constant across the $2^j$ pixels that the detail $d_j[k]$ looks at. Then $d_j[k]$ is zero.
-- The row of 512 pixels is $2^3$ times 64, so three rungs fit with no padding.
+- Take a row of $`N`$ pixels, with $`N`$ a multiple of $`2^J`$. Then running the pairing backwards from $`s_J`$ and the details returns every pixel exactly.
+- Take the same row. Then its energy in pixels equals the energy of the coarse picture $`s_J`$ plus the energy of all the details.
+- Suppose the pixel noise values are independent, each with the same standard deviation $`\sigma`$. Then every detail and every coarse number of the noise has standard deviation $`\sigma`$ too.
+- Suppose the row is constant across the $`2^j`$ pixels that the detail $`d_j[k]`$ looks at. Then $`d_j[k]`$ is zero.
+- The row of 512 pixels is $`2^3`$ times 64, so three rungs fit with no padding.
 - The four boxes hold 64, 64, 128 and 256 numbers, which make 512.
 - For pixels 239 and 34, the squared sum plus the squared difference is twice the sum of their squares.
 - With their details zeroed, 52 and 45 come back as 48.5 twice, and 225 and 220 as 222.5 twice.
 - The kept details, 14, 26 and 21, make 61 of the 448.
 - Ink is 165 grey levels below paper, and the pencil line should read 175.
 
-The scan's noise, the threshold $T$, the errors and the 2000 pure-noise rows are left to the Python and Rust checks.
+The scan's noise, the threshold $`T`$, the errors and the 2000 pure-noise rows are left to the Python and Rust checks.
 
 ```lean
 -- Wavelets: the Haar ladder rebuilds every row exactly and keeps its energy, independent pixel noise of one size stays that size in every coefficient, and flat stretches give zero detail.
@@ -905,10 +911,10 @@ example : 215 - 40 = 175 := by norm_num
 > [!warning]
 > **Treating wavelet denoising as a smoothing filter.** A low-pass filter treats every place in the row alike, so it cannot quieten the paper without smearing the edges: the three-pixel average ends at 21.08 grey levels of error, worse than the raw scan's 16.07. The wavelet threshold decides coefficient by coefficient, so place by place and scale by scale. Where the row is flat it smooths hard; at an edge it keeps the detail whole, and reaches 7.83.
 >
-> - **Soft thresholding on text.** Shrinking every surviving detail by $T$ suits smooth images, but on text it fades the ink from 50 to 95.0 and the error to 22.08.
+> - **Soft thresholding on text.** Shrinking every surviving detail by $`T`$ suits smooth images, but on text it fades the ink from 50 to 95.0 and the error to 22.08.
 > - **Dropping the √2.** Plain averages and half-differences make the noise shrink at every rung, so one threshold kills real coarse detail: error 27.22.
-> - **Setting the threshold at the noise level.** $T = \hat\sigma$ leaves many noise details alive: error 14.57, barely better than the raw 16.07.
-> - **Expecting faint marks to survive.** Anything whose details stay under $T$ is treated as noise. The pencil line comes back at 204.1, nearly paper.
+> - **Setting the threshold at the noise level.** $`T = \hat\sigma`$ leaves many noise details alive: error 14.57, barely better than the raw 16.07.
+> - **Expecting faint marks to survive.** Anything whose details stay under $`T`$ is treated as noise. The pencil line comes back at 204.1, nearly paper.
 
 ---
 
@@ -948,5 +954,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Haar, A. "Zur Theorie der orthogonalen Funktionensysteme." *Mathematische Annalen* 69(3), 331–371, 1910. [DOI](https://doi.org/10.1007/BF01456326). The box and up-down step functions as an orthonormal system: the Haar wavelet.
 - Mallat, S. G. "A theory for multiresolution signal decomposition: the wavelet representation." *IEEE Transactions on Pattern Analysis and Machine Intelligence* 11(7), 674–693, 1989. [DOI](https://doi.org/10.1109/34.192463). The multiresolution ladder and the fast pyramid algorithm with filters and decimation.
 - Daubechies, I. "Orthonormal bases of compactly supported wavelets." *Communications on Pure and Applied Mathematics* 41(7), 909–996, 1988. [DOI](https://doi.org/10.1002/cpa.3160410705). Short perfect-reconstruction filters smoother than Haar, with more vanishing moments.
-- Donoho, D. L., and I. M. Johnstone. "Ideal spatial adaptation by wavelet shrinkage." *Biometrika* 81(3), 425–455, 1994. [DOI](https://doi.org/10.1093/biomet/81.3.425). The threshold $\sigma\sqrt{2\ln N}$, the median estimate of $\sigma$, and the near-oracle theorem.
+- Donoho, D. L., and I. M. Johnstone. "Ideal spatial adaptation by wavelet shrinkage." *Biometrika* 81(3), 425–455, 1994. [DOI](https://doi.org/10.1093/biomet/81.3.425). The threshold $`\sigma\sqrt{2\ln N}`$, the median estimate of $`\sigma`$, and the near-oracle theorem.
 - Donoho, D. L. "De-noising by soft-thresholding." *IEEE Transactions on Information Theory* 41(3), 613–627, 1995. [DOI](https://doi.org/10.1109/18.382009). Soft thresholding, and the result that with high probability it adds no wiggles the clean signal lacks.

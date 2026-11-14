@@ -37,26 +37,30 @@ Each arrow is one layer of the sieve.
 
 ## The formula
 
-Two reminders first. $C(k, j)$, read "k choose j", counts the ways of picking $j$ things from $k$ when order does not matter. The capital sigma sign below means "add up what follows, once for each value of the counter underneath".
+Two reminders first. $`C(k, j)`$, read "k choose j", counts the ways of picking $`j`$ things from $`k`$ when order does not matter. The capital sigma sign below means "add up what follows, once for each value of the counter underneath".
 
-$$\mathrm{onto}(n, k) \;=\; \sum_{j=0}^{k} (-1)^j \, C(k, j) \, (k - j)^n$$
+```math
+\mathrm{onto}(n, k) \;=\; \sum_{j=0}^{k} (-1)^j \, C(k, j) \, (k - j)^n
+```
 
-**Read it aloud:** for each way of naming $j$ recipients as empty, count the handouts using only the recipients left, adding or taking off as the sign flips.
+**Read it aloud:** for each way of naming $`j`$ recipients as empty, count the handouts using only the recipients left, adding or taking off as the sign flips.
 
 For five jobs and three mechanics it runs to four terms:
 
-$$3^5 - 3 \times 2^5 + 3 \times 1^5 - 1 \times 0^5 \;=\; 243 - 96 + 3 - 0 \;=\; 150$$
+```math
+3^5 - 3 \times 2^5 + 3 \times 1^5 - 1 \times 0^5 \;=\; 243 - 96 + 3 - 0 \;=\; 150
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many different items go out | 5 jobs | climbs hard: each job multiplies the count |
-| $k$ | how many recipients, each needing something | 3 mechanics | climbs to 240 at four mechanics, then drops to 0 once $k$ passes $n$ |
-| $j$ | the counter: recipients this term names as empty | 0, 1, 2, 3 | — |
-| $C(k, j)$ | ways to name $j$ of the $k$ recipients | C(3, 1) = 3 | a bigger correction at that layer |
-| $(k - j)^n$ | handouts using only the recipients left | 2^5 = 32 | — |
-| $(-1)^j$ | the sign: add, take off, add, take off | + − + − | — |
-| $\mathrm{onto}(n, k)$ | the count wanted | 150 | — |
-| $S(n, k)$ | groupings into $k$ unnamed piles, none empty | S(5, 3) = 25 | — |
+| $`n`$ | how many different items go out | 5 jobs | climbs hard: each job multiplies the count |
+| $`k`$ | how many recipients, each needing something | 3 mechanics | climbs to 240 at four mechanics, then drops to 0 once $`k`$ passes $`n`$ |
+| $`j`$ | the counter: recipients this term names as empty | 0, 1, 2, 3 | — |
+| $`C(k, j)`$ | ways to name $`j`$ of the $`k`$ recipients | C(3, 1) = 3 | a bigger correction at that layer |
+| $`(k - j)^n`$ | handouts using only the recipients left | 2^5 = 32 | — |
+| $`(-1)^j`$ | the sign: add, take off, add, take off | + − + − | — |
+| $`\mathrm{onto}(n, k)`$ | the count wanted | 150 | — |
+| $`S(n, k)`$ | groupings into $`k`$ unnamed piles, none empty | S(5, 3) = 25 | — |
 
 ### When it holds
 
@@ -85,12 +89,12 @@ Idle Ada and idle Ben leave all five jobs to Cleo: 1^5 = 1 handout. Three pairs 
 
 All three idle would leave the jobs undone, which no handout does: 0^5 = 0. The layers are 243, 96, 3 and 0, and the signs alternate as each repair overshoots: 243 − 96 + 3 − 0 = 150.
 
-The general shape is the same: naming $j$ of the $k$ recipients as empty can be done $C(k, j)$ ways. The handouts avoiding those $j$ use the other $k - j$ recipients freely, $(k - j)^n$ of them. That product is the term, and the sign flips every layer.
+The general shape is the same: naming $`j`$ of the $`k`$ recipients as empty can be done $`C(k, j)`$ ways. The handouts avoiding those $`j`$ use the other $`k - j`$ recipients freely, $`(k - j)^n`$ of them. That product is the term, and the sign flips every layer.
 
 <details>
 <summary>Detailed proof: every handout weighed, and only the onto ones survive</summary>
 
-Take one handout and let m be how many of the $k$ recipients it leaves empty. In the term for $j$ it is counted once for every set of $j$ named-empty recipients it genuinely leaves empty. Those $j$ come from its own m, so it appears $C(m, j)$ times with the sign $(-1)^j$. Its weight across the whole sum is the alternating sum of $C(m, j)$ over $j$ from 0 to m, which the binomial theorem reads off as $(1 - 1)^m$.
+Take one handout and let m be how many of the $`k`$ recipients it leaves empty. In the term for $`j`$ it is counted once for every set of $`j`$ named-empty recipients it genuinely leaves empty. Those $`j`$ come from its own m, so it appears $`C(m, j)`$ times with the sign $`(-1)^j`$. Its weight across the whole sum is the alternating sum of $`C(m, j)`$ over $`j`$ from 0 to m, which the binomial theorem reads off as $`(1 - 1)^m`$.
 
 When m is 0 that is 1: a handout leaving nobody idle is counted exactly once. For any larger m it is 0. So the sum counts the onto handouts once each and everything else zero times.
 
@@ -100,7 +104,7 @@ In the garage: one idle mechanic means counted once, then off once; two idle mea
 
 ### Step 4: a second road, group first and name afterwards
 
-Forget the names. Split the five jobs into three piles, none empty: brakes with clutch, exhaust with headlight, gearbox alone. There are 25 such splits, written $S(5, 3)$ ([Stirling numbers of the second kind](../08-Partitions/04-stirling-numbers-second-kind.md)).
+Forget the names. Split the five jobs into three piles, none empty: brakes with clutch, exhaust with headlight, gearbox alone. There are 25 such splits, written $`S(5, 3)`$ ([Stirling numbers of the second kind](../08-Partitions/04-stirling-numbers-second-kind.md)).
 
 Now hand the piles over: three piles to three named mechanics is 3! = 6 orders, where 3! means 3 × 2 × 1. Every onto handout is one split with one order, so 6 × 25 = 150. The roads share no arithmetic and agree.
 
@@ -355,10 +359,10 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the formula for every number of items $n$ and recipients $k$, and checks the garage numbers.
+Lean proves the formula for every number of items $`n`$ and recipients $`k`$, and checks the garage numbers.
 
-- The onto handouts of $n$ different items to $k$ named recipients number exactly the sieve sum.
-- The same count equals $k! \times S(n, k)$: split into $k$ piles, none empty, then name the piles.
+- The onto handouts of $`n`$ different items to $`k`$ named recipients number exactly the sieve sum.
+- The same count equals $`k! \times S(n, k)`$: split into $`k`$ piles, none empty, then name the piles.
 - With fewer items than recipients, the sieve sum is 0.
 - The garage numbers come out exactly: 150 for five jobs, 540 for six, and S(5, 3) = 25.
 
@@ -547,7 +551,7 @@ example : 3 * sieveSum 5 1 + 3 * sieveSum 5 2 + 1 * sieveSum 5 3 = 243 := by dec
 > [!warning]
 > **Taking off the idle-mechanic handouts and stopping there.** 243 − 96 = 147 looks finished and is not. The 96 counts "all five jobs to Cleo" twice, under idle Ada and again under idle Ben, so 147 is only a floor. Where a floor is enough, stopping early is a decision rather than an error ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
 >
-> - **Naming the empty recipients but not counting the namings.** Each layer carries its $C(k, j)$: the second layer is 3 pairs × 1 handout = 3, not 1.
+> - **Naming the empty recipients but not counting the namings.** Each layer carries its $`C(k, j)`$: the second layer is 3 pairs × 1 handout = 3, not 1.
 > - **Treating the mechanics as alike.** That answers a different question, 25; multiplying by 3! = 6 names the piles, 150.
 > - **Reading "at least one each" as "one each".** Five jobs among three mechanics means somebody takes two or more ([Pigeonhole, extended](05-pigeonhole-extended.md)).
 

@@ -36,38 +36,42 @@ The rising line is the forward rate for delivery 0 to 5 years out. The flat line
 
 ## The formula
 
-Notation first, in words. A small letter after a symbol, written low, labels which currency it belongs to: $r_d$ is the **domestic** rate, the rate on the currency prices are counted in (dollars); $r_f$ is the **foreign** rate, on the currency being priced (euros). Both are continuously compounded ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)): a deposit of 1 grows to $e^{rT}$ in $T$ years.
+Notation first, in words. A small letter after a symbol, written low, labels which currency it belongs to: $`r_d`$ is the **domestic** rate, the rate on the currency prices are counted in (dollars); $`r_f`$ is the **foreign** rate, on the currency being priced (euros). Both are continuously compounded ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)): a deposit of 1 grows to $`e^{rT}`$ in $`T`$ years.
 
-$$F = S\,e^{(r_d - r_f)\,T}$$
+```math
+F = S\,e^{(r_d - r_f)\,T}
+```
 
 **Read it aloud:** the forward rate is today's rate, grown for the life of the contract at the dollar rate minus the euro rate.
 
 | Symbol | Plain meaning | In our example | Push it up and the forward… |
 | --- | --- | --- | --- |
-| $S$ | spot rate: dollars for one euro, swapped today | 1.10 | rises in proportion |
-| $F$ | forward rate: dollars for one euro, agreed today, swapped at $T$ | 1.122221 | (the answer) |
-| $r_d$ | domestic rate: what a dollar deposit pays, per year, continuously compounded | 5% | rises: dollars held earn more, so euros must cost more forward |
-| $r_f$ | foreign rate: what a euro deposit pays, same basis | 3% | falls: euros held earn more, so they must cost less forward |
-| $T$ | years until delivery | 1 | moves further from spot, in the direction of the rate gap |
-| $e^{(r_d - r_f)T}$ | the carry factor: how far the forward sits from spot, as a multiple | 1.020201 | (built from the three above) |
-| $e^{-r_d T}$, $e^{-r_f T}$ | discount factors, D(T): today's value of one dollar, or one euro, due at $T$ | (for the proof) | |
-| $F_q$ | a forward rate someone quotes, which may differ from $F$ | 1.15 or 1.10 | above $F$ the seller profits; below, the buyer |
-| $S_T$ | the spot rate that turns up on delivery day | unknown today | does not appear in $F$ at all |
-| $R_d$, $R_f$ | money-market rates: simple interest, the way deposits are quoted on a desk | 5.0569%, 3.0037% | (a different unit for $r_d$, $r_f$) |
-| $\tau$ | day-count fraction: days in the deposit over the convention's year | 365/360 | (fixed by convention) |
-| pip | one ten-thousandth of a dollar per euro, 0.0001; forward points are $F - S$ counted in pips | forward points 222.21 pips | |
+| $`S`$ | spot rate: dollars for one euro, swapped today | 1.10 | rises in proportion |
+| $`F`$ | forward rate: dollars for one euro, agreed today, swapped at $`T`$ | 1.122221 | (the answer) |
+| $`r_d`$ | domestic rate: what a dollar deposit pays, per year, continuously compounded | 5% | rises: dollars held earn more, so euros must cost more forward |
+| $`r_f`$ | foreign rate: what a euro deposit pays, same basis | 3% | falls: euros held earn more, so they must cost less forward |
+| $`T`$ | years until delivery | 1 | moves further from spot, in the direction of the rate gap |
+| $`e^{(r_d - r_f)T}`$ | the carry factor: how far the forward sits from spot, as a multiple | 1.020201 | (built from the three above) |
+| $`e^{-r_d T}`$, $`e^{-r_f T}`$ | discount factors, D(T): today's value of one dollar, or one euro, due at $`T`$ | (for the proof) | |
+| $`F_q`$ | a forward rate someone quotes, which may differ from $`F`$ | 1.15 or 1.10 | above $`F`$ the seller profits; below, the buyer |
+| $`S_T`$ | the spot rate that turns up on delivery day | unknown today | does not appear in $`F`$ at all |
+| $`R_d`$, $`R_f`$ | money-market rates: simple interest, the way deposits are quoted on a desk | 5.0569%, 3.0037% | (a different unit for $`r_d`$, $`r_f`$) |
+| $`\tau`$ | day-count fraction: days in the deposit over the convention's year | 365/360 | (fixed by convention) |
+| pip | one ten-thousandth of a dollar per euro, 0.0001; forward points are $`F - S`$ counted in pips | forward points 222.21 pips | |
 
-**The money-market form.** Desks quote deposit rates as simple interest over a day count, not continuously. A dollar deposit of 1 then grows to $1 + R_d\tau$, and the same argument gives
+**The money-market form.** Desks quote deposit rates as simple interest over a day count, not continuously. A dollar deposit of 1 then grows to $`1 + R_d\tau`$, and the same argument gives
 
-$$F = S\,\frac{1 + R_d\,\tau}{1 + R_f\,\tau}.$$
+```math
+F = S\,\frac{1 + R_d\,\tau}{1 + R_f\,\tau}.
+```
 
-In words: dollars grown for the term, divided by euros grown for the term. Converting between the two units is one line each way: $r = \ln(1 + R\tau)/T$ and $R = (e^{rT} - 1)/\tau$. The house rates of 5% and 3% continuous are 5.0569% and 3.0037% on a money-market quote for 365 days counted over 360.
+In words: dollars grown for the term, divided by euros grown for the term. Converting between the two units is one line each way: $`r = \ln(1 + R\tau)/T`$ and $`R = (e^{rT} - 1)/\tau`$. The house rates of 5% and 3% continuous are 5.0569% and 3.0037% on a money-market quote for 365 days counted over 360.
 
 **Conventions verified 27 Sep 2026:** EURUSD is quoted in dollars per euro; dollar and euro deposits count actual days over a 360-day year, sterling over 365; a pip on EURUSD is 0.0001. Markets could change these; the formula does not care, provided the rate and its day count travel together.
 
 ### When it holds
 
-- **One rate to borrow and one to lend, the same, in each currency.** Real banks borrow dearer than they lend, and pay a bid–offer spread (the gap between the buying and selling price) at spot and forward. The single $F$ then widens into a band; a quote inside it offers no free money.
+- **One rate to borrow and one to lend, the same, in each currency.** Real banks borrow dearer than they lend, and pay a bid–offer spread (the gap between the buying and selling price) at spot and forward. The single $`F`$ then widens into a band; a quote inside it offers no free money.
 - **Both sides deliver.** A forward is a promise. If default risk or collateral differs between the two deposits and the forward, the rates in the formula are not the rates the trader actually faces, and the gap shows up as the cross-currency basis ([The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md)).
 - **Money can move freely.** Capital controls, or limits on a bank's balance sheet, stop the arbitrage from being run at size. Since 2008 the euro, yen and sterling forwards against the dollar have sat tens of basis points (hundredths of a percent) off this formula for years.
 - **Rates for exactly the forward's term, on one compounding basis.** A 1-year forward needs 1-year deposit rates. Mixing money-market quotes into the continuous formula shifts the one-year forward by 5.74 pips here (What breaks, below).
@@ -80,18 +84,20 @@ In words: dollars grown for the term, divided by euros grown for the term. Conve
 
 Nobody needs to know where the euro is going. There are two ways to hold one euro on delivery day, both fixed today.
 
-- **Route A, through the forward.** Agree today to pay $F$ dollars for one euro at $T$. To be sure of the dollars, set aside $F e^{-r_d T}$ dollars now in a dollar deposit; it grows to exactly $F$.
-- **Route B, through spot and a deposit.** Buy $e^{-r_f T}$ euros today at spot and leave them in a euro deposit; they grow to exactly one euro. The cost today is $S e^{-r_f T}$ dollars.
+- **Route A, through the forward.** Agree today to pay $`F`$ dollars for one euro at $`T`$. To be sure of the dollars, set aside $`F e^{-r_d T}`$ dollars now in a dollar deposit; it grows to exactly $`F`$.
+- **Route B, through spot and a deposit.** Buy $`e^{-r_f T}`$ euros today at spot and leave them in a euro deposit; they grow to exactly one euro. The cost today is $`S e^{-r_f T}`$ dollars.
 
 Both deliver the same euro on the same day with no risk. So
 
-$$F\,e^{-r_d T} = S\,e^{-r_f T} \quad\Longrightarrow\quad F = S\,e^{(r_d - r_f)T}.$$
+```math
+F\,e^{-r_d T} = S\,e^{-r_f T} \quad\Longrightarrow\quad F = S\,e^{(r_d - r_f)T}.
+```
 
-At the house numbers both routes cost 1.067490 dollars today. This is the forward-price argument from [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) with one change: the euro, held, pays interest at $r_f$ the way a share pays a dividend. Put $r_f$ where that card has the dividend yield and the two formulas coincide.
+At the house numbers both routes cost 1.067490 dollars today. This is the forward-price argument from [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) with one change: the euro, held, pays interest at $`r_f`$ the way a share pays a dividend. Put $`r_f`$ where that card has the dividend yield and the two formulas coincide.
 
 ### Step 1: the seller's ledger, when the quote is too high
 
-Say the market quotes $F_q$ = 1.15, above 1.122221. Sell the forward and cover it. All figures are per euro bought today.
+Say the market quotes $`F_q`$ = 1.15, above 1.122221. Sell the forward and cover it. All figures are per euro bought today.
 
 | Step | Today | On delivery day |
 | --- | --- | --- |
@@ -101,11 +107,11 @@ Say the market quotes $F_q$ = 1.15, above 1.122221. Sell the forward and cover i
 | Sell 1.030455 euros forward at 1.15 | nothing | −1.030455 euros, +1.185023 dollars |
 | **Net** | **0** | **+0.028625 dollars** |
 
-Nothing paid today. Every delivery-day amount was fixed this morning. The profit is 2.86 cents per euro, 286,245.08 dollars on a 10-million-euro trade. The spot rate on delivery day, $S_T$, appears nowhere in the table: the forward already disposed of every euro the trader would ever hold.
+Nothing paid today. Every delivery-day amount was fixed this morning. The profit is 2.86 cents per euro, 286,245.08 dollars on a 10-million-euro trade. The spot rate on delivery day, $`S_T`$, appears nowhere in the table: the forward already disposed of every euro the trader would ever hold.
 
 ### Step 2: the buyer's ledger, when the quote is too low
 
-Now $F_q$ = 1.10, below 1.122221. Run every leg the other way.
+Now $`F_q`$ = 1.10, below 1.122221. Run every leg the other way.
 
 | Step | Today | On delivery day |
 | --- | --- | --- |
@@ -119,28 +125,30 @@ Now $F_q$ = 1.10, below 1.122221. Run every leg the other way.
 
 ### Step 3: close the gap in general
 
-Write the seller's ledger with any quote $F_q$. On delivery day the forward pays $F_q e^{r_f T}$ dollars and the loan costs $S e^{r_d T}$. Pull out $e^{r_f T}$:
+Write the seller's ledger with any quote $`F_q`$. On delivery day the forward pays $`F_q e^{r_f T}`$ dollars and the loan costs $`S e^{r_d T}`$. Pull out $`e^{r_f T}`$:
 
-$$\text{profit} = F_q e^{r_f T} - S e^{r_d T} = e^{r_f T}\,(F_q - F).$$
+```math
+\text{profit} = F_q e^{r_f T} - S e^{r_d T} = e^{r_f T}\,(F_q - F).
+```
 
-$e^{r_f T}$ is always positive, so the sign of the profit is the sign of $F_q - F$. The buyer's ledger gives $e^{r_f T}(F - F_q)$. At 1.15 the formula gives 0.028625, and at 1.10 it gives 0.022898: the ledgers above, to the last digit.
+$`e^{r_f T}`$ is always positive, so the sign of the profit is the sign of $`F_q - F`$. The buyer's ledger gives $`e^{r_f T}(F - F_q)`$. At 1.15 the formula gives 0.028625, and at 1.10 it gives 0.022898: the ledgers above, to the last digit.
 
 <details>
 <summary>Detailed proof: no quote other than F survives</summary>
 
-Assume one continuously compounded rate for borrowing and lending in each currency, no fees, and contracts that are honoured. Let the market quote $F_q$.
+Assume one continuously compounded rate for borrowing and lending in each currency, no fees, and contracts that are honoured. Let the market quote $`F_q`$.
 
-Seller's strategy at time 0: borrow $S$ dollars, buy one euro, deposit it at $r_f$, and sell $e^{r_f T}$ euros forward at $F_q$. Net cash at time 0 is zero. At $T$ the deposit returns $e^{r_f T}$ euros, which are delivered into the forward for $F_q e^{r_f T}$ dollars; the loan costs $S e^{r_d T}$ dollars. Net cash at $T$ is $e^{r_f T}(F_q - F)$, with $F = S e^{(r_d - r_f)T}$. No term depends on $S_T$.
+Seller's strategy at time 0: borrow $`S`$ dollars, buy one euro, deposit it at $`r_f`$, and sell $`e^{r_f T}`$ euros forward at $`F_q`$. Net cash at time 0 is zero. At $`T`$ the deposit returns $`e^{r_f T}`$ euros, which are delivered into the forward for $`F_q e^{r_f T}`$ dollars; the loan costs $`S e^{r_d T}`$ dollars. Net cash at $`T`$ is $`e^{r_f T}(F_q - F)`$, with $`F = S e^{(r_d - r_f)T}`$. No term depends on $`S_T`$.
 
-Buyer's strategy: borrow one euro, sell it for $S$ dollars, deposit them at $r_d$, and buy $e^{r_f T}$ euros forward at $F_q$. Net cash at 0 is zero; at $T$ it is $S e^{r_d T} - F_q e^{r_f T} = e^{r_f T}(F - F_q)$.
+Buyer's strategy: borrow one euro, sell it for $`S`$ dollars, deposit them at $`r_d`$, and buy $`e^{r_f T}`$ euros forward at $`F_q`$. Net cash at 0 is zero; at $`T`$ it is $`S e^{r_d T} - F_q e^{r_f T} = e^{r_f T}(F - F_q)`$.
 
-If $F_q > F$, the seller's strategy costs nothing and pays a positive amount for certain: an arbitrage. If $F_q < F$, the buyer's does. A market with no arbitrage therefore has $F_q = F$. The same steps with simple interest, a deposit of 1 growing to $1 + R\tau$, give the money-market form.
+If $`F_q > F`$, the seller's strategy costs nothing and pays a positive amount for certain: an arbitrage. If $`F_q < F`$, the buyer's does. A market with no arbitrage therefore has $`F_q = F`$. The same steps with simple interest, a deposit of 1 growing to $`1 + R\tau`$, give the money-market form.
 
 </details>
 
 ### Step 4: a break-even, not a forecast
 
-Drop the forward. Borrow 1.10 dollars, buy a euro, deposit it, and on delivery day convert the 1.030455 euros back at whatever spot turns out to be. That unhedged trade does depend on $S_T$:
+Drop the forward. Borrow 1.10 dollars, buy a euro, deposit it, and on delivery day convert the 1.030455 euros back at whatever spot turns out to be. That unhedged trade does depend on $`S_T`$:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -158,24 +166,24 @@ A dealer who expects the euro at 1.30 and one who expects 0.95 quote the same fo
 
 ### The other door: money-market rates
 
-Replace each continuous deposit by a simple-interest deposit with its day count. Route A sets aside $F/(1 + R_d\tau)$ dollars; route B buys $1/(1 + R_f\tau)$ euros. Equating them gives the money-market form. With the house rates converted to 5.0569% and 3.0037%, it returns 1.122221 again. The formula does not depend on how interest is counted, only on each rate being counted consistently. The same carry, read as a number of pips and traded as a two-legged ticket, is [Forward points and the FX swap](03-forward-points-and-fx-swaps.md).
+Replace each continuous deposit by a simple-interest deposit with its day count. Route A sets aside $`F/(1 + R_d\tau)`$ dollars; route B buys $`1/(1 + R_f\tau)`$ euros. Equating them gives the money-market form. With the house rates converted to 5.0569% and 3.0037%, it returns 1.122221 again. The formula does not depend on how interest is counted, only on each rate being counted consistently. The same carry, read as a number of pips and traded as a two-legged ticket, is [Forward points and the FX swap](03-forward-points-and-fx-swaps.md).
 
 ---
 
 ## Worked numbers, by hand
 
-EURUSD spot $S$ = 1.10, $r_d$ = 5%, $r_f$ = 3%, for delivery in one year and, separately, in three months.
+EURUSD spot $`S`$ = 1.10, $`r_d`$ = 5%, $`r_f`$ = 3%, for delivery in one year and, separately, in three months.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | the carry | 0.05 − 0.03, times 1 year | 0.020000 |
-| carry factor | $e^{0.02}$ | 1.020201 |
+| carry factor | $`e^{0.02}`$ | 1.020201 |
 | **one-year forward** | 1.10 × 1.020201 | **1.122221** |
 | forward points | (1.122221 − 1.10) × 10,000 | +222.21 pips |
-| dollar loan at delivery | 1.10 × $e^{0.05}$ | 1.156398 |
-| euro deposit at delivery | 1 × $e^{0.03}$ | 1.030455 |
+| dollar loan at delivery | 1.10 × $`e^{0.05}`$ | 1.156398 |
+| euro deposit at delivery | 1 × $`e^{0.03}`$ | 1.030455 |
 | cross-check | 1.156398 / 1.030455 | 1.122221 |
-| **three-month forward** | 1.10 × $e^{0.02 \times 0.25}$ | **1.105514** |
+| **three-month forward** | 1.10 × $`e^{0.02 \times 0.25}`$ | **1.105514** |
 | three-month points | (1.105514 − 1.10) × 10,000 | +55.14 pips |
 | seller's profit, quote 1.15 | 1.030455 × (1.15 − 1.122221) | 0.028625 |
 | buyer's profit, quote 1.10 | 1.030455 × (1.122221 − 1.10) | 0.022898 |
@@ -202,7 +210,7 @@ Every number in the table is printed by both checks below.
 
 ## Code, from first principles, and it actually runs
 
-The script reaches the one-year forward by **four roads**. Road 1 is the formula with the library exponential. Road 2 never calls it: it grows both deposits with a hand-summed series for $e^x$, writes the seller's ledger for any quoted rate, and finds by bisection (halving an interval until it is a point) the quote at which the ledger nets zero. Road 3 starts from money-market quotes. Road 4 carries the three-month forward nine more months. Then both ledgers are checked against the closed form, the unhedged break-even is found by the same root finder, and every wrong number in the table above is reproduced. Mutation tests were run: swapping the rate gap for a sum, breaking the series, and dropping either deposit's growth each fail an assert, and so does a wrong day count.
+The script reaches the one-year forward by **four roads**. Road 1 is the formula with the library exponential. Road 2 never calls it: it grows both deposits with a hand-summed series for $`e^x`$, writes the seller's ledger for any quoted rate, and finds by bisection (halving an interval until it is a point) the quote at which the ledger nets zero. Road 3 starts from money-market quotes. Road 4 carries the three-month forward nine more months. Then both ledgers are checked against the closed form, the unhedged break-even is found by the same root finder, and every wrong number in the table above is reproduced. Mutation tests were run: swapping the rate gap for a sum, breaking the series, and dropping either deposit's growth each fail an assert, and so does a wrong day count.
 
 ### Python
 
@@ -523,16 +531,16 @@ chart, hedged at 1.15, cents   2.86    2.86    2.86    2.86    2.86    2.86
 ALL CHECKS PASS
 ```
 
-The two outputs agree line for line. Four roads land on 1.122221 to the printed digit, and the ledgers match $e^{r_f T}(F_q - F)$ to twelve decimals.
+The two outputs agree line for line. Four roads land on 1.122221 to the printed digit, and the ledgers match $`e^{r_f T}(F_q - F)`$ to twelve decimals.
 
 ### Lean
 
 Lean proves the formula and both ledgers for every spot rate, interest rate, term and quote.
 
-- Take any spot $S$, rates $r_d$ and $r_f$, term $T$ and quote $F_q$. Then neither ledger shows a profit if $F_q = S\,e^{(r_d - r_f)T}$, and one of them does otherwise.
-- Take the same numbers, with $F = S\,e^{(r_d - r_f)T}$. Then the seller's profit is $e^{r_f T}(F_q - F)$ and the buyer's is $e^{r_f T}(F - F_q)$.
-- Take money-market rates $R_d$ and $R_f$ and a day-count fraction $\tau$, with $1 + R_f\tau$ not zero. Then neither ledger shows a profit if $F_q = S(1 + R_d\tau)/(1 + R_f\tau)$, and one does otherwise.
-- Take $S$ = 1.10 and $r_d = r_f$ = 0.04 for one year. Then the forward is 1.10, spot exactly.
+- Take any spot $`S`$, rates $`r_d`$ and $`r_f`$, term $`T`$ and quote $`F_q`$. Then neither ledger shows a profit if $`F_q = S\,e^{(r_d - r_f)T}`$, and one of them does otherwise.
+- Take the same numbers, with $`F = S\,e^{(r_d - r_f)T}`$. Then the seller's profit is $`e^{r_f T}(F_q - F)`$ and the buyer's is $`e^{r_f T}(F - F_q)`$.
+- Take money-market rates $`R_d`$ and $`R_f`$ and a day-count fraction $`\tau`$, with $`1 + R_f\tau`$ not zero. Then neither ledger shows a profit if $`F_q = S(1 + R_d\tau)/(1 + R_f\tau)`$, and one does otherwise.
+- Take $`S`$ = 1.10 and $`r_d = r_f`$ = 0.04 for one year. Then the forward is 1.10, spot exactly.
 
 The decimal values such as 1.122221, the four roads, and the wrong-answer table are left to the Python and Rust checks.
 
@@ -633,7 +641,7 @@ example : (11 / 10 : ℝ) * Real.exp ((4 / 100 - 4 / 100) * 1) = 11 / 10 := by
 > [!warning]
 > **Reading the forward as the market's forecast.** It is not one. 1.122221 is where two deposits tie; the ledger in Step 1 earns the same at every landing spot. The claim that the forward predicts next year's spot is a different claim, **uncovered interest parity**, and no trade enforces it. The evidence has run against it since Fama's 1984 paper: the currency at a forward discount has on average fallen less than the forward implied, and often risen. Borrowing the low-rate currency to hold the high-rate one on that bet is the **carry trade**. It pays the rate gap for years and then loses much of it in weeks. The unhedged line on the second chart is that trade run backwards: it borrows the high-rate dollar to hold the low-rate euro.
 >
-> - **The quote direction.** $S$ and $F$ must be dollars per euro when $r_d$ is the dollar rate. Swap the rates and the forward comes out at 1.078219, a number that still looks like an exchange rate. Test: the higher-rate currency must be the one that is cheaper forward.
+> - **The quote direction.** $`S`$ and $`F`$ must be dollars per euro when $`r_d`$ is the dollar rate. Swap the rates and the forward comes out at 1.078219, a number that still looks like an exchange rate. Test: the higher-rate currency must be the one that is cheaper forward.
 > - **Mixing rate units.** A 5% money-market quote is not a 5% continuous rate. Put desk quotes in the exponent and the one-year forward moves 5.74 pips.
 > - **The wrong interest rate.** The rates belong to deposits the trader can actually borrow and lend at, for exactly this term. A government bond yield nobody lends at gives a forward nobody trades.
 > - **Assuming the market obeys it to the pip.** Since 2008 the major currencies have shown a persistent cross-currency basis. The formula is still how forwards are quoted; the residual is priced separately.
@@ -647,7 +655,7 @@ example : (11 / 10 : ℝ) * Real.exp ((4 / 100 - 4 / 100) * 1) = 11 / 10 := by
 - **Contracts already on the books.** A forward signed last month at an old rate is now worth something to one side. Its value comes from today's forward and discount factor: [Valuing an old currency forward](04-fx-forward-value-after-inception.md).
 - **Currency options.** The Garman–Kohlhagen formula is Black–Scholes with the foreign rate in the dividend slot, and it prices off this card's forward: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
 - **Funding-stress monitors.** Central banks watch how far quoted forwards sit from this formula. Run backwards, a forward implies an interest rate, and the gap to the quoted deposit rate is the cross-currency basis: [The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md).
-- **Gold.** Gold lent out earns a lease rate the way a euro earns its deposit rate, and the gold forward is the same formula with the lease rate in place of $r_f$: [Gold forward](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md).
+- **Gold.** Gold lent out earns a lease rate the way a euro earns its deposit rate, and the gold forward is the same formula with the lease rate in place of $`r_f`$: [Gold forward](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md).
 
 > **Say it back**
 > A currency forward fixes today the rate for a swap on a later date. Buying the foreign currency now and depositing it reaches the same place as agreeing the forward and depositing the home currency, so both must cost the same. That forces the forward to equal spot grown at the home rate minus the foreign rate. Any other quote lets one side lock in cash with no exposure to the exchange rate. The forward is where the two deposits tie, not a forecast of where the rate will land.
@@ -658,7 +666,7 @@ example : (11 / 10 : ℝ) * Real.exp ((4 / 100 - 4 / 100) * 1) = 11 / 10 := by
 
 - [Reading a currency quote](01-currency-quotes-and-cross-rates.md): which currency is priced in which, and what a pip is.
 - [Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md): why a deposit multiplies rather than adds.
-- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): where $e^{rT}$ comes from, and how simple and continuous rates convert.
+- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): where $`e^{rT}`$ comes from, and how simple and continuous rates convert.
 - [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the discount factors that price routes A and B today.
 - [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the same argument for a share; the euro's interest takes the dividend's place.
 

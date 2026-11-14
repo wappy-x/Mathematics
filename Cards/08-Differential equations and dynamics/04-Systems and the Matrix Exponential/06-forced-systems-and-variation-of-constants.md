@@ -36,30 +36,36 @@ Orange: room 1, with the heater, heading for 10 C. Teal: room 2, warmed only thr
 
 Reminder: a system is written with a vector unknown, x' = Ax, read "the rate of the state is the matrix A applied to the state"; its solution from a start x0 is e^(At) x0, where e^(At) is the matrix exponential ([The matrix exponential](04-the-matrix-exponential.md)). A **forced** system adds an input b(t) that does not depend on the state:
 
-$$x' = Ax + b(t), \qquad x(0) = x_0$$
+```math
+x' = Ax + b(t), \qquad x(0) = x_0
+```
 
 For the rooms, x = (room 1, room 2), A is `[[-2, 1], [1, -2]]` per hour, and b = (15, 0) C per hour. The solution is
 
-$$x(t) = e^{At}x_0 + \int_0^t e^{A(t-s)}\,b(s)\,ds$$
+```math
+x(t) = e^{At}x_0 + \int_0^t e^{A(t-s)}\,b(s)\,ds
+```
 
 **Read it aloud:** the state now is the start, carried forward t hours, plus the input of every earlier moment s, each carried forward the t − s hours since it arrived.
 
 When b is constant and A has an inverse, the integral can be done once and for all:
 
-$$x(t) = x_{eq} + e^{At}\,(x_0 - x_{eq}), \qquad x_{eq} = -A^{-1}b$$
+```math
+x(t) = x_{eq} + e^{At}\,(x_0 - x_{eq}), \qquad x_{eq} = -A^{-1}b
+```
 
 The **settled state** x_eq is where Ax + b = 0: the rates stop. The start's gap from it decays as a free system would.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $s$ | time now; an earlier moment of input, in hours | t = 2 | — |
-| $x$ | the state: both temperatures, C above outdoors | (8.98, 3.99) at 2 h | — |
-| $x_0$ | the starting state | (0, 0), or the house start (30, 10) | adds its own fading term |
-| $A$ | the rate matrix: leak and wall transfer, per hour | `[[-2, 1], [1, -2]]` | a bigger leak settles lower, faster |
-| $b$ | the forcing: input rate, C per hour | (15, 0) | the settled state scales with it |
-| $e^{At}$ | the propagator: carries a state forward t hours | modes e^(−t) and e^(−3t) | — |
-| $x_{eq}$ | the settled state, −A^(−1) b | (10, 5) | — |
-| $A^{-1}$, $I$ | A's inverse; the identity matrix | A^(−1) = −(1/3)`[[2, 1], [1, 2]]` | — |
+| $`t`$, $`s`$ | time now; an earlier moment of input, in hours | t = 2 | — |
+| $`x`$ | the state: both temperatures, C above outdoors | (8.98, 3.99) at 2 h | — |
+| $`x_0`$ | the starting state | (0, 0), or the house start (30, 10) | adds its own fading term |
+| $`A`$ | the rate matrix: leak and wall transfer, per hour | `[[-2, 1], [1, -2]]` | a bigger leak settles lower, faster |
+| $`b`$ | the forcing: input rate, C per hour | (15, 0) | the settled state scales with it |
+| $`e^{At}`$ | the propagator: carries a state forward t hours | modes e^(−t) and e^(−3t) | — |
+| $`x_{eq}`$ | the settled state, −A^(−1) b | (10, 5) | — |
+| $`A^{-1}`$, $`I`$ | A's inverse; the identity matrix | A^(−1) = −(1/3)`[[2, 1], [1, 2]]` | — |
 
 ### When it holds
 
@@ -80,7 +86,9 @@ For one equation, y' + py = q, multiplying by e^(pt) made the left side one deri
 
 By the product rule, which holds for a matrix times a vector,
 
-$$\big(e^{-At}x\big)' = e^{-At}x' - Ae^{-At}x = e^{-At}\,(x' - Ax) = e^{-At}\,b(t)$$
+```math
+\big(e^{-At}x\big)' = e^{-At}x' - Ae^{-At}x = e^{-At}\,(x' - Ax) = e^{-At}\,b(t)
+```
 
 The middle step moves A past e^(−At), allowed because e^(−At) is a power series in A.
 
@@ -88,7 +96,9 @@ The middle step moves A past e^(−At), allowed because e^(−At) is a power ser
 
 Integrate from 0 to t. At 0 the weight is I, so the left side gives e^(−At) x(t) − x0:
 
-$$e^{-At}x(t) - x_0 = \int_0^t e^{-As}\,b(s)\,ds$$
+```math
+e^{-At}x(t) - x_0 = \int_0^t e^{-As}\,b(s)\,ds
+```
 
 Multiply on the left by e^(At). Exponents of the same matrix add, so e^(At) e^(−As) = e^(A(t−s)), and the formula appears. Any solution must satisfy it, so there is only one.
 

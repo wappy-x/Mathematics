@@ -42,53 +42,61 @@ The first line is the one-year call price at each strike, falling from 22.76 at 
 
 ## The formula
 
-Notation first, in words. A call's price depends on which strike and which expiry, so it is written $C(K,T)$: the price today of the right to buy one Acme share for $K$ dollars on a date $T$ years away.
+Notation first, in words. A call's price depends on which strike and which expiry, so it is written $`C(K,T)`$: the price today of the right to buy one Acme share for $`K`$ dollars on a date $`T`$ years away.
 
-Strikes are written $K_1 < K_2 < K_3$ and expiries $T_1 < T_2$.
+Strikes are written $`K_1 < K_2 < K_3`$ and expiries $`T_1 < T_2`$.
 
-Two market prices carry the bookkeeping. The discount factor $D(T)$ is today's price of one dollar delivered at $T$: $e^{-rT}$ at a continuously compounded rate $r$, or 0.951229 for one year at 5 percent.
+Two market prices carry the bookkeeping. The discount factor $`D(T)`$ is today's price of one dollar delivered at $`T`$: $`e^{-rT}`$ at a continuously compounded rate $`r`$, or 0.951229 for one year at 5 percent.
 
-The forward price $F(T)$ is what the market charges today for a share delivered at $T$: $S\,e^{(r-q)T}$ for a share priced $S$ today paying a dividend yield $q$, or 103.045453 for one year here.
+The forward price $`F(T)`$ is what the market charges today for a share delivered at $`T`$: $`S\,e^{(r-q)T}`$ for a share priced $`S`$ today paying a dividend yield $`q`$, or 103.045453 for one year here.
 
 Falling, and not too fast:
 
-$$0 \;\le\; C(K_1,T) - C(K_2,T) \;\le\; D(T)\,(K_2 - K_1)$$
+```math
+0 \;\le\; C(K_1,T) - C(K_2,T) \;\le\; D(T)\,(K_2 - K_1)
+```
 
 Bending upwards, for evenly spaced strikes:
 
-$$C(K_1,T) - 2\,C(K_2,T) + C(K_3,T) \;\ge\; 0$$
+```math
+C(K_1,T) - 2\,C(K_2,T) + C(K_3,T) \;\ge\; 0
+```
 
 Climbing with expiry, at a matched strike:
 
-$$\frac{C(K_1,T_1)}{D(T_1)\,F(T_1)} \;\le\; \frac{C(K_2,T_2)}{D(T_2)\,F(T_2)} \qquad\text{when}\qquad \frac{K_1}{F(T_1)} = \frac{K_2}{F(T_2)}$$
+```math
+\frac{C(K_1,T_1)}{D(T_1)\,F(T_1)} \;\le\; \frac{C(K_2,T_2)}{D(T_2)\,F(T_2)} \qquad\text{when}\qquad \frac{K_1}{F(T_1)} = \frac{K_2}{F(T_2)}
+```
 
 **Read it aloud:** a higher strike is never worth more, and never worth less by more than the discounted gap between the strikes. The middle of three evenly spaced strikes is worth no more than the average of its neighbours. And measured against its own expiry's forward, a longer-dated call is never the cheaper one.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$ | a call's price today, written $C(K,T)$ | $C(100,1)$ is 9.227006 | — |
-| $S$, $S_1$ | Acme's price today; and $S_1$, wherever Acme lands at the near expiry | 100; unknown | rises: every call on the screen is worth more |
-| $K$, $K_1$, $K_2$, $K_3$ | **strikes**, the prices a call may buy at, low to high | 80, 90, 100, 110, 120 | rises: that call is worth less |
-| $T$, $T_1$, $T_2$ | years to expiry; the near one and the far one | 1 year; 0.5 and 1 | rises: more room for Acme to travel |
-| $\tau$ | the far leg's life left at the near expiry, $T_2 - T_1$. Say "tau". | 0.5 | rises: the far leg's cushion grows |
-| $r$, $q$ | the riskless rate, and the **dividend yield** the shares pay out, both continuously compounded | 5% and 2% | $r$ rises: the cap on a fall loosens. $q$ rises: the matched strike moves down |
-| $D$, $F$ | the **discount factor** $D(T) = e^{-rT}$, a dollar due at $T$ priced today; the **forward price** $F(T) = S\,e^{(r-q)T}$, a share delivered at $T$ priced today | 0.951229 and 103.045453 | $D$ rises: the cap tightens toward the raw gap. $F$ rises: the matched far strike follows |
-| $k$ | **moneyness**: a strike measured against its own expiry's forward, $K/F(T)$ | 0.985112 | rises: the call is further out of the money |
-| $w$ | the **cover weight** $e^{-q\tau}$: how many near calls one far call can cover | 0.990050 | — |
-| $c$ | the **normalized call**: $C$ divided by $D(T)F(T)$, which is $S\,e^{-qT}$ | 0.063710, then 0.086728 | — |
-| $v$ | **total variance** $v = \sigma^2 T$: volatility squared, times the years | 0.020000, then 0.040000 | rises: the normalized call rises, always |
-| $\sigma$, $N$ | volatility, said "sigma"; and $N$, the bell-curve area to the left of a point | 20% | $\sigma$ rises: every call is worth more |
+| $`C`$ | a call's price today, written $`C(K,T)`$ | $`C(100,1)`$ is 9.227006 | — |
+| $`S`$, $`S_1`$ | Acme's price today; and $`S_1`$, wherever Acme lands at the near expiry | 100; unknown | rises: every call on the screen is worth more |
+| $`K`$, $`K_1`$, $`K_2`$, $`K_3`$ | **strikes**, the prices a call may buy at, low to high | 80, 90, 100, 110, 120 | rises: that call is worth less |
+| $`T`$, $`T_1`$, $`T_2`$ | years to expiry; the near one and the far one | 1 year; 0.5 and 1 | rises: more room for Acme to travel |
+| $`\tau`$ | the far leg's life left at the near expiry, $`T_2 - T_1`$. Say "tau". | 0.5 | rises: the far leg's cushion grows |
+| $`r`$, $`q`$ | the riskless rate, and the **dividend yield** the shares pay out, both continuously compounded | 5% and 2% | $`r`$ rises: the cap on a fall loosens. $`q`$ rises: the matched strike moves down |
+| $`D`$, $`F`$ | the **discount factor** $`D(T) = e^{-rT}`$, a dollar due at $`T`$ priced today; the **forward price** $`F(T) = S\,e^{(r-q)T}`$, a share delivered at $`T`$ priced today | 0.951229 and 103.045453 | $`D`$ rises: the cap tightens toward the raw gap. $`F`$ rises: the matched far strike follows |
+| $`k`$ | **moneyness**: a strike measured against its own expiry's forward, $`K/F(T)`$ | 0.985112 | rises: the call is further out of the money |
+| $`w`$ | the **cover weight** $`e^{-q\tau}`$: how many near calls one far call can cover | 0.990050 | — |
+| $`c`$ | the **normalized call**: $`C`$ divided by $`D(T)F(T)`$, which is $`S\,e^{-qT}`$ | 0.063710, then 0.086728 | — |
+| $`v`$ | **total variance** $`v = \sigma^2 T`$: volatility squared, times the years | 0.020000, then 0.040000 | rises: the normalized call rises, always |
+| $`\sigma`$, $`N`$ | volatility, said "sigma"; and $`N`$, the bell-curve area to the left of a point | 20% | $`\sigma`$ rises: every call is worth more |
 
-Moneyness $k = K/F(T)$ is how the third rule matches one column to another: the 100-strike is 0.985112 of the half-year forward, and the one-year strike at that same moneyness is 101.511306. Because $D(T)F(T) = S\,e^{-qT}$, the rule in trading form is one far call against $w$ near calls:
+Moneyness $`k = K/F(T)`$ is how the third rule matches one column to another: the 100-strike is 0.985112 of the half-year forward, and the one-year strike at that same moneyness is 101.511306. Because $`D(T)F(T) = S\,e^{-qT}`$, the rule in trading form is one far call against $`w`$ near calls:
 
-$$C(K_2,T_2) \;\ge\; w\;C(K_1,T_1), \qquad w = e^{-q\tau}$$
+```math
+C(K_2,T_2) \;\ge\; w\;C(K_1,T_1), \qquad w = e^{-q\tau}
+```
 
 ### When it holds
 
-- **European exercise, held to expiry.** Every proof below sets a position up and never touches it. A short American leg can be exercised early, which knocks the discount out of the cap and leaves only the raw gap $K_2 - K_1$.
+- **European exercise, held to expiry.** Every proof below sets a position up and never touches it. A short American leg can be exercised early, which knocks the discount out of the cap and leaves only the raw gap $`K_2 - K_1`$.
 - **Both quotes tradeable, both ways, at the same moment.** Each proof sells one option and buys another. A stale mid-quote, a strike nobody will sell, a share nobody will lend: then the screen breaks a rule with no trade behind it, which on an illiquid strike happens daily.
-- **The right forward.** $F(T)$ must be that expiry's own forward. Known cash dividends replace $S\,e^{(r-q)T}$ with a lumpier one ([Known cash dividends](08-known-cash-dividends.md)), and a wrong forward moves the matched strike, inventing a violation worth a few cents.
-- **A traded discount factor.** $D(T)$ is the price of a dollar at $T$, read off the curve, not a guess. Treating the cap as the undiscounted gap lets 0.487706 per spread through as free money.
+- **The right forward.** $`F(T)`$ must be that expiry's own forward. Known cash dividends replace $`S\,e^{(r-q)T}`$ with a lumpier one ([Known cash dividends](08-known-cash-dividends.md)), and a wrong forward moves the matched strike, inventing a violation worth a few cents.
+- **A traded discount factor.** $`D(T)`$ is the price of a dollar at $`T`$, read off the curve, not a guess. Treating the cap as the undiscounted gap lets 0.487706 per spread through as free money.
 - **The strike rules inside one expiry, the calendar rule at one moneyness.** A 90-strike call at one date against a 100-strike call at another says nothing at all.
 
 ---
@@ -107,9 +115,9 @@ Buy the 90-strike call and sell the 100-strike call, same expiry. The trade is c
 
 Walk through Acme's possible finishes. Below 90 neither call pays: nothing. At 95 the long call pays 5 and the short pays nothing: 5. Above 100 the long pays Acme minus 90 and the short costs Acme minus 100, and the difference is 10 whatever Acme does. So the payoff climbs from 0 to 10 and stops.
 
-Never negative, so the price is not negative: $C(90,T) \ge C(100,T)$. A higher strike never costs more — the left half of the first rule.
+Never negative, so the price is not negative: $`C(90,T) \ge C(100,T)`$. A higher strike never costs more — the left half of the first rule.
 
-Never above 10, which gives the right half. Ten dollars delivered at $T$ costs $D(T) \times 10$ today, or 9.512294 for one year, and that cash pays at least as much as the spread in every single outcome. If the spread cost more, buying the cash and selling the spread would be a never-negative payoff for negative cost, which Step 0 forbids. So the spread costs at most 9.512294. On this screen it costs 5.896703, well inside.
+Never above 10, which gives the right half. Ten dollars delivered at $`T`$ costs $`D(T) \times 10`$ today, or 9.512294 for one year, and that cash pays at least as much as the spread in every single outcome. If the spread cost more, buying the cash and selling the spread would be a never-negative payoff for negative cost, which Step 0 forbids. So the spread costs at most 9.512294. On this screen it costs 5.896703, well inside.
 
 ### Step 2: the butterfly, and why the curve bends upwards
 
@@ -119,21 +127,25 @@ Check the tent at four finishes. At 85, nothing pays: 0. At 95 only the 90-call 
 
 Never negative, so the price is not negative:
 
-$$C(90,T) - 2\,C(100,T) + C(110,T) \;\ge\; 0,$$
+```math
+C(90,T) - 2\,C(100,T) + C(110,T) \;\ge\; 0,
+```
 
 which is exactly the statement that the middle price sits at or below the average of the outer two. On this screen the combination is a positive 1.858279, and the picture at the top of the card is that number drawn.
 
-Unequal spacing changes the weights, not the argument: the two gaps in proportion, $(K_3 - K_2)/(K_3 - K_1)$ on the low call and $(K_2 - K_1)/(K_3 - K_1)$ on the high one. For 90, 100 and 120 that is two parts of the 90-strike to one of the 120-strike, and the bound comes out at 10.986397, comfortably above the real 9.227006. The plain 50-50 average of those two calls, 8.917742, is not the bound and would report a violation that is not there.
+Unequal spacing changes the weights, not the argument: the two gaps in proportion, $`(K_3 - K_2)/(K_3 - K_1)`$ on the low call and $`(K_2 - K_1)/(K_3 - K_1)`$ on the high one. For 90, 100 and 120 that is two parts of the 90-strike to one of the 120-strike, and the bound comes out at 10.986397, comfortably above the real 9.227006. The plain 50-50 average of those two calls, 8.917742, is not the bound and would report a violation that is not there.
 
 <details>
 <summary>Detailed proof: both strike rules from one convexity</summary>
 
-Fix Acme's finishing price and look at a call's payoff as a function of its strike: $K \mapsto (\text{finish} - K)^+$, which is the finish minus $K$ while that is positive and zero after. That function falls as $K$ rises, never by more than one dollar per dollar of strike, and it is convex, meaning it lies at or below the straight line joining any two of its points ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). Both strike rules are those three properties, priced.
+Fix Acme's finishing price and look at a call's payoff as a function of its strike: $`K \mapsto (\text{finish} - K)^+`$, which is the finish minus $`K`$ while that is positive and zero after. That function falls as $`K`$ rises, never by more than one dollar per dollar of strike, and it is convex, meaning it lies at or below the straight line joining any two of its points ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). Both strike rules are those three properties, priced.
 
-Falling by at most a dollar per dollar: at every finish, $0 \le (\text{finish}-K_1)^+ - (\text{finish}-K_2)^+ \le K_2 - K_1$. The middle term is the call spread's payoff, squeezed between nothing at all and a fixed $K_2 - K_1$ due at $T$; pricing all three by Step 0, twice, gives $0 \le C(K_1,T) - C(K_2,T) \le D(T)(K_2-K_1)$.
+Falling by at most a dollar per dollar: at every finish, $`0 \le (\text{finish}-K_1)^+ - (\text{finish}-K_2)^+ \le K_2 - K_1`$. The middle term is the call spread's payoff, squeezed between nothing at all and a fixed $`K_2 - K_1`$ due at $`T`$; pricing all three by Step 0, twice, gives $`0 \le C(K_1,T) - C(K_2,T) \le D(T)(K_2-K_1)`$.
 
 Convexity: at every finish,
-$$(\text{finish} - K_2)^+ \;\le\; \frac{K_3-K_2}{K_3-K_1}\,(\text{finish}-K_1)^+ \;+\; \frac{K_2-K_1}{K_3-K_1}\,(\text{finish}-K_3)^+ .$$
+
+$`\displaystyle (\text{finish} - K_2)^+ \;\le\; \frac{K_3-K_2}{K_3-K_1}\,(\text{finish}-K_1)^+ \;+\; \frac{K_2-K_1}{K_3-K_1}\,(\text{finish}-K_3)^+ .`$
+
 So the portfolio holding those two fractions of the outer calls while short the middle call has a payoff that is never negative, and its price is not negative: the middle call costs at most the same blend of the outer two. Equal spacing makes both weights one half; double that and the 1, −2, 1 butterfly appears.
 
 </details>
@@ -142,19 +154,23 @@ So the portfolio holding those two fractions of the outer calls while short the 
 
 Two expiries now: the half-year 100-call and a one-year call. Which one-year strike should be set against the half-year 100-strike? Not 100.
 
-Here is why. Write $S_1$ for wherever Acme lands at the near expiry. There the half-year call is finished: it pays $S_1$ minus 100 if that is positive, nothing otherwise. The one-year call is still alive, with half a year to run, and a live call is worth at least zero and at least its forward intrinsic, $S_1\,e^{-q\tau} - K\,e^{-r\tau}$ ([Option price bounds](04-option-price-bounds.md)). Pick the far strike so that this floor is a fixed multiple of what the near call pays, and the far leg covers the near leg in every outcome at once.
+Here is why. Write $`S_1`$ for wherever Acme lands at the near expiry. There the half-year call is finished: it pays $`S_1`$ minus 100 if that is positive, nothing otherwise. The one-year call is still alive, with half a year to run, and a live call is worth at least zero and at least its forward intrinsic, $`S_1\,e^{-q\tau} - K\,e^{-r\tau}`$ ([Option price bounds](04-option-price-bounds.md)). Pick the far strike so that this floor is a fixed multiple of what the near call pays, and the far leg covers the near leg in every outcome at once.
 
 That strike is the near strike grown by the ratio of the two forwards:
 
-$$K_2 = K_1\,\frac{F(T_2)}{F(T_1)} = 100 \times \frac{103.045453}{101.511306} = 101.511306.$$
+```math
+K_2 = K_1\,\frac{F(T_2)}{F(T_1)} = 100 \times \frac{103.045453}{101.511306} = 101.511306.
+```
 
-(The answer coincides with the half-year forward only because the near strike happens to equal Acme's spot price.) With that strike, $K_2\,e^{-r\tau}$ and $K_1\,e^{-q\tau}$ are the same number, so the far call's floor — zero below $K_1$, the forward intrinsic above it — is $e^{-q\tau}$ times the near call's payoff at every $S_1$ at once. Write $w = e^{-q\tau} = 0.990050$.
+(The answer coincides with the half-year forward only because the near strike happens to equal Acme's spot price.) With that strike, $`K_2\,e^{-r\tau}`$ and $`K_1\,e^{-q\tau}`$ are the same number, so the far call's floor — zero below $`K_1`$, the forward intrinsic above it — is $`e^{-q\tau}`$ times the near call's payoff at every $`S_1`$ at once. Write $`w = e^{-q\tau} = 0.990050`$.
 
-So: buy one far call and sell $w$ near calls. At the near expiry the far leg is worth at least what settling the short near legs costs, so the position's value there is never negative. Step 0 then says its cost today is not negative:
+So: buy one far call and sell $`w`$ near calls. At the near expiry the far leg is worth at least what settling the short near legs costs, so the position's value there is never negative. Step 0 then says its cost today is not negative:
 
-$$C(K_2,T_2) \;\ge\; w\,C(K_1,T_1).$$
+```math
+C(K_2,T_2) \;\ge\; w\,C(K_1,T_1).
+```
 
-On this screen the far call is 8.501093 and $w$ near calls cost 0.990050 times 6.307635, leaving 2.256219 of cushion. Divide both sides by the far leg's $S\,e^{-qT_2}$ and the normalized form at the top of the card appears: on the right, $w$ and $e^{-qT_2}$ combine into the near leg's own $e^{-qT_1}$. So $c$ rises from 0.063710 at the half-year to 0.086728 at the year, at the one shared moneyness 0.985112.
+On this screen the far call is 8.501093 and $`w`$ near calls cost 0.990050 times 6.307635, leaving 2.256219 of cushion. Divide both sides by the far leg's $`S\,e^{-qT_2}`$ and the normalized form at the top of the card appears: on the right, $`w`$ and $`e^{-qT_2}`$ combine into the near leg's own $`e^{-qT_1}`$. So $`c`$ rises from 0.063710 at the half-year to 0.086728 at the year, at the one shared moneyness 0.985112.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -166,22 +182,24 @@ xychart-beta
     line [0.00, 0.00, 0.00, 19.80, 39.60, 59.40]
 ```
 
-The first line is the far leg's worth at the near expiry, 5.58 with Acme at 100; the second is what settling $w$ short near calls costs there, nothing up to 100 and then 19.80 at 120. The first never dips below the second. The gap between them is the cushion, fattest at the near strike at 5.581107 and thinning to 0.002057 at 160 and 0.000403 at 60 — thin, never negative, and confirmed at 301 prices from 50 to 200.
+The first line is the far leg's worth at the near expiry, 5.58 with Acme at 100; the second is what settling $`w`$ short near calls costs there, nothing up to 100 and then 19.80 at 120. The first never dips below the second. The gap between them is the cushion, fattest at the near strike at 5.581107 and thinning to 0.002057 at 160 and 0.000403 at 60 — thin, never negative, and confirmed at 301 prices from 50 to 200.
 
 ### The same rule in volatility units
 
-At a fixed moneyness $k$, the normalized Black-Scholes call depends on one number only, the total variance $v = \sigma^2 T$:
+At a fixed moneyness $`k`$, the normalized Black-Scholes call depends on one number only, the total variance $`v = \sigma^2 T`$:
 
-$$c(k,v) = N(z) - k\,N\!\left(z - \sqrt{v}\right), \qquad z = \frac{\ln(1/k) + v/2}{\sqrt{v}}.$$
+```math
+c(k,v) = N(z) - k\,N\!\left(z - \sqrt{v}\right), \qquad z = \frac{\ln(1/k) + v/2}{\sqrt{v}}.
+```
 
-That function starts at $(1-k)^+$ when $v$ is nothing, climbs strictly, and approaches 1 as $v$ grows without bound. Those two ends are the option price bounds in normalized clothing, so a normalized quote strictly between them comes from exactly one total variance: the inverse exists and is unique, while a quote at or outside the bounds has none, which is the thing to check before solving. The checks invert by bisection, written out, and recover 0.020000 for the half-year quote and 0.040000 for the year — which is $\sigma^2 T$ at 20 percent volatility.
+That function starts at $`(1-k)^+`$ when $`v`$ is nothing, climbs strictly, and approaches 1 as $`v`$ grows without bound. Those two ends are the option price bounds in normalized clothing, so a normalized quote strictly between them comes from exactly one total variance: the inverse exists and is unique, while a quote at or outside the bounds has none, which is the thing to check before solving. The checks invert by bisection, written out, and recover 0.020000 for the half-year quote and 0.040000 for the year — which is $`\sigma^2 T`$ at 20 percent volatility.
 
-Because $c$ climbs strictly with $v$, the calendar rule reads, in these units: **total variance at a fixed moneyness never falls as the expiry lengthens.** Implied volatility itself is free to fall, and often does.
+Because $`c`$ climbs strictly with $`v`$, the calendar rule reads, in these units: **total variance at a fixed moneyness never falls as the expiry lengthens.** Implied volatility itself is free to fall, and often does.
 
 <details>
 <summary>The same three facts in the pretend world</summary>
 
-Where risk-neutral pricing is already familiar, all three come out in two lines. There a call's price is the discounted average of its payoff. Rules one and two are then the properties of $K \mapsto (\text{finish}-K)^+$ from the folded proof above, averaged: an average of falling functions falls, and an average of convex functions is convex. For rule three, the ratio of Acme's price at an expiry to that expiry's forward is a martingale — its average at a later date, given what is known at the near date, is its value at the near date — and the payoff is convex in that ratio, so Jensen's inequality gives the normalized call climbing with expiry.
+Where risk-neutral pricing is already familiar, all three come out in two lines. There a call's price is the discounted average of its payoff. Rules one and two are then the properties of $`K \mapsto (\text{finish}-K)^+`$ from the folded proof above, averaged: an average of falling functions falls, and an average of convex functions is convex. For rule three, the ratio of Acme's price at an expiry to that expiry's forward is a martingale — its average at a later date, given what is known at the near date, is its value at the near date — and the payoff is convex in that ratio, so Jensen's inequality gives the normalized call climbing with expiry.
 
 The static portfolios above carry the same content without the machinery, and hold in markets where no such pretend world has been built at all.
 
@@ -191,7 +209,7 @@ The static portfolios above carry the same content without the machinery, and ho
 
 ## Worked numbers, by hand
 
-The house market: Acme at $S = 100$, riskless rate $r = 5\%$, dividend yield $q = 2\%$, volatility $\sigma = 20\%$.
+The house market: Acme at $`S = 100`$, riskless rate $`r = 5\%`$, dividend yield $`q = 2\%`$, volatility $`\sigma = 20\%`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -199,13 +217,13 @@ The house market: Acme at $S = 100$, riskless rate $r = 5\%$, dividend yield $q 
 | one-year 100-call | the shelf's house call | 9.227006 |
 | one-year 110-call | | 5.188582 |
 | the 90-to-100 fall | 15.123708 − 9.227006 | 5.896703 |
-| its cap | $D(1) \times 10 = 0.951229 \times 10$ | 9.512294 |
+| its cap | $`D(1) \times 10 = 0.951229 \times 10`$ | 9.512294 |
 | the 90/100/110 combination | 15.123708 − 2 × 9.227006 + 5.188582 | **1.858279** |
 | the 90/110 average | (15.123708 + 5.188582)/2 | 10.156145 |
 | half-year 100-call | | 6.307635 |
 | the matched one-year strike | 100 × 103.045453 / 101.511306 | 101.511306 |
 | one-year call at that strike | | 8.501093 |
-| the cover weight | $e^{-0.02 \times 0.5}$ | 0.990050 |
+| the cover weight | $`e^{-0.02 \times 0.5}`$ | 0.990050 |
 | the calendar cushion | 8.501093 − 0.990050 × 6.307635 | **2.256219** |
 
 All three rules hold with room to spare. Those cushions are what a market maker eats into before a quote stops being a price and becomes a gift.
@@ -214,7 +232,7 @@ All three rules hold with room to spare. Those cushions are what a market maker 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Test the calendar on raw cash prices at one strike | $C(100,200) - C(100,1) = -7.399266$ | With a 2 percent dividend yield a very long call really is worth less than a one-year call, and nothing is wrong: the strike was never moved to the far forward. |
+| Test the calendar on raw cash prices at one strike | $`C(100,200) - C(100,1) = -7.399266`$ | With a 2 percent dividend yield a very long call really is worth less than a one-year call, and nothing is wrong: the strike was never moved to the far forward. |
 | Cap the fall at the raw gap of 10 | 0.487706 free per spread | A dollar at expiry is not a dollar today. The cap is 0.951229 × 10, or 9.512294. |
 | Average unequal wings 50-50: 90, 100, 120 | bound 8.917742 instead of 10.986397 | The weights are the gap proportions, two to one. The plain average falls below the real 9.227006 and cries arbitrage. |
 | Read the volatility term structure instead of the prices | 25 percent then 20 percent looks like a fall | Total variance still climbs, 0.031250 then 0.040000, and so do the normalized calls, 0.077603 then 0.086728. |
@@ -671,10 +689,10 @@ The two outputs match line for line, produced by different code taking different
 
 Lean proves all three rules in any market where prices add up and a never-negative payoff never has a negative price.
 
-- Take two strikes $K_1 < K_2$ at one expiry $T$. Then the call spread costs at least zero and at most $D(T)(K_2 - K_1)$.
-- Take evenly spaced strikes $K_1 < K_2 < K_3$ at one expiry. Then the butterfly costs at least zero, so the middle call sits at or below the average of the outer two.
-- Take any strikes $K_1 < K_2 < K_3$ at one expiry. Then the middle call costs at most the blend of the outer two, with the gap-proportion weights from Step 2.
-- Take two strikes at one moneyness, and a far call worth at least zero and its forward intrinsic at the near expiry. Then the normalized call $c$ at $T_1$ is at most $c$ at $T_2$.
+- Take two strikes $`K_1 < K_2`$ at one expiry $`T`$. Then the call spread costs at least zero and at most $`D(T)(K_2 - K_1)`$.
+- Take evenly spaced strikes $`K_1 < K_2 < K_3`$ at one expiry. Then the butterfly costs at least zero, so the middle call sits at or below the average of the outer two.
+- Take any strikes $`K_1 < K_2 < K_3`$ at one expiry. Then the middle call costs at most the blend of the outer two, with the gap-proportion weights from Step 2.
+- Take two strikes at one moneyness, and a far call worth at least zero and its forward intrinsic at the near expiry. Then the normalized call $`c`$ at $`T_1`$ is at most $`c`$ at $`T_2`$.
 - The card's hand arithmetic also checks out exactly. That covers the tent at four finishes, the spread's payoffs, the two-to-one weights and the hand-made sheet's 0.90 and 0.20.
 
 The Black-Scholes numbers, total variance, the lumpy market, the tree and the sheet's audit are left to the Python and Rust checks.
@@ -886,7 +904,7 @@ example : (540 - 520 : ℤ) = 20 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Testing the calendar rule on raw cash prices at one strike.** With a dividend yield, a longer call can be worth less than a shorter one at the same strike and nothing is wrong: on this screen $C(100,200) - C(100,1) = -7.399266$. The rule compares matched moneyness, not matched strikes, and it compares normalized prices.
+> **Testing the calendar rule on raw cash prices at one strike.** With a dividend yield, a longer call can be worth less than a shorter one at the same strike and nothing is wrong: on this screen $`C(100,200) - C(100,1) = -7.399266`$. The rule compares matched moneyness, not matched strikes, and it compares normalized prices.
 >
 > Four more traps, each with the wrong number it produces:
 > - **Reading these as Black-Scholes facts.** No model appears in any proof. The lumpy five-outcome market in the checks has nothing lognormal about it and still returns a positive 3.804918 for its 90/100/110 combination. Any arbitrage-free screen obeys all three, smile or no smile.

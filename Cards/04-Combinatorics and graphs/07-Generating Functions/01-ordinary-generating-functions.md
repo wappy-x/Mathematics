@@ -33,19 +33,25 @@ Each height is the number in front of that power of x in the die series squared.
 
 ## The formula
 
-A sequence is a list of numbers, one slot per whole-number size. Its **ordinary generating function** hangs the size-$n$ count on the $n$-th power of $x$. The sigma sign, met on [The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md), is shorthand for adding what follows over every size under it.
+A sequence is a list of numbers, one slot per whole-number size. Its **ordinary generating function** hangs the size-$`n`$ count on the $`n`$-th power of $`x`$. The sigma sign, met on [The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md), is shorthand for adding what follows over every size under it.
 
-$$A(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots = \sum_{n \ge 0} a_n x^n$$
+```math
+A(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots = \sum_{n \ge 0} a_n x^n
+```
 
 **Read it aloud:** the count for size n rides on the n-th power of x, and the series is the whole list at once.
 
-$[x^n]A(x)$ means the number hanging on that power, read "the coefficient of x to the n in A". Two series are equal when every coefficient agrees, size by size. Nothing is ever substituted for $x$: a series read as bookkeeping only is a **formal power series**.
+$`[x^n]A(x)`$ means the number hanging on that power, read "the coefficient of x to the n in A". Two series are equal when every coefficient agrees, size by size. Nothing is ever substituted for $`x`$: a series read as bookkeeping only is a **formal power series**.
 
-$$\frac{1}{1-x} = 1 + x + x^2 + x^3 + \cdots$$
+```math
+\frac{1}{1-x} = 1 + x + x^2 + x^3 + \cdots
+```
 
 **Read it aloud:** the series carrying a 1 on every power is what multiplies 1 − x to give plain 1.
 
-$$A(x)\,B(x) = \sum_{n \ge 0} c_n x^n, \qquad c_n = \sum_{k=0}^{n} a_k\, b_{n-k}$$
+```math
+A(x)\,B(x) = \sum_{n \ge 0} c_n x^n, \qquad c_n = \sum_{k=0}^{n} a_k\, b_{n-k}
+```
 
 **Read it aloud:** the coefficient at size n in the product runs over every split of n into a first piece of size k and a second of size n minus k, multiplying the two counts and adding.
 
@@ -53,16 +59,16 @@ That sum over splits is the lists' **convolution**, the word used from here on.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a_n$, $a_k$ | count at size $n$, first list | one die: 1 at 1 to 6 | more ways there |
-| $b_n$ | second list, $b_{n-k}$ its count at the leftover size | the other die's 1s | — |
-| $c_n$ | count at size $n$ in the product | 6 at total 7 | — |
-| $n$, $k$ | a size; a split's first piece | totals 2 to 12 | bigger $n$, more splits: $n + 1$ of them |
-| $x$ | placeholder, its exponent the size | never a number | — |
-| $A(x)$, $B(x)$, $[x^n]A(x)$ | the series, and a count in one | 6 on x^7 | — |
+| $`a_n`$, $`a_k`$ | count at size $`n`$, first list | one die: 1 at 1 to 6 | more ways there |
+| $`b_n`$ | second list, $`b_{n-k}`$ its count at the leftover size | the other die's 1s | — |
+| $`c_n`$ | count at size $`n`$ in the product | 6 at total 7 | — |
+| $`n`$, $`k`$ | a size; a split's first piece | totals 2 to 12 | bigger $`n`$, more splits: $`n + 1`$ of them |
+| $`x`$ | placeholder, its exponent the size | never a number | — |
+| $`A(x)`$, $`B(x)`$, $`[x^n]A(x)`$ | the series, and a count in one | 6 on x^7 | — |
 
 ### When it holds
 
-- **The sizes must add.** Two pieces side by side make a thing of their combined size, one way only; the dice qualify, the faces adding to the total. Size $n$ has only $n + 1$ splits, so each coefficient is a finite sum.
+- **The sizes must add.** Two pieces side by side make a thing of their combined size, one way only; the dice qualify, the faces adding to the total. Size $`n`$ has only $`n + 1`$ splits, so each coefficient is a finite sum.
 - **No labels reshuffled.** Pieces carrying labels dealt out among them need a binomial coefficient in the product instead: [Exponential generating functions](04-exponential-generating-functions.md).
 - **A nonzero constant term, to invert.** 1 − x carries a 1 on the zeroth power, so something multiplies it to 1; one die's series starts at x, and nothing does.
 
@@ -76,23 +82,25 @@ x^3 times x^4 is x^7: three copies of x beside four makes seven. So when the exp
 
 ### Step 1: multiplying two series convolves the two lists
 
-Multiply out the way two polynomials do, every term of the first against every term of the second ([Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md)). Each pair contributes its counts multiplied, on the power got by adding the exponents. Gather what landed on $x^n$: if the first exponent is $k$ the second is $n$ minus $k$, and adding those products gives $c_n$. For the dice at total 7 the first exponent runs 1 through 6, its partner always in range, each product 1 times 1: six splits, so 6. At 13 nothing works, and the series stops at the twelfth power.
+Multiply out the way two polynomials do, every term of the first against every term of the second ([Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md)). Each pair contributes its counts multiplied, on the power got by adding the exponents. Gather what landed on $`x^n`$: if the first exponent is $`k`$ the second is $`n`$ minus $`k`$, and adding those products gives $`c_n`$. For the dice at total 7 the first exponent runs 1 through 6, its partner always in range, each product 1 times 1: six splits, so 6. At 13 nothing works, and the series stops at the twelfth power.
 
-Read the same line as counting. A split with a size-$k$ first piece has $a_k$ times $b_{n-k}$ pairs, by the product rule; the splits are separate cases covering everything, so the sum rule adds them ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)). Multiplying series is those two rules applied to every size at once, in advance.
+Read the same line as counting. A split with a size-$`k`$ first piece has $`a_k`$ times $`b_{n-k}`$ pairs, by the product rule; the splits are separate cases covering everything, so the sum rule adds them ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)). Multiplying series is those two rules applied to every size at once, in advance.
 
 ### Step 2: the series of ones is the inverse of 1 − x
 
-Multiply the series of ones by 1 − x. The coefficients of 1 − x are 1, then −1, then 0 forever, so above the constant term only two products land on each power: the 1 there against that 1, and the 1 below against that −1. Every $a_n$ here is 1.
+Multiply the series of ones by 1 − x. The coefficients of 1 − x are 1, then −1, then 0 forever, so above the constant term only two products land on each power: the 1 there against that 1, and the 1 below against that −1. Every $`a_n`$ here is 1.
 
-$$c_n = a_n \cdot 1 + a_{n-1} \cdot (-1) = 1 - 1 = 0 \quad \text{for } n \ge 1, \qquad c_0 = 1$$
+```math
+c_n = a_n \cdot 1 + a_{n-1} \cdot (-1) = 1 - 1 = 0 \quad \text{for } n \ge 1, \qquad c_0 = 1
+```
 
 They cancel, and the constant term stays 1. So the product is plain 1, which is what the name 1/(1 − x) records: not a division, but what multiplies 1 − x to 1.
 
-Nothing else does. Read the same convolution for an unknown series with $(1-x)A(x) = 1$: its constant term must be 1, and above that each coefficient must equal the one before, so all are 1. No finite piece will do either: cut the ones off and everything cancels except the top term, left with no partner, so 1 − x times 1 + x + … + x^8 is 1 − x^9.
+Nothing else does. Read the same convolution for an unknown series with $`(1-x)A(x) = 1`$: its constant term must be 1, and above that each coefficient must equal the one before, so all are 1. No finite piece will do either: cut the ones off and everything cancels except the top term, left with no partner, so 1 − x times 1 + x + … + x^8 is 1 − x^9.
 
 ### Step 3: ones against ones, and the grand total
 
-Squaring the ones is the smallest convolution worth doing: every split of $n$ gives 1 times 1, and there are $n + 1$ splits, so the coefficients run 1, 2, 3, 4, … — the count of ordered pairs of whole numbers adding to $n$.
+Squaring the ones is the smallest convolution worth doing: every split of $`n`$ gives 1 times 1, and there are $`n + 1`$ splits, so the coefficients run 1, 2, 3, 4, … — the count of ordered pairs of whole numbers adding to $`n`$.
 
 The dice cross-check a total instead of one coefficient: the eleven coefficients add to 36, and 6 faces times 6 faces is the same 36. Every pair of faces sits in one split, so the roads must agree.
 
@@ -129,7 +137,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The dice counts come out three times by roads sharing no arithmetic: the series multiplied over every pair of terms, all 36 rolls listed and tallied, and the splits of each total counted. The squared ones is set against $n + 1$, 1 − x times the ones shows the leftover at the top, and the four wrong numbers are printed too.
+Nothing is imported. The dice counts come out three times by roads sharing no arithmetic: the series multiplied over every pair of terms, all 36 rolls listed and tallied, and the splits of each total counted. The squared ones is set against $`n + 1`$, 1 − x times the ones shows the leftover at the top, and the four wrong numbers are printed too.
 
 ### Python
 
@@ -323,11 +331,11 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's three facts about series for every size $n$ and every pair of series, plus the dice counts.
+Lean proves the card's three facts about series for every size $`n`$ and every pair of series, plus the dice counts.
 
-- Multiplying two series convolves their lists: the coefficient of $x^n$ in the product adds $a_k\, b_{n-k}$ over all $n + 1$ splits.
+- Multiplying two series convolves their lists: the coefficient of $`x^n`$ in the product adds $`a_k\, b_{n-k}`$ over all $`n + 1`$ splits.
 - The series of ones times 1 − x gives plain 1, and no other series does.
-- The ones squared carry $n + 1$ on $x^n$, one for each split of $n$.
+- The ones squared carry $`n + 1`$ on $`x^n`$, one for each split of $`n`$.
 - For two dice, totals 2 through 12 come out 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, with 6 on x^7.
 - Listing all 36 ordered rolls gives the same counts, and the eleven counts add to 36.
 - Faces numbered 0 to 5 leave only 4 ways to make 7.
@@ -461,4 +469,4 @@ Verified 19 Sep 2026: every link below resolves to the publisher's page.
 
 - Wilf, Herbert S. *generatingfunctionology*, 2nd ed. Academic Press, 1994. [Download page](https://www2.math.upenn.edu/~wilf/DownldGF.html), [full PDF](https://www2.math.upenn.edu/~wilf/gfology2.pdf). Free and complete; chapters 1 and 2 give the powers-of-x idea and the product rule.
 - Flajolet, Philippe, and Robert Sedgewick. *Analytic Combinatorics*. Cambridge University Press, 2009. [Publisher page](https://doi.org/10.1017/CBO9780511801655), [authors' PDF](https://algo.inria.fr/flajolet/Publications/book.pdf). Part A, chapter I: pairing two kinds of object is multiplying their series.
-- Olver, F. W. J., et al., eds. *NIST Digital Library of Mathematical Functions*, §26.3. [dlmf.nist.gov/26.3](https://dlmf.nist.gov/26.3). Free; equation 26.3.4 gives the coefficients of 1/(1 − x) raised to a power, the squared ones being its $n = 1$ case.
+- Olver, F. W. J., et al., eds. *NIST Digital Library of Mathematical Functions*, §26.3. [dlmf.nist.gov/26.3](https://dlmf.nist.gov/26.3). Free; equation 26.3.4 gives the coefficients of 1/(1 − x) raised to a power, the squared ones being its $`n = 1`$ case.

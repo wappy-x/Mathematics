@@ -44,41 +44,47 @@ The lower, straight line is the quote itself. The upper, bending line is the ret
 
 Three rules, in the order a trade meets them. Notation first, in words. A year fraction is the days in a period divided by the days the convention calls a year; dollar money markets count actual days over 360, written actual/360. The tall sign ∏ in the third rule means "multiply all of these together", the way a sum sign adds a list up.
 
-$$P = F\left(1 - d\cdot\frac{n}{360}\right)$$
+```math
+P = F\left(1 - d\cdot\frac{n}{360}\right)
+```
 
 **Read it aloud:** take the quoted discount off the face amount, in proportion to the days left, and what remains is the price.
 
-$$i = \frac{F - P}{P}\cdot\frac{360}{n}$$
+```math
+i = \frac{F - P}{P}\cdot\frac{360}{n}
+```
 
 **Read it aloud:** the gain, divided by the cash that earned it, scaled up to a 360-day year.
 
-$$G = \prod_{j=1}^{m}\left(1 + r_j\cdot\frac{n_j}{360}\right), \qquad R = (G - 1)\cdot\frac{360}{n}$$
+```math
+G = \prod_{j=1}^{m}\left(1 + r_j\cdot\frac{n_j}{360}\right), \qquad R = (G - 1)\cdot\frac{360}{n}
+```
 
 **Read it aloud:** let each block's interest join the balance, multiply the blocks together, and quote the whole period's growth as one simple rate.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | face value: the round amount repaid at maturity | $1,000,000.00 | price and gain both scale with it |
-| $P$ | price: the cash actually handed over | $987,613.89 | the return falls, the same gain spread over more cash |
-| $d$ | discount quote: a percent a year of the face value | 4.90% | the price falls and the return rises a little faster |
-| $n$ | days in the period, counted actual: to the bill's maturity, or across the whole overnight path | 91 | more days, more discount and more interest |
-| $i$ | the return on the cash, simple, actual/360 | 4.9615% | — |
-| $y$ | the same return stated on a 365-day year | 5.0304% | — |
-| $r_j$ | the overnight rate applying to one block of the path | 5.05%, later 4.80% | every balance after it grows faster |
-| $n_j$ | calendar days that block covers: 1, or 3 over a weekend | 1 or 3 | — |
-| $m$ | how many blocks the period holds | 65 | — |
-| $G$ | growth factor over the whole period, all blocks multiplied | 1.0125065396 | — |
-| $R$ | the compounded-in-arrears rate, simple, actual/360 | 4.9476% | — |
-| $J$ | a published index: the same product run from a fixed start date | 1.00000000 on day 0 | — |
+| $`F`$ | face value: the round amount repaid at maturity | $1,000,000.00 | price and gain both scale with it |
+| $`P`$ | price: the cash actually handed over | $987,613.89 | the return falls, the same gain spread over more cash |
+| $`d`$ | discount quote: a percent a year of the face value | 4.90% | the price falls and the return rises a little faster |
+| $`n`$ | days in the period, counted actual: to the bill's maturity, or across the whole overnight path | 91 | more days, more discount and more interest |
+| $`i`$ | the return on the cash, simple, actual/360 | 4.9615% | — |
+| $`y`$ | the same return stated on a 365-day year | 5.0304% | — |
+| $`r_j`$ | the overnight rate applying to one block of the path | 5.05%, later 4.80% | every balance after it grows faster |
+| $`n_j`$ | calendar days that block covers: 1, or 3 over a weekend | 1 or 3 | — |
+| $`m`$ | how many blocks the period holds | 65 | — |
+| $`G`$ | growth factor over the whole period, all blocks multiplied | 1.0125065396 | — |
+| $`R`$ | the compounded-in-arrears rate, simple, actual/360 | 4.9476% | — |
+| $`J`$ | a published index: the same product run from a fixed start date | 1.00000000 on day 0 | — |
 
-Two helpers. A bill of six months or less is also quoted on a 365-day year, the bond-equivalent yield $y = i\cdot 365/360$, which puts it beside a bond's yield instead of a deposit's.
+Two helpers. A bill of six months or less is also quoted on a 365-day year, the bond-equivalent yield $`y = i\cdot 365/360`$, which puts it beside a bond's yield instead of a deposit's.
 
-And because an index is one long product, the growth factor between any two of its dates is one level divided by the other: $G = J_{\text{end}}/J_{\text{start}}$. The published SOFR Index began at 1.00000000 on 2 April 2018 and is quoted to eight decimal places for exactly this purpose.
+And because an index is one long product, the growth factor between any two of its dates is one level divided by the other: $`G = J_{\text{end}}/J_{\text{start}}`$. The published SOFR Index began at 1.00000000 on 2 April 2018 and is quoted to eight decimal places for exactly this purpose.
 
 ### When it holds
 
 - **The day count is part of the quote, not decoration.** Dollar bills, repo and SOFR all accrue actual/360. Price the same bill on a 365-day year and it comes out $169.67 dearer per million, on identical cash flows.
-- **The price has to stay positive.** The discount rule needs $d\cdot n/360 < 1$. At 91 days that means a quote under 395.6% a year, so it never binds in practice; at very long maturities the discount basis breaks, which is one reason only short paper uses it.
+- **The price has to stay positive.** The discount rule needs $`d\cdot n/360 < 1`$. At 91 days that means a quote under 395.6% a year, so it never binds in practice; at very long maturities the discount basis breaks, which is one reason only short paper uses it.
 - **Overnight blocks come from a published calendar.** One rate covers one block. A Friday rate normally covers Saturday and Sunday as a single three-day block of simple interest, not three compounded days; compounding them adds $0.74 per million over this quarter.
 - **In arrears means the last rate is missing until the end.** The formula is exact arithmetic on a path, not a forecast. Before the period closes, any number quoted for it is an estimate from futures or swaps, not an observation. Futures and swaps are contracts traded today whose payments depend on the overnight rates the period will later set.
 - **Conventions verified 14 September 2026:** bills quoted as a discount on actual/360; SOFR published each business day at about 8 a.m. New York time; the SOFR Index set to 1.00000000 on 2 April 2018 and published to eight decimals, with rolling compounded averages over 30, 90 and 180 calendar days. Markets can change these rules. The algebra does not change with them.
@@ -95,7 +101,7 @@ Every conversion on this card is bookkeeping between those choices, so the first
 
 ### Step 1: the discount is taken off the round number
 
-A bill has one payment, the face value, and that is the number everyone knows in advance. So the market quotes the amount knocked off it. At 4.90 for 91 days the discount is $1{,}000{,}000.00\times 0.049\times 91/360$, which is $12,386.11, and the price is what is left, $987,613.89.
+A bill has one payment, the face value, and that is the number everyone knows in advance. So the market quotes the amount knocked off it. At 4.90 for 91 days the discount is $`1{,}000{,}000.00\times 0.049\times 91/360`$, which is $12,386.11, and the price is what is left, $987,613.89.
 
 The convention is hand arithmetic from before calculators: the discount is a plain slice of a round number. It also checks cleanly. Because 91 days over a 360-day year leave the price with a denominator of 36, the price before rounding to cents, times 36, is the whole number 35,554,100 — a check the code repeats.
 
@@ -105,16 +111,18 @@ The buyer's money is $987,613.89. The gain is $12,386.11. The return over 91 day
 
 Writing the price rule inside the return rule removes the dollars entirely:
 
-$$i = \frac{d}{1 - d\cdot n/360}, \qquad i - d = \frac{d^2\cdot n/360}{1 - d\cdot n/360}$$
+```math
+i = \frac{d}{1 - d\cdot n/360}, \qquad i - d = \frac{d^2\cdot n/360}{1 - d\cdot n/360}
+```
 
 The gap is a squared term, so it is small at small rates and grows quickly: at a 4.90 quote it is six basis points, at a 10.00 quote it is 26. That is the bend in the opening picture.
 
 <details>
 <summary>Detailed proof: the price and the quote determine each other exactly</summary>
 
-Fix a face value and a day count, both positive. The price rule is a straight line in the quote with slope $-F\cdot n/360$, which is negative, so it is strictly decreasing: raising the quote always lowers the price, and no two quotes give the same price. The price is positive exactly when $d\cdot n/360 < 1$. On that range the line runs from arbitrarily large prices down towards zero, so every positive price is hit, and rearranging gives the one quote that produces it: $d = (1 - P/F)\cdot 360/n$.
+Fix a face value and a day count, both positive. The price rule is a straight line in the quote with slope $`-F\cdot n/360`$, which is negative, so it is strictly decreasing: raising the quote always lowers the price, and no two quotes give the same price. The price is positive exactly when $`d\cdot n/360 < 1`$. On that range the line runs from arbitrarily large prices down towards zero, so every positive price is hit, and rearranging gives the one quote that produces it: $`d = (1 - P/F)\cdot 360/n`$.
 
-The return behaves the same way from the other side. The map $P \mapsto (F/P - 1)\cdot 360/n$ is strictly decreasing on positive prices, running from arbitrarily large returns down to $-360/n$, so each positive price names exactly one return and each return above that floor names exactly one price, $P = F/(1 + i\cdot n/360)$. Substituting $P/F = 1 - d\cdot n/360$ into it gives the displayed conversion above, and subtracting $d$ gives the squared gap, which is zero only when the quote is zero and positive otherwise. Boundary cases: a zero quote is a bill sold at face with no gain; a negative quote is a price above face, which the algebra allows and the auction rules may not.
+The return behaves the same way from the other side. The map $`P \mapsto (F/P - 1)\cdot 360/n`$ is strictly decreasing on positive prices, running from arbitrarily large returns down to $`-360/n`$, so each positive price names exactly one return and each return above that floor names exactly one price, $`P = F/(1 + i\cdot n/360)`$. Substituting $`P/F = 1 - d\cdot n/360`$ into it gives the displayed conversion above, and subtracting $`d`$ gives the squared gap, which is zero only when the quote is zero and positive otherwise. Boundary cases: a zero quote is a bill sold at face with no gain; a negative quote is a price above face, which the algebra allows and the auction rules may not.
 
 </details>
 
@@ -122,7 +130,7 @@ The return behaves the same way from the other side. The map $P \mapsto (F/P - 1
 
 A repo lends for one night. Lending for a quarter means rolling it: the next night's loan is of last night's principal *plus* last night's interest, because that is the cash now in hand. So the periods do not add — the growth factors multiply.
 
-One night at 5.05% multiplies the balance by $1 + 0.0505/360 = 1.0001402778$. A Friday rate that covers the weekend multiplies by $1 + 0.0505\times 3/360 = 1.0004208333$: three days of simple interest in one block, because the rate was only published once.
+One night at 5.05% multiplies the balance by $`1 + 0.0505/360 = 1.0001402778`$. A Friday rate that covers the weekend multiplies by $`1 + 0.0505\times 3/360 = 1.0004208333`$: three days of simple interest in one block, because the rate was only published once.
 
 Thirteen weeks of those blocks — 52 single days and 13 weekend blocks, 91 calendar days in all — multiply to 1.0125065396 along the path this card uses: 5.05%, cut to 4.80% from week seven, 5.00% on the last Thursday.
 
@@ -137,9 +145,9 @@ The reason is visible in the multiplication. Multiplying the blocks out gives on
 <details>
 <summary>The algebra behind the extra three basis points</summary>
 
-Each block contributes an interest fraction $r_j\cdot n_j/360$. Multiplying the blocks out and keeping the terms up to second order leaves the total of those fractions, plus half of the total squared minus the sum of the squares:
+Each block contributes an interest fraction $`r_j\cdot n_j/360`$. Multiplying the blocks out and keeping the terms up to second order leaves the total of those fractions, plus half of the total squared minus the sum of the squares:
 
-$$G \approx 1 + \sum_j r_j\frac{n_j}{360} + \frac{1}{2}\left[\left(\sum_j r_j\frac{n_j}{360}\right)^{2} - \sum_j \left(r_j\frac{n_j}{360}\right)^{2}\right]$$
+$`\displaystyle G \approx 1 + \sum_j r_j\frac{n_j}{360} + \frac{1}{2}\left[\left(\sum_j r_j\frac{n_j}{360}\right)^{2} - \sum_j \left(r_j\frac{n_j}{360}\right)^{2}\right]`$
 
 The bracket is exactly the sum of all the products of two distinct fractions: every such product appears twice in the squared total and not at all in the sum of squares.
 
@@ -160,8 +168,8 @@ That is why the convention is compounded in arrears, and why floating coupons ne
 | Convention | What it does |
 | --- | --- |
 | Payment delay | The period keeps its own rates; the cash is paid some days after the period ends. |
-| Lookback | Each day of the period uses the rate published a fixed number of days earlier, with the period's own day weights $n_j$. |
-| Observation shift | The whole observation window slides back, carrying the day weights $n_j$ of the observation dates with it. |
+| Lookback | Each day of the period uses the rate published a fixed number of days earlier, with the period's own day weights $`n_j`$. |
+| Observation shift | The whole observation window slides back, carrying the day weights $`n_j`$ of the observation dates with it. |
 | Lockout | The rate for the last few days is frozen at the last one published before them. |
 
 The four give different coupons from the same daily rates. A contract that fixes the period's weights before shifting the observations is not the same trade as one that shifts both, which is the small print that makes two "SOFR + 50" loans (SOFR plus 0.50%) pay different amounts.
@@ -699,13 +707,13 @@ The two outputs match line for line, including the tenth decimal place of the gr
 
 Lean proves the card's bill and compounding rules for every value that meets the conditions below, and the bill's worked numbers exactly.
 
-- Take a positive $F$ and $n$, and a quote with $d\cdot n/360 < 1$. Then $i = d/(1 - d\cdot n/360)$, and $i - d$ is the squared term of Step 2.
+- Take a positive $`F`$ and $`n`$, and a quote with $`d\cdot n/360 < 1`$. Then $`i = d/(1 - d\cdot n/360)`$, and $`i - d`$ is the squared term of Step 2.
 - Under the same conditions, the return equals the quote when the quote is zero, and is strictly above it otherwise.
-- Take a positive $F$ and $n$. Then the price falls strictly as the quote rises, and is positive exactly when $d\cdot n/360 < 1$.
-- Take a positive $F$ and $n$, and any positive price $P$. Then exactly one quote gives that price, and it is $d = (1 - P/F)\cdot 360/n$.
-- Take a positive $F$ and $n$. Then the return falls strictly as the price rises, and always stays above $-360/n$.
-- Take a positive $F$ and $n$, and any return $i$ above $-360/n$. Then exactly one positive price gives that return, and it is $P = F/(1 + i\cdot n/360)$.
-- Take two or more blocks, each with a positive rate $r_j$ and positive $n_j$. Then the compounded-in-arrears rate $R$ is strictly above the weighted average of the daily rates.
+- Take a positive $`F`$ and $`n`$. Then the price falls strictly as the quote rises, and is positive exactly when $`d\cdot n/360 < 1`$.
+- Take a positive $`F`$ and $`n`$, and any positive price $`P`$. Then exactly one quote gives that price, and it is $`d = (1 - P/F)\cdot 360/n`$.
+- Take a positive $`F`$ and $`n`$. Then the return falls strictly as the price rises, and always stays above $`-360/n`$.
+- Take a positive $`F`$ and $`n`$, and any return $`i`$ above $`-360/n`$. Then exactly one positive price gives that return, and it is $`P = F/(1 + i\cdot n/360)`$.
+- Take two or more blocks, each with a positive rate $`r_j`$ and positive $`n_j`$. Then the compounded-in-arrears rate $`R`$ is strictly above the weighted average of the daily rates.
 - The bill's worked numbers hold exactly in fractions: the discount, the 35,554,100 hand check and the 4.9615% return. So do the 395.6% limit on the quote and the 65 blocks covering 91 days.
 
 The 365-day yields, the overnight path, the two-term expansion, the index and the mistake costs are left to the Python and Rust checks.

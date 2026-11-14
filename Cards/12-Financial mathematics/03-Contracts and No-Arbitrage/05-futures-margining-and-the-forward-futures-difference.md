@@ -36,46 +36,52 @@ The two middle branches finish at the same quote and at different cash. A forwar
 
 ## The formula
 
-A futures position is not one purchase but a list of decisions, one per settlement date. The dates run from today, numbered 0, to expiry, numbered $N$. On each, the exchange publishes one official quote, written $F_i$, so $F_0$ is today's and $F_N$ the last.
+A futures position is not one purchase but a list of decisions, one per settlement date. The dates run from today, numbered 0, to expiry, numbered $`N`$. On each, the exchange publishes one official quote, written $`F_i`$, so $`F_0`$ is today's and $`F_N`$ the last.
 
-The contracts carried from one date to the next are written $h_i$; that number may be fractional, and may be changed at any settlement at no charge, because a contract that has just settled is worth nothing.
+The contracts carried from one date to the next are written $`h_i`$; that number may be fractional, and may be changed at any settlement at no charge, because a contract that has just settled is worth nothing.
 
-The bank account starts at 1.00 and grows at the interest rate, written $B_i$ on each date and $B_N$ at expiry. Cash in the margin account just after a settlement is $V_i$. One settlement pays the change in the quote times the contracts carried across it, and that is the whole ledger:
+The bank account starts at 1.00 and grows at the interest rate, written $`B_i`$ on each date and $`B_N`$ at expiry. Cash in the margin account just after a settlement is $`V_i`$. One settlement pays the change in the quote times the contracts carried across it, and that is the whole ledger:
 
-$$V_{i+1} \;=\; V_i\,\frac{B_{i+1}}{B_i} \;+\; h_i\,(F_{i+1} - F_i)$$
+```math
+V_{i+1} \;=\; V_i\,\frac{B_{i+1}}{B_i} \;+\; h_i\,(F_{i+1} - F_i)
+```
 
 **Read it aloud:** last night's balance grows at the bank rate, and then tonight's settlement is added to it.
 
 Run that to expiry and every settlement carries its own interest from its own date:
 
-$$V_N \;=\; \sum_{i=0}^{N-1} h_i\,\frac{B_N}{B_{i+1}}\,(F_{i+1}-F_i)$$
+```math
+V_N \;=\; \sum_{i=0}^{N-1} h_i\,\frac{B_N}{B_{i+1}}\,(F_{i+1}-F_i)
+```
 
 **Read it aloud:** carry each settlement forward from the evening it was paid, then add the results.
 
 Those weights are the entire difference from a forward, which carries nothing because it pays once. So choose the position to cancel them:
 
-$$h_i \;=\; \frac{B_{i+1}}{B_N}$$
+```math
+h_i \;=\; \frac{B_{i+1}}{B_N}
+```
 
 **Read it aloud:** hold fewer contracts early, scaled down by exactly what that settlement's cash will grow by before expiry. Desks call this **tailing**, and the shrinking factor the **tail**.
 
-With those sizes the sum collapses to $F_N - F_0$. The last quote is the share's own price on expiry day, $F_N = S_T$, so that is the payoff of a forward struck at today's quote. Both contracts now cost nothing to enter and pay the same on every record, so today's quote must equal $K$, the delivery price written into that forward. Step 3 prices any gap between them as free money.
+With those sizes the sum collapses to $`F_N - F_0`$. The last quote is the share's own price on expiry day, $`F_N = S_T`$, so that is the payoff of a forward struck at today's quote. Both contracts now cost nothing to enter and pay the same on every record, so today's quote must equal $`K`$, the delivery price written into that forward. Step 3 prices any gap between them as free money.
 
-Both prices are also averages taken in the **risk-neutral world**, the pretend market in which every asset drifts at the bank rate ([State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md)). The futures price $F_0$ is the plain average of the finishing price $S_T$; $K$ is that same average weighted by $D$, what one dollar paid at expiry is worth today on one record. Step 5 works out when the two part.
+Both prices are also averages taken in the **risk-neutral world**, the pretend market in which every asset drifts at the bank rate ([State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md)). The futures price $`F_0`$ is the plain average of the finishing price $`S_T`$; $`K`$ is that same average weighted by $`D`$, what one dollar paid at expiry is worth today on one record. Step 5 works out when the two part.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F_i$, $F_0$, $F_N$ | the official futures quote on each settlement date, today's and the last | 103.045453, then 113.045453 or 93.045453 | the whole tree lifts; widen the steps between them instead and more cash moves early |
-| $S$, $S_T$ | Acme's price today, and on expiry day | 100.00, and 123.045453, 103.045453 or 83.045453 | every quote lifts with it |
-| $K$ | the delivery price written into a forward | 103.045453 | the forward is worth less to its buyer |
-| $h_i$ | contracts carried from one settlement date to the next | 1, or the tailed 0.975310 | every settlement scales with it |
-| $B_i$, $B_N$ | the bank account, starting at 1.00 and growing at the interest rate | 1.025315 after six months | early cash is carried further |
-| $V_i$, $V_N$ | cash in the margin account just after a settlement, and at expiry | 0.253151 on the up-then-down record | — |
-| $D$ | today's worth of one dollar paid at expiry, on one record | 0.951229 with a flat bank | the forward price is pulled down |
-| $N$ | how many settlement dates there are | 2 here, about 252 in a year of nightly settlement | the same cash moves earlier |
-| $T$ | time to expiry, in years | 1 | more interest on each settlement |
-| $r$ | the interest rate, continuously compounded | 5 percent, or 8 and 2 | every carrying weight grows |
-| $q$ | Acme's dividend yield | 2 percent | the quote tree slides down |
-| $\tanh x$ | a function of one number, $(e^{x} - e^{-x})/(e^{x} + e^{-x})$, very near $x$ itself when $x$ is small | times the 10.00 move it gives the 0.149989 gap | the gap widens, a little slower than the tilt |
+| $`F_i`$, $`F_0`$, $`F_N`$ | the official futures quote on each settlement date, today's and the last | 103.045453, then 113.045453 or 93.045453 | the whole tree lifts; widen the steps between them instead and more cash moves early |
+| $`S`$, $`S_T`$ | Acme's price today, and on expiry day | 100.00, and 123.045453, 103.045453 or 83.045453 | every quote lifts with it |
+| $`K`$ | the delivery price written into a forward | 103.045453 | the forward is worth less to its buyer |
+| $`h_i`$ | contracts carried from one settlement date to the next | 1, or the tailed 0.975310 | every settlement scales with it |
+| $`B_i`$, $`B_N`$ | the bank account, starting at 1.00 and growing at the interest rate | 1.025315 after six months | early cash is carried further |
+| $`V_i`$, $`V_N`$ | cash in the margin account just after a settlement, and at expiry | 0.253151 on the up-then-down record | — |
+| $`D`$ | today's worth of one dollar paid at expiry, on one record | 0.951229 with a flat bank | the forward price is pulled down |
+| $`N`$ | how many settlement dates there are | 2 here, about 252 in a year of nightly settlement | the same cash moves earlier |
+| $`T`$ | time to expiry, in years | 1 | more interest on each settlement |
+| $`r`$ | the interest rate, continuously compounded | 5 percent, or 8 and 2 | every carrying weight grows |
+| $`q`$ | Acme's dividend yield | 2 percent | the quote tree slides down |
+| $`\tanh x`$ | a function of one number, $`(e^{x} - e^{-x})/(e^{x} + e^{-x})`$, very near $`x`$ itself when $`x`$ is small | times the 10.00 move it gives the 0.149989 gap | the gap widens, a little slower than the tilt |
 
 ### When it holds
 
@@ -83,7 +89,7 @@ Both prices are also averages taken in the **risk-neutral world**, the pretend m
 - **The rate over each period is known before the position for that period is chosen.** The load-bearing assumption: take it away and the tail cannot be computed in time, and on this tree the two prices part by 0.15.
 - **Settlement cash moves freely at that rate.** Real margin sits in a clearing account paying less, and part of it cannot be withdrawn, pushing the futures price further from the forward than the model says.
 - **Every margin call is met.** A position closed out by force leaves a ledger no fixed rescaling repairs — which is how a correct hedge still bankrupts its holder.
-- **The last quote is the share's own price, $F_N = S_T$.** Where the final settlement is an average over a window, or a basket, a residue is left that this argument does not price.
+- **The last quote is the share's own price, $`F_N = S_T`$.** Where the final settlement is an average over a window, or a basket, a residue is left that this argument does not price.
 
 ---
 
@@ -103,22 +109,22 @@ One contract held throughout, on the up-then-down record: the 10.00 received at 
 
 The weights are the problem: the six-month settlement is multiplied by 1.025315, the one at expiry by 1. Hold less early and the multiplication is absorbed. Carry 1 ÷ 1.025315 = 0.975310 contracts for the first half-year and 1 for the second: the first settlement is then 0.975310 × 10.00 = 9.753099, which grows to exactly 10.00 by expiry, and the two cancel.
 
-This is exact, not approximate, and it holds on every record. The tailed position ends at 20.00, 0.00, 0.00 and −20.00 across the four, which is $F_N - F_0$ on each.
+This is exact, not approximate, and it holds on every record. The tailed position ends at 20.00, 0.00, 0.00 and −20.00 across the four, which is $`F_N - F_0`$ on each.
 
 ### Step 3: no free money, so the two prices are one price
 
-Two positions now cost nothing to open and pay the identical amount on every record: the tailed futures position, and a forward struck at $F_0$. Suppose the exchange's quote sat below the fair forward price. Buy the tailed position, sell a forward at that price: the finishing price cancels between the legs, and what is left is the difference between the two prices — positive on every record, with nothing staked and no risk. Free money cannot survive. Above the forward price, both legs reverse.
+Two positions now cost nothing to open and pay the identical amount on every record: the tailed futures position, and a forward struck at $`F_0`$. Suppose the exchange's quote sat below the fair forward price. Buy the tailed position, sell a forward at that price: the finishing price cancels between the legs, and what is left is the difference between the two prices — positive on every record, with nothing staked and no risk. Free money cannot survive. Above the forward price, both legs reverse.
 
 So the futures quote is forced onto the cash-and-carry forward price, 103.045453 for Acme: the nightly settlements visibly change the cash and do not touch the price.
 
 <details>
 <summary>Detailed proof: the sum, the tail, and the sign of the gap</summary>
 
-**The sum.** Divide the ledger by $B_{i+1}$: the balance in bank units on one date is the balance in bank units on the date before, plus that evening's settlement divided by the bank's value that evening. Adding those changes from today to expiry leaves the last bank-unit balance minus the first, and the account starts empty, so multiplying back by $B_N$ gives the displayed sum. No step needed the sizes positive or constant, so reversing a position reverses the whole cash path.
+**The sum.** Divide the ledger by $`B_{i+1}`$: the balance in bank units on one date is the balance in bank units on the date before, plus that evening's settlement divided by the bank's value that evening. Adding those changes from today to expiry leaves the last bank-unit balance minus the first, and the account starts empty, so multiplying back by $`B_N`$ gives the displayed sum. No step needed the sizes positive or constant, so reversing a position reverses the whole cash path.
 
-**The tail.** Substitute the tail sizes. Each term becomes the bank's growth from a date to expiry, times its own reciprocal, times the change in the quote: the weights cancel and consecutive changes add to $F_N - F_0$. Every size is a finite positive number fixed by the known rate schedule and available before its period starts, and resizing a settled contract costs nothing, so the strategy is executable and self-financing: after the start, no money goes in and none comes out ([Replication](06-replication-and-self-financing.md)).
+**The tail.** Substitute the tail sizes. Each term becomes the bank's growth from a date to expiry, times its own reciprocal, times the change in the quote: the weights cancel and consecutive changes add to $`F_N - F_0`$. Every size is a finite positive number fixed by the known rate schedule and available before its period starts, and resizing a settled contract costs nothing, so the strategy is executable and self-financing: after the start, no money goes in and none comes out ([Replication](06-replication-and-self-financing.md)).
 
-**The gap.** Write the risk-neutral average as a bar. The futures price is the bar of $S_T$, the forward price the bar of $D\,S_T$ divided by the bar of $D$. The bar of a product is the product of the bars plus the covariance: the bar of the product of each one's distance from its own bar. So the forward price is the futures price plus that covariance divided by the bar of $D$. Rates rising with the asset make $D$ small exactly where $S_T$ is large, so the covariance is negative and the futures price the higher; rates falling with it reverse the sign. A known rate makes $D$ constant, the covariance zero and the two prices equal — Step 3 by another road.
+**The gap.** Write the risk-neutral average as a bar. The futures price is the bar of $`S_T`$, the forward price the bar of $`D\,S_T`$ divided by the bar of $`D`$. The bar of a product is the product of the bars plus the covariance: the bar of the product of each one's distance from its own bar. So the forward price is the futures price plus that covariance divided by the bar of $`D`$. Rates rising with the asset make $`D`$ small exactly where $`S_T`$ is large, so the covariance is negative and the futures price the higher; rates falling with it reverse the sign. A known rate makes $`D`$ constant, the covariance zero and the two prices equal — Step 3 by another road.
 
 </details>
 
@@ -130,11 +136,11 @@ Let the second half-year's rate depend on what Acme does: 8 percent if the quote
 
 ### Step 5: two averages, and which way the gap points
 
-What remains is the pair of averages. Nothing is carried across a futures settlement, so the futures price stays the plain average; the forward pays once, so its price is that average weighted by $D$. When the interest rate rises with Acme, the records where Acme finishes high are the records where money is dear, so $D$ is small exactly where the finishing price is large. The weighted average is dragged below the plain one, the forward price sits below the futures price, and reversing the link reverses the gap.
+What remains is the pair of averages. Nothing is carried across a futures settlement, so the futures price stays the plain average; the forward pays once, so its price is that average weighted by $`D`$. When the interest rate rises with Acme, the records where Acme finishes high are the records where money is dear, so $`D`$ is small exactly where the finishing price is large. The weighted average is dragged below the plain one, the forward price sits below the futures price, and reversing the link reverses the gap.
 
-On this tree the arithmetic closes in one line. The rate tilt is how far the second half-year's rate rises or falls with Acme: 3 points here, 8 or 2 percent around 5. The gap is the size of the quote's move times $\tanh$ of the rate tilt over half a year, where $\tanh x = (e^{x} - e^{-x})/(e^{x} + e^{-x})$, a function very nearly equal to its own argument for small inputs. So 10.00 × tanh(0.015) = 0.149989, computed without reference to either average and agreeing with their difference to the last digit. In words: **the gap is a covariance, between the finishing price and the cost of money.** A covariance is the average of two distances multiplied together, each quantity's distance from its own average. It is negative when one runs high where the other runs low.
+On this tree the arithmetic closes in one line. The rate tilt is how far the second half-year's rate rises or falls with Acme: 3 points here, 8 or 2 percent around 5. The gap is the size of the quote's move times $`\tanh`$ of the rate tilt over half a year, where $`\tanh x = (e^{x} - e^{-x})/(e^{x} + e^{-x})`$, a function very nearly equal to its own argument for small inputs. So 10.00 × tanh(0.015) = 0.149989, computed without reference to either average and agreeing with their difference to the last digit. In words: **the gap is a covariance, between the finishing price and the cost of money.** A covariance is the average of two distances multiplied together, each quantity's distance from its own average. It is negative when one runs high where the other runs low.
 
-A second road to Step 3 avoids trees entirely. In the risk-neutral world a futures quote is a **martingale** — a running number whose average next value is its current value — since a position that costs nothing and settles instantly has no drift to pay for. A forward price is a ratio of two averages; it equals the plain average whenever $D$ and the finishing price do not move together, which a known rate guarantees by making $D$ the same on every record. That framing belongs to [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md).
+A second road to Step 3 avoids trees entirely. In the risk-neutral world a futures quote is a **martingale** — a running number whose average next value is its current value — since a position that costs nothing and settles instantly has no drift to pay for. A forward price is a ratio of two averages; it equals the plain average whenever $`D`$ and the finishing price do not move together, which a known rate guarantees by making $`D`$ the same on every record. That framing belongs to [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md).
 
 ---
 
@@ -144,17 +150,17 @@ Acme at 100.00, the bank at 5 percent, the dividend yield 2 percent, expiry a ye
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the opening quote | $100.00 \times e^{0.03}$ | 103.045453 |
-| six months in, the quote rises | $103.045453 + 10.00$ | 113.045453 |
+| the opening quote | $`100.00 \times e^{0.03}`$ | 103.045453 |
+| six months in, the quote rises | $`103.045453 + 10.00`$ | 113.045453 |
 | the settlement paid that evening | the change in the quote | 10.00 |
-| half a year of bank growth | $e^{0.025}$ | 1.025315 |
-| that 10.00 by expiry | $10.00 \times 1.025315$ | 10.253151 |
+| half a year of bank growth | $`e^{0.025}`$ | 1.025315 |
+| that 10.00 by expiry | $`10.00 \times 1.025315`$ | 10.253151 |
 | expiry, the quote falls back | the settlement paid away | −10.00 |
-| **cash at expiry, one contract** | $10.253151 - 10.00$ | **0.253151** |
+| **cash at expiry, one contract** | $`10.253151 - 10.00`$ | **0.253151** |
 | **the other record, down then up** | every sign reversed | **−0.253151** |
-| a forward struck at 103.045453 | $103.045453 - 103.045453$ | **0.00** |
-| the tail for the first half-year | $1 \div 1.025315$ | 0.975310 |
-| **cash at expiry, tailed** | $0.975310 \times 10.00 \times 1.025315 - 10.00$ | **0.00** |
+| a forward struck at 103.045453 | $`103.045453 - 103.045453`$ | **0.00** |
+| the tail for the first half-year | $`1 \div 1.025315`$ | 0.975310 |
+| **cash at expiry, tailed** | $`0.975310 \times 10.00 \times 1.025315 - 10.00`$ | **0.00** |
 
 Read the last five rows together: one contract is out by a quarter of a dollar, in whichever direction the quote moved first, while 0.975310 contracts for the first half-year lands exactly where the forward lands — on every record, not on average.
 
@@ -662,10 +668,10 @@ The two outputs match line for line.
 
 Lean proves the ledger sum, tailing and the covariance gap, for any number of settlement dates and any finite set of records.
 
-- Suppose the margin account starts empty and follows the ledger, with every $B_i$ positive and any sizes $h_i$. Then $V_N = \sum_{i=0}^{N-1} h_i (B_N/B_{i+1}) (F_{i+1}-F_i)$.
-- Take a bank account known in advance, a quote ending at $F_N = S_T$, and the tail $h_i = B_{i+1}/B_N$. Then the margin account, started empty, ends at $S_T - F_0$ on every record: a forward's payoff.
-- Here the futures price is the plain average of $S_T$, and the forward price the average weighted by $D$.
-- Take finitely many records with their risk-neutral odds, and $D$ positive on each. Then the forward price equals the futures price plus the covariance of $D$ and $S_T$, divided by the average of $D$.
+- Suppose the margin account starts empty and follows the ledger, with every $`B_i`$ positive and any sizes $`h_i`$. Then $`V_N = \sum_{i=0}^{N-1} h_i (B_N/B_{i+1}) (F_{i+1}-F_i)`$.
+- Take a bank account known in advance, a quote ending at $`F_N = S_T`$, and the tail $`h_i = B_{i+1}/B_N`$. Then the margin account, started empty, ends at $`S_T - F_0`$ on every record: a forward's payoff.
+- Here the futures price is the plain average of $`S_T`$, and the forward price the average weighted by $`D`$.
+- Take finitely many records with their risk-neutral odds, and $`D`$ positive on each. Then the forward price equals the futures price plus the covariance of $`D`$ and $`S_T`$, divided by the average of $`D`$.
 
 The tree's numbers, the 252 nightly settlements and the tanh closed form are left to the Python and Rust checks.
 

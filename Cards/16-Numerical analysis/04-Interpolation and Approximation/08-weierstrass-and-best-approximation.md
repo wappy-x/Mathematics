@@ -37,11 +37,13 @@ Orange: the minimax polynomial. Its eight peaks all reach 4.028484e-08, alternat
 
 ## The formula
 
-Some notation first. The **uniform norm** of a function g on an interval is its largest size there, written $\lVert g\rVert_\infty$. For an error curve it is the worst error. This card introduces it for the wing.
+Some notation first. The **uniform norm** of a function g on an interval is its largest size there, written $`\lVert g\rVert_\infty`$. For an error curve it is the worst error. This card introduces it for the wing.
 
 **Weierstrass's theorem.** Let f be continuous on a closed interval [a, b]. For every tolerance ε > 0 there is a polynomial p with
 
-$$\lVert f - p\rVert_\infty = \max_{a \le x \le b} \lvert f(x) - p(x)\rvert < ε.$$
+```math
+\lVert f - p\rVert_\infty = \max_{a \le x \le b} \lvert f(x) - p(x)\rvert < ε.
+```
 
 **Read it aloud:** however small a worst error is asked for, some polynomial stays inside it everywhere on the interval.
 
@@ -49,42 +51,48 @@ Here ε is a tolerance, as in wing 06; the machine epsilon keeps its subscript, 
 
 **The proof's polynomials.** On [0, 1] the **Bernstein polynomial** of degree n samples f at n + 1 equally spaced points and blends them:
 
-$$B_n f(x) = \sum_{k=0}^{n} f\!\left(\frac{k}{n}\right) \binom{n}{k} x^k (1-x)^{n-k}, \qquad \lVert B_n f - f\rVert_\infty \le \frac{\lVert f''\rVert_\infty}{8n}.$$
+```math
+B_n f(x) = \sum_{k=0}^{n} f\!\left(\frac{k}{n}\right) \binom{n}{k} x^k (1-x)^{n-k}, \qquad \lVert B_n f - f\rVert_\infty \le \frac{\lVert f''\rVert_\infty}{8n}.
+```
 
 **Read it aloud:** average the samples of f, weighting sample k by the chance of k heads in n coin flips with heads-chance x; if f has a second derivative, the worst error is at most its largest size over 8n.
 
-The binomial coefficient $\binom{n}{k}$ counts the ways to choose k of n flips. The bound needs f'' to exist; the theorem itself does not.
+The binomial coefficient $`\binom{n}{k}`$ counts the ways to choose k of n flips. The bound needs f'' to exist; the theorem itself does not.
 
 **The best polynomial.** Among polynomials of degree at most n, the smallest worst error is
 
-$$E_n(f) = \min_{\deg p \le n} \lVert f - p\rVert_\infty ,$$
+```math
+E_n(f) = \min_{\deg p \le n} \lVert f - p\rVert_\infty ,
+```
 
-and a polynomial $p^{*}$ that attains it is a **minimax** (best uniform) polynomial.
+and a polynomial $`p^{*}`$ that attains it is a **minimax** (best uniform) polynomial.
 
-**The equioscillation theorem (Chebyshev).** $p^{*}$ is the minimax polynomial of degree at most n if and only if there are n + 2 points $x_0 < x_1 < \cdots < x_{n+1}$ in the interval where
+**The equioscillation theorem (Chebyshev).** $`p^{*}`$ is the minimax polynomial of degree at most n if and only if there are n + 2 points $`x_0 < x_1 < \cdots < x_{n+1}`$ in the interval where
 
-$$f(x_i) - p^{*}(x_i) = σ\,(-1)^i\,\lVert f - p^{*}\rVert_\infty, \qquad σ = +1 \text{ or } -1.$$
+```math
+f(x_i) - p^{*}(x_i) = σ\,(-1)^i\,\lVert f - p^{*}\rVert_\infty, \qquad σ = +1 \text{ or } -1.
+```
 
 **Read it aloud:** the best polynomial's error reaches its full height n + 2 times, with the sign flipping each time.
 
-**The lower bound (de la Vallée Poussin).** If some polynomial p of degree at most n has an error that alternates in sign at n + 2 points, each of size at least m, then $E_n(f) \ge m$.
+**The lower bound (de la Vallée Poussin).** If some polynomial p of degree at most n has an error that alternates in sign at n + 2 points, each of size at least m, then $`E_n(f) \ge m`$.
 
 **Read it aloud:** any error that swings n + 2 times proves no polynomial can do better than its smallest swing.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $f'$, $f''$, $f^{(7)}$ | the function to approximate, continuous on the interval; its first, second and seventh derivatives | $e^x$, and every derivative is $e^x$ too | — |
-| $x$, $[a, b]$, $t$, $ξ$ | the input and its interval; $t = 2x - 1$, the same point moved to [−1, 1]; $ξ$ (also $ξ_k$), an unknown point that Taylor's theorem supplies | x from 0 to 1 | — |
-| $n$ | the degree: the highest power allowed | 6 for the chip | worst error falls |
-| $p$, $q$, $r$, $p^{*}$ | any polynomials of degree at most n; the minimax one | chip coefficients below | — |
-| $\lVert g\rVert_\infty$ | the uniform norm: largest $\lvert g(x)\rvert$ on the interval, for any function g | $\lVert f''\rVert_\infty = e$ on [0, 1] | — |
-| $E_n(f)$, $E$ | smallest worst error at degree n; E for short | $E_5$ = 1.129570e-06, $E_6$ = 4.028484e-08 | — |
-| $ε$, $δ$, $M$ | a tolerance on outputs; a nearness distance on inputs; a cap on $\lvert f\rvert$ (the last two in the proof) | ε = 1e-06 | a looser ε needs a lower degree |
-| $B_n f$, $k$, $\binom{n}{k}$, $w_k$ | Bernstein polynomial; sample number; ways to pick k of n; the weight of sample k | n = 218,986 for a millionth | error falls like 1/n |
-| $x_0, \dots, x_{n+1}$, $x_i$ | the alternation points: where the error peaks with flipping sign | x = 0, 0.0503, …, 1 | — |
-| $σ$ | the sign of the error at the first alternation point | −1 here | — |
-| $m$, $L$ | the smallest peak of an alternating error, a lower bound on $E_n$; L, the Remez level, is one such bound | m = 3.780047e-08; L = 4.028484e-08 | — |
-| $T_n$ | the Chebyshev polynomial of degree n, from the Runge card | $T_7$ for the a-priori bound | — |
+| $`f`$, $`f'`$, $`f''`$, $`f^{(7)}`$ | the function to approximate, continuous on the interval; its first, second and seventh derivatives | $`e^x`$, and every derivative is $`e^x`$ too | — |
+| $`x`$, $`[a, b]`$, $`t`$, $`ξ`$ | the input and its interval; $`t = 2x - 1`$, the same point moved to [−1, 1]; $`ξ`$ (also $`ξ_k`$), an unknown point that Taylor's theorem supplies | x from 0 to 1 | — |
+| $`n`$ | the degree: the highest power allowed | 6 for the chip | worst error falls |
+| $`p`$, $`q`$, $`r`$, $`p^{*}`$ | any polynomials of degree at most n; the minimax one | chip coefficients below | — |
+| $`\lVert g\rVert_\infty`$ | the uniform norm: largest $`\lvert g(x)\rvert`$ on the interval, for any function g | $`\lVert f''\rVert_\infty = e`$ on [0, 1] | — |
+| $`E_n(f)`$, $`E`$ | smallest worst error at degree n; E for short | $`E_5`$ = 1.129570e-06, $`E_6`$ = 4.028484e-08 | — |
+| $`ε`$, $`δ`$, $`M`$ | a tolerance on outputs; a nearness distance on inputs; a cap on $`\lvert f\rvert`$ (the last two in the proof) | ε = 1e-06 | a looser ε needs a lower degree |
+| $`B_n f`$, $`k`$, $`\binom{n}{k}`$, $`w_k`$ | Bernstein polynomial; sample number; ways to pick k of n; the weight of sample k | n = 218,986 for a millionth | error falls like 1/n |
+| $`x_0, \dots, x_{n+1}`$, $`x_i`$ | the alternation points: where the error peaks with flipping sign | x = 0, 0.0503, …, 1 | — |
+| $`σ`$ | the sign of the error at the first alternation point | −1 here | — |
+| $`m`$, $`L`$ | the smallest peak of an alternating error, a lower bound on $`E_n`$; L, the Remez level, is one such bound | m = 3.780047e-08; L = 4.028484e-08 | — |
+| $`T_n`$ | the Chebyshev polynomial of degree n, from the Runge card | $`T_7`$ for the a-priori bound | — |
 
 ### When it holds
 
@@ -101,55 +109,55 @@ $$f(x_i) - p^{*}(x_i) = σ\,(-1)^i\,\lVert f - p^{*}\rVert_\infty, \qquad σ = +
 
 Weierstrass: replace f(x) by an average of f's values at nearby points. If the average leans more and more heavily on points close to x, it approaches f(x). Bernstein's weights do exactly that, and each weight is a polynomial in x.
 
-Minimax: suppose the error's tallest peaks do not alternate enough. Then a small polynomial can be subtracted that pushes all of them down at once, so the fit was not best. When the peaks are equal and alternate n + 2 times, any better polynomial would need its difference from $p^{*}$ to change sign n + 1 times. A nonzero polynomial of degree n cannot do that, because it would have n + 1 roots.
+Minimax: suppose the error's tallest peaks do not alternate enough. Then a small polynomial can be subtracted that pushes all of them down at once, so the fit was not best. When the peaks are equal and alternate n + 2 times, any better polynomial would need its difference from $`p^{*}`$ to change sign n + 1 times. A nonzero polynomial of degree n cannot do that, because it would have n + 1 roots.
 
 ### Step 1: Bernstein's polynomial is an average over coin flips
 
-Flip a coin n times, with chance x of heads each time. The chance of exactly k heads is $\binom{n}{k} x^k (1-x)^{n-k}$, the weight of sample k. So $B_n f(x)$ is the expected value of f at the fraction of heads, k/n.
+Flip a coin n times, with chance x of heads each time. The chance of exactly k heads is $`\binom{n}{k} x^k (1-x)^{n-k}`$, the weight of sample k. So $`B_n f(x)`$ is the expected value of f at the fraction of heads, k/n.
 
 Three facts about these weights carry the whole proof. They are the first three moments of the fraction of heads: the weighted averages of 1, of k/n and of (k/n)^2.
 
 1. The weights add up to 1.
 2. The average fraction of heads is x.
-3. The average squared fraction of heads is $x^2 + x(1-x)/n$.
+3. The average squared fraction of heads is $`x^2 + x(1-x)/n`$.
 
-The third fact says the fraction of heads spreads around x with variance (average squared distance from x) x(1 − x)/n, which shrinks as n grows. That is the law of large numbers in one line. The checks test it at n = 10 and x = 0.3: $B_{10}$ applied to x^2 gives 0.111000000000, and the formula gives 0.111000000000.
+The third fact says the fraction of heads spreads around x with variance (average squared distance from x) x(1 − x)/n, which shrinks as n grows. That is the law of large numbers in one line. The checks test it at n = 10 and x = 0.3: $`B_{10}`$ applied to x^2 gives 0.111000000000, and the formula gives 0.111000000000.
 
 ### Step 2: the error bound for a smooth function
 
-Expand f around x with Taylor's theorem and a remainder: $f(k/n) = f(x) + f'(x)(k/n - x) + \tfrac12 f''(ξ_k)(k/n - x)^2$ for some point $ξ_k$ between.
+Expand f around x with Taylor's theorem and a remainder: $`f(k/n) = f(x) + f'(x)(k/n - x) + \tfrac12 f''(ξ_k)(k/n - x)^2`$ for some point $`ξ_k`$ between.
 
 Average both sides with the Bernstein weights.
 
 - The constant term gives f(x), by fact 1.
 - The slope term gives zero, by fact 2.
-- The last term is at most $\tfrac12 \lVert f''\rVert_\infty$ times the variance, x(1 − x)/n, by fact 3.
+- The last term is at most $`\tfrac12 \lVert f''\rVert_\infty`$ times the variance, x(1 − x)/n, by fact 3.
 
-Since x(1 − x) is at most 1/4, the error is at most $\lVert f''\rVert_\infty/(8n)$. For e^x on [0, 1], $\lVert f''\rVert_\infty = e$, so the bound is e/(8n). At n = 1000 it is 3.397852e-04; the true worst error is 2.189814e-04. The bound is 1.552 times the true error.
+Since x(1 − x) is at most 1/4, the error is at most $`\lVert f''\rVert_\infty/(8n)`$. For e^x on [0, 1], $`\lVert f''\rVert_\infty = e`$, so the bound is e/(8n). At n = 1000 it is 3.397852e-04; the true worst error is 2.189814e-04. The bound is 1.552 times the true error.
 
 <details>
 <summary>Detailed proof: Weierstrass for any continuous function</summary>
 
-Let f be continuous on [0, 1]; another closed interval [a, b] maps onto [0, 1] by x ↦ a + (b − a)x, which keeps polynomials polynomials. A continuous function on a closed interval is bounded, say $\lvert f\rvert \le M$, and uniformly continuous: one nearness distance δ works at every x at once ([Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md) uses the same tolerance game).
+Let f be continuous on [0, 1]; another closed interval [a, b] maps onto [0, 1] by x ↦ a + (b − a)x, which keeps polynomials polynomials. A continuous function on a closed interval is bounded, say $`\lvert f\rvert \le M`$, and uniformly continuous: one nearness distance δ works at every x at once ([Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md) uses the same tolerance game).
 
-Fix a tolerance ε > 0. Uniform continuity gives δ > 0 with $\lvert f(y) - f(x)\rvert < ε/2$ whenever $\lvert y - x\rvert < δ$. Write $w_k(x) = \binom{n}{k} x^k (1-x)^{n-k}$. By fact 1,
+Fix a tolerance ε > 0. Uniform continuity gives δ > 0 with $`\lvert f(y) - f(x)\rvert < ε/2`$ whenever $`\lvert y - x\rvert < δ`$. Write $`w_k(x) = \binom{n}{k} x^k (1-x)^{n-k}`$. By fact 1,
 
-$$B_n f(x) - f(x) = \sum_k \bigl(f(k/n) - f(x)\bigr)\, w_k(x).$$
+$`\displaystyle B_n f(x) - f(x) = \sum_k \bigl(f(k/n) - f(x)\bigr)\, w_k(x).`$
 
 Split the sum.
 
-- **Near terms**, $\lvert k/n - x\rvert < δ$: each bracket is under ε/2 in size and the weights add to at most 1, so these contribute under ε/2.
-- **Far terms**, $\lvert k/n - x\rvert \ge δ$: each bracket is at most 2M. Their total weight is at most $\sum_k w_k (k/n - x)^2/δ^2 = x(1-x)/(nδ^2) \le 1/(4nδ^2)$, by facts 1 to 3. This is Chebyshev's inequality. So they contribute at most $2M/(4nδ^2) = M/(2nδ^2)$.
+- **Near terms**, $`\lvert k/n - x\rvert < δ`$: each bracket is under ε/2 in size and the weights add to at most 1, so these contribute under ε/2.
+- **Far terms**, $`\lvert k/n - x\rvert \ge δ`$: each bracket is at most 2M. Their total weight is at most $`\sum_k w_k (k/n - x)^2/δ^2 = x(1-x)/(nδ^2) \le 1/(4nδ^2)`$, by facts 1 to 3. This is Chebyshev's inequality. So they contribute at most $`2M/(4nδ^2) = M/(2nδ^2)`$.
 
-Choose $n > M/(εδ^2)$. Then the far terms contribute under ε/2, and $\lvert B_n f(x) - f(x)\rvert < ε$ for every x at once, because δ and n do not depend on x. $\blacksquare$
+Choose $`n > M/(εδ^2)`$. Then the far terms contribute under ε/2, and $`\lvert B_n f(x) - f(x)\rvert < ε`$ for every x at once, because δ and n do not depend on x. $`\blacksquare`$
 
-The three facts themselves: fact 1 is the binomial theorem applied to $(x + (1 - x))^n$. Facts 2 and 3 follow from $k\binom{n}{k} = n\binom{n-1}{k-1}$, used once and twice. It gives $\sum_k k\,w_k = nx$ and $\sum_k k(k-1)\,w_k = n(n-1)x^2$; divide by n and n² and fact 3 drops out.
+The three facts themselves: fact 1 is the binomial theorem applied to $`(x + (1 - x))^n`$. Facts 2 and 3 follow from $`k\binom{n}{k} = n\binom{n-1}{k-1}`$, used once and twice. It gives $`\sum_k k\,w_k = nx`$ and $`\sum_k k(k-1)\,w_k = n(n-1)x^2`$; divide by n and n² and fact 3 drops out.
 
 </details>
 
 ### Step 3: why Bernstein is far too slow for a chip
 
-The bound e/(8n) is not loose by much. Voronovskaya proved in 1932 that n times the error tends to $x(1-x)f''(x)/2$; it is stated here, and DeVore and Lorentz (Sources) prove it. For e^x that product is largest where $1 - x - x^2 = 0$, at x = 0.618034, the golden ratio's reciprocal. The limit there is $(\sqrt5 - 2)e^{0.618034}/2 = 0.218986$.
+The bound e/(8n) is not loose by much. Voronovskaya proved in 1932 that n times the error tends to $`x(1-x)f''(x)/2`$; it is stated here, and DeVore and Lorentz (Sources) prove it. For e^x that product is largest where $`1 - x - x^2 = 0`$, at x = 0.618034, the golden ratio's reciprocal. The limit there is $`(\sqrt5 - 2)e^{0.618034}/2 = 0.218986`$.
 
 | n | worst at x | worst error | n × error | bound e/(8n) | bound / true |
 | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -177,29 +185,31 @@ Bernstein's polynomials prove that a polynomial exists. They are a poor way to f
 
 ### Step 4: a best polynomial exists
 
-The worst error $\lVert f - p\rVert_\infty$ changes continuously with p's n + 1 coefficients. Coefficients that are very large make it large too. So only a closed, bounded set of coefficients needs searching, and a continuous function on such a set reaches its minimum. That minimum is $E_n(f)$, and some $p^{*}$ attains it. This is the compactness argument in Powell, chapter 1 (Sources).
+The worst error $`\lVert f - p\rVert_\infty`$ changes continuously with p's n + 1 coefficients. Coefficients that are very large make it large too. So only a closed, bounded set of coefficients needs searching, and a continuous function on such a set reaches its minimum. That minimum is $`E_n(f)`$, and some $`p^{*}`$ attains it. This is the compactness argument in Powell, chapter 1 (Sources).
 
 ### Step 5: equal alternating peaks mean best, and best is unique
 
-Suppose $f - p^{*}$ reaches $\pm E$, alternately, at n + 2 points, where $E = \lVert f - p^{*}\rVert_\infty$. Suppose some q of degree at most n did better: $\lVert f - q\rVert_\infty < E$. Then
+Suppose $`f - p^{*}`$ reaches $`\pm E`$, alternately, at n + 2 points, where $`E = \lVert f - p^{*}\rVert_\infty`$. Suppose some q of degree at most n did better: $`\lVert f - q\rVert_\infty < E`$. Then
 
-$$q - p^{*} = (f - p^{*}) - (f - q).$$
+```math
+q - p^{*} = (f - p^{*}) - (f - q).
+```
 
-At each $x_i$ the first term is ±E and the second is smaller than E in size. So $q - p^{*}$ has the sign of $f - p^{*}$ there, and that sign flips n + 1 times. A polynomial that changes sign n + 1 times has n + 1 roots. But $q - p^{*}$ has degree at most n and is not zero. That is impossible, so no q does better.
+At each $`x_i`$ the first term is ±E and the second is smaller than E in size. So $`q - p^{*}`$ has the sign of $`f - p^{*}`$ there, and that sign flips n + 1 times. A polynomial that changes sign n + 1 times has n + 1 roots. But $`q - p^{*}`$ has degree at most n and is not zero. That is impossible, so no q does better.
 
 The same argument, with "at least m" in place of "exactly E", proves de la Vallée Poussin's lower bound.
 
 <details>
 <summary>Detailed proof: uniqueness, and the converse (key steps)</summary>
 
-**Uniqueness.** Let p and q both attain $E = E_n(f)$. Their average r = (p + q)/2 is no worse, by the triangle inequality, so it is also best. Granting the converse below, r has n + 2 alternation points. At each, $\tfrac12(f - p) + \tfrac12(f - q) = \pm E$ while each half is at most E/2 in size, so both $f - p$ and $f - q$ equal ±E there. Hence p and q agree at n + 2 points, and their difference, of degree at most n, is zero. $\blacksquare$
+**Uniqueness.** Let p and q both attain $`E = E_n(f)`$. Their average r = (p + q)/2 is no worse, by the triangle inequality, so it is also best. Granting the converse below, r has n + 2 alternation points. At each, $`\tfrac12(f - p) + \tfrac12(f - q) = \pm E`$ while each half is at most E/2 in size, so both $`f - p`$ and $`f - q`$ equal ±E there. Hence p and q agree at n + 2 points, and their difference, of degree at most n, is zero. $`\blacksquare`$
 
 **Converse: best implies n + 2 alternation points.** Key steps, after Powell, chapter 7, and Trefethen, chapter 10 (Sources).
 
-1. Group the points where $\lvert f - p^{*}\rvert = E$ into runs of one sign. Suppose there are at most n + 1 runs.
+1. Group the points where $`\lvert f - p^{*}\rvert = E`$ into runs of one sign. Suppose there are at most n + 1 runs.
 2. Between neighbouring runs pick a point where the error is below full height. There are at most n such points.
-3. The polynomial with its roots exactly at those points has degree at most n. With its sign chosen, it has the same sign as $f - p^{*}$ on every run.
-4. Add a small enough multiple of it to $p^{*}$. The error drops on every run and, by continuity on a closed interval, stays below E elsewhere. So $p^{*}$ was not best.
+3. The polynomial with its roots exactly at those points has degree at most n. With its sign chosen, it has the same sign as $`f - p^{*}`$ on every run.
+4. Add a small enough multiple of it to $`p^{*}`$. The error drops on every run and, by continuity on a closed interval, stays below E elsewhere. So $`p^{*}`$ was not best.
 
 </details>
 
@@ -207,12 +217,12 @@ The same argument, with "at least m" in place of "exactly E", proves de la Vall�
 
 The theorem says what to aim for: n + 2 equal alternating peaks. Remez (1934) aims for it directly. The code works on t = 2x − 1, which moves [0, 1] to [−1, 1].
 
-1. Pick n + 2 reference points. Start from the Chebyshev extreme points, $t_i = -\cos(iπ/(n+1))$.
-2. Solve n + 2 linear equations, $p(t_i) + (-1)^i L = f(t_i)$, for the n + 1 coefficients and a **level** L. The new p has error exactly ±L, alternating, at the reference points.
+1. Pick n + 2 reference points. Start from the Chebyshev extreme points, $`t_i = -\cos(iπ/(n+1))`$.
+2. Solve n + 2 linear equations, $`p(t_i) + (-1)^i L = f(t_i)`$, for the n + 1 coefficients and a **level** L. The new p has error exactly ±L, alternating, at the reference points.
 3. Find the true peaks of the new error: one per run of one sign, located on a grid of 2001 points, then refined by golden-section search.
 4. Move the reference points to those peaks, and repeat until the tallest peak equals the level.
 
-Each round brackets the answer. By de la Vallée Poussin, $\lvert L\rvert \le E_n(f)$; the tallest peak is an upper bound, since it is the worst error of a real polynomial.
+Each round brackets the answer. By de la Vallée Poussin, $`\lvert L\rvert \le E_n(f)`$; the tallest peak is an upper bound, since it is the worst error of a real polynomial.
 
 | Round | Level (lower bound) | Tallest peak (upper bound) | Gap |
 | ---: | ---: | ---: | ---: |
@@ -225,11 +235,13 @@ The gap fell from 7.6e-11 to 9.5e-15 in one round. That fits the known result th
 
 ### Step 7: a free box from Chebyshev interpolation
 
-No exchange is needed for a near-best answer. Interpolate e^x at the 7 Chebyshev nodes, the roots of $T_7$, as on [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md). Its error alternates at 8 points with peaks from 3.780047e-08 to 4.283030e-08. By de la Vallée Poussin, $E_6 \ge 3.780047e-08$. Being a real polynomial, it shows $E_6 \le 4.283030e-08$. Remez's 4.028484e-08 lies inside this box.
+No exchange is needed for a near-best answer. Interpolate e^x at the 7 Chebyshev nodes, the roots of $`T_7`$, as on [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md). Its error alternates at 8 points with peaks from 3.780047e-08 to 4.283030e-08. By de la Vallée Poussin, $`E_6 \ge 3.780047e-08`$. Being a real polynomial, it shows $`E_6 \le 4.283030e-08`$. Remez's 4.028484e-08 lies inside this box.
 
-[The interpolation error theorem](03-polynomial-interpolation-error.md) also gives a bound before any computing. The error is $f^{(7)}(ξ)/7!$ times the product of (x − node) over the nodes. At Chebyshev nodes on [0, 1] that product is at most $2/4^7$. With $f^{(7)} = e^x \le e$:
+[The interpolation error theorem](03-polynomial-interpolation-error.md) also gives a bound before any computing. The error is $`f^{(7)}(ξ)/7!`$ times the product of (x − node) over the nodes. At Chebyshev nodes on [0, 1] that product is at most $`2/4^7`$. With $`f^{(7)} = e^x \le e`$:
 
-$$E_6 \le \frac{e}{7!}\cdot\frac{2}{4^{7}} = 6.583760\text{e-08}.$$
+```math
+E_6 \le \frac{e}{7!}\cdot\frac{2}{4^{7}} = 6.583760\text{e-08}.
+```
 
 That a-priori bound is 1.634 times the true best error, and already under a millionth: degree 6 was guaranteed to work before Remez ran.
 
@@ -252,7 +264,9 @@ Target: e^x on [0, 1], worst error at most 1e-06.
 
 The chip stores the seven doubles the code computes. To 10 decimals they are:
 
-$$p^{*}(x) \approx 1.0000000403 + 0.9999961205\,x + 0.5000609306\,x^2 + 0.1663090696\,x^3 + 0.0426585099\,x^4 + 0.0069441257\,x^5 + 0.0023129916\,x^6 .$$
+```math
+p^{*}(x) \approx 1.0000000403 + 0.9999961205\,x + 0.5000609306\,x^2 + 0.1663090696\,x^3 + 0.0426585099\,x^4 + 0.0069441257\,x^5 + 0.0023129916\,x^6 .
+```
 
 They are close to Taylor's 1, 1, 1/2, 1/6, 1/24, 1/120, 1/720, but not equal. The minimax polynomial gives up exactness at x = 0, where its error is a full negative peak, to spread the error evenly. Checked on 4001 points in this form, with the full doubles, the worst error is 4.028484e-08: the rewrite from t to x lost nothing that shows.
 
@@ -666,11 +680,11 @@ ALL CHECKS PASS
 
 Lean proves Weierstrass's theorem and Step 5 for any continuous f, any closed interval [a, b] and any degree n.
 
-- Weierstrass: for every tolerance ε > 0, some polynomial p has $\lvert f(x) - p(x)\rvert < ε$ at every x in [a, b].
+- Weierstrass: for every tolerance ε > 0, some polynomial p has $`\lvert f(x) - p(x)\rvert < ε`$ at every x in [a, b].
 - A polynomial of degree at most n cannot flip sign n + 1 times in a row across n + 2 increasing points; Step 5 uses this.
-- Equal peaks mean best: let p have degree at most n, with error $\pm\lVert f - p\rVert_\infty$ alternately at n + 2 points. Then no polynomial of degree at most n has a smaller worst error.
-- De la Vallée Poussin: if p has degree at most n and its error alternates in sign at n + 2 points, each of size at least m, then $E_n(f) \ge m$.
-- Fact 3 at n = 10 and x = 0.3: $B_{10}$ applied to x^2 gives exactly 0.111, the value of $x^2 + x(1-x)/n$.
+- Equal peaks mean best: let p have degree at most n, with error $`\pm\lVert f - p\rVert_\infty`$ alternately at n + 2 points. Then no polynomial of degree at most n has a smaller worst error.
+- De la Vallée Poussin: if p has degree at most n and its error alternates in sign at n + 2 points, each of size at least m, then $`E_n(f) \ge m`$.
+- Fact 3 at n = 10 and x = 0.3: $`B_{10}`$ applied to x^2 gives exactly 0.111, the value of $`x^2 + x(1-x)/n`$.
 
 Bernstein's bound, the Remez runs and every decimal are left to the Python and Rust checks; Lean omits the converse and uniqueness.
 
@@ -858,7 +872,7 @@ example : ((3 : ℚ) / 10) ^ 2 + (3 / 10) * (1 - 3 / 10) / 10 = 111 / 1000 := by
 
 ## What this builds on
 
-- [The interpolation error theorem](03-polynomial-interpolation-error.md): the error formula $f^{(n+1)}(ξ)/(n+1)!$ times the node product, which gives the a-priori bound 6.583760e-08 before any computing.
+- [The interpolation error theorem](03-polynomial-interpolation-error.md): the error formula $`f^{(n+1)}(ξ)/(n+1)!`$ times the node product, which gives the a-priori bound 6.583760e-08 before any computing.
 - [Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md): the worst gap over an interval, which is the uniform norm here; Weierstrass says polynomials can converge uniformly to any continuous function.
 - [Power series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md): the Taylor polynomial the chip could use instead, and why it is accurate only near its centre.
 
@@ -867,7 +881,7 @@ example : ((3 : ℚ) / 10) ^ 2 + (3 / 10) * (1 - 3 / 10) / 10 = 111 / 1000 := by
 - [Pade approximants](09-pade-and-rational-approximation.md): ratios of polynomials matched at one point, which cope with poles; the equal-ripple best rational fit is left open there.
 - Function spaces C and Lp (planned): the uniform norm becomes the norm of the space of continuous functions, and Weierstrass's theorem says polynomials are dense in it.
 
-Also on this shelf: [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md) supplies the Chebyshev nodes and $T_n$, and [Fitting instead of passing through](07-least-squares-and-orthogonal-polynomials.md) minimises the average squared error instead of the worst one.
+Also on this shelf: [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md) supplies the Chebyshev nodes and $`T_n`$, and [Fitting instead of passing through](07-least-squares-and-orthogonal-polynomials.md) minimises the average squared error instead of the worst one.
 
 Left open: e^x on [0, 1] needs degree 6 for a millionth, but how fast does the best error fall as the degree grows, and what property of a function decides that rate?
 

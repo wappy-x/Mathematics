@@ -42,40 +42,44 @@ Orange: the single-phase motor. Power surges to 11,250 W and dips to −1,250 W,
 
 ## The formula
 
-Notation first. The voltage $v(t)$ and current $i(t)$ swing as sine waves. The capital letters $V$ and $I$ are their **rms** (root-mean-square) values: the steady values that would heat a resistor equally. For a sine wave, that is the peak divided by $\sqrt2$. Mains "230 V" is an rms value; its peak is 325.27 V.
+Notation first. The voltage $`v(t)`$ and current $`i(t)`$ swing as sine waves. The capital letters $`V`$ and $`I`$ are their **rms** (root-mean-square) values: the steady values that would heat a resistor equally. For a sine wave, that is the peak divided by $`\sqrt2`$. Mains "230 V" is an rms value; its peak is 325.27 V.
 
 The current lags the voltage by the angle φ (phi), a fraction of the 360° cycle. Each quantity below is defined from those three.
 
-$$p(t) = v(t)\,i(t), \qquad P = VI\cos\varphi, \qquad Q = VI\sin\varphi, \qquad S = VI, \qquad P^2 + Q^2 = S^2$$
+```math
+p(t) = v(t)\,i(t), \qquad P = VI\cos\varphi, \qquad Q = VI\sin\varphi, \qquad S = VI, \qquad P^2 + Q^2 = S^2
+```
 
 **Read it aloud:** the power at each instant is voltage times current; its average is volts times amps times the cosine of the lag; the sine of the lag gives the part that goes back and forth; volts times amps is the size of both together.
 
-For three phases, each with $V$ to the shared return wire (the **neutral**) and line current $I_L$:
+For three phases, each with $`V`$ to the shared return wire (the **neutral**) and line current $`I_L`$:
 
-$$P = 3VI_L\cos\varphi = \sqrt3\,V_L I_L\cos\varphi, \qquad V_L = \sqrt3\,V, \qquad I_N = 0 \ \text{(balanced)}$$
+```math
+P = 3VI_L\cos\varphi = \sqrt3\,V_L I_L\cos\varphi, \qquad V_L = \sqrt3\,V, \qquad I_N = 0 \ \text{(balanced)}
+```
 
 **Read it aloud:** three phases carry three times one phase's power; the voltage between two lines is root three times the voltage to neutral; with equal loads the neutral carries nothing.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$, $v(t)$ | rms voltage, live wire to neutral; $v(t)$ the voltage at instant $t$ | 230 V; peak 325.2691 V | current falls for the same power |
-| $I$, $I_L$, $i(t)$ | rms current in the cable; on three phases, in each line; $i(t)$ the current at instant $t$ | 27.1739 A; 9.0580 A | — |
-| $\varphi$ | lag of current behind voltage | 36.8699° | power factor falls, current rises |
-| $\cos\varphi$ | power factor, P ÷ S | 0.8 | current falls toward 21.7391 A |
-| $\omega$, $t$, $T$ | angular frequency 2π × 50 rad/s, time, one cycle (20 ms) | 314.1593 rad/s, —, 20 ms | the inductor's reactance grows |
-| $p(t)$ | power flowing in at instant $t$ | −1,250 W to 11,250 W | — |
-| $P$ | real power, the average of $p(t)$ | 5,000 W | everything scales with it |
-| $Q$ | reactive power, the back-and-forth part | 3,750 var | current rises |
-| $S$ | apparent power, $V$ × $I$ | 6,250 VA | the cable must be thicker |
-| $R$, $X$, $L$, $j$ | the motor as resistance $R$ (opposition in step with the voltage) and reactance $X$ (opposition a quarter cycle out of step), in ohms; $L$ the inductance giving $X$, in millihenries (mH); $j$ marks the part a quarter cycle out of step (the square root of −1 in phasors) | 6.7712 Ω, 5.0784 Ω, 16.1650 mH | $X$ up: φ grows |
-| $V_L$ | rms voltage between two live lines | 398.3717 V | — |
-| $I_N$ | current in the neutral | 0 A balanced | — |
+| $`V`$, $`v(t)`$ | rms voltage, live wire to neutral; $`v(t)`$ the voltage at instant $`t`$ | 230 V; peak 325.2691 V | current falls for the same power |
+| $`I`$, $`I_L`$, $`i(t)`$ | rms current in the cable; on three phases, in each line; $`i(t)`$ the current at instant $`t`$ | 27.1739 A; 9.0580 A | — |
+| $`\varphi`$ | lag of current behind voltage | 36.8699° | power factor falls, current rises |
+| $`\cos\varphi`$ | power factor, P ÷ S | 0.8 | current falls toward 21.7391 A |
+| $`\omega`$, $`t`$, $`T`$ | angular frequency 2π × 50 rad/s, time, one cycle (20 ms) | 314.1593 rad/s, —, 20 ms | the inductor's reactance grows |
+| $`p(t)`$ | power flowing in at instant $`t`$ | −1,250 W to 11,250 W | — |
+| $`P`$ | real power, the average of $`p(t)`$ | 5,000 W | everything scales with it |
+| $`Q`$ | reactive power, the back-and-forth part | 3,750 var | current rises |
+| $`S`$ | apparent power, $`V`$ × $`I`$ | 6,250 VA | the cable must be thicker |
+| $`R`$, $`X`$, $`L`$, $`j`$ | the motor as resistance $`R`$ (opposition in step with the voltage) and reactance $`X`$ (opposition a quarter cycle out of step), in ohms; $`L`$ the inductance giving $`X`$, in millihenries (mH); $`j`$ marks the part a quarter cycle out of step (the square root of −1 in phasors) | 6.7712 Ω, 5.0784 Ω, 16.1650 mH | $`X`$ up: φ grows |
+| $`V_L`$ | rms voltage between two live lines | 398.3717 V | — |
+| $`I_N`$ | current in the neutral | 0 A balanced | — |
 
 ### When it holds
 
 - **Sine waves of one frequency.** Rectifiers in computers and chargers draw spiky currents. Their 150 Hz part (the third harmonic) adds in the neutral instead of cancelling: 3 A in each phase puts 9 A in the neutral.
 - **Steady load.** The formulas describe a cycle repeating unchanged. A motor starting up draws several times its running current at a much worse power factor.
-- **Balanced phases.** $I_N = 0$ needs three equal loads. Switch one phase's load off and the neutral carries 9.0580 A; halve it and the neutral carries 4.5290 A.
+- **Balanced phases.** $`I_N = 0`$ needs three equal loads. Switch one phase's load off and the neutral carries 9.0580 A; halve it and the neutral carries 4.5290 A.
 - **Three voltages a third of a cycle apart.** A fault that collapses one phase's voltage breaks the cancellation, and the total power starts to ripple.
 
 ---
@@ -86,43 +90,49 @@ $$P = 3VI_L\cos\varphi = \sqrt3\,V_L I_L\cos\varphi, \qquad V_L = \sqrt3\,V, \qq
 
 At every instant, power is voltage times current. Two sine waves of the same frequency multiply into a constant plus a wave at twice the frequency. The constant is the average, the power that does work. The double-frequency part averages to nothing: energy lent and repaid each half cycle.
 
-### Step 1: the average is $VI\cos\varphi$
+### Step 1: the average is $`VI\cos\varphi`$
 
-Write the waves with their peaks, $\sqrt2V$ and $\sqrt2I$:
+Write the waves with their peaks, $`\sqrt2V`$ and $`\sqrt2I`$:
 
-$$v = \sqrt2 V\cos\omega t, \qquad i = \sqrt2 I\cos(\omega t - \varphi)$$
+```math
+v = \sqrt2 V\cos\omega t, \qquad i = \sqrt2 I\cos(\omega t - \varphi)
+```
 
-Add the addition formulas for $\cos(\omega t + (\omega t - \varphi))$ and $\cos(\omega t - (\omega t - \varphi))$ from [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): $2\cos\omega t\cos(\omega t - \varphi) = \cos\varphi + \cos(2\omega t - \varphi)$. So
+Add the addition formulas for $`\cos(\omega t + (\omega t - \varphi))`$ and $`\cos(\omega t - (\omega t - \varphi))`$ from [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): $`2\cos\omega t\cos(\omega t - \varphi) = \cos\varphi + \cos(2\omega t - \varphi)`$. So
 
-$$p(t) = VI\cos\varphi + VI\cos(2\omega t - \varphi).$$
+```math
+p(t) = VI\cos\varphi + VI\cos(2\omega t - \varphi).
+```
 
-The second term swings symmetrically about zero, so over a cycle it averages to zero. The average is $P = VI\cos\varphi$. The swing about $P$ has size $VI = S$, so $p$ runs from $P - S$ to $P + S$: from −1,250 W to 11,250 W.
+The second term swings symmetrically about zero, so over a cycle it averages to zero. The average is $`P = VI\cos\varphi`$. The swing about $`P`$ has size $`VI = S`$, so $`p`$ runs from $`P - S`$ to $`P + S`$: from −1,250 W to 11,250 W.
 
 ### Step 2: split the current, and the two powers appear
 
-Expand $\cos(2\omega t - \varphi)$ by the addition formula and gather terms:
+Expand $`\cos(2\omega t - \varphi)`$ by the addition formula and gather terms:
 
-$$p(t) = P\,(1 + \cos 2\omega t) + Q\sin 2\omega t, \qquad Q = VI\sin\varphi.$$
+```math
+p(t) = P\,(1 + \cos 2\omega t) + Q\sin 2\omega t, \qquad Q = VI\sin\varphi.
+```
 
-The first term never goes below zero: energy flowing one way, into work. It comes from the current's part in step with the voltage, $I\cos\varphi$.
+The first term never goes below zero: energy flowing one way, into work. It comes from the current's part in step with the voltage, $`I\cos\varphi`$.
 
-The second term is positive for a quarter cycle and negative for the next: the lent energy. It comes from the part a quarter cycle behind, $I\sin\varphi$.
+The second term is positive for a quarter cycle and negative for the next: the lent energy. It comes from the part a quarter cycle behind, $`I\sin\varphi`$.
 
-Those two parts are at right angles as arrows on [The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md), so $P^2 + Q^2 = V^2I^2(\cos^2\varphi + \sin^2\varphi) = S^2$. That is the **power triangle**: P and Q as its two short sides, S as its long side.
+Those two parts are at right angles as arrows on [The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md), so $`P^2 + Q^2 = V^2I^2(\cos^2\varphi + \sin^2\varphi) = S^2`$. That is the **power triangle**: P and Q as its two short sides, S as its long side.
 
 ### Step 3: the same split, seen in the circuit
 
-The motor's impedance is $R + jX$, its opposition to current in phasor form ([Phasors](02-phasors-and-impedance.md)). A phasor writes a sine wave as an arrow: its length is the wave's size, and its angle is the wave's timing.
+The motor's impedance is $`R + jX`$, its opposition to current in phasor form ([Phasors](02-phasors-and-impedance.md)). A phasor writes a sine wave as an arrow: its length is the wave's size, and its angle is the wave's timing.
 
-In the resistance, current and voltage are in step; in the inductance, the current runs a quarter cycle behind its voltage. So $P = I^2R$ and $Q = I^2X$. For the motor, $R$ = 6.7712 Ω, $X$ = 5.0784 Ω, an inductance of 16.1650 mH. Wire those into a simulation, push 230 V through it, and the measured average is 5,000 W.
+In the resistance, current and voltage are in step; in the inductance, the current runs a quarter cycle behind its voltage. So $`P = I^2R`$ and $`Q = I^2X`$. For the motor, $`R`$ = 6.7712 Ω, $`X`$ = 5.0784 Ω, an inductance of 16.1650 mH. Wire those into a simulation, push 230 V through it, and the measured average is 5,000 W.
 
-A capacitor's reactance is negative, so its $Q$ is negative: it gives energy back while a coil takes it in. In a tuned circuit at resonance ([RLC resonance](03-rlc-circuits-and-resonance.md)) the coil's $Q$ and the capacitor's $Q$ cancel, so the source supplies only $P$.
+A capacitor's reactance is negative, so its $`Q`$ is negative: it gives energy back while a coil takes it in. In a tuned circuit at resonance ([RLC resonance](03-rlc-circuits-and-resonance.md)) the coil's $`Q`$ and the capacitor's $`Q`$ cancel, so the source supplies only $`P`$.
 
 ### Step 4: three phases cancel in the neutral
 
 Three live wires carry voltages of the same size, each a third of a cycle (120°) behind the last. Each feeds a third of the motor, so each line carries the same current, lagging its own voltage by φ: 9.0580 A.
 
-All three return through one neutral. Its current is the sum of three equal arrows at 120° apart. Laid head to tail, they close a triangle back on their start, so the sum is zero. In symbols, $\cos\omega t + \cos(\omega t + 120°) + \cos(\omega t + 240°) = 0$ at every instant, by the addition formula with $\cos 120° = -\tfrac12$, $\sin 120° = \tfrac{\sqrt3}{2}$.
+All three return through one neutral. Its current is the sum of three equal arrows at 120° apart. Laid head to tail, they close a triangle back on their start, so the sum is zero. In symbols, $`\cos\omega t + \cos(\omega t + 120°) + \cos(\omega t + 240°) = 0`$ at every instant, by the addition formula with $`\cos 120° = -\tfrac12`$, $`\sin 120° = \tfrac{\sqrt3}{2}`$.
 
 So a balanced load such as a three-phase motor needs no neutral: it connects to the three lines alone, and each line's current returns through the other two.
 
@@ -131,21 +141,21 @@ So a balanced load such as a three-phase motor needs no neutral: it connects to 
 
 Expand the last two by the addition formula:
 
-$$\cos(\omega t + 120°) + \cos(\omega t + 240°) = \cos\omega t\,(\cos 120° + \cos 240°) - \sin\omega t\,(\sin 120° + \sin 240°).$$
+$`\displaystyle \cos(\omega t + 120°) + \cos(\omega t + 240°) = \cos\omega t\,(\cos 120° + \cos 240°) - \sin\omega t\,(\sin 120° + \sin 240°).`$
 
-Here $\cos 120° = \cos 240° = -\tfrac12$ and $\sin 240° = -\sin 120°$, so the right side is $-\cos\omega t$. Adding $\cos\omega t$ gives 0 at every instant, not only on average. Each current is such a cosine, shifted by the same lag φ, so the same holds for them.
+Here $`\cos 120° = \cos 240° = -\tfrac12`$ and $`\sin 240° = -\sin 120°`$, so the right side is $`-\cos\omega t`$. Adding $`\cos\omega t`$ gives 0 at every instant, not only on average. Each current is such a cosine, shifted by the same lag φ, so the same holds for them.
 
 </details>
 
 ### Step 5: three phases deliver steady power
 
-Each phase's power is Step 1's: $\tfrac13P$ plus a double-frequency wave. Doubling the phase shifts turns 0°, 120°, 240° into 0°, 240°, 480°, which is 0°, 240°, 120°: again three equal waves a third of a cycle apart. Step 4 cancels them. What is left is $3 \times \tfrac13P$ = 5,000 W, at every instant.
+Each phase's power is Step 1's: $`\tfrac13P`$ plus a double-frequency wave. Doubling the phase shifts turns 0°, 120°, 240° into 0°, 240°, 480°, which is 0°, 240°, 120°: again three equal waves a third of a cycle apart. Step 4 cancels them. What is left is $`3 \times \tfrac13P`$ = 5,000 W, at every instant.
 
 A motor on steady power turns with a steady pull, without the 100 Hz shudder of one phase.
 
 ### Step 6: root three between the lines
 
-The voltage between two live lines is the difference of two arrows of size $V$ with 120° between them. By the [Law of cosines](../../05-Geometry%20and%20trig/03-Trigonometry/06-law-of-cosines.md) its size is $\sqrt{V^2 + V^2 - 2V^2\cos120°} = \sqrt3\,V$ = 398.3717 V: the "400 V" of a three-phase supply. Substituting $V = V_L/\sqrt3$ gives $P = \sqrt3\,V_L I_L\cos\varphi$.
+The voltage between two live lines is the difference of two arrows of size $`V`$ with 120° between them. By the [Law of cosines](../../05-Geometry%20and%20trig/03-Trigonometry/06-law-of-cosines.md) its size is $`\sqrt{V^2 + V^2 - 2V^2\cos120°} = \sqrt3\,V`$ = 398.3717 V: the "400 V" of a three-phase supply. Substituting $`V = V_L/\sqrt3`$ gives $`P = \sqrt3\,V_L I_L\cos\varphi`$.
 
 ---
 
@@ -154,12 +164,12 @@ The voltage between two live lines is the difference of two arrows of size $V$ w
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | lag φ | angle whose cosine is 0.8 | 36.8699° |
-| apparent power $S$ | 5,000 ÷ 0.8 | 6,250 VA |
-| reactive power $Q$ | the root of 6,250² − 5,000², or 6,250 × 0.6 | 3,750 var |
+| apparent power $`S`$ | 5,000 ÷ 0.8 | 6,250 VA |
+| reactive power $`Q`$ | the root of 6,250² − 5,000², or 6,250 × 0.6 | 3,750 var |
 | single-phase current | 6,250 ÷ 230 | **27.1739 A** |
 | same work at power factor 1 | 5,000 ÷ 230 | 21.7391 A |
-| $p(t)$ range | 5,000 − 6,250 to 5,000 + 6,250 | −1,250 W to 11,250 W |
-| $R$, $X$ | 5,000 ÷ 27.1739², 3,750 ÷ 27.1739² | 6.7712 Ω, 5.0784 Ω |
+| $`p(t)`$ range | 5,000 − 6,250 to 5,000 + 6,250 | −1,250 W to 11,250 W |
+| $`R`$, $`X`$ | 5,000 ÷ 27.1739², 3,750 ÷ 27.1739² | 6.7712 Ω, 5.0784 Ω |
 | line voltage | √3 × 230 | 398.3717 V |
 | three-phase line current | (5,000 ÷ 3) ÷ 0.8 ÷ 230 | **9.0580 A** |
 | wire loss, 0.1 Ω per wire | 2 × 27.1739² × 0.1, against 3 × 9.0580² × 0.1 | 147.6843 W against 24.6141 W |
@@ -180,8 +190,8 @@ three-phase, neutral                                     0.00 A
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Power as volts times amps | 6,250 W | That is S. The lagging current's quarter-cycle part does no work. |
-| Adding the powers, $S = P + Q$ | 8,750 VA | P and Q are at right angles; they add like sides of a right triangle |
-| Line voltage in $P = 3VI\cos\varphi$ | 5.2296 A per line | 398 V is between lines, not to neutral; the √3 got lost |
+| Adding the powers, $`S = P + Q`$ | 8,750 VA | P and Q are at right angles; they add like sides of a right triangle |
+| Line voltage in $`P = 3VI\cos\varphi`$ | 5.2296 A per line | 398 V is between lines, not to neutral; the √3 got lost |
 | Neutral current as the sum of sizes | 27.1739 A | The three currents point a third of a cycle apart and cancel |
 | Assume the neutral is idle with computer loads | 9.0000 A, not 0 | Outside the model: their 150 Hz currents (the third harmonic, 3 A in each phase here) add in the neutral instead of cancelling |
 
@@ -192,8 +202,8 @@ three-phase, neutral                                     0.00 A
 The script takes the motor's 5 kW, its power factor and the 230 V, 50 Hz supply, and reaches the powers by **three independent roads**.
 
 1. Road 1 is the formulas.
-2. Road 2 samples the voltage and current 40,000 times over one cycle and averages: $p = vi$ for P, the rms values for S, and voltage delayed a quarter cycle times current for Q, as a digital power meter does.
-3. Road 3 builds the motor as a resistor and an inductor. It solves $L\,di/dt + Ri = v$ by fourth-order Runge–Kutta ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) from rest for ten cycles. It measures the power drawn in the last cycle, and the power factor back from it as P ÷ (rms voltage × rms current).
+2. Road 2 samples the voltage and current 40,000 times over one cycle and averages: $`p = vi`$ for P, the rms values for S, and voltage delayed a quarter cycle times current for Q, as a digital power meter does.
+3. Road 3 builds the motor as a resistor and an inductor. It solves $`L\,di/dt + Ri = v`$ by fourth-order Runge–Kutta ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) from rest for ten cycles. It measures the power drawn in the last cycle, and the power factor back from it as P ÷ (rms voltage × rms current).
 
 Then it samples three phases instant by instant: the neutral current, the total power, the line voltage, and the unbalanced cases. It also prints every wrong answer in the tables.
 
@@ -542,14 +552,14 @@ Three roads, one 5,000 W. The sampled averages match the formulas to four decima
 
 Lean proves the power triangle and the three-phase facts for sine waves of one frequency, and checks the worked numbers.
 
-- Take $v = \sqrt2 V\cos\omega t$ and $i = \sqrt2 I\cos(\omega t - \varphi)$, with $\omega > 0$. Then the average of $p(t)$ over one cycle is $P = S\cos\varphi$, where $S = VI$.
-- Take the same waves. Then the voltage a quarter cycle late, times the current, averages to $Q = S\sin\varphi$ over one cycle.
-- Take the same waves. Then $P^2 + Q^2 = S^2$: the power triangle.
+- Take $`v = \sqrt2 V\cos\omega t`$ and $`i = \sqrt2 I\cos(\omega t - \varphi)`$, with $`\omega > 0`$. Then the average of $`p(t)`$ over one cycle is $`P = S\cos\varphi`$, where $`S = VI`$.
+- Take the same waves. Then the voltage a quarter cycle late, times the current, averages to $`Q = S\sin\varphi`$ over one cycle.
+- Take the same waves. Then $`P^2 + Q^2 = S^2`$: the power triangle.
 - Take three equal currents, each lagging its own voltage by φ, the three a third of a cycle apart. Then they add to zero in the neutral at every instant.
-- Take those currents, with three voltages of rms $V$ a third of a cycle apart. Then the total power is $3VI\cos\varphi$ at every instant.
-- Take $P$ = 5,000 W at power factor 0.8. Then $S$ = 6,250 VA, $Q$ = 3,750 var, and $5000^2 + 3750^2 = 6250^2$.
-- For the same motor, $P - S$ is −1,250 W and $P + S$ is 11,250 W.
-- The usual mistake $S = P + Q$ gives 8,750, not 6,250.
+- Take those currents, with three voltages of rms $`V`$ a third of a cycle apart. Then the total power is $`3VI\cos\varphi`$ at every instant.
+- Take $`P`$ = 5,000 W at power factor 0.8. Then $`S`$ = 6,250 VA, $`Q`$ = 3,750 var, and $`5000^2 + 3750^2 = 6250^2`$.
+- For the same motor, $`P - S`$ is −1,250 W and $`P + S`$ is 11,250 W.
+- The usual mistake $`S = P + Q`$ gives 8,750, not 6,250.
 
 The circuit simulation, the line voltage, unbalanced loads, the third harmonic and the decimals are left to the Python and Rust checks.
 
@@ -731,7 +741,7 @@ example : (5000 : ℕ) + 3750 = 8750 := by norm_num
 > [!TIP]
 > **Try changing**
 > - Guess first: set `pf` to 0.5. The current climbs to 43.4783 A for the same 5 kW, and S doubles to 10,000 VA.
-> - Guess first: set `pf` to 1.0. Q falls to 0 var, the current to 21.7391 A, and $p(t)$ never dips below zero.
+> - Guess first: set `pf` to 1.0. Q falls to 0 var, the current to 21.7391 A, and $`p(t)`$ never dips below zero.
 > - Guess first: set `f` to 60 Hz, as in North America. P, Q and the currents do not move; the inductance that gives the same reactance falls to 13.4709 mH.
 > - Guess first: what the neutral carries if phase c's load is halved. The "phase c half" line says 4.5290 A: half of one phase's current, the half that phase c no longer cancels.
 
@@ -745,7 +755,7 @@ example : (5000 : ℕ) + 3750 = 8750 := by norm_num
 > - **Volts times amps as watts.** 230 × 27.17 is 6,250, but that is VA, 25% above the real 5,000 W.
 > - **Adding P and Q.** 5,000 + 3,750 = 8,750, not 6,250: they add as the sides of a right triangle.
 > - **Peak values in the formula.** 325.27 V × 38.43 A × 0.8 gives 10,000 W, twice the truth. The formulas use rms values.
-> - **The line voltage as if it were the phase voltage.** Putting 398 V into $P = 3VI\cos\varphi$ gives 5.2296 A per line, not 9.0580 A.
+> - **The line voltage as if it were the phase voltage.** Putting 398 V into $`P = 3VI\cos\varphi`$ gives 5.2296 A per line, not 9.0580 A.
 
 ---
 
@@ -757,15 +767,15 @@ example : (5000 : ℕ) + 3750 = 8750 := by norm_num
 - **Electrical installations.** 230 V to neutral and 400 V between lines is the European standard supply. A neutral shared by offices full of computers can run hot: the 150 Hz currents add instead of cancelling.
 
 > **Say it back**
-> Power at each instant is voltage times current. When current lags voltage by φ, the average, the real power, is $VI\cos\varphi$; the reactive power, $VI\sin\varphi$, measures the energy lent and repaid each cycle. The 5 kW motor at power factor 0.8 draws 6,250 VA and 27.17 A for 5,000 W of work. Three phases a third of a cycle apart carry it on 9.06 A per line, with nothing in the neutral, and the power arrives perfectly steady.
+> Power at each instant is voltage times current. When current lags voltage by φ, the average, the real power, is $`VI\cos\varphi`$; the reactive power, $`VI\sin\varphi`$, measures the energy lent and repaid each cycle. The 5 kW motor at power factor 0.8 draws 6,250 VA and 27.17 A for 5,000 W of work. Three phases a third of a cycle apart carry it on 9.06 A per line, with nothing in the neutral, and the power arrives perfectly steady.
 
 ---
 
 ## What this builds on
 
-- [Phasors](02-phasors-and-impedance.md): sine waves as arrows and impedance as $R + jX$; this card multiplies a voltage and a current and asks what the product does.
-- [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the addition and product-to-sum formulas that split $p(t)$ into steady and swinging parts.
-- [The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md): $\cos^2 + \sin^2 = 1$, which makes P, Q and S a right triangle.
+- [Phasors](02-phasors-and-impedance.md): sine waves as arrows and impedance as $`R + jX`$; this card multiplies a voltage and a current and asks what the product does.
+- [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the addition and product-to-sum formulas that split $`p(t)`$ into steady and swinging parts.
+- [The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md): $`\cos^2 + \sin^2 = 1`$, which makes P, Q and S a right triangle.
 
 ## Where this goes next
 

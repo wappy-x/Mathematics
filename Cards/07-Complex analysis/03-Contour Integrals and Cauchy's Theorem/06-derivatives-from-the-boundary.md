@@ -26,30 +26,34 @@ To scale: 80 units per 1, with 0 at (100, 120), so the loop round a = 1 has radi
 
 ## The formula
 
-Notation first, in words. $f^{(n)}$ means f differentiated n times: $f^{(0)}$ is f, $f^{(2)}$ is f″. The factorial n! is 1 × 2 × … × n, with 0! = 1. The loop integral sign $\oint_C$ means: walk once round the loop C anticlockwise, adding the function times each small step dz ([Contour integrals](01-contour-integrals.md)).
+Notation first, in words. $`f^{(n)}`$ means f differentiated n times: $`f^{(0)}`$ is f, $`f^{(2)}`$ is f″. The factorial n! is 1 × 2 × … × n, with 0! = 1. The loop integral sign $`\oint_C`$ means: walk once round the loop C anticlockwise, adding the function times each small step dz ([Contour integrals](01-contour-integrals.md)).
 
-$$f^{(n)}(a) = \frac{n!}{2\pi i}\oint_C \frac{f(z)}{(z-a)^{n+1}}\,dz$$
+```math
+f^{(n)}(a) = \frac{n!}{2\pi i}\oint_C \frac{f(z)}{(z-a)^{n+1}}\,dz
+```
 
 **Read it aloud:** the n-th derivative of f at a is n factorial over two-pi-i, times the loop integral of f of z over z minus a to the power n plus one.
 
 With n = 0 this is Cauchy's integral formula ([Cauchy's integral formula](05-cauchys-integral-formula.md)). Two consequences follow.
 
-**Cauchy's estimate.** If C is the circle of radius r round a and $|f(z)| \le M$ on it, then
+**Cauchy's estimate.** If C is the circle of radius r round a and $`|f(z)| \le M`$ on it, then
 
-$$|f^{(n)}(a)| \le \frac{n!\,M}{r^n}$$
+```math
+|f^{(n)}(a)| \le \frac{n!\,M}{r^n}
+```
 
 **Morera's theorem.** If f is continuous on a disc and its loop integral round every triangle inside the disc is 0, then f is holomorphic there: Cauchy's theorem run backwards.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the function, holomorphic on and inside the loop | z^3 | — |
-| $a$ | the inside point where derivatives are wanted | 1 | f″(a) = 6a grows |
-| $z$ | a point walking round the loop | a point with \|z − 1\| = 1 | — |
-| $n$, $f^{(n)}$ | how many times f is differentiated; the result | n = 2, f″(1) = 6 | from n = 4 on, z^3 gives 0 |
-| $n!$ | 1 × 2 × … × n | 2! = 2 | bounds 8, 8, 16, 48, 192 |
-| $C$, $\oint_C$ | the loop, and the integral once round it anticlockwise | the circle \|z − 1\| = 1 | a second lap doubles it |
-| $r$, $M$ | the circle's radius; the largest \|f\| on it | r = 1, M = 8 | 27 at r = 0.5, 13.5 at r = 2 |
-| $i$, $\pi$ | the square root of −1; a half turn in radians | 2πi = one full turn's worth | — |
+| $`f`$ | the function, holomorphic on and inside the loop | z^3 | — |
+| $`a`$ | the inside point where derivatives are wanted | 1 | f″(a) = 6a grows |
+| $`z`$ | a point walking round the loop | a point with \|z − 1\| = 1 | — |
+| $`n`$, $`f^{(n)}`$ | how many times f is differentiated; the result | n = 2, f″(1) = 6 | from n = 4 on, z^3 gives 0 |
+| $`n!`$ | 1 × 2 × … × n | 2! = 2 | bounds 8, 8, 16, 48, 192 |
+| $`C`$, $`\oint_C`$ | the loop, and the integral once round it anticlockwise | the circle \|z − 1\| = 1 | a second lap doubles it |
+| $`r`$, $`M`$ | the circle's radius; the largest \|f\| on it | r = 1, M = 8 | 27 at r = 0.5, 13.5 at r = 2 |
+| $`i`$, $`\pi`$ | the square root of −1; a half turn in radians | 2πi = one full turn's worth | — |
 
 ### When it holds
 
@@ -64,7 +68,7 @@ $$|f^{(n)}(a)| \le \frac{n!\,M}{r^n}$$
 
 ### Step 0: a appears only in the denominator
 
-In Cauchy's integral formula, $f(a) = \frac{1}{2\pi i}\oint_C \frac{f(z)}{z-a}\,dz$, the rim values f(z) do not involve a. Moving a changes only the factor 1/(z − a), so differentiating f(a) means differentiating that factor inside the integral.
+In Cauchy's integral formula, $`f(a) = \frac{1}{2\pi i}\oint_C \frac{f(z)}{z-a}\,dz`$, the rim values f(z) do not involve a. Moving a changes only the factor 1/(z − a), so differentiating f(a) means differentiating that factor inside the integral.
 
 ### Step 1: differentiate 1/(z − a) with respect to a
 
@@ -79,9 +83,9 @@ The loop stays a fixed distance from a, so 1/(z − a) and its derivatives in a 
 
 Let d > 0 be the distance from a to C, and |h| < d/2. By Cauchy's integral formula at a and a + h,
 
-$$\frac{f(a+h) - f(a)}{h} = \frac{1}{2\pi i}\oint_C \frac{f(z)}{(z-a-h)(z-a)}\,dz,$$
+$`\displaystyle \frac{f(a+h) - f(a)}{h} = \frac{1}{2\pi i}\oint_C \frac{f(z)}{(z-a-h)(z-a)}\,dz,`$
 
-since $\frac{1}{z-a-h} - \frac{1}{z-a} = \frac{h}{(z-a-h)(z-a)}$. Subtract the claimed limit $\frac{1}{2\pi i}\oint_C \frac{f(z)}{(z-a)^2}\,dz$: the integrands differ by $\frac{h\,f(z)}{(z-a-h)(z-a)^2}$. On C, $|z-a| \ge d$ and $|z-a-h| \ge d/2$. With M the largest |f| on C and L the loop's length, the difference is at most $\frac{L}{2\pi}\cdot\frac{2|h|M}{d^3}$ in size. For a tolerance ε > 0, any $|h| < \delta = \min(d/2,\ \pi\varepsilon d^3/(LM))$ keeps it below ε. So the difference quotient tends to the integral. One power higher each time gives every n.
+since $`\frac{1}{z-a-h} - \frac{1}{z-a} = \frac{h}{(z-a-h)(z-a)}`$. Subtract the claimed limit $`\frac{1}{2\pi i}\oint_C \frac{f(z)}{(z-a)^2}\,dz`$: the integrands differ by $`\frac{h\,f(z)}{(z-a-h)(z-a)^2}`$. On C, $`|z-a| \ge d`$ and $`|z-a-h| \ge d/2`$. With M the largest |f| on C and L the loop's length, the difference is at most $`\frac{L}{2\pi}\cdot\frac{2|h|M}{d^3}`$ in size. For a tolerance ε > 0, any $`|h| < \delta = \min(d/2,\ \pi\varepsilon d^3/(LM))`$ keeps it below ε. So the difference quotient tends to the integral. One power higher each time gives every n.
 
 </details>
 
@@ -95,15 +99,19 @@ Real calculus has no such rule. On the real line, x|x| has slope 2|x|, which has
 
 Put w = z − 1, so w runs once round 0 at radius 1. The integrand for n = 2 is
 
-$$\frac{(1+w)^3}{w^3} = w^{-3} + 3w^{-2} + 3w^{-1} + 1.$$
+```math
+\frac{(1+w)^3}{w^3} = w^{-3} + 3w^{-2} + 3w^{-1} + 1.
+```
 
-Once round 0, every whole power of w integrates to 0 except $w^{-1}$, which gives 2πi ([Contour integrals](01-contour-integrals.md)). So the loop integral is 3 × 2πi, and f″(1) = (2!/2πi) × 3 × 2πi = 6. The power rule agrees: f″(z) = 6z.
+Once round 0, every whole power of w integrates to 0 except $`w^{-1}`$, which gives 2πi ([Contour integrals](01-contour-integrals.md)). So the loop integral is 3 × 2πi, and f″(1) = (2!/2πi) × 3 × 2πi = 6. The power rule agrees: f″(z) = 6z.
 
 ### Step 5: Cauchy's estimate, from the size of an integral
 
-A loop integral sums pieces, each a value times a step dz, so its size is at most the loop's length times the integrand's largest size. On the circle of radius r round a, the length is 2πr and $|f(z)/(z-a)^{n+1}| \le M/r^{n+1}$. So
+A loop integral sums pieces, each a value times a step dz, so its size is at most the loop's length times the integrand's largest size. On the circle of radius r round a, the length is 2πr and $`|f(z)/(z-a)^{n+1}| \le M/r^{n+1}`$. So
 
-$$|f^{(n)}(a)| \le \frac{n!}{2\pi}\cdot 2\pi r\cdot\frac{M}{r^{n+1}} = \frac{n!\,M}{r^n}.$$
+```math
+|f^{(n)}(a)| \le \frac{n!}{2\pi}\cdot 2\pi r\cdot\frac{M}{r^{n+1}} = \frac{n!\,M}{r^n}.
+```
 
 For z^3 at 1 with r = 1, M = |2|^3 = 8, and the bound on |f″(1)| is 16. z^3 is holomorphic on the whole plane, so any radius is allowed. On the circle of radius r round 1 the largest |z^3| is (1 + r)^3, so the bound is 2(1 + r)^3/r^2; its derivative in r vanishes at r = 2, giving 13.5. None reaches 6: the estimate covers every function of that size on that circle.
 
@@ -125,7 +133,7 @@ Suppose f is continuous on a disc and its integral round every triangle there is
 
 Round the regatta triangle 0 → 2 → 1 + i, z^3 gives 0 ([Cauchy's theorem](03-cauchys-theorem.md)). The conjugate z-bar (z reflected in the real axis) gives 2i: twice the triangle's area, 1, times i. A holomorphic function gives 0 round every triangle, so z-bar is holomorphic on no disc containing the course.
 
-A second road to all the derivatives at once: expand 1/(z − a) as a geometric series inside the integral, and the Taylor coefficients come out as $f^{(n)}(a)/n!$ ([Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)).
+A second road to all the derivatives at once: expand 1/(z − a) as a geometric series inside the integral, and the Taylor coefficients come out as $`f^{(n)}(a)/n!`$ ([Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)).
 
 ---
 
@@ -156,7 +164,7 @@ By hand: the loop splits into loops round 1 and round 0 ([Deforming a loop](04-d
 
 ## Code, from first principles, and it actually runs
 
-Road one is the power rule on the coefficients of z^3. Road two is n!/(2πi) times the programs' own trapezoid sum round the circle. Triangle integrals use Simpson's rule per edge; the area comes from the shoelace formula. M is the largest |z^3| over 360 rim points, measured again for each radius. With 2 points the loop sum for f″(1) is 8: at the two sample points ±1, $w^{-3}$ equals $w^{-1}$, so it is counted as one more $w^{-1}$. From 3 points on it is exact. A second case, e^z at 0, shows the error shrinking.
+Road one is the power rule on the coefficients of z^3. Road two is n!/(2πi) times the programs' own trapezoid sum round the circle. Triangle integrals use Simpson's rule per edge; the area comes from the shoelace formula. M is the largest |z^3| over 360 rim points, measured again for each radius. With 2 points the loop sum for f″(1) is 8: at the two sample points ±1, $`w^{-3}`$ equals $`w^{-1}`$, so it is counted as one more $`w^{-1}`$. From 3 points on it is exact. A second case, e^z at 0, shows the error shrinking.
 
 ### Python
 
@@ -356,9 +364,9 @@ The two outputs match line for line.
 
 Lean proves the derivative formula, holomorphic once means holomorphic forever, and Cauchy's estimate, for every f, circle and n, plus the card's arithmetic.
 
-- Let f be holomorphic on and inside a circle, with a strictly inside it. Then $f^{(n)}(a)$ is n!/(2πi) times the loop integral of f(z)/(z − a)^(n+1), for every n.
-- If f is holomorphic on a region, then every derivative $f^{(n)}$ is holomorphic on that region too.
-- Cauchy's estimate: let f be holomorphic on and inside the circle of radius r > 0 round a. If |f(z)| ≤ M on that circle, then $|f^{(n)}(a)| \le n!\,M/r^n$ for every n.
+- Let f be holomorphic on and inside a circle, with a strictly inside it. Then $`f^{(n)}(a)`$ is n!/(2πi) times the loop integral of f(z)/(z − a)^(n+1), for every n.
+- If f is holomorphic on a region, then every derivative $`f^{(n)}`$ is holomorphic on that region too.
+- Cauchy's estimate: let f be holomorphic on and inside the circle of radius r > 0 round a. If |f(z)| ≤ M on that circle, then $`|f^{(n)}(a)| \le n!\,M/r^n`$ for every n.
 - The worked arithmetic: the power-rule values 1, 3, 6, 6, 0, the coefficients 1, 3, 3, 1, and f″(1) = 2! × 3 = 6.
 - The bounds 8, 8, 16, 48, 192 for n = 0 to 4, and 27, 16, 13.5 at r = 0.5, 1, 2.
 - The mistakes: the loop round 0 adds 2! × 1/(0 − 1)^3 = −2, and M read at the centre gives the "bound" 2, below 6.

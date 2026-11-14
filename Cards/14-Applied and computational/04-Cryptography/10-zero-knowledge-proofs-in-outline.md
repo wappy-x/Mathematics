@@ -50,31 +50,35 @@ On this card c is the bank's challenge, not a ciphertext as on [The one-time pad
 
 One round has three moves. The laptop picks a fresh random r and sends t = g^r mod p. The bank sends a random c from 0 to q − 1. The laptop sends s = r + c·x mod q. The bank accepts if
 
-$$g^{s} \equiv t \cdot y^{c} \pmod p$$
+```math
+g^{s} \equiv t \cdot y^{c} \pmod p
+```
 
 **Read it aloud:** g raised to the response must equal the commitment times the public number raised to the challenge, with the arithmetic done mod p.
 
-A cheater who does not know x passes one round with chance 1/q. After ℓ independent rounds the chance is $(1/q)^{\ell}$.
+A cheater who does not know x passes one round with chance 1/q. After ℓ independent rounds the chance is $`(1/q)^{\ell}`$.
 
 **Fiat-Shamir** removes the bank's turn. The laptop makes the challenge itself, from a hash of everything so far:
 
-$$c = h(g \,\|\, y \,\|\, t \,\|\, \text{msg}) \bmod q$$
+```math
+c = h(g \,\|\, y \,\|\, t \,\|\, \text{msg}) \bmod q
+```
 
 **Read it aloud:** the challenge is the hash of the group, the public number, the commitment and the message, joined end to end and cut down mod q.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the prime the arithmetic wraps at | 23 (real: 3072 bits) | — |
-| $q$ | how many powers of g before they repeat; also prime | 11 (real: 256 bits) | cheater's chance 1/q falls |
-| $g$ | the generator: the base everyone uses | 4 | — |
-| $x$ | the secret exponent, made from the password | 7 | — |
-| $y$ | the public number the bank stores: g^x mod p | 8 | — |
-| $r$ | a fresh random exponent, used for one round only | 5 | reused, it leaks x |
-| $t$ | the commitment: g^r mod p | 12 | — |
-| $c$ | the challenge, a random number from 0 to q − 1 | 3 | — |
-| $s$ | the response: r + c·x mod q | 4 | — |
-| $\ell$ | how many rounds are run | 6 rounds for under 1 in a million | cheater's chance $(1/q)^{\ell}$ falls |
-| $h$ | a hash function, written out on [Hashes and MACs](03-hash-functions-and-macs.md); the code uses the toy FNV-1a | — | — |
+| $`p`$ | the prime the arithmetic wraps at | 23 (real: 3072 bits) | — |
+| $`q`$ | how many powers of g before they repeat; also prime | 11 (real: 256 bits) | cheater's chance 1/q falls |
+| $`g`$ | the generator: the base everyone uses | 4 | — |
+| $`x`$ | the secret exponent, made from the password | 7 | — |
+| $`y`$ | the public number the bank stores: g^x mod p | 8 | — |
+| $`r`$ | a fresh random exponent, used for one round only | 5 | reused, it leaks x |
+| $`t`$ | the commitment: g^r mod p | 12 | — |
+| $`c`$ | the challenge, a random number from 0 to q − 1 | 3 | — |
+| $`s`$ | the response: r + c·x mod q | 4 | — |
+| $`\ell`$ | how many rounds are run | 6 rounds for under 1 in a million | cheater's chance $`(1/q)^{\ell}`$ falls |
+| $`h`$ | a hash function, written out on [Hashes and MACs](03-hash-functions-and-macs.md); the code uses the toy FNV-1a | — | — |
 | msg | what the non-interactive proof is bound to | `login 2026-11-11 session 41` | — |
 
 ### When it holds
@@ -97,7 +101,9 @@ Taken alone, s = r + c·x is one equation in two unknowns, r and x. Every possib
 
 Substitute s = r + c·x:
 
-$$g^{s} = g^{r + c x} = g^{r} \cdot (g^{x})^{c} = t \cdot y^{c}$$
+```math
+g^{s} = g^{r + c x} = g^{r} \cdot (g^{x})^{c} = t \cdot y^{c}
+```
 
 The exponent is taken mod q, which is safe because g^q = 1. In the example, s = 5 + 3·7 = 26, which is 4 mod 11. Then g^4 = 3, and t·y^3 = 12·6 mod 23 = 3. The code checks all 121 pairs of r and c: every one is accepted.
 
@@ -105,7 +111,9 @@ The exponent is taken mod q, which is safe because g^q = 1. In the example, s = 
 
 Suppose someone can answer two different challenges c and c' for one commitment t, with responses s and s'. Both pass, so g^s = t·y^c and g^{s'} = t·y^{c'}. Divide one by the other and t cancels:
 
-$$g^{s - s'} = y^{c - c'} \quad\Rightarrow\quad x = \frac{s - s'}{c - c'} \bmod q$$
+```math
+g^{s - s'} = y^{c - c'} \quad\Rightarrow\quad x = \frac{s - s'}{c - c'} \bmod q
+```
 
 Division mod q works because q is prime. In the example, the challenges 3 and 8 give responses 4 and 6. Then (4 − 6) mod 11 = 9. Dividing by (3 − 8) mod 11 means multiplying by its inverse mod 11, the number that multiplies it to 1, which is 2. So x = 9 · 2 mod 11 = 7, the secret. This turning of two answers into the secret is called **extraction**.
 

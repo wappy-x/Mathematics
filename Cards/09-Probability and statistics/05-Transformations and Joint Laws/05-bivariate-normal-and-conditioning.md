@@ -28,37 +28,43 @@ Drawn to scale: 1 cm across is 7.14 pixels, 1 kg up is 2.67 pixels, as printed o
 
 ## The formula
 
-Notation first, in words. Height is the random variable $H$, one value of it $h$; weight is $W$, one value $w$. Their averages are $\mu_H$ and $\mu_W$ (mu, the Greek m), their spreads (standard deviations, the precise form of the typical stray) $\sigma_H$ and $\sigma_W$ (sigma). A spread squared is a variance.
+Notation first, in words. Height is the random variable $`H`$, one value of it $`h`$; weight is $`W`$, one value $`w`$. Their averages are $`\mu_H`$ and $`\mu_W`$ (mu, the Greek m), their spreads (standard deviations, the precise form of the typical stray) $`\sigma_H`$ and $`\sigma_W`$ (sigma). A spread squared is a variance.
 
-The correlation is $\rho$ (rho, the Greek r): the covariance of the two, divided by both spreads. It runs from −1 to 1. Here the covariance is the average of the height gap times the weight gap, each gap measured from its own average. A standard score says how many spreads a value sits from its average: $x$ for height, $y$ for weight.
+The correlation is $`\rho`$ (rho, the Greek r): the covariance of the two, divided by both spreads. It runs from −1 to 1. Here the covariance is the average of the height gap times the weight gap, each gap measured from its own average. A standard score says how many spreads a value sits from its average: $`x`$ for height, $`y`$ for weight.
 
-$$x = \frac{h - \mu_H}{\sigma_H}, \qquad y = \frac{w - \mu_W}{\sigma_W}, \qquad Q = \frac{x^2 - 2\rho\,x\,y + y^2}{1 - \rho^2}$$
+```math
+x = \frac{h - \mu_H}{\sigma_H}, \qquad y = \frac{w - \mu_W}{\sigma_W}, \qquad Q = \frac{x^2 - 2\rho\,x\,y + y^2}{1 - \rho^2}
+```
 
 The **bivariate normal density**, the height of the tilted bell over the point (h, w):
 
-$$f(h, w) = \frac{1}{2\pi\,\sigma_H\,\sigma_W\sqrt{1-\rho^2}}\; e^{-Q/2}$$
+```math
+f(h, w) = \frac{1}{2\pi\,\sigma_H\,\sigma_W\sqrt{1-\rho^2}}\; e^{-Q/2}
+```
 
 **Read it aloud:** the bell is highest at the average person, and falls off as the tilted distance Q grows; the number in front makes the total volume one.
 
 The theorem, the card's point. Among adults of height h, weight is normal. The bar is read "given": W | H = h is weight among adults of height h. N(centre, spread^2) is the normal law ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)).
 
-$$W \mid H = h \;\sim\; N\!\left(\mu_W + \rho\,\frac{\sigma_W}{\sigma_H}\,(h - \mu_H),\;\; \sigma_W^2\,(1-\rho^2)\right)$$
+```math
+W \mid H = h \;\sim\; N\!\left(\mu_W + \rho\,\frac{\sigma_W}{\sigma_H}\,(h - \mu_H),\;\; \sigma_W^2\,(1-\rho^2)\right)
+```
 
 **Read it aloud:** go as many spreads above average in weight as ρ times the spreads above average in height; the leftover spread is the old one times √(1 − ρ^2), whatever the height.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $H$, $h$ | height as a random variable; one value of it | the 189 cm group | the average weight rises 0.857 kg per cm |
-| $W$, $w$ | weight as a random variable; one value of it | 90 kg threshold | fewer adults clear a higher bar |
-| $\mu_H$, $\mu_W$ | the two averages | 175 cm, 75 kg | the whole ellipse slides |
-| $\sigma_H$, $\sigma_W$ | the two spreads (standard deviations) | 7 cm, 12 kg | a wider $\sigma_W$ steepens the line; a wider $\sigma_H$ flattens it |
-| $\rho$ | the correlation: covariance over both spreads | 0.5 | the line steepens and the slice narrows |
-| $x$, $y$ | standard scores: spreads away from average | x = 2 at 189 cm | — |
-| $Q$ | the tilted squared distance from the average person | 4 on the drawn ellipse | the density falls as e^(−Q/2) |
-| $f$, $f_H$ | the joint density, per cm per kg; height's own density | f_H(189) = 0.0077 per cm | — |
-| $\varphi$, $\Phi$ | the standard bell's height; its area to the left | Φ(0.2887) = 1 − 0.3864 | — |
-| $Z_1$, $Z_2$ | two independent standard bells, the raw material | — | — |
-| $\Sigma$ | the covariance matrix of the pair | entries 49, 42, 42, 144 | — |
+| $`H`$, $`h`$ | height as a random variable; one value of it | the 189 cm group | the average weight rises 0.857 kg per cm |
+| $`W`$, $`w`$ | weight as a random variable; one value of it | 90 kg threshold | fewer adults clear a higher bar |
+| $`\mu_H`$, $`\mu_W`$ | the two averages | 175 cm, 75 kg | the whole ellipse slides |
+| $`\sigma_H`$, $`\sigma_W`$ | the two spreads (standard deviations) | 7 cm, 12 kg | a wider $`\sigma_W`$ steepens the line; a wider $`\sigma_H`$ flattens it |
+| $`\rho`$ | the correlation: covariance over both spreads | 0.5 | the line steepens and the slice narrows |
+| $`x`$, $`y`$ | standard scores: spreads away from average | x = 2 at 189 cm | — |
+| $`Q`$ | the tilted squared distance from the average person | 4 on the drawn ellipse | the density falls as e^(−Q/2) |
+| $`f`$, $`f_H`$ | the joint density, per cm per kg; height's own density | f_H(189) = 0.0077 per cm | — |
+| $`\varphi`$, $`\Phi`$ | the standard bell's height; its area to the left | Φ(0.2887) = 1 − 0.3864 | — |
+| $`Z_1`$, $`Z_2`$ | two independent standard bells, the raw material | — | — |
+| $`\Sigma`$ | the covariance matrix of the pair | entries 49, 42, 42, 144 | — |
 
 Two helper readings. The **slope** in kg per cm is ρσ_W/σ_H = 0.5 × 12 / 7 = 0.857143. The **covariance**, ρσ_Hσ_W = 42 cm·kg, is the off-diagonal entry of Σ.
 
@@ -75,9 +81,11 @@ Two helper readings. The **slope** in kg per cm is ρσ_W/σ_H = 0.5 × 12 / 7 =
 
 ### Step 0: build the pair from two independent bells
 
-Take two independent standard bells, $Z_1$ and $Z_2$. Let height's standard score be the first. Let weight's standard score be a blend: ρ parts the height signal, plus a fresh independent part.
+Take two independent standard bells, $`Z_1`$ and $`Z_2`$. Let height's standard score be the first. Let weight's standard score be a blend: ρ parts the height signal, plus a fresh independent part.
 
-$$x = Z_1, \qquad y = \rho\,Z_1 + \sqrt{1-\rho^2}\;Z_2$$
+```math
+x = Z_1, \qquad y = \rho\,Z_1 + \sqrt{1-\rho^2}\;Z_2
+```
 
 That blend is the whole idea. Weight's standard score takes ρ = 0.5 of height's, plus a fresh part of its own. Fix the height, and the only thing left to vary is the fresh part. That is why the slice is a bell, and why its width cannot depend on the height.
 
@@ -89,9 +97,11 @@ Variances of independent parts add. Var(y) = ρ^2 + (1 − ρ^2) = 1, so y is a 
 
 The map from (Z₁, Z₂) to (x, y) is linear. A change of variables in a double integral multiplies by how the map stretches area ([Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md); [Transforming a variable](01-transforming-a-random-variable.md) does it for one variable). Here the stretch factor is √(1 − ρ^2). Undo the blend and square: Z₁^2 + Z₂^2 equals Q exactly. Rescaling to cm and kg divides by σ_H σ_W. Out comes f(h, w). The algebra is in the folded proof below.
 
-The tilted distance is a quadratic form, $Q = v^{\mathsf T}\,\Sigma^{-1}\,v$ with v the column of gaps (h − 175, w − 75), $v^{\mathsf T}$ the same gaps written as a row, and $\Sigma^{-1}$ the inverse of the matrix ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)), where
+The tilted distance is a quadratic form, $`Q = v^{\mathsf T}\,\Sigma^{-1}\,v`$ with v the column of gaps (h − 175, w − 75), $`v^{\mathsf T}`$ the same gaps written as a row, and $`\Sigma^{-1}`$ the inverse of the matrix ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)), where
 
-$$\Sigma = \begin{pmatrix} \sigma_H^2 & \rho\,\sigma_H\sigma_W \\ \rho\,\sigma_H\sigma_W & \sigma_W^2 \end{pmatrix}.$$
+```math
+\Sigma = \begin{pmatrix} \sigma_H^2 & \rho\,\sigma_H\sigma_W \\ \rho\,\sigma_H\sigma_W & \sigma_W^2 \end{pmatrix}.
+```
 
 That matrix is positive definite (Q is above zero except at the centre) when |ρ| < 1, so the level sets of Q are ellipses. Those are the contours in the picture.
 
@@ -99,11 +109,15 @@ That matrix is positive definite (Q is above zero except at the centre) when |ρ
 
 Rearrange the tilted distance:
 
-$$Q = x^2 + \frac{(y - \rho x)^2}{1 - \rho^2}$$
+```math
+Q = x^2 + \frac{(y - \rho x)^2}{1 - \rho^2}
+```
 
 The exponential of a sum is a product. So the density splits into a height factor times a weight-given-height factor:
 
-$$f(h, w) = \underbrace{\frac{\varphi(x)}{\sigma_H}}_{f_H(h)} \;\times\; \frac{1}{\sigma_W\sqrt{1-\rho^2}}\;\varphi\!\left(\frac{y - \rho x}{\sqrt{1-\rho^2}}\right)$$
+```math
+f(h, w) = \underbrace{\frac{\varphi(x)}{\sigma_H}}_{f_H(h)} \;\times\; \frac{1}{\sigma_W\sqrt{1-\rho^2}}\;\varphi\!\left(\frac{y - \rho x}{\sqrt{1-\rho^2}}\right)
+```
 
 The second factor is a normal density in w, so it integrates to 1 over all weights. Integrating out weight leaves the first factor: height alone is normal, N(175, 7^2), as it should be ([Joint densities](02-joint-densities-and-marginals.md)).
 

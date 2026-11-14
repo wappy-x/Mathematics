@@ -37,41 +37,45 @@ One line, the distribution function F. It is 0 up to just below zero, 0.30 at ze
 
 ## The formula
 
-Notation first, in words. A **half-open interval** $(a, b]$ is every number above $a$ and at most $b$. The **Borel sets** $\mathcal{B}(\mathbb{R})$ are the sets of reals built from intervals by complements and countable unions ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
+Notation first, in words. A **half-open interval** $`(a, b]`$ is every number above $`a`$ and at most $`b`$. The **Borel sets** $`\mathcal{B}(\mathbb{R})`$ are the sets of reals built from intervals by complements and countable unions ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
 
-A measure $\mu$ gives each Borel set a size and adds up over countable disjoint unions. A **probability measure**, also called a **probability law** or just a law, is a measure with total mass 1. The **left limit** $F(x-)$ is the value F approaches from the left of x: $F(x-) = \lim_{t \uparrow x} F(t)$, read "the limit of F(t) as t rises to x".
+A measure $`\mu`$ gives each Borel set a size and adds up over countable disjoint unions. A **probability measure**, also called a **probability law** or just a law, is a measure with total mass 1. The **left limit** $`F(x-)`$ is the value F approaches from the left of x: $`F(x-) = \lim_{t \uparrow x} F(t)`$, read "the limit of F(t) as t rises to x".
 
-A function F on the real line is a **distribution function** in the broad sense when it is increasing (never goes down) and **right-continuous**: $F(x) = \lim_{t \downarrow x} F(t)$ at every x, so approaching from the right lands on the value itself.
+A function F on the real line is a **distribution function** in the broad sense when it is increasing (never goes down) and **right-continuous**: $`F(x) = \lim_{t \downarrow x} F(t)`$ at every x, so approaching from the right lands on the value itself.
 
-$$\mu_F\big((a, b]\big) \;=\; F(b) - F(a) \qquad \text{for all } a < b$$
+```math
+\mu_F\big((a, b]\big) \;=\; F(b) - F(a) \qquad \text{for all } a < b
+```
 
 **Read it aloud:** the mass of the stretch above a, up to and including b, is how much F rises from a to b.
 
 The theorem has three parts.
 
-1. **From a law to a function.** If $\mu$ is a probability measure on $\mathcal{B}(\mathbb{R})$, then $F(x) = \mu\big((-\infty, x]\big)$ is increasing and right-continuous, with $F(x) \to 0$ as $x \to -\infty$ and $F(x) \to 1$ as $x \to \infty$.
-2. **From a function to a measure.** If F is increasing and right-continuous, exactly one measure $\mu_F$ on $\mathcal{B}(\mathbb{R})$ satisfies the display above. It is the **Lebesgue-Stieltjes measure** of F.
-3. **Jumps are points, and the match is one to one.** $\mu_F(\{x\}) = F(x) - F(x-)$ for every x. When F runs from 0 to 1, $\mu_F$ is a probability measure whose distribution function is F again.
+1. **From a law to a function.** If $`\mu`$ is a probability measure on $`\mathcal{B}(\mathbb{R})`$, then $`F(x) = \mu\big((-\infty, x]\big)`$ is increasing and right-continuous, with $`F(x) \to 0`$ as $`x \to -\infty`$ and $`F(x) \to 1`$ as $`x \to \infty`$.
+2. **From a function to a measure.** If F is increasing and right-continuous, exactly one measure $`\mu_F`$ on $`\mathcal{B}(\mathbb{R})`$ satisfies the display above. It is the **Lebesgue-Stieltjes measure** of F.
+3. **Jumps are points, and the match is one to one.** $`\mu_F(\{x\}) = F(x) - F(x-)`$ for every x. When F runs from 0 to 1, $`\mu_F`$ is a probability measure whose distribution function is F again.
 
-$$\mu_F(\{x\}) \;=\; F(x) - F(x-)$$
+```math
+\mu_F(\{x\}) \;=\; F(x) - F(x-)
+```
 
 **Read it aloud:** the mass sitting exactly on x is the height F jumps at x.
 
-On the claim: $\mu_F(\{0\}) = 0.3 - 0 = 0.3$, and $\mu_F(\{350\}) = 0$.
+On the claim: $`\mu_F(\{0\}) = 0.3 - 0 = 0.3`$, and $`\mu_F(\{350\}) = 0`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | distribution function: chance of at most x | 0.44 at \$200, 0.65 at \$500 | a steeper rise puts more mass there |
-| $F(x-)$ | left limit: the value F approaches from below x | 0 at x = 0 | a lower left limit means a taller jump |
-| $\mu$, $\mu_F$ | a measure; the one built from F | $\mu_F\big((200, 500]\big)$ = 0.21 | — |
-| $a$, $b$, $a_k$, $b_k$ | interval ends; $a_k$, $b_k$ those of the $k$-th piece in a list | 200 and 500 | $b$ up adds mass |
-| $\mathcal{B}(\mathbb{R})$ | Borel sets: built from intervals by complements and countable unions | (\$200, \$500], {0} | — |
-| $\mu_0$, $\mathcal{A}$ | the mass on finite unions of half-open intervals; that collection of sets | $\mu_0$ of (\$200, \$500] = 0.21 | — |
-| $X$, $P$ | the claim in dollars; probability | $P(X = 0)$ = 0.3 | — |
-| $\lambda$, $\Omega$, $\omega$ | Lebesgue measure (length); the interval [0, 1) used as a source of chance; a point of it | cell of width 0.0001 | — |
-| $G$, $H$ | broken candidates: left-continuous, and dipping | $G(0)$ = 0; $H$ drops 0.1 at 400 | — |
-| $\varepsilon$, $\delta$, $\delta_k$ | small positive allowances | any positive amount | — |
-| $n$, $k$ | counters in a list | first 40 pieces | — |
+| $`F`$ | distribution function: chance of at most x | 0.44 at \$200, 0.65 at \$500 | a steeper rise puts more mass there |
+| $`F(x-)`$ | left limit: the value F approaches from below x | 0 at x = 0 | a lower left limit means a taller jump |
+| $`\mu`$, $`\mu_F`$ | a measure; the one built from F | $`\mu_F\big((200, 500]\big)`$ = 0.21 | — |
+| $`a`$, $`b`$, $`a_k`$, $`b_k`$ | interval ends; $`a_k`$, $`b_k`$ those of the $`k`$-th piece in a list | 200 and 500 | $`b`$ up adds mass |
+| $`\mathcal{B}(\mathbb{R})`$ | Borel sets: built from intervals by complements and countable unions | (\$200, \$500], {0} | — |
+| $`\mu_0`$, $`\mathcal{A}`$ | the mass on finite unions of half-open intervals; that collection of sets | $`\mu_0`$ of (\$200, \$500] = 0.21 | — |
+| $`X`$, $`P`$ | the claim in dollars; probability | $`P(X = 0)`$ = 0.3 | — |
+| $`\lambda`$, $`\Omega`$, $`\omega`$ | Lebesgue measure (length); the interval [0, 1) used as a source of chance; a point of it | cell of width 0.0001 | — |
+| $`G`$, $`H`$ | broken candidates: left-continuous, and dipping | $`G(0)`$ = 0; $`H`$ drops 0.1 at 400 | — |
+| $`\varepsilon`$, $`\delta`$, $`\delta_k`$ | small positive allowances | any positive amount | — |
+| $`n`$, $`k`$ | counters in a list | first 40 pieces | — |
 
 ### When it holds
 
@@ -86,99 +90,99 @@ On the claim: $\mu_F(\{0\}) = 0.3 - 0 = 0.3$, and $\mu_F(\{350\}) = 0$.
 
 ### Step 0: mass is the rise of a running total
 
-A probability law gives mass to sets. The running total $F(x) = \mu\big((-\infty, x]\big)$ keeps only the masses of the half-lines. Going from law to F is bookkeeping; the facts about F follow from monotonicity and continuity of a measure.
+A probability law gives mass to sets. The running total $`F(x) = \mu\big((-\infty, x]\big)`$ keeps only the masses of the half-lines. Going from law to F is bookkeeping; the facts about F follow from monotonicity and continuity of a measure.
 
-Going back is the real work. The rise $F(b) - F(a)$ prices every half-open interval, the way length prices intervals on [Outer measure](01-lebesgue-outer-measure.md). The extension theorem then turns a price list on intervals into a measure on every Borel set, provided the price list is countably additive. Right-continuity is exactly what makes it so.
+Going back is the real work. The rise $`F(b) - F(a)`$ prices every half-open interval, the way length prices intervals on [Outer measure](01-lebesgue-outer-measure.md). The extension theorem then turns a price list on intervals into a measure on every Borel set, provided the price list is countably additive. Right-continuity is exactly what makes it so.
 
 ### Step 1: a law's distribution function rises, is right-continuous, and runs from 0 to 1
 
-**Increasing.** If $s \le t$, the half-line $(-\infty, s]$ sits inside $(-\infty, t]$, so $F(s) \le F(t)$ by monotonicity.
+**Increasing.** If $`s \le t`$, the half-line $`(-\infty, s]`$ sits inside $`(-\infty, t]`$, so $`F(s) \le F(t)`$ by monotonicity.
 
-**Right-continuous.** Take x and the shrinking half-lines $(-\infty, x + 1/n]$. They shrink to $(-\infty, x]$: a number at most $x + 1/n$ for every $n$ is at most x. Continuity from above says: when sets of finite mass shrink, their masses fall to the mass of the part they all share. They have finite mass, so continuity from above ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $F(x + 1/n) \to F(x)$. F is increasing, so the limit along every sequence falling to x is the same.
+**Right-continuous.** Take x and the shrinking half-lines $`(-\infty, x + 1/n]`$. They shrink to $`(-\infty, x]`$: a number at most $`x + 1/n`$ for every $`n`$ is at most x. Continuity from above says: when sets of finite mass shrink, their masses fall to the mass of the part they all share. They have finite mass, so continuity from above ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $`F(x + 1/n) \to F(x)`$. F is increasing, so the limit along every sequence falling to x is the same.
 
-**Limits.** Continuity from below is the matching rule for growing sets: their masses rise to the mass of their union. The half-lines $(-\infty, n]$ rise to the whole line, so $F(n) \to 1$ by continuity from below. The half-lines $(-\infty, -n]$ shrink to the empty set, so $F(-n) \to 0$ by continuity from above.
+**Limits.** Continuity from below is the matching rule for growing sets: their masses rise to the mass of their union. The half-lines $`(-\infty, n]`$ rise to the whole line, so $`F(n) \to 1`$ by continuity from below. The half-lines $`(-\infty, -n]`$ shrink to the empty set, so $`F(-n) \to 0`$ by continuity from above.
 
-**Left limits.** The half-lines $(-\infty, x - 1/n]$ rise to $(-\infty, x)$, which leaves out x. So $F(x-) = \mu\big((-\infty, x)\big)$, and not $F(x)$. The two differ by $\mu(\{x\})$.
+**Left limits.** The half-lines $`(-\infty, x - 1/n]`$ rise to $`(-\infty, x)`$, which leaves out x. So $`F(x-) = \mu\big((-\infty, x)\big)`$, and not $`F(x)`$. The two differ by $`\mu(\{x\})`$.
 
-On the claim, the code prints $F(0 + 1/2^n)$ for n = 1, 5, 10: 0.30035, 0.300021875, 0.30000068359375, falling to F(0) = 0.3. From the left the values are all 0: the limit from the left is 0, not 0.3.
+On the claim, the code prints $`F(0 + 1/2^n)`$ for n = 1, 5, 10: 0.30035, 0.300021875, 0.30000068359375, falling to F(0) = 0.3. From the left the values are all 0: the limit from the left is 0, not 0.3.
 
 ### Step 2: the rise of F prices finite unions of half-open intervals
 
-Now start from any increasing, right-continuous F. Let $\mathcal{A}$ be the collection of finite disjoint unions of half-open intervals $(a, b]$, allowing $a = -\infty$ or $b = \infty$ (read as the open end $(a, \infty)$). It is an **algebra**: closed under complements and finite unions. The complement of (\$200, \$500] is $(-\infty, 200] \cup (500, \infty)$, again in $\mathcal{A}$.
+Now start from any increasing, right-continuous F. Let $`\mathcal{A}`$ be the collection of finite disjoint unions of half-open intervals $`(a, b]`$, allowing $`a = -\infty`$ or $`b = \infty`$ (read as the open end $`(a, \infty)`$). It is an **algebra**: closed under complements and finite unions. The complement of (\$200, \$500] is $`(-\infty, 200] \cup (500, \infty)`$, again in $`\mathcal{A}`$.
 
-Set $\mu_0\big((a, b]\big) = F(b) - F(a)$, with $F(-\infty)$ and $F(\infty)$ the limits of F at the two ends, and add over the disjoint pieces of a union. This is well defined. Cutting (a, b] at a point c gives $\big(F(c) - F(a)\big) + \big(F(b) - F(c)\big) = F(b) - F(a)$: the sum telescopes, so any two ways of cutting a set into intervals agree. The same telescoping makes $\mu_0$ finitely additive. F is increasing, so $\mu_0 \ge 0$, and a union of finitely many sets costs at most the sum of their costs.
+Set $`\mu_0\big((a, b]\big) = F(b) - F(a)`$, with $`F(-\infty)`$ and $`F(\infty)`$ the limits of F at the two ends, and add over the disjoint pieces of a union. This is well defined. Cutting (a, b] at a point c gives $`\big(F(c) - F(a)\big) + \big(F(b) - F(c)\big) = F(b) - F(a)`$: the sum telescopes, so any two ways of cutting a set into intervals agree. The same telescoping makes $`\mu_0`$ finitely additive. F is increasing, so $`\mu_0 \ge 0`$, and a union of finitely many sets costs at most the sum of their costs.
 
 ### Step 3: right-continuity makes the price countably additive
 
 This is the step that needs right-continuity, and the only hard one.
 
-Suppose $(a, b]$ is cut into countably many disjoint pieces $(a_k, b_k]$. The claim is $F(b) - F(a) = \sum_k \big(F(b_k) - F(a_k)\big)$.
+Suppose $`(a, b]`$ is cut into countably many disjoint pieces $`(a_k, b_k]`$. The claim is $`F(b) - F(a) = \sum_k \big(F(b_k) - F(a_k)\big)`$.
 
-**At least the sum.** The first n pieces sit inside $(a, b]$ without overlapping, with gaps between them. The gaps have mass at least 0, so the first n prices add to at most $F(b) - F(a)$. Let n grow.
+**At least the sum.** The first n pieces sit inside $`(a, b]`$ without overlapping, with gaps between them. The gaps have mass at least 0, so the first n prices add to at most $`F(b) - F(a)`$. Let n grow.
 
-**At most the sum.** Shrink the target and fatten the pieces. Right-continuity at a gives a small $\delta$ with $F(a + \delta)$ within $\varepsilon$ of $F(a)$. Right-continuity at each $b_k$ gives $\delta_k$ with $F(b_k + \delta_k)$ within $\varepsilon/2^k$ of $F(b_k)$.
+**At most the sum.** Shrink the target and fatten the pieces. Right-continuity at a gives a small $`\delta`$ with $`F(a + \delta)`$ within $`\varepsilon`$ of $`F(a)`$. Right-continuity at each $`b_k`$ gives $`\delta_k`$ with $`F(b_k + \delta_k)`$ within $`\varepsilon/2^k`$ of $`F(b_k)`$.
 
-The closed interval $[a + \delta, b]$ is covered by the open intervals $(a_k, b_k + \delta_k)$, so finitely many of them cover it (the finite-subcover property of a closed, bounded interval, proved on [Outer measure](01-lebesgue-outer-measure.md)). Finite subadditivity from Step 2 then says the rise from $a + \delta$ to b is at most the sum of the fattened prices.
+The closed interval $`[a + \delta, b]`$ is covered by the open intervals $`(a_k, b_k + \delta_k)`$, so finitely many of them cover it (the finite-subcover property of a closed, bounded interval, proved on [Outer measure](01-lebesgue-outer-measure.md)). Finite subadditivity from Step 2 then says the rise from $`a + \delta`$ to b is at most the sum of the fattened prices.
 
-Each fattened price exceeds the true one by less than $\varepsilon/2^k$, and those allowances add to $\varepsilon$. Putting back the $\varepsilon$ lost at a, $F(b) - F(a)$ is at most the sum plus $2\varepsilon$, for every $\varepsilon$.
+Each fattened price exceeds the true one by less than $`\varepsilon/2^k`$, and those allowances add to $`\varepsilon`$. Putting back the $`\varepsilon`$ lost at a, $`F(b) - F(a)`$ is at most the sum plus $`2\varepsilon`$, for every $`\varepsilon`$.
 
 On the claim, cut (\$0, \$500] in halves towards zero: (\$250, \$500], (\$125, \$250], and on. The code sums the first 10, 20 and 40 pieces: 0.349658203125, 0.349999666213989, 0.349999999999681. They approach F(500) − F(0) = 0.35. With the left-continuous G the same pieces give the same sums, but G(500) − G(0) = 0.65. The δ step fails at a = 0: no small δ brings G(0 + δ) near G(0), since G jumps there.
 
 <details>
 <summary>Detailed proof: countable additivity of the price on half-open intervals</summary>
 
-Let $(a, b]$, with a and b finite, be the disjoint union of $(a_k, b_k]$, k = 1, 2, … .
+Let $`(a, b]`$, with a and b finite, be the disjoint union of $`(a_k, b_k]`$, k = 1, 2, … .
 
-*Lower bound.* Fix n. Order the first n pieces left to right. They and the gaps between them, and the gaps at the two ends, are finitely many disjoint half-open intervals making up $(a, b]$. By finite additivity (Step 2), $F(b) - F(a)$ equals the sum of the n prices plus the gap prices. Gap prices are at least 0 because F is increasing. So $\sum_{k \le n} \big(F(b_k) - F(a_k)\big) \le F(b) - F(a)$ for every n, hence for the infinite sum.
+*Lower bound.* Fix n. Order the first n pieces left to right. They and the gaps between them, and the gaps at the two ends, are finitely many disjoint half-open intervals making up $`(a, b]`$. By finite additivity (Step 2), $`F(b) - F(a)`$ equals the sum of the n prices plus the gap prices. Gap prices are at least 0 because F is increasing. So $`\sum_{k \le n} \big(F(b_k) - F(a_k)\big) \le F(b) - F(a)`$ for every n, hence for the infinite sum.
 
-*Upper bound.* Fix $\varepsilon > 0$. F is right-continuous at a, so there is $\delta$ with $0 < \delta < b - a$ and $F(a + \delta) - F(a) < \varepsilon$. For each k, F is right-continuous at $b_k$, so there is $\delta_k > 0$ with $F(b_k + \delta_k) - F(b_k) < \varepsilon/2^k$.
+*Upper bound.* Fix $`\varepsilon > 0`$. F is right-continuous at a, so there is $`\delta`$ with $`0 < \delta < b - a`$ and $`F(a + \delta) - F(a) < \varepsilon`$. For each k, F is right-continuous at $`b_k`$, so there is $`\delta_k > 0`$ with $`F(b_k + \delta_k) - F(b_k) < \varepsilon/2^k`$.
 
-Every point of $[a + \delta, b]$ lies in $(a, b]$, so in some $(a_k, b_k]$, so in the open interval $(a_k, b_k + \delta_k)$. By the finite-subcover property, some finite list $k_1, \dots, k_m$ already covers $[a + \delta, b]$. Then the half-open intervals $(a_{k_i}, b_{k_i} + \delta_{k_i}]$ cover $(a + \delta, b]$.
+Every point of $`[a + \delta, b]`$ lies in $`(a, b]`$, so in some $`(a_k, b_k]`$, so in the open interval $`(a_k, b_k + \delta_k)`$. By the finite-subcover property, some finite list $`k_1, \dots, k_m`$ already covers $`[a + \delta, b]`$. Then the half-open intervals $`(a_{k_i}, b_{k_i} + \delta_{k_i}]`$ cover $`(a + \delta, b]`$.
 
-By Step 2, $\mu_0$ is monotone and finitely subadditive on $\mathcal{A}$. So
-$F(b) - F(a + \delta) \le \sum_{i \le m} \big(F(b_{k_i} + \delta_{k_i}) - F(a_{k_i})\big) \le \sum_{k} \big(F(b_k) - F(a_k) + \varepsilon/2^k\big) = \sum_k \big(F(b_k) - F(a_k)\big) + \varepsilon.$
+By Step 2, $`\mu_0`$ is monotone and finitely subadditive on $`\mathcal{A}`$. So
+$`F(b) - F(a + \delta) \le \sum_{i \le m} \big(F(b_{k_i} + \delta_{k_i}) - F(a_{k_i})\big) \le \sum_{k} \big(F(b_k) - F(a_k) + \varepsilon/2^k\big) = \sum_k \big(F(b_k) - F(a_k)\big) + \varepsilon.`$
 
-Adding $F(a + \delta) - F(a) < \varepsilon$ to both sides: $F(b) - F(a) < \sum_k \big(F(b_k) - F(a_k)\big) + 2\varepsilon$. This holds for every $\varepsilon > 0$.
+Adding $`F(a + \delta) - F(a) < \varepsilon`$ to both sides: $`F(b) - F(a) < \sum_k \big(F(b_k) - F(a_k)\big) + 2\varepsilon`$. This holds for every $`\varepsilon > 0`$.
 
-*Unbounded intervals and finite unions.* If $a = -\infty$ or $b = \infty$, apply the bounded case to $(\max(a, -M), \min(b, M)]$, cut by the pieces meeting it, and let M grow; both sides converge to the stated values by the definition of $F(\pm\infty)$ as limits. A set in $\mathcal{A}$ that is a finite disjoint union of intervals is handled interval by interval, since each piece of a countable cut can be split among them.
+*Unbounded intervals and finite unions.* If $`a = -\infty`$ or $`b = \infty`$, apply the bounded case to $`(\max(a, -M), \min(b, M)]`$, cut by the pieces meeting it, and let M grow; both sides converge to the stated values by the definition of $`F(\pm\infty)`$ as limits. A set in $`\mathcal{A}`$ that is a finite disjoint union of intervals is handled interval by interval, since each piece of a countable cut can be split among them.
 
 </details>
 
 ### Step 4: extend, and the extension is the only one
 
-Step 3 makes $\mu_0$ a **pre-measure** on the algebra $\mathcal{A}$: countably additive wherever a countable disjoint union stays in $\mathcal{A}$. Carathéodory's extension theorem ([Caratheodory's extension theorem](05-caratheodory-extension-theorem.md)) extends it to a measure on the sets that $\mathcal{A}$ generates, and those are the Borel sets. Concretely, the extension is the cheapest-cover recipe of [Outer measure](01-lebesgue-outer-measure.md) with length replaced by rise:
-$\mu_F^*(A) = \inf \sum_k \big(F(b_k) - F(a_k)\big)$ over lists of half-open intervals covering A.
+Step 3 makes $`\mu_0`$ a **pre-measure** on the algebra $`\mathcal{A}`$: countably additive wherever a countable disjoint union stays in $`\mathcal{A}`$. Carathéodory's extension theorem ([Caratheodory's extension theorem](05-caratheodory-extension-theorem.md)) extends it to a measure on the sets that $`\mathcal{A}`$ generates, and those are the Borel sets. Concretely, the extension is the cheapest-cover recipe of [Outer measure](01-lebesgue-outer-measure.md) with length replaced by rise:
+$`\mu_F^*(A) = \inf \sum_k \big(F(b_k) - F(a_k)\big)`$ over lists of half-open intervals covering A.
 Here inf (the infimum) means the lowest value the total can be pushed down to.
 
-The extension is unique. The line is the union of the stretches $(-n, n]$, each of finite mass $F(n) - F(-n)$. So $\mu_0$ is σ-finite (the line splits into countably many pieces of finite mass), and the extension theorem's uniqueness clause applies: two measures that agree on half-open intervals and are finite on each $(-n, n]$ agree on every Borel set. The same fact, argued through π-systems (collections closed under finite intersections), is [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md).
+The extension is unique. The line is the union of the stretches $`(-n, n]`$, each of finite mass $`F(n) - F(-n)`$. So $`\mu_0`$ is σ-finite (the line splits into countably many pieces of finite mass), and the extension theorem's uniqueness clause applies: two measures that agree on half-open intervals and are finite on each $`(-n, n]`$ agree on every Borel set. The same fact, argued through π-systems (collections closed under finite intersections), is [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md).
 
 ### Step 5: jumps are single points
 
-The half-open intervals $(x - 1/n, x]$ shrink to the single point x, and each has finite mass. Continuity from above gives
+The half-open intervals $`(x - 1/n, x]`$ shrink to the single point x, and each has finite mass. Continuity from above gives
 
-$\mu_F(\{x\}) = \lim_n \big(F(x) - F(x - 1/n)\big) = F(x) - F(x-)$.
+$`\mu_F(\{x\}) = \lim_n \big(F(x) - F(x - 1/n)\big) = F(x) - F(x-)`$.
 
-At the claim's zero: $F(0) - F(0 - 1/2^n)$ is 0.3 for n = 1, 5, 10, and the point mass is 0.3. At \$350: $F(350) - F(350 - 1/2^n)$ is 0.00035, 0.000021875, 0.00000068359375, falling to 0. F is continuous at x exactly when x carries no mass.
+At the claim's zero: $`F(0) - F(0 - 1/2^n)`$ is 0.3 for n = 1, 5, 10, and the point mass is 0.3. At \$350: $`F(350) - F(350 - 1/2^n)`$ is 0.00035, 0.000021875, 0.00000068359375, falling to 0. F is continuous at x exactly when x carries no mass.
 
 A probability law has at most n points of mass above 1/n, or they would total more than 1. So the jumps can be listed: at most countably many.
 
 ### Step 6: the match is one to one
 
-**Law, then function, then law.** Start from a probability law $\mu$ and its F from Step 1. For $a < b$, $(-\infty, b]$ is $(-\infty, a]$ plus $(a, b]$, so $\mu\big((a, b]\big) = F(b) - F(a)$. Thus $\mu$ and $\mu_F$ agree on half-open intervals, and by Step 4's uniqueness they are the same measure. Two laws with the same distribution function are equal.
+**Law, then function, then law.** Start from a probability law $`\mu`$ and its F from Step 1. For $`a < b`$, $`(-\infty, b]`$ is $`(-\infty, a]`$ plus $`(a, b]`$, so $`\mu\big((a, b]\big) = F(b) - F(a)`$. Thus $`\mu`$ and $`\mu_F`$ agree on half-open intervals, and by Step 4's uniqueness they are the same measure. Two laws with the same distribution function are equal.
 
-**Function, then law, then function.** Start from F running from 0 to 1. Then $\mu_F$ of the whole line is $F(\infty) - F(-\infty) = 1$, a probability measure. Its distribution function at x is $\mu_F\big((-\infty, x]\big)$. The stretches $(-n, x]$ rise to $(-\infty, x]$, so by continuity from below it equals $\lim_n \big(F(x) - F(-n)\big) = F(x) - 0 = F(x)$.
+**Function, then law, then function.** Start from F running from 0 to 1. Then $`\mu_F`$ of the whole line is $`F(\infty) - F(-\infty) = 1`$, a probability measure. Its distribution function at x is $`\mu_F\big((-\infty, x]\big)`$. The stretches $`(-n, x]`$ rise to $`(-\infty, x]`$, so by continuity from below it equals $`\lim_n \big(F(x) - F(-n)\big) = F(x) - 0 = F(x)`$.
 
-So laws on $\mathcal{B}(\mathbb{R})$ and increasing right-continuous functions from 0 to 1 pair off exactly.
+So laws on $`\mathcal{B}(\mathbb{R})`$ and increasing right-continuous functions from 0 to 1 pair off exactly.
 
 ### What the code shows and what only the proof shows
 
 The code checks this one claim: the formula against two other roads to the same masses, the jump and no-jump sequences, and the countable cut of (\$0, \$500]. The proof covers every increasing right-continuous F and every Borel set, which no program can list.
 
-A second road to existence, for F running from 0 to 1, builds a random variable directly. Take a point $\omega$ drawn evenly from $\Omega$ = [0, 1), with length $\lambda$ as its probability.
+A second road to existence, for F running from 0 to 1, builds a random variable directly. Take a point $`\omega`$ drawn evenly from $`\Omega`$ = [0, 1), with length $`\lambda`$ as its probability.
 
-For $\omega > 0$, set $X(\omega)$ to the smallest x with $F(x) \ge \omega$; it exists because F is increasing, right-continuous and runs from 0 to 1. The single point $\omega = 0$ has length 0 and can go anywhere. Then $X \le x$ exactly when $\omega \le F(x)$, which has probability F(x).
+For $`\omega > 0`$, set $`X(\omega)`$ to the smallest x with $`F(x) \ge \omega`$; it exists because F is increasing, right-continuous and runs from 0 to 1. The single point $`\omega = 0`$ has length 0 and can go anywhere. Then $`X \le x`$ exactly when $`\omega \le F(x)`$, which has probability F(x).
 
-For the claim, $\omega$ below 0.3 gives \$0, and $\omega$ above it gives \$1,000 × (ω − 0.3)/0.7. The code uses this as its second road; how a function carries a measure along is [The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md).
+For the claim, $`\omega`$ below 0.3 gives \$0, and $`\omega`$ above it gives \$1,000 × (ω − 0.3)/0.7. The code uses this as its second road; how a function carries a measure along is [The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md).
 
 ---
 
@@ -517,10 +521,10 @@ The two outputs match line for line.
 Lean proves the card's three parts for every increasing right-continuous F and every probability law, and checks the claim's numbers exactly.
 
 - Take an increasing, right-continuous F. Then exactly one measure on the Borel sets gives each (a, b] the mass F(b) − F(a).
-- Take a probability law $\mu$ and $F(x) = \mu\big((-\infty, x]\big)$. Then F is increasing and right-continuous. It tends to 0 at the far left and 1 at the far right.
+- Take a probability law $`\mu`$ and $`F(x) = \mu\big((-\infty, x]\big)`$. Then F is increasing and right-continuous. It tends to 0 at the far left and 1 at the far right.
 - Two probability laws with the same distribution function are the same law.
-- Take an increasing, right-continuous F and its Lebesgue-Stieltjes measure $\mu_F$. Then each single point x has mass F(x) − F(x−), the jump of F there.
-- Suppose also that F runs from 0 to 1. Then $\mu_F$ is a probability law, and its distribution function is F again.
+- Take an increasing, right-continuous F and its Lebesgue-Stieltjes measure $`\mu_F`$. Then each single point x has mass F(x) − F(x−), the jump of F there.
+- Suppose also that F runs from 0 to 1. Then $`\mu_F`$ is a probability law, and its distribution function is F again.
 - For the claim, F(200) = 0.44 and F(500) = 0.65. So (\$200, \$500] gets 0.21.
 - F(0) = 0.3 and F is 0 on every negative amount, so the jump at \$0 is 0.3.
 - (\$0, \$500] gets 0.35, and [\$0, \$500] gets 0.65. The claim exceeds a \$200 deductible with chance 0.56.
@@ -648,7 +652,7 @@ example : (claimF 400 - 1 / 10) - claimF 350 = -65 / 1000 := by norm_num [claimF
 - **Every random quantity on the line.** A random variable's law, the measure it carries across from the probability space, is fixed by its distribution function ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
 - **Length itself.** F(x) = x builds Lebesgue measure, the special case the shelf began with ([Lebesgue measure](03-lebesgue-measure.md)).
 - **Simulation.** Setting X to the smallest x with F(x) at least an even draw from [0, 1), the second road here, is the standard general method software uses to draw from a law given by its distribution function.
-- **Weighted sums and integrals.** Integrating against $\mu_F$ is the Stieltjes integral $\int g \, dF$, which averages a payout g over a law with jumps and spreads alike ([The Lebesgue-Stieltjes integral](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md)).
+- **Weighted sums and integrals.** Integrating against $`\mu_F`$ is the Stieltjes integral $`\int g \, dF`$, which averages a payout g over a law with jumps and spreads alike ([The Lebesgue-Stieltjes integral](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md)).
 
 > **Say it back**
 > A distribution function is a running total: the chance of at most x. A probability law gives one that never falls, is continuous from the right, and runs from 0 to 1. Conversely, any increasing right-continuous F prices each half-open interval by its rise, right-continuity makes that price countably additive, and the extension theorem turns it into exactly one measure on the Borel sets. Each jump of F is the mass of a single point. The insurance claim's F jumps 0.3 at \$0 and gives (\$200, \$500] the mass 0.21.
@@ -667,7 +671,7 @@ example : (claimF 400 - 1 / 10) - claimF 350 = -65 / 1000 := by norm_num [claimF
 - [The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md): the law of a random variable as a measure carried across by a function.
 - [Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md): every law splits into a part with a density, a jump part and a Cantor-like part.
 - [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md): laws converging when their distribution functions converge at points without jumps.
-- [The Lebesgue-Stieltjes integral](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): integrating against $\mu_F$.
+- [The Lebesgue-Stieltjes integral](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): integrating against $`\mu_F`$.
 - The delta: the jump's "derivative" made into an object, a point mass.
 
 The claim's law is a jump plus a spread, which suggests every law is; whether a continuous F can carry mass that no density describes is what [The Cantor set](07-the-cantor-set.md) answers.

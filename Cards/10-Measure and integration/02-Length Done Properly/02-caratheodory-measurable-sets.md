@@ -40,46 +40,50 @@ Drawn to scale, 100 units per metre. The comb on the fence line is the 100 rust 
 
 ## The formula
 
-Notation first, in words. An **outer measure** $\mu^*$, read "mu star", is any rule giving every subset of a space $\Omega$ (omega, the set of all points in play) a size from 0 to infinity, such that the empty set gets 0, a bigger set never gets less (**monotonicity**), and a list of sets together never gets more than the sum of their sizes (**countable subadditivity**).
+Notation first, in words. An **outer measure** $`\mu^*`$, read "mu star", is any rule giving every subset of a space $`\Omega`$ (omega, the set of all points in play) a size from 0 to infinity, such that the empty set gets 0, a bigger set never gets less (**monotonicity**), and a list of sets together never gets more than the sum of their sizes (**countable subadditivity**).
 
-Lebesgue outer measure $\lambda^*$ on the line is one such rule. For sets, $T \cap E$ is the part of $T$ inside $E$, $E^c$ is the **complement** of $E$ (every point of $\Omega$ not in $E$), and $T \cap E^c$, also written $T \setminus E$, is the part of $T$ outside $E$.
+Lebesgue outer measure $`\lambda^*`$ on the line is one such rule. For sets, $`T \cap E`$ is the part of $`T`$ inside $`E`$, $`E^c`$ is the **complement** of $`E`$ (every point of $`\Omega`$ not in $`E`$), and $`T \cap E^c`$, also written $`T \setminus E`$, is the part of $`T`$ outside $`E`$.
 
-$$\mu^*(T) = \mu^*(T \cap E) + \mu^*(T \cap E^c) \qquad \text{for every } T \subseteq \Omega$$
+```math
+\mu^*(T) = \mu^*(T \cap E) + \mu^*(T \cap E^c) \qquad \text{for every } T \subseteq \Omega
+```
 
 **Read it aloud:** whatever set is cut by E, the size of the part inside plus the size of the part outside is exactly the size of the whole.
 
-A set $E$ passing this test is **Carathéodory measurable**, or measurable for $\mu^*$. The script letter $\mathcal{M}$ names the collection of all of them. The theorem, for pieces $E_1, E_2, E_3, \dots$ in $\mathcal{M}$ with no point in two of them:
+A set $`E`$ passing this test is **Carathéodory measurable**, or measurable for $`\mu^*`$. The script letter $`\mathcal{M}`$ names the collection of all of them. The theorem, for pieces $`E_1, E_2, E_3, \dots`$ in $`\mathcal{M}`$ with no point in two of them:
 
-$$\mathcal{M} \text{ is a sigma-algebra, and } \ \mu^*\Big(\bigcup_{i} E_i\Big) = \sum_{i} \mu^*(E_i).$$
+```math
+\mathcal{M} \text{ is a sigma-algebra, and } \ \mu^*\Big(\bigcup_{i} E_i\Big) = \sum_{i} \mu^*(E_i).
+```
 
 **Read it aloud:** the passing sets survive complements and countable unions, and on them the size of a union of separate pieces is the sum of their sizes.
 
-For Lebesgue outer measure on the line, two families pass: every interval, and every set with $\lambda^*$ equal to 0. The rule $\lambda^*$ kept only on $\mathcal{M}$ is Lebesgue measure $\lambda$ ([Lebesgue measure](03-lebesgue-measure.md)).
+For Lebesgue outer measure on the line, two families pass: every interval, and every set with $`\lambda^*`$ equal to 0. The rule $`\lambda^*`$ kept only on $`\mathcal{M}`$ is Lebesgue measure $`\lambda`$ ([Lebesgue measure](03-lebesgue-measure.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$ | the space: every point in play | the fence [0, 3] | more room for test sets |
-| $\mu^*$ | an outer measure: a size for every subset, subadditive | the board bill on the toy fence in Worked numbers | — |
-| $\lambda^*$ | Lebesgue outer measure: cheapest cover by open intervals | $\lambda^*(T)$ = 1.6 | — |
-| $E$, $F$ | the set on trial; $F$ a second set in $\mathcal{M}$ | [0.5, 1.2] | a longer E takes more of T inside |
-| $T$ | a test set: any subset of $\Omega$ | [0.2, 0.8] and [1.0, 2.0] | both parts grow, their sum stays $\lambda^*(T)$ |
-| $E^c$ | the complement: points of $\Omega$ not in $E$ | [0, 0.5) and (1.2, 3] | — |
-| $\mathcal{M}$ | the sets passing the test | contains E and the rust spots | — |
-| $R$ | the rust-spot set | 100 points, 0.03 to 3.00 | still size 0 at any finite count |
-| $E_i$, $F_i$, $i$ | a list of sets in $\mathcal{M}$, and its non-overlapping version; $i$ counts the list | — | — |
-| $B_k$, $B$ | the union of the first $k$ pieces of the list; the union of all of them | — | — |
-| $I_k$, $k$, $\ell$ | the intervals of one cover; $k$ counts them; $\ell(I_k)$ is the length of $I_k$ | two open intervals around T's pieces | — |
-| $H$, $c$, $a$, $b$ | a half-line, every point beyond the cut point $c$; $a$ and $b$ are interval ends | $c$ = 0.5 | — |
-| $N$ | any set of outer measure 0 | the rust spots R | — |
-| $\varepsilon$ | the slack a cover is allowed over the cheapest total | 0.01 | a looser cover, a weaker bound |
-| $\lambda$ | Lebesgue measure: $\lambda^*$ kept on $\mathcal{M}$ | $\lambda$(E) = 0.7 | — |
+| $`\Omega`$ | the space: every point in play | the fence [0, 3] | more room for test sets |
+| $`\mu^*`$ | an outer measure: a size for every subset, subadditive | the board bill on the toy fence in Worked numbers | — |
+| $`\lambda^*`$ | Lebesgue outer measure: cheapest cover by open intervals | $`\lambda^*(T)`$ = 1.6 | — |
+| $`E`$, $`F`$ | the set on trial; $`F`$ a second set in $`\mathcal{M}`$ | [0.5, 1.2] | a longer E takes more of T inside |
+| $`T`$ | a test set: any subset of $`\Omega`$ | [0.2, 0.8] and [1.0, 2.0] | both parts grow, their sum stays $`\lambda^*(T)`$ |
+| $`E^c`$ | the complement: points of $`\Omega`$ not in $`E`$ | [0, 0.5) and (1.2, 3] | — |
+| $`\mathcal{M}`$ | the sets passing the test | contains E and the rust spots | — |
+| $`R`$ | the rust-spot set | 100 points, 0.03 to 3.00 | still size 0 at any finite count |
+| $`E_i`$, $`F_i`$, $`i`$ | a list of sets in $`\mathcal{M}`$, and its non-overlapping version; $`i`$ counts the list | — | — |
+| $`B_k`$, $`B`$ | the union of the first $`k`$ pieces of the list; the union of all of them | — | — |
+| $`I_k`$, $`k`$, $`\ell`$ | the intervals of one cover; $`k`$ counts them; $`\ell(I_k)`$ is the length of $`I_k`$ | two open intervals around T's pieces | — |
+| $`H`$, $`c`$, $`a`$, $`b`$ | a half-line, every point beyond the cut point $`c`$; $`a`$ and $`b`$ are interval ends | $`c`$ = 0.5 | — |
+| $`N`$ | any set of outer measure 0 | the rust spots R | — |
+| $`\varepsilon`$ | the slack a cover is allowed over the cheapest total | 0.01 | a looser cover, a weaker bound |
+| $`\lambda`$ | Lebesgue measure: $`\lambda^*`$ kept on $`\mathcal{M}`$ | $`\lambda`$(E) = 0.7 | — |
 
 ### When it holds
 
-- **$\mu^*$ must be an outer measure.** Countable subadditivity supplies the "no less than" half of every equality in the proof; without it Steps 2 and 3 lose their footing.
+- **$`\mu^*`$ must be an outer measure.** Countable subadditivity supplies the "no less than" half of every equality in the proof; without it Steps 2 and 3 lose their footing.
 - **Every test set, not a favourite one.** On the toy fence in Worked numbers, the set b passes the test with the whole fence as T but fails with T = bc, and outer measure does not add on it.
 - **Countable unions, not arbitrary ones.** Each single point of the fence passes, having size 0, yet every subset of the fence is a union of single points, the Vitali set included. The proof's limit step runs down a list, and an uncountable union is no list.
-- **Intervals pass for $\lambda^*$ because $\lambda^*$ is built from interval lengths.** For another outer measure an interval may fail: on the toy fence, a stretch of two panels such as bc fails.
+- **Intervals pass for $`\lambda^*`$ because $`\lambda^*`$ is built from interval lengths.** For another outer measure an interval may fail: on the toy fence, a stretch of two panels such as bc fails.
 
 ---
 
@@ -87,7 +91,7 @@ For Lebesgue outer measure on the line, two families pass: every interval, and e
 
 ### Step 0: half of the test is free
 
-Subadditivity already says the two parts of T measure at least T: $\mu^*(T) \le \mu^*(T \cap E) + \mu^*(T \cap E^c)$. So only one direction is ever in question: cutting T along E must waste nothing. Each step below proves a "no more than"; subadditivity supplies the rest.
+Subadditivity already says the two parts of T measure at least T: $`\mu^*(T) \le \mu^*(T \cap E) + \mu^*(T \cap E^c)`$. So only one direction is ever in question: cutting T along E must waste nothing. Each step below proves a "no more than"; subadditivity supplies the rest.
 
 ### Step 1: complements pass
 
@@ -95,21 +99,21 @@ Swapping E and its complement swaps the two terms of the sum. So when E passes, 
 
 ### Step 2: unions of two pass
 
-Take E and F in $\mathcal{M}$. Cut T by E, then cut the outside part again by F: three parts whose sizes add to exactly $\mu^*(T)$. The first two together make the part of T inside E or F, and by subadditivity their sizes add to at least its size. So the parts inside and outside the union add to no more than $\mu^*(T)$. With Step 1, overlaps and differences pass too.
+Take E and F in $`\mathcal{M}`$. Cut T by E, then cut the outside part again by F: three parts whose sizes add to exactly $`\mu^*(T)`$. The first two together make the part of T inside E or F, and by subadditivity their sizes add to at least its size. So the parts inside and outside the union add to no more than $`\mu^*(T)`$. With Step 1, overlaps and differences pass too.
 
 ### Step 3: countable unions pass, and sizes add
 
-For separate pieces $E_1, E_2, \dots$ in $\mathcal{M}$, cut T by the first piece, then the rest by the second, and so on. Each cut is exact, so the parts of T in the first few pieces, plus the part outside all of them, add to at most $\mu^*(T)$. Let the number of pieces grow: the sum becomes a series, and by subadditivity the series is at least the size of the part of T in the whole union. So the union passes.
+For separate pieces $`E_1, E_2, \dots`$ in $`\mathcal{M}`$, cut T by the first piece, then the rest by the second, and so on. Each cut is exact, so the parts of T in the first few pieces, plus the part outside all of them, add to at most $`\mu^*(T)`$. Let the number of pieces grow: the sum becomes a series, and by subadditivity the series is at least the size of the part of T in the whole union. So the union passes.
 
-An overlapping list is first made separate, keeping from each set only what earlier ones missed. So $\mathcal{M}$ is a sigma-algebra. Taking the union itself as T gives countable additivity: $\mu^*$ is a measure on $\mathcal{M}$, in the sense of [Measures](../01-Sets%20You%20Can%20Measure/04-measures.md).
+An overlapping list is first made separate, keeping from each set only what earlier ones missed. So $`\mathcal{M}`$ is a sigma-algebra. Taking the union itself as T gives countable additivity: $`\mu^*`$ is a measure on $`\mathcal{M}`$, in the sense of [Measures](../01-Sets%20You%20Can%20Measure/04-measures.md).
 
 ### Step 4: sets of size zero pass
 
-For the rust spots R, the part of any T inside R measures 0, since it sits inside R. The part outside measures at most $\lambda^*(T)$, since it sits inside T. On the fence: 0 + 1.6.
+For the rust spots R, the part of any T inside R measures 0, since it sits inside R. The part outside measures at most $`\lambda^*(T)`$, since it sits inside T. On the fence: 0 + 1.6.
 
 ### Step 5: every interval passes Lebesgue outer measure
 
-Start with a half-line: every point beyond a cut point. Cover T by open intervals $I_k$ whose lengths total at most $\lambda^*(T) + \varepsilon$. Cut each $I_k$ at the cut point: two intervals whose lengths add to exactly the length of $I_k$. The inside pieces cover the part of T in the half-line, the outside pieces cover the rest, so the two parts measure at most $\lambda^*(T) + \varepsilon$ together, for every slack $\varepsilon$.
+Start with a half-line: every point beyond a cut point. Cover T by open intervals $`I_k`$ whose lengths total at most $`\lambda^*(T) + \varepsilon`$. Cut each $`I_k`$ at the cut point: two intervals whose lengths add to exactly the length of $`I_k`$. The inside pieces cover the part of T in the half-line, the outside pieces cover the rest, so the two parts measure at most $`\lambda^*(T) + \varepsilon`$ together, for every slack $`\varepsilon`$.
 
 On the fence, a cover of T totalling 1.61 cuts at 0.5 and 1.2 into 0.505 inside E and 1.105 outside.
 
@@ -118,29 +122,37 @@ Complements of half-lines pass by Step 1. E = [0.5, 1.2] is the overlap of "from
 <details>
 <summary>Detailed proof</summary>
 
-Here $\mu^*$ is an outer measure on $\Omega$. By subadditivity on $T = (T \cap E) \cup (T \cap E^c)$, a set $E$ is in $\mathcal{M}$ once $\mu^*(T) \ge \mu^*(T \cap E) + \mu^*(T \cap E^c)$ for every $T$ of finite outer measure; for infinite $\mu^*(T)$ there is nothing to prove.
+Here $`\mu^*`$ is an outer measure on $`\Omega`$. By subadditivity on $`T = (T \cap E) \cup (T \cap E^c)`$, a set $`E`$ is in $`\mathcal{M}`$ once $`\mu^*(T) \ge \mu^*(T \cap E) + \mu^*(T \cap E^c)`$ for every $`T`$ of finite outer measure; for infinite $`\mu^*(T)`$ there is nothing to prove.
 
-**1. Complements.** The condition for $E$ is the condition for $E^c$, since $(E^c)^c = E$. The empty set passes: $\mu^*(T \cap \emptyset) + \mu^*(T) = 0 + \mu^*(T)$.
+**1. Complements.** The condition for $`E`$ is the condition for $`E^c`$, since $`(E^c)^c = E`$. The empty set passes: $`\mu^*(T \cap \emptyset) + \mu^*(T) = 0 + \mu^*(T)`$.
 
-**2. Finite unions.** Let $E, F \in \mathcal{M}$. Testing $E$ with $T$, then $F \in \mathcal{M}$ with $T \cap E^c$:
-$$\mu^*(T) = \mu^*(T \cap E) + \mu^*(T \cap E^c \cap F) + \mu^*(T \cap E^c \cap F^c).$$
-Since $T \cap (E \cup F) = (T \cap E) \cup (T \cap E^c \cap F)$, subadditivity bounds the first two terms below by $\mu^*\big(T \cap (E \cup F)\big)$; and $E^c \cap F^c = (E \cup F)^c$. Hence $\mu^*(T) \ge \mu^*\big(T \cap (E \cup F)\big) + \mu^*\big(T \cap (E \cup F)^c\big)$. With 1, $E \cap F = (E^c \cup F^c)^c$ and $E \setminus F = E \cap F^c$ lie in $\mathcal{M}$.
+**2. Finite unions.** Let $`E, F \in \mathcal{M}`$. Testing $`E`$ with $`T`$, then $`F \in \mathcal{M}`$ with $`T \cap E^c`$:
 
-**3. Additivity inside a test set.** Let $E_1, E_2, \dots \in \mathcal{M}$ be pairwise disjoint, $B_k = E_1 \cup \dots \cup E_k$, and $B = \bigcup_i E_i$. Testing $E_k \in \mathcal{M}$ with $T \cap B_k$, whose parts inside and outside it are $T \cap E_k$ and $T \cap B_{k-1}$, gives $\mu^*(T \cap B_k) = \mu^*(T \cap E_k) + \mu^*(T \cap B_{k-1})$, so by induction $\mu^*(T \cap B_k) = \sum_{i \le k} \mu^*(T \cap E_i)$.
+$`\displaystyle \mu^*(T) = \mu^*(T \cap E) + \mu^*(T \cap E^c \cap F) + \mu^*(T \cap E^c \cap F^c).`$
 
-**4. Countable unions.** Each $B_k \in \mathcal{M}$ by 2, and $B^c \subseteq B_k^c$, so by monotonicity and 3
-$$\mu^*(T) = \mu^*(T \cap B_k) + \mu^*(T \cap B_k^c) \ge \sum_{i \le k} \mu^*(T \cap E_i) + \mu^*(T \cap B^c).$$
-Let $k \to \infty$, then apply subadditivity to $T \cap B = \bigcup_i (T \cap E_i)$:
-$$\mu^*(T) \ge \sum_{i=1}^{\infty} \mu^*(T \cap E_i) + \mu^*(T \cap B^c) \ge \mu^*(T \cap B) + \mu^*(T \cap B^c).$$
-So $B \in \mathcal{M}$. For an arbitrary list in $\mathcal{M}$, the sets $F_1 = E_1$ and $F_i = E_i \setminus (E_1 \cup \dots \cup E_{i-1})$ lie in $\mathcal{M}$ by 2, are pairwise disjoint and have the same union. So $\mathcal{M}$ is a sigma-algebra.
+Since $`T \cap (E \cup F) = (T \cap E) \cup (T \cap E^c \cap F)`$, subadditivity bounds the first two terms below by $`\mu^*\big(T \cap (E \cup F)\big)`$; and $`E^c \cap F^c = (E \cup F)^c`$. Hence $`\mu^*(T) \ge \mu^*\big(T \cap (E \cup F)\big) + \mu^*\big(T \cap (E \cup F)^c\big)`$. With 1, $`E \cap F = (E^c \cup F^c)^c`$ and $`E \setminus F = E \cap F^c`$ lie in $`\mathcal{M}`$.
 
-**5. Countable additivity.** Put $T = B$ in the middle inequality of 4: $\mu^*(B) \ge \sum_i \mu^*(E_i)$, and subadditivity gives the reverse.
+**3. Additivity inside a test set.** Let $`E_1, E_2, \dots \in \mathcal{M}`$ be pairwise disjoint, $`B_k = E_1 \cup \dots \cup E_k`$, and $`B = \bigcup_i E_i`$. Testing $`E_k \in \mathcal{M}`$ with $`T \cap B_k`$, whose parts inside and outside it are $`T \cap E_k`$ and $`T \cap B_{k-1}`$, gives $`\mu^*(T \cap B_k) = \mu^*(T \cap E_k) + \mu^*(T \cap B_{k-1})`$, so by induction $`\mu^*(T \cap B_k) = \sum_{i \le k} \mu^*(T \cap E_i)`$.
 
-**6. Null sets.** If $\mu^*(N) = 0$, monotonicity gives $\mu^*(T \cap N) = 0$ and $\mu^*(T \cap N^c) \le \mu^*(T)$ for every $T$, so $N \in \mathcal{M}$.
+**4. Countable unions.** Each $`B_k \in \mathcal{M}`$ by 2, and $`B^c \subseteq B_k^c`$, so by monotonicity and 3
 
-**7. Half-lines for $\lambda^*$.** Let $H = (c, \infty)$ and $\varepsilon > 0$. As $\lambda^*(T)$ is a greatest lower bound, some open intervals $I_1, I_2, \dots$ cover $T$ with $\sum_k \ell(I_k) \le \lambda^*(T) + \varepsilon$, where $\ell(I_k)$ is the length of $I_k$. The sets $I_k \cap H$ and $I_k \cap H^c$ are intervals, possibly empty, with $\ell(I_k \cap H) + \ell(I_k \cap H^c) = \ell(I_k)$; the first family covers $T \cap H$ and the second covers $T \cap H^c$. An interval's outer measure is its length ([Outer measure](01-lebesgue-outer-measure.md)), so by subadditivity
-$$\lambda^*(T \cap H) + \lambda^*(T \cap H^c) \le \sum_k \ell(I_k \cap H) + \sum_k \ell(I_k \cap H^c) = \sum_k \ell(I_k) \le \lambda^*(T) + \varepsilon.$$
-The slack is arbitrary, so $H \in \mathcal{M}$. Then $(-\infty, c] = H^c$, $(a, b] = (a, \infty) \cap (-\infty, b]$, $\{b\} = \bigcap_k (b - 1/k, b]$ and $(a, b) = \bigcup_k (a, b - 1/k]$ put every interval in $\mathcal{M}$ by 1, 2 and 4, and with them the sigma-algebra they generate: the Borel sets.
+$`\displaystyle \mu^*(T) = \mu^*(T \cap B_k) + \mu^*(T \cap B_k^c) \ge \sum_{i \le k} \mu^*(T \cap E_i) + \mu^*(T \cap B^c).`$
+
+Let $`k \to \infty`$, then apply subadditivity to $`T \cap B = \bigcup_i (T \cap E_i)`$:
+
+$`\displaystyle \mu^*(T) \ge \sum_{i=1}^{\infty} \mu^*(T \cap E_i) + \mu^*(T \cap B^c) \ge \mu^*(T \cap B) + \mu^*(T \cap B^c).`$
+
+So $`B \in \mathcal{M}`$. For an arbitrary list in $`\mathcal{M}`$, the sets $`F_1 = E_1`$ and $`F_i = E_i \setminus (E_1 \cup \dots \cup E_{i-1})`$ lie in $`\mathcal{M}`$ by 2, are pairwise disjoint and have the same union. So $`\mathcal{M}`$ is a sigma-algebra.
+
+**5. Countable additivity.** Put $`T = B`$ in the middle inequality of 4: $`\mu^*(B) \ge \sum_i \mu^*(E_i)`$, and subadditivity gives the reverse.
+
+**6. Null sets.** If $`\mu^*(N) = 0`$, monotonicity gives $`\mu^*(T \cap N) = 0`$ and $`\mu^*(T \cap N^c) \le \mu^*(T)`$ for every $`T`$, so $`N \in \mathcal{M}`$.
+
+**7. Half-lines for $`\lambda^*`$.** Let $`H = (c, \infty)`$ and $`\varepsilon > 0`$. As $`\lambda^*(T)`$ is a greatest lower bound, some open intervals $`I_1, I_2, \dots`$ cover $`T`$ with $`\sum_k \ell(I_k) \le \lambda^*(T) + \varepsilon`$, where $`\ell(I_k)`$ is the length of $`I_k`$. The sets $`I_k \cap H`$ and $`I_k \cap H^c`$ are intervals, possibly empty, with $`\ell(I_k \cap H) + \ell(I_k \cap H^c) = \ell(I_k)`$; the first family covers $`T \cap H`$ and the second covers $`T \cap H^c`$. An interval's outer measure is its length ([Outer measure](01-lebesgue-outer-measure.md)), so by subadditivity
+
+$`\displaystyle \lambda^*(T \cap H) + \lambda^*(T \cap H^c) \le \sum_k \ell(I_k \cap H) + \sum_k \ell(I_k \cap H^c) = \sum_k \ell(I_k) \le \lambda^*(T) + \varepsilon.`$
+
+The slack is arbitrary, so $`H \in \mathcal{M}`$. Then $`(-\infty, c] = H^c`$, $`(a, b] = (a, \infty) \cap (-\infty, b]`$, $`\{b\} = \bigcap_k (b - 1/k, b]`$ and $`(a, b) = \bigcup_k (a, b - 1/k]`$ put every interval in $`\mathcal{M}`$ by 1, 2 and 4, and with them the sigma-algebra they generate: the Borel sets.
 
 </details>
 
@@ -171,7 +183,7 @@ So bc costs 1 (one board), bd costs 2, abcd costs 3. A dash, -, names the empty 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| a against every test set | 16 tests, all pass | a is in $\mathcal{M}$ |
+| a against every test set | 16 tests, all pass | a is in $`\mathcal{M}`$ |
 | sets that pass | out of 16 | -, a, bcd, abcd |
 | adding up on them | bill(a) + bill(bcd) = 1 + 2 | **3** = bill(abcd) |
 | b against T = bc | bill(b) + bill(c) = 1 + 1 | 2, but bill(bc) = 1 |
@@ -183,7 +195,7 @@ The panel b fails because one board charges b and c together. Here the passing s
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Test only with the whole toy fence | b passes: 1 + 2 = 3, yet fails T = bc | One test set cannot see a cut inside a board |
-| Add outer measure on sets that fail | bill(b) + bill(c) = 2, bill(bc) = 1 | Additivity is the theorem's conclusion, only on $\mathcal{M}$ |
+| Add outer measure on sets that fail | bill(b) + bill(c) = 2, bill(bc) = 1 | Additivity is the theorem's conclusion, only on $`\mathcal{M}`$ |
 | Judge a set by one coarse cover | at 10 cells per metre the spots cover 3.1 m and E cuts T into 0.7 + 1.2 = 1.9 | Outer measure is the cheapest cover, a limit, not one cover |
 
 The code prints all three.
@@ -580,12 +592,12 @@ Orange: the part of T inside E, falling to 0.5. Green: the part outside E, falli
 
 Lean proves the theorem for every outer measure, and Steps 4 and 5 for every set on the line, then checks the worked numbers.
 
-- The splitting test is the card's formula. $\lambda^*$ is the cheapest total length of a list of open intervals covering a set.
-- Take any outer measure $\mu^*$. Then the empty set, complements of passing sets and countable unions of passing sets all pass.
-- Take passing sets $E_1, E_2, \dots$ with no point in two of them. Then $\mu^*$ of their union is the sum of their sizes.
-- Every interval passes for $\lambda^*$: open, closed, half-open, a half-line or the whole line.
-- Take a set $N$ with $\lambda^*(N) = 0$. Then $N$ passes for $\lambda^*$.
-- Every Borel set passes for $\lambda^*$.
+- The splitting test is the card's formula. $`\lambda^*`$ is the cheapest total length of a list of open intervals covering a set.
+- Take any outer measure $`\mu^*`$. Then the empty set, complements of passing sets and countable unions of passing sets all pass.
+- Take passing sets $`E_1, E_2, \dots`$ with no point in two of them. Then $`\mu^*`$ of their union is the sum of their sizes.
+- Every interval passes for $`\lambda^*`$: open, closed, half-open, a half-line or the whole line.
+- Take a set $`N`$ with $`\lambda^*(N) = 0`$. Then $`N`$ passes for $`\lambda^*`$.
+- Every Borel set passes for $`\lambda^*`$.
 - On the fence, 0.6 + 1.0 and 1.8 − 0.2 both give 1.6, and E's test gives 0.5 + 1.1 = 1.6.
 - The parts agree too: 0.3 + 0.2 and 0.7 − 0.2 give 0.5; 0.3 + 0.8 and 1.8 − 0.7 give 1.1.
 - Of the 100 rust spots, 20 lie in [0.2, 0.8] and 33 in [1.0, 2.0], 53 in all.

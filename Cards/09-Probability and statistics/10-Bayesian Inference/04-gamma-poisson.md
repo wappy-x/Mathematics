@@ -38,48 +38,56 @@ Orange: the prior, Gamma(24, 2), centred on 12. Green: the posterior after 45 em
 
 ## The formula
 
-Notation first, in words. The desk's true rate, emails per hour, is $\lambda$ (lambda). It is unknown, so it is treated as a random quantity with a law of its own.
+Notation first, in words. The desk's true rate, emails per hour, is $`\lambda`$ (lambda). It is unknown, so it is treated as a random quantity with a law of its own.
 
-Gamma(α, β), read "the gamma law with shape alpha and rate beta", is the density from the gamma card, $f(\lambda) = \beta^{\alpha}\lambda^{\alpha-1}e^{-\beta\lambda}/\Gamma(\alpha)$. Here Γ (capital gamma) is the gamma integral, with Γ(a) = (a − 1)! for a whole number a. Its **shape** $\alpha$ counts emails and its **rate** $\beta$ is measured in hours; its mean is α/β and its variance α/β^2.
+Gamma(α, β), read "the gamma law with shape alpha and rate beta", is the density from the gamma card, $`f(\lambda) = \beta^{\alpha}\lambda^{\alpha-1}e^{-\beta\lambda}/\Gamma(\alpha)`$. Here Γ (capital gamma) is the gamma integral, with Γ(a) = (a − 1)! for a whole number a. Its **shape** $`\alpha`$ counts emails and its **rate** $`\beta`$ is measured in hours; its mean is α/β and its variance α/β^2.
 
-Watching window i lasts $t_i$ hours and brings $y_i$ emails. Given the rate, the count in that window is Poisson with mean $t_i\lambda$: the exposure, the time watched, times the rate.
+Watching window i lasts $`t_i`$ hours and brings $`y_i`$ emails. Given the rate, the count in that window is Poisson with mean $`t_i\lambda`$: the exposure, the time watched, times the rate.
 
-Prior: $\lambda$ ~ Gamma(α, β). Record: $y_i$ given $\lambda$ ~ Poisson($t_i\lambda$), independently. Then, writing $K = \sum_i y_i$ for all the emails and $H = \sum_i t_i$ for all the hours,
+Prior: $`\lambda`$ ~ Gamma(α, β). Record: $`y_i`$ given $`\lambda`$ ~ Poisson($`t_i\lambda`$), independently. Then, writing $`K = \sum_i y_i`$ for all the emails and $`H = \sum_i t_i`$ for all the hours,
 
-$$\lambda \mid \text{record} \;\sim\; \mathrm{Gamma}(A,\,B), \qquad A = \alpha + K, \qquad B = \beta + H$$
+```math
+\lambda \mid \text{record} \;\sim\; \mathrm{Gamma}(A,\,B), \qquad A = \alpha + K, \qquad B = \beta + H
+```
 
 **Read it aloud:** after the record, the rate is still gamma; its shape is the old shape plus every email seen, and its rate is the old rate plus every hour watched.
 
 The posterior mean and spread follow from the gamma card's moments:
 
-$$E[\lambda \mid \text{record}] = \frac{A}{B}, \qquad \mathrm{Var}(\lambda \mid \text{record}) = \frac{A}{B^2}$$
+```math
+E[\lambda \mid \text{record}] = \frac{A}{B}, \qquad \mathrm{Var}(\lambda \mid \text{record}) = \frac{A}{B^2}
+```
 
-The forecast. Let $N$ be the count in a new window of $t$ hours, and $k$ one possible value. Averaging the Poisson over the posterior gives
+The forecast. Let $`N`$ be the count in a new window of $`t`$ hours, and $`k`$ one possible value. Averaging the Poisson over the posterior gives
 
-$$P(N = k \mid \text{record}) = \frac{\Gamma(A+k)}{\Gamma(A)\,k!}\;p^{A}\,(1-p)^{k}, \qquad p = \frac{B}{B+t}, \qquad k = 0, 1, 2, \ldots$$
+```math
+P(N = k \mid \text{record}) = \frac{\Gamma(A+k)}{\Gamma(A)\,k!}\;p^{A}\,(1-p)^{k}, \qquad p = \frac{B}{B+t}, \qquad k = 0, 1, 2, \ldots
+```
 
 **Read it aloud:** the chance of k emails in the new window is the negative binomial mass with shape A and success chance B over B + t.
 
 Its mean and variance:
 
-$$E[N \mid \text{record}] = \frac{tA}{B}, \qquad \mathrm{Var}(N \mid \text{record}) = \frac{tA}{B} + \frac{t^2 A}{B^2}$$
+```math
+E[N \mid \text{record}] = \frac{tA}{B}, \qquad \mathrm{Var}(N \mid \text{record}) = \frac{tA}{B} + \frac{t^2 A}{B^2}
+```
 
-The first variance term is the Poisson's own scatter. The second is the leftover doubt about $\lambda$.
+The first variance term is the Poisson's own scatter. The second is the leftover doubt about $`\lambda`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\lambda$ | the desk's true rate, emails per hour; unknown | believed near 13.8 after the record | — |
-| $\alpha$ | prior shape: emails the prior is "worth" | 24 | the prior mean α/β rises, and the posterior mean with it, by 1/B per unit; the prior's weight β/B is unchanged |
-| $\beta$ | prior rate: hours the prior is "worth" | 2 hours | the prior pulls harder; prior mean α/β falls |
-| $t_i$, $y_i$, $i$ | hours watched and emails seen in window i | 2 h and 28; 1 h and 17 | — |
-| $K$, $H$ | all emails seen, all hours watched | 45 and 3 | K up: the rate estimate rises; H up: it falls and tightens |
-| $A$, $B$ | posterior shape α + K and posterior rate β + H | 69 and 5 | — |
-| $N$, $t$, $k$ | the count in a new window, its length in hours, one possible count | next hour, t = 1, k = 14 | t up: more emails expected, and more doubt about them |
-| $p$ | the forecast's success chance, B/(B + t) | 5/6 | closer to 1: a tighter forecast |
-| $\Gamma$ | the gamma integral, Γ(a) = (a − 1)! for whole a | Γ(69) = 68! | — |
-| $f$ | a density: f(λ) before the record, f(λ ∣ record) after | 0.1623 at 12 and 0.2347 at 14 on the chart | — |
-| $E$, $\mathrm{Var}$ | the long-run average, and the variance | E[N] = 13.8, Var(N) = 16.56 | — |
-| $L$, $u$, $C$, $m$ | used only in the proofs: L(λ) the likelihood; u = Bλ, the substitution in the gamma integral; C the record's factor free of λ; m the mean of a Poisson count | L(λ) is a constant times λ^45 e^(−3λ) | — |
+| $`\lambda`$ | the desk's true rate, emails per hour; unknown | believed near 13.8 after the record | — |
+| $`\alpha`$ | prior shape: emails the prior is "worth" | 24 | the prior mean α/β rises, and the posterior mean with it, by 1/B per unit; the prior's weight β/B is unchanged |
+| $`\beta`$ | prior rate: hours the prior is "worth" | 2 hours | the prior pulls harder; prior mean α/β falls |
+| $`t_i`$, $`y_i`$, $`i`$ | hours watched and emails seen in window i | 2 h and 28; 1 h and 17 | — |
+| $`K`$, $`H`$ | all emails seen, all hours watched | 45 and 3 | K up: the rate estimate rises; H up: it falls and tightens |
+| $`A`$, $`B`$ | posterior shape α + K and posterior rate β + H | 69 and 5 | — |
+| $`N`$, $`t`$, $`k`$ | the count in a new window, its length in hours, one possible count | next hour, t = 1, k = 14 | t up: more emails expected, and more doubt about them |
+| $`p`$ | the forecast's success chance, B/(B + t) | 5/6 | closer to 1: a tighter forecast |
+| $`\Gamma`$ | the gamma integral, Γ(a) = (a − 1)! for whole a | Γ(69) = 68! | — |
+| $`f`$ | a density: f(λ) before the record, f(λ ∣ record) after | 0.1623 at 12 and 0.2347 at 14 on the chart | — |
+| $`E`$, $`\mathrm{Var}`$ | the long-run average, and the variance | E[N] = 13.8, Var(N) = 16.56 | — |
+| $`L`$, $`u`$, $`C`$, $`m`$ | used only in the proofs: L(λ) the likelihood; u = Bλ, the substitution in the gamma integral; C the record's factor free of λ; m the mean of a Poisson count | L(λ) is a constant times λ^45 e^(−3λ) | — |
 
 The vertical bar ∣ is read "given", as in the conditional-probability cards: "λ given the record" is the belief about λ once the record is known.
 
@@ -97,7 +105,7 @@ The vertical bar ∣ is read "given", as in the conditional-probability cards: "
 
 ### Step 0: the prior and the evidence have the same shape in λ
 
-Written as a function of λ, a gamma density is a power of λ times an exponential, $\lambda^{\alpha-1}e^{-\beta\lambda}$. A Poisson mass, read as a function of λ with the count held fixed, is also a power of λ times an exponential, $\lambda^{y}e^{-t\lambda}$. Bayes' rule multiplies them. Powers of the same thing multiply by adding exponents, and so do exponentials. So the product has the gamma shape again, and the update is two additions.
+Written as a function of λ, a gamma density is a power of λ times an exponential, $`\lambda^{\alpha-1}e^{-\beta\lambda}`$. A Poisson mass, read as a function of λ with the count held fixed, is also a power of λ times an exponential, $`\lambda^{y}e^{-t\lambda}`$. Bayes' rule multiplies them. Powers of the same thing multiply by adding exponents, and so do exponentials. So the product has the gamma shape again, and the update is two additions.
 
 The gamma prior is called **conjugate** to the Poisson: prior and posterior belong to the same family. The beta prior plays the same part for the binomial ([Beta-binomial](02-beta-binomial.md)).
 
@@ -105,7 +113,9 @@ The gamma prior is called **conjugate** to the Poisson: prior and posterior belo
 
 The **likelihood** is the chance of the observed record, read as a function of the unknown λ. The windows are independent given λ, so their Poisson masses multiply:
 
-$$L(\lambda) = \prod_i e^{-t_i\lambda}\,\frac{(t_i\lambda)^{y_i}}{y_i!} = \underbrace{\prod_i \frac{t_i^{\,y_i}}{y_i!}}_{\text{no }\lambda}\;\lambda^{K}\,e^{-H\lambda}$$
+```math
+L(\lambda) = \prod_i e^{-t_i\lambda}\,\frac{(t_i\lambda)^{y_i}}{y_i!} = \underbrace{\prod_i \frac{t_i^{\,y_i}}{y_i!}}_{\text{no }\lambda}\;\lambda^{K}\,e^{-H\lambda}
+```
 
 The first factor does not involve λ, so it cannot move belief about λ. What remains sees only K = 45 and H = 3. Twenty-eight emails in two hours and seventeen in one teach the same thing about the rate as 45 in three straight hours.
 
@@ -113,9 +123,11 @@ The first factor does not involve λ, so it cannot move belief about λ. What re
 
 Bayes' rule for densities says the posterior is the prior times the likelihood, divided by whatever makes the total area 1 ([Bayesian updating](01-priors-posteriors-and-updating.md)). Dropping every factor free of λ:
 
-$$f(\lambda \mid \text{record}) \;\propto\; \lambda^{\alpha-1}e^{-\beta\lambda}\cdot\lambda^{K}e^{-H\lambda} = \lambda^{(\alpha+K)-1}\,e^{-(\beta+H)\lambda}$$
+```math
+f(\lambda \mid \text{record}) \;\propto\; \lambda^{\alpha-1}e^{-\beta\lambda}\cdot\lambda^{K}e^{-H\lambda} = \lambda^{(\alpha+K)-1}\,e^{-(\beta+H)\lambda}
+```
 
-The sign ∝ means "equal up to a constant factor". The area under $\lambda^{A-1}e^{-B\lambda}$ is found by substituting u = Bλ in the gamma integral: it is Γ(A)/B^A, finite and positive for A, B > 0. Dividing by it gives exactly the Gamma(A, B) density. The mean A/B and variance A/B^2 are the gamma card's moments.
+The sign ∝ means "equal up to a constant factor". The area under $`\lambda^{A-1}e^{-B\lambda}`$ is found by substituting u = Bλ in the gamma integral: it is Γ(A)/B^A, finite and positive for A, B > 0. Dividing by it gives exactly the Gamma(A, B) density. The mean A/B and variance A/B^2 are the gamma card's moments.
 
 For the desk: A = 24 + 45 = 69, B = 2 + 3 = 5, mean 13.8, standard deviation √69 / 5 = 1.661325.
 
@@ -123,7 +135,9 @@ For the desk: A = 24 + 45 = 69, B = 2 + 3 = 5, mean 13.8, standard deviation √
 
 Split the posterior mean:
 
-$$\frac{A}{B} = \frac{\beta}{B}\cdot\frac{\alpha}{\beta} + \frac{H}{B}\cdot\frac{K}{H}$$
+```math
+\frac{A}{B} = \frac{\beta}{B}\cdot\frac{\alpha}{\beta} + \frac{H}{B}\cdot\frac{K}{H}
+```
 
 The prior mean α/β = 12 gets weight β/B = 0.4. The record's rate K/H = 15 gets weight H/B = 0.6. So 0.4 × 12 + 0.6 × 15 = 13.8. The prior acts like 2 hours of earlier watching that brought 24 emails. That reading is bookkeeping, not a claim that those emails happened. As the watched hours grow, the prior's weight shrinks toward 0 and the posterior mean approaches the record's own rate.
 
@@ -135,32 +149,38 @@ Update after the morning alone: Gamma(24 + 28, 2 + 2) = Gamma(52, 4). Then the a
 
 If λ were known, the next t hours would bring a Poisson count with mean tλ. It is not known, so each possible λ is weighted by its posterior density and the Poisson chances are averaged:
 
-$$P(N = k \mid \text{record}) = \int_0^\infty e^{-t\lambda}\frac{(t\lambda)^k}{k!}\cdot\frac{B^A\lambda^{A-1}e^{-B\lambda}}{\Gamma(A)}\,d\lambda$$
+```math
+P(N = k \mid \text{record}) = \int_0^\infty e^{-t\lambda}\frac{(t\lambda)^k}{k!}\cdot\frac{B^A\lambda^{A-1}e^{-B\lambda}}{\Gamma(A)}\,d\lambda
+```
 
-The integrand is again a power of λ times an exponential, $\lambda^{A+k-1}e^{-(B+t)\lambda}$. The same gamma integral evaluates it, and the negative binomial formula falls out. For a whole-number shape it is the law of the number of failures before the A-th success, each trial succeeding with chance p = B/(B + t). [Waiting for a success](../03-Discrete%20Distributions/02-geometric-and-negative-binomial.md) counts trials instead, which is failures plus A. The formula holds for any positive shape, where the story of successes no longer applies.
+The integrand is again a power of λ times an exponential, $`\lambda^{A+k-1}e^{-(B+t)\lambda}`$. The same gamma integral evaluates it, and the negative binomial formula falls out. For a whole-number shape it is the law of the number of failures before the A-th success, each trial succeeding with chance p = B/(B + t). [Waiting for a success](../03-Discrete%20Distributions/02-geometric-and-negative-binomial.md) counts trials instead, which is failures plus A. The formula holds for any positive shape, where the story of successes no longer applies.
 
 ### Step 6: two sources of spread
 
 The variance of the forecast splits in two, by the rule that total variance is the average of the variance given λ plus the variance of the average given λ ([Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md)):
 
-$$\mathrm{Var}(N) = E[\,t\lambda\,] + \mathrm{Var}(t\lambda) = \frac{tA}{B} + \frac{t^2A}{B^2}$$
+```math
+\mathrm{Var}(N) = E[\,t\lambda\,] + \mathrm{Var}(t\lambda) = \frac{tA}{B} + \frac{t^2A}{B^2}
+```
 
 The Poisson's own scatter, variance equal to its mean, gives 13.8. Doubt about λ adds 2.76. Total 16.56. A Poisson with λ fixed at 13.8 keeps the first term and drops the second, and its tail above 20 is too thin: 0.042431 against 0.058132.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Posterior.** For a record with every $t_i \ge 0$, every $y_i$ a whole number, and no email in a zero-length window, the constant $C = \prod_i t_i^{\,y_i}/y_i!$ is positive (with $0^0 = 1$). The joint density of λ and the record is $C\,\beta^{\alpha}\lambda^{A-1}e^{-B\lambda}/\Gamma(\alpha)$. Its integral over λ from 0 to ∞ is, by u = Bλ, $C\,\beta^{\alpha}\Gamma(A)/(\Gamma(\alpha)B^{A})$, the chance of the record, finite and positive. Dividing gives $B^{A}\lambda^{A-1}e^{-B\lambda}/\Gamma(A)$, the Gamma(A, B) density exactly, not only up to a constant. Its moments: $\int \lambda\,f = \Gamma(A+1)/(\Gamma(A)B) = A/B$ and $\int \lambda^2 f = A(A+1)/B^2$, so the variance is $A/B^2$.
+**Posterior.** For a record with every $`t_i \ge 0`$, every $`y_i`$ a whole number, and no email in a zero-length window, the constant $`C = \prod_i t_i^{\,y_i}/y_i!`$ is positive (with $`0^0 = 1`$). The joint density of λ and the record is $`C\,\beta^{\alpha}\lambda^{A-1}e^{-B\lambda}/\Gamma(\alpha)`$. Its integral over λ from 0 to ∞ is, by u = Bλ, $`C\,\beta^{\alpha}\Gamma(A)/(\Gamma(\alpha)B^{A})`$, the chance of the record, finite and positive. Dividing gives $`B^{A}\lambda^{A-1}e^{-B\lambda}/\Gamma(A)`$, the Gamma(A, B) density exactly, not only up to a constant. Its moments: $`\int \lambda\,f = \Gamma(A+1)/(\Gamma(A)B) = A/B`$ and $`\int \lambda^2 f = A(A+1)/B^2`$, so the variance is $`A/B^2`$.
 
 **Forecast masses.** For t > 0,
-$$\int_0^\infty \frac{t^k\lambda^k e^{-t\lambda}}{k!}\cdot\frac{B^A\lambda^{A-1}e^{-B\lambda}}{\Gamma(A)}\,d\lambda = \frac{B^A t^k}{\Gamma(A)\,k!}\cdot\frac{\Gamma(A+k)}{(B+t)^{A+k}} = \frac{\Gamma(A+k)}{\Gamma(A)\,k!}\,p^A(1-p)^k.$$
-The recurrence Γ(a + 1) = aΓ(a) turns the ratio into $A(A+1)\cdots(A+k-1)/k!$, which is how the code builds each mass from the one before: multiply by $(A+k)(1-p)/(k+1)$.
 
-**The masses add to 1.** Every term is non-negative, so sum and integral may be swapped: $\sum_k P(N=k) = \int \big(\sum_k e^{-t\lambda}(t\lambda)^k/k!\big) f(\lambda \mid \text{record})\,d\lambda = \int 1\cdot f = 1$, the Poisson masses adding to 1 for each λ.
+$`\displaystyle \int_0^\infty \frac{t^k\lambda^k e^{-t\lambda}}{k!}\cdot\frac{B^A\lambda^{A-1}e^{-B\lambda}}{\Gamma(A)}\,d\lambda = \frac{B^A t^k}{\Gamma(A)\,k!}\cdot\frac{\Gamma(A+k)}{(B+t)^{A+k}} = \frac{\Gamma(A+k)}{\Gamma(A)\,k!}\,p^A(1-p)^k.`$
 
-**Mean and variance.** Swapping again, $E[N] = \int t\lambda\,f = tA/B$, and $E[N^2] = \int (t\lambda + t^2\lambda^2) f = tA/B + t^2A(A+1)/B^2$, using the Poisson fact that a count with mean m has average square m + m^2. Subtract the squared mean $t^2A^2/B^2$: the variance is $tA/B + t^2A/B^2$.
+The recurrence Γ(a + 1) = aΓ(a) turns the ratio into $`A(A+1)\cdots(A+k-1)/k!`$, which is how the code builds each mass from the one before: multiply by $`(A+k)(1-p)/(k+1)`$.
 
-**Why the forecast is wider than any single Poisson.** The second term, $t^2A/B^2$, is positive whenever t > 0. It shrinks as B grows, since it is $t^2$ times the posterior variance of λ: with enough watching the forecast approaches a Poisson.
+**The masses add to 1.** Every term is non-negative, so sum and integral may be swapped: $`\sum_k P(N=k) = \int \big(\sum_k e^{-t\lambda}(t\lambda)^k/k!\big) f(\lambda \mid \text{record})\,d\lambda = \int 1\cdot f = 1`$, the Poisson masses adding to 1 for each λ.
+
+**Mean and variance.** Swapping again, $`E[N] = \int t\lambda\,f = tA/B`$, and $`E[N^2] = \int (t\lambda + t^2\lambda^2) f = tA/B + t^2A(A+1)/B^2`$, using the Poisson fact that a count with mean m has average square m + m^2. Subtract the squared mean $`t^2A^2/B^2`$: the variance is $`tA/B + t^2A/B^2`$.
+
+**Why the forecast is wider than any single Poisson.** The second term, $`t^2A/B^2`$, is positive whenever t > 0. It shrinks as B grows, since it is $`t^2`$ times the posterior variance of λ: with enough watching the forecast approaches a Poisson.
 
 </details>
 
@@ -658,10 +678,10 @@ The two outputs agree line for line, including the simulation, since both langua
 
 Lean proves the gamma-Poisson update and the negative binomial forecast for every positive prior shape and rate.
 
-- Take a prior Gamma(α, β) with α and β above 0, and a record with no email in a zero-length window. Then the chance of the record is $C\beta^{\alpha}\Gamma(A)/(\Gamma(\alpha)B^{A})$, as in the detailed proof.
+- Take a prior Gamma(α, β) with α and β above 0, and a record with no email in a zero-length window. Then the chance of the record is $`C\beta^{\alpha}\Gamma(A)/(\Gamma(\alpha)B^{A})`$, as in the detailed proof.
 - Take the same prior and record. Then prior times likelihood, divided by that chance, is exactly the Gamma(A, B) density at every rate.
-- Take a rate with law Gamma(A, B), with A and B above 0, and a new window of $t > 0$ hours. Then the chance of k emails is the negative binomial mass with $p = B/(B + t)$, for every k.
-- Take the same A, B and t. Then the negative binomial masses add to 1, with mean $tA/B$ and variance $tA/B + t^2A/B^2$.
+- Take a rate with law Gamma(A, B), with A and B above 0, and a new window of $`t > 0`$ hours. Then the chance of k emails is the negative binomial mass with $`p = B/(B + t)`$, for every k.
+- Take the same A, B and t. Then the negative binomial masses add to 1, with mean $`tA/B`$ and variance $`tA/B + t^2A/B^2`$.
 - The hand arithmetic holds exactly: 45 emails, 3 hours, Gamma(69, 5), mean 69/5, p = 5/6 and variance 414/25.
 - The mistakes and the Try changing cases hold exactly: means 69/4, 138/7, 97/7, 237/16, 57/4 and 23/2.
 

@@ -8,7 +8,7 @@
 
 A hydro reservoir holds up to 100 million cubic metres of water, logged in 20 bands of 5 million m³: band 0 is the bottom band, nearly empty, and band 19 the top band, full. Once a month the operator releases 0, 5 or 10 million m³ through the turbines, that is 0, 1 or 2 bands, and never more than the water in store: nothing at band 0, at most one band at band 1. Rain then brings 0, 1, 2 or 3 bands, with chances 20, 30, 30 and 20 percent. The numbers are illustrative, not a real dam.
 
-Each band released sells for £(10 + s) thousand when the reservoir stands at band $s$: a fuller lake gives the water more height to fall, so more electricity. Releasing nothing costs a £7,000 fine for a dry river. Water that overflows the top costs £40,000 a band in flood damage. The aim is to maximise the money over all future months, with each month counted at 0.95 of the one before. The thing chosen is a **rule**: one release for each of the 20 bands.
+Each band released sells for £(10 + s) thousand when the reservoir stands at band $`s`$: a fuller lake gives the water more height to fall, so more electricity. Releasing nothing costs a £7,000 fine for a dry river. Water that overflows the top costs £40,000 a band in flood damage. The aim is to maximise the money over all future months, with each month counted at 0.95 of the one before. The thing chosen is a **rule**: one release for each of the 20 bands.
 
 This is a different reservoir from the one on [Markov decision processes](02-markov-decision-processes.md). The 20 bands are the same, but the releases, the rain and the money are not. That card's only cost is a penalty for running low. This one adds what that card leaves out: the price rises with the height of the water, and a dry river and a flood both cost money. So the values, the best zones and the sweep counts here belong to this reservoir; the notation and the two methods carry over unchanged.
 
@@ -33,56 +33,62 @@ xychart-beta
     line [2.93, 2.70, 2.48, 2.26, 2.03, 1.81, 1.59, 1.37, 1.14, 0.92]
 ```
 
-Orange: the largest gap, over the 20 bands, between value iteration's table after $k$ sweeps and the true values, as a power of ten. Green: the guarantee, the starting error times $0.95^k$. Orange stays under green and parallel to it: each sweep removes about 5 percent of the error. The errors of the rules policy iteration evaluates in its five rounds are 690.2, 103.4, 23.7, 0.9 and 0.0, in £ thousand.
+Orange: the largest gap, over the 20 bands, between value iteration's table after $`k`$ sweeps and the true values, as a power of ten. Green: the guarantee, the starting error times $`0.95^k`$. Orange stays under green and parallel to it: each sweep removes about 5 percent of the error. The errors of the rules policy iteration evaluates in its five rounds are 690.2, 103.4, 23.7, 0.9 and 0.0, in £ thousand.
 
 ---
 
 ## The formula
 
-Notation from [Markov decision processes](02-markov-decision-processes.md), in one line each. The state $s$ is the band; the action $a$ is the release; $r(s, a)$ is the expected money this month; $p(s' \mid s, a)$ is the chance of standing at band $s'$ next month; $\gamma$ (gamma) is the discount; a rule $\pi$ (pi, a policy) picks $\pi(s)$ at each band. This card writes $V$ for a value table, one number per band, and $V^*$ for the best one. A rule's own value, $V_\pi$ on that card, is written $V^{\pi}$ here, because the subscript now counts sweeps: $V_k$ is the table after $k$ sweeps. It is a maximisation.
+Notation from [Markov decision processes](02-markov-decision-processes.md), in one line each. The state $`s`$ is the band; the action $`a`$ is the release; $`r(s, a)`$ is the expected money this month; $`p(s' \mid s, a)`$ is the chance of standing at band $`s'`$ next month; $`\gamma`$ (gamma) is the discount; a rule $`\pi`$ (pi, a policy) picks $`\pi(s)`$ at each band. This card writes $`V`$ for a value table, one number per band, and $`V^*`$ for the best one. A rule's own value, $`V_\pi`$ on that card, is written $`V^{\pi}`$ here, because the subscript now counts sweeps: $`V_k`$ is the table after $`k`$ sweeps. It is a maximisation.
 
 The **Bellman optimality equation**: the best values are the ones that one more month of best choices hands back unchanged.
 
-$$V^*(s) = \max_{a}\Bigl[\, r(s, a) + \gamma \sum_{s'} p(s' \mid s, a)\, V^*(s') \Bigr]\quad\text{for every band } s.$$
+```math
+V^*(s) = \max_{a}\Bigl[\, r(s, a) + \gamma \sum_{s'} p(s' \mid s, a)\, V^*(s') \Bigr]\quad\text{for every band } s.
+```
 
 **Read it aloud:** a band is worth this month's money plus 0.95 times the average worth of where the water ends up, for the best release.
 
-**Value iteration** turns the equation into an update. Start from $V_0 = 0$ and sweep, for $k = 0, 1, 2, \dots$:
+**Value iteration** turns the equation into an update. Start from $`V_0 = 0`$ and sweep, for $`k = 0, 1, 2, \dots`$:
 
-$$V_{k+1}(s) = \max_{a}\Bigl[\, r(s, a) + \gamma \sum_{s'} p(s' \mid s, a)\, V_k(s') \Bigr].$$
+```math
+V_{k+1}(s) = \max_{a}\Bigl[\, r(s, a) + \gamma \sum_{s'} p(s' \mid s, a)\, V_k(s') \Bigr].
+```
 
-Stop at the first sweep whose largest change is below $\varepsilon(1 - \gamma)/(2\gamma)$, with target $\varepsilon$ (epsilon) = £10 thousand. Then the table is within $\varepsilon/2$ of $V^*$ and the rule read off it is within $\varepsilon$ of the best.
+Stop at the first sweep whose largest change is below $`\varepsilon(1 - \gamma)/(2\gamma)`$, with target $`\varepsilon`$ (epsilon) = £10 thousand. Then the table is within $`\varepsilon/2`$ of $`V^*`$ and the rule read off it is within $`\varepsilon`$ of the best.
 
 **Read it aloud:** replace every value by what one month of look-ahead says it should be, and stop when no value moves by more than 0.2632 thousand pounds.
 
-**Policy iteration** alternates two steps. Evaluate the current rule $\pi$ exactly by solving 20 linear equations,
+**Policy iteration** alternates two steps. Evaluate the current rule $`\pi`$ exactly by solving 20 linear equations,
 
-$$V^{\pi}(s) = r(s, \pi(s)) + \gamma \sum_{s'} p(s' \mid s, \pi(s))\, V^{\pi}(s'),$$
+```math
+V^{\pi}(s) = r(s, \pi(s)) + \gamma \sum_{s'} p(s' \mid s, \pi(s))\, V^{\pi}(s'),
+```
 
-then improve: at each band, switch to the release with the largest right-hand side of the optimality equation, using $V^{\pi}$, and keep the old release on a tie. Stop when no band switches.
+then improve: at each band, switch to the release with the largest right-hand side of the optimality equation, using $`V^{\pi}`$, and keep the old release on a tie. Stop when no band switches.
 
 **Read it aloud:** find out exactly what this rule is worth, then let every band take the release that looks best given those worths.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $s'$ | the band now, the band next month | 0 to 19, each 5 million m³ | — |
-| $a$ | the release, in bands; never more than $s$, the water in store | 0, 1 or 2 | — |
-| $r(s, a)$ | expected money this month, in £ thousand | 40 at band 10 releasing two; −67 at band 19 holding | — |
-| $p(s' \mid s, a)$ | chance of band $s'$ next month | 0.3 from band 10, release 2, to band 9 | — |
-| $\gamma$ | weight on next month against this one | 0.95 | more patience, larger values, many more sweeps |
-| $\pi$, $\pi(s)$, $\pi'$ | a rule; its release at band $s$; the improved rule | best: hold to band 4, one to 14, two above | — |
-| $V$, $V^{\pi}$, $V^*$ | a value table; what rule $\pi$ earns from each band; the best | $V^*(10) = 632.9$ | — |
-| $V_k$, $k$, $K$ | the table after $k$ sweeps; the sweep count; where it stops | $K = 94$ | — |
-| $\varepsilon$ | the target: the rule found is within this of the best | £10 thousand; stop at a change of 0.2632 | fewer sweeps, looser guarantee |
-| $e_k$, $\Vert U - W\Vert_\infty$ | largest error of $V_k$ against $V^*$; the largest gap between two tables $U$, $W$ over the bands | 4.9133 at $k = 94$ | — |
-| $P_\pi$, $r_\pi$, $I$, $T_{\pi'}$, $m$ | a rule's table of chances; its column of money; the identity table; one sweep with rule $\pi'$ fixed; a count of such sweeps | row 10 of round 1's table: 0.2, 0.3, 0.3, 0.2 for bands 9 to 12 | — |
-| $d_\pi$ | long-run share of months at each band under $\pi$ | 50.16 percent of months release one band | — |
+| $`s`$, $`s'`$ | the band now, the band next month | 0 to 19, each 5 million m³ | — |
+| $`a`$ | the release, in bands; never more than $`s`$, the water in store | 0, 1 or 2 | — |
+| $`r(s, a)`$ | expected money this month, in £ thousand | 40 at band 10 releasing two; −67 at band 19 holding | — |
+| $`p(s' \mid s, a)`$ | chance of band $`s'`$ next month | 0.3 from band 10, release 2, to band 9 | — |
+| $`\gamma`$ | weight on next month against this one | 0.95 | more patience, larger values, many more sweeps |
+| $`\pi`$, $`\pi(s)`$, $`\pi'`$ | a rule; its release at band $`s`$; the improved rule | best: hold to band 4, one to 14, two above | — |
+| $`V`$, $`V^{\pi}`$, $`V^*`$ | a value table; what rule $`\pi`$ earns from each band; the best | $`V^*(10) = 632.9`$ | — |
+| $`V_k`$, $`k`$, $`K`$ | the table after $`k`$ sweeps; the sweep count; where it stops | $`K = 94`$ | — |
+| $`\varepsilon`$ | the target: the rule found is within this of the best | £10 thousand; stop at a change of 0.2632 | fewer sweeps, looser guarantee |
+| $`e_k`$, $`\Vert U - W\Vert_\infty`$ | largest error of $`V_k`$ against $`V^*`$; the largest gap between two tables $`U`$, $`W`$ over the bands | 4.9133 at $`k = 94`$ | — |
+| $`P_\pi`$, $`r_\pi`$, $`I`$, $`T_{\pi'}`$, $`m`$ | a rule's table of chances; its column of money; the identity table; one sweep with rule $`\pi'`$ fixed; a count of such sweeps | row 10 of round 1's table: 0.2, 0.3, 0.3, 0.2 for bands 9 to 12 | — |
+| $`d_\pi`$ | long-run share of months at each band under $`\pi`$ | 50.16 percent of months release one band | — |
 
 ### When it holds
 
-- **A discount below 1.** Every sweep then shrinks the error by at least the factor $\gamma$. At $\gamma = 1$ there is no shrinking: after 400 sweeps the values still change by £39.3193 thousand a sweep, and value iteration never stops.
+- **A discount below 1.** Every sweep then shrinks the error by at least the factor $`\gamma`$. At $`\gamma = 1`$ there is no shrinking: after 400 sweeps the values still change by £39.3193 thousand a sweep, and value iteration never stops.
 - **Finitely many bands and releases.** Policy iteration stops because there are only finitely many rules. With a continuous water level the tables become functions and both methods need an approximation.
-- **A known model.** Both methods use $r$ and $p$ directly. A reservoir whose rain chances are unknown has to learn them by trying: [Q-learning](05-q-learning-and-temporal-differences.md).
+- **A known model.** Both methods use $`r`$ and $`p`$ directly. A reservoir whose rain chances are unknown has to learn them by trying: [Q-learning](05-q-learning-and-temporal-differences.md).
 - **Next month depends only on this month.** If a wet month makes the next one wetter, the band alone is not a full state: add last month's rain to it and the table has four times as many rows.
 - **The same rules every month.** Real rain is seasonal. Then the calendar month joins the state, 12 times as many rows, and the method is unchanged.
 
@@ -92,53 +98,57 @@ then improve: at each band, switch to the release with the largest right-hand si
 
 ### Step 0: both methods chase the same fixed point
 
-The optimality equation says $V^*$ is the one table that a month of best choices leaves unchanged. Value iteration applies "a month of best choices" again and again, and the table drifts towards the fixed point. Policy iteration jumps: it fixes the choices, which turns the hard equation (with a max in it) into a linear one it can solve exactly, then repairs the choices. Both stop at the same table, because there is only one fixed point.
+The optimality equation says $`V^*`$ is the one table that a month of best choices leaves unchanged. Value iteration applies "a month of best choices" again and again, and the table drifts towards the fixed point. Policy iteration jumps: it fixes the choices, which turns the hard equation (with a max in it) into a linear one it can solve exactly, then repairs the choices. Both stop at the same table, because there is only one fixed point.
 
 ### Step 1: each sweep shrinks the error by the factor γ
 
-Take two value tables that differ by at most $e$ at every band. For a fixed release, the sweep averages next month's values with weights that add to 1 and multiplies by $\gamma$. So the two results differ by at most $\gamma e$. Taking the best release cannot widen the gap, because the largest of several numbers moves by no more than the numbers do. Putting $V^*$ in as the second table, which a sweep leaves unchanged:
+Take two value tables that differ by at most $`e`$ at every band. For a fixed release, the sweep averages next month's values with weights that add to 1 and multiplies by $`\gamma`$. So the two results differ by at most $`\gamma e`$. Taking the best release cannot widen the gap, because the largest of several numbers moves by no more than the numbers do. Putting $`V^*`$ in as the second table, which a sweep leaves unchanged:
 
-$$e_{k+1} \le \gamma\, e_k.$$
+```math
+e_{k+1} \le \gamma\, e_k.
+```
 
 This is the contraction proved in full on [The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md); here it is used. On the reservoir the measured ratios are 0.9406 for the first sweep, 0.9369 for the second, and 0.9500 by sweep 94. The early sweeps beat the bound a little; the late ones run exactly at it.
 
 ### Step 2: a small change proves a small error
 
-The error itself is unknown while the method runs, since $V^*$ is unknown. The change between sweeps is known. The two are tied:
+The error itself is unknown while the method runs, since $`V^*`$ is unknown. The change between sweeps is known. The two are tied:
 
-$$e_{k+1} \le \frac{\gamma}{1 - \gamma}\,\max_s \bigl|V_{k+1}(s) - V_k(s)\bigr|.$$
+```math
+e_{k+1} \le \frac{\gamma}{1 - \gamma}\,\max_s \bigl|V_{k+1}(s) - V_k(s)\bigr|.
+```
 
-At $\gamma = 0.95$ the factor is 19: the error can be 19 times the last change. So the stopping test asks for a change below $\varepsilon(1 - \gamma)/(2\gamma) = 0.2632$, which makes the error below $\varepsilon/2 = 5$. At sweep 94 the change is 0.2586 and the bound gives 4.9133. The true error, measured against policy iteration's answer, is also 4.9133: the bound is tight here, because by sweep 94 every sweep removes exactly 5 percent.
+At $`\gamma = 0.95`$ the factor is 19: the error can be 19 times the last change. So the stopping test asks for a change below $`\varepsilon(1 - \gamma)/(2\gamma) = 0.2632`$, which makes the error below $`\varepsilon/2 = 5`$. At sweep 94 the change is 0.2586 and the bound gives 4.9133. The true error, measured against policy iteration's answer, is also 4.9133: the bound is tight here, because by sweep 94 every sweep removes exactly 5 percent.
 
 <details>
 <summary>Detailed proof: the stopping bound, and why the rule read off is within ε</summary>
 
-Write $\|U - W\|_\infty$ for $\max_s |U(s) - W(s)|$, the largest gap over the bands. Step 1 gives $\|V_{k+1} - V^*\|_\infty \le \gamma\|V_k - V^*\|_\infty$. The triangle inequality splits $\|V_k - V^*\|_\infty \le \|V_k - V_{k+1}\|_\infty + \|V_{k+1} - V^*\|_\infty$. Combine:
+Write $`\|U - W\|_\infty`$ for $`\max_s |U(s) - W(s)|`$, the largest gap over the bands. Step 1 gives $`\|V_{k+1} - V^*\|_\infty \le \gamma\|V_k - V^*\|_\infty`$. The triangle inequality splits $`\|V_k - V^*\|_\infty \le \|V_k - V_{k+1}\|_\infty + \|V_{k+1} - V^*\|_\infty`$. Combine:
 
-$$\|V_{k+1} - V^*\|_\infty \le \gamma\|V_k - V_{k+1}\|_\infty + \gamma\|V_{k+1} - V^*\|_\infty,$$
+$`\displaystyle \|V_{k+1} - V^*\|_\infty \le \gamma\|V_k - V_{k+1}\|_\infty + \gamma\|V_{k+1} - V^*\|_\infty,`$
 
-and move the last term across: $(1 - \gamma)\|V_{k+1} - V^*\|_\infty \le \gamma\|V_{k+1} - V_k\|_\infty$.
+and move the last term across: $`(1 - \gamma)\|V_{k+1} - V^*\|_\infty \le \gamma\|V_{k+1} - V_k\|_\infty`$.
 
-Now let $\pi$ be the rule read off $V_{k+1}$: at each band, the release that wins the maximum with $V_{k+1}$ on the right. Fixing a rule gives a sweep too, with no max in it, and it also shrinks gaps by $\gamma$. Rule $\pi$'s own values $V^{\pi}$ are its fixed point. The sweep for $\pi$ and the best-choice sweep agree on $V_{k+1}$, by the choice of $\pi$. So $\|V^{\pi} - V_{k+1}\|_\infty$ is at most $\gamma\|V^{\pi} - V_{k+1}\|_\infty + \|V_{k+2} - V_{k+1}\|_\infty$, and $\|V_{k+2} - V_{k+1}\|_\infty \le \gamma\|V_{k+1} - V_k\|_\infty$. Hence $\|V^{\pi} - V_{k+1}\|_\infty \le \frac{\gamma}{1-\gamma}\|V_{k+1} - V_k\|_\infty$, the same bound as for $V^*$. With the change below $\varepsilon(1-\gamma)/(2\gamma)$ both distances are below $\varepsilon/2$, and the triangle inequality gives $\|V^{\pi} - V^*\|_\infty < \varepsilon$.
+Now let $`\pi`$ be the rule read off $`V_{k+1}`$: at each band, the release that wins the maximum with $`V_{k+1}`$ on the right. Fixing a rule gives a sweep too, with no max in it, and it also shrinks gaps by $`\gamma`$. Rule $`\pi`$'s own values $`V^{\pi}`$ are its fixed point. The sweep for $`\pi`$ and the best-choice sweep agree on $`V_{k+1}`$, by the choice of $`\pi`$. So $`\|V^{\pi} - V_{k+1}\|_\infty`$ is at most $`\gamma\|V^{\pi} - V_{k+1}\|_\infty + \|V_{k+2} - V_{k+1}\|_\infty`$, and $`\|V_{k+2} - V_{k+1}\|_\infty \le \gamma\|V_{k+1} - V_k\|_\infty`$. Hence $`\|V^{\pi} - V_{k+1}\|_\infty \le \frac{\gamma}{1-\gamma}\|V_{k+1} - V_k\|_\infty`$, the same bound as for $`V^*`$. With the change below $`\varepsilon(1-\gamma)/(2\gamma)`$ both distances are below $`\varepsilon/2`$, and the triangle inequality gives $`\|V^{\pi} - V^*\|_\infty < \varepsilon`$.
 
 </details>
 
 ### Step 3: one rule's worth is a linear system
 
-With the rule fixed there is no max: the evaluation equation is 20 linear equations in 20 unknowns, $(I - \gamma P_{\pi})V^{\pi} = r_{\pi}$. Here $P_{\pi}$ is the 20-by-20 table of chances $p(s' \mid s, \pi(s))$, $r_{\pi}$ is the column of $r(s, \pi(s))$, and $I$ is the identity table. Each row of $\gamma P_{\pi}$ adds to 0.95, less than 1, so the diagonal of $I - \gamma P_{\pi}$ outweighs the rest of its row and the system has exactly one solution. The code solves it by [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md), which removes one unknown at a time. For the first rule, release one band whenever there is water, it gives $V^{\pi}(10) = 323.1$: that rule overflows in wet spells and pays the flood damage.
+With the rule fixed there is no max: the evaluation equation is 20 linear equations in 20 unknowns, $`(I - \gamma P_{\pi})V^{\pi} = r_{\pi}`$. Here $`P_{\pi}`$ is the 20-by-20 table of chances $`p(s' \mid s, \pi(s))`$, $`r_{\pi}`$ is the column of $`r(s, \pi(s))`$, and $`I`$ is the identity table. Each row of $`\gamma P_{\pi}`$ adds to 0.95, less than 1, so the diagonal of $`I - \gamma P_{\pi}`$ outweighs the rest of its row and the system has exactly one solution. The code solves it by [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md), which removes one unknown at a time. For the first rule, release one band whenever there is water, it gives $`V^{\pi}(10) = 323.1`$: that rule overflows in wet spells and pays the flood damage.
 
 ### Step 4: the greedy switch never makes things worse
 
-The **policy improvement theorem**: if $\pi'$ takes, at every band, a release that does at least as well as $\pi(s)$ against the values $V^{\pi}$, then $V^{\pi'}(s) \ge V^{\pi}(s)$ at every band. If it does strictly better at some band, the gain is strict there.
+The **policy improvement theorem**: if $`\pi'`$ takes, at every band, a release that does at least as well as $`\pi(s)`$ against the values $`V^{\pi}`$, then $`V^{\pi'}(s) \ge V^{\pi}(s)`$ at every band. If it does strictly better at some band, the gain is strict there.
 
-The idea: following $\pi'$ for one month and then $\pi$ for ever after is no worse than $\pi$, by the choice of $\pi'$. Each further month of $\pi'$ helps again or changes nothing, and in the limit that is $\pi'$ for ever, worth $V^{\pi'}$.
+The idea: following $`\pi'`$ for one month and then $`\pi`$ for ever after is no worse than $`\pi`$, by the choice of $`\pi'`$. Each further month of $`\pi'`$ helps again or changes nothing, and in the limit that is $`\pi'`$ for ever, worth $`V^{\pi'}`$.
 
 <details>
 <summary>Detailed proof: the policy improvement theorem</summary>
 
-Write $T_{\pi'}$ for the sweep with the rule $\pi'$ fixed: $(T_{\pi'}W)(s) = r(s, \pi'(s)) + \gamma\sum_{s'} p(s' \mid s, \pi'(s))\,W(s')$. Two facts about it. It is **monotone**: if $W \ge U$ at every band, then $T_{\pi'}W \ge T_{\pi'}U$, because the chances are not negative. And by Step 1 it shrinks gaps by $\gamma$, so $T_{\pi'}^{\,m}W \to V^{\pi'}$ from any start $W$.
+Write $`T_{\pi'}`$ for the sweep with the rule $`\pi'`$ fixed: $`(T_{\pi'}W)(s) = r(s, \pi'(s)) + \gamma\sum_{s'} p(s' \mid s, \pi'(s))\,W(s')`$. Two facts about it. It is **monotone**: if $`W \ge U`$ at every band, then $`T_{\pi'}W \ge T_{\pi'}U`$, because the chances are not negative. And by Step 1 it shrinks gaps by $`\gamma`$, so $`T_{\pi'}^{\,m}W \to V^{\pi'}`$ from any start $`W`$.
 
-By the choice of $\pi'$, $T_{\pi'}V^{\pi} \ge T_{\pi}V^{\pi} = V^{\pi}$. Apply $T_{\pi'}$ to both sides and use monotonicity: $T_{\pi'}^{\,2}V^{\pi} \ge T_{\pi'}V^{\pi} \ge V^{\pi}$. By induction $T_{\pi'}^{\,m}V^{\pi} \ge V^{\pi}$ for every $m$, and letting $m$ grow gives $V^{\pi'} \ge V^{\pi}$. If the first inequality is strict at band $s$, then $V^{\pi'}(s) \ge (T_{\pi'}V^{\pi})(s) > V^{\pi}(s)$.
+By the choice of $`\pi'`$, $`T_{\pi'}V^{\pi} \ge T_{\pi}V^{\pi} = V^{\pi}`$. Apply $`T_{\pi'}`$ to both sides and use monotonicity: $`T_{\pi'}^{\,2}V^{\pi} \ge T_{\pi'}V^{\pi} \ge V^{\pi}`$. By induction $`T_{\pi'}^{\,m}V^{\pi} \ge V^{\pi}`$ for every $`m`$, and letting $`m`$ grow gives $`V^{\pi'} \ge V^{\pi}`$. If the first inequality is strict at band $`s`$, then $`V^{\pi'}(s) \ge (T_{\pi'}V^{\pi})(s) > V^{\pi}(s)`$.
 
 </details>
 
@@ -146,7 +156,7 @@ By the choice of $\pi'$, $T_{\pi'}V^{\pi} \ge T_{\pi}V^{\pi} = V^{\pi}$. Apply $
 
 Keeping the old release on a tie means a round switches a band only when the new release is strictly better. Then Step 4 makes the values strictly higher somewhere and no lower anywhere, so no rule can come round twice. There are finitely many rules, so the rounds end.
 
-They end when no band switches. Then the current release wins the maximum at every band against its own values, so $V^{\pi}$ satisfies the optimality equation. By Step 1 that equation has one solution, so $V^{\pi} = V^*$ and the rule is best from every band at once. The code checks it directly: one best-choice sweep applied to the final table moves no entry by more than 1.1e-13, rounding error.
+They end when no band switches. Then the current release wins the maximum at every band against its own values, so $`V^{\pi}`$ satisfies the optimality equation. By Step 1 that equation has one solution, so $`V^{\pi} = V^*`$ and the rule is best from every band at once. The code checks it directly: one best-choice sweep applied to the final table moves no entry by more than 1.1e-13, rounding error.
 
 ### Step 6: why five rounds and not ninety-four
 
@@ -162,15 +172,15 @@ The first two sweeps of value iteration at band 10, then the stopping test.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| money at band 10, release 0, 1, 2 | $-7$; $1 \times 20$; $2 \times 20$; no overflow possible from band 10 | −7.0, 20.0, 40.0 |
-| sweep 1 at band 10 | $\max(-7, 20, 40)$, with $V_0 = 0$ | 40.0, release 2 |
-| sweep 1 at bands 8 to 13 | $2 \times (10 + s)$ at each | 36.0, 38.0, 40.0, 42.0, 44.0, 46.0 |
-| sweep 2, release 2 | $40 + 0.95\,(0.2 \times 36 + 0.3 \times 38 + 0.3 \times 40 + 0.2 \times 42) = 40 + 0.95 \times 39$ | 77.05 |
-| sweep 2, release 1 | $20 + 0.95\,(0.2 \times 38 + 0.3 \times 40 + 0.3 \times 42 + 0.2 \times 44) = 20 + 0.95 \times 41$ | 58.95 |
-| sweep 2, release 0 | $-7 + 0.95\,(0.2 \times 40 + 0.3 \times 42 + 0.3 \times 44 + 0.2 \times 46) = -7 + 0.95 \times 43$ | 33.85 |
-| stopping threshold | $10 \times 0.05 \div (2 \times 0.95)$ | 0.2632 |
+| money at band 10, release 0, 1, 2 | $`-7`$; $`1 \times 20`$; $`2 \times 20`$; no overflow possible from band 10 | −7.0, 20.0, 40.0 |
+| sweep 1 at band 10 | $`\max(-7, 20, 40)`$, with $`V_0 = 0`$ | 40.0, release 2 |
+| sweep 1 at bands 8 to 13 | $`2 \times (10 + s)`$ at each | 36.0, 38.0, 40.0, 42.0, 44.0, 46.0 |
+| sweep 2, release 2 | $`40 + 0.95\,(0.2 \times 36 + 0.3 \times 38 + 0.3 \times 40 + 0.2 \times 42) = 40 + 0.95 \times 39`$ | 77.05 |
+| sweep 2, release 1 | $`20 + 0.95\,(0.2 \times 38 + 0.3 \times 40 + 0.3 \times 42 + 0.2 \times 44) = 20 + 0.95 \times 41`$ | 58.95 |
+| sweep 2, release 0 | $`-7 + 0.95\,(0.2 \times 40 + 0.3 \times 42 + 0.3 \times 44 + 0.2 \times 46) = -7 + 0.95 \times 43`$ | 33.85 |
+| stopping threshold | $`10 \times 0.05 \div (2 \times 0.95)`$ | 0.2632 |
 | change at sweep 94 | largest of the 20 changes | 0.2586, below the threshold |
-| error bound | $0.95 \div 0.05 \times 0.2586$ | 4.9133, under 5 |
+| error bound | $`0.95 \div 0.05 \times 0.2586`$ | 4.9133, under 5 |
 | answer | value iteration's sweeps, against policy iteration's rounds | **94 sweeps, 5 rounds, same rule** |
 
 Two sweeps in, value iteration still says "release two" at band 10: it sees only two months ahead, too few for the worth of keeping water high to show.
@@ -179,7 +189,7 @@ Two sweeps in, value iteration still says "release two" at band 10: it sees only
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Discount $\gamma = 1$ | change still 39.3 at sweep 94 and 39.3193 at sweep 400; never stops | No contraction. The values grow without end, by the long-run monthly money of the rule they settle on |
+| Discount $`\gamma = 1`$ | change still 39.3 at sweep 94 and 39.3193 at sweep 400; never stops | No contraction. The values grow without end, by the long-run monthly money of the rule they settle on |
 | Stop when the change is below £10 thousand | stops at sweep 25, true error £171.5 thousand | A change is not an error: the error can be 19 times the change |
 | Read the rule off after 10 sweeps | rule 01111112222222222222, losing up to £49.8 thousand | The values have not settled, so the rule releases two bands from band 7 |
 
@@ -193,7 +203,7 @@ The puzzle. Value iteration needs 94 sweeps; policy iteration needs 5 rounds. Ea
 
 Each rule is written as 20 digits, one release per band from band 0 to band 19.
 
-| Round | Rule evaluated | $V^{\pi}(10)$ | Largest error | Bands switched |
+| Round | Rule evaluated | $`V^{\pi}(10)`$ | Largest error | Bands switched |
 | --- | --- | ---: | ---: | ---: |
 | 1 | 01111111111111111111 | 323.1 | 690.2 | 18 |
 | 2 | 01222222222222222222 | 541.3 | 103.4 | 15 |
@@ -245,7 +255,7 @@ Orange: round 1's rule, release one band whenever possible; its value falls abov
 
 ## Code, from first principles, and it actually runs
 
-The code builds the reservoir from its rain chances and money rules, then reaches the answer by four independent roads. Value iteration from a table of zeros. Policy iteration with Gaussian elimination written out. The Bellman certificate: one more best-choice sweep must leave policy iteration's table unchanged. And on a 6-band reservoir, every one of the 162 rules is evaluated and the one that is best at every band is found by listing them all. A fifth check uses the stationary distribution $d_\pi$, the long-run share of months at each band, from [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): under any rule, $d_\pi \cdot r_\pi = (1 - \gamma)\, d_\pi \cdot V^{\pi}$, since $d_\pi P_\pi = d_\pi$. The dot means: multiply band by band, then add. The code also counts the multiply-adds of the sweeps and of the elimination, and runs the failures in the table above.
+The code builds the reservoir from its rain chances and money rules, then reaches the answer by four independent roads. Value iteration from a table of zeros. Policy iteration with Gaussian elimination written out. The Bellman certificate: one more best-choice sweep must leave policy iteration's table unchanged. And on a 6-band reservoir, every one of the 162 rules is evaluated and the one that is best at every band is found by listing them all. A fifth check uses the stationary distribution $`d_\pi`$, the long-run share of months at each band, from [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): under any rule, $`d_\pi \cdot r_\pi = (1 - \gamma)\, d_\pi \cdot V^{\pi}`$, since $`d_\pi P_\pi = d_\pi`$. The dot means: multiply band by band, then add. The code also counts the multiply-adds of the sweeps and of the elimination, and runs the failures in the table above.
 
 ### Python
 
@@ -646,18 +656,18 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
-Two lines need reading. The long-run lines say that, run by the best rule, the reservoir spends 50.16 percent of months releasing one band and 49.84 percent releasing two, earning £37.2552 thousand a month on average. Holding rounds to 0.0000: that zone is for recovering from a drought start and is almost never visited again. At $\gamma = 1$ the rule that value iteration drifts towards holds water up to band 13 and earns £39.3193 thousand a month. Without a discount, patience pays more on average.
+Two lines need reading. The long-run lines say that, run by the best rule, the reservoir spends 50.16 percent of months releasing one band and 49.84 percent releasing two, earning £37.2552 thousand a month on average. Holding rounds to 0.0000: that zone is for recovering from a drought start and is almost never visited again. At $`\gamma = 1`$ the rule that value iteration drifts towards holds water up to band 13 and earns £39.3193 thousand a month. Without a discount, patience pays more on average.
 
 ### Lean
 
 Lean proves the card's three theorems for any money and rain chances, with finitely many bands and releases and a discount below 1.
 
-- Take $V^*$, the table a sweep leaves unchanged. From any starting table, each sweep shrinks the largest error by at least the factor $\gamma$.
-- The largest error after a sweep is at most $\gamma/(1 - \gamma)$ times that sweep's largest change.
-- If a sweep's largest change is below $\varepsilon(1 - \gamma)/(2\gamma)$, the table is within $\varepsilon/2$ of $V^*$.
-- Every rule read off that table then has values within $\varepsilon$ of $V^*$ at every band.
-- The policy improvement theorem: if $\pi'$ does at least as well as $\pi$ at every band against $V^{\pi}$, then $V^{\pi'} \ge V^{\pi}$ at every band.
-- Where $\pi'$ does strictly better against $V^{\pi}$, the gain is strict there.
+- Take $`V^*`$, the table a sweep leaves unchanged. From any starting table, each sweep shrinks the largest error by at least the factor $`\gamma`$.
+- The largest error after a sweep is at most $`\gamma/(1 - \gamma)`$ times that sweep's largest change.
+- If a sweep's largest change is below $`\varepsilon(1 - \gamma)/(2\gamma)`$, the table is within $`\varepsilon/2`$ of $`V^*`$.
+- Every rule read off that table then has values within $`\varepsilon`$ of $`V^*`$ at every band.
+- The policy improvement theorem: if $`\pi'`$ does at least as well as $`\pi`$ at every band against $`V^{\pi}`$, then $`V^{\pi'} \ge V^{\pi}`$ at every band.
+- Where $`\pi'`$ does strictly better against $`V^{\pi}`$, the gain is strict there.
 - From any starting rule, policy iteration stops in fewer rounds than there are rules, keeping the old release on a tie.
 - The rule it stops at satisfies the Bellman optimality equation, and no rule earns more than it from any band.
 - The hand arithmetic holds exactly: the money at bands 10 and 19, the first two sweeps at band 10, and the stopping threshold 5/19.
@@ -1161,8 +1171,8 @@ example : 228 * 94 = 21432 ∧ 3288 * 5 = 16440 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The last three lines of the output already run these settings; to see the whole output, change `G` or `EPS` in the line `N, G, EPS = 20, 0.95, 10.0`. The asserts are pinned to the settings above, so a change may stop the program.
-> - **Guess first: at $\gamma = 0.9$, fewer sweeps or more?** Fewer: 37 sweeps, and policy iteration takes 4 rounds. Each sweep now removes 10 percent of the error.
-> - **Guess first: at $\gamma = 0.99$, how many sweeps?** 661. Policy iteration needs only 6 rounds. Value iteration's count grows roughly like $1/(1-\gamma)$; policy iteration's barely moves.
+> - **Guess first: at $`\gamma = 0.9`$, fewer sweeps or more?** Fewer: 37 sweeps, and policy iteration takes 4 rounds. Each sweep now removes 10 percent of the error.
+> - **Guess first: at $`\gamma = 0.99`$, how many sweeps?** 661. Policy iteration needs only 6 rounds. Value iteration's count grows roughly like $`1/(1-\gamma)`$; policy iteration's barely moves.
 > - **Guess first: what does a ten times tighter target cost?** Set `EPS` to `1.0`: 139 sweeps instead of 94. The extra sweeps are what it takes to cut the error tenfold when each sweep removes only 5 percent.
 
 ---
@@ -1170,10 +1180,10 @@ example : 228 * 94 = 21432 ∧ 3288 * 5 = 16440 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Stopping value iteration when the values stop moving much.** A change of £10 thousand per sweep sounds small against values near £600 thousand. Value iteration first reaches it at sweep 25, when the table is still £171.5 thousand off. The error can be $\gamma/(1-\gamma)$ times the last change, 19 times at $\gamma = 0.95$, so the test must be scaled by that factor. Quote the start, the test and its tolerance: here, from zeros, stop when no entry changes by more than 0.2632, after 94 sweeps.
+> **Stopping value iteration when the values stop moving much.** A change of £10 thousand per sweep sounds small against values near £600 thousand. Value iteration first reaches it at sweep 25, when the table is still £171.5 thousand off. The error can be $`\gamma/(1-\gamma)`$ times the last change, 19 times at $`\gamma = 0.95`$, so the test must be scaled by that factor. Quote the start, the test and its tolerance: here, from zeros, stop when no entry changes by more than 0.2632, after 94 sweeps.
 >
 > - **Reading the rule off too early.** After 10 sweeps the rule releases two bands from band 7 and loses up to £49.8 thousand against the best.
-> - **Running value iteration with no discount.** At $\gamma = 1$ the change settles at £39.3193 thousand a sweep and never falls. The values grow without bound; only their differences between bands settle.
+> - **Running value iteration with no discount.** At $`\gamma = 1`$ the change settles at £39.3193 thousand a sweep and never falls. The values grow without bound; only their differences between bands settle.
 > - **Counting rounds as if they were sweeps.** Five rounds are not 19 times faster than 94 sweeps: a round costs 3,288 multiply-adds against 228 for a sweep, and the totals are 16,440 against 21,432.
 
 ---

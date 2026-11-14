@@ -37,17 +37,23 @@ Nothing was added, nothing taken away, so 4 × 3 and 3 × 4 are the same twelve 
 
 ## The formula
 
-Let $a$, $b$ and $c$ stand for any three whole numbers. Each law, with the apples underneath.
+Let $`a`$, $`b`$ and $`c`$ stand for any three whole numbers. Each law, with the apples underneath.
 
-$$a + b = b + a \qquad\qquad a \times b = b \times a$$
+```math
+a + b = b + a \qquad\qquad a \times b = b \times a
+```
 
 12 × 75 = 75 × 12 = 900.
 
-$$(a + b) + c = a + (b + c) \qquad\qquad (a \times b) \times c = a \times (b \times c)$$
+```math
+(a + b) + c = a + (b + c) \qquad\qquad (a \times b) \times c = a \times (b \times c)
+```
 
 (4 × 3) × 75 = 4 × (3 × 75) = 900.
 
-$$a \times (b + c) = a \times b + a \times c$$
+```math
+a \times (b + c) = a \times b + a \times c
+```
 
 12 × (70 + 5) = 12 × 70 + 12 × 5 = 840 + 60 = 900.
 
@@ -55,9 +61,9 @@ $$a \times (b + c) = a \times b + a \times c$$
 
 | Symbol | Plain meaning | In 12 × (70 + 5) |
 | --- | --- | --- |
-| $a$ | any whole number; here, outside the bracket | 12, the apples |
-| $b$ | any whole number; here, the first piece inside | 70 |
-| $c$ | any whole number; here, the second piece | 5 |
+| $`a`$ | any whole number; here, outside the bracket | 12, the apples |
+| $`b`$ | any whole number; here, the first piece inside | 70 |
+| $`c`$ | any whole number; here, the second piece | 5 |
 
 ### When it holds
 
@@ -225,7 +231,7 @@ Identical, line for line.
 
 Lean proves the three laws for every whole number, and proves that minus and divide break them.
 
-- Swapping, regrouping and spreading hold for any three whole numbers $a$, $b$ and $c$.
+- Swapping, regrouping and spreading hold for any three whole numbers $`a`$, $`b`$ and $`c`$.
 - Minus and divide neither swap nor regroup. This stays true with minus numbers and fractions allowed, so it is not a whole-number quirk.
 - The apple numbers come out as the card says: the 900-cent bill both ways, the 100 change, the 225 shares and both traps.
 
@@ -343,7 +349,7 @@ example : (1000 - 900) - 100 = 0 := by decide
 
 ## Where this goes next
 
-- [Negative numbers](06-negative-numbers.md): where subtraction stops being a fourth operation. Once minus numbers exist, $a - b$ is $a + (-b)$, an addition in disguise, and swapping and regrouping cover it after all.
+- [Negative numbers](06-negative-numbers.md): where subtraction stops being a fourth operation. Once minus numbers exist, $`a - b`$ is $`a + (-b)`$, an addition in disguise, and swapping and regrouping cover it after all.
 
 The question this card leaves open: what does subtraction become, so that the three laws reach it too?
 

@@ -32,30 +32,36 @@ The piece along the heading is the **projection**; the leftover is the **residua
 
 ## The formula
 
-Call the vector being split $u$, the rower's pull, and the direction projected onto $v$, the boat's heading. Shadow and leftover:
+Call the vector being split $`u`$, the rower's pull, and the direction projected onto $`v`$, the boat's heading. Shadow and leftover:
 
-$$p \;=\; \frac{u \cdot v}{v \cdot v}\, v, \qquad\qquad e \;=\; u - p.$$
+```math
+p \;=\; \frac{u \cdot v}{v \cdot v}\, v, \qquad\qquad e \;=\; u - p.
+```
 
 **Read it aloud:** the dot product says how much of the pull runs along the heading; dividing by the heading's dot product with itself cancels the arrow's length, leaving the copies to lay down.
 
 That count gets its own letter:
 
-$$t \;=\; \frac{u \cdot v}{v \cdot v}, \qquad\qquad p \;=\; t\,v.$$
+```math
+t \;=\; \frac{u \cdot v}{v \cdot v}, \qquad\qquad p \;=\; t\,v.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | the vector being split: the pull | (6, 2) | a shadow grown in proportion |
-| $v$ | the direction projected onto: the heading | (1, 1) | no change: only v's direction counts |
-| $u \cdot v$ | the dot product: matching entries multiplied, added | 8 | more pull along the heading, a longer shadow |
-| $v \cdot v$ | the heading dotted with itself: its squared length | 2 | t shrinks as v grows; the shadow holds still |
-| $t$ | copies of the heading in the shadow | 4 | a longer shadow, same line |
-| $p$ | the projection: the useful part | (4, 4) | — |
-| $e$ | the residual: the leftover, at right angles to v | (2, -2) | more pull wasted sideways |
-| $w_1$, $w_2$ | perpendicular directions naming a plane | (1, 1, 0), (1, -1, 0) | a tilted plane, a tilted shadow |
+| $`u`$ | the vector being split: the pull | (6, 2) | a shadow grown in proportion |
+| $`v`$ | the direction projected onto: the heading | (1, 1) | no change: only v's direction counts |
+| $`u \cdot v`$ | the dot product: matching entries multiplied, added | 8 | more pull along the heading, a longer shadow |
+| $`v \cdot v`$ | the heading dotted with itself: its squared length | 2 | t shrinks as v grows; the shadow holds still |
+| $`t`$ | copies of the heading in the shadow | 4 | a longer shadow, same line |
+| $`p`$ | the projection: the useful part | (4, 4) | — |
+| $`e`$ | the residual: the leftover, at right angles to v | (2, -2) | more pull wasted sideways |
+| $`w_1`$, $`w_2`$ | perpendicular directions naming a plane | (1, 1, 0), (1, -1, 0) | a tilted plane, a tilted shadow |
 
-For a plane, named by perpendicular directions $w_1$ and $w_2$, project onto each and add the shadows:
+For a plane, named by perpendicular directions $`w_1`$ and $`w_2`$, project onto each and add the shadows:
 
-$$p \;=\; \frac{u \cdot w_1}{w_1 \cdot w_1}\, w_1 \;+\; \frac{u \cdot w_2}{w_2 \cdot w_2}\, w_2.$$
+```math
+p \;=\; \frac{u \cdot w_1}{w_1 \cdot w_1}\, w_1 \;+\; \frac{u \cdot w_2}{w_2 \cdot w_2}\, w_2.
+```
 
 The same formula twice, summed.
 
@@ -76,15 +82,19 @@ The heading (1, 1) reaches its own multiples and nothing else, negative ones inc
 
 ### Step 1: demand a perpendicular leftover, and that number falls out
 
-Write the leftover as the pull minus the shadow: $e = u - t\,v$. Now demand what the picture insists on: the leftover meets the heading at a right angle, so their dot product is zero.
+Write the leftover as the pull minus the shadow: $`e = u - t\,v`$. Now demand what the picture insists on: the leftover meets the heading at a right angle, so their dot product is zero.
 
 The dot product splits over subtraction, so that reads
 
-$$(u - t\,v)\cdot v \;=\; u\cdot v \;-\; t\,(v\cdot v) \;=\; 0,$$
+```math
+(u - t\,v)\cdot v \;=\; u\cdot v \;-\; t\,(v\cdot v) \;=\; 0,
+```
 
-and rearranging for $t$ gives
+and rearranging for $`t`$ gives
 
-$$t \;=\; \frac{u\cdot v}{v\cdot v}.$$
+```math
+t \;=\; \frac{u\cdot v}{v\cdot v}.
+```
 
 With our numbers, 8 minus t times 2 is 0: t is 4, and the shadow is 4 copies of (1, 1), namely (4, 4). Nothing was assumed but the right angle.
 
@@ -94,11 +104,15 @@ A different question, answered without a dot product: which point on the heading
 
 Every point on it is t copies of (1, 1), so the gap from the pull is (6 - t, 2 - t), with squared length
 
-$$(6-t)^2 + (2-t)^2 \;=\; 2t^2 - 16t + 40.$$
+```math
+(6-t)^2 + (2-t)^2 \;=\; 2t^2 - 16t + 40.
+```
 
 Complete the square, as on [The quadratic formula](../02-Polynomials/03-quadratic-formula.md):
 
-$$2t^2 - 16t + 40 \;=\; 2(t-4)^2 + 8.$$
+```math
+2t^2 - 16t + 40 \;=\; 2(t-4)^2 + 8.
+```
 
 A square is never negative, so the smallest value sits where the squared piece vanishes: t = 4, giving 8 — the same t as step 1, reached without mentioning a right angle.
 
@@ -120,7 +134,7 @@ The parabola settled one example; this settles all, with nothing but the dot pro
 
 Any other point w of W gives u - w = e + (p - w). Since p - w lies in W, it is perpendicular to e, so the cross terms cancel:
 
-$$(u-w)\cdot(u-w) \;=\; e\cdot e \;+\; (p-w)\cdot(p-w).$$
+$`\displaystyle (u-w)\cdot(u-w) \;=\; e\cdot e \;+\; (p-w)\cdot(p-w).`$
 
 The last piece is never negative, so nothing in W beats p, and only w = p ties. Uniqueness follows: two splits u = p + e = p' + e' give p - p' = e' - e, lying in W and perpendicular to W, so it dots to zero with itself — only the zero vector does.
 
@@ -146,7 +160,9 @@ Perpendicular matters: each shadow is invisible to the other direction, so neith
 <summary>The one-step version: a matrix that does the projecting</summary>
 
 Stack the directions as the columns of a matrix A, none a mix of the others. Any vector b then has shadow P b on the space they span, with
-$$P = A\,(A^{T} A)^{-1} A^{T}.$$
+
+$`\displaystyle P = A\,(A^{T} A)^{-1} A^{T}.`$
+
 Raised T means rows and columns swapped; raised -1 means the inverse, the matrix that undoes it, which exists exactly because no column is a mix of the others. For our line A is the single column (1, 1), the bracket holds only v dotted with itself, 2, and (6, 2) through P returns (4, 4). Projecting twice adds nothing: P P = P. It is the object [Least squares](04-least-squares.md) solves for.
 
 </details>

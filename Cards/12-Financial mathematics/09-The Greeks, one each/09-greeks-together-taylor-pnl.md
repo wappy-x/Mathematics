@@ -41,28 +41,30 @@ Orange: the full reprice, the truth. Green, the straight line: delta alone. Dark
 
 ## The formula
 
-Notation first, in words. A small $d$ in front of an input means "the change in": $dS$ is the change in Acme's price, $d\sigma$ the change in volatility, $dt$ the time that passes, $dr$ the change in the interest rate. $dV$ is the resulting change in the option's value. Each Greek is a slope or a bend of the price, measured the evening before.
+Notation first, in words. A small $`d`$ in front of an input means "the change in": $`dS`$ is the change in Acme's price, $`d\sigma`$ the change in volatility, $`dt`$ the time that passes, $`dr`$ the change in the interest rate. $`dV`$ is the resulting change in the option's value. Each Greek is a slope or a bend of the price, measured the evening before.
 
-$$dV \approx \Delta\,dS + \tfrac12\,\Gamma\,dS^2 + \mathcal{V}\,d\sigma + \Theta\,dt + \rho\,dr + \text{vanna}\,dS\,d\sigma + \tfrac12\,\text{volga}\,d\sigma^2$$
+```math
+dV \approx \Delta\,dS + \tfrac12\,\Gamma\,dS^2 + \mathcal{V}\,d\sigma + \Theta\,dt + \rho\,dr + \text{vanna}\,dS\,d\sigma + \tfrac12\,\text{volga}\,d\sigma^2
+```
 
 **Read it aloud:** the gain is delta times the share move, plus half of gamma times the share move squared, plus vega times the volatility move, plus theta times the time gone, plus rho times the rate move, plus vanna times the share move times the volatility move, plus half of volga times the volatility move squared.
 
-The first five terms are straight-line pieces and one bend. The last two exist because two things moved at once, or because volatility's own effect bends. What is left over is the error. Most of it is $R_3$, which shrinks like the cube of the move. The rest is the dropped terms that carry $dt$, under a tenth of a cent over one day here (Step 3).
+The first five terms are straight-line pieces and one bend. The last two exist because two things moved at once, or because volatility's own effect bends. What is left over is the error. Most of it is $`R_3`$, which shrinks like the cube of the move. The rest is the dropped terms that carry $`dt`$, under a tenth of a cent over one day here (Step 3).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$, $dV$ | the call's value, and its change over the day | $9.23, then +$3.51 exact | — |
-| $S$, $dS$ | Acme's price, and its overnight move | $100, +$5 | the gain rises, faster than a straight line |
-| $\sigma$, $d\sigma$ | volatility as a decimal, and its move; one vol point is 0.01 | 0.20, +0.01 | the gain rises by about $0.38 per point |
-| $t$, $dt$ | calendar time gone, in years; a day is 1/365 here (some desks count trading days, 1/252) | one day, 1/365 | the gain falls by about 1.4 cents a day |
-| $r$, $dr$, $\rho$ | the riskless rate, continuously compounded, and its move; rho: dollars per 1.00 of rate | 0.05, 0; rho 49.458109 | the gain rises: 0.123645 per quarter point |
-| $\Delta$ | delta: dollars gained per dollar of share move | 0.586851 | — |
-| $\Gamma$ | gamma: how fast delta itself changes per dollar of share move | 0.018951 | — |
-| $\mathcal{V}$ | vega: dollars per 1.00 of volatility; per point, divide by 100 | 37.901158 | — |
-| $\Theta$ | theta: dollars per year of time passing, all else still | −5.089319 per year | — |
+| $`V`$, $`dV`$ | the call's value, and its change over the day | $9.23, then +$3.51 exact | — |
+| $`S`$, $`dS`$ | Acme's price, and its overnight move | $100, +$5 | the gain rises, faster than a straight line |
+| $`\sigma`$, $`d\sigma`$ | volatility as a decimal, and its move; one vol point is 0.01 | 0.20, +0.01 | the gain rises by about $0.38 per point |
+| $`t`$, $`dt`$ | calendar time gone, in years; a day is 1/365 here (some desks count trading days, 1/252) | one day, 1/365 | the gain falls by about 1.4 cents a day |
+| $`r`$, $`dr`$, $`\rho`$ | the riskless rate, continuously compounded, and its move; rho: dollars per 1.00 of rate | 0.05, 0; rho 49.458109 | the gain rises: 0.123645 per quarter point |
+| $`\Delta`$ | delta: dollars gained per dollar of share move | 0.586851 | — |
+| $`\Gamma`$ | gamma: how fast delta itself changes per dollar of share move | 0.018951 | — |
+| $`\mathcal{V}`$ | vega: dollars per 1.00 of volatility; per point, divide by 100 | 37.901158 | — |
+| $`\Theta`$ | theta: dollars per year of time passing, all else still | −5.089319 per year | — |
 | vanna, volga | vanna: how delta changes with volatility; volga: how vega changes with volatility | −0.094753, 2.368822 | — |
-| $g$, $h$, $h_i$ | the proof's shorthand: the price along the straight path from tonight to next evening; the whole move as one list; one input's move | h = (5, 0.01, 1/365, 0) | — |
-| $R_3$, $k$, $\xi$ | the leftover error; $k$ scales the whole move (k = 2 doubles it); $\xi$ is an in-between point in the error's exact form | −$0.02 at k = 1 | $R_3$ grows like $k^3$ |
+| $`g`$, $`h`$, $`h_i`$ | the proof's shorthand: the price along the straight path from tonight to next evening; the whole move as one list; one input's move | h = (5, 0.01, 1/365, 0) | — |
+| $`R_3`$, $`k`$, $`\xi`$ | the leftover error; $`k`$ scales the whole move (k = 2 doubles it); $`\xi`$ is an in-between point in the error's exact form | −$0.02 at k = 1 | $`R_3`$ grows like $`k^3`$ |
 
 Every Greek above is the house market's, taken on the evening before the move. The sibling cards derive each one: [Delta](01-delta.md), [Gamma](02-gamma.md), [Vega](03-vega.md), [Theta](04-theta.md), [Rho and dividend rho](05-rho-and-dividend-rho.md), [Vanna](06-vanna.md), [Volga](07-volga.md). This card uses them; it does not re-derive them.
 
@@ -70,7 +72,7 @@ Every Greek above is the house market's, taken on the evening before the move. T
 
 - **The price is smooth near today's inputs.** Three rounds of slopes must exist and stay bounded. At expiry the payoff has a kink at the strike, gamma runs off to infinity, and the expansion fails for an at-the-money option (one whose strike equals the share price) on its last day.
 - **The move is small.** The error grows like the cube of the move. At spot +$5 and +1 point it is 2 cents; at +$20 and +4 points it is $1.08.
-- **The Greeks are fresh.** They are slopes at one point. Greeks stored a week ago describe a different point, and the estimate carries that staleness on top of $R_3$.
+- **The Greeks are fresh.** They are slopes at one point. Greeks stored a week ago describe a different point, and the estimate carries that staleness on top of $`R_3`$.
 - **One model on both sides.** The error measured here is against a Black-Scholes reprice. A real desk reprices on a volatility surface (a different volatility for each strike and date), so "volatility up one point" is itself a simplification; any difference between that and the real surface move is unexplained by this sum.
 - **No jump.** A takeover bid or an earnings gap moves Acme by $30 before anyone can act. The expansion is still defined there, but its error, at the cube of a huge move, swamps the answer.
 
@@ -88,36 +90,40 @@ The option's price is a smooth surface over four inputs: share price, volatility
 
 Hold volatility, time and the rate still. The price is now a curve in the share price alone. Taylor's theorem ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) says
 
-$$V(S + dS) = V(S) + \Delta\,dS + \tfrac12\,\Gamma\,dS^2 + \tfrac16\,V'''(\xi)\,dS^3$$
+```math
+V(S + dS) = V(S) + \Delta\,dS + \tfrac12\,\Gamma\,dS^2 + \tfrac16\,V'''(\xi)\,dS^3
+```
 
-where $V'''$ is the third slope, taken at some price $\xi$ (read "ksi") between $S$ and $S + dS$. The first two pieces are the tangent and the bend. The third is the error: a number times the cube of the move.
+where $`V'''`$ is the third slope, taken at some price $`\xi`$ (read "ksi") between $`S`$ and $`S + dS`$. The first two pieces are the tangent and the bend. The third is the error: a number times the cube of the move.
 
-Where does the half come from? A parabola $a\,x^2$ has second derivative $2a$. To match a curve whose second derivative is $\Gamma$, the parabola needs $a = \Gamma/2$.
+Where does the half come from? A parabola $`a\,x^2`$ has second derivative $`2a`$. To match a curve whose second derivative is $`\Gamma`$, the parabola needs $`a = \Gamma/2`$.
 
 ### Step 2: several inputs at once, by walking a straight line
 
-Next evening's inputs differ from tonight's in every coordinate at once. Draw a straight path between the two points, and let $k$ run from 0 (tonight) to 1 (next evening):
+Next evening's inputs differ from tonight's in every coordinate at once. Draw a straight path between the two points, and let $`k`$ run from 0 (tonight) to 1 (next evening):
 
-$$g(k) = V\big(S + k\,dS,\ \sigma + k\,d\sigma,\ t + k\,dt,\ r + k\,dr\big).$$
+```math
+g(k) = V\big(S + k\,dS,\ \sigma + k\,d\sigma,\ t + k\,dt,\ r + k\,dr\big).
+```
 
-Along that path $g$ is an ordinary curve in one variable, so Step 1 applies to it. Its slope at $k = 0$ is, by the chain rule, each input's slope times that input's move, summed: $\Delta\,dS + \mathcal{V}\,d\sigma + \Theta\,dt + \rho\,dr$.
+Along that path $`g`$ is an ordinary curve in one variable, so Step 1 applies to it. Its slope at $`k = 0`$ is, by the chain rule, each input's slope times that input's move, summed: $`\Delta\,dS + \mathcal{V}\,d\sigma + \Theta\,dt + \rho\,dr`$.
 
-Its bend is every second slope of the surface, each multiplied by the two moves it involves. The pure bends appear once: $\Gamma\,dS^2$, $\text{volga}\,d\sigma^2$. Each cross bend appears twice, because moving $S$ then $\sigma$ and moving $\sigma$ then $S$ give the same second slope: $2\,\text{vanna}\,dS\,d\sigma$. Taylor halves the whole bend. The pure terms keep their half. The cross terms lose it: $\tfrac12 \times 2 = 1$. That is why vanna carries no half on the card's formula.
+Its bend is every second slope of the surface, each multiplied by the two moves it involves. The pure bends appear once: $`\Gamma\,dS^2`$, $`\text{volga}\,d\sigma^2`$. Each cross bend appears twice, because moving $`S`$ then $`\sigma`$ and moving $`\sigma`$ then $`S`$ give the same second slope: $`2\,\text{vanna}\,dS\,d\sigma`$. Taylor halves the whole bend. The pure terms keep their half. The cross terms lose it: $`\tfrac12 \times 2 = 1`$. That is why vanna carries no half on the card's formula.
 
 <details>
 <summary>Detailed proof: the second-order expansion in several inputs, with its error</summary>
 
-Let $x = (S, \sigma, t, r)$ and $h = (dS, d\sigma, dt, dr)$, and suppose every third partial derivative of $V$ is continuous on the segment from $x$ to $x + h$. Set $g(k) = V(x + k h)$ for $0 \le k \le 1$.
+Let $`x = (S, \sigma, t, r)`$ and $`h = (dS, d\sigma, dt, dr)`$, and suppose every third partial derivative of $`V`$ is continuous on the segment from $`x`$ to $`x + h`$. Set $`g(k) = V(x + k h)`$ for $`0 \le k \le 1`$.
 
-By the chain rule, $g'(k) = \sum_i \partial_i V(x + kh)\,h_i$, $g''(k) = \sum_{i,j} \partial_i\partial_j V(x + kh)\,h_i h_j$, and $g'''(k) = \sum_{i,j,l} \partial_i\partial_j\partial_l V(x + kh)\,h_i h_j h_l$. Here $\partial_i V$ means the slope of $V$ in the i-th input with the others held still, and $h_i$, the i-th entry of $h$, is that input's move.
+By the chain rule, $`g'(k) = \sum_i \partial_i V(x + kh)\,h_i`$, $`g''(k) = \sum_{i,j} \partial_i\partial_j V(x + kh)\,h_i h_j`$, and $`g'''(k) = \sum_{i,j,l} \partial_i\partial_j\partial_l V(x + kh)\,h_i h_j h_l`$. Here $`\partial_i V`$ means the slope of $`V`$ in the i-th input with the others held still, and $`h_i`$, the i-th entry of $`h`$, is that input's move.
 
-Taylor's theorem with the Lagrange remainder, for the one-variable $g(k)$ from 0 to 1: $g(1) = g(0) + g'(0) + \tfrac12 g''(0) + \tfrac16 g'''(c)$ for some point $0 < c < 1$.
+Taylor's theorem with the Lagrange remainder, for the one-variable $`g(k)`$ from 0 to 1: $`g(1) = g(0) + g'(0) + \tfrac12 g''(0) + \tfrac16 g'''(c)`$ for some point $`0 < c < 1`$.
 
-Since mixed partials of a smooth function do not depend on order, $g''(0)$ collects each unordered pair $i \neq j$ twice. Writing it out with the Greeks' names: $g''(0) = \Gamma\,dS^2 + \text{volga}\,d\sigma^2 + 2\,\text{vanna}\,dS\,d\sigma + 2\,\partial_S\partial_t V\,dS\,dt + (\text{the remaining pairs and squares involving } dt, dr)$. The derivative $\partial_S\partial_t V$ is charm, the change of delta with time.
+Since mixed partials of a smooth function do not depend on order, $`g''(0)`$ collects each unordered pair $`i \neq j`$ twice. Writing it out with the Greeks' names: $`g''(0) = \Gamma\,dS^2 + \text{volga}\,d\sigma^2 + 2\,\text{vanna}\,dS\,d\sigma + 2\,\partial_S\partial_t V\,dS\,dt + (\text{the remaining pairs and squares involving } dt, dr)`$. The derivative $`\partial_S\partial_t V`$ is charm, the change of delta with time.
 
-The remainder: $g(k)$ is the price after the move scaled by $k$. The same theorem from 0 to $k$ gives $R_3 = \tfrac16 g'''(c)\,k^3$ for some $0 < c < k$. Since $g'''$ is continuous, $c \to 0$ as $k \to 0$ and $R_3 / k^3 \to \tfrac16 g'''(0)$: the error tends to a fixed number times the cube of the move.
+The remainder: $`g(k)`$ is the price after the move scaled by $`k`$. The same theorem from 0 to $`k`$ gives $`R_3 = \tfrac16 g'''(c)\,k^3`$ for some $`0 < c < k`$. Since $`g'''`$ is continuous, $`c \to 0`$ as $`k \to 0`$ and $`R_3 / k^3 \to \tfrac16 g'''(0)`$: the error tends to a fixed number times the cube of the move.
 
-The card's formula keeps the second-order terms that matter over a day and drops those carrying $dt^2$, $dr^2$, $dS\,dt$, $d\sigma\,dt$, $dS\,dr$, $d\sigma\,dr$ and $dt\,dr$. Over one day with $dr = 0$ the largest dropped term is charm times $dS\,dt$: −$0.000488$ here.
+The card's formula keeps the second-order terms that matter over a day and drops those carrying $`dt^2`$, $`dr^2`$, $`dS\,dt`$, $`d\sigma\,dt`$, $`dS\,dr`$, $`d\sigma\,dr`$ and $`dt\,dr`$. Over one day with $`dr = 0`$ the largest dropped term is charm times $`dS\,dt`$: −$`0.000488`$ here.
 
 </details>
 
@@ -125,13 +131,13 @@ The card's formula keeps the second-order terms that matter over a day and drops
 
 Seven terms survive, from a possible fourteen (four slopes and ten bends). The test is size over one day.
 
-Time moves by $dt = 1/365$ year. Its square, and any product of it with another small move, is tiny: charm (how fast delta changes as time passes) times $dS\,dt$ is −0.000488 dollars here. Rates rarely move much in a day, and rate terms times anything else are smaller still.
+Time moves by $`dt = 1/365`$ year. Its square, and any product of it with another small move, is tiny: charm (how fast delta changes as time passes) times $`dS\,dt`$ is −0.000488 dollars here. Rates rarely move much in a day, and rate terms times anything else are smaller still.
 
-The share move is different. A day's typical share move is about $\sigma S \sqrt{dt}$: 0.20 × 100 × √(1/365) = $1.05 (1.046848). Its square is $\sigma^2 S^2\,dt$: proportional to $dt$ itself, not to $dt^2$. So $\tfrac12\Gamma\,dS^2$ stays, and it is the same size as $\Theta\,dt$. That match in size is no coincidence; it is where the next card starts.
+The share move is different. A day's typical share move is about $`\sigma S \sqrt{dt}`$: 0.20 × 100 × √(1/365) = $1.05 (1.046848). Its square is $`\sigma^2 S^2\,dt`$: proportional to $`dt`$ itself, not to $`dt^2`$. So $`\tfrac12\Gamma\,dS^2`$ stays, and it is the same size as $`\Theta\,dt`$. That match in size is no coincidence; it is where the next card starts.
 
 ### Step 4: the error shrinks with the cube
 
-Scale the whole move: spot $+5k$ dollars, volatility $+k$ points, with no time passing. Step 2 says the leftover after the seven terms is about $\tfrac16 g'''(0)\,k^3$. The code measures $g'''$ directly, by repricing at four points along the path, and gets $\tfrac16 g'''(0) = -0.019880$. The measured leftover at $k = 1$ is $-0.01935$. Halve the move and the error falls by a factor of 7.88, and leftover ÷ $k^3$ moves closer to the prediction.
+Scale the whole move: spot $`+5k`$ dollars, volatility $`+k`$ points, with no time passing. Step 2 says the leftover after the seven terms is about $`\tfrac16 g'''(0)\,k^3`$. The code measures $`g'''`$ directly, by repricing at four points along the path, and gets $`\tfrac16 g'''(0) = -0.019880`$. The measured leftover at $`k = 1`$ is $`-0.01935`$. Halve the move and the error falls by a factor of 7.88, and leftover ÷ $`k^3`$ moves closer to the prediction.
 
 The sign is negative: the estimate overshoots. The third slope along this path is negative because gamma falls as Acme rises above the strike and also falls as volatility rises; the two effects are of similar size. So the parabola keeps curving up after the true price has started to straighten.
 
@@ -141,7 +147,7 @@ A second road reaches each Greek without any formula: nudge one input up and dow
 
 ## Worked numbers, by hand
 
-House call, the evening before: $S = 100$, $\sigma = 0.20$, one year left, $r = 0.05$, dividend yield 0.02. Next evening: $dS = +5$, $d\sigma = +0.01$, $dt = 1/365$, $dr = 0$.
+House call, the evening before: $`S = 100`$, $`\sigma = 0.20`$, one year left, $`r = 0.05`$, dividend yield 0.02. Next evening: $`dS = +5`$, $`d\sigma = +0.01`$, $`dt = 1/365`$, $`dr = 0`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -206,7 +212,7 @@ The leftover looks negligible at two cents. It is not negligible on a bad day. S
 | 2 | +$10 | +2 pts | 7.4066 | 7.5556 | −0.14899 | −0.018624 |
 | 4 | +$20 | +4 pts | 15.8844 | 16.9693 | −1.08486 | −0.016951 |
 
-The last column is nearly flat, and it sits near the predicted $\tfrac16 g'''(0) = -0.019880$. That flatness is the cube law. Each doubling multiplies the error by 7.88, then 7.70, then 7.28: close to 8, and drifting down as the move grows, because the fourth-order term (with the opposite sign) starts to count.
+The last column is nearly flat, and it sits near the predicted $`\tfrac16 g'''(0) = -0.019880`$. That flatness is the cube law. Each doubling multiplies the error by 7.88, then 7.70, then 7.28: close to 8, and drifting down as the move grows, because the fourth-order term (with the opposite sign) starts to count.
 
 ```
 leftover error of the second-order estimate, dollars
@@ -603,14 +609,14 @@ The two outputs agree line for line, although they reach the bell-curve area by 
 
 Lean proves the expansion and its error for a price of any number of inputs, smooth near today's inputs, and for every move.
 
-- Suppose the price has three rounds of continuous slopes near today's inputs $x$, and $k$ scales a move $h$. Then $R_3 / k^3$ tends to $\tfrac16 g'''(0)$ as $k$ goes to 0. Here $R_3$ is what is left after every slope term, each pure bend with its half, and each cross bend once.
-- Suppose the price has three rounds of continuous slopes near every point of the straight path from $x$ to $x + h$. Then $g(1)$ equals the second-order sum plus $\tfrac16 g'''(c)$, for some $c$ between 0 and 1.
-- Suppose the price has two rounds of continuous slopes near $x$. Then a cross bend is the same in either order: vanna is the change of delta with volatility, and of vega with the share price.
-- Four slopes and ten bends make fourteen terms, and the cross term's half cancels: $\tfrac12 \times 2 = 1$.
-- The share move squared is $5^2 = 25$, and the scaled spot moves $5k$ are 2.50, 10 and 20 dollars.
+- Suppose the price has three rounds of continuous slopes near today's inputs $`x`$, and $`k`$ scales a move $`h`$. Then $`R_3 / k^3`$ tends to $`\tfrac16 g'''(0)`$ as $`k`$ goes to 0. Here $`R_3`$ is what is left after every slope term, each pure bend with its half, and each cross bend once.
+- Suppose the price has three rounds of continuous slopes near every point of the straight path from $`x`$ to $`x + h`$. Then $`g(1)`$ equals the second-order sum plus $`\tfrac16 g'''(c)`$, for some $`c`$ between 0 and 1.
+- Suppose the price has two rounds of continuous slopes near $`x`$. Then a cross bend is the same in either order: vanna is the change of delta with volatility, and of vega with the share price.
+- Four slopes and ten bends make fourteen terms, and the cross term's half cancels: $`\tfrac12 \times 2 = 1`$.
+- The share move squared is $`5^2 = 25`$, and the scaled spot moves $`5k`$ are 2.50, 10 and 20 dollars.
 - One point lifts volatility from 20 to 21 percent, and one day leaves 364/365 of the year.
-- Double the move and $k^3$ grows eightfold; four times the move, 64-fold.
-- A typical day's move squared, before the factor $dt$, is $(0.20 \times 100)^2 = 400$.
+- Double the move and $`k^3`$ grows eightfold; four times the move, 64-fold.
+- A typical day's move squared, before the factor $`dt`$, is $`(0.20 \times 100)^2 = 400`$.
 
 The Greeks' values, the reprices, the dropped time terms and the measured errors are left to the Python and Rust checks.
 

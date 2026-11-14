@@ -39,48 +39,54 @@ The line only joins the dots. The six corners are the data; the straight pieces 
 
 ## The formula
 
-Notation first, in words. A discount factor at time $t$ is written $D(t)$: the price today of one dollar due at $t$, so $D(0) = 1$ and a falling $D$ means a positive interest rate.
+Notation first, in words. A discount factor at time $`t`$ is written $`D(t)`$: the price today of one dollar due at $`t`$, so $`D(0) = 1`$ and a falling $`D`$ means a positive interest rate.
 
-The **instantaneous forward rate**, written $f(t)$, is the rate the curve implies for a loan starting at $t$ and lasting a moment. It is the rate per year that the curve is charging at that instant, and it is what every rule on this card really chooses.
+The **instantaneous forward rate**, written $`f(t)`$, is the rate the curve implies for a loan starting at $`t`$ and lasting a moment. It is the rate per year that the curve is charging at that instant, and it is what every rule on this card really chooses.
 
-$$D(t) = \exp\left(-\int_0^t f(u)\,du\right)$$
+```math
+D(t) = \exp\left(-\int_0^t f(u)\,du\right)
+```
 
 **Read it aloud:** a dollar due later is worth what is left of it after the forward rate has been charged, continuously, from today until the payment date.
 
-Two quoted pillars therefore fix one number about the forward rate between them: its total. Writing $t_i$ for the pillar dates, $h_i = t_i - t_{i-1}$ for the length of the gap in years and $D_i$ for the quoted discount factor at $t_i$,
+Two quoted pillars therefore fix one number about the forward rate between them: its total. Writing $`t_i`$ for the pillar dates, $`h_i = t_i - t_{i-1}`$ for the length of the gap in years and $`D_i`$ for the quoted discount factor at $`t_i`$,
 
-$$m_i = \frac{\ln D_{i-1} - \ln D_i}{h_i}$$
+```math
+m_i = \frac{\ln D_{i-1} - \ln D_i}{h_i}
+```
 
-**Read it aloud:** the **segment forward** is the gap's total forward rate spread evenly across it — the average height of $f$ over the gap, and the only thing the two quotes say about it.
+**Read it aloud:** the **segment forward** is the gap's total forward rate spread evenly across it — the average height of $`f`$ over the gap, and the only thing the two quotes say about it.
 
-The three rules differ in what they do with that freedom. Writing $w$ for the fraction of a gap already elapsed, $w = (t - t_{i-1})/h_i$, and $g_0$, $g_1$ for how far the curve's forward sits above the segment forward at the gap's two ends:
+The three rules differ in what they do with that freedom. Writing $`w`$ for the fraction of a gap already elapsed, $`w = (t - t_{i-1})/h_i`$, and $`g_0`$, $`g_1`$ for how far the curve's forward sits above the segment forward at the gap's two ends:
 
 | Rule | What it sets | Forward rate it implies |
 | --- | --- | --- |
-| Log-linear | $\ln D(t) = (1 - w)\ln D_{i-1} + w \ln D_i$ | flat at $m_i$ across the gap, jumping at each pillar |
-| Monotone convex | $f$ continuous, piecewise quadratic, same area on every gap | a curve through a forward at each pillar, with no invented humps |
-| Nelson-Siegel | $f(t) = \beta_0 + \beta_1 e^{-t/\tau} + \beta_2 \frac{t}{\tau} e^{-t/\tau}$ | smooth everywhere, and not pinned to the quotes |
+| Log-linear | $`\ln D(t) = (1 - w)\ln D_{i-1} + w \ln D_i`$ | flat at $`m_i`$ across the gap, jumping at each pillar |
+| Monotone convex | $`f`$ continuous, piecewise quadratic, same area on every gap | a curve through a forward at each pillar, with no invented humps |
+| Nelson-Siegel | $`f(t) = \beta_0 + \beta_1 e^{-t/\tau} + \beta_2 \frac{t}{\tau} e^{-t/\tau}`$ | smooth everywhere, and not pinned to the quotes |
 
-The middle rule starts from one formula on each gap, with $x$ the same fraction $w$ written short:
+The middle rule starts from one formula on each gap, with $`x`$ the same fraction $`w`$ written short:
 
-$$f(t) = m_i + g_0\,(1 - 4x + 3x^2) + g_1\,(3x^2 - 2x)$$
+```math
+f(t) = m_i + g_0\,(1 - 4x + 3x^2) + g_1\,(3x^2 - 2x)
+```
 
-Both bracketed pieces average to zero across the gap, which is why the area — and so every quote — survives. Where that plain parabola would invent a hump, Hagan and West replace part of it with a flat piece, turning at a point $\eta$ chosen to keep the area right. Step 3 says when and why.
+Both bracketed pieces average to zero across the gap, which is why the area — and so every quote — survives. Where that plain parabola would invent a hump, Hagan and West replace part of it with a flat piece, turning at a point $`\eta`$ chosen to keep the area right. Step 3 says when and why.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $D(t)$, $D_i$ | price today of a dollar due at $t$, and at the pillar dated $t_i$ | 0.926816 at two years | rises: the payment is worth more today |
-| $t$, $t_i$ | time from today in years, and the quoted dates | 3 years; 0.25, 1, 2, 5, 10, 30 | later payments are worth less |
-| $h_i$ | length of the gap ending at $t_i$, in years | 3 years, from 2 to 5 | wider gaps leave the rule more room |
-| $m_i$ | the segment forward: the gap's average forward rate | 3.9667% from 2 to 5 years | every discount factor past the gap falls |
-| $f(t)$ | the instantaneous forward rate at $t$ | 3.8021% at 2.5 years, monotone convex | the curve is charging more at that instant |
-| $z$ | the zero rate: one steady rate from today to $t$ | 3.80% at two years | the same, averaged from today |
-| $w$, $x$ | fraction of the gap already elapsed, 0 to 1 | 1/3 at three years | moves the point across the gap |
-| $g_0$, $g_1$ | the gap's end forwards, measured from $m_i$ | −0.2750% and +0.2000% from 2 to 5 years | the curve leans harder inside the gap |
-| $\eta$ | where a gap's shape turns from curved to flat | 0.2477 across the 5-to-10-year gap | the flat piece takes more of the gap |
-| $\beta_0$, $\beta_1$, $\beta_2$ | Nelson-Siegel's level, its fading start, its hump | 4.6580%, −0.1885%, −2.6184% | lifts the far end, the near end, the middle |
-| $\tau$ | Nelson-Siegel's time scale: where the hump sits | 1.67 years | pushes the hump out to longer maturities |
-| $A$ | the level where a gap's two half-parabolas meet | used only on the 1-to-2-year gap | the crossing sits nearer one end |
+| $`D(t)`$, $`D_i`$ | price today of a dollar due at $`t`$, and at the pillar dated $`t_i`$ | 0.926816 at two years | rises: the payment is worth more today |
+| $`t`$, $`t_i`$ | time from today in years, and the quoted dates | 3 years; 0.25, 1, 2, 5, 10, 30 | later payments are worth less |
+| $`h_i`$ | length of the gap ending at $`t_i`$, in years | 3 years, from 2 to 5 | wider gaps leave the rule more room |
+| $`m_i`$ | the segment forward: the gap's average forward rate | 3.9667% from 2 to 5 years | every discount factor past the gap falls |
+| $`f(t)`$ | the instantaneous forward rate at $`t`$ | 3.8021% at 2.5 years, monotone convex | the curve is charging more at that instant |
+| $`z`$ | the zero rate: one steady rate from today to $`t`$ | 3.80% at two years | the same, averaged from today |
+| $`w`$, $`x`$ | fraction of the gap already elapsed, 0 to 1 | 1/3 at three years | moves the point across the gap |
+| $`g_0`$, $`g_1`$ | the gap's end forwards, measured from $`m_i`$ | −0.2750% and +0.2000% from 2 to 5 years | the curve leans harder inside the gap |
+| $`\eta`$ | where a gap's shape turns from curved to flat | 0.2477 across the 5-to-10-year gap | the flat piece takes more of the gap |
+| $`\beta_0`$, $`\beta_1`$, $`\beta_2`$ | Nelson-Siegel's level, its fading start, its hump | 4.6580%, −0.1885%, −2.6184% | lifts the far end, the near end, the middle |
+| $`\tau`$ | Nelson-Siegel's time scale: where the hump sits | 1.67 years | pushes the hump out to longer maturities |
+| $`A`$ | the level where a gap's two half-parabolas meet | used only on the 1-to-2-year gap | the crossing sits nearer one end |
 
 ### When it holds
 
@@ -106,9 +112,11 @@ Which means: any forward curve at all whose average over that gap is 3.9667% rep
 
 ### Step 1: log-linear spreads the area flat
 
-The first rule takes the obvious option: hold the forward at $m_i$ all the way across the gap. Then the logarithm of the discount factor falls at a constant rate, which is a straight line between the two quoted logarithms, so
+The first rule takes the obvious option: hold the forward at $`m_i`$ all the way across the gap. Then the logarithm of the discount factor falls at a constant rate, which is a straight line between the two quoted logarithms, so
 
-$$D(t) = D_{i-1}^{\,1-w}\,D_i^{\,w}.$$
+```math
+D(t) = D_{i-1}^{\,1-w}\,D_i^{\,w}.
+```
 
 Every quote comes back exactly; every discount factor stays positive, because an exponential cannot be negative. It is one line of arithmetic, and it is the common default.
 
@@ -120,38 +128,40 @@ The second rule keeps every area and removes the jumps. It needs a forward rate 
 
 Picture the staircase's two steps either side of a pillar, each drawn at the middle of its gap. Join those two midpoints with a straight line and read the line off at the pillar. The arithmetic of that reading is
 
-$$f_i = \frac{h_{i+1}\,m_i + h_i\,m_{i+1}}{h_i + h_{i+1}},$$
+```math
+f_i = \frac{h_{i+1}\,m_i + h_i\,m_{i+1}}{h_i + h_{i+1}},
+```
 
 where the weight on each step is the *other* gap's length: a long gap next door pulls its own step's weight down, because the pillar is far from that gap's middle. At ten years, a five-year gap at 4.5000% beside a twenty-year gap at 4.6500% gives 4.5300%.
 
 The two ends of the curve have only one neighbour each, so their forwards are reflected. Each is set half as far from its gap's average as the inner pillar's forward, and on the other side of it. At the short end, 4.2000% inside an average of 4.3000% gives 4.3500% at today's date.
 
-Now fill each gap with the one quadratic that hits those two pillar forwards and keeps the area. Measure the ends from the gap's own average, $g_0 = f_{i-1} - m_i$ and $g_1 = f_i - m_i$, and the shape is the formula in the last section. Check it: at $x = 0$ it gives $m_i + g_0$, at $x = 1$ it gives $m_i + g_1$, and each bracket integrates to zero across the gap, so the area — the quote — is untouched.
+Now fill each gap with the one quadratic that hits those two pillar forwards and keeps the area. Measure the ends from the gap's own average, $`g_0 = f_{i-1} - m_i`$ and $`g_1 = f_i - m_i`$, and the shape is the formula in the last section. Check it: at $`x = 0`$ it gives $`m_i + g_0`$, at $`x = 1`$ it gives $`m_i + g_1`$, and each bracket integrates to zero across the gap, so the area — the quote — is untouched.
 
 ### Step 3: a plain parabola invents humps, so it is amended
 
 A parabola through two end values can swing past both of them. On the gap from five to ten years the ends sit −0.3333% below and +0.0300% above an average of 4.5000%. The plain parabola, forced to make up the deficit left by that low start, rises above *both* ends in the second half of the gap before dropping back to the far one. Nothing in the quotes asked for that hump; the algebra invented it.
 
-Hagan and West's fix is to spend part of the gap flat: curve between the two ends over part of it, hold one of them over the rest. Then place the turning point $\eta$ so the area is still exactly right. From five to ten years that means curving up to 4.5300% a quarter of the way across, then flat.
+Hagan and West's fix is to spend part of the gap flat: curve between the two ends over part of it, hold one of them over the rest. Then place the turning point $`\eta`$ so the area is still exactly right. From five to ten years that means curving up to 4.5300% a quarter of the way across, then flat.
 
 There are four cases, depending on where the two ends sit relative to each other; three of them occur in this morning's quotes, and the check prints which one each gap uses.
 
 <details>
 <summary>Detailed proof: the four shapes, and why each keeps the quote</summary>
 
-Work in the gap's own units: $x$ runs from 0 to 1, and $g(x)$ is the forward measured from the segment forward $m_i$, so the quote is honoured exactly when $\int_0^1 g\,dx = 0$, with $g(0) = g_0$ and $g(1) = g_1$.
+Work in the gap's own units: $`x`$ runs from 0 to 1, and $`g(x)`$ is the forward measured from the segment forward $`m_i`$, so the quote is honoured exactly when $`\int_0^1 g\,dx = 0`$, with $`g(0) = g_0`$ and $`g(1) = g_1`$.
 
-**Region 1, the plain parabola.** $g(x) = g_0(1 - 4x + 3x^2) + g_1(3x^2 - 2x)$. Its integral is $g_0(1 - 2 + 1) + g_1(1 - 1) = 0$. It is used when the two ends are related closely enough that it cannot overshoot: $-\tfrac12 g_0 \le g_1 \le -2g_0$ when $g_0 < 0$, and the same chain reversed when $g_0 > 0$.
+**Region 1, the plain parabola.** $`g(x) = g_0(1 - 4x + 3x^2) + g_1(3x^2 - 2x)`$. Its integral is $`g_0(1 - 2 + 1) + g_1(1 - 1) = 0`$. It is used when the two ends are related closely enough that it cannot overshoot: $`-\tfrac12 g_0 \le g_1 \le -2g_0`$ when $`g_0 < 0`$, and the same chain reversed when $`g_0 > 0`$.
 
-**Region 2, flat then curved.** When $g_1$ is too far past $-2g_0$, hold $g = g_0$ on $[0, \eta]$ and run $g = g_0 + (g_1 - g_0)\left(\frac{x - \eta}{1 - \eta}\right)^2$ after it. The integral is $g_0 + (g_1 - g_0)(1 - \eta)/3$, which vanishes at $\eta = (g_1 + 2g_0)/(g_1 - g_0)$.
+**Region 2, flat then curved.** When $`g_1`$ is too far past $`-2g_0`$, hold $`g = g_0`$ on $`[0, \eta]`$ and run $`g = g_0 + (g_1 - g_0)\left(\frac{x - \eta}{1 - \eta}\right)^2`$ after it. The integral is $`g_0 + (g_1 - g_0)(1 - \eta)/3`$, which vanishes at $`\eta = (g_1 + 2g_0)/(g_1 - g_0)`$.
 
-**Region 3, curved then flat.** When $g_1$ sits between 0 and $-\tfrac12 g_0$, run $g = g_1 + (g_0 - g_1)\left(\frac{\eta - x}{\eta}\right)^2$ on $[0, \eta)$ and hold $g = g_1$ after it. The integral is $g_1 + (g_0 - g_1)\eta/3$, which vanishes at $\eta = 3g_1/(g_1 - g_0)$.
+**Region 3, curved then flat.** When $`g_1`$ sits between 0 and $`-\tfrac12 g_0`$, run $`g = g_1 + (g_0 - g_1)\left(\frac{\eta - x}{\eta}\right)^2`$ on $`[0, \eta)`$ and hold $`g = g_1`$ after it. The integral is $`g_1 + (g_0 - g_1)\eta/3`$, which vanishes at $`\eta = 3g_1/(g_1 - g_0)`$.
 
-**Region 4, both ends the same side.** When $g_0$ and $g_1$ share a sign the curve must cross to the other side in between. So it is built from two parabola halves meeting at a level $A$: $g = A + (g_0 - A)\left(\frac{\eta - x}{\eta}\right)^2$ before $\eta$ and $g = A + (g_1 - A)\left(\frac{x - \eta}{1 - \eta}\right)^2$ after it. Here $\eta = g_1/(g_0 + g_1)$ and $A = -g_0g_1/(g_0 + g_1)$. Its integral is $A + (g_0 - A)\eta/3 + (g_1 - A)(1 - \eta)/3$; substituting $s = g_0 + g_1$ gives $A + g_0g_1/s = A - A = 0$.
+**Region 4, both ends the same side.** When $`g_0`$ and $`g_1`$ share a sign the curve must cross to the other side in between. So it is built from two parabola halves meeting at a level $`A`$: $`g = A + (g_0 - A)\left(\frac{\eta - x}{\eta}\right)^2`$ before $`\eta`$ and $`g = A + (g_1 - A)\left(\frac{x - \eta}{1 - \eta}\right)^2`$ after it. Here $`\eta = g_1/(g_0 + g_1)`$ and $`A = -g_0g_1/(g_0 + g_1)`$. Its integral is $`A + (g_0 - A)\eta/3 + (g_1 - A)(1 - \eta)/3`$; substituting $`s = g_0 + g_1`$ gives $`A + g_0g_1/s = A - A = 0`$.
 
-In every region the value at $x = 0$ is $g_0$ and at $x = 1$ is $g_1$, so neighbouring gaps agree at the pillar they share and the forward curve is continuous. The check integrates each gap numerically and compares the answer with the quote that fixed it, to fourteen decimal places.
+In every region the value at $`x = 0`$ is $`g_0`$ and at $`x = 1`$ is $`g_1`$, so neighbouring gaps agree at the pillar they share and the forward curve is continuous. The check integrates each gap numerically and compares the answer with the quote that fixed it, to fourteen decimal places.
 
-One step is left out here: Hagan and West first clip each pillar forward into $[0,\,2\min(m_i, m_{i+1})]$, which is what keeps the forward curve positive in a steeper market. On this morning's quotes nothing is clipped.
+One step is left out here: Hagan and West first clip each pillar forward into $`[0,\,2\min(m_i, m_{i+1})]`$, which is what keeps the forward curve positive in a steeper market. On this morning's quotes nothing is clipped.
 
 </details>
 
@@ -159,13 +169,13 @@ One step is left out here: Hagan and West first clip each pillar forward into $[
 
 The third rule stops interpolating altogether. It proposes that the whole forward curve, from today to thirty years, is three simple shapes added up:
 
-- a flat level $\beta_0$;
-- a piece $\beta_1 e^{-t/\tau}$ that starts at full size and fades;
-- a hump $\beta_2 \frac{t}{\tau}e^{-t/\tau}$ that is zero today, peaks at $\tau$ years and fades after.
+- a flat level $`\beta_0`$;
+- a piece $`\beta_1 e^{-t/\tau}`$ that starts at full size and fades;
+- a hump $`\beta_2 \frac{t}{\tau}e^{-t/\tau}`$ that is zero today, peaks at $`\tau`$ years and fades after.
 
-Integrating that from 0 to $t$ and dividing by $t$ gives the zero rate the curve implies, which is what the quotes are compared against.
+Integrating that from 0 to $`t`$ and dividing by $`t`$ gives the zero rate the curve implies, which is what the quotes are compared against.
 
-Four numbers cannot pass through six quotes. So the numbers are fitted: with $\tau$ held fixed the zero rate is a plain weighted sum of the three levels, so the best three are the solution of a three-by-three linear system. Then $\tau$ is swept to find the best of those solutions. This morning it lands on $\tau$ = 1.67 years, with $\beta_0$ = 4.6580%, $\beta_1$ = −0.1885% and $\beta_2$ = −2.6184%.
+Four numbers cannot pass through six quotes. So the numbers are fitted: with $`\tau`$ held fixed the zero rate is a plain weighted sum of the three levels, so the best three are the solution of a three-by-three linear system. Then $`\tau`$ is swept to find the best of those solutions. This morning it lands on $`\tau`$ = 1.67 years, with $`\beta_0`$ = 4.6580%, $`\beta_1`$ = −0.1885% and $`\beta_2`$ = −2.6184%.
 
 The fit is close and it is not exact. Against the six quotes, in basis points:
 
@@ -213,13 +223,13 @@ The client's payment: 10,000,000.00 dollars due in three years, from this mornin
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | the pillars either side | the quotes at 2 and 5 years | 0.926816 and 0.822835 |
-| their logarithms | $\ln$ of each | −0.076000 and −0.195000 |
+| their logarithms | $`\ln`$ of each | −0.076000 and −0.195000 |
 | the area over the gap | −0.076000 − (−0.195000) | 0.119000 |
 | the segment forward | 0.119000 ÷ 3 years | 3.9667% |
-| log-linear at three years | $e^{-0.076000 - 0.119000/3}$ | 0.890772 |
+| log-linear at three years | $`e^{-0.076000 - 0.119000/3}`$ | 0.890772 |
 | **the payment, log-linear** | 10,000,000.00 × 0.890772 | **8,907,720.98** |
 | monotone convex, average forward from 2 to 3 years | the fitted shape on that gap | 3.8000% |
-| monotone convex at three years | 0.926816 × $e^{-0.038000}$, that 3.8000% for one year | 0.892258 |
+| monotone convex at three years | 0.926816 × $`e^{-0.038000}`$, that 3.8000% for one year | 0.892258 |
 | **the payment, monotone convex** | 10,000,000.00 × 0.892258 | **8,922,579.56** |
 | **what the choice of rule cost** | 8,922,579.56 − 8,907,720.98 | **14,858.58** |
 
@@ -242,7 +252,7 @@ Every number in that table is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that already knows an answer: the quadrature rule (the numerical integration) is a two-point Gauss rule written out, the least-squares fit is Gaussian elimination written out, and $\tau$ is found by sweeping a hundredth of a year at a time. Six roads cross-check each other.
+Nothing is imported that already knows an answer: the quadrature rule (the numerical integration) is a two-point Gauss rule written out, the least-squares fit is Gaussian elimination written out, and $`\tau`$ is found by sweeping a hundredth of a year at a time. Six roads cross-check each other.
 
 - Each pillar forward is computed twice, once from the weights above and once by reading the line through the two step midpoints.
 - Both exact rules are asked for every quoted discount factor back.
@@ -674,9 +684,9 @@ The two outputs match line for line: different languages, the same six roads, th
 Lean proves the card's three facts about filling a gap, for every value meeting the conditions below, and the worked numbers exactly.
 
 - Take pillar dates sorted and distinct, starting today, and two forward curves that can be integrated up to the last pillar. Then the two curves give the same discount factor at every pillar exactly when they have the same area on every gap.
-- Take a gap from $t_{i-1}$ to $t_i$, with positive discount factors $D_{i-1}$ and $D_i$. Then log-linear interpolation hands back both quotes, and its forward rate equals the segment forward $m_i$ at every point.
-- Take any gap and any end forwards $g_0$ and $g_1$. Then the plain parabola starts at $m_i + g_0$, ends at $m_i + g_1$, and keeps the area $m_i h_i$.
-- The worked numbers also hold exactly in fractions. That covers three segment forwards, two pillar forwards, the reflected short end, and $\eta$ on the 5-to-10-year gap.
+- Take a gap from $`t_{i-1}`$ to $`t_i`$, with positive discount factors $`D_{i-1}`$ and $`D_i`$. Then log-linear interpolation hands back both quotes, and its forward rate equals the segment forward $`m_i`$ at every point.
+- Take any gap and any end forwards $`g_0`$ and $`g_1`$. Then the plain parabola starts at $`m_i + g_0`$, ends at $`m_i + g_1`$, and keeps the area $`m_i h_i`$.
+- The worked numbers also hold exactly in fractions. That covers three segment forwards, two pillar forwards, the reflected short end, and $`\eta`$ on the 5-to-10-year gap.
 
 Hagan and West's four regions, the Nelson-Siegel fit, the discount factors and the money amounts are left to the Python and Rust checks.
 

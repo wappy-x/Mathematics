@@ -43,42 +43,48 @@ Orange: this card's exact adjustment for the simple three-month rate, 5.99 at th
 
 ## The formula
 
-$$R_0 - K \;=\; \frac{G_0}{\alpha}\left(e^{C}-1\right), \qquad C \;=\; b(h)^2\,q_T \;+\; b(h)\,c_T$$
+```math
+R_0 - K \;=\; \frac{G_0}{\alpha}\left(e^{C}-1\right), \qquad C \;=\; b(h)^2\,q_T \;+\; b(h)\,c_T
+```
 
 **Read it aloud:** the futures rate beats the FRA rate by the forward growth factor, times a small exponential tilt, spread over the accrual period; the tilt has a payment-date part and a bank-account part.
 
 The two rates on their own:
 
-$$K = \frac{G_0 - 1}{\alpha}, \qquad R_0 = \frac{G_0\,e^{C} - 1}{\alpha}, \qquad G_0 = \frac{D(T)}{D(U)}$$
+```math
+K = \frac{G_0 - 1}{\alpha}, \qquad R_0 = \frac{G_0\,e^{C} - 1}{\alpha}, \qquad G_0 = \frac{D(T)}{D(U)}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the adjustment… |
 | --- | --- | --- | --- |
-| $L_T$, $Z_T$ | the three-month simple rate that fixes at $T$; $Z_T = 1 + \alpha L_T$ is the growth factor it implies | random | |
-| $K$ | the **FRA rate**: the fixed rate that makes the FRA worth zero today | 4.2727% | |
-| $R_0$ | the **futures rate** today; the quote is $100(1-R_0)$ | 4.3325%, quote 95.6675 | |
-| $D(s)$, $P(T,U)$, $w$ | today's discount curve: what one dollar due at a date is worth now; $P(T,U)$ is the same thing seen at $T$ for a payment at $U$; $w = P(T,U)/B_T$ is Step 3's weight, today's value of one dollar at $U$ along one outcome | $D(s) = e^{-0.03s - 0.002s^2}$; $D(U) = 0.8881$ | |
-| $G_0$ | $D(T)/D(U)$: the growth factor from $T$ to $U$ that today's curve implies | 1.01068165 | |
-| $T$, $U$, $h$ | the fixing date, the payment date, and the gap $h = U - T$, in years | 3, 3.25, 0.25 | rises with $T$ (the chart) |
-| $\alpha$ | the accrual fraction: the share of a year the rate is paid for | 0.25 | |
-| $r_t$, $\varphi$, $X_t$, $X_T$, $W$, $B_T$ | the **short rate** (the overnight bank rate); its fitted, non-random part; its random part, now and at the fixing date; the random walk that kicks it; and the bank account, one dollar invested at the short rate from today to $T$ | random; $X_0 = 0$ | |
-| $\kappa$ | **mean-reversion speed**: how hard the model pulls $X_t$ back to zero, per year | 0.2 | falls: pull-back limits how far rates wander |
-| $\sigma$ | **rate volatility**: the size of the random kicks to the short rate, in rate per square-root year | 0.0143 (1.43 percentage points) | rises with its square |
-| $b(v)$, $v$ | the **loading** $(1 - e^{-\kappa v})/\kappa$: how much a rate move now shifts the average rate over the next $v$ years | $b(h) = 0.2439$, $b(T) = 2.2559$ | |
-| $q_T$, $c_T$, $C$ | the variance of $X_T$; its covariance with the bank account's log growth; the total exponent | 0.00035725, 0.00052035, 0.00014813 | |
+| $`L_T`$, $`Z_T`$ | the three-month simple rate that fixes at $`T`$; $`Z_T = 1 + \alpha L_T`$ is the growth factor it implies | random | |
+| $`K`$ | the **FRA rate**: the fixed rate that makes the FRA worth zero today | 4.2727% | |
+| $`R_0`$ | the **futures rate** today; the quote is $`100(1-R_0)`$ | 4.3325%, quote 95.6675 | |
+| $`D(s)`$, $`P(T,U)`$, $`w`$ | today's discount curve: what one dollar due at a date is worth now; $`P(T,U)`$ is the same thing seen at $`T`$ for a payment at $`U`$; $`w = P(T,U)/B_T`$ is Step 3's weight, today's value of one dollar at $`U`$ along one outcome | $`D(s) = e^{-0.03s - 0.002s^2}`$; $`D(U) = 0.8881`$ | |
+| $`G_0`$ | $`D(T)/D(U)`$: the growth factor from $`T`$ to $`U`$ that today's curve implies | 1.01068165 | |
+| $`T`$, $`U`$, $`h`$ | the fixing date, the payment date, and the gap $`h = U - T`$, in years | 3, 3.25, 0.25 | rises with $`T`$ (the chart) |
+| $`\alpha`$ | the accrual fraction: the share of a year the rate is paid for | 0.25 | |
+| $`r_t`$, $`\varphi`$, $`X_t`$, $`X_T`$, $`W`$, $`B_T`$ | the **short rate** (the overnight bank rate); its fitted, non-random part; its random part, now and at the fixing date; the random walk that kicks it; and the bank account, one dollar invested at the short rate from today to $`T`$ | random; $`X_0 = 0`$ | |
+| $`\kappa`$ | **mean-reversion speed**: how hard the model pulls $`X_t`$ back to zero, per year | 0.2 | falls: pull-back limits how far rates wander |
+| $`\sigma`$ | **rate volatility**: the size of the random kicks to the short rate, in rate per square-root year | 0.0143 (1.43 percentage points) | rises with its square |
+| $`b(v)`$, $`v`$ | the **loading** $`(1 - e^{-\kappa v})/\kappa`$: how much a rate move now shifts the average rate over the next $`v`$ years | $`b(h) = 0.2439`$, $`b(T) = 2.2559`$ | |
+| $`q_T`$, $`c_T`$, $`C`$ | the variance of $`X_T`$; its covariance with the bank account's log growth; the total exponent | 0.00035725, 0.00052035, 0.00014813 | |
 
 The two model quantities, each in one line of words:
 
-$$q_T = \sigma^2\,\frac{1 - e^{-2\kappa T}}{2\kappa}, \qquad c_T = \frac{\sigma^2}{2}\,b(T)^2$$
+```math
+q_T = \sigma^2\,\frac{1 - e^{-2\kappa T}}{2\kappa}, \qquad c_T = \frac{\sigma^2}{2}\,b(T)^2
+```
 
-$q_T$ is how spread out the random part of the short rate is on the fixing date. $c_T$ is how strongly that random part moves together with everything the bank account earned on the way there. Both are zero if $\sigma = 0$ or $T = 0$, and then $R_0 = K$.
+$`q_T`$ is how spread out the random part of the short rate is on the fixing date. $`c_T`$ is how strongly that random part moves together with everything the bank account earned on the way there. Both are zero if $`\sigma = 0`$ or $`T = 0`$, and then $`R_0 = K`$.
 
 ### When it holds
 
 - **Rates follow the Hull-White model**: one random driver, normal kicks, pull-back, fitted to today's curve. Fatter tails or several drivers change the size; the sign argument of Step 3 survives in any model where high rates and a fast-growing bank account go together.
 - **Settlement is continuous and gains earn the bank rate.** Daily settlement moves the answer by a sliver; margin paid at a rate far from the bank rate needs its own model.
-- **The FRA pays at the end of the period, $U$.** An FRA that pays at $T$ with a discount factor has the same rate $K$. A plain payment at $T$ without that discount is a different contract; see [Timing adjustments](03-timing-and-in-arrears-adjustments.md).
+- **The FRA pays at the end of the period, $`U`$.** An FRA that pays at $`T`$ with a discount factor has the same rate $`K`$. A plain payment at $`T`$ without that discount is a different contract; see [Timing adjustments](03-timing-and-in-arrears-adjustments.md).
 - **One curve, no default.** A separate projection curve, or a rate compounded day by day over the period, changes the payoff and needs its own derivation.
-- **The volatility is known.** The adjustment moves with $\sigma^2$, so a 10% error in $\sigma$ is roughly a 20% error in the adjustment.
+- **The volatility is known.** The adjustment moves with $`\sigma^2`$, so a 10% error in $`\sigma`$ is roughly a 20% error in the adjustment.
 
 ---
 
@@ -86,44 +92,50 @@ $q_T$ is how spread out the random part of the short rate is on the fixing date.
 
 ### Step 0: settlement dates change which average is fair
 
-A contract that costs nothing to enter must be worth nothing on average, once each payment is valued at the date it is paid. The FRA pays once, at $U$. The future pays every evening, from now to $T$. Different payment dates mean the two contracts are fair under different averages of the same final rate. The whole card is working out those two averages and subtracting.
+A contract that costs nothing to enter must be worth nothing on average, once each payment is valued at the date it is paid. The FRA pays once, at $`U`$. The future pays every evening, from now to $`T`$. Different payment dates mean the two contracts are fair under different averages of the same final rate. The whole card is working out those two averages and subtracting.
 
-The tool is the pricing rule from the Black-Scholes cards: the value today of a payment due at date $T$ is the average of that payment divided by $B_T$, where $B_T$ is what one dollar in the bank grows to by $T$. The average is taken in the **risk-neutral** world, the pretend world in which every asset is priced this way. Every average on this card is in that world.
+The tool is the pricing rule from the Black-Scholes cards: the value today of a payment due at date $`T`$ is the average of that payment divided by $`B_T`$, where $`B_T`$ is what one dollar in the bank grows to by $`T`$. The average is taken in the **risk-neutral** world, the pretend world in which every asset is priced this way. Every average on this card is in that world.
 
 ### Step 1: the futures rate is a plain average
 
 Take one evening. The future pays that night's change in its rate, in cash, and entering costs nothing. The bank rate for that one night is already known, so discounting the payment by a known amount cannot change its sign. For the position to be fair, the expected change over the night must be zero.
 
-A quantity whose expected next change is always zero is a **martingale**: its best forecast of its own future value is its current value. At $T$ the futures rate equals the fixed rate $L_T$ by contract. So today
+A quantity whose expected next change is always zero is a **martingale**: its best forecast of its own future value is its current value. At $`T`$ the futures rate equals the fixed rate $`L_T`$ by contract. So today
 
-$$R_0 = \text{average of } L_T.$$
+```math
+R_0 = \text{average of } L_T.
+```
 
 No discounting anywhere: the one-night discount was known at each step, so the bank account dropped out. This is the result of [Futures](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md), carried from shares to rates.
 
 ### Step 2: the FRA rate needs no model
 
-The FRA pays $\alpha(L_T - K)$ per dollar of notional (the amount the payment is computed on) at $U$. Rewrite: $\alpha L_T = Z_T - 1$, and $Z_T = 1/P(T,U)$, because a dollar invested at $T$ in the bond maturing at $U$ grows to exactly $Z_T$. So at $U$ the FRA pays $Z_T - 1 - \alpha K$.
+The FRA pays $`\alpha(L_T - K)`$ per dollar of notional (the amount the payment is computed on) at $`U`$. Rewrite: $`\alpha L_T = Z_T - 1`$, and $`Z_T = 1/P(T,U)`$, because a dollar invested at $`T`$ in the bond maturing at $`U`$ grows to exactly $`Z_T`$. So at $`U`$ the FRA pays $`Z_T - 1 - \alpha K`$.
 
-Value that payment at $T$: multiply by $P(T,U)$ to get $1 - (1 + \alpha K)\,P(T,U)$. That is one dollar received at $T$ minus $1 + \alpha K$ dollars received at $U$. Its value today is $D(T) - (1 + \alpha K)\,D(U)$. Set it to zero:
+Value that payment at $`T`$: multiply by $`P(T,U)`$ to get $`1 - (1 + \alpha K)\,P(T,U)`$. That is one dollar received at $`T`$ minus $`1 + \alpha K`$ dollars received at $`U`$. Its value today is $`D(T) - (1 + \alpha K)\,D(U)`$. Set it to zero:
 
-$$K = \frac{G_0 - 1}{\alpha}.$$
+```math
+K = \frac{G_0 - 1}{\alpha}.
+```
 
 Only today's curve. No volatility, no model.
 
 ### Step 3: the FRA rate is a weighted average, and the weights lean against high rates
 
-Now write $K$ as an average of $L_T$ too. Give each future outcome the weight $w = P(T,U)/B_T$: the value today of one dollar paid at $U$ along that outcome. The average of $w$ is $D(U)$. The average of $Z_T\,w$ is the average of $1/B_T$, which is $D(T)$, since $Z_T P(T,U) = 1$. Divide: the weighted average of $Z_T$ is $G_0$. So
+Now write $`K`$ as an average of $`L_T`$ too. Give each future outcome the weight $`w = P(T,U)/B_T`$: the value today of one dollar paid at $`U`$ along that outcome. The average of $`w`$ is $`D(U)`$. The average of $`Z_T\,w`$ is the average of $`1/B_T`$, which is $`D(T)`$, since $`Z_T P(T,U) = 1`$. Divide: the weighted average of $`Z_T`$ is $`G_0`$. So
 
-$$K = \text{weighted average of } L_T, \text{ with weight } w.$$
+```math
+K = \text{weighted average of } L_T, \text{ with weight } w.
+```
 
-Here is the whole effect. In outcomes where rates rose, $L_T$ is high, the bank account grew fast so $B_T$ is big, and $P(T,U)$ is small. The weight $w$ is small exactly where $L_T$ is large. The weighted average leans away from high rates, so it sits below the plain average. That is why $R_0 > K$.
+Here is the whole effect. In outcomes where rates rose, $`L_T`$ is high, the bank account grew fast so $`B_T`$ is big, and $`P(T,U)`$ is small. The weight $`w`$ is small exactly where $`L_T`$ is large. The weighted average leans away from high rates, so it sits below the plain average. That is why $`R_0 > K`$.
 
-In symbols, $R_0 - K$ equals minus the covariance of $L_T$ with $w$, divided by the average of $w$; the covariance is negative, so the gap is positive.
+In symbols, $`R_0 - K`$ equals minus the covariance of $`L_T`$ with $`w`$, divided by the average of $`w`$; the covariance is negative, so the gap is positive.
 
-The weight has two parts, and each makes one piece of $C$:
+The weight has two parts, and each makes one piece of $`C`$:
 
-- $P(T,U)$ is small when rates are high at $T$. This is the **payment-date piece**, $b(h)^2 q_T$. It exists even without evening settlement: it is what separates a payment at $U$ from a plain payment at $T$.
-- $1/B_T$ is small when rates were high on the way to $T$. This is the **bank-account piece**, $b(h)\,c_T$. It is the evening settlement itself.
+- $`P(T,U)`$ is small when rates are high at $`T`$. This is the **payment-date piece**, $`b(h)^2 q_T`$. It exists even without evening settlement: it is what separates a payment at $`U`$ from a plain payment at $`T`$.
+- $`1/B_T`$ is small when rates were high on the way to $`T`$. This is the **bank-account piece**, $`b(h)\,c_T`$. It is the evening settlement itself.
 
 ```
 pieces of the 3-year adjustment, basis points (each █ = 0.25 bp)
@@ -136,48 +148,54 @@ The bank-account piece is most of it: the bank account absorbs three years of ra
 
 ### Step 4: in Hull-White, the plain average is exact
 
-The Hull-White model writes the short rate as $r_t = \varphi(t) + X_t$. The deterministic part $\varphi$ is fitted so the model reprices today's curve exactly. The random part $X_t$ starts at zero, is pulled back towards zero at speed $\kappa$, and is kicked by normal (bell-curve) shocks of size $\sigma$. Its value $X_T$ at the fixing date is normal, centred on zero, with variance $q_T$.
+The Hull-White model writes the short rate as $`r_t = \varphi(t) + X_t`$. The deterministic part $`\varphi`$ is fitted so the model reprices today's curve exactly. The random part $`X_t`$ starts at zero, is pulled back towards zero at speed $`\kappa`$, and is kicked by normal (bell-curve) shocks of size $`\sigma`$. Its value $`X_T`$ at the fixing date is normal, centred on zero, with variance $`q_T`$.
 
-The [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md) card gives the bond price at $T$:
+The [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md) card gives the bond price at $`T`$:
 
-$$P(T,U) = \frac{D(U)}{D(T)}\,\exp\!\left(-\tfrac12 b(h)^2 q_T - b(h)\,c_T - b(h)\,X_T\right).$$
+```math
+P(T,U) = \frac{D(U)}{D(T)}\,\exp\!\left(-\tfrac12 b(h)^2 q_T - b(h)\,c_T - b(h)\,X_T\right).
+```
 
-So the growth factor is $Z_T = 1/P(T,U) = G_0 \exp\!\left(\tfrac12 b(h)^2 q_T + b(h)\,c_T + b(h)\,X_T\right)$: a constant times the exponential of a normal variable. For a normal variable centred on zero, the average of its exponential is the exponential of half its variance. Here the variable is $b(h)X_T$, with variance $b(h)^2 q_T$. So
+So the growth factor is $`Z_T = 1/P(T,U) = G_0 \exp\!\left(\tfrac12 b(h)^2 q_T + b(h)\,c_T + b(h)\,X_T\right)`$: a constant times the exponential of a normal variable. For a normal variable centred on zero, the average of its exponential is the exponential of half its variance. Here the variable is $`b(h)X_T`$, with variance $`b(h)^2 q_T`$. So
 
-$$\text{average of } Z_T = G_0 \exp\!\left(b(h)^2 q_T + b(h)\,c_T\right) = G_0\,e^{C}.$$
+```math
+\text{average of } Z_T = G_0 \exp\!\left(b(h)^2 q_T + b(h)\,c_T\right) = G_0\,e^{C}.
+```
 
-Subtract one, divide by $\alpha$: $R_0 = (G_0 e^{C} - 1)/\alpha$. Subtract Step 2's $K$ and the formula is done.
+Subtract one, divide by $`\alpha`$: $`R_0 = (G_0 e^{C} - 1)/\alpha`$. Subtract Step 2's $`K`$ and the formula is done.
 
-The $c_T$ term comes from $\varphi$: to reprice today's curve while rates wander, the fitted drift must include $\tfrac12\sigma^2 b(T)^2 = c_T$ at time $T$. That extra drift is the bank account's covariance with the rate.
+The $`c_T`$ term comes from $`\varphi`$: to reprice today's curve while rates wander, the fitted drift must include $`\tfrac12\sigma^2 b(T)^2 = c_T`$ at time $`T`$. That extra drift is the bank account's covariance with the rate.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** The bank account is $B_T = \exp\!\left(\int_0^T r_s\,ds\right)$. Prices are averages of payments divided by the bank account, in the risk-neutral world. The model: $r_t = \varphi(t) + X_t$, $dX_t = -\kappa X_t\,dt + \sigma\,dW_t$ with $X_0 = 0$, where $W$ is a Brownian motion (the continuous random walk of the stochastic-calculus wing). $\varphi$ is chosen so that the average of $1/B_s$ equals $D(s)$ at every date.
+**Setting.** The bank account is $`B_T = \exp\!\left(\int_0^T r_s\,ds\right)`$. Prices are averages of payments divided by the bank account, in the risk-neutral world. The model: $`r_t = \varphi(t) + X_t`$, $`dX_t = -\kappa X_t\,dt + \sigma\,dW_t`$ with $`X_0 = 0`$, where $`W`$ is a Brownian motion (the continuous random walk of the stochastic-calculus wing). $`\varphi`$ is chosen so that the average of $`1/B_s`$ equals $`D(s)`$ at every date.
 
-**(a) The futures rate.** Hold any number of contracts, changed at will; the gains are paid as the rate moves and banked. Entering costs nothing, so every such strategy has discounted gains that average zero. Over one short interval, hold as many contracts as the bank account is worth, and only if some event known at its start has happened: the average change of the futures rate over the interval, given that event, is zero. So the futures rate is a martingale, and $R_0$ is the average of its final value, $L_T$. (The technical conditions, a continuous process of integrable size, hold here because every quantity is a smooth function of a normal variable.)
+**(a) The futures rate.** Hold any number of contracts, changed at will; the gains are paid as the rate moves and banked. Entering costs nothing, so every such strategy has discounted gains that average zero. Over one short interval, hold as many contracts as the bank account is worth, and only if some event known at its start has happened: the average change of the futures rate over the interval, given that event, is zero. So the futures rate is a martingale, and $`R_0`$ is the average of its final value, $`L_T`$. (The technical conditions, a continuous process of integrable size, hold here because every quantity is a smooth function of a normal variable.)
 
-**(b) The FRA rate.** Shown in Step 2. The argument uses only the prices $D(T)$, $D(U)$ and the identity $Z_T P(T,U) = 1$.
+**(b) The FRA rate.** Shown in Step 2. The argument uses only the prices $`D(T)`$, $`D(U)`$ and the identity $`Z_T P(T,U) = 1`$.
 
-**(c) The weighted form.** With $w = P(T,U)/B_T$: average of $w$ is $D(U)$ (the value of one dollar at $U$); average of $Z_T w$ is average of $1/B_T$, which is $D(T)$. Hence $K = \dfrac{\text{avg}(L_T w)}{\text{avg}(w)}$ and $R_0 - K = -\dfrac{\text{cov}(L_T, w)}{\text{avg}(w)}$.
+**(c) The weighted form.** With $`w = P(T,U)/B_T`$: average of $`w`$ is $`D(U)`$ (the value of one dollar at $`U`$); average of $`Z_T w`$ is average of $`1/B_T`$, which is $`D(T)`$. Hence $`K = \dfrac{\text{avg}(L_T w)}{\text{avg}(w)}`$ and $`R_0 - K = -\dfrac{\text{cov}(L_T, w)}{\text{avg}(w)}`$.
 
-**(d) The two moments.** Solving the equation for $X_t$: $X_T = \sigma\int_0^T e^{-\kappa(T-s)}\,dW_s$. By the Itô isometry (the variance of a stochastic integral is the integral of the squared integrand), $\text{var}(X_T) = \sigma^2\int_0^T e^{-2\kappa v}\,dv = q_T$. Swapping the order of integration, $\int_0^T X_s\,ds = \sigma\int_0^T b(T-s)\,dW_s$, so $\text{cov}\!\left(X_T, \int_0^T X_s\,ds\right) = \sigma^2\int_0^T e^{-\kappa v}\,b(v)\,dv$. The integrand is the derivative of $\tfrac12 b(v)^2$, since $b'(v) = e^{-\kappa v}$; so the covariance is $\tfrac12\sigma^2 b(T)^2 = c_T$.
+**(d) The two moments.** Solving the equation for $`X_t`$: $`X_T = \sigma\int_0^T e^{-\kappa(T-s)}\,dW_s`$. By the Itô isometry (the variance of a stochastic integral is the integral of the squared integrand), $`\text{var}(X_T) = \sigma^2\int_0^T e^{-2\kappa v}\,dv = q_T`$. Swapping the order of integration, $`\int_0^T X_s\,ds = \sigma\int_0^T b(T-s)\,dW_s`$, so $`\text{cov}\!\left(X_T, \int_0^T X_s\,ds\right) = \sigma^2\int_0^T e^{-\kappa v}\,b(v)\,dv`$. The integrand is the derivative of $`\tfrac12 b(v)^2`$, since $`b'(v) = e^{-\kappa v}`$; so the covariance is $`\tfrac12\sigma^2 b(T)^2 = c_T`$.
 
-**(e) The bond price.** Given $X_T$, $\int_T^U X_s\,ds = b(h)X_T + (\text{a normal variable independent of } X_T)$. Averaging $\exp\left(-\int_T^U r_s ds\right)$ over the independent part gives a constant times $e^{-b(h)X_T}$. The fitting condition on $\varphi$ fixes the constant; the calculation, done on the [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md) card, yields the bond formula of Step 4. Road 3 of the code checks it numerically: the simulated average of $P(T,U)/B_T$ reprices $D(U)$ to five decimal places.
+**(e) The bond price.** Given $`X_T`$, $`\int_T^U X_s\,ds = b(h)X_T + (\text{a normal variable independent of } X_T)`$. Averaging $`\exp\left(-\int_T^U r_s ds\right)`$ over the independent part gives a constant times $`e^{-b(h)X_T}`$. The fitting condition on $`\varphi`$ fixes the constant; the calculation, done on the [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md) card, yields the bond formula of Step 4. Road 3 of the code checks it numerically: the simulated average of $`P(T,U)/B_T`$ reprices $`D(U)`$ to five decimal places.
 
-**(f) The average.** $b(h)X_T$ is normal with centre 0 and variance $b(h)^2 q_T$, so $\text{avg}\,e^{b(h)X_T} = e^{\frac12 b(h)^2 q_T}$ (complete the square in the bell-curve integral). With (e), $\text{avg}\,Z_T = G_0 e^{C}$ with $C = b(h)^2 q_T + b(h) c_T$. By (a), $R_0 = (G_0 e^C - 1)/\alpha$; by (b), $R_0 - K = G_0(e^C - 1)/\alpha$.
+**(f) The average.** $`b(h)X_T`$ is normal with centre 0 and variance $`b(h)^2 q_T`$, so $`\text{avg}\,e^{b(h)X_T} = e^{\frac12 b(h)^2 q_T}`$ (complete the square in the bell-curve integral). With (e), $`\text{avg}\,Z_T = G_0 e^{C}`$ with $`C = b(h)^2 q_T + b(h) c_T`$. By (a), $`R_0 = (G_0 e^C - 1)/\alpha`$; by (b), $`R_0 - K = G_0(e^C - 1)/\alpha`$.
 
-**(g) Sign and boundaries.** For $\sigma > 0$, $T > 0$, $h > 0$: $q_T > 0$, $c_T > 0$, $b(h) > 0$, so $C > 0$ and the futures rate is strictly above the FRA rate. At $\sigma = 0$ or $T = 0$, $C = 0$ and the two rates agree, as the margining card found for known rates.
+**(g) Sign and boundaries.** For $`\sigma > 0`$, $`T > 0`$, $`h > 0`$: $`q_T > 0`$, $`c_T > 0`$, $`b(h) > 0`$, so $`C > 0`$ and the futures rate is strictly above the FRA rate. At $`\sigma = 0`$ or $`T = 0`$, $`C = 0`$ and the two rates agree, as the margining card found for known rates.
 
 </details>
 
 ### The other roads: Hull's form and the Ho-Lee rule
 
-Many books quote the adjustment for a **continuously compounded** rate, $\ln Z_T / h$, instead of the simple rate. Averaging the logarithm instead of $Z_T$ drops half of the payment-date piece:
+Many books quote the adjustment for a **continuously compounded** rate, $`\ln Z_T / h`$, instead of the simple rate. Averaging the logarithm instead of $`Z_T`$ drops half of the payment-date piece:
 
-$$\text{cc adjustment} = \frac{C - \tfrac12 b(h)^2 q_T}{h} = \frac{b(h)}{h}\left[b(h)\left(1 - e^{-2\kappa T}\right) + 2\kappa\,b(T)^2\right]\frac{\sigma^2}{4\kappa}.$$
+```math
+\text{cc adjustment} = \frac{C - \tfrac12 b(h)^2 q_T}{h} = \frac{b(h)}{h}\left[b(h)\left(1 - e^{-2\kappa T}\right) + 2\kappa\,b(T)^2\right]\frac{\sigma^2}{4\kappa}.
+```
 
-The right-hand form is the one in Hull's textbook; the code types it separately and the two agree to within $10^{-12}$: 5.50 basis points. Let the pull-back vanish, $\kappa \to 0$: then $b(v) \to v$ and the formula becomes the **Ho-Lee rule**, $\tfrac12\sigma^2 T U$, 9.97 basis points. That rule is quick and common, and it is the dark-blue line in the chart.
+The right-hand form is the one in Hull's textbook; the code types it separately and the two agree to within $`10^{-12}`$: 5.50 basis points. Let the pull-back vanish, $`\kappa \to 0`$: then $`b(v) \to v`$ and the formula becomes the **Ho-Lee rule**, $`\tfrac12\sigma^2 T U`$, 9.97 basis points. That rule is quick and common, and it is the dark-blue line in the chart.
 
 The trinomial tree that gives road 2 of the code is built as in [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md).
 
@@ -185,21 +203,21 @@ The trinomial tree that gives road 2 of the code is built as in [The Hull-White 
 
 ## Worked numbers, by hand
 
-The invented market: discount curve $D(s) = e^{-0.03s - 0.002s^2}$; Hull-White with $\kappa = 0.2$ and $\sigma = 0.0143$; the rate fixes at $T = 3$ and is paid at $U = 3.25$ with $\alpha = 0.25$.
+The invented market: discount curve $`D(s) = e^{-0.03s - 0.002s^2}`$; Hull-White with $`\kappa = 0.2`$ and $`\sigma = 0.0143`$; the rate fixes at $`T = 3`$ and is paid at $`U = 3.25`$ with $`\alpha = 0.25`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $b(h)$ | $(1 - e^{-0.2 \times 0.25})/0.2$ | 0.24385288 |
-| $b(T)$ | $(1 - e^{-0.2 \times 3})/0.2$ | 2.25594182 |
-| $q_T$ | $0.0143^2 \times (1 - e^{-1.2})/0.4$ | 0.00035725 |
-| $c_T$ | $0.0143^2 \times 2.25594182^2 / 2$ | 0.00052035 |
-| $C$ | $0.24385288^2 \times 0.00035725 + 0.24385288 \times 0.00052035$ | 0.00014813 |
-| $G_0$ | $e^{-0.108}/e^{-0.118625} = e^{0.010625}$ | 1.01068165 |
-| FRA rate $K$ | $(1.01068165 - 1)/0.25$ | 4.2727% |
-| futures rate $R_0$ | $(1.01068165 \times e^{0.00014813} - 1)/0.25$ | 4.3325% |
-| **adjustment** $R_0 - K$ | $1.01068165 \times (e^{0.00014813} - 1)/0.25$ | **5.99 bp** |
-| futures quote | $100 \times (1 - 0.04332549)$ | 95.6675 |
-| per contract | $5.98905314 \times \$25$ | $149.73 |
+| $`b(h)`$ | $`(1 - e^{-0.2 \times 0.25})/0.2`$ | 0.24385288 |
+| $`b(T)`$ | $`(1 - e^{-0.2 \times 3})/0.2`$ | 2.25594182 |
+| $`q_T`$ | $`0.0143^2 \times (1 - e^{-1.2})/0.4`$ | 0.00035725 |
+| $`c_T`$ | $`0.0143^2 \times 2.25594182^2 / 2`$ | 0.00052035 |
+| $`C`$ | $`0.24385288^2 \times 0.00035725 + 0.24385288 \times 0.00052035`$ | 0.00014813 |
+| $`G_0`$ | $`e^{-0.108}/e^{-0.118625} = e^{0.010625}`$ | 1.01068165 |
+| FRA rate $`K`$ | $`(1.01068165 - 1)/0.25`$ | 4.2727% |
+| futures rate $`R_0`$ | $`(1.01068165 \times e^{0.00014813} - 1)/0.25`$ | 4.3325% |
+| **adjustment** $`R_0 - K`$ | $`1.01068165 \times (e^{0.00014813} - 1)/0.25`$ | **5.99 bp** |
+| futures quote | $`100 \times (1 - 0.04332549)`$ | 95.6675 |
+| per contract | $`5.98905314 \times \$25`$ | $149.73 |
 
 A desk that sees the future quoted at 95.6675 and wants the three-year FRA rate subtracts 5.99 basis points from 4.3325% and gets 4.2727%. Skip that step and a swap curve built from futures is 6 basis points too high at three years, and more further out.
 
@@ -211,7 +229,7 @@ Correct adjustment 5.99 basis points; FRA rate 4.2727%.
 | --- | --- | --- |
 | Take the futures rate as the FRA rate | 4.3325% | No adjustment at all: 5.99 bp too high, $149.73 per contract |
 | Add the adjustment instead of subtracting it | 4.3924% | Futures rates sit above FRA rates; this lands twice as far away |
-| Ho-Lee rule $\tfrac12\sigma^2 T U$ | 9.97 bp | No pull-back: rates are allowed to wander without limit, so the variance is overstated |
+| Ho-Lee rule $`\tfrac12\sigma^2 T U`$ | 9.97 bp | No pull-back: rates are allowed to wander without limit, so the variance is overstated |
 | Keep only the payment-date piece | 0.86 bp | Drops the evening settlement, which is 5.13 of the 5.99 |
 | Continuously compounded formula on a simple rate | 5.50 bp | Right model, wrong rate: averaging a logarithm is not averaging the rate |
 
@@ -222,8 +240,8 @@ Correct adjustment 5.99 basis points; FRA rate 4.2727%.
 The code reaches the adjustment by **three independent roads**:
 
 - Road 1 is the formula.
-- Road 2 builds a Hull-White trinomial tree (each step, the random part of the rate goes up, stays or goes down) and fits it to the curve by itself. It rolls the bond price back from $U$ to $T$. It rolls the rate back from $T$ to today without discounting for the future and with discounting for the FRA. It uses no bond formula and no $q_T$ or $c_T$. Two step sizes are combined (Richardson extrapolation: the step-size error halves when the step halves, so twice the fine answer minus the coarse one cancels it).
-- Road 3 simulates 50,000 paths of the short rate with random numbers generated in the script, then averages $L_T$ plainly for the future and with weight $P(T,U)/B_T$ for the FRA.
+- Road 2 builds a Hull-White trinomial tree (each step, the random part of the rate goes up, stays or goes down) and fits it to the curve by itself. It rolls the bond price back from $`U`$ to $`T`$. It rolls the rate back from $`T`$ to today without discounting for the future and with discounting for the FRA. It uses no bond formula and no $`q_T`$ or $`c_T`$. Two step sizes are combined (Richardson extrapolation: the step-size error halves when the step halves, so twice the fine answer minus the coarse one cancels it).
+- Road 3 simulates 50,000 paths of the short rate with random numbers generated in the script, then averages $`L_T`$ plainly for the future and with weight $`P(T,U)/B_T`$ for the FRA.
 
 Two more checks follow: Hull's textbook form against the derived one, and the Ho-Lee limit.
 
@@ -390,7 +408,7 @@ chart, Ho-Lee rule bp     0.38   1.28   4.60   9.97  17.38  26.84  51.89 104.80
 ALL CHECKS PASS
 ```
 
-The formula says 5.98905 basis points. The tree says 5.98636 with 80 steps a year and 5.98771 with 160; extrapolated, 5.98906. The simulation says 5.96 with a standard error of 0.06, so it sits within half a standard error. The simulated weights reprice $D(U)$ to five decimal places, which checks the bond formula the simulation borrows.
+The formula says 5.98905 basis points. The tree says 5.98636 with 80 steps a year and 5.98771 with 160; extrapolated, 5.98906. The simulation says 5.96 with a standard error of 0.06, so it sits within half a standard error. The simulated weights reprice $`D(U)`$ to five decimal places, which checks the bond formula the simulation borrows.
 
 ### Rust
 
@@ -586,10 +604,10 @@ The two outputs agree line for line, including the simulation, because both lang
 
 Lean proves the exact gap, its sign and the Ho-Lee limit, taking as given Steps 1 and 2 and Step 4's bond formula.
 
-- Suppose $X_T$ is normal, centred on zero, with variance $q_T$, and $Z_T$ follows Step 4's bond formula. Then $R_0 - K = G_0(e^C - 1)/\alpha$, with $R_0$ the plain average of $L_T$.
-- Suppose also $\kappa$, $\sigma$, $T$, $\alpha$, $D(T)$ and $D(U)$ are positive, and $U > T$. Then the futures rate is strictly above the FRA rate.
-- Take the continuously compounded adjustment $(C - \tfrac12 b(h)^2 q_T)/h$. Then, as $\kappa$ falls to zero, it tends to the Ho-Lee rule $\tfrac12\sigma^2 T U$.
-- The worked numbers check exactly as fractions: $h = 0.25$, $G_0$'s exponent 0.010625, 25 dollars per basis point, and Ho-Lee's 9.9688875 basis points.
+- Suppose $`X_T`$ is normal, centred on zero, with variance $`q_T`$, and $`Z_T`$ follows Step 4's bond formula. Then $`R_0 - K = G_0(e^C - 1)/\alpha`$, with $`R_0`$ the plain average of $`L_T`$.
+- Suppose also $`\kappa`$, $`\sigma`$, $`T`$, $`\alpha`$, $`D(T)`$ and $`D(U)`$ are positive, and $`U > T`$. Then the futures rate is strictly above the FRA rate.
+- Take the continuously compounded adjustment $`(C - \tfrac12 b(h)^2 q_T)/h`$. Then, as $`\kappa`$ falls to zero, it tends to the Ho-Lee rule $`\tfrac12\sigma^2 T U`$.
+- The worked numbers check exactly as fractions: $`h = 0.25`$, $`G_0`$'s exponent 0.010625, 25 dollars per basis point, and Ho-Lee's 9.9688875 basis points.
 
 The tree, the simulation, Hull's textbook form and every decimal figure are left to the Python and Rust checks.
 
@@ -780,7 +798,7 @@ example : (1 / 2 : ℚ) * (143 / 10000) ^ 2 * 3 * (13 / 4) * 10000 = 99688875 / 
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
-> - **Double the volatility.** The `try:` rows run `closed` with `sigma` at 0.0286. Guess: twice as big? The adjustment is **23.96** basis points, about four times as big. It moves with $\sigma^2$: it is a variance effect.
+> - **Double the volatility.** The `try:` rows run `closed` with `sigma` at 0.0286. Guess: twice as big? The adjustment is **23.96** basis points, about four times as big. It moves with $`\sigma^2`$: it is a variance effect.
 > - **Calm the rates.** `sigma` at 0.01. The adjustment falls to **2.93** basis points.
 > - **Weaken the pull-back.** `kappa` at 0.05. The adjustment rises to **9.29** basis points: rates wander further before being pulled back, and it moves towards the Ho-Lee rule's 9.97.
 
@@ -793,7 +811,7 @@ example : (1 / 2 : ℚ) * (143 / 10000) ^ 2 * 3 * (13 / 4) * 10000 = 99688875 / 
 >
 > Smaller traps:
 > - **Getting the sign backwards.** The future's side that gains when rates rise has the edge, so the futures rate is above the FRA rate. Adding the adjustment to the futures rate gives 4.3924% instead of 4.2727%.
-> - **Using the Ho-Lee rule far out.** $\tfrac12\sigma^2 T U$ gives 9.97 basis points at three years and 104.80 at ten, against 5.99 and 20.19 with pull-back. Fine at a year, badly wrong at ten.
+> - **Using the Ho-Lee rule far out.** $`\tfrac12\sigma^2 T U`$ gives 9.97 basis points at three years and 104.80 at ten, against 5.99 and 20.19 with pull-back. Fine at a year, badly wrong at ten.
 > - **Mixing rate conventions.** Hull's form is for a continuously compounded rate: 5.50 basis points. The simple rate needs 5.99. Half a basis point is real money on a futures strip (a run of futures on back-to-back three-month periods).
 > - **Calling it a timing adjustment.** The payment-date piece alone is 0.86 basis points. Most of the effect, 5.13, comes from the evening settlement.
 
@@ -801,7 +819,7 @@ example : (1 / 2 : ℚ) * (143 / 10000) ^ 2 * 3 * (13 / 4) * 10000 = 99688875 / 
 
 ## Where you meet it in real life
 
-- **Building a curve from futures.** Rate desks read short- and medium-dated rates off a strip of futures, subtract a convexity adjustment for each, and then build forward rates and swap rates from the result. The adjustment is usually model-based, as here, with $\sigma$ and $\kappa$ fitted to option prices.
+- **Building a curve from futures.** Rate desks read short- and medium-dated rates off a strip of futures, subtract a convexity adjustment for each, and then build forward rates and swap rates from the result. The adjustment is usually model-based, as here, with $`\sigma`$ and $`\kappa`$ fitted to option prices.
 - **Hedging swaps with futures.** The hedge gains slightly whichever way rates move; the adjustment is the price of that gain, and getting it wrong shows up as a slow bleed.
 - **After LIBOR.** Dollar LIBOR ended in June 2023; the dollar market's three-month rate futures now reference SOFR (the Secured Overnight Financing Rate), an overnight rate compounded over the period, still quoted as 100 minus the rate at $25 per basis point. The payoff differs, but the evening-settlement argument of Step 3 is unchanged. *Conventions verified 2026-09-28.*
 - **Constant-maturity swaps.** A swap that pays a 10-year swap rate every year has its own convexity, from a different nonlinear payoff: [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md).
@@ -809,7 +827,7 @@ example : (1 / 2 : ℚ) * (143 / 10000) ^ 2 * 3 * (13 / 4) * 10000 = 99688875 / 
 - **Paying in another currency.** A rate paid in a currency other than its own picks up a covariance with the exchange rate: [Quanto rates](04-quanto-adjustments-for-rates.md).
 
 > **Say it back**
-> An FRA and a rate future fix the same rate but pay at different times: once at the end, or every evening. The FRA rate comes from today's curve alone. The futures rate is the plain average of the final rate, while the FRA rate is an average weighted by discount factors that are small exactly when rates are high. So the futures rate is higher. In the Hull-White model the gap is $G_0(e^C - 1)/\alpha$, with a payment-date piece and a larger bank-account piece: 5.99 basis points at three years in this card's market.
+> An FRA and a rate future fix the same rate but pay at different times: once at the end, or every evening. The FRA rate comes from today's curve alone. The futures rate is the plain average of the final rate, while the FRA rate is an average weighted by discount factors that are small exactly when rates are high. So the futures rate is higher. In the Hull-White model the gap is $`G_0(e^C - 1)/\alpha`$, with a payment-date piece and a larger bank-account piece: 5.99 basis points at three years in this card's market.
 
 ---
 

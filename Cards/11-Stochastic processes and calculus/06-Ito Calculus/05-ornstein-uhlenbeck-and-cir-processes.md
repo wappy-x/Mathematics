@@ -37,57 +37,69 @@ Orange: one sample path, a single simulated run: seed 20260930, stepped every 0.
 
 ## The formula
 
-Notation first, in words. Time $t$ is in years. The rate at time $t$ is $r_t$, a decimal, so 0.06 is 6 percent; $r_0$ is today's rate. $W_t$ is Brownian motion, the random walk seen from far away. As in [Stochastic differential equations](04-stochastic-differential-equations.md), $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none.
+Notation first, in words. Time $`t`$ is in years. The rate at time $`t`$ is $`r_t`$, a decimal, so 0.06 is 6 percent; $`r_0`$ is today's rate. $`W_t`$ is Brownian motion, the random walk seen from far away. As in [Stochastic differential equations](04-stochastic-differential-equations.md), $`dW_t`$ is shorthand for an Ito integral, never a derivative, because the path has none.
 
 The Ornstein-Uhlenbeck equation, OU for short, is
 
-$$dr_t = \kappa\,(\theta - r_t)\,dt + \sigma\,dW_t .$$
+```math
+dr_t = \kappa\,(\theta - r_t)\,dt + \sigma\,dW_t .
+```
 
 **Read it aloud:** over the next instant, the rate moves toward the level theta at a speed proportional to its distance from it, plus a random shove of fixed size.
 
 Its exact solution, the point of this card:
 
-$$r_t = \theta + (r_0 - \theta)\,e^{-\kappa t} + \sigma \int_0^t e^{-\kappa (t-u)}\,dW_u .$$
+```math
+r_t = \theta + (r_0 - \theta)\,e^{-\kappa t} + \sigma \int_0^t e^{-\kappa (t-u)}\,dW_u .
+```
 
 **Read it aloud:** today's gap fades exponentially, and every later shock fades the same way, by how long ago it arrived.
 
-So $r_t$ is normal, with
+So $`r_t`$ is normal, with
 
-$$E[r_t] = \theta + (r_0-\theta)e^{-\kappa t}, \qquad \operatorname{Var}(r_t) = \frac{\sigma^2}{2\kappa}\big(1 - e^{-2\kappa t}\big).$$
+```math
+E[r_t] = \theta + (r_0-\theta)e^{-\kappa t}, \qquad \mathrm{Var}(r_t) = \frac{\sigma^2}{2\kappa}\big(1 - e^{-2\kappa t}\big).
+```
 
-As $t$ grows, the start is forgotten and the law settles to the **stationary law**: normal, mean $\theta$, variance $v_\infty = \sigma^2/(2\kappa)$. The expected gap halves every
+As $`t`$ grows, the start is forgotten and the law settles to the **stationary law**: normal, mean $`\theta`$, variance $`v_\infty = \sigma^2/(2\kappa)`$. The expected gap halves every
 
-$$t_{1/2} = \frac{\ln 2}{\kappa}.$$
+```math
+t_{1/2} = \frac{\ln 2}{\kappa}.
+```
 
 The Cox-Ingersoll-Ross equation, CIR, keeps the pull and scales the noise by the square root of the rate:
 
-$$dr_t = \kappa\,(\theta - r_t)\,dt + \sigma\sqrt{r_t}\,dW_t .$$
+```math
+dr_t = \kappa\,(\theta - r_t)\,dt + \sigma\sqrt{r_t}\,dW_t .
+```
 
 Its mean is the OU mean. Started above zero, its rate never reaches zero exactly when **Feller's condition** holds:
 
-$$2\kappa\theta \;\ge\; \sigma^2 .$$
+```math
+2\kappa\theta \;\ge\; \sigma^2 .
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time from today, in years | 1, 2, 5, 10 | mean nearer 4 percent |
-| $r_t$, $r_0$, $r$ | the rate at time $t$; today's rate; the rate as a variable | 0.06 today | a higher start lifts the mean, not the spread |
-| $\theta$ | the long-run level, "theta" | 0.04 | means and stationary centre rise |
-| $\kappa$, $e^{-\kappa t}$ | pull speed per year, "kappa"; the share of today's gap still expected at $t$ | 0.5; 0.606531 at one year | shorter half-life, narrower stationary law |
-| $\sigma$ | noise size, "sigma": rate per root-year for OU; for CIR, times the root of the rate | OU 0.02; CIR 0.10 and 0.30 | wider spread; past the Feller line, CIR reaches zero |
-| $W_t$, $W$, $dW_t$ | Brownian motion; its increment, shorthand for an Ito integral | one draw per step | — |
-| $v_\infty$ | stationary variance, $\sigma^2/(2\kappa)$ | 0.000400 | — |
-| $t_{1/2}$ | half-life of the expected gap, $\ln 2/\kappa$ | 1.386294 years | — |
-| $h$, $a$ | simulation step in years; Euler's factor $a = 1-\kappa h$, the share of the expected gap one simulation step keeps | 0.02; 0.99 | past $\kappa h = 2$ the scheme explodes |
-| $\nu$, $S$ | Feller's ratio $2\kappa\theta/\sigma^2$, also the shape of CIR's stationary law; Step 7's scale function | 4, or 0.4444 at sigma 0.30 | at 1 or more, zero is never reached |
-| $Y_t$, $J_t$, $I$, $f$, $f_k$, $D$ | proof names: the scaled gap $e^{\kappa t}(r_t-\theta)$; the integral of $e^{\kappa u}$ against $W$; the noise integral, its integrand, a step version; the gap between two solutions | starts at 0.02 | — |
-| $b$, $c$, $B$, $\varepsilon$ | in Feller's test: drift and noise size of a general equation; a high and a low level | — | — |
-| $m(t)$, $v(t)$, $q_k$, $q$, $s$ | Step 6's mean and variance as functions of time; in the normality proof, the variance of a step-version sum and of the integral, and the input of a characteristic function | $m(1)$ = 5.2131 percent; OU $v(1)$ = 0.0002528 | — |
+| $`t`$ | time from today, in years | 1, 2, 5, 10 | mean nearer 4 percent |
+| $`r_t`$, $`r_0`$, $`r`$ | the rate at time $`t`$; today's rate; the rate as a variable | 0.06 today | a higher start lifts the mean, not the spread |
+| $`\theta`$ | the long-run level, "theta" | 0.04 | means and stationary centre rise |
+| $`\kappa`$, $`e^{-\kappa t}`$ | pull speed per year, "kappa"; the share of today's gap still expected at $`t`$ | 0.5; 0.606531 at one year | shorter half-life, narrower stationary law |
+| $`\sigma`$ | noise size, "sigma": rate per root-year for OU; for CIR, times the root of the rate | OU 0.02; CIR 0.10 and 0.30 | wider spread; past the Feller line, CIR reaches zero |
+| $`W_t`$, $`W`$, $`dW_t`$ | Brownian motion; its increment, shorthand for an Ito integral | one draw per step | — |
+| $`v_\infty`$ | stationary variance, $`\sigma^2/(2\kappa)`$ | 0.000400 | — |
+| $`t_{1/2}`$ | half-life of the expected gap, $`\ln 2/\kappa`$ | 1.386294 years | — |
+| $`h`$, $`a`$ | simulation step in years; Euler's factor $`a = 1-\kappa h`$, the share of the expected gap one simulation step keeps | 0.02; 0.99 | past $`\kappa h = 2`$ the scheme explodes |
+| $`\nu`$, $`S`$ | Feller's ratio $`2\kappa\theta/\sigma^2`$, also the shape of CIR's stationary law; Step 7's scale function | 4, or 0.4444 at sigma 0.30 | at 1 or more, zero is never reached |
+| $`Y_t`$, $`J_t`$, $`I`$, $`f`$, $`f_k`$, $`D`$ | proof names: the scaled gap $`e^{\kappa t}(r_t-\theta)`$; the integral of $`e^{\kappa u}`$ against $`W`$; the noise integral, its integrand, a step version; the gap between two solutions | starts at 0.02 | — |
+| $`b`$, $`c`$, $`B`$, $`\varepsilon`$ | in Feller's test: drift and noise size of a general equation; a high and a low level | — | — |
+| $`m(t)`$, $`v(t)`$, $`q_k`$, $`q`$, $`s`$ | Step 6's mean and variance as functions of time; in the normality proof, the variance of a step-version sum and of the integral, and the input of a characteristic function | $`m(1)`$ = 5.2131 percent; OU $`v(1)`$ = 0.0002528 | — |
 
 ### When it holds
 
-- **A pull that is a straight line in the rate.** A pull such as $\kappa(\theta - r_t)^3$ has no exponential that cancels it, and the method below fails.
+- **A pull that is a straight line in the rate.** A pull such as $`\kappa(\theta - r_t)^3`$ has no exponential that cancels it, and the method below fails.
 - **Noise of fixed size, for OU.** That is what makes the law normal, and a normal law gives negative rates a chance: 2.3 percent in the long run. Noise that depends on the rate, as in CIR, gives a law that is not normal.
-- **A positive pull speed.** At $\kappa = 0$ the rate is Brownian motion and its variance $\sigma^2 t$ grows without limit; below zero the gap grows and no stationary law exists.
+- **A positive pull speed.** At $`\kappa = 0`$ the rate is Brownian motion and its variance $`\sigma^2 t`$ grows without limit; below zero the gap grows and no stationary law exists.
 - **For CIR, Feller's condition.** Drop it and paths reach zero: with sigma 0.30, 94 percent of simulated paths touch zero within ten years.
 
 ---
@@ -96,25 +108,29 @@ $$2\kappa\theta \;\ge\; \sigma^2 .$$
 
 ### Step 0: cancel the pull with an exponential
 
-Without noise, the gap shrinks like $e^{-\kappa t}$. So multiply the gap by $e^{\kappa t}$, the integrating factor of [The integrating factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md), which grows exactly as fast as the gap decays. What is left changes only through the noise, and noise alone integrates directly.
+Without noise, the gap shrinks like $`e^{-\kappa t}`$. So multiply the gap by $`e^{\kappa t}`$, the integrating factor of [The integrating factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md), which grows exactly as fast as the gap decays. What is left changes only through the noise, and noise alone integrates directly.
 
 ### Step 1: the product rule removes the drift
 
-Set $Y_t = e^{\kappa t}(r_t - \theta)$. Ito's product rule ([Ito's product rule](03-ito-product-rule.md)) adds a cross term, the product of the two noise parts. The exponential has no noise part, so the cross term is zero:
+Set $`Y_t = e^{\kappa t}(r_t - \theta)`$. Ito's product rule ([Ito's product rule](03-ito-product-rule.md)) adds a cross term, the product of the two noise parts. The exponential has no noise part, so the cross term is zero:
 
-$$dY_t = \kappa e^{\kappa t}(r_t-\theta)\,dt + e^{\kappa t}\,dr_t = \kappa e^{\kappa t}(r_t-\theta)\,dt + e^{\kappa t}\big[\kappa(\theta - r_t)\,dt + \sigma\,dW_t\big] = \sigma e^{\kappa t}\,dW_t .$$
+```math
+dY_t = \kappa e^{\kappa t}(r_t-\theta)\,dt + e^{\kappa t}\,dr_t = \kappa e^{\kappa t}(r_t-\theta)\,dt + e^{\kappa t}\big[\kappa(\theta - r_t)\,dt + \sigma\,dW_t\big] = \sigma e^{\kappa t}\,dW_t .
+```
 
-The two drift terms cancel. This is Ito calculus; its extra term happens to be zero here, because $Y_t$ is a straight line in $r_t$.
+The two drift terms cancel. This is Ito calculus; its extra term happens to be zero here, because $`Y_t`$ is a straight line in $`r_t`$.
 
 ### Step 2: integrate and undo the scaling
 
-Integrate: $Y_t = Y_0 + \sigma\int_0^t e^{\kappa u}\,dW_u$. Multiply by $e^{-\kappa t}$ and add $\theta$ back: that is the solution in The formula.
+Integrate: $`Y_t = Y_0 + \sigma\int_0^t e^{\kappa u}\,dW_u`$. Multiply by $`e^{-\kappa t}`$ and add $`\theta`$ back: that is the solution in The formula.
 
 ### Step 3: mean and variance from two Ito facts
 
-An Ito integral of a fixed function has mean zero ([The Ito integral](01-ito-integral.md)), so the mean is the fading gap alone: 0.04 + 0.02 × 0.606531 = 5.2131 percent after a year. The Ito isometry says the variance is the integral of the squared integrand. A shock at time u survives to time t as the fraction $e^{-\kappa(t-u)}$, and variance scales with the square of that fraction:
+An Ito integral of a fixed function has mean zero ([The Ito integral](01-ito-integral.md)), so the mean is the fading gap alone: 0.04 + 0.02 × 0.606531 = 5.2131 percent after a year. The Ito isometry says the variance is the integral of the squared integrand. A shock at time u survives to time t as the fraction $`e^{-\kappa(t-u)}`$, and variance scales with the square of that fraction:
 
-$$\operatorname{Var}(r_t) = \sigma^2\int_0^t e^{-2\kappa(t-u)}\,du = \frac{\sigma^2}{2\kappa}\big(1-e^{-2\kappa t}\big).$$
+```math
+\mathrm{Var}(r_t) = \sigma^2\int_0^t e^{-2\kappa(t-u)}\,du = \frac{\sigma^2}{2\kappa}\big(1-e^{-2\kappa t}\big).
+```
 
 The 2 comes from squaring the survival fraction.
 
@@ -124,71 +140,77 @@ The integrand is a fixed function, not random. On a grid the integral is a weigh
 
 ### Step 5: the stationary law and the half-life
 
-As $t$ grows the law tends to normal with mean 0.04 and standard deviation 0.02. That law is **stationary**: unchanged by time, though the rate never stands still. Start the rate from it, independent of the noise, and it keeps it: the start's variance shrinks by $e^{-2\kappa t}$ and fresh noise adds back exactly the shortfall.
+As $`t`$ grows the law tends to normal with mean 0.04 and standard deviation 0.02. That law is **stationary**: unchanged by time, though the rate never stands still. Start the rate from it, independent of the noise, and it keeps it: the start's variance shrinks by $`e^{-2\kappa t}`$ and fresh noise adds back exactly the shortfall.
 
-The expected gap $(r_0-\theta)e^{-\kappa t}$ is half its start when $e^{-\kappa t} = 1/2$, at $t = \ln 2/\kappa$ = 1.386294 years. Neither the noise nor the start appears.
+The expected gap $`(r_0-\theta)e^{-\kappa t}`$ is half its start when $`e^{-\kappa t} = 1/2`$, at $`t = \ln 2/\kappa`$ = 1.386294 years. Neither the noise nor the start appears.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $W$ is a Brownian motion; $\kappa > 0$; $r_0$ is fixed. The equation means $r_t = r_0 + \int_0^t \kappa(\theta - r_u)\,du + \sigma W_t$.
+**Setting.** $`W`$ is a Brownian motion; $`\kappa > 0`$; $`r_0`$ is fixed. The equation means $`r_t = r_0 + \int_0^t \kappa(\theta - r_u)\,du + \sigma W_t`$.
 
-**1. The formula solves the equation.** Let $J_t = \int_0^t e^{\kappa u}\,dW_u$, a continuous martingale started at zero. Define $\tilde r_t = \theta + (r_0-\theta)e^{-\kappa t} + \sigma e^{-\kappa t}J_t$. By Ito's product rule for $e^{-\kappa t}$, which has no noise part, and $J_t$, whose differential is $e^{\kappa t}\,dW_t$: $d(e^{-\kappa t}J_t) = -\kappa e^{-\kappa t}J_t\,dt + dW_t$, with no cross term. So $d\tilde r_t = -\kappa(r_0-\theta)e^{-\kappa t}\,dt - \kappa\sigma e^{-\kappa t}J_t\,dt + \sigma\,dW_t = \kappa(\theta - \tilde r_t)\,dt + \sigma\,dW_t$, and $\tilde r_0 = r_0$.
+**1. The formula solves the equation.** Let $`J_t = \int_0^t e^{\kappa u}\,dW_u`$, a continuous martingale started at zero. Define $`\tilde r_t = \theta + (r_0-\theta)e^{-\kappa t} + \sigma e^{-\kappa t}J_t`$. By Ito's product rule for $`e^{-\kappa t}`$, which has no noise part, and $`J_t`$, whose differential is $`e^{\kappa t}\,dW_t`$: $`d(e^{-\kappa t}J_t) = -\kappa e^{-\kappa t}J_t\,dt + dW_t`$, with no cross term. So $`d\tilde r_t = -\kappa(r_0-\theta)e^{-\kappa t}\,dt - \kappa\sigma e^{-\kappa t}J_t\,dt + \sigma\,dW_t = \kappa(\theta - \tilde r_t)\,dt + \sigma\,dW_t`$, and $`\tilde r_0 = r_0`$.
 
-**2. It is the only solution.** If $r$ and $\tilde r$ solve the equation with the same start and the same $W$, their difference $D$ satisfies $D_t = -\kappa\int_0^t D_u\,du$ path by path. So $D$ is differentiable with $D' = -\kappa D$ and $D_0 = 0$; then $(e^{\kappa t}D_t)' = 0$ and $D \equiv 0$. The general Lipschitz theorem gives the same result ([When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md)).
+**2. It is the only solution.** If $`r`$ and $`\tilde r`$ solve the equation with the same start and the same $`W`$, their difference $`D`$ satisfies $`D_t = -\kappa\int_0^t D_u\,du`$ path by path. So $`D`$ is differentiable with $`D' = -\kappa D`$ and $`D_0 = 0`$; then $`(e^{\kappa t}D_t)' = 0`$ and $`D \equiv 0`$. The general Lipschitz theorem gives the same result ([When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md)).
 
-**3. Normality.** Fix $t$, let $f(u) = e^{-\kappa(t-u)}$ and $I = \int_0^t f\,dW$. Its left-endpoint sums on finer grids are fixed combinations of independent normal increments, so each is normal with mean 0 and variance $q_k = \int_0^t f_k^2$, where $f_k$ is the step version of $f$. By the isometry the sums converge to $I$ in mean square, since $\int_0^t (f_k - f)^2 \to 0$ by uniform continuity. Mean-square convergence gives convergence in distribution, and the characteristic functions (the transform that pins down a law, [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)) $e^{-s^2 q_k/2}$ tend to $e^{-s^2 q/2}$ with $q = \int_0^t f^2 = (1 - e^{-2\kappa t})/(2\kappa)$. So $I$ is normal, and so is $r_t$.
+**3. Normality.** Fix $`t`$, let $`f(u) = e^{-\kappa(t-u)}`$ and $`I = \int_0^t f\,dW`$. Its left-endpoint sums on finer grids are fixed combinations of independent normal increments, so each is normal with mean 0 and variance $`q_k = \int_0^t f_k^2`$, where $`f_k`$ is the step version of $`f`$. By the isometry the sums converge to $`I`$ in mean square, since $`\int_0^t (f_k - f)^2 \to 0`$ by uniform continuity. Mean-square convergence gives convergence in distribution, and the characteristic functions (the transform that pins down a law, [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)) $`e^{-s^2 q_k/2}`$ tend to $`e^{-s^2 q/2}`$ with $`q = \int_0^t f^2 = (1 - e^{-2\kappa t})/(2\kappa)`$. So $`I`$ is normal, and so is $`r_t`$.
 
-**4. Invariance.** Let $r_0$ be normal with mean $\theta$ and variance $v_\infty$, independent of $W$. Then $r_t - \theta = e^{-\kappa t}(r_0 - \theta) + \sigma I$ is a sum of independent normals with variance $e^{-2\kappa t}v_\infty + v_\infty(1 - e^{-2\kappa t}) = v_\infty$: the law is unchanged. From a fixed start the two moments converge, so the characteristic functions do, and the law converges in distribution to the stationary one.
+**4. Invariance.** Let $`r_0`$ be normal with mean $`\theta`$ and variance $`v_\infty`$, independent of $`W`$. Then $`r_t - \theta = e^{-\kappa t}(r_0 - \theta) + \sigma I`$ is a sum of independent normals with variance $`e^{-2\kappa t}v_\infty + v_\infty(1 - e^{-2\kappa t}) = v_\infty`$: the law is unchanged. From a fixed start the two moments converge, so the characteristic functions do, and the law converges in distribution to the stationary one.
 
-**5. Half-life.** $(r_0 - \theta)e^{-\kappa t} = (r_0 - \theta)/2$ exactly when $\kappa t = \ln 2$. $\blacksquare$
+**5. Half-life.** $`(r_0 - \theta)e^{-\kappa t} = (r_0 - \theta)/2`$ exactly when $`\kappa t = \ln 2`$. $`\blacksquare`$
 
 </details>
 
 ### Step 6: a second road, the moment equations
 
-Ito's lemma ([Ito's lemma](02-itos-lemma.md)) gives $d(r_t^2) = 2r_t\,dr_t + (\text{noise size})^2\,dt$. Take expectations, where the Ito integral part has mean zero, and write $m(t)$ and $v(t)$ for the mean and variance:
+Ito's lemma ([Ito's lemma](02-itos-lemma.md)) gives $`d(r_t^2) = 2r_t\,dr_t + (\text{noise size})^2\,dt`$. Take expectations, where the Ito integral part has mean zero, and write $`m(t)`$ and $`v(t)`$ for the mean and variance:
 
-$$m'(t) = \kappa(\theta - m), \qquad v'(t) = -2\kappa\,v + E[\text{noise size}^2].$$
+```math
+m'(t) = \kappa(\theta - m), \qquad v'(t) = -2\kappa\,v + E[\text{noise size}^2].
+```
 
-A tap and a drain: noise pours variance in, and the pull drains it at twice its own speed, because variance is a square. For OU the tap is $\sigma^2$, which balances the drain at $\sigma^2/(2\kappa)$. For CIR the tap is $\sigma^2 m(t)$, and the integrating factor once more gives
+A tap and a drain: noise pours variance in, and the pull drains it at twice its own speed, because variance is a square. For OU the tap is $`\sigma^2`$, which balances the drain at $`\sigma^2/(2\kappa)`$. For CIR the tap is $`\sigma^2 m(t)`$, and the integrating factor once more gives
 
-$$\operatorname{Var}_{\text{CIR}}(r_t) = r_0\,\frac{\sigma^2}{\kappa}\big(e^{-\kappa t} - e^{-2\kappa t}\big) + \frac{\theta\sigma^2}{2\kappa}\big(1 - e^{-\kappa t}\big)^2 .$$
+```math
+\mathrm{Var}_{\text{CIR}}(r_t) = r_0\,\frac{\sigma^2}{\kappa}\big(e^{-\kappa t} - e^{-2\kappa t}\big) + \frac{\theta\sigma^2}{2\kappa}\big(1 - e^{-\kappa t}\big)^2 .
+```
 
 These equations use no solution formula; the code solves them numerically and lands on the closed forms to twelve decimals.
 
 ### Step 7: why CIR stays positive under Feller's condition
 
-Near zero the CIR pull is about $\kappa\theta$ upward and the noise $\sigma\sqrt{r_t}$ fades. Feller's test settles the contest with a **scale function** $S$, chosen so that $S(r_t)$ has no drift and is a fair game. Its slope is
+Near zero the CIR pull is about $`\kappa\theta`$ upward and the noise $`\sigma\sqrt{r_t}`$ fades. Feller's test settles the contest with a **scale function** $`S`$, chosen so that $`S(r_t)`$ has no drift and is a fair game. Its slope is
 
-$$S'(x) = x^{-\nu}\,e^{2\kappa x/\sigma^2}, \qquad \nu = \frac{2\kappa\theta}{\sigma^2}.$$
+```math
+S'(x) = x^{-\nu}\,e^{2\kappa x/\sigma^2}, \qquad \nu = \frac{2\kappa\theta}{\sigma^2}.
+```
 
 <details>
 <summary>Key steps of Feller's test, and what is left to the source</summary>
 
-For $dr = b(r)\,dt + c(r)\,dW$, Ito's lemma gives $S(r_t)$ the drift $S'b + \tfrac12 S'' c^2$, which $S'(x) = \exp\!\big(-\int^x 2b/c^2\big)$ makes zero. For CIR, $2b/c^2 = \nu/x - 2\kappa/\sigma^2$, which integrates to the $S'$ above.
+For $`dr = b(r)\,dt + c(r)\,dW`$, Ito's lemma gives $`S(r_t)`$ the drift $`S'b + \tfrac12 S'' c^2`$, which $`S'(x) = \exp\!\big(-\int^x 2b/c^2\big)`$ makes zero. For CIR, $`2b/c^2 = \nu/x - 2\kappa/\sigma^2`$, which integrates to the $`S'`$ above.
 
-Start between a low level $\varepsilon$ and a high level $B$. Stopped on leaving $(\varepsilon, B)$, $S(r_t)$ is a bounded martingale, and optional stopping gives $P(\text{reach } \varepsilon \text{ before } B) = \dfrac{S(B) - S(r_0)}{S(B) - S(\varepsilon)}$.
+Start between a low level $`\varepsilon`$ and a high level $`B`$. Stopped on leaving $`(\varepsilon, B)`$, $`S(r_t)`$ is a bounded martingale, and optional stopping gives $`P(\text{reach } \varepsilon \text{ before } B) = \dfrac{S(B) - S(r_0)}{S(B) - S(\varepsilon)}`$.
 
-Near zero, $S'(x)$ behaves like $x^{-\nu}$, and $\int_0 x^{-\nu}\,dx$ is infinite exactly when $\nu \ge 1$. Then $S(\varepsilon) \to -\infty$ as $\varepsilon \to 0$, so reaching zero before $B$ has chance 0 for every $B$. The coefficients grow at most linearly, so a path stays below some $B$ over any finite time, and zero is never reached.
+Near zero, $`S'(x)`$ behaves like $`x^{-\nu}`$, and $`\int_0 x^{-\nu}\,dx`$ is infinite exactly when $`\nu \ge 1`$. Then $`S(\varepsilon) \to -\infty`$ as $`\varepsilon \to 0`$, so reaching zero before $`B`$ has chance 0 for every $`B`$. The coefficients grow at most linearly, so a path stays below some $`B`$ over any finite time, and zero is never reached.
 
-Left to the sources: a unique solution exists although $\sqrt{r}$ is not Lipschitz at zero (Yamada and Watanabe; Karatzas and Shreve, Section 5.2); for $\nu < 1$ zero is reached (Feller 1951; Karatzas and Shreve, Section 5.5); the stationary law is gamma with shape $\nu$ and scale $\sigma^2/(2\kappa)$ (Cox, Ingersoll and Ross 1985).
+Left to the sources: a unique solution exists although $`\sqrt{r}`$ is not Lipschitz at zero (Yamada and Watanabe; Karatzas and Shreve, Section 5.2); for $`\nu < 1`$ zero is reached (Feller 1951; Karatzas and Shreve, Section 5.5); the stationary law is gamma with shape $`\nu`$ and scale $`\sigma^2/(2\kappa)`$ (Cox, Ingersoll and Ross 1985).
 
 </details>
 
-So **if $2\kappa\theta \ge \sigma^2$, a CIR rate started above zero never reaches zero.** Here $2\kappa\theta$ is 0.04. Sigma 0.10 gives 0.01 and $\nu$ = 4: zero is out of reach. Sigma 0.30 gives 0.09 and $\nu$ = 0.4444: zero is reached, and the upward pull there pushes the rate off it.
+So **if $`2\kappa\theta \ge \sigma^2`$, a CIR rate started above zero never reaches zero.** Here $`2\kappa\theta`$ is 0.04. Sigma 0.10 gives 0.01 and $`\nu`$ = 4: zero is out of reach. Sigma 0.30 gives 0.09 and $`\nu`$ = 0.4444: zero is reached, and the upward pull there pushes the rate off it.
 
 ---
 
 ## Worked numbers, by hand
 
-The rate: $r_0$ = 0.06, $\theta$ = 0.04, $\kappa$ = 0.5 per year, OU $\sigma$ = 0.02, CIR $\sigma$ = 0.10.
+The rate: $`r_0`$ = 0.06, $`\theta`$ = 0.04, $`\kappa`$ = 0.5 per year, OU $`\sigma`$ = 0.02, CIR $`\sigma`$ = 0.10.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| share of the gap left after one year | $e^{-0.5}$ | 0.606531 |
+| share of the gap left after one year | $`e^{-0.5}`$ | 0.606531 |
 | **mean after one year** | 0.04 + 0.02 × 0.606531 | **5.2131 percent** |
-| OU variance after one year | (0.0004 / 1) × (1 − $e^{-1}$) = 0.0004 × (1 − 0.367879) | 0.0002528 |
+| OU variance after one year | (0.0004 / 1) × (1 − $`e^{-1}`$) = 0.0004 × (1 − 0.367879) | 0.0002528 |
 | OU standard deviation after one year | square root of 0.0002528 | 1.5901 points |
 | **half-life** | 0.693147 / 0.5 | **1.386294 years** |
 | stationary variance | 0.02 × 0.02 / (2 × 0.5) | 0.000400 |
@@ -203,11 +225,11 @@ A year from now the rate averages about 5.2 percent, two years in about 4.7. Wit
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No pull, as Brownian motion: variance $\sigma^2 t$ | 0.004000 at ten years, a 6.3246 point spread | Without the drain the spread grows forever |
-| Stationary variance $\sigma^2/\kappa$ | 0.000800, a 2.8284 point spread | The gap shrinks at kappa, its square at 2 kappa |
-| $1/\kappa$ = 2 years as the half-life | mean 4.7358 percent at two years, not 5.0000 | $1/\kappa$ takes the gap to $e^{-1}$, 0.367879 of itself |
+| No pull, as Brownian motion: variance $`\sigma^2 t`$ | 0.004000 at ten years, a 6.3246 point spread | Without the drain the spread grows forever |
+| Stationary variance $`\sigma^2/\kappa`$ | 0.000800, a 2.8284 point spread | The gap shrinks at kappa, its square at 2 kappa |
+| $`1/\kappa`$ = 2 years as the half-life | mean 4.7358 percent at two years, not 5.0000 | $`1/\kappa`$ takes the gap to $`e^{-1}`$, 0.367879 of itself |
 | Euler steps of 4.5 years | variance 0.274356 after 10 steps, 24.070924 after 20 | Factor −1.25: each step overshoots by more than the gap |
-| CIR, Feller dropped, sigma 0.30 | 94 percent of paths touch zero in ten years | $\nu$ = 0.4444 is below 1 |
+| CIR, Feller dropped, sigma 0.30 | 94 percent of paths touch zero in ten years | $`\nu`$ = 0.4444 is below 1 |
 
 The code prints every row.
 
@@ -227,9 +249,9 @@ xychart-beta
     line [6.00, 3.06, 6.20, 7.13, 1.26, 3.58, 1.65, 3.35, 5.32, 6.14, 3.86, 11.95, 15.02, 8.06, 3.68, 3.02, 1.62, 0.83, 0.85, 0.50, 0.34]
 ```
 
-Orange: CIR with sigma 0.10, inside Feller's condition. It tracks the OU path of the first picture, because at 4 percent its noise, $0.10 \times \sqrt{0.04}$ = 0.02, equals the OU noise. Green: CIR with sigma 0.30, outside the condition, swinging from 15.02 down to 0.34 percent. One sample path each, same seed and grid as before.
+Orange: CIR with sigma 0.10, inside Feller's condition. It tracks the OU path of the first picture, because at 4 percent its noise, $`0.10 \times \sqrt{0.04}`$ = 0.02, equals the OU noise. Green: CIR with sigma 0.30, outside the condition, swinging from 15.02 down to 0.34 percent. One sample path each, same seed and grid as before.
 
-With sigma 0.10, CIR's stationary law has mean 4 percent and variance $\theta\sigma^2/(2\kappa)$, the same 0.000400 as OU. Same centre, same spread; yet the OU law puts 2.3 percent of its weight below zero and the lopsided CIR law none. On the 0.02-year grid, 0.2822 of OU paths dip below zero within ten years, and no CIR path with sigma 0.10 ends below zero.
+With sigma 0.10, CIR's stationary law has mean 4 percent and variance $`\theta\sigma^2/(2\kappa)`$, the same 0.000400 as OU. Same centre, same spread; yet the OU law puts 2.3 percent of its weight below zero and the lopsided CIR law none. On the 0.02-year grid, 0.2822 of OU paths dip below zero within ten years, and no CIR path with sigma 0.10 ends below zero.
 
 ---
 
@@ -239,7 +261,7 @@ Four roads:
 
 1. The closed forms.
 2. The moment equations of Step 6, solved by a fourth-order Runge-Kutta (RK4) stepper written out, with no solution formula.
-3. The Euler scheme, the simulation rule $r \to r + \kappa(\theta - r)h + \sigma\sqrt{h}\,Z$ for a standard normal draw $Z$. Its own mean and variance follow an exact recursion, so its error prints with no sampling noise.
+3. The Euler scheme, the simulation rule $`r \to r + \kappa(\theta - r)h + \sigma\sqrt{h}\,Z`$ for a standard normal draw $`Z`$. Its own mean and variance follow an exact recursion, so its error prints with no sampling noise.
 4. 10000 simulated ten-year paths at step 0.02 years, from a SplitMix64 generator (seed 20260930) and Box-Muller normals (two uniform draws turned into one normal draw), every number with its standard error.
 
 The asserts compare roads one and two to twelve decimals and check the half-life by bisection. They also check the Euler error shrinking with the step, the simulations within 4 standard errors, and the Feller split by hit counts.
@@ -658,11 +680,11 @@ The two outputs agree line for line: both draw the same SplitMix64 stream and do
 
 Lean proves the OU rate's normal law, its half-life and stationary variance, and Feller's condition for CIR's scale function, for every positive pull speed.
 
-- Suppose $\kappa > 0$ and $r_t$ solves the OU equation in the Detailed proof's form, with continuous paths. Then at every time $t \ge 0$, $r_t$ is normal with the mean and variance of The formula.
-- Take $\kappa > 0$ and $r_0 \ne \theta$. Then the expected gap halves over every stretch of $t_{1/2}$ years, and is half its start only at $t_{1/2}$.
-- Take $\kappa > 0$. Then as $t$ grows, the mean tends to $\theta$ and the variance tends to $v_\infty = \sigma^2/(2\kappa)$.
-- Take $\kappa > 0$, $\sigma > 0$, Step 7's slope $S'$, and $S(1) = 0$. Then $S(\varepsilon) \to -\infty$ as $\varepsilon$ drops to 0 exactly when $2\kappa\theta \ge \sigma^2$.
-- Lean checks the worked numbers: stationary variance 0.000400, $\nu$ = 4 at sigma 0.10, and $\nu$ = 4/9 at sigma 0.30.
+- Suppose $`\kappa > 0`$ and $`r_t`$ solves the OU equation in the Detailed proof's form, with continuous paths. Then at every time $`t \ge 0`$, $`r_t`$ is normal with the mean and variance of The formula.
+- Take $`\kappa > 0`$ and $`r_0 \ne \theta`$. Then the expected gap halves over every stretch of $`t_{1/2}`$ years, and is half its start only at $`t_{1/2}`$.
+- Take $`\kappa > 0`$. Then as $`t`$ grows, the mean tends to $`\theta`$ and the variance tends to $`v_\infty = \sigma^2/(2\kappa)`$.
+- Take $`\kappa > 0`$, $`\sigma > 0`$, Step 7's slope $`S'`$, and $`S(1) = 0`$. Then $`S(\varepsilon) \to -\infty`$ as $`\varepsilon`$ drops to 0 exactly when $`2\kappa\theta \ge \sigma^2`$.
+- Lean checks the worked numbers: stationary variance 0.000400, $`\nu`$ = 4 at sigma 0.10, and $`\nu`$ = 4/9 at sigma 0.30.
 - It also checks the mistake rows, 0.004000 and 0.000800, and Euler's long-run variances 0.000533, 0.001067 and 0.003200.
 
 Lean has no Ito integral, so CIR's moments, its paths touching zero, and every simulation are left to the Python and Rust checks.
@@ -1239,11 +1261,11 @@ end OrnsteinUhlenbeckCIR
 > **Reading "stationary" as "settled".** The stationary law describes the spread of possible rates, not any one path. Under it the rate moves forever, 2 points either side of 4 percent, and 28 percent of simulated OU paths from 6 percent dip below zero within ten years. The law stands still; the rate does not.
 >
 > Smaller traps:
-> - **Dropping the 2.** $\sigma^2/\kappa$ gives a 2.8284 point spread instead of 2.0000.
-> - **Calling $1/\kappa$ the half-life.** That is the time constant, 2 years; the half-life is 1.386294 years.
-> - **Reading kappa as the fraction closed per year.** Kappa 0.5 does not close half the gap in a year: the fraction closed is $1 - e^{-\kappa t}$, 0.393469 after one year.
-> - **Large Euler steps.** The factor $1 - \kappa h$ copies $e^{-\kappa h}$ only for small $\kappa h$. Between 1 and 2 the scheme oscillates around the level; at 2 its variance grows without limit; above 2 it explodes. For OU an exact step exists ([Exact simulation](../08-Generators%2C%20Densities%20and%20Simulation/06-exact-simulation-of-gbm-and-ou.md)).
-> - **Assuming CIR is always positive.** Only with $2\kappa\theta \ge \sigma^2$; at sigma 0.30, 94 percent of paths reach zero.
+> - **Dropping the 2.** $`\sigma^2/\kappa`$ gives a 2.8284 point spread instead of 2.0000.
+> - **Calling $`1/\kappa`$ the half-life.** That is the time constant, 2 years; the half-life is 1.386294 years.
+> - **Reading kappa as the fraction closed per year.** Kappa 0.5 does not close half the gap in a year: the fraction closed is $`1 - e^{-\kappa t}`$, 0.393469 after one year.
+> - **Large Euler steps.** The factor $`1 - \kappa h`$ copies $`e^{-\kappa h}`$ only for small $`\kappa h`$. Between 1 and 2 the scheme oscillates around the level; at 2 its variance grows without limit; above 2 it explodes. For OU an exact step exists ([Exact simulation](../08-Generators%2C%20Densities%20and%20Simulation/06-exact-simulation-of-gbm-and-ou.md)).
+> - **Assuming CIR is always positive.** Only with $`2\kappa\theta \ge \sigma^2`$; at sigma 0.30, 94 percent of paths reach zero.
 
 ---
 
@@ -1257,13 +1279,13 @@ end OrnsteinUhlenbeckCIR
 - **Tracking a hidden state.** A mean-reverting level seen only through noisy readings is the standard state of the Kalman-Bucy filter: [Filtering](../09-Beyond%20Brownian/04-filtering-and-the-kalman-bucy-filter.md).
 
 > **Say it back**
-> A mean-reverting rate is pulled toward a level in proportion to its distance, plus random shocks. Multiplying the gap by $e^{\kappa t}$ cancels the pull, so the Ornstein-Uhlenbeck rate solves exactly and is normal. Its expected gap halves every $\ln 2/\kappa$ years, and its variance fills to $\sigma^2/(2\kappa)$, where noise in balances pull out. Cox-Ingersoll-Ross shrinks the noise near zero and never reaches zero when $2\kappa\theta \ge \sigma^2$.
+> A mean-reverting rate is pulled toward a level in proportion to its distance, plus random shocks. Multiplying the gap by $`e^{\kappa t}`$ cancels the pull, so the Ornstein-Uhlenbeck rate solves exactly and is normal. Its expected gap halves every $`\ln 2/\kappa`$ years, and its variance fills to $`\sigma^2/(2\kappa)`$, where noise in balances pull out. Cox-Ingersoll-Ross shrinks the noise near zero and never reaches zero when $`2\kappa\theta \ge \sigma^2`$.
 
 ---
 
 ## What this builds on
 
-- [Stochastic differential equations](04-stochastic-differential-equations.md): what an equation with $dW_t$ in it means, and what counts as a solution.
+- [Stochastic differential equations](04-stochastic-differential-equations.md): what an equation with $`dW_t`$ in it means, and what counts as a solution.
 - [The integrating factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md): the exponential that turns a linear equation into one that integrates directly; Step 0 uses it unchanged.
 - [Ito's product rule](03-ito-product-rule.md) and [The Ito integral](01-ito-integral.md): the product rule of Step 1, and the mean-zero and isometry facts of Step 3.
 

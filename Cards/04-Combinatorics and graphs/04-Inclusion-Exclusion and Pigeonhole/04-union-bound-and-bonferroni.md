@@ -36,32 +36,38 @@ The jagged line is the sieve stopped after one, two and three layers: 25, 18, 19
 
 ## The formula
 
-Bars count members: $\lvert A_1 \rvert$ is the number of days in the set $A_1$. The sign $\cup$ joins sets into their union, and the dots stand for the sets in between. $N$ is the size of the union: the days in at least one set. A layer total carries a number under the letter S: $S_1$ adds the set sizes, $S_2$ the sizes of every pair overlap, $S_j$ of every overlap j sets at a time.
+Bars count members: $`\lvert A_1 \rvert`$ is the number of days in the set $`A_1`$. The sign $`\cup`$ joins sets into their union, and the dots stand for the sets in between. $`N`$ is the size of the union: the days in at least one set. A layer total carries a number under the letter S: $`S_1`$ adds the set sizes, $`S_2`$ the sizes of every pair overlap, $`S_j`$ of every overlap j sets at a time.
 
 The shortest bound, written out in full:
 
-$$\lvert A_1 \cup \cdots \cup A_n \rvert \;\le\; \lvert A_1 \rvert + \cdots + \lvert A_n \rvert$$
+```math
+\lvert A_1 \cup \cdots \cup A_n \rvert \;\le\; \lvert A_1 \rvert + \cdots + \lvert A_n \rvert
+```
 
 **Read it aloud:** the things in at least one of the sets are never more numerous than the sizes added up.
 
-The right side is $S_1$, so the line reads $N \le S_1$: the union bound. One more layer overshoots the other way: subtracting every pair overlap strips out the three-heading days, those rainy, windy and foggy at once.
+The right side is $`S_1`$, so the line reads $`N \le S_1`$: the union bound. One more layer overshoots the other way: subtracting every pair overlap strips out the three-heading days, those rainy, windy and foggy at once.
 
-$$S_1 - S_2 \;\le\; N \;\le\; S_1$$
+```math
+S_1 - S_2 \;\le\; N \;\le\; S_1
+```
 
-Keeping $m$ layers is the general statement. The sigma sign $\sum$ means "add these as $j$ runs from 1 to $m$" ([The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)); $(-1)^{j+1}$ flips the sign, plus on odd $j$.
+Keeping $`m`$ layers is the general statement. The sigma sign $`\sum`$ means "add these as $`j`$ runs from 1 to $`m`$" ([The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)); $`(-1)^{j+1}`$ flips the sign, plus on odd $`j`$.
 
-$$\sum_{j=1}^{m} (-1)^{j+1} S_j \;\ge\; N \ (m \text{ odd}), \qquad \sum_{j=1}^{m} (-1)^{j+1} S_j \;\le\; N \ (m \text{ even})$$
+```math
+\sum_{j=1}^{m} (-1)^{j+1} S_j \;\ge\; N \ (m \text{ odd}), \qquad \sum_{j=1}^{m} (-1)^{j+1} S_j \;\le\; N \ (m \text{ even})
+```
 
 These are the Bonferroni inequalities (Carlo Emilio Bonferroni, 1936); the first is also Boole's inequality (George Boole, 1854).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A_1$, $A_i$, $n$ | the sets, and how many | rainy, windy, foggy; $n$ = 3 | ceiling rises |
-| $N$ | the size of the union | 19 bad days | — |
-| $S_1$ | set sizes added, uncorrected | 12 + 8 + 5 = 25 | ceiling rises |
-| $S_2$, $S_3$, $S_j$ | overlap sizes, j sets at a time | 7, then 1 | floor drops |
-| $m$, $j$, $k$ | layers kept, which layer, a day's headings | m = 1, 2, 3; k = 3 | more layers tighten, more headings loosen |
-| $\sum$ | add as $j$ runs from below to above | j = 1 to m | — |
+| $`A_1`$, $`A_i`$, $`n`$ | the sets, and how many | rainy, windy, foggy; $`n`$ = 3 | ceiling rises |
+| $`N`$ | the size of the union | 19 bad days | — |
+| $`S_1`$ | set sizes added, uncorrected | 12 + 8 + 5 = 25 | ceiling rises |
+| $`S_2`$, $`S_3`$, $`S_j`$ | overlap sizes, j sets at a time | 7, then 1 | floor drops |
+| $`m`$, $`j`$, $`k`$ | layers kept, which layer, a day's headings | m = 1, 2, 3; k = 3 | more layers tighten, more headings loosen |
+| $`\sum`$ | add as $`j`$ runs from below to above | j = 1 to m | — |
 
 ### When it holds
 
@@ -79,11 +85,11 @@ A union's size is the number of days appearing at least once, so the sets can be
 
 ### Step 1: a day under k headings is counted C(k, j) times in layer j
 
-The 12th was rainy, windy and foggy, so k = 3. It appears in all three set sizes, all three pair overlaps and the one triple overlap — 3, 3, 1. Those are the ways of choosing j of its 3 headings, so its share of layer $j$ is C(k, j), the ways to pick j from k ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
+The 12th was rainy, windy and foggy, so k = 3. It appears in all three set sizes, all three pair overlaps and the one triple overlap — 3, 3, 1. Those are the ways of choosing j of its 3 headings, so its share of layer $`j`$ is C(k, j), the ways to pick j from k ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 ### Step 2: one layer overshoots, two undershoot
 
-Keep one layer. A day under k headings is counted k times but belongs once: k − 1 too many, never negative. Over the log that is 14 days at 0, four at 1, one at 2 — 6 too many, and 25 − 6 = 19. $S_1$ can never fall short: that is the union bound, with its gap named.
+Keep one layer. A day under k headings is counted k times but belongs once: k − 1 too many, never negative. Over the log that is 14 days at 0, four at 1, one at 2 — 6 too many, and 25 − 6 = 19. $`S_1`$ can never fall short: that is the union bound, with its gap named.
 
 Keep two, and a day scores C(k, 1) − C(k, 2): 1 at k = 1, 1 at k = 2, 0 at k = 3, −2 at k = 4. Never above 1, and short once a day carries three headings. Only the 12th does, so two layers give 18 against 19.
 
@@ -91,7 +97,9 @@ Keep two, and a day scores C(k, 1) − C(k, 2): 1 at k = 1, 1 at k = 2, 0 at k =
 
 The tally after m layers collapses to one term.
 
-$$\sum_{j=1}^{m} (-1)^{j+1} C(k,\, j) \;=\; 1 - (-1)^{m}\, C(k-1,\, m) \qquad (k \ge 1)$$
+```math
+\sum_{j=1}^{m} (-1)^{j+1} C(k,\, j) \;=\; 1 - (-1)^{m}\, C(k-1,\, m) \qquad (k \ge 1)
+```
 
 Counts of ways to choose are never negative, so the correction comes off when m is even and goes on when m is odd: at most 1 for even m, at least 1 for odd. C(k − 1, m) is 0 once m reaches k, which is why enough layers are exact.
 
@@ -99,7 +107,9 @@ Counts of ways to choose are never negative, so the correction comes off when m 
 <summary>Detailed proof: the partial sum collapses to one coefficient</summary>
 
 Pascal's rule splits each coefficient into the two above it ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)), and regrouping the signs makes each term one step of a staircase:
-$$(-1)^j C(k,\, j) \;=\; (-1)^{j} C(k-1,\, j) \;-\; (-1)^{j-1} C(k-1,\, j-1).$$
+
+$`\displaystyle (-1)^j C(k,\, j) \;=\; (-1)^{j} C(k-1,\, j) \;-\; (-1)^{j-1} C(k-1,\, j-1).`$
+
 Each step's second half cancels the first half of the one before, so adding j from 0 to m leaves only the top: (−1)^m C(k−1, m). The bottom is C(k−1, −1) = 0, there being no way to choose −1 things. That sum differs from the card's by the term C(k, 0) = 1 and by a sign, so the card's is 1 minus it.
 
 </details>
@@ -116,9 +126,9 @@ The union bound alone has a shorter route: |A ∪ B| ≤ |A| + |B|, applied one 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the published totals | 12 + 8 + 5 | $S_1$ = 25 |
+| the published totals | 12 + 8 + 5 | $`S_1`$ = 25 |
 | one layer kept, odd | 25, nothing taken off | at most **25** |
-| the pair overlaps | 4 + 2 + 1 | $S_2$ = 7 |
+| the pair overlaps | 4 + 2 + 1 | $`S_2`$ = 7 |
 | two layers kept, even | 25 − 7 | at least **18** |
 | the third layer added in | 25 − 7 + 1 | **19** |
 | the daily log, listed | 14 + 4 + 1 | **19** |

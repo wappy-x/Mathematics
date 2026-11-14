@@ -34,34 +34,40 @@ The orange curve is revenue. The green line touches it at week 4 with slope 36. 
 
 ## The formula
 
-A reminder of notation from [The derivative](01-the-derivative.md): a prime marks a derivative, so $p'$ is the rate of $p$ per unit of the input. For two functions $f$ and $g$ of the same input, each with a derivative there:
+A reminder of notation from [The derivative](01-the-derivative.md): a prime marks a derivative, so $`p'`$ is the rate of $`p`$ per unit of the input. For two functions $`f`$ and $`g`$ of the same input, each with a derivative there:
 
-$$(f g)' = f' g + f g'$$
+```math
+(f g)' = f' g + f g'
+```
 
 **Read it aloud:** the rate of a product is the first's rate times the second, plus the first times the second's rate.
 
-$$\left(\frac{f}{g}\right)' = \frac{f' g - f g'}{g^2}, \qquad g \ne 0$$
+```math
+\left(\frac{f}{g}\right)' = \frac{f' g - f g'}{g^2}, \qquad g \ne 0
+```
 
 **Read it aloud:** the rate of a ratio is the top's rate times the bottom, minus the top times the bottom's rate, all over the bottom squared.
 
-For a whole number $n \ne 0$, written with d/dx meaning "the derivative with respect to x":
+For a whole number $`n \ne 0`$, written with d/dx meaning "the derivative with respect to x":
 
-$$\frac{d}{dx}\, x^n = n\, x^{n-1}, \qquad \text{with } x \ne 0 \text{ when } n \text{ is negative}$$
+```math
+\frac{d}{dx}\, x^n = n\, x^{n-1}, \qquad \text{with } x \ne 0 \text{ when } n \text{ is negative}
+```
 
 **Read it aloud:** bring the power down in front and lower it by one.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time, in weeks since launch | 4 | the rate falls 4 dollars a week, per week, for each week later |
-| $p$ | price of a bag, dollars: 12 + 0.5t | 14.00 | a higher price weights the bag loss more |
-| $q$ | bags sold a week: 200 − 4t | 184 | more bags weight the price rise more |
-| $R$ | weekly revenue, p × q | 2,576.00 | — |
-| $p'$, $q'$, $R'$ | rates per week: dollars, bags, dollars a week | 0.5, −4, 36 | — |
-| $h$ | a small step in time, weeks | 4 down to 0.001 | a bigger step leaves a bigger gap to the rate |
-| $f$, $g$ | any two functions with derivatives at the point | R on top, q below | — |
-| $n$ | a whole-number power, possibly negative | 3 and −2 | — |
+| $`t`$ | time, in weeks since launch | 4 | the rate falls 4 dollars a week, per week, for each week later |
+| $`p`$ | price of a bag, dollars: 12 + 0.5t | 14.00 | a higher price weights the bag loss more |
+| $`q`$ | bags sold a week: 200 − 4t | 184 | more bags weight the price rise more |
+| $`R`$ | weekly revenue, p × q | 2,576.00 | — |
+| $`p'`$, $`q'`$, $`R'`$ | rates per week: dollars, bags, dollars a week | 0.5, −4, 36 | — |
+| $`h`$ | a small step in time, weeks | 4 down to 0.001 | a bigger step leaves a bigger gap to the rate |
+| $`f`$, $`g`$ | any two functions with derivatives at the point | R on top, q below | — |
+| $`n`$ | a whole-number power, possibly negative | 3 and −2 | — |
 
-Units: $R'$ is dollars a week, per week, the output's unit per input unit.
+Units: $`R'`$ is dollars a week, per week, the output's unit per input unit.
 
 ### When it holds
 
@@ -85,7 +91,7 @@ The solid rectangle is week 4; the dashed one is week 8. Scale: 20 units across 
 
 ### Step 1: split the change into three pieces
 
-Over a step of $h$ weeks, price changes by Δp (read "the change in p") and bags by Δq. The new revenue is (p + Δp)(q + Δq). Multiply out and subtract the old p × q:
+Over a step of $`h`$ weeks, price changes by Δp (read "the change in p") and bags by Δq. The new revenue is (p + Δp)(q + Δq). Multiply out and subtract the old p × q:
 
 ΔR = Δp × q + p × Δq + Δp × Δq.
 
@@ -93,31 +99,34 @@ For the 4-week step: 2 × 184 + 14 × (−16) + 2 × (−16) = 368 − 224 − 3
 
 ### Step 2: divide by the step and shrink it
 
-Divide by $h$ to get an average rate:
+Divide by $`h`$ to get an average rate:
 
 ΔR / h = (Δp / h) × q + p × (Δq / h) + (Δp / h) × Δq.
 
-As $h$ shrinks, Δp / h heads for $p'$ and Δq / h heads for $q'$. That is the definition of a derivative. The last term carries an extra Δq, which heads for 0, so it vanishes. What is left is $p' q + p q'$.
+As $`h`$ shrinks, Δp / h heads for $`p'`$ and Δq / h heads for $`q'`$. That is the definition of a derivative. The last term carries an extra Δq, which heads for 0, so it vanishes. What is left is $`p' q + p q'`$.
 
 Here the corner term is exactly 0.5 × (−4) × h = −2h. At h = 1 the average rate is 34, at h = 0.1 it is 35.8, at h = 0.001 it is 35.998. A step of 0.001 weeks lands within 0.002 of 36; halve the step to halve the gap. That game, won for every tolerance, is the limit.
 
-Why does Δq head for 0? It equals h × (Δq / h): a shrinking step times a number near $q'$. A function with a derivative cannot jump.
+Why does Δq head for 0? It equals h × (Δq / h): a shrinking step times a number near $`q'`$. A function with a derivative cannot jump.
 
 <details>
 <summary>Detailed proof</summary>
 
 Let f and g have derivatives at x. Write the product's difference quotient as
-$$\frac{f(x+h)g(x+h) - f(x)g(x)}{h} = \frac{f(x+h)-f(x)}{h}\,g(x+h) + f(x)\,\frac{g(x+h)-g(x)}{h}.$$
+
+$`\displaystyle \frac{f(x+h)g(x+h) - f(x)g(x)}{h} = \frac{f(x+h)-f(x)}{h}\,g(x+h) + f(x)\,\frac{g(x+h)-g(x)}{h}.`$
+
 The fractions tend to f'(x) and g'(x); it remains to show g(x+h) tends to g(x). Pick δ > 0 so that for 0 < |h| < δ the quotient of g is within 1 of g'(x). Then |g(x+h) − g(x)| ≤ |h| (|g'(x)| + 1). Given ε > 0, taking |h| below both δ and ε / (|g'(x)| + 1) makes this less than ε. By the limit laws for sums and products, the quotient tends to f'(x)g(x) + f(x)g'(x).
 
 For the reciprocal, suppose g(x) ≠ 0. By the continuity just shown, for small h, |g(x+h) − g(x)| < |g(x)|/2, so g(x+h) is at least |g(x)|/2 away from 0 and 1/g(x+h) exists. Then
-$$\frac{1/g(x+h) - 1/g(x)}{h} = -\frac{g(x+h)-g(x)}{h}\cdot\frac{1}{g(x+h)\,g(x)} \to -\frac{g'(x)}{g(x)^2}.$$
+
+$`\displaystyle \frac{1/g(x+h) - 1/g(x)}{h} = -\frac{g(x+h)-g(x)}{h}\cdot\frac{1}{g(x+h)\,g(x)} \to -\frac{g'(x)}{g(x)^2}.`$
 
 </details>
 
 ### Step 3: a reciprocal, then any ratio
 
-The gap 1/g(x+h) − 1/g(x) equals −(g(x+h) − g(x)) over g(x+h) × g(x). Divide by $h$ and shrink it: the rate of 1/g is −g′ / g^2. A ratio f/g is f times 1/g, so the product rule gives f′/g − f g′/g^2, which over a common bottom is the quotient rule.
+The gap 1/g(x+h) − 1/g(x) equals −(g(x+h) − g(x)) over g(x+h) × g(x). Divide by $`h`$ and shrink it: the rate of 1/g is −g′ / g^2. A ratio f/g is f times 1/g, so the product rule gives f′/g − f g′/g^2, which over a common bottom is the quotient rule.
 
 Test it: price is revenue ÷ bags. With R′ = 36: (36 × 184 − 2576 × (−4)) / 184^2 = (6624 + 10304) / 33856 = 16928 / 33856 = 0.5. The quotient rule hands back the 50 cents a week the story started with.
 

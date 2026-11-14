@@ -36,46 +36,56 @@ Orange: the one-touch, nothing until the year's high reaches 1.20, then the full
 
 ## The formula
 
-Notation first. $S$ is EURUSD today in dollars per euro, so the euro is the **foreign** currency and the dollar the **domestic** one. $H$ is the barrier. The first moment EURUSD reaches $H$ is written $\tau$, read "tau", the **first touch time**; if it never happens, $\tau$ is taken as infinite. Everything else follows [Currency digitals](01-fx-digitals.md): $N(x)$ is the area under the standard bell curve left of $x$.
+Notation first. $`S`$ is EURUSD today in dollars per euro, so the euro is the **foreign** currency and the dollar the **domestic** one. $`H`$ is the barrier. The first moment EURUSD reaches $`H`$ is written $`\tau`$, read "tau", the **first touch time**; if it never happens, $`\tau`$ is taken as infinite. Everything else follows [Currency digitals](01-fx-digitals.md): $`N(x)`$ is the area under the standard bell curve left of $`x`$.
 
-For an upper barrier ($H$ above $S$), the chance of a touch by expiry, in the dollar pricing world, is
+For an upper barrier ($`H`$ above $`S`$), the chance of a touch by expiry, in the dollar pricing world, is
 
-$$P(\tau \le T) = N\!\left(\frac{\nu T - b}{\sigma\sqrt{T}}\right) + \left(\frac{H}{S}\right)^{2\lambda} N\!\left(\frac{-b - \nu T}{\sigma\sqrt{T}}\right)$$
+```math
+P(\tau \le T) = N\!\left(\frac{\nu T - b}{\sigma\sqrt{T}}\right) + \left(\frac{H}{S}\right)^{2\lambda} N\!\left(\frac{-b - \nu T}{\sigma\sqrt{T}}\right)
+```
 
-with $b = \ln(H/S)$, $\nu = r_d - r_f - \tfrac12\sigma^2$ and $\lambda = \nu/\sigma^2$. The two contracts that pay one dollar at expiry are then
+with $`b = \ln(H/S)`$, $`\nu = r_d - r_f - \tfrac12\sigma^2`$ and $`\lambda = \nu/\sigma^2`$. The two contracts that pay one dollar at expiry are then
 
-$$V_{OT} = e^{-r_d T}\,P(\tau \le T), \qquad V_{NT} = e^{-r_d T} - V_{OT}.$$
+```math
+V_{OT} = e^{-r_d T}\,P(\tau \le T), \qquad V_{NT} = e^{-r_d T} - V_{OT}.
+```
 
 **Read it aloud:** the one-touch is the chance the rate ever reaches the wall, discounted at the dollar rate; that chance is the chance of finishing beyond the wall plus a weighted mirror term for the paths that touched and came back; the no-touch is what is left of one discounted dollar.
 
 Paying at the touch, or paying in euros, needs one change each:
 
-$$V_{OT}^{hit} = \left(\frac{H}{S}\right)^{(\nu - \hat\nu)/\sigma^2} P_{\hat\nu}(\tau \le T), \qquad \hat\nu = \sqrt{\nu^2 + 2 r_d \sigma^2}$$
+```math
+V_{OT}^{hit} = \left(\frac{H}{S}\right)^{(\nu - \hat\nu)/\sigma^2} P_{\hat\nu}(\tau \le T), \qquad \hat\nu = \sqrt{\nu^2 + 2 r_d \sigma^2}
+```
 
-$$V_{OT}^{EUR} = e^{-r_f T}\,P_{\nu_f}(\tau \le T), \qquad V_{OT}^{EUR,hit} = \frac{H}{S}\,V_{OT}^{hit}, \qquad \nu_f = r_d - r_f + \tfrac12\sigma^2$$
+```math
+V_{OT}^{EUR} = e^{-r_f T}\,P_{\nu_f}(\tau \le T), \qquad V_{OT}^{EUR,hit} = \frac{H}{S}\,V_{OT}^{hit}, \qquad \nu_f = r_d - r_f + \tfrac12\sigma^2
+```
 
-Here $P_{\hat\nu}$ means the same touch formula with the drift $\nu$ replaced by $\hat\nu$, and likewise for $\nu_f$.
+Here $`P_{\hat\nu}`$ means the same touch formula with the drift $`\nu`$ replaced by $`\hat\nu`$, and likewise for $`\nu_f`$.
 
-**Read it aloud:** paying at the touch is the same touch chance with the drift raised to absorb the discounting; paying in euros is the touch chance counted in euros and discounted at the euro rate; and a euro paid at the touch is worth exactly $H$ dollars at that moment.
+**Read it aloud:** paying at the touch is the same touch chance with the drift raised to absorb the discounting; paying in euros is the touch chance counted in euros and discounted at the euro rate; and a euro paid at the touch is worth exactly $`H`$ dollars at that moment.
 
 | Symbol | Plain meaning | In our example | Push it up and the one-touch… |
 | --- | --- | --- | --- |
-| $S$ | EURUSD today, dollars per euro | 1.10 | rises: closer to the wall; at $H$ it is worth $e^{-r_d T}$ |
-| $H$, $b$ | the barrier; $b = \ln(H/S)$ is its distance above today's rate on the log scale | 1.20; 0.087011 | falls: further to go |
-| $T$ | time to expiry, in years | 1 | rises: more time to touch |
-| $\tau$, $X_t$, $M_T$ | first touch time, the first moment EURUSD trades at $H$; $X_t = \ln(S_t/S)$, the log of the rate's ratio to today; $M_T$, the highest $X_t$ by expiry | random | |
-| $r_d$, $r_f$ | dollar and euro interest rates, continuously compounded; $e^{-r_d T}$ discounts dollars, $e^{-r_f T}$ euros | 5%, 3%; 0.951229 | $r_d$ up: drift tilts toward 1.20; $r_f$ up: away |
-| $\sigma$ | volatility: the yearly spread of log moves in EURUSD | 10% | rises here: the wall is out of reach, so jumpiness helps |
-| $\nu$, $\nu_f$ | drift of log EURUSD per year, counting in dollars and in euros | 0.015; 0.025 | |
-| $\lambda$ | $\nu/\sigma^2$: the drift in units of yearly variance; $(H/S)^{2\lambda}$ is the mirror weight | 1.5; 1.298272 | |
-| $\hat\nu$ | the tilted drift for pay-at-hit, $\sqrt{\nu^2 + 2r_d\sigma^2}$ | 0.035 | |
-| $N(x)$ | bell-curve area to the left of $x$ | | |
-| $V_{OT}$, $V_{NT}$ | prices today of the one-touch and no-touch, dollars per dollar of payout | 0.414213; 0.537017 | |
-| $n$, $\beta$ | number of equally spaced monitoring dates; the Broadie–Glasserman–Kou constant | 252; 0.5826 | |
+| $`S`$ | EURUSD today, dollars per euro | 1.10 | rises: closer to the wall; at $`H`$ it is worth $`e^{-r_d T}`$ |
+| $`H`$, $`b`$ | the barrier; $`b = \ln(H/S)`$ is its distance above today's rate on the log scale | 1.20; 0.087011 | falls: further to go |
+| $`T`$ | time to expiry, in years | 1 | rises: more time to touch |
+| $`\tau`$, $`X_t`$, $`M_T`$ | first touch time, the first moment EURUSD trades at $`H`$; $`X_t = \ln(S_t/S)`$, the log of the rate's ratio to today; $`M_T`$, the highest $`X_t`$ by expiry | random | |
+| $`r_d`$, $`r_f`$ | dollar and euro interest rates, continuously compounded; $`e^{-r_d T}`$ discounts dollars, $`e^{-r_f T}`$ euros | 5%, 3%; 0.951229 | $`r_d`$ up: drift tilts toward 1.20; $`r_f`$ up: away |
+| $`\sigma`$ | volatility: the yearly spread of log moves in EURUSD | 10% | rises here: the wall is out of reach, so jumpiness helps |
+| $`\nu`$, $`\nu_f`$ | drift of log EURUSD per year, counting in dollars and in euros | 0.015; 0.025 | |
+| $`\lambda`$ | $`\nu/\sigma^2`$: the drift in units of yearly variance; $`(H/S)^{2\lambda}`$ is the mirror weight | 1.5; 1.298272 | |
+| $`\hat\nu`$ | the tilted drift for pay-at-hit, $`\sqrt{\nu^2 + 2r_d\sigma^2}`$ | 0.035 | |
+| $`N(x)`$ | bell-curve area to the left of $`x`$ | | |
+| $`V_{OT}`$, $`V_{NT}`$ | prices today of the one-touch and no-touch, dollars per dollar of payout | 0.414213; 0.537017 | |
+| $`n`$, $`\beta`$ | number of equally spaced monitoring dates; the Broadie–Glasserman–Kou constant | 252; 0.5826 | |
 
-For a contract checked only at $n$ equal dates, price it with the same formula and the wall moved away from spot:
+For a contract checked only at $`n`$ equal dates, price it with the same formula and the wall moved away from spot:
 
-$$H \;\to\; H\,e^{+\beta\sigma\sqrt{T/n}} \quad\text{(upper wall)}, \qquad H \;\to\; H\,e^{-\beta\sigma\sqrt{T/n}} \quad\text{(lower wall)}.$$
+```math
+H \;\to\; H\,e^{+\beta\sigma\sqrt{T/n}} \quad\text{(upper wall)}, \qquad H \;\to\; H\,e^{-\beta\sigma\sqrt{T/n}} \quad\text{(lower wall)}.
+```
 
 In words: a daily check behaves like a continuous check against a slightly more distant wall. For 1.20 and daily fixings the wall becomes 1.204412.
 
@@ -87,8 +97,8 @@ In words: a daily check behaves like a continuous check against a slightly more 
 - **A lognormal rate with one constant volatility, no jumps.** A touch contract is priced almost entirely by the volatility near the wall, not at the money. On a real smile this model price is off, and the size of the error is measured on [Barriers on a smile](07-barriers-with-the-smile.md).
 - **Known, constant rates in both currencies.** Both the drift and the discount come from them.
 - **One wall.** A contract with a wall on each side is not the product of two single-wall chances: [Two walls](05-double-barriers-and-double-no-touch.md).
-- **A real tilted drift.** Pay-at-hit needs $\nu^2 + 2r_d\sigma^2 \ge 0$. A negative rate deep enough makes the square root fail; the time integral in the code still prices it.
-- **The complement needs the same payment date.** $V_{OT} + V_{NT} = e^{-r_d T}$ holds for a one-touch paid at expiry. A pay-at-hit one-touch plus a no-touch does not pay one dollar at a single date, so the identity fails.
+- **A real tilted drift.** Pay-at-hit needs $`\nu^2 + 2r_d\sigma^2 \ge 0`$. A negative rate deep enough makes the square root fail; the time integral in the code still prices it.
+- **The complement needs the same payment date.** $`V_{OT} + V_{NT} = e^{-r_d T}`$ holds for a one-touch paid at expiry. A pay-at-hit one-touch plus a no-touch does not pay one dollar at a single date, so the identity fails.
 
 ---
 
@@ -96,78 +106,86 @@ In words: a daily check behaves like a continuous check against a slightly more 
 
 ### Step 0: the price is a discounted chance about the path's highest point
 
-A one-touch pays one dollar at expiry exactly when the year's highest EURUSD is at or above $H$. In the dollar pricing world ([Currency digitals](01-fx-digitals.md)), a dollar paid at $T$ on an event is worth $e^{-r_d T}$ times the event's chance. So everything reduces to one number: the chance that a drifting random walk ever reaches a level. A mirror in the wall counts that chance.
+A one-touch pays one dollar at expiry exactly when the year's highest EURUSD is at or above $`H`$. In the dollar pricing world ([Currency digitals](01-fx-digitals.md)), a dollar paid at $`T`$ on an event is worth $`e^{-r_d T}`$ times the event's chance. So everything reduces to one number: the chance that a drifting random walk ever reaches a level. A mirror in the wall counts that chance.
 
 ### Step 1: work on the log scale, where the wall is flat
 
-Measure EURUSD by $X_t = \ln(S_t/S)$, the log of its ratio to today. In the dollar pricing world $X_t$ is a Brownian motion with drift $\nu = r_d - r_f - \tfrac12\sigma^2$ per year and spread $\sigma$ per root-year. Here $\nu = 0.05 - 0.03 - 0.005 = 0.015$. The wall 1.20 becomes the flat level $b = \ln(1.20/1.10) = 0.087011$. The touch happens when the running maximum of $X_t$ reaches $b$.
+Measure EURUSD by $`X_t = \ln(S_t/S)`$, the log of its ratio to today. In the dollar pricing world $`X_t`$ is a Brownian motion with drift $`\nu = r_d - r_f - \tfrac12\sigma^2`$ per year and spread $`\sigma`$ per root-year. Here $`\nu = 0.05 - 0.03 - 0.005 = 0.015`$. The wall 1.20 becomes the flat level $`b = \ln(1.20/1.10) = 0.087011`$. The touch happens when the running maximum of $`X_t`$ reaches $`b`$.
 
 ### Step 2: split the touching paths in two
 
-Every path that touches $b$ by expiry either finishes at or above $b$, or touches and falls back below it. The first group is easy. Finishing above $b$ is the event a digital struck at 1.20 pays on, so its chance is $N((\nu T - b)/(\sigma\sqrt{T}))$. That is the first term of the formula: 0.235727, worth 0.224231 dollars discounted.
+Every path that touches $`b`$ by expiry either finishes at or above $`b`$, or touches and falls back below it. The first group is easy. Finishing above $`b`$ is the event a digital struck at 1.20 pays on, so its chance is $`N((\nu T - b)/(\sigma\sqrt{T}))`$. That is the first term of the formula: 0.235727, worth 0.224231 dollars discounted.
 
 The second group is the hard one, and it is where the mirror comes in.
 
 ### Step 3: without drift, the second group is a copy of the first
 
-Suppose the drift were zero. Take a path that touches $b$ and ends at some $x$ below it. Flip everything after the first touch, up for down, about $b$. The flipped path ends at $2b - x$, above $b$. The pairing is one for one, and flipping a driftless Brownian motion keeps every probability ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)). So touch-and-return is exactly as likely as finish-above, and the touch chance is twice the digital chance. Desks call this the **twice-the-digital rule**, and without drift it is exact.
+Suppose the drift were zero. Take a path that touches $`b`$ and ends at some $`x`$ below it. Flip everything after the first touch, up for down, about $`b`$. The flipped path ends at $`2b - x`$, above $`b`$. The pairing is one for one, and flipping a driftless Brownian motion keeps every probability ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)). So touch-and-return is exactly as likely as finish-above, and the touch chance is twice the digital chance. Desks call this the **twice-the-digital rule**, and without drift it is exact.
 
 ### Step 4: put the drift back, and the mirror gets a weight
 
-With drift, an upward piece of path and its downward flip are no longer equally likely. Girsanov's theorem (a change of drift is a reweighting of paths) gives the factor: a path with drift $\nu$ is weighted by $e^{\nu X_T/\sigma^2}$ times a constant, relative to a driftless one. The flipped path ends at $2b - x$ instead of $x$, so the ratio of the two weights is $e^{\nu(2x - 2b)/\sigma^2}$. Moving that weight onto the flipped path and completing the square turns the second group's chance into
+With drift, an upward piece of path and its downward flip are no longer equally likely. Girsanov's theorem (a change of drift is a reweighting of paths) gives the factor: a path with drift $`\nu`$ is weighted by $`e^{\nu X_T/\sigma^2}`$ times a constant, relative to a driftless one. The flipped path ends at $`2b - x`$ instead of $`x`$, so the ratio of the two weights is $`e^{\nu(2x - 2b)/\sigma^2}`$. Moving that weight onto the flipped path and completing the square turns the second group's chance into
 
-$$e^{2\nu b/\sigma^2}\,N\!\left(\frac{-b - \nu T}{\sigma\sqrt{T}}\right) = \left(\frac{H}{S}\right)^{2\lambda} N\!\left(\frac{-b - \nu T}{\sigma\sqrt{T}}\right).$$
+```math
+e^{2\nu b/\sigma^2}\,N\!\left(\frac{-b - \nu T}{\sigma\sqrt{T}}\right) = \left(\frac{H}{S}\right)^{2\lambda} N\!\left(\frac{-b - \nu T}{\sigma\sqrt{T}}\right).
+```
 
-Here the weight is $(1.20/1.10)^{3} = 1.298272$ and the second group is worth 0.189982 dollars discounted. Add the two groups: 0.224231 + 0.189982 = 0.414213.
+Here the weight is $`(1.20/1.10)^{3} = 1.298272`$ and the second group is worth 0.189982 dollars discounted. Add the two groups: 0.224231 + 0.189982 = 0.414213.
 
 The drift of 0.015 pushes EURUSD toward the wall, so paths that touch tend to carry on through it. Fewer come back. That is why the mirror group, 0.189982, is smaller than the digital, 0.224231, and why twice the digital, 0.448462, overprices.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $X_t$ be Brownian motion with drift $\nu$ and variance $\sigma^2$ per year, $M_T$ its maximum on $[0, T]$, $b > 0$, and $v = \sigma^2 T$. For $\nu = 0$ the reflection principle gives, for $x < b$, $P(M_T \ge b,\ X_T \in dx) = \varphi_v(2b - x)\,dx$, where $\varphi_v(u) = e^{-u^2/(2v)}/\sqrt{2\pi v}$.
+Let $`X_t`$ be Brownian motion with drift $`\nu`$ and variance $`\sigma^2`$ per year, $`M_T`$ its maximum on $`[0, T]`$, $`b > 0`$, and $`v = \sigma^2 T`$. For $`\nu = 0`$ the reflection principle gives, for $`x < b`$, $`P(M_T \ge b,\ X_T \in dx) = \varphi_v(2b - x)\,dx`$, where $`\varphi_v(u) = e^{-u^2/(2v)}/\sqrt{2\pi v}`$.
 
-By Girsanov, the law with drift $\nu$ has density $e^{\nu X_T/\sigma^2 - \nu^2 T/(2\sigma^2)}$ against the driftless law; the event $\{M_T \ge b\}$ is a statement about the path and passes through. So for $x < b$
-$$P_\nu(M_T \ge b,\ X_T \in dx) = e^{\nu x/\sigma^2 - \nu^2 T/(2\sigma^2)}\,\varphi_v(2b - x)\,dx.$$
-Write $\nu x/\sigma^2 = 2\nu b/\sigma^2 - \nu(2b - x)/\sigma^2$ and complete the square in $u = 2b - x$: $e^{-\nu u/\sigma^2 - \nu^2 T/(2\sigma^2)}\varphi_v(u) = \varphi_v(u + \nu T)$. Hence the density is $e^{2\nu b/\sigma^2}\varphi_v(2b - x + \nu T)$. Integrate over $x < b$, that is $u > b$: $\int_b^\infty \varphi_v(u + \nu T)\,du = N((-b - \nu T)/\sqrt{v})$.
+By Girsanov, the law with drift $`\nu`$ has density $`e^{\nu X_T/\sigma^2 - \nu^2 T/(2\sigma^2)}`$ against the driftless law; the event $`\{M_T \ge b\}`$ is a statement about the path and passes through. So for $`x < b`$
 
-For $x \ge b$ the touch is certain, and $P_\nu(X_T \ge b) = N((\nu T - b)/\sqrt{v})$. Adding the two pieces gives the formula. Checks: at $b = 0$ it equals $N(\nu\sqrt{T}/\sigma) + N(-\nu\sqrt{T}/\sigma) = 1$; as $b \to \infty$ both terms vanish.
+$`\displaystyle P_\nu(M_T \ge b,\ X_T \in dx) = e^{\nu x/\sigma^2 - \nu^2 T/(2\sigma^2)}\,\varphi_v(2b - x)\,dx.`$
 
-Differentiating in $T$ gives the density of the first touch time, $f(t) = \dfrac{b}{\sigma\sqrt{2\pi t^3}}\exp\!\left(-\dfrac{(b - \nu t)^2}{2\sigma^2 t}\right)$, which the code integrates as its second road.
+Write $`\nu x/\sigma^2 = 2\nu b/\sigma^2 - \nu(2b - x)/\sigma^2`$ and complete the square in $`u = 2b - x`$: $`e^{-\nu u/\sigma^2 - \nu^2 T/(2\sigma^2)}\varphi_v(u) = \varphi_v(u + \nu T)`$. Hence the density is $`e^{2\nu b/\sigma^2}\varphi_v(2b - x + \nu T)`$. Integrate over $`x < b`$, that is $`u > b`$: $`\int_b^\infty \varphi_v(u + \nu T)\,du = N((-b - \nu T)/\sqrt{v})`$.
+
+For $`x \ge b`$ the touch is certain, and $`P_\nu(X_T \ge b) = N((\nu T - b)/\sqrt{v})`$. Adding the two pieces gives the formula. Checks: at $`b = 0`$ it equals $`N(\nu\sqrt{T}/\sigma) + N(-\nu\sqrt{T}/\sigma) = 1`$; as $`b \to \infty`$ both terms vanish.
+
+Differentiating in $`T`$ gives the density of the first touch time, $`f(t) = \dfrac{b}{\sigma\sqrt{2\pi t^3}}\exp\!\left(-\dfrac{(b - \nu t)^2}{2\sigma^2 t}\right)`$, which the code integrates as its second road.
 
 </details>
 
 ### Step 5: paying at the touch tilts the drift
 
-A pay-at-hit one-touch pays one dollar at time $\tau$, worth $e^{-r_d \tau}$ today, so its price is the average of $e^{-r_d\tau}$ over paths that touch by $T$. That average looks harder than a chance. One reweighting turns it back into a chance.
+A pay-at-hit one-touch pays one dollar at time $`\tau`$, worth $`e^{-r_d \tau}`$ today, so its price is the average of $`e^{-r_d\tau}`$ over paths that touch by $`T`$. That average looks harder than a chance. One reweighting turns it back into a chance.
 
-Compare a path's weight under drift $\hat\nu$ with its weight under drift $\nu$, stopped at the touch where $X_\tau = b$. By Girsanov the ratio is $e^{(\hat\nu - \nu)b/\sigma^2 - (\hat\nu^2 - \nu^2)\tau/(2\sigma^2)}$. Choose $\hat\nu$ so that $(\hat\nu^2 - \nu^2)/(2\sigma^2) = r_d$, that is $\hat\nu = \sqrt{\nu^2 + 2r_d\sigma^2}$. Then the $\tau$ part of the ratio is exactly the discount $e^{-r_d\tau}$, and
+Compare a path's weight under drift $`\hat\nu`$ with its weight under drift $`\nu`$, stopped at the touch where $`X_\tau = b`$. By Girsanov the ratio is $`e^{(\hat\nu - \nu)b/\sigma^2 - (\hat\nu^2 - \nu^2)\tau/(2\sigma^2)}`$. Choose $`\hat\nu`$ so that $`(\hat\nu^2 - \nu^2)/(2\sigma^2) = r_d`$, that is $`\hat\nu = \sqrt{\nu^2 + 2r_d\sigma^2}`$. Then the $`\tau`$ part of the ratio is exactly the discount $`e^{-r_d\tau}`$, and
 
-$$\text{average of } e^{-r_d\tau}\text{ on touching paths, drift } \nu \;=\; e^{(\nu - \hat\nu)b/\sigma^2}\;P_{\hat\nu}(\tau \le T).$$
+```math
+\text{average of } e^{-r_d\tau}\text{ on touching paths, drift } \nu \;=\; e^{(\nu - \hat\nu)b/\sigma^2}\;P_{\hat\nu}(\tau \le T).
+```
 
-Here $\hat\nu = \sqrt{0.000225 + 0.001} = 0.035$ and $(\nu - \hat\nu)/\sigma^2 = -2$, so the pay-at-hit price is $(1.10/1.20)^2$ times the touch chance at drift 0.035: 0.425164. It exceeds the at-expiry price, 0.414213, because the money arrives earlier on every touching path.
+Here $`\hat\nu = \sqrt{0.000225 + 0.001} = 0.035`$ and $`(\nu - \hat\nu)/\sigma^2 = -2`$, so the pay-at-hit price is $`(1.10/1.20)^2`$ times the touch chance at drift 0.035: 0.425164. It exceeds the at-expiry price, 0.414213, because the money arrives earlier on every touching path.
 
 ### Step 6: paying in euros changes the counting currency
 
-A one-touch paying one euro at expiry, valued in euros, is the euro-discounted chance of a touch counted in the euro pricing world. Counting in euros weights the futures where the euro is strong, which raises the drift of $X_t$ by $\sigma^2$: $\nu_f = 0.015 + 0.01 = 0.025$. This is the same slide that gives the euro digital $N(d_1)$ in place of $N(d_2)$ on [Currency digitals](01-fx-digitals.md). The touch chance becomes 0.470507, and the price is $e^{-0.03} \times 0.470507 = 0.456601$ euros per euro.
+A one-touch paying one euro at expiry, valued in euros, is the euro-discounted chance of a touch counted in the euro pricing world. Counting in euros weights the futures where the euro is strong, which raises the drift of $`X_t`$ by $`\sigma^2`$: $`\nu_f = 0.015 + 0.01 = 0.025`$. This is the same slide that gives the euro digital $`N(d_1)`$ in place of $`N(d_2)`$ on [Currency digitals](01-fx-digitals.md). The touch chance becomes 0.470507, and the price is $`e^{-0.03} \times 0.470507 = 0.456601`$ euros per euro.
 
-Paying one euro at the touch needs no new chance at all. At the moment of the touch one euro is worth exactly $H = 1.20$ dollars. So the contract is 1.20 pay-at-hit dollar one-touches, worth $1.20 \times 0.425164$ dollars, which is $1.20/1.10 \times 0.425164 = 0.463815$ euros. The code also reaches that number the long way, integrating the discounted first-touch density in the euro world, and the two agree.
+Paying one euro at the touch needs no new chance at all. At the moment of the touch one euro is worth exactly $`H = 1.20`$ dollars. So the contract is 1.20 pay-at-hit dollar one-touches, worth $`1.20 \times 0.425164`$ dollars, which is $`1.20/1.10 \times 0.425164 = 0.463815`$ euros. The code also reaches that number the long way, integrating the discounted first-touch density in the euro world, and the two agree.
 
 ### Step 7: the no-touch is what is left of one dollar
 
-Hold a one-touch and a no-touch on the same wall, both paid at expiry. On every path exactly one pays, so together they pay one dollar at $T$ for certain. That costs $e^{-r_d T} = 0.951229$ today. Hence
+Hold a one-touch and a no-touch on the same wall, both paid at expiry. On every path exactly one pays, so together they pay one dollar at $`T`$ for certain. That costs $`e^{-r_d T} = 0.951229`$ today. Hence
 
-$$V_{NT} = e^{-r_d T} - V_{OT} = 0.951229 - 0.414213 = 0.537017.$$
+```math
+V_{NT} = e^{-r_d T} - V_{OT} = 0.951229 - 0.414213 = 0.537017.
+```
 
 No model entered: the identity holds with any smile, jumps, or monitoring rule, as long as both contracts use the same rule. The code confirms it by pricing the no-touch directly, from the chance that the path ends below the wall and the Brownian bridge between now and expiry never crosses it. A Brownian bridge is the random path between two points whose values are both known: [Brownian bridge](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/05-brownian-bridge.md).
 
 ### Step 8: daily monitoring, and the shift
 
-A contract that checks EURUSD at 252 daily fixings misses any touch that happens and reverses between two fixings. It pays less often. In 50,000 simulated years the daily touch rate is 0.413100 against 0.433061 for the same paths watched continuously (the continuous rate uses the Brownian bridge between fixings). Broadie, Glasserman and Kou proved that moving the wall away from spot by $\beta\sigma\sqrt{T/n}$, with $\beta = 0.5826$, matches the discrete price with an error that shrinks faster than $1/\sqrt{n}$. Here the shifted price is 0.395051 against a simulated 0.392953, a gap inside the simulation's noise.
+A contract that checks EURUSD at 252 daily fixings misses any touch that happens and reverses between two fixings. It pays less often. In 50,000 simulated years the daily touch rate is 0.413100 against 0.433061 for the same paths watched continuously (the continuous rate uses the Brownian bridge between fixings). Broadie, Glasserman and Kou proved that moving the wall away from spot by $`\beta\sigma\sqrt{T/n}`$, with $`\beta = 0.5826`$, matches the discrete price with an error that shrinks faster than $`1/\sqrt{n}`$. Here the shifted price is 0.395051 against a simulated 0.392953, a gap inside the simulation's noise.
 
 ### Another road
 
-The one-touch also solves the Garman–Kohlhagen pricing equation with value $e^{-r_d(T-t)}$ on the wall and zero at expiry below it, and the pay-at-hit version with value 1 on the wall. The mirror formula is that equation's solution by the method of images.
+The one-touch also solves the Garman–Kohlhagen pricing equation with value $`e^{-r_d(T-t)}`$ on the wall and zero at expiry below it, and the pay-at-hit version with value 1 on the wall. The mirror formula is that equation's solution by the method of images.
 
 ---
 
@@ -177,16 +195,16 @@ EURUSD 1.10, wall 1.20, dollar rate 5%, euro rate 3%, volatility 10%, one year, 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| distance to the wall, $b$ | $\ln(1.20/1.10)$ | 0.087011 |
-| drift in dollars, $\nu$ | $0.05 - 0.03 - \tfrac12(0.10)^2$ | 0.015 |
-| $\lambda$ | $0.015/0.01$ | 1.5 |
-| finish above 1.20 | $N((0.015 - 0.087011)/0.10) = N(-0.720114)$ | 0.235727 |
-| mirror weight | $(1.20/1.10)^{3}$ | 1.298272 |
-| touch and come back | $1.298272 \times N((-0.087011 - 0.015)/0.10) = 1.298272 \times N(-1.020114)$ | 0.199723 |
-| touch chance | $0.235727 + 0.199723$ | 0.435450 |
-| discount | $e^{-0.05}$ | 0.951229 |
-| **one-touch** | $0.951229 \times 0.435450$ | **0.414213** |
-| **no-touch** | $0.951229 - 0.414213$ | **0.537017** |
+| distance to the wall, $`b`$ | $`\ln(1.20/1.10)`$ | 0.087011 |
+| drift in dollars, $`\nu`$ | $`0.05 - 0.03 - \tfrac12(0.10)^2`$ | 0.015 |
+| $`\lambda`$ | $`0.015/0.01`$ | 1.5 |
+| finish above 1.20 | $`N((0.015 - 0.087011)/0.10) = N(-0.720114)`$ | 0.235727 |
+| mirror weight | $`(1.20/1.10)^{3}`$ | 1.298272 |
+| touch and come back | $`1.298272 \times N((-0.087011 - 0.015)/0.10) = 1.298272 \times N(-1.020114)`$ | 0.199723 |
+| touch chance | $`0.235727 + 0.199723`$ | 0.435450 |
+| discount | $`e^{-0.05}`$ | 0.951229 |
+| **one-touch** | $`0.951229 \times 0.435450`$ | **0.414213** |
+| **no-touch** | $`0.951229 - 0.414213`$ | **0.537017** |
 
 In desk terms: the one-touch is 41.42% of payout and the no-touch 53.70%. A fund paying USD 414,213 for a million-dollar one-touch is paying a little under half the payout for an event with a 43.5% chance, a year of interest removed.
 
@@ -209,7 +227,7 @@ Right answer 0.414213 (one-touch, USD at expiry), 0.537017 (no-touch).
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Quote the touch chance as the price | 0.435450 | Forgot that the dollar arrives in a year. |
-| Drop the drift: $2N(-b/\sigma\sqrt{T})$, discounted | 0.365499 | Treated EURUSD as driftless; the 2% rate gap pushes it toward 1.20. |
+| Drop the drift: $`2N(-b/\sigma\sqrt{T})`$, discounted | 0.365499 | Treated EURUSD as driftless; the 2% rate gap pushes it toward 1.20. |
 | Twice the digital | 0.448462 | The desk rule of thumb; exact only without drift. Here touching paths tend to carry on, so fewer come back. |
 | No-touch as 1 minus the one-touch | 0.585787 | Complemented to one dollar today instead of one dollar in a year. |
 | Euro drift for a dollar payout | 0.447560 | Counted in the wrong currency: that chance belongs with a euro payout and euro discounting. |
@@ -671,9 +689,9 @@ The two outputs agree line for line.
 Lean proves three facts behind the formula: the no-touch complement in every model, the drift tilt for pay-at-hit, and the mirror weight.
 
 - The no-touch is the discount factor minus the one-touch, in any model and with any monitoring rule, when both pay at expiry.
-- Take $\sigma > 0$, a time $t > 0$ and a real tilted drift, $\nu^2 + 2r_d\sigma^2 \ge 0$. Then the discounted first-touch density at drift $\nu$ is $e^{(\nu - \hat\nu)b/\sigma^2}$ times the one at drift $\hat\nu$.
-- Take $S > 0$, $H > 0$ and $b = \ln(H/S)$. Then the mirror weight $e^{2\nu b/\sigma^2}$ equals $(H/S)^{2\lambda}$.
-- The house market's numbers come out exact: $\nu = 0.015$, $\lambda = 1.5$, mirror weight $1728/1331$ and $\hat\nu = 0.035$.
+- Take $`\sigma > 0`$, a time $`t > 0`$ and a real tilted drift, $`\nu^2 + 2r_d\sigma^2 \ge 0`$. Then the discounted first-touch density at drift $`\nu`$ is $`e^{(\nu - \hat\nu)b/\sigma^2}`$ times the one at drift $`\hat\nu`$.
+- Take $`S > 0`$, $`H > 0`$ and $`b = \ln(H/S)`$. Then the mirror weight $`e^{2\nu b/\sigma^2}`$ equals $`(H/S)^{2\lambda}`$.
+- The house market's numbers come out exact: $`\nu = 0.015`$, $`\lambda = 1.5`$, mirror weight $`1728/1331`$ and $`\hat\nu = 0.035`$.
 
 The mirror formula itself and the daily shift are left to the Python and Rust checks, since Lean's library lacks the reflection principle.
 
@@ -782,7 +800,7 @@ example : ∀ h ∈ [110, 112, 114, 116, 118, 120, 122, 124, 126],
 > - **Volatility 10% → 15%.** Guess first: the wall is out of reach, so more jumpiness helps. The one-touch rises from 0.414213 to 0.552517. Set `sig = 0.15` in `ot(...)`.
 > - **Wall 1.20 → 1.15.** Guess first: half the distance, but not double the price. It comes out at 0.665527.
 > - **One year → three months.** Guess first: a quarter of the time is not a quarter of the price. It falls to 0.091886: the spread of log moves halves with a quarter of the time, so the wall is twice as far in standard deviations.
-> - **Pay in euros at the touch.** Guess first: higher than the dollar version. It is 0.463815 euros per euro, exactly $H/S$ times the dollar pay-at-hit price.
+> - **Pay in euros at the touch.** Guess first: higher than the dollar version. It is 0.463815 euros per euro, exactly $`H/S`$ times the dollar pay-at-hit price.
 
 ---
 
@@ -795,7 +813,7 @@ example : ∀ h ∈ [110, 112, 114, 116, 118, 120, 122, 124, 126],
 > - **No-touch equals one minus one-touch.** It is the discount factor minus the one-touch: 0.537017, not 0.585787. Desk screens quote both, and the sum is 95.12%, not 100%.
 > - **Twice the digital as a price.** Exact only with zero drift; here it gives 0.448462. With carry toward the wall it overprices, with carry away from it it underprices.
 > - **Ignoring the payment date.** Pay-at-hit is worth 0.425164, not 0.414213. And the complement identity only holds for contracts paid at the same date.
-> - **Continuous formula on a fixing-based contract.** A daily-fixing one-touch is worth about 0.393, not 0.414. Shift the wall away from spot by $\beta\sigma\sqrt{T/n}$.
+> - **Continuous formula on a fixing-based contract.** A daily-fixing one-touch is worth about 0.393, not 0.414. Shift the wall away from spot by $`\beta\sigma\sqrt{T/n}`$.
 
 ---
 
@@ -832,7 +850,7 @@ This card prices one wall with one volatility; the question it leaves open is wh
 
 Verified 2026-09-27: every link below resolves to the publisher's page.
 
-- Broadie, Mark, Paul Glasserman, and Steven Kou. "A Continuity Correction for Discrete Barrier Options." *Mathematical Finance* 7, no. 4 (1997): 325–349. [doi:10.1111/1467-9965.00035](https://doi.org/10.1111/1467-9965.00035). The wall shift $\beta\sigma\sqrt{T/n}$ and its error bound.
+- Broadie, Mark, Paul Glasserman, and Steven Kou. "A Continuity Correction for Discrete Barrier Options." *Mathematical Finance* 7, no. 4 (1997): 325–349. [doi:10.1111/1467-9965.00035](https://doi.org/10.1111/1467-9965.00035). The wall shift $`\beta\sigma\sqrt{T/n}`$ and its error bound.
 - Garman, Mark B., and Steven W. Kohlhagen. "Foreign Currency Option Values." *Journal of International Money and Finance* 2, no. 3 (1983): 231–237. [doi:10.1016/S0261-5606(83)80001-1](https://doi.org/10.1016/S0261-5606(83)80001-1). The lognormal currency model with two interest rates that this card's drifts come from.
 - Karatzas, Ioannis, and Steven E. Shreve. *Brownian Motion and Stochastic Calculus*, 2nd ed. Springer, 1998. [doi:10.1007/978-1-4612-0949-2](https://doi.org/10.1007/978-1-4612-0949-2). The reflection principle, the first-passage time of Brownian motion with drift, and Girsanov's theorem, proved in full.
 - Wystup, Uwe. *FX Options and Structured Products*, 2nd ed. Wiley, 2017. [Publisher page](https://www.wiley.com/en-us/FX+Options+and+Structured+Products%2C+2nd+Edition-p-9781118471067). One-touch and no-touch contracts as desks trade them: payout currency, pay-at-hit, quoting as a percentage of payout.

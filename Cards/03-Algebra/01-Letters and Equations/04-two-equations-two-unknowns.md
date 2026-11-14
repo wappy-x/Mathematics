@@ -36,32 +36,38 @@ The lower line at the left edge is Friday's receipt: every pair of prices that c
 
 ## The formula
 
-Call the adult price $x$ and the child price $y$. Both are numbers you have not been told yet ([Letters for numbers](01-letters-for-numbers.md)). Each receipt is then one equation:
+Call the adult price $`x`$ and the child price $`y`$. Both are numbers you have not been told yet ([Letters for numbers](01-letters-for-numbers.md)). Each receipt is then one equation:
 
-$$2x + 3y = 41 \qquad x + 2y = 24$$
+```math
+2x + 3y = 41 \qquad x + 2y = 24
+```
 
 **Read it aloud:** two adult tickets and three child tickets came to 41 dollars, and one adult ticket and two child tickets came to 24 dollars.
 
 Put letters where the counts and totals are and you have the general pair, the shape every such problem takes:
 
-$$ax + by = p \qquad cx + dy = q$$
+```math
+ax + by = p \qquad cx + dy = q
+```
 
 | Symbol | Plain meaning | In our example | Push it up and… |
 | --- | --- | --- | --- |
-| $x$ | the first unknown: the adult ticket price | 10.00 | — |
-| $y$ | the second unknown: the child ticket price | 7.00 | — |
-| $a$ | adults on the first receipt | 2 | the first line tilts flatter |
-| $b$ | children on the first receipt | 3 | the first line tilts steeper |
-| $p$ | what the first receipt came to | 41.00 | the adult price rises and the child price falls |
-| $c$ | adults on the second receipt | 1 | the second line tilts flatter |
-| $d$ | children on the second receipt | 2 | the second line tilts steeper |
-| $q$ | what the second receipt came to | 24.00 | the adult price falls and the child price rises |
+| $`x`$ | the first unknown: the adult ticket price | 10.00 | — |
+| $`y`$ | the second unknown: the child ticket price | 7.00 | — |
+| $`a`$ | adults on the first receipt | 2 | the first line tilts flatter |
+| $`b`$ | children on the first receipt | 3 | the first line tilts steeper |
+| $`p`$ | what the first receipt came to | 41.00 | the adult price rises and the child price falls |
+| $`c`$ | adults on the second receipt | 1 | the second line tilts flatter |
+| $`d`$ | children on the second receipt | 2 | the second line tilts steeper |
+| $`q`$ | what the second receipt came to | 24.00 | the adult price falls and the child price rises |
 
 Solve that general pair once and out comes a formula for every version of the problem:
 
-$$x = \frac{pd - bq}{ad - bc} \qquad y = \frac{aq - cp}{ad - bc}$$
+```math
+x = \frac{pd - bq}{ad - bc} \qquad y = \frac{aq - cp}{ad - bc}
+```
 
-The number underneath both, $ad - bc$, decides everything. Call it the **crossing number**: multiply along one diagonal of the four counts, multiply along the other, subtract. For our receipts it is 2 × 2 − 3 × 1 = 1. Not zero means the lines cross once and the prices are pinned. Zero means they do not, and Step 4 says what happens instead.
+The number underneath both, $`ad - bc`$, decides everything. Call it the **crossing number**: multiply along one diagonal of the four counts, multiply along the other, subtract. For our receipts it is 2 × 2 − 3 × 1 = 1. Not zero means the lines cross once and the prices are pinned. Zero means they do not, and Step 4 says what happens instead.
 
 ### When it holds
 
@@ -83,11 +89,15 @@ A pair that obeys both rules must sit on both lines. That is the crossing point,
 
 Take Saturday's receipt, x + 2y = 24, and make the adult price the subject ([Rearranging a formula](03-rearranging-formulas.md)):
 
-$$x = 24 - 2y$$
+```math
+x = 24 - 2y
+```
 
-That is what Saturday allows: pick a child price and the adult price follows. Now put that expression into Friday's receipt wherever an $x$ stands:
+That is what Saturday allows: pick a child price and the adult price follows. Now put that expression into Friday's receipt wherever an $`x`$ stands:
 
-$$2(24 - 2y) + 3y = 41$$
+```math
+2(24 - 2y) + 3y = 41
+```
 
 Multiply out the bracket ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)): 48 − 4y + 3y = 41, so 48 − y = 41, so y = 7. One equation, one unknown, undone step by step — that is the card before this one ([Linear equations](02-linear-equations.md)). Feed 7.00 back into x = 24 − 2y and the adult price is 10.00.
 
@@ -95,7 +105,9 @@ Multiply out the bracket ([The three rearranging laws](../../01-Foundations/01-E
 
 Doing the same thing to both sides of an equation leaves it true, so double Saturday's whole receipt — every count and the total:
 
-$$2x + 4y = 48$$
+```math
+2x + 4y = 48
+```
 
 Two adults now appear on both receipts. Subtract Friday from this one: equal amounts taken from equal amounts leave equal amounts, so the result is still true. The adults cancel. The children do not: 4y − 3y = y. The totals give 48 − 41 = 7. So y = 7, with no rearranging at all, and either receipt then returns the adult price: 24.00 − 2 × 7.00 = 10.00.
 
@@ -108,9 +120,11 @@ Run elimination on the general pair and the formulas above fall out.
 <details>
 <summary>The algebra behind the general pair</summary>
 
-Multiply the first equation by $c$ and the second by $a$, so both carry the same amount of $x$:
-$$acx + bcy = cp \qquad acx + ady = aq$$
-Subtract the first from the second. The $x$ terms cancel and what is left is $(ad - bc)\,y = aq - cp$, so $y = (aq - cp) / (ad - bc)$. Doing it the other way round, killing $y$ instead, gives $x = (pd - bq) / (ad - bc)$. Both carry the same crossing number underneath: it is the same subtraction.
+Multiply the first equation by $`c`$ and the second by $`a`$, so both carry the same amount of $`x`$:
+
+$`\displaystyle acx + bcy = cp \qquad acx + ady = aq`$
+
+Subtract the first from the second. The $`x`$ terms cancel and what is left is $`(ad - bc)\,y = aq - cp`$, so $`y = (aq - cp) / (ad - bc)`$. Doing it the other way round, killing $`y`$ instead, gives $`x = (pd - bq) / (ad - bc)`$. Both carry the same crossing number underneath: it is the same subtraction.
 
 </details>
 

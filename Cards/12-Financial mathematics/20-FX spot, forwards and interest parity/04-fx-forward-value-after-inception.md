@@ -37,34 +37,38 @@ Orange: the mark in thousands of dollars with three months left. Green: what the
 
 ## The formula
 
-Notation first, in words. A small letter written low labels a currency: $r_d$ is the **domestic** rate, on the currency the prices are counted in (dollars); $r_f$ is the **foreign** rate, on the currency being bought (euros). Both are continuously compounded: a deposit of 1 grows to $e^{r\tau}$ over $\tau$ years. A subscript $t$ means "as of today"; $T$ is delivery day; $\tau = T - t$ is the years left.
+Notation first, in words. A small letter written low labels a currency: $`r_d`$ is the **domestic** rate, on the currency the prices are counted in (dollars); $`r_f`$ is the **foreign** rate, on the currency being bought (euros). Both are continuously compounded: a deposit of 1 grows to $`e^{r\tau}`$ over $`\tau`$ years. A subscript $`t`$ means "as of today"; $`T`$ is delivery day; $`\tau = T - t`$ is the years left.
 
-$$V_d = A\,(F_t - K)\,e^{-r_d \tau}$$
+```math
+V_d = A\,(F_t - K)\,e^{-r_d \tau}
+```
 
 **Read it aloud:** the dollar value of the contract is the euro amount, times today's forward rate minus the contract rate, shrunk back from delivery day at the dollar rate.
 
 Counted in euros:
 
-$$V_f = \frac{V_d}{S_t} = A\left(1 - \frac{K}{F_t}\right)e^{-r_f \tau}$$
+```math
+V_f = \frac{V_d}{S_t} = A\left(1 - \frac{K}{F_t}\right)e^{-r_f \tau}
+```
 
 **Read it aloud:** the euro value is the dollar value at today's spot rate; equivalently, the euros bought minus the euros the owed dollars are worth forward, shrunk back at the euro rate.
 
 | Symbol | Plain meaning | In our example | Push it up and the mark… |
 | --- | --- | --- | --- |
-| $A$ | euro amount bought under the contract (negative if sold) | 10,000,000 | grows in size, same sign |
-| $K$ | contract rate: dollars per euro written in the contract | 1.1500 | falls: more dollars owed |
-| $F_t$ | today's forward rate for the same delivery day | 1.1055 | rises, by 987.58 dollars per pip |
-| $S_t$ | today's spot rate, dollars per euro | 1.1000 | rises (with both interest rates held) |
-| $S_T$ | spot rate on delivery day | unknown today | does not appear |
-| $r_d$ | dollar interest rate, continuously compounded | 5% | rises, with spot held: the forward climbs |
-| $r_f$ | euro interest rate, continuously compounded, as the quote implies | 3.0050% | falls, with spot held: the forward drops |
-| $\tau$, with $T$ and $t$ | years left to delivery, $\tau = T - t$ | 0.25 | moves the mark toward its delivery value |
-| $e^{-r_d \tau}$, $e^{-r_f \tau}$ | discount factors D(T): today's value of one dollar, or one euro, due on delivery day | 0.987578, 0.992516 | |
-| $V_d$, $P$ | the mark counted in dollars; $P$ is any trial price for the old contract, in the folded proof | −439,472.12 | (the answer) |
-| $V_f$ | the mark counted in euros | −399,520.11 | (the answer, restated) |
-| $A_i$, $K_i$, $F^*$ | a book's legs, each an amount and a contract rate; the forward rate at which the book is worth zero | +10m at 1.1500, −4m at 1.1300; 1.163333 | |
+| $`A`$ | euro amount bought under the contract (negative if sold) | 10,000,000 | grows in size, same sign |
+| $`K`$ | contract rate: dollars per euro written in the contract | 1.1500 | falls: more dollars owed |
+| $`F_t`$ | today's forward rate for the same delivery day | 1.1055 | rises, by 987.58 dollars per pip |
+| $`S_t`$ | today's spot rate, dollars per euro | 1.1000 | rises (with both interest rates held) |
+| $`S_T`$ | spot rate on delivery day | unknown today | does not appear |
+| $`r_d`$ | dollar interest rate, continuously compounded | 5% | rises, with spot held: the forward climbs |
+| $`r_f`$ | euro interest rate, continuously compounded, as the quote implies | 3.0050% | falls, with spot held: the forward drops |
+| $`\tau`$, with $`T`$ and $`t`$ | years left to delivery, $`\tau = T - t`$ | 0.25 | moves the mark toward its delivery value |
+| $`e^{-r_d \tau}`$, $`e^{-r_f \tau}`$ | discount factors D(T): today's value of one dollar, or one euro, due on delivery day | 0.987578, 0.992516 | |
+| $`V_d`$, $`P`$ | the mark counted in dollars; $`P`$ is any trial price for the old contract, in the folded proof | −439,472.12 | (the answer) |
+| $`V_f`$ | the mark counted in euros | −399,520.11 | (the answer, restated) |
+| $`A_i`$, $`K_i`$, $`F^*`$ | a book's legs, each an amount and a contract rate; the forward rate at which the book is worth zero | +10m at 1.1500, −4m at 1.1300; 1.163333 | |
 
-Two helper facts from the shelf. Today's forward obeys parity, $F_t = S_t\,e^{(r_d - r_f)\tau}$ ([Covered interest parity](02-covered-interest-parity.md)). Solved for the euro rate, it gives the rate the quote implies: $r_f = r_d - \ln(F_t/S_t)/\tau$, which is 3.0050% here. The shelf's house rates, 5% and 3%, give a three-month forward of 1.105514; the market quotes it to the pip as 1.1055, and 3.0050% is the euro rate that rounded quote carries. Reading the rate out of a quote is the job of [The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md).
+Two helper facts from the shelf. Today's forward obeys parity, $`F_t = S_t\,e^{(r_d - r_f)\tau}`$ ([Covered interest parity](02-covered-interest-parity.md)). Solved for the euro rate, it gives the rate the quote implies: $`r_f = r_d - \ln(F_t/S_t)/\tau`$, which is 3.0050% here. The shelf's house rates, 5% and 3%, give a three-month forward of 1.105514; the market quotes it to the pip as 1.1055, and 3.0050% is the euro rate that rounded quote carries. Reading the rate out of a quote is the job of [The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md).
 
 **Conventions verified 27 Sep 2026:** EURUSD is quoted in dollars per euro; a pip is 0.0001 dollars per euro; outright forwards are quoted to the pip, as spot plus forward points ([Forward points and the FX swap](03-forward-points-and-fx-swaps.md)). Markets could change these; the formula does not care, provided the rate and its quoting unit travel together.
 
@@ -72,7 +76,7 @@ Two helper facts from the shelf. Today's forward obeys parity, $F_t = S_t\,e^{(r
 
 - **The contract and the new forward settle on the same day, both sides deliver.** Then the close-out below leaves a sure sum. If the bank might default, the sum is not sure, and the mark needs a charge for that risk ([An old forward](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md) marks the default-free case).
 - **One dollar rate to discount with, for exactly the time left.** A three-month dollar rate discounts a three-month sum. Borrowing dearer than lending opens a narrow band around −439,472.12, not a different answer.
-- **Parity links spot, forward and the two rates.** The dollar formula needs only $F_t$ and $r_d$. The euro restatement at spot needs parity to hold between the quote and the euro rate used. Where banks' funding costs split the two (the cross-currency basis), take the euro discount from the forward, as Step 3 does, not from a euro deposit rate.
+- **Parity links spot, forward and the two rates.** The dollar formula needs only $`F_t`$ and $`r_d`$. The euro restatement at spot needs parity to hold between the quote and the euro rate used. Where banks' funding costs split the two (the cross-currency basis), take the euro discount from the forward, as Step 3 does, not from a euro deposit rate.
 - **A forward, not a future.** A future settles each day's gain in cash and restarts at zero, so its mark is not this number.
 
 ---
@@ -91,52 +95,56 @@ The importer need not guess where the euro goes. It can sign a second forward to
 | New contract: sell EUR 10m at 1.1055 | +11,055,000 | −10,000,000 |
 | **Net** | **−445,000** | **0** |
 
-The euros cancel. The net is fixed this morning, whatever spot does by delivery: $A(F_t - K)$, or −0.0445 dollars per euro. The spot rate on delivery day, $S_T$, appears nowhere.
+The euros cancel. The net is fixed this morning, whatever spot does by delivery: $`A(F_t - K)`$, or −0.0445 dollars per euro. The spot rate on delivery day, $`S_T`$, appears nowhere.
 
 ### Step 2: a sure dollar sum is worth its dollar-discounted value
 
-A sum of dollars due in three months is worth today what a dollar deposit needs to hold now to reach it. Three months at 5% grows a deposit by a factor of 1.012578, so the sum is worth −445,000 divided by that factor today, which is −445,000 × $e^{-0.0125}$ = −439,472.12. That is the formula, with 0.987578 as the dollar discount factor. The check reaches the same figure a second way, by compounding a dollar deposit in 100,000 small steps instead of using the exponential.
+A sum of dollars due in three months is worth today what a dollar deposit needs to hold now to reach it. Three months at 5% grows a deposit by a factor of 1.012578, so the sum is worth −445,000 divided by that factor today, which is −445,000 × $`e^{-0.0125}`$ = −439,472.12. That is the formula, with 0.987578 as the dollar discount factor. The check reaches the same figure a second way, by compounding a dollar deposit in 100,000 small steps instead of using the exponential.
 
 The rate is the dollar rate because the sum is in dollars. The euro rate never touches it.
 
 <details>
 <summary>Detailed proof: why any other price for the old contract gives free money</summary>
 
-Let $P$ be a price at which the old contract changes hands today, in dollars paid to its holder. A buyer who pays $P$, signs the offsetting forward at $F_t$, and deposits or borrows dollars to meet the fixed net sum ends with nothing on delivery day. That sum, $A(F_t - K)$, is met by a deposit of $A(F_t - K)e^{-r_d\tau}$ today (a loan, when negative), so the buyer's whole position costs $P - A(F_t - K)e^{-r_d\tau}$ today and pays nothing later.
+Let $`P`$ be a price at which the old contract changes hands today, in dollars paid to its holder. A buyer who pays $`P`$, signs the offsetting forward at $`F_t`$, and deposits or borrows dollars to meet the fixed net sum ends with nothing on delivery day. That sum, $`A(F_t - K)`$, is met by a deposit of $`A(F_t - K)e^{-r_d\tau}`$ today (a loan, when negative), so the buyer's whole position costs $`P - A(F_t - K)e^{-r_d\tau}`$ today and pays nothing later.
 
-If $P$ were below $A(F_t - K)e^{-r_d\tau}$, buying the contract and running this recipe would pay the gap today and owe nothing, riskless: buyers would bid $P$ up. If $P$ were above it, the holder would run the recipe itself instead of selling, and a seller of a copy (the recipe run in reverse) would pocket the gap: $P$ falls. Only $P = A(F_t - K)e^{-r_d\tau}$ leaves no free money. Nothing in the argument used the spot rate on delivery day or its spread.
+If $`P`$ were below $`A(F_t - K)e^{-r_d\tau}`$, buying the contract and running this recipe would pay the gap today and owe nothing, riskless: buyers would bid $`P`$ up. If $`P`$ were above it, the holder would run the recipe itself instead of selling, and a seller of a copy (the recipe run in reverse) would pocket the gap: $`P`$ falls. Only $`P = A(F_t - K)e^{-r_d\tau}`$ leaves no free money. Nothing in the argument used the spot rate on delivery day or its spread.
 
 </details>
 
 ### Step 3: counting in euros gives the same value, divided by spot
 
-A euro-based parent could run the same ledger in euros. The old contract owes 11,500,000 dollars on delivery day. Bought forward today at 1.1055, each dollar owed per euro costs 1.1500 ÷ 1.1055 = 1.040253 euros on that day: that ratio is $K/F_t$. Against the 10,000,000 euros the contract delivers, the net is 10,000,000 × (1 − 1.1500 ÷ 1.1055) = −402,532.79 euros on delivery day, fixed today. A sure euro sum discounts at the euro rate, 3.0050%: times $e^{-r_f\tau}$ = 0.992516, it gives **−399,520.11 euros**.
+A euro-based parent could run the same ledger in euros. The old contract owes 11,500,000 dollars on delivery day. Bought forward today at 1.1055, each dollar owed per euro costs 1.1500 ÷ 1.1055 = 1.040253 euros on that day: that ratio is $`K/F_t`$. Against the 10,000,000 euros the contract delivers, the net is 10,000,000 × (1 − 1.1500 ÷ 1.1055) = −402,532.79 euros on delivery day, fixed today. A sure euro sum discounts at the euro rate, 3.0050%: times $`e^{-r_f\tau}`$ = 0.992516, it gives **−399,520.11 euros**.
 
-That is the dollar mark divided by 1.1000, to the cent. The reason is parity. Parity says $F_t e^{-r_d\tau} = S_t e^{-r_f\tau}$: one euro delivered forward costs the same today by either route. Substitute it into the euro value:
+That is the dollar mark divided by 1.1000, to the cent. The reason is parity. Parity says $`F_t e^{-r_d\tau} = S_t e^{-r_f\tau}`$: one euro delivered forward costs the same today by either route. Substitute it into the euro value:
 
-$$A\left(1 - \frac{K}{F_t}\right)e^{-r_f\tau} = \frac{A(F_t - K)}{F_t}\,e^{-r_f\tau} = \frac{A(F_t - K)\,e^{-r_d\tau}}{S_t} = \frac{V_d}{S_t}.$$
+```math
+A\left(1 - \frac{K}{F_t}\right)e^{-r_f\tau} = \frac{A(F_t - K)}{F_t}\,e^{-r_f\tau} = \frac{A(F_t - K)\,e^{-r_d\tau}}{S_t} = \frac{V_d}{S_t}.
+```
 
 So a value today converts at today's exchange rate, spot. The forward rate converts delivery-day money; the contract rate converts nothing at all. This is the FX-specific point of the card: the mark has one size, and two currencies to state it in, linked by spot.
 
 ### Step 4: where the volatility went
 
-The euro's jumpiness does not appear. The contract pays $A(S_T - K)$ dollars on delivery day, a straight line in $S_T$. In the pricing world, the pretend world in which a euro deposit, counted in dollars, earns exactly the dollar rate ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)), the average of $S_T$ is the forward rate. So the average payoff is $A(F_t - K)$, whatever the spread around it. The check averages the payoff over a bell curve on the log of $S_T$, by Simpson's rule (a weighted sum of samples that approximates an integral), at 8% and at 16% volatility. Both give −439,472.12.
+The euro's jumpiness does not appear. The contract pays $`A(S_T - K)`$ dollars on delivery day, a straight line in $`S_T`$. In the pricing world, the pretend world in which a euro deposit, counted in dollars, earns exactly the dollar rate ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)), the average of $`S_T`$ is the forward rate. So the average payoff is $`A(F_t - K)`$, whatever the spread around it. The check averages the payoff over a bell curve on the log of $`S_T`$, by Simpson's rule (a weighted sum of samples that approximates an integral), at 8% and at 16% volatility. Both give −439,472.12.
 
 ### Step 5: the rate at which a book is flat
 
-A treasurer rarely holds one forward. Say the importer later also sold 4 million euros for the same delivery day at 1.1300. The book has legs $A_i$ at rates $K_i$: +10,000,000 at 1.1500 and −4,000,000 at 1.1300. Each leg's mark is Step 2 again, so the book is worth
+A treasurer rarely holds one forward. Say the importer later also sold 4 million euros for the same delivery day at 1.1300. The book has legs $`A_i`$ at rates $`K_i`$: +10,000,000 at 1.1500 and −4,000,000 at 1.1300. Each leg's mark is Step 2 again, so the book is worth
 
-$$e^{-r_d\tau}\sum_i A_i\,(F_t - K_i),$$
+```math
+e^{-r_d\tau}\sum_i A_i\,(F_t - K_i),
+```
 
-which at 1.1055 is −342,689.50 dollars. As a function of the forward rate this is a straight line with slope $e^{-r_d\tau}\sum_i A_i$.
+which at 1.1055 is −342,689.50 dollars. As a function of the forward rate this is a straight line with slope $`e^{-r_d\tau}\sum_i A_i`$.
 
 Before solving for the flat rate, when does one exist?
 
-- **Net euro amount not zero.** Exactly one flat rate: $F^* = \sum_i A_i K_i \big/ \sum_i A_i$, the amount-weighted average of the contract rates. Here (10,000,000 × 1.1500 − 4,000,000 × 1.1300) ÷ (10,000,000 − 4,000,000) = 1.163333. The book gains above it and loses below it, since it is net long euros.
+- **Net euro amount not zero.** Exactly one flat rate: $`F^* = \sum_i A_i K_i \big/ \sum_i A_i`$, the amount-weighted average of the contract rates. Here (10,000,000 × 1.1500 − 4,000,000 × 1.1300) ÷ (10,000,000 − 4,000,000) = 1.163333. The book gains above it and loses below it, since it is net long euros.
 - **Net euro amount zero.** The line is flat. The book is then a fixed dollar sum: worth zero at every forward rate if the weighted rates also cancel, and at none if they do not. No rate can rescue it.
 - **A flat rate at or below zero.** It solves the equation but is no exchange rate: the book then keeps one sign at every positive rate.
 
-The check finds 1.163333 a second way, by bisection: halve an interval of forward rates eighty times, keeping the half where the book's value changes sign. For the single contract, the spot rate at which it is flat is $K e^{-(r_d - r_f)\tau}$ = 1.144279, the crossing in the overview chart.
+The check finds 1.163333 a second way, by bisection: halve an interval of forward rates eighty times, keeping the half where the book's value changes sign. For the single contract, the spot rate at which it is flat is $`K e^{-(r_d - r_f)\tau}`$ = 1.144279, the crossing in the overview chart.
 
 The general version of all this, for a share with a dividend yield, is [An old forward](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md); the euro rate plays the dividend yield's part.
 
@@ -148,16 +156,16 @@ EUR 10,000,000 bought at 1.1500; three months left; spot 1.1000; three-month for
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| gap per euro, $F_t - K$ | 1.1055 − 1.1500 | −0.0445 |
+| gap per euro, $`F_t - K`$ | 1.1055 − 1.1500 | −0.0445 |
 | net on delivery day | −0.0445 × 10,000,000 | −445,000.00 dollars |
-| dollar discount, $e^{-r_d\tau}$ | $e^{-0.05 \times 0.25} = e^{-0.0125}$ | 0.987578 |
-| per euro today | −0.0445 × $e^{-0.0125}$ | −0.043947 dollars |
-| **mark in dollars** | −445,000 × $e^{-0.0125}$ | **−439,472.12 dollars** |
+| dollar discount, $`e^{-r_d\tau}`$ | $`e^{-0.05 \times 0.25} = e^{-0.0125}`$ | 0.987578 |
+| per euro today | −0.0445 × $`e^{-0.0125}`$ | −0.043947 dollars |
+| **mark in dollars** | −445,000 × $`e^{-0.0125}`$ | **−439,472.12 dollars** |
 | **mark in euros** | −439,472.12 ÷ 1.1000 | **−399,520.11 euros** |
 | cross-check: implied euro rate | 0.05 − ln(1.1055/1.1000) ÷ 0.25 = 0.05 − 0.019950 | 3.0050% |
-| cross-check: euro discount | $e^{-0.030050 \times 0.25}$ | 0.992516 |
+| cross-check: euro discount | $`e^{-0.030050 \times 0.25}`$ | 0.992516 |
 | cross-check: euros on delivery day | 10,000,000 − 11,500,000 ÷ 1.1055 | −402,532.79 euros |
-| cross-check: mark in euros | −402,532.79 × $e^{-0.030050 \times 0.25}$ | −399,520.11 euros |
+| cross-check: mark in euros | −402,532.79 × $`e^{-0.030050 \times 0.25}`$ | −399,520.11 euros |
 
 To leave the contract today, the importer pays its bank 439,472.12 dollars, or 399,520.11 euros at spot. Or it signs the offsetting forward and pays 445,000 dollars on delivery day. Those are the same cost at two dates.
 
@@ -197,13 +205,13 @@ The other force, spot moving, is the overview chart: the three-month dollar mark
 
 | Nudge | Change in the mark | Formula |
 | --- | --- | --- |
-| forward rate up one pip, rates held | +987.58 dollars | $A\,e^{-r_d\tau} \times 0.0001$ |
-| spot up one pip, both rates held | +992.52 dollars | $A\,e^{-r_f\tau} \times 0.0001$ |
-| dollar rate up one basis point (0.01%), spot held | +283.93 dollars | $A\,K\,\tau\,e^{-r_d\tau} \times 0.0001$ |
-| euro rate up one basis point, spot held | −272.94 dollars | $-A\,S_t\,\tau\,e^{-r_f\tau} \times 0.0001$ |
-| spot up one pip, mark counted in euros | +938.61 euros | $A\,K\,e^{-r_d\tau}/S_t^2 \times 0.0001$ |
+| forward rate up one pip, rates held | +987.58 dollars | $`A\,e^{-r_d\tau} \times 0.0001`$ |
+| spot up one pip, both rates held | +992.52 dollars | $`A\,e^{-r_f\tau} \times 0.0001`$ |
+| dollar rate up one basis point (0.01%), spot held | +283.93 dollars | $`A\,K\,\tau\,e^{-r_d\tau} \times 0.0001`$ |
+| euro rate up one basis point, spot held | −272.94 dollars | $`-A\,S_t\,\tau\,e^{-r_f\tau} \times 0.0001`$ |
+| spot up one pip, mark counted in euros | +938.61 euros | $`A\,K\,e^{-r_d\tau}/S_t^2 \times 0.0001`$ |
 
-The checks confirm each slope by nudging the rate both ways and halving the difference. The last row is the two-currency point again: the euro-counted mark moves with spot not by $A\,e^{-r_f\tau}$, a flat 10 million euros' worth, but by the contract's dollar leg divided by spot squared, because spot now sits in the denominator.
+The checks confirm each slope by nudging the rate both ways and halving the difference. The last row is the two-currency point again: the euro-counted mark moves with spot not by $`A\,e^{-r_f\tau}`$, a flat 10 million euros' worth, but by the contract's dollar leg divided by spot squared, because spot now sits in the denominator.
 
 ---
 
@@ -577,9 +585,9 @@ The two outputs agree line for line.
 
 Lean proves the dollar mark, the euro mark and the book's flat rate, for every amount, rate and time left.
 
-- Suppose a new forward at $F_t$ costs nothing, and a sure dollar on delivery day costs $e^{-r_d \tau}$ today. Then $V_d = A(F_t - K)e^{-r_d \tau}$, whatever spot does by delivery day.
-- Suppose also $S_t$ is positive, and a euro due on delivery day costs $e^{-r_f \tau}$ euros today, at spot. Then $V_d / S_t = A(1 - K/F_t)e^{-r_f \tau}$.
-- Take a book of forwards with legs $A_i$ at $K_i$, whose net euro amount is not zero. Then the book is worth zero exactly when $F_t = \sum_i A_i K_i / \sum_i A_i$.
+- Suppose a new forward at $`F_t`$ costs nothing, and a sure dollar on delivery day costs $`e^{-r_d \tau}`$ today. Then $`V_d = A(F_t - K)e^{-r_d \tau}`$, whatever spot does by delivery day.
+- Suppose also $`S_t`$ is positive, and a euro due on delivery day costs $`e^{-r_f \tau}`$ euros today, at spot. Then $`V_d / S_t = A(1 - K/F_t)e^{-r_f \tau}`$.
+- Take a book of forwards with legs $`A_i`$ at $`K_i`$, whose net euro amount is not zero. Then the book is worth zero exactly when $`F_t = \sum_i A_i K_i / \sum_i A_i`$.
 - The net of −445,000 dollars, the payoff of −500,000 dollars at zero months left, and the flat rate 349/300 are exact.
 
 The decimal figures, such as −439,472.12 dollars, and every sensitivity are left to the Python and Rust checks.
@@ -728,7 +736,7 @@ example : ((10000000 : ℚ) * (11500 / 10000) + (-4000000) * (11300 / 10000)) /
 > - **Discounting at the wrong currency's rate.** The dollar sum takes the dollar rate: the euro rate gives −441,669.48 dollars.
 > - **Using spot where the forward belongs.** The gap is between two delivery-day rates: spot against the contract gives −493,788.90 dollars.
 > - **Dropping the discount.** −445,000.00 dollars is delivery-day money, not today's.
-> - **Getting the sign from the wrong side.** A firm that sold euros forward holds −10,000,000 in $A$; its mark at these rates is +439,472.12 dollars, the bank's mirror of the importer.
+> - **Getting the sign from the wrong side.** A firm that sold euros forward holds −10,000,000 in $`A`$; its mark at these rates is +439,472.12 dollars, the bank's mirror of the importer.
 
 ---
 
@@ -737,7 +745,7 @@ example : ((10000000 : ℚ) * (11500 / 10000) + (-4000000) * (11300 / 10000)) /
 - **Corporate hedge accounting.** A firm that hedges a euro bill with a forward carries the forward on its balance sheet at this mark, restated at spot into whichever currency it reports in, every quarter until the cash moves.
 - **Unwinding a hedge early.** If the underlying bill is cancelled, the bank quotes a close-out: the dollar mark today, or the undiscounted sum on delivery day. The importer here pays 439,472.12 now or 445,000.00 in three months.
 - **Collateral between banks.** Two dealers exchange collateral each day equal to the net mark of every forward between them, counted in the currency their agreement names.
-- **A dealer's position report.** A book of forwards on one date collapses to a net euro amount and a flat rate, $F^*$: long euros above it, short below. The whole book's risk is one number and one level.
+- **A dealer's position report.** A book of forwards on one date collapses to a net euro amount and a flat rate, $`F^*`$: long euros above it, short below. The whole book's risk is one number and one level.
 - **Swaps.** An FX swap is a spot trade and a forward reversing it; its forward leg is marked by this formula ([Forward points and the FX swap](03-forward-points-and-fx-swaps.md)).
 
 > **Say it back**

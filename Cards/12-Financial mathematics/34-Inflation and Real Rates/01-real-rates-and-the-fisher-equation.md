@@ -34,38 +34,44 @@ The upper line is the balance as the bank statement shows it: $1,552.97 after te
 
 ## The formula
 
-Notation first, in words. The Greek letter $\pi$ ("pi") is used here for the inflation rate, as economists write it; on this card it never means 3.14159. A small c set low and to the right of a rate marks the **continuous** version of that rate, the one that compounds at every instant ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)).
+Notation first, in words. The Greek letter $`\pi`$ ("pi") is used here for the inflation rate, as economists write it; on this card it never means 3.14159. A small c set low and to the right of a rate marks the **continuous** version of that rate, the one that compounds at every instant ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)).
 
 The exact relation, named after Irving Fisher, who set it out in 1896:
 
-$$1 + i \;=\; (1 + r)(1 + \pi) \qquad\text{so}\qquad r \;=\; \frac{1 + i}{1 + \pi} - 1 \;=\; \frac{i - \pi}{1 + \pi}$$
+```math
+1 + i \;=\; (1 + r)(1 + \pi) \qquad\text{so}\qquad r \;=\; \frac{1 + i}{1 + \pi} - 1 \;=\; \frac{i - \pi}{1 + \pi}
+```
 
 **Read it aloud:** one year's growth in dollars equals one year's growth in goods times one year's rise in prices. So the growth in goods is the dollar growth divided by the price rise.
 
 The approximation everyone uses:
 
-$$r \;\approx\; i - \pi, \qquad\text{off by exactly}\qquad (i - \pi) - r \;=\; \frac{(i - \pi)\,\pi}{1 + \pi}$$
+```math
+r \;\approx\; i - \pi, \qquad\text{off by exactly}\qquad (i - \pi) - r \;=\; \frac{(i - \pi)\,\pi}{1 + \pi}
+```
 
-In words: the shortcut drops the division by $1 + \pi$. Since $(i - \pi)/(1 + \pi)$ is $r$, the error is exactly $r\pi$, the real rate times inflation: tiny when both are a few percent, large when either is large.
+In words: the shortcut drops the division by $`1 + \pi`$. Since $`(i - \pi)/(1 + \pi)`$ is $`r`$, the error is exactly $`r\pi`$, the real rate times inflation: tiny when both are a few percent, large when either is large.
 
 In continuous rates the relation is a plain subtraction, with no approximation at all:
 
-$$r_c \;=\; i_c - \pi_c, \qquad i_c = \ln(1 + i), \quad \pi_c = \ln(1 + \pi), \quad r_c = \ln(1 + r)$$
+```math
+r_c \;=\; i_c - \pi_c, \qquad i_c = \ln(1 + i), \quad \pi_c = \ln(1 + \pi), \quad r_c = \ln(1 + r)
+```
 
 In words: the natural logarithm turns multiplying growth factors into adding rates, so on the continuous label the real rate is the nominal minus inflation, exactly.
 
 | Symbol | Plain meaning | In our example | Push it up and the real rate… |
 | --- | --- | --- | --- |
-| $i$ | the **nominal** rate: growth of the account in dollars, one year | 4.5 percent | rises, almost point for point |
-| $\pi$ | **inflation**: the rise in the basket's price over the same year | 2.5 percent | falls, almost point for point |
-| $r$ | the **real** rate: growth in how many baskets the money buys | 1.9512 percent | — |
-| $M$ | the dollars deposited | 1,000 dollars | — (it cancels) |
-| $P_0$ | the basket's price at the start | 100.00 dollars | — (it cancels) |
-| $P_1$ | the basket's price a year later, $P_0 (1 + \pi)$ | 102.50 dollars | falls: each dollar buys less |
-| $i_c$ | the continuous nominal rate, $\ln(1 + i)$ | 4.4017 percent | $r_c$ rises one for one |
-| $\pi_c$ | the continuous inflation rate, $\ln(1 + \pi)$ | 2.4693 percent | $r_c$ falls one for one |
-| $r_c$ | the continuous real rate, $i_c - \pi_c$ | 1.9324 percent | — |
-| $n$ | a number of years, for the ten-year story | 10 | the shortcut's error compounds |
+| $`i`$ | the **nominal** rate: growth of the account in dollars, one year | 4.5 percent | rises, almost point for point |
+| $`\pi`$ | **inflation**: the rise in the basket's price over the same year | 2.5 percent | falls, almost point for point |
+| $`r`$ | the **real** rate: growth in how many baskets the money buys | 1.9512 percent | — |
+| $`M`$ | the dollars deposited | 1,000 dollars | — (it cancels) |
+| $`P_0`$ | the basket's price at the start | 100.00 dollars | — (it cancels) |
+| $`P_1`$ | the basket's price a year later, $`P_0 (1 + \pi)`$ | 102.50 dollars | falls: each dollar buys less |
+| $`i_c`$ | the continuous nominal rate, $`\ln(1 + i)`$ | 4.4017 percent | $`r_c`$ rises one for one |
+| $`\pi_c`$ | the continuous inflation rate, $`\ln(1 + \pi)`$ | 2.4693 percent | $`r_c`$ falls one for one |
+| $`r_c`$ | the continuous real rate, $`i_c - \pi_c`$ | 1.9324 percent | — |
+| $`n`$ | a number of years, for the ten-year story | 10 | the shortcut's error compounds |
 
 ### When it holds
 
@@ -75,7 +81,7 @@ The exact relation is an identity: once the three rates are defined as above, it
 - **Same period, same compounding.** All three rates must cover the same year on the same label. Mixing a yearly nominal rate with a monthly inflation figure, or a yearly rate with a continuous one, gives a number with no meaning.
 - **Inflation measured, not guessed.** Computed with inflation that has already happened, the result is the **realised** real rate. Computed with inflation that is expected, it is the **expected** real rate. This is close to, not equal to, the average of the realised real rates: dividing by an average is not the average of the divisions. The claim that market nominal rates rise one for one with expected inflation is a separate model, the Fisher hypothesis, tested in the sources and only roughly true.
 - **Before tax.** Tax is charged on the nominal interest, not the real gain. After tax the real rate is lower than the formula applied to pre-tax numbers suggests, by more than the tax rate alone (The usual mistake has the numbers).
-- **Prices above zero.** The division needs $1 + \pi$ above zero, which holds whenever prices stay positive. Then each pair of rates fixes the third uniquely, and $r$ is above −1 exactly when $i$ is (money not wiped out). Deflation, a negative $\pi$, is allowed and raises the real rate above the nominal.
+- **Prices above zero.** The division needs $`1 + \pi`$ above zero, which holds whenever prices stay positive. Then each pair of rates fixes the third uniquely, and $`r`$ is above −1 exactly when $`i`$ is (money not wiped out). Deflation, a negative $`\pi`$, is allowed and raises the real rate above the nominal.
 
 ---
 
@@ -83,50 +89,58 @@ The exact relation is an identity: once the three rates are defined as above, it
 
 ### Step 0: measure the gain in goods, not in dollars
 
-A rate of interest is a statement about a ratio: what comes back over what went in. Measured in dollars, that ratio is $1 + i$. But dollars are only worth what they buy. So measure the same ratio in baskets. The real rate is nothing more than the nominal rate recomputed with baskets as the unit of account.
+A rate of interest is a statement about a ratio: what comes back over what went in. Measured in dollars, that ratio is $`1 + i`$. But dollars are only worth what they buy. So measure the same ratio in baskets. The real rate is nothing more than the nominal rate recomputed with baskets as the unit of account.
 
 ### Step 1: count baskets at the start and at the end
 
-Put in $M$ dollars (here 1,000). At the start a basket costs $P_0$, so the money buys $M / P_0$ baskets: 10.
+Put in $`M`$ dollars (here 1,000). At the start a basket costs $`P_0`$, so the money buys $`M / P_0`$ baskets: 10.
 
-A year later the account holds $M(1 + i)$ dollars: 1,045.00. A basket costs $P_1 = P_0(1 + \pi)$ dollars: 102.50. So the money buys
+A year later the account holds $`M(1 + i)`$ dollars: 1,045.00. A basket costs $`P_1 = P_0(1 + \pi)`$ dollars: 102.50. So the money buys
 
-$$\frac{M(1 + i)}{P_0(1 + \pi)} \text{ baskets}: \quad \frac{1045}{102.50} = 10.195122.$$
+```math
+\frac{M(1 + i)}{P_0(1 + \pi)} \text{ baskets}: \quad \frac{1045}{102.50} = 10.195122.
+```
 
 ### Step 2: the ratio of basket counts is one plus the real rate
 
-By definition, $1 + r$ is baskets at the end over baskets at the start. Divide Step 1's count by $M / P_0$. The deposit and the starting price both cancel:
+By definition, $`1 + r`$ is baskets at the end over baskets at the start. Divide Step 1's count by $`M / P_0`$. The deposit and the starting price both cancel:
 
-$$1 + r \;=\; \frac{1 + i}{1 + \pi}.$$
+```math
+1 + r \;=\; \frac{1 + i}{1 + \pi}.
+```
 
-Neither the size of the deposit nor the price of a basket survives. Only the two rates do. Multiply both sides by $1 + \pi$ and the result is Fisher's form, $1 + i = (1 + r)(1 + \pi)$: dollar growth is goods growth times price growth.
+Neither the size of the deposit nor the price of a basket survives. Only the two rates do. Multiply both sides by $`1 + \pi`$ and the result is Fisher's form, $`1 + i = (1 + r)(1 + \pi)`$: dollar growth is goods growth times price growth.
 
 ### Step 3: the subtraction is what is left when a small product is dropped
 
-Multiply out Fisher's form: $1 + i = 1 + r + \pi + r\pi$. So $i = r + \pi + r\pi$, and
+Multiply out Fisher's form: $`1 + i = 1 + r + \pi + r\pi`$. So $`i = r + \pi + r\pi`$, and
 
-$$r \;=\; i - \pi - r\pi.$$
+```math
+r \;=\; i - \pi - r\pi.
+```
 
-The shortcut $r \approx i - \pi$ drops the last term, $r\pi$: the real rate earned on the inflation itself. At 1.95 percent and 2.5 percent that product is about 0.05 percentage points (0.0488, to be exact). At 100 percent inflation and 102 percent nominal the real rate is 1 percent, so the dropped product is 1 point. That is as large as the answer itself, and the shortcut stops being a shortcut.
+The shortcut $`r \approx i - \pi`$ drops the last term, $`r\pi`$: the real rate earned on the inflation itself. At 1.95 percent and 2.5 percent that product is about 0.05 percentage points (0.0488, to be exact). At 100 percent inflation and 102 percent nominal the real rate is 1 percent, so the dropped product is 1 point. That is as large as the answer itself, and the shortcut stops being a shortcut.
 
 <details>
 <summary>Detailed proof: the exact error, the continuous form, and many years</summary>
 
-**The error.** From Step 2, $r = (1 + i)/(1 + \pi) - 1 = (i - \pi)/(1 + \pi)$. Subtract this from $i - \pi$:
-$$(i - \pi) - \frac{i - \pi}{1 + \pi} \;=\; (i - \pi)\,\frac{(1 + \pi) - 1}{1 + \pi} \;=\; \frac{(i - \pi)\,\pi}{1 + \pi}.$$
-With $i - \pi = 0.02$ and $\pi = 0.025$: $0.02 \times 0.025 / 1.025 = 0.000487805$. The sign is the sign of $(i - \pi)\pi$: with positive inflation and a positive real rate, the shortcut always overstates.
+**The error.** From Step 2, $`r = (1 + i)/(1 + \pi) - 1 = (i - \pi)/(1 + \pi)`$. Subtract this from $`i - \pi`$:
 
-**The continuous form.** Take natural logarithms of $1 + i = (1 + r)(1 + \pi)$. The logarithm of a product is the sum of the logarithms, so $\ln(1 + i) = \ln(1 + r) + \ln(1 + \pi)$, which is $i_c = r_c + \pi_c$. No term was dropped, so the subtraction is exact on this label.
+$`\displaystyle (i - \pi) - \frac{i - \pi}{1 + \pi} \;=\; (i - \pi)\,\frac{(1 + \pi) - 1}{1 + \pi} \;=\; \frac{(i - \pi)\,\pi}{1 + \pi}.`$
 
-**Many years.** Over $n$ years, with the same rates each year, dollars grow by $(1 + i)^n$ and prices by $(1 + \pi)^n$. Baskets grow by their ratio, $\big((1 + i)/(1 + \pi)\big)^n = (1 + r)^n$. So the real rate compounds exactly like any other rate, and the yearly relation is all that is needed. If the rates differ year to year, the same argument multiplies the yearly ratios.
+With $`i - \pi = 0.02`$ and $`\pi = 0.025`$: $`0.02 \times 0.025 / 1.025 = 0.000487805`$. The sign is the sign of $`(i - \pi)\pi`$: with positive inflation and a positive real rate, the shortcut always overstates.
+
+**The continuous form.** Take natural logarithms of $`1 + i = (1 + r)(1 + \pi)`$. The logarithm of a product is the sum of the logarithms, so $`\ln(1 + i) = \ln(1 + r) + \ln(1 + \pi)`$, which is $`i_c = r_c + \pi_c`$. No term was dropped, so the subtraction is exact on this label.
+
+**Many years.** Over $`n`$ years, with the same rates each year, dollars grow by $`(1 + i)^n`$ and prices by $`(1 + \pi)^n`$. Baskets grow by their ratio, $`\big((1 + i)/(1 + \pi)\big)^n = (1 + r)^n`$. So the real rate compounds exactly like any other rate, and the yearly relation is all that is needed. If the rates differ year to year, the same argument multiplies the yearly ratios.
 
 </details>
 
 ### Step 4: two more roads to the same number
 
-The relation can be read as an equation to solve rather than a division to do: find the $r$ for which $(1 + r)(1 + \pi)$ lands on $1 + i$. With $1 + \pi$ above zero the left side rises steadily as $r$ rises, so there is exactly one such $r$. Halving an interval that brackets it (bisection) finds it without ever dividing. The code does that. It also takes the continuous road: subtract the two logarithms, then undo the logarithm. All roads land on 1.9512195 percent.
+The relation can be read as an equation to solve rather than a division to do: find the $`r`$ for which $`(1 + r)(1 + \pi)`$ lands on $`1 + i`$. With $`1 + \pi`$ above zero the left side rises steadily as $`r`$ rises, so there is exactly one such $`r`$. Halving an interval that brackets it (bisection) finds it without ever dividing. The code does that. It also takes the continuous road: subtract the two logarithms, then undo the logarithm. All roads land on 1.9512195 percent.
 
-The same relation run backwards turns a real rate into a nominal one. The shelf's house bond yields 1 percent real: its coupon, since it is priced at par, meaning at its face value. Markets price 2.5 percent inflation against it. Fisher's form gives $1.01 \times 1.025 - 1 = 3.525$ percent as the nominal yield that matches it. How markets read that 2.5 percent out of prices is [Breakeven inflation](03-breakeven-inflation.md).
+The same relation run backwards turns a real rate into a nominal one. The shelf's house bond yields 1 percent real: its coupon, since it is priced at par, meaning at its face value. Markets price 2.5 percent inflation against it. Fisher's form gives $`1.01 \times 1.025 - 1 = 3.525`$ percent as the nominal yield that matches it. How markets read that 2.5 percent out of prices is [Breakeven inflation](03-breakeven-inflation.md).
 
 ---
 
@@ -154,8 +168,8 @@ A year of saving at 4.5 percent buys 1.95 percent more groceries, not 4.5 percen
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Subtract the rates | 2.00 percent, not 1.95 | Drops the real return on the inflation; small here, 0.0488 points |
-| Multiply instead of divide: $(1 + i)(1 + \pi) - 1$ | 7.11 percent | Adds inflation to the gain; it should come off |
-| Subtract when inflation is 100 percent and nominal 110 | 10 percent, not 5 | The dropped term $r\pi$ is now as large as the answer |
+| Multiply instead of divide: $`(1 + i)(1 + \pi) - 1`$ | 7.11 percent | Adds inflation to the gain; it should come off |
+| Subtract when inflation is 100 percent and nominal 110 | 10 percent, not 5 | The dropped term $`r\pi`$ is now as large as the answer |
 | Compound the shortcut for ten years | 12.19 baskets, not 12.13 | A 0.05-point error each year, carried ten times |
 
 Every number in both tables is printed by the code below.
@@ -555,12 +569,12 @@ The two outputs match line for line.
 
 Lean proves Fisher's exact relation, the shortcut's error and the continuous form for any rates with prices above zero, and checks the worked numbers.
 
-- Suppose $1 + r$ is baskets at the end over baskets at the start, with $M$, $P_0$ and $1 + \pi$ above zero. Then $1 + i = (1 + r)(1 + \pi)$, so $r = (1 + i)/(1 + \pi) - 1 = (i - \pi)/(1 + \pi)$.
-- Suppose $1 + \pi > 0$ and $1 + r = (1 + i)/(1 + \pi)$. Then the shortcut's error $(i - \pi) - r$ equals both $(i - \pi)\pi/(1 + \pi)$ and $r\pi$.
-- Suppose also that inflation and the real rate are both above zero. Then the shortcut overstates: $r < i - \pi$.
-- Suppose $1 + i = (1 + r)(1 + \pi)$, with $1 + i$ and $1 + \pi$ above zero. Then $r_c = i_c - \pi_c$, that is $\ln(1 + r) = \ln(1 + i) - \ln(1 + \pi)$.
+- Suppose $`1 + r`$ is baskets at the end over baskets at the start, with $`M`$, $`P_0`$ and $`1 + \pi`$ above zero. Then $`1 + i = (1 + r)(1 + \pi)`$, so $`r = (1 + i)/(1 + \pi) - 1 = (i - \pi)/(1 + \pi)`$.
+- Suppose $`1 + \pi > 0`$ and $`1 + r = (1 + i)/(1 + \pi)`$. Then the shortcut's error $`(i - \pi) - r`$ equals both $`(i - \pi)\pi/(1 + \pi)`$ and $`r\pi`$.
+- Suppose also that inflation and the real rate are both above zero. Then the shortcut overstates: $`r < i - \pi`$.
+- Suppose $`1 + i = (1 + r)(1 + \pi)`$, with $`1 + i`$ and $`1 + \pi`$ above zero. Then $`r_c = i_c - \pi_c`$, that is $`\ln(1 + r) = \ln(1 + i) - \ln(1 + \pi)`$.
 - The deposit's numbers check exactly: 1,045 dollars, a 102.50 dollar basket, 418/41 baskets, and a real rate of 4/205, about 1.9512 percent.
-- The shortcut's error there is exactly 1/2050, about 0.000488, and it equals $r\pi$.
+- The shortcut's error there is exactly 1/2050, about 0.000488, and it equals $`r\pi`$.
 - At 100 percent inflation, 110 percent nominal gives exactly 5 percent real, and 102 percent nominal gives exactly 1 percent.
 - The shelf bond's nominal yield is 3.525 percent. Multiplying instead of dividing gives 7.1125 percent. Inflation of 4.5 percent gives a real rate of exactly 0.
 
@@ -677,7 +691,7 @@ example : (1 + 9 / 200 : ℚ) / (1 + 9 / 200) - 1 = 0 := by norm_num
 > **Treating the nominal rate as the return.** A 4.5 percent deposit does not make its owner 4.5 percent richer. It makes them 1.95 percent richer in goods, and in a year when inflation reaches 5 percent, 0.48 percent poorer. The number on the statement is a count of dollars; wealth is a count of what they buy.
 >
 > - **Taxing the wrong number.** Tax falls on the nominal interest. At a 30 percent tax rate the saver keeps 3.15 percent nominal, which is 0.634 percent real. Taking 30 percent off the real rate instead gives 1.366 percent, more than double the truth: the tax also bites the part of the interest that only kept pace with prices.
-> - **Multiplying where division belongs.** $(1 + i)(1 + \pi) - 1$ gives 7.11 percent. Fisher's form multiplies the real rate by inflation to get the nominal rate; to go back, divide.
+> - **Multiplying where division belongs.** $`(1 + i)(1 + \pi) - 1`$ gives 7.11 percent. Fisher's form multiplies the real rate by inflation to get the nominal rate; to go back, divide.
 > - **Mixing labels.** A continuous nominal rate minus a yearly inflation figure is neither a yearly nor a continuous real rate. Put both on one label first.
 > - **Trusting the subtraction in high inflation.** At 100 percent inflation and 110 percent nominal the shortcut says 10 percent and the truth is 5.
 
@@ -699,7 +713,7 @@ example : (1 + 9 / 200 : ℚ) / (1 + 9 / 200) - 1 = 0 := by norm_num
 ## What this builds on
 
 - [Bond price and yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md): what a yield is, and that a quoted rate is growth per year on a stated compounding label. This card splits that yield into a real part and an inflation part.
-- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): compounding labels, including the continuous rate $\ln(1 + i)$. This card uses the continuous label, where the Fisher relation is an exact subtraction.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): compounding labels, including the continuous rate $`\ln(1 + i)`$. This card uses the continuous label, where the Fisher relation is an exact subtraction.
 
 ## Where this goes next
 

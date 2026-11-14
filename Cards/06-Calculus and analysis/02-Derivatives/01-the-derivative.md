@@ -26,26 +26,30 @@ Drawn to scale: 1 s is 140 units across, 1 m is 4 units up, the axis at 30 m. P 
 
 ## The formula
 
-Notation first, in words. The derivative of a function f at a point $a$ is written $f'(a)$, read "f prime of a". When output is y and input x, it is also written $\frac{dy}{dx}$, read "the rate of y per unit of x". Reminder from [Limits](../01-Limits%20and%20Continuity/01-limits.md): $\lim_{h \to 0}$ reads "what this heads for as h heads for 0".
+Notation first, in words. The derivative of a function f at a point $`a`$ is written $`f'(a)`$, read "f prime of a". When output is y and input x, it is also written $`\frac{dy}{dx}`$, read "the rate of y per unit of x". Reminder from [Limits](../01-Limits%20and%20Continuity/01-limits.md): $`\lim_{h \to 0}`$ reads "what this heads for as h heads for 0".
 
-$$f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}$$
+```math
+f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}
+```
 
 **Read it aloud:** step the input from a to a + h, divide the change in output by the step, and see what that average rate heads for as the step shrinks to zero.
 
-For the car the function is the odometer, $s(t) = 2t^2$ metres at $t$ seconds, and the instant is 5 s:
+For the car the function is the odometer, $`s(t) = 2t^2`$ metres at $`t`$ seconds, and the instant is 5 s:
 
-$$s'(5) = \lim_{h \to 0} \frac{s(5+h) - s(5)}{h} = 20 \text{ m/s}$$
+```math
+s'(5) = \lim_{h \to 0} \frac{s(5+h) - s(5)}{h} = 20 \text{ m/s}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s(t)$ | the odometer reading, metres, at time t | 2 × t × t; 50 m at 5 s | a faster car gives bigger averages |
-| $t$ | time since the lights, seconds | 5 s at the instant | later instants give higher speeds (4t) |
-| $a$ | the input where the rate is wanted | 5 s | the car's rate at a is 4 × a |
-| $h$ | the window: the step in the input, either sign, never 0 | 1, 0.1, 0.01, 0.001 s | the average drifts from 20 by 2h |
-| $f$ | any function, input x to output y | the odometer | — |
-| $f'(a)$, $s'(5)$ | the derivative at a: output units per input unit | 20 m/s | — |
-| $\frac{ds}{dt}$ | the same derivative, written as a rate of s per unit of t | 20 m/s at 5 s | — |
-| $\lim_{h \to 0}$ | what the expression heads for as h heads for 0 | averages head for 20 | — |
+| $`s(t)`$ | the odometer reading, metres, at time t | 2 × t × t; 50 m at 5 s | a faster car gives bigger averages |
+| $`t`$ | time since the lights, seconds | 5 s at the instant | later instants give higher speeds (4t) |
+| $`a`$ | the input where the rate is wanted | 5 s | the car's rate at a is 4 × a |
+| $`h`$ | the window: the step in the input, either sign, never 0 | 1, 0.1, 0.01, 0.001 s | the average drifts from 20 by 2h |
+| $`f`$ | any function, input x to output y | the odometer | — |
+| $`f'(a)`$, $`s'(5)`$ | the derivative at a: output units per input unit | 20 m/s | — |
+| $`\frac{ds}{dt}`$ | the same derivative, written as a rate of s per unit of t | 20 m/s at 5 s | — |
+| $`\lim_{h \to 0}`$ | what the expression heads for as h heads for 0 | averages head for 20 | — |
 
 A derivative's units are the output's units per input unit: metres per second here.
 
@@ -67,9 +71,11 @@ Speed is distance divided by time. At one instant both are zero, and 0 divided b
 
 ### Step 1: work the car's average for every window at once
 
-Over a window of $h$ seconds from 5 s, the reading goes from 50 m to 2(5 + h)(5 + h) = 50 + 20h + 2h^2 metres. Subtract 50, divide by h:
+Over a window of $`h`$ seconds from 5 s, the reading goes from 50 m to 2(5 + h)(5 + h) = 50 + 20h + 2h^2 metres. Subtract 50, divide by h:
 
-$$\frac{s(5+h) - s(5)}{h} = \frac{20h + 2h^2}{h} = 20 + 2h$$
+```math
+\frac{s(5+h) - s(5)}{h} = \frac{20h + 2h^2}{h} = 20 + 2h
+```
 
 Dividing is allowed because h is not zero. As h heads for 0, so does 2h, and the average heads for **20 m/s**. At any instant a the same algebra gives 4a + 2h, so the speed at a is 4a: 8 m/s at 2 s.
 
@@ -85,7 +91,9 @@ On the graph, the average over a window is the slope of the straight line throug
 
 Continuity at a means the output's gap from f(a) heads for 0 as the input closes in ([Continuity](../01-Limits%20and%20Continuity/05-continuity.md)). Write the gap as window times average:
 
-$$f(a+h) - f(a) = h \times \frac{f(a+h) - f(a)}{h}$$
+```math
+f(a+h) - f(a) = h \times \frac{f(a+h) - f(a)}{h}
+```
 
 If the derivative exists, the average heads for a fixed number while h heads for 0, so their product, the gap, heads for 0. For the car: 2.02 m at a 0.1 s window, 0.2002 m at 0.01 s, 0.020002 m at 0.001 s.
 

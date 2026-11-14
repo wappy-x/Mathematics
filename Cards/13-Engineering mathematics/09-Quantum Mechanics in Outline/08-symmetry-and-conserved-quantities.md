@@ -29,57 +29,61 @@ xychart-beta
     line [0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250]
 ```
 
-Orange: $\langle S_x\rangle$, the average spin across the field in one direction. Teal: $\langle S_y\rangle$, across the field in the other. Dark: $\langle S_z\rangle$, along the field, flat at 0.250 ħ. One full sweep takes 0.10495 ns.
+Orange: $`\langle S_x\rangle`$, the average spin across the field in one direction. Teal: $`\langle S_y\rangle`$, across the field in the other. Dark: $`\langle S_z\rangle`$, along the field, flat at 0.250 ħ. One full sweep takes 0.10495 ns.
 
 ---
 
 ## The formula
 
-Notation, in words first. A system's position is fixed by coordinates $q_i$ (a length, an angle); a prime is a rate in time, so $q_i'$ is a speed. The Lagrangian $L(q, q', t)$ is kinetic minus potential energy, and the momentum belonging to $q_i$ is $p_i = \partial L/\partial q_i'$, both from [Lagrangian and Hamiltonian mechanics](../07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md). A symmetry is a move $q_i \to q_i + \varepsilon\,\eta_i(q)$: $\varepsilon$ is how far, and $\eta_i$ says which way each coordinate goes. **Noether's theorem:**
+Notation, in words first. A system's position is fixed by coordinates $`q_i`$ (a length, an angle); a prime is a rate in time, so $`q_i'`$ is a speed. The Lagrangian $`L(q, q', t)`$ is kinetic minus potential energy, and the momentum belonging to $`q_i`$ is $`p_i = \partial L/\partial q_i'`$, both from [Lagrangian and Hamiltonian mechanics](../07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md). A symmetry is a move $`q_i \to q_i + \varepsilon\,\eta_i(q)`$: $`\varepsilon`$ is how far, and $`\eta_i`$ says which way each coordinate goes. **Noether's theorem:**
 
-$$\text{if } L(q + \varepsilon\eta,\ q' + \varepsilon\eta',\ t) = L(q, q', t) \text{ for every small } \varepsilon, \quad\text{then}\quad Q = \sum_i p_i\,\eta_i \ \text{ is constant;} \qquad \text{if } \frac{\partial L}{\partial t} = 0, \quad E = \sum_i p_i\,q_i' - L \ \text{ is constant.}$$
+```math
+\text{if } L(q + \varepsilon\eta,\ q' + \varepsilon\eta',\ t) = L(q, q', t) \text{ for every small } \varepsilon, \quad\text{then}\quad Q = \sum_i p_i\,\eta_i \ \text{ is constant;} \qquad \text{if } \frac{\partial L}{\partial t} = 0, \quad E = \sum_i p_i\,q_i' - L \ \text{ is constant.}
+```
 
 **Read it aloud:** if sliding the system a little along a fixed pattern leaves the Lagrangian unchanged, then momentum measured along that pattern never changes; if the Lagrangian does not mention the clock, energy never changes.
 
-The same fact in the Hamiltonian's language uses the **Poisson bracket** of two quantities $A$ and $B$ (functions of the $q$'s and $p$'s):
+The same fact in the Hamiltonian's language uses the **Poisson bracket** of two quantities $`A`$ and $`B`$ (functions of the $`q`$'s and $`p`$'s):
 
-$$\{A, B\} = \sum_i \left(\frac{\partial A}{\partial q_i}\frac{\partial B}{\partial p_i} - \frac{\partial A}{\partial p_i}\frac{\partial B}{\partial q_i}\right), \qquad \frac{dA}{dt} = \{A, H\}, \qquad \{A, B\} \;\longrightarrow\; \frac{[\hat A, \hat B]}{i\hbar}$$
+```math
+\{A, B\} = \sum_i \left(\frac{\partial A}{\partial q_i}\frac{\partial B}{\partial p_i} - \frac{\partial A}{\partial p_i}\frac{\partial B}{\partial q_i}\right), \qquad \frac{dA}{dt} = \{A, H\}, \qquad \{A, B\} \;\longrightarrow\; \frac{[\hat A, \hat B]}{i\hbar}
+```
 
-**Read it aloud:** any quantity changes at the rate given by its bracket with the energy; and quantum mechanics keeps the rule with the bracket replaced by the commutator divided by $i\hbar$.
+**Read it aloud:** any quantity changes at the rate given by its bracket with the energy; and quantum mechanics keeps the rule with the bracket replaced by the commutator divided by $`i\hbar`$.
 
-Here a hat marks an operator (a matrix acting on the state, as in [States as vectors](02-state-vectors-operators-and-measurement.md)), not an estimate. The **commutator** is $[\hat A, \hat B] = \hat A\hat B - \hat B\hat A$: how much the order of the two matters.
+Here a hat marks an operator (a matrix acting on the state, as in [States as vectors](02-state-vectors-operators-and-measurement.md)), not an estimate. The **commutator** is $`[\hat A, \hat B] = \hat A\hat B - \hat B\hat A`$: how much the order of the two matters.
 
 The three examples:
 
-| Symmetry: the move that changes nothing | $\eta$ | The quantity kept |
+| Symmetry: the move that changes nothing | $`\eta`$ | The quantity kept |
 | --- | --- | --- |
-| shift in time: run the experiment later | (clock moves) | energy $E$ |
-| shift in space: slide everything along $x$ | 1 for $x$ | momentum $p_x$ |
-| turn about $z$ by an angle | $(-y, x)$ for $(x, y)$ | angular momentum $L_z = x p_y - y p_x$, and for a spin, $S_z$ |
+| shift in time: run the experiment later | (clock moves) | energy $`E`$ |
+| shift in space: slide everything along $`x`$ | 1 for $`x`$ | momentum $`p_x`$ |
+| turn about $`z`$ by an angle | $`(-y, x)`$ for $`(x, y)`$ | angular momentum $`L_z = x p_y - y p_x`$, and for a spin, $`S_z`$ |
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $q_i$, $q_i'$, $t$ | coordinates, their rates, time (s) | spin angles; box position | — |
-| $L$ | Lagrangian: kinetic minus potential energy, J | — | — |
-| $p_i$ | momentum belonging to $q_i$: $\partial L/\partial q_i'$ | 3.3130 × 10⁻²⁵ kg m/s in the box | faster electron, shorter 2.750 fs (femtoseconds) between walls |
-| $\varepsilon$, $\eta_i$, $\alpha$ | size of the symmetry move; its direction for each coordinate; a turn angle | 10⁻⁶ rad in the code's test | change in $H$ grows in step, unless the move is a symmetry: then it stays 0 |
-| $Q$, $G$, $L_z$ | Noether's kept quantity, $\sum p_i \eta_i$; any quantity, read as the move it generates; angular momentum about $z$ | $\langle S_z\rangle$ = 0.2500 ħ | — |
-| $E$, $H$ | energy; the Hamiltonian, energy written in $q$ and $p$ | average 9.852 μeV for the spin | — |
-| $\{A, B\}$ | Poisson bracket: rate of $A$ along the motion $B$ generates | $\{S_x, S_y\} = S_z$ | $A$ changes faster |
-| $[\hat A, \hat B]$, $\hbar$, $\langle A\rangle$ | commutator; reduced Planck constant, $h/2\pi$ = 1.054571818 × 10⁻³⁴ J s; the average a measurement of $A$ returns | $[\hat S_x, \hat S_y] = i\hbar \hat S_z$ | — |
-| $S_x$, $S_y$, $S_z$ | spin components, in units of ħ; one reading gives ±½, so the values shown are averages | averages 0.433, 0, 0.250 at the start | larger $S_z$: higher kept energy |
-| $\gamma$, $B$ | electron gyromagnetic ratio (spin turn rate per tesla); field | 1.76085962784 × 10¹¹ rad/(s T); 0.34 T | faster sweep |
-| $\omega$, $f$ | sweep rate in rad/s; in hertz, $\omega/2\pi$ | 5.98692 × 10¹⁰ rad/s; 9.5285 GHz | source tuned higher; wider level splitting |
-| $m$, $a$, $h$ | electron mass; box width; Planck constant $2\pi\hbar$ | 9.1093837139 × 10⁻³¹ kg; 1 nm | larger $a$: lower energy |
+| $`q_i`$, $`q_i'`$, $`t`$ | coordinates, their rates, time (s) | spin angles; box position | — |
+| $`L`$ | Lagrangian: kinetic minus potential energy, J | — | — |
+| $`p_i`$ | momentum belonging to $`q_i`$: $`\partial L/\partial q_i'`$ | 3.3130 × 10⁻²⁵ kg m/s in the box | faster electron, shorter 2.750 fs (femtoseconds) between walls |
+| $`\varepsilon`$, $`\eta_i`$, $`\alpha`$ | size of the symmetry move; its direction for each coordinate; a turn angle | 10⁻⁶ rad in the code's test | change in $`H`$ grows in step, unless the move is a symmetry: then it stays 0 |
+| $`Q`$, $`G`$, $`L_z`$ | Noether's kept quantity, $`\sum p_i \eta_i`$; any quantity, read as the move it generates; angular momentum about $`z`$ | $`\langle S_z\rangle`$ = 0.2500 ħ | — |
+| $`E`$, $`H`$ | energy; the Hamiltonian, energy written in $`q`$ and $`p`$ | average 9.852 μeV for the spin | — |
+| $`\{A, B\}`$ | Poisson bracket: rate of $`A`$ along the motion $`B`$ generates | $`\{S_x, S_y\} = S_z`$ | $`A`$ changes faster |
+| $`[\hat A, \hat B]`$, $`\hbar`$, $`\langle A\rangle`$ | commutator; reduced Planck constant, $`h/2\pi`$ = 1.054571818 × 10⁻³⁴ J s; the average a measurement of $`A`$ returns | $`[\hat S_x, \hat S_y] = i\hbar \hat S_z`$ | — |
+| $`S_x`$, $`S_y`$, $`S_z`$ | spin components, in units of ħ; one reading gives ±½, so the values shown are averages | averages 0.433, 0, 0.250 at the start | larger $`S_z`$: higher kept energy |
+| $`\gamma`$, $`B`$ | electron gyromagnetic ratio (spin turn rate per tesla); field | 1.76085962784 × 10¹¹ rad/(s T); 0.34 T | faster sweep |
+| $`\omega`$, $`f`$ | sweep rate in rad/s; in hertz, $`\omega/2\pi`$ | 5.98692 × 10¹⁰ rad/s; 9.5285 GHz | source tuned higher; wider level splitting |
+| $`m`$, $`a`$, $`h`$ | electron mass; box width; Planck constant $`2\pi\hbar`$ | 9.1093837139 × 10⁻³¹ kg; 1 nm | larger $`a`$: lower energy |
 
-The spin's energy is $H = \gamma\,\hbar\,(B_x S_x + B_y S_y + B_z S_z)$, so the bracket rule gives the sweep: $S' = \gamma\,B \times S$, a turn about $B$ at $\omega = \gamma B$.
+The spin's energy is $`H = \gamma\,\hbar\,(B_x S_x + B_y S_y + B_z S_z)`$, so the bracket rule gives the sweep: $`S' = \gamma\,B \times S`$, a turn about $`B`$ at $`\omega = \gamma B`$.
 
 ### When it holds
 
 - **The symmetry is continuous.** A mirror flip has no "small amount", and the argument gives nothing for it.
-- **It is a symmetry of the rules, not of the state.** The tilted spin does not look the same after a turn about $z$; the field does, and that is what counts.
-- **It is exact.** Tilt the field 10 degrees off $z$ and $S_z$ is no longer kept: its average swings from 0.2500 to 0.3830 ħ. The component along the new field direction is kept instead.
-- **The rules are steady.** Ramp the field from 0.34 to 0.36 T over 1 ns and the average energy climbs from 9.852 to 10.431 μeV. $\langle S_z\rangle$ stays at 0.2500 ħ: the turn symmetry survives the ramp, and each symmetry carries its own quantity.
+- **It is a symmetry of the rules, not of the state.** The tilted spin does not look the same after a turn about $`z`$; the field does, and that is what counts.
+- **It is exact.** Tilt the field 10 degrees off $`z`$ and $`S_z`$ is no longer kept: its average swings from 0.2500 to 0.3830 ħ. The component along the new field direction is kept instead.
+- **The rules are steady.** Ramp the field from 0.34 to 0.36 T over 1 ns and the average energy climbs from 9.852 to 10.431 μeV. $`\langle S_z\rangle`$ stays at 0.2500 ħ: the turn symmetry survives the ramp, and each symmetry carries its own quantity.
 - **No losses.** Real spins relax toward the field through their surroundings, a loss no Lagrangian holds; this model leaves it out.
 
 ---
@@ -88,60 +92,64 @@ The spin's energy is $H = \gamma\,\hbar\,(B_x S_x + B_y S_y + B_z S_z)$, so the 
 
 ### Step 0: the motion already obeys a rule that turns "unchanged" into "constant"
 
-A true motion obeys Lagrange's equation, $p_i' = \partial L/\partial q_i$: momentum changes at the rate $L$ changes with position. A symmetry says $L$ does not change in one particular direction of position. Put those together and the momentum along that direction has nothing pushing it. The rest is bookkeeping for the case where the direction mixes several coordinates.
+A true motion obeys Lagrange's equation, $`p_i' = \partial L/\partial q_i`$: momentum changes at the rate $`L`$ changes with position. A symmetry says $`L`$ does not change in one particular direction of position. Put those together and the momentum along that direction has nothing pushing it. The rest is bookkeeping for the case where the direction mixes several coordinates.
 
 ### Step 1: the simplest case, a coordinate the Lagrangian does not contain
 
-A free electron sliding along a wire has $L = \tfrac12 m x'^2$. No $x$ appears, so $p_x' = \partial L/\partial x = 0$: momentum $m x'$ is constant. Put the electron in a 1 nm box and the walls add a potential energy that depends on $x$. The symmetry is gone, and so is the conservation: in the classical picture the electron's momentum, 3.3130 × 10⁻²⁵ kg m/s, flips sign at each wall, every 2.750 fs. The walls take the difference.
+A free electron sliding along a wire has $`L = \tfrac12 m x'^2`$. No $`x`$ appears, so $`p_x' = \partial L/\partial x = 0`$: momentum $`m x'`$ is constant. Put the electron in a 1 nm box and the walls add a potential energy that depends on $`x`$. The symmetry is gone, and so is the conservation: in the classical picture the electron's momentum, 3.3130 × 10⁻²⁵ kg m/s, flips sign at each wall, every 2.750 fs. The walls take the difference.
 
 Count the electron and the box together, with nothing outside pushing them, and sliding both is a symmetry again: the box takes 6.6261 × 10⁻²⁵ kg m/s at one wall and gives it back at the other, so the total is kept.
 
-[Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md) meets the same case as a coordinate missing from $H$.
+[Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md) meets the same case as a coordinate missing from $`H`$.
 
 ### Step 2: any symmetry, the general proof
 
-Differentiate the symmetry condition in $\varepsilon$ at $\varepsilon = 0$. The left side does not depend on $\varepsilon$ at all, so
+Differentiate the symmetry condition in $`\varepsilon`$ at $`\varepsilon = 0`$. The left side does not depend on $`\varepsilon`$ at all, so
 
-$$0 = \sum_i \left(\frac{\partial L}{\partial q_i}\,\eta_i + \frac{\partial L}{\partial q_i'}\,\eta_i'\right) = \sum_i \left(p_i'\,\eta_i + p_i\,\eta_i'\right) = \frac{d}{dt}\sum_i p_i\,\eta_i .$$
+```math
+0 = \sum_i \left(\frac{\partial L}{\partial q_i}\,\eta_i + \frac{\partial L}{\partial q_i'}\,\eta_i'\right) = \sum_i \left(p_i'\,\eta_i + p_i\,\eta_i'\right) = \frac{d}{dt}\sum_i p_i\,\eta_i .
+```
 
-The middle step uses Lagrange's equation for the first term and the definition of $p_i$ for the second. The last step is the product rule read backwards. So $Q = \sum p_i \eta_i$ is constant along every motion.
+The middle step uses Lagrange's equation for the first term and the definition of $`p_i`$ for the second. The last step is the product rule read backwards. So $`Q = \sum p_i \eta_i`$ is constant along every motion.
 
-For a turn in the plane, a small angle $\varepsilon$ moves $(x, y)$ to $(x - \varepsilon y,\ y + \varepsilon x)$, so $\eta = (-y, x)$ and $Q = x p_y - y p_x = L_z$, angular momentum.
+For a turn in the plane, a small angle $`\varepsilon`$ moves $`(x, y)`$ to $`(x - \varepsilon y,\ y + \varepsilon x)`$, so $`\eta = (-y, x)`$ and $`Q = x p_y - y p_x = L_z`$, angular momentum.
 
 ### Step 3: the clock, and energy
 
-Along a motion the chain rule gives $dL/dt = \sum (\partial L/\partial q_i\, q_i' + p_i\, q_i'') + \partial L/\partial t$. Lagrange's equation turns the first term into $p_i' q_i'$, so the sum is $d(\sum p_i q_i')/dt$. Rearranged,
+Along a motion the chain rule gives $`dL/dt = \sum (\partial L/\partial q_i\, q_i' + p_i\, q_i'') + \partial L/\partial t`$. Lagrange's equation turns the first term into $`p_i' q_i'`$, so the sum is $`d(\sum p_i q_i')/dt`$. Rearranged,
 
-$$\frac{dE}{dt} = \frac{d}{dt}\Big(\sum_i p_i q_i' - L\Big) = -\frac{\partial L}{\partial t}.$$
+```math
+\frac{dE}{dt} = \frac{d}{dt}\Big(\sum_i p_i q_i' - L\Big) = -\frac{\partial L}{\partial t}.
+```
 
 Energy changes exactly as fast as the rules change with the clock. The box's walls hold still, so its electron keeps 0.3760 eV. The ramped field changes the rules, so the spin's energy moves.
 
 ### Step 4: the Poisson bracket says both halves at once
 
-In Hamilton's form, $q_i' = \partial H/\partial p_i$ and $p_i' = -\partial H/\partial q_i$. Any quantity $A(q, p)$ then changes at $\sum(\partial A/\partial q_i\, q_i' + \partial A/\partial p_i\, p_i') = \{A, H\}$. So $A$ is kept exactly when $\{A, H\} = 0$.
+In Hamilton's form, $`q_i' = \partial H/\partial p_i`$ and $`p_i' = -\partial H/\partial q_i`$. Any quantity $`A(q, p)`$ then changes at $`\sum(\partial A/\partial q_i\, q_i' + \partial A/\partial p_i\, p_i') = \{A, H\}`$. So $`A`$ is kept exactly when $`\{A, H\} = 0`$.
 
-Now read the bracket the other way. Any quantity $G$ generates a move: nudge $q_i$ by $\varepsilon\,\partial G/\partial p_i$ and $p_i$ by $-\varepsilon\,\partial G/\partial q_i$. Momentum $p_x$ generates a slide along $x$; $L_z$ generates a turn about $z$; $H$ generates the passage of time. Under that move $H$ changes by $\varepsilon\{H, G\} = -\varepsilon\{G, H\}$.
+Now read the bracket the other way. Any quantity $`G`$ generates a move: nudge $`q_i`$ by $`\varepsilon\,\partial G/\partial p_i`$ and $`p_i`$ by $`-\varepsilon\,\partial G/\partial q_i`$. Momentum $`p_x`$ generates a slide along $`x`$; $`L_z`$ generates a turn about $`z`$; $`H`$ generates the passage of time. Under that move $`H`$ changes by $`\varepsilon\{H, G\} = -\varepsilon\{G, H\}`$.
 
-So one number, $\{G, H\}$, measures two things. It is how fast $G$ changes along the motion, and how much $H$ changes under the move $G$ generates. If one is zero, so is the other. That is Noether's theorem in two lines. The code tests it on the spin: turning it about $z$ changes $H$ at 0.0000 μeV per radian, and $S_z$ is kept; turning it about $x$ changes $H$ at 15.8877 μeV per radian, matching $-\hbar\{S_x, H\}$, and $S_x$ moves.
+So one number, $`\{G, H\}`$, measures two things. It is how fast $`G`$ changes along the motion, and how much $`H`$ changes under the move $`G`$ generates. If one is zero, so is the other. That is Noether's theorem in two lines. The code tests it on the spin: turning it about $`z`$ changes $`H`$ at 0.0000 μeV per radian, and $`S_z`$ is kept; turning it about $`x`$ changes $`H`$ at 15.8877 μeV per radian, matching $`-\hbar\{S_x, H\}`$, and $`S_x`$ moves.
 
 ### Step 5: spin, and the commutator as the bracket's heir
 
-A spin has no position and momentum of its own, so its bracket is set directly, copying orbital angular momentum: $\{S_x, S_y\} = S_z$, and the same with $x \to y \to z \to x$. Inside a bracket, $S$ is an angular momentum in J s, which makes that rule balance.
+A spin has no position and momentum of its own, so its bracket is set directly, copying orbital angular momentum: $`\{S_x, S_y\} = S_z`$, and the same with $`x \to y \to z \to x`$. Inside a bracket, $`S`$ is an angular momentum in J s, which makes that rule balance.
 
-Everywhere else this card counts $S$ in units of ħ, so $H = \gamma\hbar\,B\cdot S$ comes out in joules, and a rate such as $\{S_x, H\}$ comes out per second; Step 4's test multiplies it by ħ to make it an energy.
+Everywhere else this card counts $`S`$ in units of ħ, so $`H = \gamma\hbar\,B\cdot S`$ comes out in joules, and a rate such as $`\{S_x, H\}`$ comes out per second; Step 4's test multiplies it by ħ to make it an energy.
 
-With $H = \gamma\hbar\, B\cdot S$ and the field along $z$, $S_x' = \{S_x, H\} = -\omega S_y$ and $S_y' = \omega S_x$: a circle at $\omega = \gamma B$. And $S_z' = \{S_z, H\} = 0$.
+With $`H = \gamma\hbar\, B\cdot S`$ and the field along $`z`$, $`S_x' = \{S_x, H\} = -\omega S_y`$ and $`S_y' = \omega S_x`$: a circle at $`\omega = \gamma B`$. And $`S_z' = \{S_z, H\} = 0`$.
 
-In 1925 the new quantum rules turned out to be the old brackets in disguise: wherever classical mechanics has $\{A, B\}$, quantum mechanics has $[\hat A, \hat B]/(i\hbar)$. The spin matrices of [Spin one-half](06-spin-and-two-state-systems.md) obey $[\hat S_x, \hat S_y] = i\hbar\hat S_z$. So the rates become $d\langle A\rangle/dt = \langle[\hat A, \hat H]\rangle/(i\hbar)$, where $\langle A\rangle$ is the average a measurement returns.
+In 1925 the new quantum rules turned out to be the old brackets in disguise: wherever classical mechanics has $`\{A, B\}`$, quantum mechanics has $`[\hat A, \hat B]/(i\hbar)`$. The spin matrices of [Spin one-half](06-spin-and-two-state-systems.md) obey $`[\hat S_x, \hat S_y] = i\hbar\hat S_z`$. So the rates become $`d\langle A\rangle/dt = \langle[\hat A, \hat H]\rangle/(i\hbar)`$, where $`\langle A\rangle`$ is the average a measurement returns.
 
-A quantity is kept exactly when its operator commutes with $\hat H$. Here $\hat H$ is a multiple of $\hat S_z$, so $[\hat S_z, \hat H] = 0$. Because $\hat H$ is a straight sum of spin components, the quantum averages follow the classical circle exactly, and the code finds them equal to six decimals.
+A quantity is kept exactly when its operator commutes with $`\hat H`$. Here $`\hat H`$ is a multiple of $`\hat S_z`$, so $`[\hat S_z, \hat H] = 0`$. Because $`\hat H`$ is a straight sum of spin components, the quantum averages follow the classical circle exactly, and the code finds them equal to six decimals.
 
-The operator that turns a state about $z$ by an angle $\alpha$ is $e^{-i\alpha\hat S_z/\hbar}$: again the kept quantity generates the symmetry. Those turns form a continuous group ([Groups](../../03-Algebra/08-Groups/01-groups.md)). The same turning symmetry is why l and m, the numbers that count an electron's angular momentum, label the levels on [Hydrogen in outline](07-the-hydrogen-atom-in-outline.md). The same bracket, $[\hat x, \hat p] = i\hbar$, sits behind [Uncertainty](05-uncertainty-principle.md).
+The operator that turns a state about $`z`$ by an angle $`\alpha`$ is $`e^{-i\alpha\hat S_z/\hbar}`$: again the kept quantity generates the symmetry. Those turns form a continuous group ([Groups](../../03-Algebra/08-Groups/01-groups.md)). The same turning symmetry is why l and m, the numbers that count an electron's angular momentum, label the levels on [Hydrogen in outline](07-the-hydrogen-atom-in-outline.md). The same bracket, $`[\hat x, \hat p] = i\hbar`$, sits behind [Uncertainty](05-uncertainty-principle.md).
 
 <details>
 <summary>What this outline leaves out</summary>
 
-Noether's theorem for fields, where a symmetry gives a conserved current flowing through space rather than one number; symmetries that leave $L$ unchanged only up to a total time derivative, such as a moving reference frame; the quantum proof that every symmetry is carried by an operator; and gauge symmetry, which ties charge conservation to electromagnetism. The geometry behind continuous symmetry groups belongs to the differential geometry and Lie groups wing.
+Noether's theorem for fields, where a symmetry gives a conserved current flowing through space rather than one number; symmetries that leave $`L`$ unchanged only up to a total time derivative, such as a moving reference frame; the quantum proof that every symmetry is carried by an operator; and gauge symmetry, which ties charge conservation to electromagnetism. The geometry behind continuous symmetry groups belongs to the differential geometry and Lie groups wing.
 
 </details>
 
@@ -153,14 +161,14 @@ The spin in a 0.34 T magnet, started 60 degrees from the field. Constants from C
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| sweep rate $\omega$ | $\gamma B$ = 1.76085962784 × 10¹¹ × 0.34 | 5.98692 × 10¹⁰ rad/s |
-| period | $2\pi/\omega$ | 0.10495 ns |
-| level splitting | $\hbar\omega$, in μeV | 39.41 μeV |
+| sweep rate $`\omega`$ | $`\gamma B`$ = 1.76085962784 × 10¹¹ × 0.34 | 5.98692 × 10¹⁰ rad/s |
+| period | $`2\pi/\omega`$ | 0.10495 ns |
+| level splitting | $`\hbar\omega`$, in μeV | 39.41 μeV |
 | average spin along the field, kept | ½ × cos 60° | 0.2500 ħ |
 | average spin across the field, at the start | ½ × sin 60° | 0.433 ħ |
-| average energy, kept | $\gamma B \hbar \times 0.2500$, in μeV | 9.852 μeV |
-| $\langle S_x\rangle$ after 1 ns | 0.433 × cos(ω × 1 ns) | −0.426097 ħ |
-| **microwave frequency to tune to** | $\omega / 2\pi$ | **9.5285 GHz** |
+| average energy, kept | $`\gamma B \hbar \times 0.2500`$, in μeV | 9.852 μeV |
+| $`\langle S_x\rangle`$ after 1 ns | 0.433 × cos(ω × 1 ns) | −0.426097 ħ |
+| **microwave frequency to tune to** | $`\omega / 2\pi`$ | **9.5285 GHz** |
 
 The spectrometer's source must sit at 9.5285 GHz for this field: that is the sweep rate of the spin, and also the photon energy, 39.41 μeV, that flips it.
 
@@ -168,26 +176,26 @@ The house example, an electron in a 1 nm box from [Schrodinger's equation](03-sc
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| lowest energy, kept (walls still) | $h^2/(8 m a^2)$ | 0.3760 eV |
-| momentum size | $h/(2a)$ | 3.3130 × 10⁻²⁵ kg m/s |
+| lowest energy, kept (walls still) | $`h^2/(8 m a^2)`$ | 0.3760 eV |
+| momentum size | $`h/(2a)`$ | 3.3130 × 10⁻²⁵ kg m/s |
 | handed to a wall at each bounce | 2 × momentum | 6.6261 × 10⁻²⁵ kg m/s |
-| speed | momentum ÷ $m$ | 363695 m/s |
-| time from wall to wall, when momentum flips | $a$ ÷ speed | **2.750 fs** |
+| speed | momentum ÷ $`m`$ | 363695 m/s |
+| time from wall to wall, when momentum flips | $`a`$ ÷ speed | **2.750 fs** |
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Expect $S_z$ kept with the field tilted 10° | $\langle S_z\rangle$ swings 0.2500 to 0.3830 ħ | Turns about $z$ are no longer a symmetry; the kept component is the one along the field |
+| Expect $`S_z`$ kept with the field tilted 10° | $`\langle S_z\rangle`$ swings 0.2500 to 0.3830 ħ | Turns about $`z`$ are no longer a symmetry; the kept component is the one along the field |
 | Expect energy kept while the field ramps 0.34 → 0.36 T | average 9.852 → 10.431 μeV | The rules change with the clock |
-| Tune the source to $\omega$ read as hertz | 59.8692 GHz | $\omega$ is in rad/s; divide by $2\pi$ |
-| Take the electron's g-factor (the number that sets how strongly its spin feels the field) as exactly 2 | 9.5174 GHz, 11.0 MHz low | The measured $\gamma$ already holds the electron's extra 0.1% |
+| Tune the source to $`\omega`$ read as hertz | 59.8692 GHz | $`\omega`$ is in rad/s; divide by $`2\pi`$ |
+| Take the electron's g-factor (the number that sets how strongly its spin feels the field) as exactly 2 | 9.5174 GHz, 11.0 MHz low | The measured $`\gamma`$ already holds the electron's extra 0.1% |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code follows the spin four independent ways. Road 1 moves a classical spin by its Poisson bracket with $H$, stepped by [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md) at 0.1 ps (picosecond), and counts zero crossings for the frequency. Road 2 steps Schrödinger's equation on the spin's two complex amplitudes. Road 3 is the closed form. Road 4 is Noether's test: turn the spin a millionth of a radian about each axis and compare the change in $H$ with the bracket. It also checks the commutators, the tilted and ramped fields, and the box.
+The code follows the spin four independent ways. Road 1 moves a classical spin by its Poisson bracket with $`H`$, stepped by [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md) at 0.1 ps (picosecond), and counts zero crossings for the frequency. Road 2 steps Schrödinger's equation on the spin's two complex amplitudes. Road 3 is the closed form. Road 4 is Noether's test: turn the spin a millionth of a radian about each axis and compare the change in $`H`$ with the bracket. It also checks the commutators, the tilted and ramped fields, and the box.
 
 ### Python
 
@@ -524,11 +532,11 @@ The two outputs match line for line.
 
 Lean proves Noether's theorem and the energy rule for any number of coordinates, and the spin commutators for every sweep rate.
 
-- Take a smooth Lagrangian left unchanged by a smooth symmetry move, for every small $\varepsilon$. Then $Q = \sum_i p_i\,\eta_i$ is constant along every motion that obeys Lagrange's equation.
-- Take a smooth Lagrangian with $\partial L/\partial t = 0$, and a motion with a smooth speed that obeys Lagrange's equation. Then the energy $E = \sum_i p_i\,q_i' - L$ is constant.
-- Take the spin matrices of Spin one-half, with ħ = 1. Then $[\hat S_x, \hat S_y] = i\hat S_z$.
-- Take $\hat H = \omega\hat S_z$, a field along $z$, for any sweep rate $\omega$. Then $[\hat S_z, \hat H] = 0$, so $S_z$ is kept.
-- Take the same $\hat H$. Then $[\hat S_x, \hat H] = -i\omega\hat S_y$.
+- Take a smooth Lagrangian left unchanged by a smooth symmetry move, for every small $`\varepsilon`$. Then $`Q = \sum_i p_i\,\eta_i`$ is constant along every motion that obeys Lagrange's equation.
+- Take a smooth Lagrangian with $`\partial L/\partial t = 0`$, and a motion with a smooth speed that obeys Lagrange's equation. Then the energy $`E = \sum_i p_i\,q_i' - L`$ is constant.
+- Take the spin matrices of Spin one-half, with ħ = 1. Then $`[\hat S_x, \hat S_y] = i\hat S_z`$.
+- Take $`\hat H = \omega\hat S_z`$, a field along $`z`$, for any sweep rate $`\omega`$. Then $`[\hat S_z, \hat H] = 0`$, so $`S_z`$ is kept.
+- Take the same $`\hat H`$. Then $`[\hat S_x, \hat H] = -i\omega\hat S_y`$.
 - Take the spin started 60 degrees from the field. Then its average along the field is ½ × cos 60° = 0.2500 ħ.
 
 The sweep frequency, Noether's test, the tilted and ramped fields and the box are left to the Python and Rust checks.
@@ -733,8 +741,8 @@ example : (1 / 2 : ℝ) * Real.cos (Real.pi / 3) = 1 / 4 := by
 
 > [!TIP]
 > **Try changing**
-> - **Guess first: what does a field with no tilt do to the swing?** Set `FTILT` to 0. The average $S_z$ swings from 0.2500 to 0.2500 ħ, nothing at all: the field is back along $z$, the label reads 0 deg, and every check still passes.
-> - **Guess first: does reversing the bracket's sign change the frequency?** Swap `cross(B, s)` to `cross(s, B)`. The spin sweeps the other way at the same 9.5285 GHz, but Noether's test no longer matches the bracket and the quantum road disagrees on $S_y$, so an assert stops it.
+> - **Guess first: what does a field with no tilt do to the swing?** Set `FTILT` to 0. The average $`S_z`$ swings from 0.2500 to 0.2500 ħ, nothing at all: the field is back along $`z`$, the label reads 0 deg, and every check still passes.
+> - **Guess first: does reversing the bracket's sign change the frequency?** Swap `cross(B, s)` to `cross(s, B)`. The spin sweeps the other way at the same 9.5285 GHz, but Noether's test no longer matches the bracket and the quantum road disagrees on $`S_y`$, so an assert stops it.
 > - **Guess first: what happens to a spin started along the field?** Set `TILT` to `radians(0)`. It never moves, so there are no zero crossings to count and the script stops: a spin along the field has nothing to sweep.
 > - **Guess first: what frequency does a 0.35 T magnet need?** Set `B0` to `0.35`. The closed form and the bracket still agree with each other, about 3% higher, but the assert pinned to 9.5285 GHz stops it.
 
@@ -743,29 +751,29 @@ example : (1 / 2 : ℝ) * Real.cos (Real.pi / 3) = 1 / 4 := by
 ## The usual mistake
 
 > [!warning]
-> **Reading the symmetry off the state instead of off the rules.** The spin tipped at 60 degrees does not look the same after a turn about $z$, yet $S_z$ is kept, because the field does look the same. A round object in a lopsided field keeps no angular momentum; a lopsided object in a round field keeps angular momentum. Check $L$ or $H$, never a snapshot.
+> **Reading the symmetry off the state instead of off the rules.** The spin tipped at 60 degrees does not look the same after a turn about $`z`$, yet $`S_z`$ is kept, because the field does look the same. A round object in a lopsided field keeps no angular momentum; a lopsided object in a round field keeps angular momentum. Check $`L`$ or $`H`$, never a snapshot.
 >
-> - Keeping the wrong component: with the field tilted 10°, the average $S_z$ swings from 0.2500 to 0.3830 ħ. Only the component along the field is kept.
-> - Tuning to $\omega$ instead of $f$: 59.8692 GHz, more than six times too high.
+> - Keeping the wrong component: with the field tilted 10°, the average $`S_z`$ swings from 0.2500 to 0.3830 ħ. Only the component along the field is kept.
+> - Tuning to $`\omega`$ instead of $`f`$: 59.8692 GHz, more than six times too high.
 > - Using g = 2 exactly: 9.5174 GHz, 11.0 MHz off the 9.5285 GHz line, which a spectrometer resolves easily.
 
 ---
 
 ## Where you meet it in real life
 
-- **ESR and MRI (magnetic resonance imaging).** Both tune a radio or microwave source to the sweep rate of spins in a steady field, $\omega = \gamma B$; the pulses tip the kept component along the field into the plane across it, where it sweeps round at $\omega$ and induces the signal in the coil.
+- **ESR and MRI (magnetic resonance imaging).** Both tune a radio or microwave source to the sweep rate of spins in a steady field, $`\omega = \gamma B`$; the pulses tip the kept component along the field into the plane across it, where it sweeps round at $`\omega`$ and induces the signal in the coil.
 - **Spacecraft attitude.** Reaction wheels turn a satellite without fuel because total angular momentum is kept: speed a wheel up one way and the body turns the other.
-- **Simulation codes.** Energy or momentum that drifts in a simulation with the matching symmetry points to a bug or too large a step; the spin code holds $S_z$, the quantity its turn symmetry promises, with no drift at all over 1 ns, and the spin's length to 1.2 × 10⁻¹² ħ.
+- **Simulation codes.** Energy or momentum that drifts in a simulation with the matching symmetry points to a bug or too large a step; the spin code holds $`S_z`$, the quantity its turn symmetry promises, with no drift at all over 1 ns, and the spin's length to 1.2 × 10⁻¹² ħ.
 
 > **Say it back**
-> If a smooth move, such as waiting, sliding or turning, leaves a system's rules unchanged, some quantity cannot change: energy, momentum or angular momentum. The proof is Lagrange's equation applied in the symmetry's direction. In Hamilton's form, one bracket $\{G, H\}$ is both the rate of $G$ and the change of $H$ under the move $G$ generates. Quantum mechanics keeps the rule with the commutator divided by $i\hbar$. An electron spin in a 0.34 T field keeps its energy and its component along the field and sweeps round at 9.5285 GHz.
+> If a smooth move, such as waiting, sliding or turning, leaves a system's rules unchanged, some quantity cannot change: energy, momentum or angular momentum. The proof is Lagrange's equation applied in the symmetry's direction. In Hamilton's form, one bracket $`\{G, H\}`$ is both the rate of $`G`$ and the change of $`H`$ under the move $`G`$ generates. Quantum mechanics keeps the rule with the commutator divided by $`i\hbar`$. An electron spin in a 0.34 T field keeps its energy and its component along the field and sweeps round at 9.5285 GHz.
 
 ---
 
 ## What this builds on
 
 - [Lagrangian and Hamiltonian mechanics](../07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): the Lagrangian, its momenta and the energy function used in the proof.
-- [Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md): the electron in a 1 nm box, with its lowest energy $h^2/(8ma^2)$ = 0.3760 eV.
+- [Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md): the electron in a 1 nm box, with its lowest energy $`h^2/(8ma^2)`$ = 0.3760 eV.
 - [Spin one-half](06-spin-and-two-state-systems.md): the three spin matrices whose commutators Step 5 uses.
 - [Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md): the first-order form that turns into the Poisson bracket.
 - [Groups](../../03-Algebra/08-Groups/01-groups.md): the rules a collection of symmetry moves obeys.
@@ -773,7 +781,7 @@ example : (1 / 2 : ℝ) * Real.cos (Real.pi / 3) = 1 / 4 := by
 ## Where this goes next
 
 - Noether (planned): the same theorem with symmetries as smooth groups, and for fields.
-- Lie algebra (planned): the brackets of the generators, $\{S_x, S_y\} = S_z$, as the structure of the rotation group itself.
+- Lie algebra (planned): the brackets of the generators, $`\{S_x, S_y\} = S_z`$, as the structure of the rotation group itself.
 
 Left open: how a symmetry of a field, rather than of a few coordinates, becomes a conserved current flowing through space.
 
@@ -784,6 +792,6 @@ Left open: how a symmetry of a field, rather than of a few coordinates, becomes 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Noether, E. "Invariant Variation Problems," translated by M. A. Tavel. *Transport Theory and Statistical Physics* 1, no. 3 (1971). [doi:10.1080/00411457108231446](https://doi.org/10.1080/00411457108231446). The 1918 theorem in English: symmetries of a variational problem give conserved quantities.
-- Dirac, P. A. M. "The Fundamental Equations of Quantum Mechanics." *Proceedings of the Royal Society A* 109 (1925). [doi:10.1098/rspa.1925.0150](https://doi.org/10.1098/rspa.1925.0150). The paper that matched the quantum commutator to the classical Poisson bracket times $i\hbar$.
-- NIST. "CODATA Value: electron gyromagnetic ratio." 2022 CODATA recommended values. [NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gammae). The value of $\gamma$; the same tables give ħ, the electron mass and the Bohr magneton.
+- Dirac, P. A. M. "The Fundamental Equations of Quantum Mechanics." *Proceedings of the Royal Society A* 109 (1925). [doi:10.1098/rspa.1925.0150](https://doi.org/10.1098/rspa.1925.0150). The paper that matched the quantum commutator to the classical Poisson bracket times $`i\hbar`$.
+- NIST. "CODATA Value: electron gyromagnetic ratio." 2022 CODATA recommended values. [NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gammae). The value of $`\gamma`$; the same tables give ħ, the electron mass and the Bohr magneton.
 - Griffiths, D. J., and D. F. Schroeter. *Introduction to Quantum Mechanics*, 3rd ed. Cambridge University Press (2018). [doi:10.1017/9781316995433](https://doi.org/10.1017/9781316995433). Spin in a magnetic field, the precession, and conserved quantities as operators that commute with the Hamiltonian.

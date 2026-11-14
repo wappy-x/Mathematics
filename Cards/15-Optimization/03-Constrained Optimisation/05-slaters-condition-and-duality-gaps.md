@@ -26,44 +26,52 @@ Each dot is one valve pattern, placed by how far its flow falls short of 100 L/s
 
 ## The formula
 
-The problem in standard form, with one inequality, over a set $X$ of allowed plans (the eight open/shut patterns, for the valves):
+The problem in standard form, with one inequality, over a set $`X`$ of allowed plans (the eight open/shut patterns, for the valves):
 
-$$p^\star = \min_{x \in X}\; f_0(x) \quad\text{subject to}\quad f_1(x) = D - \text{flow}(x) \le 0.$$
+```math
+p^\star = \min_{x \in X}\; f_0(x) \quad\text{subject to}\quad f_1(x) = D - \text{flow}(x) \le 0.
+```
 
-Price the shortfall at $\lambda \ge 0$ and minimise the priced power with the rule removed. That is the dual function, a lower bound on $p^\star$ for every price ([Lagrangian duality](04-lagrangian-duality-weak-and-strong.md)):
+Price the shortfall at $`\lambda \ge 0`$ and minimise the priced power with the rule removed. That is the dual function, a lower bound on $`p^\star`$ for every price ([Lagrangian duality](04-lagrangian-duality-weak-and-strong.md)):
 
-$$q(\lambda) = \min_{x \in X} \big[f_0(x) + \lambda f_1(x)\big] \le p^\star, \qquad d^\star = \max_{\lambda \ge 0} q(\lambda), \qquad \text{gap} = p^\star - d^\star \ge 0.$$
+```math
+q(\lambda) = \min_{x \in X} \big[f_0(x) + \lambda f_1(x)\big] \le p^\star, \qquad d^\star = \max_{\lambda \ge 0} q(\lambda), \qquad \text{gap} = p^\star - d^\star \ge 0.
+```
 
-**Slater's condition.** If the set of allowed plans $X$ is convex, $f_0$ and $f_1$ are convex on it, and some plan $\tilde x$ in $X$ has $f_1(\tilde x) < 0$, then
+**Slater's condition.** If the set of allowed plans $`X`$ is convex, $`f_0`$ and $`f_1`$ are convex on it, and some plan $`\tilde x`$ in $`X`$ has $`f_1(\tilde x) < 0`$, then
 
-$$d^\star = p^\star, \quad\text{and some } \lambda^\star \ge 0 \text{ has } q(\lambda^\star) = p^\star \text{ (when } p^\star \text{ is finite).}$$
+```math
+d^\star = p^\star, \quad\text{and some } \lambda^\star \ge 0 \text{ has } q(\lambda^\star) = p^\star \text{ (when } p^\star \text{ is finite).}
+```
 
-**The stopping certificate.** For any plan $x_k$ that meets demand and any price $\lambda_k \ge 0$,
+**The stopping certificate.** For any plan $`x_k`$ that meets demand and any price $`\lambda_k \ge 0`$,
 
-$$f_0(x_k) - q(\lambda_k) \le \varepsilon \quad\Longrightarrow\quad f_0(x_k) - p^\star \le \varepsilon.$$
+```math
+f_0(x_k) - q(\lambda_k) \le \varepsilon \quad\Longrightarrow\quad f_0(x_k) - p^\star \le \varepsilon.
+```
 
-**Read it aloud:** if the allowed plans, the cost and the rule are convex and some plan beats demand with room to spare, then some price proves exactly the best cost; so once a plan's cost comes within $\varepsilon$ of a price's bound, the plan is within $\varepsilon$ of the best.
+**Read it aloud:** if the allowed plans, the cost and the rule are convex and some plan beats demand with room to spare, then some price proves exactly the best cost; so once a plan's cost comes within $`\varepsilon`$ of a price's bound, the plan is within $`\varepsilon`$ of the best.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the decision: which valves open, or each variable-speed main's flow $w_i$ in L/s (and $w$ for one main's flow in the no-strict-point case) | AB open; flows 44.43, 30.57, 24.99 | — |
-| $a_i$, $c_i$ | main $i$'s flow with its valve fully open (L/s), and its pump power at that flow (kW) | A: 60 L/s, 45 kW | more flow per kW makes the main cheaper to use |
-| $D$ | the demand, L/s | 100 | more mains must open; $p^\star$ rises |
-| $f_0(x)$ | the pump power, kW: the cost being minimised | 100 for AB | — |
-| $f_1(x)$ | the shortfall, $D$ minus the flow delivered; at most 0 to meet demand | $-10$ for AB | — |
-| $\tilde x$ | a Slater point: a plan with $f_1 < 0$, demand beaten with room to spare | all valves open, $-55$; flows 50, 40, 35, $-25$ | — |
-| $\lambda$ | the price on one L/s of shortfall, kW per L/s; the Lagrange multiplier | best 1.1 (valves), 1.233907 (variable speed) | $q$ rises, then falls |
-| $q(\lambda)$ | the dual function: the priced minimum, a lower bound on $p^\star$ | $q(1.1) = 89$ | — |
-| $p^\star$, $d^\star$, $p^\star - d^\star$ | the best power; the best bound any price gives; the duality gap between them | 100, 89, gap 11 kW (valves); 41.130238 both, gap 0 (variable speed) | — |
-| $X$, $u$, $t$, $\mathcal{A}$, $\mathcal{B}$, $\tilde\lambda$, $\mu$, $\gamma$, $\theta$, $s$ | the set of allowed plans; in the proof fold, a shortfall and a power level; the reachable (shortfall, power) pairs; the points below $p^\star$ at zero shortfall; the separating line's two coefficients and its level; plus $\theta$, a mixing weight from 0 to 1, and $s$, a power level below $p^\star$ | — | — |
-| $\varepsilon$ | the stopping tolerance on the gap, kW | 0.01 | fewer steps before the stop |
-| $k$, $\lambda_k$, $x_k$, $\alpha$ | step number from $k = 0$; the price and the feasible plan at step $k$; the step size | $\lambda_0 = 0.5$, $\alpha = 0.01$ | at 0.06 the price never settles |
+| $`x`$ | the decision: which valves open, or each variable-speed main's flow $`w_i`$ in L/s (and $`w`$ for one main's flow in the no-strict-point case) | AB open; flows 44.43, 30.57, 24.99 | — |
+| $`a_i`$, $`c_i`$ | main $`i`$'s flow with its valve fully open (L/s), and its pump power at that flow (kW) | A: 60 L/s, 45 kW | more flow per kW makes the main cheaper to use |
+| $`D`$ | the demand, L/s | 100 | more mains must open; $`p^\star`$ rises |
+| $`f_0(x)`$ | the pump power, kW: the cost being minimised | 100 for AB | — |
+| $`f_1(x)`$ | the shortfall, $`D`$ minus the flow delivered; at most 0 to meet demand | $`-10`$ for AB | — |
+| $`\tilde x`$ | a Slater point: a plan with $`f_1 < 0`$, demand beaten with room to spare | all valves open, $`-55`$; flows 50, 40, 35, $`-25`$ | — |
+| $`\lambda`$ | the price on one L/s of shortfall, kW per L/s; the Lagrange multiplier | best 1.1 (valves), 1.233907 (variable speed) | $`q`$ rises, then falls |
+| $`q(\lambda)`$ | the dual function: the priced minimum, a lower bound on $`p^\star`$ | $`q(1.1) = 89`$ | — |
+| $`p^\star`$, $`d^\star`$, $`p^\star - d^\star`$ | the best power; the best bound any price gives; the duality gap between them | 100, 89, gap 11 kW (valves); 41.130238 both, gap 0 (variable speed) | — |
+| $`X`$, $`u`$, $`t`$, $`\mathcal{A}`$, $`\mathcal{B}`$, $`\tilde\lambda`$, $`\mu`$, $`\gamma`$, $`\theta`$, $`s`$ | the set of allowed plans; in the proof fold, a shortfall and a power level; the reachable (shortfall, power) pairs; the points below $`p^\star`$ at zero shortfall; the separating line's two coefficients and its level; plus $`\theta`$, a mixing weight from 0 to 1, and $`s`$, a power level below $`p^\star`$ | — | — |
+| $`\varepsilon`$ | the stopping tolerance on the gap, kW | 0.01 | fewer steps before the stop |
+| $`k`$, $`\lambda_k`$, $`x_k`$, $`\alpha`$ | step number from $`k = 0`$; the price and the feasible plan at step $`k`$; the step size | $`\lambda_0 = 0.5`$, $`\alpha = 0.01`$ | at 0.06 the price never settles |
 
 ### When it holds
 
 - **The allowed plans, the cost and the inequality must be convex, and any equalities linear.** Valves that are open or shut make the allowed set a handful of corners with nothing between them, though power and shortfall are linear in the open/shut settings. All three valves open beats demand by 55 L/s, so a strictly feasible point exists, and the gap is still 11 kW.
-- **Some plan must beat every nonlinear inequality strictly.** Take one main that draws 0.75 kW per L/s, so 40 L/s costs $p^\star = 30$ kW, and write "deliver exactly 40 L/s" as $(w - 40)^2 \le 0$, with $w$ the flow. The problem is convex, but only $w = 40$ is allowed and nothing beats the rule with room. The bound $q(\lambda)$ falls short of $p^\star$ by 0.140625 kW at price 1 and 0.000000141 kW at price $10^6$. So $d^\star = 30 = p^\star$ and the duality gap is zero, but no price reaches it: what Slater's condition adds here is a best price.
-- **Linear inequalities need no room.** Slater's refined form asks for strictness only on the nonlinear inequalities. The part-open valve problem (each valve open for a share of the time, so flow and power are averages) is a linear program (LP), where plain feasibility is enough; it has strict points anyway ($x = 0.9$ each beats demand by 39.5 L/s).
+- **Some plan must beat every nonlinear inequality strictly.** Take one main that draws 0.75 kW per L/s, so 40 L/s costs $`p^\star = 30`$ kW, and write "deliver exactly 40 L/s" as $`(w - 40)^2 \le 0`$, with $`w`$ the flow. The problem is convex, but only $`w = 40`$ is allowed and nothing beats the rule with room. The bound $`q(\lambda)`$ falls short of $`p^\star`$ by 0.140625 kW at price 1 and 0.000000141 kW at price $`10^6`$. So $`d^\star = 30 = p^\star`$ and the duality gap is zero, but no price reaches it: what Slater's condition adds here is a best price.
+- **Linear inequalities need no room.** Slater's refined form asks for strictness only on the nonlinear inequalities. The part-open valve problem (each valve open for a share of the time, so flow and power are averages) is a linear program (LP), where plain feasibility is enough; it has strict points anyway ($`x = 0.9`$ each beats demand by 39.5 L/s).
 - **The condition is enough, not necessary.** At a demand of 110 L/s the valve problem is still not convex, yet the gap is 0: AB delivers exactly 110 L/s, so the hull and the best pattern touch. A zero gap can happen by luck; Slater's condition is what guarantees it.
 - **The stopping test needs a plan that meets demand.** The upper number must be the power of a real, feasible plan, not of the price's own flows (The usual mistake).
 
@@ -73,17 +81,19 @@ $$f_0(x_k) - q(\lambda_k) \le \varepsilon \quad\Longrightarrow\quad f_0(x_k) - p
 
 ### Step 0: every plan is a dot, every price is a line under the dots
 
-Put each plan on the picture as a dot: shortfall $f_1$ across, power $f_0$ up. A price $\lambda$ scores each plan $f_0 + \lambda f_1$, and the plans with the same score lie on a straight line of slope $-\lambda$. The dual function $q(\lambda)$ is the lowest score, so its line passes under every dot and touches the lowest. Where that line crosses zero shortfall, its height is $q(\lambda)$.
+Put each plan on the picture as a dot: shortfall $`f_1`$ across, power $`f_0`$ up. A price $`\lambda`$ scores each plan $`f_0 + \lambda f_1`$, and the plans with the same score lie on a straight line of slope $`-\lambda`$. The dual function $`q(\lambda)`$ is the lowest score, so its line passes under every dot and touches the lowest. Where that line crosses zero shortfall, its height is $`q(\lambda)`$.
 
-Turn the price and the line pivots. The highest crossing any such line can reach is $d^\star$. Every line stays under all the dots, so it stays under the hull of the dots too; the best it can do is lie along the hull's lower edge. So $d^\star$ is the height of that lower edge at zero shortfall, and a gap means the edge passes below the best real dot.
+Turn the price and the line pivots. The highest crossing any such line can reach is $`d^\star`$. Every line stays under all the dots, so it stays under the hull of the dots too; the best it can do is lie along the hull's lower edge. So $`d^\star`$ is the height of that lower edge at zero shortfall, and a gap means the edge passes below the best real dot.
 
 ### Step 1: the valves' dual function, and its best price
 
-For the valves, the priced minimum splits main by main. Opening main $i$ adds $c_i$ kW and removes $a_i$ L/s of shortfall, so at price $\lambda$ it is worth opening exactly when $c_i - \lambda a_i < 0$:
+For the valves, the priced minimum splits main by main. Opening main $`i`$ adds $`c_i`$ kW and removes $`a_i`$ L/s of shortfall, so at price $`\lambda`$ it is worth opening exactly when $`c_i - \lambda a_i < 0`$:
 
-$$q(\lambda) = \lambda D + \sum_{i} \min\big(0,\; c_i - \lambda a_i\big).$$
+```math
+q(\lambda) = \lambda D + \sum_{i} \min\big(0,\; c_i - \lambda a_i\big).
+```
 
-Each term is a minimum of straight lines in $\lambda$, so $q$ is concave (bent downwards, no dents up), as every dual function is ([Lagrangian duality](04-lagrangian-duality-weak-and-strong.md)). Its corners sit where a main changes sides: $\lambda = c_i / a_i$, the main's kW per L/s. A is cheapest at 0.75, then B at 1.1, then C at 1.3333. The slope of $q$ is $D$ minus the flow of the mains open: 40 between A's corner and B's, and $-10$ between B's and C's. So the top is at B's corner: $q(1.1) = 89$ kW.
+Each term is a minimum of straight lines in $`\lambda`$, so $`q`$ is concave (bent downwards, no dents up), as every dual function is ([Lagrangian duality](04-lagrangian-duality-weak-and-strong.md)). Its corners sit where a main changes sides: $`\lambda = c_i / a_i`$, the main's kW per L/s. A is cheapest at 0.75, then B at 1.1, then C at 1.3333. The slope of $`q`$ is $`D`$ minus the flow of the mains open: 40 between A's corner and B's, and $`-10`$ between B's and C's. So the top is at B's corner: $`q(1.1) = 89`$ kW.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -95,36 +105,40 @@ xychart-beta
     line [100, 100, 100, 100, 100, 100, 100, 100, 100]
 ```
 
-Orange: the bound $q(\lambda)$, rising to its top of 89 kW at a price of 1.1, between the grid points 1 and 1.25. Green, flat: the best real pattern, 100 kW. The 11 kW between the orange top and the green line is the gap.
+Orange: the bound $`q(\lambda)`$, rising to its top of 89 kW at a price of 1.1, between the grid points 1 and 1.25. Green, flat: the best real pattern, 100 kW. The 11 kW between the orange top and the green line is the gap.
 
 ### Step 2: why the valves keep a gap
 
-At the best price, main B's net value is exactly zero, so the priced problem is indifferent to opening it. Blending "B shut" with "B open" in the ratio 1 to 4 meets demand exactly: all of A (60 L/s) and 80 percent of B (40 L/s), for $45 + 0.8 \times 55 = 89$ kW. That blend is the hull point in the picture, and it is the answer of the part-open LP, a time-share of open and shut.
+At the best price, main B's net value is exactly zero, so the priced problem is indifferent to opening it. Blending "B shut" with "B open" in the ratio 1 to 4 meets demand exactly: all of A (60 L/s) and 80 percent of B (40 L/s), for $`45 + 0.8 \times 55 = 89`$ kW. That blend is the hull point in the picture, and it is the answer of the part-open LP, a time-share of open and shut.
 
 A valve cannot sit at 0.8; at every moment it is open or shut. The nearest dots that meet demand are AC at 105 kW and AB at 100 kW, and both sit above 89 kW, the hull's height at zero shortfall. The dual cannot see the difference between the real problem and its convex hull. It answers for the hull, 89 kW, so on a nonconvex problem it can only bound, never certify. This is the general picture for integer choices, with a cleaner proof in [Lagrangian relaxation](../05-Integer%20and%20Combinatorial%20Optimisation/07-lagrangian-relaxation-and-decomposition.md).
 
 ### Step 3: convexity removes the hole, strict feasibility keeps the line from standing upright
 
-Now let the allowed plans, the cost and the shortfall be convex. Then the set of reachable pairs (shortfall at most $u$, power at most $t$) is itself convex: it has no hole to hide under. The best real point at zero shortfall, $(0, p^\star)$, sits on its edge. A convex set has a supporting line at every edge point ([Separating hyperplanes](../01-Convexity/06-separating-hyperplanes.md)), so some line touches the set at $(0, p^\star)$ and keeps the whole set on one side.
+Now let the allowed plans, the cost and the shortfall be convex. Then the set of reachable pairs (shortfall at most $`u`$, power at most $`t`$) is itself convex: it has no hole to hide under. The best real point at zero shortfall, $`(0, p^\star)`$, sits on its edge. A convex set has a supporting line at every edge point ([Separating hyperplanes](../01-Convexity/06-separating-hyperplanes.md)), so some line touches the set at $`(0, p^\star)`$ and keeps the whole set on one side.
 
-One danger remains. That supporting line might be **vertical**, standing upright at zero shortfall. A vertical line has no slope, so it corresponds to no price, and the dual can only approach $p^\star$ as the price runs to infinity. That is the $(w - 40)^2 \le 0$ case: nothing allowed lies left of zero shortfall.
+One danger remains. That supporting line might be **vertical**, standing upright at zero shortfall. A vertical line has no slope, so it corresponds to no price, and the dual can only approach $`p^\star`$ as the price runs to infinity. That is the $`(w - 40)^2 \le 0`$ case: nothing allowed lies left of zero shortfall.
 
-Slater's point stops that. It is a reachable pair strictly left of zero shortfall. A vertical line at zero would need the whole set on its right, and the Slater point is on its left. So the supporting line is not vertical, its slope is a price $-\lambda^\star$, and $q(\lambda^\star) = p^\star$.
+Slater's point stops that. It is a reachable pair strictly left of zero shortfall. A vertical line at zero would need the whole set on its right, and the Slater point is on its left. So the supporting line is not vertical, its slope is a price $`-\lambda^\star`$, and $`q(\lambda^\star) = p^\star`$.
 
 <details>
 <summary>Detailed proof: Slater's theorem with one inequality</summary>
 
-Let $f_0$ and $f_1$ be convex on a convex set $X$, let $p^\star$ be finite, and let $\tilde x \in X$ have $f_1(\tilde x) < 0$.
+Let $`f_0`$ and $`f_1`$ be convex on a convex set $`X`$, let $`p^\star`$ be finite, and let $`\tilde x \in X`$ have $`f_1(\tilde x) < 0`$.
 
-Define $\mathcal{A} = \{(u, t) : f_1(x) \le u \text{ and } f_0(x) \le t \text{ for some } x \in X\}$. It is convex: if $x$ serves $(u, t)$ and $y$ serves $(u', t')$, then $\theta x + (1 - \theta) y$ serves the blend, because convex functions lie under their chords. Define $\mathcal{B} = \{(0, s) : s < p^\star\}$, also convex. They do not meet: a point of both would be a plan with $f_1 \le 0$ and power below $p^\star$.
+Define $`\mathcal{A} = \{(u, t) : f_1(x) \le u \text{ and } f_0(x) \le t \text{ for some } x \in X\}`$. It is convex: if $`x`$ serves $`(u, t)`$ and $`y`$ serves $`(u', t')`$, then $`\theta x + (1 - \theta) y`$ serves the blend, because convex functions lie under their chords. Define $`\mathcal{B} = \{(0, s) : s < p^\star\}`$, also convex. They do not meet: a point of both would be a plan with $`f_1 \le 0`$ and power below $`p^\star`$.
 
-By the separating hyperplane theorem there are numbers $(\tilde\lambda, \mu) \ne (0, 0)$ and a level $\gamma$ with
-$$\tilde\lambda u + \mu t \ge \gamma \text{ on } \mathcal{A}, \qquad \tilde\lambda u + \mu t \le \gamma \text{ on } \mathcal{B}.$$
-$\mathcal{A}$ runs off to the right and upwards, so a negative $\tilde\lambda$ or $\mu$ would let the left side fall below $\gamma$: hence $\tilde\lambda \ge 0$ and $\mu \ge 0$. On $\mathcal{B}$ the second inequality says $\mu s \le \gamma$ for every $s < p^\star$, so $\mu p^\star \le \gamma$. Putting the pair $(f_1(x), f_0(x))$ into the first:
-$$\tilde\lambda f_1(x) + \mu f_0(x) \ge \mu p^\star \quad\text{for every } x \in X.$$
-**If $\mu = 0$:** then $\tilde\lambda > 0$ and $\tilde\lambda f_1(x) \ge 0$ for every $x$. At the Slater point $f_1(\tilde x) < 0$, a contradiction. So $\mu > 0$.
+By the separating hyperplane theorem there are numbers $`(\tilde\lambda, \mu) \ne (0, 0)`$ and a level $`\gamma`$ with
 
-Divide by $\mu$ and write $\lambda^\star = \tilde\lambda / \mu \ge 0$: $f_0(x) + \lambda^\star f_1(x) \ge p^\star$ for every $x \in X$. The minimum over $x$ is $q(\lambda^\star)$, so $q(\lambda^\star) \ge p^\star$. Weak duality gives $q(\lambda^\star) \le p^\star$. Hence $q(\lambda^\star) = d^\star = p^\star$, and the best price is attained.
+$`\displaystyle \tilde\lambda u + \mu t \ge \gamma \text{ on } \mathcal{A}, \qquad \tilde\lambda u + \mu t \le \gamma \text{ on } \mathcal{B}.`$
+
+$`\mathcal{A}`$ runs off to the right and upwards, so a negative $`\tilde\lambda`$ or $`\mu`$ would let the left side fall below $`\gamma`$: hence $`\tilde\lambda \ge 0`$ and $`\mu \ge 0`$. On $`\mathcal{B}`$ the second inequality says $`\mu s \le \gamma`$ for every $`s < p^\star`$, so $`\mu p^\star \le \gamma`$. Putting the pair $`(f_1(x), f_0(x))`$ into the first:
+
+$`\displaystyle \tilde\lambda f_1(x) + \mu f_0(x) \ge \mu p^\star \quad\text{for every } x \in X.`$
+
+**If $`\mu = 0`$:** then $`\tilde\lambda > 0`$ and $`\tilde\lambda f_1(x) \ge 0`$ for every $`x`$. At the Slater point $`f_1(\tilde x) < 0`$, a contradiction. So $`\mu > 0`$.
+
+Divide by $`\mu`$ and write $`\lambda^\star = \tilde\lambda / \mu \ge 0`$: $`f_0(x) + \lambda^\star f_1(x) \ge p^\star`$ for every $`x \in X`$. The minimum over $`x`$ is $`q(\lambda^\star)`$, so $`q(\lambda^\star) \ge p^\star`$. Weak duality gives $`q(\lambda^\star) \le p^\star`$. Hence $`q(\lambda^\star) = d^\star = p^\star`$, and the best price is attained.
 
 The same argument with several inequalities and linear equalities is in Boyd and Vandenberghe (Sources), section 5.3.2.
 
@@ -132,21 +146,23 @@ The same argument with several inequalities and linear equalities is in Boyd and
 
 ### Step 4: a zero gap is a proof, so it is a stopping rule
 
-Weak duality puts every price's bound below $p^\star$, and every feasible plan's power is at least $p^\star$:
+Weak duality puts every price's bound below $`p^\star`$, and every feasible plan's power is at least $`p^\star`$:
 
-$$q(\lambda_k) \;\le\; p^\star \;\le\; f_0(x_k).$$
+```math
+q(\lambda_k) \;\le\; p^\star \;\le\; f_0(x_k).
+```
 
-So $f_0(x_k) - p^\star \le f_0(x_k) - q(\lambda_k)$. The right side is computed, not guessed; when it is below $\varepsilon$, the plan is within $\varepsilon$ of the best, whatever the method was. Slater's condition is what makes this test usable: it promises the gap can shrink to zero, so the test is sure to fire for any $\varepsilon > 0$ on a method that converges. The upper number comes from a plan, so nobody needs to know $p^\star$ in advance.
+So $`f_0(x_k) - p^\star \le f_0(x_k) - q(\lambda_k)`$. The right side is computed, not guessed; when it is below $`\varepsilon`$, the plan is within $`\varepsilon`$ of the best, whatever the method was. Slater's condition is what makes this test usable: it promises the gap can shrink to zero, so the test is sure to fire for any $`\varepsilon > 0`$ on a method that converges. The upper number comes from a plan, so nobody needs to know $`p^\star`$ in advance.
 
-Here is the test at work on variable-speed mains. Each main's pump now runs at any speed, setting a flow $w_i$ between 0 and $a_i$, and its power follows the cube law of pump affinity, $c_i (w_i / a_i)^3$ kW, a model that holds well for mains whose pressure loss is mostly friction.
+Here is the test at work on variable-speed mains. Each main's pump now runs at any speed, setting a flow $`w_i`$ between 0 and $`a_i`$, and its power follows the cube law of pump affinity, $`c_i (w_i / a_i)^3`$ kW, a model that holds well for mains whose pressure loss is mostly friction.
 
-Unlike the time-share of Step 2, a slower pump draws far less power for each litre. The cost is convex, the shortfall $100 - \sum w_i$ is linear, and flows of 50, 40 and 35 L/s beat demand by 25 L/s inside every range. Slater holds.
+Unlike the time-share of Step 2, a slower pump draws far less power for each litre. The cost is convex, the shortfall $`100 - \sum w_i`$ is linear, and flows of 50, 40 and 35 L/s beat demand by 25 L/s inside every range. Slater holds.
 
-Dual ascent climbs the dual function. At price $\lambda_k$, each main picks the flow that minimises its priced power, $3 c_i w_i^2 / a_i^3 = \lambda_k$, so $w_i = a_i \sqrt{\lambda_k a_i / (3 c_i)}$, capped at $a_i$. The price then moves up when the flows fall short and down when they overshoot: $\lambda_{k+1} = \max\big(0, \lambda_k + \alpha (D - \sum w_i)\big)$.
+Dual ascent climbs the dual function. At price $`\lambda_k`$, each main picks the flow that minimises its priced power, $`3 c_i w_i^2 / a_i^3 = \lambda_k`$, so $`w_i = a_i \sqrt{\lambda_k a_i / (3 c_i)}`$, capped at $`a_i`$. The price then moves up when the flows fall short and down when they overshoot: $`\lambda_{k+1} = \max\big(0, \lambda_k + \alpha (D - \sum w_i)\big)`$.
 
-For the upper number, the flows are scaled to total exactly 100 L/s, a plan that meets demand. Start $\lambda_0 = 0.5$, step $\alpha = 0.01$, stop when the gap is at most $\varepsilon = 0.01$ kW:
+For the upper number, the flows are scaled to total exactly 100 L/s, a plan that meets demand. Start $`\lambda_0 = 0.5`$, step $`\alpha = 0.01`$, stop when the gap is at most $`\varepsilon = 0.01`$ kW:
 
-| $k$ | price $\lambda_k$ | flow at that price (L/s) | lower $q(\lambda_k)$ (kW) | upper, scaled plan (kW) | gap (kW) | gap ratio |
+| $`k`$ | price $`\lambda_k`$ | flow at that price (L/s) | lower $`q(\lambda_k)`$ (kW) | upper, scaled plan (kW) | gap (kW) | gap ratio |
 | --- | --- | --- | --- | --- | --- | --- |
 | 0 | 0.500000 | 63.6566 | 28.781118 | 41.130238 | 12.349121 | — |
 | 1 | 0.863434 | 83.6514 | 38.191737 | 41.130238 | 2.938501 | 0.238 |
@@ -157,13 +173,13 @@ For the upper number, the flows are scaled to total exactly 100 L/s, a plan that
 | 6 | 1.209631 | 99.0114 | 41.118259 | 41.130238 | 0.011979 | 0.349 |
 | 7 | 1.219517 | 99.4152 | 41.126035 | 41.130238 | **0.004204** | 0.351 |
 
-At $k = 7$ the gap is 0.004204 kW, under 0.01, and the run stops: the plan of 44.43, 30.57 and 24.99 L/s is certified within 0.01 kW of the best.
+At $`k = 7`$ the gap is 0.004204 kW, under 0.01, and the run stops: the plan of 44.43, 30.57 and 24.99 L/s is certified within 0.01 kW of the best.
 
-The upper column never moves. Every main's flow grows with $\sqrt{\lambda}$ in the same proportion, so scaling to 100 L/s gives the best plan at every step; the plan was right at $k = 0$, and the seven steps were spent proving it.
+The upper column never moves. Every main's flow grows with $`\sqrt{\lambda}`$ in the same proportion, so scaling to 100 L/s gives the best plan at every step; the plan was right at $`k = 0`$, and the seven steps were spent proving it.
 
-The rate: near the answer, each step multiplies the price's error by about $1 - \alpha D / (2\lambda^\star)$, because the dual's slope $D - \sum w_i$ changes by $D / (2\lambda^\star)$ per unit of price there. The lower bound's error grows with the square of the price's error, so the gap ratio tends to $(1 - \alpha D / (2\lambda^\star))^2 = 0.354$, and the printed ratios climb 0.238, 0.304, … , 0.351 towards it.
+The rate: near the answer, each step multiplies the price's error by about $`1 - \alpha D / (2\lambda^\star)`$, because the dual's slope $`D - \sum w_i`$ changes by $`D / (2\lambda^\star)`$ per unit of price there. The lower bound's error grows with the square of the price's error, so the gap ratio tends to $`(1 - \alpha D / (2\lambda^\star))^2 = 0.354`$, and the printed ratios climb 0.238, 0.304, … , 0.351 towards it.
 
-That is linear convergence (the gap shrinks by a steady factor each step). It holds provided $q$ is smooth and concave near $\lambda^\star$, as here, and $\alpha < 4\lambda^\star / D = 0.0494$, which keeps the factor above $-1$. At $\alpha = 0.06$ it is $-1.43$ and the price never settles.
+That is linear convergence (the gap shrinks by a steady factor each step). It holds provided $`q`$ is smooth and concave near $`\lambda^\star`$, as here, and $`\alpha < 4\lambda^\star / D = 0.0494`$, which keeps the factor above $`-1`$. At $`\alpha = 0.06`$ it is $`-1.43`$ and the price never settles.
 
 ---
 
@@ -173,18 +189,18 @@ The valves, at the best price, then the variable-speed mains' exact answer.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| best price: B's kW per L/s | $55 / 50$ | 1.1 |
-| demand credit | $1.1 \times 100$ | 110 |
-| main A's net, $c - \lambda a$ | $45 - 1.1 \times 60$ | $-21$: open |
-| main B's net | $55 - 1.1 \times 50$ | 0: either |
-| main C's net | $60 - 1.1 \times 45$ | 10.5: shut |
-| $q(1.1)$ | $110 - 21 + 0 + 0$ | 89 kW |
-| best pattern, AB | $45 + 55$ kW, $60 + 50$ L/s | 100 kW, 110 L/s |
-| **valve gap** | $100 - 89$, as a share of 100 | **11 kW, 11.0%** |
-| variable speed: flow per root-price, $a \sqrt{a / 3c}$ | $60\sqrt{60/135}$, $50\sqrt{50/165}$, $45\sqrt{45/180}$ | 40.0000, 27.5241, 22.5000; sum 90.0241 |
-| best price $\lambda^\star$, from total flow 100 | $(100 / 90.0241)^2$ | 1.233907 |
-| best flows | each root-price flow $\times \sqrt{1.233907}$ | 44.4325, 30.5741, 24.9933 L/s |
-| **variable-speed best power** | $45 (44.4325/60)^3 + 55 (30.5741/50)^3 + 60 (24.9933/45)^3$ | **41.130238 kW, gap 0** |
+| best price: B's kW per L/s | $`55 / 50`$ | 1.1 |
+| demand credit | $`1.1 \times 100`$ | 110 |
+| main A's net, $`c - \lambda a`$ | $`45 - 1.1 \times 60`$ | $`-21`$: open |
+| main B's net | $`55 - 1.1 \times 50`$ | 0: either |
+| main C's net | $`60 - 1.1 \times 45`$ | 10.5: shut |
+| $`q(1.1)`$ | $`110 - 21 + 0 + 0`$ | 89 kW |
+| best pattern, AB | $`45 + 55`$ kW, $`60 + 50`$ L/s | 100 kW, 110 L/s |
+| **valve gap** | $`100 - 89`$, as a share of 100 | **11 kW, 11.0%** |
+| variable speed: flow per root-price, $`a \sqrt{a / 3c}`$ | $`60\sqrt{60/135}`$, $`50\sqrt{50/165}`$, $`45\sqrt{45/180}`$ | 40.0000, 27.5241, 22.5000; sum 90.0241 |
+| best price $`\lambda^\star`$, from total flow 100 | $`(100 / 90.0241)^2`$ | 1.233907 |
+| best flows | each root-price flow $`\times \sqrt{1.233907}`$ | 44.4325, 30.5741, 24.9933 L/s |
+| **variable-speed best power** | $`45 (44.4325/60)^3 + 55 (30.5741/50)^3 + 60 (24.9933/45)^3`$ | **41.130238 kW, gap 0** |
 
 The valve plan AB is the best, but the best price can only prove 89 kW; the 100 kW is certified by listing all eight patterns. At variable speed the same three mains need 41.13 kW, and a price proves it exactly, as Slater promises.
 
@@ -194,14 +210,14 @@ The valve plan AB is the best, but the best price can only prove 89 kW; the 100 
 | --- | --- | --- |
 | Read the dual's 89 kW as a plan | 89 kW, needing A open and B at 0.80 | That is the hull, not a valve setting; the best real plan draws 100 kW |
 | Check strict feasibility but not convexity | all open beats demand by 55 L/s, gap still 11 kW (11.0%) | Slater's theorem needs both; open-or-shut valves are not convex |
-| Convex, but no strict point: $(w - 40)^2 \le 0$ | bound below $p^\star = 30$ kW by 0.140625 at price 1, 0.010000 at 14.0625, 0.000000141 at $10^6$; reached at no price | The supporting line stands upright: $d^\star = p^\star$, but no best price exists |
-| Stop the valve dual on gap $\le 0.01$ kW | after 200 subgradient steps (dual ascent using one of $q$'s slopes at its corners) from price 0, step $0.05/(k+1)$: bound 88.9989, gap 11.0011; never stops | The test can only fire when the gap can close |
+| Convex, but no strict point: $`(w - 40)^2 \le 0`$ | bound below $`p^\star = 30`$ kW by 0.140625 at price 1, 0.010000 at 14.0625, 0.000000141 at $`10^6`$; reached at no price | The supporting line stands upright: $`d^\star = p^\star`$, but no best price exists |
+| Stop the valve dual on gap $`\le 0.01`$ kW | after 200 subgradient steps (dual ascent using one of $`q`$'s slopes at its corners) from price 0, step $`0.05/(k+1)`$: bound 88.9989, gap 11.0011; never stops | The test can only fire when the gap can close |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script settles the valve problem's best plan by listing all eight patterns ($p^\star = 100$ kW), then reaches its best bound $d^\star = 89$ kW by three independent roads: maximising the dual over its corners in exact fractions, solving the part-open LP by opening the cheapest kW per L/s first, and reading the lower hull of the picture's dots at zero shortfall.
+The script settles the valve problem's best plan by listing all eight patterns ($`p^\star = 100`$ kW), then reaches its best bound $`d^\star = 89`$ kW by three independent roads: maximising the dual over its corners in exact fractions, solving the part-open LP by opening the cheapest kW per L/s first, and reading the lower hull of the picture's dots at zero shortfall.
 
 Then it tests Slater's condition on three plan sets; only the valves fail, on convexity (the midpoint of two patterns is not a pattern). It runs dual ascent on the variable-speed mains with the gap as the stopping test, and confirms the answer by two more roads: the [KKT conditions](02-kkt-conditions.md) (Karush–Kuhn–Tucker: the checklist a best plan passes when inequalities can bind) in closed form and a direct search over the flows. Last come the broken cases and the "try changing" numbers.
 
@@ -589,15 +605,15 @@ The two outputs are identical, line for line.
 
 Lean proves Slater's theorem with one inequality for every convex problem, the stopping test for any problem, and the valves' gap.
 
-- If the allowed plans, the cost and the rule are convex, some plan has $f_1 < 0$, and $p^\star$ is finite, then $d^\star = p^\star$.
-- In that case some price $\lambda^\star \ge 0$ has $q(\lambda^\star) = p^\star$: the best price exists.
-- The stopping test needs no convexity. Take a plan that meets the rule and a price $\lambda \ge 0$.
-  If the plan's power is within $\varepsilon$ of $q(\lambda)$, it is within $\varepsilon$ of $p^\star$.
+- If the allowed plans, the cost and the rule are convex, some plan has $`f_1 < 0`$, and $`p^\star`$ is finite, then $`d^\star = p^\star`$.
+- In that case some price $`\lambda^\star \ge 0`$ has $`q(\lambda^\star) = p^\star`$: the best price exists.
+- The stopping test needs no convexity. Take a plan that meets the rule and a price $`\lambda \ge 0`$.
+  If the plan's power is within $`\varepsilon`$ of $`q(\lambda)`$, it is within $`\varepsilon`$ of $`p^\star`$.
 - For the valves, the cheapest pattern that delivers at least 100 L/s draws 100 kW.
-- The valves' dual function $q(\lambda) = \lambda D + \sum_i \min(0, c_i - \lambda a_i)$ never goes above 89 kW, and reaches it at price 1.1.
-- So the valve gap is $100 - 89 = 11$ kW, though all three valves open beat demand by 55 L/s.
+- The valves' dual function $`q(\lambda) = \lambda D + \sum_i \min(0, c_i - \lambda a_i)`$ never goes above 89 kW, and reaches it at price 1.1.
+- So the valve gap is $`100 - 89 = 11`$ kW, though all three valves open beat demand by 55 L/s.
 - At the hull point, all of A and 80 percent of B deliver exactly 100 L/s for 89 kW.
-- With no strict point, the bound at price 1 falls short of $p^\star = 30$ kW by 0.140625 kW.
+- With no strict point, the bound at price 1 falls short of $`p^\star = 30`$ kW by 0.140625 kW.
 
 Everything else, including the variable-speed mains, the dual ascent table and the "try changing" runs, is left to the Python and Rust checks.
 
@@ -833,7 +849,7 @@ end SlaterCondition
 
 > [!TIP]
 > **Try changing**
-> - Guess first: can a nonconvex problem have no gap? Call `solve_valves(110)`. Then $p^\star = d^\star = 100$ kW: a gap of 0.0%, by luck rather than by Slater (When it holds).
+> - Guess first: can a nonconvex problem have no gap? Call `solve_valves(110)`. Then $`p^\star = d^\star = 100`$ kW: a gap of 0.0%, by luck rather than by Slater (When it holds).
 > - Guess first: does a lower demand shrink the gap? Call `solve_valves(90)`. AB is still best at 100 kW, but the bound falls to 78 kW: a gap of 22.0%.
 > - Guess first: how many steps for a gap of a millionth of a kW? Set the tolerance to `1e-6`. The run takes 17 rows instead of 8: each row cuts the gap by a factor near 0.354, so a tolerance 10,000 times finer costs nine more rows.
 > - Guess first: does a bigger step help? Step `0.03` stops after 4 rows. Step `0.06` overshoots the best price every time and never meets the test within the 200-row cap.
@@ -845,8 +861,8 @@ end SlaterCondition
 > [!warning]
 > **Trusting the gap test on a problem that is not convex.** On the valves, the best price proves 89 kW and the best plan draws 100 kW. A solver that waits for these to meet waits for ever: after 200 dual steps the gap is still 11.0011 kW. And the gap does not mean the plan is poor: AB is the best there is. On a nonconvex problem the dual is a bound, and the plan must be certified another way, here by listing every pattern, in general by a search such as [Branch and bound](../05-Integer%20and%20Combinatorial%20Optimisation/03-branch-and-bound.md).
 >
-> - **Writing an equality as a squared inequality.** $(w - 40)^2 \le 0$ is convex but has no strict point, so the bound reaches $p^\star$ only as the price runs off to infinity and no multiplier exists (When it holds). Write it as the linear equality $w = 40$.
-> - **Using the price's own flows as the upper number.** At $k = 0$ they total 63.6566 L/s, short of demand, so their power bounds nothing. Repair them into a feasible plan first.
+> - **Writing an equality as a squared inequality.** $`(w - 40)^2 \le 0`$ is convex but has no strict point, so the bound reaches $`p^\star`$ only as the price runs off to infinity and no multiplier exists (When it holds). Write it as the linear equality $`w = 40`$.
+> - **Using the price's own flows as the upper number.** At $`k = 0`$ they total 63.6566 L/s, short of demand, so their power bounds nothing. Repair them into a feasible plan first.
 > - **Reading a small gap as an accurate price.** At the stop the gap is 0.004204 kW, but the price is 1.219517 against the exact 1.233907. The certificate is on the cost.
 
 ---
@@ -865,7 +881,7 @@ end SlaterCondition
 
 ## What this builds on
 
-- [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md): the dual function, its concavity and weak duality, $q(\lambda) \le p^\star$. This card asks when the bound is exact.
+- [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md): the dual function, its concavity and weak duality, $`q(\lambda) \le p^\star`$. This card asks when the bound is exact.
 
 ## Where this goes next
 

@@ -37,37 +37,43 @@ Orange: independent loans, a neat hump centred on 5. Green: the town model built
 
 ## The formula
 
-Notation first, in words. Write $p_1$ and $p_2$ for the two bakeries' chances of failing over the five years, and $j$ for the chance that both fail. Write $\rho_D$ ("rho D") for the default correlation. Then:
+Notation first, in words. Write $`p_1`$ and $`p_2`$ for the two bakeries' chances of failing over the five years, and $`j`$ for the chance that both fail. Write $`\rho_D`$ ("rho D") for the default correlation. Then:
 
-$$j = p_1 p_2 + \rho_D \sqrt{p_1(1-p_1)\,p_2(1-p_2)}$$
+```math
+j = p_1 p_2 + \rho_D \sqrt{p_1(1-p_1)\,p_2(1-p_2)}
+```
 
 **Read it aloud:** the chance both fail is the chance under independence, plus the default correlation times a fixed scale set by the two single chances.
 
 Run backwards, the same line gives the correlation from a joint chance:
 
-$$\rho_D = \frac{j - p_1 p_2}{\sqrt{p_1(1-p_1)\,p_2(1-p_2)}}$$
+```math
+\rho_D = \frac{j - p_1 p_2}{\sqrt{p_1(1-p_1)\,p_2(1-p_2)}}
+```
 
 **Read it aloud:** the default correlation is the extra joint failure beyond independence, measured in units of that scale.
 
-For a pool of $n$ loans that all share one failure chance $p$ and one pairwise default correlation, let $S$ be the number that fail. Its spread, the variance (average squared distance from the mean), is
+For a pool of $`n`$ loans that all share one failure chance $`p`$ and one pairwise default correlation, let $`S`$ be the number that fail. Its spread, the variance (average squared distance from the mean), is
 
-$$\operatorname{Var}(S) = n\,p\,(1-p)\,\bigl[1 + (n-1)\,\rho_D\bigr]$$
+```math
+\mathrm{Var}(S) = n\,p\,(1-p)\,\bigl[1 + (n-1)\,\rho_D\bigr]
+```
 
 **Read it aloud:** the independent pool's variance, multiplied by one plus the number of other loans times the default correlation.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p_1$, $p_2$ | each borrower's chance of failing by the horizon | 5% each, over five years | the joint chance rises |
-| $p$ | the shared failure chance when all loans are alike | 5% | more failures on average |
-| $j$ | the chance both borrowers fail by the horizon | 0.25% independent, 0.525% clustered | — |
-| $\rho_D$ | default correlation: the correlation of the two yes-or-no outcomes | 0.058 (exactly 11/190) | joint chance and pool spread rise; the average does not move |
-| $B_1$, $B_2$ | failure indicators: 1 if that borrower fails, 0 if not | 0 or 1 | — |
-| $n$ | number of loans in the pool | 100 | the spread grows, faster when clustered |
-| $S$ | number of loans in the pool that fail | 5 on average | — |
-| $\operatorname{Var}(S)$ | variance of that count: average squared distance from 5 | 4.75 independent, 31.975 clustered | — |
-| $\rho_A$ | asset correlation: the correlation of two borrowers' underlying health scores, a different number | 20% | raises $\rho_D$, but far less than one for one |
-| $c$ | the failure threshold on a standard health score | −1.645 | — |
-| $N(x)$ | bell-curve area to the left of x ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)) | N(−1.645) = 0.05 | — |
+| $`p_1`$, $`p_2`$ | each borrower's chance of failing by the horizon | 5% each, over five years | the joint chance rises |
+| $`p`$ | the shared failure chance when all loans are alike | 5% | more failures on average |
+| $`j`$ | the chance both borrowers fail by the horizon | 0.25% independent, 0.525% clustered | — |
+| $`\rho_D`$ | default correlation: the correlation of the two yes-or-no outcomes | 0.058 (exactly 11/190) | joint chance and pool spread rise; the average does not move |
+| $`B_1`$, $`B_2`$ | failure indicators: 1 if that borrower fails, 0 if not | 0 or 1 | — |
+| $`n`$ | number of loans in the pool | 100 | the spread grows, faster when clustered |
+| $`S`$ | number of loans in the pool that fail | 5 on average | — |
+| $`\mathrm{Var}(S)`$ | variance of that count: average squared distance from 5 | 4.75 independent, 31.975 clustered | — |
+| $`\rho_A`$ | asset correlation: the correlation of two borrowers' underlying health scores, a different number | 20% | raises $`\rho_D`$, but far less than one for one |
+| $`c`$ | the failure threshold on a standard health score | −1.645 | — |
+| $`N(x)`$ | bell-curve area to the left of x ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)) | N(−1.645) = 0.05 | — |
 
 ### When it holds
 
@@ -83,11 +89,11 @@ $$\operatorname{Var}(S) = n\,p\,(1-p)\,\bigl[1 + (n-1)\,\rho_D\bigr]$$
 
 ### Step 0: a failure is a number, so it can be correlated
 
-Code each bakery's fate as a number: 1 if it fails within five years, 0 if it survives. Call these $B_1$ and $B_2$, the failure indicators. Correlation measures how two numbers move together ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Apply it to these two 0-or-1 numbers and the result is the default correlation. No model of the economy, no bell curve.
+Code each bakery's fate as a number: 1 if it fails within five years, 0 if it survives. Call these $`B_1`$ and $`B_2`$, the failure indicators. Correlation measures how two numbers move together ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Apply it to these two 0-or-1 numbers and the result is the default correlation. No model of the economy, no bell curve.
 
 ### Step 1: averages of indicators are probabilities
 
-The average of an indicator is the chance it equals 1. So the average of the first bakery's indicator is 5%, the chance it fails. The product of the two indicators is 1 only when both fail, so its average is $j$, the joint chance.
+The average of an indicator is the chance it equals 1. So the average of the first bakery's indicator is 5%, the chance it fails. The product of the two indicators is 1 only when both fail, so its average is $`j`$, the joint chance.
 
 ### Step 2: covariance, variance, correlation
 
@@ -115,7 +121,7 @@ Put j = 0 into the inverse formula and the correlation is −0.0025 / 0.0475 = �
 <details>
 <summary>Detailed proof: the identity, the range and the pool spread</summary>
 
-**Identity.** Let $B_1$ and $B_2$ take values 0 or 1 with chances of 1 equal to p1 and p2, and joint chance j of both being 1. Then E[B1] = p1, E[B1 B2] = j, and since B1^2 = B1, Var(B1) = p1 − p1^2 = p1(1 − p1). Cov(B1, B2) = E[B1 B2] − E[B1] E[B2] = j − p1 p2. For p1 and p2 strictly between 0 and 1 both variances are positive, so ρD = (j − p1 p2) / √(p1(1 − p1) p2(1 − p2)). Solving for j gives the first formula.
+**Identity.** Let $`B_1`$ and $`B_2`$ take values 0 or 1 with chances of 1 equal to p1 and p2, and joint chance j of both being 1. Then E[B1] = p1, E[B1 B2] = j, and since B1^2 = B1, Var(B1) = p1 − p1^2 = p1(1 − p1). Cov(B1, B2) = E[B1 B2] − E[B1] E[B2] = j − p1 p2. For p1 and p2 strictly between 0 and 1 both variances are positive, so ρD = (j − p1 p2) / √(p1(1 − p1) p2(1 − p2)). Solving for j gives the first formula.
 
 **Range.** The four outcomes do not overlap and cover everything, so their chances are exactly the four cells above and sum to 1. Each is a chance, hence at least 0: j ≥ 0, j ≤ p1, j ≤ p2, j ≥ p1 + p2 − 1. Conversely, any j obeying these four bounds makes four non-negative cells that sum to 1, which is a legitimate pair of borrowers with those chances. So the bounds are exactly the allowed set. The inverse formula is increasing in j, so it carries the two ends of that interval to the two ends of the allowed correlation range.
 
@@ -141,7 +147,9 @@ One loan's failure chance is 11/51 × 15% + 40/51 × 2.25% = 5%. Two loans fail 
 
 Its count of failures is a blend of two binomials, the counts of independent failures ([Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md)): 100 draws at 15%, weighted 11/51, plus 100 draws at 2.25%, weighted 40/51. The chance of ten or more failures:
 
-$$P(S \ge 10) = \tfrac{11}{51}\sum_{k=10}^{100}\binom{100}{k}0.15^k\,0.85^{100-k} + \tfrac{40}{51}\sum_{k=10}^{100}\binom{100}{k}0.0225^k\,0.9775^{100-k} = 20.39\%$$
+```math
+P(S \ge 10) = \tfrac{11}{51}\sum_{k=10}^{100}\binom{100}{k}0.15^k\,0.85^{100-k} + \tfrac{40}{51}\sum_{k=10}^{100}\binom{100}{k}0.0225^k\,0.9775^{100-k} = 20.39\%
+```
 
 Here the sum sign adds the terms for k = 10 up to 100, and the binomial coefficient counts the ways to choose which k loans fail. Independent loans give the same sum with 5% in place of both rates and weight 1: 2.82%.
 
@@ -151,9 +159,9 @@ Here the sum sign adds the terms for k = 10 up to 100, and the binomial coeffici
 
 ### Step 6: asset correlation is a different number
 
-Banks rarely measure default correlation directly: 5% events are too rare. They model each borrower's underlying health as a score on a bell curve, fail it when the score falls below a threshold $c$, and correlate the scores. That correlation of scores is the **asset correlation**, $\rho_A$. The threshold is the point with 5% of the bell curve below it: $c$ = −1.645, the value where N(c) = 0.05.
+Banks rarely measure default correlation directly: 5% events are too rare. They model each borrower's underlying health as a score on a bell curve, fail it when the score falls below a threshold $`c`$, and correlate the scores. That correlation of scores is the **asset correlation**, $`\rho_A`$. The threshold is the point with 5% of the bell curve below it: $`c`$ = −1.645, the value where N(c) = 0.05.
 
-With $\rho_A$ = 20%, the chance both scores fall below −1.645 is 0.5245%, so the default correlation is 0.0578. Asset correlation 0.20 becomes default correlation 0.058: cutting a smooth score at a far-out threshold throws away most of the co-movement. The machinery is the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md); this card only uses its answer, reached two ways in the code.
+With $`\rho_A`$ = 20%, the chance both scores fall below −1.645 is 0.5245%, so the default correlation is 0.0578. Asset correlation 0.20 becomes default correlation 0.058: cutting a smooth score at a far-out threshold throws away most of the co-movement. The machinery is the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md); this card only uses its answer, reached two ways in the code.
 
 <details>
 <summary>Two roads to the same 0.5245%</summary>
@@ -650,14 +658,14 @@ The two outputs agree line for line; the simulation matches because both run the
 Lean proves the identity, the range and the pool spread for any borrowers whose failure chances lie strictly between 0 and 1.
 
 - Lean defines default correlation as this card does: the indicators' covariance divided by the product of their standard deviations.
-- Take a borrower with failure chance $p$. Then its indicator averages $p$ and has variance $p(1-p)$.
-- Take two borrowers. Then the covariance of their indicators is $j - p_1 p_2$.
-- Suppose $p_1$ and $p_2$ lie strictly between 0 and 1. Then $j = p_1 p_2 + \rho_D \sqrt{p_1(1-p_1)\,p_2(1-p_2)}$.
-- Take the same two borrowers. Then the inverse formula gives $\rho_D$ from $j$, $p_1$ and $p_2$.
-- Take the same two borrowers. Then $j$ lies between max(0, p1 + p2 − 1) and min(p1, p2).
-- Take the same two borrowers. Then $\rho_D$ lies between the inverse formula's values at those two ends.
-- Take $n$ loans, each with failure chance $p$ strictly between 0 and 1, and one shared $\rho_D$ for every pair. Then $S$ averages $n p$.
-- Take the same pool. Then $\operatorname{Var}(S) = n\,p\,(1-p)\,[1 + (n-1)\,\rho_D]$.
+- Take a borrower with failure chance $`p`$. Then its indicator averages $`p`$ and has variance $`p(1-p)`$.
+- Take two borrowers. Then the covariance of their indicators is $`j - p_1 p_2`$.
+- Suppose $`p_1`$ and $`p_2`$ lie strictly between 0 and 1. Then $`j = p_1 p_2 + \rho_D \sqrt{p_1(1-p_1)\,p_2(1-p_2)}`$.
+- Take the same two borrowers. Then the inverse formula gives $`\rho_D`$ from $`j`$, $`p_1`$ and $`p_2`$.
+- Take the same two borrowers. Then $`j`$ lies between max(0, p1 + p2 − 1) and min(p1, p2).
+- Take the same two borrowers. Then $`\rho_D`$ lies between the inverse formula's values at those two ends.
+- Take $`n`$ loans, each with failure chance $`p`$ strictly between 0 and 1, and one shared $`\rho_D`$ for every pair. Then $`S`$ averages $`n p`$.
+- Take the same pool. Then $`\mathrm{Var}(S) = n\,p\,(1-p)\,[1 + (n-1)\,\rho_D]`$.
 - The bakeries' numbers match: 0.25% independent, scale 0.0475, joint chance 0.525%, and back again 11/190.
 - Two 5% borrowers have a correlation range from −1/19 to exactly 1.
 - The pool of 100 averages 5 failures, with variance 4.75 independent and 31.975 clustered.

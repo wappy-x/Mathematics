@@ -26,28 +26,32 @@ To scale: 120 units per 1, with 0 at (110, 190), 1 at (230, 190) and 1 + i at (2
 
 ## The formula
 
-Notation first, in words. A path is written γ (gamma): a point γ(t) that moves as a clock t runs from 0 to 1, with velocity γ′(t). The integral of f along γ is written $\int_\gamma f(z)\,dz$; a loop integral carries a circle on the sign, $\oint$.
+Notation first, in words. A path is written γ (gamma): a point γ(t) that moves as a clock t runs from 0 to 1, with velocity γ′(t). The integral of f along γ is written $`\int_\gamma f(z)\,dz`$; a loop integral carries a circle on the sign, $`\oint`$.
 
 An open set holds a small disc round each of its points. A region is an open set in one piece: connected.
 
-$$\int_\gamma f(z)\,dz = \int_0^1 f(\gamma(t))\,\gamma'(t)\,dt = F(b) - F(a) \qquad \text{when } F' = f \text{ on an open set containing } \gamma$$
+```math
+\int_\gamma f(z)\,dz = \int_0^1 f(\gamma(t))\,\gamma'(t)\,dt = F(b) - F(a) \qquad \text{when } F' = f \text{ on an open set containing } \gamma
+```
 
 **Read it aloud:** if F has derivative f on an open set holding the path, the integral of f along it is F at the finish minus F at the start.
 
-$$\oint_{|z| = 1} \frac{dz}{z} = 2\pi i$$
+```math
+\oint_{|z| = 1} \frac{dz}{z} = 2\pi i
+```
 
 **Read it aloud:** once anticlockwise round the unit circle, 1/z adds up to 2πi, not 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the function added up along the path | z^2 | — |
-| $F$ | an antiderivative: its complex derivative is f | z^3/3 | adding a constant changes nothing |
-| $\gamma$, $t$ | the path, and its clock running 0 to 1; γ′ is its velocity | γ(t) = (1 + i)t, velocity 1 + i | a new route, same answer when F exists |
-| $a$, $b$ | where the path starts and finishes | 0 and 1 + i | moves the answer by F's change |
-| $\oint$ | an integral round a closed loop, anticlockwise | the unit circle | — |
-| $\log z$, $\operatorname{Log} z$ | ln\|z\| + i times an angle of z; Log takes the angle in (−π, π] | log 1 = 0, Log(−1) = πi | one lap round 0 adds 2πi |
-| $\bar z$ | z-bar, the mirror of z in the real axis | 1 + i becomes 1 − i | — |
-| $i$, $\pi$, $N$ | i^2 = −1; a half turn in radians; steps in the numerical sum | N = 10 to 10000 | error falls as 1/N^2 |
+| $`f`$ | the function added up along the path | z^2 | — |
+| $`F`$ | an antiderivative: its complex derivative is f | z^3/3 | adding a constant changes nothing |
+| $`\gamma`$, $`t`$ | the path, and its clock running 0 to 1; γ′ is its velocity | γ(t) = (1 + i)t, velocity 1 + i | a new route, same answer when F exists |
+| $`a`$, $`b`$ | where the path starts and finishes | 0 and 1 + i | moves the answer by F's change |
+| $`\oint`$ | an integral round a closed loop, anticlockwise | the unit circle | — |
+| $`\log z`$, $`\mathrm{Log}\, z`$ | ln\|z\| + i times an angle of z; Log takes the angle in (−π, π] | log 1 = 0, Log(−1) = πi | one lap round 0 adds 2πi |
+| $`\bar z`$ | z-bar, the mirror of z in the real axis | 1 + i becomes 1 − i | — |
+| $`i`$, $`\pi`$, $`N`$ | i^2 = −1; a half turn in radians; steps in the numerical sum | N = 10 to 10000 | error falls as 1/N^2 |
 
 ### When it holds
 
@@ -71,11 +75,11 @@ A complex derivative means F(w + h) ≈ F(w) + F′(w) h from any direction. In 
 <details>
 <summary>Detailed proof: the chain rule along a path</summary>
 
-Fix t with γ differentiable at t, and let s be a small real tick. Write $\Delta = \gamma(t+s) - \gamma(t)$, so $\Delta/s \to \gamma'(t)$ and $|\Delta| \le M|s|$ for some M once s is small. Differentiability of F at $w = \gamma(t)$ gives $F(w + \Delta) - F(w) = F'(w)\,\Delta + R(\Delta)$ with $|R(h)|/|h| \to 0$ as $h \to 0$, and R(0) = 0. Then
+Fix t with γ differentiable at t, and let s be a small real tick. Write $`\Delta = \gamma(t+s) - \gamma(t)`$, so $`\Delta/s \to \gamma'(t)`$ and $`|\Delta| \le M|s|`$ for some M once s is small. Differentiability of F at $`w = \gamma(t)`$ gives $`F(w + \Delta) - F(w) = F'(w)\,\Delta + R(\Delta)`$ with $`|R(h)|/|h| \to 0`$ as $`h \to 0`$, and R(0) = 0. Then
 
-$$\frac{F(\gamma(t+s)) - F(\gamma(t))}{s} = F'(w)\,\frac{\Delta}{s} + \frac{R(\Delta)}{s}.$$
+$`\displaystyle \frac{F(\gamma(t+s)) - F(\gamma(t))}{s} = F'(w)\,\frac{\Delta}{s} + \frac{R(\Delta)}{s}.`$
 
-The first term tends to $F'(w)\gamma'(t)$. For the second: given ε > 0, pick δ with $|R(h)| \le \varepsilon |h|$ when $|h| < \delta$; for small s, $|R(\Delta)/s| \le \varepsilon M$, so it tends to 0. On each smooth piece the real fundamental theorem then applies to the real and imaginary parts; summing pieces, interior corners cancel.
+The first term tends to $`F'(w)\gamma'(t)`$. For the second: given ε > 0, pick δ with $`|R(h)| \le \varepsilon |h|`$ when $`|h| < \delta`$; for small s, $`|R(\Delta)/s| \le \varepsilon M`$, so it tends to 0. On each smooth piece the real fundamental theorem then applies to the real and imaginary parts; summing pieces, interior corners cancel.
 
 </details>
 
@@ -83,7 +87,9 @@ The first term tends to $F'(w)\gamma'(t)$. For the second: given ε > 0, pick δ
 
 A complex-valued function of t is two real ones, its real and imaginary parts. The fundamental theorem of calculus ([Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)) turns each integral of a rate into a change:
 
-$$\int_0^1 f(\gamma(t))\,\gamma'(t)\,dt = F(\gamma(1)) - F(\gamma(0)) = F(b) - F(a).$$
+```math
+\int_0^1 f(\gamma(t))\,\gamma'(t)\,dt = F(\gamma(1)) - F(\gamma(0)) = F(b) - F(a).
+```
 
 Only the ends are left.
 
@@ -99,11 +105,11 @@ Fix a base point p in a connected open region, and let F(z) be the integral of f
 <details>
 <summary>Detailed proof: the constructed F has derivative f</summary>
 
-The region is open, so a disc around z lies inside it; take h small enough that z + h is in that disc. Extend a path from p to z by the segment $z + sh$, s from 0 to 1. Then
+The region is open, so a disc around z lies inside it; take h small enough that z + h is in that disc. Extend a path from p to z by the segment $`z + sh`$, s from 0 to 1. Then
 
-$$F(z+h) - F(z) = \int_0^1 f(z + sh)\,h\,ds, \qquad \left|\frac{F(z+h) - F(z)}{h} - f(z)\right| \le \max_{0 \le s \le 1} |f(z + sh) - f(z)|.$$
+$`\displaystyle F(z+h) - F(z) = \int_0^1 f(z + sh)\,h\,ds, \qquad \left|\frac{F(z+h) - F(z)}{h} - f(z)\right| \le \max_{0 \le s \le 1} |f(z + sh) - f(z)|.`$
 
-Continuity of f at z makes the right side tend to 0 as h → 0, from every direction. So $F'(z) = f(z)$. Connectedness is what lets one base point reach every z by a path of segments.
+Continuity of f at z makes the right side tend to 0 as h → 0, from every direction. So $`F'(z) = f(z)`$. Connectedness is what lets one base point reach every z by a path of segments.
 
 </details>
 

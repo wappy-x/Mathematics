@@ -40,48 +40,54 @@ Orange: the log odds itself, a curve. Green: its tangent line at 0.15, with slop
 
 Notation first, in words.
 
-- A hat over a letter marks an estimate made from data: $\hat p$ is the estimated chance, events divided by patients, and $p$ is the true chance it estimates. The later estimation cards use the hat freely.
-- A reminder from shelf 02, [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md): $\mu$ is the mean of one reading and $\sigma$ its spread (standard deviation); the variance $\sigma^2$ is the spread squared. $\bar X_n$ is the average of $n$ readings.
-- From [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), $N(0, v)$ is the normal law with mean 0 and variance v, and Φ is the standard bell's area to the left of a point.
-- The function applied to the average is $g$, and $g'(\mu)$ is its slope, its derivative, at the true mean.
-- SE is the delta method's standard error of $g(\bar X_n)$ at the true values, $|g'(\mu)|\,\sigma/\sqrt{n}$, and $\widehat{\mathrm{SE}}$ is one computed from the data.
+- A hat over a letter marks an estimate made from data: $`\hat p`$ is the estimated chance, events divided by patients, and $`p`$ is the true chance it estimates. The later estimation cards use the hat freely.
+- A reminder from shelf 02, [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md): $`\mu`$ is the mean of one reading and $`\sigma`$ its spread (standard deviation); the variance $`\sigma^2`$ is the spread squared. $`\bar X_n`$ is the average of $`n`$ readings.
+- From [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), $`N(0, v)`$ is the normal law with mean 0 and variance v, and Φ is the standard bell's area to the left of a point.
+- The function applied to the average is $`g`$, and $`g'(\mu)`$ is its slope, its derivative, at the true mean.
+- SE is the delta method's standard error of $`g(\bar X_n)`$ at the true values, $`|g'(\mu)|\,\sigma/\sqrt{n}`$, and $`\widehat{\mathrm{SE}}`$ is one computed from the data.
 - Two reminders from this shelf: a sequence converges **in distribution** when its chances P(· ≤ z) approach a fixed law's ([Central limit theorem](02-central-limit-theorem.md)), and **in probability** when the chance of missing a target by more than any fixed tolerance goes to 0 ([Law of large numbers](01-law-of-large-numbers.md)).
 
 The **delta method** says:
 
-$$\sqrt{n}\,\big(g(\bar X_n) - g(\mu)\big) \;\longrightarrow\; N\big(0,\; g'(\mu)^2\,\sigma^2\big) \quad\text{in distribution}$$
+```math
+\sqrt{n}\,\big(g(\bar X_n) - g(\mu)\big) \;\longrightarrow\; N\big(0,\; g'(\mu)^2\,\sigma^2\big) \quad\text{in distribution}
+```
 
 **Read it aloud:** the function's miss, magnified by root n, settles into a bell centred on zero whose variance is the slope squared times one reading's variance.
 
-The working form: the standard error of $g(\bar X_n)$ is about $|g'(\mu)|\,\sigma/\sqrt{n}$, the average's own standard error times the size of the slope.
+The working form: the standard error of $`g(\bar X_n)`$ is about $`|g'(\mu)|\,\sigma/\sqrt{n}`$, the average's own standard error times the size of the slope.
 
 **Slutsky's theorem**, in the form used here, lets an estimated standard error stand in for SE:
 
-$$\frac{g(\bar X_n) - g(\mu)}{\widehat{\mathrm{SE}}} \;\longrightarrow\; N(0, 1) \quad\text{whenever}\quad \frac{\widehat{\mathrm{SE}}}{\mathrm{SE}} \longrightarrow 1 \text{ in probability}$$
+```math
+\frac{g(\bar X_n) - g(\mu)}{\widehat{\mathrm{SE}}} \;\longrightarrow\; N(0, 1) \quad\text{whenever}\quad \frac{\widehat{\mathrm{SE}}}{\mathrm{SE}} \longrightarrow 1 \text{ in probability}
+```
 
 **Read it aloud:** divide the miss by a standard error computed from the data, and the result is still a standard bell, provided the computed standard error is sure to be close to SE in large samples.
 
-For the odds ratio, $\mathrm{OR}$, from counts $a$, $b$ (drug: yes, no) and $c$, $d$ (placebo: yes, no), the two results together give **Woolf's formula** (1955):
+For the odds ratio, $`\mathrm{OR}`$, from counts $`a`$, $`b`$ (drug: yes, no) and $`c`$, $`d`$ (placebo: yes, no), the two results together give **Woolf's formula** (1955):
 
-$$\widehat{\mathrm{SE}}\big(\ln \widehat{\mathrm{OR}}\big) = \sqrt{\frac1a + \frac1b + \frac1c + \frac1d}$$
+```math
+\widehat{\mathrm{SE}}\big(\ln \widehat{\mathrm{OR}}\big) = \sqrt{\frac1a + \frac1b + \frac1c + \frac1d}
+```
 
 **Read it aloud:** the standard error of the log odds ratio is the square root of the sum of the reciprocals of the four counts.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | patients in one group | 400 | the standard error shrinks like 1/√n |
-| $p$, $\hat p$ | a group's true chance of hospital care; its estimate, events over patients | 0.15 drug, 0.25 placebo; 60/400 = 0.15 | — |
-| $\mu$, $\sigma$ | mean and spread of one reading, a patient's 1 (care) or 0 | drug: 0.15 and 0.357071 | a larger σ widens every bell |
-| $\bar X_n$ | the average of the n readings: here the share $\hat p$ | 0.15 | — |
-| $g$ | the smooth function applied to the average | the log odds, ln(p/(1 − p)) | — |
-| $g'(\mu)$ | its slope at the true value | 1/(p(1 − p)) = 7.843137 at 0.15 | the output error grows in proportion |
-| $a$, $b$, $c$, $d$ | the four counts of the trial | 60, 340, 100, 300 | a larger count shrinks the error |
-| $\mathrm{OR}$, $\theta$, $\hat\theta$ | the odds ratio, its log θ, and the log's estimate | 0.529412; θ̂ = −0.635989 | — |
-| $\mathrm{SE}$ | the delta method's standard error at the true chances | 0.181497; the exact spread over every trial is 0.182953 | wider interval |
-| $\widehat{\mathrm{SE}}$ | the standard error computed from the data | 0.181497 | wider interval |
-| $z$ | the number of standard errors for 95%: Φ(z) = 0.975 | 1.959964 | wider interval, higher coverage |
-| $\Phi$ | the standard bell's area to the left of a point | Φ(1.959964) = 0.975 | — |
-| $N(0, v)$ | the normal law with mean 0 and variance v | v = g'(μ)^2 σ^2 = 7.843137 for the drug group's log odds; θ̂ itself is close to normal with variance 0.032941 | — |
+| $`n`$ | patients in one group | 400 | the standard error shrinks like 1/√n |
+| $`p`$, $`\hat p`$ | a group's true chance of hospital care; its estimate, events over patients | 0.15 drug, 0.25 placebo; 60/400 = 0.15 | — |
+| $`\mu`$, $`\sigma`$ | mean and spread of one reading, a patient's 1 (care) or 0 | drug: 0.15 and 0.357071 | a larger σ widens every bell |
+| $`\bar X_n`$ | the average of the n readings: here the share $`\hat p`$ | 0.15 | — |
+| $`g`$ | the smooth function applied to the average | the log odds, ln(p/(1 − p)) | — |
+| $`g'(\mu)`$ | its slope at the true value | 1/(p(1 − p)) = 7.843137 at 0.15 | the output error grows in proportion |
+| $`a`$, $`b`$, $`c`$, $`d`$ | the four counts of the trial | 60, 340, 100, 300 | a larger count shrinks the error |
+| $`\mathrm{OR}`$, $`\theta`$, $`\hat\theta`$ | the odds ratio, its log θ, and the log's estimate | 0.529412; θ̂ = −0.635989 | — |
+| $`\mathrm{SE}`$ | the delta method's standard error at the true chances | 0.181497; the exact spread over every trial is 0.182953 | wider interval |
+| $`\widehat{\mathrm{SE}}`$ | the standard error computed from the data | 0.181497 | wider interval |
+| $`z`$ | the number of standard errors for 95%: Φ(z) = 0.975 | 1.959964 | wider interval, higher coverage |
+| $`\Phi`$ | the standard bell's area to the left of a point | Φ(1.959964) = 0.975 | — |
+| $`N(0, v)`$ | the normal law with mean 0 and variance v | v = g'(μ)^2 σ^2 = 7.843137 for the drug group's log odds; θ̂ itself is close to normal with variance 0.032941 | — |
 
 ### When it holds
 
@@ -103,19 +109,23 @@ That is the whole method. The rest checks that the curve's bend costs nothing in
 
 ### Step 1: the share has a bell
 
-Each drug patient is a reading of 1 (care) or 0 (none), with mean 0.15 and variance 0.15 × 0.85, so spread 0.357071. The share $\hat p$ is the average of 400 such readings. By [Central limit theorem](02-central-limit-theorem.md), its miss is a bell centred at 0 with spread 0.357071/√400 = 0.017854.
+Each drug patient is a reading of 1 (care) or 0 (none), with mean 0.15 and variance 0.15 × 0.85, so spread 0.357071. The share $`\hat p`$ is the average of 400 such readings. By [Central limit theorem](02-central-limit-theorem.md), its miss is a bell centred at 0 with spread 0.357071/√400 = 0.017854.
 
 ### Step 2: the tangent line stretches the bell by the slope
 
 The log odds is g(p) = ln(p/(1 − p)) = ln p − ln(1 − p). Its slope is 1/p + 1/(1 − p) = 1/(p(1 − p)), which is 7.843137 at 0.15; a central difference computed from g alone gives the same 7.843137. By [Linear approximation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md),
 
-$$g(\hat p) \approx g(p) + g'(p)\,(\hat p - p)$$
+```math
+g(\hat p) \approx g(p) + g'(p)\,(\hat p - p)
+```
 
 The right side is a fixed number plus a fixed multiple of the share's miss. Multiplying a bell by a constant multiplies its spread by the constant's size. So the log odds has spread 7.843137 × 0.017854 = 0.140028.
 
 The same algebra in symbols shows where the counts come from. The slope times the share's spread is
 
-$$\frac{1}{p(1-p)}\sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{1}{n\,p(1-p)}} = \sqrt{\frac{1}{np} + \frac{1}{n(1-p)}}$$
+```math
+\frac{1}{p(1-p)}\sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{1}{n\,p(1-p)}} = \sqrt{\frac{1}{np} + \frac{1}{n(1-p)}}
+```
 
 and np and n(1 − p) are the expected counts of patients with and without care: 60 and 340. So the drug group's log odds has standard error √(1/60 + 1/340) = 0.140028, the same number by a second road.
 
@@ -131,7 +141,9 @@ Chebyshev's inequality, a bound on the chance of a large miss from the variance 
 **Setting.** Readings are independent with mean μ and finite spread σ. The function g has slope g'(μ) at μ, and near μ its bend is bounded: |g''| is at most M on an interval μ − δ to μ + δ.
 
 **Taylor.** For x in that interval, g(x) = g(μ) + g'(μ)(x − μ) + r, with |r| at most (M/2)(x − μ)^2. So
-$$\sqrt{n}\,\big(g(\bar X_n) - g(\mu)\big) = g'(\mu)\,\sqrt{n}\,(\bar X_n - \mu) + \sqrt{n}\,r_n$$
+
+$`\displaystyle \sqrt{n}\,\big(g(\bar X_n) - g(\mu)\big) = g'(\mu)\,\sqrt{n}\,(\bar X_n - \mu) + \sqrt{n}\,r_n`$
+
 whenever the average lies in the interval.
 
 **The main term.** By the central limit theorem, √n times the average's miss tends to N(0, σ^2) in distribution. Multiplying by the constant g'(μ) multiplies the spread by |g'(μ)|: the limit is N(0, g'(μ)^2 σ^2). (If g'(μ) = 0 the limit is the point 0, which is the failure listed in When it holds.)
@@ -164,11 +176,15 @@ Slutsky's theorem says that settling is enough. Dividing the miss by the plug-in
 <summary>Detailed proof: Slutsky's theorem, the two rules used here</summary>
 
 **Sum rule.** Suppose the chances P(Z_n ≤ z) tend to F(z), the cumulative distribution function (CDF) of a law with no jumps, such as the bell, and W_n tends to 0 in probability. Fix ε > 0. If Z_n + W_n is at most z, then either Z_n is at most z + ε or |W_n| exceeds ε. If Z_n is at most z − ε and |W_n| is at most ε, then Z_n + W_n is at most z. So
-$$P(Z_n \le z - \varepsilon) - P(|W_n| > \varepsilon) \;\le\; P(Z_n + W_n \le z) \;\le\; P(Z_n \le z + \varepsilon) + P(|W_n| > \varepsilon)$$
+
+$`\displaystyle P(Z_n \le z - \varepsilon) - P(|W_n| > \varepsilon) \;\le\; P(Z_n + W_n \le z) \;\le\; P(Z_n \le z + \varepsilon) + P(|W_n| > \varepsilon)`$
+
 As n grows the outer sides tend to F(z − ε) and F(z + ε). Let ε shrink: F has no jumps, so both tend to F(z). The middle is squeezed to F(z).
 
 **Ratio rule.** Let Z_n be the miss divided by SE, tending to the standard bell, and let the ratio of SE to the estimated standard error, Q_n, tend to 1 in probability. The studentised miss is Z_n Q_n = Z_n + Z_n (Q_n − 1). For the second term, fix ε and a small η, and pick K with Φ(−K) below η/4. For large n, P(|Z_n| > K) is below η, since it tends to 2Φ(−K). Then
-$$P\big(|Z_n (Q_n - 1)| > \varepsilon\big) \;\le\; P(|Z_n| > K) + P\big(|Q_n - 1| > \varepsilon / K\big)$$
+
+$`\displaystyle P\big(|Z_n (Q_n - 1)| > \varepsilon\big) \;\le\; P(|Z_n| > K) + P\big(|Q_n - 1| > \varepsilon / K\big)`$
+
 and the right side is below 2η for large n. So the second term tends to 0 in probability, and the sum rule finishes the proof.
 
 **Why Q_n tends to 1.** The plug-in standard error is a continuous function h of the two observed shares, and h is positive at the true chances. For any tolerance there is a δ such that shares within δ of the truth keep h within that tolerance. So the chance of missing the tolerance is at most the chance a share misses by δ, which tends to 0 by the law of large numbers.
@@ -653,10 +669,10 @@ Orange: the interval built on the log scale and carried back, as on this card; t
 
 Lean proves the delta method and Slutsky's theorem for any independent readings with one common law and finite spread.
 
-- Take independent readings with one common law, mean $\mu$ and finite spread $\sigma$, and a slope $g'(\mu) \ne 0$. Then $\sqrt{n}\,(g(\bar X_n) - g(\mu))$ tends in distribution to $N(0, g'(\mu)^2 \sigma^2)$.
+- Take independent readings with one common law, mean $`\mu`$ and finite spread $`\sigma`$, and a slope $`g'(\mu) \ne 0`$. Then $`\sqrt{n}\,(g(\bar X_n) - g(\mu))`$ tends in distribution to $`N(0, g'(\mu)^2 \sigma^2)`$.
 - Lean needs only the slope, not the bounded bend the proof above assumes.
-- Suppose also that $\widehat{\mathrm{SE}}/\mathrm{SE}$ tends to 1 in probability. Then $(g(\bar X_n) - g(\mu))/\widehat{\mathrm{SE}}$ tends in distribution to $N(0, 1)$.
-- Take a true chance $p$ between 0 and 1, and $n > 0$ patients. Then the slope squared times the share's variance $p(1-p)/n$ equals $1/(np) + 1/(n(1-p))$.
+- Suppose also that $`\widehat{\mathrm{SE}}/\mathrm{SE}`$ tends to 1 in probability. Then $`(g(\bar X_n) - g(\mu))/\widehat{\mathrm{SE}}`$ tends in distribution to $`N(0, 1)`$.
+- Take a true chance $`p`$ between 0 and 1, and $`n > 0`$ patients. Then the slope squared times the share's variance $`p(1-p)/n`$ equals $`1/(np) + 1/(n(1-p))`$.
 - The hand arithmetic holds exactly: odds 3/17 and 1/3, odds ratio 9/17, and slopes 400/51 and 16/3.
 - So do the variances: 1/60 + 1/340 = 1/51, 1/100 + 1/300 = 1/75, and their sum 14/425.
 

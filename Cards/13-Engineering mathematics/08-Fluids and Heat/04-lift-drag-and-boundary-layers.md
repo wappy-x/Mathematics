@@ -38,38 +38,44 @@ Orange: lift from circulation alone, with no boundary layer; it never stops risi
 
 ## The formula
 
-Notation already met: **viscosity**, friction inside the fluid, from [Viscosity](02-viscosity-and-pipe-flow.md); the Reynolds number Re, inertia over viscous force, from [Navier-Stokes](03-navier-stokes-and-the-reynolds-number.md); the boundary layer and its momentum loss from [Boundary layers](../01-Units%20and%20Modelling/06-boundary-layers-and-singular-perturbation.md). A layer is **laminar** when its air slides in smooth sheets, and **turbulent** when it churns and mixes. Forces are made dimensionless by dividing by the **dynamic pressure** $q = \tfrac12\rho U^2$, the pressure rise from bringing the oncoming air to rest, times the area.
+Notation already met: **viscosity**, friction inside the fluid, from [Viscosity](02-viscosity-and-pipe-flow.md); the Reynolds number Re, inertia over viscous force, from [Navier-Stokes](03-navier-stokes-and-the-reynolds-number.md); the boundary layer and its momentum loss from [Boundary layers](../01-Units%20and%20Modelling/06-boundary-layers-and-singular-perturbation.md). A layer is **laminar** when its air slides in smooth sheets, and **turbulent** when it churns and mixes. Forces are made dimensionless by dividing by the **dynamic pressure** $`q = \tfrac12\rho U^2`$, the pressure rise from bringing the oncoming air to rest, times the area.
 
 Lift per metre of span, and the lift coefficient with no layer:
 
-$$L' = \rho\,U\,\Gamma, \qquad F = \frac{L'}{q\,c} = k\,\sin(\alpha - \alpha_0)$$
+```math
+L' = \rho\,U\,\Gamma, \qquad F = \frac{L'}{q\,c} = k\,\sin(\alpha - \alpha_0)
+```
 
-Lift with the layer, where the upper surface is attached only for the front fraction $f$ of the chord:
+Lift with the layer, where the upper surface is attached only for the front fraction $`f`$ of the chord:
 
-$$C_L = F\left[\,g\cos^2(\alpha-\alpha_0) + \sqrt{f}\,\sin^2(\alpha-\alpha_0)\right], \qquad g = \left(\frac{1+\sqrt f}{2}\right)^2$$
+```math
+C_L = F\left[\,g\cos^2(\alpha-\alpha_0) + \sqrt{f}\,\sin^2(\alpha-\alpha_0)\right], \qquad g = \left(\frac{1+\sqrt f}{2}\right)^2
+```
 
 Drag, from the momentum the layer has lost by the back edge on each surface, plus the pressure lost behind separation:
 
-$$C_D = \frac{2}{c}\sum_{\text{upper, lower}} \theta_{\mathrm{TE}}\left(\frac{U_{\mathrm{TE}}}{U}\right)^{(H_{\mathrm{TE}}+5)/2} \;+\; F\sin(\alpha-\alpha_0)\cos(\alpha-\alpha_0)\,(g - \sqrt f)$$
+```math
+C_D = \frac{2}{c}\sum_{\text{upper, lower}} \theta_{\mathrm{TE}}\left(\frac{U_{\mathrm{TE}}}{U}\right)^{(H_{\mathrm{TE}}+5)/2} \;+\; F\sin(\alpha-\alpha_0)\cos(\alpha-\alpha_0)\,(g - \sqrt f)
+```
 
-The forces on the balance are $L = C_L\,q\,c\,b$ and $D = C_D\,q\,c\,b$.
+The forces on the balance are $`L = C_L\,q\,c\,b`$ and $`D = C_D\,q\,c\,b`$.
 
 **Read it aloud:** lift is the air's density times its speed times how hard it circulates round the wing; the separated part of the upper surface gives up some of that lift; and drag is the momentum the thin wall layer has lost, carried off in the wake.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L'$; $L$, $D$ | lift per metre of span, N/m; lift and drag on the balance, N | 382.654 N/m with no layer; 287.16 N and 3.682 N, at 8° | — |
-| $\rho$ | air density | 1.2041 kg/m³ | lift and drag rise in proportion |
-| $U$, $U_e$, $U_{\mathrm{TE}}$; $u$ | tunnel speed; air speed just outside the layer at distance $s$ along the surface; the same at the back edge; in Step 1, the small extra speed over the top | 40 m/s | forces rise as $U^2$; stall comes a little later |
-| $\Gamma$ | **circulation**: the air's speed along a loop round the wing, added up all the way round, m²/s | 7.9449 m²/s at 8° | lift rises in proportion |
-| $c$, $b$; $f_c$ | chord and span; camber, the arch's height as a fraction of chord | 0.30 m and 0.80 m, area 0.240 m²; 0.0273 | forces rise in proportion to $c$ and $b$; more camber, more lift at the same angle |
-| $q$ | dynamic pressure $\tfrac12\rho U^2$ | 963.27 Pa | forces rise in proportion |
-| $F$, $C_L$, $C_D$ | lift coefficient with no layer, lift and drag coefficients with it | 1.3242, 1.2421 and 0.01593 at 8° | — |
-| $\alpha$, $\alpha_0$ | angle of attack; **zero-lift angle**, where the cambered wing gives no lift | 8°; −3.1221° | lift rises until stall |
-| $k$; $a$, $\beta$, $\zeta$, $z$ | lift slope, $F$ gained per radian; circle radius, $\beta = -\alpha_0$, and the circle and wing planes of the map | 6.8644 per rad; a very thin plate gives 2π | lift rises in proportion |
-| $f$, $g$ | **separation point** as a fraction of chord, upper surface; Kirchhoff's lift factor | 0.8781 and 0.9381 at 8° | f = 1 means fully attached, f near 0 means stalled |
-| $\theta$, $H$, $C_f$ | **momentum thickness**: the height of full-speed air carrying the momentum the layer has lost ($\theta_{\mathrm{TE}}$ at the back edge, $\theta_\infty$ far downstream); **shape factor**, how hollow the layer's speed profile is; skin friction, wall shear over $q$ | H about 1.4 healthy; separation taken where H passes 2.0 | — |
-| $\mathrm{Re}$ | Reynolds number $Uc/\nu$, with $\nu$ the kinematic viscosity 15.1152 mm²/s | 793,902 | thinner layer, less friction, later stall |
+| $`L'`$; $`L`$, $`D`$ | lift per metre of span, N/m; lift and drag on the balance, N | 382.654 N/m with no layer; 287.16 N and 3.682 N, at 8° | — |
+| $`\rho`$ | air density | 1.2041 kg/m³ | lift and drag rise in proportion |
+| $`U`$, $`U_e`$, $`U_{\mathrm{TE}}`$; $`u`$ | tunnel speed; air speed just outside the layer at distance $`s`$ along the surface; the same at the back edge; in Step 1, the small extra speed over the top | 40 m/s | forces rise as $`U^2`$; stall comes a little later |
+| $`\Gamma`$ | **circulation**: the air's speed along a loop round the wing, added up all the way round, m²/s | 7.9449 m²/s at 8° | lift rises in proportion |
+| $`c`$, $`b`$; $`f_c`$ | chord and span; camber, the arch's height as a fraction of chord | 0.30 m and 0.80 m, area 0.240 m²; 0.0273 | forces rise in proportion to $`c`$ and $`b`$; more camber, more lift at the same angle |
+| $`q`$ | dynamic pressure $`\tfrac12\rho U^2`$ | 963.27 Pa | forces rise in proportion |
+| $`F`$, $`C_L`$, $`C_D`$ | lift coefficient with no layer, lift and drag coefficients with it | 1.3242, 1.2421 and 0.01593 at 8° | — |
+| $`\alpha`$, $`\alpha_0`$ | angle of attack; **zero-lift angle**, where the cambered wing gives no lift | 8°; −3.1221° | lift rises until stall |
+| $`k`$; $`a`$, $`\beta`$, $`\zeta`$, $`z`$ | lift slope, $`F`$ gained per radian; circle radius, $`\beta = -\alpha_0`$, and the circle and wing planes of the map | 6.8644 per rad; a very thin plate gives 2π | lift rises in proportion |
+| $`f`$, $`g`$ | **separation point** as a fraction of chord, upper surface; Kirchhoff's lift factor | 0.8781 and 0.9381 at 8° | f = 1 means fully attached, f near 0 means stalled |
+| $`\theta`$, $`H`$, $`C_f`$ | **momentum thickness**: the height of full-speed air carrying the momentum the layer has lost ($`\theta_{\mathrm{TE}}`$ at the back edge, $`\theta_\infty`$ far downstream); **shape factor**, how hollow the layer's speed profile is; skin friction, wall shear over $`q`$ | H about 1.4 healthy; separation taken where H passes 2.0 | — |
+| $`\mathrm{Re}`$ | Reynolds number $`Uc/\nu`$, with $`\nu`$ the kinematic viscosity 15.1152 mm²/s | 793,902 | thinner layer, less friction, later stall |
 
 Formulas take angles in radians; the prose says degrees. The air properties are the same as on [Boundary layers](../01-Units%20and%20Modelling/06-boundary-layers-and-singular-perturbation.md): ideal-gas density at 101,325 Pa and 293.15 K, and viscosity 1.82 × 10⁻⁵ Pa s from Lemmon and Jacobsen.
 
@@ -95,7 +101,7 @@ So the thin layer does three jobs. It fixes the circulation, and so the lift. It
 
 **Circulation** Γ is the speed along a closed loop round the wing, added up all the way round. Without viscosity it is the same for every loop that encloses the wing.
 
-The **Kutta–Joukowski theorem** says lift per metre of span is $L' = \rho U \Gamma$. A short version of why: over the top the air moves at about $U + u$, underneath at about $U - u$. Bernoulli ([Continuity and Bernoulli](01-continuity-and-bernoulli.md)) says pressure drops by $\rho U u$ on top and rises by about $\rho U u$ underneath, to first order in $u$. Over a chord $c$ that is a net push $2\rho U u c$. The circulation round the wing is about $(U + u)c - (U - u)c = 2uc$. So the push is $\rho U \Gamma$.
+The **Kutta–Joukowski theorem** says lift per metre of span is $`L' = \rho U \Gamma`$. A short version of why: over the top the air moves at about $`U + u`$, underneath at about $`U - u`$. Bernoulli ([Continuity and Bernoulli](01-continuity-and-bernoulli.md)) says pressure drops by $`\rho U u`$ on top and rises by about $`\rho U u`$ underneath, to first order in $`u`$. Over a chord $`c`$ that is a net push $`2\rho U u c`$. The circulation round the wing is about $`(U + u)c - (U - u)c = 2uc`$. So the push is $`\rho U \Gamma`$.
 
 <details>
 <summary>Detailed proof: the exact theorem from a large circle</summary>
@@ -108,18 +114,18 @@ The code checks the theorem by a second road. It adds up the pressure on 20,000 
 
 ### Step 2: the circulation of this wing, from a circle
 
-The model's section is a **Joukowski aerofoil**. The flow round a circle is known exactly. The map $z = \zeta + 1/\zeta$ turns a circle through ζ = 1 into a wing shape with a sharp back edge at z = 2, and carries the streamlines with it. Here the circle's centre sits at (−0.10, 0.06): the 0.10 gives thickness, the 0.06 gives camber, the arch of the section.
+The model's section is a **Joukowski aerofoil**. The flow round a circle is known exactly. The map $`z = \zeta + 1/\zeta`$ turns a circle through ζ = 1 into a wing shape with a sharp back edge at z = 2, and carries the streamlines with it. Here the circle's centre sits at (−0.10, 0.06): the 0.10 gives thickness, the 0.06 gives camber, the arch of the section.
 
-Round a circle of radius $a$, any amount of circulation is allowed. The Kutta condition picks one: the speed must be zero at the circle point that becomes the sharp edge. That gives $\Gamma = 4\pi U a_{\text{phys}} \sin(\alpha - \alpha_0)$, where $a_{\text{phys}}$ is the circle radius in metres and $-\alpha_0 = \beta = \arcsin(0.06/a)$. With lift $\rho U \Gamma$, the coefficient is $F = k \sin(\alpha - \alpha_0)$ with $k = 8\pi a/(\text{chord})$, both in the circle's own units.
+Round a circle of radius $`a`$, any amount of circulation is allowed. The Kutta condition picks one: the speed must be zero at the circle point that becomes the sharp edge. That gives $`\Gamma = 4\pi U a_{\text{phys}} \sin(\alpha - \alpha_0)`$, where $`a_{\text{phys}}`$ is the circle radius in metres and $`-\alpha_0 = \beta = \arcsin(0.06/a)`$. With lift $`\rho U \Gamma`$, the coefficient is $`F = k \sin(\alpha - \alpha_0)`$ with $`k = 8\pi a/(\text{chord})`$, both in the circle's own units.
 
-For our wing $k = 6.8644$ per radian and $\alpha_0 = -3.1221°$. At 8°, Γ = 7.9449 m²/s and $L'$ = 382.654 N/m.
+For our wing $`k = 6.8644`$ per radian and $`\alpha_0 = -3.1221°`$. At 8°, Γ = 7.9449 m²/s and $`L'`$ = 382.654 N/m.
 
-**Thin aerofoil theory**, which flattens the wing to its camber line, gives $F = 2\pi(\alpha - \alpha_0)$ and $\alpha_0 = -2f_c$ for an arched camber line of height $f_c$ chords. It knows nothing about the circle. Yet with the camber read off the shape, 0.0273 chords, it predicts $\alpha_0$ = −3.1254°, against the exact −3.1221°. Its slope of 2π, used with the exact zero-lift angle, gives 1.2197 at 8°, low against 1.3242: thickness speeds up the air round the nose and adds lift slope, from 2π to 6.8644.
+**Thin aerofoil theory**, which flattens the wing to its camber line, gives $`F = 2\pi(\alpha - \alpha_0)`$ and $`\alpha_0 = -2f_c`$ for an arched camber line of height $`f_c`$ chords. It knows nothing about the circle. Yet with the camber read off the shape, 0.0273 chords, it predicts $`\alpha_0`$ = −3.1254°, against the exact −3.1221°. Its slope of 2π, used with the exact zero-lift angle, gives 1.2197 at 8°, low against 1.3242: thickness speeds up the air round the nose and adds lift slope, from 2π to 6.8644.
 
 <details>
 <summary>Detailed proof: the zero-lift angle of an arched camber line</summary>
 
-Thin aerofoil theory gives the zero-lift angle as $\alpha_0 = -\frac{1}{\pi}\int_0^\pi \frac{dz_c}{dx}(\cos\vartheta - 1)\,d\vartheta$, where $x$ is the distance back from the front edge, $z_c(x)$ is the camber line's height above the chord there, and $\vartheta$ is a stand-in angle running from 0 at the front edge to π at the back, with $x = \tfrac{c}{2}(1 - \cos\vartheta)$. For a parabolic arch of height $f_c c$, $z_c = 4f_c\,x(c - x)/c$, the slope is $dz_c/dx = 4f_c(1 - 2x/c) = 4f_c\cos\vartheta$. Then $\alpha_0 = -\frac{4f_c}{\pi}\int_0^\pi(\cos^2\vartheta - \cos\vartheta)\,d\vartheta = -\frac{4f_c}{\pi}\cdot\frac{\pi}{2} = -2f_c$ radians. A Joukowski camber line is a circular arc, which for small camber is the same parabola.
+Thin aerofoil theory gives the zero-lift angle as $`\alpha_0 = -\frac{1}{\pi}\int_0^\pi \frac{dz_c}{dx}(\cos\vartheta - 1)\,d\vartheta`$, where $`x`$ is the distance back from the front edge, $`z_c(x)`$ is the camber line's height above the chord there, and $`\vartheta`$ is a stand-in angle running from 0 at the front edge to π at the back, with $`x = \tfrac{c}{2}(1 - \cos\vartheta)`$. For a parabolic arch of height $`f_c c`$, $`z_c = 4f_c\,x(c - x)/c`$, the slope is $`dz_c/dx = 4f_c(1 - 2x/c) = 4f_c\cos\vartheta`$. Then $`\alpha_0 = -\frac{4f_c}{\pi}\int_0^\pi(\cos^2\vartheta - \cos\vartheta)\,d\vartheta = -\frac{4f_c}{\pi}\cdot\frac{\pi}{2} = -2f_c`$ radians. A Joukowski camber line is a circular arc, which for small camber is the same parabola.
 
 </details>
 
@@ -127,11 +133,13 @@ Thin aerofoil theory gives the zero-lift angle as $\alpha_0 = -\frac{1}{\pi}\int
 
 Two numbers carry the layer's state. The **momentum thickness** θ is the height of full-speed air whose momentum the layer has lost. The **shape factor** H is the **displacement thickness** (how far the slow layer pushes the outside flow away from the wall) divided by θ: about 1.4 in a healthy turbulent layer, larger when the air near the wall is nearly stopped. Momentum balance across the layer, the same step that gave drag on [Boundary layers](../01-Units%20and%20Modelling/06-boundary-layers-and-singular-perturbation.md), gives
 
-$$\frac{d\theta}{ds} = \frac{C_f}{2} - (H + 2)\,\frac{\theta}{U_e}\,\frac{dU_e}{ds}$$
+```math
+\frac{d\theta}{ds} = \frac{C_f}{2} - (H + 2)\,\frac{\theta}{U_e}\,\frac{dU_e}{ds}
+```
 
-where s is distance along the surface, $U_e$ the air speed just outside the layer, and $C_f$ the local skin friction, wall shear over $q$. The first term is friction eating momentum. The second is pressure: outside air speeding up helps the layer, outside air slowing down thickens it, faster the bigger H already is.
+where s is distance along the surface, $`U_e`$ the air speed just outside the layer, and $`C_f`$ the local skin friction, wall shear over $`q`$. The first term is friction eating momentum. The second is pressure: outside air speeding up helps the layer, outside air slowing down thickens it, faster the bigger H already is.
 
-On the upper surface the air speeds up round the nose to a **suction peak**, then slows all the way to the back edge. Up to the peak the layer is laminar, and **Thwaites's method** gives θ in one integral: $\theta^2 = 0.45\,\nu\,U_e^{-6}\int_0^s U_e^5\,ds$. After it the layer is turbulent, and **Head's method** marches θ and H together, with a second equation for how fast the layer swallows outside air and the Ludwieg–Tillmann fit for $C_f$.
+On the upper surface the air speeds up round the nose to a **suction peak**, then slows all the way to the back edge. Up to the peak the layer is laminar, and **Thwaites's method** gives θ in one integral: $`\theta^2 = 0.45\,\nu\,U_e^{-6}\int_0^s U_e^5\,ds`$. After it the layer is turbulent, and **Head's method** marches θ and H together, with a second equation for how fast the layer swallows outside air and the Ludwieg–Tillmann fit for $`C_f`$.
 
 ### Step 4: separation is the layer failing to climb the pressure hill
 
@@ -141,19 +149,19 @@ More angle means a sharper suction peak and a steeper climb behind it. So the se
 
 ### Step 5: drag is the momentum missing from the wake
 
-By the back edge, each surface's layer has lost momentum θ_TE. Behind the wing the two layers merge into a **wake**, and in it the outside speed recovers from $U_{\mathrm{TE}}$ to $U$. The **Squire–Young formula** follows the wake's momentum thickness through that recovery, giving $\theta_\infty = \theta_{\mathrm{TE}}(U_{\mathrm{TE}}/U)^{(H_{\mathrm{TE}}+5)/2}$. Drag per metre is $\rho U^2 \theta_\infty$, so the drag coefficient is $2\theta_\infty/c$, summed over both surfaces. It counts skin friction and the pressure drag from the layer's thickness together.
+By the back edge, each surface's layer has lost momentum θ_TE. Behind the wing the two layers merge into a **wake**, and in it the outside speed recovers from $`U_{\mathrm{TE}}`$ to $`U`$. The **Squire–Young formula** follows the wake's momentum thickness through that recovery, giving $`\theta_\infty = \theta_{\mathrm{TE}}(U_{\mathrm{TE}}/U)^{(H_{\mathrm{TE}}+5)/2}`$. Drag per metre is $`\rho U^2 \theta_\infty`$, so the drag coefficient is $`2\theta_\infty/c`$, summed over both surfaces. It counts skin friction and the pressure drag from the layer's thickness together.
 
-Behind a separation point the code holds the outside speed constant, as the churning region does. Kirchhoff's rule (Step 6) adds a pressure drag $F\sin(\alpha-\alpha_0)\cos(\alpha-\alpha_0)(g - \sqrt f)$: zero when attached, 0.00025 at 8°, and large deep in stall.
+Behind a separation point the code holds the outside speed constant, as the churning region does. Kirchhoff's rule (Step 6) adds a pressure drag $`F\sin(\alpha-\alpha_0)\cos(\alpha-\alpha_0)(g - \sqrt f)`$: zero when attached, 0.00025 at 8°, and large deep in stall.
 
-A fourth road checks the march. On a flat plate the outside speed never changes, and Head's method gives a one-side friction coefficient of 0.00432 at Re 793,902. The standard turbulent flat-plate fit, $0.074\,\mathrm{Re}^{-0.2}$, gives 0.00489. Published fits differ from each other by about this much. The wing at 0° has drag 0.01091, more than twice 0.00432: a thick wing speeds the air up over its middle, and faster air rubs harder.
+A fourth road checks the march. On a flat plate the outside speed never changes, and Head's method gives a one-side friction coefficient of 0.00432 at Re 793,902. The standard turbulent flat-plate fit, $`0.074\,\mathrm{Re}^{-0.2}`$, gives 0.00489. Published fits differ from each other by about this much. The wing at 0° has drag 0.01091, more than twice 0.00432: a thick wing speeds the air up over its middle, and faster air rubs harder.
 
 ### Step 6: stall is lift that separation takes away faster than angle adds it
 
-The air above the separated part no longer follows the skin, so it no longer gives the low pressure that made lift there. **Kirchhoff's rule**, used in the Leishman–Beddoes stall model, says how much lift survives. Split the no-layer force into a part at right angles to the zero-lift line, $F\cos(\alpha-\alpha_0)$, and the **leading-edge suction**, $F\sin(\alpha-\alpha_0)$, which pulls forward along it.
+The air above the separated part no longer follows the skin, so it no longer gives the low pressure that made lift there. **Kirchhoff's rule**, used in the Leishman–Beddoes stall model, says how much lift survives. Split the no-layer force into a part at right angles to the zero-lift line, $`F\cos(\alpha-\alpha_0)`$, and the **leading-edge suction**, $`F\sin(\alpha-\alpha_0)`$, which pulls forward along it.
 
-A separation point at $f$ multiplies the first by $g = ((1+\sqrt f)/2)^2$ and the second by $\sqrt f$. Resolving back gives the formula for $C_L$. With $f = 1$ both factors are 1 and nothing changes. With $f = 0$ the lift falls to about a quarter.
+A separation point at $`f`$ multiplies the first by $`g = ((1+\sqrt f)/2)^2`$ and the second by $`\sqrt f`$. Resolving back gives the formula for $`C_L`$. With $`f = 1`$ both factors are 1 and nothing changes. With $`f = 0`$ the lift falls to about a quarter.
 
-Raising the angle raises $F$, and also pulls $f$ forward, which lowers $g$. At first $F$ wins. Then separation races forward and lift falls. The code finds the top by scanning whole degrees, then narrowing in by **golden-section search**, which shrinks the interval round the peak by a fixed fraction each time: 14.84°, with $C_L$ = 1.5893.
+Raising the angle raises $`F`$, and also pulls $`f`$ forward, which lowers $`g`$. At first $`F`$ wins. Then separation races forward and lift falls. The code finds the top by scanning whole degrees, then narrowing in by **golden-section search**, which shrinks the interval round the peak by a fixed fraction each time: 14.84°, with $`C_L`$ = 1.5893.
 
 ---
 
@@ -185,10 +193,10 @@ At 8° the balance reads 287.16 N up and 3.682 N back, and the wing has 6.84 deg
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Degrees put into 2π(α − α₀) | C_L 69.88 | the formula takes radians, not 11.1221 degrees |
-| Camber left out, $k \sin\alpha$ | C_L 0.9553, against 1.3242 | the arch gives lift at zero angle; α₀ = −3.1221° matters |
+| Camber left out, $`k \sin\alpha`$ | C_L 0.9553, against 1.3242 | the arch gives lift at zero angle; α₀ = −3.1221° matters |
 | The straight lift line read at 20° | C_L 2.6956, against 1.1094 | the layer is attached over only 0.097 of the upper surface |
 | Laminar friction for drag at 0° | C_D 0.00298, against 0.01091 | at Re 793,902 the layer is turbulent behind the suction peak |
-| The ½ left out of the dynamic pressure | lift 574.31 N, against 287.16 N | $q = \tfrac12\rho U^2$, not $\rho U^2$ |
+| The ½ left out of the dynamic pressure | lift 574.31 N, against 287.16 N | $`q = \tfrac12\rho U^2`$, not $`\rho U^2`$ |
 
 Every number in this table is printed by the code.
 
@@ -666,11 +674,11 @@ ALL CHECKS PASS
 
 Lean proves the lift theorem round a circle, the limits of Kirchhoff's rule, and the zero-lift angle of an arched camber line.
 
-- Suppose air of density $\rho$ passes a circle at speed $U$, with circulation $\Gamma$ and no viscosity. Then the Bernoulli pressure, added round the circle, gives lift exactly $\rho U \Gamma$ and drag exactly zero.
-- Suppose $k > 0$, $0 \le f \le 1$ and $0 \le \alpha - \alpha_0 \le \pi/2$. Then $C_L \le F$, and the pressure drag from separation is never negative.
-- Take $f = 1$, fully attached. Then $C_L = F$ and the pressure drag is zero.
-- Take $f = 0$, fully separated. Then $C_L = F\cos^2(\alpha - \alpha_0)/4$.
-- Take the arch $z_c = 4 f_c x (c - x)/c$ with $c \ne 0$. Then its slope is $4 f_c \cos\vartheta$, and the zero-lift angle is exactly $-2 f_c$ radians.
+- Suppose air of density $`\rho`$ passes a circle at speed $`U`$, with circulation $`\Gamma`$ and no viscosity. Then the Bernoulli pressure, added round the circle, gives lift exactly $`\rho U \Gamma`$ and drag exactly zero.
+- Suppose $`k > 0`$, $`0 \le f \le 1`$ and $`0 \le \alpha - \alpha_0 \le \pi/2`$. Then $`C_L \le F`$, and the pressure drag from separation is never negative.
+- Take $`f = 1`$, fully attached. Then $`C_L = F`$ and the pressure drag is zero.
+- Take $`f = 0`$, fully separated. Then $`C_L = F\cos^2(\alpha - \alpha_0)/4`$.
+- Take the arch $`z_c = 4 f_c x (c - x)/c`$ with $`c \ne 0`$. Then its slope is $`4 f_c \cos\vartheta`$, and the zero-lift angle is exactly $`-2 f_c`$ radians.
 
 The Joukowski wing, the layer march, the drag numbers and the stall angle are left to the Python and Rust checks.
 

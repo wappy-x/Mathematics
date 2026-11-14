@@ -30,20 +30,22 @@ To scale. Left: 55 units per 1, 0 at (75, 120), the zeros at (75, 120) and (97, 
 
 Reminder: a loop integral adds f(z) times each small step dz round a closed path ([Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md)); arg w is the angle of the arrow w, measured anticlockwise from the positive real axis. The quotient f′/f, the derivative divided by the function, is the **logarithmic derivative**: the rate of change of ln f.
 
-$$N - P = \frac{1}{2\pi i}\oint_C \frac{f'(z)}{f(z)}\,dz = \frac{\Delta_C \arg f}{2\pi} = n\big(f(C),\,0\big)$$
+```math
+N - P = \frac{1}{2\pi i}\oint_C \frac{f'(z)}{f(z)}\,dz = \frac{\Delta_C \arg f}{2\pi} = n\big(f(C),\,0\big)
+```
 
 **Read it aloud:** zeros minus poles inside the loop equals the loop integral of f′ over f, divided by two pi i, which is the total turn of f's angle along the loop, in whole turns: the winding number of the output curve round 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $z$ | the function, and the point walking the loop | z(z − 0.4); z on \|z\| = 1 | — |
-| $C$ | the loop, walked once anticlockwise | \|z\| = 1 | may enclose more zeros or poles |
-| $f'$ | the complex derivative of f | 2z − 0.4 | — |
-| $N$ | zeros inside, each counted by its multiplicity | 2 | one more turn per zero |
-| $P$ | poles inside, each counted by its order | 0; for g on \|z\| = 3, 3 | one turn fewer per pole |
-| $a$, $m$, $p$ | a zero or pole; a zero's multiplicity; a pole's order | 0.4, m = 1; 2, p = 3 | — |
-| $\Delta_C \arg f$ | total change in the angle of f round C, kept continuous | 4π, two full turns | — |
-| $n(f(C), 0)$ | winding number of the output curve round 0 | 2 | — |
+| $`f`$, $`z`$ | the function, and the point walking the loop | z(z − 0.4); z on \|z\| = 1 | — |
+| $`C`$ | the loop, walked once anticlockwise | \|z\| = 1 | may enclose more zeros or poles |
+| $`f'`$ | the complex derivative of f | 2z − 0.4 | — |
+| $`N`$ | zeros inside, each counted by its multiplicity | 2 | one more turn per zero |
+| $`P`$ | poles inside, each counted by its order | 0; for g on \|z\| = 3, 3 | one turn fewer per pole |
+| $`a`$, $`m`$, $`p`$ | a zero or pole; a zero's multiplicity; a pole's order | 0.4, m = 1; 2, p = 3 | — |
+| $`\Delta_C \arg f`$ | total change in the angle of f round C, kept continuous | 4π, two full turns | — |
+| $`n(f(C), 0)`$ | winding number of the output curve round 0 | 2 | — |
 
 A zero of **multiplicity** m at a: f is (z − a)^m times a function nonzero at a ([Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)).
 

@@ -36,45 +36,53 @@ The steep line is the five-year payer on its own: about 4.4 thousand dollars per
 
 ## The formula
 
-Notation first, in words. A swap's fixed payments fall at the end of years 1 to $n$. $D(i)$ is the price today of one dollar paid at the end of year $i$, read off the discount curve. The **annuity** $A_n$ adds those prices up: it is what one dollar a year for $n$ years is worth today. The **par rate** $S$ is the fixed rate that makes a new $n$-year swap worth zero ([The par swap rate](02-par-swap-rate-and-annuity.md)).
+Notation first, in words. A swap's fixed payments fall at the end of years 1 to $`n`$. $`D(i)`$ is the price today of one dollar paid at the end of year $`i`$, read off the discount curve. The **annuity** $`A_n`$ adds those prices up: it is what one dollar a year for $`n`$ years is worth today. The **par rate** $`S`$ is the fixed rate that makes a new $`n`$-year swap worth zero ([The par swap rate](02-par-swap-rate-and-annuity.md)).
 
 The payer's value:
 
-$$V = N\,(S - K)\,A_n, \qquad A_n = D(1) + D(2) + \dots + D(n)$$
+```math
+V = N\,(S - K)\,A_n, \qquad A_n = D(1) + D(2) + \dots + D(n)
+```
 
 **Read it aloud:** the swap is worth the gap between the market rate and the agreed rate, paid on the notional every year, valued at today's price of a dollar a year.
 
-DV01, the definition, with every quote moved by $\delta$ and the curve rebuilt:
+DV01, the definition, with every quote moved by $`\delta`$ and the curve rebuilt:
 
-$$\text{DV01} = \frac{V(\text{quotes} + \delta) - V(\text{quotes} - \delta)}{2}, \qquad \delta = 0.0001$$
+```math
+\text{DV01} = \frac{V(\text{quotes} + \delta) - V(\text{quotes} - \delta)}{2}, \qquad \delta = 0.0001
+```
 
 **Read it aloud:** move the market up one basis point and down one, reprice both times, and take half the difference.
 
 The shortcut, called **PV01** (the value today of one basis point a year):
 
-$$\text{PV01} = N \times A_n \times \delta, \qquad \text{DV01} = \text{PV01} \text{ when } K = S$$
+```math
+\text{PV01} = N \times A_n \times \delta, \qquad \text{DV01} = \text{PV01} \text{ when } K = S
+```
 
 **Read it aloud:** one basis point a year on the notional, for the life of the swap, valued today.
 
-The hedge, a swap of $m$ years going the other way:
+The hedge, a swap of $`m`$ years going the other way:
 
-$$h = \frac{\text{DV01 of the position}}{\text{DV01 of one dollar of the hedge}}$$
+```math
+h = \frac{\text{DV01 of the position}}{\text{DV01 of one dollar of the hedge}}
+```
 
 **Read it aloud:** buy as many dollars of hedge as it takes for its rate risk to match the position's.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | notional: the amount the payments are sized on | 10,000,000 | DV01 grows in proportion |
-| $K$ | the fixed rate the payer agreed to | 4.5% | value falls; DV01 rises slightly |
-| $S$ | par rate: the fixed rate a new swap would carry today | 4.65% for 5 years, 4.71% for 10 | value rises by $N A_n$ per unit |
-| $D(i)$, $i$ | price today of one dollar paid at the end of year $i$, where $i$ counts the years | $D(5) = 0.79621728$ | — |
-| $n$, $m$ | years to run on the position and on the hedge | 5 and 10 | DV01 grows, a little less than in step |
-| $A_n$, $A_5$, $A_{10}$ | annuity: $D(1)$ to $D(n)$ added up | 4.382424 and 7.850863 | DV01 grows in step |
-| $V$ | value to the payer | 65,736.36 dollars | — |
-| $\delta$ | one basis point, 0.0001 | 0.0001 | — |
-| $h$ | hedge notional | 5,558,765.46 dollars | — |
-| $S_n$ | the quoted par rate for $n$ years | 4.20% to 4.71% | — |
-| $B_n$ | $D(1)$ to $D(n-1)$ added up: the annuity before year $n$ | $B_5 = 3.586207$ | — |
+| $`N`$ | notional: the amount the payments are sized on | 10,000,000 | DV01 grows in proportion |
+| $`K`$ | the fixed rate the payer agreed to | 4.5% | value falls; DV01 rises slightly |
+| $`S`$ | par rate: the fixed rate a new swap would carry today | 4.65% for 5 years, 4.71% for 10 | value rises by $`N A_n`$ per unit |
+| $`D(i)`$, $`i`$ | price today of one dollar paid at the end of year $`i`$, where $`i`$ counts the years | $`D(5) = 0.79621728`$ | — |
+| $`n`$, $`m`$ | years to run on the position and on the hedge | 5 and 10 | DV01 grows, a little less than in step |
+| $`A_n`$, $`A_5`$, $`A_{10}`$ | annuity: $`D(1)`$ to $`D(n)`$ added up | 4.382424 and 7.850863 | DV01 grows in step |
+| $`V`$ | value to the payer | 65,736.36 dollars | — |
+| $`\delta`$ | one basis point, 0.0001 | 0.0001 | — |
+| $`h`$ | hedge notional | 5,558,765.46 dollars | — |
+| $`S_n`$ | the quoted par rate for $`n`$ years | 4.20% to 4.71% | — |
+| $`B_n`$ | $`D(1)`$ to $`D(n-1)`$ added up: the annuity before year $`n`$ | $`B_5 = 3.586207`$ | — |
 
 ### When it holds
 
@@ -90,48 +98,60 @@ $$h = \frac{\text{DV01 of the position}}{\text{DV01 of one dollar of the hedge}}
 
 ### Step 0: a swap's value is a straight line in the par rate
 
-The payer receives the market rate and pays 4.5 percent. Its value is the rate gap times the annuity: $V = N(S - K)A_n$. Move the market up one basis point and $S$ moves up exactly one basis point, because the rebuilt curve must reprice its own five-year quote. If nothing else moved, the value would rise by $N \times A_n \times \delta$. Almost everything in DV01 is that one product. The rest of this section finds the small piece that is left over.
+The payer receives the market rate and pays 4.5 percent. Its value is the rate gap times the annuity: $`V = N(S - K)A_n`$. Move the market up one basis point and $`S`$ moves up exactly one basis point, because the rebuilt curve must reprice its own five-year quote. If nothing else moved, the value would rise by $`N \times A_n \times \delta`$. Almost everything in DV01 is that one product. The rest of this section finds the small piece that is left over.
 
 ### Step 1: the floating leg collapses to two numbers
 
-Each year the floating side pays the forward rate for that year, $D(i-1)/D(i) - 1$, with $D(0) = 1$. Discount it with $D(i)$ and the product is $D(i-1) - D(i)$. Add five of those and everything cancels except the ends:
+Each year the floating side pays the forward rate for that year, $`D(i-1)/D(i) - 1`$, with $`D(0) = 1`$. Discount it with $`D(i)`$ and the product is $`D(i-1) - D(i)`$. Add five of those and everything cancels except the ends:
 
-$$\text{floating leg} = N\,\bigl(1 - D(n)\bigr)$$
+```math
+\text{floating leg} = N\,\bigl(1 - D(n)\bigr)
+```
 
-On this curve that is 2,037,827.18 dollars, whether it is added up forward by forward or read off $D(5)$ directly. The fixed leg is $N K A_n$, 1,972,090.82 dollars. The par rate is the $K$ that makes the two legs equal, $S = (1 - D(n))/A_n$, so the floating leg is also $N S A_n$. Subtract the fixed leg: $V = N(S - K)A_n$, 65,736.36 dollars.
+On this curve that is 2,037,827.18 dollars, whether it is added up forward by forward or read off $`D(5)`$ directly. The fixed leg is $`N K A_n`$, 1,972,090.82 dollars. The par rate is the $`K`$ that makes the two legs equal, $`S = (1 - D(n))/A_n`$, so the floating leg is also $`N S A_n`$. Subtract the fixed leg: $`V = N(S - K)A_n`$, 65,736.36 dollars.
 
 ### Step 2: bump the quotes, and split the change in two
 
-Raise every quote by $\delta$ and rebuild. The five-year par rate becomes $S + \delta$. The annuity becomes a slightly smaller $A_n'$, because every future dollar is now discounted a little harder. The change in value is
+Raise every quote by $`\delta`$ and rebuild. The five-year par rate becomes $`S + \delta`$. The annuity becomes a slightly smaller $`A_n'`$, because every future dollar is now discounted a little harder. The change in value is
 
-$$V' - V = N(S + \delta - K)A_n' - N(S - K)A_n = N\,\delta\,A_n' + N(S - K)(A_n' - A_n).$$
+```math
+V' - V = N(S + \delta - K)A_n' - N(S - K)A_n = N\,\delta\,A_n' + N(S - K)(A_n' - A_n).
+```
 
-The first term is PV01, measured on the bumped annuity. The second is the swap's existing profit, $N(S - K)$ a year, revalued on the smaller annuity. Averaging the up-bump and the down-bump cancels the part of the first term that bends, so the central DV01 is PV01 plus the second term, to within cents.
+The first term is PV01, measured on the bumped annuity. The second is the swap's existing profit, $`N(S - K)`$ a year, revalued on the smaller annuity. Averaging the up-bump and the down-bump cancels the part of the first term that bends, so the central DV01 is PV01 plus the second term, to within cents.
 
 ### Step 3: at par the leftover vanishes
 
-A swap struck at the market rate has $S = K$, so the second term is zero and $\text{DV01} = N A_n \delta$. That is the theorem behind the shortcut. The code checks it: struck at 4.65 percent, the five-year swap's DV01 by bumping is 4,382.42 dollars, the PV01 to the cent.
+A swap struck at the market rate has $`S = K`$, so the second term is zero and $`\text{DV01} = N A_n \delta`$. That is the theorem behind the shortcut. The code checks it: struck at 4.65 percent, the five-year swap's DV01 by bumping is 4,382.42 dollars, the PV01 to the cent.
 
-This swap is struck at 4.5 percent, off par, so the payer already holds a profit of $N(S - K)$ a year. A basis point up shrinks the annuity that values that profit, and the swap gives back 18.31 dollars of it. DV01 is 4,382.42 less 18.31: 4,364.11 dollars.
+This swap is struck at 4.5 percent, off par, so the payer already holds a profit of $`N(S - K)`$ a year. A basis point up shrinks the annuity that values that profit, and the swap gives back 18.31 dollars of it. DV01 is 4,382.42 less 18.31: 4,364.11 dollars.
 
 <details>
 <summary>Detailed proof: the exact slope, carried through the bootstrap</summary>
 
-The curve is built one year at a time from the quotes $S_1, \dots, S_{10}$ ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)). With $B_n = D(1) + \dots + D(n-1)$, each rung reads
-$$D(n) = \frac{1 - S_n B_n}{1 + S_n}.$$
-Move every quote together by an amount $x$, so each $S_n$ grows at rate 1. Differentiate the rung with the quotient rule, writing $D'$ and $B'$ for the rates of change:
-$$D'(n) = \frac{-(B_n + S_n B_n')(1 + S_n) - (1 - S_n B_n)}{(1 + S_n)^2}, \qquad B_{n+1}' = B_n' + D'(n),$$
-starting from $B_1 = B_1' = 0$. One pass up the ladder gives every $D'(i)$ exactly, with no bump at all. Then $V = N\bigl(1 - D(n)\bigr) - N K A_n$ differentiates to
-$$\frac{dV}{dx} = N\bigl(-D'(n) - K\,[D'(1) + \dots + D'(n)]\bigr),$$
-and DV01 is that slope times $\delta$. The code runs this recursion as road 2. It lands on 4,364.11, the same as the bump to the cent. The bump's error is of order $\delta^2$, a few hundredths of a cent here. For the step 2 algebra at a general bump: the up-bump gives $N\delta A_n^+ + N(S - K)(A_n^+ - A_n)$, the down-bump gives $-N\delta A_n^- + N(S - K)(A_n^- - A_n)$. Half their difference is $N\delta (A_n^+ + A_n^-)/2 + N(S - K)(A_n^+ - A_n^-)/2$. The first average equals $A_n$ up to order $\delta^2$; the second term is $N(S - K)$ times the annuity's own slope times $\delta$. At $S = K$ it is zero.
+The curve is built one year at a time from the quotes $`S_1, \dots, S_{10}`$ ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)). With $`B_n = D(1) + \dots + D(n-1)`$, each rung reads
+
+$`\displaystyle D(n) = \frac{1 - S_n B_n}{1 + S_n}.`$
+
+Move every quote together by an amount $`x`$, so each $`S_n`$ grows at rate 1. Differentiate the rung with the quotient rule, writing $`D'`$ and $`B'`$ for the rates of change:
+
+$`\displaystyle D'(n) = \frac{-(B_n + S_n B_n')(1 + S_n) - (1 - S_n B_n)}{(1 + S_n)^2}, \qquad B_{n+1}' = B_n' + D'(n),`$
+
+starting from $`B_1 = B_1' = 0`$. One pass up the ladder gives every $`D'(i)`$ exactly, with no bump at all. Then $`V = N\bigl(1 - D(n)\bigr) - N K A_n`$ differentiates to
+
+$`\displaystyle \frac{dV}{dx} = N\bigl(-D'(n) - K\,[D'(1) + \dots + D'(n)]\bigr),`$
+
+and DV01 is that slope times $`\delta`$. The code runs this recursion as road 2. It lands on 4,364.11, the same as the bump to the cent. The bump's error is of order $`\delta^2`$, a few hundredths of a cent here. For the step 2 algebra at a general bump: the up-bump gives $`N\delta A_n^+ + N(S - K)(A_n^+ - A_n)`$, the down-bump gives $`-N\delta A_n^- + N(S - K)(A_n^- - A_n)`$. Half their difference is $`N\delta (A_n^+ + A_n^-)/2 + N(S - K)(A_n^+ - A_n^-)/2`$. The first average equals $`A_n`$ up to order $`\delta^2`$; the second term is $`N(S - K)`$ times the annuity's own slope times $`\delta`$. At $`S = K`$ it is zero.
 
 </details>
 
 ### Step 4: two DV01s that cancel make a hedge
 
-A ten-year swap struck at its par rate, 4.71 percent, has DV01 $A_{10} \times \delta$ per dollar of notional, by Step 3. That is 785.09 dollars per million. The desk receives fixed on it, so it loses when rates rise, while the five-year payer gains. Choose the notional $h$ so the two cancel:
+A ten-year swap struck at its par rate, 4.71 percent, has DV01 $`A_{10} \times \delta`$ per dollar of notional, by Step 3. That is 785.09 dollars per million. The desk receives fixed on it, so it loses when rates rise, while the five-year payer gains. Choose the notional $`h`$ so the two cancel:
 
-$$h = \frac{4{,}364.11}{785.09 \text{ per million}} = 5{,}558{,}765.46 \text{ dollars (full precision in the code)}.$$
+```math
+h = \frac{4{,}364.11}{785.09 \text{ per million}} = 5{,}558{,}765.46 \text{ dollars (full precision in the code)}.
+```
 
 For small parallel moves the book's value now stands still: a 25 basis point move in either direction leaves 0.58 or 0.57 thousand dollars, against 109.87 or 108.35 thousand unhedged. What remains is second order. The ten-year value line bends more than the five-year one, and the desk is on the side that gains from bending, so the hedged book makes a little money whichever way rates go.
 
@@ -147,18 +167,18 @@ The house curve: par quotes of 4.20, 4.40, 4.55, 4.62 and 4.65 percent for one t
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $D(1)$ | $1 / 1.042$ | $0.95969290$ |
-| $D(2)$ | $(1 - 0.044 \times 0.95969290) / 1.044$ | $0.91740758$ |
-| $D(3)$ to $D(5)$ | the same rung, three more times | $0.87478903$, $0.83431725$, $0.79621728$ |
-| $A_5$ | the five prices added | $4.382424$ |
-| floating leg | $10{,}000{,}000 \times (1 - 0.79621728)$ | $2{,}037{,}827.18$ |
-| fixed leg | $10{,}000{,}000 \times 0.045 \times 4.382424$ | $1{,}972{,}090.82$ |
-| value to the payer | $2{,}037{,}827.18 - 1{,}972{,}090.82$ | $65{,}736.36$ |
-| PV01 | $10{,}000{,}000 \times 4.382424 \times 0.0001$ | $4{,}382.42$ |
-| DV01, bump and rebuild | PV01 less the off-par piece, $4{,}382.42 - 18.31$ | **$4{,}364.11$** |
-| $A_{10}$ | ten prices added, the last $D(10) = 0.63022438$ | $7.850863$ |
-| ten-year DV01 per million | at par: $1{,}000{,}000 \times A_{10} \times 0.0001$ | $785.09$ |
-| hedge notional $h$ | $4{,}364.11 / 785.09$, in millions | **$5{,}558{,}765.46$** |
+| $`D(1)`$ | $`1 / 1.042`$ | $`0.95969290`$ |
+| $`D(2)`$ | $`(1 - 0.044 \times 0.95969290) / 1.044`$ | $`0.91740758`$ |
+| $`D(3)`$ to $`D(5)`$ | the same rung, three more times | $`0.87478903`$, $`0.83431725`$, $`0.79621728`$ |
+| $`A_5`$ | the five prices added | $`4.382424`$ |
+| floating leg | $`10{,}000{,}000 \times (1 - 0.79621728)`$ | $`2{,}037{,}827.18`$ |
+| fixed leg | $`10{,}000{,}000 \times 0.045 \times 4.382424`$ | $`1{,}972{,}090.82`$ |
+| value to the payer | $`2{,}037{,}827.18 - 1{,}972{,}090.82`$ | $`65{,}736.36`$ |
+| PV01 | $`10{,}000{,}000 \times 4.382424 \times 0.0001`$ | $`4{,}382.42`$ |
+| DV01, bump and rebuild | PV01 less the off-par piece, $`4{,}382.42 - 18.31`$ | **$`4{,}364.11`$** |
+| $`A_{10}`$ | ten prices added, the last $`D(10) = 0.63022438`$ | $`7.850863`$ |
+| ten-year DV01 per million | at par: $`1{,}000{,}000 \times A_{10} \times 0.0001`$ | $`785.09`$ |
+| hedge notional $`h`$ | $`4{,}364.11 / 785.09`$, in millions | **$`5{,}558{,}765.46`$** |
 
 The payer gains about 4,364 dollars for every basis point the market rises. A ten-year receiver of 5.56 million dollars loses the same, and together they are flat.
 
@@ -187,7 +207,7 @@ Each year one payment drops off each swap. The five-year swap loses a fifth of i
 | 3 years | 1,879.78 | 3,265.28 | −1,385.50 |
 | 4 years | 962.46 | 2,862.16 | −1,899.70 |
 
-Each row reprices both swaps on the same quotes: the five-year leg with $5 - j$ payments left, the hedge with $10 - j$.
+Each row reprices both swaps on the same quotes: the five-year leg with $`5 - j`$ payments left, the hedge with $`10 - j`$.
 
 ```
 net DV01 of the hedged book, dollars lost per basis point rise, quotes unchanged
@@ -204,7 +224,7 @@ After one year the unhedged exposure is 439.45 dollars a basis point, a tenth of
 
 ## Code, from first principles, and it actually runs
 
-The script builds the curve from its ten quotes with the bootstrap written out, prices the swap with the floating leg as a strip of forwards, and reaches DV01 by two independent roads: bump every quote and rebuild, and carry the exact slope up the bootstrap ladder. It then checks the par-swap theorem (DV01 equals PV01 when $K = S$), sizes the hedge, runs the book through parallel moves and a twist, reproduces every "what breaks" number, and ages both swaps a year at a time. Six asserts, each against a number computed another way; breaking the bootstrap, dropping the factor of two in the bump, flipping the hedge's sign or mis-discounting a forward each makes one fail.
+The script builds the curve from its ten quotes with the bootstrap written out, prices the swap with the floating leg as a strip of forwards, and reaches DV01 by two independent roads: bump every quote and rebuild, and carry the exact slope up the bootstrap ladder. It then checks the par-swap theorem (DV01 equals PV01 when $`K = S`$), sizes the hedge, runs the book through parallel moves and a twist, reproduces every "what breaks" number, and ages both swaps a year at a time. Six asserts, each against a number computed another way; breaking the bootstrap, dropping the factor of two in the bump, flipping the hedge's sign or mis-discounting a forward each makes one fail.
 
 ### Python
 
@@ -603,10 +623,10 @@ The two outputs are identical, byte for byte.
 
 Lean proves the card's three exact results for a swap of any length on any quotes, and checks the worked numbers.
 
-- Take any discount curve with $D(0) = 1$ and no zero prices. Then the floating leg, added forward by forward, is $N(1 - D(n))$, and the payer's value is $N(S - K)A_n$.
-- Suppose the swap is struck at its quoted par rate, $K = S_n$, and every quote moves together. Then the value's slope is exactly $N A_n$, so DV01 equals PV01.
-- Suppose the swap is struck at any fixed rate $K$. Then the slope is $N A_n$ plus $N(S - K)$ times the annuity's own slope.
-- The house curve's $D(1)$, $D(5)$ and $A_5$ come out exactly as the table shows. The value is 65,736.36 dollars and PV01 is 4,382.42 dollars, to the cent.
+- Take any discount curve with $`D(0) = 1`$ and no zero prices. Then the floating leg, added forward by forward, is $`N(1 - D(n))`$, and the payer's value is $`N(S - K)A_n`$.
+- Suppose the swap is struck at its quoted par rate, $`K = S_n`$, and every quote moves together. Then the value's slope is exactly $`N A_n`$, so DV01 equals PV01.
+- Suppose the swap is struck at any fixed rate $`K`$. Then the slope is $`N A_n`$ plus $`N(S - K)`$ times the annuity's own slope.
+- The house curve's $`D(1)`$, $`D(5)`$ and $`A_5`$ come out exactly as the table shows. The value is 65,736.36 dollars and PV01 is 4,382.42 dollars, to the cent.
 
 The 4,364.11 DV01 by bumping, the hedge notional, the chart and the drift over time are left to the Python and Rust checks.
 
@@ -827,7 +847,7 @@ example : 438242 / 100 < 10000000 * annuityBefore houseQuotes 5 * (1 / 10000) �
 
 ## What this builds on
 
-- [The par swap rate](02-par-swap-rate-and-annuity.md): the par rate and the annuity it divides by. This card's value formula, $V = N(S - K)A_n$, and its whole DV01 come from that annuity.
+- [The par swap rate](02-par-swap-rate-and-annuity.md): the par rate and the annuity it divides by. This card's value formula, $`V = N(S - K)A_n`$, and its whole DV01 come from that annuity.
 - [Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): DV01 for a bond, the slope of price against yield, and convexity, the bend that shows up here as the hedged book's small gain.
 
 ## Where this goes next

@@ -36,62 +36,70 @@ The orange line is implied volatility at one year, one number per strike. The gr
 
 ## The formula
 
-Notation from [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md), in words first. The **forward** $F_T = S\,e^{(r-q)T}$ is the price agreed today for Acme delivered in $T$ years, from share price $S$ = \$100, rate $r$ = 5% and dividend yield $q$ = 2%. **Log-moneyness** $k = \ln(K/F_T)$ measures a strike $K$ against that forward on a log scale; $k = 0$ is the forward. **Total implied variance** $w = \sigma_{\text{imp}}^2\,T$ is implied volatility squared, times years. Its slope and bend in $k$ are $w'$ and $w''$; its slope in expiry, holding $k$ fixed, is $\partial w/\partial T$.
+Notation from [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md), in words first. The **forward** $`F_T = S\,e^{(r-q)T}`$ is the price agreed today for Acme delivered in $`T`$ years, from share price $`S`$ = \$100, rate $`r`$ = 5% and dividend yield $`q`$ = 2%. **Log-moneyness** $`k = \ln(K/F_T)`$ measures a strike $`K`$ against that forward on a log scale; $`k = 0`$ is the forward. **Total implied variance** $`w = \sigma_{\text{imp}}^2\,T`$ is implied volatility squared, times years. Its slope and bend in $`k`$ are $`w'`$ and $`w''`$; its slope in expiry, holding $`k`$ fixed, is $`\partial w/\partial T`$.
 
-$$\sigma_{\text{loc}}^2(K, T) \;=\; \frac{\partial w/\partial T}{g(k)}, \qquad g(k) = \Bigl(1 - \frac{k\,w'}{2w}\Bigr)^2 - \frac{(w')^2}{4}\Bigl(\frac{1}{w} + \frac14\Bigr) + \frac{w''}{2}$$
+```math
+\sigma_{\text{loc}}^2(K, T) \;=\; \frac{\partial w/\partial T}{g(k)}, \qquad g(k) = \Bigl(1 - \frac{k\,w'}{2w}\Bigr)^2 - \frac{(w')^2}{4}\Bigl(\frac{1}{w} + \frac14\Bigr) + \frac{w''}{2}
+```
 
 **Read it aloud:** local variance at a strike and date is how fast total implied variance grows with expiry at that forward-relative strike, divided by the butterfly function of the smile there.
 
-The function $g$ is the SVI card's butterfly test: its sign is the sign of the market's probability density. Rates and dividends enter only through the forward inside $k$; no call price enters.
+The function $`g`$ is the SVI card's butterfly test: its sign is the sign of the market's probability density. Rates and dividends enter only through the forward inside $`k`$; no call price enters.
 
-**The surface.** The SVI card fitted one expiry. This card extends it in the simplest way free of calendar arbitrage: each log-moneyness keeps its one-year implied volatility at every expiry. With $v$ the fitted one-year curve and $a$, $b$, $\rho$, $m$, $s$ its five numbers,
+**The surface.** The SVI card fitted one expiry. This card extends it in the simplest way free of calendar arbitrage: each log-moneyness keeps its one-year implied volatility at every expiry. With $`v`$ the fitted one-year curve and $`a`$, $`b`$, $`\rho`$, $`m`$, $`s`$ its five numbers,
 
-$$w(k, T) = T\,v(k), \qquad v(k) = a + b\Bigl(\rho\,(k - m) + \sqrt{(k - m)^2 + s^2}\Bigr)$$
+```math
+w(k, T) = T\,v(k), \qquad v(k) = a + b\Bigl(\rho\,(k - m) + \sqrt{(k - m)^2 + s^2}\Bigr)
+```
 
-In words: total variance grows in proportion to time. So $\partial w/\partial T = v(k)$, and the slopes in $k$ are $T$ times SVI's closed-form slopes.
+In words: total variance grows in proportion to time. So $`\partial w/\partial T = v(k)`$, and the slopes in $`k`$ are $`T`$ times SVI's closed-form slopes.
 
-**At short expiry** two terms of $g$ vanish, and
+**At short expiry** two terms of $`g`$ vanish, and
 
-$$\sigma_{\text{loc}}(k) \;\to\; \frac{\sigma_{\text{imp}}(k)}{1 - k\,\sigma_{\text{imp}}'(k)/\sigma_{\text{imp}}(k)}, \qquad \frac{1}{\sigma_{\text{imp}}(k)} = \int_0^1 \frac{du}{\sigma_{\text{loc}}(u\,k)}$$
+```math
+\sigma_{\text{loc}}(k) \;\to\; \frac{\sigma_{\text{imp}}(k)}{1 - k\,\sigma_{\text{imp}}'(k)/\sigma_{\text{imp}}(k)}, \qquad \frac{1}{\sigma_{\text{imp}}(k)} = \int_0^1 \frac{du}{\sigma_{\text{loc}}(u\,k)}
+```
 
-In words: implied volatility at a strike is the harmonic mean of local volatility (the reciprocal of the average of the reciprocals) along the straight line from the forward to that strike. $\sigma_{\text{imp}}'$ is implied volatility's slope in $k$, the **implied skew**; $u$ runs from 0 at the forward to 1 at the strike.
+In words: implied volatility at a strike is the harmonic mean of local volatility (the reciprocal of the average of the reciprocals) along the straight line from the forward to that strike. $`\sigma_{\text{imp}}'`$ is implied volatility's slope in $`k`$, the **implied skew**; $`u`$ runs from 0 at the forward to 1 at the strike.
 
 **The skew rule** follows at the forward:
 
-$$\sigma_{\text{loc}}'(0) = 2\,\sigma_{\text{imp}}'(0)$$
+```math
+\sigma_{\text{loc}}'(0) = 2\,\sigma_{\text{imp}}'(0)
+```
 
 In words: at the money and short expiry, local volatility slopes twice as steeply as implied.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $K$, $T$ | strike, or share price on the date; years to expiry | \$92 and \$120; 1 year | $K$: local vol falls from \$80 to \$120; $T$: at the forward, 19.49% at one day to 18.07% at one year |
-| $F_T$, $D(T)$, $S$, $r$, $q$ | forward; discount factor $e^{-rT}$; share price, rate, dividend yield | \$103.05 at one year; \$100, 5%, 2% | $S$ or $r$ up: every $k$ falls; $q$ up: every $k$ rises |
-| $k$ | log-moneyness, $\ln(K/F_T)$ | −0.113382 at \$92, +0.152322 at \$120 | local vol falls |
-| $\sigma_{\text{imp}}$, $\sigma_{\text{imp}}'$ | implied volatility; its slope in $k$, the implied skew | 21.8464%, 17.8994%; skew −0.157199 at the forward | — |
-| $w$, $v$ | total implied variance; $v$ the one-year SVI curve, $w = T v$ | 0.047727 at \$92 | local vol up |
-| $a$, $b$, $\rho$, $m$, $s$ | SVI's level, wing steepness, tilt, centre, rounding | 0.016719, 0.126769, −0.912282, −0.118207, 0.248954 | $b = 0$: local equals implied |
-| $w'$, $w''$ | slope and bend of $w$ in $k$ | −0.113192 and 0.508920 at \$92 | more bend: $g$ up, local vol down |
-| $\partial w/\partial T$ | slope of $w$ in expiry at fixed $k$ | 0.047727 at \$92 | local vol up |
-| $g$ | the butterfly function; same sign as the market's density | 0.935717 at \$92, 1.184289 at \$120 | local vol down |
-| $\sigma_{\text{loc}}$, $\sigma_{\text{loc}}'$ | local volatility: how widely Acme's price swings at price $K$ on date $T$; its slope in $k$, the local skew | 22.5844%, 16.4479%; local skew −0.223711 at the forward | — |
-| $C$, $c$, $N$, $\varphi$, $d_1$, $d_2$ | call price; $c$ the call per discounted forward dollar; bell-curve area and height; the Black-Scholes distances in $k$ and $w$ | — | — |
-| $u$, $y$ | a point on the line from forward to strike: fraction $u$ of the way, log-moneyness $y$ | 0 to 1; 0 to $k$ | — |
+| $`K`$, $`T`$ | strike, or share price on the date; years to expiry | \$92 and \$120; 1 year | $`K`$: local vol falls from \$80 to \$120; $`T`$: at the forward, 19.49% at one day to 18.07% at one year |
+| $`F_T`$, $`D(T)`$, $`S`$, $`r`$, $`q`$ | forward; discount factor $`e^{-rT}`$; share price, rate, dividend yield | \$103.05 at one year; \$100, 5%, 2% | $`S`$ or $`r`$ up: every $`k`$ falls; $`q`$ up: every $`k`$ rises |
+| $`k`$ | log-moneyness, $`\ln(K/F_T)`$ | −0.113382 at \$92, +0.152322 at \$120 | local vol falls |
+| $`\sigma_{\text{imp}}`$, $`\sigma_{\text{imp}}'`$ | implied volatility; its slope in $`k`$, the implied skew | 21.8464%, 17.8994%; skew −0.157199 at the forward | — |
+| $`w`$, $`v`$ | total implied variance; $`v`$ the one-year SVI curve, $`w = T v`$ | 0.047727 at \$92 | local vol up |
+| $`a`$, $`b`$, $`\rho`$, $`m`$, $`s`$ | SVI's level, wing steepness, tilt, centre, rounding | 0.016719, 0.126769, −0.912282, −0.118207, 0.248954 | $`b = 0`$: local equals implied |
+| $`w'`$, $`w''`$ | slope and bend of $`w`$ in $`k`$ | −0.113192 and 0.508920 at \$92 | more bend: $`g`$ up, local vol down |
+| $`\partial w/\partial T`$ | slope of $`w`$ in expiry at fixed $`k`$ | 0.047727 at \$92 | local vol up |
+| $`g`$ | the butterfly function; same sign as the market's density | 0.935717 at \$92, 1.184289 at \$120 | local vol down |
+| $`\sigma_{\text{loc}}`$, $`\sigma_{\text{loc}}'`$ | local volatility: how widely Acme's price swings at price $`K`$ on date $`T`$; its slope in $`k`$, the local skew | 22.5844%, 16.4479%; local skew −0.223711 at the forward | — |
+| $`C`$, $`c`$, $`N`$, $`\varphi`$, $`d_1`$, $`d_2`$ | call price; $`c`$ the call per discounted forward dollar; bell-curve area and height; the Black-Scholes distances in $`k`$ and $`w`$ | — | — |
+| $`u`$, $`y`$ | a point on the line from forward to strike: fraction $`u`$ of the way, log-moneyness $`y`$ | 0 to 1; 0 to $`k`$ | — |
 
-**Existence, uniqueness and the boundary cases, before solving.** This is an inverse: option prices in, the volatility function behind them out. The formula returns a local volatility where $\partial w/\partial T \ge 0$ and $g > 0$, the calendar and butterfly tests. Where either fails, the quotes hold an arbitrage and no local volatility reprices them.
+**Existence, uniqueness and the boundary cases, before solving.** This is an inverse: option prices in, the volatility function behind them out. The formula returns a local volatility where $`\partial w/\partial T \ge 0`$ and $`g > 0`$, the calendar and butterfly tests. Where either fails, the quotes hold an arbitrage and no local volatility reprices them.
 
-Given a complete smooth surface the answer is unique: the formula is explicit. A desk never has one. Seven one-year quotes fix neither the curve between strikes nor its growth between expiries; SVI and the constant-per-$k$ extension are choices, and another choice through the same quotes gives another local volatility.
+Given a complete smooth surface the answer is unique: the formula is explicit. A desk never has one. Seven one-year quotes fix neither the curve between strikes nor its growth between expiries; SVI and the constant-per-$`k`$ extension are choices, and another choice through the same quotes gives another local volatility.
 
 Boundary cases:
 
-- **Short expiry.** As $T$ shrinks to 0 the formula has the finite limit above, which at the forward is implied volatility itself.
-- **Far out in a wing.** $g$ tends to $\tfrac14$ minus the square of the wing slope of $w$ over 16: positive while that slope stays below 2 (Lee's bound, on the SVI card), zero at 2. There local volatility grows like the square root of $|k|$, as implied does, but faster: 78.78% at \$60 and 109.76% at \$40 one year out, against implied 35.75% and 47.13%.
-- **Stretched in expiry.** The surface itself breaks: the $(w')^2/16$ inside $g$ grows like $T^2$, and the smallest $g$ for $k$ from −1.5 to 1.5 falls from 0.025117 at three years to −0.065153 at four. The card uses the surface up to one year.
+- **Short expiry.** As $`T`$ shrinks to 0 the formula has the finite limit above, which at the forward is implied volatility itself.
+- **Far out in a wing.** $`g`$ tends to $`\tfrac14`$ minus the square of the wing slope of $`w`$ over 16: positive while that slope stays below 2 (Lee's bound, on the SVI card), zero at 2. There local volatility grows like the square root of $`|k|`$, as implied does, but faster: 78.78% at \$60 and 109.76% at \$40 one year out, against implied 35.75% and 47.13%.
+- **Stretched in expiry.** The surface itself breaks: the $`(w')^2/16`$ inside $`g`$ grows like $`T^2`$, and the smallest $`g`$ for $`k`$ from −1.5 to 1.5 falls from 0.025117 at three years to −0.065153 at four. The card uses the surface up to one year.
 
 ### When it holds
 
-- **A surface smooth in strike and expiry.** The formula needs two slopes in $k$ and one in $T$. Differencing raw quotes divides their errors by the square of the strike spacing, so the slopes come from a fitted curve.
-- **No calendar arbitrage: $\partial w/\partial T \ge 0$.** Otherwise local variance is negative, and no volatility squares to it.
-- **No butterfly arbitrage: $g > 0$.** At $g = 0$ local variance is infinite, below it negative. Here the smallest $g$ for $k$ from −1.5 to 1.5, over six expiries, is 0.182822.
+- **A surface smooth in strike and expiry.** The formula needs two slopes in $`k`$ and one in $`T`$. Differencing raw quotes divides their errors by the square of the strike spacing, so the slopes come from a fitted curve.
+- **No calendar arbitrage: $`\partial w/\partial T \ge 0`$.** Otherwise local variance is negative, and no volatility squares to it.
+- **No butterfly arbitrage: $`g > 0`$.** At $`g = 0`$ local variance is infinite, below it negative. Here the smallest $`g`$ for $`k`$ from −1.5 to 1.5, over six expiries, is 0.182822.
 - **Known rates and a proportional dividend yield.** Then the forward is fixed today and Step 1's cancellation is exact. Cash dividends or random rates add terms.
 - **The skew rule: short expiry, near the money.** At one year the local-to-implied slope ratio here is 1.42; far from the money local volatility bends away from any straight line.
 
@@ -101,87 +109,103 @@ Boundary cases:
 
 ### Step 0: every slope of a call price is a slope of total variance
 
-Dupire's formula needs the slopes of call prices in strike and expiry. Every call price on the surface is Black-Scholes applied to one total variance at one log-moneyness. So by the chain rule every slope of a call price is a slope of $w$ times a Black-Scholes factor. The factors on top and below turn out equal, and cancel. What survives is $w$ and its slopes.
+Dupire's formula needs the slopes of call prices in strike and expiry. Every call price on the surface is Black-Scholes applied to one total variance at one log-moneyness. So by the chain rule every slope of a call price is a slope of $`w`$ times a Black-Scholes factor. The factors on top and below turn out equal, and cancel. What survives is $`w`$ and its slopes.
 
 ### Step 1: measure strikes from the forward, and the rates drop out
 
-Dupire's formula, from [Dupire local volatility](01-dupire-local-volatility.md), with $C(K, T)$ the call price:
+Dupire's formula, from [Dupire local volatility](01-dupire-local-volatility.md), with $`C(K, T)`$ the call price:
 
-$$\sigma_{\text{loc}}^2 = \frac{\partial C/\partial T + (r - q)\,K\,\partial C/\partial K + q\,C}{\tfrac12 K^2\,\partial^2 C/\partial K^2}$$
+```math
+\sigma_{\text{loc}}^2 = \frac{\partial C/\partial T + (r - q)\,K\,\partial C/\partial K + q\,C}{\tfrac12 K^2\,\partial^2 C/\partial K^2}
+```
 
-Write each call as the discounted forward times a price per forward dollar: $C = D(T)\,F_T\;c(k, T)$, with $D(T) = e^{-rT}$. Substitute. On top the rate and dividend terms cancel, leaving $D(T) F_T$ times the slope of $c$ in expiry at fixed $k$. Below, strike slopes become slopes in $k$, written with primes:
+Write each call as the discounted forward times a price per forward dollar: $`C = D(T)\,F_T\;c(k, T)`$, with $`D(T) = e^{-rT}`$. Substitute. On top the rate and dividend terms cancel, leaving $`D(T) F_T`$ times the slope of $`c`$ in expiry at fixed $`k`$. Below, strike slopes become slopes in $`k`$, written with primes:
 
-$$\sigma_{\text{loc}}^2 = \frac{2\,\partial c/\partial T}{c'' - c'}$$
+```math
+\sigma_{\text{loc}}^2 = \frac{2\,\partial c/\partial T}{c'' - c'}
+```
 
 Measuring strikes from the forward is what makes the drift cancel.
 
 <details>
 <summary>The algebra behind this</summary>
 
-At a fixed strike, $k = \ln K - \ln F_T$ falls at rate $r - q$ as expiry grows, because the forward grows at that rate. And $D(T)F_T = S e^{-qT}$ falls at rate $q$. So
-$$\frac{\partial C}{\partial K} = \frac{D(T)F_T\,c'}{K}, \qquad \frac{\partial^2 C}{\partial K^2} = \frac{D(T)F_T\,(c'' - c')}{K^2}, \qquad \frac{\partial C}{\partial T} = D(T)F_T\Bigl(-q\,c + \frac{\partial c}{\partial T} - (r - q)\,c'\Bigr).$$
-Then $(r - q)K\,\partial C/\partial K = D(T)F_T\,(r - q)\,c'$ and $qC = D(T)F_T\,q\,c$. Adding the three pieces of the top leaves $D(T)F_T\,\partial c/\partial T$. The bottom is $\tfrac12 K^2\,\partial^2 C/\partial K^2 = \tfrac12 D(T)F_T\,(c'' - c')$.
+At a fixed strike, $`k = \ln K - \ln F_T`$ falls at rate $`r - q`$ as expiry grows, because the forward grows at that rate. And $`D(T)F_T = S e^{-qT}`$ falls at rate $`q`$. So
+
+$`\displaystyle \frac{\partial C}{\partial K} = \frac{D(T)F_T\,c'}{K}, \qquad \frac{\partial^2 C}{\partial K^2} = \frac{D(T)F_T\,(c'' - c')}{K^2}, \qquad \frac{\partial C}{\partial T} = D(T)F_T\Bigl(-q\,c + \frac{\partial c}{\partial T} - (r - q)\,c'\Bigr).`$
+
+Then $`(r - q)K\,\partial C/\partial K = D(T)F_T\,(r - q)\,c'`$ and $`qC = D(T)F_T\,q\,c`$. Adding the three pieces of the top leaves $`D(T)F_T\,\partial c/\partial T`$. The bottom is $`\tfrac12 K^2\,\partial^2 C/\partial K^2 = \tfrac12 D(T)F_T\,(c'' - c')`$.
 
 </details>
 
 ### Step 2: the time slope is vega times the variance slope
 
-The price per forward dollar is $c = N(d_1) - e^{k} N(d_2)$, with $d_1 = -k/\sqrt{w} + \sqrt{w}/2$ and $d_2 = d_1 - \sqrt{w}$, where $N$ is the bell-curve area to the left. It depends on expiry only through $w$. So
+The price per forward dollar is $`c = N(d_1) - e^{k} N(d_2)`$, with $`d_1 = -k/\sqrt{w} + \sqrt{w}/2`$ and $`d_2 = d_1 - \sqrt{w}`$, where $`N`$ is the bell-curve area to the left. It depends on expiry only through $`w`$. So
 
-$$\frac{\partial c}{\partial T} = \frac{\partial c}{\partial w}\,\frac{\partial w}{\partial T}, \qquad \frac{\partial c}{\partial w} = \frac{e^{k}\,\varphi(d_2)}{2\sqrt{w}} > 0$$
+```math
+\frac{\partial c}{\partial T} = \frac{\partial c}{\partial w}\,\frac{\partial w}{\partial T}, \qquad \frac{\partial c}{\partial w} = \frac{e^{k}\,\varphi(d_2)}{2\sqrt{w}} > 0
+```
 
-The factor $\partial c/\partial w$ is vega (how much the option price rises when volatility rises) written for total variance, and $\varphi$ is the bell-curve height.
+The factor $`\partial c/\partial w`$ is vega (how much the option price rises when volatility rises) written for total variance, and $`\varphi`$ is the bell-curve height.
 
 ### Step 3: the strike bend is vega times twice g
 
-The chain rule on the strike side, with $w$ now a function of $k$, gives
+The chain rule on the strike side, with $`w`$ now a function of $`k`$, gives
 
-$$c'' - c' = 2\,\frac{\partial c}{\partial w}\;g(k)$$
+```math
+c'' - c' = 2\,\frac{\partial c}{\partial w}\;g(k)
+```
 
-This is the identity inside the butterfly test of [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): the density of Acme's price is $g$ times a positive factor. Divide Step 2 by Step 3 and the vega cancels:
+This is the identity inside the butterfly test of [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): the density of Acme's price is $`g`$ times a positive factor. Divide Step 2 by Step 3 and the vega cancels:
 
-$$\sigma_{\text{loc}}^2 = \frac{2\,(\partial c/\partial w)\,\partial w/\partial T}{2\,(\partial c/\partial w)\,g} = \frac{\partial w/\partial T}{g}$$
+```math
+\sigma_{\text{loc}}^2 = \frac{2\,(\partial c/\partial w)\,\partial w/\partial T}{2\,(\partial c/\partial w)\,g} = \frac{\partial w/\partial T}{g}
+```
 
 <details>
 <summary>Detailed proof: $c'' - c' = 2\,(\partial c/\partial w)\,g$</summary>
 
-Four Black-Scholes facts, each checked by differentiating $N(d_1) - e^k N(d_2)$ and using $\varphi(d_1) = e^{k}\varphi(d_2)$. Partial slopes hold the other variable fixed; $\partial_k c$, $\partial_w c$, $\partial_{kk} c$, $\partial_{kw} c$ and $\partial_{ww} c$ are short for the slopes below.
-- $\partial c/\partial k = -e^{k} N(d_2)$.
-- $\partial^2 c/\partial k^2 - \partial c/\partial k = e^{k}\varphi(d_2)/\sqrt{w} = 2\,\partial c/\partial w$.
-- $\partial^2 c/\partial k\,\partial w = (\partial c/\partial w)\,(\tfrac12 - k/w)$.
-- $\partial^2 c/\partial w^2 = (\partial c/\partial w)\,\bigl(k^2/(2w^2) - 1/(2w) - 1/8\bigr)$.
+Four Black-Scholes facts, each checked by differentiating $`N(d_1) - e^k N(d_2)`$ and using $`\varphi(d_1) = e^{k}\varphi(d_2)`$. Partial slopes hold the other variable fixed; $`\partial_k c`$, $`\partial_w c`$, $`\partial_{kk} c`$, $`\partial_{kw} c`$ and $`\partial_{ww} c`$ are short for the slopes below.
+- $`\partial c/\partial k = -e^{k} N(d_2)`$.
+- $`\partial^2 c/\partial k^2 - \partial c/\partial k = e^{k}\varphi(d_2)/\sqrt{w} = 2\,\partial c/\partial w`$.
+- $`\partial^2 c/\partial k\,\partial w = (\partial c/\partial w)\,(\tfrac12 - k/w)`$.
+- $`\partial^2 c/\partial w^2 = (\partial c/\partial w)\,\bigl(k^2/(2w^2) - 1/(2w) - 1/8\bigr)`$.
 
-Now let $w$ depend on $k$. The chain rule gives $c' = \partial_k c + w'\,\partial_w c$ and $c'' = \partial_{kk} c + 2w'\,\partial_{kw} c + (w')^2\,\partial_{ww} c + w''\,\partial_w c$. Subtract and substitute the four facts:
-$$c'' - c' = \partial_w c\,\Bigl[\,2 + 2w'\bigl(\tfrac12 - \tfrac{k}{w}\bigr) - w' + (w')^2\bigl(\tfrac{k^2}{2w^2} - \tfrac{1}{2w} - \tfrac18\bigr) + w''\Bigr].$$
-The two lone $w'$ terms cancel. Take out a factor 2 and the bracket becomes $1 - kw'/w + k^2(w')^2/(4w^2) - (w')^2/(4w) - (w')^2/16 + w''/2$, which is $g$ once $(1 - kw'/(2w))^2$ is expanded. So $c'' - c' = 2\,\partial_w c\;g$.
+Now let $`w`$ depend on $`k`$. The chain rule gives $`c' = \partial_k c + w'\,\partial_w c`$ and $`c'' = \partial_{kk} c + 2w'\,\partial_{kw} c + (w')^2\,\partial_{ww} c + w''\,\partial_w c`$. Subtract and substitute the four facts:
+
+$`\displaystyle c'' - c' = \partial_w c\,\Bigl[\,2 + 2w'\bigl(\tfrac12 - \tfrac{k}{w}\bigr) - w' + (w')^2\bigl(\tfrac{k^2}{2w^2} - \tfrac{1}{2w} - \tfrac18\bigr) + w''\Bigr].`$
+
+The two lone $`w'`$ terms cancel. Take out a factor 2 and the bracket becomes $`1 - kw'/w + k^2(w')^2/(4w^2) - (w')^2/(4w) - (w')^2/16 + w''/2`$, which is $`g`$ once $`(1 - kw'/(2w))^2`$ is expanded. So $`c'' - c' = 2\,\partial_w c\;g`$.
 
 </details>
 
 ### Step 4: what the two halves say
 
-A flat surface first. Flat means $w' = w'' = 0$, so $g = 1$ and $\partial w/\partial T$ is the volatility squared: local equals implied. The house example's flat 20% gives 20% everywhere; road 2 of the code confirms it from call prices alone.
+A flat surface first. Flat means $`w' = w'' = 0`$, so $`g = 1`$ and $`\partial w/\partial T`$ is the volatility squared: local equals implied. The house example's flat 20% gives 20% everywhere; road 2 of the code confirms it from call prices alone.
 
-The top is the calendar half. At fixed $k$, $\partial w/\partial T$ is the variance the market adds between one expiry and the next: the forward variance of [Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md), at one moneyness.
+The top is the calendar half. At fixed $`k`$, $`\partial w/\partial T`$ is the variance the market adds between one expiry and the next: the forward variance of [Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md), at one moneyness.
 
-The bottom is the butterfly half, the smile's shape. Below the forward on a downward skew, $k$ and $w'$ are both negative, so the first term of $g$ drops below 1: 0.749172 at \$92. The bend adds back 0.254460, but $g$ is still 0.935717, so local volatility sits above implied. At \$120 $k$ is positive and $w'$ still negative, so the first term exceeds 1 and $g$ is 1.184289: local sits below implied. The skew makes local volatility steeper than implied; the bend pulls it back.
+The bottom is the butterfly half, the smile's shape. Below the forward on a downward skew, $`k`$ and $`w'`$ are both negative, so the first term of $`g`$ drops below 1: 0.749172 at \$92. The bend adds back 0.254460, but $`g`$ is still 0.935717, so local volatility sits above implied. At \$120 $`k`$ is positive and $`w'`$ still negative, so the first term exceeds 1 and $`g`$ is 1.184289: local sits below implied. The skew makes local volatility steeper than implied; the bend pulls it back.
 
 ### Step 5: at short expiry, implied is an average of local
 
-Let $T$ shrink with implied volatility held at each $k$, as on this surface. Then $w = \sigma_{\text{imp}}^2 T$ and $w' = 2\sigma_{\text{imp}}\sigma_{\text{imp}}' T$ both shrink in proportion to $T$, but their ratio does not: $k w'/(2w) = k\,\sigma_{\text{imp}}'/\sigma_{\text{imp}}$. The second and third terms of $g$ carry a spare factor of $T$ and vanish. The top tends to $\sigma_{\text{imp}}^2$. So local volatility tends to $\sigma_{\text{imp}}/(1 - k\sigma_{\text{imp}}'/\sigma_{\text{imp}})$.
+Let $`T`$ shrink with implied volatility held at each $`k`$, as on this surface. Then $`w = \sigma_{\text{imp}}^2 T`$ and $`w' = 2\sigma_{\text{imp}}\sigma_{\text{imp}}' T`$ both shrink in proportion to $`T`$, but their ratio does not: $`k w'/(2w) = k\,\sigma_{\text{imp}}'/\sigma_{\text{imp}}`$. The second and third terms of $`g`$ carry a spare factor of $`T`$ and vanish. The top tends to $`\sigma_{\text{imp}}^2`$. So local volatility tends to $`\sigma_{\text{imp}}/(1 - k\sigma_{\text{imp}}'/\sigma_{\text{imp}})`$.
 
-One piece of calculus turns that into an average. The slope in $k$ of $k/\sigma_{\text{imp}}(k)$ is $(1 - k\sigma_{\text{imp}}'/\sigma_{\text{imp}})/\sigma_{\text{imp}}$, which is exactly $1/\sigma_{\text{loc}}$. Add up that slope from the forward, $y = 0$, to the strike, $y = k$:
+One piece of calculus turns that into an average. The slope in $`k`$ of $`k/\sigma_{\text{imp}}(k)`$ is $`(1 - k\sigma_{\text{imp}}'/\sigma_{\text{imp}})/\sigma_{\text{imp}}`$, which is exactly $`1/\sigma_{\text{loc}}`$. Add up that slope from the forward, $`y = 0`$, to the strike, $`y = k`$:
 
-$$\frac{k}{\sigma_{\text{imp}}(k)} = \int_0^k \frac{dy}{\sigma_{\text{loc}}(y)}, \qquad\text{so}\qquad \frac{1}{\sigma_{\text{imp}}(k)} = \int_0^1 \frac{du}{\sigma_{\text{loc}}(u\,k)}$$
+```math
+\frac{k}{\sigma_{\text{imp}}(k)} = \int_0^k \frac{dy}{\sigma_{\text{loc}}(y)}, \qquad\text{so}\qquad \frac{1}{\sigma_{\text{imp}}(k)} = \int_0^1 \frac{du}{\sigma_{\text{loc}}(u\,k)}
+```
 
 Implied volatility is the harmonic mean of local volatility along the straight line from the forward to the strike. Berestycki, Busca and Florent proved this short-expiry limit in 2002 for local volatility models in general. At one day the code's harmonic means give 21.1050% at \$92 and 17.7279% at \$120, against implied 21.1108% and 17.7303%; the gap shrinks in proportion to expiry.
 
 ### Step 6: why the factor is two
 
-Near the money, local volatility is nearly a straight line in $k$, and a harmonic mean of nearly equal numbers is nearly their ordinary average. The average of a straight line from 0 to $k$ is its value halfway, at $k/2$. So implied volatility at $k$ is roughly local volatility at $k/2$: the implied curve climbs at half the local rate.
+Near the money, local volatility is nearly a straight line in $`k`$, and a harmonic mean of nearly equal numbers is nearly their ordinary average. The average of a straight line from 0 to $`k`$ is its value halfway, at $`k/2`$. So implied volatility at $`k`$ is roughly local volatility at $`k/2`$: the implied curve climbs at half the local rate.
 
-Differentiating the short-expiry formula at $k = 0$ makes it exact. Local volatility there is implied volatility divided by $1 - k\sigma_{\text{imp}}'/\sigma_{\text{imp}}$. At the forward that divisor is 1 and falls at the rate $\sigma_{\text{imp}}'/\sigma_{\text{imp}}$ per unit of $k$. Where a divisor equals 1, a quotient's slope is the top's slope plus the top times the rate at which the divisor falls: $\sigma_{\text{imp}}' + \sigma_{\text{imp}} \cdot \sigma_{\text{imp}}'/\sigma_{\text{imp}} = 2\sigma_{\text{imp}}'$.
+Differentiating the short-expiry formula at $`k = 0`$ makes it exact. Local volatility there is implied volatility divided by $`1 - k\sigma_{\text{imp}}'/\sigma_{\text{imp}}`$. At the forward that divisor is 1 and falls at the rate $`\sigma_{\text{imp}}'/\sigma_{\text{imp}}`$ per unit of $`k`$. Where a divisor equals 1, a quotient's slope is the top's slope plus the top times the rate at which the divisor falls: $`\sigma_{\text{imp}}' + \sigma_{\text{imp}} \cdot \sigma_{\text{imp}}'/\sigma_{\text{imp}} = 2\sigma_{\text{imp}}'`$.
 
-On Acme's surface the implied skew at the forward is −0.157199 per unit of $k$; twice it is −0.314398. The local skew, measured by finite differences, as a multiple of the implied:
+On Acme's surface the implied skew at the forward is −0.157199 per unit of $`k`$; twice it is −0.314398. The local skew, measured by finite differences, as a multiple of the implied:
 
 ```
 local skew / implied skew, at the forward      one block = 0.05
@@ -193,7 +217,7 @@ local skew / implied skew, at the forward      one block = 0.05
 1 day      ████████████████████████████████████████  2.00
 ```
 
-The factor climbs to 2 as expiry shrinks. At one year the two terms of $g$ that carry $T$ still matter.
+The factor climbs to 2 as expiry shrinks. At one year the two terms of $`g`$ that carry $`T`$ still matter.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -206,7 +230,7 @@ xychart-beta
     line [22.63, 21.85, 21.06, 20.28, 19.49, 18.70, 17.92, 17.13, 16.35]
 ```
 
-Orange: implied volatility at one week. Green: local volatility at one week. Dark: the straight line through the at-the-money implied volatility with twice the implied skew as its slope. Near $k = 0$ the local curve runs along it; further out it bends above it on both sides.
+Orange: implied volatility at one week. Green: local volatility at one week. Dark: the straight line through the at-the-money implied volatility with twice the implied skew as its slope. Near $`k = 0`$ the local curve runs along it; further out it bends above it on both sides.
 
 For longer expiries Gatheral's book names a refinement, the most-likely-path approximation: implied volatility is roughly local volatility averaged along the path the share most likely takes to finish at the strike. This card names it only. The other road to the local volatilities is Dupire's formula on call prices by finite differences, the method of [Dupire local volatility](01-dupire-local-volatility.md) and road 2 of the code.
 
@@ -214,29 +238,29 @@ For longer expiries Gatheral's book names a refinement, the most-likely-path app
 
 ## Worked numbers, by hand
 
-The \$92 strike, one year out, with the SVI card's five numbers: $a$ = 0.016719, $b$ = 0.126769, $\rho$ = −0.912282, $m$ = −0.118207, $s$ = 0.248954.
+The \$92 strike, one year out, with the SVI card's five numbers: $`a`$ = 0.016719, $`b`$ = 0.126769, $`\rho`$ = −0.912282, $`m`$ = −0.118207, $`s`$ = 0.248954.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forward | $100 \times e^{0.03}$ | 103.045453 |
-| log-moneyness $k$ | $\ln(92 / 103.045453)$ | −0.113382 |
-| distance from the centre, $k - m$ | $-0.113382 + 0.118207$ | 0.004825 |
-| rounded distance | $\sqrt{0.004825^2 + 0.248954^2}$ | 0.249001 |
-| total variance $w$ | $0.016719 + 0.126769 \times (-0.912282 \times 0.004825 + 0.249001)$ | 0.047727 |
-| implied volatility | $\sqrt{0.047727}$ | 21.8464% |
-| slope $w'$ | $0.126769 \times (-0.912282 + 0.004825 / 0.249001)$ | −0.113192 |
-| bend $w''$ | $0.126769 \times 0.248954^2 / 0.249001^3$ | 0.508920 |
-| time slope $\partial w/\partial T$ | $w = T v$, so the slope is $v$ | 0.047727 |
-| first term of $g$ | $\bigl(1 - (-0.113382)(-0.113192) / (2 \times 0.047727)\bigr)^2$ | 0.749172 |
-| second term | $(-0.113192)^2 / 4 \times (1/0.047727 + 1/4)$ | 0.067915 |
-| third term | $0.508920 / 2$ | 0.254460 |
-| $g$ | $0.749172 - 0.067915 + 0.254460$ | 0.935717 |
-| local variance | $0.047727 / 0.935717$ | 0.051005 |
-| **local volatility** | $\sqrt{0.051005}$ | **22.5844%** |
+| forward | $`100 \times e^{0.03}`$ | 103.045453 |
+| log-moneyness $`k`$ | $`\ln(92 / 103.045453)`$ | −0.113382 |
+| distance from the centre, $`k - m`$ | $`-0.113382 + 0.118207`$ | 0.004825 |
+| rounded distance | $`\sqrt{0.004825^2 + 0.248954^2}`$ | 0.249001 |
+| total variance $`w`$ | $`0.016719 + 0.126769 \times (-0.912282 \times 0.004825 + 0.249001)`$ | 0.047727 |
+| implied volatility | $`\sqrt{0.047727}`$ | 21.8464% |
+| slope $`w'`$ | $`0.126769 \times (-0.912282 + 0.004825 / 0.249001)`$ | −0.113192 |
+| bend $`w''`$ | $`0.126769 \times 0.248954^2 / 0.249001^3`$ | 0.508920 |
+| time slope $`\partial w/\partial T`$ | $`w = T v`$, so the slope is $`v`$ | 0.047727 |
+| first term of $`g`$ | $`\bigl(1 - (-0.113382)(-0.113192) / (2 \times 0.047727)\bigr)^2`$ | 0.749172 |
+| second term | $`(-0.113192)^2 / 4 \times (1/0.047727 + 1/4)`$ | 0.067915 |
+| third term | $`0.508920 / 2`$ | 0.254460 |
+| $`g`$ | $`0.749172 - 0.067915 + 0.254460`$ | 0.935717 |
+| local variance | $`0.047727 / 0.935717`$ | 0.051005 |
+| **local volatility** | $`\sqrt{0.051005}`$ | **22.5844%** |
 
 Values are carried at full precision, so a last digit can differ from the rounded arithmetic.
 
-The \$120 strike, same steps: $k$ = 0.152322, $w$ = 0.032039, $w'$ = −0.022367, $w''$ = 0.158111, $g$ = 1.184289, local volatility **16.4479%** against implied 17.8994%.
+The \$120 strike, same steps: $`k`$ = 0.152322, $`w`$ = 0.032039, $`w'`$ = −0.022367, $`w''`$ = 0.158111, $`g`$ = 1.184289, local volatility **16.4479%** against implied 17.8994%.
 
 In the one model where volatility depends only on price and date and every quoted option reprices, Acme standing at \$92 a year from now moves with volatility 22.58%; at \$120, with 16.45%.
 
@@ -245,9 +269,9 @@ In the one model where volatility depends only on price and date and every quote
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Implied volatility read as local | 21.8464% at \$92, 17.8994% at \$120 (right: 22.5844%, 16.4479%) | an average over a year of paths is not the volatility at one price |
-| Time slope taken at fixed strike, not fixed $k$ | 23.3740%, 16.6192% | at a fixed strike $k$ drifts as the forward grows, which adds $-(r - q)\,w'$ to the top |
-| $k$ measured from the share price, $\ln(K/S)$ | 20.9255%, 16.3859% | treats the forward, \$103.05, as \$100 |
-| Short-expiry formula used at one year | 25.2400%, 16.9957% | drops the two terms of $g$ that carry a factor $T$; at one year they are not small |
+| Time slope taken at fixed strike, not fixed $`k`$ | 23.3740%, 16.6192% | at a fixed strike $`k`$ drifts as the forward grows, which adds $`-(r - q)\,w'`$ to the top |
+| $`k`$ measured from the share price, $`\ln(K/S)`$ | 20.9255%, 16.3859% | treats the forward, \$103.05, as \$100 |
+| Short-expiry formula used at one year | 25.2400%, 16.9957% | drops the two terms of $`g`$ that carry a factor $`T`$; at one year they are not small |
 
 The code prints all four.
 
@@ -255,7 +279,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer: the normal distribution is summed from its series, Simpson's rule (a standard way to add up an integral from sampled points) is written out, slopes are finite differences. Road 1 is this card's formula with SVI's closed-form slopes. Road 2 prices Black-Scholes calls off the surface and runs Dupire's formula on them by finite differences; it never sees $g$ or an SVI slope, and on a flat 20% surface its pricer returns the house example's call price, \$9.23 (\$100 strike, one year, 20% volatility). Road 3 tests the short-expiry results: the local skew against twice the implied skew, and harmonic means of local volatility against implied. Mutation tests broke the maths six ways (a term of $g$ dropped, Dupire's drift term flipped, the time slope taken at fixed strike, a coarse strike step, an ordinary average for the harmonic one, the implied skew measured for the local one); an assert stopped the run each time.
+Nothing imported knows the answer: the normal distribution is summed from its series, Simpson's rule (a standard way to add up an integral from sampled points) is written out, slopes are finite differences. Road 1 is this card's formula with SVI's closed-form slopes. Road 2 prices Black-Scholes calls off the surface and runs Dupire's formula on them by finite differences; it never sees $`g`$ or an SVI slope, and on a flat 20% surface its pricer returns the house example's call price, \$9.23 (\$100 strike, one year, 20% volatility). Road 3 tests the short-expiry results: the local skew against twice the implied skew, and harmonic means of local volatility against implied. Mutation tests broke the maths six ways (a term of $`g`$ dropped, Dupire's drift term flipped, the time slope taken at fixed strike, a coarse strike step, an ordinary average for the harmonic one, the implied skew measured for the local one); an assert stopped the run each time.
 
 ### Python
 
@@ -636,10 +660,10 @@ The two outputs match line for line. Road 2 differs from road 1 only in the last
 
 Lean proves the card's formula on any smooth surface, and both short-expiry rules for any smooth positive smile.
 
-- Take a smooth, positive surface $w$, a fixed rate and dividend yield, and a point passing the calendar and butterfly tests. Then Dupire's formula on Black-Scholes call prices gives exactly $(\partial w/\partial T)/g$, and that is not negative.
-- Take implied volatility smooth, positive and held at each $k$ for every expiry, with the short-expiry divisor above zero. Then as $T$ shrinks to 0, local volatility tends to the card's short-expiry formula.
-- On that same surface, implied volatility at each $k$ is exactly the harmonic mean of that limit, from the forward to the strike.
-- Take implied volatility smooth, and positive at the forward. Then at the forward, short-expiry local volatility slopes twice as steeply: $\sigma_{\text{loc}}'(0) = 2\,\sigma_{\text{imp}}'(0)$.
+- Take a smooth, positive surface $`w`$, a fixed rate and dividend yield, and a point passing the calendar and butterfly tests. Then Dupire's formula on Black-Scholes call prices gives exactly $`(\partial w/\partial T)/g`$, and that is not negative.
+- Take implied volatility smooth, positive and held at each $`k`$ for every expiry, with the short-expiry divisor above zero. Then as $`T`$ shrinks to 0, local volatility tends to the card's short-expiry formula.
+- On that same surface, implied volatility at each $`k`$ is exactly the harmonic mean of that limit, from the forward to the strike.
+- Take implied volatility smooth, and positive at the forward. Then at the forward, short-expiry local volatility slopes twice as steeply: $`\sigma_{\text{loc}}'(0) = 2\,\sigma_{\text{imp}}'(0)`$.
 
 Acme's numbers, the factor of 1.42 at one year, and the wing and four-year results are left to the Python and Rust checks.
 
@@ -1068,7 +1092,7 @@ end LocalVolFromImpliedVol
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Flatten the smile.** The `try: b = 0` row sets the wing steepness to zero. Every slope vanishes, $g$ is 1, and local equals implied at both strikes: 12.93%, the square root of $a$.
+> - **Flatten the smile.** The `try: b = 0` row sets the wing steepness to zero. Every slope vanishes, $`g`$ is 1, and local equals implied at both strikes: 12.93%, the square root of $`a`$.
 > - **Remove the tilt.** The `try: rho = 0` row makes the smile nearly symmetric. Does the factor of two care about the smile's shape? At one day, no: 2.00. At one year, yes: 2.50, against this skew's 1.42.
 > - **Take the time slope at fixed strike.** In `loc`, subtract `(R - Q) * T * svi(k, p)[1]` from the top. Road 1 becomes the mistake row's 23.3740%, road 2 does not move, and the first assert stops the run.
 > - **Coarsen road 2.** Set `hk=5.0` in `dupire`. The second difference over \$10 of strike blurs the bend and the first assert stops the run.
@@ -1081,7 +1105,7 @@ end LocalVolFromImpliedVol
 > **Reading implied volatility as the volatility at that price.** The \$80 option's 26.12% is not Acme's volatility at \$80. It prices a whole year of paths, most of which spend their time nearer \$100. Local volatility at \$80, one year out, is 36.54%. An option that dies at \$80, priced with 26.12%, puts the swings in the wrong place.
 >
 > - **Time slope at fixed strike.** The formula's top holds log-moneyness fixed. Holding the strike fixed instead gives 23.37% at \$92 against the right 22.58%.
-> - **Log-moneyness from the share price.** $\ln(K/S)$ in place of $\ln(K/F_T)$ gives 20.93% at \$92.
+> - **Log-moneyness from the share price.** $`\ln(K/S)`$ in place of $`\ln(K/F_T)`$ gives 20.93% at \$92.
 > - **The factor of two at long expiry.** At one year the local skew is 1.42 times the implied, not 2; the short-expiry formula used there gives 25.24% at \$92.
 > - **Differencing raw quotes.** Second differences magnify quote noise; the slopes come from a fitted, arbitrage-free curve.
 
@@ -1095,14 +1119,14 @@ end LocalVolFromImpliedVol
 - **Jumps.** Local volatility matches any arbitrage-free smile, but its paths never jump; sudden falls are the other account of steep short-dated skews: [Merton jump-diffusion](04-merton-jump-diffusion.md).
 
 > **Say it back**
-> Local volatility is one volatility for each price and date, the one that reprices every option. In the smile's own terms, local variance is how fast total implied variance grows with expiry at a fixed forward-relative strike, divided by the butterfly function $g$. Rates and dividends drop out because strikes are measured from the forward. On Acme's SVI surface it gives 22.58% at \$92 and 16.45% at \$120 one year out, as Dupire's formula on call prices does. At short expiry implied volatility is the harmonic mean of local volatility between forward and strike, so near the money local volatility slopes twice as steeply.
+> Local volatility is one volatility for each price and date, the one that reprices every option. In the smile's own terms, local variance is how fast total implied variance grows with expiry at a fixed forward-relative strike, divided by the butterfly function $`g`$. Rates and dividends drop out because strikes are measured from the forward. On Acme's SVI surface it gives 22.58% at \$92 and 16.45% at \$120 one year out, as Dupire's formula on call prices does. At short expiry implied volatility is the harmonic mean of local volatility between forward and strike, so near the money local volatility slopes twice as steeply.
 
 ---
 
 ## What this builds on
 
 - [Dupire local volatility](01-dupire-local-volatility.md): the formula in call prices that Step 1 rewrites, and road 2 of the code.
-- [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): the fitted one-year curve, its closed-form slopes, and the butterfly function $g$ with the identity Step 3 uses.
+- [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): the fitted one-year curve, its closed-form slopes, and the butterfly function $`g`$ with the identity Step 3 uses.
 
 ## Where this goes next
 
@@ -1117,6 +1141,6 @@ This card turns a smile into a volatility for every price and date; whether a sh
 Verified 2026-09-24: every link below resolves to the publisher's page.
 
 - Jim Gatheral, *The Volatility Surface: A Practitioner's Guide*, Wiley, 2006. [Publisher page](https://www.wiley.com/en-us/The+Volatility+Surface%3A+A+Practitioner%27s+Guide-p-9780471792512). Local variance written in total implied variance, the short-dated rules linking implied and local volatility, and the most-likely-path approximation.
-- Jim Gatheral and Antoine Jacquier, "Arbitrage-free SVI volatility surfaces", *Quantitative Finance* 14(1), 2014, pp. 59–71. [doi:10.1080/14697688.2013.819986](https://doi.org/10.1080/14697688.2013.819986); preprint [arXiv:1204.0646](https://arxiv.org/abs/1204.0646). The function $g$ and the conditions that keep a whole SVI surface free of static arbitrage.
+- Jim Gatheral and Antoine Jacquier, "Arbitrage-free SVI volatility surfaces", *Quantitative Finance* 14(1), 2014, pp. 59–71. [doi:10.1080/14697688.2013.819986](https://doi.org/10.1080/14697688.2013.819986); preprint [arXiv:1204.0646](https://arxiv.org/abs/1204.0646). The function $`g`$ and the conditions that keep a whole SVI surface free of static arbitrage.
 - H. Berestycki, J. Busca and I. Florent, "Asymptotics and calibration of local volatility models", *Quantitative Finance* 2(1), 2002, pp. 61–69. [doi:10.1088/1469-7688/2/1/305](https://doi.org/10.1088/1469-7688/2/1/305). The short-expiry limit: implied volatility as a harmonic mean of local volatility.
 - Emanuel Derman, Iraj Kani and Joseph Z. Zou, "The Local Volatility Surface: Unlocking the Information in Index Option Prices", *Financial Analysts Journal* 52(4), 1996, pp. 25–36. [doi:10.2469/faj.v52.n4.2008](https://doi.org/10.2469/faj.v52.n4.2008). Local volatility read like forward rates off a yield curve, with three rules of thumb linking it to implied volatility.

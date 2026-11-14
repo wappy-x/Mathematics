@@ -45,26 +45,30 @@ A method runs in **polynomial time** if its cost is at most c·nᵏ for some fix
 
 What one more item costs:
 
-$$\frac{T(n+1)}{T(n)} = \left(1 + \frac{1}{n}\right)^{k} \ \text{ when } T(n) = n^k, \qquad \frac{T(n+1)}{T(n)} = 2 \ \text{ when } T(n) = 2^n$$
+```math
+\frac{T(n+1)}{T(n)} = \left(1 + \frac{1}{n}\right)^{k} \ \text{ when } T(n) = n^k, \qquad \frac{T(n+1)}{T(n)} = 2 \ \text{ when } T(n) = 2^n
+```
 
 What a machine s times faster buys, inside the same time budget:
 
-$$n_{\text{new}} = s^{1/k}\, n_{\text{old}} \ \text{ for } n^k, \qquad n_{\text{new}} = n_{\text{old}} + \log_2 s \ \text{ for } 2^n$$
+```math
+n_{\text{new}} = s^{1/k}\, n_{\text{old}} \ \text{ for } n^k, \qquad n_{\text{new}} = n_{\text{old}} + \log_2 s \ \text{ for } 2^n
+```
 
 **Read it aloud:** one more item nudges a polynomial cost up by a factor close to 1 but always doubles an exponential one, so speed multiplies the size a polynomial method can handle and only adds to the size an exponential method can handle.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the size: items handed to the method | 40 stops | n³ creeps up; 2ⁿ doubles each time |
-| $T(n)$ | the cost: named steps done on size n | 64,000 or 1,099,511,627,776 | — |
-| $k$ | the fixed power in a polynomial cost | 3 | the crossing with 2ⁿ moves later: 23 for k = 5 |
-| $c$ | the fixed constant in front: steps per unit of nᵏ | 1 | every cost scales by it; growth is unchanged |
-| $2^n$ | two multiplied by itself n times: the number of sets of n items | 1,099,511,627,776 | — |
-| $s$ | how many times faster the new machine is | 1,000 | n³ reach × 10; 2ⁿ reach + about 10 |
-| $\log_2 s$ | how many doublings make s | about 10 for s = 1,000 | — |
-| $a$ | the fixed factor per item in a general exponential cost aⁿ | 2 | each item multiplies the cost by more |
-| $B$ | the budget: the most steps allowed | one hour at a billion steps a second: about 10^12.56 steps | both reaches grow, n³'s far more |
-| $n_{\text{old}}, n_{\text{new}}$ | the largest size that fits the budget, before and after the speed-up | 41 and 51 stops, for 2ⁿ in one hour | — |
+| $`n`$ | the size: items handed to the method | 40 stops | n³ creeps up; 2ⁿ doubles each time |
+| $`T(n)`$ | the cost: named steps done on size n | 64,000 or 1,099,511,627,776 | — |
+| $`k`$ | the fixed power in a polynomial cost | 3 | the crossing with 2ⁿ moves later: 23 for k = 5 |
+| $`c`$ | the fixed constant in front: steps per unit of nᵏ | 1 | every cost scales by it; growth is unchanged |
+| $`2^n`$ | two multiplied by itself n times: the number of sets of n items | 1,099,511,627,776 | — |
+| $`s`$ | how many times faster the new machine is | 1,000 | n³ reach × 10; 2ⁿ reach + about 10 |
+| $`\log_2 s`$ | how many doublings make s | about 10 for s = 1,000 | — |
+| $`a`$ | the fixed factor per item in a general exponential cost aⁿ | 2 | each item multiplies the cost by more |
+| $`B`$ | the budget: the most steps allowed | one hour at a billion steps a second: about 10^12.56 steps | both reaches grow, n³'s far more |
+| $`n_{\text{old}}, n_{\text{new}}`$ | the largest size that fits the budget, before and after the speed-up | 41 and 51 stops, for 2ⁿ in one hour | — |
 
 ### When it holds
 
@@ -107,7 +111,7 @@ The same argument beats any fixed power, only later. Against n⁵ the crossing i
 
 **Step.** Suppose 2ⁿ > n³ for some n ≥ 10. Then
 
-$$2^{n+1} = 2 \cdot 2^n > 2 n^3 > (n+1)^3,$$
+$`\displaystyle 2^{n+1} = 2 \cdot 2^n > 2 n^3 > (n+1)^3,`$
 
 where the last step holds because (n + 1)³ / n³ = (1 + 1/n)³ ≤ (1.1)³ = 1.331 < 2 for n ≥ 10.
 
@@ -524,18 +528,18 @@ The two outputs are identical, line for line.
 
 Lean proves the crossing and both speed-up rules for every size, power and speed-up, and checks the worked numbers.
 
-- Take any whole number $n$ of 10 or more. Then $n^3 < 2^n$, so $2^n$ passes $n^3$ for good at 10.
-- Suppose a cost $x^k$ exactly fills the budget $B$ at size $n_{\text{old}}$, with $k$ above 0. Then a machine $s$ times faster fits exactly the sizes up to $s^{1/k}\, n_{\text{old}}$.
-- Suppose a cost $2^x$ exactly fills the budget $B$ at size $n_{\text{old}}$. Then a machine $s$ times faster fits exactly the sizes up to $n_{\text{old}} + \log_2 s$.
-- For 40 stops, $n^3$ is 64,000 and $2^n$ is 1,099,511,627,776: 17,179,869 times as many. One more stop gives 68,921 and 2,199,023,255,552.
-- At 8 stops $2^n$ is 256 against $n^3$ at 512. At 9 it is 512 against 729, and at 10 it is 1,024 against 1,000.
-- Take $n$ from 1 to 120. Then $2^n \le n^3$ exactly when $n$ is 2 to 9.
-- Take $n$ from 23 to 120. Then $n^5 < 2^n$, while $2^{22} \le 22^5$.
-- At 16 stops $2^n$ and $n^4$ are both 65,536. At 17 stops $2^n$ is ahead.
+- Take any whole number $`n`$ of 10 or more. Then $`n^3 < 2^n`$, so $`2^n`$ passes $`n^3`$ for good at 10.
+- Suppose a cost $`x^k`$ exactly fills the budget $`B`$ at size $`n_{\text{old}}`$, with $`k`$ above 0. Then a machine $`s`$ times faster fits exactly the sizes up to $`s^{1/k}\, n_{\text{old}}`$.
+- Suppose a cost $`2^x`$ exactly fills the budget $`B`$ at size $`n_{\text{old}}`$. Then a machine $`s`$ times faster fits exactly the sizes up to $`n_{\text{old}} + \log_2 s`$.
+- For 40 stops, $`n^3`$ is 64,000 and $`2^n`$ is 1,099,511,627,776: 17,179,869 times as many. One more stop gives 68,921 and 2,199,023,255,552.
+- At 8 stops $`2^n`$ is 256 against $`n^3`$ at 512. At 9 it is 512 against 729, and at 10 it is 1,024 against 1,000.
+- Take $`n`$ from 1 to 120. Then $`2^n \le n^3`$ exactly when $`n`$ is 2 to 9.
+- Take $`n`$ from 23 to 120. Then $`n^5 < 2^n`$, while $`2^{22} \le 22^5`$.
+- At 16 stops $`2^n`$ and $`n^4`$ are both 65,536. At 17 stops $`2^n`$ is ahead.
 - The set-by-set method's formula gives 203,684,529,045,543 steps for 40 stops.
-- In one hour $n^3$ fits 15,326 stops and $2^n$ fits 41. A machine 1,000 times faster fits 153,261 and 51; one day fits 44,208 and 46.
+- In one hour $`n^3`$ fits 15,326 stops and $`2^n`$ fits 41. A machine 1,000 times faster fits 153,261 and 51; one day fits 44,208 and 46.
 - The least speed-up that fits 82 stops in the hour is 1,343,250,910,683.
-- $40^2$ is 1,600, far from $2^{40}$.
+- $`40^2`$ is 1,600, far from $`2^{40}`$.
 
 The counted steps, the cheapest rounds and the times in years are left to the Python and Rust checks.
 

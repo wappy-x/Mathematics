@@ -41,34 +41,40 @@ Orange: log10 of each kept step's length, so −1 is 0.1 s and −3 is 0.001 s. 
 
 ## The formula
 
-Reminder: a Runge-Kutta step samples the rate of change at several points inside the step, called **stages**. Stage i is $k_i = f(t + c_i h,\ y + h\sum_j a_{ij}k_j)$, and the step ends at $y + h\sum_i b_i k_i$. The table of $c_i$, $a_{ij}$ and $b_i$ is the Butcher tableau ([Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md)).
+Reminder: a Runge-Kutta step samples the rate of change at several points inside the step, called **stages**. Stage i is $`k_i = f(t + c_i h,\ y + h\sum_j a_{ij}k_j)`$, and the step ends at $`y + h\sum_i b_i k_i`$. The table of $`c_i`$, $`a_{ij}`$ and $`b_i`$ is the Butcher tableau ([Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md)).
 
-The weights must pass one **order condition** per rooted tree (a pattern of nested derivatives in the Taylor series of one step). In each condition, $\Phi_i(\text{tree})$ is a number built from the stage table alone (stage i's elementary weight), and $\gamma(\text{tree})$ is a whole number fixed by the tree's shape (its density); Step 1 shows how to compute both. Then the pair, its error ratio and the step rule are
+The weights must pass one **order condition** per rooted tree (a pattern of nested derivatives in the Taylor series of one step). In each condition, $`\Phi_i(\text{tree})`$ is a number built from the stage table alone (stage i's elementary weight), and $`\gamma(\text{tree})`$ is a whole number fixed by the tree's shape (its density); Step 1 shows how to compute both. Then the pair, its error ratio and the step rule are
 
-$$\sum_{i=1}^{7} b_i\,\Phi_i(\text{tree}) = \frac{1}{\gamma(\text{tree})}\quad\text{for every tree with at most } p \text{ nodes},$$
+```math
+\sum_{i=1}^{7} b_i\,\Phi_i(\text{tree}) = \frac{1}{\gamma(\text{tree})}\quad\text{for every tree with at most } p \text{ nodes},
+```
 
-$$y_5 = y + h\sum_{i=1}^{7} b_i k_i,\qquad y_4 = y + h\sum_{i=1}^{7} \hat b_i k_i,\qquad E = \max_m \frac{|y_{4,m} - y_{5,m}|}{\mathrm{tol}\,\bigl(1 + \max(|y_m|, |y_{5,m}|)\bigr)},$$
+```math
+y_5 = y + h\sum_{i=1}^{7} b_i k_i,\qquad y_4 = y + h\sum_{i=1}^{7} \hat b_i k_i,\qquad E = \max_m \frac{|y_{4,m} - y_{5,m}|}{\mathrm{tol}\,\bigl(1 + \max(|y_m|, |y_{5,m}|)\bigr)},
+```
 
-$$h_{new} = h\cdot\min\bigl(5,\ \max(0.2,\ 0.9\,E^{-1/5})\bigr).$$
+```math
+h_{new} = h\cdot\min\bigl(5,\ \max(0.2,\ 0.9\,E^{-1/5})\bigr).
+```
 
 **Read it aloud:** weights that pass every condition up to p nodes give order p; the same seven stages, weighted two ways, give a fifth-order and a fourth-order answer; their worst gap over its allowance is E; keep the step if E is at most 1, and scale the next step by 0.9 times E to the power −1/5, by at most 5 and at least a fifth.
 
-Control **per unit step** divides E by h first and uses the power −1/4. Both versions keep $y_5$, the better answer.
+Control **per unit step** divides E by h first and uses the power −1/4. Both versions keep $`y_5`$, the better answer.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $h$ | time in s; the step's length | 0 to 6 s; 1 s tried from burnout | error per step grows like $h^5$ |
-| $y = (y_1, y_2)$, $y_m$ | the state: height in m, speed in m/s; component m | 43.758903 m, 56.503865 m/s at burnout | — |
-| $f$, $k_i$, $c_i$ | the rate law; stage i's sample of it; its time as a fraction of the step | $c$ = 0, 1/5, 3/10, 4/5, 8/9, 1, 1 | — |
-| $a_{ij}$ | how stage i mixes the earlier samples | row 2 is 1/5; row 7 equals $b$ | — |
-| $b_i$, $\hat b_i$ | fifth-order and fourth-order weights | $b_1$ = 35/384; $\hat b_7$ = 1/40 | a bigger $\hat b_7$ inflates every estimate |
-| $p$ | order of a set of weights | 5 for $b$, 4 for $\hat b$ | more conditions to pass |
-| $\Phi_i(\text{tree})$, $\gamma(\text{tree})$ | stage i's elementary weight on a tree; the tree's density | 17 trees with up to 5 nodes | — |
-| $y_5$, $y_4$ | the two answers to one step | 92.397871 m and 92.398138 m | — |
+| $`t`$, $`h`$ | time in s; the step's length | 0 to 6 s; 1 s tried from burnout | error per step grows like $`h^5`$ |
+| $`y = (y_1, y_2)`$, $`y_m`$ | the state: height in m, speed in m/s; component m | 43.758903 m, 56.503865 m/s at burnout | — |
+| $`f`$, $`k_i`$, $`c_i`$ | the rate law; stage i's sample of it; its time as a fraction of the step | $`c`$ = 0, 1/5, 3/10, 4/5, 8/9, 1, 1 | — |
+| $`a_{ij}`$ | how stage i mixes the earlier samples | row 2 is 1/5; row 7 equals $`b`$ | — |
+| $`b_i`$, $`\hat b_i`$ | fifth-order and fourth-order weights | $`b_1`$ = 35/384; $`\hat b_7`$ = 1/40 | a bigger $`\hat b_7`$ inflates every estimate |
+| $`p`$ | order of a set of weights | 5 for $`b`$, 4 for $`\hat b`$ | more conditions to pass |
+| $`\Phi_i(\text{tree})`$, $`\gamma(\text{tree})`$ | stage i's elementary weight on a tree; the tree's density | 17 trees with up to 5 nodes | — |
+| $`y_5`$, $`y_4`$ | the two answers to one step | 92.397871 m and 92.398138 m | — |
 | tol | the tolerance: allowed gap per unit of $1 + $ size | 1e-6 | longer steps, larger final error |
-| $E$ | worst gap over its allowance | 2.8552 for the 1 s try | reject when above 1 |
-| 0.9; 0.2 and 5 | safety factor; limits on one change of $h$ | as given | more rejected tries (see Try changing) |
-| $C_5$, $C_6$, $\theta$, $T$, $N$ | in the fold: error constants of orders 4 and 5; the fraction of tol a step uses; the run's length; the step count | $T$ = 6 s; $N$ = 10 at 1e-6 | — |
+| $`E`$ | worst gap over its allowance | 2.8552 for the 1 s try | reject when above 1 |
+| 0.9; 0.2 and 5 | safety factor; limits on one change of $`h`$ | as given | more rejected tries (see Try changing) |
+| $`C_5`$, $`C_6`$, $`\theta`$, $`T`$, $`N`$ | in the fold: error constants of orders 4 and 5; the fraction of tol a step uses; the run's length; the step count | $`T`$ = 6 s; $`N`$ = 10 at 1e-6 | — |
 
 ### When it holds
 
@@ -83,7 +89,7 @@ Control **per unit step** divides E by h first and uses the power −1/4. Both v
 
 ### Step 0: fix the stages, and the weights enter linearly
 
-Every order condition is a sum of weights times numbers built from the stage table alone. So once $c$ and $a$ are chosen, finding the weights means solving a linear system. The code does this in exact fractions.
+Every order condition is a sum of weights times numbers built from the stage table alone. So once $`c`$ and $`a`$ are chosen, finding the weights means solving a linear system. The code does this in exact fractions.
 
 ### Step 1: count the conditions
 
@@ -91,42 +97,46 @@ Every order condition is a sum of weights times numbers built from the stage tab
 
 The two numbers in each condition come from the tree's shape:
 
-- $\Phi_i$ of a single node is 1. For a root carrying subtrees, $\Phi_i$ multiplies, over the subtrees, $\sum_j a_{ij}\Phi_j(\text{subtree})$.
-- $\gamma$ is the tree's node count times the $\gamma$ of each subtree.
+- $`\Phi_i`$ of a single node is 1. For a root carrying subtrees, $`\Phi_i`$ multiplies, over the subtrees, $`\sum_j a_{ij}\Phi_j(\text{subtree})`$.
+- $`\gamma`$ is the tree's node count times the $`\gamma`$ of each subtree.
 
-For the bushy tree this gives $\sum_i b_i c_i^4 = 1/5$: the weights must integrate $t^4$ exactly over the step. For the tall tree it gives a chain of four $a$-sums equal to 1/120.
+For the bushy tree this gives $`\sum_i b_i c_i^4 = 1/5`$: the weights must integrate $`t^4`$ exactly over the step. For the tall tree it gives a chain of four $`a`$-sums equal to 1/120.
 
 The code counts 1, 1, 2, 4 and 9 trees with 1 to 5 nodes. So order 4 needs 8 conditions and order 5 needs 17.
 
 ### Step 2: order 5 leaves exactly one set of weights
 
-Leave all seven weights free. The 17 conditions on them have rank 7 (rank: the number of independent equations), and they do not contradict each other. So exactly one set of weights passes them all, and the conditions themselves force $b_2 = 0$:
+Leave all seven weights free. The 17 conditions on them have rank 7 (rank: the number of independent equations), and they do not contradict each other. So exactly one set of weights passes them all, and the conditions themselves force $`b_2 = 0`$:
 
-$$b = \Bigl(\tfrac{35}{384},\ 0,\ \tfrac{500}{1113},\ \tfrac{125}{192},\ -\tfrac{2187}{6784},\ \tfrac{11}{84},\ 0\Bigr).$$
+```math
+b = \Bigl(\tfrac{35}{384},\ 0,\ \tfrac{500}{1113},\ \tfrac{125}{192},\ -\tfrac{2187}{6784},\ \tfrac{11}{84},\ 0\Bigr).
+```
 
-These are the published fifth-order weights. Note $b_7 = 0$, and row 7 of the stage table equals $b$. So stage 7 samples the rate at $y_5$ itself, at the step's end. That sample is the next step's stage 1, so a kept step costs six new samples, not seven.
+These are the published fifth-order weights. Note $`b_7 = 0`$, and row 7 of the stage table equals $`b`$. So stage 7 samples the rate at $`y_5`$ itself, at the step's end. That sample is the next step's stage 1, so a kept step costs six new samples, not seven.
 
 ### Step 3: order 4 leaves a line of weights, and one free number
 
 The 8 conditions for order 4 have rank 6 on the same seven weights. That leaves one free number. Every choice of it gives a valid fourth-order formula.
 
-Fixing $\hat b_7 = 1/40$, the published choice, gives
+Fixing $`\hat b_7 = 1/40`$, the published choice, gives
 
-$$\hat b = \Bigl(\tfrac{5179}{57600},\ 0,\ \tfrac{7571}{16695},\ \tfrac{393}{640},\ -\tfrac{92097}{339200},\ \tfrac{187}{2100},\ \tfrac{1}{40}\Bigr).$$
+```math
+\hat b = \Bigl(\tfrac{5179}{57600},\ 0,\ \tfrac{7571}{16695},\ \tfrac{393}{640},\ -\tfrac{92097}{339200},\ \tfrac{187}{2100},\ \tfrac{1}{40}\Bigr).
+```
 
-$\hat b$ misses all 9 fifth-order conditions; $b$ misses none. On the bushy tree it misses by −71/270000, on the tall tree by 97/120000. These misses are the fourth-order answer's error constants. Each one times $h^5$ and a product of derivatives is part of $y_4 - y_5$.
+$`\hat b`$ misses all 9 fifth-order conditions; $`b`$ misses none. On the bushy tree it misses by −71/270000, on the tall tree by 97/120000. These misses are the fourth-order answer's error constants. Each one times $`h^5`$ and a product of derivatives is part of $`y_4 - y_5`$.
 
-One point on the line is useless: $\hat b_7 = 0$ gives $\hat b = b$. Then the two answers agree exactly, every estimate is 0, and the step grows by the cap of 5 each time. The code runs it: 4 steps, and the height ends −1.254e-1 m off.
+One point on the line is useless: $`\hat b_7 = 0`$ gives $`\hat b = b`$. Then the two answers agree exactly, every estimate is 0, and the step grows by the cap of 5 each time. The code runs it: 4 steps, and the height ends −1.254e-1 m off.
 
 ### Step 4: the gap measures the fourth-order error, so the fifth root sets the step
 
-The gap $y_4 - y_5$ is the fourth-order error minus the fifth-order error, and for a short step the second is smaller by a factor of order $h$. Since the gap grows like $h^5$, the step that brings a ratio E down to 1 is h times the fifth root of 1/E. [Adaptive steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/05-adaptive-step-size.md) proves this rule and explains the safety factor 0.9.
+The gap $`y_4 - y_5`$ is the fourth-order error minus the fifth-order error, and for a short step the second is smaller by a factor of order $`h`$. Since the gap grows like $`h^5`$, the step that brings a ratio E down to 1 is h times the fifth root of 1/E. [Adaptive steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/05-adaptive-step-size.md) proves this rule and explains the safety factor 0.9.
 
 ### Step 5: why the final error is not the tolerance
 
 The final error is the sum of every step's local error, each carried forward and stretched or shrunk by the equation. [From local error to global error](02-convergence-of-one-step-methods.md) proves this. The controller holds something different: the fourth-order error of each step. Two gaps open between the two:
 
-- **The kept answer is not the one measured.** The solver keeps $y_5$, whose local error is smaller than the estimate by a factor of order $h$.
+- **The kept answer is not the one measured.** The solver keeps $`y_5`$, whose local error is smaller than the estimate by a factor of order $`h`$.
 - **The count of steps changes with the tolerance.** A tighter tolerance means shorter steps and more of them.
 
 Tracking both gives a prediction for how the final error scales with tol, written as error ∝ tol^slope. The derivation is in the fold. The code measures each slope by a straight-line fit of log10 error against log10 tol, from 1e-4 to 1e-10:
@@ -143,17 +153,17 @@ The usual setting, per step with the fifth-order answer kept, gives slope 1. Ten
 <details>
 <summary>Detailed proof: the four slopes from the step-size rule</summary>
 
-Let the estimate, the fourth-order local error, be about $C_5 h^5$, and let the fifth-order local error be $C_6 h^6$. Take $C_5$ and $C_6$ as roughly constant over the climb of length $T$, ignore the stretching factors, and count $N \approx T/h$ steps.
+Let the estimate, the fourth-order local error, be about $`C_5 h^5`$, and let the fifth-order local error be $`C_6 h^6`$. Take $`C_5`$ and $`C_6`$ as roughly constant over the climb of length $`T`$, ignore the stretching factors, and count $`N \approx T/h`$ steps.
 
-**Per step.** The controller makes $C_5 h^5 \approx \theta\,\mathrm{tol}$ for a fixed fraction $\theta$ below 1, so $h \propto \mathrm{tol}^{1/5}$.
+**Per step.** The controller makes $`C_5 h^5 \approx \theta\,\mathrm{tol}`$ for a fixed fraction $`\theta`$ below 1, so $`h \propto \mathrm{tol}^{1/5}`$.
 
-- Keep $y_4$: each step adds $\theta\,\mathrm{tol}$, and $N \propto \mathrm{tol}^{-1/5}$, so the final error $\propto \mathrm{tol}^{4/5}$.
-- Keep $y_5$: each step adds $C_6 h^6 = (C_6/C_5)\,h\,\theta\,\mathrm{tol}$. Summing $h$ over the steps gives $T$, so the final error $\approx T(C_6/C_5)\theta\,\mathrm{tol} \propto \mathrm{tol}$.
+- Keep $`y_4`$: each step adds $`\theta\,\mathrm{tol}`$, and $`N \propto \mathrm{tol}^{-1/5}`$, so the final error $`\propto \mathrm{tol}^{4/5}`$.
+- Keep $`y_5`$: each step adds $`C_6 h^6 = (C_6/C_5)\,h\,\theta\,\mathrm{tol}`$. Summing $`h`$ over the steps gives $`T`$, so the final error $`\approx T(C_6/C_5)\theta\,\mathrm{tol} \propto \mathrm{tol}`$.
 
-**Per unit step.** The controller makes $C_5 h^5 / h \approx \theta\,\mathrm{tol}$, so $h \propto \mathrm{tol}^{1/4}$.
+**Per unit step.** The controller makes $`C_5 h^5 / h \approx \theta\,\mathrm{tol}`$, so $`h \propto \mathrm{tol}^{1/4}`$.
 
-- Keep $y_4$: each step adds $\theta\,\mathrm{tol}\,h$, which sums to $\theta T\,\mathrm{tol} \propto \mathrm{tol}$.
-- Keep $y_5$: each step adds $(C_6/C_5)\,h\cdot\theta\,\mathrm{tol}\,h$, which sums to $T(C_6/C_5)\theta\,\mathrm{tol}\,h \propto \mathrm{tol}^{5/4}$.
+- Keep $`y_4`$: each step adds $`\theta\,\mathrm{tol}\,h`$, which sums to $`\theta T\,\mathrm{tol} \propto \mathrm{tol}`$.
+- Keep $`y_5`$: each step adds $`(C_6/C_5)\,h\cdot\theta\,\mathrm{tol}\,h`$, which sums to $`T(C_6/C_5)\theta\,\mathrm{tol}\,h \propto \mathrm{tol}^{5/4}`$.
 
 The measured slopes sit a little below theory, because the constants are not really fixed along the climb and local errors of opposite sign partly cancel. One sign of this: the height error changes sign between tol 1e-6 and 1e-7, and at 1e-7 and 1e-8 it is almost the same, −5.54e-8 m and −5.19e-8 m.
 
@@ -174,8 +184,8 @@ One trial step of h = 1 s from the exact burnout state, with tol = 1e-6.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | start | closed form at 1.5 s | 43.758903 m, 56.503865 m/s |
-| fifth-order answer | seven stages, weights $b$ | 92.397871 m, 41.327898 m/s |
-| fourth-order answer | the same stages, weights $\hat b$ | 92.398138 m, 41.327909 m/s |
+| fifth-order answer | seven stages, weights $`b`$ | 92.397871 m, 41.327898 m/s |
+| fourth-order answer | the same stages, weights $`\hat b`$ | 92.398138 m, 41.327909 m/s |
 | gaps | fourth minus fifth | 2.667e-4 m, 1.093e-5 m/s |
 | allowances | 1e-6 × (1 + 92.397871); 1e-6 × (1 + 56.503865) | 9.340e-5 m, 5.750e-5 m/s |
 | worst ratio E | 2.667e-4 ÷ 9.340e-5, the height | 2.8552, so reject |
@@ -191,7 +201,7 @@ The estimate is honest here. The true error of the fourth-order height at 2.5 s 
 | --- | --- | --- |
 | Step across burnout blindly | speed off by −3.588e-3 m/s after one step; −1.138e-2 m in height at 6 s | the step's samples straddle a jump in the push, and both answers share them |
 | Keep the fourth-order answer | 1.75e-4 m at 6 s, against 3.10e-6 m | the estimate is now the kept error; it is accurate but larger |
-| Choose $\hat b_7 = 0$, so $\hat b = b$ | 4 steps; height off by −1.254e-1 m | every estimate is 0, so nothing stops the step growing |
+| Choose $`\hat b_7 = 0`$, so $`\hat b = b`$ | 4 steps; height off by −1.254e-1 m | every estimate is 0, so nothing stops the step growing |
 
 The fix for the first row is to end a step exactly at burnout: then 10 steps, none rejected, reach 6 s with a height error of 3.101e-6 m. The blind step that crossed burnout had only its first sample before burnout. Both answers weight that sample almost equally, 35/384 against 5179/57600. So both answers missed the push by nearly the same amount, and their gap stayed under its allowance.
 
@@ -600,12 +610,12 @@ ALL CHECKS PASS
 
 Lean proves Steps 2 and 3 exactly, for the seven Dormand-Prince stages: which weights pass the order conditions, and which miss.
 
-- Leave all seven weights free. They pass the condition of every tree with up to 5 nodes exactly when they are the published weights $b$.
-- They pass every condition up to 4 nodes exactly on the line through $b$ and $\hat b$: one free number.
-- $\hat b$ misses the condition of every tree with 5 nodes: by −71/270000 on the bushy tree, and by 97/120000 on the tall tree.
-- The stage times are c = 0, 1/5, 3/10, 4/5, 8/9, 1, 1, and row 7 of the stage table equals $b$.
-- The bushy and tall trees have densities 5 and 120, and $b$ passes the bushy tree's condition: $\sum_i b_i c_i^4 = 1/5$.
-- Choosing $\hat b_7 = 0$ on the line gives back $b$, and the two first weights differ by 71/57600.
+- Leave all seven weights free. They pass the condition of every tree with up to 5 nodes exactly when they are the published weights $`b`$.
+- They pass every condition up to 4 nodes exactly on the line through $`b`$ and $`\hat b`$: one free number.
+- $`\hat b`$ misses the condition of every tree with 5 nodes: by −71/270000 on the bushy tree, and by 97/120000 on the tall tree.
+- The stage times are c = 0, 1/5, 3/10, 4/5, 8/9, 1, 1, and row 7 of the stage table equals $`b`$.
+- The bushy and tall trees have densities 5 and 120, and $`b`$ passes the bushy tree's condition: $`\sum_i b_i c_i^4 = 1/5`$.
+- Choosing $`\hat b_7 = 0`$ on the line gives back $`b`$, and the two first weights differ by 71/57600.
 
 The rocket's flight, the error estimates, the step rule, the four slopes and every row of What breaks are left to Python and Rust.
 
@@ -1561,7 +1571,7 @@ example : (35/384 : ℚ) - 5179/57600 = 71/57600 := by norm_num
 > - **Reading tol as the final error.** At tol 1e-4 the final height error is 1.20e-3 m. At 1e-8 it is −5.19e-8 m. The error is roughly proportional to tol, not equal to it.
 > - **Expecting ten times tighter to mean ten times smaller under every rule.** Per step with the fourth-order answer kept, the measured slope is 0.73: ten times tighter buys clearly less than ten times smaller.
 > - **Choosing per unit step to save work.** At 1e-10 it takes 81 steps against 49.
-> - **Making the two weight sets equal.** With $\hat b = b$ every estimate is 0, the solver takes 4 steps, and the height ends −1.254e-1 m off.
+> - **Making the two weight sets equal.** With $`\hat b = b`$ every estimate is 0, the solver takes 4 steps, and the height ends −1.254e-1 m off.
 
 ---
 

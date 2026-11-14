@@ -37,51 +37,57 @@ Orange: the call's delta, falling as the strike rises. Green: the put's delta wi
 
 ## The formula
 
-Notation first, in words. $S$ is Acme's price today, called the spot price or spot. $K$ is the strike, $T$ the years to expiry, $r$ the riskless rate, $q$ the dividend yield and $\sigma$ (sigma) the volatility, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). $\Delta$ (capital Greek delta) is the option's delta.
+Notation first, in words. $`S`$ is Acme's price today, called the spot price or spot. $`K`$ is the strike, $`T`$ the years to expiry, $`r`$ the riskless rate, $`q`$ the dividend yield and $`\sigma`$ (sigma) the volatility, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). $`\Delta`$ (capital Greek delta) is the option's delta.
 
-$N(x)$ is the area under the standard bell curve to the left of $x$, a probability between 0 and 1. $N^{-1}(p)$ runs that backwards: the point whose left-hand area is a given probability, called the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+$`N(x)`$ is the area under the standard bell curve to the left of $`x`$, a probability between 0 and 1. $`N^{-1}(p)`$ runs that backwards: the point whose left-hand area is a given probability, called the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
 
-For a call with delta $\Delta$ strictly between 0 and $e^{-qT}$:
+For a call with delta $`\Delta`$ strictly between 0 and $`e^{-qT}`$:
 
-$$K = S\,\exp\!\Big(-\sigma\sqrt{T}\;N^{-1}\!\big(\Delta\,e^{qT}\big) + \big(r - q + \tfrac12\sigma^2\big)T\Big)$$
+```math
+K = S\,\exp\!\Big(-\sigma\sqrt{T}\;N^{-1}\!\big(\Delta\,e^{qT}\big) + \big(r - q + \tfrac12\sigma^2\big)T\Big)
+```
 
 **Read it aloud:** undo the dividend drag on the delta, look up where that area sits on the bell curve, turn that point into a log-distance between strike and spot, and step that far from today's price.
 
-For a put the delta is negative, strictly between $-e^{-qT}$ and 0. Its strike uses the same formula with the quantile's sign flipped:
+For a put the delta is negative, strictly between $`-e^{-qT}`$ and 0. Its strike uses the same formula with the quantile's sign flipped:
 
-$$K = S\,\exp\!\Big(+\sigma\sqrt{T}\;N^{-1}\!\big(\lvert\Delta\rvert\,e^{qT}\big) + \big(r - q + \tfrac12\sigma^2\big)T\Big)$$
+```math
+K = S\,\exp\!\Big(+\sigma\sqrt{T}\;N^{-1}\!\big(\lvert\Delta\rvert\,e^{qT}\big) + \big(r - q + \tfrac12\sigma^2\big)T\Big)
+```
 
 Outside those ranges there is no strike at all.
 
 | Symbol | Plain meaning | In our example | Push it up and the strike… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100 | rises in proportion |
-| $K$ | the strike: the price the holder may trade at on expiry day | $119.93 call, $92.15 put | (the answer) |
-| $T$ | time to expiry, in years | 1 | call strike moves further out |
-| $r$ | riskless rate, continuously compounded | 5% | rises, both sides |
-| $q$ | dividend yield, continuously compounded | 2% | falls, and the call's delta ceiling drops |
-| $\sigma$ | volatility: how jumpy Acme is, per year. Say "sigma". | 20% | call strike rises, put strike falls: the wings (the far-out strikes) spread |
-| $\Delta$ | delta: shares that move one-for-one with the option | 0.25 call, −0.25 put | call strike falls toward spot |
-| $N(x)$ | bell-curve area to the left of $x$ | $N(d_1) = 0.2551$ | |
-| $N^{-1}(p)$ | the normal quantile: the point with a given area to its left | $N^{-1}(0.2551) = -0.6587$ | |
-| $d_1$ | log-distance from strike to spot, plus drift, in wiggle units $\sigma\sqrt{T}$ | −0.6587 call, +0.6587 put | |
-| $d_2$ | $d_1$ minus one wiggle unit; belongs to the cash half of the price, not to delta | | |
-| $e^{-qT}$ | dividend drag: the fraction of a share bought today that grows to one share by expiry, dividends reinvested | 0.9802 | |
+| $`S`$ | Acme's price today | $100 | rises in proportion |
+| $`K`$ | the strike: the price the holder may trade at on expiry day | $119.93 call, $92.15 put | (the answer) |
+| $`T`$ | time to expiry, in years | 1 | call strike moves further out |
+| $`r`$ | riskless rate, continuously compounded | 5% | rises, both sides |
+| $`q`$ | dividend yield, continuously compounded | 2% | falls, and the call's delta ceiling drops |
+| $`\sigma`$ | volatility: how jumpy Acme is, per year. Say "sigma". | 20% | call strike rises, put strike falls: the wings (the far-out strikes) spread |
+| $`\Delta`$ | delta: shares that move one-for-one with the option | 0.25 call, −0.25 put | call strike falls toward spot |
+| $`N(x)`$ | bell-curve area to the left of $`x`$ | $`N(d_1) = 0.2551`$ | |
+| $`N^{-1}(p)`$ | the normal quantile: the point with a given area to its left | $`N^{-1}(0.2551) = -0.6587`$ | |
+| $`d_1`$ | log-distance from strike to spot, plus drift, in wiggle units $`\sigma\sqrt{T}`$ | −0.6587 call, +0.6587 put | |
+| $`d_2`$ | $`d_1`$ minus one wiggle unit; belongs to the cash half of the price, not to delta | | |
+| $`e^{-qT}`$ | dividend drag: the fraction of a share bought today that grows to one share by expiry, dividends reinvested | 0.9802 | |
 
 The helper, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}
+```
 
-In words: how far below the spot the strike sits, in logs, plus the drift, counted in wiggle units. The strike formula is this line solved for $K$.
+In words: how far below the spot the strike sits, in logs, plus the drift, counted in wiggle units. The strike formula is this line solved for $`K`$.
 
-The deltas themselves come from [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): a call's is $e^{-qT}N(d_1)$ and a put's is $-e^{-qT}N(-d_1)$.
+The deltas themselves come from [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): a call's is $`e^{-qT}N(d_1)`$ and a put's is $`-e^{-qT}N(-d_1)`$.
 
 ### When it holds
 
-- **One volatility for every strike.** The formula feeds in a single $\sigma$. Real markets show a smile (a different implied volatility at each strike, see [Implied volatility](01-implied-volatility.md)). Then $\sigma$ depends on the $K$ being solved for. The one-line answer becomes a starting guess, and the strike is found by repeating the formula with the smile's volatility at the last guess until it settles.
+- **One volatility for every strike.** The formula feeds in a single $`\sigma`$. Real markets show a smile (a different implied volatility at each strike, see [Implied volatility](01-implied-volatility.md)). Then $`\sigma`$ depends on the $`K`$ being solved for. The one-line answer becomes a starting guess, and the strike is found by repeating the formula with the smile's volatility at the last guess until it settles.
 - **Spot delta, premium not included.** This card's delta is the change in option value per dollar of Acme, paid for in cash. Currency markets also quote forward deltas and premium-included deltas. Those are different functions of the strike with different inverses; feeding one into this formula gives the wrong strike.
 - **Black-Scholes dynamics.** Delta here is the model's delta. If Acme's price can jump, the hedge ratio a desk actually uses differs, but the quoting convention still uses this formula to turn the label into a strike.
-- **The delta is inside the range.** A call delta at or above $e^{-qT}$, or at or below 0, has no strike. The formula signals this: $N^{-1}$ is asked for the point with area 1 or more, or 0 or less, and there is none.
+- **The delta is inside the range.** A call delta at or above $`e^{-qT}`$, or at or below 0, has no strike. The formula signals this: $`N^{-1}`$ is asked for the point with area 1 or more, or 0 or less, and there is none.
 
 Conventions verified 2026-09-19: equity options quote spot delta without premium; currency options use the conventions listed in Reiswich and Wystup (2010), cited below.
 
@@ -95,48 +101,48 @@ A formula that takes strikes to deltas can be run in reverse only if two differe
 
 ### Step 1: delta falls as the strike rises
 
-Raise $K$ and $\ln(S/K)$ falls, so $d_1$ falls. Precisely, the rate of change of $d_1$ with $K$ is $-1/(K\sigma\sqrt{T})$, negative for every positive strike. The bell-curve area $N$ grows with its argument and never stalls, because the bell curve's height is positive everywhere. So $N(d_1)$ falls strictly, and the call's delta $e^{-qT}N(d_1)$ falls strictly with it.
+Raise $`K`$ and $`\ln(S/K)`$ falls, so $`d_1`$ falls. Precisely, the rate of change of $`d_1`$ with $`K`$ is $`-1/(K\sigma\sqrt{T})`$, negative for every positive strike. The bell-curve area $`N`$ grows with its argument and never stalls, because the bell curve's height is positive everywhere. So $`N(d_1)`$ falls strictly, and the call's delta $`e^{-qT}N(d_1)`$ falls strictly with it.
 
-A put's delta is the call's delta minus a constant: $-e^{-qT}N(-d_1) = e^{-qT}N(d_1) - e^{-qT}$, because $N(-x) = 1 - N(x)$. Subtracting a constant keeps the direction. Both deltas fall as the strike rises. That is the uniqueness half: no two strikes share a delta.
+A put's delta is the call's delta minus a constant: $`-e^{-qT}N(-d_1) = e^{-qT}N(d_1) - e^{-qT}`$, because $`N(-x) = 1 - N(x)`$. Subtracting a constant keeps the direction. Both deltas fall as the strike rises. That is the uniqueness half: no two strikes share a delta.
 
 ### Step 2: the two ends set the range
 
-Push the strike toward zero. The option becomes a near-certain claim on the share, $d_1$ runs to plus infinity, $N(d_1)$ climbs to 1, and the call's delta climbs to $e^{-qT} = 0.9802$. It never gets there: at every real strike some chance remains that Acme ends below it.
+Push the strike toward zero. The option becomes a near-certain claim on the share, $`d_1`$ runs to plus infinity, $`N(d_1)`$ climbs to 1, and the call's delta climbs to $`e^{-qT} = 0.9802`$. It never gets there: at every real strike some chance remains that Acme ends below it.
 
-Push the strike toward infinity. $d_1$ runs to minus infinity and the call's delta sinks to 0.
+Push the strike toward infinity. $`d_1`$ runs to minus infinity and the call's delta sinks to 0.
 
-The delta moves without jumps in between. So it passes through every value strictly between 0 and $0.9802$, and by Step 1 it passes through each exactly once. For the put, the same argument gives every value strictly between $-0.9802$ and 0.
+The delta moves without jumps in between. So it passes through every value strictly between 0 and $`0.9802`$, and by Step 1 it passes through each exactly once. For the put, the same argument gives every value strictly between $`-0.9802`$ and 0.
 
-The ceiling is below 1 because of the dividend. A call is a claim on a share at expiry, and the dividends paid before then go to whoever holds the share now. Hedging one share at expiry needs only $e^{-qT}$ shares today, reinvesting the dividends. So even a call certain to be exercised has delta $0.9802$, not 1. A delta of 0.99 would need $N(d_1) = 0.99 \times e^{0.02} = 1.0100$, an area larger than the whole bell curve. No strike exists.
+The ceiling is below 1 because of the dividend. A call is a claim on a share at expiry, and the dividends paid before then go to whoever holds the share now. Hedging one share at expiry needs only $`e^{-qT}`$ shares today, reinvesting the dividends. So even a call certain to be exercised has delta $`0.9802`$, not 1. A delta of 0.99 would need $`N(d_1) = 0.99 \times e^{0.02} = 1.0100`$, an area larger than the whole bell curve. No strike exists.
 
 <details>
 <summary>Detailed proof</summary>
 
-Fix $S, T, \sigma > 0$ and real $r, q$. Write $v = \sigma\sqrt{T}$ and $m = (r - q + \tfrac12\sigma^2)T$, so $d_1(K) = (\ln S - \ln K + m)/v$ for $K > 0$.
+Fix $`S, T, \sigma > 0`$ and real $`r, q`$. Write $`v = \sigma\sqrt{T}`$ and $`m = (r - q + \tfrac12\sigma^2)T`$, so $`d_1(K) = (\ln S - \ln K + m)/v`$ for $`K > 0`$.
 
-*Monotone.* $d_1$ is differentiable with $d_1'(K) = -1/(Kv) < 0$. $N$ is differentiable with $N'(x) = \varphi(x) = e^{-x^2/2}/\sqrt{2\pi} > 0$ (the bell curve's height). By the chain rule the call delta $\Delta_c(K) = e^{-qT}N(d_1(K))$ has derivative $-e^{-qT}\varphi(d_1)/(Kv) < 0$ everywhere, so it is strictly decreasing. $\Delta_p(K) = \Delta_c(K) - e^{-qT}$ has the same derivative.
+*Monotone.* $`d_1`$ is differentiable with $`d_1'(K) = -1/(Kv) < 0`$. $`N`$ is differentiable with $`N'(x) = \varphi(x) = e^{-x^2/2}/\sqrt{2\pi} > 0`$ (the bell curve's height). By the chain rule the call delta $`\Delta_c(K) = e^{-qT}N(d_1(K))`$ has derivative $`-e^{-qT}\varphi(d_1)/(Kv) < 0`$ everywhere, so it is strictly decreasing. $`\Delta_p(K) = \Delta_c(K) - e^{-qT}`$ has the same derivative.
 
-*Limits.* As $K \to 0^+$, $\ln K \to -\infty$, so $d_1 \to +\infty$ and $N(d_1) \to 1$. As $K \to \infty$, $d_1 \to -\infty$ and $N(d_1) \to 0$. So $\Delta_c(K)$ tends to $e^{-qT}$ and to 0 at the two ends. Since $0 < N(x) < 1$ at every finite $x$, neither limit is reached.
+*Limits.* As $`K \to 0^+`$, $`\ln K \to -\infty`$, so $`d_1 \to +\infty`$ and $`N(d_1) \to 1`$. As $`K \to \infty`$, $`d_1 \to -\infty`$ and $`N(d_1) \to 0`$. So $`\Delta_c(K)`$ tends to $`e^{-qT}`$ and to 0 at the two ends. Since $`0 < N(x) < 1`$ at every finite $`x`$, neither limit is reached.
 
-*Range and uniqueness.* For $0 < \Delta < e^{-qT}$, the limits give a small strike where $\Delta_c(K) > \Delta$ and a larger one where $\Delta_c(K) < \Delta$. $\Delta_c(K)$ is continuous, so the intermediate value theorem gives a root in between. Strict decrease makes it the only root on all of $(0, \infty)$. For $\Delta \ge e^{-qT}$ or $\Delta \le 0$ the strict bounds $0 < \Delta_c < e^{-qT}$ exclude every $K$. The put follows by the shift $\Delta_p = \Delta_c - e^{-qT}$.
+*Range and uniqueness.* For $`0 < \Delta < e^{-qT}`$, the limits give a small strike where $`\Delta_c(K) > \Delta`$ and a larger one where $`\Delta_c(K) < \Delta`$. $`\Delta_c(K)`$ is continuous, so the intermediate value theorem gives a root in between. Strict decrease makes it the only root on all of $`(0, \infty)`$. For $`\Delta \ge e^{-qT}`$ or $`\Delta \le 0`$ the strict bounds $`0 < \Delta_c < e^{-qT}`$ exclude every $`K`$. The put follows by the shift $`\Delta_p = \Delta_c - e^{-qT}`$.
 
-*Closed form.* $N$ is a strictly increasing continuous bijection from the real line onto $(0, 1)$, so $N^{-1}$ exists on $(0,1)$. From $e^{-qT}N(d_1) = \Delta$: $d_1 = N^{-1}(\Delta e^{qT})$, then $\ln(K/S) = m - v\,d_1$, which is the card's formula. For the put, $N(-d_1) = \lvert\Delta\rvert e^{qT}$ gives $d_1 = -N^{-1}(\lvert\Delta\rvert e^{qT})$.
+*Closed form.* $`N`$ is a strictly increasing continuous bijection from the real line onto $`(0, 1)`$, so $`N^{-1}`$ exists on $`(0,1)`$. From $`e^{-qT}N(d_1) = \Delta`$: $`d_1 = N^{-1}(\Delta e^{qT})`$, then $`\ln(K/S) = m - v\,d_1`$, which is the card's formula. For the put, $`N(-d_1) = \lvert\Delta\rvert e^{qT}`$ gives $`d_1 = -N^{-1}(\lvert\Delta\rvert e^{qT})`$.
 
 </details>
 
 ### Step 3: peel the formula, one layer at a time
 
-The call's delta is three layers wrapped around $K$: a log, a bell-curve area, and a dividend factor. Undo them from the outside in.
+The call's delta is three layers wrapped around $`K`$: a log, a bell-curve area, and a dividend factor. Undo them from the outside in.
 
-1. Divide by the dividend drag: $N(d_1) = \Delta\,e^{qT}$. For the 25-delta call that is $0.25 \times e^{0.02} = 0.2551$.
-2. Undo the bell-curve area with the quantile: $d_1 = N^{-1}(0.2551) = -0.6587$. The point is negative because the area is below one half: the strike sits above $105.13, the balance point found in Step 4.
-3. Undo the definition of $d_1$: multiply by $\sigma\sqrt{T}$, subtract the drift, and read off $\ln(K/S) = -\sigma\sqrt{T}\,d_1 + (r - q + \tfrac12\sigma^2)T$. Then exponentiate.
+1. Divide by the dividend drag: $`N(d_1) = \Delta\,e^{qT}`$. For the 25-delta call that is $`0.25 \times e^{0.02} = 0.2551`$.
+2. Undo the bell-curve area with the quantile: $`d_1 = N^{-1}(0.2551) = -0.6587`$. The point is negative because the area is below one half: the strike sits above $105.13, the balance point found in Step 4.
+3. Undo the definition of $`d_1`$: multiply by $`\sigma\sqrt{T}`$, subtract the drift, and read off $`\ln(K/S) = -\sigma\sqrt{T}\,d_1 + (r - q + \tfrac12\sigma^2)T`$. Then exponentiate.
 
-For a put the target is $N(-d_1) = \lvert\Delta\rvert e^{qT}$, so the quantile's sign flips and the strike lands below spot.
+For a put the target is $`N(-d_1) = \lvert\Delta\rvert e^{qT}`$, so the quantile's sign flips and the strike lands below spot.
 
 ### Step 4: the middle of the range
 
-Where do the call's and the put's deltas balance? Where $N(d_1) = N(-d_1)$, which forces $d_1 = 0$ and $K = S\,e^{(r - q + \frac12\sigma^2)T} = \$105.13$. There the call's delta is $0.4901$ and the put's is $-0.4901$: a call and a put there together carry no delta. Dealers call this the delta-neutral strike. It sits above the forward price $F = S\,e^{(r-q)T} = \$103.05$ (the price agreed today for delivery of one share at expiry), because $d_1$ carries the extra half wiggle-squared.
+Where do the call's and the put's deltas balance? Where $`N(d_1) = N(-d_1)`$, which forces $`d_1 = 0`$ and $`K = S\,e^{(r - q + \frac12\sigma^2)T} = \$105.13`$. There the call's delta is $`0.4901`$ and the put's is $`-0.4901`$: a call and a put there together carry no delta. Dealers call this the delta-neutral strike. It sits above the forward price $`F = S\,e^{(r-q)T} = \$103.05`$ (the price agreed today for delivery of one share at expiry), because $`d_1`$ carries the extra half wiggle-squared.
 
 The other road to the strike skips the quantile: guess a strike, compute its delta, and narrow the guess by halving an interval until the delta matches. That is bisection, and it works because Step 1 made delta one-directional. The method itself belongs to [Solving for implied volatility](02-implied-volatility-by-newton-and-bisection.md); the code below uses it as its second road.
 
@@ -144,23 +150,23 @@ The other road to the strike skips the quantile: guess a strike, compute its del
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year. Target: the 25-delta call.
+Acme: $`S = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year. Target: the 25-delta call.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| ceiling $e^{-qT}$ | $e^{-0.02}$ | $0.9802$ |
-| is 0.25 inside $(0, 0.9802)$? | yes | a strike exists, and only one |
-| target area $N(d_1)$ | $0.25 \times e^{0.02}$ | $0.2551$ |
-| $d_1 = N^{-1}(0.2551)$ | bell-curve table, backwards | $-0.6587$ |
-| drift $(r - q + \tfrac12\sigma^2)T$ | $0.05 - 0.02 + 0.02$ | $0.05$ |
-| $\ln(K/S)$ | $0.6587 \times 0.20 + 0.05$ | $0.1817$ |
-| **strike $K$** | $100 \times e^{0.1817}$ | **$\$119.93$** |
+| ceiling $`e^{-qT}`$ | $`e^{-0.02}`$ | $`0.9802`$ |
+| is 0.25 inside $`(0, 0.9802)`$? | yes | a strike exists, and only one |
+| target area $`N(d_1)`$ | $`0.25 \times e^{0.02}`$ | $`0.2551`$ |
+| $`d_1 = N^{-1}(0.2551)`$ | bell-curve table, backwards | $`-0.6587`$ |
+| drift $`(r - q + \tfrac12\sigma^2)T`$ | $`0.05 - 0.02 + 0.02`$ | $`0.05`$ |
+| $`\ln(K/S)`$ | $`0.6587 \times 0.20 + 0.05`$ | $`0.1817`$ |
+| **strike $`K`$** | $`100 \times e^{0.1817}`$ | **$`\$119.93`$** |
 
-The 25-delta put runs the same table with $d_1 = +0.6587$: $\ln(K/S) = -0.6587 \times 0.20 + 0.05 = -0.0817$, so $K = \$92.15$.
+The 25-delta put runs the same table with $`d_1 = +0.6587`$: $`\ln(K/S) = -0.6587 \times 0.20 + 0.05 = -0.0817`$, so $`K = \$92.15`$.
 
 A client buying the 25-delta call is buying the right to pay $119.93 for a share now at $100. One such call moves about a quarter as much as a share does, and a dealer who sells it hedges with a quarter of a share.
 
-Three strikes from the same market, for scale. At $K = \$100$ the call's delta is $0.5869$, the figure on the delta card. The 10-delta call sits further out, at $135.53; the 10-delta put further down, at $81.54.
+Three strikes from the same market, for scale. At $`K = \$100`$ the call's delta is $`0.5869`$, the figure on the delta card. The 10-delta call sits further out, at $135.53; the 10-delta put further down, at $81.54.
 
 ```
 strike named by each delta, $5 per block
@@ -179,10 +185,10 @@ Right answers: 25-delta call $119.93, 25-delta put $92.15.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Solve $N(d_1) = 0.25$, forgetting $e^{qT}$ | $120.31 | Treated the dividend drag as 1. The strike lands 38 cents too far out. |
-| Use $d_2$ where $d_1$ belongs | $115.23 | $d_2$ prices the cash half of the option; delta is $d_1$ alone. Almost five dollars off. |
-| Read the 25-delta put as the 75-delta call | $90.97 | Call and put deltas at one strike differ by $e^{-qT} = 0.9802$, not by 1. At the true put strike the call's delta is $0.7302$. |
-| Ask for a 0.99-delta call | no strike | $N(d_1)$ would have to be $1.0100$. The ceiling is $0.9802$. |
+| Solve $`N(d_1) = 0.25`$, forgetting $`e^{qT}`$ | $120.31 | Treated the dividend drag as 1. The strike lands 38 cents too far out. |
+| Use $`d_2`$ where $`d_1`$ belongs | $115.23 | $`d_2`$ prices the cash half of the option; delta is $`d_1`$ alone. Almost five dollars off. |
+| Read the 25-delta put as the 75-delta call | $90.97 | Call and put deltas at one strike differ by $`e^{-qT} = 0.9802`$, not by 1. At the true put strike the call's delta is $`0.7302`$. |
+| Ask for a 0.99-delta call | no strike | $`N(d_1)`$ would have to be $`1.0100`$. The ceiling is $`0.9802`$. |
 
 ---
 
@@ -192,9 +198,9 @@ The code builds its own bell-curve area and its own quantile, then reaches each 
 
 1. **Road 1 is the closed form.** Newton's method (improve a guess by following the slope of the curve, again and again) on the bell-curve area gives the quantile, and the formula does the rest.
 2. **Road 2 never inverts the bell curve.** It bisects on the strike until the strike-to-delta formula hits the target.
-3. **Road 3 checks the meaning of the answer.** It prices the option at the found strike by Simpson's rule (adding up thin slices under the payoff times the bell curve, with no $N$ and no $d_1$). Then it nudges Acme by one cent each way and reads the delta off the change in price. That delta must come back as 0.25.
+3. **Road 3 checks the meaning of the answer.** It prices the option at the found strike by Simpson's rule (adding up thin slices under the payoff times the bell curve, with no $`N`$ and no $`d_1`$). Then it nudges Acme by one cent each way and reads the delta off the change in price. That delta must come back as 0.25.
 
-The same integral reprices the house call at $9.23 as a fourth anchor. Python's bell-curve area is the Taylor series (an endless sum of powers of $x$) of the error function (erf, a rescaled bell-curve area), written out. Rust's is Simpson's rule under the bell curve. The two languages share no bell-curve code.
+The same integral reprices the house call at $9.23 as a fourth anchor. Python's bell-curve area is the Taylor series (an endless sum of powers of $`x`$) of the error function (erf, a rescaled bell-curve area), written out. Rust's is Simpson's rule under the bell curve. The two languages share no bell-curve code.
 
 ### Python
 
@@ -533,12 +539,12 @@ The two outputs agree line for line, although one language sums a series and the
 Lean proves the method sound for every positive spot, volatility and time, and for any rates.
 
 - Delta falls as the strike rises. Both the call's delta and the put's delta are strictly decreasing over all positive strikes.
-- A call delta names exactly one positive strike if and only if it lies strictly between 0 and $e^{-qT}$.
-- A put delta names exactly one positive strike if and only if it lies strictly between $-e^{-qT}$ and 0.
-- Take a call delta $\Delta$ inside its range, and a point $z$ with $N(z) = \Delta e^{qT}$. Then the card's call formula gives a strike whose delta is exactly $\Delta$.
-- Take a put delta $\Delta$ inside its range, and a point $z$ with $N(z) = \lvert\Delta\rvert e^{qT}$. Then the card's put formula gives a strike whose delta is exactly $\Delta$.
+- A call delta names exactly one positive strike if and only if it lies strictly between 0 and $`e^{-qT}`$.
+- A put delta names exactly one positive strike if and only if it lies strictly between $`-e^{-qT}`$ and 0.
+- Take a call delta $`\Delta`$ inside its range, and a point $`z`$ with $`N(z) = \Delta e^{qT}`$. Then the card's call formula gives a strike whose delta is exactly $`\Delta`$.
+- Take a put delta $`\Delta`$ inside its range, and a point $`z`$ with $`N(z) = \lvert\Delta\rvert e^{qT}`$. Then the card's put formula gives a strike whose delta is exactly $`\Delta`$.
 - On the house market, no strike has a call delta of 0.99.
-- On the house market, $d_1 = 0$ at the delta-neutral strike $S e^{0.05}$.
+- On the house market, $`d_1 = 0`$ at the delta-neutral strike $`S e^{0.05}`$.
 
 The decimal strikes, such as $119.93 and $92.15, and the delta read off the Simpson premium are left to the Python and Rust checks.
 
@@ -837,11 +843,11 @@ example : (730199 : ℕ) + 250000 = 980199 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating the delta label as if it were a probability of finishing in the money.** It is not. The 25-delta call is not "the call with a 25 percent chance of paying". The risk-neutral chance of exercise (the chance the pricing model assigns) is $N(d_2)$, which sits one wiggle unit below $N(d_1)$, and delta also carries the dividend drag. Solving $e^{-qT}N(d_2) = 0.25$ instead puts the 25-delta call at $115.23, not $119.93.
+> **Treating the delta label as if it were a probability of finishing in the money.** It is not. The 25-delta call is not "the call with a 25 percent chance of paying". The risk-neutral chance of exercise (the chance the pricing model assigns) is $`N(d_2)`$, which sits one wiggle unit below $`N(d_1)`$, and delta also carries the dividend drag. Solving $`e^{-qT}N(d_2) = 0.25`$ instead puts the 25-delta call at $115.23, not $119.93.
 >
-> - **Forgetting the dividend drag.** Solving $N(d_1) = 0.25$ gives $120.31. The error grows with the dividend yield and the maturity.
-> - **Mirroring the put through 1 instead of $e^{-qT}$.** A 25-delta put is the 73.02-delta call, not the 75-delta call. Using 75 gives $90.97 instead of $92.15.
-> - **Asking for a delta the formula cannot produce.** A call delta at or above $e^{-qT}$ returns an area of 1 or more to the quantile. A solver that does not check the range first either crashes or returns a strike that does not have the requested delta.
+> - **Forgetting the dividend drag.** Solving $`N(d_1) = 0.25`$ gives $120.31. The error grows with the dividend yield and the maturity.
+> - **Mirroring the put through 1 instead of $`e^{-qT}`$.** A 25-delta put is the 73.02-delta call, not the 75-delta call. Using 75 gives $90.97 instead of $92.15.
+> - **Asking for a delta the formula cannot produce.** A call delta at or above $`e^{-qT}`$ returns an area of 1 or more to the quantile. A solver that does not check the range first either crashes or returns a strike that does not have the requested delta.
 > - **Mixing delta conventions.** A premium-included or forward delta from a currency desk is a different number from this card's spot delta, and the same "25" names a different strike.
 
 ---
@@ -854,15 +860,15 @@ example : (730199 : ℕ) + 250000 = 980199 := by norm_num
 - **Premium targets.** The sibling problem fixes the price instead of the delta and asks for the strike: [Strike or spot from a target premium](04-strike-or-spot-from-a-target-premium.md). Reading the forward and dividend back from market prices is [Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md).
 
 > **Say it back**
-> A delta quote names an option by how much it moves with the share instead of by its strike. Delta falls strictly as the strike rises, from a ceiling of $e^{-qT}$ down to zero, so each delta inside that range names one strike and none outside does. Divide out the dividend drag, run the bell curve backwards with the normal quantile, and solve $d_1$ for the strike. On the house market the 25-delta call is $119.93 and the 25-delta put is $92.15, and no strike carries a delta of 0.99.
+> A delta quote names an option by how much it moves with the share instead of by its strike. Delta falls strictly as the strike rises, from a ceiling of $`e^{-qT}`$ down to zero, so each delta inside that range names one strike and none outside does. Divide out the dividend drag, run the bell curve backwards with the normal quantile, and solve $`d_1`$ for the strike. On the house market the 25-delta call is $119.93 and the 25-delta put is $92.15, and no strike carries a delta of 0.99.
 
 ---
 
 ## What this builds on
 
-- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the forward map this card runs backwards, $e^{-qT}N(d_1)$ for a call and $-e^{-qT}N(-d_1)$ for a put.
+- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the forward map this card runs backwards, $`e^{-qT}N(d_1)`$ for a call and $`-e^{-qT}N(-d_1)`$ for a put.
 - [Implied volatility](01-implied-volatility.md): the volatility fed into the conversion, and the first inverse on the shelf with the same existence-then-solve order.
-- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): $N^{-1}$, the bell curve read backwards, which does the one hard step.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): $`N^{-1}`$, the bell curve read backwards, which does the one hard step.
 
 ## Where this goes next
 
@@ -878,5 +884,5 @@ Verified 2026-09-24: every link below resolves to the publisher's page for the c
 
 - Reiswich, Dimitri, and Uwe Wystup. "A Guide to FX Options Quoting Conventions." *The Journal of Derivatives* 18, no. 2 (2010): 58–68. [doi:10.3905/jod.2010.18.2.058](https://doi.org/10.3905/jod.2010.18.2.058). The delta conventions side by side, and the strike-from-delta inverses for each.
 - Clark, Iain J. *Foreign Exchange Option Pricing: A Practitioner's Guide*. Wiley, 2011. [Publisher page](https://www.wiley.com/en-us/Foreign+Exchange+Option+Pricing%3A+A+Practitioner%27s+Guide-p-9780470683682). Delta-quoted smiles and turning them into strikes before building a surface.
-- Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). Delta for options on dividend-paying stocks, $e^{-qT}N(d_1)$.
-- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield $q$ in the model, which puts the ceiling at $e^{-qT}$.
+- Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). Delta for options on dividend-paying stocks, $`e^{-qT}N(d_1)`$.
+- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield $`q`$ in the model, which puts the ceiling at $`e^{-qT}`$.

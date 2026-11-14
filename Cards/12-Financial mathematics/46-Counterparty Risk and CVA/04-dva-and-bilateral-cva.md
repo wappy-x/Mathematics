@@ -37,41 +37,45 @@ Orange, flat at 9.23: what Northwind owes the bank on the call, on average, at e
 
 ## The formula
 
-Notation first, in words. For any number $x$, the positive part $x^+$ is $x$ if $x$ is above zero and zero otherwise; the negative part $x^-$ is the size of $x$ if it is below zero and zero otherwise. So $V_t^+$ is what the other side owes, and $V_t^-$ is what this side owes. Subscript C marks the counterparty, subscript O the firm doing its own books.
+Notation first, in words. For any number $`x`$, the positive part $`x^+`$ is $`x`$ if $`x`$ is above zero and zero otherwise; the negative part $`x^-`$ is the size of $`x`$ if it is below zero and zero otherwise. So $`V_t^+`$ is what the other side owes, and $`V_t^-`$ is what this side owes. Subscript C marks the counterparty, subscript O the firm doing its own books.
 
-$$\text{BCVA} \;=\; \underbrace{(1-R_C)\int_0^T \lambda_C\, e^{-(\lambda_C+\lambda_O)t}\,\text{EPE}(t)\,dt}_{\text{CVA}} \;-\; \underbrace{(1-R_O)\int_0^T \lambda_O\, e^{-(\lambda_C+\lambda_O)t}\,\text{ENE}(t)\,dt}_{\text{DVA}}$$
+```math
+\text{BCVA} \;=\; \underbrace{(1-R_C)\int_0^T \lambda_C\, e^{-(\lambda_C+\lambda_O)t}\,\text{EPE}(t)\,dt}_{\text{CVA}} \;-\; \underbrace{(1-R_O)\int_0^T \lambda_O\, e^{-(\lambda_C+\lambda_O)t}\,\text{ENE}(t)\,dt}_{\text{DVA}}
+```
 
 **Read it aloud:** the bilateral adjustment is the expected loss from the other side defaulting first while owing money, minus the expected saving from defaulting first oneself while owing money.
 
-The risky value of the trade is the riskless value minus the bilateral adjustment: $V_0 - \text{BCVA}$.
+The risky value of the trade is the riskless value minus the bilateral adjustment: $`V_0 - \text{BCVA}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V_t$ | the trade's riskless value at date t to the firm doing the books | call 9.23 today to the bank; forward 0 today | — |
-| $x^+$, $x^-$ | positive part, max(x, 0); negative part, max(−x, 0) | bank's call: $V^+ = V$, $V^- = 0$ | — |
-| $D(t)$ | discount factor $e^{-rt}$: today's worth of a dollar due at t | 0.951229 at 1 year | — |
-| $\text{EPE}(t)$, $\text{ENE}(t)$ | expected positive and negative exposure: the average of $D(t)V_t^+$ and of $D(t)V_t^-$ | call: 9.23 and 0; forward at 1 year: 7.81 and 7.81 | CVA rises with EPE, DVA with ENE |
-| $\lambda_C$, $\lambda_O$ | hazard rates of counterparty and of self, per year (λ is "lambda") | Northwind 2%, bank 1% | $\lambda_C$ up: CVA up; $\lambda_O$ up: DVA up and CVA slightly down |
-| $R_C$, $R_O$ | recovery rates: fraction of a debt paid after a default | 40% each | the matching adjustment falls |
-| $\tau_C$, $\tau_O$ | default dates, in years from today (τ is "tau") | unknown; exponential with the hazards above | — |
-| $t$, $T$ | a date, and the trade's end date, in years | T = 1 | more years, more room to default |
-| $\text{CVA}$, $\text{DVA}$, $\text{BCVA}$ | the two adjustments and their difference | forward: 0.0614, 0.0307, 0.0307 | — |
-| $F$ | the forward's delivery price, set so the forward is worth 0 today | 103.05 | — |
-| $S$, $S_t$, $K$, $r$, $q$, $\sigma$, $C_0$ | house market: Acme today and at date t, strike, riskless rate, dividend yield, volatility; the call's riskless price | $S$ = $K$ = 100, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%; $S_t$ unknown today; $C_0$ = 9.227 | $C_0$ up: the call's CVA rises in proportion |
-| $N(x)$, $\mathbb{E}$, $\mathbf{1}\{\cdot\}$ | bell-curve area left of x; the average over the pretend (risk-neutral) world; a switch, 1 if the event in braces happens and 0 if not | — | — |
+| $`V_t`$ | the trade's riskless value at date t to the firm doing the books | call 9.23 today to the bank; forward 0 today | — |
+| $`x^+`$, $`x^-`$ | positive part, max(x, 0); negative part, max(−x, 0) | bank's call: $`V^+ = V`$, $`V^- = 0`$ | — |
+| $`D(t)`$ | discount factor $`e^{-rt}`$: today's worth of a dollar due at t | 0.951229 at 1 year | — |
+| $`\text{EPE}(t)`$, $`\text{ENE}(t)`$ | expected positive and negative exposure: the average of $`D(t)V_t^+`$ and of $`D(t)V_t^-`$ | call: 9.23 and 0; forward at 1 year: 7.81 and 7.81 | CVA rises with EPE, DVA with ENE |
+| $`\lambda_C`$, $`\lambda_O`$ | hazard rates of counterparty and of self, per year (λ is "lambda") | Northwind 2%, bank 1% | $`\lambda_C`$ up: CVA up; $`\lambda_O`$ up: DVA up and CVA slightly down |
+| $`R_C`$, $`R_O`$ | recovery rates: fraction of a debt paid after a default | 40% each | the matching adjustment falls |
+| $`\tau_C`$, $`\tau_O`$ | default dates, in years from today (τ is "tau") | unknown; exponential with the hazards above | — |
+| $`t`$, $`T`$ | a date, and the trade's end date, in years | T = 1 | more years, more room to default |
+| $`\text{CVA}`$, $`\text{DVA}`$, $`\text{BCVA}`$ | the two adjustments and their difference | forward: 0.0614, 0.0307, 0.0307 | — |
+| $`F`$ | the forward's delivery price, set so the forward is worth 0 today | 103.05 | — |
+| $`S`$, $`S_t`$, $`K`$, $`r`$, $`q`$, $`\sigma`$, $`C_0`$ | house market: Acme today and at date t, strike, riskless rate, dividend yield, volatility; the call's riskless price | $`S`$ = $`K`$ = 100, $`r`$ = 5%, $`q`$ = 2%, $`\sigma`$ = 20%; $`S_t`$ unknown today; $`C_0`$ = 9.227 | $`C_0`$ up: the call's CVA rises in proportion |
+| $`N(x)`$, $`\mathbb{E}`$, $`\mathbf{1}\{\cdot\}`$ | bell-curve area left of x; the average over the pretend (risk-neutral) world; a switch, 1 if the event in braces happens and 0 if not | — | — |
 
 The exposures are averages in the pretend world where every asset grows at the riskless rate:
 
-$$\text{EPE}(t) = \mathbb{E}\big[D(t)\,V_t^+\big], \qquad \text{ENE}(t) = \mathbb{E}\big[D(t)\,V_t^-\big].$$
+```math
+\text{EPE}(t) = \mathbb{E}\big[D(t)\,V_t^+\big], \qquad \text{ENE}(t) = \mathbb{E}\big[D(t)\,V_t^-\big].
+```
 
-The weight $\lambda_C e^{-(\lambda_C+\lambda_O)t}$ is the chance, per unit of time, that the counterparty defaults at date t while the firm is still alive. Set $\lambda_O = 0$ in it and the CVA is the unilateral one of [CVA](03-cva.md); set $\lambda_C = 0$ in the DVA's weight and it is the unilateral DVA.
+The weight $`\lambda_C e^{-(\lambda_C+\lambda_O)t}`$ is the chance, per unit of time, that the counterparty defaults at date t while the firm is still alive. Set $`\lambda_O = 0`$ in it and the CVA is the unilateral one of [CVA](03-cva.md); set $`\lambda_C = 0`$ in the DVA's weight and it is the unilateral DVA.
 
 ### When it holds
 
 - **Defaults independent of Acme's price.** The hazard is the same whatever the market does. If Northwind is likelier to fail exactly when it owes the most, the CVA is too low: [Wrong-way risk](05-wrong-way-risk.md).
-- **Close-out at the riskless value.** At a default the trade is settled at $V_t$ with no credit adjustment in it. Real master agreements (the standard contract that governs every trade between two firms) let the survivor claim a replacement cost, which can include its own adjustments; the numbers then shift, most for long trades between weak names.
+- **Close-out at the riskless value.** At a default the trade is settled at $`V_t`$ with no credit adjustment in it. Real master agreements (the standard contract that governs every trade between two firms) let the survivor claim a replacement cost, which can include its own adjustments; the numbers then shift, most for long trades between weak names.
 - **First default ends the trade.** The second party's later default does nothing, because nothing is left to owe. Drop the survival factor and the scenarios where both default before T are counted twice.
-- **Flat hazards and known recoveries.** A hazard curve replaces $\lambda e^{-\lambda t}$ with the curve's default density; a random recovery is replaced by its average when it is independent of everything else.
+- **Flat hazards and known recoveries.** A hazard curve replaces $`\lambda e^{-\lambda t}`$ with the curve's default density; a random recovery is replaced by its average when it is independent of everything else.
 - **One uncollateralised trade.** Netting across trades and posted collateral cut both EPE and ENE: [Counterparty exposure](01-counterparty-exposure-and-netting.md).
 
 ---
@@ -101,48 +105,54 @@ A defaulter that is owed money gets paid in full: the survivor cannot skip a deb
 
 ### Step 2: average the cases
 
-Write $\mathbf{1}\{\cdot\}$ for a switch that is 1 when the bracketed event happens and 0 when not. The bank's credit loss, in today's dollars, is
+Write $`\mathbf{1}\{\cdot\}`$ for a switch that is 1 when the bracketed event happens and 0 when not. The bank's credit loss, in today's dollars, is
 
-$$(1-R_C)\,\mathbf{1}\{\tau_C \le T,\ \tau_C < \tau_O\}\,D(\tau_C)\,V_{\tau_C}^+ \;-\; (1-R_O)\,\mathbf{1}\{\tau_O \le T,\ \tau_O < \tau_C\}\,D(\tau_O)\,V_{\tau_O}^-.$$
+```math
+(1-R_C)\,\mathbf{1}\{\tau_C \le T,\ \tau_C < \tau_O\}\,D(\tau_C)\,V_{\tau_C}^+ \;-\; (1-R_O)\,\mathbf{1}\{\tau_O \le T,\ \tau_O < \tau_C\}\,D(\tau_O)\,V_{\tau_O}^-.
+```
 
-Average it in the pretend world. With independent default dates, the chance that Northwind defaults in the small interval just after t is $\lambda_C e^{-\lambda_C t}\,dt$, and the chance that the bank is still alive at t is $e^{-\lambda_O t}$. Multiply, then average the exposure at that date, which is $\text{EPE}(t)$ because the default date is independent of Acme. Adding over all dates gives the CVA integral. The same steps with the roles swapped give the DVA integral.
+Average it in the pretend world. With independent default dates, the chance that Northwind defaults in the small interval just after t is $`\lambda_C e^{-\lambda_C t}\,dt`$, and the chance that the bank is still alive at t is $`e^{-\lambda_O t}`$. Multiply, then average the exposure at that date, which is $`\text{EPE}(t)`$ because the default date is independent of Acme. Adding over all dates gives the CVA integral. The same steps with the roles swapped give the DVA integral.
 
 <details>
 <summary>Detailed proof: the first-to-default weight and the averaging</summary>
 
-Let $\tau_C$ and $\tau_O$ be independent, exponential with rates $\lambda_C$ and $\lambda_O$, and independent of Acme's path. Condition on $\tau_C = t$. The density of $\tau_C$ at t is $\lambda_C e^{-\lambda_C t}$; the chance that $\tau_O > t$ is $e^{-\lambda_O t}$. By independence the joint weight for "Northwind defaults at t and the bank is alive" is $\lambda_C e^{-(\lambda_C+\lambda_O)t}\,dt$.
+Let $`\tau_C`$ and $`\tau_O`$ be independent, exponential with rates $`\lambda_C`$ and $`\lambda_O`$, and independent of Acme's path. Condition on $`\tau_C = t`$. The density of $`\tau_C`$ at t is $`\lambda_C e^{-\lambda_C t}`$; the chance that $`\tau_O > t`$ is $`e^{-\lambda_O t}`$. By independence the joint weight for "Northwind defaults at t and the bank is alive" is $`\lambda_C e^{-(\lambda_C+\lambda_O)t}\,dt`$.
 
-Given $\tau_C = t$, the loss is $(1-R_C)D(t)V_t^+$, and its average is $(1-R_C)\,\mathbb{E}[D(t)V_t^+] = (1-R_C)\,\text{EPE}(t)$, because the market path does not depend on $\tau_C$. Integrating t from 0 to T gives the CVA term. Swapping C and O and $V^+$ for $V^-$ gives the DVA term. The two events "C first" and "O first" cannot both happen (ties have probability zero), so the terms add with no overlap, and the case "no default before T" contributes zero.
+Given $`\tau_C = t`$, the loss is $`(1-R_C)D(t)V_t^+`$, and its average is $`(1-R_C)\,\mathbb{E}[D(t)V_t^+] = (1-R_C)\,\text{EPE}(t)`$, because the market path does not depend on $`\tau_C`$. Integrating t from 0 to T gives the CVA term. Swapping C and O and $`V^+`$ for $`V^-`$ gives the DVA term. The two events "C first" and "O first" cannot both happen (ties have probability zero), so the terms add with no overlap, and the case "no default before T" contributes zero.
 
-Unilateral CVA drops the factor $e^{-\lambda_O t}$. It then also counts the bank's loss in paths where the bank had already defaulted, when there was nothing left for it to lose. Unilateral CVA minus unilateral DVA counts those paths twice, once on each side.
+Unilateral CVA drops the factor $`e^{-\lambda_O t}`$. It then also counts the bank's loss in paths where the bank had already defaulted, when there was nothing left for it to lose. Unilateral CVA minus unilateral DVA counts those paths twice, once on each side.
 
 </details>
 
 ### Step 3: the mirror, and why DVA has to exist
 
-Northwind's value of any trade is the bank's value with the sign changed: $-V_t$. Its positive part is the bank's negative part. Feed that into the formula with C and O swapped: Northwind's CVA is the bank's DVA, Northwind's DVA is the bank's CVA, and Northwind's BCVA is the bank's with the sign changed.
+Northwind's value of any trade is the bank's value with the sign changed: $`-V_t`$. Its positive part is the bank's negative part. Feed that into the formula with C and O swapped: Northwind's CVA is the bank's DVA, Northwind's DVA is the bank's CVA, and Northwind's BCVA is the bank's with the sign changed.
 
 That sign change is the reason DVA is booked at all. Without it the bank prices the call at $9.12 (riskless value less CVA), while Northwind, having no CVA, marks its obligation at $9.23. Two desks, one contract, two prices. Adding DVA to Northwind's books brings its obligation to $9.12 as well. With first-to-default weights both desks land on $9.1179.
 
 ### Step 4: the option, where one side is always the creditor
 
-The bank paid the premium on day one. After that the call can only be worth something to the bank, never a debt of the bank. So $V_t^- = 0$ for the bank: its ENE and DVA are zero, and so are Northwind's EPE and CVA.
+The bank paid the premium on day one. After that the call can only be worth something to the bank, never a debt of the bank. So $`V_t^- = 0`$ for the bank: its ENE and DVA are zero, and so are Northwind's EPE and CVA.
 
-The bank's exposure is flat. In the pretend world, the average of a traded price discounted back to today is today's price, at every date (a discounted price is a martingale: a quantity whose average future value is its value now). So $\text{EPE}(t) = C_0 = 9.227$ for every t, and the integral has a closed form:
+The bank's exposure is flat. In the pretend world, the average of a traded price discounted back to today is today's price, at every date (a discounted price is a martingale: a quantity whose average future value is its value now). So $`\text{EPE}(t) = C_0 = 9.227`$ for every t, and the integral has a closed form:
 
-$$\text{CVA}_{\text{bilateral}} = (1-R_C)\,C_0\,\frac{\lambda_C}{\lambda_C+\lambda_O}\big(1 - e^{-(\lambda_C+\lambda_O)T}\big).$$
+```math
+\text{CVA}_{\text{bilateral}} = (1-R_C)\,C_0\,\frac{\lambda_C}{\lambda_C+\lambda_O}\big(1 - e^{-(\lambda_C+\lambda_O)T}\big).
+```
 
-The fraction times the bracket is the chance that Northwind defaults first and before year end: 0.019703. With $\lambda_O = 0$ it becomes $1 - e^{-\lambda_C T}$, the plain default chance, 0.019801.
+The fraction times the bracket is the chance that Northwind defaults first and before year end: 0.019703. With $`\lambda_O = 0`$ it becomes $`1 - e^{-\lambda_C T}`$, the plain default chance, 0.019801.
 
 ### Step 5: the forward, where either side can owe
 
-The forward obliges the bank to pay $F = S e^{(r-q)T} = 103.05$ for one Acme share in a year. That price makes the forward worth zero today. Its value at date t is the share's worth, delivered later, minus the cash's worth, paid later: $V_t = S_t e^{-q(T-t)} - F e^{-r(T-t)}$.
+The forward obliges the bank to pay $`F = S e^{(r-q)T} = 103.05`$ for one Acme share in a year. That price makes the forward worth zero today. Its value at date t is the share's worth, delivered later, minus the cash's worth, paid later: $`V_t = S_t e^{-q(T-t)} - F e^{-r(T-t)}`$.
 
-Its average discounted value stays at zero, so $\text{EPE}(t) - \text{ENE}(t) = \mathbb{E}[D(t)V_t] = V_0 = 0$: the two exposures are equal at every date. The positive part is a call struck at Acme's forward level, priced like a Black-Scholes call:
+Its average discounted value stays at zero, so $`\text{EPE}(t) - \text{ENE}(t) = \mathbb{E}[D(t)V_t] = V_0 = 0`$: the two exposures are equal at every date. The positive part is a call struck at Acme's forward level, priced like a Black-Scholes call:
 
-$$\text{EPE}(t) = \text{ENE}(t) = S\,e^{-qT}\big(2N(\tfrac12\sigma\sqrt{t}) - 1\big).$$
+```math
+\text{EPE}(t) = \text{ENE}(t) = S\,e^{-qT}\big(2N(\tfrac12\sigma\sqrt{t}) - 1\big).
+```
 
-It starts at zero and grows roughly like $\sqrt{t}$, reaching 7.81 at one year. With equal exposures, the CVA and DVA differ only through hazards and recoveries. Northwind's hazard is twice the bank's, so the CVA 0.0614 is twice the DVA 0.0307.
+It starts at zero and grows roughly like $`\sqrt{t}`$, reaching 7.81 at one year. With equal exposures, the CVA and DVA differ only through hazards and recoveries. Northwind's hazard is twice the bank's, so the CVA 0.0614 is twice the DVA 0.0307.
 
 The same numbers come from a third road, used in the code: simulate both default dates, simulate Acme at the first one, settle the trade by the rules in Step 1, and average. That road uses no exposure profile and no first-to-default weight.
 
@@ -154,15 +164,15 @@ House market (S = K = 100, r = 5%, q = 2%, σ = 20%, T = 1, call 9.227). Northwi
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Northwind defaults within the year | $1 - e^{-0.02}$ | 0.019801 |
+| Northwind defaults within the year | $`1 - e^{-0.02}`$ | 0.019801 |
 | bank's CVA on the call, unilateral | 0.6 × 9.227006 × 0.019801 | 0.1096 |
 | bank's risky price | 9.227006 − 0.109624 | $9.12 |
 | Northwind's DVA on the sold call, unilateral | same arithmetic, from its desk | 0.1096 |
 | Northwind's CVA; bank's DVA | nobody ever owes Northwind | 0 |
-| Northwind defaults first, within the year | $\tfrac{0.02}{0.03}\,(1 - e^{-0.03})$ | 0.019703 |
+| Northwind defaults first, within the year | $`\tfrac{0.02}{0.03}\,(1 - e^{-0.03})`$ | 0.019703 |
 | bank's CVA on the call, bilateral | 0.6 × 9.227006 × 0.019703 | 0.1091 |
 | **price both desks book** | 9.227006 − 0.109080 | **$9.1179** |
-| forward: exposure each way at 1 year | $100e^{-0.02}(2N(0.1) - 1)$ | 7.81 |
+| forward: exposure each way at 1 year | $`100e^{-0.02}(2N(0.1) - 1)`$ | 7.81 |
 | forward: bank's CVA and DVA | integrals over the year | 0.0614 and 0.0307 |
 | **forward: bank's BCVA** | 0.061391 − 0.030696 | **0.0307** |
 
@@ -653,10 +663,10 @@ The two outputs are identical line for line. Both use the same random number str
 
 Starting from the card's formula, Lean proves Step 3's mirror for any trade and the option and forward results of Steps 4 and 5.
 
-- Take any trade, worth $V_t$ to the bank and $-V_t$ to Northwind. Then Northwind's CVA is the bank's DVA, and Northwind's DVA is the bank's CVA.
+- Take any trade, worth $`V_t`$ to the bank and $`-V_t`$ to Northwind. Then Northwind's CVA is the bank's DVA, and Northwind's DVA is the bank's CVA.
 - For that trade, the price Northwind books is exactly minus the price the bank books. Both desks agree on one price.
-- Suppose a bought option is never a debt of the bank, and its average discounted value is $C_0$ at every date. Then the bank's DVA is zero. Its CVA is $(1-R_C) C_0 \frac{\lambda_C}{\lambda_C+\lambda_O} (1 - e^{-(\lambda_C+\lambda_O)T})$.
-- Suppose a trade's average discounted value exists and is zero at every date, as for the forward. Then $(1-R_O)\lambda_O$ times its CVA equals $(1-R_C)\lambda_C$ times its DVA.
+- Suppose a bought option is never a debt of the bank, and its average discounted value is $`C_0`$ at every date. Then the bank's DVA is zero. Its CVA is $`(1-R_C) C_0 \frac{\lambda_C}{\lambda_C+\lambda_O} (1 - e^{-(\lambda_C+\lambda_O)T})`$.
+- Suppose a trade's average discounted value exists and is zero at every date, as for the forward. Then $`(1-R_O)\lambda_O`$ times its CVA equals $`(1-R_C)\lambda_C`$ times its DVA.
 - Lean checks Step 0's \$6 shortfall, the 2/3 chance that Northwind defaults before the bank, and the forward's CVA at twice its DVA.
 
 Step 2's averaging over default dates, the forward's bell-curve exposure and all the dollar figures are left to the Python and Rust checks.
@@ -893,7 +903,7 @@ example (cva dva : ℚ)
 ## What this builds on
 
 - [CVA](03-cva.md): the unilateral charge, loss times default density times exposure, which this card mirrors and nets.
-- [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard rate and the survival curve $e^{-\lambda t}$ behind every weight here.
+- [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard rate and the survival curve $`e^{-\lambda t}`$ behind every weight here.
 - [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the $9.23 call and the pretend-world average used for every exposure.
 
 ## Where this goes next

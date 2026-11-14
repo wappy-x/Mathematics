@@ -35,48 +35,54 @@ The bars sum to 1. The two bars at $4 and above hold 0.04 between them; the boun
 
 ## The formula
 
-A reminder of the notation. $X$ is the random variable, here one ticket's payout in dollars; its values are written in lower case, $x$. $P(A)$ is the chance of the event $A$, here the share of tickets for which $A$ is true. $E[X]$ is the expectation, the long-run average, shortened to $\mu$ (Greek mu). $\mathrm{Var}(X)$ is the variance, shortened to $\sigma^2$, and $\sigma$ (Greek sigma) is the standard deviation. Vertical bars, $\lvert X - \mu \rvert$, mean the distance between $X$ and $\mu$, sign dropped.
+A reminder of the notation. $`X`$ is the random variable, here one ticket's payout in dollars; its values are written in lower case, $`x`$. $`P(A)`$ is the chance of the event $`A`$, here the share of tickets for which $`A`$ is true. $`E[X]`$ is the expectation, the long-run average, shortened to $`\mu`$ (Greek mu). $`\mathrm{Var}(X)`$ is the variance, shortened to $`\sigma^2`$, and $`\sigma`$ (Greek sigma) is the standard deviation. Vertical bars, $`\lvert X - \mu \rvert`$, mean the distance between $`X`$ and $`\mu`$, sign dropped.
 
-**Markov's inequality.** For a random variable that is never negative, and any positive threshold $a$:
+**Markov's inequality.** For a random variable that is never negative, and any positive threshold $`a`$:
 
-$$P(X \ge a) \le \frac{E[X]}{a}$$
+```math
+P(X \ge a) \le \frac{E[X]}{a}
+```
 
-**Read it aloud:** the chance of reaching at least $a$ is at most the mean divided by $a$.
+**Read it aloud:** the chance of reaching at least $`a`$ is at most the mean divided by $`a`$.
 
-**Chebyshev's inequality.** For a random variable with a finite variance, and any positive distance $\varepsilon$ (Greek epsilon):
+**Chebyshev's inequality.** For a random variable with a finite variance, and any positive distance $`\varepsilon`$ (Greek epsilon):
 
-$$P\big(\lvert X - \mu \rvert \ge \varepsilon\big) \le \frac{\sigma^2}{\varepsilon^2}$$
+```math
+P\big(\lvert X - \mu \rvert \ge \varepsilon\big) \le \frac{\sigma^2}{\varepsilon^2}
+```
 
-**Read it aloud:** the chance of landing at least $\varepsilon$ from the mean, on either side, is at most the variance divided by $\varepsilon$ squared.
+**Read it aloud:** the chance of landing at least $`\varepsilon`$ from the mean, on either side, is at most the variance divided by $`\varepsilon`$ squared.
 
-Measuring the distance in standard deviations, $\varepsilon = k\sigma$ for a number $k$, gives the form most often quoted:
+Measuring the distance in standard deviations, $`\varepsilon = k\sigma`$ for a number $`k`$, gives the form most often quoted:
 
-$$P\big(\lvert X - \mu \rvert \ge k\sigma\big) \le \frac{1}{k^2}$$
+```math
+P\big(\lvert X - \mu \rvert \ge k\sigma\big) \le \frac{1}{k^2}
+```
 
-**Read it aloud:** at most one over $k$ squared of the probability lies $k$ or more standard deviations from the mean. Two standard deviations: at most a quarter. Three: at most a ninth.
+**Read it aloud:** at most one over $`k`$ squared of the probability lies $`k`$ or more standard deviations from the mean. Two standard deviations: at most a quarter. Three: at most a ninth.
 
-For the tickets, "twice the average" is $X \ge 2\mu$, which puts $X$ at least $\mu$ above the mean, so Chebyshev with $\varepsilon = \mu$ caps it at $\sigma^2 / \mu^2 = 1/4$.
+For the tickets, "twice the average" is $`X \ge 2\mu`$, which puts $`X`$ at least $`\mu`$ above the mean, so Chebyshev with $`\varepsilon = \mu`$ caps it at $`\sigma^2 / \mu^2 = 1/4`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the random variable: one ticket's payout | $0, $1, $2, $3 or $5 | — |
-| $x$ | one value $X$ can take | 5 for the top prize | — |
-| $A$, $P(A)$ | an event, and its chance: the share of tickets where it is true | 0.04 for "pays $4 or more" | — |
-| $\mu$ | the mean, $E[X]$ | $2 | Markov's ceiling rises in proportion |
-| $\sigma^2$, $\sigma$ | the variance and the standard deviation | 1 square dollar, $1 | Chebyshev's ceiling rises with $\sigma^2$ |
-| $a$ | Markov's threshold, in dollars | $4 | the ceiling falls like $1/a$ |
-| $\varepsilon$ | Chebyshev's distance from the mean, in dollars | $2 | the ceiling falls like $1/\varepsilon^2$ |
-| $k$ | the same distance counted in standard deviations | 2 | the ceiling falls like $1/k^2$ |
-| $Y$ | the squared distance from the mean, $(X - \mu)^2$ | 4, 1, 0, 1 or 9 | its mean is $\sigma^2$ |
-| $n$ | tickets drawn in the simulation, or people in a poll | 1,000,000 | the standard error shrinks like $1/\sqrt{n}$ |
+| $`X`$ | the random variable: one ticket's payout | $0, $1, $2, $3 or $5 | — |
+| $`x`$ | one value $`X`$ can take | 5 for the top prize | — |
+| $`A`$, $`P(A)`$ | an event, and its chance: the share of tickets where it is true | 0.04 for "pays $4 or more" | — |
+| $`\mu`$ | the mean, $`E[X]`$ | $2 | Markov's ceiling rises in proportion |
+| $`\sigma^2`$, $`\sigma`$ | the variance and the standard deviation | 1 square dollar, $1 | Chebyshev's ceiling rises with $`\sigma^2`$ |
+| $`a`$ | Markov's threshold, in dollars | $4 | the ceiling falls like $`1/a`$ |
+| $`\varepsilon`$ | Chebyshev's distance from the mean, in dollars | $2 | the ceiling falls like $`1/\varepsilon^2`$ |
+| $`k`$ | the same distance counted in standard deviations | 2 | the ceiling falls like $`1/k^2`$ |
+| $`Y`$ | the squared distance from the mean, $`(X - \mu)^2`$ | 4, 1, 0, 1 or 9 | its mean is $`\sigma^2`$ |
+| $`n`$ | tickets drawn in the simulation, or people in a poll | 1,000,000 | the standard error shrinks like $`1/\sqrt{n}`$ |
 
 ### When it holds
 
-- **Markov needs a quantity that is never negative.** A ticket's payout net of a $2 price, $X - 2$, averages $0$, so Markov would promise that no ticket nets $1 or more. In fact 25% do. Negative values cancel against positive ones in the mean and hide the tail.
-- **The threshold must be positive.** At $a = 0$ the ratio has no meaning, and any threshold at or below the mean gives a ceiling of 1 or more, which says nothing.
-- **Chebyshev needs a finite variance.** A ticket paying $2, $4, $8 and so on, $2^j$ with chance $3/4^j$, averages $3, but its average squared payout grows by 3 with every prize level added: 30 over ten levels, 120 over forty. There is no $\sigma^2$ to divide. Markov still applies to it.
+- **Markov needs a quantity that is never negative.** A ticket's payout net of a $2 price, $`X - 2`$, averages $`0`$, so Markov would promise that no ticket nets $1 or more. In fact 25% do. Negative values cancel against positive ones in the mean and hide the tail.
+- **The threshold must be positive.** At $`a = 0`$ the ratio has no meaning, and any threshold at or below the mean gives a ceiling of 1 or more, which says nothing.
+- **Chebyshev needs a finite variance.** A ticket paying $2, $4, $8 and so on, $`2^j`$ with chance $`3/4^j`$, averages $3, but its average squared payout grows by 3 with every prize level added: 30 over ten levels, 120 over forty. There is no $`\sigma^2`$ to divide. Markov still applies to it.
 - **The mean and variance must be the law's own.** Numbers estimated from a handful of draws carry their own error, and the inequality does not account for it.
-- **Useful beyond one standard deviation only.** For $k \le 1$ the ceiling $1/k^2$ is 1 or more: true and empty.
+- **Useful beyond one standard deviation only.** For $`k \le 1`$ the ceiling $`1/k^2`$ is 1 or more: true and empty.
 
 ---
 
@@ -90,7 +96,7 @@ The prize fund is 1,000 tickets times $2: $2,000. Every ticket paying $4 or more
 
 Count the tickets paying $4 or more. Each takes at least $4 of the fund, and the others take at least $0, since payouts are never negative. So $4 times the count is at most $2,000, and the count is at most 500: at most half.
 
-The same line works for any threshold. Compare each ticket's payout with a second, smaller payout: $a$ dollars if the ticket reaches $a$, nothing otherwise. The smaller payout never exceeds the real one. On a big ticket it pays $a$, and the real one pays at least $a$. On a small ticket it pays $0$, and the real one pays at least $0$. Averages keep that order, and the smaller payout averages $a \cdot P(X \ge a)$. So $a \cdot P(X \ge a) \le E[X]$. Divide by $a$.
+The same line works for any threshold. Compare each ticket's payout with a second, smaller payout: $`a`$ dollars if the ticket reaches $`a`$, nothing otherwise. The smaller payout never exceeds the real one. On a big ticket it pays $`a`$, and the real one pays at least $`a`$. On a small ticket it pays $`0`$, and the real one pays at least $`0`$. Averages keep that order, and the smaller payout averages $`a \cdot P(X \ge a)`$. So $`a \cdot P(X \ge a) \le E[X]`$. Divide by $`a`$.
 
 ### The picture: the step that sits under the diagonal
 
@@ -100,13 +106,15 @@ The solid line is the payout. The dashed step pays $4 from $4 on and nothing bel
 
 ### Step 2: Chebyshev is Markov on the squared distance
 
-Give each ticket a new number, $Y = (X - \mu)^2$: its squared distance from the $2 mean. The five payouts $0, $1, $2, $3, $5 give $Y$ = 4, 1, 0, 1, 9. $Y$ is never negative, and its average is the variance by definition: 1.
+Give each ticket a new number, $`Y = (X - \mu)^2`$: its squared distance from the $2 mean. The five payouts $0, $1, $2, $3, $5 give $`Y`$ = 4, 1, 0, 1, 9. $`Y`$ is never negative, and its average is the variance by definition: 1.
 
-A payout lands at least $2 from the mean exactly when its squared distance is at least 4. Markov on $Y$ at threshold 4 gives
+A payout lands at least $2 from the mean exactly when its squared distance is at least 4. Markov on $`Y`$ at threshold 4 gives
 
-$$P\big(\lvert X - 2 \rvert \ge 2\big) = P(Y \ge 4) \le \frac{E[Y]}{4} = \frac{1}{4}.$$
+```math
+P\big(\lvert X - 2 \rvert \ge 2\big) = P(Y \ge 4) \le \frac{E[Y]}{4} = \frac{1}{4}.
+```
 
-In general, $\lvert X - \mu \rvert \ge \varepsilon$ is the same event as $Y \ge \varepsilon^2$, and $E[Y] = \sigma^2$. That is Chebyshev's inequality. The square is what turns a signed distance into something never negative, so Markov can use it.
+In general, $`\lvert X - \mu \rvert \ge \varepsilon`$ is the same event as $`Y \ge \varepsilon^2`$, and $`E[Y] = \sigma^2`$. That is Chebyshev's inequality. The square is what turns a signed distance into something never negative, so Markov can use it.
 
 ### Step 3: the one-sided question sits inside the two-sided one
 
@@ -116,20 +124,22 @@ A ticket paying $4 or more is at least $2 above the mean, so it lies in the two-
 
 Both inequalities are as strong as their inputs allow: some law meets each one exactly.
 
-For Chebyshev, take 8 tickets: one pays $0, six pay $2, one pays $4. The mean is $2. The squared distances are 4, 0 and 4, averaging $(4 + 4)/8 = 1$. Two tickets of 8 lie $2 from the mean: a quarter, the full ceiling. No smaller constant than 1 in $\sigma^2/\varepsilon^2$ could survive this law.
+For Chebyshev, take 8 tickets: one pays $0, six pay $2, one pays $4. The mean is $2. The squared distances are 4, 0 and 4, averaging $`(4 + 4)/8 = 1`$. Two tickets of 8 lie $2 from the mean: a quarter, the full ceiling. No smaller constant than 1 in $`\sigma^2/\varepsilon^2`$ could survive this law.
 
-For Markov, the shelf's house raffle does it. One ticket in 100 pays $100, the rest pay $0, so the mean is $1. Markov at $100 gives $1/100 = 0.01$, and exactly 0.01 of tickets pay $100. The gaps in the picture close when every payout sits either at 0 or at the threshold, and this raffle is built that way.
+For Markov, the shelf's house raffle does it. One ticket in 100 pays $100, the rest pay $0, so the mean is $1. Markov at $100 gives $`1/100 = 0.01`$, and exactly 0.01 of tickets pay $100. The gaps in the picture close when every payout sits either at 0 or at the threshold, and this raffle is built that way.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Markov.** Let $X$ take values $x \ge 0$ with chances $P(X = x)$ summing to 1, let $\mu = \sum_x x \, P(X = x)$ be finite, and let $a > 0$. Split the sum at $a$:
-$$\mu = \sum_{x < a} x \, P(X = x) + \sum_{x \ge a} x \, P(X = x) \ge 0 + \sum_{x \ge a} a \, P(X = x) = a \, P(X \ge a).$$
-The first sum is at least 0 because every $x$ is; the second has each $x$ at least $a$. Dividing by $a$ gives the result. Equality needs both steps tight: no chance on values strictly between 0 and $a$, and no chance above $a$.
+**Markov.** Let $`X`$ take values $`x \ge 0`$ with chances $`P(X = x)`$ summing to 1, let $`\mu = \sum_x x \, P(X = x)`$ be finite, and let $`a > 0`$. Split the sum at $`a`$:
 
-**Chebyshev.** Suppose $\sigma^2 = \sum_x (x - \mu)^2 P(X = x)$ is finite, and let $\varepsilon > 0$. Put $Y = (X - \mu)^2$, never negative, with $E[Y] = \sigma^2$. For every value, $\lvert x - \mu \rvert \ge \varepsilon$ holds exactly when $(x - \mu)^2 \ge \varepsilon^2$, so the two events have the same chance. Markov on $Y$ at $\varepsilon^2$ gives $P(\lvert X - \mu \rvert \ge \varepsilon) \le \sigma^2 / \varepsilon^2$. If $\sigma > 0$, setting $\varepsilon = k\sigma$ gives the $1/k^2$ form. If $\sigma = 0$, [Variance](03-variance-and-standard-deviation.md) shows $X$ equals $\mu$ with chance 1, and both sides are 0 for every $\varepsilon > 0$.
+$`\displaystyle \mu = \sum_{x < a} x \, P(X = x) + \sum_{x \ge a} x \, P(X = x) \ge 0 + \sum_{x \ge a} a \, P(X = x) = a \, P(X \ge a).`$
 
-**Equality in Chebyshev.** For any $\varepsilon > 0$ and $0 < v \le \varepsilon^2$, put chance $v/(2\varepsilon^2)$ at each of $\mu - \varepsilon$ and $\mu + \varepsilon$ and the rest at $\mu$. The mean is $\mu$, the variance is $2 \cdot \frac{v}{2\varepsilon^2} \cdot \varepsilon^2 = v$, and the two-sided tail is $v/\varepsilon^2$: the ceiling. The 8-ticket law is the case $\mu = 2$, $\varepsilon = 2$, $v = 1$.
+The first sum is at least 0 because every $`x`$ is; the second has each $`x`$ at least $`a`$. Dividing by $`a`$ gives the result. Equality needs both steps tight: no chance on values strictly between 0 and $`a`$, and no chance above $`a`$.
+
+**Chebyshev.** Suppose $`\sigma^2 = \sum_x (x - \mu)^2 P(X = x)`$ is finite, and let $`\varepsilon > 0`$. Put $`Y = (X - \mu)^2`$, never negative, with $`E[Y] = \sigma^2`$. For every value, $`\lvert x - \mu \rvert \ge \varepsilon`$ holds exactly when $`(x - \mu)^2 \ge \varepsilon^2`$, so the two events have the same chance. Markov on $`Y`$ at $`\varepsilon^2`$ gives $`P(\lvert X - \mu \rvert \ge \varepsilon) \le \sigma^2 / \varepsilon^2`$. If $`\sigma > 0`$, setting $`\varepsilon = k\sigma`$ gives the $`1/k^2`$ form. If $`\sigma = 0`$, [Variance](03-variance-and-standard-deviation.md) shows $`X`$ equals $`\mu`$ with chance 1, and both sides are 0 for every $`\varepsilon > 0`$.
+
+**Equality in Chebyshev.** For any $`\varepsilon > 0`$ and $`0 < v \le \varepsilon^2`$, put chance $`v/(2\varepsilon^2)`$ at each of $`\mu - \varepsilon`$ and $`\mu + \varepsilon`$ and the rest at $`\mu`$. The mean is $`\mu`$, the variance is $`2 \cdot \frac{v}{2\varepsilon^2} \cdot \varepsilon^2 = v`$, and the two-sided tail is $`v/\varepsilon^2`$: the ceiling. The 8-ticket law is the case $`\mu = 2`$, $`\varepsilon = 2`$, $`v = 1`$.
 
 **Densities.** For a variable with a density the sums become integrals, and every line holds unchanged. The single statement covering both is proved in [Expectation as an integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
 
@@ -138,11 +148,11 @@ The first sum is at least 0 because every $x$ is; the second has each $x$ at lea
 <details>
 <summary>One tail only: Cantelli's sharper quarter</summary>
 
-Chebyshev spends its quarter on both tails, and at the fête some of that goes on $0 tickets nobody is asking about. Asking about the upper tail alone gives $P(X - \mu \ge \varepsilon) \le \sigma^2 / (\sigma^2 + \varepsilon^2)$, Cantelli's inequality. The proof shifts before squaring: for any shift $t \ge 0$, $X - \mu \ge \varepsilon$ forces $(X - \mu + t)^2 \ge (\varepsilon + t)^2$, so Markov gives a ceiling of $(\sigma^2 + t^2)/(\varepsilon + t)^2$, smallest at $t = \sigma^2/\varepsilon$, where it equals $\sigma^2/(\sigma^2 + \varepsilon^2)$. At the fête: $1/(1 + 4) = 0.2$, so at most 200 tickets, not 250. Five tickets meet it: four pay $1.50 and one pays $4. Mean $2, variance 1, and one in five pays $4.
+Chebyshev spends its quarter on both tails, and at the fête some of that goes on $0 tickets nobody is asking about. Asking about the upper tail alone gives $`P(X - \mu \ge \varepsilon) \le \sigma^2 / (\sigma^2 + \varepsilon^2)`$, Cantelli's inequality. The proof shifts before squaring: for any shift $`t \ge 0`$, $`X - \mu \ge \varepsilon`$ forces $`(X - \mu + t)^2 \ge (\varepsilon + t)^2`$, so Markov gives a ceiling of $`(\sigma^2 + t^2)/(\varepsilon + t)^2`$, smallest at $`t = \sigma^2/\varepsilon`$, where it equals $`\sigma^2/(\sigma^2 + \varepsilon^2)`$. At the fête: $`1/(1 + 4) = 0.2`$, so at most 200 tickets, not 250. Five tickets meet it: four pay $1.50 and one pays $4. Mean $2, variance 1, and one in five pays $4.
 
 </details>
 
-A second route to tail bounds applies Markov to an exponential of $X$ instead of $(X - \mu)^2$. It uses the moment generating function ([Moment generating functions](07-moment-generating-functions.md)) and gives tails that shrink exponentially rather than like $1/k^2$: [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
+A second route to tail bounds applies Markov to an exponential of $`X`$ instead of $`(X - \mu)^2`$. It uses the moment generating function ([Moment generating functions](07-moment-generating-functions.md)) and gives tails that shrink exponentially rather than like $`1/k^2`$: [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
 
 ---
 
@@ -176,15 +186,15 @@ xychart-beta
     line [0.32, 0.13, 0.05, 0.01, 0.00]
 ```
 
-Orange, top: Chebyshev's ceiling $1/k^2$. Green, middle: the fête's tickets, counted. Dark, bottom: a normal law, the bell curve of [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), at the same $k$. Both real laws stay under the ceiling at every $k$, the normal law far under it from two standard deviations on.
+Orange, top: Chebyshev's ceiling $`1/k^2`$. Green, middle: the fête's tickets, counted. Dark, bottom: a normal law, the bell curve of [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), at the same $`k`$. Both real laws stay under the ceiling at every $`k`$, the normal law far under it from two standard deviations on.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Markov on the net payout $X - 2$, threshold $1 | a "ceiling" of 0; the true share is 0.25 | $X - 2$ goes negative, and the losses cancel the wins in the mean |
-| Chebyshev on the ticket paying $2^j$ with chance $3/4^j$ | no number: the average squared payout reads 30, 60, 120 over 10, 20, 40 prize levels | the variance is infinite |
-| Chebyshev at $k = 1$ | a ceiling of 1; the fête's true share is 0.53 | true, and says nothing |
+| Markov on the net payout $`X - 2`$, threshold $1 | a "ceiling" of 0; the true share is 0.25 | $`X - 2`$ goes negative, and the losses cancel the wins in the mean |
+| Chebyshev on the ticket paying $`2^j`$ with chance $`3/4^j`$ | no number: the average squared payout reads 30, 60, 120 over 10, 20, 40 prize levels | the variance is infinite |
+| Chebyshev at $`k = 1`$ | a ceiling of 1; the fête's true share is 0.53 | true, and says nothing |
 | Chebyshev's 0.25 quoted as the best for one tail | 0.25, where 0.2 is the true worst case | Chebyshev covers both tails; Cantelli covers one |
 
 The code prints all four.
@@ -632,11 +642,11 @@ The two outputs match line for line. The simulated shares, 0.040111 and 0.090472
 
 ### Lean
 
-Lean proves both inequalities, and the $1/k^2$ form, for every random variable. It also checks the hand arithmetic.
+Lean proves both inequalities, and the $`1/k^2`$ form, for every random variable. It also checks the hand arithmetic.
 
-- Suppose $X$ is never negative, has a finite mean, and $a > 0$. Then $P(X \ge a) \le E[X]/a$.
-- Suppose $X$ has a finite variance and $\varepsilon > 0$. Then $P\big(\lvert X - \mu \rvert \ge \varepsilon\big) \le \sigma^2/\varepsilon^2$.
-- Suppose $X$ has a finite variance, $\sigma > 0$ and $k > 0$. Then $P\big(\lvert X - \mu \rvert \ge k\sigma\big) \le 1/k^2$.
+- Suppose $`X`$ is never negative, has a finite mean, and $`a > 0`$. Then $`P(X \ge a) \le E[X]/a`$.
+- Suppose $`X`$ has a finite variance and $`\varepsilon > 0`$. Then $`P\big(\lvert X - \mu \rvert \ge \varepsilon\big) \le \sigma^2/\varepsilon^2`$.
+- Suppose $`X`$ has a finite variance, $`\sigma > 0`$ and $`k > 0`$. Then $`P\big(\lvert X - \mu \rvert \ge k\sigma\big) \le 1/k^2`$.
 - The fête's mean, variance, both ceilings and the 250 tickets hold exactly.
 - So do the laws that meet each ceiling, the house raffle, Cantelli's fifth, the net payout, the heavy ticket's sums and the poll.
 
@@ -753,7 +763,7 @@ example : (1 : ℚ) / (4 * 2000) / (1 / 20) ^ 2 = 1 / 20 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Three standard deviations.** Guess the ceiling and the fête's true share at $k = 3$. Ceiling 1/9, about 0.11; true share 0.04. The `chart,` rows print both.
+> - **Three standard deviations.** Guess the ceiling and the fête's true share at $`k = 3`$. Ceiling 1/9, about 0.11; true share 0.04. The `chart,` rows print both.
 > - **The house raffle at two thresholds.** Guess Markov's ceiling for "pays $2 or more" and for "pays $100". At $2 it is 0.5 against a true 0.01; at $100 it is 0.01 against a true 0.01, exact.
 > - **Another seed.** Change `20260928` to any other number. The simulated shares move by about one standard error, 0.0002 to 0.0003, and the random search finds a different near-worst law, still under both ceilings.
 > - **Break the square.** Replace `(x - m) * (x - m)` with `abs(x - m)` in `moments`. The 8-ticket law's "variance" shrinks, its ceiling falls below the quarter that is really there, and an assert stops the run.
@@ -766,21 +776,21 @@ example : (1 : ℚ) / (4 * 2000) / (1 / 20) ^ 2 = 1 / 20 := by norm_num
 > **Reading the ceiling as the chance.** Chebyshev says at most 25% of tickets pay $4 or more; the fête's table gives 4%. A bell-shaped law two standard deviations out holds 0.0455 in both tails together, not 0.25. The inequality is a worst case over every law with that mean and variance, so it is the right number only when nothing else is known, and a poor estimate once anything is.
 >
 > - **Markov on a signed quantity.** Net winnings average $0, so a mean-over-threshold "ceiling" reads 0, while 25% of tickets net $1 or more.
-> - **The standard deviation where the variance belongs.** A ceiling of $\sigma/\varepsilon$ instead of $\sigma^2/\varepsilon^2$ still holds, but is weaker beyond one standard deviation and is not Chebyshev's statement.
-> - **A variance that does not exist.** Heavy-tailed payouts have no finite $\sigma^2$, and Chebyshev then gives nothing, not a small number.
+> - **The standard deviation where the variance belongs.** A ceiling of $`\sigma/\varepsilon`$ instead of $`\sigma^2/\varepsilon^2`$ still holds, but is weaker beyond one standard deviation and is not Chebyshev's statement.
+> - **A variance that does not exist.** Heavy-tailed payouts have no finite $`\sigma^2`$, and Chebyshev then gives nothing, not a small number.
 > - **Sample figures as if exact.** A mean and variance estimated from a handful of draws are themselves uncertain; the ceiling inherits that uncertainty.
 
 ---
 
 ## Where you meet it in real life
 
-- **Polls and the law of large numbers.** The share answering yes in a poll of $n$ people has variance at most $1/(4n)$. Chebyshev then says a poll of 2,000 lands within 5 points of the truth with chance at least 95%, for any population. The bell-curve approximation needs only about 384, because it assumes more. The first version is how [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) is proved.
+- **Polls and the law of large numbers.** The share answering yes in a poll of $`n`$ people has variance at most $`1/(4n)`$. Chebyshev then says a poll of 2,000 lands within 5 points of the truth with chance at least 95%, for any population. The bell-curve approximation needs only about 384, because it assumes more. The first version is how [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) is proved.
 - **Randomised algorithms.** A program that is fast on average is rarely slow: Markov bounds how often a run takes more than a few times its mean, and repeating the run drives that down fast. [Tail bounds](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/02-tail-bounds-and-repeated-trials.md).
 - **Counting arguments.** If the average count of some structure is below 1, Markov shows it is often absent; if the variance is small next to the mean squared, Chebyshev shows it is usually present. [First and second moments](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/04-first-and-second-moment-methods.md).
 - **Risk without a bell curve.** A loss known only by its mean and standard deviation still has a guaranteed ceiling on a 3-sigma event: 1/9. In the finance wing, [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md), the loss exceeded only on the worst few percent of days, usually assumes a shape and gets a much smaller number.
 
 > **Say it back**
-> A fête's scratch tickets average $2 with a standard deviation of $1, and nothing else is known. Markov's inequality uses only the average: a quantity that is never negative reaches $a$ with chance at most the mean over $a$, so at most half pay $4. Chebyshev's inequality applies Markov to the squared distance from the mean, whose average is the variance, so at most a quarter land $2 or more from the mean, and so at most a quarter pay $4. Some law meets each ceiling exactly, so neither can be lowered without more information; for the upper tail alone, Cantelli's inequality lowers the quarter to a fifth. The real table has 4% at $4 or more: the ceiling is a guarantee, not an estimate.
+> A fête's scratch tickets average $2 with a standard deviation of $1, and nothing else is known. Markov's inequality uses only the average: a quantity that is never negative reaches $`a`$ with chance at most the mean over $`a`$, so at most half pay $4. Chebyshev's inequality applies Markov to the squared distance from the mean, whose average is the variance, so at most a quarter land $2 or more from the mean, and so at most a quarter pay $4. Some law meets each ceiling exactly, so neither can be lowered without more information; for the upper tail alone, Cantelli's inequality lowers the quarter to a fifth. The real table has 4% at $4 or more: the ceiling is a guarantee, not an estimate.
 
 ---
 
@@ -790,7 +800,7 @@ example : (1 : ℚ) / (4 * 2000) / (1 / 20) ^ 2 = 1 / 20 := by norm_num
 
 ## Where this goes next
 
-- [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): Chebyshev on an average of $n$ draws, whose variance falls like $1/n$.
+- [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): Chebyshev on an average of $`n`$ draws, whose variance falls like $`1/n`$.
 - [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md): Markov on an exponential, for tails that shrink exponentially.
 - [First and second moments](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/04-first-and-second-moment-methods.md): both inequalities deciding whether a random graph holds a structure.
 - [Tail bounds](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/02-tail-bounds-and-repeated-trials.md): running time and error chance of randomised programs.

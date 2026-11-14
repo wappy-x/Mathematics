@@ -37,53 +37,63 @@ Bottom line (orange): 3 months. Middle line (green): 6 months. Top line (dark bl
 
 ## The formula
 
-Write $C(K,T)$ for the price of a call with strike $K$ and $T$ years to expiry, $r = 5\%$ for the riskless rate, and $F_T = 100\,e^{(r-q)T}$ for the forward price, the price agreed today for Acme delivered at $T$ ($q = 2\%$ is the dividend yield). Two coordinates first, in words. **Log-moneyness** $k$ is the log of strike over forward price. **Total variance** $w$ is implied volatility squared times years to expiry.
+Write $`C(K,T)`$ for the price of a call with strike $`K`$ and $`T`$ years to expiry, $`r = 5\%`$ for the riskless rate, and $`F_T = 100\,e^{(r-q)T}`$ for the forward price, the price agreed today for Acme delivered at $`T`$ ($`q = 2\%`$ is the dividend yield). Two coordinates first, in words. **Log-moneyness** $`k`$ is the log of strike over forward price. **Total variance** $`w`$ is implied volatility squared times years to expiry.
 
-$$k = \ln\frac{K}{F_T}, \qquad w(k, T) = \sigma(k, T)^2\, T$$
+```math
+k = \ln\frac{K}{F_T}, \qquad w(k, T) = \sigma(k, T)^2\, T
+```
 
 **Read it aloud:** measure each strike against the forward price on a log scale, and measure each volatility as the variance it piles up by expiry.
 
-The two tests, with $h$ the strike step ($5 here):
+The two tests, with $`h`$ the strike step ($5 here):
 
-$$C(K-h,\,T) \;-\; 2\,C(K,\,T) \;+\; C(K+h,\,T) \;\ge\; 0 \quad\text{(butterfly)}$$
+```math
+C(K-h,\,T) \;-\; 2\,C(K,\,T) \;+\; C(K+h,\,T) \;\ge\; 0 \quad\text{(butterfly)}
+```
 
-$$w(k,\,T_2) \;\ge\; w(k,\,T_1) \quad\text{whenever } T_2 > T_1 \quad\text{(calendar)}$$
+```math
+w(k,\,T_2) \;\ge\; w(k,\,T_1) \quad\text{whenever } T_2 > T_1 \quad\text{(calendar)}
+```
 
 **Read it aloud:** at each expiry, one call below plus one call above costs at least two calls at the middle; at each log-moneyness, a later expiry has at least as much total variance as an earlier one.
 
-As the strike step $h$ shrinks, the butterfly becomes a statement about the market's probability density for Acme's price:
+As the strike step $`h`$ shrinks, the butterfly becomes a statement about the market's probability density for Acme's price:
 
-$$p(K) = e^{rT}\,\frac{\partial^2 C}{\partial K^2} = \frac{\varphi(d_2)}{K\sqrt{w}}\; g(k) \;\ge\; 0$$
+```math
+p(K) = e^{rT}\,\frac{\partial^2 C}{\partial K^2} = \frac{\varphi(d_2)}{K\sqrt{w}}\; g(k) \;\ge\; 0
+```
 
 with
 
-$$g(k) = \Bigl(1 - \frac{k\,w'}{2w}\Bigr)^2 - \frac{w'^2}{4}\Bigl(\frac{1}{w} + \frac14\Bigr) + \frac{w''}{2}, \qquad d_2 = -\frac{k}{\sqrt{w}} - \frac{\sqrt{w}}{2}.$$
+```math
+g(k) = \Bigl(1 - \frac{k\,w'}{2w}\Bigr)^2 - \frac{w'^2}{4}\Bigl(\frac{1}{w} + \frac14\Bigr) + \frac{w''}{2}, \qquad d_2 = -\frac{k}{\sqrt{w}} - \frac{\sqrt{w}}{2}.
+```
 
-In words: $g$ is built only from total variance and its slope and bend in $k$, written $w'$ and $w''$. The density is positive exactly where $g$ is. This form, due to Valdo Durrleman, lets the butterfly test run on the surface itself, without pricing a single option.
+In words: $`g`$ is built only from total variance and its slope and bend in $`k`$, written $`w'`$ and $`w''`$. The density is positive exactly where $`g`$ is. This form, due to Valdo Durrleman, lets the butterfly test run on the surface itself, without pricing a single option.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $K$ | strike, the price the call lets its holder pay | $80 to $120 | call price falls |
-| $T$, $T_1$, $T_2$ | years to expiry; $T_1$ earlier, $T_2$ later | 0.25, 0.5, 1 | total variance rises, if the surface is honest |
-| $F_T$, $X_T$, $K_T$ | forward price: spot $100 grown at the 5% rate less the 2% dividend yield, $100\,e^{0.03T}$; $X_T$ is Acme's price at expiry divided by it; $K_T$ is the strike $F_T e^k$ | $103.0455 at 1 year | every $k$ moves down |
-| $k$ | log-moneyness, $\ln(K/F_T)$; 0 means strike equals forward | $-0.0300$ for the 1-year $100 strike | further into the smile's call wing |
-| $\sigma$ | implied volatility, the quote | 20.00% at 1 year, $100 | price rises |
-| $w$ | total variance, $\sigma^2 T$ | 4.0000 (×100) at 1 year, $100 | price rises |
-| $C$, $c$ | call price in dollars; $c$ is the same call divided by $e^{-rT}F_T$ | $9.2270 at 1 year, $100 | — |
-| $h$ | strike step of the butterfly | $5 | the butterfly is a coarser test |
-| $p$ | market-implied probability density of Acme's price at expiry, per dollar | $-0.01433$ at $95 on the dipped grid | — |
-| $g$ | Durrleman's function; same sign as the density | positive everywhere on the clean grid | — |
-| $d_2$ | $-k/\sqrt{w} - \sqrt{w}/2$, the Black-Scholes $d_2$ written in $k$ and $w$ | small and positive at the 1-year $100 strike | — |
-| $\varphi$ | the bell-curve height, $e^{-x^2/2}/\sqrt{2\pi}$ | — | — |
+| $`K`$ | strike, the price the call lets its holder pay | $80 to $120 | call price falls |
+| $`T`$, $`T_1`$, $`T_2`$ | years to expiry; $`T_1`$ earlier, $`T_2`$ later | 0.25, 0.5, 1 | total variance rises, if the surface is honest |
+| $`F_T`$, $`X_T`$, $`K_T`$ | forward price: spot $100 grown at the 5% rate less the 2% dividend yield, $`100\,e^{0.03T}`$; $`X_T`$ is Acme's price at expiry divided by it; $`K_T`$ is the strike $`F_T e^k`$ | $103.0455 at 1 year | every $`k`$ moves down |
+| $`k`$ | log-moneyness, $`\ln(K/F_T)`$; 0 means strike equals forward | $`-0.0300`$ for the 1-year $100 strike | further into the smile's call wing |
+| $`\sigma`$ | implied volatility, the quote | 20.00% at 1 year, $100 | price rises |
+| $`w`$ | total variance, $`\sigma^2 T`$ | 4.0000 (×100) at 1 year, $100 | price rises |
+| $`C`$, $`c`$ | call price in dollars; $`c`$ is the same call divided by $`e^{-rT}F_T`$ | $9.2270 at 1 year, $100 | — |
+| $`h`$ | strike step of the butterfly | $5 | the butterfly is a coarser test |
+| $`p`$ | market-implied probability density of Acme's price at expiry, per dollar | $`-0.01433`$ at $95 on the dipped grid | — |
+| $`g`$ | Durrleman's function; same sign as the density | positive everywhere on the clean grid | — |
+| $`d_2`$ | $`-k/\sqrt{w} - \sqrt{w}/2`$, the Black-Scholes $`d_2`$ written in $`k`$ and $`w`$ | small and positive at the 1-year $100 strike | — |
+| $`\varphi`$ | the bell-curve height, $`e^{-x^2/2}/\sqrt{2\pi}`$ | — | — |
 
-The discount factor $e^{-rT}$ (house convention $D(T)$) turns a dollar at expiry into a dollar today; $e^{rT}$ undoes it.
+The discount factor $`e^{-rT}`$ (house convention $`D(T)`$) turns a dollar at expiry into a dollar today; $`e^{rT}`$ undoes it.
 
 ### When it holds
 
-- **Known rates and a proportional dividend.** The forward $F_T$ is then fixed today, and the calendar test at fixed $k$ is exact. With cash dividends on known dates, the forward-relative strike needs the dividend stripped out first; skip that and the calendar test compares the wrong options.
+- **Known rates and a proportional dividend.** The forward $`F_T`$ is then fixed today, and the calendar test at fixed $`k`$ is exact. With cash dividends on known dates, the forward-relative strike needs the dividend stripped out first; skip that and the calendar test compares the wrong options.
 - **European options on one underlying.** American puts carry an early-exercise premium, and the formulas above price it at zero; strip it out before testing.
 - **Mid prices that could be traded.** A negative butterfly smaller than the bid-ask spread cannot be bought for less than nothing. The tests flag faults in the quotes; whether money can be made depends on the spread.
-- **Tests on a finite grid.** Checking the quoted strikes clears the quotes. Between quotes, the surface is only as clean as the interpolation. Linear pieces of total variance keep the calendar order between nodes (Step 5), but not the butterfly: wherever the slope of $w$ falls at a node, narrow enough butterflies there go negative. Beyond the last strike, total variance must grow no faster than twice the distance $|k|$ (Roger Lee's moment formula, 2004), or the far wings price arbitrage.
+- **Tests on a finite grid.** Checking the quoted strikes clears the quotes. Between quotes, the surface is only as clean as the interpolation. Linear pieces of total variance keep the calendar order between nodes (Step 5), but not the butterfly: wherever the slope of $`w`$ falls at a node, narrow enough butterflies there go negative. Beyond the last strike, total variance must grow no faster than twice the distance $`|k|`$ (Roger Lee's moment formula, 2004), or the far wings price arbitrage.
 
 ---
 
@@ -95,76 +105,80 @@ Both tests are one idea, applied to two combinations of options. If a combinatio
 
 ### Step 1: the butterfly pays a tent
 
-Buy one Acme call struck at $95, sell two at $100, buy one at $105. At expiry, with Acme at a price $x$:
+Buy one Acme call struck at $95, sell two at $100, buy one at $105. At expiry, with Acme at a price $`x`$:
 
-- $x \le 95$: nothing pays. Payoff 0.
-- $x = 100$: the $95 call pays 5, the others nothing. Payoff 5.
-- $x \ge 105$: the three calls pay $x-95$, $-2(x-100)$ and $x-105$. They sum to 0.
+- $`x \le 95`$: nothing pays. Payoff 0.
+- $`x = 100`$: the $95 call pays 5, the others nothing. Payoff 5.
+- $`x \ge 105`$: the three calls pay $`x-95`$, $`-2(x-100)`$ and $`x-105`$. They sum to 0.
 
-In between, the payoff rises in a straight line from 0 to 5 and falls back: a tent, never below zero. By Step 0 its price $C(95) - 2C(100) + C(105)$ is at least zero. There is one such test per interior strike per expiry, 21 on the Acme grid.
+In between, the payoff rises in a straight line from 0 to 5 and falls back: a tent, never below zero. By Step 0 its price $`C(95) - 2C(100) + C(105)`$ is at least zero. There is one such test per interior strike per expiry, 21 on the Acme grid.
 
 ### Step 2: shrink the tent and it measures probability
 
-The tent is $h$ wide on each side and $h$ tall, so its area is $h^2$. Divide the butterfly price by $h^2$ and it prices a narrowing spike of unit area: a bet paying off only if Acme ends very near $K$. That bet's price is the discounted chance of ending there. So the butterfly divided by $h^2$ is, approximately, the discounted density of Acme's future price.
+The tent is $`h`$ wide on each side and $`h`$ tall, so its area is $`h^2`$. Divide the butterfly price by $`h^2`$ and it prices a narrowing spike of unit area: a bet paying off only if Acme ends very near $`K`$. That bet's price is the discounted chance of ending there. So the butterfly divided by $`h^2`$ is, approximately, the discounted density of Acme's future price.
 
-Taylor's theorem ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) makes that exact. Expand $C(K \pm h)$ around $K$: the first-slope terms cancel between the two wings, and what is left is $h^2$ times the second derivative, plus a term of size $h^4$. So a non-negative butterfly at every step is a non-negative second derivative, which is a non-negative density.
+Taylor's theorem ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) makes that exact. Expand $`C(K \pm h)`$ around $`K`$: the first-slope terms cancel between the two wings, and what is left is $`h^2`$ times the second derivative, plus a term of size $`h^4`$. So a non-negative butterfly at every step is a non-negative second derivative, which is a non-negative density.
 
 <details>
 <summary>The algebra behind this</summary>
 
-A call pays $(x-K)^+$, meaning $x - K$ if positive and 0 otherwise. Its price is the discounted average payoff over the market's density $p$:
-$$C(K) = e^{-rT}\int_K^\infty (x-K)\,p(x)\,dx.$$
-Differentiate in $K$. The integrand is zero at the lower limit, so only the inside changes: $\partial C/\partial K = -e^{-rT}\int_K^\infty p(x)\,dx$, minus the discounted chance of finishing above $K$. Differentiate again: $\partial^2 C/\partial K^2 = e^{-rT}\,p(K)$. This is Breeden and Litzenberger's 1978 result. The Taylor step: $C(K\pm h) = C \pm h\,C' + \tfrac12 h^2 C'' \pm \tfrac16 h^3 C''' + O(h^4)$, and adding the two with $-2C$ leaves $h^2 C'' + O(h^4)$.
+A call pays $`(x-K)^+`$, meaning $`x - K`$ if positive and 0 otherwise. Its price is the discounted average payoff over the market's density $`p`$:
+
+$`\displaystyle C(K) = e^{-rT}\int_K^\infty (x-K)\,p(x)\,dx.`$
+
+Differentiate in $`K`$. The integrand is zero at the lower limit, so only the inside changes: $`\partial C/\partial K = -e^{-rT}\int_K^\infty p(x)\,dx`$, minus the discounted chance of finishing above $`K`$. Differentiate again: $`\partial^2 C/\partial K^2 = e^{-rT}\,p(K)`$. This is Breeden and Litzenberger's 1978 result. The Taylor step: $`C(K\pm h) = C \pm h\,C' + \tfrac12 h^2 C'' \pm \tfrac16 h^3 C''' + O(h^4)`$, and adding the two with $`-2C`$ leaves $`h^2 C'' + O(h^4)`$.
 
 </details>
 
 ### Step 3: why total variance and log-moneyness
 
-The Black-Scholes call depends on volatility and time only through $w = \sigma^2 T$, and on strike only through $k$ once the forward is known. Written in those coordinates,
+The Black-Scholes call depends on volatility and time only through $`w = \sigma^2 T`$, and on strike only through $`k`$ once the forward is known. Written in those coordinates,
 
-$$C = e^{-rT} F_T\,\bigl[\,N(d_1) - e^{k} N(d_2)\,\bigr], \qquad d_1 = -\frac{k}{\sqrt{w}} + \frac{\sqrt{w}}{2}, \quad d_2 = d_1 - \sqrt{w},$$
+```math
+C = e^{-rT} F_T\,\bigl[\,N(d_1) - e^{k} N(d_2)\,\bigr], \qquad d_1 = -\frac{k}{\sqrt{w}} + \frac{\sqrt{w}}{2}, \quad d_2 = d_1 - \sqrt{w},
+```
 
-where $N(x)$ is the bell-curve area to the left of $x$. Everything outside the bracket is fixed by the market's rate and dividend. Inside, only $k$ and $w$ appear. Two expiries are therefore comparable at the same $k$ and in units of $w$, and nowhere else. That is why the surface is interpolated in total variance against log-moneyness: linear pieces of $w$ between neighbouring $k$ nodes within one expiry, and linear in $T$ between expiries at a fixed $k$.
+where $`N(x)`$ is the bell-curve area to the left of $`x`$. Everything outside the bracket is fixed by the market's rate and dividend. Inside, only $`k`$ and $`w`$ appear. Two expiries are therefore comparable at the same $`k`$ and in units of $`w`$, and nowhere else. That is why the surface is interpolated in total variance against log-moneyness: linear pieces of $`w`$ between neighbouring $`k`$ nodes within one expiry, and linear in $`T`$ between expiries at a fixed $`k`$.
 
 ### Step 4: the butterfly test read off the surface
 
-Put $w(k)$ into the call formula, change variable from $K$ to $k$ (each $\partial/\partial K$ becomes $\tfrac1K\,\partial/\partial k$), and differentiate twice. The terms collect into $\varphi(d_2)/(K\sqrt{w})$, which is always positive, times Durrleman's $g(k)$. So the density's sign is the sign of $g$. A dip in the surface bends $w$ down sharply, makes $w''$ large and negative beside it, and drives $g$ below zero there.
+Put $`w(k)`$ into the call formula, change variable from $`K`$ to $`k`$ (each $`\partial/\partial K`$ becomes $`\tfrac1K\,\partial/\partial k`$), and differentiate twice. The terms collect into $`\varphi(d_2)/(K\sqrt{w})`$, which is always positive, times Durrleman's $`g(k)`$. So the density's sign is the sign of $`g`$. A dip in the surface bends $`w`$ down sharply, makes $`w''`$ large and negative beside it, and drives $`g`$ below zero there.
 
 <details>
 <summary>Detailed proof: from the call price to g</summary>
 
-Write the undiscounted, forward-scaled call as $c(k) = N(d_1) - e^k N(d_2)$, with $d_{1,2}$ functions of $k$ both directly and through $w(k)$. Two identities do the work: $\varphi(d_1) = e^k \varphi(d_2)$, and $\partial c/\partial\sqrt{w} = \varphi(d_1)$ (vega). Differentiating once gives $c'(k) = -e^k N(d_2) + \varphi(d_1)\,\frac{w'}{2\sqrt{w}}$. Differentiating again and collecting every term over $\varphi(d_2)e^k/\sqrt{w}$, then using $\partial^2 C/\partial K^2 = e^{-rT}(c'' - c')/(F_T e^{2k})$ for the change of variable, gives the density $p(K) = \varphi(d_2)\,g(k)/(K\sqrt{w})$ with $g$ as in The formula. Gatheral and Jacquier (2014) state the same result. The checks confirm it independently: the price road and the $g$ road give densities within 0.9% of each other at every 1-year strike.
+Write the undiscounted, forward-scaled call as $`c(k) = N(d_1) - e^k N(d_2)`$, with $`d_{1,2}`$ functions of $`k`$ both directly and through $`w(k)`$. Two identities do the work: $`\varphi(d_1) = e^k \varphi(d_2)`$, and $`\partial c/\partial\sqrt{w} = \varphi(d_1)`$ (vega). Differentiating once gives $`c'(k) = -e^k N(d_2) + \varphi(d_1)\,\frac{w'}{2\sqrt{w}}`$. Differentiating again and collecting every term over $`\varphi(d_2)e^k/\sqrt{w}`$, then using $`\partial^2 C/\partial K^2 = e^{-rT}(c'' - c')/(F_T e^{2k})`$ for the change of variable, gives the density $`p(K) = \varphi(d_2)\,g(k)/(K\sqrt{w})`$ with $`g`$ as in The formula. Gatheral and Jacquier (2014) state the same result. The checks confirm it independently: the price road and the $`g`$ road give densities within 0.9% of each other at every 1-year strike.
 
 </details>
 
 ### Step 5: the calendar spread, and why the test is on total variance
 
-Fix a log-moneyness $k$. At expiry $T$ the matching strike is $K_T = F_T e^k$, a fixed fraction of that expiry's forward. Scale the call's price by the discounted forward: $c(k,T) = C/(e^{-rT}F_T)$. This is the price of $(X_T - e^k)^+$, where $X_T$ is Acme's price at expiry divided by its forward. With known rates and a proportional dividend, $X_T$ averages 1 at every expiry, and its best forecast of any later value is its current value: it is a **martingale**, a fair game.
+Fix a log-moneyness $`k`$. At expiry $`T`$ the matching strike is $`K_T = F_T e^k`$, a fixed fraction of that expiry's forward. Scale the call's price by the discounted forward: $`c(k,T) = C/(e^{-rT}F_T)`$. This is the price of $`(X_T - e^k)^+`$, where $`X_T`$ is Acme's price at expiry divided by its forward. With known rates and a proportional dividend, $`X_T`$ averages 1 at every expiry, and its best forecast of any later value is its current value: it is a **martingale**, a fair game.
 
 A fair game plus a payoff that bends upward means the later option is worth at least as much. Waiting adds spread and never removes it.
 
 <details>
 <summary>Detailed proof: longer never cheaper at the same k</summary>
 
-Take $T_1 < T_2$ and $a = e^k$. The function $x \mapsto (x-a)^+$ is convex, so by Jensen's inequality applied to the forecast made at $T_1$: $\mathbb{E}[(X_{T_2} - a)^+ \mid \text{time } T_1] \ge (\mathbb{E}[X_{T_2} \mid T_1] - a)^+ = (X_{T_1} - a)^+$. Average both sides over everything known today: $c(k, T_2) \ge c(k, T_1)$. Now read $c$ off Step 3: $c = N(d_1) - e^k N(d_2)$ depends on $T$ only through $w$, and its derivative in $\sqrt{w}$ is $\varphi(d_1) > 0$. So $c$ rises strictly with $w$, and $c(k,T_2) \ge c(k,T_1)$ is the same statement as $w(k,T_2) \ge w(k,T_1)$. Carr and Madan (2005) give the full list of grid conditions, including call spreads, that together rule out every static arbitrage.
+Take $`T_1 < T_2`$ and $`a = e^k`$. The function $`x \mapsto (x-a)^+`$ is convex, so by Jensen's inequality applied to the forecast made at $`T_1`$: $`\mathbb{E}[(X_{T_2} - a)^+ \mid \text{time } T_1] \ge (\mathbb{E}[X_{T_2} \mid T_1] - a)^+ = (X_{T_1} - a)^+`$. Average both sides over everything known today: $`c(k, T_2) \ge c(k, T_1)`$. Now read $`c`$ off Step 3: $`c = N(d_1) - e^k N(d_2)`$ depends on $`T`$ only through $`w`$, and its derivative in $`\sqrt{w}`$ is $`\varphi(d_1) > 0`$. So $`c`$ rises strictly with $`w`$, and $`c(k,T_2) \ge c(k,T_1)`$ is the same statement as $`w(k,T_2) \ge w(k,T_1)`$. Carr and Madan (2005) give the full list of grid conditions, including call spreads, that together rule out every static arbitrage.
 
 </details>
 
-Volatility itself may fall with expiry; only $\sigma^2 T$ may not. That is the link to forward volatility ([Term structure and forward volatility](02-term-structure-and-forward-volatility.md)): the variance between two expiries, $w(k,T_2) - w(k,T_1)$, must not be negative.
+Volatility itself may fall with expiry; only $`\sigma^2 T`$ may not. That is the link to forward volatility ([Term structure and forward volatility](02-term-structure-and-forward-volatility.md)): the variance between two expiries, $`w(k,T_2) - w(k,T_1)`$, must not be negative.
 
-On a grid, each expiry has its own $k$ nodes, because each has its own forward. The test compares the two linear interpolants at every node of either expiry, inside the range both cover. Between consecutive nodes the gap between two straight-line pieces is itself a straight line, so its lowest point sits at a node. Checking the nodes is complete.
+On a grid, each expiry has its own $`k`$ nodes, because each has its own forward. The test compares the two linear interpolants at every node of either expiry, inside the range both cover. Between consecutive nodes the gap between two straight-line pieces is itself a straight line, so its lowest point sits at a node. Checking the nodes is complete.
 
 ### Step 6: repair one quote
 
-A bad quote at strike $K$ touches three butterflies: the ones centred at $K-h$, $K$ and $K+h$. Each gives one inequality on the call price $C(K)$:
+A bad quote at strike $`K`$ touches three butterflies: the ones centred at $`K-h`$, $`K`$ and $`K+h`$. Each gives one inequality on the call price $`C(K)`$:
 
-- centred at $K - h$: $C(K) \ge 2C(K-h) - C(K-2h)$
-- centred at $K + h$: $C(K) \ge 2C(K+h) - C(K+2h)$
-- centred at $K$: $C(K) \le \tfrac12\bigl(C(K-h) + C(K+h)\bigr)$
+- centred at $`K - h`$: $`C(K) \ge 2C(K-h) - C(K-2h)`$
+- centred at $`K + h`$: $`C(K) \ge 2C(K+h) - C(K+2h)`$
+- centred at $`K`$: $`C(K) \le \tfrac12\bigl(C(K-h) + C(K+h)\bigr)`$
 
-The larger lower bound and the upper bound make a band of honest prices. Each band edge converts to a volatility by solving Black-Scholes backwards. That inverse always has exactly one answer inside the no-arbitrage price range: the call price rises strictly with volatility, from the discounted intrinsic value $e^{-rT}(F_T - K)^+$ at zero volatility to the discounted forward $e^{-rT}F_T$ as volatility grows without limit. Bisection finds it. A price outside that range has no implied volatility at all.
+The larger lower bound and the upper bound make a band of honest prices. Each band edge converts to a volatility by solving Black-Scholes backwards. That inverse always has exactly one answer inside the no-arbitrage price range: the call price rises strictly with volatility, from the discounted intrinsic value $`e^{-rT}(F_T - K)^+`$ at zero volatility to the discounted forward $`e^{-rT}F_T`$ as volatility grows without limit. Bisection finds it. A price outside that range has no implied volatility at all.
 
-A band says what is allowed, not what is right. The repair here discards the bad quote and refills it from its two neighbours, linear in total variance against $k$. The checks confirm the refill lands inside the band.
+A band says what is allowed, not what is right. The repair here discards the bad quote and refills it from its two neighbours, linear in total variance against $`k`$. The checks confirm the refill lands inside the band.
 
 A smooth parametric smile that cannot produce these faults in the first place is the other route; that is the job of [The SVI smile](04-svi-smile-fit.md).
 
@@ -184,20 +198,20 @@ The 100-strike column carries the house term structure: 18% at 6 months, 20% at 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| 1-year forward | $100 \times e^{0.03}$ | $103.0455 |
-| $k$ at the $100 strike | $\ln(100 / 103.0455)$ | $-0.0300$ |
+| 1-year forward | $`100 \times e^{0.03}`$ | $103.0455 |
+| $`k`$ at the $100 strike | $`\ln(100 / 103.0455)`$ | $`-0.0300`$ |
 | 1-year calls at $90 and $95, from their quotes | Black-Scholes | $16.0904, $12.4503 |
 | 1-year $100 call at the dipped 18.00% | Black-Scholes | $8.4696 (clean: $9.2270) |
-| butterfly centred at $95 | $16.0904 - 2 \times 12.4503 + 8.4696$ | $-0.3407$ |
-| butterfly centred at $105 | same pattern, $100 to $110 | $-0.2019$ |
-| butterfly centred at $100 | $12.4503 - 2 \times 8.4696 + 6.5020$ | $+2.0132$ |
-| density at $95, price road | $e^{0.05} \times (-0.3407) / 5^2$ | $-0.01433$ per dollar |
-| density at $95, $g$ road | Durrleman, from $w$ alone | $-0.01379$ per dollar |
+| butterfly centred at $95 | $`16.0904 - 2 \times 12.4503 + 8.4696`$ | $`-0.3407`$ |
+| butterfly centred at $105 | same pattern, $100 to $110 | $`-0.2019`$ |
+| butterfly centred at $100 | $`12.4503 - 2 \times 8.4696 + 6.5020`$ | $`+2.0132`$ |
+| density at $95, price road | $`e^{0.05} \times (-0.3407) / 5^2`$ | $`-0.01433`$ per dollar |
+| density at $95, $`g`$ road | Durrleman, from $`w`$ alone | $`-0.01379`$ per dollar |
 | honest band for the $100 call | the three inequalities of Step 6 | $8.8102 to $9.4762 |
 | the same band in volatility | bisection on each edge | 18.8999% to 20.6573% |
-| refill from the neighbours | $w$ linear in $k$ between 4.6139 and 3.5194 (×100) | **20.1319%** |
+| refill from the neighbours | $`w`$ linear in $`k`$ between 4.6139 and 3.5194 (×100) | **20.1319%** |
 
-The last line in words: the typed 18% sits below the lowest honest value, 18.90%; refilled from its neighbours in total variance, the quote comes back at 20.13%, inside the band and close to the true 20%. After the refill the three butterflies read $+0.4668$, $+0.3983$ and $+0.6055$.
+The last line in words: the typed 18% sits below the lowest honest value, 18.90%; refilled from its neighbours in total variance, the quote comes back at 20.13%, inside the band and close to the true 20%. After the refill the three butterflies read $`+0.4668`$, $`+0.3983`$ and $`+0.6055`$.
 
 The density, per dollar and scaled by 100, clean, dipped and refilled:
 
@@ -212,9 +226,9 @@ xychart-beta
     line [1.02, 1.38, 1.96, 1.67, 2.55, 2.32, 2.10]
 ```
 
-Orange: the clean grid. Green: the 18% dip, with a spike at $100 and negative probability either side. Dark blue: after the refill, positive everywhere but kinked, because linear pieces of $w$ bend only at the nodes.
+Orange: the clean grid. Green: the 18% dip, with a spike at $100 and negative probability either side. Dark blue: after the refill, positive everywhere but kinked, because linear pieces of $`w`$ bend only at the nodes.
 
-Now the second fault: the whole 6-month row typed 10 points high, so the 6-month $100 quote reads 28.00%. At the same strike this looks acceptable: 6-month total variance $0.5 \times 0.28^2$ is below the 1-year $1 \times 0.20^2$, and forward variance is $+0.001600$. At the same log-moneyness it is not. The 6-month $100 strike sits at $k = -0.0150$, and the 1-year surface there has total variance 0.00068 less than the 6-month's. Forward variance at that $k$ is $-0.001355$: a negative amount of variance between 6 months and 1 year, which no market can deliver. The calendar test flags 9 nodes, from $k = -0.0300$ to $k = 0.1523$, and the price road flags the same 9.
+Now the second fault: the whole 6-month row typed 10 points high, so the 6-month $100 quote reads 28.00%. At the same strike this looks acceptable: 6-month total variance $`0.5 \times 0.28^2`$ is below the 1-year $`1 \times 0.20^2`$, and forward variance is $`+0.001600`$. At the same log-moneyness it is not. The 6-month $100 strike sits at $`k = -0.0150`$, and the 1-year surface there has total variance 0.00068 less than the 6-month's. Forward variance at that $`k`$ is $`-0.001355`$: a negative amount of variance between 6 months and 1 year, which no market can deliver. The calendar test flags 9 nodes, from $`k = -0.0300`$ to $`k = 0.1523`$, and the price road flags the same 9.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -227,22 +241,22 @@ xychart-beta
     line [6.58, 5.66, 4.89, 4.24, 3.70, 3.27, 2.92, 2.64]
 ```
 
-Orange: the clean 6-month row. Green: the same row 10 points high. Dark blue: the 1-year. Where green climbs above dark blue, from about $k = -0.06$ rightward, the 6-month slice holds more variance than the 1-year: a calendar arbitrage. The first grid node past the crossing is $k = -0.0300$, where the flags start.
+Orange: the clean 6-month row. Green: the same row 10 points high. Dark blue: the 1-year. Where green climbs above dark blue, from about $`k = -0.06`$ rightward, the 6-month slice holds more variance than the 1-year: a calendar arbitrage. The first grid node past the crossing is $`k = -0.0300`$, where the flags start.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Calendar test on volatility instead of total variance, clean grid | 6 false alarms: 5 of 16 nodes from 3 to 6 months, 1 of 16 from 6 months to 1 year | Volatility may fall with expiry; only $\sigma^2 T$ may not. Deep put-wing vols fall as expiry lengthens. |
-| Calendar test at the same strike, not the same $k$, lifted row | flags 4 strikes ($105 to $120), passes $100 with forward variance $+0.001600$ | Each expiry has its own forward; the same strike is a different bet at each. The right comparison gives $-0.001355$ at the $100 node and 9 flags. |
-| Look for the butterfly fault at the dipped strike itself | $+2.0132$ at $100: passes | A dip over-bends the price at the dip and under-bends it beside it; the negatives are at $95 ($-0.3407$) and $105 ($-0.2019$). |
-| A 9-month $100 vol interpolated linearly in volatility | 19.0000% instead of 19.3112% | Variance adds over time, volatility does not. Linear in $w$ at fixed $k$ (0.01668 at 6 months, 0.03926 at 1 year) is the honest route. |
+| Calendar test on volatility instead of total variance, clean grid | 6 false alarms: 5 of 16 nodes from 3 to 6 months, 1 of 16 from 6 months to 1 year | Volatility may fall with expiry; only $`\sigma^2 T`$ may not. Deep put-wing vols fall as expiry lengthens. |
+| Calendar test at the same strike, not the same $`k`$, lifted row | flags 4 strikes ($105 to $120), passes $100 with forward variance $`+0.001600`$ | Each expiry has its own forward; the same strike is a different bet at each. The right comparison gives $`-0.001355`$ at the $100 node and 9 flags. |
+| Look for the butterfly fault at the dipped strike itself | $`+2.0132`$ at $100: passes | A dip over-bends the price at the dip and under-bends it beside it; the negatives are at $95 ($`-0.3407`$) and $105 ($`-0.2019`$). |
+| A 9-month $100 vol interpolated linearly in volatility | 19.0000% instead of 19.3112% | Variance adds over time, volatility does not. Linear in $`w`$ at fixed $`k`$ (0.01668 at 6 months, 0.03926 at 1 year) is the honest route. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the Acme surface from its 27 quotes and takes two independent roads through each test. For butterflies: the price of every 5-dollar butterfly from Black-Scholes prices, and Durrleman's $g$ from total variance alone, with no option priced. For calendars: total variance compared at every shared node, and forward-scaled call prices compared at the same nodes in dollars. For the repair: a band from three butterfly inequalities in price space, solved to volatilities by bisection, against a refill from total variance. Each script writes its own normal distribution function (Marsaglia's series), root finder and interpolator.
+The code builds the Acme surface from its 27 quotes and takes two independent roads through each test. For butterflies: the price of every 5-dollar butterfly from Black-Scholes prices, and Durrleman's $`g`$ from total variance alone, with no option priced. For calendars: total variance compared at every shared node, and forward-scaled call prices compared at the same nodes in dollars. For the repair: a band from three butterfly inequalities in price space, solved to volatilities by bisection, against a refill from total variance. Each script writes its own normal distribution function (Marsaglia's series), root finder and interpolator.
 
 ### Python
 
@@ -647,18 +661,18 @@ The 3-month roads differ by up to 12.6% at one strike, against 0.9% at 1 year: a
 
 Lean proves Steps 1, 5 and 6 for every strike, step, pair of expiries and log-moneyness, not just the Acme grid.
 
-- Take call prices that are discounted averages of their payoffs, with Acme's price over its forward a fair game between two expiries. Then every butterfly, at any strike $K$ and step $h \ge 0$, costs at least zero.
-- Take the same two expiries. Then at every log-moneyness $k$, the later forward-scaled call is worth at least the earlier one: no negative calendar spread.
-- Take the forward-scaled Black-Scholes call $c = N(d_1) - e^k N(d_2)$ of Step 3. Then at every $k$, $c$ rises strictly as total variance $w$ rises.
+- Take call prices that are discounted averages of their payoffs, with Acme's price over its forward a fair game between two expiries. Then every butterfly, at any strike $`K`$ and step $`h \ge 0`$, costs at least zero.
+- Take the same two expiries. Then at every log-moneyness $`k`$, the later forward-scaled call is worth at least the earlier one: no negative calendar spread.
+- Take the forward-scaled Black-Scholes call $`c = N(d_1) - e^k N(d_2)`$ of Step 3. Then at every $`k`$, $`c`$ rises strictly as total variance $`w`$ rises.
 - So the calendar test on prices is the calendar test on total variance.
-- Take any $k$ and a price $p$ strictly between the intrinsic value $(1 - e^k)^+$ and 1, both in forward units. Then exactly one positive total variance $w$ gives $c = p$.
+- Take any $`k`$ and a price $`p`$ strictly between the intrinsic value $`(1 - e^k)^+`$ and 1, both in forward units. Then exactly one positive total variance $`w`$ gives $`c = p`$.
 - Take the 95/100/105 butterfly and Acme finishing at $80, $85, up to $120. Then it pays 5 at $100 and 0 at the other eight.
 - Take Acme finishing above $105. Then the three payoffs always sum to 0.
 - Take 3 expiries and 9 strikes. Then the grid holds 27 quotes and 21 butterflies.
-- Take the lifted 6-month row at the $100 strike. Then forward variance is $(1 \times 0.20^2 - 0.5 \times 0.28^2) / 0.5 = 0.0016$.
+- Take the lifted 6-month row at the $100 strike. Then forward variance is $`(1 \times 0.20^2 - 0.5 \times 0.28^2) / 0.5 = 0.0016`$.
 - Take the 6-month and 1-year $100 quotes, 18% and 20%. Then the naive 9-month vol, linear in volatility, is 19%.
 
-Prices, Durrleman's $g$, the band, the refill and the grid flags are left to the Python and Rust checks.
+Prices, Durrleman's $`g`$, the band, the refill and the grid flags are left to the Python and Rust checks.
 
 ```lean
 -- The volatility surface: call prices that are discounted averages over a fair-game (martingale) price pass both the butterfly test across strikes and the calendar test across expiries at fixed log-moneyness, and the Black-Scholes call in forward units rises strictly with total variance, so the calendar test on prices is the calendar test on total variance and every honest price has exactly one total variance.
@@ -1026,10 +1040,10 @@ example : ((18 : ℚ) + 20) / 2 = 19 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading a falling volatility as an arbitrage, or a rising one as safe.** The calendar rule is about total variance at the same log-moneyness, not about volatility at the same strike. On the clean Acme grid the shorter expiry's put-wing vol sits above the longer expiry's at 6 nodes of 32, and there is no arbitrage. With the 6-month row lifted, the $100 strike passes a same-strike check with room to spare, yet at its own log-moneyness the forward variance is $-0.001355$.
+> **Reading a falling volatility as an arbitrage, or a rising one as safe.** The calendar rule is about total variance at the same log-moneyness, not about volatility at the same strike. On the clean Acme grid the shorter expiry's put-wing vol sits above the longer expiry's at 6 nodes of 32, and there is no arbitrage. With the 6-month row lifted, the $100 strike passes a same-strike check with room to spare, yet at its own log-moneyness the forward variance is $`-0.001355`$.
 >
-> - **Hunting the fault where it was typed.** A dip at $100 shows as negative butterflies at $95 and $105; the butterfly at $100 itself is $+2.0132$.
-> - **Interpolating in volatility.** Linear in vol between 6 months and 1 year gives a 9-month $100 vol of 19.0000%; linear in total variance at fixed $k$ gives 19.3112%. The first can also manufacture calendar faults that are not in the quotes.
+> - **Hunting the fault where it was typed.** A dip at $100 shows as negative butterflies at $95 and $105; the butterfly at $100 itself is $`+2.0132`$.
+> - **Interpolating in volatility.** Linear in vol between 6 months and 1 year gives a 9-month $100 vol of 19.0000%; linear in total variance at fixed $`k`$ gives 19.3112%. The first can also manufacture calendar faults that are not in the quotes.
 > - **Treating the band as the answer.** Any price from $8.8102 to $9.4762 passes; the repair still needs a rule for which one. Clamping to a band edge sets the density at a neighbour to exactly zero, which is legal and implausible.
 > - **Testing only the quotes.** A clean grid can still produce arbitrage between nodes or beyond the last strike if the interpolation or extrapolation is careless.
 
@@ -1051,13 +1065,13 @@ example : ((18 : ℚ) + 20) / 2 = 19 := by norm_num
 ## What this builds on
 
 - [Term structure and forward volatility](02-term-structure-and-forward-volatility.md): forward variance between two expiries, here required to be non-negative at every log-moneyness, and the house 21.82% forward vol.
-- [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the expansion that turns a butterfly into a second derivative with an $h^4$ error.
+- [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the expansion that turns a butterfly into a second derivative with an $`h^4`$ error.
 
 ---
 
 ## Where this goes next
 
-- [The SVI smile](04-svi-smile-fit.md): a five-number smile formula fitted to one expiry, smooth where linear pieces are kinked, with conditions that keep $g$ positive.
+- [The SVI smile](04-svi-smile-fit.md): a five-number smile formula fitted to one expiry, smooth where linear pieces are kinked, with conditions that keep $`g`$ positive.
 - [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): turns an honest surface into one volatility per price and date, with the butterfly and calendar quantities in its denominator and numerator.
 - [The VIX](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md): integrates one slice of the surface into a single number for the market's expected variance.
 - [The vanna-volga smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md): builds a whole smile from three quotes, which must then pass these tests.
@@ -1072,5 +1086,5 @@ Verified 2026-11-13: every link below resolves to the publisher's page.
 
 - Douglas T. Breeden and Robert H. Litzenberger, "Prices of State-Contingent Claims Implicit in Option Prices", *Journal of Business* 51(4), 1978, [doi:10.1086/296025](https://doi.org/10.1086/296025). The second strike derivative of call prices is the discounted density: the butterfly test.
 - Peter Carr and Dilip B. Madan, "A note on sufficient conditions for no arbitrage", *Finance Research Letters* 2(3), 2005, [doi:10.1016/j.frl.2005.04.005](https://doi.org/10.1016/j.frl.2005.04.005). The full list of grid tests, butterflies and calendars included, that rules out static arbitrage.
-- Jim Gatheral and Antoine Jacquier, "Arbitrage-free SVI volatility surfaces", *Quantitative Finance* 14(1), 2014, [arXiv:1204.0646](https://arxiv.org/abs/1204.0646). Durrleman's $g$, the calendar condition on total variance, and the density formula used by the second road.
+- Jim Gatheral and Antoine Jacquier, "Arbitrage-free SVI volatility surfaces", *Quantitative Finance* 14(1), 2014, [arXiv:1204.0646](https://arxiv.org/abs/1204.0646). Durrleman's $`g`$, the calendar condition on total variance, and the density formula used by the second road.
 - Jim Gatheral, *The Volatility Surface: A Practitioner's Guide*, Wiley, 2006, [publisher's page](https://www.wiley.com/en-us/The+Volatility+Surface%3A+A+Practitioner%27s+Guide-p-9780471792512). The desk's view of building, reading and cleaning a surface.

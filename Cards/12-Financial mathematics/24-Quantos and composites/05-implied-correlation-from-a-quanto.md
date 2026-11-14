@@ -37,50 +37,58 @@ Orange: the model price at each correlation, falling from 10.81 at −1 to 8.33 
 
 The price as a function of the correlation, with every other input fixed:
 
-$$C(\rho) = \bar{X}\,e^{-r_d T}\left[F_Q(\rho)\,N(d_1) - K\,N(d_2)\right], \qquad F_Q(\rho) = S\,e^{(r_f - q - \rho\,\sigma_S\,\sigma_X)T}$$
+```math
+C(\rho) = \bar{X}\,e^{-r_d T}\left[F_Q(\rho)\,N(d_1) - K\,N(d_2)\right], \qquad F_Q(\rho) = S\,e^{(r_f - q - \rho\,\sigma_S\,\sigma_X)T}
+```
 
-The implied correlation is the $\rho$ that solves
+The implied correlation is the $`\rho`$ that solves
 
-$$C(\rho) = C_m, \qquad \text{which has exactly one solution in } [-1, 1] \text{ when } C(1) \le C_m \le C(-1).$$
+```math
+C(\rho) = C_m, \qquad \text{which has exactly one solution in } [-1, 1] \text{ when } C(1) \le C_m \le C(-1).
+```
 
 **Read it aloud:** find the correlation at which the model's quanto price equals the quoted price; one exists, and only one, when the quote lies between the price at perfect co-movement and the price at perfect opposite movement.
 
 | Symbol | Plain meaning | In our example | Push it up and the price… |
 | --- | --- | --- | --- |
-| $C(\rho)$ | the model's quanto call price at correlation $\rho$, in dollars | 9.151629 at 0.30; 10.81 at −1; 8.33 at +1 | — |
-| $C_m$ | the quoted (market) price that goes in | 9.151629, 11.00, 9.40 | — |
-| $\rho$ | correlation of the share's moves with the dollars-per-euro moves, from −1 to +1; say "rho" | 0.30 comes back | falls, 1.20 dollars per unit near 0.30 |
-| $\sigma_S$, $\sigma_X$ | volatility (yearly spread of log returns) of the share and of the exchange rate | 20% and 10% | $\sigma_X$: falls when $\rho$ is positive |
-| $\bar{X}$ | the fixed rate in the contract ("X-bar"), dollars per euro | 1.10 | rises in proportion |
-| $X_0$ | today's market exchange rate, dollars per euro | 1.15 | does nothing: it cancels |
-| $S$, $K$ | the share's price today and the strike, both in euros | 100 and 100 | $S$ raises it; $K$ lowers it |
-| $r_d$, $r_f$, $q$ | dollar rate, euro rate, dividend yield, continuously compounded | 5%, 3%, 1% | $r_f$ raises it; $r_d$ and $q$ lower it |
-| $T$ | years to expiry | 1 | raises it |
-| $F_Q$ | the quanto forward: the share's fair future price in this contract, euros | 101.41 at 0.30 | raises it |
-| $N(x)$, $\varphi(x)$, $d_1$, $d_2$ | bell-curve area left of $x$ and its height at $x$; the Black-Scholes call's two cut-offs, with $F_Q$ as the forward | — | — |
-| $\partial C / \partial \rho$ | the slope: dollars of price per unit of correlation | −1.204343 at 0.30 | — |
+| $`C(\rho)`$ | the model's quanto call price at correlation $`\rho`$, in dollars | 9.151629 at 0.30; 10.81 at −1; 8.33 at +1 | — |
+| $`C_m`$ | the quoted (market) price that goes in | 9.151629, 11.00, 9.40 | — |
+| $`\rho`$ | correlation of the share's moves with the dollars-per-euro moves, from −1 to +1; say "rho" | 0.30 comes back | falls, 1.20 dollars per unit near 0.30 |
+| $`\sigma_S`$, $`\sigma_X`$ | volatility (yearly spread of log returns) of the share and of the exchange rate | 20% and 10% | $`\sigma_X`$: falls when $`\rho`$ is positive |
+| $`\bar{X}`$ | the fixed rate in the contract ("X-bar"), dollars per euro | 1.10 | rises in proportion |
+| $`X_0`$ | today's market exchange rate, dollars per euro | 1.15 | does nothing: it cancels |
+| $`S`$, $`K`$ | the share's price today and the strike, both in euros | 100 and 100 | $`S`$ raises it; $`K`$ lowers it |
+| $`r_d`$, $`r_f`$, $`q`$ | dollar rate, euro rate, dividend yield, continuously compounded | 5%, 3%, 1% | $`r_f`$ raises it; $`r_d`$ and $`q`$ lower it |
+| $`T`$ | years to expiry | 1 | raises it |
+| $`F_Q`$ | the quanto forward: the share's fair future price in this contract, euros | 101.41 at 0.30 | raises it |
+| $`N(x)`$, $`\varphi(x)`$, $`d_1`$, $`d_2`$ | bell-curve area left of $`x`$ and its height at $`x`$; the Black-Scholes call's two cut-offs, with $`F_Q`$ as the forward | — | — |
+| $`\partial C / \partial \rho`$ | the slope: dollars of price per unit of correlation | −1.204343 at 0.30 | — |
 
 The cut-offs are the ones from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), written with the forward:
 
-$$d_1 = \frac{\ln(F_Q/K) + \tfrac12\sigma_S^2 T}{\sigma_S\sqrt{T}}, \qquad d_2 = d_1 - \sigma_S\sqrt{T}$$
+```math
+d_1 = \frac{\ln(F_Q/K) + \tfrac12\sigma_S^2 T}{\sigma_S\sqrt{T}}, \qquad d_2 = d_1 - \sigma_S\sqrt{T}
+```
 
-In words: $d_2$ counts how many standard deviations of room the share has above the strike; $d_1$ adds one more spread, $\sigma_S\sqrt{T}$ (0.20 here).
+In words: $`d_2`$ counts how many standard deviations of room the share has above the strike; $`d_1`$ adds one more spread, $`\sigma_S\sqrt{T}`$ (0.20 here).
 
 The slope, which Step 2 derives and Newton's method uses:
 
-$$\frac{\partial C}{\partial \rho} = -\,\bar{X}\,e^{-r_d T}\,F_Q\,N(d_1)\,\sigma_S\,\sigma_X\,T$$
+```math
+\frac{\partial C}{\partial \rho} = -\,\bar{X}\,e^{-r_d T}\,F_Q\,N(d_1)\,\sigma_S\,\sigma_X\,T
+```
 
 In words: every factor is positive, and the minus sign in front makes the slope negative everywhere.
 
-Conventions verified 2026-09-27: the exchange rate is quoted as dollars per euro and $\rho$ is measured against that quote; with euros per dollar the sign of $\rho$ flips.
+Conventions verified 2026-09-27: the exchange rate is quoted as dollars per euro and $`\rho`$ is measured against that quote; with euros per dollar the sign of $`\rho`$ flips.
 
 ### When it holds
 
-- **Both volatilities known.** The correlation only enters through the product $\rho\sigma_X$. With $\sigma_X$ also unknown, one quote pins that product and nothing more: 0.03 here, which is 0.30 with a 10% euro or 0.60 with a 5% euro.
+- **Both volatilities known.** The correlation only enters through the product $`\rho\sigma_X`$. With $`\sigma_X`$ also unknown, one quote pins that product and nothing more: 0.03 here, which is 0.30 with a 10% euro or 0.60 with a 5% euro.
 - **The quanto model is right.** Constant volatilities, constant correlation, lognormal prices. A quote carrying a volatility smile (strike-dependent volatility) or a dealer's margin is read as correlation, and the implied number absorbs every error in the other inputs.
 - **The quote is inside the range.** Outside the band from 8.33 to 10.81 no correlation fits. The quote then says something the model cannot say, or an input is wrong.
-- **The option is not far from the money.** The slope carries $N(d_1)$. At a strike of 140 euros the whole correlation range moves the price only from 0.47 to 0.77 dollars, and a one-cent quote error moves the answer by 0.072 instead of 0.008.
-- **Something is exposed to the currency.** If $\sigma_X$, $\sigma_S$ or $T$ is zero the slope is zero, the price ignores the correlation, and every correlation fits a correct quote.
+- **The option is not far from the money.** The slope carries $`N(d_1)`$. At a strike of 140 euros the whole correlation range moves the price only from 0.47 to 0.77 dollars, and a one-cent quote error moves the answer by 0.072 instead of 0.008.
+- **Something is exposed to the currency.** If $`\sigma_X`$, $`\sigma_S`$ or $`T`$ is zero the slope is zero, the price ignores the correlation, and every correlation fits a correct quote.
 
 ---
 
@@ -88,45 +96,47 @@ Conventions verified 2026-09-27: the exchange rate is quoted as dollars per euro
 
 ### Step 0: the correlation acts through one number, the quanto forward
 
-The quanto call is the Black-Scholes call on a share whose fair future price is the quanto forward $F_Q$ ([The quanto adjustment](01-quanto-forward-and-adjustment.md)). The correlation appears nowhere else. So inverting in correlation is two smaller inversions in a row: from the price to the forward, and from the forward to the correlation. The first is monotone because a call is worth more when the share is expected to end higher. The second is monotone because the forward is an exponential in $\rho$.
+The quanto call is the Black-Scholes call on a share whose fair future price is the quanto forward $`F_Q`$ ([The quanto adjustment](01-quanto-forward-and-adjustment.md)). The correlation appears nowhere else. So inverting in correlation is two smaller inversions in a row: from the price to the forward, and from the forward to the correlation. The first is monotone because a call is worth more when the share is expected to end higher. The second is monotone because the forward is an exponential in $`\rho`$.
 
 ### Step 1: the forward falls as the correlation rises
 
-$F_Q(\rho) = S\,e^{(r_f - q - \rho\sigma_S\sigma_X)T}$. Every rise in $\rho$ lowers the exponent, so the forward slides: 104.08 at −1, 102.02 at 0, 100.00 at +1. At +1 the forward is exactly today's price, because the adjustment $\rho\sigma_S\sigma_X$ then equals the euro carry $r_f - q$ (the euro rate less the dividend).
+$`F_Q(\rho) = S\,e^{(r_f - q - \rho\sigma_S\sigma_X)T}`$. Every rise in $`\rho`$ lowers the exponent, so the forward slides: 104.08 at −1, 102.02 at 0, 100.00 at +1. At +1 the forward is exactly today's price, because the adjustment $`\rho\sigma_S\sigma_X`$ then equals the euro carry $`r_f - q`$ (the euro rate less the dividend).
 
-As long as $\sigma_S$, $\sigma_X$ and $T$ are positive, the forward is strictly decreasing in $\rho$: a larger correlation always gives a smaller forward.
+As long as $`\sigma_S`$, $`\sigma_X`$ and $`T`$ are positive, the forward is strictly decreasing in $`\rho`$: a larger correlation always gives a smaller forward.
 
 ### Step 2: the price rises with the forward, so it falls with the correlation
 
-Hold the forward's spread fixed and raise the forward. The call's price rises at the rate $\bar{X}e^{-r_d T}N(d_1)$ per euro of forward: the chance of exercise counted in shares, discounted and converted. That is positive. By the chain rule (the slope of a function of a function is the product of the two slopes), the price's slope in $\rho$ is that positive number times the forward's slope, $-\sigma_S\sigma_X T\,F_Q$. The product is the formula for $\partial C/\partial\rho$ above. At 0.30 it is −1.204343 dollars per unit of correlation: about 1.2 cents per 0.01.
+Hold the forward's spread fixed and raise the forward. The call's price rises at the rate $`\bar{X}e^{-r_d T}N(d_1)`$ per euro of forward: the chance of exercise counted in shares, discounted and converted. That is positive. By the chain rule (the slope of a function of a function is the product of the two slopes), the price's slope in $`\rho`$ is that positive number times the forward's slope, $`-\sigma_S\sigma_X T\,F_Q`$. The product is the formula for $`\partial C/\partial\rho`$ above. At 0.30 it is −1.204343 dollars per unit of correlation: about 1.2 cents per 0.01.
 
 <details>
 <summary>Detailed proof: the slope in the forward is $\bar{X}e^{-r_dT}N(d_1)$</summary>
 
-Write $C = A\,[F_Q N(d_1) - K N(d_2)]$ with $A = \bar{X}e^{-r_dT}$, and $v = \sigma_S\sqrt{T}$. Both cut-offs depend on the forward: $\partial d_1/\partial F_Q = \partial d_2/\partial F_Q = 1/(F_Q v)$. Differentiate:
-$$\frac{\partial C}{\partial F_Q} = A\left[N(d_1) + F_Q\,\varphi(d_1)\frac{1}{F_Q v} - K\,\varphi(d_2)\frac{1}{F_Q v}\right]$$
-where $\varphi$ is the bell curve's height. The two height terms cancel, because $F_Q\varphi(d_1) = K\varphi(d_2)$: the ratio $\varphi(d_1)/\varphi(d_2)$ is $e^{-(d_1^2 - d_2^2)/2} = e^{-(d_1 + d_2)v/2}$, and $(d_1 + d_2)v/2 = \ln(F_Q/K)$ from the definition of $d_1$, so the ratio is $K/F_Q$. What is left is $\partial C/\partial F_Q = A\,N(d_1)$, strictly positive for any finite $d_1$. With $\partial F_Q/\partial\rho = -\sigma_S\sigma_X T F_Q$, the chain rule gives the slope in the formula section. Since $\bar{X}e^{-r_dT}$, $F_Q$, $N(d_1)$, $\sigma_S$, $\sigma_X$ and $T$ are all positive, $\partial C/\partial\rho < 0$ for every $\rho$. $\blacksquare$
+Write $`C = A\,[F_Q N(d_1) - K N(d_2)]`$ with $`A = \bar{X}e^{-r_dT}`$, and $`v = \sigma_S\sqrt{T}`$. Both cut-offs depend on the forward: $`\partial d_1/\partial F_Q = \partial d_2/\partial F_Q = 1/(F_Q v)`$. Differentiate:
+
+$`\displaystyle \frac{\partial C}{\partial F_Q} = A\left[N(d_1) + F_Q\,\varphi(d_1)\frac{1}{F_Q v} - K\,\varphi(d_2)\frac{1}{F_Q v}\right]`$
+
+where $`\varphi`$ is the bell curve's height. The two height terms cancel, because $`F_Q\varphi(d_1) = K\varphi(d_2)`$: the ratio $`\varphi(d_1)/\varphi(d_2)`$ is $`e^{-(d_1^2 - d_2^2)/2} = e^{-(d_1 + d_2)v/2}`$, and $`(d_1 + d_2)v/2 = \ln(F_Q/K)`$ from the definition of $`d_1`$, so the ratio is $`K/F_Q`$. What is left is $`\partial C/\partial F_Q = A\,N(d_1)`$, strictly positive for any finite $`d_1`$. With $`\partial F_Q/\partial\rho = -\sigma_S\sigma_X T F_Q`$, the chain rule gives the slope in the formula section. Since $`\bar{X}e^{-r_dT}`$, $`F_Q`$, $`N(d_1)`$, $`\sigma_S`$, $`\sigma_X`$ and $`T`$ are all positive, $`\partial C/\partial\rho < 0`$ for every $`\rho`$. $`\blacksquare`$
 
 </details>
 
 ### Step 3: existence, by the intermediate value theorem
 
-$C(\rho)$ is continuous on $[-1, 1]$: it is built from exponentials, a logarithm and the bell-curve area, all continuous. Its ends are $C(-1)$ = 10.808928 and $C(1)$ = 8.334790. The intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)) says a continuous function on an interval takes every value between its two end values. So any quote from 8.334790 to 10.808928 is hit by at least one correlation.
+$`C(\rho)`$ is continuous on $`[-1, 1]`$: it is built from exponentials, a logarithm and the bell-curve area, all continuous. Its ends are $`C(-1)`$ = 10.808928 and $`C(1)`$ = 8.334790. The intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)) says a continuous function on an interval takes every value between its two end values. So any quote from 8.334790 to 10.808928 is hit by at least one correlation.
 
 ### Step 4: uniqueness, from the slope
 
-A strictly decreasing function cannot take the same value twice: if $\rho_1 < \rho_2$ then $C(\rho_1) > C(\rho_2)$. So the correlation from Step 3 is the only one. Together: **exactly one root for a quote in the band, none outside it.**
+A strictly decreasing function cannot take the same value twice: if $`\rho_1 < \rho_2`$ then $`C(\rho_1) > C(\rho_2)`$. So the correlation from Step 3 is the only one. Together: **exactly one root for a quote in the band, none outside it.**
 
 ### Step 5: the boundary cases
 
-- **A quote equal to $C(-1)$ or $C(1)$.** The root is −1 or +1: share and euro move as one, in opposite or the same direction. Legal, but a sign that some other input is off.
-- **A quote above $C(-1)$**, such as 11.00. No correlation in range fits. Newton's method, which follows the slope without keeping a bracket, walks past −1 and stops at −1.141154, where the formula, pushed outside the legal range, prices 11.00. That number is not a correlation.
-- **A quote below $C(1)$**, such as 8.20. No correlation fits. The quote is below the lowest price any correlation gives.
-- **$\sigma_X$, $\sigma_S$ or $T$ equal to 0.** The slope is zero everywhere and $C$ is flat. A correct quote fits every $\rho$; the correlation is not identified.
+- **A quote equal to $`C(-1)`$ or $`C(1)`$.** The root is −1 or +1: share and euro move as one, in opposite or the same direction. Legal, but a sign that some other input is off.
+- **A quote above $`C(-1)`$**, such as 11.00. No correlation in range fits. Newton's method, which follows the slope without keeping a bracket, walks past −1 and stops at −1.141154, where the formula, pushed outside the legal range, prices 11.00. That number is not a correlation.
+- **A quote below $`C(1)`$**, such as 8.20. No correlation fits. The quote is below the lowest price any correlation gives.
+- **$`\sigma_X`$, $`\sigma_S`$ or $`T`$ equal to 0.** The slope is zero everywhere and $`C`$ is flat. A correct quote fits every $`\rho`$; the correlation is not identified.
 
 ### Step 6: with the currency's volatility unknown, only the product is identified
 
-The correlation enters only through $\rho\sigma_S\sigma_X$, and $\sigma_S$ is known. So a quote fixes $\rho\sigma_X$, not $\rho$ and $\sigma_X$ apart. For the house quote that product is 0.03. Assume a 5% euro volatility and the implied correlation is 0.60; assume 15% and it is 0.20. Since a correlation cannot exceed 1, the quote does say one thing about $\sigma_X$: it is at least 0.03. At 0.02 no correlation fits.
+The correlation enters only through $`\rho\sigma_S\sigma_X`$, and $`\sigma_S`$ is known. So a quote fixes $`\rho\sigma_X`$, not $`\rho`$ and $`\sigma_X`$ apart. For the house quote that product is 0.03. Assume a 5% euro volatility and the implied correlation is 0.60; assume 15% and it is 0.20. Since a correlation cannot exceed 1, the quote does say one thing about $`\sigma_X`$: it is at least 0.03. At 0.02 no correlation fits.
 
 ```
 Implied correlation from 9.151629, by assumed euro volatility (one █ = 0.05)
@@ -142,34 +152,34 @@ In practice the euro's volatility is read from currency options, which trade in 
 
 ### Comparing with history
 
-The implied correlation is what the quote charges. The historical correlation is what the last year's daily returns show. They answer different questions, and the historical one is itself noisy. With 252 daily returns and a true correlation of 0.30, an estimate lands within about $(1 - \rho^2)/\sqrt{252}$ = 0.057 of the truth, as a typical error (R. A. Fisher derived the full distribution of such estimates in 1915). The check simulates 1,000 such years: the estimates average 0.2997 with a spread of 0.0570. One simulated year gave 0.275.
+The implied correlation is what the quote charges. The historical correlation is what the last year's daily returns show. They answer different questions, and the historical one is itself noisy. With 252 daily returns and a true correlation of 0.30, an estimate lands within about $`(1 - \rho^2)/\sqrt{252}`$ = 0.057 of the truth, as a typical error (R. A. Fisher derived the full distribution of such estimates in 1915). The check simulates 1,000 such years: the estimates average 0.2997 with a spread of 0.0570. One simulated year gave 0.275.
 
 Now a dealer quotes 9.40. The implied correlation is 0.096. That sits 3.6 spreads below 0.30, too far to blame on a short history. The dealer is charging for a lower correlation than history shows, either as a view or as a premium for carrying correlation risk that cannot be hedged ([Hedging a quanto](03-quanto-greeks-and-hedging.md)).
 
 ### The other door: go through the forward
 
-Step 0 gives a second route. Solve the quote for the quanto forward first, with no correlation in sight. Then read the correlation off the forward by logarithms: $\rho = (r_f - q - \ln(F_Q/S)/T)/(\sigma_S\sigma_X)$. The code takes this route with its own integrator and its own root finder, and lands on the same 0.300000.
+Step 0 gives a second route. Solve the quote for the quanto forward first, with no correlation in sight. Then read the correlation off the forward by logarithms: $`\rho = (r_f - q - \ln(F_Q/S)/T)/(\sigma_S\sigma_X)`$. The code takes this route with its own integrator and its own root finder, and lands on the same 0.300000.
 
 ---
 
 ## Worked numbers, by hand
 
-The house quote 9.151629, halving the bracket from $[-1, 1]$ and keeping the half where the price minus the quote changes sign:
+The house quote 9.151629, halving the bracket from $`[-1, 1]`$ and keeping the half where the price minus the quote changes sign:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | is there a root? | 8.334790 ≤ 9.151629 ≤ 10.808928 | yes, exactly one |
-| try $\rho$ = 0 | price minus quote +0.366152: too dear, go right | $[0, 1]$ |
-| try 0.5 | −0.238721: too cheap, go left | $[0, 0.5]$ |
-| try 0.25 | +0.060352 | $[0.25, 0.5]$ |
-| try 0.375 | −0.090023 | $[0.25, 0.375]$ |
-| try 0.3125 | −0.015046 | $[0.25, 0.3125]$ |
-| try 0.28125 | +0.022600 | $[0.28125, 0.3125]$ |
-| 80 halvings | the bracket closes on the root | **$\rho$ = 0.300000** |
-| the other door: forward | solve the call price for $F_Q$ | 101.409846 EUR |
-| its growth | $\ln(101.409846/100)/1$ | 0.014000 |
-| back to $\rho$ | $(0.03 - 0.01 - 0.014)/(0.20 \times 0.10)$ | **0.300000** |
-| the product pinned | $\rho\sigma_S\sigma_X$ = 0.30 × 0.20 × 0.10; $\rho\sigma_X$ | 0.006000; 0.030000 |
+| try $`\rho`$ = 0 | price minus quote +0.366152: too dear, go right | $`[0, 1]`$ |
+| try 0.5 | −0.238721: too cheap, go left | $`[0, 0.5]`$ |
+| try 0.25 | +0.060352 | $`[0.25, 0.5]`$ |
+| try 0.375 | −0.090023 | $`[0.25, 0.375]`$ |
+| try 0.3125 | −0.015046 | $`[0.25, 0.3125]`$ |
+| try 0.28125 | +0.022600 | $`[0.28125, 0.3125]`$ |
+| 80 halvings | the bracket closes on the root | **$`\rho`$ = 0.300000** |
+| the other door: forward | solve the call price for $`F_Q`$ | 101.409846 EUR |
+| its growth | $`\ln(101.409846/100)/1`$ | 0.014000 |
+| back to $`\rho`$ | $`(0.03 - 0.01 - 0.014)/(0.20 \times 0.10)`$ | **0.300000** |
+| the product pinned | $`\rho\sigma_S\sigma_X`$ = 0.30 × 0.20 × 0.10; $`\rho\sigma_X`$ | 0.006000; 0.030000 |
 
 The quote carries a correlation of 0.30: the dollar investor's market is pricing a share that tends to rise when the euro strengthens, and charging 1.2 cents less for each extra 0.01 of that tendency.
 
@@ -180,7 +190,7 @@ Same quote, 9.151629, correct answer 0.30:
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Today's rate 1.15 in place of the fixed 1.10 | ρ = 0.635 | Every price is scaled up by 1.15/1.10, so a much larger correlation is needed to pull it back down |
-| Share vol widened to $\sqrt{\sigma_S^2 + \sigma_X^2}$ | no solution: floor 9.314703 | The currency's wobble does not widen a quanto payoff; with it added, even correlation +1 prices above the quote |
+| Share vol widened to $`\sqrt{\sigma_S^2 + \sigma_X^2}`$ | no solution: floor 9.314703 | The currency's wobble does not widen a quanto payoff; with it added, even correlation +1 prices above the quote |
 | Plus sign on the adjustment | ρ = −0.30 | A euros-per-dollar formula paired with a dollars-per-euro correlation |
 | Newton on the quote 11.00 with no bracket | ρ = −1.141154 | No root exists; the solver reports a number outside the range of a correlation |
 
@@ -625,10 +635,10 @@ The two outputs agree line for line. The simulated numbers match because both pr
 Lean proves the band rule and the falling price for every positive share price, strike, fixed rate, time to expiry and pair of volatilities.
 
 - The quanto price falls strictly as the correlation rises: a larger correlation always gives a smaller price.
-- Take any correlation $\rho$. Then the slope $\partial C/\partial\rho$ equals the formula in The formula section.
-- Suppose the quote $C_m$ satisfies $C(1) \le C_m \le C(-1)$. Then exactly one correlation in $[-1, 1]$ reproduces it.
-- Suppose the quote lies outside that band. Then no correlation in $[-1, 1]$ reproduces it.
-- Take a forward growth of 0.014. Then $(0.03 - 0.01 - 0.014)/(0.20 \times 0.10) = 0.30$, the house correlation.
+- Take any correlation $`\rho`$. Then the slope $`\partial C/\partial\rho`$ equals the formula in The formula section.
+- Suppose the quote $`C_m`$ satisfies $`C(1) \le C_m \le C(-1)`$. Then exactly one correlation in $`[-1, 1]`$ reproduces it.
+- Suppose the quote lies outside that band. Then no correlation in $`[-1, 1]`$ reproduces it.
+- Take a forward growth of 0.014. Then $`(0.03 - 0.01 - 0.014)/(0.20 \times 0.10) = 0.30`$, the house correlation.
 - Take the house inputs and correlation +1. Then the quanto forward is exactly 100 euros, today's share price.
 
 The decimal prices, the band's ends and the roots the solvers find are left to the Python and Rust checks.
@@ -890,11 +900,11 @@ end QuantoImpliedCorrelation
 ## The usual mistake
 
 > [!warning]
-> **Trusting a solver's answer without checking the band first.** A root finder always returns a number. Only the check $C(1) \le C_m \le C(-1)$ says whether that number is a correlation. Newton on 11.00 returns −1.141154; clipped to −1, it becomes a plausible-looking −1.00 that reproduces a price of 10.81, not 11.00.
+> **Trusting a solver's answer without checking the band first.** A root finder always returns a number. Only the check $`C(1) \le C_m \le C(-1)`$ says whether that number is a correlation. Newton on 11.00 returns −1.141154; clipped to −1, it becomes a plausible-looking −1.00 that reproduces a price of 10.81, not 11.00.
 >
 > - **Reading the implied number as a forecast.** It is what the quote charges, including any premium for correlation risk. The dealer's 9.40 implies 0.096; history says 0.30, give or take 0.057.
-> - **Inverting with the currency's volatility guessed.** Only $\rho\sigma_X$ = 0.03 is pinned. A guess of 5% returns 0.60; a guess of 15% returns 0.20. The correlation is only as good as the volatility fed in.
-> - **Inverting a far out-of-the-money quote.** At a 140-euro strike a one-cent bid-ask spread spans 0.07 of correlation. The price barely listens to $\rho$ there, so the answer is mostly noise.
+> - **Inverting with the currency's volatility guessed.** Only $`\rho\sigma_X`$ = 0.03 is pinned. A guess of 5% returns 0.60; a guess of 15% returns 0.20. The correlation is only as good as the volatility fed in.
+> - **Inverting a far out-of-the-money quote.** At a 140-euro strike a one-cent bid-ask spread spans 0.07 of correlation. The price barely listens to $`\rho`$ there, so the answer is mostly noise.
 > - **Mixing quote directions.** A formula written for euros per dollar, fed a correlation measured against dollars per euro, returns −0.30.
 
 ---
@@ -902,7 +912,7 @@ end QuantoImpliedCorrelation
 ## Where you meet it in real life
 
 - **Correlation marks on an exotics desk.** A bank that has sold quanto notes needs a correlation to value them each night. Where dealers quote quanto prices or quanto forwards, the implied correlation from those quotes becomes the mark; the historical estimate is a sanity check.
-- **Dollar-settled index futures.** A future on a foreign index settled in dollars at a fixed rate trades at the quanto forward. The log of the ordinary forward over it, divided by $\sigma_S\sigma_X T$, is an implied correlation, the other door of this card in daily use ([The quanto adjustment](01-quanto-forward-and-adjustment.md)).
+- **Dollar-settled index futures.** A future on a foreign index settled in dollars at a fixed rate trades at the quanto forward. The log of the ordinary forward over it, divided by $`\sigma_S\sigma_X T`$, is an implied correlation, the other door of this card in daily use ([The quanto adjustment](01-quanto-forward-and-adjustment.md)).
 - **Currency triangles.** For three currencies, the volatilities of the three exchange rates pin the correlation between two of them. Desks compare that currency-implied number with the quanto-implied one.
 - **The composite alternative.** A composite option converts at the market rate, so the correlation widens the payoff's volatility instead of bending the forward. It can be inverted the same way, with its own band ([Composite option](04-composite-option.md)).
 
@@ -931,6 +941,6 @@ The correlation is now read from a price; what stays open is how a book holding 
 
 Verified 2026-09-27: every link below resolves to the publisher's page.
 
-- Garman, Mark B., and Steven W. Kohlhagen. "Foreign Currency Option Values." *Journal of International Money and Finance* 2, no. 3 (1983): 231–237. [doi:10.1016/S0261-5606(83)80001-1](https://doi.org/10.1016/S0261-5606(83)80001-1). Two interest rates in one option formula; the currency's growth at $r_d - r_f$ behind the quanto forward.
+- Garman, Mark B., and Steven W. Kohlhagen. "Foreign Currency Option Values." *Journal of International Money and Finance* 2, no. 3 (1983): 231–237. [doi:10.1016/S0261-5606(83)80001-1](https://doi.org/10.1016/S0261-5606(83)80001-1). Two interest rates in one option formula; the currency's growth at $`r_d - r_f`$ behind the quanto forward.
 - Musiela, Marek, and Marek Rutkowski. *Martingale Methods in Financial Modelling*, 2nd ed. Springer, 2005. [doi:10.1007/b137866](https://doi.org/10.1007/b137866). Quantos derived in the correlated two-asset model, the model this card inverts.
 - Fisher, R. A. "Frequency Distribution of the Values of the Correlation Coefficient in Samples from an Indefinitely Large Population." *Biometrika* 10, no. 4 (1915): 507–521. [doi:10.2307/2331838](https://doi.org/10.2307/2331838). The sampling spread of a historical correlation, used to judge the gap between implied and historical.

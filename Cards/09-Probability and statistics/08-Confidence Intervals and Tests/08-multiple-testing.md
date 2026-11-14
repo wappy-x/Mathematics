@@ -30,57 +30,63 @@ xychart-beta
     line [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
 ```
 
-Orange line: every test at 0.05, uncorrected; the chance is $1 - 0.95^m$. Teal line: every test at $0.05/m$, Bonferroni; the chance is $1 - (1 - 0.05/m)^m$, which stays just under 0.05 (0.048782 at 100 tests). Both lines are exact, computed by the checks.
+Orange line: every test at 0.05, uncorrected; the chance is $`1 - 0.95^m`$. Teal line: every test at $`0.05/m`$, Bonferroni; the chance is $`1 - (1 - 0.05/m)^m`$, which stays just under 0.05 (0.048782 at 100 tests). Both lines are exact, computed by the checks.
 
 ---
 
 ## The formula
 
-Notation first. The family has $m$ tests. Each test has a **null hypothesis**, the claim "this gene does nothing", and $m_0$ of the nulls are true; nobody knows which, or how many. $R$ counts the tests rejected (the genes flagged, called discoveries) and $V$ counts the rejected tests whose null was true (the false discoveries). $R$ is seen; $V$ never is. $P(\cdot)$ is a chance and $E[\cdot]$ a long-run average, as on the earlier cards of this wing.
+Notation first. The family has $`m`$ tests. Each test has a **null hypothesis**, the claim "this gene does nothing", and $`m_0`$ of the nulls are true; nobody knows which, or how many. $`R`$ counts the tests rejected (the genes flagged, called discoveries) and $`V`$ counts the rejected tests whose null was true (the false discoveries). $`R`$ is seen; $`V`$ never is. $`P(\cdot)`$ is a chance and $`E[\cdot]`$ a long-run average, as on the earlier cards of this wing.
 
 The two error rates:
 
-$$\mathrm{FWER} = P(V \ge 1), \qquad \mathrm{FDR} = E\!\left[\frac{V}{\max(R,1)}\right]$$
+```math
+\mathrm{FWER} = P(V \ge 1), \qquad \mathrm{FDR} = E\!\left[\frac{V}{\max(R,1)}\right]
+```
 
 **Read it aloud:** the family-wise error rate is the chance of at least one false discovery; the false discovery rate is the long-run average of the false share of the flagged list, counting an empty list as zero.
 
-The share $V/\max(R,1)$ in one experiment is the **false discovery proportion**, FDP. The FDR is its average over repeats of the whole experiment, not a statement about any one list.
+The share $`V/\max(R,1)`$ in one experiment is the **false discovery proportion**, FDP. The FDR is its average over repeats of the whole experiment, not a statement about any one list.
 
-**Bonferroni.** Reject test $i$ when its p-value $p_i$ satisfies
+**Bonferroni.** Reject test $`i`$ when its p-value $`p_i`$ satisfies
 
-$$p_i \le \frac{\alpha}{m}. \qquad \text{Then } \mathrm{FWER} \le \frac{m_0}{m}\,\alpha \le \alpha.$$
+```math
+p_i \le \frac{\alpha}{m}. \qquad \text{Then } \mathrm{FWER} \le \frac{m_0}{m}\,\alpha \le \alpha.
+```
 
 **Read it aloud:** split the allowed error evenly over the tests; the chance of any false discovery is then at most the allowed error.
 
-**Benjamini–Hochberg (BH).** Sort the p-values from smallest to largest, $p_{(1)} \le p_{(2)} \le \dots \le p_{(m)}$; the bracketed subscript means "the $k$-th smallest". Find the largest rank that sits on or under the line $kq/m$:
+**Benjamini–Hochberg (BH).** Sort the p-values from smallest to largest, $`p_{(1)} \le p_{(2)} \le \dots \le p_{(m)}`$; the bracketed subscript means "the $`k`$-th smallest". Find the largest rank that sits on or under the line $`kq/m`$:
 
-$$R = \max\left\{k : p_{(k)} \le \frac{k}{m}\,q\right\}, \qquad \text{reject every test with } p_i \le \frac{R}{m}\,q. \qquad \text{Then } \mathrm{FDR} \le \frac{m_0}{m}\,q \le q.$$
+```math
+R = \max\left\{k : p_{(k)} \le \frac{k}{m}\,q\right\}, \qquad \text{reject every test with } p_i \le \frac{R}{m}\,q. \qquad \text{Then } \mathrm{FDR} \le \frac{m_0}{m}\,q \le q.
+```
 
 **Read it aloud:** the k-th smallest p-value may be as large as k shares of the allowance; take the deepest rank that meets its share, flag everything up to it, and the average false share of the list stays under the allowance.
 
-If no rank qualifies, $R = 0$ and nothing is flagged.
+If no rank qualifies, $`R = 0`$ and nothing is flagged.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $m$ | tests in the family, fixed before looking | 100 genes | uncorrected false alarms rise; Bonferroni's cutoff tightens |
-| $m_0$ | tests whose null is true; unknown | 90 in the simulation | more room for false discoveries |
-| $i$, $k$, $r$ | a test's number, 1 to $m$; a rank in the sorted list; a candidate count | gene 1 to gene 100; rank 8 | BH's line $kq/m$ rises with the rank |
-| $p_i$, $p_{(k)}$ | test $i$'s p-value; the $k$-th smallest p-value | 0.00002 for the strongest gene; $p_{(8)} = 0.0038$ | a test is less likely to be flagged |
-| $\alpha$ | allowed family-wise error rate | 0.05 | more flags, more false ones |
-| $q$ | allowed false discovery rate | 0.05 | more flags, more false ones |
-| $t$, $c$ | a cutoff for p-values; Šidák's cutoff | 0.0005; 0.000513 | more flags |
-| $R$, $R_i$ | tests rejected (discoveries); the same count with $p_i$ set to 0 | 8 by BH, 3 by Bonferroni | — |
-| $V$ | rejected tests whose null is true; never seen | unknown for the lab | — |
-| $A_i$ | the event "test $i$'s null is true and it is rejected" | — | — |
-| $N$, $N_i$ | how many p-values sit at or below a cutoff; the same with $p_i$ set to 0 | 12 at or below 0.05 | — |
+| $`m`$ | tests in the family, fixed before looking | 100 genes | uncorrected false alarms rise; Bonferroni's cutoff tightens |
+| $`m_0`$ | tests whose null is true; unknown | 90 in the simulation | more room for false discoveries |
+| $`i`$, $`k`$, $`r`$ | a test's number, 1 to $`m`$; a rank in the sorted list; a candidate count | gene 1 to gene 100; rank 8 | BH's line $`kq/m`$ rises with the rank |
+| $`p_i`$, $`p_{(k)}`$ | test $`i`$'s p-value; the $`k`$-th smallest p-value | 0.00002 for the strongest gene; $`p_{(8)} = 0.0038`$ | a test is less likely to be flagged |
+| $`\alpha`$ | allowed family-wise error rate | 0.05 | more flags, more false ones |
+| $`q`$ | allowed false discovery rate | 0.05 | more flags, more false ones |
+| $`t`$, $`c`$ | a cutoff for p-values; Šidák's cutoff | 0.0005; 0.000513 | more flags |
+| $`R`$, $`R_i`$ | tests rejected (discoveries); the same count with $`p_i`$ set to 0 | 8 by BH, 3 by Bonferroni | — |
+| $`V`$ | rejected tests whose null is true; never seen | unknown for the lab | — |
+| $`A_i`$ | the event "test $`i`$'s null is true and it is rejected" | — | — |
+| $`N`$, $`N_i`$ | how many p-values sit at or below a cutoff; the same with $`p_i`$ set to 0 | 12 at or below 0.05 | — |
 | FWER, FDR, FDP | chance of any false discovery; average false share; false share in one run | promised 0.05; averaged 0.0443 in simulation | — |
 
 ### When it holds
 
 - **A family fixed in advance.** Both guarantees count the 100 tests actually run. Running 100 and then quoting only the best as if it were the only test is the uncorrected orange line: the chance of a false alarm is 99.4%, not 5%.
-- **Valid p-values for the true nulls.** For a true null, the chance that $p_i \le t$ must be at most $t$ for every cutoff $t$. A miscalibrated test breaks both guarantees at the root.
+- **Valid p-values for the true nulls.** For a true null, the chance that $`p_i \le t`$ must be at most $`t`$ for every cutoff $`t`$. A miscalibrated test breaks both guarantees at the root.
 - **Bonferroni: nothing else.** No independence is needed; the union bound holds for any dependence. With strongly linked tests it is needlessly strict: 100 copies of one test need no correction at all.
-- **BH: independent tests, or a positive kind of dependence.** The proof below uses independence. Benjamini and Yekutieli extended it to tests that tend to move together in one direction. Under arbitrary dependence BH can fail: a two-test model below has FDR 0.15 against a promise of 0.10. Their repair divides $q$ by $1 + 1/2 + \dots + 1/m$, which is 5.187378 for 100 tests.
+- **BH: independent tests, or a positive kind of dependence.** The proof below uses independence. Benjamini and Yekutieli extended it to tests that tend to move together in one direction. Under arbitrary dependence BH can fail: a two-test model below has FDR 0.15 against a promise of 0.10. Their repair divides $`q`$ by $`1 + 1/2 + \dots + 1/m`$, which is 5.187378 for 100 tests.
 - **An average, not a promise per list.** FDR at 0.05 allows a particular list to be half false; it says the long-run average share is at most 5%.
 
 ---
@@ -89,32 +95,38 @@ If no rank qualifies, $R = 0$ and nothing is flagged.
 
 ### Step 0: false alarms add, whatever the dependence
 
-Each true null is flagged with chance at most $\alpha$. The count of false flags is a sum of 0-or-1 indicators, one per true null, and an average of a sum is the sum of the averages, with or without independence. So
+Each true null is flagged with chance at most $`\alpha`$. The count of false flags is a sum of 0-or-1 indicators, one per true null, and an average of a sum is the sum of the averages, with or without independence. So
 
-$$E[V] \le m_0\,\alpha.$$
+```math
+E[V] \le m_0\,\alpha.
+```
 
 With all 100 nulls true and the level at 0.05, that is 5 expected false flags. In 20,000 simulated experiments of 100 null genes the average was 4.9883, standard error 0.0154.
 
-The number that matters is the chance of at least one. Under independence, each null escapes with chance 0.95 and all escape together with chance $0.95^{100}$, so
+The number that matters is the chance of at least one. Under independence, each null escapes with chance 0.95 and all escape together with chance $`0.95^{100}`$, so
 
-$$P(V \ge 1) = 1 - 0.95^{100} = 0.994079.$$
+```math
+P(V \ge 1) = 1 - 0.95^{100} = 0.994079.
+```
 
 The simulation gave 0.9933, standard error 0.0006. That is the "one in twenty lies" of the title: at the single-test level, one null in twenty on average is flagged, and across a large family almost surely at least one is.
 
 ### Step 1: the union bound caps the chance of any false alarm
 
-Let $A_i$ be the event that true null $i$ is rejected. A false discovery happens exactly when at least one $A_i$ happens. The chance of a union is at most the sum of the chances ([Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)): the sum counts each overlap more than once, never less. So
+Let $`A_i`$ be the event that true null $`i`$ is rejected. A false discovery happens exactly when at least one $`A_i`$ happens. The chance of a union is at most the sum of the chances ([Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)): the sum counts each overlap more than once, never less. So
 
-$$\mathrm{FWER} = P\Big(\bigcup_{i \text{ null}} A_i\Big) \le \sum_{i \text{ null}} P(A_i) \le m_0 \cdot \frac{\alpha}{m} \le \alpha.$$
+```math
+\mathrm{FWER} = P\Big(\bigcup_{i \text{ null}} A_i\Big) \le \sum_{i \text{ null}} P(A_i) \le m_0 \cdot \frac{\alpha}{m} \le \alpha.
+```
 
-That is the whole Bonferroni theorem. The first step is the union bound; the second uses a valid p-value, $P(p_i \le \alpha/m) \le \alpha/m$; the third uses $m_0 \le m$. No step assumed the tests were independent, and no step needed to know which nulls are true.
+That is the whole Bonferroni theorem. The first step is the union bound; the second uses a valid p-value, $`P(p_i \le \alpha/m) \le \alpha/m`$; the third uses $`m_0 \le m`$. No step assumed the tests were independent, and no step needed to know which nulls are true.
 
-For the lab: each gene needs $p_i \le 0.05/100 = 0.0005$. With 90 true nulls the bound gives 0.045. Under independence the exact value is $1 - 0.9995^{90} = 0.044013$, just under the bound, and the simulation gave 0.0442, standard error 0.0015. The union bound is nearly tight here because the events $A_i$ are rare and seldom overlap.
+For the lab: each gene needs $`p_i \le 0.05/100 = 0.0005`$. With 90 true nulls the bound gives 0.045. Under independence the exact value is $`1 - 0.9995^{90} = 0.044013`$, just under the bound, and the simulation gave 0.0442, standard error 0.0015. The union bound is nearly tight here because the events $`A_i`$ are rare and seldom overlap.
 
 <details>
 <summary>Šidák's cutoff: the exact version under independence</summary>
 
-If the tests are independent, the cutoff $c$ that makes $1 - (1 - c)^{100}$ exactly 0.05 is $c = 1 - 0.95^{1/100} = 0.000513$. It is a hair looser than Bonferroni's 0.0005 and needs independence to keep its promise. The two differ only in the fifth decimal, because the union bound loses almost nothing when each event is rare.
+If the tests are independent, the cutoff $`c`$ that makes $`1 - (1 - c)^{100}`$ exactly 0.05 is $`c = 1 - 0.95^{1/100} = 0.000513`$. It is a hair looser than Bonferroni's 0.0005 and needs independence to keep its promise. The two differ only in the fifth decimal, because the union bound loses almost nothing when each event is rare.
 
 </details>
 
@@ -128,7 +140,7 @@ Protection against even one false flag costs more than half of the real genes. T
 
 A lab screening genes can live with a few false flags, followed up later, if they are a small share of the list. That is the false discovery rate. BH builds its cutoff from the data: the more small p-values there are, the more of them can be trusted, so the cutoff rises.
 
-The lab's ten smallest p-values, in thousandths, against the BH line $k \times 0.05/100$:
+The lab's ten smallest p-values, in thousandths, against the BH line $`k \times 0.05/100`$:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -142,51 +154,55 @@ xychart-beta
 
 Orange line: the sorted p-values. Teal line: the BH line, 0.5 thousandths per rank. Rank 7 pokes above its line, 3.60 against 3.50. Rank 8 is back under, 3.80 against 4.00. From rank 9 on, the p-values stay above. The largest rank under the line is 8, so BH flags the 8 smallest, everything at or below 0.0040, including rank 7.
 
-Why a line through the origin with slope $q/m$? If the cutoff is $t$ and all 100 nulls were true, about $100t$ p-values would fall below it by chance. If $k$ p-values actually fall below $t = kq/m$, the expected number of false ones among them is at most $m \cdot kq/m = kq$, a share $q$ of the $k$ flagged. BH picks the largest list for which that estimate of the false share is still at most $q$.
+Why a line through the origin with slope $`q/m`$? If the cutoff is $`t`$ and all 100 nulls were true, about $`100t`$ p-values would fall below it by chance. If $`k`$ p-values actually fall below $`t = kq/m`$, the expected number of false ones among them is at most $`m \cdot kq/m = kq`$, a share $`q`$ of the $`k`$ flagged. BH picks the largest list for which that estimate of the false share is still at most $`q`$.
 
 ### Step 4: why the average false share stays under q
 
-Take one true null, gene $i$. Set its p-value to 0, run BH, and call the number flagged $R_i$; it depends only on the other 99 p-values. The step-up rule gives two facts: gene $i$ is flagged exactly when $p_i \le R_i q/m$, and then the real count $R$ equals $R_i$.
+Take one true null, gene $`i`$. Set its p-value to 0, run BH, and call the number flagged $`R_i`$; it depends only on the other 99 p-values. The step-up rule gives two facts: gene $`i`$ is flagged exactly when $`p_i \le R_i q/m`$, and then the real count $`R`$ equals $`R_i`$.
 
-Under independence, $p_i$ knows nothing about $R_i$. So if $R_i = r$, gene $i$ is flagged with chance at most $rq/m$ and then adds $1/r$ to the false share. The $r$ cancels: each true null adds at most $q/m$ to the FDR, and the $m_0$ of them add at most $m_0 q/m$.
+Under independence, $`p_i`$ knows nothing about $`R_i`$. So if $`R_i = r`$, gene $`i`$ is flagged with chance at most $`rq/m`$ and then adds $`1/r`$ to the false share. The $`r`$ cancels: each true null adds at most $`q/m`$ to the FDR, and the $`m_0`$ of them add at most $`m_0 q/m`$.
 
-For the lab's 90 true nulls that is $0.05 \times 90/100 = 0.045$. The simulation gave an average false share of 0.0443, standard error 0.0006: equality, within noise, because with independent, exactly uniform null p-values each bound in the argument is met exactly.
+For the lab's 90 true nulls that is $`0.05 \times 90/100 = 0.045`$. The simulation gave an average false share of 0.0443, standard error 0.0006: equality, within noise, because with independent, exactly uniform null p-values each bound in the argument is met exactly.
 
 <details>
 <summary>Detailed proof: Benjamini–Hochberg controls the FDR under independence</summary>
 
-**Counting form.** Write $N(t)$ for how many p-values are at most $t$. The $k$-th smallest is at most $t$ exactly when $N(t) \ge k$. So $p_{(k)} \le kq/m$ exactly when $N(kq/m) \ge k$, and
-$$R = \max\{r : N(rq/m) \ge r\}, \quad \text{or } 0 \text{ if no } r \text{ qualifies}.$$
-The rejected set is $\{p_i \le Rq/m\}$, which has exactly $N(Rq/m)$ members. That number is at least $R$; if it were some $k > R$, then $N(kq/m) \ge N(Rq/m) = k$ and rank $k$ would qualify, contradicting the maximum. So exactly $R$ tests are rejected, ties included. The checks compute $R$ both ways, by the rank scan and by this count, and they agree in all 20,000 simulated experiments.
+**Counting form.** Write $`N(t)`$ for how many p-values are at most $`t`$. The $`k`$-th smallest is at most $`t`$ exactly when $`N(t) \ge k`$. So $`p_{(k)} \le kq/m`$ exactly when $`N(kq/m) \ge k`$, and
 
-**Insert a zero.** Fix a true null $i$. Let $N_i$ and $R_i$ be the count and the BH number with $p_i$ replaced by 0; they are functions of the other p-values only. Lowering a p-value never lowers a count, so $R_i \ge R$, and $R_i \ge 1$ because the zero qualifies at rank 1.
+$`\displaystyle R = \max\{r : N(rq/m) \ge r\}, \quad \text{or } 0 \text{ if no } r \text{ qualifies}.`$
 
-*If $i$ is rejected*, then $p_i \le Rq/m$. At every threshold $rq/m$ with $r \ge R$, $p_i$ was already counted, so $N_i = N$ there. Ranks above $R$ fail for $N$, so they fail for $N_i$; rank $R$ passes for both. Hence $R_i = R$ and $p_i \le R_i q/m$.
+The rejected set is $`\{p_i \le Rq/m\}`$, which has exactly $`N(Rq/m)`$ members. That number is at least $`R`$; if it were some $`k > R`$, then $`N(kq/m) \ge N(Rq/m) = k`$ and rank $`k`$ would qualify, contradicting the maximum. So exactly $`R`$ tests are rejected, ties included. The checks compute $`R`$ both ways, by the rank scan and by this count, and they agree in all 20,000 simulated experiments.
 
-*If $p_i \le R_i q/m$*, then at the threshold $R_i q/m$ the value $p_i$ is counted both before and after the change, so $N(R_i q/m) = N_i(R_i q/m) \ge R_i$. Rank $R_i$ qualifies for the original list: $R \ge R_i$. With $R_i \ge R$, $R = R_i$, and $p_i \le Rq/m$: $i$ is rejected.
+**Insert a zero.** Fix a true null $`i`$. Let $`N_i`$ and $`R_i`$ be the count and the BH number with $`p_i`$ replaced by 0; they are functions of the other p-values only. Lowering a p-value never lowers a count, so $`R_i \ge R`$, and $`R_i \ge 1`$ because the zero qualifies at rank 1.
 
-So $\{i \text{ rejected}\} = \{p_i \le R_i q/m\}$, and $R = R_i$ on that event.
+*If $`i`$ is rejected*, then $`p_i \le Rq/m`$. At every threshold $`rq/m`$ with $`r \ge R`$, $`p_i`$ was already counted, so $`N_i = N`$ there. Ranks above $`R`$ fail for $`N`$, so they fail for $`N_i`$; rank $`R`$ passes for both. Hence $`R_i = R`$ and $`p_i \le R_i q/m`$.
 
-**Average.** The false share is $V/\max(R,1) = \sum_{i \text{ null}} \mathbf{1}\{i \text{ rejected}\}/\max(R,1)$, where $\mathbf{1}\{\cdot\}$ is 1 when the event happens and 0 otherwise. For one true null,
-$$E\left[\frac{\mathbf{1}\{i \text{ rejected}\}}{\max(R,1)}\right] = \sum_{r=1}^{m} \frac{1}{r}\,P\!\left(p_i \le \frac{rq}{m},\ R_i = r\right) = \sum_{r=1}^{m} \frac{1}{r}\,P\!\left(p_i \le \frac{rq}{m}\right) P(R_i = r) \le \sum_{r=1}^{m} \frac{q}{m}\,P(R_i = r) = \frac{q}{m}.$$
-The middle equality is independence of $p_i$ from the other p-values; the inequality is validity, $P(p_i \le t) \le t$. Summing over the $m_0$ true nulls gives $\mathrm{FDR} \le m_0 q / m$. If the null p-values are exactly uniform, the inequality is an equality and $\mathrm{FDR} = m_0 q/m$.
+*If* $`p_i \le R_i q/m`$, then at the threshold $`R_i q/m`$ the value $`p_i`$ is counted both before and after the change, so $`N(R_i q/m) = N_i(R_i q/m) \ge R_i`$. Rank $`R_i`$ qualifies for the original list: $`R \ge R_i`$. With $`R_i \ge R`$, $`R = R_i`$, and $`p_i \le Rq/m`$: $`i`$ is rejected.
 
-The middle equality is the only place independence enters. The dependent pair in What breaks is a model where it fails and the FDR exceeds $q$.
+So $`\{i \text{ rejected}\} = \{p_i \le R_i q/m\}`$, and $`R = R_i`$ on that event.
+
+**Average.** The false share is $`V/\max(R,1) = \sum_{i \text{ null}} \mathbf{1}\{i \text{ rejected}\}/\max(R,1)`$, where $`\mathbf{1}\{\cdot\}`$ is 1 when the event happens and 0 otherwise. For one true null,
+
+$`\displaystyle E\left[\frac{\mathbf{1}\{i \text{ rejected}\}}{\max(R,1)}\right] = \sum_{r=1}^{m} \frac{1}{r}\,P\!\left(p_i \le \frac{rq}{m},\ R_i = r\right) = \sum_{r=1}^{m} \frac{1}{r}\,P\!\left(p_i \le \frac{rq}{m}\right) P(R_i = r) \le \sum_{r=1}^{m} \frac{q}{m}\,P(R_i = r) = \frac{q}{m}.`$
+
+The middle equality is independence of $`p_i`$ from the other p-values; the inequality is validity, $`P(p_i \le t) \le t`$. Summing over the $`m_0`$ true nulls gives $`\mathrm{FDR} \le m_0 q / m`$. If the null p-values are exactly uniform, the inequality is an equality and $`\mathrm{FDR} = m_0 q/m`$.
+
+The middle equality is the only place independence enters. The dependent pair in What breaks is a model where it fails and the FDR exceeds $`q`$.
 
 </details>
 
 ### Step 5: the two rates side by side
 
-In every experiment, $V/\max(R,1) \le 1$ when $V \ge 1$, and it is 0 when $V = 0$. So the false share never exceeds the indicator of "at least one false flag", and averaging gives $\mathrm{FDR} \le \mathrm{FWER}$ for any procedure. FWER control implies FDR control; the reverse fails. When every null is true, any flag is false, $V = R$, and the two rates coincide.
+In every experiment, $`V/\max(R,1) \le 1`$ when $`V \ge 1`$, and it is 0 when $`V = 0`$. So the false share never exceeds the indicator of "at least one false flag", and averaging gives $`\mathrm{FDR} \le \mathrm{FWER}`$ for any procedure. FWER control implies FDR control; the reverse fails. When every null is true, any flag is false, $`V = R`$, and the two rates coincide.
 
 In the lab's simulation BH kept the average false share at 0.0443, but at least one false gene was on its list in 27.50% of the experiments (standard error 0.32%). In exchange it found 6.1292 of the 10 real genes (standard error 0.0134), against Bonferroni's 3.8662 (standard error 0.0109). Uncorrected testing found 9.1290 (standard error 0.0063), but 0.3158 of its list was false on average (standard error 0.0007): about a third.
 
-A third road reaches both theorems on a model small enough to list every outcome: 3 tests, level 0.75, the true nulls' p-values spread evenly over 0.25, 0.5, 0.75 and 1, the others 0. Adding up every outcome gives BH's FDR as exactly 0, 0.25, 0.5 and 0.75 for 0 to 3 true nulls, which is $0.75\,m_0/3$, and Bonferroni's FWER as 0, 0.25, 0.4375 and 0.578125, which is $1 - 0.75^{m_0}$, never above 0.75.
+A third road reaches both theorems on a model small enough to list every outcome: 3 tests, level 0.75, the true nulls' p-values spread evenly over 0.25, 0.5, 0.75 and 1, the others 0. Adding up every outcome gives BH's FDR as exactly 0, 0.25, 0.5 and 0.75 for 0 to 3 true nulls, which is $`0.75\,m_0/3`$, and Bonferroni's FWER as 0, 0.25, 0.4375 and 0.578125, which is $`1 - 0.75^{m_0}`$, never above 0.75.
 
 <details>
 <summary>Holm's method: Bonferroni with a sliding cutoff</summary>
 
-Holm compares the smallest p-value with $\alpha/m$, the next with $\alpha/(m-1)$, and so on, and stops at the first failure. It keeps the FWER at most $\alpha$ under any dependence and never flags fewer than Bonferroni. On the lab's list it flags 3, the same as Bonferroni: the fourth p-value, 0.0009, fails against $0.05/97$.
+Holm compares the smallest p-value with $`\alpha/m`$, the next with $`\alpha/(m-1)`$, and so on, and stops at the first failure. It keeps the FWER at most $`\alpha`$ under any dependence and never flags fewer than Bonferroni. On the lab's list it flags 3, the same as Bonferroni: the fourth p-value, 0.0009, fails against $`0.05/97`$.
 
 </details>
 
@@ -194,7 +210,7 @@ Holm compares the smallest p-value with $\alpha/m$, the next with $\alpha/(m-1)$
 
 ## Worked numbers, by hand
 
-The lab's 100 p-values: the twelve smallest are 0.00002, 0.00011, 0.0004, 0.0009, 0.0015, 0.0021, 0.0036, 0.0038, 0.0052, 0.0071, 0.021 and 0.034; the other 88 are spread evenly from 0.06 to 0.93. Level $\alpha = q = 0.05$.
+The lab's 100 p-values: the twelve smallest are 0.00002, 0.00011, 0.0004, 0.0009, 0.0015, 0.0021, 0.0036, 0.0038, 0.0052, 0.0071, 0.021 and 0.034; the other 88 are spread evenly from 0.06 to 0.93. Level $`\alpha = q = 0.05`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -664,13 +680,13 @@ The two outputs match line for line, simulation included, because both draw the 
 
 Lean proves the Bonferroni and BH guarantees for any number of tests, and the uncorrected false-alarm formula, then checks the lab's counts.
 
-- Bonferroni. Suppose every true null has a valid p-value, and the tests depend on each other in any way. Then the FWER is at most $m_0 \alpha / m$, which is at most $\alpha$.
-- BH. Suppose the tests are independent, every true null has a valid p-value, and $q \ge 0$. Then the FDR is at most $m_0 q / m$, which is at most $q$.
-- Uncorrected testing. Suppose the tests are independent, and each true null is flagged with chance exactly $\alpha$. Then the chance of at least one false alarm is $1 - (1 - \alpha)^{m_0}$.
+- Bonferroni. Suppose every true null has a valid p-value, and the tests depend on each other in any way. Then the FWER is at most $`m_0 \alpha / m`$, which is at most $`\alpha`$.
+- BH. Suppose the tests are independent, every true null has a valid p-value, and $`q \ge 0`$. Then the FDR is at most $`m_0 q / m`$, which is at most $`q`$.
+- Uncorrected testing. Suppose the tests are independent, and each true null is flagged with chance exactly $`\alpha`$. Then the chance of at least one false alarm is $`1 - (1 - \alpha)^{m_0}`$.
 - On the lab's 100 p-values at level 0.05, uncorrected testing flags 12 genes, Bonferroni flags 3, and BH flags 8.
-- For BH on the lab's list, $R = 8$ and the cutoff is 0.004.
+- For BH on the lab's list, $`R = 8`$ and the cutoff is 0.004.
 - Rank 7 sits above its BH line, 0.0036 against 0.0035. Rank 8 sits under, 0.0038 against 0.0040.
-- The values of $1 - 0.75^{m_0}$ for $m_0$ from 0 to 3 are 0, 0.25, 0.4375 and 0.578125.
+- The values of $`1 - 0.75^{m_0}`$ for $`m_0`$ from 0 to 3 are 0, 0.25, 0.4375 and 0.578125.
 
 The simulations, Šidák's and Holm's cutoffs, the dependent pair and the three-test enumeration stay with the Python and Rust checks.
 
@@ -1094,7 +1110,7 @@ end MultipleTesting
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Make the tests copies of one.** Replace `u = [rng.unif() for _ in range(M)]` with `u = [rng.unif()] * M`. The chance of at least one false alarm falls to the single-test 5%, since 100 copies are one test, and the third assert stops the run: the formula $1 - 0.95^{100}$ assumed independence.
+> - **Make the tests copies of one.** Replace `u = [rng.unif() for _ in range(M)]` with `u = [rng.unif()] * M`. The chance of at least one false alarm falls to the single-test 5%, since 100 copies are one test, and the third assert stops the run: the formula $`1 - 0.95^{100}`$ assumed independence.
 > - **Break the BH line.** In `bh_stepup`, change `q * k / m` to `q * k / (m - 1)`. The two roads to BH disagree in some simulated experiments, and the first assert stops it.
 > - **Weaken the real genes.** Set `SHIFT = 2.0`. Every method finds fewer real genes, and BH drops towards Bonferroni. BH's average false share and Bonferroni's family error stay where they were, since both are set by the nulls; the uncorrected list's false share rises, because fewer real genes dilute the false ones. All checks still pass.
 
@@ -1103,7 +1119,7 @@ end MultipleTesting
 ## The usual mistake
 
 > [!warning]
-> **Reporting the smallest of many p-values as if it were the only test.** A p-value of 0.01 is striking on its own. As the best of 100 null tests it is expected: the chance that some null reaches 0.01 or below is $1 - 0.99^{100} = 0.633968$. The family has to be declared, and corrected for, before looking.
+> **Reporting the smallest of many p-values as if it were the only test.** A p-value of 0.01 is striking on its own. As the best of 100 null tests it is expected: the chance that some null reaches 0.01 or below is $`1 - 0.99^{100} = 0.633968`$. The family has to be declared, and corrected for, before looking.
 >
 > - **Treating FDR control as FWER control.** BH at 5% put at least one false gene on the list in 27.5% of the simulated screens, not 5%.
 > - **Reading 1 − FDR as the chance each flagged gene is real.** The FDR is an average over many screens. It says nothing about which of today's 8 genes are false, and it allows a single list to be mostly false.
@@ -1116,11 +1132,11 @@ end MultipleTesting
 - **Genomics.** A gene-expression study tests tens of thousands of genes at once; FDR control is the standard, often reported as Storey's q-value: the smallest FDR level at which a gene would be flagged.
 - **Brain imaging.** A scan is tested voxel by voxel, tens of thousands of small cubes of brain; a well-known poster found "activity" in a dead salmon's brain by skipping the correction.
 - **Clinical trials.** Regulators ask for a primary outcome named in advance, so a trial is not judged on whichever of many outcomes happened to cross 0.05; secondary outcomes get Bonferroni-type or Holm corrections.
-- **Simultaneous confidence intervals.** Widen each of $m$ intervals from 95% to $1 - 0.05/m$ and all of them hold together with chance at least 95%, the interval twin of Bonferroni ([Confidence intervals](01-confidence-intervals.md)).
+- **Simultaneous confidence intervals.** Widen each of $`m`$ intervals from 95% to $`1 - 0.05/m`$ and all of them hold together with chance at least 95%, the interval twin of Bonferroni ([Confidence intervals](01-confidence-intervals.md)).
 - **Trading strategies.** Backtest enough rules and the best one looks brilliant by chance; the finance wing corrects the Sharpe ratio, a strategy's return per unit of risk, for the number of trials in [Trying many strategies](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/06-deflated-sharpe-and-multiple-testing.md).
 
 > **Say it back**
-> A test at 5% lets a true null through 1 time in 20, so 100 tests on nothing produce about 5 false flags and at least one with chance 99.4%. Bonferroni divides the level by the number of tests; the union bound then keeps the chance of any false flag under the level, whatever the dependence. Benjamini–Hochberg flags every p-value up to the deepest rank under the line $kq/m$, and under independence the average false share of its list stays under $q$. The first is strict and loses real findings; the second finds more and accepts a controlled share of false ones. Neither turns a p-value into the chance that a finding is real.
+> A test at 5% lets a true null through 1 time in 20, so 100 tests on nothing produce about 5 false flags and at least one with chance 99.4%. Bonferroni divides the level by the number of tests; the union bound then keeps the chance of any false flag under the level, whatever the dependence. Benjamini–Hochberg flags every p-value up to the deepest rank under the line $`kq/m`$, and under independence the average false share of its list stays under $`q`$. The first is strict and loses real findings; the second finds more and accepts a controlled share of false ones. Neither turns a p-value into the chance that a finding is real.
 
 ---
 
@@ -1143,7 +1159,7 @@ Both guarantees here count errors among tests already chosen; what these cards t
 Verified 2026-09-28: every link below resolves to the publisher's page.
 
 - Benjamini, Yoav, and Yosef Hochberg. "Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing." *Journal of the Royal Statistical Society, Series B* 57, no. 1 (1995): 289–300. [doi:10.1111/j.2517-6161.1995.tb02031.x](https://doi.org/10.1111/j.2517-6161.1995.tb02031.x). The false discovery rate and the step-up procedure.
-- Benjamini, Yoav, and Daniel Yekutieli. "The Control of the False Discovery Rate in Multiple Testing under Dependency." *Annals of Statistics* 29, no. 4 (2001): 1165–1188. [doi:10.1214/aos/1013699998](https://doi.org/10.1214/aos/1013699998). BH under positive dependence, and the divisor $1 + 1/2 + \dots + 1/m$ for any dependence.
+- Benjamini, Yoav, and Daniel Yekutieli. "The Control of the False Discovery Rate in Multiple Testing under Dependency." *Annals of Statistics* 29, no. 4 (2001): 1165–1188. [doi:10.1214/aos/1013699998](https://doi.org/10.1214/aos/1013699998). BH under positive dependence, and the divisor $`1 + 1/2 + \dots + 1/m`$ for any dependence.
 - Dunn, Olive Jean. "Multiple Comparisons among Means." *Journal of the American Statistical Association* 56, no. 293 (1961): 52–64. [doi:10.1080/01621459.1961.10482090](https://doi.org/10.1080/01621459.1961.10482090). The division of the level by the number of comparisons, set out for statistical practice.
 - Holm, Sture. "A Simple Sequentially Rejective Multiple Test Procedure." *Scandinavian Journal of Statistics* 6, no. 2 (1979): 65–70. [Journal page, JSTOR](https://www.jstor.org/stable/4615733). Holm's step-down method and its family-wise guarantee under any dependence.
 - Storey, John D., and Robert Tibshirani. "Statistical Significance for Genomewide Studies." *Proceedings of the National Academy of Sciences* 100, no. 16 (2003): 9440–9445. [doi:10.1073/pnas.1530509100](https://doi.org/10.1073/pnas.1530509100). FDR in gene-expression studies, and the q-value.

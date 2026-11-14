@@ -26,36 +26,42 @@ Scale: 240 px per metre across, 100 px per cm up; the bottom axis sits at 0.9 cm
 
 ## The formula
 
-Reminder: $y''$ is the rate of the rate, the bending. Write $y_s(x)$ for the forward run starting at the left end with the given height and slope $s$. The **miss** is where it lands minus where it should:
+Reminder: $`y''`$ is the rate of the rate, the bending. Write $`y_s(x)`$ for the forward run starting at the left end with the given height and slope $`s`$. The **miss** is where it lands minus where it should:
 
-$$g(s) = y_s(1) - 2.$$
+```math
+g(s) = y_s(1) - 2.
+```
 
-Shooting solves $g(s) = 0$. From two shots $s_0$ and $s_1$, the next aim is where the straight line through their misses crosses zero:
+Shooting solves $`g(s) = 0`$. From two shots $`s_0`$ and $`s_1`$, the next aim is where the straight line through their misses crosses zero:
 
-$$s_{\text{new}} = s_1 - g(s_1)\,\frac{s_1 - s_0}{g(s_1) - g(s_0)}.$$
+```math
+s_{\text{new}} = s_1 - g(s_1)\,\frac{s_1 - s_0}{g(s_1) - g(s_0)}.
+```
 
 **Read it aloud:** move the aim from the last shot by its miss, divided by how much the miss changed per unit of aim between the last two shots.
 
 This is the **secant method**: Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) with the derivative replaced by the slope through two recent shots.
 
-For the cable, $y'' = y$ with $y(0) = 1$ cm and $y(1) = 2$ cm, the closed form in cosh and sinh ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)) gives the aim
+For the cable, $`y'' = y`$ with $`y(0) = 1`$ cm and $`y(1) = 2`$ cm, the closed form in cosh and sinh ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)) gives the aim
 
-$$s = \frac{2 - \cosh 1}{\sinh 1} = 0.38880097.$$
+```math
+s = \frac{2 - \cosh 1}{\sinh 1} = 0.38880097.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | position along the cable | 0 to 1 m | — |
-| $y$ | height above the mat; $y''$ its bending | 1 cm and 2 cm at the posts | a higher right post needs a steeper aim |
-| $s$ | the starting slope: the aim | 0.38880097 cm per m | the landing rises 1.175201 cm per unit |
-| $g$ | the miss at the far end, $g(s)$ | −0.456919 at s = 0 | zero means the shot lands |
-| $s_0$, $s_1$ | the two most recent aims | 0 and 1 | — |
-| $h$ | step size of the forward runs | 1/64 m | slope error grows as its fourth power |
-| $\theta$ | theta, a helper number in the slab's closed form | 1.517165 | — |
+| $`x`$ | position along the cable | 0 to 1 m | — |
+| $`y`$ | height above the mat; $`y''`$ its bending | 1 cm and 2 cm at the posts | a higher right post needs a steeper aim |
+| $`s`$ | the starting slope: the aim | 0.38880097 cm per m | the landing rises 1.175201 cm per unit |
+| $`g`$ | the miss at the far end, $`g(s)`$ | −0.456919 at s = 0 | zero means the shot lands |
+| $`s_0`$, $`s_1`$ | the two most recent aims | 0 and 1 | — |
+| $`h`$ | step size of the forward runs | 1/64 m | slope error grows as its fourth power |
+| $`\theta`$ | theta, a helper number in the slab's closed form | 1.517165 | — |
 
 ### When it holds
 
 - **Every shot must reach the far end.** Some nonlinear runs blow up before it; those aims have no landing.
-- **The landing must depend on the aim.** For $y'' = -\pi^2 y$ from height 0, every shot returns to 0: the miss never changes and the secant divides by zero.
+- **The landing must depend on the aim.** For $`y'' = -\pi^2 y`$ from height 0, every shot returns to 0: the miss never changes and the secant divides by zero.
 - **The far end must not be too sensitive.** With a fast-growing solution, the last digit of the aim swings the landing and rounding decides the answer; [Finite differences](07-finite-differences-for-boundary-problems.md) avoids aiming.
 - **The starting shots choose the answer.** A nonlinear problem can have several solutions; the secant finds one near its start, or none.
 
@@ -65,15 +71,17 @@ $$s = \frac{2 - \cosh 1}{\sinh 1} = 0.38880097.$$
 
 ### Step 0: one unknown number decides everything
 
-A height and a slope at the left end fix a unique forward run (existence and uniqueness for initial values, proved in [The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)). So each aim gives one landing, and the problem is one equation in one unknown, $g(s) = 0$.
+A height and a slope at the left end fix a unique forward run (existence and uniqueness for initial values, proved in [The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)). So each aim gives one landing, and the problem is one equation in one unknown, $`g(s) = 0`$.
 
 ### Step 1: for the cable, each run is a fixed curve plus s times another
 
 The run with height 1 and slope 0 is cosh x: its bending equals itself, it starts at 1, flat. The run with height 0 and slope 1 is sinh x. The rule is linear, so sums and multiples of runs are runs:
 
-$$y_s(x) = \cosh x + s \sinh x,$$
+```math
+y_s(x) = \cosh x + s \sinh x,
+```
 
-the only run with height 1 and slope $s$ at the left end. At the far end, $g(s) = \cosh 1 + s \sinh 1 - 2$: a straight line in $s$ with steepness $\sinh 1 = 1.175201$.
+the only run with height 1 and slope $`s`$ at the left end. At the far end, $`g(s) = \cosh 1 + s \sinh 1 - 2`$: a straight line in $`s`$ with steepness $`\sinh 1 = 1.175201`$.
 
 ### Step 2: a straight-line miss is solved by two shots
 
@@ -83,11 +91,11 @@ Runge-Kutta four ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-
 
 ### Step 3: the stepping error passes to the aim, divided by the steepness
 
-A landing error e moves the root by e / 1.175201. The landing error shrinks as $h^4$, so the aim's error does too. With 4, 8 and 16 steps the aim is off by 3.86e-05, 2.73e-06 and 1.81e-07: ratios 14.16 and 15.07, closing in on 2^4 = 16.
+A landing error e moves the root by e / 1.175201. The landing error shrinks as $`h^4`$, so the aim's error does too. With 4, 8 and 16 steps the aim is off by 3.86e-05, 2.73e-06 and 1.81e-07: ratios 14.16 and 15.07, closing in on 2^4 = 16.
 
 ### Step 4: a curved miss needs repeated corrections
 
-A slab of damp wood chips heats itself, faster the warmer it is, roughly exponentially. Both faces are held at air temperature. In scaled units, y is the temperature rise and x runs across the slab from 0 to 1; heat balance reads $y'' = -e^y$ with $y(0) = y(1) = 0$.
+A slab of damp wood chips heats itself, faster the warmer it is, roughly exponentially. Both faces are held at air temperature. In scaled units, y is the temperature rise and x runs across the slab from 0 to 1; heat balance reads $`y'' = -e^y`$ with $`y(0) = y(1) = 0`$.
 
 Now the miss curves, so the secant's line only approximates it. Each shot's error is roughly a constant times the product of the two before. From shots 0 and 1 the misses fall to +9.44e-03, −2.20e-04, +1.19e-07 and +1.50e-12 in four corrections, landing on slope 0.5493527288.
 
@@ -103,7 +111,7 @@ So if g'(r) ≠ 0 and g'' is continuous, there is a δ > 0 (delta) such that sho
 <details>
 <summary>The slab's closed form, if you want it</summary>
 
-Try $y = 2\ln\cosh(\theta/4) - 2\ln\cosh(\theta(x - \tfrac12)/2)$, which is 0 at both walls. Its slope at the left wall is $\theta\tanh(\theta/4)$. With sech meaning one over cosh, its bending is $-\tfrac{\theta^2}{2}\,\text{sech}^2(\theta(x-\tfrac12)/2)$ and $e^y = \cosh^2(\theta/4)\,\text{sech}^2(\theta(x-\tfrac12)/2)$, so $y'' = -e^y$ exactly when $\theta = \sqrt{2}\cosh(\theta/4)$. Bisection finds two roots, 1.517165 and 10.938703: starting slopes 0.549353 and 10.846899.
+Try $`y = 2\ln\cosh(\theta/4) - 2\ln\cosh(\theta(x - \tfrac12)/2)`$, which is 0 at both walls. Its slope at the left wall is $`\theta\tanh(\theta/4)`$. With sech meaning one over cosh, its bending is $`-\tfrac{\theta^2}{2}\,\text{sech}^2(\theta(x-\tfrac12)/2)`$ and $`e^y = \cosh^2(\theta/4)\,\text{sech}^2(\theta(x-\tfrac12)/2)`$, so $`y'' = -e^y`$ exactly when $`\theta = \sqrt{2}\cosh(\theta/4)`$. Bisection finds two roots, 1.517165 and 10.938703: starting slopes 0.549353 and 10.846899.
 
 </details>
 
@@ -113,7 +121,7 @@ Two roots mean two steady profiles: the cool one is the slab's resting state; th
 
 ## Worked numbers, by hand
 
-The cable, $y'' = y$, from 1 cm at the left post, aiming for 2 cm at the right.
+The cable, $`y'' = y`$, from 1 cm at the left post, aiming for 2 cm at the right.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -132,7 +140,7 @@ The cable leaves the left post rising 0.3888 cm per metre and meets the right po
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Starting height 0 instead of 1 | s = 1.701836, not 0.388801 | That aims a different cable, one pinned at the mat |
-| Shooting $y'' = -\pi^2 y$ from 0 at 1 | miss −1.000000 at s = 0 and at s = 1 | Every shot lands at 0; the secant divides by zero, and no aim exists |
+| Shooting $`y'' = -\pi^2 y`$ from 0 at 1 | miss −1.000000 at s = 0 and at s = 1 | Every shot lands at 0; the secant divides by zero, and no aim exists |
 | Slab heating 4 times as fast | best landing −0.2630 for aims 0 to 30, never 0 | No steady state: the slab ignites |
 
 The second row is the shelf's house problem at its first eigenvalue: [Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md).

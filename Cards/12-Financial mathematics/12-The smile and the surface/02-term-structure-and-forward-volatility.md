@@ -34,38 +34,42 @@ The lower line from month seven on is the implied volatility of an option expiri
 
 ## The formula
 
-Notation first, in words. A subscript names the expiry: $T_1$ is the near expiry in years and $T_2$ the far one; $\sigma_1$ and $\sigma_2$ are their implied volatilities. The total variance of an expiry is its volatility squared times its years, written $w$:
+Notation first, in words. A subscript names the expiry: $`T_1`$ is the near expiry in years and $`T_2`$ the far one; $`\sigma_1`$ and $`\sigma_2`$ are their implied volatilities. The total variance of an expiry is its volatility squared times its years, written $`w`$:
 
-$$w_1 = \sigma_1^2\,T_1, \qquad w_2 = \sigma_2^2\,T_2 .$$
+```math
+w_1 = \sigma_1^2\,T_1, \qquad w_2 = \sigma_2^2\,T_2 .
+```
 
-The forward volatility $\sigma_f$ between the two expiries is then
+The forward volatility $`\sigma_f`$ between the two expiries is then
 
-$$\sigma_f = \sqrt{\frac{w_2 - w_1}{T_2 - T_1}} .$$
+```math
+\sigma_f = \sqrt{\frac{w_2 - w_1}{T_2 - T_1}} .
+```
 
 **Read it aloud:** the far total variance, minus the near total variance, spread over the years between them; the square root of that rate is the volatility of the gap.
 
-Existence first, since this is an inverse (from quotes back to the volatility that produced them). The formula has an answer exactly when $w_2 \ge w_1$ and $T_2 > T_1$. The answer is unique, because a volatility is not negative and only one non-negative number squares to a given rate. The boundary case $w_2 = w_1$ gives $\sigma_f = 0$: the market expects Acme to sit still between the expiries. The case $w_2 < w_1$ gives no volatility at all, and the quotes carry an arbitrage, a trade that collects money today and can never lose it later (Step 4).
+Existence first, since this is an inverse (from quotes back to the volatility that produced them). The formula has an answer exactly when $`w_2 \ge w_1`$ and $`T_2 > T_1`$. The answer is unique, because a volatility is not negative and only one non-negative number squares to a given rate. The boundary case $`w_2 = w_1`$ gives $`\sigma_f = 0`$: the market expects Acme to sit still between the expiries. The case $`w_2 < w_1`$ gives no volatility at all, and the quotes carry an arbitrage, a trade that collects money today and can never lose it later (Step 4).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$, $T_1$, $T_2$ | an expiry in years; the near and the far one | 0.5 and 1 | $T_1$ up: $\sigma_f$ rises here, because $\sigma_2 > \sigma_1$ |
-| $\sigma_1$, $\sigma_2$ | implied volatility of the near and far option | 18% and 20% | $\sigma_1$ up: $\sigma_f$ falls; $\sigma_2$ up: $\sigma_f$ rises |
-| $w$, $w_1$, $w_2$ | **total variance**: volatility squared times years, $w(T) = \sigma^2 T$ | 0.016200 and 0.040000 | $w_2$ up: $\sigma_f$ rises |
-| $\sigma_f$ | **forward volatility**: the volatility of the stretch from $T_1$ to $T_2$ | 21.82% | — |
-| $\sigma$, $t$ | a volatility in general; $t$ is calendar time in years, and $\sigma(t)$ the volatility in force then | 18% before six months, 21.82% after | — |
-| $S$, $S_T$ | Acme's price today, and at time $T$ | 100; unknown | — |
-| $K$ | the strike, the price a call lets its owner buy at | 100 | — |
-| $r$, $q$ | the riskless rate and the dividend yield, both continuously compounded | 5% and 2% | neither enters $\sigma_f$ |
-| $F$ | the forward price $F(T) = S\,e^{(r-q)T}$: a share delivered at $T$, priced today | 101.511306 at half a year, 103.045453 at one | — |
-| $C$, $N$ | a call's price; $N$ is the bell-curve area to the left of a point | $C$ = 9.227006 at one year, 20% | — |
-| $Z_1$, $Z_2$ | two independent standard bell-curve draws, one for each half-year | — | — |
+| $`T`$, $`T_1`$, $`T_2`$ | an expiry in years; the near and the far one | 0.5 and 1 | $`T_1`$ up: $`\sigma_f`$ rises here, because $`\sigma_2 > \sigma_1`$ |
+| $`\sigma_1`$, $`\sigma_2`$ | implied volatility of the near and far option | 18% and 20% | $`\sigma_1`$ up: $`\sigma_f`$ falls; $`\sigma_2`$ up: $`\sigma_f`$ rises |
+| $`w`$, $`w_1`$, $`w_2`$ | **total variance**: volatility squared times years, $`w(T) = \sigma^2 T`$ | 0.016200 and 0.040000 | $`w_2`$ up: $`\sigma_f`$ rises |
+| $`\sigma_f`$ | **forward volatility**: the volatility of the stretch from $`T_1`$ to $`T_2`$ | 21.82% | — |
+| $`\sigma`$, $`t`$ | a volatility in general; $`t`$ is calendar time in years, and $`\sigma(t)`$ the volatility in force then | 18% before six months, 21.82% after | — |
+| $`S`$, $`S_T`$ | Acme's price today, and at time $`T`$ | 100; unknown | — |
+| $`K`$ | the strike, the price a call lets its owner buy at | 100 | — |
+| $`r`$, $`q`$ | the riskless rate and the dividend yield, both continuously compounded | 5% and 2% | neither enters $`\sigma_f`$ |
+| $`F`$ | the forward price $`F(T) = S\,e^{(r-q)T}`$: a share delivered at $`T`$, priced today | 101.511306 at half a year, 103.045453 at one | — |
+| $`C`$, $`N`$ | a call's price; $`N`$ is the bell-curve area to the left of a point | $`C`$ = 9.227006 at one year, 20% | — |
+| $`Z_1`$, $`Z_2`$ | two independent standard bell-curve draws, one for each half-year | — | — |
 
 ### When it holds
 
-- **Volatility that changes with the calendar, not at random.** The theorem behind the formula assumes the volatility path $\sigma(t)$ is fixed in advance. If volatility itself moves at random, total variances still add as averages, but the option prices pick up a smile and the forward volatility becomes a forward-start option's price rather than a sure number ([Forward-start options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md)).
+- **Volatility that changes with the calendar, not at random.** The theorem behind the formula assumes the volatility path $`\sigma(t)`$ is fixed in advance. If volatility itself moves at random, total variances still add as averages, but the option prices pick up a smile and the forward volatility becomes a forward-start option's price rather than a sure number ([Forward-start options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md)).
 - **Both quotes at the same moneyness.** With a smile, each expiry has many volatilities, one per strike ([The volatility smile and skew](01-volatility-smile-and-skew.md)). The subtraction is done at matched moneyness, a strike measured against its own expiry's forward; mixing a 90-strike quote at one date with a 110-strike quote at another subtracts two different things.
-- **The same underlying and the same clock.** Both years must be counted the same way. Counting one expiry in calendar days and the other in trading days shifts $w$ by the ratio of the two counts.
-- **Tradeable quotes.** The no-arbitrage reading of $w_2 < w_1$ needs both options to trade at the quoted prices, both ways, at once. A stale quote breaks the rule with no trade behind it.
+- **The same underlying and the same clock.** Both years must be counted the same way. Counting one expiry in calendar days and the other in trading days shifts $`w`$ by the ratio of the two counts.
+- **Tradeable quotes.** The no-arbitrage reading of $`w_2 < w_1`$ needs both options to trade at the quoted prices, both ways, at once. A stale quote breaks the rule with no trade behind it.
 
 ---
 
@@ -77,40 +81,46 @@ Two independent moves in Acme's log price, one in each half-year, add up to the 
 
 ### Step 1: an implied volatility quotes a total variance
 
-In Black-Scholes, a call's price depends on volatility and time to expiry through the spread of the log price at expiry, $\sigma\sqrt{T}$, and on the forward and the discount factor. Hold the moneyness fixed and the price is a function of total variance alone: the prerequisite card shows the normalized call rising strictly in $w$ ([Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md)). So a quote of 18 percent at half a year is a quote of total variance $0.18^2 \times 0.5 = 0.016200$, and 20 percent at one year is $0.040000$. Implied volatility is total variance restated as a per-year rate: $\sigma = \sqrt{w/T}$.
+In Black-Scholes, a call's price depends on volatility and time to expiry through the spread of the log price at expiry, $`\sigma\sqrt{T}`$, and on the forward and the discount factor. Hold the moneyness fixed and the price is a function of total variance alone: the prerequisite card shows the normalized call rising strictly in $`w`$ ([Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md)). So a quote of 18 percent at half a year is a quote of total variance $`0.18^2 \times 0.5 = 0.016200`$, and 20 percent at one year is $`0.040000`$. Implied volatility is total variance restated as a per-year rate: $`\sigma = \sqrt{w/T}`$.
 
 ### Step 2: with a calendar-dependent volatility, total variances add
 
-Suppose Acme's volatility is 18 percent for the first half-year and some $\sigma_f$ for the second, fixed in advance. Over the first half the log price moves by a drift plus $0.18\sqrt{0.5}\,Z_1$; over the second by a drift plus $\sigma_f\sqrt{0.5}\,Z_2$. The draws $Z_1$ and $Z_2$ are independent, because Brownian motion's moves over separate periods are independent ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)).
+Suppose Acme's volatility is 18 percent for the first half-year and some $`\sigma_f`$ for the second, fixed in advance. Over the first half the log price moves by a drift plus $`0.18\sqrt{0.5}\,Z_1`$; over the second by a drift plus $`\sigma_f\sqrt{0.5}\,Z_2`$. The draws $`Z_1`$ and $`Z_2`$ are independent, because Brownian motion's moves over separate periods are independent ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)).
 
 The sum of two independent bell-curve moves is again a bell-curve move, with variance equal to the sum of the two variances. So Acme's log price at one year is bell-shaped with variance
 
-$$0.18^2 \times 0.5 \;+\; \sigma_f^2 \times 0.5 \;=\; w_1 + \sigma_f^2\,(T_2 - T_1).$$
+```math
+0.18^2 \times 0.5 \;+\; \sigma_f^2 \times 0.5 \;=\; w_1 + \sigma_f^2\,(T_2 - T_1).
+```
 
-A bell-shaped log price with that spread is exactly what Black-Scholes assumes at one flat volatility $\sigma_2$ with $\sigma_2^2 T_2$ equal to it. So every one-year call, at every strike, carries the Black-Scholes price at that single $\sigma_2$. Set $\sigma_2^2 T_2 = w_2$ and solve:
+A bell-shaped log price with that spread is exactly what Black-Scholes assumes at one flat volatility $`\sigma_2`$ with $`\sigma_2^2 T_2`$ equal to it. So every one-year call, at every strike, carries the Black-Scholes price at that single $`\sigma_2`$. Set $`\sigma_2^2 T_2 = w_2`$ and solve:
 
-$$w_2 = w_1 + \sigma_f^2\,(T_2 - T_1) \quad\Longrightarrow\quad \sigma_f = \sqrt{\frac{w_2 - w_1}{T_2 - T_1}} .$$
+```math
+w_2 = w_1 + \sigma_f^2\,(T_2 - T_1) \quad\Longrightarrow\quad \sigma_f = \sqrt{\frac{w_2 - w_1}{T_2 - T_1}} .
+```
 
-For Acme, $(0.040000 - 0.016200)/0.5 = 0.047600$, and its square root is 0.218174: 21.82 percent. In general the implied total variance to $T$ is the running total of the calendar volatility's square, $w(T) = \int_0^T \sigma(t)^2\,dt$, and the implied volatility is its root-mean-square average, the curve in the picture.
+For Acme, $`(0.040000 - 0.016200)/0.5 = 0.047600`$, and its square root is 0.218174: 21.82 percent. In general the implied total variance to $`T`$ is the running total of the calendar volatility's square, $`w(T) = \int_0^T \sigma(t)^2\,dt`$, and the implied volatility is its root-mean-square average, the curve in the picture.
 
 <details>
 <summary>Detailed proof: independent bell curves add variances, and the drift comes out right</summary>
 
-Write $a = 0.18\sqrt{0.5}$ and $b = \sigma_f\sqrt{0.5}$. For a standard bell-curve draw $Z$, the average of $e^{uZ}$ is $e^{u^2/2}$, for every number $u$. Independence lets averages of products split into products of averages, so
-$$\text{average of } e^{u(aZ_1 + bZ_2)} \;=\; e^{u^2a^2/2}\,e^{u^2b^2/2} \;=\; e^{u^2(a^2+b^2)/2}.$$
-The right side is the same function of $u$ as for a single draw $\sqrt{a^2+b^2}\,Z$. A distribution is pinned down by this function (it is the moment generating function, and bell curves are determined by theirs), so $aZ_1 + bZ_2$ is a bell curve with variance $a^2 + b^2$.
+Write $`a = 0.18\sqrt{0.5}`$ and $`b = \sigma_f\sqrt{0.5}`$. For a standard bell-curve draw $`Z`$, the average of $`e^{uZ}`$ is $`e^{u^2/2}`$, for every number $`u`$. Independence lets averages of products split into products of averages, so
 
-The drift: in the pricing world each half contributes $(r - q)$ times its length minus half its own variance, so the year's drift is $(r-q)T_2 - \tfrac12(a^2 + b^2)$. That is the Black-Scholes drift at total variance $a^2 + b^2$. Log price, spread and drift all match the flat-volatility model at $\sigma_2^2 T_2 = a^2 + b^2$, so the one-year call prices are identical at every strike. Merton made this observation in 1973: a volatility that varies with time but not at random enters Black-Scholes only through its total over the option's life.
+$`\displaystyle \text{average of } e^{u(aZ_1 + bZ_2)} \;=\; e^{u^2a^2/2}\,e^{u^2b^2/2} \;=\; e^{u^2(a^2+b^2)/2}.`$
+
+The right side is the same function of $`u`$ as for a single draw $`\sqrt{a^2+b^2}\,Z`$. A distribution is pinned down by this function (it is the moment generating function, and bell curves are determined by theirs), so $`aZ_1 + bZ_2`$ is a bell curve with variance $`a^2 + b^2`$.
+
+The drift: in the pricing world each half contributes $`(r - q)`$ times its length minus half its own variance, so the year's drift is $`(r-q)T_2 - \tfrac12(a^2 + b^2)`$. That is the Black-Scholes drift at total variance $`a^2 + b^2`$. Log price, spread and drift all match the flat-volatility model at $`\sigma_2^2 T_2 = a^2 + b^2`$, so the one-year call prices are identical at every strike. Merton made this observation in 1973: a volatility that varies with time but not at random enters Black-Scholes only through its total over the option's life.
 
 </details>
 
 ### Step 3: the inverse has one answer, none, or a zero
 
-Solving for $\sigma_f$ asks for a non-negative number whose square is $(w_2 - w_1)/(T_2 - T_1)$. If that rate is positive there is exactly one. If it is zero the answer is zero. If it is negative, no real volatility squares to it. The checks confirm the one-answer case a second way: they price the one-year call in two stages with 18 percent then a trial $\sigma_f$, and bisect (halve a bracket until it closes) on $\sigma_f$ until that price equals the 20 percent Black-Scholes price, 9.23 dollars. The two-stage price rises strictly with $\sigma_f$, so the bracket closes on one number: 0.218174 again.
+Solving for $`\sigma_f`$ asks for a non-negative number whose square is $`(w_2 - w_1)/(T_2 - T_1)`$. If that rate is positive there is exactly one. If it is zero the answer is zero. If it is negative, no real volatility squares to it. The checks confirm the one-answer case a second way: they price the one-year call in two stages with 18 percent then a trial $`\sigma_f`$, and bisect (halve a bracket until it closes) on $`\sigma_f`$ until that price equals the 20 percent Black-Scholes price, 9.23 dollars. The two-stage price rises strictly with $`\sigma_f`$, so the bracket closes on one number: 0.218174 again.
 
 ### Step 4: total variance cannot fall, and when it does there is free money
 
-Inside the model, $w(T)$ is a running total of squares, each at least zero, so it never falls. The model-free version, holding in any market, is the calendar rule proved in [Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): at matched moneyness a longer call, per unit of forward, is never the cheaper one, and in volatility units that says $w_2 \ge w_1$.
+Inside the model, $`w(T)`$ is a running total of squares, each at least zero, so it never falls. The model-free version, holding in any market, is the calendar rule proved in [Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): at matched moneyness a longer call, per unit of forward, is never the cheaper one, and in volatility units that says $`w_2 \ge w_1`$.
 
 The broken sheet, 21 percent at half a year and 14 percent at one, gives these totals:
 
@@ -124,7 +134,7 @@ broken sheet   1 year    ██████████               0.019600
 
 The broken sheet's total falls from 0.022050 to 0.019600, a rate of −0.004900 per year between the expiries. No volatility squares to a negative number. The two-stage pricer shows the same wall from the price side: with 21 percent for the first half and zero volatility after, the cheapest the one-year 100-strike call can be is 7.28 dollars, and the sheet quotes it at 6.96. No forward volatility, however small, reaches the quote.
 
-The trade is the calendar at matched moneyness from the prerequisite. Sell 0.990050 half-year 100-strike calls at 6.58 dollars, buy one one-year call struck at 101.51 (the same distance from its forward) for 6.19, and 0.33 dollars is collected today. At the half-year the long call is worth at least $e^{-0.02 \times 0.5} = 0.990050$ times what each short call owes, whatever Acme does, so nothing is ever paid back. The checks confirm that floor at every Acme price from 50 to 300.
+The trade is the calendar at matched moneyness from the prerequisite. Sell 0.990050 half-year 100-strike calls at 6.58 dollars, buy one one-year call struck at 101.51 (the same distance from its forward) for 6.19, and 0.33 dollars is collected today. At the half-year the long call is worth at least $`e^{-0.02 \times 0.5} = 0.990050`$ times what each short call owes, whatever Acme does, so nothing is ever paid back. The checks confirm that floor at every Acme price from 50 to 300.
 
 The other road to forward variance runs through variance swaps, contracts that pay realized variance directly; the difference between two expiries' variance-swap strikes, each weighted by its years, is forward variance bought and sold outright ([Marking a variance swap](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md)).
 
@@ -136,12 +146,12 @@ The house sheet: Acme at 100, rate 5 percent, dividend yield 2 percent, 18 perce
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| near total variance $w_1$ | $0.18^2 \times 0.5 = 0.0324 \times 0.5$ | 0.016200 |
-| far total variance $w_2$ | $0.20^2 \times 1$ | 0.040000 |
-| variance in between | $0.040000 - 0.016200$ | 0.023800 |
-| per year in between | $0.023800 / (1 - 0.5)$ | 0.047600 |
-| **forward volatility** $\sigma_f$ | $\sqrt{0.047600}$ | **0.218174, or 21.82%** |
-| check: rebuild $w_2$ | $0.016200 + 0.218174^2 \times 0.5$ | 0.040000 |
+| near total variance $`w_1`$ | $`0.18^2 \times 0.5 = 0.0324 \times 0.5`$ | 0.016200 |
+| far total variance $`w_2`$ | $`0.20^2 \times 1`$ | 0.040000 |
+| variance in between | $`0.040000 - 0.016200`$ | 0.023800 |
+| per year in between | $`0.023800 / (1 - 0.5)`$ | 0.047600 |
+| **forward volatility** $`\sigma_f`$ | $`\sqrt{0.047600}`$ | **0.218174, or 21.82%** |
+| check: rebuild $`w_2`$ | $`0.016200 + 0.218174^2 \times 0.5`$ | 0.040000 |
 | half-year call at 18% | Black-Scholes | 5.757930 |
 | one-year call at 20% | Black-Scholes | 9.227006 |
 | calendar cushion at matched strike 101.511306 | far call − 0.990050 × near call | 2.800455 |
@@ -154,9 +164,9 @@ The market charges 21.82 percent for Acme's second half-year: more than either q
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Average the vols in a straight line: $(0.20 \times 1 - 0.18 \times 0.5)/0.5$ | 22.00% | Volatilities do not add; squared volatilities times years do. |
-| Divide by $T_2$ instead of $T_2 - T_1$ | 15.43% | The variance in between belongs to the half-year between, not the whole year. |
-| Subtract squared vols without the years: $\sqrt{(0.20^2 - 0.18^2)/0.5}$ | 12.33% | Each squared vol must be weighted by its own expiry before subtracting. |
+| Average the vols in a straight line: $`(0.20 \times 1 - 0.18 \times 0.5)/0.5`$ | 22.00% | Volatilities do not add; squared volatilities times years do. |
+| Divide by $`T_2`$ instead of $`T_2 - T_1`$ | 15.43% | The variance in between belongs to the half-year between, not the whole year. |
+| Subtract squared vols without the years: $`\sqrt{(0.20^2 - 0.18^2)/0.5}`$ | 12.33% | Each squared vol must be weighted by its own expiry before subtracting. |
 
 All three numbers are printed by the checks below.
 
@@ -529,13 +539,13 @@ The two outputs agree line for line, including the simulation, which runs the sa
 
 Lean proves the formula's one-answer-or-none rule, Step 2's adding of variances and Step 4's running total, for any expiries and volatilities.
 
-- Take $T_1 < T_2$ and a forward volatility that is not negative. Then its variance in between, added to $w_1$, gives $w_2$ exactly when $w_2 \ge w_1$ and it is the formula's answer.
+- Take $`T_1 < T_2`$ and a forward volatility that is not negative. Then its variance in between, added to $`w_1`$, gives $`w_2`$ exactly when $`w_2 \ge w_1`$ and it is the formula's answer.
 - So a sheet whose total variance falls has no forward volatility, and any other sheet has exactly one.
-- Take two independent standard bell-curve draws $Z_1$ and $Z_2$, and any numbers $a$ and $b$. Then $a Z_1 + b Z_2$ is a bell curve with average 0 and variance $a^2 + b^2$.
-- Take a volatility path $\sigma(t)$ fixed in advance, whose square can be integrated, and $0 \le T_1 \le T_2$. Then $w(T_2)$ is $w(T_1)$ plus the part from $T_1$ to $T_2$, and that part is never negative.
-- Take the house sheet. Then $w_1$ = 0.0162, $w_2$ = 0.04, and the variance per year in between is 0.0476.
-- Take the broken sheet. Then $w_1$ = 0.02205 is above $w_2$ = 0.0196, so it has no forward volatility.
-- Take 25 percent at half a year and 20 percent at one. Then $w_1$ = 0.03125 is at most $w_2$ = 0.04, so total variance does not fall.
+- Take two independent standard bell-curve draws $`Z_1`$ and $`Z_2`$, and any numbers $`a`$ and $`b`$. Then $`a Z_1 + b Z_2`$ is a bell curve with average 0 and variance $`a^2 + b^2`$.
+- Take a volatility path $`\sigma(t)`$ fixed in advance, whose square can be integrated, and $`0 \le T_1 \le T_2`$. Then $`w(T_2)`$ is $`w(T_1)`$ plus the part from $`T_1`$ to $`T_2`$, and that part is never negative.
+- Take the house sheet. Then $`w_1`$ = 0.0162, $`w_2`$ = 0.04, and the variance per year in between is 0.0476.
+- Take the broken sheet. Then $`w_1`$ = 0.02205 is above $`w_2`$ = 0.0196, so it has no forward volatility.
+- Take 25 percent at half a year and 20 percent at one. Then $`w_1`$ = 0.03125 is at most $`w_2`$ = 0.04, so total variance does not fall.
 
 The option prices, the root 0.218174, the simulation and the calendar trade's cash are left to the Python and Rust checks.
 
@@ -638,7 +648,7 @@ example : ((25 : ℚ) / 100) ^ 2 * (1 / 2) ≤ ((20 : ℚ) / 100) ^ 2 * 1 := by 
 > Guess first, then run it.
 > - **A flat sheet.** Set the one-year volatility to 18 percent. The forward volatility is **18 percent**: with nothing new priced after six months, the gap looks like the start.
 > - **A steep sheet.** Set the one-year volatility to 25 percent. The forward volatility is **30.43 percent**: a modest rise in the quote needs a large one in the gap.
-> - **The boundary.** Set the one-year volatility to 12.7279 percent, which is $0.18\sqrt{0.5}$. Total variance is flat at 0.016200 and the forward volatility is **0**. Any lower and the formula returns none.
+> - **The boundary.** Set the one-year volatility to 12.7279 percent, which is $`0.18\sqrt{0.5}`$. Total variance is flat at 0.016200 and the forward volatility is **0**. Any lower and the formula returns none.
 > - **A thinner simulation.** Set `paths` to 500. The simulated variances wander much further from the exact ones, and one of the two simulation asserts may stop the run.
 
 ---
@@ -648,8 +658,8 @@ example : ((25 : ℚ) / 100) ^ 2 * (1 / 2) ≤ ((20 : ℚ) / 100) ^ 2 * 1 := by 
 > [!warning]
 > **Subtracting volatilities instead of variances.** A rise from 18 to 20 percent does not mean the second half-year is priced at 22 percent. Volatility is a spread, and spreads of independent moves combine by their squares. The straight-line answer, 22.00 percent, overshoots the true 21.82 percent here, and the gap widens on steeper sheets.
 >
-> - **Reading a falling volatility term structure as an arbitrage.** Volatility may fall with expiry; only total variance may not. A sheet with 25 percent at six months and 20 at one year has $w_1 = 0.031250$ and $w_2 = 0.040000$: fine, with a forward volatility of 13.23 percent.
-> - **Dividing by the wrong years.** The gap's variance is spread over $T_2 - T_1$, not over $T_2$; dividing by the whole year gives 15.43 percent.
+> - **Reading a falling volatility term structure as an arbitrage.** Volatility may fall with expiry; only total variance may not. A sheet with 25 percent at six months and 20 at one year has $`w_1 = 0.031250`$ and $`w_2 = 0.040000`$: fine, with a forward volatility of 13.23 percent.
+> - **Dividing by the wrong years.** The gap's variance is spread over $`T_2 - T_1`$, not over $`T_2`$; dividing by the whole year gives 15.43 percent.
 > - **Mixing strikes across expiries.** With a smile, subtract at matched moneyness. The at-the-money-forward strike moves with the forward, 101.51 at half a year against 103.05 at one year here.
 > - **Treating the forward volatility as a forecast.** It is a price implied by two quotes. Realized volatility over the gap can come in anywhere; the forward volatility is what a trader can lock in today.
 

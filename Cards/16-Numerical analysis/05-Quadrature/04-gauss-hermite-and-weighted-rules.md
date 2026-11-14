@@ -38,49 +38,57 @@ The falling line is the share: a smooth payoff. Each extra node removes about on
 
 Reminders. A quadrature rule replaces an integral by a weighted sum of samples. Its **nodes** are the sample points, its **weights** the multipliers, and its **degree of exactness** the highest polynomial degree it integrates with no error ([Trapezoid, midpoint and Simpson](01-newton-cotes-and-composite-rules.md)). [Gaussian quadrature](03-gaussian-quadrature.md) shows that n well-placed nodes reach degree 2n − 1 on an interval with no weight.
 
-This card introduces the **physicists' Hermite polynomials** $H_n$. A second convention, the probabilists' $He_n$, is not used here. They are built by a recurrence, a rule that makes each one from the two before it:
+This card introduces the **physicists' Hermite polynomials** $`H_n`$. A second convention, the probabilists' $`He_n`$, is not used here. They are built by a recurrence, a rule that makes each one from the two before it:
 
-$$H_0 = 1,\qquad H_1 = 2x,\qquad H_{k+1}(x) = 2x\,H_k(x) - 2k\,H_{k-1}(x)$$
+```math
+H_0 = 1,\qquad H_1 = 2x,\qquad H_{k+1}(x) = 2x\,H_k(x) - 2k\,H_{k-1}(x)
+```
 
 The Gauss–Hermite rule with n nodes is:
 
-$$\int_{-\infty}^{\infty} e^{-x^2}\,g(x)\,dx \;\approx\; \sum_{i=1}^{n} w_i\, g(x_i), \qquad H_n(x_i) = 0, \qquad w_i = \frac{2^{\,n-1}\, n!\,\sqrt{\pi}}{n^2\, H_{n-1}(x_i)^2}$$
+```math
+\int_{-\infty}^{\infty} e^{-x^2}\,g(x)\,dx \;\approx\; \sum_{i=1}^{n} w_i\, g(x_i), \qquad H_n(x_i) = 0, \qquad w_i = \frac{2^{\,n-1}\, n!\,\sqrt{\pi}}{n^2\, H_{n-1}(x_i)^2}
+```
 
 **Read it aloud:** to average a smooth function g against the bell e to the minus x squared, sample g at the n roots of the nth Hermite polynomial, weight each sample by the formula, and add.
 
-A normal expectation is the same integral after one change of variable, $z = \sqrt{2}\,x$:
+A normal expectation is the same integral after one change of variable, $`z = \sqrt{2}\,x`$:
 
-$$E[f(Z)] \;\approx\; \sum_{i=1}^{n} p_i\, f\!\left(\sqrt{2}\,x_i\right), \qquad p_i = \frac{w_i}{\sqrt{\pi}}$$
+```math
+E[f(Z)] \;\approx\; \sum_{i=1}^{n} p_i\, f\!\left(\sqrt{2}\,x_i\right), \qquad p_i = \frac{w_i}{\sqrt{\pi}}
+```
 
 **Read it aloud:** the expected value of a payoff of a standard normal draw is a probability-weighted sum of the payoff at seven, or n, special draws.
 
-For the share, $f(z) = S_T = S_0\, e^{(\mu - \sigma^2/2)T + \sigma\sqrt{T}\,z}$, the price when the normal draw is z. The rule's error, exact minus rule, for a g with 2n smooth derivatives, is
+For the share, $`f(z) = S_T = S_0\, e^{(\mu - \sigma^2/2)T + \sigma\sqrt{T}\,z}`$, the price when the normal draw is z. The rule's error, exact minus rule, for a g with 2n smooth derivatives, is
 
-$$E_n = \frac{n!\,\sqrt{\pi}}{2^n\,(2n)!}\; g^{(2n)}(\xi)$$
+```math
+E_n = \frac{n!\,\sqrt{\pi}}{2^n\,(2n)!}\; g^{(2n)}(\xi)
+```
 
-for some point $\xi$ the theorem does not name.
+for some point $`\xi`$ the theorem does not name.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $Z$, $z$ | a standard normal draw, and one value of it | the share's luck over two years | larger z: a higher price |
-| $f$, $g$ | the payoff as a function of the draw; the smooth part left once the weight is taken out | $f = S_T$; $g(x) = f(\sqrt{2}x)/\sqrt{\pi}$ | — |
-| $n$, $i$, $k$ | the number of nodes; a node's index; a step of a recurrence | n = 7 | larger n: the error falls fast, for a smooth g |
-| $x_i$ | the nodes: roots of $H_n$ | ±2.6519613568, ±1.6735516288, ±0.8162878829, 0 | — |
-| $w_i$, $p_i$ | the weights for $e^{-x^2}$, and the same divided by $\sqrt{\pi}$: probabilities summing to 1 | $p_4$ = 0.4571428571 at the centre | — |
-| $H_n$, $He_n$ | physicists' Hermite polynomial, used here; probabilists' version, not used | $H_7$ | — |
-| $L_n$, $T_n$ | Laguerre polynomial (weight $e^{-x}$); Chebyshev polynomial (weight $1/\sqrt{1-x^2}$), not the years T | $L_7$ for the warranty | — |
-| $E_n$, $\xi$ | the rule's error, exact minus rule, and the unnamed point in its formula | 2.82e-7 dollars | — |
-| $a$ | the slope of the log-price in x: $\sigma\sqrt{T}\sqrt{2}$ | 1.2 | the error grows like $a^{2n}$ |
-| $S_0$, $S_T$, $K$ | the share price today, in two years, and an option's strike | $50, random, $50 | larger $S_0$: every price scales up |
-| $\mu$, $\sigma$, $T$, $t$ | drift, volatility and years; a warranty item's failure time in years | 8%, 60%, 2; mean 1 | larger $\sigma\sqrt{T}$: the price curve bends harder and the error grows |
-| $I_0(1)$ | a modified Bessel number, the sum of $1/(4^k (k!)^2)$ | Chebyshev test: π I0(1) = 3.977463260506 | — |
+| $`Z`$, $`z`$ | a standard normal draw, and one value of it | the share's luck over two years | larger z: a higher price |
+| $`f`$, $`g`$ | the payoff as a function of the draw; the smooth part left once the weight is taken out | $`f = S_T`$; $`g(x) = f(\sqrt{2}x)/\sqrt{\pi}`$ | — |
+| $`n`$, $`i`$, $`k`$ | the number of nodes; a node's index; a step of a recurrence | n = 7 | larger n: the error falls fast, for a smooth g |
+| $`x_i`$ | the nodes: roots of $`H_n`$ | ±2.6519613568, ±1.6735516288, ±0.8162878829, 0 | — |
+| $`w_i`$, $`p_i`$ | the weights for $`e^{-x^2}`$, and the same divided by $`\sqrt{\pi}`$: probabilities summing to 1 | $`p_4`$ = 0.4571428571 at the centre | — |
+| $`H_n`$, $`He_n`$ | physicists' Hermite polynomial, used here; probabilists' version, not used | $`H_7`$ | — |
+| $`L_n`$, $`T_n`$ | Laguerre polynomial (weight $`e^{-x}`$); Chebyshev polynomial (weight $`1/\sqrt{1-x^2}`$), not the years T | $`L_7`$ for the warranty | — |
+| $`E_n`$, $`\xi`$ | the rule's error, exact minus rule, and the unnamed point in its formula | 2.82e-7 dollars | — |
+| $`a`$ | the slope of the log-price in x: $`\sigma\sqrt{T}\sqrt{2}`$ | 1.2 | the error grows like $`a^{2n}`$ |
+| $`S_0`$, $`S_T`$, $`K`$ | the share price today, in two years, and an option's strike | $50, random, $50 | larger $`S_0`$: every price scales up |
+| $`\mu`$, $`\sigma`$, $`T`$, $`t`$ | drift, volatility and years; a warranty item's failure time in years | 8%, 60%, 2; mean 1 | larger $`\sigma\sqrt{T}`$: the price curve bends harder and the error grows |
+| $`I_0(1)`$ | a modified Bessel number, the sum of $`1/(4^k (k!)^2)`$ | Chebyshev test: π I0(1) = 3.977463260506 | — |
 
 ### When it holds
 
-- **The weight in the integral is the weight in the rule.** Feed a normal expectation to the bare $e^{-x^2}$ rule without the $\sqrt{2}$ and it averages over a narrower bell: $49.009934, not $58.68.
-- **The weight is used once.** Multiply the samples by $e^{-x_i^2}$ as well and the bell is counted twice: $34.635645.
+- **The weight in the integral is the weight in the rule.** Feed a normal expectation to the bare $`e^{-x^2}`$ rule without the $`\sqrt{2}`$ and it averages over a narrower bell: $49.009934, not $58.68.
+- **The weight is used once.** Multiply the samples by $`e^{-x_i^2}`$ as well and the bell is counted twice: $34.635645.
 - **The remaining function is smooth.** The error formula needs 2n derivatives. The call's kink at the strike has none past the first, and seven nodes miss by 3.8 cents, with no steady fall.
-- **The remaining function does not grow too fast.** The share price grows like $e^{1.2x}$. Stretch the horizon to 8 years and seven nodes miss by 4.24e-3 dollars.
+- **The remaining function does not grow too fast.** The share price grows like $`e^{1.2x}`$. Stretch the horizon to 8 years and seven nodes miss by 4.24e-3 dollars.
 - **The nodes and weights are accurate.** They come from a root finder here; a wrong recurrence breaks the Hermite probabilities' sum or moments, or the Laguerre moments, and the check fails.
 
 ---
@@ -89,52 +97,54 @@ for some point $\xi$ the theorem does not name.
 
 ### Step 0: put the awkward part in the weight
 
-The bell $e^{-x^2}$ is not a polynomial, and it runs off to infinity both ways. A rule with no weight, such as Simpson's, has to resolve its shape step by step. But the bell is fixed. Every normal expectation carries the same one. So split the integrand into the fixed weight times a smooth remainder g. Choose n nodes and n weights, 2n free numbers in all, to integrate weight times polynomial exactly. Then the rule only has to resolve g.
+The bell $`e^{-x^2}`$ is not a polynomial, and it runs off to infinity both ways. A rule with no weight, such as Simpson's, has to resolve its shape step by step. But the bell is fixed. Every normal expectation carries the same one. So split the integrand into the fixed weight times a smooth remainder g. Choose n nodes and n weights, 2n free numbers in all, to integrate weight times polynomial exactly. Then the rule only has to resolve g.
 
 ### Step 1: the nodes are the roots of the polynomial the weight makes
 
-Two functions are **orthogonal** under the weight when the integral of weight × one × the other is zero. Run Gram–Schmidt (make each new function orthogonal to all earlier ones by subtracting its projections) on 1, x, x², … with that integral and out come the Hermite polynomials: $H_n$ is orthogonal to every polynomial of lower degree. The three-term recurrence above is a shortcut for the same thing.
+Two functions are **orthogonal** under the weight when the integral of weight × one × the other is zero. Run Gram–Schmidt (make each new function orthogonal to all earlier ones by subtracting its projections) on 1, x, x², … with that integral and out come the Hermite polynomials: $`H_n`$ is orthogonal to every polynomial of lower degree. The three-term recurrence above is a shortcut for the same thing.
 
 The theorem from [Gaussian quadrature](03-gaussian-quadrature.md) carries over with the weight inside the integral. Its proof is short enough to give in full.
 
 <details>
 <summary>Detailed proof: n roots of H_n integrate every polynomial of degree up to 2n − 1 exactly</summary>
 
-Here p, q and r name polynomials, not the probabilities $p_i$. Let p be any polynomial of degree at most 2n − 1. Divide it by $H_n$: $p = q\,H_n + r$, where q and r both have degree at most n − 1.
+Here p, q and r name polynomials, not the probabilities $`p_i`$. Let p be any polynomial of degree at most 2n − 1. Divide it by $`H_n`$: $`p = q\,H_n + r`$, where q and r both have degree at most n − 1.
 
-The exact integral: $\int e^{-x^2} q\,H_n\,dx = 0$, because $H_n$ is orthogonal to every polynomial of lower degree, q included. So the exact integral of p equals the exact integral of r.
+The exact integral: $`\int e^{-x^2} q\,H_n\,dx = 0`$, because $`H_n`$ is orthogonal to every polynomial of lower degree, q included. So the exact integral of p equals the exact integral of r.
 
-The rule: at every node $H_n(x_i) = 0$, so the rule sees $p(x_i) = r(x_i)$. The rule's sum for p equals its sum for r.
+The rule: at every node $`H_n(x_i) = 0`$, so the rule sees $`p(x_i) = r(x_i)`$. The rule's sum for p equals its sum for r.
 
 Choose the weights so the rule is exact on all polynomials of degree at most n − 1. That is n linear conditions on n weights, and they have a solution because the n nodes are distinct. Then the rule is exact on r, so it is exact on p.
 
-The weights are positive: apply the rule to the square of the degree n − 1 polynomial that vanishes at every node but $x_j$. That square has degree 2n − 2, so the rule is exact, and its sum is $w_j$ times a positive number while the integral is positive. Positive weights summing to $\sqrt{\pi}$ make the $p_i$ a real probability distribution.
+The weights are positive: apply the rule to the square of the degree n − 1 polynomial that vanishes at every node but $`x_j`$. That square has degree 2n − 2, so the rule is exact, and its sum is $`w_j`$ times a positive number while the integral is positive. Positive weights summing to $`\sqrt{\pi}`$ make the $`p_i`$ a real probability distribution.
 
-The closed form for $w_i$ follows from the Christoffel–Darboux identity (a closed form for sums of products of orthogonal polynomials) applied to the Hermite recurrence; that algebra is not reproduced here. The code tests the result three ways: the probabilities sum to 1, the degree-12 moment comes out exact, and degree 14 falls short by exactly 7!.
+The closed form for $`w_i`$ follows from the Christoffel–Darboux identity (a closed form for sums of products of orthogonal polynomials) applied to the Hermite recurrence; that algebra is not reproduced here. The code tests the result three ways: the probabilities sum to 1, the degree-12 moment comes out exact, and degree 14 falls short by exactly 7!.
 
 </details>
 
-The rule cannot reach degree 2n. The polynomial $H_n^2$ has degree 2n, its integral is positive, and the rule sees zero at every node.
+The rule cannot reach degree 2n. The polynomial $`H_n^2`$ has degree 2n, its integral is positive, and the rule sees zero at every node.
 
 ### Step 2: from the bell e^(−x²) to the normal
 
-The standard normal density is $e^{-z^2/2}/\sqrt{2\pi}$. Put $z = \sqrt{2}\,x$. Then $dz = \sqrt{2}\,dx$, and the density times $dz$ becomes $e^{-x^2}\,dx/\sqrt{\pi}$.
+The standard normal density is $`e^{-z^2/2}/\sqrt{2\pi}`$. Put $`z = \sqrt{2}\,x`$. Then $`dz = \sqrt{2}\,dx`$, and the density times $`dz`$ becomes $`e^{-x^2}\,dx/\sqrt{\pi}`$.
 
-So the normal expectation is the Hermite integral divided by $\sqrt{\pi}$, with the payoff evaluated at $\sqrt{2}\,x_i$. Dividing every weight by $\sqrt{\pi}$ gives seven probabilities that sum to 1.000000000000000. The rule is a discrete random variable with seven values. It matches the normal's moments (averages of powers) up to the 13th. The check prints $E[Z^{12}]$ from the rule: 10395.000000, the true value.
+So the normal expectation is the Hermite integral divided by $`\sqrt{\pi}`$, with the payoff evaluated at $`\sqrt{2}\,x_i`$. Dividing every weight by $`\sqrt{\pi}`$ gives seven probabilities that sum to 1.000000000000000. The rule is a discrete random variable with seven values. It matches the normal's moments (averages of powers) up to the 13th. The check prints $`E[Z^{12}]`$ from the rule: 10395.000000, the true value.
 
 ### Step 3: where the error comes from
 
-Expand g in its Taylor series. Every term up to $x^{13}$ is integrated exactly. The first term the rule gets wrong is the $x^{14}$ term.
+Expand g in its Taylor series. Every term up to $`x^{13}`$ is integrated exactly. The first term the rule gets wrong is the $`x^{14}`$ term.
 
-The rule's shortfall on $x^{2n}$ is easy to find. Write $x^{2n} = (H_n/2^n)^2 + $ lower degree, since $H_n$ starts $2^n x^n$. The rule is exact on the lower-degree part and sees zero for the square. The square's true integral is $\sqrt{\pi}\,n!/2^n$. In normal form, with n = 7, the rule gives $E[Z^{14}]$ as 130095.000000 against the true 135135: short by 5040.000000, which is 7!.
+The rule's shortfall on $`x^{2n}`$ is easy to find. Write $x^{2n} = (H_n/2^n)^2 + $ lower degree, since $`H_n`$ starts $`2^n x^n`$. The rule is exact on the lower-degree part and sees zero for the square. The square's true integral is $`\sqrt{\pi}\,n!/2^n`$. In normal form, with n = 7, the rule gives $`E[Z^{14}]`$ as 130095.000000 against the true 135135: short by 5040.000000, which is 7!.
 
-For the share, $g$ is a multiple of $e^{a x}$ with slope $a = \sigma\sqrt{T}\sqrt{2} = 1.2$. Its $x^{2n}$ term is $a^{2n}/(2n)!$ times the multiple. Multiply by the shortfall and the first missed term estimates the rule minus the exact value (the rule falls short, so it is negative):
+For the share, $`g`$ is a multiple of $`e^{a x}`$ with slope $`a = \sigma\sqrt{T}\sqrt{2} = 1.2`$. Its $`x^{2n}`$ term is $`a^{2n}/(2n)!`$ times the multiple. Multiply by the shortfall and the first missed term estimates the rule minus the exact value (the rule falls short, so it is negative):
 
-$$\text{rule} - \text{exact} \approx -\,S_0\,e^{(\mu-\sigma^2/2)T}\;\frac{a^{2n}\,n!}{(2n)!\,2^n}$$
+```math
+\text{rule} - \text{exact} \approx -\,S_0\,e^{(\mu-\sigma^2/2)T}\;\frac{a^{2n}\,n!}{(2n)!\,2^n}
+```
 
-At n = 7 it gives −2.37e-7 against the true −2.82e-7: a ratio of 0.843. The ratio stays near 0.84 from n = 2 to n = 10, because the later missed terms add a near-fixed share. This is the error formula $E_n$ of the previous section with $g^{(2n)}$ taken at the centre, and the sign flipped because $E_n$ is exact minus rule. The formula itself, with the constant $\sqrt{\pi}\,n!/2^n$ found above, is equations 3.5.19 and 3.5.28 of the DLMF section in the Sources.
+At n = 7 it gives −2.37e-7 against the true −2.82e-7: a ratio of 0.843. The ratio stays near 0.84 from n = 2 to n = 10, because the later missed terms add a near-fixed share. This is the error formula $`E_n`$ of the previous section with $`g^{(2n)}`$ taken at the centre, and the sign flipped because $`E_n`$ is exact minus rule. The formula itself, with the constant $`\sqrt{\pi}\,n!/2^n`$ found above, is equations 3.5.19 and 3.5.28 of the DLMF section in the Sources.
 
-The factor $a^{2n}/(2n)!$ shrinks faster than any power of n. So the error does not fall like $n^{-p}$ for some order p. It falls faster with every node, as long as g equals its Taylor series everywhere, as $e^{ax}$ does, and does not grow too fast. That is the falling line in the picture.
+The factor $`a^{2n}/(2n)!`$ shrinks faster than any power of n. So the error does not fall like $`n^{-p}`$ for some order p. It falls faster with every node, as long as g equals its Taylor series everywhere, as $`e^{ax}`$ does, and does not grow too fast. That is the falling line in the picture.
 
 ### Step 4: other weights, same recipe
 
@@ -142,13 +152,13 @@ Change the weight and the interval, and the same steps give a new family of rule
 
 | Weight | Interval | Polynomials | Nodes | Typical integral |
 | --- | --- | --- | --- | --- |
-| $e^{-x^2}$ | the whole line | Hermite $H_n$ | roots of $H_n$ | a normal expectation |
-| $e^{-x}$ | zero to infinity | Laguerre $L_n$ | roots of $L_n$ | an exponential lifetime, a discounted stream |
-| $1/\sqrt{1-x^2}$ | −1 to 1 | Chebyshev $T_n$ | $\cos\!\big((2i-1)\pi/(2n)\big)$ | an integrand with square-root end behaviour |
+| $`e^{-x^2}`$ | the whole line | Hermite $`H_n`$ | roots of $`H_n`$ | a normal expectation |
+| $`e^{-x}`$ | zero to infinity | Laguerre $`L_n`$ | roots of $`L_n`$ | an exponential lifetime, a discounted stream |
+| $`1/\sqrt{1-x^2}`$ | −1 to 1 | Chebyshev $`T_n`$ | $`\cos\!\big((2i-1)\pi/(2n)\big)`$ | an integrand with square-root end behaviour |
 
-For **Gauss–Laguerre**, the recurrence is $(k+1)L_{k+1} = (2k+1-x)L_k - k\,L_{k-1}$ with $L_0 = 1$, $L_1 = 1 - x$. The weights are $w_i = x_i / (n^2\,L_{n-1}(x_i)^2)$.
+For **Gauss–Laguerre**, the recurrence is $`(k+1)L_{k+1} = (2k+1-x)L_k - k\,L_{k-1}`$ with $`L_0 = 1`$, $`L_1 = 1 - x`$. The weights are $`w_i = x_i / (n^2\,L_{n-1}(x_i)^2)`$.
 
-The decaying-tail example is a warranty. It refunds the fraction $1/(1+t)$ of the price when the item fails at year t. Lifetimes are exponential with a mean of one year ([Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)), so the density is $e^{-t}$ and the weight is already there. Both are illustrative. Simpson's rule on [0, 40] with 40,000 steps gives an expected refund of 0.596347362323 of the price.
+The decaying-tail example is a warranty. It refunds the fraction $`1/(1+t)`$ of the price when the item fails at year t. Lifetimes are exponential with a mean of one year ([Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)), so the density is $`e^{-t}`$ and the weight is already there. Both are illustrative. Simpson's rule on [0, 40] with 40,000 steps gives an expected refund of 0.596347362323 of the price.
 
 | Laguerre nodes | Rule | Error against Simpson |
 | --- | --- | --- |
@@ -156,13 +166,13 @@ The decaying-tail example is a warranty. It refunds the fraction $1/(1+t)$ of th
 | 7 | 0.596080108767 | −2.67e-4 |
 | 14 | 0.596343529264 | −3.83e-6 |
 
-This converges more slowly than the share. The refund $1/(1+t)$ has a pole (a point where it blows up) at t = −1, just outside the interval. A nearby pole limits how well polynomials can follow g, and so limits every Gauss rule.
+This converges more slowly than the share. The refund $`1/(1+t)`$ has a pole (a point where it blows up) at t = −1, just outside the interval. A nearby pole limits how well polynomials can follow g, and so limits every Gauss rule.
 
-For **Gauss–Chebyshev**, the nodes and weights need no root finder: the weights are all $\pi/n$. Seven nodes on $\int_{-1}^{1} e^x/\sqrt{1-x^2}\,dx$ give 3.977463260506. The exact value is $\pi\,I_0(1)$, where $I_0(1) = \sum_k 1/(4^k (k!)^2)$ is a modified Bessel number, and the rule's error is −4.00e-15.
+For **Gauss–Chebyshev**, the nodes and weights need no root finder: the weights are all $`\pi/n`$. Seven nodes on $`\int_{-1}^{1} e^x/\sqrt{1-x^2}\,dx`$ give 3.977463260506. The exact value is $`\pi\,I_0(1)`$, where $`I_0(1) = \sum_k 1/(4^k (k!)^2)`$ is a modified Bessel number, and the rule's error is −4.00e-15.
 
 ### Step 5: computing the nodes, and the cost
 
-The code finds the roots of $H_n$ by scanning for sign changes in steps of 0.001, then bisecting each bracket 60 times. That is simple and fine for a few dozen nodes. The standard method reads the nodes off as eigenvalues of a small tridiagonal matrix built from the recurrence (Golub and Welsch, below).
+The code finds the roots of $`H_n`$ by scanning for sign changes in steps of 0.001, then bisecting each bracket 60 times. That is simple and fine for a few dozen nodes. The standard method reads the nodes off as eigenvalues of a small tridiagonal matrix built from the recurrence (Golub and Welsch, below).
 
 The nodes are computed once and stored. After that, each expectation costs n payoff evaluations: 7 here. Simpson on [−10, 10] stays within the 7-node error only from 38 steps on, so at equal accuracy the count is 39 payoffs against 7. Its 2,000-step run is there as a second road to the exact value, not as a cost comparison.
 
@@ -170,13 +180,13 @@ The nodes are computed once and stored. After that, each expectation costs n pay
 
 ## Worked numbers, by hand
 
-Share at $50, drift 8%, volatility 60%, two years. The log-price centre is $(\mu - \sigma^2/2)T$ and its spread $\sigma\sqrt{T}$.
+Share at $50, drift 8%, volatility 60%, two years. The log-price centre is $`(\mu - \sigma^2/2)T`$ and its spread $`\sigma\sqrt{T}`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| centre of the log-price | $(0.08 - 0.18) \times 2$ | −0.200000 |
-| spread of the log-price | $0.60 \times \sqrt{2}$ | 0.8485281374 |
-| node 1: price × probability | $50\,e^{-0.2 + 0.8485 \times (-3.750440)} = 1.698371$, × 0.0005482689 | 0.000931 |
+| centre of the log-price | $`(0.08 - 0.18) \times 2`$ | −0.200000 |
+| spread of the log-price | $`0.60 \times \sqrt{2}`$ | 0.8485281374 |
+| node 1: price × probability | $`50\,e^{-0.2 + 0.8485 \times (-3.750440)} = 1.698371`$, × 0.0005482689 | 0.000931 |
 | node 2 | 5.494574 × 0.0307571240 | 0.168997 |
 | node 3 | 15.370922 × 0.2401231786 | 3.690915 |
 | node 4, the centre | 40.936538 × 0.4571428571 | 18.713846 |
@@ -184,7 +194,7 @@ Share at $50, drift 8%, volatility 60%, two years. The log-price centre is $(\mu
 | node 6 | 304.991821 × 0.0307571240 | 9.380671 |
 | node 7 | 986.710451 × 0.0005482689 | 0.540983 |
 | **sum: the expected price** | add the seven products | **$58.6755432679** |
-| closed form | $50\,e^{0.08 \times 2}$ | $58.6755435496 |
+| closed form | $`50\,e^{0.08 \times 2}`$ | $58.6755435496 |
 | true error | rule − closed form | −2.82e-7 |
 
 Seven prices and seven fixed probabilities give the promised share's average value to within three hundred-thousandths of a cent. Nodes 5 and 6 carry most of the value: the price curve is steep on the right, so the right tail matters more than the bell's height suggests.
@@ -193,9 +203,9 @@ Seven prices and seven fixed probabilities give the promised share's average val
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Sample at $x_i$, not $\sqrt{2}\,x_i$ | $49.009934 | The bell $e^{-x^2}$ is narrower than the normal; the share's spread shrank by $\sqrt{2}$ |
-| Use $w_i$, not $w_i/\sqrt{\pi}$ | $103.999693 | The weights sum to $\sqrt{\pi}$, not 1 |
-| Multiply by $e^{-x_i^2}$ as well | $34.635645 | The bell is already in the weights; it was counted twice |
+| Sample at $`x_i`$, not $`\sqrt{2}\,x_i`$ | $49.009934 | The bell $`e^{-x^2}`$ is narrower than the normal; the share's spread shrank by $`\sqrt{2}`$ |
+| Use $`w_i`$, not $`w_i/\sqrt{\pi}`$ | $103.999693 | The weights sum to $`\sqrt{\pi}`$, not 1 |
+| Multiply by $`e^{-x_i^2}`$ as well | $34.635645 | The bell is already in the weights; it was counted twice |
 | A kinked payoff: the call at strike $50 | $22.529426, against $22.4918038951 | No smooth g; 2n derivatives do not exist, and the error does not settle |
 
 The code prints all four. The call's exact value is the [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) formula with the drift in place of the bank rate and no discounting. Simpson's rule started at the kink gives $22.4918038952, a second road to it.
@@ -582,13 +592,13 @@ The two outputs are identical line for line: each sum is added left to right in 
 
 Lean proves the Detailed proof's theorem, the failure at degree 2n and Step 3's shortfall, for every number of nodes n.
 
-- Take n distinct nodes, each a root of $H_n$, with n at least 1. Some positive weights then make the rule exact for every polynomial of degree up to 2n − 1.
-- Whatever the weights, a rule on the roots of $H_n$ sees zero for $H_n^2$, yet its true integral against the bell is positive.
-- A rule on those roots that is exact to degree 2n − 1 falls short on $x^{2n}$ by exactly $\sqrt{\pi}\,n!/2^n$.
+- Take n distinct nodes, each a root of $`H_n`$, with n at least 1. Some positive weights then make the rule exact for every polynomial of degree up to 2n − 1.
+- Whatever the weights, a rule on the roots of $`H_n`$ sees zero for $`H_n^2`$, yet its true integral against the bell is positive.
+- A rule on those roots that is exact to degree 2n − 1 falls short on $`x^{2n}`$ by exactly $`\sqrt{\pi}\,n!/2^n`$.
 - The arithmetic behind the moment checks: 1 × 3 × … × 11 = 10395, 1 × 3 × … × 13 = 135135, 7! = 5040 and 135135 − 5040 = 130095.
-- $H_6(0) = -120$, so the weight formula's centre probability at n = 7, $2^6\,7!/(7^2 H_6(0)^2)$, is 16/35, which the card rounds to 0.4571428571.
+- $`H_6(0) = -120`$, so the weight formula's centre probability at n = 7, $`2^6\,7!/(7^2 H_6(0)^2)`$, is 16/35, which the card rounds to 0.4571428571.
 
-The weight formula, the n real roots of $H_n$, the Laguerre and Chebyshev rules and every dollar figure are left to Python and Rust.
+The weight formula, the n real roots of $`H_n`$, the Laguerre and Chebyshev rules and every dollar figure are left to Python and Rust.
 
 ```lean
 -- Weighted Gauss rules: n nodes at the roots of the physicists' Hermite polynomial H_n, with positive weights, integrate e^(-x^2) times every polynomial of degree up to 2n - 1 exactly, fail on H_n^2, and fall short on x^(2n) by exactly sqrt(pi) n!/2^n.
@@ -971,7 +981,7 @@ example : ((2 : ℚ) ^ 6 * 5040) / (7 ^ 2 * (-120) ^ 2) = 16 / 35 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - Guess first: halve the volatility to 30 percent. Does the 7-node error fall a little or a lot? Set `SIG` to `0.30`: the error drops from −2.82e-7 to −1.98e-11, because the slope a halves and the error goes as $a^{14}$.
+> - Guess first: halve the volatility to 30 percent. Does the 7-node error fall a little or a lot? Set `SIG` to `0.30`: the error drops from −2.82e-7 to −1.98e-11, because the slope a halves and the error goes as $`a^{14}`$.
 > - Guess first: stretch the horizon from 2 to 8 years. Set `T` to `8.0`: the expected price is $94.8240439652, seven nodes give $94.8198074644, and they now miss by −4.24e-3. The price curve bends harder, so it needs more nodes.
 > - Guess first: how far off are three nodes? Run `gh(share, 3)`: $58.5249189851, off by −1.51e-1. One node gives $40.9365376539, the median price, not the mean.
 > - Guess first: does doubling the Laguerre nodes from 7 to 14 square the error? Run `laguerre(14)`: the error goes from −2.67e-4 to −3.83e-6. It gains less than two digits, held back by the pole at t = −1.
@@ -981,13 +991,13 @@ example : ((2 : ℚ) ^ 6 * 5040) / (7 ^ 2 * (-120) ^ 2) = 16 / 35 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Using the e^(−x²) rule on a normal expectation as if the weights were already probabilities at the right places.** Tables and libraries list Hermite nodes for the weight $e^{-x^2}$. A normal expectation needs the payoff at $\sqrt{2}\,x_i$ and the weights divided by $\sqrt{\pi}$. Drop the $\sqrt{2}$ and the share's expected price comes out at $49.009934; drop the $\sqrt{\pi}$ and it is $103.999693. Both look like prices.
+> **Using the e^(−x²) rule on a normal expectation as if the weights were already probabilities at the right places.** Tables and libraries list Hermite nodes for the weight $`e^{-x^2}`$. A normal expectation needs the payoff at $`\sqrt{2}\,x_i`$ and the weights divided by $`\sqrt{\pi}`$. Drop the $`\sqrt{2}`$ and the share's expected price comes out at $49.009934; drop the $`\sqrt{\pi}`$ and it is $103.999693. Both look like prices.
 >
 > Smaller traps:
 > - **Counting the weight twice.** The integrand already holds the bell; the rule must sample only the remainder. Sampling the whole integrand gives $34.635645.
 > - **Trusting Gauss–Hermite on a kink.** A call payoff has a corner at the strike. Seven nodes give $22.529426 against $22.4918038951, and twelve are still 4 cents off. Split the integral at the kink and use a rule on each smooth piece.
 > - **Reading one node as the average.** The one-node rule samples the centre and returns $40.9365376539: the median price, not the mean $58.68.
-> - **Mixing the two Hermite conventions.** The probabilists' $He_n$ has roots $\sqrt{2}$ times larger and is meant for the weight $e^{-z^2/2}$. Use one convention for both nodes and weights.
+> - **Mixing the two Hermite conventions.** The probabilists' $`He_n`$ has roots $`\sqrt{2}`$ times larger and is meant for the weight $`e^{-z^2/2}`$. Use one convention for both nodes and weights.
 
 ---
 
@@ -996,18 +1006,18 @@ example : ((2 : ℚ) ^ 6 * 5040) / (7 ^ 2 * (-120) ^ 2) = 16 / 35 := by norm_num
 - **Credit-risk models.** [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md) averages default chances over one normal economy factor. A handful of Hermite nodes does that average for every loan pool, and prices every tranche (a slice of the pool's losses).
 - **Statistics with random effects.** A model where each hospital or school has its own normal offset needs a normal integral per group in its likelihood. Adaptive Gauss–Hermite, which re-centres the nodes on each group, is a standard way to compute it.
 - **Uncertainty in engineering models.** When an input such as a load or a material constant is taken as normal, the output's mean and spread are computed by running the model at Hermite nodes instead of thousands of random draws.
-- **Lifetimes and discounting.** Expected values over an exponential lifetime, and present values of a stream discounted to infinity, carry the weight $e^{-t}$: Gauss–Laguerre's home.
+- **Lifetimes and discounting.** Expected values over an exponential lifetime, and present values of a stream discounted to infinity, carry the weight $`e^{-t}`$: Gauss–Laguerre's home.
 
 > **Say it back**
-> Many integrals carry a fixed weight: a bell curve, a decaying exponential, a square-root end. A weighted Gauss rule puts that weight into its nodes and weights once, so its n samples only have to follow the smooth remainder. The nodes are the roots of the polynomials the weight makes orthogonal, and the rule is exact for remainders of degree up to 2n − 1. For a normal expectation, sample at $\sqrt{2}$ times the Hermite nodes and divide the weights by $\sqrt{\pi}$: seven nodes give the share's expected price to 2.82e-7 dollars. A kink or a nearby pole in the remainder slows it down, and the code shows both.
+> Many integrals carry a fixed weight: a bell curve, a decaying exponential, a square-root end. A weighted Gauss rule puts that weight into its nodes and weights once, so its n samples only have to follow the smooth remainder. The nodes are the roots of the polynomials the weight makes orthogonal, and the rule is exact for remainders of degree up to 2n − 1. For a normal expectation, sample at $`\sqrt{2}`$ times the Hermite nodes and divide the weights by $`\sqrt{\pi}`$: seven nodes give the share's expected price to 2.82e-7 dollars. A kink or a nearby pole in the remainder slows it down, and the code shows both.
 
 ---
 
 ## What this builds on
 
 - [Gaussian quadrature](03-gaussian-quadrature.md): n nodes at the roots of an orthogonal polynomial reach degree 2n − 1. This card puts a weight inside the same theorem.
-- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its density and standardising. The change of variable $z = \sqrt{2}\,x$ turns its density into $e^{-x^2}/\sqrt{\pi}$.
-- [The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md): the area under $e^{-x^2}$ is $\sqrt{\pi}$. That is why the Hermite weights sum to $\sqrt{\pi}$ and the probabilities to 1.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its density and standardising. The change of variable $`z = \sqrt{2}\,x`$ turns its density into $`e^{-x^2}/\sqrt{\pi}`$.
+- [The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md): the area under $`e^{-x^2}`$ is $`\sqrt{\pi}`$. That is why the Hermite weights sum to $`\sqrt{\pi}`$ and the probabilities to 1.
 
 ## Where this goes next
 

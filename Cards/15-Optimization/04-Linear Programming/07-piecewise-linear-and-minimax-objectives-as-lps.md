@@ -14,7 +14,7 @@ The trouble is the bill. It is a straight line up to 10 hours, then a steeper on
 
 The answer: buy exactly 10 overtime hours, make 28 tables and 18 chairs, and earn **£872**. Prices on labour, finish and the cheap tier prove no plan earns more.
 
-The same move turns an absolute value $|u|$ into a linear program, because $|u|$ is the higher of $u$ and $-u$. It also turns a worst case into one, because "the worst of five weeks" is the highest of five lines.
+The same move turns an absolute value $`|u|`$ into a linear program, because $`|u|`$ is the higher of $`u`$ and $`-u`$. It also turns a worst case into one, because "the worst of five weeks" is the highest of five lines.
 
 **A cost made of straight pieces whose slopes rise is the highest of its pieces, so a new variable required to sit above every piece, and pushed down by the objective, equals that cost at the optimum; absolute values, worst cases and tiered prices all become linear programs this way.**
 
@@ -39,53 +39,53 @@ Orange is the tier-1 line, £2 an hour. Green is the tier-2 line, £5 an hour mi
 
 ## The formula
 
-A cost that is the highest of $K$ straight-line pieces $\ell_1(x), \dots, \ell_K(x)$ becomes a linear program with one extra variable $z$:
+A cost that is the highest of $`K`$ straight-line pieces $`\ell_1(x), \dots, \ell_K(x)`$ becomes a linear program with one extra variable $`z`$:
 
-$$
+```math
 \min_{x \in P}\; \max_{k}\, \ell_k(x) \;=\; \min_{x \in P,\ z}\; z \quad\text{subject to}\quad z \ge \ell_k(x)\ \text{ for } k = 1, \dots, K
-$$
+```
 
 **Read it aloud:** to make the highest of several lines as small as possible, add a number that must sit above every line, and make that number as small as possible.
 
-Here $x$ is the plan and $P$ is the set of allowed plans, cut out by straight-line limits ([Linear programs](01-linear-programs-and-polyhedra.md)). Three cases cover most uses:
+Here $`x`$ is the plan and $`P`$ is the set of allowed plans, cut out by straight-line limits ([Linear programs](01-linear-programs-and-polyhedra.md)). Three cases cover most uses:
 
-- **A kinked cost.** The overtime bill is $f(h) = \max(2h,\ 5h - 30)$ for $h$ overtime hours, so $z \ge 2h$ and $z \ge 5h - 30$.
-- **An absolute value.** $|u| = \max(u, -u)$, so $e \ge u$ and $e \ge -u$. A sum of absolute values gets one such $e$ per term.
-- **A worst case.** The largest of many errors, or the worst of many scenarios, is one $z$ above all of them.
+- **A kinked cost.** The overtime bill is $`f(h) = \max(2h,\ 5h - 30)`$ for $`h`$ overtime hours, so $`z \ge 2h`$ and $`z \ge 5h - 30`$.
+- **An absolute value.** $`|u| = \max(u, -u)`$, so $`e \ge u`$ and $`e \ge -u`$. A sum of absolute values gets one such $`e`$ per term.
+- **A worst case.** The largest of many errors, or the worst of many scenarios, is one $`z`$ above all of them.
 
 For the workshop, with timber, labour and finish as rows (a row is one limit of the program), the whole week is one linear program:
 
-$$
+```math
 \max_{t,\,c,\,h,\,z}\; 19t + 20c - z \quad\text{subject to}\quad 4t + 2c \le 160,\ \ 3t + c \le 92 + h,\ \ t + 2c \le 64,\ \ z \ge 2h,\ \ z \ge 5h - 30,\ \ t, c, h \ge 0
-$$
+```
 
 **Read it aloud:** choose tables, chairs and overtime to make profit minus the bill as large as possible, where the bill sits on or above both tier lines and the labour used fits inside regular hours plus overtime.
 
-The bill is subtracted from a profit being made as large as possible, so the program pushes $z$ down, onto the higher line.
+The bill is subtracted from a profit being made as large as possible, so the program pushes $`z`$ down, onto the higher line.
 
-A second way writes the tiers as two variables: $h_1$ hours at £2, at most 10, and $h_2$ hours at £5. The bill is $2h_1 + 5h_2$ and the labour row becomes $3t + c \le 92 + h_1 + h_2$. Both ways give £872.
+A second way writes the tiers as two variables: $`h_1`$ hours at £2, at most 10, and $`h_2`$ hours at £5. The bill is $`2h_1 + 5h_2`$ and the labour row becomes $`3t + c \le 92 + h_1 + h_2`$. Both ways give £872.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $c$ | tables and chairs made this week | 28 and 18 | — (chosen) |
-| $h$ | overtime hours bought | 10 | — (chosen) |
-| $f(h)$, $F(x)$ | the overtime bill, the higher tier line; any cost that is the highest of its pieces | £20 | — |
-| $h_1$, $h_2$ | overtime hours in tier 1 (at most 10) and tier 2 | 10 and 0 | — (chosen) |
-| $z$ | the new variable standing for the bill, kept above every line | 20 | — (chosen) |
-| $\ell_k$, $K$ | the straight-line pieces of a cost, and how many there are | $2h$ and $5h - 30$; $K = 2$ | more pieces, more rows; same idea |
-| $x$, $P$ | a plan, and the set of allowed plans | $(t, c, h)$ inside the three stock limits | — |
-| $y$ | prices proving the answer: £ per unit of each limit | timber 0, labour 3.60, finish 8.20, tier-1 cap 1.60 | — |
-| $q_i$, $H_i$ | tables made and labour hours logged in past week $i$ | week 3: 20 tables, 80 hours | — |
-| $a$ | hours per table, fitted from the past weeks | 3 (absolute errors); 3.40 (worst error) | — (chosen) |
-| $e_i$ | a number kept above the error in week $i$, both signs | 0 in weeks 1, 2 and 4 | — (chosen) |
-| $u$, $r$ | any number inside an absolute value; the list of the five weeks' errors | an error $H_i - a q_i$; at $a = 3$, `0, 0, 20, 0, 1` | $\lvert u \rvert$ rises either way from 0 |
+| $`t`$, $`c`$ | tables and chairs made this week | 28 and 18 | — (chosen) |
+| $`h`$ | overtime hours bought | 10 | — (chosen) |
+| $`f(h)`$, $`F(x)`$ | the overtime bill, the higher tier line; any cost that is the highest of its pieces | £20 | — |
+| $`h_1`$, $`h_2`$ | overtime hours in tier 1 (at most 10) and tier 2 | 10 and 0 | — (chosen) |
+| $`z`$ | the new variable standing for the bill, kept above every line | 20 | — (chosen) |
+| $`\ell_k`$, $`K`$ | the straight-line pieces of a cost, and how many there are | $`2h`$ and $`5h - 30`$; $`K = 2`$ | more pieces, more rows; same idea |
+| $`x`$, $`P`$ | a plan, and the set of allowed plans | $`(t, c, h)`$ inside the three stock limits | — |
+| $`y`$ | prices proving the answer: £ per unit of each limit | timber 0, labour 3.60, finish 8.20, tier-1 cap 1.60 | — |
+| $`q_i`$, $`H_i`$ | tables made and labour hours logged in past week $`i`$ | week 3: 20 tables, 80 hours | — |
+| $`a`$ | hours per table, fitted from the past weeks | 3 (absolute errors); 3.40 (worst error) | — (chosen) |
+| $`e_i`$ | a number kept above the error in week $`i`$, both signs | 0 in weeks 1, 2 and 4 | — (chosen) |
+| $`u`$, $`r`$ | any number inside an absolute value; the list of the five weeks' errors | an error $`H_i - a q_i`$; at $`a = 3`$, `0, 0, 20, 0, 1` | $`\lvert u \rvert`$ rises either way from 0 |
 
 ### When it holds
 
 - **The cost is the highest of its pieces.** That is true exactly when the slopes rise from piece to piece: a convex cost ([Building convex functions](../01-Convexity/09-operations-that-preserve-convexity.md)). With a bulk discount instead, £2 then £1, the tier program buys the cheap tier first and reports £908 for a plan whose real bill leaves £898.
-- **The kinked term is pushed down.** It must be minimised, or subtracted in a maximisation. If the objective rewarded $|u|$, the variable $e$ would climb forever and the program would have no answer.
-- **Every piece has its row.** Leave out the tier-1 line $z \ge 2h$ but keep $z \ge 0$, and the first 6 hours look free: the program buys 6 hours and claims £877.60, but the real bill leaves £865.60. Drop $z \ge 0$ as well and nothing stops the bill going negative: with no overtime the $5h - 30$ line lets it sit at −£30.
-- **Every tier has its width.** In the two-variable form, the cap $h_1 \le 10$ is what makes tier 1 run out. Drop it and all 20 hours are charged £2: the program claims £888, the bill leaves £858.
+- **The kinked term is pushed down.** It must be minimised, or subtracted in a maximisation. If the objective rewarded $`|u|`$, the variable $`e`$ would climb forever and the program would have no answer.
+- **Every piece has its row.** Leave out the tier-1 line $`z \ge 2h`$ but keep $`z \ge 0`$, and the first 6 hours look free: the program buys 6 hours and claims £877.60, but the real bill leaves £865.60. Drop $`z \ge 0`$ as well and nothing stops the bill going negative: with no overtime the $`5h - 30`$ line lets it sit at −£30.
+- **Every tier has its width.** In the two-variable form, the cap $`h_1 \le 10`$ is what makes tier 1 run out. Drop it and all 20 hours are charged £2: the program claims £888, the bill leaves £858.
 
 ---
 
@@ -93,30 +93,30 @@ A second way writes the tiers as two variables: $h_1$ hours at £2, at most 10, 
 
 ### Step 0: a number held above every line settles on the highest
 
-Take any plan. The rows $z \ge 2h$ and $z \ge 5h - 30$ say $z$ is at least the higher of the two, which is the bill $f(h)$. Nothing stops $z$ from being larger, but the objective charges for every pound of $z$, so the best plan never pays more than it must. At the optimum $z = f(h)$. The bend is never written down: it appears where the two rows take turns being tight (met with equality).
+Take any plan. The rows $`z \ge 2h`$ and $`z \ge 5h - 30`$ say $`z`$ is at least the higher of the two, which is the bill $`f(h)`$. Nothing stops $`z`$ from being larger, but the objective charges for every pound of $`z`$, so the best plan never pays more than it must. At the optimum $`z = f(h)`$. The bend is never written down: it appears where the two rows take turns being tight (met with equality).
 
 ### Step 1: the extra variable changes nothing about the best plan
 
-Write $F(x) = \max_k \ell_k(x)$. The claim is that minimising $F$ over $P$ and minimising $z$ over the new program give the same value and the same plans.
+Write $`F(x) = \max_k \ell_k(x)`$. The claim is that minimising $`F`$ over $`P`$ and minimising $`z`$ over the new program give the same value and the same plans.
 
 <details>
 <summary>Detailed proof: the two programs have the same best value and plans</summary>
 
-Take any $(x, z)$ allowed by the new program. Then $z \ge \ell_k(x)$ for every $k$, so $z \ge F(x) \ge \min_P F$. So the new program's value is at least the old one's.
+Take any $`(x, z)`$ allowed by the new program. Then $`z \ge \ell_k(x)`$ for every $`k`$, so $`z \ge F(x) \ge \min_P F`$. So the new program's value is at least the old one's.
 
-Now take any $x$ in $P$ and set $z = F(x)$. This pair is allowed, since $F(x)$ is at least every $\ell_k(x)$, and it scores exactly $F(x)$. So the new program's value is at most the old one's. The two values are equal.
+Now take any $`x`$ in $`P`$ and set $`z = F(x)`$. This pair is allowed, since $`F(x)`$ is at least every $`\ell_k(x)`$, and it scores exactly $`F(x)`$. So the new program's value is at most the old one's. The two values are equal.
 
-If $(x^*, z^*)$ is best for the new program, then $z^* = F(x^*)$: if $z^*$ were larger, lowering it to $F(x^*)$ would score better. So $x^*$ is best for the old problem. Conversely, a best $x^*$ for the old problem with $z = F(x^*)$ is best for the new one.
+If $`(x^*, z^*)`$ is best for the new program, then $`z^* = F(x^*)`$: if $`z^*`$ were larger, lowering it to $`F(x^*)`$ would score better. So $`x^*`$ is best for the old problem. Conversely, a best $`x^*`$ for the old problem with $`z = F(x^*)`$ is best for the new one.
 
-The same argument runs term by term when the objective adds several such costs, each with its own $z$. In a maximisation the cost enters with a minus sign, which pushes each $z$ down just the same.
+The same argument runs term by term when the objective adds several such costs, each with its own $`z`$. In a maximisation the cost enters with a minus sign, which pushes each $`z`$ down just the same.
 
 </details>
 
-The proof uses one fact about $F$: that it is the highest of its pieces. A cost with rising slopes always is. A cost with falling slopes is not: there, beyond the bend, the cheaper line is the true cost, and "sit above both lines" charges the dearer one.
+The proof uses one fact about $`F`$: that it is the highest of its pieces. A cost with rising slopes always is. A cost with falling slopes is not: there, beyond the bend, the cheaper line is the true cost, and "sit above both lines" charges the dearer one.
 
 ### Step 2: tiers as separate hours, and why the cheap tier fills first
 
-The two-variable form says: overtime $h = h_1 + h_2$, with $0 \le h_1 \le 10$ and $h_2 \ge 0$, and a bill of $2h_1 + 5h_2$. The program is free to put hours into tier 2 while tier 1 has room. It never wants to: moving one hour from tier 2 to tier 1 keeps the labour the same and saves £3. So in every best plan tier 2 is empty until tier 1 is full, and $2h_1 + 5h_2 = f(h)$.
+The two-variable form says: overtime $`h = h_1 + h_2`$, with $`0 \le h_1 \le 10`$ and $`h_2 \ge 0`$, and a bill of $`2h_1 + 5h_2`$. The program is free to put hours into tier 2 while tier 1 has room. It never wants to: moving one hour from tier 2 to tier 1 keeps the labour the same and saves £3. So in every best plan tier 2 is empty until tier 1 is full, and $`2h_1 + 5h_2 = f(h)`$.
 
 That exchange argument needs the later tier to be dearer. With a bulk discount, tier 2 at £1, moving hours the other way saves money, and the program happily buys 20 cheap hours while the £2 tier sits empty. It reports £908. The real bill for 20 hours is 10 at £2 plus 10 at £1, £30, leaving £898. No error message appears. A falling-slope cost needs a yes-or-no variable that forces tier 1 to fill first ([Yes-or-no variables](../05-Integer%20and%20Combinatorial%20Optimisation/02-modelling-with-binary-variables-big-m-and-indicators.md)).
 
@@ -126,19 +126,19 @@ With 92 hours and no overtime, labour and finish run out together at 24 tables a
 
 So each tier-1 hour (£2) earns £1.60 net, and each tier-2 hour (£5) loses £1.40. The workshop buys tier 1 to the end and stops: 10 hours, 102 hours of labour, 28 tables and 18 chairs. Profit is 19 × 28 + 20 × 18 − 20 = **£872**.
 
-Prices on the limits prove nothing earns more ([LP duality](04-lp-duality-and-complementary-slackness.md)). Put $y$ = £0 on timber (148 of 160 metres used, so spare), £3.60 on a labour hour, £8.20 on a litre of finish and £1.60 on each hour of the tier-1 cap. For every allowed plan, the profit splits exactly as
+Prices on the limits prove nothing earns more ([LP duality](04-lp-duality-and-complementary-slackness.md)). Put $`y`$ = £0 on timber (148 of 160 metres used, so spare), £3.60 on a labour hour, £8.20 on a litre of finish and £1.60 on each hour of the tier-1 cap. For every allowed plan, the profit splits exactly as
 
-$$
+```math
 19t + 20c - 2h_1 - 5h_2 \;=\; 3.6\,(3t + c - h_1 - h_2) + 8.2\,(t + 2c) + 1.6\,h_1 - 1.4\,h_2 .
-$$
+```
 
-Each bracket is at most its limit: labour at most 92, finish at most 64, $h_1$ at most 10. The last term is at most 0. So profit is at most 3.6 × 92 + 8.2 × 64 + 1.6 × 10 = 331.20 + 524.80 + 16 = **£872**. The plan above reaches it, so it is the best. The −1.4 is the £1.40 lost on every tier-2 hour.
+Each bracket is at most its limit: labour at most 92, finish at most 64, $`h_1`$ at most 10. The last term is at most 0. So profit is at most 3.6 × 92 + 8.2 × 64 + 1.6 × 10 = 331.20 + 524.80 + 16 = **£872**. The plan above reaches it, so it is the best. The −1.4 is the £1.40 lost on every tier-2 hour.
 
 ### Step 4: absolute values, fitting the 3 hours a table
 
 Where did "3 hours a table" come from? From five past weeks in which only tables were made:
 
-| Week | Tables $q_i$ | Hours $H_i$ | Hours per table |
+| Week | Tables $`q_i`$ | Hours $`H_i`$ | Hours per table |
 | --- | ---: | ---: | ---: |
 | 1 | 10 | 30 | 3 |
 | 2 | 30 | 90 | 3 |
@@ -146,21 +146,21 @@ Where did "3 hours a table" come from? From five past weeks in which only tables
 | 4 | 25 | 75 | 3 |
 | 5 | 15 | 46 | 3.07 |
 
-A fitted rate $a$ predicts $a q_i$ hours in week $i$; the error is $H_i - a q_i$. Make the **total of the absolute errors** as small as possible: a minimisation. (Wing notation: this total is $\lVert r \rVert_1$ of the error list $r$, and the largest error is $\lVert r \rVert_\infty$, from [Subgradients](../01-Convexity/07-subgradients.md).) One $e_i$ per week does it:
+A fitted rate $`a`$ predicts $`a q_i`$ hours in week $`i`$; the error is $`H_i - a q_i`$. Make the **total of the absolute errors** as small as possible: a minimisation. (Wing notation: this total is $`\lVert r \rVert_1`$ of the error list $`r`$, and the largest error is $`\lVert r \rVert_\infty`$, from [Subgradients](../01-Convexity/07-subgradients.md).) One $`e_i`$ per week does it:
 
-$$
+```math
 \min_{a,\ e}\; e_1 + \dots + e_5 \quad\text{subject to}\quad e_i \ge H_i - a q_i,\ \ e_i \ge -(H_i - a q_i)\ \text{ for each week } i .
-$$
+```
 
-The program returns $a = 3$, with total error 21 hours: 20 from the bad week and 1 from week 5. The bad week is outvoted.
+The program returns $`a = 3`$, with total error 21 hours: 20 from the bad week and 1 from week 5. The bad week is outvoted.
 
-The proof is a slope count. Just below $a = 3$ every week's prediction is short, and raising $a$ cuts the total by $q_i$ for each week: 100 hours per unit of $a$. Just above 3, the three exact weeks (65 tables) start to overshoot while weeks 3 and 5 (35 tables) still fall short: the total rises by 65 − 35 = 30. Down on one side and up on the other, so $a = 3$ is the bottom.
+The proof is a slope count. Just below $`a = 3`$ every week's prediction is short, and raising $`a`$ cuts the total by $`q_i`$ for each week: 100 hours per unit of $`a`$. Just above 3, the three exact weeks (65 tables) start to overshoot while weeks 3 and 5 (35 tables) still fall short: the total rises by 65 − 35 = 30. Down on one side and up on the other, so $`a = 3`$ is the bottom.
 
 ### Step 5: worst cases, the same five weeks
 
-Now make the **largest** error as small as possible, a minimax fit: one $z$ above all ten lines $\pm(H_i - a q_i)$. The program returns $a = 3.40$, with worst error 12 hours. The bad week now sets the answer: at 3.40 it is under by 12 hours, and week 2 is over by 12.
+Now make the **largest** error as small as possible, a minimax fit: one $`z`$ above all ten lines $`\pm(H_i - a q_i)`$. The program returns $`a = 3.40`$, with worst error 12 hours. The bad week now sets the answer: at 3.40 it is under by 12 hours, and week 2 is over by 12.
 
-The certificate is a pair of weights. Give week 3's error weight 3/5 and week 2's overshoot weight 2/5. For every $a$ the weighted sum is $\tfrac35(80 - 20a) + \tfrac25(30a - 90) = 48 - 36 = 12$, because the $a$ terms cancel: 3/5 × 20 = 2/5 × 30. A weighted average of two errors is never above the larger, so no $a$ has a worst error below 12.
+The certificate is a pair of weights. Give week 3's error weight 3/5 and week 2's overshoot weight 2/5. For every $`a`$ the weighted sum is $`\tfrac35(80 - 20a) + \tfrac25(30a - 90) = 48 - 36 = 12`$, because the $`a`$ terms cancel: 3/5 × 20 = 2/5 × 30. A weighted average of two errors is never above the larger, so no $`a`$ has a worst error below 12.
 
 The absolute fit, 3 hours, describes the typical week. The minimax fit, 3.40, guards against the worst week and lets it alone steer the answer. Squaring the errors, the usual least-squares fit, gives 3.18.
 
@@ -176,13 +176,13 @@ The workshop with 92 regular hours, overtime at £2 for 10 hours and £5 after.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| no overtime: labour and finish full | $3t + c = 92$, $t + 2c = 64$ | 24 tables, 20 chairs |
+| no overtime: labour and finish full | $`3t + c = 92`$, $`t + 2c = 64`$ | 24 tables, 20 chairs |
 | profit with no overtime | 19 × 24 + 20 × 20 | £856 |
 | worth of one more labour hour | 19 × 0.4 − 20 × 0.2 | £3.60 |
 | tier 1, £2 an hour | 3.60 − 2 | £1.60 gained per hour |
 | tier 2, £5 an hour | 3.60 − 5 | £1.40 lost per hour |
 | hours bought | all of tier 1, none of tier 2 | 10, so 102 hours of labour |
-| new mix | $3t + c = 102$, $t + 2c = 64$ | 28 tables, 18 chairs |
+| new mix | $`3t + c = 102`$, $`t + 2c = 64`$ | 28 tables, 18 chairs |
 | timber used | 4 × 28 + 2 × 18 | 148 of 160 metres |
 | bill, the higher line | max(2 × 10, 5 × 10 − 30) | £20 |
 | **best profit** | 19 × 28 + 20 × 18 − 20 | **£872** |
@@ -196,8 +196,8 @@ Ten overtime hours at the cheap rate add £16 to the week; the ten dear hours af
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Tiers with falling prices, £2 then £1 | LP says £908, bill leaves £898 | Slopes fall, so the cost is not the highest of its pieces; the cheap tier is used first |
-| Tier-1 cap $h_1 \le 10$ dropped | LP says £888 with 20 hours, bill leaves £858 | Every hour is charged the tier-1 price |
-| Only the $5h - 30$ line kept, plus $z \ge 0$ | LP says £877.60 with 6 hours, bill leaves £865.60 | The first 6 hours look free |
+| Tier-1 cap $`h_1 \le 10`$ dropped | LP says £888 with 20 hours, bill leaves £858 | Every hour is charged the tier-1 price |
+| Only the $`5h - 30`$ line kept, plus $`z \ge 0`$ | LP says £877.60 with 6 hours, bill leaves £865.60 | The first 6 hours look free |
 | Fitting the rate by the worst week | 3.40 hours a table, against 3 | Minimax hands control to the one bad week |
 
 The code prints every row.
@@ -206,7 +206,7 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported but exact fractions in Python and a small fraction type in Rust. Every linear program is solved by brute force: try each set of limits as equations, solve by elimination, keep the allowed points, take the best corner. The week is reached by three independent roads: the two-variable tier program, the program with $z$ above both lines, and the original kinked problem with no new variables at all, evaluated at every crossing of its limit and kink lines. A fourth road, the prices of Step 3, bounds every plan and must meet the answer exactly. Each fit is solved as a linear program and again by trying every kink of the error curve directly.
+Nothing is imported but exact fractions in Python and a small fraction type in Rust. Every linear program is solved by brute force: try each set of limits as equations, solve by elimination, keep the allowed points, take the best corner. The week is reached by three independent roads: the two-variable tier program, the program with $`z`$ above both lines, and the original kinked problem with no new variables at all, evaluated at every crossing of its limit and kink lines. A fourth road, the prices of Step 3, bounds every plan and must meet the answer exactly. Each fit is solved as a linear program and again by trying every kink of the error curve directly.
 
 ### Python
 
@@ -581,11 +581,11 @@ The two outputs match line for line.
 
 Lean proves the main theorem for any number of pieces and limits, and checks the workshop week and both five-week fits exactly.
 
-- Minimising the highest of several straight-line pieces over the allowed plans gives the same best value as minimising $z$ held above every piece.
-- A pair $(x, z)$ is best for the new program exactly when $x$ is best for the old one and $z = F(x)$.
+- Minimising the highest of several straight-line pieces over the allowed plans gives the same best value as minimising $`z`$ held above every piece.
+- A pair $`(x, z)`$ is best for the new program exactly when $`x`$ is best for the old one and $`z = F(x)`$.
 - The workshop's best profit is £872, and the only plan that earns it is 28 tables, 18 chairs, 10 overtime hours and a £20 bill.
-- The absolute fit gives $a = 3$ with total error 21 hours, and no other rate does as well.
-- The minimax fit gives $a = 3.40$ with worst error 12 hours, and no other rate does as well.
+- The absolute fit gives $`a = 3`$ with total error 21 hours, and no other rate does as well.
+- The minimax fit gives $`a = 3.40`$ with worst error 12 hours, and no other rate does as well.
 - The hand sums also check: the £856 and £858 weeks, the price bound and the minimax weights.
 
 The two-variable tier program, the broken models in What breaks, and the least-squares fit are left to the Python and Rust checks.
@@ -778,7 +778,7 @@ example : (80 : ℚ) - 17 / 5 * 20 = 12 ∧ (17 / 5 : ℚ) * 30 - 90 = 12 := by 
 >
 > - **Dropping a tier's width:** £888 claimed against £858.
 > - **Forgetting a piece:** £877.60 claimed against £865.60.
-> - **Rewarding a kink.** Maximising $|u|$ lets the new variable climb without limit.
+> - **Rewarding a kink.** Maximising $`|u|`$ lets the new variable climb without limit.
 > - **Choosing the fit by habit:** 3.40 hours a table from the worst week, against 3 from the typical one.
 
 ---
@@ -788,7 +788,7 @@ example : (80 : ℚ) - 17 / 5 * 20 = 12 ∧ (17 / 5 : ℚ) * 30 - 90 = 12 := by 
 - **Tiered tariffs and wages.** Overtime rates and rising-block water and power prices have slopes that rise, and so do many income tax schedules, so planning models carry them as linear programs.
 - **Robust fitting.** Fitting by absolute errors was one of the first uses of linear programming: Charnes, Cooper and Ferguson used it in 1955 to fit executive pay, and Wagner set out the regression method in 1959. A few bad records barely move it, as the broken-saw week showed.
 - **Tolerances.** Minimax fits are used where the worst point matters, such as a filter that must stay within a band at every frequency.
-- **Worst-case planning.** Choosing a plan whose profit in the worst of several price scenarios is as large as possible is one $z$ below every scenario's profit line.
+- **Worst-case planning.** Choosing a plan whose profit in the worst of several price scenarios is as large as possible is one $`z`$ below every scenario's profit line.
 - **Portfolios.** Minimising expected shortfall over asset weights is a linear program by the positive-part trick, as in [Expected shortfall](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md).
 
 > **Say it back**

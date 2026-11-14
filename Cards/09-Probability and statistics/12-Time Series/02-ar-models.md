@@ -38,56 +38,66 @@ Orange: the station, each day keeping 80% of the day before. Green: the same dai
 
 ## The formula
 
-Notation first, in words. Days are numbered $t$ = 1, 2, 3 and so on. $X_t$ is the anomaly on day $t$ before it is seen, a random variable, written with a capital letter as on the random-variables shelf; $x_t$ is the value recorded. A subscript $t-1$ means the day before.
+Notation first, in words. Days are numbered $`t`$ = 1, 2, 3 and so on. $`X_t`$ is the anomaly on day $`t`$ before it is seen, a random variable, written with a capital letter as on the random-variables shelf; $`x_t`$ is the value recorded. A subscript $`t-1`$ means the day before.
 
-$$X_t = c + \phi\,X_{t-1} + \varepsilon_t$$
+```math
+X_t = c + \phi\,X_{t-1} + \varepsilon_t
+```
 
 **Read it aloud:** today's anomaly is a constant, plus phi times yesterday's, plus a fresh shock.
 
-The shocks $\varepsilon_t$ are independent of each other and of everything before day $t$, with mean 0 and standard deviation $\sigma$. For the 95% bands they are also normal. When $-1 < \phi < 1$ three facts follow:
+The shocks $`\varepsilon_t`$ are independent of each other and of everything before day $`t`$, with mean 0 and standard deviation $`\sigma`$. For the 95% bands they are also normal. When $`-1 < \phi < 1`$ three facts follow:
 
-$$\mu = \frac{c}{1-\phi}, \qquad \operatorname{Var}(X_t) = \frac{\sigma^2}{1-\phi^2}, \qquad \rho(h) = \phi^{h}$$
+```math
+\mu = \frac{c}{1-\phi}, \qquad \mathrm{Var}(X_t) = \frac{\sigma^2}{1-\phi^2}, \qquad \rho(h) = \phi^{h}
+```
 
-**Read it aloud:** the long-run mean is the constant divided by one minus phi; the spread is the shock's variance divided by one minus phi squared; and readings $h$ days apart are correlated by phi to the power $h$.
+**Read it aloud:** the long-run mean is the constant divided by one minus phi; the spread is the shock's variance divided by one minus phi squared; and readings $`h`$ days apart are correlated by phi to the power $`h`$.
 
-Standing on day $T$ with reading $x_T$, the forecast $h$ days ahead and the spread of its error are
+Standing on day $`T`$ with reading $`x_T`$, the forecast $`h`$ days ahead and the spread of its error are
 
-$$\hat X_{T+h} = \mu + \phi^{h}\,(x_T - \mu), \qquad \sigma_h^2 = \sigma^2\,\frac{1-\phi^{2h}}{1-\phi^2}$$
+```math
+\hat X_{T+h} = \mu + \phi^{h}\,(x_T - \mu), \qquad \sigma_h^2 = \sigma^2\,\frac{1-\phi^{2h}}{1-\phi^2}
+```
 
-**Read it aloud:** the forecast is the mean plus today's gap from it, shrunk by phi once per day ahead; the error's variance adds one shrunk shock per day. The 95% band is $\hat X_{T+h} \pm 1.96\,\sigma_h$, where 1.96 is the normal quantile $\Phi^{-1}(0.975)$ of [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md).
+**Read it aloud:** the forecast is the mean plus today's gap from it, shrunk by phi once per day ahead; the error's variance adds one shrunk shock per day. The 95% band is $`\hat X_{T+h} \pm 1.96\,\sigma_h`$, where 1.96 is the normal quantile $`\Phi^{-1}(0.975)`$ of [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md).
 
-With $p$ days of memory the model is AR($p$):
+With $`p`$ days of memory the model is AR($`p`$):
 
-$$X_t = c + \phi_1 X_{t-1} + \phi_2 X_{t-2} + \dots + \phi_p X_{t-p} + \varepsilon_t$$
+```math
+X_t = c + \phi_1 X_{t-1} + \phi_2 X_{t-2} + \dots + \phi_p X_{t-p} + \varepsilon_t
+```
 
-It is stationary exactly when every solution $\lambda$ of $\lambda^p = \phi_1\lambda^{p-1} + \phi_2\lambda^{p-2} + \dots + \phi_p$ has size below 1, complex solutions measured by their modulus, their distance from 0. For $p$ = 1 the one solution is $\phi$ itself, which gives back $-1 < \phi < 1$. For $p$ = 2 the condition is a triangle: $\phi_1 + \phi_2 < 1$, $\phi_2 - \phi_1 < 1$ and $-1 < \phi_2 < 1$.
+It is stationary exactly when every solution $`\lambda`$ of $`\lambda^p = \phi_1\lambda^{p-1} + \phi_2\lambda^{p-2} + \dots + \phi_p`$ has size below 1, complex solutions measured by their modulus, their distance from 0. For $`p`$ = 1 the one solution is $`\phi`$ itself, which gives back $`-1 < \phi < 1`$. For $`p`$ = 2 the condition is a triangle: $`\phi_1 + \phi_2 < 1`$, $`\phi_2 - \phi_1 < 1`$ and $`-1 < \phi_2 < 1`$.
 
-Fitting has two standard roads, given here for AR(1) and in Why it works, Step 6, for AR($p$). Least squares fits the line through the points (yesterday, today), exactly as in [Least squares](../09-Regression/01-least-squares-regression.md), and its slope is the estimate $\hat\phi$. Yule–Walker sets $\hat\phi = r(1)$, the record's own autocorrelation at lag 1. Either way, for a record of $n$ days,
+Fitting has two standard roads, given here for AR(1) and in Why it works, Step 6, for AR($`p`$). Least squares fits the line through the points (yesterday, today), exactly as in [Least squares](../09-Regression/01-least-squares-regression.md), and its slope is the estimate $`\hat\phi`$. Yule–Walker sets $`\hat\phi = r(1)`$, the record's own autocorrelation at lag 1. Either way, for a record of $`n`$ days,
 
-$$\operatorname{se}(\hat\phi) \approx \sqrt{\frac{1-\phi^2}{n}}$$
+```math
+\mathrm{se}(\hat\phi) \approx \sqrt{\frac{1-\phi^2}{n}}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_t$, $x_t$, $t$ | the anomaly on day $t$: random before it is seen, a number after | day 1 recorded −1.18 °C | — |
-| $\phi$ | phi, the carry-over: the fraction of yesterday kept today | 0.8 | memory lasts longer and the spread grows; at 1 there is no mean |
-| $c$ | the constant added each day | 0.1 °C | the mean rises, by the constant over one minus phi |
-| $\varepsilon_t$ | the shock on day $t$: fresh, independent, mean zero | one normal draw a day | — |
-| $\sigma$ | the shock's standard deviation | 1.2 °C | every band widens in proportion |
-| $\mu$ | the long-run mean the series settles around | 0.5 °C | forecasts glide to a higher level |
-| $\rho(h)$, $h$ | the autocorrelation at lag $h$; $h$ counts days apart, or days ahead | 0.8 at one day, 0.64 at two | — |
-| $T$, $x_T$ | today, the last recorded day, and its reading | +4.5 °C | every forecast starts higher |
-| $\hat X_{T+h}$ | the forecast $h$ days ahead | 3.7 °C tomorrow | — |
-| $\sigma_h$ | the standard deviation of the $h$-day forecast error | 1.2 tomorrow, 1.537 at two days, towards 2.0 | the band widens |
-| $p$; $\phi_1$, $\phi_2$, $\phi_p$; $\lambda$ | the order of an AR($p$) model; its carry-over fractions; a solution of its root equation | $p$ = 2 fit: 0.7562 and 0.0808; largest size of $\lambda$ 0.8512 | stationarity lost once any size reaches 1 |
-| $n$; $\hat\phi$, $r(1)$ | days in the record; the fitted carry-over by least squares, and by the lag-1 autocorrelation | 365; 0.8230 both ways | a larger record shrinks the standard error |
-| $\operatorname{se}(\cdot)$ | the standard error of an estimate: its typical distance from the truth | se of $\hat\phi$: 0.0298 by regression, 0.0314 by formula | — |
-| $\Phi^{-1}$ | the normal quantile: the cutoff with a given area to its left | $\Phi^{-1}(0.975)$ = 1.96 | — |
-| $Y_t$, $Y_0$ | the gap from the mean, $X_t - \mu$, in the proof; $Y_0$ on the starting day | today's gap, 4.5 − 0.5 = 4 °C | — |
-| $j$ | a shock's age in days, or in Step 6 the day of an echo | weight $\phi^j$: 0.8 at age 1, 0.64 at age 2 | — |
+| $`X_t`$, $`x_t`$, $`t`$ | the anomaly on day $`t`$: random before it is seen, a number after | day 1 recorded −1.18 °C | — |
+| $`\phi`$ | phi, the carry-over: the fraction of yesterday kept today | 0.8 | memory lasts longer and the spread grows; at 1 there is no mean |
+| $`c`$ | the constant added each day | 0.1 °C | the mean rises, by the constant over one minus phi |
+| $`\varepsilon_t`$ | the shock on day $`t`$: fresh, independent, mean zero | one normal draw a day | — |
+| $`\sigma`$ | the shock's standard deviation | 1.2 °C | every band widens in proportion |
+| $`\mu`$ | the long-run mean the series settles around | 0.5 °C | forecasts glide to a higher level |
+| $`\rho(h)`$, $`h`$ | the autocorrelation at lag $`h`$; $`h`$ counts days apart, or days ahead | 0.8 at one day, 0.64 at two | — |
+| $`T`$, $`x_T`$ | today, the last recorded day, and its reading | +4.5 °C | every forecast starts higher |
+| $`\hat X_{T+h}`$ | the forecast $`h`$ days ahead | 3.7 °C tomorrow | — |
+| $`\sigma_h`$ | the standard deviation of the $`h`$-day forecast error | 1.2 tomorrow, 1.537 at two days, towards 2.0 | the band widens |
+| $`p`$; $`\phi_1`$, $`\phi_2`$, $`\phi_p`$; $`\lambda`$ | the order of an AR($`p`$) model; its carry-over fractions; a solution of its root equation | $`p`$ = 2 fit: 0.7562 and 0.0808; largest size of $`\lambda`$ 0.8512 | stationarity lost once any size reaches 1 |
+| $`n`$; $`\hat\phi`$, $`r(1)`$ | days in the record; the fitted carry-over by least squares, and by the lag-1 autocorrelation | 365; 0.8230 both ways | a larger record shrinks the standard error |
+| $`\mathrm{se}(\cdot)`$ | the standard error of an estimate: its typical distance from the truth | se of $`\hat\phi`$: 0.0298 by regression, 0.0314 by formula | — |
+| $`\Phi^{-1}`$ | the normal quantile: the cutoff with a given area to its left | $`\Phi^{-1}(0.975)`$ = 1.96 | — |
+| $`Y_t`$, $`Y_0`$ | the gap from the mean, $`X_t - \mu`$, in the proof; $`Y_0`$ on the starting day | today's gap, 4.5 − 0.5 = 4 °C | — |
+| $`j`$ | a shock's age in days, or in Step 6 the day of an echo | weight $`\phi^j`$: 0.8 at age 1, 0.64 at age 2 | — |
 
 ### When it holds
 
-- **The carry-over strictly between −1 and 1** (for AR($p$), every root size below 1). At $\phi$ = 1 the model is a random walk: fed the same shocks, its spread after a year is 23.26 °C, against the station's 2.00.
+- **The carry-over strictly between −1 and 1** (for AR($`p`$), every root size below 1). At $`\phi`$ = 1 the model is a random walk: fed the same shocks, its spread after a year is 23.26 °C, against the station's 2.00.
 - **Shocks independent of the past, with the same spread every day.** If calm and stormy spells alternate, the band is right on average and wrong on the day; [GARCH](06-garch-and-volatility-clustering.md) models that, by letting the shock's spread follow its own autoregression.
 - **Normal shocks, for the 1.96.** The forecast itself needs only mean-zero shocks. With fat-tailed shocks, where large shocks come more often than the normal allows, the share outside the band is no longer 5%, and the misses that do happen are larger.
 - **Known parameters.** The formulas use the true 0.8. A band built from the fitted 0.823 ignores that estimate's own error and comes out slightly too narrow; with a year of data the effect is small.
@@ -103,70 +113,78 @@ Substitute yesterday's equation into today's, then the day before's, and so on. 
 
 ### Step 1: the mean is not the constant
 
-If the series has a fixed mean $\mu$, averaging both sides of the rule gives $\mu = c + \phi\mu$, since the shock averages zero. So $\mu = c/(1-\phi)$ = 0.1/0.2 = 0.5 °C. The constant 0.1 is not the mean. Each day adds 0.1 and keeps 80% of the rest, and the level where those balance is 0.5.
+If the series has a fixed mean $`\mu`$, averaging both sides of the rule gives $`\mu = c + \phi\mu`$, since the shock averages zero. So $`\mu = c/(1-\phi)`$ = 0.1/0.2 = 0.5 °C. The constant 0.1 is not the mean. Each day adds 0.1 and keeps 80% of the rest, and the level where those balance is 0.5.
 
 ### Step 2: the spread settles exactly when the carry-over is below 1 in size
 
-Unrolled from a starting day 0, the gap from the mean on day $t$ is the starting gap times $\phi^t$, plus $t$ shocks weighted 1, $\phi$, $\phi^2$ and so on. The pieces are independent, so their variances add: the starting variance times $\phi^{2t}$, plus $\sigma^2$ times $1 + \phi^2 + \phi^4 + \dots + \phi^{2(t-1)}$.
+Unrolled from a starting day 0, the gap from the mean on day $`t`$ is the starting gap times $`\phi^t`$, plus $`t`$ shocks weighted 1, $`\phi`$, $`\phi^2`$ and so on. The pieces are independent, so their variances add: the starting variance times $`\phi^{2t}`$, plus $`\sigma^2`$ times $`1 + \phi^2 + \phi^4 + \dots + \phi^{2(t-1)}`$.
 
-That is a geometric series with ratio $\phi^2$. When $-1 < \phi < 1$ the starting term dies away and the sum approaches $\sigma^2/(1-\phi^2)$ = 1.44/0.36 = 4, standard deviation 2 °C, whatever the start. A series started with variance 4 keeps it exactly on every day.
+That is a geometric series with ratio $`\phi^2`$. When $`-1 < \phi < 1`$ the starting term dies away and the sum approaches $`\sigma^2/(1-\phi^2)`$ = 1.44/0.36 = 4, standard deviation 2 °C, whatever the start. A series started with variance 4 keeps it exactly on every day.
 
-When the size of $\phi$ is 1 or more, the sum grows without limit: at $\phi$ = 1 it is $t$ times $\sigma^2$, and no fixed spread exists. That is the stationarity condition, and why it takes exactly this form.
+When the size of $`\phi`$ is 1 or more, the sum grows without limit: at $`\phi`$ = 1 it is $`t`$ times $`\sigma^2`$, and no fixed spread exists. That is the stationarity condition, and why it takes exactly this form.
 
 <details>
 <summary>Detailed proof: unrolling, the variance and the autocorrelation</summary>
 
-Measure each day as a gap from the mean, $Y_t = X_t - \mu$. Since $c = \mu - \phi\mu$, the rule becomes $Y_t = \phi Y_{t-1} + \varepsilon_t$. By induction on $t$,
-$$Y_t = \phi^t Y_0 + \sum_{j=0}^{t-1} \phi^j \varepsilon_{t-j}.$$
-The case $t$ = 1 is the rule itself; substituting the rule into the case for $t$ gives the case for $t+1$.
+Measure each day as a gap from the mean, $`Y_t = X_t - \mu`$. Since $`c = \mu - \phi\mu`$, the rule becomes $`Y_t = \phi Y_{t-1} + \varepsilon_t`$. By induction on $`t`$,
 
-The shocks are independent of each other and of the starting gap $Y_0 = X_0 - \mu$, so variances add, and a constant factor multiplies a variance by its square:
-$$\operatorname{Var}(Y_t) = \phi^{2t}\operatorname{Var}(Y_0) + \sigma^2 \sum_{j=0}^{t-1} \phi^{2j} = \phi^{2t}\operatorname{Var}(Y_0) + \sigma^2\,\frac{1-\phi^{2t}}{1-\phi^2}.$$
-If $\operatorname{Var}(Y_0) = \sigma^2/(1-\phi^2)$, substituting gives $\sigma^2/(1-\phi^2)$ for every $t$. If $-1 < \phi < 1$, $\phi^{2t}$ goes to 0 and any starting variance is forgotten. If $\phi^2 \ge 1$, every term of the sum is at least $\sigma^2$, so the variance is at least $t\sigma^2$ and grows without limit.
+$`\displaystyle Y_t = \phi^t Y_0 + \sum_{j=0}^{t-1} \phi^j \varepsilon_{t-j}.`$
 
-For the memory, unroll from day $t$ to day $t+h$: $Y_{t+h} = \phi^h Y_t + (\text{shocks after day } t)$. Those shocks are independent of the day-$t$ gap, so $\operatorname{Cov}(Y_{t+h}, Y_t) = \phi^h \operatorname{Var}(Y_t)$. Divide by the variance: $\rho(h) = \phi^h$. The code also sums the first 200 weights $\sigma^2\phi^{2j}$ directly and gets 4.0000.
+The case $`t`$ = 1 is the rule itself; substituting the rule into the case for $`t`$ gives the case for $`t+1`$.
+
+The shocks are independent of each other and of the starting gap $`Y_0 = X_0 - \mu`$, so variances add, and a constant factor multiplies a variance by its square:
+
+$`\displaystyle \mathrm{Var}(Y_t) = \phi^{2t}\mathrm{Var}(Y_0) + \sigma^2 \sum_{j=0}^{t-1} \phi^{2j} = \phi^{2t}\mathrm{Var}(Y_0) + \sigma^2\,\frac{1-\phi^{2t}}{1-\phi^2}.`$
+
+If $`\mathrm{Var}(Y_0) = \sigma^2/(1-\phi^2)`$, substituting gives $`\sigma^2/(1-\phi^2)`$ for every $`t`$. If $`-1 < \phi < 1`$, $`\phi^{2t}`$ goes to 0 and any starting variance is forgotten. If $`\phi^2 \ge 1`$, every term of the sum is at least $`\sigma^2`$, so the variance is at least $`t\sigma^2`$ and grows without limit.
+
+For the memory, unroll from day $`t`$ to day $`t+h`$: $`Y_{t+h} = \phi^h Y_t + (\text{shocks after day } t)`$. Those shocks are independent of the day-$`t`$ gap, so $`\mathrm{Cov}(Y_{t+h}, Y_t) = \phi^h \mathrm{Var}(Y_t)`$. Divide by the variance: $`\rho(h) = \phi^h`$. The code also sums the first 200 weights $`\sigma^2\phi^{2j}`$ directly and gets 4.0000.
 
 </details>
 
 ### Step 3: the memory fades geometrically
 
-The autocorrelation from [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md) is, for this model, $\phi^h$: 0.800, 0.640, 0.512, 0.410, 0.328 at lags 1 to 5. The simulated year gives 0.823, 0.703, 0.538, 0.434, 0.374. Each lag keeps a fixed fraction of the one before. A negative $\phi$ makes the signs alternate: a warm day predicts a cool one. That geometric fade is the fingerprint an analyst looks for before choosing AR(1).
+The autocorrelation from [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md) is, for this model, $`\phi^h`$: 0.800, 0.640, 0.512, 0.410, 0.328 at lags 1 to 5. The simulated year gives 0.823, 0.703, 0.538, 0.434, 0.374. Each lag keeps a fixed fraction of the one before. A negative $`\phi`$ makes the signs alternate: a warm day predicts a cool one. That geometric fade is the fingerprint an analyst looks for before choosing AR(1).
 
 ### Step 4: fitting, by two roads
 
-Given yesterday, the rule says today is $c + \phi x_{t-1}$ plus an independent shock. That is a straight-line regression of today on yesterday with independent errors, so least squares applies unchanged. On the 364 pairs of consecutive days it gives slope $\hat\phi$ = 0.8230, intercept 0.1181, and residual standard deviation 1.2157 against a true 1.2.
+Given yesterday, the rule says today is $`c + \phi x_{t-1}`$ plus an independent shock. That is a straight-line regression of today on yesterday with independent errors, so least squares applies unchanged. On the 364 pairs of consecutive days it gives slope $`\hat\phi`$ = 0.8230, intercept 0.1181, and residual standard deviation 1.2157 against a true 1.2.
 
-The second road uses no regression. Subtract the mean, multiply the rule by yesterday's gap, and average. The shock is independent of yesterday, so its term averages zero, and what is left says the lag-1 autocovariance is $\phi$ times the variance: $\phi = \rho(1)$. Plugging in the record's $r(1)$ gives 0.8230 again. This is the one-lag Yule–Walker equation; the two roads differ only in how they treat the first and last day, which moves nothing at four decimals here.
+The second road uses no regression. Subtract the mean, multiply the rule by yesterday's gap, and average. The shock is independent of yesterday, so its term averages zero, and what is left says the lag-1 autocovariance is $`\phi`$ times the variance: $`\phi = \rho(1)`$. Plugging in the record's $`r(1)`$ gives 0.8230 again. This is the one-lag Yule–Walker equation; the two roads differ only in how they treat the first and last day, which moves nothing at four decimals here.
 
-How far off is the fit likely to be? The regression card's standard error of a slope is the residual spread over the square root of the sum of squared deviations of yesterday's values: here 0.0298. For large $n$ that sum is about $n$ times the stationary variance, and the ratio simplifies to $\sqrt{(1-\phi^2)/n}$ = 0.0314. So the fit reads 0.823 with a standard error of about 0.030, and the true 0.8 sits within one standard error.
+How far off is the fit likely to be? The regression card's standard error of a slope is the residual spread over the square root of the sum of squared deviations of yesterday's values: here 0.0298. For large $`n`$ that sum is about $`n`$ times the stationary variance, and the ratio simplifies to $`\sqrt{(1-\phi^2)/n}`$ = 0.0314. So the fit reads 0.823 with a standard error of about 0.030, and the true 0.8 sits within one standard error.
 
-Simulating 2,000 more years of the station tests those claims. The fitted carry-over averages 0.7911, with standard deviation 0.0321 across years. The spread matches the formula's 0.0314. The average sits low: least squares on a series with memory underestimates $\phi$ by about $(1+3\phi)/n$, which predicts 0.7907 (Marriott and Pope, 1954).
+Simulating 2,000 more years of the station tests those claims. The fitted carry-over averages 0.7911, with standard deviation 0.0321 across years. The spread matches the formula's 0.0314. The average sits low: least squares on a series with memory underestimates $`\phi`$ by about $`(1+3\phi)/n`$, which predicts 0.7907 (Marriott and Pope, 1954).
 
-The record's mean is 0.6375 against a true 0.5, with standard error $\sigma/((1-\phi)\sqrt n)$ = 0.31. Independent readings would give $2/\sqrt{365}$ = 0.10: with memory, 365 days carry far less information about the mean; [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md) shows the same effect for a shared offset.
+The record's mean is 0.6375 against a true 0.5, with standard error $`\sigma/((1-\phi)\sqrt n)`$ = 0.31. Independent readings would give $`2/\sqrt{365}`$ = 0.10: with memory, 365 days carry far less information about the mean; [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md) shows the same effect for a shared offset.
 
 ### Step 5: the forecast is the mean plus the shrunk gap, and its error is the shocks still to come
 
-The forecast with the smallest average squared error is the average of the future value given everything known today, the conditional expectation of [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md). Unroll from today, day $T$:
+The forecast with the smallest average squared error is the average of the future value given everything known today, the conditional expectation of [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md). Unroll from today, day $`T`$:
 
-$$X_{T+h} - \mu = \phi^h (x_T - \mu) + \varepsilon_{T+h} + \phi\,\varepsilon_{T+h-1} + \dots + \phi^{h-1}\varepsilon_{T+1}$$
+```math
+X_{T+h} - \mu = \phi^h (x_T - \mu) + \varepsilon_{T+h} + \phi\,\varepsilon_{T+h-1} + \dots + \phi^{h-1}\varepsilon_{T+1}
+```
 
-Today's gap is known. The future shocks average zero, so the forecast is $\mu + \phi^h(x_T - \mu)$. The error is exactly the future shocks' weighted sum, whose variance is $\sigma^2(1 + \phi^2 + \dots + \phi^{2(h-1)})$, the formula for $\sigma_h^2$. A sum of independent normal shocks is normal, so the band of $\pm 1.96\,\sigma_h$ holds 95% of outcomes. Two limits read off: tomorrow's error is one shock, $\sigma_1 = \sigma$; far ahead the forecast is the mean and the band is the stationary spread, $\pm 1.96 \times 2$.
+Today's gap is known. The future shocks average zero, so the forecast is $`\mu + \phi^h(x_T - \mu)`$. The error is exactly the future shocks' weighted sum, whose variance is $`\sigma^2(1 + \phi^2 + \dots + \phi^{2(h-1)})`$, the formula for $`\sigma_h^2`$. A sum of independent normal shocks is normal, so the band of $`\pm 1.96\,\sigma_h`$ holds 95% of outcomes. Two limits read off: tomorrow's error is one shock, $`\sigma_1 = \sigma`$; far ahead the forecast is the mean and the band is the stationary spread, $`\pm 1.96 \times 2`$.
 
 The code runs 20,000 futures from +4.5 °C. At 1, 2, 3, 5 and 10 days ahead the share inside the band is 0.9526, 0.9516, 0.9501, 0.9500 and 0.9497.
 
 ### Step 6: AR(p), and why the condition is on the roots
 
-Follow one shock of size 1 through an AR(2). Its echo obeys the model's own rule with no new shocks: each day's echo is $\phi_1$ times the echo the day before, plus $\phi_2$ times the echo two days before. Try an echo that is a power of one number, $\lambda^j$ on day j: the rule holds exactly when $\lambda^2 = \phi_1\lambda + \phi_2$.
+Follow one shock of size 1 through an AR(2). Its echo obeys the model's own rule with no new shocks: each day's echo is $`\phi_1`$ times the echo the day before, plus $`\phi_2`$ times the echo two days before. Try an echo that is a power of one number, $`\lambda^j`$ on day j: the rule holds exactly when $`\lambda^2 = \phi_1\lambda + \phi_2`$.
 
-Every echo is a mix of the two solutions' powers (with a repeated solution, $j\lambda^j$ joins $\lambda^j$), so it dies away exactly when both have size below 1. The variance, $\sigma^2$ times the sum of squared echoes, is finite exactly then. The same holds for any $p$.
+Every echo is a mix of the two solutions' powers (with a repeated solution, $`j\lambda^j`$ joins $`\lambda^j`$), so it dies away exactly when both have size below 1. The variance, $`\sigma^2`$ times the sum of squared echoes, is finite exactly then. The same holds for any $`p`$.
 
-Stacking the last $p$ days into a vector turns AR($p$) into a one-step matrix rule, and the $\lambda$ are that matrix's eigenvalues: its stretch factors, as in [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md).
+Stacking the last $`p`$ days into a vector turns AR($`p`$) into a one-step matrix rule, and the $`\lambda`$ are that matrix's eigenvalues: its stretch factors, as in [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md).
 
-Both fitting roads carry over to $p$ lags. Least squares regresses today on the last $p$ days together, the multiple regression of [Multiple regression](../09-Regression/03-multiple-regression-and-gauss-markov.md). Yule–Walker multiplies the rule by each of the last $p$ days' gaps in turn and averages, as in Step 4. That gives $p$ equations, one for each lag $k = 1, \dots, p$: $r(k) = \phi_1 r(k-1) + \phi_2 r(k-2) + \dots + \phi_p r(k-p)$, where $r(0) = 1$ and a negative lag reads as the positive one, solved for the $p$ fractions. For $p$ = 2 the solution is
+Both fitting roads carry over to $`p`$ lags. Least squares regresses today on the last $`p`$ days together, the multiple regression of [Multiple regression](../09-Regression/03-multiple-regression-and-gauss-markov.md). Yule–Walker multiplies the rule by each of the last $`p`$ days' gaps in turn and averages, as in Step 4. That gives $`p`$ equations, one for each lag $`k = 1, \dots, p`$: $`r(k) = \phi_1 r(k-1) + \phi_2 r(k-2) + \dots + \phi_p r(k-p)`$, where $`r(0) = 1`$ and a negative lag reads as the positive one, solved for the $`p`$ fractions. For $`p`$ = 2 the solution is
 
-$$\hat\phi_1 = \frac{r(1)\,(1 - r(2))}{1 - r(1)^2}, \qquad \hat\phi_2 = \frac{r(2) - r(1)^2}{1 - r(1)^2}.$$
+```math
+\hat\phi_1 = \frac{r(1)\,(1 - r(2))}{1 - r(1)^2}, \qquad \hat\phi_2 = \frac{r(2) - r(1)^2}{1 - r(1)^2}.
+```
 
-The code fits an AR(2) to the same year. Least squares gives 0.7562 and 0.0808, with standard error 0.0527 on the second; Yule–Walker gives 0.7572 and 0.0800. By hand, Step 3's three-place values 0.823 and 0.703 give 0.7575 and 0.0796: the denominator $1 - r(1)^2$ is only about 0.32, so rounding the inputs moves the fourth decimal.
+The code fits an AR(2) to the same year. Least squares gives 0.7562 and 0.0808, with standard error 0.0527 on the second; Yule–Walker gives 0.7572 and 0.0800. By hand, Step 3's three-place values 0.823 and 0.703 give 0.7575 and 0.0796: the denominator $`1 - r(1)^2`$ is only about 0.32, so rounding the inputs moves the fourth decimal.
 
 The largest root size is 0.8512, inside the triangle. The second coefficient sits under two standard errors from zero, so the extra lag earns nothing and AR(1) stays.
 
@@ -638,12 +656,12 @@ The two outputs match line for line, simulations included, since both languages 
 
 Lean proves the mean, the spread, the memory and the forecast error of AR(1), for every carry-over strictly between −1 and 1.
 
-- Take shocks independent of each other and of the starting reading, with mean 0 and standard deviation $\sigma$. Then the mean of $X_t$ tends to $\mu = c/(1-\phi)$, whatever the start.
-- Take the same model. Then $\operatorname{Var}(X_t)$ tends to $\sigma^2/(1-\phi^2)$, whatever the starting spread.
-- Take any day $t$. Then $\operatorname{Var}(X_t)$ is the starting variance times $\phi^{2t}$, plus $\sigma^2(1-\phi^{2t})/(1-\phi^2)$.
-- Take any day $t$ and any lag $h$. Then the covariance of $X_{t+h}$ and $X_t$ is $\phi^h$ times $\operatorname{Var}(X_t)$, so the memory fades geometrically.
-- Stand on day $T$ and forecast $h$ days ahead by $\mu + \phi^h(x_T - \mu)$. Then the error is exactly the weighted sum of the $h$ shocks still to come.
-- Take the same forecast. Then its error averages zero, and its variance is $\sigma_h^2 = \sigma^2(1-\phi^{2h})/(1-\phi^2)$.
+- Take shocks independent of each other and of the starting reading, with mean 0 and standard deviation $`\sigma`$. Then the mean of $`X_t`$ tends to $`\mu = c/(1-\phi)`$, whatever the start.
+- Take the same model. Then $`\mathrm{Var}(X_t)`$ tends to $`\sigma^2/(1-\phi^2)`$, whatever the starting spread.
+- Take any day $`t`$. Then $`\mathrm{Var}(X_t)`$ is the starting variance times $`\phi^{2t}`$, plus $`\sigma^2(1-\phi^{2t})/(1-\phi^2)`$.
+- Take any day $`t`$ and any lag $`h`$. Then the covariance of $`X_{t+h}`$ and $`X_t`$ is $`\phi^h`$ times $`\mathrm{Var}(X_t)`$, so the memory fades geometrically.
+- Stand on day $`T`$ and forecast $`h`$ days ahead by $`\mu + \phi^h(x_T - \mu)`$. Then the error is exactly the weighted sum of the $`h`$ shocks still to come.
+- Take the same forecast. Then its error averages zero, and its variance is $`\sigma_h^2 = \sigma^2(1-\phi^{2h})/(1-\phi^2)`$.
 - The hand arithmetic holds exactly: mean 0.5 °C, variance 4, and tomorrow's forecast 3.7 °C with band 1.348 to 6.052 °C.
 - Also exact: two days ahead 3.06 °C with error variance 2.3616, the far band ± 3.92, and autocorrelations 0.8 and 0.64.
 
@@ -995,7 +1013,7 @@ An AR model keeps memory in past values, so every shock echoes forever; the open
 Verified 29 Sep 2026: every link below resolves to the publisher's page.
 
 - Brockwell, Peter J., and Richard A. Davis. *Introduction to Time Series and Forecasting*, 3rd ed. Springer, 2016. [Publisher page](https://doi.org/10.1007/978-3-319-29854-2). AR processes, causality and the root condition, Yule–Walker estimation, and prediction.
-- Hamilton, James D. *Time Series Analysis*. Princeton University Press, 1994. [Publisher page](https://press.princeton.edu/books/hardcover/9780691042893/time-series-analysis). Stationary AR($p$) processes, the companion-matrix view, and forecasting.
+- Hamilton, James D. *Time Series Analysis*. Princeton University Press, 1994. [Publisher page](https://press.princeton.edu/books/hardcover/9780691042893/time-series-analysis). Stationary AR($`p`$) processes, the companion-matrix view, and forecasting.
 - Box, George E. P., Gwilym M. Jenkins, Gregory C. Reinsel and Greta M. Ljung. *Time Series Analysis: Forecasting and Control*, 5th ed. Wiley, 2015. [Publisher page](https://www.wiley.com/en-us/Time+Series+Analysis%3A+Forecasting+and+Control%2C+5th+Edition-p-9781118675021). Model identification by autocorrelations and partial autocorrelations, and forecast bands.
 - Hyndman, Rob J., and George Athanasopoulos. *Forecasting: Principles and Practice*, 3rd ed. OTexts. [Section 9.3, Autoregressive models](https://otexts.com/fpp3/AR.html). Free; AR models, their stationarity triangle and choosing the order in practice.
 - Marriott, F. H. C., and J. A. Pope. "Bias in the estimation of autocorrelations." *Biometrika* 41 (1954). [DOI](https://doi.org/10.2307/2332719). The downward bias of about (1 + 3 phi)/n that the simulated years reproduce.

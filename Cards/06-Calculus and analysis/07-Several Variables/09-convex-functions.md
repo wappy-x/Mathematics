@@ -34,40 +34,48 @@ The curved line is the squared error as b runs from 0 to 3, a held at 1.1 cm; th
 
 ## The formula
 
-Notation first, in words. A point is a pair, $p = (a, b)$. Mixing two points with weight t takes t of one and 1 − t of the other: the half-and-half mix of (0, 2) and (2, 1) is (1, 1.5). As t runs from 0 to 1 the mix slides from q to p.
+Notation first, in words. A point is a pair, $`p = (a, b)`$. Mixing two points with weight t takes t of one and 1 − t of the other: the half-and-half mix of (0, 2) and (2, 1) is (1, 1.5). As t runs from 0 to 1 the mix slides from q to p.
 
-$$f\big(tp+(1-t)q\big)\le tf(p)+(1-t)f(q),\quad 0\le t\le 1$$
+```math
+f\big(tp+(1-t)q\big)\le tf(p)+(1-t)f(q),\quad 0\le t\le 1
+```
 
 **Read it aloud:** the function at a mix is at most the mix of its values: graph under chord. **Strictly convex**: strictly under, for p ≠ q and t strictly between 0 and 1.
 
 The seedling's squared error, the sigma sign adding over the measurements:
 
-$$S(a,b)=\sum_{i=1}^{n}\big(y_i-a-bx_i\big)^2$$
+```math
+S(a,b)=\sum_{i=1}^{n}\big(y_i-a-bx_i\big)^2
+```
 
 **Read it aloud:** each measured height minus the line's prediction, squared, then added.
 
-The test uses the Hessian H, the table of second partial derivatives ([Hessian](05-hessian-and-second-order-approximation.md)). Its quadratic form $v^{\top} H v$, read "v transposed H v", is f's second derivative along direction v.
+The test uses the Hessian H, the table of second partial derivatives ([Hessian](05-hessian-and-second-order-approximation.md)). Its quadratic form $`v^{\top} H v`$, read "v transposed H v", is f's second derivative along direction v.
 
-$$v^{\top}Hv\ge 0\quad\text{for every } v \text{, at every point}$$
+```math
+v^{\top}Hv\ge 0\quad\text{for every } v \text{, at every point}
+```
 
 **Read it aloud:** in every direction, everywhere, the graph never curves downward.
 
 Jensen's inequality stretches the chord to k points:
 
-$$f\Big(\sum_{i=1}^{k}\theta_ip_i\Big)\le\sum_{i=1}^{k}\theta_if(p_i),\qquad \theta_i\ge 0,\ \sum_{i=1}^{k}\theta_i=1$$
+```math
+f\Big(\sum_{i=1}^{k}\theta_ip_i\Big)\le\sum_{i=1}^{k}\theta_if(p_i),\qquad \theta_i\ge 0,\ \sum_{i=1}^{k}\theta_i=1
+```
 
 **Read it aloud:** the function at a weighted average of points is at most the weighted average of its values.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | squared error, cm^2 | 0.200 at the best line | a worse fit |
-| $a$, $b$ | start (cm), growth (cm per week) | 1.1 and 1.6 at the bottom | S climbs away from there |
-| $x_i$, $y_i$, $n$ | week, height of measurement i; count | 0 to 3; 1, 3, 4, 6 cm; 4 | larger n, steeper bowl |
-| $f$ | any function under test | S, or the wavy w in What breaks | — |
-| $p$, $q$, $t$ | two points, mixing weight | (0, 2), (2, 1), t = ½ | t near 1 sits near p |
-| $H$ | Hessian: second partial derivatives | `[[8, 12], [12, 28]]` everywhere | steeper walls |
-| $v$ | a direction, a pair of numbers | (2, −1) | — |
-| $\theta_i$, $k$, $p_i$ | Jensen's weights (theta), count, points | 0.5, 0.3, 0.2; 3 points | average moves toward that point |
+| $`S`$ | squared error, cm^2 | 0.200 at the best line | a worse fit |
+| $`a`$, $`b`$ | start (cm), growth (cm per week) | 1.1 and 1.6 at the bottom | S climbs away from there |
+| $`x_i`$, $`y_i`$, $`n`$ | week, height of measurement i; count | 0 to 3; 1, 3, 4, 6 cm; 4 | larger n, steeper bowl |
+| $`f`$ | any function under test | S, or the wavy w in What breaks | — |
+| $`p`$, $`q`$, $`t`$ | two points, mixing weight | (0, 2), (2, 1), t = ½ | t near 1 sits near p |
+| $`H`$ | Hessian: second partial derivatives | `[[8, 12], [12, 28]]` everywhere | steeper walls |
+| $`v`$ | a direction, a pair of numbers | (2, −1) | — |
+| $`\theta_i`$, $`k`$, $`p_i`$ | Jensen's weights (theta), count, points | 0.5, 0.3, 0.2; 3 points | average moves toward that point |
 
 ### When it holds
 
@@ -92,11 +100,13 @@ Convexity only compares points on a segment, and along a line the height is a fu
 
 ### Step 2: the Hessian gives every slice's second derivative
 
-Along the line from p in direction v the height is g(t) = f(p + t v). By [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md), its second derivative is $v^{\top} H v$ at the point reached, nonnegative by the test; Step 1 finishes.
+Along the line from p in direction v the height is g(t) = f(p + t v). By [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md), its second derivative is $`v^{\top} H v`$ at the point reached, nonnegative by the test; Step 1 finishes.
 
 For the seedling, H has entries 2n = 8, twice the week sum = 12, twice the squared-week sum = 28, everywhere. Direction v = (c, d) scores 8c^2 + 24cd + 28d^2, which is
 
-$$v^{\top}Hv=2\sum_{i=1}^{n}\big(c+dx_i\big)^2,$$
+```math
+v^{\top}Hv=2\sum_{i=1}^{n}\big(c+dx_i\big)^2,
+```
 
 a sum of squares, 0 only if c + d x_i = 0 for every measurement: c = d = 0 unless all weeks are equal. So S is strictly convex. The eigenvalues (stretch factors) multiply to the determinant, 8 × 28 − 12^2 = 80, and add to the trace (the diagonal sum, 8 + 28), 36; both positive, so both eigenvalues are: 33.62 and 2.38.
 
@@ -124,7 +134,7 @@ For k = 1 both sides are f(p_1). Assume k − 1 points work. If θ_k = 1 both si
 
 </details>
 
-For S, with constant Hessian, the Jensen gap (right side minus left side) is exactly half the weighted average of $v^{\top} H v$ over the steps from the average point to each point. Two points at weight ½ give the chord gap: steps ±d/2 from the midpoint, d = p − q, so the gap is $d^{\top} H d / 8$. Random averages are [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md).
+For S, with constant Hessian, the Jensen gap (right side minus left side) is exactly half the weighted average of $`v^{\top} H v`$ over the steps from the average point to each point. Two points at weight ½ give the chord gap: steps ±d/2 from the midpoint, d = p − q, so the gap is $`d^{\top} H d / 8`$. Random averages are [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md).
 
 ---
 
@@ -360,10 +370,10 @@ Lean proves the three theorems for any number of variables, and checks the seedl
 
 - Local minimum is global: if f is convex on a domain holding every segment, no point of the domain is lower than a local minimum.
 - Hessian test: let f have two derivatives on an open domain holding every segment (open: each point has room around it in every direction).
-- If $v^{\top} H v \ge 0$ for every direction v at every point of that domain, then f is convex there.
-- Jensen's inequality holds for any k points in a convex f's domain, with weights $\theta_i$ at least 0 that add up to 1.
+- If $`v^{\top} H v \ge 0`$ for every direction v at every point of that domain, then f is convex there.
+- Jensen's inequality holds for any k points in a convex f's domain, with weights $`\theta_i`$ at least 0 that add up to 1.
 - The seedling sums are 6, 14, 14 and 29; the best line is b = 1.6, a = 1.1, with squared error 0.2.
-- S expands so its Hessian is `[[8, 12], [12, 28]]` everywhere, and $v^{\top} H v$ is twice a sum of squares.
+- S expands so its Hessian is `[[8, 12], [12, 28]]` everywhere, and $`v^{\top} H v`$ is twice a sum of squares.
 - The determinant is 80 and the trace is 36.
 - The chord gap is 1.5 both ways, and the Jensen example gives 4.4 against 1.14, a gap of 3.26.
 - With all four measurements in week 2, the determinant is 0 and S(3.5, 0) = S(1.5, 1) = 13.

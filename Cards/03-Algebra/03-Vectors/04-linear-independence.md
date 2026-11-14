@@ -40,9 +40,11 @@ The flat line is t bags of A, t of B and t of C taken back out: an empty barrow 
 
 Name the amounts first, in words: the mix uses x bags of A, y bags of B and z bags of C. A negative amount means bags taken back out; fractions are allowed. Set the mix equal to nothing:
 
-$$x\,A + y\,B + z\,C = 0$$
+```math
+x\,A + y\,B + z\,C = 0
+```
 
-The 0 on the right is the **zero vector**, (0, 0): nothing in either slot. The list A, B, C is **linearly independent** when the only amounts making that true are $x$ = 0, $y$ = 0, $z$ = 0, and **linearly dependent** when some other choice works.
+The 0 on the right is the **zero vector**, (0, 0): nothing in either slot. The list A, B, C is **linearly independent** when the only amounts making that true are $`x`$ = 0, $`y`$ = 0, $`z`$ = 0, and **linearly dependent** when some other choice works.
 
 **Read it aloud:** if the only way to mix these bags and end up with an empty barrow is to use none of any of them, then no bag is redundant.
 
@@ -50,18 +52,20 @@ The sentence is a *for every*: for every set of amounts landing on nothing, ever
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the first blend, in kg of nitrogen and kg of phosphorus | (10, 5) | the relation shifts, the trio stays dependent |
-| $B$ | the second blend | (2, 8) | same again |
-| $C$ | the blend being offered | (12, 13) | the amounts change; C is still a mix of A and B |
-| $x$ | bags of A in the mix; negative means taken back out | 1 | more in the barrow |
-| $y$ | bags of B | 1 | same again, in B's proportions |
-| $z$ | bags of C | −1 | more taken back out |
-| $0$ | the zero vector, (0, 0): nothing in either slot | (0, 0) | — |
+| $`A`$ | the first blend, in kg of nitrogen and kg of phosphorus | (10, 5) | the relation shifts, the trio stays dependent |
+| $`B`$ | the second blend | (2, 8) | same again |
+| $`C`$ | the blend being offered | (12, 13) | the amounts change; C is still a mix of A and B |
+| $`x`$ | bags of A in the mix; negative means taken back out | 1 | more in the barrow |
+| $`y`$ | bags of B | 1 | same again, in B's proportions |
+| $`z`$ | bags of C | −1 | more taken back out |
+| $`0`$ | the zero vector, (0, 0): nothing in either slot | (0, 0) | — |
 | the cross-number | first slot times the other's second slot, minus the other way round | 70, for A and B | only zero against not-zero matters |
 
 A second wording: a list is dependent exactly when one of its vectors sits in the span of the rest: the set of every mix of them ([Linear combinations and span](03-linear-combinations-and-span.md)).
 
-$$C = x\,A + y\,B$$
+```math
+C = x\,A + y\,B
+```
 
 Here x = 1 and y = 1 do it.
 
@@ -85,7 +89,9 @@ The span of A and B is every target those two bags can be mixed to hit. C = (12,
 
 Start from C = 1A + 1B. Subtract C from both sides:
 
-$$1\,A + 1\,B - 1\,C = 0$$
+```math
+1\,A + 1\,B - 1\,C = 0
+```
 
 Amounts 1, 1 and −1: not all zero, and the barrow is empty. Dependence found.
 

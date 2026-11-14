@@ -36,51 +36,57 @@ The kinked upper line is what the option settles for: nothing at or below the st
 
 ## The formula
 
-Eight letters and one function, each named before it is used. $F$ is the **forward price**: the cash figure quoted today for delivery at the option's expiry. $K$ is the **strike**, the figure the payoff is measured against. $T$ is the wait to expiry, in years. $r$ is the **bank rate** a safe loan costs, continuously compounded: added at every instant. $\sigma$ (say "sigma") is the forward's **volatility**: how jumpy the quote is, as a yearly fraction of itself. $D$ is the **discount factor** $e^{-rT}$: what a dollar due on expiry day costs today. $N(x)$ is the **bell-curve area** to the left of $x$, a chance between 0 and 1. And $C$ and $P$ are the two premiums, paid today: the call's and the put's.
+Eight letters and one function, each named before it is used. $`F`$ is the **forward price**: the cash figure quoted today for delivery at the option's expiry. $`K`$ is the **strike**, the figure the payoff is measured against. $`T`$ is the wait to expiry, in years. $`r`$ is the **bank rate** a safe loan costs, continuously compounded: added at every instant. $`\sigma`$ (say "sigma") is the forward's **volatility**: how jumpy the quote is, as a yearly fraction of itself. $`D`$ is the **discount factor** $`e^{-rT}`$: what a dollar due on expiry day costs today. $`N(x)`$ is the **bell-curve area** to the left of $`x`$, a chance between 0 and 1. And $`C`$ and $`P`$ are the two premiums, paid today: the call's and the put's.
 
-$$C = D\,\bigl[\,F\,N(d_1) \;-\; K\,N(d_2)\,\bigr], \qquad P = D\,\bigl[\,K\,N(-d_2) \;-\; F\,N(-d_1)\,\bigr]$$
+```math
+C = D\,\bigl[\,F\,N(d_1) \;-\; K\,N(d_2)\,\bigr], \qquad P = D\,\bigl[\,K\,N(-d_2) \;-\; F\,N(-d_1)\,\bigr]
+```
 
 **Read it aloud:** the delivery figure the holder might collect, minus the strike the holder might pay, each weighted by its own chance of happening, and the pair shrunk once to today's money.
 
-$$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-The top of $d_1$ is how far the forward already sits above the strike, measured in logarithms, plus half the variance the wait brings. The bottom, $\sigma\sqrt{T}$, is one **wiggle unit** — the standard deviation of the quote's logarithm over the whole wait, which is how far the quote typically travels. So $d_1$ counts wiggle units of room and $d_2$ is one wiggle unit less.
+The top of $`d_1`$ is how far the forward already sits above the strike, measured in logarithms, plus half the variance the wait brings. The bottom, $`\sigma\sqrt{T}`$, is one **wiggle unit** — the standard deviation of the quote's logarithm over the whole wait, which is how far the quote typically travels. So $`d_1`$ counts wiggle units of room and $`d_2`$ is one wiggle unit less.
 
-Now read what is *absent*. No $r$ inside $d_1$ or $d_2$. No dividend yield anywhere on the card. The rate does one job, the factor $D$ out front. Everything the other route spends its exponents on, the market spent when it quoted 103.05.
+Now read what is *absent*. No $`r`$ inside $`d_1`$ or $`d_2`$. No dividend yield anywhere on the card. The rate does one job, the factor $`D`$ out front. Everything the other route spends its exponents on, the market spent when it quoted 103.05.
 
 Two facts come free. Subtract the put from the call: every bell-curve term pairs off, since the areas left of a point and of its mirror add to 1.
 
-$$C - P = D\,(F - K)$$
+```math
+C - P = D\,(F - K)
+```
 
 A call minus a put is the forward itself, discounted — 2.896925 for Acme, with volatility nowhere in it.
 
-The premium also has a floor and a ceiling: above $D\,(F-K)$, 2.896925, and below $D\,F$, 98.019867, since the most a positive forward can deliver is everything it has. It climbs strictly with volatility across that span, so any quote strictly inside the band comes from exactly one volatility — which is what lets a desk quote this option in volatility rather than dollars. The check runs Acme's premium backwards and recovers 20 percent.
+The premium also has a floor and a ceiling: above $`D\,(F-K)`$, 2.896925, and below $`D\,F`$, 98.019867, since the most a positive forward can deliver is everything it has. It climbs strictly with volatility across that span, so any quote strictly inside the band comes from exactly one volatility — which is what lets a desk quote this option in volatility rather than dollars. The check runs Acme's premium backwards and recovers 20 percent.
 
 | Symbol | Plain meaning | In our example | Push it up and the premium… |
 | --- | --- | --- | --- |
-| $F$ | the forward price quoted today for delivery at expiry | 103.045453 | rises: more to collect |
-| $F_T$ | that same quote on expiry day, unknown today | — | — |
-| $K$ | the strike, the figure the payoff is measured against | 100.00 | falls: further to climb |
-| $T$ | the wait to expiry, in years | 1 | rises: more room to move |
-| $r$ | the bank rate, continuously compounded | 5 percent | falls: discounted harder |
-| $\sigma$ | the forward's volatility, how jumpy the quote is | 20 percent | rises, and it matters most |
-| $D$ | the discount factor $e^{-rT}$ | 0.951229 | — |
-| $N(x)$ | the bell-curve area to the left of $x$ | — | — |
-| $\phi(x)$ | the bell curve's height at $x$, not its area | $\phi(d_1) = 0.386668$ | — |
-| $d_1$ | the lead over the strike in wiggle units, plus half a unit | 0.250000 | — |
-| $d_2$ | the same lead, minus half a unit | 0.050000 | — |
-| $C$ | the call premium, paid today | 9.227006 | — |
-| $P$ | the put premium, paid today | 6.330081 | — |
+| $`F`$ | the forward price quoted today for delivery at expiry | 103.045453 | rises: more to collect |
+| $`F_T`$ | that same quote on expiry day, unknown today | — | — |
+| $`K`$ | the strike, the figure the payoff is measured against | 100.00 | falls: further to climb |
+| $`T`$ | the wait to expiry, in years | 1 | rises: more room to move |
+| $`r`$ | the bank rate, continuously compounded | 5 percent | falls: discounted harder |
+| $`\sigma`$ | the forward's volatility, how jumpy the quote is | 20 percent | rises, and it matters most |
+| $`D`$ | the discount factor $`e^{-rT}`$ | 0.951229 | — |
+| $`N(x)`$ | the bell-curve area to the left of $`x`$ | — | — |
+| $`\phi(x)`$ | the bell curve's height at $`x`$, not its area | $`\phi(d_1) = 0.386668`$ | — |
+| $`d_1`$ | the lead over the strike in wiggle units, plus half a unit | 0.250000 | — |
+| $`d_2`$ | the same lead, minus half a unit | 0.050000 | — |
+| $`C`$ | the call premium, paid today | 9.227006 | — |
+| $`P`$ | the put premium, paid today | 6.330081 | — |
 
 ### When it holds
 
 - **The quote wanders lognormally, with one constant volatility — the forward's own, not the asset's.** That is the model, not a fact. If volatility moves, the premium is off by roughly vega, the premium's slope against volatility, times the move; vega here is 37.901158 per whole unit. In most markets that use this formula the forward is the calmer of the two: twelve-month gas moves far less than gas for next month.
 - **The forward and the strike are both above zero.** A logarithm of a negative number is no answer at all. Euro and Swiss rates traded below zero from 2014 and this formula stopped returning anything, which is why the shelf carries [Bachelier](07-bachelier-model.md) and [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
 - **Exercise on expiry day only.** The average runs over the quote on that one day, so nothing earlier can count. Most options on exchange-traded futures may in fact be exercised early; that extra right is worth more than this formula prices, and valuing it needs a tree rather than a formula.
-- **Volatility runs to expiry, the discount to the day the cash arrives.** Here they are the same day, so $D$ is $e^{-rT}$. A caplet fixes its rate on one date and pays months later; using one date for both is the standard way to get a caplet wrong.
+- **Volatility runs to expiry, the discount to the day the cash arrives.** Here they are the same day, so $`D`$ is $`e^{-rT}`$. A caplet fixes its rate on one date and pays months later; using one date for both is the standard way to get a caplet wrong.
 - **The bank rate is known in advance.** Then a daily-settled exchange contract and a private forward carry the same quote. Once the rate moves unpredictably they part company, and the honest discount is the market's own zero-coupon bond price — the change of yardstick in [Changing the unit of account](05-change-of-numeraire-in-pricing.md).
 
-**Conventions verified 19 Sep 2026:** $r$ is continuously compounded and $T$ counts calendar years. Real quotes carry day-count and compounding conventions that differ by market and do get changed; convert before substituting.
+**Conventions verified 19 Sep 2026:** $`r`$ is continuously compounded and $`T`$ counts calendar years. Real quotes carry day-count and compounding conventions that differ by market and do get changed; convert before substituting.
 
 ---
 
@@ -90,62 +96,78 @@ The premium also has a floor and a ceiling: above $D\,(F-K)$, 2.896925, and belo
 
 Signing a forward takes no money. Whatever pricing rule the market obeys must give a position that cost nothing an average gain of nothing, or anyone would sign a billion of them and stand back ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). The gain on a forward held to delivery is the final quote minus today's. Set its average to zero:
 
-$$\text{average of } F_T \;=\; F$$
+```math
+\text{average of } F_T \;=\; F
+```
 
-A forward is a fair bet on its own number. Compare a share, which must grow at the carry rate to be worth holding. The carry did not vanish from the problem; it moved out of the formula and into $F$. The rest of this card works that one sentence out.
+A forward is a fair bet on its own number. Compare a share, which must grow at the carry rate to be worth holding. The carry did not vanish from the problem; it moved out of the formula and into $`F`$. The rest of this card works that one sentence out.
 
 ### Step 1: on expiry day the forward quote is just the price
 
 The option and the forward end on the same day, and on that morning there is nothing left to carry: delivery is today, so the quoted delivery figure and Acme's own price are one number. The payoff is
 
-$$(F_T - K)^+ \;=\; \max(F_T - K,\ 0)$$
+```math
+(F_T - K)^+ \;=\; \max(F_T - K,\ 0)
+```
 
-where $F_T$ is the quote on expiry day and $(\cdot)^+$ means "that, or zero, whichever is larger". At a quote of 120 the option settles for 20.00; at 80, for nothing.
+where $`F_T`$ is the quote on expiry day and $`(\cdot)^+`$ means "that, or zero, whichever is larger". At a quote of 120 the option settles for 20.00; at 80, for nothing.
 
-That is why this card and the spot cards agree to the last digit: one contract, two coordinate systems. The spot cards are the ones that start from the spot price, Acme's own price today. Where the option expires *before* delivery — the ordinary case on a commodity future, whose option dies weeks before the barrels move — they are no longer the same contract, $F_T$ is a quote in its own right, and the formula is unchanged.
+That is why this card and the spot cards agree to the last digit: one contract, two coordinate systems. The spot cards are the ones that start from the spot price, Acme's own price today. Where the option expires *before* delivery — the ordinary case on a commodity future, whose option dies weeks before the barrels move — they are no longer the same contract, $`F_T`$ is a quote in its own right, and the formula is unchanged.
 
 ### Step 2: a forward that drifts nowhere, written out
 
 Step 0 fixed the average; the model fixes the shape. Take the quote's logarithm to wander as a bell curve, the engine the shelf opens with ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md)), with the drift set to nothing:
 
-$$F_T = F\,\exp\!\left(-\tfrac12\sigma^2 T + \sigma\sqrt{T}\,Z\right), \qquad Z \ \text{a standard bell-curve draw}$$
+```math
+F_T = F\,\exp\!\left(-\tfrac12\sigma^2 T + \sigma\sqrt{T}\,Z\right), \qquad Z \ \text{a standard bell-curve draw}
+```
 
-The $-\tfrac12\sigma^2 T$ is not a fudge. Wiggling drags on a quantity that multiplies: up 50 percent then down 50 percent ends 25 percent below the start, though the average move was nothing. That term is exactly the drag that keeps the average of $F_T$ equal to $F$, which is what Step 0 demanded.
+The $`-\tfrac12\sigma^2 T`$ is not a fudge. Wiggling drags on a quantity that multiplies: up 50 percent then down 50 percent ends 25 percent below the start, though the average move was nothing. That term is exactly the drag that keeps the average of $`F_T`$ equal to $`F`$, which is what Step 0 demanded.
 
 ### Step 3: average the payoff, and the two halves appear
 
 The payoff is cash on one future date, so today's value is the discount factor times the average payoff. Split the payoff first:
 
-$$(F_T - K)^+ \;=\; F_T \cdot [\text{quote above } K] \;-\; K \cdot [\text{quote above } K]$$
+```math
+(F_T - K)^+ \;=\; F_T \cdot [\text{quote above } K] \;-\; K \cdot [\text{quote above } K]
+```
 
 The bracket is a light switch: 1 if the quote finishes above the strike, 0 if not. Check it at 120 — switch on, collect 120, pay 100, net 20. At 80, switch off, nothing happens.
 
-The **strike half** is easy. The holder pays $K$, but only with the switch on, so it is worth $K$ times that chance times the discount. In Step 2's model the quote clears the strike exactly when the bell-curve draw lands above $-d_2$, and by symmetry that chance is $N(d_2)$, or 0.519939: a little better than a coin flip. The half is $D\,K\,N(d_2)$, which is 49.458109.
+The **strike half** is easy. The holder pays $`K`$, but only with the switch on, so it is worth $`K`$ times that chance times the discount. In Step 2's model the quote clears the strike exactly when the bell-curve draw lands above $`-d_2`$, and by symmetry that chance is $`N(d_2)`$, or 0.519939: a little better than a coin flip. The half is $`D\,K\,N(d_2)`$, which is 49.458109.
 
-The **forward half** carries the subtlety, the same one the spot card meets. What is collected is not a fixed number of dollars but the quote itself, and the quote is larger in exactly those futures where it is collected. Averaging "the quote, if above the strike" therefore weights the good futures extra, and weighting the bell curve that way slides the whole curve right by one wiggle unit. Same event, shifted curve: the chance becomes $N(d_2 + \sigma\sqrt{T})$, which is $N(d_1)$, or 0.598706. The half is $D\,F\,N(d_1)$, which is 58.685115.
+The **forward half** carries the subtlety, the same one the spot card meets. What is collected is not a fixed number of dollars but the quote itself, and the quote is larger in exactly those futures where it is collected. Averaging "the quote, if above the strike" therefore weights the good futures extra, and weighting the bell curve that way slides the whole curve right by one wiggle unit. Same event, shifted curve: the chance becomes $`N(d_2 + \sigma\sqrt{T})`$, which is $`N(d_1)`$, or 0.598706. The half is $`D\,F\,N(d_1)`$, which is 58.685115.
 
 Subtract: 58.685115 − 49.458109 = 9.227006. Two probability-weighted bets, one discount, and no opinion anywhere about where Acme is going.
 
 <details>
 <summary>Detailed proof: the two integrals, and why the curve slides</summary>
 
-Average the payoff over the bell-curve draw, whose height is $\phi(z) = e^{-z^2/2}/\sqrt{2\pi}$. By Step 2 the quote clears the strike exactly when
-$$F\exp\!\left(-\tfrac12\sigma^2T + \sigma\sqrt{T}\,z\right) > K \iff z > \frac{\ln(K/F) + \tfrac12\sigma^2T}{\sigma\sqrt{T}} = -d_2 ,$$
-so the strike half is $K$ times the area above $-d_2$, which by symmetry is $N(d_2)$. The forward half carries the quote inside the integral, and completing the square in its exponent gives
-$$e^{-\frac12\sigma^2T + \sigma\sqrt{T}z}\,\frac{e^{-z^2/2}}{\sqrt{2\pi}} \;=\; \frac{1}{\sqrt{2\pi}}\exp\!\left(-\tfrac12\bigl(z - \sigma\sqrt{T}\bigr)^2\right) \;=\; \phi\!\left(z - \sigma\sqrt{T}\right).$$
-The stray factors cancel exactly, and that cancellation *is* the $-\tfrac12\sigma^2T$ earning its place. What remains is a bell curve centred one wiggle unit right, so substituting $u = z - \sigma\sqrt{T}$ turns the limit $-d_2$ into $-d_1$ and the integral into $F\,N(d_1)$. Multiply both halves by $D$ and subtract; the same substitution below the boundary gives the put. Positive volatility spreads the quote smoothly, so finishing exactly at the strike has chance zero and needs no separate case.
+Average the payoff over the bell-curve draw, whose height is $`\phi(z) = e^{-z^2/2}/\sqrt{2\pi}`$. By Step 2 the quote clears the strike exactly when
+
+$`\displaystyle F\exp\!\left(-\tfrac12\sigma^2T + \sigma\sqrt{T}\,z\right) > K \iff z > \frac{\ln(K/F) + \tfrac12\sigma^2T}{\sigma\sqrt{T}} = -d_2 ,`$
+
+so the strike half is $`K`$ times the area above $`-d_2`$, which by symmetry is $`N(d_2)`$. The forward half carries the quote inside the integral, and completing the square in its exponent gives
+
+$`\displaystyle e^{-\frac12\sigma^2T + \sigma\sqrt{T}z}\,\frac{e^{-z^2/2}}{\sqrt{2\pi}} \;=\; \frac{1}{\sqrt{2\pi}}\exp\!\left(-\tfrac12\bigl(z - \sigma\sqrt{T}\bigr)^2\right) \;=\; \phi\!\left(z - \sigma\sqrt{T}\right).`$
+
+The stray factors cancel exactly, and that cancellation *is* the $`-\tfrac12\sigma^2T`$ earning its place. What remains is a bell curve centred one wiggle unit right, so substituting $`u = z - \sigma\sqrt{T}`$ turns the limit $`-d_2`$ into $`-d_1`$ and the integral into $`F\,N(d_1)`$. Multiply both halves by $`D`$ and subtract; the same substitution below the boundary gives the put. Positive volatility spreads the quote smoothly, so finishing exactly at the strike has chance zero and needs no separate case.
 
 </details>
 
 ### Step 4: the other road — relabel the spot formula, and watch the carry collapse
 
-The shelf's spot formula is $C = S\,e^{-qT}N(d_1) - K\,e^{-rT}N(d_2)$, with $S$, Acme's price today, and $q$, its dividend yield, inside the distances, and the forward is $F = S\,e^{(r-q)T}$. Substitute, and two collapses happen at once. First the top of each distance:
+The shelf's spot formula is $`C = S\,e^{-qT}N(d_1) - K\,e^{-rT}N(d_2)`$, with $`S`$, Acme's price today, and $`q`$, its dividend yield, inside the distances, and the forward is $`F = S\,e^{(r-q)T}`$. Substitute, and two collapses happen at once. First the top of each distance:
 
-$$\ln\frac{S}{K} + \left(r - q \pm \tfrac12\sigma^2\right)T \;=\; \ln\frac{S\,e^{(r-q)T}}{K} \pm \tfrac12\sigma^2 T \;=\; \ln\frac{F}{K} \pm \tfrac12\sigma^2 T$$
+```math
+\ln\frac{S}{K} + \left(r - q \pm \tfrac12\sigma^2\right)T \;=\; \ln\frac{S\,e^{(r-q)T}}{K} \pm \tfrac12\sigma^2 T \;=\; \ln\frac{F}{K} \pm \tfrac12\sigma^2 T
+```
 
 The carry has been eaten by the logarithm. Then the coefficient in front:
 
-$$S\,e^{-qT} \;=\; \left(F\,e^{-(r-q)T}\right)e^{-qT} \;=\; F\,e^{-rT} \;=\; D\,F$$
+```math
+S\,e^{-qT} \;=\; \left(F\,e^{-(r-q)T}\right)e^{-qT} \;=\; F\,e^{-rT} \;=\; D\,F
+```
 
 The dividend yield cancels itself, and the two separate discount factors merge into one. So this is not a second theory: one object in two coordinate systems.
 
@@ -162,23 +184,29 @@ Two doors, one room: Acme's price today on the left, the quoted forward in the m
 
 A slope means nothing until the thing held still is named, and the two coordinate systems hold different things still.
 
-Differentiate the call in $F$. The two bell-curve-*height* terms cancel, because $F\,\phi(d_1) = K\,\phi(d_2)$ for these two distances, leaving
+Differentiate the call in $`F`$. The two bell-curve-*height* terms cancel, because $`F\,\phi(d_1) = K\,\phi(d_2)`$ for these two distances, leaving
 
-$$\Delta \;=\; \frac{\partial C}{\partial F} \;=\; D\,N(d_1) \;=\; 0.569507 .$$
+```math
+\Delta \;=\; \frac{\partial C}{\partial F} \;=\; D\,N(d_1) \;=\; 0.569507 .
+```
 
-The premium moves about 57 cents per dollar on the quote. The spot card's delta is 0.586851 — about 59 cents per dollar on *Acme itself*. Both are right; they answer different questions. The chain rule joins them, since a dollar on Acme is $e^{(r-q)T}$ dollars on the forward; the check reaches that 0.586851 a third way, by nudging Acme's price in the spot formula.
+The premium moves about 57 cents per dollar on the quote. The spot card's delta is 0.586851 — about 59 cents per dollar on *Acme itself*. Both are right; they answer different questions. The chain rule joins them, since a dollar on Acme is $`e^{(r-q)T}`$ dollars on the forward; the check reaches that 0.586851 a third way, by nudging Acme's price in the spot formula.
 
-Rho, the slope against the rate, is sharper. Hold the quote still and raise the rate: nothing in the brackets moves, only $D$, so
+Rho, the slope against the rate, is sharper. Hold the quote still and raise the rate: nothing in the brackets moves, only $`D`$, so
 
-$$\rho\Big|_{F} \;=\; -T\,C \;=\; -9.227006 .$$
+```math
+\rho\Big|_{F} \;=\; -T\,C \;=\; -9.227006 .
+```
 
-The premium *falls* — the same payoff, discounted harder. Now hold Acme's price still instead. The forward rises too, by $T\,F$ per unit of rate, so a second term appears; and since $D\,F\,N(d_1) - C$ is exactly $D\,K\,N(d_2)$, the two combine into something positive:
+The premium *falls* — the same payoff, discounted harder. Now hold Acme's price still instead. The forward rises too, by $`T\,F`$ per unit of rate, so a second term appears; and since $`D\,F\,N(d_1) - C`$ is exactly $`D\,K\,N(d_2)`$, the two combine into something positive:
 
-$$-T\,C \;+\; D\,N(d_1)\cdot T\,F \;=\; T\,K\,D\,N(d_2) \;=\; 49.458109 .$$
+```math
+-T\,C \;+\; D\,N(d_1)\cdot T\,F \;=\; T\,K\,D\,N(d_2) \;=\; 49.458109 .
+```
 
 One option, one afternoon, two rate sensitivities of opposite sign, and neither is wrong.
 
-A third road belongs to another card: write the hedge rather than the average. A futures position ties up no cash, so the equation the premium must obey loses its carry term, leaving, for a premium $V$ at time $t$, $\partial V/\partial t + \tfrac12\sigma^2 F^2\,\partial^2 V/\partial F^2 = r\,V$ — the premium's slide with the clock, plus its bend against the quote, must earn the bank rate. It returns the same formula, and the hedging route is done properly on [Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md).
+A third road belongs to another card: write the hedge rather than the average. A futures position ties up no cash, so the equation the premium must obey loses its carry term, leaving, for a premium $`V`$ at time $`t`$, $`\partial V/\partial t + \tfrac12\sigma^2 F^2\,\partial^2 V/\partial F^2 = r\,V`$ — the premium's slide with the clock, plus its bend against the quote, must earn the bank rate. It returns the same formula, and the hedging route is done properly on [Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md).
 
 ---
 
@@ -188,37 +216,37 @@ Acme's forward at 103.045453, strike 100.00, bank rate 5 percent, the forward's 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the forward, carried from Acme's price | $100.00 \times e^{(0.05 - 0.02) \times 1}$ | 103.045453 |
-| the forward's lead over the strike, in logs | $\ln(103.045453/100.00)$ | 0.030000 |
-| one wiggle unit, $\sigma\sqrt{T}$ | $0.20 \times \sqrt{1}$ | 0.200000 |
-| $d_1$ | $(0.030000 + \tfrac12 \times 0.200000^2)\,/\,0.200000$ | 0.250000 |
-| $d_2$ | $0.250000 - 0.200000$ | 0.050000 |
-| $N(d_1)$, the chance counted in forwards | bell-curve area | 0.598706 |
-| $N(d_2)$, the chance counted in cash | bell-curve area | 0.519939 |
-| the discount $D$ | $e^{-0.05}$ | 0.951229 |
-| forward half, $D\,F\,N(d_1)$ | $0.951229 \times 103.045453 \times 0.598706$ | 58.685115 |
-| strike half, $D\,K\,N(d_2)$ | $0.951229 \times 100.00 \times 0.519939$ | 49.458109 |
-| **the call premium** | $58.685115 - 49.458109$ | **9.227006** |
-| the put, from its own formula | $D\,[K\,N(-d_2) - F\,N(-d_1)]$ | 6.330081 |
-| parity, both sides computed apart | $C-P$ and $D(F-K)$ | 2.896925 |
-| the premium financed to expiry | $9.227006\,/\,0.951229$ | 9.700084 |
-| break-even quote at expiry | $100.00 + 9.700084$ | 109.700084 |
+| the forward, carried from Acme's price | $`100.00 \times e^{(0.05 - 0.02) \times 1}`$ | 103.045453 |
+| the forward's lead over the strike, in logs | $`\ln(103.045453/100.00)`$ | 0.030000 |
+| one wiggle unit, $`\sigma\sqrt{T}`$ | $`0.20 \times \sqrt{1}`$ | 0.200000 |
+| $`d_1`$ | $`(0.030000 + \tfrac12 \times 0.200000^2)\,/\,0.200000`$ | 0.250000 |
+| $`d_2`$ | $`0.250000 - 0.200000`$ | 0.050000 |
+| $`N(d_1)`$, the chance counted in forwards | bell-curve area | 0.598706 |
+| $`N(d_2)`$, the chance counted in cash | bell-curve area | 0.519939 |
+| the discount $`D`$ | $`e^{-0.05}`$ | 0.951229 |
+| forward half, $`D\,F\,N(d_1)`$ | $`0.951229 \times 103.045453 \times 0.598706`$ | 58.685115 |
+| strike half, $`D\,K\,N(d_2)`$ | $`0.951229 \times 100.00 \times 0.519939`$ | 49.458109 |
+| **the call premium** | $`58.685115 - 49.458109`$ | **9.227006** |
+| the put, from its own formula | $`D\,[K\,N(-d_2) - F\,N(-d_1)]`$ | 6.330081 |
+| parity, both sides computed apart | $`C-P`$ and $`D(F-K)`$ | 2.896925 |
+| the premium financed to expiry | $`9.227006\,/\,0.951229`$ | 9.700084 |
+| break-even quote at expiry | $`100.00 + 9.700084`$ | 109.700084 |
 
 The option costs 9.23 this morning. A buyer who borrows that premium needs the quote above 109.70 on expiry day to come out ahead; a buyer who sells the option earlier needs no such thing. Starting from 100.00 instead, [Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md) reaches the same 9.227006.
 
 ### The Greeks at these numbers
 
-Each row is the premium's slope against one input with everything else held still. $\phi(d_1)$ is the bell curve's *height* at $d_1$, not its area: 0.386668 here.
+Each row is the premium's slope against one input with everything else held still. $`\phi(d_1)`$ is the bell curve's *height* at $`d_1`$, not its area: 0.386668 here.
 
 | Sensitivity | What it answers | Formula | Value |
 | --- | --- | --- | --- |
-| $\Delta$ | premium change per dollar on the quote | $D\,N(d_1)$ | 0.569507 |
-| $\Gamma$ | delta change per dollar on the quote | $D\,\phi(d_1)\,/\,(F\sigma\sqrt{T})$ | 0.017847 |
-| vega | premium change per unit of volatility | $D\,F\,\phi(d_1)\sqrt{T}$ | 37.901158 |
-| $\Theta$ | premium change per year of waiting, at today's numbers | $r\,C - D\,F\,\phi(d_1)\,\sigma/(2\sqrt{T})$ | -3.328765 |
-| $\rho$ | premium change per unit of rate, quote held still | $-T\,C$ | -9.227006 |
+| $`\Delta`$ | premium change per dollar on the quote | $`D\,N(d_1)`$ | 0.569507 |
+| $`\Gamma`$ | delta change per dollar on the quote | $`D\,\phi(d_1)\,/\,(F\sigma\sqrt{T})`$ | 0.017847 |
+| vega | premium change per unit of volatility | $`D\,F\,\phi(d_1)\sqrt{T}`$ | 37.901158 |
+| $`\Theta`$ | premium change per year of waiting, at today's numbers | $`r\,C - D\,F\,\phi(d_1)\,\sigma/(2\sqrt{T})`$ | -3.328765 |
+| $`\rho`$ | premium change per unit of rate, quote held still | $`-T\,C`$ | -9.227006 |
 
-Three need a word. Vega is per *whole* unit of volatility, so desks divide it by a hundred for the change per percentage point. $\Theta$ is negative here but need not be: the first of its two terms carries the rate and can win. And $\rho$ here holds the quote still; Step 5's other convention gives 49.458109.
+Three need a word. Vega is per *whole* unit of volatility, so desks divide it by a hundred for the change per percentage point. $`\Theta`$ is negative here but need not be: the first of its two terms carries the rate and can win. And $`\rho`$ here holds the quote still; Step 5's other convention gives 49.458109.
 
 ### What breaks if you drop a piece
 
@@ -226,16 +254,16 @@ The correct premium is 9.227006, and both checks compute each mistake below.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The rate put back inside $d_1$ and $d_2$ | 8.999506 | Carry counted twice: in the quoted 103.045453, then again in the exponents |
-| The discount $D$ dropped | 9.700084 | That is the premium as if handed over on expiry day, not today |
+| The rate put back inside $`d_1`$ and $`d_2`$ | 8.999506 | Carry counted twice: in the quoted 103.045453, then again in the exponents |
+| The discount $`D`$ dropped | 9.700084 | That is the premium as if handed over on expiry day, not today |
 | Acme's price 100.00 used where the forward belongs | 7.577082 | Priced an option on a figure the payoff never reads |
-| $N(d_2)$ used for both halves | 1.506224 | Counted the forward in dollars; it is worth more where it is collected |
+| $`N(d_2)`$ used for both halves | 1.506224 | Counted the forward in dollars; it is worth more where it is collected |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported holds the answer: the integrator, the tree and the root finder are written out in the file. The premium is reached **four independent ways** — the formula; a brute-force average of the payoff over the driftless forward, which never mentions $d_1$ or $d_2$; a coin-flip tree on the forward, where the up-chance follows from the average staying put and one discount lands at the end; and the spot formula run on Acme's 100.00. The put is built on its own and checked against parity, every Greek against a nudged price, the stock delta against a nudge of Acme's own price, and the premium is run backwards to recover 20 percent. Python reaches the bell-curve area through `math.erf`; Rust has none, so it adds up thin slices under the curve.
+Nothing imported holds the answer: the integrator, the tree and the root finder are written out in the file. The premium is reached **four independent ways** — the formula; a brute-force average of the payoff over the driftless forward, which never mentions $`d_1`$ or $`d_2`$; a coin-flip tree on the forward, where the up-chance follows from the average staying put and one discount lands at the end; and the spot formula run on Acme's 100.00. The put is built on its own and checked against parity, every Greek against a nudged price, the stock delta against a nudge of Acme's own price, and the premium is run backwards to recover 20 percent. Python reaches the bell-curve area through `math.erf`; Rust has none, so it adds up thin slices under the curve.
 
 ### Python
 
@@ -669,13 +697,13 @@ The two outputs match line for line, though the bell-curve area behind them was 
 
 Lean proves the premium formula, parity, the spot match and the premium band for every input meeting the conditions below.
 
-- Take $F$, $K$, $\sigma$ and $T$ above zero, and $F_T$ as in Step 2 with $Z$ a standard bell-curve draw. Then $C$ is $D$ times the average of $(F_T - K)^+$. Likewise $P$ is $D$ times the average of $(K - F_T)^+$.
-- Take the same four inputs. Then $C - P = D\,(F - K)$, whatever the volatility.
-- Take a spot price $S$ above zero and any dividend yield $q$. Then the spot formula of Step 4 equals $C$ on the forward $F = S\,e^{(r-q)T}$.
-- Take $F$, $K$ and $T$ above zero. Then at every volatility above zero, $C$ lies strictly between $D\,(F-K)^+$ and $D\,F$.
-- Under the same conditions, $C$ climbs strictly as the volatility rises.
-- Take any quote strictly between $D\,(F-K)^+$ and $D\,F$. Then exactly one volatility above zero gives that quote as $C$.
-- Acme's $d_1 = 0.25$ and $d_2 = 0.05$ hold exactly, and so does $(r - q)\,T = 0.03$. So do the payoff chart and Step 3's switch check at 120.
+- Take $`F`$, $`K`$, $`\sigma`$ and $`T`$ above zero, and $`F_T`$ as in Step 2 with $`Z`$ a standard bell-curve draw. Then $`C`$ is $`D`$ times the average of $`(F_T - K)^+`$. Likewise $`P`$ is $`D`$ times the average of $`(K - F_T)^+`$.
+- Take the same four inputs. Then $`C - P = D\,(F - K)`$, whatever the volatility.
+- Take a spot price $`S`$ above zero and any dividend yield $`q`$. Then the spot formula of Step 4 equals $`C`$ on the forward $`F = S\,e^{(r-q)T}`$.
+- Take $`F`$, $`K`$ and $`T`$ above zero. Then at every volatility above zero, $`C`$ lies strictly between $`D\,(F-K)^+`$ and $`D\,F`$.
+- Under the same conditions, $`C`$ climbs strictly as the volatility rises.
+- Take any quote strictly between $`D\,(F-K)^+`$ and $`D\,F`$. Then exactly one volatility above zero gives that quote as $`C`$.
+- Acme's $`d_1 = 0.25`$ and $`d_2 = 0.05`$ hold exactly, and so does $`(r - q)\,T = 0.03`$. So do the payoff chart and Step 3's switch check at 120.
 
 The premium of 9.227006, the Greeks, the tree and the four mistakes' numbers are left to the Python and Rust checks.
 
@@ -1205,9 +1233,9 @@ example : (120 : ℚ) * 1 - 100 * 1 = 20 := by norm_num
 > **Treating Black-76 as a second theory.** It is the same model written in the coordinates the market happens to quote. Step 4 substitutes in two lines, and the check pins the two premiums together to a millionth of a millionth. What changes is where the carry is written down, not what is priced — which is why a "Black volatility" and a "Black-Scholes volatility" on one option are one number.
 >
 > Four traps, each with a wrong number attached:
-> - **Putting the rate back inside $d_1$ and $d_2$.** The carry is in the quote already; counting it again prices the Acme option at 8.999506 instead of 9.227006. This is the commonest error on this formula.
-> - **Dropping the discount because "futures settle daily".** Some exchange contracts do margin the *premium* itself; those are a different contract with nothing to discount. This card's payoff is cash on one date, so drop $D$ and the answer becomes 9.700084. Read the contract first.
-> - **Reading $N(d_1)$ as the chance of exercise.** That chance is $N(d_2)$, 0.519939, and only inside the pricing model's world. $N(d_1)$, 0.598706, is the same chance counted in forwards rather than cash. Use $N(d_2)$ on both halves and the option comes out at 1.506224.
+> - **Putting the rate back inside $`d_1`$ and $`d_2`$.** The carry is in the quote already; counting it again prices the Acme option at 8.999506 instead of 9.227006. This is the commonest error on this formula.
+> - **Dropping the discount because "futures settle daily".** Some exchange contracts do margin the *premium* itself; those are a different contract with nothing to discount. This card's payoff is cash on one date, so drop $`D`$ and the answer becomes 9.700084. Read the contract first.
+> - **Reading $`N(d_1)`$ as the chance of exercise.** That chance is $`N(d_2)`$, 0.519939, and only inside the pricing model's world. $`N(d_1)`$, 0.598706, is the same chance counted in forwards rather than cash. Use $`N(d_2)`$ on both halves and the option comes out at 1.506224.
 > - **Mixing the two rate sensitivities.** −9.227006 holds the quote still; 49.458109 holds Acme's price still. Both belong on a risk report; netting one against the other reports an exposure nobody has.
 
 ---
@@ -1215,7 +1243,7 @@ example : (120 : ℚ) * 1 - 100 * 1 = 20 := by norm_num
 ## Where you meet it in real life
 
 - **Commodity futures options.** Black's 1976 paper was about commodity contracts, and options on crude, gas, gold and grain futures are still quoted through this formula: [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md).
-- **Caps and floors.** A caplet is this call with a forward interest rate where $F$ sits, times the loan's face amount and the length of the interest period, because a rate is not a payment: four percent of a million for a year is. See [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
+- **Caps and floors.** A caplet is this call with a forward interest rate where $`F`$ sits, times the loan's face amount and the length of the interest period, because a rate is not a payment: four percent of a million for a year is. See [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
 - **Options on bonds and swaps.** The same skeleton with a forward swap rate or forward bond price, and a different multiplier in front: [Bond options](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md).
 - **Currencies.** An option on an exchange rate is this formula on the currency forward, both countries' rates already folded into the quote: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
 - **Credit.** An option on a credit spread is written on a forward spread and quoted in the volatility this formula implies: [Options on a CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md).
@@ -1252,6 +1280,6 @@ Verified 19 Sep 2026: every link below resolves to the publisher's page.
 
 - Black, Fischer. "The Pricing of Commodity Contracts." *Journal of Financial Economics* 3, no. 1–2 (1976): 167–179. [doi:10.1016/0304-405X(76)90024-6](https://doi.org/10.1016/0304-405X(76)90024-6). The original: options priced off a futures figure rather than a spot one.
 - Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The parent formula Step 4 relabels.
-- Cox, John C., Jonathan E. Ingersoll, and Stephen A. Ross. "The Relation between Forward Prices and Futures Prices." *Journal of Financial Economics* 9, no. 4 (1981): 321–346. [doi:10.1016/0304-405X(81)90002-7](https://doi.org/10.1016/0304-405X(81)90002-7). Why a known, fixed rate lets a daily-settled futures figure and a private forward share one $F$.
-- Geman, Hélyette, Nicole El Karoui, and Jean-Charles Rochet. "Changes of Numéraire, Changes of Probability Measure and Option Pricing." *Journal of Applied Probability* 32, no. 2 (1995): 443–458. [doi:10.2307/3215299](https://doi.org/10.2307/3215299). The careful version of Step 0, and what replaces $D$ when the rate moves.
+- Cox, John C., Jonathan E. Ingersoll, and Stephen A. Ross. "The Relation between Forward Prices and Futures Prices." *Journal of Financial Economics* 9, no. 4 (1981): 321–346. [doi:10.1016/0304-405X(81)90002-7](https://doi.org/10.1016/0304-405X(81)90002-7). Why a known, fixed rate lets a daily-settled futures figure and a private forward share one $`F`$.
+- Geman, Hélyette, Nicole El Karoui, and Jean-Charles Rochet. "Changes of Numéraire, Changes of Probability Measure and Option Pricing." *Journal of Applied Probability* 32, no. 2 (1995): 443–458. [doi:10.2307/3215299](https://doi.org/10.2307/3215299). The careful version of Step 0, and what replaces $`D`$ when the rate moves.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The textbook treatment, in the chapter on futures options and Black's model.

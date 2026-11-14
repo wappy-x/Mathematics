@@ -35,48 +35,56 @@ Orange: one fixed run of 20 rounds, chosen by hand, not simulated. It first reac
 
 ## The formula
 
-Notation first, in words. The wing writes a process as $X_n$, read "the value at time n" ([Stochastic processes](01-processes-and-paths.md)). Here $X_n$ is the gambler's pile after round $n$, time is counted in rounds, and one session's sequence of piles is a **path**, the run drawn against time. The pile starts at $x_0$ = 10 chips. The target is $\ell$ = 15 chips, a gap of $a$ = 5 above the start. The **best pile so far**, $M_n$, is the largest of $X_0, X_1, \ldots, X_n$; probabilists call it the **running maximum**. Reaching 15 by round $n$ is the same event as $M_n \ge \ell$.
+Notation first, in words. The wing writes a process as $`X_n`$, read "the value at time n" ([Stochastic processes](01-processes-and-paths.md)). Here $`X_n`$ is the gambler's pile after round $`n`$, time is counted in rounds, and one session's sequence of piles is a **path**, the run drawn against time. The pile starts at $`x_0`$ = 10 chips. The target is $`\ell`$ = 15 chips, a gap of $`a`$ = 5 above the start. The **best pile so far**, $`M_n`$, is the largest of $`X_0, X_1, \ldots, X_n`$; probabilists call it the **running maximum**. Reaching 15 by round $`n`$ is the same event as $`M_n \ge \ell`$.
 
-$$P(M_n \ge \ell) = P(X_n \ge \ell) + P(X_n > \ell), \qquad \ell \ge x_0$$
+```math
+P(M_n \ge \ell) = P(X_n \ge \ell) + P(X_n > \ell), \qquad \ell \ge x_0
+```
 
 **Read it aloud:** the chance the pile has touched the target by round n is the chance it ends at or above the target, plus the chance it ends strictly above.
 
-It rests on one exchange, the reflection principle proper. For any ending pile $b$ at or below the target,
+It rests on one exchange, the reflection principle proper. For any ending pile $`b`$ at or below the target,
 
-$$P(M_n \ge \ell, X_n = b) = P(X_n = 2\ell - b), \qquad b \le \ell$$
+```math
+P(M_n \ge \ell, X_n = b) = P(X_n = 2\ell - b), \qquad b \le \ell
+```
 
 **Read it aloud:** touching the target and ending at b is exactly as likely as ending at b's mirror image, as far above the target as b is below.
 
-Two consequences carry the rest of the card. The law of the best pile, meaning the chance of each value it can take, for any pile $m$ from the start upward:
+Two consequences carry the rest of the card. The law of the best pile, meaning the chance of each value it can take, for any pile $`m`$ from the start upward:
 
-$$P(M_n = m) = P(X_n = m) + P(X_n = m + 1), \qquad m \ge x_0$$
+```math
+P(M_n = m) = P(X_n = m) + P(X_n = m + 1), \qquad m \ge x_0
+```
 
 **Read it aloud:** the chance the best pile is exactly m is the chance of ending at m plus the chance of ending at m + 1.
 
-And the ballot form of first arrival. Write $\tau$ for the first round at which the pile reaches the target. Then
+And the ballot form of first arrival. Write $`\tau`$ for the first round at which the pile reaches the target. Then
 
-$$P(\tau = n) = \frac{a}{n}\, P(X_n = \ell), \qquad a \ge 1,\ n \ge 1$$
+```math
+P(\tau = n) = \frac{a}{n}\, P(X_n = \ell), \qquad a \ge 1,\ n \ge 1
+```
 
 **Read it aloud:** of all the ways to stand at the target after round n, the share that arrive there for the first time at round n is the gap over the number of rounds.
 
-Every probability here counts paths. Each of the $2^n$ win-loss sequences of n rounds has chance $1/2^n$, and $h$ wins leave the pile at $x_0 + 2h - n$, which happens in $C(n, h)$ of them, read "n choose h" ([Simple random walk](02-simple-random-walk.md)).
+Every probability here counts paths. Each of the $`2^n`$ win-loss sequences of n rounds has chance $`1/2^n`$, and $`h`$ wins leave the pile at $`x_0 + 2h - n`$, which happens in $`C(n, h)`$ of them, read "n choose h" ([Simple random walk](02-simple-random-walk.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_n$, $X_0$ | the pile after round n; $X_0$ is the start | an even number of chips at round 20 | — |
-| $n$ | rounds played, the unit of time | 20 | rises: more rounds, more chances to touch |
-| $x_0$ | the starting pile | 10 chips | rises, target fixed: less ground to cover |
-| $\ell$ | the target level | 15 chips | falls: further to climb |
-| $a$ | the gap, $\ell - x_0$ | 5 chips | falls |
-| $M_n$, $M_{20}$ | the best pile so far, largest of $X_0$ to $X_n$ | 15 or more on about 1 run in 4 | — |
-| $b$ | a possible ending pile at or below the target | 12 | its mirror $2\ell - b$ falls |
-| $m$ | a possible best pile | 10 to 30 | its chance falls, in pairs |
-| $\tau$ | the first round at which the pile reaches $\ell$ | round 9 on the pictured run | — |
-| $h$ | the number of winning rounds | 13 or more to end at 15 or above | the pile ends higher |
-| $C(n, h)$, $k$ | ways to choose which h of n rounds were wins; in the Detailed proof, k = (n + a)/2 is the number of wins that leaves the pile at the target | $C(20, 14)$ = 38760 | — |
-| $A_b$, $B_b$ | in the proof: runs that touch $\ell$ and end at b; runs that end at $2\ell - b$ | 38760 each at b = 12 | — |
+| $`X_n`$, $`X_0`$ | the pile after round n; $`X_0`$ is the start | an even number of chips at round 20 | — |
+| $`n`$ | rounds played, the unit of time | 20 | rises: more rounds, more chances to touch |
+| $`x_0`$ | the starting pile | 10 chips | rises, target fixed: less ground to cover |
+| $`\ell`$ | the target level | 15 chips | falls: further to climb |
+| $`a`$ | the gap, $`\ell - x_0`$ | 5 chips | falls |
+| $`M_n`$, $`M_{20}`$ | the best pile so far, largest of $`X_0`$ to $`X_n`$ | 15 or more on about 1 run in 4 | — |
+| $`b`$ | a possible ending pile at or below the target | 12 | its mirror $`2\ell - b`$ falls |
+| $`m`$ | a possible best pile | 10 to 30 | its chance falls, in pairs |
+| $`\tau`$ | the first round at which the pile reaches $`\ell`$ | round 9 on the pictured run | — |
+| $`h`$ | the number of winning rounds | 13 or more to end at 15 or above | the pile ends higher |
+| $`C(n, h)`$, $`k`$ | ways to choose which h of n rounds were wins; in the Detailed proof, k = (n + a)/2 is the number of wins that leaves the pile at the target | $`C(20, 14)`$ = 38760 | — |
+| $`A_b`$, $`B_b`$ | in the proof: runs that touch $`\ell`$ and end at b; runs that end at $`2\ell - b`$ | 38760 each at b = 12 | — |
 
-After 20 rounds the pile is even, so nobody ends at exactly 15: the two terms of the sum are equal, and the answer is twice $P(X_{20} \ge 15)$. At a target the pile can end on, 14 say, doubling is wrong (What breaks, below).
+After 20 rounds the pile is even, so nobody ends at exactly 15: the two terms of the sum are equal, and the answer is twice $`P(X_{20} \ge 15)`$. At a target the pile can end on, 14 say, doubling is wrong (What breaks, below).
 
 ### When it holds
 
@@ -91,13 +99,13 @@ After 20 rounds the pile is even, so nobody ends at exactly 15: the two terms of
 
 ### Step 0: after the first touch, the future is a fresh fair game
 
-The first time the pile stands at 15, what happens next is a new run of fair tosses starting at 15. A fair run and its mirror image, every win swapped for a loss, are equally likely: each sequence of n rounds has chance $1/2^n$. So from the first touch on, ending 3 below 15 and ending 3 above are equally likely. Counting runs that touch 15 becomes counting runs by where they end, and those counts are binomial coefficients.
+The first time the pile stands at 15, what happens next is a new run of fair tosses starting at 15. A fair run and its mirror image, every win swapped for a loss, are equally likely: each sequence of n rounds has chance $`1/2^n`$. So from the first touch on, ending 3 below 15 and ending 3 above are equally likely. Counting runs that touch 15 becomes counting runs by where they end, and those counts are binomial coefficients.
 
 The counting version of this mirror, with votes instead of chips, is proved on [The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md). This card spends its effort on what the mirror says about the process: its best pile, and when it first arrives.
 
 ### Step 1: the mirror is a one-for-one pairing
 
-Take a run that touches 15 and ends at $b$ = 12. Flip every round after the first touch. The pile after the touch now moves the opposite way each round, so it ends at $15 + (15 - 12)$ = 18.
+Take a run that touches 15 and ends at $`b`$ = 12. Flip every round after the first touch. The pile after the touch now moves the opposite way each round, so it ends at $`15 + (15 - 12)`$ = 18.
 
 Go the other way. A run ending at 18 started below 15 and moves one chip at a time, so it stood on 15; flip everything after its first touch and it ends at 12. The two flips undo each other, so the two kinds of run are equally many: 38760 each, out of 1048576. The check counts both over all 2^20 runs and finds them equal at every ending pile from 0 to 14.
 
@@ -108,23 +116,23 @@ A run touching 15 by round 20 ends either at 15 or above, or below 15. The first
 <details>
 <summary>Detailed proof</summary>
 
-Fix a starting pile $x_0$, a target $\ell > x_0$ and a number of rounds $n$. The sample space is the $2^n$ win-loss sequences, each with probability $2^{-n}$ ([Simple random walk](02-simple-random-walk.md)).
+Fix a starting pile $`x_0`$, a target $`\ell > x_0`$ and a number of rounds $`n`$. The sample space is the $`2^n`$ win-loss sequences, each with probability $`2^{-n}`$ ([Simple random walk](02-simple-random-walk.md)).
 
-**The map.** Let $b < \ell$. Let $A_b$ be the sequences whose path reaches $\ell$ at some round and ends at $b$, and $B_b$ the sequences whose path ends at $2\ell - b$. For a sequence in $A_b$, let $\tau$ be its first round at $\ell$, and flip every step after round $\tau$. The path up to $\tau$ is unchanged. After $\tau$ each step is negated, so the new path at round $j \ge \tau$ is $2\ell - X_j$. It ends at $2\ell - b$: the image lies in $B_b$.
+**The map.** Let $`b < \ell`$. Let $`A_b`$ be the sequences whose path reaches $`\ell`$ at some round and ends at $`b`$, and $`B_b`$ the sequences whose path ends at $`2\ell - b`$. For a sequence in $`A_b`$, let $`\tau`$ be its first round at $`\ell`$, and flip every step after round $`\tau`$. The path up to $`\tau`$ is unchanged. After $`\tau`$ each step is negated, so the new path at round $`j \ge \tau`$ is $`2\ell - X_j`$. It ends at $`2\ell - b`$: the image lies in $`B_b`$.
 
-**The inverse.** A path in $B_b$ starts below $\ell$, ends above it and moves by one, so it visits $\ell$; let $\tau'$ be the first visit. Flip every step after $\tau'$. The prefix is unchanged, so $\tau'$ is still the first visit, and the path ends at $2\ell - (2\ell - b) = b$: the image lies in $A_b$. Neither flip moves the first visit, so the two maps undo each other. So $A_b$ and $B_b$ have the same size, and with equal weights $P(A_b) = P(B_b)$: the reflection principle.
+**The inverse.** A path in $`B_b`$ starts below $`\ell`$, ends above it and moves by one, so it visits $`\ell`$; let $`\tau'`$ be the first visit. Flip every step after $`\tau'`$. The prefix is unchanged, so $`\tau'`$ is still the first visit, and the path ends at $`2\ell - (2\ell - b) = b`$: the image lies in $`A_b`$. Neither flip moves the first visit, so the two maps undo each other. So $`A_b`$ and $`B_b`$ have the same size, and with equal weights $`P(A_b) = P(B_b)`$: the reflection principle.
 
-**The sum.** The event $M_n \ge \ell$ splits into $X_n \ge \ell$ (a path ending at or above $\ell$ passed through $\ell$) and the disjoint union of the $A_b$ over $b < \ell$. Summing, $P(M_n \ge \ell) = P(X_n \ge \ell) + \sum_{b < \ell} P(X_n = 2\ell - b) = P(X_n \ge \ell) + P(X_n > \ell)$. At $\ell = x_0$ the formula still holds: the walk is symmetric about its start, so $P(X_n > x_0) = P(X_n < x_0)$ and the right side is 1.
+**The sum.** The event $`M_n \ge \ell`$ splits into $`X_n \ge \ell`$ (a path ending at or above $`\ell`$ passed through $`\ell`$) and the disjoint union of the $`A_b`$ over $`b < \ell`$. Summing, $`P(M_n \ge \ell) = P(X_n \ge \ell) + \sum_{b < \ell} P(X_n = 2\ell - b) = P(X_n \ge \ell) + P(X_n > \ell)`$. At $`\ell = x_0`$ the formula still holds: the walk is symmetric about its start, so $`P(X_n > x_0) = P(X_n < x_0)`$ and the right side is 1.
 
-**The best pile.** For $m \ge x_0$, $P(M_n = m) = P(M_n \ge m) - P(M_n \ge m + 1)$. Substituting the formula at $m$ and at $m + 1$, the terms $P(X_n \ge m + 1)$ cancel and $P(X_n = m) + P(X_n = m + 1)$ is left.
+**The best pile.** For $`m \ge x_0`$, $`P(M_n = m) = P(M_n \ge m) - P(M_n \ge m + 1)`$. Substituting the formula at $`m`$ and at $`m + 1`$, the terms $`P(X_n \ge m + 1)`$ cancel and $`P(X_n = m) + P(X_n = m + 1)`$ is left.
 
-**First arrival.** $P(\tau = n) = P(M_n \ge \ell) - P(M_{n-1} \ge \ell)$. Write $u(y)$ for $P(X_{n-1} = y)$. One more fair round gives $P(X_n \ge y) = \tfrac12 P(X_{n-1} \ge y - 1) + \tfrac12 P(X_{n-1} \ge y + 1)$. Put this into the formula at $n$, subtract the formula at $n - 1$, and everything cancels except $\tfrac12\,[u(\ell - 1) - u(\ell + 1)]$. With $k = (n + a)/2$ wins needed, $u(\ell - 1) = C(n-1, k-1)/2^{n-1}$ and $u(\ell + 1) = C(n-1, k)/2^{n-1}$. Since $C(n-1, k-1) = \tfrac{k}{n} C(n, k)$ and $C(n-1, k) = \tfrac{n-k}{n} C(n, k)$, the difference is $\tfrac{2k - n}{n} C(n, k)/2^{n-1} = \tfrac{a}{n} C(n, k)/2^{n-1}$. Halving gives $P(\tau = n) = \tfrac{a}{n}\, C(n, k)/2^n = \tfrac{a}{n} P(X_n = \ell)$.
+**First arrival.** $`P(\tau = n) = P(M_n \ge \ell) - P(M_{n-1} \ge \ell)`$. Write $`u(y)`$ for $`P(X_{n-1} = y)`$. One more fair round gives $`P(X_n \ge y) = \tfrac12 P(X_{n-1} \ge y - 1) + \tfrac12 P(X_{n-1} \ge y + 1)`$. Put this into the formula at $`n`$, subtract the formula at $`n - 1`$, and everything cancels except $`\tfrac12\,[u(\ell - 1) - u(\ell + 1)]`$. With $`k = (n + a)/2`$ wins needed, $`u(\ell - 1) = C(n-1, k-1)/2^{n-1}`$ and $`u(\ell + 1) = C(n-1, k)/2^{n-1}`$. Since $`C(n-1, k-1) = \tfrac{k}{n} C(n, k)`$ and $`C(n-1, k) = \tfrac{n-k}{n} C(n, k)`$, the difference is $`\tfrac{2k - n}{n} C(n, k)/2^{n-1} = \tfrac{a}{n} C(n, k)/2^{n-1}`$. Halving gives $`P(\tau = n) = \tfrac{a}{n}\, C(n, k)/2^n = \tfrac{a}{n} P(X_n = \ell)`$.
 
 </details>
 
 ### Step 3: the law of the best pile
 
-Asking "touched 15?" for every level at once gives the whole law of $M_{20}$, the best pile of the session: subtract the formula at $m + 1$ from the formula at $m$. Of the two terms left, only one is ever non-zero, since the pile after 20 rounds is even. So each even ending pile above 10 lends its chance to two best piles, itself and the odd pile just below: $P(M_{20} = 11)$ and $P(M_{20} = 12)$ both equal $P(X_{20} = 12)$, 16.02%. The chart shows the pairs.
+Asking "touched 15?" for every level at once gives the whole law of $`M_{20}`$, the best pile of the session: subtract the formula at $`m + 1`$ from the formula at $`m`$. Of the two terms left, only one is ever non-zero, since the pile after 20 rounds is even. So each even ending pile above 10 lends its chance to two best piles, itself and the odd pile just below: $`P(M_{20} = 11)`$ and $`P(M_{20} = 12)`$ both equal $`P(X_{20} = 12)`$, 16.02%. The chart shows the pairs.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -135,13 +143,13 @@ xychart-beta
     bar [17.62, 16.02, 16.02, 12.01, 12.01, 7.39, 7.39, 3.70, 3.70, 1.48, 1.48, 0.46, 0.46, 0.11, 0.11]
 ```
 
-Bars: $P(M_{20} = m)$ in percent, from the formula; the count over all 2^20 runs prints the same fifteen values. The tallest bar, 17.62% at 10 chips, is the chance the pile never rises above its start. Piles above 24 are rarer still and left off.
+Bars: $`P(M_{20} = m)`$ in percent, from the formula; the count over all 2^20 runs prints the same fifteen values. The tallest bar, 17.62% at 10 chips, is the chance the pile never rises above its start. Piles above 24 are rarer still and left off.
 
-Turned around, the formula says when the pile never reaches the target. The walk is symmetric about its start, so ending above 15 is as likely as ending below 5. Hence $P(M_{20} < 15) = P(5 \le X_{20} \le 14)$ = 0.7368: never reaching 15 has exactly the chance of ending between 5 and 14 chips. As the rounds grow the ending pile spreads like $\sqrt{n}$, that window holds less and less of it, and reaching 15 becomes certain for a walk with no floor.
+Turned around, the formula says when the pile never reaches the target. The walk is symmetric about its start, so ending above 15 is as likely as ending below 5. Hence $`P(M_{20} < 15) = P(5 \le X_{20} \le 14)`$ = 0.7368: never reaching 15 has exactly the chance of ending between 5 and 14 chips. As the rounds grow the ending pile spreads like $`\sqrt{n}`$, that window holds less and less of it, and reaching 15 becomes certain for a walk with no floor.
 
 ### Step 4: first arrival, and the ballot theorem
 
-The first arrival $\tau$ is at round n exactly when the best pile first reaches 15 at round n. Subtracting the formula at $n - 1$ from the formula at $n$ gives the first-arrival law of The formula (Detailed proof, last paragraph).
+The first arrival $`\tau`$ is at round n exactly when the best pile first reaches 15 at round n. Subtracting the formula at $`n - 1`$ from the formula at $`n`$ gives the first-arrival law of The formula (Detailed proof, last paragraph).
 
 This is the ballot theorem in walk form. The ballot theorem says: if the winner of an election gets p votes and the loser q, the chance the winner leads all through the count is (p − q)/(p + q) ([The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md)). Read a first-arrival path backwards from round n and track how far below 15 each earlier pile was: that distance starts at 0, stays above 0, and ends at 5. That is the ballot condition, with rounds as votes. At 19 rounds, 50388 paths stand at 15, and 13260 of them are there for the first time: five in nineteen, the gap over the rounds.
 
@@ -157,14 +165,14 @@ Gambler with 10 chips, target 15, 20 rounds, fair coin.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the gap $a$ | 15 − 10 | 5 |
-| wins needed to end at 15 or more | $10 + 2h - 20 \ge 15$, so $h \ge 12.5$ | 13 |
-| runs ending at 15 or more | $C(20, 13) + \cdots + C(20, 20)$ | 137980 |
-| all runs | $2^{20}$ | 1048576 |
-| $P(X_{20} \ge 15)$ | 137980 / 1048576 | 0.1316 |
-| $P(X_{20} > 15)$ | the pile is even, so above 15 means 16 or more: 13 wins again | 0.1316 |
+| the gap $`a`$ | 15 − 10 | 5 |
+| wins needed to end at 15 or more | $`10 + 2h - 20 \ge 15`$, so $`h \ge 12.5`$ | 13 |
+| runs ending at 15 or more | $`C(20, 13) + \cdots + C(20, 20)`$ | 137980 |
+| all runs | $`2^{20}`$ | 1048576 |
+| $`P(X_{20} \ge 15)`$ | 137980 / 1048576 | 0.1316 |
+| $`P(X_{20} > 15)`$ | the pile is even, so above 15 means 16 or more: 13 wins again | 0.1316 |
 | mirror pairs, one example | touch 15 and end at 12, against end at 18 | 38760 = 38760 |
-| **$P(M_{20} \ge 15)$** | 0.1316 + 0.1316 | **0.2632** |
+| **$`P(M_{20} \ge 15)`$** | 0.1316 + 0.1316 | **0.2632** |
 
 The gambler leaves with 15 chips in about 1 session in 4. In the other 73.7% it never stands on 15. That share equals the chance of ending between 5 and 14 chips, though the two are different sets of runs: a run that never reaches 15 can still end at 3. The expected final pile is still 10: the sessions that reach 15 are paid for by the ones that drift down.
 
@@ -187,7 +195,7 @@ Orange: reaching 15 by round n; it never falls, since a touch cannot be undone. 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Count only the runs that end at 15 or more | 0.1316 (right: 0.2632) | Half the touching runs fall back before round 20 |
-| Target 14, gap 4: double $P(X_{20} \ge 14)$ | 0.5034 (right: 0.3833) | Ending at exactly 14 is possible; those runs are counted twice |
+| Target 14, gap 4: double $`P(X_{20} \ge 14)`$ | 0.5034 (right: 0.3833) | Ending at exactly 14 is possible; those runs are counted twice |
 | Roulette red, a win 18 times in 38: use the mirror | 0.1750 (right: 0.1990) | A flipped run no longer has the same chance; the recursion gives the truth |
 | 100 rounds, ignoring that a broke gambler leaves | 0.6173 (right: 0.6057) | Runs that hit 0 and climb back are counted, though play stopped at 0 |
 
@@ -549,16 +557,16 @@ The two outputs agree line for line, the simulation included, because both langu
 
 Lean proves the formula, the reflection principle proper and the first-arrival law for every fair walk of one-chip steps, and checks the worked numbers.
 
-- Take a target $\ell \ge x_0$. Then $P(M_n \ge \ell) = P(X_n \ge \ell) + P(X_n > \ell)$.
-- Take a target $\ell \ge x_0$ and an ending pile $b \le \ell$. Then $P(M_n \ge \ell, X_n = b) = P(X_n = 2\ell - b)$.
-- Suppose the gap $a$ is at least 1 and $n \ge 1$. Then $P(\tau = n) = \frac{a}{n}\, P(X_n = \ell)$.
+- Take a target $`\ell \ge x_0`$. Then $`P(M_n \ge \ell) = P(X_n \ge \ell) + P(X_n > \ell)`$.
+- Take a target $`\ell \ge x_0`$ and an ending pile $`b \le \ell`$. Then $`P(M_n \ge \ell, X_n = b) = P(X_n = 2\ell - b)`$.
+- Suppose the gap $`a`$ is at least 1 and $`n \ge 1`$. Then $`P(\tau = n) = \frac{a}{n}\, P(X_n = \ell)`$.
 - From 10 chips over 20 rounds, 137980 of the 1048576 runs end at 15 or more, and as many end above 15.
-- The mirror of ending at 12 is ending at 18, which takes 14 wins: $C(20, 14)$ = 38760 runs.
+- The mirror of ending at 12 is ending at 18, which takes 14 wins: $`C(20, 14)`$ = 38760 runs.
 - Never reaching 15 has the count of ending between 5 and 14 chips: 772616, which is 1048576 − 275960.
 - For target 14, doubling counts 527900 runs, but the formula counts 401930.
 - First arrival at 15 has chance 1/32 at round 5 and 5/128 at round 7.
 - At 19 rounds, 50388 runs stand at 15, and five nineteenths of them is 13260.
-- The best-pile chart rests on $C(20, 11)$ = 167960 and $C(20, 10)$ = 184756.
+- The best-pile chart rests on $`C(20, 11)`$ = 167960 and $`C(20, 10)`$ = 184756.
 - The pictured run first reaches 15 at round 9 and ends at 12, and its mirror ends at 18.
 
 The general law of the best pile, the unfair game, the floor at 0 and the simulation are left to the Python and Rust checks.
@@ -1108,7 +1116,7 @@ example : walk 10 (fun i => if (i : ℕ) < 9 then pictured i else !pictured i) 2
 
 ## What this builds on
 
-- [Simple random walk](02-simple-random-walk.md): the fair walk with steps of one, its $2^n$ equally likely paths, and the binomial law of where it ends.
+- [Simple random walk](02-simple-random-walk.md): the fair walk with steps of one, its $`2^n`$ equally likely paths, and the binomial law of where it ends.
 - [The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md): the mirror as a counting argument, and the ballot theorem for votes. This card reads both as statements about a process in time.
 
 ## Where this goes next

@@ -38,28 +38,32 @@ Orange: the convolution, overshooting to 2.41 cm and settling at 2 cm. Teal: the
 
 ## The formula
 
-Notation first, in words. A star between two signals, $g * f$, means "g convolved with f": a sliding integral, not multiplication. The letter $\tau$ (tau) marks the moment of one earlier kick.
+Notation first, in words. A star between two signals, $`g * f`$, means "g convolved with f": a sliding integral, not multiplication. The letter $`\tau`$ (tau) marks the moment of one earlier kick.
 
-$$(g * f)(t) = \int_0^t g(t-\tau)\, f(\tau)\, d\tau$$
+```math
+(g * f)(t) = \int_0^t g(t-\tau)\, f(\tau)\, d\tau
+```
 
 **Read it aloud:** the response at time t adds up the push at every earlier moment τ, each weighted by the impulse response at its age, t − τ.
 
 The solution of the forced equation, started at rest:
 
-$$y = g * f, \qquad Y(s) = G(s)\,F(s), \qquad G(s) = \frac{1}{P(s)} = \frac{1}{s^2 + 2s + 5}$$
+```math
+y = g * f, \qquad Y(s) = G(s)\,F(s), \qquad G(s) = \frac{1}{P(s)} = \frac{1}{s^2 + 2s + 5}
+```
 
 **Read it aloud:** the motion is the impulse response convolved with the push; its transform is the transform of the impulse response times the transform of the push.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $\tau$ | the time of reading; the time of one earlier kick, in s | t = 1 s; τ runs from 0 to 1 s | — |
-| $f$ | the push from the road, per unit mass, in cm/s^2 | 10 from t = 0 on | the motion scales with it |
-| $g$ | the impulse response: height in cm after a kick to 1 cm/s | 0.5 e^(−t) sin 2t; 0.167256 at t = 1 s | — |
-| $y$ | the height above level, in cm | 1.971672 at t = 1 s | — |
-| $s$ | the transform's fading rate, per second | s = 1 in the check | — |
-| $F$, $G$, $Y$ | the transforms of f, g and y | G(s) = 1/(s^2 + 2s + 5) | — |
-| $P$ | the characteristic polynomial s^2 + 2s + 5 | P(0) = 5 | a stiffer spring, smaller G |
-| $\delta$ | the impulse: a kick of total size 1, delivered at an instant | its transform is 1 | — |
+| $`t`$, $`\tau`$ | the time of reading; the time of one earlier kick, in s | t = 1 s; τ runs from 0 to 1 s | — |
+| $`f`$ | the push from the road, per unit mass, in cm/s^2 | 10 from t = 0 on | the motion scales with it |
+| $`g`$ | the impulse response: height in cm after a kick to 1 cm/s | 0.5 e^(−t) sin 2t; 0.167256 at t = 1 s | — |
+| $`y`$ | the height above level, in cm | 1.971672 at t = 1 s | — |
+| $`s`$ | the transform's fading rate, per second | s = 1 in the check | — |
+| $`F`$, $`G`$, $`Y`$ | the transforms of f, g and y | G(s) = 1/(s^2 + 2s + 5) | — |
+| $`P`$ | the characteristic polynomial s^2 + 2s + 5 | P(0) = 5 | a stiffer spring, smaller G |
+| $`\delta`$ | the impulse: a kick of total size 1, delivered at an instant | its transform is 1 | — |
 
 ### When it holds
 
@@ -80,7 +84,7 @@ Linearity and constant coefficients say the car answers it with g scaled by f(τ
 
 ### Step 1: the impulse response is the transform of 1 over P
 
-An impulse $\delta$ at time 0 transforms to 1 ([Impulses](06-impulses-and-the-delta-function.md)). With the car at rest, the transformed equation reads (s^2 + 2s + 5)G = 1, so G = 1/((s + 1)^2 + 4). The pair 2/((s + 1)^2 + 4) ↔ e^(−t) sin 2t, halved, inverts it to 0.5 e^(−t) sin 2t.
+An impulse $`\delta`$ at time 0 transforms to 1 ([Impulses](06-impulses-and-the-delta-function.md)). With the car at rest, the transformed equation reads (s^2 + 2s + 5)G = 1, so G = 1/((s + 1)^2 + 4). The pair 2/((s + 1)^2 + 4) ↔ e^(−t) sin 2t, halved, inverts it to 0.5 e^(−t) sin 2t.
 
 In time, g solves the free equation with g(0) = 0 and g'(0) = 1: the kick leaves the height at 0 and the velocity at 1 cm/s.
 
@@ -97,7 +101,7 @@ The convolution theorem says the transform of g * f is G times F ([Convolution](
 
 **The transform of a convolution.** Let g and f be piecewise continuous with size at most M e^(at). For s above a,
 
-$$\int_0^\infty e^{-st}\int_0^t g(t-\tau) f(\tau)\,d\tau\,dt = \int_0^\infty f(\tau)\int_\tau^\infty e^{-st} g(t-\tau)\,dt\,d\tau .$$
+$`\displaystyle \int_0^\infty e^{-st}\int_0^t g(t-\tau) f(\tau)\,d\tau\,dt = \int_0^\infty f(\tau)\int_\tau^\infty e^{-st} g(t-\tau)\,dt\,d\tau .`$
 
 Both sides cover the region 0 ≤ τ ≤ t. The absolute integrand is at most M^2 e^(−(s − a)t); integrated over τ from 0 to t it is at most M^2 t e^(−(s − a)t), which has a finite integral, so the swap is allowed. Putting u = t − τ turns the inner integral into e^(−sτ) G(s), leaving G(s) times the transform of f.
 
@@ -119,7 +123,9 @@ By hand, e^(−t) * e^(−2t) = ∫ from 0 to t of e^(−τ) e^(−2(t − τ)) 
 
 With f = 10, substitute u = t − τ: y(t) = 10 ∫ from 0 to t of g(u) du = 5 ∫ e^(−u) sin 2u du. The integral of e^(−u) sin 2u from 0 to t is (2 − e^(−t)(sin 2t + 2 cos 2t))/5. So
 
-$$y(t) = 2 - e^{-t}\,(2\cos 2t + \sin 2t),$$
+```math
+y(t) = 2 - e^{-t}\,(2\cos 2t + \sin 2t),
+```
 
 the round-trip answer, reached without splitting G F = 10/(s(s^2 + 2s + 5)) into partial fractions.
 

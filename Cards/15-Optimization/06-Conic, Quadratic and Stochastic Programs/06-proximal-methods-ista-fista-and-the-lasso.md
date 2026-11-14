@@ -40,65 +40,77 @@ Orange: ISTA. Green: FISTA. Each unit down the scale is ten times closer. At ste
 
 ## The formula
 
-Notation first, in words. The 100 weekly sales form the list $y$. The table $A$ has one row per week and one column per signal; column $A_j$ is signal $j$ over the 100 weeks. The coefficients are $x$, one per signal, and $x^*$ is the minimiser. As on [Subgradients](../01-Convexity/07-subgradients.md), $\lVert x\rVert_1$ is the sum of the sizes $|x_j|$ and $\lVert v\rVert$ is ordinary length. (The regularisation card calls the coefficients $b$; the code here does too.)
+Notation first, in words. The 100 weekly sales form the list $`y`$. The table $`A`$ has one row per week and one column per signal; column $`A_j`$ is signal $`j`$ over the 100 weeks. The coefficients are $`x`$, one per signal, and $`x^*`$ is the minimiser. As on [Subgradients](../01-Convexity/07-subgradients.md), $`\lVert x\rVert_1`$ is the sum of the sizes $`|x_j|`$ and $`\lVert v\rVert`$ is ordinary length. (The regularisation card calls the coefficients $`b`$; the code here does too.)
 
-The problem, split into a smooth part $f$ and a kinked charge:
+The problem, split into a smooth part $`f`$ and a kinked charge:
 
-$$\min_x\ F(x) = \underbrace{\tfrac12\lVert y - Ax\rVert^2}_{f(x)} \;+\; \lambda\lVert x\rVert_1$$
+```math
+\min_x\ F(x) = \underbrace{\tfrac12\lVert y - Ax\rVert^2}_{f(x)} \;+\; \lambda\lVert x\rVert_1
+```
 
 **Read it aloud:** find the coefficients that make half the squared misses plus lambda times the summed sizes as small as possible.
 
-The **proximal operator** (prox) of a charge $h$ with step $\alpha$ turns any point $v$ into the point that best trades the charge against distance from $v$:
+The **proximal operator** (prox) of a charge $`h`$ with step $`\alpha`$ turns any point $`v`$ into the point that best trades the charge against distance from $`v`$:
 
-$$\operatorname{prox}_{\alpha h}(v) = \arg\min_u \Big( h(u) + \frac{1}{2\alpha}\lVert u - v\rVert^2 \Big)$$
+```math
+\mathrm{prox}_{\alpha h}(v) = \arg\min_u \Big( h(u) + \frac{1}{2\alpha}\lVert u - v\rVert^2 \Big)
+```
 
 **Read it aloud:** the prox of v is the point that keeps the charge low without straying far from v.
 
-For $h = \lambda\lVert\cdot\rVert_1$ it is soft thresholding, entry by entry:
+For $`h = \lambda\lVert\cdot\rVert_1`$ it is soft thresholding, entry by entry:
 
-$$\operatorname{prox}_{\alpha\lambda\lVert\cdot\rVert_1}(v)_j = S_{\alpha\lambda}(v_j), \qquad S_\tau(v) = \operatorname{sign}(v)\,\max(|v| - \tau,\ 0)$$
+```math
+\mathrm{prox}_{\alpha\lambda\lVert\cdot\rVert_1}(v)_j = S_{\alpha\lambda}(v_j), \qquad S_\tau(v) = \mathrm{sign}(v)\,\max(|v| - \tau,\ 0)
+```
 
 **Read it aloud:** shrink each entry toward zero by alpha times lambda, and stop at zero.
 
-ISTA, from $x_0 = 0$, with gradient $\nabla f(x) = A^\top(Ax - y)$ and step $\alpha = 1/L$:
+ISTA, from $`x_0 = 0`$, with gradient $`\nabla f(x) = A^\top(Ax - y)`$ and step $`\alpha = 1/L`$:
 
-$$x_{k+1} = S_{\alpha\lambda}\big(x_k - \alpha\,\nabla f(x_k)\big)$$
+```math
+x_{k+1} = S_{\alpha\lambda}\big(x_k - \alpha\,\nabla f(x_k)\big)
+```
 
 **Read it aloud:** take an ordinary gradient step on the squared misses, then shrink every coefficient toward zero by alpha times lambda.
 
-FISTA takes the same step from a look-ahead point $z_k$, starting $z_0 = x_0$ and $t_0 = 1$:
+FISTA takes the same step from a look-ahead point $`z_k`$, starting $`z_0 = x_0`$ and $`t_0 = 1`$:
 
-$$x_{k+1} = S_{\alpha\lambda}\big(z_k - \alpha\,\nabla f(z_k)\big), \quad t_{k+1} = \frac{1 + \sqrt{1 + 4t_k^2}}{2}, \quad z_{k+1} = x_{k+1} + \frac{t_k - 1}{t_{k+1}}\,(x_{k+1} - x_k)$$
+```math
+x_{k+1} = S_{\alpha\lambda}\big(z_k - \alpha\,\nabla f(z_k)\big), \quad t_{k+1} = \frac{1 + \sqrt{1 + 4t_k^2}}{2}, \quad z_{k+1} = x_{k+1} + \frac{t_k - 1}{t_{k+1}}\,(x_{k+1} - x_k)
+```
 
 **Read it aloud:** step and shrink as before, but from a point pushed a little further along the last move, with the push growing toward one.
 
-The rates, for convex $f$ whose gradient changes at most at rate $L$:
+The rates, for convex $`f`$ whose gradient changes at most at rate $`L`$:
 
-$$\text{ISTA: } F(x_k) - F^* \le \frac{L\lVert x_0 - x^*\rVert^2}{2k}, \qquad \text{FISTA: } F(x_k) - F^* \le \frac{2L\lVert x_0 - x^*\rVert^2}{(k+1)^2}$$
+```math
+\text{ISTA: } F(x_k) - F^* \le \frac{L\lVert x_0 - x^*\rVert^2}{2k}, \qquad \text{FISTA: } F(x_k) - F^* \le \frac{2L\lVert x_0 - x^*\rVert^2}{(k+1)^2}
+```
 
 **Read it aloud:** after k steps, ISTA's total is above the minimum by at most L times the squared distance from start to answer, over 2k. FISTA's is at most twice that top line over (k + 1) squared, so it falls much faster.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y$, $N$ | weekly sales from the average week, £ thousand; N weeks | 100 weeks | more weeks: the nine are found more reliably |
-| $A$, $A_j$, $P$ | the table of standardised signals; column j; P signals | 100 by 200 | more signals: more false candidates to shrink away |
-| $x$, $x_j$, $x^*$ | the coefficients, £ thousand per standard deviation of the signal; the minimiser | 9 of 200 nonzero | — |
-| $f$, $\nabla f$ | half the squared misses; its gradient, $A^\top(Ax - y)$ | $f(x^*) = 157.81$ | — |
-| $\lambda$, $\lambda_{\max}$ | the charge per unit of summed size; the smallest charge that zeroes every coefficient | 40; 390.18 | more coefficients exactly zero |
-| $h$, $\lVert x\rVert_1$, $\partial$ | the kinked charge, here $\lambda\lVert x\rVert_1$; sum of sizes; the subdifferential, the set of slopes at a corner | charge $\lambda\lVert x^*\rVert_1 = 401.60$ | — |
-| $F$, $F^*$ | the total being minimised; its minimum | 1415.94 at $x = 0$; 559.412115 | — |
-| $L$ | the largest eigenvalue of $A^\top A$: the steepest curvature of $f$ | 9437.47 | smaller safe step, slower progress |
-| $\alpha$ | the step length, $1/L$ | 0.00010596 | the guarantee here needs α ≤ 1/L; past 2/L it can diverge (3/L blows up) |
-| $\operatorname{prox}$, $S_\tau$, $\tau$, sign, $u$, $v$, $d$ | proximal operator; soft threshold by $\tau$; sign(v) is +1, 0 or −1 as v is positive, zero or negative; a candidate point; the point being shrunk; a move | $\tau = \alpha\lambda = 0.004238$ | bigger τ: more zeros per step |
-| $x_k$, $k$, $i$, $x^+$, $z_k$, $t_k$ | the iterate after k steps, from $x_0 = 0$; i counts steps in a sum; $x^+$ is one step on from x; FISTA's look-ahead point and momentum counter | within 0.000001 of $F^*$ at k = 2367 (ISTA), 1133 (FISTA) | — |
-| $r$, $\theta$ | the leftover misses $y - Ax$; a dual list of 100 numbers whose match with every signal is at most λ | θ = scaled r | — |
+| $`y`$, $`N`$ | weekly sales from the average week, £ thousand; N weeks | 100 weeks | more weeks: the nine are found more reliably |
+| $`A`$, $`A_j`$, $`P`$ | the table of standardised signals; column j; P signals | 100 by 200 | more signals: more false candidates to shrink away |
+| $`x`$, $`x_j`$, $`x^*`$ | the coefficients, £ thousand per standard deviation of the signal; the minimiser | 9 of 200 nonzero | — |
+| $`f`$, $`\nabla f`$ | half the squared misses; its gradient, $`A^\top(Ax - y)`$ | $`f(x^*) = 157.81`$ | — |
+| $`\lambda`$, $`\lambda_{\max}`$ | the charge per unit of summed size; the smallest charge that zeroes every coefficient | 40; 390.18 | more coefficients exactly zero |
+| $`h`$, $`\lVert x\rVert_1`$, $`\partial`$ | the kinked charge, here $`\lambda\lVert x\rVert_1`$; sum of sizes; the subdifferential, the set of slopes at a corner | charge $`\lambda\lVert x^*\rVert_1 = 401.60`$ | — |
+| $`F`$, $`F^*`$ | the total being minimised; its minimum | 1415.94 at $`x = 0`$; 559.412115 | — |
+| $`L`$ | the largest eigenvalue of $`A^\top A`$: the steepest curvature of $`f`$ | 9437.47 | smaller safe step, slower progress |
+| $`\alpha`$ | the step length, $`1/L`$ | 0.00010596 | the guarantee here needs α ≤ 1/L; past 2/L it can diverge (3/L blows up) |
+| $`\mathrm{prox}`$, $`S_\tau`$, $`\tau`$, sign, $`u`$, $`v`$, $`d`$ | proximal operator; soft threshold by $`\tau`$; sign(v) is +1, 0 or −1 as v is positive, zero or negative; a candidate point; the point being shrunk; a move | $`\tau = \alpha\lambda = 0.004238`$ | bigger τ: more zeros per step |
+| $`x_k`$, $`k`$, $`i`$, $`x^+`$, $`z_k`$, $`t_k`$ | the iterate after k steps, from $`x_0 = 0`$; i counts steps in a sum; $`x^+`$ is one step on from x; FISTA's look-ahead point and momentum counter | within 0.000001 of $`F^*`$ at k = 2367 (ISTA), 1133 (FISTA) | — |
+| $`r`$, $`\theta`$ | the leftover misses $`y - Ax`$; a dual list of 100 numbers whose match with every signal is at most λ | θ = scaled r | — |
 
 ### When it holds
 
-- **The smooth part's slope changes at a bounded rate $L$, and the step is at most $1/L$.** Above $2/L$ the gradient step overshoots along the steepest direction: at $3/L$ the total reaches 10^61.99 after 100 steps.
+- **The smooth part's slope changes at a bounded rate $`L`$, and the step is at most $`1/L`$.** Above $`2/L`$ the gradient step overshoots along the steepest direction: at $`3/L`$ the total reaches 10^61.99 after 100 steps.
 - **The charge is convex and its prox is cheap.** The sum of sizes qualifies. A charge that counts nonzeros also has a prox (keep or kill each entry), but it is not convex, and every guarantee here is lost.
 - **The smooth part is convex.** Squared misses always are. Without convexity the method still goes downhill but may stop at a local minimum.
-- **The bounds are about the total, measured from the start.** Both scale with $\lVert x_0 - x^*\rVert^2$, so a start near the answer helps; neither says how close the coefficients are.
+- **The bounds are about the total, measured from the start.** Both scale with $`\lVert x_0 - x^*\rVert^2`$, so a start near the answer helps; neither says how close the coefficients are.
 
 ---
 
@@ -108,75 +120,83 @@ $$\text{ISTA: } F(x_k) - F^* \le \frac{L\lVert x_0 - x^*\rVert^2}{2k}, \qquad \t
 
 Gradient descent works because near the current point the cost looks like its tangent plane. The charge has no tangent plane at zero. So do not approximate it.
 
-Replace only the smooth part by a simple bowl that sits on or above it, add the charge back unchanged, and minimise that. If the bowl touches $f$ at the current point and lies above it everywhere else, the step can never go uphill. The bowl's minimiser plus the charge turns out to be a prox, and for the sum of sizes the prox is a shrink.
+Replace only the smooth part by a simple bowl that sits on or above it, add the charge back unchanged, and minimise that. If the bowl touches $`f`$ at the current point and lies above it everywhere else, the step can never go uphill. The bowl's minimiser plus the charge turns out to be a prox, and for the sum of sizes the prox is a shrink.
 
-### Step 1: a bowl of curvature $L$ sits above the squared misses
+### Step 1: a bowl of curvature $`L`$ sits above the squared misses
 
-For any point $x$ and any move $d$, multiply out:
+For any point $`x`$ and any move $`d`$, multiply out:
 
-$$f(x + d) = f(x) + \nabla f(x)^\top d + \tfrac12\lVert Ad\rVert^2$$
+```math
+f(x + d) = f(x) + \nabla f(x)^\top d + \tfrac12\lVert Ad\rVert^2
+```
 
-The last term is at most $\tfrac{L}{2}\lVert d\rVert^2$, because $L$ is the largest eigenvalue of $A^\top A$: no direction is stretched by more. So the bowl
+The last term is at most $`\tfrac{L}{2}\lVert d\rVert^2`$, because $`L`$ is the largest eigenvalue of $`A^\top A`$: no direction is stretched by more. So the bowl
 
-$$f(x) + \nabla f(x)^\top (u - x) + \frac{L}{2}\lVert u - x\rVert^2$$
+```math
+f(x) + \nabla f(x)^\top (u - x) + \frac{L}{2}\lVert u - x\rVert^2
+```
 
-equals $f$ at $u = x$ and is never below it. The checks find $L = 9437.47$ by power iteration (multiply by $A^\top A$ and rescale, 200 times) and confirm it is an eigenvalue. It is large because the shared season makes all 200 signals point roughly the same way.
+equals $`f`$ at $`u = x`$ and is never below it. The checks find $`L = 9437.47`$ by power iteration (multiply by $`A^\top A`$ and rescale, 200 times) and confirm it is an eigenvalue. It is large because the shared season makes all 200 signals point roughly the same way.
 
 ### Step 2: minimising bowl plus charge is a prox
 
-Complete the square. With $\alpha = 1/L$ the bowl is, up to a constant that does not depend on $u$,
+Complete the square. With $`\alpha = 1/L`$ the bowl is, up to a constant that does not depend on $`u`$,
 
-$$\frac{1}{2\alpha}\big\lVert u - (x - \alpha\nabla f(x))\big\rVert^2$$
+```math
+\frac{1}{2\alpha}\big\lVert u - (x - \alpha\nabla f(x))\big\rVert^2
+```
 
-So the step minimises $h(u) + \frac{1}{2\alpha}\lVert u - v\rVert^2$ with $v = x - \alpha\nabla f(x)$: the ordinary gradient step, then $\operatorname{prox}_{\alpha h}$ of where it landed. That is the whole method, for any convex charge with a computable prox.
+So the step minimises $`h(u) + \frac{1}{2\alpha}\lVert u - v\rVert^2`$ with $`v = x - \alpha\nabla f(x)`$: the ordinary gradient step, then $`\mathrm{prox}_{\alpha h}`$ of where it landed. That is the whole method, for any convex charge with a computable prox.
 
 ### Step 3: the prox of the sum of sizes is soft thresholding
 
-The sum of sizes and the squared distance both add up entry by entry, so each entry is its own one-variable problem: minimise $\tau|u| + \tfrac12(u - v)^2$ with $\tau = \alpha\lambda$. By the zero-slope rule of [Subgradients](../01-Convexity/07-subgradients.md), $u$ is the minimiser exactly when 0 is a slope of the total there:
+The sum of sizes and the squared distance both add up entry by entry, so each entry is its own one-variable problem: minimise $`\tau|u| + \tfrac12(u - v)^2`$ with $`\tau = \alpha\lambda`$. By the zero-slope rule of [Subgradients](../01-Convexity/07-subgradients.md), $`u`$ is the minimiser exactly when 0 is a slope of the total there:
 
-$$0 \in \tau\,\partial|u| + (u - v)$$
+```math
+0 \in \tau\,\partial|u| + (u - v)
+```
 
-- If $u > 0$, the slope of $|u|$ is 1, so $u = v - \tau$. That is positive only when $v > \tau$.
-- If $u < 0$, the slope is −1, so $u = v + \tau$, needing $v < -\tau$.
-- If $u = 0$, the slopes of $|u|$ fill $[-1, 1]$, so 0 is a slope of the total when $|v| \le \tau$.
+- If $`u > 0`$, the slope of $`|u|`$ is 1, so $`u = v - \tau`$. That is positive only when $`v > \tau`$.
+- If $`u < 0`$, the slope is −1, so $`u = v + \tau`$, needing $`v < -\tau`$.
+- If $`u = 0`$, the slopes of $`|u|`$ fill $`[-1, 1]`$, so 0 is a slope of the total when $`|v| \le \tau`$.
 
-Together: $u = S_\tau(v)$. The [Regularisation](../../09-Probability%20and%20statistics/09-Regression/06-ridge-and-lasso.md) card met the same rule for one coefficient inside coordinate descent (which adjusts one coefficient at a time, holding the rest fixed); here it is the prox, applied to all 200 at once. The checks confirm it against a brute-force golden-section search (which keeps narrowing an interval around the lowest point) on every one of the 200 first-step entries.
+Together: $`u = S_\tau(v)`$. The [Regularisation](../../09-Probability%20and%20statistics/09-Regression/06-ridge-and-lasso.md) card met the same rule for one coefficient inside coordinate descent (which adjusts one coefficient at a time, holding the rest fixed); here it is the prox, applied to all 200 at once. The checks confirm it against a brute-force golden-section search (which keeps narrowing an interval around the lowest point) on every one of the 200 first-step entries.
 
 ### Step 4: the method stops exactly at the minimisers
 
-A point is a minimiser when 0 is a slope of $F$ there: $-\nabla f(x) \in \lambda\,\partial\lVert x\rVert_1$. Entry by entry, with $A_j^\top(y - Ax)$ the match between signal $j$ and what is still unexplained:
+A point is a minimiser when 0 is a slope of $`F`$ there: $`-\nabla f(x) \in \lambda\,\partial\lVert x\rVert_1`$. Entry by entry, with $`A_j^\top(y - Ax)`$ the match between signal $`j`$ and what is still unexplained:
 
-- a kept signal has match exactly $\lambda$, with its coefficient's sign;
-- a dropped signal has match at most $\lambda$ in size.
+- a kept signal has match exactly $`\lambda`$, with its coefficient's sign;
+- a dropped signal has match at most $`\lambda`$ in size.
 
-Step 3's three cases say $x = S_{\alpha\lambda}(x - \alpha\nabla f(x))$ exactly when these hold. So the method's resting points are the minimisers and nothing else.
+Step 3's three cases say $`x = S_{\alpha\lambda}(x - \alpha\nabla f(x))`$ exactly when these hold. So the method's resting points are the minimisers and nothing else.
 
-One consequence comes free. At $x = 0$ the match is $A_j^\top y$, so all-zero is optimal when every $|A_j^\top y| \le \lambda$. For the garden centre the largest is $\lambda_{\max} = 390.18$: any charge at or above it keeps no signal.
+One consequence comes free. At $`x = 0`$ the match is $`A_j^\top y`$, so all-zero is optimal when every $`|A_j^\top y| \le \lambda`$. For the garden centre the largest is $`\lambda_{\max} = 390.18`$: any charge at or above it keeps no signal.
 
 ### Step 5: ISTA never goes uphill, and closes the gap like 1/k
 
-Because the bowl lies above $f$, the minimiser of bowl plus charge is at least as good as staying put: ISTA never goes uphill, and its total fell or held on all of its first 1000 steps. A sharper form of the same inequality gives the rate.
+Because the bowl lies above $`f`$, the minimiser of bowl plus charge is at least as good as staying put: ISTA never goes uphill, and its total fell or held on all of its first 1000 steps. A sharper form of the same inequality gives the rate.
 
 <details>
 <summary>Detailed proof: ISTA's gap is at most L‖x₀ − x*‖² / (2k)</summary>
 
-Write $x^+$ for one ISTA step from $x$, and $v = x - \nabla f(x)/L$. The prox's target, $h(u) + \frac{L}{2}\lVert u - v\rVert^2$, is a convex charge plus an exact bowl of curvature $L$, and $x^+$ minimises it. So it rises at least like that bowl away from $x^+$: for every $u$,
+Write $`x^+`$ for one ISTA step from $`x`$, and $`v = x - \nabla f(x)/L`$. The prox's target, $`h(u) + \frac{L}{2}\lVert u - v\rVert^2`$, is a convex charge plus an exact bowl of curvature $`L`$, and $`x^+`$ minimises it. So it rises at least like that bowl away from $`x^+`$: for every $`u`$,
 
-$$h(u) + \tfrac{L}{2}\lVert u - v\rVert^2 \ge h(x^+) + \tfrac{L}{2}\lVert x^+ - v\rVert^2 + \tfrac{L}{2}\lVert u - x^+\rVert^2.$$
+$`\displaystyle h(u) + \tfrac{L}{2}\lVert u - v\rVert^2 \ge h(x^+) + \tfrac{L}{2}\lVert x^+ - v\rVert^2 + \tfrac{L}{2}\lVert u - x^+\rVert^2.`$
 
-Expand $\frac L2\lVert u - v\rVert^2 = \frac L2\lVert u - x\rVert^2 + \nabla f(x)^\top(u - x)$ plus a term that does not depend on $u$, and the same for $x^+$. Then
+Expand $`\frac L2\lVert u - v\rVert^2 = \frac L2\lVert u - x\rVert^2 + \nabla f(x)^\top(u - x)`$ plus a term that does not depend on $`u`$, and the same for $`x^+`$. Then
 
-$$h(x^+) + \nabla f(x)^\top(x^+ - x) + \tfrac L2\lVert x^+ - x\rVert^2 \le h(u) + \nabla f(x)^\top(u - x) + \tfrac L2\lVert u - x\rVert^2 - \tfrac L2\lVert u - x^+\rVert^2.$$
+$`\displaystyle h(x^+) + \nabla f(x)^\top(x^+ - x) + \tfrac L2\lVert x^+ - x\rVert^2 \le h(u) + \nabla f(x)^\top(u - x) + \tfrac L2\lVert u - x\rVert^2 - \tfrac L2\lVert u - x^+\rVert^2.`$
 
-Step 1 bounds $f(x^+)$ by $f(x) + \nabla f(x)^\top(x^+ - x) + \frac L2\lVert x^+ - x\rVert^2$. Convexity of $f$ gives $f(x) + \nabla f(x)^\top(u - x) \le f(u)$. Add $f(x)$ to both sides above and use both:
+Step 1 bounds $`f(x^+)`$ by $`f(x) + \nabla f(x)^\top(x^+ - x) + \frac L2\lVert x^+ - x\rVert^2`$. Convexity of $`f`$ gives $`f(x) + \nabla f(x)^\top(u - x) \le f(u)`$. Add $`f(x)`$ to both sides above and use both:
 
-$$F(x^+) \le F(u) + \tfrac L2\big(\lVert u - x\rVert^2 - \lVert u - x^+\rVert^2\big).$$
+$`\displaystyle F(x^+) \le F(u) + \tfrac L2\big(\lVert u - x\rVert^2 - \lVert u - x^+\rVert^2\big).`$
 
-With $u = x$ this says $F(x^+) \le F(x)$: never uphill. With $u = x^*$ and $x = x_i$:
+With $`u = x`$ this says $`F(x^+) \le F(x)`$: never uphill. With $`u = x^*`$ and $`x = x_i`$:
 
-$$F(x_{i+1}) - F^* \le \tfrac L2\big(\lVert x_i - x^*\rVert^2 - \lVert x_{i+1} - x^*\rVert^2\big).$$
+$`\displaystyle F(x_{i+1}) - F^* \le \tfrac L2\big(\lVert x_i - x^*\rVert^2 - \lVert x_{i+1} - x^*\rVert^2\big).`$
 
-Add these for $i = 0, \dots, k-1$. The right side telescopes (its middle terms cancel in pairs) to at most $\frac L2\lVert x_0 - x^*\rVert^2$. The left side has $k$ terms, each at least the last one, $F(x_k) - F^*$, because the totals never rise. So $k\,(F(x_k) - F^*) \le \frac L2\lVert x_0 - x^*\rVert^2$.
+Add these for $`i = 0, \dots, k-1`$. The right side telescopes (its middle terms cancel in pairs) to at most $`\frac L2\lVert x_0 - x^*\rVert^2`$. The left side has $`k`$ terms, each at least the last one, $`F(x_k) - F^*`$, because the totals never rise. So $`k\,(F(x_k) - F^*) \le \frac L2\lVert x_0 - x^*\rVert^2`$.
 
 </details>
 
@@ -184,9 +204,9 @@ The bound is a worst case: at step 1000 it allows 10^1.87, and ISTA is at 10^−
 
 ### Step 6: momentum buys a square, FISTA
 
-ISTA forgets how it got where it is. FISTA remembers the last move, $x_{k+1} - x_k$, and takes the next step from a point pushed further along it, by the fraction $(t_k - 1)/t_{k+1}$, which grows from 0 toward 1.
+ISTA forgets how it got where it is. FISTA remembers the last move, $`x_{k+1} - x_k`$, and takes the next step from a point pushed further along it, by the fraction $`(t_k - 1)/t_{k+1}`$, which grows from 0 toward 1.
 
-Beck and Teboulle proved, under the same hypotheses with $\alpha = 1/L$, that the gap then falls like $1/k^2$: the second bound in The formula. Their proof extends the telescoping above with a weighted choice of $u$; this card states the result, and the checks test it at every one of 3000 steps.
+Beck and Teboulle proved, under the same hypotheses with $`\alpha = 1/L`$, that the gap then falls like $`1/k^2`$: the second bound in The formula. Their proof extends the telescoping above with a weighted choice of $`u`$; this card states the result, and the checks test it at every one of 3000 steps.
 
 The price is monotonicity. FISTA overshoots and comes back, so its total rose on 363 of its first 1000 steps. The guarantee bounds the gap, not each step.
 
@@ -205,29 +225,29 @@ Every signal moves with the season, so after one step all 200 look useful. The s
 
 ### Step 7: the certificate, a dual bound that meets the answer
 
-"Optimal" needs evidence that does not trust the method. Take any list $\theta$ of 100 numbers whose match with every signal is at most $\lambda$ in size, $|A_j^\top\theta| \le \lambda$. Then for every $x$, with $r = y - Ax$:
+"Optimal" needs evidence that does not trust the method. Take any list $`\theta`$ of 100 numbers whose match with every signal is at most $`\lambda`$ in size, $`|A_j^\top\theta| \le \lambda`$. Then for every $`x`$, with $`r = y - Ax`$:
 
-- $\tfrac12\lVert r\rVert^2 \ge \theta^\top r - \tfrac12\lVert\theta\rVert^2$, since $\tfrac12\lVert r - \theta\rVert^2 \ge 0$;
-- $\lambda\lVert x\rVert_1 \ge \sum_j |A_j^\top\theta|\,|x_j| \ge \theta^\top A x$.
+- $`\tfrac12\lVert r\rVert^2 \ge \theta^\top r - \tfrac12\lVert\theta\rVert^2`$, since $`\tfrac12\lVert r - \theta\rVert^2 \ge 0`$;
+- $`\lambda\lVert x\rVert_1 \ge \sum_j |A_j^\top\theta|\,|x_j| \ge \theta^\top A x`$.
 
-Add them: $F(x) \ge \theta^\top y - \tfrac12\lVert\theta\rVert^2$, a floor under every possible total. The checks take $\theta$ as the leftover misses $r$, scaled down just enough to meet the match limit. At coordinate descent's answer the floor meets the total to 12 decimals: the dual gap, total minus floor, prints as 0.000000000000. So $F^* = 559.412115$ is the minimum, not merely the best found. The same answer passes Step 4's test with a worst miss of 0.000000000.
+Add them: $`F(x) \ge \theta^\top y - \tfrac12\lVert\theta\rVert^2`$, a floor under every possible total. The checks take $`\theta`$ as the leftover misses $`r`$, scaled down just enough to meet the match limit. At coordinate descent's answer the floor meets the total to 12 decimals: the dual gap, total minus floor, prints as 0.000000000000. So $`F^* = 559.412115`$ is the minimum, not merely the best found. The same answer passes Step 4's test with a worst miss of 0.000000000.
 
 ---
 
 ## Worked numbers, by hand
 
-The first ISTA step from $x_0 = 0$. There, the gradient is $-A^\top y$, so the gradient step moves signal $j$ to $\alpha A_j^\top y$ and the shrink then subtracts $\alpha\lambda$.
+The first ISTA step from $`x_0 = 0`$. There, the gradient is $`-A^\top y`$, so the gradient step moves signal $`j`$ to $`\alpha A_j^\top y`$ and the shrink then subtracts $`\alpha\lambda`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| step length | $\alpha = 1/L = 1/9437.47$ | 0.00010596 |
-| shrink per step | $\alpha\lambda = 40/9437.47$ | 0.004238 |
-| signal 1, gradient step | $\alpha \times 390.18$ | 0.041344 |
+| step length | $`\alpha = 1/L = 1/9437.47`$ | 0.00010596 |
+| shrink per step | $`\alpha\lambda = 40/9437.47`$ | 0.004238 |
+| signal 1, gradient step | $`\alpha \times 390.18`$ | 0.041344 |
 | signal 1, shrink | 0.041344 − 0.004238 | 0.037105 |
-| signal 2, gradient step | $\alpha \times 46.13$ | 0.004888 |
+| signal 2, gradient step | $`\alpha \times 46.13`$ | 0.004888 |
 | signal 2, shrink | 0.004888 − 0.004238 | 0.000650 |
-| signal 10, worth nothing | $\alpha \times 220.31 = 0.023344$, less 0.004238 | 0.019106 |
-| signals kept after step 1 | every $\lvert A_j^\top y\rvert$ exceeds 40 | 200 |
+| signal 10, worth nothing | $`\alpha \times 220.31 = 0.023344`$, less 0.004238 | 0.019106 |
+| signals kept after step 1 | every $`\lvert A_j^\top y\rvert`$ exceeds 40 | 200 |
 | at the minimum | half squared misses 157.81 + charge 401.60 | **F\* = 559.412115** |
 
 Step 1 gets things wrong. Signal 2 truly lowers weekly sales by £2,500 per standard deviation, yet starts positive, because the season it rides on raises sales. Signal 10 is worth nothing yet starts large. The iterations sort this out:
@@ -258,7 +278,7 @@ The nine kept are the true nine, with the right signs, each shrunk toward zero; 
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the garden centre's 100 weeks from SplitMix64, a short random generator written out in both languages (seed 11), turned into bell-curve noise by the Box–Muller recipe. They find $L$ by power iteration and run four roads to the same lasso: ISTA, FISTA, coordinate descent (the method of the regularisation card), and the dual floor of Step 7, which certifies the minimum without trusting any of them. A golden-section search checks soft thresholding against the prox's definition. The asserts check the certificate, the agreement of the roads, both rate bounds at every step, ISTA's never-uphill property and the blow-up at step 3/L.
+Both programs build the garden centre's 100 weeks from SplitMix64, a short random generator written out in both languages (seed 11), turned into bell-curve noise by the Box–Muller recipe. They find $`L`$ by power iteration and run four roads to the same lasso: ISTA, FISTA, coordinate descent (the method of the regularisation card), and the dual floor of Step 7, which certifies the minimum without trusting any of them. A golden-section search checks soft thresholding against the prox's definition. The asserts check the certificate, the agreement of the roads, both rate bounds at every step, ISTA's never-uphill property and the blow-up at step 3/L.
 
 ### Python
 
@@ -672,14 +692,14 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves Steps 3, 4 and 5 of Why it works for every table, sales list, charge $\lambda \ge 0$ and start.
+Lean proves Steps 3, 4 and 5 of Why it works for every table, sales list, charge $`\lambda \ge 0`$ and start.
 
-- For any shrink $\tau \ge 0$, the prox of $\tau$ times the sum of sizes is soft thresholding by $\tau$, entry by entry. No other point minimises.
-- Take any $L > 0$ with $\lVert Ad\rVert^2 \le L\lVert d\rVert^2$ for every move $d$. ISTA with step $1/L$ never goes uphill.
-- With that same $L$, after $k \ge 1$ steps ISTA's total is above the minimum by at most $L\lVert x_0 - x^*\rVert^2/(2k)$.
-- For any $L > 0$, a point is left unchanged by an ISTA step exactly when it minimises the total.
+- For any shrink $`\tau \ge 0`$, the prox of $`\tau`$ times the sum of sizes is soft thresholding by $`\tau`$, entry by entry. No other point minimises.
+- Take any $`L > 0`$ with $`\lVert Ad\rVert^2 \le L\lVert d\rVert^2`$ for every move $`d`$. ISTA with step $`1/L`$ never goes uphill.
+- With that same $`L`$, after $`k \ge 1`$ steps ISTA's total is above the minimum by at most $`L\lVert x_0 - x^*\rVert^2/(2k)`$.
+- For any $`L > 0`$, a point is left unchanged by an ISTA step exactly when it minimises the total.
 
-FISTA's 1/k² rate, the dual certificate, the value of $L$ and the garden centre's numbers are left to the Python and Rust checks.
+FISTA's 1/k² rate, the dual certificate, the value of $`L`$ and the garden centre's numbers are left to the Python and Rust checks.
 
 ```lean
 -- Proximal gradient: for the lasso, the prox of the sum of sizes is soft thresholding, ISTA never goes uphill and its gap above the minimum after k steps is at most L‖x₀ − x*‖²/(2k), and ISTA's resting points are exactly the minimisers.
@@ -1003,7 +1023,7 @@ theorem ista_fixed_point_iff_minimiser {m n : ℕ} (A : Matrix (Fin m) (Fin n) �
 > **Try changing**
 > - Guess first: double the charge. Set `LAM = 80.0`. Seven signals are kept; true signals 4 and 7 are dropped, and signals 5 and 9 hang on at 0.01 and 0.02. FISTA gets within 0.000001 of the minimum at step 860, ISTA at step 2259.
 > - Guess first: halve the charge. Set `LAM = 20.0`. Thirteen signals are kept, the true nine plus false signals 81, 128, 181 and 198. FISTA needs 1225 steps; ISTA does not get within 0.000001 in 3000 and prints `none`.
-> - Guess first: remove the season. Set `RHO = 0.0`. $L$ drops from 9437.47 to 600.31, ISTA needs 91 steps, FISTA 75 and coordinate descent 5 sweeps: with no shared direction the problem is easy and momentum has little to add. The last assert now fails, honestly: the step-3/L run settles instead of blowing up. Above 2/L the guarantee is gone, which is not the same as certain failure.
+> - Guess first: remove the season. Set `RHO = 0.0`. $`L`$ drops from 9437.47 to 600.31, ISTA needs 91 steps, FISTA 75 and coordinate descent 5 sweeps: with no shared direction the problem is easy and momentum has little to add. The last assert now fails, honestly: the step-3/L run settles instead of blowing up. Above 2/L the guarantee is gone, which is not the same as certain failure.
 
 ---
 
@@ -1013,7 +1033,7 @@ theorem ista_fixed_point_iff_minimiser {m n : ℕ} (A : Matrix (Fin m) (Fin n) �
 > **Shrinking by λ instead of αλ.** The prox belongs to the charge scaled by the step, αλ‖x‖₁, because the gradient step was scaled by α. Shrink by λ = 40 when the gradient steps are about 0.04 and every coefficient is zeroed on every step: 0 signals kept, the total stuck at 1415.94, and no error message.
 >
 > - **Expecting FISTA's total to fall every step.** It rose on 363 of its first 1000 steps. A stopping test of "stop when the total rises" ends FISTA early; test the dual gap, the optimality conditions, or the size of the step instead.
-> - **A step past 2/L.** At 3/L the total reaches 10^61.99 in 100 steps. Find $L$ first, or shrink the step whenever the total breaks Step 1's bowl.
+> - **A step past 2/L.** At 3/L the total reaches 10^61.99 in 100 steps. Find $`L`$ first, or shrink the step whenever the total breaks Step 1's bowl.
 > - **Subgradient steps instead of the prox.** After 3000 steps they leave all 200 signals nonzero and sit 16.4982 above the minimum. The exact zeros come from the prox, not from the charge alone.
 > - **Comparing λ across write-ups.** This card puts a half in front of the squared misses; the regularisation card does not. The same fit is λ = 40 here and 80 there.
 
@@ -1022,12 +1042,12 @@ theorem ista_fixed_point_iff_minimiser {m n : ℕ} (A : Matrix (Fin m) (Fin n) �
 ## Where you meet it in real life
 
 - **MRI scanners.** Compressed-sensing scans take fewer measurements and rebuild the image with a sum-of-sizes charge on wavelet coefficients. FISTA-type iterations suit them, because each step needs only fast transforms, never a stored matrix.
-- **Image deblurring.** Beck and Teboulle introduced FISTA on this problem: the blur is the matrix $A$, applied by a fast convolution.
+- **Image deblurring.** Beck and Teboulle introduced FISTA on this problem: the blur is the matrix $`A`$, applied by a fast convolution.
 - **Statistics software.** Lasso, group lasso and sparse logistic regression are fitted by proximal gradient or coordinate descent; the group charge's prox shrinks a whole block's length at once.
 - **Sparse portfolios.** A sum-of-sizes charge on trades keeps a rebalance to a handful of assets, on top of the risk problem of [Quadratic programs](01-quadratic-programs-and-markowitz.md).
 - **Sparse recovery.** The solver of [Compressed sensing](../../13-Engineering%20mathematics/05-Signals/10-compressed-sensing-in-outline.md) uses the same shrink as its basic step.
 
-On the garden centre's small table, coordinate descent wins: 26 sweeps against FISTA's 1133 steps; a sweep costs about one pass over the table, a FISTA step about two (one with $A$, one with $A^\top$). Proximal gradient earns its place when the matrix is only ever applied, never stored (a transform, a blur, a scanner), and when each step must run in parallel.
+On the garden centre's small table, coordinate descent wins: 26 sweeps against FISTA's 1133 steps; a sweep costs about one pass over the table, a FISTA step about two (one with $`A`$, one with $`A^\top`$). Proximal gradient earns its place when the matrix is only ever applied, never stored (a transform, a blur, a scanner), and when each step must run in parallel.
 
 > **Say it back**
 > The lasso adds a sum-of-sizes charge to squared misses, and the charge's corner at zero stops plain gradient descent. Proximal gradient takes a gradient step on the squared misses alone, then applies the charge exactly through its prox, which for the sum of sizes is soft thresholding: shrink each entry by αλ and stop at zero. ISTA repeats that pair, never goes uphill, and closes the gap like 1/k; FISTA adds a growing momentum push and closes it like 1/k², at the cost of occasional rises. For the garden centre both start with all 200 signals and end on the true nine, and a dual floor certifies the minimum at 559.412115.
@@ -1037,7 +1057,7 @@ On the garden centre's small table, coordinate descent wins: 26 sweeps against F
 ## What this builds on
 
 - [Subgradients](../01-Convexity/07-subgradients.md): the set of slopes at a corner, and the rule that a minimum is where 0 is one of them, which Step 3 uses to derive the shrink.
-- [Gradient descent](../02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md): the step $x_k - \alpha\nabla f(x_k)$, its step-size limit 2/L, and the bowl of curvature L that Step 1 reuses.
+- [Gradient descent](../02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md): the step $`x_k - \alpha\nabla f(x_k)`$, its step-size limit 2/L, and the bowl of curvature L that Step 1 reuses.
 - [Regularisation](../../09-Probability%20and%20statistics/09-Regression/06-ridge-and-lasso.md): the lasso itself, why its charge gives exact zeros, and coordinate descent with the one-coefficient soft-threshold rule.
 - [Compressed sensing](../../13-Engineering%20mathematics/05-Signals/10-compressed-sensing-in-outline.md): sparse recovery, and the swap from counting nonzeros to summing sizes that makes the problem convex.
 

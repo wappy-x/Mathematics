@@ -39,29 +39,33 @@ Each box is one line of the program for the 2-D banana, f(x, y) = 100(y − x²)
 
 A reminder: the gradient ∇f lists every partial derivative of f, and a minimum of a smooth function has ∇f = 0 ([Optimality conditions](01-optimality-conditions.md)).
 
-Write the program as numbered lines. Line k computes a value $v_k = \varphi_k(\text{its inputs})$, where $\varphi_k$ ("phi k") is one elementary operation: an addition, a subtraction or a multiplication. Write $j \to k$ when line j feeds line k.
+Write the program as numbered lines. Line k computes a value $`v_k = \varphi_k(\text{its inputs})`$, where $`\varphi_k`$ ("phi k") is one elementary operation: an addition, a subtraction or a multiplication. Write $`j \to k`$ when line j feeds line k.
 
-Two new notations, in words first. The **tangent** $\dot v_k$ ("v dot") is how fast line k changes when the inputs move in one chosen direction. The **adjoint** $\bar v_k$ ("v bar") is how fast the final output changes per unit change in line k. They are not a time derivative and not a mean. Later cards in this wing use them freely.
+Two new notations, in words first. The **tangent** $`\dot v_k`$ ("v dot") is how fast line k changes when the inputs move in one chosen direction. The **adjoint** $`\bar v_k`$ ("v bar") is how fast the final output changes per unit change in line k. They are not a time derivative and not a mean. Later cards in this wing use them freely.
 
-$$\text{forward:}\quad \dot v_k = \sum_{j \to k} \frac{\partial \varphi_k}{\partial v_j}\,\dot v_j \qquad\qquad \text{reverse:}\quad \bar v_j = \sum_{k:\, j \to k} \bar v_k\,\frac{\partial \varphi_k}{\partial v_j}, \quad \bar f = 1$$
+```math
+\text{forward:}\quad \dot v_k = \sum_{j \to k} \frac{\partial \varphi_k}{\partial v_j}\,\dot v_j \qquad\qquad \text{reverse:}\quad \bar v_j = \sum_{k:\, j \to k} \bar v_k\,\frac{\partial \varphi_k}{\partial v_j}, \quad \bar f = 1
+```
 
-$$\text{reverse mode} \;\le\; 5L \text{ operations}, \qquad \text{forward mode} \;\approx\; 3nL, \qquad \text{central differences} \;\approx\; 2nL$$
+```math
+\text{reverse mode} \;\le\; 5L \text{ operations}, \qquad \text{forward mode} \;\approx\; 3nL, \qquad \text{central differences} \;\approx\; 2nL
+```
 
 **Read it aloud:** going forwards, a line's tangent is the sum of its inputs' tangents, each scaled by the local slope joining them; going backwards, a line's adjoint is the sum of the adjoints of the lines it feeds, each scaled by the same local slope; and the backward sweep that fills every adjoint costs at most five runs of the program, while the other two roads pay once per input.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$; $x_1, \dots, x_{50}$ | the valley's coordinates; in the 50-variable version, all of them | (−1.2, 1); (−1.2, 1, −1.2, …) | moves the point where every slope is read |
-| $f$ | the valley's height, the Rosenbrock function, to be minimised | 24.2 in 2-D; 12,221 in 50-D | — |
-| $v_k$, $\varphi_k$; $s, d, c, dd, t, u$ | the value on line k of the program; the one operation that makes it; the six inner lines of the 2-D program, named in the picture | $s = x \cdot x = 1.44$ | — |
-| $j \to k$; $\sum_{j \to k}$; $\partial\varphi_k/\partial v_j$ | line j feeds line k; add over every such line; the local slope of that one operation against that one input | for $s = x \cdot x$ each copy of x has slope −1.2 | a bigger local slope passes more change along the edge |
-| $\dot x$, $\dot v_k$ | tangent: rate of change along the seeded direction | $\dot x = 1$, $\dot s = -2.4$ | the tangents scale in proportion |
-| $\bar x$, $\bar v_k$ | adjoint: rate of change of $f$ per unit change of that line | $\bar s = 88$, $\bar x = -215.6$ | — |
-| $\nabla f$ | the gradient, every partial derivative of $f$ | (−215.6, −88) in 2-D | — |
-| $\varepsilon$; $p + \dot p\,\varepsilon$ | the dual unit, a symbol with $\varepsilon \cdot \varepsilon = 0$; a dual number, a value p carrying its tangent $\dot p$ | $f(-1.2 + \varepsilon, 1) = 24.2 - 215.6\,\varepsilon$ | — |
-| $h$ | the step in a finite difference | $10^{-6}$ | too big bends, too small rounds |
-| $n$; $m$ | the number of inputs; the number of outputs | 2 and 50; 1 | differences and forward mode grow with n; reverse mode grows with m |
-| $L$ | arithmetic operations in one run of the program | 7 in 2-D; 391 in 50-D | every cost scales with it |
+| $`x`$, $`y`$; $`x_1, \dots, x_{50}`$ | the valley's coordinates; in the 50-variable version, all of them | (−1.2, 1); (−1.2, 1, −1.2, …) | moves the point where every slope is read |
+| $`f`$ | the valley's height, the Rosenbrock function, to be minimised | 24.2 in 2-D; 12,221 in 50-D | — |
+| $`v_k`$, $`\varphi_k`$; $`s, d, c, dd, t, u`$ | the value on line k of the program; the one operation that makes it; the six inner lines of the 2-D program, named in the picture | $`s = x \cdot x = 1.44`$ | — |
+| $`j \to k`$; $`\sum_{j \to k}`$; $`\partial\varphi_k/\partial v_j`$ | line j feeds line k; add over every such line; the local slope of that one operation against that one input | for $`s = x \cdot x`$ each copy of x has slope −1.2 | a bigger local slope passes more change along the edge |
+| $`\dot x`$, $`\dot v_k`$ | tangent: rate of change along the seeded direction | $`\dot x = 1`$, $`\dot s = -2.4`$ | the tangents scale in proportion |
+| $`\bar x`$, $`\bar v_k`$ | adjoint: rate of change of $`f`$ per unit change of that line | $`\bar s = 88`$, $`\bar x = -215.6`$ | — |
+| $`\nabla f`$ | the gradient, every partial derivative of $`f`$ | (−215.6, −88) in 2-D | — |
+| $`\varepsilon`$; $`p + \dot p\,\varepsilon`$ | the dual unit, a symbol with $`\varepsilon \cdot \varepsilon = 0`$; a dual number, a value p carrying its tangent $`\dot p`$ | $`f(-1.2 + \varepsilon, 1) = 24.2 - 215.6\,\varepsilon`$ | — |
+| $`h`$ | the step in a finite difference | $`10^{-6}`$ | too big bends, too small rounds |
+| $`n`$; $`m`$ | the number of inputs; the number of outputs | 2 and 50; 1 | differences and forward mode grow with n; reverse mode grows with m |
+| $`L`$ | arithmetic operations in one run of the program | 7 in 2-D; 391 in 50-D | every cost scales with it |
 
 ### When it holds
 
@@ -69,7 +73,7 @@ $$\text{reverse mode} \;\le\; 5L \text{ operations}, \qquad \text{forward mode} 
 - **The code computes the function the same way near the point.** AD differentiates the path the program took. A shortcut `if x == 1: return 1` in a squaring routine gives slope 0 at x = 1, where the true slope is 2. The checks print exactly this case.
 - **One output per sweep.** One reverse sweep gives the gradient of one number. A program with m outputs and n inputs needs m sweeps for its full Jacobian (the table of every output's partials), or n forward runs. With many outputs and few inputs, forward mode wins.
 - **The tape fits in memory.** Reverse mode stores every line's value and local slopes, so memory grows with the length of the run. Long loops store checkpoints and recompute the rest.
-- **Exact means exact up to rounding.** No step size enters, so there is no truncation error. The derivative is typically about as accurate as the evaluation of $f$ itself.
+- **Exact means exact up to rounding.** No step size enters, so there is no truncation error. The derivative is typically about as accurate as the evaluation of $`f`$ itself.
 
 ---
 
@@ -77,7 +81,7 @@ $$\text{reverse mode} \;\le\; 5L \text{ operations}, \qquad \text{forward mode} 
 
 ### Step 0: a program is a chain of tiny steps, each with a known slope
 
-The Rosenbrock height is not computed in one stroke. The program squares, subtracts, squares again, scales and adds: seven lines in 2-D. Each line is a single operation whose slope is known exactly. The slope of $a \cdot b$ against $a$ is $b$. The slope of $a - b$ against $b$ is −1.
+The Rosenbrock height is not computed in one stroke. The program squares, subtracts, squares again, scales and adds: seven lines in 2-D. Each line is a single operation whose slope is known exactly. The slope of $`a \cdot b`$ against $`a`$ is $`b`$. The slope of $`a - b`$ against $`b`$ is −1.
 
 So the derivative of the whole program is a product of these known slopes, by the chain rule. Where one value feeds two lines, the slopes along the two routes add ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)). Nothing is approximated. The only question is the order of multiplying, and that order decides the cost.
 
@@ -85,27 +89,29 @@ The chain-rule card makes exactly this point: grouping a long product from the i
 
 ### Step 1: forward mode carries a tangent beside every value
 
-Pick a direction, say "move x by 1, leave y alone": $\dot x = 1$, $\dot y = 0$. Then run the program, and on every line compute the tangent from the forward formula next to the value.
+Pick a direction, say "move x by 1, leave y alone": $`\dot x = 1`$, $`\dot y = 0`$. Then run the program, and on every line compute the tangent from the forward formula next to the value.
 
-For $s = x \cdot x$ the rule is $\dot s = x\dot x + x \dot x = -2.4$. For $d = y - s$ it is $\dot d = \dot y - \dot s = 2.4$. Line by line, the tangent reaches $\dot f = -215.6$. That is $\partial f/\partial x$.
+For $`s = x \cdot x`$ the rule is $`\dot s = x\dot x + x \dot x = -2.4`$. For $`d = y - s`$ it is $`\dot d = \dot y - \dot s = 2.4`$. Line by line, the tangent reaches $`\dot f = -215.6`$. That is $`\partial f/\partial x`$.
 
-**Dual numbers** do this without writing a single rule by hand. Replace every number $p$ by a pair $p + \dot p\,\varepsilon$, its value and its tangent, where $\varepsilon$ is a new symbol with $\varepsilon \cdot \varepsilon = 0$. Multiply two pairs:
+**Dual numbers** do this without writing a single rule by hand. Replace every number $`p`$ by a pair $`p + \dot p\,\varepsilon`$, its value and its tangent, where $`\varepsilon`$ is a new symbol with $`\varepsilon \cdot \varepsilon = 0`$. Multiply two pairs:
 
-$$(p + \dot p\,\varepsilon)(q + \dot q\,\varepsilon) = pq + (p\dot q + \dot p q)\,\varepsilon + \dot p \dot q\,\varepsilon^2 = pq + (p\dot q + \dot p q)\,\varepsilon.$$
+```math
+(p + \dot p\,\varepsilon)(q + \dot q\,\varepsilon) = pq + (p\dot q + \dot p q)\,\varepsilon + \dot p \dot q\,\varepsilon^2 = pq + (p\dot q + \dot p q)\,\varepsilon.
+```
 
-The ε part is the product rule. So feed the program $x = -1.2 + 1\varepsilon$ and $y = 1 + 0\varepsilon$, and out comes $24.2 - 215.6\,\varepsilon$: the height and its slope together.
+The ε part is the product rule. So feed the program $`x = -1.2 + 1\varepsilon`$ and $`y = 1 + 0\varepsilon`$, and out comes $`24.2 - 215.6\,\varepsilon`$: the height and its slope together.
 
-Why exact? A finite difference evaluates at $x + h$ and keeps every power of $h$ in the Taylor expansion (f(x + h) written as a sum of powers of h), then divides by $h$; the leftover $h$ and $h^2$ terms are its error. With $\varepsilon$ in place of $h$, every power beyond the first is zero by definition. Nothing is left over to divide away.
+Why exact? A finite difference evaluates at $`x + h`$ and keeps every power of $`h`$ in the Taylor expansion (f(x + h) written as a sum of powers of h), then divides by $`h`$; the leftover $`h`$ and $`h^2`$ terms are its error. With $`\varepsilon`$ in place of $`h`$, every power beyond the first is zero by definition. Nothing is left over to divide away.
 
-The catch: one forward run gives one direction. The slope against y needs a second run seeded $\dot y = 1$. Fifty inputs need fifty runs.
+The catch: one forward run gives one direction. The slope against y needs a second run seeded $`\dot y = 1`$. Fifty inputs need fifty runs.
 
 ### Step 2: reverse mode sweeps adjoints from the output back
 
-Reverse mode asks the opposite question on every line: if this value moved by 1, how far would $f$ move? Start at the end, $\bar f = 1$, and work back up the program.
+Reverse mode asks the opposite question on every line: if this value moved by 1, how far would $`f`$ move? Start at the end, $`\bar f = 1`$, and work back up the program.
 
 The rule is the reverse formula. A line's adjoint collects one contribution from each line it feeds: that line's adjoint times the local slope joining them. A line's adjoint is ready only when every line it feeds has been swept, so the sweep runs strictly last line first.
 
-For the 2-D valley: $\bar t = \bar u = 1$, because $f = t + u$. Then $\bar{dd} = 100$ and $\bar c = 2c \cdot \bar u = 4.4$. Then $\bar d = 2d \cdot 100 = -88$, so $\bar y = -88$ and $\bar s = 88$. Finally x feeds three edges: two into $s = x \cdot x$ and one into $c = 1 - x$. Its adjoint adds all three: $88 \cdot (-1.2) \cdot 2 + 4.4 \cdot (-1) = -215.6$.
+For the 2-D valley: $`\bar t = \bar u = 1`$, because $`f = t + u`$. Then $`\bar{dd} = 100`$ and $`\bar c = 2c \cdot \bar u = 4.4`$. Then $`\bar d = 2d \cdot 100 = -88`$, so $`\bar y = -88`$ and $`\bar s = 88`$. Finally x feeds three edges: two into $`s = x \cdot x`$ and one into $`c = 1 - x`$. Its adjoint adds all three: $`88 \cdot (-1.2) \cdot 2 + 4.4 \cdot (-1) = -215.6`$.
 
 Both partials came out of one sweep. The same sweep on the 50-variable valley gives all 50.
 
@@ -113,18 +119,18 @@ Both partials came out of one sweep. The same sweep on the 50-variable valley gi
 
 ### Step 3: the sweep costs at most four operations per line
 
-Count arithmetic operations. Recording costs one per line: the value itself. For $+$, $-$ and $\times$ the local slopes are free, because they are constants (1 and −1) or copies of an input.
+Count arithmetic operations. Recording costs one per line: the value itself. For $`+`$, $`-`$ and $`\times`$ the local slopes are free, because they are constants (1 and −1) or copies of an input.
 
 Each line has at most two inputs, so at most two edges. The sweep visits each edge once and does one multiplication and one addition there. That is at most 4 operations per line, so at most 4L for the sweep and 5L in all. The count does not mention n. Counts that leave out the recording, or weigh the operations differently, quote four instead of five, as [Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md) does; none of them mentions n either.
 
 <details>
 <summary>Detailed proof: reverse mode costs at most 5L, and gives the exact gradient</summary>
 
-Let the program have inputs $v_1, \dots, v_n$ and lines $v_{n+1}, \dots, v_{n+L}$, each line an addition, subtraction or multiplication of two earlier values or constants, the last line being $f$.
+Let the program have inputs $`v_1, \dots, v_n`$ and lines $`v_{n+1}, \dots, v_{n+L}`$, each line an addition, subtraction or multiplication of two earlier values or constants, the last line being $`f`$.
 
-*Correctness.* Define $\bar v_j$ as the partial derivative of $f$ with respect to $v_j$, when $v_j$ is treated as a free variable and every later line is recomputed from it. Line j influences $f$ only through the lines k with $j \to k$. By the chain rule in several variables, $\bar v_j = \sum_{k:\,j\to k} \bar v_k\,\partial\varphi_k/\partial v_j$. Every such k is later than j, so if the sweep visits lines in decreasing order, each $\bar v_k$ on the right is final before it is used. Induction from $\bar f = 1$ downwards gives every $\bar v_j$ exactly; for an input line it is $\partial f/\partial x_j$.
+*Correctness.* Define $`\bar v_j`$ as the partial derivative of $`f`$ with respect to $`v_j`$, when $`v_j`$ is treated as a free variable and every later line is recomputed from it. Line j influences $`f`$ only through the lines k with $`j \to k`$. By the chain rule in several variables, $`\bar v_j = \sum_{k:\,j\to k} \bar v_k\,\partial\varphi_k/\partial v_j`$. Every such k is later than j, so if the sweep visits lines in decreasing order, each $`\bar v_k`$ on the right is final before it is used. Induction from $`\bar f = 1`$ downwards gives every $`\bar v_j`$ exactly; for an input line it is $`\partial f/\partial x_j`$.
 
-*Cost.* Recording performs each operation once: L operations, with local slopes 1, −1 or a stored input, at no further cost. The sweep handles each edge once, with one multiplication and one addition, and each line has at most two edges: at most $4L$. The total is at most $5L$, independent of n. With sine, division and the like, the local slopes cost a few operations each and the constant grows to another small fixed number; the general result is Baur and Strassen's (1983), in the operation-count model of Griewank and Walther.
+*Cost.* Recording performs each operation once: L operations, with local slopes 1, −1 or a stored input, at no further cost. The sweep handles each edge once, with one multiplication and one addition, and each line has at most two edges: at most $`4L`$. The total is at most $`5L`$, independent of n. With sine, division and the like, the local slopes cost a few operations each and the constant grows to another small fixed number; the general result is Baur and Strassen's (1983), in the operation-count model of Griewank and Walther.
 
 </details>
 
@@ -138,28 +144,28 @@ The 5 in 5L is fixed; the 2n in the differences' 2nL grows with the number of in
 
 ## Worked numbers, by hand
 
-The 2-D valley at (−1.2, 1). Forward mode seeded $\dot x = 1$, then the reverse sweep.
+The 2-D valley at (−1.2, 1). Forward mode seeded $`\dot x = 1`$, then the reverse sweep.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $s$, $\dot s$ | $(-1.2)^2$; $\;2 \cdot (-1.2) \cdot 1$ | 1.44; −2.4 |
-| $d$, $\dot d$ | $1 - 1.44$; $\;0 - (-2.4)$ | −0.44; 2.4 |
-| $c$, $\dot c$ | $1 - (-1.2)$; $\;0 - 1$ | 2.2; −1 |
-| $dd$, $\dot{dd}$ | $(-0.44)^2$; $\;2 \cdot (-0.44) \cdot 2.4$ | 0.1936; −2.112 |
-| $t$, $\dot t$ | $100 \cdot 0.1936$; $\;100 \cdot (-2.112)$ | 19.36; −211.2 |
-| $u$, $\dot u$ | $2.2^2$; $\;2 \cdot 2.2 \cdot (-1)$ | 4.84; −4.4 |
-| $f$, $\dot f$ | $19.36 + 4.84$; $\;-211.2 + (-4.4)$ | 24.2; **−215.6** |
-| sweep: $\bar t$, $\bar u$, $\bar{dd}$ | $\bar f \cdot 1$; $\;\bar f \cdot 1$; $\;100 \cdot \bar t$ | 1; 1; 100 |
-| sweep: $\bar c$, $\bar d$ | $2 \cdot 2.2 \cdot 1$; $\;2 \cdot (-0.44) \cdot 100$ | 4.4; −88 |
-| sweep: $\bar y$, $\bar s$ | $\bar d \cdot 1$; $\;\bar d \cdot (-1)$ | −88; 88 |
-| sweep: $\bar x$ | $88 \cdot (-1.2) \cdot 2 + 4.4 \cdot (-1)$ | **−215.6** |
-| the gradient | $(\bar x, \bar y)$ | **(−215.6, −88)** |
+| $`s`$, $`\dot s`$ | $`(-1.2)^2`$; $`\;2 \cdot (-1.2) \cdot 1`$ | 1.44; −2.4 |
+| $`d`$, $`\dot d`$ | $`1 - 1.44`$; $`\;0 - (-2.4)`$ | −0.44; 2.4 |
+| $`c`$, $`\dot c`$ | $`1 - (-1.2)`$; $`\;0 - 1`$ | 2.2; −1 |
+| $`dd`$, $`\dot{dd}`$ | $`(-0.44)^2`$; $`\;2 \cdot (-0.44) \cdot 2.4`$ | 0.1936; −2.112 |
+| $`t`$, $`\dot t`$ | $`100 \cdot 0.1936`$; $`\;100 \cdot (-2.112)`$ | 19.36; −211.2 |
+| $`u`$, $`\dot u`$ | $`2.2^2`$; $`\;2 \cdot 2.2 \cdot (-1)`$ | 4.84; −4.4 |
+| $`f`$, $`\dot f`$ | $`19.36 + 4.84`$; $`\;-211.2 + (-4.4)`$ | 24.2; **−215.6** |
+| sweep: $`\bar t`$, $`\bar u`$, $`\bar{dd}`$ | $`\bar f \cdot 1`$; $`\;\bar f \cdot 1`$; $`\;100 \cdot \bar t`$ | 1; 1; 100 |
+| sweep: $`\bar c`$, $`\bar d`$ | $`2 \cdot 2.2 \cdot 1`$; $`\;2 \cdot (-0.44) \cdot 100`$ | 4.4; −88 |
+| sweep: $`\bar y`$, $`\bar s`$ | $`\bar d \cdot 1`$; $`\;\bar d \cdot (-1)`$ | −88; 88 |
+| sweep: $`\bar x`$ | $`88 \cdot (-1.2) \cdot 2 + 4.4 \cdot (-1)`$ | **−215.6** |
+| the gradient | $`(\bar x, \bar y)`$ | **(−215.6, −88)** |
 
 Both partials are negative, so the valley falls as x and y rise from the start, and it falls far faster along x.
 
-The hand formula agrees. Differentiating $100(y - x^2)^2 + (1 - x)^2$ gives $\partial f/\partial x = -400x(y - x^2) - 2(1 - x) = -215.6$ and $\partial f/\partial y = 200(y - x^2) = -88$.
+The hand formula agrees. Differentiating $`100(y - x^2)^2 + (1 - x)^2`$ gives $`\partial f/\partial x = -400x(y - x^2) - 2(1 - x) = -215.6`$ and $`\partial f/\partial y = 200(y - x^2) = -88`$.
 
-On the 50-variable valley the same sweep returns the partials −215.6, 792, −655.6, …, −655.6, −88. Forward mode, reverse mode and the hand formula agree to every printed digit (largest gap 0.000000000000). A central difference with $h = 10^{-6}$ agrees to within 0.000001.
+On the 50-variable valley the same sweep returns the partials −215.6, 792, −655.6, …, −655.6, −88. Forward mode, reverse mode and the hand formula agree to every printed digit (largest gap 0.000000000000). A central difference with $`h = 10^{-6}`$ agrees to within 0.000001.
 
 ### The picture: the nudge's error against its size
 
@@ -173,18 +179,18 @@ xychart-beta
     line [0.68, -1.32, -3.32, -5.32, -7.31, -7.65, -7.03, -6.00, -4.75, -4.75, -3.47, -1.80, -0.79, -0.51]
 ```
 
-The upper line is the one-sided forward difference, the lower the two-sided central difference. Read left to right: shrinking the step first helps, because the curve bends less inside it. Past a point it hurts, because the height is known only to about sixteen digits and a tiny step divides that rounding noise by a tiny number. The best forward step, $h = 10^{-8}$, still errs by $10^{-5.11}$; the best central one, $h = 10^{-6}$, by $10^{-7.65}$. AD has no step and sits off the bottom of this chart.
+The upper line is the one-sided forward difference, the lower the two-sided central difference. Read left to right: shrinking the step first helps, because the curve bends less inside it. Past a point it hurts, because the height is known only to about sixteen digits and a tiny step divides that rounding noise by a tiny number. The best forward step, $`h = 10^{-8}`$, still errs by $`10^{-5.11}`$; the best central one, $`h = 10^{-6}`$, by $`10^{-7.65}`$. AD has no step and sits off the bottom of this chart.
 
 ### What breaks if you drop a piece
 
-The correct answer is $\partial f/\partial x = -215.6$, $\partial f/\partial y = -88$.
+The correct answer is $`\partial f/\partial x = -215.6`$, $`\partial f/\partial y = -88`$.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Adjoints overwritten (`=`) instead of added (`+=`) in the sweep | −52.8 and −44 | x feeds three edges and d feeds two; only the last contribution survived |
-| Both tangents seeded at once, $\dot x = \dot y = 1$ | −303.6 | a forward run gives one directional slope, here $\partial f/\partial x + \partial f/\partial y$, not a gradient |
-| Forward difference with $h = 0.1$ | −153.8 | the valley curves a lot within a step that long |
-| Forward difference with $h = 10^{-12}$ | −215.624851 | rounding noise in $f$, divided by a tiny step |
+| Both tangents seeded at once, $`\dot x = \dot y = 1`$ | −303.6 | a forward run gives one directional slope, here $`\partial f/\partial x + \partial f/\partial y`$, not a gradient |
+| Forward difference with $`h = 0.1`$ | −153.8 | the valley curves a lot within a step that long |
+| Forward difference with $`h = 10^{-12}`$ | −215.624851 | rounding noise in $`f`$, divided by a tiny step |
 | A shortcut branch `if x == 1: return 1` in a squaring routine, at x = 1 | 0 (true slope 2; a central difference through the same routine gives 2) | AD differentiates the code path taken, and that path is a constant |
 
 The last row is the hypothesis "the code computes the function the same way near the point" failing. Every number in the table is printed by both checks.
@@ -584,7 +590,7 @@ The two outputs are identical line for line.
 
 Lean proves both modes exact for every program built from addition, subtraction and multiplication, with any number of inputs and lines.
 
-- Forward mode: feed the program dual numbers $x + v\,\varepsilon$, and the ε part of the output is exactly the slope along the direction $v$.
+- Forward mode: feed the program dual numbers $`x + v\,\varepsilon`$, and the ε part of the output is exactly the slope along the direction $`v`$.
 - Reverse mode: one sweep, last line first, gives each input an adjoint. That adjoint is exactly the partial derivative of the output against that input.
 - The whole reverse computation takes at most 5L operations: one per line recorded, two per edge swept. The bound never mentions n.
 - On the 2-D valley at (−1.2, 1), the program's height is 24.2 and the sweep's gradient is (−215.6, −88), matching the hand formula.
@@ -1134,20 +1140,20 @@ example : 8 * (50 - 1) - 1 = 391 ∧ 5 * 391 = 1955 ∧ 2 * 50 * 391 = 39100 ∧
 > - Guess first: at how many inputs does reverse mode start to beat central differences? Change `cost(x2)` to `cost(x[:3])`. Already at three: 75 operations against 90, because 5L is below 2nL once n passes 2.5. At two inputs it loses, 35 against 28.
 > - Guess first: change `g_rev, first, adj = reverse_mode(x2)` to `reverse_mode(x2, overwrite=True)`, so the sweep overwrites adjoints. The slopes come out at −52.8 and −44, and an assert stops the run.
 > - Guess first: what does one forward run give when the seed points on a slant? In `_, fx = rosen([Dual(-1.2, 1.0), Dual(1.0)], Dual)`, seed `Dual(-1.2, 0.6), Dual(1.0, 0.8)`. The tangent column ends at −199.76, which is 0.6 × (−215.6) + 0.8 × (−88): the slope in that one direction, not the gradient. An assert stops the run.
-> - Guess first: in `Node.__mul__`, give each input its own value as its slope, `((s.i, s.v), (o.i, o.v))`, instead of the other input's. Does the gradient change? Not through the squares, whose two inputs are equal. Only $t = 100 \cdot dd$ exposes it: $\bar{dd}$ becomes 0.1936 instead of 100, reverse mode reports −4.808883 and −0.170368, and an assert stops the run.
+> - Guess first: in `Node.__mul__`, give each input its own value as its slope, `((s.i, s.v), (o.i, o.v))`, instead of the other input's. Does the gradient change? Not through the squares, whose two inputs are equal. Only $`t = 100 \cdot dd`$ exposes it: $`\bar{dd}`$ becomes 0.1936 instead of 100, reverse mode reports −4.808883 and −0.170368, and an assert stops the run.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Thinking AD is a finite difference done carefully, or symbolic algebra done by computer.** It is neither. A finite difference re-runs the program at nearby points and keeps an error that depends on the step: on this valley at best $10^{-5.11}$ one-sided. Symbolic differentiation builds a formula for the derivative, which can grow far longer than the program. AD runs the program and applies the exact chain rule to the numbers actually computed; it never forms a formula and never takes a step.
+> **Thinking AD is a finite difference done carefully, or symbolic algebra done by computer.** It is neither. A finite difference re-runs the program at nearby points and keeps an error that depends on the step: on this valley at best $`10^{-5.11}`$ one-sided. Symbolic differentiation builds a formula for the derivative, which can grow far longer than the program. AD runs the program and applies the exact chain rule to the numbers actually computed; it never forms a formula and never takes a step.
 >
 > Smaller traps, each with the wrong number it gives here:
-> - **Overwriting adjoints instead of adding them:** $\bar x$ comes out at −52.8, not −215.6.
+> - **Overwriting adjoints instead of adding them:** $`\bar x`$ comes out at −52.8, not −215.6.
 > - **Expecting a gradient from one forward run:** seeding every input with 1 gives −303.6, one directional slope.
 > - **Trusting AD across a branch:** slope 0 where the true slope is 2.
-> - **Checking AD with a careless finite difference:** a forward difference with $h = 0.1$ gives −153.8 and makes correct AD look broken. A central difference near $h = 10^{-6}$ agrees to within 0.000001.
+> - **Checking AD with a careless finite difference:** a forward difference with $`h = 0.1`$ gives −153.8 and makes correct AD look broken. A central difference near $`h = 10^{-6}`$ agrees to within 0.000001.
 
 ---
 

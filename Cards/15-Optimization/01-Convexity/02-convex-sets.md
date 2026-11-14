@@ -28,21 +28,27 @@ Robusta share across, Brazil share up, 1 share = 200 units; the Ethiopian share 
 
 ## The formula
 
-A blend is a list of three shares, $x = (x_1, x_2, x_3)$: Robusta, Brazil, Ethiopian. Lists mix entry by entry, as vectors do. The plane version of everything below, with points on a field, is in [Convex sets](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/02-convex-sets-and-convex-hulls.md); this card works in any number of entries $n$.
+A blend is a list of three shares, $`x = (x_1, x_2, x_3)`$: Robusta, Brazil, Ethiopian. Lists mix entry by entry, as vectors do. The plane version of everything below, with points on a field, is in [Convex sets](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/02-convex-sets-and-convex-hulls.md); this card works in any number of entries $`n`$.
 
-A **convex combination** (a mix) of two points $x$ and $y$ is
+A **convex combination** (a mix) of two points $`x`$ and $`y`$ is
 
-$$\theta x + (1 - \theta)\,y, \qquad 0 \le \theta \le 1.$$
+```math
+\theta x + (1 - \theta)\,y, \qquad 0 \le \theta \le 1.
+```
 
-A set $C$ is **convex** when every such mix of two of its points is again in $C$. The **convex hull** of a set $S$ is every mix of finitely many of its points:
+A set $`C`$ is **convex** when every such mix of two of its points is again in $`C`$. The **convex hull** of a set $`S`$ is every mix of finitely many of its points:
 
-$$\operatorname{conv} S = \{\, \theta_1 s_1 + \dots + \theta_k s_k \;:\; s_i \in S,\ \theta_i \ge 0,\ \theta_1 + \dots + \theta_k = 1 \,\}.$$
+```math
+\mathrm{conv}\, S = \{\, \theta_1 s_1 + \dots + \theta_k s_k \;:\; s_i \in S,\ \theta_i \ge 0,\ \theta_1 + \dots + \theta_k = 1 \,\}.
+```
 
 A **polyhedron** is a set cut out by finitely many walls:
 
-$$P = \{\, x : Ax \le b \,\}, \quad\text{that is,}\quad a_i^{\mathsf T} x \le b_i \text{ for every row } i.$$
+```math
+P = \{\, x : Ax \le b \,\}, \quad\text{that is,}\quad a_i^{\mathsf T} x \le b_i \text{ for every row } i.
+```
 
-Here $a_i^{\mathsf T} x$ is a weighted sum: each entry of $x$ times its weight in row $i$, added up. The inequality holds entry by entry, one row at a time.
+Here $`a_i^{\mathsf T} x`$ is a weighted sum: each entry of $`x`$ times its weight in row $`i`$, added up. The inequality holds entry by entry, one row at a time.
 
 **Read it aloud:** a polyhedron is every point that satisfies a list of straight-line rules, each of the form "this weighted sum of the entries is at most that number".
 
@@ -50,21 +56,21 @@ The blend set is one, with six walls. Read each row of `A` against the same entr
 
 `A = [[-1, 0, 0], [0, -1, 0], [0, 0, -1], [1, 1, 1], [-1, -1, -1], [6, 8, 14]]`, `b = [0, 0, 0, 1, -1, 9]`.
 
-The first three rows say no share is negative. Rows four and five say the shares add to at most 1 and at least 1, so exactly 1. The last row is the price rule, $6x_1 + 8x_2 + 14x_3 \le 9$.
+The first three rows say no share is negative. Rows four and five say the shares add to at most 1 and at least 1, so exactly 1. The last row is the price rule, $`6x_1 + 8x_2 + 14x_3 \le 9`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | two points: here two blends, as lists of shares | Dark $(1/2, 1/2, 0)$, Bright $(1/2, 1/5, 3/10)$ | — |
-| $x_1, x_2, x_3$ | the Robusta, Brazil and Ethiopian shares | House: 2/5, 2/5, 1/5 | more Ethiopian in place of the others raises the cost |
-| $n$ | how many entries a point has | 3 beans | the set lives in a bigger space; the tests are unchanged |
-| $\theta$ | the fraction of $x$ in a two-way mix | 1/2 is a 50/50 bin | the mix slides from $y$ to $x$ |
-| $C$ | a set being tested | the blends costing at most £9 | — |
-| $S$, $\operatorname{conv} S$ | some given points; every mix of them | five named blends; the dashed outline | more points can only grow the hull |
-| $s_i$, $\theta_i$, $k$ | the i-th point, its weight, how many points | House = 1/9 Dark + 5/9 Bright + 1/3 Breakfast | a bigger weight pulls the mix towards that point |
-| $a_i$, $b_i$ | one wall: weights on the entries, and a limit | prices $(6, 8, 14)$, limit 9 | a bigger limit moves the wall out |
-| $A$, $b$, $m$ | all walls stacked as rows; how many walls | six rows above; $m = 6$ | more walls can only shrink $P$ |
-| $P$ | a polyhedron, $\{x : Ax \le b\}$ | the passing set, four corners | — |
-| $u$, $v$, $\alpha_i$, $\beta_i$ | two mixes of the points of $S$, and their weights (Step 3's fold) | two tip-togethers of the named blends | — |
+| $`x`$, $`y`$ | two points: here two blends, as lists of shares | Dark $`(1/2, 1/2, 0)`$, Bright $`(1/2, 1/5, 3/10)`$ | — |
+| $`x_1, x_2, x_3`$ | the Robusta, Brazil and Ethiopian shares | House: 2/5, 2/5, 1/5 | more Ethiopian in place of the others raises the cost |
+| $`n`$ | how many entries a point has | 3 beans | the set lives in a bigger space; the tests are unchanged |
+| $`\theta`$ | the fraction of $`x`$ in a two-way mix | 1/2 is a 50/50 bin | the mix slides from $`y`$ to $`x`$ |
+| $`C`$ | a set being tested | the blends costing at most £9 | — |
+| $`S`$, $`\mathrm{conv}\, S`$ | some given points; every mix of them | five named blends; the dashed outline | more points can only grow the hull |
+| $`s_i`$, $`\theta_i`$, $`k`$ | the i-th point, its weight, how many points | House = 1/9 Dark + 5/9 Bright + 1/3 Breakfast | a bigger weight pulls the mix towards that point |
+| $`a_i`$, $`b_i`$ | one wall: weights on the entries, and a limit | prices $`(6, 8, 14)`$, limit 9 | a bigger limit moves the wall out |
+| $`A`$, $`b`$, $`m`$ | all walls stacked as rows; how many walls | six rows above; $`m = 6`$ | more walls can only shrink $`P`$ |
+| $`P`$ | a polyhedron, $`\{x : Ax \le b\}`$ | the passing set, four corners | — |
+| $`u`$, $`v`$, $`\alpha_i`$, $`\beta_i`$ | two mixes of the points of $`S`$, and their weights (Step 3's fold) | two tip-togethers of the named blends | — |
 
 ### When it holds
 
@@ -83,37 +89,39 @@ The cost of a mix is the mix of the costs. Every wall is a weighted sum, so the 
 
 ### Step 1: one wall makes a convex set, in any number of entries
 
-The set on one side of a wall, $\{x : a^{\mathsf T}x \le b\}$, is a **half-space**. Take two of its points $x$ and $y$ and a fraction $\theta$ from 0 to 1. Then
+The set on one side of a wall, $`\{x : a^{\mathsf T}x \le b\}`$, is a **half-space**. Take two of its points $`x`$ and $`y`$ and a fraction $`\theta`$ from 0 to 1. Then
 
-$$a^{\mathsf T}(\theta x + (1-\theta)y) = \theta\, a^{\mathsf T}x + (1-\theta)\, a^{\mathsf T}y \le \theta b + (1-\theta) b = b.$$
+```math
+a^{\mathsf T}(\theta x + (1-\theta)y) = \theta\, a^{\mathsf T}x + (1-\theta)\, a^{\mathsf T}y \le \theta b + (1-\theta) b = b.
+```
 
-The first step is the even averaging of Step 0. The second uses that $\theta$ and $1-\theta$ are not negative, so they keep the "at most". An equality wall is two half-spaces, at most and at least, so it is convex too.
+The first step is the even averaging of Step 0. The second uses that $`\theta`$ and $`1-\theta`$ are not negative, so they keep the "at most". An equality wall is two half-spaces, at most and at least, so it is convex too.
 
 For the blends: Dark costs £7.00 and Bright £8.80, so every mix of them costs between those two figures. All 28 mixes of Dark, Bright and Breakfast in sixths cost from £7.00 to £8.80.
 
 ### Step 2: walls together still make a convex set
 
-If $x$ and $y$ are in every one of several convex sets, the segment between them lies in each set, so it lies in all of them at once. The overlap of convex sets is convex. A polyhedron is the overlap of its half-spaces, so every polyhedron is convex. The blend set is six half-spaces overlapping: convex, with no further work.
+If $`x`$ and $`y`$ are in every one of several convex sets, the segment between them lies in each set, so it lies in all of them at once. The overlap of convex sets is convex. A polyhedron is the overlap of its half-spaces, so every polyhedron is convex. The blend set is six half-spaces overlapping: convex, with no further work.
 
 ### Step 3: the hull is every mix, and the smallest convex set holding the points
 
-Two facts make $\operatorname{conv} S$ the right object.
+Two facts make $`\mathrm{conv}\, S`$ the right object.
 
 1. A convex set holds every mix of its points, not only two-way mixes. A three-way mix is a two-way mix of one point with a two-way mix of the others.
 2. The set of all mixes is itself convex: mixing two mixes gives weights that are still not negative and still add to one.
 
-So the mixes form a convex set holding $S$, and any convex set holding $S$ holds all the mixes. Nothing smaller works. For the roaster, $\operatorname{conv} S$ is every blend that can be made by tipping existing blends together.
+So the mixes form a convex set holding $`S`$, and any convex set holding $`S`$ holds all the mixes. Nothing smaller works. For the roaster, $`\mathrm{conv}\, S`$ is every blend that can be made by tipping existing blends together.
 
 <details>
 <summary>Detailed proof: a convex set holds every mix of its points</summary>
 
-Induction on $k$, the number of points. For $k = 1$ the mix is the point itself; $k = 2$ is the definition. Suppose every $(k-1)$-point mix of points of $C$ is in $C$, and take $\theta_1 s_1 + \dots + \theta_k s_k$ with $\theta_k < 1$ (if $\theta_k = 1$ the mix is $s_k$). Write it as
+Induction on $`k`$, the number of points. For $`k = 1`$ the mix is the point itself; $`k = 2`$ is the definition. Suppose every $`(k-1)`$-point mix of points of $`C`$ is in $`C`$, and take $`\theta_1 s_1 + \dots + \theta_k s_k`$ with $`\theta_k < 1`$ (if $`\theta_k = 1`$ the mix is $`s_k`$). Write it as
 
-$$(1 - \theta_k)\left(\tfrac{\theta_1}{1-\theta_k} s_1 + \dots + \tfrac{\theta_{k-1}}{1-\theta_k} s_{k-1}\right) + \theta_k s_k.$$
+$`\displaystyle (1 - \theta_k)\left(\tfrac{\theta_1}{1-\theta_k} s_1 + \dots + \tfrac{\theta_{k-1}}{1-\theta_k} s_{k-1}\right) + \theta_k s_k.`$
 
-The bracket's weights are not negative and add to one, so the bracket is in $C$ by the induction step. The whole is a two-way mix of the bracket and $s_k$, so it is in $C$.
+The bracket's weights are not negative and add to one, so the bracket is in $`C`$ by the induction step. The whole is a two-way mix of the bracket and $`s_k`$, so it is in $`C`$.
 
-For the second fact: if $u = \sum \alpha_i s_i$ and $v = \sum \beta_i s_i$ (padding with zero weights so both use the same points), then $\theta u + (1-\theta)v = \sum (\theta\alpha_i + (1-\theta)\beta_i) s_i$. Each new weight is at least 0, and they add to $\theta + (1 - \theta) = 1$.
+For the second fact: if $`u = \sum \alpha_i s_i`$ and $`v = \sum \beta_i s_i`$ (padding with zero weights so both use the same points), then $`\theta u + (1-\theta)v = \sum (\theta\alpha_i + (1-\theta)\beta_i) s_i`$. Each new weight is at least 0, and they add to $`\theta + (1 - \theta) = 1`$.
 
 </details>
 
@@ -121,9 +129,9 @@ House sits inside the hull of the other four named blends, and the weights that 
 
 ### Step 4: corners are where enough walls meet
 
-In $n$ entries, a **corner** (also called a vertex) of a polyhedron is a point of it where $n$ walls hold with equality and their directions are independent, so they pin down that one point. With $m$ walls there are at most "m choose n" ways to pick them, so a polyhedron has finitely many corners.
+In $`n`$ entries, a **corner** (also called a vertex) of a polyhedron is a point of it where $`n`$ walls hold with equality and their directions are independent, so they pin down that one point. With $`m`$ walls there are at most "m choose n" ways to pick them, so a polyhedron has finitely many corners.
 
-The blends have $n = 3$. The shares-add-to-one rule is always tight, so two more walls must be. Four candidate walls give six choices: four meet at a corner, two meet outside the set (Worked numbers).
+The blends have $`n = 3`$. The shares-add-to-one rule is always tight, so two more walls must be. Four candidate walls give six choices: four meet at a corner, two meet outside the set (Worked numbers).
 
 **Minkowski–Weyl theorem (stated, not proved here).** A bounded polyhedron is exactly the convex hull of its finitely many corners; conversely, the hull of finitely many points is a bounded polyhedron. The proof is in Ziegler, Lectures on Polytopes, Lectures 1 and 2 (Sources).
 
@@ -145,15 +153,15 @@ Corners of the passing set: hold two walls tight, plus the shares adding to 1, a
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| No Robusta, no Brazil | $x_3 = 1$; cost $14$ | (0, 0, 1) at £14: breaks the price wall, out |
-| No Robusta, no Ethiopian | $x_2 = 1$; cost $8$ | **corner** (0, 1, 0) at £8 |
-| No Robusta, cost exactly 9 | $8x_2 + 14x_3 = 9$, $x_2 + x_3 = 1$: $8 + 6x_3 = 9$ | $x_3 = 1/6$: **corner** (0, 5/6, 1/6) |
-| No Brazil, no Ethiopian | $x_1 = 1$; cost $6$ | **corner** (1, 0, 0) at £6 |
-| No Brazil, cost exactly 9 | $6x_1 + 14x_3 = 9$, $x_1 + x_3 = 1$: $6 + 8x_3 = 9$ | $x_3 = 3/8$: **corner** (5/8, 0, 3/8) |
-| No Ethiopian, cost exactly 9 | $6x_1 + 8x_2 = 9$, $x_1 + x_2 = 1$: $6 + 2x_2 = 9$ | $x_2 = 3/2$, so $x_1 = -1/2$: negative share, out |
-| Area cut off by the £9 line | triangle $\tfrac12 \times \tfrac58 \times \tfrac56$ | 25/96 |
-| Area that passes | $\tfrac12 - 25/96$ | 23/96 |
-| Share of all blends that pass | $23/96 \div 1/2$ | **47.9%** |
+| No Robusta, no Brazil | $`x_3 = 1`$; cost $`14`$ | (0, 0, 1) at £14: breaks the price wall, out |
+| No Robusta, no Ethiopian | $`x_2 = 1`$; cost $`8`$ | **corner** (0, 1, 0) at £8 |
+| No Robusta, cost exactly 9 | $`8x_2 + 14x_3 = 9`$, $`x_2 + x_3 = 1`$: $`8 + 6x_3 = 9`$ | $`x_3 = 1/6`$: **corner** (0, 5/6, 1/6) |
+| No Brazil, no Ethiopian | $`x_1 = 1`$; cost $`6`$ | **corner** (1, 0, 0) at £6 |
+| No Brazil, cost exactly 9 | $`6x_1 + 14x_3 = 9`$, $`x_1 + x_3 = 1`$: $`6 + 8x_3 = 9`$ | $`x_3 = 3/8`$: **corner** (5/8, 0, 3/8) |
+| No Ethiopian, cost exactly 9 | $`6x_1 + 8x_2 = 9`$, $`x_1 + x_2 = 1`$: $`6 + 2x_2 = 9`$ | $`x_2 = 3/2`$, so $`x_1 = -1/2`$: negative share, out |
+| Area cut off by the £9 line | triangle $`\tfrac12 \times \tfrac58 \times \tfrac56`$ | 25/96 |
+| Area that passes | $`\tfrac12 - 25/96`$ | 23/96 |
+| Share of all blends that pass | $`23/96 \div 1/2`$ | **47.9%** |
 
 Four corners: all Robusta, all Brazil, and two edge blends that cost exactly £9. Every passing blend is a mix of these four, and the most Ethiopian any passing blend can hold is 3/8.
 
@@ -481,7 +489,7 @@ Lean proves the card's three theorems for any number of walls and entries, and c
 
 - A polyhedron, cut out by any finite number of walls in any number of entries, is convex.
 - A convex set holds every mix of finitely many of its points, not only two-way mixes.
-- The smallest convex set holding the points of $S$ is exactly $\operatorname{conv} S$, every mix of finitely many of its points.
+- The smallest convex set holding the points of $`S`$ is exactly $`\mathrm{conv}\, S`$, every mix of finitely many of its points.
 - House (2/5, 2/5, 1/5) passes all six walls and costs £8.40 a kilo.
 - The corners (0, 5/6, 1/6) and (5/8, 0, 3/8) cost exactly £9.
 - The point (-1/2, 3/2, 0) also costs £9 with shares adding to 1, but its negative share puts it outside.

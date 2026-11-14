@@ -36,45 +36,49 @@ Bars: the rainfall X in each of the eight equally likely cases. First line: the 
 
 ## The formula
 
-Notation first, in words. The **probability space** $(\Omega, \mathcal F, P)$ lists the outcomes, the collection of events we allow ourselves to measure, and their probabilities. Here $\Omega$ is the eight season-and-year cases, each with probability 0.125. The **sub-sigma-algebra** $\mathcal G$ is the smaller collection of events the forecaster can see: the 16 unions of whole seasons. A quantity is **$\mathcal G$-measurable**, or **known**, when it is computed from the season alone. $\mathbf 1_A$ is the indicator of an event $A$, one on A and zero off it.
+Notation first, in words. The **probability space** $`(\Omega, \mathcal F, P)`$ lists the outcomes, the collection of events we allow ourselves to measure, and their probabilities. Here $`\Omega`$ is the eight season-and-year cases, each with probability 0.125. The **sub-sigma-algebra** $`\mathcal G`$ is the smaller collection of events the forecaster can see: the 16 unions of whole seasons. A quantity is **$`\mathcal G`$-measurable**, or **known**, when it is computed from the season alone. $`\mathbf 1_A`$ is the indicator of an event $`A`$, one on A and zero off it.
 
-The conditional expectation $M = E[X \mid \mathcal G]$ is the known quantity with $E[M\,\mathbf 1_A] = E[X\,\mathbf 1_A]$ for every event $A$ in $\mathcal G$ ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)); on a partition into seasons it is the average within each season ([Conditioning on a partition](01-conditioning-on-a-partition.md)). The probability wing computes the same thing from tables ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)); this card is the general statement as a projection.
+The conditional expectation $`M = E[X \mid \mathcal G]`$ is the known quantity with $`E[M\,\mathbf 1_A] = E[X\,\mathbf 1_A]`$ for every event $`A`$ in $`\mathcal G`$ ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)); on a partition into seasons it is the average within each season ([Conditioning on a partition](01-conditioning-on-a-partition.md)). The probability wing computes the same thing from tables ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)); this card is the general statement as a projection.
 
-$L^2$ is every quantity with finite mean square, $E[X^2] < \infty$, with two quantities equal almost surely, that is, except on an event of probability zero, counted as one ([L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md)). $L^2(\mathcal G)$ is the part of it that is known. Its **inner product**, the analogue of the dot product, is $\langle U, V\rangle = E[UV]$, and its length is $\lVert U\rVert_2 = \sqrt{E[U^2]}$, so the squared distance between two quantities is their mean squared difference. Two quantities are **orthogonal**, at right angles, when $E[UV] = 0$.
+$`L^2`$ is every quantity with finite mean square, $`E[X^2] < \infty`$, with two quantities equal almost surely, that is, except on an event of probability zero, counted as one ([L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md)). $`L^2(\mathcal G)`$ is the part of it that is known. Its **inner product**, the analogue of the dot product, is $`\langle U, V\rangle = E[UV]`$, and its length is $`\lVert U\rVert_2 = \sqrt{E[U^2]}`$, so the squared distance between two quantities is their mean squared difference. Two quantities are **orthogonal**, at right angles, when $`E[UV] = 0`$.
 
-For $X$ in $L^2$ and every known $Z$ in $L^2(\mathcal G)$:
+For $`X`$ in $`L^2`$ and every known $`Z`$ in $`L^2(\mathcal G)`$:
 
-$$E\big[(X - M)\,Z\big] = 0 \qquad\text{and}\qquad E\big[(X - Z)^2\big] = E\big[(X - M)^2\big] + E\big[(M - Z)^2\big].$$
+```math
+E\big[(X - M)\,Z\big] = 0 \qquad\text{and}\qquad E\big[(X - Z)^2\big] = E\big[(X - M)^2\big] + E\big[(M - Z)^2\big].
+```
 
 **Read it aloud:** the forecast's error has zero average product with every known quantity; so any other known forecast's mean squared error is the conditional expectation's error plus the squared distance between the two forecasts.
 
-The second term is zero only when $Z = M$ almost surely, so $M$ is the unique closest point. Put the constant $Z = E[X]$ in and the identity becomes the **law of total variance**:
+The second term is zero only when $`Z = M`$ almost surely, so $`M`$ is the unique closest point. Put the constant $`Z = E[X]`$ in and the identity becomes the **law of total variance**:
 
-$$\operatorname{Var}(X) = E\big[\operatorname{Var}(X \mid \mathcal G)\big] + \operatorname{Var}\big(E[X \mid \mathcal G]\big), \qquad \operatorname{Var}(X \mid \mathcal G) = E\big[(X - M)^2 \mid \mathcal G\big].$$
+```math
+\mathrm{Var}(X) = E\big[\mathrm{Var}(X \mid \mathcal G)\big] + \mathrm{Var}\big(E[X \mid \mathcal G]\big), \qquad \mathrm{Var}(X \mid \mathcal G) = E\big[(X - M)^2 \mid \mathcal G\big].
+```
 
 **Read it aloud:** the total spread is the average spread left inside the known groups plus the spread of the group averages themselves; within plus between.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal F$, $P$ | the outcomes, the measurable events, their probabilities | 8 cases, every set of cases, 0.125 each | — |
-| $\mathcal G$ | the events the forecaster can see | the 16 unions of whole seasons | more information: a bigger floor, a smaller error |
-| $X$ | the quantity to forecast | monthly rainfall, 20 to 100 mm | — |
-| $M$ | the conditional expectation $E[X \mid \mathcal G]$ | 30, 60, 90, 40 by season | — |
-| $Z$ | any known forecast in $L^2(\mathcal G)$ | 55 flat; the line 7 + 4T | further from M: error grows by the squared distance |
-| $L^2$, $L^2(\mathcal G)$ | finite-mean-square quantities; the known ones | all rainfall rules; all seasonal rules | — |
-| $\langle U, V\rangle$, $U$, $V$, $\lVert U\rVert_2$ | inner product $E[UV]$ of two quantities; length | $\lVert X - M\rVert_2$ = 10 mm | — |
-| $\mathbf 1_A$, $A$, $B$ | indicator of an event; events | $\mathbf 1_{\text{summer}}$ | — |
-| $\operatorname{Var}$, $\operatorname{Var}(X \mid \mathcal G)$ | variance; spread left inside each known group | 625; 100 in every season | — |
-| $T$, $a$, $b$ | season's mean temperature (°C); line intercept and slope | 5, 11, 19, 13; 7 and 4 | — |
-| $d$ | a shift of the forecast, one per season | each of −10, 0, 5 | — |
-| $R$, $Y$, $K$, $n$, $Z_n$, $a_n$, $A_j$, $c_j$ | proof helpers: the error X − M, a rival with orthogonal error, a bound, an index, truncated or simple versions, their mean squares, events and weights | R = ±10 mm | — |
+| $`\Omega`$, $`\mathcal F`$, $`P`$ | the outcomes, the measurable events, their probabilities | 8 cases, every set of cases, 0.125 each | — |
+| $`\mathcal G`$ | the events the forecaster can see | the 16 unions of whole seasons | more information: a bigger floor, a smaller error |
+| $`X`$ | the quantity to forecast | monthly rainfall, 20 to 100 mm | — |
+| $`M`$ | the conditional expectation $`E[X \mid \mathcal G]`$ | 30, 60, 90, 40 by season | — |
+| $`Z`$ | any known forecast in $`L^2(\mathcal G)`$ | 55 flat; the line 7 + 4T | further from M: error grows by the squared distance |
+| $`L^2`$, $`L^2(\mathcal G)`$ | finite-mean-square quantities; the known ones | all rainfall rules; all seasonal rules | — |
+| $`\langle U, V\rangle`$, $`U`$, $`V`$, $`\lVert U\rVert_2`$ | inner product $`E[UV]`$ of two quantities; length | $`\lVert X - M\rVert_2`$ = 10 mm | — |
+| $`\mathbf 1_A`$, $`A`$, $`B`$ | indicator of an event; events | $`\mathbf 1_{\text{summer}}`$ | — |
+| $`\mathrm{Var}`$, $`\mathrm{Var}(X \mid \mathcal G)`$ | variance; spread left inside each known group | 625; 100 in every season | — |
+| $`T`$, $`a`$, $`b`$ | season's mean temperature (°C); line intercept and slope | 5, 11, 19, 13; 7 and 4 | — |
+| $`d`$ | a shift of the forecast, one per season | each of −10, 0, 5 | — |
+| $`R`$, $`Y`$, $`K`$, $`n`$, $`Z_n`$, $`a_n`$, $`A_j`$, $`c_j`$ | proof helpers: the error X − M, a rival with orthogonal error, a bound, an index, truncated or simple versions, their mean squares, events and weights | R = ±10 mm | — |
 
 ### When it holds
 
-- **Finite mean square, $E[X^2] < \infty$.** Without it every forecast scores infinity and "closest" means nothing. A quantity equal to 2^k with probability 3/4^k has a finite mean, 3, and a conditional expectation, but its mean square adds 3 per term: 15, 30, 60 after 5, 10, 20 terms, without end.
-- **The competitor must be known.** A forecast that peeks at wet or dry, such as $Z = X$ itself, scores 0 and beats the seasonal means; $E[(X - M)(M - Z)]$ is then −100, not 0, and Pythagoras fails. The theorem ranks only forecasts in $L^2(\mathcal G)$.
+- **Finite mean square, $`E[X^2] < \infty`$.** Without it every forecast scores infinity and "closest" means nothing. A quantity equal to 2^k with probability 3/4^k has a finite mean, 3, and a conditional expectation, but its mean square adds 3 per term: 15, 30, 60 after 5, 10, 20 terms, without end.
+- **The competitor must be known.** A forecast that peeks at wet or dry, such as $`Z = X`$ itself, scores 0 and beats the seasonal means; $`E[(X - M)(M - Z)]`$ is then −100, not 0, and Pythagoras fails. The theorem ranks only forecasts in $`L^2(\mathcal G)`$.
 - **The score is squared error.** Under the average absolute error the best known forecast is a median, not a mean. A desert month reading 0, 0, 0 or 40 mm has mean 10: forecasting 10 wins on squared error, 300 against 400, and loses on absolute error, 15 against 10.
-- **Uniqueness is almost sure.** Forecasts differing only on an event of probability zero score the same, so the closest point is a class, as in $L^2$.
+- **Uniqueness is almost sure.** Forecasts differing only on an event of probability zero score the same, so the closest point is a class, as in $`L^2`$.
 
 ---
 
@@ -82,68 +86,68 @@ $$\operatorname{Var}(X) = E\big[\operatorname{Var}(X \mid \mathcal G)\big] + \op
 
 ### Step 0: squared error is squared distance
 
-Mean squared error $E[(X - Z)^2]$ is the squared length of $X - Z$ in $L^2$. The known quantities form a subspace, a flat floor: sums and multiples of seasonal rules are seasonal rules. In the plane, the nearest point of a line to a given point is the foot of the perpendicular ([Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)). So the whole proof is one claim: the error $X - M$ is perpendicular to every known quantity. Pythagoras does the rest.
+Mean squared error $`E[(X - Z)^2]`$ is the squared length of $`X - Z`$ in $`L^2`$. The known quantities form a subspace, a flat floor: sums and multiples of seasonal rules are seasonal rules. In the plane, the nearest point of a line to a given point is the foot of the perpendicular ([Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)). So the whole proof is one claim: the error $`X - M`$ is perpendicular to every known quantity. Pythagoras does the rest.
 
-The definition of $M$ already says something perpendicular. $E[M\,\mathbf 1_A] = E[X\,\mathbf 1_A]$ rearranges to $E[(X - M)\,\mathbf 1_A] = 0$: the error is orthogonal to every indicator of a visible event. The steps below spread that from indicators to every known quantity in $L^2$.
+The definition of $`M`$ already says something perpendicular. $`E[M\,\mathbf 1_A] = E[X\,\mathbf 1_A]`$ rearranges to $`E[(X - M)\,\mathbf 1_A] = 0`$: the error is orthogonal to every indicator of a visible event. The steps below spread that from indicators to every known quantity in $`L^2`$.
 
 ### Step 1: the error is orthogonal to every bounded known quantity
 
-A known **simple** quantity, one taking finitely many values, is a sum of multiples of indicators of events in $\mathcal G$. Linearity of the integral carries the zero through the sum. A bounded known quantity is a uniform limit of simple ones, rounded down to the nearest multiple of 2^−n. Dominated convergence, which lets a limit pass inside an integral when one integrable function bounds the whole sequence, carries the zero through the limit.
+A known **simple** quantity, one taking finitely many values, is a sum of multiples of indicators of events in $`\mathcal G`$. Linearity of the integral carries the zero through the sum. A bounded known quantity is a uniform limit of simple ones, rounded down to the nearest multiple of 2^−n. Dominated convergence, which lets a limit pass inside an integral when one integrable function bounds the whole sequence, carries the zero through the limit.
 
 In the rainfall case the error is ±10 in every season, averaging to 0 inside each one, so its average product with any seasonal rule is 0. The code checks all four season indicators and the temperature: every product averages to 0.
 
 ### Step 2: the forecast has finite mean square
 
-The inner product $E[(X - M) Z]$ needs $M$ in $L^2$, and the definition only promised a finite mean. Truncate $M$ at height n, pair it with $X$ using Step 1, and apply Cauchy–Schwarz: the average of a product is at most the product of the two root-mean-squares, the p = q = 2 case of [Holder's inequality](../07-Sizes%20of%20Functions/02-holders-inequality.md). The result is $E[M^2] \le E[X^2]$: forecasting never adds spread. Here $E[M^2] = 3550$ and $E[X^2] = 3650$; the gap, 100, is the error's mean square.
+The inner product $`E[(X - M) Z]`$ needs $`M`$ in $`L^2`$, and the definition only promised a finite mean. Truncate $`M`$ at height n, pair it with $`X`$ using Step 1, and apply Cauchy–Schwarz: the average of a product is at most the product of the two root-mean-squares, the p = q = 2 case of [Holder's inequality](../07-Sizes%20of%20Functions/02-holders-inequality.md). The result is $`E[M^2] \le E[X^2]`$: forecasting never adds spread. Here $`E[M^2] = 3550`$ and $`E[X^2] = 3650`$; the gap, 100, is the error's mean square.
 
-### Step 3: the error is orthogonal to every known quantity in $L^2$
+### Step 3: the error is orthogonal to every known quantity in $`L^2`$
 
-Truncate an unbounded known $Z$ at height n. Step 1 covers the truncation, and Cauchy–Schwarz bounds what is left by $\lVert X - M\rVert_2$ times the $L^2$ length of the part cut off, which dominated convergence sends to zero.
+Truncate an unbounded known $`Z`$ at height n. Step 1 covers the truncation, and Cauchy–Schwarz bounds what is left by $`\lVert X - M\rVert_2`$ times the $`L^2`$ length of the part cut off, which dominated convergence sends to zero.
 
 ### Step 4: Pythagoras, so the forecast is the closest point
 
-Write the miss of any known $Z$ as the error plus a known piece: $X - Z = (X - M) + (M - Z)$. Square and average. The cross term is $2E[(X - M)(M - Z)]$, zero by Step 3, since $M - Z$ is known. What remains is the formula. The extra term $E[(M - Z)^2]$ is never negative and is zero only when $Z = M$ almost surely.
+Write the miss of any known $`Z`$ as the error plus a known piece: $`X - Z = (X - M) + (M - Z)`$. Square and average. The cross term is $`2E[(X - M)(M - Z)]`$, zero by Step 3, since $`M - Z`$ is known. What remains is the formula. The extra term $`E[(M - Z)^2]`$ is never negative and is zero only when $`Z = M`$ almost surely.
 
-The code runs through all 81 forecasts that shift each seasonal mean by −10, 0 or +5. Every one obeys the identity exactly; the best is the unshifted one at 100, the worst 200; none beats $M$.
+The code runs through all 81 forecasts that shift each seasonal mean by −10, 0 or +5. Every one obeys the identity exactly; the best is the unshifted one at 100, the worst 200; none beats $`M`$.
 
 <details>
 <summary>Detailed proof</summary>
 
-Setting: $X$ in $L^2(\Omega, \mathcal F, P)$, $\mathcal G$ a sub-sigma-algebra of $\mathcal F$, and $M$ a version of $E[X \mid \mathcal G]$: $\mathcal G$-measurable, integrable, with $E[M\mathbf 1_A] = E[X\mathbf 1_A]$ for all $A$ in $\mathcal G$. $X$ is integrable, by Cauchy–Schwarz against the constant 1.
+Setting: $`X`$ in $`L^2(\Omega, \mathcal F, P)`$, $`\mathcal G`$ a sub-sigma-algebra of $`\mathcal F`$, and $`M`$ a version of $`E[X \mid \mathcal G]`$: $`\mathcal G`$-measurable, integrable, with $`E[M\mathbf 1_A] = E[X\mathbf 1_A]`$ for all $`A`$ in $`\mathcal G`$. $`X`$ is integrable, by Cauchy–Schwarz against the constant 1.
 
-**(a) Bounded multipliers.** If $Z = \sum_j c_j \mathbf 1_{A_j}$ with finitely many $A_j$ in $\mathcal G$, linearity of the integral gives $E[MZ] = E[XZ]$. If $Z$ is $\mathcal G$-measurable with $\lvert Z\rvert \le K$, set $Z_n = 2^{-n}\lfloor 2^n Z\rfloor$. Each $Z_n$ is $\mathcal G$-measurable and takes finitely many values, $\lvert Z_n - Z\rvert \le 2^{-n}$ and $\lvert Z_n\rvert \le K + 1$. Then $Z_n M \to ZM$ and $Z_n X \to ZX$ at every point, with integrable envelopes $(K+1)\lvert M\rvert$ and $(K+1)\lvert X\rvert$; dominated convergence ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)) gives $E[MZ] = E[XZ]$.
+**(a) Bounded multipliers.** If $`Z = \sum_j c_j \mathbf 1_{A_j}`$ with finitely many $`A_j`$ in $`\mathcal G`$, linearity of the integral gives $`E[MZ] = E[XZ]`$. If $`Z`$ is $`\mathcal G`$-measurable with $`\lvert Z\rvert \le K`$, set $`Z_n = 2^{-n}\lfloor 2^n Z\rfloor`$. Each $`Z_n`$ is $`\mathcal G`$-measurable and takes finitely many values, $`\lvert Z_n - Z\rvert \le 2^{-n}`$ and $`\lvert Z_n\rvert \le K + 1`$. Then $`Z_n M \to ZM`$ and $`Z_n X \to ZX`$ at every point, with integrable envelopes $`(K+1)\lvert M\rvert`$ and $`(K+1)\lvert X\rvert`$; dominated convergence ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)) gives $`E[MZ] = E[XZ]`$.
 
-**(b) $E[M^2] \le E[X^2]$.** Let $Z_n = M\mathbf 1_{\{\lvert M\rvert \le n\}}$, bounded and $\mathcal G$-measurable, and $a_n = E[M^2\mathbf 1_{\{\lvert M\rvert \le n\}}] = E[Z_n^2]$. By (a), $a_n = E[MZ_n] = E[XZ_n]$, and Cauchy–Schwarz gives $a_n \le \lVert X\rVert_2\, a_n^{1/2}$. If $a_n > 0$ divide: $a_n \le E[X^2]$; if $a_n = 0$ it holds anyway. The $a_n$ rise to $E[M^2]$ by monotone convergence (a rising sequence of non-negative functions may pass its limit inside the integral), since $M$ is finite almost surely. So $M$ is in $L^2(\mathcal G)$.
+**(b) $`E[M^2] \le E[X^2]`$.** Let $`Z_n = M\mathbf 1_{\{\lvert M\rvert \le n\}}`$, bounded and $`\mathcal G`$-measurable, and $`a_n = E[M^2\mathbf 1_{\{\lvert M\rvert \le n\}}] = E[Z_n^2]`$. By (a), $`a_n = E[MZ_n] = E[XZ_n]`$, and Cauchy–Schwarz gives $`a_n \le \lVert X\rVert_2\, a_n^{1/2}`$. If $`a_n > 0`$ divide: $`a_n \le E[X^2]`$; if $`a_n = 0`$ it holds anyway. The $`a_n`$ rise to $`E[M^2]`$ by monotone convergence (a rising sequence of non-negative functions may pass its limit inside the integral), since $`M`$ is finite almost surely. So $`M`$ is in $`L^2(\mathcal G)`$.
 
-**(c) Orthogonality.** Let $R = X - M$; it is in $L^2$ because $R^2 \le 2X^2 + 2M^2$. Take $Z$ in $L^2(\mathcal G)$ and $Z_n = Z\mathbf 1_{\{\lvert Z\rvert \le n\}}$. By (a), $E[RZ_n] = 0$, since $E[XZ_n] = E[MZ_n]$ and both products are integrable. Next, $E[(Z - Z_n)^2] = E[Z^2\mathbf 1_{\{\lvert Z\rvert > n\}}] \to 0$ by dominated convergence with envelope $Z^2$. Cauchy–Schwarz: $\lvert E[RZ]\rvert = \lvert E[R(Z - Z_n)]\rvert \le \lVert R\rVert_2\,\lVert Z - Z_n\rVert_2 \to 0$. So $E[RZ] = 0$.
+**(c) Orthogonality.** Let $`R = X - M`$; it is in $`L^2`$ because $`R^2 \le 2X^2 + 2M^2`$. Take $`Z`$ in $`L^2(\mathcal G)`$ and $`Z_n = Z\mathbf 1_{\{\lvert Z\rvert \le n\}}`$. By (a), $`E[RZ_n] = 0`$, since $`E[XZ_n] = E[MZ_n]`$ and both products are integrable. Next, $`E[(Z - Z_n)^2] = E[Z^2\mathbf 1_{\{\lvert Z\rvert > n\}}] \to 0`$ by dominated convergence with envelope $`Z^2`$. Cauchy–Schwarz: $`\lvert E[RZ]\rvert = \lvert E[R(Z - Z_n)]\rvert \le \lVert R\rVert_2\,\lVert Z - Z_n\rVert_2 \to 0`$. So $`E[RZ] = 0`$.
 
-**(d) Pythagoras.** For $Z$ in $L^2(\mathcal G)$, $M - Z$ is in $L^2(\mathcal G)$. Expand $(X - Z)^2 = R^2 + 2R(M - Z) + (M - Z)^2$; each term is integrable since $2\lvert UV\rvert \le U^2 + V^2$. Take expectations; (c) kills the middle term.
+**(d) Pythagoras.** For $`Z`$ in $`L^2(\mathcal G)`$, $`M - Z`$ is in $`L^2(\mathcal G)`$. Expand $`(X - Z)^2 = R^2 + 2R(M - Z) + (M - Z)^2`$; each term is integrable since $`2\lvert UV\rvert \le U^2 + V^2`$. Take expectations; (c) kills the middle term.
 
-**(e) Uniqueness.** If $E[(X - Z)^2] = E[R^2]$ then $E[(M - Z)^2] = 0$. A non-negative function with integral zero is zero almost everywhere, so $Z = M$ almost surely.
+**(e) Uniqueness.** If $`E[(X - Z)^2] = E[R^2]`$ then $`E[(M - Z)^2] = 0`$. A non-negative function with integral zero is zero almost everywhere, so $`Z = M`$ almost surely.
 
-**(f) The converse.** If $Y$ is in $L^2(\mathcal G)$ and $E[(X - Y)Z] = 0$ for every $Z$ in $L^2(\mathcal G)$, take $Z = \mathbf 1_A$ for $A$ in $\mathcal G$: $E[Y\mathbf 1_A] = E[X\mathbf 1_A]$. So $Y$ satisfies the definition and is a version of $E[X \mid \mathcal G]$. Orthogonal error and conditional expectation are the same property.
+**(f) The converse.** If $`Y`$ is in $`L^2(\mathcal G)`$ and $`E[(X - Y)Z] = 0`$ for every $`Z`$ in $`L^2(\mathcal G)`$, take $`Z = \mathbf 1_A`$ for $`A`$ in $`\mathcal G`$: $`E[Y\mathbf 1_A] = E[X\mathbf 1_A]`$. So $`Y`$ satisfies the definition and is a version of $`E[X \mid \mathcal G]`$. Orthogonal error and conditional expectation are the same property.
 
 </details>
 
-### The picture: the right triangle in $L^2$
+### The picture: the right triangle in $`L^2`$
 
 <p align="center"><img src="../figures/conditional-expectation-as-projection.svg" alt="A right triangle drawn to scale, 8 units per mm: the constant 55 to the forecast M is 22.91 mm, M to the rainfall X is 10 mm at a right angle, and 55 to X is 25 mm" width="420"></p>
 
-Drawn to scale at 8 units per mm, with each side the root-mean-square length $\lVert\cdot\rVert_2$. The floor runs from the constant forecast 55 to the seasonal forecast $M$: 22.91 mm, the square root of 525. The wall rises from $M$ to the rainfall $X$: 10 mm, the within-season error, at a right angle to the floor. The dashed side is the flat forecast's miss, 25 mm. 22.91^2 + 10^2 = 25^2.
+Drawn to scale at 8 units per mm, with each side the root-mean-square length $`\lVert\cdot\rVert_2`$. The floor runs from the constant forecast 55 to the seasonal forecast $`M`$: 22.91 mm, the square root of 525. The wall rises from $`M`$ to the rainfall $`X`$: 10 mm, the within-season error, at a right angle to the floor. The dashed side is the flat forecast's miss, 25 mm. 22.91^2 + 10^2 = 25^2.
 
 ### Step 5: the law of total variance is Pythagoras with a constant
 
-A constant is known under any information, so take $Z = E[X]$. The definition with $A = \Omega$ gives $E[M] = E[X]$, so $E[(M - E[X])^2]$ is the variance of $M$: the spread between seasons, 525. The same definition, applied to $(X - M)^2$, turns $E[(X - M)^2]$ into the average of the within-season variances, 100 in every season. Pythagoras gives 625 = 100 + 525. The code also reaches 625 directly, as $E[X^2] - 55^2$ = 3650 − 3025. The season explains 525/625 = 0.84 of the variance, the number regression output calls R^2.
+A constant is known under any information, so take $`Z = E[X]`$. The definition with $`A = \Omega`$ gives $`E[M] = E[X]`$, so $`E[(M - E[X])^2]`$ is the variance of $`M`$: the spread between seasons, 525. The same definition, applied to $`(X - M)^2`$, turns $`E[(X - M)^2]`$ into the average of the within-season variances, 100 in every season. Pythagoras gives 625 = 100 + 525. The code also reaches 625 directly, as $`E[X^2] - 55^2`$ = 3650 − 3025. The season explains 525/625 = 0.84 of the variance, the number regression output calls R^2.
 
 ### Step 6: least-squares regression is the same drop onto a smaller floor
 
-A straight line in temperature, $a + bT$, is also a seasonal rule: temperature is a function of the season. The lines form a two-dimensional floor inside the four-dimensional floor $L^2(\mathcal G)$. The best line makes its miss orthogonal to both $1$ and $T$: two equations in $a$ and $b$, the **normal equations** of [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md). They give $a = 7$ and $b = 4$: forecasts 27, 51, 83 and 59.
+A straight line in temperature, $`a + bT`$, is also a seasonal rule: temperature is a function of the season. The lines form a two-dimensional floor inside the four-dimensional floor $`L^2(\mathcal G)`$. The best line makes its miss orthogonal to both $`1`$ and $`T`$: two equations in $`a`$ and $`b`$, the **normal equations** of [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md). They give $`a = 7`$ and $`b = 4`$: forecasts 27, 51, 83 and 59.
 
-Fitting the line to $X$ or to $M$ gives the same line. The reason is Step 3: $X - M$ is orthogonal to $1$ and $T$, so it drops out of both normal equations. Dropping straight onto the small floor lands where dropping first to the big floor, then across, lands. The errors add by Pythagoras again: 225 = 100 within + 125 from line to seasonal means. And 525 = 400 explained by the line + 125 left over.
+Fitting the line to $`X`$ or to $`M`$ gives the same line. The reason is Step 3: $`X - M`$ is orthogonal to $`1`$ and $`T`$, so it drops out of both normal equations. Dropping straight onto the small floor lands where dropping first to the big floor, then across, lands. The errors add by Pythagoras again: 225 = 100 within + 125 from line to seasonal means. And 525 = 400 explained by the line + 125 left over.
 
-Give the regression enough features to reach every seasonal rule and it returns $M$ itself. Four distinct temperatures let a cubic, $1$, $T$, $T^2$, $T^3$, pass through any four seasonal values. Least squares on those four features gives 30, 60, 90, 40, the second road to $M$ in the code.
+Give the regression enough features to reach every seasonal rule and it returns $`M`$ itself. Four distinct temperatures let a cubic, $`1`$, $`T`$, $`T^2`$, $`T^3`$, pass through any four seasonal values. Least squares on those four features gives 30, 60, 90, 40, the second road to $`M`$ in the code.
 
-A second route to the whole theorem runs the other way. $L^2(\mathcal G)$ is complete ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)), so it is a closed subspace of $L^2$, and every $X$ in $L^2$ has a closest point in it, by the projection theorem of [L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md). Part (f) of the proof shows that closest point satisfies the definition. That builds conditional expectation for $L^2$ without densities, and truncation extends it to every integrable $X$: the route of Williams's book.
+A second route to the whole theorem runs the other way. $`L^2(\mathcal G)`$ is complete ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)), so it is a closed subspace of $`L^2`$, and every $`X`$ in $`L^2`$ has a closest point in it, by the projection theorem of [L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md). Part (f) of the proof shows that closest point satisfies the definition. That builds conditional expectation for $`L^2`$ without densities, and truncation extends it to every integrable $`X`$: the route of Williams's book.
 
 ---
 
@@ -170,7 +174,7 @@ For the line, the temperatures average 12 °C, their deviations −7, −1, 7, 1
 | --- | --- | --- |
 | A forecast that peeks at wet or dry, Z = X | error 0; Pythagoras would say 200 | Z is not known; E[(X − M)(M − Z)] is −100, not 0 |
 | Scoring by absolute error, desert month 0, 0, 0, 40 | mean 10 scores 15, forecast 0 scores 10 | the projection answers squared error only; absolute error wants the median |
-| A quantity with no finite mean square, 2^k with probability 3/4^k | mean square 15, 30, 60 after 5, 10, 20 terms | not in $L^2$: every forecast scores infinity |
+| A quantity with no finite mean square, 2^k with probability 3/4^k | mean square 15, 30, 60 after 5, 10, 20 terms | not in $`L^2`$: every forecast scores infinity |
 | Leaving out the between term | Var X = 100 | 525 of the 625 sits between seasons |
 
 The code prints all four.
@@ -588,8 +592,8 @@ The two outputs agree line for line.
 
 Lean proves the card's three general claims for every probability space and sub-sigma-algebra, and checks the rainfall numbers exactly.
 
-- Take X with finite mean square and a known Z with finite mean square. Then $E[(X - M)Z] = 0$, and the Pythagoras formula above holds.
-- Take the same X and Z. Then $E[(X - M)^2] \le E[(X - Z)^2]$, with equality exactly when $Z = M$ almost surely.
+- Take X with finite mean square and a known Z with finite mean square. Then $`E[(X - M)Z] = 0`$, and the Pythagoras formula above holds.
+- Take the same X and Z. Then $`E[(X - M)^2] \le E[(X - Z)^2]`$, with equality exactly when $`Z = M`$ almost surely.
 - Take X with finite mean square. Then the law of total variance holds: the variance of X is within plus between.
 - In the rainfall example the error averages 0 against each season and against T.
 - The example's averages hold: E[X] = 55, E[X^2] = 3650 and E[M^2] = 3550.
@@ -781,7 +785,7 @@ example : (∑ k ∈ Finset.Icc 1 5, (3 : ℚ) / 4 ^ k * (2 ^ k) ^ 2) = 15 ∧
 > - **Dropping the between term.** Averaging the within-season variances gives 100, not the variance of rainfall, 625.
 > - **Dropping the within term.** The variance of the seasonal means is 525; a forecaster quoting it as the uncertainty of a month understates it.
 > - **Reading orthogonal as independent.** The error X − M has zero average product with every seasonal rule, but its size could still depend on the season; orthogonality says only that its average within each season is zero.
-> - **Assuming the regression line is the conditional expectation.** It is only when the line's floor contains $M$; here the line scores 225, the seasonal means 100.
+> - **Assuming the regression line is the conditional expectation.** It is only when the line's floor contains $`M`$; here the line scores 225, the seasonal means 100.
 
 ---
 
@@ -800,7 +804,7 @@ example : (∑ k ∈ Finset.Icc 1 5, (3 : ℚ) / 4 ^ k * (2 ^ k) ^ 2) = 15 ∧
 ## What this builds on
 
 - [Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md): the definition by equal integrals on every known event, and existence.
-- [L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): the inner product $E[UV]$, lengths, Cauchy–Schwarz in $L^2$, and the projection theorem.
+- [L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): the inner product $`E[UV]`$, lengths, Cauchy–Schwarz in $`L^2`$, and the projection theorem.
 - [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): the nearest point is where the leftover is perpendicular, in the plane.
 - [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations behind the regression line.
 - [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md): conditional expectation and the tower rule computed from tables.
@@ -820,6 +824,6 @@ Step 6 dropped twice, onto the seasons and then onto the lines, and landed where
 
 Verified 2026-09-29: every link below resolves to the publisher's or author's page naming the book.
 
-- Williams, David. *Probability with Martingales*. Cambridge University Press, 1991. [doi:10.1017/CBO9780511813658](https://doi.org/10.1017/CBO9780511813658). Chapter 9 builds conditional expectation from the orthogonal projection in $L^2$, then extends it by truncation.
-- Durrett, Rick. *Probability: Theory and Examples*, 5th ed. Cambridge University Press, 2019. [doi:10.1017/9781108591034](https://doi.org/10.1017/9781108591034); [author's PDF](https://sites.math.duke.edu/~rtd/PTE/PTE5_011119.pdf). Theorem 4.1.15: for $E[X^2] < \infty$ the conditional expectation minimises the mean square error.
+- Williams, David. *Probability with Martingales*. Cambridge University Press, 1991. [doi:10.1017/CBO9780511813658](https://doi.org/10.1017/CBO9780511813658). Chapter 9 builds conditional expectation from the orthogonal projection in $`L^2`$, then extends it by truncation.
+- Durrett, Rick. *Probability: Theory and Examples*, 5th ed. Cambridge University Press, 2019. [doi:10.1017/9781108591034](https://doi.org/10.1017/9781108591034); [author's PDF](https://sites.math.duke.edu/~rtd/PTE/PTE5_011119.pdf). Theorem 4.1.15: for $`E[X^2] < \infty`$ the conditional expectation minimises the mean square error.
 - Blitzstein, Joseph K., and Jessica Hwang. *Introduction to Probability*, 2nd ed. Chapman & Hall/CRC, 2019. [Publisher page](https://www.routledge.com/Introduction-to-Probability-Second-Edition/Blitzstein-Hwang/p/book/9781138369917). Chapter 9: conditional expectation as a prediction, its geometric picture, and the law of total variance.

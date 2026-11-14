@@ -36,49 +36,57 @@ The sloped line is the holder's profit; the flat line is break-even. Left of a $
 
 ## The formula
 
-Notation first, in words. A subscript 1 or 2 says which share a letter belongs to. A share's **forward**, $F_1$ or $F_2$, is the price agreed today for delivery in a year: today's price grown at the bank rate less the dividend. $N(x)$ is the bell-curve area left of $x$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
+Notation first, in words. A subscript 1 or 2 says which share a letter belongs to. A share's **forward**, $`F_1`$ or $`F_2`$, is the price agreed today for delivery in a year: today's price grown at the bank rate less the dividend. $`N(x)`$ is the bell-curve area left of $`x`$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
 
 The contract:
 
-$$\text{payoff} = \max(S_1 - S_2 - K,\ 0)\ \text{ at time } T$$
+```math
+\text{payoff} = \max(S_1 - S_2 - K,\ 0)\ \text{ at time } T
+```
 
 **Kirk's approximation:**
 
-$$C \approx e^{-rT}\Big[F_1\,N(d_1) - (F_2 + K)\,N(d_2)\Big]$$
+```math
+C \approx e^{-rT}\Big[F_1\,N(d_1) - (F_2 + K)\,N(d_2)\Big]
+```
 
 **Read it aloud:** the share you might receive, minus "share 2 plus the strike" that you might hand over, each weighted by its own chance and shrunk back to today.
 
-It is Margrabe's formula with $F_2 + K$ standing where $F_2$ stood. The volatility changes to match:
+It is Margrabe's formula with $`F_2 + K`$ standing where $`F_2`$ stood. The volatility changes to match:
 
-$$\sigma_K = \sqrt{\sigma_1^2 - 2\rho\,\sigma_1\sigma_2\,w + \sigma_2^2\,w^2}, \qquad w = \frac{F_2}{F_2 + K}$$
+```math
+\sigma_K = \sqrt{\sigma_1^2 - 2\rho\,\sigma_1\sigma_2\,w + \sigma_2^2\,w^2}, \qquad w = \frac{F_2}{F_2 + K}
+```
 
-In words: $w$ is the share of the folded asset that actually moves. Of $108.05, $103.05 is share 2 and $5 is fixed cash, so the folded asset is only 95 percent as jumpy as share 2. The volatility of the ratio uses that damped jumpiness.
+In words: $`w`$ is the share of the folded asset that actually moves. Of $108.05, $103.05 is share 2 and $5 is fixed cash, so the folded asset is only 95 percent as jumpy as share 2. The volatility of the ratio uses that damped jumpiness.
 
-$$d_1 = \frac{\ln\!\big(F_1/(F_2+K)\big) + \tfrac12\sigma_K^2\,T}{\sigma_K\sqrt{T}}, \qquad d_2 = d_1 - \sigma_K\sqrt{T}$$
+```math
+d_1 = \frac{\ln\!\big(F_1/(F_2+K)\big) + \tfrac12\sigma_K^2\,T}{\sigma_K\sqrt{T}}, \qquad d_2 = d_1 - \sigma_K\sqrt{T}
+```
 
-In words: $d_2$ counts how many "wiggle units" of the ratio stand between the two forwards, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md); $d_1$ is one wiggle unit more.
+In words: $`d_2`$ counts how many "wiggle units" of the ratio stand between the two forwards, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md); $`d_1`$ is one wiggle unit more.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_1$, $S_2$ | the two share prices; today, or at expiry when marked "at $T$" | $100, $100 | rises with $S_1$, falls with $S_2$ |
-| $K$ | the strike: the margin share 1 must beat share 2 by | $5 | falls |
-| $\rho$ | correlation of the two shares' moves, from −1 to +1 | 0.5 | falls: the gap between two shares that move together barely moves |
-| $\sigma_1$, $\sigma_2$ | each share's volatility: how jumpy it is, per year | 0.20, 0.20 | rises |
-| $r$, $q_1$, $q_2$ | bank rate; each share's dividend yield | 5%; 2%, 2% | $q_1$ lowers it, $q_2$ raises it |
-| $T$ | time to expiry, in years | 1 | rises |
-| $F_1$, $F_2$ | forwards, $S e^{(r-q)T}$ | 103.05, 103.05 | as $S_1$ and $S_2$ |
-| $w$, $w_t$, $Y$ | $Y = F_2 + K$, the folded asset "share 2 plus strike"; $w$ is its moving part today, $w_t$ the same part at a later time | 0.9537; $108.05 | — |
-| $\sigma_K$ | Kirk's volatility for the ratio of share 1 to "share 2 plus strike" | 0.1955 | rises |
-| $d_1$, $d_2$ | the two cut-offs, in wiggle units | −0.1445, −0.3401 | — |
-| $N(x)$ | bell-curve area left of $x$: a probability | 0.4425, 0.3669 | — |
-| $C$, $P$ | spread call and spread put prices today | $5.67, $10.42 | — |
+| $`S_1`$, $`S_2`$ | the two share prices; today, or at expiry when marked "at $`T`$" | $100, $100 | rises with $`S_1`$, falls with $`S_2`$ |
+| $`K`$ | the strike: the margin share 1 must beat share 2 by | $5 | falls |
+| $`\rho`$ | correlation of the two shares' moves, from −1 to +1 | 0.5 | falls: the gap between two shares that move together barely moves |
+| $`\sigma_1`$, $`\sigma_2`$ | each share's volatility: how jumpy it is, per year | 0.20, 0.20 | rises |
+| $`r`$, $`q_1`$, $`q_2`$ | bank rate; each share's dividend yield | 5%; 2%, 2% | $`q_1`$ lowers it, $`q_2`$ raises it |
+| $`T`$ | time to expiry, in years | 1 | rises |
+| $`F_1`$, $`F_2`$ | forwards, $`S e^{(r-q)T}`$ | 103.05, 103.05 | as $`S_1`$ and $`S_2`$ |
+| $`w`$, $`w_t`$, $`Y`$ | $`Y = F_2 + K`$, the folded asset "share 2 plus strike"; $`w`$ is its moving part today, $`w_t`$ the same part at a later time | 0.9537; $108.05 | — |
+| $`\sigma_K`$ | Kirk's volatility for the ratio of share 1 to "share 2 plus strike" | 0.1955 | rises |
+| $`d_1`$, $`d_2`$ | the two cut-offs, in wiggle units | −0.1445, −0.3401 | — |
+| $`N(x)`$ | bell-curve area left of $`x`$: a probability | 0.4425, 0.3669 | — |
+| $`C`$, $`P`$ | spread call and spread put prices today | $5.67, $10.42 | — |
 
 ### When it holds
 
 - **Both shares follow geometric Brownian motion with fixed volatilities and correlation** ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). If correlation itself moves, the price is off by roughly the correlation sensitivity, 7.5 cents per 0.01 here, times the move.
-- **A strike small next to the second forward.** Kirk freezes $w$ at today's value. At $K = 5$ the error is 0.04 percent of the price; at $K = 30$ with correlation 0 it is 1.70 percent.
-- **Correlation not near +1 with a large strike.** There the price itself is pennies and Kirk's relative error jumps: 6.42 percent of a one-cent price at correlation 0.9 and $K = 30$.
-- **A folded asset $F_2 + K$ well above zero.** Kirk is built for $K \ge 0$. A negative strike pushes $w$ above 1, and once $F_2 + K \le 0$ the logarithm in $d_1$ is undefined.
+- **A strike small next to the second forward.** Kirk freezes $`w`$ at today's value. At $`K = 5`$ the error is 0.04 percent of the price; at $`K = 30`$ with correlation 0 it is 1.70 percent.
+- **Correlation not near +1 with a large strike.** There the price itself is pennies and Kirk's relative error jumps: 6.42 percent of a one-cent price at correlation 0.9 and $`K = 30`$.
+- **A folded asset $`F_2 + K`$ well above zero.** Kirk is built for $`K \ge 0`$. A negative strike pushes $`w`$ above 1, and once $`F_2 + K \le 0`$ the logarithm in $`d_1`$ is undefined.
 - **European exercise, one date.** An early-exercise spread option needs a lattice or regression, not this formula.
 
 ---
@@ -87,49 +95,51 @@ In words: $d_2$ counts how many "wiggle units" of the ratio stand between the tw
 
 ### Step 0: at a zero strike, count in units of share 2
 
-Margrabe's insight, proved on [The exchange option](01-exchange-option-margrabe.md): measure every price in shares of asset 2 instead of dollars. Then asset 2 is worth exactly 1 forever, and the exchange option becomes an ordinary call on the ratio $S_1/S_2$ with strike 1. The ratio of two lognormal prices is lognormal (a price whose logarithm follows a bell curve), with volatility $\sqrt{\sigma_1^2 - 2\rho\sigma_1\sigma_2 + \sigma_2^2}$. Black-Scholes does the rest. Here that volatility is 0.20 and the price is $7.81.
+Margrabe's insight, proved on [The exchange option](01-exchange-option-margrabe.md): measure every price in shares of asset 2 instead of dollars. Then asset 2 is worth exactly 1 forever, and the exchange option becomes an ordinary call on the ratio $`S_1/S_2`$ with strike 1. The ratio of two lognormal prices is lognormal (a price whose logarithm follows a bell curve), with volatility $`\sqrt{\sigma_1^2 - 2\rho\sigma_1\sigma_2 + \sigma_2^2}`$. Black-Scholes does the rest. Here that volatility is 0.20 and the price is $7.81.
 
 Everything on this card tries to keep that trick alive once the strike is not zero.
 
 ### Step 1: why the strike breaks it
 
-The call pays when $S_1 > S_2 + K$. Count in units of share 2 and the condition becomes $S_1/S_2 > 1 + K/S_2$: the hurdle now moves with share 2 itself.
+The call pays when $`S_1 > S_2 + K`$. Count in units of share 2 and the condition becomes $`S_1/S_2 > 1 + K/S_2`$: the hurdle now moves with share 2 itself.
 
-In logarithms, the line separating "pays" from "does not pay" is $\ln S_1 = \ln(S_2 + K)$. With $K = 0$ that is a straight line, and the chance of landing on one side of a straight line under a two-dimensional bell curve is a single $N(\cdot)$. With $K = 5$ the line bends, because $\ln(S_2 + 5)$ is not a straight function of $\ln S_2$. A bell curve cut by a curve has no single-$N$ answer.
+In logarithms, the line separating "pays" from "does not pay" is $`\ln S_1 = \ln(S_2 + K)`$. With $`K = 0`$ that is a straight line, and the chance of landing on one side of a straight line under a two-dimensional bell curve is a single $`N(\cdot)`$. With $`K = 5`$ the line bends, because $`\ln(S_2 + 5)`$ is not a straight function of $`\ln S_2`$. A bell curve cut by a curve has no single-$`N`$ answer.
 
-A second way to see it: $S_2 + K$ is a lognormal share plus a fixed $5. A sum of a lognormal and a constant is not lognormal, so "share 2 plus strike" is not a Black-Scholes asset. No closed form is known for the spread call in general.
+A second way to see it: $`S_2 + K`$ is a lognormal share plus a fixed $5. A sum of a lognormal and a constant is not lognormal, so "share 2 plus strike" is not a Black-Scholes asset. No closed form is known for the spread call in general.
 
 ### Step 2: Kirk pretends the sum is lognormal
 
-Kirk's move: treat $Y = F_2 + K$ as if it were a share. How jumpy is it? When share 2's forward moves by 1 percent, $Y$ moves by the same dollar amount, which is $w = F_2/(F_2 + K)$ percent of $Y$. So $Y$ behaves like a share with volatility $w\,\sigma_2$: 95 percent of share 2's jumpiness.
+Kirk's move: treat $`Y = F_2 + K`$ as if it were a share. How jumpy is it? When share 2's forward moves by 1 percent, $`Y`$ moves by the same dollar amount, which is $`w = F_2/(F_2 + K)`$ percent of $`Y`$. So $`Y`$ behaves like a share with volatility $`w\,\sigma_2`$: 95 percent of share 2's jumpiness.
 
-Freeze $w$ at today's value and $Y$ is lognormal. Margrabe's formula then applies with $F_2 + K$ in place of $F_2$ and $w\sigma_2$ in place of $\sigma_2$. The ratio volatility becomes $\sigma_K$ in the formula above. At $K = 0$, $w = 1$ and Kirk *is* Margrabe, exactly.
+Freeze $`w`$ at today's value and $`Y`$ is lognormal. Margrabe's formula then applies with $`F_2 + K`$ in place of $`F_2`$ and $`w\sigma_2`$ in place of $`\sigma_2`$. The ratio volatility becomes $`\sigma_K`$ in the formula above. At $`K = 0`$, $`w = 1`$ and Kirk *is* Margrabe, exactly.
 
-The error comes from the freezing. As share 2 moves over the year, the true weight moves with it: if share 2 falls, the fixed $5 is a bigger part of $Y$, and $Y$ becomes calmer than Kirk assumed; if it rises, jumpier. A larger strike makes the weight drift more, so the error grows with $K$. A lower correlation makes share 2's own randomness a larger part of the ratio's randomness, so misjudging it costs more.
+The error comes from the freezing. As share 2 moves over the year, the true weight moves with it: if share 2 falls, the fixed $5 is a bigger part of $`Y`$, and $`Y`$ becomes calmer than Kirk assumed; if it rises, jumpier. A larger strike makes the weight drift more, so the error grows with $`K`$. A lower correlation makes share 2's own randomness a larger part of the ratio's randomness, so misjudging it costs more.
 
 <details>
 <summary>Detailed proof: Kirk's volatility and where the approximation enters</summary>
 
-In the risk-neutral world (the pricing world, where a share is expected to grow at the bank rate less its dividend) each forward is a martingale (a quantity whose expected future value is its value today): $dF_i = \sigma_i F_i\, dW_i$, the two Brownian increments (random shocks) having correlation $\rho$. Set $Y = F_2 + K$. Since $K$ is a constant, $dY = dF_2 = \sigma_2 F_2\, dW_2$, so $dY / Y = \sigma_2 \,\frac{F_2}{F_2 + K}\, dW_2 = \sigma_2\, w_t\, dW_2$. This is exact, with a weight $w_t$ that changes over time.
+In the risk-neutral world (the pricing world, where a share is expected to grow at the bank rate less its dividend) each forward is a martingale (a quantity whose expected future value is its value today): $`dF_i = \sigma_i F_i\, dW_i`$, the two Brownian increments (random shocks) having correlation $`\rho`$. Set $`Y = F_2 + K`$. Since $`K`$ is a constant, $`dY = dF_2 = \sigma_2 F_2\, dW_2`$, so $`dY / Y = \sigma_2 \,\frac{F_2}{F_2 + K}\, dW_2 = \sigma_2\, w_t\, dW_2`$. This is exact, with a weight $`w_t`$ that changes over time.
 
-The one approximation: replace $w_t$ by today's weight $w$. Then $Y$ is a geometric Brownian motion with volatility $\sigma_2 w$. By Itô's lemma (the chain rule for random processes) the ratio $F_1 / Y$ has log-increments with variance rate $\sigma_1^2 - 2\rho\sigma_1(\sigma_2 w) + (\sigma_2 w)^2 = \sigma_K^2$. Measuring in units of $Y$ (Step 0 with $Y$ as the unit), the call on $F_1 - Y$ is a Black-Scholes call on the ratio with strike 1, giving $e^{-rT}[F_1 N(d_1) - Y N(d_2)]$ with $d_1, d_2$ as stated. Every step after the freeze is exact; the whole error lives in $w_t \neq w$.
+The one approximation: replace $`w_t`$ by today's weight $`w`$. Then $`Y`$ is a geometric Brownian motion with volatility $`\sigma_2 w`$. By Itô's lemma (the chain rule for random processes) the ratio $`F_1 / Y`$ has log-increments with variance rate $`\sigma_1^2 - 2\rho\sigma_1(\sigma_2 w) + (\sigma_2 w)^2 = \sigma_K^2`$. Measuring in units of $`Y`$ (Step 0 with $`Y`$ as the unit), the call on $`F_1 - Y`$ is a Black-Scholes call on the ratio with strike 1, giving $`e^{-rT}[F_1 N(d_1) - Y N(d_2)]`$ with $`d_1, d_2`$ as stated. Every step after the freeze is exact; the whole error lives in $`w_t \neq w`$.
 
 </details>
 
 ### Step 3: the exact price, by one integral
 
-There is an exact route that needs one numerical integral instead of a formula. Fix the random draw $z$ that sets share 2's final price. Given $z$, share 2 at expiry is known, so the hurdle $X(z) = S_2 + K$ is just a number.
+There is an exact route that needs one numerical integral instead of a formula. Fix the random draw $`z`$ that sets share 2's final price. Given $`z`$, share 2 at expiry is known, so the hurdle $`X(z) = S_2 + K`$ is just a number.
 
-Share 1, given $z$, is still lognormal: its correlated part is now fixed, and only its own leftover randomness remains, with log-spread $\sigma_1\sqrt{T}\sqrt{1-\rho^2}$. So given $z$ the spread call is an ordinary Black-Scholes call on share 1 with strike $X(z)$. Average that over the bell curve in $z$:
+Share 1, given $`z`$, is still lognormal: its correlated part is now fixed, and only its own leftover randomness remains, with log-spread $`\sigma_1\sqrt{T}\sqrt{1-\rho^2}`$. So given $`z`$ the spread call is an ordinary Black-Scholes call on share 1 with strike $`X(z)`$. Average that over the bell curve in $`z`$:
 
-$$C = e^{-rT}\int_{-\infty}^{\infty} \frac{e^{-z^2/2}}{\sqrt{2\pi}}\ \mathrm{BS}\big(G(z),\, X(z)\big)\, dz$$
+```math
+C = e^{-rT}\int_{-\infty}^{\infty} \frac{e^{-z^2/2}}{\sqrt{2\pi}}\ \mathrm{BS}\big(G(z),\, X(z)\big)\, dz
+```
 
-Here $G(z)$ is share 1's forward given $z$ and $\mathrm{BS}$ is the undiscounted Black-Scholes call. This is Pearson's 1995 method. The integrand is smooth, so Simpson's rule on 400 slices from −9 to 9 is accurate far beyond the printed digits. It is exact in the sense that matters: no modelling shortcut, only a quadrature (numerical area) whose error can be driven down at will. At $K = 0$ it returns Margrabe's $7.807839.
+Here $`G(z)`$ is share 1's forward given $`z`$ and $`\mathrm{BS}`$ is the undiscounted Black-Scholes call. This is Pearson's 1995 method. The integrand is smooth, so Simpson's rule on 400 slices from −9 to 9 is accurate far beyond the printed digits. It is exact in the sense that matters: no modelling shortcut, only a quadrature (numerical area) whose error can be driven down at will. At $`K = 0`$ it returns Margrabe's $7.807839.
 
 <details>
 <summary>The algebra behind the conditional step</summary>
 
-Write share 1's draw as $Z_1 = \rho z + \sqrt{1-\rho^2}\,W$, the draw in the last term independent of $z$ (the Cholesky step of [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md)). Then $S_1(T) = F_1 \exp(-\tfrac12\sigma_1^2 T + \sigma_1\sqrt{T}\rho z)\cdot\exp(-\tfrac12\sigma_1^2(1-\rho^2)T + \sigma_1\sqrt{T}\sqrt{1-\rho^2}\,W)$. The second factor has mean 1, so the first factor, $G(z) = F_1\exp(\sigma_1\sqrt{T}\rho z - \tfrac12\sigma_1^2\rho^2 T)$, is share 1's forward given $z$. Share 2 at expiry is $F_2\exp(-\tfrac12\sigma_2^2 T + \sigma_2\sqrt{T} z)$. The call given $z$ is Black's formula (the Black-Scholes call written with a forward price) with forward $G(z)$, strike $X(z)$ and log-spread $\sigma_1\sqrt{T}\sqrt{1-\rho^2}$. The same step with the put payoff gives the put independently, which is how the code tests parity.
+Write share 1's draw as $`Z_1 = \rho z + \sqrt{1-\rho^2}\,W`$, the draw in the last term independent of $`z`$ (the Cholesky step of [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md)). Then $`S_1(T) = F_1 \exp(-\tfrac12\sigma_1^2 T + \sigma_1\sqrt{T}\rho z)\cdot\exp(-\tfrac12\sigma_1^2(1-\rho^2)T + \sigma_1\sqrt{T}\sqrt{1-\rho^2}\,W)`$. The second factor has mean 1, so the first factor, $`G(z) = F_1\exp(\sigma_1\sqrt{T}\rho z - \tfrac12\sigma_1^2\rho^2 T)`$, is share 1's forward given $`z`$. Share 2 at expiry is $`F_2\exp(-\tfrac12\sigma_2^2 T + \sigma_2\sqrt{T} z)`$. The call given $`z`$ is Black's formula (the Black-Scholes call written with a forward price) with forward $`G(z)`$, strike $`X(z)`$ and log-spread $`\sigma_1\sqrt{T}\sqrt{1-\rho^2}`$. The same step with the put payoff gives the put independently, which is how the code tests parity.
 
 </details>
 
@@ -139,7 +149,7 @@ The third road trusts no formula. Draw two independent bell-curve numbers, mix t
 
 The average is $5.69 with an error bar (one standard error, the typical miss of such an average) of one cent. The exact integral's $5.67 lies within two error bars. The simulation cannot see Kirk's fifth of a cent; its job is to confirm the integral, and the integral then measures Kirk to many decimals.
 
-A parity identity closes the loop. The call minus the put on the same spread pays $S_1 - S_2 - K$ in every outcome, so today $C - P = e^{-rT}(F_1 - F_2 - K)$. The put priced by its own integral, $10.42, satisfies this to every printed decimal.
+A parity identity closes the loop. The call minus the put on the same spread pays $`S_1 - S_2 - K`$ in every outcome, so today $`C - P = e^{-rT}(F_1 - F_2 - K)`$. The put priced by its own integral, $10.42, satisfies this to every printed decimal.
 
 Other shortcuts exist. Treating the spread itself as a bell-curve variable (the Bachelier or normal-model view) is common on commodity desks; Carmona and Durrleman's survey compares it and several sharper refinements of Kirk.
 
@@ -147,22 +157,22 @@ Other shortcuts exist. Treating the spread itself as a bell-curve variable (the 
 
 ## Worked numbers, by hand
 
-House market, two shares: $S_1 = S_2 = 100$, $\sigma_1 = \sigma_2 = 0.20$, $q_1 = q_2 = 2\%$, $\rho = 0.5$, $r = 5\%$, $T = 1$, strike $K = 5$.
+House market, two shares: $`S_1 = S_2 = 100`$, $`\sigma_1 = \sigma_2 = 0.20`$, $`q_1 = q_2 = 2\%`$, $`\rho = 0.5`$, $`r = 5\%`$, $`T = 1`$, strike $`K = 5`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forwards $F_1 = F_2$ | $100\,e^{(0.05-0.02)\times 1}$ | 103.0455 |
-| folded asset $F_2 + K$ | $103.0455 + 5$ | 108.0455 |
-| weight $w$ | $103.0455 / 108.0455$ | 0.9537 |
-| Kirk volatility $\sigma_K$ | $\sqrt{0.04 - 2(0.5)(0.04)(0.9537) + 0.04(0.9537)^2}$ | 0.1955 |
-| $d_1$ | $[\ln(103.0455/108.0455) + \tfrac12(0.1955)^2]/0.1955$ | −0.1445 |
-| $d_2$ | $-0.1445 - 0.1955$ | −0.3401 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.4425, 0.3669 |
-| share leg | $e^{-0.05}\times 103.0455 \times 0.4425$ | $43.38 |
-| cash-and-share leg | $e^{-0.05}\times 108.0455 \times 0.3669$ | $37.71 |
-| **Kirk price** | $43.38 - 37.71$ | **$5.67** (5.668964) |
+| forwards $`F_1 = F_2`$ | $`100\,e^{(0.05-0.02)\times 1}`$ | 103.0455 |
+| folded asset $`F_2 + K`$ | $`103.0455 + 5`$ | 108.0455 |
+| weight $`w`$ | $`103.0455 / 108.0455`$ | 0.9537 |
+| Kirk volatility $`\sigma_K`$ | $`\sqrt{0.04 - 2(0.5)(0.04)(0.9537) + 0.04(0.9537)^2}`$ | 0.1955 |
+| $`d_1`$ | $`[\ln(103.0455/108.0455) + \tfrac12(0.1955)^2]/0.1955`$ | −0.1445 |
+| $`d_2`$ | $`-0.1445 - 0.1955`$ | −0.3401 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.4425, 0.3669 |
+| share leg | $`e^{-0.05}\times 103.0455 \times 0.4425`$ | $43.38 |
+| cash-and-share leg | $`e^{-0.05}\times 108.0455 \times 0.3669`$ | $37.71 |
+| **Kirk price** | $`43.38 - 37.71`$ | **$5.67** (5.668964) |
 | exact price, by the integral | Simpson's rule, 400 slices | $5.67 (5.666758) |
-| Kirk's error | $5.668964 - 5.666758$ | 0.22 cents |
+| Kirk's error | $`5.668964 - 5.666758`$ | 0.22 cents |
 
 A one-year right to receive share 1 in exchange for share 2 plus $5 costs $5.67, against $7.81 with no strike. The $5 hurdle takes less off the price than the $4.76 that $5 is worth today, because the call pays nothing in the outcomes where the hurdle would have been paid.
 
@@ -201,9 +211,9 @@ xychart-beta
 
 Top line: correlation −0.5. Middle: correlation 0. Bottom: correlation 0.5. All three start at zero, where Kirk is Margrabe. At correlation 0.5 and below, Kirk overprices, and its percent error grows with every step in the strike.
 
-In cents, lower correlation always means a bigger error. At correlation 0.5 the cents error peaks near $K = 20$ and then falls, only because the price itself is shrinking; the percent error keeps climbing. At correlation 0.9 the error changes sign and stays under a tenth of a cent, but on a one-cent price that is 6.42 percent.
+In cents, lower correlation always means a bigger error. At correlation 0.5 the cents error peaks near $`K = 20`$ and then falls, only because the price itself is shrinking; the percent error keeps climbing. At correlation 0.9 the error changes sign and stays under a tenth of a cent, but on a one-cent price that is 6.42 percent.
 
-At correlation −0.5 and $K = 20$, Kirk says $6.13 against the exact $6.09. The million-year simulation there gives $6.11, error bar 1.4 cents. It sits between the two and cannot tell them apart; only the integral can.
+At correlation −0.5 and $`K = 20`$, Kirk says $6.13 against the exact $6.09. The million-year simulation there gives $6.11, error bar 1.4 cents. It sits between the two and cannot tell them apart; only the integral can.
 
 ### Greeks, by nudging the inputs
 
@@ -224,15 +234,15 @@ Same contract, right answer $5.67:
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Margrabe's price minus the strike's present value | $3.05 | That is a floor on the price, not the price: it charges the $5 even in outcomes where the call is not used |
-| Kirk with $w = 1$, Margrabe's volatility 0.20 | $5.84 | Treats the $5 as jumpy as a share; the folded asset is only 95 percent as jumpy |
+| Kirk with $`w = 1`$, Margrabe's volatility 0.20 | $5.84 | Treats the $5 as jumpy as a share; the folded asset is only 95 percent as jumpy |
 | Strike added to today's share price, then grown | $5.61 | The $5 is grown at the share's rate as if it were share 2; the hurdle comes out too high |
-| Correlation left out ($\rho = 0$) | $8.81 | Treats the shares as unrelated; their tendency to move together makes the gap calmer and the call cheaper |
+| Correlation left out ($`\rho = 0`$) | $8.81 | Treats the shares as unrelated; their tendency to move together makes the gap calmer and the call cheaper |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs take three independent roads to the $K = 5$ price: Kirk's formula, the exact conditional integral by Simpson's rule, and a million simulated years. They also price the put by its own integral and test parity, bump both prices for the Greeks, fill the strike-by-correlation grids, and reproduce every "what breaks" number.
+Both programs take three independent roads to the $`K = 5`$ price: Kirk's formula, the exact conditional integral by Simpson's rule, and a million simulated years. They also price the put by its own integral and test parity, bump both prices for the Greeks, fill the strike-by-correlation grids, and reproduce every "what breaks" number.
 
 The bell-curve area is Marsaglia's series written out; the random numbers come from a splitmix64 generator written out, turned into bell-curve draws by the Box-Muller recipe (two uniform numbers become two independent normal draws through a logarithm, a cosine and a sine). Both programs make the same draws in the same order, so their outputs match line for line.
 
@@ -638,9 +648,9 @@ The two outputs agree to every printed digit: the same series, the same slices a
 
 Lean proves parity and both price bounds in any model where each final price has an average, plus Kirk equals Margrabe at zero strike.
 
-- Suppose each final price has a pricing-world average, $F_1$ and $F_2$. Then $C - P = e^{-rT}(F_1 - F_2 - K)$, with no model needed beyond that.
-- Take a strike $K \ge 0$ and the same two shares. Then the call costs between the exchange option's price minus $e^{-rT}K$ and the exchange option's price itself.
-- Take a zero strike and $F_2$ above zero. Then $w = 1$, and Kirk's formula is Margrabe's formula exactly.
+- Suppose each final price has a pricing-world average, $`F_1`$ and $`F_2`$. Then $`C - P = e^{-rT}(F_1 - F_2 - K)`$, with no model needed beyond that.
+- Take a strike $`K \ge 0`$ and the same two shares. Then the call costs between the exchange option's price minus $`e^{-rT}K`$ and the exchange option's price itself.
+- Take a zero strike and $`F_2`$ above zero. Then $`w = 1`$, and Kirk's formula is Margrabe's formula exactly.
 - On the payoff chart, with a $5 strike, spreads of −$10, $5 and $25 at expiry pay $0, $0 and $20.
 - At spreads of $25 and −$10, call payoff minus put payoff equals the spread minus the strike.
 
@@ -769,7 +779,7 @@ example : max ((-10 : ℤ) - 5) 0 - max (5 - (-10)) 0 = -10 - 5 := by decide
 > **Try changing**
 > Guess the direction first. Then run it with a different `RHO` or `K`.
 > - **Raise the correlation to 0.9 at the house strike.** The exact price falls from $5.67 to **$1.64**, and Kirk matches it to the printed cent. Shares that move together leave little gap to bet on.
-> - **Drop the correlation to −0.5 and raise the strike to 20.** The exact price is **$6.09** and Kirk says **$6.13**, 0.79 percent high. At $K = 30$ the gap grows to 7.22 cents.
+> - **Drop the correlation to −0.5 and raise the strike to 20.** The exact price is **$6.09** and Kirk says **$6.13**, 0.79 percent high. At $`K = 30`$ the gap grows to 7.22 cents.
 > - **Set the strike to 0.** Kirk's weight becomes 1, and Kirk, the integral and Margrabe all give **$7.81**.
 > - **Correlation 0.9, strike 30.** The price is **$0.01**, and Kirk's error, under a twentieth of a cent, is **6.42 percent** of it. Small absolute errors on cheap options are large relative ones.
 
@@ -780,10 +790,10 @@ example : max ((-10 : ℤ) - 5) 0 - max (5 - (-10)) 0 = -10 - 5 := by decide
 > [!warning]
 > **Pricing the spread with Margrabe's formula and subtracting the strike.** $7.81 minus the $4.76 present value of $5 gives $3.05, far below the true $5.67. That subtraction charges the strike in every outcome, including the ones where the holder walks away and pays nothing. It is a lower bound, never a price.
 >
-> - **Keeping Margrabe's volatility.** Folding the strike in without damping the second share's volatility by $w$ gives $5.84 against $5.67. The $5 is cash; it does not wiggle.
-> - **Folding the strike at face value.** Kirk's folded asset is the forward $F_2 + K$, or in today's money $S_2 e^{-q_2T} + Ke^{-rT}$. Adding $5 to the spot and growing the lot gives $5.61.
+> - **Keeping Margrabe's volatility.** Folding the strike in without damping the second share's volatility by $`w`$ gives $5.84 against $5.67. The $5 is cash; it does not wiggle.
+> - **Folding the strike at face value.** Kirk's folded asset is the forward $`F_2 + K`$, or in today's money $`S_2 e^{-q_2T} + Ke^{-rT}`$. Adding $5 to the spot and growing the lot gives $5.61.
 > - **Trusting a simulation's last digit.** A million paths give $5.69 ± $0.01. That cannot confirm or refute a fifth-of-a-cent error; the exact integral can.
-> - **Reading Kirk's small cents error as small everywhere.** At correlation 0.9 and $K = 30$ it is 6.42 percent of the price. Quote errors as a share of the price, not only in cents.
+> - **Reading Kirk's small cents error as small everywhere.** At correlation 0.9 and $`K = 30`$ it is 6.42 percent of the price. Quote errors as a share of the price, not only in cents.
 
 ---
 
@@ -796,7 +806,7 @@ example : max ((-10 : ℤ) - 5) 0 - max (5 - (-10)) 0 = -10 - 5 := by decide
 - **Neighbours on this shelf.** The zero-strike case is [The exchange option](01-exchange-option-margrabe.md); the sum instead of the difference is [Basket options](03-basket-options.md); the better or worse of the two is [Rainbow options](04-rainbow-best-of-and-worst-of.md).
 
 > **Say it back**
-> A spread call pays the first price minus the second minus a strike, if positive. At a zero strike Margrabe's formula prices it exactly by counting in units of the second share. A nonzero strike bends the exercise boundary and no closed form is known. Kirk folds the strike into the second share, damps its volatility by the weight $w$, and reuses Margrabe; the house price is $5.67, a fifth of a cent above the exact integral and within a simulation's error bar. Kirk's error grows with the strike and with falling correlation, and is largest relative to cheap, far-out contracts.
+> A spread call pays the first price minus the second minus a strike, if positive. At a zero strike Margrabe's formula prices it exactly by counting in units of the second share. A nonzero strike bends the exercise boundary and no closed form is known. Kirk folds the strike into the second share, damps its volatility by the weight $`w`$, and reuses Margrabe; the house price is $5.67, a fifth of a cent above the exact integral and within a simulation's error bar. Kirk's error grows with the strike and with falling correlation, and is largest relative to cheap, far-out contracts.
 
 ---
 

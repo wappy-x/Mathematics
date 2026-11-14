@@ -12,7 +12,7 @@ The old tools give no answer. Every stretch, however short, holds a pothole: bet
 
 Lebesgue's answer is 1 km, pinned from both sides. An open set of 1.001 km covers the smooth path from outside. A closed set of at least 0.999 km sits inside it, though it contains no interval at all. The slack, 0.001 km, can be made as small as wished. The potholes, infinitely many and everywhere, take up no length.
 
-This card assembles the length rule behind that answer, called **Lebesgue measure** from here on and written $\lambda$ (the Greek letter lambda).
+This card assembles the length rule behind that answer, called **Lebesgue measure** from here on and written $`\lambda`$ (the Greek letter lambda).
 
 **Lebesgue measure is outer length kept on the sets that split every other set cleanly; it measures every Borel set, squeezes every set it measures between open sets outside and closed sets inside, and is the only measure on Borel sets that gives intervals their lengths.**
 
@@ -28,56 +28,68 @@ Drawn to scale: 0 km at 20 px, 1 km at 340 px. The ticks are the 21 potholes who
 
 ## The formula
 
-Notation first. $\lambda^*$ is the **outer measure** from [Outer measure](01-lebesgue-outer-measure.md): the cheapest total length of countably many open intervals $(c_k, d_k)$ covering a set. $\mathcal B(\mathbb R)$ is the Borel sets, the smallest sigma-algebra holding every open set (a sigma-algebra: the collection of sets allowed to be measured, closed under complements and countable unions). $\mathcal L$, a script L, is the collection this card calls the **Lebesgue sets**.
+Notation first. $`\lambda^*`$ is the **outer measure** from [Outer measure](01-lebesgue-outer-measure.md): the cheapest total length of countably many open intervals $`(c_k, d_k)`$ covering a set. $`\mathcal B(\mathbb R)`$ is the Borel sets, the smallest sigma-algebra holding every open set (a sigma-algebra: the collection of sets allowed to be measured, closed under complements and countable unions). $`\mathcal L`$, a script L, is the collection this card calls the **Lebesgue sets**.
 
-$$\lambda^*(E) = \inf\Big\{\sum_{k \ge 1} (d_k - c_k) \;:\; E \subseteq \bigcup_{k \ge 1} (c_k, d_k)\Big\}$$
+```math
+\lambda^*(E) = \inf\Big\{\sum_{k \ge 1} (d_k - c_k) \;:\; E \subseteq \bigcup_{k \ge 1} (c_k, d_k)\Big\}
+```
 
-$$\mathcal L = \big\{E \;:\; \lambda^*(A) = \lambda^*(A \cap E) + \lambda^*(A \setminus E) \text{ for every } A \subseteq \mathbb R\big\}, \qquad \lambda = \lambda^* \text{ kept on } \mathcal L$$
+```math
+\mathcal L = \big\{E \;:\; \lambda^*(A) = \lambda^*(A \cap E) + \lambda^*(A \setminus E) \text{ for every } A \subseteq \mathbb R\big\}, \qquad \lambda = \lambda^* \text{ kept on } \mathcal L
+```
 
 **Read it aloud:** the length of a set is the cheapest way to cover it with open intervals, kept only for the sets that cut every other set into two pieces whose lengths add up.
 
 The four theorems:
 
-$$\text{(i)}\quad \mathcal B(\mathbb R) \subseteq \mathcal L, \qquad \lambda\big((a, b]\big) = b - a$$
+```math
+\text{(i)}\quad \mathcal B(\mathbb R) \subseteq \mathcal L, \qquad \lambda\big((a, b]\big) = b - a
+```
 
-$$\text{(ii)}\quad \text{for every } E \in \mathcal L \text{ and } \varepsilon > 0:\ \text{open } G \supseteq E \text{ with } \lambda(G \setminus E) < \varepsilon, \ \text{closed } K \subseteq E \text{ with } \lambda(E \setminus K) < \varepsilon$$
+```math
+\text{(ii)}\quad \text{for every } E \in \mathcal L \text{ and } \varepsilon > 0:\ \text{open } G \supseteq E \text{ with } \lambda(G \setminus E) < \varepsilon, \ \text{closed } K \subseteq E \text{ with } \lambda(E \setminus K) < \varepsilon
+```
 
-$$\text{(iii)}\quad E \in \mathcal L \iff M \subseteq E \subseteq H \text{ for some Borel } M, H \text{ with } \lambda(H \setminus M) = 0$$
+```math
+\text{(iii)}\quad E \in \mathcal L \iff M \subseteq E \subseteq H \text{ for some Borel } M, H \text{ with } \lambda(H \setminus M) = 0
+```
 
-$$\text{(iv)}\quad \mu\big((a, b]\big) = b - a \text{ for all } a < b \implies \mu = \lambda \text{ on } \mathcal B(\mathbb R)$$
+```math
+\text{(iv)}\quad \mu\big((a, b]\big) = b - a \text{ for all } a < b \implies \mu = \lambda \text{ on } \mathcal B(\mathbb R)
+```
 
 **Read them aloud:**
 
 1. Every Borel set has a length, and intervals get the usual one.
 2. Every Lebesgue set sits between an open set and a closed set with as little slack as wished.
 3. A Lebesgue set is a Borel set give or take part of a null set (a set of length 0).
-4. Any measure on Borel sets giving intervals their lengths is $\lambda$.
+4. Any measure on Borel sets giving intervals their lengths is $`\lambda`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\lambda$, $\lambda_n$ | Lebesgue measure; $\lambda_n$ is it kept to the stretch (n, n + 1] | 1 km for the smooth path | — |
-| $\lambda^*$ | outer measure: cheapest countable cover by intervals, for every set | 1 km for the smooth path | — |
-| $E$, $E_n$ | the set measured, here the smooth path; $E_n$ its part in (n, n + 1] | (0, 1) km minus the fractions | bigger set, bigger length |
-| $N$ | the potholes: every fraction p/q in (0, 1) | 1/2, 1/3, 2/3, … | still length 0 |
-| $Z$ | a set of outer measure 0 | the potholes | — |
-| $G$, $G_n$, $G_m$ | open sets covering $E$ from outside | (−0.0005, 1.0005), 1.001 km | more overhang, more slack |
-| $K$, $K_m$ | closed sets inside $E$ | ends trimmed 0.25 m, gaps round every pothole: at least 0.999 km | wider gaps, less length |
-| $\varepsilon$, $\delta$ | slack allowed; $\delta$ is spare slack inside a proof | 0.001 km | a looser squeeze |
-| $q_k$, $\varepsilon_k$ | the k-th pothole in the list, and the width of its gap | $q_1 = 1/2$ with a 25 cm gap | later gaps halve |
-| $c_k$, $d_k$, $a$, $b$, $c$, $d$ | interval ends; $(c_k, d_k)$ is the k-th interval of a cover | (−0.0005, 1.0005) for G | — |
-| $k$, $m$, $n$ | counters; $n$ runs over all integers | $k$ = 1 for 1/2 | — |
-| $A$, $B$ | a test set to be split; a Borel set | any subset of the line | — |
-| $\mathcal B(\mathbb R)$, $\mathcal L$ | Borel sets; Lebesgue sets | the path is in both | — |
-| $M$, $H$ | Borel sets squeezing $E$ with a null difference | $H$ = (0, 1) | — |
-| $\mu$, $\nu$, $\mu_n$ | other measures set against $\lambda$ | four points: 0.25 each; 0.5 on two | — |
+| $`\lambda`$, $`\lambda_n`$ | Lebesgue measure; $`\lambda_n`$ is it kept to the stretch (n, n + 1] | 1 km for the smooth path | — |
+| $`\lambda^*`$ | outer measure: cheapest countable cover by intervals, for every set | 1 km for the smooth path | — |
+| $`E`$, $`E_n`$ | the set measured, here the smooth path; $`E_n`$ its part in (n, n + 1] | (0, 1) km minus the fractions | bigger set, bigger length |
+| $`N`$ | the potholes: every fraction p/q in (0, 1) | 1/2, 1/3, 2/3, … | still length 0 |
+| $`Z`$ | a set of outer measure 0 | the potholes | — |
+| $`G`$, $`G_n`$, $`G_m`$ | open sets covering $`E`$ from outside | (−0.0005, 1.0005), 1.001 km | more overhang, more slack |
+| $`K`$, $`K_m`$ | closed sets inside $`E`$ | ends trimmed 0.25 m, gaps round every pothole: at least 0.999 km | wider gaps, less length |
+| $`\varepsilon`$, $`\delta`$ | slack allowed; $`\delta`$ is spare slack inside a proof | 0.001 km | a looser squeeze |
+| $`q_k`$, $`\varepsilon_k`$ | the k-th pothole in the list, and the width of its gap | $`q_1 = 1/2`$ with a 25 cm gap | later gaps halve |
+| $`c_k`$, $`d_k`$, $`a`$, $`b`$, $`c`$, $`d`$ | interval ends; $`(c_k, d_k)`$ is the k-th interval of a cover | (−0.0005, 1.0005) for G | — |
+| $`k`$, $`m`$, $`n`$ | counters; $`n`$ runs over all integers | $`k`$ = 1 for 1/2 | — |
+| $`A`$, $`B`$ | a test set to be split; a Borel set | any subset of the line | — |
+| $`\mathcal B(\mathbb R)`$, $`\mathcal L`$ | Borel sets; Lebesgue sets | the path is in both | — |
+| $`M`$, $`H`$ | Borel sets squeezing $`E`$ with a null difference | $`H`$ = (0, 1) | — |
+| $`\mu`$, $`\nu`$, $`\mu_n`$ | other measures set against $`\lambda`$ | four points: 0.25 each; 0.5 on two | — |
 
 ### When it holds
 
-- **Intervals as the starting sizes, on the line.** Area and volume come from products of $\lambda$ ([Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md)); other starting sizes give [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md).
+- **Intervals as the starting sizes, on the line.** Area and volume come from products of $`\lambda`$ ([Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md)); other starting sizes give [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md).
 - **Countable covers, not finite ones.** With finite covers the potholes cost 1 km from outside; with countable covers they cost nothing.
-- **Slack measured by the leftover, not the total.** On a set of infinite length, "$\lambda(G)$ within $\varepsilon$ of $\lambda(E)$" says nothing; $\lambda(G \setminus E) < \varepsilon$ still does.
+- **Slack measured by the leftover, not the total.** On a set of infinite length, "$`\lambda(G)`$ within $`\varepsilon`$ of $`\lambda(E)`$" says nothing; $`\lambda(G \setminus E) < \varepsilon`$ still does.
 - **Uniqueness needs agreement on a pi-system**, a class closed under overlaps. On four points, two measures agree on {1, 2} and {1, 3} at 0.5 each and give {1} the values 0.25 and 0.5.
-- **Not every subset of the line.** Sets outside $\mathcal L$ exist: [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md).
+- **Not every subset of the line.** Sets outside $`\mathcal L`$ exist: [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md).
 
 ---
 
@@ -91,102 +103,104 @@ That is the engine. Lebesgue measure covers from outside, and keeps a set exactl
 
 ### Step 1: assemble the measure
 
-[Outer measure](01-lebesgue-outer-measure.md) defines $\lambda^*$ for every subset of the line, shows it grows with the set and is at most the sum over any countable cover, and proves $\lambda^*([a, b]) = b - a$. A single point costs nothing, so $(a, b]$ has the same outer measure. [Caratheodory's criterion](02-caratheodory-measurable-sets.md) proves that the sets splitting every test set cleanly form a sigma-algebra on which the outer measure adds over disjoint pieces. For $\lambda^*$ that sigma-algebra is $\mathcal L$ and the measure is $\lambda$.
+[Outer measure](01-lebesgue-outer-measure.md) defines $`\lambda^*`$ for every subset of the line, shows it grows with the set and is at most the sum over any countable cover, and proves $`\lambda^*([a, b]) = b - a`$. A single point costs nothing, so $`(a, b]`$ has the same outer measure. [Caratheodory's criterion](02-caratheodory-measurable-sets.md) proves that the sets splitting every test set cleanly form a sigma-algebra on which the outer measure adds over disjoint pieces. For $`\lambda^*`$ that sigma-algebra is $`\mathcal L`$ and the measure is $`\lambda`$.
 
-A set $Z$ of outer measure 0 always splits cleanly: for any test set $A$, the piece inside $Z$ costs 0 and the piece outside costs no more than $A$.
+A set $`Z`$ of outer measure 0 always splits cleanly: for any test set $`A`$, the piece inside $`Z`$ costs 0 and the piece outside costs no more than $`A`$.
 
 ### Step 2: every Borel set is a Lebesgue set
 
-Take the half-line (a, ∞) and any test set $A$. Cover $A$ nearly as cheaply as possible and cut each interval at a. The right-hand pieces cover the part of $A$ in the half-line, the left-hand pieces the rest, and each pair of pieces adds back to its interval, give or take a sliver as small as wished. So the two parts of $A$ cost no more than $A$: the half-line splits it cleanly.
+Take the half-line (a, ∞) and any test set $`A`$. Cover $`A`$ nearly as cheaply as possible and cut each interval at a. The right-hand pieces cover the part of $`A`$ in the half-line, the left-hand pieces the rest, and each pair of pieces adds back to its interval, give or take a sliver as small as wished. So the two parts of $`A`$ cost no more than $`A`$: the half-line splits it cleanly.
 
-$\mathcal L$ is a sigma-algebra, so it holds every set built from half-lines, and that is every Borel set.
+$`\mathcal L`$ is a sigma-algebra, so it holds every set built from half-lines, and that is every Borel set.
 
 <details>
 <summary>Detailed proof</summary>
 
-Fix a real a and a test set $A$ with $\lambda^*(A)$ finite (if infinite, the split inequality below is trivial). Fix $\delta > 0$. By the definition of $\lambda^*$, open intervals $(c_k, d_k)$ cover $A$ with $\sum_k (d_k - c_k) \le \lambda^*(A) + \delta$.
+Fix a real a and a test set $`A`$ with $`\lambda^*(A)`$ finite (if infinite, the split inequality below is trivial). Fix $`\delta > 0`$. By the definition of $`\lambda^*`$, open intervals $`(c_k, d_k)`$ cover $`A`$ with $`\sum_k (d_k - c_k) \le \lambda^*(A) + \delta`$.
 
-Cut each at a. The right piece $(\max(c_k, a), d_k)$ is open, or empty. The left piece $(c_k, \min(d_k, a)]$ lies inside the open interval $(c_k, \min(d_k, a) + \delta 2^{-k})$. When $c_k < a < d_k$ the two lengths sum to $(d_k - a) + (a - c_k) + \delta 2^{-k}$; otherwise one piece is empty. Either way the pair costs at most $d_k - c_k + \delta 2^{-k}$.
+Cut each at a. The right piece $`(\max(c_k, a), d_k)`$ is open, or empty. The left piece $`(c_k, \min(d_k, a)]`$ lies inside the open interval $`(c_k, \min(d_k, a) + \delta 2^{-k})`$. When $`c_k < a < d_k`$ the two lengths sum to $`(d_k - a) + (a - c_k) + \delta 2^{-k}`$; otherwise one piece is empty. Either way the pair costs at most $`d_k - c_k + \delta 2^{-k}`$.
 
-The right pieces cover $A \cap (a, \infty)$, the left ones cover $A \setminus (a, \infty)$. By the definition of $\lambda^*$, the two parts' outer measures sum to at most $\lambda^*(A) + 2\delta$. Let $\delta \to 0$; the reverse inequality is subadditivity. So $(a, \infty) \in \mathcal L$.
+The right pieces cover $`A \cap (a, \infty)`$, the left ones cover $`A \setminus (a, \infty)`$. By the definition of $`\lambda^*`$, the two parts' outer measures sum to at most $`\lambda^*(A) + 2\delta`$. Let $`\delta \to 0`$; the reverse inequality is subadditivity. So $`(a, \infty) \in \mathcal L`$.
 
-$\mathcal L$ is a sigma-algebra (Carathéodory card), so it holds $(a, b] = (a, \infty) \setminus (b, \infty)$ and $(a, b) = \bigcup_n (a, b - 1/n]$. Every open set is a countable union of open intervals with rational endpoints, so every open set is in $\mathcal L$, and so is the smallest sigma-algebra holding them, $\mathcal B(\mathbb R)$.
+$`\mathcal L`$ is a sigma-algebra (Carathéodory card), so it holds $`(a, b] = (a, \infty) \setminus (b, \infty)`$ and $`(a, b) = \bigcup_n (a, b - 1/n]`$. Every open set is a countable union of open intervals with rational endpoints, so every open set is in $`\mathcal L`$, and so is the smallest sigma-algebra holding them, $`\mathcal B(\mathbb R)`$.
 
 </details>
 
 ### Step 3: squeeze from outside by open sets
 
-The definition of $\lambda^*$ already covers from outside by open intervals, and a union of open intervals is open. So a set of finite length has an open set around it with as little to spare as wished. For a set of infinite length, do this separately on each stretch (n, n + 1] with a shrinking share of the slack, and join the results.
+The definition of $`\lambda^*`$ already covers from outside by open intervals, and a union of open intervals is open. So a set of finite length has an open set around it with as little to spare as wished. For a set of infinite length, do this separately on each stretch (n, n + 1] with a shrinking share of the slack, and join the results.
 
 On the path, the open set is (−0.0005, 1.0005) km: 1.001 km, of which the two overhangs and the potholes lie outside the smooth path, 0.0005 + 0.0005 + 0 = 0.001 km.
 
 <details>
 <summary>Detailed proof</summary>
 
-*Finite length.* Take open intervals $(c_k, d_k)$ covering $E$ with $\sum_k (d_k - c_k) < \lambda(E) + \varepsilon$, and let $G$ be their union. It is open and holds $E$; by subadditivity $\lambda(G) < \lambda(E) + \varepsilon$. Both sets are in $\mathcal L$ and $\lambda(E)$ is finite, so $\lambda(G \setminus E) = \lambda(G) - \lambda(E) < \varepsilon$.
+*Finite length.* Take open intervals $`(c_k, d_k)`$ covering $`E`$ with $`\sum_k (d_k - c_k) < \lambda(E) + \varepsilon`$, and let $`G`$ be their union. It is open and holds $`E`$; by subadditivity $`\lambda(G) < \lambda(E) + \varepsilon`$. Both sets are in $`\mathcal L`$ and $`\lambda(E)`$ is finite, so $`\lambda(G \setminus E) = \lambda(G) - \lambda(E) < \varepsilon`$.
 
-*Any length.* For every integer n, negative ones included, the finite case gives an open $G_n$ holding $E_n = E \cap (n, n + 1]$ with $\lambda(G_n \setminus E_n) < \varepsilon 2^{-|n| - 2}$. Let $G = \bigcup_n G_n$. Then $G \setminus E$ lies inside $\bigcup_n (G_n \setminus E_n)$, so $\lambda(G \setminus E) < \varepsilon (1/4 + 1/4 + 1/4) < \varepsilon$, the three quarters coming from n = 0, the positive n and the negative n.
+*Any length.* For every integer n, negative ones included, the finite case gives an open $`G_n`$ holding $`E_n = E \cap (n, n + 1]`$ with $`\lambda(G_n \setminus E_n) < \varepsilon 2^{-|n| - 2}`$. Let $`G = \bigcup_n G_n`$. Then $`G \setminus E`$ lies inside $`\bigcup_n (G_n \setminus E_n)`$, so $`\lambda(G \setminus E) < \varepsilon (1/4 + 1/4 + 1/4) < \varepsilon`$, the three quarters coming from n = 0, the positive n and the negative n.
 
 </details>
 
 ### Step 4: squeeze from inside by closed sets
 
-Turn Step 3 inside out. The complement of $E$ is a Lebesgue set, so an open $G$ holds it with less than $\varepsilon$ to spare. Everything outside $G$ is a closed set $K$ inside $E$, and $E$ beyond $K$ is exactly $G$ beyond the complement: less than $\varepsilon$.
+Turn Step 3 inside out. The complement of $`E`$ is a Lebesgue set, so an open $`G`$ holds it with less than $`\varepsilon`$ to spare. Everything outside $`G`$ is a closed set $`K`$ inside $`E`$, and $`E`$ beyond $`K`$ is exactly $`G`$ beyond the complement: less than $`\varepsilon`$.
 
-On the path the complement is the potholes plus everything outside (0, 1). List the potholes by denominator, $q_1 = 1/2$, $q_2 = 1/3$, $q_3 = 2/3$, $q_4 = 1/4$, and so on, and cut round $q_k$ an open gap of width $\varepsilon_k = 0.0005 \times 2^{-k}$ km: 25 cm, 12.5 cm, 6.25 cm, 3.125 cm, halving each time. Trim 0.25 m from each end as well:
+On the path the complement is the potholes plus everything outside (0, 1). List the potholes by denominator, $`q_1 = 1/2`$, $`q_2 = 1/3`$, $`q_3 = 2/3`$, $`q_4 = 1/4`$, and so on, and cut round $`q_k`$ an open gap of width $`\varepsilon_k = 0.0005 \times 2^{-k}`$ km: 25 cm, 12.5 cm, 6.25 cm, 3.125 cm, halving each time. Trim 0.25 m from each end as well:
 
-$$K = [0.00025,\ 0.99975] \setminus \bigcup_{k \ge 1} \big(q_k - \tfrac12 \varepsilon_k,\ q_k + \tfrac12 \varepsilon_k\big)$$
+```math
+K = [0.00025,\ 0.99975] \setminus \bigcup_{k \ge 1} \big(q_k - \tfrac12 \varepsilon_k,\ q_k + \tfrac12 \varepsilon_k\big)
+```
 
-It is a closed interval of 0.9995 km with open gaps removed, so closed. Every fraction sits in its own gap, so $K$ lies inside the smooth path. The gaps total at most 0.0005 km, so $K$ has length at least 0.999 km.
+It is a closed interval of 0.9995 km with open gaps removed, so closed. Every fraction sits in its own gap, so $`K`$ lies inside the smooth path. The gaps total at most 0.0005 km, so $`K`$ has length at least 0.999 km.
 
 <details>
 <summary>Detailed proof</summary>
 
-The complement $E^c$ is in $\mathcal L$. Step 3 gives an open $G$ holding $E^c$ with $\lambda(G \setminus E^c) < \varepsilon$. Let $K$ be the complement of $G$: closed, and inside $E$. Then $E \setminus K = E \cap G = G \setminus E^c$, which has length below $\varepsilon$.
+The complement $`E^c`$ is in $`\mathcal L`$. Step 3 gives an open $`G`$ holding $`E^c`$ with $`\lambda(G \setminus E^c) < \varepsilon`$. Let $`K`$ be the complement of $`G`$: closed, and inside $`E`$. Then $`E \setminus K = E \cap G = G \setminus E^c`$, which has length below $`\varepsilon`$.
 
-Additivity gives $\lambda(E) = \lambda(K) + \lambda(E \setminus K)$. If $\lambda(E)$ is finite, $\lambda(K) > \lambda(E) - \varepsilon$; if infinite, so is $\lambda(K)$. Either way $\lambda(E)$ is the supremum of $\lambda(K)$ over closed $K$ inside $E$, and just as Step 3 makes it the infimum of $\lambda(G)$ over open $G$ holding $E$.
+Additivity gives $`\lambda(E) = \lambda(K) + \lambda(E \setminus K)`$. If $`\lambda(E)`$ is finite, $`\lambda(K) > \lambda(E) - \varepsilon`$; if infinite, so is $`\lambda(K)`$. Either way $`\lambda(E)`$ is the supremum of $`\lambda(K)`$ over closed $`K`$ inside $`E`$, and just as Step 3 makes it the infimum of $`\lambda(G)`$ over open $`G`$ holding $`E`$.
 
-On the path, subadditivity bounds the gaps by $\sum_k 0.0005 \times 2^{-k} = 0.0005$ km, so $\lambda(K) \ge 0.9995 - 0.0005 = 0.999$ km.
+On the path, subadditivity bounds the gaps by $`\sum_k 0.0005 \times 2^{-k} = 0.0005`$ km, so $`\lambda(K) \ge 0.9995 - 0.0005 = 0.999`$ km.
 
 </details>
 
 ### Step 5: Lebesgue sets are Borel sets up to a null set
 
-Squeeze with slack 1, then 1/2, then 1/3, and so on. The open sets meet in a Borel set $H$ and the closed sets join into a Borel set $M$, with $M \subseteq E \subseteq H$ and $H \setminus M$ smaller than every slack, so of length 0.
+Squeeze with slack 1, then 1/2, then 1/3, and so on. The open sets meet in a Borel set $`H`$ and the closed sets join into a Borel set $`M`$, with $`M \subseteq E \subseteq H`$ and $`H \setminus M`$ smaller than every slack, so of length 0.
 
-Conversely, a set trapped like that is a Borel set plus a piece of a null set, and null sets split cleanly (Step 1). So $\mathcal L$ is the **completion** of $\mathcal B(\mathbb R)$ under $\lambda$: the Borel sets with every subset of a Borel null set added, as [Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md) defines it.
+Conversely, a set trapped like that is a Borel set plus a piece of a null set, and null sets split cleanly (Step 1). So $`\mathcal L`$ is the **completion** of $`\mathcal B(\mathbb R)`$ under $`\lambda`$: the Borel sets with every subset of a Borel null set added, as [Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md) defines it.
 
-On the path, $H$ is (0, 1) and the difference is the potholes.
+On the path, $`H`$ is (0, 1) and the difference is the potholes.
 
 On four points, take only the sets ∅, {1, 2}, {3, 4} and all four, with the block {1, 2} of size 0 and {3, 4} of size 2. Completion adds the subsets of the null block and nothing else: 4 old sets become 8, and {3} stays out.
 
 <details>
 <summary>Detailed proof</summary>
 
-*Forward.* For each m = 1, 2, 3, …, Steps 3 and 4 give open $G_m$ and closed $K_m$ with $K_m \subseteq E \subseteq G_m$ and both leftovers below 1/m. Let $H = \bigcap_m G_m$ and $M = \bigcup_m K_m$, Borel as a countable intersection of open sets and a countable union of closed ones. For each m, $H \setminus M$ lies inside $(G_m \setminus E) \cup (E \setminus K_m)$, of length below 2/m. So $\lambda(H \setminus M) = 0$.
+*Forward.* For each m = 1, 2, 3, …, Steps 3 and 4 give open $`G_m`$ and closed $`K_m`$ with $`K_m \subseteq E \subseteq G_m`$ and both leftovers below 1/m. Let $`H = \bigcap_m G_m`$ and $`M = \bigcup_m K_m`$, Borel as a countable intersection of open sets and a countable union of closed ones. For each m, $`H \setminus M`$ lies inside $`(G_m \setminus E) \cup (E \setminus K_m)`$, of length below 2/m. So $`\lambda(H \setminus M) = 0`$.
 
-*Backward.* $E \setminus M$ lies inside $H \setminus M$, so its outer measure is 0 and it is in $\mathcal L$ (Step 1). So $E = M \cup (E \setminus M)$ is in $\mathcal L$, with $\lambda(E) = \lambda(M)$.
+*Backward.* $`E \setminus M`$ lies inside $`H \setminus M`$, so its outer measure is 0 and it is in $`\mathcal L`$ (Step 1). So $`E = M \cup (E \setminus M)`$ is in $`\mathcal L`$, with $`\lambda(E) = \lambda(M)`$.
 
-*Completion.* The completion holds the sets $B \cup Z$ with $B$ Borel and $Z$ inside a Borel null set; such a set is squeezed by $B$ and $B$ joined with that null set. Conversely a squeezed $E$ is $M$ joined with $E \setminus M$, which lies inside the Borel null set $H \setminus M$.
+*Completion.* The completion holds the sets $`B \cup Z`$ with $`B`$ Borel and $`Z`$ inside a Borel null set; such a set is squeezed by $`B`$ and $`B`$ joined with that null set. Conversely a squeezed $`E`$ is $`M`$ joined with $`E \setminus M`$, which lies inside the Borel null set $`H \setminus M`$.
 
 </details>
 
 ### Step 6: no other measure on Borel sets gives intervals their lengths
 
-Suppose $\mu$ on $\mathcal B(\mathbb R)$ gives every (a, b] the length b − a. The half-open intervals, with the empty set, form a pi-system: two of them overlap in another or not at all. They generate the Borel sets. On each stretch (n, n + 1] both measures have total 1 and agree on the pi-system, so they agree on every Borel set there, by [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md). The stretches fill the line without overlap, so $\mu = \lambda$.
+Suppose $`\mu`$ on $`\mathcal B(\mathbb R)`$ gives every (a, b] the length b − a. The half-open intervals, with the empty set, form a pi-system: two of them overlap in another or not at all. They generate the Borel sets. On each stretch (n, n + 1] both measures have total 1 and agree on the pi-system, so they agree on every Borel set there, by [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md). The stretches fill the line without overlap, so $`\mu = \lambda`$.
 
-The overlap rule matters. On four points put 0.25 on each point for $\mu$, and 0.5 on each of 1 and 4 for $\nu$. They agree on {1, 2} and {1, 3}, 0.5 each, and those two sets generate all 16 subsets. On their overlap {1}, $\mu$ gives 0.25 and $\nu$ gives 0.5; they disagree on 10 of the 16.
+The overlap rule matters. On four points put 0.25 on each point for $`\mu`$, and 0.5 on each of 1 and 4 for $`\nu`$. They agree on {1, 2} and {1, 3}, 0.5 each, and those two sets generate all 16 subsets. On their overlap {1}, $`\mu`$ gives 0.25 and $`\nu`$ gives 0.5; they disagree on 10 of the 16.
 
 <details>
 <summary>Detailed proof</summary>
 
-Two half-open intervals overlap in $(\max(a, c), \min(b, d)]$ or not at all, so with the empty set they form a pi-system. The sigma-algebra they generate holds each $(a, \infty) = \bigcup_n (a, a + n]$, hence every Borel set by Step 2's argument, and lies inside $\mathcal B(\mathbb R)$: they generate $\mathcal B(\mathbb R)$.
+Two half-open intervals overlap in $`(\max(a, c), \min(b, d)]`$ or not at all, so with the empty set they form a pi-system. The sigma-algebra they generate holds each $`(a, \infty) = \bigcup_n (a, a + n]`$, hence every Borel set by Step 2's argument, and lies inside $`\mathcal B(\mathbb R)`$: they generate $`\mathcal B(\mathbb R)`$.
 
-For every integer n, negative ones included, let $\mu_n(B) = \mu(B \cap (n, n + 1])$ and $\lambda_n(B) = \lambda(B \cap (n, n + 1])$. Both are measures of total 1 on $\mathcal B(\mathbb R)$, and they agree on the pi-system, since an interval cut to (n, n + 1] is again one. Finite measures with equal totals that agree on a pi-system agree on what it generates (pi-systems card), so $\mu_n = \lambda_n$. Countable additivity over the disjoint stretches gives $\mu(B) = \sum_n \mu_n(B) = \sum_n \lambda_n(B) = \lambda(B)$.
+For every integer n, negative ones included, let $`\mu_n(B) = \mu(B \cap (n, n + 1])`$ and $`\lambda_n(B) = \lambda(B \cap (n, n + 1])`$. Both are measures of total 1 on $`\mathcal B(\mathbb R)`$, and they agree on the pi-system, since an interval cut to (n, n + 1] is again one. Finite measures with equal totals that agree on a pi-system agree on what it generates (pi-systems card), so $`\mu_n = \lambda_n`$. Countable additivity over the disjoint stretches gives $`\mu(B) = \sum_n \mu_n(B) = \sum_n \lambda_n(B) = \lambda(B)`$.
 
 </details>
 
-The same measure also comes from extending lengths off the finite unions of intervals, [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md), or from the distribution function F(x) = x, [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md); Step 6 says every route lands on this $\lambda$.
+The same measure also comes from extending lengths off the finite unions of intervals, [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md), or from the distribution function F(x) = x, [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md); Step 6 says every route lands on this $`\lambda`$.
 
 <details>
 <summary>Is every Lebesgue set a Borel set?</summary>
@@ -243,9 +257,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The code finds the length of the closed set $K$ after its first gaps by three independent roads: sorting and merging the gaps, the geometric sum of their widths, and 200000 random darts from a SplitMix64 generator written out in full. Python uses exact fractions; Rust counts whole units of a small fraction of a kilometre. The code also prints the four failures and builds the four-point completion two ways, by the definition and as the sets whose part in {3, 4} is empty or whole. The darts are themselves fractions with denominator 2^64, so they test the stage of $K$ with 21 gaps, not the path.
+The code finds the length of the closed set $`K`$ after its first gaps by three independent roads: sorting and merging the gaps, the geometric sum of their widths, and 200000 random darts from a SplitMix64 generator written out in full. Python uses exact fractions; Rust counts whole units of a small fraction of a kilometre. The code also prints the four failures and builds the four-point completion two ways, by the definition and as the sets whose part in {3, 4} is empty or whole. The darts are themselves fractions with denominator 2^64, so they test the stage of $`K`$ with 21 gaps, not the path.
 
-The code checks 21 potholes, finite stages of $K$ and four-point examples; that the full $K$ stays above 0.999 km and holds no fraction, and every statement about all Lebesgue sets, only the proof shows.
+The code checks 21 potholes, finite stages of $`K`$ and four-point examples; that the full $`K`$ stays above 0.999 km and holds no fraction, and every statement about all Lebesgue sets, only the proof shows.
 
 ### Python
 
@@ -577,14 +591,14 @@ The two outputs are identical, byte for byte.
 Lean proves the four theorems, with outer measure built from interval covers as in The formula, plus the worked numbers.
 
 - Every Borel set is a Lebesgue set.
-- Take $a < b$. Then $(a, b]$ has outer measure $b - a$.
-- Take a Lebesgue set $E$ and $\varepsilon > 0$. Then some open set $G$ holding $E$ has $\lambda^*(G \setminus E) < \varepsilon$. Some closed set $K$ inside $E$ has $\lambda^*(E \setminus K) < \varepsilon$.
-- Take any set $E$. Then $E$ is a Lebesgue set exactly when Borel sets $M \subseteq E \subseteq H$ have $\lambda^*(H \setminus M) = 0$.
-- Take a measure $\mu$ on Borel sets giving every $(a, b]$ with $a < b$ the length $b - a$. Then $\mu(B) = \lambda^*(B)$ for every Borel set $B$.
+- Take $`a < b`$. Then $`(a, b]`$ has outer measure $`b - a`$.
+- Take a Lebesgue set $`E`$ and $`\varepsilon > 0`$. Then some open set $`G`$ holding $`E`$ has $`\lambda^*(G \setminus E) < \varepsilon`$. Some closed set $`K`$ inside $`E`$ has $`\lambda^*(E \setminus K) < \varepsilon`$.
+- Take any set $`E`$. Then $`E`$ is a Lebesgue set exactly when Borel sets $`M \subseteq E \subseteq H`$ have $`\lambda^*(H \setminus M) = 0`$.
+- Take a measure $`\mu`$ on Borel sets giving every $`(a, b]`$ with $`a < b`$ the length $`b - a`$. Then $`\mu(B) = \lambda^*(B)`$ for every Borel set $`B`$.
 - The worked arithmetic: G is 1.001 km, its overhangs 0.001 km, the trimmed interval 0.9995 km, and 0.9995 − 0.0005 = 0.999 km.
 - The first four gaps are 25, 12.5, 6.25 and 3.125 cm, and together they stay below 0.0005 km.
 - There are 21 potholes with denominator up to 8, and 301/1003 sits inside (0.3, 0.3001).
-- Take the four-point measures $\mu$ and $\nu$. Then they agree on {1, 2} and {1, 3}, differ on {1}, and disagree on 10 of the 16 sets.
+- Take the four-point measures $`\mu`$ and $`\nu`$. Then they agree on {1, 2} and {1, 3}, differ on {1}, and disagree on 10 of the 16 sets.
 - In the four-point completion, 4 old sets become 8, and {3} stays out.
 
 The stages of K, the darts, the flat gaps, the chart and the figure are left to the Python and Rust checks.
@@ -867,7 +881,7 @@ example : (Finset.univ.filter (fun e : Finset (Fin 4) =>
 > **Try changing**
 > - **Guess first:** with a slack of 0.01 km instead of 0.001, how long is the closed set after 21 potholes? Change `t` in the last lines, or set `EPS = Fr(1, 100)`. Answer: 0.9900000023842 km, above its floor of 0.99 km.
 > - **Guess first:** what happens to the floor check if the gaps stop halving? Pass `False` as the last argument to both roads in the stage loop. Answer: the roads still agree with each other, and the floor assert fails at stage n=2, since two flat gaps and the end trims already cut more than the slack.
-> - **Guess first:** if $\nu$ puts 0.25 on every point, like $\mu$, do the two measures still disagree anywhere? Set `nu` to `[1, 1, 1, 1]`. Answer: they agree on every set, and the assert expecting 10 disagreements fails, as it should.
+> - **Guess first:** if $`\nu`$ puts 0.25 on every point, like $`\mu`$, do the two measures still disagree anywhere? Set `nu` to `[1, 1, 1, 1]`. Answer: they agree on every set, and the assert expecting 10 disagreements fails, as it should.
 > - **Guess first:** does a different seed move the dart estimate far? Change `SEED`. Answer: the hit count moves by a few tens; the estimate stays within four standard errors of 0.000071 of the exact length.
 
 ---
@@ -878,7 +892,7 @@ example : (Finset.univ.filter (fun e : Finset (Fin 4) =>
 > **Reading "length 0" as "few points" or "nowhere".** The potholes are infinitely many and sit in every stretch of the path, however short, yet their length is 0 km. Length counts room, not points: countably many points can be packed into gaps of total width as small as wished.
 >
 > - **Squeezing from inside with open sets.** The smooth path holds no interval, so the only open set inside it is empty: 0 km. Inside needs closed sets.
-> - **Stating regularity as "total within ε".** On a set of infinite length the totals say nothing; the leftover $\lambda(G \setminus E)$ is what shrinks.
+> - **Stating regularity as "total within ε".** On a set of infinite length the totals say nothing; the leftover $`\lambda(G \setminus E)`$ is what shrinks.
 > - **Taking Lebesgue sets to be Borel sets.** Completion adds every subset of every Borel null set; most subsets of the Cantor set are Lebesgue sets and not Borel.
 > - **Taking every subset to be a Lebesgue set.** In the four-point completion {3} stays out; on the line the Vitali set stays out.
 
@@ -889,7 +903,7 @@ example : (Finset.univ.filter (fun e : Finset (Fin 4) =>
 - **A number drawn uniformly from 0 to 1.** Lebesgue measure on [0, 1] is the uniform law. The chance that the draw is a fraction is the length of the potholes: 0.
 - **Monte Carlo estimates.** Throwing random points and counting hits estimates a length, an area or a probability; here 199809 hits of 200000 estimate 0.99905 km with a standard error of 0.000071.
 - **Pixels and sampled regions.** Up to any slack, a set of finite length is a finite union of intervals: take the open set of Step 3, a countable union of intervals, and keep enough of them. So a measurable region can be drawn in pixels with as small an error as wished.
-- **A coin tossed forever.** The binary digits of a uniform draw from [0, 1] are fair coin tosses, so $\lambda$ on [0, 1] is the law of an infinite coin sequence: [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md).
+- **A coin tossed forever.** The binary digits of a uniform draw from [0, 1] are fair coin tosses, so $`\lambda`$ on [0, 1] is the law of an infinite coin sequence: [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md).
 
 > **Say it back**
 > Lebesgue measure is the cheapest countable cover by intervals, kept on the sets that split every other set without losing length. An interval cut at a point keeps its length, so half-lines split cleanly and every Borel set is measured. Every measured set sits between an open set and a closed set with as little slack as wished, so it is a Borel set give or take part of a null set. Intervals form a pi-system, so no other measure on Borel sets gives them their lengths. The path with a pothole at every fraction is 1 km, squeezed between 1.001 km and 0.999 km.
@@ -906,12 +920,12 @@ example : (Finset.univ.filter (fun e : Finset (Fin 4) =>
 
 - [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md): sliding a set keeps its length, and that forces a set with no length at all.
 - [The Cantor set](07-the-cantor-set.md): a closed set of length 0 with as many points as the line.
-- [Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md): area and volume as products of $\lambda$.
-- [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md): $\lambda$ on [0, 1] as a coin tossed forever.
+- [Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md): area and volume as products of $`\lambda`$.
+- [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md): $`\lambda`$ on [0, 1] as a coin tossed forever.
 - [The Lebesgue differentiation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md): averages over shrinking intervals recover a function at almost every point, with regularity doing the covering.
-- The maximal function: the largest local average, bounded through $\lambda$ of the set where it is big.
-- Calderon-Zygmund decomposition: splitting a function by cutting the line into intervals measured by $\lambda$.
-- Restriction and Kakeya in outline: how small a set can be while holding a segment in every direction, measured by $\lambda$ in the plane.
+- The maximal function: the largest local average, bounded through $`\lambda`$ of the set where it is big.
+- Calderon-Zygmund decomposition: splitting a function by cutting the line into intervals measured by $`\lambda`$.
+- Restriction and Kakeya in outline: how small a set can be while holding a segment in every direction, measured by $`\lambda`$ in the plane.
 
 Every Borel set now has a length, and so does everything a null set away from one; whether every subset of the line has one is what [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md) settles, and the answer is no.
 

@@ -37,34 +37,38 @@ Orange: the flaw hazard, a Weibull with shape 0.5, falling. Green: the wear haza
 
 ## The formula
 
-Notation first, in words. A capital $T$ is a bulb's lifetime in burning hours, a random variable (a quantity settled by chance). A lower-case $t$ is one fixed age. $S(t)$ is the **survival function**, the chance the bulb is still lit at age $t$: $S(t) = P(T > t)$.
+Notation first, in words. A capital $`T`$ is a bulb's lifetime in burning hours, a random variable (a quantity settled by chance). A lower-case $`t`$ is one fixed age. $`S(t)`$ is the **survival function**, the chance the bulb is still lit at age $`t`$: $`S(t) = P(T > t)`$.
 
-The Greek letter $\eta$, read "eta", is the **scale**, in hours. The letter $k$ is the **shape**, a plain number. $h(t)$ is the hazard at age $t$, and $H(t)$ is its running total from age 0, the **cumulative hazard**.
+The Greek letter $`\eta`$, read "eta", is the **scale**, in hours. The letter $`k`$ is the **shape**, a plain number. $`h(t)`$ is the hazard at age $`t`$, and $`H(t)`$ is its running total from age 0, the **cumulative hazard**.
 
-$$h(t) = \frac{k}{\eta}\left(\frac{t}{\eta}\right)^{k-1}, \qquad H(t) = \left(\frac{t}{\eta}\right)^{k}, \qquad S(t) = e^{-(t/\eta)^k}$$
+```math
+h(t) = \frac{k}{\eta}\left(\frac{t}{\eta}\right)^{k-1}, \qquad H(t) = \left(\frac{t}{\eta}\right)^{k}, \qquad S(t) = e^{-(t/\eta)^k}
+```
 
 **Read it aloud:** the hazard at age t is shape over scale times age-over-scale to the shape minus one; its running total up to t is age-over-scale to the shape; and the chance of still burning is e to the minus that running total.
 
 The density, how thickly the chance of dying is packed near each age, is hazard times survival, and the average life uses the gamma function:
 
-$$f(t) = h(t)\,S(t), \qquad E[T] = \eta\,\Gamma\!\left(1 + \tfrac{1}{k}\right), \qquad \text{median} = \eta\,(\ln 2)^{1/k}$$
+```math
+f(t) = h(t)\,S(t), \qquad E[T] = \eta\,\Gamma\!\left(1 + \tfrac{1}{k}\right), \qquad \text{median} = \eta\,(\ln 2)^{1/k}
+```
 
-The gamma function $\Gamma$ is the integral $\Gamma(x) = \int_0^\infty y^{x-1} e^{-y}\,dy$; at a whole number $n$ it is the factorial one step down, $\Gamma(n) = (n-1)!$, so $\Gamma(3) = 2$, and between whole numbers it fills in smoothly ([Gamma and beta](07-gamma-and-beta-distributions.md)). Writing $T \sim \mathrm{Weibull}(k, \eta)$ reads "$T$ follows the Weibull law with shape $k$ and scale $\eta$".
+The gamma function $`\Gamma`$ is the integral $`\Gamma(x) = \int_0^\infty y^{x-1} e^{-y}\,dy`$; at a whole number $`n`$ it is the factorial one step down, $`\Gamma(n) = (n-1)!`$, so $`\Gamma(3) = 2`$, and between whole numbers it fills in smoothly ([Gamma and beta](07-gamma-and-beta-distributions.md)). Writing $`T \sim \mathrm{Weibull}(k, \eta)`$ reads "$`T`$ follows the Weibull law with shape $`k`$ and scale $`\eta`$".
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$ | a bulb's lifetime in burning hours, a random variable | unknown in advance | — |
-| $t$, $s$ | fixed ages in hours | $s$ = 800 already burned, $t$ = 200 more | older bulbs: survival falls |
-| $k$ | shape: how the hazard changes with age | 3 for wear, 0.5 for flaws | above 1, hazard climbs faster with age |
-| $\eta$ | scale: the age by which 63.21% have died, whatever the shape | 1,000 hours for wear, 10,000 for flaws | every age stretches in proportion |
-| $h(t)$ | hazard: chance per hour of dying now, among bulbs still lit | 3.00 per 1,000 hours at $t$ = 1,000 | — |
-| $H(t)$ | cumulative hazard: the hazard added up from 0 to $t$ | $H(1000) = 1$ | survival falls as $e^{-H}$ |
-| $S(t)$ | survival: chance still lit at age $t$ | $S(1000) = 0.3679$ | — |
-| $f(t)$, $F(t)$ | density, and cumulative chance of being dead by $t$, which is $1 - S(t)$ | $F(1000) = 0.6321$ | — |
-| $\Delta$ | a short slice of time, in hours | 1 hour | smaller slices: the slice product closes on $S(t)$ |
-| $\Gamma$ | the gamma function, a smooth factorial | $\Gamma(4/3) = 0.892980$ | — |
-| $E[T]$ | average life in the long run | 892.98 hours | — |
-| $n$ | bulbs wired in series, all dark when one fails | 10 | the string's scale shrinks as $n^{-1/k}$ |
+| $`T`$ | a bulb's lifetime in burning hours, a random variable | unknown in advance | — |
+| $`t`$, $`s`$ | fixed ages in hours | $`s`$ = 800 already burned, $`t`$ = 200 more | older bulbs: survival falls |
+| $`k`$ | shape: how the hazard changes with age | 3 for wear, 0.5 for flaws | above 1, hazard climbs faster with age |
+| $`\eta`$ | scale: the age by which 63.21% have died, whatever the shape | 1,000 hours for wear, 10,000 for flaws | every age stretches in proportion |
+| $`h(t)`$ | hazard: chance per hour of dying now, among bulbs still lit | 3.00 per 1,000 hours at $`t`$ = 1,000 | — |
+| $`H(t)`$ | cumulative hazard: the hazard added up from 0 to $`t`$ | $`H(1000) = 1`$ | survival falls as $`e^{-H}`$ |
+| $`S(t)`$ | survival: chance still lit at age $`t`$ | $`S(1000) = 0.3679`$ | — |
+| $`f(t)`$, $`F(t)`$ | density, and cumulative chance of being dead by $`t`$, which is $`1 - S(t)`$ | $`F(1000) = 0.6321`$ | — |
+| $`\Delta`$ | a short slice of time, in hours | 1 hour | smaller slices: the slice product closes on $`S(t)`$ |
+| $`\Gamma`$ | the gamma function, a smooth factorial | $`\Gamma(4/3) = 0.892980`$ | — |
+| $`E[T]`$ | average life in the long run | 892.98 hours | — |
+| $`n`$ | bulbs wired in series, all dark when one fails | 10 | the string's scale shrinks as $`n^{-1/k}`$ |
 
 ### When it holds
 
@@ -79,47 +83,51 @@ The gamma function $\Gamma$ is the integral $\Gamma(x) = \int_0^\infty y^{x-1} e
 
 ### Step 0: surviving is a run of survived slices
 
-Cut a bulb's life into short slices of time. In each slice the bulb either dies or goes on. The chance of dying in the slice starting at age $t$, given it is still lit, is about $h(t)\,\Delta$. Surviving to age $t$ means surviving every slice in turn, so its chance is a product of $1 - h\,\Delta$ factors. Everything below is that product, taken to the limit, then evaluated for a hazard that is a power of age.
+Cut a bulb's life into short slices of time. In each slice the bulb either dies or goes on. The chance of dying in the slice starting at age $`t`$, given it is still lit, is about $`h(t)\,\Delta`$. Surviving to age $`t`$ means surviving every slice in turn, so its chance is a product of $`1 - h\,\Delta`$ factors. Everything below is that product, taken to the limit, then evaluated for a hazard that is a power of age.
 
 ### Step 1: the hazard, defined, gives survival for any lifetime law
 
-The hazard is a rate among survivors. Take the chance of dying in the next $\Delta$ hours, given lit at $t$, divide by $\Delta$, and shrink $\Delta$:
+The hazard is a rate among survivors. Take the chance of dying in the next $`\Delta`$ hours, given lit at $`t`$, divide by $`\Delta`$, and shrink $`\Delta`$:
 
-$$h(t) = \lim_{\Delta \to 0} \frac{P(t < T \le t + \Delta \mid T > t)}{\Delta} = \frac{f(t)}{S(t)}.$$
+```math
+h(t) = \lim_{\Delta \to 0} \frac{P(t < T \le t + \Delta \mid T > t)}{\Delta} = \frac{f(t)}{S(t)}.
+```
 
-The bar reads "given". The top is the density near $t$; dividing by $S(t)$ keeps only the bulbs still lit. Since $f$ is the slope of $F = 1 - S$, $f = -S'$, and the hazard is $-S'/S$, which is minus the slope of $\ln S$. Add it up from age 0, where every bulb is lit and $S(0) = 1$:
+The bar reads "given". The top is the density near $`t`$; dividing by $`S(t)`$ keeps only the bulbs still lit. Since $`f`$ is the slope of $`F = 1 - S`$, $`f = -S'`$, and the hazard is $`-S'/S`$, which is minus the slope of $`\ln S`$. Add it up from age 0, where every bulb is lit and $`S(0) = 1`$:
 
-$$H(t) = \int_0^t h(u)\,du = -\ln S(t), \qquad S(t) = e^{-H(t)}.$$
+```math
+H(t) = \int_0^t h(u)\,du = -\ln S(t), \qquad S(t) = e^{-H(t)}.
+```
 
-This holds for any lifetime with a density. It is the slice product of Step 0 in the limit: the logarithm of a product of $1 - h\Delta$ factors is a sum of about $-h\Delta$ terms, which is $-H$. The code checks it without calling the exponential at all. With one-hour slices the product gives 0.3675 against the exact 0.3679 at 1,000 hours; with 100-hour slices it gives 0.3322.
+This holds for any lifetime with a density. It is the slice product of Step 0 in the limit: the logarithm of a product of $`1 - h\Delta`$ factors is a sum of about $`-h\Delta`$ terms, which is $`-H`$. The code checks it without calling the exponential at all. With one-hour slices the product gives 0.3675 against the exact 0.3679 at 1,000 hours; with 100-hour slices it gives 0.3322.
 
 <details>
 <summary>Detailed proof: the hazard fixes the survival curve, and a power-law hazard fixes the Weibull</summary>
 
-Suppose $T > 0$ has a density $f$ that is continuous on the positive ages, and $S(t) > 0$. For $\Delta > 0$, the chance of dying in $(t, t + \Delta]$ given lit at $t$ is $(S(t) - S(t + \Delta))/S(t)$. Divide by $\Delta$: as $\Delta$ shrinks, the top tends to $-S'(t) = f(t)$, so the limit is $f(t)/S(t)$.
+Suppose $`T > 0`$ has a density $`f`$ that is continuous on the positive ages, and $`S(t) > 0`$. For $`\Delta > 0`$, the chance of dying in $`(t, t + \Delta]`$ given lit at $`t`$ is $`(S(t) - S(t + \Delta))/S(t)`$. Divide by $`\Delta`$: as $`\Delta`$ shrinks, the top tends to $`-S'(t) = f(t)`$, so the limit is $`f(t)/S(t)`$.
 
-By the chain rule, $\frac{d}{dt}\ln S(t) = S'(t)/S(t) = -h(t)$. Integrate from a small $\varepsilon > 0$ to $t$ and let $\varepsilon \to 0$; since $S$ is continuous with $S(0) = 1$, $\ln S(\varepsilon) \to 0$, and $\ln S(t) = -\int_0^t h(u)\,du$. The integral near 0 is an improper one when the hazard blows up there, as it does for shape below 1 ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)).
+By the chain rule, $`\frac{d}{dt}\ln S(t) = S'(t)/S(t) = -h(t)`$. Integrate from a small $`\varepsilon > 0`$ to $`t`$ and let $`\varepsilon \to 0`$; since $`S`$ is continuous with $`S(0) = 1`$, $`\ln S(\varepsilon) \to 0`$, and $`\ln S(t) = -\int_0^t h(u)\,du`$. The integral near 0 is an improper one when the hazard blows up there, as it does for shape below 1 ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)).
 
-So the hazard determines $S$ completely: two laws with the same hazard at every age have the same survival curve.
+So the hazard determines $`S`$ completely: two laws with the same hazard at every age have the same survival curve.
 
-Now take $h(t) = c\,t^{k-1}$ with $c > 0$ and $k > 0$. Then $\int_0^t c\,u^{k-1}\,du = c\,t^k/k$, finite because $k > 0$. Name the scale by $c = k/\eta^k$; then $H(t) = (t/\eta)^k$ and $S(t) = e^{-(t/\eta)^k}$. As $t$ grows, $H$ grows without bound, so $S \to 0$: every bulb dies eventually, and the law is a genuine lifetime law. The only law with a power-law hazard is the Weibull.
+Now take $`h(t) = c\,t^{k-1}`$ with $`c > 0`$ and $`k > 0`$. Then $`\int_0^t c\,u^{k-1}\,du = c\,t^k/k`$, finite because $`k > 0`$. Name the scale by $`c = k/\eta^k`$; then $`H(t) = (t/\eta)^k`$ and $`S(t) = e^{-(t/\eta)^k}`$. As $`t`$ grows, $`H`$ grows without bound, so $`S \to 0`$: every bulb dies eventually, and the law is a genuine lifetime law. The only law with a power-law hazard is the Weibull.
 
 </details>
 
 ### Step 2: a power of age gives the Weibull, and the scale has a meaning
 
-Take the hazard to be a constant times age to some power, $c\,t^{k-1}$. Its running total is $c\,t^k/k$. Writing the constant as $k/\eta^k$ tidies that to $(t/\eta)^k$, which is why the formula carries the scale inside a bracket. Step 1 then gives $S(t) = e^{-(t/\eta)^k}$.
+Take the hazard to be a constant times age to some power, $`c\,t^{k-1}`$. Its running total is $`c\,t^k/k`$. Writing the constant as $`k/\eta^k`$ tidies that to $`(t/\eta)^k`$, which is why the formula carries the scale inside a bracket. Step 1 then gives $`S(t) = e^{-(t/\eta)^k}`$.
 
-At $t = \eta$ the bracket is 1 whatever the shape, so $S(\eta) = e^{-1} = 0.3679$. The scale is the age by which 0.6321 of the bulbs, about 63 in 100, have died. For the worn bulbs that is 1,000 hours. It is not the average life, which is 892.98 hours, nor the median, 885.00 hours.
+At $`t = \eta`$ the bracket is 1 whatever the shape, so $`S(\eta) = e^{-1} = 0.3679`$. The scale is the age by which 0.6321 of the bulbs, about 63 in 100, have died. For the worn bulbs that is 1,000 hours. It is not the average life, which is 892.98 hours, nor the median, 885.00 hours.
 
 For the wear bulbs, with shape 3 and scale 1,000:
 
-- the hazard is $3t^2/1000^3$: 0.75 per 1,000 hours at 500 hours, 3.00 at 1,000 hours;
+- the hazard is $`3t^2/1000^3`$: 0.75 per 1,000 hours at 500 hours, 3.00 at 1,000 hours;
 - survival is 0.8825 at 500 hours and 0.3679 at 1,000 hours.
 
 ### Step 3: reading the shape
 
-The hazard's slope has the sign of $k - 1$, because age is raised to the power $k - 1$. Three cases, all with scale 1,000 hours:
+The hazard's slope has the sign of $`k - 1`$, because age is raised to the power $`k - 1`$. Three cases, all with scale 1,000 hours:
 
 | Shape | Hazard at 200 h, per 1,000 h | Hazard at 800 h | Lasts 200 h, fresh | Lasts 200 more, after 800 h |
 | --- | --- | --- | --- | --- |
@@ -129,7 +137,9 @@ The hazard's slope has the sign of $k - 1$, because age is raised to the power $
 
 The last two columns come from one ratio. Surviving 200 more hours after 800 means surviving to 1,000, out of those who reached 800:
 
-$$P(T > s + t \mid T > s) = \frac{S(s + t)}{S(s)} = e^{-[H(s+t) - H(s)]}.$$
+```math
+P(T > s + t \mid T > s) = \frac{S(s + t)}{S(s)} = e^{-[H(s+t) - H(s)]}.
+```
 
 Only the hazard packed into the next 200 hours matters. With shape 0.5 the old bulb faces less of it than a new one, so it is safer. With shape 1 the two are equal, the memoryless case of the exponential. With shape 3 it faces far more.
 
@@ -138,7 +148,7 @@ Shape below 1 does not mean a single bulb heals. It means the batch changes: wea
 <details>
 <summary>Why engineers met the Weibull first: the weakest link</summary>
 
-Wire 10 shape-3 bulbs in series, like an old string of festive lights: the string goes dark when the first bulb fails. The string survives to $t$ only if all ten do, so its survival is $S(t)^{10} = e^{-10(t/\eta)^k}$. That is again a Weibull, same shape, with scale $\eta \times 10^{-1/k}$: 464.16 hours instead of 1,000.
+Wire 10 shape-3 bulbs in series, like an old string of festive lights: the string goes dark when the first bulb fails. The string survives to $`t`$ only if all ten do, so its survival is $`S(t)^{10} = e^{-10(t/\eta)^k}`$. That is again a Weibull, same shape, with scale $`\eta \times 10^{-1/k}`$: 464.16 hours instead of 1,000.
 
 A chain is as strong as its weakest link, and the minimum of many Weibull lives stays Weibull. Waloddi Weibull proposed the law in 1939 for the breaking strength of materials, where a rod breaks at its weakest flaw, and argued its wide use in 1951.
 
@@ -146,34 +156,38 @@ A chain is as strong as its weakest link, and the minimum of many Weibull lives 
 
 ### Step 4: reading the shape from data
 
-Take logarithms twice. Since $-\ln S(t) = (t/\eta)^k$,
+Take logarithms twice. Since $`-\ln S(t) = (t/\eta)^k`$,
 
-$$\ln\big(-\ln S(t)\big) = k \ln t - k \ln \eta.$$
+```math
+\ln\big(-\ln S(t)\big) = k \ln t - k \ln \eta.
+```
 
-Plotted against $\ln t$, the left side is a straight line with slope $k$: the **Weibull plot**. Count the fraction of a batch still lit at two ages and the slope between them estimates the shape.
+Plotted against $`\ln t`$, the left side is a straight line with slope $`k`$: the **Weibull plot**. Count the fraction of a batch still lit at two ages and the slope between them estimates the shape.
 
-At 500 and 1,000 hours the exact survivals are 0.8825 and 0.3679, whose $-\ln$ values are $1/8$ and 1; the ratio is 8, and $\ln 8/\ln 2 = 3$. The scale then follows from either age: $\eta = t/(-\ln S(t))^{1/k} = 500/(1/8)^{1/3} = 1{,}000$ hours.
+At 500 and 1,000 hours the exact survivals are 0.8825 and 0.3679, whose $`-\ln`$ values are $`1/8`$ and 1; the ratio is 8, and $`\ln 8/\ln 2 = 3`$. The scale then follows from either age: $`\eta = t/(-\ln S(t))^{1/k} = 500/(1/8)^{1/3} = 1{,}000`$ hours.
 
-Two ages $t_1 < t_2$ give exactly one Weibull when $1 > S(t_1) > S(t_2) > 0$; if survival does not fall strictly between them, or either value is 0 or 1, no Weibull fits. The simulation below does this on 20 batches of 2,000 bulbs and reads a shape of 3.018 (standard error 0.021).
+Two ages $`t_1 < t_2`$ give exactly one Weibull when $`1 > S(t_1) > S(t_2) > 0`$; if survival does not fall strictly between them, or either value is 0 or 1, no Weibull fits. The simulation below does this on 20 batches of 2,000 bulbs and reads a shape of 3.018 (standard error 0.021).
 
 ### Step 5: two causes, hazards add
 
 A bulb in the mixed batch carries two clocks: a flaw clock (shape 0.5, scale 10,000 hours) and a wear clock (shape 3, scale 1,000 hours). It dies when the first one runs out. If the two are independent, surviving both is the product of surviving each:
 
-$$S(t) = e^{-H_{\text{flaw}}(t)}\,e^{-H_{\text{wear}}(t)} = e^{-[H_{\text{flaw}}(t) + H_{\text{wear}}(t)]}.$$
+```math
+S(t) = e^{-H_{\text{flaw}}(t)}\,e^{-H_{\text{wear}}(t)} = e^{-[H_{\text{flaw}}(t) + H_{\text{wear}}(t)]}.
+```
 
-So cumulative hazards add, and so do hazards. That sum is the dark blue bathtub in the opening chart. The flaw part is $0.005/\sqrt{t}$ per hour and the wear part $3t^2/1000^3$. Setting the slope of the sum to zero puts the low point at 177.0 hours, with a hazard of 0.470 per 1,000 hours. Survival is 0.9039 at 100 hours, so about 1 bulb in 10 dies early, and 0.2681 at 1,000 hours.
+So cumulative hazards add, and so do hazards. That sum is the dark blue bathtub in the opening chart. The flaw part is $`0.005/\sqrt{t}`$ per hour and the wear part $`3t^2/1000^3`$. Setting the slope of the sum to zero puts the low point at 177.0 hours, with a hazard of 0.470 per 1,000 hours. Survival is 0.9039 at 100 hours, so about 1 bulb in 10 dies early, and 0.2681 at 1,000 hours.
 
 ### The average life
 
-The average of a lifetime is the area under its survival curve, $E[T] = \int_0^\infty S(t)\,dt$, because each hour contributes the chance of still being lit through it. For the Weibull, substitute $y = (t/\eta)^k$ and the area becomes $\eta\,\Gamma(1 + 1/k)$. At shape 3 that is $1000 \times 0.892980 = 892.98$ hours.
+The average of a lifetime is the area under its survival curve, $`E[T] = \int_0^\infty S(t)\,dt`$, because each hour contributes the chance of still being lit through it. For the Weibull, substitute $`y = (t/\eta)^k`$ and the area becomes $`\eta\,\Gamma(1 + 1/k)`$. At shape 3 that is $`1000 \times 0.892980 = 892.98`$ hours.
 
-The code reaches it twice: by a Stirling series for $\Gamma(1 + 1/k)$, and by adding up the area under $S(t)$ with Simpson's rule. A Stirling series is a formula for the logarithm of the gamma function that grows more exact as its input grows. Simpson's rule cuts an area into thin strips and fits a parabola over each pair.
+The code reaches it twice: by a Stirling series for $`\Gamma(1 + 1/k)`$, and by adding up the area under $`S(t)`$ with Simpson's rule. A Stirling series is a formula for the logarithm of the gamma function that grows more exact as its input grows. Simpson's rule cuts an area into thin strips and fits a parabola over each pair.
 
 <details>
 <summary>Detailed proof: the mean and the median</summary>
 
-With $t = \eta\,y^{1/k}$, $dt = (\eta/k)\,y^{1/k - 1}\,dy$, so $\int_0^\infty e^{-(t/\eta)^k}\,dt = \frac{\eta}{k}\int_0^\infty y^{1/k - 1} e^{-y}\,dy = \frac{\eta}{k}\,\Gamma(1/k) = \eta\,\Gamma(1 + 1/k)$, using $x\,\Gamma(x) = \Gamma(x + 1)$. The median solves $(t/\eta)^k = \ln 2$, so it is $\eta\,(\ln 2)^{1/k}$.
+With $`t = \eta\,y^{1/k}`$, $`dt = (\eta/k)\,y^{1/k - 1}\,dy`$, so $`\int_0^\infty e^{-(t/\eta)^k}\,dt = \frac{\eta}{k}\int_0^\infty y^{1/k - 1} e^{-y}\,dy = \frac{\eta}{k}\,\Gamma(1/k) = \eta\,\Gamma(1 + 1/k)`$, using $`x\,\Gamma(x) = \Gamma(x + 1)`$. The median solves $`(t/\eta)^k = \ln 2`$, so it is $`\eta\,(\ln 2)^{1/k}`$.
 
 </details>
 
@@ -187,12 +201,12 @@ Wear-out bulbs: shape 3, scale 1,000 hours. A bulb has burned 800 hours.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| cumulative hazard at 800 h | $(800/1000)^3$ | 0.512 |
-| cumulative hazard at 1,000 h | $(1000/1000)^3$ | 1 |
-| survival to 1,000 h | $e^{-1}$ | 0.3679 |
-| hazard at 1,000 h | $3 \times 1000^2 / 1000^3$ | 3.00 per 1,000 h |
-| a fresh bulb lasts 200 h | $e^{-(0.2)^3} = e^{-0.008}$ | 0.9920 |
-| the 800-hour bulb lasts 200 more | $e^{-(1 - 0.512)} = e^{-0.488}$ | **0.6139** |
+| cumulative hazard at 800 h | $`(800/1000)^3`$ | 0.512 |
+| cumulative hazard at 1,000 h | $`(1000/1000)^3`$ | 1 |
+| survival to 1,000 h | $`e^{-1}`$ | 0.3679 |
+| hazard at 1,000 h | $`3 \times 1000^2 / 1000^3`$ | 3.00 per 1,000 h |
+| a fresh bulb lasts 200 h | $`e^{-(0.2)^3} = e^{-0.008}`$ | 0.9920 |
+| the 800-hour bulb lasts 200 more | $`e^{-(1 - 0.512)} = e^{-0.488}`$ | **0.6139** |
 
 An 800-hour bulb has about a 61% chance of reaching 1,000 hours, against 99% for a new bulb over the same 200 hours: at this age, replacing it before it fails is worth considering.
 
@@ -202,7 +216,7 @@ An 800-hour bulb has about a 61% chance of reaching 1,000 hours, against 99% for
 | --- | --- | --- |
 | Exponential with the same 892.98 h mean | 0.7993, not 0.6139 | Constant hazard forgets age; these bulbs wear |
 | Fresh survival used for the 800-hour bulb | 0.9920, not 0.6139 | The condition "already lit at 800" was dropped |
-| Hazard times 200 h read as a chance of dying | 0.6000, not 0.5171 | A hazard is a rate; over a long stretch use $1 - S(1200)/S(1000)$ |
+| Hazard times 200 h read as a chance of dying | 0.6000, not 0.5171 | A hazard is a rate; over a long stretch use $`1 - S(1200)/S(1000)`$ |
 | One Weibull forced through the bathtub batch | shape 1.115 | Two causes, one falling and one rising hazard, averaged into nearly flat |
 
 The last row drops the single-cause hypothesis: a shape near 1 says "age irrelevant" about a batch with strong infant mortality and strong wear. The code prints all four.
@@ -213,13 +227,13 @@ The last row drops the single-cause hypothesis: a shape near 1 says "age irrelev
 
 The scripts reach the answers by independent roads:
 
-- the closed form $e^{-(t/\eta)^k}$;
-- a product of survived slices, $1 - h\Delta$ in each, which never calls the exponential;
-- the mean twice: a Stirling series for $\Gamma(1 + 1/k)$, and Simpson's rule for the area under $S(t)$;
+- the closed form $`e^{-(t/\eta)^k}`$;
+- a product of survived slices, $`1 - h\Delta`$ in each, which never calls the exponential;
+- the mean twice: a Stirling series for $`\Gamma(1 + 1/k)`$, and Simpson's rule for the area under $`S(t)`$;
 - the bathtub's low point twice: a ternary search (shrinking a bracket around the minimum) and the algebra of Step 5;
 - a simulation of 40,000 bulbs from a SplitMix64 random-number generator with seed 2026, each drawing a wear life and a flaw life.
 
-The draws invert $S$, so they do follow the formula; what the simulation tests independently is the hazard found by counting deaths among the living, the Weibull-plot slope, and the product rule for two causes. Simulated numbers carry a standard error (se), and the asserts allow four of them.
+The draws invert $`S`$, so they do follow the formula; what the simulation tests independently is the hazard found by counting deaths among the living, the Weibull-plot slope, and the product rule for two causes. Simulated numbers carry a standard error (se), and the asserts allow four of them.
 
 ### Python
 
@@ -602,16 +616,16 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the three main facts for every shape $k > 0$ and scale $\eta > 0$, plus the hand-worked arithmetic.
+Lean proves the three main facts for every shape $`k > 0`$ and scale $`\eta > 0`$, plus the hand-worked arithmetic.
 
-- Suppose a lifetime is positive, and at every positive age $S$ is above 0, has a slope, and has the formula's hazard $h(t)$. Then $S(t) = e^{-(t/\eta)^k}$ at every age from 0 on.
-- Take ages $s, t > 0$ and shape below 1. Then $S(s+t)/S(s)$ is above $S(t)$: the old bulb is safer than a new one.
-- Take ages $s, t > 0$ and shape 1. Then $S(s+t)/S(s) = S(t)$: age changes nothing.
-- Take ages $s, t > 0$ and shape above 1. Then $S(s+t)/S(s)$ is below $S(t)$: the old bulb is worse off.
-- Take the Weibull survival $S(t)$. Then the area under it, from age 0 on, is $\eta\,\Gamma(1 + 1/k)$.
+- Suppose a lifetime is positive, and at every positive age $`S`$ is above 0, has a slope, and has the formula's hazard $`h(t)`$. Then $`S(t) = e^{-(t/\eta)^k}`$ at every age from 0 on.
+- Take ages $`s, t > 0`$ and shape below 1. Then $`S(s+t)/S(s)`$ is above $`S(t)`$: the old bulb is safer than a new one.
+- Take ages $`s, t > 0`$ and shape 1. Then $`S(s+t)/S(s) = S(t)`$: age changes nothing.
+- Take ages $`s, t > 0`$ and shape above 1. Then $`S(s+t)/S(s)`$ is below $`S(t)`$: the old bulb is worse off.
+- Take the Weibull survival $`S(t)`$. Then the area under it, from age 0 on, is $`\eta\,\Gamma(1 + 1/k)`$.
 - The worked cumulative hazards are 0.512 at 800 hours, 1 at 1,000 hours, and 0.008 for a fresh bulb over 200 hours.
 - The hazard at 1,000 hours is 3 per 1,000 hours, and the 800-hour bulb faces 0.488 of cumulative hazard over the next 200.
-- In the Weibull plot, $-\ln S$ at 500 hours is $1/8$, and the scale comes back as 1,000 hours.
+- In the Weibull plot, $`-\ln S`$ at 500 hours is $`1/8`$, and the scale comes back as 1,000 hours.
 
 That average life equals that area, the median, the decimals, the bathtub and the simulation are left to the Python and Rust checks.
 

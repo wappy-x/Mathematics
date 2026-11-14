@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A small bird gives one whistle: a pure note that slides from 2000 Hz (hertz, cycles per second) up to 4000 Hz in half a second. A recorder samples it 16000 times a second, so the call is a list of 8000 numbers. Here the whistle is drawn from a formula rather than recorded, so every answer can be checked against the truth: at time $t$ seconds its pitch is $2000 + 4000\,t$ Hz.
+A small bird gives one whistle: a pure note that slides from 2000 Hz (hertz, cycles per second) up to 4000 Hz in half a second. A recorder samples it 16000 times a second, so the call is a list of 8000 numbers. Here the whistle is drawn from a formula rather than recorded, so every answer can be checked against the truth: at time $`t`$ seconds its pitch is $`2000 + 4000\,t`$ Hz.
 
 One Fourier transform of all 8000 samples ([The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md)) says the call holds every frequency from 2000 to 4000 Hz. True, and no help: it cannot say the low notes came first. A **spectrogram** can.
 
@@ -41,50 +41,56 @@ The orange line is the whistle's ridge. The green line is a steady 2000 Hz tone 
 
 ## The formula
 
-Notation first, in words. The recording is $x[n]$, sample number $n$, taken $f_s$ times a second. The **window** $w[n]$, $n = 0$ to $L-1$, is the taper: here the Hann window $w[n] = \tfrac12 - \tfrac12\cos(2\pi n/L)$, a single hump that is 0 at the start and 1 in the middle ([Windows](03-windows-and-spectral-leakage.md)).
+Notation first, in words. The recording is $`x[n]`$, sample number $`n`$, taken $`f_s`$ times a second. The **window** $`w[n]`$, $`n = 0`$ to $`L-1`$, is the taper: here the Hann window $`w[n] = \tfrac12 - \tfrac12\cos(2\pi n/L)`$, a single hump that is 0 at the start and 1 in the middle ([Windows](03-windows-and-spectral-leakage.md)).
 
-Slice $m$ starts at sample $mH$, where the **hop** $H$ is the step between slice starts. As on the rest of the wing, $j$ is the square root of −1.
+Slice $`m`$ starts at sample $`mH`$, where the **hop** $`H`$ is the step between slice starts. As on the rest of the wing, $`j`$ is the square root of −1.
 
-$$X[m,k] = \sum_{n=0}^{L-1} x[mH+n]\;w[n]\;e^{-j2\pi kn/L}, \qquad S[m,k] = \lvert X[m,k]\rvert^2$$
+```math
+X[m,k] = \sum_{n=0}^{L-1} x[mH+n]\;w[n]\;e^{-j2\pi kn/L}, \qquad S[m,k] = \lvert X[m,k]\rvert^2
+```
 
-**Read it aloud:** take the $L$ samples starting at sample $mH$, multiply each by the window, and run the DFT (discrete Fourier transform); the spectrogram is the power of what comes out.
+**Read it aloud:** take the $`L`$ samples starting at sample $`mH`$, multiply each by the window, and run the DFT (discrete Fourier transform); the spectrogram is the power of what comes out.
 
-$X$ is the **short-time Fourier transform**. Slice $m$ is labelled by its centre time $t_m = (mH + L/2)/f_s$, and bin $k$ by the frequency $k f_s / L$. The spectrogram $S$ is the picture: one column per slice, one row per bin, brightness for power.
+$`X`$ is the **short-time Fourier transform**. Slice $`m`$ is labelled by its centre time $`t_m = (mH + L/2)/f_s`$, and bin $`k`$ by the frequency $`k f_s / L`$. The spectrogram $`S`$ is the picture: one column per slice, one row per bin, brightness for power.
 
-How thick is the ridge? Measure a column's **spread**: the standard deviation of frequency, each frequency weighted by its power. Call it $B$. For a whistle whose pitch climbs at $c$ hertz per second,
+How thick is the ridge? Measure a column's **spread**: the standard deviation of frequency, each frequency weighted by its power. Call it $`B`$. For a whistle whose pitch climbs at $`c`$ hertz per second,
 
-$$B^2 = \Delta f_w^{\,2} + c^2\,\Delta t_w^{\,2}, \qquad \Delta t_w\,\Delta f_w \ \ge\ \frac{1}{4\pi}, \qquad\text{so}\qquad B \ \ge\ \sqrt{\frac{c}{2\pi}}.$$
+```math
+B^2 = \Delta f_w^{\,2} + c^2\,\Delta t_w^{\,2}, \qquad \Delta t_w\,\Delta f_w \ \ge\ \frac{1}{4\pi}, \qquad\text{so}\qquad B \ \ge\ \sqrt{\frac{c}{2\pi}}.
+```
 
 **Read it aloud:** the ridge's squared thickness is the window's own squared spread in frequency plus the squared pitch drift across the window's spread in time; and those two spreads can never both be small.
 
-The window's two spreads are its standard deviations in time and in frequency, weighted by its power $w^2$:
+The window's two spreads are its standard deviations in time and in frequency, weighted by its power $`w^2`$:
 
-$$\Delta t_w^{\,2} = \frac{\sum_n \tau_n^2\, w[n]^2}{\sum_n w[n]^2}, \qquad \Delta f_w^{\,2} = \frac{\sum_n w'(\tau_n)^2}{4\pi^2\sum_n w[n]^2},$$
+```math
+\Delta t_w^{\,2} = \frac{\sum_n \tau_n^2\, w[n]^2}{\sum_n w[n]^2}, \qquad \Delta f_w^{\,2} = \frac{\sum_n w'(\tau_n)^2}{4\pi^2\sum_n w[n]^2},
+```
 
-where $\tau_n = (n - L/2)/f_s$ is the time of sample $n$ from the window's centre and $w'$ is the window's slope, per second. The second formula is the frequency spread of $\lvert W\rvert^2$, the window's power spectrum, read off in the time domain (Step 2 shows why).
+where $`\tau_n = (n - L/2)/f_s`$ is the time of sample $`n`$ from the window's centre and $`w'`$ is the window's slope, per second. The second formula is the frequency spread of $`\lvert W\rvert^2`$, the window's power spectrum, read off in the time domain (Step 2 shows why).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x[n]$, $f_s$ | the recording, sample number $n$; samples per second | 8000 samples at 16000 per second | — |
-| $w[n]$, $L$, $T$ | the taper; its length in samples; in seconds, $T = L/f_s$ | Hann, 512 samples, 32.0 ms | $B$ falls, then rises: the U on the chart |
-| $H$ | hop: samples between slice starts | 256 (16.0 ms) | fewer columns; past $L/2$ the slices stop covering every sample evenly |
-| $m$, $k$, $t_m$ | slice number; bin number; a slice's centre time | 30 slices, bins 31.25 Hz apart; slice 15 at 256.0 ms | — |
-| $X$, $S$, $j$ | the short-time Fourier transform; the spectrogram $\lvert X\rvert^2$; the square root of −1 | the slice at 250 ms is brightest at 3000.00 Hz | — |
-| $f(\tau)$, $f_0$, $c$ | the pitch at time $\tau$; starting pitch; how fast the pitch climbs | 2000 Hz; 4000 Hz per second | larger $c$: thicker ridge, shorter best slice |
-| $\tau_n$, $w'$ | a sample's time from the window's centre; the window's slope, per second | — | — |
-| $\Delta t_w$ | the window's spread in time | 4.5263 ms | more drift inside the slice |
-| $\Delta f_w$ | the window's spread in frequency | 18.042 Hz | more smear of a steady tone |
-| $a$, $b$ | the window shape's two fixed numbers: $\Delta f_w = a/T$, $\Delta t_w = bT$ | 0.57735 and 0.14145 for Hann | a larger product $ab$ raises the best thickness |
-| $B$, $T^\ast$ | the ridge's thickness, a column's spread; the slice length that makes it least | 25.56 Hz at 31.9 ms | — |
-| $W$, $\varphi$, $y$, $Y$ | the window's spectrum; the whistle's phase, whose slope is $2\pi f$; one windowed slice and its spectrum (in the proof) | — | — |
+| $`x[n]`$, $`f_s`$ | the recording, sample number $`n`$; samples per second | 8000 samples at 16000 per second | — |
+| $`w[n]`$, $`L`$, $`T`$ | the taper; its length in samples; in seconds, $`T = L/f_s`$ | Hann, 512 samples, 32.0 ms | $`B`$ falls, then rises: the U on the chart |
+| $`H`$ | hop: samples between slice starts | 256 (16.0 ms) | fewer columns; past $`L/2`$ the slices stop covering every sample evenly |
+| $`m`$, $`k`$, $`t_m`$ | slice number; bin number; a slice's centre time | 30 slices, bins 31.25 Hz apart; slice 15 at 256.0 ms | — |
+| $`X`$, $`S`$, $`j`$ | the short-time Fourier transform; the spectrogram $`\lvert X\rvert^2`$; the square root of −1 | the slice at 250 ms is brightest at 3000.00 Hz | — |
+| $`f(\tau)`$, $`f_0`$, $`c`$ | the pitch at time $`\tau`$; starting pitch; how fast the pitch climbs | 2000 Hz; 4000 Hz per second | larger $`c`$: thicker ridge, shorter best slice |
+| $`\tau_n`$, $`w'`$ | a sample's time from the window's centre; the window's slope, per second | — | — |
+| $`\Delta t_w`$ | the window's spread in time | 4.5263 ms | more drift inside the slice |
+| $`\Delta f_w`$ | the window's spread in frequency | 18.042 Hz | more smear of a steady tone |
+| $`a`$, $`b`$ | the window shape's two fixed numbers: $`\Delta f_w = a/T`$, $`\Delta t_w = bT`$ | 0.57735 and 0.14145 for Hann | a larger product $`ab`$ raises the best thickness |
+| $`B`$, $`T^\ast`$ | the ridge's thickness, a column's spread; the slice length that makes it least | 25.56 Hz at 31.9 ms | — |
+| $`W`$, $`\varphi`$, $`y`$, $`Y`$ | the window's spectrum; the whistle's phase, whose slope is $`2\pi f`$; one windowed slice and its spectrum (in the proof) | — | — |
 
 ### When it holds
 
-- **The pitch climbs at a steady rate inside each slice.** If it bends, the drift term becomes the spread of pitch across the slice, which is larger near the bend; the floor $\sqrt{c/2\pi}$ then uses the local rate of climb at each slice.
-- **One sound at a time.** Two whistles closer in pitch than about $B$ merge into one ridge, and their columns are not the sum of the two alone: the cross term between them beats.
+- **The pitch climbs at a steady rate inside each slice.** If it bends, the drift term becomes the spread of pitch across the slice, which is larger near the bend; the floor $`\sqrt{c/2\pi}`$ then uses the local rate of climb at each slice.
+- **One sound at a time.** Two whistles closer in pitch than about $`B`$ merge into one ridge, and their columns are not the sum of the two alone: the cross term between them beats.
 - **A real window, symmetric about its centre.** Then the ridge's centre sits exactly on the pitch at the slice's centre. A lopsided window pulls it toward its heavy side.
 - **A steady loudness.** A whistle that swells inside a slice pulls the ridge toward its louder end.
-- **Pitch well away from 0 and $f_s/2$.** The proof treats the whistle as a single complex spinning tone. A real recording also has a mirror image at minus the pitch, which leaks in when the window is short: at 2 ms the formula says 288.68 Hz and the slice measures 288.74 Hz.
+- **Pitch well away from 0 and $`f_s/2`$.** The proof treats the whistle as a single complex spinning tone. A real recording also has a mirror image at minus the pitch, which leaks in when the window is short: at 2 ms the formula says 288.68 Hz and the slice measures 288.74 Hz.
 
 ---
 
@@ -96,68 +102,74 @@ A Fourier transform answers "which frequencies, over the whole recording?". Mult
 
 ### Step 1: a steady tone shows the window's own smear
 
-A steady tone through a window gives the window's spectrum, moved to sit on the tone's frequency ([Windows](03-windows-and-spectral-leakage.md)). So a steady tone's ridge has thickness $\Delta f_w$ exactly. Stretch the window to twice the length and its spectrum squeezes to half the width: the green line on the chart, 36.08 Hz at 16 ms, 18.04 Hz at 32 ms, 9.02 Hz at 64 ms.
+A steady tone through a window gives the window's spectrum, moved to sit on the tone's frequency ([Windows](03-windows-and-spectral-leakage.md)). So a steady tone's ridge has thickness $`\Delta f_w`$ exactly. Stretch the window to twice the length and its spectrum squeezes to half the width: the green line on the chart, 36.08 Hz at 16 ms, 18.04 Hz at 32 ms, 9.02 Hz at 64 ms.
 
 ### Step 2: a slice's centre is the average pitch inside it, and its spread adds the window's
 
-Write the whistle as a spinning tone of steady size, $e^{j\varphi(\tau)}$, whose pitch at time $\tau$ is $f(\tau) = \varphi'(\tau)/2\pi$. Two facts about any slice follow from Parseval's theorem (the energy is the same counted in time or in frequency).
+Write the whistle as a spinning tone of steady size, $`e^{j\varphi(\tau)}`$, whose pitch at time $`\tau`$ is $`f(\tau) = \varphi'(\tau)/2\pi`$. Two facts about any slice follow from Parseval's theorem (the energy is the same counted in time or in frequency).
 
-- The column's mean frequency is the window-weighted average of the pitch, $\sum f(\tau_n)\,w[n]^2 / \sum w[n]^2$.
-- The column's squared spread is the window-weighted spread of the pitch, plus $\Delta f_w^{\,2}$.
+- The column's mean frequency is the window-weighted average of the pitch, $`\sum f(\tau_n)\,w[n]^2 / \sum w[n]^2`$.
+- The column's squared spread is the window-weighted spread of the pitch, plus $`\Delta f_w^{\,2}`$.
 
 The window adds its own smear on top of whatever the pitch does inside it.
 
 <details>
 <summary>Proof: the moments of one slice</summary>
 
-Let $y(\tau) = w(\tau)\,e^{j\varphi(\tau)}$ be one windowed slice, with $w$ real and zero at both ends, and $Y(f)$ its Fourier transform. Differentiating $y$ multiplies $Y$ by $j2\pi f$, so Parseval gives
+Let $`y(\tau) = w(\tau)\,e^{j\varphi(\tau)}`$ be one windowed slice, with $`w`$ real and zero at both ends, and $`Y(f)`$ its Fourier transform. Differentiating $`y`$ multiplies $`Y`$ by $`j2\pi f`$, so Parseval gives
 
-$$\int f\,\lvert Y\rvert^2\,df = \frac{1}{2\pi j}\int y'\,\bar y\,d\tau, \qquad \int f^2\,\lvert Y\rvert^2\,df = \frac{1}{4\pi^2}\int \lvert y'\rvert^2\,d\tau .$$
+$`\displaystyle \int f\,\lvert Y\rvert^2\,df = \frac{1}{2\pi j}\int y'\,\bar y\,d\tau, \qquad \int f^2\,\lvert Y\rvert^2\,df = \frac{1}{4\pi^2}\int \lvert y'\rvert^2\,d\tau .`$
 
-Here $y' = (w' + j\varphi' w)\,e^{j\varphi}$, so $y'\bar y = w'w + j\varphi' w^2$ and $\lvert y'\rvert^2 = w'^2 + \varphi'^2 w^2$; the cross term is zero because $w$ is real. The piece $\int w'w\,d\tau = [w^2/2]$ vanishes because $w$ is zero at both ends. Divide by $\int \lvert Y\rvert^2\,df = \int w^2\,d\tau$:
+Here $`y' = (w' + j\varphi' w)\,e^{j\varphi}`$, so $`y'\bar y = w'w + j\varphi' w^2`$ and $`\lvert y'\rvert^2 = w'^2 + \varphi'^2 w^2`$; the cross term is zero because $`w`$ is real. The piece $`\int w'w\,d\tau = [w^2/2]`$ vanishes because $`w`$ is zero at both ends. Divide by $`\int \lvert Y\rvert^2\,df = \int w^2\,d\tau`$:
 
-$$\text{mean} = \frac{\int f(\tau)\,w^2\,d\tau}{\int w^2\,d\tau}, \qquad \text{mean square} = \frac{\int f(\tau)^2\,w^2\,d\tau}{\int w^2\,d\tau} + \frac{\int w'^2\,d\tau}{4\pi^2\int w^2\,d\tau}.$$
+$`\displaystyle \text{mean} = \frac{\int f(\tau)\,w^2\,d\tau}{\int w^2\,d\tau}, \qquad \text{mean square} = \frac{\int f(\tau)^2\,w^2\,d\tau}{\int w^2\,d\tau} + \frac{\int w'^2\,d\tau}{4\pi^2\int w^2\,d\tau}.`$
 
-Subtract the mean squared from the mean square. The first part becomes the window-weighted variance of the pitch; the second part is $\Delta f_w^{\,2}$ as defined above. On samples the integrals become the sums in The formula.
+Subtract the mean squared from the mean square. The first part becomes the window-weighted variance of the pitch; the second part is $`\Delta f_w^{\,2}`$ as defined above. On samples the integrals become the sums in The formula.
 
 </details>
 
-### Step 3: for the whistle, the drift is $c$ times the window's time spread
+### Step 3: for the whistle, the drift is $`c`$ times the window's time spread
 
-Inside slice $m$ the pitch is $f(t_m) + c\,\tau$, with $\tau$ measured from the slice's centre. The Hann window is symmetric, so the $c\,\tau$ part averages to zero and the ridge's centre is $f(t_m)$: the column centred on 256 ms has its centre at 3024.00 Hz. The weighted spread of $c\,\tau$ is $c\,\Delta t_w$. So
+Inside slice $`m`$ the pitch is $`f(t_m) + c\,\tau`$, with $`\tau`$ measured from the slice's centre. The Hann window is symmetric, so the $`c\,\tau`$ part averages to zero and the ridge's centre is $`f(t_m)`$: the column centred on 256 ms has its centre at 3024.00 Hz. The weighted spread of $`c\,\tau`$ is $`c\,\Delta t_w`$. So
 
-$$B^2 = \Delta f_w^{\,2} + c^2\,\Delta t_w^{\,2}.$$
+```math
+B^2 = \Delta f_w^{\,2} + c^2\,\Delta t_w^{\,2}.
+```
 
 The table in the code output puts the measured spread beside this formula for seven slice lengths: 25.56 against 25.56 at 32 ms, 72.56 against 72.56 at 128 ms.
 
 ### Step 4: the trade-off has a best slice length
 
-Stretching a window to length $T$ stretches its time spread in proportion and squeezes its frequency spread in proportion: $\Delta t_w = b\,T$ and $\Delta f_w = a/T$, with two numbers $a$ and $b$ fixed by the window's shape. For Hann, $a = 1/\sqrt3 = 0.57735$ and $b = \sqrt{1/12 - 5/(8\pi^2)} = 0.14145$. Then
+Stretching a window to length $`T`$ stretches its time spread in proportion and squeezes its frequency spread in proportion: $`\Delta t_w = b\,T`$ and $`\Delta f_w = a/T`$, with two numbers $`a`$ and $`b`$ fixed by the window's shape. For Hann, $`a = 1/\sqrt3 = 0.57735`$ and $`b = \sqrt{1/12 - 5/(8\pi^2)} = 0.14145`$. Then
 
-$$B^2 = \frac{a^2}{T^2} + c^2 b^2 T^2 .$$
+```math
+B^2 = \frac{a^2}{T^2} + c^2 b^2 T^2 .
+```
 
-The first part falls as $T$ grows and the second rises. Their sum is smallest where they are equal, $a/T = c\,b\,T$, so at $T^\ast = \sqrt{a/(bc)}$, and there $B = \sqrt{2abc}$. For the whistle, $T^\ast$ is 31.9 ms (511 samples) and the thickness is 25.56 Hz. A faster sweep moves the best slice shorter, in proportion to $1/\sqrt c$.
+The first part falls as $`T`$ grows and the second rises. Their sum is smallest where they are equal, $`a/T = c\,b\,T`$, so at $`T^\ast = \sqrt{a/(bc)}`$, and there $`B = \sqrt{2abc}`$. For the whistle, $`T^\ast`$ is 31.9 ms (511 samples) and the thickness is 25.56 Hz. A faster sweep moves the best slice shorter, in proportion to $`1/\sqrt c`$.
 
 <details>
 <summary>Where Hann's a and b come from</summary>
 
-Take the continuous Hann window $w(\tau) = \cos^2(\pi\tau/T)$ on $-T/2 \le \tau \le T/2$ and put $u = \pi\tau/T$. Then $\int w^2\,d\tau = (T/\pi)\int\cos^4u\,du = 3T/8$. The slope is $w' = -(\pi/T)\sin 2u$, so $\int w'^2\,d\tau = \pi^2/(2T)$, and $\Delta f_w^{\,2} = \frac{\pi^2/(2T)}{4\pi^2\cdot 3T/8} = \frac{1}{3T^2}$. For the time spread, expand $\cos^4u = \tfrac38 + \tfrac12\cos2u + \tfrac18\cos4u$ and integrate $u^2$ against each piece: $\int u^2\cos^4u\,du = \pi^3/32 - 15\pi/64$. Then $\Delta t_w^{\,2} = T^2\bigl(\tfrac1{12} - \tfrac{5}{8\pi^2}\bigr)$. The sampled window in the code gives the same 4.5263 ms and 18.042 Hz.
+Take the continuous Hann window $`w(\tau) = \cos^2(\pi\tau/T)`$ on $`-T/2 \le \tau \le T/2`$ and put $`u = \pi\tau/T`$. Then $`\int w^2\,d\tau = (T/\pi)\int\cos^4u\,du = 3T/8`$. The slope is $`w' = -(\pi/T)\sin 2u`$, so $`\int w'^2\,d\tau = \pi^2/(2T)`$, and $`\Delta f_w^{\,2} = \frac{\pi^2/(2T)}{4\pi^2\cdot 3T/8} = \frac{1}{3T^2}`$. For the time spread, expand $`\cos^4u = \tfrac38 + \tfrac12\cos2u + \tfrac18\cos4u`$ and integrate $`u^2`$ against each piece: $`\int u^2\cos^4u\,du = \pi^3/32 - 15\pi/64`$. Then $`\Delta t_w^{\,2} = T^2\bigl(\tfrac1{12} - \tfrac{5}{8\pi^2}\bigr)`$. The sampled window in the code gives the same 4.5263 ms and 18.042 Hz.
 
 </details>
 
 ### Step 5: the floor under every window
 
-Multiply the two spreads: $\Delta t_w\,\Delta f_w = ab$, which for Hann is 0.08167 at every length. Gabor proved in 1946 that for any window whatever,
+Multiply the two spreads: $`\Delta t_w\,\Delta f_w = ab`$, which for Hann is 0.08167 at every length. Gabor proved in 1946 that for any window whatever,
 
-$$\Delta t_w\,\Delta f_w \ \ge\ \frac{1}{4\pi} = 0.07958,$$
+```math
+\Delta t_w\,\Delta f_w \ \ge\ \frac{1}{4\pi} = 0.07958,
+```
 
 with equality only for the bell-shaped Gaussian window; [Uncertainty](../09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md) proves it.
 
-Put $ab \ge 1/(4\pi)$ into $B = \sqrt{2abc}$: no real window of any shape or length can draw this whistle thinner than $\sqrt{c/(2\pi)} = 25.23$ Hz. (Step 2 assumed a real window. A complex window that chirps along with the whistle is not bound by this floor.) Hann's best, 25.56 Hz, sits just above the floor. That is the blur you cannot avoid: it comes from the whistle's sweep rate alone.
+Put $`ab \ge 1/(4\pi)`$ into $`B = \sqrt{2abc}`$: no real window of any shape or length can draw this whistle thinner than $`\sqrt{c/(2\pi)} = 25.23`$ Hz. (Step 2 assumed a real window. A complex window that chirps along with the whistle is not bound by this floor.) Hann's best, 25.56 Hz, sits just above the floor. That is the blur you cannot avoid: it comes from the whistle's sweep rate alone.
 
 ### Step 6: half-overlapping Hann slices lose nothing
 
-Hann windows placed every $L/2$ samples add up to exactly 1 at every sample. So run each slice's DFT backwards, add the slices back in place, and the recording returns: away from the two ends, the code rebuilds every sample to nine decimal places. The spectrogram itself keeps only the power $\lvert X\rvert^2$ and throws away each value's angle, so going back from the picture alone needs an estimate of that angle (Griffin and Lim's method).
+Hann windows placed every $`L/2`$ samples add up to exactly 1 at every sample. So run each slice's DFT backwards, add the slices back in place, and the recording returns: away from the two ends, the code rebuilds every sample to nine decimal places. The spectrogram itself keeps only the power $`\lvert X\rvert^2`$ and throws away each value's angle, so going back from the picture alone needs an estimate of that angle (Griffin and Lim's method).
 
 ---
 
@@ -167,15 +179,15 @@ The column centred on 256 ms, with the 512-sample Hann window.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| sweep rate $c$ | $(4000 - 2000) / 0.5$ | 4000 Hz per second |
-| slice 15's centre | $(15 \times 256 + 256)/16000$ | 256.0 ms |
-| the whistle there | $2000 + 4000 \times 0.256$ | 3024.00 Hz |
-| slice length $T$ | $512 / 16000$ | 32.0 ms |
-| window's time spread $\Delta t_w$ | $\sqrt{1/12 - 5/(8\pi^2)} \times 32.0$ ms | 4.5263 ms |
-| window's frequency spread $\Delta f_w$ | $0.57735 / 0.032$ | 18.042 Hz |
-| pitch drift $c\,\Delta t_w$ | $4000 \times 0.0045263$ | 18.11 Hz |
-| ridge thickness $B$ | $\sqrt{18.04^2 + 18.11^2}$ | **25.56 Hz** |
-| the floor | $\sqrt{4000 / (2\pi)}$ | 25.23 Hz |
+| sweep rate $`c`$ | $`(4000 - 2000) / 0.5`$ | 4000 Hz per second |
+| slice 15's centre | $`(15 \times 256 + 256)/16000`$ | 256.0 ms |
+| the whistle there | $`2000 + 4000 \times 0.256`$ | 3024.00 Hz |
+| slice length $`T`$ | $`512 / 16000`$ | 32.0 ms |
+| window's time spread $`\Delta t_w`$ | $`\sqrt{1/12 - 5/(8\pi^2)} \times 32.0`$ ms | 4.5263 ms |
+| window's frequency spread $`\Delta f_w`$ | $`0.57735 / 0.032`$ | 18.042 Hz |
+| pitch drift $`c\,\Delta t_w`$ | $`4000 \times 0.0045263`$ | 18.11 Hz |
+| ridge thickness $`B`$ | $`\sqrt{18.04^2 + 18.11^2}`$ | **25.56 Hz** |
+| the floor | $`\sqrt{4000 / (2\pi)}`$ | 25.23 Hz |
 
 So the ridge at 256 ms is centred on 3024.00 Hz and is about 25.56 Hz thick: read off this spectrogram, the whistle's pitch at that moment is pinned to within a few tens of hertz, and no real window could pin it closer than 25.23.
 
@@ -214,7 +226,7 @@ The brightest point is found by fitting a bell through the top three bins. Count
 
 ### The trade-off on the picture
 
-The same stretch of the spectrogram, drawn three times, with slices 4 ms, 32 ms and 128 ms long. Each slice length is two lines of one colour: each column's centre plus its spread $B$, and its centre minus $B$. The ridge is the band between them.
+The same stretch of the spectrogram, drawn three times, with slices 4 ms, 32 ms and 128 ms long. Each slice length is two lines of one colour: each column's centre plus its spread $`B`$, and its centre minus $`B`$. The ridge is the band between them.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -230,7 +242,7 @@ xychart-beta
     line [2695.4, 2823.4, 2951.4, 3079.4, 3207.4]
 ```
 
-Orange: 4 ms slices, the widest band; the table in the code output gives its $B$ as 144.36 Hz, nearly all of it the slice's own smear. Dark: 128 ms slices, $B$ = 72.56 Hz, nearly all of it the pitch drift inside the slice. Green: 32 ms slices, the thinnest band, $B$ = 25.56 Hz.
+Orange: 4 ms slices, the widest band; the table in the code output gives its $`B`$ as 144.36 Hz, nearly all of it the slice's own smear. Dark: 128 ms slices, $`B`$ = 72.56 Hz, nearly all of it the pitch drift inside the slice. Green: 32 ms slices, the thinnest band, $`B`$ = 25.56 Hz.
 
 All three bands climb with the whistle. Read across, the picture shows the trade-off directly: shortening the slice from 128 ms to 32 ms sharpens the ridge, and shortening it further to 4 ms blurs it again.
 
@@ -247,7 +259,7 @@ All three bands climb with the whistle. Read across, the picture shows the trade
 
 ## Code, from first principles, and it actually runs
 
-The script draws the whistle from its formula, writes its own FFT (fast Fourier transform), and builds the spectrogram slice by slice. The pitch is reached **three independent ways**: the column's centre, its brightest point, and a count of zero crossings that uses no Fourier transform; all three are checked against the whistle's formula. The ridge's thickness is measured from the spectrum and checked against $\sqrt{\Delta f_w^{\,2} + c^2\Delta t_w^{\,2}}$, which is computed from the window alone in the time domain; Hann's spreads are checked against their closed forms. The overlap-add rebuild checks that the slices lose nothing.
+The script draws the whistle from its formula, writes its own FFT (fast Fourier transform), and builds the spectrogram slice by slice. The pitch is reached **three independent ways**: the column's centre, its brightest point, and a count of zero crossings that uses no Fourier transform; all three are checked against the whistle's formula. The ridge's thickness is measured from the spectrum and checked against $`\sqrt{\Delta f_w^{\,2} + c^2\Delta t_w^{\,2}}`$, which is computed from the window alone in the time domain; Hann's spreads are checked against their closed forms. The overlap-add rebuild checks that the slices lose nothing.
 
 ### Python
 
@@ -656,14 +668,14 @@ The two outputs match line for line.
 
 Lean proves Steps 4, 5 and 6 for every sweep rate and window length, and checks the worked numbers.
 
-- Take positive $a$, $b$, $c$ and $B^2 = a^2/T^2 + c^2 b^2 T^2$. Then $B$ strictly falls up to $T^\ast = \sqrt{a/(bc)}$, strictly rises after it, and equals $\sqrt{2abc}$ there.
-- Suppose $c > 0$ and a window of any shape obeys Gabor's theorem, $\Delta t_w\,\Delta f_w \ge 1/(4\pi)$. Then $B = \sqrt{\Delta f_w^2 + c^2 \Delta t_w^2}$ is at least $\sqrt{c/(2\pi)}$.
-- Take Hann windows of even length $L$, placed every $L/2$ samples. Then they add up to exactly 1 at every sample.
+- Take positive $`a`$, $`b`$, $`c`$ and $`B^2 = a^2/T^2 + c^2 b^2 T^2`$. Then $`B`$ strictly falls up to $`T^\ast = \sqrt{a/(bc)}`$, strictly rises after it, and equals $`\sqrt{2abc}`$ there.
+- Suppose $`c > 0`$ and a window of any shape obeys Gabor's theorem, $`\Delta t_w\,\Delta f_w \ge 1/(4\pi)`$. Then $`B = \sqrt{\Delta f_w^2 + c^2 \Delta t_w^2}`$ is at least $`\sqrt{c/(2\pi)}`$.
+- Take Hann windows of even length $`L`$, placed every $`L/2`$ samples. Then they add up to exactly 1 at every sample.
 - The worked numbers check exactly: sweep rate 4000 Hz per second, 30 slices, and bins 31.25 Hz apart.
 - Slice 15 is centred on 256 ms, where the whistle is at 3024 Hz. Every pitch in the ridge table matches the whistle's formula.
 - Labelled by its start, slice 15 reads 240 ms, when the whistle was at 2960 Hz. The Hann window is 0 at its first sample.
 
-Steps 2 and 3, Hann's $a$ and $b$, and every measured spectrum are left to the Python and Rust checks.
+Steps 2 and 3, Hann's $`a`$ and $`b`$, and every measured spectrum are left to the Python and Rust checks.
 
 ```lean
 -- Spectrograms: the ridge thickness of a swept whistle is smallest at one slice length and grows on both sides, no real window gets below the floor sqrt(c/(2π)), and half-overlapping Hann windows add up to exactly 1.
@@ -856,7 +868,7 @@ example : hannWin 512 0 = 0 := by norm_num [hannWin]
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this whistle, so a change may stop the script; the answers below are printed by the last lines of the output.
-> - **Sweep twice as fast.** Change `C` to `8000.0`. Longer or shorter best slice? Shorter, by $\sqrt2$: 361 samples, 22.6 ms, with thickness 36.15 Hz. Of the seven lengths, 256 samples (40.37 Hz) now beats 512 (40.46 Hz), so the assert pinned to 512 stops it.
+> - **Sweep twice as fast.** Change `C` to `8000.0`. Longer or shorter best slice? Shorter, by $`\sqrt2`$: 361 samples, 22.6 ms, with thickness 36.15 Hz. Of the seven lengths, 256 samples (40.37 Hz) now beats 512 (40.46 Hz), so the assert pinned to 512 stops it.
 > - **Hold the pitch still.** How thick is a steady 2000 Hz tone's ridge through the longest slice, 2048 samples? The script already runs this: see the `try, steady` line and the `steady_tone_Hz` column. Only 4.51 Hz. With no drift, longer is always sharper.
 > - **Overlap more.** Set `HOP = 128`. The windows now add to 2.000 everywhere, so the rebuild comes out twice too loud and the overlap-add assert stops it.
 > - **Remove the taper.** How much power does a plain cut leave 500 Hz from the ridge? The script's `mistake, no taper` line measures it on the slice at 250 ms: −47.4 dB (decibels, a logarithmic measure of power) against the peak, where Hann gives −89.0 dB.
@@ -896,7 +908,7 @@ example : hannWin 512 0 = 0 := by norm_num [hannWin]
 
 ## Where this goes next
 
-- [Uncertainty](../09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md): proves $\Delta t\,\Delta f \ge 1/(4\pi)$ for every window and shows why only the Gaussian bell reaches it.
+- [Uncertainty](../09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md): proves $`\Delta t\,\Delta f \ge 1/(4\pi)`$ for every window and shows why only the Gaussian bell reaches it.
 - Short-time Fourier transform (planned): the sliding transform in its own right, with continuous time, its inverse formula, and which windows and hops let any signal be rebuilt.
 
 This card fixes one window for the whole picture. Whether any time-frequency picture at all, of any construction, can beat the floor the uncertainty card sets is the question left open here.
@@ -907,7 +919,7 @@ This card fixes one window for the whole picture. Whether any time-frequency pic
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Gabor, Dennis. "Theory of Communication. Part 1: The Analysis of Information." *Journal of the Institution of Electrical Engineers, Part III* 93, no. 26 (1946): 429–441. [doi:10.1049/ji-3-2.1946.0074](https://doi.org/10.1049/ji-3-2.1946.0074). The time and frequency spreads, their product's floor $1/(4\pi)$, and the Gaussian window that meets it.
+- Gabor, Dennis. "Theory of Communication. Part 1: The Analysis of Information." *Journal of the Institution of Electrical Engineers, Part III* 93, no. 26 (1946): 429–441. [doi:10.1049/ji-3-2.1946.0074](https://doi.org/10.1049/ji-3-2.1946.0074). The time and frequency spreads, their product's floor $`1/(4\pi)`$, and the Gaussian window that meets it.
 - Koenig, W., H. K. Dunn, and L. Y. Lacy. "The Sound Spectrograph." *Journal of the Acoustical Society of America* 18, no. 1 (1946): 19–49. [doi:10.1121/1.1916342](https://doi.org/10.1121/1.1916342). The machine that first drew spectrograms, and the choice between narrow and wide analysing bands.
 - Allen, J. B., and L. R. Rabiner. "A Unified Approach to Short-Time Fourier Analysis and Synthesis." *Proceedings of the IEEE* 65, no. 11 (1977): 1558–1564. [doi:10.1109/PROC.1977.10770](https://doi.org/10.1109/PROC.1977.10770). The short-time transform in sampled form, and the overlap-add rebuild of Step 6.
 - Griffin, D. W., and J. S. Lim. "Signal Estimation from Modified Short-Time Fourier Transform." *IEEE Transactions on Acoustics, Speech, and Signal Processing* 32, no. 2 (1984): 236–243. [doi:10.1109/TASSP.1984.1164317](https://doi.org/10.1109/TASSP.1984.1164317). Rebuilding a sound from the spectrogram's power alone.

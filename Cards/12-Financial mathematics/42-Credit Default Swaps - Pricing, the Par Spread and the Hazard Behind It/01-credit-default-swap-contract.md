@@ -44,36 +44,42 @@ Northwind signs nothing. The contract is between the fund and the bank; Northwin
 
 Three sums settle every cash flow in the contract. The quarterly premium:
 
-$$\text{premium}_i = s \times N \times \Delta_i, \qquad \Delta_i = \frac{d_i}{360}$$
+```math
+\text{premium}_i = s \times N \times \Delta_i, \qquad \Delta_i = \frac{d_i}{360}
+```
 
 **Read it aloud:** the premium for a quarter is the yearly spread, times the notional, times the fraction of a year the quarter lasts, counted as actual days over 360.
 
 The payout after a credit event:
 
-$$L = N \times (1 - R)$$
+```math
+L = N \times (1 - R)
+```
 
 **Read it aloud:** the seller pays the notional times the fraction lost, where the fraction recovered is fixed by an industry auction.
 
 The price of standardising the spread, paid once at the start:
 
-$$U \approx (s - c) \times A \times N$$
+```math
+U \approx (s - c) \times A \times N
+```
 
 **Read it aloud:** when the contract pays a standard coupon instead of the quoted spread, the difference, valued over the contract's expected life, changes hands as cash on day one.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | notional: the amount of debt insured | $10,000,000 | every cash flow grows in proportion |
-| $s$ | spread: the yearly fee as a fraction of $N$, quoted in basis points | 120 bp = 0.012 | premiums rise, $250 a quarter per bp |
-| $i$, $d_i$ | a quarter's number, and the actual days in quarter $i$ | 90, 92, 92, 91 | that quarter's premium rises |
-| $\Delta_i$ | accrual fraction: $d_i/360$, the market's "fraction of a year" | 90/360 to 92/360 | that quarter's premium rises |
-| $R$ | recovery rate: the auction's final price per dollar of face value | 40% | the payout falls, $100,000 per point |
-| $L$ | payout: what the seller pays after a credit event | $6,000,000 | |
-| $c$ | standard coupon: the fixed running fee the traded contract pays | 100 bp = 0.01 | the buyer's upfront falls |
-| $A$ | risky annuity: today's value of 1 a year, paid quarterly while Northwind survives | 4.1819 years | the upfront scales with it |
-| $U$ | upfront: cash paid at the start, buyer to seller when positive | $83,638.71 | |
-| $\lambda$ | hazard rate: the yearly rate of default, used only to value $A$ | 2% | $A$ falls |
-| $r$ | riskless interest rate, continuously compounded | 5% | $A$ falls |
-| $y$, $\tau$ | used in the Detailed proof: the bond's yearly coupon rate, and the default time | a rate; 19 May 2029 in the story | |
+| $`N`$ | notional: the amount of debt insured | $10,000,000 | every cash flow grows in proportion |
+| $`s`$ | spread: the yearly fee as a fraction of $`N`$, quoted in basis points | 120 bp = 0.012 | premiums rise, $250 a quarter per bp |
+| $`i`$, $`d_i`$ | a quarter's number, and the actual days in quarter $`i`$ | 90, 92, 92, 91 | that quarter's premium rises |
+| $`\Delta_i`$ | accrual fraction: $`d_i/360`$, the market's "fraction of a year" | 90/360 to 92/360 | that quarter's premium rises |
+| $`R`$ | recovery rate: the auction's final price per dollar of face value | 40% | the payout falls, $100,000 per point |
+| $`L`$ | payout: what the seller pays after a credit event | $6,000,000 | |
+| $`c`$ | standard coupon: the fixed running fee the traded contract pays | 100 bp = 0.01 | the buyer's upfront falls |
+| $`A`$ | risky annuity: today's value of 1 a year, paid quarterly while Northwind survives | 4.1819 years | the upfront scales with it |
+| $`U`$ | upfront: cash paid at the start, buyer to seller when positive | $83,638.71 | |
+| $`\lambda`$ | hazard rate: the yearly rate of default, used only to value $`A`$ | 2% | $`A`$ falls |
+| $`r`$ | riskless interest rate, continuously compounded | 5% | $`A`$ falls |
+| $`y`$, $`\tau`$ | used in the Detailed proof: the bond's yearly coupon rate, and the default time | a rate; 19 May 2029 in the story | |
 
 Here 1 basis point is 0.01%, so 120 bp is 1.2% a year: $120,000 a year on $10 million.
 
@@ -85,7 +91,7 @@ A definition holds by agreement. The sums above describe the real contract when 
 - **Recovery means the auction price.** The payout uses the price set at the auction a few weeks after the event, not what creditors finally collect years later in bankruptcy. The two can differ by a lot.
 - **The seller can pay.** The payout is a promise. If the seller fails in the same crisis, the buyer holds a claim, not cash; that risk has its own card, [Counterparty exposure](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md).
 - **The day count is ACT/360.** Quarters are counted in actual days over 360. Taking each quarter as exactly a quarter of a year is a close but inexact shortcut. The standard contract also counts the maturity date in the final quarter, one extra day, which this card leaves out.
-- **The upfront formula is approximate.** The market converts spread to upfront with a published standard model; $(s - c)AN$ is the first-order version of it: its simplest approximation.
+- **The upfront formula is approximate.** The market converts spread to upfront with a published standard model; $`(s - c)AN`$ is the first-order version of it: its simplest approximation.
 
 Conventions verified 2026-09-28, as standardised in 2009:
 
@@ -106,18 +112,18 @@ The idea behind the whole design: a bondholder who also owns protection cannot l
 
 Take the fund. It holds $10 million of Northwind bonds and owns protection on $10 million. Northwind defaults. The bonds now trade at 40 cents: $4 million. The CDS pays $6 million. Together: $10 million, the face value. The fund ends where it would have been had Northwind repaid in full.
 
-That fixes the payout. The seller must pay whatever tops the damaged bond back up to par (face value). If the bond is worth $R$ per dollar, the top-up is $1 - R$ per dollar, and $N(1 - R)$ in all.
+That fixes the payout. The seller must pay whatever tops the damaged bond back up to par (face value). If the bond is worth $`R`$ per dollar, the top-up is $`1 - R`$ per dollar, and $`N(1 - R)`$ in all.
 
 <details>
 <summary>Detailed proof: bond plus protection behaves like a riskless bond</summary>
 
-Hold $N$ of face value of a Northwind bond that pays a yearly coupon $y$, and buy protection on $N$ at spread $s$. Follow the cash in each case.
+Hold $`N`$ of face value of a Northwind bond that pays a yearly coupon $`y`$, and buy protection on $`N`$ at spread $`s`$. Follow the cash in each case.
 
-**No default before maturity.** Each year the bond pays $y \times N$ and the CDS costs $s \times N$: net $(y - s)N$. At maturity the bond repays $N$; the CDS expires unused.
+**No default before maturity.** Each year the bond pays $`y \times N`$ and the CDS costs $`s \times N`$: net $`(y - s)N`$. At maturity the bond repays $`N`$; the CDS expires unused.
 
-**Default at time $\tau$.** Coupons and premiums run until $\tau$, net $(y - s)N$ a year, less the premium accrued since the last payment date. At $\tau$ the buyer delivers the bond, now worth $R \times N$, to the seller and receives $N$. The bond's damage, $N - RN$, is exactly the CDS payout, so the position holds $N$ in cash.
+**Default at time $`\tau`$.** Coupons and premiums run until $`\tau`$, net $`(y - s)N`$ a year, less the premium accrued since the last payment date. At $`\tau`$ the buyer delivers the bond, now worth $`R \times N`$, to the seller and receives $`N`$. The bond's damage, $`N - RN`$, is exactly the CDS payout, so the position holds $`N`$ in cash.
 
-In both cases the holder collects $(y - s)N$ a year until the money comes back, and gets $N$ back. The default time changes only when that happens, not how much comes back. So the pair is close to a riskless bond paying $y - s$. If riskless borrowing pays $r$, then $y - s \approx r$, and $s \approx y - r$: the CDS spread is about the bond's extra yield over riskless debt.
+In both cases the holder collects $`(y - s)N`$ a year until the money comes back, and gets $`N`$ back. The default time changes only when that happens, not how much comes back. So the pair is close to a riskless bond paying $`y - s`$. If riskless borrowing pays $`r`$, then $`y - s \approx r`$, and $`s \approx y - r`$: the CDS spread is about the bond's extra yield over riskless debt.
 
 The approximation, not equality, comes from three places:
 
@@ -125,7 +131,7 @@ The approximation, not equality, comes from three places:
 - money returned early at default is reinvested at whatever rates then are;
 - the delivered bond may be the cheapest of several eligible bonds.
 
-The market's name for the gap $s - (y - r)$ is the CDS–bond basis. This is Duffie's 1999 replication argument.
+The market's name for the gap $`s - (y - r)`$ is the CDS–bond basis. This is Duffie's 1999 replication argument.
 
 </details>
 
@@ -133,28 +139,28 @@ The market's name for the gap $s - (y - r)$ is the CDS–bond basis. This is Duf
 
 A spread of 120 bp is 1.2% a year. On $10 million that is $120,000 a year. Paid quarterly, the idealised quarter is a quarter of that: $30,000.
 
-The contract counts quarters in actual days over 360. The quarter from 20 Dec 2026 to 20 Mar 2027 has 90 days, so its premium is $0.012 \times 10{,}000{,}000 \times 90/360 = \$30{,}000$ exactly. The two 92-day quarters that follow each cost $30,666.67. The 91-day quarter to December costs $30,333.33. The first year comes to $121,666.67, not $120,000, because a year has 365 days and the divisor is 360.
+The contract counts quarters in actual days over 360. The quarter from 20 Dec 2026 to 20 Mar 2027 has 90 days, so its premium is $`0.012 \times 10{,}000{,}000 \times 90/360 = \$30{,}000`$ exactly. The two 92-day quarters that follow each cost $30,666.67. The 91-day quarter to December costs $30,333.33. The first year comes to $121,666.67, not $120,000, because a year has 365 days and the divisor is 360.
 
 ### Step 2: premiums stop at the event, with one last part-payment
 
 The premium is rent for protection over time. Protection ends at the credit event, so the rent does too.
 
-Say Northwind's credit event falls on 19 May 2029. By then the fund has made nine quarterly payments, the last on 20 Mar 2029, $273,666.67 in all. Between 20 Mar and 19 May it enjoyed 60 days of protection it has not yet paid for. It owes that part-quarter, the **accrued premium**: $0.012 \times 10{,}000{,}000 \times 60/360 = \$20{,}000$. That is settled with the payout.
+Say Northwind's credit event falls on 19 May 2029. By then the fund has made nine quarterly payments, the last on 20 Mar 2029, $273,666.67 in all. Between 20 Mar and 19 May it enjoyed 60 days of protection it has not yet paid for. It owes that part-quarter, the **accrued premium**: $`0.012 \times 10{,}000{,}000 \times 60/360 = \$20{,}000`$. That is settled with the payout.
 
 The code builds this a second way. A ledger walks the contract one day at a time, adding one day's fee to a running bill and settling the bill on each payment date. At 19 May 2029 the ledger shows the same $273,666.67 settled and the same $20,000 outstanding.
 
 ### Step 3: one price for everyone, set by auction
 
-Before 2005 the buyer settled by **physical delivery**: hand the seller $10 million face of Northwind bonds, receive $10 million in cash. The buyer's net gain is par minus what the bonds cost to buy: $N - RN$, the same as Step 0.
+Before 2005 the buyer settled by **physical delivery**: hand the seller $10 million face of Northwind bonds, receive $10 million in cash. The buyer's net gain is par minus what the bonds cost to buy: $`N - RN`$, the same as Step 0.
 
-That broke down as the market grew. Protection written on a company can exceed its bonds many times over. When everyone must buy bonds to deliver, the scramble pushes the bond price up and the payout down. So the market moved to **cash settlement**: the seller pays $N(1 - R)$ and no bond moves. The only question left is what $R$ is. An auction answers it once, for every contract on that borrower.
+That broke down as the market grew. Protection written on a company can exceed its bonds many times over. When everyone must buy bonds to deliver, the scramble pushes the bond price up and the payout down. So the market moved to **cash settlement**: the seller pays $`N(1 - R)`$ and no bond moves. The only question left is what $`R`$ is. An auction answers it once, for every contract on that borrower.
 
 The auction has two stages. In a toy version with Northwind's numbers:
 
 1. **Dealers quote.** Five dealers each give a price at which they would buy and sell the bonds: 40/42, 40.5/42.5, 41/43, 39.5/41.5, 40/42, in cents per dollar. The average of their midpoints, 41.2, is the **initial midpoint**. Dealers also report how many bonds their clients want to buy or sell at the final price; here the net is $150 million of bonds to sell.
 2. **Bids fill the imbalance.** Buyers submit limit bids, each an amount to buy at a stated price or less: $40 million at 41.5, $50 million at 41, $80 million at 40, $100 million at 39. Filling from the top, the first two bids fall short of $150 million and the third takes the total past it. The price of the last bid needed, 40, is the **final price**.
 
-So $R = 40\%$ and every contract on Northwind pays $10{,}000{,}000 \times 0.60 = \$6{,}000{,}000$ per $10 million. The real auctions add rules on dealers' quote widths and a cap on how far the final price may stray from the midpoint. The shape is the one above.
+So $`R = 40\%`$ and every contract on Northwind pays $`10{,}000{,}000 \times 0.60 = \$6{,}000{,}000`$ per $10 million. The real auctions add rules on dealers' quote widths and a cap on how far the final price may stray from the midpoint. The shape is the one above.
 
 When more bonds are for sale than wanted, as here, the final price tends to land below the initial midpoint. Lehman Brothers in October 2008 was the extreme case: final price 8.625 cents, a payout of $9,137,500 on each $10 million insured.
 
@@ -164,9 +170,11 @@ Before 2009 each contract carried its own spread, set on the day it was traded. 
 
 The quote is still a spread. A trade at 120 bp settles as a contract paying 100 bp, plus cash on day one that makes up the missing 20 bp a year. That cash is the **upfront**. Its size is 20 bp a year, valued over the years Northwind is expected to keep paying.
 
-That value is the **risky annuity** $A$: today's value of 1 a year, paid quarterly and only while Northwind survives. With a 2% yearly default rate and 5% interest, $A = 4.1819$: five years of payments shrink to about 4.18 once survival and discounting are counted. [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md) derives it. So:
+That value is the **risky annuity** $`A`$: today's value of 1 a year, paid quarterly and only while Northwind survives. With a 2% yearly default rate and 5% interest, $`A = 4.1819`$: five years of payments shrink to about 4.18 once survival and discounting are counted. [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md) derives it. So:
 
-$$U \approx (0.012 - 0.010) \times 4.1819 \times 10{,}000{,}000 = \$83{,}638.71.$$
+```math
+U \approx (0.012 - 0.010) \times 4.1819 \times 10{,}000{,}000 = \$83{,}638.71.
+```
 
 The buyer pays it, because it pays less running fee than the market asks. If the quote were below the coupon, the seller would pay the buyer.
 
@@ -176,7 +184,7 @@ The market does not use this line directly. It uses a published calculator, the 
 
 The contract can also be seen as two streams: one fed by premiums while the borrower lives, one fed by the payout if it dies. Valuing each stream, weighted by the chance of survival, is how the spread gets priced.
 
-At Northwind's 2% hazard, 40% recovery and 5% rates, the premium stream is worth $A$ per unit of spread and the payout stream 0.050625 per dollar insured. The spread that equates them is 121.06 bp with quarterly payments. That work belongs to [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md); this card uses the two numbers only as a cross-check.
+At Northwind's 2% hazard, 40% recovery and 5% rates, the premium stream is worth $`A`$ per unit of spread and the payout stream 0.050625 per dollar insured. The spread that equates them is 121.06 bp with quarterly payments. That work belongs to [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md); this card uses the two numbers only as a cross-check.
 
 ---
 
@@ -186,18 +194,18 @@ Protection on $10 million of Northwind at 120 bp, five years from 20 Dec 2026. C
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| yearly fee | $0.012 \times 10{,}000{,}000$ | $120,000 |
-| idealised quarterly premium | $120{,}000 / 4$ | $30,000 |
-| first quarter, 90 days | $120{,}000 \times 90/360$ | $30,000.00 |
-| second quarter, 92 days | $120{,}000 \times 92/360$ | $30,666.67 |
-| first year, 365 days | $120{,}000 \times 365/360$ | $121,666.67 |
-| five years with no default, 1,826 days | $120{,}000 \times 1826/360$ | $608,666.67 |
+| yearly fee | $`0.012 \times 10{,}000{,}000`$ | $120,000 |
+| idealised quarterly premium | $`120{,}000 / 4`$ | $30,000 |
+| first quarter, 90 days | $`120{,}000 \times 90/360`$ | $30,000.00 |
+| second quarter, 92 days | $`120{,}000 \times 92/360`$ | $30,666.67 |
+| first year, 365 days | $`120{,}000 \times 365/360`$ | $121,666.67 |
+| five years with no default, 1,826 days | $`120{,}000 \times 1826/360`$ | $608,666.67 |
 | premiums paid before the event, 9 quarters | sum of the nine ACT/360 premiums | $273,666.67 |
-| accrued, 20 Mar to 19 May 2029 | $120{,}000 \times 60/360$ | $20,000.00 |
-| **payout** | $10{,}000{,}000 \times (1 - 0.40)$ | **$6,000,000** |
-| seller's premium income in all | $273{,}666.67 + 20{,}000$ | $293,666.67 |
-| buyer's net gain over the trade | $6{,}000{,}000 - 293{,}666.67$ | $5,706,333.33 |
-| upfront at a 100 bp coupon | $0.002 \times 4.1819 \times 10{,}000{,}000$ | $83,638.71 |
+| accrued, 20 Mar to 19 May 2029 | $`120{,}000 \times 60/360`$ | $20,000.00 |
+| **payout** | $`10{,}000{,}000 \times (1 - 0.40)`$ | **$6,000,000** |
+| seller's premium income in all | $`273{,}666.67 + 20{,}000`$ | $293,666.67 |
+| buyer's net gain over the trade | $`6{,}000{,}000 - 293{,}666.67`$ | $5,706,333.33 |
+| upfront at a 100 bp coupon | $`0.002 \times 4.1819 \times 10{,}000{,}000`$ | $83,638.71 |
 
 Over two and a half years the fund paid under $300,000 for protection that returned $6 million. Had Northwind survived, it would have paid $608,666.67 and received nothing. That lopsided exchange is what the spread prices.
 
@@ -587,9 +595,9 @@ The two outputs agree line for line. They share the random-number recipe, so the
 
 Lean proves three facts behind the contract for every notional, recovery rate, spread and day count, and checks the worked numbers exactly.
 
-- Bond plus protection is worth par at default exactly when the payout is the loss. Take a bond with face value $N$, worth $R \times N$ after a credit event. Then bond plus payout equals $N$ exactly when the payout is $N \times (1 - R)$.
-- The day-by-day ledger and the ACT/360 premiums give the same total. Take any number of quarters, with any number of days $d_i$ in each. Then charging $s \times N / 360$ for every day gives the sum of the quarterly premiums.
-- The buyer pays the upfront exactly when the quoted spread is above the standard coupon. Suppose the notional $N$ and the risky annuity $A$ are positive. Then $(s - c) \times A \times N$ is positive exactly when $s > c$, and negative exactly when $s < c$.
+- Bond plus protection is worth par at default exactly when the payout is the loss. Take a bond with face value $`N`$, worth $`R \times N`$ after a credit event. Then bond plus payout equals $`N`$ exactly when the payout is $`N \times (1 - R)`$.
+- The day-by-day ledger and the ACT/360 premiums give the same total. Take any number of quarters, with any number of days $`d_i`$ in each. Then charging $`s \times N / 360`$ for every day gives the sum of the quarterly premiums.
+- The buyer pays the upfront exactly when the quoted spread is above the standard coupon. Suppose the notional $`N`$ and the risky annuity $`A`$ are positive. Then $`(s - c) \times A \times N`$ is positive exactly when $`s > c`$, and negative exactly when $`s < c`$.
 - The worked numbers hold exactly, as fractions: every premium, the accrued premium, the auction's final price and both payouts.
 
 The calendar day counts, the risky annuity, the protection leg and the simulated default times are left to the Python and Rust checks.
@@ -727,7 +735,7 @@ example : (List.range 11).map (fun k => 10 - k) = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1
 ## The usual mistake
 
 > [!warning]
-> **Thinking the CDS pays the recovery.** It pays the loss. The seller hands over $N(1 - R)$: $6 million on $10 million at 40% recovery. Recovery is what the bondholder keeps; protection tops it up to par. Paying $R$ instead gives $4 million, and the error grows as recoveries fall: at Lehman's 8.625 cents, the loss owed was $9,137,500 per $10 million.
+> **Thinking the CDS pays the recovery.** It pays the loss. The seller hands over $`N(1 - R)`$: $6 million on $10 million at 40% recovery. Recovery is what the bondholder keeps; protection tops it up to par. Paying $`R`$ instead gives $4 million, and the error grows as recoveries fall: at Lehman's 8.625 cents, the loss owed was $9,137,500 per $10 million.
 >
 > Smaller traps:
 > - **A yearly spread charged quarterly.** 120 bp a year is $30,000 a quarter on $10 million, not $120,000.
@@ -753,7 +761,7 @@ example : (List.range 11).map (fun k => 10 - k) = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1
 
 ## What this builds on
 
-- [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): recovery rate, loss given default $1 - R$, and why a lender's loss is the notional times the fraction lost. The CDS payout is that loss, sold as a contract.
+- [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): recovery rate, loss given default $`1 - R`$, and why a lender's loss is the notional times the fraction lost. The CDS payout is that loss, sold as a contract.
 - [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): basis points are hundredths of a percent, and every cash flow here is a percentage of the notional.
 
 ## Where this goes next

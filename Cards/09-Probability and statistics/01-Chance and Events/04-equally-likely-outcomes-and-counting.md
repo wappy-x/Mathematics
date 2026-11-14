@@ -35,28 +35,32 @@ Each bar is the share of all hands with that suit shape, counted by formula and 
 
 ## The formula
 
-Notation first, in words. $P(A)$ is the chance of the event $A$, read "the chance of A" ([Probability](01-what-probability-means.md)). $S$ is the sample space: the list of every outcome that can happen ([Sample spaces and events](02-sample-spaces-and-events.md)). Vertical bars count members: $\lvert A\rvert$ is how many outcomes $A$ holds. $C(n, k)$, read "n choose k", is the number of ways to take $k$ things from $n$ with order ignored ([Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md)).
+Notation first, in words. $`P(A)`$ is the chance of the event $`A`$, read "the chance of A" ([Probability](01-what-probability-means.md)). $`S`$ is the sample space: the list of every outcome that can happen ([Sample spaces and events](02-sample-spaces-and-events.md)). Vertical bars count members: $`\lvert A\rvert`$ is how many outcomes $`A`$ holds. $`C(n, k)`$, read "n choose k", is the number of ways to take $`k`$ things from $`n`$ with order ignored ([Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md)).
 
-$$P(A) = \frac{\lvert A\rvert}{\lvert S\rvert}\qquad\text{when every outcome in } S \text{ is equally likely}$$
+```math
+P(A) = \frac{\lvert A\rvert}{\lvert S\rvert}\qquad\text{when every outcome in } S \text{ is equally likely}
+```
 
 **Read it aloud:** the chance of A is the count of outcomes where A happens, over the count of all outcomes.
 
 For the flush, an outcome is a five-card hand with order ignored, and the event is "all five in one suit":
 
-$$P(\text{flush}) = \frac{4 \times C(13, 5)}{C(52, 5)} = \frac{5{,}148}{2{,}598{,}960} = 0.0019808$$
+```math
+P(\text{flush}) = \frac{4 \times C(13, 5)}{C(52, 5)} = \frac{5{,}148}{2{,}598{,}960} = 0.0019808
+```
 
-The 4 picks the suit. $C(13, 5)$ picks five of that suit's 13 ranks. $C(52, 5)$ counts all hands.
+The 4 picks the suit. $`C(13, 5)`$ picks five of that suit's 13 ranks. $`C(52, 5)`$ counts all hands.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P(A)$ | the chance of the event, a number from 0 to 1 | P(flush) = 0.0019808 | — |
-| $A$ | the event: the outcomes that count as a success | all 5,148 flushes | more outcomes in it, a bigger chance |
-| $S$ | the sample space: every outcome that can happen | all five-card hands | more outcomes, each one rarer |
-| $\lvert A\rvert$, $\lvert S\rvert$ | how many outcomes each holds | 5,148 and 2,598,960 | top up, chance up; bottom up, chance down |
-| $C(n, k)$ | ways to take $k$ things from $n$, order ignored | C(52, 5) = 2,598,960 | — |
-| $n$ | how many things are available | 52 cards, or 13 in one suit | more hands in all |
-| $k$ | how many are taken | 5 cards | — |
-| $n!$ | the orders of $n$ different things: n × (n−1) × … × 1 | 5! = 120 | — |
+| $`P(A)`$ | the chance of the event, a number from 0 to 1 | P(flush) = 0.0019808 | — |
+| $`A`$ | the event: the outcomes that count as a success | all 5,148 flushes | more outcomes in it, a bigger chance |
+| $`S`$ | the sample space: every outcome that can happen | all five-card hands | more outcomes, each one rarer |
+| $`\lvert A\rvert`$, $`\lvert S\rvert`$ | how many outcomes each holds | 5,148 and 2,598,960 | top up, chance up; bottom up, chance down |
+| $`C(n, k)`$ | ways to take $`k`$ things from $`n`$, order ignored | C(52, 5) = 2,598,960 | — |
+| $`n`$ | how many things are available | 52 cards, or 13 in one suit | more hands in all |
+| $`k`$ | how many are taken | 5 cards | — |
+| $`n!`$ | the orders of $`n`$ different things: n × (n−1) × … × 1 | 5! = 120 | — |
 
 One clash of letters: the [Ordered picks](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/04-ordered-picks.md) card writes its count of ordered picks with a P too. That count is not a chance, so this card writes ordered products out in full, 52 × 51 × 50 × 49 × 48.
 
@@ -77,11 +81,11 @@ A fair shuffle does not prefer one card to another. Swap the names of any two ca
 
 ### Step 1: equal chances that fill the space are each one over the count
 
-Say the sample space holds $\lvert S\rvert$ outcomes, each with the same chance, call it q. Different outcomes cannot happen together, so by the addition rule ([The rules](03-probability-rules-and-complements.md)) their chances add. Something must happen, so they add to 1. That gives $\lvert S\rvert \times q = 1$, so q = 1 over $\lvert S\rvert$: one over 2,598,960 for each hand.
+Say the sample space holds $`\lvert S\rvert`$ outcomes, each with the same chance, call it q. Different outcomes cannot happen together, so by the addition rule ([The rules](03-probability-rules-and-complements.md)) their chances add. Something must happen, so they add to 1. That gives $`\lvert S\rvert \times q = 1`$, so q = 1 over $`\lvert S\rvert`$: one over 2,598,960 for each hand.
 
 ### Step 2: an event's chance is its count times that share
 
-The event $A$ is a collection of single outcomes that cannot happen together. The addition rule again: its chance is the sum of their chances, $\lvert A\rvert$ copies of 1 over $\lvert S\rvert$. That is $\lvert A\rvert$ over $\lvert S\rvert$, the formula.
+The event $`A`$ is a collection of single outcomes that cannot happen together. The addition rule again: its chance is the sum of their chances, $`\lvert A\rvert`$ copies of 1 over $`\lvert S\rvert`$. That is $`\lvert A\rvert`$ over $`\lvert S\rvert`$, the formula.
 
 ### Step 3: why every unordered hand is equally likely
 
@@ -92,13 +96,13 @@ The shuffle acts on the order of the whole deck: every one of the 52! orders is 
 
 Take the 52! deck orders as the equally likely outcomes, by Step 0 applied to the whole deck. Fix one five-card hand, call it H. A deck order puts H on top exactly when its first five places hold the cards of H in some order (5! ways) and its last 47 places hold the rest in some order (47! ways). So H is on top in 5! × 47! orders, whichever hand H is.
 
-By Step 2, the chance of H is 5! × 47! over 52!, the same for every hand. By Step 1 that common chance is also 1 over the number of hands. So the number of hands is 52! over 5! × 47!, which is $C(52, 5)$, the n-choose-k count. The same argument inside one suit gives $C(13, 5)$ = 1,287.
+By Step 2, the chance of H is 5! × 47! over 52!, the same for every hand. By Step 1 that common chance is also 1 over the number of hands. So the number of hands is 52! over 5! × 47!, which is $`C(52, 5)`$, the n-choose-k count. The same argument inside one suit gives $`C(13, 5)`$ = 1,287.
 
 </details>
 
 ### Step 4: count the flushes
 
-Build a flush in two moves. Choose its suit: 4 ways. Choose its five ranks from that suit's 13: $C(13, 5)$ = 1,287 ways. Every choice gives a different flush and every flush arises once, so the product rule gives 4 × 1,287 = 5,148. The product rule says that when choices come in stages, their counts multiply ([The rules of sum and product](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/01-rules-of-sum-and-product.md)). Divide by 2,598,960: 0.0019808.
+Build a flush in two moves. Choose its suit: 4 ways. Choose its five ranks from that suit's 13: $`C(13, 5)`$ = 1,287 ways. Every choice gives a different flush and every flush arises once, so the product rule gives 4 × 1,287 = 5,148. The product rule says that when choices come in stages, their counts multiply ([The rules of sum and product](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/01-rules-of-sum-and-product.md)). Divide by 2,598,960: 0.0019808.
 
 ### Step 5: order in both counts, or in neither
 
@@ -435,8 +439,8 @@ The two outputs match line for line. The simulation matches too, because both la
 
 Lean proves the counting rule on any finite sample space, and the flush count for any deck and hand size.
 
-- Suppose a finite sample space $S$ has every outcome equally likely. Then every event $A$ has $P(A) = \lvert A\rvert / \lvert S\rvert$.
-- Take a deck of $r$ ranks in each of $s$ suits, and hands of $k$ cards, with $k$ at least 1. Then $s \times C(r, k)$ of those hands are flushes, all $k$ cards in one suit.
+- Suppose a finite sample space $`S`$ has every outcome equally likely. Then every event $`A`$ has $`P(A) = \lvert A\rvert / \lvert S\rvert`$.
+- Take a deck of $`r`$ ranks in each of $`s`$ suits, and hands of $`k`$ cards, with $`k`$ at least 1. Then $`s \times C(r, k)`$ of those hands are flushes, all $`k`$ cards in one suit.
 - The standard 52-card deck has 2,598,960 five-card hands, and 5,148 of them are flushes.
 - The hand-worked counts also check: ordered deals, the six suit shapes, the 56 suit patterns, and 6 of 36 dice pairs summing to 7.
 

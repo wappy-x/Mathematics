@@ -51,52 +51,62 @@ First line (orange): a borrower earning $40,000. Second line (green): a borrower
 
 ## The formula
 
-Notation first, in words. A subscript i numbers the loans, from 1 to $n$ = 500. For loan i, $y_i$ is 1 if it defaulted and 0 if it was repaid; $x_{i1}$ is income in thousands of dollars and $x_{i2}$ is the debt ratio in percentage points.
+Notation first, in words. A subscript i numbers the loans, from 1 to $`n`$ = 500. For loan i, $`y_i`$ is 1 if it defaulted and 0 if it was repaid; $`x_{i1}`$ is income in thousands of dollars and $`x_{i2}`$ is the debt ratio in percentage points.
 
 The **odds** of an event are its chance divided by the chance it fails: among the 297 loans with debt ratios under 40%, 27 defaulted, odds of 0.1000, one default for every ten loans repaid. The **log-odds** are the natural logarithm of the odds.
 
-$$\ln\frac{p_i}{1-p_i} \;=\; z_i \;=\; \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2}, \qquad p_i = \Lambda(z_i) = \frac{1}{1+e^{-z_i}}$$
+```math
+\ln\frac{p_i}{1-p_i} \;=\; z_i \;=\; \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2}, \qquad p_i = \Lambda(z_i) = \frac{1}{1+e^{-z_i}}
+```
 
 **Read it aloud:** the log-odds of default for loan i is a straight line in income and debt ratio, called the score; the chance of default is the score passed through the logistic curve.
 
-The line is chosen by maximum likelihood. Each defaulted loan contributes its chance $p_i$, each repaid loan $1 - p_i$, and the logarithms add:
+The line is chosen by maximum likelihood. Each defaulted loan contributes its chance $`p_i`$, each repaid loan $`1 - p_i`$, and the logarithms add:
 
-$$\ell(\beta_0,\beta_1,\beta_2) \;=\; \sum_{i=1}^{n}\Big[\,y_i \ln p_i + (1-y_i)\ln(1-p_i)\,\Big] \;=\; \sum_{i=1}^{n}\Big[\,y_i z_i - \ln\!\big(1+e^{z_i}\big)\Big]$$
+```math
+\ell(\beta_0,\beta_1,\beta_2) \;=\; \sum_{i=1}^{n}\Big[\,y_i \ln p_i + (1-y_i)\ln(1-p_i)\,\Big] \;=\; \sum_{i=1}^{n}\Big[\,y_i z_i - \ln\!\big(1+e^{z_i}\big)\Big]
+```
 
 **Read it aloud:** the log-likelihood adds, over every loan, the logarithm of the chance the model gave to what actually happened.
 
-The peak is where all three slopes of $\ell$ are zero. Set to zero, they are the **likelihood equations**:
+The peak is where all three slopes of $`\ell`$ are zero. Set to zero, they are the **likelihood equations**:
 
-$$\sum_{i=1}^{n} (y_i - p_i) = 0, \qquad \sum_{i=1}^{n} x_{i1}(y_i - p_i) = 0, \qquad \sum_{i=1}^{n} x_{i2}(y_i - p_i) = 0$$
+```math
+\sum_{i=1}^{n} (y_i - p_i) = 0, \qquad \sum_{i=1}^{n} x_{i1}(y_i - p_i) = 0, \qquad \sum_{i=1}^{n} x_{i2}(y_i - p_i) = 0
+```
 
 **Read it aloud:** at the best fit, observed minus predicted balances out overall, and balances out again when weighted by income and by debt ratio.
 
 The first equation says the fitted chances add up to the 103 defaults seen. The bend of the log-likelihood at the peak gives the standard errors. The bend is minus the **information table**, a 3-by-3 table of sums, one entry for each pair j, k, where j and k run over 0, 1, 2, standing for the constant, income and debt ratio:
 
-$$\sum_{i=1}^{n} w_i\, x_{ij}\, x_{ik}, \qquad w_i = p_i(1-p_i), \qquad x_{i0} = 1$$
+```math
+\sum_{i=1}^{n} w_i\, x_{ij}\, x_{ik}, \qquad w_i = p_i(1-p_i), \qquad x_{i0} = 1
+```
 
 **Read it aloud:** each loan adds its predictors' products, weighted by how uncertain the model is about it; the standard errors are the square roots of the diagonal of this table's inverse.
 
 The coefficients are read through the odds:
 
-$$\frac{\text{odds of default at debt ratio } x_{i2} + 10}{\text{odds of default at debt ratio } x_{i2}} \;=\; e^{10\,\beta_2}$$
+```math
+\frac{\text{odds of default at debt ratio } x_{i2} + 10}{\text{odds of default at debt ratio } x_{i2}} \;=\; e^{10\,\beta_2}
+```
 
 **Read it aloud:** ten more points of debt ratio, income held fixed, multiply the odds of default by the same factor for every borrower.
 
 | Symbol | Plain meaning | In our example | Push it up and the chance of default… |
 | --- | --- | --- | --- |
-| $n$ | the number of loans | 500 | — |
-| $y_i$ | loan i's outcome: 1 defaulted, 0 repaid | loan 2: 1 | — |
-| $x_{i1}$, $x_{i2}$ | income in thousands of dollars; debt ratio in percentage points | applicant A: 50 and 45 | income: falls; debt ratio: rises |
-| $\beta_0$ | the intercept: the score at zero income and zero debt | estimate −2.9213 | rises everywhere |
-| $\beta_1$ | change in log-odds per $1,000 of income | estimate −0.0242, standard error 0.0047 | falls less steeply with income |
-| $\beta_2$ | change in log-odds per point of debt ratio | estimate 0.0829, standard error 0.0105 | climbs faster with debt |
-| $z_i$ | the score: the log-odds of default | applicant A: −0.3987 | rises toward 1 |
-| $p_i$ | the chance of default | applicant A: 0.4016 | — |
-| $\Lambda$ | the logistic curve, which turns a score into a chance (some texts write σ; this wing keeps σ for the standard deviation) | Λ(−0.3987) = 0.4016 | — |
-| $\ell$ | the log-likelihood | −200.0216 at the peak | — |
-| $w_i$ | loan i's weight in the information table, p(1 − p) | largest, 0.25, where the chance is one half | — |
-| $t$, $v$, $s_i$ | in the proofs: a distance along a path, the path's direction, and how fast loan i's score moves along it | separated book: slope t per point of debt ratio | the log-likelihood climbs toward 0 |
+| $`n`$ | the number of loans | 500 | — |
+| $`y_i`$ | loan i's outcome: 1 defaulted, 0 repaid | loan 2: 1 | — |
+| $`x_{i1}`$, $`x_{i2}`$ | income in thousands of dollars; debt ratio in percentage points | applicant A: 50 and 45 | income: falls; debt ratio: rises |
+| $`\beta_0`$ | the intercept: the score at zero income and zero debt | estimate −2.9213 | rises everywhere |
+| $`\beta_1`$ | change in log-odds per $1,000 of income | estimate −0.0242, standard error 0.0047 | falls less steeply with income |
+| $`\beta_2`$ | change in log-odds per point of debt ratio | estimate 0.0829, standard error 0.0105 | climbs faster with debt |
+| $`z_i`$ | the score: the log-odds of default | applicant A: −0.3987 | rises toward 1 |
+| $`p_i`$ | the chance of default | applicant A: 0.4016 | — |
+| $`\Lambda`$ | the logistic curve, which turns a score into a chance (some texts write σ; this wing keeps σ for the standard deviation) | Λ(−0.3987) = 0.4016 | — |
+| $`\ell`$ | the log-likelihood | −200.0216 at the peak | — |
+| $`w_i`$ | loan i's weight in the information table, p(1 − p) | largest, 0.25, where the chance is one half | — |
+| $`t`$, $`v`$, $`s_i`$ | in the proofs: a distance along a path, the path's direction, and how fast loan i's score moves along it | separated book: slope t per point of debt ratio | the log-likelihood climbs toward 0 |
 
 ### When it holds
 
@@ -116,42 +126,42 @@ A chance lives between 0 and 1. The odds live between 0 and infinity: a chance o
 
 ### Step 1: convert back with the logistic curve
 
-Solve $\ln\big(p/(1-p)\big) = z$ for the chance. Exponentiate: the odds are $e^{z}$. Then the chance is odds over one plus odds, $e^{z}/(1+e^{z})$, which is $1/(1+e^{-z})$ after dividing top and bottom by $e^{z}$. That is the logistic curve $\Lambda$. It passes through one half at score zero, flattens toward 0 on the left and 1 on the right, and is symmetric: $\Lambda(-z) = 1 - \Lambda(z)$.
+Solve $`\ln\big(p/(1-p)\big) = z`$ for the chance. Exponentiate: the odds are $`e^{z}`$. Then the chance is odds over one plus odds, $`e^{z}/(1+e^{z})`$, which is $`1/(1+e^{-z})`$ after dividing top and bottom by $`e^{z}`$. That is the logistic curve $`\Lambda`$. It passes through one half at score zero, flattens toward 0 on the left and 1 on the right, and is symmetric: $`\Lambda(-z) = 1 - \Lambda(z)`$.
 
-Differentiate $(1+e^{-z})^{-1}$ and the slope is $e^{-z}/(1+e^{-z})^2$, which is $\Lambda(z)\,\big(1-\Lambda(z)\big)$: steepest at one half, where it is 0.25, and nearly flat near 0 or 1.
+Differentiate $`(1+e^{-z})^{-1}`$ and the slope is $`e^{-z}/(1+e^{-z})^2`$, which is $`\Lambda(z)\,\big(1-\Lambda(z)\big)`$: steepest at one half, where it is 0.25, and nearly flat near 0 or 1.
 
 ### Step 2: the likelihood of a yes-or-no record
 
-Each loan is one Bernoulli trial, a single yes-or-no draw with its own chance ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). Loan i contributes $p_i$ if it defaulted and $1 - p_i$ if not. Independence multiplies the contributions, and the logarithm turns the product into the sum in the formula.
+Each loan is one Bernoulli trial, a single yes-or-no draw with its own chance ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). Loan i contributes $`p_i`$ if it defaulted and $`1 - p_i`$ if not. Independence multiplies the contributions, and the logarithm turns the product into the sum in the formula.
 
-The sum simplifies. Split $y \ln p + (1-y)\ln(1-p)$ as $y \ln\big(p/(1-p)\big) + \ln(1-p)$. The first log is the score $z$. The second is $\ln\big(1/(1+e^{z})\big) = -\ln(1+e^{z})$. So each loan adds $y z - \ln(1+e^{z})$, the second form in the formula. The check writes $\ln(1+e^{z})$ as $\max(z, 0) + \ln(1+e^{-\lvert z\rvert})$, the same number, so it never overflows.
+The sum simplifies. Split $`y \ln p + (1-y)\ln(1-p)`$ as $`y \ln\big(p/(1-p)\big) + \ln(1-p)`$. The first log is the score $`z`$. The second is $`\ln\big(1/(1+e^{z})\big) = -\ln(1+e^{z})`$. So each loan adds $`y z - \ln(1+e^{z})`$, the second form in the formula. The check writes $`\ln(1+e^{z})`$ as $`\max(z, 0) + \ln(1+e^{-\lvert z\rvert})`$, the same number, so it never overflows.
 
 ### Step 3: the slopes, and why there is no closed form
 
-Differentiate one loan's term in its score: $y - e^{z}/(1+e^{z}) = y - p$. The score depends on each coefficient through the chain rule: moving $\beta_1$ by one moves $z_i$ by $x_{i1}$. So the slope of $\ell$ in $\beta_1$ is the sum of $x_{i1}(y_i - p_i)$, and likewise for the other two. Setting all three to zero gives the likelihood equations.
+Differentiate one loan's term in its score: $`y - e^{z}/(1+e^{z}) = y - p`$. The score depends on each coefficient through the chain rule: moving $`\beta_1`$ by one moves $`z_i`$ by $`x_{i1}`$. So the slope of $`\ell`$ in $`\beta_1`$ is the sum of $`x_{i1}(y_i - p_i)`$, and likewise for the other two. Setting all three to zero gives the likelihood equations.
 
-On [Multiple regression](03-multiple-regression-and-gauss-markov.md) the same equations are linear in the coefficients and solve in one step. Here each $p_i$ bends through the logistic curve, so no formula solves them; they are solved by climbing.
+On [Multiple regression](03-multiple-regression-and-gauss-markov.md) the same equations are linear in the coefficients and solve in one step. Here each $`p_i`$ bends through the logistic curve, so no formula solves them; they are solved by climbing.
 
 ### Step 4: one peak at most
 
-Differentiate the slopes once more. Loan i's term bends by $-p_i(1-p_i) = -w_i$ in its own score, so the curvature of $\ell$ is minus the information table. Along any straight path through the coefficients, the second derivative of $\ell$ is minus a sum of weights times squares. It is never positive: $\ell$ is **concave**, shaped like a dome ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). It is strictly negative unless the path leaves every score unchanged, which happens only when one predictor is an exact combination of the others.
+Differentiate the slopes once more. Loan i's term bends by $`-p_i(1-p_i) = -w_i`$ in its own score, so the curvature of $`\ell`$ is minus the information table. Along any straight path through the coefficients, the second derivative of $`\ell`$ is minus a sum of weights times squares. It is never positive: $`\ell`$ is **concave**, shaped like a dome ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). It is strictly negative unless the path leaves every score unchanged, which happens only when one predictor is an exact combination of the others.
 
 A strictly concave dome has at most one top, and any point where all slopes are zero is that top. So when Newton's method, below, finds a point where every slope is zero, the search is over: no other coefficients fit better.
 
 <details>
 <summary>Detailed proof: one peak, and none under separation</summary>
 
-**Concavity.** Write the path as $\beta + t v$, where $v$ is a direction with entries $v_0, v_1, v_2$, and let $s_i = v_0 + v_1 x_{i1} + v_2 x_{i2}$, the rate at which loan i's score moves. Each loan's term $y_i z_i - \ln(1+e^{z_i})$ has second derivative $-w_i$ in its score, so along the path the second derivative of $\ell$ is $-\sum_i w_i s_i^2$. Every $w_i$ is positive at finite coefficients, so the sum is zero only if the direction changes no loan's score. Unless one predictor is an exact combination of the others and the constant, no such direction exists.
+**Concavity.** Write the path as $`\beta + t v`$, where $`v`$ is a direction with entries $`v_0, v_1, v_2`$, and let $`s_i = v_0 + v_1 x_{i1} + v_2 x_{i2}`$, the rate at which loan i's score moves. Each loan's term $`y_i z_i - \ln(1+e^{z_i})`$ has second derivative $`-w_i`$ in its score, so along the path the second derivative of $`\ell`$ is $`-\sum_i w_i s_i^2`$. Every $`w_i`$ is positive at finite coefficients, so the sum is zero only if the direction changes no loan's score. Unless one predictor is an exact combination of the others and the constant, no such direction exists.
 
-**Uniqueness.** Suppose two different coefficient sets both maximise $\ell$. On the straight path between them, $\ell$ is a strictly concave function of one variable with equal values at both ends. A strictly concave function lies above its chord, so the midpoint beats both ends. Contradiction. And a point with zero slopes is the top: along every path out of it, the slope starts at zero and only decreases, so $\ell$ only falls.
+**Uniqueness.** Suppose two different coefficient sets both maximise $`\ell`$. On the straight path between them, $`\ell`$ is a strictly concave function of one variable with equal values at both ends. A strictly concave function lies above its chord, so the midpoint beats both ends. Contradiction. And a point with zero slopes is the top: along every path out of it, the slope starts at zero and only decreases, so $`\ell`$ only falls.
 
-**Separation.** Suppose a direction exists with $s_i > 0$ for every defaulted loan and $s_i < 0$ for every repaid one. Walk out along it, $t v$ with $t$ growing. Each defaulted loan's chance tends to 1 and each repaid loan's to 0, so $\ell$ tends to 0. At any finite coefficients each chance lies strictly between 0 and 1, so $\ell$ is strictly negative. It gets arbitrarily close to 0 and never reaches it: there is no maximum. Albert and Anderson (1984) show that separation of this kind, complete or with ties on the dividing line, is exactly when the finite maximum fails to exist.
+**Separation.** Suppose a direction exists with $`s_i > 0`$ for every defaulted loan and $`s_i < 0`$ for every repaid one. Walk out along it, $`t v`$ with $`t`$ growing. Each defaulted loan's chance tends to 1 and each repaid loan's to 0, so $`\ell`$ tends to 0. At any finite coefficients each chance lies strictly between 0 and 1, so $`\ell`$ is strictly negative. It gets arbitrarily close to 0 and never reaches it: there is no maximum. Albert and Anderson (1984) show that separation of this kind, complete or with ties on the dividing line, is exactly when the finite maximum fails to exist.
 
 </details>
 
 ### Step 5: climb by Newton's method
 
-Near the current guess, replace $\ell$ by its quadratic Taylor approximation, which uses the slopes and the curvature. Jump to that quadratic's top: the step is the inverse of the information table times the slopes. Then repeat ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)).
+Near the current guess, replace $`\ell`$ by its quadratic Taylor approximation, which uses the slopes and the curvature. Jump to that quadratic's top: the step is the inverse of the information table times the slopes. Then repeat ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)).
 
 Starting from all coefficients at zero, which gives every loan a chance of one half, Newton's method reached the peak in 7 steps. There the largest slope was below 0.000000001. The fit:
 
@@ -161,11 +171,11 @@ Starting from all coefficients at zero, which gives every loan a chance of one h
 | income, per $1,000 | −0.0242 | 0.0047 | −0.0300 |
 | debt ratio, per point | 0.0829 | 0.0105 | 0.0800 |
 
-Each estimate lies within three standard errors of the value used to draw the data; the check asserts it. Each Newton step is also a weighted least-squares fit, with weights $w_i$, which is why statisticians call the method iteratively reweighted least squares (Nelder and Wedderburn, 1972).
+Each estimate lies within three standard errors of the value used to draw the data; the check asserts it. Each Newton step is also a weighted least-squares fit, with weights $`w_i`$, which is why statisticians call the method iteratively reweighted least squares (Nelder and Wedderburn, 1972).
 
 ### Step 6: read a coefficient as an odds multiplier
 
-Raise the debt ratio by one point and hold income fixed. The score rises by the debt coefficient, 0.0829. The log-odds rise by the same amount, so the odds are multiplied by $e^{0.0829}$. Ten points multiply the odds by $e^{10 \times 0.0829}$ = 2.2909. The same multiplier applies to every borrower, rich or poor.
+Raise the debt ratio by one point and hold income fixed. The score rises by the debt coefficient, 0.0829. The log-odds rise by the same amount, so the odds are multiplied by $`e^{0.0829}`$. Ten points multiply the odds by $`e^{10 \times 0.0829}`$ = 2.2909. The same multiplier applies to every borrower, rich or poor.
 
 The chance does not move by a fixed amount. Applicant A, at $50,000, goes from 0.2266 at a 35% debt ratio to 0.4016 at 45% and 0.6059 at 55%. Applicant B, at $100,000, goes from 0.0246 at 20% to 0.0547 at 30%. Each step multiplies the odds by 2.2909; the change in chance depends on where the borrower sits on the S-curve. An extra $10,000 of income multiplies the odds by 0.7854, a cut of about a fifth.
 
@@ -175,13 +185,13 @@ These are associations in past loans: borrowers with more debt defaulted more of
 
 A sharply bent peak pins the coefficients down; a flat one does not. Invert the information table at the peak and take square roots of its diagonal: 0.5091, 0.0047 and 0.0105. Why the inverse curvature measures the spread of an estimate is shown on [Fisher information](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md). The check draws 400 fresh loan books from the fitted model, refits each, and measures the spread of the estimates: 0.5360, 0.0047 and 0.0106.
 
-A 95% interval is the estimate plus or minus 1.96 standard errors, 1.96 being the normal quantile $\Phi^{-1}(0.975)$, the point with 97.5% of the standard normal curve below it ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)). For the debt odds multiplier it runs from 1.8657 to 2.8129. The interval is a statement about the method: across the 400 simulated books, the interval built this way caught the debt coefficient the books were drawn from in 0.9500 of them. It is not a 95% chance that this particular interval holds the truth.
+A 95% interval is the estimate plus or minus 1.96 standard errors, 1.96 being the normal quantile $`\Phi^{-1}(0.975)`$, the point with 97.5% of the standard normal curve below it ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)). For the debt odds multiplier it runs from 1.8657 to 2.8129. The interval is a statement about the method: across the 400 simulated books, the interval built this way caught the debt coefficient the books were drawn from in 0.9500 of them. It is not a 95% chance that this particular interval holds the truth.
 
 ### Step 8: when the peak runs away
 
 Take a small, tidy book of eight loans. Debt ratios 20%, 25%, 30% and 35% were all repaid. Debt ratios 45%, 50%, 55% and 60% all defaulted. A dividing line at 40% separates them perfectly.
 
-Fit the score $t \times (\text{debt ratio} - 40)$ and let $t$ grow. Every defaulted loan's chance climbs toward 1 and every repaid loan's falls toward 0. The log-likelihood rises toward 0 and never arrives.
+Fit the score $`t \times (\text{debt ratio} - 40)`$ and let $`t`$ grow. Every defaulted loan's chance climbs toward 1 and every repaid loan's falls toward 0. The log-likelihood rises toward 0 and never arrives.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -212,7 +222,7 @@ Applicant A: income $50,000, debt ratio 45%. Coefficients from the fit above.
 | income part | income coefficient × 50 | −1.2077 |
 | debt part | debt coefficient × 45 | 3.7302 |
 | score, the log-odds | −2.9213 − 1.2077 + 3.7302 (unrounded parts give −0.3987) | −0.3987 |
-| odds | $e^{-0.3987}$ | 0.6712 |
+| odds | $`e^{-0.3987}`$ | 0.6712 |
 | chance | 0.6712 ÷ (1 + 0.6712) | **0.4016** |
 | 95% interval for the chance | score ± 1.96 standard errors, each end through the logistic curve | 0.3312 to 0.4764 |
 | same applicant at a 35% debt ratio | odds 0.6712 ÷ 2.2909 | odds 0.2930, chance 0.2266 |

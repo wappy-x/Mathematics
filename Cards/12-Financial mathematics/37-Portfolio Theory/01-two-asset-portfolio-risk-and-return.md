@@ -39,40 +39,48 @@ Top line (orange): the weighted average of the two spreads, a straight line from
 
 ## The formula
 
-Notation first, in words. Call shares asset A and bonds asset B. $R_A$ and $R_B$ are their returns over the year: simple returns, the change in value divided by the starting value ([Returns](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md)). They are random: nobody knows them in advance. $E[\,\cdot\,]$ is the expectation, the probability-weighted average of a random quantity; $\operatorname{Var}$ is its variance and $\operatorname{Cov}$ the covariance of two, the average product of their deviations from their means ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Shares have expected return $\mu_A$ (the Greek letter mu), spread $\sigma_A$ (sigma) and variance $\sigma_A^2$; bonds have $\mu_B$, $\sigma_B$, $\sigma_B^2$. $\rho$ (rho) is their correlation. A fraction $w$ of the money goes into shares and the rest, $1-w$, into bonds. $\mu_p$ and $\sigma_p$ are the mix's expected return and spread.
+Notation first, in words. Call shares asset A and bonds asset B. $`R_A`$ and $`R_B`$ are their returns over the year: simple returns, the change in value divided by the starting value ([Returns](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md)). They are random: nobody knows them in advance. $`E[\,\cdot\,]`$ is the expectation, the probability-weighted average of a random quantity; $`\mathrm{Var}`$ is its variance and $`\mathrm{Cov}`$ the covariance of two, the average product of their deviations from their means ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Shares have expected return $`\mu_A`$ (the Greek letter mu), spread $`\sigma_A`$ (sigma) and variance $`\sigma_A^2`$; bonds have $`\mu_B`$, $`\sigma_B`$, $`\sigma_B^2`$. $`\rho`$ (rho) is their correlation. A fraction $`w`$ of the money goes into shares and the rest, $`1-w`$, into bonds. $`\mu_p`$ and $`\sigma_p`$ are the mix's expected return and spread.
 
 The portfolio's return is
 
-$$R_p = w\,R_A + (1-w)\,R_B$$
+```math
+R_p = w\,R_A + (1-w)\,R_B
+```
 
 and its mean and variance are
 
-$$\mu_p = w\,\mu_A + (1-w)\,\mu_B$$
+```math
+\mu_p = w\,\mu_A + (1-w)\,\mu_B
+```
 
-$$\sigma_p^2 = w^2\sigma_A^2 + (1-w)^2\sigma_B^2 + 2\,w(1-w)\,\rho\,\sigma_A\sigma_B$$
+```math
+\sigma_p^2 = w^2\sigma_A^2 + (1-w)^2\sigma_B^2 + 2\,w(1-w)\,\rho\,\sigma_A\sigma_B
+```
 
 **Read it aloud:** the mix expects the weighted average of the two expected returns; its variance is each asset's variance scaled by its weight squared, plus twice the product of the weights times the covariance.
 
-The last term is the **cross term**. It is the whole story. The covariance is written $c = \rho\,\sigma_A\sigma_B$: correlation times the two spreads. The spread of the mix is $\sigma_p = \sqrt{\sigma_p^2}$.
+The last term is the **cross term**. It is the whole story. The covariance is written $`c = \rho\,\sigma_A\sigma_B`$: correlation times the two spreads. The spread of the mix is $`\sigma_p = \sqrt{\sigma_p^2}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $w$ | fraction of the money in shares; $1-w$ goes into bonds | 0.6 | mean rises; spread first dips, then rises |
-| $R_A$, $R_B$ | one year's simple return on shares, on bonds: random | unknown in advance | — |
-| $R_p$ | one year's return on the mix | unknown in advance | — |
-| $\mu_A$, $\mu_B$ | expected return of shares, of bonds | 8%, 4% | $\mu_p$ rises by the weight times the push |
-| $\sigma_A$, $\sigma_B$ | spread (standard deviation) of shares, of bonds | 20%, 6% | $\sigma_p$ rises |
-| $\rho$ | correlation of the two returns, from −1 to +1 | 0.2 | $\sigma_p$ rises: less cancelling |
-| $c$ | covariance, $\rho\,\sigma_A\sigma_B$ | 0.0024 | $\sigma_p$ rises |
-| $\mu_p$ | expected return of the mix | 6.40% | — |
-| $\sigma_p$ | spread of the mix; its square is the variance | 12.70% (variance 0.016128) | — |
-| $w^*$ | the weight in shares that makes the spread smallest | 0.030928 | — |
-| $d$ | variance of the gap between the two returns, $\sigma_A^2 + \sigma_B^2 - 2c$ | 0.0388 | the bowl in Step 5 gets steeper |
-| $E$, $\operatorname{Var}$, $\operatorname{Cov}$ | expectation, variance, covariance | — | — |
+| $`w`$ | fraction of the money in shares; $`1-w`$ goes into bonds | 0.6 | mean rises; spread first dips, then rises |
+| $`R_A`$, $`R_B`$ | one year's simple return on shares, on bonds: random | unknown in advance | — |
+| $`R_p`$ | one year's return on the mix | unknown in advance | — |
+| $`\mu_A`$, $`\mu_B`$ | expected return of shares, of bonds | 8%, 4% | $`\mu_p`$ rises by the weight times the push |
+| $`\sigma_A`$, $`\sigma_B`$ | spread (standard deviation) of shares, of bonds | 20%, 6% | $`\sigma_p`$ rises |
+| $`\rho`$ | correlation of the two returns, from −1 to +1 | 0.2 | $`\sigma_p`$ rises: less cancelling |
+| $`c`$ | covariance, $`\rho\,\sigma_A\sigma_B`$ | 0.0024 | $`\sigma_p`$ rises |
+| $`\mu_p`$ | expected return of the mix | 6.40% | — |
+| $`\sigma_p`$ | spread of the mix; its square is the variance | 12.70% (variance 0.016128) | — |
+| $`w^*`$ | the weight in shares that makes the spread smallest | 0.030928 | — |
+| $`d`$ | variance of the gap between the two returns, $`\sigma_A^2 + \sigma_B^2 - 2c`$ | 0.0388 | the bowl in Step 5 gets steeper |
+| $`E`$, $`\mathrm{Var}`$, $`\mathrm{Cov}`$ | expectation, variance, covariance | — | — |
 
 The least-risk weight, derived in Step 5:
 
-$$w^* = \frac{\sigma_B^2 - c}{\sigma_A^2 + \sigma_B^2 - 2c}$$
+```math
+w^* = \frac{\sigma_B^2 - c}{\sigma_A^2 + \sigma_B^2 - 2c}
+```
 
 In words: the bond variance, less the covariance, over the variance of the gap between the two returns.
 
@@ -90,47 +98,57 @@ In words: the bond variance, less the covariance, over the variance of the gap b
 
 ### Step 0: the mix's return is a weighted average, in every outcome
 
-Whatever the year brings, the $600 in shares becomes $600 × (1 + R_A)$ dollars and the $400 in bonds becomes $400 × (1 + R_B)$. Add them, subtract the $1,000, divide by $1,000:
+Whatever the year brings, the $600 in shares becomes $`600 × (1 + R_A)`$ dollars and the $400 in bonds becomes $`400 × (1 + R_B)`$. Add them, subtract the $1,000, divide by $1,000:
 
-$$R_p = 0.6\,R_A + 0.4\,R_B.$$
+```math
+R_p = 0.6\,R_A + 0.4\,R_B.
+```
 
 This holds outcome by outcome, before any averaging. Everything below is what averaging does to a weighted sum.
 
 ### Step 1: the mean passes straight through
 
-Expectation is linear: the average of a weighted sum is the weighted sum of the averages. So $\mu_p = w\,\mu_A + (1-w)\,\mu_B$. For 60-40: $0.6 × 8\% + 0.4 × 4\% = 6.40\%$. No assumption about how the two move together was needed.
+Expectation is linear: the average of a weighted sum is the weighted sum of the averages. So $`\mu_p = w\,\mu_A + (1-w)\,\mu_B`$. For 60-40: $`0.6 × 8\% + 0.4 × 4\% = 6.40\%`$. No assumption about how the two move together was needed.
 
 ### Step 2: the variance picks up a cross term
 
 Variance is the average of a squared deviation. The mix's deviation from its mean is the weighted sum of the two deviations:
 
-$$R_p - \mu_p = w\,(R_A - \mu_A) + (1-w)\,(R_B - \mu_B).$$
+```math
+R_p - \mu_p = w\,(R_A - \mu_A) + (1-w)\,(R_B - \mu_B).
+```
 
 Square it. A sum squared is not the sum of the squares: for any two numbers, the square of their sum is the two squares plus twice their product. So
 
-$$(R_p - \mu_p)^2 = w^2 (R_A - \mu_A)^2 + (1-w)^2 (R_B - \mu_B)^2 + 2w(1-w)(R_A - \mu_A)(R_B - \mu_B).$$
+```math
+(R_p - \mu_p)^2 = w^2 (R_A - \mu_A)^2 + (1-w)^2 (R_B - \mu_B)^2 + 2w(1-w)(R_A - \mu_A)(R_B - \mu_B).
+```
 
-Average each piece. The first averages to $w^2\sigma_A^2$, the second to $(1-w)^2\sigma_B^2$. The third averages to $2w(1-w)$ times the covariance: the average product of the two deviations. That is the formula.
+Average each piece. The first averages to $`w^2\sigma_A^2`$, the second to $`(1-w)^2\sigma_B^2`$. The third averages to $`2w(1-w)`$ times the covariance: the average product of the two deviations. That is the formula.
 
 The cross term is what averaging a product does. When shares are above their mean, are bonds usually above theirs too? Then the products are mostly positive and the cross term adds variance. Usually below? Then the products are mostly negative and the cross term takes variance away. No pattern? It averages to zero.
 
 ### Step 3: correlation puts the cross term on a fixed scale
 
-Covariance mixes two things: how strongly the returns move together, and how big they are. Dividing by both spreads leaves only the first: $\rho = c / (\sigma_A\sigma_B)$. The Cauchy–Schwarz inequality (the average of a product is at most the square root of the product of the average squares) keeps $\rho$ between −1 and +1. So the cross term is never bigger than $2w(1-w)\sigma_A\sigma_B$.
+Covariance mixes two things: how strongly the returns move together, and how big they are. Dividing by both spreads leaves only the first: $`\rho = c / (\sigma_A\sigma_B)`$. The Cauchy–Schwarz inequality (the average of a product is at most the square root of the product of the average squares) keeps $`\rho`$ between −1 and +1. So the cross term is never bigger than $`2w(1-w)\sigma_A\sigma_B`$.
 
 ### Step 4: the spread never exceeds the weighted average of spreads
 
-Put $\rho = 1$, the largest it can be. The variance becomes
+Put $`\rho = 1`$, the largest it can be. The variance becomes
 
-$$w^2\sigma_A^2 + (1-w)^2\sigma_B^2 + 2w(1-w)\sigma_A\sigma_B = \big(w\,\sigma_A + (1-w)\,\sigma_B\big)^2,$$
+```math
+w^2\sigma_A^2 + (1-w)^2\sigma_B^2 + 2w(1-w)\sigma_A\sigma_B = \big(w\,\sigma_A + (1-w)\,\sigma_B\big)^2,
+```
 
 a perfect square. The spread is then exactly the weighted average, 14.40% for 60-40. Any smaller correlation shrinks the cross term, so for weights between 0 and 1:
 
-$$\sigma_p \le w\,\sigma_A + (1-w)\,\sigma_B,$$
+```math
+\sigma_p \le w\,\sigma_A + (1-w)\,\sigma_B,
+```
 
-with strict inequality whenever $\rho < 1$ and both weights are positive. This is the theorem behind diversification. Mixing never makes the spread worse than the average, and makes it better whenever the two are not in lockstep.
+with strict inequality whenever $`\rho < 1`$ and both weights are positive. This is the theorem behind diversification. Mixing never makes the spread worse than the average, and makes it better whenever the two are not in lockstep.
 
-Put $\rho = -1$, the smallest. The variance becomes $\big(w\,\sigma_A - (1-w)\,\sigma_B\big)^2$, and the spread is the gap between the two weighted spreads. At $w = \sigma_B / (\sigma_A + \sigma_B) = 6/26 = 0.230769$ the gap is zero. The mix has no risk at all and still expects 4.92%. Every share loss is exactly cancelled by a bond gain.
+Put $`\rho = -1`$, the smallest. The variance becomes $`\big(w\,\sigma_A - (1-w)\,\sigma_B\big)^2`$, and the spread is the gap between the two weighted spreads. At $`w = \sigma_B / (\sigma_A + \sigma_B) = 6/26 = 0.230769`$ the gap is zero. The mix has no risk at all and still expects 4.92%. Every share loss is exactly cancelled by a bond gain.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -147,26 +165,32 @@ Top line (orange): correlation +1, the straight line. Middle line (green): corre
 
 ### Step 5: the least-risk mix, by completing the square
 
-The variance is a quadratic in $w$ (a formula with a $w^2$ term, a $w$ term and a constant). Collect the terms:
+The variance is a quadratic in $`w`$ (a formula with a $`w^2`$ term, a $`w`$ term and a constant). Collect the terms:
 
-$$\sigma_p^2 = d\,w^2 - 2(\sigma_B^2 - c)\,w + \sigma_B^2, \qquad d = \sigma_A^2 + \sigma_B^2 - 2c.$$
+```math
+\sigma_p^2 = d\,w^2 - 2(\sigma_B^2 - c)\,w + \sigma_B^2, \qquad d = \sigma_A^2 + \sigma_B^2 - 2c.
+```
 
-Here $d$ is the variance of the gap $R_A - R_B$, so it is never negative. When $d > 0$ the quadratic is a bowl, and its lowest point sits at $w^* = (\sigma_B^2 - c)/d$. For this market: $(0.0036 - 0.0024)/0.0388 = 0.030928$. About 3.09% in shares gives the calmest mix: mean 4.12%, spread 5.97%. That is calmer than bonds alone, at 6%.
+Here $`d`$ is the variance of the gap $`R_A - R_B`$, so it is never negative. When $`d > 0`$ the quadratic is a bowl, and its lowest point sits at $`w^* = (\sigma_B^2 - c)/d`$. For this market: $`(0.0036 - 0.0024)/0.0388 = 0.030928`$. About 3.09% in shares gives the calmest mix: mean 4.12%, spread 5.97%. That is calmer than bonds alone, at 6%.
 
-This is the surprise of the card. Adding a little of the riskier asset to the safer one lowers risk. At a small weight $w$, the shares' own piece is $w^2\sigma_A^2$: tiny, because $w^2$ is tiny. The bond piece shrinks by about $2w\sigma_B^2$, and the cross term grows by about $2wc$. Here $c = 0.0024$ is below $\sigma_B^2 = 0.0036$, so the shrink wins. That holds whenever $\rho < \sigma_B/\sigma_A$.
+This is the surprise of the card. Adding a little of the riskier asset to the safer one lowers risk. At a small weight $`w`$, the shares' own piece is $`w^2\sigma_A^2`$: tiny, because $`w^2`$ is tiny. The bond piece shrinks by about $`2w\sigma_B^2`$, and the cross term grows by about $`2wc`$. Here $`c = 0.0024`$ is below $`\sigma_B^2 = 0.0036`$, so the shrink wins. That holds whenever $`\rho < \sigma_B/\sigma_A`$.
 
 <details>
 <summary>Detailed proof: completing the square, and when $w^*$ lies between 0 and 1</summary>
 
-Start from $\sigma_p^2(w) = w^2\sigma_A^2 + (1-w)^2\sigma_B^2 + 2w(1-w)c$. Expand $(1-w)^2 = 1 - 2w + w^2$ and $w(1-w) = w - w^2$:
-$$\sigma_p^2 = w^2(\sigma_A^2 + \sigma_B^2 - 2c) - 2w(\sigma_B^2 - c) + \sigma_B^2.$$
-With $d = \sigma_A^2 + \sigma_B^2 - 2c = \operatorname{Var}(R_A - R_B) \ge 0$ and $d > 0$, complete the square:
-$$\sigma_p^2 = d\,(w - w^*)^2 + \sigma_B^2 - \frac{(\sigma_B^2 - c)^2}{d}, \qquad w^* = \frac{\sigma_B^2 - c}{d}.$$
-The first term is zero at $w^*$ and positive elsewhere, so $w^*$ is the unique minimum over all real weights. The minimum variance simplifies to $\sigma_A^2\sigma_B^2(1 - \rho^2)/d$.
+Start from $`\sigma_p^2(w) = w^2\sigma_A^2 + (1-w)^2\sigma_B^2 + 2w(1-w)c`$. Expand $`(1-w)^2 = 1 - 2w + w^2`$ and $`w(1-w) = w - w^2`$:
 
-$w^* > 0$ exactly when $c < \sigma_B^2$, that is when $\rho < \sigma_B/\sigma_A$ (0.3 here). With $\rho = 0.5$, $w^* = -0.075949$: the calmest mix would sell shares short (borrow shares and sell them, a negative weight). A fund that cannot sell short takes the nearest allowed weight, 0, and holds only bonds. By the same argument $w^* < 1$ exactly when $c < \sigma_A^2$.
+$`\displaystyle \sigma_p^2 = w^2(\sigma_A^2 + \sigma_B^2 - 2c) - 2w(\sigma_B^2 - c) + \sigma_B^2.`$
 
-If $d = 0$ the gap $R_A - R_B$ is a constant: the two assets move in lockstep up to a fixed offset. Every weight then has the same variance, and no weight is least-risk.
+With $`d = \sigma_A^2 + \sigma_B^2 - 2c = \mathrm{Var}(R_A - R_B) \ge 0`$ and $`d > 0`$, complete the square:
+
+$`\displaystyle \sigma_p^2 = d\,(w - w^*)^2 + \sigma_B^2 - \frac{(\sigma_B^2 - c)^2}{d}, \qquad w^* = \frac{\sigma_B^2 - c}{d}.`$
+
+The first term is zero at $`w^*`$ and positive elsewhere, so $`w^*`$ is the unique minimum over all real weights. The minimum variance simplifies to $`\sigma_A^2\sigma_B^2(1 - \rho^2)/d`$.
+
+$`w^* > 0`$ exactly when $`c < \sigma_B^2`$, that is when $`\rho < \sigma_B/\sigma_A`$ (0.3 here). With $`\rho = 0.5`$, $`w^* = -0.075949`$: the calmest mix would sell shares short (borrow shares and sell them, a negative weight). A fund that cannot sell short takes the nearest allowed weight, 0, and holds only bonds. By the same argument $`w^* < 1`$ exactly when $`c < \sigma_A^2`$.
+
+If $`d = 0`$ the gap $`R_A - R_B`$ is a constant: the two assets move in lockstep up to a fixed offset. Every weight then has the same variance, and no weight is least-risk.
 
 </details>
 
@@ -182,17 +206,17 @@ Shares: mean 8%, spread 20%. Bonds: mean 4%, spread 6%. Correlation 0.2. Weight 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| mean of the mix | $0.6 × 0.08 + 0.4 × 0.04$ | 6.40% |
-| share variance $\sigma_A^2$ | $0.20^2$ | 0.04 |
-| bond variance $\sigma_B^2$ | $0.06^2$ | 0.0036 |
-| covariance $c$ | $0.2 × 0.20 × 0.06$ | 0.0024 |
-| share piece | $0.6^2 × 0.04$ | 0.0144 |
-| bond piece | $0.4^2 × 0.0036$ | 0.000576 |
-| cross term | $2 × 0.6 × 0.4 × 0.0024$ | 0.001152 |
-| variance of the mix | $0.0144 + 0.000576 + 0.001152$ | 0.016128 |
-| **spread of the mix** | $\sqrt{0.016128}$ | **12.70%** |
-| weighted average of spreads | $0.6 × 20\% + 0.4 × 6\%$ | 14.40% |
-| diversification saving | $14.40 - 12.70$ | 1.70 points |
+| mean of the mix | $`0.6 × 0.08 + 0.4 × 0.04`$ | 6.40% |
+| share variance $`\sigma_A^2`$ | $`0.20^2`$ | 0.04 |
+| bond variance $`\sigma_B^2`$ | $`0.06^2`$ | 0.0036 |
+| covariance $`c`$ | $`0.2 × 0.20 × 0.06`$ | 0.0024 |
+| share piece | $`0.6^2 × 0.04`$ | 0.0144 |
+| bond piece | $`0.4^2 × 0.0036`$ | 0.000576 |
+| cross term | $`2 × 0.6 × 0.4 × 0.0024`$ | 0.001152 |
+| variance of the mix | $`0.0144 + 0.000576 + 0.001152`$ | 0.016128 |
+| **spread of the mix** | $`\sqrt{0.016128}`$ | **12.70%** |
+| weighted average of spreads | $`0.6 × 20\% + 0.4 × 6\%`$ | 14.40% |
+| diversification saving | $`14.40 - 12.70`$ | 1.70 points |
 
 One spread either side of the mean runs from −6.30% to 19.10%. If returns are roughly bell-shaped, about two years in three land in that range.
 
@@ -615,13 +639,13 @@ The two outputs are identical, including the simulation, since both use the same
 
 Lean proves the card's three results for any two returns with finite variance, and checks the worked numbers.
 
-- Take any real weight $w$, negative weights included. Then $\mu_p = w\,\mu_A + (1-w)\,\mu_B$.
-- Take the same weight $w$. Then $\sigma_p^2 = w^2\sigma_A^2 + (1-w)^2\sigma_B^2 + 2w(1-w)c$.
-- Take a weight $w$ between 0 and 1. Then $\sigma_p \le w\,\sigma_A + (1-w)\,\sigma_B$.
-- Take $0 < w < 1$ and $c < \sigma_A\sigma_B$, which is $\rho < 1$. Then the spread of the mix is strictly below the weighted average.
-- Take $d > 0$. Then $w^*$ gives the smallest variance, and every other real weight gives a strictly larger one.
+- Take any real weight $`w`$, negative weights included. Then $`\mu_p = w\,\mu_A + (1-w)\,\mu_B`$.
+- Take the same weight $`w`$. Then $`\sigma_p^2 = w^2\sigma_A^2 + (1-w)^2\sigma_B^2 + 2w(1-w)c`$.
+- Take a weight $`w`$ between 0 and 1. Then $`\sigma_p \le w\,\sigma_A + (1-w)\,\sigma_B`$.
+- Take $`0 < w < 1`$ and $`c < \sigma_A\sigma_B`$, which is $`\rho < 1`$. Then the spread of the mix is strictly below the weighted average.
+- Take $`d > 0`$. Then $`w^*`$ gives the smallest variance, and every other real weight gives a strictly larger one.
 - The 60-40 mix has mean 6.40% and variance 0.016128. The four-outcome ledger gives the same two numbers, dollar by dollar.
-- For this market $d$ = 0.0388 and $w^*$ = 3/97, about 0.030928. At correlation −1 the zero-risk weight is 3/13, with no variance.
+- For this market $`d`$ = 0.0388 and $`w^*`$ = 3/97, about 0.030928. At correlation −1 the zero-risk weight is 3/13, with no variance.
 
 Square roots such as 12.70%, the curve tables, the search and the simulation are left to the Python and Rust checks.
 
@@ -825,7 +849,7 @@ example : ((3 / 13 : ℚ) * (20 / 100) - (10 / 13) * (6 / 100)) ^ 2 = 0 := by no
 > **Adding the spreads by weight.** The spread of a mix is not 60% of one spread plus 40% of the other. That shortcut gives 14.40% for this market and is right only when the two assets move in perfect lockstep. Spreads do not add; variances add, plus a cross term. Any correlation below +1 pulls the true spread below the weighted average.
 >
 > - **Dropping the cross term.** Treating shares and bonds as unrelated gives 12.24%, too calm by half a point. The cross term is where the correlation lives.
-> - **Forgetting the 2.** The cross term is $2w(1-w)c$. Missing the 2 gives 12.47%.
+> - **Forgetting the 2.** The cross term is $`2w(1-w)c`$. Missing the 2 gives 12.47%.
 > - **Weights not squared.** A weight of 0.6 scales the variance by 0.6 squared, not by 0.6. Getting this wrong gives 16.31%.
 > - **Reading "less correlated" as "safer than the safer asset".** Diversification lowers the spread below the weighted average, not below the safer asset. The 60-40 mix, at 12.70%, is still twice as volatile as bonds alone.
 
@@ -836,7 +860,7 @@ example : ((3 / 13 : ℚ) * (20 / 100) - (10 / 13) * (6 / 100)) ^ 2 = 0 := by no
 - **The 60-40 fund.** Balanced funds and many pension default options hold roughly 60% shares and 40% bonds. The case for the mix is this card: bonds dilute the spread by more than their share of the money, because the two do not move in lockstep.
 - **When correlation turned.** The benefit rests on correlation staying low. In 2022 shares and bonds fell together as interest rates rose, and 60-40 funds lost heavily on both sides. A correlation that rises in a crisis shrinks the cross-term saving when it is needed.
 - **Currency hedging.** A foreign share held unhedged is a two-asset position: the share and the currency. Whether hedging the currency lowers the spread depends on the correlation between the two, by the same formula.
-- **The calmest mix is not all-bonds.** Whenever $\rho < \sigma_B/\sigma_A$, a sliver of the riskier asset lowers the spread; here the least-risk weight is 3.09% shares. A low-risk mandate that holds only bonds leaves that on the table.
+- **The calmest mix is not all-bonds.** Whenever $`\rho < \sigma_B/\sigma_A`$, a sliver of the riskier asset lowers the spread; here the least-risk weight is 3.09% shares. A low-risk mandate that holds only bonds leaves that on the table.
 - **Pricing risk.** How much a single asset adds to a portfolio's variance is its covariance with the portfolio, not its own variance. That is the idea behind [CAPM](04-capm-and-beta.md). Weighting assets so each contributes the same variance is [Risk parity](08-risk-parity-and-alternative-weightings.md).
 
 > **Say it back**

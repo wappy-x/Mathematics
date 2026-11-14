@@ -40,45 +40,51 @@ Falling line: the one-year forward rate for each year of the swap. Flat line: th
 
 ## The formula
 
-Notation first, in words. The swap pays on dates $T_1$ to $T_n$, one per year here, with $n = 5$; $T_0$ is the start, today. A small letter set low, like the $i$ in $T_i$, names which date. $D(T)$ is the discount factor: what one dollar paid at time $T$ costs today, with D(0) = 1. The Greek capital sigma, $\sum$, means "add up the terms for $i = 1$ to $n$".
+Notation first, in words. The swap pays on dates $`T_1`$ to $`T_n`$, one per year here, with $`n = 5`$; $`T_0`$ is the start, today. A small letter set low, like the $`i`$ in $`T_i`$, names which date. $`D(T)`$ is the discount factor: what one dollar paid at time $`T`$ costs today, with D(0) = 1. The Greek capital sigma, $`\sum`$, means "add up the terms for $`i = 1`$ to $`n`$".
 
-$$S = \frac{D(T_0) - D(T_n)}{A}, \qquad A = \sum_{i=1}^{n} \alpha_i \, D(T_i)$$
+```math
+S = \frac{D(T_0) - D(T_n)}{A}, \qquad A = \sum_{i=1}^{n} \alpha_i \, D(T_i)
+```
 
 **Read it aloud:** the par rate is one dollar today less one dollar at the end, divided by the price of one unit of rate paid on every payment date.
 
 The same number, written as an average:
 
-$$S = \sum_{i=1}^{n} w_i \, F_i, \qquad w_i = \frac{\alpha_i \, D(T_i)}{A}, \qquad F_i = \frac{1}{\alpha_i}\left(\frac{D(T_{i-1})}{D(T_i)} - 1\right)$$
+```math
+S = \sum_{i=1}^{n} w_i \, F_i, \qquad w_i = \frac{\alpha_i \, D(T_i)}{A}, \qquad F_i = \frac{1}{\alpha_i}\left(\frac{D(T_{i-1})}{D(T_i)} - 1\right)
+```
 
 **Read it aloud:** the par rate is each year's forward rate times that year's share of the annuity, added up.
 
 A swap already on the books at some other fixed rate is worth, to the side paying fixed:
 
-$$V = N \, A \, (S - K)$$
+```math
+V = N \, A \, (S - K)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | the par swap rate: the fixed rate that makes a new swap worth zero | 4.421030 percent | — |
-| $A$ | the annuity: what one unit of rate, paid on every fixed date, costs today, in years | 4.380745 | the par rate falls for the same floating leg |
-| $D(T)$, $T$ | the discount factor: today's price of one dollar paid at time $T$; its reciprocal is the growth factor, what a dollar grows to | 0.952381 at one year, 0.806326 at five; growth 1.050000 to 1.240193 | that period's forward falls, the next one rises, and its weight rises |
-| $T_i$, $T_0$, $T_1$, $T_n$ | payment dates in years; the start; the last date | 1 to 5; 0; 5 | a longer swap adds terms to both top and bottom |
-| $i$, $n$, $\sum$ | the count of a payment date; the number of payments; add up over $i$ | 1 to 5; 5 | — |
-| $\alpha_i$ | the accrual: the length of period $i$ as a fraction of a year | 1 every year | the payment for that period grows, and so does $A$ |
-| $F_i$ | the forward rate for period $i$, fixed today from the curve | 5.00 down to 4.00 percent | the par rate rises by that year's weight times the rise |
-| $w_i$ | the weight of year $i$: its share of the annuity | 21.7402 percent down to 18.4061 | — |
-| $L_i$, $L_1$, $L_2$ | the floating rate that will actually be set for period $i$, unknown today | — | the floating payment grows |
-| $N$ | the notional: the amount the interest is worked out on, never exchanged | 10,000,000 dollars | every value scales; the rate does not |
-| $K$ | the fixed rate written into a particular swap | 4.50 percent for the house swap | the value to the fixed payer falls by $N A$ per unit |
-| $V$ | the value today of a swap paying $K$ fixed and receiving floating | −34,594.64 dollars at 4.50 percent | — |
+| $`S`$ | the par swap rate: the fixed rate that makes a new swap worth zero | 4.421030 percent | — |
+| $`A`$ | the annuity: what one unit of rate, paid on every fixed date, costs today, in years | 4.380745 | the par rate falls for the same floating leg |
+| $`D(T)`$, $`T`$ | the discount factor: today's price of one dollar paid at time $`T`$; its reciprocal is the growth factor, what a dollar grows to | 0.952381 at one year, 0.806326 at five; growth 1.050000 to 1.240193 | that period's forward falls, the next one rises, and its weight rises |
+| $`T_i`$, $`T_0`$, $`T_1`$, $`T_n`$ | payment dates in years; the start; the last date | 1 to 5; 0; 5 | a longer swap adds terms to both top and bottom |
+| $`i`$, $`n`$, $`\sum`$ | the count of a payment date; the number of payments; add up over $`i`$ | 1 to 5; 5 | — |
+| $`\alpha_i`$ | the accrual: the length of period $`i`$ as a fraction of a year | 1 every year | the payment for that period grows, and so does $`A`$ |
+| $`F_i`$ | the forward rate for period $`i`$, fixed today from the curve | 5.00 down to 4.00 percent | the par rate rises by that year's weight times the rise |
+| $`w_i`$ | the weight of year $`i`$: its share of the annuity | 21.7402 percent down to 18.4061 | — |
+| $`L_i`$, $`L_1`$, $`L_2`$ | the floating rate that will actually be set for period $`i`$, unknown today | — | the floating payment grows |
+| $`N`$ | the notional: the amount the interest is worked out on, never exchanged | 10,000,000 dollars | every value scales; the rate does not |
+| $`K`$ | the fixed rate written into a particular swap | 4.50 percent for the house swap | the value to the fixed payer falls by $`N A`$ per unit |
+| $`V`$ | the value today of a swap paying $`K`$ fixed and receiving floating | −34,594.64 dollars at 4.50 percent | — |
 
-**Conventions verified 27 Sep 2026.** Every accrual here is set by hand to exactly one year, and both legs pay on the same dates, so the arithmetic stays visible. Real swaps compute each $\alpha_i$ from calendar dates under a day-count rule named in the contract, and the fixed and floating legs often use different rules and different frequencies; those rules are on [Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md). The formula does not change: $A$ always runs over the fixed leg's own dates and accruals.
+**Conventions verified 27 Sep 2026.** Every accrual here is set by hand to exactly one year, and both legs pay on the same dates, so the arithmetic stays visible. Real swaps compute each $`\alpha_i`$ from calendar dates under a day-count rule named in the contract, and the fixed and floating legs often use different rules and different frequencies; those rules are on [Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md). The formula does not change: $`A`$ always runs over the fixed leg's own dates and accruals.
 
 ### When it holds
 
 - **One curve forecasts and discounts.** The floating leg collapses to D(0) − D(5) only if the rate the floating leg pays is the rate the discount factors are built from. Since 2008 the two are separate curves, the collapse fails, and the floating leg must be summed coupon by coupon: [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md).
 - **No default.** Both sides are assumed to pay. A counterparty that can fail makes each leg worth less by its own credit charge, and collateral changes which rate discounts: [Collateral discounting](05-ois-discounting-and-collateral.md).
 - **The floating rate is set at the start of each period and paid at its end.** A rate set late, paid early, or averaged over the period needs a small adjustment to its forward.
-- **A new swap starts today.** For a swap starting later, $D(T_0)$ is below one and the same formula gives the forward swap rate.
+- **A new swap starts today.** For a swap starting later, $`D(T_0)`$ is below one and the same formula gives the forward swap rate.
 
 ---
 
@@ -90,36 +96,38 @@ No money changes hands when a swap is signed. If one leg were worth more than th
 
 ### Step 1: the fixed leg is the rate times the annuity
 
-In year $i$ the fixed payer hands over $N \alpha_i K$ dollars. That amount is known today, so its value today is $N \alpha_i K \, D(T_i)$. Add the five payments: $N K$ times the sum of $\alpha_i D(T_i)$, which is $N K A$.
+In year $`i`$ the fixed payer hands over $`N \alpha_i K`$ dollars. That amount is known today, so its value today is $`N \alpha_i K \, D(T_i)`$. Add the five payments: $`N K`$ times the sum of $`\alpha_i D(T_i)`$, which is $`N K A`$.
 
-So $A$ is the price of an annuity: one unit of rate (one dollar per dollar of notional per year) paid on every fixed date. Here it is 4.380745: five payments, each worth a little less than a dollar because each arrives later.
+So $`A`$ is the price of an annuity: one unit of rate (one dollar per dollar of notional per year) paid on every fixed date. Here it is 4.380745: five payments, each worth a little less than a dollar because each arrives later.
 
 ### Step 2: the floating leg is one dollar now less one dollar at the end
 
-The floating payments are unknown today. Their value is not. Take one dollar today and put it on deposit for a year at the rate set today, $L_1$. At the end of the year it pays $L_1$ in interest and the dollar comes back. Put the dollar back on deposit at the new rate $L_2$. Repeat for five years, then take the dollar home.
+The floating payments are unknown today. Their value is not. Take one dollar today and put it on deposit for a year at the rate set today, $`L_1`$. At the end of the year it pays $`L_1`$ in interest and the dollar comes back. Put the dollar back on deposit at the new rate $`L_2`$. Repeat for five years, then take the dollar home.
 
-That plan cost one dollar today. It delivers exactly the floating payments per dollar of notional, $\alpha_i L_i$ in each year, plus one dollar at the end. The dollar at the end costs D(5) today. So the floating payments alone are worth 1 − D(5), which is 0.193674 per dollar of notional: 1,936,740.46 dollars on 10 million.
+That plan cost one dollar today. It delivers exactly the floating payments per dollar of notional, $`\alpha_i L_i`$ in each year, plus one dollar at the end. The dollar at the end costs D(5) today. So the floating payments alone are worth 1 − D(5), which is 0.193674 per dollar of notional: 1,936,740.46 dollars on 10 million.
 
-Set the legs equal: $N K A = N(1 - D(5))$. The par rate is $S = (1 - D(5))/A$ = 0.193674 ÷ 4.380745 = 4.421030 percent.
+Set the legs equal: $`N K A = N(1 - D(5))`$. The par rate is $`S = (1 - D(5))/A`$ = 0.193674 ÷ 4.380745 = 4.421030 percent.
 
 <details>
 <summary>Detailed proof: the floating leg, coupon by coupon, and the telescope</summary>
 
-Hold a deposit of one dollar from $T_{i-1}$ to $T_i$. At $T_{i-1}$ the rate $L_i$ is set, and at $T_i$ the deposit returns $1 + \alpha_i L_i$. Its value at $T_{i-1}$ is one dollar, so its value today is $D(T_{i-1})$. The one dollar returned at $T_i$ is worth $D(T_i)$ today. So the coupon $\alpha_i L_i$ paid at $T_i$ is worth $D(T_{i-1}) - D(T_i)$ today, whatever $L_i$ turns out to be.
+Hold a deposit of one dollar from $`T_{i-1}`$ to $`T_i`$. At $`T_{i-1}`$ the rate $`L_i`$ is set, and at $`T_i`$ the deposit returns $`1 + \alpha_i L_i`$. Its value at $`T_{i-1}`$ is one dollar, so its value today is $`D(T_{i-1})`$. The one dollar returned at $`T_i`$ is worth $`D(T_i)`$ today. So the coupon $`\alpha_i L_i`$ paid at $`T_i`$ is worth $`D(T_{i-1}) - D(T_i)`$ today, whatever $`L_i`$ turns out to be.
 
-Write that value as $\alpha_i F_i D(T_i)$: this defines $F_i$ as the fixed rate that, paid in place of $L_i$, has the same value today. Solving gives $F_i = (D(T_{i-1})/D(T_i) - 1)/\alpha_i$, the forward rate of [Forward rate agreements](../02-Curves/02-forward-rate-agreements.md).
+Write that value as $`\alpha_i F_i D(T_i)`$: this defines $`F_i`$ as the fixed rate that, paid in place of $`L_i`$, has the same value today. Solving gives $`F_i = (D(T_{i-1})/D(T_i) - 1)/\alpha_i`$, the forward rate of [Forward rate agreements](../02-Curves/02-forward-rate-agreements.md).
 
-Add the five coupons. The middle terms cancel in pairs: $(D(T_0) - D(T_1)) + (D(T_1) - D(T_2)) + \dots + (D(T_4) - D(T_5)) = D(T_0) - D(T_5)$. A sum whose middle cancels like this is called telescoping. The fixed leg is $K A$ per dollar. Equal values give $K = (D(T_0) - D(T_n))/A$, and there is exactly one such $K$, because $A$ is positive: the fixed leg grows in a straight line with $K$ while the floating leg does not depend on it.
+Add the five coupons. The middle terms cancel in pairs: $`(D(T_0) - D(T_1)) + (D(T_1) - D(T_2)) + \dots + (D(T_4) - D(T_5)) = D(T_0) - D(T_5)`$. A sum whose middle cancels like this is called telescoping. The fixed leg is $`K A`$ per dollar. Equal values give $`K = (D(T_0) - D(T_n))/A`$, and there is exactly one such $`K`$, because $`A`$ is positive: the fixed leg grows in a straight line with $`K`$ while the floating leg does not depend on it.
 
 </details>
 
 ### Step 3: the same ratio is a weighted average of the forwards
 
-The proof's middle line says each floating payment is worth $\alpha_i F_i D(T_i)$. So the floating leg is the sum of those, and dividing by $A$ gives
+The proof's middle line says each floating payment is worth $`\alpha_i F_i D(T_i)`$. So the floating leg is the sum of those, and dividing by $`A`$ gives
 
-$$S = \frac{\sum \alpha_i F_i D(T_i)}{\sum \alpha_i D(T_i)} = \sum w_i F_i.$$
+```math
+S = \frac{\sum \alpha_i F_i D(T_i)}{\sum \alpha_i D(T_i)} = \sum w_i F_i.
+```
 
-Each weight $w_i$ is year $i$'s share of the annuity. The weights are positive and add to 1.000000. An average with positive weights that add to one always lands between the smallest and largest of the things averaged. Here, between 4.00 and 5.00 percent.
+Each weight $`w_i`$ is year $`i`$'s share of the annuity. The weights are positive and add to 1.000000. An average with positive weights that add to one always lands between the smallest and largest of the things averaged. Here, between 4.00 and 5.00 percent.
 
 ```
 weight of each year in the par rate, percent; one block = one percentage point
@@ -134,11 +142,11 @@ The weights fall because a dollar paid later is worth less today. The early forw
 
 ### Step 4: the annuity turns a rate gap into money
 
-A swap written last month at $K$ = 4.50 percent is no longer at par. Its fixed leg is $N K A$; its floating leg is still $N S A$, since that is what par means. The difference, to the fixed payer, is $V = N A (S - K)$.
+A swap written last month at $`K`$ = 4.50 percent is no longer at par. Its fixed leg is $`N K A`$; its floating leg is still $`N S A`$, since that is what par means. The difference, to the fixed payer, is $`V = N A (S - K)`$.
 
-Take the house swap, the example that runs through this shelf: 4.50 percent fixed on 10 million. That is 7.8970 basis points above today's par. Each basis point of fixed rate is worth $N A$ times one basis point: 4,380.74 dollars. So the fixed payer is down 34,594.64 dollars.
+Take the house swap, the example that runs through this shelf: 4.50 percent fixed on 10 million. That is 7.8970 basis points above today's par. Each basis point of fixed rate is worth $`N A`$ times one basis point: 4,380.74 dollars. So the fixed payer is down 34,594.64 dollars.
 
-On the curve of [Interest rate swaps](01-interest-rate-swaps.md) the same contract is worth +65,736.36 dollars: there par is 4.65 percent and $A$ is 4.382424. Same terms, different curve, opposite sign. The annuity is the exchange rate between a rate gap and money, and it is also the slope of the swap's value against its fixed rate.
+On the curve of [Interest rate swaps](01-interest-rate-swaps.md) the same contract is worth +65,736.36 dollars: there par is 4.65 percent and $`A`$ is 4.382424. Same terms, different curve, opposite sign. The annuity is the exchange rate between a rate gap and money, and it is also the slope of the swap's value against its fixed rate.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -149,12 +157,12 @@ xychart-beta
     line [184.44, 96.83, 9.21, -78.40, -166.02, -253.63]
 ```
 
-One line: the swap's value to the side paying fixed, by the fixed rate written into it. It is straight, falls by the same amount for every step in the fixed rate, and crosses zero at the par rate, just above 4.4 percent. The steepness of that line, per unit of rate, is $N A$.
+One line: the swap's value to the side paying fixed, by the fixed rate written into it. It is straight, falls by the same amount for every step in the fixed rate, and crosses zero at the par rate, just above 4.4 percent. The steepness of that line, per unit of rate, is $`N A`$.
 
 <details>
 <summary>The par bond view</summary>
 
-Add the notional to both legs at the end. The floating side becomes the deposit plan of Step 2, worth exactly one dollar today. The fixed side becomes a bond paying coupon $K$ each year and one dollar at maturity. A new swap is worth zero, so this bond must be worth one dollar: it trades at par, its face value. The par swap rate is the coupon of a par bond on the same curve, the par rate of [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md). The code's third road solves for that coupon directly.
+Add the notional to both legs at the end. The floating side becomes the deposit plan of Step 2, worth exactly one dollar today. The fixed side becomes a bond paying coupon $`K`$ each year and one dollar at maturity. A new swap is worth zero, so this bond must be worth one dollar: it trades at par, its face value. The par swap rate is the coupon of a par bond on the same curve, the par rate of [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md). The code's third road solves for that coupon directly.
 
 </details>
 
@@ -174,10 +182,10 @@ The curve is given by its five one-year forward rates: 5.00, 4.60, 4.30, 4.10 an
 | growth to year 4 | 1.145527 × (1 + 4.10 percent) | 1.192494 |
 | growth to year 5 | 1.192494 × (1 + 4.00 percent) | 1.240193 |
 | discount factors | 1 ÷ each growth factor | 0.952381, 0.910498, 0.872961, 0.838579, 0.806326 |
-| annuity $A$ | add the five | 4.380745 |
+| annuity $`A`$ | add the five | 4.380745 |
 | floating leg per dollar | 1 − 0.806326 | 0.193674 |
 | par rate, first road | 0.193674 ÷ 4.380745 | 4.421030 percent |
-| weights $w_i$ | each D ÷ 4.380745 | 21.7402, 20.7841, 19.9272, 19.1424, 18.4061 percent |
+| weights $`w_i`$ | each D ÷ 4.380745 | 21.7402, 20.7841, 19.9272, 19.1424, 18.4061 percent |
 | weight × forward | 1.087008 + 0.956068 + 0.856871 + 0.784838 + 0.736246 | 4.421030 percent |
 | **par rate** | both roads agree | **4.42 percent** |
 
@@ -196,7 +204,7 @@ A company can swap its five-year floating loan into a fixed 4.42 percent at no c
 
 ## Code, from first principles, and it actually runs
 
-The code builds the discount factors from the five forwards. It then reaches the par rate by three independent roads: the telescoped ratio $(1 - D(T_n))/A$; the weighted average of forwards; and a bisection search (halving a range of rates until it pins the answer) for the coupon of a par bond valued backwards year by year, which never forms $A$. It finds the annuity twice: as a sum of discount factors, and as the slope of the swap's value when the fixed rate is bumped. It values the 4.50 percent house swap twice: by backward recursion and by $N A (S - K)$. It then prints the wrong answers, the chart points and the experiments below. Last, it values the same 4.50 percent swap on the curve of [Interest rate swaps](01-interest-rate-swaps.md) and recovers that card's par quote of 4.65 percent.
+The code builds the discount factors from the five forwards. It then reaches the par rate by three independent roads: the telescoped ratio $`(1 - D(T_n))/A`$; the weighted average of forwards; and a bisection search (halving a range of rates until it pins the answer) for the coupon of a par bond valued backwards year by year, which never forms $`A`$. It finds the annuity twice: as a sum of discount factors, and as the slope of the swap's value when the fixed rate is bumped. It values the 4.50 percent house swap twice: by backward recursion and by $`N A (S - K)`$. It then prints the wrong answers, the chart points and the experiments below. Last, it values the same 4.50 percent swap on the curve of [Interest rate swaps](01-interest-rate-swaps.md) and recovers that card's par quote of 4.65 percent.
 
 ### Python
 
@@ -580,10 +588,10 @@ The two outputs agree line for line.
 
 Lean proves the formulas for every swap with positive accruals and discount factors, and checks this card's numbers exactly.
 
-- Take a fixed rate $K$, with each floating payment valued at its forward rate. Then the two legs are worth the same exactly when $K = (D(T_0) - D(T_n))/A$.
-- Take the weights $w_i = \alpha_i D(T_i)/A$. Then $S = \sum w_i F_i$: the par rate is the weighted average of the forward rates.
+- Take a fixed rate $`K`$, with each floating payment valued at its forward rate. Then the two legs are worth the same exactly when $`K = (D(T_0) - D(T_n))/A`$.
+- Take the weights $`w_i = \alpha_i D(T_i)/A`$. Then $`S = \sum w_i F_i`$: the par rate is the weighted average of the forward rates.
 - The weights are positive and add to one. So the par rate lies between the smallest and the largest forward rate.
-- Take a swap already on the books at fixed rate $K$. Then its value to the fixed payer is $V = N A (S - K)$.
+- Take a swap already on the books at fixed rate $`K`$. Then its value to the fixed payer is $`V = N A (S - K)`$.
 - On this card's curve, the annuity is 4.380745 to six places, and the par rate lies between 4.421025 and 4.421035 percent.
 - That par rate sits above the plain average of 4.40 percent, and the house swap is worth −34,594.64 dollars to the cent.
 
@@ -787,8 +795,8 @@ example :
 >
 > - **Counting the annuity from the wrong end.** Discount factors from D(0) to D(4) put each fixed payment a year early and give 4.233850 percent.
 > - **Leaving out the discounting.** An annuity of 5, one per year, gives 3.873481 percent. The top of the ratio is money today; the bottom must be too.
-> - **Confusing the par rate with a swap's own fixed rate.** Once signed, $K$ never changes. The par rate moves with the curve every day, and the gap between them, times $N A$, is the swap's value: −34,594.64 dollars for the house swap at 4.50 percent.
-> - **Using the floating leg's dates in the annuity.** When the fixed leg pays annually and the floating leg quarterly, $A$ runs over the annual fixed dates only.
+> - **Confusing the par rate with a swap's own fixed rate.** Once signed, $`K`$ never changes. The par rate moves with the curve every day, and the gap between them, times $`N A`$, is the swap's value: −34,594.64 dollars for the house swap at 4.50 percent.
+> - **Using the floating leg's dates in the annuity.** When the fixed leg pays annually and the floating leg quarterly, $`A`$ runs over the annual fixed dates only.
 
 ---
 
@@ -797,7 +805,7 @@ example :
 - **Every rates screen.** Swap dealers quote par rates for each maturity; the five-year swap rate is the fixed rate on a new five-year swap. A hedge is priced by reading it off.
 - **Building the curve.** Par swap rates are the long-end inputs from which discount factors are solved one maturity at a time: [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md). That is this card's formula run backwards.
 - **Marking a swap already on the books.** The value is the notional times the annuity times the gap between today's par rate and the swap's own rate: [Interest rate swaps](01-interest-rate-swaps.md).
-- **Risk per basis point.** $N A$ times one basis point is the first estimate of how much a swap moves when rates move one basis point, 4,380.74 dollars here: [Swap DV01](03-swap-dv01-and-hedging.md).
+- **Risk per basis point.** $`N A`$ times one basis point is the first estimate of how much a swap moves when rates move one basis point, 4,380.74 dollars here: [Swap DV01](03-swap-dv01-and-hedging.md).
 - **Credit default swaps.** The fair spread on a credit default swap is the same shape: the value of the protection leg divided by a risky annuity, whose discount factors include the chance the borrower survives: [The forward CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/04-forward-cds-and-the-forward-spread.md).
 
 > **Say it back**

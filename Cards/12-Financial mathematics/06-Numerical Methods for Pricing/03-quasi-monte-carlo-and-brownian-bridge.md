@@ -36,23 +36,29 @@ Date by date, draw 1 would set only the first step and draw 16 the last.
 
 ## The formula
 
-Three formulas: the average, the points under it, and the rule that turns a point into a path. First the notation, in words. A **coordinate** is one of the 16 numbers a point carries, one per draw the path needs. A **kick** is one draw from the bell curve, of spread one. **XOR**, written $\oplus$, adds binary digits with no carrying, so 1 ⊕ 1 = 0; it is not addition. A **direction number** is one of the fixed fractions a coordinate is built from.
+Three formulas: the average, the points under it, and the rule that turns a point into a path. First the notation, in words. A **coordinate** is one of the 16 numbers a point carries, one per draw the path needs. A **kick** is one draw from the bell curve, of spread one. **XOR**, written $`\oplus`$, adds binary digits with no carrying, so 1 ⊕ 1 = 0; it is not addition. A **direction number** is one of the fixed fractions a coordinate is built from.
 
 The estimate is an average, exactly as in plain simulation, but over fixed points:
 
-$$\hat C \;=\; \frac{1}{N}\sum_{i=0}^{N-1} f(u_i), \qquad u_{i,j} \;=\; \frac{a_{i,j} + \tfrac12}{N}$$
+```math
+\hat C \;=\; \frac{1}{N}\sum_{i=0}^{N-1} f(u_i), \qquad u_{i,j} \;=\; \frac{a_{i,j} + \tfrac12}{N}
+```
 
-**Read it aloud:** price 4,096 paths and take the average, where each path comes from one chosen point $u_i$ — its 16 coordinates $u_{i,1}$ to $u_{i,16}$ — rather than from a random number generator, and $f$ is what turns one point into one discounted payoff.
+**Read it aloud:** price 4,096 paths and take the average, where each path comes from one chosen point $`u_i`$ — its 16 coordinates $`u_{i,1}`$ to $`u_{i,16}`$ — rather than from a random number generator, and $`f`$ is what turns one point into one discounted payoff.
 
 Each coordinate of a Sobol point is an XOR of direction numbers, picked out by the binary digits of the point's index:
 
-$$a_{i,j} \;=\; \bigoplus_{k\,:\,\text{digit } k \text{ of } i \text{ is } 1} m_{k,j}\,2^{\,w-k}, \qquad v_{k,j} = \frac{m_{k,j}}{2^{\,k}}$$
+```math
+a_{i,j} \;=\; \bigoplus_{k\,:\,\text{digit } k \text{ of } i \text{ is } 1} m_{k,j}\,2^{\,w-k}, \qquad v_{k,j} = \frac{m_{k,j}}{2^{\,k}}
+```
 
 **Read it aloud:** write the point's number in binary, and XOR together the direction numbers its 1s select. The code grows every ladder 30 rungs deep once and shifts it down to the budget.
 
 The bridge fills a gap. Every gap it fills is split down the middle, so the straight line between the two known ends is their average:
 
-$$W_{\text{mid}} \;=\; \frac{W_{\text{left}} + W_{\text{right}}}{2} \;+\; \frac{\sqrt{t_{\text{right}} - t_{\text{left}}}}{2}\;z$$
+```math
+W_{\text{mid}} \;=\; \frac{W_{\text{left}} + W_{\text{right}}}{2} \;+\; \frac{\sqrt{t_{\text{right}} - t_{\text{left}}}}{2}\;z
+```
 
 **Read it aloud:** put the new date halfway between the two dates around it, then step off that line by one fresh kick, scaled by the width of the gap.
 
@@ -60,28 +66,28 @@ The two ends can be any pair of dates with an unfilled date halfway between them
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $K$, $r$, $q$, $\sigma$, $T$ | Acme's price, the strike, the bank rate, the dividend yield, the volatility, the years | 100, 100, 5%, 2%, 20%, 1 | the market this shelf prices everything in |
-| $C$ | what the call is really worth | 9.227006 | — |
-| $\hat C$ | what a method says it is worth | 9.226149 | — |
-| $N$ | how many points, always a power of two | 4,096 | the error falls, and for these points it falls fast |
-| $u_i$, $f$ | point $i$, meaning its 16 coordinates together; the rule that prices one point | — | — |
-| $i$, $j$, $k$ | which point, which coordinate of it (the code prints coordinates as dimensions), which rung of a coordinate's ladder | 0 to 4,095; 1 to 16; 1 to 12 | — |
-| $a_{i,j}$ | coordinate $j$ of point $i$, counted in whole grid steps | a whole number, 0 to 4,095 | — |
-| $u_{i,j}$ | that grid step nudged to the middle of its cell | 0.125 when $N$ is 4 | — |
-| $z$ | the kick a coordinate becomes, through the inverse bell curve | -1.150349 at $u$ = 0.125 | — |
-| $m_{k,j}$, $v_{k,j}$ | direction number $k$ of coordinate $j$, as a whole number and as a fraction | 1, 3, 5, 15, 17 over 2, 4, 8, 16, 32 | — |
-| $W_i$, $t_i$ | the path's accumulated wiggle at date $i$, and that date in years | date 16 is one year | — |
-| $w$ | how many halvings the budget is, so $N = 2^{\,w}$ | 12, since 4,096 = $2^{12}$ | — |
-| $\oplus$ | XOR: add binary digits, never carry | 1 ⊕ 1 = 0 | — |
+| $`S`$, $`K`$, $`r`$, $`q`$, $`\sigma`$, $`T`$ | Acme's price, the strike, the bank rate, the dividend yield, the volatility, the years | 100, 100, 5%, 2%, 20%, 1 | the market this shelf prices everything in |
+| $`C`$ | what the call is really worth | 9.227006 | — |
+| $`\hat C`$ | what a method says it is worth | 9.226149 | — |
+| $`N`$ | how many points, always a power of two | 4,096 | the error falls, and for these points it falls fast |
+| $`u_i`$, $`f`$ | point $`i`$, meaning its 16 coordinates together; the rule that prices one point | — | — |
+| $`i`$, $`j`$, $`k`$ | which point, which coordinate of it (the code prints coordinates as dimensions), which rung of a coordinate's ladder | 0 to 4,095; 1 to 16; 1 to 12 | — |
+| $`a_{i,j}`$ | coordinate $`j`$ of point $`i`$, counted in whole grid steps | a whole number, 0 to 4,095 | — |
+| $`u_{i,j}`$ | that grid step nudged to the middle of its cell | 0.125 when $`N`$ is 4 | — |
+| $`z`$ | the kick a coordinate becomes, through the inverse bell curve | -1.150349 at $`u`$ = 0.125 | — |
+| $`m_{k,j}`$, $`v_{k,j}`$ | direction number $`k`$ of coordinate $`j`$, as a whole number and as a fraction | 1, 3, 5, 15, 17 over 2, 4, 8, 16, 32 | — |
+| $`W_i`$, $`t_i`$ | the path's accumulated wiggle at date $`i`$, and that date in years | date 16 is one year | — |
+| $`w`$ | how many halvings the budget is, so $`N = 2^{\,w}`$ | 12, since 4,096 = $`2^{12}`$ | — |
+| $`\oplus`$ | XOR: add binary digits, never carry | 1 ⊕ 1 = 0 | — |
 
-That helper $f$ runs each coordinate through the inverse bell curve to get a kick, hands the 16 kicks to a build rule to get a path, reads Acme's price at the last date, and discounts what the option pays.
+That helper $`f`$ runs each coordinate through the inverse bell curve to get a kick, hands the 16 kicks to a build rule to get a path, reads Acme's price at the last date, and discounts what the option pays.
 
 ### When it holds
 
-- **The budget is a power of two.** At $N$ = 4,096 every coordinate visits all 4,096 cells of its own grid exactly once. Stop at 3,000 points instead and that even cover is gone, and nothing warns of it.
+- **The budget is a power of two.** At $`N`$ = 4,096 every coordinate visits all 4,096 cells of its own grid exactly once. Stop at 3,000 points instead and that even cover is gone, and nothing warns of it.
 - **The payoff's variation concentrates in the early coordinates.** This is what the bridge arranges. When it fails — a payoff that leans on all 16 dates equally — the error drifts back towards the date-by-date column, -0.164125 at 4,096 points.
 - **The payoff has no jumps.** Kinks are fine: the call's kink at the strike costs nothing measurable here. A digital's cliff is a different matter (a digital pays a fixed sum or nothing: [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md)), and the even cover buys much less.
-- **There is no error bar.** A deterministic rule has no sampling spread, so the usual scatter over root $N$ means nothing: it claims 0.216036 where the true error is 0.000856.
+- **There is no error bar.** A deterministic rule has no sampling spread, so the usual scatter over root $`N`$ means nothing: it claims 0.216036 where the true error is 0.000856.
 - **The dimension count stays modest, or hides.** 4,096 points cannot cover a 16-dimensional cube evenly in any strong sense. What saves the method is that the payoff does not really live in 16 dimensions.
 
 ---
@@ -106,13 +112,13 @@ It is no use as a guarantee: nobody can compute the wiggle measure for a real pa
 
 ### Step 2: building the points from bit patterns
 
-Each coordinate gets its own ladder of direction numbers: fractions $v_{k,j}$ whose $k$-th binary digit is 1 and whose later digits are anything. Coordinate 1 is the plainest ladder, a half, a quarter, an eighth.
+Each coordinate gets its own ladder of direction numbers: fractions $`v_{k,j}`$ whose $`k`$-th binary digit is 1 and whose later digits are anything. Coordinate 1 is the plainest ladder, a half, a quarter, an eighth.
 
-Every other coordinate takes its ladder from a **primitive polynomial** in the two-element arithmetic where 1 + 1 = 0: one whose root generates every nonzero element, which is what makes the ladder's digits fill up instead of repeating early. The code tests that rather than trusting it, by counting multiplications by $x$ before the answer returns to 1: for degree 5 the count must be 31, and all 15 polynomials pass.
+Every other coordinate takes its ladder from a **primitive polynomial** in the two-element arithmetic where 1 + 1 = 0: one whose root generates every nonzero element, which is what makes the ladder's digits fill up instead of repeating early. The code tests that rather than trusting it, by counting multiplications by $`x`$ before the answer returns to 1: for degree 5 the count must be 31, and all 15 polynomials pass.
 
-The recurrence that grows a ladder from that polynomial shifts the earlier whole numbers and XORs them together. For coordinate 2, whose polynomial is $x + 1$, it reads $m_k = 2m_{k-1} \oplus m_{k-1}$, so the ladder is 1, 3, 5, 15, 17; coordinate 3 gives 1, 1, 7, 11, 13.
+The recurrence that grows a ladder from that polynomial shifts the earlier whole numbers and XORs them together. For coordinate 2, whose polynomial is $`x + 1`$, it reads $`m_k = 2m_{k-1} \oplus m_{k-1}`$, so the ladder is 1, 3, 5, 15, 17; coordinate 3 gives 1, 1, 7, 11, 13.
 
-To get point $i$, write $i$ in binary and XOR the direction numbers its 1s pick out. The digit map from index to coordinate is then triangular with 1s down its diagonal, so it can be run backwards uniquely: every grid value is hit exactly once as $i$ runs over the budget. The code confirms it for all 16 coordinates at all five budgets.
+To get point $`i`$, write $`i`$ in binary and XOR the direction numbers its 1s pick out. The digit map from index to coordinate is then triangular with 1s down its diagonal, so it can be run backwards uniquely: every grid value is hit exactly once as $`i`$ runs over the budget. The code confirms it for all 16 coordinates at all five budgets.
 
 ### Step 3: the half-cell nudge
 
@@ -135,7 +141,7 @@ The bridge uses two properties of Brownian motion and nothing else. Its value at
 
 Take a gap with the path known at both ends and an unfilled date exactly halfway. Conditioning one bell-curve draw on another is standard work, and it gives that middle value as a bell-curve draw whose mean is the average of the two ends and whose spread is half the root of the gap's width. Averaging the ends and adding one independent kick of that size is exactly that draw, which is the formula above.
 
-Now induct on the halvings. Start with the end of the year, $W_{16} = \sqrt{T}\,z_1$: correct, since its spread is the root of a year. Each later step fills a gap whose ends are already correct, using a kick independent of everything drawn so far, so by the paragraph above that date gets its correct conditional law. After 15 such steps every date has been filled, so the whole collection has the joint law of the process sampled at those dates.
+Now induct on the halvings. Start with the end of the year, $`W_{16} = \sqrt{T}\,z_1`$: correct, since its spread is the root of a year. Each later step fills a gap whose ends are already correct, using a kick independent of everything drawn so far, so by the paragraph above that date gets its correct conditional law. After 15 such steps every date has been filled, so the whole collection has the joint law of the process sampled at those dates.
 
 The mechanical version of the same claim is the covariance test. Write the build rule as a table of numbers, so that the path is that table applied to the kicks. Since the kicks are independent and each has unit spread, the wiggle shared by two dates is the dot product of their two rows of the table. That dot product must equal the earlier date's time in years, for all 256 pairs. Both build rules pass, which pins them to the same process without any appeal to the argument above.
 
@@ -192,7 +198,7 @@ A different route to the same gain gives the error bar back: shift every point b
 
 ## Worked numbers, by hand
 
-The whole machine on four points, which is small enough to check with a pencil. Acme: $S$ = 100, $K$ = 100, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%, $T$ = 1 year, and the drift inside the exponent is $r - q - \tfrac12\sigma^2$ = 0.01.
+The whole machine on four points, which is small enough to check with a pencil. Acme: $`S`$ = 100, $`K`$ = 100, $`r`$ = 5%, $`q`$ = 2%, $`\sigma`$ = 20%, $`T`$ = 1 year, and the drift inside the exponent is $`r - q - \tfrac12\sigma^2`$ = 0.01.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -215,7 +221,7 @@ Four points give 8.27: the error is -0.954834, because four cells cannot see the
 | --- | --- | --- |
 | The same 4,096 points, path built date by date | 9.062881, error -0.164125 | the payoff's variation is spread over all 16 coordinates, where the even cover is weak: 192 times the bridge's error |
 | Four times the budget, still date by date | 9.203952, error -0.023054 | 16,384 points in date order are still 27 times further off than 4,096 in bridge order |
-| Quoting the payoff scatter over root $N$ as an error bar | 0.216036 | there is no sampling error to estimate; the true error was 0.000856, so the bar is not wrong by a little |
+| Quoting the payoff scatter over root $`N`$ as an error bar | 0.216036 | there is no sampling error to estimate; the true error was 0.000856, so the bar is not wrong by a little |
 | Using 4,096 random paths instead | error bar 0.209141, this run -0.175625 | the square root law, working exactly as advertised |
 
 Every number in that table is printed by the code below.
@@ -633,16 +639,16 @@ The two outputs match line for line: two languages, one series for the bell-curv
 
 Lean proves the even cover for every power-of-two budget, proves the bridge step for every gap, and checks the worked numbers.
 
-- Suppose $N = 2^w$, and each direction number $m_{k,j}$ for $k$ = 1 to $w$ is odd and below $2^k$. Then coordinate $j$ of points 0 to $N - 1$ hits each grid value 0 to $N - 1$ exactly once.
+- Suppose $`N = 2^w`$, and each direction number $`m_{k,j}`$ for $`k`$ = 1 to $`w`$ is odd and below $`2^k`$. Then coordinate $`j`$ of points 0 to $`N - 1`$ hits each grid value 0 to $`N - 1`$ exactly once.
 - Suppose every pair of dates filled so far shares the earlier date's time as wiggle, and the new kick is independent of them. Then the gap's middle date, filled by the bridge formula, keeps that rule with itself and every filled date.
-- The budget 4,096 is $2^{12}$, so $w$ = 12.
+- The budget 4,096 is $`2^{12}`$, so $`w`$ = 12.
 - The 15 polynomial degrees are 1, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6 and 6.
-- All 15 polynomials are primitive. For degree 5, $x$ returns to 1 after exactly 31 multiplications.
-- The polynomial $x^2 + 1$ is not primitive: $x$ returns to 1 after 2 multiplications.
-- Coordinate 2's $m_1$ to $m_5$ are 1, 3, 5, 15, 17; coordinate 3's are 1, 1, 7, 11, 13. Each is odd and below $2^k$.
+- All 15 polynomials are primitive. For degree 5, $`x`$ returns to 1 after exactly 31 multiplications.
+- The polynomial $`x^2 + 1`$ is not primitive: $`x`$ returns to 1 after 2 multiplications.
+- Coordinate 2's $`m_1`$ to $`m_5`$ are 1, 3, 5, 15, 17; coordinate 3's are 1, 1, 7, 11, 13. Each is odd and below $`2^k`$.
 - On a budget of 4, coordinate 1 gives 0, 2, 1 and 3 quarters. The nudge turns them into 0.125, 0.625, 0.375 and 0.875.
 - On 32 points, coordinates 2 and 3 each visit all 32 cells exactly once.
-- The drift inside the exponent, $r - q - \tfrac12\sigma^2$, is 0.01.
+- The drift inside the exponent, $`r - q - \tfrac12\sigma^2`$, is 0.01.
 - In bridge order, draw 1 carries 68.75 per cent of the path's wiggle.
 - In date order, draws 1, 1 to 2, 1 to 4 and 1 to 8 carry 16, 31, 58 and 100 parts of 136.
 
@@ -934,7 +940,7 @@ end QuasiMonteCarloAndBrownianBridge
 ## The usual mistake
 
 > [!warning]
-> **Quoting a standard error for a quasi-Monte Carlo price.** The points are fixed. Run it twice and the same number comes back, so there is no sampling spread to measure. The payoff scatter over root $N$ comes out at 0.216036 here while the true error is 0.000856: the bar is not merely inaccurate, it is measuring something that does not exist. Randomise the points if an honest bar is needed.
+> **Quoting a standard error for a quasi-Monte Carlo price.** The points are fixed. Run it twice and the same number comes back, so there is no sampling spread to measure. The payoff scatter over root $`N`$ comes out at 0.216036 here while the true error is 0.000856: the bar is not merely inaccurate, it is measuring something that does not exist. Randomise the points if an honest bar is needed.
 >
 > Four smaller traps, each with its own wrong number:
 > - **Using even points with a date-by-date build.** Same points, same payoff, and the error goes from 0.000856 to 0.164125. The build rule is not a detail. It is the method.

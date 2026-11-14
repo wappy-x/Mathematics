@@ -35,50 +35,58 @@ One line: the loss that only the stated share of days stays under. It is $14,978
 
 ## The formula
 
-Notation first, in words. The normal card wrote $\Phi(z)$ for the area under the standard bell curve (centre 0, spread 1) to the left of $z$, the chance that a standard normal value lands below $z$. This card writes $\Phi^{-1}(p)$, read "the normal quantile of $p$", for the reverse: the $z$ whose left area is exactly $p$. The finance wing writes the same area $N(z)$ and the quantile $N^{-1}(p)$.
+Notation first, in words. The normal card wrote $`\Phi(z)`$ for the area under the standard bell curve (centre 0, spread 1) to the left of $`z`$, the chance that a standard normal value lands below $`z`$. This card writes $`\Phi^{-1}(p)`$, read "the normal quantile of $`p`$", for the reverse: the $`z`$ whose left area is exactly $`p`$. The finance wing writes the same area $`N(z)`$ and the quantile $`N^{-1}(p)`$.
 
-$$\Phi(z_p) = p \quad\Longleftrightarrow\quad z_p = \Phi^{-1}(p)$$
+```math
+\Phi(z_p) = p \quad\Longleftrightarrow\quad z_p = \Phi^{-1}(p)
+```
 
-$$x_p = \mu + \sigma\, z_p, \qquad L = -W\, x_p$$
+```math
+x_p = \mu + \sigma\, z_p, \qquad L = -W\, x_p
+```
 
-**Read it aloud:** find the standard cutoff with chance $p$ below it, stretch it by the spread, shift it by the centre, and turn the return into dollars lost.
+**Read it aloud:** find the standard cutoff with chance $`p`$ below it, stretch it by the spread, shift it by the centre, and turn the return into dollars lost.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the tail chance: probability that the day lands below the cutoff | 0.01 (99 percent level) | cutoff moves up, loss level falls |
-| $\Phi$ | standard normal cumulative area: chance a standard normal value lands left of $z$ | $\Phi(-2.3263478740) = 0.01$ | — |
-| $\Phi^{-1}(p)$, $z_p$ | the normal quantile: the standard cutoff with left area $p$ | −2.3263478740 | — |
-| $\phi$ | the bell curve's height, $e^{-z^2/2}/\sqrt{2\pi}$; also the slope of $\Phi$ | 0.026652 at $z_p$ | steeper $\Phi$, cutoff easier to pin down |
-| $X$, $Z$ | the day's return, and the standard normal value it is built from, $X = \mu + \sigma Z$ | — | — |
-| $\mu$ | centre of the daily return | 0.0004 (0.04 percent) | loss level falls by $W$ times the rise |
-| $\sigma$ | spread of the daily return (standard deviation) | 0.012 (1.2 percent) | loss level rises in proportion |
-| $x_p$ | the return with chance $p$ below it | −0.027516 | — |
-| $W$ | dollars held | $1,000,000 | loss level rises in proportion |
-| $L$ | the loss level, $-W x_p$ | $27,516.17 | — |
-| $t$ | the tail variable $\sqrt{-2\ln p}$ in the rational formula | 3.034854 | — |
-| $c_0,c_1,c_2,d_1,d_2,d_3$ | fixed constants of the rational formula | 2.515517, 0.802853, 0.010328, 1.432788, 0.189269, 0.001308 | — |
+| $`p`$ | the tail chance: probability that the day lands below the cutoff | 0.01 (99 percent level) | cutoff moves up, loss level falls |
+| $`\Phi`$ | standard normal cumulative area: chance a standard normal value lands left of $`z`$ | $`\Phi(-2.3263478740) = 0.01`$ | — |
+| $`\Phi^{-1}(p)`$, $`z_p`$ | the normal quantile: the standard cutoff with left area $`p`$ | −2.3263478740 | — |
+| $`\phi`$ | the bell curve's height, $`e^{-z^2/2}/\sqrt{2\pi}`$; also the slope of $`\Phi`$ | 0.026652 at $`z_p`$ | steeper $`\Phi`$, cutoff easier to pin down |
+| $`X`$, $`Z`$ | the day's return, and the standard normal value it is built from, $`X = \mu + \sigma Z`$ | — | — |
+| $`\mu`$ | centre of the daily return | 0.0004 (0.04 percent) | loss level falls by $`W`$ times the rise |
+| $`\sigma`$ | spread of the daily return (standard deviation) | 0.012 (1.2 percent) | loss level rises in proportion |
+| $`x_p`$ | the return with chance $`p`$ below it | −0.027516 | — |
+| $`W`$ | dollars held | $1,000,000 | loss level rises in proportion |
+| $`L`$ | the loss level, $`-W x_p`$ | $27,516.17 | — |
+| $`t`$ | the tail variable $`\sqrt{-2\ln p}`$ in the rational formula | 3.034854 | — |
+| $`c_0,c_1,c_2,d_1,d_2,d_3`$ | fixed constants of the rational formula | 2.515517, 0.802853, 0.010328, 1.432788, 0.189269, 0.001308 | — |
 
 Three helper formulas do the computing.
 
-Bisection (halving a bracket): keep an interval with $\Phi$ below $p$ at its left end and above $p$ at its right end, test the midpoint, and keep the half that still straddles $p$.
+Bisection (halving a bracket): keep an interval with $`\Phi`$ below $`p`$ at its left end and above $`p`$ at its right end, test the midpoint, and keep the half that still straddles $`p`$.
 
-Newton's step (the slope of $\Phi$ is $\phi$):
+Newton's step (the slope of $`\Phi`$ is $`\phi`$):
 
-$$z_{\text{new}} = z - \frac{\Phi(z) - p}{\phi(z)}$$
+```math
+z_{\text{new}} = z - \frac{\Phi(z) - p}{\phi(z)}
+```
 
-The rational starting guess, for $p \le 1/2$ (Abramowitz and Stegun formula 26.2.23, due to Cecil Hastings):
+The rational starting guess, for $`p \le 1/2`$ (Abramowitz and Stegun formula 26.2.23, due to Cecil Hastings):
 
-$$z_p \approx -\left(t - \frac{c_0 + c_1 t + c_2 t^2}{1 + d_1 t + d_2 t^2 + d_3 t^3}\right), \qquad t = \sqrt{-2\ln p}$$
+```math
+z_p \approx -\left(t - \frac{c_0 + c_1 t + c_2 t^2}{1 + d_1 t + d_2 t^2 + d_3 t^3}\right), \qquad t = \sqrt{-2\ln p}
+```
 
-Its error is below 0.00045 for every $p$ in that range.
+Its error is below 0.00045 for every $`p`$ in that range.
 
 ### When it holds
 
 - **The return is normal.** Real daily returns have fatter tails than the bell curve. The normal level then understates the worst days; see [Heavy tails](08-heavy-tails-pareto-and-cauchy.md).
-- **The centre and spread are known.** In practice both are estimates. An error in $\sigma$ moves the loss level in proportion: a spread of 2.4 percent gives $55,432.35.
-- **The tail chance is strictly between 0 and 1.** No finite $z$ has left area 0 or 1: the cutoff runs off to minus infinity as $p \to 0$ and plus infinity as $p \to 1$. The bracket used below, −6 to 6, covers $p$ down to about 1 in a billion, $\Phi(-6)$.
-- **The rational formula is for the lower half.** For $p > 1/2$ use symmetry, $z_{1-p} = -z_p$.
-- **The area is computed accurately where it is used.** The series for $\Phi$ on this card works for tail chances down to 0.001. Much farther out, one half minus nearly one half loses digits, and a tail formula is needed.
+- **The centre and spread are known.** In practice both are estimates. An error in $`\sigma`$ moves the loss level in proportion: a spread of 2.4 percent gives $55,432.35.
+- **The tail chance is strictly between 0 and 1.** No finite $`z`$ has left area 0 or 1: the cutoff runs off to minus infinity as $`p \to 0`$ and plus infinity as $`p \to 1`$. The bracket used below, −6 to 6, covers $`p`$ down to about 1 in a billion, $`\Phi(-6)`$.
+- **The rational formula is for the lower half.** For $`p > 1/2`$ use symmetry, $`z_{1-p} = -z_p`$.
+- **The area is computed accurately where it is used.** The series for $`\Phi`$ on this card works for tail chances down to 0.001. Much farther out, one half minus nearly one half loses digits, and a tail formula is needed.
 
 ---
 
@@ -86,23 +94,25 @@ Its error is below 0.00045 for every $p$ in that range.
 
 ### Step 0: read the cumulative curve backwards
 
-The cumulative curve $\Phi$ takes a cutoff and returns a probability. A quantile takes a probability and returns a cutoff. On a graph, that is the same curve read from the other axis: go up the probability axis to 0.01, across to the curve, down to the cutoff. Everything below is about doing that reading precisely, since the curve has no formula that can be turned round by algebra.
+The cumulative curve $`\Phi`$ takes a cutoff and returns a probability. A quantile takes a probability and returns a cutoff. On a graph, that is the same curve read from the other axis: go up the probability axis to 0.01, across to the curve, down to the cutoff. Everything below is about doing that reading precisely, since the curve has no formula that can be turned round by algebra.
 
 ### Step 1: there is exactly one answer
 
-$\Phi$ is continuous, climbs strictly (its slope $\phi$ is positive everywhere), tends to 0 far to the left and to 1 far to the right. A continuous curve that goes from below 0.01 to above 0.01 must cross 0.01 somewhere (the intermediate value theorem). A curve that only climbs crosses it once. So for every $p$ strictly between 0 and 1 there is one cutoff, $z_p$, and $\Phi^{-1}$ is a genuine function. Densities and cumulative curves in general are on [Densities](01-densities-and-cdfs.md).
+$`\Phi`$ is continuous, climbs strictly (its slope $`\phi`$ is positive everywhere), tends to 0 far to the left and to 1 far to the right. A continuous curve that goes from below 0.01 to above 0.01 must cross 0.01 somewhere (the intermediate value theorem). A curve that only climbs crosses it once. So for every $`p`$ strictly between 0 and 1 there is one cutoff, $`z_p`$, and $`\Phi^{-1}`$ is a genuine function. Densities and cumulative curves in general are on [Densities](01-densities-and-cdfs.md).
 
 ### Step 2: every normal is a stretched standard one
 
-Write the return as $X = \mu + \sigma Z$, where $Z$ is standard normal. For a positive spread, $X$ lands below $\mu + \sigma z$ exactly when $Z$ lands below $z$. So the two events have the same chance, written $P(\cdot)$, and the cutoffs match:
+Write the return as $`X = \mu + \sigma Z`$, where $`Z`$ is standard normal. For a positive spread, $`X`$ lands below $`\mu + \sigma z`$ exactly when $`Z`$ lands below $`z`$. So the two events have the same chance, written $`P(\cdot)`$, and the cutoffs match:
 
-$$P(X \le \mu + \sigma z_p) = P(Z \le z_p) = p.$$
+```math
+P(X \le \mu + \sigma z_p) = P(Z \le z_p) = p.
+```
 
 One standard quantile serves every normal law. For the share: 0.0004 + 0.012 × (−2.3263478740) = −0.027516.
 
 ### Step 3: symmetry halves the work
 
-The bell curve is a mirror image about zero. The area left of $-z$ equals the area right of $z$, so $z_{1-p} = -z_p$. The 99 percent upper cutoff is 2.33 and the 1 percent lower cutoff is −2.33, the same number with the sign flipped. Code needs to handle only $p \le 1/2$.
+The bell curve is a mirror image about zero. The area left of $`-z`$ equals the area right of $`z`$, so $`z_{1-p} = -z_p`$. The 99 percent upper cutoff is 2.33 and the 1 percent lower cutoff is −2.33, the same number with the sign flipped. Code needs to handle only $`p \le 1/2`$.
 
 ### Step 4: bisection, the search that cannot miss
 
@@ -110,43 +120,47 @@ Start with the bracket from −6 to 6. At −6 the area is below 0.01; at 6 it i
 
 Sixty halvings shrink the 12-wide bracket below the spacing of floating-point numbers near 2.3, so what limits the answer is the accuracy of the area, not the bracket. The midpoint agrees with the printed tables to about 14 digits: −2.3263478740.
 
-Bisection is slow, 60 area computations, but it needs only two facts: $\Phi$ climbs, and the bracket straddles $p$.
+Bisection is slow, 60 area computations, but it needs only two facts: $`\Phi`$ climbs, and the bracket straddles $`p`$.
 
 <details>
 <summary>Where the series for the area comes from</summary>
 
-The code computes $\Phi(z) = \tfrac12 + \phi(z)\,\bigl(z + z^3/3 + z^5/(3\cdot 5) + z^7/(3\cdot5\cdot7) + \cdots\bigr)$. Call the bracket $G(z)$. The area from 0 to $z$ is $\phi(z) G(z)$, so $G(z) = e^{z^2/2}\int_0^z e^{-s^2/2}\,ds$. Differentiating the product gives $G'(z) = 1 + z\,G(z)$. Put $G = a_0 z + a_1 z^3 + a_2 z^5 + \cdots$ into that and match powers: $a_0 = 1$ and $(2k+1)a_k = a_{k-1}$, which gives the odd-number products in the denominators. The code checks the result against a Simpson integral (the area summed over thin strips, with a parabola fitted across each pair) at the answer: both give 0.010000000000.
+The code computes $`\Phi(z) = \tfrac12 + \phi(z)\,\bigl(z + z^3/3 + z^5/(3\cdot 5) + z^7/(3\cdot5\cdot7) + \cdots\bigr)`$. Call the bracket $`G(z)`$. The area from 0 to $`z`$ is $`\phi(z) G(z)`$, so $`G(z) = e^{z^2/2}\int_0^z e^{-s^2/2}\,ds`$. Differentiating the product gives $`G'(z) = 1 + z\,G(z)`$. Put $`G = a_0 z + a_1 z^3 + a_2 z^5 + \cdots`$ into that and match powers: $`a_0 = 1`$ and $`(2k+1)a_k = a_{k-1}`$, which gives the odd-number products in the denominators. The code checks the result against a Simpson integral (the area summed over thin strips, with a parabola fitted across each pair) at the answer: both give 0.010000000000.
 
 </details>
 
 ### Step 5: Newton's method, the fast polish
 
-Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) replaces a curve by its tangent line and jumps to where the tangent hits the target. The slope of $\Phi$ is the bell curve's height $\phi$, so the tangent at $z$ reaches $p$ after a step of $(\Phi(z) - p)/\phi(z)$, the helper formula above.
+Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) replaces a curve by its tangent line and jumps to where the tangent hits the target. The slope of $`\Phi`$ is the bell curve's height $`\phi`$, so the tangent at $`z`$ reaches $`p`$ after a step of $`(\Phi(z) - p)/\phi(z)`$, the helper formula above.
 
 Near the answer, each step roughly squares the error. From the rational guess, off by 0.0004374585, one step leaves 0.0000002227 and a second step lands on the bisection answer to ten decimals.
 
 <details>
 <summary>Detailed proof: why one Newton step squares the error</summary>
 
-Let the current guess be $z = z_p + \varepsilon_0$, off by a small amount. Expand both pieces of the step around $z_p$, using $\Phi' = \phi$ and $\phi'(z) = -z\,\phi(z)$ (differentiate $e^{-z^2/2}$):
-$$\Phi(z) - p = \phi(z_p)\,\varepsilon_0 - \tfrac12 z_p \phi(z_p)\,\varepsilon_0^2 + \cdots, \qquad \phi(z) = \phi(z_p)\,(1 - z_p \varepsilon_0 + \cdots).$$
-Divide: the step is $\varepsilon_0\,(1 + \tfrac12 z_p \varepsilon_0 + \cdots)$. Subtract it from the guess. The new error is
-$$\varepsilon_1 = -\tfrac12 z_p\,\varepsilon_0^2 + (\text{terms in } \varepsilon_0^3).$$
-At the 1 percent point $-\tfrac12 z_p$ is half of 2.33. The rational guess had $\varepsilon_0 = -0.0004374585$; half of 2.33 times its square matches the printed one-step error, 0.0000002227. The error's digits double with every step, which is why two steps finish the job.
+Let the current guess be $`z = z_p + \varepsilon_0`$, off by a small amount. Expand both pieces of the step around $`z_p`$, using $`\Phi' = \phi`$ and $`\phi'(z) = -z\,\phi(z)`$ (differentiate $`e^{-z^2/2}`$):
+
+$`\displaystyle \Phi(z) - p = \phi(z_p)\,\varepsilon_0 - \tfrac12 z_p \phi(z_p)\,\varepsilon_0^2 + \cdots, \qquad \phi(z) = \phi(z_p)\,(1 - z_p \varepsilon_0 + \cdots).`$
+
+Divide: the step is $`\varepsilon_0\,(1 + \tfrac12 z_p \varepsilon_0 + \cdots)`$. Subtract it from the guess. The new error is
+
+$`\displaystyle \varepsilon_1 = -\tfrac12 z_p\,\varepsilon_0^2 + (\text{terms in } \varepsilon_0^3).`$
+
+At the 1 percent point $`-\tfrac12 z_p`$ is half of 2.33. The rational guess had $`\varepsilon_0 = -0.0004374585`$; half of 2.33 times its square matches the printed one-step error, 0.0000002227. The error's digits double with every step, which is why two steps finish the job.
 
 </details>
 
-The squaring holds only near the answer. Far out in the tail $\phi$ is almost zero, the tangent is almost flat, and the step is enormous: from $z = -5$, one step lands at 6721.0, where $\phi$ is 0.0 in floating point and the next step divides by zero. Libraries therefore start Newton from a guess already close, or fall back to bisection when a step leaves the bracket.
+The squaring holds only near the answer. Far out in the tail $`\phi`$ is almost zero, the tangent is almost flat, and the step is enormous: from $`z = -5`$, one step lands at 6721.0, where $`\phi`$ is 0.0 in floating point and the next step divides by zero. Libraries therefore start Newton from a guess already close, or fall back to bisection when a step leaves the bracket.
 
 ### Step 6: a rational formula for the starting guess
 
-Where does a close guess come from without searching? From the shape of the tail. Far out, the left area is roughly the bell's height divided by the distance, and the height is $e^{-z^2/2}$ up to a constant. Setting $e^{-z^2/2} \approx p$ and solving gives $|z| \approx \sqrt{-2\ln p} = t$. For $p = 0.01$ that is 3.034854, too far out, because the division and the constant were ignored.
+Where does a close guess come from without searching? From the shape of the tail. Far out, the left area is roughly the bell's height divided by the distance, and the height is $`e^{-z^2/2}`$ up to a constant. Setting $`e^{-z^2/2} \approx p`$ and solving gives $`|z| \approx \sqrt{-2\ln p} = t`$. For $`p = 0.01`$ that is 3.034854, too far out, because the division and the constant were ignored.
 
-Hastings's rational formula subtracts a correction that is a ratio of two short polynomials in $t$, with constants fitted in the 1950s so the error stays below 0.00045 everywhere in the lower half. Here the correction is 0.708069, and the guess is −2.326785. It is fast (one log, one root, a handful of multiplies) and close enough for Newton to finish in one or two steps. Production libraries use longer fitted ratios of the same shape, such as Wichura's algorithm AS 241, accurate to about 16 digits with no polish at all.
+Hastings's rational formula subtracts a correction that is a ratio of two short polynomials in $`t`$, with constants fitted in the 1950s so the error stays below 0.00045 everywhere in the lower half. Here the correction is 0.708069, and the guess is −2.326785. It is fast (one log, one root, a handful of multiplies) and close enough for Newton to finish in one or two steps. Production libraries use longer fitted ratios of the same shape, such as Wichura's algorithm AS 241, accurate to about 16 digits with no polish at all.
 
 ### Step 7: the cutoff is touchiest in the tail
 
-The slope of $\Phi^{-1}$ is one over the slope of $\Phi$: $1/\phi(z_p)$. At the median that is 2.5066. At the 1 percent point it is 37.5204. So a small error in the tail chance becomes a large error in the cutoff. Moving $p$ from 1 percent to 1.1 percent shifts the cutoff by 0.035980, which is $431.76 on this fund.
+The slope of $`\Phi^{-1}`$ is one over the slope of $`\Phi`$: $`1/\phi(z_p)`$. At the median that is 2.5066. At the 1 percent point it is 37.5204. So a small error in the tail chance becomes a large error in the cutoff. Moving $`p`$ from 1 percent to 1.1 percent shifts the cutoff by 0.035980, which is $431.76 on this fund.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -157,7 +171,7 @@ xychart-beta
     line [-3.09, -2.33, -1.64, -1.28, -0.84, -0.52, -0.25, 0.00, 0.25, 0.52, 0.84, 1.28, 1.64, 2.33, 3.09]
 ```
 
-One line: $\Phi^{-1}(p)$ at fifteen tail chances. The chances are unevenly spaced, which squeezes the ends; on an even scale the curve is flat through the middle and near-vertical at both ends. The mirror image about $p = 0.5$ is Step 3.
+One line: $`\Phi^{-1}(p)`$ at fifteen tail chances. The chances are unevenly spaced, which squeezes the ends; on an even scale the curve is flat through the middle and near-vertical at both ends. The mirror image about $`p = 0.5`$ is Step 3.
 
 A fourth road needs no area at all: simulate many standard normal values, sort them, and read off the value 1 percent of the way up. That is inverse sampling run backwards, and the uniform card's inverse-transform idea ([Uniform](02-uniform-distribution.md)) is the same move forwards.
 
@@ -168,13 +182,13 @@ A fourth road needs no area at all: simulate many standard normal values, sort t
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | tail chance | 1 − 0.99 | 0.01 |
-| $-2\ln p$ | −2 × ln 0.01 | 9.210340 |
-| $t$ | √9.210340 | 3.034854 |
+| $`-2\ln p`$ | −2 × ln 0.01 | 9.210340 |
+| $`t`$ | √9.210340 | 3.034854 |
 | numerator | 2.515517 + 0.802853 × 3.034854 + 0.010328 × 3.034854^2 | 5.047183 |
 | denominator | 1 + 1.432788 × 3.034854 + 0.189269 × 3.034854^2 + 0.001308 × 3.034854^3 | 7.128096 |
 | correction | 5.047183 ÷ 7.128096 | 0.708069 |
 | rational guess | −(3.034854 − 0.708069) | −2.326785 |
-| area at the guess | $\Phi(-2.326785)$, a little short of 0.01 | 0.00998835 |
+| area at the guess | $`\Phi(-2.326785)`$, a little short of 0.01 | 0.00998835 |
 | one Newton step | guess + (0.01 − 0.00998835) ÷ (bell height there) | −2.3263476513 |
 | second step | same again | −2.3263478740 |
 | return at 1 percent | 0.0004 + 0.012 × (−2.3263478740) | −0.027516 |
@@ -186,16 +200,16 @@ On 99 trading days in 100 the fund loses less than $27,516.17 (or gains). On abo
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| read −2.33 as a percent, skipped the spread | $23,263.48 | the cutoff is in standard units; it must be multiplied by $\sigma$ |
+| read −2.33 as a percent, skipped the spread | $23,263.48 | the cutoff is in standard units; it must be multiplied by $`\sigma`$ |
 | used the two-sided cutoff 2.575829 | $30,509.95 | that leaves 0.5 percent in each tail; a loss level has one tail, 1 percent |
 | stopped at the rational guess | $27,521.42 | a few dollars off $27,516.17: fine for a desk, wrong for a published table |
-| Newton from $z = -5$ with no bracket | jumps to 6721.0; next divisor 0.0 | the tangent in the flat tail is nearly horizontal |
+| Newton from $`z = -5`$ with no bracket | jumps to 6721.0; next divisor 0.0 | the tangent in the flat tail is nearly horizontal |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the area $\Phi$ from its series and check it with a Simpson integral, which sums the area over thin strips with a parabola fitted across each pair. Then they find the 1 percent point by four roads: the rational formula alone, the rational formula polished by Newton, bisection, and a seeded simulation of 200,000 days drawn with SplitMix64 (a small, fully written-out random generator, seed 20260928) and the Box–Muller transform (which turns two uniform draws into one normal draw with a log, a root and a cosine).
+The scripts build the area $`\Phi`$ from its series and check it with a Simpson integral, which sums the area over thin strips with a parabola fitted across each pair. Then they find the 1 percent point by four roads: the rational formula alone, the rational formula polished by Newton, bisection, and a seeded simulation of 200,000 days drawn with SplitMix64 (a small, fully written-out random generator, seed 20260928) and the Box–Muller transform (which turns two uniform draws into one normal draw with a log, a root and a cosine).
 
 The simulation also counts how many simulated days breach the formula's loss level. Asserts compare bisection with the printed tables' value, Newton with bisection, Simpson's area with 1 percent, the rational guess with its stated error bound, and both simulated numbers with the formula within four standard errors.
 
@@ -627,10 +641,10 @@ The two outputs are identical line for line. The simulated 1 percent point, −2
 
 Lean proves the facts behind Steps 1, 2, 3 and 5, for every tail chance, centre, positive spread and cutoff.
 
-- Take a tail chance $p$ strictly between 0 and 1. Then exactly one standard cutoff $z_p$ has $\Phi(z_p) = p$.
-- Take also a centre $\mu$ and a positive spread $\sigma$. Then, for that normal law, the only cutoff with chance $p$ below it is $\mu + \sigma z_p$.
-- Take any cutoff $z$. Then the area left of $-z$ equals the area right of $z$: $\Phi(-z) = 1 - \Phi(z)$.
-- Take any cutoff $z$. Then the slope of $\Phi$ at $z$ is the bell curve's height $\phi(z)$, the divisor in Newton's step.
+- Take a tail chance $`p`$ strictly between 0 and 1. Then exactly one standard cutoff $`z_p`$ has $`\Phi(z_p) = p`$.
+- Take also a centre $`\mu`$ and a positive spread $`\sigma`$. Then, for that normal law, the only cutoff with chance $`p`$ below it is $`\mu + \sigma z_p`$.
+- Take any cutoff $`z`$. Then the area left of $`-z`$ equals the area right of $`z`$: $`\Phi(-z) = 1 - \Phi(z)`$.
+- Take any cutoff $`z`$. Then the slope of $`\Phi`$ at $`z`$ is the bell curve's height $`\phi(z)`$, the divisor in Newton's step.
 
 The numbers, the rational formula and its error bound, bisection, Newton's speed and the simulation are left to the Python and Rust checks.
 
@@ -776,7 +790,7 @@ theorem normal_cdf_slope_eq_density (z : ℝ) :
 >
 > Smaller traps:
 > - **One tail or two.** A loss level has one tail: 2.326348. The familiar 2.575829 leaves 0.5 percent in each of two tails and gives $30,509.95.
-> - **The wrong side.** $\Phi^{-1}(0.99)$ is +2.326348, a gain. A loss level uses the lower tail, $p = 0.01$, or flips the sign.
+> - **The wrong side.** $`\Phi^{-1}(0.99)`$ is +2.326348, a gain. A loss level uses the lower tail, $`p = 0.01`$, or flips the sign.
 > - **Trusting the bell in the tail.** Real returns have fatter tails, so the true 1 percent loss is usually larger than the normal one. The normal quantile is a model, not a measurement.
 > - **Scaling time by the day count.** Ten days multiply the spread by √10, not 10, and only if the days are independent: $84,278.69, not ten times the daily level.
 
@@ -786,9 +800,9 @@ theorem normal_cdf_slope_eq_density (z : ℝ) :
 
 - **Bank risk reports.** Daily and ten-day value at risk at 99 percent, the banks' name for this card's loss level, is a normal quantile times a spread, whenever the desk assumes a bell curve: [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
 - **Option desks.** Traders quote strikes (the fixed price at which an option lets its owner buy or sell) by delta, a normal area; turning a delta back into a strike is a normal quantile: [Strike from delta](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
-- **Bank capital for loans.** The Basel formula, from the international rules on bank capital, feeds a default probability through $\Phi^{-1}$, mixes it with a stress quantile, and feeds the result back through $\Phi$: [Vasicek's large-pool loss curve](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
+- **Bank capital for loans.** The Basel formula, from the international rules on bank capital, feeds a default probability through $`\Phi^{-1}`$, mixes it with a stress quantile, and feeds the result back through $`\Phi`$: [Vasicek's large-pool loss curve](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
 - **Stocking a shop.** A newspaper seller facing normal demand orders up to the demand quantile at the critical ratio: the cost of one unit short divided by the cost of one unit short plus one unit left over: [Stock](../../14-Applied%20and%20computational/05-Operations%20Research/06-inventory-models-eoq-and-newsvendor.md).
-- **Simulation engines.** Feeding a uniform random number through $\Phi^{-1}$ gives a normal draw, the forward version of this card's fourth road: [Uniform](02-uniform-distribution.md).
+- **Simulation engines.** Feeding a uniform random number through $`\Phi^{-1}`$ gives a normal draw, the forward version of this card's fourth road: [Uniform](02-uniform-distribution.md).
 - **Growth charts and exam scores.** A child "at the 3rd percentile" or a score "at the 90th" is a quantile, often read off a normal fit.
 
 > **Say it back**
@@ -798,16 +812,16 @@ theorem normal_cdf_slope_eq_density (z : ℝ) :
 
 ## What this builds on
 
-- [Normal](04-normal-distribution.md): the bell curve, its height $\phi$, its cumulative area $\Phi$, and the stretch-and-shift $X = \mu + \sigma Z$. This card runs $\Phi$ backwards.
+- [Normal](04-normal-distribution.md): the bell curve, its height $`\phi`$, its cumulative area $`\Phi`$, and the stretch-and-shift $`X = \mu + \sigma Z`$. This card runs $`\Phi`$ backwards.
 - [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line step and its error-squaring, used here to polish the rational guess.
 
 ## Where this goes next
 
 - [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md): the loss level of this card as value at risk, and expected shortfall, the average beyond it.
 - [Digital inverses](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/06-digital-inverses-vol-and-strike.md): a digital option's price is a normal area; inverting it for the strike or the volatility is a quantile.
-- [Strike from delta](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md): the strike with a quoted delta, in one line of $\Phi^{-1}$.
+- [Strike from delta](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md): the strike with a quoted delta, in one line of $`\Phi^{-1}`$.
 - [Strike from delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): the same inversion under currency-desk conventions, where some deltas need a search like Step 4.
-- [Vasicek's large-pool loss curve](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): quantiles of a loan book's loss, built from $\Phi^{-1}$ of default probabilities.
+- [Vasicek's large-pool loss curve](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): quantiles of a loan book's loss, built from $`\Phi^{-1}`$ of default probabilities.
 - [Expected exposure over time](../../12-Financial%20mathematics/46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): potential future exposure, a high quantile of what a counterparty could owe.
 - [Stock](../../14-Applied%20and%20computational/05-Operations%20Research/06-inventory-models-eoq-and-newsvendor.md): the order quantity as a quantile of demand.
 

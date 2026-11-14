@@ -35,32 +35,38 @@ Each box is one pair of terms meeting at 1/12^s.
 
 ## The formula
 
-Notation first, in words. An **arithmetic function** gives one number for each whole number n; the weights above are an example. The bar in $d \mid n$ reads "d divides n". For complex s, $n^{-s}$ means $e^{-s \ln n}$, of size n to the power −Re s, where Re s is the real part of s. A **Dirichlet series** adds an arithmetic function's values against these powers:
+Notation first, in words. An **arithmetic function** gives one number for each whole number n; the weights above are an example. The bar in $`d \mid n`$ reads "d divides n". For complex s, $`n^{-s}`$ means $`e^{-s \ln n}`$, of size n to the power −Re s, where Re s is the real part of s. A **Dirichlet series** adds an arithmetic function's values against these powers:
 
-$$F_a(s)=\sum_{n=1}^{\infty}\frac{a(n)}{n^s},\qquad(a*b)(n)=\sum_{d\mid n}a(d)\,b(n/d),\qquad F_a(s)\,F_b(s)=F_{a*b}(s)$$
+```math
+F_a(s)=\sum_{n=1}^{\infty}\frac{a(n)}{n^s},\qquad(a*b)(n)=\sum_{d\mid n}a(d)\,b(n/d),\qquad F_a(s)\,F_b(s)=F_{a*b}(s)
+```
 
 **Read it aloud:** the product of two Dirichlet series has, at n, the sum over divisors d of a at d times b at n over d.
 
-That divisor sum $a * b$ is the **Dirichlet convolution**. With weight one everywhere, written $\mathbf{1}$, the series is zeta, and $\mathbf{1} * \mathbf{1}$ counts divisors, $\tau$. The Möbius function $\mu$ is
+That divisor sum $`a * b`$ is the **Dirichlet convolution**. With weight one everywhere, written $`\mathbf{1}`$, the series is zeta, and $`\mathbf{1} * \mathbf{1}`$ counts divisors, $`\tau`$. The Möbius function $`\mu`$ is
 
-$$\mu(n)=\begin{cases}1&n=1\\(-1)^r&n\text{ is }r\text{ different primes multiplied}\\0&\text{a prime squared divides }n\end{cases}\qquad\sum_{d\mid n}\mu(d)=\varepsilon(n)$$
+```math
+\mu(n)=\begin{cases}1&n=1\\(-1)^r&n\text{ is }r\text{ different primes multiplied}\\0&\text{a prime squared divides }n\end{cases}\qquad\sum_{d\mid n}\mu(d)=\varepsilon(n)
+```
 
-**Read it aloud:** the Möbius signs over the divisors of n add to $\varepsilon(n)$: 1 when n is 1, 0 otherwise.
+**Read it aloud:** the Möbius signs over the divisors of n add to $`\varepsilon(n)`$: 1 when n is 1, 0 otherwise.
 
-$$\frac{1}{\zeta(s)}=\sum_{n=1}^{\infty}\frac{\mu(n)}{n^s}\quad(\operatorname{Re}s>1),\qquad g=\mathbf{1}*f\iff f=\mu*g$$
+```math
+\frac{1}{\zeta(s)}=\sum_{n=1}^{\infty}\frac{\mu(n)}{n^s}\quad(\mathrm{Re}\,s>1),\qquad g=\mathbf{1}*f\iff f=\mu*g
+```
 
 **Read it aloud:** one over zeta has the Möbius weights; if g adds f over divisors, Möbius-weighting g gives f back.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | the complex exponent | 2, and 2 + i | larger Re s: faster shrinking terms |
-| $n$, $d$, $m$, $k$ | whole numbers; $d$ divides $n$ | n = 12; d = 1, 2, 3, 4, 6, 12 | longer divisor sums |
-| $a$, $b$, $f$, $g$ | arithmetic functions: one number per $n$ | f(n) = n, g = σ | — |
-| $F_a$ | the Dirichlet series with weights $a$ | $F_{\mathbf 1} = \zeta$ | — |
-| $a * b$ | Dirichlet convolution | $\mathbf 1 * \mathbf 1 = \tau$ | — |
-| $\mu$ | the Möbius function | μ(6) = 1, μ(12) = 0 | a repeated prime makes it 0 |
-| $\zeta$, $\mathbf{1}$, $\varepsilon$ | zeta; weight 1 everywhere; 1 at 1, else 0 | $\zeta \cdot F_\mu = F_\varepsilon = 1$ | — |
-| $\tau$, $\sigma$ | divisor count, divisor sum | τ(12) = 6, σ(6) = 12, σ(12) = 28 | — |
+| $`s`$ | the complex exponent | 2, and 2 + i | larger Re s: faster shrinking terms |
+| $`n`$, $`d`$, $`m`$, $`k`$ | whole numbers; $`d`$ divides $`n`$ | n = 12; d = 1, 2, 3, 4, 6, 12 | longer divisor sums |
+| $`a`$, $`b`$, $`f`$, $`g`$ | arithmetic functions: one number per $`n`$ | f(n) = n, g = σ | — |
+| $`F_a`$ | the Dirichlet series with weights $`a`$ | $`F_{\mathbf 1} = \zeta`$ | — |
+| $`a * b`$ | Dirichlet convolution | $`\mathbf 1 * \mathbf 1 = \tau`$ | — |
+| $`\mu`$ | the Möbius function | μ(6) = 1, μ(12) = 0 | a repeated prime makes it 0 |
+| $`\zeta`$, $`\mathbf{1}`$, $`\varepsilon`$ | zeta; weight 1 everywhere; 1 at 1, else 0 | $`\zeta \cdot F_\mu = F_\varepsilon = 1`$ | — |
+| $`\tau`$, $`\sigma`$ | divisor count, divisor sum | τ(12) = 6, σ(6) = 12, σ(12) = 28 | — |
 
 A function is **multiplicative** when its value at a product of two numbers sharing no prime is the product of its values: τ(12) = τ(4) × τ(3) = 3 × 2 = 6. A shared prime breaks it: τ(2) × τ(2) = 4, but τ(4) = 3.
 
@@ -68,7 +74,7 @@ A function is **multiplicative** when its value at a product of two numbers shar
 
 - **Re s > 1, for the series.** The weights of zeta and of the Möbius series are at most 1 in size, so both converge absolutely there. At s = 1 zeta is the divergent harmonic series.
 - **Absolute convergence, for multiplying.** Grouping a product by n = mk rearranges it, safe only for absolutely convergent series.
-- **Nothing, for inversion.** $g = \mathbf{1} * f \iff f = \mu * g$ is finite divisor arithmetic, true for every arithmetic function.
+- **Nothing, for inversion.** $`g = \mathbf{1} * f \iff f = \mu * g`$ is finite divisor arithmetic, true for every arithmetic function.
 - **Zero on repeated primes.** Signs that count repeats, giving 4 = 2 × 2 the sign +1, add to 1 over the divisors of 4, not 0.
 
 ---
@@ -77,50 +83,52 @@ A function is **multiplicative** when its value at a product of two numbers shar
 
 ### Step 0: powers of whole numbers multiply the way the numbers do
 
-For complex s, $m^{-s} k^{-s} = (mk)^{-s}$, because $\ln(mk) = \ln m + \ln k$ and the exponential turns sums into products. Multiplied term by term, the terms from m and from k land on the power of n = mk, and every divisor pair of n meets there.
+For complex s, $`m^{-s} k^{-s} = (mk)^{-s}`$, because $`\ln(mk) = \ln m + \ln k`$ and the exponential turns sums into products. Multiplied term by term, the terms from m and from k land on the power of n = mk, and every divisor pair of n meets there.
 
 ### Step 1: collect the terms, and the weights convolve
 
-The pair (m, k) with m × k = 12 contributes $a(m)\,b(k)\,12^{-s}$. The six pairs add to $(a * b)(12)$. The same holds at every n, so $F_a F_b = F_{a*b}$; with every weight 1, $\zeta^2$ has weight τ(n) at n. Grouping by mk rearranges infinitely many terms, allowed under absolute convergence.
+The pair (m, k) with m × k = 12 contributes $`a(m)\,b(k)\,12^{-s}`$. The six pairs add to $`(a * b)(12)`$. The same holds at every n, so $`F_a F_b = F_{a*b}`$; with every weight 1, $`\zeta^2`$ has weight τ(n) at n. Grouping by mk rearranges infinitely many terms, allowed under absolute convergence.
 
 <details>
 <summary>Detailed proof: multiplying two absolutely convergent Dirichlet series</summary>
 
-Fix s with real part x, and let $A = \sum |a(m)| m^{-x}$ and $B = \sum |b(k)| k^{-x}$ be finite. The sizes of the product's first N terms add to at most the sum over pairs with mk up to N, at most AB, so the product converges absolutely.
+Fix s with real part x, and let $`A = \sum |a(m)| m^{-x}`$ and $`B = \sum |b(k)| k^{-x}`$ be finite. The sizes of the product's first N terms add to at most the sum over pairs with mk up to N, at most AB, so the product converges absolutely.
 
-Pairs with m and k both up to M give the product of two length-M partial sums, tending to $F_a F_b$. For N at least M × M, the pairs with mk up to N contain that square. The rest are at most B times the tail of A past M plus A times the tail of B past M, which tends to 0. Those pairs regroup finitely into the product's first N terms. Letting N, then M, grow gives $F_{a*b} = F_a F_b$.
+Pairs with m and k both up to M give the product of two length-M partial sums, tending to $`F_a F_b`$. For N at least M × M, the pairs with mk up to N contain that square. The rest are at most B times the tail of A past M plus A times the tail of B past M, which tends to 0. Those pairs regroup finitely into the product's first N terms. Letting N, then M, grow gives $`F_{a*b} = F_a F_b`$.
 
 </details>
 
 ### Step 2: convolution keeps multiplicativity
 
-Split 12 as 4 × 3, no shared prime. Each divisor of 12 is uniquely a divisor of 4 times one of 3. So for multiplicative a and b, a divisor sum at 12 splits into sums at 4 and at 3: $a * b$ is multiplicative.
+Split 12 as 4 × 3, no shared prime. Each divisor of 12 is uniquely a divisor of 4 times one of 3. So for multiplicative a and b, a divisor sum at 12 splits into sums at 4 and at 3: $`a * b`$ is multiplicative.
 
-At a prime power τ is the exponent plus one, so τ(12) = (2 + 1)(1 + 1) = 6. The divisor sum σ is "n itself" convolved with $\mathbf 1$, and splits the same way.
+At a prime power τ is the exponent plus one, so τ(12) = (2 + 1)(1 + 1) = 6. The divisor sum σ is "n itself" convolved with $`\mathbf 1`$, and splits the same way.
 
 ### Step 3: the Möbius signs over the divisors of n cancel unless n is 1
 
 At 12 the signs over the divisors 1, 2, 3, 4, 6, 12 are 1, −1, −1, 0, 1, 0, and they add to 0.
 
-Divisors with a repeated prime give 0. The rest are one per choice among the r different primes of n, with sign −1 per prime chosen. Pair each choice without the first prime with the same choice plus it: opposite signs. Every choice is in one pair, so for r at least 1 the sum is 0. At n = 1 the sum is μ(1) = 1. That is $\mathbf 1 * \mu = \varepsilon$.
+Divisors with a repeated prime give 0. The rest are one per choice among the r different primes of n, with sign −1 per prime chosen. Pair each choice without the first prime with the same choice plus it: opposite signs. Every choice is in one pair, so for r at least 1 the sum is 0. At n = 1 the sum is μ(1) = 1. That is $`\mathbf 1 * \mu = \varepsilon`$.
 
 ### Step 4: one over zeta has the Möbius weights
 
-For Re s > 1 both $\zeta$ and $F_\mu$ converge absolutely, so Step 1 applies:
+For Re s > 1 both $`\zeta`$ and $`F_\mu`$ converge absolutely, so Step 1 applies:
 
-$$\zeta(s)\,F_\mu(s)=F_{\mathbf 1*\mu}(s)=F_\varepsilon(s)=1.$$
+```math
+\zeta(s)\,F_\mu(s)=F_{\mathbf 1*\mu}(s)=F_\varepsilon(s)=1.
+```
 
-The series with weights ε is its first term, 1. So $F_\mu = 1/\zeta$, and zeta has no zero where Re s > 1.
+The series with weights ε is its first term, 1. So $`F_\mu = 1/\zeta`$, and zeta has no zero where Re s > 1.
 
-A second road: the Euler product ([The zeta function](05-zeta-function-and-euler-product.md)) writes 1/ζ(s) as the product of $1 - p^{-s}$ over primes p. Expanding takes 1 or $-p^{-s}$ from each bracket: each prime at most once, sign −1 per prime, exactly μ. The brackets for 2, 3, 5 and 7 give the first ten weights.
+A second road: the Euler product ([The zeta function](05-zeta-function-and-euler-product.md)) writes 1/ζ(s) as the product of $`1 - p^{-s}`$ over primes p. Expanding takes 1 or $`-p^{-s}`$ from each bracket: each prime at most once, sign −1 per prime, exactly μ. The brackets for 2, 3, 5 and 7 give the first ten weights.
 
 ### Step 5: Möbius inversion is dividing by zeta
 
-If $g = \mathbf 1 * f$ then $F_g = \zeta F_f$, and dividing by zeta gives $F_f = F_\mu F_g$, so $f = \mu * g$.
+If $`g = \mathbf 1 * f`$ then $`F_g = \zeta F_f`$, and dividing by zeta gives $`F_f = F_\mu F_g`$, so $`f = \mu * g`$.
 
-Without series: both groupings of $\mu * \mathbf 1 * f$ add $\mu(a) f(c)$ over triples with a × b × c = n, so convolution is associative and $\mu * (\mathbf 1 * f) = (\mu * \mathbf 1) * f = \varepsilon * f = f$.
+Without series: both groupings of $`\mu * \mathbf 1 * f`$ add $`\mu(a) f(c)`$ over triples with a × b × c = n, so convolution is associative and $`\mu * (\mathbf 1 * f) = (\mu * \mathbf 1) * f = \varepsilon * f = f`$.
 
-At n = 6 with $f(n) = n$, g is σ. The signs 1, −1, −1, 1 on the divisors 1, 2, 3, 6 meet σ(6), σ(3), σ(2), σ(1): 12 − 4 − 3 + 1 = 6.
+At n = 6 with $`f(n) = n`$, g is σ. The signs 1, −1, −1, 1 on the divisors 1, 2, 3, 6 meet σ(6), σ(3), σ(2), σ(1): 12 − 4 − 3 + 1 = 6.
 
 A signless road: f(n) is g(n) minus f at the smaller divisors, from f(1) = σ(1) = 1 upward. The general form is The Mobius function.
 
@@ -498,7 +506,7 @@ example : ∑ d ∈ Nat.divisors 4, (-1 : ℤ) ^ (Ω d) = 1 := by decide +kernel
 ## The usual mistake
 
 > [!warning]
-> **Taking 1/ζ as the series of reciprocal weights.** 1 over each weight of zeta is still 1, which gives zeta back. Division undoes convolution, and the weights that undo $\mathbf 1$ are the Möbius signs, zeros included.
+> **Taking 1/ζ as the series of reciprocal weights.** 1 over each weight of zeta is still 1, which gives zeta back. Division undoes convolution, and the weights that undo $`\mathbf 1`$ are the Möbius signs, zeros included.
 >
 > - **Forgetting the zeros.** μ(12) = 0; a +1 on 4 makes the divisor sum at 4 come out 1, not 0.
 

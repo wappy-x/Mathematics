@@ -35,17 +35,23 @@ The flat-topped line is the square wave. The smooth sine is the 220 Hz tone alon
 
 ## The formula
 
-Notation first. The phase $x$ is the position inside one cycle, in radians: x = 2π × 220 × $t$ for time $t$ in seconds. A subscript counts harmonics: $b_n$ is the amount of the sine repeating $n$ times per cycle. The sigma sign adds the terms for n = 1, 2, 3 and on.
+Notation first. The phase $`x`$ is the position inside one cycle, in radians: x = 2π × 220 × $`t`$ for time $`t`$ in seconds. A subscript counts harmonics: $`b_n`$ is the amount of the sine repeating $`n`$ times per cycle. The sigma sign adds the terms for n = 1, 2, 3 and on.
 
-$$f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} (a_n \cos nx + b_n \sin nx)$$
+```math
+f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} (a_n \cos nx + b_n \sin nx)
+```
 
-$$a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos nx \, dx, \qquad b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin nx \, dx$$
+```math
+a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos nx \, dx, \qquad b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin nx \, dx
+```
 
 **Read it aloud:** the signal is its average level plus, for each whole number n, a cosine and a sine repeating n times per cycle; each amount is the signal times that wave, integrated over a cycle, over π.
 
-What makes it work is orthogonality, for whole numbers $m$ and $n$ of at least 1:
+What makes it work is orthogonality, for whole numbers $`m`$ and $`n`$ of at least 1:
 
-$$\int_{-\pi}^{\pi} \sin mx \sin nx \, dx = \pi \text{ if } m = n, \; 0 \text{ if not}$$
+```math
+\int_{-\pi}^{\pi} \sin mx \sin nx \, dx = \pi \text{ if } m = n, \; 0 \text{ if not}
+```
 
 The same holds with cosines for both, and sin mx cos nx always integrates to 0.
 
@@ -53,15 +59,15 @@ The same holds with cosines for both, and sin mx cos nx always integrates to 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $t$ | phase in radians; time in seconds | a cycle: x from 0 to 2π, 4.55 ms | the pattern repeats |
-| $f(x)$ | the signal at phase x | +1 V, then −1 V | every amount scales with it |
-| $n$, $m$, $k$ | whole numbers of repeats per cycle | n = 1, 3, 5: 220, 660, 1100 Hz | higher pitch, smaller amount |
-| $a_0$ | twice the average over a cycle | 0 | the wave lifts |
-| $a_n$ | amount of cos nx | 0 for every n | peaks slide earlier |
-| $b_n$ | amount of sin nx | 1.273, 0.424, 0.255; 0 for even n | that tone gets louder |
-| $S_N$, $N$ | the sum stopped after harmonic N | $S_5(\pi/2)$ = 1.103 V | mean-square miss (integral of the squared gap over a cycle) at N = 1, 3, 5: 1.190, 0.624, 0.421 |
+| $`x`$, $`t`$ | phase in radians; time in seconds | a cycle: x from 0 to 2π, 4.55 ms | the pattern repeats |
+| $`f(x)`$ | the signal at phase x | +1 V, then −1 V | every amount scales with it |
+| $`n`$, $`m`$, $`k`$ | whole numbers of repeats per cycle | n = 1, 3, 5: 220, 660, 1100 Hz | higher pitch, smaller amount |
+| $`a_0`$ | twice the average over a cycle | 0 | the wave lifts |
+| $`a_n`$ | amount of cos nx | 0 for every n | peaks slide earlier |
+| $`b_n`$ | amount of sin nx | 1.273, 0.424, 0.255; 0 for even n | that tone gets louder |
+| $`S_N`$, $`N`$ | the sum stopped after harmonic N | $`S_5(\pi/2)`$ = 1.103 V | mean-square miss (integral of the squared gap over a cycle) at N = 1, 3, 5: 1.190, 0.624, 0.421 |
 
-The half in $a_0/2$ lets one formula serve every $a_n$, including n = 0.
+The half in $`a_0/2`$ lets one formula serve every $`a_n`$, including n = 0.
 
 ### When it holds
 
@@ -80,29 +86,35 @@ Sample two signals at many phases, multiply entry by entry, add, and scale by th
 
 ### Step 1: a whole-number cosine cancels over a cycle
 
-For whole $k$ not 0, the integral of cos kx from −π to π is sin(kπ)/k − sin(−kπ)/k = 0: the lobes cancel. For $k$ = 0 the cosine is 1 and the integral is 2π. The integral of sin kx is 0 for every whole $k$, since sine is odd (its value at −x is minus its value at x).
+For whole $`k`$ not 0, the integral of cos kx from −π to π is sin(kπ)/k − sin(−kπ)/k = 0: the lobes cancel. For $`k`$ = 0 the cosine is 1 and the integral is 2π. The integral of sin kx is 0 for every whole $`k`$, since sine is odd (its value at −x is minus its value at x).
 
 ### Step 2: a product of two harmonics is two harmonics
 
 The product-to-sum identities of [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md) turn each product into a sum:
 
-$$\sin mx \sin nx = \tfrac12[\cos (m-n)x - \cos (m+n)x]$$
+```math
+\sin mx \sin nx = \tfrac12[\cos (m-n)x - \cos (m+n)x]
+```
 
 Cos mx cos nx is the same with a plus; sin mx cos nx is half of sin (m+n)x plus sin (m−n)x. Integrate each piece by Step 1. Every piece dies except a cosine of frequency 0, which appears only for m = n in the first two, leaving ½ × 2π = π. The code's 20,000-slice sums give 3.141593 and 0.000000.
 
 ### Step 3: integrating against one harmonic isolates its amount
 
-Multiply the whole series by sin mx and integrate over a cycle. By Step 2, every cosine term and every sine term with n ≠ m gives 0. Only one term survives, $b_m \pi$:
+Multiply the whole series by sin mx and integrate over a cycle. By Step 2, every cosine term and every sine term with n ≠ m gives 0. Only one term survives, $`b_m \pi`$:
 
-$$\int_{-\pi}^{\pi} f(x) \sin mx \, dx = b_m \pi$$
+```math
+\int_{-\pi}^{\pi} f(x) \sin mx \, dx = b_m \pi
+```
 
-Divide by π for $b_n$; cos mx gives $a_n$ the same way. For $m$ = 0 the surviving integral is 2π, not π: hence the half in front of $a_0$.
+Divide by π for $`b_n`$; cos mx gives $`a_n`$ the same way. For $`m`$ = 0 the surviving integral is 2π, not π: hence the half in front of $`a_0`$.
 
 ### Step 4: the square wave
 
-Wave odd, cosine even (its value at −x equals its value at x): the product is odd, so every $a_n$ is 0. The product f(x) sin nx is even, so its integral is twice the half from 0 to π, where f is 1:
+Wave odd, cosine even (its value at −x equals its value at x): the product is odd, so every $`a_n`$ is 0. The product f(x) sin nx is even, so its integral is twice the half from 0 to π, where f is 1:
 
-$$b_n = \frac{2}{\pi} \int_0^{\pi} \sin nx \, dx = \frac{2}{\pi} \cdot \frac{1 - \cos n\pi}{n} = \begin{cases} 4/(n\pi) & n \text{ odd} \\ 0 & n \text{ even} \end{cases}$$
+```math
+b_n = \frac{2}{\pi} \int_0^{\pi} \sin nx \, dx = \frac{2}{\pi} \cdot \frac{1 - \cos n\pi}{n} = \begin{cases} 4/(n\pi) & n \text{ odd} \\ 0 & n \text{ even} \end{cases}
+```
 
 since cos nπ is −1 for odd n and +1 for even n. The square wave is (4/π)(sin x + sin 3x/3 + sin 5x/5 + …).
 
@@ -111,9 +123,9 @@ since cos nπ is −1 for odd n and +1 for even n. The square wave is (4/π)(sin
 
 Step 3 swapped an infinite sum with an integral, safe when the largest gap between signal and sum shrinks to 0 (uniform convergence). At a jump it does not.
 
-Instead, fix N and ask which amounts $c_1, \ldots, c_N$ make the sum of $c_n \sin nx$ closest to f in mean square: the integral over a cycle of (f minus the sum) squared.
+Instead, fix N and ask which amounts $`c_1, \ldots, c_N`$ make the sum of $`c_n \sin nx`$ closest to f in mean square: the integral over a cycle of (f minus the sum) squared.
 
-By Step 2 the cross terms vanish, so the miss is the integral of f squared plus, for each n, $\pi c_n^2 - 2 c_n \int_{-\pi}^{\pi} f(x) \sin nx \, dx$. Each piece is a parabola in $c_n$, lowest at that integral over π, which is $b_n$. So the Fourier amounts are the best fit at every N.
+By Step 2 the cross terms vanish, so the miss is the integral of f squared plus, for each n, $`\pi c_n^2 - 2 c_n \int_{-\pi}^{\pi} f(x) \sin nx \, dx`$. Each piece is a parabola in $`c_n`$, lowest at that integral over π, which is $`b_n`$. So the Fourier amounts are the best fit at every N.
 
 The code's search for N = 1 lands on 1.273240, which is 4/π. That the miss falls to 0 as N grows is completeness, proved in Completeness of sines and cosines.
 
@@ -343,10 +355,10 @@ The two outputs are identical line for line.
 
 Lean proves orthogonality, the amount formulas and the square wave's amounts, for every whole-number harmonic.
 
-- Take whole numbers $m$ and $n$ of at least 1. Then sin mx sin nx integrates over a cycle to π if m = n, and to 0 if not.
+- Take whole numbers $`m`$ and $`n`$ of at least 1. Then sin mx sin nx integrates over a cycle to π if m = n, and to 0 if not.
 - Cos mx cos nx does the same. Sin mx cos nx integrates to 0 for every whole m and n, 0 included.
-- Suppose the largest gap between a signal and its sum stopped after harmonic $N$ shrinks to 0 as $N$ grows. Then each amount is the signal times its wave, integrated over a cycle, over π.
-- That formula holds for $a_0$ too, which is why the average level carries the half.
+- Suppose the largest gap between a signal and its sum stopped after harmonic $`N`$ shrinks to 0 as $`N`$ grows. Then each amount is the signal times its wave, integrated over a cycle, over π.
+- That formula holds for $`a_0`$ too, which is why the average level carries the half.
 - The square wave's cosine amounts are all 0. Its sine amounts are 4/(nπ) for odd n and 0 for even n.
 
 The decimal values, the mean-square misses and the best fit at every length of sum are left to the Python and Rust checks.
@@ -689,7 +701,7 @@ end FourierSeries
 > [!TIP]
 > **Try changing**
 > - **Guess first: do 8 slices still give orthogonality?** Set `M = 8`. Yes, π and 0. But the fifth amount reads 0.541196, not 0.254648: eight samples cannot tell the fifth harmonic from the third. That is aliasing: [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md). The second assert fails.
-> - **Guess first: what does a 0-to-1 volt gate change?** Return `0.0` instead of `-1.0` in `f`. The amounts halve to 0.636620, 0.212207 and 0.127324, and $a_0$ becomes 1.000000. The second assert fails.
+> - **Guess first: what does a 0-to-1 volt gate change?** Return `0.0` instead of `-1.0` in `f`. The amounts halve to 0.636620, 0.212207 and 0.127324, and $`a_0`$ becomes 1.000000. The second assert fails.
 > - **Guess first: where does a search over sin 3x land?** Change both `math.sin(x)` in the search loop to `math.sin(3 * x)`. It lands on 0.424413, the third amount. The third assert fails.
 
 ---
@@ -699,7 +711,7 @@ end FourierSeries
 > [!warning]
 > **Taking the fundamental's amplitude to be the wave's height.** The wave peaks at 1 volt, but its 220 Hz sine has amplitude 1.273. A sine of height 1 misses more: mean-square 1.424778 against 1.190227. The sine must overshoot to cover the flat top's corners; the projection says how far.
 >
-> - **Dropping the half on $a_0$.** A 0-to-1 gate's average then reads double.
+> - **Dropping the half on $`a_0`$.** A 0-to-1 gate's average then reads double.
 > - **Expecting every harmonic.** The square wave's even amounts are 0: no 440 Hz.
 
 ---

@@ -28,34 +28,38 @@ Drawn at 1 cm = 2.2 units, y measured up the axis from the dish's centre V, the 
 
 A point (x, y) is x cm across and y cm up from the vertex. Two points' distance is the square root of the across-gap squared plus the up-gap squared ([Distance and midpoint](01-distance-and-midpoint.md)).
 
-The circle with centre $(h, k)$ and radius $r$:
+The circle with centre $`(h, k)`$ and radius $`r`$:
 
-$$(x-h)^2 + (y-k)^2 = r^2$$
+```math
+(x-h)^2 + (y-k)^2 = r^2
+```
 
 **Read it aloud:** the across-gap from the centre squared, plus the up-gap squared, makes the radius squared.
 
-The upward parabola with vertex at the origin, focus $F$ at height $p$ and directrix the line $y = -p$:
+The upward parabola with vertex at the origin, focus $`F`$ at height $`p`$ and directrix the line $`y = -p`$:
 
-$$x^2 = 4py$$
+```math
+x^2 = 4py
+```
 
 **Read it aloud:** the across-distance squared equals four times the focal length times the height.
 
-With the vertex moved to $(h, k)$ it is $(x-h)^2 = 4p(y-k)$: focus $(h, k+p)$, directrix $y = k - p$. A negative p opens it downward; swapping x and y turns it on its side.
+With the vertex moved to $`(h, k)`$ it is $`(x-h)^2 = 4p(y-k)`$: focus $`(h, k+p)`$, directrix $`y = k - p`$. A negative p opens it downward; swapping x and y turns it on its side.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | a point's position: across, and up the axis, in cm | rim point P at (40, 10) | — |
-| $h$, $k$ | the circle's centre (or a moved parabola's vertex) | circle centred at (0, 40), the receiver | the whole curve slides |
-| $r$ | the circle's radius | 50 cm | the circle grows |
-| $p$ | the focal length: vertex to focus, and vertex to directrix | 40 cm | a flatter, shallower dish |
-| $F$, $V$ | the focus and the vertex | (0, 40) and (0, 0) | — |
-| $P$, $D$ | a point on the curve, and its foot on the directrix | (40, 10) and (40, −40) | — |
+| $`x`$, $`y`$ | a point's position: across, and up the axis, in cm | rim point P at (40, 10) | — |
+| $`h`$, $`k`$ | the circle's centre (or a moved parabola's vertex) | circle centred at (0, 40), the receiver | the whole curve slides |
+| $`r`$ | the circle's radius | 50 cm | the circle grows |
+| $`p`$ | the focal length: vertex to focus, and vertex to directrix | 40 cm | a flatter, shallower dish |
+| $`F`$, $`V`$ | the focus and the vertex | (0, 40) and (0, 0) | — |
+| $`P`$, $`D`$ | a point on the curve, and its foot on the directrix | (40, 10) and (40, −40) | — |
 
 ### When it holds
 
 - **Flat, square grid.** The distance formula is Pythagoras: same unit on both axes, meeting at a right angle.
 - **Axis along a grid line.** A tilted parabola has an extra term in xy, handled in Conics.
-- **A positive radius, a nonzero focal length.** A tidied circle equation with 0 on the right is one point; with a negative number, no point. With $p = 0$ the focus lies on the directrix and there is no parabola.
+- **A positive radius, a nonzero focal length.** A tidied circle equation with 0 on the right is one point; with a negative number, no point. With $`p = 0`$ the focus lies on the directrix and there is no parabola.
 - **Rays parallel to the axis.** Rays arriving at a slant do not meet at one point; they blur beside F, which is why the dish is aimed.
 
 ---
@@ -74,23 +78,25 @@ A point (x, y) and the centre (h, k) differ by x − h across and y − k up. Se
 
 Put the focus at (0, p) and the directrix at y = −p. For a point (x, y) above the directrix, the distance to the line is the straight drop to it, y + p. The distance to the focus is the square root of x squared plus (y − p) squared. Set them equal and square:
 
-$$x^2 + (y-p)^2 = (y+p)^2$$
+```math
+x^2 + (y-p)^2 = (y+p)^2
+```
 
-Expand both brackets. Each side carries $y^2$ and $p^2$; they cancel. What is left is $x^2 - 2py = 2py$, so $x^2 = 4py$. The 4 is the two cross terms, −2py and +2py, meeting across the equals sign.
+Expand both brackets. Each side carries $`y^2`$ and $`p^2`$; they cancel. What is left is $`x^2 - 2py = 2py`$, so $`x^2 = 4py`$. The 4 is the two cross terms, −2py and +2py, meeting across the equals sign.
 
 At P (40, 10) the distance to F is the square root of 1600 + 900, which is 50; the drop to the directrix is 10 + 40, also 50.
 
 ### Step 3: read the parts back
 
-The maker knows width and depth, not focus. The rim at (40, 10) must satisfy $x^2 = 4py$: 1600 = 4p × 10, so 4p = 160, the equation is $x^2 = 160y$, and p = 40 cm.
+The maker knows width and depth, not focus. The rim at (40, 10) must satisfy $`x^2 = 4py`$: 1600 = 4p × 10, so 4p = 160, the equation is $`x^2 = 160y`$, and p = 40 cm.
 
-A circle given in expanded form is read by **completing the square**, adding the number that turns $y^2 - 80y$ into a perfect square ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)).
+A circle given in expanded form is read by **completing the square**, adding the number that turns $`y^2 - 80y`$ into a perfect square ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)).
 
-Take $x^2 + y^2 - 80y - 900 = 0$. Since $(y - 40)^2 = y^2 - 80y + 1600$, add 1600 to both sides: $x^2 + (y-40)^2 = 2500$. The centre is (0, 40), the receiver; the radius is the square root of 2500, 50 cm. Both rim points lie on it.
+Take $`x^2 + y^2 - 80y - 900 = 0`$. Since $`(y - 40)^2 = y^2 - 80y + 1600`$, add 1600 to both sides: $`x^2 + (y-40)^2 = 2500`$. The centre is (0, 40), the receiver; the radius is the square root of 2500, 50 cm. Both rim points lie on it.
 
 ### Step 4: why every ray reaches the focus
 
-The **tangent** at P is the straight line touching the curve there without crossing it. It is the line at right angles to FD through its midpoint (20, 0), with slope 0.5: rising 0.5 cm per cm across. Put it into $x^2 = 160y$ to get $x^2 - 80x + 1600 = 0$, which factors as $(x - 40)^2 = 0$: one repeated root, so the line meets the curve at P alone ([Factoring](../../03-Algebra/02-Polynomials/02-factoring-quadratics.md)).
+The **tangent** at P is the straight line touching the curve there without crossing it. It is the line at right angles to FD through its midpoint (20, 0), with slope 0.5: rising 0.5 cm per cm across. Put it into $`x^2 = 160y`$ to get $`x^2 - 80x + 1600 = 0`$, which factors as $`(x - 40)^2 = 0`$: one repeated root, so the line meets the curve at P alone ([Factoring](../../03-Algebra/02-Polynomials/02-factoring-quadratics.md)).
 
 The tangent also halves the angle FPD. A mirror returns light at the angle it arrived, and the falling signal continues the line DP, so it leaves along PF. Every point has its own D, so every ray parallel to the axis reaches F.
 
@@ -114,12 +120,12 @@ The code bounces four falling rays off the curve; all four cross the axis at y =
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | rim point | half the width, and the depth | (40, 10) |
-| put it into $x^2 = 4py$ | 40 × 40 = 4p × 10 | 4p = 160 |
+| put it into $`x^2 = 4py`$ | 40 × 40 = 4p × 10 | 4p = 160 |
 | focal length | 160 ÷ 4 | **p = 40 cm** |
 | rim to receiver | square root of (40 × 40 + 30 × 30) | 50 cm |
 | rim to directrix | 10 + 40 | 50 cm |
 | a point halfway out | 20 × 20 ÷ 160 | height 2.50 cm, 42.50 cm from both |
-| circle round the receiver | add 1600 to $x^2 + y^2 - 80y = 900$ | $x^2 + (y-40)^2 = 2500$ |
+| circle round the receiver | add 1600 to $`x^2 + y^2 - 80y = 900`$ | $`x^2 + (y-40)^2 = 2500`$ |
 | its radius | square root of 2500 | **50 cm** |
 
 The arm holds the receiver 40 cm in front of the dish's centre, 50 cm from every rim point.
@@ -139,7 +145,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The focus comes from the equation and from four bounced rays. The rim tangent comes from the bisector of F and D and from a very short chord: a straight line joining two nearby points of the curve. A **discriminant** $b^2 - 4c$ of 0 in $x^2 + bx + c = 0$ means one repeated root. The circle's centre and radius come from completing the square and from three points on the circle, by solving two straight-line equations for the point equally far from all three ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
+The focus comes from the equation and from four bounced rays. The rim tangent comes from the bisector of F and D and from a very short chord: a straight line joining two nearby points of the curve. A **discriminant** $`b^2 - 4c`$ of 0 in $`x^2 + bx + c = 0`$ means one repeated root. The circle's centre and radius come from completing the square and from three points on the circle, by solving two straight-line equations for the point equally far from all three ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
 ### Python
 
@@ -337,11 +343,11 @@ The two outputs match line for line.
 
 Lean proves the card's three facts for every point of the flat plane, every positive radius and every nonzero focal length.
 
-- A point lies at distance $r$ from the centre $(h, k)$ exactly when $(x-h)^2 + (y-k)^2 = r^2$.
-- A point is as far from the focus $(h, k+p)$ as from the directrix $y = k - p$ exactly when $(x-h)^2 = 4p(y-k)$.
-- On $x^2 = 4py$, the line of points equally far from F and D meets the curve at P alone.
+- A point lies at distance $`r`$ from the centre $`(h, k)`$ exactly when $`(x-h)^2 + (y-k)^2 = r^2`$.
+- A point is as far from the focus $`(h, k+p)`$ as from the directrix $`y = k - p`$ exactly when $`(x-h)^2 = 4p(y-k)`$.
+- On $`x^2 = 4py`$, the line of points equally far from F and D meets the curve at P alone.
 - From P, that line makes the same angle with PF as with PD, so a ray falling along DP leaves along PF.
-- The card's own sums: 4p = 160 and p = 40, both 50 cm distances, $x^2 + (y-40)^2 = 2500$, the three points on the circle, and the zero discriminant.
+- The card's own sums: 4p = 160 and p = 40, both 50 cm distances, $`x^2 + (y-40)^2 = 2500`$, the three points on the circle, and the zero discriminant.
 
 The bounced rays, the short chord, the three-point centre, the mistakes and the figure are left to the Python and Rust checks.
 
@@ -503,7 +509,7 @@ example : (-80 : ℤ) ^ 2 - 4 * 1600 = 0 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading a number off the equation before it is in standard form.** In $x^2 = 160y$ the 160 is 4p: the receiver belongs at 40 cm, and at 160 cm the signal misses it. In $x^2 + y^2 - 80y - 900 = 0$ nothing is readable until the square is completed, and then 2500 is the radius squared and y − 40 means a centre at +40.
+> **Reading a number off the equation before it is in standard form.** In $`x^2 = 160y`$ the 160 is 4p: the receiver belongs at 40 cm, and at 160 cm the signal misses it. In $`x^2 + y^2 - 80y - 900 = 0`$ nothing is readable until the square is completed, and then 2500 is the radius squared and y − 40 means a centre at +40.
 
 ---
 
@@ -514,7 +520,7 @@ example : (-80 : ℤ) ^ 2 - 4 * 1600 = 0 := by norm_num
 - **Positioning.** A phone's distance from one mast puts it on a circle round the mast; several masts pin it where the circles meet.
 
 > **Say it back**
-> A circle is every point at one distance from a centre: $(x-h)^2 + (y-k)^2 = r^2$. A parabola is every point as far from a focus as from a directrix: $x^2 = 4py$. A dish 80 cm across and 10 cm deep satisfies $x^2 = 160y$, so its focus is 40 cm out. The tangent at each point halves the angle between focus and directrix, so every ray along the axis bounces to the receiver.
+> A circle is every point at one distance from a centre: $`(x-h)^2 + (y-k)^2 = r^2`$. A parabola is every point as far from a focus as from a directrix: $`x^2 = 4py`$. A dish 80 cm across and 10 cm deep satisfies $`x^2 = 160y`$, so its focus is 40 cm out. The tangent at each point halves the angle between focus and directrix, so every ray along the axis bounces to the receiver.
 
 ---
 

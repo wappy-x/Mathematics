@@ -36,54 +36,60 @@ The first line is the chance of rain given the umbrellas up to that day: what co
 
 ## The formula
 
-Notation first, in words. Days are numbered $n = 1$ (Monday) to $N = 5$ (Friday). $X_n$ is the weather on day $n$: S, C or R, for sunny, cloudy, rainy. It is hidden. $Y_n$ is the signal on day $n$: 1 for an umbrella, 0 for none; $y_n$ is the value actually seen, here 1, 1, 0, 0, 1. The letters $i$ and $j$ stand for weathers.
+Notation first, in words. Days are numbered $`n = 1`$ (Monday) to $`N = 5`$ (Friday). $`X_n`$ is the weather on day $`n`$: S, C or R, for sunny, cloudy, rainy. It is hidden. $`Y_n`$ is the signal on day $`n`$: 1 for an umbrella, 0 for none; $`y_n`$ is the value actually seen, here 1, 1, 0, 0, 1. The letters $`i`$ and $`j`$ stand for weathers.
 
-The chain's habits are the transition matrix $P$ with entries $p_{ij}$: the chance that tomorrow is $j$ given today is $i$ ([Markov chains](01-markov-chains.md)). Two new ingredients join it. The **start law** $\nu_i$, read "nu", is the chance Monday is $i$, before any umbrella is seen. The **emission chance** $b_i(y)$ is the chance of signal $y$ on a day whose weather is $i$.
+The chain's habits are the transition matrix $`P`$ with entries $`p_{ij}`$: the chance that tomorrow is $`j`$ given today is $`i`$ ([Markov chains](01-markov-chains.md)). Two new ingredients join it. The **start law** $`\nu_i`$, read "nu", is the chance Monday is $`i`$, before any umbrella is seen. The **emission chance** $`b_i(y)`$ is the chance of signal $`y`$ on a day whose weather is $`i`$.
 
-| Today | Tomorrow S | Tomorrow C | Tomorrow R | Chance Monday is this, $\nu_i$ | Umbrella chance, $b_i(1)$ |
+| Today | Tomorrow S | Tomorrow C | Tomorrow R | Chance Monday is this, $`\nu_i`$ | Umbrella chance, $`b_i(1)`$ |
 | --- | --- | --- | --- | --- | --- |
 | sunny, S | 0.7 | 0.3 | 0 | 0.5 | 0.1 |
 | cloudy, C | 0.3 | 0.3 | 0.4 | 0.3 | 0.4 |
 | rainy, R | 0.2 | 0.2 | 0.6 | 0.2 | 0.8 |
 
-No umbrella has the other chance: $b_i(0) = 1 - b_i(1)$.
+No umbrella has the other chance: $`b_i(0) = 1 - b_i(1)`$.
 
-The model fixes the joint chance of any weather week $x_1, \dots, x_N$ together with any umbrella week:
+The model fixes the joint chance of any weather week $`x_1, \dots, x_N`$ together with any umbrella week:
 
-$$\Pr(X_1 = x_1, \dots, X_N = x_N,\ Y_1 = y_1, \dots, Y_N = y_N) = \nu_{x_1}\, b_{x_1}(y_1) \prod_{n=2}^{N} p_{x_{n-1} x_n}\, b_{x_n}(y_n)$$
+```math
+\Pr(X_1 = x_1, \dots, X_N = x_N,\ Y_1 = y_1, \dots, Y_N = y_N) = \nu_{x_1}\, b_{x_1}(y_1) \prod_{n=2}^{N} p_{x_{n-1} x_n}\, b_{x_n}(y_n)
+```
 
 **Read it aloud:** the chance of Monday's weather, times Monday's signal given it, then for each later day the chance of moving to that day's weather, times the signal given it.
 
-The forward algorithm builds, for each day and each weather, the chance of the signals so far with today's weather equal to $i$, written $\alpha_n(i)$ and read "alpha":
+The forward algorithm builds, for each day and each weather, the chance of the signals so far with today's weather equal to $`i`$, written $`\alpha_n(i)`$ and read "alpha":
 
-$$\alpha_1(i) = \nu_i\, b_i(y_1), \qquad \alpha_n(i) = \Big(\sum_{j} \alpha_{n-1}(j)\, p_{ji}\Big)\, b_i(y_n), \qquad L = \sum_{i} \alpha_N(i)$$
+```math
+\alpha_1(i) = \nu_i\, b_i(y_1), \qquad \alpha_n(i) = \Big(\sum_{j} \alpha_{n-1}(j)\, p_{ji}\Big)\, b_i(y_n), \qquad L = \sum_{i} \alpha_N(i)
+```
 
-**Read it aloud:** to reach weather $i$ today with the signals so far, arrive from each weather $j$ yesterday, add up the ways, then multiply by the chance of today's signal; the chance of the whole signal week is the total over Friday's weathers.
+**Read it aloud:** to reach weather $`i`$ today with the signals so far, arrive from each weather $`j`$ yesterday, add up the ways, then multiply by the chance of today's signal; the chance of the whole signal week is the total over Friday's weathers.
 
-Viterbi decoding keeps, for each day and weather, the chance of the signals so far together with the single best weather path ending there, $\delta_n(i)$ ("delta"), and which weather yesterday it came from, $\psi_n(i)$ ("psi"):
+Viterbi decoding keeps, for each day and weather, the chance of the signals so far together with the single best weather path ending there, $`\delta_n(i)`$ ("delta"), and which weather yesterday it came from, $`\psi_n(i)`$ ("psi"):
 
-$$\delta_1(i) = \nu_i\, b_i(y_1), \qquad \delta_n(i) = \max_{j} \big(\delta_{n-1}(j)\, p_{ji}\big)\, b_i(y_n), \qquad \psi_n(i) = \text{the } j \text{ that gives that maximum}$$
+```math
+\delta_1(i) = \nu_i\, b_i(y_1), \qquad \delta_n(i) = \max_{j} \big(\delta_{n-1}(j)\, p_{ji}\big)\, b_i(y_n), \qquad \psi_n(i) = \text{the } j \text{ that gives that maximum}
+```
 
-**Read it aloud:** the best path into weather $i$ today is the best path into some weather yesterday, extended by one step; keep the best and remember where it came from.
+**Read it aloud:** the best path into weather $`i`$ today is the best path into some weather yesterday, extended by one step; keep the best and remember where it came from.
 
-The best week ends at the weather with the largest $\delta_N(i)$; the pointers $\psi_n(i)$ read off the rest, backwards.
+The best week ends at the weather with the largest $`\delta_N(i)`$; the pointers $`\psi_n(i)`$ read off the rest, backwards.
 
-A third recursion runs from Friday backwards. $\beta_n(i)$, read "beta", is the chance of the signals after day $n$, given weather $i$ on day $n$: $\beta_N(i) = 1$ and $\beta_n(i) = \sum_j p_{ij}\, b_j(y_{n+1})\, \beta_{n+1}(j)$. Then the chance of weather $i$ on day $n$, given the whole week, is $\alpha_n(i)\,\beta_n(i) / L$: the **smoothed** chance, the second line of the picture. The first line, $\alpha_n(i)$ divided by its total over $i$, is the **filtered** chance.
+A third recursion runs from Friday backwards. $`\beta_n(i)`$, read "beta", is the chance of the signals after day $`n`$, given weather $`i`$ on day $`n`$: $`\beta_N(i) = 1`$ and $`\beta_n(i) = \sum_j p_{ij}\, b_j(y_{n+1})\, \beta_{n+1}(j)`$. Then the chance of weather $`i`$ on day $`n`$, given the whole week, is $`\alpha_n(i)\,\beta_n(i) / L`$: the **smoothed** chance, the second line of the picture. The first line, $`\alpha_n(i)`$ divided by its total over $`i`$, is the **filtered** chance.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $N$ | a day; the number of days seen | Monday is 1, Friday is $N = 5$ | more days, more to add over |
-| $X_n$ | the hidden weather on day $n$ | S, C or R | — |
-| $Y_n$, $y_n$, $y$ | the signal on day $n$; the value seen; any signal value | 1, 1, 0, 0, 1 | — |
-| $i$, $j$ | weathers, used as labels | S, C, R | — |
-| $P$, $p_{ij}$ | the transition matrix; the chance tomorrow is $j$ given today is $i$ | sunny to sunny 0.7, sunny to rainy 0 | larger stay-chances make the hidden path smoother |
-| $\nu_i$ | the start law: the chance Monday is $i$ | 0.5, 0.3, 0.2 | Monday's reading leans towards $i$ |
-| $b_i(y)$ | the emission chance: signal $y$ given weather $i$ | umbrella 0.1, 0.4, 0.8 | signals separate weathers more sharply |
-| $\alpha_n(i)$ | forward: chance of signals up to day $n$ and weather $i$ that day | Monday rainy 0.16 | — |
-| $\beta_n(i)$ | backward: chance of the signals after day $n$, given weather $i$ on day $n$ | 1 on Friday | — |
-| $\delta_n(i)$ | Viterbi: chance of the signals up to day $n$ together with the best single path ending in $i$ that day | Tuesday rainy 0.0768 | — |
-| $\psi_n(i)$ | the weather on day $n - 1$ that the best path into $i$ came from | into Friday cloudy: sunny | — |
-| $L$ | the chance of the whole signal week | 0.0139810329 | — |
+| $`n`$, $`N`$ | a day; the number of days seen | Monday is 1, Friday is $`N = 5`$ | more days, more to add over |
+| $`X_n`$ | the hidden weather on day $`n`$ | S, C or R | — |
+| $`Y_n`$, $`y_n`$, $`y`$ | the signal on day $`n`$; the value seen; any signal value | 1, 1, 0, 0, 1 | — |
+| $`i`$, $`j`$ | weathers, used as labels | S, C, R | — |
+| $`P`$, $`p_{ij}`$ | the transition matrix; the chance tomorrow is $`j`$ given today is $`i`$ | sunny to sunny 0.7, sunny to rainy 0 | larger stay-chances make the hidden path smoother |
+| $`\nu_i`$ | the start law: the chance Monday is $`i`$ | 0.5, 0.3, 0.2 | Monday's reading leans towards $`i`$ |
+| $`b_i(y)`$ | the emission chance: signal $`y`$ given weather $`i`$ | umbrella 0.1, 0.4, 0.8 | signals separate weathers more sharply |
+| $`\alpha_n(i)`$ | forward: chance of signals up to day $`n`$ and weather $`i`$ that day | Monday rainy 0.16 | — |
+| $`\beta_n(i)`$ | backward: chance of the signals after day $`n`$, given weather $`i`$ on day $`n`$ | 1 on Friday | — |
+| $`\delta_n(i)`$ | Viterbi: chance of the signals up to day $`n`$ together with the best single path ending in $`i`$ that day | Tuesday rainy 0.0768 | — |
+| $`\psi_n(i)`$ | the weather on day $`n - 1`$ that the best path into $`i`$ came from | into Friday cloudy: sunny | — |
+| $`L`$ | the chance of the whole signal week | 0.0139810329 | — |
 
 ### When it holds
 
@@ -102,31 +108,31 @@ Every question here is about the product in the model. The chance of the umbrell
 
 ### Step 1: why the joint chance is that product
 
-The multiplication rule breaks the joint chance into pieces, each the chance of the next item given everything before it. The next weather needs only today's weather, $p_{x_{n-1} x_n}$: the Markov assumption. The next signal needs only its own day's weather, $b_{x_n}(y_n)$: the emission assumption. Multiply the pieces: the formula.
+The multiplication rule breaks the joint chance into pieces, each the chance of the next item given everything before it. The next weather needs only today's weather, $`p_{x_{n-1} x_n}`$: the Markov assumption. The next signal needs only its own day's weather, $`b_{x_n}(y_n)`$: the emission assumption. Multiply the pieces: the formula.
 
 On our week, the weather week rainy, rainy, sunny, sunny, cloudy gives
 
-$0.2 \times 0.8 \times (0.6 \times 0.8) \times (0.2 \times 0.9) \times (0.7 \times 0.9) \times (0.3 \times 0.4) = 0.0010450944.$
+$`0.2 \times 0.8 \times (0.6 \times 0.8) \times (0.2 \times 0.9) \times (0.7 \times 0.9) \times (0.3 \times 0.4) = 0.0010450944.`$
 
 ### Step 2: the forward algorithm adds over yesterday
 
-The chance of umbrellas on Monday and Tuesday with Tuesday rainy is a sum over Monday's weather. Monday's three values $\alpha_1(i)$ are 0.5 × 0.1 = 0.05 for sunny, 0.3 × 0.4 = 0.12 for cloudy, 0.2 × 0.8 = 0.16 for rainy. Each is multiplied by its chance of moving to rain, the three are added, and the sum is multiplied by the chance of Tuesday's umbrella:
+The chance of umbrellas on Monday and Tuesday with Tuesday rainy is a sum over Monday's weather. Monday's three values $`\alpha_1(i)`$ are 0.5 × 0.1 = 0.05 for sunny, 0.3 × 0.4 = 0.12 for cloudy, 0.2 × 0.8 = 0.16 for rainy. Each is multiplied by its chance of moving to rain, the three are added, and the sum is multiplied by the chance of Tuesday's umbrella:
 
-$(0.05 \times 0 + 0.12 \times 0.4 + 0.16 \times 0.6) \times 0.8 = 0.144 \times 0.8 = 0.1152.$
+$`(0.05 \times 0 + 0.12 \times 0.4 + 0.16 \times 0.6) \times 0.8 = 0.144 \times 0.8 = 0.1152.`$
 
-That is $\alpha_2(\text{R})$. Wednesday's values need only Tuesday's three, never Monday's: the whole past is folded into three numbers. Friday's three numbers sum to $L$ = 0.0139810329, the chance of the umbrella week, about 1.40%.
+That is $`\alpha_2(\text{R})`$. Wednesday's values need only Tuesday's three, never Monday's: the whole past is folded into three numbers. Friday's three numbers sum to $`L`$ = 0.0139810329, the chance of the umbrella week, about 1.40%.
 
 Divide each day's three forward values by their total and Bayes' rule appears ([Bayes' rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md)). The forward step is a prediction, "yesterday's belief moved by the chain", followed by an update, "multiplied by the chance of today's signal and rescaled". On Monday the prior 0.5, 0.3, 0.2 meets an umbrella and becomes 0.1515, 0.3636, 0.4848.
 
 ### Step 3: backwards, for the whole week
 
-The filtered chance on Monday uses Monday's umbrella only. Tuesday's umbrella is evidence about Monday too, since rain tends to persist. The backward values carry the future to each day, and $\alpha_n(i)\,\beta_n(i)$ is the sum of the products of all weeks that have weather $i$ on day $n$: the past half times the future half. Dividing by $L$ gives the smoothed chance. Monday's chance of rain rises from 0.48 to 0.56 in hindsight.
+The filtered chance on Monday uses Monday's umbrella only. Tuesday's umbrella is evidence about Monday too, since rain tends to persist. The backward values carry the future to each day, and $`\alpha_n(i)\,\beta_n(i)`$ is the sum of the products of all weeks that have weather $`i`$ on day $`n`$: the past half times the future half. Dividing by $`L`$ gives the smoothed chance. Monday's chance of rain rises from 0.48 to 0.56 in hindsight.
 
 ### Step 4: Viterbi takes the largest instead of the sum
 
-Replace "add over yesterday's weather" by "keep the best of yesterday's weather" and the same sweep finds the best single week. On Tuesday, the best way into rain comes from a rainy Monday: 0.16 × 0.6 = 0.096 beats 0.12 × 0.4 = 0.048, so $\delta_2(\text{R}) = 0.096 \times 0.8 = 0.0768$, with $\psi_2(\text{R})$ = rainy.
+Replace "add over yesterday's weather" by "keep the best of yesterday's weather" and the same sweep finds the best single week. On Tuesday, the best way into rain comes from a rainy Monday: 0.16 × 0.6 = 0.096 beats 0.12 × 0.4 = 0.048, so $`\delta_2(\text{R}) = 0.096 \times 0.8 = 0.0768`$, with $`\psi_2(\text{R})`$ = rainy.
 
-Why is keeping only the best enough? Take the best week ending in weather $i$ on day $n$. Its first $n - 1$ days end in some weather $j$. If a better path into $j$ existed, swapping it in would multiply the same remaining factors by a larger number, giving a better path into $i$. So the best path into $i$ is always a best path into some $j$, extended one step, and nothing else needs remembering.
+Why is keeping only the best enough? Take the best week ending in weather $`i`$ on day $`n`$. Its first $`n - 1`$ days end in some weather $`j`$. If a better path into $`j`$ existed, swapping it in would multiply the same remaining factors by a larger number, giving a better path into $`i`$. So the best path into $`i`$ is always a best path into some $`j`$, extended one step, and nothing else needs remembering.
 
 ### The picture: five days, three weathers, two readings
 
@@ -136,26 +142,26 @@ Days run left to right, one per 60 units; the bottom row is the umbrella seen. T
 
 ### Step 5: why the recursion is needed, and what it costs
 
-Listing every week costs $3^N$ products. The forward sweep costs 9 multiply-adds a day, one per pairing of yesterday's weather with today's. For 2000 days, $3^{2000}$ is about $10^{954}$; the sweep needs 18000 steps.
+Listing every week costs $`3^N`$ products. The forward sweep costs 9 multiply-adds a day, one per pairing of yesterday's weather with today's. For 2000 days, $`3^{2000}`$ is about $`10^{954}`$; the sweep needs 18000 steps.
 
-Long runs raise a second problem. The chance of 2000 days of signals is about $10^{-549}$, far below the smallest number a standard double-precision float can hold: about $10^{-308}$, or $10^{-324}$ counting the tiny, less precise subnormal numbers. So plain multiplication returns exactly 0.
+Long runs raise a second problem. The chance of 2000 days of signals is about $`10^{-549}`$, far below the smallest number a standard double-precision float can hold: about $`10^{-308}`$, or $`10^{-324}`$ counting the tiny, less precise subnormal numbers. So plain multiplication returns exactly 0.
 
-Two repairs work. Rescale each day's forward values to sum to 1 and add the logarithms of the scale factors: the sum is the logarithm of $L$. Or run the recursion on logarithms, where products become sums.
+Two repairs work. Rescale each day's forward values to sum to 1 and add the logarithms of the scale factors: the sum is the logarithm of $`L`$. Or run the recursion on logarithms, where products become sums.
 
 The forward step also adds chances: to add two chances known only by their logarithms, factor out the larger, so the log of the sum is the larger log plus log(1 + e^(smaller log − larger log)), and nothing underflows. Viterbi's "largest" survives, since the logarithm keeps order.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** Finitely many weathers; a chain $X_1, X_2, \dots$ with start law $\nu_i$ and transition matrix $P$; signals $Y_1, Y_2, \dots$ taking finitely many values. Assumption M: given the whole past of weather and signals, tomorrow is $j$ with chance $p_{ij}$ when today is $i$. Assumption E: given all weather to date and all earlier signals, today's signal is $y$ with chance $b_i(y)$ when today is $i$. Write $y_{1:n}$ for $y_1, \dots, y_n$.
+**Setting.** Finitely many weathers; a chain $`X_1, X_2, \dots`$ with start law $`\nu_i`$ and transition matrix $`P`$; signals $`Y_1, Y_2, \dots`$ taking finitely many values. Assumption M: given the whole past of weather and signals, tomorrow is $`j`$ with chance $`p_{ij}`$ when today is $`i`$. Assumption E: given all weather to date and all earlier signals, today's signal is $`y`$ with chance $`b_i(y)`$ when today is $`i`$. Write $`y_{1:n}`$ for $`y_1, \dots, y_n`$.
 
-**Forward.** Let $\alpha_n(i)$ be the chance that $Y_{1:n} = y_{1:n}$ and $X_n = i$. At $n = 1$ the product gives $\nu_i\, b_i(y_1)$. For $n \ge 2$, the law of total probability over yesterday's weather $j$ writes $\alpha_n(i)$ as a sum over $j$ of $\alpha_{n-1}(j)$ times the chance of moving from $j$ to $i$ given the past, times the chance of today's signal given the past. By M and E those are the transition chance from $j$ to $i$ and $b_i(y_n)$. Induction on $n$ finishes it; summing $\alpha_N(i)$ over $i$ gives $L$.
+**Forward.** Let $`\alpha_n(i)`$ be the chance that $`Y_{1:n} = y_{1:n}`$ and $`X_n = i`$. At $`n = 1`$ the product gives $`\nu_i\, b_i(y_1)`$. For $`n \ge 2`$, the law of total probability over yesterday's weather $`j`$ writes $`\alpha_n(i)`$ as a sum over $`j`$ of $`\alpha_{n-1}(j)`$ times the chance of moving from $`j`$ to $`i`$ given the past, times the chance of today's signal given the past. By M and E those are the transition chance from $`j`$ to $`i`$ and $`b_i(y_n)`$. Induction on $`n`$ finishes it; summing $`\alpha_N(i)`$ over $`i`$ gives $`L`$.
 
-**Backward and smoothing.** Let $\beta_n(i)$ be the chance that $Y_{n+1:N} = y_{n+1:N}$ given $X_n = i$, with $\beta_N(i) = 1$; total probability over tomorrow's weather gives its recursion. The product splits at day $n$ into a factor for the days up to $n$ and a factor for the later days, sharing only day $n$'s weather. Summed over all paths with weather $i$ on day $n$, it gives $\alpha_n(i)\,\beta_n(i)$; dividing by $L$ is Bayes' rule.
+**Backward and smoothing.** Let $`\beta_n(i)`$ be the chance that $`Y_{n+1:N} = y_{n+1:N}`$ given $`X_n = i`$, with $`\beta_N(i) = 1`$; total probability over tomorrow's weather gives its recursion. The product splits at day $`n`$ into a factor for the days up to $`n`$ and a factor for the later days, sharing only day $`n`$'s weather. Summed over all paths with weather $`i`$ on day $`n`$, it gives $`\alpha_n(i)\,\beta_n(i)`$; dividing by $`L`$ is Bayes' rule.
 
-**Viterbi.** Let $\delta_n(i)$ be the largest product, cut off at day $n$, over paths with weather $i$ on day $n$. Group those paths by their day $n - 1$ weather $j$. Within a group every product carries the same last factor, moving from $j$ to $i$ and emitting $y_n$, which is at least 0; multiplying by it keeps the group's largest member largest. So $\delta_n(i)$ is the best over $j$ of $\delta_{n-1}(j)$ times that factor, and the traceback follows these choices back from the best final weather. With ties it finds one of the best paths; the code breaks ties towards the first weather listed.
+**Viterbi.** Let $`\delta_n(i)`$ be the largest product, cut off at day $`n`$, over paths with weather $`i`$ on day $`n`$. Group those paths by their day $`n - 1`$ weather $`j`$. Within a group every product carries the same last factor, moving from $`j`$ to $`i`$ and emitting $`y_n`$, which is at least 0; multiplying by it keeps the group's largest member largest. So $`\delta_n(i)`$ is the best over $`j`$ of $`\delta_{n-1}(j)`$ times that factor, and the traceback follows these choices back from the best final weather. With ties it finds one of the best paths; the code breaks ties towards the first weather listed.
 
-**Rescaling.** Divide each day's forward values by their total, the day's scale factor, before the next step. By induction the rescaled values are the true ones divided by the product of the scale factors so far. On the last day they sum to 1, so $L$ is the product of all $N$ scale factors and $\log L$ is the sum of their logarithms. Each scale factor is the chance of that day's signal given the earlier ones, between 0 and 1, and does not underflow.
+**Rescaling.** Divide each day's forward values by their total, the day's scale factor, before the next step. By induction the rescaled values are the true ones divided by the product of the scale factors so far. On the last day they sum to 1, so $`L`$ is the product of all $`N`$ scale factors and $`\log L`$ is the sum of their logarithms. Each scale factor is the chance of that day's signal given the earlier ones, between 0 and 1, and does not underflow.
 
 </details>
 
@@ -172,12 +178,12 @@ A second road to every answer is brute force: list the 243 weeks, compute each p
 | Tuesday forward, rain | (0.05 × 0 + 0.12 × 0.4 + 0.16 × 0.6) × 0.8 | 0.1152 |
 | Tuesday forward, S and C | the same step, into sun and into cloud | 0.0103, 0.0332 |
 | Friday forward, S, C, R | the same step three more times | 0.0026587221, 0.0055769604, 0.0057453504 |
-| chance of the umbrella week | their sum, $L$ | **0.0139810329** |
+| chance of the umbrella week | their sum, $`L`$ | **0.0139810329** |
 | Tuesday Viterbi, rain | max(0, 0.048, 0.096) × 0.8, from rain | 0.0768 |
 | Friday Viterbi, S, C, R | the same step three more times | 0.0006096384, 0.0010450944, 0.0007962624 |
 | best week | largest is cloudy; trace back | **R R S S C** |
 | its chance given the umbrellas | 0.0010450944 / 0.0139810329 | **0.0748** |
-| Friday smoothed, S, C, R | forward × backward / $L$ | 0.1902, 0.3989, 0.4109 |
+| Friday smoothed, S, C, R | forward × backward / $`L`$ | 0.1902, 0.3989, 0.4109 |
 
 The umbrella week turns up in about 1.40% of weeks. Given it, the best single guess at the weather is right as a whole only about 7.5% of the time: 144 of the 243 weather weeks can produce these umbrellas.
 
@@ -187,7 +193,7 @@ The umbrella week turns up in about 1.40% of weeks. Given it, the best single gu
 | --- | --- | --- |
 | Take each day's most likely weather and string them together | R R S S R, a week of chance exactly 0 | A sunny Thursday cannot turn straight to rain; each day's best ignores its neighbours' choices |
 | Treat the days as independent, each drawn from Monday's mix | 0.33^3 × 0.67^2 = 0.0161, not 0.0140 | The chain's persistence is thrown away |
-| Multiply the forward values plainly over 2000 days | 0.0 | The true chance, about $10^{-549}$, underflows; rescale or use logarithms |
+| Multiply the forward values plainly over 2000 days | 0.0 | The true chance, about $`10^{-549}`$, underflows; rescale or use logarithms |
 
 The code prints all three.
 
@@ -195,7 +201,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported except the logarithm, the exponential, the square root and infinity. The answers are reached by three roads. Road 1 runs the forward, backward and Viterbi recursions in ordinary floating-point numbers. Road 2 lists all 243 weather weeks and computes each product exactly in whole numbers: every chance in the model is a whole number of tenths, so each product is a whole number of units of $10^{-10}$.
+Nothing is imported except the logarithm, the exponential, the square root and infinity. The answers are reached by three roads. Road 1 runs the forward, backward and Viterbi recursions in ordinary floating-point numbers. Road 2 lists all 243 weather weeks and computes each product exactly in whole numbers: every chance in the model is a whole number of tenths, so each product is a whole number of units of $`10^{-10}`$.
 
 Road 3 simulates 300000 weeks of weather and umbrellas with SplitMix64, a short random-number generator written out in both languages, seed 2026. Among the weeks that happen to show this umbrella pattern, it counts how often the weather was the Viterbi week and how often Friday was rainy, each with its standard error: the typical size of the random error in a simulated share ([Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)).
 
@@ -614,17 +620,17 @@ The two outputs match line for line. The simulated chance of the umbrella week, 
 Lean proves the facts of Why it works for any number of weathers, signals and days, and checks the worked numbers.
 
 - Suppose tomorrow's weather depends on today's alone, each signal on that day's weather alone, and the start law, transition and emission chances are fixed. Then the chance of any weather week together with the signals is the product in the formula.
-- Take the same model. Then the chance of the signals is $L$, the forward total, and $L$ equals the product added over all weather weeks.
-- Take any transition and emission chances, none negative. Then $\delta_n(i)$ is the largest product up to day $n$ over weather paths ending in $i$.
-- Take the same chances. Then some path reaches that largest product, and the largest $\delta_N(i)$ is the largest product over all weather weeks.
-- Take any day $n$ and weather $i$. Then $\alpha_n(i)\,\beta_n(i)$ is the sum of the products of all weeks with weather $i$ on day $n$.
+- Take the same model. Then the chance of the signals is $`L`$, the forward total, and $`L`$ equals the product added over all weather weeks.
+- Take any transition and emission chances, none negative. Then $`\delta_n(i)`$ is the largest product up to day $`n`$ over weather paths ending in $`i`$.
+- Take the same chances. Then some path reaches that largest product, and the largest $`\delta_N(i)`$ is the largest product over all weather weeks.
+- Take any day $`n`$ and weather $`i`$. Then $`\alpha_n(i)\,\beta_n(i)`$ is the sum of the products of all weeks with weather $`i`$ on day $`n`$.
 - Monday's forward values are 0.05, 0.12 and 0.16, and Tuesday's for rain is 0.1152.
-- Friday's forward values are 0.0026587221, 0.0055769604 and 0.0057453504, and their sum $L$ is 0.0139810329.
+- Friday's forward values are 0.0026587221, 0.0055769604 and 0.0057453504, and their sum $`L`$ is 0.0139810329.
 - Monday's filtered chance of rain is 16/33, about 0.4848.
-- Tuesday's $\delta$ for rain is 0.0768, and Friday's three are 0.0006096384, 0.0010450944 and 0.0007962624.
+- Tuesday's $`\delta`$ for rain is 0.0768, and Friday's three are 0.0006096384, 0.0010450944 and 0.0007962624.
 - The week R R S S C has product 0.0010450944, and the day-by-day week R R S S R has chance 0.
 - Given the umbrellas, the best week's chance is about 0.0748, and Friday's smoothed chance of rain about 0.4109.
-- The products of all 243 weather weeks add to $L$, and 144 of those weeks are possible.
+- The products of all 243 weather weeks add to $`L`$, and 144 of those weeks are possible.
 
 The other decimals, the 2000-day run with rescaling and logarithms, and the simulated weeks are left to the Python and Rust checks.
 

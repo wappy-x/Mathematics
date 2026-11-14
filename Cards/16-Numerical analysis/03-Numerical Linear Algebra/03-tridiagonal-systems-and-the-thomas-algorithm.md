@@ -35,51 +35,61 @@ The line is the Thomas solution, read every 20th point, with the two held ends a
 
 ## The formula
 
-Notation first, in words. The system is $Ax = d$: $A$ is the matrix, $x$ the list of unknowns (here the temperatures, in °C), $d$ the right side. Row $i$ has three entries: $a_i$ below the diagonal, $b_i$ on it, $c_i$ above it. Row 1 has no $a_1$ and row $n$ has no $c_n$.
+Notation first, in words. The system is $`Ax = d`$: $`A`$ is the matrix, $`x`$ the list of unknowns (here the temperatures, in °C), $`d`$ the right side. Row $`i`$ has three entries: $`a_i`$ below the diagonal, $`b_i`$ on it, $`c_i`$ above it. Row 1 has no $`a_1`$ and row $`n`$ has no $`c_n`$.
 
-$$a_i x_{i-1} + b_i x_i + c_i x_{i+1} = d_i, \qquad i = 1, \dots, n.$$
+```math
+a_i x_{i-1} + b_i x_i + c_i x_{i+1} = d_i, \qquad i = 1, \dots, n.
+```
 
-**Sweep down**, for $i = 2, \dots, n$, starting from $p_1 = b_1$ and $y_1 = d_1$:
+**Sweep down**, for $`i = 2, \dots, n`$, starting from $`p_1 = b_1`$ and $`y_1 = d_1`$:
 
-$$l_i = \frac{a_i}{p_{i-1}}, \qquad p_i = b_i - l_i c_{i-1}, \qquad y_i = d_i - l_i y_{i-1}.$$
+```math
+l_i = \frac{a_i}{p_{i-1}}, \qquad p_i = b_i - l_i c_{i-1}, \qquad y_i = d_i - l_i y_{i-1}.
+```
 
-**Sweep back**, for $i = n-1$ down to $1$:
+**Sweep back**, for $`i = n-1`$ down to $`1`$:
 
-$$x_n = \frac{y_n}{p_n}, \qquad x_i = \frac{y_i - c_i x_{i+1}}{p_i}.$$
+```math
+x_n = \frac{y_n}{p_n}, \qquad x_i = \frac{y_i - c_i x_{i+1}}{p_i}.
+```
 
 **Read it aloud:** going down, use each row's pivot to clear the entry below it and carry the right side along; going back, the last row has one unknown, and each row above then has one unknown left.
 
 The cost and the safety rule are two more lines:
 
-$$F(n) = 8n - 7 \text{ flops}$$
+```math
+F(n) = 8n - 7 \text{ flops}
+```
 
-$$\lvert b_i\rvert \ge \lvert a_i\rvert + \lvert c_i\rvert \text{ in every row}, \quad \lvert b_1\rvert > \lvert c_1\rvert, \quad \text{every } a_i \ne 0 \;\Longrightarrow\; \lvert p_i\rvert > \lvert b_i\rvert - \lvert a_i\rvert \text{ for } i \ge 2.$$
+```math
+\lvert b_i\rvert \ge \lvert a_i\rvert + \lvert c_i\rvert \text{ in every row}, \quad \lvert b_1\rvert > \lvert c_1\rvert, \quad \text{every } a_i \ne 0 \;\Longrightarrow\; \lvert p_i\rvert > \lvert b_i\rvert - \lvert a_i\rvert \text{ for } i \ge 2.
+```
 
-**Read it aloud:** the work is eight flops per unknown, less seven; and if each diagonal entry is at least as big as its two neighbours together, strictly bigger than its one neighbour in the first row, and no entry below the diagonal is zero, then every pivot after the first keeps more than the margin $\lvert b_i\rvert - \lvert a_i\rvert$, so no pivot is zero.
+**Read it aloud:** the work is eight flops per unknown, less seven; and if each diagonal entry is at least as big as its two neighbours together, strictly bigger than its one neighbour in the first row, and no entry below the diagonal is zero, then every pivot after the first keeps more than the margin $`\lvert b_i\rvert - \lvert a_i\rvert`$, so no pivot is zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $h$ | unknowns; segment length | 199; 0.005 m | $n$ up: flops grow in step with $n$ |
-| $A$, $L$, $U$, $P$ | the matrix; its two factors, $A = LU$; the row swaps, $PA = LU$ | 199 by 199, three diagonals; $P$ swaps nothing | — |
-| $a_i$, $b_i$, $c_i$ | entries below, on and above the diagonal in row $i$ | −1, 2, −1 | $b_i$ up: bigger margin, safer pivots |
-| $d_i$ | right side of row $i$ | 0.0100; row 1 adds 20, row 199 adds 60 | temperatures rise |
-| $x_i$, $\hat{x}$ | the unknowns; $\hat{x}$, "x-hat", is the computed $x$ | $x_{120}$ = 92.000000 °C | — |
-| $l_i$, $p_i$ | multiplier: how much of row $i-1$ to subtract from row $i$; pivot: the diagonal entry left in row $i$ after clearing | row 2: −0.500000; pivots 2.000000, 1.500000, …, 1.005025 | — |
-| $y_i$ | the right side after the sweep down | 20.010000, 10.015000, … | — |
-| $s$, $T(s)$, $k$, $q$ | position along the rod; exact temperature there; conductivity; heat made per cubic metre | 0.6 m, 92 °C; 50 W/(m K); 20,000 W/m³ | $q$ up: hotter middle |
-| $F(n)$, $E(n)$ | flops for the sweep; for dense elimination | 1,585; 5,312,902 | $E$ grows like $n^3$ |
-| $\kappa$, $z$ | condition number $\lVert A\rVert_\infty \lVert A^{-1}\rVert_\infty$; the solution of $Az = (1, \dots, 1)$, whose largest entry is $\lVert A^{-1}\rVert_\infty$ | 20000.0; 5000.0 | $\kappa$ up: more digits at risk |
-| $\eta$, $u$, $\delta$, $\Delta A$ | backward error; unit roundoff $2^{-53}$; one flop's relative rounding error, $\lvert\delta\rvert \le u$; the change to $A$ that $\hat{x}$ solves exactly | 6.64e-17 | $\eta$ up: a worse solve |
-| $\alpha$, $\Delta t$, $r$ | diffusivity; time step; mesh ratio $\alpha\Delta t/h^2$ | 1.2e-5 m²/s; 10 s; 4.8 | $r$ up: margin $1 + r$ grows, still safe |
+| $`n`$, $`h`$ | unknowns; segment length | 199; 0.005 m | $`n`$ up: flops grow in step with $`n`$ |
+| $`A`$, $`L`$, $`U`$, $`P`$ | the matrix; its two factors, $`A = LU`$; the row swaps, $`PA = LU`$ | 199 by 199, three diagonals; $`P`$ swaps nothing | — |
+| $`a_i`$, $`b_i`$, $`c_i`$ | entries below, on and above the diagonal in row $`i`$ | −1, 2, −1 | $`b_i`$ up: bigger margin, safer pivots |
+| $`d_i`$ | right side of row $`i`$ | 0.0100; row 1 adds 20, row 199 adds 60 | temperatures rise |
+| $`x_i`$, $`\hat{x}`$ | the unknowns; $`\hat{x}`$, "x-hat", is the computed $`x`$ | $`x_{120}`$ = 92.000000 °C | — |
+| $`l_i`$, $`p_i`$ | multiplier: how much of row $`i-1`$ to subtract from row $`i`$; pivot: the diagonal entry left in row $`i`$ after clearing | row 2: −0.500000; pivots 2.000000, 1.500000, …, 1.005025 | — |
+| $`y_i`$ | the right side after the sweep down | 20.010000, 10.015000, … | — |
+| $`s`$, $`T(s)`$, $`k`$, $`q`$ | position along the rod; exact temperature there; conductivity; heat made per cubic metre | 0.6 m, 92 °C; 50 W/(m K); 20,000 W/m³ | $`q`$ up: hotter middle |
+| $`F(n)`$, $`E(n)`$ | flops for the sweep; for dense elimination | 1,585; 5,312,902 | $`E`$ grows like $`n^3`$ |
+| $`\kappa`$, $`z`$ | condition number $`\lVert A\rVert_\infty \lVert A^{-1}\rVert_\infty`$; the solution of $`Az = (1, \dots, 1)`$, whose largest entry is $`\lVert A^{-1}\rVert_\infty`$ | 20000.0; 5000.0 | $`\kappa`$ up: more digits at risk |
+| $`\eta`$, $`u`$, $`\delta`$, $`\Delta A`$ | backward error; unit roundoff $`2^{-53}`$; one flop's relative rounding error, $`\lvert\delta\rvert \le u`$; the change to $`A`$ that $`\hat{x}`$ solves exactly | 6.64e-17 | $`\eta`$ up: a worse solve |
+| $`\alpha`$, $`\Delta t`$, $`r`$ | diffusivity; time step; mesh ratio $`\alpha\Delta t/h^2`$ | 1.2e-5 m²/s; 10 s; 4.8 | $`r`$ up: margin $`1 + r`$ grows, still safe |
 
-The steady rod obeys $-kT'' = q$: the curvature of the temperature, times the conductivity, balances the heat made. Its exact answer is the parabola $T(s) = 20 + 40s + 200\,s(1-s)$.
+The steady rod obeys $`-kT'' = q`$: the curvature of the temperature, times the conductivity, balances the heat made. Its exact answer is the parabola $`T(s) = 20 + 40s + 200\,s(1-s)`$.
 
 ### When it holds
 
-- **Diagonal dominance.** Each $\lvert b_i\rvert$ is at least $\lvert a_i\rvert + \lvert c_i\rvert$, strictly in row 1, with every $a_i$ nonzero. Without it a pivot can be tiny: a well-conditioned 3 by 3 matrix below comes out wrong in the fifth digit.
+- **Diagonal dominance.** Each $`\lvert b_i\rvert`$ is at least $`\lvert a_i\rvert + \lvert c_i\rvert`$, strictly in row 1, with every $`a_i`$ nonzero. Without it a pivot can be tiny: a well-conditioned 3 by 3 matrix below comes out wrong in the fifth digit.
 - **Tridiagonal shape.** One entry below each pivot. A matrix with a few more diagonals (a band) needs the general banded LU; a network with loops needs sparse methods.
 - **No row swaps.** The sweep never swaps rows, which is what keeps the band intact. Dominance is what makes skipping the swaps safe.
-- **A small $\kappa$ for a small forward error.** The sweep gives a tiny backward error; the forward error is up to $\kappa$ times larger.
+- **A small $`\kappa`$ for a small forward error.** The sweep gives a tiny backward error; the forward error is up to $`\kappa`$ times larger.
 
 ---
 
@@ -93,13 +103,13 @@ The rod's system comes from the centred second difference of [Finite differences
 
 ### Step 1: the sweep is an LU factorisation on a band
 
-[LU with partial pivoting](02-lu-decomposition-and-pivoting.md) writes $PA = LU$: $L$ lower triangular with ones on its diagonal, $U$ upper triangular, $P$ a row swap. Here $P$ is the identity. $L$ has the multipliers $l_i$ just below its diagonal. $U$ has the pivots $p_i$ on its diagonal and the original $c_i$ just above it. Multiply them back:
+[LU with partial pivoting](02-lu-decomposition-and-pivoting.md) writes $`PA = LU`$: $`L`$ lower triangular with ones on its diagonal, $`U`$ upper triangular, $`P`$ a row swap. Here $`P`$ is the identity. $`L`$ has the multipliers $`l_i`$ just below its diagonal. $`U`$ has the pivots $`p_i`$ on its diagonal and the original $`c_i`$ just above it. Multiply them back:
 
-- the entry below the diagonal is $l_i p_{i-1} = a_i$;
-- the diagonal entry is $l_i c_{i-1} + p_i = b_i$;
-- the entry above is $c_i$.
+- the entry below the diagonal is $`l_i p_{i-1} = a_i`$;
+- the diagonal entry is $`l_i c_{i-1} + p_i = b_i`$;
+- the entry above is $`c_i`$.
 
-So $A = LU$ exactly. The sweep down solves $Ly = d$; the sweep back solves $Ux = y$.
+So $`A = LU`$ exactly. The sweep down solves $`Ly = d`$; the sweep back solves $`Ux = y`$.
 
 The check runs a dense 199 by 199 elimination with partial pivoting beside the sweep. On the rod no swap is needed, the extra work is all arithmetic on zeros, and the two answers agree bit for bit.
 
@@ -109,15 +119,15 @@ Count each line once.
 
 | Part | Flops per row | Rows | Total |
 | --- | --- | --- | --- |
-| multiplier $l_i$ | 1 divide | $n-1$ | $n-1$ |
-| pivot $p_i$ | 1 multiply, 1 subtract | $n-1$ | $2(n-1)$ |
-| right side $y_i$ | 1 multiply, 1 subtract | $n-1$ | $2(n-1)$ |
-| last unknown $x_n$ | 1 divide | 1 | 1 |
-| back rows $x_i$ | multiply, subtract, divide | $n-1$ | $3(n-1)$ |
+| multiplier $`l_i`$ | 1 divide | $`n-1`$ | $`n-1`$ |
+| pivot $`p_i`$ | 1 multiply, 1 subtract | $`n-1`$ | $`2(n-1)`$ |
+| right side $`y_i`$ | 1 multiply, 1 subtract | $`n-1`$ | $`2(n-1)`$ |
+| last unknown $`x_n`$ | 1 divide | 1 | 1 |
+| back rows $`x_i`$ | multiply, subtract, divide | $`n-1`$ | $`3(n-1)`$ |
 
-The total is $8(n-1) + 1 = 8n - 7$: 1,585 at $n$ = 199. Dense elimination costs $E(n) = \tfrac23 n^3 + \tfrac32 n^2 - \tfrac76 n$ ([Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md)): 5,312,902. Both checks count every flop as it happens and match both formulas.
+The total is $`8(n-1) + 1 = 8n - 7`$: 1,585 at $`n`$ = 199. Dense elimination costs $`E(n) = \tfrac23 n^3 + \tfrac32 n^2 - \tfrac76 n`$ ([Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md)): 5,312,902. Both checks count every flop as it happens and match both formulas.
 
-When pivots repeat across many right sides, as in time stepping, store $l_i$ and $p_i$ once. Each new right side then costs $5n - 4$ flops.
+When pivots repeat across many right sides, as in time stepping, store $`l_i`$ and $`p_i`$ once. Each new right side then costs $`5n - 4`$ flops.
 
 ### The picture: flops against size
 
@@ -131,50 +141,52 @@ xychart-beta
     line [1.86, 2.37, 2.90, 3.38, 3.90]
 ```
 
-Orange, the top line: dense elimination, $E(n)$. Teal, the bottom line: the Thomas sweep, $8n - 7$. Each step up is ten times more work. Ten times more unknowns costs the sweep ten times more and dense elimination about a thousand times more.
+Orange, the top line: dense elimination, $`E(n)`$. Teal, the bottom line: the Thomas sweep, $`8n - 7`$. Each step up is ten times more work. Ten times more unknowns costs the sweep ten times more and dense elimination about a thousand times more.
 
 ### Step 3: diagonal dominance keeps every pivot away from zero
 
-The idea in words: a pivot is the diagonal entry minus a share of the row above. If every earlier ratio $c_{i-1}/p_{i-1}$ has size below 1, that share is smaller than $\lvert a_i\rvert$. So the pivot keeps more than $\lvert b_i\rvert - \lvert a_i\rvert$, and that is at least $\lvert c_i\rvert$, which keeps the next ratio below 1 too. The bound passes down the chain.
+The idea in words: a pivot is the diagonal entry minus a share of the row above. If every earlier ratio $`c_{i-1}/p_{i-1}`$ has size below 1, that share is smaller than $`\lvert a_i\rvert`$. So the pivot keeps more than $`\lvert b_i\rvert - \lvert a_i\rvert`$, and that is at least $`\lvert c_i\rvert`$, which keeps the next ratio below 1 too. The bound passes down the chain.
 
 <details>
 <summary>Detailed proof: every pivot exceeds |b_i| − |a_i|</summary>
 
-**Assume** $\lvert b_i\rvert \ge \lvert a_i\rvert + \lvert c_i\rvert$ for every row, $\lvert b_1\rvert > \lvert c_1\rvert$, and $a_i \ne 0$ for $i \ge 2$.
+**Assume** $`\lvert b_i\rvert \ge \lvert a_i\rvert + \lvert c_i\rvert`$ for every row, $`\lvert b_1\rvert > \lvert c_1\rvert`$, and $`a_i \ne 0`$ for $`i \ge 2`$.
 
-**Claim.** For $i < n$, $\lvert c_i\rvert < \lvert p_i\rvert$; and for every $i \ge 2$, $\lvert p_i\rvert > \lvert b_i\rvert - \lvert a_i\rvert$.
+**Claim.** For $`i < n`$, $`\lvert c_i\rvert < \lvert p_i\rvert`$; and for every $`i \ge 2`$, $`\lvert p_i\rvert > \lvert b_i\rvert - \lvert a_i\rvert`$.
 
-**Start.** $p_1 = b_1$, and $\lvert b_1\rvert > \lvert c_1\rvert$.
+**Start.** $`p_1 = b_1`$, and $`\lvert b_1\rvert > \lvert c_1\rvert`$.
 
-**Step.** Suppose $\lvert c_{i-1}\rvert < \lvert p_{i-1}\rvert$. Then
+**Step.** Suppose $`\lvert c_{i-1}\rvert < \lvert p_{i-1}\rvert`$. Then
 
-$$\lvert p_i\rvert = \left\lvert b_i - a_i\frac{c_{i-1}}{p_{i-1}}\right\rvert \ge \lvert b_i\rvert - \lvert a_i\rvert\frac{\lvert c_{i-1}\rvert}{\lvert p_{i-1}\rvert} > \lvert b_i\rvert - \lvert a_i\rvert \ge \lvert c_i\rvert.$$
+$`\displaystyle \lvert p_i\rvert = \left\lvert b_i - a_i\frac{c_{i-1}}{p_{i-1}}\right\rvert \ge \lvert b_i\rvert - \lvert a_i\rvert\frac{\lvert c_{i-1}\rvert}{\lvert p_{i-1}\rvert} > \lvert b_i\rvert - \lvert a_i\rvert \ge \lvert c_i\rvert.`$
 
-The strict sign uses $a_i \ne 0$ and the ratio below 1. That gives both halves of the claim for row $i$. For $i = n$ there is no $c_n$, and $\lvert p_n\rvert > \lvert b_n\rvert - \lvert a_n\rvert \ge 0$, so the last pivot is nonzero too.
+The strict sign uses $`a_i \ne 0`$ and the ratio below 1. That gives both halves of the claim for row $`i`$. For $`i = n`$ there is no $`c_n`$, and $`\lvert p_n\rvert > \lvert b_n\rvert - \lvert a_n\rvert \ge 0`$, so the last pivot is nonzero too.
 
-**No growth.** Compare $\lvert L\rvert\lvert U\rvert$ (the factors with every entry made positive, multiplied) with $\lvert A\rvert$, entry by entry. Below the diagonal it is $\lvert l_i\rvert\lvert p_{i-1}\rvert = \lvert a_i\rvert$. Above it is $\lvert c_i\rvert$. On the diagonal it is $\lvert l_i\rvert\lvert c_{i-1}\rvert + \lvert p_i\rvert$. The first term is $\lvert a_i\rvert \lvert c_{i-1}\rvert/\lvert p_{i-1}\rvert < \lvert a_i\rvert$, and the same line read the other way gives $\lvert p_i\rvert < \lvert b_i\rvert + \lvert a_i\rvert$. So the diagonal entry is below $\lvert b_i\rvert + 2\lvert a_i\rvert \le 3\lvert b_i\rvert$. Hence $\lvert L\rvert\lvert U\rvert \le 3\lvert A\rvert$: the factors never grow past the size of $A$.
+**No growth.** Compare $`\lvert L\rvert\lvert U\rvert`$ (the factors with every entry made positive, multiplied) with $`\lvert A\rvert`$, entry by entry. Below the diagonal it is $`\lvert l_i\rvert\lvert p_{i-1}\rvert = \lvert a_i\rvert`$. Above it is $`\lvert c_i\rvert`$. On the diagonal it is $`\lvert l_i\rvert\lvert c_{i-1}\rvert + \lvert p_i\rvert`$. The first term is $`\lvert a_i\rvert \lvert c_{i-1}\rvert/\lvert p_{i-1}\rvert < \lvert a_i\rvert`$, and the same line read the other way gives $`\lvert p_i\rvert < \lvert b_i\rvert + \lvert a_i\rvert`$. So the diagonal entry is below $`\lvert b_i\rvert + 2\lvert a_i\rvert \le 3\lvert b_i\rvert`$. Hence $`\lvert L\rvert\lvert U\rvert \le 3\lvert A\rvert`$: the factors never grow past the size of $`A`$.
 
 </details>
 
-On the rod the margin is $2 - 1 = 1$. The pivots are $p_i = (i+1)/i$: 2.000000, 1.500000, 1.333333, down to 1.005025. All stay above 1, as the proof says.
+On the rod the margin is $`2 - 1 = 1`$. The pivots are $`p_i = (i+1)/i`$: 2.000000, 1.500000, 1.333333, down to 1.005025. All stay above 1, as the proof says.
 
 ### Step 4: small pivots never appear, so the rounding stays small
 
-The standard model of rounding ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)) says each flop is off by a factor $1 + \delta$ with $\lvert\delta\rvert \le u$. Higham's book (chapter 9, in Sources) proves that the computed $\hat{x}$ from the sweep solves a nearby system $(A + \Delta A)\hat{x} = d$. Each entry of $\Delta A$ is at most about $4u$ times the matching entry of $\lvert L\rvert\lvert U\rvert$. For a diagonally dominant tridiagonal $A$, $\lvert L\rvert\lvert U\rvert \le 3\lvert A\rvert$, entry by entry. That makes the sweep backward stable: the computed answer is the exact answer to a slightly changed matrix ([Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md)).
+The standard model of rounding ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)) says each flop is off by a factor $`1 + \delta`$ with $`\lvert\delta\rvert \le u`$. Higham's book (chapter 9, in Sources) proves that the computed $`\hat{x}`$ from the sweep solves a nearby system $`(A + \Delta A)\hat{x} = d`$. Each entry of $`\Delta A`$ is at most about $`4u`$ times the matching entry of $`\lvert L\rvert\lvert U\rvert`$. For a diagonally dominant tridiagonal $`A`$, $`\lvert L\rvert\lvert U\rvert \le 3\lvert A\rvert`$, entry by entry. That makes the sweep backward stable: the computed answer is the exact answer to a slightly changed matrix ([Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md)).
 
-The check measures it. The **backward error** $\eta$ is the residual's size over the sizes of $A$, $\hat{x}$ and $d$:
+The check measures it. The **backward error** $`\eta`$ is the residual's size over the sizes of $`A`$, $`\hat{x}`$ and $`d`$:
 
-$$\eta = \frac{\lVert d - A\hat{x}\rVert_\infty}{\lVert A\rVert_\infty\lVert \hat{x}\rVert_\infty + \lVert d\rVert_\infty}.$$
+```math
+\eta = \frac{\lVert d - A\hat{x}\rVert_\infty}{\lVert A\rVert_\infty\lVert \hat{x}\rVert_\infty + \lVert d\rVert_\infty}.
+```
 
-On the rod $\eta$ = 6.64e-17, below $u$. The forward error is then at most about $2\kappa\eta$ in relative terms ([Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md)).
+On the rod $`\eta`$ = 6.64e-17, below $`u`$. The forward error is then at most about $`2\kappa\eta`$ in relative terms ([Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md)).
 
-The condition number needs $\lVert A^{-1}\rVert_\infty$. Every entry of $A^{-1}$ is positive here, so its largest row sum is the largest entry of $z$ in $Az = (1, 1, \dots, 1)$. That $z$ is the parabola $i(n+1-i)/2$, peaking at 5000.0. So $\kappa$ = 4 × 5000.0 = 20000.0.
+The condition number needs $`\lVert A^{-1}\rVert_\infty`$. Every entry of $`A^{-1}`$ is positive here, so its largest row sum is the largest entry of $`z`$ in $`Az = (1, 1, \dots, 1)`$. That $`z`$ is the parabola $`i(n+1-i)/2`$, peaking at 5000.0. So $`\kappa`$ = 4 × 5000.0 = 20000.0.
 
 | Quantity | Value | Kind |
 | --- | --- | --- |
 | largest true error against the parabola | 1.34e-12 °C | true error |
 | relative true error | 1.45e-14 | true error |
-| bound $2\kappa\eta$ | 2.66e-12 | bound |
+| bound $`2\kappa\eta`$ | 2.66e-12 | bound |
 | true over bound | 0.005 | ratio |
 
 In exact arithmetic the grid equals the parabola at every point, because the centred difference is exact on a parabola. So the true error is all rounding, and it sits well inside the bound. The trouble the rod can have is conditioning, not stability.
@@ -183,7 +195,7 @@ In exact arithmetic the grid equals the parabola at every point, because the cen
 
 The pattern appears wherever each unknown talks only to its two neighbours.
 
-- **An implicit heat step.** Switch the current off. One backward-Euler step of the cooling rod solves $-r\,T_{i-1} + (1 + 2r)T_i - r\,T_{i+1} = $ old $T_i$, with $r = \alpha\Delta t/h^2$ ([Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md); that card writes the diffusivity as κ, but here κ is the condition number, so the diffusivity is α). With $\alpha$ = 1.2e-5 m²/s and $\Delta t$ = 10 s, $r$ = 4.8. The margin is $1 + 2r - r = 1 + r$ = 5.8 for any $r$, so the step is safe at any size. The smallest pivot is 7.547221. The middle cools from 90.000000 to 89.952000 °C in one step, with residual 1.7e-13.
+- **An implicit heat step.** Switch the current off. One backward-Euler step of the cooling rod solves $-r\,T_{i-1} + (1 + 2r)T_i - r\,T_{i+1} = $ old $`T_i`$, with $`r = \alpha\Delta t/h^2`$ ([Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md); that card writes the diffusivity as κ, but here κ is the condition number, so the diffusivity is α). With $`\alpha`$ = 1.2e-5 m²/s and $`\Delta t`$ = 10 s, $`r`$ = 4.8. The margin is $`1 + 2r - r = 1 + r`$ = 5.8 for any $`r`$, so the step is safe at any size. The smallest pivot is 7.547221. The middle cools from 90.000000 to 89.952000 °C in one step, with residual 1.7e-13.
 - **A cubic spline.** The unknowns are the curve's second derivatives at the knots. With equal spacing each row reads 1, 4, 1 ([Cubic splines](../04-Interpolation%20and%20Approximation/05-splines.md)). The margin is 3. The pivots run 4, 3.750000, 3.733333, settling at 2 + √3 = 3.732051.
 - **An option grid.** [Pricing on a grid](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md) solves one tridiagonal system per time step. Its dominant diagonal is what keeps the sweep from dividing by anything near zero.
 
@@ -191,37 +203,37 @@ The pattern appears wherever each unknown talks only to its two neighbours.
 
 ## Worked numbers, by hand
 
-The rod: $n$ = 199, every $a_i = c_i = -1$, $b_i = 2$. The right side is $h^2 q/k$ = 0.0100 in each row, plus 20 in row 1 and 60 in row 199.
+The rod: $`n`$ = 199, every $`a_i = c_i = -1`$, $`b_i = 2`$. The right side is $`h^2 q/k`$ = 0.0100 in each row, plus 20 in row 1 and 60 in row 199.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| row 1 | $p_1 = 2$, $y_1 = 0.01 + 20$ | 2.000000, 20.010000 |
-| row 2 | $l_2 = -1/2$; $p_2 = 2 - (-0.5)(-1)$; $y_2 = 0.01 + 0.5 \times 20.01$ | −0.500000, 1.500000, 10.015000 |
-| row 3 | $l_3 = -1/1.5$; $p_3 = 2 - 0.666667$; $y_3 = 0.01 + 0.666667 \times 10.015$ | −0.666667, 1.333333, 6.686667 |
-| row 199 | same pattern: $l_{199} = -198/199$, $p_{199} = 200/199$ | −0.994975, 1.005025, 61.100503 |
-| back, point 199 | $x_{199} = 61.100503 / 1.005025$ | 60.795000 |
-| point 198 | $x_{198} = (y_{198} + 60.795) / p_{198}$ | 61.580000 |
+| row 1 | $`p_1 = 2`$, $`y_1 = 0.01 + 20`$ | 2.000000, 20.010000 |
+| row 2 | $`l_2 = -1/2`$; $`p_2 = 2 - (-0.5)(-1)`$; $`y_2 = 0.01 + 0.5 \times 20.01`$ | −0.500000, 1.500000, 10.015000 |
+| row 3 | $`l_3 = -1/1.5`$; $`p_3 = 2 - 0.666667`$; $`y_3 = 0.01 + 0.666667 \times 10.015`$ | −0.666667, 1.333333, 6.686667 |
+| row 199 | same pattern: $`l_{199} = -198/199`$, $`p_{199} = 200/199`$ | −0.994975, 1.005025, 61.100503 |
+| back, point 199 | $`x_{199} = 61.100503 / 1.005025`$ | 60.795000 |
+| point 198 | $`x_{198} = (y_{198} + 60.795) / p_{198}`$ | 61.580000 |
 | point 197 | same step | 62.355000 |
-| point 120, $s$ = 0.6 m | 77 more back steps | **92.000000 °C** |
+| point 120, $`s`$ = 0.6 m | 77 more back steps | **92.000000 °C** |
 
-The rod peaks at 92.000000 °C, 0.600 m from the cool end. The middle reads 90.000000 °C. Both match the parabola $T(s)$.
+The rod peaks at 92.000000 °C, 0.600 m from the cool end. The middle reads 90.000000 °C. Both match the parabola $`T(s)`$.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Ends left off the right side | hottest 50.000000 °C at 0.500 m | the held 20 and 60 °C belong in rows 1 and 199 |
-| Right side not swept down | 36.610995 °C at 0.6 m | the back sweep needs $y_i$, not $d_i$ |
+| Right side not swept down | 36.610995 °C at 0.6 m | the back sweep needs $`y_i`$, not $`d_i`$ |
 | Dense elimination on a band | 5,312,902 flops, 3,352 times the sweep | the zeros were treated as data |
 | A matrix that is not dominant | error 0.00002220 on a 3 by 3 system | a pivot of 1.000e-12 |
 
-The last row is the broken hypothesis. Take $b = (1, 1 + 10^{-12}, 1)$ and every $a_i$ and $c_i$ equal to 1, with true answer 0.3, 0.6, 0.9. Its $\kappa$ is only 9.000: a well-conditioned problem. The second pivot is 1.000e-12 and the third is −999911107319. The sweep returns 0.299978, 0.600022, 0.900000, wrong in the fifth digit. Elimination with row swaps returns an error of 2.22e-16. This is a stability failure, not a conditioning one.
+The last row is the broken hypothesis. Take $`b = (1, 1 + 10^{-12}, 1)`$ and every $`a_i`$ and $`c_i`$ equal to 1, with true answer 0.3, 0.6, 0.9. Its $`\kappa`$ is only 9.000: a well-conditioned problem. The second pivot is 1.000e-12 and the third is −999911107319. The sweep returns 0.299978, 0.600022, 0.900000, wrong in the fifth digit. Elimination with row swaps returns an error of 2.22e-16. This is a stability failure, not a conditioning one.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code solves the rod three ways. Road one is the Thomas sweep. Road two is the exact parabola. Road three is dense elimination with partial pivoting, which must match the sweep bit for bit. Both programs count flops as they go and compare with $8n - 7$ and $E(n)$. They also bound the true error by $2\kappa\eta$, test the pivot bound on the rod, the heat step and the spline, and print the broken 3 by 3 case. A 12-unknown chain with varying entries checks the general recurrence against dense elimination, and κ is checked against the row sums of A times the closed-form row sums of $A^{-1}$.
+The code solves the rod three ways. Road one is the Thomas sweep. Road two is the exact parabola. Road three is dense elimination with partial pivoting, which must match the sweep bit for bit. Both programs count flops as they go and compare with $`8n - 7`$ and $`E(n)`$. They also bound the true error by $`2\kappa\eta`$, test the pivot bound on the rod, the heat step and the spline, and print the broken 3 by 3 case. A 12-unknown chain with varying entries checks the general recurrence against dense elimination, and κ is checked against the row sums of A times the closed-form row sums of $`A^{-1}`$.
 
 ### Python
 
@@ -594,15 +606,15 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the pivot bound, the factorisation and the flop count of Steps 1 to 3, for every size $n$.
+Lean proves the pivot bound, the factorisation and the flop count of Steps 1 to 3, for every size $`n`$.
 
-- If each $\lvert b_i\rvert \ge \lvert a_i\rvert + \lvert c_i\rvert$, with $\lvert b_1\rvert > \lvert c_1\rvert$ and every $a_i \ne 0$, every pivot after the first exceeds the margin $\lvert b_i\rvert - \lvert a_i\rvert$.
-- Under the same rule no pivot is zero, and $\lvert L\rvert\lvert U\rvert \le 3\lvert A\rvert$, entry by entry.
-- Under the same rule $A = LU$ exactly, and the numbers from the sweep down and the sweep back solve $Ax = d$.
-- The line-by-line count of Step 2 adds up to exactly $8n - 7$ flops for every $n \ge 1$.
-- The worked numbers hold exactly: 1,585 flops at $n$ = 199, $E(199)$ = 5,312,902, the rod and spline pivots, and the tiny pivot $10^{-12}$.
+- If each $`\lvert b_i\rvert \ge \lvert a_i\rvert + \lvert c_i\rvert`$, with $`\lvert b_1\rvert > \lvert c_1\rvert`$ and every $`a_i \ne 0`$, every pivot after the first exceeds the margin $`\lvert b_i\rvert - \lvert a_i\rvert`$.
+- Under the same rule no pivot is zero, and $`\lvert L\rvert\lvert U\rvert \le 3\lvert A\rvert`$, entry by entry.
+- Under the same rule $`A = LU`$ exactly, and the numbers from the sweep down and the sweep back solve $`Ax = d`$.
+- The line-by-line count of Step 2 adds up to exactly $`8n - 7`$ flops for every $`n \ge 1`$.
+- The worked numbers hold exactly: 1,585 flops at $`n`$ = 199, $`E(199)`$ = 5,312,902, the rod and spline pivots, and the tiny pivot $`10^{-12}`$.
 
-Rounding, the backward error $\eta$, the error bound $2\kappa\eta$ and the flops counted during a real run are left to the Python and Rust checks.
+Rounding, the backward error $`\eta`$, the error bound $`2\kappa\eta`$ and the flops counted during a real run are left to the Python and Rust checks.
 
 ```lean
 -- The Thomas algorithm: under diagonal dominance every pivot of the sweep stays above its margin and is nonzero, the factors do not grow, the sweep is A = LU and returns the exact solution, and it costs 8n - 7 flops.
@@ -1033,8 +1045,8 @@ example : pivot (fun _ => 1) (fun i => if i = 2 then 1 + 1 / 10 ^ 12 else 1) (fu
 
 > [!TIP]
 > **Try changing**
-> - **Guess first:** set `n, h = 399, 0.0025` (400 segments). Does the hottest point move? No: still 0.600 m and 92 °C, since the grid is exact on a parabola. The sweep's count about doubles, the dense count grows about eight times, and $\kappa$ grows four times; the true error grows too but stays inside $2\kappa\eta$.
-> - **Guess first:** set `dt = 1000.0`, so $r$ = 480. Does the implicit step fail? No: every pivot stays above $1 + r$, and the asserts pass.
+> - **Guess first:** set `n, h = 399, 0.0025` (400 segments). Does the hottest point move? No: still 0.600 m and 92 °C, since the grid is exact on a parabola. The sweep's count about doubles, the dense count grows about eight times, and $`\kappa`$ grows four times; the true error grows too but stays inside $`2\kappa\eta`$.
+> - **Guess first:** set `dt = 1000.0`, so $`r`$ = 480. Does the implicit step fail? No: every pivot stays above $`1 + r`$, and the asserts pass.
 > - **Guess first:** set `eps = 1e-6` in the broken case. The tiny pivot is a million times larger, so the sweep's error drops below the printed digits, and the assert that expects a large error fails.
 > - **Guess first:** change the rod's diagonal from `2.0` to `1.9`. The matrix is no longer dominant and no longer matches the rod. An assert fails.
 
@@ -1043,12 +1055,12 @@ example : pivot (fun _ => 1) (fun i => if i = 2 then 1 + 1 / 10 ^ 12 else 1) (fu
 ## The usual mistake
 
 > [!warning]
-> **Running the sweep on a matrix that is not diagonally dominant.** The sweep never swaps rows, so nothing protects it from a tiny pivot. The 3 by 3 case has $\kappa$ = 9.000, yet the sweep's error is 0.00002220 against 2.22e-16 with row swaps. Check dominance first; if it fails, use [LU with partial pivoting](02-lu-decomposition-and-pivoting.md) on the band.
+> **Running the sweep on a matrix that is not diagonally dominant.** The sweep never swaps rows, so nothing protects it from a tiny pivot. The 3 by 3 case has $`\kappa`$ = 9.000, yet the sweep's error is 0.00002220 against 2.22e-16 with row swaps. Check dominance first; if it fails, use [LU with partial pivoting](02-lu-decomposition-and-pivoting.md) on the band.
 >
 > - **Forgetting the boundary values.** Held end temperatures go into the first and last right sides. Left out, the peak reads 50.000000 °C at 0.500 m.
-> - **Back-substituting the original right side.** The back sweep needs the swept $y_i$. Using $d_i$ gives 36.610995 °C at 0.6 m.
-> - **Storing the band as a full matrix.** At $n$ = 199 that is 39,601 numbers instead of 796, and 5,312,902 flops instead of 1,585.
-> - **Reading a small residual as a small error.** Residual and true error differ by up to $\kappa$, here 20000.0.
+> - **Back-substituting the original right side.** The back sweep needs the swept $`y_i`$. Using $`d_i`$ gives 36.610995 °C at 0.6 m.
+> - **Storing the band as a full matrix.** At $`n`$ = 199 that is 39,601 numbers instead of 796, and 5,312,902 flops instead of 1,585.
+> - **Reading a small residual as a small error.** Residual and true error differ by up to $`\kappa`$, here 20000.0.
 
 ---
 
@@ -1066,7 +1078,7 @@ example : pivot (fun _ => 1) (fun i => if i = 2 then 1 + 1 / 10 ^ 12 else 1) (fu
 
 ## What this builds on
 
-- [LU with partial pivoting](02-lu-decomposition-and-pivoting.md): the factorisation $PA = LU$; the sweep is its band form with no swaps.
+- [LU with partial pivoting](02-lu-decomposition-and-pivoting.md): the factorisation $`PA = LU`$; the sweep is its band form with no swaps.
 - [Finite differences](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md): how a boundary problem becomes a tridiagonal system, and the first run of the sweep.
 - [Pricing on a grid](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): one tridiagonal solve per implicit time step, kept safe by a dominant diagonal.
 

@@ -36,32 +36,38 @@ From the top: the coffee poured at 80 °C (orange), a cup poured at 50 °C (gree
 
 ## The formula
 
-Notation first, in words. A dash after a letter means its rate of change: $T'$, read "T prime", is the temperature's change in degrees per minute at time $t$. In general the unknown is called $y$ and the rule $f$. The shape $y' = f(t, y)$ is read "the rate of y at time t is f of t and y". The starting value $y(t_0) = y_0$ says y has the given value at the starting time.
+Notation first, in words. A dash after a letter means its rate of change: $`T'`$, read "T prime", is the temperature's change in degrees per minute at time $`t`$. In general the unknown is called $`y`$ and the rule $`f`$. The shape $`y' = f(t, y)`$ is read "the rate of y at time t is f of t and y". The starting value $`y(t_0) = y_0`$ says y has the given value at the starting time.
 
-$$y' = f(t, y), \qquad y(t_0) = y_0$$
+```math
+y' = f(t, y), \qquad y(t_0) = y_0
+```
 
 **Read it aloud:** at every moment the unknown changes at the rate the rule assigns, and it starts at the given value.
 
 For the coffee, a tenth of the excess per minute, from 80 °C:
 
-$$T' = -0.1\,(T - 20), \qquad T(0) = 80.$$
+```math
+T' = -0.1\,(T - 20), \qquad T(0) = 80.
+```
 
 The proposed **general solution**, the family of every curve obeying the rule, is
 
-$$T = 20 + C e^{-0.1 t}.$$
+```math
+T = 20 + C e^{-0.1 t}.
+```
 
-The starting value then forces $C = 60$, giving the **particular solution** $T = 20 + 60e^{-0.1t}$: the one curve for this cup.
+The starting value then forces $`C = 60`$, giving the **particular solution** $`T = 20 + 60e^{-0.1t}`$: the one curve for this cup.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since pouring, min | 0 to 30 | nearer 20 °C |
-| $T$, $T'$ | temperature (°C) and its rate (°C per min) | 80 and −6 at the pour | faster cooling |
-| $0.1$ | cooling constant, per minute | a tenth of the excess | 50 °C comes sooner |
-| $y$, $y'$, $f(t, y)$ | any unknown, its rate, the rule | $T$, $T'$, −0.1(T − 20) | — |
-| $t_0$, $y_0$ | starting time and value | 0 min, 80 °C | another family member |
-| $C$ | the family's free constant: starting excess over the room | 60 | the curve rises everywhere |
-| $e$ | base of the natural exponential | $e^{-1}$ at 10 min | — |
-| $h$ | water height in a leaking bucket, cm | 1 or 4 at the start | — |
+| $`t`$ | time since pouring, min | 0 to 30 | nearer 20 °C |
+| $`T`$, $`T'`$ | temperature (°C) and its rate (°C per min) | 80 and −6 at the pour | faster cooling |
+| $`0.1`$ | cooling constant, per minute | a tenth of the excess | 50 °C comes sooner |
+| $`y`$, $`y'`$, $`f(t, y)`$ | any unknown, its rate, the rule | $`T`$, $`T'`$, −0.1(T − 20) | — |
+| $`t_0`$, $`y_0`$ | starting time and value | 0 min, 80 °C | another family member |
+| $`C`$ | the family's free constant: starting excess over the room | 60 | the curve rises everywhere |
+| $`e`$ | base of the natural exponential | $`e^{-1}`$ at 10 min | — |
+| $`h`$ | water height in a leaking bucket, cm | 1 or 4 at the start | — |
 
 The **order** is the highest rate that appears: the coffee's rule uses only the first rate, so it is first order. A car's shock absorber sets the acceleration, the rate of the rate, so it is second order. **Ordinary** means the unknown depends on time alone; heat spreading along a rod, with rates in time and in place, is a partial differential equation, met later in this wing.
 
@@ -70,8 +76,8 @@ The **order** is the highest rate that appears: the coffee's rule uses only the 
 The definition always applies. The two facts proved below for the coffee, a family holding every solution and one curve per starting value, hold for other rules only under conditions.
 
 - **The rule is solved for the rate.** A rule that only fixes the square of the rate allows two slopes, so two curves leave each point.
-- **The rule changes steadily with the unknown.** The cooling rule does. A leaking bucket with rate $h' = -\sqrt{h}$ does not near empty, and there an empty bucket at 4 s fits two histories. The condition that restores uniqueness is proved on [Picard iteration](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md).
-- **The solution lives long enough.** A rule growing faster than the unknown can send it to infinity in finite time. $y' = y^2$ from $y(0) = 1$ gives $y = 1/(1 - t)$, which ends at $t = 1$.
+- **The rule changes steadily with the unknown.** The cooling rule does. A leaking bucket with rate $`h' = -\sqrt{h}`$ does not near empty, and there an empty bucket at 4 s fits two histories. The condition that restores uniqueness is proved on [Picard iteration](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md).
+- **The solution lives long enough.** A rule growing faster than the unknown can send it to infinity in finite time. $`y' = y^2`$ from $`y(0) = 1`$ gives $`y = 1/(1 - t)`$, which ends at $`t = 1`$.
 - **For the coffee, the model fits.** Newton's law assumes a steady room and a cup at one temperature throughout; a draught or a lid changes the constant.
 
 ---
@@ -84,24 +90,24 @@ A differential equation is checked by putting a curve in, not a number. Compute 
 
 ### Step 1: every member of the family passes
 
-Take $T = 20 + Ce^{-0.1t}$ for some constant $C$. Its slope, by the rule for the exponential, is $-0.1\,Ce^{-0.1t}$. The rule demands $-0.1(T - 20) = -0.1\,Ce^{-0.1t}$. The two agree at every time and for every $C$. So the rule alone accepts a whole family, one curve per value of $C$: the four lines of the chart are four of them.
+Take $`T = 20 + Ce^{-0.1t}`$ for some constant $`C`$. Its slope, by the rule for the exponential, is $`-0.1\,Ce^{-0.1t}`$. The rule demands $`-0.1(T - 20) = -0.1\,Ce^{-0.1t}`$. The two agree at every time and for every $`C`$. So the rule alone accepts a whole family, one curve per value of $`C`$: the four lines of the chart are four of them.
 
 ### Step 2: no curve outside the family passes
 
-Suppose some curve $T$ obeys the rule. Multiply its excess, $T - 20$, by $e^{0.1t}$ to undo the shrinking. By the product rule the slope of that product is $e^{0.1t}\bigl(T' + 0.1(T - 20)\bigr)$, and the bracket is zero because $T$ obeys the rule. A quantity with zero slope everywhere does not change, so the product is a constant $C$, and $T = 20 + Ce^{-0.1t}$. That is why the family is called the general solution.
+Suppose some curve $`T`$ obeys the rule. Multiply its excess, $`T - 20`$, by $`e^{0.1t}`$ to undo the shrinking. By the product rule the slope of that product is $`e^{0.1t}\bigl(T' + 0.1(T - 20)\bigr)`$, and the bracket is zero because $`T`$ obeys the rule. A quantity with zero slope everywhere does not change, so the product is a constant $`C`$, and $`T = 20 + Ce^{-0.1t}`$. That is why the family is called the general solution.
 
 <details>
 <summary>Detailed proof: every solution is in the family</summary>
 
-Let $T$ be differentiable on an interval containing 0 and satisfy $T' = -0.1(T - 20)$ there. Write $P(t) = (T(t) - 20)e^{0.1t}$ for the product. By the product rule, $P'(t) = e^{0.1t}\bigl(T'(t) + 0.1(T(t) - 20)\bigr) = 0$ on the whole interval.
+Let $`T`$ be differentiable on an interval containing 0 and satisfy $`T' = -0.1(T - 20)`$ there. Write $`P(t) = (T(t) - 20)e^{0.1t}`$ for the product. By the product rule, $`P'(t) = e^{0.1t}\bigl(T'(t) + 0.1(T(t) - 20)\bigr) = 0`$ on the whole interval.
 
-By the mean value theorem, for any two times a < b in the interval, $P(b) - P(a) = P'(c)(b - a)$ for some time c between them, and $P'(c) = 0$. So the product takes one value $C$ throughout, and $T = 20 + Ce^{-0.1t}$. No division by $T - 20$ was used, so the flat solution $C = 0$ is covered too.
+By the mean value theorem, for any two times a < b in the interval, $`P(b) - P(a) = P'(c)(b - a)`$ for some time c between them, and $`P'(c) = 0`$. So the product takes one value $`C`$ throughout, and $`T = 20 + Ce^{-0.1t}`$. No division by $`T - 20`$ was used, so the flat solution $`C = 0`$ is covered too.
 
 </details>
 
 ### Step 3: the starting value picks one member
 
-At the pour, $e^{0} = 1$, so the family gives $T(0) = 20 + C$. The cup reads 80, so $C = 60$. Step 2 says there is no other candidate, so the coffee's history is $T = 20 + 60e^{-0.1t}$. It reaches 50 °C when $60e^{-0.1t} = 30$, that is $e^{-0.1t} = 1/2$, at $t = 10\ln 2 = 6.93$ minutes.
+At the pour, $`e^{0} = 1`$, so the family gives $`T(0) = 20 + C`$. The cup reads 80, so $`C = 60`$. Step 2 says there is no other candidate, so the coffee's history is $`T = 20 + 60e^{-0.1t}`$. It reaches 50 °C when $`60e^{-0.1t} = 30`$, that is $`e^{-0.1t} = 1/2`$, at $`t = 10\ln 2 = 6.93`$ minutes.
 
 ### Step 4: the order counts the starting values
 
@@ -468,7 +474,7 @@ example : ((2 : ℝ) - 4 / 2) ^ 2 = 0 ∧ ((1 : ℝ) - 1 / 2) ^ 2 = 1 / 4 ∧
 
 > [!TIP]
 > **Try changing**
-> - **Start the coffee at 50 °C.** Guess $C$ first. It is 30, the second line on the chart; the rule did not change, only the member of the family.
+> - **Start the coffee at 50 °C.** Guess $`C`$ first. It is 30, the second line on the chart; the rule did not change, only the member of the family.
 > - **Set the cooling rule to −0.1(T − 25), a warmer room.** Guess whether the family still passes. It does not: the largest residual leaves zero, because the family was built for a 20 °C room.
 > - **Add a step of 0.0001 to Euler's list.** Guess its error before running. About a tenth of the 0.001-step error: Euler's rule is first order, so the error falls in step with the step.
 
@@ -477,7 +483,7 @@ example : ((2 : ℝ) - 4 / 2) ^ 2 = 0 ∧ ((1 : ℝ) - 1 / 2) ^ 2 = 1 / 4 ∧
 ## The usual mistake
 
 > [!warning]
-> **Asking for "the" solution of the rule alone.** $T' = -0.1(T - 20)$ has a whole family of solutions; the chart shows four. Without the starting value the answer is a family, not a prediction.
+> **Asking for "the" solution of the rule alone.** $`T' = -0.1(T - 20)`$ has a whole family of solutions; the chart shows four. Without the starting value the answer is a family, not a prediction.
 >
 > - **Checking one moment.** The tangent line 80 − 6t matches the value and the slope at the pour and still says 50 °C at 5.00 minutes, not 6.93. A solution must pass at every moment.
 > - **Reading the order from the power.** The order is the highest rate present, not the highest power: a rule with the rate squared is still first order.
@@ -499,7 +505,7 @@ example : ((2 : ℝ) - 4 / 2) ^ 2 = 0 ∧ ((1 : ℝ) - 1 / 2) ^ 2 = 1 / 4 ∧
 ## What this builds on
 
 - [The derivative](../../06-Calculus%20and%20analysis/02-Derivatives/01-the-derivative.md): the slope of a curve as an instantaneous rate, which the rule prescribes.
-- [Derivatives of exp and log](../../06-Calculus%20and%20analysis/02-Derivatives/05-derivatives-of-exp-and-log.md): the slope of $e^{-0.1t}$, used in the substitution, and ln 2 for the crossing time.
+- [Derivatives of exp and log](../../06-Calculus%20and%20analysis/02-Derivatives/05-derivatives-of-exp-and-log.md): the slope of $`e^{-0.1t}`$, used in the substitution, and ln 2 for the crossing time.
 
 ## Where this goes next
 

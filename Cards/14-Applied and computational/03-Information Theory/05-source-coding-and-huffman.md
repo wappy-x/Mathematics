@@ -28,32 +28,34 @@ Schematic, not to scale. Read a codeword by walking from the top to a forecast: 
 
 ## The formula
 
-Notation first, in words. Tomorrow's forecast is $X$, one of $n$ symbols. Symbol $i$ turns up with probability $p_i$ and gets a codeword $\ell_i$ bits long; $\ell_i$ is its **codeword length**, introduced on this card. The average length is $L$, the entropy is $H(X)$, and the **Kraft sum** $K$ adds up one half raised to each codeword length.
+Notation first, in words. Tomorrow's forecast is $`X`$, one of $`n`$ symbols. Symbol $`i`$ turns up with probability $`p_i`$ and gets a codeword $`\ell_i`$ bits long; $`\ell_i`$ is its **codeword length**, introduced on this card. The average length is $`L`$, the entropy is $`H(X)`$, and the **Kraft sum** $`K`$ adds up one half raised to each codeword length.
 
-$$L = \sum_i p_i\,\ell_i, \qquad K = \sum_i 2^{-\ell_i} \le 1, \qquad H(X) \;\le\; L_{\text{Huffman}} \;<\; H(X) + 1$$
+```math
+L = \sum_i p_i\,\ell_i, \qquad K = \sum_i 2^{-\ell_i} \le 1, \qquad H(X) \;\le\; L_{\text{Huffman}} \;<\; H(X) + 1
+```
 
 **Read it aloud:** the average length is each codeword's length weighted by how often it is sent; a code can be read back only if one half to the power of each length adds up to at most one; and Huffman's average sits at or above the entropy, but less than one bit above it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | tomorrow's forecast, one random symbol | Sun, Cloud, Rain or Snow | — |
-| $n$ | how many symbols there are | 4 | $L$ and $H$ both grow, about like $\log_2 n$ for even odds |
-| $p_i$ | probability of symbol $i$; $i$ counts the symbols ($p_a$, $p_b$ name two particular ones) | 0.5, 0.25, 0.125, 0.125 | a likelier symbol earns a shorter codeword |
-| $\ell_i$ | codeword length of symbol $i$, in bits ($\ell_a$, $\ell_b$ likewise) | 1, 2, 3, 3 | $L$ rises; $K$ falls |
-| $L$ | average codeword length, bits a day | 1.75 | more radio time |
-| $H(X)$ | entropy: the average bits a perfect code would need | 1.75 | every code's $L$ rises with it |
-| $K$ | Kraft sum, $\sum_i 2^{-\ell_i}$ | 1 | above 1, the code cannot be read back |
-| $\ell_{\max}$ | the longest codeword length | 3 | — |
-| $L'$ | average length of a code for the shorter list left after one join | 1.75 − 0.25, after joining Rain and Snow | $L$ rises by the same amount |
-| $k$ | how many forecasts are sent as one block | 1, 2 or 3 | the bits a day fall toward $H$ |
-| $m$ | the total bits in one $k$-forecast message | 4, for 3 forecasts | — |
-| $A_m$ | how many $k$-forecast messages come out $m$ bits long | 24, for the code `0`, `1`, `10`, `11` | above $2^m$, two messages share a bit string |
+| $`X`$ | tomorrow's forecast, one random symbol | Sun, Cloud, Rain or Snow | — |
+| $`n`$ | how many symbols there are | 4 | $`L`$ and $`H`$ both grow, about like $`\log_2 n`$ for even odds |
+| $`p_i`$ | probability of symbol $`i`$; $`i`$ counts the symbols ($`p_a`$, $`p_b`$ name two particular ones) | 0.5, 0.25, 0.125, 0.125 | a likelier symbol earns a shorter codeword |
+| $`\ell_i`$ | codeword length of symbol $`i`$, in bits ($`\ell_a`$, $`\ell_b`$ likewise) | 1, 2, 3, 3 | $`L`$ rises; $`K`$ falls |
+| $`L`$ | average codeword length, bits a day | 1.75 | more radio time |
+| $`H(X)`$ | entropy: the average bits a perfect code would need | 1.75 | every code's $`L`$ rises with it |
+| $`K`$ | Kraft sum, $`\sum_i 2^{-\ell_i}`$ | 1 | above 1, the code cannot be read back |
+| $`\ell_{\max}`$ | the longest codeword length | 3 | — |
+| $`L'`$ | average length of a code for the shorter list left after one join | 1.75 − 0.25, after joining Rain and Snow | $`L`$ rises by the same amount |
+| $`k`$ | how many forecasts are sent as one block | 1, 2 or 3 | the bits a day fall toward $`H`$ |
+| $`m`$ | the total bits in one $`k`$-forecast message | 4, for 3 forecasts | — |
+| $`A_m`$ | how many $`k`$-forecast messages come out $`m`$ bits long | 24, for the code `0`, `1`, `10`, `11` | above $`2^m`$, two messages share a bit string |
 
 ### When it holds
 
 - **The odds are known and do not drift.** The code is built from 0.5, 0.25, 0.125, 0.125. Use it in a season with other odds and it costs extra bits; how many is the subject of [KL divergence](03-kl-divergence-and-cross-entropy.md).
 - **Each day is coded on its own.** Codeword lengths are whole numbers, so a symbol costs at least 1 bit. A desert station that sees rain one day in ten has entropy 0.469 bits but pays 1.000 bit a day. Coding days in blocks fixes most of this (Step 6).
-- **Days are independent.** If Rain usually follows Rain, the true cost per day is lower than $H(X)$, and a code that ignores yesterday leaves bits unused ([Conditional entropy and mutual information](02-conditional-entropy-and-mutual-information.md)).
+- **Days are independent.** If Rain usually follows Rain, the true cost per day is lower than $`H(X)`$, and a code that ignores yesterday leaves bits unused ([Conditional entropy and mutual information](02-conditional-entropy-and-mutual-information.md)).
 - **The code can be read back.** Break the Kraft sum and two different messages send the same bits: with Sun `0`, Cloud `1`, Rain `10`, Snow `11`, the string `10` is Rain or Cloud-then-Sun.
 - **The bits arrive intact.** One flipped bit on the radio garbles the forecasts around it and can change how many forecasts are read, so every later day can slip out of place. Compression removes the redundancy; [Hamming and Reed-Solomon](08-error-correcting-codes-hamming-and-reed-solomon.md) add some back, on purpose, before the bits go on air.
 
@@ -65,66 +67,70 @@ $$L = \sum_i p_i\,\ell_i, \qquad K = \sum_i 2^{-\ell_i} \le 1, \qquad H(X) \;\le
 
 Draw every codeword as a path in a binary tree: left for 0, right for 1. A prefix-free code puts each symbol at the end of a branch, never on the way to another symbol.
 
-Go down to depth 3, the longest codeword. There are $2^3 = 8$ slots there. A codeword of length $\ell$ owns every slot below it: Sun at depth 1 owns 4 slots, Cloud 2, Rain 1, Snow 1. The four claims cannot overlap, so they add to at most 8. Divide by 8 and you have the Kraft sum: $\tfrac12 + \tfrac14 + \tfrac18 + \tfrac18 = 1$.
+Go down to depth 3, the longest codeword. There are $`2^3 = 8`$ slots there. A codeword of length $`\ell`$ owns every slot below it: Sun at depth 1 owns 4 slots, Cloud 2, Rain 1, Snow 1. The four claims cannot overlap, so they add to at most 8. Divide by 8 and you have the Kraft sum: $`\tfrac12 + \tfrac14 + \tfrac18 + \tfrac18 = 1`$.
 
 So short codewords are expensive. Each one uses up a large share of a fixed budget. Every result below is about spending that budget well.
 
 ### Step 1: Kraft's inequality, both ways
 
-**Every prefix-free code has $K \le 1$.** That is the slot count above, for any lengths: a codeword of length $\ell_i$ owns $2^{\ell_{\max} - \ell_i}$ of the $2^{\ell_{\max}}$ slots, the claims are disjoint, so $\sum_i 2^{\ell_{\max} - \ell_i} \le 2^{\ell_{\max}}$.
+**Every prefix-free code has $`K \le 1`$.** That is the slot count above, for any lengths: a codeword of length $`\ell_i`$ owns $`2^{\ell_{\max} - \ell_i}`$ of the $`2^{\ell_{\max}}`$ slots, the claims are disjoint, so $`\sum_i 2^{\ell_{\max} - \ell_i} \le 2^{\ell_{\max}}`$.
 
-**Any lengths with $K \le 1$ have a prefix-free code.** List the lengths shortest first. Hand each symbol a block of $2^{\ell_{\max} - \ell_i}$ bottom slots, starting at the first unused slot. Because the lengths only grow, every earlier block is a whole number of the new block's size, so the new block starts on a boundary and is exactly the set of slots under one branch at depth $\ell_i$. That branch is the codeword. Because $K \le 1$, the blocks never run past the last slot.
+**Any lengths with $`K \le 1`$ have a prefix-free code.** List the lengths shortest first. Hand each symbol a block of $`2^{\ell_{\max} - \ell_i}`$ bottom slots, starting at the first unused slot. Because the lengths only grow, every earlier block is a whole number of the new block's size, so the new block starts on a boundary and is exactly the set of slots under one branch at depth $`\ell_i`$. That branch is the codeword. Because $`K \le 1`$, the blocks never run past the last slot.
 
-So the question "which codeword lengths can I have?" has a one-line answer: any whole numbers with $K \le 1$.
+So the question "which codeword lengths can I have?" has a one-line answer: any whole numbers with $`K \le 1`$.
 
 ### Step 2: McMillan: dropping the prefix rule buys nothing
 
-A code can be read back without being prefix-free. Sun `0`, Cloud `01`, Rain `011`, Snow `111` is one: read it from the right-hand end. McMillan proved that every code that can be read back, prefix-free or not, still has $K \le 1$. So prefix-free codes lose nothing, and they decode as the bits arrive.
+A code can be read back without being prefix-free. Sun `0`, Cloud `01`, Rain `011`, Snow `111` is one: read it from the right-hand end. McMillan proved that every code that can be read back, prefix-free or not, still has $`K \le 1`$. So prefix-free codes lose nothing, and they decode as the bits arrive.
 
-The proof counts messages. Raise $K$ to the power $k$ and multiply out:
+The proof counts messages. Raise $`K`$ to the power $`k`$ and multiply out:
 
-$$K^k = \Big(\sum_i 2^{-\ell_i}\Big)^k = \sum_{\text{messages of } k \text{ symbols}} 2^{-(\text{total length})} = \sum_m A_m\, 2^{-m}.$$
+```math
+K^k = \Big(\sum_i 2^{-\ell_i}\Big)^k = \sum_{\text{messages of } k \text{ symbols}} 2^{-(\text{total length})} = \sum_m A_m\, 2^{-m}.
+```
 
-Here $A_m$ counts the $k$-symbol messages whose bits total $m$. If the code can be read back, different messages give different bit strings, and there are only $2^m$ strings of $m$ bits, so $A_m \le 2^m$. Each term is then at most 1, and $m$ runs from $k$ to $k\,\ell_{\max}$, so $K^k \le k\,\ell_{\max}$.
+Here $`A_m`$ counts the $`k`$-symbol messages whose bits total $`m`$. If the code can be read back, different messages give different bit strings, and there are only $`2^m`$ strings of $`m`$ bits, so $`A_m \le 2^m`$. Each term is then at most 1, and $`m`$ runs from $`k`$ to $`k\,\ell_{\max}`$, so $`K^k \le k\,\ell_{\max}`$.
 
-If $K$ were above 1, the left side would grow like a power while the right side grows in a straight line. For large $k$ the inequality fails. So $K \le 1$.
+If $`K`$ were above 1, the left side would grow like a power while the right side grows in a straight line. For large $`k`$ the inequality fails. So $`K \le 1`$.
 
-The bad code Sun `0`, Cloud `1`, Rain `10`, Snow `11` has $K = 1.5$. Take $k = 3$ forecasts. There are 24 three-forecast messages that come out 4 bits long, and only 16 strings of 4 bits. At least two messages must share a string, so the receiver cannot tell them apart. For the Huffman code, three-forecast messages never outnumber strings: at most 0.28125 messages per string, at any length.
+The bad code Sun `0`, Cloud `1`, Rain `10`, Snow `11` has $`K = 1.5`$. Take $`k = 3`$ forecasts. There are 24 three-forecast messages that come out 4 bits long, and only 16 strings of 4 bits. At least two messages must share a string, so the receiver cannot tell them apart. For the Huffman code, three-forecast messages never outnumber strings: at most 0.28125 messages per string, at any length.
 
 ### Step 3: no code beats the entropy
 
-Take any code with $K \le 1$. Compare its average with the entropy, symbol by symbol:
+Take any code with $`K \le 1`$. Compare its average with the entropy, symbol by symbol:
 
-$$H(X) - L = \sum_i p_i \log_2 \frac{2^{-\ell_i}}{p_i} \;\le\; \frac{1}{\ln 2}\sum_i p_i\Big(\frac{2^{-\ell_i}}{p_i} - 1\Big) = \frac{K - 1}{\ln 2} \;\le\; 0.$$
+```math
+H(X) - L = \sum_i p_i \log_2 \frac{2^{-\ell_i}}{p_i} \;\le\; \frac{1}{\ln 2}\sum_i p_i\Big(\frac{2^{-\ell_i}}{p_i} - 1\Big) = \frac{K - 1}{\ln 2} \;\le\; 0.
+```
 
-Here $\ln$ is the natural logarithm, to base $e$. The middle step uses $\log_2 x \le (x - 1)/\ln 2$: the logarithm curve lies under its tangent line at $x = 1$. So $L \ge H(X)$ for every code that can be read back. The same inequality is the heart of [KL divergence](03-kl-divergence-and-cross-entropy.md).
+Here $`\ln`$ is the natural logarithm, to base $`e`$. The middle step uses $`\log_2 x \le (x - 1)/\ln 2`$: the logarithm curve lies under its tangent line at $`x = 1`$. So $`L \ge H(X)`$ for every code that can be read back. The same inequality is the heart of [KL divergence](03-kl-divergence-and-cross-entropy.md).
 
-Equality needs $2^{-\ell_i} = p_i$ for every symbol: each probability a power of one half. The forecast odds are exactly that, so the code meets the entropy: 1.75 bits.
+Equality needs $`2^{-\ell_i} = p_i`$ for every symbol: each probability a power of one half. The forecast odds are exactly that, so the code meets the entropy: 1.75 bits.
 
 ### Step 4: one bit above the entropy is always reachable
 
-Choose $\ell_i = \lceil \log_2(1/p_i) \rceil$: round each symbol's "ideal" length up to a whole number. Then $2^{-\ell_i} \le p_i$, so $K \le 1$ and Step 1 builds the code. Each length is less than $\log_2(1/p_i) + 1$, so $L < H(X) + 1$. These are **Shannon lengths**. They prove the bound, but they are not the best: rounding up can waste slots.
+Choose $`\ell_i = \lceil \log_2(1/p_i) \rceil`$: round each symbol's "ideal" length up to a whole number. Then $`2^{-\ell_i} \le p_i`$, so $`K \le 1`$ and Step 1 builds the code. Each length is less than $`\log_2(1/p_i) + 1`$, so $`L < H(X) + 1`$. These are **Shannon lengths**. They prove the bound, but they are not the best: rounding up can waste slots.
 
 ### Step 5: Huffman's code is the shortest
 
-Huffman's method: list the symbols with their probabilities. Join the two least likely into one new symbol whose probability is their sum. Repeat until one symbol is left. Read the codewords back down the tree. Each join adds one bit to every symbol inside it, so $L$ equals the sum of all the joined weights: $0.25 + 0.5 + 1 = 1.75$.
+Huffman's method: list the symbols with their probabilities. Join the two least likely into one new symbol whose probability is their sum. Repeat until one symbol is left. Read the codewords back down the tree. Each join adds one bit to every symbol inside it, so $`L`$ equals the sum of all the joined weights: $`0.25 + 0.5 + 1 = 1.75`$.
 
 Why no prefix-free code is shorter, in four facts about a best code:
 
-1. **Likelier symbols are never longer.** If $p_a > p_b$ but $\ell_a > \ell_b$, swap their codewords. The average changes by $(p_a - p_b)(\ell_b - \ell_a)$, which is negative. So that code was not the best.
+1. **Likelier symbols are never longer.** If $`p_a > p_b`$ but $`\ell_a > \ell_b`$, swap their codewords. The average changes by $`(p_a - p_b)(\ell_b - \ell_a)`$, which is negative. So that code was not the best.
 2. **The tree is full.** In a best code every join has two branches. A join with one branch could be cut out, shortening every codeword below it.
 3. **The two least likely symbols can be siblings at the bottom.** A full tree has at least two leaves side by side at its deepest level. By fact 1, the two least likely symbols can be moved there without raising the average.
-4. **Joining them gives a smaller problem with the same answer.** Treat the two siblings as one symbol of weight $p_a + p_b$. Any code for that smaller list, average $L'$, gives a code for the original list with $L = L' + p_a + p_b$, by splitting the joined symbol's branch in two. The extra $p_a + p_b$ is the same for every such code, and by fact 3 some best code is of this kind. So the best smaller code gives the best larger one.
+4. **Joining them gives a smaller problem with the same answer.** Treat the two siblings as one symbol of weight $`p_a + p_b`$. Any code for that smaller list, average $`L'`$, gives a code for the original list with $`L = L' + p_a + p_b`$, by splitting the joined symbol's branch in two. The extra $`p_a + p_b`$ is the same for every such code, and by fact 3 some best code is of this kind. So the best smaller code gives the best larger one.
 
 Fact 4 is Huffman's first join. The method then solves the smaller list the same way. With one symbol left there is nothing to choose, so by induction (proving a claim for one symbol, then from each size to the next) the method is optimal for every list. It is a greedy method whose safety argument is facts 1 to 4 ([Greedy](../01-Algorithms%20and%20Growth/08-greedy-algorithms-and-matroids.md)).
 
-Huffman's $L$ is no longer than the Shannon lengths' $L$, so Step 4 gives $L_{\text{Huffman}} < H(X) + 1$, and Step 3 gives $L_{\text{Huffman}} \ge H(X)$.
+Huffman's $`L`$ is no longer than the Shannon lengths' $`L`$, so Step 4 gives $`L_{\text{Huffman}} < H(X) + 1`$, and Step 3 gives $`L_{\text{Huffman}} \ge H(X)`$.
 
 ### Step 6: closing the last bit by coding blocks
 
-The "+1" comes from whole-number lengths, and it is spread over a single symbol. Code $k$ forecasts at once as one symbol of a bigger list. For independent days the entropy of the block is $k\,H(X)$, so the block's Huffman code costs less than $k\,H(X) + 1$ bits, which is less than $H(X) + 1/k$ bits a day.
+The "+1" comes from whole-number lengths, and it is spread over a single symbol. Code $`k`$ forecasts at once as one symbol of a bigger list. For independent days the entropy of the block is $`k\,H(X)`$, so the block's Huffman code costs less than $`k\,H(X) + 1`$ bits, which is less than $`H(X) + 1/k`$ bits a day.
 
-In the desert, rain one day in ten: 1.000 bit a day coding one day at a time, 0.645 coding two, 0.533 coding three, against an entropy of 0.469. Step 3, applied to a $k$-day block, already shows the cost never drops below $H(X)$ a day, since the block's entropy is $k\,H(X)$. [Typical sequences](04-typical-sequences-and-the-aep.md) explains why: long runs of weather nearly all look alike, and there are about $2^{kH}$ of them to name.
+In the desert, rain one day in ten: 1.000 bit a day coding one day at a time, 0.645 coding two, 0.533 coding three, against an entropy of 0.469. Step 3, applied to a $`k`$-day block, already shows the cost never drops below $`H(X)`$ a day, since the block's entropy is $`k\,H(X)`$. [Typical sequences](04-typical-sequences-and-the-aep.md) explains why: long runs of weather nearly all look alike, and there are about $`2^{kH}`$ of them to name.
 
 ---
 
@@ -138,9 +144,9 @@ The summer odds: Sun 0.5, Cloud 0.25, Rain 0.125, Snow 0.125.
 | join the two least likely, Cloud and Rain-or-Snow | 0.250 + 0.250 | 0.500 |
 | join the last two, Sun and the rest | 0.500 + 0.500 | 1.000 |
 | read the codewords down the tree | Sun 0, Cloud 10, Rain 110, Snow 111 | lengths 1, 2, 3, 3 |
-| average length $L$ | 0.500 + 0.500 + 0.375 + 0.375 | 1.750 |
+| average length $`L`$ | 0.500 + 0.500 + 0.375 + 0.375 | 1.750 |
 | same, as the sum of the joins | 0.250 + 0.500 + 1.000 | 1.750 |
-| entropy, $\sum p_i \log_2(1/p_i)$ | 0.5 × 1 + 0.25 × 2 + 0.125 × 3 + 0.125 × 3 | 1.750 |
+| entropy, $`\sum p_i \log_2(1/p_i)`$ | 0.5 × 1 + 0.25 × 2 + 0.125 × 3 + 0.125 × 3 | 1.750 |
 | Kraft sum | 1/2 + 1/4 + 1/8 + 1/8 | 1 |
 | a year of forecasts | 365 × 1.75, against 365 × 2 = 730 | **638.75 bits** |
 
@@ -156,7 +162,7 @@ Autumn is less tidy: Sun 0.4, Cloud 0.3, Rain 0.2, Snow 0.1. The joins are 0.1 +
 | --- | --- | --- |
 | Codewords `0`, `1`, `10`, `11`: shorter than Kraft allows | 1.25 bits a day, below the entropy | The Kraft sum is 1.5. The string `10` is Rain or Cloud-then-Sun, and 24 three-forecast messages share 16 four-bit strings. The station saves bits by sending nonsense. |
 | Short words to the rare days: Sun and Cloud 3 bits, Rain 2, Snow 1 | 2.625 bits a day | Fact 1 broken: worse than the plain two-bit code |
-| Shannon lengths in autumn, rounding each $\log_2(1/p_i)$ up: 2, 2, 3, 4 | 2.4 bits a day, against Huffman's 1.9 | Kraft sum only 0.6875: almost a third of the slots wasted |
+| Shannon lengths in autumn, rounding each $`\log_2(1/p_i)`$ up: 2, 2, 3, 4 | 2.4 bits a day, against Huffman's 1.9 | Kraft sum only 0.6875: almost a third of the slots wasted |
 | One desert day per codeword | 1.000 bit a day, against entropy 0.469 | Whole-number lengths: no symbol costs less than one bit. Blocks fix it. |
 
 ---
@@ -580,12 +586,12 @@ The 10,000 synthetic days cost 17,488 bits: 1.7488 a day, a fraction of one stan
 
 Lean proves the three theorems for any list of probabilities, and checks the worked numbers exactly.
 
-- Take probabilities $p_i$ that add to 1. Then Huffman's code is prefix-free, and no prefix-free code has a smaller average length $L$.
-- Every code that can be read back, prefix-free or not, has Kraft sum $K \le 1$.
-- Take whole-number lengths $\ell_i$. Then some prefix-free code has exactly those lengths when $K \le 1$, and only then.
-- Take probabilities $p_i$, all above zero, that add to 1. Then every code that can be read back has $L \ge H(X)$, and Huffman's code has $L < H(X) + 1$.
+- Take probabilities $`p_i`$ that add to 1. Then Huffman's code is prefix-free, and no prefix-free code has a smaller average length $`L`$.
+- Every code that can be read back, prefix-free or not, has Kraft sum $`K \le 1`$.
+- Take whole-number lengths $`\ell_i`$. Then some prefix-free code has exactly those lengths when $`K \le 1`$, and only then.
+- Take probabilities $`p_i`$, all above zero, that add to 1. Then every code that can be read back has $`L \ge H(X)`$, and Huffman's code has $`L < H(X) + 1`$.
 - In summer, Huffman's method gives Sun `0`, Cloud `10`, Rain `110`, Snow `111`. The average is 1.75 bits and the Kraft sum is 1.
-- Take $\log_2(1/p_i)$ as 1, 2, 3 and 3 for the summer odds. Then the entropy sum comes to 1.75 bits.
+- Take $`\log_2(1/p_i)`$ as 1, 2, 3 and 3 for the summer odds. Then the entropy sum comes to 1.75 bits.
 - A year costs 638.75 bits against 730, a saving of 91.25.
 - The week Sun, Sun, Cloud, Rain, Sun, Snow, Cloud goes out as `0010110011110`.
 - In autumn, Huffman's method gives Sun `0`, Cloud `10`, Rain `111`, Snow `110`. The average is 1.9 bits, the same as the sum of the three joins.
@@ -1502,8 +1508,8 @@ end HuffmanCard
 
 ## What this builds on
 
-- [Entropy](01-entropy.md): $H(X)$, the average number of yes-or-no questions an outcome costs. This card proves it is the floor for every code that can be read back.
-- [Typical sequences](04-typical-sequences-and-the-aep.md): why long blocks of $k$ symbols can be named in about $kH$ bits and no fewer, which is where block coding in Step 6 is heading.
+- [Entropy](01-entropy.md): $`H(X)`$, the average number of yes-or-no questions an outcome costs. This card proves it is the floor for every code that can be read back.
+- [Typical sequences](04-typical-sequences-and-the-aep.md): why long blocks of $`k`$ symbols can be named in about $`kH`$ bits and no fewer, which is where block coding in Step 6 is heading.
 - [Rooted trees](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/02-rooted-and-binary-trees.md): binary trees, depth and leaves. A prefix-free code is a binary tree with the symbols at its leaves.
 
 ## Where this goes next

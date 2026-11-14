@@ -39,38 +39,44 @@ One line: the payoff. It rises one for one above the strike and drops to zero at
 
 ## The formula
 
-$$V_{\text{VV}} \;=\; V_{\text{flat}} \;+\; p_{\text{surv}} \sum_{i=1}^{3} x_i \left(C_i^{\text{mkt}} - C_i^{\text{flat}}\right)$$
+```math
+V_{\text{VV}} \;=\; V_{\text{flat}} \;+\; p_{\text{surv}} \sum_{i=1}^{3} x_i \left(C_i^{\text{mkt}} - C_i^{\text{flat}}\right)
+```
 
 **Read it aloud:** the smile price is the one-volatility price, plus the market's extra charge for a three-option hedge of the barrier's volatility risks, scaled down by the chance the barrier is never touched.
 
-The sum with $x_i$ inside is the overlay of the vanna-volga card, unchanged. The only new piece is $p_{\text{surv}}$ in front.
+The sum with $`x_i`$ inside is the overlay of the vanna-volga card, unchanged. The only new piece is $`p_{\text{surv}}`$ in front.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | EURUSD today, dollars per euro | 1.10 (1.19 in the week case) | climbs toward the wall, then collapses to 0 at 1.20 |
-| $K$ | the strike | 1.10 | falls: less to receive |
-| $H$ | the wall, the knock-out level | 1.20 | rises: more room to pay out; at 1.25 the flat price is 165.90 pips |
-| $T$ | years left to expiry | 1 (7/365 in the week case) | depends on spot: more time means more payoff and more knock-outs |
-| $\sigma$ | the one flat volatility, the at-the-money quote | 10% | falls: vega is −0.124128 per 1.00 of volatility, so more wiggle kills more paths |
-| $r_d$, $r_f$ | dollar and euro interest rates, continuously compounded | 5%, 3% | the gap sets the forward drift of EURUSD |
-| $V_{\text{flat}}$ | the price with one volatility, by reflection | 54.40 pips | |
-| $x_i$ | hedge weights: how many of each pillar option match the barrier's vega, vanna and volga | 1.080824, −2.120324, 1.194190 | |
-| $C_i^{\text{mkt}} - C_i^{\text{flat}}$ | a pillar's market price minus its flat price: the smile's charge for that option | 25.51, 0, −8.67 pips | |
-| $p_{\text{surv}}$ | the chance, in the pricing world (where EURUSD drifts at $r_d - r_f$ a year), that EURUSD never trades at 1.20 before expiry | 0.564550 | more of the overlay is kept |
-| $\mu$ | drift of log EURUSD in the pricing world, $r_d - r_f - \tfrac12\sigma^2$ | 5% − 3% − half of 10% squared | |
-| $N$ | the bell-curve area to the left of a point | | |
+| $`S`$ | EURUSD today, dollars per euro | 1.10 (1.19 in the week case) | climbs toward the wall, then collapses to 0 at 1.20 |
+| $`K`$ | the strike | 1.10 | falls: less to receive |
+| $`H`$ | the wall, the knock-out level | 1.20 | rises: more room to pay out; at 1.25 the flat price is 165.90 pips |
+| $`T`$ | years left to expiry | 1 (7/365 in the week case) | depends on spot: more time means more payoff and more knock-outs |
+| $`\sigma`$ | the one flat volatility, the at-the-money quote | 10% | falls: vega is −0.124128 per 1.00 of volatility, so more wiggle kills more paths |
+| $`r_d`$, $`r_f`$ | dollar and euro interest rates, continuously compounded | 5%, 3% | the gap sets the forward drift of EURUSD |
+| $`V_{\text{flat}}`$ | the price with one volatility, by reflection | 54.40 pips | |
+| $`x_i`$ | hedge weights: how many of each pillar option match the barrier's vega, vanna and volga | 1.080824, −2.120324, 1.194190 | |
+| $`C_i^{\text{mkt}} - C_i^{\text{flat}}`$ | a pillar's market price minus its flat price: the smile's charge for that option | 25.51, 0, −8.67 pips | |
+| $`p_{\text{surv}}`$ | the chance, in the pricing world (where EURUSD drifts at $`r_d - r_f`$ a year), that EURUSD never trades at 1.20 before expiry | 0.564550 | more of the overlay is kept |
+| $`\mu`$ | drift of log EURUSD in the pricing world, $`r_d - r_f - \tfrac12\sigma^2`$ | 5% − 3% − half of 10% squared | |
+| $`N`$ | the bell-curve area to the left of a point | | |
 
 The greeks are a price's sensitivities, and three matter here. **Vega** is the price change per unit of volatility. **Vanna** is how vega changes as spot moves. **Volga** is how vega changes as volatility moves ([Greeks at the wall](06-barrier-and-touch-greeks.md)).
 
 The survival chance comes from the reflection argument of the touch card ([One-touch and no-touch](04-fx-one-touch-and-no-touch.md)):
 
-$$p_{\text{surv}} = N\!\left(\frac{\ln(H/S) - \mu T}{\sigma\sqrt{T}}\right) - \left(\frac{H}{S}\right)^{2\mu/\sigma^2} N\!\left(\frac{-\ln(H/S) - \mu T}{\sigma\sqrt{T}}\right)$$
+```math
+p_{\text{surv}} = N\!\left(\frac{\ln(H/S) - \mu T}{\sigma\sqrt{T}}\right) - \left(\frac{H}{S}\right)^{2\mu/\sigma^2} N\!\left(\frac{-\ln(H/S) - \mu T}{\sigma\sqrt{T}}\right)
+```
 
 In words: the chance of ending below the wall, minus the chance of ending below it after touching it, which reflection turns into a chance about a mirrored start.
 
 The weights solve three equations, one per risk:
 
-$$\sum_{i=1}^{3} x_i \,\text{vega}_i = \text{vega}_{\text{KO}}, \qquad \sum_{i=1}^{3} x_i \,\text{vanna}_i = \text{vanna}_{\text{KO}}, \qquad \sum_{i=1}^{3} x_i \,\text{volga}_i = \text{volga}_{\text{KO}}$$
+```math
+\sum_{i=1}^{3} x_i \,\text{vega}_i = \text{vega}_{\text{KO}}, \qquad \sum_{i=1}^{3} x_i \,\text{vanna}_i = \text{vanna}_{\text{KO}}, \qquad \sum_{i=1}^{3} x_i \,\text{volga}_i = \text{volga}_{\text{KO}}
+```
 
 In words: hold enough of each pillar option that the basket carries exactly the knock-out's vega, vanna and volga, every greek taken at the flat 10%.
 
@@ -93,25 +99,25 @@ A flat price ignores what the market charges for three risks: a parallel shift i
 
 The overlay assumes the three-pillar hedge is held for the whole year. A knock-out stops existing when EURUSD touches 1.20. Its vega, vanna and volga drop to zero, the hedge is unwound, and the smile premium paid for the rest of the year buys nothing. The full overlay charges for risk the option carries only while alive.
 
-The simplest fix scales the charge by the chance the option is still alive at the end: $p_{\text{surv}}$ = 0.564550. The overlay falls from 17.22 to 9.72 pips and the price from 71.62 to 64.12. The fix is a rule of thumb. It is not derived from any equation, and other versions weight by the expected fraction of the life survived instead. Its only justification is that it matches models on the contracts desks trade most.
+The simplest fix scales the charge by the chance the option is still alive at the end: $`p_{\text{surv}}`$ = 0.564550. The overlay falls from 17.22 to 9.72 pips and the price from 71.62 to 64.12. The fix is a rule of thumb. It is not derived from any equation, and other versions weight by the expected fraction of the life survived instead. Its only justification is that it matches models on the contracts desks trade most.
 
 ### Step 2: a model to judge the recipe by
 
-A judge must reproduce the same three quotes and then price the barrier with its own dynamics. The card uses **local volatility**: volatility becomes a function of where EURUSD is, $\sigma(S)$, chosen so that the three pillar options price exactly at their quotes ([Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)).
+A judge must reproduce the same three quotes and then price the barrier with its own dynamics. The card uses **local volatility**: volatility becomes a function of where EURUSD is, $`\sigma(S)`$, chosen so that the three pillar options price exactly at their quotes ([Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)).
 
-The full Dupire construction reads a whole surface across strikes and dates. Here only one date is quoted, so the card fits the smallest version. With the letter y for the log of EURUSD over today's spot, $\sigma(y) = a + b\,y + c\,y^2$, three numbers for three quotes, found by Newton's method. On the house contract a = 0.099672, b = −0.196188, c = 1.573968. The negative b makes volatility higher when the euro is lower, which is how the market's expensive euro puts show up in a model.
+The full Dupire construction reads a whole surface across strikes and dates. Here only one date is quoted, so the card fits the smallest version. With the letter y for the log of EURUSD over today's spot, $`\sigma(y) = a + b\,y + c\,y^2`$, three numbers for three quotes, found by Newton's method. On the house contract a = 0.099672, b = −0.196188, c = 1.573968. The negative b makes volatility higher when the euro is lower, which is how the market's expensive euro puts show up in a model.
 
 In that model the barrier is priced two ways that share nothing but the inputs. A finite-difference grid (a lattice in log spot and time on which the pricing equation is stepped back from expiry) puts the wall on the grid's top edge with value zero. A Monte Carlo simulation (many random paths averaged) steps EURUSD forward and, between steps, multiplies each path's weight by the chance it did not cross the wall unseen.
 
 <details>
 <summary>Detailed proof: the chance a path crosses the wall between two steps</summary>
 
-Between two checks a time $\Delta t$ apart, EURUSD moves from $S$ to a new level $S'$, both below the wall $H$. In logs, the path starts $\ln(H/S)$ below the log wall and ends $\ln(H/S')$ below it. Over so short a step the drift is negligible next to the noise, so the path between the two ends is a Brownian bridge: a random path pinned at both ends, with variance rate $\sigma^2$.
+Between two checks a time $`\Delta t`$ apart, EURUSD moves from $`S`$ to a new level $`S'`$, both below the wall $`H`$. In logs, the path starts $`\ln(H/S)`$ below the log wall and ends $`\ln(H/S')`$ below it. Over so short a step the drift is negligible next to the noise, so the path between the two ends is a Brownian bridge: a random path pinned at both ends, with variance rate $`\sigma^2`$.
 
-1. A free path between those ends moved $\ln(H/S) - \ln(H/S')$ in log terms. Its density is proportional to $\exp\!\big(-[\ln(H/S) - \ln(H/S')]^2/(2\sigma^2\Delta t)\big)$.
-2. Reflection: every path that touches the wall and ends $\ln(H/S')$ below it matches, one for one, a path that ends $\ln(H/S')$ above it. Flip the part after the first touch.
-3. That mirrored path moved $\ln(H/S) + \ln(H/S')$, so its density is proportional to $\exp\!\big(-[\ln(H/S) + \ln(H/S')]^2/(2\sigma^2\Delta t)\big)$.
-4. Divide step 3 by step 1. The difference of the two squares is $4\ln(H/S)\ln(H/S')$, so the chance of touching, given both ends, is $\exp\!\big(-2\ln(H/S)\ln(H/S')/(\sigma^2\Delta t)\big)$.
+1. A free path between those ends moved $`\ln(H/S) - \ln(H/S')`$ in log terms. Its density is proportional to $`\exp\!\big(-[\ln(H/S) - \ln(H/S')]^2/(2\sigma^2\Delta t)\big)`$.
+2. Reflection: every path that touches the wall and ends $`\ln(H/S')`$ below it matches, one for one, a path that ends $`\ln(H/S')`$ above it. Flip the part after the first touch.
+3. That mirrored path moved $`\ln(H/S) + \ln(H/S')`$, so its density is proportional to $`\exp\!\big(-[\ln(H/S) + \ln(H/S')]^2/(2\sigma^2\Delta t)\big)`$.
+4. Divide step 3 by step 1. The difference of the two squares is $`4\ln(H/S)\ln(H/S')`$, so the chance of touching, given both ends, is $`\exp\!\big(-2\ln(H/S)\ln(H/S')/(\sigma^2\Delta t)\big)`$.
 
 The simulation multiplies each path's weight by one minus that, step by step, using the local volatility at the step's start. Without the product it would check the wall only at the steps and overprice every knock-out.
 
@@ -133,7 +139,7 @@ The other road is to skip the recipe and use a model with dynamics for volatilit
 
 ## Worked numbers, by hand
 
-House FX market: $S$ = 1.10, $K$ = 1.10, $H$ = 1.20, $r_d$ = 5%, $r_f$ = 3%, flat $\sigma$ = 10%, $T$ = 1 year, smile 10.75% / 10% / 9.75%.
+House FX market: $`S`$ = 1.10, $`K`$ = 1.10, $`H`$ = 1.20, $`r_d`$ = 5%, $`r_f`$ = 3%, flat $`\sigma`$ = 10%, $`T`$ = 1 year, smile 10.75% / 10% / 9.75%.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -666,9 +672,9 @@ The two outputs agree line for line, down to the Monte Carlo rows, because both 
 
 Lean proves three exact facts behind the recipe, for every input that meets each fact's conditions.
 
-- Suppose spot is above zero and at or below the wall, with $\sigma$ and $T$ above zero. Then $p_{\text{surv}}$ lies between 0 and 1, so the recipe lands between the flat price and the full-overlay price.
+- Suppose spot is above zero and at or below the wall, with $`\sigma`$ and $`T`$ above zero. Then $`p_{\text{surv}}`$ lies between 0 and 1, so the recipe lands between the flat price and the full-overlay price.
 - Take the three equations for the weights, with exactly one solution, and put one pillar option in place of the knock-out. Then that pillar's flat price plus the overlay is exactly its market price.
-- Take a step of length $\Delta t$ from $S$ to $S'$, both below $H$, with $\sigma$ and $\Delta t$ above zero. Then the mirrored path's density over the free path's density equals the chance of touching in the detailed proof. That chance is above 0 and at most 1.
+- Take a step of length $`\Delta t`$ from $`S`$ to $`S'`$, both below $`H`$, with $`\sigma`$ and $`\Delta t`$ above zero. Then the mirrored path's density over the free path's density equals the chance of touching in the detailed proof. That chance is above 0 and at most 1.
 - The card's pip sums are exact: 54.40 plus 9.72 is 64.12, and 0.31 minus −4.18 is 4.49.
 
 The pillar strikes, greeks, weights and prices, and the model that judges the recipe, are left to the Python and Rust checks.

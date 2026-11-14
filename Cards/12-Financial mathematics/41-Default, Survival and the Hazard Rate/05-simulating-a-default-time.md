@@ -39,50 +39,58 @@ Orange: the van's survival curve from the formula. Green: the share of 100,000 s
 
 ## The formula
 
-Notation first, in words. The uniform draw is $U$. The default time is $\tau$ (Greek "tau"), measured in rounds for the game and years for the van. The survival curve $S(t)$ is the chance of no default by date $t$. $S^{-1}$ is its inverse: it takes a height and returns the date at which the curve reaches that height.
+Notation first, in words. The uniform draw is $`U`$. The default time is $`\tau`$ (Greek "tau"), measured in rounds for the game and years for the van. The survival curve $`S(t)`$ is the chance of no default by date $`t`$. $`S^{-1}`$ is its inverse: it takes a height and returns the date at which the curve reaches that height.
 
-$$\tau = S^{-1}(U), \qquad\text{that is, the date at which } S(\tau) = U.$$
+```math
+\tau = S^{-1}(U), \qquad\text{that is, the date at which } S(\tau) = U.
+```
 
 **Read it aloud:** the default date is the date at which the survival curve has fallen to the drawn number.
 
-Survival is e to the minus the area under the hazard, $S(t) = e^{-\Lambda(t)}$, so the same equation reads $\Lambda(\tau) = -\ln U$. Call the right side $E$:
+Survival is e to the minus the area under the hazard, $`S(t) = e^{-\Lambda(t)}`$, so the same equation reads $`\Lambda(\tau) = -\ln U`$. Call the right side $`E`$:
 
-$$E = -\ln U, \qquad \Lambda(\tau) = E.$$
+```math
+E = -\ln U, \qquad \Lambda(\tau) = E.
+```
 
 **Read it aloud:** each piece carries a budget of hazard, minus the log of its draw; it defaults when the hazard piled up since today uses the budget up.
 
-For a flat hazard $\lambda$ the area is $\lambda t$, and the date comes out directly:
+For a flat hazard $`\lambda`$ the area is $`\lambda t`$, and the date comes out directly:
 
-$$\tau = \frac{E}{\lambda} = \frac{-\ln U}{\lambda}.$$
+```math
+\tau = \frac{E}{\lambda} = \frac{-\ln U}{\lambda}.
+```
 
-For a piecewise-flat hazard, rate $\lambda_i$ from date $t_i$ until the next node, find the step in which the budget runs out, then divide what is left by that step's rate:
+For a piecewise-flat hazard, rate $`\lambda_i`$ from date $`t_i`$ until the next node, find the step in which the budget runs out, then divide what is left by that step's rate:
 
-$$\tau = t_i + \frac{E - \Lambda(t_i)}{\lambda_i}, \qquad\text{for the step with } \Lambda(t_i) \le E < \Lambda(t_{i+1}).$$
+```math
+\tau = t_i + \frac{E - \Lambda(t_i)}{\lambda_i}, \qquad\text{for the step with } \Lambda(t_i) \le E < \Lambda(t_{i+1}).
+```
 
 **Read it aloud:** spend the budget step by step; in the step where it runs out, the extra time is the leftover budget divided by that step's hazard.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $U$ | the uniform draw, the piece's ticket | 0.85 | the date comes sooner |
-| $\tau$ | the default time, a random date | 8.1259 rounds (game), 4.0420 years (van), for U = 0.85 | — |
-| $t$, $t_i$ | a date; $t_i$ is where step i of the hazard starts | van nodes 0, 1, 3 | — |
-| $S(t)$, $S^{-1}$ | survival by date t; its inverse, height in, date out | game: 0.9048 at round 5; van: 0.8025 at year 5 | — |
-| $\lambda$ | a flat hazard, per round or per year ("lambda") | 0.02 | dates come sooner |
-| $\lambda_i$ | the hazard on step i | van: 0.02, 0.04, 0.06 | dates in that step come sooner |
-| $\Lambda(t)$ | cumulative hazard: area under the hazard from 0 to t | van: 0.02, 0.10, 0.22 at years 1, 3, 5 | survival falls |
-| $E$ | the hazard budget, minus the log of the draw | 0.162519 for U = 0.85 | the date moves later |
-| $N$ | number of simulated pieces | 100,000 | the count settles on the formula |
-| $p$, $\hat p$ | chance of default by the date asked; the simulated share gone by then | 9.516%, 9.521% by round 5 | — |
-| SE | standard error: the typical size of the gap between $\hat p$ and the truth | 0.0928 points | — |
-| $r$ | the riskless rate, for the pricing example | 5% | prices fall |
+| $`U`$ | the uniform draw, the piece's ticket | 0.85 | the date comes sooner |
+| $`\tau`$ | the default time, a random date | 8.1259 rounds (game), 4.0420 years (van), for U = 0.85 | — |
+| $`t`$, $`t_i`$ | a date; $`t_i`$ is where step i of the hazard starts | van nodes 0, 1, 3 | — |
+| $`S(t)`$, $`S^{-1}`$ | survival by date t; its inverse, height in, date out | game: 0.9048 at round 5; van: 0.8025 at year 5 | — |
+| $`\lambda`$ | a flat hazard, per round or per year ("lambda") | 0.02 | dates come sooner |
+| $`\lambda_i`$ | the hazard on step i | van: 0.02, 0.04, 0.06 | dates in that step come sooner |
+| $`\Lambda(t)`$ | cumulative hazard: area under the hazard from 0 to t | van: 0.02, 0.10, 0.22 at years 1, 3, 5 | survival falls |
+| $`E`$ | the hazard budget, minus the log of the draw | 0.162519 for U = 0.85 | the date moves later |
+| $`N`$ | number of simulated pieces | 100,000 | the count settles on the formula |
+| $`p`$, $`\hat p`$ | chance of default by the date asked; the simulated share gone by then | 9.516%, 9.521% by round 5 | — |
+| SE | standard error: the typical size of the gap between $`\hat p`$ and the truth | 0.0928 points | — |
+| $`r`$ | the riskless rate, for the pricing example | 5% | prices fall |
 
 ### Existence, uniqueness and the edges
 
-Before solving $S(\tau) = U$, check it has one answer.
+Before solving $`S(\tau) = U`$, check it has one answer.
 
-- **Existence.** $S$ starts at 1 on day zero and falls without jumps. A draw strictly between 0 and 1 is a height the curve passes through, provided the curve falls below it eventually. The van's last rate, 6%, is carried on past year five, so its curve falls toward zero and every draw finds a date.
-- **Uniqueness.** With a hazard above zero at every date, $S$ falls strictly, so it passes each height once. If the hazard is zero on a stretch, the curve is flat there and a draw at exactly that height matches a whole stretch of dates. The rule is to take the earliest. That case has probability zero for a smooth draw.
-- **The edges.** A draw of 1 would mean default at day zero; a draw of 0 would mean never. The generator on this card returns neither. If the hazard switches off for good, the curve levels out at a floor above zero, and a draw below the floor never defaults: its default time is "never", written $\tau = \infty$.
+- **Existence.** $`S`$ starts at 1 on day zero and falls without jumps. A draw strictly between 0 and 1 is a height the curve passes through, provided the curve falls below it eventually. The van's last rate, 6%, is carried on past year five, so its curve falls toward zero and every draw finds a date.
+- **Uniqueness.** With a hazard above zero at every date, $`S`$ falls strictly, so it passes each height once. If the hazard is zero on a stretch, the curve is flat there and a draw at exactly that height matches a whole stretch of dates. The rule is to take the earliest. That case has probability zero for a smooth draw.
+- **The edges.** A draw of 1 would mean default at day zero; a draw of 0 would mean never. The generator on this card returns neither. If the hazard switches off for good, the curve levels out at a floor above zero, and a draw below the floor never defaults: its default time is "never", written $`\tau = \infty`$.
 
 ### When it holds
 
@@ -97,53 +105,57 @@ Before solving $S(\tau) = U$, check it has one answer.
 
 ### Step 0: the survival curve sorts the tickets
 
-At any date t, the curve's height $S(t)$ splits the interval from 0 to 1 in two. A piece has defaulted by t exactly when its ticket lies above that height. A uniform ticket lands above a height with chance one minus the height. So the chance of default by t is $1 - S(t)$, which is what the curve says it should be. That is the whole proof; the steps below make each link precise.
+At any date t, the curve's height $`S(t)`$ splits the interval from 0 to 1 in two. A piece has defaulted by t exactly when its ticket lies above that height. A uniform ticket lands above a height with chance one minus the height. So the chance of default by t is $`1 - S(t)`$, which is what the curve says it should be. That is the whole proof; the steps below make each link precise.
 
 ### Step 1: an earlier default is a higher ticket
 
-$S$ only falls as time passes. So the date at which the curve reaches the ticket's height comes at or before t exactly when the curve at t has already fallen to the ticket or below:
+$`S`$ only falls as time passes. So the date at which the curve reaches the ticket's height comes at or before t exactly when the curve at t has already fallen to the ticket or below:
 
-$$\tau \le t \quad\text{exactly when}\quad U \ge S(t).$$
+```math
+\tau \le t \quad\text{exactly when}\quad U \ge S(t).
+```
 
-For the van at year three, $S(3) = 0.9048$. A ticket of 0.97 sits above it and defaults at 1.2615 years. A ticket of 0.85 sits below it and survives past year three, to 4.0420 years.
+For the van at year three, $`S(3) = 0.9048`$. A ticket of 0.97 sits above it and defaults at 1.2615 years. A ticket of 0.85 sits below it and survives past year three, to 4.0420 years.
 
 ### Step 2: count the high tickets
 
-A uniform draw lands in any stretch of the interval with chance equal to the stretch's length ([Uniform](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/02-uniform-distribution.md)). The stretch from $S(t)$ up to 1 has length $1 - S(t)$. So the chance of default by t is $1 - S(t)$, at every date t at once. The simulated dates have the right chance of landing before year one, before year two, before any date: they follow the whole curve, not just one point on it.
+A uniform draw lands in any stretch of the interval with chance equal to the stretch's length ([Uniform](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/02-uniform-distribution.md)). The stretch from $`S(t)`$ up to 1 has length $`1 - S(t)`$. So the chance of default by t is $`1 - S(t)`$, at every date t at once. The simulated dates have the right chance of landing before year one, before year two, before any date: they follow the whole curve, not just one point on it.
 
 ### Step 3: the log turns the curve into a budget
 
-Taking logs of $S(\tau) = U$ gives $\Lambda(\tau) = -\ln U$. The right side, $E$, has its own simple law: the chance that $E$ exceeds a number x is the chance that $U$ falls below $e^{-x}$, which is $e^{-x}$. So $E$ is an exponential draw with average 1 ([Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). Each piece carries one unit of hazard budget on average; the hazard spends it at its current rate; the piece defaults when the budget is gone.
+Taking logs of $`S(\tau) = U`$ gives $`\Lambda(\tau) = -\ln U`$. The right side, $`E`$, has its own simple law: the chance that $`E`$ exceeds a number x is the chance that $`U`$ falls below $`e^{-x}`$, which is $`e^{-x}`$. So $`E`$ is an exponential draw with average 1 ([Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). Each piece carries one unit of hazard budget on average; the hazard spends it at its current rate; the piece defaults when the budget is gone.
 
-For a flat 2%, the budget drains at 0.02 a round, so $\tau = E / 0.02$. The average lifetime is then 1 / 0.02 = 50 rounds; the 100,000 draws average 49.88.
+For a flat 2%, the budget drains at 0.02 a round, so $`\tau = E / 0.02`$. The average lifetime is then 1 / 0.02 = 50 rounds; the 100,000 draws average 49.88.
 
 ### Step 4: a stepped hazard is spent step by step
 
-For the van and a ticket of 0.85, the budget is $E = 0.162519$. Year one spends 0.02. Years one to three spend 0.04 a year, 0.08 more, reaching 0.10 by year three. The 6% step then needs 0.062519 more, which takes 0.062519 / 0.06 = 1.0420 years. Default at year 4.0420. No search is needed: each step is a straight line in the area, so the crossing point is one division ([The piecewise-flat hazard curve](03-piecewise-flat-hazard-curve.md) builds that area).
+For the van and a ticket of 0.85, the budget is $`E = 0.162519`$. Year one spends 0.02. Years one to three spend 0.04 a year, 0.08 more, reaching 0.10 by year three. The 6% step then needs 0.062519 more, which takes 0.062519 / 0.06 = 1.0420 years. Default at year 4.0420. No search is needed: each step is a straight line in the area, so the crossing point is one division ([The piecewise-flat hazard curve](03-piecewise-flat-hazard-curve.md) builds that area).
 
 ### Step 5: how close the count should be
 
-Each piece is gone by year five or not, independently, with chance $p = 1 - S(5)$. The share gone out of $N$ pieces, $\hat p$, averages $p$ and scatters around it by a standard error of $\sqrt{p(1-p)/N}$. For the game with 100,000 pieces that is 0.0928 percentage points. The draws land 0.0047 points from the formula: well inside one standard error. The checks fail if any share lands more than four standard errors away.
+Each piece is gone by year five or not, independently, with chance $`p = 1 - S(5)`$. The share gone out of $`N`$ pieces, $`\hat p`$, averages $`p`$ and scatters around it by a standard error of $`\sqrt{p(1-p)/N}`$. For the game with 100,000 pieces that is 0.0928 percentage points. The draws land 0.0047 points from the formula: well inside one standard error. The checks fail if any share lands more than four standard errors away.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $S$ be any survival curve: it starts at 1, never rises, and at a jump takes the lower value just after the jump (right-continuous). Define
-$$\tau = \inf\{\, t \ge 0 : S(t) \le U \,\},$$
-the earliest date at which the curve is at or below the draw, with $\tau = \infty$ if there is none. This covers flat stretches (the earliest date is taken), jumps (the date of the jump is taken) and floors (never).
+Let $`S`$ be any survival curve: it starts at 1, never rises, and at a jump takes the lower value just after the jump (right-continuous). Define
 
-Claim: $\tau \le t$ exactly when $S(t) \le U$. If $S(t) \le U$, then t is in the set, so the earliest member is at most t. Conversely, if $\tau \le t$, pick dates in the set falling to $\tau$; right-continuity gives $S(\tau) \le U$, and since $S$ never rises, $S(t) \le S(\tau) \le U$.
+$`\displaystyle \tau = \inf\{\, t \ge 0 : S(t) \le U \,\},`$
 
-Then $P(\tau \le t) = P(U \ge S(t)) = 1 - S(t)$, because a uniform draw lands in an interval of length $1 - S(t)$ with that chance (the endpoint has chance zero). So $\tau$ has survival curve $S$, for every t.
+the earliest date at which the curve is at or below the draw, with $`\tau = \infty`$ if there is none. This covers flat stretches (the earliest date is taken), jumps (the date of the jump is taken) and floors (never).
 
-For the budget: $P(E > x) = P(U < e^{-x}) = e^{-x}$ for x ≥ 0, the survival curve of an exponential with rate 1. When $S = e^{-\Lambda}$ with $\Lambda$ continuous and rising, $S(\tau) = U$ is the same equation as $\Lambda(\tau) = E$.
+Claim: $`\tau \le t`$ exactly when $`S(t) \le U`$. If $`S(t) \le U`$, then t is in the set, so the earliest member is at most t. Conversely, if $`\tau \le t`$, pick dates in the set falling to $`\tau`$; right-continuity gives $`S(\tau) \le U`$, and since $`S`$ never rises, $`S(t) \le S(\tau) \le U`$.
+
+Then $`P(\tau \le t) = P(U \ge S(t)) = 1 - S(t)`$, because a uniform draw lands in an interval of length $`1 - S(t)`$ with that chance (the endpoint has chance zero). So $`\tau`$ has survival curve $`S`$, for every t.
+
+For the budget: $`P(E > x) = P(U < e^{-x}) = e^{-x}`$ for x ≥ 0, the survival curve of an exponential with rate 1. When $`S = e^{-\Lambda}`$ with $`\Lambda`$ continuous and rising, $`S(\tau) = U`$ is the same equation as $`\Lambda(\tau) = E`$.
 
 </details>
 
 <details>
 <summary>Why the survival curve and not the default curve?</summary>
 
-The general inverse-transform recipe ([Inverse transform](../../09-Probability%20and%20statistics/11-Simulation/02-inverse-transform-sampling.md)) inverts the default curve, $1 - S(t)$, at the draw. Inverting $S$ instead uses $1 - U$ in place of $U$. When $U$ is uniform, so is $1 - U$, so both give dates with the same law. Credit desks invert $S$ because the budget form, $\Lambda(\tau) = -\ln U$, then falls straight out.
+The general inverse-transform recipe ([Inverse transform](../../09-Probability%20and%20statistics/11-Simulation/02-inverse-transform-sampling.md)) inverts the default curve, $`1 - S(t)`$, at the draw. Inverting $`S`$ instead uses $`1 - U`$ in place of $`U`$. When $`U`$ is uniform, so is $`1 - U`$, so both give dates with the same law. Credit desks invert $`S`$ because the budget form, $`\Lambda(\tau) = -\ln U`$, then falls straight out.
 
 </details>
 
@@ -161,16 +173,16 @@ Four tickets, read off the game's flat 2% curve and the van's stepped curve.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| ticket 0.97: budget | $-\ln 0.97$ | 0.030459 |
+| ticket 0.97: budget | $`-\ln 0.97`$ | 0.030459 |
 | game date | 0.030459 / 0.02 | 1.5230 rounds |
 | van date | year 1 spends 0.02; 0.010459 / 0.04 | 1 + 0.2615 = 1.2615 years |
-| ticket 0.90: budget | $-\ln 0.90$ | 0.105361 |
+| ticket 0.90: budget | $`-\ln 0.90`$ | 0.105361 |
 | game date | 0.105361 / 0.02 | 5.2680 rounds: survives round 5 |
 | van date | 0.10 spent by year 3; 0.005361 / 0.06 | 3 + 0.0893 = 3.0893 years |
-| ticket 0.85: budget | $-\ln 0.85$ | 0.162519 |
+| ticket 0.85: budget | $`-\ln 0.85`$ | 0.162519 |
 | game date | 0.162519 / 0.02 | 8.1259 rounds |
 | van date | 0.10 spent by year 3; 0.062519 / 0.06 | 3 + 1.0420 = 4.0420 years |
-| ticket 0.50: budget | $-\ln 0.50$ | 0.693147 |
+| ticket 0.50: budget | $`-\ln 0.50`$ | 0.693147 |
 | game date | 0.693147 / 0.02 | 34.6574 rounds: the median lifetime |
 | van date | 0.10 spent by year 3; 0.593147 / 0.06 on the 6% step and its tail | 3 + 9.8858 = 12.8858 years |
 | **100,000 tickets, game, gone by round 5** | count of dates ≤ 5 | **9.521%, formula 9.516%** |
@@ -214,9 +226,9 @@ Orange: the running share gone by round five after the first n tickets. Green: t
 
 ### The same draws, as a pricing engine
 
-The game at 2% a round is the shelf's house company at 2% a year: Northwind Lines, flat hazard 2%, riskless rate $r$ = 5%, 40% recovery.
+The game at 2% a round is the shelf's house company at 2% a year: Northwind Lines, flat hazard 2%, riskless rate $`r`$ = 5%, 40% recovery.
 
-The dates already drawn price Northwind promises. A \$100 payment due in five years, paid only if Northwind is still alive, is worth \$100 × $e^{-0.25}$ × (share alive at five). The formula gives \$70.47; the draws give \$70.47 (70.4688 against 70.4651).
+The dates already drawn price Northwind promises. A \$100 payment due in five years, paid only if Northwind is still alive, is worth \$100 × $`e^{-0.25}`$ × (share alive at five). The formula gives \$70.47; the draws give \$70.47 (70.4688 against 70.4651).
 
 Now add \$40 paid on the default date itself if Northwind fails first. The draws discount each \$40 from its own date and average: \$73.85, with a standard error of 4 cents. The formula, derived on [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md), gives \$73.84. The draws needed no formula at all; that is why they serve as the second road to every price on the later credit shelves.
 
@@ -634,9 +646,9 @@ The two outputs agree line for line.
 
 Lean proves the fact behind the method for every survival curve that starts at 1, never rises, and is right-continuous.
 
-- The default time comes at or before a date $t$ exactly when the curve's height at $t$ is at or below the draw.
-- Take a uniform draw between 0 and 1, and read its default time off the curve. Then, at every date $t$, the chance of default by $t$ is exactly $1 - S(t)$.
-- Suppose $x$ is 0 or more. Then the budget $E = -\ln U$ exceeds $x$ with chance $e^{-x}$.
+- The default time comes at or before a date $`t`$ exactly when the curve's height at $`t`$ is at or below the draw.
+- Take a uniform draw between 0 and 1, and read its default time off the curve. Then, at every date $`t`$, the chance of default by $`t`$ is exactly $`1 - S(t)`$.
+- Suppose $`x`$ is 0 or more. Then the budget $`E = -\ln U`$ exceeds $`x`$ with chance $`e^{-x}`$.
 - The arithmetic for the van's area under the hazard: 0.10 by year 3 and 0.22 by year 5.
 - The arithmetic 1 / 0.02 = 50 behind the game's average lifetime.
 
@@ -770,10 +782,10 @@ example : (1 : ℚ) / (2 / 100) = 50 := by norm_num
 > **Checking one number instead of the curve.** A simulation of the van at a flat 4.4% gives the right share broken by year five and puts 4.30% of breakdowns in year one, where the stepped curve puts 1.98%. Anything that pays on the default date, recovery or a protection payment, is then mispriced. The test of a default-time simulator is the whole curve: year-by-year counts, as in the bars above.
 >
 > Smaller traps:
-> - **Multiplying instead of dividing.** $\tau = -\ln U / \lambda$. Multiplying by $\lambda$ puts 100.00% of the game's pieces out by round five.
+> - **Multiplying instead of dividing.** $`\tau = -\ln U / \lambda`$. Multiplying by $`\lambda`$ puts 100.00% of the game's pieces out by round five.
 > - **Forgetting the tail.** For the van, 80.25% of tickets land beyond year five. Code that stops at the last node returns no date for four draws in five.
 > - **Reusing the ticket.** Seeding the generator afresh for each piece gives every piece the same ticket and so the same date. The shares come out all or nothing.
-> - **Reading 2% as a per-round coin toss.** That is a different game, with 9.61% gone by round five instead of 9.52%. A hazard is a rate; its one-round chance is $1 - e^{-0.02}$ = 1.98%.
+> - **Reading 2% as a per-round coin toss.** That is a different game, with 9.61% gone by round five instead of 9.52%. A hazard is a rate; its one-round chance is $`1 - e^{-0.02}`$ = 1.98%.
 
 ---
 

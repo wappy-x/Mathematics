@@ -16,7 +16,7 @@ Two things can go wrong with a guess. It can be **noisy**: different samples giv
 
 **An estimator is a rule that turns a sample into a guess at a population number; since the sample is random, the guess is a random variable, and a good rule is one whose guesses centre on the truth (no bias) and scatter little around it (little noise).**
 
-**What kind of fact this is:** a definition (estimator, estimate, bias, noise), together with a theorem proved on this card in Why it works: under random sampling the poll's share has no bias and noise $\sqrt{p(1-p)/n}$, where $p$ is the electorate's true share and $n$ the number of voters polled.
+**What kind of fact this is:** a definition (estimator, estimate, bias, noise), together with a theorem proved on this card in Why it works: under random sampling the poll's share has no bias and noise $`\sqrt{p(1-p)/n}`$, where $`p`$ is the electorate's true share and $`n`$ the number of voters polled.
 
 ### The picture: two ways to run the same poll
 
@@ -38,58 +38,66 @@ Orange: the honest poll, centred on the truth, 0.52. Green: the poll whose respo
 
 ## The formula
 
-A reminder of the wing's notation. A random variable is a capital letter; $E[X]$ is its long-run average; $\mathrm{Var}(X)$ is its variance, the average squared distance from that mean, and the square root of the variance is the standard deviation, written $\mathrm{SD}(X)$ here.
+A reminder of the wing's notation. A random variable is a capital letter; $`E[X]`$ is its long-run average; $`\mathrm{Var}(X)`$ is its variance, the average squared distance from that mean, and the square root of the variance is the standard deviation, written $`\mathrm{SD}(X)`$ here.
 
-One new piece of notation. **A hat over a letter marks a guess at the thing the letter names**: if $p$ is the electorate's true share, $\hat p$, read "p-hat", is the poll's guess at it.
+One new piece of notation. **A hat over a letter marks a guess at the thing the letter names**: if $`p`$ is the electorate's true share, $`\hat p`$, read "p-hat", is the poll's guess at it.
 
-Before the calls are made, voter number $i$'s answer is a random variable $X_i$: 1 for yes, 0 for no. The sample is the list $X_1, X_2, \dots, X_n$. A **statistic** is any rule $T$ that turns that list into a number. An **estimator** of a population number $\theta$ (Greek theta) is a statistic chosen to guess it:
+Before the calls are made, voter number $`i`$'s answer is a random variable $`X_i`$: 1 for yes, 0 for no. The sample is the list $`X_1, X_2, \dots, X_n`$. A **statistic** is any rule $`T`$ that turns that list into a number. An **estimator** of a population number $`\theta`$ (Greek theta) is a statistic chosen to guess it:
 
-$$\hat\theta = T(X_1, X_2, \dots, X_n)$$
+```math
+\hat\theta = T(X_1, X_2, \dots, X_n)
+```
 
 **Read it aloud:** the guess is whatever the rule makes of the sample.
 
-The rule must use the sample alone; it may not use $\theta$, which is unknown. The poll's rule is the sample share, with $K$ the number of yeses:
+The rule must use the sample alone; it may not use $`\theta`$, which is unknown. The poll's rule is the sample share, with $`K`$ the number of yeses:
 
-$$\hat p = \frac{K}{n} = \frac{X_1 + X_2 + \dots + X_n}{n}$$
+```math
+\hat p = \frac{K}{n} = \frac{X_1 + X_2 + \dots + X_n}{n}
+```
 
-Because the $X_i$ are random, so is $\hat\theta$. Its law over all possible samples is called its **sampling distribution**, and the two curves above are sampling distributions. Two numbers summarise how good the rule is:
+Because the $`X_i`$ are random, so is $`\hat\theta`$. Its law over all possible samples is called its **sampling distribution**, and the two curves above are sampling distributions. Two numbers summarise how good the rule is:
 
-$$\mathrm{bias}(\hat\theta) = E[\hat\theta] - \theta, \qquad \mathrm{noise} = \mathrm{SD}(\hat\theta)$$
+```math
+\mathrm{bias}(\hat\theta) = E[\hat\theta] - \theta, \qquad \mathrm{noise} = \mathrm{SD}(\hat\theta)
+```
 
 **Read it aloud:** the bias is how far the rule's average guess sits from the truth; the noise is how far a single guess typically strays from the rule's own average.
 
-A rule with zero bias for every possible value of $\theta$ is called **unbiased**. The noise of an estimator has a name of its own, its **standard error**; estimating it from the data alone is the job of [Standard error](02-sample-mean-and-standard-error.md). For the poll's share under random sampling, both numbers come out in closed form:
+A rule with zero bias for every possible value of $`\theta`$ is called **unbiased**. The noise of an estimator has a name of its own, its **standard error**; estimating it from the data alone is the job of [Standard error](02-sample-mean-and-standard-error.md). For the poll's share under random sampling, both numbers come out in closed form:
 
-$$E[\hat p] = p, \qquad \mathrm{SD}(\hat p) = \sqrt{\frac{p(1-p)}{n}}$$
+```math
+E[\hat p] = p, \qquad \mathrm{SD}(\hat p) = \sqrt{\frac{p(1-p)}{n}}
+```
 
 **Read it aloud:** the sample share aims exactly at the true share, and it typically misses by the square root of p times one minus p, all over the sample size.
 
-With $p = 0.52$ and $n = 1{,}000$ the noise is 0.0158: the poll reads 0.52 with a standard error of about 1.6 points.
+With $`p = 0.52`$ and $`n = 1{,}000`$ the noise is 0.0158: the poll reads 0.52 with a standard error of about 1.6 points.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the population share: the fraction of the whole electorate voting yes; fixed and unknown | 0.52, fixed by the checks | the sampling distribution slides right; the noise is largest at 0.5 |
-| $n$ | the sample size: how many voters are asked | 1,000 | noise falls like $1/\sqrt{n}$; bias does not move |
-| $X_i$, $i$ | voter number $i$'s answer, 1 for yes and 0 for no | 520 ones, 480 zeros | — |
-| $K$ | the number of yeses in the sample | 520 | — |
-| $\hat p$ | the sample share $K/n$: the estimator, and its value on one sample, the estimate | 0.52 | — |
-| $\theta$, $\hat\theta$ | any population number, and an estimator of it | $\theta$ is $p$, $\hat\theta$ is $\hat p$ | — |
-| $T$ | the rule: a recipe from the list of answers to one number | count the yeses, divide by $n$ | — |
-| $E[\hat\theta]$ | where the estimator lands on average over every possible sample | 0.52 honest; 0.4745 with self-selected answers | — |
-| $\mathrm{bias}(\hat\theta)$ | $E[\hat\theta] - \theta$: the systematic miss | 0 honest; −0.0455 self-selected | every poll leans further the same way |
-| $\mathrm{SD}(\hat\theta)$ | the noise, or standard error: the typical stray of one guess from the rule's average | 0.0158 | single polls scatter more widely |
-| $\mathrm{Var}$, $\mathrm{Cov}$ | the variance, the SD squared; the covariance of two random variables, the average product of their distances from their own means, zero for independent ones | 0.2496 for one answer; in the proof, two voters' draw indicators have a negative covariance | — |
-| $N$ | the number of voters in the population | 25 in the small town below; millions in the electorate | the correction for sampling without replacement fades to nothing |
-| $C(N, n)$ | the number of ways to choose $n$ voters from $N$, order ignored | C(25, 5) = 53,130 samples in the town | — |
-| $M$, $y_j$, $I_j$, $j$, $l$ | in the proof: the number of yes voters in the population, voter $j$'s fixed vote (1 or 0), and 1 if voter $j$ is drawn; $l$ is a second voter | 13 of the town's 25 | — |
+| $`p`$ | the population share: the fraction of the whole electorate voting yes; fixed and unknown | 0.52, fixed by the checks | the sampling distribution slides right; the noise is largest at 0.5 |
+| $`n`$ | the sample size: how many voters are asked | 1,000 | noise falls like $`1/\sqrt{n}`$; bias does not move |
+| $`X_i`$, $`i`$ | voter number $`i`$'s answer, 1 for yes and 0 for no | 520 ones, 480 zeros | — |
+| $`K`$ | the number of yeses in the sample | 520 | — |
+| $`\hat p`$ | the sample share $`K/n`$: the estimator, and its value on one sample, the estimate | 0.52 | — |
+| $`\theta`$, $`\hat\theta`$ | any population number, and an estimator of it | $`\theta`$ is $`p`$, $`\hat\theta`$ is $`\hat p`$ | — |
+| $`T`$ | the rule: a recipe from the list of answers to one number | count the yeses, divide by $`n`$ | — |
+| $`E[\hat\theta]`$ | where the estimator lands on average over every possible sample | 0.52 honest; 0.4745 with self-selected answers | — |
+| $`\mathrm{bias}(\hat\theta)`$ | $`E[\hat\theta] - \theta`$: the systematic miss | 0 honest; −0.0455 self-selected | every poll leans further the same way |
+| $`\mathrm{SD}(\hat\theta)`$ | the noise, or standard error: the typical stray of one guess from the rule's average | 0.0158 | single polls scatter more widely |
+| $`\mathrm{Var}`$, $`\mathrm{Cov}`$ | the variance, the SD squared; the covariance of two random variables, the average product of their distances from their own means, zero for independent ones | 0.2496 for one answer; in the proof, two voters' draw indicators have a negative covariance | — |
+| $`N`$ | the number of voters in the population | 25 in the small town below; millions in the electorate | the correction for sampling without replacement fades to nothing |
+| $`C(N, n)`$ | the number of ways to choose $`n`$ voters from $`N`$, order ignored | C(25, 5) = 53,130 samples in the town | — |
+| $`M`$, $`y_j`$, $`I_j`$, $`j`$, $`l`$ | in the proof: the number of yes voters in the population, voter $`j`$'s fixed vote (1 or 0), and 1 if voter $`j`$ is drawn; $`l`$ is a second voter | 13 of the town's 25 | — |
 
 ### When it holds
 
-The definitions hold for any rule and any data. The theorem, $E[\hat p] = p$ with noise $\sqrt{p(1-p)/n}$, needs the **iid sampling model**: the answers are **independent** (one tells nothing about another) and **identically distributed** (each is yes with the same chance $p$). Random sampling is what makes that model true. Each part can fail:
+The definitions hold for any rule and any data. The theorem, $`E[\hat p] = p`$ with noise $`\sqrt{p(1-p)/n}`$, needs the **iid sampling model**: the answers are **independent** (one tells nothing about another) and **identically distributed** (each is yes with the same chance $`p`$). Random sampling is what makes that model true. Each part can fail:
 
 - **Everyone equally likely to be counted.** If yes voters answer the phone half the time and no voters 60 percent of the time, the answerers are not the population. The poll then aims at 0.4745, a bias of −0.0455, at every sample size.
 - **Independent answers.** Poll 100 households of 10 people who always vote alike, and the poll holds only 100 independent answers. The share still averages 0.52, but its noise is 0.0500, not 0.0158.
-- **A population much larger than the sample, or drawing with replacement.** Drawing without replacement leaves the share unbiased and shrinks its variance by the factor $(N - n)/(N - 1)$. For a million voters and a poll of 1,000 that factor is 0.999001, so the iid model is an excellent approximation.
+- **A population much larger than the sample, or drawing with replacement.** Drawing without replacement leaves the share unbiased and shrinks its variance by the factor $`(N - n)/(N - 1)`$. For a million voters and a poll of 1,000 that factor is 0.999001, so the iid model is an excellent approximation.
 - **One fixed target.** The population number must not move between the calls and the moment it matters. A poll estimates the share on the days it was taken, not on election day.
 - **Honest answers.** If some voters say yes and vote no, the rule estimates the share of stated yeses, which is a different population number.
 
@@ -103,17 +111,19 @@ The idea that makes estimation a subject is a change of viewpoint. After the pol
 
 ### Step 1: random sampling produces the iid model
 
-Choose one voter from the electorate at random, every voter equally likely. The chance that the chosen voter says yes is the fraction of yes voters: $p$. That is the whole link between the sample and the population. It says each $X_i$ is 1 with chance $p$ and 0 with chance $1 - p$: the Bernoulli law ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). If each call is a fresh random choice from the whole electorate, the calls are independent too. The count $K$ then follows the binomial law, written $K \sim \mathrm{Binomial}(n, p)$ and read "K follows the binomial law with n trials and chance p".
+Choose one voter from the electorate at random, every voter equally likely. The chance that the chosen voter says yes is the fraction of yes voters: $`p`$. That is the whole link between the sample and the population. It says each $`X_i`$ is 1 with chance $`p`$ and 0 with chance $`1 - p`$: the Bernoulli law ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). If each call is a fresh random choice from the whole electorate, the calls are independent too. The count $`K`$ then follows the binomial law, written $`K \sim \mathrm{Binomial}(n, p)`$ and read "K follows the binomial law with n trials and chance p".
 
 ### Step 2: the sample share aims at the truth
 
-Expectation adds up ([Expectation](../02-Random%20Variables/02-expectation.md)). One answer has expectation $0 \times (1 - p) + 1 \times p = p$. So $E[K] = np$, and dividing by $n$ gives $E[\hat p] = p$. The share has no bias, whatever the true $p$. This step needs identical laws but not independence.
+Expectation adds up ([Expectation](../02-Random%20Variables/02-expectation.md)). One answer has expectation $`0 \times (1 - p) + 1 \times p = p`$. So $`E[K] = np`$, and dividing by $`n`$ gives $`E[\hat p] = p`$. The share has no bias, whatever the true $`p`$. This step needs identical laws but not independence.
 
 ### Step 3: its noise shrinks like one over the square root of n
 
-One answer has variance $p(1-p)$: here 0.52 × 0.48 = 0.2496. Independent answers have no covariance, so the variances of the $X_i$ add ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)): $\mathrm{Var}(K) = np(1-p)$. Dividing $K$ by $n$ divides its variance by $n^2$:
+One answer has variance $`p(1-p)`$: here 0.52 × 0.48 = 0.2496. Independent answers have no covariance, so the variances of the $`X_i`$ add ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)): $`\mathrm{Var}(K) = np(1-p)`$. Dividing $`K`$ by $`n`$ divides its variance by $`n^2`$:
 
-$$\mathrm{Var}(\hat p) = \frac{p(1-p)}{n}$$
+```math
+\mathrm{Var}(\hat p) = \frac{p(1-p)}{n}
+```
 
 For the poll, 0.2496 / 1,000 has square root 0.015799. This step is where independence is used.
 
@@ -121,34 +131,38 @@ For the poll, 0.2496 / 1,000 has square root 0.015799. This step is where indepe
 
 Now let the answerers choose themselves. On average, of every 1,000 voters phoned, 520 are yes voters and half of them answer: 260. 480 are no voters and 60 percent answer: 288. So 548 answer, of whom 260 say yes. Among answerers the yes share is 260 / 548 = 0.4745.
 
-The poll is still an honest count of the people it reaches. Steps 2 and 3 now apply with 0.4745 in place of 0.52: the share aims at 0.4745, with noise 0.0158. The bias is −0.0455, and nothing in $n$ touches it. A poll of 10,000 answerers has about a third of the noise and exactly the same bias.
+The poll is still an honest count of the people it reaches. Steps 2 and 3 now apply with 0.4745 in place of 0.52: the share aims at 0.4745, with noise 0.0158. The bias is −0.0455, and nothing in $`n`$ touches it. A poll of 10,000 answerers has about a third of the noise and exactly the same bias.
 
 ### Step 5: without replacement, still unbiased and a little less noisy
 
 A real poll never calls the same voter twice, so the draws are not quite independent: once a yes voter is used up, the next call is slightly more likely to reach a no.
 
-Take a town of $N = 25$ voters, 13 of them yes (a share of 0.52), and poll 5 without replacement. The checks list all 53,130 possible samples. Every voter appears in exactly 1 sample in 5, so the share still averages 0.52. Its variance is 0.0416 against 0.0499 for independent draws: smaller by the factor $(N - n)/(N - 1)$, which is 20/24 here and 0.999001 for a million voters. The law of the count is the hypergeometric law ([Hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md)).
+Take a town of $`N = 25`$ voters, 13 of them yes (a share of 0.52), and poll 5 without replacement. The checks list all 53,130 possible samples. Every voter appears in exactly 1 sample in 5, so the share still averages 0.52. Its variance is 0.0416 against 0.0499 for independent draws: smaller by the factor $`(N - n)/(N - 1)`$, which is 20/24 here and 0.999001 for a million voters. The law of the count is the hypergeometric law ([Hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md)).
 
 <details>
 <summary>Detailed proof: sampling without replacement</summary>
 
-**Setting.** A population of $N$ voters, of whom $M$ vote yes, so $p = M/N$. Write $y_j = 1$ if voter $j$ votes yes and 0 otherwise; these are fixed numbers. Draw $n$ voters without replacement, every set of $n$ equally likely. Let $I_j = 1$ if voter $j$ is drawn. Then $\hat p = \frac{1}{n}\sum_j y_j I_j$: only the $I_j$ are random.
+**Setting.** A population of $`N`$ voters, of whom $`M`$ vote yes, so $`p = M/N`$. Write $`y_j = 1`$ if voter $`j`$ votes yes and 0 otherwise; these are fixed numbers. Draw $`n`$ voters without replacement, every set of $`n`$ equally likely. Let $`I_j = 1`$ if voter $`j`$ is drawn. Then $`\hat p = \frac{1}{n}\sum_j y_j I_j`$: only the $`I_j`$ are random.
 
-**Inclusion.** Voter $j$ is in $C(N-1, n-1)$ of the $C(N, n)$ samples, so $E[I_j] = n/N$. For two different voters, $P(I_j = I_l = 1) = C(N-2, n-2)/C(N, n) = \frac{n(n-1)}{N(N-1)}$.
+**Inclusion.** Voter $`j`$ is in $`C(N-1, n-1)`$ of the $`C(N, n)`$ samples, so $`E[I_j] = n/N`$. For two different voters, $`P(I_j = I_l = 1) = C(N-2, n-2)/C(N, n) = \frac{n(n-1)}{N(N-1)}`$.
 
-**Mean.** $E[\hat p] = \frac{1}{n}\sum_j y_j \frac{n}{N} = \frac{M}{N} = p$. The estimator is unbiased.
+**Mean.** $`E[\hat p] = \frac{1}{n}\sum_j y_j \frac{n}{N} = \frac{M}{N} = p`$. The estimator is unbiased.
 
-**Variance.** $\mathrm{Var}(I_j) = \frac{n}{N}\big(1 - \frac{n}{N}\big)$, and for $j \ne l$, $\mathrm{Cov}(I_j, I_l) = \frac{n(n-1)}{N(N-1)} - \frac{n^2}{N^2} = -\frac{n(N-n)}{N^2(N-1)}$. The sum $\sum_j y_j^2$ is $M$ and the sum of $y_j y_l$ over ordered pairs $j \ne l$ is $M(M-1)$, so
-$$\mathrm{Var}\Big(\sum_j y_j I_j\Big) = M\,\frac{n(N-n)}{N^2} - M(M-1)\,\frac{n(N-n)}{N^2(N-1)} = \frac{n(N-n)}{N^2}\cdot\frac{M(N-M)}{N-1}.$$
-Dividing by $n^2$ and writing $M/N = p$:
-$$\mathrm{Var}(\hat p) = \frac{p(1-p)}{n}\cdot\frac{N-n}{N-1}.$$
-With $N = 25$, $n = 5$, $p = 0.52$: 0.2496 / 5 × 20/24 = 0.0416, the number the enumeration prints.
+**Variance.** $`\mathrm{Var}(I_j) = \frac{n}{N}\big(1 - \frac{n}{N}\big)`$, and for $`j \ne l`$, $`\mathrm{Cov}(I_j, I_l) = \frac{n(n-1)}{N(N-1)} - \frac{n^2}{N^2} = -\frac{n(N-n)}{N^2(N-1)}`$. The sum $`\sum_j y_j^2`$ is $`M`$ and the sum of $`y_j y_l`$ over ordered pairs $`j \ne l`$ is $`M(M-1)`$, so
+
+$`\displaystyle \mathrm{Var}\Big(\sum_j y_j I_j\Big) = M\,\frac{n(N-n)}{N^2} - M(M-1)\,\frac{n(N-n)}{N^2(N-1)} = \frac{n(N-n)}{N^2}\cdot\frac{M(N-M)}{N-1}.`$
+
+Dividing by $`n^2`$ and writing $`M/N = p`$:
+
+$`\displaystyle \mathrm{Var}(\hat p) = \frac{p(1-p)}{n}\cdot\frac{N-n}{N-1}.`$
+
+With $`N = 25`$, $`n = 5`$, $`p = 0.52`$: 0.2496 / 5 × 20/24 = 0.0416, the number the enumeration prints.
 
 </details>
 
 ### Step 6: the honest share settles on the truth
 
-As $n$ grows, the noise $\sqrt{p(1-p)/n}$ goes to zero and the bias is already zero. By the law of large numbers ([Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)), the chance that $\hat p$ misses $p$ by any fixed amount goes to zero. An estimator with this property is called **consistent**. The self-selected poll also settles down, but on 0.4745: it is not consistent for $p$.
+As $`n`$ grows, the noise $`\sqrt{p(1-p)/n}`$ goes to zero and the bias is already zero. By the law of large numbers ([Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)), the chance that $`\hat p`$ misses $`p`$ by any fixed amount goes to zero. An estimator with this property is called **consistent**. The self-selected poll also settles down, but on 0.4745: it is not consistent for $`p`$.
 
 ### The rate: noise falls, bias stays
 
@@ -162,9 +176,9 @@ xychart-beta
     line [0.0455, 0.0455, 0.0455, 0.0455, 0.0455, 0.0455, 0.0455]
 ```
 
-Orange: the noise, $\sqrt{p(1-p)/n}$, the same for the honest and the self-selected poll. Green: the size of the self-selected poll's bias, 0.0455 at every $n$. At 100 voters the noise is still the larger error; by 200 the bias has overtaken it, and from there on more calls buy almost nothing.
+Orange: the noise, $`\sqrt{p(1-p)/n}`$, the same for the honest and the self-selected poll. Green: the size of the self-selected poll's bias, 0.0455 at every $`n`$. At 100 voters the noise is still the larger error; by 200 the bias has overtaken it, and from there on more calls buy almost nothing.
 
-The share is not the only road to $\hat p$. Asking which value of $p$ makes 520 yeses in 1,000 most probable gives the same 0.52; that road, which works for any model, is [Maximum likelihood](04-maximum-likelihood.md).
+The share is not the only road to $`\hat p`$. Asking which value of $`p`$ makes 520 yeses in 1,000 most probable gives the same 0.52; that road, which works for any model, is [Maximum likelihood](04-maximum-likelihood.md).
 
 ---
 
@@ -175,7 +189,7 @@ The share is not the only road to $\hat p$. Asking which value of $p$ makes 520 
 | the estimate | 520 / 1,000 | 0.52 |
 | one answer's variance | 0.52 × 0.48 | 0.2496 |
 | the share's noise | square root of 0.2496 / 1,000 | 0.0158 |
-| honest poll's bias | $E[\hat p] - p$ = 0.52 − 0.52 | 0 |
+| honest poll's bias | $`E[\hat p] - p`$ = 0.52 − 0.52 | 0 |
 | self-selected: yes voters answering | 0.52 × 0.5 | 0.260 |
 | self-selected: no voters answering | 0.48 × 0.6 | 0.288 |
 | self-selected: yes share among answerers | 0.260 / (0.260 + 0.288) | 0.4745 |
@@ -189,15 +203,15 @@ The simulation agrees. Over 2,000 seeded honest polls the average share is 0.519
 
 Any rule is an estimator, good or bad. The checks run four rules, and the self-selected poll, over the exact law of the count:
 
-| Rule | Average guess | Bias | Noise | Settles on the truth as $n$ grows? |
+| Rule | Average guess | Bias | Noise | Settles on the truth as $`n`$ grows? |
 | --- | --- | --- | --- | --- |
-| the share $K/n$ | 0.520000 | 0 | 0.0158 | yes |
+| the share $`K/n`$ | 0.520000 | 0 | 0.0158 | yes |
 | the first voter's answer alone | 0.520000 | 0 | 0.4996 | no: it ignores the other 999 |
 | always say 0.5 | 0.500000 | −0.0200 | 0 | no: it ignores the data |
-| $(K + 1)/(n + 2)$ | 0.519960 | −0.00004 | 0.01577 | yes |
+| $`(K + 1)/(n + 2)`$ | 0.519960 | −0.00004 | 0.01577 | yes |
 | the self-selected poll's share | 0.474453 | −0.0455 | 0.0158 | no: it settles on 0.4745 |
 
-The first voter's answer is unbiased, and useless: a single 0 or 1. The constant has no noise, and learns nothing. The rule $(K+1)/(n+2)$, which adds one imaginary yes and one imaginary no, is slightly biased and slightly less noisy than the share. Whether that trade is worth it is the subject of [Bias and variance](06-bias-variance-and-mean-squared-error.md).
+The first voter's answer is unbiased, and useless: a single 0 or 1. The constant has no noise, and learns nothing. The rule $`(K+1)/(n+2)`$, which adds one imaginary yes and one imaginary no, is slightly biased and slightly less noisy than the share. Whether that trade is worth it is the subject of [Bias and variance](06-bias-variance-and-mean-squared-error.md).
 
 ### What breaks if you drop a piece
 
@@ -217,11 +231,11 @@ The code prints all four.
 The scripts reach the poll's behaviour by four independent roads:
 
 - Road 1 is the formula.
-- Road 2 is the exact law of the count, built one voter at a time: the chance of a given count of yeses after one more call is the chance of that count before times $1 - p$, plus the chance of one fewer before times $p$.
+- Road 2 is the exact law of the count, built one voter at a time: the chance of a given count of yeses after one more call is the chance of that count before times $`1 - p`$, plus the chance of one fewer before times $`p`$.
 - Road 3 runs 2,000 seeded polls of each kind, drawing from SplitMix64, a short recipe for pseudo-random whole numbers written out in both languages so both draw the same answers; the self-selected poll keeps calling until 1,000 voters have answered.
 - Road 4 lists every sample of 5 from the town of 25.
 
-Both charts and every table on this card come from these runs. One clash of letters: in the code `N` is the poll size, the card's $n$; the card's $N$ for the town is `TOWN`.
+Both charts and every table on this card come from these runs. One clash of letters: in the code `N` is the poll size, the card's $`n`$; the card's $`N`$ for the town is `TOWN`.
 
 ### Python
 
@@ -666,18 +680,18 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the theorem for every sample size $n \ge 1$, with and without replacement, and checks the card's worked numbers exactly.
+Lean proves the theorem for every sample size $`n \ge 1`$, with and without replacement, and checks the card's worked numbers exactly.
 
-- Take $n \ge 1$ independent answers, each 1 for yes and 0 for no, each yes with the same chance $p$. Then $E[\hat p] = p$: the share has no bias.
-- Take the same answers. Then $\mathrm{Var}(\hat p) = p(1-p)/n$, so the noise is $\sqrt{p(1-p)/n}$.
-- Take answers that need not be independent, each 1 or 0 and yes with the same chance $p$. Then still $E[\hat p] = p$.
-- Suppose $n$ of $N$ voters, each with a fixed vote of 1 or 0, are drawn without replacement, every set of $n$ equally likely. Then the share averages exactly $p$ over all $C(N, n)$ samples.
-- Take the same draw. Then the share's variance is $\frac{p(1-p)}{n}\cdot\frac{N-n}{N-1}$.
+- Take $`n \ge 1`$ independent answers, each 1 for yes and 0 for no, each yes with the same chance $`p`$. Then $`E[\hat p] = p`$: the share has no bias.
+- Take the same answers. Then $`\mathrm{Var}(\hat p) = p(1-p)/n`$, so the noise is $`\sqrt{p(1-p)/n}`$.
+- Take answers that need not be independent, each 1 or 0 and yes with the same chance $`p`$. Then still $`E[\hat p] = p`$.
+- Suppose $`n`$ of $`N`$ voters, each with a fixed vote of 1 or 0, are drawn without replacement, every set of $`n`$ equally likely. Then the share averages exactly $`p`$ over all $`C(N, n)`$ samples.
+- Take the same draw. Then the share's variance is $`\frac{p(1-p)}{n}\cdot\frac{N-n}{N-1}`$.
 - The poll's arithmetic is exact: 520 / 1,000 is 0.52, and 0.52 × 0.48 is 0.2496.
 - Of every 1,000 phoned, 260 yes voters and 288 no voters answer. Their yes share, 260 / 548, sits exactly 156/3425 below 0.52: about 0.0455.
 - The town of 25 has C(25, 5) = 53,130 samples of 5, and each voter is in exactly 1 sample in 5.
 - With 13 yes voters, the share's variance is 0.2496 / 5 × 20/24 = 0.0416, against 0.0499 with replacement.
-- For a million voters and a poll of 1,000, the factor $(N - n)/(N - 1)$ is 999,000/999,999, about 0.999001.
+- For a million voters and a poll of 1,000, the factor $`(N - n)/(N - 1)`$ is 999,000/999,999, about 0.999001.
 
 The exact law of the count, the simulated polls, the four rules and both charts are left to the Python and Rust checks.
 
@@ -1021,7 +1035,7 @@ example : ((10 ^ 6 - 1000 : ℚ)) / (10 ^ 6 - 1) = 999000 / 999999 := by norm_nu
 > Guess first, then run it.
 > - **Equal answer rates.** Set `RN` to 0.5 in both. The answerers are now a random half of those phoned, so the self-selected poll aims at 0.52 again; the assert that it lands far below the truth stops the program. Bias comes from who answers, not from how many.
 > - **Bias the other way.** Set `RY` to 0.6 and `RN` to 0.5 in both. Now yes voters answer more readily, the answerers' share rises above 0.52 by nearly as much as it fell, and the assert that the biased polls sit far below the truth stops the program.
-> - **A tied electorate.** Set `P` to 0.5. The noise edges up to its largest possible value, since $p(1-p)$ peaks at 0.5. The town still holds 13 yes voters in 25, so the formula is now fed the wrong share, and the assert comparing the town's enumerated variance with the formula fails.
+> - **A tied electorate.** Set `P` to 0.5. The noise edges up to its largest possible value, since $`p(1-p)`$ peaks at 0.5. The town still holds 13 yes voters in 25, so the formula is now fed the wrong share, and the assert comparing the town's enumerated variance with the formula fails.
 > - **Another seed.** Change `SEED`. The simulated averages move by about a thousandth or less, well inside a few standard errors; the exact law does not move at all.
 
 ---
@@ -1046,7 +1060,7 @@ example : ((10 ^ 6 - 1000 : ℚ)) / (10 ^ 6 - 1) = 999000 / 999999 := by norm_nu
 - **Simulation.** A Monte Carlo price in finance, an average over many simulated market paths, is a sample share or sample average used as an estimator, quoted with its standard error ([Bootstrap](08-bootstrap.md) resamples the data itself to find that error).
 
 > **Say it back**
-> A population number, like the electorate's yes share, is fixed and unknown; a sample is a random selection from the population; an estimator is a rule that turns the sample into a guess. Because the sample is random, the guess is a random variable, judged by where it centres and how much it scatters. The bias is the gap between its average guess and the truth; the noise, or standard error, is its typical stray from that average. Under random sampling the poll's share has no bias and noise $\sqrt{p(1-p)/n}$: 0.0158 for 1,000 voters. A larger sample shrinks the noise but never the bias, which comes from how the sample was drawn.
+> A population number, like the electorate's yes share, is fixed and unknown; a sample is a random selection from the population; an estimator is a rule that turns the sample into a guess. Because the sample is random, the guess is a random variable, judged by where it centres and how much it scatters. The bias is the gap between its average guess and the truth; the noise, or standard error, is its typical stray from that average. Under random sampling the poll's share has no bias and noise $`\sqrt{p(1-p)/n}`$: 0.0158 for 1,000 voters. A larger sample shrinks the noise but never the bias, which comes from how the sample was drawn.
 
 ---
 
@@ -1056,10 +1070,10 @@ example : ((10 ^ 6 - 1000 : ℚ)) / (10 ^ 6 - 1) = 999000 / 999999 := by norm_nu
 
 ## Where this goes next
 
-- [Standard error](02-sample-mean-and-standard-error.md): the noise of any sample average, and how to estimate it from the sample when $p$ is unknown.
+- [Standard error](02-sample-mean-and-standard-error.md): the noise of any sample average, and how to estimate it from the sample when $`p`$ is unknown.
 - [Maximum likelihood](04-maximum-likelihood.md): a general recipe for building estimators, which returns the share for the poll.
 
-This card judged the share with the true $p$ in hand; a real pollster has only the 520 yeses. How to put an honest error bar on 0.52 using the sample alone is [Standard error](02-sample-mean-and-standard-error.md).
+This card judged the share with the true $`p`$ in hand; a real pollster has only the 520 yeses. How to put an honest error bar on 0.52 using the sample alone is [Standard error](02-sample-mean-and-standard-error.md).
 
 ---
 

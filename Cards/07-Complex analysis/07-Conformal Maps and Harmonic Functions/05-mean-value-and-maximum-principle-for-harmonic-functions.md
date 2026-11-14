@@ -26,30 +26,36 @@ To scale: 80 units per 1, centre 0 at (180, 120), frame radius 80; a = 0.3 + 0.4
 
 ## The formula
 
-Notation first, in words. A point on the circle of radius r round a is $a + re^{i\theta}$, with θ its angle ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The region is $D$ and its boundary, the frame, is $\partial D$, read "the boundary of D".
+Notation first, in words. A point on the circle of radius r round a is $`a + re^{i\theta}`$, with θ its angle ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The region is $`D`$ and its boundary, the frame, is $`\partial D`$, read "the boundary of D".
 
-$$u(a) = \frac{1}{2\pi}\int_0^{2\pi} u(a + re^{i\theta})\,d\theta$$
+```math
+u(a) = \frac{1}{2\pi}\int_0^{2\pi} u(a + re^{i\theta})\,d\theta
+```
 
 **Read it aloud:** the value at the centre is the average of the values round the circle.
 
-$$\min_{\partial D} u \;\le\; u(z) \;\le\; \max_{\partial D} u \quad\text{for every } z \text{ in } D$$
+```math
+\min_{\partial D} u \;\le\; u(z) \;\le\; \max_{\partial D} u \quad\text{for every } z \text{ in } D
+```
 
 **Read it aloud:** inside the region the function stays between its lowest and highest boundary values.
 
-$$u_1 = u_2 \text{ on } \partial D \;\Longrightarrow\; u_1 = u_2 \text{ on all of } D$$
+```math
+u_1 = u_2 \text{ on } \partial D \;\Longrightarrow\; u_1 = u_2 \text{ on all of } D
+```
 
 **Read it aloud:** harmonic functions that agree on the whole boundary agree inside. Finding the harmonic function with given boundary values is the **Dirichlet problem**: it has at most one answer.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | the harmonic function: film height | x^2 − y^2, in mm | — |
-| $\Delta u$ | the Laplacian u_xx + u_yy: net bending | 0; −6 for a pushed sheet | below 0 allows a bump |
-| $F$, $v$ | holomorphic (complex-differentiable) partner F = u + iv; v the conjugate | z^2; 2xy | — |
-| $a$ | the circle's centre | 0, then 0.3 + 0.4i | the average follows u(a) |
-| $r$, $\theta$ | radius; angle in radians | 0.25 to 1; 0.4 round a | no change while the disk fits |
-| $D$, $\partial D$ | the region; its boundary | unit disk; the frame | — |
-| $M$ | the largest value u reaches | 1, on the frame | the inside range follows |
-| $u_1$, $u_2$, $h$, $\varepsilon$ | two harmonic functions; their difference; its bound on the frame | two films, h = 0 | h stays within ε inside |
+| $`u`$ | the harmonic function: film height | x^2 − y^2, in mm | — |
+| $`\Delta u`$ | the Laplacian u_xx + u_yy: net bending | 0; −6 for a pushed sheet | below 0 allows a bump |
+| $`F`$, $`v`$ | holomorphic (complex-differentiable) partner F = u + iv; v the conjugate | z^2; 2xy | — |
+| $`a`$ | the circle's centre | 0, then 0.3 + 0.4i | the average follows u(a) |
+| $`r`$, $`\theta`$ | radius; angle in radians | 0.25 to 1; 0.4 round a | no change while the disk fits |
+| $`D`$, $`\partial D`$ | the region; its boundary | unit disk; the frame | — |
+| $`M`$ | the largest value u reaches | 1, on the frame | the inside range follows |
+| $`u_1`$, $`u_2`$, $`h`$, $`\varepsilon`$ | two harmonic functions; their difference; its bound on the frame | two films, h = 0 | h stays within ε inside |
 
 ### When it holds
 
@@ -69,7 +75,9 @@ Holomorphic functions equal their average round a circle ([Cauchy's integral for
 
 Take a circle round a whose closed disk lies inside the region. A slightly larger disk also fits, and on it u has a conjugate v, making F = u + iv holomorphic. Cauchy's formula on the circle gives:
 
-$$F(a) = \frac{1}{2\pi}\int_0^{2\pi} F(a + re^{i\theta})\,d\theta$$
+```math
+F(a) = \frac{1}{2\pi}\int_0^{2\pi} F(a + re^{i\theta})\,d\theta
+```
 
 Take real parts of both sides. The left is u(a), the right is the average of u. That is the formula.
 

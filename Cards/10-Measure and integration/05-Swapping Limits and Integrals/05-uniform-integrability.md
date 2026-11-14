@@ -32,61 +32,69 @@ Each rectangle's base is the chance of winning and its height is the prize. The 
 
 Notation first, in words.
 
-- Work on a probability space $(\Omega, \mathcal{F}, P)$: outcomes, the events we allow ourselves to measure, and their probabilities.
+- Work on a probability space $`(\Omega, \mathcal{F}, P)`$: outcomes, the events we allow ourselves to measure, and their probabilities.
 - For the lottery, the outcomes are points U of [0, 1) and P is length, the Lebesgue measure λ.
-- The expectation $E[X]$ is the integral of X against P, read "the average of X" ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)).
-- A random variable is **integrable**, in $L^1$, when $E|X|$ is finite ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
-- The indicator $\mathbf{1}_A$ is one on the event A, zero off it.
+- The expectation $`E[X]`$ is the integral of X against P, read "the average of X" ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)).
+- A random variable is **integrable**, in $`L^1`$, when $`E|X|`$ is finite ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
+- The indicator $`\mathbf{1}_A`$ is one on the event A, zero off it.
 
-Two modes of convergence from [Modes of convergence](04-modes-of-convergence.md): $X_n$ converges to $X$ **in probability** when $P(|X_n - X| > \varepsilon) \to 0$ for every $\varepsilon > 0$, and **in mean**, or in $L^1$, when $E|X_n - X| \to 0$.
+Two modes of convergence from [Modes of convergence](04-modes-of-convergence.md): $`X_n`$ converges to $`X`$ **in probability** when $`P(|X_n - X| > \varepsilon) \to 0`$ for every $`\varepsilon > 0`$, and **in mean**, or in $`L^1`$, when $`E|X_n - X| \to 0`$.
 
-The definition. A family $\mathcal{H}$ of integrable random variables is **uniformly integrable**, written UI, when
+The definition. A family $`\mathcal{H}`$ of integrable random variables is **uniformly integrable**, written UI, when
 
-$$\lim_{K \to \infty}\ \sup_{X \in \mathcal{H}}\ E\big[\,|X|\,\mathbf{1}_{\{|X| > K\}}\big] \;=\; 0.$$
+```math
+\lim_{K \to \infty}\ \sup_{X \in \mathcal{H}}\ E\big[\,|X|\,\mathbf{1}_{\{|X| > K\}}\big] \;=\; 0.
+```
 
 **Read it aloud:** pick a cutoff K; for each member, take the part of its average that comes from values larger than K; look at the worst member; that worst tail must shrink to zero as K grows.
 
 That inner average is the **tail** of X at K. One integrable X always has a vanishing tail; UI asks one cutoff to serve the whole family.
 
-Three tests that give UI, all proved below. A finite family of integrable variables is UI. A **dominated** family, one with an integrable **envelope** $Z$ such that $|X| \le Z$ for every member, is UI. A family bounded in $L^p$ for some power $p > 1$ is UI, by the bound
+Three tests that give UI, all proved below. A finite family of integrable variables is UI. A **dominated** family, one with an integrable **envelope** $`Z`$ such that $`|X| \le Z`$ for every member, is UI. A family bounded in $`L^p`$ for some power $`p > 1`$ is UI, by the bound
 
-$$E\big[|X|\,\mathbf{1}_{\{|X| > K\}}\big] \;\le\; \frac{E|X|^p}{K^{p-1}}.$$
+```math
+E\big[|X|\,\mathbf{1}_{\{|X| > K\}}\big] \;\le\; \frac{E|X|^p}{K^{p-1}}.
+```
 
-The equivalent form. On a probability space, $\mathcal{H}$ is UI exactly when two things hold: the averages $E|X|$ are bounded over the family, and for every $\varepsilon > 0$ there is a $\delta > 0$ with
+The equivalent form. On a probability space, $`\mathcal{H}`$ is UI exactly when two things hold: the averages $`E|X|`$ are bounded over the family, and for every $`\varepsilon > 0`$ there is a $`\delta > 0`$ with
 
-$$P(A) < \delta \ \Longrightarrow\ \sup_{X \in \mathcal{H}} E\big[|X|\,\mathbf{1}_A\big] < \varepsilon.$$
+```math
+P(A) < \delta \ \Longrightarrow\ \sup_{X \in \mathcal{H}} E\big[|X|\,\mathbf{1}_A\big] < \varepsilon.
+```
 
 **Read it aloud:** no member hides much of its average on a small event. For one integrable X this always holds, and is called **absolute continuity of the integral**; UI is its uniform version.
 
-Vitali's theorem. For integrable $X_n$ and a random variable $X$ on one probability space,
+Vitali's theorem. For integrable $`X_n`$ and a random variable $`X`$ on one probability space,
 
-$$X_n \to X \text{ in probability, and } \{X_n\} \text{ UI} \iff X \in L^1 \text{ and } E|X_n - X| \to 0.$$
+```math
+X_n \to X \text{ in probability, and } \{X_n\} \text{ UI} \iff X \in L^1 \text{ and } E|X_n - X| \to 0.
+```
 
 **Read it aloud:** convergence in probability upgrades to convergence in mean exactly when the sequence is uniformly integrable.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the ticket number | ticket 1,000 pays 1,000 dollars with probability 0.001 | rarer, larger jackpot |
-| $X_n$ | ticket n's payout in dollars | n on the event U < 1/n, else 0 | — |
-| $X$ | the limit | 0, the in-probability limit of every family here | — |
-| $Y_n$, $C$ | the capped ticket, and the cap | $Y_n$ pays min(n, 100) with probability 1/n; C = 100 | a higher cap needs a higher cutoff |
-| $R_n$, $W_n$ | two more families: the square-root ticket and the disjoint ticket | $R_n$ pays √n with probability 1/n; $W_n$ pays n with probability 1/(n(n + 1)) | — |
-| $K$ | the cutoff | K = 10: the tickets' worst tails are 1, 1, 0.0995, 0.0833 | smaller tails in a UI family |
-| $\mathcal{H}$ | a family of integrable random variables | all the lottery tickets | a bigger family is harder to make UI |
-| $Z$, $p$ | an integrable envelope; a power above 1 | $W_n$ has no integrable envelope; $R_n$ has $E R_n^2$ = 1, p = 2 | — |
-| $\varepsilon$, $\delta$ | a tolerance; the size of a small event | δ = 0.001: capped tickets carry at most 0.1 dollars on it | — |
-| $A$, $A_n$, $\mathbf{1}_A$ | an event; the event where $X_n$ misses $X$ by more than ε; the indicator | A = {U < 0.001}; for capped tickets $A_n$ = {U < 1/n} | — |
-| $U$, $P$, $E$ | the uniform point; probability; expectation | P(U < 0.01) = 0.01; $E X_n$ = 1 | — |
-| $\Omega$, $\mu$, $\lambda$ | the space of outcomes; a general measure; Lebesgue measure | [0, 1) with λ as P; the whole line with λ, not a probability | — |
-| $M$, $N$ | a bound on the averages, or on p-th-power averages in the $L^p$ test; a ticket past which the error is small | M = 1 for the lottery | — |
-| $T(K)$, $L$, $\wedge$ | the worst tail at K; a cap level in Vitali's proof, not the L of $L^1$; the smaller of two numbers | T(10) = 1 for the lottery; the capped prize is n ∧ 100 | — |
-| $\varphi$ | an increasing function with φ(x)/x unbounded | φ(x) = x^2 | — |
+| $`n`$ | the ticket number | ticket 1,000 pays 1,000 dollars with probability 0.001 | rarer, larger jackpot |
+| $`X_n`$ | ticket n's payout in dollars | n on the event U < 1/n, else 0 | — |
+| $`X`$ | the limit | 0, the in-probability limit of every family here | — |
+| $`Y_n`$, $`C`$ | the capped ticket, and the cap | $`Y_n`$ pays min(n, 100) with probability 1/n; C = 100 | a higher cap needs a higher cutoff |
+| $`R_n`$, $`W_n`$ | two more families: the square-root ticket and the disjoint ticket | $`R_n`$ pays √n with probability 1/n; $`W_n`$ pays n with probability 1/(n(n + 1)) | — |
+| $`K`$ | the cutoff | K = 10: the tickets' worst tails are 1, 1, 0.0995, 0.0833 | smaller tails in a UI family |
+| $`\mathcal{H}`$ | a family of integrable random variables | all the lottery tickets | a bigger family is harder to make UI |
+| $`Z`$, $`p`$ | an integrable envelope; a power above 1 | $`W_n`$ has no integrable envelope; $`R_n`$ has $`E R_n^2`$ = 1, p = 2 | — |
+| $`\varepsilon`$, $`\delta`$ | a tolerance; the size of a small event | δ = 0.001: capped tickets carry at most 0.1 dollars on it | — |
+| $`A`$, $`A_n`$, $`\mathbf{1}_A`$ | an event; the event where $`X_n`$ misses $`X`$ by more than ε; the indicator | A = {U < 0.001}; for capped tickets $`A_n`$ = {U < 1/n} | — |
+| $`U`$, $`P`$, $`E`$ | the uniform point; probability; expectation | P(U < 0.01) = 0.01; $`E X_n`$ = 1 | — |
+| $`\Omega`$, $`\mu`$, $`\lambda`$ | the space of outcomes; a general measure; Lebesgue measure | [0, 1) with λ as P; the whole line with λ, not a probability | — |
+| $`M`$, $`N`$ | a bound on the averages, or on p-th-power averages in the $`L^p`$ test; a ticket past which the error is small | M = 1 for the lottery | — |
+| $`T(K)`$, $`L`$, $`\wedge`$ | the worst tail at K; a cap level in Vitali's proof, not the L of $`L^1`$; the smaller of two numbers | T(10) = 1 for the lottery; the capped prize is n ∧ 100 | — |
+| $`\varphi`$ | an increasing function with φ(x)/x unbounded | φ(x) = x^2 | — |
 
 ### When it holds
 
 - **A finite measure.** Everything here is on a probability space; the same proofs work for any finite measure μ. On the whole line with length λ, the flat spread 1/n on [0, n) of [Modes of convergence](04-modes-of-convergence.md) never exceeds 1, so every tail above K = 1 is zero, yet its integral stays 1. The mass escapes sideways, and a separate condition, tightness (most of every member's mass stays on one set of finite measure), is needed to stop that.
 - **Convergence in probability, on one space.** UI alone gives no convergence: fair coin flips of ±1 dollar are bounded, hence UI, and never settle. Vitali's theorem needs both hypotheses.
-- **Integrable members.** A family containing one variable with $E|X| = \infty$ is not UI: its tail at every K is infinite.
+- **Integrable members.** A family containing one variable with $`E|X| = \infty`$ is not UI: its tail at every K is infinite.
 - **Uniform, not member by member.** Each lottery ticket alone has tail 0 once K reaches n; the family still fails, since one cutoff must serve all members.
 
 ---
@@ -101,55 +109,59 @@ Take a cutoff K. Any average splits into the part from values at most K and the 
 
 Fix K. Every ticket n with n > K has tail n × (1/n) = 1 dollar. The worst tail is 1 for every K and never falls: not UI.
 
-The capped ticket $Y_n$ pays min(n, 100). For K ≥ 100 no payout exceeds K and every tail is 0: UI. Below 100 its worst tail is still 1; UI concerns the limit as K grows, not any fixed K.
+The capped ticket $`Y_n`$ pays min(n, 100). For K ≥ 100 no payout exceeds K and every tail is 0: UI. Below 100 its worst tail is still 1; UI concerns the limit as K grows, not any fixed K.
 
-The square-root ticket $R_n$ has tail 1/√n when √n > K. The worst is at the smallest n above K^2: at K = 10, 1/√101 = 0.0995. It falls like 1/K: UI.
+The square-root ticket $`R_n`$ has tail 1/√n when √n > K. The worst is at the smallest n above K^2: at K = 10, 1/√101 = 0.0995. It falls like 1/K: UI.
 
 ### Step 2: three tests that give UI
 
 **Finite families.** One integrable X has a tail that vanishes: the integrand falls to zero wherever X is finite, which is almost everywhere, and stays under |X|, so dominated convergence applies: a limit passes through the average when one integrable envelope lies over every term ([Dominated convergence](02-dominated-convergence-theorem.md)). For finitely many members take the largest of their cutoffs.
 
-**Dominated families.** If $|X| \le Z$, then where |X| > K also Z > K, so each member's tail lies under the envelope's tail, which vanishes. The cap at 100 is the case Z = 100.
+**Dominated families.** If $`|X| \le Z`$, then where |X| > K also Z > K, so each member's tail lies under the envelope's tail, which vanishes. The cap at 100 is the case Z = 100.
 
-**Bounded in $L^p$, with $p > 1$.** Where |X| > K, the ratio |X|/K exceeds 1, so its power p − 1 does too: $|X| \le |X|^p / K^{p-1}$ there. Averaging gives the displayed bound. For the square-root ticket $E R_n^2 = 1$, so every tail is at most 1/K; at K = 100 the worst is 1/√10,001, just under the bound 0.0100.
+**Bounded in $`L^p`$, with $`p > 1`$.** Where |X| > K, the ratio |X|/K exceeds 1, so its power p − 1 does too: $`|X| \le |X|^p / K^{p-1}`$ there. Averaging gives the displayed bound. For the square-root ticket $`E R_n^2 = 1`$, so every tail is at most 1/K; at K = 100 the worst is 1/√10,001, just under the bound 0.0100.
 
-The lottery is bounded in $L^1$, every average 1, and Step 1 shows that is not enough: at p = 1 the factor K^0 = 1 gives no decay.
+The lottery is bounded in $`L^1`$, every average 1, and Step 1 shows that is not enough: at p = 1 the factor K^0 = 1 gives no decay.
 
 ### Step 3: UI is uniform absolute continuity of the integral
 
 For one integrable X and any event A, split at K:
 
-$$E\big[|X|\mathbf{1}_A\big] \;\le\; K\,P(A) + E\big[|X|\mathbf{1}_{\{|X| > K\}}\big].$$
+```math
+E\big[|X|\mathbf{1}_A\big] \;\le\; K\,P(A) + E\big[|X|\mathbf{1}_{\{|X| > K\}}\big].
+```
 
 Choose K with the tail below ε/2, then δ = ε/(2K): any event smaller than δ carries less than ε. That is absolute continuity of the integral. With a supremum over the family, UI gives one K, hence one δ, for all members. Taking A to be all of Ω, of probability 1, bounds the averages by K plus the tail. Here the finite measure is needed.
 
-The other direction works for any measure. With averages at most M, Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) gives $P(|X| > K) \le M/K$ for every member, so for large K the event {|X| > K} is below δ for everyone and carries less than ε.
+The other direction works for any measure. With averages at most M, Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) gives $`P(|X| > K) \le M/K`$ for every member, so for large K the event {|X| > K} is below δ for everyone and carries less than ε.
 
 On the event {U < 0.001}, ticket 1,000 and every later lottery ticket carry their whole dollar. The capped tickets carry at most 100 × 0.001 = 0.1 dollars there, the square-root tickets at most √0.001 = 0.0316.
 
 ### Step 4: Vitali's theorem, forward
 
-Suppose $X_n \to X$ in probability and the $X_n$ are UI, with averages at most M.
+Suppose $`X_n \to X`$ in probability and the $`X_n`$ are UI, with averages at most M.
 
-*The limit is integrable.* Cap at a level L: $|X|$ capped at L is at most $|X_n|$ capped at L plus $|X - X_n|$ capped at L. The first averages at most M; the second at most ε plus L times $P(|X_n - X| > \varepsilon)$, which tends to ε. So every capped average of |X| is at most M, and monotone convergence gives $E|X| \le M$: averages of a rising sequence rise to the average of its limit ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)).
+*The limit is integrable.* Cap at a level L: $`|X|`$ capped at L is at most $`|X_n|`$ capped at L plus $`|X - X_n|`$ capped at L. The first averages at most M; the second at most ε plus L times $`P(|X_n - X| > \varepsilon)`$, which tends to ε. So every capped average of |X| is at most M, and monotone convergence gives $`E|X| \le M`$: averages of a rising sequence rise to the average of its limit ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)).
 
-*The error goes to zero.* Let $A_n$ be the event $|X_n - X| > \varepsilon$. Off it the error is at most ε; on it, at most $|X_n| + |X|$:
+*The error goes to zero.* Let $`A_n`$ be the event $`|X_n - X| > \varepsilon`$. Off it the error is at most ε; on it, at most $`|X_n| + |X|`$:
 
-$$E|X_n - X| \;\le\; \varepsilon + E\big[|X_n|\mathbf{1}_{A_n}\big] + E\big[|X|\mathbf{1}_{A_n}\big].$$
+```math
+E|X_n - X| \;\le\; \varepsilon + E\big[|X_n|\mathbf{1}_{A_n}\big] + E\big[|X|\mathbf{1}_{A_n}\big].
+```
 
-As $P(A_n) \to 0$, uniform absolute continuity shrinks the middle term, whichever n it is, and absolute continuity for X shrinks the last. The error ends below 3ε, for any ε.
+As $`P(A_n) \to 0`$, uniform absolute continuity shrinks the middle term, whichever n it is, and absolute continuity for X shrinks the last. The error ends below 3ε, for any ε.
 
-For the capped tickets with ε = 0.01, $A_n$ is {U < 1/n}, where any capped ticket carries at most min(1, 100/n). At n = 1,000 the bound is 0.11 and the true error 0.1. For the lottery the bound exceeds 1 and proves nothing, correctly: the error is 1.
+For the capped tickets with ε = 0.01, $`A_n`$ is {U < 1/n}, where any capped ticket carries at most min(1, 100/n). At n = 1,000 the bound is 0.11 and the true error 0.1. For the lottery the bound exceeds 1 and proves nothing, correctly: the error is 1.
 
 ### Step 5: the converse
 
-If X is integrable and $E|X_n - X| \to 0$, Markov's inequality gives convergence in probability. For UI, use Step 3's test: $E|X_n| \le E|X| + E|X_n - X|$ bounds the averages, and $E[|X_n|\mathbf{1}_A] \le E|X_n - X| + E[|X|\mathbf{1}_A]$. Past some ticket N the first term is below ε/2; absolute continuity for X and for the first N tickets gives one δ for the rest. So, given convergence in probability, a sequence converges in mean exactly when it is UI.
+If X is integrable and $`E|X_n - X| \to 0`$, Markov's inequality gives convergence in probability. For UI, use Step 3's test: $`E|X_n| \le E|X| + E|X_n - X|`$ bounds the averages, and $`E[|X_n|\mathbf{1}_A] \le E|X_n - X| + E[|X|\mathbf{1}_A]`$. Past some ticket N the first term is below ε/2; absolute continuity for X and for the first N tickets gives one δ for the rest. So, given convergence in probability, a sequence converges in mean exactly when it is UI.
 
 ### Step 6: UI is weaker than domination
 
-Ticket $W_n$ pays n dollars when U lies in [1/(n + 1), 1/n), probability 1/(n(n + 1)), and these events do not overlap. Its average is 1/(n + 1) and its worst tail at K is 1/(K + 2): UI, so Vitali gives $E W_n \to 0$.
+Ticket $`W_n`$ pays n dollars when U lies in [1/(n + 1), 1/n), probability 1/(n(n + 1)), and these events do not overlap. Its average is 1/(n + 1) and its worst tail at K is 1/(K + 2): UI, so Vitali gives $`E W_n \to 0`$.
 
-The smallest envelope, $\sup_n W_n$, equals n on the n-th event. Up to ticket N it averages 1/2 + 1/3 + … + 1/(N + 1), the harmonic series less its first term: 11.0902 by N = 100,000, without bound. No integrable envelope exists, so dominated convergence cannot see what Vitali proves.
+The smallest envelope, $`\sup_n W_n`$, equals n on the n-th event. Up to ticket N it averages 1/2 + 1/3 + … + 1/(N + 1), the harmonic series less its first term: 11.0902 by N = 100,000, without bound. No integrable envelope exists, so dominated convergence cannot see what Vitali proves.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -162,24 +174,24 @@ xychart-beta
     line [1.00, 0.32, 0.10, 0.03, 0.01]
 ```
 
-Orange: the lottery, flat at 1 dollar, not UI, no convergence in mean. Green: the jackpot capped at 100 dollars, flat until n reaches the cap, then falling as 100/n. Dark: the square-root ticket, bounded in $L^2$, falling as 1/√n. All three converge to 0 in probability.
+Orange: the lottery, flat at 1 dollar, not UI, no convergence in mean. Green: the jackpot capped at 100 dollars, flat until n reaches the cap, then falling as 100/n. Dark: the square-root ticket, bounded in $`L^2`$, falling as 1/√n. All three converge to 0 in probability.
 
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, $(\Omega, \mathcal{F}, P)$ is a probability space; for a finite measure μ replace P(Ω) = 1 by μ(Ω) where it appears. $\mathcal{H}$ is a non-empty family of integrable random variables, and $T(K) = \sup_{X \in \mathcal{H}} E[|X|\mathbf{1}_{\{|X| > K\}}]$.
+Throughout, $`(\Omega, \mathcal{F}, P)`$ is a probability space; for a finite measure μ replace P(Ω) = 1 by μ(Ω) where it appears. $`\mathcal{H}`$ is a non-empty family of integrable random variables, and $`T(K) = \sup_{X \in \mathcal{H}} E[|X|\mathbf{1}_{\{|X| > K\}}]`$.
 
-**Lemma 1 (one variable).** If $E|X| < \infty$ then $E[|X|\mathbf{1}_{\{|X| > K\}}] \to 0$ as $K \to \infty$. *Proof.* $|X|$ is finite almost everywhere ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md), finite integral gives finite almost everywhere). At each such point the integrand is 0 once K ≥ |X|. The integrands lie under |X|; dominated convergence along K = 1, 2, 3, … gives the limit 0, and the tail is non-increasing in K.
+**Lemma 1 (one variable).** If $`E|X| < \infty`$ then $`E[|X|\mathbf{1}_{\{|X| > K\}}] \to 0`$ as $`K \to \infty`$. *Proof.* $`|X|`$ is finite almost everywhere ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md), finite integral gives finite almost everywhere). At each such point the integrand is 0 once K ≥ |X|. The integrands lie under |X|; dominated convergence along K = 1, 2, 3, … gives the limit 0, and the tail is non-increasing in K.
 
-**Theorem 1 (three tests).** (a) A finite family is UI: $T(K)$ is the largest of finitely many tails, each tending to 0 by Lemma 1. (b) If $|X| \le Z$ for all $X \in \mathcal{H}$ with $EZ < \infty$: on $\{|X| > K\}$, $Z \ge |X| > K$, so $|X|\mathbf{1}_{\{|X| > K\}} \le Z\mathbf{1}_{\{Z > K\}}$ pointwise; monotonicity of the integral gives $T(K) \le E[Z\mathbf{1}_{\{Z > K\}}] \to 0$ by Lemma 1. (c) If $p > 1$ and $E|X|^p \le M$ for all members: on $\{|X| > K\}$, $(|X|/K)^{p-1} \ge 1$, so $|X|\mathbf{1}_{\{|X| > K\}} \le |X|^p/K^{p-1}$; averaging gives $T(K) \le M/K^{p-1} \to 0$.
+**Theorem 1 (three tests).** (a) A finite family is UI: $`T(K)`$ is the largest of finitely many tails, each tending to 0 by Lemma 1. (b) If $`|X| \le Z`$ for all $`X \in \mathcal{H}`$ with $`EZ < \infty`$: on $`\{|X| > K\}`$, $`Z \ge |X| > K`$, so $`|X|\mathbf{1}_{\{|X| > K\}} \le Z\mathbf{1}_{\{Z > K\}}`$ pointwise; monotonicity of the integral gives $`T(K) \le E[Z\mathbf{1}_{\{Z > K\}}] \to 0`$ by Lemma 1. (c) If $`p > 1`$ and $`E|X|^p \le M`$ for all members: on $`\{|X| > K\}`$, $`(|X|/K)^{p-1} \ge 1`$, so $`|X|\mathbf{1}_{\{|X| > K\}} \le |X|^p/K^{p-1}`$; averaging gives $`T(K) \le M/K^{p-1} \to 0`$.
 
-**Theorem 2 (characterization).** $\mathcal{H}$ is UI if and only if (i) $\sup_{\mathcal{H}} E|X| < \infty$ and (ii) for every $\varepsilon > 0$ there is $\delta > 0$ with $\sup_{\mathcal{H}} E[|X|\mathbf{1}_A] < \varepsilon$ whenever $P(A) < \delta$. *Proof.* Suppose UI. For any event A and any K, $|X|\mathbf{1}_A \le K\mathbf{1}_A + |X|\mathbf{1}_{\{|X| > K\}}$ pointwise (split by whether $|X| \le K$), so $E[|X|\mathbf{1}_A] \le K\,P(A) + T(K)$. With $A = \Omega$ and K chosen so $T(K) \le 1$, $E|X| \le K + 1$: (i). Given ε, choose K with $T(K) < \varepsilon/2$ and set $\delta = \varepsilon/(2K)$: (ii). Conversely, let M bound the averages and, given ε, take δ from (ii). Markov's inequality gives $P(|X| > K) \le M/K$ for every member. For $K > M/\delta$ each event $\{|X| > K\}$ has probability below δ, so (ii) with $A = \{|X| > K\}$ gives $E[|X|\mathbf{1}_{\{|X| > K\}}] < \varepsilon$ for every member: $T(K) \le \varepsilon$. The case of a one-member family, with Lemma 1, is **absolute continuity of the integral**: for integrable X and every ε there is δ with $E[|X|\mathbf{1}_A] < \varepsilon$ whenever $P(A) < \delta$.
+**Theorem 2 (characterization).** $`\mathcal{H}`$ is UI if and only if (i) $`\sup_{\mathcal{H}} E|X| < \infty`$ and (ii) for every $`\varepsilon > 0`$ there is $`\delta > 0`$ with $`\sup_{\mathcal{H}} E[|X|\mathbf{1}_A] < \varepsilon`$ whenever $`P(A) < \delta`$. *Proof.* Suppose UI. For any event A and any K, $`|X|\mathbf{1}_A \le K\mathbf{1}_A + |X|\mathbf{1}_{\{|X| > K\}}`$ pointwise (split by whether $`|X| \le K`$), so $`E[|X|\mathbf{1}_A] \le K\,P(A) + T(K)`$. With $`A = \Omega`$ and K chosen so $`T(K) \le 1`$, $`E|X| \le K + 1`$: (i). Given ε, choose K with $`T(K) < \varepsilon/2`$ and set $`\delta = \varepsilon/(2K)`$: (ii). Conversely, let M bound the averages and, given ε, take δ from (ii). Markov's inequality gives $`P(|X| > K) \le M/K`$ for every member. For $`K > M/\delta`$ each event $`\{|X| > K\}`$ has probability below δ, so (ii) with $`A = \{|X| > K\}`$ gives $`E[|X|\mathbf{1}_{\{|X| > K\}}] < \varepsilon`$ for every member: $`T(K) \le \varepsilon`$. The case of a one-member family, with Lemma 1, is **absolute continuity of the integral**: for integrable X and every ε there is δ with $`E[|X|\mathbf{1}_A] < \varepsilon`$ whenever $`P(A) < \delta`$.
 
-**Theorem 3 (Vitali, forward).** If $X_n \to X$ in probability and $\{X_n\}$ is UI, then $X \in L^1$ and $E|X_n - X| \to 0$. *Proof.* Let M bound $E|X_n|$ (Theorem 2 (i)). For $a, b \ge 0$ and $L > 0$, $(a + b) \wedge L \le a \wedge L + b \wedge L$: if either term on the right is L it is clear, otherwise the right is $a + b$. With $|X| \le |X_n| + |X - X_n|$ and monotonicity of $t \mapsto t \wedge L$, $E[|X| \wedge L] \le M + E[|X - X_n| \wedge L] \le M + \varepsilon + L\,P(|X_n - X| > \varepsilon)$. Let $n \to \infty$, then $\varepsilon \to 0$: $E[|X| \wedge L] \le M$. As $L \uparrow \infty$, $|X| \wedge L \uparrow |X|$, and monotone convergence gives $E|X| \le M$. Now fix ε and let $A_n = \{|X_n - X| > \varepsilon\}$. Pointwise, $|X_n - X| \le \varepsilon + (|X_n| + |X|)\mathbf{1}_{A_n}$, so $E|X_n - X| \le \varepsilon + E[|X_n|\mathbf{1}_{A_n}] + E[|X|\mathbf{1}_{A_n}]$. Take δ from Theorem 2 (ii) for the family $\{X_n\} \cup \{X\}$, which is UI by Theorem 1 (a) together with the definition (the supremum over a union is the larger of two suprema). Since $P(A_n) \to 0$, for large n both terms are below ε, and $E|X_n - X| < 3\varepsilon$. So $\limsup_n E|X_n - X| \le 3\varepsilon$ for every ε.
+**Theorem 3 (Vitali, forward).** If $`X_n \to X`$ in probability and $`\{X_n\}`$ is UI, then $`X \in L^1`$ and $`E|X_n - X| \to 0`$. *Proof.* Let M bound $`E|X_n|`$ (Theorem 2 (i)). For $`a, b \ge 0`$ and $`L > 0`$, $`(a + b) \wedge L \le a \wedge L + b \wedge L`$: if either term on the right is L it is clear, otherwise the right is $`a + b`$. With $`|X| \le |X_n| + |X - X_n|`$ and monotonicity of $`t \mapsto t \wedge L`$, $`E[|X| \wedge L] \le M + E[|X - X_n| \wedge L] \le M + \varepsilon + L\,P(|X_n - X| > \varepsilon)`$. Let $`n \to \infty`$, then $`\varepsilon \to 0`$: $`E[|X| \wedge L] \le M`$. As $`L \uparrow \infty`$, $`|X| \wedge L \uparrow |X|`$, and monotone convergence gives $`E|X| \le M`$. Now fix ε and let $`A_n = \{|X_n - X| > \varepsilon\}`$. Pointwise, $`|X_n - X| \le \varepsilon + (|X_n| + |X|)\mathbf{1}_{A_n}`$, so $`E|X_n - X| \le \varepsilon + E[|X_n|\mathbf{1}_{A_n}] + E[|X|\mathbf{1}_{A_n}]`$. Take δ from Theorem 2 (ii) for the family $`\{X_n\} \cup \{X\}`$, which is UI by Theorem 1 (a) together with the definition (the supremum over a union is the larger of two suprema). Since $`P(A_n) \to 0`$, for large n both terms are below ε, and $`E|X_n - X| < 3\varepsilon`$. So $`\limsup_n E|X_n - X| \le 3\varepsilon`$ for every ε.
 
-**Theorem 4 (Vitali, converse).** If $X \in L^1$ and $E|X_n - X| \to 0$, then $X_n \to X$ in probability and $\{X_n\}$ is UI. *Proof.* Markov's inequality applied to $|X_n - X|$ gives $P(|X_n - X| > \varepsilon) \le E|X_n - X|/\varepsilon \to 0$. For (i): $E|X_n| \le E|X| + E|X_n - X|$, and a convergent sequence of numbers is bounded. For (ii): given ε, choose N with $E|X_n - X| < \varepsilon/2$ for $n > N$. The finite family $\{X, X_1, \ldots, X_N\}$ is UI (Theorem 1 (a)), so Theorem 2 gives δ with $E[|Y|\mathbf{1}_A] < \varepsilon/2$ for each of its members Y when $P(A) < \delta$. For $n > N$, $E[|X_n|\mathbf{1}_A] \le E|X_n - X| + E[|X|\mathbf{1}_A] < \varepsilon$; for $n \le N$ the bound is immediate. Theorem 2 gives UI.
+**Theorem 4 (Vitali, converse).** If $`X \in L^1`$ and $`E|X_n - X| \to 0`$, then $`X_n \to X`$ in probability and $`\{X_n\}`$ is UI. *Proof.* Markov's inequality applied to $`|X_n - X|`$ gives $`P(|X_n - X| > \varepsilon) \le E|X_n - X|/\varepsilon \to 0`$. For (i): $`E|X_n| \le E|X| + E|X_n - X|`$, and a convergent sequence of numbers is bounded. For (ii): given ε, choose N with $`E|X_n - X| < \varepsilon/2`$ for $`n > N`$. The finite family $`\{X, X_1, \ldots, X_N\}`$ is UI (Theorem 1 (a)), so Theorem 2 gives δ with $`E[|Y|\mathbf{1}_A] < \varepsilon/2`$ for each of its members Y when $`P(A) < \delta`$. For $`n > N`$, $`E[|X_n|\mathbf{1}_A] \le E|X_n - X| + E[|X|\mathbf{1}_A] < \varepsilon`$; for $`n \le N`$ the bound is immediate. Theorem 2 gives UI.
 
-**The families.** $X_n = n\mathbf{1}_{\{U < 1/n\}}$ has $E X_n = 1$, $P(X_n > \varepsilon) = 1/n$ for $0 < \varepsilon < 1$, and tail 1 at every K < n, so $T(K) = 1$: not UI, as Theorem 3 forces, since UI would give $E X_n \to 0$. $Y_n \le 100$ is UI by Theorem 1 (b); $E R_n^2 = 1$ gives $T(K) \le 1/K$ by Theorem 1 (c). For $W_n$ the sets are disjoint, so $\sup_n W_n = \sum_n W_n$ and monotone convergence gives $E\sup_n W_n = \sum_n 1/(n + 1) = \infty$.
+**The families.** $`X_n = n\mathbf{1}_{\{U < 1/n\}}`$ has $`E X_n = 1`$, $`P(X_n > \varepsilon) = 1/n`$ for $`0 < \varepsilon < 1`$, and tail 1 at every K < n, so $`T(K) = 1`$: not UI, as Theorem 3 forces, since UI would give $`E X_n \to 0`$. $`Y_n \le 100`$ is UI by Theorem 1 (b); $`E R_n^2 = 1`$ gives $`T(K) \le 1/K`$ by Theorem 1 (c). For $`W_n`$ the sets are disjoint, so $`\sup_n W_n = \sum_n W_n`$ and monotone convergence gives $`E\sup_n W_n = \sum_n 1/(n + 1) = \infty`$.
 
 </details>
 
@@ -207,7 +219,7 @@ The lottery is worth 1 dollar a ticket, forever, although late tickets almost ne
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Using convergence in probability without UI | P(win) 0.000001 at n = 1,000,000, yet mean distance from 0 still 1.0000 | the mass sits on ever rarer, ever larger jackpots |
-| Taking bounded averages for UI | every lottery mean 1.0000, worst tail 1.0000 at every K | $L^1$-bounded is p = 1, where the $L^p$ test gives no decay |
+| Taking bounded averages for UI | every lottery mean 1.0000, worst tail 1.0000 at every K | $`L^1`$-bounded is p = 1, where the $`L^p`$ test gives no decay |
 | Dropping the finite measure | on the line, height 0.0100 at n = 100 and every tail 0, but area 1.0000 | the mass escapes sideways, which tails above K cannot see |
 | Trusting a sample to see the tail | 200,000 tickets at n = 1,000,000: 0 winners, sample mean 0.0000, true mean 1 | a jackpot of probability 0.000001 is almost never drawn |
 
@@ -221,7 +233,7 @@ The code checks four ticket families; statements about every family rest on the 
 
 1. **The law.** Each average is value times probability over the ticket's law.
 2. **The survival curve.** Each average is also the area under its survival curve P(X > t), the chance that the ticket pays more than t. The area is a midpoint sum over t. P(X > t) is the length of the part of [0, 1) where the ticket, written as a function of U, pays more than t. This road never reads the law, so a wrong law fails the check.
-3. **Brute force.** Every worst tail and worst mass on a small event is found over tickets 1 to 100,000 and compared with the closed form from the proofs. The square-root tickets are held to the $L^2$ bound 1/K.
+3. **Brute force.** Every worst tail and worst mass on a small event is found over tickets 1 to 100,000 and compared with the closed form from the proofs. The square-root tickets are held to the $`L^2`$ bound 1/K.
 4. **Simulation.** A SplitMix64 random-number generator, seed 20260929, simulates 200,000 tickets, asserting within four standard errors.
 
 The code also checks Vitali's bound on the capped tickets. It holds the disjoint tickets' envelope between ln((N + 2)/2) and ln(N + 1), from a logarithm series written out.
@@ -594,14 +606,14 @@ The two outputs are identical line for line.
 
 ### Lean
 
-Lean proves the $L^p$ test, the equivalent form and Vitali's theorem both ways, on any finite measure.
+Lean proves the $`L^p`$ test, the equivalent form and Vitali's theorem both ways, on any finite measure.
 
-- Take a power p above 1 and a family with every $E|X|^p$ at most M. Then the family is UI, even when the measure is not finite.
+- Take a power p above 1 and a family with every $`E|X|^p`$ at most M. Then the family is UI, even when the measure is not finite.
 - Take a family of integrable members on a finite measure. Then it is UI exactly when its averages are bounded and no member hides much of its average on a small event.
-- Take integrable $X_n$ on a finite measure, converging in probability to a random variable $X$, with $\{X_n\}$ UI. Then $X$ is integrable and $E|X_n - X| \to 0$.
-- Take integrable $X_n$ and $X$ on a finite measure with $E|X_n - X| \to 0$. Then $X_n \to X$ in probability, and $\{X_n\}$ is UI.
+- Take integrable $`X_n`$ on a finite measure, converging in probability to a random variable $`X`$, with $`\{X_n\}`$ UI. Then $`X`$ is integrable and $`E|X_n - X| \to 0`$.
+- Take integrable $`X_n`$ and $`X`$ on a finite measure with $`E|X_n - X| \to 0`$. Then $`X_n \to X`$ in probability, and $`\{X_n\}`$ is UI.
 - Lottery ticket 1,000 averages 1 dollar, and 0.1 dollars when capped at 100.
-- Take the square-root ticket at n = 10,001. Then $E R_n^2 = 1$.
+- Take the square-root ticket at n = 10,001. Then $`E R_n^2 = 1`$.
 - Take the disjoint tickets and K = 10. Then the worst tail is 1/12, from ticket 11.
 - Take capped ticket 1,000 and ε = 0.01. Then Vitali's bound is 0.11, above the true error 0.1.
 
@@ -971,7 +983,7 @@ example : (1 / 100 : ℚ) + min 1 (100 / 1000) = 11 / 100 ∧
 > [!TIP]
 > **Try changing**
 > - **Raise the cap.** Guess first: with the jackpot capped at 1,000 instead of 100, is the family still UI, and what does ticket 1,000 average? Change `C` to 1000 in both files. Ticket 1,000 now averages 1.0000 and the worst tail at K = 100 is 1.0000; the asserts still pass. Any finite cap gives UI; a higher cap needs a higher cutoff.
-> - **A fatter root.** Guess first: tickets paying n^0.9 dollars with probability 1/n, are they UI? In `root` and `V`, change `n ** 0.5` to `n ** 0.9`. The run stops at the assert that expects the square-root averages 1/√n. The family is still UI: $E R_n^p$ = n^(0.9p − 1) stays bounded for p up to 10/9, a power above 1, so the $L^p$ test applies, but its tails now fall only like K^(−1/9).
+> - **A fatter root.** Guess first: tickets paying n^0.9 dollars with probability 1/n, are they UI? In `root` and `V`, change `n ** 0.5` to `n ** 0.9`. The run stops at the assert that expects the square-root averages 1/√n. The family is still UI: $`E R_n^p`$ = n^(0.9p − 1) stays bounded for p up to 10/9, a power above 1, so the $`L^p`$ test applies, but its tails now fall only like K^(−1/9).
 > - **More tickets in the sample.** Guess first: how many draws until the million-dollar ticket's sample mean is trustworthy? Change `200_000` to `2_000_000` in the Python. One winner appears, and the sample mean reads 0.5000 against a true 1, with a standard error of 0.7071: still useless. A simulation needs many times 1/P(win) draws to see a rare tail.
 
 ---
@@ -992,7 +1004,7 @@ example : (1 / 100 : ℚ) + min 1 (100 / 1000) = 11 / 100 ∧
 - **Fair games that stop late.** A doubling strategy at a fair coin, which doubles the stake after each loss and stops at the first win, wins 1 dollar almost surely, yet each version forced to stop by a fixed toss averages 0. Its gains are not UI, which is why its average does not follow its limit ([Stopping without a bound](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md)).
 - **Simulating rare, large losses.** A Monte Carlo average sees only the tail its sample reaches: 200,000 draws usually miss a one-in-a-million loss of a million, and the estimate reads 0.
 - **Insurance limits.** Capping each claim is Step 2's dominated test: capped losses form a UI family. Uncapped catastrophe losses need their tails checked directly.
-- **Averages of samples.** For independent draws from one integrable law, the sample means form a UI family: on a small event A, each draw's contribution is at most the largest $E[|X|\mathbf{1}_B]$ over events B no bigger than A, the same bound for every draw, and averaging keeps it. So the law of large numbers in probability upgrades to convergence in mean.
+- **Averages of samples.** For independent draws from one integrable law, the sample means form a UI family: on a small event A, each draw's contribution is at most the largest $`E[|X|\mathbf{1}_B]`$ over events B no bigger than A, the same bound for every draw, and averaging keeps it. So the law of large numbers in probability upgrades to convergence in mean.
 
 > **Say it back**
 > A family is uniformly integrable when the part of each member's average carried by values above a cutoff becomes small for all members at once as the cutoff rises. The lottery ticket paying n dollars with probability 1/n fails: its average of 1 dollar always sits above any cutoff below n. Capping the jackpot, bounding a higher moment, or having one integrable envelope each restores UI. UI is the same as bounded averages plus no member hiding much on a small event. Vitali's theorem: on a probability space, convergence in probability plus UI is exactly convergence in mean.
@@ -1002,7 +1014,7 @@ example : (1 / 100 : ℚ) + min 1 (100 / 1000) = 11 / 100 ∧
 ## What this builds on
 
 - [Modes of convergence](04-modes-of-convergence.md): convergence in probability and in mean, and the growing spike between them, this lottery as a function of U; this card supplies the condition that joins the two.
-- [Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md): integrable random variables and the average absolute distance $E|X_n - X|$ used throughout.
+- [Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md): integrable random variables and the average absolute distance $`E|X_n - X|`$ used throughout.
 
 Within the shelf, [Dominated convergence](02-dominated-convergence-theorem.md) is the special case with an envelope, and [Fatou's lemma](01-fatous-lemma.md) gives only the one-sided inequality that UI closes.
 
@@ -1018,6 +1030,6 @@ Which fair games stopped at an unbounded random time are UI is the question [Sto
 
 Verified 2026-09-29: every link below resolves to the publisher's or author's page for the book named.
 
-- Williams, David. *Probability with Martingales*. Cambridge University Press, 1991. [Publisher page](https://www.cambridge.org/core/books/probability-with-martingales/B4CFCE0D08930FB46C6E93E775503926). Chapter 13 defines uniform integrability, gives the dominated and $L^p$ tests, and proves that convergence in probability plus UI is convergence in mean, with the converse.
+- Williams, David. *Probability with Martingales*. Cambridge University Press, 1991. [Publisher page](https://www.cambridge.org/core/books/probability-with-martingales/B4CFCE0D08930FB46C6E93E775503926). Chapter 13 defines uniform integrability, gives the dominated and $`L^p`$ tests, and proves that convergence in probability plus UI is convergence in mean, with the converse.
 - Billingsley, Patrick. *Probability and Measure*, Anniversary Edition. Wiley, 2012. [Publisher page](https://www.wiley.com/en-us/Probability+and+Measure%2C+Anniversary+Edition-p-9781118122372). Section 16 treats uniform integrability and its use in passing limits through integrals.
 - Durrett, Rick. *Probability: Theory and Examples*, 5th ed. Cambridge University Press, 2019. [Author's page](https://services.math.duke.edu/~rtd/PTE/pte.html). The section "Uniform Integrability, Convergence in L1" in the martingale chapter proves the Vitali equivalence and uses it for martingales.

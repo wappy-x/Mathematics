@@ -30,44 +30,48 @@ The bottom bar is the engine noise still in the output once LMS has learned. It 
 
 ## The formula
 
-Notation first. Time runs in samples, counted by $n$. The engine microphone gives $x(n)$; the filter looks at the two newest samples, written as one column $\mathbf{x}(n) = (x(n),\ x(n-1))$. The cabin microphone gives $d(n)$, the *desired* signal the filter tries to match.
+Notation first. Time runs in samples, counted by $`n`$. The engine microphone gives $`x(n)`$; the filter looks at the two newest samples, written as one column $`\mathbf{x}(n) = (x(n),\ x(n-1))`$. The cabin microphone gives $`d(n)`$, the *desired* signal the filter tries to match.
 
-The filter's two weights are $\mathbf{w} = (w_0, w_1)$, and its guess is $\mathbf{w}^T\mathbf{x}(n) = w_0\,x(n) + w_1\,x(n-1)$. Each weighted input is a *tap*, so this is a two-tap FIR (finite impulse response) filter in the sense of [Digital filters](04-digital-filters-fir-and-iir.md). What is left, $e(n) = d(n) - \mathbf{w}^T\mathbf{x}(n)$, is the error, and in noise cancelling it is also the output: the voice plus whatever noise the guess missed.
+The filter's two weights are $`\mathbf{w} = (w_0, w_1)`$, and its guess is $`\mathbf{w}^T\mathbf{x}(n) = w_0\,x(n) + w_1\,x(n-1)`$. Each weighted input is a *tap*, so this is a two-tap FIR (finite impulse response) filter in the sense of [Digital filters](04-digital-filters-fir-and-iir.md). What is left, $`e(n) = d(n) - \mathbf{w}^T\mathbf{x}(n)`$, is the error, and in noise cancelling it is also the output: the voice plus whatever noise the guess missed.
 
-$E[\cdot]$ is the long-run average, as in [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md). Two tables of averages feed the filter: $R$, how the engine samples go together, and $\mathbf{p}$, how each engine sample goes with the cabin signal.
+$`E[\cdot]`$ is the long-run average, as in [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md). Two tables of averages feed the filter: $`R`$, how the engine samples go together, and $`\mathbf{p}`$, how each engine sample goes with the cabin signal.
 
-$$R\,\mathbf{w}_{\text{opt}} = \mathbf{p}, \qquad R = E[\mathbf{x}(n)\,\mathbf{x}(n)^T], \quad \mathbf{p} = E[d(n)\,\mathbf{x}(n)]$$
+```math
+R\,\mathbf{w}_{\text{opt}} = \mathbf{p}, \qquad R = E[\mathbf{x}(n)\,\mathbf{x}(n)^T], \quad \mathbf{p} = E[d(n)\,\mathbf{x}(n)]
+```
 
 **Read it aloud:** the best weights are the ones that make the engine's own correlations, times the weights, reproduce the engine's correlation with the cabin microphone.
 
 When the averages are unknown, LMS learns the weights one sample at a time:
 
-$$\mathbf{w}(n+1) = \mathbf{w}(n) + \mu\, e(n)\, \mathbf{x}(n)$$
+```math
+\mathbf{w}(n+1) = \mathbf{w}(n) + \mu\, e(n)\, \mathbf{x}(n)
+```
 
 **Read it aloud:** after each sample, move every weight a little in the direction that would have shrunk this sample's error, by the step size times the error times that weight's input.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the sample count, 8,000 per second | 0 to 79,999 | — |
-| $x(n)$, $\mathbf{x}(n)$, $^T$ | engine microphone sample; the newest two as a column; a superscript $T$ turns a column into a row | power 1 | louder reference, same weights scaled down |
-| $d(n)$ | cabin microphone sample: voice plus engine noise | power 1.37 | — |
-| $s(n)$ | the voice alone, never seen by the filter | power 0.25 | the floor $J_{\min}$ rises with it |
-| $\mathbf{h}$ | the true path, engine to cabin | (0.8, 0.4) | more noise in the cabin |
-| $\mathbf{w}$, $\mathbf{w}_{\text{opt}}$, $\mathbf{v}$ | the filter's two weights; the best ones; $\mathbf{v} = \mathbf{w} - \mathbf{w}_{\text{opt}}$, the distance from the best (Step 2's fold) | best: (0.8, 0.4) | — |
-| $e(n)$, $e_{\text{opt}}$ | error, which is the output; the error left by the best weights (Step 2's fold) | power 0.2526 after LMS | — |
-| $R$ | tap correlations; its diagonal summed, the trace $\operatorname{tr} R$, is 2 | `[[1, 0.5], [0.5, 1]]` | — |
-| $\mathbf{p}$ | each tap's correlation with $d(n)$ | (1.0, 0.8) | weights follow it through $R^{-1}$ |
-| $J(\mathbf{w})$, $J_{\min}$ | mean squared error $E[e(n)^2]$; its lowest value | lowest 0.25 | — |
-| $\mu$ | the LMS step size | 0.01 | faster learning, noisier weights, and past 1.3333 even the average walk diverges |
-| $\lambda$ | the eigenvalues of $R$, its stretch factors | 1.5 and 0.5 | the slow one sets how long learning takes |
+| $`n`$ | the sample count, 8,000 per second | 0 to 79,999 | — |
+| $`x(n)`$, $`\mathbf{x}(n)`$, $`^T`$ | engine microphone sample; the newest two as a column; a superscript $`T`$ turns a column into a row | power 1 | louder reference, same weights scaled down |
+| $`d(n)`$ | cabin microphone sample: voice plus engine noise | power 1.37 | — |
+| $`s(n)`$ | the voice alone, never seen by the filter | power 0.25 | the floor $`J_{\min}`$ rises with it |
+| $`\mathbf{h}`$ | the true path, engine to cabin | (0.8, 0.4) | more noise in the cabin |
+| $`\mathbf{w}`$, $`\mathbf{w}_{\text{opt}}`$, $`\mathbf{v}`$ | the filter's two weights; the best ones; $`\mathbf{v} = \mathbf{w} - \mathbf{w}_{\text{opt}}`$, the distance from the best (Step 2's fold) | best: (0.8, 0.4) | — |
+| $`e(n)`$, $`e_{\text{opt}}`$ | error, which is the output; the error left by the best weights (Step 2's fold) | power 0.2526 after LMS | — |
+| $`R`$ | tap correlations; its diagonal summed, the trace $`\mathrm{tr}\, R`$, is 2 | `[[1, 0.5], [0.5, 1]]` | — |
+| $`\mathbf{p}`$ | each tap's correlation with $`d(n)`$ | (1.0, 0.8) | weights follow it through $`R^{-1}`$ |
+| $`J(\mathbf{w})`$, $`J_{\min}`$ | mean squared error $`E[e(n)^2]`$; its lowest value | lowest 0.25 | — |
+| $`\mu`$ | the LMS step size | 0.01 | faster learning, noisier weights, and past 1.3333 even the average walk diverges |
+| $`\lambda`$ | the eigenvalues of $`R`$, its stretch factors | 1.5 and 0.5 | the slow one sets how long learning takes |
 
 ### When it holds
 
 - **The relation is linear and fixed.** A weighted sum can only copy a weighted-sum path. If the engine changes speed the best weights move, and the Wiener answer for last minute is wrong for this one; LMS keeps learning, which is why it is used.
-- **The voice is uncorrelated with the engine.** If the engine microphone also hears the voice, $\mathbf{p}$ picks up the voice and the filter cancels part of the call.
-- **The averages exist and stay put** (the signals are *stationary*). Otherwise $R$ and $\mathbf{p}$ have no single value to solve for.
+- **The voice is uncorrelated with the engine.** If the engine microphone also hears the voice, $`\mathbf{p}`$ picks up the voice and the filter cancels part of the call.
+- **The averages exist and stay put** (the signals are *stationary*). Otherwise $`R`$ and $`\mathbf{p}`$ have no single value to solve for.
 - **The filter is long enough.** Two taps cover a two-tap path exactly. A real cabin path rings for thousands of samples; a short filter leaves the rest as error (one tap leaves 0.37 here, not 0.25).
-- **$R$ can be inverted.** An engine signal with too little variety, such as a single low tone (or, for a filter longer than two taps, any single tone), makes $R$ nearly singular: many weight pairs fit equally well and LMS drifts along them.
+- **$`R`$ can be inverted.** An engine signal with too little variety, such as a single low tone (or, for a filter longer than two taps, any single tone), makes $`R`$ nearly singular: many weight pairs fit equally well and LMS drifts along them.
 
 ---
 
@@ -75,54 +79,60 @@ $$\mathbf{w}(n+1) = \mathbf{w}(n) + \mu\, e(n)\, \mathbf{x}(n)$$
 
 ### Step 0: perpendicular, again
 
-[Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) found the best line by demanding the leftover be perpendicular to every column it could have used. Random signals have their own dot product: the average product $E[XY]$, which is the covariance when the averages are zero. "Perpendicular" becomes "uncorrelated". The best guess is the one whose error is uncorrelated with every tap: the **orthogonality principle**.
+[Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) found the best line by demanding the leftover be perpendicular to every column it could have used. Random signals have their own dot product: the average product $`E[XY]`$, which is the covariance when the averages are zero. "Perpendicular" becomes "uncorrelated". The best guess is the one whose error is uncorrelated with every tap: the **orthogonality principle**.
 
 ### Step 1: the error surface is a bowl
 
 Expand the mean squared error for any weights:
 
-$$J(\mathbf{w}) = E[d^2] - 2\,\mathbf{p}^T\mathbf{w} + \mathbf{w}^T R\,\mathbf{w}.$$
+```math
+J(\mathbf{w}) = E[d^2] - 2\,\mathbf{p}^T\mathbf{w} + \mathbf{w}^T R\,\mathbf{w}.
+```
 
-It is a quadratic in the two weights. $R$ is an average of squares, so $\mathbf{w}^T R\,\mathbf{w} = E[(\mathbf{w}^T\mathbf{x})^2] \ge 0$: the surface curves up in every direction. It is a bowl with one lowest point.
+It is a quadratic in the two weights. $`R`$ is an average of squares, so $`\mathbf{w}^T R\,\mathbf{w} = E[(\mathbf{w}^T\mathbf{x})^2] \ge 0`$: the surface curves up in every direction. It is a bowl with one lowest point.
 
 ### Step 2: at the bottom, the error is uncorrelated with each tap
 
-At the lowest point, nudging either weight cannot lower $J$. The slope of $J$ along $w_0$ is $-2E[e(n)\,x(n)]$, and along $w_1$ it is $-2E[e(n)\,x(n-1)]$, so the condition is
+At the lowest point, nudging either weight cannot lower $`J`$. The slope of $`J`$ along $`w_0`$ is $`-2E[e(n)\,x(n)]`$, and along $`w_1`$ it is $`-2E[e(n)\,x(n-1)]`$, so the condition is
 
-$$E[e(n)\,x(n)] = 0, \qquad E[e(n)\,x(n-1)] = 0.$$
+```math
+E[e(n)\,x(n)] = 0, \qquad E[e(n)\,x(n-1)] = 0.
+```
 
-Substitute $e = d - \mathbf{w}^T\mathbf{x}$ and the two zeros become $\mathbf{p} - R\,\mathbf{w} = \mathbf{0}$: the **Wiener–Hopf equations** $R\,\mathbf{w}_{\text{opt}} = \mathbf{p}$. The lowest error that is left is $J_{\min} = E[d^2] - \mathbf{p}^T\mathbf{w}_{\text{opt}}$. Put sums over a recording in place of the averages, and these are the normal equations of [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md) of $d(n)$ on the two predictors $x(n)$ and $x(n-1)$. The Wiener filter is that regression, and road 2 in the code computes it.
+Substitute $`e = d - \mathbf{w}^T\mathbf{x}`$ and the two zeros become $`\mathbf{p} - R\,\mathbf{w} = \mathbf{0}`$: the **Wiener–Hopf equations** $`R\,\mathbf{w}_{\text{opt}} = \mathbf{p}`$. The lowest error that is left is $`J_{\min} = E[d^2] - \mathbf{p}^T\mathbf{w}_{\text{opt}}`$. Put sums over a recording in place of the averages, and these are the normal equations of [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md) of $`d(n)`$ on the two predictors $`x(n)`$ and $`x(n-1)`$. The Wiener filter is that regression, and road 2 in the code computes it.
 
 <details>
 <summary>Detailed proof: why the bottom is the only bottom</summary>
 
-Write any weights as $\mathbf{w} = \mathbf{w}_{\text{opt}} + \mathbf{v}$. Then $e = e_{\text{opt}} - \mathbf{v}^T\mathbf{x}$, and
+Write any weights as $`\mathbf{w} = \mathbf{w}_{\text{opt}} + \mathbf{v}`$. Then $`e = e_{\text{opt}} - \mathbf{v}^T\mathbf{x}`$, and
 
-$$J(\mathbf{w}) = E[e_{\text{opt}}^2] - 2\,\mathbf{v}^T E[e_{\text{opt}}\,\mathbf{x}] + \mathbf{v}^T R\,\mathbf{v} = J_{\min} + \mathbf{v}^T R\,\mathbf{v}.$$
+$`\displaystyle J(\mathbf{w}) = E[e_{\text{opt}}^2] - 2\,\mathbf{v}^T E[e_{\text{opt}}\,\mathbf{x}] + \mathbf{v}^T R\,\mathbf{v} = J_{\min} + \mathbf{v}^T R\,\mathbf{v}.`$
 
-The middle term is zero by orthogonality. The last term is zero only when $\mathbf{v}^T\mathbf{x}(n)$ is zero for all time, which for an invertible $R$ means $\mathbf{v} = \mathbf{0}$. So every other choice of weights costs exactly $\mathbf{v}^T R\,\mathbf{v}$ extra.
+The middle term is zero by orthogonality. The last term is zero only when $`\mathbf{v}^T\mathbf{x}(n)`$ is zero for all time, which for an invertible $`R`$ means $`\mathbf{v} = \mathbf{0}`$. So every other choice of weights costs exactly $`\mathbf{v}^T R\,\mathbf{v}`$ extra.
 
 </details>
 
-For the engine: $\mathbf{p} = R\,\mathbf{h}$ because the voice is uncorrelated with the engine, so the solution is $\mathbf{w}_{\text{opt}} = \mathbf{h}$, and $J_{\min}$ is the voice power. The best filter removes all the engine noise and none of the voice. The frequency-domain version of the same equation divides the cross spectrum by the engine's spectrum, both estimated as on [Spectral estimation](06-spectral-estimation-and-periodograms.md).
+For the engine: $`\mathbf{p} = R\,\mathbf{h}`$ because the voice is uncorrelated with the engine, so the solution is $`\mathbf{w}_{\text{opt}} = \mathbf{h}`$, and $`J_{\min}`$ is the voice power. The best filter removes all the engine noise and none of the voice. The frequency-domain version of the same equation divides the cross spectrum by the engine's spectrum, both estimated as on [Spectral estimation](06-spectral-estimation-and-periodograms.md).
 
 ### Step 3: walk downhill instead of solving
 
-The slope of the bowl is $-2(\mathbf{p} - R\,\mathbf{w})$. **Steepest descent** steps against it:
+The slope of the bowl is $`-2(\mathbf{p} - R\,\mathbf{w})`$. **Steepest descent** steps against it:
 
-$$\mathbf{w} \leftarrow \mathbf{w} + \mu\,(\mathbf{p} - R\,\mathbf{w}),$$
+```math
+\mathbf{w} \leftarrow \mathbf{w} + \mu\,(\mathbf{p} - R\,\mathbf{w}),
+```
 
 repeated, each time from the newest weights.
 
-Measure the gap $\mathbf{w}_{\text{opt}} - \mathbf{w}$ along the two eigenvectors of $R$, the directions that $R$ only stretches (see [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)): here (1, 1) and (1, −1). Along each, one step multiplies the gap by $(1 - \mu\lambda)$: by 0.985 and 0.995 when $\mu = 0.01$. The walk converges exactly when every factor has size below 1, that is $0 < \mu < 2/\lambda_{\max} = 1.3333$.
+Measure the gap $`\mathbf{w}_{\text{opt}} - \mathbf{w}`$ along the two eigenvectors of $`R`$, the directions that $`R`$ only stretches (see [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)): here (1, 1) and (1, −1). Along each, one step multiplies the gap by $`(1 - \mu\lambda)`$: by 0.985 and 0.995 when $`\mu = 0.01`$. The walk converges exactly when every factor has size below 1, that is $`0 < \mu < 2/\lambda_{\max} = 1.3333`$.
 
-A gap shrinks by a factor of about 2.718 (Euler's number $e$) in about $1/(\mu\lambda)$ steps, its **time constant**: 66.67 steps along (1, 1), 200 along (1, −1).
+A gap shrinks by a factor of about 2.718 (Euler's number $`e`$) in about $`1/(\mu\lambda)`$ steps, its **time constant**: 66.67 steps along (1, 1), 200 along (1, −1).
 
 ### Step 4: LMS replaces each average by one sample
 
-LMS does not know $\mathbf{p}$ or $R$. It takes the one sample it has, $e(n)\,\mathbf{x}(n)$, as its estimate of $\mathbf{p} - R\,\mathbf{w}$, whose long-run average it is. Each step is noisy, but the noise averages out. Under the usual simplification that the newest input is independent of the current weights, the *average* LMS weights follow the steepest-descent path exactly.
+LMS does not know $`\mathbf{p}`$ or $`R`$. It takes the one sample it has, $`e(n)\,\mathbf{x}(n)`$, as its estimate of $`\mathbf{p} - R\,\mathbf{w}`$, whose long-run average it is. Each step is noisy, but the noise averages out. Under the usual simplification that the newest input is independent of the current weights, the *average* LMS weights follow the steepest-descent path exactly.
 
-The leftover jiggle costs a little extra error: about $J_{\min}\,\mu\,\operatorname{tr}R/2$, here 0.0025, the **misadjustment**. Small steps mean little jiggle but slow learning; that trade is the design choice.
+The leftover jiggle costs a little extra error: about $`J_{\min}\,\mu\,\mathrm{tr}\,R/2`$, here 0.0025, the **misadjustment**. Small steps mean little jiggle but slow learning; that trade is the design choice.
 
 ---
 
@@ -132,25 +142,25 @@ Path (0.8, 0.4); engine power 1, neighbouring engine samples correlated 0.5; voi
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| noise at the cabin mic, $\mathbf{h}^T R\,\mathbf{h}$ | 0.64 + 0.16 + 2 × 0.5 × 0.8 × 0.4 | 1.12 |
-| cabin mic power $E[d^2]$ | 0.25 + 1.12 | 1.37 |
-| $p_0 = E[d\,x(n)]$ | 0.8 × 1 + 0.4 × 0.5 | 1.0 |
-| $p_1 = E[d\,x(n-1)]$ | 0.8 × 0.5 + 0.4 × 1 | 0.8 |
-| determinant of $R$ | 1 × 1 − 0.5 × 0.5 | 0.75 |
-| $w_0$ | (1.0 × 1 − 0.5 × 0.8) / 0.75 = 0.6 / 0.75 | **0.8** |
-| $w_1$ | (1 × 0.8 − 0.5 × 1.0) / 0.75 = 0.3 / 0.75 | **0.4** |
-| $\mathbf{p}^T\mathbf{w}_{\text{opt}}$ | 1.0 × 0.8 + 0.8 × 0.4 | 1.12 |
-| $J_{\min}$ | 1.37 − 1.12 | **0.25** |
+| noise at the cabin mic, $`\mathbf{h}^T R\,\mathbf{h}`$ | 0.64 + 0.16 + 2 × 0.5 × 0.8 × 0.4 | 1.12 |
+| cabin mic power $`E[d^2]`$ | 0.25 + 1.12 | 1.37 |
+| $`p_0 = E[d\,x(n)]`$ | 0.8 × 1 + 0.4 × 0.5 | 1.0 |
+| $`p_1 = E[d\,x(n-1)]`$ | 0.8 × 0.5 + 0.4 × 1 | 0.8 |
+| determinant of $`R`$ | 1 × 1 − 0.5 × 0.5 | 0.75 |
+| $`w_0`$ | (1.0 × 1 − 0.5 × 0.8) / 0.75 = 0.6 / 0.75 | **0.8** |
+| $`w_1`$ | (1 × 0.8 − 0.5 × 1.0) / 0.75 = 0.3 / 0.75 | **0.4** |
+| $`\mathbf{p}^T\mathbf{w}_{\text{opt}}`$ | 1.0 × 0.8 + 0.8 × 0.4 | 1.12 |
+| $`J_{\min}`$ | 1.37 − 1.12 | **0.25** |
 | signal-to-noise before | 10 log₁₀(0.25 / 1.12) | −6.51 dB |
 
-The best two-tap filter is the path itself, and what it leaves is exactly the voice. LMS, starting from (0, 0) with $\mu = 0.01$, averages (0.8010, 0.4057) over the last second and leaves output power 0.2526, against the rule's 0.25 × (1 + 0.01) = 0.2525.
+The best two-tap filter is the path itself, and what it leaves is exactly the voice. LMS, starting from (0, 0) with $`\mu = 0.01`$, averages (0.8010, 0.4057) over the last second and leaves output power 0.2526, against the rule's 0.25 × (1 + 0.01) = 0.2525.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| One tap only, $w_0 = p_0/r_0$ | weight 1.0, error 0.37 | The delayed half of the path is unreachable, and the one weight over-reaches to make up |
-| Each tap solved on its own, $w_k = p_k / 1$ | weights (1.0, 0.8), error 0.53 | Ignores that the taps are correlated: each weight takes credit for its neighbour's work, worse than one tap |
+| One tap only, $`w_0 = p_0/r_0`$ | weight 1.0, error 0.37 | The delayed half of the path is unreachable, and the one weight over-reaches to make up |
+| Each tap solved on its own, $`w_k = p_k / 1`$ | weights (1.0, 0.8), error 0.53 | Ignores that the taps are correlated: each weight takes credit for its neighbour's work, worse than one tap |
 | Steepest-descent step 1.4, above 2/1.5 | weights (−26.36, −26.76) after 40 steps | The fast direction's factor is 1 − 1.4 × 1.5 = −1.10: each step overshoots further |
 | LMS with the sign flipped | weights (−923071, −927094) after 1,000 samples | Each step climbs the bowl instead of descending it |
 
@@ -158,13 +168,13 @@ The best two-tap filter is the path itself, and what it leaves is exactly the vo
 
 ## How the learning moves
 
-The puzzle: LMS starts knowing nothing, sees one noisy sample at a time, and still homes in within a few hundred samples. Yet $w_1$ gets close to 0.4 well before $w_0$ reaches 0.8. Why does one weight lead?
+The puzzle: LMS starts knowing nothing, sees one noisy sample at a time, and still homes in within a few hundred samples. Yet $`w_1`$ gets close to 0.4 well before $`w_0`$ reaches 0.8. Why does one weight lead?
 
 The two weights are not learned separately. The bowl is tilted, because the engine samples are correlated, and its natural directions are "both weights together", (1, 1), with stretch 1.5, and "the difference", (1, −1), with stretch 0.5. The target splits into a sum of 1.2 and a difference of 0.4.
 
 ### One run, followed
 
-| Samples | Time | LMS $w_0$ | LMS $w_1$ | Average path $w_0$ | Average path $w_1$ |
+| Samples | Time | LMS $`w_0`$ | LMS $`w_1`$ | Average path $`w_0`$ | Average path $`w_1`$ |
 | --- | --- | --- | --- | --- | --- |
 | 0 | 0 ms | 0 | 0 | 0 | 0 |
 | 50 | 6.25 ms | 0.3712 | 0.3215 | 0.3625 | 0.2738 |
@@ -174,11 +184,11 @@ The two weights are not learned separately. The bowl is tilted, because the engi
 | 800 | 100 ms | 0.8223 | 0.3277 | 0.7964 | 0.4036 |
 | 1600 | 200 ms | 0.8471 | 0.3806 | 0.7999 | 0.4001 |
 
-The average path has overshot $w_1$ to 0.4442 by 25 ms and then settles back. The one real run tracks it, jiggling around it: 0.3277 against 0.4036 at 100 ms.
+The average path has overshot $`w_1`$ to 0.4442 by 25 ms and then settles back. The one real run tracks it, jiggling around it: 0.3277 against 0.4036 at 100 ms.
 
 ### Force one: the sum closes fast
 
-Gap in $w_0 + w_1$, shrinking by 0.985 per sample:
+Gap in $`w_0 + w_1`$, shrinking by 0.985 per sample:
 
 ```
      0 samples  ████████████████████████████████████████████████  1.2000
@@ -190,7 +200,7 @@ Gap in $w_0 + w_1$, shrinking by 0.985 per sample:
 
 ### Force two: the difference closes slowly
 
-Gap in $w_0 - w_1$, shrinking by 0.995 per sample, on the same scale:
+Gap in $`w_0 - w_1`$, shrinking by 0.995 per sample, on the same scale:
 
 ```
      0 samples  ████████████████                                  0.4000
@@ -201,7 +211,7 @@ Gap in $w_0 - w_1$, shrinking by 0.995 per sample, on the same scale:
    800 samples  ▎                                                 0.0073
 ```
 
-Early on the sum dominates: both weights rise together, and $w_1$, whose target is small, gets pushed past it. Once the sum has closed the slow difference is still open, and it pulls $w_1$ back down while $w_0$ keeps climbing. The slow direction, $1/(\mu\lambda_{\min}) = 200$ samples, sets the learning time.
+Early on the sum dominates: both weights rise together, and $`w_1`$, whose target is small, gets pushed past it. Once the sum has closed the slow difference is still open, and it pulls $`w_1`$ back down while $`w_0`$ keeps climbing. The slow direction, $`1/(\mu\lambda_{\min}) = 200`$ samples, sets the learning time.
 
 ### Both at once
 
@@ -216,7 +226,7 @@ xychart-beta
     line [0, 0.2738, 0.3888, 0.4442, 0.4255, 0.4036, 0.4001]
 ```
 
-Orange: the run's $w_0$, heading for 0.8. Green: the run's $w_1$, heading for 0.4. Dark: the average path of $w_1$, rising past 0.4 and settling back. The samples on the axis are not evenly spaced.
+Orange: the run's $`w_0`$, heading for 0.8. Green: the run's $`w_1`$, heading for 0.4. Dark: the average path of $`w_1`$, rising past 0.4 and settling back. The samples on the axis are not evenly spaced.
 
 ---
 
@@ -579,15 +589,15 @@ The outputs agree line for line. Wiener from the averages gives (0.8, 0.4) exact
 
 ### Lean
 
-Lean proves the Wiener results and the steepest-descent rule for any number of taps, whenever $R$ can be inverted.
+Lean proves the Wiener results and the steepest-descent rule for any number of taps, whenever $`R`$ can be inverted.
 
-- Take signals whose squares have finite averages. Then weights give the lowest $J$ exactly when $R\,\mathbf{w} = \mathbf{p}$.
-- Take any weights $\mathbf{w}$. Then $R\,\mathbf{w} = \mathbf{p}$ exactly when the error is uncorrelated with every tap.
+- Take signals whose squares have finite averages. Then weights give the lowest $`J`$ exactly when $`R\,\mathbf{w} = \mathbf{p}`$.
+- Take any weights $`\mathbf{w}`$. Then $`R\,\mathbf{w} = \mathbf{p}`$ exactly when the error is uncorrelated with every tap.
 - There is exactly one choice of best weights.
-- Take the best weights $\mathbf{w}_{\text{opt}}$. Then $J_{\min} = E[d^2] - \mathbf{p}^T\mathbf{w}_{\text{opt}}$.
-- Take any other weights $\mathbf{w} = \mathbf{w}_{\text{opt}} + \mathbf{v}$. Then they cost exactly $\mathbf{v}^T R\,\mathbf{v}$ more than $J_{\min}$.
-- Suppose $d(n)$ is the voice plus the path $\mathbf{h}$ applied to the taps, with the voice uncorrelated with every tap. Then $\mathbf{p} = R\,\mathbf{h}$, the only best weights are $\mathbf{h}$, and $J_{\min}$ is the voice power.
-- Take any step size $\mu$, and let $\lambda$ run over the eigenvalues of $R$. Then steepest descent reaches the best weights from every start exactly when each factor $1 - \mu\lambda$ has size below 1.
+- Take the best weights $`\mathbf{w}_{\text{opt}}`$. Then $`J_{\min} = E[d^2] - \mathbf{p}^T\mathbf{w}_{\text{opt}}`$.
+- Take any other weights $`\mathbf{w} = \mathbf{w}_{\text{opt}} + \mathbf{v}`$. Then they cost exactly $`\mathbf{v}^T R\,\mathbf{v}`$ more than $`J_{\min}`$.
+- Suppose $`d(n)`$ is the voice plus the path $`\mathbf{h}`$ applied to the taps, with the voice uncorrelated with every tap. Then $`\mathbf{p} = R\,\mathbf{h}`$, the only best weights are $`\mathbf{h}`$, and $`J_{\min}`$ is the voice power.
+- Take any step size $`\mu`$, and let $`\lambda`$ run over the eigenvalues of $`R`$. Then steepest descent reaches the best weights from every start exactly when each factor $`1 - \mu\lambda`$ has size below 1.
 - The hand arithmetic in Worked numbers also checks, from the determinant 0.75 to the misadjustment 0.0025.
 
 LMS itself, its average convergence, the misadjustment rule and the simulated recording are left to the Python and Rust checks.
@@ -1007,7 +1017,7 @@ example : (1/4 : ℚ) * (1 + 1/100 * 2 / 2) = 101 / 400 := by norm_num
 > Smaller traps:
 > - **Fitting each tap on its own.** Correlated taps share the work; solving them separately gives (1.0, 0.8) and an error of 0.53, worse than doing nothing clever with one tap (0.37).
 > - **Reading the error as failure.** In noise cancelling the error *is* the output. A perfect filter leaves error power 0.25, the voice, not zero. Driving the error to zero would mean cancelling the voice.
-> - **Choosing the step, then turning the reference up.** The bound $2/\lambda_{\max}$ shrinks as the reference gets louder: double its level and the eigenvalues quadruple, so the safe range of steps falls to a quarter. Normalised LMS divides the step by the input power to remove this.
+> - **Choosing the step, then turning the reference up.** The bound $`2/\lambda_{\max}`$ shrinks as the reference gets louder: double its level and the eigenvalues quadruple, so the safe range of steps falls to a quarter. Normalised LMS divides the step by the input power to remove this.
 > - **Quoting the last weights.** LMS weights jiggle around the answer: the last sample's weights here are (0.8346, 0.4502). Average them, or shrink the step, before reading them as the path.
 
 ---
@@ -1022,7 +1032,7 @@ example : (1/4 : ℚ) * (1 + 1/100 * 2 / 2) = 101 / 400 := by norm_num
 - **Linear prediction in speech coding.** The same Wiener–Hopf equations, with the signal's own past as the reference, compress speech into a few predictor weights.
 
 > **Say it back**
-> The best guess of one signal as a weighted sum of another leaves an error uncorrelated with every input it used. That condition is a small linear system, $R\,\mathbf{w} = \mathbf{p}$, built from averages, and its solution is the Wiener filter. Walking downhill on the squared-error bowl reaches the same answer, as long as the step stays below $2/\lambda_{\max}$. LMS takes that walk with one sample at a time standing in for the averages, so it learns, and keeps learning, with no averages known in advance. Here its average weights reach the (0.8, 0.4) engine path to within 1 percent in about 100 ms, and it lifts the call from −6.51 dB to +20.12 dB.
+> The best guess of one signal as a weighted sum of another leaves an error uncorrelated with every input it used. That condition is a small linear system, $`R\,\mathbf{w} = \mathbf{p}`$, built from averages, and its solution is the Wiener filter. Walking downhill on the squared-error bowl reaches the same answer, as long as the step stays below $`2/\lambda_{\max}`$. LMS takes that walk with one sample at a time standing in for the averages, so it learns, and keeps learning, with no averages known in advance. Here its average weights reach the (0.8, 0.4) engine path to within 1 percent in about 100 ms, and it lifts the call from −6.51 dB to +20.12 dB.
 
 ---
 
@@ -1032,8 +1042,8 @@ example : (1/4 : ℚ) * (1 + 1/100 * 2 / 2) = 101 / 400 := by norm_num
 - [Digital filters](04-digital-filters-fir-and-iir.md): the two-tap weighted sum is an FIR filter; this card chooses its weights instead of designing them.
 - [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): perpendicular leftovers and the normal equations; road 2 in the code is least squares on the recording.
 - [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance as the average product, the dot product that makes "uncorrelated" mean "perpendicular".
-- [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): one variable regressed on several predictors. $R\,\mathbf{w} = \mathbf{p}$ are its normal equations with averages in place of sums, so the Wiener filter is that regression of the cabin signal on the engine taps.
-- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the directions a matrix only stretches, and the stretch factors; Step 3 splits the learning along the eigenvectors of $R$.
+- [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): one variable regressed on several predictors. $`R\,\mathbf{w} = \mathbf{p}`$ are its normal equations with averages in place of sums, so the Wiener filter is that regression of the cabin signal on the engine taps.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the directions a matrix only stretches, and the stretch factors; Step 3 splits the learning along the eigenvectors of $`R`$.
 
 ## Where this goes next
 

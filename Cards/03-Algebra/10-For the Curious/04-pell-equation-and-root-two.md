@@ -32,26 +32,32 @@ Each arrow multiplies by 3 + 2 root 2; the lower line is the equation's left sid
 
 ## The formula
 
-$$x^2 - 2y^2 = 1$$
+```math
+x^2 - 2y^2 = 1
+```
 
 **Read it aloud:** x multiplied by itself, less twice y multiplied by itself, comes to exactly one.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the big square's side, the fraction's top | 99 | y grows to match |
-| $y$ | a small square's side, the fraction's bottom | 70 | x/y lands closer to root 2 |
-| $x^2 - 2y^2$ | the big square less the two small ones | 9801 − 9800 | — |
-| $\sqrt{2}$ | root 2: gives 2 when multiplied by itself | 1.4142136 | — |
-| $n$ | which solution, counting from 1 | 3, for (99, 70) | both numbers grow about six times |
-| $3 + 2\sqrt{2}$ | the multiplier from one solution to the next | fixed | — |
+| $`x`$ | the big square's side, the fraction's top | 99 | y grows to match |
+| $`y`$ | a small square's side, the fraction's bottom | 70 | x/y lands closer to root 2 |
+| $`x^2 - 2y^2`$ | the big square less the two small ones | 9801 − 9800 | — |
+| $`\sqrt{2}`$ | root 2: gives 2 when multiplied by itself | 1.4142136 | — |
+| $`n`$ | which solution, counting from 1 | 3, for (99, 70) | both numbers grow about six times |
+| $`3 + 2\sqrt{2}`$ | the multiplier from one solution to the next | fixed | — |
 
 From (x, y) the next solution is the pair
 
-$$(3x + 4y, \; 2x + 3y)$$
+```math
+(3x + 4y, \; 2x + 3y)
+```
 
 Both entries use the old pair, not each other. The rule is one multiplication in disguise, n counting the solutions:
 
-$$x + y\sqrt{2} = (3 + 2\sqrt{2})^n$$
+```math
+x + y\sqrt{2} = (3 + 2\sqrt{2})^n
+```
 
 ### When it holds
 
@@ -70,19 +76,25 @@ Work inside the numbers a + b root 2, a and b whole. Add, subtract or multiply t
 
 Flip the sign before the root for the mirror image, properly the **conjugate**: 3 + 2 root 2 has conjugate 3 - 2 root 2. A number times its own conjugate loses the root:
 
-$$(x + y\sqrt{2})(x - y\sqrt{2}) = x^2 - 2y^2$$
+```math
+(x + y\sqrt{2})(x - y\sqrt{2}) = x^2 - 2y^2
+```
 
 So the equation says more than it appears to: x + y root 2 times its conjugate is 1, making the conjugate its reciprocal. A member whose reciprocal is also a member is a **unit**, so the equation hunts the units of a + b root 2. The quantity x^2 - 2y^2 is the **norm** of x + y root 2.
 
 ### Step 1: two solutions multiply into a third
 
-$$(x + y\sqrt{2})(3 + 2\sqrt{2}) = 3x + 4y + (2x + 3y)\sqrt{2}$$
+```math
+(x + y\sqrt{2})(3 + 2\sqrt{2}) = 3x + 4y + (2x + 3y)\sqrt{2}
+```
 
 There is the step rule, read off a multiplication rather than guessed.
 
 Conjugating flips a sign, so (x - y root 2)(3 - 2 root 2) is 3x + 4y - (2x + 3y) root 2. Multiply those two results, each number with its own conjugate, and Step 0 turns each side into norms:
 
-$$(x^2 - 2y^2) \times (3^2 - 2 \times 2^2) = (3x + 4y)^2 - 2(2x + 3y)^2$$
+```math
+(x^2 - 2y^2) \times (3^2 - 2 \times 2^2) = (3x + 4y)^2 - 2(2x + 3y)^2
+```
 
 Since 9 - 8 = 1, the left side is 1 × 1 for any solution, so the new pair has norm 1: it solves the equation. Norms multiply; no cases are checked. From (3, 2) the rule gives 17 and 12, with 289 - 288 = 1, or in one line (3 + 2 root 2)^2 = 17 + 12 root 2.
 
@@ -115,15 +127,21 @@ A decreasing run of positive whole numbers is finite, so the steps reach (3, 2),
 
 Divide x^2 - 2y^2 = 1 by y^2:
 
-$$(x/y)^2 = 2 + 1/y^2$$
+```math
+(x/y)^2 = 2 + 1/y^2
+```
 
 The square sits above 2 by 1/y^2, so the fraction sits above root 2 by much less. For the overshoot exactly, split the difference of squares:
 
-$$(x/y - \sqrt{2})(x/y + \sqrt{2}) = 1/y^2$$
+```math
+(x/y - \sqrt{2})(x/y + \sqrt{2}) = 1/y^2
+```
 
 Divide by the second bracket:
 
-$$x/y - \sqrt{2} = \frac{1}{y^2 \, (x/y + \sqrt{2})}$$
+```math
+x/y - \sqrt{2} = \frac{1}{y^2 \, (x/y + \sqrt{2})}
+```
 
 That bracket exceeds 2 root 2, so the overshoot is under 1 over (2 root 2 × y^2) — at (99, 70), a bound of 0.0000721538 against the true 0.0000721519. Each step divides it by roughly 34, from 0.0857864376 to 0.0024531043 to 0.0000721519.
 

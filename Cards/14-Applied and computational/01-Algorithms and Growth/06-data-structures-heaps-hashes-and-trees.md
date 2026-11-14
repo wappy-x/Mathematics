@@ -30,53 +30,57 @@ The top of the stage heap after all 480 bookings (schematic). Each parent's star
 
 ## The formula
 
-Costs count one named operation: comparing two keys (a ticket code, a start minute). $O(g)$, from [Big-O](01-big-o-and-growth-rates.md), reads "grows at most like $g$, up to a constant, for large $n$". Each cost names its case: worst (the slowest single operation), expected (the average over the hash's random spread) or amortised (the average over a long run of operations).
+Costs count one named operation: comparing two keys (a ticket code, a start minute). $`O(g)`$, from [Big-O](01-big-o-and-growth-rates.md), reads "grows at most like $`g`$, up to a constant, for large $`n`$". Each cost names its case: worst (the slowest single operation), expected (the average over the hash's random spread) or amortised (the average over a long run of operations).
 
 | Structure | Find a given item | Find the smallest | Insert | Remove | Read out in order |
 | --- | --- | --- | --- | --- | --- |
-| Array, unsorted | $O(n)$ | $O(n)$ | $O(1)$ amortised, at the end | $O(n)$ | sort first |
-| Array, sorted | $O(\log n)$, binary search | $O(1)$ | $O(n)$ moves | $O(n)$ moves | free |
-| Linked list | $O(n)$ | $O(n)$ | $O(1)$ at a spot already found | $O(1)$ at a spot already found | no |
-| Stack | top item only | no | $O(1)$, on top | $O(1)$, from the top | no |
-| Queue | front item only | no | $O(1)$, at the back | $O(1)$, from the front | no |
-| Hash table | $1 + \alpha/2$ expected | $O(n)$ | $O(1)$ expected | $O(1)$ expected | no |
-| Binary heap | $O(n)$ | $O(1)$ | $O(\log n)$ worst | $O(\log n)$ worst, smallest only | no |
-| Balanced search tree | $O(\log n)$ worst | $O(\log n)$ | $O(\log n)$ worst | $O(\log n)$ worst | free |
+| Array, unsorted | $`O(n)`$ | $`O(n)`$ | $`O(1)`$ amortised, at the end | $`O(n)`$ | sort first |
+| Array, sorted | $`O(\log n)`$, binary search | $`O(1)`$ | $`O(n)`$ moves | $`O(n)`$ moves | free |
+| Linked list | $`O(n)`$ | $`O(n)`$ | $`O(1)`$ at a spot already found | $`O(1)`$ at a spot already found | no |
+| Stack | top item only | no | $`O(1)`$, on top | $`O(1)`$, from the top | no |
+| Queue | front item only | no | $`O(1)`$, at the back | $`O(1)`$, from the front | no |
+| Hash table | $`1 + \alpha/2`$ expected | $`O(n)`$ | $`O(1)`$ expected | $`O(1)`$ expected | no |
+| Binary heap | $`O(n)`$ | $`O(1)`$ | $`O(\log n)`$ worst | $`O(\log n)`$ worst, smallest only | no |
+| Balanced search tree | $`O(\log n)`$ worst | $`O(\log n)`$ | $`O(\log n)`$ worst | $`O(\log n)`$ worst | free |
 
 Behind the hash-table and tree rows sit exact results. For a hash table whose buckets hold chains (short lists):
 
-$$C_{\text{hit}} = 1 + \frac{n-1}{2m} \approx 1 + \frac{\alpha}{2}, \qquad C_{\text{miss}} = \frac{n}{m} = \alpha$$
+```math
+C_{\text{hit}} = 1 + \frac{n-1}{2m} \approx 1 + \frac{\alpha}{2}, \qquad C_{\text{miss}} = \frac{n}{m} = \alpha
+```
 
-**Read it aloud:** with $n$ items spread evenly over $m$ buckets, a search for an item that is there compares about one plus half the load; a search for one that is not compares the whole load.
+**Read it aloud:** with $`n`$ items spread evenly over $`m`$ buckets, a search for an item that is there compares about one plus half the load; a search for one that is not compares the whole load.
 
 For a binary heap and for an AVL tree (named by its inventors' initials: a search tree whose two sides never differ in height by more than one):
 
-$$h_{\text{heap}} = \lfloor \log_2 n \rfloor, \qquad N(h) = N(h-1) + N(h-2) + 1$$
+```math
+h_{\text{heap}} = \lfloor \log_2 n \rfloor, \qquad N(h) = N(h-1) + N(h-2) + 1
+```
 
-The heap's height is only $\lfloor \log_2 n \rfloor$. The fewest items $N(h)$ an AVL tree of height $h$ can hold grows like the Fibonacci numbers, so its height stays a fixed multiple of $\log_2 n$.
+The heap's height is only $`\lfloor \log_2 n \rfloor`$. The fewest items $`N(h)`$ an AVL tree of height $`h`$ can hold grows like the Fibonacci numbers, so its height stays a fixed multiple of $`\log_2 n`$.
 
-This card introduces the **load factor** $\alpha$: items per bucket, $n/m$.
+This card introduces the **load factor** $`\alpha`$: items per bucket, $`n/m`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | items stored | 60,000 tickets; 480 sets | every cost grows, at the rate the table says |
-| $m$ | buckets in the hash table | 80,000 | searches get cheaper, memory gets dearer |
-| $\alpha$ | load factor, items per bucket, $n/m$ | 0.75 | chains lengthen and searches slow |
-| $C_{\text{hit}}$ | expected comparisons to find a real ticket | 1.3750 | — |
-| $C_{\text{miss}}$ | expected comparisons to reject a fake | 0.7500 | — |
-| $h$ | height: edges from the root down to the deepest item | 8 for the heap | each operation walks further |
-| $\lfloor x \rfloor$ | $x$ rounded down to a whole number | $\lfloor \log_2 480 \rfloor = 8$ | — |
-| $i$, $j$ | $i$: a position in the heap's array, from 0; $j$: the order a ticket was stored in | the children of 1 are 3 and 4 | — |
-| $N(h)$ | fewest items an AVL tree of height $h$ can hold | $N(11) = 376$ | — |
-| $O(g)$ | grows at most like $g$, up to a constant | $O(\log n)$ for the heap | — |
-| $F(k)$, $\varphi$ | the Fibonacci numbers 1, 1, 2, 3, 5, …; their growth factor, the golden ratio | $N(h) + 1 = F(h+3)$ | — |
+| $`n`$ | items stored | 60,000 tickets; 480 sets | every cost grows, at the rate the table says |
+| $`m`$ | buckets in the hash table | 80,000 | searches get cheaper, memory gets dearer |
+| $`\alpha`$ | load factor, items per bucket, $`n/m`$ | 0.75 | chains lengthen and searches slow |
+| $`C_{\text{hit}}`$ | expected comparisons to find a real ticket | 1.3750 | — |
+| $`C_{\text{miss}}`$ | expected comparisons to reject a fake | 0.7500 | — |
+| $`h`$ | height: edges from the root down to the deepest item | 8 for the heap | each operation walks further |
+| $`\lfloor x \rfloor`$ | $`x`$ rounded down to a whole number | $`\lfloor \log_2 480 \rfloor = 8`$ | — |
+| $`i`$, $`j`$ | $`i`$: a position in the heap's array, from 0; $`j`$: the order a ticket was stored in | the children of 1 are 3 and 4 | — |
+| $`N(h)`$ | fewest items an AVL tree of height $`h`$ can hold | $`N(11) = 376`$ | — |
+| $`O(g)`$ | grows at most like $`g`$, up to a constant | $`O(\log n)`$ for the heap | — |
+| $`F(k)`$, $`\varphi`$ | the Fibonacci numbers 1, 1, 2, 3, 5, …; their growth factor, the golden ratio | $`N(h) + 1 = F(h+3)`$ | — |
 
 ### When it holds
 
-- **The hash spreads keys evenly.** The formula for $C_{\text{hit}}$ assumes each code is equally likely to land in any bucket. A hash that adds up the characters crowds all 60,000 tickets into a few dozen buckets, and a real ticket then costs 1,388.8 comparisons.
-- **The table grows with its contents.** The $O(1)$ holds only while $\alpha$ stays bounded. Keep $m$ at 8,000 for 60,000 tickets and $\alpha = 7.5$: a fake costs 7.5045 comparisons. Real tables double $m$ when $\alpha$ passes a limit.
-- **The heap keeps its shape.** $\lfloor \log_2 n \rfloor$ needs every level full except the last, filled from the left.
-- **The search tree rebalances.** A plain search tree fed the sets in time order grows into a single chain 479 deep. The $O(\log n)$ row is for a tree that repairs itself after each insert.
+- **The hash spreads keys evenly.** The formula for $`C_{\text{hit}}`$ assumes each code is equally likely to land in any bucket. A hash that adds up the characters crowds all 60,000 tickets into a few dozen buckets, and a real ticket then costs 1,388.8 comparisons.
+- **The table grows with its contents.** The $`O(1)`$ holds only while $`\alpha`$ stays bounded. Keep $`m`$ at 8,000 for 60,000 tickets and $`\alpha = 7.5`$: a fake costs 7.5045 comparisons. Real tables double $`m`$ when $`\alpha`$ passes a limit.
+- **The heap keeps its shape.** $`\lfloor \log_2 n \rfloor`$ needs every level full except the last, filled from the left.
+- **The search tree rebalances.** A plain search tree fed the sets in time order grows into a single chain 479 deep. The $`O(\log n)`$ row is for a tree that repairs itself after each insert.
 - **Costs count comparisons, not seconds.** Memory layout matters on a real machine; an array, its items side by side, often beats a structure with the same count.
 
 ---
@@ -91,39 +95,39 @@ The weaker the promise, the cheaper it is to keep. A heap promises only that eac
 
 ### Step 1: arrays, linked lists, stacks and queues
 
-An **array** stores items side by side, so item $i$ is found by arithmetic in one step, but inserting in the middle shifts everything after it. A **linked list** stores each item with a pointer to the next: inserting after a known item is one pointer change, but reaching item $i$ means following $i$ pointers.
+An **array** stores items side by side, so item $`i`$ is found by arithmetic in one step, but inserting in the middle shifts everything after it. A **linked list** stores each item with a pointer to the next: inserting after a known item is one pointer change, but reaching item $`i`$ means following $`i`$ pointers.
 
-A **stack** (last in, first out, like the flight cases on a truck) and a **queue** (first in, first out, like the line at the gate) are arrays or lists used at their ends only. Giving up access to the middle is what makes every operation $O(1)$.
+A **stack** (last in, first out, like the flight cases on a truck) and a **queue** (first in, first out, like the line at the gate) are arrays or lists used at their ends only. Giving up access to the middle is what makes every operation $`O(1)`$.
 
-Why appends to an array that doubles when full are $O(1)$ amortised is on [Which case are you quoting? Worst, average and amortised cost](02-worst-case-average-case-and-amortised.md). Binary search (check the middle item, keep the half that can hold the target) on a sorted array, $\lfloor \log_2 n \rfloor + 1$ comparisons at worst, is on [Sorting and searching](05-sorting-and-searching.md): 16 for 60,000 tickets.
+Why appends to an array that doubles when full are $`O(1)`$ amortised is on [Which case are you quoting? Worst, average and amortised cost](02-worst-case-average-case-and-amortised.md). Binary search (check the middle item, keep the half that can hold the target) on a sorted array, $`\lfloor \log_2 n \rfloor + 1`$ comparisons at worst, is on [Sorting and searching](05-sorting-and-searching.md): 16 for 60,000 tickets.
 
 ### Step 2: a binary heap is a full tree that lives in an array
 
-The tree words come from [Rooted trees](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/02-rooted-and-binary-trees.md): root, parent, child, depth, height, and the count $2^{h+1} - 1$ for a perfect binary tree of height $h$.
+The tree words come from [Rooted trees](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/02-rooted-and-binary-trees.md): root, parent, child, depth, height, and the count $`2^{h+1} - 1`$ for a perfect binary tree of height $`h`$.
 
 A **binary heap** keeps two rules. **Shape:** every level is full except possibly the last, which fills from the left. **Order:** every parent is no larger than its children. The order rule means the smallest item is at the root.
 
-The shape rule fixes the height. Levels $0$ to $h-1$ are full, so they hold $2^h - 1$ items, and level $h$ holds at least one more. So $2^h \le n \le 2^{h+1} - 1$, which means $h = \lfloor \log_2 n \rfloor$. For 480 sets, $h = 8$.
+The shape rule fixes the height. Levels $`0`$ to $`h-1`$ are full, so they hold $`2^h - 1`$ items, and level $`h`$ holds at least one more. So $`2^h \le n \le 2^{h+1} - 1`$, which means $`h = \lfloor \log_2 n \rfloor`$. For 480 sets, $`h = 8`$.
 
-The shape rule also removes the pointers. Number the items level by level, left to right, from 0. Then the children of position $i$ are $2i+1$ and $2i+2$, and its parent is $\lfloor (i-1)/2 \rfloor$. The figure shows it: position 1 holds 24, and its children 36 and 72 sit at 3 and 4.
+The shape rule also removes the pointers. Number the items level by level, left to right, from 0. Then the children of position $`i`$ are $`2i+1`$ and $`2i+2`$, and its parent is $`\lfloor (i-1)/2 \rfloor`$. The figure shows it: position 1 holds 24, and its children 36 and 72 sit at 3 and 4.
 
-**Insert:** put the new item in the next free slot at the end of the array, then compare it with its parent and swap while it is smaller. One comparison per level climbed, so at most $h$.
+**Insert:** put the new item in the next free slot at the end of the array, then compare it with its parent and swap while it is smaller. One comparison per level climbed, so at most $`h`$.
 
-**Remove the smallest:** take the root. Move the last item into the root's place, then sift it down: compare the two children (one comparison), compare the smaller child with it (another), swap if the child is smaller. Two comparisons per level, so at most $2h$.
+**Remove the smallest:** take the root. Move the last item into the root's place, then sift it down: compare the two children (one comparison), compare the smaller child with it (another), swap if the child is smaller. Two comparisons per level, so at most $`2h`$.
 
-Each repair walks one path from root to leaf, at most $\lfloor \log_2 n \rfloor$ edges long. That is the whole reason the heap is fast.
+Each repair walks one path from root to leaf, at most $`\lfloor \log_2 n \rfloor`$ edges long. That is the whole reason the heap is fast.
 
 ### Step 3: a hash table is an array plus a function
 
-If ticket codes were the numbers 1 to 60,000, an array indexed by the number would find any ticket in one step. Real codes are long and random-looking so no one can guess one. A **hash function** turns any code into a big random-looking number; its remainder after dividing by $m$ picks a bucket. Codes in the same bucket form a **chain**, searched from the front.
+If ticket codes were the numbers 1 to 60,000, an array indexed by the number would find any ticket in one step. Real codes are long and random-looking so no one can guess one. A **hash function** turns any code into a big random-looking number; its remainder after dividing by $`m`$ picks a bucket. Codes in the same bucket form a **chain**, searched from the front.
 
-Now count. Assume each code lands in each bucket with chance $1/m$, independently.
+Now count. Assume each code lands in each bucket with chance $`1/m`$, independently.
 
-**A fake ticket** has to be compared against every code in its bucket. Each of the $n$ real codes is in that bucket with chance $1/m$. Adding up these chances gives the expected chain length: $n/m = \alpha$. For the gate, 0.7500.
+**A fake ticket** has to be compared against every code in its bucket. Each of the $`n`$ real codes is in that bucket with chance $`1/m`$. Adding up these chances gives the expected chain length: $`n/m = \alpha`$. For the gate, 0.7500.
 
-**A real ticket** joined the end of its chain when it was stored. The ticket stored $j$-th finds, on average, $(j-1)/m$ earlier tickets ahead of it in its chain, so finding it costs $1 + (j-1)/m$ comparisons. Average over $j = 1$ to $n$: the mean of $0, 1, \dots, n-1$ is $(n-1)/2$, which gives $C_{\text{hit}} = 1 + (n-1)/(2m)$. For the gate, $1 + 59{,}999/160{,}000 = 1.3750$.
+**A real ticket** joined the end of its chain when it was stored. The ticket stored $`j`$-th finds, on average, $`(j-1)/m`$ earlier tickets ahead of it in its chain, so finding it costs $`1 + (j-1)/m`$ comparisons. Average over $`j = 1`$ to $`n`$: the mean of $`0, 1, \dots, n-1`$ is $`(n-1)/2`$, which gives $`C_{\text{hit}} = 1 + (n-1)/(2m)`$. For the gate, $`1 + 59{,}999/160{,}000 = 1.3750`$.
 
-Both numbers depend only on the ratio $\alpha$: double the tickets and the buckets, and a search costs the same. That is "$O(1)$ expected", and it rests entirely on the even spread.
+Both numbers depend only on the ratio $`\alpha`$: double the tickets and the buckets, and a search costs the same. That is "$`O(1)`$ expected", and it rests entirely on the even spread.
 
 ### Step 4: a balanced search tree keeps order and stays short
 
@@ -133,14 +137,14 @@ Its cost is its height, which a plain search tree does not control. Fed the sets
 
 An **AVL tree** adds one rule: at every item, the heights of the left and right subtrees differ by at most one. When an insert breaks the rule, a **rotation** (lifting a child into its parent's place, a few pointer changes) repairs it, and one single or double rotation per insert is enough.
 
-The rule caps the height. Let $N(h)$ be the fewest items an AVL tree of height $h$ can hold. The thinnest such tree has a root, one subtree of height $h-1$ and, as thin as the rule allows, one of height $h-2$. So $N(h) = N(h-1) + N(h-2) + 1$, starting $N(0) = 1$, $N(1) = 2$: 1, 2, 4, 7, 12, 20, 33, 54, 88, 143, 232, 376. The next value is beyond 480, so no AVL tree on 480 sets is taller than 11.
+The rule caps the height. Let $`N(h)`$ be the fewest items an AVL tree of height $`h`$ can hold. The thinnest such tree has a root, one subtree of height $`h-1`$ and, as thin as the rule allows, one of height $`h-2`$. So $`N(h) = N(h-1) + N(h-2) + 1`$, starting $`N(0) = 1`$, $`N(1) = 2`$: 1, 2, 4, 7, 12, 20, 33, 54, 88, 143, 232, 376. The next value is beyond 480, so no AVL tree on 480 sets is taller than 11.
 
 <details>
 <summary>Why the Fibonacci numbers appear, and why that means logarithmic height</summary>
 
-Add 1 to both sides: $N(h) + 1 = (N(h-1) + 1) + (N(h-2) + 1)$. So $N(h) + 1$ obeys the Fibonacci rule, and with $N(0) + 1 = 2$ and $N(1) + 1 = 3$ it is the Fibonacci number $F(h+3)$, where $F(1) = F(2) = 1$. The code checks this for $h = 0$ to 29.
+Add 1 to both sides: $`N(h) + 1 = (N(h-1) + 1) + (N(h-2) + 1)`$. So $`N(h) + 1`$ obeys the Fibonacci rule, and with $`N(0) + 1 = 2`$ and $`N(1) + 1 = 3`$ it is the Fibonacci number $`F(h+3)`$, where $`F(1) = F(2) = 1`$. The code checks this for $`h = 0`$ to 29.
 
-Fibonacci numbers grow by a factor approaching the golden ratio $\varphi = (1 + \sqrt 5)/2$ each step. So $N(h)$, and with it any $n \ge N(h)$, grows at least like $\varphi^h$; taking logarithms, $h$ is at most a constant times $\log_2 n$. The constant is $1/\log_2 \varphi$, a little under one and a half. An AVL tree on 60,000 tickets therefore has height at most 21; binary search on a sorted array needs at most 16 comparisons.
+Fibonacci numbers grow by a factor approaching the golden ratio $`\varphi = (1 + \sqrt 5)/2`$ each step. So $`N(h)`$, and with it any $`n \ge N(h)`$, grows at least like $`\varphi^h`$; taking logarithms, $`h`$ is at most a constant times $`\log_2 n`$. The constant is $`1/\log_2 \varphi`$, a little under one and a half. An AVL tree on 60,000 tickets therefore has height at most 21; binary search on a sorted array needs at most 16 comparisons.
 
 </details>
 
@@ -158,7 +162,7 @@ The gate, one ticket at a time, then the stage desk over the whole weekend.
 | fake ticket, hash table | 60,000 ÷ 80,000 | 0.7500 |
 | real ticket, unsorted list | (60,000 + 1) ÷ 2 | 30,000.5 |
 | any ticket, sorted list, worst | halve 60,000 until nothing is left | 16 |
-| heap height for 480 sets | 480 lies between $2^8$ and $2^9$ | 8 |
+| heap height for 480 sets | 480 lies between $`2^8`$ and $`2^9`$ | 8 |
 | next set, unsorted list, all weekend | 479 + 478 + … + 1 = 480 × 479 ÷ 2 | 114,960 |
 | heap inserts, all 480, counted | at most 3,338 by the height bound | 1,011 |
 | heap removals, all 480, counted | at most 6,660 by the height bound | 6,215 |
@@ -191,7 +195,7 @@ Listing the questions first picks every structure the festival needs:
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Hash by adding up the code's characters | 1,388.8 comparisons per real ticket, 2,520.3 per fake; longest chain 3,848 | The sums of all 60,000 codes fall in a narrow range, so the codes crowd into a few dozen buckets |
-| Never grow the table: $m$ stays 8,000 | 4.7470 per real ticket, 7.5045 per fake | The load factor reached 7.5; the cost tracks $\alpha$, not $n$ |
+| Never grow the table: $`m`$ stays 8,000 | 4.7470 per real ticket, 7.5045 per fake | The load factor reached 7.5; the cost tracks $`\alpha`$, not $`n`$ |
 | Plain search tree, sets typed in time order | height 479, 240.50 comparisons on average | Sorted input builds a chain; the AVL tree on the same input has height 8, average 7.95 |
 | Plain list for "which set is next?" | 114,960 comparisons | Every call rescans what is left; the heap needs 7,226 |
 
@@ -211,7 +215,7 @@ The code writes out:
 
 It takes three roads:
 
-- the closed forms, exact formulas ($1 + (n-1)/(2m)$, $\alpha$, $n(n-1)/2$, $\lfloor \log_2 n \rfloor$, the Fibonacci identity);
+- the closed forms, exact formulas ($`1 + (n-1)/(2m)`$, $`\alpha`$, $`n(n-1)/2`$, $`\lfloor \log_2 n \rfloor`$, the Fibonacci identity);
 - a run that counts its own comparisons;
 - brute force, a scan for the smallest set that must call the sets in the same order as the heap.
 
@@ -599,15 +603,15 @@ The two outputs match line for line. The `figure,` line gives each heap item and
 
 ### Lean
 
-Lean proves the heap height, both hash-table costs and the AVL count for every $n$, $m$ and $h$, and checks the worked numbers.
+Lean proves the heap height, both hash-table costs and the AVL count for every $`n`$, $`m`$ and $`h`$, and checks the worked numbers.
 
-- Take a binary heap of $n \ge 1$ items in array positions 0 to $n-1$. Then every position reaches the root within $\lfloor \log_2 n \rfloor$ parent steps.
-- Take the same heap. Then the last position, $n-1$, needs all $\lfloor \log_2 n \rfloor$ steps, so the height is exactly $\lfloor \log_2 n \rfloor$.
-- Suppose each of $n \ge 1$ codes lands in each of $m \ge 1$ buckets with chance $1/m$, independently. Then a real ticket costs $C_{\text{hit}} = 1 + (n-1)/(2m)$ on average.
-- Take the same spread and any one bucket. Then its chain holds $n/m = \alpha$ codes on average, so a fake ticket costs $C_{\text{miss}} = \alpha$.
-- Take $N(h)$ as defined by the rule $N(h) = N(h-1) + N(h-2) + 1$, with $N(0) = 1$, $N(1) = 2$. Then $N(h) + 1 = F(h+3)$ for every $h$.
-- Lean also checks the worked numbers: $\lfloor \log_2 480 \rfloor = 8$, 16 binary-search comparisons, and the bounds 3,338 and 6,660.
-- It also checks 114,960 for the plain list, $N(0)$ to $N(11)$, and the AVL height caps 11 and 21.
+- Take a binary heap of $`n \ge 1`$ items in array positions 0 to $`n-1`$. Then every position reaches the root within $`\lfloor \log_2 n \rfloor`$ parent steps.
+- Take the same heap. Then the last position, $`n-1`$, needs all $`\lfloor \log_2 n \rfloor`$ steps, so the height is exactly $`\lfloor \log_2 n \rfloor`$.
+- Suppose each of $`n \ge 1`$ codes lands in each of $`m \ge 1`$ buckets with chance $`1/m`$, independently. Then a real ticket costs $`C_{\text{hit}} = 1 + (n-1)/(2m)`$ on average.
+- Take the same spread and any one bucket. Then its chain holds $`n/m = \alpha`$ codes on average, so a fake ticket costs $`C_{\text{miss}} = \alpha`$.
+- Take $`N(h)`$ as defined by the rule $`N(h) = N(h-1) + N(h-2) + 1`$, with $`N(0) = 1`$, $`N(1) = 2`$. Then $`N(h) + 1 = F(h+3)`$ for every $`h`$.
+- Lean also checks the worked numbers: $`\lfloor \log_2 480 \rfloor = 8`$, 16 binary-search comparisons, and the bounds 3,338 and 6,660.
+- It also checks 114,960 for the plain list, $`N(0)`$ to $`N(11)`$, and the AVL height caps 11 and 21.
 
 The counted runs, the 60,000 hashed tickets, the bad hash and the trees actually built are left to the Python and Rust checks.
 
@@ -827,7 +831,7 @@ example : avlMinSize 21 ≤ 60000 ∧ 60000 < avlMinSize 22 := by decide
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong.
-> - **Fewer buckets.** Set `M_B` to `60000`, so $\alpha = 1$. Guess the cost of a real ticket. The formula says 1.5000 and the run gives 1.5053; a fake now costs 1.0010. Every assert still passes, because the formula moves with $m$.
+> - **Fewer buckets.** Set `M_B` to `60000`, so $`\alpha = 1`$. Guess the cost of a real ticket. The formula says 1.5000 and the run gives 1.5053; a fake now costs 1.0010. Every assert still passes, because the formula moves with $`m`$.
 > - **Twice the sets.** Set `N_S` to `960`. The plain list's weekend cost quadruples to 460,320. The heap's only a little more than doubles, to 16,505. The AVL tree's height rises by one, to 9.
 > - **A different booking order.** Set the seed `state` to `7`. The heap's total moves only slightly, to 7,223, but the plain tree built in booking order grows from height 16 to 19.
 > - **Switch off the balancing.** Change `build(in_order, True)` to `False`. The "AVL" tree grows to height 479, and the fourth assert stops it.
@@ -841,7 +845,7 @@ example : avlMinSize 21 ≤ 60000 ∧ 60000 < avlMinSize 22 := by decide
 >
 > Asked "which set is next?", it must scan all of its buckets, which is the 114,960-comparison plain list again. The stage desk needs a heap. A desk that also needs "everything starting in the next two hours" needs a balanced tree.
 >
-> - **Trusting $O(1)$ without checking the hash.** Adding up characters crowds 60,000 codes into a few dozen buckets: 1,388.8 comparisons per real ticket, not 1.3730.
+> - **Trusting $`O(1)`$ without checking the hash.** Adding up characters crowds 60,000 codes into a few dozen buckets: 1,388.8 comparisons per real ticket, not 1.3730.
 > - **Forgetting to grow the table.** At 8,000 buckets a fake costs 7.5045 comparisons, against 0.7500 at 80,000.
 > - **Feeding sorted data to a plain search tree.** Typed in time order, it becomes a chain 479 deep.
 > - **Thinking a heap is sorted.** Only the root is guaranteed. Reading the array left to right gives 0, 24, 12, 36: not in order.
@@ -857,15 +861,15 @@ example : avlMinSize 21 ≤ 60000 ∧ 60000 < avlMinSize 22 := by decide
 - **Undo and the back button** are stacks; **print jobs and network packets** wait in queues.
 
 > **Say it back**
-> A data structure is a promise about where items sit, and the promise makes some questions cheap and every change a little dearer. A hash table finds a given key in about $1 + \alpha/2$ comparisons, but only if the hash spreads keys evenly and the table grows with them; it knows nothing about order. A binary heap keeps the smallest item on top of a full tree stored in an array, so inserting and removing cost at most $\lfloor \log_2 n \rfloor$ levels. A balanced search tree keeps full order at a guaranteed logarithmic height. At the festival, the gate hashes tickets and the stage desk runs a heap: 1.3730 comparisons a ticket and 7,226 for the whole weekend.
+> A data structure is a promise about where items sit, and the promise makes some questions cheap and every change a little dearer. A hash table finds a given key in about $`1 + \alpha/2`$ comparisons, but only if the hash spreads keys evenly and the table grows with them; it knows nothing about order. A binary heap keeps the smallest item on top of a full tree stored in an array, so inserting and removing cost at most $`\lfloor \log_2 n \rfloor`$ levels. A balanced search tree keeps full order at a guaranteed logarithmic height. At the festival, the gate hashes tickets and the stage desk runs a heap: 1.3730 comparisons a ticket and 7,226 for the whole weekend.
 
 ---
 
 ## What this builds on
 
-- [Which case are you quoting? Worst, average and amortised cost](02-worst-case-average-case-and-amortised.md): the three kinds of cost quoted in the table, and why a doubling array's appends are $O(1)$ on average over many.
+- [Which case are you quoting? Worst, average and amortised cost](02-worst-case-average-case-and-amortised.md): the three kinds of cost quoted in the table, and why a doubling array's appends are $`O(1)`$ on average over many.
 - [Sorting and searching](05-sorting-and-searching.md): binary search on a sorted array, the 16-comparison baseline every structure here is measured against.
-- [Rooted trees](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/02-rooted-and-binary-trees.md): root, depth, height and the $2^{h+1} - 1$ count that fixes a heap's height.
+- [Rooted trees](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/02-rooted-and-binary-trees.md): root, depth, height and the $`2^{h+1} - 1`$ count that fixes a heap's height.
 
 ## Where this goes next
 

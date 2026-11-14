@@ -38,44 +38,50 @@ Orange: the obvious fit, missing readings set to zero and the spectrum scaled up
 
 ## The formula
 
-Notation first. The 1000 readings are written as a sum of 1000 basis waves, each scaled to length 1: one constant, one alternating wave at 22,050 Hz, and a cosine and a sine for each of bins 1 to 499. The list of their weights is the spectrum $z$.
+Notation first. The 1000 readings are written as a sum of 1000 basis waves, each scaled to length 1: one constant, one alternating wave at 22,050 Hz, and a cosine and a sine for each of bins 1 to 499. The list of their weights is the spectrum $`z`$.
 
-Frequency bin $k$ owns a pair $z_k = (c_k, d_k)$, its cosine weight $c_k$ and sine weight $d_k$. Its **size** $\lVert z_k \rVert = \sqrt{c_k^2 + d_k^2}$ is the tone's amplitude times 22.36 (that is $\sqrt{N/2}$, from the scaling).
+Frequency bin $`k`$ owns a pair $`z_k = (c_k, d_k)`$, its cosine weight $`c_k`$ and sine weight $`d_k`$. Its **size** $`\lVert z_k \rVert = \sqrt{c_k^2 + d_k^2}`$ is the tone's amplitude times 22.36 (that is $`\sqrt{N/2}`$, from the scaling).
 
-Keeping $m$ readings picks $m$ rows of the basis. Stacked, they form the **sensing matrix** $A$, $m$ rows by $N$ columns. The kept readings are $y = A z$.
+Keeping $`m`$ readings picks $`m`$ rows of the basis. Stacked, they form the **sensing matrix** $`A`$, $`m`$ rows by $`N`$ columns. The kept readings are $`y = A z`$.
 
-Counting is the goal ($\#$ counts the members of a set):
+Counting is the goal ($`\#`$ counts the members of a set):
 
-$$\min_z \ \#\{k : z_k \neq 0\} \quad \text{subject to} \quad A z = y$$
+```math
+\min_z \ \#\{k : z_k \neq 0\} \quad \text{subject to} \quad A z = y
+```
 
-Summing sizes is what can be solved, and it is **basis pursuit** ($\arg\min_z$ names the $z$ that makes the sum least):
+Summing sizes is what can be solved, and it is **basis pursuit** ($`\arg\min_z`$ names the $`z`$ that makes the sum least):
 
-$$\hat z = \arg\min_z \ \sum_{k=0}^{N/2} \lVert z_k \rVert \quad \text{subject to} \quad A z = y$$
+```math
+\hat z = \arg\min_z \ \sum_{k=0}^{N/2} \lVert z_k \rVert \quad \text{subject to} \quad A z = y
+```
 
 **Read it aloud:** of all the spectra that reproduce the kept readings exactly, take the one whose frequency sizes add up to the least.
 
-The recovery theorem says when this works. If the spectrum has $s$ nonzero numbers and the $m$ reading times are chosen at random, then with high probability $\hat z = z$ once
+The recovery theorem says when this works. If the spectrum has $`s`$ nonzero numbers and the $`m`$ reading times are chosen at random, then with high probability $`\hat z = z`$ once
 
-$$m \ \ge\ C\, s \,\ln N.$$
+```math
+m \ \ge\ C\, s \,\ln N.
+```
 
 **Read it aloud:** the readings needed grow with the number of nonzero numbers, and only with the logarithm of the signal length.
 
-This is the form proved for a sparse spectrum read at random times. When each reading is instead a random mix of all 1000 samples, the $\ln N$ improves to $\ln(N/s)$ (the overview by Candès and Wakin in the sources).
+This is the form proved for a sparse spectrum read at random times. When each reading is instead a random mix of all 1000 samples, the $`\ln N`$ improves to $`\ln(N/s)`$ (the overview by Candès and Wakin in the sources).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f_s$ | sampling rate, readings per second | 44,100 Hz | finer time, same 44.1 Hz grid only if $N$ grows too |
-| $N$ | readings in the full window; also the number of basis waves | 1000 (22.68 ms) | more frequencies to search; $m$ grows only as $\ln N$ |
-| $m$ | readings kept, at random times | 40 (4%) | recovery gets safer: exact in 5 of 5 draws from 35 up |
-| $k$ | frequency bin; bin $k$ is $k \times 44.1$ Hz | 5, 15, 80 | — |
-| $z$, $z_k = (c_k, d_k)$, $\hat z$ | the spectrum; bin $k$'s pair of cosine and sine weights; $\hat z$ is the fit basis pursuit picks | 3 of 501 bins nonzero | — |
-| $\lVert z_k \rVert$ | size of bin $k$: amplitude times 22.36 | 100, 60, 40 mV times 22.36 | — |
-| $s$, $S$ | nonzero numbers in $z$ (each tone gives a cosine and a sine weight); $S$ is the set of chord bins | 6 | more readings needed |
-| $y$ | the kept readings, in mV | 40 numbers | — |
-| $A$, $h$ | sensing matrix: the basis waves at the kept times; $h$ is a change to the spectrum with $Ah = 0$, invisible in the readings | 40 by 1000 | — |
-| $C$ | a constant the theorem does not pin down | under 1 here: 30 to 35 needed, against $6 \ln 1000$ = 41.4 | — |
-| $\tau$ | shrink per pass in the solver (Step 4) | 100 | slower or faster solving, same answer |
-| $v$, $g_k$ | the certificate: one weight per kept reading (Step 3); $g_k$ is bin $k$'s pair in $g = A^\top v$ | largest match off the chord 0.8982 | — |
+| $`f_s`$ | sampling rate, readings per second | 44,100 Hz | finer time, same 44.1 Hz grid only if $`N`$ grows too |
+| $`N`$ | readings in the full window; also the number of basis waves | 1000 (22.68 ms) | more frequencies to search; $`m`$ grows only as $`\ln N`$ |
+| $`m`$ | readings kept, at random times | 40 (4%) | recovery gets safer: exact in 5 of 5 draws from 35 up |
+| $`k`$ | frequency bin; bin $`k`$ is $`k \times 44.1`$ Hz | 5, 15, 80 | — |
+| $`z`$, $`z_k = (c_k, d_k)`$, $`\hat z`$ | the spectrum; bin $`k`$'s pair of cosine and sine weights; $`\hat z`$ is the fit basis pursuit picks | 3 of 501 bins nonzero | — |
+| $`\lVert z_k \rVert`$ | size of bin $`k`$: amplitude times 22.36 | 100, 60, 40 mV times 22.36 | — |
+| $`s`$, $`S`$ | nonzero numbers in $`z`$ (each tone gives a cosine and a sine weight); $`S`$ is the set of chord bins | 6 | more readings needed |
+| $`y`$ | the kept readings, in mV | 40 numbers | — |
+| $`A`$, $`h`$ | sensing matrix: the basis waves at the kept times; $`h`$ is a change to the spectrum with $`Ah = 0`$, invisible in the readings | 40 by 1000 | — |
+| $`C`$ | a constant the theorem does not pin down | under 1 here: 30 to 35 needed, against $`6 \ln 1000`$ = 41.4 | — |
+| $`\tau`$ | shrink per pass in the solver (Step 4) | 100 | slower or faster solving, same answer |
+| $`v`$, $`g_k`$ | the certificate: one weight per kept reading (Step 3); $`g_k`$ is bin $`k`$'s pair in $`g = A^\top v`$ | largest match off the chord 0.8982 | — |
 
 ### When it holds
 
@@ -83,7 +89,7 @@ This is the form proved for a sparse spectrum read at random times. When each re
 - **Each basis wave spreads across every reading time** (incoherence). Sines do. A signal of three short clicks is sparse in the time basis instead, and each click shows in one reading only. Forty random readings out of 1000 catch all three with chance 5.9e-05; a click that falls between readings cannot be rebuilt by any method.
 - **The reading times are random, not even.** Every 25th reading is regular sampling at 1764 Hz. Then each tone has aliases (false frequencies with identical readings), and no method can choose between them.
 - **There are enough readings.** With 20 random readings the fit lands on 16 bins instead of 3 and misses by 33.22 mV rms.
-- **The readings are clean, or the fit is relaxed.** The exact fit $Az = y$ trusts every reading. Add 1 mV of noise and it fits the noise too: false peaks of up to 0.60 mV, an rms error of 1.76 mV. A noisy version relaxes the fit; that is the lasso of [Regularisation](../../09-Probability%20and%20statistics/09-Regression/06-ridge-and-lasso.md).
+- **The readings are clean, or the fit is relaxed.** The exact fit $`Az = y`$ trusts every reading. Add 1 mV of noise and it fits the noise too: false peaks of up to 0.60 mV, an rms error of 1.76 mV. A noisy version relaxes the fit; that is the lasso of [Regularisation](../../09-Probability%20and%20statistics/09-Regression/06-ridge-and-lasso.md).
 
 ---
 
@@ -95,7 +101,7 @@ Forty equations cannot pin 1000 unknowns. A huge family of spectra fits the 40 r
 
 ### Step 1: counting gives a unique answer, but cannot be searched
 
-Suppose two different spectra, each with at most $s$ nonzero numbers, fit the same readings. Their difference $h$ has at most $2s$ nonzero numbers, and $Ah = 0$. If every set of $2s$ columns of $A$ is independent, no such $h$ exists. So with $2s = 12 \le m$ and columns in general position, the sparsest fit is the true one.
+Suppose two different spectra, each with at most $`s`$ nonzero numbers, fit the same readings. Their difference $`h`$ has at most $`2s`$ nonzero numbers, and $`Ah = 0`$. If every set of $`2s`$ columns of $`A`$ is independent, no such $`h`$ exists. So with $`2s = 12 \le m`$ and columns in general position, the sparsest fit is the true one.
 
 Finding it is another matter. The only sure way is to try every choice of bins. Three bins out of the 500 with a nonzero frequency is 20,708,500 choices, each a small least-squares fit. Ten bins out of 500 is 245,810,588,801,891,098,700. Counting does not scale.
 
@@ -109,46 +115,46 @@ A round ball, the fit of least energy (smallest sum of squares), touches anywher
 
 ### Step 3: a certificate proves the answer is the smallest
 
-How do we know the sum-of-sizes fit is the chord and not some other spectrum with a smaller sum? A **certificate** settles it. Find weights $v$, one per kept reading, such that the correlation $A^\top v$, read bin by bin, is
+How do we know the sum-of-sizes fit is the chord and not some other spectrum with a smaller sum? A **certificate** settles it. Find weights $`v`$, one per kept reading, such that the correlation $`A^\top v`$, read bin by bin, is
 
-- on each chord bin, exactly the unit direction of that bin's pair: $z_k / \lVert z_k \rVert$;
+- on each chord bin, exactly the unit direction of that bin's pair: $`z_k / \lVert z_k \rVert`$;
 - on every other bin, smaller than 1 in size.
 
-If such a $v$ exists, every other fit has a strictly larger summed size. The checks build one and find the largest match off the chord at **0.8982**: below 1, so the chord is proved to be the unique smallest fit. They also confirm the two facts the proof below leans on: the chord bins match their unit directions exactly, and the chord's 6 columns are independent.
+If such a $`v`$ exists, every other fit has a strictly larger summed size. The checks build one and find the largest match off the chord at **0.8982**: below 1, so the chord is proved to be the unique smallest fit. They also confirm the two facts the proof below leans on: the chord bins match their unit directions exactly, and the chord's 6 columns are independent.
 
 <details>
 <summary>Detailed proof: why the certificate rules out every other fit</summary>
 
-Let $z$ be the chord, with nonzero bins $S$, and let $z + h$ be any other fit, so $Ah = 0$. Write $g = A^\top v$ and $g_k$ for its pair at bin $k$, and $\langle a, b \rangle$ for the dot product of $a$ and $b$.
+Let $`z`$ be the chord, with nonzero bins $`S`$, and let $`z + h`$ be any other fit, so $`Ah = 0`$. Write $`g = A^\top v`$ and $`g_k`$ for its pair at bin $`k`$, and $`\langle a, b \rangle`$ for the dot product of $`a`$ and $`b`$.
 
-On a chord bin, $\lVert z_k + h_k \rVert \ge \langle z_k + h_k, \, g_k \rangle = \lVert z_k \rVert + \langle h_k, g_k \rangle$, because $g_k$ is a unit vector pointing along $z_k$. Off the chord, $\lVert h_k \rVert \ge \langle h_k, g_k \rangle + (1 - \lVert g_k \rVert)\lVert h_k \rVert$, by the Cauchy–Schwarz inequality.
+On a chord bin, $`\lVert z_k + h_k \rVert \ge \langle z_k + h_k, \, g_k \rangle = \lVert z_k \rVert + \langle h_k, g_k \rangle`$, because $`g_k`$ is a unit vector pointing along $`z_k`$. Off the chord, $`\lVert h_k \rVert \ge \langle h_k, g_k \rangle + (1 - \lVert g_k \rVert)\lVert h_k \rVert`$, by the Cauchy–Schwarz inequality.
 
 Add over all bins:
 
-$$\sum_k \lVert z_k + h_k \rVert \ \ge\ \sum_{k} \lVert z_k \rVert + \langle h, A^\top v \rangle + \sum_{k \notin S} (1 - \lVert g_k \rVert)\lVert h_k \rVert.$$
+$`\displaystyle \sum_k \lVert z_k + h_k \rVert \ \ge\ \sum_{k} \lVert z_k \rVert + \langle h, A^\top v \rangle + \sum_{k \notin S} (1 - \lVert g_k \rVert)\lVert h_k \rVert.`$
 
-The middle term is $\langle Ah, v \rangle = 0$. The last term is positive unless $h$ is zero off the chord. If it is, $h$ lives on the chord's 6 columns with $Ah = 0$, and those columns are independent, so $h = 0$. Every other fit costs strictly more.
+The middle term is $`\langle Ah, v \rangle = 0`$. The last term is positive unless $`h`$ is zero off the chord. If it is, $`h`$ lives on the chord's 6 columns with $`Ah = 0`$, and those columns are independent, so $`h = 0`$. Every other fit costs strictly more.
 
 </details>
 
-The recovery theorem is, at heart, a promise that random reading times make such a certificate exist with high probability. The 2006 proof builds the certificate directly from the random times. Later proofs show that one set of readings works for every sparse spectrum at once. They go through the **restricted isometry property**: every small set of columns of $A$ behaves almost like perpendicular unit vectors (the Candès–Wakin overview). Both proofs are long, and this card leaves them to the sources.
+The recovery theorem is, at heart, a promise that random reading times make such a certificate exist with high probability. The 2006 proof builds the certificate directly from the random times. Later proofs show that one set of readings works for every sparse spectrum at once. They go through the **restricted isometry property**: every small set of columns of $`A`$ behaves almost like perpendicular unit vectors (the Candès–Wakin overview). Both proofs are long, and this card leaves them to the sources.
 
 ### Step 4: solve it by alternating two moves
 
 The checks find the sum-of-sizes fit with two simple moves, repeated until the answer fits every reading and has stopped moving (858 passes for the chord):
 
-1. **Shrink.** Pull every bin's pair toward zero by $\tau$, and stop at zero. This is the soft-threshold of the lasso, applied to each pair's length.
-2. **Snap.** Move to the nearest spectrum that fits the 40 readings exactly. The rows of $A$ are rows of a basis whose rows are perpendicular unit vectors, so $AA^\top$ is the identity and the snap is one line: subtract $A^\top(Az - y)$.
+1. **Shrink.** Pull every bin's pair toward zero by $`\tau`$, and stop at zero. This is the soft-threshold of the lasso, applied to each pair's length.
+2. **Snap.** Move to the nearest spectrum that fits the 40 readings exactly. The rows of $`A`$ are rows of a basis whose rows are perpendicular unit vectors, so $`AA^\top`$ is the identity and the snap is one line: subtract $`A^\top(Az - y)`$.
 
-A running correction, carried between passes, keeps the pair from settling on a compromise; the full recipe is the **alternating direction method of multipliers** (ADMM, from Boyd and colleagues in the sources). The correction, divided by $\tau$, is also the raw material for the certificate of Step 3.
+A running correction, carried between passes, keeps the pair from settling on a compromise; the full recipe is the **alternating direction method of multipliers** (ADMM, from Boyd and colleagues in the sources). The correction, divided by $`\tau`$, is also the raw material for the certificate of Step 3.
 
-Each run stops only when no entry moves by more than $10^{-6}$ in a pass and the answer fits the readings; the checks assert that every reported fit does. Other solvers, such as proximal gradient, take the same shrink as their basic step.
+Each run stops only when no entry moves by more than $`10^{-6}`$ in a pass and the answer fits the readings; the checks assert that every reported fit does. Other solvers, such as proximal gradient, take the same shrink as their basic step.
 
 ### Step 5: why random times
 
 Each basis wave is spread over the whole window, so every reading sees a little of every frequency. What can go wrong is a pattern in the reading times that makes two frequencies look the same. Evenly spaced readings are exactly that pattern: aliasing. Random times have no pattern, so no pair of frequencies can line up on all of them at once. That is the **incoherence** behind the theorem.
 
-How many readings are enough? The rule $s \ln N$ gives $6 \ln 1000 = 41.4$. The checks redraw the reading times five times for each $m$:
+How many readings are enough? The rule $`s \ln N`$ gives $`6 \ln 1000 = 41.4`$. The checks redraw the reading times five times for each $`m`$:
 
 ```
 10 readings  ▏                                         0 of 5 proved exact
@@ -161,7 +167,7 @@ How many readings are enough? The rule $s \ln N$ gives $6 \ln 1000 = 41.4$. The 
 
 Each draw is settled by a proof, not by eye. "Proved exact" means the certificate of Step 3, built from the solver's running correction, comes out below 1. The other draws are proved to fail: the solver finds a fit to the readings whose summed size is smaller than the chord's.
 
-The change from failure to success happens between 20 and 35 readings, a little below the rule's 41.4, so $C$ is a little under 1 for this example. Theorems with proofs need a larger $C$ to be safe for every signal.
+The change from failure to success happens between 20 and 35 readings, a little below the rule's 41.4, so $`C`$ is a little under 1 for this example. Theorems with proofs need a larger $`C`$ to be safe for every signal.
 
 ---
 
@@ -174,9 +180,9 @@ The change from failure to success happens between 20 and 35 readings, a little 
 | the three tones | 5 × 44.1, 15 × 44.1, 80 × 44.1 | 220.5, 661.5, 3528.0 Hz |
 | even sampling for the top tone | 2 × 3528; 2 × 80 readings in the window | more than 7056 per second; more than 160 readings |
 | readings kept | 40 / 1000 | 4% |
-| size scale per mV | $\sqrt{1000/2}$ | 22.36 |
+| size scale per mV | $`\sqrt{1000/2}`$ | 22.36 |
 | summed size of the chord, in mV | 100 + 60 + 40 | 200.00 |
-| root-sum-square size of the chord, in mV | $\sqrt{100^2 + 60^2 + 40^2}$ | 123.29 |
+| root-sum-square size of the chord, in mV | $`\sqrt{100^2 + 60^2 + 40^2}`$ | 123.29 |
 | fewest readings for a unique sparsest fit | 2 × 6 | 12 |
 | rule of thumb | 6 × ln 1000 | 41.4 |
 | the swap in miniature: one reading says first + 2 × second = 2 | least energy: (first, second) = 2 × (1, 2) / 5 | 0.4, 0.8; summed size 1.2 |
@@ -205,7 +211,7 @@ The scripts build the chord, draw 40 reading times with a SplitMix64 random gene
 3. Road 3 is **greedy matching** (orthogonal matching pursuit), a different method: pick the bin that best matches what is still unexplained, refit by least squares, repeat.
 4. Road 4 is the certificate of Step 3, which proves the chord is the smallest fit.
 
-The scripts then reproduce every wrong answer above, the noisy and real-tuning runs, and the sweep over $m$. In the sweep, each draw is settled by a proof: a certificate below 1, or a fit to the readings smaller than the chord. The Python runs in under a minute.
+The scripts then reproduce every wrong answer above, the noisy and real-tuning runs, and the sweep over $`m`$. In the sweep, each draw is settled by a proof: a certificate below 1, or a fit to the readings smaller than the chord. The Python runs in under a minute.
 
 ### Python
 
@@ -599,8 +605,8 @@ The outputs agree line for line. The full DFT, the sum-of-sizes fit and greedy m
 
 Lean proves Step 3's certificate and Step 1's counting fact for any sensing matrix, proves the one-reading miniature, and checks the worked numbers.
 
-- Suppose $A^\top v$ is the unit direction on each nonzero bin of $z$, under 1 in size elsewhere, and those bins' columns are independent. Then every other spectrum that fits the same readings has a strictly larger summed size.
-- Suppose any $2s$ or fewer columns of $A$ are independent, and two spectra with at most $s$ nonzero numbers fit the same readings. Then the two spectra are equal.
+- Suppose $`A^\top v`$ is the unit direction on each nonzero bin of $`z`$, under 1 in size elsewhere, and those bins' columns are independent. Then every other spectrum that fits the same readings has a strictly larger summed size.
+- Suppose any $`2s`$ or fewer columns of $`A`$ are independent, and two spectra with at most $`s`$ nonzero numbers fit the same readings. Then the two spectra are equal.
 - Take one reading, first + 2 × second = 2. Then the least energy is 0.8, reached only at first = 0.4, second = 0.8.
 - Take the same reading. Then the least summed size is 1, reached only at the corner first = 0, second = 1.
 - The worked numbers also check: 501 frequencies, the 44.1 Hz spacing, 160 readings, 1764 Hz, 200 mV, and 20,708,500 choices of three bins.
@@ -895,13 +901,13 @@ example : (2 / 5 : ℚ) + 2 * (4 / 5) = 2 ∧ (2 / 5 : ℚ) + 4 / 5 = 6 / 5 ∧
 ## Where you meet it in real life
 
 - **MRI scanners.** A scanner measures an image's spatial frequencies one line at a time, and each line costs scan time. Medical images are close to sparse after a wavelet transform, so scanners measure a random subset of lines and rebuild by a summed-size fit, cutting the time a patient lies still. A wavelet transform rewrites an image as a coarse picture plus the detail at every scale ([Wavelets](08-wavelets-and-multiresolution.md)).
-- **Single-pixel cameras.** One light sensor reads the scene through a series of random masks. Each reading is one row of $A$; a few thousand readings rebuild an image of many more pixels.
+- **Single-pixel cameras.** One light sensor reads the scene through a series of random masks. Each reading is one row of $`A`$; a few thousand readings rebuild an image of many more pixels.
 - **Radio astronomy.** An array of dishes measures only some of the sky's spatial frequencies. A sky of a few bright sources is sparse, and the same idea fills in the gaps.
 - **Wideband radio receivers.** A receiver watching a band of many megahertz in which only a few channels are busy can sample far below the band's Nyquist rate at random times.
 - **Seismic surveys.** Geophones cannot be placed everywhere. Randomly placed ones, plus a sparse model of the layers underground, rebuild the full survey.
 
 > **Say it back**
-> A signal with only a few nonzero entries in a known basis can be rebuilt from far fewer readings than the sampling theorem asks for. Of all the spectra that fit the readings, the right one is the sparsest. Counting cannot be searched, so take the fit with the smallest summed size instead. Its corners make it land on sparse answers, and a certificate can prove when it is exact. Random reading times stop aliases from lining up, and about $s \ln N$ of them are enough: here 40 random readings out of 1000 rebuild a 220.5, 661.5 and 3528 Hz chord exactly.
+> A signal with only a few nonzero entries in a known basis can be rebuilt from far fewer readings than the sampling theorem asks for. Of all the spectra that fit the readings, the right one is the sparsest. Counting cannot be searched, so take the fit with the smallest summed size instead. Its corners make it land on sparse answers, and a certificate can prove when it is exact. Random reading times stop aliases from lining up, and about $`s \ln N`$ of them are enough: here 40 random readings out of 1000 rebuild a 220.5, 661.5 and 3528 Hz chord exactly.
 
 ---
 
@@ -910,7 +916,7 @@ example : (2 / 5 : ℚ) + 2 * (4 / 5) = 2 ∧ (2 / 5 : ℚ) + 4 / 5 = 6 / 5 ∧
 - [The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md): the 44.1 Hz grid, the cosine-and-sine basis, and road 1 of the checks.
 - [Wiener and LMS](07-adaptive-and-optimal-filters.md): least-squares fitting of signals, used by greedy matching to refit its chosen bins.
 - [Regularisation](../../09-Probability%20and%20statistics/09-Regression/06-ridge-and-lasso.md): the sum-of-sizes charge and the soft-threshold, which this card applies to each frequency's pair and uses as the shrink move.
-- [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): stretch factors of a matrix; the restricted isometry property says every small set of columns of $A$ has stretch factors close to 1.
+- [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): stretch factors of a matrix; the restricted isometry property says every small set of columns of $`A`$ has stretch factors close to 1.
 
 ## Where this goes next
 
@@ -924,8 +930,8 @@ This card leaves open what to do when the signal is sparse in no fixed basis, as
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Candès, Emmanuel J., Justin Romberg, and Terence Tao. "Robust uncertainty principles: exact signal reconstruction from highly incomplete frequency information." *IEEE Transactions on Information Theory* 52, no. 2 (2006): 489–509. [doi:10.1109/TIT.2005.862083](https://doi.org/10.1109/TIT.2005.862083). The recovery theorem, $m \ge C\,s\ln N$, with its certificate built directly; it is stated for a signal with few nonzero samples seen at random frequencies, this card's setting with time and frequency swapped.
+- Candès, Emmanuel J., Justin Romberg, and Terence Tao. "Robust uncertainty principles: exact signal reconstruction from highly incomplete frequency information." *IEEE Transactions on Information Theory* 52, no. 2 (2006): 489–509. [doi:10.1109/TIT.2005.862083](https://doi.org/10.1109/TIT.2005.862083). The recovery theorem, $`m \ge C\,s\ln N`$, with its certificate built directly; it is stated for a signal with few nonzero samples seen at random frequencies, this card's setting with time and frequency swapped.
 - Donoho, David L. "Compressed sensing." *IEEE Transactions on Information Theory* 52, no. 4 (2006): 1289–1306. [doi:10.1109/TIT.2006.871582](https://doi.org/10.1109/TIT.2006.871582). The general theory, and the case for summing sizes in place of counting.
-- Candès, Emmanuel J., and Michael B. Wakin. "An introduction to compressive sampling." *IEEE Signal Processing Magazine* 25, no. 2 (2008): 21–30. [doi:10.1109/MSP.2007.914731](https://doi.org/10.1109/MSP.2007.914731). A readable overview: incoherence, the restricted isometry property, the $s\ln(N/s)$ rate for fully random measurements, and applications.
+- Candès, Emmanuel J., and Michael B. Wakin. "An introduction to compressive sampling." *IEEE Signal Processing Magazine* 25, no. 2 (2008): 21–30. [doi:10.1109/MSP.2007.914731](https://doi.org/10.1109/MSP.2007.914731). A readable overview: incoherence, the restricted isometry property, the $`s\ln(N/s)`$ rate for fully random measurements, and applications.
 - Tropp, Joel A., and Anna C. Gilbert. "Signal recovery from random measurements via orthogonal matching pursuit." *IEEE Transactions on Information Theory* 53, no. 12 (2007): 4655–4666. [doi:10.1109/TIT.2007.909108](https://doi.org/10.1109/TIT.2007.909108). The greedy method of road 3.
 - Boyd, Stephen, et al. "Distributed optimization and statistical learning via the alternating direction method of multipliers." *Foundations and Trends in Machine Learning* 3, no. 1 (2011): 1–122. [doi:10.1561/2200000016](https://doi.org/10.1561/2200000016). The shrink-and-snap solver of road 2, with basis pursuit as a worked case.

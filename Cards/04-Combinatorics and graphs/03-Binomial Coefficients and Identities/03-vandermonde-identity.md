@@ -38,22 +38,24 @@ There is no branch for a band with no guitarist: five seats cannot be filled fro
 
 C(n, k) counts the ways to choose k items from n when order is ignored, read "n choose k"; it is 0 whenever k is below 0 or above n, a count of something impossible ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). The tall Σ is the instruction to add, with the letter that changes and its first value below, its last value above ([The binomial theorem](02-binomial-theorem.md)).
 
-$$C(m+n,\ r) \;=\; \sum_{k=0}^{r} C(m,\ k)\; C(n,\ r-k)$$
+```math
+C(m+n,\ r) \;=\; \sum_{k=0}^{r} C(m,\ k)\; C(n,\ r-k)
+```
 
 **Read it aloud:** for each number k that could come from the first group, multiply the ways to pick those k by the ways to finish from the second, then add.
 
-Here $m$ is 6 guitarists, $n$ is 4 drummers, $r$ is 5 seats, and the term at $k$ = 0 is C(6, 0) × C(4, 5) = 1 × 0 = 0 — the missing branch on the picture, doing its job quietly.
+Here $`m`$ is 6 guitarists, $`n`$ is 4 drummers, $`r`$ is 5 seats, and the term at $`k`$ = 0 is C(6, 0) × C(4, 5) = 1 × 0 = 0 — the missing branch on the picture, doing its job quietly.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $m$ | size of the first group | 6 guitarists | bigger terms |
-| $n$ | size of the second group | 4 drummers | bigger terms |
-| $r$ | how many are chosen in all | 5 seats | climbs to mid-row, then falls |
-| $k$ | how many of the $r$ come from the first group | 0 to 5 | picks out a different term |
-| $C(m,k)$ | ways to choose those $k$ | C(6,3) = 20 | — |
-| $C(n,r-k)$ | ways to fill the rest | C(4,2) = 6 | — |
-| $C(m+n,r)$ | ways to choose $r$ from the pool | C(10,5) = 252 | — |
-| $\sum_{k=0}^{r}$ | add the term over every $k$ | 0+6+60+120+60+6 | — |
+| $`m`$ | size of the first group | 6 guitarists | bigger terms |
+| $`n`$ | size of the second group | 4 drummers | bigger terms |
+| $`r`$ | how many are chosen in all | 5 seats | climbs to mid-row, then falls |
+| $`k`$ | how many of the $`r`$ come from the first group | 0 to 5 | picks out a different term |
+| $`C(m,k)`$ | ways to choose those $`k`$ | C(6,3) = 20 | — |
+| $`C(n,r-k)`$ | ways to fill the rest | C(4,2) = 6 | — |
+| $`C(m+n,r)`$ | ways to choose $`r`$ from the pool | C(10,5) = 252 | — |
+| $`\sum_{k=0}^{r}`$ | add the term over every $`k`$ | 0+6+60+120+60+6 | — |
 
 ### When it holds
 
@@ -72,24 +74,24 @@ Pick up any of the 252 bands and count its guitarists. The answer is one number 
 
 ### Step 1: size one pile
 
-Take the pile with exactly 3 guitarists. Building one is two choices in a row: which 3 of the 6 guitarists play, C(6, 3) = 20 ways, then which 2 of the 4 drummers fill the seats left over, C(4, 2) = 6 ways. Any trio goes with any drummer pair, each pairing a different band, so the pile holds 20 × 6 = 120. In letters, the pile labelled $k$ holds C($m$, $k$) × C($n$, $r-k$) bands.
+Take the pile with exactly 3 guitarists. Building one is two choices in a row: which 3 of the 6 guitarists play, C(6, 3) = 20 ways, then which 2 of the 4 drummers fill the seats left over, C(4, 2) = 6 ways. Any trio goes with any drummer pair, each pairing a different band, so the pile holds 20 × 6 = 120. In letters, the pile labelled $`k`$ holds C($`m`$, $`k`$) × C($`n`$, $`r-k`$) bands.
 
 ### Step 2: add the piles
 
-The piles cannot overlap, since a band has one guitar count, and nothing escapes them, since every band has one. So the pile sizes add to the total — which is what the pooled count C($m+n$, $r$) measures. That is the identity.
+The piles cannot overlap, since a band has one guitar count, and nothing escapes them, since every band has one. So the pile sizes add to the total — which is what the pooled count C($`m+n`$, $`r`$) measures. That is the identity.
 
 ### Step 3: the zero convention closes the ends
 
-Let $k$ run from 0 to $r$ and an end term can look wrong: there is no such thing as 5 drummers chosen from 4. Read that as a count of zero and the term is 1 × 0 = 0, which is right — there are no bands without a guitarist. One formula then covers every pool, with no special cases.
+Let $`k`$ run from 0 to $`r`$ and an end term can look wrong: there is no such thing as 5 drummers chosen from 4. Read that as a count of zero and the term is 1 × 0 = 0, which is right — there are no bands without a guitarist. One formula then covers every pool, with no special cases.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let A and B share no member, A holding $m$ people and B holding $n$. A band is a set S of $r$ people from the two pooled: C($m+n$, $r$) of them.
+Let A and B share no member, A holding $`m`$ people and B holding $`n`$. A band is a set S of $`r`$ people from the two pooled: C($`m+n`$, $`r`$) of them.
 
-Every S splits into the part inside A and the part inside B. Those share no one and together hold all of S, so their sizes add to $r$. Write $k$ for the size of the part inside A; the other has size $r-k$.
+Every S splits into the part inside A and the part inside B. Those share no one and together hold all of S, so their sizes add to $`r`$. Write $`k`$ for the size of the part inside A; the other has size $`r-k`$.
 
-The bands with a given $k$ are exactly the pairs — a set of $k$ from A, a set of $r-k$ from B. Each pair pools to one band and each band gives back one pair, so that pile holds C($m$, $k$) × C($n$, $r-k$) bands. Different $k$ give different bands and every band has a $k$, so adding over $k$ counts each band once. Terms where $k$ exceeds $m$, or $r-k$ exceeds $n$, count empty collections and contribute 0.
+The bands with a given $`k`$ are exactly the pairs — a set of $`k`$ from A, a set of $`r-k`$ from B. Each pair pools to one band and each band gives back one pair, so that pile holds C($`m`$, $`k`$) × C($`n`$, $`r-k`$) bands. Different $`k`$ give different bands and every band has a $`k`$, so adding over $`k`$ counts each band once. Terms where $`k`$ exceeds $`m`$, or $`r-k`$ exceeds $`n`$, count empty collections and contribute 0.
 
 </details>
 
@@ -97,15 +99,17 @@ The bands with a given $k$ are exactly the pairs — a set of $k$ from A, a set 
 
 Change the pool: 5 guitarists and 5 drummers, five seats. The split gives 1, 25, 100, 100, 25, 1 — adding again to 252, since the pool is still ten players.
 
-The term at $k$ is C(5, $k$) × C(5, 5−$k$). Choosing which 3 of 5 drummers play is choosing which 2 sit out, so C(5, 5−$k$) = C(5, $k$) and every term is a number multiplied by itself: 1, 5, 10, 10, 5 and 1, squared.
+The term at $`k`$ is C(5, $`k`$) × C(5, 5−$`k`$). Choosing which 3 of 5 drummers play is choosing which 2 sit out, so C(5, 5−$`k`$) = C(5, $`k`$) and every term is a number multiplied by itself: 1, 5, 10, 10, 5 and 1, squared.
 
-In letters, with both groups of size $n$ and $r$ = $n$ seats:
+In letters, with both groups of size $`n`$ and $`r`$ = $`n`$ seats:
 
-$$C(2n,\ n) \;=\; \sum_{k=0}^{n} C(n,\ k)^2$$
+```math
+C(2n,\ n) \;=\; \sum_{k=0}^{n} C(n,\ k)^2
+```
 
 **Read it aloud:** the middle entry of an even-numbered row of Pascal's triangle is every entry of the half-sized row squared and added. Row 5 is 1 5 10 10 5 1, and its squares add to 252.
 
-A second road reaches the identity through powers rather than piles. Multiply out a bracket raised to $m$ against one raised to $n$ and collect the terms carrying the same number of one letter: drawing $k$ copies from the first bracket and $r-k$ from the second is a band again. The two brackets multiply to one raised to $m+n$, so the collected counts must agree. [The binomial theorem](02-binomial-theorem.md) sets up that expansion properly.
+A second road reaches the identity through powers rather than piles. Multiply out a bracket raised to $`m`$ against one raised to $`n`$ and collect the terms carrying the same number of one letter: drawing $`k`$ copies from the first bracket and $`r-k`$ from the second is a band again. The two brackets multiply to one raised to $`m+n`$, so the collected counts must agree. [The binomial theorem](02-binomial-theorem.md) sets up that expansion properly.
 
 ---
 
@@ -353,9 +357,9 @@ The two outputs match line for line.
 
 Lean proves the identity for every pair of groups and every number of seats, not just the band.
 
-- When two groups share no member, choosing $r$ from the merged pool gives the same count as adding the piles, $k$ from 0 to $r$.
-- C($m+n$, $r$) equals the sum of C($m$, $k$) × C($n$, $r-k$) for all whole numbers $m$, $n$ and $r$, reading impossible counts as zero.
-- With two equal groups of $n$, the middle entry C($2n$, $n$) is every entry of row $n$ squared and added.
+- When two groups share no member, choosing $`r`$ from the merged pool gives the same count as adding the piles, $`k`$ from 0 to $`r`$.
+- C($`m+n`$, $`r`$) equals the sum of C($`m`$, $`k`$) × C($`n`$, $`r-k`$) for all whole numbers $`m`$, $`n`$ and $`r`$, reading impossible counts as zero.
+- With two equal groups of $`n`$, the middle entry C($`2n`$, $`n`$) is every entry of row $`n`$ squared and added.
 
 Lean also checks the band's numbers and the four mistakes; listing every band one at a time is left to the Python and Rust checks.
 

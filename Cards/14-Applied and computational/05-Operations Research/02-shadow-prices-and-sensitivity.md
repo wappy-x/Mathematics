@@ -30,23 +30,25 @@ The dashed line is the flour limit raised to 700 kg. Raising a limit slides its 
 
 ## The formula
 
-Notation from the [Linear programs](01-modelling-with-linear-programs.md) card: the plan is $x$, the margins $c$, the limits $b$, the usage table $A$, and the problem is "maximise $c^T x$ subject to $Ax \le b$, $x \ge 0$". This card adds $y_i$, the **shadow price** of limit $i$, and for its range $P^*$ (the best profit), $t$ (how far one limit moves) and $\ell_i$, $u_i$ (the range's two ends).
+Notation from the [Linear programs](01-modelling-with-linear-programs.md) card: the plan is $`x`$, the margins $`c`$, the limits $`b`$, the usage table $`A`$, and the problem is "maximise $`c^T x`$ subject to $`Ax \le b`$, $`x \ge 0`$". This card adds $`y_i`$, the **shadow price** of limit $`i`$, and for its range $`P^*`$ (the best profit), $`t`$ (how far one limit moves) and $`\ell_i`$, $`u_i`$ (the range's two ends).
 
-$$P^*(b_i + t) = P^* + y_i\,t \quad \text{for } b_i + t \text{ between } \ell_i \text{ and } u_i, \qquad \text{where } \sum_i y_i\,a_{ij} = c_j \text{ for each product made, and } y_i = 0 \text{ for a limit with slack}$$
+```math
+P^*(b_i + t) = P^* + y_i\,t \quad \text{for } b_i + t \text{ between } \ell_i \text{ and } u_i, \qquad \text{where } \sum_i y_i\,a_{ij} = c_j \text{ for each product made, and } y_i = 0 \text{ for a limit with slack}
+```
 
-**Read it aloud:** move one limit by $t$ units and the best profit moves by its shadow price times $t$, as long as the limit stays inside its range; the shadow prices are the numbers that make every product's margin equal to the value of the limits it uses up.
+**Read it aloud:** move one limit by $`t`$ units and the best profit moves by its shadow price times $`t`$, as long as the limit stays inside its range; the shadow prices are the numbers that make every product's margin equal to the value of the limits it uses up.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_j$ | batches of product $j$ in the plan: $x_1$ sponge, $x_2$ loaf | 15 and 30 | |
-| $c_j$ | margin per batch of product $j$, in pounds, after normal flour costs | £30 and £27 | profit rises; the plan stays put inside its margin range |
-| $a_{ij}$, $A$ | how much of limit $i$ one batch of product $j$ uses; $A$ is the whole table of them | sponge: 2 h, 10 kg, 0.6 load | that limit runs out sooner |
-| $b_i$ | limit $i$: what is available per day | 60 h, 600 kg, 30 loads | profit rises by $y_i$ a unit, inside the range |
-| $s_i$ | slack: the unused part of limit $i$, $b_i$ minus what the plan uses | 0, 0, 3 loads | |
-| $P^*$ | the best profit the limits allow | £1,260 | |
-| $y_i$ | the shadow price, or dual value, of limit $i$: pounds per unit | £9.00, £1.20, £0 | |
-| $t$ | how far one limit is moved, in its own units | +1 | profit moves by $y_i t$ |
-| $\ell_i,\ u_i$ | the lower and upper ends of the range where $y_i$ holds | oven 40 to 80 h; flour 300 to 700 kg | |
+| $`x_j`$ | batches of product $`j`$ in the plan: $`x_1`$ sponge, $`x_2`$ loaf | 15 and 30 | |
+| $`c_j`$ | margin per batch of product $`j`$, in pounds, after normal flour costs | £30 and £27 | profit rises; the plan stays put inside its margin range |
+| $`a_{ij}`$, $`A`$ | how much of limit $`i`$ one batch of product $`j`$ uses; $`A`$ is the whole table of them | sponge: 2 h, 10 kg, 0.6 load | that limit runs out sooner |
+| $`b_i`$ | limit $`i`$: what is available per day | 60 h, 600 kg, 30 loads | profit rises by $`y_i`$ a unit, inside the range |
+| $`s_i`$ | slack: the unused part of limit $`i`$, $`b_i`$ minus what the plan uses | 0, 0, 3 loads | |
+| $`P^*`$ | the best profit the limits allow | £1,260 | |
+| $`y_i`$ | the shadow price, or dual value, of limit $`i`$: pounds per unit | £9.00, £1.20, £0 | |
+| $`t`$ | how far one limit is moved, in its own units | +1 | profit moves by $`y_i t`$ |
+| $`\ell_i,\ u_i`$ | the lower and upper ends of the range where $`y_i`$ holds | oven 40 to 80 h; flour 300 to 700 kg | |
 
 ### When it holds
 
@@ -68,37 +70,45 @@ The best plan of a linear program sits at a corner of the allowed region. At the
 
 At the corner, the two tight limits hold as equations:
 
-$$2x_1 + x_2 = b_1, \qquad 10x_1 + 15x_2 = b_2.$$
+```math
+2x_1 + x_2 = b_1, \qquad 10x_1 + 15x_2 = b_2.
+```
 
-Two equations in two unknowns have one answer, and that answer is a fixed combination of $b_1$ and $b_2$. Solving gives the plan per extra unit. One extra oven hour moves sponge by +0.75 batches and loaf by −0.50. One extra kilogram of flour moves sponge by −0.05 and loaf by +0.10. Both are straight-line moves.
+Two equations in two unknowns have one answer, and that answer is a fixed combination of $`b_1`$ and $`b_2`$. Solving gives the plan per extra unit. One extra oven hour moves sponge by +0.75 batches and loaf by −0.50. One extra kilogram of flour moves sponge by −0.05 and loaf by +0.10. Both are straight-line moves.
 
 ### Step 2: profit equals the limits times their prices
 
-Choose numbers $y_1$ and $y_2$ so that each product's margin equals the value of what it uses:
+Choose numbers $`y_1`$ and $`y_2`$ so that each product's margin equals the value of what it uses:
 
-$$2y_1 + 10y_2 = 30 \ \text{(sponge)}, \qquad 1y_1 + 15y_2 = 27 \ \text{(loaf)}.$$
+```math
+2y_1 + 10y_2 = 30 \ \text{(sponge)}, \qquad 1y_1 + 15y_2 = 27 \ \text{(loaf)}.
+```
 
-Now add up the profit a different way. Each sponge batch earns $2y_1 + 10y_2$ and each loaf batch $y_1 + 15y_2$, so
+Now add up the profit a different way. Each sponge batch earns $`2y_1 + 10y_2`$ and each loaf batch $`y_1 + 15y_2`$, so
 
-$$P^* = (2y_1 + 10y_2)x_1 + (y_1 + 15y_2)x_2 = y_1(2x_1 + x_2) + y_2(10x_1 + 15x_2) = y_1 b_1 + y_2 b_2.$$
+```math
+P^* = (2y_1 + 10y_2)x_1 + (y_1 + 15y_2)x_2 = y_1(2x_1 + x_2) + y_2(10x_1 + 15x_2) = y_1 b_1 + y_2 b_2.
+```
 
-The last step uses the two tight equations. So while the same limits stay tight, profit is exactly $y_1 b_1 + y_2 b_2$. One more unit of $b_2$ adds exactly $y_2$. That is the formula: the shadow price is the slope. Here, $P^* = 60 \times 9 + 600 \times 1.20 = 1{,}260$.
+The last step uses the two tight equations. So while the same limits stay tight, profit is exactly $`y_1 b_1 + y_2 b_2`$. One more unit of $`b_2`$ adds exactly $`y_2`$. That is the formula: the shadow price is the slope. Here, $`P^* = 60 \times 9 + 600 \times 1.20 = 1{,}260`$.
 
 ### Step 3: positive prices prove the plan is best
 
-Take any plan that fits, tight or not. Its profit is $c_1 x_1 + c_2 x_2$. Replace each margin by the value of what the batch uses, as in Step 2:
+Take any plan that fits, tight or not. Its profit is $`c_1 x_1 + c_2 x_2`$. Replace each margin by the value of what the batch uses, as in Step 2:
 
-$$c_1 x_1 + c_2 x_2 = y_1(2x_1 + x_2) + y_2(10x_1 + 15x_2) \le y_1 \cdot 60 + y_2 \cdot 600 = 1{,}260.$$
+```math
+c_1 x_1 + c_2 x_2 = y_1(2x_1 + x_2) + y_2(10x_1 + 15x_2) \le y_1 \cdot 60 + y_2 \cdot 600 = 1{,}260.
+```
 
-The "at most" holds because each bracket is at most its limit and each $y$ is zero or more. So no plan beats £1,260. Prices that are all zero or more, and cover every margin, are a certificate: they prove the plan is best without checking any other corner.
+The "at most" holds because each bracket is at most its limit and each $`y`$ is zero or more. So no plan beats £1,260. Prices that are all zero or more, and cover every margin, are a certificate: they prove the plan is best without checking any other corner.
 
-Finding such prices is itself a linear program, the **dual** (minimise $60y_1 + 600y_2 + 30y_3$ while every product's margin is covered). Its best value equals the bakery's best profit. The theory behind that equality is [LP duality](../../15-Optimization/04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md), on the optimisation wing.
+Finding such prices is itself a linear program, the **dual** (minimise $`60y_1 + 600y_2 + 30y_3`$ while every product's margin is covered). Its best value equals the bakery's best profit. The theory behind that equality is [LP duality](../../15-Optimization/04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md), on the optimisation wing.
 
 The calculus wing reaches the same price for curved problems: a shadow price is the [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md) card's multiplier, read off a straight-line model.
 
 ### Step 4: a limit with slack has price zero
 
-The vans have 3 loads spare. One more van load lets the bakery do nothing it could not already do, so it adds £0. In the dual, a limit with slack gets $y_3 = 0$, and Step 3 still works. This is called **complementary slackness**: a limit either has slack or has a price, never both.
+The vans have 3 loads spare. One more van load lets the bakery do nothing it could not already do, so it adds £0. In the dual, a limit with slack gets $`y_3 = 0`$, and Step 3 still works. This is called **complementary slackness**: a limit either has slack or has a price, never both.
 
 ### Step 5: the range ends where the corner changes
 
@@ -121,9 +131,9 @@ The same idea gives the range for each margin. The plan stays the best while bot
 | flour used | 10 × 15 + 15 × 30, of 600 | 600: tight |
 | van loads used | 0.6 × 15 + 0.6 × 30, of 30 | 27: slack 3 |
 | van price | slack, so zero | £0 |
-| price equations | sponge: $2y_1 + 10y_2 = 30$; loaf: $y_1 + 15y_2 = 27$ | |
-| flour price | double the loaf line: $2y_1 + 30y_2 = 54$; subtract sponge: $20y_2 = 24$ | **£1.20 a kg** |
-| oven price | $y_1 = 27 - 15 \times 1.20 = 27 - 18$ | **£9.00 an hour** |
+| price equations | sponge: $`2y_1 + 10y_2 = 30`$; loaf: $`y_1 + 15y_2 = 27`$ | |
+| flour price | double the loaf line: $`2y_1 + 30y_2 = 54`$; subtract sponge: $`20y_2 = 24`$ | **£1.20 a kg** |
+| oven price | $`y_1 = 27 - 15 \times 1.20 = 27 - 18`$ | **£9.00 an hour** |
 | check | 60 × 9 + 600 × 1.20 + 30 × 0 | £1,260, the best profit |
 | oven range | sponge reaches 0 at −20 h; vans fill at +20 h | 40 to 80 h |
 | flour range | loaf reaches 0 at −300 kg; vans fill at +100 kg | 300 to 700 kg |
@@ -605,7 +615,7 @@ ALL CHECKS PASS
 
 Lean proves the formula for every linear program whose best corner has exactly as many tight limits as products, and checks the bakery's numbers.
 
-- Suppose the best corner makes every product, has exactly as many tight limits as products, and leaves every other limit slack. Then moving only $b_i$ by $t$, inside its range, makes the best profit $P^* + y_i\,t$.
+- Suppose the best corner makes every product, has exactly as many tight limits as products, and leaves every other limit slack. Then moving only $`b_i`$ by $`t`$, inside its range, makes the best profit $`P^* + y_i\,t`$.
 - Take any corner with exactly as many tight limits as products. Then its profit equals the limits times their shadow prices, as in Step 2.
 - Take prices that are all zero or more and cover every margin. Then no plan that fits earns more than the limits times those prices.
 - The bakery's plan, prices, ranges, margin ranges, overtime decision, What breaks figures and three points of the profit chart also check.

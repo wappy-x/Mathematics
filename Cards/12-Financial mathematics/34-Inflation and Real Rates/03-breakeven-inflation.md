@@ -40,57 +40,63 @@ Rising line: the linker, whose dollars grow with prices. Flat line: the nominal 
 
 ## The formula
 
-A few pieces of notation, each met on earlier cards. A rate is a decimal: 2.5 percent is 0.025. A **growth factor** is one plus a rate: 1.025. Raising a factor to the power $T$ compounds it over $T$ years. A **basis point**, "bp", is one hundredth of a percent, 0.0001.
+A few pieces of notation, each met on earlier cards. A rate is a decimal: 2.5 percent is 0.025. A **growth factor** is one plus a rate: 1.025. Raising a factor to the power $`T`$ compounds it over $`T`$ years. A **basis point**, "bp", is one hundredth of a percent, 0.0001.
 
-The two bonds tie when their dollars at year $T$ are equal:
+The two bonds tie when their dollars at year $`T`$ are equal:
 
-$$(1+n)^T = (1+r)^T\,(1+b)^T$$
+```math
+(1+n)^T = (1+r)^T\,(1+b)^T
+```
 
-Take the $T$-th root of both sides, which is allowed because every factor is positive, and solve:
+Take the $`T`$-th root of both sides, which is allowed because every factor is positive, and solve:
 
-$$b = \frac{1+n}{1+r} - 1$$
+```math
+b = \frac{1+n}{1+r} - 1
+```
 
 **Read it aloud:** divide one year of nominal growth by one year of real growth; what is left over is one year of inflation, and that is the breakeven.
 
-For our bonds: 1.03525 divided by 1.01 is 1.025, so $b$ is 2.5 percent.
+For our bonds: 1.03525 divided by 1.01 is 1.025, so $`b`$ is 2.5 percent.
 
 The market's quick version subtracts the yields instead:
 
-$$s = n - r, \qquad s - b = r\,b$$
+```math
+s = n - r, \qquad s - b = r\,b
+```
 
-**Read it aloud:** the plain difference of the yields overstates the breakeven by the real yield times the breakeven. Here that is 0.01 × 0.025, or 2.5 basis points: $s$ is 2.525 percent, $b$ is 2.5.
+**Read it aloud:** the plain difference of the yields overstates the breakeven by the real yield times the breakeven. Here that is 0.01 × 0.025, or 2.5 basis points: $`s`$ is 2.525 percent, $`b`$ is 2.5.
 
 | Symbol | Plain meaning | In our example | Push it up and the breakeven… |
 | --- | --- | --- | --- |
-| $n$ | the nominal bond's yield: growth of dollars per year | 3.525% | rises almost one for one |
-| $r$ | the linker's real yield: growth of buying power per year | 1% | falls almost one for one |
-| $b$ | the breakeven inflation rate | 2.5% | — |
-| $\pi$ | an actual constant yearly inflation rate, a scenario | 2%, 2.5%, 3% | — |
-| $T$ | years to maturity, the same for both bonds | 10 | no change: the tie holds year by year |
-| $t$ | a year count running 1, 2, … up to $T$ | 1 to 10 | — |
-| $I_0$, $I_T$ | the price index today and at year $T$ | not needed: only their ratio enters | — |
-| $J$ | the index ratio $I_T / I_0$: how much prices rose in total | at the tie, 1.2801 | — |
-| $c$ | the linker's real coupon, a fraction of face paid each year before scaling | 1% (a second case: 0.125%) | no change |
-| $P$ | the linker's price per 1 of face, from its real yield | 1.000 (0.125% coupon: 0.9171) | — |
-| $s$ | the shortcut: nominal yield minus real yield | 2.525% | — |
-| $k$ | an inflation swap's fixed rate, quoted for the same maturity | 2.6% | — |
+| $`n`$ | the nominal bond's yield: growth of dollars per year | 3.525% | rises almost one for one |
+| $`r`$ | the linker's real yield: growth of buying power per year | 1% | falls almost one for one |
+| $`b`$ | the breakeven inflation rate | 2.5% | — |
+| $`\pi`$ | an actual constant yearly inflation rate, a scenario | 2%, 2.5%, 3% | — |
+| $`T`$ | years to maturity, the same for both bonds | 10 | no change: the tie holds year by year |
+| $`t`$ | a year count running 1, 2, … up to $`T`$ | 1 to 10 | — |
+| $`I_0`$, $`I_T`$ | the price index today and at year $`T`$ | not needed: only their ratio enters | — |
+| $`J`$ | the index ratio $`I_T / I_0`$: how much prices rose in total | at the tie, 1.2801 | — |
+| $`c`$ | the linker's real coupon, a fraction of face paid each year before scaling | 1% (a second case: 0.125%) | no change |
+| $`P`$ | the linker's price per 1 of face, from its real yield | 1.000 (0.125% coupon: 0.9171) | — |
+| $`s`$ | the shortcut: nominal yield minus real yield | 2.525% | — |
+| $`k`$ | an inflation swap's fixed rate, quoted for the same maturity | 2.6% | — |
 
 ### Solving it as an inverse: existence, uniqueness, the boundary
 
 The breakeven is an inverse: it runs a payoff backwards to the rate that produces it ([Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)). Three questions come before solving.
 
-- **Does one exist?** Yes, whenever both yields are above −100 percent. The linker's year-$T$ dollars, $(1+r)^T(1+\pi)^T$, run from zero (as $\pi$ falls to −1) to as large as needed, passing every value on the way. So they hit the nominal bond's dollars somewhere.
+- **Does one exist?** Yes, whenever both yields are above −100 percent. The linker's year-$`T`$ dollars, $`(1+r)^T(1+\pi)^T`$, run from zero (as $`\pi`$ falls to −1) to as large as needed, passing every value on the way. So they hit the nominal bond's dollars somewhere.
 - **Is it unique?** Yes. Higher inflation always means more linker dollars, so the linker line in the picture only climbs. A climbing line crosses a flat one once.
-- **The boundary.** If $n = r$, the breakeven is zero. If $n < r$, it is negative: the bonds tie only under falling prices.
+- **The boundary.** If $`n = r`$, the breakeven is zero. If $`n < r`$, it is negative: the bonds tie only under falling prices.
 
-  Then a real feature intervenes: a US linker repays at least its original face at maturity (the **deflation floor**). At $n = r$ the floor makes every index ratio $J \le 1$ a tie, so the answer is no longer unique.
+  Then a real feature intervenes: a US linker repays at least its original face at maturity (the **deflation floor**). At $`n = r`$ the floor makes every index ratio $`J \le 1`$ a tie, so the answer is no longer unique.
 
-  With $n$ at 0.5 percent and $r$ at 1 percent, the formula gives −0.495 percent, an index ratio of 0.9516. But the floored linker pays at least $1,104.62, above the nominal bond's $1,051.14. No inflation rate makes them tie. In our example the tie sits at an index ratio of 1.2801, far above 1, so the floor stays out of the way.
+  With $`n`$ at 0.5 percent and $`r`$ at 1 percent, the formula gives −0.495 percent, an index ratio of 0.9516. But the floored linker pays at least $1,104.62, above the nominal bond's $1,051.14. No inflation rate makes them tie. In our example the tie sits at an index ratio of 1.2801, far above 1, so the floor stays out of the way.
 
 ### When it holds
 
 - **Same maturity, same dates.** A ten-year linker against a seven-year nominal bond measures nothing clean. Real market breakevens are read off matched maturities or a fitted curve.
-- **Constant inflation.** The formula names one steady rate. Actual inflation wobbles. For zero-coupon bonds only the total rise $J$ matters, so the tie holds for any path with $J = 1.2801$. With coupons, the path shifts each coupon's dollars a little.
+- **Constant inflation.** The formula names one steady rate. Actual inflation wobbles. For zero-coupon bonds only the total rise $`J`$ matters, so the tie holds for any path with $`J = 1.2801`$. With coupons, the path shifts each coupon's dollars a little.
 - **Same compounding on both yields.** Mixing a semiannual quote with an annual one moves the answer by 3 basis points here; see What breaks.
 - **No credit, tax or liquidity differences.** Both bonds are from the same government. Linkers trade less, and buyers want paying for that; the gap lands inside the breakeven and makes it read low.
 - **The index is the one the linker uses.** A US linker follows a consumer price index (CPI) read three months late; a breakeven measures inflation in that index, over that lagged window.
@@ -105,61 +111,65 @@ Two bonds from the same issuer, maturing the same day, are two ways to hold mone
 
 ### Step 1: zero-coupon bonds tie on their one payment
 
-Take the simplest pair: bonds with no coupons, one payment each, at year $T$. A dollar in the nominal bond becomes $(1+n)^T$ dollars. A dollar in the linker becomes $(1+r)^T$ units of buying power, and each unit is paid as $J$ dollars, where $J$ is how much the index rose. So the linker pays $(1+r)^T J$ dollars.
+Take the simplest pair: bonds with no coupons, one payment each, at year $`T`$. A dollar in the nominal bond becomes $`(1+n)^T`$ dollars. A dollar in the linker becomes $`(1+r)^T`$ units of buying power, and each unit is paid as $`J`$ dollars, where $`J`$ is how much the index rose. So the linker pays $`(1+r)^T J`$ dollars.
 
-Set them equal: $J = (1+n)^T / (1+r)^T$. For our bonds, $J = 1.025^{10} = 1.2801$. Prices rising 28.01 percent in total over ten years make the two bonds tie.
+Set them equal: $`J = (1+n)^T / (1+r)^T`$. For our bonds, $`J = 1.025^{10} = 1.2801`$. Prices rising 28.01 percent in total over ten years make the two bonds tie.
 
 ### Step 2: turn the total into a yearly rate
 
-A total rise of $J$ over $T$ years is a constant yearly rate $b$ with $(1+b)^T = J$. Taking the $T$-th root gives
+A total rise of $`J`$ over $`T`$ years is a constant yearly rate $`b`$ with $`(1+b)^T = J`$. Taking the $`T`$-th root gives
 
-$$1 + b = \frac{1+n}{1+r}.$$
+```math
+1 + b = \frac{1+n}{1+r}.
+```
 
-The years cancel. That is why the breakeven for the ten-year pair and a thirty-year pair with the same yields comes out the same, 2.5 percent. The code checks this with $T = 30$.
+The years cancel. That is why the breakeven for the ten-year pair and a thirty-year pair with the same yields comes out the same, 2.5 percent. The code checks this with $`T = 30`$.
 
 ### Step 3: coupons do not move it
 
-Real linkers pay coupons. The 1 percent linker pays 1 percent of its face each year, scaled by the index, and the face at the end, also scaled. If inflation is a constant $\pi$, year $t$ pays $c(1+\pi)^t$ dollars. To compare it with the nominal bond, discount every payment at the nominal yield $n$, the rate the market uses for dollar payments on that date. The breakeven is the $\pi$ that makes this worth exactly the linker's price $P$:
+Real linkers pay coupons. The 1 percent linker pays 1 percent of its face each year, scaled by the index, and the face at the end, also scaled. If inflation is a constant $`\pi`$, year $`t`$ pays $`c(1+\pi)^t`$ dollars. To compare it with the nominal bond, discount every payment at the nominal yield $`n`$, the rate the market uses for dollar payments on that date. The breakeven is the $`\pi`$ that makes this worth exactly the linker's price $`P`$:
 
-$$P = \sum_{t=1}^{T} \frac{c\,(1+\pi)^t}{(1+n)^t} + \frac{(1+\pi)^T}{(1+n)^T}$$
+```math
+P = \sum_{t=1}^{T} \frac{c\,(1+\pi)^t}{(1+n)^t} + \frac{(1+\pi)^T}{(1+n)^T}
+```
 
-The sign $\sum_{t=1}^{T}$ means: add up the term after it for $t = 1, 2, \ldots, T$.
+The sign $`\sum_{t=1}^{T}`$ means: add up the term after it for $`t = 1, 2, \ldots, T`$.
 
-Now look at one term. It has $(1+\pi)^t$ on top and $(1+n)^t$ below, so it equals $c / \big((1+n)/(1+\pi)\big)^t$. That is the payment discounted at a single rate, $(1+n)/(1+\pi) - 1$.
+Now look at one term. It has $`(1+\pi)^t`$ on top and $`(1+n)^t`$ below, so it equals $`c / \big((1+n)/(1+\pi)\big)^t`$. That is the payment discounted at a single rate, $`(1+n)/(1+\pi) - 1`$.
 
-The linker's price, by definition of its real yield, is its real payments discounted at $r$ ([Bond price and yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md)). So the equation holds exactly when $(1+n)/(1+\pi) = 1+r$: the same formula as Step 2.
+The linker's price, by definition of its real yield, is its real payments discounted at $`r`$ ([Bond price and yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md)). So the equation holds exactly when $`(1+n)/(1+\pi) = 1+r`$: the same formula as Step 2.
 
 The coupon never entered. The code checks it on two linkers, one with a 1 percent coupon priced at $1,000 and one with a 0.125 percent coupon priced at $917.13. Both give 2.5 percent.
 
 <details>
 <summary>Detailed proof: the coupon linker's breakeven is unique and equals the closed form</summary>
 
-Write $g = (1+n)/(1+\pi)$, positive whenever $\pi > -1$ and $n > -1$. The right-hand side above is then $\sum_{t=1}^{T} c\,g^{-t} + g^{-T}$, the linker's real price at yield $g - 1$.
+Write $`g = (1+n)/(1+\pi)`$, positive whenever $`\pi > -1`$ and $`n > -1`$. The right-hand side above is then $`\sum_{t=1}^{T} c\,g^{-t} + g^{-T}`$, the linker's real price at yield $`g - 1`$.
 
-For $c \ge 0$ that price strictly falls as the yield rises, since each term $g^{-t}$ does. As $\pi$ rises, $(1+n)/(1+\pi)$ falls, so the right-hand side strictly rises in $\pi$: at most one root.
+For $`c \ge 0`$ that price strictly falls as the yield rises, since each term $`g^{-t}`$ does. As $`\pi`$ rises, $`(1+n)/(1+\pi)`$ falls, so the right-hand side strictly rises in $`\pi`$: at most one root.
 
-As $\pi \to -1$, $g \to \infty$ and the right-hand side goes to 0, below $P$. As $\pi \to \infty$, $g \to 0$ and the right-hand side grows without bound, above $P$. It is continuous in between, so it crosses $P$: at least one root.
+As $`\pi \to -1`$, $`g \to \infty`$ and the right-hand side goes to 0, below $`P`$. As $`\pi \to \infty`$, $`g \to 0`$ and the right-hand side grows without bound, above $`P`$. It is continuous in between, so it crosses $`P`$: at least one root.
 
-The real yield $r$ is defined by $P = \sum c(1+r)^{-t} + (1+r)^{-T}$. So $g = 1+r$ solves the equation, and by uniqueness it is the only solution: $1 + b = (1+n)/(1+r)$. The deflation floor adds $\max(0, 1 - (1+\pi)^T)$ to the final payment; for $b > 0$ that term is zero at the root, so the answer stands.
+The real yield $`r`$ is defined by $`P = \sum c(1+r)^{-t} + (1+r)^{-T}`$. So $`g = 1+r`$ solves the equation, and by uniqueness it is the only solution: $`1 + b = (1+n)/(1+r)`$. The deflation floor adds $`\max(0, 1 - (1+\pi)^T)`$ to the final payment; for $`b > 0`$ that term is zero at the root, so the answer stands.
 
 </details>
 
 ### Step 4: why subtracting yields is close but not exact
 
-Multiply out the tie: $1 + n = (1+r)(1+b) = 1 + r + b + r\,b$. So $n - r = b + r\,b$. The shortcut $s$ carries an extra cross term $r\,b$: real growth earned on the inflation uplift. At our yields it is 2.5 basis points. It grows with both rates.
+Multiply out the tie: $`1 + n = (1+r)(1+b) = 1 + r + b + r\,b`$. So $`n - r = b + r\,b`$. The shortcut $`s`$ carries an extra cross term $`r\,b`$: real growth earned on the inflation uplift. At our yields it is 2.5 basis points. It grows with both rates.
 
-Quoted with **continuous compounding**, rates add exactly. A continuous rate is interest added at every instant; it is the natural logarithm, $\ln$, of a growth factor ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). So the breakeven is $\ln(1+n) - \ln(1+r)$, here 2.469 percent a year continuously compounded. Same fact, a different unit, as a temperature in Celsius and Fahrenheit.
+Quoted with **continuous compounding**, rates add exactly. A continuous rate is interest added at every instant; it is the natural logarithm, $`\ln`$, of a growth factor ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). So the breakeven is $`\ln(1+n) - \ln(1+r)`$, here 2.469 percent a year continuously compounded. Same fact, a different unit, as a temperature in Celsius and Fahrenheit.
 
 ### Step 5: read it against the inflation swap
 
-A zero-coupon inflation swap is a contract on the same question with no bonds at all: at year $T$, one side pays the index's total rise $J$ on a notional amount (the sum both payments are computed on, never itself paid), the other pays a fixed growth $(1+k)^T$ ([Inflation swaps](04-zero-coupon-inflation-swaps.md)). Its fixed rate $k$ is a second, independent quote for the price of inflation.
+A zero-coupon inflation swap is a contract on the same question with no bonds at all: at year $`T`$, one side pays the index's total rise $`J`$ on a notional amount (the sum both payments are computed on, never itself paid), the other pays a fixed growth $`(1+k)^T`$ ([Inflation swaps](04-zero-coupon-inflation-swaps.md)). Its fixed rate $`k`$ is a second, independent quote for the price of inflation.
 
 The two quotes can be set side by side as trades.
 
-- **Linker plus a swap paying the index.** The linker's dollars rise with $J$; the swap hands that rise away and receives fixed growth. Whatever the index does, $1,000 ends at $1{,}000 \times (1.01 \times 1.026)^{10} = \$1{,}427.87$. That is $13.86 more than the nominal bond's $1,414.01, with no inflation risk. The code tries 1,000 random index ratios; the total never moves.
-- **Nominal bond plus a swap receiving the index.** This builds a linker out of other parts. Its real yield is $(1+n)/(1+k) - 1 = 0.9016$ percent, below the cash linker's 1 percent.
+- **Linker plus a swap paying the index.** The linker's dollars rise with $`J`$; the swap hands that rise away and receives fixed growth. Whatever the index does, $1,000 ends at $`1{,}000 \times (1.01 \times 1.026)^{10} = \$1{,}427.87`$. That is $13.86 more than the nominal bond's $1,414.01, with no inflation risk. The code tries 1,000 random index ratios; the total never moves.
+- **Nominal bond plus a swap receiving the index.** This builds a linker out of other parts. Its real yield is $`(1+n)/(1+k) - 1 = 0.9016`$ percent, below the cash linker's 1 percent.
 
-Both say the same thing: when $k$ is above $b$, cash linkers are cheap next to swaps. The gap here is 10 basis points. In real markets the two quotes for one maturity rarely match exactly. The gap is not free money: holding the linker ties up cash, the swap carries a counterparty and collateral terms, and linkers are harder to sell in a hurry. Those costs are what the gap pays for.
+Both say the same thing: when $`k`$ is above $`b`$, cash linkers are cheap next to swaps. The gap here is 10 basis points. In real markets the two quotes for one maturity rarely match exactly. The gap is not free money: holding the linker ties up cash, the swap carries a counterparty and collateral terms, and linkers are harder to sell in a hurry. Those costs are what the gap pays for.
 
 ---
 
@@ -170,12 +180,12 @@ Ten years; nominal yield 3.525 percent; linker real yield 1 percent, real coupon
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | nominal growth over real growth | 1.03525 ÷ 1.01 | 1.025 |
-| **breakeven** $b$ | 1.025 − 1 | **2.5%** |
-| index ratio at the tie, $J$ | 1.025 to the 10th | 1.2801 |
+| **breakeven** $`b`$ | 1.025 − 1 | **2.5%** |
+| index ratio at the tie, $`J`$ | 1.025 to the 10th | 1.2801 |
 | nominal bond at year ten | 1,000 × 1.03525 to the 10th | $1,414.01 |
 | linker, in today's buying power | 1,000 × 1.01 to the 10th | $1,104.62 |
 | linker at the tie, in dollars | 1,104.62 × 1.2801 | $1,414.01 |
-| shortcut $s$ | 3.525% − 1% | 2.525% |
+| shortcut $`s`$ | 3.525% − 1% | 2.525% |
 | shortcut error | 0.01 × 0.025 | 2.5 bp |
 | swap minus breakeven | 2.6% − 2.5% | 10 bp |
 | synthetic real yield | 1.03525 ÷ 1.026 − 1 | 0.9016% |
@@ -189,7 +199,7 @@ Correct answer: 2.5 percent.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Subtract the yields | 2.525% | drops the cross term $r\,b$; 2.5 bp too high |
+| Subtract the yields | 2.525% | drops the cross term $`r\,b`$; 2.5 bp too high |
 | Divide the wrong way, real over nominal | −2.439% | the sign flips and a deflation "breakeven" appears |
 | Annualise the total rise by dividing 28.01% by 10 | 2.801% | treats compound growth as simple; 30 bp too high |
 | Nominal yield quoted semiannually (3.4945%), real yield annually | 2.470% | two compounding conventions in one fraction; 3 bp too low |
@@ -561,9 +571,9 @@ ALL CHECKS PASS
 
 Lean proves the formula, the coupon fact and the shortcut error for any yields above −100 percent, and checks the card's numbers.
 
-- Take $T \ge 1$ years, with $n$, $r$ and $b$ all above −100 percent. Then $(1+n)^T = (1+r)^T (1+b)^T$ exactly when $b = (1+n)/(1+r) - 1$.
-- Take the same $T$, $n$ and $r$, a linker with real coupon $c \ge 0$ priced at $P$, and inflation $\pi$ above −100 percent. Then its payments, scaled by the index and discounted at $n$, are worth $P$ exactly when $\pi = (1+n)/(1+r) - 1$.
-- Take any $n$, and $r$ above −100 percent. Then $s - b = r\,b$: the shortcut overstates by exactly the real yield times the breakeven.
+- Take $`T \ge 1`$ years, with $`n`$, $`r`$ and $`b`$ all above −100 percent. Then $`(1+n)^T = (1+r)^T (1+b)^T`$ exactly when $`b = (1+n)/(1+r) - 1`$.
+- Take the same $`T`$, $`n`$ and $`r`$, a linker with real coupon $`c \ge 0`$ priced at $`P`$, and inflation $`\pi`$ above −100 percent. Then its payments, scaled by the index and discounted at $`n`$, are worth $`P`$ exactly when $`\pi = (1+n)/(1+r) - 1`$.
+- Take any $`n`$, and $`r`$ above −100 percent. Then $`s - b = r\,b`$: the shortcut overstates by exactly the real yield times the breakeven.
 - Take the card's yields, 3.525 and 1 percent. Then the breakeven is exactly 2.5 percent, and the bonds tie at ten and thirty years.
 - The 2.5 bp shortcut error, the 10 bp swap gap, the wrong-way and boundary breakevens and the Try changing answers also check.
 
@@ -734,7 +744,7 @@ example : ((1 : ℚ) + 5 / 100) / (1 + 1 / 100) - 1 = 4 / 101 := by norm_num
 > - **Subtracting yields.** Gives 2.525 percent, 2.5 basis points high here, more when rates are higher. Divide the growth factors instead.
 > - **Mixing compounding conventions.** A semiannual nominal quote over an annual real one gives 2.470 percent, 3 basis points low.
 > - **Mismatched maturities or index lags.** A ten-year linker against a nine-year nominal bond mixes the breakeven with the slope of the yield curve. The linker's index is also read three months late, so its breakeven covers a lagged window.
-> - **Forgetting the deflation floor near zero.** When the breakeven is near or below zero, the linker's floor is worth something and the plain formula no longer gives the tie; with $n$ below $r$ there is no tie at all.
+> - **Forgetting the deflation floor near zero.** When the breakeven is near or below zero, the linker's floor is worth something and the plain formula no longer gives the tie; with $`n`$ below $`r`$ there is no tie at all.
 
 ---
 

@@ -28,51 +28,61 @@ Scale: 400 units per metre, shoulder at (40, 60). Solid: held straight out. Dash
 
 ## The formula
 
-Notation, in words first. The arm's **generalised coordinates** (the numbers that fix where it is) are the two joint angles, collected as $q = (\theta_1, \theta_2)$. A prime is a rate in time: $q'$ holds the two joint speeds, $q''$ the two joint accelerations. $T$ is kinetic energy, $V$ potential energy, and $L = T - V$ the Lagrangian. Lagrange's equation, with a motor torque $\tau_i$ on joint $i$:
+Notation, in words first. The arm's **generalised coordinates** (the numbers that fix where it is) are the two joint angles, collected as $`q = (\theta_1, \theta_2)`$. A prime is a rate in time: $`q'`$ holds the two joint speeds, $`q''`$ the two joint accelerations. $`T`$ is kinetic energy, $`V`$ potential energy, and $`L = T - V`$ the Lagrangian. Lagrange's equation, with a motor torque $`\tau_i`$ on joint $`i`$:
 
-$$\frac{d}{dt}\,\frac{\partial L}{\partial \theta_i'} - \frac{\partial L}{\partial \theta_i} = \tau_i, \qquad i = 1, 2$$
+```math
+\frac{d}{dt}\,\frac{\partial L}{\partial \theta_i'} - \frac{\partial L}{\partial \theta_i} = \tau_i, \qquad i = 1, 2
+```
 
-**Read it aloud:** for each joint, the rate of change of the slope of $L$ in that joint's speed, minus the slope of $L$ in that joint's angle, equals the motor torque on that joint.
+**Read it aloud:** for each joint, the rate of change of the slope of $`L`$ in that joint's speed, minus the slope of $`L`$ in that joint's angle, equals the motor torque on that joint.
 
 Worked through for the arm (Why it works, Steps 1 to 3), it always takes the same shape, the **manipulator equation**:
 
-$$M(q)\,q'' + c(q, q') + w(q) = \tau$$
+```math
+M(q)\,q'' + c(q, q') + w(q) = \tau
+```
 
 **Read it aloud:** mass matrix times accelerations, plus the speed terms, plus the gravity torques, equals the motor torques.
 
-The pieces, with $a_1 = l_1/2$ and $a_2 = l_2/2$ the distances from each joint to its link's centre of mass and $h = m_2 l_1 a_2$:
+The pieces, with $`a_1 = l_1/2`$ and $`a_2 = l_2/2`$ the distances from each joint to its link's centre of mass and $`h = m_2 l_1 a_2`$:
 
-$$M = \begin{pmatrix} I_1 + I_2 + m_1 a_1^2 + m_2(l_1^2 + a_2^2 + 2 l_1 a_2\cos\theta_2) & I_2 + m_2(a_2^2 + l_1 a_2 \cos\theta_2) \\ I_2 + m_2(a_2^2 + l_1 a_2\cos\theta_2) & I_2 + m_2 a_2^2 \end{pmatrix}$$
+```math
+M = \begin{pmatrix} I_1 + I_2 + m_1 a_1^2 + m_2(l_1^2 + a_2^2 + 2 l_1 a_2\cos\theta_2) & I_2 + m_2(a_2^2 + l_1 a_2 \cos\theta_2) \\ I_2 + m_2(a_2^2 + l_1 a_2\cos\theta_2) & I_2 + m_2 a_2^2 \end{pmatrix}
+```
 
-$$c = h\sin\theta_2 \begin{pmatrix} -\theta_2'(2\theta_1' + \theta_2') \\ \theta_1'^2 \end{pmatrix}, \qquad w = g\begin{pmatrix} (m_1 a_1 + m_2 l_1)\cos\theta_1 + m_2 a_2\cos(\theta_1 + \theta_2) \\ m_2 a_2 \cos(\theta_1 + \theta_2) \end{pmatrix}$$
+```math
+c = h\sin\theta_2 \begin{pmatrix} -\theta_2'(2\theta_1' + \theta_2') \\ \theta_1'^2 \end{pmatrix}, \qquad w = g\begin{pmatrix} (m_1 a_1 + m_2 l_1)\cos\theta_1 + m_2 a_2\cos(\theta_1 + \theta_2) \\ m_2 a_2 \cos(\theta_1 + \theta_2) \end{pmatrix}
+```
 
-The Hamiltonian form uses the joint momenta $p = M(q)\,q'$ in place of the speeds:
+The Hamiltonian form uses the joint momenta $`p = M(q)\,q'`$ in place of the speeds:
 
-$$H(q, p) = \tfrac12\,p^{\mathsf T} M(q)^{-1} p + V(q), \qquad q' = \frac{\partial H}{\partial p}, \qquad p' = -\frac{\partial H}{\partial q} + \tau$$
+```math
+H(q, p) = \tfrac12\,p^{\mathsf T} M(q)^{-1} p + V(q), \qquad q' = \frac{\partial H}{\partial p}, \qquad p' = -\frac{\partial H}{\partial q} + \tau
+```
 
 **Read it aloud:** the energy written in angles and momenta; the angles change at its slope in the momenta, the momenta at minus its slope in the angles, plus the motor torques.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta_1$, $\theta_2$, $q$, $t$ | shoulder angle above horizontal; elbow angle measured from the upper arm's line; both together; time, s; $\delta$ marks a small change; $i$ numbers the joint | 0 and 0 when held straight out | $\theta_2 \ne 0$ shrinks $M_{11}$ and $M_{12}$ |
-| $m_1$, $l_1$, $a_1$, $I_1$ | upper arm: mass, length, joint to centre, its own spin inertia $m_1 l_1^2/12$ | 4 kg, 0.5 m, 0.25 m, 0.083333 kg m² | more shoulder torque |
-| $m_2$, $l_2$, $a_2$, $I_2$ | forearm, the same four | 2.5 kg, 0.4 m, 0.2 m, 0.033333 kg m² | more torque at both joints |
-| $g$ | gravity, standard 9.80665 m/s² rounded | 9.81 m/s² | gravity torques scale with it |
-| $T$, $V$, $L$ | kinetic, potential energy (zero with the arm at shoulder height), $T - V$; J | 0 J held | — |
-| $M(q)$; $M_{11}$, $M_{12}$, $M_{22}$ | mass matrix: inertia felt by the joints | 1.591667, 0.383333, 0.133333 kg m² straight out | more torque per rad/s² |
-| $c$, $h$ | speed terms: torque the joints need because the links whirl (centrifugal) and because one joint's speed drags on the other (Coriolis); their size $m_2 l_1 a_2$ | 0.25 kg m²; 2.2500 N m at the elbow, bent 90° with the shoulder turning at 3 rad/s | grow with speed squared |
-| $w$ | gravity torques $\partial V/\partial q$ | 26.9775, 4.9050 N m straight out | — |
-| $\tau_1$, $\tau_2$ | motor torques at shoulder and elbow, N m | 36.5275, 7.2050 to start the lift | larger joint acceleration |
-| $p_1$, $p_2$, $H$, ${}^{\mathsf T}$ | joint momenta $M q'$, kg m²/s; energy in angles and momenta, J; a superscript T (transpose) turns the column $p$ into a row, so $p^{\mathsf T} M^{-1} p$ is one number | −7.4040, −1.7099 at 0.3 s after a power cut; $H$ = 0 J throughout | — |
-| $m$, $l$, $\theta_0$, $x$, $y$, $v$ | pendulum: bob mass, rod length, release angle from straight down; bob across and up from the pivot; bob speed | 2 kg, 0.5 m, 60° | — |
-| $F$, $\lambda$ | rod tension, N; the multiplier, here $\lambda = -F$ | 39.2400 N at the bottom | longer drop: more tension |
+| $`\theta_1`$, $`\theta_2`$, $`q`$, $`t`$ | shoulder angle above horizontal; elbow angle measured from the upper arm's line; both together; time, s; $`\delta`$ marks a small change; $`i`$ numbers the joint | 0 and 0 when held straight out | $`\theta_2 \ne 0`$ shrinks $`M_{11}`$ and $`M_{12}`$ |
+| $`m_1`$, $`l_1`$, $`a_1`$, $`I_1`$ | upper arm: mass, length, joint to centre, its own spin inertia $`m_1 l_1^2/12`$ | 4 kg, 0.5 m, 0.25 m, 0.083333 kg m² | more shoulder torque |
+| $`m_2`$, $`l_2`$, $`a_2`$, $`I_2`$ | forearm, the same four | 2.5 kg, 0.4 m, 0.2 m, 0.033333 kg m² | more torque at both joints |
+| $`g`$ | gravity, standard 9.80665 m/s² rounded | 9.81 m/s² | gravity torques scale with it |
+| $`T`$, $`V`$, $`L`$ | kinetic, potential energy (zero with the arm at shoulder height), $`T - V`$; J | 0 J held | — |
+| $`M(q)`$; $`M_{11}`$, $`M_{12}`$, $`M_{22}`$ | mass matrix: inertia felt by the joints | 1.591667, 0.383333, 0.133333 kg m² straight out | more torque per rad/s² |
+| $`c`$, $`h`$ | speed terms: torque the joints need because the links whirl (centrifugal) and because one joint's speed drags on the other (Coriolis); their size $`m_2 l_1 a_2`$ | 0.25 kg m²; 2.2500 N m at the elbow, bent 90° with the shoulder turning at 3 rad/s | grow with speed squared |
+| $`w`$ | gravity torques $`\partial V/\partial q`$ | 26.9775, 4.9050 N m straight out | — |
+| $`\tau_1`$, $`\tau_2`$ | motor torques at shoulder and elbow, N m | 36.5275, 7.2050 to start the lift | larger joint acceleration |
+| $`p_1`$, $`p_2`$, $`H`$, $`{}^{\mathsf T}`$ | joint momenta $`M q'`$, kg m²/s; energy in angles and momenta, J; a superscript T (transpose) turns the column $`p`$ into a row, so $`p^{\mathsf T} M^{-1} p`$ is one number | −7.4040, −1.7099 at 0.3 s after a power cut; $`H`$ = 0 J throughout | — |
+| $`m`$, $`l`$, $`\theta_0`$, $`x`$, $`y`$, $`v`$ | pendulum: bob mass, rod length, release angle from straight down; bob across and up from the pivot; bob speed | 2 kg, 0.5 m, 60° | — |
+| $`F`$, $`\lambda`$ | rod tension, N; the multiplier, here $`\lambda = -F`$ | 39.2400 N at the bottom | longer drop: more tension |
 
 ### When it holds
 
 - **Rigid links.** A flexible link adds coordinates of its own, its bending modes ([Vibration modes](06-vibration-modes-and-resonance.md)); a two-angle model misses the ringing at the tip.
-- **Frictionless joints and ideal motors.** Gearbox friction is not a potential, so it adds a torque the energies cannot see; it must be added to $\tau$ by hand, and the energy then drains instead of staying fixed.
+- **Frictionless joints and ideal motors.** Gearbox friction is not a potential, so it adds a torque the energies cannot see; it must be added to $`\tau`$ by hand, and the energy then drains instead of staying fixed.
 - **The constraint can push and pull.** A pin or rod can; a cable can only pull. When the multiplier says the tension is negative, the constraint model is wrong: a cable released from 120 degrees gives −9.8100 N, and in fact goes slack.
-- **One coordinate per way the machine can move.** A locked elbow is not free; its torque must be found as on this card, from the equation with $\theta_2''$ set to zero, not by deleting $\theta_2$ before differentiating.
+- **One coordinate per way the machine can move.** A locked elbow is not free; its torque must be found as on this card, from the equation with $`\theta_2''`$ set to zero, not by deleting $`\theta_2`$ before differentiating.
 
 ---
 
@@ -84,85 +94,97 @@ A free-body diagram needs every force, including the pins' pushes. Lagrange's ro
 
 ### Step 1: kinetic energy in the joint angles
 
-Put the shoulder at the origin. The upper arm's centre sits at $a_1(\cos\theta_1, \sin\theta_1)$, so it moves at speed $a_1\theta_1'$, and the link also spins at $\theta_1'$. By [Rotation](02-rigid-body-rotation-and-moment-of-inertia.md), a body's kinetic energy is its centre's motion plus its spin about the centre:
+Put the shoulder at the origin. The upper arm's centre sits at $`a_1(\cos\theta_1, \sin\theta_1)`$, so it moves at speed $`a_1\theta_1'`$, and the link also spins at $`\theta_1'`$. By [Rotation](02-rigid-body-rotation-and-moment-of-inertia.md), a body's kinetic energy is its centre's motion plus its spin about the centre:
 
-$$T_1 = \tfrac12 m_1 a_1^2\,\theta_1'^2 + \tfrac12 I_1\,\theta_1'^2.$$
+```math
+T_1 = \tfrac12 m_1 a_1^2\,\theta_1'^2 + \tfrac12 I_1\,\theta_1'^2.
+```
 
-The forearm's centre is the elbow, $l_1(\cos\theta_1, \sin\theta_1)$, plus $a_2$ along the forearm, whose angle from horizontal is $\theta_1 + \theta_2$. Its velocity has two parts: $l_1\theta_1'$ at right angles to the upper arm, and $a_2(\theta_1' + \theta_2')$ at right angles to the forearm. The angle between those two directions is $\theta_2$, so the speed squared is
+The forearm's centre is the elbow, $`l_1(\cos\theta_1, \sin\theta_1)`$, plus $`a_2`$ along the forearm, whose angle from horizontal is $`\theta_1 + \theta_2`$. Its velocity has two parts: $`l_1\theta_1'`$ at right angles to the upper arm, and $`a_2(\theta_1' + \theta_2')`$ at right angles to the forearm. The angle between those two directions is $`\theta_2`$, so the speed squared is
 
-$$l_1^2\theta_1'^2 + a_2^2(\theta_1' + \theta_2')^2 + 2 l_1 a_2\cos\theta_2\,\theta_1'(\theta_1' + \theta_2').$$
+```math
+l_1^2\theta_1'^2 + a_2^2(\theta_1' + \theta_2')^2 + 2 l_1 a_2\cos\theta_2\,\theta_1'(\theta_1' + \theta_2').
+```
 
-That cross term is the whole story of coupling. Collect $T = T_1 + \tfrac12 m_2(\text{speed}^2) + \tfrac12 I_2(\theta_1' + \theta_2')^2$ into $\tfrac12(M_{11}\theta_1'^2 + 2M_{12}\theta_1'\theta_2' + M_{22}\theta_2'^2)$ and the matrix in The formula falls out. Straight out ($\theta_2 = 0$): $M_{11}$ = 0.083333 + 0.033333 + 0.25 + 2.5 × (0.25 + 0.04 + 0.2) = 1.591667 kg m².
+That cross term is the whole story of coupling. Collect $`T = T_1 + \tfrac12 m_2(\text{speed}^2) + \tfrac12 I_2(\theta_1' + \theta_2')^2`$ into $`\tfrac12(M_{11}\theta_1'^2 + 2M_{12}\theta_1'\theta_2' + M_{22}\theta_2'^2)`$ and the matrix in The formula falls out. Straight out ($`\theta_2 = 0`$): $`M_{11}`$ = 0.083333 + 0.033333 + 0.25 + 2.5 × (0.25 + 0.04 + 0.2) = 1.591667 kg m².
 
 ### Step 2: potential energy
 
-Heights above the shoulder: $a_1\sin\theta_1$ for the upper arm's centre and $l_1\sin\theta_1 + a_2\sin(\theta_1 + \theta_2)$ for the forearm's. So
+Heights above the shoulder: $`a_1\sin\theta_1`$ for the upper arm's centre and $`l_1\sin\theta_1 + a_2\sin(\theta_1 + \theta_2)`$ for the forearm's. So
 
-$$V = g\big[m_1 a_1\sin\theta_1 + m_2\big(l_1\sin\theta_1 + a_2\sin(\theta_1 + \theta_2)\big)\big],$$
+```math
+V = g\big[m_1 a_1\sin\theta_1 + m_2\big(l_1\sin\theta_1 + a_2\sin(\theta_1 + \theta_2)\big)\big],
+```
 
-and its two slopes are the gravity torques $w$. Straight out, $w_1$ = 9.81 × (4 × 0.25 + 2.5 × 0.7) = 26.9775 N m: each link's weight times the horizontal distance from the shoulder to its centre, which is what a statics check gives.
+and its two slopes are the gravity torques $`w`$. Straight out, $`w_1`$ = 9.81 × (4 × 0.25 + 2.5 × 0.7) = 26.9775 N m: each link's weight times the horizontal distance from the shoulder to its centre, which is what a statics check gives.
 
 ### Step 3: apply Lagrange's equation to each joint
 
-The elbow first, because it is shorter. The slope of $L$ in $\theta_2'$ is $M_{12}\theta_1' + M_{22}\theta_2'$. Its rate in time is $M_{12}\theta_1'' + M_{22}\theta_2''$ plus a term from $M_{12}$ changing as the elbow bends: $-h\sin\theta_2\,\theta_2'\theta_1'$. The slope of $L$ in $\theta_2$ is $-h\sin\theta_2(\theta_1'^2 + \theta_1'\theta_2') - w_2$, because only the cosines in $M$ and the sine in $V$ hold $\theta_2$. Subtract:
+The elbow first, because it is shorter. The slope of $`L`$ in $`\theta_2'`$ is $`M_{12}\theta_1' + M_{22}\theta_2'`$. Its rate in time is $`M_{12}\theta_1'' + M_{22}\theta_2''`$ plus a term from $`M_{12}`$ changing as the elbow bends: $`-h\sin\theta_2\,\theta_2'\theta_1'`$. The slope of $`L`$ in $`\theta_2`$ is $`-h\sin\theta_2(\theta_1'^2 + \theta_1'\theta_2') - w_2`$, because only the cosines in $`M`$ and the sine in $`V`$ hold $`\theta_2`$. Subtract:
 
-$$M_{12}\theta_1'' + M_{22}\theta_2'' + h\sin\theta_2\,\theta_1'^2 + w_2 = \tau_2.$$
+```math
+M_{12}\theta_1'' + M_{22}\theta_2'' + h\sin\theta_2\,\theta_1'^2 + w_2 = \tau_2.
+```
 
-The $\theta_1'\theta_2'$ pieces cancel. The shoulder runs the same way and gives the first row.
+The $`\theta_1'\theta_2'`$ pieces cancel. The shoulder runs the same way and gives the first row.
 
 <details>
 <summary>Detailed working: the shoulder row</summary>
 
-The slope of $L$ in $\theta_1'$ is $M_{11}\theta_1' + M_{12}\theta_2'$. Along the motion, $M_{11}$ changes at $-2h\sin\theta_2\,\theta_2'$ and $M_{12}$ at $-h\sin\theta_2\,\theta_2'$. So its rate is
+The slope of $`L`$ in $`\theta_1'`$ is $`M_{11}\theta_1' + M_{12}\theta_2'`$. Along the motion, $`M_{11}`$ changes at $`-2h\sin\theta_2\,\theta_2'`$ and $`M_{12}`$ at $`-h\sin\theta_2\,\theta_2'`$. So its rate is
 
-$$M_{11}\theta_1'' + M_{12}\theta_2'' - h\sin\theta_2\,\theta_2'(2\theta_1' + \theta_2').$$
+$`\displaystyle M_{11}\theta_1'' + M_{12}\theta_2'' - h\sin\theta_2\,\theta_2'(2\theta_1' + \theta_2').`$
 
-$M$ contains no $\theta_1$, so the slope of $L$ in $\theta_1$ is only $-\partial V/\partial\theta_1 = -w_1$. Subtracting gives $M_{11}\theta_1'' + M_{12}\theta_2'' - h\sin\theta_2\,\theta_2'(2\theta_1' + \theta_2') + w_1 = \tau_1$, the first row of the manipulator equation.
+$`M`$ contains no $`\theta_1`$, so the slope of $`L`$ in $`\theta_1`$ is only $`-\partial V/\partial\theta_1 = -w_1`$. Subtracting gives $`M_{11}\theta_1'' + M_{12}\theta_2'' - h\sin\theta_2\,\theta_2'(2\theta_1' + \theta_2') + w_1 = \tau_1`$, the first row of the manipulator equation.
 
 </details>
 
-Read the elbow row for the lift: $\theta_1''$ = 6 rad/s², $\theta_2''$ = 0, at rest. Then $\tau_2 = M_{12} \times 6 + w_2$ = 0.383333 × 6 + 4.905 = 7.2050 N m. The elbow motor must hold the forearm straight while the upper arm accelerates under it. That 2.3000 N m is the off-diagonal entry at work.
+Read the elbow row for the lift: $`\theta_1''`$ = 6 rad/s², $`\theta_2''`$ = 0, at rest. Then $`\tau_2 = M_{12} \times 6 + w_2`$ = 0.383333 × 6 + 4.905 = 7.2050 N m. The elbow motor must hold the forearm straight while the upper arm accelerates under it. That 2.3000 N m is the off-diagonal entry at work.
 
 ### Step 4: why the motor torques land on the right, one each
 
-The right-hand side of Lagrange's equation is the **generalised force** (the work a force does per unit change of the coordinate). The shoulder motor turns the upper arm against the base: work $\tau_1\,\delta\theta_1$ for a small turn $\delta\theta_1$. The elbow motor turns the forearm one way and the upper arm the other, so its work is $\tau_2\,\delta(\theta_1 + \theta_2) - \tau_2\,\delta\theta_1 = \tau_2\,\delta\theta_2$. Measuring the elbow relative to the upper arm puts each motor in exactly one equation. With absolute angles the elbow motor would appear in both.
+The right-hand side of Lagrange's equation is the **generalised force** (the work a force does per unit change of the coordinate). The shoulder motor turns the upper arm against the base: work $`\tau_1\,\delta\theta_1`$ for a small turn $`\delta\theta_1`$. The elbow motor turns the forearm one way and the upper arm the other, so its work is $`\tau_2\,\delta(\theta_1 + \theta_2) - \tau_2\,\delta\theta_1 = \tau_2\,\delta\theta_2`$. Measuring the elbow relative to the upper arm puts each motor in exactly one equation. With absolute angles the elbow motor would appear in both.
 
 ### Step 5: getting a constraint force back, with a multiplier
 
 Sometimes the pin force is the answer: a bearing or a rod must be sized. Then do not build the constraint into the coordinates. Use more coordinates than needed, and add the constraint with a multiplier, as in [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md).
 
-Take a 2 kg pendulum bob on a 0.5 m rod. Describe the bob by $x$ and $y$, across and up from the pivot, with $L = \tfrac12 m(x'^2 + y'^2) - m g y$ and the rule $\sqrt{x^2 + y^2} - l = 0$. Lagrange's equation with a multiplier $\lambda$ adds $\lambda$ times the rule's slope:
+Take a 2 kg pendulum bob on a 0.5 m rod. Describe the bob by $`x`$ and $`y`$, across and up from the pivot, with $`L = \tfrac12 m(x'^2 + y'^2) - m g y`$ and the rule $`\sqrt{x^2 + y^2} - l = 0`$. Lagrange's equation with a multiplier $`\lambda`$ adds $`\lambda`$ times the rule's slope:
 
-$$m x'' = \lambda\,\frac{x}{l}, \qquad m y'' = -m g + \lambda\,\frac{y}{l}.$$
+```math
+m x'' = \lambda\,\frac{x}{l}, \qquad m y'' = -m g + \lambda\,\frac{y}{l}.
+```
 
-The extra force points along the rod, so $\lambda$ is the rod force; a rod in tension $F$ pulls toward the pivot, so $\lambda = -F$. The rule must hold at every instant, so its second rate is zero: $x x'' + y y'' + x'^2 + y'^2 = 0$. Substitute and solve:
+The extra force points along the rod, so $`\lambda`$ is the rod force; a rod in tension $`F`$ pulls toward the pivot, so $`\lambda = -F`$. The rule must hold at every instant, so its second rate is zero: $`x x'' + y y'' + x'^2 + y'^2 = 0`$. Substitute and solve:
 
-$$F = \frac{m\,(v^2 - g y)}{l},$$
+```math
+F = \frac{m\,(v^2 - g y)}{l},
+```
 
-with $v$ the bob's speed. At the bottom $y = -l$ and energy gives $v^2 = 2 g l(1 - \cos\theta_0)$, so $F = m g(3 - 2\cos\theta_0)$: 2 × 9.81 × 2 = 39.2400 N, twice the bob's weight. The code simulates the bob in $x$ and $y$ with this multiplier and reads the same 39.2400 N at the bottom.
+with $`v`$ the bob's speed. At the bottom $`y = -l`$ and energy gives $`v^2 = 2 g l(1 - \cos\theta_0)`$, so $`F = m g(3 - 2\cos\theta_0)`$: 2 × 9.81 × 2 = 39.2400 N, twice the bob's weight. The code simulates the bob in $`x`$ and $`y`$ with this multiplier and reads the same 39.2400 N at the bottom.
 
 For the arm, the same move would return the elbow pin force. The code takes it from Newton–Euler (free-body diagrams, link by link) instead: 24.5250 N up while holding, the forearm's weight, and 35.0250 N at the start of the lift.
 
 ### Step 6: the Hamiltonian form of the arm
 
-[Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md) does the swap for one angle; the arm needs the matrix version. The momenta are the slopes of $L$ in the speeds, $p = M(q)\,q'$. Kinetic energy is $\tfrac12 q'^{\mathsf T} M q' = \tfrac12 p^{\mathsf T} M^{-1} p$, so $H$ is the total energy in angles and momenta: four first-order equations, the form a simulator steps.
+[Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md) does the swap for one angle; the arm needs the matrix version. The momenta are the slopes of $`L`$ in the speeds, $`p = M(q)\,q'`$. Kinetic energy is $`\tfrac12 q'^{\mathsf T} M q' = \tfrac12 p^{\mathsf T} M^{-1} p`$, so $`H`$ is the total energy in angles and momenta: four first-order equations, the form a simulator steps.
 
-Two readings matter to an engineer. First, $M$ holds no $\theta_1$, so $p_1' = \tau_1 - w_1$: the shoulder momentum (the whole arm's angular momentum about the shoulder) changes only by motor torque minus gravity torque. Second, with the motors off, $H$ cannot change: $H' = \frac{\partial H}{\partial q}q' + \frac{\partial H}{\partial p}p' = 0$ because the two products cancel. A simulation whose energy drifts has a bug or too large a step.
+Two readings matter to an engineer. First, $`M`$ holds no $`\theta_1`$, so $`p_1' = \tau_1 - w_1`$: the shoulder momentum (the whole arm's angular momentum about the shoulder) changes only by motor torque minus gravity torque. Second, with the motors off, $`H`$ cannot change: $`H' = \frac{\partial H}{\partial q}q' + \frac{\partial H}{\partial p}p' = 0`$ because the two products cancel. A simulation whose energy drifts has a bug or too large a step.
 
 ---
 
 ## Worked numbers, by hand
 
-The arm straight out, at rest: $\theta_1 = \theta_2 = 0$, so every cosine is 1 and $c = 0$.
+The arm straight out, at rest: $`\theta_1 = \theta_2 = 0`$, so every cosine is 1 and $`c = 0`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| spin inertias | $I_1$ = 4 × 0.5² ÷ 12; $I_2$ = 2.5 × 0.4² ÷ 12 | 0.083333, 0.033333 kg m² |
-| $M_{11}$ | 0.083333 + 0.033333 + 4 × 0.25² + 2.5 × (0.25 + 0.04 + 0.2) | 1.591667 kg m² |
-| $M_{12}$ | 0.033333 + 2.5 × (0.04 + 0.1) | 0.383333 kg m² |
-| $M_{22}$ | 0.033333 + 2.5 × 0.04 | 0.133333 kg m² |
-| hold, shoulder $w_1$ | 9.81 × (4 × 0.25 + 2.5 × 0.5 + 2.5 × 0.2) | 26.9775 N m |
-| hold, elbow $w_2$ | 9.81 × 2.5 × 0.2 | 4.9050 N m |
+| spin inertias | $`I_1`$ = 4 × 0.5² ÷ 12; $`I_2`$ = 2.5 × 0.4² ÷ 12 | 0.083333, 0.033333 kg m² |
+| $`M_{11}`$ | 0.083333 + 0.033333 + 4 × 0.25² + 2.5 × (0.25 + 0.04 + 0.2) | 1.591667 kg m² |
+| $`M_{12}`$ | 0.033333 + 2.5 × (0.04 + 0.1) | 0.383333 kg m² |
+| $`M_{22}`$ | 0.033333 + 2.5 × 0.04 | 0.133333 kg m² |
+| hold, shoulder $`w_1`$ | 9.81 × (4 × 0.25 + 2.5 × 0.5 + 2.5 × 0.2) | 26.9775 N m |
+| hold, elbow $`w_2`$ | 9.81 × 2.5 × 0.2 | 4.9050 N m |
 | lift, shoulder | 1.591667 × 6 + 26.9775 = 9.5500 + 26.9775 | **36.5275 N m** |
 | lift, elbow | 0.383333 × 6 + 4.9050 = 2.3000 + 4.9050 | **7.2050 N m** |
 | pendulum, bottom tension | 2 × 9.81 × (3 − 2 × 0.5) | 39.2400 N |
@@ -182,23 +204,23 @@ elbow, coupling      ██                             2.3000 N m
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the coupling $M_{12}$: size each motor for its own link | elbow 4.9050 N m at the start of the lift (true 7.2050) | The forearm rides on an accelerating upper arm; the elbow must push it along |
-| $L = T + V$ | shoulder −17.4275, elbow −2.6050 N m | Gravity's sign flips: the motors would drive the arm into the floor |
-| Simulate without the speed terms $c$ | elbow 75.32° at 0.3 s after a power cut (true 44.84°); 0.5730 J of energy from nowhere | The whirling and Coriolis torques are part of $d/dt$ of the momenta, not optional |
+| Drop the coupling $`M_{12}`$: size each motor for its own link | elbow 4.9050 N m at the start of the lift (true 7.2050) | The forearm rides on an accelerating upper arm; the elbow must push it along |
+| $`L = T + V`$ | shoulder −17.4275, elbow −2.6050 N m | Gravity's sign flips: the motors would drive the arm into the floor |
+| Simulate without the speed terms $`c`$ | elbow 75.32° at 0.3 s after a power cut (true 44.84°); 0.5730 J of energy from nowhere | The whirling and Coriolis torques are part of $`d/dt`$ of the momenta, not optional |
 | Treat a cable as a rod past horizontal | tension −9.8100 N at release from 120° | A cable cannot push; it goes slack and the bob falls free until it snaps taut |
 
 ---
 
 ## How the arm falls when the power cuts
 
-The arm is held straight out and both motors lose power. Set $\tau = 0$. Gravity alone, on a forearm hinged to a fixed elbow, would swing it down at 36.7875 rad/s². On the real arm the elbow starts by bending *upward*, at +38.8226 rad/s², while the shoulder drops at −26.2991 rad/s². The upper arm falls out from under the elbow, and the forearm's own inertia keeps its far end high: its angle from horizontal starts rising, at 12.5234 rad/s². The off-diagonal mass entry $M_{12}$, not gravity on the forearm, decides which way the elbow first moves.
+The arm is held straight out and both motors lose power. Set $`\tau = 0`$. Gravity alone, on a forearm hinged to a fixed elbow, would swing it down at 36.7875 rad/s². On the real arm the elbow starts by bending *upward*, at +38.8226 rad/s², while the shoulder drops at −26.2991 rad/s². The upper arm falls out from under the elbow, and the forearm's own inertia keeps its far end high: its angle from horizontal starts rising, at 12.5234 rad/s². The off-diagonal mass entry $`M_{12}`$, not gravity on the forearm, decides which way the elbow first moves.
 
-| $t$ (s) | 0 | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 |
+| $`t`$ (s) | 0 | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 |
 | --- | --- | --- | --- | --- | --- | --- |
-| shoulder $\theta_1$ (deg) | 0.0 | −7.5 | −28.2 | −55.4 | −76.9 | −99.0 |
-| elbow $\theta_2$ (deg) | 0.0 | 10.9 | 35.8 | 44.8 | 5.5 | −38.5 |
+| shoulder $`\theta_1`$ (deg) | 0.0 | −7.5 | −28.2 | −55.4 | −76.9 | −99.0 |
+| elbow $`\theta_2`$ (deg) | 0.0 | 10.9 | 35.8 | 44.8 | 5.5 | −38.5 |
 
-At 0.3 s the joint speeds are −4.7337 and −1.7970 rad/s and the momenta are $p_1$ = −7.4040 and $p_2$ = −1.7099 kg m²/s. The tip reaches its peak speed in the first second, 7.035 m/s, at 0.410 s, as the arm whips through the bottom. A safety brake has well under half a second before the tip is at full speed.
+At 0.3 s the joint speeds are −4.7337 and −1.7970 rad/s and the momenta are $`p_1`$ = −7.4040 and $`p_2`$ = −1.7099 kg m²/s. The tip reaches its peak speed in the first second, 7.035 m/s, at 0.410 s, as the arm whips through the bottom. A safety brake has well under half a second before the tip is at full speed.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -216,7 +238,7 @@ Orange: the shoulder angle, falling past straight down (−90°) between 0.4 and
 
 ## Code, from first principles, and it actually runs
 
-The code takes two independent roads to the motor torques: the manipulator equation from $T - V$, and Newton–Euler free-body diagrams that know nothing of energies. It compares them on five moving states and against statics. It also checks the mass matrix against kinetic energy summed over 2000 thin slices of the links, which uses no inertia formula. It simulates the power cut two ways: by Lagrange's equations with the hand-derived speed terms, and by Hamilton's equations with $\partial H/\partial q$ from numerical slopes of $H$. It requires the two to agree and the energy to stay at its starting value, zero here. It simulates the pendulum in $x$ and $y$ with the multiplier and compares the bottom tension with the energy formula. Both use Runge–Kutta 4 ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) with a 0.001 s step for the arm and 0.0001 s for the pendulum.
+The code takes two independent roads to the motor torques: the manipulator equation from $`T - V`$, and Newton–Euler free-body diagrams that know nothing of energies. It compares them on five moving states and against statics. It also checks the mass matrix against kinetic energy summed over 2000 thin slices of the links, which uses no inertia formula. It simulates the power cut two ways: by Lagrange's equations with the hand-derived speed terms, and by Hamilton's equations with $`\partial H/\partial q`$ from numerical slopes of $`H`$. It requires the two to agree and the energy to stay at its starting value, zero here. It simulates the pendulum in $`x`$ and $`y`$ with the multiplier and compares the bottom tension with the energy formula. Both use Runge–Kutta 4 ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) with a 0.001 s step for the arm and 0.0001 s for the pendulum.
 
 ### Python
 
@@ -567,12 +589,12 @@ ALL CHECKS PASS
 
 Lean proves the manipulator equation, the fixed energy with motors off, and the rod tension, for every arm and every smooth motion.
 
-- Take any two-link arm, and any motion whose joint accelerations change smoothly. Then Lagrange's equation for each joint gives that joint's row of $M q'' + c + w = \tau$, with no pin force.
-- Suppose the arm moves with both motors off, so $\tau = 0$ at every instant. Then the total energy $T + V$, which is $H$, never changes.
-- Take a bob on a rod of length $l$, moving by Lagrange's equation with the multiplier $\lambda$. Then the rod tension is $F = m(v^2 - g y)/l$.
-- Straight out, $M_{11}$, $M_{12}$ and $M_{22}$ are exactly 191/120, 23/60 and 2/15 kg m², the card's 1.591667, 0.383333 and 0.133333.
+- Take any two-link arm, and any motion whose joint accelerations change smoothly. Then Lagrange's equation for each joint gives that joint's row of $`M q'' + c + w = \tau`$, with no pin force.
+- Suppose the arm moves with both motors off, so $`\tau = 0`$ at every instant. Then the total energy $`T + V`$, which is $`H`$, never changes.
+- Take a bob on a rod of length $`l`$, moving by Lagrange's equation with the multiplier $`\lambda`$. Then the rod tension is $`F = m(v^2 - g y)/l`$.
+- Straight out, $`M_{11}`$, $`M_{12}`$ and $`M_{22}`$ are exactly 191/120, 23/60 and 2/15 kg m², the card's 1.591667, 0.383333 and 0.133333.
 - Holding straight out takes 26.9775 and 4.9050 N m. Starting the lift takes 36.5275 and 7.2050 N m.
-- Take the 2 kg bob released from 60 degrees. Then $m g(3 - 2\cos\theta_0)$ is 39.2400 N, twice its weight.
+- Take the 2 kg bob released from 60 degrees. Then $`m g(3 - 2\cos\theta_0)`$ is 39.2400 N, twice its weight.
 
 Hamilton's first-order equations, the Newton–Euler cross-check, the power-cut motion and the simulations are left to the Python and Rust checks.
 
@@ -947,16 +969,16 @@ example : (2 : ℝ) * (981 / 100) * (3 - 2 * cos (π / 3)) = 981 / 25 ∧
 > - Guess first: halve the forearm to 1.25 kg. Does the shoulder's holding torque halve? Set `M2 = 1.25`. It falls from 26.9775 to 18.3938 N m, not to half: the upper arm's own share stays.
 > - Guess first: bend the elbow 90 degrees up and hold. Change the hold state to `[0.0, pi / 2]`. The shoulder needs 22.0725 N m, because the forearm's centre now sits straight above the elbow, nearer the shoulder.
 > - Guess first: release the pendulum from 90 degrees. Set `TH0 = pi / 2`. The rod pulls 58.8600 N at the bottom, three times the bob's weight, whatever the rod's length.
-> - Guess first: lay the arm flat, as on a horizontal assembly robot, by setting `GA = 0.0` (the pendulum keeps `G`). Start the power cut with the elbow bent and only the shoulder turning, `S0 = [0.0, 0.5, 2.0, 0.0]`. Does the shoulder keep turning at 2 rad/s? No. Nothing exerts a torque about the shoulder, so $p_1$ cannot change: both roads print the same $p_1$ at the start and at 1 s, while the elbow swings back and forth and the shoulder speed trades against it. With gravity on, as printed, $p_1$ goes from 0 to 3.0250 kg m²/s in the first second.
+> - Guess first: lay the arm flat, as on a horizontal assembly robot, by setting `GA = 0.0` (the pendulum keeps `G`). Start the power cut with the elbow bent and only the shoulder turning, `S0 = [0.0, 0.5, 2.0, 0.0]`. Does the shoulder keep turning at 2 rad/s? No. Nothing exerts a torque about the shoulder, so $`p_1`$ cannot change: both roads print the same $`p_1`$ at the start and at 1 s, while the elbow swings back and forth and the shoulder speed trades against it. With gravity on, as printed, $`p_1`$ goes from 0 to 3.0250 kg m²/s in the first second.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Sizing each motor for the link it carries.** The elbow motor seems to hold only the forearm, so it is sized for 4.9050 N m. But the forearm rides on the upper arm. When the shoulder accelerates, the off-diagonal mass entry $M_{12}$ puts 2.3000 N m more on the elbow, 7.2050 N m in all. The equations are coupled, and a decoupled sizing leaves the elbow 2.3000 N m short.
+> **Sizing each motor for the link it carries.** The elbow motor seems to hold only the forearm, so it is sized for 4.9050 N m. But the forearm rides on the upper arm. When the shoulder accelerates, the off-diagonal mass entry $`M_{12}`$ puts 2.3000 N m more on the elbow, 7.2050 N m in all. The equations are coupled, and a decoupled sizing leaves the elbow 2.3000 N m short.
 >
-> - **Writing $L = T + V$.** Gravity's torques flip sign: −17.4275 and −2.6050 N m to start the lift.
+> - **Writing $`L = T + V`$.** Gravity's torques flip sign: −17.4275 and −2.6050 N m to start the lift.
 > - **Dropping the speed terms because the arm "moves slowly".** They grow with speed squared: with the elbow at 90 degrees and the shoulder at 3 rad/s the elbow needs 2.2500 N m from them alone. In the power cut, dropping them puts the elbow at 75.32° instead of 44.84° after 0.3 s.
 > - **Trusting a constraint force with the wrong sign.** The multiplier gives −9.8100 N for a cable released from 120 degrees: the model has failed, not the cable.
 
@@ -964,29 +986,29 @@ example : (2 : ℝ) * (981 / 100) * (3 - 2 * cos (π / 3)) = 981 / 25 ∧
 
 ## Where you meet it in real life
 
-- **Robot controllers.** Industrial arm controllers compute $M q'' + c + w$ for the planned motion and feed that torque forward, so the feedback loop only corrects small errors. This is the "computed torque" or inverse-dynamics method.
+- **Robot controllers.** Industrial arm controllers compute $`M q'' + c + w`$ for the planned motion and feed that torque forward, so the feedback loop only corrects small errors. This is the "computed torque" or inverse-dynamics method.
 - **Motor and gearbox sizing.** Peak torque on a planned move, as in the lift above, sets the motor, the gear ratio and the brake.
 - **Cranes and hoists.** A load swinging on a rope pulls hardest at the bottom of the swing, up to three times its weight from a horizontal start; a rope that goes slack and snaps taut takes a shock load the steady model never shows.
 - **Multibody simulation software.** Vehicle, aircraft-landing-gear and machine simulators step the first-order Hamiltonian or Lagrangian form, and watch the energy to catch errors.
 
 > **Say it back**
-> Write the kinetic and potential energy of a machine in its joint angles. Lagrange's equation then gives one equation per joint, $M q'' + c + w = \tau$, with the motor torques on the right and the pin forces gone. The off-diagonal entries of the mass matrix couple the joints, so the elbow of the arm needs 7.2050 N m, not 4.9050, to start a lift. A multiplier brings back a constraint force when it is needed, such as a pendulum rod's 39.2400 N, twice the bob's weight. Swapping speeds for momenta gives Hamilton's first-order equations, which keep the energy fixed when the motors are off.
+> Write the kinetic and potential energy of a machine in its joint angles. Lagrange's equation then gives one equation per joint, $`M q'' + c + w = \tau`$, with the motor torques on the right and the pin forces gone. The off-diagonal entries of the mass matrix couple the joints, so the elbow of the arm needs 7.2050 N m, not 4.9050, to start a lift. A multiplier brings back a constraint force when it is needed, such as a pendulum rod's 39.2400 N, twice the bob's weight. Swapping speeds for momenta gives Hamilton's first-order equations, which keep the energy fixed when the motors are off.
 
 ---
 
 ## What this builds on
 
-- [Newton's laws](01-newtons-laws-work-and-energy.md): force, work and kinetic and potential energy, the raw material of $L$.
-- [Rotation](02-rigid-body-rotation-and-moment-of-inertia.md): a link's kinetic energy is its centre's motion plus its spin, and a uniform rod's spin inertia is $m l^2/12$.
+- [Newton's laws](01-newtons-laws-work-and-energy.md): force, work and kinetic and potential energy, the raw material of $`L`$.
+- [Rotation](02-rigid-body-rotation-and-moment-of-inertia.md): a link's kinetic energy is its centre's motion plus its spin, and a uniform rod's spin inertia is $`m l^2/12`$.
 - [Lagrangian mechanics](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/04-lagrangian-mechanics.md): Lagrange's equation and the proof that it is Newton's law in any coordinates.
-- [Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md): the Legendre swap from speed to momentum and why $H$ is conserved, for one angle.
+- [Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md): the Legendre swap from speed to momentum and why $`H`$ is conserved, for one angle.
 - [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md): a constraint added with a multiplier, which here is a rod's force.
 
 ## Where this goes next
 
 - [Equations of motion of a vehicle](05-vehicle-equations-of-motion.md): an aircraft's six freedoms, written by Newton and Euler in axes that turn with it, then linearised into modes.
-- [Orbits](09-orbital-mechanics-and-the-kepler-problem.md): an angle missing from the Lagrangian, like $\theta_1$ from the mass matrix, gives a conserved momentum, and the orbit follows.
-- [Symmetry and conservation](../09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): why each symmetry of $L$ or $H$ conserves a quantity, and how the Hamiltonian carries into quantum mechanics.
+- [Orbits](09-orbital-mechanics-and-the-kepler-problem.md): an angle missing from the Lagrangian, like $`\theta_1`$ from the mass matrix, gives a conserved momentum, and the orbit follows.
+- [Symmetry and conservation](../09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): why each symmetry of $`L`$ or $`H`$ conserves a quantity, and how the Hamiltonian carries into quantum mechanics.
 
 The arm here is rigid with frictionless joints; how much a flexible link or a gearbox's friction changes the torques is left open.
 

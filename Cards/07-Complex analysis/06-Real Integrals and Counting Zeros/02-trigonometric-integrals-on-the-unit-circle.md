@@ -35,32 +35,38 @@ Reminders:
 
 The translations:
 
-$$\cos t = \frac{z + 1/z}{2}, \qquad \sin t = \frac{z - 1/z}{2i}, \qquad dt = \frac{dz}{iz}$$
+```math
+\cos t = \frac{z + 1/z}{2}, \qquad \sin t = \frac{z - 1/z}{2i}, \qquad dt = \frac{dz}{iz}
+```
 
 **Read it aloud:** cosine is the average of the point and its reciprocal; a step in angle is a step along the circle divided by i times the point.
 
 The wheel's integral, carried through:
 
-$$I = \int_0^{2\pi} \frac{dt}{2 + \cos t} = \oint_{|z|=1} \frac{2\,dz}{i\,(z^2 + 4z + 1)} = 2\pi i \,\operatorname{Res}_{z = z_+} \frac{2}{i\,(z^2 + 4z + 1)} = \frac{2\pi}{\sqrt 3}$$
+```math
+I = \int_0^{2\pi} \frac{dt}{2 + \cos t} = \oint_{|z|=1} \frac{2\,dz}{i\,(z^2 + 4z + 1)} = 2\pi i \,\mathrm{Res}_{z = z_+} \frac{2}{i\,(z^2 + 4z + 1)} = \frac{2\pi}{\sqrt 3}
+```
 
 **Read it aloud:** the integral over one turn is a loop integral of a fraction in z, which is 2π i times the residue at the one pole inside, z₊ = −2 + √3, giving 2π over root 3.
 
-The general shape, for constants with $A > \sqrt{B^2 + C^2}$:
+The general shape, for constants with $`A > \sqrt{B^2 + C^2}`$:
 
-$$\int_0^{2\pi} \frac{dt}{A + B\cos t + C\sin t} = \frac{2\pi}{\sqrt{A^2 - B^2 - C^2}}$$
+```math
+\int_0^{2\pi} \frac{dt}{A + B\cos t + C\sin t} = \frac{2\pi}{\sqrt{A^2 - B^2 - C^2}}
+```
 
 **Read it aloud:** one over a constant plus a wave, over a full turn, is 2π over the root of the constant squared minus the wave's size squared.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | angle turned, radians from the top | 0 to 2π | — |
-| $z$ | the point e^(it) on the unit circle | at t = π, z = −1 | — |
-| $A$, $B$, $C$ | constant, cos weight, sin weight | 2, 1, 0; second case 5, 0, 4 | A up: smaller; B or C up: larger |
-| $q(z)$ | iz times (A + B cos t + C sin t), written in z | (i/2)(z^2 + 4z + 1) | — |
-| $z_+$, $z_-$ | roots of q: poles inside and outside | −0.267949, −3.732051 | pole nearer the circle: larger |
-| $\operatorname{Res}$ | residue; at a simple root of q, 1/q' | 0.000000 − 0.577350i | — |
-| $I$ | the integral over one turn | 3.627599 | — |
-| $N$ | steps in the trapezoid sum | 4, 8, 16, 64 | error falls fast |
+| $`t`$ | angle turned, radians from the top | 0 to 2π | — |
+| $`z`$ | the point e^(it) on the unit circle | at t = π, z = −1 | — |
+| $`A`$, $`B`$, $`C`$ | constant, cos weight, sin weight | 2, 1, 0; second case 5, 0, 4 | A up: smaller; B or C up: larger |
+| $`q(z)`$ | iz times (A + B cos t + C sin t), written in z | (i/2)(z^2 + 4z + 1) | — |
+| $`z_+`$, $`z_-`$ | roots of q: poles inside and outside | −0.267949, −3.732051 | pole nearer the circle: larger |
+| $`\mathrm{Res}`$ | residue; at a simple root of q, 1/q' | 0.000000 − 0.577350i | — |
+| $`I`$ | the integral over one turn | 3.627599 | — |
+| $`N`$ | steps in the trapezoid sum | 4, 8, 16, 64 | error falls fast |
 
 ### When it holds
 
@@ -89,7 +95,9 @@ Differentiate z = e^(it) in t: dz/dt = iz, so dt = dz/(iz).
 
 Swap in cos t: 2 + (z + 1/z)/2 = (z^2 + 4z + 1)/(2z). Take the reciprocal, multiply by dz/(iz), and the z cancels:
 
-$$\frac{1}{2 + \cos t}\,dt = \frac{2\,dz}{i\,(z^2 + 4z + 1)}$$
+```math
+\frac{1}{2 + \cos t}\,dt = \frac{2\,dz}{i\,(z^2 + 4z + 1)}
+```
 
 So 0 is not a pole; the poles are the roots of z^2 + 4z + 1.
 
@@ -103,7 +111,9 @@ No accident: swapping z for 1/z̄ (read z-bar) turns z + 1/z and (z − 1/z)/(2i
 
 Write the integrand as 1/q(z) with q(z) = (i/2)(z^2 + 4z + 1). Near a simple root z₀ of q (a root that is not repeated), the residue is the limit of (z − z₀)/q(z). Since q(z₀) = 0, q(z)/(z − z₀) equals (q(z) − q(z₀))/(z − z₀), which tends to the slope q'(z₀). So the residue is 1/q'(z₀). Here q'(z) = i(z + 2), and at the inside pole z + 2 = √3, so
 
-$$\operatorname{Res}_{z = z_+} = \frac{1}{i\sqrt 3} = -0.577350\,i$$
+```math
+\mathrm{Res}_{z = z_+} = \frac{1}{i\sqrt 3} = -0.577350\,i
+```
 
 Times 2π i, the i's cancel: I = 2π/√3 = 3.627599. Divided by 2π, the average is 1/√3 = 0.577350.
 

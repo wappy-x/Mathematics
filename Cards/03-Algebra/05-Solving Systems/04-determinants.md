@@ -39,31 +39,37 @@ Bars are areas, so none is negative. The stretch `[[3, 0], [0, 2]]` lifts it to 
 
 ## The formula
 
-For a 2 by 2 read row by row, $A$ = `[[a, b], [c, d]]` — $a$, $b$ on top, $c$, $d$ below — the determinant is
+For a 2 by 2 read row by row, $`A`$ = `[[a, b], [c, d]]` — $`a`$, $`b`$ on top, $`c`$, $`d`$ below — the determinant is
 
-$$\det A = ad - bc$$
+```math
+\det A = ad - bc
+```
 
 **Read it aloud:** multiply the main diagonal's two numbers, then take away the product of the other two.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the matrix applied, square: rows match columns | the shear `[[1, 1], [0, 1]]` | — |
-| $a$, $b$, $c$, $d$ | its four numbers, row by row (p, q, r, s on [The inverse matrix](03-inverse-matrix.md)) | 1, 1, 0, 1 | raise $a$ and it climbs by $d$, raise $b$ and it drops by $c$ |
-| $e$, $f$, $g$, $h$, $i$ | a 3 by 3's five further numbers | 1, 1, 1, 0, 4 below | each through its own minor |
-| $\det A$ | what $A$ multiplies every area by | 1 for the shear, 0 for the flattener | more stretch; a minus sign means flipped |
-| $B$ | a second matrix, applied before $A$ in AB | the stretch `[[3, 0], [0, 2]]` | AB's is $\det A$ times $\det B$ |
+| $`A`$ | the matrix applied, square: rows match columns | the shear `[[1, 1], [0, 1]]` | — |
+| $`a`$, $`b`$, $`c`$, $`d`$ | its four numbers, row by row (p, q, r, s on [The inverse matrix](03-inverse-matrix.md)) | 1, 1, 0, 1 | raise $`a`$ and it climbs by $`d`$, raise $`b`$ and it drops by $`c`$ |
+| $`e`$, $`f`$, $`g`$, $`h`$, $`i`$ | a 3 by 3's five further numbers | 1, 1, 1, 0, 4 below | each through its own minor |
+| $`\det A`$ | what $`A`$ multiplies every area by | 1 for the shear, 0 for the flattener | more stretch; a minus sign means flipped |
+| $`B`$ | a second matrix, applied before $`A`$ in AB | the stretch `[[3, 0], [0, 2]]` | AB's is $`\det A`$ times $`\det B`$ |
 
-In a 3 by 3 the letters restart row by row, so $c$ is top right: $A$ = `[[a, b, c], [d, e, f], [g, h, i]]`.
+In a 3 by 3 the letters restart row by row, so $`c`$ is top right: $`A`$ = `[[a, b, c], [d, e, f], [g, h, i]]`.
 
-$$\det A = a(ei - fh) - b(di - fg) + c(dh - eg)$$
+```math
+\det A = a(ei - fh) - b(di - fg) + c(dh - eg)
+```
 
 Walk along the top row. Cover a number's row and column; the four survivors form a 2 by 2 whose determinant is that number's **minor**. Multiply each number by its minor, then add, take away, add. That is **cofactor expansion**; a 4 by 4 breaks into four 3 by 3s the same way.
 
 Two shortcuts do the work:
 
-$$\det (AB) = \det A \times \det B$$
+```math
+\det (AB) = \det A \times \det B
+```
 
-AB means apply $B$ first, then $A$ ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)): area is multiplied twice, so the multipliers multiply. And when every number below the main diagonal is zero — **upper triangular**, a staircase here — the determinant is the diagonal multiplied out.
+AB means apply $`B`$ first, then $`A`$ ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)): area is multiplied twice, so the multipliers multiply. And when every number below the main diagonal is zero — **upper triangular**, a staircase here — the determinant is the diagonal multiplied out.
 
 ### When it holds
 
@@ -77,20 +83,20 @@ AB means apply $B$ first, then $A$ ([Matrix multiplication](../04-Matrices/03-ma
 
 ### Step 0: a matrix is four numbers saying where two arrows land
 
-The square is built from two arrows out of the corner: one step right, (1, 0), and one up, (0, 1). Applying $A$ sends (1, 0) to ($a$, $c$), its first column read downward, and (0, 1) to ($b$, $d$), the second ([Linear maps](../04-Matrices/04-linear-maps-as-matrices.md)). They span a **parallelogram** — four sides, opposite ones parallel — and area is now a question about that shape.
+The square is built from two arrows out of the corner: one step right, (1, 0), and one up, (0, 1). Applying $`A`$ sends (1, 0) to ($`a`$, $`c`$), its first column read downward, and (0, 1) to ($`b`$, $`d`$), the second ([Linear maps](../04-Matrices/04-linear-maps-as-matrices.md)). They span a **parallelogram** — four sides, opposite ones parallel — and area is now a question about that shape.
 
 ### Step 1: the area of that shape is ad − bc
 
-Draw the smallest upright rectangle around it, $a$ + $b$ wide and $c$ + $d$ tall, then trim six pieces: two triangles coming to ac, two to bd, two corner rectangles to 2bc. Left over: ad − bc.
+Draw the smallest upright rectangle around it, $`a`$ + $`b`$ wide and $`c`$ + $`d`$ tall, then trim six pieces: two triangles coming to ac, two to bd, two corner rectangles to 2bc. Left over: ad − bc.
 
-On the cafe matrix ($a$ = 2, $b$ = 1, $c$ = 1, $d$ = 1) the rectangle is 3 by 2, area 6, the trimmings come to 5, and 1 is left — ad − bc = 2 − 1, the area the code measures off the four corners. The picture needs four positive numbers, so the folded proof does every sign.
+On the cafe matrix ($`a`$ = 2, $`b`$ = 1, $`c`$ = 1, $`d`$ = 1) the rectangle is 3 by 2, area 6, the trimmings come to 5, and 1 is left — ad − bc = 2 − 1, the area the code measures off the four corners. The picture needs four positive numbers, so the folded proof does every sign.
 
 <details>
 <summary>Detailed proof: ad − bc at any signs</summary>
 
 The general version counts **signed area**: positive when the second arrow lies anticlockwise of the first, negative when clockwise. Doubling an arrow doubles it; sliding one along the other leaves it alone, so splitting an arrow splits the answer; two arrows on one line give 0.
 
-Split: ($a$, $c$) is $a$ right and $c$ up, ($b$, $d$) is $b$ right and $d$ up. Right with right, and up with up, lie on one line: 0. Right with up gives ad on the unit square; up with right gives bc in the other order, so it counts negative. Total ad − bc, at any signs; ordinary area is its size.
+Split: ($`a`$, $`c`$) is $`a`$ right and $`c`$ up, ($`b`$, $`d`$) is $`b`$ right and $`d`$ up. Right with right, and up with up, lie on one line: 0. Right with up gives ad on the unit square; up with right gives bc in the other order, so it counts negative. Total ad − bc, at any signs; ordinary area is its size.
 
 </details>
 
@@ -113,7 +119,7 @@ flowchart LR
 
 ### Step 4: multipliers multiply, and staircases fall out
 
-Run the shear (area × 1), then the stretch (area × 6): area × 6. The two as one matrix are `[[3, 3], [0, 2]]`, determinant 6. Why always? $B$ multiplies every area by $\det B$, then $A$ by $\det A$, and one number does that for every shape.
+Run the shear (area × 1), then the stretch (area × 6): area × 6. The two as one matrix are `[[3, 3], [0, 2]]`, determinant 6. Why always? $`B`$ multiplies every area by $`\det B`$, then $`A`$ by $`\det A`$, and one number does that for every shape.
 
 Staircases are easy for another reason. Expand along the first column: everything below the top-left number is zero, so only it contributes, and the same happens in the square left behind. Only the diagonal's product survives.
 

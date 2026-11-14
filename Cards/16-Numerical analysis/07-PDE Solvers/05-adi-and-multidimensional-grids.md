@@ -28,30 +28,34 @@ To scale, 200 units to the metre, on a 5-cell grid so the points show; both chec
 
 ## The formula
 
-Write $U_{i,j}^n$ for the grid temperature at $x = ih$, $y = jh$ after $n$ time steps. The **second difference** along a row is $\delta_x^2 U_{i,j} = U_{i+1,j} - 2U_{i,j} + U_{i-1,j}$; along a column, $\delta_y^2$ does the same with $j$. The **five-point rule** for the settled plate, and the **Peaceman–Rachford ADI step** for the warming plate, are
+Write $`U_{i,j}^n`$ for the grid temperature at $`x = ih`$, $`y = jh`$ after $`n`$ time steps. The **second difference** along a row is $`\delta_x^2 U_{i,j} = U_{i+1,j} - 2U_{i,j} + U_{i-1,j}`$; along a column, $`\delta_y^2`$ does the same with $`j`$. The **five-point rule** for the settled plate, and the **Peaceman–Rachford ADI step** for the warming plate, are
 
-$$\delta_x^2 U_{i,j} + \delta_y^2 U_{i,j} = 0 \quad\Longleftrightarrow\quad 4U_{i,j} - U_{i+1,j} - U_{i-1,j} - U_{i,j+1} - U_{i,j-1} = 0,$$
+```math
+\delta_x^2 U_{i,j} + \delta_y^2 U_{i,j} = 0 \quad\Longleftrightarrow\quad 4U_{i,j} - U_{i+1,j} - U_{i-1,j} - U_{i,j+1} - U_{i,j-1} = 0,
+```
 
-$$\Big(1 - \tfrac{r}{2}\delta_x^2\Big)U^{*} = \Big(1 + \tfrac{r}{2}\delta_y^2\Big)U^{n}, \qquad \Big(1 - \tfrac{r}{2}\delta_y^2\Big)U^{n+1} = \Big(1 + \tfrac{r}{2}\delta_x^2\Big)U^{*}, \qquad r = \frac{\alpha\,\Delta t}{h^2}.$$
+```math
+\Big(1 - \tfrac{r}{2}\delta_x^2\Big)U^{*} = \Big(1 + \tfrac{r}{2}\delta_y^2\Big)U^{n}, \qquad \Big(1 - \tfrac{r}{2}\delta_y^2\Big)U^{n+1} = \Big(1 + \tfrac{r}{2}\delta_x^2\Big)U^{*}, \qquad r = \frac{\alpha\,\Delta t}{h^2}.
+```
 
 **Read it aloud:** settled, each inside point is the average of its four neighbours; warming, each step first solves along every row with the columns read from the old values, then solves along every column with the rows read from the half-step values.
 
-Numbered row by row, the inside points form one list $\mathbf{U}$ of $m = (N-1)^2$ unknowns, and the five-point rule becomes $A\mathbf{U} = \mathbf{b}$.
+Numbered row by row, the inside points form one list $`\mathbf{U}`$ of $`m = (N-1)^2`$ unknowns, and the five-point rule becomes $`A\mathbf{U} = \mathbf{b}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u(x, y, t)$ | true temperature, C, at $x$ m across, $y$ m up, $t$ s after noon | centre 8.1027 C at 1 h | — |
-| $\alpha$ | diffusivity: how fast heat spreads, m²/s (wing 08 wrote it κ; here κ is the condition number) | 1.2 × 10⁻⁵, illustrative, near a carbon steel | the plate warms faster |
-| $N$, $h$ | cells per side; spacing $h = 1/N$ m | 40; 0.025 m | more unknowns; error falls as $h^2$ |
-| $i$, $j$, $k$ | column and row number of a point; its place $k = (j-1)(N-1) + i - 1$ in the list | $i$, $j$ from 0 to 40 | — |
-| $U_{i,j}^n$, $U^*$ | grid temperature at time level $n$; the half-step value after the row sweep | 3-cell grid: $U^* = 16.2760$ | — |
-| $\Delta t$ | time step, s | 600 s in the chart | fewer steps; time error grows as $\Delta t^2$ |
-| $r$ | mesh ratio $\alpha\Delta t/h^2$: the time step measured against the grid | 11.52 at 600 s | explicit steps fail above 1/4; ADI stays stable |
-| $\delta_x^2$, $\delta_y^2$ | second difference along a row, along a column (not yet divided by $h^2$) | — | — |
-| $A$, $\mathbf{U}$, $\mathbf{b}$ | five-point matrix; list of unknowns; right side holding the edge values | 1,521 × 1,521; 4 on the diagonal | — |
-| $m$, $w$ | number of unknowns; band half-width, the distance from the diagonal to the farthest nonzero | 1,521; 39 | banded cost grows as $m w^2$ |
-| $P$ | probe point (0.5, 0.8) m, 20 cm below the hot edge | settled 62.0792 C | — |
-| $g$; $p$, $q$; $a$, $c$ | amplification factor: what one step multiplies a grid wave by; the wave's hump counts across and up; its two weights in Step 4 | $\lvert g\rvert \le 1$ for ADI | — |
+| $`u(x, y, t)`$ | true temperature, C, at $`x`$ m across, $`y`$ m up, $`t`$ s after noon | centre 8.1027 C at 1 h | — |
+| $`\alpha`$ | diffusivity: how fast heat spreads, m²/s (wing 08 wrote it κ; here κ is the condition number) | 1.2 × 10⁻⁵, illustrative, near a carbon steel | the plate warms faster |
+| $`N`$, $`h`$ | cells per side; spacing $`h = 1/N`$ m | 40; 0.025 m | more unknowns; error falls as $`h^2`$ |
+| $`i`$, $`j`$, $`k`$ | column and row number of a point; its place $`k = (j-1)(N-1) + i - 1`$ in the list | $`i`$, $`j`$ from 0 to 40 | — |
+| $`U_{i,j}^n`$, $`U^*`$ | grid temperature at time level $`n`$; the half-step value after the row sweep | 3-cell grid: $`U^* = 16.2760`$ | — |
+| $`\Delta t`$ | time step, s | 600 s in the chart | fewer steps; time error grows as $`\Delta t^2`$ |
+| $`r`$ | mesh ratio $`\alpha\Delta t/h^2`$: the time step measured against the grid | 11.52 at 600 s | explicit steps fail above 1/4; ADI stays stable |
+| $`\delta_x^2`$, $`\delta_y^2`$ | second difference along a row, along a column (not yet divided by $`h^2`$) | — | — |
+| $`A`$, $`\mathbf{U}`$, $`\mathbf{b}`$ | five-point matrix; list of unknowns; right side holding the edge values | 1,521 × 1,521; 4 on the diagonal | — |
+| $`m`$, $`w`$ | number of unknowns; band half-width, the distance from the diagonal to the farthest nonzero | 1,521; 39 | banded cost grows as $`m w^2`$ |
+| $`P`$ | probe point (0.5, 0.8) m, 20 cm below the hot edge | settled 62.0792 C | — |
+| $`g`$; $`p`$, $`q`$; $`a`$, $`c`$ | amplification factor: what one step multiplies a grid wave by; the wave's hump counts across and up; its two weights in Step 4 | $`\lvert g\rvert \le 1`$ for ADI | — |
 
 ### When it holds
 
@@ -70,99 +74,103 @@ An implicit step on a plate couples each point to four neighbours at once. Make 
 
 ### Step 1: assemble the five-point system
 
-[Laplace's equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/07-laplaces-equation-and-harmonic-functions.md) already derives the five-point rule from Taylor's theorem: the four neighbours sum to four times the centre plus $h^2(u_{xx} + u_{yy})$, up to terms in $h^4$. Here $u_{xx}$ is the bend across, a second derivative in $x$ with $y$ held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). This card builds the system.
+[Laplace's equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/07-laplaces-equation-and-harmonic-functions.md) already derives the five-point rule from Taylor's theorem: the four neighbours sum to four times the centre plus $`h^2(u_{xx} + u_{yy})`$, up to terms in $`h^4`$. Here $`u_{xx}`$ is the bend across, a second derivative in $`x`$ with $`y`$ held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). This card builds the system.
 
-1. Number the inside points row by row: $k = (j-1)(N-1) + i - 1$.
-2. Row $k$ of $A$ gets 4 on the diagonal.
-3. For each of the four neighbours: if it is inside, put −1 in its column. Its east and west neighbours sit 1 place away in the list; its north and south neighbours sit $N - 1$ places away.
-4. If the neighbour is on an edge, its value is known. Add it to $b_k$ instead.
+1. Number the inside points row by row: $`k = (j-1)(N-1) + i - 1`$.
+2. Row $`k`$ of $`A`$ gets 4 on the diagonal.
+3. For each of the four neighbours: if it is inside, put −1 in its column. Its east and west neighbours sit 1 place away in the list; its north and south neighbours sit $`N - 1`$ places away.
+4. If the neighbour is on an edge, its value is known. Add it to $`b_k`$ instead.
 
-So $A$ has at most five nonzeros in a row, all within $w = N - 1$ places of the diagonal. On the 40-cell grid, $\mathbf{b}$ holds 100 in the 39 entries of the top inside row and 0 elsewhere. Leave the edge values out and the system has the answer 0 everywhere.
+So $`A`$ has at most five nonzeros in a row, all within $`w = N - 1`$ places of the diagonal. On the 40-cell grid, $`\mathbf{b}`$ holds 100 in the 39 entries of the top inside row and 0 elsewhere. Leave the edge values out and the system has the answer 0 everywhere.
 
 ### Step 2: why a direct solve is costly
 
-Gaussian elimination inside the band fills in the zeros between the diagonals. The checks count every flop (one floating-point add, subtract, multiply or divide; see [Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md)). At $N = 40$, factoring costs 4,604,821 flops, close to the estimate $2mw^2$ = 4,626,882. Each later solve with the factors costs 235,677, close to $4mw$ = 237,276.
+Gaussian elimination inside the band fills in the zeros between the diagonals. The checks count every flop (one floating-point add, subtract, multiply or divide; see [Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md)). At $`N = 40`$, factoring costs 4,604,821 flops, close to the estimate $`2mw^2`$ = 4,626,882. Each later solve with the factors costs 235,677, close to $`4mw`$ = 237,276.
 
 An implicit time step has a matrix of the same shape, so it pays at least a solve every step.
 
-ADI pays for $2(N-1)$ chains per step. Each chain costs $5(N-1) + 4$ flops for its right side and $8(N-1) - 6$ for the sweep, in this code's arrangement. That is $2(N-1)(13(N-1) - 2)$ flops: 39,390 at $N = 40$, 6.0 times fewer than the estimate for one banded solve. At $N = 1000$ the estimates are 25,944,030 against 3,988,011,996, a ratio of 153.7, before the 1,992,011,992,002 flops of factoring.
+ADI pays for $`2(N-1)`$ chains per step. Each chain costs $`5(N-1) + 4`$ flops for its right side and $`8(N-1) - 6`$ for the sweep, in this code's arrangement. That is $`2(N-1)(13(N-1) - 2)`$ flops: 39,390 at $`N = 40`$, 6.0 times fewer than the estimate for one banded solve. At $`N = 1000`$ the estimates are 25,944,030 against 3,988,011,996, a ratio of 153.7, before the 1,992,011,992,002 flops of factoring.
 
 ### Step 3: ADI is Crank–Nicolson plus a small term
 
-Apply $(1 - \tfrac r2\delta_x^2)$ to the second half step and use the first:
+Apply $`(1 - \tfrac r2\delta_x^2)`$ to the second half step and use the first:
 
-$$\Big(1 - \tfrac r2\delta_x^2\Big)\Big(1 - \tfrac r2\delta_y^2\Big)U^{n+1} = \Big(1 + \tfrac r2\delta_x^2\Big)\Big(1 + \tfrac r2\delta_y^2\Big)U^{n}.$$
+```math
+\Big(1 - \tfrac r2\delta_x^2\Big)\Big(1 - \tfrac r2\delta_y^2\Big)U^{n+1} = \Big(1 + \tfrac r2\delta_x^2\Big)\Big(1 + \tfrac r2\delta_y^2\Big)U^{n}.
+```
 
-Multiply out both sides. What remains is the Crank–Nicolson step of [Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md) plus one extra term, $\tfrac{r^2}{4}\delta_x^2\delta_y^2(U^{n+1} - U^n)$. Divided by $\Delta t$ to compare with the equation, that term is about $\tfrac{\alpha^2\Delta t^2}{4}\,u_{xxyyt}$, where $u_{xxyyt}$ means: take the bend across, $u_{xx}$, then the bend of that up the plate, then the rate at which the result changes in time. It is of order $\Delta t^2$, the same order as Crank–Nicolson's own error. So ADI is second order in time. The checks see it: as $\Delta t$ halves from 600 s to 300 s to 150 s, the time error falls by 3.85 and 4.13. The halving from 20 minutes to 10 gives 7.71: steps that long are outside the range where the $\Delta t^2$ term dominates.
+Multiply out both sides. What remains is the Crank–Nicolson step of [Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md) plus one extra term, $`\tfrac{r^2}{4}\delta_x^2\delta_y^2(U^{n+1} - U^n)`$. Divided by $`\Delta t`$ to compare with the equation, that term is about $`\tfrac{\alpha^2\Delta t^2}{4}\,u_{xxyyt}`$, where $`u_{xxyyt}`$ means: take the bend across, $`u_{xx}`$, then the bend of that up the plate, then the rate at which the result changes in time. It is of order $`\Delta t^2`$, the same order as Crank–Nicolson's own error. So ADI is second order in time. The checks see it: as $`\Delta t`$ halves from 600 s to 300 s to 150 s, the time error falls by 3.85 and 4.13. The halving from 20 minutes to 10 gives 7.71: steps that long are outside the range where the $`\Delta t^2`$ term dominates.
 
 <details>
 <summary>Detailed proof: the factored form, and its local error</summary>
 
-On a rectangle with fixed edges and equal spacing, $\delta_x^2$ acts along rows and $\delta_y^2$ along columns, so $\delta_x^2\delta_y^2 = \delta_y^2\delta_x^2$. The two factors in $x$ also commute with each other, since both are polynomials in $\delta_x^2$.
+On a rectangle with fixed edges and equal spacing, $`\delta_x^2`$ acts along rows and $`\delta_y^2`$ along columns, so $`\delta_x^2\delta_y^2 = \delta_y^2\delta_x^2`$. The two factors in $`x`$ also commute with each other, since both are polynomials in $`\delta_x^2`$.
 
-From the second half step, $(1 - \tfrac r2\delta_y^2)U^{n+1} = (1 + \tfrac r2\delta_x^2)U^*$. Apply $(1 - \tfrac r2\delta_x^2)$ to both sides. On the right, swap the two $x$ factors and use the first half step, $(1 - \tfrac r2\delta_x^2)U^* = (1 + \tfrac r2\delta_y^2)U^n$. This gives the factored form above.
+From the second half step, $`(1 - \tfrac r2\delta_y^2)U^{n+1} = (1 + \tfrac r2\delta_x^2)U^*`$. Apply $`(1 - \tfrac r2\delta_x^2)`$ to both sides. On the right, swap the two $`x`$ factors and use the first half step, $`(1 - \tfrac r2\delta_x^2)U^* = (1 + \tfrac r2\delta_y^2)U^n`$. This gives the factored form above.
 
-Expand: $(1 + \tfrac{r^2}{4}\delta_x^2\delta_y^2)(U^{n+1} - U^n) = \tfrac r2(\delta_x^2 + \delta_y^2)(U^{n+1} + U^n)$. Without the $r^2$ term this is Crank–Nicolson. Put in the true solution. Crank–Nicolson's residual is $O(\Delta t^3 + \Delta t\,h^2)$ per step. The extra term is $\tfrac{r^2}{4}\delta_x^2\delta_y^2(u^{n+1} - u^n) = \tfrac{\alpha^2\Delta t^2}{4}\,h^{-4}\delta_x^2\delta_y^2\,(\Delta t\,u_t + O(\Delta t^2))$, and $h^{-4}\delta_x^2\delta_y^2 u_t \to u_{xxyyt}$. So it is $O(\Delta t^3)$ per step, for a smooth solution. Summed over the steps to a fixed time, with stability (Step 4), the global error is $O(\Delta t^2 + h^2)$.
+Expand: $`(1 + \tfrac{r^2}{4}\delta_x^2\delta_y^2)(U^{n+1} - U^n) = \tfrac r2(\delta_x^2 + \delta_y^2)(U^{n+1} + U^n)`$. Without the $`r^2`$ term this is Crank–Nicolson. Put in the true solution. Crank–Nicolson's residual is $`O(\Delta t^3 + \Delta t\,h^2)`$ per step. The extra term is $`\tfrac{r^2}{4}\delta_x^2\delta_y^2(u^{n+1} - u^n) = \tfrac{\alpha^2\Delta t^2}{4}\,h^{-4}\delta_x^2\delta_y^2\,(\Delta t\,u_t + O(\Delta t^2))`$, and $`h^{-4}\delta_x^2\delta_y^2 u_t \to u_{xxyyt}`$. So it is $`O(\Delta t^3)`$ per step, for a smooth solution. Summed over the steps to a fixed time, with stability (Step 4), the global error is $`O(\Delta t^2 + h^2)`$.
 
 </details>
 
 ### Step 4: stable at every step length
 
-Test one grid wave, $\sin(p\pi x)\sin(q\pi y)$, as [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md) does. The row difference multiplies it by $-4\sin^2(p\pi h/2)$. Write $a = 2r\sin^2(p\pi h/2)$ and $c = 2r\sin^2(q\pi h/2)$, both at least 0. One ADI step multiplies the wave by
+Test one grid wave, $`\sin(p\pi x)\sin(q\pi y)`$, as [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md) does. The row difference multiplies it by $`-4\sin^2(p\pi h/2)`$. Write $`a = 2r\sin^2(p\pi h/2)`$ and $`c = 2r\sin^2(q\pi h/2)`$, both at least 0. One ADI step multiplies the wave by
 
-$$g = \frac{1 - a}{1 + a}\cdot\frac{1 - c}{1 + c}.$$
+```math
+g = \frac{1 - a}{1 + a}\cdot\frac{1 - c}{1 + c}.
+```
 
-A fraction $(1 - a)/(1 + a)$ lies between −1 and 1 whenever $a \ge 0$, and the same holds for $c$. So $|g| \le 1$ for every wave and every $r$: no wave can grow.
+A fraction $`(1 - a)/(1 + a)`$ lies between −1 and 1 whenever $`a \ge 0`$, and the same holds for $`c`$. So $`|g| \le 1`$ for every wave and every $`r`$: no wave can grow.
 
-An explicit step multiplies the same wave by $1 - 2a - 2c$, which can fall to $1 - 8r$. That stays above −1 only when $r \le 1/4$: half the one-dimensional limit. On the 40-cell grid that means $\Delta t \le$ 13.0208 s.
+An explicit step multiplies the same wave by $`1 - 2a - 2c`$, which can fall to $`1 - 8r`$. That stays above −1 only when $`r \le 1/4`$: half the one-dimensional limit. On the 40-cell grid that means $`\Delta t \le`$ 13.0208 s.
 
 ### Step 5: where the edge values go
 
-In the row sweep, the first and last points of each row have an edge as a neighbour. Its value goes to the right side, times $r/2$. The explicit column part also reads edge values above and below. The column sweep does the same with the top and bottom edges.
+In the row sweep, the first and last points of each row have an edge as a neighbour. Its value goes to the right side, times $`r/2`$. The explicit column part also reads edge values above and below. The column sweep does the same with the top and bottom edges.
 
-The half-step value $U^*$ on an edge needs care. Subtracting the second half step from the first gives $2U^* = (1 + \tfrac r2\delta_y^2)U^n + (1 - \tfrac r2\delta_y^2)U^{n+1}$. For an edge held still, this is just the edge temperature. For an edge that changes in time, use this formula, not the edge temperature at the half time.
+The half-step value $`U^*`$ on an edge needs care. Subtracting the second half step from the first gives $`2U^* = (1 + \tfrac r2\delta_y^2)U^n + (1 - \tfrac r2\delta_y^2)U^{n+1}`$. For an edge held still, this is just the edge temperature. For an edge that changes in time, use this formula, not the edge temperature at the half time.
 
 ---
 
 ## Worked numbers, by hand
 
-The coarsest grid with rows: 3 cells a side, $h = 1/3$ m, four inside points. Settled first. By left–right symmetry the two top points share one value, and the two bottom points another. At a top point, four times its value equals 100 (the edge above) + 0 (the side edge) + the other top point + the bottom point below. So 3 × top − bottom = 100, and likewise 3 × bottom − top = 0. Hence top = 37.5000 C and bottom = 12.5000 C.
+The coarsest grid with rows: 3 cells a side, $`h = 1/3`$ m, four inside points. Settled first. By left–right symmetry the two top points share one value, and the two bottom points another. At a top point, four times its value equals 100 (the edge above) + 0 (the side edge) + the other top point + the bottom point below. So 3 × top − bottom = 100, and likewise 3 × bottom − top = 0. Hence top = 37.5000 C and bottom = 12.5000 C.
 
 Now one ADI step of an hour from the cold start.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| mesh ratio $r$ | $1.2\times10^{-5} \times 3600 \times 9$ | 0.3888 |
-| half of it | $0.3888 / 2$ | 0.1944 |
-| row sweep, top row: right side | $0 + 0.1944 \times (100 - 0 + 0)$; the left and right edges add 0 | 19.4400 |
-| row sweep: diagonal $1 + r$ | $1 + 0.3888$ | 1.3888 |
-| row sweep: solve the chain | both points equal by symmetry: $19.4400 / (1.3888 - 0.1944)$ | $U^*$ = 16.2760 |
+| mesh ratio $`r`$ | $`1.2\times10^{-5} \times 3600 \times 9`$ | 0.3888 |
+| half of it | $`0.3888 / 2`$ | 0.1944 |
+| row sweep, top row: right side | $`0 + 0.1944 \times (100 - 0 + 0)`$; the left and right edges add 0 | 19.4400 |
+| row sweep: diagonal $`1 + r`$ | $`1 + 0.3888`$ | 1.3888 |
+| row sweep: solve the chain | both points equal by symmetry: $`19.4400 / (1.3888 - 0.1944)`$ | $`U^*`$ = 16.2760 |
 | row sweep, bottom row | right side 0 | 0 |
-| column sweep, top point: right side | $16.2760 + 0.1944 \times (0 - 2 \times 16.2760 + 16.2760) + 0.1944 \times 100$ | 32.5519 |
-| column sweep: eliminate the bottom point | pivot $1.3888 - 0.1944^2 / 1.3888$ | 1.3616 |
-| top point | $32.5519 / 1.3616$ | **23.9073 C** |
-| bottom point | $0.1944 \times 23.9073 / 1.3888$ | 3.3465 C |
+| column sweep, top point: right side | $`16.2760 + 0.1944 \times (0 - 2 \times 16.2760 + 16.2760) + 0.1944 \times 100`$ | 32.5519 |
+| column sweep: eliminate the bottom point | pivot $`1.3888 - 0.1944^2 / 1.3888`$ | 1.3616 |
+| top point | $`32.5519 / 1.3616`$ | **23.9073 C** |
+| bottom point | $`0.1944 \times 23.9073 / 1.3888`$ | 3.3465 C |
 
 The true plate reads 22.2413 C at (1/3, 2/3) after an hour. Four unknowns and one long step land at 23.9073 C, off by 1.6660 C. The coarse grid and the hour-long step both add to that error; the finer runs below separate them.
 
-The settled plate on finer grids, at $P$ = (0.5, 0.8), against the series of [Laplace on a rectangle](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/08-laplace-on-a-rectangle.md), 62.0792 C:
+The settled plate on finer grids, at $`P`$ = (0.5, 0.8), against the series of [Laplace on a rectangle](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/08-laplace-on-a-rectangle.md), 62.0792 C:
 
-| Cells $N$ | Unknowns | Grid at $P$, C | True error | Ratio |
+| Cells $`N`$ | Unknowns | Grid at $`P`$, C | True error | Ratio |
 | --- | --- | --- | --- | --- |
 | 10 | 81 | 61.7397 | 0.33950 | — |
 | 20 | 361 | 61.9910 | 0.08821 | 3.85 |
 | 40 | 1,521 | 62.0570 | 0.02224 | 3.97 |
 
-The error falls fourfold as $h$ halves: second order in space. The centre reads 25.0000 C on every grid, the symmetry value.
+The error falls fourfold as $`h`$ halves: second order in space. The centre reads 25.0000 C on every grid, the symmetry value.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Edge values left out of $\mathbf{b}$ | 0.0000 C at $P$ on the 20-cell grid, against 61.9910 with the edges in | the 100 C edge never enters the equations |
-| Full $r$, not $r/2$, in each half step, 60 s steps | 17.6433 C at 1 h; the true 2 h value is 17.6418 | each half step moved a whole step, so time ran twice as fast |
-| Explicit steps of 15 s ($r$ = 0.288) | largest value 3.271e+23 C after an hour | the one-dimensional limit 1/2 used in two dimensions, where it is 1/4 |
-| One ADI step for the whole hour ($r$ = 69.12) | 6.2344 C; true 8.1027 | stable is not accurate: the time error is 1.8832 |
+| Edge values left out of $`\mathbf{b}`$ | 0.0000 C at $`P`$ on the 20-cell grid, against 61.9910 with the edges in | the 100 C edge never enters the equations |
+| Full $`r`$, not $`r/2`$, in each half step, 60 s steps | 17.6433 C at 1 h; the true 2 h value is 17.6418 | each half step moved a whole step, so time ran twice as fast |
+| Explicit steps of 15 s ($`r`$ = 0.288) | largest value 3.271e+23 C after an hour | the one-dimensional limit 1/2 used in two dimensions, where it is 1/4 |
+| One ADI step for the whole hour ($`r`$ = 69.12) | 6.2344 C; true 8.1027 | stable is not accurate: the time error is 1.8832 |
 
 ---
 
@@ -180,13 +188,13 @@ xychart-beta
     line [8.0772, 17.6469, 21.8639, 23.6631, 24.4301, 24.7571, 24.8964, 24.9559]
 ```
 
-Orange: the exact series. Green: ADI on the 40-cell grid with 10-minute steps ($r$ = 11.52). The two lines lie on top of each other; the largest gap is 0.0255 C, at the first hour. At 24 hours the ADI grid matches the direct five-point solve to within 5.25e-08 C at every point.
+Orange: the exact series. Green: ADI on the 40-cell grid with 10-minute steps ($`r`$ = 11.52). The two lines lie on top of each other; the largest gap is 0.0255 C, at the first hour. At 24 hours the ADI grid matches the direct five-point solve to within 5.25e-08 C at every point.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code takes **three independent roads**: the exact series, settled and warming; the five-point system assembled with its edge values and solved by banded elimination, flops counted; and ADI with its own Thomas solver. They meet three ways: the settled grid against the series, order 2 in $h$; ADI at one hour against the series, order 2 in $\Delta t$; ADI at 24 hours against the direct solve. Explicit steps run on each side of their limit.
+The code takes **three independent roads**: the exact series, settled and warming; the five-point system assembled with its edge values and solved by banded elimination, flops counted; and ADI with its own Thomas solver. They meet three ways: the settled grid against the series, order 2 in $`h`$; ADI at one hour against the series, order 2 in $`\Delta t`$; ADI at 24 hours against the direct solve. Explicit steps run on each side of their limit.
 
 ### Python
 
@@ -573,12 +581,12 @@ ALL CHECKS PASS
 
 Lean proves the algebra of Steps 3 and 4 for every grid wave and every step length, and checks the card's whole-number arithmetic.
 
-- The row difference $\delta_x^2$ multiplies the grid wave $\sin(p\pi x)\sin(q\pi y)$ by $-4\sin^2(p\pi h/2)$. The column difference $\delta_y^2$ multiplies it by $-4\sin^2(q\pi h/2)$.
-- With $a$ and $c$ as in Step 4, $U^* = \tfrac{1 - c}{1 + a}$ times the wave and $U^{n+1} = g$ times the wave satisfy both half steps at every grid point.
-- $|g| \le 1$ for every $\alpha > 0$, $\Delta t > 0$ and $h > 0$: no wave can grow, whatever the step length.
-- Any $U^*$ and $U^{n+1}$ that satisfy the two half steps also satisfy the factored form of Step 3.
-- Multiplied out, that form is Crank–Nicolson plus the one extra term $\tfrac{r^2}{4}\delta_x^2\delta_y^2(U^{n+1} - U^n)$.
-- The explicit factor $1 - 2a - 2c$ stays between −1 and 1 for every wave exactly when $r \le 1/4$.
+- The row difference $`\delta_x^2`$ multiplies the grid wave $`\sin(p\pi x)\sin(q\pi y)`$ by $`-4\sin^2(p\pi h/2)`$. The column difference $`\delta_y^2`$ multiplies it by $`-4\sin^2(q\pi h/2)`$.
+- With $`a`$ and $`c`$ as in Step 4, $`U^* = \tfrac{1 - c}{1 + a}`$ times the wave and $`U^{n+1} = g`$ times the wave satisfy both half steps at every grid point.
+- $`|g| \le 1`$ for every $`\alpha > 0`$, $`\Delta t > 0`$ and $`h > 0`$: no wave can grow, whatever the step length.
+- Any $`U^*`$ and $`U^{n+1}`$ that satisfy the two half steps also satisfy the factored form of Step 3.
+- Multiplied out, that form is Crank–Nicolson plus the one extra term $`\tfrac{r^2}{4}\delta_x^2\delta_y^2(U^{n+1} - U^n)`$.
+- The explicit factor $`1 - 2a - 2c`$ stays between −1 and 1 for every wave exactly when $`r \le 1/4`$.
 - The hand arithmetic holds exactly: the 3-cell settled values, the mesh ratios 0.3888, 11.52, 0.2304 and 0.288, the 13.0208 s limit, and the unknown and flop counts.
 
 The five-point assembly, the edge values of Step 5, the second-order error claims and every decimal are left to the Python and Rust checks.
@@ -801,19 +809,19 @@ example : 999 ^ 2 = 998001 ∧ 4 * 998001 * 999 = 3988011996 ∧
 > **Try changing**
 > - Guess first: one ADI step of a whole hour. Is the centre too hot or too cold? Print `run(adi_step, 40, 3600.0, HOUR)[20][20]`. It reads 6.2344 C against 8.1027: too cold, though stable.
 > - Guess first: explicit steps of 15 s, just over the 13.0208 s limit. Change `12.0` to `15.0` in the explicit run. The largest value reaches 3.271e+23 C within the hour.
-> - Guess first: halve the spacing on the settled plate. Compare N = 20 with N = 40 in the output. The error at $P$ falls from 0.08821 to 0.02224 C, a ratio of 3.97.
-> - Guess first: use $r$ in each half step instead of $r/2$. Call `adi_step` with `half=False`. The one-hour centre reads 17.6433 C, the plate's two-hour temperature.
+> - Guess first: halve the spacing on the settled plate. Compare N = 20 with N = 40 in the output. The error at $`P`$ falls from 0.08821 to 0.02224 C, a ratio of 3.97.
+> - Guess first: use $`r`$ in each half step instead of $`r/2`$. Call `adi_step` with `half=False`. The one-hour centre reads 17.6433 C, the plate's two-hour temperature.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Taking "stable at every step" to mean "accurate at every step".** ADI never blows up, so one huge step is tempting. One step of an hour gives the centre 6.2344 C against the true 8.1027; 20-minute steps are still 0.2967 C off. Stability only promises that errors do not grow. The step length still sets the error, which falls as $\Delta t^2$.
+> **Taking "stable at every step" to mean "accurate at every step".** ADI never blows up, so one huge step is tempting. One step of an hour gives the centre 6.2344 C against the true 8.1027; 20-minute steps are still 0.2967 C off. Stability only promises that errors do not grow. The step length still sets the error, which falls as $`\Delta t^2`$.
 >
 > Smaller traps:
-> - **The rod's limit on the plate.** Explicit steps need $r \le 1/4$ in two dimensions, not 1/2. At $r$ = 0.288 the grid reaches 3.271e+23 C.
-> - **Forgetting the half.** Each half step uses $r/2$. Using $r$ gives 17.6433 C at one hour: the two-hour answer.
+> - **The rod's limit on the plate.** Explicit steps need $`r \le 1/4`$ in two dimensions, not 1/2. At $`r`$ = 0.288 the grid reaches 3.271e+23 C.
+> - **Forgetting the half.** Each half step uses $`r/2`$. Using $`r`$ gives 17.6433 C at one hour: the two-hour answer.
 > - **Leaving the edges out of the right side.** The matrix alone describes a plate with every edge at 0 C. The probe point reads 0.0000 C.
 > - **Reading a small error as accuracy.** At 300 s the error against the truth is only 0.0044 C, because a time error and a space error cancel. Halve the step and the error grows to 0.0124 C. Check each error separately.
 
@@ -827,7 +835,7 @@ example : 999 ^ 2 = 998001 ∧ 4 * 998001 * 999 = 3988011996 ∧
 - **Image smoothing.** Running the heat equation on an image blurs it. Split schemes keep each step to row solves and column solves.
 
 > **Say it back**
-> On a grid, each inside temperature is tied to its four neighbours by the five-point rule. Known edge values move to the right-hand side, and the system has a band as wide as a row. Solving that band directly costs about $2mw^2$ flops, and an implicit step would pay part of that every step. ADI makes one direction implicit at a time, so every solve is a chain: 39,390 flops a step on the 40-cell grid. It is Crank–Nicolson plus a term of order $\Delta t^2$, stable at every step length, and second order in space and time.
+> On a grid, each inside temperature is tied to its four neighbours by the five-point rule. Known edge values move to the right-hand side, and the system has a band as wide as a row. Solving that band directly costs about $`2mw^2`$ flops, and an implicit step would pay part of that every step. ADI makes one direction implicit at a time, so every solve is a chain: 39,390 flops a step on the 40-cell grid. It is Crank–Nicolson plus a term of order $`\Delta t^2`$, stable at every step length, and second order in space and time.
 
 ---
 
@@ -835,7 +843,7 @@ example : 999 ^ 2 = 998001 ∧ 4 * 998001 * 999 = 3988011996 ∧
 
 - [Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md): the time-centred step that ADI factors into two half steps.
 - [Laplace on a rectangle](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/08-laplace-on-a-rectangle.md): the separated series for the settled plate, the exact answer the grid is checked against.
-- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the bend across and the bend up, $u_{xx}$ and $u_{yy}$, which the second differences copy.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the bend across and the bend up, $`u_{xx}`$ and $`u_{yy}`$, which the second differences copy.
 - [Laplace's equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/07-laplaces-equation-and-harmonic-functions.md): the five-point rule from Taylor's theorem, and each point as its neighbours' average.
 - [The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md): the chain solve that each row and column uses, in about eight flops per unknown.
 

@@ -43,49 +43,57 @@ Orange is the logarithm itself. Green is the chord, the straight line joining th
 
 ## The formula
 
-Notation first, in words. $E[X]$ is the expectation of $X$, read "the average value of X in the long run" ([Expectation](02-expectation.md)). A Greek phi, $\varphi$, names a function. A function is **convex** when every chord between two points of its graph lies on or above the graph ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)); **concave** when every chord lies on or below.
+Notation first, in words. $`E[X]`$ is the expectation of $`X`$, read "the average value of X in the long run" ([Expectation](02-expectation.md)). A Greek phi, $`\varphi`$, names a function. A function is **convex** when every chord between two points of its graph lies on or above the graph ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)); **concave** when every chord lies on or below.
 
-$$\varphi\big(E[X]\big) \;\le\; E\big[\varphi(X)\big] \qquad \text{for convex } \varphi$$
+```math
+\varphi\big(E[X]\big) \;\le\; E\big[\varphi(X)\big] \qquad \text{for convex } \varphi
+```
 
 **Read it aloud:** for a function that bends upward, the function of the average is at most the average of the function.
 
 Two cases carry most of the uses.
 
-$$\big(E[X]\big)^2 \;\le\; E[X^2], \qquad E[X^2] - \big(E[X]\big)^2 = \operatorname{Var}(X)$$
+```math
+\big(E[X]\big)^2 \;\le\; E[X^2], \qquad E[X^2] - \big(E[X]\big)^2 = \mathrm{Var}(X)
+```
 
 **Read it aloud:** the square of the average never beats the average of the square, and the gap is the variance.
 
-$$E[\ln X] \;\le\; \ln E[X] \qquad \text{for } X > 0$$
+```math
+E[\ln X] \;\le\; \ln E[X] \qquad \text{for } X > 0
+```
 
 **Read it aloud:** the logarithm bends downward, so the average of the logarithms is at most the logarithm of the average.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | one year's growth factor, a random variable | 1.50 or 0.60, chance 0.5 each | — |
-| $E[X]$, $m$ | the average of $X$; $m$ is its short name in the proofs | 1.05 | — |
-| $\varphi$ | a function applied to $X$ | $x^2$, or $\ln x$ | a sharper bend, a bigger gap |
-| $E[X^2]$ | the average of the squared growth | 1.305 | — |
-| $\operatorname{Var}(X)$ | the variance: average squared distance from $m$ | 0.2025 | the square gap grows with it, one for one |
-| $\ln$ | the natural logarithm; it turns multiplying into adding | $\ln 1.5 = 0.405465$ | — |
-| $E[\ln X]$ | the average log return: the mean of $\ln X$ per year | −0.052680 | typical wealth grows faster |
-| $\ell(x)$, $s$ | a supporting line through the curve at $m$, and its slope | $\ell(x) = \ln m + (x - m)/m$ for the logarithm | — |
-| $x$, $y$ | input values along the curve's horizontal axis | 0.6 and 1.5 | — |
-| $W_n$, $n$ | wealth per dollar invested after $n$ years | after 10 years: mean 1.628895 | mean and median drift apart |
-| $k$ | the number of heads in a ten-year run | 5 on the median run | — |
-| $R$ | a return: growth factor minus 1 | +0.50 or −0.40 | — |
+| $`X`$ | one year's growth factor, a random variable | 1.50 or 0.60, chance 0.5 each | — |
+| $`E[X]`$, $`m`$ | the average of $`X`$; $`m`$ is its short name in the proofs | 1.05 | — |
+| $`\varphi`$ | a function applied to $`X`$ | $`x^2`$, or $`\ln x`$ | a sharper bend, a bigger gap |
+| $`E[X^2]`$ | the average of the squared growth | 1.305 | — |
+| $`\mathrm{Var}(X)`$ | the variance: average squared distance from $`m`$ | 0.2025 | the square gap grows with it, one for one |
+| $`\ln`$ | the natural logarithm; it turns multiplying into adding | $`\ln 1.5 = 0.405465`$ | — |
+| $`E[\ln X]`$ | the average log return: the mean of $`\ln X`$ per year | −0.052680 | typical wealth grows faster |
+| $`\ell(x)`$, $`s`$ | a supporting line through the curve at $`m`$, and its slope | $`\ell(x) = \ln m + (x - m)/m`$ for the logarithm | — |
+| $`x`$, $`y`$ | input values along the curve's horizontal axis | 0.6 and 1.5 | — |
+| $`W_n`$, $`n`$ | wealth per dollar invested after $`n`$ years | after 10 years: mean 1.628895 | mean and median drift apart |
+| $`k`$ | the number of heads in a ten-year run | 5 on the median run | — |
+| $`R`$ | a return: growth factor minus 1 | +0.50 or −0.40 | — |
 
-For the logarithm, raising $\operatorname{Var}(X)$ with $m$ fixed lowers $E[\ln X]$: more spread, slower typical growth. A second-order Taylor expansion of $\ln$ around $m$ says by how much. It swaps the curve near $m$ for the parabola with the same height, slope and bend at $m$:
+For the logarithm, raising $`\mathrm{Var}(X)`$ with $`m`$ fixed lowers $`E[\ln X]`$: more spread, slower typical growth. A second-order Taylor expansion of $`\ln`$ around $`m`$ says by how much. It swaps the curve near $`m`$ for the parabola with the same height, slope and bend at $`m`$:
 
-$$E[\ln X] \;\approx\; \ln m - \frac{\operatorname{Var}(X)}{2m^2}$$
+```math
+E[\ln X] \;\approx\; \ln m - \frac{\mathrm{Var}(X)}{2m^2}
+```
 
-In words: the log average falls short of the log of the average by about half the variance, measured in units of the mean squared. This is an approximation. For small returns, $\ln m \approx E[R]$ and $m \approx 1$, and it shrinks to the traders' drag rule: average log return ≈ average return minus half the variance.
+In words: the log average falls short of the log of the average by about half the variance, measured in units of the mean squared. This is an approximation. For small returns, $`\ln m \approx E[R]`$ and $`m \approx 1`$, and it shrinks to the traders' drag rule: average log return ≈ average return minus half the variance.
 
 ### When it holds
 
-- **The function bends one way over every value $X$ can take.** A cube bends down for negative inputs and up for positive ones. A fund returning −40% or +10% has returns whose average cube is −0.0315, below the cube of the average return, −0.003375: the inequality runs the wrong way.
-- **Both averages exist.** $E[X]$ and $E[\varphi(X)]$ must be finite numbers. For a finite list of outcomes they always are; for unbounded laws this is a real condition, taken up in wing 10.
+- **The function bends one way over every value $`X`$ can take.** A cube bends down for negative inputs and up for positive ones. A fund returning −40% or +10% has returns whose average cube is −0.0315, below the cube of the average return, −0.003375: the inequality runs the wrong way.
+- **Both averages exist.** $`E[X]`$ and $`E[\varphi(X)]`$ must be finite numbers. For a finite list of outcomes they always are; for unbounded laws this is a real condition, taken up in wing 10.
 - **Direction follows the bend.** Convex gives ≤ as written; concave, like the logarithm, reverses it. Reading the logarithm as convex predicts that typical growth beats average growth: −0.0527 against 0.0488 says otherwise.
-- **Equality needs no spread.** When the function is strictly convex (no straight pieces), the two sides are equal only when $X$ is one fixed value. Any spread opens a gap.
+- **Equality needs no spread.** When the function is strictly convex (no straight pieces), the two sides are equal only when $`X`$ is one fixed value. Any spread opens a gap.
 - **It bounds, it does not measure.** The inequality says which side is larger. The size of the gap needs more: the variance for the square, the Taylor term above for the logarithm.
 
 ---
@@ -94,30 +102,32 @@ In words: the log average falls short of the log of the average by about half th
 
 ### Step 0: straight lines pass through averages unchanged
 
-For any straight line $\ell(x) = a + b\,x$, the average of $\ell(X)$ is $\ell$ of the average: $E[a + bX] = a + b\,E[X]$. That is linearity of expectation ([Expectation](02-expectation.md)). Only bending breaks the swap. So squeeze the curve against a line that touches it at the mean, and let the line do the averaging.
+For any straight line $`\ell(x) = a + b\,x`$, the average of $`\ell(X)`$ is $`\ell`$ of the average: $`E[a + bX] = a + b\,E[X]`$. That is linearity of expectation ([Expectation](02-expectation.md)). Only bending breaks the swap. So squeeze the curve against a line that touches it at the mean, and let the line do the averaging.
 
 ### Step 1: a convex curve has a line beneath it touching at the mean
 
-Take $m = E[X]$. A **supporting line** at $m$ is a straight line that meets the graph at $m$ and lies on or below it everywhere else. For a curve with a slope at $m$, the tangent line does it:
+Take $`m = E[X]`$. A **supporting line** at $`m`$ is a straight line that meets the graph at $`m`$ and lies on or below it everywhere else. For a curve with a slope at $`m`$, the tangent line does it:
 
-$$\varphi(x) \;\ge\; \varphi(m) + \varphi'(m)\,(x - m) \quad \text{for every } x$$
+```math
+\varphi(x) \;\ge\; \varphi(m) + \varphi'(m)\,(x - m) \quad \text{for every } x
+```
 
-Here $\varphi'(m)$ is the slope of the curve at $m$. The inequality holds because a convex curve's slope never decreases as $x$ grows ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)): to the right of $m$ the curve climbs at least as fast as the tangent, to the left it falls at least as fast.
+Here $`\varphi'(m)`$ is the slope of the curve at $`m`$. The inequality holds because a convex curve's slope never decreases as $`x`$ grows ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)): to the right of $`m`$ the curve climbs at least as fast as the tangent, to the left it falls at least as fast.
 
-For the square at $m = 1.05$, the tangent is $\ell(x) = m^2 + 2m\,(x - m)$. The curve minus the line is $x^2 - m^2 - 2m(x - m) = (x - m)^2$, never negative. At both outcomes, 1.5 and 0.6, the gap is $0.45^2 = 0.2025$.
+For the square at $`m = 1.05`$, the tangent is $`\ell(x) = m^2 + 2m\,(x - m)`$. The curve minus the line is $`x^2 - m^2 - 2m(x - m) = (x - m)^2`$, never negative. At both outcomes, 1.5 and 0.6, the gap is $`0.45^2 = 0.2025`$.
 
 A curve with a corner, like a call option's payoff at its strike, has no single tangent there, but a supporting line still exists: any slope between the left slope and the right slope works.
 
 <details>
 <summary>Detailed proof: a supporting line exists at any interior point, corner or not</summary>
 
-Let $\varphi$ be convex on an interval and $m$ a point inside it, not an endpoint. For $x < m < y$ in the interval, write $m$ as a weighted average of $x$ and $y$: $m = (1-t)x + ty$ with $t = (m - x)/(y - x)$, which lies strictly between 0 and 1. The chord inequality gives $\varphi(m) \le (1-t)\varphi(x) + t\varphi(y)$. Rearranged, this says the slope from $x$ to $m$ is at most the slope from $m$ to $y$:
+Let $`\varphi`$ be convex on an interval and $`m`$ a point inside it, not an endpoint. For $`x < m < y`$ in the interval, write $`m`$ as a weighted average of $`x`$ and $`y`$: $`m = (1-t)x + ty`$ with $`t = (m - x)/(y - x)`$, which lies strictly between 0 and 1. The chord inequality gives $`\varphi(m) \le (1-t)\varphi(x) + t\varphi(y)`$. Rearranged, this says the slope from $`x`$ to $`m`$ is at most the slope from $`m`$ to $`y`$:
 
-$$\frac{\varphi(m) - \varphi(x)}{m - x} \;\le\; \frac{\varphi(y) - \varphi(m)}{y - m}.$$
+$`\displaystyle \frac{\varphi(m) - \varphi(x)}{m - x} \;\le\; \frac{\varphi(y) - \varphi(m)}{y - m}.`$
 
-So every left slope is at most every right slope. Fix one right slope: it caps all the left slopes, so they have a least upper bound $s$, and $s$ is still at most every right slope. For any $x < m$, the left slope is at most $s$, so $\varphi(x) \ge \varphi(m) + s(x - m)$ (multiplying by the negative $x - m$ flips the inequality). For any $y > m$, the right slope is at least $s$, so $\varphi(y) \ge \varphi(m) + s(y - m)$. At $x = m$ both sides agree. The line $\ell(x) = \varphi(m) + s(x - m)$ supports the curve at $m$.
+So every left slope is at most every right slope. Fix one right slope: it caps all the left slopes, so they have a least upper bound $`s`$, and $`s`$ is still at most every right slope. For any $`x < m`$, the left slope is at most $`s`$, so $`\varphi(x) \ge \varphi(m) + s(x - m)`$ (multiplying by the negative $`x - m`$ flips the inequality). For any $`y > m`$, the right slope is at least $`s`$, so $`\varphi(y) \ge \varphi(m) + s(y - m)`$. At $`x = m`$ both sides agree. The line $`\ell(x) = \varphi(m) + s(x - m)`$ supports the curve at $`m`$.
 
-If $m$ is an endpoint of the interval, every value of $X$ is on one side of it and its average is on the boundary; that forces $X$ to equal $m$ with chance 1, and both sides of Jensen are $\varphi(m)$.
+If $`m`$ is an endpoint of the interval, every value of $`X`$ is on one side of it and its average is on the boundary; that forces $`X`$ to equal $`m`$ with chance 1, and both sides of Jensen are $`\varphi(m)`$.
 
 </details>
 
@@ -125,25 +135,27 @@ If $m$ is an endpoint of the interval, every value of $X$ is on one side of it a
 
 The curve lies above the line at every outcome, so its average lies above the line's average. By Step 0 the line's average is the line at the mean, which is the curve at the mean:
 
-$$E[\varphi(X)] \;\ge\; E[\ell(X)] \;=\; \varphi(m) + s\,(E[X] - m) \;=\; \varphi(m).$$
+```math
+E[\varphi(X)] \;\ge\; E[\ell(X)] \;=\; \varphi(m) + s\,(E[X] - m) \;=\; \varphi(m).
+```
 
-The slope term vanishes because $E[X] - m = 0$. That is Jensen's inequality.
+The slope term vanishes because $`E[X] - m = 0`$. That is Jensen's inequality.
 
-For the square, averaging the gap $(X - m)^2$ gives the variance exactly: $E[X^2] - m^2 = \operatorname{Var}(X) = 0.2025$. The supporting-line proof and the variance formula are the same calculation.
+For the square, averaging the gap $`(X - m)^2`$ gives the variance exactly: $`E[X^2] - m^2 = \mathrm{Var}(X) = 0.2025`$. The supporting-line proof and the variance formula are the same calculation.
 
 ### Step 3: turn it over for a concave curve
 
-If $\varphi$ is concave, then $-\varphi$ is convex, and Step 2 applied to $-\varphi$ flips the sign: $E[\varphi(X)] \le \varphi(E[X])$. Geometrically, the tangent now lies above the curve.
+If $`\varphi`$ is concave, then $`-\varphi`$ is convex, and Step 2 applied to $`-\varphi`$ flips the sign: $`E[\varphi(X)] \le \varphi(E[X])`$. Geometrically, the tangent now lies above the curve.
 
-For the logarithm at $m = 1.05$ the tangent is $\ell(x) = \ln 1.05 + (x - 1.05)/1.05$. At 1.5 the tangent reads 0.477362 and the curve 0.405465. At 0.6 the tangent reads −0.379781 and the curve −0.510826. The tangent's average is $\ln 1.05 = 0.048790$; the curve's average is −0.052680, lower at both points and so lower on average.
+For the logarithm at $`m = 1.05`$ the tangent is $`\ell(x) = \ln 1.05 + (x - 1.05)/1.05`$. At 1.5 the tangent reads 0.477362 and the curve 0.405465. At 0.6 the tangent reads −0.379781 and the curve −0.510826. The tangent's average is $`\ln 1.05 = 0.048790`$; the curve's average is −0.052680, lower at both points and so lower on average.
 
 ### Step 4: from one year to ten
 
-Wealth multiplies: after $n$ years, $W_n = X_1 X_2 \cdots X_n$, one growth factor per year. Logarithms turn that product into a sum, $\ln W_n = \ln X_1 + \cdots + \ln X_n$, and averages of sums add. So the average log wealth after ten years is $10 \times (-0.052680) = -0.526803$.
+Wealth multiplies: after $`n`$ years, $`W_n = X_1 X_2 \cdots X_n`$, one growth factor per year. Logarithms turn that product into a sum, $`\ln W_n = \ln X_1 + \cdots + \ln X_n`$, and averages of sums add. So the average log wealth after ten years is $`10 \times (-0.052680) = -0.526803`$.
 
-The years are independent (the coin has no memory), so the average of the product is the product of the averages ([Two variables at once](04-joint-distributions-and-covariance.md)): $E[W_{10}] = 1.05^{10} = 1.628895$.
+The years are independent (the coin has no memory), so the average of the product is the product of the averages ([Two variables at once](04-joint-distributions-and-covariance.md)): $`E[W_{10}] = 1.05^{10} = 1.628895`$.
 
-The mean is pulled up by rare runs of heads; ten heads in a row turns $100 into $5,766.50. A typical run has about as many heads as tails, and a head followed by a tail multiplies wealth by $1.5 \times 0.6 = 0.9$. Per year that is $\sqrt{0.9} = 0.948683$, which is exactly $e^{E[\ln X]}$: the typical path grows at the average *log* rate, not the log of the average. Jensen says that rate is always the lower one.
+The mean is pulled up by rare runs of heads; ten heads in a row turns $100 into $5,766.50. A typical run has about as many heads as tails, and a head followed by a tail multiplies wealth by $`1.5 \times 0.6 = 0.9`$. Per year that is $`\sqrt{0.9} = 0.948683`$, which is exactly $`e^{E[\ln X]}`$: the typical path grows at the average *log* rate, not the log of the average. Jensen says that rate is always the lower one.
 
 A second road to the same inequality: for a finite list of outcomes, Jensen is the chord inequality stretched from two points to many, proved by induction on the number of points in [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md). The supporting line is the better tool here because it never counts outcomes, and it is the idea Jensen's inequality builds on.
 
@@ -155,7 +167,7 @@ The fund: growth factor 1.5 or 0.6, chance 0.5 each.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average growth $m$ | 0.5 × 1.5 + 0.5 × 0.6 | 1.05 |
+| average growth $`m`$ | 0.5 × 1.5 + 0.5 × 0.6 | 1.05 |
 | average of the squares | 0.5 × 2.25 + 0.5 × 0.36 | 1.305 |
 | square of the average | 1.05 × 1.05 | 1.1025 |
 | square gap | 1.305 − 1.1025 | **0.2025** |
@@ -164,7 +176,7 @@ The fund: growth factor 1.5 or 0.6, chance 0.5 each.
 | average of the logs | (0.405465 − 0.510826) / 2 | −0.052680 |
 | log of the average | ln 1.05 | 0.048790 |
 | log gap | 0.048790 + 0.052680 | **0.101470** |
-| typical yearly growth | $e^{-0.052680}$, or √(1.5 × 0.6) | 0.948683 |
+| typical yearly growth | $`e^{-0.052680}`$, or √(1.5 × 0.6) | 0.948683 |
 
 Squared growth averages 0.2025 above the square of average growth, and that surplus is the variance. The logarithm reverses the order: typical wealth shrinks by about 5.1% a year while average wealth grows 5%.
 
@@ -192,7 +204,7 @@ Orange is the average over all runs, growing at 1.05 a year. Green grows at the 
 | --- | --- | --- |
 | Compounding the average return as the typical outcome | $162.89 after ten years; the median run ends at $59.05 | Averages pass through sums, not through products or logarithms |
 | A cube on returns of −40% or +10% | average cube −0.0315, below the cube of the average, −0.003375 | The cube bends both ways across those values; no single bend, no inequality |
-| The average return used as a growth rate | +5% a year; the typical run shrinks 5.13% a year | The growth rate of one path is $e^{E[\ln X]} - 1$, the concave side of Jensen |
+| The average return used as a growth rate | +5% a year; the typical run shrinks 5.13% a year | The growth rate of one path is $`e^{E[\ln X]} - 1`$, the concave side of Jensen |
 
 The code prints all three.
 
@@ -200,7 +212,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The scripts import only logarithm, exponential and square root. They reach each answer by three roads. First, exact sums over the two outcomes, with the variance computed twice: by the shortcut and by its definition. Second, all 1,024 ten-year runs enumerated one at a time, checked against the formula $1.05^{10}$ and against a count by $C(10, k)$, the number of ways to place $k$ heads among 10 years. Third, a seeded simulation of 200,000 runs with a small random-number generator, SplitMix64, written out in both languages, printed with standard errors (the typical size of the simulation's miss). The calmer year, the cube counterexample and every charted point are printed too.
+The scripts import only logarithm, exponential and square root. They reach each answer by three roads. First, exact sums over the two outcomes, with the variance computed twice: by the shortcut and by its definition. Second, all 1,024 ten-year runs enumerated one at a time, checked against the formula $`1.05^{10}`$ and against a count by $`C(10, k)`$, the number of ways to place $`k`$ heads among 10 years. Third, a seeded simulation of 200,000 runs with a small random-number generator, SplitMix64, written out in both languages, printed with standard errors (the typical size of the simulation's miss). The calmer year, the cube counterexample and every charted point are printed too.
 
 ### Python
 
@@ -554,9 +566,9 @@ The two outputs match line for line, simulation included, because both languages
 
 Lean proves Jensen's inequality for every random variable whose averages exist, plus its square and logarithm cases.
 
-- **Jensen's inequality.** Suppose $\varphi$ is convex over every value $X$ can take, and both averages, $E[X]$ and $E[\varphi(X)]$, exist. Then $\varphi(E[X]) \le E[\varphi(X)]$.
-- **The square.** Suppose $E[X]$ and $E[X^2]$ both exist. Then $(E[X])^2 \le E[X^2]$, and the gap $E[X^2] - (E[X])^2$ equals $\operatorname{Var}(X)$.
-- **The logarithm.** Suppose $X > 0$, and $E[X]$ and $E[\ln X]$ both exist. Then $E[\ln X] \le \ln E[X]$.
+- **Jensen's inequality.** Suppose $`\varphi`$ is convex over every value $`X`$ can take, and both averages, $`E[X]`$ and $`E[\varphi(X)]`$, exist. Then $`\varphi(E[X]) \le E[\varphi(X)]`$.
+- **The square.** Suppose $`E[X]`$ and $`E[X^2]`$ both exist. Then $`(E[X])^2 \le E[X^2]`$, and the gap $`E[X^2] - (E[X])^2`$ equals $`\mathrm{Var}(X)`$.
+- **The logarithm.** Suppose $`X > 0`$, and $`E[X]`$ and $`E[\ln X]`$ both exist. Then $`E[\ln X] \le \ln E[X]`$.
 - **The worked numbers.** Average growth is 1.05, and the square gap and the variance are both 0.2025. Of the 1,024 ten-year runs, 638 end below the start.
 - **The cube.** On returns of −40% or +10%, the average cube lies below the cube of the average return.
 
@@ -729,9 +741,9 @@ example : (-63/2000 : ℚ) < -27/8000 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Plugging the average into a curve and calling the answer the average.** The fund's average growth is 1.05, and $1.05^{10}$ is 1.628895, the average wealth per dollar. It is not what an investor should expect to see: the median run ends at $59.05 per $100. The average of a product, a square or a logarithm is not that function of the average.
+> **Plugging the average into a curve and calling the answer the average.** The fund's average growth is 1.05, and $`1.05^{10}`$ is 1.628895, the average wealth per dollar. It is not what an investor should expect to see: the median run ends at $59.05 per $100. The average of a product, a square or a logarithm is not that function of the average.
 >
-> - **Getting the direction backwards.** Convex (bends up, like $x^2$): average of the function is larger. Concave (bends down, like $\ln x$): smaller. Drawing the chord settles it every time.
+> - **Getting the direction backwards.** Convex (bends up, like $`x^2`$): average of the function is larger. Concave (bends down, like $`\ln x`$): smaller. Drawing the chord settles it every time.
 > - **Using a curve that bends both ways.** The cube on returns of −40% or +10% gives −0.0315 against −0.003375: below, where a convex function would put it above.
 > - **Reading the gap as rounding.** The square gap is the variance, 0.2025 here; it is structure, not error.
 > - **Averaging past returns to get a growth rate.** Up 50% then down 40% averages to +5% but leaves $100 at $90.
@@ -740,9 +752,9 @@ example : (-63/2000 : ℚ) < -27/8000 := by norm_num
 
 ## Where you meet it in real life
 
-- **Investment growth.** Performance reports often quote the average (arithmetic) return; the investor's balance grows at the geometric rate, $e^{E[\ln X]} - 1$, which Jensen puts below it. The drag rule, average return minus half the variance, is how practitioners estimate the gap.
+- **Investment growth.** Performance reports often quote the average (arithmetic) return; the investor's balance grows at the geometric rate, $`e^{E[\ln X]} - 1`$, which Jensen puts below it. The drag rule, average return minus half the variance, is how practitioners estimate the gap.
 - **Betting and position sizing.** Kelly's rule chooses the stake that maximises the average log of wealth, not the average wealth, because the average log is what one bettor's wealth grows at over many rounds.
-- **Variance is never negative.** $E[X^2] \ge (E[X])^2$ is the square case of Jensen; [Variance](03-variance-and-standard-deviation.md) builds everything on that gap.
+- **Variance is never negative.** $`E[X^2] \ge (E[X])^2`$ is the square case of Jensen; [Variance](03-variance-and-standard-deviation.md) builds everything on that gap.
 - **Options have value at the money.** A call payoff is convex in the final price, so its average payoff exceeds the payoff at the average price. The volatility swap, whose payoff is a square root of variance, sits on the concave side ([The volatility swap and the jump bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md)).
 - **Risk aversion.** A concave utility of money makes a sure $1.05 worth more than a coin toss between $1.50 and $0.60: [Expected utility](../../12-Financial%20mathematics/36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md).
 - **Information theory.** The logarithm's concavity makes the KL divergence, a measure of mismatch between two laws of chance, never negative: [KL divergence](../../14-Applied%20and%20computational/03-Information%20Theory/03-kl-divergence-and-cross-entropy.md).

@@ -42,46 +42,52 @@ Orange: the error bound proved on this card, for r = 0.3. Teal: the true error f
 
 Notation first, in words.
 
-- $u(x, t)$ is the bar's true temperature in C at $x$ metres from the left end, at $t$ seconds. A subscript $t$ or $x$ is a rate ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)): $u_t$ is the change in time, $u_{xx}$ the bend along the bar.
-- $\alpha$ is the **diffusivity**: how fast heat spreads, in m²/s. The differential-equations wing called it κ; this wing keeps κ for the condition number. Steel is about 1.2e-5 m²/s; that value is illustrative.
-- The **heat equation** is $u_t = \alpha\,u_{xx}$: a point warms in proportion to how much its neighbours bend above it.
-- The grid has spacing $h$ m and time step $\Delta t$ s. The **grid value** $u_j^n$ is the computed temperature at node $j$ (at $x = jh$) after $n$ steps. The raised $n$ is a time level, not a power.
+- $`u(x, t)`$ is the bar's true temperature in C at $`x`$ metres from the left end, at $`t`$ seconds. A subscript $`t`$ or $`x`$ is a rate ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)): $`u_t`$ is the change in time, $`u_{xx}`$ the bend along the bar.
+- $`\alpha`$ is the **diffusivity**: how fast heat spreads, in m²/s. The differential-equations wing called it κ; this wing keeps κ for the condition number. Steel is about 1.2e-5 m²/s; that value is illustrative.
+- The **heat equation** is $`u_t = \alpha\,u_{xx}`$: a point warms in proportion to how much its neighbours bend above it.
+- The grid has spacing $`h`$ m and time step $`\Delta t`$ s. The **grid value** $`u_j^n`$ is the computed temperature at node $`j`$ (at $`x = jh`$) after $`n`$ steps. The raised $`n`$ is a time level, not a power.
 
 The explicit scheme, from [Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md):
 
-$$u_j^{n+1} = r\,u_{j-1}^n + (1 - 2r)\,u_j^n + r\,u_{j+1}^n, \qquad r = \frac{\alpha\,\Delta t}{h^2}.$$
+```math
+u_j^{n+1} = r\,u_{j-1}^n + (1 - 2r)\,u_j^n + r\,u_{j+1}^n, \qquad r = \frac{\alpha\,\Delta t}{h^2}.
+```
 
-Stack the inside values into one list $u^n$. One step multiplies that list by a fixed matrix: $u^{n+1} = A\,u^n$. The three ideas of this card are:
+Stack the inside values into one list $`u^n`$. One step multiplies that list by a fixed matrix: $`u^{n+1} = A\,u^n`$. The three ideas of this card are:
 
-$$\underbrace{\tau_j^n = \frac{u(x_j, t_{n+1}) - u(x_j, t_n)}{\Delta t} - \alpha\,\frac{u(x_{j+1}, t_n) - 2u(x_j, t_n) + u(x_{j-1}, t_n)}{h^2} \to 0}_{\text{consistency}}, \qquad \underbrace{\lVert A^n\rVert_\infty \le C \text{ for } n\Delta t \le T}_{\text{stability}},$$
+```math
+\underbrace{\tau_j^n = \frac{u(x_j, t_{n+1}) - u(x_j, t_n)}{\Delta t} - \alpha\,\frac{u(x_{j+1}, t_n) - 2u(x_j, t_n) + u(x_{j-1}, t_n)}{h^2} \to 0}_{\text{consistency}}, \qquad \underbrace{\lVert A^n\rVert_\infty \le C \text{ for } n\Delta t \le T}_{\text{stability}},
+```
 
-$$\underbrace{\max_j \lvert u(x_j, t_n) - u_j^n\rvert \;\le\; C\sum_{m=0}^{n-1}\Delta t\,\lVert \tau^m\rVert_\infty \;\to\; 0}_{\text{convergence}}.$$
+```math
+\underbrace{\max_j \lvert u(x_j, t_n) - u_j^n\rvert \;\le\; C\sum_{m=0}^{n-1}\Delta t\,\lVert \tau^m\rVert_\infty \;\to\; 0}_{\text{convergence}}.
+```
 
 **Read it aloud:** if the exact solution misses the grid rule by an amount that shrinks to zero, and no number of steps can magnify an error by more than C, then the grid error is at most C times the total miss, and it shrinks to zero at the same rate.
 
-Here $\tau_j^n$, the **local truncation error**, is the exact solution's miss per second at one node. The **max norm** $\lVert v\rVert_\infty$ is the largest absolute entry of a list $v$. For a matrix, $\lVert A\rVert_\infty$ is the most it can stretch a list in that size: its largest row sum of absolute entries.
+Here $`\tau_j^n`$, the **local truncation error**, is the exact solution's miss per second at one node. The **max norm** $`\lVert v\rVert_\infty`$ is the largest absolute entry of a list $`v`$. For a matrix, $`\lVert A\rVert_\infty`$ is the most it can stretch a list in that size: its largest row sum of absolute entries.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $u_t$, $u_{xx}$, $u_{tt}$, $u_{xxxx}$; $M_2$, $M_4$ | true temperature; its time rate; its bend; higher rates; largest sizes of $u_{tt}$ and $u_{xxxx}$ | 100 C at the centre at the start | — |
-| $\alpha$ | diffusivity: how fast heat spreads | 1.2e-5 m²/s (illustrative) | the bar cools faster; the safe $\Delta t$ shrinks |
-| $x$, $t$, $T$; $x_j$, $t_n$ | place; time; end time; node $j$ at $jh$; time $n\Delta t$ | 0 to 1 m; 0 to 3600 s | — |
-| $h$, $\Delta t$ | node spacing; time step | 0.02 m; 10 s | larger error |
-| $r$ | $\alpha\Delta t/h^2$, the time step in grid units | 0.3 | above 1/2 the scheme blows up |
-| $u_j^n$, $j$, $n$, $m$ | grid value at node $j$ after $n$ steps; $m$ an earlier step | centre $j$ = 25: 65.280346 C at $n$ = 360 | — |
-| $A$ | the step matrix: $u^{n+1} = Au^n$ | weights 0.3, 0.4, 0.3 on each row | — |
-| $\lVert\cdot\rVert_\infty$, $v$ | max norm: largest absolute entry of a list $v$, or largest row sum | $\lVert A\rVert_\infty$ = 1.0000 | above 1, errors may grow |
-| $\tau_j^n$ | local truncation error: the exact solution's miss per second | 3.115e-6 C/s at the centre, at the start | the error bound grows in proportion |
-| $e_j^n$ | grid error $u(x_j, t_n) - u_j^n$ | 7.329e-3 C at its largest, at 3600 s | — |
-| $C$, $K$ | stability constant: the most $A^n$ can stretch; $K$ the constant in $\lvert\tau\rvert \le Kh^2$ | 1; — | the bound loosens in proportion |
-| $g$ | factor that one step multiplies a sine shape by | 0.99881604 for the starting hump | — |
+| $`u`$, $`u_t`$, $`u_{xx}`$, $`u_{tt}`$, $`u_{xxxx}`$; $`M_2`$, $`M_4`$ | true temperature; its time rate; its bend; higher rates; largest sizes of $`u_{tt}`$ and $`u_{xxxx}`$ | 100 C at the centre at the start | — |
+| $`\alpha`$ | diffusivity: how fast heat spreads | 1.2e-5 m²/s (illustrative) | the bar cools faster; the safe $`\Delta t`$ shrinks |
+| $`x`$, $`t`$, $`T`$; $`x_j`$, $`t_n`$ | place; time; end time; node $`j`$ at $`jh`$; time $`n\Delta t`$ | 0 to 1 m; 0 to 3600 s | — |
+| $`h`$, $`\Delta t`$ | node spacing; time step | 0.02 m; 10 s | larger error |
+| $`r`$ | $`\alpha\Delta t/h^2`$, the time step in grid units | 0.3 | above 1/2 the scheme blows up |
+| $`u_j^n`$, $`j`$, $`n`$, $`m`$ | grid value at node $`j`$ after $`n`$ steps; $`m`$ an earlier step | centre $`j`$ = 25: 65.280346 C at $`n`$ = 360 | — |
+| $`A`$ | the step matrix: $`u^{n+1} = Au^n`$ | weights 0.3, 0.4, 0.3 on each row | — |
+| $`\lVert\cdot\rVert_\infty`$, $`v`$ | max norm: largest absolute entry of a list $`v`$, or largest row sum | $`\lVert A\rVert_\infty`$ = 1.0000 | above 1, errors may grow |
+| $`\tau_j^n`$ | local truncation error: the exact solution's miss per second | 3.115e-6 C/s at the centre, at the start | the error bound grows in proportion |
+| $`e_j^n`$ | grid error $`u(x_j, t_n) - u_j^n`$ | 7.329e-3 C at its largest, at 3600 s | — |
+| $`C`$, $`K`$ | stability constant: the most $`A^n`$ can stretch; $`K`$ the constant in $`\lvert\tau\rvert \le Kh^2`$ | 1; — | the bound loosens in proportion |
+| $`g`$ | factor that one step multiplies a sine shape by | 0.99881604 for the starting hump | — |
 
 ### When it holds
 
-- **A linear scheme for a linear equation.** The proof uses $e^{n+1} = Ae^n + \Delta t\,\tau^n$, which needs the step to be a matrix. For a nonlinear equation the theorem does not apply as stated, and a stable-looking scheme can still converge to the wrong answer.
-- **A smooth true solution.** The truncation error shrinks like $h^2$ only if $u$ has four smooth derivatives in $x$. A sudden jump in the start temperature slows the rate near the jump.
+- **A linear scheme for a linear equation.** The proof uses $`e^{n+1} = Ae^n + \Delta t\,\tau^n`$, which needs the step to be a matrix. For a nonlinear equation the theorem does not apply as stated, and a stable-looking scheme can still converge to the wrong answer.
+- **A smooth true solution.** The truncation error shrinks like $`h^2`$ only if $`u`$ has four smooth derivatives in $`x`$. A sudden jump in the start temperature slows the rate near the jump.
 - **A well-posed problem.** Small changes to the start must make small changes to the true answer. The heat equation forward in time qualifies. Run backward in time, tiny wiggles in the start grow without limit in the true solution too, and the theorem does not apply.
-- **Stability uniform in h.** The bound $C$ must not grow as the grid is refined. A scheme stable on each grid, with $C$ growing as $h$ shrinks, can still fail.
+- **Stability uniform in h.** The bound $`C`$ must not grow as the grid is refined. A scheme stable on each grid, with $`C`$ growing as $`h`$ shrinks, can still fail.
 - **Exact arithmetic.** Each step also rounds. A stable scheme keeps rounding errors small too. An unstable one grows them, which is how the 17 s run blows up from a smooth start.
 
 ---
@@ -94,66 +100,80 @@ The grid rule turns today's values into tomorrow's. The exact solution, sampled 
 
 ### Step 1: consistency, by Taylor's theorem
 
-Expand each difference about $(x_j, t_n)$ with [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md). The forward time difference is
+Expand each difference about $`(x_j, t_n)`$ with [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md). The forward time difference is
 
-$$\frac{u(x, t + \Delta t) - u(x, t)}{\Delta t} = u_t + \frac{\Delta t}{2}\,u_{tt} + \dots$$
+```math
+\frac{u(x, t + \Delta t) - u(x, t)}{\Delta t} = u_t + \frac{\Delta t}{2}\,u_{tt} + \dots
+```
 
 The centred second difference is
 
-$$\frac{u(x + h, t) - 2u(x, t) + u(x - h, t)}{h^2} = u_{xx} + \frac{h^2}{12}\,u_{xxxx} + \dots$$
+```math
+\frac{u(x + h, t) - 2u(x, t) + u(x - h, t)}{h^2} = u_{xx} + \frac{h^2}{12}\,u_{xxxx} + \dots
+```
 
-The odd powers of $h$ cancel, because the stencil is symmetric. On the bar's start, 100 sin(πx), at the centre, this difference misses $-100\pi^2$ = −986.9604 by 0.324654 at $h$ = 0.02. The formula $h^2/12 \times 100\pi^4$ predicts 0.324697. Halving $h$ divides the miss by 4: order 2.
+The odd powers of $`h`$ cancel, because the stencil is symmetric. On the bar's start, 100 sin(πx), at the centre, this difference misses $`-100\pi^2`$ = −986.9604 by 0.324654 at $`h`$ = 0.02. The formula $`h^2/12 \times 100\pi^4`$ predicts 0.324697. Halving $`h`$ divides the miss by 4: order 2.
 
-Subtract α times the second line from the first. The $u_t - \alpha u_{xx}$ terms cancel, since $u$ solves the equation:
+Subtract α times the second line from the first. The $`u_t - \alpha u_{xx}`$ terms cancel, since $`u`$ solves the equation:
 
-$$\tau = \frac{\Delta t}{2}\,u_{tt} - \frac{\alpha h^2}{12}\,u_{xxxx} + \dots$$
+```math
+\tau = \frac{\Delta t}{2}\,u_{tt} - \frac{\alpha h^2}{12}\,u_{xxxx} + \dots
+```
 
-Differentiate the heat equation once more in time: $u_{tt} = \alpha^2 u_{xxxx}$. With $\Delta t = rh^2/\alpha$ both terms carry $h^2$:
+Differentiate the heat equation once more in time: $`u_{tt} = \alpha^2 u_{xxxx}`$. With $`\Delta t = rh^2/\alpha`$ both terms carry $`h^2`$:
 
-$$\tau = \alpha h^2\,u_{xxxx}\left(\frac{r}{2} - \frac{1}{12}\right) + \dots$$
+```math
+\tau = \alpha h^2\,u_{xxxx}\left(\frac{r}{2} - \frac{1}{12}\right) + \dots
+```
 
-So the scheme is **consistent of order 2**: with $r$ fixed, the truncation error shrinks like $h^2$. At the centre, at the start, with $h$ = 0.02 and $r$ = 0.3, the formula gives 3.117e-6 C/s and direct substitution gives 3.115e-6 C/s.
+So the scheme is **consistent of order 2**: with $`r`$ fixed, the truncation error shrinks like $`h^2`$. At the centre, at the start, with $`h`$ = 0.02 and $`r`$ = 0.3, the formula gives 3.117e-6 C/s and direct substitution gives 3.115e-6 C/s.
 
-One surprise: at $r = 1/6$ the bracket is zero. The time and space misses cancel, and the scheme becomes order 4. Measured truncation errors then fall with orders 4.00, 4.00, 3.98.
+One surprise: at $`r = 1/6`$ the bracket is zero. The time and space misses cancel, and the scheme becomes order 4. Measured truncation errors then fall with orders 4.00, 4.00, 3.98.
 
 ### Step 2: stability, as a bound on the step's norm
 
-Each new value is $r$, $1 - 2r$, $r$ times three old ones. When $r \le 1/2$ none of these weights is negative, and they add to 1. So
+Each new value is $`r`$, $`1 - 2r`$, $`r`$ times three old ones. When $`r \le 1/2`$ none of these weights is negative, and they add to 1. So
 
-$$\lvert u_j^{n+1}\rvert \le r\lvert u_{j-1}^n\rvert + (1 - 2r)\lvert u_j^n\rvert + r\lvert u_{j+1}^n\rvert \le \lVert u^n\rVert_\infty.$$
+```math
+\lvert u_j^{n+1}\rvert \le r\lvert u_{j-1}^n\rvert + (1 - 2r)\lvert u_j^n\rvert + r\lvert u_{j+1}^n\rvert \le \lVert u^n\rVert_\infty.
+```
 
-In matrix terms, every row of $A$ has absolute sum at most 1, so $\lVert A\rVert_\infty = 1$. Then $\lVert A^n\rVert_\infty \le \lVert A\rVert_\infty^n = 1$ for every $n$, on every grid: the scheme is **stable** with $C = 1$. The check computes the row sums: 1.0000 at $r$ = 0.3 and at $r$ = 0.5.
+In matrix terms, every row of $`A`$ has absolute sum at most 1, so $`\lVert A\rVert_\infty = 1`$. Then $`\lVert A^n\rVert_\infty \le \lVert A\rVert_\infty^n = 1`$ for every $`n`$, on every grid: the scheme is **stable** with $`C = 1`$. The check computes the row sums: 1.0000 at $`r`$ = 0.3 and at $`r`$ = 0.5.
 
-At $r$ = 0.51 the weights are 0.5100, −0.0200, 0.5100, and the row sum of their sizes is 1.0400. The norm bound now allows growth by 1.04 per step, 2550.7-fold over 200 steps. The real growth is of the same order. A zigzag shape, alternating up and down from node to node, is multiplied by −1.037987 per step: 1731.4-fold over 200 steps. [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md) finds that factor for every shape.
+At $`r`$ = 0.51 the weights are 0.5100, −0.0200, 0.5100, and the row sum of their sizes is 1.0400. The norm bound now allows growth by 1.04 per step, 2550.7-fold over 200 steps. The real growth is of the same order. A zigzag shape, alternating up and down from node to node, is multiplied by −1.037987 per step: 1731.4-fold over 200 steps. [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md) finds that factor for every shape.
 
 ### Step 3: convergence, by adding up the pushes
 
-The exact values satisfy $u(t_{n+1}) = A\,u(t_n) + \Delta t\,\tau^n$; that is the definition of $\tau$, rearranged. The grid values satisfy $u^{n+1} = Au^n$. Subtract:
+The exact values satisfy $`u(t_{n+1}) = A\,u(t_n) + \Delta t\,\tau^n`$; that is the definition of $`\tau`$, rearranged. The grid values satisfy $`u^{n+1} = Au^n`$. Subtract:
 
-$$e^{n+1} = A\,e^n + \Delta t\,\tau^n, \qquad e^0 = 0.$$
+```math
+e^{n+1} = A\,e^n + \Delta t\,\tau^n, \qquad e^0 = 0.
+```
 
-Unroll it. The push made at step $m$ is carried by $n - 1 - m$ later steps:
+Unroll it. The push made at step $`m`$ is carried by $`n - 1 - m`$ later steps:
 
-$$e^n = \sum_{m=0}^{n-1} A^{\,n-1-m}\,\Delta t\,\tau^m, \qquad \lVert e^n\rVert_\infty \le C\sum_{m=0}^{n-1}\Delta t\,\lVert\tau^m\rVert_\infty \le C\,t_n \max_m \lVert\tau^m\rVert_\infty.$$
+```math
+e^n = \sum_{m=0}^{n-1} A^{\,n-1-m}\,\Delta t\,\tau^m, \qquad \lVert e^n\rVert_\infty \le C\sum_{m=0}^{n-1}\Delta t\,\lVert\tau^m\rVert_\infty \le C\,t_n \max_m \lVert\tau^m\rVert_\infty.
+```
 
-Consistency makes the last factor shrink like $h^2$. Stability keeps $C$ fixed. So the error shrinks like $h^2$: **consistency plus stability gives convergence, at the order of the truncation error.** This is the same argument as [From local error to global error](../06-ODE%20Solvers/02-convergence-of-one-step-methods.md), with a matrix in place of one number.
+Consistency makes the last factor shrink like $`h^2`$. Stability keeps $`C`$ fixed. So the error shrinks like $`h^2`$: **consistency plus stability gives convergence, at the order of the truncation error.** This is the same argument as [From local error to global error](../06-ODE%20Solvers/02-convergence-of-one-step-methods.md), with a matrix in place of one number.
 
-The check adds up the pushes exactly. With $h$ = 0.02 the bound is 9.135e-3 C; the true largest error is 7.329e-3 C; the ratio is 1.246. It stays between 1.244 and 1.247 on every grid. The bound lets every push survive at full size, while the real step shrinks the hump by $g$ = 0.99881604 per step.
+The check adds up the pushes exactly. With $`h`$ = 0.02 the bound is 9.135e-3 C; the true largest error is 7.329e-3 C; the ratio is 1.246. It stays between 1.244 and 1.247 on every grid. The bound lets every push survive at full size, while the real step shrinks the hump by $`g`$ = 0.99881604 per step.
 
 <details>
 <summary>Detailed proof: the sufficiency half, with the constants</summary>
 
-Fix $r \le 1/2$ and $T$. Let $u$ have continuous derivatives $u_{tt}$ and $u_{xxxx}$ on $[0, 1] \times [0, T]$, bounded by $M_2$ and $M_4$.
+Fix $`r \le 1/2`$ and $`T`$. Let $`u`$ have continuous derivatives $`u_{tt}`$ and $`u_{xxxx}`$ on $`[0, 1] \times [0, T]`$, bounded by $`M_2`$ and $`M_4`$.
 
-Taylor's theorem with remainder gives, for some time $s$ between $t$ and $t + \Delta t$ and some place $y$ between $x - h$ and $x + h$,
+Taylor's theorem with remainder gives, for some time $`s`$ between $`t`$ and $`t + \Delta t`$ and some place $`y`$ between $`x - h`$ and $`x + h`$,
 
-$$\frac{u(x, t+\Delta t) - u(x, t)}{\Delta t} - u_t = \frac{\Delta t}{2}\,u_{tt}(x, s), \qquad \frac{u(x+h, t) - 2u(x, t) + u(x-h, t)}{h^2} - u_{xx} = \frac{h^2}{12}\,u_{xxxx}(y, t).$$
+$`\displaystyle \frac{u(x, t+\Delta t) - u(x, t)}{\Delta t} - u_t = \frac{\Delta t}{2}\,u_{tt}(x, s), \qquad \frac{u(x+h, t) - 2u(x, t) + u(x-h, t)}{h^2} - u_{xx} = \frac{h^2}{12}\,u_{xxxx}(y, t).`$
 
-The second line uses the expansion to fourth order on each side; the third-order terms cancel and the two fourth-order remainders average to one value of $u_{xxxx}$ by the intermediate value theorem. Hence $\lvert\tau_j^n\rvert \le \tfrac{\Delta t}{2}M_2 + \tfrac{\alpha h^2}{12}M_4 = h^2\bigl(\tfrac{r M_2}{2\alpha} + \tfrac{\alpha M_4}{12}\bigr) =: Kh^2$.
+The second line uses the expansion to fourth order on each side; the third-order terms cancel and the two fourth-order remainders average to one value of $`u_{xxxx}`$ by the intermediate value theorem. Hence $`\lvert\tau_j^n\rvert \le \tfrac{\Delta t}{2}M_2 + \tfrac{\alpha h^2}{12}M_4 = h^2\bigl(\tfrac{r M_2}{2\alpha} + \tfrac{\alpha M_4}{12}\bigr) =: Kh^2`$.
 
-The ends are held at 0 C both by the bar and by the grid, so the error is 0 at both end nodes and only the inside nodes carry error. Every inside row of $A$ has non-negative weights summing to at most 1, so $\lVert A\rVert_\infty \le 1$ and $\lVert A^k\rVert_\infty \le 1$ for all $k$.
+The ends are held at 0 C both by the bar and by the grid, so the error is 0 at both end nodes and only the inside nodes carry error. Every inside row of $`A`$ has non-negative weights summing to at most 1, so $`\lVert A\rVert_\infty \le 1`$ and $`\lVert A^k\rVert_\infty \le 1`$ for all $`k`$.
 
-From $e^{n+1} = Ae^n + \Delta t\,\tau^n$ and $e^0 = 0$, induction gives $e^n = \sum_{m<n} A^{n-1-m}\Delta t\,\tau^m$. Taking max norms, $\lVert e^n\rVert_\infty \le n\Delta t\,Kh^2 \le TKh^2$. This tends to 0 as $h \to 0$ with $r$ fixed: convergence of order 2.
+From $`e^{n+1} = Ae^n + \Delta t\,\tau^n`$ and $`e^0 = 0`$, induction gives $`e^n = \sum_{m<n} A^{n-1-m}\Delta t\,\tau^m`$. Taking max norms, $`\lVert e^n\rVert_\infty \le n\Delta t\,Kh^2 \le TKh^2`$. This tends to 0 as $`h \to 0`$ with $`r`$ fixed: convergence of order 2.
 
 </details>
 
@@ -163,8 +183,8 @@ The **Lax equivalence theorem** (Lax and Richtmyer, 1956): for a well-posed line
 
 Step 3 proved "if". The "only if" half needs a tool from functional analysis, so this card states its key steps instead of proving it:
 
-1. Convergence for every start means the computed values stay bounded for that start: for each start $v$, the numbers $\lVert A^n v\rVert$ stay below some limit as the grid refines.
-2. The **uniform boundedness principle** turns a bound for each start into one bound for all starts at once: $\lVert A^n\rVert \le C$. That is stability.
+1. Convergence for every start means the computed values stay bounded for that start: for each start $`v`$, the numbers $`\lVert A^n v\rVert`$ stay below some limit as the grid refines.
+2. The **uniform boundedness principle** turns a bound for each start into one bound for all starts at once: $`\lVert A^n\rVert \le C`$. That is stability.
 
 The source is Lax and Richtmyer's survey, listed in Sources. In practice the useful reading is the contrapositive: an unstable scheme cannot converge, however consistent it is.
 
@@ -172,14 +192,14 @@ The source is Lax and Richtmyer's survey, listed in Sources. In practice the use
 
 | Grid | Steps to 3600 s | True error | Bound | Ratio to the next |
 | --- | --- | --- | --- | --- |
-| $h$ = 0.04 m | 90 | 2.929e-2 C | 3.645e-2 C | 3.997 |
-| $h$ = 0.02 m | 360 | 7.329e-3 C | 9.135e-3 C | 4.001 |
-| $h$ = 0.01 m | 1440 | 1.832e-3 C | 2.284e-3 C | 4.000 |
-| $h$ = 0.005 m | 5760 | 4.579e-4 C | 5.710e-4 C | — |
+| $`h`$ = 0.04 m | 90 | 2.929e-2 C | 3.645e-2 C | 3.997 |
+| $`h`$ = 0.02 m | 360 | 7.329e-3 C | 9.135e-3 C | 4.001 |
+| $`h`$ = 0.01 m | 1440 | 1.832e-3 C | 2.284e-3 C | 4.000 |
+| $`h`$ = 0.005 m | 5760 | 4.579e-4 C | 5.710e-4 C | — |
 
-Observed orders are 2.00, 2.00, 2.00, as the truncation error predicts. At $r$ = 1/6 the true errors are 1.285e-5, 8.037e-7, 5.023e-8 and 3.180e-9 C: orders 4.00, 4.00, 3.98. The error inherits the order of the truncation error, as Step 3 says.
+Observed orders are 2.00, 2.00, 2.00, as the truncation error predicts. At $`r`$ = 1/6 the true errors are 1.285e-5, 8.037e-7, 5.023e-8 and 3.180e-9 C: orders 4.00, 4.00, 3.98. The error inherits the order of the truncation error, as Step 3 says.
 
-The cost grows faster than the accuracy. Each halving of $h$ doubles the nodes and quadruples the steps. Node updates to 3600 s go 2160, 17640, 142560, 1146240: ratios 8.17, 8.08, 8.04, for a fourfold smaller error each time. Implicit steps ([Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md)) remove the limit on $\Delta t$.
+The cost grows faster than the accuracy. Each halving of $`h`$ doubles the nodes and quadruples the steps. Node updates to 3600 s go 2160, 17640, 142560, 1146240: ratios 8.17, 8.08, 8.04, for a fourfold smaller error each time. Implicit steps ([Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md)) remove the limit on $`\Delta t`$.
 
 ---
 
@@ -189,15 +209,15 @@ The 2 cm grid with 10 s steps, run to one hour.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| grid units | $r = 1.2\text{e-}5 \times 10 \div 0.02^2$ | 0.3 |
-| weights | $r$, $1 - 2r$, $r$ | 0.3, 0.4, 0.3 |
-| step norm | largest row sum, $0.3 + 0.4 + 0.3$ | 1.0000: stable |
-| safe time step | $\Delta t \le h^2/(2\alpha) = 0.0004 \div 0.000024$ | 16.667 s |
-| centre after one step | $0.3 \times 100\sin(0.48\pi) \times 2 + 0.4 \times 100$ | 99.881604 C; exact 99.881635 C |
-| truncation error at the centre | $\alpha\pi^4 h^2 \times 100 \times (0.3/2 - 1/12)$ | 3.117e-6 C/s |
-| bound at 3600 s | sum of $\Delta t \times \max\lvert\tau\rvert$ over 360 steps | 9.135e-3 C |
-| centre at 3600 s | $100\,g^{360}$, $g$ = 0.99881604 | 65.280346 C |
-| exact centre at 3600 s | $100\,e^{-\alpha\pi^2 \times 3600}$ | 65.287675 C |
+| grid units | $`r = 1.2\text{e-}5 \times 10 \div 0.02^2`$ | 0.3 |
+| weights | $`r`$, $`1 - 2r`$, $`r`$ | 0.3, 0.4, 0.3 |
+| step norm | largest row sum, $`0.3 + 0.4 + 0.3`$ | 1.0000: stable |
+| safe time step | $`\Delta t \le h^2/(2\alpha) = 0.0004 \div 0.000024`$ | 16.667 s |
+| centre after one step | $`0.3 \times 100\sin(0.48\pi) \times 2 + 0.4 \times 100`$ | 99.881604 C; exact 99.881635 C |
+| truncation error at the centre | $`\alpha\pi^4 h^2 \times 100 \times (0.3/2 - 1/12)`$ | 3.117e-6 C/s |
+| bound at 3600 s | sum of $`\Delta t \times \max\lvert\tau\rvert`$ over 360 steps | 9.135e-3 C |
+| centre at 3600 s | $`100\,g^{360}`$, $`g`$ = 0.99881604 | 65.280346 C |
+| exact centre at 3600 s | $`100\,e^{-\alpha\pi^2 \times 3600}`$ | 65.287675 C |
 | largest true error | over all 51 nodes | **7.329e-3 C** |
 
 The one-hour centre temperature is right to within 0.0073 C, inside the 0.01 C target, and inside the proved bound of 9.135e-3 C.
@@ -206,17 +226,17 @@ The one-hour centre temperature is right to within 0.0073 C, inside the 0.01 C t
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $r$ = 0.51 (17 s steps on the 2 cm grid), refined at fixed $r$ | errors at 3400 s: 7.311e-2, 1.826e-2, 1.526e-2, 7.181e39 C | consistent but unstable: $\lVert A\rVert_\infty$ = 1.0400, and a zigzag grows from rounding |
-| Weight computed as $\alpha\Delta t/h$, forgetting the square | 0.0060 at $h$ = 0.02; centre at 3600 s: 98.1172, 99.1512, 99.5746, 99.7870 C; true 65.2877 C | stable but not consistent: it converges, to the wrong answer |
-| $h$ halved to 0.01 m, $\Delta t$ kept at 10 s | $r$ = 1.2; largest value at 3600 s: 5.658e193 C | refining space without time leaves the stable range |
+| $`r`$ = 0.51 (17 s steps on the 2 cm grid), refined at fixed $`r`$ | errors at 3400 s: 7.311e-2, 1.826e-2, 1.526e-2, 7.181e39 C | consistent but unstable: $`\lVert A\rVert_\infty`$ = 1.0400, and a zigzag grows from rounding |
+| Weight computed as $`\alpha\Delta t/h`$, forgetting the square | 0.0060 at $`h`$ = 0.02; centre at 3600 s: 98.1172, 99.1512, 99.5746, 99.7870 C; true 65.2877 C | stable but not consistent: it converges, to the wrong answer |
+| $`h`$ halved to 0.01 m, $`\Delta t`$ kept at 10 s | $`r`$ = 1.2; largest value at 3600 s: 5.658e193 C | refining space without time leaves the stable range |
 
-The middle row is the subtle one. Every weight is positive, so the step is an average and nothing blows up. But heat moves at α times $h$ instead of α, and that tends to zero. The bar seems to stop cooling.
+The middle row is the subtle one. Every weight is positive, so the step is an average and nothing blows up. But heat moves at α times $`h`$ instead of α, and that tends to zero. The bar seems to stop cooling.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code steps the bar on four grids and checks the result by three roads. Road one is the loop itself. Road two is the exact solution $100e^{-\alpha\pi^2 t}\sin(\pi x)$, and the closed form $100g^n$ for the centre. Road three is the Lax bound, the sum of $\Delta t\max\lvert\tau\rvert$, which must sit above the true error. Asserts check that loop and closed form agree, that the one-hour error meets the target, that the orders are 2 and 4, that the bound holds, and that each failure in What breaks really fails.
+The code steps the bar on four grids and checks the result by three roads. Road one is the loop itself. Road two is the exact solution $`100e^{-\alpha\pi^2 t}\sin(\pi x)`$, and the closed form $`100g^n`$ for the centre. Road three is the Lax bound, the sum of $`\Delta t\max\lvert\tau\rvert`$, which must sit above the true error. Asserts check that loop and closed form agree, that the one-hour error meets the target, that the orders are 2 and 4, that the bound holds, and that each failure in What breaks really fails.
 
 ### Python
 
@@ -528,12 +548,12 @@ The two outputs match line for line. Both languages do the same operations in th
 
 Lean proves the three steps of Why it works for the explicit heat scheme, on every grid, and checks the card's hand arithmetic.
 
-- Take any linear step $u^{n+1} = Au^n$ started from the exact values, with $n\Delta t \le T$. Fix $C$, $K$ and $T$ before choosing the grid. If $\lVert A^k v\rVert_\infty \le C\lVert v\rVert_\infty$ for every $k \le n$ and every list $v$, and every $\lVert\tau^m\rVert_\infty \le Kh^2$, then $\lVert e^n\rVert_\infty \le C\sum_{m<n}\Delta t\,\lVert\tau^m\rVert_\infty \le CTKh^2$. Any whole power of $h$ works in place of $h^2$.
-- For $0 \le r \le 1/2$, with any number of inside nodes and both ends held at 0, any number of explicit steps keeps $\lVert A^k v\rVert_\infty \le \lVert v\rVert_\infty$. So the scheme is stable with $C = 1$.
-- Suppose $u_t = \alpha u_{xx}$ at one node, with $\alpha$, $h$ and $\Delta t$ positive. Suppose $u_{tt}$ and $u_{xxxx}$ are continuous along the lines through the node. If $\lvert u_{tt}\rvert \le M_2$ on $[t, t + \Delta t]$ and $\lvert u_{xxxx}\rvert \le M_4$ on $[x - h, x + h]$, then $\lvert\tau\rvert \le \tfrac{\Delta t}{2}M_2 + \tfrac{\alpha h^2}{12}M_4$.
-- The hand numbers check out: $r$ = 0.3, the weights 0.3, 0.4, 0.3, the safe step 50/3 s and the 360 steps. Also checked: the $r$ = 0.51 weights and their size sum 1.04, the 0.006 slip, $r$ = 1.2, and the step and node-update counts.
+- Take any linear step $`u^{n+1} = Au^n`$ started from the exact values, with $`n\Delta t \le T`$. Fix $`C`$, $`K`$ and $`T`$ before choosing the grid. If $`\lVert A^k v\rVert_\infty \le C\lVert v\rVert_\infty`$ for every $`k \le n`$ and every list $`v`$, and every $`\lVert\tau^m\rVert_\infty \le Kh^2`$, then $`\lVert e^n\rVert_\infty \le C\sum_{m<n}\Delta t\,\lVert\tau^m\rVert_\infty \le CTKh^2`$. Any whole power of $`h`$ works in place of $`h^2`$.
+- For $`0 \le r \le 1/2`$, with any number of inside nodes and both ends held at 0, any number of explicit steps keeps $`\lVert A^k v\rVert_\infty \le \lVert v\rVert_\infty`$. So the scheme is stable with $`C = 1`$.
+- Suppose $`u_t = \alpha u_{xx}`$ at one node, with $`\alpha`$, $`h`$ and $`\Delta t`$ positive. Suppose $`u_{tt}`$ and $`u_{xxxx}`$ are continuous along the lines through the node. If $`\lvert u_{tt}\rvert \le M_2`$ on $`[t, t + \Delta t]`$ and $`\lvert u_{xxxx}\rvert \le M_4`$ on $`[x - h, x + h]`$, then $`\lvert\tau\rvert \le \tfrac{\Delta t}{2}M_2 + \tfrac{\alpha h^2}{12}M_4`$.
+- The hand numbers check out: $`r`$ = 0.3, the weights 0.3, 0.4, 0.3, the safe step 50/3 s and the 360 steps. Also checked: the $`r`$ = 0.51 weights and their size sum 1.04, the 0.006 slip, $`r`$ = 1.2, and the step and node-update counts.
 
-The bar's temperatures and errors, the observed orders, the $r$ = 1/6 surprise and every blow-up in What breaks are left to Python and Rust.
+The bar's temperatures and errors, the observed orders, the $`r`$ = 1/6 surprise and every blow-up in What breaks are left to Python and Rust.
 
 ```lean
 -- Finite differences on a grid: a linear grid rule that is consistent and stable converges, with the error bounded by the stability constant times the summed truncation errors, and the explicit heat step is stable and consistent of order 2 when r ≤ 1/2.
@@ -808,20 +828,20 @@ example : 24 * 90 = 2160 ∧ 49 * 360 = 17640 ∧ 99 * 1440 = 142560 ∧ 199 * 5
 > [!TIP]
 > **Try changing**
 >
-> - **Guess first:** what order does $r$ = 0.2 give? In the `E6 =` line change `1 / 6` to `0.2`. Answer: order 2.00 on every grid, and the order-4 assert fails. Only $r$ = 1/6 cancels the leading miss.
+> - **Guess first:** what order does $`r`$ = 0.2 give? In the `E6 =` line change `1 / 6` to `0.2`. Answer: order 2.00 on every grid, and the order-4 assert fails. Only $`r`$ = 1/6 cancels the leading miss.
 > - **Guess first:** what if the weights stop adding to 1? Change `(1 - 2 * w)` to `(1 - 2.02 * w)`. Answer: the centre at 3600 s drops far below the true value, and the first assert fails. The scheme is stable but no longer consistent.
-> - **Guess first:** does $r$ = 0.5 exactly converge? In the `E51` loop change both `0.51` to `0.5`. Answer: yes, errors fall fourfold per halving, and the blow-up assert fails. The limit 1/2 is still stable.
+> - **Guess first:** does $`r`$ = 0.5 exactly converge? In the `E51` loop change both `0.51` to `0.5`. Answer: yes, errors fall fourfold per halving, and the blow-up assert fails. The limit 1/2 is still stable.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Checking only consistency.** A scheme can match the heat equation to order 2 and still be useless. At $r$ = 0.51 the truncation error shrinks like $h^2$, yet refining the grid sends the error at 3400 s from 1.826e-2 C to 7.181e39 C. A consistent scheme converges only when it is also stable.
+> **Checking only consistency.** A scheme can match the heat equation to order 2 and still be useless. At $`r`$ = 0.51 the truncation error shrinks like $`h^2`$, yet refining the grid sends the error at 3400 s from 1.826e-2 C to 7.181e39 C. A consistent scheme converges only when it is also stable.
 >
-> - **Treating stability as enough.** The weight $\alpha\Delta t/h$ gives a stable average, and a smooth, calm answer near 99.7870 C. It is the wrong answer: the true centre is at 65.2877 C.
-> - **Refining space alone.** Halving $h$ with $\Delta t$ fixed quadruples $r$, here to 1.2, and the run reaches 5.658e193 C.
-> - **Assuming order 2 always.** At $r$ = 1/6 the scheme is order 4: errors fall from 1.285e-5 to 8.037e-7 C per halving. The order comes from the truncation error, not from the stencil alone.
+> - **Treating stability as enough.** The weight $`\alpha\Delta t/h`$ gives a stable average, and a smooth, calm answer near 99.7870 C. It is the wrong answer: the true centre is at 65.2877 C.
+> - **Refining space alone.** Halving $`h`$ with $`\Delta t`$ fixed quadruples $`r`$, here to 1.2, and the run reaches 5.658e193 C.
+> - **Assuming order 2 always.** At $`r`$ = 1/6 the scheme is order 4: errors fall from 1.285e-5 to 8.037e-7 C per halving. The order comes from the truncation error, not from the stencil alone.
 
 ---
 
@@ -840,7 +860,7 @@ example : 24 * 90 = 2160 ∧ 49 * 360 = 17640 ∧ 99 * 1440 = 142560 ∧ 199 * 5
 
 - [Three families](01-pde-families-elliptic-parabolic-hyperbolic.md): the heat equation is parabolic, so it smooths and needs a start and boundary values; that sets what "well-posed" means here.
 - [Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the explicit scheme itself, its limit r ≤ 1/2, and the observed fourfold fall.
-- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the rates $u_t$ and $u_{xx}$ that the differences replace.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the rates $`u_t`$ and $`u_{xx}`$ that the differences replace.
 
 ## Where this goes next
 

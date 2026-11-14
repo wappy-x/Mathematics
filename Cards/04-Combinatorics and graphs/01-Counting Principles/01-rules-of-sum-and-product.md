@@ -18,7 +18,7 @@ Multiply across stages, add across cases. Every later formula on this shelf is b
 
 **Options that come in stages multiply; options that fall into cases with nothing in common add.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works, resting on one definition borrowed from set theory — the set of ordered pairs, written $A \times B$.
+**What kind of fact this is:** a theorem, proved on this card in Why it works, resting on one definition borrowed from set theory — the set of ordered pairs, written $`A \times B`$.
 
 ### The picture: two cases, three stages
 
@@ -42,35 +42,39 @@ Arrows in a row are stages and multiply; arrows forking from one box are cases a
 The notation first, in words.
 
 - A **set** is a collection of distinct things, written in braces: the breads are {rye, white, sourdough, flat}.
-- Bars count it: $\lvert A\rvert$ is how many members the set $A$ has, read "the size of A".
-- Two sets combine in two ways, both met earlier ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)): the **union** $A \cup B$ holds everything in either, the **intersection** $A \cap B$ only what is in both.
-- The empty set, $\varnothing$, has no members.
-- $A \times B$ is the set of **ordered pairs**: a member of $A$, then a member of $B$ ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)).
+- Bars count it: $`\lvert A\rvert`$ is how many members the set $`A`$ has, read "the size of A".
+- Two sets combine in two ways, both met earlier ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)): the **union** $`A \cup B`$ holds everything in either, the **intersection** $`A \cap B`$ only what is in both.
+- The empty set, $`\varnothing`$, has no members.
+- $`A \times B`$ is the set of **ordered pairs**: a member of $`A`$, then a member of $`B`$ ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)).
 
 The rule of product:
 
-$$\lvert A \times B\rvert = \lvert A\rvert \times \lvert B\rvert$$
+```math
+\lvert A \times B\rvert = \lvert A\rvert \times \lvert B\rvert
+```
 
 **Read it aloud:** the number of ways to take one thing from the first set and then one from the second is the first set's size times the second's.
 
-The rule of sum, for two whole cases $A$ and $B$:
+The rule of sum, for two whole cases $`A`$ and $`B`$:
 
-$$\lvert A \cup B\rvert = \lvert A\rvert + \lvert B\rvert \quad \text{when } A \cap B = \varnothing$$
+```math
+\lvert A \cup B\rvert = \lvert A\rvert + \lvert B\rvert \quad \text{when } A \cap B = \varnothing
+```
 
 **Read it aloud:** when two sets share no member, the count of everything in either is one size plus the other.
 
-Three stages of sizes $n_1$, $n_2$ and $n_3$ give $n_1 \times n_2 \times n_3$ outcomes, here 60; each further stage adds a factor, and each further case another count.
+Three stages of sizes $`n_1`$, $`n_2`$ and $`n_3`$ give $`n_1 \times n_2 \times n_3`$ outcomes, here 60; each further stage adds a factor, and each further case another count.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | one stage's options, or one case | the 4 breads; the 60 sandwiches | rises in proportion |
-| $B$ | the next stage's options, or the other case | the 5 fillings; the 3 soups | rises in proportion |
-| $\lvert A\rvert$ | a set's size: its member count | 4, for the breads | — |
-| $A \times B$ | the ordered pairs, one pick from each | the 20 bread-and-filling pairs | — |
-| $A \cup B$ | the union: everything in either | the 63 lunches | — |
-| $A \cap B$ | the intersection: what is in both | empty: no lunch is sandwich and soup | any shared member and the sum over-counts |
-| $\varnothing$ | the empty set, no members | what the two cases share | — |
-| $n_1$, $n_2$, $n_3$ | the stage sizes, in order | 4, 5 and 3 | the count grows by that factor |
+| $`A`$ | one stage's options, or one case | the 4 breads; the 60 sandwiches | rises in proportion |
+| $`B`$ | the next stage's options, or the other case | the 5 fillings; the 3 soups | rises in proportion |
+| $`\lvert A\rvert`$ | a set's size: its member count | 4, for the breads | — |
+| $`A \times B`$ | the ordered pairs, one pick from each | the 20 bread-and-filling pairs | — |
+| $`A \cup B`$ | the union: everything in either | the 63 lunches | — |
+| $`A \cap B`$ | the intersection: what is in both | empty: no lunch is sandwich and soup | any shared member and the sum over-counts |
+| $`\varnothing`$ | the empty set, no members | what the two cases share | — |
+| $`n_1`$, $`n_2`$, $`n_3`$ | the stage sizes, in order | 4, 5 and 3 | the count grows by that factor |
 
 ### When it holds
 
@@ -98,24 +102,24 @@ Breads down the side, fillings across the top. Each cell is one pair. Count a ro
 | and sourdough | 5 more | 15 |
 | and flat | 5 more | 20 |
 
-Four rows of five, no cell reached twice. Adding five four times is what 4 × 5 means ([Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md)), so the pairs number 20: the rule of product with two stages, and the rectangle is $A \times B$ drawn out.
+Four rows of five, no cell reached twice. Adding five four times is what 4 × 5 means ([Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md)), so the pairs number 20: the rule of product with two stages, and the rectangle is $`A \times B`$ drawn out.
 
 ### Step 2: each further stage repeats the whole count
 
 Each of the 20 pairs opens the same 3 sauces: 20 blocks of 3, so 60 sandwiches. The rectangle again, pairs down the side and sauces across.
 
-The argument never said what the stages were. A further stage of size $n_3$ makes that many copies of whatever is built so far, multiplying the running count by $n_3$: start at 4, multiply by 5, multiply by 3.
+The argument never said what the stages were. A further stage of size $`n_3`$ makes that many copies of whatever is built so far, multiplying the running count by $`n_3`$: start at 4, multiply by 5, multiply by 3.
 
 <details>
 <summary>Detailed proof: any number of stages, by induction</summary>
 
 Induction proves a claim for one stage, then shows that each added stage keeps it true ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
-**Claim.** For stages of sizes $n_1$, $n_2$ and so on, where a stage's options number the same whatever was picked before, the completed choices number $n_1 \times n_2 \times \cdots$.
+**Claim.** For stages of sizes $`n_1`$, $`n_2`$ and so on, where a stage's options number the same whatever was picked before, the completed choices number $`n_1 \times n_2 \times \cdots`$.
 
-**One stage.** The choices are the options themselves: $n_1$ of them.
+**One stage.** The choices are the options themselves: $`n_1`$ of them.
 
-**One more stage.** Say the stages so far give the product of their sizes; call that set of part-built choices $A$, and let $B$ hold the next stage's options. A longer choice is the ordered pair (part-built choice, option), so the longer choices are exactly $A \times B$: a rectangle of $\lvert A\rvert$ rows holding $\lvert B\rvert$ pairs each, every pair in one row only. Adding equal rows is multiplying, so the count picks up one factor, $\lvert B\rvert$. The equal-option condition is used just here: it keeps the same $B$ in every row.
+**One more stage.** Say the stages so far give the product of their sizes; call that set of part-built choices $`A`$, and let $`B`$ hold the next stage's options. A longer choice is the ordered pair (part-built choice, option), so the longer choices are exactly $`A \times B`$: a rectangle of $`\lvert A\rvert`$ rows holding $`\lvert B\rvert`$ pairs each, every pair in one row only. Adding equal rows is multiplying, so the count picks up one factor, $`\lvert B\rvert`$. The equal-option condition is used just here: it keeps the same $`B`$ in every row.
 
 So the count gains exactly one factor per stage, and after the last stage it is the product of them all.
 
@@ -357,8 +361,8 @@ The two outputs match line for line.
 
 Lean proves both rules for every set with a size, not just the lunch deal.
 
-- Picking one member of $A$ and then one of $B$ gives $\lvert A\rvert \times \lvert B\rvert$ ordered pairs.
-- When two cases share no member, $\lvert A \cup B\rvert = \lvert A\rvert + \lvert B\rvert$.
+- Picking one member of $`A`$ and then one of $`B`$ gives $`\lvert A\rvert \times \lvert B\rvert`$ ordered pairs.
+- When two cases share no member, $`\lvert A \cup B\rvert = \lvert A\rvert + \lvert B\rvert`$.
 - A second stage whose options change with the first pick still multiplies, if every branch offers the same number.
 - Any number of stages, one pick from each, gives the product of the stage sizes.
 

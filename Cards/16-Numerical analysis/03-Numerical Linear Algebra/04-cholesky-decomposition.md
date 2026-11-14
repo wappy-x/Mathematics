@@ -40,7 +40,9 @@ The line is the third diagonal entry of L: the part of Cobalt's volatility that 
 
 ## The formula
 
-$$A = L\,L^{T}, \qquad \ell_{jj} = \sqrt{a_{jj} - \sum_{k<j} \ell_{jk}^{2}}, \qquad \ell_{ij} = \frac{a_{ij} - \sum_{k<j} \ell_{ik}\ell_{jk}}{\ell_{jj}} \quad (i > j)$$
+```math
+A = L\,L^{T}, \qquad \ell_{jj} = \sqrt{a_{jj} - \sum_{k<j} \ell_{jk}^{2}}, \qquad \ell_{ij} = \frac{a_{ij} - \sum_{k<j} \ell_{ik}\ell_{jk}}{\ell_{jj}} \quad (i > j)
+```
 
 **Read it aloud:** each diagonal entry of L is the square root of what the diagonal of A still needs after the earlier columns, and each entry below it is what that pair still needs, divided by that root.
 
@@ -48,26 +50,30 @@ The number under the square root is the **pivot** of column j. The run stops if 
 
 Solving A x = b with the factor takes two sweeps:
 
-$$L\,y = b \ \text{(forward, top row first)}, \qquad L^{T} x = y \ \text{(back, bottom row first)}.$$
+```math
+L\,y = b \ \text{(forward, top row first)}, \qquad L^{T} x = y \ \text{(back, bottom row first)}.
+```
 
 The cost, counted on this card:
 
-$$\text{Cholesky: } \frac{2n^{3} + 3n^{2} + n}{6} \text{ flops}, \qquad \text{LU: } \frac{4n^{3} - 3n^{2} - n}{6} \text{ flops}.$$
+```math
+\text{Cholesky: } \frac{2n^{3} + 3n^{2} + n}{6} \text{ flops}, \qquad \text{LU: } \frac{4n^{3} - 3n^{2} - n}{6} \text{ flops}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $a_{ij}$ | the symmetric positive definite matrix, and its entry in row i, column j; k counts the earlier columns | covariance in percent squared: 400, 900, 625 on the diagonal | a bigger diagonal entry gives a bigger diagonal entry of L |
-| $L$, $\ell_{ij}$ | the Cholesky factor: lower-triangular, positive diagonal | rows (20, 0, 0), (18, 24, 0), (7, 10.375, 21.641612) | — |
-| $L^{T}$ | the transpose: L with rows written as columns | upper-triangular | — |
-| $n$ | the size: number of rows of A | 3 shares; 500 for the water network, a round size for illustration | flops grow as n³ |
-| $b$, $y$, $x$ | right-hand side, the forward sweep's result, the solution of A x = b | b is three ones; x = A⁻¹ times ones | — |
-| $z$, $v$ | independent random draws, mean 0, variance 1; v = L z, the correlated shocks, in percent | first z (0.906541, −1.548788, 1.651281); first v (18.130815, −20.853186, 26.013480) | — |
-| $\rho_{23}$ | the Acme–Cobalt correlation; $a_{23} = 750\,\rho_{23}$ | 0.5 | the last pivot falls to zero at 0.936 |
-| $w$ | portfolio weights: x divided by the sum of its entries | 0.724805, −0.116979, 0.392173 | — |
-| $\hat L$, $\Delta A$ | the computed factor, and the change in A that it factors exactly | worst change 1.735e-16 at the decimal edge, relative | — |
-| $u$ | unit roundoff: the largest relative error of one rounding, 2⁻⁵³ | about 1.1e-16 | — |
-| $\gamma_{n+1}$ | the rounding allowance $(n+1)u / (1 - (n+1)u)$ | $\gamma_4$ = 4.441e-16 | — |
-| $\kappa_1(A)$ | condition number in the 1-norm: how much A can magnify a data error | 9.142 at ρ₂₃ = 0.5 | grows without limit at the edge |
+| $`A`$, $`a_{ij}`$ | the symmetric positive definite matrix, and its entry in row i, column j; k counts the earlier columns | covariance in percent squared: 400, 900, 625 on the diagonal | a bigger diagonal entry gives a bigger diagonal entry of L |
+| $`L`$, $`\ell_{ij}`$ | the Cholesky factor: lower-triangular, positive diagonal | rows (20, 0, 0), (18, 24, 0), (7, 10.375, 21.641612) | — |
+| $`L^{T}`$ | the transpose: L with rows written as columns | upper-triangular | — |
+| $`n`$ | the size: number of rows of A | 3 shares; 500 for the water network, a round size for illustration | flops grow as n³ |
+| $`b`$, $`y`$, $`x`$ | right-hand side, the forward sweep's result, the solution of A x = b | b is three ones; x = A⁻¹ times ones | — |
+| $`z`$, $`v`$ | independent random draws, mean 0, variance 1; v = L z, the correlated shocks, in percent | first z (0.906541, −1.548788, 1.651281); first v (18.130815, −20.853186, 26.013480) | — |
+| $`\rho_{23}`$ | the Acme–Cobalt correlation; $`a_{23} = 750\,\rho_{23}`$ | 0.5 | the last pivot falls to zero at 0.936 |
+| $`w`$ | portfolio weights: x divided by the sum of its entries | 0.724805, −0.116979, 0.392173 | — |
+| $`\hat L`$, $`\Delta A`$ | the computed factor, and the change in A that it factors exactly | worst change 1.735e-16 at the decimal edge, relative | — |
+| $`u`$ | unit roundoff: the largest relative error of one rounding, 2⁻⁵³ | about 1.1e-16 | — |
+| $`\gamma_{n+1}`$ | the rounding allowance $`(n+1)u / (1 - (n+1)u)`$ | $`\gamma_4`$ = 4.441e-16 | — |
+| $`\kappa_1(A)`$ | condition number in the 1-norm: how much A can magnify a data error | 9.142 at ρ₂₃ = 0.5 | grows without limit at the edge |
 
 The condition number and its norms come from [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md); u comes from [Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md).
 
@@ -99,7 +105,9 @@ Column j (counting from 1) costs:
 
 So column j costs (2j − 1)(n − j + 1) flops. Add over j = 1 to n:
 
-$$\sum_{j=1}^{n} (2j-1)(n-j+1) = \frac{2n^{3} + 3n^{2} + n}{6} = \frac{n^{3}}{3} + \frac{n^{2}}{2} + \frac{n}{6}.$$
+```math
+\sum_{j=1}^{n} (2j-1)(n-j+1) = \frac{2n^{3} + 3n^{2} + n}{6} = \frac{n^{3}}{3} + \frac{n^{2}}{2} + \frac{n}{6}.
+```
 
 LU elimination ([LU with partial pivoting](02-lu-decomposition-and-pivoting.md)), counted the same way, costs about 2n³/3. The code counts every flop as it happens and matches both formulas at n = 3 and n = 40.
 
@@ -110,7 +118,7 @@ The halving is a large-n fact. At n = 3 Cholesky uses 14 flops and LU uses 13: t
 
 Put m = n − j + 1, so j = n + 1 − m and 2j − 1 = 2n + 1 − 2m. As j runs from 1 to n, m runs from n down to 1. The sum becomes
 
-$$\sum_{m=1}^{n} (2n+1)m - 2m^{2} = (2n+1)\frac{n(n+1)}{2} - \frac{n(n+1)(2n+1)}{3} = \frac{n(n+1)(2n+1)}{6}.$$
+$`\displaystyle \sum_{m=1}^{n} (2n+1)m - 2m^{2} = (2n+1)\frac{n(n+1)}{2} - \frac{n(n+1)(2n+1)}{3} = \frac{n(n+1)(2n+1)}{6}.`$
 
 Multiply out: (2n³ + 3n² + n)/6. For LU, step k removes m = n − k entries below the pivot, each costing one division and 2m flops on its row: m + 2m² flops. Summing m from 0 to n − 1 gives n(n − 1)/2 + n(n − 1)(2n − 1)/3 = (4n³ − 3n² − n)/6.
 
@@ -122,7 +130,9 @@ LU swaps rows to avoid dividing by a small pivot. A small pivot can make the mul
 
 Cholesky cannot grow. Entry (i, i) of A = L Lᵀ is row i of L dotted with itself:
 
-$$a_{ii} = \ell_{i1}^{2} + \ell_{i2}^{2} + \dots + \ell_{ii}^{2}.$$
+```math
+a_{ii} = \ell_{i1}^{2} + \ell_{i2}^{2} + \dots + \ell_{ii}^{2}.
+```
 
 Each square is at most the total. So every entry obeys |ℓ_ij| ≤ √a_ii. In the example, Cobalt's row (7, 10.375, 21.641612) stays below √625 = 25. Across the whole factor, the largest |ℓ_ij| / √a_ii is 1.000000, reached by the first diagonal entry, and no entry exceeds it.
 
@@ -130,7 +140,9 @@ Each square is at most the total. So every entry obeys |ℓ_ij| ≤ √a_ii. In 
 
 Higham's book (chapter 10) proves this bound for the computed factor L̂ (read "L-hat", the computed L):
 
-$$\hat L \hat L^{T} = A + \Delta A, \qquad |\Delta a_{ij}| \le \gamma_{n+1} \left(|\hat L|\,|\hat L^{T}|\right)_{ij}.$$
+```math
+\hat L \hat L^{T} = A + \Delta A, \qquad |\Delta a_{ij}| \le \gamma_{n+1} \left(|\hat L|\,|\hat L^{T}|\right)_{ij}.
+```
 
 So the computed factor is the exact factor of a slightly changed matrix: Cholesky is **backward stable** ([Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md)). By Step 3, and by the Cauchy–Schwarz inequality on two rows (a dot product is at most the product of the two rows' lengths), the right side is at most about γ_{n+1} √(a_ii a_jj). No growth factor appears, unlike LU.
 

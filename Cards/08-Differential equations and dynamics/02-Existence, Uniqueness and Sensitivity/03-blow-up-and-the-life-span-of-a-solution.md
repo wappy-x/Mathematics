@@ -36,37 +36,41 @@ Orange: the square scheme, y = 100/(10 − t), heading for infinity at 10 months
 
 Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)", with y(0) = y0 the start ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). For the square scheme:
 
-$$y' = k\,y^2,\quad y(0) = y_0>0 \qquad\Longrightarrow\qquad y(t) = \frac{y_0}{1 - k\,y_0\,t},\qquad T = \frac{1}{k\,y_0}$$
+```math
+y' = k\,y^2,\quad y(0) = y_0>0 \qquad\Longrightarrow\qquad y(t) = \frac{y_0}{1 - k\,y_0\,t},\qquad T = \frac{1}{k\,y_0}
+```
 
 **Read it aloud:** a rate of k times the amount squared gives the start over one minus k y0 t, infinite at the time T = 1/(k y0).
 
-With $k$ = 0.01 and $y_0$ = 10: y = 100/(10 − t) and $T$ = 10 months. For y' = y^2, k = 1 and T = 1/y0.
+With $`k`$ = 0.01 and $`y_0`$ = 10: y = 100/(10 − t) and $`T`$ = 10 months. For y' = y^2, k = 1 and T = 1/y0.
 
 A solution's **maximal interval** is the longest time interval, containing the start, on which it exists; from here on, its life span. For the scheme it runs from minus infinity to 10 months. The start matters: from y0 = 0 the solution stays 0 forever, and from a negative start it shrinks toward 0 for all later time.
 
-**Blow-up alternative.** If $f$ meets the Picard-Lindelof conditions everywhere, a life span ending at a finite time T ends with |y| growing without bound.
+**Blow-up alternative.** If $`f`$ meets the Picard-Lindelof conditions everywhere, a life span ending at a finite time T ends with |y| growing without bound.
 
-Those conditions are that $f$ is continuous and locally Lipschitz in y, defined under When it holds below ([The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md)).
+Those conditions are that $`f`$ is continuous and locally Lipschitz in y, defined under When it holds below ([The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md)).
 
 **Linear equations never blow up.** If the rate is linear in y,
 
-$$y' = a(t)\,y + b(t),$$
+```math
+y' = a(t)\,y + b(t),
+```
 
-with $a$ and $b$ continuous for all time, the solution exists for all time.
+with $`a`$ and $`b`$ continuous for all time, the solution exists for all time.
 
 **Read it aloud:** a rate linear in the amount gives a solution that lasts forever.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since the start, in months | 0 to 10 | — |
-| $y$, $y_0$ | members, and members at the start | 10 at the start | ends sooner: 20 ends at 5 months |
-| $y'$ | the recruiting rate, members per month | 1 at the start | — |
-| $k$ | recruiting constant, per member per month | 0.01 | ends sooner |
-| $T$ | blow-up time, the end of the life span | 10 months | — |
-| $f$ | the rate rule | 0.01y^2 | — |
-| $a$, $b$ | a(t) multiplies y; b(t) is added whatever y is | 0.1 per month and 0 | faster growth, no end |
-| $Y$ | size at the start of a doubling | 10, 20, 40, … | quicker doubling |
-| $h$ | water height in a leaking bucket, the edge example (in the code, Euler's step length) | 25 at the start, 0 at t = 50 | — |
+| $`t`$ | time since the start, in months | 0 to 10 | — |
+| $`y`$, $`y_0`$ | members, and members at the start | 10 at the start | ends sooner: 20 ends at 5 months |
+| $`y'`$ | the recruiting rate, members per month | 1 at the start | — |
+| $`k`$ | recruiting constant, per member per month | 0.01 | ends sooner |
+| $`T`$ | blow-up time, the end of the life span | 10 months | — |
+| $`f`$ | the rate rule | 0.01y^2 | — |
+| $`a`$, $`b`$ | a(t) multiplies y; b(t) is added whatever y is | 0.1 per month and 0 | faster growth, no end |
+| $`Y`$ | size at the start of a doubling | 10, 20, 40, … | quicker doubling |
+| $`h`$ | water height in a leaking bucket, the edge example (in the code, Euler's step length) | 25 at the start, 0 at t = 50 | — |
 
 ### When it holds
 
@@ -86,7 +90,9 @@ For the linear scheme every doubling takes the same 6.93 months, so infinitely m
 
 The equation is separable ([Separable equations](../01-Rate%20Equations/03-separable-equations.md)). While y > 0, divide by y^2 and integrate both sides from 0 to t:
 
-$$\int_{y_0}^{y}\frac{du}{u^2} = \int_0^t k\,ds \qquad\Longrightarrow\qquad \frac{1}{y_0} - \frac{1}{y} = k\,t.$$
+```math
+\int_{y_0}^{y}\frac{du}{u^2} = \int_0^t k\,ds \qquad\Longrightarrow\qquad \frac{1}{y_0} - \frac{1}{y} = k\,t.
+```
 
 Here u and s stand in for y and t inside the integrals. Solving, y = y0/(1 − k y0 t), whose denominator reaches zero at t = 1/(k y0). For the scheme, 1/y = 0.1 − 0.01t reaches zero at 10 months. Uniqueness, from the Picard-Lindelof theorem, makes this the scheme's only future.
 
@@ -94,7 +100,9 @@ Here u and s stand in for y and t inside the integrals. Solving, y = y0/(1 − k
 
 Doubling from Y to 2Y takes the time
 
-$$\int_Y^{2Y}\frac{du}{k\,u^2} = \frac{1}{k}\Big(\frac{1}{Y} - \frac{1}{2Y}\Big) = \frac{1}{2kY}.$$
+```math
+\int_Y^{2Y}\frac{du}{k\,u^2} = \frac{1}{k}\Big(\frac{1}{Y} - \frac{1}{2Y}\Big) = \frac{1}{2kY}.
+```
 
 At Y = 10 that is 5 months, then 2.5, 1.25, 0.625. The total is 5 × (1 + 1/2 + 1/4 + …) = 10 months, Step 1's T by another road. For the rate 0.1y the same integral gives ln 2/0.1 = 6.93 months at every size: 40 doublings take 277.26 months, and the total has no limit.
 

@@ -44,35 +44,39 @@ All eight lines are drawn, each joining one row to the next: the previous card's
 
 ## The formula
 
-Notation first, in words. Distance takes a lower-case d and two stations in brackets: $d(u,v)$ is the fewest steps from station $u$ to station $v$, so $d(A,D) = 3$. Three names use brackets the same way: ecc for **eccentricity**, diam for **diameter**, rad for **radius**.
+Notation first, in words. Distance takes a lower-case d and two stations in brackets: $`d(u,v)`$ is the fewest steps from station $`u`$ to station $`v`$, so $`d(A,D) = 3`$. Three names use brackets the same way: ecc for **eccentricity**, diam for **diameter**, rad for **radius**.
 
 Below, min means the smallest of the numbers listed, max the largest, and the letter underneath runs through every station.
 
-$$d(u,v) \;=\; \min\{\,\text{length of a walk from } u \text{ to } v\,\}$$
+```math
+d(u,v) \;=\; \min\{\,\text{length of a walk from } u \text{ to } v\,\}
+```
 
 **Read it aloud:** the distance is the step count of the thriftiest journey there is.
 
-$$\mathrm{ecc}(v) \;=\; \max_{u} \; d(v,u), \qquad \mathrm{diam}(G) \;=\; \max_{v} \; \mathrm{ecc}(v), \qquad \mathrm{rad}(G) \;=\; \min_{v} \; \mathrm{ecc}(v)$$
+```math
+\mathrm{ecc}(v) \;=\; \max_{u} \; d(v,u), \qquad \mathrm{diam}(G) \;=\; \max_{v} \; \mathrm{ecc}(v), \qquad \mathrm{rad}(G) \;=\; \min_{v} \; \mathrm{ecc}(v)
+```
 
 **Read it aloud:** a station's eccentricity is its distance to the furthest station; the diameter is the worst of those, the radius the best.
 
-The **girth** $g(G)$ is the fewest stations in a cycle. A cycle's stations and steps come to the same count, its last step returning to the start, so it reads either way: 4 here, the loop A-B-C-F-A.
+The **girth** $`g(G)`$ is the fewest stations in a cycle. A cycle's stations and steps come to the same count, its last step returning to the start, so it reads either way: 4 here, the loop A-B-C-F-A.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | the graph: stations and lines | the metro map | — |
-| $u$, $v$, $w$ | stations in general | A, D, B | — |
-| $d(u,v)$ | steps on the best route | $d(A,D) = 3$ | — |
-| $\mathrm{ecc}(v)$ | distance to the furthest station | 3 from A, 2 from B | — |
-| $\mathrm{diam}(G)$ | the largest eccentricity | 3 | — |
-| $\mathrm{rad}(G)$ | the smallest eccentricity | 2 | — |
-| $g(G)$ | stations on the shortest cycle | 4 | — |
+| $`G`$ | the graph: stations and lines | the metro map | — |
+| $`u`$, $`v`$, $`w`$ | stations in general | A, D, B | — |
+| $`d(u,v)`$ | steps on the best route | $`d(A,D) = 3`$ | — |
+| $`\mathrm{ecc}(v)`$ | distance to the furthest station | 3 from A, 2 from B | — |
+| $`\mathrm{diam}(G)`$ | the largest eccentricity | 3 | — |
+| $`\mathrm{rad}(G)`$ | the smallest eccentricity | 2 | — |
+| $`g(G)`$ | stations on the shortest cycle | 4 | — |
 
 ### When it holds
 
 - **Steps are counted, nothing else.** Put fares on the lines and the cheapest route can stop being the shortest.
 - **Every station reachable.** Otherwise two stations have no distance, and the map no diameter: [Connected or not](04-connectivity-and-breadth-first-search.md).
-- **Lines run both ways,** which makes $d(u,v)$ and $d(v,u)$ agree; one-way track breaks it ([Directed graphs](06-directed-graphs-and-topological-order.md)).
+- **Lines run both ways,** which makes $`d(u,v)`$ and $`d(v,u)`$ agree; one-way track breaks it ([Directed graphs](06-directed-graphs-and-topological-order.md)).
 - **A cycle needs three different stations.** Out and back repeats a line, so it is a walk; a map with no loop has no girth ([Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)).
 
 ---
@@ -99,7 +103,7 @@ The move works on any repeat and shortens the walk each time, so the cutting sto
 <details>
 <summary>Detailed proof: every walk from u to v contains a path from u to v</summary>
 
-Write the walk as $x_0, x_1, \ldots, x_k$, with $x_0 = u$ and $x_k = v$, and induct on the step count. If no station repeats it is already a path. Otherwise one station sits at two positions, $x_i = x_j$ with the first earlier; delete the entries after the first up to and including the second. The result, $x_0, \ldots, x_i, x_{j+1}, \ldots, x_k$, is again a walk — the join holds because the deleted copy was joined to $x_{j+1}$ — and it is shorter, so induction finishes it.
+Write the walk as $`x_0, x_1, \ldots, x_k`$, with $`x_0 = u`$ and $`x_k = v`$, and induct on the step count. If no station repeats it is already a path. Otherwise one station sits at two positions, $`x_i = x_j`$ with the first earlier; delete the entries after the first up to and including the second. The result, $`x_0, \ldots, x_i, x_{j+1}, \ldots, x_k`$, is again a walk — the join holds because the deleted copy was joined to $`x_{j+1}`$ — and it is shorter, so induction finishes it.
 
 Nothing was added, so no shortest walk repeats a station; and a path visits each station at most once, so on six stations it takes at most 5 steps.
 
@@ -113,9 +117,11 @@ The marks are the distances. A marked station is reached in that many steps, so 
 
 ### Step 3: distance behaves like distance
 
-Lines run both ways, so reversing a walk gives one of the same length back: $d(u,v) = d(v,u)$. And journeys join: glue a shortest A-to-B walk to a shortest B-to-D walk, tidy by Step 1, and
+Lines run both ways, so reversing a walk gives one of the same length back: $`d(u,v) = d(v,u)`$. And journeys join: glue a shortest A-to-B walk to a shortest B-to-D walk, tidy by Step 1, and
 
-$$d(u,w) \;\le\; d(u,v) + d(v,w)$$
+```math
+d(u,w) \;\le\; d(u,v) + d(v,w)
+```
 
 for any three stations — going by way of somewhere else never saves a step. The check tests all 216 triples.
 
@@ -123,9 +129,11 @@ Sweep from every station and the rows make a table of distances. Each row's larg
 
 Stations at the radius form the **centre** — B, C, E, F — those at the diameter the **periphery**, A and D.
 
-$$\mathrm{rad}(G) \;\le\; \mathrm{diam}(G) \;\le\; 2 \times \mathrm{rad}(G)$$
+```math
+\mathrm{rad}(G) \;\le\; \mathrm{diam}(G) \;\le\; 2 \times \mathrm{rad}(G)
+```
 
-The left half is automatic: the smallest of six numbers cannot beat the largest. The right half is the rule above: route A and D through a centre station, say B, and the trip takes at most $d(A,B) + d(B,D)$ steps, each at most B's eccentricity — the radius. Here radius 2, diameter 3, twice the radius 4.
+The left half is automatic: the smallest of six numbers cannot beat the largest. The right half is the rule above: route A and D through a centre station, say B, and the trip takes at most $`d(A,B) + d(B,D)`$ steps, each at most B's eccentricity — the radius. Here radius 2, diameter 3, twice the radius 4.
 
 ### Step 4: the shortest loop
 
@@ -370,11 +378,11 @@ The two outputs match line for line.
 
 Lean proves the card's general facts for every map, of any size, and re-checks the metro's numbers.
 
-- Every walk from $u$ to $v$ contains a path from $u$ to $v$, no longer, using only the walk's stations and lines.
-- When every station is reachable, $d(u,v)$ is the length of some path, and no walk from $u$ to $v$ is shorter.
-- When every station is reachable, $d(u,v) = d(v,u)$ and $d(u,w) \le d(u,v) + d(v,w)$.
+- Every walk from $`u`$ to $`v`$ contains a path from $`u`$ to $`v`$, no longer, using only the walk's stations and lines.
+- When every station is reachable, $`d(u,v)`$ is the length of some path, and no walk from $`u`$ to $`v`$ is shorter.
+- When every station is reachable, $`d(u,v) = d(v,u)`$ and $`d(u,w) \le d(u,v) + d(v,w)`$.
 - When every station is reachable, the radius is at most the diameter, and the diameter at most twice the radius.
-- On the metro: eight lines, $d(A,D) = 3$, and four shortest routes from A to D.
+- On the metro: eight lines, $`d(A,D) = 3`$, and four shortest routes from A to D.
 - The eccentricities are 3, 2, 2, 3, 2, 2, so the diameter is 3, the radius 2, and the centre B, C, E, F.
 - The girth is 4, with A-B-C-F-A a cycle of four steps.
 - A-B-A-B-C-D is a walk but not a path, and B-A-F-C-B-E a trail but not a path.

@@ -40,56 +40,66 @@ Bars: the share of 200,000 Box-Muller draws landing in each half-unit bin, divid
 
 ## The formula
 
-Reminders. $\varphi$ is the standard bell's height and $\Phi$ its area to the left of a point ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)); P(A) is the chance of A, and P(A | B) the chance of A given B.
+Reminders. $`\varphi`$ is the standard bell's height and $`\Phi`$ its area to the left of a point ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)); P(A) is the chance of A, and P(A | B) the chance of A given B.
 
-**Rejection sampling.** The target density $f$ is the law wanted. The proposal density $g$ is a law that is easy to draw from. Find a number $M$ with
+**Rejection sampling.** The target density $`f`$ is the law wanted. The proposal density $`g`$ is a law that is easy to draw from. Find a number $`M`$ with
 
-$$f(y) \le M\,g(y) \quad\text{for every } y.$$
+```math
+f(y) \le M\,g(y) \quad\text{for every } y.
+```
 
-Draw $Y$ from $g$ and a fresh uniform $U$. Keep $Y$ when
+Draw $`Y`$ from $`g`$ and a fresh uniform $`U`$. Keep $`Y`$ when
 
-$$U \le \frac{f(Y)}{M\,g(Y)},$$
+```math
+U \le \frac{f(Y)}{M\,g(Y)},
+```
 
 otherwise throw both away and try again. Then
 
-$$P(\text{kept}) = \frac{1}{M}, \qquad P(Y \le y \mid \text{kept}) = F(y).$$
+```math
+P(\text{kept}) = \frac{1}{M}, \qquad P(Y \le y \mid \text{kept}) = F(y).
+```
 
 **Read it aloud:** raise the easy curve until it sits above the hard one everywhere; keep each easy draw with chance equal to the hard curve's height over the raised curve's height at that point; one draw in M survives, and the survivors follow the hard law.
 
-**Box-Muller.** Take two independent uniforms $U_1$ and $U_2$ in (0, 1]. Set
+**Box-Muller.** Take two independent uniforms $`U_1`$ and $`U_2`$ in (0, 1]. Set
 
-$$R = \sqrt{-2\ln U_1}, \qquad \Theta = 2\pi U_2, \qquad Z_1 = R\cos\Theta, \qquad Z_2 = R\sin\Theta.$$
+```math
+R = \sqrt{-2\ln U_1}, \qquad \Theta = 2\pi U_2, \qquad Z_1 = R\cos\Theta, \qquad Z_2 = R\sin\Theta.
+```
 
 **Read it aloud:** turn the first uniform into a distance from the centre and the second into an angle; the point at that distance and angle has two coordinates, each a standard normal draw, and neither tells anything about the other.
 
 On this card the target of the rejection sampler is the size of a normal draw, its distance from 0 ignoring sign, and a fair coin then adds the sign. The proposal is the exponential law with rate 1, drawn by the inverse transform as −ln of a uniform ([Exponential](../04-Continuous%20Distributions/03-exponential-distribution.md)):
 
-$$f(y) = \sqrt{2/\pi}\;e^{-y^2/2}, \qquad g(y) = e^{-y}, \qquad M = \sqrt{2e/\pi} = 1.315489, \qquad \frac{f(y)}{M\,g(y)} = e^{-(y-1)^2/2}.$$
+```math
+f(y) = \sqrt{2/\pi}\;e^{-y^2/2}, \qquad g(y) = e^{-y}, \qquad M = \sqrt{2e/\pi} = 1.315489, \qquad \frac{f(y)}{M\,g(y)} = e^{-(y-1)^2/2}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | target density: the law wanted | size of a normal draw, height 79.79 percent per unit at 0 | — |
-| $g$ | proposal density: a law easy to draw | exponential, e^(−y), height 1 at 0 | a proposal closer to the target needs a smaller M |
-| $F$ | the target's cumulative curve, its area to the left of a point | at 1: 2Φ(1) − 1 | — |
-| $M$ | envelope constant: how far g must be raised to sit above f | 1.315489 | more tries per kept draw, same law |
-| $Y$, $y$ | a draw from the proposal, and a point on the axis; in Steps 4 and 7 and the detailed proof, $x$ and $y$ are instead the two coordinates of a point in the plane | Y = 1.203973 from U = 0.3 | — |
-| $U$ | the uniform used for the keep-or-throw test | 0.8 | — |
-| $U_1$, $U_2$ | two independent uniforms in (0, 1] | 0.3 and 0.8 | smaller U1 gives a longer radius |
-| $R$, $\Theta$ | distance from the centre, and angle round it, in radians | 1.551756 and 5.026548 | — |
-| $r$, $\theta$ | one particular value of the distance and of the angle | 1.551756 and 5.026548 | — |
-| $W$ | polar method: a kept dart's squared distance from the centre, $x^2 + y^2$ | a number in (0, 1], used in place of $U_1$ | smaller W gives a longer radius |
-| $t$, $s$ | variables of integration: the points an integral sweeps over | $t$ up to $y$ in Step 2; $s$ from $r$ outwards in Step 5 | — |
-| $Z_1$, $Z_2$ | the two standard normal draws Box-Muller returns | 0.479519 and −1.475807 | — |
-| $\varphi$, $\Phi$ | the standard bell's height, and its area to the left | Φ(1) = 0.841345 | Φ rises from 0 to 1 |
-| $S$ | the share's price in a year, 100 e^(0.01 + 0.2 Z) | $111.17 for Z = 0.479519 | — |
-| $\sigma$ | the share's yearly volatility | 0.2 | wider spread of prices |
+| $`f`$ | target density: the law wanted | size of a normal draw, height 79.79 percent per unit at 0 | — |
+| $`g`$ | proposal density: a law easy to draw | exponential, e^(−y), height 1 at 0 | a proposal closer to the target needs a smaller M |
+| $`F`$ | the target's cumulative curve, its area to the left of a point | at 1: 2Φ(1) − 1 | — |
+| $`M`$ | envelope constant: how far g must be raised to sit above f | 1.315489 | more tries per kept draw, same law |
+| $`Y`$, $`y`$ | a draw from the proposal, and a point on the axis; in Steps 4 and 7 and the detailed proof, $`x`$ and $`y`$ are instead the two coordinates of a point in the plane | Y = 1.203973 from U = 0.3 | — |
+| $`U`$ | the uniform used for the keep-or-throw test | 0.8 | — |
+| $`U_1`$, $`U_2`$ | two independent uniforms in (0, 1] | 0.3 and 0.8 | smaller U1 gives a longer radius |
+| $`R`$, $`\Theta`$ | distance from the centre, and angle round it, in radians | 1.551756 and 5.026548 | — |
+| $`r`$, $`\theta`$ | one particular value of the distance and of the angle | 1.551756 and 5.026548 | — |
+| $`W`$ | polar method: a kept dart's squared distance from the centre, $`x^2 + y^2`$ | a number in (0, 1], used in place of $`U_1`$ | smaller W gives a longer radius |
+| $`t`$, $`s`$ | variables of integration: the points an integral sweeps over | $`t`$ up to $`y`$ in Step 2; $`s`$ from $`r`$ outwards in Step 5 | — |
+| $`Z_1`$, $`Z_2`$ | the two standard normal draws Box-Muller returns | 0.479519 and −1.475807 | — |
+| $`\varphi`$, $`\Phi`$ | the standard bell's height, and its area to the left | Φ(1) = 0.841345 | Φ rises from 0 to 1 |
+| $`S`$ | the share's price in a year, 100 e^(0.01 + 0.2 Z) | $111.17 for Z = 0.479519 | — |
+| $`\sigma`$ | the share's yearly volatility | 0.2 | wider spread of prices |
 
 ### When it holds
 
-- **The envelope must hold at every point.** If $f$ pokes above $M g$ somewhere, the test chance would exceed 1 there. Capping it at 1 silently thins that region. With $M$ = 1 on this card's example, the kept draws land beyond 2 in size 0.0516 of the time, against 0.0455 for the true bell.
-- **The proposal must reach everywhere the target lives.** Where $g$ is 0 and $f$ is not, no proposal ever lands, and that part of the law is missing however long the run.
-- **Each test uses a fresh uniform, independent of the proposal.** Reusing the number that made $Y$ makes the keep decision a fixed function of $Y$, and the output follows a different law.
-- **Uniforms in (0, 1], never 0.** Box-Muller takes the log of $U_1$; ln 0 is minus infinity. With 53-bit uniforms the smallest $U_1$ is 2^(−53), so the longest radius is 8.5717: no draw beyond 8.5717 standard deviations, a limit that matters only for tails far beyond anything a share simulation uses.
+- **The envelope must hold at every point.** If $`f`$ pokes above $`M g`$ somewhere, the test chance would exceed 1 there. Capping it at 1 silently thins that region. With $`M`$ = 1 on this card's example, the kept draws land beyond 2 in size 0.0516 of the time, against 0.0455 for the true bell.
+- **The proposal must reach everywhere the target lives.** Where $`g`$ is 0 and $`f`$ is not, no proposal ever lands, and that part of the law is missing however long the run.
+- **Each test uses a fresh uniform, independent of the proposal.** Reusing the number that made $`Y`$ makes the keep decision a fixed function of $`Y`$, and the output follows a different law.
+- **Uniforms in (0, 1], never 0.** Box-Muller takes the log of $`U_1`$; ln 0 is minus infinity. With 53-bit uniforms the smallest $`U_1`$ is 2^(−53), so the longest radius is 8.5717: no draw beyond 8.5717 standard deviations, a limit that matters only for tails far beyond anything a share simulation uses.
 - **Real uniforms are a model.** A generator produces a long fixed cycle of numbers that pass tests for uniformity ([Random numbers from a computer](01-pseudo-random-numbers.md)). The theorems are exact for true uniforms; the program is as good as its generator.
 
 ---
@@ -112,31 +122,35 @@ xychart-beta
     line [79.79, 77.33, 70.41, 60.23, 48.39, 36.53, 25.90, 17.26, 10.80, 6.35, 3.51, 1.82, 0.89, 0.41, 0.17, 0.07, 0.03]
 ```
 
-Upper line (orange): the envelope, $M$ times the exponential density. Lower line (green): the target, the density of the size of a normal draw. The two touch at y = 1, where both are 48.39 percent per unit; everywhere else the envelope is higher.
+Upper line (orange): the envelope, $`M`$ times the exponential density. Lower line (green): the target, the density of the size of a normal draw. The two touch at y = 1, where both are 48.39 percent per unit; everywhere else the envelope is higher.
 
-Picture the region under the envelope as a dartboard. A proposal $Y$ picks the dart's horizontal position with density $g$. The uniform $U$ times $M g(Y)$ picks a height between 0 and the envelope. The dart is kept when it lands under the target curve. Kept darts are spread evenly over the region under $f$, so their horizontal positions follow $f$. The steps below turn that picture into two lines of calculus.
+Picture the region under the envelope as a dartboard. A proposal $`Y`$ picks the dart's horizontal position with density $`g`$. The uniform $`U`$ times $`M g(Y)`$ picks a height between 0 and the envelope. The dart is kept when it lands under the target curve. Kept darts are spread evenly over the region under $`f`$, so their horizontal positions follow $`f`$. The steps below turn that picture into two lines of calculus.
 
-Why $M$ = 1.315489: the ratio $f(y) / g(y)$ equals √(2/π) e^(y − y^2/2). The exponent y − y^2/2 is largest at y = 1, where it is 1/2, so the ratio peaks at √(2/π) e^(1/2) = √(2e/π). That peak is the smallest $M$ that works. Dividing, the keep chance at a point is $e^{-(y-1)^2/2}$: certain at y = 1, and falling off both sides.
+Why $`M`$ = 1.315489: the ratio $`f(y) / g(y)`$ equals √(2/π) e^(y − y^2/2). The exponent y − y^2/2 is largest at y = 1, where it is 1/2, so the ratio peaks at √(2/π) e^(1/2) = √(2e/π). That peak is the smallest $`M`$ that works. Dividing, the keep chance at a point is $`e^{-(y-1)^2/2}`$: certain at y = 1, and falling off both sides.
 
 ### Step 2: the chance of landing at or below y and being kept
 
-Fix a point y. A proposal lands in a thin slice at t with chance g(t) dt. Once there, it is kept with chance $f(t) / (M g(t))$, since $U$ is uniform and independent of $Y$. Multiply and add over every slice at or below y:
+Fix a point y. A proposal lands in a thin slice at t with chance g(t) dt. Once there, it is kept with chance $`f(t) / (M g(t))`$, since $`U`$ is uniform and independent of $`Y`$. Multiply and add over every slice at or below y:
 
-$$P(Y \le y \text{ and kept}) = \int_{-\infty}^{y} g(t)\,\frac{f(t)}{M\,g(t)}\,dt = \frac{1}{M}\int_{-\infty}^{y} f(t)\,dt = \frac{F(y)}{M}.$$
+```math
+P(Y \le y \text{ and kept}) = \int_{-\infty}^{y} g(t)\,\frac{f(t)}{M\,g(t)}\,dt = \frac{1}{M}\int_{-\infty}^{y} f(t)\,dt = \frac{F(y)}{M}.
+```
 
-The proposal density cancels. Only the target's area survives, scaled by $1/M$.
+The proposal density cancels. Only the target's area survives, scaled by $`1/M`$.
 
 ### Step 3: the chance of being kept at all, and the law of the kept draws
 
-Let y run to the far right. The target's total area is 1, so $P(\text{kept}) = 1/M$. Divide Step 2 by this, which is the definition of a chance given an event:
+Let y run to the far right. The target's total area is 1, so $`P(\text{kept}) = 1/M`$. Divide Step 2 by this, which is the definition of a chance given an event:
 
-$$P(Y \le y \mid \text{kept}) = \frac{F(y)/M}{1/M} = F(y).$$
+```math
+P(Y \le y \mid \text{kept}) = \frac{F(y)/M}{1/M} = F(y).
+```
 
-The kept draws have exactly the target's cumulative curve, so exactly the target law. Nothing was approximated. For this card's example the keep rate is 1/M = 0.760173, and the integral of $g$ times the keep chance, done numerically in the code, gives the same 0.760173.
+The kept draws have exactly the target's cumulative curve, so exactly the target law. Nothing was approximated. For this card's example the keep rate is 1/M = 0.760173, and the integral of $`g`$ times the keep chance, done numerically in the code, gives the same 0.760173.
 
-Each try is independent and succeeds with chance $1/M$, so the number of tries per kept draw is geometric (the count of attempts up to and including the first success), with average $M$ = 1.315489. The loop returns the first kept draw. If it comes on try j, the chance of that and of a value at or below y is (1 − 1/M)^(j−1) × F(y)/M. Adding over every j gives F(y), so the returned draw follows the target law too.
+Each try is independent and succeeds with chance $`1/M`$, so the number of tries per kept draw is geometric (the count of attempts up to and including the first success), with average $`M`$ = 1.315489. The loop returns the first kept draw. If it comes on try j, the chance of that and of a value at or below y is (1 − 1/M)^(j−1) × F(y)/M. Adding over every j gives F(y), so the returned draw follows the target law too.
 
-The sampler spends 1.315489 exponential draws, on average, per normal size it returns. A looser envelope, say $M$ = 2, still gives the exact law but wastes more proposals.
+The sampler spends 1.315489 exponential draws, on average, per normal size it returns. A looser envelope, say $`M`$ = 2, still gives the exact law but wastes more proposals.
 
 The sign comes from a separate fair coin. The bell is symmetric, so a size with a random sign is a standard normal draw.
 
@@ -144,36 +158,48 @@ The sign comes from a separate fair coin. The bell is symmetric, so a size with 
 
 Now Box-Muller. Take two independent standard normals as the coordinates of a point in the plane. Independence means their joint density is the product of the two heights:
 
-$$\varphi(x)\,\varphi(y) = \frac{1}{2\pi}\,e^{-(x^2 + y^2)/2}.$$
+```math
+\varphi(x)\,\varphi(y) = \frac{1}{2\pi}\,e^{-(x^2 + y^2)/2}.
+```
 
-The right side depends only on $x^2 + y^2$, the squared distance from the centre. The two-dimensional bell is round. That is the whole reason Box-Muller exists: a round law has a uniform angle, and only its distance needs work.
+The right side depends only on $`x^2 + y^2`$, the squared distance from the centre. The two-dimensional bell is round. That is the whole reason Box-Muller exists: a round law has a uniform angle, and only its distance needs work.
 
 ### Step 5: the angle and the distance, each from one uniform
 
-Switch to distance $R$ and angle $\Theta$. A small patch dr by dθ covers area r dr dθ, the Jacobian factor for polar coordinates ([Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)). So the density in the new coordinates is
+Switch to distance $`R`$ and angle $`\Theta`$. A small patch dr by dθ covers area r dr dθ, the Jacobian factor for polar coordinates ([Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)). So the density in the new coordinates is
 
-$$\frac{1}{2\pi} \times r\,e^{-r^2/2}, \qquad r > 0,\; 0 \le \theta < 2\pi.$$
+```math
+\frac{1}{2\pi} \times r\,e^{-r^2/2}, \qquad r > 0,\; 0 \le \theta < 2\pi.
+```
 
-It splits into a factor in θ alone, 1/(2π), and a factor in r alone, r e^(−r^2/2). A density that splits into separate factors means the pieces are independent. The angle is uniform round the circle: $\Theta = 2\pi U_2$. The distance has tail chance
+It splits into a factor in θ alone, 1/(2π), and a factor in r alone, r e^(−r^2/2). A density that splits into separate factors means the pieces are independent. The angle is uniform round the circle: $`\Theta = 2\pi U_2`$. The distance has tail chance
 
-$$P(R > r) = \int_r^\infty s\,e^{-s^2/2}\,ds = e^{-r^2/2}.$$
+```math
+P(R > r) = \int_r^\infty s\,e^{-s^2/2}\,ds = e^{-r^2/2}.
+```
 
-Set this tail chance equal to a uniform and solve: $e^{-R^2/2} = U_1$ gives $R = \sqrt{-2\ln U_1}$. The inverse transform does this, run on the tail chance instead of the cumulative curve, which is allowed because 1 − U is uniform too ([Inverse transform](02-inverse-transform-sampling.md)). It works because the distance, unlike the normal itself, has a cumulative curve that can be turned round by algebra. Half the squared distance, $R^2/2 = -\ln U_1$, is an exponential draw with rate 1.
+Set this tail chance equal to a uniform and solve: $`e^{-R^2/2} = U_1`$ gives $`R = \sqrt{-2\ln U_1}`$. The inverse transform does this, run on the tail chance instead of the cumulative curve, which is allowed because 1 − U is uniform too ([Inverse transform](02-inverse-transform-sampling.md)). It works because the distance, unlike the normal itself, has a cumulative curve that can be turned round by algebra. Half the squared distance, $`R^2/2 = -\ln U_1`$, is an exponential draw with rate 1.
 
 ### Step 6: run it backwards
 
-Steps 4 and 5 say: two independent normals, read in polar coordinates, are a uniform angle and a distance $\sqrt{-2\ln U_1}$, independent of each other. Reverse it: build the angle and the distance from $U_1$ and $U_2$, then read off the coordinates $Z_1 = R\cos\Theta$ and $Z_2 = R\sin\Theta$. The pair has the round bell's density, so $Z_1$ and $Z_2$ are two independent standard normals. The folded proof below does the same computation in one Jacobian.
+Steps 4 and 5 say: two independent normals, read in polar coordinates, are a uniform angle and a distance $`\sqrt{-2\ln U_1}`$, independent of each other. Reverse it: build the angle and the distance from $`U_1`$ and $`U_2`$, then read off the coordinates $`Z_1 = R\cos\Theta`$ and $`Z_2 = R\sin\Theta`$. The pair has the round bell's density, so $`Z_1`$ and $`Z_2`$ are two independent standard normals. The folded proof below does the same computation in one Jacobian.
 
 <details>
 <summary>Detailed proof: Box-Muller by one change of variables</summary>
 
-The pair $(U_1, U_2)$ has density 1 on the square (0, 1] × (0, 1]. The map to $(Z_1, Z_2)$ is one to one, and its inverse is
-$$U_1 = e^{-(x^2 + y^2)/2}, \qquad U_2 = \frac{\theta(x, y)}{2\pi},$$
+The pair $`(U_1, U_2)`$ has density 1 on the square (0, 1] × (0, 1]. The map to $`(Z_1, Z_2)`$ is one to one, and its inverse is
+
+$`\displaystyle U_1 = e^{-(x^2 + y^2)/2}, \qquad U_2 = \frac{\theta(x, y)}{2\pi},`$
+
 where θ(x, y) is the angle of the point (x, y), measured anticlockwise from the positive x-axis into [0, 2π). The angle's rates of change are ∂θ/∂x = −y / (x^2 + y^2) and ∂θ/∂y = x / (x^2 + y^2). Write r^2 = x^2 + y^2. The Jacobian determinant of the inverse map is
-$$\frac{\partial U_1}{\partial x}\frac{\partial U_2}{\partial y} - \frac{\partial U_1}{\partial y}\frac{\partial U_2}{\partial x} = \left(-x\,e^{-r^2/2}\right)\frac{x}{2\pi r^2} - \left(-y\,e^{-r^2/2}\right)\frac{-y}{2\pi r^2} = -\frac{e^{-r^2/2}}{2\pi}.$$
-The change-of-variables theorem says the density of $(Z_1, Z_2)$ is the density of $(U_1, U_2)$, which is 1, times the size of this determinant:
-$$1 \times \frac{e^{-(x^2+y^2)/2}}{2\pi} = \varphi(x)\,\varphi(y).$$
-A joint density that is a product of one function of x and one of y means independent coordinates, each with density φ. The edge where $U_1$ = 1, which has zero area, maps to the centre.
+
+$`\displaystyle \frac{\partial U_1}{\partial x}\frac{\partial U_2}{\partial y} - \frac{\partial U_1}{\partial y}\frac{\partial U_2}{\partial x} = \left(-x\,e^{-r^2/2}\right)\frac{x}{2\pi r^2} - \left(-y\,e^{-r^2/2}\right)\frac{-y}{2\pi r^2} = -\frac{e^{-r^2/2}}{2\pi}.`$
+
+The change-of-variables theorem says the density of $`(Z_1, Z_2)`$ is the density of $`(U_1, U_2)`$, which is 1, times the size of this determinant:
+
+$`\displaystyle 1 \times \frac{e^{-(x^2+y^2)/2}}{2\pi} = \varphi(x)\,\varphi(y).`$
+
+A joint density that is a product of one function of x and one of y means independent coordinates, each with density φ. The edge where $`U_1`$ = 1, which has zero area, maps to the centre.
 
 </details>
 
@@ -185,9 +211,11 @@ Throw a dart uniformly at the square from −1 to 1 on both axes, and keep it on
 
 A kept dart (x, y) has a uniform angle, and its squared distance W = x^2 + y^2 is uniform on (0, 1], since the area inside radius √w is a fraction w of the circle. The angle and W are also independent: in distance-and-angle coordinates the dart's flat density on the disc splits into a factor in the angle alone and one in the distance alone, as in Step 5.
 
-So W can stand in for $U_1$, and x/√W, y/√W are the cosine and sine of the angle for free:
+So W can stand in for $`U_1`$, and x/√W, y/√W are the cosine and sine of the angle for free:
 
-$$Z_1 = x\sqrt{\frac{-2\ln W}{W}}, \qquad Z_2 = y\sqrt{\frac{-2\ln W}{W}}.$$
+```math
+Z_1 = x\sqrt{\frac{-2\ln W}{W}}, \qquad Z_2 = y\sqrt{\frac{-2\ln W}{W}}.
+```
 
 The code runs it: of 127,375 darts, the kept share times 4 is 3.1403, with a standard error of 0.0046. A standard error is the typical size of the random scatter in a simulated figure ([Monte Carlo](04-monte-carlo-estimates-and-error.md)). The draws pass the same checks as the other two samplers.
 
@@ -208,11 +236,11 @@ The same two uniforms, U = 0.3 and then U = 0.8, run through both methods.
 | radius | √2.407946 | 1.551756 |
 | angle | 2π × 0.8 | 5.026548 |
 | cosine and sine | cos 5.026548, sin 5.026548 | 0.309017, −0.951057 |
-| $Z_1$ | 1.551756 × 0.309017 | **0.479519** |
-| $Z_2$ | 1.551756 × (−0.951057) | **−1.475807** |
+| $`Z_1`$ | 1.551756 × 0.309017 | **0.479519** |
+| $`Z_2`$ | 1.551756 × (−0.951057) | **−1.475807** |
 | share in a year | 100 e^(0.01 + 0.2 × 0.479519) | **$111.17** |
 
-One pair of uniforms gives two simulated years for the share: one at \$111.17, and a second from $Z_2$ = −1.475807, a bad year.
+One pair of uniforms gives two simulated years for the share: one at \$111.17, and a second from $`Z_2`$ = −1.475807, a bad year.
 
 Across 200,000 draws each, the three samplers land where the bell says. Φ(1) = 0.841345 by numerical integration of the bell. The share of draws at or below 1 is 0.8404 ± 0.0008 by rejection, 0.8416 ± 0.0008 by Box-Muller, and 0.8423 ± 0.0008 by the polar method. The ± is one standard error, and each estimate sits within two of them of the true value.
 
@@ -633,11 +661,11 @@ The two outputs match line for line: the same generator feeds the same arithmeti
 
 Lean proves both theorems for every density, envelope and pair of uniforms that meet their conditions, and the card's envelope numbers.
 
-- Suppose $f(y) \le M\,g(y)$ at every y, and $U$ is a fresh uniform in (0, 1], independent of $Y$. Then $P(\text{kept}) = 1/M$, and $P(Y \le y \mid \text{kept}) = F(y)$ for every y.
-- Lean does not assume $M$ is positive or that $g$ reaches the target; the envelope forces both.
-- Take two independent uniforms $U_1$ and $U_2$ in (0, 1], and set $R$ and $\Theta$ as in the formula. Then $Z_1 = R\cos\Theta$ and $Z_2 = R\sin\Theta$ are two independent standard normal draws.
-- Take the card's example: $f$ the size of a normal draw, $g$ the exponential, and $M = \sqrt{2e/\pi}$. Then $f(y) \le M\,g(y)$ at every y, and the keep chance is $e^{-(y-1)^2/2}$.
-- Suppose some number $M'$ has $f(y) \le M'\,g(y)$ for every y ≥ 0. Then $M'$ is at least $\sqrt{2e/\pi}$, so no smaller envelope works.
+- Suppose $`f(y) \le M\,g(y)`$ at every y, and $`U`$ is a fresh uniform in (0, 1], independent of $`Y`$. Then $`P(\text{kept}) = 1/M`$, and $`P(Y \le y \mid \text{kept}) = F(y)`$ for every y.
+- Lean does not assume $`M`$ is positive or that $`g`$ reaches the target; the envelope forces both.
+- Take two independent uniforms $`U_1`$ and $`U_2`$ in (0, 1], and set $`R`$ and $`\Theta`$ as in the formula. Then $`Z_1 = R\cos\Theta`$ and $`Z_2 = R\sin\Theta`$ are two independent standard normal draws.
+- Take the card's example: $`f`$ the size of a normal draw, $`g`$ the exponential, and $`M = \sqrt{2e/\pi}`$. Then $`f(y) \le M\,g(y)`$ at every y, and the keep chance is $`e^{-(y-1)^2/2}`$.
+- Suppose some number $`M'`$ has $`f(y) \le M'\,g(y)`$ for every y ≥ 0. Then $`M'`$ is at least $`\sqrt{2e/\pi}`$, so no smaller envelope works.
 
 The loop of tries, the sign's coin, the polar method, the decimals and the share prices are left to the Python and Rust checks.
 
@@ -974,7 +1002,7 @@ theorem half_normal_exponential_envelope :
 ## The usual mistake
 
 > [!warning]
-> **Mending a low envelope by capping the keep chance at 1.** If the chosen $M$ is too small, the ratio $f/(M g)$ exceeds 1 in places, and code that caps it at 1 runs without complaint. The output is wrong where it matters: with $M$ = 1 here the draws land beyond 2 in size 0.0516 of the time instead of 0.0455, while the mean and variance barely move. The fix is to prove the bound before sampling, by finding the peak of $f/g$, as Step 1 did.
+> **Mending a low envelope by capping the keep chance at 1.** If the chosen $`M`$ is too small, the ratio $`f/(M g)`$ exceeds 1 in places, and code that caps it at 1 runs without complaint. The output is wrong where it matters: with $`M`$ = 1 here the draws land beyond 2 in size 0.0516 of the time instead of 0.0455, while the mean and variance barely move. The fix is to prove the bound before sampling, by finding the peak of $`f/g`$, as Step 1 did.
 >
 > - **Dropping the 2 in −2 ln U1.** The variance halves to 0.5, and the call on this card's share comes out at $6.4312 instead of $9.227006.
 > - **Using the squared radius as the radius.** Without the square root, the variance is 4 and the shape is no longer a bell.
@@ -988,7 +1016,7 @@ theorem half_normal_exponential_envelope :
 - **Share and option simulations.** Every simulated price path starts from normal draws. Glasserman's text on Monte Carlo in finance covers Box-Muller, the polar method and a fast normal quantile in its section on normal draws.
 - **Standard libraries.** Python's `random.gauss` uses a Box-Muller form; Java's `Random.nextGaussian` documents the polar method. Faster modern normal samplers, such as the ziggurat, are rejection samplers with a staircase envelope built to keep almost every proposal.
 - **Laws with no invertible curve.** The gamma law of waiting times ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)) is sampled in practice by rejection against a simple envelope, and the beta law of proportions from two gamma draws.
-- **Bayesian computing.** A posterior (the law of an unknown quantity after seeing data) is often known only up to a constant. It can still be sampled by rejection, since the keep test needs $f$ only up to a fixed factor folded into $M$.
+- **Bayesian computing.** A posterior (the law of an unknown quantity after seeing data) is often known only up to a constant. It can still be sampled by rejection, since the keep test needs $`f`$ only up to a fixed factor folded into $`M`$.
 
 > **Say it back**
 > Rejection sampling raises an easy density until it sits above the wanted one, draws from the easy one, and keeps each draw with chance equal to the ratio of the two heights. The kept draws follow the wanted law exactly, and one proposal in M is kept. Box-Muller reads two uniforms as a distance √(−2 ln U1) and an angle 2πU2; because two independent normals form a round bell, the point's two coordinates are two independent normals. The polar method combines the two: darts in a square, kept inside the circle, give the same normals without a cosine or sine. Both methods are exact; the danger is an envelope that is not really above the target.

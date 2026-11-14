@@ -30,55 +30,63 @@ Caption: the solid arrow from the origin to (3, 5) is A, of length 5.831; the da
 
 ## The formula
 
-Notation first, in words, as a reminder from [Lp spaces](01-lp-spaces.md). A measure space $(\Omega,\mathcal F,\mu)$ is a set of points, the collection of sets we allow ourselves to measure, and a measure giving each such set a size.
+Notation first, in words, as a reminder from [Lp spaces](01-lp-spaces.md). A measure space $`(\Omega,\mathcal F,\mu)`$ is a set of points, the collection of sets we allow ourselves to measure, and a measure giving each such set a size.
 
-Here $\Omega$ is the seven days, and $\mu$ is either **counting measure**, which gives each day weight 1, or the **uniform probability**, which gives each day weight 1/7. For a measurable function $f$ and an exponent $p$ with $1 \le p < \infty$, the **p-norm**, which this card also calls the p-size, is
+Here $`\Omega`$ is the seven days, and $`\mu`$ is either **counting measure**, which gives each day weight 1, or the **uniform probability**, which gives each day weight 1/7. For a measurable function $`f`$ and an exponent $`p`$ with $`1 \le p < \infty`$, the **p-norm**, which this card also calls the p-size, is
 
-$$\|f\|_p = \Big(\int_\Omega |f|^p \, d\mu\Big)^{1/p}.$$
+```math
+\|f\|_p = \Big(\int_\Omega |f|^p \, d\mu\Big)^{1/p}.
+```
 
-In words: raise the size of each value to the power p, integrate, then take the p-th root to return to the original units. On the seven days, the integral against counting measure is a plain sum. The **sup-norm** $\|f\|_\infty$ is the smallest number that $|f|$ stays at or below almost everywhere, that is, except on a set of measure zero. On seven days of weight 1 it is the largest value: 8 m/s for turbine A.
+In words: raise the size of each value to the power p, integrate, then take the p-th root to return to the original units. On the seven days, the integral against counting measure is a plain sum. The **sup-norm** $`\|f\|_\infty`$ is the smallest number that $`|f|`$ stays at or below almost everywhere, that is, except on a set of measure zero. On seven days of weight 1 it is the largest value: 8 m/s for turbine A.
 
-**Minkowski's inequality.** For measurable $f$ and $g$ and any $p$ with $1 \le p \le \infty$,
+**Minkowski's inequality.** For measurable $`f`$ and $`g`$ and any $`p`$ with $`1 \le p \le \infty`$,
 
-$$\|f+g\|_p \;\le\; \|f\|_p + \|g\|_p .$$
+```math
+\|f+g\|_p \;\le\; \|f\|_p + \|g\|_p .
+```
 
 **Read it aloud:** the p-size of the sum is at most the p-size of the first plus the p-size of the second.
 
 With the sum of the sizes finite, the left side is finite too, so the sum of two functions of finite p-size again has finite p-size.
 
-The proof borrows Hölder's inequality ([Holder's inequality](02-holders-inequality.md)): for measurable $u$ and $v$, $1 < p < \infty$ and the **conjugate exponent** $q = p/(p-1)$, the number with $1/p + 1/q = 1$,
+The proof borrows Hölder's inequality ([Holder's inequality](02-holders-inequality.md)): for measurable $`u`$ and $`v`$, $`1 < p < \infty`$ and the **conjugate exponent** $`q = p/(p-1)`$, the number with $`1/p + 1/q = 1`$,
 
-$$\int_\Omega |u\,v| \, d\mu \;\le\; \|u\|_p \, \|v\|_q .$$
+```math
+\int_\Omega |u\,v| \, d\mu \;\le\; \|u\|_p \, \|v\|_q .
+```
 
 In words: the integral of a product is at most the product of the two sizes, measured with matched exponents.
 
 **The norm axioms.** A **norm** is a size with three properties, and the p-norm has all three:
 
-$$\|f\|_p = 0 \iff f = 0 \text{ a.e.}, \qquad \|c f\|_p = |c|\,\|f\|_p, \qquad \|f+g\|_p \le \|f\|_p + \|g\|_p .$$
+```math
+\|f\|_p = 0 \iff f = 0 \text{ a.e.}, \qquad \|c f\|_p = |c|\,\|f\|_p, \qquad \|f+g\|_p \le \|f\|_p + \|g\|_p .
+```
 
-In words: only the zero function has size zero, once functions that agree almost everywhere count as one; scaling a function by a number $c$ scales its size by the size of $c$; and the triangle inequality. **L^p**, the space of functions of finite p-size with that identification, is therefore a **normed space**: a space of things that can be added and scaled, with a length that behaves like length. The distance between two functions is $\|f-g\|_p$.
+In words: only the zero function has size zero, once functions that agree almost everywhere count as one; scaling a function by a number $`c`$ scales its size by the size of $`c`$; and the triangle inequality. **L^p**, the space of functions of finite p-size with that identification, is therefore a **normed space**: a space of things that can be added and scaled, with a length that behaves like length. The distance between two functions is $`\|f-g\|_p`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$ | the space of points | the seven days of the week | more days, more terms in each sum |
-| $\mu$ | the measure: a weight on sets of days | 1 per day (counting) or 1/7 per day (uniform probability) | every p-size scales by the weight to the power 1/p; the inequality is unchanged |
-| $\mathcal F$ | the sets we allow ourselves to measure | every set of days | — |
-| $f$, $g$ | two measurable functions, the summands | turbine A and turbine B, in m/s | larger values, larger sizes |
-| $p$ | the exponent that picks the size | 2, the square-root-of-squares length | the size leans harder on the largest values |
-| $q$ | the conjugate exponent, p/(p − 1) | 2 when p = 2 | falls toward 1 as p grows |
-| $\|f\|_p$ | the p-norm: p-th root of the integral of the p-th power | 14.2478 for A at p = 2 under counting measure | — |
-| $\|f\|_\infty$ | the sup-norm: the largest value, ignoring sets of measure zero | 8 for A, 6 for B, 12 for the sum | — |
-| $u$, $v$ | the two factors fed to Hölder | u = A, v = (A + B) to the power p − 1 | — |
-| $c$ | a number that scales a function | −2.5 in the scaling check | the size grows by the factor 2.5 |
-| $t$ | the ratio in the equality case, g = t f with t ≥ 0 | t = 2 when B is twice A | — |
-| $M$, $N_f$, $N_g$ | in the proof: the sup-norm of f, and the sets of measure zero where f or g passes its sup-norm | M = 8 for A; both sets empty here | — |
+| $`\Omega`$ | the space of points | the seven days of the week | more days, more terms in each sum |
+| $`\mu`$ | the measure: a weight on sets of days | 1 per day (counting) or 1/7 per day (uniform probability) | every p-size scales by the weight to the power 1/p; the inequality is unchanged |
+| $`\mathcal F`$ | the sets we allow ourselves to measure | every set of days | — |
+| $`f`$, $`g`$ | two measurable functions, the summands | turbine A and turbine B, in m/s | larger values, larger sizes |
+| $`p`$ | the exponent that picks the size | 2, the square-root-of-squares length | the size leans harder on the largest values |
+| $`q`$ | the conjugate exponent, p/(p − 1) | 2 when p = 2 | falls toward 1 as p grows |
+| $`\Vert f\Vert_p`$ | the p-norm: p-th root of the integral of the p-th power | 14.2478 for A at p = 2 under counting measure | — |
+| $`\Vert f\Vert_\infty`$ | the sup-norm: the largest value, ignoring sets of measure zero | 8 for A, 6 for B, 12 for the sum | — |
+| $`u`$, $`v`$ | the two factors fed to Hölder | u = A, v = (A + B) to the power p − 1 | — |
+| $`c`$ | a number that scales a function | −2.5 in the scaling check | the size grows by the factor 2.5 |
+| $`t`$ | the ratio in the equality case, g = t f with t ≥ 0 | t = 2 when B is twice A | — |
+| $`M`$, $`N_f`$, $`N_g`$ | in the proof: the sup-norm of f, and the sets of measure zero where f or g passes its sup-norm | M = 8 for A; both sets empty here | — |
 
 ### When it holds
 
 - **p at least 1.** Below 1 the inequality fails. At p = 1/2 the turbines give 402.3318 for the sum against 384.2390 for the two sizes added. The proof's tool fails with it: q = p/(p − 1) is negative, and Hölder's inequality needs p ≥ 1; the split in Step 3 uses 1 < p < ∞.
 - **Measurable functions on any measure space.** No finiteness, no continuity, no bound. A size may be infinite; the inequality then holds with ∞ on the right.
 - **Size zero means zero almost everywhere, not everywhere.** A day of weight zero, such as a day with the sensor offline, carries any value at no cost: the function 9 on that day and 0 elsewhere has 2-norm 0.0000. The norm axioms hold only once such functions count as the zero function ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
-- **Equality needs the same direction.** For 1 < p < ∞, equality holds exactly when one function is a multiple $t \ge 0$ of the other almost everywhere. Opposite directions do not count: B = −2A gives 14.2478 against 42.7434.
+- **Equality needs the same direction.** For 1 < p < ∞, equality holds exactly when one function is a multiple $`t \ge 0`$ of the other almost everywhere. Opposite directions do not count: B = −2A gives 14.2478 against 42.7434.
 
 ---
 
@@ -92,58 +100,62 @@ The trick is to split the p-th power of the sum into two pieces, one carrying A 
 
 ### Step 1: p = 1, the triangle inequality integrated
 
-At each point, $|f+g| \le |f| + |g|$. The integral respects order and adds ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so the size of the sum is at most the sum of sizes. For the turbines both sides are 58.0000: every reading is positive, so the day-by-day triangle inequality is an equality on every day.
+At each point, $`|f+g| \le |f| + |g|`$. The integral respects order and adds ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so the size of the sum is at most the sum of sizes. For the turbines both sides are 58.0000: every reading is positive, so the day-by-day triangle inequality is an equality on every day.
 
 ### Step 2: p = ∞, the largest values
 
-Off a set of measure zero, $|f| \le \|f\|_\infty$ and $|g| \le \|g\|_\infty$. Two sets of measure zero together still have measure zero. Off both, $|f+g| \le \|f\|_\infty + \|g\|_\infty$. The sup-norm of the sum is the smallest such bound, so it is at most that sum. For the turbines the combined maximum is 12, on day 3, against 8 + 6 = 14: A peaks on day 3 and B on day 4, so their peaks do not add.
+Off a set of measure zero, $`|f| \le \|f\|_\infty`$ and $`|g| \le \|g\|_\infty`$. Two sets of measure zero together still have measure zero. Off both, $`|f+g| \le \|f\|_\infty + \|g\|_\infty`$. The sup-norm of the sum is the smallest such bound, so it is at most that sum. For the turbines the combined maximum is 12, on day 3, against 8 + 6 = 14: A peaks on day 3 and B on day 4, so their peaks do not add.
 
 The sup-norm is also the limit of the p-norms as p grows. For turbine A the p-norms at p = 8, 16 and 64 are 8.3956, 8.0607 and 8.0000, closing on the maximum, 8.
 
 ### Step 3: 1 < p < ∞, split and apply Hölder
 
-First make sure the size of the sum is finite. At each point $|f+g| \le 2\max(|f|,|g|)$, so the p-th power is at most $2^p(|f|^p + |g|^p)$, which has a finite integral when both sizes are finite.
+First make sure the size of the sum is finite. At each point $`|f+g| \le 2\max(|f|,|g|)`$, so the p-th power is at most $`2^p(|f|^p + |g|^p)`$, which has a finite integral when both sizes are finite.
 
 Now write the p-th power of the sum as the sum times its (p − 1)-th power, and split the first factor:
 
-$$|f+g|^p \;\le\; |f|\,|f+g|^{p-1} + |g|\,|f+g|^{p-1}.$$
+```math
+|f+g|^p \;\le\; |f|\,|f+g|^{p-1} + |g|\,|f+g|^{p-1}.
+```
 
-Apply Hölder to each piece with $v = |f+g|^{p-1}$. Because $(p-1)q = p$, the q-size of $v$ is the p-size of the sum to the power p − 1. Each piece is at most one summand's size times $\|f+g\|_p^{p-1}$. Adding them,
+Apply Hölder to each piece with $`v = |f+g|^{p-1}`$. Because $`(p-1)q = p`$, the q-size of $`v`$ is the p-size of the sum to the power p − 1. Each piece is at most one summand's size times $`\|f+g\|_p^{p-1}`$. Adding them,
 
-$$\|f+g\|_p^{\,p} \;\le\; \big(\|f\|_p + \|g\|_p\big)\,\|f+g\|_p^{\,p-1}.$$
+```math
+\|f+g\|_p^{\,p} \;\le\; \big(\|f\|_p + \|g\|_p\big)\,\|f+g\|_p^{\,p-1}.
+```
 
-Divide by $\|f+g\|_p^{p-1}$, which is finite, and positive unless the sum is zero almost everywhere, in which case there is nothing to prove.
+Divide by $`\|f+g\|_p^{p-1}`$, which is finite, and positive unless the sum is zero almost everywhere, in which case there is nothing to prove.
 
 On the turbines at p = 2, the sum of squares of the combined week, 500, splits as 304 from A's piece and 196 from B's. Hölder caps them at 318.59 and 217.94. At p = 3 the cubes sum to 4510 = 2774 + 1736, capped at 2975.37 and 2090.26.
 
 ### Step 4: the other two axioms, and a normed space
 
-Scaling: the integral of $|cf|^p$ is $|c|^p$ times the integral of $|f|^p$, and the p-th root turns $|c|^p$ back into $|c|$. The check scales turbine A by −2.5 and gets a 3-norm of 27.2498 both ways.
+Scaling: the integral of $`|cf|^p`$ is $`|c|^p`$ times the integral of $`|f|^p`$, and the p-th root turns $`|c|^p`$ back into $`|c|`$. The check scales turbine A by −2.5 and gets a 3-norm of 27.2498 both ways.
 
-Zero: the integral of the function $|f|^p$, which is zero or more, is zero exactly when that function is zero almost everywhere. So $\|f\|_p = 0$ exactly when $f = 0$ almost everywhere.
+Zero: the integral of the function $`|f|^p`$, which is zero or more, is zero exactly when that function is zero almost everywhere. So $`\|f\|_p = 0`$ exactly when $`f = 0`$ almost everywhere.
 
 With all three axioms, the functions of finite p-size, with functions equal almost everywhere counted as one, form a normed space. Minkowski supplies the two facts the axioms need beyond arithmetic: the sum of two members is a member, and distance obeys the triangle inequality.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space, $f$ and $g$ are measurable with real values, and $1 \le p \le \infty$. If the right side $\|f\|_p + \|g\|_p$ is infinite there is nothing to prove, so assume both sizes are finite. The sum $f + g$ is measurable, as a sum of measurable functions ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)).
+**Setting.** $`(\Omega,\mathcal F,\mu)`$ is a measure space, $`f`$ and $`g`$ are measurable with real values, and $`1 \le p \le \infty`$. If the right side $`\|f\|_p + \|g\|_p`$ is infinite there is nothing to prove, so assume both sizes are finite. The sum $`f + g`$ is measurable, as a sum of measurable functions ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)).
 
-**Case p = 1.** For every point, $|f+g| \le |f| + |g|$, the triangle inequality for numbers. The integral of functions of zero or more is monotone and additive ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so $\int|f+g|\,d\mu \le \int|f|\,d\mu + \int|g|\,d\mu$.
+**Case p = 1.** For every point, $`|f+g| \le |f| + |g|`$, the triangle inequality for numbers. The integral of functions of zero or more is monotone and additive ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so $`\int|f+g|\,d\mu \le \int|f|\,d\mu + \int|g|\,d\mu`$.
 
-**Case p = ∞.** Let $M = \|f\|_\infty$. The set where $|f| > M$ is the union over n of the sets where $|f| > M + 1/n$; each has measure zero, because $M$ is the greatest lower bound of the almost-everywhere bounds, so some such bound lies below $M + 1/n$; and a countable union of sets of measure zero has measure zero. So $|f| \le M$ off a null set $N_f$. Likewise $|g| \le \|g\|_\infty$ off a null set $N_g$. Off $N_f \cup N_g$, still null, $|f+g| \le \|f\|_\infty + \|g\|_\infty$. The sup-norm of $f + g$ is the smallest bound of this kind, so it is at most $\|f\|_\infty + \|g\|_\infty$.
+**Case p = ∞.** Let $`M = \|f\|_\infty`$. The set where $`|f| > M`$ is the union over n of the sets where $`|f| > M + 1/n`$; each has measure zero, because $`M`$ is the greatest lower bound of the almost-everywhere bounds, so some such bound lies below $`M + 1/n`$; and a countable union of sets of measure zero has measure zero. So $`|f| \le M`$ off a null set $`N_f`$. Likewise $`|g| \le \|g\|_\infty`$ off a null set $`N_g`$. Off $`N_f \cup N_g`$, still null, $`|f+g| \le \|f\|_\infty + \|g\|_\infty`$. The sup-norm of $`f + g`$ is the smallest bound of this kind, so it is at most $`\|f\|_\infty + \|g\|_\infty`$.
 
 **Case 1 < p < ∞.**
-1. *The sum has finite size.* At each point, $|f+g| \le |f| + |g| \le 2\max(|f|,|g|)$, so $|f+g|^p \le 2^p \max(|f|^p, |g|^p) \le 2^p(|f|^p + |g|^p)$. Integrating, $\int|f+g|^p\,d\mu \le 2^p(\|f\|_p^p + \|g\|_p^p) < \infty$.
-2. *Nothing to do at zero.* If $\|f+g\|_p = 0$, the inequality holds, since the right side is zero or more.
-3. *Split.* At each point, $|f+g|^p = |f+g|\cdot|f+g|^{p-1} \le |f|\,|f+g|^{p-1} + |g|\,|f+g|^{p-1}$, by the triangle inequality for numbers times a factor of zero or more.
-4. *Hölder on each piece.* Let $q = p/(p-1)$, so $1/p + 1/q = 1$ and $(p-1)q = p$. Put $v = |f+g|^{p-1}$. Then $\int v^q\,d\mu = \int|f+g|^p\,d\mu$, so $\|v\|_q = \big(\int|f+g|^p\,d\mu\big)^{1/q} = \|f+g\|_p^{p/q} = \|f+g\|_p^{p-1}$, finite by 1. Hölder ([Holder's inequality](02-holders-inequality.md)) gives $\int|f|\,v\,d\mu \le \|f\|_p\,\|f+g\|_p^{p-1}$, and the same with $g$ in place of $f$.
-5. *Add.* Integrating 3 and using 4, $\|f+g\|_p^p \le (\|f\|_p + \|g\|_p)\,\|f+g\|_p^{p-1}$.
-6. *Divide.* By 1 and 2, $\|f+g\|_p^{p-1}$ is finite and positive. Dividing by it gives $\|f+g\|_p \le \|f\|_p + \|g\|_p$. ∎
+1. *The sum has finite size.* At each point, $`|f+g| \le |f| + |g| \le 2\max(|f|,|g|)`$, so $`|f+g|^p \le 2^p \max(|f|^p, |g|^p) \le 2^p(|f|^p + |g|^p)`$. Integrating, $`\int|f+g|^p\,d\mu \le 2^p(\|f\|_p^p + \|g\|_p^p) < \infty`$.
+2. *Nothing to do at zero.* If $`\|f+g\|_p = 0`$, the inequality holds, since the right side is zero or more.
+3. *Split.* At each point, $`|f+g|^p = |f+g|\cdot|f+g|^{p-1} \le |f|\,|f+g|^{p-1} + |g|\,|f+g|^{p-1}`$, by the triangle inequality for numbers times a factor of zero or more.
+4. *Hölder on each piece.* Let $`q = p/(p-1)`$, so $`1/p + 1/q = 1`$ and $`(p-1)q = p`$. Put $`v = |f+g|^{p-1}`$. Then $`\int v^q\,d\mu = \int|f+g|^p\,d\mu`$, so $`\|v\|_q = \big(\int|f+g|^p\,d\mu\big)^{1/q} = \|f+g\|_p^{p/q} = \|f+g\|_p^{p-1}`$, finite by 1. Hölder ([Holder's inequality](02-holders-inequality.md)) gives $`\int|f|\,v\,d\mu \le \|f\|_p\,\|f+g\|_p^{p-1}`$, and the same with $`g`$ in place of $`f`$.
+5. *Add.* Integrating 3 and using 4, $`\|f+g\|_p^p \le (\|f\|_p + \|g\|_p)\,\|f+g\|_p^{p-1}`$.
+6. *Divide.* By 1 and 2, $`\|f+g\|_p^{p-1}`$ is finite and positive. Dividing by it gives $`\|f+g\|_p \le \|f\|_p + \|g\|_p`$. ∎
 
-**Norm axioms.** Scaling: $\int|cf|^p\,d\mu = |c|^p\int|f|^p\,d\mu$ because the integral pulls out constants; take p-th roots. At p = ∞, $|cf| \le |c|M$ off a null set exactly when $|f| \le M$ there, for $c \ne 0$. Zero: $\int|f|^p\,d\mu = 0$ exactly when $|f|^p = 0$ off a null set, since a function of zero or more with integral zero vanishes almost everywhere (by Markov's bound, $\mu(|f|^p > 1/n) \le n\cdot 0$ for every n, [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Identifying functions equal almost everywhere, as [Lp spaces](01-lp-spaces.md) does, makes "size zero" mean "the zero element". Closure: $c\,f$ has finite size by scaling, $f + g$ by the case above. So $L^p$ is a vector space and the p-norm is a norm on it.
+**Norm axioms.** Scaling: $`\int|cf|^p\,d\mu = |c|^p\int|f|^p\,d\mu`$ because the integral pulls out constants; take p-th roots. At p = ∞, $`|cf| \le |c|M`$ off a null set exactly when $`|f| \le M`$ there, for $`c \ne 0`$. Zero: $`\int|f|^p\,d\mu = 0`$ exactly when $`|f|^p = 0`$ off a null set, since a function of zero or more with integral zero vanishes almost everywhere (by Markov's bound, $`\mu(|f|^p > 1/n) \le n\cdot 0`$ for every n, [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Identifying functions equal almost everywhere, as [Lp spaces](01-lp-spaces.md) does, makes "size zero" mean "the zero element". Closure: $`c\,f`$ has finite size by scaling, $`f + g`$ by the case above. So $`L^p`$ is a vector space and the p-norm is a norm on it.
 
-**Equality, 1 < p < ∞.** If equality holds with $\|f+g\|_p > 0$, both inequalities used must be equalities almost everywhere. Item 3 is an equality exactly where $f$ and $g$ have the same sign, or one of $f$, $g$, $f + g$ is zero. Item 4 is Hölder, whose equality case makes $|f|^p$ a constant multiple of $|f+g|^p$ almost everywhere, and the same for $|g|^p$. Together, $g = t f$ almost everywhere for a constant $t \ge 0$, or $f = 0$. Conversely, if $g = t f$ with $t \ge 0$, both sides equal $(1+t)\|f\|_p$.
+**Equality, 1 < p < ∞.** If equality holds with $`\|f+g\|_p > 0`$, both inequalities used must be equalities almost everywhere. Item 3 is an equality exactly where $`f`$ and $`g`$ have the same sign, or one of $`f`$, $`g`$, $`f + g`$ is zero. Item 4 is Hölder, whose equality case makes $`|f|^p`$ a constant multiple of $`|f+g|^p`$ almost everywhere, and the same for $`|g|^p`$. Together, $`g = t f`$ almost everywhere for a constant $`t \ge 0`$, or $`f = 0`$. Conversely, if $`g = t f`$ with $`t \ge 0`$, both sides equal $`(1+t)\|f\|_p`$.
 
 </details>
 
@@ -165,7 +177,7 @@ xychart-beta
     line [1, 1, 1, 1, 1, 1, 1, 1, 1]
 ```
 
-Caption: the first line is $\|A+B\|_p$ divided by $\|A\|_p + \|B\|_p$ for the turbines under counting measure; the flat second line is 1, where equality would sit. Minkowski says the first line stays at or below the second for p from 1 on. It crosses at p = 1, where every reading being positive makes the two sides equal, and it rises above 1 for p below 1. As p grows the ratio tends to 12/14, the sup-norms' ratio.
+Caption: the first line is $`\|A+B\|_p`$ divided by $`\|A\|_p + \|B\|_p`$ for the turbines under counting measure; the flat second line is 1, where equality would sit. Minkowski says the first line stays at or below the second for p from 1 on. It crosses at p = 1, where every reading being positive makes the two sides equal, and it rises above 1 for p below 1. As p grows the ratio tends to 12/14, the sup-norms' ratio.
 
 Another route to the same inequality runs through convexity of the p-th power alone ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)): normalise both functions to size 1, note the unit ball is convex because the p-th power is a convex function for p ≥ 1, and scale back. At p = 2 there is a third route, through the inner product, taken in [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md).
 
@@ -192,7 +204,7 @@ The house example, turbine A, and its neighbour B, under counting measure at p =
 
 The second road uses (sum of sizes)^2 − (size of sum)^2 = 2(‖A‖‖B‖ − cross term), then divides the gap in squares by the sum of the two lengths.
 
-Under the uniform probability, each day weighs 1/7 and each 2-norm is the **root mean square** (RMS) speed. Every p-size is then its counting-measure value times $(1/7)^{1/p}$, and the inequality survives unchanged: RMS of the combined week 8.4515, against 5.3852 + 3.6839 = 9.0691. Halve it: the fleet's average turbine has RMS 4.2258, at most the average of the two RMS values, 4.5346. Pooling two sites never makes the RMS larger than the mean of the RMS values.
+Under the uniform probability, each day weighs 1/7 and each 2-norm is the **root mean square** (RMS) speed. Every p-size is then its counting-measure value times $`(1/7)^{1/p}`$, and the inequality survives unchanged: RMS of the combined week 8.4515, against 5.3852 + 3.6839 = 9.0691. Halve it: the fleet's average turbine has RMS 4.2258, at most the average of the two RMS values, 4.5346. Pooling two sites never makes the RMS larger than the mean of the RMS values.
 
 ### What breaks if you drop a piece
 
@@ -532,14 +544,14 @@ The two outputs match line for line.
 
 Lean proves Minkowski's inequality and the norm axioms on any measure space, for every p from 1 to ∞, and checks the turbine numbers.
 
-- Suppose $f$ and $g$ are measurable, with sizes possibly infinite, and $1 \le p \le \infty$. Then $\|f+g\|_p \le \|f\|_p + \|g\|_p$.
-- Take a measurable $f$ and $1 \le p \le \infty$. Then $\|f\|_p = 0$ exactly when $f = 0$ almost everywhere.
-- Take a measurable $f$ and a number $c$. Then $\|c f\|_p = |c|\,\|f\|_p$.
-- Take $L^p$, with functions equal almost everywhere counted as one. Then its p-norm has all three norm properties, so it is a normed space.
+- Suppose $`f`$ and $`g`$ are measurable, with sizes possibly infinite, and $`1 \le p \le \infty`$. Then $`\|f+g\|_p \le \|f\|_p + \|g\|_p`$.
+- Take a measurable $`f`$ and $`1 \le p \le \infty`$. Then $`\|f\|_p = 0`$ exactly when $`f = 0`$ almost everywhere.
+- Take a measurable $`f`$ and a number $`c`$. Then $`\|c f\|_p = |c|\,\|f\|_p`$.
+- Take $`L^p`$, with functions equal almost everywhere counted as one. Then its p-norm has all three norm properties, so it is a normed space.
 - Adding the turbines day by day gives 8, 7, 12, 8, 7, 7 and 9.
 - The sums of squares are 203 for A, 95 for B and 500 for the sum.
 - Take the cross term, 101. Then 203 + 2 × 101 + 95 = 500.
-- Take p = 2. Then $\sqrt{500} \le \sqrt{203} + \sqrt{95}$, checked by squaring until only whole numbers remain.
+- Take p = 2. Then $`\sqrt{500} \le \sqrt{203} + \sqrt{95}`$, checked by squaring until only whole numbers remain.
 - Take p = 1. Then the sizes 35 and 23 add to 58, the size of the sum.
 - Take p = ∞. Then the largest values 8 and 6 add to 14, and the sum's largest value is 12.
 - Dropping the root at p = 2 gives 500, more than 203 + 95 = 298.
@@ -634,7 +646,7 @@ example : (203 : ℕ) + 95 = 298 ∧ 298 < 500 := by decide
 >
 > - **Using it below p = 1.** The same formula at p = 1/2 fails: 402.3318 against 384.2390. The quantity is still defined; it is just not a norm.
 > - **Reading size zero as the zero function.** On a day of weight zero a function can be 9 and still have size 0.0000. The p-norm is a norm only on classes of functions equal almost everywhere.
-> - **Expecting equality whenever the arrows are parallel.** B = −2A is parallel to A but opposite, and the sizes are 14.2478 against 42.7434. Equality needs one function to be a multiple $t \ge 0$ of the other.
+> - **Expecting equality whenever the arrows are parallel.** B = −2A is parallel to A but opposite, and the sizes are 14.2478 against 42.7434. Equality needs one function to be a multiple $`t \ge 0`$ of the other.
 > - **Treating p = 1 equality as luck.** For the turbines both sides are 58.0000 because every reading is positive. Any two functions of zero or more give equality at p = 1.
 
 ---
@@ -663,7 +675,7 @@ example : (203 : ℕ) + 95 = 298 ∧ 298 < 500 := by decide
 
 Also on this shelf: [Jensen's inequality](04-jensens-inequality.md) compares sizes at different exponents under a probability.
 
-L^p now has a distance, $\|f-g\|_p$; whether a sequence whose members crowd together in that distance always has a limit inside L^p is the question [Riesz-Fischer](05-completeness-of-lp.md) answers.
+L^p now has a distance, $`\|f-g\|_p`$; whether a sequence whose members crowd together in that distance always has a limit inside L^p is the question [Riesz-Fischer](05-completeness-of-lp.md) answers.
 
 ---
 

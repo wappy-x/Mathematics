@@ -33,44 +33,54 @@ Every label is a capacity in loads a night.
 
 ## The formula
 
-Notation first, in words. The network is a directed graph with junction set $V$ and road set $E$. The road from $u$ to $v$ is $u \to v$; $c(u,v)$ is its capacity, 0 where no road runs, and $f(u,v)$ the loads the plan puts on it. The sign $\sum$ means "add up over every junction named underneath".
+Notation first, in words. The network is a directed graph with junction set $`V`$ and road set $`E`$. The road from $`u`$ to $`v`$ is $`u \to v`$; $`c(u,v)`$ is its capacity, 0 where no road runs, and $`f(u,v)`$ the loads the plan puts on it. The sign $`\sum`$ means "add up over every junction named underneath".
 
 A flow obeys two rules. Nothing overflows:
 
-$$0 \le f(u,v) \le c(u,v)$$
+```math
+0 \le f(u,v) \le c(u,v)
+```
 
-and at every junction $x$ other than the source and the sink, nothing is stranded:
+and at every junction $`x`$ other than the source and the sink, nothing is stranded:
 
-$$\sum_u f(u,x) = \sum_u f(x,u)$$
+```math
+\sum_u f(u,x) = \sum_u f(x,u)
+```
 
 **Read it aloud:** what arrives at a depot leaves it.
 
-The **value**, written $\lvert f\rvert$, is the net count of loads leaving the source:
+The **value**, written $`\lvert f\rvert`$, is the net count of loads leaving the source:
 
-$$\lvert f\rvert = \sum_u f(s,u) - \sum_u f(u,s)$$
+```math
+\lvert f\rvert = \sum_u f(s,u) - \sum_u f(u,s)
+```
 
-A **cut** splits the junctions into two sides: $S$ holds the source, $T$ holds the sink. Its **price** is the total capacity of the roads leaving $S$:
+A **cut** splits the junctions into two sides: $`S`$ holds the source, $`T`$ holds the sink. Its **price** is the total capacity of the roads leaving $`S`$:
 
-$$c(S,T) = \sum_{u \in S,\, v \in T} c(u,v)$$
+```math
+c(S,T) = \sum_{u \in S,\, v \in T} c(u,v)
+```
 
-Roads entering $S$ are not priced. Shutting the priced roads severs every route to the sink.
+Roads entering $`S`$ are not priced. Shutting the priced roads severs every route to the sink.
 
-The **leftover**, or residual, is how much more a step from $u$ to $v$ can take: spare capacity, plus any load going the other way, which can be cancelled:
+The **leftover**, or residual, is how much more a step from $`u`$ to $`v`$ can take: spare capacity, plus any load going the other way, which can be cancelled:
 
-$$\text{leftover}(u,v) = \bigl(c(u,v) - f(u,v)\bigr) + f(v,u)$$
+```math
+\text{leftover}(u,v) = \bigl(c(u,v) - f(u,v)\bigr) + f(v,u)
+```
 
-Where no road runs from $u$ to $v$, the leftover is $f(v,u)$ alone: a **backward stub**, permission to undo that many loads. An **augmenting route** runs from source to sink with leftover above 0 at every step. **Ford-Fulkerson: while an augmenting route exists, push its smallest leftover, the bottleneck, along it.** Always taking an augmenting route with the fewest roads is the Edmonds-Karp rule.
+Where no road runs from $`u`$ to $`v`$, the leftover is $`f(v,u)`$ alone: a **backward stub**, permission to undo that many loads. An **augmenting route** runs from source to sink with leftover above 0 at every step. **Ford-Fulkerson: while an augmenting route exists, push its smallest leftover, the bottleneck, along it.** Always taking an augmenting route with the fewest roads is the Edmonds-Karp rule.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$, $E$ | the junctions, the one-way roads | 4 junctions, 5 roads | more roads, more room to route |
-| $s$, $t$ | source and sink | the plant and the port | — |
-| $u$, $v$, $x$ | any junctions; $u \to v$ names a road | s → A, A → B | — |
-| $c$ | capacity: the most a road carries | 3 outer, 1 on the cross | a wider road may raise the value, or may not |
-| $f$ | the plan: loads on each road | 3, 3, 3, 3, 0 | capped by the capacities |
-| $\sum$ | add up over the junctions named below it | loads into t: 3 + 3 | — |
-| $\lvert f\rvert$ | the value: net loads leaving the source | 6 | — |
-| $S$, $T$ | the two sides of a cut; $c(S,T)$ its price | {s} and {A,B,t}, priced 6 | a dearer cheapest cut allows more |
+| $`V`$, $`E`$ | the junctions, the one-way roads | 4 junctions, 5 roads | more roads, more room to route |
+| $`s`$, $`t`$ | source and sink | the plant and the port | — |
+| $`u`$, $`v`$, $`x`$ | any junctions; $`u \to v`$ names a road | s → A, A → B | — |
+| $`c`$ | capacity: the most a road carries | 3 outer, 1 on the cross | a wider road may raise the value, or may not |
+| $`f`$ | the plan: loads on each road | 3, 3, 3, 3, 0 | capped by the capacities |
+| $`\sum`$ | add up over the junctions named below it | loads into t: 3 + 3 | — |
+| $`\lvert f\rvert`$ | the value: net loads leaving the source | 6 | — |
+| $`S`$, $`T`$ | the two sides of a cut; $`c(S,T)`$ its price | {s} and {A,B,t}, priced 6 | a dearer cheapest cut allows more |
 
 ### When it holds
 
@@ -89,24 +99,26 @@ After 1 load on s → A → B → t, the road B → t has 2 spare, and a forward
 
 ### Step 1: a push keeps the plan legal and adds the bottleneck to the value
 
-Add the bottleneck to $f$ on each forward step; subtract it from the cancelled load on each stub step. No road overfills, since the bottleneck is at most any step's spare capacity, and no load goes below 0, since it is at most any load cancelled.
+Add the bottleneck to $`f`$ on each forward step; subtract it from the cancelled load on each stub step. No road overfills, since the bottleneck is at most any step's spare capacity, and no load goes below 0, since it is at most any load cancelled.
 
 At a junction inside the route, the step in adds the bottleneck to net arrivals and the step out adds it to net departures, so nothing is stranded. The route leaves the source once and never returns, so the value rises by exactly the bottleneck.
 
 ### Step 2: no plan can beat any cut
 
-For any split, the loads crossing out of $S$, less those crossing back in, equal the value (proof folded below). Outward loads are at most their capacities and inward loads at least 0, so
+For any split, the loads crossing out of $`S`$, less those crossing back in, equal the value (proof folded below). Outward loads are at most their capacities and inward loads at least 0, so
 
-$$\lvert f\rvert \le c(S,T).$$
+```math
+\lvert f\rvert \le c(S,T).
+```
 
 On the diamond the four splits price 6, 7, 6 and 6, so no plan ships more than 6. A plan whose value equals some split's price cannot be beaten.
 
 <details>
 <summary>Detailed proof: the net crossing equals the value</summary>
 
-For each junction $x$ in $S$, take loads out of $x$ minus loads into $x$. Conservation, the rule that what arrives at a depot leaves it, makes this 0 except at the source, where it is $\lvert f\rvert$. So the sum over $S$ is $\lvert f\rvert$.
+For each junction $`x`$ in $`S`$, take loads out of $`x`$ minus loads into $`x`$. Conservation, the rule that what arrives at a depot leaves it, makes this 0 except at the source, where it is $`\lvert f\rvert`$. So the sum over $`S`$ is $`\lvert f\rvert`$.
 
-Collect the same sum road by road. A road inside $S$ counts once as output and once as input, and cancels. A road from $S$ to $T$ counts once, positively; a road from $T$ to $S$ once, negatively. So $\lvert f\rvert$ is the loads leaving $S$ minus those entering it.
+Collect the same sum road by road. A road inside $`S`$ counts once as output and once as input, and cancels. A road from $`S`$ to $`T`$ counts once, positively; a road from $`T`$ to $`S`$ once, negatively. So $`\lvert f\rvert`$ is the loads leaving $`S`$ minus those entering it.
 
 </details>
 
@@ -120,7 +132,7 @@ That bound grows with the capacities. The Edmonds-Karp rule bounds the pushes by
 
 Edmonds-Karp reaches 6 in two pushes; the cross-first run takes four, the last riding the stub B → A. Step 2 caps every plan at the cheapest split's 6, so 6 is the most this network can ship.
 
-That pairing is not luck. When no augmenting route is left, let $S$ be the junctions still reachable from the source on leftover. Every road leaving $S$ is full and every road entering it empty, or its far end would be reachable, so that split's price equals the value. The theorem for every network is [Max-flow min-cut](06-max-flow-min-cut.md).
+That pairing is not luck. When no augmenting route is left, let $`S`$ be the junctions still reachable from the source on leftover. Every road leaving $`S`$ is full and every road entering it empty, or its far end would be reachable, so that split's price equals the value. The theorem for every network is [Max-flow min-cut](06-max-flow-min-cut.md).
 
 ---
 
@@ -831,7 +843,7 @@ end FordFulkerson
 > **Reading the smallest capacity as the answer.** The cross road carries 1, and shutting it changes nothing: both outer routes still run. A ceiling comes from a split of the junctions, priced 6 here, never from one narrow road.
 >
 > - **Refusing to undo.** The cross route first, with no stubs, stalls at 5.
-> - **Pricing the roads that enter $S$.** Only roads leaving $S$ count.
+> - **Pricing the roads that enter $`S`$.** Only roads leaving $`S`$ count.
 
 ---
 

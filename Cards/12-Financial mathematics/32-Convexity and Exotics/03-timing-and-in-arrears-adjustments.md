@@ -37,38 +37,44 @@ One line: the extra dollars, \$10 million times a quarter squared times the fixi
 
 ## The formula
 
-For a coupon fixed and paid at $T$:
+For a coupon fixed and paid at $`T`$:
 
-$$K_T = F + \frac{\delta\,\operatorname{Var}^U(L_T)}{1 + \delta F}$$
+```math
+K_T = F + \frac{\delta\,\mathrm{Var}^U(L_T)}{1 + \delta F}
+```
 
 **Read it aloud:** the fair in-arrears rate is the forward rate plus the accrual fraction times the rate's variance, shrunk by one plus the forward's quarterly interest.
 
 In Black's lognormal model the variance is
 
-$$\operatorname{Var}^U(L_T) = F^2\left(e^{\sigma^2 T} - 1\right).$$
+```math
+\mathrm{Var}^U(L_T) = F^2\left(e^{\sigma^2 T} - 1\right).
+```
 
-For a payment on any date $D$:
+For a payment on any date $`D`$:
 
-$$K_D = \frac{E^U[L_T\,W]}{E^U[W]} = F + \frac{\operatorname{Cov}^U(L_T, W)}{E^U[W]}, \qquad W = \frac{P(T,D)}{P(T,U)}.$$
+```math
+K_D = \frac{E^U[L_T\,W]}{E^U[W]} = F + \frac{\mathrm{Cov}^U(L_T, W)}{E^U[W]}, \qquad W = \frac{P(T,D)}{P(T,U)}.
+```
 
 **Read it aloud:** the fair rate for a payment on date D is the rate averaged with extra weight on the outcomes where cash on D is worth more, counted in cash on U.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L_T$ | the 3-month rate read off the screen on the fixing date | unknown today | — |
-| $F$ | today's forward rate for that quarter | 6% | rises, roughly with the square of F |
-| $K_T$ | fair fixed rate when the coupon is paid on the fixing date | 6.0196% | — |
-| $K_D$ | fair fixed rate when the coupon is paid on date D | 6% when D is U | — |
-| $\delta$ | accrual fraction: the quarter as a fraction of a year | 0.25 | rises |
-| $T$ | years from today to the fixing | 5 | rises: more time for the rate to spread |
-| $U$ | end of the quarter, where the ordinary coupon is paid | 5.25 | — |
-| $D$ | the date the coupon is actually paid | 5, the fixing date | later D shrinks it, and past U it turns negative |
-| $\sigma$ | volatility of the rate: how far it spreads per root-year, in log terms | 20% | rises fast |
-| $P(0,T)$, $P(T,U)$ | price at the first date of \$1 paid at the second | $P(0,T)$ = 0.7788 | — |
-| $W$ | cash on D counted in cash on U: the payment's weight | 1 + 0.25 × fixing when D = T | — |
-| $E^U$, $\operatorname{Var}^U$, $\operatorname{Cov}^U$ | average, variance, covariance under the odds that price cash on U (the U-forward measure) | variance 0.000797 | — |
+| $`L_T`$ | the 3-month rate read off the screen on the fixing date | unknown today | — |
+| $`F`$ | today's forward rate for that quarter | 6% | rises, roughly with the square of F |
+| $`K_T`$ | fair fixed rate when the coupon is paid on the fixing date | 6.0196% | — |
+| $`K_D`$ | fair fixed rate when the coupon is paid on date D | 6% when D is U | — |
+| $`\delta`$ | accrual fraction: the quarter as a fraction of a year | 0.25 | rises |
+| $`T`$ | years from today to the fixing | 5 | rises: more time for the rate to spread |
+| $`U`$ | end of the quarter, where the ordinary coupon is paid | 5.25 | — |
+| $`D`$ | the date the coupon is actually paid | 5, the fixing date | later D shrinks it, and past U it turns negative |
+| $`\sigma`$ | volatility of the rate: how far it spreads per root-year, in log terms | 20% | rises fast |
+| $`P(0,T)`$, $`P(T,U)`$ | price at the first date of \$1 paid at the second | $`P(0,T)`$ = 0.7788 | — |
+| $`W`$ | cash on D counted in cash on U: the payment's weight | 1 + 0.25 × fixing when D = T | — |
+| $`E^U`$, $`\mathrm{Var}^U`$, $`\mathrm{Cov}^U`$ | average, variance, covariance under the odds that price cash on U (the U-forward measure) | variance 0.000797 | — |
 
-Here $e^x$ is the exponential and the variance of a random quantity is the average squared distance from its average ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
+Here $`e^x`$ is the exponential and the variance of a random quantity is the average squared distance from its average ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
 
 ### When it holds
 
@@ -92,60 +98,70 @@ Cash paid early can be deposited. The deposit rate for the stretch from T to U i
 
 Pay the rate for the quarter, times the accrual fraction, at U. That coupon can be built from two bonds. Buy a bond paying \$1 at T and sell one paying \$1 at U. At T the \$1 arrives and goes on deposit at the fixing; at U it returns 1 plus a quarter's interest, of which \$1 repays the sold bond. What is left is exactly the coupon, paid at U.
 
-The cost today is $P(0,T) - P(0,U)$, where $P(0,T)$ is today's price of \$1 paid at T. Divide by $P(0,U)$ and by the accrual fraction and the result is the forward rate:
+The cost today is $`P(0,T) - P(0,U)`$, where $`P(0,T)`$ is today's price of \$1 paid at T. Divide by $`P(0,U)`$ and by the accrual fraction and the result is the forward rate:
 
-$$F = \frac{1}{\delta}\left(\frac{P(0,T)}{P(0,U)} - 1\right).$$
+```math
+F = \frac{1}{\delta}\left(\frac{P(0,T)}{P(0,U)} - 1\right).
+```
 
-So a coupon paid at U is worth $P(0,U)\,\delta F$, whatever the rates do. The same construction is the forward rate agreement ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)).
+So a coupon paid at U is worth $`P(0,U)\,\delta F`$, whatever the rates do. The same construction is the forward rate agreement ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)).
 
 ### Step 2: price in bonds that pay at U
 
-Any amount X paid at U is worth $P(0,U)$ times an average of X. The average is taken under a particular set of odds, the ones that make this rule agree with every traded price: the **U-forward measure**, written $E^U$. Step 1 fixes one of its averages: $E^U[L_T] = F$. Under these odds the fixing is fair at the forward rate. This is the same move as counting in annuities for a swap rate ([The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)), with one bond as the unit instead of a strip.
+Any amount X paid at U is worth $`P(0,U)`$ times an average of X. The average is taken under a particular set of odds, the ones that make this rule agree with every traded price: the **U-forward measure**, written $`E^U`$. Step 1 fixes one of its averages: $`E^U[L_T] = F`$. Under these odds the fixing is fair at the forward rate. This is the same move as counting in annuities for a swap rate ([The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)), with one bond as the unit instead of a strip.
 
 ### Step 3: roll the in-arrears coupon forward to U
 
 The in-arrears coupon is the fixing times the accrual fraction, paid at T. Deposit it at the fixing until U. It becomes
 
-$$\delta L_T\,(1 + \delta L_T) = \delta L_T + \delta^2 L_T^2 \quad \text{at } U.$$
+```math
+\delta L_T\,(1 + \delta L_T) = \delta L_T + \delta^2 L_T^2 \quad \text{at } U.
+```
 
-Its value today is $P(0,U)$ times the U-average. The first piece averages to the forward. The second needs the average of a square, which is the square of the average plus the variance:
+Its value today is $`P(0,U)`$ times the U-average. The first piece averages to the forward. The second needs the average of a square, which is the square of the average plus the variance:
 
-$$\text{value} = P(0,U)\,\delta\left[F + \delta\left(F^2 + \operatorname{Var}^U(L_T)\right)\right].$$
+```math
+\text{value} = P(0,U)\,\delta\left[F + \delta\left(F^2 + \mathrm{Var}^U(L_T)\right)\right].
+```
 
 ### Step 4: solve for the fair fixed rate
 
-The fixed side pays the accrual fraction times $K_T$ at T. Its value is $P(0,T)\,\delta K_T$, and from Step 1, $P(0,T) = P(0,U)(1 + \delta F)$. Set the two sides equal and cancel $P(0,U)\,\delta$:
+The fixed side pays the accrual fraction times $`K_T`$ at T. Its value is $`P(0,T)\,\delta K_T`$, and from Step 1, $`P(0,T) = P(0,U)(1 + \delta F)`$. Set the two sides equal and cancel $`P(0,U)\,\delta`$:
 
-$$K_T(1 + \delta F) = F + \delta F^2 + \delta\operatorname{Var}^U(L_T) = F(1+\delta F) + \delta\operatorname{Var}^U(L_T).$$
+```math
+K_T(1 + \delta F) = F + \delta F^2 + \delta\mathrm{Var}^U(L_T) = F(1+\delta F) + \delta\mathrm{Var}^U(L_T).
+```
 
-Divide by $1 + \delta F$ and the formula appears. The adjustment is the variance times the accrual fraction, discounted over one quarter at the forward rate.
+Divide by $`1 + \delta F`$ and the formula appears. The adjustment is the variance times the accrual fraction, discounted over one quarter at the forward rate.
 
 A three-state version shows it in numbers. Let the fixing be 2, 6 or 10 percent with U-odds of a quarter, a half and a quarter. The average is 6 percent and the variance is 0.0008. The adjustment is 0.25 × 0.0008 / 1.015, which is 1.97 basis points.
 
 ### Step 5: the variance, from a model or from caplets
 
-Under Black's model the fixing is lognormal under the U-odds: its logarithm is bell-shaped with spread $\sigma\sqrt{T}$, centred so that the average is F. The average of its square is then $F^2 e^{\sigma^2 T}$, so the variance is $F^2(e^{\sigma^2 T} - 1)$. With 20 percent volatility and five years, $\sigma^2 T$ is 0.2, the bracket is 0.2214 and the variance is 0.000797: almost exactly the three-state 0.0008, which is why the two examples land on 1.96 and 1.97 basis points.
+Under Black's model the fixing is lognormal under the U-odds: its logarithm is bell-shaped with spread $`\sigma\sqrt{T}`$, centred so that the average is F. The average of its square is then $`F^2 e^{\sigma^2 T}`$, so the variance is $`F^2(e^{\sigma^2 T} - 1)`$. With 20 percent volatility and five years, $`\sigma^2 T`$ is 0.2, the bracket is 0.2214 and the variance is 0.000797: almost exactly the three-state 0.0008, which is why the two examples land on 1.96 and 1.97 basis points.
 
 Without a model, the square can be bought. A square of the fixing equals twice the sum of caplet payoffs across every strike (a caplet pays the fixing minus the strike when positive; [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)). So the average square is twice the integral of caplet prices over strikes, each price counted in U-bonds per unit of accrual, read off the market's caplets. The code takes this road too; it lands on the same 1.963177 basis points under a flat volatility, and on a market smile it gives the smile-consistent answer.
 
 <details>
 <summary>Detailed proof: the U-odds exist, and re-weighting them gives the answer directly</summary>
 
-Assume a bank account and bonds with positive prices and no free money, so prices divided by the bank account are fair averages under some odds Q. Define new odds by weighting each outcome known at T by the U-bond's price at T, divided by the bank account's value at T and by $P(0,U)$. The weight is positive and averages to one under Q, so it is a legitimate re-weighting. Under the new odds, any price divided by $P(\cdot,U)$ is a fair average: that is the U-forward measure. Applied to the T-bond, $1/P(T,U) = 1 + \delta L_T$ averages to $P(0,T)/P(0,U) = 1 + \delta F$, so $E^U[L_T] = F$.
+Assume a bank account and bonds with positive prices and no free money, so prices divided by the bank account are fair averages under some odds Q. Define new odds by weighting each outcome known at T by the U-bond's price at T, divided by the bank account's value at T and by $`P(0,U)`$. The weight is positive and averages to one under Q, so it is a legitimate re-weighting. Under the new odds, any price divided by $`P(\cdot,U)`$ is a fair average: that is the U-forward measure. Applied to the T-bond, $`1/P(T,U) = 1 + \delta L_T`$ averages to $`P(0,T)/P(0,U) = 1 + \delta F`$, so $`E^U[L_T] = F`$.
 
-Cash X at T is worth $P(0,U)\,E^U[X/P(T,U)]$, which is $P(0,U)\,E^U[X(1+\delta L_T)]$. The fair $K_T$ solves $E^U[(L_T - K_T)(1+\delta L_T)] = 0$, giving $K_T = E^U[L_T(1+\delta L_T)]/(1 + \delta F)$. Equivalently, $K_T$ is the plain average of the fixing under odds re-weighted by $(1+\delta L_T)/(1+\delta F)$: the T-forward measure. In the three-state case those odds are 0.2475, 0.5 and 0.2525, and the re-weighted average is 6 percent plus 1.97 basis points. The code checks both routes agree.
+Cash X at T is worth $`P(0,U)\,E^U[X/P(T,U)]`$, which is $`P(0,U)\,E^U[X(1+\delta L_T)]`$. The fair $`K_T`$ solves $`E^U[(L_T - K_T)(1+\delta L_T)] = 0`$, giving $`K_T = E^U[L_T(1+\delta L_T)]/(1 + \delta F)`$. Equivalently, $`K_T`$ is the plain average of the fixing under odds re-weighted by $`(1+\delta L_T)/(1+\delta F)`$: the T-forward measure. In the three-state case those odds are 0.2475, 0.5 and 0.2525, and the re-weighted average is 6 percent plus 1.97 basis points. The code checks both routes agree.
 
-For payment on D, cash X at D is worth $P(0,U)\,E^U[X\,P(T,D)/P(T,U)]$ (value at T is $X\,P(T,D)$, then convert to U-units). Setting the swaplet's value to zero gives $K_D = E^U[L_T W]/E^U[W]$, and expanding the average of a product gives the covariance form. When D is U, W is 1 and the correction vanishes.
+For payment on D, cash X at D is worth $`P(0,U)\,E^U[X\,P(T,D)/P(T,U)]`$ (value at T is $`X\,P(T,D)`$, then convert to U-units). Setting the swaplet's value to zero gives $`K_D = E^U[L_T W]/E^U[W]`$, and expanding the average of a product gives the covariance form. When D is U, W is 1 and the correction vanishes.
 
 </details>
 
 ### Step 6: any payment date
 
-Nothing in Steps 2 to 4 used that the payment fell on T. Pay on D instead. Cash on D is worth $P(T,D)/P(T,U)$ units of cash on U at the fixing date: that is W. The fair rate becomes the W-weighted average of the fixing, and the correction is the covariance of the fixing with W, divided by W's average.
+Nothing in Steps 2 to 4 used that the payment fell on T. Pay on D instead. Cash on D is worth $`P(T,D)/P(T,U)`$ units of cash on U at the fixing date: that is W. The fair rate becomes the W-weighted average of the fixing, and the correction is the covariance of the fixing with W, divided by W's average.
 
 The sign follows from how W moves with rates. Paid early, D before U, cash on D can earn interest to U, so W rises with the fixing: covariance positive, adjustment positive. Paid late, D after U, cash on D is discounted back to U, so W falls as rates rise: adjustment negative. With the rate from D to U taken as the fixing, early payment gives
 
-$$K_D = F + \frac{(U - D)\operatorname{Var}^U(L_T)}{1 + (U - D)F},$$
+```math
+K_D = F + \frac{(U - D)\mathrm{Var}^U(L_T)}{1 + (U - D)F},
+```
 
 which is the in-arrears formula with the accrual fraction replaced by the head start.
 
@@ -166,7 +182,7 @@ The caplet road of Step 5 is static replication, the method the sibling card use
 
 ## Worked numbers, by hand
 
-Forward 6 percent, quarter 0.25, fixing in five years, volatility 20 percent, \$10 million notional, today's price of \$1 at the fixing date $e^{-0.05 \times 5}$ (a 5 percent riskless rate, continuously compounded).
+Forward 6 percent, quarter 0.25, fixing in five years, volatility 20 percent, \$10 million notional, today's price of \$1 at the fixing date $`e^{-0.05 \times 5}`$ (a 5 percent riskless rate, continuously compounded).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -206,7 +222,7 @@ years to fixing   adjustment, basis points (6% forward, 20% volatility)
      0.25   ██                                        0.09
 ```
 
-The melt is almost linear: $e^{\sigma^2 T} - 1$ is close to $\sigma^2 T$ at these sizes, bending slightly upward at the long end.
+The melt is almost linear: $`e^{\sigma^2 T} - 1`$ is close to $`\sigma^2 T`$ at these sizes, bending slightly upward at the long end.
 
 ### The Greeks of the adjustment
 
@@ -632,9 +648,9 @@ The two outputs are identical to the printed precision.
 
 Lean proves the fair-rate formulas of Steps 4 and 6, and the sign for late payment, for any fixing with a finite variance.
 
-- Suppose the fixing has a finite variance under the U-odds, and positive bond prices are linked as in Step 1. Then both sides are worth the same exactly when $K_T = F + \delta\operatorname{Var}^U(L_T)/(1 + \delta F)$.
-- Take a payment on date D, where W and the fixing have finite variances and W's average is not zero. Then the fixed and floating coupons are worth the same exactly when $K_D = F + \operatorname{Cov}^U(L_T, W)/E^U[W]$.
-- Suppose a coupon paid after U is discounted back at the fixing, bond prices stay positive, and the fixing's variance is finite and not zero. Then the fair rate $K_D$ is below the forward rate $F$.
+- Suppose the fixing has a finite variance under the U-odds, and positive bond prices are linked as in Step 1. Then both sides are worth the same exactly when $`K_T = F + \delta\mathrm{Var}^U(L_T)/(1 + \delta F)`$.
+- Take a payment on date D, where W and the fixing have finite variances and W's average is not zero. Then the fixed and floating coupons are worth the same exactly when $`K_D = F + \mathrm{Cov}^U(L_T, W)/E^U[W]`$.
+- Suppose a coupon paid after U is discounted back at the fixing, bond prices stay positive, and the fixing's variance is finite and not zero. Then the fair rate $`K_D`$ is below the forward rate $`F`$.
 - The three-state example matches: average 6 percent, variance 0.0008 and an adjustment of 1.97 basis points.
 - Its re-weighted odds, about 0.2475, 0.5 and 0.2525, give the same 1.97 basis points.
 - The payoff chart's five points, \$250 up to \$6,250, match too.

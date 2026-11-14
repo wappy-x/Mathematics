@@ -49,45 +49,53 @@ Orange: the close each day, as traded. Day 0 is the last print before the month 
 
 ## The formula
 
-Notation first, in words. $\sum_{i=1}^{N}$ means "add up the next thing for $i = 1, 2, \dots, N$". A hat on a letter marks an estimate made from data: $\hat\sigma$ is read "sigma-hat", an estimate of the true volatility $\sigma$.
+Notation first, in words. $`\sum_{i=1}^{N}`$ means "add up the next thing for $`i = 1, 2, \dots, N`$". A hat on a letter marks an estimate made from data: $`\hat\sigma`$ is read "sigma-hat", an estimate of the true volatility $`\sigma`$.
 
-$$\hat\sigma^2 = \frac{252}{N}\sum_{i=1}^{N} r_i^2, \qquad r_i = \ln\frac{S_i}{S_{i-1}}$$
+```math
+\hat\sigma^2 = \frac{252}{N}\sum_{i=1}^{N} r_i^2, \qquad r_i = \ln\frac{S_i}{S_{i-1}}
+```
 
 **Read it aloud:** take each day's log return, square it, add them up, and multiply by the number of trading days in a year over the number of days you added.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_i$ | the closing price on day i; day 0 is the close before the window | $99.90 to $98.43 | only the ratios between closes matter |
-| $r_i$ | the log return on day i: $\ln(S_i/S_{i-1})$, near the percentage move for small moves | day 2: −0.013758 | bigger moves, bigger variance, whichever sign |
-| $N$ | how many daily returns are added | 21 | the estimate wobbles less, like $\sqrt{2/N}$ |
-| $\hat\sigma^2$ | realised variance, per year | 0.036304 | — |
-| $\sigma$ | the true volatility that drove the path | 20% | realised variance centres on $\sigma^2$ = 0.04 |
-| $\mu$ | the share's drift, its average growth per year | 3% | almost no effect over a month |
-| $T$ | the window's length in years, $N/252$ | 21/252 | — |
-| $n$ | how many returns inside the window when sampling faster than daily | 1,638 five-minute returns | on true prices: less wobble; on traded prices: more noise |
-| $\Delta t$ | the time between two prints, in years | 5 minutes, one 78th of a 6.5-hour trading day | — |
-| $h$ | half the bid-ask spread, as a log: each trade lands at true price times $e^{\pm h}$ | 0.001, 10 cents on $100 | adds $2nh^2/T$ to the measured variance |
-| $H_i$, $L_i$ | the highest and lowest price on day i | from minute prices | a wider range, a bigger range estimate |
-| $O_i$, $C_i$ | the open and close on day i | open = yesterday's close here | — |
+| $`S_i`$ | the closing price on day i; day 0 is the close before the window | $99.90 to $98.43 | only the ratios between closes matter |
+| $`r_i`$ | the log return on day i: $`\ln(S_i/S_{i-1})`$, near the percentage move for small moves | day 2: −0.013758 | bigger moves, bigger variance, whichever sign |
+| $`N`$ | how many daily returns are added | 21 | the estimate wobbles less, like $`\sqrt{2/N}`$ |
+| $`\hat\sigma^2`$ | realised variance, per year | 0.036304 | — |
+| $`\sigma`$ | the true volatility that drove the path | 20% | realised variance centres on $`\sigma^2`$ = 0.04 |
+| $`\mu`$ | the share's drift, its average growth per year | 3% | almost no effect over a month |
+| $`T`$ | the window's length in years, $`N/252`$ | 21/252 | — |
+| $`n`$ | how many returns inside the window when sampling faster than daily | 1,638 five-minute returns | on true prices: less wobble; on traded prices: more noise |
+| $`\Delta t`$ | the time between two prints, in years | 5 minutes, one 78th of a 6.5-hour trading day | — |
+| $`h`$ | half the bid-ask spread, as a log: each trade lands at true price times $`e^{\pm h}`$ | 0.001, 10 cents on $100 | adds $`2nh^2/T`$ to the measured variance |
+| $`H_i`$, $`L_i`$ | the highest and lowest price on day i | from minute prices | a wider range, a bigger range estimate |
+| $`O_i`$, $`C_i`$ | the open and close on day i | open = yesterday's close here | — |
 
-Two range estimators use more of each day. Each is annualised the same way, 252 over $N$ times a sum over days.
+Two range estimators use more of each day. Each is annualised the same way, 252 over $`N`$ times a sum over days.
 
-$$\hat\sigma^2_{\text{P}} = \frac{252}{N}\sum_{i=1}^{N}\frac{\big(\ln(H_i/L_i)\big)^2}{4\ln 2}$$
+```math
+\hat\sigma^2_{\text{P}} = \frac{252}{N}\sum_{i=1}^{N}\frac{\big(\ln(H_i/L_i)\big)^2}{4\ln 2}
+```
 
-Parkinson's estimator: the square of each day's log range, the distance from low to high, divided by $4\ln 2$ = 2.7726. That constant is the average squared range of a random walk with unit variance per day.
+Parkinson's estimator: the square of each day's log range, the distance from low to high, divided by $`4\ln 2`$ = 2.7726. That constant is the average squared range of a random walk with unit variance per day.
 
-$$\hat\sigma^2_{\text{GK}} = \frac{252}{N}\sum_{i=1}^{N}\Big[\tfrac12\big(\ln(H_i/L_i)\big)^2 - (2\ln 2 - 1)\big(\ln(C_i/O_i)\big)^2\Big]$$
+```math
+\hat\sigma^2_{\text{GK}} = \frac{252}{N}\sum_{i=1}^{N}\Big[\tfrac12\big(\ln(H_i/L_i)\big)^2 - (2\ln 2 - 1)\big(\ln(C_i/O_i)\big)^2\Big]
+```
 
-Garman and Klass's estimator: half the squared range, less a fraction $2\ln 2 - 1$ = 0.3863 of the squared open-to-close move. Garman and Klass searched for the weights that make the estimate wobble least; this two-term form is their practical version, almost as good.
+Garman and Klass's estimator: half the squared range, less a fraction $`2\ln 2 - 1`$ = 0.3863 of the squared open-to-close move. Garman and Klass searched for the weights that make the estimate wobble least; this two-term form is their practical version, almost as good.
 
-And the noise bias, for returns sampled $n$ times with every print off by $\pm h$:
+And the noise bias, for returns sampled $`n`$ times with every print off by $`\pm h`$:
 
-$$\text{expected measured variance per year} = \sigma^2 + \frac{2nh^2}{T}$$
+```math
+\text{expected measured variance per year} = \sigma^2 + \frac{2nh^2}{T}
+```
 
 ### When it holds
 
-- **Steady volatility and no jumps.** Realised variance then centres on $\sigma^2$. If volatility changes during the month it centres on the month's average variance instead, which is exactly what a variance swap pays on. A jump adds its own square in full, however rare it was meant to be. The jump bias gets its own card: [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md).
-- **Enough returns.** With $N$ = 21 the estimate's spread is about 31 percent of its size. A single month reading 19.05 percent against a true 20 is inside the normal wobble, not evidence of anything.
+- **Steady volatility and no jumps.** Realised variance then centres on $`\sigma^2`$. If volatility changes during the month it centres on the month's average variance instead, which is exactly what a variance swap pays on. A jump adds its own square in full, however rare it was meant to be. The jump bias gets its own card: [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md).
+- **Enough returns.** With $`N`$ = 21 the estimate's spread is about 31 percent of its size. A single month reading 19.05 percent against a true 20 is inside the normal wobble, not evidence of anything.
 - **Prices that are the share's price.** Every traded price carries bid-ask noise. At daily sampling it barely matters; at five-minute sampling it adds 0.039312 a year. The rule of thumb in practice is to sample no faster than every five to thirty minutes, or to use a noise-corrected estimator.
 - **Trading through the day, and a true high and low.** The range estimators assume the price is watched continuously. Read from minute prices they miss the true extremes by a little and read low. Across 400 simulated months, 19.43 percent for Parkinson and 19.12 percent for Garman-Klass against the true 20. They also assume the open equals yesterday's close: real overnight gaps need an extra term.
 
@@ -99,50 +107,54 @@ $$\text{expected measured variance per year} = \sigma^2 + \frac{2nh^2}{T}$$
 
 A random move with average zero has variance equal to its average square. One day's move tells almost nothing about direction. Its square, averaged over many days, tells the variance. Realised variance is that average, and the 252 turns a per-day number into a per-year one. Everything below is about how good that reading is and what spoils it.
 
-### Step 1: each squared return averages $\sigma^2\Delta t$
+### Step 1: each squared return averages $`\sigma^2\Delta t`$
 
 Under geometric Brownian motion ([Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md) has the background), one step's log return is a fixed drift piece plus a bell-curve shock:
 
-$$r_i = \big(\mu - \tfrac12\sigma^2\big)\Delta t + \sigma\sqrt{\Delta t}\,Z_i$$
+```math
+r_i = \big(\mu - \tfrac12\sigma^2\big)\Delta t + \sigma\sqrt{\Delta t}\,Z_i
+```
 
-where $Z$ is a standard bell-curve draw, a fresh one each step, average 0, average square 1. Square and average. The shock's square averages $\sigma^2\Delta t$. The cross term averages zero. The drift's square is of size $\Delta t^2$, the square of a small fraction of a year, far too small to matter.
+where $`Z`$ is a standard bell-curve draw, a fresh one each step, average 0, average square 1. Square and average. The shock's square averages $`\sigma^2\Delta t`$. The cross term averages zero. The drift's square is of size $`\Delta t^2`$, the square of a small fraction of a year, far too small to matter.
 
-So each squared return averages $\sigma^2\Delta t$. Add $N$ of them, one per day, and the total averages $\sigma^2 N\Delta t = \sigma^2 T$. For the month that is $0.04 \times 21/252$ = 0.003333. Divide by $T$ and the formula centres on $\sigma^2$: realised variance is unbiased, up to that negligible drift term. Its square root, the volatility, reads slightly low on average, because a square root bends down.
+So each squared return averages $`\sigma^2\Delta t`$. Add $`N`$ of them, one per day, and the total averages $`\sigma^2 N\Delta t = \sigma^2 T`$. For the month that is $`0.04 \times 21/252`$ = 0.003333. Divide by $`T`$ and the formula centres on $`\sigma^2`$: realised variance is unbiased, up to that negligible drift term. Its square root, the volatility, reads slightly low on average, because a square root bends down.
 
-### Step 2: the wobble shrinks like $\sqrt{2/N}$
+### Step 2: the wobble shrinks like $`\sqrt{2/N}`$
 
-A squared bell-curve draw has variance 2 (its fourth moment is 3, less its mean squared, 1). So each $r_i^2$ wobbles by $\sqrt2\,\sigma^2\Delta t$ around its average. The $N$ days are independent, so their variances add: the sum wobbles by $\sqrt{2N}\,\sigma^2\Delta t$. Relative to its average $N\sigma^2\Delta t$, that is $\sqrt{2/N}$.
+A squared bell-curve draw has variance 2 (its fourth moment is 3, less its mean squared, 1). So each $`r_i^2`$ wobbles by $`\sqrt2\,\sigma^2\Delta t`$ around its average. The $`N`$ days are independent, so their variances add: the sum wobbles by $`\sqrt{2N}\,\sigma^2\Delta t`$. Relative to its average $`N\sigma^2\Delta t`$, that is $`\sqrt{2/N}`$.
 
 For 21 days: 0.3086. The simulation of 400 months measures 0.3053. For a year of 252 days: 0.0891. The same law as a sample mean's standard error ([Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)), applied to squares.
 
 ### Step 3: sample faster and the sum converges on the quadratic variation
 
-Keep the month fixed at $T$ and cut it into $n$ smaller steps. The average of the sum stays $\sigma^2 T$. The relative wobble is now $\sqrt{2/n}$, which goes to zero as $n$ grows. In the limit the sum of squared log returns stops being random: it equals $\sigma^2 T$ exactly. That limit is the **quadratic variation** of the log price, the variance the path actually delivered. If $\sigma$ itself moves, the same argument gives the time-integral of $\sigma^2$ over the window.
+Keep the month fixed at $`T`$ and cut it into $`n`$ smaller steps. The average of the sum stays $`\sigma^2 T`$. The relative wobble is now $`\sqrt{2/n}`$, which goes to zero as $`n`$ grows. In the limit the sum of squared log returns stops being random: it equals $`\sigma^2 T`$ exactly. That limit is the **quadratic variation** of the log price, the variance the path actually delivered. If $`\sigma`$ itself moves, the same argument gives the time-integral of $`\sigma^2`$ over the window.
 
 On the true Acme prices, 1,638 five-minute returns give 19.75 percent, within its much smaller wobble of 20.
 
 <details>
 <summary>Detailed proof: mean and variance of the realised sum</summary>
 
-Here $E[\cdot]$ means the average of a random quantity and $\text{Var}$ its variance. Write $a = (\mu - \tfrac12\sigma^2)\Delta t$ and $b = \sigma\sqrt{\Delta t}$, so $r_i = a + bZ_i$ with the draws independent and standard normal.
+Here $`E[\cdot]`$ means the average of a random quantity and $`\text{Var}`$ its variance. Write $`a = (\mu - \tfrac12\sigma^2)\Delta t`$ and $`b = \sigma\sqrt{\Delta t}`$, so $`r_i = a + bZ_i`$ with the draws independent and standard normal.
 
-Mean: $E[r_i^2] = a^2 + 2ab\,E[Z_i] + b^2E[Z_i^2] = a^2 + b^2$.
+Mean: $`E[r_i^2] = a^2 + 2ab\,E[Z_i] + b^2E[Z_i^2] = a^2 + b^2`$.
 
-Variance: $r_i^2 - E[r_i^2] = 2abZ_i + b^2(Z_i^2 - 1)$. These two pieces are uncorrelated because $E[Z^3] = 0$, so $\text{Var}(r_i^2) = 4a^2b^2 + b^4\,\text{Var}(Z^2) = 4a^2b^2 + 2b^4$.
+Variance: $`r_i^2 - E[r_i^2] = 2abZ_i + b^2(Z_i^2 - 1)`$. These two pieces are uncorrelated because $`E[Z^3] = 0`$, so $`\text{Var}(r_i^2) = 4a^2b^2 + b^4\,\text{Var}(Z^2) = 4a^2b^2 + 2b^4`$.
 
-Sum over $n$ steps with $n\Delta t = T$: mean $\sigma^2 T + (\mu - \tfrac12\sigma^2)^2 T\Delta t$, variance $2\sigma^4 T\Delta t + 4(\mu - \tfrac12\sigma^2)^2\sigma^2 T\Delta t^2$. Both correction terms carry a factor $\Delta t$, so as $\Delta t \to 0$ the mean tends to $\sigma^2 T$ and the variance to 0. A quantity whose mean tends to a limit and whose variance tends to zero converges to that limit in mean square. Relative to the mean, the leading standard deviation is $\sqrt{2\sigma^4 T\Delta t}/(\sigma^2 T) = \sqrt{2/n}$.
+Sum over $`n`$ steps with $`n\Delta t = T`$: mean $`\sigma^2 T + (\mu - \tfrac12\sigma^2)^2 T\Delta t`$, variance $`2\sigma^4 T\Delta t + 4(\mu - \tfrac12\sigma^2)^2\sigma^2 T\Delta t^2`$. Both correction terms carry a factor $`\Delta t`$, so as $`\Delta t \to 0`$ the mean tends to $`\sigma^2 T`$ and the variance to 0. A quantity whose mean tends to a limit and whose variance tends to zero converges to that limit in mean square. Relative to the mean, the leading standard deviation is $`\sqrt{2\sigma^4 T\Delta t}/(\sigma^2 T) = \sqrt{2/n}`$.
 
 </details>
 
 ### Step 4: traded prices add the spread's squares
 
-Now each print is the true log price plus a small error: $+h$ if the trade hit the ask, $-h$ if it hit the bid, each equally likely and independent of everything else. A measured return is the true return plus the difference of two errors. The difference is $0$ or $\pm 2h$, and its average square is $2h^2$. It is uncorrelated with the true return, so the cross term averages zero.
+Now each print is the true log price plus a small error: $`+h`$ if the trade hit the ask, $`-h`$ if it hit the bid, each equally likely and independent of everything else. A measured return is the true return plus the difference of two errors. The difference is $`0`$ or $`\pm 2h`$, and its average square is $`2h^2`$. It is uncorrelated with the true return, so the cross term averages zero.
 
-Neighbouring measured returns share an error, so they are not independent; averages still add. Each measured squared return therefore averages $\sigma^2\Delta t + 2h^2$. Add $n$ of them and divide by $T$:
+Neighbouring measured returns share an error, so they are not independent; averages still add. Each measured squared return therefore averages $`\sigma^2\Delta t + 2h^2`$. Add $`n`$ of them and divide by $`T`$:
 
-$$\sigma^2 + \frac{2nh^2}{T}.$$
+```math
+\sigma^2 + \frac{2nh^2}{T}.
+```
 
-The true part is fixed as $n$ grows. The noise part grows in proportion to $n$. Sampling faster adds more bid-ask squares, not more information. For Acme at five minutes: $2 \times 1638 \times 0.001^2 \times 12$ = 0.039312, total 0.079312, a volatility of 28.16 percent. The one simulated month reads 28.04.
+The true part is fixed as $`n`$ grows. The noise part grows in proportion to $`n`$. Sampling faster adds more bid-ask squares, not more information. For Acme at five minutes: $`2 \times 1638 \times 0.001^2 \times 12`$ = 0.039312, total 0.079312, a volatility of 28.16 percent. The one simulated month reads 28.04.
 
 Plotting measured volatility against the sampling interval gives a **signature plot**. Each point below averages 400 simulated months.
 
@@ -157,13 +169,13 @@ xychart-beta
     line [20.00, 20.02, 20.01, 20.04, 20.00, 20.15, 20.08, 20.21]
 ```
 
-Orange: traded prices, simulated. Green: the formula $\sqrt{\sigma^2 + 2nh^2/T}$, almost on top of orange. Dark blue: true prices, flat at 20. The 390-minute point is one sample a day. The orange line climbs as the interval shrinks; that climb is the bias, and its shape is how practitioners spot noise in real data.
+Orange: traded prices, simulated. Green: the formula $`\sqrt{\sigma^2 + 2nh^2/T}`$, almost on top of orange. Dark blue: true prices, flat at 20. The 390-minute point is one sample a day. The orange line climbs as the interval shrinks; that climb is the bias, and its shape is how practitioners spot noise in real data.
 
 ### Step 5: a day's range carries more than its close
 
 The close-to-close return uses two numbers per day. The day's high and low record where the price went in between. A day that swings far up, then far down, and closes where it opened has a close-to-close return of zero and a large range.
 
-For a random walk with unit variance per day, the squared log range averages $4\ln 2$. Parkinson (1980) proved this from the known distribution of a random walk's range; dividing by it gives an unbiased variance estimate. Garman and Klass (1980) then combined the range with the open-to-close move, choosing weights to make the wobble as small as possible.
+For a random walk with unit variance per day, the squared log range averages $`4\ln 2`$. Parkinson (1980) proved this from the known distribution of a random walk's range; dividing by it gives an unbiased variance estimate. Garman and Klass (1980) then combined the range with the open-to-close move, choosing weights to make the wobble as small as possible.
 
 Efficiency here means how many days of close-to-close data one day of the other estimator is worth: the ratio of the two estimators' squared spread/mean. Spread relative to the mean, so an estimator that reads low does not look precise for that reason alone. Across 400 simulated months:
 
@@ -188,19 +200,19 @@ Acme's 22 closes, as traded. Log returns from the checks.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| day 1 log return | $\ln(99.3050 / 99.90)$ | −0.005974 |
-| its square | $(-0.005974)^2$ | 0.00003569 |
-| day 2 log return | $\ln(97.9481 / 99.3050)$ | −0.013758 |
+| day 1 log return | $`\ln(99.3050 / 99.90)`$ | −0.005974 |
+| its square | $`(-0.005974)^2`$ | 0.00003569 |
+| day 2 log return | $`\ln(97.9481 / 99.3050)`$ | −0.013758 |
 | its square | | 0.00018928 |
-| day 3 log return | $\ln(98.7640 / 97.9481)$ | +0.008295 |
+| day 3 log return | $`\ln(98.7640 / 97.9481)`$ | +0.008295 |
 | its square | | 0.00006880 |
 | … 18 more days, same way | | |
 | sum of 21 squares | | 0.003025 |
 | annualise | × 252/21 = × 12 | 0.036304 |
-| **realised volatility** | $\sqrt{0.036304}$ | **19.05%** |
-| quadratic variation the path delivered | $0.04 \times 21/252$ | 0.003333 |
-| five-minute prints, bounce term | $2 \times 1638 \times 0.001^2 \times 12$ | 0.039312 |
-| five-minute prints, expected total | $0.04 + 0.039312$ | 0.079312, i.e. 28.16% |
+| **realised volatility** | $`\sqrt{0.036304}`$ | **19.05%** |
+| quadratic variation the path delivered | $`0.04 \times 21/252`$ | 0.003333 |
+| five-minute prints, bounce term | $`2 \times 1638 \times 0.001^2 \times 12`$ | 0.039312 |
+| five-minute prints, expected total | $`0.04 + 0.039312`$ | 0.079312, i.e. 28.16% |
 | five-minute prints, this month | from the checks | 28.04% |
 
 The daily sum, 0.003025, reads under the 0.003333 the path delivered. The shortfall is well inside the 31 percent wobble of a 21-day estimate. On the same month, Parkinson reads 19.74 percent and Garman-Klass 20.07 percent.
@@ -211,10 +223,10 @@ Same 21 closes, correct answer 19.05 percent:
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Annualise with 365 | 22.93% | Calendar days; the returns came from trading days. Too high by $\sqrt{365/252}$. |
+| Annualise with 365 | 22.93% | Calendar days; the returns came from trading days. Too high by $`\sqrt{365/252}`$. |
 | Quote the variance as a volatility | 3.63% | 0.036304 is variance; its square root is the volatility. |
-| Textbook sample variance: remove the mean, divide by $N - 1$ | 19.49% | Not wrong as statistics; wrong for a contract. Variance contracts assume mean zero and divide by $N$. |
-| Simple returns, $S_i/S_{i-1} - 1$ | 19.09% | Small on quiet days, larger after big moves; contracts use logs. |
+| Textbook sample variance: remove the mean, divide by $`N - 1`$ | 19.49% | Not wrong as statistics; wrong for a contract. Variance contracts assume mean zero and divide by $`N`$. |
+| Simple returns, $`S_i/S_{i-1} - 1`$ | 19.09% | Small on quiet days, larger after big moves; contracts use logs. |
 | Sample every five minutes on traded prices | 28.04% | Measures the bid-ask bounce as much as the share. |
 
 ---
@@ -223,9 +235,9 @@ Same 21 closes, correct answer 19.05 percent:
 
 The scripts build Acme's month minute by minute from their own random numbers: splitmix64 integers, turned into bell-curve draws by the Box-Muller formula. They put every five-minute print at the bid or the ask and compute every number on the card. Three independent roads meet:
 
-- the closed-form mean and wobble of Why it works ($\sigma^2$, $\sqrt{2/N}$, $\sigma^2 + 2nh^2/T$);
+- the closed-form mean and wobble of Why it works ($`\sigma^2`$, $`\sqrt{2/N}`$, $`\sigma^2 + 2nh^2/T`$);
 - a 400-month simulation that measures the same things;
-- the range estimators, which reach $\sigma$ from highs and lows instead of closes.
+- the range estimators, which reach $`\sigma`$ from highs and lows instead of closes.
 
 Both languages draw the same random numbers, so the two outputs agree to the digit.
 
@@ -566,22 +578,22 @@ ALL CHECKS PASS
 The two outputs are identical line for line. The asserts compare simulation with theory:
 
 - the 400-month average of close-to-close variance against 0.04;
-- its measured wobble against $\sqrt{2/21}$;
+- its measured wobble against $`\sqrt{2/21}`$;
 - the five-minute traded average against the noise formula;
 - the one month's five-minute true-price reading against 20 percent;
 - the range estimators' averages against a band just under 0.04.
 
-Breaking the annualisation, the factor 2 in the noise term, the step size or the constant $4\ln 2$ each makes an assert fail.
+Breaking the annualisation, the factor 2 in the noise term, the step size or the constant $`4\ln 2`$ each makes an assert fail.
 
 ### Lean
 
 Lean proves Steps 1 to 3 of Why it works, for any drift, any volatility and any window length above zero.
 
-- Suppose the $n$ log returns follow Step 1, with $\Delta t = T/n$ and standard bell-curve draws. Then their sum averages $\sigma^2 T + (\mu - \tfrac12\sigma^2)^2 T\Delta t$.
-- Suppose also the draws are independent. Then the sum's variance is $2\sigma^4 T\Delta t + 4(\mu - \tfrac12\sigma^2)^2\sigma^2 T\Delta t^2$.
-- Take $T$ fixed and let $n$ grow, with independent draws at each $n$. Then the average squared distance between the sum and $\sigma^2 T$ tends to zero.
-- Take the month: 21 days, 78 five-minute returns a day, and $\sigma^2$ = 0.04. Then $252/21 = 12$, $n$ = 1,638, and $\sigma^2 T = 1/300$, the 0.003333 above.
-- Take $n$ = 1,638, $h$ = 0.001 and $T$ = 21/252. Then the noise term $2nh^2/T$ is 0.039312, and the expected total is 0.079312.
+- Suppose the $`n`$ log returns follow Step 1, with $`\Delta t = T/n`$ and standard bell-curve draws. Then their sum averages $`\sigma^2 T + (\mu - \tfrac12\sigma^2)^2 T\Delta t`$.
+- Suppose also the draws are independent. Then the sum's variance is $`2\sigma^4 T\Delta t + 4(\mu - \tfrac12\sigma^2)^2\sigma^2 T\Delta t^2`$.
+- Take $`T`$ fixed and let $`n`$ grow, with independent draws at each $`n`$. Then the average squared distance between the sum and $`\sigma^2 T`$ tends to zero.
+- Take the month: 21 days, 78 five-minute returns a day, and $`\sigma^2`$ = 0.04. Then $`252/21 = 12`$, $`n`$ = 1,638, and $`\sigma^2 T = 1/300`$, the 0.003333 above.
+- Take $`n`$ = 1,638, $`h`$ = 0.001 and $`T`$ = 21/252. Then the noise term $`2nh^2/T`$ is 0.039312, and the expected total is 0.079312.
 
 The noise bias itself, the range estimators and every simulated reading are left to the Python and Rust checks.
 
@@ -956,7 +968,7 @@ example : (4 / 100 + 39312 / 1000000 : ℚ) = 79312 / 1000000 := by norm_num
 - **High-frequency econometrics.** Research on intraday data uses realised variance from five-minute returns, a compromise between wobble and bid-ask noise, or two-scale estimators that subtract the noise term measured at the fastest sampling.
 
 > **Say it back**
-> Realised variance squares each day's log return, adds them up, and multiplies by 252 over the number of days. Each square averages the day's share of the true variance, so the sum is unbiased, and its relative wobble is $\sqrt{2/N}$: about 31 percent for a month. Sampling faster shrinks the wobble towards the quadratic variation, until bid-ask noise adds $2h^2$ to every return and the reading climbs. Using each day's high and low instead of just the close is worth five to seven months of closes per month, if the high and low are real. For Acme's month: 19.05 percent from closes, 28.04 from five-minute trades, against a true 20.
+> Realised variance squares each day's log return, adds them up, and multiplies by 252 over the number of days. Each square averages the day's share of the true variance, so the sum is unbiased, and its relative wobble is $`\sqrt{2/N}`$: about 31 percent for a month. Sampling faster shrinks the wobble towards the quadratic variation, until bid-ask noise adds $`2h^2`$ to every return and the reading climbs. Using each day's high and low instead of just the close is worth five to seven months of closes per month, if the high and low are real. For Acme's month: 19.05 percent from closes, 28.04 from five-minute trades, against a true 20.
 
 ---
 
@@ -979,8 +991,8 @@ Realised variance says what a month delivered. The question it leaves open: what
 
 Verified 2026-09-27: every link below resolves to the publisher's page.
 
-- Parkinson, Michael. "The Extreme Value Method for Estimating the Variance of the Rate of Return." *Journal of Business* 53, no. 1 (1980): 61–65. [doi:10.1086/296071](https://doi.org/10.1086/296071). The range estimator and its $4\ln 2$.
+- Parkinson, Michael. "The Extreme Value Method for Estimating the Variance of the Rate of Return." *Journal of Business* 53, no. 1 (1980): 61–65. [doi:10.1086/296071](https://doi.org/10.1086/296071). The range estimator and its $`4\ln 2`$.
 - Garman, Mark B., and Michael J. Klass. "On the Estimation of Security Price Volatilities from Historical Data." *Journal of Business* 53, no. 1 (1980): 67–78. [doi:10.1086/296072](https://doi.org/10.1086/296072). Open, high, low and close combined with minimum-variance weights.
 - Barndorff-Nielsen, Ole E., and Neil Shephard. "Econometric Analysis of Realized Volatility and Its Use in Estimating Stochastic Volatility Models." *Journal of the Royal Statistical Society Series B* 64, no. 2 (2002): 253–280. [doi:10.1111/1467-9868.00336](https://doi.org/10.1111/1467-9868.00336). Realised variance as an estimate of quadratic variation, with its error.
-- Zhang, Lan, Per A. Mykland, and Yacine Aït-Sahalia. "A Tale of Two Time Scales." *Journal of the American Statistical Association* 100, no. 472 (2005): 1394–1411. [doi:10.1198/016214505000000169](https://doi.org/10.1198/016214505000000169). The noise bias $2nE[\varepsilon^2]$, where $\varepsilon$ is the error in each print, and an estimator that removes it.
+- Zhang, Lan, Per A. Mykland, and Yacine Aït-Sahalia. "A Tale of Two Time Scales." *Journal of the American Statistical Association* 100, no. 472 (2005): 1394–1411. [doi:10.1198/016214505000000169](https://doi.org/10.1198/016214505000000169). The noise bias $`2nE[\varepsilon^2]`$, where $`\varepsilon`$ is the error in each print, and an estimator that removes it.
 - Cboe Futures Exchange. *S&P 500 Variance Futures: Summary Product Specifications*. [Contract specification (PDF)](https://cdn.cboe.com/resources/futures/sp_500_variance_futures_contract.pdf). The settlement formula: daily log returns, zero mean, 252 business days a year.

@@ -28,38 +28,44 @@ To scale: 200 px is the island's ceiling on both axes, so a population v sits at
 
 ## The formula
 
-A map is written $x_{n+1} = g(x_n)$: next summer's population is the rule $g$ applied to this summer's ([Iteration](01-iteration-and-cobweb-plots.md)). The moth rule is the logistic map:
+A map is written $`x_{n+1} = g(x_n)`$: next summer's population is the rule $`g`$ applied to this summer's ([Iteration](01-iteration-and-cobweb-plots.md)). The moth rule is the logistic map:
 
-$$g(x) = r\,x\,(1 - x)$$
+```math
+g(x) = r\,x\,(1 - x)
+```
 
-A fixed point $x^*$ solves $g(x^*) = x^*$. The test for it:
+A fixed point $`x^*`$ solves $`g(x^*) = x^*`$. The test for it:
 
-$$|g'(x^*)|<1 \;\Rightarrow\; \text{attracting}, \qquad |g'(x^*)|>1 \;\Rightarrow\; \text{repelling}$$
+```math
+|g'(x^*)|<1 \;\Rightarrow\; \text{attracting}, \qquad |g'(x^*)|>1 \;\Rightarrow\; \text{repelling}
+```
 
 **Read it aloud:** a slope at the fixed point smaller than 1 in size draws nearby populations in; larger than 1 pushes them away.
 
 For the moths:
 
-$$x^* = 0 \text{ with slope } r, \qquad x^* = 1 - \frac{1}{r} \text{ with slope } 2 - r$$
+```math
+x^* = 0 \text{ with slope } r, \qquad x^* = 1 - \frac{1}{r} \text{ with slope } 2 - r
+```
 
-So the living fixed point attracts for $r$ between 1 and 3. At 2.8 its slope is −0.8; at 3.2, −1.2.
+So the living fixed point attracts for $`r`$ between 1 and 3. At 2.8 its slope is −0.8; at 3.2, −1.2.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_n$, $x_0$, $n$ | population in summer $n$, as a fraction of the ceiling | $x_0$ = 0.2 | — |
-| $g$, $N$ | a map, one value to the next; $N$ is Newton's | $g(0.2)$ = 0.448 | — |
-| $r$ | breeding factor, growth per summer without crowding | 2.8, 3.2 | fixed point rises, slope falls |
-| $x^*$ | fixed point: sent to itself | 0.642857 | — |
-| $g'(x^*)$ | slope of the map at the fixed point | −0.8 | past 1 in size, lets go |
-| $e_n$, $e$ | the gap $x_n-x^*$ | 0.02 | — |
-| $L$, $K$, $\delta$, $c$ | slope bound below 1 on a window of half-width $\delta$; $K$ a floor above 1; $c$ a point inside | $L$ = 0.912, $\delta$ = 0.02 | at 1 the proof fails |
-| $F$, $h$, $t$ | rate law $x'=F(x)$ in time $t$; step $h$ in years | $h$ = 1.8 | past 2, lets go |
+| $`x_n`$, $`x_0`$, $`n`$ | population in summer $`n`$, as a fraction of the ceiling | $`x_0`$ = 0.2 | — |
+| $`g`$, $`N`$ | a map, one value to the next; $`N`$ is Newton's | $`g(0.2)`$ = 0.448 | — |
+| $`r`$ | breeding factor, growth per summer without crowding | 2.8, 3.2 | fixed point rises, slope falls |
+| $`x^*`$ | fixed point: sent to itself | 0.642857 | — |
+| $`g'(x^*)`$ | slope of the map at the fixed point | −0.8 | past 1 in size, lets go |
+| $`e_n`$, $`e`$ | the gap $`x_n-x^*`$ | 0.02 | — |
+| $`L`$, $`K`$, $`\delta`$, $`c`$ | slope bound below 1 on a window of half-width $`\delta`$; $`K`$ a floor above 1; $`c`$ a point inside | $`L`$ = 0.912, $`\delta`$ = 0.02 | at 1 the proof fails |
+| $`F`$, $`h`$, $`t`$ | rate law $`x'=F(x)`$ in time $`t`$; step $`h`$ in years | $`h`$ = 1.8 | past 2, lets go |
 
 ### When it holds
 
-- **The slope exists and changes smoothly near $x^*$.** At a corner there is no single slope and the test says nothing.
+- **The slope exists and changes smoothly near $`x^*`$.** At a corner there is no single slope and the test says nothing.
 - **The start is close enough.** The theorem is local: at 2.8 the proof covers ±0.02.
-- **The slope is not exactly 1 in size.** At $r$ = 3 the slope is −1 and the test is silent: the gap creeps from 0.007330 after 1000 summers to 0.003700 after 4000.
+- **The slope is not exactly 1 in size.** At $`r`$ = 3 the slope is −1 and the test is silent: the gap creeps from 0.007330 after 1000 summers to 0.003700 after 4000.
 - **The state is one number.** For several, every eigenvalue (a stretch factor along a direction the map does not turn) of the Jacobian matrix of partial slopes must be smaller than 1 in size.
 
 ---
@@ -68,34 +74,36 @@ So the living fixed point attracts for $r$ between 1 and 3. At 2.8 its slope is 
 
 ### Step 0: near a fixed point the map is a multiplication
 
-Zoom in on the fixed point and the hump looks straight. A straight rule through $x^*$ with slope $g'(x^*)$ sends a gap $e$ to $g'(x^*)\,e$, so every summer multiplies the gap by the same number. The rest makes "looks straight" honest.
+Zoom in on the fixed point and the hump looks straight. A straight rule through $`x^*`$ with slope $`g'(x^*)`$ sends a gap $`e`$ to $`g'(x^*)\,e`$, so every summer multiplies the gap by the same number. The rest makes "looks straight" honest.
 
 ### Step 1: find the fixed points
 
-Solve $r x (1 - x) = x$, that is $x\,(r - 1 - r x) = 0$. Either no moths, or $x = 1 - 1/r$: at 2.8, 0.642857. Pressing the map 200 times from 0.2 lands there to twelve decimals.
+Solve $`r x (1 - x) = x`$, that is $`x\,(r - 1 - r x) = 0`$. Either no moths, or $`x = 1 - 1/r`$: at 2.8, 0.642857. Pressing the map 200 times from 0.2 lands there to twelve decimals.
 
 ### Step 2: the slope at each
 
-The slope of $g$ is $g'(x) = r\,(1 - 2x)$. At 0 it is $r$ = 2.8: a few moths multiply, so an empty island repels. At $1 - 1/r$ it is $r\,(1 - 2 + 2/r) = 2 - r$ = −0.8.
+The slope of $`g`$ is $`g'(x) = r\,(1 - 2x)`$. At 0 it is $`r`$ = 2.8: a few moths multiply, so an empty island repels. At $`1 - 1/r`$ it is $`r\,(1 - 2 + 2/r) = 2 - r`$ = −0.8.
 
 ### Step 3: the contraction argument
 
-The slope changes smoothly, so on some window round $x^*$ its size stays below a bound $L$ under 1. At 2.8, on ±0.02, $L$ = 0.8 + 2 × 2.8 × 0.02 = 0.912. The mean value theorem (a chord of a smooth curve has the curve's slope somewhere between its ends; [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)) makes the new gap the old gap times a slope from inside the window:
+The slope changes smoothly, so on some window round $`x^*`$ its size stays below a bound $`L`$ under 1. At 2.8, on ±0.02, $`L`$ = 0.8 + 2 × 2.8 × 0.02 = 0.912. The mean value theorem (a chord of a smooth curve has the curve's slope somewhere between its ends; [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)) makes the new gap the old gap times a slope from inside the window:
 
-$$|e_{n+1}| \le L\,|e_n|$$
+```math
+|e_{n+1}| \le L\,|e_n|
+```
 
-The population stays in the window, and after $n$ summers the gap is at most $L^n$ times the first: it goes to 0. A map shrinking distances by a fixed factor below 1 is a **contraction** ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)), here used only near the point. The check scans the window: nothing lands farther than 0.017120 from $x^*$.
+The population stays in the window, and after $`n`$ summers the gap is at most $`L^n`$ times the first: it goes to 0. A map shrinking distances by a fixed factor below 1 is a **contraction** ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)), here used only near the point. The check scans the window: nothing lands farther than 0.017120 from $`x^*`$.
 
 With slope size above 1 the argument runs backwards: gaps grow by a fixed factor, so the population leaves. At 3.2: 2 hundredths, 2.53, 2.83.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $g'$ be continuous near $x^*$ with $|g'(x^*)|<1$. Choose $L$ with $|g'(x^*)|<L<1$. By continuity there is $\delta>0$ with $|g'(c)|\le L$ whenever $|c-x^*|\le\delta$.
+Let $`g'`$ be continuous near $`x^*`$ with $`|g'(x^*)|<1`$. Choose $`L`$ with $`|g'(x^*)|<L<1`$. By continuity there is $`\delta>0`$ with $`|g'(c)|\le L`$ whenever $`|c-x^*|\le\delta`$.
 
-Take $|x_0-x^*|\le\delta$. The mean value theorem gives $c$ between $x_0$ and $x^*$ with $g(x_0)-g(x^*)=g'(c)(x_0-x^*)$. Since $g(x^*)=x^*$, this says $|x_1-x^*|\le L|x_0-x^*|\le\delta$. By induction $|x_n-x^*|\le L^n\delta$, which tends to 0.
+Take $`|x_0-x^*|\le\delta`$. The mean value theorem gives $`c`$ between $`x_0`$ and $`x^*`$ with $`g(x_0)-g(x^*)=g'(c)(x_0-x^*)`$. Since $`g(x^*)=x^*`$, this says $`|x_1-x^*|\le L|x_0-x^*|\le\delta`$. By induction $`|x_n-x^*|\le L^n\delta`$, which tends to 0.
 
-If instead $|g'(x^*)|>1$, choose $K$ with $1<K<|g'(x^*)|$ and $\delta$ with $|g'(c)|\ge K$ on the window. While $x_n$ stays there and differs from $x^*$, $|x_{n+1}-x^*|\ge K|x_n-x^*|$, so the gap is at least $K^n$ times the first and passes $\delta$: the orbit leaves unless it lands exactly on $x^*$.
+If instead $`|g'(x^*)|>1`$, choose $`K`$ with $`1<K<|g'(x^*)|`$ and $`\delta`$ with $`|g'(c)|\ge K`$ on the window. While $`x_n`$ stays there and differs from $`x^*`$, $`|x_{n+1}-x^*|\ge K|x_n-x^*|`$, so the gap is at least $`K^n`$ times the first and passes $`\delta`$: the orbit leaves unless it lands exactly on $`x^*`$.
 
 </details>
 
@@ -105,21 +113,23 @@ A positive slope keeps the gap's sign, so the population creeps in from one side
 
 ### Step 5: continuous time asks for a sign, a map asks for a size
 
-For a differential equation $x' = F(x)$ (the rate of $x$ at time $t$ is $F$ of $x$), an equilibrium (a level where the rate $F$ is 0) is stable when $F$'s slope there is negative, of any size. Take $F(x) = x\,(1 - x)$, rate constant 1 per year: the full island, 1, has slope −1 per year, so it is stable.
+For a differential equation $`x' = F(x)`$ (the rate of $`x`$ at time $`t`$ is $`F`$ of $`x`$), an equilibrium (a level where the rate $`F`$ is 0) is stable when $`F`$'s slope there is negative, of any size. Take $`F(x) = x\,(1 - x)`$, rate constant 1 per year: the full island, 1, has slope −1 per year, so it is stable.
 
-Step it $h$ years at a time with Euler's rule (follow the current rate for one whole step): the map $x + h\,F(x)$, slope $1 - h$ at 1. Steps of 1.8 years give −0.8 and land on 1.000000. Steps of 2.2 years give −1.2 and alternate between 0.746247 and 1.162844 for ever.
+Step it $`h`$ years at a time with Euler's rule (follow the current rate for one whole step): the map $`x + h\,F(x)`$, slope $`1 - h`$ at 1. Steps of 1.8 years give −0.8 and land on 1.000000. Steps of 2.2 years give −1.2 and alternate between 0.746247 and 1.162844 for ever.
 
-The equation did not change; the step outran it. Rescaled by $h/(1 + h)$, this is the moth map with $r = 1 + h$: the check finds the 2.2-year cycle equal to the 3.2 cycle times 3.2/2.2.
+The equation did not change; the step outran it. Rescaled by $`h/(1 + h)`$, this is the moth map with $`r = 1 + h`$: the check finds the 2.2-year cycle equal to the 3.2 cycle times 3.2/2.2.
 
 ### Step 6: Newton's method is a map with slope 0
 
-Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) replaces a guess by the guess minus the equation's value over its slope. For $x^2 = 2$ that is the map
+Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) replaces a guess by the guess minus the equation's value over its slope. For $`x^2 = 2`$ that is the map
 
-$$N(x) = \frac{x}{2} + \frac{1}{x}$$
+```math
+N(x) = \frac{x}{2} + \frac{1}{x}
+```
 
-Its fixed point is the square root of 2, where its slope is $\tfrac12 - 1/x^2 = 0$. Slope 0 kills the gap to first order, leaving a fixed multiple of its square: errors 0.085786438, 0.002453104, 0.000002124, Newton's doubling of digits.
+Its fixed point is the square root of 2, where its slope is $`\tfrac12 - 1/x^2 = 0`$. Slope 0 kills the gap to first order, leaving a fixed multiple of its square: errors 0.085786438, 0.002453104, 0.000002124, Newton's doubling of digits.
 
-In general the Newton map's slope is the equation's value times its second slope over its first slope squared, and the value is 0 at a root. Newton even reaches the repelling point: on $g(x) - x = 0$ at 3.2 from 0.9 it lands on 0.6875 in 6 steps.
+In general the Newton map's slope is the equation's value times its second slope over its first slope squared, and the value is 0 at a root. Newton even reaches the repelling point: on $`g(x) - x = 0`$ at 3.2 from 0.9 it lands on 0.6875 in 6 steps.
 
 ---
 
@@ -134,7 +144,7 @@ In general the Newton map's slope is the equation's value times its second slope
 | its slope | 2 − 3.2 | **−1.2: lets go** |
 | where the population ends | 1000 and 1001 summers from 0.2 | 0.513045 and 0.799455 |
 
-The third row is the exact one-summer gap $g(x^*+e)-x^* = (2-r)e-re^2$: slope times gap, plus the hump's bend. At 2.8 the moths settle at 0.642857 of the ceiling; at 3.2 they boom and bust.
+The third row is the exact one-summer gap $`g(x^*+e)-x^* = (2-r)e-re^2`$: slope times gap, plus the hump's bend. At 2.8 the moths settle at 0.642857 of the ceiling; at 3.2 they boom and bust.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -155,7 +165,7 @@ First line (orange): breeding factor 2.8, the gap flips and shrinks. Second (gre
 | Sign rule on a map, at 3.2 | slope −1.2 "negative, so stable"; moths alternate 0.513045, 0.799455 | a map needs size below 1, not a sign |
 | Slope exactly 1 in size, at 3.0 | gap 0.007330 after 1000 summers, 0.003700 after 4000 | the test is silent |
 | Slope read at the start 0.2 | 1.68, "repelling" | the test belongs to the fixed point |
-| Newton at a double root, $(x - 1)^2 = 0$ | map $(x + 1)/2$, slope 0.5 | slope 0 needs a nonzero equation slope at the root |
+| Newton at a double root, $`(x - 1)^2 = 0`$ | map $`(x + 1)/2`$, slope 0.5 | slope 0 needs a nonzero equation slope at the root |
 
 The code prints all four.
 
@@ -163,7 +173,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Fixed points come from the formula $1 - 1/r$ and from pressing the map (2.8) or hand-written Newton (3.2). Slopes come from $2 - r$ and from measurement: a central difference (rise over a tiny step either side) and the gap ratio. The Euler cycle is checked against the rescaled moth cycle.
+Nothing is imported. Fixed points come from the formula $`1 - 1/r`$ and from pressing the map (2.8) or hand-written Newton (3.2). Slopes come from $`2 - r`$ and from measurement: a central difference (rise over a tiny step either side) and the gap ratio. The Euler cycle is checked against the rescaled moth cycle.
 
 ### Python
 
@@ -369,10 +379,10 @@ The two outputs match line for line.
 
 Lean proves the slope test for every smooth map, and the moth rule's fixed points and slopes for every breeding factor but 0.
 
-- Take a fixed point where the slope changes smoothly and is smaller than 1 in size. Then some window round it has a bound $L$ under 1. Every start in that window has its gap after $n$ summers at most $L^n$ times the first, so it goes to 0.
+- Take a fixed point where the slope changes smoothly and is smaller than 1 in size. Then some window round it has a bound $`L`$ under 1. Every start in that window has its gap after $`n`$ summers at most $`L^n`$ times the first, so it goes to 0.
 - Take a fixed point where the slope changes smoothly and is larger than 1 in size. Then there is a window round it that every other start eventually leaves.
-- Take a breeding factor $r$ other than 0. Then the moth rule's fixed points are exactly 0 and $1 - 1/r$, with slopes $r$ and $2 - r$.
-- The living fixed point's slope is smaller than 1 in size exactly when $r$ lies between 1 and 3.
+- Take a breeding factor $`r`$ other than 0. Then the moth rule's fixed points are exactly 0 and $`1 - 1/r`$, with slopes $`r`$ and $`2 - r`$.
+- The living fixed point's slope is smaller than 1 in size exactly when $`r`$ lies between 1 and 3.
 - The worked numbers check out exactly: the fixed points and slopes at 2.8 and 3.2, the bound 0.912 and the gap −0.01712.
 - So do Euler's slopes −0.8 and −1.2, the mistaken slope 1.68, and Newton's slope 0 at the square root of 2.
 
@@ -608,10 +618,10 @@ end FixedPointsOfAMap
 ## The usual mistake
 
 > [!warning]
-> **Carrying the differential-equation rule over to maps.** For $x' = F(x)$ a negative slope is enough. For a map, a slope of −1.2 is negative and still repels: each overshoot beats the last.
+> **Carrying the differential-equation rule over to maps.** For $`x' = F(x)`$ a negative slope is enough. For a map, a slope of −1.2 is negative and still repels: each overshoot beats the last.
 >
 > - **Local taken for global.** The proof covers only ±0.02 round 0.642857.
-> - **The other fixed point.** $x = 0$ has slope 2.8: an empty island stays empty, a handful of moths leave it.
+> - **The other fixed point.** $`x = 0`$ has slope 2.8: an empty island stays empty, a handful of moths leave it.
 
 ---
 
@@ -619,7 +629,7 @@ end FixedPointsOfAMap
 
 - **Insect and fish populations.** Yearly breeders are modelled by maps; May's 1976 paper showed with this one that high breeding alone can destroy a steady level.
 - **Simulation step sizes.** Euler's limit, step times rate constant below 2, is Step 5's slope test.
-- **Square roots in software.** Newton's map $x/2 + 1/x$ has slope 0 at its fixed point, which is why four steps from 1 reach 1.414213562375.
+- **Square roots in software.** Newton's map $`x/2 + 1/x`$ has slope 0 at its fixed point, which is why four steps from 1 reach 1.414213562375.
 - **Chaos.** [The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md) averages the slope's size along a whole orbit.
 
 > **Say it back**

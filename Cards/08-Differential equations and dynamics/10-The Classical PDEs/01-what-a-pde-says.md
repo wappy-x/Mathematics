@@ -34,13 +34,17 @@ A doubled letter takes the rate twice: u_xx is the **bend** of the profile (its 
 
 The three equations, with the rod's diffusivity κ and the string's wave speed c scaled to 1:
 
-$$u_t = u_{xx}, \qquad u_{tt} = u_{xx}, \qquad u_{xx} + u_{yy} = 0$$
+```math
+u_t = u_{xx}, \qquad u_{tt} = u_{xx}, \qquad u_{xx} + u_{yy} = 0
+```
 
 **Read it aloud:** the rod warms where its profile bends upward; the string accelerates where its shape bends; the plate's bend across cancels its bend up, at every point.
 
 Every second-order linear equation in two variables x and y, with A, B, C not all zero, can be written as below. The "…" gathers the lower-order terms: u_x, u_y, u and a given source.
 
-$$A\,u_{xx} + B\,u_{xy} + C\,u_{yy} + \ldots = 0.$$
+```math
+A\,u_{xx} + B\,u_{xy} + C\,u_{yy} + \ldots = 0.
+```
 
 Its family is the sign of one number, B^2 − 4AC: positive, **hyperbolic** (the wave family); zero, **parabolic** (the heat family); negative, **elliptic** (the Laplace family).
 
@@ -50,13 +54,13 @@ For the rod, time plays the part of y: u_xx − u_t = 0 has A = 1 and B = C = 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | the unknown: temperature or height | rod middle: 1 C at the start | — |
-| $x$, $y$, $t$ | place along, place up, scaled time | 0 to 1 m | — |
-| $u_t$, $u_x$, $u_y$ | first partial derivatives | rod middle: u_x = 0 | — |
-| $u_{xx}$, $u_{yy}$, $u_{tt}$, $u_{xy}$ | second partial derivatives: bends, acceleration, twist | the string's bend | faster change |
-| $A$, $B$, $C$ | coefficients of u_xx, u_xy, u_yy | heat 1, 0, 0; wave 1, 0, −1 | large B: hyperbolic |
-| $B^2 - 4AC$ | the discriminant | 0, 4, −4 | past 0, hyperbolic |
-| $\kappa$, $c$ | diffusivity, how fast heat spreads; wave speed | both 1 | faster change |
+| $`u`$ | the unknown: temperature or height | rod middle: 1 C at the start | — |
+| $`x`$, $`y`$, $`t`$ | place along, place up, scaled time | 0 to 1 m | — |
+| $`u_t`$, $`u_x`$, $`u_y`$ | first partial derivatives | rod middle: u_x = 0 | — |
+| $`u_{xx}`$, $`u_{yy}`$, $`u_{tt}`$, $`u_{xy}`$ | second partial derivatives: bends, acceleration, twist | the string's bend | faster change |
+| $`A`$, $`B`$, $`C`$ | coefficients of u_xx, u_xy, u_yy | heat 1, 0, 0; wave 1, 0, −1 | large B: hyperbolic |
+| $`B^2 - 4AC`$ | the discriminant | 0, 4, −4 | past 0, hyperbolic |
+| $`\kappa`$, $`c`$ | diffusivity, how fast heat spreads; wave speed | both 1 | faster change |
 
 ### When it holds
 
@@ -98,7 +102,9 @@ With the top edge at sin(πx) C and the others at 0 C, the answer is u = sin(πx
 
 Take a direction with components p along x and q along y, and replace u_xx by p^2, u_xy by pq and u_yy by q^2:
 
-$$Q(p, q) = A p^2 + B p q + C q^2.$$
+```math
+Q(p, q) = A p^2 + B p q + C q^2.
+```
 
 A direction with Q = 0 points across a **characteristic** line: the top-order part says nothing about how u changes across it, so a jump or signal can ride it. Solving Q = 0 for p/q is a quadratic with discriminant B^2 − 4AC.
 

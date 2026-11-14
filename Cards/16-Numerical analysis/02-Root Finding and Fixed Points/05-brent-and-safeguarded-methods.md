@@ -19,7 +19,7 @@ Two kinds of search already exist on this shelf.
 
 **Brent's method takes a fast step only when it lands well inside the bracket and is under half the length of the step two before; otherwise it halves the bracket. So it never loses the answer, never needs more than about the square of bisection's count, and on smooth problems usually runs at the speed of its fast steps.**
 
-**What kind of fact this is:** a method with three theorems attached, all proved on this card in Why it works: the answer stays bracketed, the count of evaluations is at most (k + 1)(k + 2) where k is bisection's count, and the fast step has order 1.839 near a simple root (a root where the slope $f'(t^{*})$ is not zero). The bound is proved for the rules as stated here; Brent's paper gives a bound of the same kind for his published code. Step counts are measurements printed by the checks.
+**What kind of fact this is:** a method with three theorems attached, all proved on this card in Why it works: the answer stays bracketed, the count of evaluations is at most (k + 1)(k + 2) where k is bisection's count, and the fast step has order 1.839 near a simple root (a root where the slope $`f'(t^{*})`$ is not zero). The bound is proved for the rules as stated here; Brent's paper gives a bound of the same kind for his published code. Step counts are measurements printed by the checks.
 
 ### The picture: the bracket, step by step
 
@@ -39,55 +39,63 @@ The straight line is bisection: one halving per evaluation. The other line is Br
 
 ## The formula
 
-Notation first, in words. The unknown is the shell temperature $t$ in degrees Celsius; $t^{*}$ is the true answer. The **residual** $f(t)$ is the heat loss at $t$ minus the meter reading, in watts. The bracket has a **best end** $b$ (the end with the smaller $\lvert f\rvert$, the current answer) and an **other end** $c$, with $f(b)$ and $f(c)$ of opposite sign. The point $a$ is the previous best end. Write $f_a$ for $f(a)$, and so on.
+Notation first, in words. The unknown is the shell temperature $`t`$ in degrees Celsius; $`t^{*}`$ is the true answer. The **residual** $`f(t)`$ is the heat loss at $`t`$ minus the meter reading, in watts. The bracket has a **best end** $`b`$ (the end with the smaller $`\lvert f\rvert`$, the current answer) and an **other end** $`c`$, with $`f(b)`$ and $`f(c)`$ of opposite sign. The point $`a`$ is the previous best end. Write $`f_a`$ for $`f(a)`$, and so on.
 
-$$f(t) = A\left[\epsilon_{\text{e}}\,\sigma\,(T^{4} - T_{\text{a}}^{4}) + h_{\text{c}}\,(T - T_{\text{a}})\right] - Q, \qquad T = t + 273.15$$
+```math
+f(t) = A\left[\epsilon_{\text{e}}\,\sigma\,(T^{4} - T_{\text{a}}^{4}) + h_{\text{c}}\,(T - T_{\text{a}})\right] - Q, \qquad T = t + 273.15
+```
 
 **Read it aloud:** the loss is radiation, which grows with the fourth power of the absolute temperature, plus convection, which grows with the temperature difference; subtract the meter reading.
 
-The fast step is **inverse quadratic interpolation** (IQI): fit $t$ as a quadratic in $f$ through the three points $a$, $b$, $c$, and read it at $f = 0$.
+The fast step is **inverse quadratic interpolation** (IQI): fit $`t`$ as a quadratic in $`f`$ through the three points $`a`$, $`b`$, $`c`$, and read it at $`f = 0`$.
 
-$$z = \frac{a\,f_b f_c}{(f_a - f_b)(f_a - f_c)} + \frac{b\,f_a f_c}{(f_b - f_a)(f_b - f_c)} + \frac{c\,f_a f_b}{(f_c - f_a)(f_c - f_b)}$$
+```math
+z = \frac{a\,f_b f_c}{(f_a - f_b)(f_a - f_c)} + \frac{b\,f_a f_c}{(f_b - f_a)(f_b - f_c)} + \frac{c\,f_a f_b}{(f_c - f_a)(f_c - f_b)}
+```
 
 **Read it aloud:** each point's temperature, weighted so the curve passes through all three points, summed at the place where the residual is zero.
 
-When $a$ and $c$ coincide, only two points are left, and the step is the secant $z = b - f_b\,(b - a)/(f_b - f_a)$, as on [Newton and secant](02-newton-and-secant-with-convergence-orders.md).
+When $`a`$ and $`c`$ coincide, only two points are left, and the step is the secant $`z = b - f_b\,(b - a)/(f_b - f_a)`$, as on [Newton and secant](02-newton-and-secant-with-convergence-orders.md).
 
-One case has no chord at all. If the last new point was worse than $b$ and replaced the other end, the best end did not move, so $a = b$ and $f_a = f_b$. The secant would divide zero by zero. The rule is then to halve: the step is the midpoint $m$, with no test needed.
+One case has no chord at all. If the last new point was worse than $`b`$ and replaced the other end, the best end did not move, so $`a = b`$ and $`f_a = f_b`$. The secant would divide zero by zero. The rule is then to halve: the step is the midpoint $`m`$, with no test needed.
 
-The safeguard decides whether $z$ is taken:
+The safeguard decides whether $`z`$ is taken:
 
-$$\text{take } z \text{ only if } z \text{ lies between } b \text{ and } b + \tfrac{3}{4}(c - b) \;\text{ and }\; \max(\lvert z - b\rvert, \delta) < \tfrac{1}{2}\,s_{n-2}; \;\text{ otherwise take } m = \tfrac{b + c}{2}$$
+```math
+\text{take } z \text{ only if } z \text{ lies between } b \text{ and } b + \tfrac{3}{4}(c - b) \;\text{ and }\; \max(\lvert z - b\rvert, \delta) < \tfrac{1}{2}\,s_{n-2}; \;\text{ otherwise take } m = \tfrac{b + c}{2}
+```
 
 **Read it aloud:** the fast step must land in the three quarters of the bracket next to the best end, and must be under half the length of the step taken two steps ago; if not, halve.
 
-A fast step shorter than $\delta$ is stretched to exactly $\delta$, a **nudge**, so every step makes progress. The run stops when $\lvert c - b\rvert / 2 \le \delta$ and returns $b$. The guarantee:
+A fast step shorter than $`\delta`$ is stretched to exactly $`\delta`$, a **nudge**, so every step makes progress. The run stops when $`\lvert c - b\rvert / 2 \le \delta`$ and returns $`b`$. The guarantee:
 
-$$\lvert b - t^{*}\rvert \le 2\delta, \qquad \text{evaluations} \le (k+1)(k+2), \qquad k = \left\lceil \log_2 \frac{W_0}{2\delta} \right\rceil$$
+```math
+\lvert b - t^{*}\rvert \le 2\delta, \qquad \text{evaluations} \le (k+1)(k+2), \qquad k = \left\lceil \log_2 \frac{W_0}{2\delta} \right\rceil
+```
 
 **Read it aloud:** the answer is within twice the tolerance, and the work is at most about the square of the k halvings bisection would need.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f(t)$ | the residual: heat loss at $t$ minus the meter reading, in watts | −12,000.000 W at 20 °C, 124,310.981 W at 520 °C | — |
-| $t$, $t^{*}$ | shell temperature in °C; $t^{*}$ the true root | $t^{*}$ = 139.612792440903 °C | — |
-| $T$, $T_{\text{a}}$ | absolute temperatures in kelvin: the shell, $t + 273.15$, and the air | $T_{\text{a}}$ = 293.15 K, which is 20 °C | — |
-| $Q$, $A$, $\epsilon_{\text{e}}$, $\sigma$, $h_{\text{c}}$ | meter reading; shell area; emissivity (how well the surface radiates, 0 to 1); the Stefan–Boltzmann constant; convection coefficient | 12,000 W; 6 m²; 0.85; 5.670374419e-08 W/(m² K⁴); 8 W/(m² K) | a larger $Q$ raises $t^{*}$ |
-| $b$, $c$, $a$ | best end, other end, previous best end | start: $b$ = 20, $c$ = 520 | — |
-| $z$, $g$, $y_k$, $P$, $\eta$, $\xi_j$ | the proposed fast step (IQI or secant); the inverse function, $g(f(t)) = t$; the residual at iterate $k$; in the fold, the quadratic through the last three points, and the in-between points that the interpolation error formula and the mean value theorem supply | $z$ = 156.067313852 on step 2 | — |
-| $m$ | the midpoint of the bracket, the fallback | never needed on the kiln | — |
-| $W$, $W_0$, $W_i$ | bracket width $\lvert c - b\rvert$; $W_0$ at the start; in the proof, $W_i$ just after the $i$-th halving | 500 °C at the start | more evaluations |
-| $\delta$ | tolerance: stop when half the width is at most $\delta$ | 1e-06 °C | fewer evaluations |
-| $k$ | bisection's count of halvings for this $W_0$ and $\delta$; as a subscript ($x_k$, $e_k$, $y_k$) it numbers the iterates instead | 28 | the bound grows as its square |
-| $s_n$, $s_j$ | the length of step $n$, nudges and halvings included; in the proof, $s_j$ is fast step $j$ of one run | the code keeps the last two | — |
-| $x_k$, $e_k$, $D_k$, $C$, $p$ | the temperature at iterate $k$ and its error $x_k - t^{*}$; its correct digits $-\log_{10}\lvert e_k\rvert$; the IQI error constant; the order; in the fold, $u_k = \log\lvert e_k\rvert$, its shifted form $v_k$, and a constant $K$ | $C$ = 6.7555e-06 per °C²; $p$ = 1.839287 | — |
+| $`f(t)`$ | the residual: heat loss at $`t`$ minus the meter reading, in watts | −12,000.000 W at 20 °C, 124,310.981 W at 520 °C | — |
+| $`t`$, $`t^{*}`$ | shell temperature in °C; $`t^{*}`$ the true root | $`t^{*}`$ = 139.612792440903 °C | — |
+| $`T`$, $`T_{\text{a}}`$ | absolute temperatures in kelvin: the shell, $`t + 273.15`$, and the air | $`T_{\text{a}}`$ = 293.15 K, which is 20 °C | — |
+| $`Q`$, $`A`$, $`\epsilon_{\text{e}}`$, $`\sigma`$, $`h_{\text{c}}`$ | meter reading; shell area; emissivity (how well the surface radiates, 0 to 1); the Stefan–Boltzmann constant; convection coefficient | 12,000 W; 6 m²; 0.85; 5.670374419e-08 W/(m² K⁴); 8 W/(m² K) | a larger $`Q`$ raises $`t^{*}`$ |
+| $`b`$, $`c`$, $`a`$ | best end, other end, previous best end | start: $`b`$ = 20, $`c`$ = 520 | — |
+| $`z`$, $`g`$, $`y_k`$, $`P`$, $`\eta`$, $`\xi_j`$ | the proposed fast step (IQI or secant); the inverse function, $`g(f(t)) = t`$; the residual at iterate $`k`$; in the fold, the quadratic through the last three points, and the in-between points that the interpolation error formula and the mean value theorem supply | $`z`$ = 156.067313852 on step 2 | — |
+| $`m`$ | the midpoint of the bracket, the fallback | never needed on the kiln | — |
+| $`W`$, $`W_0`$, $`W_i`$ | bracket width $`\lvert c - b\rvert`$; $`W_0`$ at the start; in the proof, $`W_i`$ just after the $`i`$-th halving | 500 °C at the start | more evaluations |
+| $`\delta`$ | tolerance: stop when half the width is at most $`\delta`$ | 1e-06 °C | fewer evaluations |
+| $`k`$ | bisection's count of halvings for this $`W_0`$ and $`\delta`$; as a subscript ($`x_k`$, $`e_k`$, $`y_k`$) it numbers the iterates instead | 28 | the bound grows as its square |
+| $`s_n`$, $`s_j`$ | the length of step $`n`$, nudges and halvings included; in the proof, $`s_j`$ is fast step $`j`$ of one run | the code keeps the last two | — |
+| $`x_k`$, $`e_k`$, $`D_k`$, $`C`$, $`p`$ | the temperature at iterate $`k`$ and its error $`x_k - t^{*}`$; its correct digits $`-\log_{10}\lvert e_k\rvert`$; the IQI error constant; the order; in the fold, $`u_k = \log\lvert e_k\rvert`$, its shifted form $`v_k`$, and a constant $`K`$ | $`C`$ = 6.7555e-06 per °C²; $`p`$ = 1.839287 | — |
 
 ### When it holds
 
 - **The residual is continuous on the bracket.** A sign change then traps a root. Across a jump, the method closes on the jump instead, as on [Bisection](01-bisection-and-bracketing.md).
 - **The two starting ends have opposite signs.** On [150, 520] both residuals are positive (+1,375.992 W at 150 °C), so there is nothing to trap. The code refuses and returns no answer, rather than guessing.
-- **The tolerance is above the floor of doubles.** A double is the computer's 53-bit number. Below the spacing of doubles near the answer, a nudge cannot move the point and the width test can never pass. This card's code assumes a sensible $\delta$; production codes add a relative part to $\delta$ so it never falls below that spacing.
-- **For speed, not for safety: a simple root and a smooth residual.** The bound on evaluations uses neither. The order 1.839 needs $f'(t^{*}) \ne 0$ and three continuous derivatives. On $x^9$, whose root is flat, the fast steps are only linear and the halvings do most of the work.
+- **The tolerance is above the floor of doubles.** A double is the computer's 53-bit number. Below the spacing of doubles near the answer, a nudge cannot move the point and the width test can never pass. This card's code assumes a sensible $`\delta`$; production codes add a relative part to $`\delta`$ so it never falls below that spacing.
+- **For speed, not for safety: a simple root and a smooth residual.** The bound on evaluations uses neither. The order 1.839 needs $`f'(t^{*}) \ne 0`$ and three continuous derivatives. On $`x^9`$, whose root is flat, the fast steps are only linear and the halvings do most of the work.
 
 ---
 
@@ -95,7 +103,7 @@ $$\lvert b - t^{*}\rvert \le 2\delta, \qquad \text{evaluations} \le (k+1)(k+2), 
 
 ### Step 0: a bracket is a promise, a fast step is a bet
 
-The bracket's promise is that the root lies between $b$ and $c$. Bisection keeps it by construction. A fast step is a bet that the curve near the root looks like a line or a parabola. When the bet is good, it gains many digits at once. When it is bad, it can land anywhere.
+The bracket's promise is that the root lies between $`b`$ and $`c`$. Bisection keeps it by construction. A fast step is a bet that the curve near the root looks like a line or a parabola. When the bet is good, it gains many digits at once. When it is bad, it can land anywhere.
 
 The first attempt to keep both was the **method of false position**: take the chord between the two bracket ends, and keep the half with the sign change. It never loses the root. But on a curved residual one end sticks, and the order drops to 1, as the "keep the chord's end fixed" row on [Newton and secant](02-newton-and-secant-with-convergence-orders.md) shows.
 
@@ -103,22 +111,22 @@ The first attempt to keep both was the **method of false position**: take the ch
 
 ### Step 1: Dekker's rule, a fast step checked against the bracket
 
-Dekker's method (1969) takes the secant through the best end and the previous best end. It accepts the step only if it lands between $b$ and the midpoint $m$. Otherwise it halves.
+Dekker's method (1969) takes the secant through the best end and the previous best end. It accepts the step only if it lands between $`b`$ and the midpoint $`m`$. Otherwise it halves.
 
 Every accepted step lands inside the bracket, so the root is never lost. The sign test then decides which end to replace:
 
-1. Evaluate $f$ at the new point.
-2. If its sign matches $f(c)$, the old $b$ becomes the other end.
-3. Otherwise $c$ stays.
-4. Swap the ends if the new point has the larger $\lvert f\rvert$.
+1. Evaluate $`f`$ at the new point.
+2. If its sign matches $`f(c)`$, the old $`b`$ becomes the other end.
+3. Otherwise $`c`$ stays.
+4. Swap the ends if the new point has the larger $`\lvert f\rvert`$.
 
-This is bisection's invariant (the bracket always holds a sign change), applied to points that are not midpoints. So the first half of the guarantee, $\lvert b - t^{*}\rvert \le W \le 2\delta$ at the stop, needs nothing about the fast step except that it lands inside.
+This is bisection's invariant (the bracket always holds a sign change), applied to points that are not midpoints. So the first half of the guarantee, $`\lvert b - t^{*}\rvert \le W \le 2\delta`$ at the stop, needs nothing about the fast step except that it lands inside.
 
 ### Step 2: the slow case, steps that are always accepted and never enough
 
-Dekker's rule promises the root but not the speed. Take the test function $x^9$ on [−1, 1.3], with the same $\delta$ of 1e-06. Its root at 0 is flat: the residual is tiny for a wide stretch around it.
+Dekker's rule promises the root but not the speed. Take the test function $`x^9`$ on [−1, 1.3], with the same $`\delta`$ of 1e-06. Its root at 0 is flat: the residual is tiny for a wide stretch around it.
 
-Each secant step lands between $b$ and $m$, so each is accepted. But each moves $b$ only a fixed fraction closer to 0, and the far end $c$ = 1.3 never moves. The bracket width after 25, 50, 100 and 140 steps reads 1.416, 1.315, 1.300 and 1.300. Not one halving happens.
+Each secant step lands between $`b`$ and $`m`$, so each is accepted. But each moves $`b`$ only a fixed fraction closer to 0, and the far end $`c`$ = 1.3 never moves. The bracket width after 25, 50, 100 and 140 steps reads 1.416, 1.315, 1.300 and 1.300. Not one halving happens.
 
 ```
 x^9 on [-1, 1.3], delta 1e-06: evaluations, one block = 4
@@ -128,13 +136,13 @@ x^9 on [-1, 1.3], delta 1e-06: evaluations, one block = 4
   plain secant    ██████████████████████████████████████████   170
 ```
 
-Dekker's method needs 152 evaluations where bisection needs 23. In the worst case its fast steps shrink to $\delta$ and stay there, and the count grows with the width divided by $\delta$, not with its logarithm. The bracket was kept; the progress was not.
+Dekker's method needs 152 evaluations where bisection needs 23. In the worst case its fast steps shrink to $`\delta`$ and stay there, and the count grows with the width divided by $`\delta`$, not with its logarithm. The bracket was kept; the progress was not.
 
 ### Step 3: Brent's cure, a step must halve every two steps
 
 Brent's extra test asks each fast step to be under half the length of the step two before. A run of fast steps then has to shrink geometrically. If the steps stop shrinking, a test fails and the next step halves the bracket.
 
-On $x^9$ Brent's method finishes in 36 evaluations. That is more than bisection's 23, but within the bound (k + 1)(k + 2) = 506 for k = 21. It halves 18 times in 34 steps. Ten of those halvings are the no-chord rule from The formula: the last point was worse than $b$, so $b$ did not move. The rest are failed tests. The proof below shows that the cap holds for any residual and any choice of fast step.
+On $`x^9`$ Brent's method finishes in 36 evaluations. That is more than bisection's 23, but within the bound (k + 1)(k + 2) = 506 for k = 21. It halves 18 times in 34 steps. Ten of those halvings are the no-chord rule from The formula: the last point was worse than $`b`$, so $`b`$ did not move. The rest are failed tests. The proof below shows that the cap holds for any residual and any choice of fast step.
 
 ```mermaid
 flowchart TB
@@ -158,106 +166,108 @@ One guarded step. The chord check and both tests use only numbers already in han
 <details>
 <summary>Detailed proof: at most (k + 1)(k + 2) evaluations</summary>
 
-Let $W_0$ be the starting width, $\delta$ the tolerance and $k = \lceil \log_2(W_0/(2\delta)) \rceil$, so that $W_0/2^k \le 2\delta$. Four facts follow from the rules.
+Let $`W_0`$ be the starting width, $`\delta`$ the tolerance and $`k = \lceil \log_2(W_0/(2\delta)) \rceil`$, so that $`W_0/2^k \le 2\delta`$. Four facts follow from the rules.
 
 1. **The bracket never grows.** Every new point lies strictly inside it, and the new bracket is one of the two pieces.
-2. **A halving halves it**, whether a test failed or no chord existed. The midpoint splits the bracket into two equal pieces, and one of them is kept. After $i$ halvings the width is at most $W_0/2^i$, so after $k$ halvings the run has stopped. There are at most $k$ halvings.
-3. **Every fast step has length at least $\delta$** (the nudge) and at most $\tfrac34$ of the current width (the first test).
+2. **A halving halves it**, whether a test failed or no chord existed. The midpoint splits the bracket into two equal pieces, and one of them is kept. After $`i`$ halvings the width is at most $`W_0/2^i`$, so after $`k`$ halvings the run has stopped. There are at most $`k`$ halvings.
+3. **Every fast step has length at least $`\delta`$** (the nudge) and at most $`\tfrac34`$ of the current width (the first test).
 4. **Every fast step is under half the step two before** (the second test), counted on actual lengths.
 
-Fix $i$, and look at the run of fast steps that follows the $i$-th halving (for $i = 0$, the run from the start, with both earlier lengths set to $W_0$). Let $W_i$ be the width just after that halving. The halving step itself had length $W_i$. The first fast step has length under $W_i$ by fact 3. By fact 4, the lengths in the run, counted from $j = 0$, satisfy
+Fix $`i`$, and look at the run of fast steps that follows the $`i`$-th halving (for $`i = 0`$, the run from the start, with both earlier lengths set to $`W_0`$). Let $`W_i`$ be the width just after that halving. The halving step itself had length $`W_i`$. The first fast step has length under $`W_i`$ by fact 3. By fact 4, the lengths in the run, counted from $`j = 0`$, satisfy
 
-$$s_j < \frac{W_i}{2^{\lceil j/2 \rceil}}.$$
+$`\displaystyle s_j < \frac{W_i}{2^{\lceil j/2 \rceil}}.`$
 
-Each length is at least $\delta$, so $\lceil j/2\rceil < \log_2(W_i/\delta) \le k + 1 - i$. That allows at most $2(k + 1 - i) - 1$ fast steps in run $i$. Runs happen for $i = 0, 1, \ldots, k - 1$ at most, since a run after the $k$-th halving would start from a width at most $2\delta$. Summing,
+Each length is at least $`\delta`$, so $`\lceil j/2\rceil < \log_2(W_i/\delta) \le k + 1 - i`$. That allows at most $`2(k + 1 - i) - 1`$ fast steps in run $`i`$. Runs happen for $`i = 0, 1, \ldots, k - 1`$ at most, since a run after the $`k`$-th halving would start from a width at most $`2\delta`$. Summing,
 
-$$\sum_{i=0}^{k-1} \bigl(2(k - i) + 1\bigr) = k^2 + 2k \text{ fast steps}, \qquad \text{plus at most } k \text{ halvings and 2 end evaluations}.$$
+$`\displaystyle \sum_{i=0}^{k-1} \bigl(2(k - i) + 1\bigr) = k^2 + 2k \text{ fast steps}, \qquad \text{plus at most } k \text{ halvings and 2 end evaluations}.`$
 
-The total is at most $k^2 + 3k + 2 = (k + 1)(k + 2)$ evaluations. Nothing in the argument used what the fast step was, or any property of $f$ beyond its sign. $\blacksquare$
+The total is at most $`k^2 + 3k + 2 = (k + 1)(k + 2)`$ evaluations. Nothing in the argument used what the fast step was, or any property of $`f`$ beyond its sign. $`\blacksquare`$
 
-The argument is in exact arithmetic. In doubles, each new point still lands strictly inside the bracket while the width exceeds $2\delta$, and the checks confirm the bound on both test cases: 9 against 870, and 36 against 506.
+The argument is in exact arithmetic. In doubles, each new point still lands strictly inside the bracket while the width exceeds $`2\delta`$, and the checks confirm the bound on both test cases: 9 against 870, and 36 against 506.
 
 </details>
 
 ### Step 4: why the fast step is inverse, and how fast it is
 
-A parabola through three points can be fitted the usual way, $f$ as a quadratic in $t$. Then finding where it crosses zero means solving a quadratic equation: a square root, a choice of two roots, and possibly none. Fitting the other way round, $t$ as a quadratic in $f$, avoids all of that. Reading it at $f = 0$ is one evaluation of a formula, and it always gives exactly one answer.
+A parabola through three points can be fitted the usual way, $`f`$ as a quadratic in $`t`$. Then finding where it crosses zero means solving a quadratic equation: a square root, a choice of two roots, and possibly none. Fitting the other way round, $`t`$ as a quadratic in $`f`$, avoids all of that. Reading it at $`f = 0`$ is one evaluation of a formula, and it always gives exactly one answer.
 
-How fast is it? Number the iterates: $x_k$ is the temperature after step $k$, $e_k = x_k - t^{*}$ its error and $y_k = f(x_k)$ its residual. Let $g$ be the inverse function: $g(f(t)) = t$, so $t^{*} = g(0)$. IQI interpolates $g$ at the three residuals $y_k$, $y_{k-1}$, $y_{k-2}$. The error of a quadratic interpolant is the next derivative times the product of the distances. Near the root each residual is about the slope times the error, $y_j \approx f'(t^{*})\,e_j$. Together:
+How fast is it? Number the iterates: $`x_k`$ is the temperature after step $`k`$, $`e_k = x_k - t^{*}`$ its error and $`y_k = f(x_k)`$ its residual. Let $`g`$ be the inverse function: $`g(f(t)) = t`$, so $`t^{*} = g(0)`$. IQI interpolates $`g`$ at the three residuals $`y_k`$, $`y_{k-1}`$, $`y_{k-2}`$. The error of a quadratic interpolant is the next derivative times the product of the distances. Near the root each residual is about the slope times the error, $`y_j \approx f'(t^{*})\,e_j`$. Together:
 
-$$e_{k+1} \approx C\, e_k\, e_{k-1}\, e_{k-2}, \qquad C = \frac{3 f''(t^{*})^2 - f'(t^{*}) f'''(t^{*})}{6 f'(t^{*})^2}$$
+```math
+e_{k+1} \approx C\, e_k\, e_{k-1}\, e_{k-2}, \qquad C = \frac{3 f''(t^{*})^2 - f'(t^{*}) f'''(t^{*})}{6 f'(t^{*})^2}
+```
 
 **Read it aloud:** the next error is a fixed constant times the product of the last three errors.
 
-On the kiln, $C$ = 6.7555e-06 per °C². Pure IQI from 20, 520 and 270 °C gives the ratio $e_{k+1}/(e_k e_{k-1} e_{k-2})$ as 6.117e-06, 6.869e-06 and 6.776e-06, settling on the prediction.
+On the kiln, $`C`$ = 6.7555e-06 per °C². Pure IQI from 20, 520 and 270 °C gives the ratio $`e_{k+1}/(e_k e_{k-1} e_{k-2})`$ as 6.117e-06, 6.869e-06 and 6.776e-06, settling on the prediction.
 
-Take logs, and count digits $D_k = -\log_{10}\lvert e_k\rvert$. Then $D_{k+1} \approx D_k + D_{k-1} + D_{k-2}$: each digit count is the sum of the three before. Such a sequence grows by a factor $p$ that solves $p^3 = p^2 + p + 1$, which is 1.839287. That is the order. The observed orders on the kiln run 2.4046, 1.8112, 1.7837 before rounding ends the fall.
+Take logs, and count digits $`D_k = -\log_{10}\lvert e_k\rvert`$. Then $`D_{k+1} \approx D_k + D_{k-1} + D_{k-2}`$: each digit count is the sum of the three before. Such a sequence grows by a factor $`p`$ that solves $`p^3 = p^2 + p + 1`$, which is 1.839287. That is the order. The observed orders on the kiln run 2.4046, 1.8112, 1.7837 before rounding ends the fall.
 
 <details>
 <summary>Detailed proof: the IQI error law and the order 1.839</summary>
 
-Assume $f$ has three continuous derivatives near $t^{*}$ and $f'(t^{*}) \ne 0$. Then $f$ has a smooth inverse $g$ near 0, with
+Assume $`f`$ has three continuous derivatives near $`t^{*}`$ and $`f'(t^{*}) \ne 0`$. Then $`f`$ has a smooth inverse $`g`$ near 0, with
 
-$$g' = \frac{1}{f'}, \qquad g'' = -\frac{f''}{f'^3}, \qquad g''' = \frac{3 f''^2 - f' f'''}{f'^5},$$
+$`\displaystyle g' = \frac{1}{f'}, \qquad g'' = -\frac{f''}{f'^3}, \qquad g''' = \frac{3 f''^2 - f' f'''}{f'^5},`$
 
-each evaluated at the matching point. The step $x_{k+1}$ is $P(0)$, where $P$ is the quadratic through $(y_j, x_j)$ for $j = k, k-1, k-2$. The interpolation error formula gives, for some $\eta$ between the $y_j$ and 0,
+each evaluated at the matching point. The step $`x_{k+1}`$ is $`P(0)`$, where $`P`$ is the quadratic through $`(y_j, x_j)`$ for $`j = k, k-1, k-2`$. The interpolation error formula gives, for some $`\eta`$ between the $`y_j`$ and 0,
 
-$$g(0) - P(0) = \frac{g'''(\eta)}{6}\,(0 - y_k)(0 - y_{k-1})(0 - y_{k-2}).$$
+$`\displaystyle g(0) - P(0) = \frac{g'''(\eta)}{6}\,(0 - y_k)(0 - y_{k-1})(0 - y_{k-2}).`$
 
-Since $g(0) = t^{*}$ and $P(0) = x_{k+1}$, this is $e_{k+1} = \tfrac{1}{6}\,g'''(\eta)\, y_k y_{k-1} y_{k-2}$. By the mean value theorem $y_j = f'(\xi_j)\, e_j$. As the errors shrink, $g'''(\eta) \to g'''(0)$ and $f'(\xi_j) \to f'(t^{*})$, so
+Since $`g(0) = t^{*}`$ and $`P(0) = x_{k+1}`$, this is $`e_{k+1} = \tfrac{1}{6}\,g'''(\eta)\, y_k y_{k-1} y_{k-2}`$. By the mean value theorem $`y_j = f'(\xi_j)\, e_j`$. As the errors shrink, $`g'''(\eta) \to g'''(0)`$ and $`f'(\xi_j) \to f'(t^{*})`$, so
 
-$$\frac{e_{k+1}}{e_k e_{k-1} e_{k-2}} \to \frac{g'''(0)\,f'(t^{*})^3}{6} = C.$$
+$`\displaystyle \frac{e_{k+1}}{e_k e_{k-1} e_{k-2}} \to \frac{g'''(0)\,f'(t^{*})^3}{6} = C.`$
 
-For the order, write $u_k = \log\lvert e_k\rvert$. Then $u_{k+1} = u_k + u_{k-1} + u_{k-2} + \log\lvert C\rvert + o(1)$. The shift $v_k = u_k + \tfrac12\log\lvert C\rvert$ removes the constant, leaving the linear recurrence $v_{k+1} \approx v_k + v_{k-1} + v_{k-2}$. Its characteristic equation is $p^3 = p^2 + p + 1$, with one real root, 1.839287, and two complex roots of size below 1. So $v_{k+1}/v_k \to 1.839287$, and $\lvert e_{k+1}\rvert \approx K\,\lvert e_k\rvert^{1.839}$ for a constant $K$: order 1.839. The same pattern with two terms gives the secant's golden ratio on [Newton and secant](02-newton-and-secant-with-convergence-orders.md). $\blacksquare$
+For the order, write $`u_k = \log\lvert e_k\rvert`$. Then $`u_{k+1} = u_k + u_{k-1} + u_{k-2} + \log\lvert C\rvert + o(1)`$. The shift $`v_k = u_k + \tfrac12\log\lvert C\rvert`$ removes the constant, leaving the linear recurrence $`v_{k+1} \approx v_k + v_{k-1} + v_{k-2}`$. Its characteristic equation is $`p^3 = p^2 + p + 1`$, with one real root, 1.839287, and two complex roots of size below 1. So $`v_{k+1}/v_k \to 1.839287`$, and $`\lvert e_{k+1}\rvert \approx K\,\lvert e_k\rvert^{1.839}`$ for a constant $`K`$: order 1.839. The same pattern with two terms gives the secant's golden ratio on [Newton and secant](02-newton-and-secant-with-convergence-orders.md). $`\blacksquare`$
 
 </details>
 
-The checks find 1.839287 two ways: by halving on $p^3 - p^2 - p - 1$, and by running the digit law for 40 steps and taking the last ratio.
+The checks find 1.839287 two ways: by halving on $`p^3 - p^2 - p - 1`$, and by running the digit law for 40 steps and taking the last ratio.
 
 ### Step 5: what the guarantee covers, and what it does not
 
 Three claims, each a different kind.
 
-- **Safety, proved.** The root stays bracketed, so the answer is within $2\delta$. On the kiln the bound is 2e-06 °C and the true error is −8.804e-09 °C: the bound is 227.2 times the error.
+- **Safety, proved.** The root stays bracketed, so the answer is within $`2\delta`$. On the kiln the bound is 2e-06 °C and the true error is −8.804e-09 °C: the bound is 227.2 times the error.
 - **Worst-case work, proved.** At most (k + 1)(k + 2) evaluations: 870 on the kiln, which used 9.
 - **Speed, observed, not promised.** Near a simple root the tests usually pass, and the fast steps show their order. That is why the kiln needs 9 evaluations, not 30.
 
-The answer's accuracy is also limited by the residual. Rewritten in factored form, $A(T - T_{\text{a}})[\epsilon_{\text{e}}\sigma(T^2 + T_{\text{a}}^2)(T + T_{\text{a}}) + h_{\text{c}}] - Q$, the residual at Brent's answer is −1.139e-06 W. The bound from the slope, $f'(t^{*})$ = 129.347372 W per °C times $2\delta$, is 2.587e-04 W. The two roads agree that the answer balances the heat. Whether 12,000 W is the true loss is a question of conditioning, taken up on [When to stop](03-stopping-criteria-and-error-estimates.md).
+The answer's accuracy is also limited by the residual. Rewritten in factored form, $`A(T - T_{\text{a}})[\epsilon_{\text{e}}\sigma(T^2 + T_{\text{a}}^2)(T + T_{\text{a}}) + h_{\text{c}}] - Q`$, the residual at Brent's answer is −1.139e-06 W. The bound from the slope, $`f'(t^{*})`$ = 129.347372 W per °C times $`2\delta`$, is 2.587e-04 W. The two roads agree that the answer balances the heat. Whether 12,000 W is the true loss is a question of conditioning, taken up on [When to stop](03-stopping-criteria-and-error-estimates.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Bracket [20, 520] °C, $\delta$ = 1e-06 °C. At the start $\lvert f(20)\rvert$ = 12,000 W is smaller than $f(520)$ = 124,310.981 W, so $b$ = 20 and $c$ = 520.
+Bracket [20, 520] °C, $`\delta`$ = 1e-06 °C. At the start $`\lvert f(20)\rvert`$ = 12,000 W is smaller than $`f(520)`$ = 124,310.981 W, so $`b`$ = 20 and $`c`$ = 520.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| promise | $k = \lceil \log_2(500 / 2\times10^{-6})\rceil$; bound $(k+1)(k+2)$ | 28 halvings; 870 evaluations |
+| promise | $`k = \lceil \log_2(500 / 2\times10^{-6})\rceil`$; bound $`(k+1)(k+2)`$ | 28 halvings; 870 evaluations |
 | 1, secant | only two points; chord from (20, −12,000) to (520, 124,310.981): 20 + 12,000 × 500 / 136,310.981 | 64.016996607; f = −8,285.554 W; width 456.0 |
 | 2, IQI | quadratic in f through 20, 64.017 and 520, read at f = 0 | 156.067313852; f = +2,210.537 W; width 92.05 |
 | 3, secant | the sign change moved, so the other end is the old best end and only two points remain | 136.680989247; f = −376.692 W; width 19.39 |
 | 4, secant | the same situation again | 139.503574420; f = −14.124 W; width 16.56 |
 | 5, IQI | through 136.681, 139.504 and 156.067 | 139.612827708; f = +0.004562 W; width 0.1093 |
 | 6, secant | through 139.5036 and 139.6128 | 139.612792432; f = −0.000001 W; width 3.528e-05 |
-| 7, nudge | the proposal is shorter than $\delta$, so step exactly $\delta$ toward $c$ | 139.612793432; f = +0.000128 W; width 1.000e-06 |
-| stop | half the width is at most $\delta$; return the best end | **139.612792432 °C, true error −8.804e-09 °C** |
+| 7, nudge | the proposal is shorter than $`\delta`$, so step exactly $`\delta`$ toward $`c`$ | 139.612793432; f = +0.000128 W; width 1.000e-06 |
+| stop | half the width is at most $`\delta`$; return the best end | **139.612792432 °C, true error −8.804e-09 °C** |
 
-The shell is at about 139.6 °C. No step was a halving: on a smooth residual, every fast step passed both tests. The last step, the nudge, spends one evaluation to shrink the bracket to $\delta$ and so certify the answer.
+The shell is at about 139.6 °C. No step was a halving: on a smooth residual, every fast step passed both tests. The last step, the nudge, spends one evaluation to shrink the bracket to $`\delta`$ and so certify the answer.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop Brent's halving test on $x^9$, which leaves only the bracket test (`notest`) | 152 evaluations, 0 halvings: Dekker's count, and Dekker's bracket is still 1.300 wide after 140 steps | accepted steps shrank by a fixed fraction while the far end never moved |
-| Drop the bracket as well: the plain secant on $x^9$ | 170 evaluations to reach $\lvert x\rvert \le$ 1e-06 | linear crawl with no halving to rescue it |
+| Drop Brent's halving test on $`x^9`$, which leaves only the bracket test (`notest`) | 152 evaluations, 0 halvings: Dekker's count, and Dekker's bracket is still 1.300 wide after 140 steps | accepted steps shrank by a fixed fraction while the far end never moved |
+| Drop the bracket as well: the plain secant on $`x^9`$ | 170 evaluations to reach $`\lvert x\rvert \le`$ 1e-06 | linear crawl with no halving to rescue it |
 | Start on [150, 520], where both residuals are positive | refused: no answer | no sign change, so no root is trapped; a blind run would return an end |
-| Read the method as never slower than bisection | $x^9$: 36 against 23 | the promise is (k + 1)(k + 2) = 506, not k + 2 |
+| Read the method as never slower than bisection | $`x^9`$: 36 against 23 | the promise is (k + 1)(k + 2) = 506, not k + 2 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code writes out the residual, inverse quadratic interpolation, and one solver with four settings: bisection, Dekker's rule, Brent's rule, and Brent's rule without its halving test (`notest`). It reaches the kiln temperature by **four roads**: bisection run until the bracket ends are neighbouring doubles (the reference), Brent, Dekker, and a separately factored residual at Brent's answer. It then runs pure IQI to measure the error constant and the order, finds the order 1.839 two ways, and runs the slow case on $x^9$. Nine asserts compare against independently computed values.
+The code writes out the residual, inverse quadratic interpolation, and one solver with four settings: bisection, Dekker's rule, Brent's rule, and Brent's rule without its halving test (`notest`). It reaches the kiln temperature by **four roads**: bisection run until the bracket ends are neighbouring doubles (the reference), Brent, Dekker, and a separately factored residual at Brent's answer. It then runs pure IQI to measure the error constant and the order, finds the order 1.839 two ways, and runs the slow case on $`x^9`$. Nine asserts compare against independently computed values.
 
 ### Python
 
@@ -666,13 +676,13 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves Brent's guarantee for any fast step, the IQI error law, and the roots of $p^3 = p^2 + p + 1$.
+Lean proves Brent's guarantee for any fast step, the IQI error law, and the roots of $`p^3 = p^2 + p + 1`$.
 
-- Suppose the residual is continuous on the bracket, its two ends have opposite signs, and $\delta > 0$. Then the method stops within $(k + 1)(k + 2)$ evaluations.
-- At the stop, the best end $b$ lies within $2\delta$ of a root inside the starting bracket. This holds whatever the fast step proposes.
-- Suppose $f$ has three continuous derivatives near a simple root $t^{*}$. Pure IQI iterates that stay distinct, never land on $t^{*}$ and converge to it give $e_{k+1}/(e_k e_{k-1} e_{k-2}) \to C$.
-- The equation $p^3 = p^2 + p + 1$ has exactly one real root, between 1.839286 and 1.839287. Its two complex roots have size below 1.
-- The kiln's bound of 870 and $x^9$'s bound of 506, with the proof's tally of fast steps and halvings, are checked as arithmetic.
+- Suppose the residual is continuous on the bracket, its two ends have opposite signs, and $`\delta > 0`$. Then the method stops within $`(k + 1)(k + 2)`$ evaluations.
+- At the stop, the best end $`b`$ lies within $`2\delta`$ of a root inside the starting bracket. This holds whatever the fast step proposes.
+- Suppose $`f`$ has three continuous derivatives near a simple root $`t^{*}`$. Pure IQI iterates that stay distinct, never land on $`t^{*}`$ and converge to it give $`e_{k+1}/(e_k e_{k-1} e_{k-2}) \to C`$.
+- The equation $`p^3 = p^2 + p + 1`$ has exactly one real root, between 1.839286 and 1.839287. Its two complex roots have size below 1.
+- The kiln's bound of 870 and $`x^9`$'s bound of 506, with the proof's tally of fast steps and halvings, are checked as arithmetic.
 
 The order 1.839 itself, the measured counts and errors, and rounding in doubles are left to the Python and Rust checks.
 
@@ -1482,19 +1492,19 @@ end BrentSafeguarded
 > **Try changing**
 > - Guess first: halve the meter reading to 6,000 W. Does the temperature halve? Set `LOSS = 6000`. The answer is 87.531921 °C in 8 evaluations: radiation's fourth power makes the curve bend, so half the heat is far from half the temperature rise.
 > - Guess first: double it to 24,000 W. The answer is 216.935432 °C in 10 evaluations.
-> - Guess first: loosen $\delta$ to 1e-03 °C. Bisection drops to 20 evaluations, Brent to 8. Tighten it to 1e-09 °C: bisection 40, Brent 10. Bisection pays for every digit; Brent's fast steps buy most of them in bulk.
-> - Guess first: how many evaluations does Brent's rule need on $x^9$ without its halving test? The `notest` line answers: 152, Dekker's count, with 0 halvings. The bracket test alone keeps the root but not the speed.
+> - Guess first: loosen $`\delta`$ to 1e-03 °C. Bisection drops to 20 evaluations, Brent to 8. Tighten it to 1e-09 °C: bisection 40, Brent 10. Bisection pays for every digit; Brent's fast steps buy most of them in bulk.
+> - Guess first: how many evaluations does Brent's rule need on $`x^9`$ without its halving test? The `notest` line answers: 152, Dekker's count, with 0 halvings. The bracket test alone keeps the root but not the speed.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Believing Brent's method is never slower than bisection.** The guarantee is a cap of (k + 1)(k + 2) evaluations, not k + 2. On $x^9$ over [−1, 1.3], bisection needs 23 evaluations and Brent's method 36, inside its cap of 506. On smooth problems it is usually much faster, as on the kiln, 9 against 30, but that is an observation, not a promise.
+> **Believing Brent's method is never slower than bisection.** The guarantee is a cap of (k + 1)(k + 2) evaluations, not k + 2. On $`x^9`$ over [−1, 1.3], bisection needs 23 evaluations and Brent's method 36, inside its cap of 506. On smooth problems it is usually much faster, as on the kiln, 9 against 30, but that is an observation, not a promise.
 >
-> - **Keeping only the bracket test.** Dekker's rule never loses the root, but on $x^9$ it takes 152 evaluations with the bracket stuck at 1.300 wide. The halving test is what bounds the work.
+> - **Keeping only the bracket test.** Dekker's rule never loses the root, but on $`x^9`$ it takes 152 evaluations with the bracket stuck at 1.300 wide. The halving test is what bounds the work.
 > - **Starting without a sign change.** On [150, 520] the residual is +1,375.992 W at 150 °C and positive at 520 °C too. Check the signs, or search outward as on [Bisection](01-bisection-and-bracketing.md).
-> - **Expecting order 1.839 at every root.** The order needs a simple root. On $x^9$ the fast steps are only linear: the plain secant crawls for 170 evaluations.
+> - **Expecting order 1.839 at every root.** The order needs a simple root. On $`x^9`$ the fast steps are only linear: the plain secant crawls for 170 evaluations.
 > - **Reading the answer beyond the tolerance.** Brent's answer is within 2e-06 °C by proof; that it is within 8.804e-09 °C is luck on this run.
 
 ---
@@ -1521,7 +1531,7 @@ end BrentSafeguarded
 
 - [Fixed points](06-fixed-point-iteration-and-contraction.md): the next card. It views a one-point method as a map applied over and over, and asks when the map must converge.
 - [Newton in several unknowns, and Broyden when a Jacobian is too expensive](07-newton-for-systems-and-broyden.md): in several unknowns there is no bracket, so the safeguards have to be different.
-- [Every root at once](08-polynomial-roots-and-companion-matrices.md): the kiln residual is a quartic in $T$, and that card's methods find every root of a polynomial at once, not just the one in a bracket.
+- [Every root at once](08-polynomial-roots-and-companion-matrices.md): the kiln residual is a quartic in $`T`$, and that card's methods find every root of a polynomial at once, not just the one in a bracket.
 
 Also on this shelf: [Newton and secant](02-newton-and-secant-with-convergence-orders.md) for the order of the secant step, and [When to stop](03-stopping-criteria-and-error-estimates.md) for turning a tolerance into an error estimate.
 

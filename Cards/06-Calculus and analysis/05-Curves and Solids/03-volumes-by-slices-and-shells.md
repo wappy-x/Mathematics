@@ -26,45 +26,51 @@ Scale 1 cm = 16 units. Dashed: the axis the wall spins round. Left: the disc fro
 
 ## The formula
 
-Notation first. The **axis** is the line the solid spins round. Height up it is $y$, from $a$ to $b$; the cross-section there is a circle of radius $r(y)$. The integral sign adds thin pieces from $a$ to $b$; the closing dy names the variable they stack along ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)).
+Notation first. The **axis** is the line the solid spins round. Height up it is $`y`$, from $`a`$ to $`b`$; the cross-section there is a circle of radius $`r(y)`$. The integral sign adds thin pieces from $`a`$ to $`b`$; the closing dy names the variable they stack along ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)).
 
 **Discs**, slices across the axis:
 
-$$V = \int_a^b \pi\, r(y)^2 \, dy$$
+```math
+V = \int_a^b \pi\, r(y)^2 \, dy
+```
 
 **Read it aloud:** add each circular slice's area up the axis.
 
-**Washers**, discs with a hole of radius $r(y)$ inside an outer radius $R(y)$:
+**Washers**, discs with a hole of radius $`r(y)`$ inside an outer radius $`R(y)`$:
 
-$$V = \int_a^b \pi\,\big(R(y)^2 - r(y)^2\big)\, dy$$
+```math
+V = \int_a^b \pi\,\big(R(y)^2 - r(y)^2\big)\, dy
+```
 
 **Read it aloud:** each slice is a circle's area minus the hole's.
 
-**Shells**, thin tubes round the axis. A tube's distance from the axis is $\rho$ (Greek rho), from 0 to $c$; its length along the axis is $\ell(\rho)$:
+**Shells**, thin tubes round the axis. A tube's distance from the axis is $`\rho`$ (Greek rho), from 0 to $`c`$; its length along the axis is $`\ell(\rho)`$:
 
-$$V = \int_0^c 2\pi\,\rho\,\ell(\rho)\, d\rho$$
+```math
+V = \int_0^c 2\pi\,\rho\,\ell(\rho)\, d\rho
+```
 
 **Read it aloud:** each tube, unrolled flat, is circumference times length times thickness.
 
-For the bowl, the wall is $y = r^2/2$, so a disc at height $y$ has $r(y)^2 = 2y$. Wine at distance $\rho$ runs from the wall to the rim: $\ell(\rho) = 10 - \rho^2/2$.
+For the bowl, the wall is $`y = r^2/2`$, so a disc at height $`y`$ has $`r(y)^2 = 2y`$. Wine at distance $`\rho`$ runs from the wall to the rim: $`\ell(\rho) = 10 - \rho^2/2`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | volume, cm^3 (1 cm^3 = 1 ml) | 314.159265 | — |
-| $y$, $a$, $b$ | height up the axis; its ends | 0 to 10 cm | more slices |
-| $r$, $R$ | slice radius; outer radius round a hole | r(y)^2 = 2y | R: more; hole: less |
-| $\rho$, $c$ | shell's distance from the axis; the largest | 0 to 4.472136 cm | far shells weigh more |
-| $\ell$ | shell's length along the axis | 10 − ρ^2/2 cm | more, in step |
-| $H$, $h$, $T$ | depth; fill height; outer wall's drop | 10; 6.909883; 0.3 cm | grows as h squared |
-| $n$, $u$, $v$, $L_n$, $U_n$ | slice count; a slice's ends; inside and outside totals | 10, 100, 1000 | squeeze tightens |
-| $\pi$ | circumference over diameter | 3.14 | fixed |
+| $`V`$ | volume, cm^3 (1 cm^3 = 1 ml) | 314.159265 | — |
+| $`y`$, $`a`$, $`b`$ | height up the axis; its ends | 0 to 10 cm | more slices |
+| $`r`$, $`R`$ | slice radius; outer radius round a hole | r(y)^2 = 2y | R: more; hole: less |
+| $`\rho`$, $`c`$ | shell's distance from the axis; the largest | 0 to 4.472136 cm | far shells weigh more |
+| $`\ell`$ | shell's length along the axis | 10 − ρ^2/2 cm | more, in step |
+| $`H`$, $`h`$, $`T`$ | depth; fill height; outer wall's drop | 10; 6.909883; 0.3 cm | grows as h squared |
+| $`n`$, $`u`$, $`v`$, $`L_n`$, $`U_n`$ | slice count; a slice's ends; inside and outside totals | 10, 100, 1000 | squeeze tightens |
+| $`\pi`$ | circumference over diameter | 3.14 | fixed |
 
 ### When it holds
 
 - **A known axis.** Every radius is a distance from it. Taking the wall height as the radius spins about the other axis: 280.992589, not 314.159265.
 - **An unbroken profile.** A continuous radius or length lets the squeeze close; a profile with a few breaks is split at them.
 - **Each part counted once.** Shells run over distances from 0 up; counting both sides of the axis doubles the wine to 628.318531.
-- **Areas subtracted, not radii.** A washer is $\pi R^2 - \pi r^2$; squaring the gap gives the glass wall 0.905869 cm^3, not 19.132299.
+- **Areas subtracted, not radii.** A washer is $`\pi R^2 - \pi r^2`$; squaring the gap gives the glass wall 0.905869 cm^3, not 19.132299.
 
 ---
 
@@ -76,7 +82,7 @@ A cylinder of radius r and height h holds pi r^2 h ([Prisms and cylinders](../..
 
 ### Step 1: discs, squeezed
 
-Cut the depth into $n$ equal slices; the volume lies between the inside and outside cylinder totals. With 10 slices the totals are 282.743339 and 345.575192; with 100, 311.017673 and 317.300858; with 1000, 313.845106 and 314.473425. The gap, 62.831853, then 6.283185, then 0.628319, shrinks tenfold per tenfold more slices: neighbouring cylinders cancel, leaving the top slice's area times one slice's height.
+Cut the depth into $`n`$ equal slices; the volume lies between the inside and outside cylinder totals. With 10 slices the totals are 282.743339 and 345.575192; with 100, 311.017673 and 317.300858; with 1000, 313.845106 and 314.473425. The gap, 62.831853, then 6.283185, then 0.628319, shrinks tenfold per tenfold more slices: neighbouring cylinders cancel, leaving the top slice's area times one slice's height.
 
 Both totals are Riemann sums, the sums whose limit is the integral ([The integral](../04-Integrals/01-riemann-integral.md)), so the volume is the integral of the slice area, 2 pi y. An antiderivative (a function whose rate is the slice area) is pi y^2; at 10 cm it gives 100 pi = 314.159265 cm^3.
 
@@ -88,28 +94,30 @@ The glass is hollow: its outer wall is the inner one lowered 0.3 cm, so at heigh
 
 A tube with radii u and v and length ℓ is a cylinder minus a smaller one. Factor:
 
-$$\pi\,(v^2 - u^2)\,\ell = 2\pi \cdot \tfrac{u+v}{2} \cdot (v-u) \cdot \ell$$
+```math
+\pi\,(v^2 - u^2)\,\ell = 2\pi \cdot \tfrac{u+v}{2} \cdot (v-u) \cdot \ell
+```
 
 Middle circumference, times thickness, times length: the tube slit and laid flat, exactly.
 
-The wine's tube at distance $\rho$ runs from the wall, $\rho^2/2$, to the rim. Using the length at each edge brackets every tube; with 1000 tubes the totals are 313.740386 and 314.578144, gap 0.837758, closing tenfold as before. The limit is the shell integral. An antiderivative of 2 pi rho (10 − rho^2/2) is 2 pi (5 rho^2 − rho^4/8); at $\rho^2 = 20$ it gives 2 pi (100 − 50) = 314.159265 cm^3.
+The wine's tube at distance $`\rho`$ runs from the wall, $`\rho^2/2`$, to the rim. Using the length at each edge brackets every tube; with 1000 tubes the totals are 313.740386 and 314.578144, gap 0.837758, closing tenfold as before. The limit is the shell integral. An antiderivative of 2 pi rho (10 − rho^2/2) is 2 pi (5 rho^2 − rho^4/8); at $`\rho^2 = 20`$ it gives 2 pi (100 − 50) = 314.159265 cm^3.
 
 <details>
 <summary>Detailed proof: the squeeze for any widening bowl</summary>
 
-Let $r(y)$ grow as $y$ rises from $a$ to $b$; cut $[a, b]$ into $n$ slices of height $(b-a)/n$. A slice from $u$ to $v$ holds the cylinder of radius $r(u)$ and lies inside the one of radius $r(v)$. Summing, $L_n \le V \le U_n$, with $L_n$ on bottom radii and $U_n$ on top radii.
+Let $`r(y)`$ grow as $`y`$ rises from $`a`$ to $`b`$; cut $`[a, b]`$ into $`n`$ slices of height $`(b-a)/n`$. A slice from $`u`$ to $`v`$ holds the cylinder of radius $`r(u)`$ and lies inside the one of radius $`r(v)`$. Summing, $`L_n \le V \le U_n`$, with $`L_n`$ on bottom radii and $`U_n`$ on top radii.
 
-Each inside cylinder but the lowest is the outside cylinder of the slice below, so $U_n - L_n = \pi\big(r(b)^2 - r(a)^2\big)(b-a)/n$: for the bowl, 628.318531 over n. Both totals are Riemann sums of the continuous $\pi r(y)^2$, so both tend to its integral, and $V$, trapped between them for every n, equals it.
+Each inside cylinder but the lowest is the outside cylinder of the slice below, so $`U_n - L_n = \pi\big(r(b)^2 - r(a)^2\big)(b-a)/n`$: for the bowl, 628.318531 over n. Both totals are Riemann sums of the continuous $`\pi r(y)^2`$, so both tend to its integral, and $`V`$, trapped between them for every n, equals it.
 
-For shells, let $\ell(\rho)$ shrink as $\rho$ grows, and cut $[0, c]$ into $n$ tubes of width $w = c/n$. The tube from $u$ to $v$ lies between exact tubes of lengths $\ell(v)$ and $\ell(u)$, each $2\pi\cdot\tfrac{u+v}{2}\,w$ times its length by Step 3's identity. Since $2\pi\rho\,\ell(\rho)$ lies between $2\pi\rho\,\ell(v)$ and $2\pi\rho\,\ell(u)$ on the tube, its integral there lies between the same two numbers. So $V$ and the shell integral share the bracket.
+For shells, let $`\ell(\rho)`$ shrink as $`\rho`$ grows, and cut $`[0, c]`$ into $`n`$ tubes of width $`w = c/n`$. The tube from $`u`$ to $`v`$ lies between exact tubes of lengths $`\ell(v)`$ and $`\ell(u)`$, each $`2\pi\cdot\tfrac{u+v}{2}\,w`$ times its length by Step 3's identity. Since $`2\pi\rho\,\ell(\rho)`$ lies between $`2\pi\rho\,\ell(v)`$ and $`2\pi\rho\,\ell(u)`$ on the tube, its integral there lies between the same two numbers. So $`V`$ and the shell integral share the bracket.
 
-This gap does not telescope: neighbouring tubes do not cancel. But each middle radius is at most $c$, so $U_n - L_n \le 2\pi c\, w \sum (\ell(u) - \ell(v)) = 2\pi c^2 \big(\ell(0) - \ell(c)\big)/n$: for the bowl, 1256.637061 over n. The gap tends to 0, so $V$ equals the shell integral. A profile that rises and falls is split where it turns.
+This gap does not telescope: neighbouring tubes do not cancel. But each middle radius is at most $`c`$, so $`U_n - L_n \le 2\pi c\, w \sum (\ell(u) - \ell(v)) = 2\pi c^2 \big(\ell(0) - \ell(c)\big)/n`$: for the bowl, 1256.637061 over n. The gap tends to 0, so $`V`$ equals the shell integral. A profile that rises and falls is split where it turns.
 
 </details>
 
 ### Step 4: choose the cut whose piece has one formula
 
-For the wine both are easy: discs turn $y = r^2/2$ round to $r^2 = 2y$; shells use it as drawn.
+For the wine both are easy: discs turn $`y = r^2/2`$ round to $`r^2 = 2y`$; shells use it as drawn.
 
 For the glass, washers win: one constant area plus the cap. Shells need two pieces: out to the rim, 4.472136 cm, each tube's glass is 0.3 cm long; from there to 4.538722 cm the rim cuts the tubes off, a second formula. Both give 19.132299 cm^3.
 

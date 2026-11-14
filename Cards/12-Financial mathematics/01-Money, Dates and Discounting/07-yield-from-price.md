@@ -36,39 +36,45 @@ The falling line is the price the bond would fetch at each yield. The flat line 
 
 Three pieces of notation, in words first.
 
-$P(y)$, read "P of y", is the price the bond's payments would fetch if the market's rate were $y$ — a machine that takes a rate and returns a price. $p$ is the price actually quoted. A star marks the answer being hunted: $y_*$, read "y star", is the yield that makes the machine produce the quoted price.
+$`P(y)`$, read "P of y", is the price the bond's payments would fetch if the market's rate were $`y`$ — a machine that takes a rate and returns a price. $`p`$ is the price actually quoted. A star marks the answer being hunted: $`y_*`$, read "y star", is the yield that makes the machine produce the quoted price.
 
-$$P(y) \;=\; \sum_{t=1}^{N} \frac{c_t}{(1+y)^{t}}, \qquad \text{the yield is the } y_* \text{ with } P(y_*) = p$$
+```math
+P(y) \;=\; \sum_{t=1}^{N} \frac{c_t}{(1+y)^{t}}, \qquad \text{the yield is the } y_* \text{ with } P(y_*) = p
+```
 
 **Read it aloud:** the yield is the one rate at which the bond's own payments, each shrunk for its own wait, add up to the price on the screen.
 
-Nothing here is new arithmetic. What is new is which side is known. The forward card is handed $y$ and computes $P$; this card is handed $p$ and must produce $y_*$.
+Nothing here is new arithmetic. What is new is which side is known. The forward card is handed $`y`$ and computes $`P`$; this card is handed $`p`$ and must produce $`y_*`$.
 
-Two searches do it. **Bisection** keeps a bracket $[a, b]$ — two rates whose prices lie on opposite sides of the quote — and halves it, over and over, keeping whichever half still straddles. **Newton's method** replaces the curve by its tangent line at the current guess and jumps to where that line crosses the quote:
+Two searches do it. **Bisection** keeps a bracket $`[a, b]`$ — two rates whose prices lie on opposite sides of the quote — and halves it, over and over, keeping whichever half still straddles. **Newton's method** replaces the curve by its tangent line at the current guess and jumps to where that line crosses the quote:
 
-$$y_{k+1} \;=\; y_k - \frac{P(y_k) - p}{P'(y_k)}, \qquad P'(y) \;=\; -\sum_{t=1}^{N} \frac{t\,c_t}{(1+y)^{t+1}}$$
+```math
+y_{k+1} \;=\; y_k - \frac{P(y_k) - p}{P'(y_k)}, \qquad P'(y) \;=\; -\sum_{t=1}^{N} \frac{t\,c_t}{(1+y)^{t+1}}
+```
 
-$P'(y)$, read "P dashed", is the slope of the price curve, negative because the price falls: dollars of price per unit of yield. For the house bond at five percent it is −4,449.156608 dollars, so one basis point of yield — one hundredth of one percent — costs 0.444916 dollars of price.
+$`P'(y)`$, read "P dashed", is the slope of the price curve, negative because the price falls: dollars of price per unit of yield. For the house bond at five percent it is −4,449.156608 dollars, so one basis point of yield — one hundredth of one percent — costs 0.444916 dollars of price.
 
 A search stops when the price it produces is close enough to the quote. That closeness has to be converted into yield before it means anything:
 
-$$\lvert y_k - y_*\rvert \;\le\; \frac{\lvert P(y_k) - p\rvert}{m}, \qquad m \;=\; \sum_{t=1}^{N} \frac{t\,c_t}{(1+b)^{t+1}}$$
+```math
+\lvert y_k - y_*\rvert \;\le\; \frac{\lvert P(y_k) - p\rvert}{m}, \qquad m \;=\; \sum_{t=1}^{N} \frac{t\,c_t}{(1+b)^{t+1}}
+```
 
 **Read it aloud:** divide the price still missing by the slowest the price can possibly fall, and the answer is how far the yield can still be out.
 
 | Symbol | Plain meaning | In the house bond | Push it up and the yield… |
 | --- | --- | --- | --- |
-| $p$ | the quoted price, the number on the screen | 1,043.294767 | falls |
-| $P(y)$ | the price the payments fetch at a trial rate $y$ | 1,300.000000 at a rate of 0 | — |
-| $y$ | a trial rate: any rate the search cares to test | 0 to 1 during the search | — |
-| $y_k$, $y_*$ | the guess after $k$ steps, and the answer it closes on | 0.049722 after one tangent step; 0.05 | — |
-| $c_t$ | the payment due in year $t$ | 60, 60, 60, 60, 1,060 | rises |
-| $t$, $N$ | which year a payment lands in, and how many there are | 1 to 5, and $N = 5$ | — |
-| $P'(y)$ | the slope: price lost per unit of yield | −4,449.156608 at five percent | — |
-| $a$, $b$ | the two ends of the bracket the answer is trapped in | 0 and 1 to start the halving; 4% and 6% for the bound | — |
-| $k$ | which step a search is on | 1 to 40 halvings, 1 to 4 tangent steps | — |
-| $m$ | the slowest the price falls anywhere in the bracket | 4,212.363786 on 4% to 6% | — |
-| $z$ | the growth factor $1+y$; shorthand in the algebra | 1.05 | — |
+| $`p`$ | the quoted price, the number on the screen | 1,043.294767 | falls |
+| $`P(y)`$ | the price the payments fetch at a trial rate $`y`$ | 1,300.000000 at a rate of 0 | — |
+| $`y`$ | a trial rate: any rate the search cares to test | 0 to 1 during the search | — |
+| $`y_k`$, $`y_*`$ | the guess after $`k`$ steps, and the answer it closes on | 0.049722 after one tangent step; 0.05 | — |
+| $`c_t`$ | the payment due in year $`t`$ | 60, 60, 60, 60, 1,060 | rises |
+| $`t`$, $`N`$ | which year a payment lands in, and how many there are | 1 to 5, and $`N = 5`$ | — |
+| $`P'(y)`$ | the slope: price lost per unit of yield | −4,449.156608 at five percent | — |
+| $`a`$, $`b`$ | the two ends of the bracket the answer is trapped in | 0 and 1 to start the halving; 4% and 6% for the bound | — |
+| $`k`$ | which step a search is on | 1 to 40 halvings, 1 to 4 tangent steps | — |
+| $`m`$ | the slowest the price falls anywhere in the bracket | 4,212.363786 on 4% to 6% | — |
+| $`z`$ | the growth factor $`1+y`$; shorthand in the algebra | 1.05 | — |
 
 ### When it holds
 
@@ -99,13 +105,13 @@ So the price sweeps every value above zero, exactly once each. Any positive quot
 <details>
 <summary>Detailed proof: one yield, and exactly one</summary>
 
-Let every payment $c_t$ be at least zero with at least one strictly positive, and work on rates $y > -1$ so that $1+y$ is positive.
+Let every payment $`c_t`$ be at least zero with at least one strictly positive, and work on rates $`y > -1`$ so that $`1+y`$ is positive.
 
-**It falls.** Differentiating term by term, $P'(y) = -\sum_{t} t\,c_t (1+y)^{-t-1}$. Every term of that sum is at least zero and at least one is strictly positive, so $P'(y) < 0$ everywhere. A function with a strictly negative derivative on an interval is strictly decreasing there, by the mean value theorem. Two different rates cannot share a price.
+**It falls.** Differentiating term by term, $`P'(y) = -\sum_{t} t\,c_t (1+y)^{-t-1}`$. Every term of that sum is at least zero and at least one is strictly positive, so $`P'(y) < 0`$ everywhere. A function with a strictly negative derivative on an interval is strictly decreasing there, by the mean value theorem. Two different rates cannot share a price.
 
-**It covers everything.** At least one payment is strictly positive. As $y$ falls towards $-1$, that payment's own term runs to infinity while no term is ever negative, so $P(y)$ runs to infinity. As $y$ grows without bound, each of the finitely many terms falls to zero, so $P(y)$ falls to zero. $P$ is a finite sum of continuous functions, so it is continuous, and the intermediate value theorem puts a solution of $P(y) = p$ somewhere between those extremes for every $p > 0$. Strict decrease makes it the only one. $\blacksquare$
+**It covers everything.** At least one payment is strictly positive. As $`y`$ falls towards $`-1`$, that payment's own term runs to infinity while no term is ever negative, so $`P(y)`$ runs to infinity. As $`y`$ grows without bound, each of the finitely many terms falls to zero, so $`P(y)`$ falls to zero. $`P`$ is a finite sum of continuous functions, so it is continuous, and the intermediate value theorem puts a solution of $`P(y) = p`$ somewhere between those extremes for every $`p > 0`$. Strict decrease makes it the only one. $`\blacksquare`$
 
-**Where the claim stops.** A quote of zero or below names no rate. If every payment is zero the price is always zero and no rate is identified. And if payments change sign, $P'$ need no longer be negative anywhere — which is the whole of Step 5.
+**Where the claim stops.** A quote of zero or below names no rate. If every payment is zero the price is always zero and no rate is identified. And if payments change sign, $`P'`$ need no longer be negative anywhere — which is the whole of Step 5.
 
 </details>
 
@@ -115,7 +121,7 @@ Bisection needs nothing but the two ends and a comparison. Halve the bracket, pr
 
 Starting from the ends 0 and 1, the halfway rate of 50 percent prices far below the quote, so the top half goes at once. The midpoint of what is left, 25 percent, is worth 489.036800 — still too cheap. Then 12.5 percent, 768.563058; then 6.25 percent, 989.540327; then 3.125 percent, 1,131.197970, too dear at last, so the bracket closes to 3.125–6.25 percent.
 
-Ten halvings give 5.029297 percent, twenty give a rate of 0.050000 to six places, forty leave a bracket one part in a million million of the range it started from. The width after $k$ halvings is the starting width divided by two $k$ times, and that is a promise made before the first step, independent of the bond.
+Ten halvings give 5.029297 percent, twenty give a rate of 0.050000 to six places, forty leave a bracket one part in a million million of the range it started from. The width after $`k`$ halvings is the starting width divided by two $`k`$ times, and that is a promise made before the first step, independent of the bond.
 
 ### Step 3: the tangent step, and what the slope is
 
@@ -123,11 +129,13 @@ Bisection ignores everything the price curve says except which side of the quote
 
 At a trial rate, the curve is replaced by its tangent — the straight line touching it there — and the next guess is where that line crosses the quoted price. The step is the price still missing, divided by the slope.
 
-That slope is not an abstraction. $-P'(y)$ is the money the bond loses per unit of yield, known on a desk as dollar duration; divided by the price it is the percentage loss, and the rest of that story is [Duration and convexity](06-duration-and-convexity.md). Here it is 4,449.156608 dollars per unit of yield at the answer, so one basis point of yield is 0.444916 dollars of price.
+That slope is not an abstraction. $`-P'(y)`$ is the money the bond loses per unit of yield, known on a desk as dollar duration; divided by the price it is the percentage loss, and the rest of that story is [Duration and convexity](06-duration-and-convexity.md). Here it is 4,449.156608 dollars per unit of yield at the answer, so one basis point of yield is 0.444916 dollars of price.
 
 Starting from the 6 percent coupon rate — the natural first guess, since it is the right answer whenever a bond trades at its face — the bond prices at 1,000.00, which is 43.294767 too cheap. The slope there is −4,212.363786. One step:
 
-$$0.06 - \frac{-43.294767}{-4212.363786} = 0.049722.$$
+```math
+0.06 - \frac{-43.294767}{-4212.363786} = 0.049722.
+```
 
 The next step reaches 4.9999788 percent, and the one after that is right to seven places. Each step roughly doubles the number of correct digits, because the error left after a step is proportional to the square of the error before it — the general statement lives on [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md).
 
@@ -140,7 +148,7 @@ The tangent's crossing is exact for a straight line and wrong for a curved one, 
 
 ### Step 4: knowing when to stop
 
-A search reports a price residual — how far the current guess's price is from the quote — and that number is in dollars, not in yield. Converting needs the slope again, but honestly: on a bracket holding both the guess and the answer, the price can fall no slower than at the bracket's high end, which for a positive stream is $m$ — on 4 to 6 percent, 4,212.363786 dollars. Dividing the leftover dollars by $m$ can only overstate the yield still missing.
+A search reports a price residual — how far the current guess's price is from the quote — and that number is in dollars, not in yield. Converting needs the slope again, but honestly: on a bracket holding both the guess and the answer, the price can fall no slower than at the bracket's high end, which for a positive stream is $`m`$ — on 4 to 6 percent, 4,212.363786 dollars. Dividing the leftover dollars by $`m`$ can only overstate the yield still missing.
 
 Stopping the halving after ten steps gives 5.029297 percent, which is out by 0.029297 percentage points. The 1.302415 of price still missing there allows at most 0.030919 percentage points. The bound holds and sits just above the true error, which is what a useful bound looks like.
 
@@ -152,7 +160,7 @@ A quarry costs 1,000 today. It returns 3,000 in a year. Then the site has to be 
 
 Its value at a rate of nothing at all is −1,000 + 3,000 − 2,000 = 0.00. At 25 percent it is worth 120.00, at 50 percent 111.11, at 75 percent 61.22, and at 100 percent it is 0.00 again. The curve climbs, turns over and comes back down, crossing zero twice.
 
-Both crossings are real rates of return. Whole-number algebra pins them exactly: clearing the denominators turns the break-even condition into $1000\,z^2 - 3000\,z + 2000 = 0$, where $z = 1+y$ is the growth factor. The number under the root sign is 1,000,000, a perfect square, so the quadratic formula lands on whole numbers and the two rates come out exactly: **yields of 0.000000 percent and 100.000000 percent, both correct.**
+Both crossings are real rates of return. Whole-number algebra pins them exactly: clearing the denominators turns the break-even condition into $`1000\,z^2 - 3000\,z + 2000 = 0`$, where $`z = 1+y`$ is the growth factor. The number under the root sign is 1,000,000, a perfect square, so the quadratic formula lands on whole numbers and the two rates come out exactly: **yields of 0.000000 percent and 100.000000 percent, both correct.**
 
 The same algebra says how many answers exist for any price. Buy the quarry for 1,125 instead and the number under the root sign is 0: the two answers merge into one, 33.333333 percent. Buy it for 1,200 and that number is −600,000, so no rate on earth breaks even — the stream simply cannot be worth 1,200 today at any yield.
 
@@ -168,7 +176,7 @@ xychart-beta
 
 The curved line is the quarry's value; the flat line is break-even. They meet at nought percent and at a hundred percent. Nothing in between is wrong, and nothing outside is a near miss.
 
-A count of sign changes is the general rule: written in $z = 1+y$, the price equation is a polynomial, and Descartes' rule of signs says it has no more positive roots — no more rates above −100 percent — than the payments have changes of sign. One change of sign, at most one answer, and Step 1 says exactly one. The project side of this, and what a single rate can and cannot be asked to mean, is [NPV and IRR](04-net-present-value-and-irr.md).
+A count of sign changes is the general rule: written in $`z = 1+y`$, the price equation is a polynomial, and Descartes' rule of signs says it has no more positive roots — no more rates above −100 percent — than the payments have changes of sign. One change of sign, at most one answer, and Step 1 says exactly one. The project side of this, and what a single rate can and cannot be asked to mean, is [NPV and IRR](04-net-present-value-and-irr.md).
 
 **The other route.** A yield is a single rate stretched over every date. A market that keeps a different rate for each date does not invert a price for one rate at all; it asks what fixed extra spread, added to every rate on the curve, reproduces the quote. Same search, different unknown: [Spreads over the curve](../02-Curves/06-z-spread-and-asset-swap-spread.md).
 
@@ -649,8 +657,8 @@ The two outputs match line for line.
 
 Lean proves the card's three theorems for every stream meeting the conditions below, and the worked numbers exactly.
 
-- Suppose every payment is positive and the quoted price $p$ is positive. Then exactly one yield above −100 percent makes the discounted payments add up to $p$.
-- Take positive payments and a bracket $[a, b]$, with $a$ above −1, holding both $y_k$ and $y_*$. Then $\lvert y_k - y_*\rvert$ is at most $\lvert P(y_k) - p\rvert$ divided by $m$.
+- Suppose every payment is positive and the quoted price $`p`$ is positive. Then exactly one yield above −100 percent makes the discounted payments add up to $`p`$.
+- Take positive payments and a bracket $`[a, b]`$, with $`a`$ above −1, holding both $`y_k`$ and $`y_*`$. Then $`\lvert y_k - y_*\rvert`$ is at most $`\lvert P(y_k) - p\rvert`$ divided by $`m`$.
 - The quarry's value today is zero at exactly two yields above −100 percent: 0 percent and 100 percent.
 - The house bond's prices at 0, 5, 6 and 100 percent hold exactly in fractions.
 - So do the quarry's numbers under the root sign, for prices of 1,000, 1,125 and 1,200.

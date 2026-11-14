@@ -33,38 +33,44 @@ One line: the fixed rate that makes the swap worth each value to whoever receive
 
 ## The formula
 
-Notation first, in words. The swap pays once a year, so its dates are numbered by year: $i$ runs from 1 to 5. $D_i$ is the discount factor for year $i$: what one dollar paid at the end of year $i$ costs today.
+Notation first, in words. The swap pays once a year, so its dates are numbered by year: $`i`$ runs from 1 to 5. $`D_i`$ is the discount factor for year $`i`$: what one dollar paid at the end of year $`i`$ costs today.
 
-Each period is one year long, so its accrual fraction $\alpha$, the share of a year a rate is paid for, is 1. The swap's size is its notional $N$, and its fixed rate is $K$. The value $V$ is always the value to whoever receives fixed.
+Each period is one year long, so its accrual fraction $`\alpha`$, the share of a year a rate is paid for, is 1. The swap's size is its notional $`N`$, and its fixed rate is $`K`$. The value $`V`$ is always the value to whoever receives fixed.
 
-The fixed side pays $N K$ each year. The floating side, discounted, is worth $N(1 - D_5)$ today, whatever the floating rates turn out to be ([Interest rate swaps](01-interest-rate-swaps.md)). So
+The fixed side pays $`N K`$ each year. The floating side, discounted, is worth $`N(1 - D_5)`$ today, whatever the floating rates turn out to be ([Interest rate swaps](01-interest-rate-swaps.md)). So
 
-$$V = N\bigl(K A - (1 - D_5)\bigr), \qquad A = D_1 + D_2 + D_3 + D_4 + D_5$$
+```math
+V = N\bigl(K A - (1 - D_5)\bigr), \qquad A = D_1 + D_2 + D_3 + D_4 + D_5
+```
 
-$A$ is the **annuity**: what one dollar a year for five years costs today ([The par swap rate](02-par-swap-rate-and-annuity.md)). The par rate $S_5$ is the $K$ that makes $V$ zero, $S_5 = (1 - D_5)/A$. The first inversion solves the line for $K$:
+$`A`$ is the **annuity**: what one dollar a year for five years costs today ([The par swap rate](02-par-swap-rate-and-annuity.md)). The par rate $`S_5`$ is the $`K`$ that makes $`V`$ zero, $`S_5 = (1 - D_5)/A`$. The first inversion solves the line for $`K`$:
 
-$$K = S_5 + \frac{V}{N A}$$
+```math
+K = S_5 + \frac{V}{N A}
+```
 
 **Read it aloud:** the fixed rate is the fair rate plus the value spread across the annuity.
 
-The second inversion reads the par equation $S_5 A = 1 - D_5$ with the first four discount factors known. Their sum is $B_5 = D_1 + D_2 + D_3 + D_4$, so $A = B_5 + D_5$. Gather the terms in $D_5$:
+The second inversion reads the par equation $`S_5 A = 1 - D_5`$ with the first four discount factors known. Their sum is $`B_5 = D_1 + D_2 + D_3 + D_4`$, so $`A = B_5 + D_5`$. Gather the terms in $`D_5`$:
 
-$$D_5 = \frac{1 - S_5 B_5}{1 + S_5}$$
+```math
+D_5 = \frac{1 - S_5 B_5}{1 + S_5}
+```
 
 **Read it aloud:** one dollar, less what the first four coupons cost, divided by one dollar plus the last coupon.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | notional: the amount the rates are paid on | 10,000,000 dollars | a given value moves the rate less |
-| $K$ | the swap's fixed rate, per year | 4.8782 percent | the value to the receiver rises |
-| $V$ | value today to whoever receives fixed | 100,000 dollars | the fixed rate rises, one for one along the line |
-| $D_i$ (so $D_4$, $D_5$) | discount factor: what a dollar due at the end of year $i$ costs today | 0.79621728 for year 5 | the fixed side is worth more |
-| $A$ | annuity: $D_1 + \dots + D_5$, the cost today of one dollar a year | 4.38242404 | a given value moves the rate less |
-| $S_5$ | the five-year par rate: the $K$ that makes $V$ zero | 4.65 percent | the solved $D_5$ falls |
-| $B_5$ | the known part of the annuity, $D_1 + \dots + D_4$ | 3.58620675 | the solved $D_5$ falls |
-| $f_i$ | forward rate: the one-year rate the curve implies for year $i$ | $D_{i-1}/D_i - 1$, with $D_0 = 1$ | that year's floating payment rises |
-| $\alpha$ | accrual fraction: the share of a year a rate is paid for | 1 | every payment scales up |
-| $i$ | the year a payment lands in | 1 to 5 | later payments are discounted more |
+| $`N`$ | notional: the amount the rates are paid on | 10,000,000 dollars | a given value moves the rate less |
+| $`K`$ | the swap's fixed rate, per year | 4.8782 percent | the value to the receiver rises |
+| $`V`$ | value today to whoever receives fixed | 100,000 dollars | the fixed rate rises, one for one along the line |
+| $`D_i`$ (so $`D_4`$, $`D_5`$) | discount factor: what a dollar due at the end of year $`i`$ costs today | 0.79621728 for year 5 | the fixed side is worth more |
+| $`A`$ | annuity: $`D_1 + \dots + D_5`$, the cost today of one dollar a year | 4.38242404 | a given value moves the rate less |
+| $`S_5`$ | the five-year par rate: the $`K`$ that makes $`V`$ zero | 4.65 percent | the solved $`D_5`$ falls |
+| $`B_5`$ | the known part of the annuity, $`D_1 + \dots + D_4`$ | 3.58620675 | the solved $`D_5`$ falls |
+| $`f_i`$ | forward rate: the one-year rate the curve implies for year $`i`$ | $`D_{i-1}/D_i - 1`$, with $`D_0 = 1`$ | that year's floating payment rises |
+| $`\alpha`$ | accrual fraction: the share of a year a rate is paid for | 1 | every payment scales up |
+| $`i`$ | the year a payment lands in | 1 to 5 | later payments are discounted more |
 
 **Conventions verified 27 Sep 2026.** Accrual fractions are set to exactly 1 by hand, so every number can be rechecked with a calculator. Real swap legs carry day-count rules that move them by a day or two of interest; those rules are on [Money markets](../02-Curves/03-money-market-instruments-and-sofr.md). The sign convention here, value to the fixed receiver, is a choice; the payer's value is the same number with the sign flipped.
 
@@ -72,10 +78,10 @@ The discount factors are the five-year end of the curve built on [Bootstrapping]
 
 ### When it holds
 
-- **The value is a straight line in the fixed rate.** True for a plain swap: the fixed side is $K$ times a fixed sum. Add an option, a cap on the floating rate or a right to cancel, and the value bends; the one-line inverse is then wrong and a search is needed ([Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)).
-- **One curve discounts and forecasts.** The floating side collapses to $N(1 - D_5)$ only when the same curve sets the floating rates and discounts them. With separate curves the line is still straight in $K$, but its intercept changes ([Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md)).
+- **The value is a straight line in the fixed rate.** True for a plain swap: the fixed side is $`K`$ times a fixed sum. Add an option, a cap on the floating rate or a right to cancel, and the value bends; the one-line inverse is then wrong and a search is needed ([Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)).
+- **One curve discounts and forecasts.** The floating side collapses to $`N(1 - D_5)`$ only when the same curve sets the floating rates and discounts them. With separate curves the line is still straight in $`K`$, but its intercept changes ([Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md)).
 - **The first four discount factors are already known.** Otherwise the five-year quote holds more than one unknown and no single answer exists: two curves can reprice it exactly.
-- **The quote sits inside its range.** $D_5$ comes out positive only for $S_5$ between $-100$ percent and $1/B_5$, which is 27.88 percent here. Outside it there is no curve point, only a sign that a quote is wrong.
+- **The quote sits inside its range.** $`D_5`$ comes out positive only for $`S_5`$ between $`-100`$ percent and $`1/B_5`$, which is 27.88 percent here. Outside it there is no curve point, only a sign that a quote is wrong.
 
 ---
 
@@ -87,41 +93,43 @@ Solving backwards is usually a search: guess, price, compare, guess again. Here 
 
 ### Step 1: the two sides of the swap, priced once
 
-The fixed side pays $N K$ at the end of each year. Discount each payment and add: $N K (D_1 + \dots + D_5) = N K A$.
+The fixed side pays $`N K`$ at the end of each year. Discount each payment and add: $`N K (D_1 + \dots + D_5) = N K A`$.
 
-The floating side pays the one-year rate that is fixed at the start of year $i$, unknown today. Its value today is that of a payment of $N f_i$, where $f_i = D_{i-1}/D_i - 1$ is the forward rate the curve locks in for that year ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)). Discounted, that is worth $N f_i D_i = N(D_{i-1} - D_i)$. Added over five years, the middle terms cancel in pairs and $N(D_0 - D_5) = N(1 - D_5)$ survives.
+The floating side pays the one-year rate that is fixed at the start of year $`i`$, unknown today. Its value today is that of a payment of $`N f_i`$, where $`f_i = D_{i-1}/D_i - 1`$ is the forward rate the curve locks in for that year ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)). Discounted, that is worth $`N f_i D_i = N(D_{i-1} - D_i)`$. Added over five years, the middle terms cancel in pairs and $`N(D_0 - D_5) = N(1 - D_5)`$ survives.
 
 On this curve that is 2,037,827.18 dollars. The code builds all five floating payments one at a time from their forward rates and gets the same number, so the cancelling is checked, not assumed.
 
-The receiver's value is fixed side minus floating side: $V = N K A - N(1 - D_5)$.
+The receiver's value is fixed side minus floating side: $`V = N K A - N(1 - D_5)`$.
 
 ### Step 2: the value to the fixed rate, one answer always
 
-Rearranging needs one division, by $N A$. That is legitimate whenever $N A$ is not zero. The notional is positive and every discount factor is positive, so $N A$ is positive: 43,824,240.35 dollars per unit of rate (a rate of 1, that is 100 percent), or 4,382.42 dollars per basis point, a hundredth of a percentage point. That per-basis-point figure is the swap's sensitivity to its own fixed rate ([Swap DV01](03-swap-dv01-and-hedging.md)).
+Rearranging needs one division, by $`N A`$. That is legitimate whenever $`N A`$ is not zero. The notional is positive and every discount factor is positive, so $`N A`$ is positive: 43,824,240.35 dollars per unit of rate (a rate of 1, that is 100 percent), or 4,382.42 dollars per basis point, a hundredth of a percentage point. That per-basis-point figure is the swap's sensitivity to its own fixed rate ([Swap DV01](03-swap-dv01-and-hedging.md)).
 
 So the three questions every inverse must answer have short answers.
 
 - **Existence.** Every value, positive or negative, has a fixed rate. A line with a positive slope reaches every height.
 - **Uniqueness.** Two different rates give two different values, since the slope is never zero. One value, one rate.
-- **Edges.** The line has no top or bottom. It does cross zero rate, at a value of $-N(1 - D_5)$, which is $-$2,037,827.18 dollars: any value below that asks for a negative fixed rate. The maths is untroubled; whether a contract can carry a negative coupon is a legal question, not a mathematical one.
+- **Edges.** The line has no top or bottom. It does cross zero rate, at a value of $`-N(1 - D_5)`$, which is $-$2,037,827.18 dollars: any value below that asks for a negative fixed rate. The maths is untroubled; whether a contract can carry a negative coupon is a legal question, not a mathematical one.
 
-For the fund, $V$ = 100,000 dollars. The rate shift is 100,000 ÷ 43,824,240.35 = 0.228184 percent, so $K$ = 4.65 + 0.2282 = 4.8782 percent.
+For the fund, $`V`$ = 100,000 dollars. The rate shift is 100,000 ÷ 43,824,240.35 = 0.228184 percent, so $`K`$ = 4.65 + 0.2282 = 4.8782 percent.
 
 ### Step 3: why a search agrees, and why one step is enough
 
-The code does not trust the rearrangement. It also searches: bisection, which halves a range known to hold the answer until the range is too small to matter, on the full payment-by-payment value. It starts from rates of $-100$ and $+100$ percent and lands on the same 4.8782 percent after 51 halvings.
+The code does not trust the rearrangement. It also searches: bisection, which halves a range known to hold the answer until the range is too small to matter, on the full payment-by-payment value. It starts from rates of $`-100`$ and $`+100`$ percent and lands on the same 4.8782 percent after 51 halvings.
 
-A secant step does it in one. From any two trial rates, 1 and 9 percent, draw the straight line through their two values and read off where it hits 100,000. For a curve that bends, that is only a better guess. For a line, it is the answer, exactly. One step landing where the rearranged formula lands confirms the value really is straight in $K$.
+A secant step does it in one. From any two trial rates, 1 and 9 percent, draw the straight line through their two values and read off where it hits 100,000. For a curve that bends, that is only a better guess. For a line, it is the answer, exactly. One step landing where the rearranged formula lands confirms the value really is straight in $`K`$.
 
-The house swap, the example swap shared by the cards on this shelf, runs through the same machine: 10,000,000 dollars, paying fixed at 4.50 percent. Its value to the payer on this curve is 65,736.36 dollars. Feed that value into the payer's version of the line, $K = S_5 - V/(N A)$, and 4.50 percent comes back.
+The house swap, the example swap shared by the cards on this shelf, runs through the same machine: 10,000,000 dollars, paying fixed at 4.50 percent. Its value to the payer on this curve is 65,736.36 dollars. Feed that value into the payer's version of the line, $`K = S_5 - V/(N A)`$, and 4.50 percent comes back.
 
 ### Step 4: a par quote to one discount factor
 
-Now hold the rate and free a curve point. The five-year par swap at $S_5$ = 4.65 percent is worth zero, so $S_5 A = 1 - D_5$. With the first four factors known, $A = B_5 + D_5$, and
+Now hold the rate and free a curve point. The five-year par swap at $`S_5`$ = 4.65 percent is worth zero, so $`S_5 A = 1 - D_5`$. With the first four factors known, $`A = B_5 + D_5`$, and
 
-$$S_5 B_5 + S_5 D_5 = 1 - D_5 \quad\Longrightarrow\quad (1 + S_5)\,D_5 = 1 - S_5 B_5.$$
+```math
+S_5 B_5 + S_5 D_5 = 1 - D_5 \quad\Longrightarrow\quad (1 + S_5)\,D_5 = 1 - S_5 B_5.
+```
 
-One division by $1 + S_5$, and $D_5 = (1 - S_5 B_5)/(1 + S_5)$. For the screen's quote: 0.83324139 ÷ 1.0465 = 0.79621728, the same number the bootstrapping card reached.
+One division by $`1 + S_5`$, and $`D_5 = (1 - S_5 B_5)/(1 + S_5)`$. For the screen's quote: 0.83324139 ÷ 1.0465 = 0.79621728, the same number the bootstrapping card reached.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -134,20 +142,20 @@ xychart-beta
 
 One line: 100 times the discount factor each quote solves to, with the first four factors held at this curve's values. It falls as the quote rises, and at a quote of 28 percent it has gone below zero, past the edge at 27.88 percent where no curve point exists. At a quote of zero it is exactly 100 dollars: with no coupons, a dollar in five years costs a dollar today.
 
-The slope is $-(1 + B_5)/(1 + S_5)^2$, which is $-4.1877$ here. A one-basis-point rise in the five-year quote lowers $D_5$ by 0.00041877. The code confirms it by bumping the quote up and down one basis point and dividing.
+The slope is $`-(1 + B_5)/(1 + S_5)^2`$, which is $`-4.1877`$ here. A one-basis-point rise in the five-year quote lowers $`D_5`$ by 0.00041877. The code confirms it by bumping the quote up and down one basis point and dividing.
 
 <details>
 <summary>Detailed proof: existence, uniqueness and the edges of the curve inversion</summary>
 
-Take $(1 + S_5) D_5 = 1 - S_5 B_5$ with $B_5 > 0$, the sum of four positive prices.
+Take $`(1 + S_5) D_5 = 1 - S_5 B_5`$ with $`B_5 > 0`$, the sum of four positive prices.
 
-*The bottom edge.* At $S_5 = -1$ the left side is $0 \times D_5 = 0$ and the right side is $1 + B_5 > 0$. No number solves it. Below $-1$ the coefficient is negative and the right side positive, so the only root is negative: not a price.
+*The bottom edge.* At $`S_5 = -1`$ the left side is $`0 \times D_5 = 0`$ and the right side is $`1 + B_5 > 0`$. No number solves it. Below $`-1`$ the coefficient is negative and the right side positive, so the only root is negative: not a price.
 
-*Inside the range.* For $S_5 > -1$ the coefficient is positive, so exactly one $D_5$ solves the equation. It is positive exactly when $1 - S_5 B_5 > 0$, that is when $S_5 < 1/B_5$. On this curve $1/B_5$ = 27.88 percent.
+*Inside the range.* For $`S_5 > -1`$ the coefficient is positive, so exactly one $`D_5`$ solves the equation. It is positive exactly when $`1 - S_5 B_5 > 0`$, that is when $`S_5 < 1/B_5`$. On this curve $`1/B_5`$ = 27.88 percent.
 
-*The top edge.* At $S_5 = 1/B_5$ the root is zero: a dollar five years out costing nothing. Above it the root is negative. Neither is a price, so the quote itself is wrong.
+*The top edge.* At $`S_5 = 1/B_5`$ the root is zero: a dollar five years out costing nothing. Above it the root is negative. Neither is a price, so the quote itself is wrong.
 
-*Monotone.* The derivative of $(1 - S_5 B_5)/(1 + S_5)$ in $S_5$ is $\bigl(-B_5(1 + S_5) - (1 - S_5 B_5)\bigr)/(1 + S_5)^2 = -(1 + B_5)/(1 + S_5)^2$, always negative. A higher quote always means a cheaper future dollar, and two different quotes never solve to the same point. Bisection on $D_5$ between 0 and 1 relies on exactly this: the par swap's value to the receiver rises with $D_5$, since the fixed side gains $S_5 D_5$ and the floating side $1 - D_5$ shrinks.
+*Monotone.* The derivative of $`(1 - S_5 B_5)/(1 + S_5)`$ in $`S_5`$ is $`\bigl(-B_5(1 + S_5) - (1 - S_5 B_5)\bigr)/(1 + S_5)^2 = -(1 + B_5)/(1 + S_5)^2`$, always negative. A higher quote always means a cheaper future dollar, and two different quotes never solve to the same point. Bisection on $`D_5`$ between 0 and 1 relies on exactly this: the par swap's value to the receiver rises with $`D_5`$, since the fixed side gains $`S_5 D_5`$ and the floating side $`1 - D_5`$ shrinks.
 
 </details>
 
@@ -161,12 +169,12 @@ The fund's swap: 10,000,000 dollars, five years, annual payments, value 100,000 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| annuity $A$ | 0.95969290 + 0.91740758 + 0.87478903 + 0.83431725 + 0.79621728 | 4.38242404 |
+| annuity $`A`$ | 0.95969290 + 0.91740758 + 0.87478903 + 0.83431725 + 0.79621728 | 4.38242404 |
 | floating side per dollar | 1 − 0.79621728 | 0.20378272 |
-| par rate $S_5$ | 0.20378272 ÷ 4.38242404 | 4.6500 percent |
-| value per unit of rate, $N A$ | 10,000,000 × 4.38242404 | 43,824,240.35 |
+| par rate $`S_5`$ | 0.20378272 ÷ 4.38242404 | 4.6500 percent |
+| value per unit of rate, $`N A`$ | 10,000,000 × 4.38242404 | 43,824,240.35 |
 | rate shift | 100,000 ÷ 43,824,240.35 | 0.2282 percent |
-| **fixed rate $K$** | 4.6500 + 0.2282 | **4.8782 percent** |
+| **fixed rate $`K`$** | 4.6500 + 0.2282 | **4.8782 percent** |
 | repriced | 10,000,000 × (0.04878184 × 4.38242404 − 0.20378272) | 100,000.00 dollars |
 
 Paying 100,000 dollars today buys the fund 0.2282 of a percentage point more on its fixed coupon, every year for five years.
@@ -175,10 +183,10 @@ The curve point from the same quote:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| known part $B_5$ | 0.95969290 + 0.91740758 + 0.87478903 + 0.83431725 | 3.58620675 |
+| known part $`B_5`$ | 0.95969290 + 0.91740758 + 0.87478903 + 0.83431725 | 3.58620675 |
 | top of the fraction | 1 − 0.0465 × 3.58620675 | 0.83324139 |
 | bottom of the fraction | 1 + 0.0465 | 1.0465 |
-| **$D_5$** | 0.83324139 ÷ 1.0465 | **0.79621728** |
+| **$`D_5`$** | 0.83324139 ÷ 1.0465 | **0.79621728** |
 | range for the quote | from −100 percent to 1 ÷ 3.58620675 | −100 to 27.88 percent |
 
 A dollar due in five years costs a shade under 80 cents this morning, and the 4.65 percent quote is the only quote on the screen that says so.
@@ -192,8 +200,8 @@ The right answers are a fixed rate of 4.8782 percent, repricing at 100,000.00 do
 | Value spread over 5 payments, not the annuity 4.38 | 4.8500 percent, repricing at 87,648.48 dollars | Later coupons are worth less today; dividing by 5 undercounts the shift |
 | Payer's line used for a receiver | 4.4218 percent, repricing at −100,000.00 dollars | Right size, wrong side of par: the fund pays 100,000 and gets a worse coupon |
 | Floating side left out | 0.2282 percent, repricing at −1,937,827.18 dollars | Only the shift was solved; the fair rate it shifts from went missing |
-| Earlier coupons dropped from the rung | $D_5$ = 0.95556617 | The quote was read as a one-payment deposit; the four earlier coupons carry most of it |
-| Par quote read as a yearly-compounded zero rate | $D_5$ = 0.79671655 | Close, and wrong: a par rate averages the curve, a zero rate does not |
+| Earlier coupons dropped from the rung | $`D_5`$ = 0.95556617 | The quote was read as a one-payment deposit; the four earlier coupons carry most of it |
+| Par quote read as a yearly-compounded zero rate | $`D_5`$ = 0.79671655 | Close, and wrong: a par rate averages the curve, a zero rate does not |
 
 The code prints every row.
 
@@ -550,10 +558,10 @@ The two outputs agree line for line.
 
 Lean proves both backwards solutions for a swap of any length, and checks the card's two worked answers.
 
-- Take a positive notional and positive discount factors, with one curve both forecasting and discounting. Then every value $V$ is reached by exactly one fixed rate: the par rate plus $V/(N A)$.
-- Take the earlier discount factors as known, with sum $B_5$, and a quote $S_5$ above $-100$ percent. Then the par equation holds for exactly one $D_5$: $(1 - S_5 B_5)/(1 + S_5)$.
-- Suppose at least one earlier discount factor is known. Then a positive $D_5$ exists exactly when the quote lies strictly between $-100$ percent and $1/B_5$.
-- Built exactly from the card's quotes, the curve gives $D_5$ within 0.000000005 of 0.79621728. The fixed rate that 100,000 dollars buys rounds to 4.8782 percent.
+- Take a positive notional and positive discount factors, with one curve both forecasting and discounting. Then every value $`V`$ is reached by exactly one fixed rate: the par rate plus $`V/(N A)`$.
+- Take the earlier discount factors as known, with sum $`B_5`$, and a quote $`S_5`$ above $`-100`$ percent. Then the par equation holds for exactly one $`D_5`$: $`(1 - S_5 B_5)/(1 + S_5)`$.
+- Suppose at least one earlier discount factor is known. Then a positive $`D_5`$ exists exactly when the quote lies strictly between $`-100`$ percent and $`1/B_5`$.
+- Built exactly from the card's quotes, the curve gives $`D_5`$ within 0.000000005 of 0.79621728. The fixed rate that 100,000 dollars buys rounds to 4.8782 percent.
 
 Bisection, the secant step, the house swap, the slope and the wrong answers are left to the Python and Rust checks.
 
@@ -713,7 +721,7 @@ example :
 > Guess the direction first. Then run it.
 > - **Ask for no upfront.** Set `V = 0`. Every road returns 4.6500 percent: the par rate is the inverse at value zero.
 > - **Double the swap.** Set `N = 20_000_000`. The same 100,000 dollars now moves the rate half as far: 4.7641 percent.
-> - **Nudge the quote.** Set `PAR[5]` to 0.0466. $D_5$ falls to 0.79579855, down 0.00041873, within a hair of the slope's forecast of 0.00041877; the gap is the curve's slight bend.
+> - **Nudge the quote.** Set `PAR[5]` to 0.0466. $`D_5`$ falls to 0.79579855, down 0.00041873, within a hair of the slope's forecast of 0.00041877; the gap is the curve's slight bend.
 > - **Ask for a negative coupon.** Set `V` to −2,037,827.18. The fixed rate comes back as zero to eight decimals: the edge where the whole floating side is given away for nothing.
 
 ---
@@ -725,7 +733,7 @@ example :
 >
 > - **Dividing by the number of payments.** The value spreads over the annuity, 4.38, not over 5. The fixed rate comes out at 4.8500 percent and the swap reprices at 87,648.48 dollars instead of 100,000.
 > - **Losing track of whose value it is.** A value quoted to the payer, used in the receiver's line, gives 4.4218 percent: the right distance from par on the wrong side.
-> - **Solving a long quote before the short ones.** With $D_4$ unknown the five-year quote holds two unknowns; any single number solved from it is a guess.
+> - **Solving a long quote before the short ones.** With $`D_4`$ unknown the five-year quote holds two unknowns; any single number solved from it is a guess.
 > - **Trusting a curve point outside the range.** A five-year quote above 27.88 percent on this curve solves to a negative price. The formula does not stop; the check on the range must.
 
 ---

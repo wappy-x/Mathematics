@@ -26,61 +26,71 @@ Height is the bankroll in dollars, to scale; the dashed line is $100. Each point
 
 ## The formula
 
-Notation first, in words. $\Omega$ (omega) is the set of all ways the night can go: here the eight win-loss histories, WWW to LLL. $\mathcal F$ is the collection of sets of histories we allow ourselves to measure, a sigma-algebra: it holds $\Omega$ and is closed under complements and countable unions. $P$ is the probability on it, 0.125 per history. A number that depends on the history is a random quantity. $E[Y \mid \mathcal G]$, from [Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md), is the best forecast of $Y$ using only the sets in a smaller collection $\mathcal G$. The subscript $n$ counts hands played, from 0 to 3.
+Notation first, in words. $`\Omega`$ (omega) is the set of all ways the night can go: here the eight win-loss histories, WWW to LLL. $`\mathcal F`$ is the collection of sets of histories we allow ourselves to measure, a sigma-algebra: it holds $`\Omega`$ and is closed under complements and countable unions. $`P`$ is the probability on it, 0.125 per history. A number that depends on the history is a random quantity. $`E[Y \mid \mathcal G]`$, from [Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md), is the best forecast of $`Y`$ using only the sets in a smaller collection $`\mathcal G`$. The subscript $`n`$ counts hands played, from 0 to 3.
 
 **Filtration.** A sequence of collections of measurable sets, each inside the next:
 
-$$\mathcal F_0 \subseteq \mathcal F_1 \subseteq \mathcal F_2 \subseteq \dots \subseteq \mathcal F .$$
+```math
+\mathcal F_0 \subseteq \mathcal F_1 \subseteq \mathcal F_2 \subseteq \dots \subseteq \mathcal F .
+```
 
-**Read it aloud:** $\mathcal F_n$ is what is known after $n$ steps, and nothing known is ever forgotten.
+**Read it aloud:** $`\mathcal F_n`$ is what is known after $`n`$ steps, and nothing known is ever forgotten.
 
-On the poker night, $\mathcal F_n$ holds exactly the sets of histories that the first $n$ hands decide. After one hand the histories fall into two cells, "won the first" and "lost the first", and $\mathcal F_1$ is every union of those cells: 4 sets. The counts run 2, 4, 16, 256.
+On the poker night, $`\mathcal F_n`$ holds exactly the sets of histories that the first $`n`$ hands decide. After one hand the histories fall into two cells, "won the first" and "lost the first", and $`\mathcal F_1`$ is every union of those cells: 4 sets. The counts run 2, 4, 16, 256.
 
-**Adapted process.** A sequence $X_0, X_1, X_2, \dots$ of random quantities is adapted when each $X_n$ is measurable with respect to $\mathcal F_n$: its value can be read off once the first $n$ steps are known. The bankroll after $n$ hands is adapted. The bankroll after hand $n + 1$, read at time $n$, is not.
+**Adapted process.** A sequence $`X_0, X_1, X_2, \dots`$ of random quantities is adapted when each $`X_n`$ is measurable with respect to $`\mathcal F_n`$: its value can be read off once the first $`n`$ steps are known. The bankroll after $`n`$ hands is adapted. The bankroll after hand $`n + 1`$, read at time $`n`$, is not.
 
-**Martingale.** An adapted process with $E\lvert X_n\rvert < \infty$ for every $n$ (each $X_n$ is integrable, written $X_n \in L^1$: its average size is finite), and
+**Martingale.** An adapted process with $`E\lvert X_n\rvert < \infty`$ for every $`n`$ (each $`X_n`$ is integrable, written $`X_n \in L^1`$: its average size is finite), and
 
-$$E[X_{n+1} \mid \mathcal F_n] = X_n \quad \text{almost surely (a.s.), for every } n .$$
+```math
+E[X_{n+1} \mid \mathcal F_n] = X_n \quad \text{almost surely (a.s.), for every } n .
+```
 
-**Read it aloud:** given everything seen after step $n$, the best forecast of the next value is the present value, except on a set of probability zero.
+**Read it aloud:** given everything seen after step $`n`$, the best forecast of the next value is the present value, except on a set of probability zero.
 
 Replacing the equals sign by "at most" gives a **supermartingale**, a process that tends to fall; "at least" gives a **submartingale**. A gambler facing a house edge holds a supermartingale.
 
 The three theorems:
 
-$$M_n = E[Y \mid \mathcal F_n] \text{ is a martingale for every integrable } Y ,$$
+```math
+M_n = E[Y \mid \mathcal F_n] \text{ is a martingale for every integrable } Y ,
+```
 
-$$Z_n = \frac{dQ|_{\mathcal F_n}}{dP|_{\mathcal F_n}} \text{ is a martingale under } P, \text{ with } E_P[Z_n] = 1 ,$$
+```math
+Z_n = \frac{dQ|_{\mathcal F_n}}{dP|_{\mathcal F_n}} \text{ is a martingale under } P, \text{ with } E_P[Z_n] = 1 ,
+```
 
-$$E[X_m \mid \mathcal F_n] = X_n \text{ for } m \ge n, \quad\text{so}\quad E[X_n] = E[X_0] .$$
+```math
+E[X_m \mid \mathcal F_n] = X_n \text{ for } m \ge n, \quad\text{so}\quad E[X_n] = E[X_0] .
+```
 
 **Read them aloud:** a forecast of a fixed final result, updated as information arrives, is a martingale. The exchange rate between two sets of odds, measured on what is known so far, is a martingale under the old odds. A martingale's forecast of any later value is its present value, so its average never moves.
 
-Here $Q|_{\mathcal F_n}$ is $Q$ used only on the sets in $\mathcal F_n$, and the fraction is the density of one against the other ([The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md)). On a finite space with cells, $Z_n$ on a cell is $Q(\text{cell}) / P(\text{cell})$. $E_P$ and $E_Q$ are averages under $P$ and under $Q$.
+Here $`Q|_{\mathcal F_n}`$ is $`Q`$ used only on the sets in $`\mathcal F_n`$, and the fraction is the density of one against the other ([The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md)). On a finite space with cells, $`Z_n`$ on a cell is $`Q(\text{cell}) / P(\text{cell})`$. $`E_P`$ and $`E_Q`$ are averages under $`P`$ and under $`Q`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal F$, $P$ | outcomes, measurable sets, probability | 8 histories, all 256 sets, 0.125 each | — |
-| $n$, $m$ | steps taken; a later step | hands played, 0 to 3 | more sets in $\mathcal F_n$ |
-| $\mathcal F_n$ | the filtration: sets decided by step $n$ | 2, 4, 16, 256 sets | finer cells, sharper forecasts |
-| $X_n$ | a process: one random quantity per step | the bankroll after $n$ hands | — |
-| $Y$ | a fixed final result | the bankroll at the end, $30 to $150 | a higher $Y$ lifts every $M_n$ |
-| $M_n$ | the forecast $E[Y \mid \mathcal F_n]$ | 100, then 120 or 80 | — |
-| $A_n$ | the forecast of finishing above $100 | 0.625, then 0.75 or 0.5 | — |
-| $\mathcal G$, $\mathcal H$ | a smaller collection of known sets; in the tower rule, a coarser one inside it, $\mathcal H \subseteq \mathcal G$ | $\mathcal H = \mathcal F_1$ inside $\mathcal G = \mathcal F_2$ | — |
-| $E[\,\cdot \mid \mathcal F_n]$, $W$ | the best forecast given step $n$; $W$ a candidate for it in the proof | an average over the cell | — |
-| $Q$, $Z$, $f$, $q_f$, $E_P$, $E_Q$ | the loaded die; its rate $dQ/dP$ per roll; a face; its loaded probability; averages under $P$, under $Q$ | 0.1 on faces 1 to 4, 0.2, 0.4; rate 0.6, 1.2, 2.4 | more weight on 6, larger $Z$ on sixes |
-| $Z_n$, $Z_3$ | the density process on three rolls; its last value | 1, 2.4, 5.76, about 13.82 on three sixes | — |
-| $\mathbf 1_B$, $B$, $C$ | indicator: one on the set $B$, zero off it; a single cell | $B$ = "won the first hand" | — |
-| $N_n$, $N_1$, $N_2$ | a process with constant mean that is no martingale | 100, then 120 or 80, then flipped | — |
+| $`\Omega`$, $`\mathcal F`$, $`P`$ | outcomes, measurable sets, probability | 8 histories, all 256 sets, 0.125 each | — |
+| $`n`$, $`m`$ | steps taken; a later step | hands played, 0 to 3 | more sets in $`\mathcal F_n`$ |
+| $`\mathcal F_n`$ | the filtration: sets decided by step $`n`$ | 2, 4, 16, 256 sets | finer cells, sharper forecasts |
+| $`X_n`$ | a process: one random quantity per step | the bankroll after $`n`$ hands | — |
+| $`Y`$ | a fixed final result | the bankroll at the end, $30 to $150 | a higher $`Y`$ lifts every $`M_n`$ |
+| $`M_n`$ | the forecast $`E[Y \mid \mathcal F_n]`$ | 100, then 120 or 80 | — |
+| $`A_n`$ | the forecast of finishing above $100 | 0.625, then 0.75 or 0.5 | — |
+| $`\mathcal G`$, $`\mathcal H`$ | a smaller collection of known sets; in the tower rule, a coarser one inside it, $`\mathcal H \subseteq \mathcal G`$ | $`\mathcal H = \mathcal F_1`$ inside $`\mathcal G = \mathcal F_2`$ | — |
+| $`E[\,\cdot \mid \mathcal F_n]`$, $`W`$ | the best forecast given step $`n`$; $`W`$ a candidate for it in the proof | an average over the cell | — |
+| $`Q`$, $`Z`$, $`f`$, $`q_f`$, $`E_P`$, $`E_Q`$ | the loaded die; its rate $`dQ/dP`$ per roll; a face; its loaded probability; averages under $`P`$, under $`Q`$ | 0.1 on faces 1 to 4, 0.2, 0.4; rate 0.6, 1.2, 2.4 | more weight on 6, larger $`Z`$ on sixes |
+| $`Z_n`$, $`Z_3`$ | the density process on three rolls; its last value | 1, 2.4, 5.76, about 13.82 on three sixes | — |
+| $`\mathbf 1_B`$, $`B`$, $`C`$ | indicator: one on the set $`B`$, zero off it; a single cell | $`B`$ = "won the first hand" | — |
+| $`N_n`$, $`N_1`$, $`N_2`$ | a process with constant mean that is no martingale | 100, then 120 or 80, then flipped | — |
 
 ### When it holds
 
 - **The definitions** are definitions: nothing to hold. A process is a martingale only relative to a stated filtration and a stated probability; change either and the answer can change.
-- **Nested information.** The forecasts theorem needs $\mathcal F_n \subseteq \mathcal F_{n+1}$. Keep only "the last hand played", and the record after hand 2 no longer knows hand 1; the tower rule below has nothing to stand on.
-- **An integrable final result.** $E\lvert Y\rvert < \infty$, or the forecast $E[Y \mid \mathcal F_n]$ need not exist. The poker bankroll is bounded, so this is automatic.
-- **For the density process, $Q \ll P$ on each $\mathcal F_n$**: no set in $\mathcal F_n$ of $P$-probability zero gets $Q$-weight. Where that fails, $\mathcal F_n$ has no density. And the martingale is under $P$: under $Q$, $E_Q[Z_1] = 1.44$, not 1.
-- **Fixed times.** The constant mean holds at fixed steps $n$. Stopping at a time chosen by looking at the path needs extra conditions, handed to wing 11.
+- **Nested information.** The forecasts theorem needs $`\mathcal F_n \subseteq \mathcal F_{n+1}`$. Keep only "the last hand played", and the record after hand 2 no longer knows hand 1; the tower rule below has nothing to stand on.
+- **An integrable final result.** $`E\lvert Y\rvert < \infty`$, or the forecast $`E[Y \mid \mathcal F_n]`$ need not exist. The poker bankroll is bounded, so this is automatic.
+- **For the density process, $`Q \ll P`$ on each $`\mathcal F_n`$**: no set in $`\mathcal F_n`$ of $`P`$-probability zero gets $`Q`$-weight. Where that fails, $`\mathcal F_n`$ has no density. And the martingale is under $`P`$: under $`Q`$, $`E_Q[Z_1] = 1.44`$, not 1.
+- **Fixed times.** The constant mean holds at fixed steps $`n`$. Stopping at a time chosen by looking at the path needs extra conditions, handed to wing 11.
 
 ---
 
@@ -88,37 +98,41 @@ Here $Q|_{\mathcal F_n}$ is $Q$ used only on the sets in $\mathcal F_n$, and the
 
 ### Step 0: forecasting a forecast gives the forecast
 
-The whole card rests on one rule from [The rules of conditional expectation](04-rules-of-conditional-expectation.md), the tower rule: if $\mathcal H \subseteq \mathcal G$, then $E[E[Y \mid \mathcal G] \mid \mathcal H] = E[Y \mid \mathcal H]$. Averaging over a fine cell and then over the coarse cell holding it is averaging over the coarse cell. A filtration is a chain of such inclusions, so the rule applies at every step.
+The whole card rests on one rule from [The rules of conditional expectation](04-rules-of-conditional-expectation.md), the tower rule: if $`\mathcal H \subseteq \mathcal G`$, then $`E[E[Y \mid \mathcal G] \mid \mathcal H] = E[Y \mid \mathcal H]`$. Averaging over a fine cell and then over the coarse cell holding it is averaging over the coarse cell. A filtration is a chain of such inclusions, so the rule applies at every step.
 
 ### Step 1: a filtration is information that only grows
 
-After hand 1, the eight histories split into two cells of four. After hand 2, four cells of two. After hand 3, eight single histories. Each cell at step $n + 1$ lies inside one cell at step $n$. So every union of step-$n$ cells is also a union of step-$(n+1)$ cells: $\mathcal F_n \subseteq \mathcal F_{n+1}$. The code lists all 2, 4, 16 and 256 sets and checks each collection is inside the next, and is closed under complements and unions, as a sigma-algebra must be.
+After hand 1, the eight histories split into two cells of four. After hand 2, four cells of two. After hand 3, eight single histories. Each cell at step $`n + 1`$ lies inside one cell at step $`n`$. So every union of step-$`n`$ cells is also a union of step-$`(n+1)`$ cells: $`\mathcal F_n \subseteq \mathcal F_{n+1}`$. The code lists all 2, 4, 16 and 256 sets and checks each collection is inside the next, and is closed under complements and unions, as a sigma-algebra must be.
 
 A family that forgets is not a filtration. "The result of the last hand only", at step 2, does not contain the set "won the first hand", which step 1 held.
 
 ### Step 2: forecasts of a fixed result are martingales
 
-Take $M_n = E[Y \mid \mathcal F_n]$. It is adapted: a conditional expectation given $\mathcal F_n$ is $\mathcal F_n$-measurable by definition. It is integrable: $\lvert E[Y \mid \mathcal F_n]\rvert \le E[\lvert Y\rvert \mid \mathcal F_n]$, whose mean is $E\lvert Y\rvert$. And the tower rule with $\mathcal F_n \subseteq \mathcal F_{n+1}$ gives
+Take $`M_n = E[Y \mid \mathcal F_n]`$. It is adapted: a conditional expectation given $`\mathcal F_n`$ is $`\mathcal F_n`$-measurable by definition. It is integrable: $`\lvert E[Y \mid \mathcal F_n]\rvert \le E[\lvert Y\rvert \mid \mathcal F_n]`$, whose mean is $`E\lvert Y\rvert`$. And the tower rule with $`\mathcal F_n \subseteq \mathcal F_{n+1}`$ gives
 
-$$E[M_{n+1} \mid \mathcal F_n] = E\big[E[Y \mid \mathcal F_{n+1}] \mid \mathcal F_n\big] = E[Y \mid \mathcal F_n] = M_n .$$
+```math
+E[M_{n+1} \mid \mathcal F_n] = E\big[E[Y \mid \mathcal F_{n+1}] \mid \mathcal F_n\big] = E[Y \mid \mathcal F_n] = M_n .
+```
 
 On the poker night, after a first win the four endings are 150, 130, 110 and 90, averaging 120. After a win and a loss, 110 and 90 average 100. And 140 and 100 average 120: the forecast after hand 2 averages back to the forecast after hand 1.
 
 Why does the forecast equal the bankroll on the table? The hands still to come are fair. Their expected gain, given anything already seen, is zero, whatever stake the rule sets. The stake is fixed by the past, so it comes out of the forecast as a known factor. Forecast = bankroll now + 0.
 
-The same theorem applies to any final result, not only money. Let $Y$ be 1 if the night ends above $100 and 0 otherwise. The forecast $A_n$ is the chance of finishing ahead: 0.625 at the start, 0.75 after a first win, 0.5 after a first loss. It too is a martingale: 0.75 and 0.5 average to 0.625.
+The same theorem applies to any final result, not only money. Let $`Y`$ be 1 if the night ends above $100 and 0 otherwise. The forecast $`A_n`$ is the chance of finishing ahead: 0.625 at the start, 0.75 after a first win, 0.5 after a first loss. It too is a martingale: 0.75 and 0.5 average to 0.625.
 
 ### Step 3: the density process is a martingale
 
-Roll the loaded die three times; $P$ is a fair die, $Q$ the loaded one of [The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md), rolls independent under each. $\mathcal F_n$ holds the sets decided by the first $n$ rolls. On $\mathcal F_n$, $Q$ has a density against $P$: on the cell of a given start of $n$ rolls, $Z_n$ is $Q(\text{cell})/P(\text{cell})$. Since rolls are independent, that is the product of the per-roll rates. Three sixes give $Z$ values 1, 2.4, 5.76 and about 13.82.
+Roll the loaded die three times; $`P`$ is a fair die, $`Q`$ the loaded one of [The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md), rolls independent under each. $`\mathcal F_n`$ holds the sets decided by the first $`n`$ rolls. On $`\mathcal F_n`$, $`Q`$ has a density against $`P`$: on the cell of a given start of $`n`$ rolls, $`Z_n`$ is $`Q(\text{cell})/P(\text{cell})`$. Since rolls are independent, that is the product of the per-roll rates. Three sixes give $`Z`$ values 1, 2.4, 5.76 and about 13.82.
 
-Why a martingale, in general? Take a set $B$ in $\mathcal F_n$. It is also in $\mathcal F_{n+1}$. So both $Z_n$ and $Z_{n+1}$ give it the same $Q$-weight:
+Why a martingale, in general? Take a set $`B`$ in $`\mathcal F_n`$. It is also in $`\mathcal F_{n+1}`$. So both $`Z_n`$ and $`Z_{n+1}`$ give it the same $`Q`$-weight:
 
-$$E_P[Z_{n+1} \mathbf 1_B] = Q(B) = E_P[Z_n \mathbf 1_B] .$$
+```math
+E_P[Z_{n+1} \mathbf 1_B] = Q(B) = E_P[Z_n \mathbf 1_B] .
+```
 
-That is the defining property of $E_P[Z_{n+1} \mid \mathcal F_n]$, satisfied by $Z_n$. Only one $\mathcal F_n$-measurable quantity has that property, up to sets of probability zero, so $E_P[Z_{n+1} \mid \mathcal F_n] = Z_n$. With $B = \Omega$, $E_P[Z_n] = Q(\Omega) = 1$.
+That is the defining property of $`E_P[Z_{n+1} \mid \mathcal F_n]`$, satisfied by $`Z_n`$. Only one $`\mathcal F_n`$-measurable quantity has that property, up to sets of probability zero, so $`E_P[Z_{n+1} \mid \mathcal F_n] = Z_n`$. With $`B = \Omega`$, $`E_P[Z_n] = Q(\Omega) = 1`$.
 
-If there is a last step with density $Z$ on all of $\mathcal F$, the same argument shows $Z_n = E_P[Z \mid \mathcal F_n]$. So the density process is the forecast of the final density, a special case of Step 2.
+If there is a last step with density $`Z`$ on all of $`\mathcal F`$, the same argument shows $`Z_n = E_P[Z \mid \mathcal F_n]`$. So the density process is the forecast of the final density, a special case of Step 2.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -131,28 +145,28 @@ xychart-beta
     line [1.00, 0.60, 0.36, 0.22]
 ```
 
-The first line is three sixes, the second a six, a one and a five, the third three ones. Under fair odds 172 of the 216 sequences, 0.7963 of them, end with $Z_3$ below 1. The rare high paths pay for them: the average stays at 1 at every step.
+The first line is three sixes, the second a six, a one and a five, the third three ones. Under fair odds 172 of the 216 sequences, 0.7963 of them, end with $`Z_3`$ below 1. The rare high paths pay for them: the average stays at 1 at every step.
 
 ### Step 4: a martingale keeps its mean
 
-Apply the defining property twice, then use the tower rule: $E[X_{n+2} \mid \mathcal F_n] = E[E[X_{n+2} \mid \mathcal F_{n+1}] \mid \mathcal F_n] = E[X_{n+1} \mid \mathcal F_n] = X_n$. Induction reaches every later step $m$. Averaging with no information at all is averaging over $\Omega$: take $B = \Omega$ in the defining property, and $E[X_{n+1}] = E[X_n]$. So the bankroll averages $100 after every hand, the chance of finishing ahead averages 0.625, and the density averages 1.
+Apply the defining property twice, then use the tower rule: $`E[X_{n+2} \mid \mathcal F_n] = E[E[X_{n+2} \mid \mathcal F_{n+1}] \mid \mathcal F_n] = E[X_{n+1} \mid \mathcal F_n] = X_n`$. Induction reaches every later step $`m`$. Averaging with no information at all is averaging over $`\Omega`$: take $`B = \Omega`$ in the defining property, and $`E[X_{n+1}] = E[X_n]`$. So the bankroll averages $100 after every hand, the chance of finishing ahead averages 0.625, and the density averages 1.
 
-The converse fails. Let $N_0 = 100$, $N_1$ the bankroll after hand 1, and $N_2 = 200 - N_1$: a forecast that always predicts a reversal. Its means are 100, 100, 100. But after a first win $N_1 = 120$ while the forecast of $N_2$ is 80. A constant mean is a consequence of being a martingale, not a test for it.
+The converse fails. Let $`N_0 = 100`$, $`N_1`$ the bankroll after hand 1, and $`N_2 = 200 - N_1`$: a forecast that always predicts a reversal. Its means are 100, 100, 100. But after a first win $`N_1 = 120`$ while the forecast of $`N_2`$ is 80. A constant mean is a consequence of being a martingale, not a test for it.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal F, P)$ a probability space; $\mathcal F_0 \subseteq \mathcal F_1 \subseteq \dots \subseteq \mathcal F$ sigma-algebras. For an integrable $Y$ and a sigma-algebra $\mathcal G \subseteq \mathcal F$, $E[Y \mid \mathcal G]$ is the a.s.-unique $\mathcal G$-measurable integrable $W$ with $E[W \mathbf 1_B] = E[Y \mathbf 1_B]$ for all $B \in \mathcal G$ ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)).
+**Setting.** $`(\Omega, \mathcal F, P)`$ a probability space; $`\mathcal F_0 \subseteq \mathcal F_1 \subseteq \dots \subseteq \mathcal F`$ sigma-algebras. For an integrable $`Y`$ and a sigma-algebra $`\mathcal G \subseteq \mathcal F`$, $`E[Y \mid \mathcal G]`$ is the a.s.-unique $`\mathcal G`$-measurable integrable $`W`$ with $`E[W \mathbf 1_B] = E[Y \mathbf 1_B]`$ for all $`B \in \mathcal G`$ ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)).
 
-**Theorem 1.** Let $E\lvert Y\rvert < \infty$ and $M_n = E[Y \mid \mathcal F_n]$. *Adapted:* $M_n$ is $\mathcal F_n$-measurable by definition. *Integrable:* by the rules card, $\lvert E[Y \mid \mathcal F_n]\rvert \le E[\lvert Y\rvert \mid \mathcal F_n]$ a.s.; take means and use $E[E[\lvert Y\rvert \mid \mathcal F_n]] = E\lvert Y\rvert < \infty$. *Martingale:* for $B \in \mathcal F_n$, also $B \in \mathcal F_{n+1}$, so $E[M_{n+1} \mathbf 1_B] = E[Y \mathbf 1_B] = E[M_n \mathbf 1_B]$, the first equality by the defining property at level $n + 1$, the second at level $n$. $M_n$ is $\mathcal F_n$-measurable and integrable, so by uniqueness $M_n = E[M_{n+1} \mid \mathcal F_n]$ a.s. This is the tower rule, written out.
+**Theorem 1.** Let $`E\lvert Y\rvert < \infty`$ and $`M_n = E[Y \mid \mathcal F_n]`$. *Adapted:* $`M_n`$ is $`\mathcal F_n`$-measurable by definition. *Integrable:* by the rules card, $`\lvert E[Y \mid \mathcal F_n]\rvert \le E[\lvert Y\rvert \mid \mathcal F_n]`$ a.s.; take means and use $`E[E[\lvert Y\rvert \mid \mathcal F_n]] = E\lvert Y\rvert < \infty`$. *Martingale:* for $`B \in \mathcal F_n`$, also $`B \in \mathcal F_{n+1}`$, so $`E[M_{n+1} \mathbf 1_B] = E[Y \mathbf 1_B] = E[M_n \mathbf 1_B]`$, the first equality by the defining property at level $`n + 1`$, the second at level $`n`$. $`M_n`$ is $`\mathcal F_n`$-measurable and integrable, so by uniqueness $`M_n = E[M_{n+1} \mid \mathcal F_n]`$ a.s. This is the tower rule, written out.
 
-**Theorem 2.** Let $Q$ be a probability on $\mathcal F$ with $Q \ll P$ on $\mathcal F_n$ for every $n$ (automatic if $Q \ll P$ on $\mathcal F$, since $\mathcal F_n \subseteq \mathcal F$). Restricted to $\mathcal F_n$, both are finite measures, so the Radon-Nikodym theorem gives an $\mathcal F_n$-measurable $Z_n \ge 0$, unique $P$-a.s., with $Q(B) = E_P[Z_n \mathbf 1_B]$ for all $B \in \mathcal F_n$. *Adapted:* by construction. *Integrable:* $E_P[Z_n] = Q(\Omega) = 1$. *Martingale:* for $B \in \mathcal F_n \subseteq \mathcal F_{n+1}$, $E_P[Z_{n+1} \mathbf 1_B] = Q(B) = E_P[Z_n \mathbf 1_B]$. So $Z_n$ satisfies the defining property of $E_P[Z_{n+1} \mid \mathcal F_n]$, and uniqueness gives equality $P$-a.s. If moreover $Z = dQ/dP$ on $\mathcal F$, the same computation with $\mathcal F$ in place of $\mathcal F_{n+1}$ gives $Z_n = E_P[Z \mid \mathcal F_n]$.
+**Theorem 2.** Let $`Q`$ be a probability on $`\mathcal F`$ with $`Q \ll P`$ on $`\mathcal F_n`$ for every $`n`$ (automatic if $`Q \ll P`$ on $`\mathcal F`$, since $`\mathcal F_n \subseteq \mathcal F`$). Restricted to $`\mathcal F_n`$, both are finite measures, so the Radon-Nikodym theorem gives an $`\mathcal F_n`$-measurable $`Z_n \ge 0`$, unique $`P`$-a.s., with $`Q(B) = E_P[Z_n \mathbf 1_B]`$ for all $`B \in \mathcal F_n`$. *Adapted:* by construction. *Integrable:* $`E_P[Z_n] = Q(\Omega) = 1`$. *Martingale:* for $`B \in \mathcal F_n \subseteq \mathcal F_{n+1}`$, $`E_P[Z_{n+1} \mathbf 1_B] = Q(B) = E_P[Z_n \mathbf 1_B]`$. So $`Z_n`$ satisfies the defining property of $`E_P[Z_{n+1} \mid \mathcal F_n]`$, and uniqueness gives equality $`P`$-a.s. If moreover $`Z = dQ/dP`$ on $`\mathcal F`$, the same computation with $`\mathcal F`$ in place of $`\mathcal F_{n+1}`$ gives $`Z_n = E_P[Z \mid \mathcal F_n]`$.
 
-**The die.** Under $P$ and $Q$ the rolls are independent, so for a start $(f_1, \dots, f_n)$ the cell $C$ has $P(C) = 6^{-n}$ and $Q(C) = q_{f_1} \cdots q_{f_n}$, where $q_f$ is the loaded probability of face $f$. On a finite space every set in $\mathcal F_n$ is a union of such cells, so the function equal to $Q(C)/P(C)$ on each cell satisfies $Q(B) = E_P[Z_n \mathbf 1_B]$ by adding over the cells in $B$. That ratio is $\prod_k 6 q_{f_k}$, the product of the per-roll rates.
+**The die.** Under $`P`$ and $`Q`$ the rolls are independent, so for a start $`(f_1, \dots, f_n)`$ the cell $`C`$ has $`P(C) = 6^{-n}`$ and $`Q(C) = q_{f_1} \cdots q_{f_n}`$, where $`q_f`$ is the loaded probability of face $`f`$. On a finite space every set in $`\mathcal F_n`$ is a union of such cells, so the function equal to $`Q(C)/P(C)`$ on each cell satisfies $`Q(B) = E_P[Z_n \mathbf 1_B]`$ by adding over the cells in $`B`$. That ratio is $`\prod_k 6 q_{f_k}`$, the product of the per-roll rates.
 
-**Theorem 3.** Let $(X_n)$ be a martingale and $m \ge n$. For $m = n$, $E[X_n \mid \mathcal F_n] = X_n$ since $X_n$ is $\mathcal F_n$-measurable. If $E[X_{m} \mid \mathcal F_n] = X_n$, then by the tower rule with $\mathcal F_n \subseteq \mathcal F_m$, $E[X_{m+1} \mid \mathcal F_n] = E[E[X_{m+1} \mid \mathcal F_m] \mid \mathcal F_n] = E[X_m \mid \mathcal F_n] = X_n$. Induction on $m$ completes it. Taking $B = \Omega$ in the defining property, $E[X_m] = E[E[X_m \mid \mathcal F_n]] = E[X_n]$; with $n = 0$ this is $E[X_m] = E[X_0]$.
+**Theorem 3.** Let $`(X_n)`$ be a martingale and $`m \ge n`$. For $`m = n`$, $`E[X_n \mid \mathcal F_n] = X_n`$ since $`X_n`$ is $`\mathcal F_n`$-measurable. If $`E[X_{m} \mid \mathcal F_n] = X_n`$, then by the tower rule with $`\mathcal F_n \subseteq \mathcal F_m`$, $`E[X_{m+1} \mid \mathcal F_n] = E[E[X_{m+1} \mid \mathcal F_m] \mid \mathcal F_n] = E[X_m \mid \mathcal F_n] = X_n`$. Induction on $`m`$ completes it. Taking $`B = \Omega`$ in the defining property, $`E[X_m] = E[E[X_m \mid \mathcal F_n]] = E[X_n]`$; with $`n = 0`$ this is $`E[X_m] = E[X_0]`$.
 
-**The flip process.** $N_1$ takes 120 and 80 with probability 0.5 each, so $E[N_1] = 100 = E[N_2]$. $N_2 = 200 - N_1$ is $\mathcal F_1$-measurable, so $E[N_2 \mid \mathcal F_1] = 200 - N_1$, which differs from $N_1$ wherever $N_1 \ne 100$: on the whole space.
+**The flip process.** $`N_1`$ takes 120 and 80 with probability 0.5 each, so $`E[N_1] = 100 = E[N_2]`$. $`N_2 = 200 - N_1`$ is $`\mathcal F_1`$-measurable, so $`E[N_2 \mid \mathcal F_1] = 200 - N_1`$, which differs from $`N_1`$ wherever $`N_1 \ne 100`$: on the whole space.
 
 </details>
 
@@ -165,16 +179,16 @@ A second road to all of this on a finite space: every forecast is a cell average
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | the eight endings | $100 ± 20 ± (20 or 40) ± 10 | 150, 130, 110, 90, 130, 110, 50, 30 |
-| $M_0$, the forecast before any hand | (150 + 130 + 110 + 90 + 130 + 110 + 50 + 30) ÷ 8 | 100 |
-| $M_1$ after a first win | (150 + 130 + 110 + 90) ÷ 4 | 120 |
-| $M_1$ after a first loss | (130 + 110 + 50 + 30) ÷ 4 | 80 |
-| $M_2$ after W then L | (110 + 90) ÷ 2 | 100 |
+| $`M_0`$, the forecast before any hand | (150 + 130 + 110 + 90 + 130 + 110 + 50 + 30) ÷ 8 | 100 |
+| $`M_1`$ after a first win | (150 + 130 + 110 + 90) ÷ 4 | 120 |
+| $`M_1`$ after a first loss | (130 + 110 + 50 + 30) ÷ 4 | 80 |
+| $`M_2`$ after W then L | (110 + 90) ÷ 2 | 100 |
 | martingale check at step 1 | (140 + 100) ÷ 2, the two step-2 forecasts after a win | 120 |
-| $A_0$, the chance of finishing above $100 | 5 of 8 endings | 0.625 |
-| $A_1$ after a win, after a loss | 3 of 4, 2 of 4 | 0.75, 0.5 |
-| $Z_2$ on two sixes | 2.4 × 2.4 | 5.76 |
-| check: $Q$(two sixes) | 5.76 × (1 ÷ 36), against 0.4 × 0.4 | **0.16** |
-| mean of each $M_n$, $A_n$, $Z_n$ | the martingale property, step by step | **100, 0.625, 1** |
+| $`A_0`$, the chance of finishing above $100 | 5 of 8 endings | 0.625 |
+| $`A_1`$ after a win, after a loss | 3 of 4, 2 of 4 | 0.75, 0.5 |
+| $`Z_2`$ on two sixes | 2.4 × 2.4 | 5.76 |
+| check: $`Q`$(two sixes) | 5.76 × (1 ÷ 36), against 0.4 × 0.4 | **0.16** |
+| mean of each $`M_n`$, $`A_n`$, $`Z_n`$ | the martingale property, step by step | **100, 0.625, 1** |
 
 Chasing losses makes finishing ahead more likely than not, 0.625, yet the average night still ends at $100: five winning endings are paid for by three losing ones, two of them deep, at $50 and $30.
 
@@ -183,9 +197,9 @@ Chasing losses makes finishing ahead more likely than not, 0.625, yet the averag
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | A house edge: each hand won with chance 0.45 | mean 100, 98, 94.9, 93.9 over the night | unfair bets: the bankroll is a supermartingale |
-| Constant mean taken as the test | means 100, 100, 100, yet 80 forecast after 120 | the flip process $N_n$ is not a martingale |
-| Forecast read one hand early | $M_{n+1}$ at time $n$: not adapted | it uses a hand not yet played |
-| Only the latest roll's rate as $Z_2$ | 0.0667 for two sixes, where $Q$ says 0.16 | the density on two rolls multiplies both rates |
+| Constant mean taken as the test | means 100, 100, 100, yet 80 forecast after 120 | the flip process $`N_n`$ is not a martingale |
+| Forecast read one hand early | $`M_{n+1}`$ at time $`n`$: not adapted | it uses a hand not yet played |
+| Only the latest roll's rate as $`Z_2`$ | 0.0667 for two sixes, where $`Q`$ says 0.16 | the density on two rolls multiplies both rates |
 
 The code prints every entry.
 
@@ -193,7 +207,7 @@ The code prints every entry.
 
 ## Code, from first principles, and it actually runs
 
-Python works in exact fractions from the standard library; Rust writes its own fractions on small integers. The poker filtration is listed set by set. The forecast $M_n$ is reached by three roads that share no arithmetic: averaging the final bankroll over each cell; folding back from the end, two children at a time; and adding up the stakes forward. The density process is reached by three more: $Q(\text{cell})/P(\text{cell})$, the product of per-roll rates, and the $P$-average of $Z_3$ over each cell's completions. A fourth road for the poker night is 200000 simulated nights from SplitMix64, a short random-number generator written out in both languages with seed 2026. The code checks these finite cases; only the proof covers every filtration.
+Python works in exact fractions from the standard library; Rust writes its own fractions on small integers. The poker filtration is listed set by set. The forecast $`M_n`$ is reached by three roads that share no arithmetic: averaging the final bankroll over each cell; folding back from the end, two children at a time; and adding up the stakes forward. The density process is reached by three more: $`Q(\text{cell})/P(\text{cell})`$, the product of per-roll rates, and the $`P`$-average of $`Z_3`$ over each cell's completions. A fourth road for the poker night is 200000 simulated nights from SplitMix64, a short random-number generator written out in both languages with seed 2026. The code checks these finite cases; only the proof covers every filtration.
 
 ### Python
 
@@ -580,15 +594,15 @@ The two outputs match line for line, the simulated nights included.
 
 Lean proves the three theorems for every filtration on any probability space, and checks the card's poker and die arithmetic.
 
-- Take an integrable final result $Y$. Then the forecasts $E[Y \mid \mathcal F_n]$ are integrable and form a martingale.
-- Suppose $Q \ll P$ on each $\mathcal F_n$. Then the density process $Z_n$ is integrable, is a martingale under $P$, and has $E_P[Z_n] = 1$.
-- Take a martingale $X_n$, defined by the one-step rule above. Then $E[X_m \mid \mathcal F_n] = X_n$ almost surely for every $m \ge n$.
-- Take the same martingale. Then $E[X_n] = E[X_0]$ for every $n$.
+- Take an integrable final result $`Y`$. Then the forecasts $`E[Y \mid \mathcal F_n]`$ are integrable and form a martingale.
+- Suppose $`Q \ll P`$ on each $`\mathcal F_n`$. Then the density process $`Z_n`$ is integrable, is a martingale under $`P`$, and has $`E_P[Z_n] = 1`$.
+- Take a martingale $`X_n`$, defined by the one-step rule above. Then $`E[X_m \mid \mathcal F_n] = X_n`$ almost surely for every $`m \ge n`$.
+- Take the same martingale. Then $`E[X_n] = E[X_0]`$ for every $`n`$.
 - The poker sums hold exactly: forecasts 100, 120, 80 and 100, and 140 and 100 averaging back to 120.
 - Five of the eight endings finish above $100, and 0.75 and 0.5 average to 0.625.
-- Two sixes give $Z_2 = 5.76$, and 5.76 times 1/36 is 0.16, the loaded chance of two sixes.
-- Under $Q$, $Z_1$ averages 1.44, not 1.
-- Exactly 172 of the 216 three-roll sequences end with $Z_3$ below 1.
+- Two sixes give $`Z_2 = 5.76`$, and 5.76 times 1/36 is 0.16, the loaded chance of two sixes.
+- Under $`Q`$, $`Z_1`$ averages 1.44, not 1.
+- Exactly 172 of the 216 three-roll sequences end with $`Z_3`$ below 1.
 
 The set counts, the simulated nights, the house edge and the flip process are left to the Python and Rust checks.
 
@@ -689,9 +703,9 @@ example :
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Stop chasing.** Change the second-hand stake after a loss from 40 to 20. $A_0$ falls from 0.625 to 0.5, and the three roads to $M_n$ still agree: the bankroll is a martingale whatever the stakes, provided each is fixed by the hands already played. The house-edge assert then stops the run, because its stake formula still says $40.
+> - **Stop chasing.** Change the second-hand stake after a loss from 40 to 20. $`A_0`$ falls from 0.625 to 0.5, and the three roads to $`M_n`$ still agree: the bankroll is a martingale whatever the stakes, provided each is fixed by the hands already played. The house-edge assert then stops the run, because its stake formula still says $40.
 > - **Fold back with the wrong odds.** In `fold_back`, weight the win child by 0.6 instead of halving. The folded forecasts no longer match the cell averages and the first assert stops the run.
-> - **Another loaded die.** Set `Q1` to `[F(1, 6)] * 6`. Every rate becomes 1, so $Z_n$ is 1 on every path; the three density roads still agree, and the chart lines go flat.
+> - **Another loaded die.** Set `Q1` to `[F(1, 6)] * 6`. Every rate becomes 1, so $`Z_n`$ is 1 on every path; the three density roads still agree, and the chart lines go flat.
 > - **Another seed.** Set `state = 7`. The simulated averages move in the first or second decimal and stay within four standard errors of 120, 80 and 0.625; the label still reads 2026, since it is fixed text.
 
 ---
@@ -699,11 +713,11 @@ example :
 ## The usual mistake
 
 > [!warning]
-> **Writing $E[X_{n+1}] = X_n$.** The left side is one number; the right side changes with the history. The definition conditions on $\mathcal F_n$: after a first win the forecast is 120, after a loss 80. Dropping the condition leaves only the weaker fact $E[X_{n+1}] = E[X_n]$, which the flip process satisfies without being a martingale.
+> **Writing $`E[X_{n+1}] = X_n`$.** The left side is one number; the right side changes with the history. The definition conditions on $`\mathcal F_n`$: after a first win the forecast is 120, after a loss 80. Dropping the condition leaves only the weaker fact $`E[X_{n+1}] = E[X_n]`$, which the flip process satisfies without being a martingale.
 >
-> - **Forgetting whose odds.** The density process averages 1 under $P$. Under $Q$ it does not: $E_Q[Z_1]$ is 1.44.
+> - **Forgetting whose odds.** The density process averages 1 under $`P`$. Under $`Q`$ it does not: $`E_Q[Z_1]`$ is 1.44.
 > - **Reading "fair" as "even chances".** The poker night finishes ahead with chance 0.625 and is still fair; the losing nights are larger.
-> - **Using tomorrow's information today.** A forecast that knows the next hand, $M_{n+1}$ read at time $n$, is not adapted and is no forecast.
+> - **Using tomorrow's information today.** A forecast that knows the next hand, $`M_{n+1}`$ read at time $`n`$, is not adapted and is no forecast.
 > - **Taking a supermartingale for a martingale.** At a table winning with chance 0.45 the night's mean slides from 100 to 93.9.
 
 ---
@@ -711,7 +725,7 @@ example :
 ## Where you meet it in real life
 
 - **Gambling systems.** No stake rule decided from past hands turns fair bets into a positive average, as the chasing rule here shows; why stopping rules cannot either, under conditions, is wing 11's optional stopping ([Stopping times](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/03-stopping-times-and-optional-stopping.md)).
-- **Forecasts that update.** A well-calibrated running forecast of a fixed outcome, such as an election or a match result, is the process $A_n$: its expected next revision is zero.
+- **Forecasts that update.** A well-calibrated running forecast of a fixed outcome, such as an election or a match result, is the process $`A_n`$: its expected next revision is zero.
 - **Changing the odds in pricing.** A pricing model reaches its pricing odds from real-world odds through a density process, a martingale under the old odds: [Changing the measure](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md).
 - **Sequential testing.** The running likelihood ratio between two models of the data, a density process, is a martingale under the first model, which bounds how often it can climb high by chance.
 
@@ -722,7 +736,7 @@ example :
 
 ## What this builds on
 
-- [The rules of conditional expectation](04-rules-of-conditional-expectation.md): the tower rule, taking out what is known, and the bound $\lvert E[Y \mid \mathcal G]\rvert \le E[\lvert Y\rvert \mid \mathcal G]$.
+- [The rules of conditional expectation](04-rules-of-conditional-expectation.md): the tower rule, taking out what is known, and the bound $`\lvert E[Y \mid \mathcal G]\rvert \le E[\lvert Y\rvert \mid \mathcal G]`$.
 - [The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): the loaded die's rates 0.6, 1.2 and 2.4, and the density of one measure against another.
 
 ## Where this goes next

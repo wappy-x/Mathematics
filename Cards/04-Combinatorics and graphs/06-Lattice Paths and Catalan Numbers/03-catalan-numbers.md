@@ -48,31 +48,37 @@ The upper line, F T F T F T F T F T, holds one note or none. The lower line, F T
 
 Write Cat(n), read "Catalan of n", for the count of safe queues with n notes of each kind. The letter C is taken: this wing writes C(a, b) for the choose-count.
 
-$$\mathrm{Cat}(n) = \frac{C(2n,\,n)}{n+1}$$
+```math
+\mathrm{Cat}(n) = \frac{C(2n,\,n)}{n+1}
+```
 
 **Read it aloud:** count every order of the two kinds of note, then keep one in every n + 1 of them.
 
 The same count as a subtraction, the form the proof produces:
 
-$$\mathrm{Cat}(n) = C(2n,\,n) - C(2n,\,n+1)$$
+```math
+\mathrm{Cat}(n) = C(2n,\,n) - C(2n,\,n+1)
+```
 
 **Read it aloud:** all the orders, less the failures, each failure counted in disguise as an order of n + 1 tens and n − 1 fives.
 
 And as a recurrence, a rule reaching a term from earlier terms ([Recurrences](../05-Recurrences/01-recurrences-and-fibonacci.md)). Sigma, the sign ∑, says add the term once for each whole number i from 0 to n ([The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)).
 
-$$\mathrm{Cat}(n+1) = \sum_{i=0}^{n} \mathrm{Cat}(i)\,\mathrm{Cat}(n-i), \qquad \mathrm{Cat}(0) = 1$$
+```math
+\mathrm{Cat}(n+1) = \sum_{i=0}^{n} \mathrm{Cat}(i)\,\mathrm{Cat}(n-i), \qquad \mathrm{Cat}(0) = 1
+```
 
 **Read it aloud:** split a safe queue at the first moment the till is empty again, then add every way of sharing the pairs between inside and after.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | pairs of notes, one $5 and one $10 | 5 pairs, 10 customers | a far larger count |
-| $i$ | pairs inside the first split | runs 0 to 4 | — |
-| $\mathrm{Cat}(n)$ | safe orders with n of each note | Cat(5) = 42 | — |
-| $C(2n,n)$ | every order, safe or not | C(10,5) = 252 | — |
-| $C(2n,n+1)$ | orders with one extra ten | C(10,6) = 210 | fewer survive |
-| $n+1$ | the divisor | 6 | fewer safe orders |
-| $\mathrm{Cat}(0)$ | the empty queue, safe | 1 | — |
+| $`n`$ | pairs of notes, one $5 and one $10 | 5 pairs, 10 customers | a far larger count |
+| $`i`$ | pairs inside the first split | runs 0 to 4 | — |
+| $`\mathrm{Cat}(n)`$ | safe orders with n of each note | Cat(5) = 42 | — |
+| $`C(2n,n)`$ | every order, safe or not | C(10,5) = 252 | — |
+| $`C(2n,n+1)`$ | orders with one extra ten | C(10,6) = 210 | fewer survive |
+| $`n+1`$ | the divisor | 6 | fewer safe orders |
+| $`\mathrm{Cat}(0)`$ | the empty queue, safe | 1 | — |
 
 ### When it holds
 
@@ -118,7 +124,9 @@ With n notes of each kind the kept stretch still ends at −1, so it holds one m
 
 That subtraction is a scaling. Write m!, read "m factorial", for 1 × 2 × … × m. With factorials, C(2n, n+1) divided by C(2n, n) is n!·n! over (n+1)!·(n−1)!; all but two factors cancel, leaving n/(n + 1). The failures are n of every n + 1 orders, whatever n is:
 
-$$\mathrm{Cat}(n) = C(2n,\,n)\left(1 - \frac{n}{n+1}\right) = \frac{C(2n,\,n)}{n+1}$$
+```math
+\mathrm{Cat}(n) = C(2n,\,n)\left(1 - \frac{n}{n+1}\right) = \frac{C(2n,\,n)}{n+1}
+```
 
 At five pairs, 252 × (1 − 5/6) = 252/6 = 42. The divisor 6 is not fitted to the answer: it is one more than the number of pairs, every time.
 

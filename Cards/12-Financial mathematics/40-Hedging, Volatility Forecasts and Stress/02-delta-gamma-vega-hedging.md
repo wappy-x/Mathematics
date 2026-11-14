@@ -38,53 +38,53 @@ Orange: the book hedged with shares alone. It loses in both directions, and the 
 
 Notation first. The **Greeks** are the sensitivities of a price, each named after a Greek letter ([Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md)).
 
-- **Delta**, $\Delta$, is dollars gained per $1 rise in Acme.
-- **Gamma**, $\Gamma$, is how much delta itself changes per $1 rise.
-- **Vega**, $\mathcal{V}$, is dollars gained per one percentage point rise in volatility.
+- **Delta**, $`\Delta`$, is dollars gained per $1 rise in Acme.
+- **Gamma**, $`\Gamma`$, is how much delta itself changes per $1 rise.
+- **Vega**, $`\mathcal{V}`$, is dollars gained per one percentage point rise in volatility.
 
-A subscript names whose Greek it is: P for the dealer's book (portfolio) as it stands, A and B for one of each listed option. The unknowns are $n_A$ and $n_B$, how many of each option to buy, and $n_S$, how many shares.
+A subscript names whose Greek it is: P for the dealer's book (portfolio) as it stands, A and B for one of each listed option. The unknowns are $`n_A`$ and $`n_B`$, how many of each option to buy, and $`n_S`$, how many shares.
 
 A book's Greek is the sum of each position's Greek times its size. Set each total to zero:
 
-$$
-\begin{aligned}
-n_S \cdot 1 &+ n_A\,\Delta_A + n_B\,\Delta_B &= -\Delta_P \\
-n_S \cdot 0 &+ n_A\,\Gamma_A + n_B\,\Gamma_B &= -\Gamma_P \\
-n_S \cdot 0 &+ n_A\,\mathcal{V}_A + n_B\,\mathcal{V}_B &= -\mathcal{V}_P
-\end{aligned}
-$$
+```math
+\begin{aligned} n_S \cdot 1 &+ n_A\,\Delta_A + n_B\,\Delta_B &= -\Delta_P \\ n_S \cdot 0 &+ n_A\,\Gamma_A + n_B\,\Gamma_B &= -\Gamma_P \\ n_S \cdot 0 &+ n_A\,\mathcal{V}_A + n_B\,\mathcal{V}_B &= -\mathcal{V}_P \end{aligned}
+```
 
 **Read it aloud:** for each risk, what the new positions add must cancel what the book already has; a share adds one unit of delta and nothing else.
 
 The bottom two lines hold no shares, so they are two equations in two unknowns. Solve them first, by Cramer's rule (each unknown is a ratio of two cross-products):
 
-$$D = \Gamma_A\,\mathcal{V}_B - \Gamma_B\,\mathcal{V}_A, \qquad n_A = \frac{\Gamma_B\,\mathcal{V}_P - \Gamma_P\,\mathcal{V}_B}{D}, \qquad n_B = \frac{\Gamma_P\,\mathcal{V}_A - \Gamma_A\,\mathcal{V}_P}{D}$$
+```math
+D = \Gamma_A\,\mathcal{V}_B - \Gamma_B\,\mathcal{V}_A, \qquad n_A = \frac{\Gamma_B\,\mathcal{V}_P - \Gamma_P\,\mathcal{V}_B}{D}, \qquad n_B = \frac{\Gamma_P\,\mathcal{V}_A - \Gamma_A\,\mathcal{V}_P}{D}
+```
 
 Then the top line gives the shares:
 
-$$n_S = -\left(\Delta_P + n_A\,\Delta_A + n_B\,\Delta_B\right)$$
+```math
+n_S = -\left(\Delta_P + n_A\,\Delta_A + n_B\,\Delta_B\right)
+```
 
 **Read it aloud:** pick the options to kill gamma and vega together, then buy whatever shares mop up the delta that is left, including the delta the new options brought with them.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's share price today | $100 | every Greek shifts; the hedge must be re-solved |
-| $\sigma$ | volatility: how jumpy Acme is, per year | 20% | the same: the hedge is solved at one level of it |
-| $T$ | years until an option expires | book 1, A 0.25, B 2 | vega rises against gamma |
-| $\Delta$ | delta: dollars gained per $1 rise in Acme | book call 0.586851 | — |
-| $\Gamma$ | gamma: change in delta per $1 rise in Acme | book call 0.018951 | — |
-| $\mathcal{V}$ | vega: dollars gained per one-point rise in volatility | book call 0.379012 | — |
-| $\Delta_P$, $\Gamma_P$, $\mathcal{V}_P$ | the book's totals: 10,000 sold calls, so each Greek times −10,000 | −5,868.51, −189.51, −3,790.12 | bigger hedge, in proportion |
-| $\Delta_A$, $\Gamma_A$, $\mathcal{V}_A$ | one three-month $100 put | −0.448016, 0.039386, 0.196932 | — |
-| $\Delta_B$, $\Gamma_B$, $\mathcal{V}_B$ | one two-year $110 call | 0.486750, 0.013550, 0.541993 | — |
-| $n_A$, $n_B$ | options to buy (negative means sell) | 2,749.41 and 5,993.94 | — |
-| $n_S$ | shares to buy | 4,182.74 | — |
-| $D$ | the determinant: zero means the two options cannot be told apart by gamma and vega | 0.01867873 | smaller means bigger, shakier positions |
+| $`S`$ | Acme's share price today | $100 | every Greek shifts; the hedge must be re-solved |
+| $`\sigma`$ | volatility: how jumpy Acme is, per year | 20% | the same: the hedge is solved at one level of it |
+| $`T`$ | years until an option expires | book 1, A 0.25, B 2 | vega rises against gamma |
+| $`\Delta`$ | delta: dollars gained per $1 rise in Acme | book call 0.586851 | — |
+| $`\Gamma`$ | gamma: change in delta per $1 rise in Acme | book call 0.018951 | — |
+| $`\mathcal{V}`$ | vega: dollars gained per one-point rise in volatility | book call 0.379012 | — |
+| $`\Delta_P`$, $`\Gamma_P`$, $`\mathcal{V}_P`$ | the book's totals: 10,000 sold calls, so each Greek times −10,000 | −5,868.51, −189.51, −3,790.12 | bigger hedge, in proportion |
+| $`\Delta_A`$, $`\Gamma_A`$, $`\mathcal{V}_A`$ | one three-month $100 put | −0.448016, 0.039386, 0.196932 | — |
+| $`\Delta_B`$, $`\Gamma_B`$, $`\mathcal{V}_B`$ | one two-year $110 call | 0.486750, 0.013550, 0.541993 | — |
+| $`n_A`$, $`n_B`$ | options to buy (negative means sell) | 2,749.41 and 5,993.94 | — |
+| $`n_S`$ | shares to buy | 4,182.74 | — |
+| $`D`$ | the determinant: zero means the two options cannot be told apart by gamma and vega | 0.01867873 | smaller means bigger, shakier positions |
 
 ### When it holds
 
-- **Existence and uniqueness.** One answer exactly when $D$ is not zero: the two options must carry gamma and vega in different proportions. If $D$ is zero, there is no answer, or a whole line of them when the book happens to share the options' proportion. Under Black-Scholes, two options on Acme with the same expiry always have $D = 0$, so the two hedges need two different expiries.
-- **Boundary cases.** As $D$ shrinks towards zero the positions grow without limit, and they change sign as $D$ passes through zero: huge offsetting trades that cost fees and break on the first model error. A book with no gamma and no vega needs no options at all; the formulas give $n_A = n_B = 0$ and $n_S = -\Delta_P$.
+- **Existence and uniqueness.** One answer exactly when $`D`$ is not zero: the two options must carry gamma and vega in different proportions. If $`D`$ is zero, there is no answer, or a whole line of them when the book happens to share the options' proportion. Under Black-Scholes, two options on Acme with the same expiry always have $`D = 0`$, so the two hedges need two different expiries.
+- **Boundary cases.** As $`D`$ shrinks towards zero the positions grow without limit, and they change sign as $`D`$ passes through zero: huge offsetting trades that cost fees and break on the first model error. A book with no gamma and no vega needs no options at all; the formulas give $`n_A = n_B = 0`$ and $`n_S = -\Delta_P`$.
 - **Small moves.** The Greeks describe the book near today's price. Past about $5 the leftovers of the Taylor expansion (the next terms in the book's price change) show again: −$489.41 at $90.
 - **Joint moves.** Gamma and vega are hedged one at a time. A drop in Acme together with a rise in volatility has a cross term (vanna, the change in delta per point of volatility) that nothing here cancels: −$222.50 when Acme drops to $95 and volatility rises to 21%, against −$40.91 for the drop alone.
 - **Time.** Theta, the value lost as a day passes, is not one of the three equations; the stale-hedge table shows its effect.
@@ -100,15 +100,17 @@ The book's value is the sum of its positions' values. A sum's rate of change is 
 
 ### Step 1: why these three Greeks matter
 
-For a small move $\delta S$ in Acme and $\delta\sigma$ in volatility (in points), the book's change is, to second order in price and first order in volatility,
+For a small move $`\delta S`$ in Acme and $`\delta\sigma`$ in volatility (in points), the book's change is, to second order in price and first order in volatility,
 
-$$\text{change} \approx \Delta_P\,\delta S + \tfrac12\,\Gamma_P\,(\delta S)^2 + \mathcal{V}_P\,\delta\sigma.$$
+```math
+\text{change} \approx \Delta_P\,\delta S + \tfrac12\,\Gamma_P\,(\delta S)^2 + \mathcal{V}_P\,\delta\sigma.
+```
 
-This is the Taylor expansion from [Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md). Here $\delta S$ is dollars and $\delta\sigma$ is volatility points. Zero all three coefficients and the change is zero to that order. For the dealer at $90, the gamma term alone is $-\tfrac12 \times 189.51 \times 10^2$, a loss of $9,475.29, against the $10,013.64 the shares-only book actually loses. The rest comes from the higher terms.
+This is the Taylor expansion from [Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md). Here $`\delta S`$ is dollars and $`\delta\sigma`$ is volatility points. Zero all three coefficients and the change is zero to that order. For the dealer at $90, the gamma term alone is $`-\tfrac12 \times 189.51 \times 10^2`$, a loss of $9,475.29, against the $10,013.64 the shares-only book actually loses. The rest comes from the higher terms.
 
 ### Step 2: shares only touch delta
 
-A share's price is Acme's price. Its delta is exactly 1, and its gamma and vega are exactly 0. That puts zeros under $n_S$ in the second and third equations. The system is triangular in blocks: the options must fix gamma and vega on their own, and the shares come last. The order matters on a desk too. Buying the shares first and then adding options leaves the options' own deltas unhedged: 1,685.77 shares' worth of exposure in this example.
+A share's price is Acme's price. Its delta is exactly 1, and its gamma and vega are exactly 0. That puts zeros under $`n_S`$ in the second and third equations. The system is triangular in blocks: the options must fix gamma and vega on their own, and the shares come last. The order matters on a desk too. Buying the shares first and then adding options leaves the options' own deltas unhedged: 1,685.77 shares' worth of exposure in this example.
 
 ### Step 3: two options for two Greeks
 
@@ -116,29 +118,33 @@ Two equations need two unknowns that pull in different directions. Short-dated o
 
 That ratio has a closed form under Black-Scholes. For any option on Acme,
 
-$$\frac{\mathcal{V}}{\Gamma} = \frac{S^2\,\sigma\,T}{100}.$$
+```math
+\frac{\mathcal{V}}{\Gamma} = \frac{S^2\,\sigma\,T}{100}.
+```
 
-The strike cancels. So the ratio depends only on the expiry, which is why two options with the same expiry leave $D = 0$. With $S = 100$ and $\sigma = 0.20$ this is $20T$: 5 at three months, 20 at a year, 40 at two years.
+The strike cancels. So the ratio depends only on the expiry, which is why two options with the same expiry leave $`D = 0`$. With $`S = 100`$ and $`\sigma = 0.20`$ this is $`20T`$: 5 at three months, 20 at a year, 40 at two years.
 
 <details>
 <summary>The algebra behind the ratio, if you want it</summary>
 
-Take the first distance d1 as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), and $\varphi(d_1)$ the bell-curve height there. Here q is the 2% dividend yield. Gamma per share is $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$ ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)); vega per unit of volatility is $S e^{-qT}\varphi(d_1)\sqrt{T}$ ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)), and per point it is that over 100. Divide: the factor $e^{-qT}\varphi(d_1)$ cancels, and so does everything that knew the strike. What is left is $S\sqrt{T}\cdot S\sigma\sqrt{T}/100 = S^2\sigma T/100$. A put and a call with the same strike and expiry share d1, so they share gamma and vega; they differ only in delta.
+Take the first distance d1 as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), and $`\varphi(d_1)`$ the bell-curve height there. Here q is the 2% dividend yield. Gamma per share is $`e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})`$ ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)); vega per unit of volatility is $`S e^{-qT}\varphi(d_1)\sqrt{T}`$ ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)), and per point it is that over 100. Divide: the factor $`e^{-qT}\varphi(d_1)`$ cancels, and so does everything that knew the strike. What is left is $`S\sqrt{T}\cdot S\sigma\sqrt{T}/100 = S^2\sigma T/100`$. A put and a call with the same strike and expiry share d1, so they share gamma and vega; they differ only in delta.
 
 </details>
 
 ### Step 4: the hedge as a blend
 
-Divide the gamma equation by the gamma to be filled, $G = -\Gamma_P = 189.51$. Write $w_A = n_A\Gamma_A/G$ and $w_B = n_B\Gamma_B/G$: the fraction of the missing gamma each option supplies. The gamma equation says $w_A + w_B = 1$. The vega equation, divided by the same 189.51, says $5\,w_A + 40\,w_B = 20$. So the book's ratio is a weighted average of the hedges' ratios:
+Divide the gamma equation by the gamma to be filled, $`G = -\Gamma_P = 189.51`$. Write $`w_A = n_A\Gamma_A/G`$ and $`w_B = n_B\Gamma_B/G`$: the fraction of the missing gamma each option supplies. The gamma equation says $`w_A + w_B = 1`$. The vega equation, divided by the same 189.51, says $`5\,w_A + 40\,w_B = 20`$. So the book's ratio is a weighted average of the hedges' ratios:
 
-$$w_A = \frac{40 - 20}{40 - 5} = \frac{4}{7} = 0.571429, \qquad w_B = \frac{3}{7} = 0.428571.$$
+```math
+w_A = \frac{40 - 20}{40 - 5} = \frac{4}{7} = 0.571429, \qquad w_B = \frac{3}{7} = 0.428571.
+```
 
 Both weights are positive exactly when the book's ratio lies between the two hedges' ratios. Then both options trade in the same direction: bought here, because the book is short gamma. If it lies outside, one weight is negative and one option must be sold. This is the same answer as Cramer's rule, reached by a second road.
 
 <details>
 <summary>Detailed proof: Cramer's rule gives the unique answer when $D$ is not zero</summary>
 
-Multiply the gamma equation by $\mathcal{V}_B$ and the vega equation by $\Gamma_B$, then subtract. The $n_B$ terms cancel, leaving $n_A(\Gamma_A\mathcal{V}_B - \Gamma_B\mathcal{V}_A) = -\Gamma_P\mathcal{V}_B + \Gamma_B\mathcal{V}_P$, which is $n_A D = \Gamma_B\mathcal{V}_P - \Gamma_P\mathcal{V}_B$. The same move with A and B swapped gives $n_B D = \Gamma_P\mathcal{V}_A - \Gamma_A\mathcal{V}_P$. When $D \ne 0$, divide: each unknown has exactly one value, and substituting back satisfies both equations. When $D = 0$, the left sides vanish; both equations then demand $\Gamma_B\mathcal{V}_P = \Gamma_P\mathcal{V}_B$ and $\Gamma_A\mathcal{V}_P = \Gamma_P\mathcal{V}_A$. If those fail there is no answer; if they hold, one equation is a multiple of the other and a whole line of answers works. The share line always has exactly one solution for $n_S$, because its coefficient is 1. The general statement for any square system is on [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md).
+Multiply the gamma equation by $`\mathcal{V}_B`$ and the vega equation by $`\Gamma_B`$, then subtract. The $`n_B`$ terms cancel, leaving $`n_A(\Gamma_A\mathcal{V}_B - \Gamma_B\mathcal{V}_A) = -\Gamma_P\mathcal{V}_B + \Gamma_B\mathcal{V}_P`$, which is $`n_A D = \Gamma_B\mathcal{V}_P - \Gamma_P\mathcal{V}_B`$. The same move with A and B swapped gives $`n_B D = \Gamma_P\mathcal{V}_A - \Gamma_A\mathcal{V}_P`$. When $`D \ne 0`$, divide: each unknown has exactly one value, and substituting back satisfies both equations. When $`D = 0`$, the left sides vanish; both equations then demand $`\Gamma_B\mathcal{V}_P = \Gamma_P\mathcal{V}_B`$ and $`\Gamma_A\mathcal{V}_P = \Gamma_P\mathcal{V}_A`$. If those fail there is no answer; if they hold, one equation is a multiple of the other and a whole line of answers works. The share line always has exactly one solution for $`n_S`$, because its coefficient is 1. The general statement for any square system is on [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md).
 
 </details>
 
@@ -153,15 +159,15 @@ House market: Acme $100, rates 5%, dividends 2%, volatility 20%. Greeks from the
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | book Greeks | −10,000 × (0.586851, 0.018951, 0.379012) | −5,868.51, −189.51, −3,790.12 |
-| vega-to-gamma ratios | $20T$ for A, book, B | 5, 20, 40 |
-| $D$ | 0.039386 × 0.541993 − 0.013550 × 0.196932 | 0.01867873 |
-| top of $n_A$ | 0.013550 × (−3,790.12) − (−189.51) × 0.541993 | 51.355394 |
-| top of $n_B$ | (−189.51) × 0.196932 − 0.039386 × (−3,790.12) | 111.959102 |
-| $n_A$, $n_B$ | 51.355394 ÷ 0.01867873, 111.959102 ÷ 0.01867873 | **2,749.41, 5,993.94** |
+| vega-to-gamma ratios | $`20T`$ for A, book, B | 5, 20, 40 |
+| $`D`$ | 0.039386 × 0.541993 − 0.013550 × 0.196932 | 0.01867873 |
+| top of $`n_A`$ | 0.013550 × (−3,790.12) − (−189.51) × 0.541993 | 51.355394 |
+| top of $`n_B`$ | (−189.51) × 0.196932 − 0.039386 × (−3,790.12) | 111.959102 |
+| $`n_A`$, $`n_B`$ | 51.355394 ÷ 0.01867873, 111.959102 ÷ 0.01867873 | **2,749.41, 5,993.94** |
 | second road: gamma shares | (40 − 20) ÷ 35, (20 − 5) ÷ 35 | 0.571429, 0.428571 |
-| $n_A$ again | 0.571429 × 189.51 ÷ 0.039386 | 2,749.41 |
+| $`n_A`$ again | 0.571429 × 189.51 ÷ 0.039386 | 2,749.41 |
 | delta to mop up | −5,868.51 + 2,749.41 × (−0.448016) + 5,993.94 × 0.486750 | −5,868.51 − 1,231.78 + 2,917.55 |
-| $n_S$ | minus that sum | **4,182.74** |
+| $`n_S`$ | minus that sum | **4,182.74** |
 | cash spent | A, B, shares | $9,877.01, $56,090.84, $418,274.14 |
 
 So the dealer buys about 27 contracts of the put and 60 of the two-year call (100 options each), plus 4,182.74 shares. The two options cost $9,877.01 and $56,090.84, well inside the $92,270.06 taken in; the shares are bought with borrowed cash.
@@ -172,7 +178,7 @@ Conventions verified 2026-09-28: a US listed equity option contract covers 100 s
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Hedge with two options of the same expiry, A and a three-month $110 call | $D$ = 0.00000000: no answer | same vega-to-gamma ratio, so the pair cannot separate the two risks |
+| Hedge with two options of the same expiry, A and a three-month $110 call | $`D`$ = 0.00000000: no answer | same vega-to-gamma ratio, so the pair cannot separate the two risks |
 | Keep the 5,868.51 shares from the shares-only hedge, then add the options | delta 1,685.77 left over | the options brought their own delta; shares must be solved last |
 | Sell A and B instead of buying them | −$19,537.87 at $90, −$17,240.92 at $110 | gamma doubled instead of cancelled: about twice the shares-only loss |
 | Quote B's vega per unit of volatility, the others per point | vega −2,817.68 left over | a 100-fold unit slip; most of the book's vega is still there |
@@ -620,12 +626,12 @@ The two outputs agree line for line. Road 2 and road 3 use nudged prices, which 
 
 Lean proves Cramer's rule, when there is one answer, and the same-expiry fact, for any inputs. It also checks the worked ratios.
 
-- Take any Greeks for the book, A and B, with $D$ not zero. Then the three equations hold exactly when the positions are given by Cramer's rule, shares solved last.
-- Take any Greeks for the book, A and B. Then the three equations have exactly one answer if and only if $D$ is not zero.
-- Take gamma and vega per point from the formulas in Step 3, with $S$, $\sigma$ and $T$ above zero. Then vega over gamma is $S^2\sigma T/100$, whatever the strike.
-- Take two such options with the same expiry. Then $D = 0$.
-- At $S$ = 100 and $\sigma$ = 0.20, the ratio is 5 for A, 20 for the book and 40 for B.
-- The gamma shares are $w_A = 4/7$ and $w_B = 3/7$. They add to 1, and $5\,w_A + 40\,w_B = 20$.
+- Take any Greeks for the book, A and B, with $`D`$ not zero. Then the three equations hold exactly when the positions are given by Cramer's rule, shares solved last.
+- Take any Greeks for the book, A and B. Then the three equations have exactly one answer if and only if $`D`$ is not zero.
+- Take gamma and vega per point from the formulas in Step 3, with $`S`$, $`\sigma`$ and $`T`$ above zero. Then vega over gamma is $`S^2\sigma T/100`$, whatever the strike.
+- Take two such options with the same expiry. Then $`D = 0`$.
+- At $`S`$ = 100 and $`\sigma`$ = 0.20, the ratio is 5 for A, 20 for the book and 40 for B.
+- The gamma shares are $`w_A = 4/7`$ and $`w_B = 3/7`$. They add to 1, and $`5\,w_A + 40\,w_B = 20`$.
 
 The Greeks' values, the hedge sizes and every profit or loss figure are left to the Python and Rust checks.
 
@@ -773,7 +779,7 @@ example : (4 / 7 : ℚ) + 3 / 7 = 1 ∧ 5 * (4 / 7 : ℚ) + 40 * (3 / 7) = 20 :=
 > **Believing the hedged book is safe.** It is flat to three first-order questions at one moment. It still loses $1,856.63 if Acme falls $10 while volatility jumps five points, $1,194.95 if Acme rises $20, and it drifts out of balance with every tick and every day. The method buys a smaller, slower risk. It does not remove risk.
 >
 > - **Solving for shares first.** Shares carry delta only. Fix them after the options, or the options' own delta, 1,685.77 here, stays open.
-> - **Two hedges with one expiry.** Under Black-Scholes they have the same vega-to-gamma ratio, so the system has no answer. Close expiries give a tiny $D$ and huge, fragile trades.
+> - **Two hedges with one expiry.** Under Black-Scholes they have the same vega-to-gamma ratio, so the system has no answer. Close expiries give a tiny $`D`$ and huge, fragile trades.
 > - **Mixed units.** Vega per point against vega per unit, or gamma per $1 against gamma per 1% move, silently rescales one row. Keep every Greek in one unit set.
 > - **Ignoring the smile.** With a different volatility per strike, "vega" is no longer one number; a book can be vega-flat to a parallel rise and still lose to a steeper skew.
 

@@ -42,68 +42,78 @@ The bars are the exchange rate at each face. The flat line at 1 is the fair die 
 
 Notation first, in words.
 
-- $\Omega$ (omega) is the space of outcomes, here the six faces.
-- $\mathcal F$ is the collection of sets we allow ourselves to measure; on a die it is all 64 sets of faces.
-- A **measure** gives each such set a size; $\mu$ (mu), $\nu$ (nu) and $\rho$ (rho) name three of them.
-- $P$ is the fair die, $Q$ the loaded die and $R$ a third die, loaded towards the low faces: 0.25, 0.25, 0.2, 0.1, 0.1, 0.1.
-- $\int g\,d\mu$ is the integral of a function $g$ against $\mu$.
-- $\nu \ll \mu$, read "$\nu$ is absolutely continuous with respect to $\mu$", means every set of $\mu$-size zero also has $\nu$-size zero. Two measures that are each absolutely continuous with respect to the other are **equivalent**.
+- $`\Omega`$ (omega) is the space of outcomes, here the six faces.
+- $`\mathcal F`$ is the collection of sets we allow ourselves to measure; on a die it is all 64 sets of faces.
+- A **measure** gives each such set a size; $`\mu`$ (mu), $`\nu`$ (nu) and $`\rho`$ (rho) name three of them.
+- $`P`$ is the fair die, $`Q`$ the loaded die and $`R`$ a third die, loaded towards the low faces: 0.25, 0.25, 0.2, 0.1, 0.1, 0.1.
+- $`\int g\,d\mu`$ is the integral of a function $`g`$ against $`\mu`$.
+- $`\nu \ll \mu`$, read "$`\nu`$ is absolutely continuous with respect to $`\mu`$", means every set of $`\mu`$-size zero also has $`\nu`$-size zero. Two measures that are each absolutely continuous with respect to the other are **equivalent**.
 
-The derivative itself, from [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md), read "the density of $\nu$ against $\mu$": the measurable function $f = \frac{d\nu}{d\mu} \ge 0$ with
+The derivative itself, from [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md), read "the density of $`\nu`$ against $`\mu`$": the measurable function $`f = \frac{d\nu}{d\mu} \ge 0`$ with
 
-$$\nu(A) = \int_A \frac{d\nu}{d\mu}\,d\mu \quad\text{for every } A \in \mathcal F .$$
+```math
+\nu(A) = \int_A \frac{d\nu}{d\mu}\,d\mu \quad\text{for every } A \in \mathcal F .
+```
 
-It is unique almost everywhere, a.e., meaning except on a set of $\mu$-size zero.
+It is unique almost everywhere, a.e., meaning except on a set of $`\mu`$-size zero.
 
-**1. Change of measure.** For every measurable $g \ge 0$, and for every $g$ integrable against $\nu$:
+**1. Change of measure.** For every measurable $`g \ge 0`$, and for every $`g`$ integrable against $`\nu`$:
 
-$$\int_\Omega g\,d\nu \;=\; \int_\Omega g\,\frac{d\nu}{d\mu}\,d\mu .$$
+```math
+\int_\Omega g\,d\nu \;=\; \int_\Omega g\,\frac{d\nu}{d\mu}\,d\mu .
+```
 
-**Read it aloud:** to integrate against $\nu$, integrate against $\mu$ after multiplying by the exchange rate.
+**Read it aloud:** to integrate against $`\nu`$, integrate against $`\mu`$ after multiplying by the exchange rate.
 
-**2. Chain rule.** If $\rho \ll \nu \ll \mu$:
+**2. Chain rule.** If $`\rho \ll \nu \ll \mu`$:
 
-$$\frac{d\rho}{d\mu} \;=\; \frac{d\rho}{d\nu}\,\frac{d\nu}{d\mu} \quad \mu\text{-a.e.}$$
+```math
+\frac{d\rho}{d\mu} \;=\; \frac{d\rho}{d\nu}\,\frac{d\nu}{d\mu} \quad \mu\text{-a.e.}
+```
 
-**Read it aloud:** converting from $\mu$ to $\rho$ directly is the same as converting to $\nu$ first and then on to $\rho$.
+**Read it aloud:** converting from $`\mu`$ to $`\rho`$ directly is the same as converting to $`\nu`$ first and then on to $`\rho`$.
 
-**3. Reciprocal rule.** If $\mu$ and $\nu$ are equivalent, then $\frac{d\nu}{d\mu} > 0$ a.e. and
+**3. Reciprocal rule.** If $`\mu`$ and $`\nu`$ are equivalent, then $`\frac{d\nu}{d\mu} > 0`$ a.e. and
 
-$$\frac{d\mu}{d\nu} \;=\; 1 \Big/ \frac{d\nu}{d\mu} \quad \text{a.e.}$$
+```math
+\frac{d\mu}{d\nu} \;=\; 1 \Big/ \frac{d\nu}{d\mu} \quad \text{a.e.}
+```
 
 **Read it aloud:** the rate back is one over the rate forward.
 
-**4. Changing probability.** If $P$ and $Q$ are probabilities with $Q \ll P$, write $Z = \frac{dQ}{dP}$, and write $E_P$, $E_Q$ for the average under $P$ and under $Q$. Then $Z \ge 0$, $E_P[Z] = 1$, and for every random quantity $X$ that is non-negative or integrable against $Q$:
+**4. Changing probability.** If $`P`$ and $`Q`$ are probabilities with $`Q \ll P`$, write $`Z = \frac{dQ}{dP}`$, and write $`E_P`$, $`E_Q`$ for the average under $`P`$ and under $`Q`$. Then $`Z \ge 0`$, $`E_P[Z] = 1`$, and for every random quantity $`X`$ that is non-negative or integrable against $`Q`$:
 
-$$E_Q[X] \;=\; E_P[X\,Z] .$$
+```math
+E_Q[X] \;=\; E_P[X\,Z] .
+```
 
 **Read it aloud:** an average under the new odds is an average under the old odds, with each outcome reweighted by the exchange rate.
 
-On the die, $Z$ at a face is the loaded probability divided by 0.1667: 0.60 on faces 1 to 4, 1.20 on face 5, 2.40 on face 6. With $X$ the face shown, both sides of rule 4 are 4.4.
+On the die, $`Z`$ at a face is the loaded probability divided by 0.1667: 0.60 on faces 1 to 4, 1.20 on face 5, 2.40 on face 6. With $`X`$ the face shown, both sides of rule 4 are 4.4.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal F$ | the outcomes; the sets allowed to be measured | faces 1 to 6; all 64 sets of faces | — |
-| $\mu$, $\nu$, $\rho$ | three measures on the same sets | the fair, loaded and third dice | — |
-| $P$, $Q$, $R$ | fair die, loaded die, third die | 0.1667 each; 0.1, 0.1, 0.1, 0.1, 0.2, 0.4; 0.25, 0.25, 0.2, 0.1, 0.1, 0.1 | more weight on 6 under Q raises E_Q of the face |
-| $A$ | one set in the collection | faces 5 and 6 | — |
-| $\ll$ | absolutely continuous: no weight where the other has none | Q ≪ P, since P misses no face | — |
-| $\frac{d\nu}{d\mu}$, $f$ | the Radon-Nikodym derivative: density of ν against μ | dQ/dR on face 6 is 4.00 | a larger rate, more ν-weight per unit of μ |
-| $Z$ | dQ/dP, the exchange rate from fair to loaded | 0.60, 0.60, 0.60, 0.60, 1.20, 2.40 | larger Z on 6, larger E_Q of the face |
-| $Q'$, $Z'$ | a die that never shows 1; its rate dQ'/dP | 0, 0.2, 0.1, 0.1, 0.2, 0.4; Z' = 0, 1.20, 0.60, 0.60, 1.20, 2.40 | — |
-| $g$, $X$ | a function being integrated; a random quantity | the face shown | — |
-| $E_P$, $E_Q$, $E_R$ | averages under P, Q, R | E_P of the face 3.5, E_Q 4.4 | — |
-| $\mathbf 1_A$ | indicator: one on A, zero off it | one on faces 5 and 6 | — |
-| $s_n$ | simple functions rising to g, used in the proof | — | larger n, closer to g |
-| $s$, $c_k$, $A_k$, $g^+$, $g^-$, $h$, $B$, $L^1$ | in the proof: a simple function, its values and the sets that carry them; the positive and negative parts of g; the rate dρ/dν; a set of waits; the functions whose absolute value has a finite integral | — | — |
-| $T$, $t$ | a bus wait and a value of it, in minutes | Z(t) = 2e^(−t) | — |
+| $`\Omega`$, $`\mathcal F`$ | the outcomes; the sets allowed to be measured | faces 1 to 6; all 64 sets of faces | — |
+| $`\mu`$, $`\nu`$, $`\rho`$ | three measures on the same sets | the fair, loaded and third dice | — |
+| $`P`$, $`Q`$, $`R`$ | fair die, loaded die, third die | 0.1667 each; 0.1, 0.1, 0.1, 0.1, 0.2, 0.4; 0.25, 0.25, 0.2, 0.1, 0.1, 0.1 | more weight on 6 under Q raises E_Q of the face |
+| $`A`$ | one set in the collection | faces 5 and 6 | — |
+| $`\ll`$ | absolutely continuous: no weight where the other has none | Q ≪ P, since P misses no face | — |
+| $`\frac{d\nu}{d\mu}`$, $`f`$ | the Radon-Nikodym derivative: density of ν against μ | dQ/dR on face 6 is 4.00 | a larger rate, more ν-weight per unit of μ |
+| $`Z`$ | dQ/dP, the exchange rate from fair to loaded | 0.60, 0.60, 0.60, 0.60, 1.20, 2.40 | larger Z on 6, larger E_Q of the face |
+| $`Q'`$, $`Z'`$ | a die that never shows 1; its rate dQ'/dP | 0, 0.2, 0.1, 0.1, 0.2, 0.4; Z' = 0, 1.20, 0.60, 0.60, 1.20, 2.40 | — |
+| $`g`$, $`X`$ | a function being integrated; a random quantity | the face shown | — |
+| $`E_P`$, $`E_Q`$, $`E_R`$ | averages under P, Q, R | E_P of the face 3.5, E_Q 4.4 | — |
+| $`\mathbf 1_A`$ | indicator: one on A, zero off it | one on faces 5 and 6 | — |
+| $`s_n`$ | simple functions rising to g, used in the proof | — | larger n, closer to g |
+| $`s`$, $`c_k`$, $`A_k`$, $`g^+`$, $`g^-`$, $`h`$, $`B`$, $`L^1`$ | in the proof: a simple function, its values and the sets that carry them; the positive and negative parts of g; the rate dρ/dν; a set of waits; the functions whose absolute value has a finite integral | — | — |
+| $`T`$, $`t`$ | a bus wait and a value of it, in minutes | Z(t) = 2e^(−t) | — |
 
 ### When it holds
 
-- **Absolute continuity, $\nu \ll \mu$.** Without it no density exists. Take a die Q' with weights 0, 0.2, 0.1, 0.1, 0.2, 0.4: it never shows a 1. The fair die is not absolutely continuous with respect to Q': P gives face 1 weight 0.1667, and any density times Q'-weight 0 is 0.
-- **$\mu$ σ-finite**, meaning Ω splits into countably many pieces of finite μ-size. The theorem card needs it for existence and for uniqueness a.e.; the chain and reciprocal rules lean on that uniqueness. Rule 1 alone needs only some $f \ge 0$ with $\nu(A) = \int_A f\,d\mu$.
-- **For the reciprocal, equivalence in both directions.** Drop it and the rate back is infinite where the rate forward is 0. For Q', with $Z' = \frac{dQ'}{dP}$ equal to 0 at face 1, the average under Q' of face ÷ Z' over the faces where Z' > 0 is 3.3333, not 3.5.
-- **Integrability for signed functions.** For $g$ of both signs the rule needs $\int \lvert g\rvert\,d\nu < \infty$; then both sides are finite and equal. Otherwise each side may read ∞ − ∞.
+- **Absolute continuity, $`\nu \ll \mu`$.** Without it no density exists. Take a die Q' with weights 0, 0.2, 0.1, 0.1, 0.2, 0.4: it never shows a 1. The fair die is not absolutely continuous with respect to Q': P gives face 1 weight 0.1667, and any density times Q'-weight 0 is 0.
+- **$`\mu`$ σ-finite**, meaning Ω splits into countably many pieces of finite μ-size. The theorem card needs it for existence and for uniqueness a.e.; the chain and reciprocal rules lean on that uniqueness. Rule 1 alone needs only some $`f \ge 0`$ with $`\nu(A) = \int_A f\,d\mu`$.
+- **For the reciprocal, equivalence in both directions.** Drop it and the rate back is infinite where the rate forward is 0. For Q', with $`Z' = \frac{dQ'}{dP}`$ equal to 0 at face 1, the average under Q' of face ÷ Z' over the faces where Z' > 0 is 3.3333, not 3.5.
+- **Integrability for signed functions.** For $`g`$ of both signs the rule needs $`\int \lvert g\rvert\,d\nu < \infty`$; then both sides are finite and equal. Otherwise each side may read ∞ − ∞.
 - **Equalities hold almost everywhere, not everywhere.** A density may be changed on a set of μ-size zero without changing any integral.
 
 ---
@@ -112,68 +122,72 @@ On the die, $Z$ at a face is the loaded probability divided by 0.1667: 0.60 on f
 
 ### Step 0: the definition is the rule for indicators
 
-Take $g = \mathbf 1_A$, one on A and zero off it. Then $\int \mathbf 1_A\,d\nu = \nu(A)$, and $\int \mathbf 1_A \frac{d\nu}{d\mu}\,d\mu = \int_A \frac{d\nu}{d\mu}\,d\mu$. The definition of the derivative says these are equal. So the change-of-measure rule already holds for indicators.
+Take $`g = \mathbf 1_A`$, one on A and zero off it. Then $`\int \mathbf 1_A\,d\nu = \nu(A)`$, and $`\int \mathbf 1_A \frac{d\nu}{d\mu}\,d\mu = \int_A \frac{d\nu}{d\mu}\,d\mu`$. The definition of the derivative says these are equal. So the change-of-measure rule already holds for indicators.
 
 The integral is built from indicators in three climbs: simple functions, then non-negative functions as rising limits, then signed functions as a difference. The rule climbs with it. The chain and reciprocal rules then follow from one more fact: two densities that give the same measure agree a.e.
 
 ### Step 1: simple functions, by adding up
 
-A **simple function** takes finitely many values, each on a measurable set: $s = \sum_k c_k \mathbf 1_{A_k}$ with $c_k \ge 0$ ([The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)). Both sides of the rule are linear in $g$: the integral of a sum is the sum of the integrals. Step 0 holds for each indicator, so it holds for every simple function.
+A **simple function** takes finitely many values, each on a measurable set: $`s = \sum_k c_k \mathbf 1_{A_k}`$ with $`c_k \ge 0`$ ([The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)). Both sides of the rule are linear in $`g`$: the integral of a sum is the sum of the integrals. Step 0 holds for each indicator, so it holds for every simple function.
 
-On the die every function is simple, and the code checks the indicator case on all 64 sets of faces: $Q(A)$ equals the sum over A of Z times $P$, every time.
+On the die every function is simple, and the code checks the indicator case on all 64 sets of faces: $`Q(A)`$ equals the sum over A of Z times $`P`$, every time.
 
 ### Step 2: non-negative functions, by monotone convergence
 
-Any measurable $g \ge 0$ is the rising limit of simple functions $s_1 \le s_2 \le \dots$. Then $s_n \frac{d\nu}{d\mu}$ also rises, to $g\frac{d\nu}{d\mu}$, because the density is non-negative. The monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) lets the limit pass inside both integrals. Step 1's equality at each stage survives the limit, the value +∞ included.
+Any measurable $`g \ge 0`$ is the rising limit of simple functions $`s_1 \le s_2 \le \dots`$. Then $`s_n \frac{d\nu}{d\mu}`$ also rises, to $`g\frac{d\nu}{d\mu}`$, because the density is non-negative. The monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) lets the limit pass inside both integrals. Step 1's equality at each stage survives the limit, the value +∞ included.
 
 ### Step 3: signed functions, by splitting
 
-Write $g = g^+ - g^-$, its positive and negative parts. Step 2 applies to each, and gives $\int \lvert g\rvert\,d\nu = \int \lvert g\rvert \frac{d\nu}{d\mu}\,d\mu$. So $g$ is integrable against $\nu$ exactly when $g\frac{d\nu}{d\mu}$ is integrable against $\mu$ ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). Subtract the two finite equalities. That is rule 1.
+Write $`g = g^+ - g^-`$, its positive and negative parts. Step 2 applies to each, and gives $`\int \lvert g\rvert\,d\nu = \int \lvert g\rvert \frac{d\nu}{d\mu}\,d\mu`$. So $`g`$ is integrable against $`\nu`$ exactly when $`g\frac{d\nu}{d\mu}`$ is integrable against $`\mu`$ ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). Subtract the two finite equalities. That is rule 1.
 
 ### Step 4: the chain rule, from uniqueness
 
-Rule 1 with $g = \mathbf 1_A \frac{d\rho}{d\nu}$, a non-negative function, gives
+Rule 1 with $`g = \mathbf 1_A \frac{d\rho}{d\nu}`$, a non-negative function, gives
 
-$$\rho(A) = \int_A \frac{d\rho}{d\nu}\,d\nu = \int_A \frac{d\rho}{d\nu}\,\frac{d\nu}{d\mu}\,d\mu .$$
+```math
+\rho(A) = \int_A \frac{d\rho}{d\nu}\,d\nu = \int_A \frac{d\rho}{d\nu}\,\frac{d\nu}{d\mu}\,d\mu .
+```
 
-So the product is a density of $\rho$ against $\mu$. The derivative $\frac{d\rho}{d\mu}$ is another. Uniqueness makes them equal μ-a.e.
+So the product is a density of $`\rho`$ against $`\mu`$. The derivative $`\frac{d\rho}{d\mu}`$ is another. Uniqueness makes them equal μ-a.e.
 
-On the dice: $\frac{dQ}{dR}$ is 0.40, 0.40, 0.50, 1.00, 2.00, 4.00, and $\frac{dR}{dP}$ is 1.50, 1.50, 1.20, 0.60, 0.60, 0.60. Their products are 0.60, 0.60, 0.60, 0.60, 1.20, 2.40: exactly Z.
+On the dice: $`\frac{dQ}{dR}`$ is 0.40, 0.40, 0.50, 1.00, 2.00, 4.00, and $`\frac{dR}{dP}`$ is 1.50, 1.50, 1.20, 0.60, 0.60, 0.60. Their products are 0.60, 0.60, 0.60, 0.60, 1.20, 2.40: exactly Z.
 
 ### Step 5: the reciprocal, as a chain that returns home
 
-Run the chain rule from $\mu$ to $\nu$ and back to $\mu$. That is allowed because $\mu \ll \nu \ll \mu$:
+Run the chain rule from $`\mu`$ to $`\nu`$ and back to $`\mu`$. That is allowed because $`\mu \ll \nu \ll \mu`$:
 
-$$\frac{d\mu}{d\mu} = \frac{d\mu}{d\nu}\,\frac{d\nu}{d\mu} \quad \mu\text{-a.e.}$$
+```math
+\frac{d\mu}{d\mu} = \frac{d\mu}{d\nu}\,\frac{d\nu}{d\mu} \quad \mu\text{-a.e.}
+```
 
-The left side is 1, since $\mu(A) = \int_A 1\,d\mu$. A product equal to 1 has neither factor 0, so $\frac{d\nu}{d\mu} > 0$ a.e., and dividing gives rule 3. On the dice, $\frac{dP}{dQ}$ is 1.6667 on faces 1 to 4, 0.8333 on 5 and 0.4167 on 6, and each times Z is 1.
+The left side is 1, since $`\mu(A) = \int_A 1\,d\mu`$. A product equal to 1 has neither factor 0, so $`\frac{d\nu}{d\mu} > 0`$ a.e., and dividing gives rule 3. On the dice, $`\frac{dP}{dQ}`$ is 1.6667 on faces 1 to 4, 0.8333 on 5 and 0.4167 on 6, and each times Z is 1.
 
 ### Step 6: probability is the special case
 
-Put $\mu = P$, $\nu = Q$, $g = X$. Rule 1 reads $E_Q[X] = E_P[XZ]$. With $X = 1$ it gives $E_P[Z] = Q(\Omega) = 1$: an exchange rate between probabilities averages 1 under the old odds. Averages are integrals ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)), so nothing new is needed.
+Put $`\mu = P`$, $`\nu = Q`$, $`g = X`$. Rule 1 reads $`E_Q[X] = E_P[XZ]`$. With $`X = 1`$ it gives $`E_P[Z] = Q(\Omega) = 1`$: an exchange rate between probabilities averages 1 under the old odds. Averages are integrals ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)), so nothing new is needed.
 
-The same holds with a density on the line. Bus waits T, in minutes, are exponential at rate 1 under P and at rate 2 under Q. The densities are $e^{-t}$ and $2e^{-2t}$, so $Z(t) = 2e^{-t}$. Rule 4 gives $E_Q[T] = \int_0^\infty t \cdot 2e^{-t}\cdot e^{-t}\,dt$, which is 0.5, the mean wait at rate 2.
+The same holds with a density on the line. Bus waits T, in minutes, are exponential at rate 1 under P and at rate 2 under Q. The densities are $`e^{-t}`$ and $`2e^{-2t}`$, so $`Z(t) = 2e^{-t}`$. Rule 4 gives $`E_Q[T] = \int_0^\infty t \cdot 2e^{-t}\cdot e^{-t}\,dt`$, which is 0.5, the mean wait at rate 2.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal F)$ a measurable space; $\mu$, $\nu$, $\rho$ measures on it, all σ-finite; $\nu \ll \mu$, and $f = \frac{d\nu}{d\mu}$ a non-negative measurable function with $\nu(A) = \int_A f\,d\mu$ for all $A \in \mathcal F$. Existence and uniqueness a.e. of such $f$ are [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md).
+**Setting.** $`(\Omega, \mathcal F)`$ a measurable space; $`\mu`$, $`\nu`$, $`\rho`$ measures on it, all σ-finite; $`\nu \ll \mu`$, and $`f = \frac{d\nu}{d\mu}`$ a non-negative measurable function with $`\nu(A) = \int_A f\,d\mu`$ for all $`A \in \mathcal F`$. Existence and uniqueness a.e. of such $`f`$ are [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md).
 
-**Rule 1, indicators.** For $A \in \mathcal F$: $\int \mathbf 1_A\,d\nu = \nu(A) = \int_A f\,d\mu = \int \mathbf 1_A f\,d\mu$. The first equality is the integral of an indicator; the second is the definition of $f$; the third is what an integral over A means.
+**Rule 1, indicators.** For $`A \in \mathcal F`$: $`\int \mathbf 1_A\,d\nu = \nu(A) = \int_A f\,d\mu = \int \mathbf 1_A f\,d\mu`$. The first equality is the integral of an indicator; the second is the definition of $`f`$; the third is what an integral over A means.
 
-**Rule 1, simple functions.** Let $s = \sum_{k=1}^m c_k \mathbf 1_{A_k}$ with $c_k \ge 0$. The integral of a non-negative simple function is linear, and so is the integral of non-negative measurable functions. So $\int s\,d\nu = \sum_k c_k \nu(A_k) = \sum_k c_k \int \mathbf 1_{A_k} f\,d\mu = \int s f\,d\mu$.
+**Rule 1, simple functions.** Let $`s = \sum_{k=1}^m c_k \mathbf 1_{A_k}`$ with $`c_k \ge 0`$. The integral of a non-negative simple function is linear, and so is the integral of non-negative measurable functions. So $`\int s\,d\nu = \sum_k c_k \nu(A_k) = \sum_k c_k \int \mathbf 1_{A_k} f\,d\mu = \int s f\,d\mu`$.
 
-**Rule 1, non-negative functions.** Let $g \ge 0$ be measurable. The simple-approximation theorem gives simple $0 \le s_1 \le s_2 \le \dots$ with $s_n \to g$ pointwise. Since $f \ge 0$, $s_n f$ rises to $g f$ pointwise. Monotone convergence, applied once against $\nu$ and once against $\mu$: $\int g\,d\nu = \lim_n \int s_n\,d\nu = \lim_n \int s_n f\,d\mu = \int g f\,d\mu$, both sides possibly $+\infty$.
+**Rule 1, non-negative functions.** Let $`g \ge 0`$ be measurable. The simple-approximation theorem gives simple $`0 \le s_1 \le s_2 \le \dots`$ with $`s_n \to g`$ pointwise. Since $`f \ge 0`$, $`s_n f`$ rises to $`g f`$ pointwise. Monotone convergence, applied once against $`\nu`$ and once against $`\mu`$: $`\int g\,d\nu = \lim_n \int s_n\,d\nu = \lim_n \int s_n f\,d\mu = \int g f\,d\mu`$, both sides possibly $`+\infty`$.
 
-**Rule 1, integrable functions.** Let $g$ be measurable. Applying the previous paragraph to $\lvert g\rvert$ gives $\int \lvert g\rvert\,d\nu = \int \lvert g\rvert f\,d\mu$, so $g \in L^1(\nu)$ exactly when $g f \in L^1(\mu)$. In that case, apply it to $g^+$ and $g^-$: both equalities are between finite numbers, and $(g f)^\pm = g^\pm f$ because $f \ge 0$. Subtract: $\int g\,d\nu = \int g f\,d\mu$.
+**Rule 1, integrable functions.** Let $`g`$ be measurable. Applying the previous paragraph to $`\lvert g\rvert`$ gives $`\int \lvert g\rvert\,d\nu = \int \lvert g\rvert f\,d\mu`$, so $`g \in L^1(\nu)`$ exactly when $`g f \in L^1(\mu)`$. In that case, apply it to $`g^+`$ and $`g^-`$: both equalities are between finite numbers, and $`(g f)^\pm = g^\pm f`$ because $`f \ge 0`$. Subtract: $`\int g\,d\nu = \int g f\,d\mu`$.
 
-**Rule 2.** Suppose $\rho \ll \nu \ll \mu$. Then $\rho \ll \mu$, since a μ-null set is ν-null and so ρ-null. Let $h = \frac{d\rho}{d\nu}$. For $A \in \mathcal F$, apply rule 1 to the non-negative function $\mathbf 1_A h$: $\rho(A) = \int \mathbf 1_A h\,d\nu = \int \mathbf 1_A h f\,d\mu$. So $h f$ is a non-negative measurable function whose integrals over every set give $\rho$. By uniqueness in the Radon-Nikodym theorem, $h f = \frac{d\rho}{d\mu}$ μ-a.e.
+**Rule 2.** Suppose $`\rho \ll \nu \ll \mu`$. Then $`\rho \ll \mu`$, since a μ-null set is ν-null and so ρ-null. Let $`h = \frac{d\rho}{d\nu}`$. For $`A \in \mathcal F`$, apply rule 1 to the non-negative function $`\mathbf 1_A h`$: $`\rho(A) = \int \mathbf 1_A h\,d\nu = \int \mathbf 1_A h f\,d\mu`$. So $`h f`$ is a non-negative measurable function whose integrals over every set give $`\rho`$. By uniqueness in the Radon-Nikodym theorem, $`h f = \frac{d\rho}{d\mu}`$ μ-a.e.
 
-**Rule 3.** Suppose also $\mu \ll \nu$. Take $\rho = \mu$ in rule 2, with the chain $\mu \ll \nu \ll \mu$: $\frac{d\mu}{d\nu} f = \frac{d\mu}{d\mu}$ μ-a.e. The constant 1 satisfies $\mu(A) = \int_A 1\,d\mu$, so by uniqueness $\frac{d\mu}{d\mu} = 1$ μ-a.e. Hence $\frac{d\mu}{d\nu} \cdot f = 1$ off a set of μ-size zero. Off that set neither factor is 0, so $f > 0$ and $\frac{d\mu}{d\nu} = 1/f$. That set also has ν-size zero, since $\nu \ll \mu$; so the equality holds ν-a.e. as well.
+**Rule 3.** Suppose also $`\mu \ll \nu`$. Take $`\rho = \mu`$ in rule 2, with the chain $`\mu \ll \nu \ll \mu`$: $`\frac{d\mu}{d\nu} f = \frac{d\mu}{d\mu}`$ μ-a.e. The constant 1 satisfies $`\mu(A) = \int_A 1\,d\mu`$, so by uniqueness $`\frac{d\mu}{d\mu} = 1`$ μ-a.e. Hence $`\frac{d\mu}{d\nu} \cdot f = 1`$ off a set of μ-size zero. Off that set neither factor is 0, so $`f > 0`$ and $`\frac{d\mu}{d\nu} = 1/f`$. That set also has ν-size zero, since $`\nu \ll \mu`$; so the equality holds ν-a.e. as well.
 
-**Rule 4.** Take $\mu = P$, $\nu = Q$, $Z = f$. $Z \ge 0$ by the theorem. Rule 1 with $g = 1$ gives $E_P[Z] = \int Z\,dP = Q(\Omega) = 1$, so $Z$ is integrable and finite a.e. Rule 1 with $g = X$ gives $E_Q[X] = E_P[XZ]$ for $X \ge 0$, and for $X$ integrable against $Q$, in which case $X\,Z$ is integrable against $P$.
+**Rule 4.** Take $`\mu = P`$, $`\nu = Q`$, $`Z = f`$. $`Z \ge 0`$ by the theorem. Rule 1 with $`g = 1`$ gives $`E_P[Z] = \int Z\,dP = Q(\Omega) = 1`$, so $`Z`$ is integrable and finite a.e. Rule 1 with $`g = X`$ gives $`E_Q[X] = E_P[XZ]`$ for $`X \ge 0`$, and for $`X`$ integrable against $`Q`$, in which case $`X\,Z`$ is integrable against $`P`$.
 
-**The bus waits.** Under P, T has density $e^{-t}$ against length on $[0, \infty)$; under Q, $2e^{-2t}$. For a Borel set B of waits, $Q(T \in B) = \int_B 2e^{-2t}\,dt = \int_B 2e^{-t}\,e^{-t}\,dt$, so $2e^{-t}$ is the density of the law of T under Q against its law under P. Rule 1 on the line: $E_Q[T] = \int_0^\infty t\,2e^{-t}e^{-t}\,dt = 2\int_0^\infty t e^{-2t}\,dt = 2 \cdot \tfrac14 = \tfrac12$.
+**The bus waits.** Under P, T has density $`e^{-t}`$ against length on $`[0, \infty)`$; under Q, $`2e^{-2t}`$. For a Borel set B of waits, $`Q(T \in B) = \int_B 2e^{-2t}\,dt = \int_B 2e^{-t}\,e^{-t}\,dt`$, so $`2e^{-t}`$ is the density of the law of T under Q against its law under P. Rule 1 on the line: $`E_Q[T] = \int_0^\infty t\,2e^{-t}e^{-t}\,dt = 2\int_0^\infty t e^{-2t}\,dt = 2 \cdot \tfrac14 = \tfrac12`$.
 
 </details>
 
@@ -199,7 +213,7 @@ On a finite space all four rules have a shorter road: every measure is a list of
 
 The loaded die averages 4.4 per roll, and the fair die's rolls, reweighted by the exchange rate, say the same; turning the rate round recovers the fair die's 3.5.
 
-The bus waits give the same shape of answer: $E_P[T\,Z]$ with $Z(t) = 2e^{-t}$ is 0.5, the mean wait at rate 2. The code reaches 0.5 by Simpson's rule (a numerical integral from parabolas fitted through evenly spaced points) and by 200000 weighted draws.
+The bus waits give the same shape of answer: $`E_P[T\,Z]`$ with $`Z(t) = 2e^{-t}`$ is 0.5, the mean wait at rate 2. The code reaches 0.5 by Simpson's rule (a numerical integral from parabolas fitted through evenly spaced points) and by 200000 weighted draws.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -605,11 +619,11 @@ The two outputs match line for line, the random draws included.
 
 Lean proves rules 1, 2 and 3 for all σ-finite measures, and checks the card's dice fractions exactly.
 
-- Take σ-finite measures μ and ν with ν ≪ μ, and a measurable $g \ge 0$. Then $\int g\,d\nu = \int g\,\frac{d\nu}{d\mu}\,d\mu$, both sides possibly +∞.
-- Take the same μ and ν, and a $g$ integrable against ν. Then $g\,\frac{d\nu}{d\mu}$ is integrable against μ, and the two integrals are equal.
-- Suppose ρ ≪ ν ≪ μ, all three σ-finite. Then $\frac{d\rho}{d\mu} = \frac{d\rho}{d\nu}\,\frac{d\nu}{d\mu}$ μ-a.e.
-- Suppose μ and ν are σ-finite and equivalent. Then $\frac{d\nu}{d\mu} > 0$ μ-a.e.
-- Suppose μ and ν are σ-finite and equivalent. Then $\frac{d\mu}{d\nu} = 1 \big/ \frac{d\nu}{d\mu}$, both μ-a.e. and ν-a.e.
+- Take σ-finite measures μ and ν with ν ≪ μ, and a measurable $`g \ge 0`$. Then $`\int g\,d\nu = \int g\,\frac{d\nu}{d\mu}\,d\mu`$, both sides possibly +∞.
+- Take the same μ and ν, and a $`g`$ integrable against ν. Then $`g\,\frac{d\nu}{d\mu}`$ is integrable against μ, and the two integrals are equal.
+- Suppose ρ ≪ ν ≪ μ, all three σ-finite. Then $`\frac{d\rho}{d\mu} = \frac{d\rho}{d\nu}\,\frac{d\nu}{d\mu}`$ μ-a.e.
+- Suppose μ and ν are σ-finite and equivalent. Then $`\frac{d\nu}{d\mu} > 0`$ μ-a.e.
+- Suppose μ and ν are σ-finite and equivalent. Then $`\frac{d\mu}{d\nu} = 1 \big/ \frac{d\nu}{d\mu}`$, both μ-a.e. and ν-a.e.
 - On the dice, Z is 3/5 on faces 1 to 4, 6/5 on face 5 and 12/5 on face 6. Its average under P is 1.
 - E_Q of the face is 22/5, both directly and as E_P of face × Z.
 - dQ/dR × dR/dP equals Z on every face.
@@ -729,9 +743,9 @@ example : (5 : ℚ) / 3 * (3 / 5) = 1 ∧ (5 : ℚ) / 6 * (6 / 5) = 1 ∧ (5 : �
 ## The usual mistake
 
 > [!warning]
-> **Using the rate on the wrong side.** $Z = \frac{dQ}{dP}$ converts P-weight into Q-weight, so it multiplies inside an average under P. Inside an average under Q it counts the loading twice: $E_Q[\text{face} \times Z]$ is 7.56, above the largest face. To go from Q back to P, use $\frac{dP}{dQ}$.
+> **Using the rate on the wrong side.** $`Z = \frac{dQ}{dP}`$ converts P-weight into Q-weight, so it multiplies inside an average under P. Inside an average under Q it counts the loading twice: $`E_Q[\text{face} \times Z]`$ is 7.56, above the largest face. To go from Q back to P, use $`\frac{dP}{dQ}`$.
 >
-> - **Taking Z for a probability.** It is a rate. It reaches 2.40 on face 6 and 2.00 at a zero-minute wait; what it satisfies is $E_P[Z] = 1$.
+> - **Taking Z for a probability.** It is a rate. It reaches 2.40 on face 6 and 2.00 at a zero-minute wait; what it satisfies is $`E_P[Z] = 1`$.
 > - **Inverting without equivalence.** Against Q', which never shows 1, the rate 1/Z' is infinite at face 1; skipping that face gives 3.3333 in place of 3.5.
 > - **Assuming a density always exists.** P against Q' has none: at face 1 any value times 0 is 0, and P needs 0.1667.
 > - **Reading "a.e." as "everywhere".** Two versions of a density may differ on a set of size zero; only integrals over sets are pinned down.

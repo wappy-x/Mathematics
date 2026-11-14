@@ -39,45 +39,53 @@ Orange: the run, which finishes $4 ahead. Green: plus one spread. Dark blue: min
 
 ## The formula
 
-Notation first, in words. The earlier card wrote a process as $(X_n)$, read "the value at time n" ([Stochastic processes](01-processes-and-paths.md)). This process is a sum, so it is named $(S_n)$: $S_n$ is the net winnings after round n. Each round's result is $\xi_i$ (xi): +1 with probability $p$, −1 otherwise, all rounds independent. The walk is their running sum:
+Notation first, in words. The earlier card wrote a process as $`(X_n)`$, read "the value at time n" ([Stochastic processes](01-processes-and-paths.md)). This process is a sum, so it is named $`(S_n)`$: $`S_n`$ is the net winnings after round n. Each round's result is $`\xi_i`$ (xi): +1 with probability $`p`$, −1 otherwise, all rounds independent. The walk is their running sum:
 
-$$S_n = \xi_1 + \xi_2 + \cdots + \xi_n, \qquad S_0 = 0$$
+```math
+S_n = \xi_1 + \xi_2 + \cdots + \xi_n, \qquad S_0 = 0
+```
 
 **Read it aloud:** the position after n rounds is the sum of the n results so far.
 
-If $j$ of the n rounds were wins, the other n − j were losses, so $S_n = 2j - n$. The whole law follows from that one line:
+If $`j`$ of the n rounds were wins, the other n − j were losses, so $`S_n = 2j - n`$. The whole law follows from that one line:
 
-$$P(S_n = k) = \binom{n}{j}\, p^{\,j}\,(1-p)^{\,n-j}, \qquad j = \frac{n+k}{2}$$
+```math
+P(S_n = k) = \binom{n}{j}\, p^{\,j}\,(1-p)^{\,n-j}, \qquad j = \frac{n+k}{2}
+```
 
 **Read it aloud:** to stand at height k after n rounds, the walk must have won exactly (n + k)/2 of them; count the orders those wins can come in, and weight each order by its chance.
 
-$$E[S_n] = n\,(2p - 1), \qquad \operatorname{Var}(S_n) = 4\,n\,p\,(1-p)$$
+```math
+E[S_n] = n\,(2p - 1), \qquad \mathrm{Var}(S_n) = 4\,n\,p\,(1-p)
+```
 
 **Read it aloud:** the mean moves by 2p − 1 dollars a round; the variance grows by 4p(1 − p) a round.
 
-For a fair game, p = 0.5: the mean is 0, the variance is n, and the spread, the square root of the variance (the standard deviation), is $\sqrt{n}$. Two positions at different rounds share their early rounds. Their covariance, how far the two move together, counts those shared rounds:
+For a fair game, p = 0.5: the mean is 0, the variance is n, and the spread, the square root of the variance (the standard deviation), is $`\sqrt{n}`$. Two positions at different rounds share their early rounds. Their covariance, how far the two move together, counts those shared rounds:
 
-$$\operatorname{Cov}(S_a, S_b) = 4\,a\,p\,(1-p), \qquad a \le b$$
+```math
+\mathrm{Cov}(S_a, S_b) = 4\,a\,p\,(1-p), \qquad a \le b
+```
 
 **Read it aloud:** the covariance of the positions at rounds a and b, with a the earlier, is the variance at round a: 4p(1 − p) for each of the a rounds they share.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_n$, $S_{50}$, $S_{100}$ | net winnings after round n (or 50, or 100); the walk's position | $4 at round 100 on the charted run | — |
-| $\xi_i$ | result of round i: +1 or −1 | one toss | — |
-| $n$ | rounds played so far | 100 | spread grows like its square root |
-| $p$ | chance a round is a win | 0.5; 18/37 on red at roulette | mean rises; variance peaks at 0.5 |
-| $j$ | rounds won among the first n | 50 to end level | position rises by 2 per extra win |
-| $k$ | a height the walk might stand at | 0, or −10 | probability falls away from the mean |
-| $\binom{n}{j}$ | orders in which j wins can come among n rounds, "n choose j" | 100 choose 50 | — |
-| $E[S_n]$ | the mean position: the average over all runs | $0 | — |
-| $\operatorname{Var}(S_n)$ | the variance: the average squared distance from the mean | 100 | — |
-| $a$, $b$, $S_a$, $S_b$ | two round numbers, a before b, and the positions there | 50 and 100 | — |
-| $\operatorname{Cov}(S_a, S_b)$ | covariance: how far the two positions move together | 50 | — |
-| $m$, $u_m$ | half the rounds, when the count is even; u is the chance of standing at 0 after 2m rounds | 50; 0.0796 | u falls like one over root m |
-| π | the circle number: the distance round a circle over the distance across it; used in the estimate for $u_m$ | 1 over the root of π × 50 is 0.0798 | — |
-| $\mu$ | one round's mean, 2p − 1 (the detailed proof only) | 0 | — |
-| $l$ | a second round number, paired with i (the detailed proof only) | any round other than i | — |
+| $`S_n`$, $`S_{50}`$, $`S_{100}`$ | net winnings after round n (or 50, or 100); the walk's position | $4 at round 100 on the charted run | — |
+| $`\xi_i`$ | result of round i: +1 or −1 | one toss | — |
+| $`n`$ | rounds played so far | 100 | spread grows like its square root |
+| $`p`$ | chance a round is a win | 0.5; 18/37 on red at roulette | mean rises; variance peaks at 0.5 |
+| $`j`$ | rounds won among the first n | 50 to end level | position rises by 2 per extra win |
+| $`k`$ | a height the walk might stand at | 0, or −10 | probability falls away from the mean |
+| $`\binom{n}{j}`$ | orders in which j wins can come among n rounds, "n choose j" | 100 choose 50 | — |
+| $`E[S_n]`$ | the mean position: the average over all runs | $0 | — |
+| $`\mathrm{Var}(S_n)`$ | the variance: the average squared distance from the mean | 100 | — |
+| $`a`$, $`b`$, $`S_a`$, $`S_b`$ | two round numbers, a before b, and the positions there | 50 and 100 | — |
+| $`\mathrm{Cov}(S_a, S_b)`$ | covariance: how far the two positions move together | 50 | — |
+| $`m`$, $`u_m`$ | half the rounds, when the count is even; u is the chance of standing at 0 after 2m rounds | 50; 0.0796 | u falls like one over root m |
+| π | the circle number: the distance round a circle over the distance across it; used in the estimate for $`u_m`$ | 1 over the root of π × 50 is 0.0798 | — |
+| $`\mu`$ | one round's mean, 2p − 1 (the detailed proof only) | 0 | — |
+| $`l`$ | a second round number, paired with i (the detailed proof only) | any round other than i | — |
 
 ### The picture: where 100 fair rounds end
 
@@ -105,42 +113,44 @@ Every bar is an exact probability from the law above. Odd results are missing: a
 
 ### Step 0: the position is decided by the number of wins
 
-Order does not matter to the final total. W L W W and W W W L both end at +2: three wins, one loss. So the position after n rounds is a relabelling of one count, $j$, the number of wins: $S_n = 2j - n$. Everything about $S_n$ at a fixed round is a fact about $j$, and $j$ is a binomial count, n independent trials each succeeding with chance $p$ ([Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md)).
+Order does not matter to the final total. W L W W and W W W L both end at +2: three wins, one loss. So the position after n rounds is a relabelling of one count, $`j`$, the number of wins: $`S_n = 2j - n`$. Everything about $`S_n`$ at a fixed round is a fact about $`j`$, and $`j`$ is a binomial count, n independent trials each succeeding with chance $`p`$ ([Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md)).
 
 ### Step 1: the law at round n is the binomial law, moved and stretched
 
-Each particular order of j wins and n − j losses has chance $p^{\,j}(1-p)^{\,n-j}$, by independence. There are $\binom{n}{j}$ such orders. Standing at height $k$ means $2j - n = k$, so $j = (n+k)/2$. That gives the law.
+Each particular order of j wins and n − j losses has chance $`p^{\,j}(1-p)^{\,n-j}`$, by independence. There are $`\binom{n}{j}`$ such orders. Standing at height $`k`$ means $`2j - n = k`$, so $`j = (n+k)/2`$. That gives the law.
 
-Two consequences follow at once. The height and the number of rounds have the same parity (both even or both odd), since $k = 2j - n$. And only heights from −n to n occur. After 100 fair rounds, ending level has chance 100 choose 50 divided by 2^100, which is 0.0796.
+Two consequences follow at once. The height and the number of rounds have the same parity (both even or both odd), since $`k = 2j - n`$. And only heights from −n to n occur. After 100 fair rounds, ending level has chance 100 choose 50 divided by 2^100, which is 0.0796.
 
 ### Step 2: the mean adds one round's mean per round
 
-One round has mean $1 \cdot p + (-1)(1-p) = 2p - 1$. Averages add over sums, always, independent or not. So the mean after n rounds is n times that: $E[S_n] = n(2p-1)$. For a fair game, 0.
+One round has mean $`1 \cdot p + (-1)(1-p) = 2p - 1`$. Averages add over sums, always, independent or not. So the mean after n rounds is n times that: $`E[S_n] = n(2p-1)`$. For a fair game, 0.
 
 ### Step 3: the variance adds, because the rounds are independent
 
-One round's variance is its average square minus its mean squared: $1 - (2p-1)^2 = 4p(1-p)$. Squared distances do not add in general. Expanding the square of a sum gives every round's own variance plus a covariance for every pair of rounds ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent rounds have covariance zero, so only the n variances survive: $\operatorname{Var}(S_n) = 4np(1-p)$. For a fair game, one per round, n in all.
+One round's variance is its average square minus its mean squared: $`1 - (2p-1)^2 = 4p(1-p)`$. Squared distances do not add in general. Expanding the square of a sum gives every round's own variance plus a covariance for every pair of rounds ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent rounds have covariance zero, so only the n variances survive: $`\mathrm{Var}(S_n) = 4np(1-p)`$. For a fair game, one per round, n in all.
 
 <details>
 <summary>Detailed proof: mean, variance and shared rounds</summary>
 
-Let $\mu = 2p - 1$ be one round's mean. Write $S_n - n\mu = \sum_{i=1}^{n} (\xi_i - \mu)$, a sum of centred results.
+Let $`\mu = 2p - 1`$ be one round's mean. Write $`S_n - n\mu = \sum_{i=1}^{n} (\xi_i - \mu)`$, a sum of centred results.
 
-**Mean.** Expectation is linear: the mean of a sum is the sum of the means ([Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)). So $E[S_n] = \sum_{i} E[\xi_i] = n\mu$. No independence is used.
+**Mean.** Expectation is linear: the mean of a sum is the sum of the means ([Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)). So $`E[S_n] = \sum_{i} E[\xi_i] = n\mu`$. No independence is used.
 
 **Variance.** Square the centred sum and take expectations:
-$$\operatorname{Var}(S_n) = \sum_{i=1}^{n} E[(\xi_i-\mu)^2] + \sum_{i \ne l} E[(\xi_i-\mu)(\xi_l-\mu)].$$
-Each diagonal term is $E[\xi_i^2] - \mu^2 = 1 - \mu^2 = 4p(1-p)$, since $\xi_i^2 = 1$ always. For $i \ne l$, independence makes the expectation of the product the product of the expectations, each zero. So $\operatorname{Var}(S_n) = 4np(1-p)$.
 
-**Shared rounds.** For $a \le b$, split $S_b = S_a + (S_b - S_a)$. The increment $S_b - S_a$ is built from rounds $a+1$ to $b$, independent of the first $a$ rounds, so its covariance with $S_a$ is zero. Covariance splits over a sum, so $\operatorname{Cov}(S_a, S_b) = \operatorname{Cov}(S_a, S_a) + \operatorname{Cov}(S_a, S_b - S_a) = \operatorname{Var}(S_a) + 0 = 4ap(1-p)$.
+$`\displaystyle \mathrm{Var}(S_n) = \sum_{i=1}^{n} E[(\xi_i-\mu)^2] + \sum_{i \ne l} E[(\xi_i-\mu)(\xi_l-\mu)].`$
 
-**Law.** The event $\{S_n = k\}$ is the event "exactly $j = (n+k)/2$ wins". The results are independent with common chance $p$, so the count of wins is binomial with parameters n and p, and the law follows. If $n + k$ is odd or $|k| > n$, no whole $j$ exists and the probability is 0.
+Each diagonal term is $`E[\xi_i^2] - \mu^2 = 1 - \mu^2 = 4p(1-p)`$, since $`\xi_i^2 = 1`$ always. For $`i \ne l`$, independence makes the expectation of the product the product of the expectations, each zero. So $`\mathrm{Var}(S_n) = 4np(1-p)`$.
+
+**Shared rounds.** For $`a \le b`$, split $`S_b = S_a + (S_b - S_a)`$. The increment $`S_b - S_a`$ is built from rounds $`a+1`$ to $`b`$, independent of the first $`a`$ rounds, so its covariance with $`S_a`$ is zero. Covariance splits over a sum, so $`\mathrm{Cov}(S_a, S_b) = \mathrm{Cov}(S_a, S_a) + \mathrm{Cov}(S_a, S_b - S_a) = \mathrm{Var}(S_a) + 0 = 4ap(1-p)`$.
+
+**Law.** The event $`\{S_n = k\}`$ is the event "exactly $`j = (n+k)/2`$ wins". The results are independent with common chance $`p`$, so the count of wins is binomial with parameters n and p, and the law follows. If $`n + k`$ is odd or $`|k| > n`$, no whole $`j`$ exists and the probability is 0.
 
 </details>
 
 ### Step 4: the spread grows like the square root of the rounds
 
-Variance grows in proportion to the rounds. Spread is the square root of variance. So spread grows like $\sqrt{n}$: 25 rounds give $5, 100 give $10, 400 give $20, 1,600 give $40. Four times the rounds, twice the spread.
+Variance grows in proportion to the rounds. Spread is the square root of variance. So spread grows like $`\sqrt{n}`$: 25 rounds give $5, 100 give $10, 400 give $20, 1,600 give $40. Four times the rounds, twice the spread.
 
 The reason is cancellation. If every round went the same way the walk would travel n. Independent rounds partly undo each other, and what survives grows only like the square root. This is the same arithmetic that makes an average of n measurements accurate to one over root n ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)).
 
@@ -148,11 +158,11 @@ With a bias the two growth rates compete. Betting red at European roulette wins 
 
 ### Step 5: positions at different rounds share their past
 
-$S_{50}$ and $S_{100}$ are not independent: the first 50 rounds sit inside both. Their covariance counts the shared rounds, 50 for a fair game. Divided by the two spreads, $\sqrt{50}$ and $10$, it gives a correlation of 0.7071. Knowing the halfway position tells a good deal about the finish. Which information is available at each round is the subject of [Filtrations](03-filtrations-and-information.md).
+$`S_{50}`$ and $`S_{100}`$ are not independent: the first 50 rounds sit inside both. Their covariance counts the shared rounds, 50 for a fair game. Divided by the two spreads, $`\sqrt{50}`$ and $`10`$, it gives a correlation of 0.7071. Knowing the halfway position tells a good deal about the finish. Which information is available at each round is the subject of [Filtrations](03-filtrations-and-information.md).
 
 ### Step 6: returns to zero
 
-The walk can stand at 0 only after an even number of rounds, 2m. The chance is $\binom{2m}{m}/4^m$, which for large m is close to one over the square root of π m ([The middle of the row](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)): 0.0798 against the exact 0.0796 at m = 50.
+The walk can stand at 0 only after an even number of rounds, 2m. The chance is $`\binom{2m}{m}/4^m`$, which for large m is close to one over the square root of π m ([The middle of the row](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)): 0.0798 against the exact 0.0796 at m = 50.
 
 Adding these chances over every even round gives the expected number of visits to 0, since the mean of a count is the sum of the chances of its events. The sum has a closed form: the expected number of visits in 2m rounds is (2m + 1) times the chance of standing at 0 at round 2m, minus 1. For 100 rounds, 101 × 0.0796 − 1 = 7.04 visits.
 
@@ -161,17 +171,17 @@ The count grows without bound, like the square root of the rounds, and a fair wa
 <details>
 <summary>Detailed proof: the count of visits to 0</summary>
 
-Write $u_m = \binom{2m}{m}/4^m$, the chance of standing at 0 after 2m rounds, with $u_0 = 1$. The claim is $u_0 + u_1 + \cdots + u_m = (2m+1)\,u_m$.
+Write $`u_m = \binom{2m}{m}/4^m`$, the chance of standing at 0 after 2m rounds, with $`u_0 = 1`$. The claim is $`u_0 + u_1 + \cdots + u_m = (2m+1)\,u_m`$.
 
-The ratio of neighbours is $u_{m+1}/u_m = \frac{(2m+2)(2m+1)}{4(m+1)^2} = \frac{2m+1}{2m+2}$, so $(2m+2)\,u_{m+1} = (2m+1)\,u_m$.
+The ratio of neighbours is $`u_{m+1}/u_m = \frac{(2m+2)(2m+1)}{4(m+1)^2} = \frac{2m+1}{2m+2}`$, so $`(2m+2)\,u_{m+1} = (2m+1)\,u_m`$.
 
-Induction on m. At m = 0 both sides are 1. If the claim holds at m, adding $u_{m+1}$ gives $(2m+1)u_m + u_{m+1} = (2m+2)u_{m+1} + u_{m+1} = (2m+3)u_{m+1}$, the claim at m + 1.
+Induction on m. At m = 0 both sides are 1. If the claim holds at m, adding $`u_{m+1}`$ gives $`(2m+1)u_m + u_{m+1} = (2m+2)u_{m+1} + u_{m+1} = (2m+3)u_{m+1}`$, the claim at m + 1.
 
-The number of visits in rounds 1 to 2m is a sum of indicators, one per even round: each is 1 if the walk stands at 0 at that round and 0 otherwise, so its mean is that round's u. Linearity gives expected visits $u_1 + \cdots + u_m = (2m+1)u_m - 1$.
+The number of visits in rounds 1 to 2m is a sum of indicators, one per even round: each is 1 if the walk stands at 0 at that round and 0 otherwise, so its mean is that round's u. Linearity gives expected visits $`u_1 + \cdots + u_m = (2m+1)u_m - 1`$.
 
 </details>
 
-The other road to the law is counting paths, which the combinatorics card does in full; this card only adds the weights $p^{\,j}(1-p)^{\,n-j}$, and for a fair game all 2^n paths weigh the same.
+The other road to the law is counting paths, which the combinatorics card does in full; this card only adds the weights $`p^{\,j}(1-p)^{\,n-j}`$, and for a fair game all 2^n paths weigh the same.
 
 ---
 
@@ -647,22 +657,22 @@ The two outputs match line for line: the generator is integer arithmetic, and th
 
 ### Lean
 
-Lean proves the facts of Why it works for any number of rounds and any win chance $p$, and checks the worked numbers.
+Lean proves the facts of Why it works for any number of rounds and any win chance $`p`$, and checks the worked numbers.
 
-- Suppose the rounds are independent, each result $\xi_i$ is +1 or −1, and every round wins with the same chance $p$. Then the law of $S_n$ is the formula above, with $j = (n+k)/2$.
-- Take the same rounds. Then a height $k$ has chance 0 when $n + k$ is odd or $|k| > n$.
-- Take the same rounds. Then the mean after n rounds is $E[S_n] = n(2p - 1)$.
-- Take the same rounds. Then the variance after n rounds is $\operatorname{Var}(S_n) = 4np(1-p)$.
-- Take the same rounds and two round numbers $a \le b$. Then $\operatorname{Cov}(S_a, S_b) = 4ap(1-p)$, the variance at round a.
-- Take a fair game, with $p = 0.5$, and $2m$ rounds. Then the expected number of visits to 0 is $(2m+1)u_m - 1$.
+- Suppose the rounds are independent, each result $`\xi_i`$ is +1 or −1, and every round wins with the same chance $`p`$. Then the law of $`S_n`$ is the formula above, with $`j = (n+k)/2`$.
+- Take the same rounds. Then a height $`k`$ has chance 0 when $`n + k`$ is odd or $`|k| > n`$.
+- Take the same rounds. Then the mean after n rounds is $`E[S_n] = n(2p - 1)`$.
+- Take the same rounds. Then the variance after n rounds is $`\mathrm{Var}(S_n) = 4np(1-p)`$.
+- Take the same rounds and two round numbers $`a \le b`$. Then $`\mathrm{Cov}(S_a, S_b) = 4ap(1-p)`$, the variance at round a.
+- Take a fair game, with $`p = 0.5`$, and $`2m`$ rounds. Then the expected number of visits to 0 is $`(2m+1)u_m - 1`$.
 - W L W W and W W W L both end at +2: three wins and one loss.
 - After 100 fair rounds the mean is $0, the variance 100 and the spread $10.
 - The spreads after 25, 100, 400 and 1,600 rounds are $5, $10, $20 and $40.
 - The counts behind ending level, 100 choose 50 and 2^100, are exact whole numbers.
-- Take a fair game. Then the covariance of $S_{50}$ and $S_{100}$ is 50, and the correlation squared is exactly 1/2.
-- Take red at roulette, with $p = 18/37$. Then the mean after 100 spins is −100/37 dollars, and after 10,000 spins it is −10000/37.
+- Take a fair game. Then the covariance of $`S_{50}`$ and $`S_{100}`$ is 50, and the correlation squared is exactly 1/2.
+- Take red at roulette, with $`p = 18/37`$. Then the mean after 100 spins is −100/37 dollars, and after 10,000 spins it is −10000/37.
 - Take the same roulette bet. Then the variance after 100 spins is 136800/1369.
-- Take a fair game of 100 rounds, so $m = 50$. Then $u_0 + u_1 + \cdots + u_{50} = 101\,u_{50}$.
+- Take a fair game of 100 rounds, so $`m = 50`$. Then $`u_0 + u_1 + \cdots + u_{50} = 101\,u_{50}`$.
 
 The decimals, such as 0.0796 and 7.04, the 296 for repeating rounds, and the simulated rows are left to the Python and Rust checks.
 
@@ -1045,7 +1055,7 @@ example : ∑ k ∈ Finset.range 51, Nat.centralBinom k * 4 ^ (50 - k) = 101 * N
 > - **Adding spreads.** One round has spread $1, so 100 rounds "should" have spread $100. They have $10: variances add, spreads do not.
 > - **Spread as a fence.** "Within $10" holds for 0.7287 of runs, not all; 0.2713 end outside.
 > - **Ignoring a small edge.** At roulette the edge is invisible over 100 spins (mean −$2.70 against spread $10.00) and decisive over 10,000 (−$270.27 against $99.96).
-> - **Treating positions as independent.** $S_{50}$ and $S_{100}$ share 50 rounds; their correlation is 0.7071, not 0.
+> - **Treating positions as independent.** $`S_{50}`$ and $`S_{100}`$ share 50 rounds; their correlation is 0.7071, not 0.
 
 ---
 

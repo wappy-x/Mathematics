@@ -46,38 +46,44 @@ Orange: the actual P&L, every position repriced. Green: the explained P&L from t
 
 ## The formula
 
-Notation first, in words. The positions are numbered by $i$. The capital Greek letter sigma, $\sum_i$, means "add up over every position". A small $d$ in front of an input means "the change in", as on the Greeks-together card.
+Notation first, in words. The positions are numbered by $`i`$. The capital Greek letter sigma, $`\sum_i`$, means "add up over every position". A small $`d`$ in front of an input means "the change in", as on the Greeks-together card.
 
-$$\Delta = \sum_i n_i\,\Delta_i,\quad \Gamma = \sum_i n_i\,\Gamma_i,\quad \mathcal{V} = \sum_i n_i\,\mathcal{V}_i,\quad \Theta = \sum_i n_i\,\Theta_i,\quad \text{and the same for vanna and volga}$$
+```math
+\Delta = \sum_i n_i\,\Delta_i,\quad \Gamma = \sum_i n_i\,\Gamma_i,\quad \mathcal{V} = \sum_i n_i\,\mathcal{V}_i,\quad \Theta = \sum_i n_i\,\Theta_i,\quad \text{and the same for vanna and volga}
+```
 
 **Read it aloud:** each Greek of the book is every position's Greek for one unit, times that position's signed quantity, added up.
 
-$$dB \approx \Delta\,dS + \tfrac12\,\Gamma\,dS^2 + \mathcal{V}\,d\sigma + \Theta\,dt + \text{vanna}\,dS\,d\sigma + \tfrac12\,\text{volga}\,d\sigma^2$$
+```math
+dB \approx \Delta\,dS + \tfrac12\,\Gamma\,dS^2 + \mathcal{V}\,d\sigma + \Theta\,dt + \text{vanna}\,dS\,d\sigma + \tfrac12\,\text{volga}\,d\sigma^2
+```
 
 **Read it aloud:** the book's gain over the day is its delta times Acme's move, plus half its gamma times the move squared, plus its vega times the volatility move, plus its theta times the time gone, plus its vanna times both moves together, plus half its volga times the volatility move squared.
 
-The rate did not move, so the rho term (rho is the slope in the rate, from [Rho and dividend rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md)) is zero and left off. The cross terms that carry time, such as delta's change with time times $dS\,dt$, are tiny over one day; they are left off too and land in the unexplained. The explained P&L is the right-hand side. The unexplained is $dB$ from a full reprice minus the right-hand side.
+The rate did not move, so the rho term (rho is the slope in the rate, from [Rho and dividend rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md)) is zero and left off. The cross terms that carry time, such as delta's change with time times $`dS\,dt`$, are tiny over one day; they are left off too and land in the unexplained. The explained P&L is the right-hand side. The unexplained is $`dB`$ from a full reprice minus the right-hand side.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $B$, $dB$ | the book's value, and its change over the day | +$41,096.48 actual | — |
-| $i$, $n_i$, $\sum_i$ | a position's number; its signed quantity in shares' worth, minus for short; add over every position | put B: −130,000 | that position's Greeks weigh more |
-| $V_i$, $\Delta_i$, $\Gamma_i$ | one unit's value, delta and gamma in position $i$ | put B: 0.609142, −0.118683, 0.019820 | — |
-| $S$, $dS$ | Acme's price, and its overnight move | $100, +$5 | the gain rises through delta, gamma and vanna |
-| $\sigma$, $d\sigma$ | volatility as a decimal, and its move; one vol point is 0.01 | 0.20, +0.01 | the gain rises by about $27,884.01 per point |
-| $t$, $dt$ | calendar time gone, in years; a day is 1/365 | one day | the gain rises by $58.41 a day: this book earns from time |
-| $\Delta$ | book delta: dollars per $1 move in Acme | 6.78 | — |
-| $\Gamma$ | book gamma: how fast book delta changes per $1 move | 78.83 | — |
-| $\mathcal{V}$ | book vega: dollars per 1.00 of volatility | 2,788,400.86 | — |
-| $\Theta$ | book theta: dollars per year of time passing | 21,320.96 | — |
+| $`B`$, $`dB`$ | the book's value, and its change over the day | +$41,096.48 actual | — |
+| $`i`$, $`n_i`$, $`\sum_i`$ | a position's number; its signed quantity in shares' worth, minus for short; add over every position | put B: −130,000 | that position's Greeks weigh more |
+| $`V_i`$, $`\Delta_i`$, $`\Gamma_i`$ | one unit's value, delta and gamma in position $`i`$ | put B: 0.609142, −0.118683, 0.019820 | — |
+| $`S`$, $`dS`$ | Acme's price, and its overnight move | $100, +$5 | the gain rises through delta, gamma and vanna |
+| $`\sigma`$, $`d\sigma`$ | volatility as a decimal, and its move; one vol point is 0.01 | 0.20, +0.01 | the gain rises by about $27,884.01 per point |
+| $`t`$, $`dt`$ | calendar time gone, in years; a day is 1/365 | one day | the gain rises by $58.41 a day: this book earns from time |
+| $`\Delta`$ | book delta: dollars per $1 move in Acme | 6.78 | — |
+| $`\Gamma`$ | book gamma: how fast book delta changes per $1 move | 78.83 | — |
+| $`\mathcal{V}`$ | book vega: dollars per 1.00 of volatility | 2,788,400.86 | — |
+| $`\Theta`$ | book theta: dollars per year of time passing | 21,320.96 | — |
 | vanna, volga | how delta moves with volatility; how vega moves with volatility | 187,573.82; −6,051,929.67 | — |
-| $F$, $T$, $r$, $q$ | a future's price, years left, the riskless rate, the dividend yield | $100.75, 0.25, 5%, 2% | — |
+| $`F`$, $`T`$, $`r`$, $`q`$ | a future's price, years left, the riskless rate, the dividend yield | $100.75, 0.25, 5%, 2% | — |
 
-The futures price has its own formula. Holding Acme until the future's date costs the interest $r$ and earns the dividends $q$, so
+The futures price has its own formula. Holding Acme until the future's date costs the interest $`r`$ and earns the dividends $`q`$, so
 
-$$F = S\,e^{(r-q)T},$$
+```math
+F = S\,e^{(r-q)T},
+```
 
-and a future's Greeks follow from it: delta $e^{(r-q)T}$ (1.007528 here), theta $-(r-q)F$, and no gamma, vega, vanna or volga. The option Greeks are the closed forms derived on the sibling cards, for instance [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) and [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md).
+and a future's Greeks follow from it: delta $`e^{(r-q)T}`$ (1.007528 here), theta $`-(r-q)F`$, and no gamma, vega, vanna or volga. The option Greeks are the closed forms derived on the sibling cards, for instance [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) and [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md).
 
 ### When it holds
 
@@ -104,7 +110,7 @@ The three option positions together carry delta 74,765.37: they gain that many d
 <details>
 <summary>Detailed proof: portfolio Greeks add, and so do the leftovers</summary>
 
-Write the book's value as $B(S,\sigma,t) = \sum_i n_i V_i(S,\sigma,t)$, where $V_i$ is one unit's value in position $i$ and the quantities $n_i$ stay fixed. Differentiation is linear: the slope of a sum of fixed multiples of curves is the same sum of fixed multiples of their slopes. Apply it once in $S$ and $\partial B / \partial S = \sum_i n_i\,\partial V_i / \partial S$, which is the delta line. Apply it twice and $\partial^2 B / \partial S^2 = \sum_i n_i\,\partial^2 V_i / \partial S^2$, the gamma line. The same step in $\sigma$, in $t$ and in mixed pairs gives vega, theta, vanna and volga. Nothing about options was used; the future is one more $V_i$.
+Write the book's value as $`B(S,\sigma,t) = \sum_i n_i V_i(S,\sigma,t)`$, where $`V_i`$ is one unit's value in position $`i`$ and the quantities $`n_i`$ stay fixed. Differentiation is linear: the slope of a sum of fixed multiples of curves is the same sum of fixed multiples of their slopes. Apply it once in $`S`$ and $`\partial B / \partial S = \sum_i n_i\,\partial V_i / \partial S`$, which is the delta line. Apply it twice and $`\partial^2 B / \partial S^2 = \sum_i n_i\,\partial^2 V_i / \partial S^2`$, the gamma line. The same step in $`\sigma`$, in $`t`$ and in mixed pairs gives vega, theta, vanna and volga. Nothing about options was used; the future is one more $`V_i`$.
 
 The explained P&L is built from those sums, and every term is linear in the Greeks, so the book's explained P&L is the sum of each position's explained P&L. The actual P&L is a difference of sums, so it is also the sum of each position's actual P&L. Their difference, the unexplained, is then the sum of the positions' unexplained amounts. The code's by-position lines show it: −1,498.85 + 4,959.90 − 433.00 + 30.70 = 3,058.75.
 
@@ -112,9 +118,9 @@ The explained P&L is built from those sums, and every term is linear in the Gree
 
 ### Step 2: the future's Greeks come from its price
 
-The future's price is $F = S\,e^{(r-q)T}$. Acme up $1 lifts it by $e^{(r-q)T}$: that is 1.007528, not 1. The price is a straight line in $S$, so gamma is zero. Volatility does not appear, so vega, vanna and volga are zero.
+The future's price is $`F = S\,e^{(r-q)T}`$. Acme up $1 lifts it by $`e^{(r-q)T}`$: that is 1.007528, not 1. The price is a straight line in $`S`$, so gamma is zero. Volatility does not appear, so vega, vanna and volga are zero.
 
-Time does appear. As the calendar moves, $T$ shrinks, and $F$ drifts down toward Acme's price at the rate $(r-q)F$ a year: 3.022585 dollars per unit. The desk is short, so it gains: **+224,275.78** a year of theta from the future alone. With the short put's own time decay, the book earns $58.41 a day from the clock: positive theta.
+Time does appear. As the calendar moves, $`T`$ shrinks, and $`F`$ drifts down toward Acme's price at the rate $`(r-q)F`$ a year: 3.022585 dollars per unit. The desk is short, so it gains: **+224,275.78** a year of theta from the future alone. With the short put's own time decay, the book earns $58.41 a day from the clock: positive theta.
 
 ### Step 3: the expansion applies to the book as one smooth value
 
@@ -134,7 +140,7 @@ Two measurements confirm that the leftover is almost all stale Greeks.
 <details>
 <summary>Why re-taking the Greeks closes the gap</summary>
 
-Cut the move into equal slices. Each slice's expansion misses two things. The first is its cubic leftover: double the number of slices and each slice's leftover falls eightfold while the count doubles, so the total falls fourfold. The second is the cross terms that carry time, which the formula leaves out, such as charm (the change of delta with time) times $dS\,dt$. Each is a slice of time times a slice of move: double the slices and each falls fourfold, so the total halves. Either way the gap keeps shrinking as slices are added, which is why refreshing the Greeks through the day beats last night's numbers. The future's $30.70 of unexplained is exactly such a time cross term, taken over the whole day at once.
+Cut the move into equal slices. Each slice's expansion misses two things. The first is its cubic leftover: double the number of slices and each slice's leftover falls eightfold while the count doubles, so the total falls fourfold. The second is the cross terms that carry time, which the formula leaves out, such as charm (the change of delta with time) times $`dS\,dt`$. Each is a slice of time times a slice of move: double the slices and each falls fourfold, so the total halves. Either way the gap keeps shrinking as slices are added, which is why refreshing the Greeks through the day beats last night's numbers. The future's $30.70 of unexplained is exactly such a time cross term, taken over the whole day at once.
 
 </details>
 
@@ -152,7 +158,7 @@ Last night's position Greeks, each the unit Greek times the signed quantity (veg
 | D short future 3m | −74,758.59 | 0 | 0 | 224,275.78 | 0 | 0 |
 | **Book** | **6.78** | **78.83** | **2,788,400.86** | **21,320.96** | **187,573.82** | **−6,051,929.67** |
 
-The book row is the column sum; adding the rounded entries can miss by a cent. Then the day, with $dS = 5$, $d\sigma = 0.01$, $dt = 1/365$:
+The book row is the column sum; adding the rounded entries can miss by a cent. Then the day, with $`dS = 5`$, $`d\sigma = 0.01`$, $`dt = 1/365`$:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -619,7 +625,7 @@ Lean proves that Greeks and P&L add across positions in any book, and that the f
 
 - Take any book whose positions have smooth values near today's inputs. Then every Greek of the book, a slope or a slope of a slope, is the signed sum of its positions' Greeks.
 - For any Greeks and any day's moves, the book's explained P&L is the sum of each position's explained P&L. The same holds for the unexplained P&L.
-- Take a future with price $F = S\,e^{(r-q)T}$. Then its delta is $e^{(r-q)T}$, its gamma is zero and its theta is $-(r-q)F$.
+- Take a future with price $`F = S\,e^{(r-q)T}`$. Then its delta is $`e^{(r-q)T}`$, its gamma is zero and its theta is $`-(r-q)F`$.
 
 The option Greeks, the day's dollar amounts and how fast the unexplained shrinks are left to the Python and Rust checks.
 
@@ -724,7 +730,7 @@ theorem future_greeks_from_price (r q T S t : ℝ) :
 > **Reading a small unexplained as proof the risk is understood.** The explained P&L and the actual agree when the day is small and drift apart with the cube of the move. On the day above the gap was $3,058.75. On a $10 fall with the same volatility move the Greeks predict a gain of $12.76 thousand while the book loses $47.39 thousand. A report that explains ordinary days well is exactly the report that misses the day that matters, which is why desks back it with full repricing across a grid of large moves.
 >
 > Smaller traps:
-> - **Treating a future as one share.** Its delta is $e^{(r-q)T}$, 1.007528 here. Counted as 1, the explained P&L comes out at $40,830.70, closer to the actual and wrong: a mistake that improves the fit is still a mistake, and the next day it will not.
+> - **Treating a future as one share.** Its delta is $`e^{(r-q)T}`$, 1.007528 here. Counted as 1, the explained P&L comes out at $40,830.70, closer to the actual and wrong: a mistake that improves the fit is still a mistake, and the next day it will not.
 > - **Adding Greeks without signs.** Short positions subtract. Entering put B as long turns the day's explained P&L into −$41,695.18.
 > - **Mixing units across positions.** Vega per 1.00 of volatility and vega per vol point differ by 100; Greeks per share and per contract differ by 100. One position in the wrong unit and the sum is meaningless: $380.38 instead of $38,037.74 when contracts replace shares.
 > - **Blaming the unexplained on the Greeks alone.** In a real report the leftover also holds trades done during the day, fees, dividends paid, model changes and data errors. Each has to be separated before the higher-order terms get the blame.
@@ -740,7 +746,7 @@ theorem future_greeks_from_price (r q T S t : ℝ) :
 - **Limits.** Risk managers cap book delta, gamma and vega, not each position's: [Limits](06-risk-limits-and-risk-appetite.md).
 
 > **Say it back**
-> A book's Greeks are its positions' Greeks, each times its signed quantity, added up, because the slope of a sum is the sum of the slopes. A future counts with delta $e^{(r-q)T}$ and a theta of its own. Fed into the second-order expansion, the book's Greeks explain a day's P&L: here $38,037.74 of an actual $41,096.48. The unexplained is the Greeks going stale as the market moves, and it grows with the cube of the move. A small unexplained on a quiet day says nothing about a large day.
+> A book's Greeks are its positions' Greeks, each times its signed quantity, added up, because the slope of a sum is the sum of the slopes. A future counts with delta $`e^{(r-q)T}`$ and a theta of its own. Fed into the second-order expansion, the book's Greeks explain a day's P&L: here $38,037.74 of an actual $41,096.48. The unexplained is the Greeks going stale as the market moves, and it grows with the cube of the move. A small unexplained on a quiet day says nothing about a large day.
 
 ---
 

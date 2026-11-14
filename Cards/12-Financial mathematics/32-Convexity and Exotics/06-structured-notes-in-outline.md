@@ -38,38 +38,44 @@ Orange: the range accrual, 6 percent from 4 percent up to (not including) 6 perc
 
 For the range accrual:
 
-$$V = M\,c\,D(1)\,\frac{1}{n}\sum_{j=1}^{n}\Big[\,N\big(d(a,t_j)\big) - N\big(d(b,t_j)\big)\Big], \qquad d(K,t) = \frac{\ln(F/K) - \tfrac12\sigma^2 t}{\sigma\sqrt{t}}$$
+```math
+V = M\,c\,D(1)\,\frac{1}{n}\sum_{j=1}^{n}\Big[\,N\big(d(a,t_j)\big) - N\big(d(b,t_j)\big)\Big], \qquad d(K,t) = \frac{\ln(F/K) - \tfrac12\sigma^2 t}{\sigma\sqrt{t}}
+```
 
 **Read it aloud:** "Each fixing is a bet that the rate lands at or above the bottom of the band, minus a bet that it lands at or above the top; price both bets with the bell curve, average over the fixings, scale by the full coupon and discount to today."
 
-For the inverse floater, the coupon rate $g(L)$ splits two ways:
+For the inverse floater, the coupon rate $`g(L)`$ splits two ways:
 
-$$g(L) = \min\big(8\%,\ \max(0,\ 10\% - 2L)\big) = 2\big[(K_0 - L)^+ - (K_c - L)^+\big] = 8\% + 2(L - K_0)^+ - 2(L - K_c)^+$$
+```math
+g(L) = \min\big(8\%,\ \max(0,\ 10\% - 2L)\big) = 2\big[(K_0 - L)^+ - (K_c - L)^+\big] = 8\% + 2(L - K_0)^+ - 2(L - K_c)^+
+```
 
-with $K_0 = 5\%$ and $K_c = 1\%$. The notation $x^+$ means $\max(x, 0)$.
+with $`K_0 = 5\%`$ and $`K_c = 1\%`$. The notation $`x^+`$ means $`\max(x, 0)`$.
 
-For the target redemption note, the coupon paid at date $i$ and the running total are
+For the target redemption note, the coupon paid at date $`i`$ and the running total are
 
-$$C_i = \min\big(\text{raw coupon}_i,\ G - A_{i-1}\big), \qquad A_i = A_{i-1} + C_i,$$
+```math
+C_i = \min\big(\text{raw coupon}_i,\ G - A_{i-1}\big), \qquad A_i = A_{i-1} + C_i,
+```
 
-and the note repays its face the day $A_i$ reaches $G$. When the issuer may call, the note's value just after a coupon is $\min(R_i, \text{value of staying alive})$.
+and the note repays its face the day $`A_i`$ reaches $`G`$. When the issuer may call, the note's value just after a coupon is $`\min(R_i, \text{value of staying alive})`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the value… |
 | --- | --- | --- | --- |
-| $V$ | value today of the coupon leg | $47.93 (range), $7.21 (inverse) | |
-| $M$ | the note's face amount | $1,000 | scales every coupon |
-| $c$ | coupon rate earned while the fixing is in the band | 6% a year | rises in proportion |
-| $a$, $b$ | bottom and top of the band; in band means $a \le L < b$ | 4%, 6% | a wider band raises it |
-| $L$, $L_j$, $W$ | the reference rate; its value at fixing $j$; the bell-curve draw that moves it | forward 5% | range: either way hurts; inverse: falls |
-| $n$, $j$, $t_j$, $t$ | number of fixings, which fixing, its time in years | 12, monthly, $t_j = j/12$ | more distant fixings are less sure to land in band |
-| $F$ | forward rate: the level priced in for each fixing | 5% | range: barely moves at mid-band; inverse: falls |
-| $\sigma$ | rate volatility, the yearly jumpiness of the log of the rate | 20% | range falls; inverse rises |
-| $D(T)$, $T$, $r$ | discount factor for money due at year $T$; the rate behind it, $D(T) = e^{-rT}$ | 0.951229, 0.904837; 5% | falls |
-| $N(x)$, $d(K,t)$, $K$ | bell-curve area left of $x$; the cut-off for "fixing at $t$ is at or above the level $K$" | $N(d(4\%,1)) = 0.845118$ | |
-| $g(L)$, $K_0$, $K_c$ | inverse coupon rate; where it hits zero; where it hits its 8% ceiling | 5%, 1% | |
-| $G$, $A_i$, $C_i$, $R_i$, $U_i$, $J_i$, $i$ | target; coupons paid so far; coupon paid at date $i$; issuer's call price; value before the coupon; value of staying alive after it | $50, $30 per hit, $980 then $985 | a higher call price helps the holder |
+| $`V`$ | value today of the coupon leg | $47.93 (range), $7.21 (inverse) | |
+| $`M`$ | the note's face amount | $1,000 | scales every coupon |
+| $`c`$ | coupon rate earned while the fixing is in the band | 6% a year | rises in proportion |
+| $`a`$, $`b`$ | bottom and top of the band; in band means $`a \le L < b`$ | 4%, 6% | a wider band raises it |
+| $`L`$, $`L_j`$, $`W`$ | the reference rate; its value at fixing $`j`$; the bell-curve draw that moves it | forward 5% | range: either way hurts; inverse: falls |
+| $`n`$, $`j`$, $`t_j`$, $`t`$ | number of fixings, which fixing, its time in years | 12, monthly, $`t_j = j/12`$ | more distant fixings are less sure to land in band |
+| $`F`$ | forward rate: the level priced in for each fixing | 5% | range: barely moves at mid-band; inverse: falls |
+| $`\sigma`$ | rate volatility, the yearly jumpiness of the log of the rate | 20% | range falls; inverse rises |
+| $`D(T)`$, $`T`$, $`r`$ | discount factor for money due at year $`T`$; the rate behind it, $`D(T) = e^{-rT}`$ | 0.951229, 0.904837; 5% | falls |
+| $`N(x)`$, $`d(K,t)`$, $`K`$ | bell-curve area left of $`x`$; the cut-off for "fixing at $`t`$ is at or above the level $`K`$" | $`N(d(4\%,1)) = 0.845118`$ | |
+| $`g(L)`$, $`K_0`$, $`K_c`$ | inverse coupon rate; where it hits zero; where it hits its 8% ceiling | 5%, 1% | |
+| $`G`$, $`A_i`$, $`C_i`$, $`R_i`$, $`U_i`$, $`J_i`$, $`i`$ | target; coupons paid so far; coupon paid at date $`i`$; issuer's call price; value before the coupon; value of staying alive after it | $50, $30 per hit, $980 then $985 | a higher call price helps the holder |
 
-The cut-off $d(K,t)$ in words: the numerator is how far the forward sits above the level $K$ in log terms, less the small drag that makes the average of the rate land on $F$; the denominator is how far the log of the rate spreads by time $t$. So $N(d(K,t))$ is the priced-in chance that the fixing at $t$ is at or above $K$.
+The cut-off $`d(K,t)`$ in words: the numerator is how far the forward sits above the level $`K`$ in log terms, less the small drag that makes the average of the rate land on $`F`$; the denominator is how far the log of the rate spreads by time $`t`$. So $`N(d(K,t))`$ is the priced-in chance that the fixing at $`t`$ is at or above $`K`$.
 
 ### When it holds
 
@@ -89,17 +95,19 @@ The value today of a payment due on a date is its average under the pricing law 
 
 ### Step 1: a band is two digitals
 
-A **digital** (a contract paying a fixed sum if a level is reached, nothing otherwise) is priced on [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md). For any rate $L$:
+A **digital** (a contract paying a fixed sum if a level is reached, nothing otherwise) is priced on [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md). For any rate $`L`$:
 
-$$[\,a \le L < b\,] = [\,L \ge a\,] - [\,L \ge b\,].$$
+```math
+[\,a \le L < b\,] = [\,L \ge a\,] - [\,L \ge b\,].
+```
 
-The square brackets are switches: 1 if true, 0 if not. Check the three cases. Below $a$: both switches off, 0 − 0 = 0. In the band: the first on, the second off, 1. At or above $b$: both on, 1 − 1 = 0. The equality holds for every value of the rate, including the endpoints, because the band was defined to include $a$ and exclude $b$.
+The square brackets are switches: 1 if true, 0 if not. Check the three cases. Below $`a`$: both switches off, 0 − 0 = 0. In the band: the first on, the second off, 1. At or above $`b`$: both on, 1 − 1 = 0. The equality holds for every value of the rate, including the endpoints, because the band was defined to include $`a`$ and exclude $`b`$.
 
 So each month's coupon, $1,000 × 6% ÷ 12 = $5, is a long digital at 4% and a short digital at 6%, each paying $5 at year end.
 
 ### Step 2: price each digital, then add
 
-Under the payment-date law the fixing at time $t$ is $L = F\,e^{\sigma W - \frac12\sigma^2 t}$, where $W$ is a bell-curve draw with spread $\sqrt t$. The fixing is at or above $K$ exactly when that draw is above a line, and the chance of that is $N(d(K,t))$. Discount by $D(1)$ because every coupon is paid at year end. Add over twelve months:
+Under the payment-date law the fixing at time $`t`$ is $`L = F\,e^{\sigma W - \frac12\sigma^2 t}`$, where $`W`$ is a bell-curve draw with spread $`\sqrt t`$. The fixing is at or above $`K`$ exactly when that draw is above a line, and the chance of that is $`N(d(K,t))`$. Discount by $`D(1)`$ because every coupon is paid at year end. Add over twelve months:
 
 - the twelve long digitals at 4% are worth $52.86;
 - the twelve short digitals at 6% are worth $4.93;
@@ -109,34 +117,34 @@ Month 1 is almost sure to land in band, with chance 0.999218; month 12 has only 
 
 ### Step 3: the inverse floater is a floor spread
 
-Take the coupon rate $g(L) = \min(8\%, \max(0, 10\% - 2L))$ and check it region by region against $2[(5\% - L)^+ - (1\% - L)^+]$:
+Take the coupon rate $`g(L) = \min(8\%, \max(0, 10\% - 2L))`$ and check it region by region against $`2[(5\% - L)^+ - (1\% - L)^+]`$:
 
-- $L \ge 5\%$: both floor terms are zero, and $10\% - 2L \le 0$, so both sides are 0.
-- $1\% < L < 5\%$: only the first term is live, giving $2(5\% - L) = 10\% - 2L$, which lies between 0 and 8%.
-- $L \le 1\%$: both live, and the difference is $2(5\% - 1\%) = 8\%$, the ceiling.
+- $`L \ge 5\%`$: both floor terms are zero, and $`10\% - 2L \le 0`$, so both sides are 0.
+- $`1\% < L < 5\%`$: only the first term is live, giving $`2(5\% - L) = 10\% - 2L`$, which lies between 0 and 8%.
+- $`L \le 1\%`$: both live, and the difference is $`2(5\% - 1\%) = 8\%`$, the ceiling.
 
-Each $(K - L)^+$ is a **floorlet** (a single-date option paying when the rate is below $K$). So the inverse floater is two floorlets struck at 5%, less two struck at 1%. Replace each $(K - L)^+$ by $(K - L) + (L - K)^+$ and the constants collect into $2(5\% - 1\%) = 8\%$: the same coupon is a fixed 8% plus two **caplets** at 5%, less two caplets at 1% (a caplet pays when the rate is above its strike). The two readings are one cash flow described twice, not two things to add. Caps and floors, and the parity that links them, are on [Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md).
+Each $`(K - L)^+`$ is a **floorlet** (a single-date option paying when the rate is below $`K`$). So the inverse floater is two floorlets struck at 5%, less two struck at 1%. Replace each $`(K - L)^+`$ by $`(K - L) + (L - K)^+`$ and the constants collect into $`2(5\% - 1\%) = 8\%`$: the same coupon is a fixed 8% plus two **caplets** at 5%, less two caplets at 1% (a caplet pays when the rate is above its strike). The two readings are one cash flow described twice, not two things to add. Caps and floors, and the parity that links them, are on [Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md).
 
-The caplet and floorlet prices come from the same lognormal fixing: $E[(L-K)^+] = F N(d+\sigma) - K N(d)$ and $E[(K-L)^+] = K N(-d) - F N(-d-\sigma)$ with $d = d(K,1)$, a fixing at year 1 paid at year 2.
+The caplet and floorlet prices come from the same lognormal fixing: $`E[(L-K)^+] = F N(d+\sigma) - K N(d)`$ and $`E[(K-L)^+] = K N(-d) - F N(-d-\sigma)`$ with $`d = d(K,1)`$, a fixing at year 1 paid at year 2.
 
 ### Step 4: a target breaks the static split
 
-A target redemption note pays a raw coupon, here $30 each half-year the rate is in band. It stops once the coupons paid reach the target, here $50. The coupon that would overshoot is clipped to what is left, and the face is repaid the same day. So $C_i = \min(\text{raw coupon}_i, G - A_{i-1})$ depends on $A_{i-1}$, the coupons already paid. That is a fact about the path, not about one fixing. The raw coupon still splits into digitals, but each piece is multiplied by a switch that depends on history, and no fixed list of stand-alone digitals reproduces it.
+A target redemption note pays a raw coupon, here $30 each half-year the rate is in band. It stops once the coupons paid reach the target, here $50. The coupon that would overshoot is clipped to what is left, and the face is repaid the same day. So $`C_i = \min(\text{raw coupon}_i, G - A_{i-1})`$ depends on $`A_{i-1}`$, the coupons already paid. That is a fact about the path, not about one fixing. The raw coupon still splits into digitals, but each piece is multiplied by a switch that depends on history, and no fixed list of stand-alone digitals reproduces it.
 
 The fix is to carry the history. Build a tree whose nodes record both the rate state and the coupons earned so far. At the last date the note pays its coupon and face. At each earlier node, the value is the coupon plus the discounted average of the next nodes. On a coin with discount 0.98 a period, that gives $980.93: $34.94 of coupons and $945.99 of principal. Two of the eight coin paths (hit, hit) reach the target at date 2 and return the face a period early.
 
 ### Step 5: an issuer call is a Bermudan right, priced backwards
 
-Many notes let the issuer repay early at a set price $R_i$ on listed dates. The issuer holds the right, so the issuer uses it when repaying is cheaper than carrying on. Just after each coupon, the holder's note is worth $\min(R_i, \text{value of staying alive})$. This is the same backward comparison as on [Callable and cancellable swaps](05-callable-and-cancellable-swaps.md), with one addition: the call pays a redemption amount and ends both future coupons and principal.
+Many notes let the issuer repay early at a set price $`R_i`$ on listed dates. The issuer holds the right, so the issuer uses it when repaying is cheaper than carrying on. Just after each coupon, the holder's note is worth $`\min(R_i, \text{value of staying alive})`$. This is the same backward comparison as on [Callable and cancellable swaps](05-callable-and-cancellable-swaps.md), with one addition: the call pays a redemption amount and ends both future coupons and principal.
 
 With calls at $980 after date 1 and $985 after date 2, the tree says: at date 2, staying alive is worth $989.80 (with $30 earned) or $994.70 (with nothing earned); both exceed $985, so the issuer calls. At date 1 after a hit, staying alive is worth $982.45, above $980: call. After a miss it is worth exactly $980.00: a tie, and either choice gives the same value. The callable note is worth **$975.10**. The call right cost the holder $5.83.
 
 <details>
 <summary>Detailed proof: backward induction finds the issuer's best policy</summary>
 
-At each node, a rate state together with the coupons earned so far, let $U_i$ be the note's value just before the date-$i$ coupon. At the final date, or on a target hit, $U_i = C_i + M$. Otherwise let $J_i$ be the discounted average of $U_{i+1}$ over the next nodes. On a call date $U_i = C_i + \min(R_i, J_i)$; on other dates $U_i = C_i + J_i$.
+At each node, a rate state together with the coupons earned so far, let $`U_i`$ be the note's value just before the date-$`i`$ coupon. At the final date, or on a target hit, $`U_i = C_i + M`$. Otherwise let $`J_i`$ be the discounted average of $`U_{i+1}`$ over the next nodes. On a call date $`U_i = C_i + \min(R_i, J_i)`$; on other dates $`U_i = C_i + J_i`$.
 
-Claim: the value at the start is the smallest value the issuer can reach with any rule that decides "call or not" from what is known at the time. Proof by induction from the last date backwards. At the last date there is no choice. Suppose the claim holds from date $i+1$ on. At date $i$, any rule either calls, paying $R_i$, or continues, and a continuing rule is worth at least $J_i$ by the claim for later dates, since averages and discounting preserve order. The minimum of the two options is $\min(R_i, J_i)$, and the backward rule reaches it. So the claim holds at date $i$.
+Claim: the value at the start is the smallest value the issuer can reach with any rule that decides "call or not" from what is known at the time. Proof by induction from the last date backwards. At the last date there is no choice. Suppose the claim holds from date $`i+1`$ on. At date $`i`$, any rule either calls, paying $`R_i`$, or continues, and a continuing rule is worth at least $`J_i`$ by the claim for later dates, since averages and discounting preserve order. The minimum of the two options is $`\min(R_i, J_i)`$, and the backward rule reaches it. So the claim holds at date $`i`$.
 
 On the coin there are five places to call: after a hit or a miss at date 1, and after the three surviving histories at date 2. The check tries all 32 call-or-not policies path by path and keeps the cheapest. It lands on $975.10, the tree's number. Adding call dates can only add policies, so it never raises the holder's value.
 
@@ -154,12 +162,12 @@ The range accrual, month 12 first, then the year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Cut-off at 4% | $(\ln(5/4) - \tfrac12(0.2)^2)/0.2$ | 1.015718 |
-| Cut-off at 6% | $(\ln(5/6) - \tfrac12(0.2)^2)/0.2$ | −1.011608 |
-| Chance at or above 4% | $N(1.015718)$ | 0.845118 |
-| Chance at or above 6% | $N(-1.011608)$ | 0.155863 |
+| Cut-off at 4% | $`(\ln(5/4) - \tfrac12(0.2)^2)/0.2`$ | 1.015718 |
+| Cut-off at 6% | $`(\ln(5/6) - \tfrac12(0.2)^2)/0.2`$ | −1.011608 |
+| Chance at or above 4% | $`N(1.015718)`$ | 0.845118 |
+| Chance at or above 6% | $`N(-1.011608)`$ | 0.155863 |
 | Month 12 in band | 0.845118 − 0.155863 | 0.689255 |
-| Month 1 in band | same, with $t = 1/12$ | 0.999218 |
+| Month 1 in band | same, with $`t = 1/12`$ | 0.999218 |
 | Average over 12 months | sum of the twelve, over 12 | 0.839800 |
 | Sure coupon, today's money | $1,000 × 6% × 0.951229 | $57.07 |
 | **Range accrual coupon** | $57.07 × 0.839800 | **$47.93** |
@@ -626,13 +634,13 @@ The two outputs agree line for line.
 
 Lean proves the range accrual split under any pricing law, the inverse floater split at every rate, and the coin note's best call.
 
-- Take $n$ fixings, all paid at year end with discount $D(1)$, under any pricing law, with $a \le b$. Then the coupon is worth $M\,c\,D(1)/n$ times a sum over the fixings. Each fixing adds the chance it is at or above $a$, less the chance it is at or above $b$.
-- Take any rate $L$. Then $g(L)$ equals two floorlets struck at 5% less two struck at 1%. It also equals a fixed 8% plus two caplets at 5% less two caplets at 1%.
+- Take $`n`$ fixings, all paid at year end with discount $`D(1)`$, under any pricing law, with $`a \le b`$. Then the coupon is worth $`M\,c\,D(1)/n`$ times a sum over the fixings. Each fixing adds the chance it is at or above $`a`$, less the chance it is at or above $`b`$.
+- Take any rate $`L`$. Then $`g(L)`$ equals two floorlets struck at 5% less two struck at 1%. It also equals a fixed 8% plus two caplets at 5% less two caplets at 1%.
 - Take the coin target note, with calls at $980 after date 1 and $985 after date 2. Then the backward tree's $975.10 is the lowest value reachable by any call rule that uses only what is known at the time. Calling after date 1, on every path, reaches it.
 - Take the coin note with no call. Then the backward tree and the walk down all eight paths both give exactly $980.93443.
 - Each month's range coupon is exactly $5, and the floorlet constants collect to exactly 8%.
 
-The lognormal chances $N(d(K,t))$, the dollar prices of the range accrual and inverse floater, the Greeks and the simulations are left to the Python and Rust checks.
+The lognormal chances $`N(d(K,t))`$, the dollar prices of the range accrual and inverse floater, the Greeks and the simulations are left to the Python and Rust checks.
 
 ```lean
 -- Structured rate notes: a range accrual is priced exactly as long digitals at the band's bottom less short digitals at its top, an inverse floater's coupon is a floorlet spread and equally a fixed coupon plus a caplet spread, and on the card's coin model the backward tree gives the issuer's cheapest call policy.

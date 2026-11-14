@@ -28,11 +28,15 @@ To scale: 280 px per metre across, 800 px per metre down, so sag is drawn 2.86 t
 
 Write x for the distance from the left bracket in metres and y(x) for the sag there, downward; y′ is the slope, y″ the bend. A tight canvas with small slopes obeys −T y″ = q, with T the tension and q the weight per metre. Divide by T and call f = q/T the **load**:
 
-$$-y'' = f, \qquad y(0) = 0, \quad y(1) = 0$$
+```math
+-y'' = f, \qquad y(0) = 0, \quad y(1) = 0
+```
 
 Its conditions sit at both ends, not at the start ([Boundary value problems](05-two-point-boundary-value-problems.md)). Its solution is
 
-$$y(x) = \int_0^1 G(x, s)\, f(s)\, ds, \qquad G(x, s) = \begin{cases} x\,(1 - s), & x \le s \\ s\,(1 - x), & x \ge s \end{cases}$$
+```math
+y(x) = \int_0^1 G(x, s)\, f(s)\, ds, \qquad G(x, s) = \begin{cases} x\,(1 - s), & x \le s \\ s\,(1 - x), & x \ge s \end{cases}
+```
 
 **Read it aloud:** the sag at x is the load at each place s, times the tent that a unit bag at s makes at x, added up over the whole shelf.
 
@@ -40,14 +44,14 @@ The two cases fold into one line, G(x, s) = min(x, s)(1 − max(x, s)). A bag of
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $s$ | where the sag is read; where a load sits, in m | 0 to 1; the bag at s = 0.3 | moving s moves the corner |
-| $y$ | sag in m, downward; y′ slope, y″ bend | 0.105 m under the bag | — |
-| $T$, $q$ | tension in N; weight per metre in N/m | 98.1 N; books 98.1 N/m | more T, less sag |
-| $f$ | load, q/T, per metre | 1 per m for the books | sag grows in proportion |
-| $P$ | a point weight divided by T | 49.05 N / 98.1 N = 0.5 | the tent scales with it |
-| $G$ | Green's function: sag at x from a unit load at s | G(0.3, 0.3) = 0.21 | — |
-| $u_1$, $u_2$ | unloaded shapes pinned at one end: x at the left, 1 − x at the right | 0 at their own bracket | — |
-| $A$, $B$ | the tent's left slope and the size of its right slope, set by s | 0.7 and 0.3 at s = 0.3 | — |
+| $`x`$, $`s`$ | where the sag is read; where a load sits, in m | 0 to 1; the bag at s = 0.3 | moving s moves the corner |
+| $`y`$ | sag in m, downward; y′ slope, y″ bend | 0.105 m under the bag | — |
+| $`T`$, $`q`$ | tension in N; weight per metre in N/m | 98.1 N; books 98.1 N/m | more T, less sag |
+| $`f`$ | load, q/T, per metre | 1 per m for the books | sag grows in proportion |
+| $`P`$ | a point weight divided by T | 49.05 N / 98.1 N = 0.5 | the tent scales with it |
+| $`G`$ | Green's function: sag at x from a unit load at s | G(0.3, 0.3) = 0.21 | — |
+| $`u_1`$, $`u_2`$ | unloaded shapes pinned at one end: x at the left, 1 − x at the right | 0 at their own bracket | — |
+| $`A`$, $`B`$ | the tent's left slope and the size of its right slope, set by s | 0.7 and 0.3 at s = 0.3 | — |
 
 ### When it holds
 
@@ -82,7 +86,9 @@ In general, with u₁ an unloaded solution meeting the left condition and u₂ o
 
 Split the sum at s = x: loads left of x act through s(1 − x), loads right of x through x(1 − s):
 
-$$y(x) = (1 - x)\int_0^x s\, f(s)\, ds \;+\; x\int_x^1 (1 - s)\, f(s)\, ds$$
+```math
+y(x) = (1 - x)\int_0^x s\, f(s)\, ds \;+\; x\int_x^1 (1 - s)\, f(s)\, ds
+```
 
 Differentiating twice by the fundamental theorem of calculus gives −y″ = f, with zero at both ends (folded proof below). For the books, f = 1: y = (1 − x)x^2/2 + x(1 − x)^2/2 = x(1 − x)/2.
 

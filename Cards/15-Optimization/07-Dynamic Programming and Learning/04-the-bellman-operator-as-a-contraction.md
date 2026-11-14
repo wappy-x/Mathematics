@@ -38,42 +38,48 @@ Orange line: the true error, the largest gap over the five storage levels betwee
 
 ## The formula
 
-Notation from [Markov decision processes](02-markov-decision-processes.md), in one line: $s$ is the state (here the storage level), $a$ the action (the release), $r(s, a)$ the revenue now, $p(s' \mid s, a)$ the probability that next month's state is $s'$, and $\gamma$ (gamma) the discount factor. A **value function** $V$ lists one number per state: what being in that state is worth. This card introduces two pieces of notation. The **Bellman operator** $\mathcal{T}$ ("script T") is one sweep, turning a value function $V$ into a new one, $\mathcal{T}V$:
+Notation from [Markov decision processes](02-markov-decision-processes.md), in one line: $`s`$ is the state (here the storage level), $`a`$ the action (the release), $`r(s, a)`$ the revenue now, $`p(s' \mid s, a)`$ the probability that next month's state is $`s'`$, and $`\gamma`$ (gamma) the discount factor. A **value function** $`V`$ lists one number per state: what being in that state is worth. This card introduces two pieces of notation. The **Bellman operator** $`\mathcal{T}`$ ("script T") is one sweep, turning a value function $`V`$ into a new one, $`\mathcal{T}V`$:
 
-$$(\mathcal{T}V)(s) = \max_{a}\Bigl[\, r(s, a) + \gamma \sum_{s'} p(s' \mid s, a)\, V(s') \Bigr]$$
+```math
+(\mathcal{T}V)(s) = \max_{a}\Bigl[\, r(s, a) + \gamma \sum_{s'} p(s' \mid s, a)\, V(s') \Bigr]
+```
 
 **Read it aloud:** the new worth of a state is the best, over releases, of revenue now plus the discounted average worth of where the rain takes you.
 
-The **sup norm** $\|U - W\|_\infty$ ("sup" for supremum, here the largest) is the largest gap between two value functions $U$ and $W$ over all states: $\max_s |U(s) - W(s)|$. The theorem:
+The **sup norm** $`\|U - W\|_\infty`$ ("sup" for supremum, here the largest) is the largest gap between two value functions $`U`$ and $`W`$ over all states: $`\max_s |U(s) - W(s)|`$. The theorem:
 
-$$\|\mathcal{T}U - \mathcal{T}W\|_\infty \;\le\; \gamma\,\|U - W\|_\infty$$
+```math
+\|\mathcal{T}U - \mathcal{T}W\|_\infty \;\le\; \gamma\,\|U - W\|_\infty
+```
 
 **Read it aloud:** after one sweep, two guesses differ in their worst state by at most gamma times their worst gap before.
 
-Value iteration presses $\mathcal{T}$ again and again: $V_{k+1} = \mathcal{T}V_k$, counting from $k = 0$ at the start $V_0$. ([Backward induction](01-finite-horizon-dynamic-programming-and-backward-induction.md) wrote $V_k$ for the value at stage $k$; here $k$ counts sweeps.) The true values $V^*$ are the one value function the sweep leaves alone, $\mathcal{T}V^* = V^*$. The three error bounds:
+Value iteration presses $`\mathcal{T}`$ again and again: $`V_{k+1} = \mathcal{T}V_k`$, counting from $`k = 0`$ at the start $`V_0`$. ([Backward induction](01-finite-horizon-dynamic-programming-and-backward-induction.md) wrote $`V_k`$ for the value at stage $`k`$; here $`k`$ counts sweeps.) The true values $`V^*`$ are the one value function the sweep leaves alone, $`\mathcal{T}V^* = V^*`$. The three error bounds:
 
-$$\|V_k - V^*\|_\infty \le \gamma^k\,\|V_0 - V^*\|_\infty \qquad \|V_k - V^*\|_\infty \le \frac{\gamma^k}{1-\gamma}\,\|V_1 - V_0\|_\infty \qquad \|V_k - V^*\|_\infty \le \frac{\gamma}{1-\gamma}\,\|V_k - V_{k-1}\|_\infty$$
+```math
+\|V_k - V^*\|_\infty \le \gamma^k\,\|V_0 - V^*\|_\infty \qquad \|V_k - V^*\|_\infty \le \frac{\gamma^k}{1-\gamma}\,\|V_1 - V_0\|_\infty \qquad \|V_k - V^*\|_\infty \le \frac{\gamma}{1-\gamma}\,\|V_k - V_{k-1}\|_\infty
+```
 
 **Read it aloud:** the error shrinks by gamma per sweep; it can be bounded in advance from the first sweep's change, the **first-step bound**; and it can be bounded while running from the latest sweep's change, the **last-step bound**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $s'$, $a$ | storage level this month and next; units released | 0 to 4 units of 10 million m³; release 0 up to $s$ | — |
-| $r(s, a)$ | revenue now, thousand pounds | 0, 60, 100, 120, 130 for $a$ = 0 to 4 | values rise |
-| $p(s' \mid s, a)$ | chance of reaching $s'$ | rain 0, 1, 2 units with 0.3, 0.5, 0.2; spill above 4 | — |
-| $\gamma$ | discount factor: next month's pound in today's pounds | 0.95 | slower sweeps; at 1 no contraction |
-| $V$, $U$, $W$ | value functions: one worth per state | any five numbers | — |
-| $\mathcal{T}$, $\mathcal{T}_\pi$ | one sweep; the sweep with the release fixed by rule $\pi$ | the bracket above | — |
-| $\Vert U - W\Vert_\infty$ | sup norm: the largest gap over states | 1163.8842 between 0 and $V^*$ | — |
-| $V^*$ | the true values, the sweep's fixed point | 976.8089 empty to 1163.8842 full | — |
-| $V_k$, $k$ | the guess after $k$ sweeps; the sweep count | $V_0 = 0$; $V_1$(full) = 130 | — |
-| $\pi$, $V_\pi$ | a release rule; its values if followed for ever | best rule: 0, 1, 1, 1, 2 | — |
-| $\varepsilon$, $e$, $\delta$ | stopping tolerance; an error size; the first sweep's change | 0.1 (£100); 1033.8842 after sweep 1; 130 | larger $\varepsilon$, fewer sweeps |
-| $f$, $g$, $c$, $a^\dagger$ | in the proof only: two lists over releases, a bound on their gap, the best entry of $f$ | totals at one state | — |
+| $`s`$, $`s'`$, $`a`$ | storage level this month and next; units released | 0 to 4 units of 10 million m³; release 0 up to $`s`$ | — |
+| $`r(s, a)`$ | revenue now, thousand pounds | 0, 60, 100, 120, 130 for $`a`$ = 0 to 4 | values rise |
+| $`p(s' \mid s, a)`$ | chance of reaching $`s'`$ | rain 0, 1, 2 units with 0.3, 0.5, 0.2; spill above 4 | — |
+| $`\gamma`$ | discount factor: next month's pound in today's pounds | 0.95 | slower sweeps; at 1 no contraction |
+| $`V`$, $`U`$, $`W`$ | value functions: one worth per state | any five numbers | — |
+| $`\mathcal{T}`$, $`\mathcal{T}_\pi`$ | one sweep; the sweep with the release fixed by rule $`\pi`$ | the bracket above | — |
+| $`\Vert U - W\Vert_\infty`$ | sup norm: the largest gap over states | 1163.8842 between 0 and $`V^*`$ | — |
+| $`V^*`$ | the true values, the sweep's fixed point | 976.8089 empty to 1163.8842 full | — |
+| $`V_k`$, $`k`$ | the guess after $`k`$ sweeps; the sweep count | $`V_0 = 0`$; $`V_1`$(full) = 130 | — |
+| $`\pi`$, $`V_\pi`$ | a release rule; its values if followed for ever | best rule: 0, 1, 1, 1, 2 | — |
+| $`\varepsilon`$, $`e`$, $`\delta`$ | stopping tolerance; an error size; the first sweep's change | 0.1 (£100); 1033.8842 after sweep 1; 130 | larger $`\varepsilon`$, fewer sweeps |
+| $`f`$, $`g`$, $`c`$, $`a^\dagger`$ | in the proof only: two lists over releases, a bound on their gap, the best entry of $`f`$ | totals at one state | — |
 
 ### When it holds
 
-- **A discount factor below 1.** At $\gamma = 1$ the factor is 1, and nothing shrinks: the reservoir's guessed worth grows by £53,158 every sweep for ever, as the check prints. Without discounting, other tools are needed (an average reward per month, or a guaranteed end).
+- **A discount factor below 1.** At $`\gamma = 1`$ the factor is 1, and nothing shrinks: the reservoir's guessed worth grows by £53,158 every sweep for ever, as the check prints. Without discounting, other tools are needed (an average reward per month, or a guaranteed end).
 - **Distance measured in the worst state.** The proof uses the largest gap. Measured by the total gap over states, one sweep can make two guesses farther apart: 1.770347 times, in the check.
 - **Probabilities that add up to 1, and rewards that are fixed numbers.** The sweep averages next month's worth; an average cannot exceed the largest gap. A "probability" adding to more than 1, say from an estimated model that was never normalised, can break the bound.
 - **Finitely many states, or bounded values.** Here five states and five numbers. With infinitely many states the same proof needs the values to stay bounded, so that the largest gap exists.
@@ -85,7 +91,7 @@ $$\|V_k - V^*\|_\infty \le \gamma^k\,\|V_0 - V^*\|_\infty \qquad \|V_k - V^*\|_\
 
 ### Step 0: four moves, none of which can widen a gap
 
-Take two guesses, $U$ and $W$, and look at one state. A sweep does four things to each guess.
+Take two guesses, $`U`$ and $`W`$, and look at one state. A sweep does four things to each guess.
 
 - It adds the revenue now: the same in both, so it cancels from the gap.
 - It averages next month's worth over the rain: an average of gaps is no bigger than the largest gap.
@@ -96,64 +102,70 @@ So each state's new gap is at most 0.95 times the old worst gap.
 
 ### Step 1: the best of two lists moves no more than the lists do
 
-Let $f(a)$ and $g(a)$ be two lists over the same releases, with $|f(a) - g(a)| \le c$ for every $a$. Let $a^\dagger$ be a release where $f$ is largest. Then
+Let $`f(a)`$ and $`g(a)`$ be two lists over the same releases, with $`|f(a) - g(a)| \le c`$ for every $`a`$. Let $`a^\dagger`$ be a release where $`f`$ is largest. Then
 
-$$\max_a f(a) - \max_a g(a) \;\le\; f(a^\dagger) - g(a^\dagger) \;\le\; c,$$
+```math
+\max_a f(a) - \max_a g(a) \;\le\; f(a^\dagger) - g(a^\dagger) \;\le\; c,
+```
 
-because $g$'s best is at least $g(a^\dagger)$. Swap the roles of $f$ and $g$ for the other direction. So $|\max_a f(a) - \max_a g(a)| \le \max_a |f(a) - g(a)|$. The best release may switch between the two guesses; the bound does not care.
+because $`g`$'s best is at least $`g(a^\dagger)`$. Swap the roles of $`f`$ and $`g`$ for the other direction. So $`|\max_a f(a) - \max_a g(a)| \le \max_a |f(a) - g(a)|`$. The best release may switch between the two guesses; the bound does not care.
 
 ### Step 2: an average of gaps is no bigger than the largest gap
 
-Fix a state $s$ and a release $a$. The totals for $U$ and $W$ differ by
+Fix a state $`s`$ and a release $`a`$. The totals for $`U`$ and $`W`$ differ by
 
-$$\gamma \sum_{s'} p(s' \mid s, a)\,\bigl(U(s') - W(s')\bigr).$$
+```math
+\gamma \sum_{s'} p(s' \mid s, a)\,\bigl(U(s') - W(s')\bigr).
+```
 
-Each gap $U(s') - W(s')$ lies between $-\|U - W\|_\infty$ and $+\|U - W\|_\infty$. The probabilities are non-negative and add up to 1, so their weighted sum lies in the same range. The difference is at most $\gamma\,\|U - W\|_\infty$ in size.
+Each gap $`U(s') - W(s')`$ lies between $`-\|U - W\|_\infty`$ and $`+\|U - W\|_\infty`$. The probabilities are non-negative and add up to 1, so their weighted sum lies in the same range. The difference is at most $`\gamma\,\|U - W\|_\infty`$ in size.
 
 ### Step 3: put together, one sweep is a contraction
 
-By Step 2, the two lists of totals at state $s$ differ by at most $\gamma\,\|U - W\|_\infty$ for every release. By Step 1, their best entries do too. That holds at every state, so the worst state's gap obeys
+By Step 2, the two lists of totals at state $`s`$ differ by at most $`\gamma\,\|U - W\|_\infty`$ for every release. By Step 1, their best entries do too. That holds at every state, so the worst state's gap obeys
 
-$$\|\mathcal{T}U - \mathcal{T}W\|_\infty \le \gamma\,\|U - W\|_\infty.$$
+```math
+\|\mathcal{T}U - \mathcal{T}W\|_\infty \le \gamma\,\|U - W\|_\infty.
+```
 
 The check tests 20,000 random pairs of guesses, each worth between −£1 million and +£1 million per state. The largest shrink factor it finds is 0.950000, never more.
 
-The factor 0.95 cannot be improved for this reservoir. Add £100,000 to every state's worth: the same revenue now, and next month is worth exactly £100,000 more whatever the rain does, so after discounting the gap is exactly £95,000. The check prints 0.950000 for $V^* + 100$ against $V^*$.
+The factor 0.95 cannot be improved for this reservoir. Add £100,000 to every state's worth: the same revenue now, and next month is worth exactly £100,000 more whatever the rain does, so after discounting the gap is exactly £95,000. The check prints 0.950000 for $`V^* + 100`$ against $`V^*`$.
 
 ### Step 4: Banach's theorem does the rest
 
-[Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md) proves Banach's fixed-point theorem for a rule on an interval, with distance $|x - y|$. The same proof runs unchanged with the sup norm in place of $|x - y|$. The one place it used a property of the real line, "terms that bunch up have a limit", holds here state by state: if the sweeps bunch up in the worst state, they bunch up in each of the five states, and each state's sequence of numbers has a limit. So:
+[Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md) proves Banach's fixed-point theorem for a rule on an interval, with distance $`|x - y|`$. The same proof runs unchanged with the sup norm in place of $`|x - y|`$. The one place it used a property of the real line, "terms that bunch up have a limit", holds here state by state: if the sweeps bunch up in the worst state, they bunch up in each of the five states, and each state's sequence of numbers has a limit. So:
 
-- **One fixed point.** Exactly one $V^*$ satisfies $\mathcal{T}V^* = V^*$.
-- **Reached from any start.** $V_k \to V^*$ whatever $V_0$ is.
-- **With the error bounds.** Pressing the contraction $k$ times gives $\gamma^k\|V_0 - V^*\|_\infty$. Restarting from sweep $k - 1$ gives the last-step bound, already proved on [Value and policy iteration](03-value-and-policy-iteration.md) as its stopping test; here it follows from the contraction. Feeding it the first sweep's change, shrunk $k - 1$ times, gives the first-step bound.
+- **One fixed point.** Exactly one $`V^*`$ satisfies $`\mathcal{T}V^* = V^*`$.
+- **Reached from any start.** $`V_k \to V^*`$ whatever $`V_0`$ is.
+- **With the error bounds.** Pressing the contraction $`k`$ times gives $`\gamma^k\|V_0 - V^*\|_\infty`$. Restarting from sweep $`k - 1`$ gives the last-step bound, already proved on [Value and policy iteration](03-value-and-policy-iteration.md) as its stopping test; here it follows from the contraction. Feeding it the first sweep's change, shrunk $`k - 1`$ times, gives the first-step bound.
 
-The check reaches $V^*$ by a second road that never presses $\mathcal{T}$: it lists all 120 fixed release rules (1 × 2 × 3 × 4 × 5 choices), works out each rule's values exactly by solving five linear equations by elimination, and takes the best in each state. The two roads agree to nine decimal places: the printed gap is 0.000000000. One rule, releasing 0, 1, 1, 1, 2 units from levels 0 to 4, is best in every state at once. Why such a rule always exists is the business of [Value and policy iteration](03-value-and-policy-iteration.md).
+The check reaches $`V^*`$ by a second road that never presses $`\mathcal{T}`$: it lists all 120 fixed release rules (1 × 2 × 3 × 4 × 5 choices), works out each rule's values exactly by solving five linear equations by elimination, and takes the best in each state. The two roads agree to nine decimal places: the printed gap is 0.000000000. One rule, releasing 0, 1, 1, 1, 2 units from levels 0 to 4, is best in every state at once. Why such a rule always exists is the business of [Value and policy iteration](03-value-and-policy-iteration.md).
 
 ### Step 5: why the measured factor settles on exactly 0.95
 
-From $V_0 = 0$, the error ratio is 0.888305 at sweep 1, 0.922428 at sweep 2 and 0.950000 from about sweep 50 on. The guesses start too low by different amounts in different states. After enough sweeps the shortfall is the same in every state: the guess is $V^*$ minus a constant. Step 3 showed that a constant gap shrinks by exactly 0.95. So the error settles on the worst case the theorem allows, and the last-step bound becomes exact: at sweep 50 it reads 79.4743, the true error.
+From $`V_0 = 0`$, the error ratio is 0.888305 at sweep 1, 0.922428 at sweep 2 and 0.950000 from about sweep 50 on. The guesses start too low by different amounts in different states. After enough sweeps the shortfall is the same in every state: the guess is $`V^*`$ minus a constant. Step 3 showed that a constant gap shrinks by exactly 0.95. So the error settles on the worst case the theorem allows, and the last-step bound becomes exact: at sweep 50 it reads 79.4743, the true error.
 
 ### Step 6: what a stopped guess is worth as a plan
 
-The point of the values is the rule: in each state, release what the bracket says is best. That **greedy rule** ("greedy" because it trusts the current guess) loses little when the guess is good. [Value and policy iteration](03-value-and-policy-iteration.md) bounds the rule read off a table by the last change; the same contraction bounds it by the error. If $\|V - V^*\|_\infty \le e$, the greedy rule's true values fall short of $V^*$ by at most $2\gamma e/(1-\gamma)$.
+The point of the values is the rule: in each state, release what the bracket says is best. That **greedy rule** ("greedy" because it trusts the current guess) loses little when the guess is good. [Value and policy iteration](03-value-and-policy-iteration.md) bounds the rule read off a table by the last change; the same contraction bounds it by the error. If $`\|V - V^*\|_\infty \le e`$, the greedy rule's true values fall short of $`V^*`$ by at most $`2\gamma e/(1-\gamma)`$.
 
 The bound is safe but loose. After one sweep the greedy rule releases 0, 1, 2, 2, 2 and loses £33,864 in its worst state; the bound allows £39.3 million. From sweep 10 on the greedy rule is the best rule, although the values are still £618,454 off. The rule settles long before the values.
 
 <details>
 <summary>Detailed proof: the contraction, the three bounds and the greedy rule's loss</summary>
 
-Let the state set and the action sets be finite, $0 \le \gamma < 1$, and $p(\cdot \mid s, a)$ a probability distribution for each $s$ and $a$.
+Let the state set and the action sets be finite, $`0 \le \gamma < 1`$, and $`p(\cdot \mid s, a)`$ a probability distribution for each $`s`$ and $`a`$.
 
-**Contraction.** For any value functions $U$, $W$ and any $s$, $a$:
-$|[r + \gamma \sum p\,U] - [r + \gamma \sum p\,W]| = \gamma\,|\sum_{s'} p(s' \mid s, a)(U(s') - W(s'))| \le \gamma \sum_{s'} p(s' \mid s, a)\,\|U - W\|_\infty = \gamma\|U - W\|_\infty.$
-By Step 1, $|(\mathcal{T}U)(s) - (\mathcal{T}W)(s)| \le \gamma\|U - W\|_\infty$. Take the maximum over $s$.
+**Contraction.** For any value functions $`U`$, $`W`$ and any $`s`$, $`a`$:
+$`|[r + \gamma \sum p\,U] - [r + \gamma \sum p\,W]| = \gamma\,|\sum_{s'} p(s' \mid s, a)(U(s') - W(s'))| \le \gamma \sum_{s'} p(s' \mid s, a)\,\|U - W\|_\infty = \gamma\|U - W\|_\infty.`$
+By Step 1, $`|(\mathcal{T}U)(s) - (\mathcal{T}W)(s)| \le \gamma\|U - W\|_\infty`$. Take the maximum over $`s`$.
 
-**Fixed point and bounds.** That exactly one $V^*$ exists, and that $V_k \to V^*$ from any start, is Banach's theorem, proved on [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md); Step 4 says why its proof runs unchanged here. The three bounds follow from the contraction. Shrinking per sweep: $\|V_k - V^*\|_\infty = \|\mathcal{T}V_{k-1} - \mathcal{T}V^*\|_\infty \le \gamma\|V_{k-1} - V^*\|_\infty$, and by induction $\le \gamma^k\|V_0 - V^*\|_\infty$. Last-step bound: going from $V_{k-1}$ to $V^*$ by way of $V_k$ is never shorter than going direct, so $\|V_{k-1} - V^*\|_\infty \le \|V_k - V_{k-1}\|_\infty + \|V_k - V^*\|_\infty$. Multiply by $\gamma$, use the line before, and move $\gamma\|V_k - V^*\|_\infty$ across: $(1 - \gamma)\|V_k - V^*\|_\infty \le \gamma\|V_k - V_{k-1}\|_\infty$. First-step bound: write $\delta = \|V_1 - V_0\|_\infty$; pressing the contraction $k - 1$ times gives $\|V_k - V_{k-1}\|_\infty \le \gamma^{k-1}\delta$, and the last-step bound turns that into $\gamma^k\delta/(1 - \gamma)$.
+**Fixed point and bounds.** That exactly one $`V^*`$ exists, and that $`V_k \to V^*`$ from any start, is Banach's theorem, proved on [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md); Step 4 says why its proof runs unchanged here. The three bounds follow from the contraction. Shrinking per sweep: $`\|V_k - V^*\|_\infty = \|\mathcal{T}V_{k-1} - \mathcal{T}V^*\|_\infty \le \gamma\|V_{k-1} - V^*\|_\infty`$, and by induction $`\le \gamma^k\|V_0 - V^*\|_\infty`$. Last-step bound: going from $`V_{k-1}`$ to $`V^*`$ by way of $`V_k`$ is never shorter than going direct, so $`\|V_{k-1} - V^*\|_\infty \le \|V_k - V_{k-1}\|_\infty + \|V_k - V^*\|_\infty`$. Multiply by $`\gamma`$, use the line before, and move $`\gamma\|V_k - V^*\|_\infty`$ across: $`(1 - \gamma)\|V_k - V^*\|_\infty \le \gamma\|V_k - V_{k-1}\|_\infty`$. First-step bound: write $`\delta = \|V_1 - V_0\|_\infty`$; pressing the contraction $`k - 1`$ times gives $`\|V_k - V_{k-1}\|_\infty \le \gamma^{k-1}\delta`$, and the last-step bound turns that into $`\gamma^k\delta/(1 - \gamma)`$.
 
-**Greedy loss.** Let $\pi$ be greedy for $V$ and $\mathcal{T}_\pi$ the sweep with the action fixed to $\pi(s)$ (no maximum). Step 2 alone shows $\mathcal{T}_\pi$ is a $\gamma$-contraction, and $V_\pi$, the values of following $\pi$ for ever, is its fixed point. Greedy means $\mathcal{T}_\pi V = \mathcal{T}V$. Then
-$V^* - V_\pi = (\mathcal{T}V^* - \mathcal{T}V) + (\mathcal{T}_\pi V - \mathcal{T}_\pi V^*) + (\mathcal{T}_\pi V^* - \mathcal{T}_\pi V_\pi)$,
-so $\|V^* - V_\pi\|_\infty \le \gamma e + \gamma e + \gamma\|V^* - V_\pi\|_\infty$, which rearranges to $\|V^* - V_\pi\|_\infty \le 2\gamma e/(1 - \gamma)$.
+**Greedy loss.** Let $`\pi`$ be greedy for $`V`$ and $`\mathcal{T}_\pi`$ the sweep with the action fixed to $`\pi(s)`$ (no maximum). Step 2 alone shows $`\mathcal{T}_\pi`$ is a $`\gamma`$-contraction, and $`V_\pi`$, the values of following $`\pi`$ for ever, is its fixed point. Greedy means $`\mathcal{T}_\pi V = \mathcal{T}V`$. Then
+$`V^* - V_\pi = (\mathcal{T}V^* - \mathcal{T}V) + (\mathcal{T}_\pi V - \mathcal{T}_\pi V^*) + (\mathcal{T}_\pi V^* - \mathcal{T}_\pi V_\pi)`$,
+so $`\|V^* - V_\pi\|_\infty \le \gamma e + \gamma e + \gamma\|V^* - V_\pi\|_\infty`$, which rearranges to $`\|V^* - V_\pi\|_\infty \le 2\gamma e/(1 - \gamma)`$.
 
 </details>
 
@@ -161,21 +173,21 @@ so $\|V^* - V_\pi\|_\infty \le \gamma e + \gamma e + \gamma\|V^* - V_\pi\|_\inft
 
 ## Worked numbers, by hand
 
-Values in thousand pounds; tolerance $\varepsilon = 0.1$, that is £100.
+Values in thousand pounds; tolerance $`\varepsilon = 0.1`$, that is £100.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | sweep 1, full reservoir | best revenue now: release all 4 units | 130.0000 |
 | sweep 2, full, release 2 | 100 + 0.95 × (0.3 × 100 + 0.5 × 120 + 0.2 × 130) | 210.2000 |
 | sweep 2, full, other releases | 0, 1, 3, 4 units | 123.5000, 180.6500, 207.4000, 177.5000 |
-| starting error | $V^*$(full) − 0, the worst state | 1163.8842 |
-| error after sweep 1 | worst gap, $\Vert V_1 - V^*\Vert_\infty$ | 1033.8842 |
+| starting error | $`V^*`$(full) − 0, the worst state | 1163.8842 |
+| error after sweep 1 | worst gap, $`\Vert V_1 - V^*\Vert_\infty`$ | 1033.8842 |
 | guarantee after sweep 1 | 0.95 × 1163.8842 | 1105.6900 |
 | measured factor | 1033.8842 ÷ 1163.8842 | 0.888305 |
-| first-step constant | $\Vert V_1 - V_0\Vert_\infty$ ÷ (1 − 0.95) = 130 ÷ 0.05 | 2600.0000 |
+| first-step constant | $`\Vert V_1 - V_0\Vert_\infty`$ ÷ (1 − 0.95) = 130 ÷ 0.05 | 2600.0000 |
 | first-step bound at 198, 199 | 0.95¹⁹⁸ × 2600, 0.95¹⁹⁹ × 2600 | 0.1010, 0.0959 |
-| sweeps guaranteed in advance | first $k$ with bound ≤ 0.1 | **199** |
-| sweeps the last-step bound needs | first $k$ with 19 × last change ≤ 0.1 | 181 |
+| sweeps guaranteed in advance | first $`k`$ with bound ≤ 0.1 | **199** |
+| sweeps the last-step bound needs | first $`k`$ with 19 × last change ≤ 0.1 | 181 |
 
 From the discount factor and the first sweep's change of 130 alone, the first-step bound promises the values within £100 by sweep 199; watching the last change stops it at 181, which is exactly when the true error first drops under £100.
 
@@ -183,7 +195,7 @@ From the discount factor and the first sweep's change of 130 alone, the first-st
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No discount, $\gamma = 1$ | change per sweep 53.6947 at sweep 10, 53.1579 at 100 and at 1000; full worth 53297.3542 after 1000 sweeps | the factor is 1: nothing shrinks, and the worth grows by the average monthly revenue for ever |
+| No discount, $`\gamma = 1`$ | change per sweep 53.6947 at sweep 10, 53.1579 at 100 and at 1000; full worth 53297.3542 after 1000 sweeps | the factor is 1: nothing shrinks, and the worth grows by the average monthly revenue for ever |
 | Stop when the last change is under 0.1, and call that the error | stops at sweep 123 with change 0.0989; true error 1.8795, that is £1,880 | the change must be multiplied by γ/(1 − γ) = 19 |
 | Measure the distance by the total gap over states | +100 at half full becomes 19.0000, 34.5550, 47.5000, 47.4797, 28.5000: total 177.0347, ratio 1.770347 | many states lead to half full, so its gap spreads; only the worst-state gap is sure to shrink |
 | Act on the guess after one sweep | releases 0, 1, 2, 2, 2; loses 33.8639 in the worst state | the guess is £1 million off; it looks only one month ahead |
@@ -192,7 +204,7 @@ From the discount factor and the first sweep's change of 130 alone, the first-st
 
 ## Code, from first principles, and it actually runs
 
-The code builds the reservoir, presses $\mathcal{T}$ 1,000 times from zero, and prints the error, its ratio and the three bounds at chosen sweeps. It takes two independent roads to $V^*$: value iteration, and an exhaustive listing of all 120 release rules, each valued exactly by Gaussian elimination. A third check tests the contraction itself on 20,000 random pairs of guesses drawn from a SplitMix64 generator with seed 0x2026, written out in both languages. Eight asserts can fail:
+The code builds the reservoir, presses $`\mathcal{T}`$ 1,000 times from zero, and prints the error, its ratio and the three bounds at chosen sweeps. It takes two independent roads to $`V^*`$: value iteration, and an exhaustive listing of all 120 release rules, each valued exactly by Gaussian elimination. A third check tests the contraction itself on 20,000 random pairs of guesses drawn from a SplitMix64 generator with seed 0x2026, written out in both languages. Eight asserts can fail:
 
 - the roads agree;
 - no pair shrinks by less than 0.95;
@@ -576,13 +588,13 @@ The two outputs match line for line.
 Lean proves the contraction and the three error bounds for any finitely many states and actions, with a discount factor below 1.
 
 - Take finitely many states, finitely many actions in each, fixed rewards, and probabilities that are non-negative and add up to 1. Each state needs at least one action.
-- Let the discount factor be at least 0 and below 1. Then one sweep brings any two value functions at least $\gamma$ times closer in the worst state.
-- Exactly one value function is left alone by a sweep: the true values $V^*$.
-- From any start $V_0$, the sweeps converge to $V^*$. After $k$ sweeps the error is at most $\gamma^k$ times the starting error.
+- Let the discount factor be at least 0 and below 1. Then one sweep brings any two value functions at least $`\gamma`$ times closer in the worst state.
+- Exactly one value function is left alone by a sweep: the true values $`V^*`$.
+- From any start $`V_0`$, the sweeps converge to $`V^*`$. After $`k`$ sweeps the error is at most $`\gamma^k`$ times the starting error.
 - The first-step bound holds at every sweep. The last-step bound holds at every sweep from the first on.
 - The hand arithmetic holds exactly: the five releases at sweep 2, the constant 2600, the 199 sweeps and the factor 19.
 
-The greedy rule's loss, the random pairs, the 120-rule elimination and the printed values of $V^*$ are left to the Python and Rust checks.
+The greedy rule's loss, the random pairs, the 120-rule elimination and the printed values of $`V^*`$ are left to the Python and Rust checks.
 
 ```lean
 -- The Bellman operator contracts: one sweep of value iteration shrinks the worst-state gap between any two value functions by the discount factor, so the sweeps converge to the one fixed point with the card's three error bounds.

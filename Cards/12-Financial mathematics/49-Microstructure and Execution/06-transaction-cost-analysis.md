@@ -37,42 +37,48 @@ Top line: the average price of other traders' shares in each hour. Middle line: 
 
 ## The formula
 
-Notation first, in words. The order is $Q$ shares. The desk fills it in pieces: piece $i$ is $q_i$ shares at price $p_i$. A sum sign, Σ, adds over every piece. The market's own trades in the same window are indexed by $j$: $v_j$ shares at price $m_j$, with $V$ shares in total.
+Notation first, in words. The order is $`Q`$ shares. The desk fills it in pieces: piece $`i`$ is $`q_i`$ shares at price $`p_i`$. A sum sign, Σ, adds over every piece. The market's own trades in the same window are indexed by $`j`$: $`v_j`$ shares at price $`m_j`$, with $`V`$ shares in total.
 
 Two averages, each weighted by shares:
 
-$$\bar p = \frac{\sum_i q_i\,p_i}{Q}, \qquad p_V = \frac{\sum_j v_j\,m_j}{V}$$
+```math
+\bar p = \frac{\sum_i q_i\,p_i}{Q}, \qquad p_V = \frac{\sum_j v_j\,m_j}{V}
+```
 
 **Read it aloud:** the order's average price is the cash it raised divided by the shares it sold; the market's average, the VWAP (volume-weighted average price), is the same thing for everyone else's trades.
 
-Then one cost for any reference price $B$:
+Then one cost for any reference price $`B`$:
 
-$$c(B) = 10{,}000 \times \frac{s\,(\bar p - B)}{p_D}$$
+```math
+c(B) = 10{,}000 \times \frac{s\,(\bar p - B)}{p_D}
+```
 
 **Read it aloud:** the gap between the average price and the reference, signed so that a worse price counts as a cost, divided by the decision price, and multiplied by 10,000 to turn it into basis points.
 
-The three benchmarks are three choices of $B$: the decision price $p_D$, the arrival price $p_A$, the VWAP $p_V$. The first gives the implementation shortfall, and it splits:
+The three benchmarks are three choices of $`B`$: the decision price $`p_D`$, the arrival price $`p_A`$, the VWAP $`p_V`$. The first gives the implementation shortfall, and it splits:
 
-$$\mathrm{IS} = c(p_D) = \underbrace{10{,}000 \times \frac{s\,(p_A - p_D)}{p_D}}_{\text{timing}} \;+\; \underbrace{c(p_A)}_{\text{impact}}$$
+```math
+\mathrm{IS} = c(p_D) = \underbrace{10{,}000 \times \frac{s\,(p_A - p_D)}{p_D}}_{\text{timing}} \;+\; \underbrace{c(p_A)}_{\text{impact}}
+```
 
 **Read it aloud:** the whole shortfall is what the market did before the order arrived, plus what the order got against the price when it arrived.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $Q$ | shares in the order | 100,000 | dollar cost grows with it; bp cost grows if the order pushes the price |
-| $i$, $q_i$, $p_i$ | fill number $i$, its shares and its price | 10,000 at $99.93, …, 15,000 at $99.86 | a higher fill price lowers a sale's cost |
-| $\bar p$ | the order's share-weighted average price | $99.88 | a sale's cost falls |
-| $s$ | the side: +1 for a buy, −1 for a sale | −1 | flipping it flips every cost's sign |
-| $p_D$ | **decision price**: the price when the manager decided | $100.00 (Monday's close) | a sale's shortfall rises |
-| $p_A$ | **arrival price**: the price when the order reached the market | $99.96 (Tuesday's open) | timing cost falls, impact rises |
-| $p_V$ | **VWAP**: other traders' share-weighted average price in the window | $99.93 | a sale's VWAP cost rises |
-| $j$, $v_j$, $m_j$, $V$ | market trade number $j$, its shares and price; total market shares | 200,000 at $99.97, …; 900,000 | — |
-| $B$, $B_1$, $B_2$, $c(B)$ | any reference price, and the cost against it in bp | $B = p_V$ gives 5 bp | a sale's cost rises with $B$ |
-| $\mathrm{IS}$ | implementation shortfall: $c(p_D)$ | 12 bp, $12,000 | — |
-| $k$, $w_k$, $t_k$, $t_j$ | a fill number, that fill's share of the order, and its time as a fraction of the day | each fill's shares ÷ 100,000; its bucket's middle hour ÷ 6.5 | — |
-| $\sigma$ | one day's random wander of the price, in dollars | $1.26 (20% a year) | the noise in one order's cost grows in proportion |
+| $`Q`$ | shares in the order | 100,000 | dollar cost grows with it; bp cost grows if the order pushes the price |
+| $`i`$, $`q_i`$, $`p_i`$ | fill number $`i`$, its shares and its price | 10,000 at $99.93, …, 15,000 at $99.86 | a higher fill price lowers a sale's cost |
+| $`\bar p`$ | the order's share-weighted average price | $99.88 | a sale's cost falls |
+| $`s`$ | the side: +1 for a buy, −1 for a sale | −1 | flipping it flips every cost's sign |
+| $`p_D`$ | **decision price**: the price when the manager decided | $100.00 (Monday's close) | a sale's shortfall rises |
+| $`p_A`$ | **arrival price**: the price when the order reached the market | $99.96 (Tuesday's open) | timing cost falls, impact rises |
+| $`p_V`$ | **VWAP**: other traders' share-weighted average price in the window | $99.93 | a sale's VWAP cost rises |
+| $`j`$, $`v_j`$, $`m_j`$, $`V`$ | market trade number $`j`$, its shares and price; total market shares | 200,000 at $99.97, …; 900,000 | — |
+| $`B`$, $`B_1`$, $`B_2`$, $`c(B)`$ | any reference price, and the cost against it in bp | $`B = p_V`$ gives 5 bp | a sale's cost rises with $`B`$ |
+| $`\mathrm{IS}`$ | implementation shortfall: $`c(p_D)`$ | 12 bp, $12,000 | — |
+| $`k`$, $`w_k`$, $`t_k`$, $`t_j`$ | a fill number, that fill's share of the order, and its time as a fraction of the day | each fill's shares ÷ 100,000; its bucket's middle hour ÷ 6.5 | — |
+| $`\sigma`$ | one day's random wander of the price, in dollars | $1.26 (20% a year) | the noise in one order's cost grows in proportion |
 
-Dividing every cost by the same $p_D$ keeps the bp numbers addable: 4 + 8 is exactly 12 because all three share one denominator. Some desks divide each cost by its own benchmark instead; the parts then stop adding exactly to the whole.
+Dividing every cost by the same $`p_D`$ keeps the bp numbers addable: 4 + 8 is exactly 12 because all three share one denominator. Some desks divide each cost by its own benchmark instead; the parts then stop adding exactly to the whole.
 
 ### When it holds
 
@@ -93,17 +99,19 @@ The idea is André Perold's, from 1988. Imagine a paper portfolio that sells all
 
 ### Step 1: the ledger forces a weighted average
 
-The paper sale raises $Q\,p_D$ = $10,000,000. The real sale raises $\sum_i q_i\,p_i$ = $9,988,000. The shortfall in dollars is the difference, $12,000.
+The paper sale raises $`Q\,p_D`$ = $10,000,000. The real sale raises $`\sum_i q_i\,p_i`$ = $9,988,000. The shortfall in dollars is the difference, $12,000.
 
-Divide the real proceeds by $Q$ and out comes $\bar p$, so the shortfall is $Q\,(p_D - \bar p)$. The average price has to be weighted by shares because the cash is. A plain average of the six fill prices weights the 10,000-share fill as heavily as the 20,000-share ones and gives 11.5 bp instead of 12.
+Divide the real proceeds by $`Q`$ and out comes $`\bar p`$, so the shortfall is $`Q\,(p_D - \bar p)`$. The average price has to be weighted by shares because the cash is. A plain average of the six fill prices weights the 10,000-share fill as heavily as the 20,000-share ones and gives 11.5 bp instead of 12.
 
-A purchase runs the other way: paying more than the paper price is the cost, so the gap is $\bar p - p_D$. The side $s$ folds both cases into one formula: $s\,(\bar p - p_D)$ is $p_D - \bar p$ for a sale and $\bar p - p_D$ for a buy. Divide by the paper price $p_D$ and multiply by 10,000 for basis points.
+A purchase runs the other way: paying more than the paper price is the cost, so the gap is $`\bar p - p_D`$. The side $`s`$ folds both cases into one formula: $`s\,(\bar p - p_D)`$ is $`p_D - \bar p`$ for a sale and $`\bar p - p_D`$ for a buy. Divide by the paper price $`p_D`$ and multiply by 10,000 for basis points.
 
 ### Step 2: add and subtract the arrival price
 
-Insert $p_A$ and take it away again:
+Insert $`p_A`$ and take it away again:
 
-$$p_D - \bar p = (p_D - p_A) + (p_A - \bar p).$$
+```math
+p_D - \bar p = (p_D - p_A) + (p_A - \bar p).
+```
 
 Nothing was assumed; the right side equals the left for any three numbers. The first bracket is how far the price moved before the order could trade: $100.00 − $99.96 = 4 cents, 4 bp. The second is how the fills did against the price at the start of trading: $99.96 − $99.88 = 8 cents, 8 bp. That is the whole proof of 12 = 4 + 8.
 
@@ -111,9 +119,11 @@ The split matters because the two parts have different owners. Timing belongs to
 
 ### Step 3: the VWAP benchmark removes the day's drift
 
-The impact leg still mixes two things. Acme drifted down all Tuesday; other traders' shares averaged $99.93, 3 bp below the open. A second add-and-subtract, this time of $p_V$, splits the 8 bp:
+The impact leg still mixes two things. Acme drifted down all Tuesday; other traders' shares averaged $99.93, 3 bp below the open. A second add-and-subtract, this time of $`p_V`$, splits the 8 bp:
 
-$$p_A - \bar p = (p_A - p_V) + (p_V - \bar p): \qquad 8 = 3 + 5.$$
+```math
+p_A - \bar p = (p_A - p_V) + (p_V - \bar p): \qquad 8 = 3 + 5.
+```
 
 The 3 bp is the market's drift from the open to the day's average. The 5 bp is how the fund's fills did against other traders over the same hours: the **VWAP cost**. A desk that matches VWAP exactly scores zero, whatever the market did.
 
@@ -122,15 +132,15 @@ The 5 bp itself has two parts. Price each of the fund's fills at the hour's mark
 <details>
 <summary>Detailed proof: the ledger for any order, either side, with fees</summary>
 
-Let the paper trade happen at reference price $B$ with no fees, and let F be the commission paid, in dollars.
+Let the paper trade happen at reference price $`B`$ with no fees, and let F be the commission paid, in dollars.
 
-For a purchase, paper cash out is $Q\,B$; real cash out is $\sum_i q_i\,p_i + F$. Real minus paper is $Q(\bar p - B) + F$.
+For a purchase, paper cash out is $`Q\,B`$; real cash out is $`\sum_i q_i\,p_i + F`$. Real minus paper is $`Q(\bar p - B) + F`$.
 
-For a sale, paper cash in is $Q\,B$; real cash in is $\sum_i q_i\,p_i - F$. Paper minus real is $-Q(\bar p - B) + F$. Both cases are $s\,Q(\bar p - B) + F$ with $s = +1$ or $-1$.
+For a sale, paper cash in is $`Q\,B`$; real cash in is $`\sum_i q_i\,p_i - F`$. Paper minus real is $`-Q(\bar p - B) + F`$. Both cases are $`s\,Q(\bar p - B) + F`$ with $`s = +1`$ or $`-1`$.
 
-Divide by the decision notional $Q\,p_D$ (the order's value at the decision price), which is positive, and multiply by 10,000. The fee adds $10{,}000\,F/(Q\,p_D)$ to every benchmark alike: a $2,000 commission on this order adds 2 bp, and the shortfall becomes 14.
+Divide by the decision notional $`Q\,p_D`$ (the order's value at the decision price), which is positive, and multiply by 10,000. The fee adds $`10{,}000\,F/(Q\,p_D)`$ to every benchmark alike: a $2,000 commission on this order adds 2 bp, and the shortfall becomes 14.
 
-For any two references $B_1$ and $B_2$, the fills and the fee cancel in the difference: $c(B_1) - c(B_2) = 10{,}000\,s\,(B_2 - B_1)/p_D$. Put $B_1 = p_D$, $B_2 = p_A$ for the timing leg; put $B_1 = p_A$, $B_2 = p_V$ for the drift. Nothing requires the prices to fall in any order: every leg may be negative.
+For any two references $`B_1`$ and $`B_2`$, the fills and the fee cancel in the difference: $`c(B_1) - c(B_2) = 10{,}000\,s\,(B_2 - B_1)/p_D`$. Put $`B_1 = p_D`$, $`B_2 = p_A`$ for the timing leg; put $`B_1 = p_A`$, $`B_2 = p_V`$ for the drift. Nothing requires the prices to fall in any order: every leg may be negative.
 
 </details>
 
@@ -140,9 +150,11 @@ The 8 bp is a measurement, not a cause. Acme would have wandered on Tuesday with
 
 Over one day, a random walk in dollars ([Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) is close enough to the geometric one (where each move is a percentage of the price), and it says exactly how much.
 
-The prices at times $t_j$ and $t_k$ (here $j$ and $k$ both count fills) share all their wander up to the earlier time. So their covariance, the amount by which the two move together, is $\sigma^2 \min(t_j, t_k)$. The average fill weights the moves by $w_k$, the share of the order sold at time $t_k$. Its spread (its standard deviation: the typical distance from the centre), in basis points, is
+The prices at times $`t_j`$ and $`t_k`$ (here $`j`$ and $`k`$ both count fills) share all their wander up to the earlier time. So their covariance, the amount by which the two move together, is $`\sigma^2 \min(t_j, t_k)`$. The average fill weights the moves by $`w_k`$, the share of the order sold at time $`t_k`$. Its spread (its standard deviation: the typical distance from the centre), in basis points, is
 
-$$\text{spread of one order's cost} = \frac{10{,}000}{p_D}\;\sigma\,\sqrt{\sum_j \sum_k w_j\,w_k\,\min(t_j, t_k)} = 75.36 \text{ bp}.$$
+```math
+\text{spread of one order's cost} = \frac{10{,}000}{p_D}\;\sigma\,\sqrt{\sum_j \sum_k w_j\,w_k\,\min(t_j, t_k)} = 75.36 \text{ bp}.
+```
 
 So one order that truly costs 8 bp reports a number drawn from a bell curve with centre 8 and spread 75. The code simulates 20,000 such Tuesdays, each fill landing 8 cents below that hour's wandering price:
 
@@ -181,8 +193,8 @@ The house order: sell 100,000 Acme, decided at $100.00, arriving at $99.96, fill
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | cash raised | 10,000 × 99.93 + 15,000 × 99.92 + 20,000 × 99.89 + 20,000 × 99.86 + 20,000 × 99.85 + 15,000 × 99.86 | $9,988,000 |
-| average fill $\bar p$ | 9,988,000 / 100,000 | $99.88 |
-| market VWAP $p_V$ | (200,000 × 99.97 + 120,000 × 99.96 + 100,000 × 99.93 + 90,000 × 99.90 + 110,000 × 99.90 + 280,000 × 99.91) / 900,000 | $99.93 |
+| average fill $`\bar p`$ | 9,988,000 / 100,000 | $99.88 |
+| market VWAP $`p_V`$ | (200,000 × 99.97 + 120,000 × 99.96 + 100,000 × 99.93 + 90,000 × 99.90 + 110,000 × 99.90 + 280,000 × 99.91) / 900,000 | $99.93 |
 | one basis point | 1 cent × 100,000 shares | $1,000 |
 | timing | (100.00 − 99.96) / 100 × 10,000 | 4 bp, $4,000 |
 | impact (arrival cost) | (99.96 − 99.88) / 100 × 10,000 | 8 bp, $8,000 |
@@ -653,9 +665,9 @@ The two outputs are identical.
 
 Lean proves the shortfall split, the fee ledger and the benchmark gap for any order, and checks the card's numbers.
 
-- Take any fills, either side, and any decision and arrival prices. Then $c(p_D) = 10{,}000\,s\,(p_A - p_D)/p_D + c(p_A)$: timing plus impact, exactly.
-- Suppose the order's shares $Q$ are not zero, and the desk pays a commission $F$. Then the ledger cost against any reference $B$ is $c(B)$ plus $10{,}000\,F/(Q\,p_D)$.
-- Take the same order and any two references $B_1$ and $B_2$. Then $c(B_1) - c(B_2) = 10{,}000\,s\,(B_2 - B_1)/p_D$: the fills and the fee cancel.
+- Take any fills, either side, and any decision and arrival prices. Then $`c(p_D) = 10{,}000\,s\,(p_A - p_D)/p_D + c(p_A)`$: timing plus impact, exactly.
+- Suppose the order's shares $`Q`$ are not zero, and the desk pays a commission $`F`$. Then the ledger cost against any reference $`B`$ is $`c(B)`$ plus $`10{,}000\,F/(Q\,p_D)`$.
+- Take the same order and any two references $`B_1`$ and $`B_2`$. Then $`c(B_1) - c(B_2) = 10{,}000\,s\,(B_2 - B_1)/p_D`$: the fills and the fee cancel.
 - Take the card's order. Then the average fill is 99.88 dollars, VWAP is 99.93 dollars, and the costs are 12, 4, 8, 3 and 5 bp.
 - Take the cash ledger on the same fills. Then it also gives 12 bp, and a 2,000-dollar commission makes it 14.
 - Take the wrong roads. Then the buy sign gives −12 bp, and the plain average of the six fill prices gives 11.5.
@@ -835,7 +847,7 @@ example : 10000 * ((-1 : ℝ) * ((998800000 - 15000 * 9986 + 15000 * 9980) - 100
 ## What this builds on
 
 - [Almgren-Chriss](04-optimal-execution-almgren-chriss.md): the plan before the trade. It picks a schedule balancing expected impact against the variance of price wander; this card is the bill after the trade, and Step 4's 75 bp is that variance, measured.
-- The random walk, [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): where the covariance $\sigma^2 \min(t_j, t_k)$ in Step 4 comes from.
+- The random walk, [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): where the covariance $`\sigma^2 \min(t_j, t_k)`$ in Step 4 comes from.
 
 ## Where this goes next
 

@@ -33,44 +33,48 @@ Each bar is one node's DV01, all 50 from a single backward sweep. Every bar is n
 
 ## The formula
 
-Notation first. The curve's nodes are $F_1, \dots, F_{50}$: node $k$ is the forward rate (the rate charged for borrowing over a short stretch of time starting then) at $0.6k$ years. Time runs in 60 half-year periods $m = 1, \dots, 60$. The pricer is one loop over the periods:
+Notation first. The curve's nodes are $`F_1, \dots, F_{50}`$: node $`k`$ is the forward rate (the rate charged for borrowing over a short stretch of time starting then) at $`0.6k`$ years. Time runs in 60 half-year periods $`m = 1, \dots, 60`$. The pricer is one loop over the periods:
 
-$$f_m = (1 - w_m)\,F_k + w_m\,F_{k+1}, \qquad D_m = D_{m-1}\,e^{-f_m/2}, \qquad P_b = \sum_m c_{b,m}\,D_m, \qquad V = \sum_b q_b\,P_b$$
+```math
+f_m = (1 - w_m)\,F_k + w_m\,F_{k+1}, \qquad D_m = D_{m-1}\,e^{-f_m/2}, \qquad P_b = \sum_m c_{b,m}\,D_m, \qquad V = \sum_b q_b\,P_b
+```
 
-In words: read the rate $f_m$ for period $m$ off the curve at the period's midpoint, by a straight line between the two nodes $F_k$ and $F_{k+1}$ on either side of it (before node 1, use $F_1$ flat). Shrink the discount factor $D_m$ (today's value of $1 paid at the end of period $m$) by that half-year's rate, compounded continuously. Each bond's price $P_b$ per $100 face is its cash flows $c_{b,m}$ times the discount factors. The book value $V$ adds the prices times the holdings $q_b$.
+In words: read the rate $`f_m`$ for period $`m`$ off the curve at the period's midpoint, by a straight line between the two nodes $`F_k`$ and $`F_{k+1}`$ on either side of it (before node 1, use $`F_1`$ flat). Shrink the discount factor $`D_m`$ (today's value of $1 paid at the end of period $`m`$) by that half-year's rate, compounded continuously. Each bond's price $`P_b`$ per $100 face is its cash flows $`c_{b,m}`$ times the discount factors. The book value $`V`$ adds the prices times the holdings $`q_b`$.
 
-This card introduces the **adjoint** $\bar{x}$, read "x-bar": the derivative of the chosen output with respect to the value $x$. It is not a mean. The finance wing and the optimisation wing use the same bar ([Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md), [Automatic differentiation](../../15-Optimization/02-Unconstrained%20Methods/10-automatic-differentiation-and-backpropagation.md)).
+This card introduces the **adjoint** $`\bar{x}`$, read "x-bar": the derivative of the chosen output with respect to the value $`x`$. It is not a mean. The finance wing and the optimisation wing use the same bar ([Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md), [Automatic differentiation](../../15-Optimization/02-Unconstrained%20Methods/10-automatic-differentiation-and-backpropagation.md)).
 
-Write the whole program as $L$ small steps, $\varphi_1$ to $\varphi_L$. Step $i$ has a **local Jacobian** $J_i$: the small table of slopes of its outputs against its inputs. The chain rule makes the program's **Jacobian** $J$ (the table of slopes of every output against every input; here 4 rows, one per bond, by 50 columns, one per node) the product of the local tables. Reverse mode multiplies that product from the output end:
+Write the whole program as $`L`$ small steps, $`\varphi_1`$ to $`\varphi_L`$. Step $`i`$ has a **local Jacobian** $`J_i`$: the small table of slopes of its outputs against its inputs. The chain rule makes the program's **Jacobian** $`J`$ (the table of slopes of every output against every input; here 4 rows, one per bond, by 50 columns, one per node) the product of the local tables. Reverse mode multiplies that product from the output end:
 
-$$\bar{x}^{\mathsf T} \;=\; \bar{y}^{\mathsf T} J \;=\; \Big(\big((\bar{y}^{\mathsf T} J_L)\,J_{L-1}\big)\cdots\Big)\,J_1, \qquad \bar{y} = q$$
+```math
+\bar{x}^{\mathsf T} \;=\; \bar{y}^{\mathsf T} J \;=\; \Big(\big((\bar{y}^{\mathsf T} J_L)\,J_{L-1}\big)\cdots\Big)\,J_1, \qquad \bar{y} = q
+```
 
-The superscript $\mathsf T$ (transpose) writes a column of numbers as a row.
+The superscript $`\mathsf T`$ (transpose) writes a column of numbers as a row.
 
 **Read it aloud:** the inputs' adjoints are the output weights times the Jacobian, worked out by passing a row of numbers backwards through one step's slopes at a time.
 
-Seed the four bond prices with the holdings, $\bar{y} = q$, and the result is the book's gradient in one sweep. That is a **vector-Jacobian product**: one row vector times $J$, never the whole table $J$.
+Seed the four bond prices with the holdings, $`\bar{y} = q`$, and the result is the book's gradient in one sweep. That is a **vector-Jacobian product**: one row vector times $`J`$, never the whole table $`J`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F_k$ | forward-rate node $k$, at $0.6k$ years | $F_1$ = 0.031427, $F_{50}$ = 0.044899 | the book falls by that node's DV01 per bp |
-| $m$, $f_m$, $w_m$, $g$ | half-year period; its rate, read at its midpoint; weight on the upper node; the exponent $-f_m/2$ | period 60: $f$ = 0.044895, $w = 7/12$ | — |
-| $D_m$ | discount factor: today's value of $1 paid at the end of period $m$ | $D_{60}$ = 0.283378 | — |
-| $c_{b,m}$, $P_b$ | bond $b$'s cash flow in period $m$, per $100 face; its price | 30-year: 2 a period, 102 at the end; price 97.830791 | — |
-| $q_b$, $V$ | holding of bond $b$ in units of $100 face; book value | 500,000 of the 30-year; $60,481,845.01 | — |
-| $\bar{x}$ | adjoint: derivative of the seeded output with respect to $x$ | $\bar{D}_{60}$ = 51,000,000 | — |
-| $J$; $\varphi_i$, $J_i$ | Jacobian of the four prices against the 50 nodes; step $i$ and its local slopes | 4 by 50 | — |
-| $\bar{y}$, $\mathsf T$, $\Phi$ | the seed: weights on the outputs; transpose (column written as a row); the weighted output $\sum_b \bar{y}_b P_b$ | $q$, the holdings; $\Phi = V$ | the gradient scales with it |
-| $\dot{x}$ | tangent: forward mode's derivative in one chosen direction | one node seeded at 1 | — |
-| $v_j$, $N$; $L$, $E$ | value $j$ on the tape, of $N$; operations on it; **edges** (input-to-step links) | $N$ = 673; 618; 867 | sweep cost grows with $E$ |
-| $S$, $s$; $n$, $p$ | loop steps; checkpoint spacing; numbers of inputs and outputs | 60; 8; 50 and 1 | bigger $s$: fewer stored states, longer tape |
-| DV01 | change in $V$ for +1 bp at one node: $\bar{F}_k \times 10^{-4}$ | node 50: −421.53 | — |
+| $`F_k`$ | forward-rate node $`k`$, at $`0.6k`$ years | $`F_1`$ = 0.031427, $`F_{50}`$ = 0.044899 | the book falls by that node's DV01 per bp |
+| $`m`$, $`f_m`$, $`w_m`$, $`g`$ | half-year period; its rate, read at its midpoint; weight on the upper node; the exponent $`-f_m/2`$ | period 60: $`f`$ = 0.044895, $`w = 7/12`$ | — |
+| $`D_m`$ | discount factor: today's value of $1 paid at the end of period $`m`$ | $`D_{60}`$ = 0.283378 | — |
+| $`c_{b,m}`$, $`P_b`$ | bond $`b`$'s cash flow in period $`m`$, per $100 face; its price | 30-year: 2 a period, 102 at the end; price 97.830791 | — |
+| $`q_b`$, $`V`$ | holding of bond $`b`$ in units of $100 face; book value | 500,000 of the 30-year; $60,481,845.01 | — |
+| $`\bar{x}`$ | adjoint: derivative of the seeded output with respect to $`x`$ | $`\bar{D}_{60}`$ = 51,000,000 | — |
+| $`J`$; $`\varphi_i`$, $`J_i`$ | Jacobian of the four prices against the 50 nodes; step $`i`$ and its local slopes | 4 by 50 | — |
+| $`\bar{y}`$, $`\mathsf T`$, $`\Phi`$ | the seed: weights on the outputs; transpose (column written as a row); the weighted output $`\sum_b \bar{y}_b P_b`$ | $`q`$, the holdings; $`\Phi = V`$ | the gradient scales with it |
+| $`\dot{x}`$ | tangent: forward mode's derivative in one chosen direction | one node seeded at 1 | — |
+| $`v_j`$, $`N`$; $`L`$, $`E`$ | value $`j`$ on the tape, of $`N`$; operations on it; **edges** (input-to-step links) | $`N`$ = 673; 618; 867 | sweep cost grows with $`E`$ |
+| $`S`$, $`s`$; $`n`$, $`p`$ | loop steps; checkpoint spacing; numbers of inputs and outputs | 60; 8; 50 and 1 | bigger $`s`$: fewer stored states, longer tape |
+| DV01 | change in $`V`$ for +1 bp at one node: $`\bar{F}_k \times 10^{-4}`$ | node 50: −421.53 | — |
 
 ### When it holds
 
 - **Every step has a slope where it runs.** Sums, products and `exp` always do. A step such as `max(x, 0)` at 0 has none, and the tape returns whatever slope its rule records.
 - **The derivative wanted is that of the path taken.** A branch is recorded only as the operations it ran. Here the branch tests the date, not a rate, so the path never changes with the nodes. A branch that tests an input loses the jump at its edge.
-- **Few outputs, many inputs.** One sweep gives one weighted row of $J$. Four separate bond rows need four sweeps; with many outputs and few inputs, forward mode is cheaper.
+- **Few outputs, many inputs.** One sweep gives one weighted row of $`J`$. Four separate bond rows need four sweeps; with many outputs and few inputs, forward mode is cheaper.
 - **The tape fits in memory, or the loop is checkpointed.** The tape grows with the run: 673 entries here, millions for a long simulation. Checkpointing trades memory for one extra forward run.
 - **Exact up to rounding.** There is no step size, so no truncation error. The sweep also differentiates any bug in the pricer faithfully.
 
@@ -82,8 +86,8 @@ Seed the four bond prices with the holdings, $\bar{y} = q$, and the result is th
 
 The chain rule says the program's Jacobian is the product of its steps' local Jacobians, outer step on the left ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)). Matrix products can be grouped in any order and give the same table. The cost depends on the grouping.
 
-- **From the input end**, start with one direction $\dot{x}$ (a column) and multiply $J_1\dot{x}$, then $J_2(J_1\dot{x})$, and so on. Every product is a matrix times a column. The result is one column of $J$: one node's effect on all four bonds. Fifty nodes need fifty runs. That is forward mode.
-- **From the output end**, start with one row $\bar{y}^{\mathsf T}$ and multiply $\bar{y}^{\mathsf T}J_L$, then $(\bar{y}^{\mathsf T}J_L)J_{L-1}$. Every product is a row times a matrix. The result is one row of $J$, weighted by $\bar{y}$: the book's slope against all 50 nodes. That is reverse mode.
+- **From the input end**, start with one direction $`\dot{x}`$ (a column) and multiply $`J_1\dot{x}`$, then $`J_2(J_1\dot{x})`$, and so on. Every product is a matrix times a column. The result is one column of $`J`$: one node's effect on all four bonds. Fifty nodes need fifty runs. That is forward mode.
+- **From the output end**, start with one row $`\bar{y}^{\mathsf T}`$ and multiply $`\bar{y}^{\mathsf T}J_L`$, then $`(\bar{y}^{\mathsf T}J_L)J_{L-1}`$. Every product is a row times a matrix. The result is one row of $`J`$, weighted by $`\bar{y}`$: the book's slope against all 50 nodes. That is reverse mode.
 
 So the choice is between one run per input and one sweep per output. This book has 50 inputs and one output that matters.
 
@@ -95,18 +99,18 @@ The pricer contains no derivative code. Its numbers are replaced by a small type
 
 | Operation | Value | Entry on the tape |
 | --- | --- | --- |
-| `a + b` | $a + b$ | (a, 1), (b, 1) |
-| `a * b` | $ab$ | (a, $b$), (b, $a$) |
-| `a * w`, w a plain number (a weight, −0.5 or a cash flow) | $aw$ | (a, $w$) |
-| `exp(a)` | $e^a$ | (a, $e^a$) |
+| `a + b` | $`a + b`$ | (a, 1), (b, 1) |
+| `a * b` | $`ab`$ | (a, $`b`$), (b, $`a`$) |
+| `a * w`, w a plain number (a weight, −0.5 or a cash flow) | $`aw`$ | (a, $`w`$) |
+| `exp(a)` | $`e^a`$ | (a, $`e^a`$) |
 
 A language that lets a program redefine `+` and `*` for its own types does this with **operator overloading**: the Python check overloads them; the Rust check passes the same four operations through a small trait.
 
-Loops and branches cost nothing extra. The loop over 60 periods simply runs 60 times, and each pass appends its entries. The branch that reads the curve records only the arm that ran. Period 1 sits before node 1, so its rate is $F_1$ times 1: one entry. Every other period blends two nodes: two scalings and an addition, three entries. The tape never holds an `if`. It holds the straight-line program that this particular run executed.
+Loops and branches cost nothing extra. The loop over 60 periods simply runs 60 times, and each pass appends its entries. The branch that reads the curve records only the arm that ran. Period 1 sits before node 1, so its rate is $`F_1`$ times 1: one entry. Every other period blends two nodes: two scalings and an addition, three entries. The tape never holds an `if`. It holds the straight-line program that this particular run executed.
 
 For the book the tape has 673 entries: 55 inputs (50 nodes, the starting discount factor and four starting prices of zero) and 618 operations with 867 edges between them.
 
-Here is the tape for the last period, $m = 60$, as values flow forward (schematic):
+Here is the tape for the last period, $`m = 60`$, as values flow forward (schematic):
 
 ```mermaid
 flowchart LR
@@ -119,30 +123,30 @@ flowchart LR
     D60 --> P1["P1 += 102 x D60<br/>30-year bond's last flow"]
 ```
 
-Left to right is the record. The sweep walks the same arrows right to left, starting from the seed on $P_1$.
+Left to right is the record. The sweep walks the same arrows right to left, starting from the seed on $`P_1`$.
 
 ### Step 2: the sweep is a row vector times the Jacobian
 
-Seed each output's adjoint with its weight. Then visit the tape's entries from last to first. At each entry, multiply its adjoint by each recorded slope and **add** the result into that input's adjoint. When the walk reaches the inputs, their adjoints are $\bar{y}^{\mathsf T}J$.
+Seed each output's adjoint with its weight. Then visit the tape's entries from last to first. At each entry, multiply its adjoint by each recorded slope and **add** the result into that input's adjoint. When the walk reaches the inputs, their adjoints are $`\bar{y}^{\mathsf T}J`$.
 
 Each visit is one row-times-local-Jacobian product, because the entry's slopes are exactly its local Jacobian. Reverse order guarantees an entry's adjoint is complete before it is used. Every step that reads a value comes later on the tape, so it is swept earlier.
 
 <details>
 <summary>Detailed proof: the backward walk returns the vector-Jacobian product</summary>
 
-Number the tape's values $v_1, \dots, v_N$, each built only from earlier ones. Fix the seed weights $\bar{y}$ on the outputs. Define $\Phi$ as the weighted output $\sum_b \bar{y}_b P_b$, viewed as a function of $v_j$ with everything after $v_j$ recomputed from it.
+Number the tape's values $`v_1, \dots, v_N`$, each built only from earlier ones. Fix the seed weights $`\bar{y}`$ on the outputs. Define $`\Phi`$ as the weighted output $`\sum_b \bar{y}_b P_b`$, viewed as a function of $`v_j`$ with everything after $`v_j`$ recomputed from it.
 
-**Claim.** After the walk has processed entries $N$ down to $j + 1$, the slot for $v_j$ holds $\partial\Phi/\partial v_j$.
+**Claim.** After the walk has processed entries $`N`$ down to $`j + 1`$, the slot for $`v_j`$ holds $`\partial\Phi/\partial v_j`$.
 
-**Base.** Before any entry is processed, an output's slot holds its seed $\bar{y}_b = \partial\Phi/\partial P_b$, and every other slot holds 0. A value used by no later step has no route to $\Phi$ except as an output, so the claim holds at the top.
+**Base.** Before any entry is processed, an output's slot holds its seed $`\bar{y}_b = \partial\Phi/\partial P_b`$, and every other slot holds 0. A value used by no later step has no route to $`\Phi`$ except as an output, so the claim holds at the top.
 
-**Step.** The value $v_j$ reaches $\Phi$ only through the later entries $k$ that read it. Each of those has been processed, by the order of the walk, and each added $\bar{v}_k\,\partial v_k/\partial v_j$ to slot $j$. By the induction hypothesis $\bar{v}_k = \partial\Phi/\partial v_k$. The multivariable chain rule gives $\partial\Phi/\partial v_j = \sum_k (\partial\Phi/\partial v_k)(\partial v_k/\partial v_j)$, plus $\bar{y}_j$ if $v_j$ is itself an output. That is exactly what the slot holds.
+**Step.** The value $`v_j`$ reaches $`\Phi`$ only through the later entries $`k`$ that read it. Each of those has been processed, by the order of the walk, and each added $`\bar{v}_k\,\partial v_k/\partial v_j`$ to slot $`j`$. By the induction hypothesis $`\bar{v}_k = \partial\Phi/\partial v_k`$. The multivariable chain rule gives $`\partial\Phi/\partial v_j = \sum_k (\partial\Phi/\partial v_k)(\partial v_k/\partial v_j)`$, plus $`\bar{y}_j`$ if $`v_j`$ is itself an output. That is exactly what the slot holds.
 
-At the inputs $F_k$ the slot holds $\partial\Phi/\partial F_k = \sum_b \bar{y}_b\,\partial P_b/\partial F_k$, which is entry $k$ of $\bar{y}^{\mathsf T}J$. ∎
+At the inputs $`F_k`$ the slot holds $`\partial\Phi/\partial F_k = \sum_b \bar{y}_b\,\partial P_b/\partial F_k`$, which is entry $`k`$ of $`\bar{y}^{\mathsf T}J`$. ∎
 
 </details>
 
-The check confirms the identity two ways. Four sweeps, each seeded with 1 on one bond, give the four rows of $J$; combining them with the holdings matches the single $q$-seeded sweep with a gap of 2.8e-16 of the largest DV01. One forward-mode run, seeded on node 50, gives the column for that node; its entry for the 30-year bond is −0.000843 dollars per $100 face per bp, the same as the reverse row's.
+The check confirms the identity two ways. Four sweeps, each seeded with 1 on one bond, give the four rows of $`J`$; combining them with the holdings matches the single $`q`$-seeded sweep with a gap of 2.8e-16 of the largest DV01. One forward-mode run, seeded on node 50, gives the column for that node; its entry for the 30-year bond is −0.000843 dollars per $100 face per bp, the same as the reverse row's.
 
 ### Step 3: count the cost, and see why many inputs favour reverse
 
@@ -156,21 +160,21 @@ central bumps, 2 per node     |#####################                       101
 forward mode, 1 run per node  |########################################  190.3
 ```
 
-Forward mode carries a tangent beside every value. Counted the same way, each of its runs costs what a record plus a sweep costs, and it needs 50 of them. Bumping needs 101 plain pricings. Reverse mode needs one record and one sweep. With $n$ inputs and $p$ outputs, reverse mode pays per output and forward mode pays per input. The book has $n$ = 50 and one weighted output.
+Forward mode carries a tangent beside every value. Counted the same way, each of its runs costs what a record plus a sweep costs, and it needs 50 of them. Bumping needs 101 plain pricings. Reverse mode needs one record and one sweep. With $`n`$ inputs and $`p`$ outputs, reverse mode pays per output and forward mode pays per input. The book has $`n`$ = 50 and one weighted output.
 
 ### Step 4: checkpointing caps the tape's memory
 
 The tape keeps every intermediate value until the sweep, so memory grows with the length of the run. A 60-period loop needs 673 entries; a simulation with a million steps needs millions.
 
-**Checkpointing** keeps only the loop's **state** (the few numbers one period hands to the next: $D_m$ and the four running prices) every $s$ periods, and no tape. The sweep then goes segment by segment, last first:
+**Checkpointing** keeps only the loop's **state** (the few numbers one period hands to the next: $`D_m`$ and the four running prices) every $`s`$ periods, and no tape. The sweep then goes segment by segment, last first:
 
 1. Restart from the segment's stored state, recording a tape for that segment only.
-2. Seed the segment's final state with the adjoints handed back by the later segment ($\bar{D}$ and the four $\bar{P}$).
+2. Seed the segment's final state with the adjoints handed back by the later segment ($`\bar{D}`$ and the four $`\bar{P}`$).
 3. Sweep the short tape. Add its node adjoints into the running totals, and hand the adjoints of its starting state to the segment before.
 
-Every period is computed twice: once in the first run, without a tape, and once again, with a tape, during the sweep. So checkpointing costs one extra forward run, whatever $s$ is.
+Every period is computed twice: once in the first run, without a tape, and once again, with a tape, during the sweep. So checkpointing costs one extra forward run, whatever $`s`$ is.
 
-| Checkpoint every $s$ periods | Stored states | Peak tape entries | Gap to the full tape |
+| Checkpoint every $`s`$ periods | Stored states | Peak tape entries | Gap to the full tape |
 | --- | --- | --- | --- |
 | 60 (no checkpoints) | 1 | 673 | 0.0e0 |
 | 15 | 4 | 253 | 0.0e0 |
@@ -178,26 +182,26 @@ Every period is computed twice: once in the first run, without a tape, and once 
 | 4 | 15 | 111 | 7.1e-17 |
 | 1 | 60 | 69 | 0.0e0 |
 
-Each stored state is five numbers. Each peak tape includes 55 entries for the segment's inputs. Fewer checkpoints mean a longer segment tape; more checkpoints mean more stored states. When a period's tape and the state are of similar size, the balance falls near $s \approx \sqrt{S}$, so memory grows like $\sqrt{S}$ instead of $S$. Nested schedules, which checkpoint inside segments too, bring memory down to growing like $\log S$, for a number of recomputations of each period that also grows like $\log S$ (the *revolve* algorithm in Sources).
+Each stored state is five numbers. Each peak tape includes 55 entries for the segment's inputs. Fewer checkpoints mean a longer segment tape; more checkpoints mean more stored states. When a period's tape and the state are of similar size, the balance falls near $`s \approx \sqrt{S}`$, so memory grows like $`\sqrt{S}`$ instead of $`S`$. Nested schedules, which checkpoint inside segments too, bring memory down to growing like $`\log S`$, for a number of recomputations of each period that also grows like $`\log S`$ (the *revolve* algorithm in Sources).
 
 ---
 
 ## Worked numbers, by hand
 
-Node 50 is the one node a sweep can follow by hand. It sits at 30 years, so it enters only period 60, with weight 7/12. Only the 30-year bond pays in period 60: its last coupon plus the face, 102 per $100. Seed the bond's price with its holding, $\bar{P}_1$ = 500,000, and walk the period-60 tape backwards.
+Node 50 is the one node a sweep can follow by hand. It sits at 30 years, so it enters only period 60, with weight 7/12. Only the 30-year bond pays in period 60: its last coupon plus the face, 102 per $100. Seed the bond's price with its holding, $`\bar{P}_1`$ = 500,000, and walk the period-60 tape backwards.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | period 60's rate, forward | 5/12 × 0.044888 + 7/12 × 0.044899 | 0.044895 |
-| half-year discount ratio $e^{g}$, forward | $e^{-0.044895/2}$ | 0.977803 |
-| discount factors, forward | $D_{59}$; $D_{60} = D_{59} \times 0.977803$ | 0.289811; 0.283378 |
-| $\bar{D}_{60}$, from $P_1 \mathrel{+}= 102\,D_{60}$ | 102 × 500,000 | 51,000,000 |
-| $\bar{g}$, through $D_{60} = D_{59}\,e^{g}$ | $D_{59}\,e^{g}\,\bar{D}_{60} = D_{60}\,\bar{D}_{60}$, unrounded | 14,452,287.23 |
-| $\bar{f}_{60}$, through $g = -0.5 f$ | −0.5 × 14,452,287.23 | −7,226,143.62 |
-| $\bar{F}_{50}$, through the blend | 7/12 × (−7,226,143.62) | −4,215,250.44 |
+| half-year discount ratio $`e^{g}`$, forward | $`e^{-0.044895/2}`$ | 0.977803 |
+| discount factors, forward | $`D_{59}`$; $`D_{60} = D_{59} \times 0.977803`$ | 0.289811; 0.283378 |
+| $`\bar{D}_{60}`$, from $`P_1 \mathrel{+}= 102\,D_{60}`$ | 102 × 500,000 | 51,000,000 |
+| $`\bar{g}`$, through $`D_{60} = D_{59}\,e^{g}`$ | $`D_{59}\,e^{g}\,\bar{D}_{60} = D_{60}\,\bar{D}_{60}`$, unrounded | 14,452,287.23 |
+| $`\bar{f}_{60}`$, through $`g = -0.5 f`$ | −0.5 × 14,452,287.23 | −7,226,143.62 |
+| $`\bar{F}_{50}`$, through the blend | 7/12 × (−7,226,143.62) | −4,215,250.44 |
 | DV01 of node 50 | −4,215,250.44 × 0.0001 | **−421.53** |
 
-A one basis point rise at the 30-year node costs the book $421.53. The full sweep's bar for node 50 is the same number. The walk also hands $e^{g}\,\bar{D}_{60}$ = 49,867,943.52 back to $D_{59}$: the adjoint that carries period 60's value back into every earlier node.
+A one basis point rise at the 30-year node costs the book $421.53. The full sweep's bar for node 50 is the same number. The walk also hands $`e^{g}\,\bar{D}_{60}`$ = 49,867,943.52 back to $`D_{59}`$: the adjoint that carries period 60's value back into every earlier node.
 
 The house example is the whole curve moved up one basis point at once. Repriced, the book falls by $120,012.15. The 50 DV01s sum to −$120,145.25. The gap, 133.10, is the price's bend against the rates (the **convexity term**, half the second difference of the book's value over ±1 bp), which the repricing measures separately at 133.21. A first derivative cannot see it.
 
@@ -209,8 +213,8 @@ The right sum of the 50 DV01s is −120,145.25 dollars per bp.
 | --- | --- | --- |
 | Sweep the tape in recording order | 0.00 | every entry is read before any later step has added to it |
 | Seed every bond with 1 instead of its holding | −0.44 | the sweep returns the slope of the four prices' plain sum per $100, not the book |
-| Restart each checkpointed segment with $\bar{D} = 0$ | −18,113.64 | each node then reaches only the cash flows in its own 8-period segment |
-| Treat $D_{m-1}$ as a constant in every period | −3,024.09 | each node then moves only its own period's discounting, not every later one |
+| Restart each checkpointed segment with $`\bar{D} = 0`$ | −18,113.64 | each node then reaches only the cash flows in its own 8-period segment |
+| Treat $`D_{m-1}`$ as a constant in every period | −3,024.09 | each node then moves only its own period's discounting, not every later one |
 
 ---
 
@@ -576,12 +580,12 @@ ALL CHECKS PASS
 
 Lean proves the sweep's rules for any program written as a list of steps, of any length and any sizes.
 
-- If every step has a slope where it runs, the backward sweep returns $\bar{y}^{\mathsf T} J$: the seed row times the whole program's Jacobian.
-- Under the same condition, the adjoint the sweep leaves on input $k$ is the slope of the weighted output $\Phi$ against that input.
+- If every step has a slope where it runs, the backward sweep returns $`\bar{y}^{\mathsf T} J`$: the seed row times the whole program's Jacobian.
+- Under the same condition, the adjoint the sweep leaves on input $`k`$ is the slope of the weighted output $`\Phi`$ against that input.
 - Checkpointing gives exactly the full tape's adjoints. Restart the last segment from its stored state and sweep it, then sweep the earlier steps from its adjoints.
 - The tape's counts hold: 55 inputs and 618 operations make 673 entries, and 867 edges are at most 2 × 618.
 - Bumping 50 nodes both ways, plus the base price, is 101 pricings.
-- The hand sweep's numbers hold: period 60 weights node 50 by 7/12 and node 49 by 5/12, and $\bar{D}_{60}$ = 102 × 500,000 = 51,000,000.
+- The hand sweep's numbers hold: period 60 weights node 50 by 7/12 and node 49 by 5/12, and $`\bar{D}_{60}`$ = 102 × 500,000 = 51,000,000.
 - Checkpointing every 60, 15, 8, 4 and 1 periods stores 1, 4, 8, 15 and 60 states.
 
 Recording the tape as the pricer runs, the 50 DV01s, rounding, the costs and the cross-checks are left to the Python and Rust checks.
@@ -759,7 +763,7 @@ example : [60, 15, 8, 4, 1].map (fun s => (60 + s - 1) / s) = [1, 4, 8, 15, 60] 
 > - **Expecting the 50 DV01s to add up to the repriced parallel move.** They sum to −120,145.25; repricing the +1 bp curve gives −120,012.15. The 133.10 gap is the convexity term, not an error in the sweep.
 > - **Checking the sweep against a bump that is far too small.** With a nudge of 1e-12 the central difference's worst gap is 5.1e-4 of the largest DV01, and its sum is −120,146.57: rounding, not reverse mode, is wrong ([Choosing the step](04-choosing-the-step-truncation-against-rounding.md)).
 > - **Sweeping once per bond when only the book is wanted.** Four sweeps cost 12.22 pricings; one sweep seeded with the holdings costs 3.81 and gives the same book gradient to 2.8e-16.
-> - **Dropping the state's adjoint at a checkpoint.** Each segment must start its sweep from the adjoints the later segment hands back. Without $\bar{D}$ the sum is −18,113.64.
+> - **Dropping the state's adjoint at a checkpoint.** Each segment must start its sweep from the adjoints the later segment hands back. Without $`\bar{D}`$ the sum is −18,113.64.
 
 ---
 

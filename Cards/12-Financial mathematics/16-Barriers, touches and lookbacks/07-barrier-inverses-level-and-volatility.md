@@ -34,44 +34,52 @@ Falling curve: the down-and-out call's price. Flat line: the $8.00 target. Far b
 
 ## The formula
 
-Five inputs are the house market: Acme's price $S$, the strike $K$, the bank rate $r$, the dividend yield $q$ and the years to expiry $T$. The sixth is the volatility $\sigma$. Barrier formulas for all eight cases are on [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md); this card needs the down-and-out call with its barrier $H$ at or below the strike:
+Five inputs are the house market: Acme's price $`S`$, the strike $`K`$, the bank rate $`r`$, the dividend yield $`q`$ and the years to expiry $`T`$. The sixth is the volatility $`\sigma`$. Barrier formulas for all eight cases are on [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md); this card needs the down-and-out call with its barrier $`H`$ at or below the strike:
 
-$$C_{do}(H) = C \;-\; \Big[\, S e^{-qT}\,(H/S)^{2\lambda}\, N(y) \;-\; K e^{-rT}\,(H/S)^{2\lambda-2}\, N(y - \sigma\sqrt{T}) \,\Big]$$
+```math
+C_{do}(H) = C \;-\; \Big[\, S e^{-qT}\,(H/S)^{2\lambda}\, N(y) \;-\; K e^{-rT}\,(H/S)^{2\lambda-2}\, N(y - \sigma\sqrt{T}) \,\Big]
+```
 
 **Read it aloud:** the down-and-out call is the plain call minus the part of it that lives on paths where Acme touched the barrier; that part is priced as a call seen in a mirror at the barrier.
 
 The two inverse statements are the card's content. For the level:
 
-$$\text{for } 0 < P < C:\quad \text{exactly one } H \text{ between } 0 \text{ and } S \text{ has } C_{do}(H) = P; \quad \text{for any other } P, \text{ none.}$$
+```math
+\text{for } 0 < P < C:\quad \text{exactly one } H \text{ between } 0 \text{ and } S \text{ has } C_{do}(H) = P; \quad \text{for any other } P, \text{ none.}
+```
 
-For the volatility, write $U(\sigma)$ for the up-and-out call's price, barrier $120$, at volatility $\sigma$:
+For the volatility, write $`U(\sigma)`$ for the up-and-out call's price, barrier $`120`$, at volatility $`\sigma`$:
 
-$$U(\sigma) = P \;\text{ has }\; \begin{cases} \text{two roots } \sigma_{lo} < \sigma_{hi} & \text{if } S e^{-qT} - K e^{-rT} < P < \max U \\ \text{one root} & \text{if } 0 < P \le S e^{-qT} - K e^{-rT} \text{ or } P = \max U \\ \text{no root} & \text{if } P > \max U \text{ or } P \le 0 \end{cases}$$
+```math
+U(\sigma) = P \;\text{ has }\; \begin{cases} \text{two roots } \sigma_{lo} < \sigma_{hi} & \text{if } S e^{-qT} - K e^{-rT} < P < \max U \\ \text{one root} & \text{if } 0 < P \le S e^{-qT} - K e^{-rT} \text{ or } P = \max U \\ \text{no root} & \text{if } P > \max U \text{ or } P \le 0 \end{cases}
+```
 
 **Read it aloud:** above the zero-volatility floor and under the peak, a knock-out quote has two volatilities; under the floor, one; over the peak, none.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $K$, $S_T$ | Acme's price today; the strike; Acme's price at expiry | $100, $100, unknown | — |
-| $H$ | the barrier: touch it and the option dies | 80, 88.73, 120 | down-and-out: price falls |
-| $r$, $q$ | bank rate; dividend yield, both continuously compounded | 5%, 2% | — |
-| $\sigma$ | volatility: the yearly size of Acme's swings, as a fraction | 0.20 | up-and-out: price rises, then falls |
-| $\sigma_{lo}$, $\sigma_{hi}$ | the two volatilities that reproduce one quote | 4.35%, 9.50% for $3.50 | they move apart as the quote falls |
-| $T$ | years to expiry | 1 | — |
-| $C$ | the plain call's price | $9.23 | ceiling for the level inverse |
-| $C_{do}$, $U$ | the down-and-out call's price as a function of the barrier; the up-and-out call's price, barrier 120, as a function of volatility | $9.13 at 80; $1.13 at 20% | — |
-| $m$ | the lowest price Acme reaches before expiry | depends on the path | — |
-| $P$ | the premium or quote being inverted | $8.00; $3.50 | level falls; vol roots close in |
-| $\lambda$, $y$, $d_1$ | helpers: $\lambda = (r - q + \tfrac12\sigma^2)/\sigma^2$; $y$ the mirrored call's distance to the strike in units of $\sigma\sqrt{T}$; $d_1$ the plain call's distance, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card | 1.25; −1.981 at 80 | — |
-| $N$, $e^{-rT}$ | the normal CDF, area under the bell curve left of a point ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)); the discount factor $D(T)$ | $e^{-0.05}$ | — |
+| $`S`$, $`K`$, $`S_T`$ | Acme's price today; the strike; Acme's price at expiry | $100, $100, unknown | — |
+| $`H`$ | the barrier: touch it and the option dies | 80, 88.73, 120 | down-and-out: price falls |
+| $`r`$, $`q`$ | bank rate; dividend yield, both continuously compounded | 5%, 2% | — |
+| $`\sigma`$ | volatility: the yearly size of Acme's swings, as a fraction | 0.20 | up-and-out: price rises, then falls |
+| $`\sigma_{lo}`$, $`\sigma_{hi}`$ | the two volatilities that reproduce one quote | 4.35%, 9.50% for $3.50 | they move apart as the quote falls |
+| $`T`$ | years to expiry | 1 | — |
+| $`C`$ | the plain call's price | $9.23 | ceiling for the level inverse |
+| $`C_{do}`$, $`U`$ | the down-and-out call's price as a function of the barrier; the up-and-out call's price, barrier 120, as a function of volatility | $9.13 at 80; $1.13 at 20% | — |
+| $`m`$ | the lowest price Acme reaches before expiry | depends on the path | — |
+| $`P`$ | the premium or quote being inverted | $8.00; $3.50 | level falls; vol roots close in |
+| $`\lambda`$, $`y`$, $`d_1`$ | helpers: $`\lambda = (r - q + \tfrac12\sigma^2)/\sigma^2`$; $`y`$ the mirrored call's distance to the strike in units of $`\sigma\sqrt{T}`$; $`d_1`$ the plain call's distance, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card | 1.25; −1.981 at 80 | — |
+| $`N`$, $`e^{-rT}`$ | the normal CDF, area under the bell curve left of a point ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)); the discount factor $`D(T)`$ | $`e^{-0.05}`$ | — |
 
-The helper $y$ in full, in words the log-distance from the mirrored start $H^2/S$ to the strike, in swing units, plus $\lambda$ swing units:
+The helper $`y`$ in full, in words the log-distance from the mirrored start $`H^2/S`$ to the strike, in swing units, plus $`\lambda`$ swing units:
 
-$$y = \frac{\ln\!\big(H^2/(SK)\big)}{\sigma\sqrt{T}} + \lambda\,\sigma\sqrt{T}$$
+```math
+y = \frac{\ln\!\big(H^2/(SK)\big)}{\sigma\sqrt{T}} + \lambda\,\sigma\sqrt{T}
+```
 
 ### When it holds
 
-- **Continuous monitoring.** The formula watches every instant. A contract that checks only daily closes is touched less often; a daily down barrier at $H$ behaves like a continuous one at $H e^{-0.5826\,\sigma\sqrt{1/252}}$, slightly lower ([Daily monitoring](03-discrete-monitoring-correction.md)). Solve in one convention and trade in the other, and the level is wrong: $88.73 against $89.38 here.
+- **Continuous monitoring.** The formula watches every instant. A contract that checks only daily closes is touched less often; a daily down barrier at $`H`$ behaves like a continuous one at $`H e^{-0.5826\,\sigma\sqrt{1/252}}`$, slightly lower ([Daily monitoring](03-discrete-monitoring-correction.md)). Solve in one convention and trade in the other, and the level is wrong: $88.73 against $89.38 here.
 - **No rebate.** A rebate is cash paid when the barrier is touched. It is worth more as the barrier rises, which can offset the falling option value, and the level can stop being unique.
 - **One volatility for the whole path.** A barrier's price depends on how Acme moves near the barrier, not just at the strike. With a smile, where plain options at different strikes imply different volatilities ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)) no single number is the barrier's volatility, which is one more reason not to invert for one.
 - **Barrier on the right side of Acme.** A down barrier sits under $100, an up barrier over it. On the wrong side the option is dead at birth and both inverses are meaningless.
@@ -93,11 +101,11 @@ The ends pin the range. As the barrier sinks toward zero, touching it becomes im
 <details>
 <summary>Detailed proof: strictly decreasing, continuous, with limits C and 0</summary>
 
-Write $m$ for the lowest price Acme reaches before expiry and $D(T) = e^{-rT}$. Then $C_{do}(H) = D(T)\,\mathbb{E}[(S_T - K)^+\,\mathbf{1}\{m > H\}]$, the average taken in the risk-neutral world, where $\mathbf{1}\{\cdot\}$ is 1 when the condition holds and 0 otherwise.
+Write $`m`$ for the lowest price Acme reaches before expiry and $`D(T) = e^{-rT}`$. Then $`C_{do}(H) = D(T)\,\mathbb{E}[(S_T - K)^+\,\mathbf{1}\{m > H\}]`$, the average taken in the risk-neutral world, where $`\mathbf{1}\{\cdot\}`$ is 1 when the condition holds and 0 otherwise.
 
-For $H_1 < H_2 < S$: $C_{do}(H_1) - C_{do}(H_2) = D(T)\,\mathbb{E}[(S_T - K)^+\,\mathbf{1}\{H_1 < m \le H_2\}]$. The joint law of the pair (lowest point, final price) has a positive density on the region where the lowest point is under both $S$ and the final price, so the event {lowest point in $(H_1, H_2]$, final price above $K + 1$} has positive probability, and the difference is at least $D(T)$ times that probability. Strictly positive.
+For $`H_1 < H_2 < S`$: $`C_{do}(H_1) - C_{do}(H_2) = D(T)\,\mathbb{E}[(S_T - K)^+\,\mathbf{1}\{H_1 < m \le H_2\}]`$. The joint law of the pair (lowest point, final price) has a positive density on the region where the lowest point is under both $`S`$ and the final price, so the event {lowest point in $`(H_1, H_2]`$, final price above $`K + 1`$} has positive probability, and the difference is at least $`D(T)`$ times that probability. Strictly positive.
 
-Continuity: $C_{do}$ is built from powers, logs and $N$, all continuous in $H$ on $(0, S)$. Limits: as $H \to 0$, $(H/S)^{2\lambda} \to 0$ and $(H/S)^{2\lambda - 2} \to 0$ when $\lambda > 1$, true here, and for smaller $\lambda$ the factor $N(y)$ falls faster than the power grows, so $C_{do} \to C$. As $H \to S$, $y \to d_1$, the plain call's $d_1$, the bracket becomes the plain call itself and $C_{do} \to 0$.
+Continuity: $`C_{do}`$ is built from powers, logs and $`N`$, all continuous in $`H`$ on $`(0, S)`$. Limits: as $`H \to 0`$, $`(H/S)^{2\lambda} \to 0`$ and $`(H/S)^{2\lambda - 2} \to 0`$ when $`\lambda > 1`$, true here, and for smaller $`\lambda`$ the factor $`N(y)`$ falls faster than the power grows, so $`C_{do} \to C`$. As $`H \to S`$, $`y \to d_1`$, the plain call's $`d_1`$, the bracket becomes the plain call itself and $`C_{do} \to 0`$.
 
 </details>
 
@@ -111,7 +119,7 @@ Bisection is the natural solver here. It keeps an interval whose two ends give p
 
 ### Step 3: volatility pulls the up-and-out call two ways
 
-The up-and-out call pays $S_T - 100$ if Acme ends above $100 and never touched $120. Its best payoff, just under $20, sits right under the wall. It dies exactly where it is worth most, which is why desks call it a **reverse knock-out**.
+The up-and-out call pays $`S_T - 100`$ if Acme ends above $100 and never touched $120. Its best payoff, just under $20, sits right under the wall. It dies exactly where it is worth most, which is why desks call it a **reverse knock-out**.
 
 Volatility does two things to it. It spreads Acme's final price wider, which lifts the call part, as for a plain call. It also makes a touch of $120 more likely, which kills the option. At low volatility the first effect wins; at high volatility the second.
 
@@ -130,7 +138,7 @@ Humped curve: the up-and-out call's price. Middle flat line: the $3.50 quote, cr
 
 ### Step 4: the ends and the peak count the roots
 
-**Zero volatility.** Acme then drifts up at the bank rate less the dividend, 3 percent a year, and ends a few dollars above $100, far under $120. No touch; the option is a plain call on a known outcome and is worth $S e^{-qT} - K e^{-rT}$, which is $2.896925. At 1 percent volatility the formula already gives $2.897294$.
+**Zero volatility.** Acme then drifts up at the bank rate less the dividend, 3 percent a year, and ends a few dollars above $100, far under $120. No touch; the option is a plain call on a known outcome and is worth $`S e^{-qT} - K e^{-rT}`$, which is $2.896925. At 1 percent volatility the formula already gives $`2.897294`$.
 
 **Endless volatility.** The payoff needs Acme to end above $100 without touching $120. With huge swings, almost every path either touches $120 or ends far below $100, so the price falls to zero. At 60 percent it is already $0.06.
 
@@ -143,7 +151,7 @@ A quote of $3.50 is hit on both: 4.35 percent and 9.50 percent. A quote of $2.00
 <details>
 <summary>Detailed proof: the high-volatility limit is zero</summary>
 
-The up-and-out payoff is at most $H - K = 20$, and it is paid only if Acme ends above $K$. So $U(\sigma) \le 20\,e^{-rT}\,\Pr(S_T > K)$, the chance taken in the risk-neutral world. That chance is $N\big((\ln(S/K) + (r - q - \tfrac12\sigma^2)T)/(\sigma\sqrt{T})\big)$. As $\sigma$ grows the argument behaves like $-\tfrac12\sigma\sqrt{T}$, which runs to minus infinity, so $N$ of it, and the price, go to zero. The chance of touching $H$ does not go to 1: in the risk-neutral world it tends to $S/H$. The price dies because the surviving paths end under the strike, not because every path touches.
+The up-and-out payoff is at most $`H - K = 20`$, and it is paid only if Acme ends above $`K`$. So $`U(\sigma) \le 20\,e^{-rT}\,\Pr(S_T > K)`$, the chance taken in the risk-neutral world. That chance is $`N\big((\ln(S/K) + (r - q - \tfrac12\sigma^2)T)/(\sigma\sqrt{T})\big)`$. As $`\sigma`$ grows the argument behaves like $`-\tfrac12\sigma\sqrt{T}`$, which runs to minus infinity, so $`N`$ of it, and the price, go to zero. The chance of touching $`H`$ does not go to 1: in the risk-neutral world it tends to $`S/H`$. The price dies because the surviving paths end under the strike, not because every path touches.
 
 </details>
 
@@ -161,11 +169,11 @@ A third road reaches the level differently: price by the Brownian bridge integra
 
 ## Worked numbers, by hand
 
-The level for $8.00, by bisection on $C_{do}$, starting from the interval $50 to $100. At each midpoint: price above $8.00 means the barrier can go higher, so the midpoint becomes the new low end; below, the new high end.
+The level for $8.00, by bisection on $`C_{do}`$, starting from the interval $50 to $100. At each midpoint: price above $8.00 means the barrier can go higher, so the midpoint becomes the new low end; below, the new high end.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| house check | $C_{do}(80) = 9.227006 - 0.093699$ | $9.133306 |
+| house check | $`C_{do}(80) = 9.227006 - 0.093699`$ | $9.133306 |
 | midpoint 1 | (50 + 100)/2 = 75; price 9.2149, above 8 | keep 75 to 100 |
 | midpoint 2 | (75 + 100)/2 = 87.5; price 8.3162, above 8 | keep 87.5 to 100 |
 | midpoint 3 | (87.5 + 100)/2 = 93.75; price 5.7434, below 8 | keep 87.5 to 93.75 |
@@ -174,7 +182,7 @@ The level for $8.00, by bisection on $C_{do}$, starting from the interval $50 to
 | midpoint 6 | 88.28125; price 8.1236, above 8 | keep 88.28125 to 89.0625 |
 | midpoint 7 | 88.671875; price 8.0159, above 8 | keep 88.671875 to 89.0625 |
 | **level, 80 halvings** | continuous monitoring | **$88.727307** |
-| daily-monitored contract | 88.727307 × $e^{0.5826 \times 0.2 \times \sqrt{1/252}}$ | $89.380968 |
+| daily-monitored contract | 88.727307 × $`e^{0.5826 \times 0.2 \times \sqrt{1/252}}`$ | $89.380968 |
 
 A down-and-out call with its barrier at $88.73 costs $8.00: the buyer pays less than the plain call's $9.23 by accepting death if Acme touches $88.73 at any moment of the year. Written into a daily-monitored contract, the barrier must be $89.38 to cost the same.
 
@@ -198,7 +206,7 @@ Newton's method moves from a guess along the tangent line, using the vega as its
 The code prices barrier options three independent ways:
 
 - Road 1 is the closed form.
-- Road 2 averages the payoff over where Acme ends, weighting each end point by the Brownian-bridge chance that a path to it never touched the barrier, $1 - e^{-2\ln(S/H)\ln(S_T/H)/(\sigma^2 T)}$ with $S_T$ the final price, and integrates by Simpson's rule.
+- Road 2 averages the payoff over where Acme ends, weighting each end point by the Brownian-bridge chance that a path to it never touched the barrier, $`1 - e^{-2\ln(S/H)\ln(S_T/H)/(\sigma^2 T)}`$ with $`S_T`$ the final price, and integrates by Simpson's rule.
 - Road 3 is an explicit finite-difference grid (a table of prices on a mesh of log prices and times, stepped back from expiry) with the barrier as a zero-value edge.
 
 The level is found by bisection on road 1 and by the secant method on road 2; the two volatilities likewise. The normal CDF is summed from its series; nothing imported knows the answer.
@@ -629,11 +637,11 @@ The two outputs agree byte for byte.
 
 Lean proves the two inverse statements from the shapes in Steps 1 and 4, plus the high-volatility limit and the bisection arithmetic.
 
-- **The level.** Suppose $C_{do}$ is continuous and strictly decreasing on $(0, S)$, with limit $C$ at 0 and limit 0 at $S$. Then each premium $P$ strictly between zero and $C$ has exactly one barrier level in $(0, S)$, and any other $P$ has none.
-- **Two volatilities.** Suppose $U$ is continuous, tends to the zero-volatility floor as $\sigma$ sinks to 0, tends to 0 as $\sigma$ grows, and peaks. Then a positive quote above the floor and under the peak is hit at least twice, once below the peak and once above.
+- **The level.** Suppose $`C_{do}`$ is continuous and strictly decreasing on $`(0, S)`$, with limit $`C`$ at 0 and limit 0 at $`S`$. Then each premium $`P`$ strictly between zero and $`C`$ has exactly one barrier level in $`(0, S)`$, and any other $`P`$ has none.
+- **Two volatilities.** Suppose $`U`$ is continuous, tends to the zero-volatility floor as $`\sigma`$ sinks to 0, tends to 0 as $`\sigma`$ grows, and peaks. Then a positive quote above the floor and under the peak is hit at least twice, once below the peak and once above.
 - **No volatility.** A quote above the peak is hit by no volatility at all.
-- **The high-volatility limit.** Take the bound on $U$ from the high-volatility proof: $H - K$, discounted, times the chance Acme ends above $K$. Then that bound tends to zero as $\sigma$ grows without limit.
-- **The arithmetic.** The seven bisection midpoints for the $8.00 level are exact, and seven halvings leave an interval 25/64 wide. The helper $\lambda$ is 1.25 at 20 percent volatility.
+- **The high-volatility limit.** Take the bound on $`U`$ from the high-volatility proof: $`H - K`$, discounted, times the chance Acme ends above $`K`$. Then that bound tends to zero as $`\sigma`$ grows without limit.
+- **The arithmetic.** The seven bisection midpoints for the $8.00 level are exact, and seven halvings leave an interval 25/64 wide. The helper $`\lambda`$ is 1.25 at 20 percent volatility.
 
 Left to the Python and Rust checks: that the house prices have these shapes, the exact root counts, and every price and root.
 

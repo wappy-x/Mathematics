@@ -26,44 +26,52 @@ To scale: 40 units per decimetre, centre at (40, 210). Solid: the isotherm throu
 
 ## The formula
 
-A subscript is a partial derivative: $u_x$ is how fast $u$ changes as x alone moves. Two subscripts do it twice: $u_{xx}$ is the rate of change of $u_x$. The sum of the two second rates is the **Laplacian**, written $\Delta$.
+A subscript is a partial derivative: $`u_x`$ is how fast $`u`$ changes as x alone moves. Two subscripts do it twice: $`u_{xx}`$ is the rate of change of $`u_x`$. The sum of the two second rates is the **Laplacian**, written $`\Delta`$.
 
-$$\Delta u = u_{xx} + u_{yy} = 0$$
+```math
+\Delta u = u_{xx} + u_{yy} = 0
+```
 
 **Read it aloud:** the bending of u eastward and its bending northward cancel at every point.
 
-A real function with continuous second partials satisfying this on an open region is **harmonic**. A **harmonic conjugate** of $u$ is a real $v$ making $f = u + iv$ holomorphic; by the Cauchy-Riemann equations ([The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md)) that means
+A real function with continuous second partials satisfying this on an open region is **harmonic**. A **harmonic conjugate** of $`u`$ is a real $`v`$ making $`f = u + iv`$ holomorphic; by the Cauchy-Riemann equations ([The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md)) that means
 
-$$v_x = -u_y, \qquad v_y = u_x$$
+```math
+v_x = -u_y, \qquad v_y = u_x
+```
 
 **Read it aloud:** the partner's slopes are u's, swapped, one sign flipped.
 
-Those slopes fix $v$ up to a constant. From an anchor $(a, 0)$ where $v$ is 0, walk east, then north:
+Those slopes fix $`v`$ up to a constant. From an anchor $`(a, 0)`$ where $`v`$ is 0, walk east, then north:
 
-$$v(x, y) = \int_a^x -u_y(s, 0)\,ds + \int_0^y u_x(x, s)\,ds$$
+```math
+v(x, y) = \int_a^x -u_y(s, 0)\,ds + \int_0^y u_x(x, s)\,ds
+```
 
 **Read it aloud:** add up the partner's slope along the bottom, then up the side.
 
-The arrow of steepest rise is the **gradient**, $\nabla u = (u_x, u_y)$. The right angles are one dot product:
+The arrow of steepest rise is the **gradient**, $`\nabla u = (u_x, u_y)`$. The right angles are one dot product:
 
-$$\nabla u \cdot \nabla v = u_x v_x + u_y v_y = u_x(-u_y) + u_y u_x = 0$$
+```math
+\nabla u \cdot \nabla v = u_x v_x + u_y v_y = u_x(-u_y) + u_y u_x = 0
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$, $z$ | across, up; z = x + iy | P = 1 + 2i | — |
-| $u$ | temperature, real part of f | x^2 − y^2; −3 at P | — |
-| $v$ | conjugate, imaginary part of f | 2xy; 4 at P | a constant changes nothing |
-| $f$ | the holomorphic function u + iv | z^2 | — |
-| $u_x$, $u_y$, $v_x$, $v_y$ | first partial derivatives | 2, −4, 4, 2 at P | — |
-| $u_{xx}$, $u_{yy}$, $v_{xx}$, $v_{yy}$ | second partial derivatives | 2, −2, 0, 0 | sums stay 0 |
-| $\Delta$, $\nabla$ | the Laplacian; the gradient, an arrow | 0; (2, −4) and (4, 2) at P | — |
-| $a$, $s$, $r$ | anchor; running variable; distance from the wire | a = 0 or 1; r = 1, 0.5 | loop sum ignores r |
+| $`x`$, $`y`$, $`z`$ | across, up; z = x + iy | P = 1 + 2i | — |
+| $`u`$ | temperature, real part of f | x^2 − y^2; −3 at P | — |
+| $`v`$ | conjugate, imaginary part of f | 2xy; 4 at P | a constant changes nothing |
+| $`f`$ | the holomorphic function u + iv | z^2 | — |
+| $`u_x`$, $`u_y`$, $`v_x`$, $`v_y`$ | first partial derivatives | 2, −4, 4, 2 at P | — |
+| $`u_{xx}`$, $`u_{yy}`$, $`v_{xx}`$, $`v_{yy}`$ | second partial derivatives | 2, −2, 0, 0 | sums stay 0 |
+| $`\Delta`$, $`\nabla`$ | the Laplacian; the gradient, an arrow | 0; (2, −4) and (4, 2) at P | — |
+| $`a`$, $`s`$, $`r`$ | anchor; running variable; distance from the wire | a = 0 or 1; r = 1, 0.5 | loop sum ignores r |
 
 ### When it holds
 
 - **A holomorphic f.** x^2 + y^2 is no real part of one; it bends up both ways, Laplacian 4.
 - **No holes, for one partner on the whole region.** Round the wire's point, log|z| is harmonic, yet the build gains 6.283185 per lap.
-- **A nonzero derivative, for right angles.** At the centre $f'(0) = 0$, and the curves u = 0 (the diagonals) and v = 0 (the axes) meet at half a right angle.
+- **A nonzero derivative, for right angles.** At the centre $`f'(0) = 0`$, and the curves u = 0 (the diagonals) and v = 0 (the axes) meet at half a right angle.
 - **Steady, source-free heat in a uniform plate.** Warming, an inside heater or varying conductivity adds terms. Laplace models steady potentials, not every flow.
 
 ---
@@ -76,44 +84,48 @@ The Cauchy-Riemann equations tie the slopes of u and v. Differentiated again, th
 
 ### Step 1: both parts are harmonic
 
-A holomorphic f has holomorphic derivatives of every order ([Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)), so u and v have continuous second partials and the mixed ones agree. Differentiate $u_x = v_y$ in x and $u_y = -v_x$ in y:
+A holomorphic f has holomorphic derivatives of every order ([Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)), so u and v have continuous second partials and the mixed ones agree. Differentiate $`u_x = v_y`$ in x and $`u_y = -v_x`$ in y:
 
-$$u_{xx} = v_{yx}, \qquad u_{yy} = -v_{xy}$$
+```math
+u_{xx} = v_{yx}, \qquad u_{yy} = -v_{xy}
+```
 
-Add: $u_{xx} + u_{yy} = v_{yx} - v_{xy} = 0$. The same move on v gives $v_{xx} + v_{yy} = -u_{yx} + u_{xy} = 0$.
+Add: $`u_{xx} + u_{yy} = v_{yx} - v_{xy} = 0`$. The same move on v gives $`v_{xx} + v_{yy} = -u_{yx} + u_{xy} = 0`$.
 
-On the plate, $u_{xx} = 2$ and $u_{yy} = -2$: up eastward as much as down northward. For v = 2xy both are 0.
+On the plate, $`u_{xx} = 2`$ and $`u_{yy} = -2`$: up eastward as much as down northward. For v = 2xy both are 0.
 
 ### Step 2: build the partner from u alone
 
-The recipe fixes v's slopes: eastward $-u_y$, northward $u_x$. Two walks to one point must give one value, which needs no twist: the northward slope's eastward rate equals the eastward slope's northward rate,
+The recipe fixes v's slopes: eastward $`-u_y`$, northward $`u_x`$. Two walks to one point must give one value, which needs no twist: the northward slope's eastward rate equals the eastward slope's northward rate,
 
-$$(u_x)_x = (-u_y)_y, \quad\text{that is}\quad u_{xx} + u_{yy} = 0$$
+```math
+(u_x)_x = (-u_y)_y, \quad\text{that is}\quad u_{xx} + u_{yy} = 0
+```
 
-Laplace's equation is the no-twist condition. On the plate from the anchor 0: along the bottom $-u_y = 0$, then up at x = 1, $u_x = 2$ for 2 decimetres: v(1, 2) = 4. Up first, then across, gives 0 + 4 = 4. Both match 2xy. The same walk run on v gives 3 at P, which is −u: the partner of v is −u, since v − iu = −iz^2.
+Laplace's equation is the no-twist condition. On the plate from the anchor 0: along the bottom $`-u_y = 0`$, then up at x = 1, $`u_x = 2`$ for 2 decimetres: v(1, 2) = 4. Up first, then across, gives 0 + 4 = 4. Both match 2xy. The same walk run on v gives 3 at P, which is −u: the partner of v is −u, since v − iu = −iz^2.
 
 <details>
 <summary>Detailed proof: the built v has the right slopes</summary>
 
-On an open rectangle in the region containing the anchor $(a, 0)$, define v by the walk formula. Then $v_y = u_x(x, y)$ at once.
+On an open rectangle in the region containing the anchor $`(a, 0)`$, define v by the walk formula. Then $`v_y = u_x(x, y)`$ at once.
 
-For $v_x$, differentiate under the integral sign, allowed by the continuous second partials:
-$v_x = -u_y(x, 0) + \int_0^y u_{xx}(x, s)\,ds$.
-Replace $u_{xx}$ by $-u_{yy}$, which is Laplace's equation, and integrate: $\int_0^y -u_{yy}(x, s)\,ds = -u_y(x, y) + u_y(x, 0)$. So $v_x = -u_y(x, y)$.
+For $`v_x`$, differentiate under the integral sign, allowed by the continuous second partials:
+$`v_x = -u_y(x, 0) + \int_0^y u_{xx}(x, s)\,ds`$.
+Replace $`u_{xx}`$ by $`-u_{yy}`$, which is Laplace's equation, and integrate: $`\int_0^y -u_{yy}(x, s)\,ds = -u_y(x, y) + u_y(x, 0)`$. So $`v_x = -u_y(x, y)`$.
 
-So u + iv satisfies Cauchy-Riemann with continuous partials: holomorphic on the rectangle. Without holes the rectangles glue: $u_x - iu_y$ is holomorphic there, has an antiderivative F by [Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md). Re F has u's gradient, so on a connected region it is u plus a constant, and Im F is one global v. Two partners differ by a constant, since their gradients agree.
+So u + iv satisfies Cauchy-Riemann with continuous partials: holomorphic on the rectangle. Without holes the rectangles glue: $`u_x - iu_y`$ is holomorphic there, has an antiderivative F by [Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md). Re F has u's gradient, so on a connected region it is u plus a constant, and Im F is one global v. Two partners differ by a constant, since their gradients agree.
 
 </details>
 
 ### Step 3: level curves cross at right angles
 
-A level curve of u runs perpendicular to $\nabla u$, since u does not change along it. At P, $\nabla u = (2, -4)$ and $\nabla v = (4, 2)$, dot product 8 − 8 = 0. At (−1.5, 0.5) they are (−3, −1) and (1, −3), again 0. Perpendicular gradients mean perpendicular level curves.
+A level curve of u runs perpendicular to $`\nabla u`$, since u does not change along it. At P, $`\nabla u = (2, -4)`$ and $`\nabla v = (4, 2)`$, dot product 8 − 8 = 0. At (−1.5, 0.5) they are (−3, −1) and (1, −3), again 0. Perpendicular gradients mean perpendicular level curves.
 
-Heat moves along $-\nabla u$, which is perpendicular to $\nabla v$: heat moves along level curves of v. Isotherms are level curves of u, flow lines level curves of v.
+Heat moves along $`-\nabla u`$, which is perpendicular to $`\nabla v`$: heat moves along level curves of v. Isotherms are level curves of u, flow lines level curves of v.
 
 ### Step 4: why steady heat obeys Laplace
 
-Fourier's law: heat flows at k times $-\nabla u$, k the conductivity. Steady and heater-free, every small square loses as much heat as it gains; summing the flow across its four sides gives $k(u_{xx} + u_{yy}) = 0$.
+Fourier's law: heat flows at k times $`-\nabla u`$, k the conductivity. Steady and heater-free, every small square loses as much heat as it gains; summing the flow across its four sides gives $`k(u_{xx} + u_{yy}) = 0`$.
 
 ### Step 5: the hot wire has no single partner
 
@@ -121,11 +133,11 @@ A hot wire through the centre gives a steady temperature c − m log|z|, |z| the
 
 On the east half, building v from the anchor (1, 0) gives v(2, 1) = 0.463648, the angle of 2 + i: the partner is arg z. Walk once round the wire adding the partner's slopes. A single-valued v would give 0. The sum is 6.283185 on circles of radius 1 and 0.5, and 0 on a circle missing the wire.
 
-Residues give it another way ([Residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)): $u_x - iu_y = 1/z$ has residue 1, its coefficient of 1/z, and loop integral $2\pi i$, whose imaginary part is the loop sum, 6.283185. For the temperature c − log|z| it is also the wire's heat output per unit conductivity.
+Residues give it another way ([Residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)): $`u_x - iu_y = 1/z`$ has residue 1, its coefficient of 1/z, and loop integral $`2\pi i`$, whose imaginary part is the loop sum, 6.283185. For the temperature c − log|z| it is also the wire's heat output per unit conductivity.
 
 That jump is the branch cut of [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md), seen from the real side: the line where the angle must jump back by 2π.
 
-A second route to the right angles: f sends isotherms to vertical lines and flow lines to horizontal ones, and where $f'$ is not 0 it keeps angles ([Conformal maps](01-conformal-maps.md)).
+A second route to the right angles: f sends isotherms to vertical lines and flow lines to horizontal ones, and where $`f'`$ is not 0 it keeps angles ([Conformal maps](01-conformal-maps.md)).
 
 ---
 
@@ -156,7 +168,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Road one starts from u alone: finite-difference partials, the partner built by its own Simpson integrator along two walks, and loop sums round circles. A finite difference estimates a slope from nearby values; a Simpson integrator estimates an integral from a weighted sum of samples. Road two is the closed form: 2xy and −u, second derivatives 2 and −2, and 2π times a residue estimated as z times $u_x - iu_y$. Four asserts compare the roads.
+Road one starts from u alone: finite-difference partials, the partner built by its own Simpson integrator along two walks, and loop sums round circles. A finite difference estimates a slope from nearby values; a Simpson integrator estimates an integral from a weighted sum of samples. Road two is the closed form: 2xy and −u, second derivatives 2 and −2, and 2π times a residue estimated as z times $`u_x - iu_y`$. Four asserts compare the roads.
 
 ### Python
 
@@ -355,8 +367,8 @@ Lean proves the card's three facts for every holomorphic function on any open re
 
 - If f is holomorphic on an open region, its real part u and imaginary part v are both harmonic there.
 - On an open region without holes, every harmonic u is the real part of a holomorphic function, so u has a harmonic conjugate there.
-- Wherever $f'$ is not 0, $\nabla u$ and $\nabla v$ are both nonzero and their dot product is 0. So the level curves cross at right angles.
-- On the plate, $(1 + 2i)^2 = -3 + 4i$: temperature −3 and partner 4 at P.
+- Wherever $`f'`$ is not 0, $`\nabla u`$ and $`\nabla v`$ are both nonzero and their dot product is 0. So the level curves cross at right angles.
+- On the plate, $`(1 + 2i)^2 = -3 + 4i`$: temperature −3 and partner 4 at P.
 - The hand sums are exact: Laplacians 2 − 2 = 0 and 2 + 2 = 4, dot product 2 × 4 + (−4) × 2 = 0, and the walk 0 + 4 = 4.
 
 The finite differences, the Simpson walks, the hot wire's 6.283185 per lap and the mistakes table are left to the Python and Rust checks.
@@ -692,7 +704,7 @@ example : (0 : ℤ) + 2 * 2 = 4 := by norm_num
 >
 > - **Any two harmonic functions as a pair.** x^2 − y^2 and −2xy are both harmonic, but u_x = 2 against v_y = −2.
 > - **Any smooth temperature as harmonic.** x^2 + y^2 has Laplacian 4: that plate is heated from inside.
-> - **Right angles everywhere.** Where $f'$ is 0, as at the centre, level curves can meet at other angles.
+> - **Right angles everywhere.** Where $`f'`$ is 0, as at the centre, level curves can meet at other angles.
 
 ---
 

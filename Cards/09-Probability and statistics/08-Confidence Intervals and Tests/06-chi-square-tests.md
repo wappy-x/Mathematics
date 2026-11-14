@@ -36,32 +36,36 @@ Orange bars: the counts seen. Teal line: the 10 per face a fair die expects. Fac
 
 ## The formula
 
-Notation first. The table has $k$ boxes, here the six faces, and $n$ observations spread among them. $O_j$ is the count observed in box j and $p_j$ is the chance the model gives that box. The **expected count** is $E_j = n p_j$: 60 × 1/6 = 10 for every face. The chi-square law with $\nu$ degrees of freedom, written $\chi^2_\nu$, is the law of a sum of $\nu$ squared independent standard normal draws, that is, bell-curve draws with average 0 and standard deviation 1 ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)).
+Notation first. The table has $`k`$ boxes, here the six faces, and $`n`$ observations spread among them. $`O_j`$ is the count observed in box j and $`p_j`$ is the chance the model gives that box. The **expected count** is $`E_j = n p_j`$: 60 × 1/6 = 10 for every face. The chi-square law with $`\nu`$ degrees of freedom, written $`\chi^2_\nu`$, is the law of a sum of $`\nu`$ squared independent standard normal draws, that is, bell-curve draws with average 0 and standard deviation 1 ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)).
 
-$$Q = \sum_{j=1}^{k} \frac{(O_j - E_j)^2}{E_j}, \qquad \text{p-value} \approx P\big(\chi^2_{\nu} \ge Q\big), \qquad \nu = k - 1 - s$$
+```math
+Q = \sum_{j=1}^{k} \frac{(O_j - E_j)^2}{E_j}, \qquad \text{p-value} \approx P\big(\chi^2_{\nu} \ge Q\big), \qquad \nu = k - 1 - s
+```
 
 **Read it aloud:** Q is the sum over boxes of squared gap over expected count; the p-value is the chance a chi-square draw with nu degrees of freedom lands at Q or beyond, where nu is the number of boxes, less one for the fixed total, less one for each parameter the model had to estimate from these same counts.
 
-For a table with $r$ rows and $c$ columns, the question "are rows and columns independent?" uses expected counts built from the table's own totals:
+For a table with $`r`$ rows and $`c`$ columns, the question "are rows and columns independent?" uses expected counts built from the table's own totals:
 
-$$E_{ij} = \frac{R_i\, C_j}{n}, \qquad Q = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}, \qquad \nu = (r - 1)(c - 1)$$
+```math
+E_{ij} = \frac{R_i\, C_j}{n}, \qquad Q = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}, \qquad \nu = (r - 1)(c - 1)
+```
 
 **Read it aloud:** the expected count in a cell is its row total times its column total over the grand total; add the squared gaps over expected counts as before; the degrees of freedom are one less than the rows times one less than the columns.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | observations in all | 60 rolls; 200 patients | the same proportions give a larger Q |
-| $k$ | boxes, one per category | 6 faces | more degrees of freedom |
-| $O_j$ | count observed in box j | 18 sixes | Q grows as it moves from $E_j$ |
-| $p_j$ | the model's chance for box j | 1/6 | — |
-| $E_j$ | expected count, $n p_j$ | 10 | a given gap counts for less |
-| $Q$ | Pearson's statistic; many books write it $X^2$ | 10.6 dice; 2.083333 trial | smaller p-value |
-| $\nu$ | degrees of freedom: gaps free to vary | 5 dice; 1 trial | a given Q is less surprising |
-| $s$ | parameters estimated from the same counts | 0 dice | one fewer degree of freedom each |
-| $r$, $c$ | rows and columns of a table | 2 arms, 2 outcomes | more degrees of freedom |
-| $R_i$, $C_j$; $R_1$, $R_2$, $C_1$, $C_2$ | a row total and a column total; numbered for a 2 × 2 table | 100 per arm; 80 recovered, 120 not | — |
-| $O_{ij}$, $E_{ij}$ | observed and expected count in row i, column j | 45 and 40, drug and recovered | — |
-| $\chi^2_\nu$ | the chi-square law with nu degrees of freedom | chance beyond 10.6 with 5: 0.059914 | — |
+| $`n`$ | observations in all | 60 rolls; 200 patients | the same proportions give a larger Q |
+| $`k`$ | boxes, one per category | 6 faces | more degrees of freedom |
+| $`O_j`$ | count observed in box j | 18 sixes | Q grows as it moves from $`E_j`$ |
+| $`p_j`$ | the model's chance for box j | 1/6 | — |
+| $`E_j`$ | expected count, $`n p_j`$ | 10 | a given gap counts for less |
+| $`Q`$ | Pearson's statistic; many books write it $`X^2`$ | 10.6 dice; 2.083333 trial | smaller p-value |
+| $`\nu`$ | degrees of freedom: gaps free to vary | 5 dice; 1 trial | a given Q is less surprising |
+| $`s`$ | parameters estimated from the same counts | 0 dice | one fewer degree of freedom each |
+| $`r`$, $`c`$ | rows and columns of a table | 2 arms, 2 outcomes | more degrees of freedom |
+| $`R_i`$, $`C_j`$; $`R_1`$, $`R_2`$, $`C_1`$, $`C_2`$ | a row total and a column total; numbered for a 2 × 2 table | 100 per arm; 80 recovered, 120 not | — |
+| $`O_{ij}`$, $`E_{ij}`$ | observed and expected count in row i, column j | 45 and 40, drug and recovered | — |
+| $`\chi^2_\nu`$ | the chi-square law with nu degrees of freedom | chance beyond 10.6 with 5: 0.059914 | — |
 
 ### When it holds
 
@@ -79,36 +83,40 @@ $$E_{ij} = \frac{R_i\, C_j}{n}, \qquad Q = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}
 
 The count of sixes in 60 fair rolls follows the binomial law, with average 10 and variance 60 × 1/6 × 5/6 = 8.33. By the central limit theorem ([Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)) the gap between count and average, divided by its standard deviation, is close to a standard normal draw. Squaring and adding such draws gives a chi-square law. Pearson's Q is almost that sum.
 
-Two details separate "almost" from "exactly": the divisor is $E_j$ rather than the variance, and the gaps are tied, since the counts must add to 60. The steps below show that these two details offset each other and leave one fewer degree of freedom than there are boxes.
+Two details separate "almost" from "exactly": the divisor is $`E_j`$ rather than the variance, and the gaps are tied, since the counts must add to 60. The steps below show that these two details offset each other and leave one fewer degree of freedom than there are boxes.
 
 ### Step 1: dividing by the expected count puts every box on one scale
 
-A gap of 8 means a lot when 10 are expected and almost nothing when 1,000 are. A count's variance grows with its expected count, so the gap squared grows with it. Dividing by $E_j$ removes that growth. For a rare box, $p_j$ small, the variance $n p_j (1 - p_j)$ is almost exactly $E_j$, so dividing by $E_j$ standardises the squared gap. For a common box the divisor is too big by the factor $1/(1 - p_j)$, and the fixed total repays exactly that excess, as Steps 2 and 3 show.
+A gap of 8 means a lot when 10 are expected and almost nothing when 1,000 are. A count's variance grows with its expected count, so the gap squared grows with it. Dividing by $`E_j`$ removes that growth. For a rare box, $`p_j`$ small, the variance $`n p_j (1 - p_j)`$ is almost exactly $`E_j`$, so dividing by $`E_j`$ standardises the squared gap. For a common box the divisor is too big by the factor $`1/(1 - p_j)`$, and the fixed total repays exactly that excess, as Steps 2 and 3 show.
 
 ### Step 2: with two boxes, Q is exactly a squared z-score
 
 Take two boxes, chances p and 1 − p. The counts add to n, so the gaps are equal and opposite: call them g and −g. Then
 
-$$Q = \frac{g^2}{np} + \frac{g^2}{n(1-p)} = \frac{g^2}{np(1-p)} = \left(\frac{g}{\sqrt{np(1-p)}}\right)^2 = z^2.$$
+```math
+Q = \frac{g^2}{np} + \frac{g^2}{n(1-p)} = \frac{g^2}{np(1-p)} = \left(\frac{g}{\sqrt{np(1-p)}}\right)^2 = z^2.
+```
 
 The reciprocals of the two divisors add up to exactly the reciprocal of the binomial variance, so the two too-large divisors together act as the right one. Q is the square of the familiar z-score, one standard normal draw squared: a chi-square law with 1 degree of freedom. Two boxes, one free gap, one degree of freedom. The 5% cut on that law is 3.8415, the square of the bell curve's two-sided 5% point.
 
 ### Step 3: the exact average of Q is k − 1, for any number of rolls
 
-Each count $O_j$ is binomial on its own ([Multinomial](../03-Discrete%20Distributions/05-multinomial.md)), so the average of its squared gap is its variance, $n p_j (1 - p_j)$. Divide by $E_j = n p_j$ and the average of each term is $1 - p_j$. Add over the boxes: the chances add to 1, so
+Each count $`O_j`$ is binomial on its own ([Multinomial](../03-Discrete%20Distributions/05-multinomial.md)), so the average of its squared gap is its variance, $`n p_j (1 - p_j)`$. Divide by $`E_j = n p_j`$ and the average of each term is $`1 - p_j`$. Add over the boxes: the chances add to 1, so
 
-$$\text{average of } Q = \sum_{j=1}^{k} (1 - p_j) = k - 1.$$
+```math
+\text{average of } Q = \sum_{j=1}^{k} (1 - p_j) = k - 1.
+```
 
-A chi-square law with $\nu$ degrees of freedom has average $\nu$, one for each squared draw. So Q averages exactly what a chi-square law with k − 1 degrees of freedom averages. For the die that is 5. The checks confirm it by listing all 19,858 distinct tallies of 60 rolls, up to the order of faces, and weighting each by its exact multinomial chance: the average is 5.000000. The variance is 9.833333, against 2 × 5 for the chi-square law; the gap closes as the number of rolls grows.
+A chi-square law with $`\nu`$ degrees of freedom has average $`\nu`$, one for each squared draw. So Q averages exactly what a chi-square law with k − 1 degrees of freedom averages. For the die that is 5. The checks confirm it by listing all 19,858 distinct tallies of 60 rolls, up to the order of faces, and weighting each by its exact multinomial chance: the average is 5.000000. The variance is 9.833333, against 2 × 5 for the chi-square law; the gap closes as the number of rolls grows.
 
 An exact average does not make an exact law. With one roll of the die, Q is 5 on every outcome, a single value, while the chi-square law is spread out. The law is a large-sample statement, and its proof needs more than averages.
 
 <details>
 <summary>Detailed proof: why Q tends to a chi-square law with k − 1 degrees of freedom</summary>
 
-Write each scaled gap as $u_j = (O_j - E_j)/\sqrt{E_j}$, so Q is the squared length of the list of scaled gaps. From the multinomial covariances, each scaled gap has variance $1 - p_j$, and the scaled gaps in boxes i and j have covariance $-\sqrt{p_i p_j}$. As a matrix, that is the identity minus the outer product of the list of square roots of the chances with itself. That list has length 1, since the chances add to 1.
+Write each scaled gap as $`u_j = (O_j - E_j)/\sqrt{E_j}`$, so Q is the squared length of the list of scaled gaps. From the multinomial covariances, each scaled gap has variance $`1 - p_j`$, and the scaled gaps in boxes i and j have covariance $`-\sqrt{p_i p_j}`$. As a matrix, that is the identity minus the outer product of the list of square roots of the chances with itself. That list has length 1, since the chances add to 1.
 
-That matrix is a projection: it removes the part of any list pointing along the list of square roots and keeps the rest. Its eigenvalues are 1, repeated k − 1 times, and 0 once, along the list of square roots. The zero is the fixed total: $\sum_j \sqrt{p_j}\, u_j = (\sum_j O_j - n)/\sqrt{n} = 0$ on every outcome.
+That matrix is a projection: it removes the part of any list pointing along the list of square roots and keeps the rest. Its eigenvalues are 1, repeated k − 1 times, and 0 once, along the list of square roots. The zero is the fixed total: $`\sum_j \sqrt{p_j}\, u_j = (\sum_j O_j - n)/\sqrt{n} = 0`$ on every outcome.
 
 The central limit theorem, applied to the list of counts as a whole, says that for large n the list of scaled gaps is close to a multivariate normal with this covariance ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)); that vector form is stated here, not proved.
 
@@ -140,7 +148,7 @@ The trial table, rows for arms and columns for outcomes:
 | Placebo | 35 | 65 | 100 |
 | Column total | 80 | 120 | 200 |
 
-If recovery ignores the pill, both arms share one recovery rate. The best estimate is the pooled rate, 80 of 200 = 0.40. So each arm of 100 expects 40 recovered and 60 not: that is $R_i C_j / n$, row total times the column's share. The estimate is the maximum-likelihood choice, the one under which the observed table is most probable ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
+If recovery ignores the pill, both arms share one recovery rate. The best estimate is the pooled rate, 80 of 200 = 0.40. So each arm of 100 expects 40 recovered and 60 not: that is $`R_i C_j / n`$, row total times the column's share. The estimate is the maximum-likelihood choice, the one under which the observed table is most probable ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
 
 Now count the free gaps. The table of gaps, observed minus expected, is `[[5, -5], [-5, 5]]`: every row and every column adds to zero, because the expected counts were built to match the totals. Choose the top-left gap and the other three follow. One free gap, one degree of freedom.
 
@@ -152,14 +160,16 @@ The four squared gaps over expected counts are 25/40, 25/60, 25/40 and 25/60, so
 
 ### Step 5: the 2 × 2 test is the two-proportion z-test, squared
 
-The two-proportion test of [Hypothesis tests](03-hypothesis-tests-and-p-values.md) divides the gap in recovery rates, 0.10, by its standard error at the pooled rate, $\sqrt{0.4 \times 0.6 \times (1/100 + 1/100)}$. That gives z = 1.443376, and z squared is 2.083333, the same as Q. The p-values agree too: twice the normal tail beyond z is 0.148915. This is the "p equals 0.15" of that card, reached through the table.
+The two-proportion test of [Hypothesis tests](03-hypothesis-tests-and-p-values.md) divides the gap in recovery rates, 0.10, by its standard error at the pooled rate, $`\sqrt{0.4 \times 0.6 \times (1/100 + 1/100)}`$. That gives z = 1.443376, and z squared is 2.083333, the same as Q. The p-values agree too: twice the normal tail beyond z is 0.148915. This is the "p equals 0.15" of that card, reached through the table.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-Label the cells a, b in the first row and c, d in the second, with row totals $R_1$, $R_2$, column totals $C_1$, $C_2$ and grand total n. The top-left gap is $a - R_1 C_1/n = \big(a(a+b+c+d) - (a+b)(a+c)\big)/n = (ad - bc)/n$, and the other three gaps are the same size with alternating signs. Add the reciprocals of the four expected counts: $\sum n/(R_i C_j) = n (1/R_1 + 1/R_2)(1/C_1 + 1/C_2) = n^3/(R_1 R_2 C_1 C_2)$. Multiply by the squared gap:
-$$Q = \frac{n\,(ad - bc)^2}{R_1 R_2 C_1 C_2}.$$
-For the trial: 45 × 65 − 55 × 35 = 1,000, so Q = 200 × 1,000,000 / (100 × 100 × 80 × 120) = 200,000,000 / 96,000,000 = 2.083333. Writing the same expression with the recovery rates $a/R_1$ and $c/R_2$ and the pooled rate $C_1/n$ turns it into the square of the two-proportion z-score.
+Label the cells a, b in the first row and c, d in the second, with row totals $`R_1`$, $`R_2`$, column totals $`C_1`$, $`C_2`$ and grand total n. The top-left gap is $`a - R_1 C_1/n = \big(a(a+b+c+d) - (a+b)(a+c)\big)/n = (ad - bc)/n`$, and the other three gaps are the same size with alternating signs. Add the reciprocals of the four expected counts: $`\sum n/(R_i C_j) = n (1/R_1 + 1/R_2)(1/C_1 + 1/C_2) = n^3/(R_1 R_2 C_1 C_2)`$. Multiply by the squared gap:
+
+$`\displaystyle Q = \frac{n\,(ad - bc)^2}{R_1 R_2 C_1 C_2}.`$
+
+For the trial: 45 × 65 − 55 × 35 = 1,000, so Q = 200 × 1,000,000 / (100 × 100 × 80 × 120) = 200,000,000 / 96,000,000 = 2.083333. Writing the same expression with the recovery rates $`a/R_1`$ and $`c/R_2`$ and the pooled rate $`C_1/n`$ turns it into the square of the two-proportion z-score.
 
 </details>
 
@@ -586,8 +596,8 @@ The two outputs match line for line. The simulated chances land within one stand
 
 Lean proves Q's exact average for any model named in advance, and the 2 × 2 formulas whenever no row or column is empty.
 
-- Take $n \ge 1$ independent observations, each landing in one of k boxes, box j always with chance $p_j > 0$. Then the average of Q is exactly k − 1, for any n.
-- Take a 2 × 2 table with cells a, b over c, d, and no empty row or column. Then $Q = n(ad - bc)^2/(R_1 R_2 C_1 C_2)$.
+- Take $`n \ge 1`$ independent observations, each landing in one of k boxes, box j always with chance $`p_j > 0`$. Then the average of Q is exactly k − 1, for any n.
+- Take a 2 × 2 table with cells a, b over c, d, and no empty row or column. Then $`Q = n(ad - bc)^2/(R_1 R_2 C_1 C_2)`$.
 - Take the same table and the two-proportion z-score, built from the row rates and the pooled rate. Then z squared equals Q exactly.
 - The worked numbers hold exactly as fractions, including Q for the die and the trial, and the breaks' 21.2 and 0.176667.
 

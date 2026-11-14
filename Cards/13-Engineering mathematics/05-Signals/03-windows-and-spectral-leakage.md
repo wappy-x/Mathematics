@@ -41,60 +41,72 @@ The orange line slides smoothly downhill past 468.3 Hz with no bump: the buzz is
 
 ## The formula
 
-Notation first, in words. The recording is $x[n]$, sample number $n$, taken $f_s$ times a second; square brackets count samples ([Sampling](01-sampling-and-the-nyquist-theorem.md)).
+Notation first, in words. The recording is $`x[n]`$, sample number $`n`$, taken $`f_s`$ times a second; square brackets count samples ([Sampling](01-sampling-and-the-nyquist-theorem.md)).
 
-A frame is $N$ samples long. The **window** $w[n]$ is the weight given to sample $n$ before the transform.
+A frame is $`N`$ samples long. The **window** $`w[n]`$ is the weight given to sample $`n`$ before the transform.
 
-As on this shelf, $j$ is the square root of −1; the rest of the library writes $i$. The DFT's output $X[k]$ sits in **bin** $k$, at frequency $k f_s/N$: the bins are $f_s/N$ apart.
+As on this shelf, $`j`$ is the square root of −1; the rest of the library writes $`i`$. The DFT's output $`X[k]`$ sits in **bin** $`k`$, at frequency $`k f_s/N`$: the bins are $`f_s/N`$ apart.
 
 The windowed DFT:
 
-$$X[k] = \sum_{n=0}^{N-1} w[n]\,x[n]\,e^{-j2\pi kn/N}$$
+```math
+X[k] = \sum_{n=0}^{N-1} w[n]\,x[n]\,e^{-j2\pi kn/N}
+```
 
 **Read it aloud:** weight each sample by the window, then measure how much of each bin's frequency the weighted frame holds.
 
-The window's own spectrum, at an offset of $d$ bins (any real $d$, not only whole numbers):
+The window's own spectrum, at an offset of $`d`$ bins (any real $`d`$, not only whole numbers):
 
-$$W(d) = \sum_{n=0}^{N-1} w[n]\,e^{-j2\pi dn/N}$$
+```math
+W(d) = \sum_{n=0}^{N-1} w[n]\,e^{-j2\pi dn/N}
+```
 
-**The leakage identity.** A tone $x[n] = A\cos(2\pi f_0 n/f_s)$ sits $\beta = f_0N/f_s$ bins up the scale, and
+**The leakage identity.** A tone $`x[n] = A\cos(2\pi f_0 n/f_s)`$ sits $`\beta = f_0N/f_s`$ bins up the scale, and
 
-$$X[k] = \frac{A}{2}\Big[\,W(k-\beta) + W(k+\beta)\,\Big]$$
+```math
+X[k] = \frac{A}{2}\Big[\,W(k-\beta) + W(k+\beta)\,\Big]
+```
 
 **Read it aloud:** a windowed tone shows up as the window's own spectrum, centred on the tone, plus a mirror copy centred on minus the tone.
 
-For the plain cut, $w[n] = 1$, the window spectrum has a closed form:
+For the plain cut, $`w[n] = 1`$, the window spectrum has a closed form:
 
-$$\lvert W_{\text{rect}}(d)\rvert = \left\lvert\frac{\sin(\pi d)}{\sin(\pi d/N)}\right\rvert \approx N\left\lvert\frac{\sin(\pi d)}{\pi d}\right\rvert$$
+```math
+\lvert W_{\text{rect}}(d)\rvert = \left\lvert\frac{\sin(\pi d)}{\sin(\pi d/N)}\right\rvert \approx N\left\lvert\frac{\sin(\pi d)}{\pi d}\right\rvert
+```
 
-The four windows on this card are all **cosine windows**, built from three fixed numbers $a_0, a_1, a_2$:
+The four windows on this card are all **cosine windows**, built from three fixed numbers $`a_0, a_1, a_2`$:
 
-$$w[n] = a_0 - a_1\cos\frac{2\pi n}{N} + a_2\cos\frac{4\pi n}{N}$$
+```math
+w[n] = a_0 - a_1\cos\frac{2\pi n}{N} + a_2\cos\frac{4\pi n}{N}
+```
 
-with $(a_0, a_1, a_2)$ = (1, 0, 0) for the plain cut ("rect", short for rectangular), (0.5, 0.5, 0) for Hann, (0.54, 0.46, 0) for Hamming and (0.42, 0.5, 0.08) for Blackman. A tone's amplitude is read back from its bin as
+with $`(a_0, a_1, a_2)`$ = (1, 0, 0) for the plain cut ("rect", short for rectangular), (0.5, 0.5, 0) for Hann, (0.54, 0.46, 0) for Hamming and (0.42, 0.5, 0.08) for Blackman. A tone's amplitude is read back from its bin as
 
-$$\hat A = \frac{2\,\lvert X[k]\rvert}{a_0 N}$$
+```math
+\hat A = \frac{2\,\lvert X[k]\rvert}{a_0 N}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x[n]$, $n$ | the recording, in volts; the sample number | note plus buzz; 0 to 8191 | — |
-| $N$ | samples in the frame | 8192, which is 185.8 ms | bins crowd closer; peaks narrow; leakage at a fixed hertz gap falls |
-| $f_s$ | sampling rate, samples per second | 44,100 Hz | bins spread apart for the same $N$ |
-| $w[n]$ | the window: the weight on sample $n$ | Hann, 0 at the ends, 1 in the middle | — |
-| $a_0, a_1, a_2$ | the cosine window's recipe | Hann: 0.5, 0.5, 0 | more taper: lower sidelobes (the small humps beside the peak), wider main lobe (the central peak) |
-| $k$ | bin number; bin $k$ is at $kf_s/N$ Hz | bin 87 is 468.3 Hz | — |
-| $X[k]$, $j$, $e$ | the windowed DFT in bin $k$; the square root of −1; $e^{j\theta} = \cos\theta + j\sin\theta$, a spinning arrow | Hann bin 87: −40.07 dB | — |
-| $A$, $f_0$ | a tone's amplitude and frequency | 1 V at 440 Hz; 0.01 V at 470 Hz | bigger $A$, proportionally bigger leakage |
-| $\beta$ | the tone's place on the bin scale, $f_0N/f_s$ | 81.7342 and 87.3070 | — |
-| $W(d)$, $d$, $\delta$ | the window's spectrum; an offset in bins; delta, the buzz's offset from its nearest bin | $d$ = 5.2658 from the note to bin 87; $\delta$ = 0.3070 | farther: less leakage |
-| $\hat A$ | amplitude read back from a bin | the 1 V note, Hann, bin 82: −0.40 dB | — |
+| $`x[n]`$, $`n`$ | the recording, in volts; the sample number | note plus buzz; 0 to 8191 | — |
+| $`N`$ | samples in the frame | 8192, which is 185.8 ms | bins crowd closer; peaks narrow; leakage at a fixed hertz gap falls |
+| $`f_s`$ | sampling rate, samples per second | 44,100 Hz | bins spread apart for the same $`N`$ |
+| $`w[n]`$ | the window: the weight on sample $`n`$ | Hann, 0 at the ends, 1 in the middle | — |
+| $`a_0, a_1, a_2`$ | the cosine window's recipe | Hann: 0.5, 0.5, 0 | more taper: lower sidelobes (the small humps beside the peak), wider main lobe (the central peak) |
+| $`k`$ | bin number; bin $`k`$ is at $`kf_s/N`$ Hz | bin 87 is 468.3 Hz | — |
+| $`X[k]`$, $`j`$, $`e`$ | the windowed DFT in bin $`k`$; the square root of −1; $`e^{j\theta} = \cos\theta + j\sin\theta`$, a spinning arrow | Hann bin 87: −40.07 dB | — |
+| $`A`$, $`f_0`$ | a tone's amplitude and frequency | 1 V at 440 Hz; 0.01 V at 470 Hz | bigger $`A`$, proportionally bigger leakage |
+| $`\beta`$ | the tone's place on the bin scale, $`f_0N/f_s`$ | 81.7342 and 87.3070 | — |
+| $`W(d)`$, $`d`$, $`\delta`$ | the window's spectrum; an offset in bins; delta, the buzz's offset from its nearest bin | $`d`$ = 5.2658 from the note to bin 87; $`\delta`$ = 0.3070 | farther: less leakage |
+| $`\hat A`$ | amplitude read back from a bin | the 1 V note, Hann, bin 82: −0.40 dB | — |
 | ENBW | equivalent noise bandwidth, in bins | 1.5 for Hann | more noise counted in each bin |
 
 ### When it holds
 
 - **The tone is steady across the frame.** The identity treats each tone as one fixed frequency and level. A note that decays or bends inside 185.8 ms smears further, and the [Spectrograms](09-short-time-fourier-and-spectrograms.md) card handles that case.
 - **Leakage vanishes only for a whole number of cycles.** Move the note to exactly bin 82, 441.43 Hz, and the plain cut leaks nothing: every other bin is below a billionth of the peak. A real note never lines up like that, and here the frame holds 81.73 cycles.
-- **Bins far from 0 and $f_s/2$.** The mirror term $W(k+\beta)$ is centred below 0 Hz, far from these bins, so it is tiny here; the code still includes it. Near 0 Hz the two copies overlap and the read-back formula is off.
+- **Bins far from 0 and $`f_s/2`$.** The mirror term $`W(k+\beta)`$ is centred below 0 Hz, far from these bins, so it is tiny here; the code still includes it. Near 0 Hz the two copies overlap and the read-back formula is off.
 - **Outside the range: a frame too short for the gap.** At 2048 samples, 46.4 ms, the tones are only 1.39 bins apart and no window here shows the buzz. The best margin is the plain cut's −26.7 dB, because its main lobe is the narrowest; every taper does worse.
 
 ---
@@ -113,52 +125,60 @@ So leakage is not noise or a fault: it is the true spectrum of a looped frame wi
 
 ### Step 1: a cut is a multiplication, and multiplying moves the window's spectrum
 
-Writing $w[n]x[n]$ treats the cut as a multiplication, which it is: the plain cut multiplies the endless recording by 1 inside the frame and 0 outside.
+Writing $`w[n]x[n]`$ treats the cut as a multiplication, which it is: the plain cut multiplies the endless recording by 1 inside the frame and 0 outside.
 
-Now put in one tone. A cosine is two spinning arrows, $\cos(2\pi\beta n/N) = \tfrac12\big(e^{j2\pi\beta n/N} + e^{-j2\pi\beta n/N}\big)$. Take the arrow $e^{j2\pi\beta n/N}$ and put it in the windowed DFT:
+Now put in one tone. A cosine is two spinning arrows, $`\cos(2\pi\beta n/N) = \tfrac12\big(e^{j2\pi\beta n/N} + e^{-j2\pi\beta n/N}\big)`$. Take the arrow $`e^{j2\pi\beta n/N}`$ and put it in the windowed DFT:
 
-$$\sum_n w[n]\,e^{j2\pi\beta n/N}e^{-j2\pi kn/N} = \sum_n w[n]\,e^{-j2\pi(k-\beta)n/N} = W(k-\beta).$$
+```math
+\sum_n w[n]\,e^{j2\pi\beta n/N}e^{-j2\pi kn/N} = \sum_n w[n]\,e^{-j2\pi(k-\beta)n/N} = W(k-\beta).
+```
 
-The second arrow gives $W(k+\beta)$ the same way. Add them with the factor $A/2$ and the leakage identity is proved. The bins sample the window's spectrum $W$, slid over to sit on the tone.
+The second arrow gives $`W(k+\beta)`$ the same way. Add them with the factor $`A/2`$ and the leakage identity is proved. The bins sample the window's spectrum $`W`$, slid over to sit on the tone.
 
 The consequence is the whole card: **what a tone looks like in the spectrum is decided by the window, not by the tone.** Every tone is drawn with the same brush. A loud tone's brush strokes reach far, and anything quieter beneath them is painted over.
 
 ### Step 2: the plain cut's spectrum has zeros on every bin and a slow tail
 
-For $w[n] = 1$, $W_{\text{rect}}(d)$ is a geometric series, a sum where each term is the previous one times the same factor $e^{-j2\pi d/N}$. Its sum is
+For $`w[n] = 1`$, $`W_{\text{rect}}(d)`$ is a geometric series, a sum where each term is the previous one times the same factor $`e^{-j2\pi d/N}`$. Its sum is
 
-$$W_{\text{rect}}(d) = \frac{1 - e^{-j2\pi d}}{1 - e^{-j2\pi d/N}} = e^{-j\pi d(N-1)/N}\,\frac{\sin(\pi d)}{\sin(\pi d/N)}.$$
+```math
+W_{\text{rect}}(d) = \frac{1 - e^{-j2\pi d}}{1 - e^{-j2\pi d/N}} = e^{-j\pi d(N-1)/N}\,\frac{\sin(\pi d)}{\sin(\pi d/N)}.
+```
 
 Read three facts off it.
 
-- **Zero at every whole $d$ except 0.** A tone exactly on a bin puts nothing in any other bin. That is the "whole number of cycles" case.
+- **Zero at every whole $`d`$ except 0.** A tone exactly on a bin puts nothing in any other bin. That is the "whole number of cycles" case.
 - **First zero at 1 bin.** The central hump, the **main lobe**, runs from −1 to +1 bin.
-- **The humps beyond, the sidelobes, shrink like $1/(\pi d)$.** The first is at $d$ = 1.4303 bins, found where $\tan(\pi d) = \pi d$, and sits 13.26 dB below the peak. Doubling the distance halves the height: 6.02 dB per doubling, called 6 dB per octave. The code measures 5.77 dB between 8 and 16 bins.
+- **The humps beyond, the sidelobes, shrink like $`1/(\pi d)`$.** The first is at $`d`$ = 1.4303 bins, found where $`\tan(\pi d) = \pi d`$, and sits 13.26 dB below the peak. Doubling the distance halves the height: 6.02 dB per doubling, called 6 dB per octave. The code measures 5.77 dB between 8 and 16 bins.
 
-At $d$ = 5.2658 bins, the distance from the note to bin 87, the plain cut's spill-over is −27.0 dB by the large-$N$ shortcut and −26.93 dB exactly. A tone 40 dB down cannot show through that.
+At $`d`$ = 5.2658 bins, the distance from the note to bin 87, the plain cut's spill-over is −27.0 dB by the large-$`N`$ shortcut and −26.93 dB exactly. A tone 40 dB down cannot show through that.
 
 ### Step 3: a taper is three shifted copies that cancel each other's tails
 
-Hann's window is $\tfrac12 - \tfrac12\cos(2\pi n/N)$. Write the cosine as two arrows again: each arrow slides the plain spectrum by one bin. So
+Hann's window is $`\tfrac12 - \tfrac12\cos(2\pi n/N)`$. Write the cosine as two arrows again: each arrow slides the plain spectrum by one bin. So
 
-$$W_{\text{Hann}}(d) = \tfrac12 W_{\text{rect}}(d) - \tfrac14 W_{\text{rect}}(d-1) - \tfrac14 W_{\text{rect}}(d+1).$$
+```math
+W_{\text{Hann}}(d) = \tfrac12 W_{\text{rect}}(d) - \tfrac14 W_{\text{rect}}(d-1) - \tfrac14 W_{\text{rect}}(d+1).
+```
 
-Far from the centre, the three copies are nearly the same size with signs arranged to cancel. Using the large-$N$ form, a shift of one bin flips the sign of both the phase factor and the sine, $\sin(\pi(d\pm1)) = -\sin(\pi d)$, so the two flips cancel, and the three terms combine to
+Far from the centre, the three copies are nearly the same size with signs arranged to cancel. Using the large-$`N`$ form, a shift of one bin flips the sign of both the phase factor and the sine, $`\sin(\pi(d\pm1)) = -\sin(\pi d)`$, so the two flips cancel, and the three terms combine to
 
-$$\lvert W_{\text{Hann}}(d)\rvert \approx \frac N2\,\left\lvert\frac{\sin(\pi d)}{\pi d}\right\rvert\cdot\frac{1}{\lvert d^2 - 1\rvert}.$$
+```math
+\lvert W_{\text{Hann}}(d)\rvert \approx \frac N2\,\left\lvert\frac{\sin(\pi d)}{\pi d}\right\rvert\cdot\frac{1}{\lvert d^2 - 1\rvert}.
+```
 
-The extra factor $1/(d^2-1)$ makes the tail fall like $1/d^3$: 18.06 dB per doubling instead of 6.02. The code measures 17.41 dB. In the time picture, the Hann window starts and ends at zero with zero slope, so the looped frame has no jump and no kink, and a smoother signal has a faster-shrinking spectrum, the same rule as in [Convergence](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/02-convergence-jumps-and-gibbs.md).
+The extra factor $`1/(d^2-1)`$ makes the tail fall like $`1/d^3`$: 18.06 dB per doubling instead of 6.02. The code measures 17.41 dB. In the time picture, the Hann window starts and ends at zero with zero slope, so the looped frame has no jump and no kink, and a smoother signal has a faster-shrinking spectrum, the same rule as in [Convergence](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/02-convergence-jumps-and-gibbs.md).
 
-At $d$ = 5.2658, dividing the plain cut's value by $d^2-1$ takes −27.0 dB down to −55.5 dB, against −55.51 dB exactly. The buzz itself sits $\delta$ = 0.3070 bins from bin 87 and reads −40.5 dB there. It stands about 15 dB clear.
+At $`d`$ = 5.2658, dividing the plain cut's value by $`d^2-1`$ takes −27.0 dB down to −55.5 dB, against −55.51 dB exactly. The buzz itself sits $`\delta`$ = 0.3070 bins from bin 87 and reads −40.5 dB there. It stands about 15 dB clear.
 
 <details>
 <summary>Detailed step: how the three Hann terms combine</summary>
 
-For large $N$, $W_{\text{rect}}(d) \approx N e^{-j\pi d}\sin(\pi d)/(\pi d)$. Shifting by one bin flips the sign twice, once in the phase $e^{-j\pi(d\pm1)}$ and once in $\sin(\pi(d\pm1))$, so $W_{\text{rect}}(d\pm1) \approx N e^{-j\pi d}\sin(\pi d)/(\pi(d\pm1))$. Then
+For large $`N`$, $`W_{\text{rect}}(d) \approx N e^{-j\pi d}\sin(\pi d)/(\pi d)`$. Shifting by one bin flips the sign twice, once in the phase $`e^{-j\pi(d\pm1)}`$ and once in $`\sin(\pi(d\pm1))`$, so $`W_{\text{rect}}(d\pm1) \approx N e^{-j\pi d}\sin(\pi d)/(\pi(d\pm1))`$. Then
 
-$$W_{\text{Hann}}(d) \approx N e^{-j\pi d}\,\frac{\sin(\pi d)}{\pi}\left[\frac{1}{2d} - \frac{1}{4(d-1)} - \frac{1}{4(d+1)}\right] = N e^{-j\pi d}\,\frac{\sin(\pi d)}{\pi}\cdot\frac{-1}{2d(d^2-1)}.$$
+$`\displaystyle W_{\text{Hann}}(d) \approx N e^{-j\pi d}\,\frac{\sin(\pi d)}{\pi}\left[\frac{1}{2d} - \frac{1}{4(d-1)} - \frac{1}{4(d+1)}\right] = N e^{-j\pi d}\,\frac{\sin(\pi d)}{\pi}\cdot\frac{-1}{2d(d^2-1)}.`$
 
-The bracket's three terms nearly cancel: what is left falls like $1/d^3$. At $d = 1$ the $(d-1)$ term's zero meets a zero of $\sin$, and the limit is finite: $\lvert W_{\text{Hann}}(1)\rvert = N/4$, so Hann's first true zero is at 2 bins. The code does not use this shortcut for its main numbers; it uses the exact three-term sum and checks it against the FFT.
+The bracket's three terms nearly cancel: what is left falls like $`1/d^3`$. At $`d = 1`$ the $`(d-1)`$ term's zero meets a zero of $`\sin`$, and the limit is finite: $`\lvert W_{\text{Hann}}(1)\rvert = N/4`$, so Hann's first true zero is at 2 bins. The code does not use this shortcut for its main numbers; it uses the exact three-term sum and checks it against the FFT.
 
 </details>
 
@@ -183,13 +203,13 @@ Blackman spends a third cosine to get both a deep first sidelobe and a fast tail
 
 Three corrections turn a bin's number into volts.
 
-- **Coherent gain.** The window shrinks the tone's peak by its average weight, $a_0$: Hann's peak is half the plain cut's. Divide by $a_0N/2$, which is the $\hat A$ formula.
+- **Coherent gain.** The window shrinks the tone's peak by its average weight, $`a_0`$: Hann's peak is half the plain cut's. Divide by $`a_0N/2`$, which is the $`\hat A`$ formula.
 - **Scalloping.** A tone between two bins is read off the side of the main lobe. At the worst place, half a bin off, the plain cut reads 3.92 dB low and Hann 1.42 dB low. Here the note sits close to bin 82, and the plain cut reads it at −1.03 dB, Hann at −0.40 dB.
-- **Noise bandwidth.** Noise is spread over all frequencies, and a wider main lobe collects more of it into each bin. The **equivalent noise bandwidth** (ENBW) counts how many bins' worth, $N\sum w^2/(\sum w)^2$: 1.5 for Hann, so Hann's noise floor sits $10\log_{10}1.5$ = 1.76 dB above the plain cut's.
+- **Noise bandwidth.** Noise is spread over all frequencies, and a wider main lobe collects more of it into each bin. The **equivalent noise bandwidth** (ENBW) counts how many bins' worth, $`N\sum w^2/(\sum w)^2`$: 1.5 for Hann, so Hann's noise floor sits $`10\log_{10}1.5`$ = 1.76 dB above the plain cut's.
 
 ### Step 6: choosing a window for a job
 
-The rule follows from the brush picture. Count the gap in bins, the hertz gap times $N/f_s$. Read the loud tone's leakage at that distance, taking the worst value within half a bin, since the bins can fall anywhere. Subtract it from the quiet tone's level. A positive **margin** means the quiet tone shows.
+The rule follows from the brush picture. Count the gap in bins, the hertz gap times $`N/f_s`$. Read the loud tone's leakage at that distance, taking the worst value within half a bin, since the bins can fall anywhere. Subtract it from the quiet tone's level. A positive **margin** means the quiet tone shows.
 
 For the 30 Hz gap and the 40 dB contrast, at four frame lengths:
 
@@ -208,18 +228,18 @@ So: **close and loud-ish, choose a narrow main lobe; far and faint, choose deep 
 
 ## Worked numbers, by hand
 
-Hann window, 8192-sample frame, reading bin 87 with the large-$N$ shortcuts of Steps 2 and 3.
+Hann window, 8192-sample frame, reading bin 87 with the large-$`N`$ shortcuts of Steps 2 and 3.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | Bin spacing | 44,100 ÷ 8192 | 5.383 Hz |
 | Note on the bin scale | 440 ÷ 5.383 | 81.7342 bins |
 | Buzz on the bin scale | 470 ÷ 5.383 | 87.3070 bins; nearest bin 87, at 468.3 Hz |
-| Note to bin 87 | $d$ = 87 − 81.7342 | 5.2658 bins |
-| Plain cut's spill-over there | $20\log_{10}\lvert\sin(\pi d)/(\pi d)\rvert$ | −27.0 dB |
-| Hann's spill-over there | the plain value divided by $d^2 - 1$, in dB | −55.5 dB |
-| Buzz to bin 87 | $\delta$ = 87.3070 − 87 | 0.3070 bins |
-| Buzz's own reading | $0.01 \times \dfrac{\sin(\pi\delta)/(\pi\delta)}{1-\delta^2}$, in dB | −40.5 dB |
+| Note to bin 87 | $`d`$ = 87 − 81.7342 | 5.2658 bins |
+| Plain cut's spill-over there | $`20\log_{10}\lvert\sin(\pi d)/(\pi d)\rvert`$ | −27.0 dB |
+| Hann's spill-over there | the plain value divided by $`d^2 - 1`$, in dB | −55.5 dB |
+| Buzz to bin 87 | $`\delta`$ = 87.3070 − 87 | 0.3070 bins |
+| Buzz's own reading | $`0.01 \times \dfrac{\sin(\pi\delta)/(\pi\delta)}{1-\delta^2}`$, in dB | −40.5 dB |
 | Margin | −40.5 − (−55.5) | **15.0 dB; exactly 14.98 dB** |
 
 The buzz stands 15 dB clear of the note's spill-over: on an analyser screen it is a clean bump, and bin 87 reads −40.07 dB against the true −40.
@@ -229,7 +249,7 @@ The buzz stands 15 dB clear of the note's spill-over: on an analyser screen it i
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | No window on the 185.8 ms frame | bin 87 reads −27.19 dB; margin −14.47 dB | the note's slow sidelobe tail sits above the buzz |
-| Hann, read without dividing by $a_0$ | the 1 V note reads −6.42 dB | Hann halves every peak; the coherent gain was not undone |
+| Hann, read without dividing by $`a_0`$ | the 1 V note reads −6.42 dB | Hann halves every peak; the coherent gain was not undone |
 | Blackman on a 92.9 ms frame | margin −11.4 dB | the buzz is 2.79 bins away, inside Blackman's 3-bin main lobe |
 | Zero padding the 92.9 ms Hann frame ×4 | bins 2.692 Hz apart, margin still −8.5 dB | padding draws the same curve with more points; a real 371.5 ms frame, same bin spacing, gives 32.4 dB |
 | Noise per bin read through Hann, no correction | 1.76 dB too high | each Hann bin collects 1.5 bins' worth of noise |
@@ -239,7 +259,7 @@ The buzz stands 15 dB clear of the note's spill-over: on an analyser screen it i
 
 ## Code, from first principles, and it actually runs
 
-The script builds the 8192 samples, applies each window, and runs an FFT written out below. It takes **four independent roads** to the spectrum: the FFT of the samples; the closed form from shifted plain kernels; a direct sum at bin 87 with no FFT; and the large-$N$ shortcut of the hand table. FFT and closed form must agree to a billionth at bins 60 to 109. Side checks: the plain cut's first sidelobe, measured and found by solving $\tan(\pi d) = \pi d$; Hann's ENBW from its samples against $(a_0^2 + a_1^2/2)/a_0^2$ = 1.5; and the zero-padded spectrum against the unpadded one.
+The script builds the 8192 samples, applies each window, and runs an FFT written out below. It takes **four independent roads** to the spectrum: the FFT of the samples; the closed form from shifted plain kernels; a direct sum at bin 87 with no FFT; and the large-$`N`$ shortcut of the hand table. FFT and closed form must agree to a billionth at bins 60 to 109. Side checks: the plain cut's first sidelobe, measured and found by solving $`\tan(\pi d) = \pi d`$; Hann's ENBW from its samples against $`(a_0^2 + a_1^2/2)/a_0^2`$ = 1.5; and the zero-padded spectrum against the unpadded one.
 
 ### Python
 
@@ -640,9 +660,9 @@ ALL CHECKS PASS
 
 Lean proves the card's three exact facts for every frame length, window and tone, and checks four example numbers.
 
-- Take any frame length $N$, any window $w[n]$, and a steady tone $A\cos(2\pi f_0 n/f_s)$. Then $X[k] = \frac{A}{2}[W(k-\beta) + W(k+\beta)]$ at every bin $k$, whole or not.
-- Take the plain cut and a whole number $d$ that is not a multiple of $N$. Then $W(d) = 0$, which is why a whole number of cycles leaks nothing.
-- Take any cosine window. Then its spectrum is shifted copies of the plain cut's spectrum $W_{\text{rect}}$. The weights are $a_0$ at no shift, $-a_1/2$ one bin either way, and $a_2/2$ two bins either way.
+- Take any frame length $`N`$, any window $`w[n]`$, and a steady tone $`A\cos(2\pi f_0 n/f_s)`$. Then $`X[k] = \frac{A}{2}[W(k-\beta) + W(k+\beta)]`$ at every bin $`k`$, whole or not.
+- Take the plain cut and a whole number $`d`$ that is not a multiple of $`N`$. Then $`W(d) = 0`$, which is why a whole number of cycles leaks nothing.
+- Take any cosine window. Then its spectrum is shifted copies of the plain cut's spectrum $`W_{\text{rect}}`$. The weights are $`a_0`$ at no shift, $`-a_1/2`$ one bin either way, and $`a_2/2`$ two bins either way.
 - The note sits between bins 81 and 82, and the buzz is nearest bin 87.
 - Hann's ENBW formula gives exactly 1.5 bins, and Hann's weight on sample 0 is 0.
 
@@ -821,7 +841,7 @@ example : (1 / 2 : ℝ) - 1 / 2 * Real.cos (2 * pi * (0 : ℕ) / 8192) = 0 := by
 >
 > Four smaller traps:
 > - **Leaving the window off because the FFT "doesn't need one".** The plain cut is a window, the worst one for faint tones: the buzz is buried by 14.47 dB.
-> - **Forgetting the coherent gain.** A 1 V note through Hann reads −6.42 dB unless the bin is divided by $a_0N/2$, not $N/2$.
+> - **Forgetting the coherent gain.** A 1 V note through Hann reads −6.42 dB unless the bin is divided by $`a_0N/2`$, not $`N/2`$.
 > - **Comparing noise floors across windows.** Hann counts 1.5 bins of noise per bin, so its floor reads 1.76 dB higher than the plain cut's for the same noise.
 > - **Trusting a single bin's level.** Between bins the peak reads low, by up to 3.92 dB for the plain cut and 1.42 dB for Hann.
 
@@ -841,7 +861,7 @@ example : (1 / 2 : ℝ) - 1 / 2 * Real.cos (2 * pi * (0 : ℕ) / 8192) = 0 := by
 
 ## What this builds on
 
-- [The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md): the transform, its bins $f_s/N$ apart, and the fast algorithm written out in the code here. This card asks what happens when a tone does not land on a bin.
+- [The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md): the transform, its bins $`f_s/N`$ apart, and the fast algorithm written out in the code here. This card asks what happens when a tone does not land on a bin.
 - [Convergence](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/02-convergence-jumps-and-gibbs.md): a function with a jump has Fourier coefficients that shrink only like one over the frequency. The seam in a plain-cut frame is that jump, and the slow tail is the leakage.
 
 ## Where this goes next

@@ -39,38 +39,44 @@ The line falls because money arriving later is worth less this morning. Nothing 
 
 Notation first, in words.
 
-- $D(T)$ is the discount factor for a date: what one dollar paid at time $T$, in years, costs this morning.
-- Every swap here pays once a year, so its dates can be numbered by the year they fall in: $D_n$ is short for $D(n)$, the price of a dollar $n$ years out.
-- A rate quoted for a period becomes money only after it is multiplied by the length of the period, and that length is the **accrual fraction** $\alpha$: half a year is $\alpha = 0.5$, a full year is $\alpha = 1$, and $\alpha_n$ is the fraction for the period ending at year $n$.
-- A deposit's simple rate is $r$.
-- A par swap rate is written $S_n$ — the same kind of number as the bond par rate on [Spot, forward and par rates](01-spot-forward-and-par-rates.md).
+- $`D(T)`$ is the discount factor for a date: what one dollar paid at time $`T`$, in years, costs this morning.
+- Every swap here pays once a year, so its dates can be numbered by the year they fall in: $`D_n`$ is short for $`D(n)`$, the price of a dollar $`n`$ years out.
+- A rate quoted for a period becomes money only after it is multiplied by the length of the period, and that length is the **accrual fraction** $`\alpha`$: half a year is $`\alpha = 0.5`$, a full year is $`\alpha = 1`$, and $`\alpha_n`$ is the fraction for the period ending at year $`n`$.
+- A deposit's simple rate is $`r`$.
+- A par swap rate is written $`S_n`$ — the same kind of number as the bond par rate on [Spot, forward and par rates](01-spot-forward-and-par-rates.md).
 
-A deposit pays once, at its own maturity $T$. One dollar lent grows to $1 + \alpha r$, so the price of a dollar on that date is:
+A deposit pays once, at its own maturity $`T`$. One dollar lent grows to $`1 + \alpha r`$, so the price of a dollar on that date is:
 
-$$D(T) \;=\; \frac{1}{1 + \alpha r}$$
+```math
+D(T) \;=\; \frac{1}{1 + \alpha r}
+```
 
 A par swap pays a coupon on every date in its schedule. Its equation, derived in Why it works, is:
 
-$$S_n \, A_n \;=\; 1 - D_n, \qquad A_n \;=\; \alpha_1 D_1 + \alpha_2 D_2 + \cdots + \alpha_n D_n$$
+```math
+S_n \, A_n \;=\; 1 - D_n, \qquad A_n \;=\; \alpha_1 D_1 + \alpha_2 D_2 + \cdots + \alpha_n D_n
+```
 
-$A_n$ is the **annuity**: the accrual-weighted discount factors added up, the cost today of one unit of coupon on every date of the schedule. Split it into the part already known and the one new term, $A_n = B_n + \alpha_n D_n$, and a single unknown is left:
+$`A_n`$ is the **annuity**: the accrual-weighted discount factors added up, the cost today of one unit of coupon on every date of the schedule. Split it into the part already known and the one new term, $`A_n = B_n + \alpha_n D_n`$, and a single unknown is left:
 
-$$\bigl(1 + \alpha_n S_n\bigr) D_n \;=\; 1 - S_n B_n \qquad\Longrightarrow\qquad \boxed{\;D_n \;=\; \frac{1 - S_n B_n}{1 + \alpha_n S_n}\;}$$
+```math
+\bigl(1 + \alpha_n S_n\bigr) D_n \;=\; 1 - S_n B_n \qquad\Longrightarrow\qquad \boxed{\;D_n \;=\; \frac{1 - S_n B_n}{1 + \alpha_n S_n}\;}
+```
 
 **Read it aloud:** take one dollar, take away what the earlier coupons already cost, and divide by one dollar plus the last coupon.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $D(T)$, $D_n$ | the discount factor: what one dollar paid at time $T$ costs today | 0.79621728 at five years | — |
-| $T$ | time from this morning until the money arrives, in years | 0.5, 1, 2, 3, 4, 5 | later money is worth less today |
-| $n$ | the year a swap payment lands in, and the swap's own maturity | 1 to 5 here | a longer swap mixes more prices into one quote |
-| $r$ | a deposit's simple interest rate, quoted per year | 4.0000 and 4.2000 percent | the deposit's rung falls |
-| $S_n$ | the par swap rate: the fixed coupon making a new swap worth nothing | 4.6500 percent at five years | that rung falls |
-| $\alpha_n$, $\alpha$ | the accrual fraction: how much of a year a period covers | 0.5 for the short deposit, 1 for each swap coupon | each coupon is worth more, so the rung falls further |
-| $A_n$ | the annuity: the cost today of one unit of coupon on every date of a schedule | 3.586207 for the four-year schedule | a given coupon buys more, so the rung rises |
-| $B_n$ | the annuity stopping one date short: the part already solved | the same 3.586207 at the five-year rung | the earlier coupons eat more of the dollar |
-| $z$, $z(T)$ | the zero rate: the single continuously compounded rate with $e^{-z T} = D(T)$ | 4.5577 percent at five years | the rung falls |
-| $f$ | the forward rate: the continuously compounded rate for one period between two dates | 4.6742 percent from year 4 to year 5 | the later rung falls |
+| $`D(T)`$, $`D_n`$ | the discount factor: what one dollar paid at time $`T`$ costs today | 0.79621728 at five years | — |
+| $`T`$ | time from this morning until the money arrives, in years | 0.5, 1, 2, 3, 4, 5 | later money is worth less today |
+| $`n`$ | the year a swap payment lands in, and the swap's own maturity | 1 to 5 here | a longer swap mixes more prices into one quote |
+| $`r`$ | a deposit's simple interest rate, quoted per year | 4.0000 and 4.2000 percent | the deposit's rung falls |
+| $`S_n`$ | the par swap rate: the fixed coupon making a new swap worth nothing | 4.6500 percent at five years | that rung falls |
+| $`\alpha_n`$, $`\alpha`$ | the accrual fraction: how much of a year a period covers | 0.5 for the short deposit, 1 for each swap coupon | each coupon is worth more, so the rung falls further |
+| $`A_n`$ | the annuity: the cost today of one unit of coupon on every date of a schedule | 3.586207 for the four-year schedule | a given coupon buys more, so the rung rises |
+| $`B_n`$ | the annuity stopping one date short: the part already solved | the same 3.586207 at the five-year rung | the earlier coupons eat more of the dollar |
+| $`z`$, $`z(T)`$ | the zero rate: the single continuously compounded rate with $`e^{-z T} = D(T)`$ | 4.5577 percent at five years | the rung falls |
+| $`f`$ | the forward rate: the continuously compounded rate for one period between two dates | 4.6742 percent from year 4 to year 5 | the later rung falls |
 
 Zero rates and forward rates are the same six prices read out loud; converting between the three is [Spot, forward and par rates](01-spot-forward-and-par-rates.md).
 
@@ -79,7 +85,7 @@ Zero rates and forward rates are the same six prices read out loud; converting b
 ### When it holds
 
 - **Each quote pays on solved dates plus one new date.** This is a property of the quote list, not of the maths. Drop the four-year swap and the five-year quote has two unknowns in it: the code prints two curves that both reprice it exactly, and nothing chooses between them.
-- **The quote is in range.** The rung divides by $1 + \alpha_n S_n$, so a par rate at $-1/\alpha_n$ leaves no answer at all, and one at $1/B_n$ drives the price of a future dollar to zero. For the five-year rung that range runs from $-100.00$ percent to 27.88 percent; real quotes sit nowhere near either edge.
+- **The quote is in range.** The rung divides by $`1 + \alpha_n S_n`$, so a par rate at $`-1/\alpha_n`$ leaves no answer at all, and one at $`1/B_n`$ drives the price of a future dollar to zero. For the five-year rung that range runs from $`-100.00`$ percent to 27.88 percent; real quotes sit nowhere near either edge.
 - **One snapshot, one curve.** The six quotes must be readings from one instant. A curve built from a four-year rate seen at 08:30 and a five-year rate seen at 09:15 reprices neither.
 - **One curve doing two jobs.** This card discounts cash flows and projects floating payments off the same six prices. Since 2008 desks separate those jobs, discounting collateralised trades (trades backed by posted cash or bonds) on an overnight-rate curve; the ladder is unchanged, but runs once per curve.
 - **The quotes are tradable.** A price nobody will deal at is not an equation. The curve inherits its quality from its inputs, never from the arithmetic.
@@ -94,20 +100,20 @@ The temptation is to read a rate as a rate. It is more useful to read every quot
 
 ### Step 1: the deposit, one payment and one unknown
 
-A six-month deposit at 4.0000 percent with accrual 0.5 pays back 1.020000 dollars per dollar lent. If a dollar due in six months costs $D(0.5)$, then 1.02 of them cost 1.02 times that, and it must come to the dollar that was lent: $D(0.5) = 1 \div 1.02 = 0.98039216$. The twelve-month deposit does the same with 1.042000 and gives 0.95969290. Two rungs, no ladder needed.
+A six-month deposit at 4.0000 percent with accrual 0.5 pays back 1.020000 dollars per dollar lent. If a dollar due in six months costs $`D(0.5)`$, then 1.02 of them cost 1.02 times that, and it must come to the dollar that was lent: $`D(0.5) = 1 \div 1.02 = 0.98039216`$. The twelve-month deposit does the same with 1.042000 and gives 0.95969290. Two rungs, no ladder needed.
 
 ### Step 2: why a par swap rate is an equation in prices
 
-A swap exchanges fixed coupons for floating ones on the same dates. The fixed side is easy: a coupon of $S_n$ per year on every date is worth $S_n A_n$ today.
+A swap exchanges fixed coupons for floating ones on the same dates. The fixed side is easy: a coupon of $`S_n`$ per year on every date is worth $`S_n A_n`$ today.
 
-The floating side looks hard and is not. The rate for the period between two dates is already pinned by the two prices around it — that is the forward rate. Multiply it by the accrual fraction to get the payment and discount it, and its value today is the price of a dollar at the start of the period minus the price of a dollar at the end. Add those along the schedule and the middle cancels, because the end of one period is the start of the next. What survives is one dollar today, less $D_n$, whatever the rates turn out to be.
+The floating side looks hard and is not. The rate for the period between two dates is already pinned by the two prices around it — that is the forward rate. Multiply it by the accrual fraction to get the payment and discount it, and its value today is the price of a dollar at the start of the period minus the price of a dollar at the end. Add those along the schedule and the middle cancels, because the end of one period is the start of the next. What survives is one dollar today, less $`D_n`$, whatever the rates turn out to be.
 
-A new swap is struck at the rate that makes it worth nothing to either side, so the two sides are equal: $S_n A_n = 1 - D_n$. That is the equation, and it is linear in the prices.
+A new swap is struck at the rate that makes it worth nothing to either side, so the two sides are equal: $`S_n A_n = 1 - D_n`$. That is the equation, and it is linear in the prices.
 
 <details>
 <summary>Why the floating side telescopes</summary>
 
-The forward rate $f$ for the period ending at date $n$ satisfies $\alpha_n f = D_{n-1}/D_n - 1$: lending a dollar across that period must return what buying the two prices returns, or one route is free money ([Spot, forward and par rates](01-spot-forward-and-par-rates.md)). The payment arrives at date $n$, so today it is worth $\alpha_n f D_n = D_{n-1} - D_n$. Summing from the first date to the $n$-th leaves one dollar minus $D_n$. The check does not use this shortcut: it builds each floating payment from its forward rate, discounts it, and compares.
+The forward rate $`f`$ for the period ending at date $`n`$ satisfies $`\alpha_n f = D_{n-1}/D_n - 1`$: lending a dollar across that period must return what buying the two prices returns, or one route is free money ([Spot, forward and par rates](01-spot-forward-and-par-rates.md)). The payment arrives at date $`n`$, so today it is worth $`\alpha_n f D_n = D_{n-1} - D_n`$. Summing from the first date to the $`n`$-th leaves one dollar minus $`D_n`$. The check does not use this shortcut: it builds each floating payment from its forward rate, discounts it, and compares.
 
 </details>
 
@@ -119,22 +125,22 @@ A triangular system is the one case needing no elimination. The first row has on
 
 ### Step 4: one rung, one answer, and when there is none
 
-Solving the rung is one line: expand $A_n = B_n + \alpha_n D_n$ in $S_n A_n = 1 - D_n$, gather the terms in $D_n$, divide. What deserves a moment is whether the division is legitimate and the answer is a price.
+Solving the rung is one line: expand $`A_n = B_n + \alpha_n D_n`$ in $`S_n A_n = 1 - D_n`$, gather the terms in $`D_n`$, divide. What deserves a moment is whether the division is legitimate and the answer is a price.
 
-The denominator $1 + \alpha_n S_n$ is positive whenever $S_n$ exceeds $-1/\alpha_n$, and the answer is then positive exactly when $1 - S_n B_n$ is, which means $S_n$ below $1/B_n$. Inside that range there is one answer and only one, because a linear equation with a non-zero coefficient has one root.
+The denominator $`1 + \alpha_n S_n`$ is positive whenever $`S_n`$ exceeds $`-1/\alpha_n`$, and the answer is then positive exactly when $`1 - S_n B_n`$ is, which means $`S_n`$ below $`1/B_n`$. Inside that range there is one answer and only one, because a linear equation with a non-zero coefficient has one root.
 
-At the top edge the answer is zero — a dollar five years away costing nothing — and past it negative, which no price can be. At the bottom edge the equation reads 0 times $D_n$ = 4.586207, which no number satisfies. The check prints both edges: the five-year quote must lie between $-100.00$ percent and 27.88 percent.
+At the top edge the answer is zero — a dollar five years away costing nothing — and past it negative, which no price can be. At the bottom edge the equation reads 0 times $`D_n`$ = 4.586207, which no number satisfies. The check prints both edges: the five-year quote must lie between $`-100.00`$ percent and 27.88 percent.
 
 <details>
 <summary>Detailed proof: one positive answer, and only one</summary>
 
-Take the rung $\bigl(1 + \alpha_n S_n\bigr) D_n = 1 - S_n B_n$ with $\alpha_n > 0$ and $B_n \ge 0$.
+Take the rung $`\bigl(1 + \alpha_n S_n\bigr) D_n = 1 - S_n B_n`$ with $`\alpha_n > 0`$ and $`B_n \ge 0`$.
 
-*At and below the bottom edge.* If $S_n \le -1/\alpha_n$ then the rate is negative and $-S_n B_n$ is at least $B_n/\alpha_n \ge 0$, so the right-hand side is at least 1. At $S_n = -1/\alpha_n$ the coefficient is zero and the equation reads 0 = something positive: no solution, and a vanishing coefficient does not admit every price at once. Below that the coefficient is negative while the right-hand side is positive, so the single root is negative and is not a price.
+*At and below the bottom edge.* If $`S_n \le -1/\alpha_n`$ then the rate is negative and $`-S_n B_n`$ is at least $`B_n/\alpha_n \ge 0`$, so the right-hand side is at least 1. At $`S_n = -1/\alpha_n`$ the coefficient is zero and the equation reads 0 = something positive: no solution, and a vanishing coefficient does not admit every price at once. Below that the coefficient is negative while the right-hand side is positive, so the single root is negative and is not a price.
 
-*Inside the range.* Above $-1/\alpha_n$ the coefficient is positive, so there is exactly one root, and it is positive exactly when $1 - S_n B_n > 0$ — which is $S_n < 1/B_n$ when $B_n > 0$, and automatic at the first rung, where $B_n$ is zero. At $S_n = 1/B_n$ the root is zero, excluded: a dollar at a future date does not cost nothing.
+*Inside the range.* Above $`-1/\alpha_n`$ the coefficient is positive, so there is exactly one root, and it is positive exactly when $`1 - S_n B_n > 0`$ — which is $`S_n < 1/B_n`$ when $`B_n > 0`$, and automatic at the first rung, where $`B_n`$ is zero. At $`S_n = 1/B_n`$ the root is zero, excluded: a dollar at a future date does not cost nothing.
 
-*Up the ladder.* The first rung is a deposit and gives one positive price whenever $1 + \alpha r > 0$. If every rung below year $n$ is solved and positive, $B_n$ is a known non-negative number and an in-range quote gives exactly one positive answer; no later equation holds an earlier price as an unknown, so nothing computed later disturbs it. The finished list is therefore the only positive list fitting every quote, and if one quote is out of range no positive list fits at all.
+*Up the ladder.* The first rung is a deposit and gives one positive price whenever $`1 + \alpha r > 0`$. If every rung below year $`n`$ is solved and positive, $`B_n`$ is a known non-negative number and an in-range quote gives exactly one positive answer; no later equation holds an earlier price as an unknown, so nothing computed later disturbs it. The finished list is therefore the only positive list fitting every quote, and if one quote is out of range no positive list fits at all.
 
 The argument uses only this shelf's model: certain cash flows, one currency, free lending and borrowing at the curve, no fees and no defaults.
 
@@ -653,9 +659,9 @@ The two outputs match line for line.
 
 Lean proves the ladder for any number of pillars, when each quote pays on every earlier pillar plus one new one.
 
-- Suppose every accrual fraction is positive and every quote sits above its bottom edge $-1/\alpha_n$. Then exactly one list of discount factors fits every quote.
-- Take one rung, with the earlier coupons already costing $B_n$ and the quote above its bottom edge. Then $S_n A_n = 1 - D_n$ holds exactly when $D_n = (1 - S_n B_n)/(1 + \alpha_n S_n)$.
-- Take the one curve that fits every quote, with every quote above its bottom edge. Then each price $D_n$ is positive exactly when $S_n B_n < 1$.
+- Suppose every accrual fraction is positive and every quote sits above its bottom edge $`-1/\alpha_n`$. Then exactly one list of discount factors fits every quote.
+- Take one rung, with the earlier coupons already costing $`B_n`$ and the quote above its bottom edge. Then $`S_n A_n = 1 - D_n`$ holds exactly when $`D_n = (1 - S_n B_n)/(1 + \alpha_n S_n)`$.
+- Take the one curve that fits every quote, with every quote above its bottom edge. Then each price $`D_n`$ is positive exactly when $`S_n B_n < 1`$.
 - The hand arithmetic holds exactly: each of the six prices, written as a fraction, satisfies its own quote's equation.
 - The exact five-year price lies between 0.79621728 and 0.79621729, so the printed digits are right.
 
@@ -811,7 +817,7 @@ example : (79621728 / 10 ^ 8 : ℚ) < 826221623729000 / 1037683609775631 ∧
 > [!warning]
 > **Reading a swap rate as the rate for five-year money.** A par swap rate is a coupon paid on every date of a schedule, an average of the curve weighted by when the money moves. The rate for one dollar on one date is the zero rate, 4.5577 percent here, not the 4.6500 percent quote. Discounting with the quote gives 0.79671655 instead of 0.79621728, and doing that at every maturity prices a 10,000,000 dollar loan at 10,005,565.07 dollars instead of 10,000,000.00.
 >
-> - **Forgetting what the earlier coupons already cost.** The rung is $1 - S_n B_n$ over $1 + \alpha_n S_n$, not 1 over $1 + S_n$. Dropping $B_n$ gives 0.95556617 and a loan worth 11,780,888.45 dollars instead of face value. The deposit formula, which has no $B_n$, looks just similar enough to invite it.
+> - **Forgetting what the earlier coupons already cost.** The rung is $`1 - S_n B_n`$ over $`1 + \alpha_n S_n`$, not 1 over $`1 + S_n`$. Dropping $`B_n`$ gives 0.95556617 and a loan worth 11,780,888.45 dollars instead of face value. The deposit formula, which has no $`B_n`$, looks just similar enough to invite it.
 > - **Bootstrapping through a hole.** A missing maturity does not give a slightly worse curve; it gives no curve. Two pairs of four- and five-year prices fit the same quote exactly and disagree about the fifth year's forward rate by five percentage points: 4.6742 percent against 9.6372 percent.
 > - **Believing the curve between the pillars.** Six quotes buy six prices. A discount factor for two and a half years is a choice made by whoever wrote the interpolation (the rule that fills in prices between the pillars), not a fact read off the market.
 > - **Quoting a curve without repricing its inputs.** A bootstrap that will not hand its own quotes back is broken, and the test costs one line. Desk systems run it on every build.

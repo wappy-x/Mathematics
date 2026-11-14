@@ -42,54 +42,58 @@ xychart-beta
     line [1044.92, 1147.76, 1257.12, 1327.56, 1373.45, 1408.45, 1435.53, 1457.02, 1474.82, 1490.37, 1505.37, 1519.73, 1533.33, 1546.29, 1558.62, 1570.34, 1581.50, 1592.10, 1602.06, 1610.52]
 ```
 
-The line is the best value $V^*(s)$ at each level. It climbs steeply at the bottom, where each band keeps the town out of the penalty zone. It flattens near the top, where an extra band mostly risks a spill. The best release is low at levels 0 to 4, medium at 5 to 9 and high at 10 to 19.
+The line is the best value $`V^*(s)`$ at each level. It climbs steeply at the bottom, where each band keeps the town out of the penalty zone. It flattens near the top, where an extra band mostly risks a spill. The best release is low at levels 0 to 4, medium at 5 to 9 and high at 10 to 19.
 
 ---
 
 ## The formula
 
-Notation first, in words. This shelf writes the state as $s$ and the action as $a$: they are the $x$ and $u$ of [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md). An MDP is five pieces:
+Notation first, in words. This shelf writes the state as $`s`$ and the action as $`a`$: they are the $`x`$ and $`u`$ of [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md). An MDP is five pieces:
 
-1. **States** $s$: here the level, 0 to 19.
-2. **Actions** $a$ allowed in each state: here 1, 2 or 3 bands released.
-3. **Transition chances** $p(s' \mid s, a)$, read "p of s-prime given s and a": the chance that the next state is $s'$ when action $a$ is taken in state $s$. For each $s$ and $a$ they add to 1, a row of a transition matrix as on [Markov chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md).
-4. **Reward** $r(s, a)$: the expected payoff this month, averaged over the rain.
-5. **Discount factor** $\gamma$ (Greek "gamma"), between 0 and 1: what one pound next month is worth today.
+1. **States** $`s`$: here the level, 0 to 19.
+2. **Actions** $`a`$ allowed in each state: here 1, 2 or 3 bands released.
+3. **Transition chances** $`p(s' \mid s, a)`$, read "p of s-prime given s and a": the chance that the next state is $`s'`$ when action $`a`$ is taken in state $`s`$. For each $`s`$ and $`a`$ they add to 1, a row of a transition matrix as on [Markov chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md).
+4. **Reward** $`r(s, a)`$: the expected payoff this month, averaged over the rain.
+5. **Discount factor** $`\gamma`$ (Greek "gamma"), between 0 and 1: what one pound next month is worth today.
 
-For the reservoir, with rain $w$ bands, the water actually released is $\min(a, s + w)$, since the turbines cannot release water that is not there. The next level is
+For the reservoir, with rain $`w`$ bands, the water actually released is $`\min(a, s + w)`$, since the turbines cannot release water that is not there. The next level is
 
-$$s' = \min\big(19,\; s + w - \min(a, s + w)\big),$$
+```math
+s' = \min\big(19,\; s + w - \min(a, s + w)\big),
+```
 
-and $p(s' \mid s, a)$ adds up the rain chances of every $w$ that lands on $s'$.
+and $`p(s' \mid s, a)`$ adds up the rain chances of every $`w`$ that lands on $`s'`$.
 
-A **policy** $\pi$ (Greek "pi") is a rule giving one action in each state: $\pi(s)$. Its **value** $V_\pi(s)$ is the expected total of discounted rewards when the process starts in $s$ and follows $\pi$ for ever. With $\pi$ fixed, the levels form a Markov chain; the long-run share of months it spends at each level, its stationary law, is written $d_\pi$. The best value is $V^*(s)$, the largest $V_\pi(s)$ over all policies. It obeys the **Bellman optimality equation**:
+A **policy** $`\pi`$ (Greek "pi") is a rule giving one action in each state: $`\pi(s)`$. Its **value** $`V_\pi(s)`$ is the expected total of discounted rewards when the process starts in $`s`$ and follows $`\pi`$ for ever. With $`\pi`$ fixed, the levels form a Markov chain; the long-run share of months it spends at each level, its stationary law, is written $`d_\pi`$. The best value is $`V^*(s)`$, the largest $`V_\pi(s)`$ over all policies. It obeys the **Bellman optimality equation**:
 
-$$V^*(s) = \max_{a \in \{1, 2, 3\}} \Big[\, r(s, a) + \gamma \sum_{s'} p(s' \mid s, a)\, V^*(s') \Big] \quad\text{for every state } s.$$
+```math
+V^*(s) = \max_{a \in \{1, 2, 3\}} \Big[\, r(s, a) + \gamma \sum_{s'} p(s' \mid s, a)\, V^*(s') \Big] \quad\text{for every state } s.
+```
 
 **Read it aloud:** the best value from a level is the largest, over this month's three releases, of this month's expected reward plus the discounted average of the best value from wherever the rain leaves the reservoir.
 
-The quantity in square brackets is called the **bracket** below: the worth of taking $a$ now and acting best afterwards. A policy that picks, in each state, an action with the largest bracket is optimal.
+The quantity in square brackets is called the **bracket** below: the worth of taking $`a`$ now and acting best afterwards. A policy that picks, in each state, an action with the largest bracket is optimal.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $s'$ | state now, state next month: the level, in bands of 5 million cubic metres | 10, and 7 to 13 next month | higher levels are worth more: $V^*(19)$ = 1610.52 |
-| $a$ | action: bands released this month | 1 low, 2 medium, 3 high | more revenue now, a lower level next month |
-| $w$ | rain inflow this month, in bands | 0 to 4; chances 10, 20, 40, 20, 10 percent | wetter months favour bigger releases |
-| $p(s' \mid s, a)$ | chance of level $s'$ next month after action $a$ at level $s$ | $p(9 \mid 10, \text{high})$ = 40% | — |
-| $r(s, a)$ | expected reward this month, thousand pounds | $r(2, \text{high})$ = −1.50 | — |
-| $\gamma$ | discount factor: next month's pound in today's pounds | 0.95 | the future counts more; values and the medium zone grow |
-| $\pi$, $\pi(s)$, $d_\pi$ | a policy; the action it takes at level $s$; the long-run share of months at each level under it | best: low at 0–4, medium at 5–9, high at 10–19 | — |
-| $V_\pi(s)$ | expected discounted total from $s$ following $\pi$, thousand pounds | the policy that takes this month's biggest reward: 809.43 at level 10 | — |
-| $V^*(s)$ | best value over all policies, thousand pounds | $V^*(10)$ = 1505.37 | — |
-| $n$, $m$ | number of states, actions per state | 20, 3 | table of $n \cdot m \cdot n$ = 1,200 chances |
-| $d$ | reservoirs on one river, each tracked in 20 levels | 1 | states $20^d$, actions $3^d$ |
-| $\sigma$, $D$, $D_{\min}$ | in the proof: any rival policy, the gap $V - V_\sigma$ level by level, and its smallest entry | the reward-chasing policy | — |
+| $`s`$, $`s'`$ | state now, state next month: the level, in bands of 5 million cubic metres | 10, and 7 to 13 next month | higher levels are worth more: $`V^*(19)`$ = 1610.52 |
+| $`a`$ | action: bands released this month | 1 low, 2 medium, 3 high | more revenue now, a lower level next month |
+| $`w`$ | rain inflow this month, in bands | 0 to 4; chances 10, 20, 40, 20, 10 percent | wetter months favour bigger releases |
+| $`p(s' \mid s, a)`$ | chance of level $`s'`$ next month after action $`a`$ at level $`s`$ | $`p(9 \mid 10, \text{high})`$ = 40% | — |
+| $`r(s, a)`$ | expected reward this month, thousand pounds | $`r(2, \text{high})`$ = −1.50 | — |
+| $`\gamma`$ | discount factor: next month's pound in today's pounds | 0.95 | the future counts more; values and the medium zone grow |
+| $`\pi`$, $`\pi(s)`$, $`d_\pi`$ | a policy; the action it takes at level $`s`$; the long-run share of months at each level under it | best: low at 0–4, medium at 5–9, high at 10–19 | — |
+| $`V_\pi(s)`$ | expected discounted total from $`s`$ following $`\pi`$, thousand pounds | the policy that takes this month's biggest reward: 809.43 at level 10 | — |
+| $`V^*(s)`$ | best value over all policies, thousand pounds | $`V^*(10)`$ = 1505.37 | — |
+| $`n`$, $`m`$ | number of states, actions per state | 20, 3 | table of $`n \cdot m \cdot n`$ = 1,200 chances |
+| $`d`$ | reservoirs on one river, each tracked in 20 levels | 1 | states $`20^d`$, actions $`3^d`$ |
+| $`\sigma`$, $`D`$, $`D_{\min}`$ | in the proof: any rival policy, the gap $`V - V_\sigma`$ level by level, and its smallest entry | the reward-chasing policy | — |
 
 ### When it holds
 
 - **The state carries all the memory that matters.** Rain here is independent from month to month. If wet months tend to follow wet months, the level alone no longer predicts next month, and the state must grow to include last month's rain, multiplying the 20 states by 5.
-- **Discounting, $\gamma < 1$.** At $\gamma = 1$ the total over an endless future is infinite. A sweep puts the current values into the right side of the equation to get new values for every level. Sweeps of the equation from zero then climb by 74.01 a month for ever, through 7468.00, 14868.23 and 29669.93 after 100, 200 and 400 sweeps, and never settle.
-- **The model is known.** The equation needs every $p(s' \mid s, a)$ and $r(s, a)$. When the rain chances are unknown and must be learned from experience, the tool is [Q-learning](05-q-learning-and-temporal-differences.md).
+- **Discounting, $`\gamma < 1`$.** At $`\gamma = 1`$ the total over an endless future is infinite. A sweep puts the current values into the right side of the equation to get new values for every level. Sweeps of the equation from zero then climb by 74.01 a month for ever, through 7468.00, 14868.23 and 29669.93 after 100, 200 and 400 sweeps, and never settle.
+- **The model is known.** The equation needs every $`p(s' \mid s, a)`$ and $`r(s, a)`$. When the rain chances are unknown and must be learned from experience, the tool is [Q-learning](05-q-learning-and-temporal-differences.md).
 - **The same rules every month.** The chances and rewards do not depend on the date. Seasons break this; the repair is to put the month in the state, multiplying the states by 12.
 - **Finitely many states and actions, bounded rewards.** Then each maximum exists and every value is finite.
 
@@ -99,70 +103,72 @@ The quantity in square brackets is called the **bracket** below: the worth of ta
 
 ### Step 0: the level is all the future needs
 
-Two operators who both stand at level 10 on 1 March face the same future: the same choices, the same rain chances, the same prices. How each got there makes no difference. So the best that can be done from here is one number per level, $V^*(s)$, and the whole problem is 20 unknown numbers.
+Two operators who both stand at level 10 on 1 March face the same future: the same choices, the same rain chances, the same prices. How each got there makes no difference. So the best that can be done from here is one number per level, $`V^*(s)`$, and the whole problem is 20 unknown numbers.
 
 ### Step 1: the value of one policy is twenty linear equations
 
-Fix a policy $\pi$. From level $s$ the total is this month's reward plus everything after. Everything after starts at the next level $s'$, a month later, so it is worth $\gamma$ times the value from $s'$. Averaging over the rain:
+Fix a policy $`\pi`$. From level $`s`$ the total is this month's reward plus everything after. Everything after starts at the next level $`s'`$, a month later, so it is worth $`\gamma`$ times the value from $`s'`$. Averaging over the rain:
 
-$$V_\pi(s) = r(s, \pi(s)) + \gamma \sum_{s'} p(s' \mid s, \pi(s))\, V_\pi(s').$$
+```math
+V_\pi(s) = r(s, \pi(s)) + \gamma \sum_{s'} p(s' \mid s, \pi(s))\, V_\pi(s').
+```
 
-One equation per level, 20 equations in 20 unknowns, all straight-line. They have exactly one solution: if two lists both solved them, their difference $D$ would satisfy $D(s) = \gamma \sum_{s'} p(s' \mid s, \pi(s)) D(s')$, an average shrunk by $\gamma$, so the largest $|D(s)|$ is at most $\gamma$ times itself, which forces 0. The code solves the 20 equations by Gaussian elimination: use one equation to remove one unknown from the rest, repeat, then solve backwards.
+One equation per level, 20 equations in 20 unknowns, all straight-line. They have exactly one solution: if two lists both solved them, their difference $`D`$ would satisfy $`D(s) = \gamma \sum_{s'} p(s' \mid s, \pi(s)) D(s')`$, an average shrunk by $`\gamma`$, so the largest $`|D(s)|`$ is at most $`\gamma`$ times itself, which forces 0. The code solves the 20 equations by Gaussian elimination: use one equation to remove one unknown from the rest, repeat, then solve backwards.
 
 ### Step 2: the best value takes the best first action
 
-Any plan from level $s$ is a first release $a$ followed by a plan from wherever the rain lands. Fix $a$. The best that can follow is $V^*(s')$ from each possible $s'$, so the best plan starting with $a$ is worth the bracket, $r(s, a) + \gamma \sum_{s'} p(s' \mid s, a) V^*(s')$. Taking the best $a$ covers every plan. That is the Bellman optimality equation. It is the principle of optimality from [Backward induction](01-finite-horizon-dynamic-programming-and-backward-induction.md), with no last month to start from.
+Any plan from level $`s`$ is a first release $`a`$ followed by a plan from wherever the rain lands. Fix $`a`$. The best that can follow is $`V^*(s')`$ from each possible $`s'`$, so the best plan starting with $`a`$ is worth the bracket, $`r(s, a) + \gamma \sum_{s'} p(s' \mid s, a) V^*(s')`$. Taking the best $`a`$ covers every plan. That is the Bellman optimality equation. It is the principle of optimality from [Backward induction](01-finite-horizon-dynamic-programming-and-backward-induction.md), with no last month to start from.
 
 ### Step 3: a solution certifies the policy
 
-The equation is useful in reverse. Suppose a list of numbers $V$ satisfies it, and $\pi$ takes, at each level, an action with the largest bracket. Then:
+The equation is useful in reverse. Suppose a list of numbers $`V`$ satisfies it, and $`\pi`$ takes, at each level, an action with the largest bracket. Then:
 
-1. $V$ satisfies Step 1's equations for $\pi$, so $V = V_\pi$.
-2. Any other policy $\sigma$ (Greek "sigma") does no better at any level: $V_\sigma(s) \le V(s)$ for every $s$.
+1. $`V`$ satisfies Step 1's equations for $`\pi`$, so $`V = V_\pi`$.
+2. Any other policy $`\sigma`$ (Greek "sigma") does no better at any level: $`V_\sigma(s) \le V(s)`$ for every $`s`$.
 
 <details>
 <summary>Detailed proof: a solution of the optimality equation beats every policy</summary>
 
-Part 1. At each $s$, $\pi(s)$ attains the maximum, so $V(s) = r(s, \pi(s)) + \gamma \sum_{s'} p(s' \mid s, \pi(s)) V(s')$. These are Step 1's equations for $\pi$, whose only solution is $V_\pi$. So $V = V_\pi$.
+Part 1. At each $`s`$, $`\pi(s)`$ attains the maximum, so $`V(s) = r(s, \pi(s)) + \gamma \sum_{s'} p(s' \mid s, \pi(s)) V(s')`$. These are Step 1's equations for $`\pi`$, whose only solution is $`V_\pi`$. So $`V = V_\pi`$.
 
-Part 2. Let $\sigma$ be any policy that takes one action per state. The maximum is at least the bracket of $\sigma(s)$:
+Part 2. Let $`\sigma`$ be any policy that takes one action per state. The maximum is at least the bracket of $`\sigma(s)`$:
 
-$$V(s) \ge r(s, \sigma(s)) + \gamma \sum_{s'} p(s' \mid s, \sigma(s))\, V(s').$$
+$`\displaystyle V(s) \ge r(s, \sigma(s)) + \gamma \sum_{s'} p(s' \mid s, \sigma(s))\, V(s').`$
 
-$V_\sigma$ satisfies the same line with equality. Subtract, and write $D(s) = V(s) - V_\sigma(s)$:
+$`V_\sigma`$ satisfies the same line with equality. Subtract, and write $`D(s) = V(s) - V_\sigma(s)`$:
 
-$$D(s) \ge \gamma \sum_{s'} p(s' \mid s, \sigma(s))\, D(s').$$
+$`\displaystyle D(s) \ge \gamma \sum_{s'} p(s' \mid s, \sigma(s))\, D(s').`$
 
-Let $D_{\min}$ be the smallest $D(s)$, reached at some state $s_0$. The average on the right is at least $D_{\min}$, so $D_{\min} \ge \gamma D_{\min}$, that is $(1 - \gamma) D_{\min} \ge 0$. With $\gamma < 1$ this gives $D_{\min} \ge 0$, so $V(s) \ge V_\sigma(s)$ at every level.
+Let $`D_{\min}`$ be the smallest $`D(s)`$, reached at some state $`s_0`$. The average on the right is at least $`D_{\min}`$, so $`D_{\min} \ge \gamma D_{\min}`$, that is $`(1 - \gamma) D_{\min} \ge 0`$. With $`\gamma < 1`$ this gives $`D_{\min} \ge 0`$, so $`V(s) \ge V_\sigma(s)`$ at every level.
 
-Policies that look back over the history, or toss a coin to choose, do no better either; Puterman (Sources) proves it, in his chapter 6. If $V_\pi$ misses the equation by at most a small residual, the same argument shows no policy beats $\pi$ by more than the residual divided by $1 - \gamma$.
+Policies that look back over the history, or toss a coin to choose, do no better either; Puterman (Sources) proves it, in his chapter 6. If $`V_\pi`$ misses the equation by at most a small residual, the same argument shows no policy beats $`\pi`$ by more than the residual divided by $`1 - \gamma`$.
 
 </details>
 
-This is the certificate the code prints. It values the policy exactly by Step 1, then checks every level and every action: no single switch of action raises a bracket above $V_\pi(s)$ by more than $10^{-9}$. That a solution exists at all, and only one, is the contraction fact proved on [The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md). The code finds it by repeated sweeps of the equation, starting from $V = 0$ and stopping when no level changes by more than $10^{-6}$: 354 sweeps. Why sweeps converge, and a faster method, are the subject of [Value and policy iteration](03-value-and-policy-iteration.md).
+This is the certificate the code prints. It values the policy exactly by Step 1, then checks every level and every action: no single switch of action raises a bracket above $`V_\pi(s)`$ by more than $`10^{-9}`$. That a solution exists at all, and only one, is the contraction fact proved on [The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md). The code finds it by repeated sweeps of the equation, starting from $`V = 0`$ and stopping when no level changes by more than $`10^{-6}`$: 354 sweeps. Why sweeps converge, and a faster method, are the subject of [Value and policy iteration](03-value-and-policy-iteration.md).
 
 ### Step 4: counting what the equation asks for
 
 The [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md) card already shows the curse of dimensionality: the state count explodes with every quantity the state must track. Here is the count for an MDP.
 
-One reservoir needs $n \cdot m \cdot n$ = 20 × 3 × 20 = 1,200 transition chances, of which 280 are not zero: each release has only five rain outcomes, and near the top and bottom some of them land on the same level. One sweep of the equation costs about that many multiply-adds. The policies number $3^{20}$ = 3,486,784,401. Valuing each one separately is hopeless; the equation instead does about 1,200 multiply-adds a sweep.
+One reservoir needs $`n \cdot m \cdot n`$ = 20 × 3 × 20 = 1,200 transition chances, of which 280 are not zero: each release has only five rain outcomes, and near the top and bottom some of them land on the same level. One sweep of the equation costs about that many multiply-adds. The policies number $`3^{20}`$ = 3,486,784,401. Valuing each one separately is hopeless; the equation instead does about 1,200 multiply-adds a sweep.
 
-Now put $d$ reservoirs in a chain on one river. Each release feeds the next reservoir down, so the levels cannot be planned one at a time. The state is the list of all $d$ levels and the action the list of all $d$ releases:
+Now put $`d`$ reservoirs in a chain on one river. Each release feeds the next reservoir down, so the levels cannot be planned one at a time. The state is the list of all $`d`$ levels and the action the list of all $`d`$ releases:
 
-| Reservoirs $d$ | States $20^d$ | Actions $3^d$ | Multiply-adds per sweep | Digits in the number of policies |
+| Reservoirs $`d`$ | States $`20^d`$ | Actions $`3^d`$ | Multiply-adds per sweep | Digits in the number of policies |
 | ---: | ---: | ---: | ---: | ---: |
 | 1 | 20 | 3 | 1,200 | 10 |
 | 2 | 400 | 9 | 1,440,000 | 382 |
 | 3 | 8,000 | 27 | 1,728,000,000 | 11,451 |
 | 10 | 10,240,000,000,000 | 59,049 | 6,191,736,422,400,000,000,000,000,000,000 | 48,857,216,483,294 |
 
-The states grow as $20^d$, the cost of one sweep as $20^d \cdot 3^d \cdot 20^d$. Three reservoirs are routine. Ten are far beyond any computer, although they are only ten numbers. That is why real river systems with many linked reservoirs approximate the values instead of storing one number per state.
+The states grow as $`20^d`$, the cost of one sweep as $`20^d \cdot 3^d \cdot 20^d`$. Three reservoirs are routine. Ten are far beyond any computer, although they are only ten numbers. That is why real river systems with many linked reservoirs approximate the values instead of storing one number per state.
 
 ---
 
 ## Worked numbers, by hand
 
-At level 10, compare the three releases. From level 10 the month cannot end below level 7, so no penalty is possible and the rewards are the plain revenues. The best values the brackets need are $V^*(7)$ to $V^*(13)$: 1457.02, 1474.82, 1490.37, 1505.37, 1519.73, 1533.33, 1546.29.
+At level 10, compare the three releases. From level 10 the month cannot end below level 7, so no penalty is possible and the rewards are the plain revenues. The best values the brackets need are $`V^*(7)`$ to $`V^*(13)`$: 1457.02, 1474.82, 1490.37, 1505.37, 1519.73, 1533.33, 1546.29.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -174,7 +180,7 @@ At level 10, compare the three releases. From level 10 the month cannot end belo
 | bracket, low | 40 + 0.95 × 1519.30 | 1483.33 |
 | bracket, medium | 75 + 0.95 × 1504.98 | 1504.73 |
 | bracket, high | 90 + 0.95 × 1489.86 | 1505.37 |
-| largest bracket | high | **1505.37 = $V^*(10)$** |
+| largest bracket | high | **1505.37 = $`V^*(10)`$** |
 
 Half full, the operator should release high, and the reservoir is worth £1,505,370 in today's money. The call is close: medium's bracket, 1504.73, is less than one thousand pounds behind. Level 10 is exactly where the best rule switches from medium to high.
 
@@ -183,9 +189,9 @@ One reward with a penalty in it, at level 2 with a high release. Rain of 0 lets 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | rain 0, 1, 2, 3, 4 | rewards 75 − 100, 90 − 100, 90 − 100, 90 − 100, 90 | −25, −10, −10, −10, 90 |
-| average | 0.1 × (−25) + 0.2 × (−10) + 0.4 × (−10) + 0.2 × (−10) + 0.1 × 90 | **$r(2, \text{high})$ = −1.50** |
+| average | 0.1 × (−25) + 0.2 × (−10) + 0.4 × (−10) + 0.2 × (−10) + 0.1 × 90 | **$`r(2, \text{high})`$ = −1.50** |
 
-Low releases the least but is the best of the three at level 2 on average: $r(2, \text{low})$ = 10.00 against 5.00 for medium.
+Low releases the least but is the best of the three at level 2 on average: $`r(2, \text{low})`$ = 10.00 against 5.00 for medium.
 
 ### What breaks if you drop a piece
 
@@ -193,7 +199,7 @@ Low releases the least but is the best of the three at level 2 on average: $r(2,
 | --- | --- | --- |
 | Pick the release with the biggest reward this month, ignoring the future (policy 33122333333333333333) | 809.43 at level 10, against 1505.37 | mostly high releases drain the store into the penalty zone; the bracket's second term is missing |
 | Plan as if every month brought exactly 2 bands of rain (policy 11123333333333333333) | promises 1590.50, delivers 1022.64 at level 10 | the average rain never causes a drought, so the plan runs the store low; a dry spell then costs £100,000 a month |
-| Set $\gamma = 1$ | 7468.00, 14868.23, 29669.93 after 100, 200, 400 sweeps, rising 74.01 a sweep | an endless undiscounted total is infinite; the equation has no finite solution |
+| Set $`\gamma = 1`$ | 7468.00, 14868.23, 29669.93 after 100, 200, 400 sweeps, rising 74.01 a sweep | an endless undiscounted total is infinite; the equation has no finite solution |
 
 ---
 
@@ -201,10 +207,10 @@ Low releases the least but is the best of the three at level 2 on average: $r(2,
 
 The script builds the reservoir's transition chances and rewards from the rain table, then takes four roads to the answer.
 
-1. Road 1 sweeps the Bellman optimality equation from $V = 0$ until no level changes by more than $10^{-6}$, a tolerance far above rounding error so the count does not depend on it, and reads off the best release at each level.
-2. Road 2 values that policy exactly by solving Step 1's 20 linear equations by Gaussian elimination, and prints the certificate: no single change of action, at any level, raises a bracket by more than $10^{-9}$.
-3. Road 3 shrinks the reservoir to 6 levels, lists all $3^6$ = 729 policies, values each exactly, and confirms that the one the equation picks is at least as good as every other at every level.
-4. Road 4 runs the policy 4,000 times for 300 months with rain drawn from SplitMix64 (a small random-number generator written out in the code), seed 2026. It checks the average discounted reward (revenue minus penalties) against $V^*(10)$ within 4 standard errors (the standard error is the typical gap between a simulated mean and the true one).
+1. Road 1 sweeps the Bellman optimality equation from $`V = 0`$ until no level changes by more than $`10^{-6}`$, a tolerance far above rounding error so the count does not depend on it, and reads off the best release at each level.
+2. Road 2 values that policy exactly by solving Step 1's 20 linear equations by Gaussian elimination, and prints the certificate: no single change of action, at any level, raises a bracket by more than $`10^{-9}`$.
+3. Road 3 shrinks the reservoir to 6 levels, lists all $`3^6`$ = 729 policies, values each exactly, and confirms that the one the equation picks is at least as good as every other at every level.
+4. Road 4 runs the policy 4,000 times for 300 months with rain drawn from SplitMix64 (a small random-number generator written out in the code), seed 2026. It checks the average discounted reward (revenue minus penalties) against $`V^*(10)`$ within 4 standard errors (the standard error is the typical gap between a simulated mean and the true one).
 
 Python's `sum()` adds floating-point numbers with a correction step, so the script uses a plain running sum to match Rust to the last digit. The `try:` lines at the end run the experiments in the Try-changing box.
 
@@ -590,18 +596,18 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves Steps 1 and 3 for every MDP with finitely many states and actions and $0 \le \gamma < 1$.
+Lean proves Steps 1 and 3 for every MDP with finitely many states and actions and $`0 \le \gamma < 1`$.
 
-- If the value of a policy $\pi$ satisfies the Bellman optimality equation, no policy $\sigma$ does better than $\pi$ from any state.
+- If the value of a policy $`\pi`$ satisfies the Bellman optimality equation, no policy $`\sigma`$ does better than $`\pi`$ from any state.
 - Each policy's value, its endless sum of discounted rewards, is a finite number.
 - The value of any fixed policy satisfies Step 1's equations, one per state.
-- If a list $V$ satisfies the Bellman optimality equation and $\pi$ takes an action with the largest bracket in every state, then $V = V_\pi$.
-- The level 2 rewards hold exactly: $r(2, \text{low})$ = 10, $r(2, \text{medium})$ = 5 and $r(2, \text{high})$ = −1.50.
+- If a list $`V`$ satisfies the Bellman optimality equation and $`\pi`$ takes an action with the largest bracket in every state, then $`V = V_\pi`$.
+- The level 2 rewards hold exactly: $`r(2, \text{low})`$ = 10, $`r(2, \text{medium})`$ = 5 and $`r(2, \text{high})`$ = −1.50.
 - The reservoir's table has 1,200 chances, 280 of them not zero, and there are 3,486,784,401 policies.
 - The counting table's states, actions and multiply-adds per sweep hold for 2, 3 and 10 reservoirs.
 - The number of policies has 10 digits for one reservoir and 382 for two.
 
-The values $V^*(s)$, the best release rule, the simulation and the mistakes table are left to the Python and Rust checks.
+The values $`V^*(s)`$, the best release rule, the simulation and the mistakes table are left to the Python and Rust checks.
 
 ```lean
 -- Markov decision processes: a policy whose value satisfies the Bellman optimality equation does at least as well as every other policy from every state.
@@ -854,8 +860,8 @@ example : 10 ^ 381 ≤ 3 ^ (2 * 20 ^ 2) ∧ 3 ^ (2 * 20 ^ 2) < 10 ^ 382 := by
 
 > [!TIP]
 > **Try changing**
-> - **Guess first:** if the operator cares less about the future, $\gamma$ = 0.8 instead of 0.95, does the high zone grow or shrink? Set `0.95` to `0.8` in the line `PENALTY, LOW, G, ACTS`. It grows: the best rule becomes high from level 7, medium only at 5 and 6, and $V^*(10)$ falls to 410.82. The sweeps settle in 82 rounds instead of 354, and every check still passes.
-> - **Guess first:** and at $\gamma$ = 0.99? Set `0.95` to `0.99`. Medium now runs from level 5 to 16 and high only from 17. The sweeps take 1,803 rounds. Road 4's assert then stops the run: 300 months no longer reach far enough into a future that counts this much, and the simulated mean, 7026.90, falls short of $V^*(10)$ = 7388.37.
+> - **Guess first:** if the operator cares less about the future, $`\gamma`$ = 0.8 instead of 0.95, does the high zone grow or shrink? Set `0.95` to `0.8` in the line `PENALTY, LOW, G, ACTS`. It grows: the best rule becomes high from level 7, medium only at 5 and 6, and $`V^*(10)`$ falls to 410.82. The sweeps settle in 82 rounds instead of 354, and every check still passes.
+> - **Guess first:** and at $`\gamma`$ = 0.99? Set `0.95` to `0.99`. Medium now runs from level 5 to 16 and high only from 17. The sweeps take 1,803 rounds. Road 4's assert then stops the run: 300 months no longer reach far enough into a future that counts this much, and the simulated mean, 7026.90, falls short of $`V^*(10)`$ = 7388.37.
 > - **Guess first:** how much of the £1,505,370 comes in the first year? Set `MONTHS` from `300` to `12`. The simulated mean is 718.00, under half, and road 4's assert stops the run, because a year is not the whole future.
 > - **Guess first:** does another seed change the answer? Set `SEED` from `2026` to `7`. The mean moves to 1506.59 with standard error 1.12, still within 4 standard errors of 1505.37.
 
@@ -864,11 +870,11 @@ example : 10 ^ 381 ≤ 3 ^ (2 * 20 ^ 2) ∧ 3 ^ (2 * 20 ^ 2) < 10 ^ 382 := by
 ## The usual mistake
 
 > [!warning]
-> **Planning with the average rain.** Replace the random rain with its average, 2 bands every month, and the plan looks safe: no month ever ends low, so it releases medium at level 3 and high from level 4, and promises 1590.50. Run that plan in the real, random rain and it delivers 1022.64, about a third less than the best rule's 1505.37. The penalty sits at the low end of the levels, and only the spread of the rain ever reaches it. The equation averages the *value* over every possible next level, $\sum_{s'} p(s' \mid s, a) V^*(s')$; it does not take the value at the average level.
+> **Planning with the average rain.** Replace the random rain with its average, 2 bands every month, and the plan looks safe: no month ever ends low, so it releases medium at level 3 and high from level 4, and promises 1590.50. Run that plan in the real, random rain and it delivers 1022.64, about a third less than the best rule's 1505.37. The penalty sits at the low end of the levels, and only the spread of the rain ever reaches it. The equation averages the *value* over every possible next level, $`\sum_{s'} p(s' \mid s, a) V^*(s')`$; it does not take the value at the average level.
 >
 > - **Chasing this month's revenue.** Releasing for the biggest reward now is worth 809.43 at level 10, barely half the best. The bracket charges each release for the level it leaves behind.
 > - **Counting levels instead of policies.** Twenty levels sound small, yet there are 3,486,784,401 policies. The equation never lists them: it needs 20 numbers and about 1,200 multiply-adds a sweep.
-> - **Forgetting the discount.** At $\gamma = 1$ sweeps from zero grow by 74.01 a month for ever; there is no finite value to find.
+> - **Forgetting the discount.** At $`\gamma = 1`$ sweeps from zero grow by 74.01 a month for ever; there is no finite value to find.
 > - **Adding a reservoir and expecting double the work.** Two linked reservoirs have 400 states, not 40, and one sweep costs 1,440,000 multiply-adds, not twice 1,200.
 
 ---
@@ -889,7 +895,7 @@ example : 10 ^ 381 ≤ 3 ^ (2 * 20 ^ 2) ∧ 3 ^ (2 * 20 ^ 2) < 10 ^ 382 := by
 ## What this builds on
 
 - [Backward induction](01-finite-horizon-dynamic-programming-and-backward-induction.md): the same recursion over a fixed number of stages, solved from the last; this card removes the last stage and keeps the averaging over chance.
-- [Markov chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md): once a policy is fixed, the levels form a Markov chain, and each $p(\cdot \mid s, \pi(s))$ is a row of its transition matrix.
+- [Markov chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md): once a policy is fixed, the levels form a Markov chain, and each $`p(\cdot \mid s, \pi(s))`$ is a row of its transition matrix.
 - [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md): the principle of optimality, the Bellman equation without chance, and the curse of dimensionality.
 
 ## Where this goes next

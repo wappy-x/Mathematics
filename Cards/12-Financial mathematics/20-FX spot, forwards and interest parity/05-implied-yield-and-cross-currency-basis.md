@@ -34,50 +34,56 @@ The falling line is the euro rate each forward quote implies. The flat line is t
 
 ## The formula
 
-Notation, in words first. $r_d$ and $r_f$ are the dollar and euro deposit rates, continuously compounded, as on [Covered interest parity](02-covered-interest-parity.md). The letter y in place of r marks a rate **read out of a forward** rather than paid by a deposit: $y_f$ is the implied euro yield, $y_d$ the implied dollar yield. $\ln$ is the natural logarithm, the power the number e must be raised to ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)).
+Notation, in words first. $`r_d`$ and $`r_f`$ are the dollar and euro deposit rates, continuously compounded, as on [Covered interest parity](02-covered-interest-parity.md). The letter y in place of r marks a rate **read out of a forward** rather than paid by a deposit: $`y_f`$ is the implied euro yield, $`y_d`$ the implied dollar yield. $`\ln`$ is the natural logarithm, the power the number e must be raised to ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)).
 
-Parity says $F = S\,e^{(r_d - r_f)T}$. Solved for the euro rate:
+Parity says $`F = S\,e^{(r_d - r_f)T}`$. Solved for the euro rate:
 
-$$y_f = r_d - \frac{\ln(F/S)}{T}$$
+```math
+y_f = r_d - \frac{\ln(F/S)}{T}
+```
 
 **Read it aloud:** the euro rate a forward implies is the dollar rate, minus the forward's premium over spot, turned into a rate per year.
 
 Solved for the dollar rate instead, with the euro rate known:
 
-$$y_d = r_f + \frac{\ln(F/S)}{T}$$
+```math
+y_d = r_f + \frac{\ln(F/S)}{T}
+```
 
 And the basis, the gap the inverse reveals:
 
-$$b = y_f - r_f = r_d - y_d$$
+```math
+b = y_f - r_f = r_d - y_d
+```
 
 In words: the basis is how much more the forward pays on euros than a euro deposit does; equivalently, how much less the forward charges for dollars than a dollar loan does. The two readings are the same number because both come from one forward.
 
 | Symbol | Plain meaning | In our example | Push it up and the implied rate… |
 | --- | --- | --- | --- |
-| $S$ | spot rate: dollars for one euro, swapped today | 1.10 | $y_f$ rises: the same forward is now a smaller premium over spot |
-| $F$ | forward rate: dollars for one euro, agreed today, swapped at $T$ | 1.1249 (+249 pips) | $y_f$ falls, $y_d$ rises |
-| $T$ | years until delivery | 1 | the premium is spread over more years, so each pip moves the rate less |
-| $r_d$ | dollar deposit rate, per year, continuously compounded | 5% | $y_f$ rises one for one |
-| $r_f$ | euro deposit rate, same basis | 3% | $y_d$ rises one for one; $y_f$ does not move |
-| $y_f$ | implied euro yield: the euro rate the forward charges | 2.761604% | (the answer) |
-| $y_d$ | implied dollar yield: the dollar rate the forward charges, also called the synthetic dollar rate | 5.238396% | (the answer, dollar side) |
-| $b$ | cross-currency basis: $y_f - r_f$, in basis points | −23.84 bp | (the gap the inverse reveals) |
-| $\ln(F/S)$ | the forward premium: how far the forward sits above spot, as a continuously compounded growth | 0.022384 | |
-| $g$ and $y$ | the forward as a function of a trial euro rate $y$, used in the proof | $g(0.03) = 1.122221$ | $g$ falls as $y$ rises |
-| pip | 0.0001 dollars per euro; forward points are $F - S$ counted in pips | 249 | |
+| $`S`$ | spot rate: dollars for one euro, swapped today | 1.10 | $`y_f`$ rises: the same forward is now a smaller premium over spot |
+| $`F`$ | forward rate: dollars for one euro, agreed today, swapped at $`T`$ | 1.1249 (+249 pips) | $`y_f`$ falls, $`y_d`$ rises |
+| $`T`$ | years until delivery | 1 | the premium is spread over more years, so each pip moves the rate less |
+| $`r_d`$ | dollar deposit rate, per year, continuously compounded | 5% | $`y_f`$ rises one for one |
+| $`r_f`$ | euro deposit rate, same basis | 3% | $`y_d`$ rises one for one; $`y_f`$ does not move |
+| $`y_f`$ | implied euro yield: the euro rate the forward charges | 2.761604% | (the answer) |
+| $`y_d`$ | implied dollar yield: the dollar rate the forward charges, also called the synthetic dollar rate | 5.238396% | (the answer, dollar side) |
+| $`b`$ | cross-currency basis: $`y_f - r_f`$, in basis points | −23.84 bp | (the gap the inverse reveals) |
+| $`\ln(F/S)`$ | the forward premium: how far the forward sits above spot, as a continuously compounded growth | 0.022384 | |
+| $`g`$ and $`y`$ | the forward as a function of a trial euro rate $`y`$, used in the proof | $`g(0.03) = 1.122221`$ | $`g`$ falls as $`y`$ rises |
+| pip | 0.0001 dollars per euro; forward points are $`F - S`$ counted in pips | 249 | |
 | bp | basis point: 0.01 percent, a hundredth of a percent | | |
 
 **Conventions verified 27 Sep 2026:** EURUSD is quoted in dollars per euro and a pip on it is 0.0001. The basis sign on this card is the one Du, Tepper and Verdelhan use: negative means dollars cost more through the FX market than in the dollar money market. Quote screens for cross-currency basis swaps use the same sign for EURUSD. Markets could change these; the algebra does not care, provided the sign travels with the number.
 
 ### Before solving: does an answer exist, and is it the only one?
 
-- **Existence.** For any positive spot $S$, any positive forward $F$ and any positive term $T$, there is a rate $y_f$ that makes parity hold. It can be negative. A forward of +700 pips over one year implies a euro rate of −1.17 percent, and euro deposit rates were in fact below zero from 2014 to 2022.
+- **Existence.** For any positive spot $`S`$, any positive forward $`F`$ and any positive term $`T`$, there is a rate $`y_f`$ that makes parity hold. It can be negative. A forward of +700 pips over one year implies a euro rate of −1.17 percent, and euro deposit rates were in fact below zero from 2014 to 2022.
 - **Uniqueness.** There is exactly one such rate. A higher euro rate always gives a lower forward, so no two euro rates can give the same forward.
-- **Boundaries.** $F = S$ gives $y_f = r_d$: no points, no rate gap. $F \le 0$ or $S \le 0$ has no answer; neither can happen on a real screen. As $T$ shrinks to zero the formula divides by nearly nothing, so any error in the points is magnified into the rate (the section after Worked numbers counts it).
+- **Boundaries.** $`F = S`$ gives $`y_f = r_d`$: no points, no rate gap. $`F \le 0`$ or $`S \le 0`$ has no answer; neither can happen on a real screen. As $`T`$ shrinks to zero the formula divides by nearly nothing, so any error in the points is magnified into the rate (the section after Worked numbers counts it).
 
 ### When it holds
 
-- **A clean, same-moment quote.** A stale forward against a fresh spot, or a mid mixed with a bid, gives a rate nobody can trade, and the error scales as one over $T$.
+- **A clean, same-moment quote.** A stale forward against a fresh spot, or a mid mixed with a bid, gives a rate nobody can trade, and the error scales as one over $`T`$.
 - **Rates for exactly the forward's term, on one compounding basis.** The dollar rate must be the one-year rate for a one-year forward, continuously compounded. Money-market quotes (simple interest over a day count, as on [Covered interest parity](02-covered-interest-parity.md)) must be converted first, or a few basis points of fake basis appear.
 - **The deposit rate compared is one the same bank can actually use.** A basis measured against a rate the trader cannot borrow at is not a price anyone can capture. Du, Tepper and Verdelhan measure against interbank and overnight-index rates for that reason.
 - **Parity itself.** The solve is exact algebra. Whether the implied rate *should* equal the deposit rate is covered parity's claim, and that claim is what the basis tests. When it fails, the solve still works; its answer is the market's rate, not the textbook's.
@@ -92,41 +98,45 @@ Covered interest parity ties together five numbers: spot, forward, term and two 
 
 ### Step 1: undo the exponential with a logarithm
 
-Start from parity with the unknown euro rate written $y_f$:
+Start from parity with the unknown euro rate written $`y_f`$:
 
-$$F = S\,e^{(r_d - y_f)T}.$$
+```math
+F = S\,e^{(r_d - y_f)T}.
+```
 
-Divide by $S$: $F/S = e^{(r_d - y_f)T}$. The unknown sits in an exponent. The natural logarithm undoes the exponential: $\ln(e^x) = x$ ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). Take it of both sides:
+Divide by $`S`$: $`F/S = e^{(r_d - y_f)T}`$. The unknown sits in an exponent. The natural logarithm undoes the exponential: $`\ln(e^x) = x`$ ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). Take it of both sides:
 
-$$\ln(F/S) = (r_d - y_f)\,T.$$
+```math
+\ln(F/S) = (r_d - y_f)\,T.
+```
 
-Divide by $T$ and move $y_f$ across: $y_f = r_d - \ln(F/S)/T$. Solving for $y_d$ with $r_f$ known is the same two moves.
+Divide by $`T`$ and move $`y_f`$ across: $`y_f = r_d - \ln(F/S)/T`$. Solving for $`y_d`$ with $`r_f`$ known is the same two moves.
 
 ### Step 2: there is always exactly one answer
 
-Picture the forward as a function of the euro rate: $g(y) = S\,e^{(r_d - y)T}$. Raise $y$ and the exponent falls, so $g$ falls. It never flattens and never turns back. As $y$ runs to very large values $g$ sinks toward zero; as $y$ runs to very negative values $g$ grows without limit. A curve that falls without a break from arbitrarily high to arbitrarily near zero crosses every positive height once and only once. So each positive forward belongs to exactly one euro rate.
+Picture the forward as a function of the euro rate: $`g(y) = S\,e^{(r_d - y)T}`$. Raise $`y`$ and the exponent falls, so $`g`$ falls. It never flattens and never turns back. As $`y`$ runs to very large values $`g`$ sinks toward zero; as $`y`$ runs to very negative values $`g`$ grows without limit. A curve that falls without a break from arbitrarily high to arbitrarily near zero crosses every positive height once and only once. So each positive forward belongs to exactly one euro rate.
 
 <details>
 <summary>Detailed proof</summary>
 
-Fix $S > 0$, $T > 0$ and $r_d$. Let $g(y) = S\,e^{(r_d - y)T}$ for real $y$.
-- **Strictly decreasing.** If $y_1 < y_2$ then $(r_d - y_1)T > (r_d - y_2)T$, and $e^x$ is strictly increasing, so $g(y_1) > g(y_2)$. Hence $g$ is one-to-one: at most one $y$ per forward.
-- **Onto the positive numbers.** Given any $F > 0$, put $y^* = r_d - \ln(F/S)/T$, which is defined because $F/S > 0$. Then $g(y^*) = S\,e^{\ln(F/S)} = F$. So at least one $y$ per forward.
-- **Nothing else.** If $F \le 0$ no $y$ works, because $g(y) > 0$ for every $y$. If $T = 0$ then $g(y) = S$ for every $y$: the forward carries no information about rates, and the inverse does not exist.
+Fix $`S > 0`$, $`T > 0`$ and $`r_d`$. Let $`g(y) = S\,e^{(r_d - y)T}`$ for real $`y`$.
+- **Strictly decreasing.** If $`y_1 < y_2`$ then $`(r_d - y_1)T > (r_d - y_2)T`$, and $`e^x`$ is strictly increasing, so $`g(y_1) > g(y_2)`$. Hence $`g`$ is one-to-one: at most one $`y`$ per forward.
+- **Onto the positive numbers.** Given any $`F > 0`$, put $`y^* = r_d - \ln(F/S)/T`$, which is defined because $`F/S > 0`$. Then $`g(y^*) = S\,e^{\ln(F/S)} = F`$. So at least one $`y`$ per forward.
+- **Nothing else.** If $`F \le 0`$ no $`y`$ works, because $`g(y) > 0`$ for every $`y`$. If $`T = 0`$ then $`g(y) = S`$ for every $`y`$: the forward carries no information about rates, and the inverse does not exist.
 
-Together: for $S, F, T > 0$ the implied rate exists, is unique, and is given by the closed form. The code's second road finds the same number by halving an interval, which relies only on $g$ falling.
+Together: for $`S, F, T > 0`$ the implied rate exists, is unique, and is given by the closed form. The code's second road finds the same number by halving an interval, which relies only on $`g`$ falling.
 
 </details>
 
 ### Step 3: the implied rate is a rate someone can actually pay
 
-The number $y_f$ is not only algebra. It is the rate on a loan built from spot and forward trades. Take the +249-pip screen. A bank borrows one euro at the 3 percent deposit rate, sells it spot for 1.10 dollars, and buys forward the 1.030455 euros it will owe in a year, at 1.1249. In a year it pays 1.159158 dollars for those euros. So it has borrowed 1.10 dollars today and repays 1.159158 dollars in a year. That is a dollar loan, made out of a euro loan and an FX swap (a spot trade and the opposite forward trade, booked together; see [Forward points and the FX swap](03-forward-points-and-fx-swaps.md)). Its rate is $\ln(1.159158/1.10) = 5.238396$ percent: the **synthetic dollar rate**, $y_d$.
+The number $`y_f`$ is not only algebra. It is the rate on a loan built from spot and forward trades. Take the +249-pip screen. A bank borrows one euro at the 3 percent deposit rate, sells it spot for 1.10 dollars, and buys forward the 1.030455 euros it will owe in a year, at 1.1249. In a year it pays 1.159158 dollars for those euros. So it has borrowed 1.10 dollars today and repays 1.159158 dollars in a year. That is a dollar loan, made out of a euro loan and an FX swap (a spot trade and the opposite forward trade, booked together; see [Forward points and the FX swap](03-forward-points-and-fx-swaps.md)). Its rate is $`\ln(1.159158/1.10) = 5.238396`$ percent: the **synthetic dollar rate**, $`y_d`$.
 
 A direct dollar loan costs 5 percent. The swap route costs 5.24 percent. Dollars are dearer through the FX market by 23.84 basis points.
 
 ### Step 4: the basis is the gap, and its sign says who pays
 
-Define the basis as $b = y_f - r_f$. On the +249 screen, $y_f = 2.761604$ percent and $r_f = 3$ percent, so $b = -23.84$ bp. Step 3 reached the same number from the dollar side: $r_d - y_d = 5 - 5.238396 = -23.84$ bp. The two agree for a reason: $y_d = r_f + \ln(F/S)/T$ and $y_f = r_d - \ln(F/S)/T$ add up to $r_d + r_f$, so $y_f - r_f = r_d - y_d$ always.
+Define the basis as $`b = y_f - r_f`$. On the +249 screen, $`y_f = 2.761604`$ percent and $`r_f = 3`$ percent, so $`b = -23.84`$ bp. Step 3 reached the same number from the dollar side: $`r_d - y_d = 5 - 5.238396 = -23.84`$ bp. The two agree for a reason: $`y_d = r_f + \ln(F/S)/T`$ and $`y_f = r_d - \ln(F/S)/T`$ add up to $`r_d + r_f`$, so $`y_f - r_f = r_d - y_d`$ always.
 
 Reading the sign:
 
@@ -140,28 +150,28 @@ Step 3 is also an arbitrage: a trade that locks in profit with no risk. On the +
 
 Before 2008 such profits were competed away; Frenkel and Levich found apparent ones vanished once transaction costs were counted. Since 2008 they persist. The trade is riskless but not free: it puts both a loan and a deposit on the bank's balance sheet, and capital rules charge for balance-sheet size whether the assets are risky or not. Borio and co-authors at the BIS (Bank for International Settlements) and Du, Tepper and Verdelhan trace the basis to that cost, plus heavy one-way demand for dollars from non-US banks, insurers and borrowers hedging dollar assets. The basis is the price of scarce balance sheet, and it jumps around quarter ends, when many banks report their balance sheets.
 
-The other road to an implied rate uses money-market quotes instead of continuous rates: solve $F = S\,(1 + R_d\tau)/(1 + R_f\tau)$ for the euro money-market rate, where $R_d\tau$ is simple interest over the deposit's day-count fraction. It gives the same rate in a different unit. Desks quote it that way; the conversion is on [Covered interest parity](02-covered-interest-parity.md).
+The other road to an implied rate uses money-market quotes instead of continuous rates: solve $`F = S\,(1 + R_d\tau)/(1 + R_f\tau)`$ for the euro money-market rate, where $`R_d\tau`$ is simple interest over the deposit's day-count fraction. It gives the same rate in a different unit. Desks quote it that way; the conversion is on [Covered interest parity](02-covered-interest-parity.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Spot $S = 1.10$ dollars per euro, dollar rate $r_d = 5\%$, euro deposit rate $r_f = 3\%$, one year.
+Spot $`S = 1.10`$ dollars per euro, dollar rate $`r_d = 5\%`$, euro deposit rate $`r_f = 3\%`$, one year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| house forward | $1.10 + 222.21 \times 0.0001$ | 1.122221 |
-| its premium, $\ln(F/S)$ | $\ln(1.122221 / 1.10)$ | 0.020000 |
-| house implied euro rate | $0.05 - 0.020000$ | 3.000042%, which is 3.000% to the quote's precision |
-| market forward, +249 pips | $1.10 + 0.0249$ | 1.124900 |
-| $F/S$ | $1.1249 / 1.10$ | 1.022636 |
-| $\ln(F/S)$ | natural log of 1.022636 | 0.022384 |
-| implied euro rate $y_f$ | $0.05 - 0.022384$ | 2.761604% |
-| basis $b = y_f - r_f$ | $2.761604\% - 3\%$ | −23.84 bp |
-| synthetic dollar rate $y_d$ | $0.03 + 0.022384$ | 5.238396% |
-| same basis, dollar side | $5\% - 5.238396\%$ | **−23.84 bp** |
-| the other screen, +195 pips: $\ln(1.1195/1.10)$ | natural log of 1.017727 | 0.017572 |
-| its implied euro rate | $0.05 - 0.017572$ | 3.242802%, basis **+24.28 bp** |
+| house forward | $`1.10 + 222.21 \times 0.0001`$ | 1.122221 |
+| its premium, $`\ln(F/S)`$ | $`\ln(1.122221 / 1.10)`$ | 0.020000 |
+| house implied euro rate | $`0.05 - 0.020000`$ | 3.000042%, which is 3.000% to the quote's precision |
+| market forward, +249 pips | $`1.10 + 0.0249`$ | 1.124900 |
+| $`F/S`$ | $`1.1249 / 1.10`$ | 1.022636 |
+| $`\ln(F/S)`$ | natural log of 1.022636 | 0.022384 |
+| implied euro rate $`y_f`$ | $`0.05 - 0.022384`$ | 2.761604% |
+| basis $`b = y_f - r_f`$ | $`2.761604\% - 3\%`$ | −23.84 bp |
+| synthetic dollar rate $`y_d`$ | $`0.03 + 0.022384`$ | 5.238396% |
+| same basis, dollar side | $`5\% - 5.238396\%`$ | **−23.84 bp** |
+| the other screen, +195 pips: $`\ln(1.1195/1.10)`$ | natural log of 1.017727 | 0.017572 |
+| its implied euro rate | $`0.05 - 0.017572`$ | 3.242802%, basis **+24.28 bp** |
 
 The house forward gives back the house euro rate; the extra 0.000042 percentage points is rounding in "222.21 pips". The +249 screen says euros earn 2.76 percent through the forward while a deposit pays 3; dollars cost 5.24 percent through the swap while a loan charges 5. The three-month house forward, +55.14 pips, gives back 2.999918 percent: 3.000 again.
 
@@ -171,16 +181,16 @@ Same +249 screen, correct answer 2.761604 percent and a basis of −23.84 bp:
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Sign flipped: $r_d + \ln(F/S)$ | 7.238396% | More points must mean a *lower* foreign rate; the flip reads the premium backwards |
-| $T$ dropped, on the three-month house forward | 4.499979% (right: 3.00%) | A quarter's premium was read as a year's rate. Dividing by $T = 0.25$ multiplies it by four. |
-| Points over spot used for the log, $(F - S)/S$ | 2.736364% | 2.5 bp off: $(F-S)/S$ is a simple return, 0.022636, not the continuous 0.022384. Enough to fake a tenth of the basis. |
+| Sign flipped: $`r_d + \ln(F/S)`$ | 7.238396% | More points must mean a *lower* foreign rate; the flip reads the premium backwards |
+| $`T`$ dropped, on the three-month house forward | 4.499979% (right: 3.00%) | A quarter's premium was read as a year's rate. Dividing by $`T = 0.25`$ multiplies it by four. |
+| Points over spot used for the log, $`(F - S)/S`$ | 2.736364% | 2.5 bp off: $`(F-S)/S`$ is a simple return, 0.022636, not the continuous 0.022384. Enough to fake a tenth of the basis. |
 | Basis taken as deposit minus implied | +23.84 bp | Right size, wrong sign: it now says dollars are cheap through the FX market when they are dear |
 
 ---
 
 ## Why short forwards give wild rates
 
-The formula divides the forward premium by $T$. So a fixed error in the forward, one pip, becomes a rate error of about one pip over $F$ times one over $T$. Around the house forward for each term:
+The formula divides the forward premium by $`T`$. So a fixed error in the forward, one pip, becomes a rate error of about one pip over $`F`$ times one over $`T`$. Around the house forward for each term:
 
 ```
 one pip of error in the forward, moved into the implied euro rate (basis points per pip)
@@ -370,7 +380,7 @@ chart, euro %     3.65    3.42    3.24    3.00    2.76    2.53    2.31
 ALL CHECKS PASS
 ```
 
-Mutation tests: dropping the division by $T$ fails the three-month assert, flipping the sign fails the one-year asserts, and booking the ledger at the dollar rate fails the basis assert.
+Mutation tests: dropping the division by $`T`$ fails the three-month assert, flipping the sign fails the one-year asserts, and booking the ledger at the dollar rate fails the basis assert.
 
 ### Rust
 
@@ -551,11 +561,11 @@ The two outputs agree line for line.
 
 Lean proves the three exact facts behind the solve, for every positive spot, forward and term.
 
-- Take $S$, $F$ and $T$ all positive. Then a euro rate makes parity hold exactly when it equals $r_d - \ln(F/S)/T$. So the implied rate exists and is unique.
-- Take $y_f$ and $y_d$ from their two closed forms. Then $y_f - r_f = r_d - y_d$ always: both readings of the basis are one number.
-- Take $S$, $F$ and $T$ all positive. Then the basis is negative exactly when $F$ is above $S\,e^{(r_d - r_f)T}$, the forward parity predicts.
+- Take $`S`$, $`F`$ and $`T`$ all positive. Then a euro rate makes parity hold exactly when it equals $`r_d - \ln(F/S)/T`$. So the implied rate exists and is unique.
+- Take $`y_f`$ and $`y_d`$ from their two closed forms. Then $`y_f - r_f = r_d - y_d`$ always: both readings of the basis are one number.
+- Take $`S`$, $`F`$ and $`T`$ all positive. Then the basis is negative exactly when $`F`$ is above $`S\,e^{(r_d - r_f)T}`$, the forward parity predicts.
 - Spot 1.10 plus 195, 222.21 and 249 pips gives forwards of 1.1195, 1.122221 and 1.1249.
-- Take $F = S = 1.10$ over one year, with dollars at 5 percent. Then the implied euro rate is 5 percent.
+- Take $`F = S = 1.10`$ over one year, with dollars at 5 percent. Then the implied euro rate is 5 percent.
 
 The logarithms of real quotes, the basis in basis points and the arbitrage ledger are left to the Python and Rust checks.
 
@@ -655,7 +665,7 @@ example : (5 / 100 : ℝ) - log ((11 / 10) / (11 / 10)) / 1 = 5 / 100 := by norm
 > - **The sign.** Negative basis means dollars are *dear* through the FX market. Quoting it as deposit minus implied flips the sign, so −23.84 bp is reported as +23.84 bp and the story reverses.
 > - **Which way the points push.** More points mean a lower implied foreign rate. The flipped formula gives 7.24 percent instead of 2.76 percent on the +249 screen.
 > - **Forgetting the term.** Three-month points read as a one-year premium give 4.50 percent instead of 3.00 percent on the house forward.
-> - **A simple return in place of the log.** Using $(F - S)/S$ puts the rate 2.5 bp off, a tenth of the basis being measured. On long-dated forwards the gap grows.
+> - **A simple return in place of the log.** Using $`(F - S)/S`$ puts the rate 2.5 bp off, a tenth of the basis being measured. On long-dated forwards the gap grows.
 
 ---
 
@@ -668,7 +678,7 @@ example : (5 / 100 : ℝ) - log ((11 / 10) / (11 / 10)) / 1 = 5 / 100 := by norm
 - **Valuing old forwards.** Marking a forward agreed months ago needs discount factors in both currencies; which rate to discount with is exactly the basis question. See [Valuing an old currency forward](04-fx-forward-value-after-inception.md).
 
 > **Say it back**
-> Covered interest parity links spot, forward, term and two interest rates; knowing four fixes the fifth. Solving for the foreign rate gives $y_f = r_d - \ln(F/S)/T$, and for every positive spot and forward the answer exists and is unique. At the house forward it gives back 3 percent. On real screens since 2008 the implied rate and the deposit rate differ, and that gap, the cross-currency basis, is negative when dollars cost more through the FX market than directly. It persists because the arbitrage is riskless but uses scarce balance sheet.
+> Covered interest parity links spot, forward, term and two interest rates; knowing four fixes the fifth. Solving for the foreign rate gives $`y_f = r_d - \ln(F/S)/T`$, and for every positive spot and forward the answer exists and is unique. At the house forward it gives back 3 percent. On real screens since 2008 the implied rate and the deposit rate differ, and that gap, the cross-currency basis, is negative when dollars cost more through the FX market than directly. It persists because the arbitrage is riskless but uses scarce balance sheet.
 
 ---
 
@@ -677,7 +687,7 @@ example : (5 / 100 : ℝ) - log ((11 / 10) / (11 / 10)) / 1 = 5 / 100 := by norm
 - [Covered interest parity](02-covered-interest-parity.md): the formula this card solves backwards, and the two-route argument that makes it hold.
 - [Forward points and the FX swap](03-forward-points-and-fx-swaps.md): how forwards are quoted as points, and the FX swap that the ledger in Step 3 books.
 - [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the logarithm as the undo button for a power, used in Step 1.
-- [Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the natural log as the continuously compounded rate hidden in a growth factor, which is what $\ln(F/S)$ is.
+- [Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the natural log as the continuously compounded rate hidden in a growth factor, which is what $`\ln(F/S)`$ is.
 - [Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md): solving one equation for a different letter, the whole of Step 0.
 
 ## Where this goes next

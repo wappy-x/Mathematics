@@ -44,7 +44,9 @@ Eight vertices, twelve upward edges, one added member per edge. An upward path m
 
 Write M for "there is motion", D for "the room is dark", O for "the override is on". A row such as MDO = 110 lists the three answers in that order, 1 for yes and 0 for no. The rule, then the override multiplied into both halves:
 
-$$L = (M \land D) \lor O = (M \lor O) \land (D \lor O)$$
+```math
+L = (M \land D) \lor O = (M \lor O) \land (D \lor O)
+```
 
 The wedge is the meet, read "and"; the vee is the join, "or"; the hook is "not".
 
@@ -52,18 +54,20 @@ The wedge is the meet, read "and"; the vee is the join, "or"; the hook is "not".
 
 De Morgan's laws turn the reversal of a meet into the join of two reversals, giving the off rule:
 
-$$\neg L = (\neg M \lor \neg D) \land \neg O$$
+```math
+\neg L = (\neg M \lor \neg D) \land \neg O
+```
 
 **Read it aloud:** off when the override is off and motion or darkness is missing.
 
 | Symbol | Plain meaning | In our example | Change it and the answer… |
 | --- | --- | --- | --- |
-| $M$, $D$, $O$, $L$ | the yes-or-no inputs — motion, dark, override — and the light | MDO = 110, light on | flip one input, read another row |
-| $\land$ (also $\cap$) | **meet**: and, intersection, series | both sensors wanted | a requirement only subtracts |
-| $\lor$ (also $\cup$) | **join**: or, union, parallel | the override suffices | an alternative only adds |
-| $\neg$ | **complement**: not, or outside a set | the off rule | — |
-| $0$, $1$ | bottom and top: false and true, empty and whole | override down 0, up 1 | — |
-| $U$, $A$, $B$, $\subseteq$ | a universe, two subsets, "is inside" | A = {a, b} inside U = {a, b, c} | — |
+| $`M`$, $`D`$, $`O`$, $`L`$ | the yes-or-no inputs — motion, dark, override — and the light | MDO = 110, light on | flip one input, read another row |
+| $`\land`$ (also $`\cap`$) | **meet**: and, intersection, series | both sensors wanted | a requirement only subtracts |
+| $`\lor`$ (also $`\cup`$) | **join**: or, union, parallel | the override suffices | an alternative only adds |
+| $`\neg`$ | **complement**: not, or outside a set | the off rule | — |
+| $`0`$, $`1`$ | bottom and top: false and true, empty and whole | override down 0, up 1 | — |
+| $`U`$, $`A`$, $`B`$, $`\subseteq`$ | a universe, two subsets, "is inside" | A = {a, b} inside U = {a, b, c} | — |
 
 ### When it holds
 
@@ -104,9 +108,9 @@ For the light to be off, neither branch may succeed: the override must be off an
 <details>
 <summary>Detailed proof: De Morgan from the laws alone, with no rows to check</summary>
 
-**A complement is unique.** If B and C both complement A, then $B = B \land 1 = B \land (A \lor C) = (B \land A) \lor (B \land C)$, which is $B \land C$ because $B \land A = 0$. Swapping names gives $C = C \land B$: the same element.
+**A complement is unique.** If B and C both complement A, then $`B = B \land 1 = B \land (A \lor C) = (B \land A) \lor (B \land C)`$, which is $`B \land C`$ because $`B \land A = 0`$. Swapping names gives $`C = C \land B`$: the same element.
 
-**The law.** $(A \lor B) \land (\neg A \land \neg B)$ distributes into halves that each meet an element with its own complement, so it is 0. $(A \lor B) \lor (\neg A \land \neg B)$ distributes into brackets that each join one with its complement, so it is 1. Meeting at the bottom and joining at the top is a complement's job, so by uniqueness $\neg(A \lor B) = \neg A \land \neg B$.
+**The law.** $`(A \lor B) \land (\neg A \land \neg B)`$ distributes into halves that each meet an element with its own complement, so it is 0. $`(A \lor B) \lor (\neg A \land \neg B)`$ distributes into brackets that each join one with its complement, so it is 1. Meeting at the bottom and joining at the top is a complement's job, so by uniqueness $`\neg(A \lor B) = \neg A \land \neg B`$.
 
 </details>
 

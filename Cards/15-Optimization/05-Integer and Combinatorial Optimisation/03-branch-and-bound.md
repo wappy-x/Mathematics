@@ -40,30 +40,34 @@ Schematic, not to scale. Each circle is one case, numbered in the order it was s
 
 The festival's problem, written as an **integer program** (a linear program whose variables must be whole numbers; [Integer programs](01-integer-programs-and-relaxations.md)):
 
-$$\max \sum_{j} v_j\,x_j \quad\text{subject to}\quad \sum_{j} f_j\,x_j \le W, \qquad x_j \in \{0, 1\}$$
+```math
+\max \sum_{j} v_j\,x_j \quad\text{subject to}\quad \sum_{j} f_j\,x_j \le W, \qquad x_j \in \{0, 1\}
+```
 
 **Read it aloud:** choose a yes or a no for every act to make total extra ticket sales as large as possible, keeping the booked acts' fees within the budget.
 
-The $\sum_j$ sign means "add up over every act $j$". A goal and limits built only from such sums are what make it a linear program ([Linear programs](../04-Linear%20Programming/01-linear-programs-and-polyhedra.md)). The **relaxation** (the same problem with a rule loosened) replaces "$x_j$ is 0 or 1" with "$x_j$ is anywhere from 0 to 1". Its best value is the ceiling.
+The $`\sum_j`$ sign means "add up over every act $`j`$". A goal and limits built only from such sums are what make it a linear program ([Linear programs](../04-Linear%20Programming/01-linear-programs-and-polyhedra.md)). The **relaxation** (the same problem with a rule loosened) replaces "$`x_j`$ is 0 or 1" with "$`x_j`$ is anywhere from 0 to 1". Its best value is the ceiling.
 
 Branch and bound keeps a list of open cases, called **nodes**. A node is the original problem with some acts already fixed: booked or skipped. Solving a node means solving its relaxation. Then the node is closed by one of three rules, or split in two:
 
-$$\text{close node } N \text{ if } \;(\text{its relaxation has no answer}) \;\text{ or }\; \bar z_N \le z_{\text{inc}} \;\text{ or }\; (\text{its relaxed answer is whole})$$
+```math
+\text{close node } N \text{ if } \;(\text{its relaxation has no answer}) \;\text{ or }\; \bar z_N \le z_{\text{inc}} \;\text{ or }\; (\text{its relaxed answer is whole})
+```
 
 **Read it aloud:** stop working on a case when no booking fits it, when its ceiling is no better than the best booking already found, or when its pretend answer turns out to be a real booking.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $j$ | which act, A to E | C is the act split on first | — |
-| $x_j$ | the decision for act $j$: 1 book it, 0 skip it | $x_A = x_B = x_D = 1$ in the best booking | — (the method chooses it) |
-| $f_j$ | act $j$'s fee, £k | $f_C = 80$ | that act is less likely booked |
-| $v_j$ | act $j$'s extra ticket sales, £k | $v_C = 115$ | that act is more likely booked |
-| $W$ | the fee budget, £k | 150 | best sales rise or stay; the tree can grow or shrink |
-| $N$ | a node: the problem with some acts fixed | node 7 skips C | — |
-| $\bar z_N$ | node $N$'s ceiling: its relaxation's best value, £k | 257.5 at the root | the node is harder to discard |
-| $z_{\text{inc}}$ | the **incumbent**: best whole booking found so far, £k | 225 after node 6, 240 after node 9 | more nodes are discarded |
-| $z^{\ast}$ | the best possible whole booking, £k | 240 | — |
-| $\lambda$ | a price on each £k of fee, for the certificate in Step 1 | 1.4375 at the root | — |
+| $`j`$ | which act, A to E | C is the act split on first | — |
+| $`x_j`$ | the decision for act $`j`$: 1 book it, 0 skip it | $`x_A = x_B = x_D = 1`$ in the best booking | — (the method chooses it) |
+| $`f_j`$ | act $`j`$'s fee, £k | $`f_C = 80`$ | that act is less likely booked |
+| $`v_j`$ | act $`j`$'s extra ticket sales, £k | $`v_C = 115`$ | that act is more likely booked |
+| $`W`$ | the fee budget, £k | 150 | best sales rise or stay; the tree can grow or shrink |
+| $`N`$ | a node: the problem with some acts fixed | node 7 skips C | — |
+| $`\bar z_N`$ | node $`N`$'s ceiling: its relaxation's best value, £k | 257.5 at the root | the node is harder to discard |
+| $`z_{\text{inc}}`$ | the **incumbent**: best whole booking found so far, £k | 225 after node 6, 240 after node 9 | more nodes are discarded |
+| $`z^{\ast}`$ | the best possible whole booking, £k | 240 | — |
+| $`\lambda`$ | a price on each £k of fee, for the certificate in Step 1 | 1.4375 at the root | — |
 
 ### When it holds
 
@@ -88,19 +92,23 @@ Every whole booking is also a fractional one, since 0 and 1 lie between 0 and 1.
 
 With one budget line, the best fractional booking has a simple shape. Rank the free acts by sales per £ of fee. Book them whole in that order until the next one does not fit. Take the fraction of that act that uses up the budget, and stop.
 
-At the root: A (£30k) and B (£80k) use £110k, the £40k left buys half of C, and the ceiling is $70 + 130 + 57.5 = 257.5$.
+At the root: A (£30k) and B (£80k) use £110k, the £40k left buys half of C, and the ceiling is $`70 + 130 + 57.5 = 257.5`$.
 
 Why no other fractional booking does better: any spending on a lower-ranked act could be moved to a higher-ranked one and buy more sales per £. This fill for the one-budget problem dates from 1957 (see Sources).
 
-A second road, with no fill at all, proves the same ceiling. Put a price $\lambda$ (at least 0) on each £k of fee. For any booking in the node, whole or fractional, write each free act's sales as
+A second road, with no fill at all, proves the same ceiling. Put a price $`\lambda`$ (at least 0) on each £k of fee. For any booking in the node, whole or fractional, write each free act's sales as
 
-$$v_j x_j = (v_j - \lambda f_j)\,x_j + \lambda f_j x_j \le \max(0,\; v_j - \lambda f_j) + \lambda f_j x_j .$$
+```math
+v_j x_j = (v_j - \lambda f_j)\,x_j + \lambda f_j x_j \le \max(0,\; v_j - \lambda f_j) + \lambda f_j x_j .
+```
 
 Add this over the free acts. The fees of the booked free acts add to at most the budget left, so
 
-$$\text{sales} \;\le\; \text{sales of acts already booked} \;+\; \lambda \times \text{budget left} \;+\; \sum_{\text{free } j} \max(0,\; v_j - \lambda f_j).$$
+```math
+\text{sales} \;\le\; \text{sales of acts already booked} \;+\; \lambda \times \text{budget left} \;+\; \sum_{\text{free } j} \max(0,\; v_j - \lambda f_j).
+```
 
-Choose $\lambda$ as the sales per £ of the part-booked act. At the root that is C's 1.4375. Only A and B earn more than their fee's worth at that price, and the right side comes to 257.5: exactly the fill's ceiling.
+Choose $`\lambda`$ as the sales per £ of the part-booked act. At the root that is C's 1.4375. Only A and B earn more than their fee's worth at that price, and the right side comes to 257.5: exactly the fill's ceiling.
 
 Both programs check this match at every node that has a part-booked act. A price that gives the same number as a fill proves the fill is the best fractional booking.
 
@@ -129,15 +137,15 @@ The proof runs while the search does. The highest ceiling still on the list caps
 <details>
 <summary>Detailed proof: the closed tree is a certificate, whatever the order of nodes</summary>
 
-Claim: when the list is empty, $z_{\text{inc}} = z^{\ast}$.
+Claim: when the list is empty, $`z_{\text{inc}} = z^{\ast}`$.
 
-Invariant: at every moment, each booking that fits the budget lies either in exactly one node still on the list, or in a closed node that holds nothing better than the current $z_{\text{inc}}$. At the start, the root holds them all. A split replaces one node by two whose fixed acts differ in one act's 0 or 1, so each booking moves to exactly one child. Closing by infeasibility removes a node holding no bookings. Closing by bound removes a node whose bookings all sell at most $\bar z_N \le z_{\text{inc}}$ (Step 1). Closing as whole removes a node whose best booking sells $\bar z_N$, and $z_{\text{inc}}$ becomes at least that. The incumbent never falls, so "nothing better than $z_{\text{inc}}$" stays true as the incumbent rises.
+Invariant: at every moment, each booking that fits the budget lies either in exactly one node still on the list, or in a closed node that holds nothing better than the current $`z_{\text{inc}}`$. At the start, the root holds them all. A split replaces one node by two whose fixed acts differ in one act's 0 or 1, so each booking moves to exactly one child. Closing by infeasibility removes a node holding no bookings. Closing by bound removes a node whose bookings all sell at most $`\bar z_N \le z_{\text{inc}}`$ (Step 1). Closing as whole removes a node whose best booking sells $`\bar z_N`$, and $`z_{\text{inc}}`$ becomes at least that. The incumbent never falls, so "nothing better than $`z_{\text{inc}}`$" stays true as the incumbent rises.
 
-When the list is empty, every booking lies in a closed node, so every booking sells at most $z_{\text{inc}}$. And $z_{\text{inc}}$ is itself a real booking's sales. So $z_{\text{inc}} = z^{\ast}$.
+When the list is empty, every booking lies in a closed node, so every booking sells at most $`z_{\text{inc}}`$. And $`z_{\text{inc}}`$ is itself a real booking's sales. So $`z_{\text{inc}} = z^{\ast}`$.
 
 Nothing in the argument depends on which node is taken next, or which act is split on. Those choices change the work, not the answer.
 
-Best-first (always taking the open node with the highest ceiling next) never splits a node whose ceiling is below $z^{\ast}$. The nodes on the path down to the best booking all have ceilings of at least $z^{\ast}$, so best-first takes every one of them before any node below $z^{\ast}$. By then the best booking is the incumbent, and the lower node closes on bound.
+Best-first (always taking the open node with the highest ceiling next) never splits a node whose ceiling is below $`z^{\ast}`$. The nodes on the path down to the best booking all have ceilings of at least $`z^{\ast}`$, so best-first takes every one of them before any node below $`z^{\ast}`$. By then the best booking is the incumbent, and the lower node closes on bound.
 
 </details>
 
@@ -149,17 +157,17 @@ Depth-first (always take the newest node), "book it" before "skip it", splitting
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Node 1, root | A, B whole (£110k); £40k buys half of C: $70 + 130 + 57.5$ | ceiling 257.5; split on C |
-| Node 2, +C | C costs £80k, £70k left; A whole, £40k buys half of B: $115 + 70 + 65$ | 250; split on B |
-| Node 3, +C +B | fees $80 + 80 = 160 > 150$ | infeasible: closed |
-| Node 4, +C −B | £70k left: A, D whole, £10k buys a ninth of E: $115 + 70 + 40 + 10$ | 235; split on E |
-| Node 5, +C −B +E | fees $80 + 90 = 170 > 150$ | infeasible: closed |
-| Node 6, +C −B −E | £70k left: A, D whole, nothing else free: $115 + 70 + 40$ | 225, whole: incumbent 225 |
-| Node 7, −C | A, B, D whole (£140k); £10k buys a ninth of E: $70 + 130 + 40 + 10$ | 250; above 225, split on E |
-| Node 8, −C +E | E costs £90k, £60k left; A whole, £30k buys three-eighths of B: $90 + 70 + 48.75$ | 208.75, not above 225: closed on bound |
-| Node 9, −C −E | A, B, D whole, nothing else free: $70 + 130 + 40$ | 240, whole: incumbent 240 |
+| Node 1, root | A, B whole (£110k); £40k buys half of C: $`70 + 130 + 57.5`$ | ceiling 257.5; split on C |
+| Node 2, +C | C costs £80k, £70k left; A whole, £40k buys half of B: $`115 + 70 + 65`$ | 250; split on B |
+| Node 3, +C +B | fees $`80 + 80 = 160 > 150`$ | infeasible: closed |
+| Node 4, +C −B | £70k left: A, D whole, £10k buys a ninth of E: $`115 + 70 + 40 + 10`$ | 235; split on E |
+| Node 5, +C −B +E | fees $`80 + 90 = 170 > 150`$ | infeasible: closed |
+| Node 6, +C −B −E | £70k left: A, D whole, nothing else free: $`115 + 70 + 40`$ | 225, whole: incumbent 225 |
+| Node 7, −C | A, B, D whole (£140k); £10k buys a ninth of E: $`70 + 130 + 40 + 10`$ | 250; above 225, split on E |
+| Node 8, −C +E | E costs £90k, £60k left; A whole, £30k buys three-eighths of B: $`90 + 70 + 48.75`$ | 208.75, not above 225: closed on bound |
+| Node 9, −C −E | A, B, D whole, nothing else free: $`70 + 130 + 40`$ | 240, whole: incumbent 240 |
 | Count | 4 split; 5 closed (2 infeasible, 1 bound, 2 whole) | 9 nodes |
-| **Best booking** | A, B, D: fees $30 + 80 + 30 = 140$ | **£240k** |
+| **Best booking** | A, B, D: fees $`30 + 80 + 30 = 140`$ | **£240k** |
 
 So the festival should book A, B and D. The closed tree proves that no booking within £150k sells more than £240k. The root ceiling, £257.5k, sat £17.5k above the answer: that £17.5k is the root's integrality gap, as defined on [Integer programs](01-integer-programs-and-relaxations.md). The search gap of Step 4 is a different number: it starts at £257.5k and falls to 0.
 
@@ -943,7 +951,7 @@ end BranchAndBound
 ## Where this goes next
 
 - [Cutting planes](04-cutting-planes.md): add constraints that slice off fractional answers, so ceilings drop and the tree shrinks.
-- [Lagrangian relaxation](07-lagrangian-relaxation-and-decomposition.md): the price $\lambda$ of Step 1, grown into a method that prices the hard constraints and gives ceilings for problems with no easy fill.
+- [Lagrangian relaxation](07-lagrangian-relaxation-and-decomposition.md): the price $`\lambda`$ of Step 1, grown into a method that prices the hard constraints and gives ceilings for problems with no easy fill.
 
 Which act to split on and which node to open next were fixed by rule here; the open question is how a solver should choose them on a problem with thousands of variables, where the tree's size depends on it.
 

@@ -51,7 +51,9 @@ Read it left to right. **Below $100:** flat at −$9.23. Acme crashed to $50? Yo
 
 ## The formula
 
-$$C = S\,e^{-qT}\,N(d_1) \;-\; K\,e^{-rT}\,N(d_2)$$
+```math
+C = S\,e^{-qT}\,N(d_1) \;-\; K\,e^{-rT}\,N(d_2)
+```
 
 **Read it aloud:** "The share you might receive, minus the cash you might hand over. Each one shrunk back to today's dollars. Each one weighted by its own chance of happening."
 
@@ -59,31 +61,33 @@ That's it. The left half is the share. The right half is the cash. Everything el
 
 | Symbol | Plain meaning | In our example | Push it up and the premium... |
 | --- | --- | --- | --- |
-| $S$ | Acme's price **today** | $100 | rises: more to receive |
-| $K$ | the **strike**, the price you may buy at | $100 | falls: further to climb, more to hand over |
-| $T$ | time until the option expires, in **years** | 1 | rises: more time for a big move |
-| $r$ | the **risk-free rate**, what cash earns sitting safely in the bank | 5% | rises a little: the $100 you'd pay later is worth less today |
-| $q$ | the **dividend yield**, cash the company pays out to shareholders each year | 2% | falls: dividends leave the share price, and you don't get them until you own the share |
-| $\sigma$ | **volatility**, how jumpy the stock is. Say "sigma". | 20% | rises, and this is the input that matters most: more jumpiness means more chance of a big win, and your downside is already capped |
-| $N(x)$ | the **bell curve** area to the left of $x$. A probability between 0 and 1. | | |
-| $d_2$ | how far Acme is from the strike, measured in "wiggle units" of $\sigma\sqrt{T}$ | 0.05 | |
-| $d_1$ | the same distance, plus one wiggle unit | 0.25 | |
-| $e^{-rT}$ | the **discount**: what a dollar due in $T$ years is worth today | 0.951 | |
-| $e^{-qT}$ | the **dividend drag**: the fraction of a share you need to buy today to end up holding one full share at $T$, dividends reinvested | 0.980 | |
+| $`S`$ | Acme's price **today** | $100 | rises: more to receive |
+| $`K`$ | the **strike**, the price you may buy at | $100 | falls: further to climb, more to hand over |
+| $`T`$ | time until the option expires, in **years** | 1 | rises: more time for a big move |
+| $`r`$ | the **risk-free rate**, what cash earns sitting safely in the bank | 5% | rises a little: the $100 you'd pay later is worth less today |
+| $`q`$ | the **dividend yield**, cash the company pays out to shareholders each year | 2% | falls: dividends leave the share price, and you don't get them until you own the share |
+| $`\sigma`$ | **volatility**, how jumpy the stock is. Say "sigma". | 20% | rises, and this is the input that matters most: more jumpiness means more chance of a big win, and your downside is already capped |
+| $`N(x)`$ | the **bell curve** area to the left of $`x`$. A probability between 0 and 1. | | |
+| $`d_2`$ | how far Acme is from the strike, measured in "wiggle units" of $`\sigma\sqrt{T}`$ | 0.05 | |
+| $`d_1`$ | the same distance, plus one wiggle unit | 0.25 | |
+| $`e^{-rT}`$ | the **discount**: what a dollar due in $`T`$ years is worth today | 0.951 | |
+| $`e^{-qT}`$ | the **dividend drag**: the fraction of a share you need to buy today to end up holding one full share at $`T`$, dividends reinvested | 0.980 | |
 
-The two $d$'s:
+The two $`d`$'s:
 
-$$d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}$$
+```math
+d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}
+```
 
-Here $\ln$ is the natural logarithm. In words: the top of $d_2$ is how far the stock is expected to travel toward (or past) the strike in the pretend world you'll meet below. The bottom, $\sigma\sqrt{T}$, is how much it wiggles over the whole year. So $d_2$ is "how many wiggle-units of room Acme has." Then $d_1$ is just one wiggle-unit more. Why one more is the best part of the card, and it's coming.
+Here $`\ln`$ is the natural logarithm. In words: the top of $`d_2`$ is how far the stock is expected to travel toward (or past) the strike in the pretend world you'll meet below. The bottom, $`\sigma\sqrt{T}`$, is how much it wiggles over the whole year. So $`d_2`$ is "how many wiggle-units of room Acme has." Then $`d_1`$ is just one wiggle-unit more. Why one more is the best part of the card, and it's coming.
 
 ### When it holds
 
-- **Acme's log price follows a bell curve with one fixed $\sigma$.** Real prices jump and crash more often than that. Then one $\sigma$ can't fit every strike, and the formula misprices the far-out options.
-- **$\sigma$ is the right number for the whole year.** The price leans hard on it: 20% gives $9.23, 40% gives $16.80. Feed in the wrong jumpiness and you get a confident wrong price.
+- **Acme's log price follows a bell curve with one fixed $`\sigma`$.** Real prices jump and crash more often than that. Then one $`\sigma`$ can't fit every strike, and the formula misprices the far-out options.
+- **$`\sigma`$ is the right number for the whole year.** The price leans hard on it: 20% gives $9.23, 40% gives $16.80. Feed in the wrong jumpiness and you get a confident wrong price.
 - **You can trade any amount at any moment, with no fees, and borrow or sell short freely.** Step 0's hedge needs this. With fees and daily rebalancing, the homemade copy costs more and drifts off the option.
 - **The option is used only on expiry day (European).** An American call can be worth more, because using it early can capture a dividend.
-- **Dividends leak out as a steady yield $q$.** Forget them and Acme's option comes out at $10.45, not $9.23. A fixed cash dividend on a known date needs [Known cash dividends](08-known-cash-dividends.md).
+- **Dividends leak out as a steady yield $`q`$.** Forget them and Acme's option comes out at $10.45, not $9.23. A fixed cash dividend on a known date needs [Known cash dividends](08-known-cash-dividends.md).
 
 All six idealisations, and which term each one holds up: [The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md).
 
@@ -99,7 +103,7 @@ Black and Scholes noticed **you don't need to predict the stock.** Here's why.
 
 Imagine you own one option and you also sell short some Acme shares (borrow them and sell them). Pick the number of shares just right, and for the next tiny slice of time, whatever Acme does, the option and the short shares move in opposite directions by the same amount. Your combined position doesn't care where Acme goes. It's **riskless**.
 
-A riskless pile of money must grow at exactly the bank rate $r$. If it grew faster, everyone would borrow at $r$ and buy the pile: free money. If slower, everyone would sell the pile and put the cash in the bank: free money the other way. Free money can't last.
+A riskless pile of money must grow at exactly the bank rate $`r`$. If it grew faster, everyone would borrow at $`r`$ and buy the pile: free money. If slower, everyone would sell the pile and put the cash in the bank: free money the other way. Free money can't last.
 
 That one requirement, "the hedged position earns the bank rate," pins the option's price. And notice what dropped out: **your opinion about where Acme is heading.** The hedge cancelled it. Only the *jumpiness* survives.
 
@@ -107,18 +111,18 @@ There's a shortcut for doing the arithmetic. The hedge argument turns out to giv
 
 > **Pretend every asset grows at the bank rate. Average the option's payoff over all the places Acme could end up in that pretend world. Shrink the average back to today's dollars.**
 
-We call it the **pretend world** (finance calls it "risk-neutral"). In it, Acme drifts up at $r - q$ per year, the bank rate minus the dividends that leak out, and wiggles with jumpiness $\sigma$. Nothing about the real world's expected return appears. The rest of this section just does that average by hand.
+We call it the **pretend world** (finance calls it "risk-neutral"). In it, Acme drifts up at $`r - q`$ per year, the bank rate minus the dividends that leak out, and wiggles with jumpiness $`\sigma`$. Nothing about the real world's expected return appears. The rest of this section just does that average by hand.
 
 ### Step 1: the payoff is two bets glued together
 
-At expiry the option pays $\max(S_T - K, 0)$: Acme's price minus $100, or zero if that's negative. Split it:
+At expiry the option pays $`\max(S_T - K, 0)`$: Acme's price minus $100, or zero if that's negative. Split it:
 
 ```
   (S_T − K)⁺   =   S_T · [Acme above $100]   −   $100 · [Acme above $100]
                    └─── you GET a share ────┘     └── you HAND OVER cash ──┘
 ```
 
-The bracket $[\text{Acme above } \$100]$ is a light switch: it's 1 if Acme finishes above the strike, 0 if not. Check it: Acme at $120, switch on, you get a $120 share and hand over $100, net $20. Acme at $80, switch off, nothing happens, net $0. Same as the option.
+The bracket $`[\text{Acme above } \$100]`$ is a light switch: it's 1 if Acme finishes above the strike, 0 if not. Check it: Acme at $120, switch on, you get a $120 share and hand over $100, net $20. Acme at $80, switch off, nothing happens, net $0. Same as the option.
 
 Why split it? Because each half is easy to price on its own. And each half needs its **own** probability, which is the thing that trips everyone up.
 
@@ -126,11 +130,13 @@ Why split it? Because each half is easy to price on its own. And each half needs
 
 You hand over $100, but only if Acme finishes above $100. So the cash half is worth
 
-$$100 \times (\text{chance Acme finishes above } \$100) \times (\text{discount back to today}).$$
+```math
+100 \times (\text{chance Acme finishes above } \$100) \times (\text{discount back to today}).
+```
 
-In the pretend world, the *logarithm* of Acme's price follows a bell curve (the callout below says why logs). Its centre after one year is $\ln S + (r - q - \tfrac12\sigma^2)T$ and its spread is $\sigma\sqrt{T}$. Acme finishes above $K$ exactly when a standard bell-curve draw $Z$ lands above $-d_2$. By the bell curve's symmetry, that chance is $N(d_2)$.
+In the pretend world, the *logarithm* of Acme's price follows a bell curve (the callout below says why logs). Its centre after one year is $`\ln S + (r - q - \tfrac12\sigma^2)T`$ and its spread is $`\sigma\sqrt{T}`$. Acme finishes above $`K`$ exactly when a standard bell-curve draw $`Z`$ lands above $`-d_2`$. By the bell curve's symmetry, that chance is $`N(d_2)`$.
 
-So the cash half is $K\,e^{-rT}\,N(d_2)$. **$N(d_2)$ is the chance of exercise, counted in dollars.** For Acme it's 0.52: a bit better than a coin flip.
+So the cash half is $`K\,e^{-rT}\,N(d_2)`$. **$`N(d_2)`$ is the chance of exercise, counted in dollars.** For Acme it's 0.52: a bit better than a coin flip.
 
 ### Step 3: the share half, and why it gets its own probability
 
@@ -138,16 +144,18 @@ Now the other half: you *receive a share*, but only if Acme finishes above $100.
 
 Here's the subtlety. A share is not a fixed dollar amount. It's worth more in exactly the futures where you receive it, because those are the futures where Acme went up. So when you average "one share, if above the strike" over all the futures, the good futures count *extra*: each one is weighted by how valuable the share is there.
 
-Weighting the bell curve by the share's value **slides the whole curve to the right by exactly one wiggle-unit**, $\sigma\sqrt{T}$. Same event, shifted curve. The chance becomes $N(d_2 + \sigma\sqrt{T}) = N(d_1)$.
+Weighting the bell curve by the share's value **slides the whole curve to the right by exactly one wiggle-unit**, $`\sigma\sqrt{T}`$. Same event, shifted curve. The chance becomes $`N(d_2 + \sigma\sqrt{T}) = N(d_1)`$.
 
-So the share half is $S\,e^{-qT}\,N(d_1)$. **$N(d_1)$ is the chance of exercise, counted in shares.** For Acme it's 0.60. Higher than 0.52, and it always will be: counting in shares tilts the odds toward the good outcomes.
+So the share half is $`S\,e^{-qT}\,N(d_1)`$. **$`N(d_1)`$ is the chance of exercise, counted in shares.** For Acme it's 0.60. Higher than 0.52, and it always will be: counting in shares tilts the odds toward the good outcomes.
 
 <details>
 <summary>The algebra behind the slide, if you want it</summary>
 
-Inside the average, the share's value contributes a factor $e^{\sigma\sqrt{T}\,z}$ and the bell curve contributes $e^{-z^2/2}$. Multiply them and complete the square:
-$$e^{\sigma\sqrt{T}\,z}\,e^{-z^2/2} \;=\; e^{\tfrac12\sigma^2 T}\;e^{-(z-\sigma\sqrt{T})^2/2}.$$
-The right-hand side is a bell curve centred at $\sigma\sqrt{T}$ instead of 0. That's the slide. The stray $e^{\frac12\sigma^2 T}$ in front cancels the $-\tfrac12\sigma^2 T$ that was sitting in the pretend world's drift, which is why $d_1$ has $+\tfrac12\sigma^2$ where $d_2$ has $-\tfrac12\sigma^2$. Substitute $u = z - \sigma\sqrt{T}$ and the lower limit $-d_2$ becomes $-d_1$. Done.
+Inside the average, the share's value contributes a factor $`e^{\sigma\sqrt{T}\,z}`$ and the bell curve contributes $`e^{-z^2/2}`$. Multiply them and complete the square:
+
+$`\displaystyle e^{\sigma\sqrt{T}\,z}\,e^{-z^2/2} \;=\; e^{\tfrac12\sigma^2 T}\;e^{-(z-\sigma\sqrt{T})^2/2}.`$
+
+The right-hand side is a bell curve centred at $`\sigma\sqrt{T}`$ instead of 0. That's the slide. The stray $`e^{\frac12\sigma^2 T}`$ in front cancels the $`-\tfrac12\sigma^2 T`$ that was sitting in the pretend world's drift, which is why $`d_1`$ has $`+\tfrac12\sigma^2`$ where $`d_2`$ has $`-\tfrac12\sigma^2`$. Substitute $`u = z - \sigma\sqrt{T}`$ and the lower limit $`-d_2`$ becomes $`-d_1`$. Done.
 
 </details>
 
@@ -155,7 +163,9 @@ The right-hand side is a bell curve centred at $\sigma\sqrt{T}$ instead of 0. Th
 
 Share half minus cash half:
 
-$$C = S\,e^{-qT}\,N(d_1) - K\,e^{-rT}\,N(d_2).$$
+```math
+C = S\,e^{-qT}\,N(d_1) - K\,e^{-rT}\,N(d_2).
+```
 
 That's the formula. Two discounted, probability-weighted bets, subtracted. Nothing in it is a guess about the future.
 
@@ -167,7 +177,7 @@ Three reasons, and they're the same reason seen three ways.
 - **Prices can't go below zero.** A bell curve on the price itself would give Acme some chance of trading at −$30. A bell curve on the log can't: as the log runs off to minus infinity, the price just creeps toward zero.
 - **Many small shoves add up to a bell curve.** Each day multiplies the price by a number near 1. Add up a year of those small log-moves and you get a bell curve. That's the central limit theorem doing its usual job.
 
-**And the $-\tfrac12\sigma^2$?** Wiggling costs you. Up 50% then down 50% leaves you down 25%, even though the "average move" was zero. The $-\tfrac12\sigma^2 T$ in the drift is the accounting for that drag, so that the *average price* in the pretend world lands exactly on the forward price $S e^{(r-q)T}$. It's not a fudge factor. It's the reason the up-then-down example loses money.
+**And the $`-\tfrac12\sigma^2`$?** Wiggling costs you. Up 50% then down 50% leaves you down 25%, even though the "average move" was zero. The $`-\tfrac12\sigma^2 T`$ in the drift is the accounting for that drag, so that the *average price* in the pretend world lands exactly on the forward price $`S e^{(r-q)T}`$. It's not a fudge factor. It's the reason the up-then-down example loses money.
 
 </details>
 
@@ -179,25 +189,25 @@ Black and Scholes didn't do the average. They did Step 0 literally: wrote down t
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\ln(S/K)$ | $\ln(100/100) = \ln 1$ | $0$ |
-| pretend-world drift, $r - q - \tfrac12\sigma^2$ | $0.05 - 0.02 - 0.02$ | $0.01$ |
-| one wiggle-unit, $\sigma\sqrt{T}$ | $0.20 \times 1$ | $0.20$ |
-| $d_2$ | $(0 + 0.01) / 0.20$ | $0.05$ |
-| $d_1$ | $0.05 + 0.20$ | $0.25$ |
-| $N(d_2)$, chance in dollars | bell-curve table | $0.5199$ |
-| $N(d_1)$, chance in shares | bell-curve table | $0.5987$ |
-| share half, $100 \times e^{-0.02} \times 0.5987$ | $100 \times 0.9802 \times 0.5987$ | $\$58.69$ |
-| cash half, $100 \times e^{-0.05} \times 0.5199$ | $100 \times 0.9512 \times 0.5199$ | $\$49.46$ |
-| **premium** | $58.69 - 49.46$ | **$\$9.23$** |
-| breakeven at expiry | $100 + 9.23$ | $\$109.23$ |
+| $`\ln(S/K)`$ | $`\ln(100/100) = \ln 1`$ | $`0`$ |
+| pretend-world drift, $`r - q - \tfrac12\sigma^2`$ | $`0.05 - 0.02 - 0.02`$ | $`0.01`$ |
+| one wiggle-unit, $`\sigma\sqrt{T}`$ | $`0.20 \times 1`$ | $`0.20`$ |
+| $`d_2`$ | $`(0 + 0.01) / 0.20`$ | $`0.05`$ |
+| $`d_1`$ | $`0.05 + 0.20`$ | $`0.25`$ |
+| $`N(d_2)`$, chance in dollars | bell-curve table | $`0.5199`$ |
+| $`N(d_1)`$, chance in shares | bell-curve table | $`0.5987`$ |
+| share half, $`100 \times e^{-0.02} \times 0.5987`$ | $`100 \times 0.9802 \times 0.5987`$ | $`\$58.69`$ |
+| cash half, $`100 \times e^{-0.05} \times 0.5199`$ | $`100 \times 0.9512 \times 0.5199`$ | $`\$49.46`$ |
+| **premium** | $`58.69 - 49.46`$ | **$`\$9.23`$** |
+| breakeven at expiry | $`100 + 9.23`$ | $`\$109.23`$ |
 
 So a one-year option on a $100 stock with 20% jumpiness costs about $9.23. Roughly 9% of the stock price. That's what "unlimited upside, capped downside" sells for in this market.
 
-Note $N(d_1) = 0.60$ versus $N(d_2) = 0.52$. The share-counted chance is higher, exactly as Step 3 promised.
+Note $`N(d_1) = 0.60`$ versus $`N(d_2) = 0.52`$. The share-counted chance is higher, exactly as Step 3 promised.
 
 ### What breaks if you drop a piece
 
@@ -205,12 +215,12 @@ Now that you've seen $9.23 come out, here's what happens when one piece goes mis
 
 | Mistake | Option comes out at | What went wrong |
 | --- | --- | --- |
-| Forget the discount $e^{-rT}$ on the cash | $6.69 | You charged yourself today's full $100 for a payment due in a year |
-| Use $N(d_2)$ for both halves | $1.51 | You counted the share in dollars. The share is worth more where you get it. |
-| Use $N(d_1)$ for both halves | $1.73 | You counted the cash in shares. Cash is just cash. |
+| Forget the discount $`e^{-rT}`$ on the cash | $6.69 | You charged yourself today's full $100 for a payment due in a year |
+| Use $`N(d_2)`$ for both halves | $1.51 | You counted the share in dollars. The share is worth more where you get it. |
+| Use $`N(d_1)`$ for both halves | $1.73 | You counted the cash in shares. Cash is just cash. |
 | Forget the 2% dividend | $10.45 | 13% too expensive. And you'd hedge with 0.64 shares when 0.59 is right. |
-| Use $\sigma T$ instead of $\sigma\sqrt{T}$, 4-year option | $31.43 (right: $19.63) | Wiggles add up in *variance*, not in size. Root $T$, not $T$. |
-| Use $\sigma T$ instead of $\sigma\sqrt{T}$, 3-month option | $2.37 (right: $4.34) | Same error, other direction: short options come out too cheap |
+| Use $`\sigma T`$ instead of $`\sigma\sqrt{T}`$, 4-year option | $31.43 (right: $19.63) | Wiggles add up in *variance*, not in size. Root $`T`$, not $`T`$. |
+| Use $`\sigma T`$ instead of $`\sigma\sqrt{T}`$, 3-month option | $2.37 (right: $4.34) | Same error, other direction: short options come out too cheap |
 
 Every number in that table is reproduced by the code below.
 
@@ -249,7 +259,7 @@ Acme today   option's worth, 12 months left
     $120   ████████████████████████████████  $24.06
 ```
 
-Acme up $10, from $100 to $110, lifts the option $6.73. About 60 cents per dollar. That 0.6 is the **delta** from the checks: $e^{-qT}N(d_1) = 0.59$. Deep in the money, at $120, the option moves almost dollar for dollar with the stock. Far out of the money, at $80, it barely moves at all.
+Acme up $10, from $100 to $110, lifts the option $6.73. About 60 cents per dollar. That 0.6 is the **delta** from the checks: $`e^{-qT}N(d_1) = 0.59`$. Deep in the money, at $120, the option moves almost dollar for dollar with the stock. Far out of the money, at $80, it barely moves at all.
 
 ### Force two: time passes
 
@@ -477,7 +487,7 @@ chart, profit after 9.23 -9.23  -9.23  -9.23  -9.23  -9.23  -4.23   0.77   5.77 
 ALL CHECKS PASS
 ```
 
-Three roads, one price. The brute-force average lands on the formula to six decimals. The tree is a tenth of a cent off, and gets closer the more steps you give it. The put, priced on its own, satisfies parity to the digit. Delta by nudging matches $e^{-qT}N(d_1)$.
+Three roads, one price. The brute-force average lands on the formula to six decimals. The tree is a tenth of a cent off, and gets closer the more steps you give it. The put, priced on its own, satisfies parity to the digit. Delta by nudging matches $`e^{-qT}N(d_1)`$.
 
 ### Rust
 
@@ -697,14 +707,14 @@ The two outputs agree line for line at six decimals. They were produced by diffe
 
 ### Lean
 
-Lean proves the formula, both halves and the worked numbers, using Step 0's pretend-world recipe, for any positive $S$, $K$, $\sigma$ and $T$.
+Lean proves the formula, both halves and the worked numbers, using Step 0's pretend-world recipe, for any positive $`S`$, $`K`$, $`\sigma`$ and $`T`$.
 
-- Suppose Acme's log price on expiry day follows the pretend world's bell curve from Step 2. Then the payoff's average, shrunk to today, is $C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)$.
-- Take any finishing price $S_T$ and strike $K$. Then $\max(S_T - K, 0)$ is $S_T$ times the light switch, minus $K$ times the light switch.
-- Take the same pretend world. Then the chance Acme finishes above the strike is $N(d_2)$, so the cash half is $K e^{-rT} N(d_2)$.
-- Take the same pretend world. Then the share half is worth $S e^{-qT} N(d_1)$ today.
-- Take any positive $\sigma$ and $T$. Then $N(d_1)$ is always bigger than $N(d_2)$: the chance counted in shares beats the chance counted in dollars.
-- For Acme, the pretend-world drift is 0.01, $d_2$ is 0.05 and $d_1$ is 0.25.
+- Suppose Acme's log price on expiry day follows the pretend world's bell curve from Step 2. Then the payoff's average, shrunk to today, is $`C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)`$.
+- Take any finishing price $`S_T`$ and strike $`K`$. Then $`\max(S_T - K, 0)`$ is $`S_T`$ times the light switch, minus $`K`$ times the light switch.
+- Take the same pretend world. Then the chance Acme finishes above the strike is $`N(d_2)`$, so the cash half is $`K e^{-rT} N(d_2)`$.
+- Take the same pretend world. Then the share half is worth $`S e^{-qT} N(d_1)`$ today.
+- Take any positive $`\sigma`$ and $`T`$. Then $`N(d_1)`$ is always bigger than $`N(d_2)`$: the chance counted in shares beats the chance counted in dollars.
+- For Acme, the pretend-world drift is 0.01, $`d_2`$ is 0.05 and $`d_1`$ is 0.25.
 - The light switch nets $20 at $120 and $0 at $80, and at $105 the option pays exactly $5.
 - Breakeven at expiry is 100 + 9.23 = 109.23 dollars.
 - Up 2% then down 2% takes $100 to $99.96, and up 50% then down 50% leaves you down 25%.
@@ -1014,26 +1024,26 @@ example : (3 / 2 : ℚ) * (1 / 2) = 3 / 4 := by norm_num
 > **Reading the price as a prediction.** It isn't. $9.23 is the cost of building the option out of shares and cash. It says nothing about where Acme is going. A bull and a bear who agree on how *jumpy* Acme is must agree on the price, even while they disagree about everything else.
 >
 > Four smaller traps, each of which has cost someone real money:
-> - **Swapping the two probabilities.** Share half gets $N(d_1)$, cash half gets $N(d_2)$. Put them the wrong way round and the option comes out at a dollar and a half (see the table above). And **$N(d_1)$ is not the chance the option finishes in the money.** That's $N(d_2)$, and only in the pretend world.
-> - **Hedging with $N(d_1)$ shares.** The hedge is $e^{-qT}N(d_1)$ shares: 0.59 for Acme, not 0.60. When there are no dividends the two numbers coincide, which hides the mistake until the first dividend-paying stock shows up.
-> - **Feeding in last year's volatility.** $\sigma$ has to be the jumpiness the *market* is pricing today, called implied volatility. Historical wiggle is a different number. Desks run this formula backwards far more often than forwards: price in, $\sigma$ out.
-> - **Units.** $\sigma$ is 0.20, not 20. $T$ is in years, not days. Rates must be continuously compounded, so a quoted 5% is $\ln(1.05) = 4.88\%$, which moves this option by six cents. Get a unit wrong and the output is nonsense that still looks like a price.
+> - **Swapping the two probabilities.** Share half gets $`N(d_1)`$, cash half gets $`N(d_2)`$. Put them the wrong way round and the option comes out at a dollar and a half (see the table above). And **$`N(d_1)`$ is not the chance the option finishes in the money.** That's $`N(d_2)`$, and only in the pretend world.
+> - **Hedging with $`N(d_1)`$ shares.** The hedge is $`e^{-qT}N(d_1)`$ shares: 0.59 for Acme, not 0.60. When there are no dividends the two numbers coincide, which hides the mistake until the first dividend-paying stock shows up.
+> - **Feeding in last year's volatility.** $`\sigma`$ has to be the jumpiness the *market* is pricing today, called implied volatility. Historical wiggle is a different number. Desks run this formula backwards far more often than forwards: price in, $`\sigma`$ out.
+> - **Units.** $`\sigma`$ is 0.20, not 20. $`T`$ is in years, not days. Rates must be continuously compounded, so a quoted 5% is $`\ln(1.05) = 4.88\%`$, which moves this option by six cents. Get a unit wrong and the output is nonsense that still looks like a price.
 
 ---
 
 ## Where you meet it in real life
 
 - **Your brokerage app.** Every option price on the screen was checked against this formula by somebody's computer before it got there.
-- **"Trading at 20 vol."** When traders quote an option by its volatility instead of its dollar price, they've run this formula backwards to find the $\sigma$ that reproduces the market price. That number, implied volatility, is what they actually argue about.
+- **"Trading at 20 vol."** When traders quote an option by its volatility instead of its dollar price, they've run this formula backwards to find the $`\sigma`$ that reproduces the market price. That number, implied volatility, is what they actually argue about.
 - **Employee stock options.** The grant you get at a startup is a call on the company's shares. Its value on the company's books comes from this formula or a cousin of it.
-- **The put.** The mirror option, the right to *sell* at $K$. You get it for free from this card via put–call parity: $C - P = Se^{-qT} - Ke^{-rT}$. See [Black-Scholes put](02-black-scholes-put.md) and [Put-call parity](03-put-call-parity.md).
-- **The Greeks.** How the price moves when you nudge each input. Delta, $e^{-qT}N(d_1)$, is literally the slope of this card's formula. See [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md).
+- **The put.** The mirror option, the right to *sell* at $`K`$. You get it for free from this card via put–call parity: $`C - P = Se^{-qT} - Ke^{-rT}`$. See [Black-Scholes put](02-black-scholes-put.md) and [Put-call parity](03-put-call-parity.md).
+- **The Greeks.** How the price moves when you nudge each input. Delta, $`e^{-qT}N(d_1)`$, is literally the slope of this card's formula. See [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md).
 - **The two halves on their own.** A bet that pays cash if Acme finishes above $100 is the cash half by itself: [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md). The share half by itself is an asset-or-nothing.
-- **Currencies and futures.** Same skeleton. For a currency option, $q$ becomes the foreign interest rate (Garman–Kohlhagen). For an option on a future, $S$ becomes the futures price and $q$ becomes $r$ (Black 76).
+- **Currencies and futures.** Same skeleton. For a currency option, $`q`$ becomes the foreign interest rate (Garman–Kohlhagen). For an option on a future, $`S`$ becomes the futures price and $`q`$ becomes $`r`$ (Black 76).
 - **A whole company.** Merton's view: a company's shares are a call on the company's assets, with the debt as the strike. If the assets are worth more than the debt at maturity, shareholders "exercise" by paying off the debt and keeping the rest.
 
 > **Say it back**
-> A call is an option: upside if the stock climbs, downside capped at the premium. Black–Scholes prices it as the cost of copying it with shares and cash, which turns out to equal the average payoff in a pretend world where everything grows at the bank rate. The payoff splits into "get the share" minus "hand over the cash," each with its own probability: $N(d_1)$ counting in shares, $N(d_2)$ counting in dollars, one wiggle-unit apart. The stock's real direction cancels out. The price is the cost of the copy, not a bet on the market.
+> A call is an option: upside if the stock climbs, downside capped at the premium. Black–Scholes prices it as the cost of copying it with shares and cash, which turns out to equal the average payoff in a pretend world where everything grows at the bank rate. The payoff splits into "get the share" minus "hand over the cash," each with its own probability: $`N(d_1)`$ counting in shares, $`N(d_2)`$ counting in dollars, one wiggle-unit apart. The stock's real direction cancels out. The price is the cost of the copy, not a bet on the market.
 
 ---
 
@@ -1042,20 +1052,20 @@ example : (3 / 2 : ℚ) * (1 / 2) = 3 / 4 := by norm_num
 If any of these felt shaky tonight, go back one card. Each one hands this card a piece.
 
 - [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): why the stock's moves are measured in logs. Prices multiply; logs turn multiplying into adding.
-- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, and $N(x)$, the area under it to the left of $x$. Both probabilities on this card are bell-curve areas.
-- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): why a dollar due in a year is worth $e^{-rT}$ dollars today, and why rates on this card are "continuously compounded."
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, and $`N(x)`$, the area under it to the left of $`x`$. Both probabilities on this card are bell-curve areas.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): why a dollar due in a year is worth $`e^{-rT}`$ dollars today, and why rates on this card are "continuously compounded."
 - [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the model of a stock that wiggles: a steady drift plus random kicks, in log space. It's the engine inside the pretend world.
 - [The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): the pretend world itself, and why pricing there is legitimate rather than a trick.
 
 ## Where this goes next
 
-- [Black-Scholes put](02-black-scholes-put.md): the mirror option, the right to *sell* at $K$. One line from this card via put–call parity.
+- [Black-Scholes put](02-black-scholes-put.md): the mirror option, the right to *sell* at $`K`$. One line from this card via put–call parity.
 - [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the grid above taken apart one input at a time: delta, theta, vega and friends.
 - [Black-Scholes by hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): how the seller of an option protects themselves. Step 0 of this card, done for real, day after day.
 - [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): the cash half of this formula sold as an option on its own.
 - [The Black-Scholes equation](07-black-scholes-equation.md): the other door. The hedge written as an equation the price must obey.
 
-The question this card leaves open: real option prices need a different $\sigma$ at each strike, so what does one fixed $\sigma$ miss?
+The question this card leaves open: real option prices need a different $`\sigma`$ at each strike, so what does one fixed $`\sigma`$ miss?
 
 ---
 
@@ -1064,7 +1074,7 @@ The question this card leaves open: real option prices need a different $\sigma$
 Verified 6 Sep 2026: every link below resolves to the publisher's page.
 
 - Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The original: the hedge argument and the formula, without dividends.
-- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). Adds the dividend yield $q$; the version on this card.
+- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). Adds the dividend yield $`q`$; the version on this card.
 - Cox, John C., Stephen A. Ross, and Mark Rubinstein. "Option Pricing: A Simplified Approach." *Journal of Financial Economics* 7, no. 3 (1979): 229–263. [doi:10.1016/0304-405X(79)90015-1](https://doi.org/10.1016/0304-405X(79)90015-1). The coin-flip tree used as road 3 in the code.
 - Geman, Hélyette, Nicole El Karoui, and Jean-Charles Rochet. "Changes of Numéraire, Changes of Probability Measure and Option Pricing." *Journal of Applied Probability* 32, no. 2 (1995): 443–458. [doi:10.2307/3215299](https://doi.org/10.2307/3215299). Why counting in shares slides the bell curve: the rigorous version of Step 3.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The standard textbook route, chapter "The Black-Scholes-Merton Model".

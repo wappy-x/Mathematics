@@ -34,36 +34,40 @@ flowchart TD
 
 ## The formula
 
-Notation first. The sigma sign here adds over every whole number n, negative ones included. The negative-power terms are the **principal part**. For a radius $R > 0$, the points with $0 < |z - a| < R$ form a **punctured disc**: a disc with its centre removed.
+Notation first. The sigma sign here adds over every whole number n, negative ones included. The negative-power terms are the **principal part**. For a radius $`R > 0`$, the points with $`0 < |z - a| < R`$ form a **punctured disc**: a disc with its centre removed.
 
-$$f(z) = \sum_{n=-\infty}^{\infty} c_n (z-a)^n \qquad \text{for } 0 < |z - a| < R$$
+```math
+f(z) = \sum_{n=-\infty}^{\infty} c_n (z-a)^n \qquad \text{for } 0 < |z - a| < R
+```
 
 **Read it aloud:** near the bad point, f is a sum of powers of z − a, some negative.
 
 Each coefficient is a loop integral, anticlockwise round any circle of radius r in the punctured disc:
 
-$$c_n = \frac{1}{2\pi i} \oint_{|z-a| = r} \frac{f(z)}{(z-a)^{n+1}}\, dz$$
+```math
+c_n = \frac{1}{2\pi i} \oint_{|z-a| = r} \frac{f(z)}{(z-a)^{n+1}}\, dz
+```
 
-The classification reads the principal part: **removable** if it is empty; a **pole of order m** if $c_{-m} \ne 0$ is its lowest term; **essential** if infinitely many of its coefficients are nonzero.
+The classification reads the principal part: **removable** if it is empty; a **pole of order m** if $`c_{-m} \ne 0`$ is its lowest term; **essential** if infinitely many of its coefficients are nonzero.
 
 Three results make the test usable.
 
-- **Riemann's removable-singularity theorem.** If $|f(z)| \le M$ on a punctured disc round a, the singularity is removable.
-- **Pole form.** A pole of order m is exactly $f(z) = g(z)/(z-a)^m$ with g holomorphic at a and $g(a) \ne 0$.
-- **Casorati–Weierstrass theorem.** At an essential singularity, for every value $w$ and tolerance $\varepsilon > 0$, every punctured disc round a, however small, holds a point z with $|f(z) - w| < \varepsilon$.
+- **Riemann's removable-singularity theorem.** If $`|f(z)| \le M`$ on a punctured disc round a, the singularity is removable.
+- **Pole form.** A pole of order m is exactly $`f(z) = g(z)/(z-a)^m`$ with g holomorphic at a and $`g(a) \ne 0`$.
+- **Casorati–Weierstrass theorem.** At an essential singularity, for every value $`w`$ and tolerance $`\varepsilon > 0`$, every punctured disc round a, however small, holds a point z with $`|f(z) - w| < \varepsilon`$.
 
 A function is **meromorphic** on an open set when it is holomorphic there apart from isolated points, each removable or a pole.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $z$ | the function; a point of the plane | e^(1/z); z = 1/8 | — |
-| $a$ | the isolated singularity | 0, or 2 for the pole | — |
-| $c_n$, $c_0$, $n$ | coefficient on the power n; the constant term | c_−2 = 1 for the pole | — |
-| $R$, $r$, $\delta$ | disc radius; loop radius; a proof's radius | loops of radius 1 | — |
-| $m$ | pole order: the most negative power | 2 | halving distance multiplies size by 2^m |
-| $g$, $h$, $q$ | helper functions, holomorphic at a | g = 1 for the pole | — |
-| $M$ | a bound on the size of f near a | 1.042191 for sin z/z | — |
-| $w$, $\varepsilon$, $k$ | target value; tolerance; a whole-number index | w = 2 + 3i | larger k, closer to 0 |
+| $`f`$, $`z`$ | the function; a point of the plane | e^(1/z); z = 1/8 | — |
+| $`a`$ | the isolated singularity | 0, or 2 for the pole | — |
+| $`c_n`$, $`c_0`$, $`n`$ | coefficient on the power n; the constant term | c_−2 = 1 for the pole | — |
+| $`R`$, $`r`$, $`\delta`$ | disc radius; loop radius; a proof's radius | loops of radius 1 | — |
+| $`m`$ | pole order: the most negative power | 2 | halving distance multiplies size by 2^m |
+| $`g`$, $`h`$, $`q`$ | helper functions, holomorphic at a | g = 1 for the pole | — |
+| $`M`$ | a bound on the size of f near a | 1.042191 for sin z/z | — |
+| $`w`$, $`\varepsilon`$, $`k`$ | target value; tolerance; a whole-number index | w = 2 + 3i | larger k, closer to 0 |
 
 ### When it holds
 
@@ -81,21 +85,23 @@ The Laurent series on a punctured disc is unique, and each coefficient is a loop
 
 ### Step 1: no negative powers, and the hole fills
 
-If every negative coefficient is 0, what remains is a power series, holomorphic on the full disc, centre included. Its value at a is $c_0$: for sin z/z the code's loop integral gives 1.000000. Conversely, a holomorphic extension has a Taylor series, which by uniqueness is the Laurent series.
+If every negative coefficient is 0, what remains is a power series, holomorphic on the full disc, centre included. Its value at a is $`c_0`$: for sin z/z the code's loop integral gives 1.000000. Conversely, a holomorphic extension has a Taylor series, which by uniqueness is the Laurent series.
 
 ### Step 2: bounded means removable
 
-Put $n = -k$ in the coefficient formula. The loop has length $2\pi r$, and on it the integrand has size at most $M r^{k-1}$. An integral is at most path length times the largest size on the path, so
+Put $`n = -k`$ in the coefficient formula. The loop has length $`2\pi r`$, and on it the integrand has size at most $`M r^{k-1}`$. An integral is at most path length times the largest size on the path, so
 
-$$|c_{-k}| \le \frac{1}{2\pi} \cdot 2\pi r \cdot M r^{k-1} = M r^k$$
+```math
+|c_{-k}| \le \frac{1}{2\pi} \cdot 2\pi r \cdot M r^{k-1} = M r^k
+```
 
 The left side does not depend on r, so shrinking r squeezes it to 0, for every k, and Step 1 fills the hole. For sin z/z the largest size on the circle of radius 0.5 is 1.042191, which is sinh(0.5)/0.5, and smaller circles give less: that bound alone proves 0 removable.
 
 ### Step 3: a lowest negative power is a pole
 
-Suppose the lowest power is −m. Multiply by $(z-a)^m$: every power becomes 0 or more, so $g = (z-a)^m f$ is a power series with $g(a) = c_{-m} \ne 0$. Near a, g stays near that value, so |f| is about $|c_{-m}|$ over distance to the m-th power, in every direction.
+Suppose the lowest power is −m. Multiply by $`(z-a)^m`$: every power becomes 0 or more, so $`g = (z-a)^m f`$ is a power series with $`g(a) = c_{-m} \ne 0`$. Near a, g stays near that value, so |f| is about $`|c_{-m}|`$ over distance to the m-th power, in every direction.
 
-For 1/(z − 2)^2, g is 1; at z = 2.01, multiplying f by $(z - 2)^m$ gives sizes 100, 1 and 0.01 for m = 1, 2, 3. Only the true order leaves a finite, nonzero value.
+For 1/(z − 2)^2, g is 1; at z = 2.01, multiplying f by $`(z - 2)^m`$ gives sizes 100, 1 and 0.01 for m = 1, 2, 3. Only the true order leaves a finite, nonzero value.
 
 Conversely, if |f| tends to infinity at a, then a is a pole (Detailed proof, below). Merely unbounded is not enough: e^(1/z) is unbounded near 0.
 
@@ -107,26 +113,28 @@ The loop integrals agree: 1, 0.5 and 0.166667 on the powers −1, −2, −3. It
 
 ### Step 5: near an essential point, f comes close to everything
 
-Suppose f stayed at least $\varepsilon$ from some value $w$ on a punctured disc. Then $h = 1/(f - w)$ is holomorphic there with size at most $1/\varepsilon$, so by Step 2 it fills in at a.
+Suppose f stayed at least $`\varepsilon`$ from some value $`w`$ on a punctured disc. Then $`h = 1/(f - w)`$ is holomorphic there with size at most $`1/\varepsilon`$, so by Step 2 it fills in at a.
 
-Solving back, $f = w + 1/h$: removable if h(a) is not 0, a pole if it is. Either way a is not essential. Felice Casorati published this in 1868, Karl Weierstrass in 1876.
+Solving back, $`f = w + 1/h`$: removable if h(a) is not 0, a pole if it is. Either way a is not essential. Felice Casorati published this in 1868, Karl Weierstrass in 1876.
 
 <details>
 <summary>Detailed proof</summary>
 
-*Riemann* is Step 2 with $|f| \le M$ on $0 < |z - a| < \delta$ and $0 < r < \delta$.
+*Riemann* is Step 2 with $`|f| \le M`$ on $`0 < |z - a| < \delta`$ and $`0 < r < \delta`$.
 
-*Pole from growth.* If |f| tends to infinity at a, pick $\delta$ with $|f| \ge 1$ on the punctured disc. Then 1/f is bounded by 1, extends by Riemann, and has value 0 at a. It is not identically 0, so $1/f = (z - a)^m q$ with q holomorphic, $q(a) \ne 0$. Shrink the disc so q has no zeros: $f = (z - a)^{-m} (1/q)$, and 1/q is a power series with nonzero constant term, so the lowest power is −m.
+*Pole from growth.* If |f| tends to infinity at a, pick $`\delta`$ with $`|f| \ge 1`$ on the punctured disc. Then 1/f is bounded by 1, extends by Riemann, and has value 0 at a. It is not identically 0, so $`1/f = (z - a)^m q`$ with q holomorphic, $`q(a) \ne 0`$. Shrink the disc so q has no zeros: $`f = (z - a)^{-m} (1/q)`$, and 1/q is a power series with nonzero constant term, so the lowest power is −m.
 
 *Casorati–Weierstrass* is Step 5, with this argument supplying the pole when h has a zero at a.
 
 </details>
 
-For e^(1/z) the truth is stronger: every value except 0 is hit exactly. For $w$ = 2 + 3i, 1/z must be ln|w| + i(arg w + 2πk) for a whole number k, where arg w is the angle of w from the positive real axis. Here ln|w| = 1.282475 and arg w = 0.982794. So
+For e^(1/z) the truth is stronger: every value except 0 is hit exactly. For $`w`$ = 2 + 3i, 1/z must be ln|w| + i(arg w + 2πk) for a whole number k, where arg w is the angle of w from the positive real axis. Here ln|w| = 1.282475 and arg w = 0.982794. So
 
-$$z_k = \frac{1}{\ln|w| + i(\arg w + 2\pi k)}$$
+```math
+z_k = \frac{1}{\ln|w| + i(\arg w + 2\pi k)}
+```
 
-has $e^{1/z_k} = w$. The sizes $|z_k|$ for k = 0 to 4 are 0.618910, 0.135533, 0.073477, 0.050318 and 0.038245: solutions crowd into 0.
+has $`e^{1/z_k} = w`$. The sizes $`|z_k|`$ for k = 0 to 4 are 0.618910, 0.135533, 0.073477, 0.050318 and 0.038245: solutions crowd into 0.
 
 ### The picture: where e^(1/z) equals 2 + 3i
 
@@ -867,7 +875,7 @@ example : (1 : ℚ) / (Nat.factorial 3) = 1 / 6 := by norm_num [Nat.factorial]
 - **Signal processing.** sinc, sin(πx)/(πx), is set to 1 at 0: a patched removable singularity.
 - **Numerical code.** (e^z − 1)/z loses digits near its removable 0, so libraries switch to its power series: Step 1 in practice.
 - **Circuits and control.** A response is a quotient of polynomials whose poles and orders set how it rings and decays ([Rational functions](03-rational-functions-and-partial-fractions.md)).
-- **Contour integrals.** A loop sees only $c_{-1}$: [Residues](04-residues.md), summed in [The residue theorem](05-the-residue-theorem.md).
+- **Contour integrals.** A loop sees only $`c_{-1}`$: [Residues](04-residues.md), summed in [The residue theorem](05-the-residue-theorem.md).
 
 > **Say it back**
 > An isolated singularity is one bad point with a holomorphic function all round it. With no negative powers in the Laurent series the hole fills, as sin z/z fills with 1. A lowest negative power −m makes a pole of order m, as for 1/(z − 2)^2 with m = 2. Infinitely many make it essential, and the function comes within any distance of every value, as e^(1/z) does. Bounded near the point means removable.
@@ -883,7 +891,7 @@ example : (1 : ℚ) / (Nat.factorial 3) = 1 / 6 := by norm_num [Nat.factorial]
 - [Rational functions](03-rational-functions-and-partial-fractions.md): quotients of polynomials, whose only singularities are poles, split into principal parts.
 - [Residues](04-residues.md): the coefficient on the power −1, found without the whole series.
 
-The question this card leaves open: a loop integral sees only $c_{-1}$, so how can that one coefficient be found at a pole without writing out the whole series?
+The question this card leaves open: a loop integral sees only $`c_{-1}`$, so how can that one coefficient be found at a pole without writing out the whole series?
 
 ---
 

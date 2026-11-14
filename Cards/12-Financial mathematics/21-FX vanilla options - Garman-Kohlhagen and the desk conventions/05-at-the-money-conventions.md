@@ -18,7 +18,7 @@ A pip, 0.0001 dollars per euro, is the market's unit of rate. The spot and DNS s
 
 A fourth variant, 1.116624, appears when the option's premium, its price, is paid in euros rather than dollars. Picking the wrong one does not misprice by a rounding error; it buys a different option. Unhedged, the straddle struck at today's rate carries 0.1916 euros of exchange-rate exposure per euro of notional, the euro amount the option covers.
 
-**At-the-money in currency options names a rule for choosing the strike, and the market's rule is the strike where a straddle's delta is zero: the forward times $e^{\sigma^2 T/2}$, or times $e^{-\sigma^2 T/2}$ when the premium is paid in the foreign currency.**
+**At-the-money in currency options names a rule for choosing the strike, and the market's rule is the strike where a straddle's delta is zero: the forward times $`e^{\sigma^2 T/2}`$, or times $`e^{-\sigma^2 T/2}`$ when the premium is paid in the foreign currency.**
 
 **What kind of fact this is:** a convention, the market's agreed meaning of a word; the strike each convention picks is then a theorem, proved on this card in Why it works.
 
@@ -45,32 +45,36 @@ Orange: the plain spot delta, used when the premium is paid in dollars. It cross
 
 Four rules, four strikes:
 
-$$K_{\text{spot}} = S, \qquad K_{\text{fwd}} = F = S\,e^{(r_d - r_f)T}, \qquad K_{\text{DNS}} = F\,e^{\sigma^2 T/2}, \qquad K_{\text{DNS,pa}} = F\,e^{-\sigma^2 T/2}$$
+```math
+K_{\text{spot}} = S, \qquad K_{\text{fwd}} = F = S\,e^{(r_d - r_f)T}, \qquad K_{\text{DNS}} = F\,e^{\sigma^2 T/2}, \qquad K_{\text{DNS,pa}} = F\,e^{-\sigma^2 T/2}
+```
 
 **Read it aloud:** spot ATM strikes at today's rate; forward ATM strikes at the forward; the delta-neutral straddle strikes at the forward pushed up by half the variance, and pushed down by half the variance when the premium is paid in the foreign currency.
 
-"pa" abbreviates premium-adjusted. The variance $\sigma^2 T$ is the volatility squared times the time: the variance of the log of the future rate.
+"pa" abbreviates premium-adjusted. The variance $`\sigma^2 T`$ is the volatility squared times the time: the variance of the log of the future rate.
 
 | Symbol | Plain meaning | In our example | Push it up and the ATM strike… |
 | --- | --- | --- | --- |
-| $S$ | spot: dollars per euro today | 1.1000 | rises one for one, under every rule |
-| $K$ | strike: the rate written into the option | 1.127847 under DNS | (the output) |
-| $F$ | forward: the rate locked today for exchange at $T$ | 1.122221 | forward and DNS strikes rise with it |
-| $T$ | time to expiry, in years | 1 | forward drifts; DNS and pa strikes spread apart |
-| $r_d$ | domestic rate: dollar cash, continuously compounded | 5% | forward rises |
-| $r_f$ | foreign rate: euro cash, continuously compounded | 3% | forward falls |
-| $\sigma$ | volatility: yearly spread of the log rate, quoted as the ATM vol | 10% | DNS rises, pa DNS falls |
-| $d_1$ | distance to the strike in volatility units, counted in euros | 0 at the DNS strike | — |
-| $d_2$ | $d_1 - \sigma\sqrt{T}$, the same distance counted in dollars | 0 at the pa strike | — |
-| $N(x)$ | normal CDF: the area under the bell curve left of $x$ | $N(0) = 0.5$ | — |
-| $\Delta$ | spot delta: euros to hold against one euro of option, $e^{-r_f T}N(d_1)$ for a call | +0.4852 call, −0.4852 put | — |
-| $C$, $P$ | call and put premiums, dollars per euro | 0.040054 and 0.045404 at DNS | — |
+| $`S`$ | spot: dollars per euro today | 1.1000 | rises one for one, under every rule |
+| $`K`$ | strike: the rate written into the option | 1.127847 under DNS | (the output) |
+| $`F`$ | forward: the rate locked today for exchange at $`T`$ | 1.122221 | forward and DNS strikes rise with it |
+| $`T`$ | time to expiry, in years | 1 | forward drifts; DNS and pa strikes spread apart |
+| $`r_d`$ | domestic rate: dollar cash, continuously compounded | 5% | forward rises |
+| $`r_f`$ | foreign rate: euro cash, continuously compounded | 3% | forward falls |
+| $`\sigma`$ | volatility: yearly spread of the log rate, quoted as the ATM vol | 10% | DNS rises, pa DNS falls |
+| $`d_1`$ | distance to the strike in volatility units, counted in euros | 0 at the DNS strike | — |
+| $`d_2`$ | $`d_1 - \sigma\sqrt{T}`$, the same distance counted in dollars | 0 at the pa strike | — |
+| $`N(x)`$ | normal CDF: the area under the bell curve left of $`x`$ | $`N(0) = 0.5`$ | — |
+| $`\Delta`$ | spot delta: euros to hold against one euro of option, $`e^{-r_f T}N(d_1)`$ for a call | +0.4852 call, −0.4852 put | — |
+| $`C`$, $`P`$ | call and put premiums, dollars per euro | 0.040054 and 0.045404 at DNS | — |
 
 The helper formulas are the Garman-Kohlhagen ones from [Garman-Kohlhagen](01-garman-kohlhagen.md):
 
-$$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: $d_1$ is the log-distance from the strike up to the forward, $\ln(F/K)$, in units of $\sigma\sqrt{T}$, plus half of $\sigma\sqrt{T}$. At spot ATM: $0.02/0.10 + 0.05 = 0.25$.
+In words: $`d_1`$ is the log-distance from the strike up to the forward, $`\ln(F/K)`$, in units of $`\sigma\sqrt{T}`$, plus half of $`\sigma\sqrt{T}`$. At spot ATM: $`0.02/0.10 + 0.05 = 0.25`$.
 
 ### When it holds
 
@@ -78,7 +82,7 @@ A convention holds by agreement, not by proof. Three things fix which one applie
 
 - **The currency pair and tenor (time to expiry).** Liquid pairs up to about one year quote DNS ATM. Long-dated options and many emerging-market pairs quote forward ATM instead. Reading a forward-ATM quote as DNS misplaces the strike by 56.3 pips at our numbers.
 - **The premium currency.** A premium paid in the foreign currency (the euro here, the dollar in USDJPY) makes the desk's delta premium-adjusted, and the DNS strike moves below the forward.
-- **One volatility at the strike.** The formula uses a single $\sigma$. Under a smile, where the vol differs strike by strike, the vol that belongs in it is the vol at the ATM strike itself, which is exactly the number quoted. Using any other vol shifts the strike.
+- **One volatility at the strike.** The formula uses a single $`\sigma`$. Under a smile, where the vol differs strike by strike, the vol that belongs in it is the vol at the ATM strike itself, which is exactly the number quoted. Using any other vol shifts the strike.
 
 Conventions verified 27 Sep 2026 against Reiswich and Wystup (2012) and Clark (2011), not against a live dealer screen; market practice can change.
 
@@ -94,48 +98,58 @@ A volatility quote on its own names no option. The desk must know which strike t
 
 Put-call parity, with two discount factors, says
 
-$$C - P = e^{-r_d T}(F - K).$$
+```math
+C - P = e^{-r_d T}(F - K).
+```
 
-At $K = F$ the right side is zero, so the call and the put cost the same: 0.042569 dollars per euro each. That is the forward rule's appeal: neither side of the straddle is the dearer one. It is not delta-neutral. The straddle struck at the forward still has a net delta of 0.0387.
+At $`K = F`$ the right side is zero, so the call and the put cost the same: 0.042569 dollars per euro each. That is the forward rule's appeal: neither side of the straddle is the dearer one. It is not delta-neutral. The straddle struck at the forward still has a net delta of 0.0387.
 
 ### Step 2: the straddle's net delta, and where it vanishes
 
-From [Four deltas for one option](04-fx-delta-conventions.md), the call's spot delta is $e^{-r_f T}N(d_1)$ and the put's is $-e^{-r_f T}N(-d_1)$. The bell curve is symmetric, so $N(-d_1) = 1 - N(d_1)$. Add them:
+From [Four deltas for one option](04-fx-delta-conventions.md), the call's spot delta is $`e^{-r_f T}N(d_1)`$ and the put's is $`-e^{-r_f T}N(-d_1)`$. The bell curve is symmetric, so $`N(-d_1) = 1 - N(d_1)`$. Add them:
 
-$$\Delta_{\text{straddle}} = e^{-r_f T}\,\big(2N(d_1) - 1\big).$$
+```math
+\Delta_{\text{straddle}} = e^{-r_f T}\,\big(2N(d_1) - 1\big).
+```
 
-That is zero exactly when $N(d_1) = \tfrac12$, which means $d_1 = 0$. Set the top of $d_1$ to zero:
+That is zero exactly when $`N(d_1) = \tfrac12`$, which means $`d_1 = 0`$. Set the top of $`d_1`$ to zero:
 
-$$\ln(F/K) + \tfrac12\sigma^2 T = 0 \quad\Longrightarrow\quad K = F\,e^{\sigma^2 T/2}.$$
+```math
+\ln(F/K) + \tfrac12\sigma^2 T = 0 \quad\Longrightarrow\quad K = F\,e^{\sigma^2 T/2}.
+```
 
-At that strike each leg's delta is $e^{-r_f T} \times 0.5 = 0.970446 \times 0.5$: +0.4852 for the call and −0.4852 for the put.
+At that strike each leg's delta is $`e^{-r_f T} \times 0.5 = 0.970446 \times 0.5`$: +0.4852 for the call and −0.4852 for the put.
 
-**Existence and uniqueness.** As the strike rises, $d_1$ falls, so $N(d_1)$ falls, strictly. For a strike near zero the net delta tends to $+e^{-r_f T}$, the call is certain to be used; for a huge strike it tends to $-e^{-r_f T}$. A strictly falling function that runs from a positive value to a negative one crosses zero exactly once.
+**Existence and uniqueness.** As the strike rises, $`d_1`$ falls, so $`N(d_1)`$ falls, strictly. For a strike near zero the net delta tends to $`+e^{-r_f T}`$, the call is certain to be used; for a huge strike it tends to $`-e^{-r_f T}`$. A strictly falling function that runs from a positive value to a negative one crosses zero exactly once.
 
-The boundary case is zero volatility: the net delta then jumps from $+e^{-r_f T}$ to $-e^{-r_f T}$ at the forward without passing through zero. The formula's limit, the forward itself, is then the only sensible reading.
+The boundary case is zero volatility: the net delta then jumps from $`+e^{-r_f T}`$ to $`-e^{-r_f T}`$ at the forward without passing through zero. The formula's limit, the forward itself, is then the only sensible reading.
 
 ### Step 3: why the answer sits above the forward
 
-$N(d_1)$ has a meaning of its own. It is the probability that the rate finishes above the strike, when outcomes are counted in euros rather than in dollars. A euro is worth more, in dollars, in exactly the outcomes where the rate is high, so counting in euros tilts the odds upward. Delta-neutral is the strike where that euro-counted chance is one half. It is the median of the future rate in the euro-counted world, and that median is $F e^{\sigma^2 T/2}$.
+$`N(d_1)`$ has a meaning of its own. It is the probability that the rate finishes above the strike, when outcomes are counted in euros rather than in dollars. A euro is worth more, in dollars, in exactly the outcomes where the rate is high, so counting in euros tilts the odds upward. Delta-neutral is the strike where that euro-counted chance is one half. It is the median of the future rate in the euro-counted world, and that median is $`F e^{\sigma^2 T/2}`$.
 
-Counting in dollars instead gives $N(d_2)$, whose median is $F e^{-\sigma^2 T/2}$. The forward sits between them: it is the average, not a median. Three natural centres of one lognormal spread (a spread whose log follows a bell curve): the dollar median 1.116624, the average 1.122221, the euro median 1.127847.
+Counting in dollars instead gives $`N(d_2)`$, whose median is $`F e^{-\sigma^2 T/2}`$. The forward sits between them: it is the average, not a median. Three natural centres of one lognormal spread (a spread whose log follows a bell curve): the dollar median 1.116624, the average 1.122221, the euro median 1.127847.
 
 ### Step 4: premium in euros moves the strike to the dollar median
 
-When the premium is paid in euros, the euro hedge must also cover the euros spent on the premium. The premium-adjusted call delta is $e^{-r_f T}N(d_1) - C/S$. The Garman-Kohlhagen formula turns this into $\tfrac{K}{S}e^{-r_d T}N(d_2)$, and the put's into $-\tfrac{K}{S}e^{-r_d T}N(-d_2)$. Their sum,
+When the premium is paid in euros, the euro hedge must also cover the euros spent on the premium. The premium-adjusted call delta is $`e^{-r_f T}N(d_1) - C/S`$. The Garman-Kohlhagen formula turns this into $`\tfrac{K}{S}e^{-r_d T}N(d_2)`$, and the put's into $`-\tfrac{K}{S}e^{-r_d T}N(-d_2)`$. Their sum,
 
-$$\Delta_{\text{straddle,pa}} = \frac{K}{S}\,e^{-r_d T}\,\big(2N(d_2) - 1\big),$$
+```math
+\Delta_{\text{straddle,pa}} = \frac{K}{S}\,e^{-r_d T}\,\big(2N(d_2) - 1\big),
+```
 
-vanishes exactly when $d_2 = 0$, that is at $K = F e^{-\sigma^2 T/2} = 1.116624$. The factor $K/S$ is positive, so the zero is again unique. Each leg's premium-adjusted delta there is ±0.4828.
+vanishes exactly when $`d_2 = 0`$, that is at $`K = F e^{-\sigma^2 T/2} = 1.116624`$. The factor $`K/S`$ is positive, so the zero is again unique. Each leg's premium-adjusted delta there is ±0.4828.
 
 <details>
 <summary>Detailed proof: the premium-adjusted delta in one line</summary>
 
-The Garman-Kohlhagen call is $C = S e^{-r_f T}N(d_1) - K e^{-r_d T}N(d_2)$. Divide by $S$ and subtract from the spot delta:
-$$e^{-r_f T}N(d_1) - \frac{C}{S} = e^{-r_f T}N(d_1) - e^{-r_f T}N(d_1) + \frac{K}{S}e^{-r_d T}N(d_2) = \frac{K}{S}e^{-r_d T}N(d_2).$$
-The put is $P = K e^{-r_d T}N(-d_2) - S e^{-r_f T}N(-d_1)$, with spot delta $-e^{-r_f T}N(-d_1)$; the same subtraction leaves $-\tfrac{K}{S}e^{-r_d T}N(-d_2)$. Adding the two and using $N(-d_2) = 1 - N(d_2)$ gives the net formula above. Its sign is the sign of $2N(d_2) - 1$, and $d_2$ falls strictly as $K$ rises, so the zero at $d_2 = 0$ is the only one.
+The Garman-Kohlhagen call is $`C = S e^{-r_f T}N(d_1) - K e^{-r_d T}N(d_2)`$. Divide by $`S`$ and subtract from the spot delta:
 
-The same strike is the cheapest straddle. The straddle's price changes with the strike at the rate $-e^{-r_d T}N(d_2) + e^{-r_d T}N(-d_2) = e^{-r_d T}(1 - 2N(d_2))$, which is negative below the strike where $d_2 = 0$ and positive above it. So the premium-adjusted DNS straddle, at 0.085032, is the cheapest straddle of any strike. The code finds that minimum by search, as a third road.
+$`\displaystyle e^{-r_f T}N(d_1) - \frac{C}{S} = e^{-r_f T}N(d_1) - e^{-r_f T}N(d_1) + \frac{K}{S}e^{-r_d T}N(d_2) = \frac{K}{S}e^{-r_d T}N(d_2).`$
+
+The put is $`P = K e^{-r_d T}N(-d_2) - S e^{-r_f T}N(-d_1)`$, with spot delta $`-e^{-r_f T}N(-d_1)`$; the same subtraction leaves $`-\tfrac{K}{S}e^{-r_d T}N(-d_2)`$. Adding the two and using $`N(-d_2) = 1 - N(d_2)`$ gives the net formula above. Its sign is the sign of $`2N(d_2) - 1`$, and $`d_2`$ falls strictly as $`K`$ rises, so the zero at $`d_2 = 0`$ is the only one.
+
+The same strike is the cheapest straddle. The straddle's price changes with the strike at the rate $`-e^{-r_d T}N(d_2) + e^{-r_d T}N(-d_2) = e^{-r_d T}(1 - 2N(d_2))`$, which is negative below the strike where $`d_2 = 0`$ and positive above it. So the premium-adjusted DNS straddle, at 0.085032, is the cheapest straddle of any strike. The code finds that minimum by search, as a third road.
 
 </details>
 
@@ -154,7 +168,7 @@ One line: the straddle's price at each strike. Its floor sits between 1.11 and 1
 
 ### Step 5: how the quoted ATM vol attaches to a strike
 
-The screen says "1Y EURUSD ATM 10.00". The convention turns that number into a strike: $K = F e^{\sigma^2 T/2}$ with $\sigma = 10\%$. No loop is needed, even when the volatility differs strike by strike (a **smile**: implied vol plotted against strike is curved). Under a smile the DNS condition reads $K = F e^{\sigma(K)^2 T/2}$, with $\sigma(K)$ the vol at strike $K$. The quote is $\sigma$ at the solution, so plugging the quote in gives the solution directly.
+The screen says "1Y EURUSD ATM 10.00". The convention turns that number into a strike: $`K = F e^{\sigma^2 T/2}`$ with $`\sigma = 10\%`$. No loop is needed, even when the volatility differs strike by strike (a **smile**: implied vol plotted against strike is curved). Under a smile the DNS condition reads $`K = F e^{\sigma(K)^2 T/2}`$, with $`\sigma(K)`$ the vol at strike $`K`$. The quote is $`\sigma`$ at the solution, so plugging the quote in gives the solution directly.
 
 The code checks this on an invented smile whose vol at the forward is 10 percent. Solving by repeated substitution gives an ATM strike of 1.127739, where the smile's vol is 9.9043 percent; the one-line formula at 9.9043 percent returns 1.127739. Reading the vol at the forward instead, 10 percent, returns 1.127847: the right formula at the wrong vol, a different strike.
 
@@ -164,24 +178,24 @@ A second road to every strike on this card is brute force: price the straddle by
 
 ## Worked numbers, by hand
 
-EURUSD: $S = 1.10$, $r_d = 5\%$, $r_f = 3\%$, $\sigma = 10\%$, $T = 1$ year.
+EURUSD: $`S = 1.10`$, $`r_d = 5\%`$, $`r_f = 3\%`$, $`\sigma = 10\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| carry factor $e^{(r_d - r_f)T}$ | $e^{0.02}$ | 1.020201 |
-| forward $F$ | 1.10 × 1.020201 | 1.122221 |
-| half the variance, $\tfrac12\sigma^2 T$ | 0.5 × 0.01 × 1 | 0.005 |
-| push up, $e^{0.005}$ | | 1.005013 |
+| carry factor $`e^{(r_d - r_f)T}`$ | $`e^{0.02}`$ | 1.020201 |
+| forward $`F`$ | 1.10 × 1.020201 | 1.122221 |
+| half the variance, $`\tfrac12\sigma^2 T`$ | 0.5 × 0.01 × 1 | 0.005 |
+| push up, $`e^{0.005}`$ | | 1.005013 |
 | **DNS strike** | 1.122221 × 1.005013 | **1.127847** |
-| push down, $e^{-0.005}$ | | 0.995012 |
+| push down, $`e^{-0.005}`$ | | 0.995012 |
 | **premium-adjusted DNS strike** | 1.122221 × 0.995012 | **1.116624** |
-| $d_1$ at the DNS strike | $(\ln(1/1.005013) + 0.005)/0.10$ | 0 |
-| foreign discount $e^{-r_f T}$ | $e^{-0.03}$ | 0.970446 |
-| call and put spot deltas | ±0.970446 × $N(0)$ = ±0.970446 × 0.5 | **+0.4852, −0.4852** |
+| $`d_1`$ at the DNS strike | $`(\ln(1/1.005013) + 0.005)/0.10`$ | 0 |
+| foreign discount $`e^{-r_f T}`$ | $`e^{-0.03}`$ | 0.970446 |
+| call and put spot deltas | ±0.970446 × $`N(0)`$ = ±0.970446 × 0.5 | **+0.4852, −0.4852** |
 
 The four strikes, and the straddle at each:
 
-| Rule | Strike | $d_1$ | Call | Put | Straddle | Net spot delta |
+| Rule | Strike | $`d_1`$ | Call | Put | Straddle | Net spot delta |
 | --- | --- | --- | --- | --- | --- | --- |
 | Spot ATM | 1.100000 | 0.25 | 0.053556 | 0.032418 | 0.085974 | 0.1916 |
 | Forward ATM | 1.122221 | 0.05 | 0.042569 | 0.042569 | 0.085138 | 0.0387 |
@@ -195,9 +209,9 @@ Prices are in dollars per euro. The spot-ATM straddle leaves the desk long 0.191
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Strike the "ATM" straddle at the forward | net delta 0.0387 | Forward ATM equalises the premiums, not the deltas |
-| Use spot in place of the forward, $S e^{\sigma^2 T/2}$ | strike 1.105514, net delta 0.1538 | The carry $e^{(r_d - r_f)T}$ was left out |
+| Use spot in place of the forward, $`S e^{\sigma^2 T/2}`$ | strike 1.105514, net delta 0.1538 | The carry $`e^{(r_d - r_f)T}`$ was left out |
 | Use the premium-adjusted strike for a dollar-premium pair | net delta 0.0773 | The dollar median replaced the euro median |
-| Forget to square the vol, $F e^{\sigma T/2}$ | strike 1.179759, net delta −0.3370 | The shift is half the variance, not half the volatility |
+| Forget to square the vol, $`F e^{\sigma T/2}`$ | strike 1.179759, net delta −0.3370 | The shift is half the variance, not half the volatility |
 
 ---
 
@@ -591,12 +605,12 @@ The two outputs are identical line for line.
 
 ### Lean
 
-Lean proves the three strike rules for any positive spot, strike, volatility and time, and checks the worked values of $d_1$.
+Lean proves the three strike rules for any positive spot, strike, volatility and time, and checks the worked values of $`d_1`$.
 
-- Take positive spot, strike, volatility and time, and any rates. Then the straddle's net spot delta is zero exactly when $K = F e^{\sigma^2 T/2}$.
-- Take the same inputs. Then the straddle's premium-adjusted delta is zero exactly when $K = F e^{-\sigma^2 T/2}$.
+- Take positive spot, strike, volatility and time, and any rates. Then the straddle's net spot delta is zero exactly when $`K = F e^{\sigma^2 T/2}`$.
+- Take the same inputs. Then the straddle's premium-adjusted delta is zero exactly when $`K = F e^{-\sigma^2 T/2}`$.
 - Take the same inputs. Then the call and the put cost the same exactly when the strike is the forward.
-- Take the EURUSD example. Then $d_1$ is 0.25 at spot ATM, 0.05 at forward ATM, 0 at DNS and 0.10 at the premium-adjusted strike.
+- Take the EURUSD example. Then $`d_1`$ is 0.25 at spot ATM, 0.05 at forward ATM, 0 at DNS and 0.10 at the premium-adjusted strike.
 - Take the vol at 20%. Then the premium-adjusted DNS strike lands exactly on today's rate, 1.1000.
 
 The decimal strikes, prices and deltas, the searches by bisection and golden section, and the smile example are left to the Python and Rust checks.
@@ -836,9 +850,9 @@ end AtTheMoney
 
 > [!TIP]
 > **Try changing**
-> - **Double the vol to 20%.** Guess first: which strike lands on today's rate? The premium-adjusted DNS strike, 1.100000, because half the variance, 0.02, equals the carry $r_d - r_f$. The DNS strike moves to 1.144892.
+> - **Double the vol to 20%.** Guess first: which strike lands on today's rate? The premium-adjusted DNS strike, 1.100000, because half the variance, 0.02, equals the carry $`r_d - r_f`$. The DNS strike moves to 1.144892.
 > - **Halve the vol to 5%.** The DNS and premium-adjusted strikes close in on the forward: 1.123625 and 1.120820.
-> - **Five years instead of one.** The forward is 1.215688; DNS 1.246463 and premium-adjusted 1.185673. The gap grows with $\sigma^2 T$, which is why long-dated quotes often switch to forward ATM.
+> - **Five years instead of one.** The forward is 1.215688; DNS 1.246463 and premium-adjusted 1.185673. The gap grows with $`\sigma^2 T`$, which is why long-dated quotes often switch to forward ATM.
 > - **Equal rates, both 3%.** Spot and forward coincide at 1.100000, and the DNS strike is 1.105514: still above spot, because the half-variance shift never goes away.
 
 ---
@@ -851,7 +865,7 @@ end AtTheMoney
 > - **ATM means the forward.** In some markets it does. For liquid currency pairs up to a year it does not: the forward straddle carries 0.0387 of net delta.
 > - **Ignoring the premium currency.** For USDJPY-style pairs, where the premium is in the foreign currency, the DNS strike sits below the forward. Using the unadjusted strike there leaves a premium-adjusted net delta of −0.0777 per unit.
 > - **Reading the ATM vol off the wrong strike.** Under a smile, the quote is the vol at the DNS strike. Taking the vol at the forward, 10 percent in the smile example, places the strike at 1.127847 instead of 1.127739.
-> - **Half the vol instead of half the variance.** The shift is $\tfrac12\sigma^2 T = 0.005$, not $\tfrac12\sigma T = 0.05$. The wrong strike, 1.179759, carries −0.3370 of net delta.
+> - **Half the vol instead of half the variance.** The shift is $`\tfrac12\sigma^2 T = 0.005`$, not $`\tfrac12\sigma T = 0.05`$. The wrong strike, 1.179759, carries −0.3370 of net delta.
 
 ---
 
@@ -864,7 +878,7 @@ end AtTheMoney
 - **Backing out the vol.** A traded ATM straddle price is turned into a vol by running the pricing formula backwards at the DNS strike: [Implied vol for a currency option](07-fx-implied-volatility.md).
 
 > **Say it back**
-> At-the-money is a rule for choosing a strike, not a single number. Spot ATM strikes at today's rate, forward ATM at the forward, where call and put cost the same. The currency market's rule is the delta-neutral straddle: the strike where the call's and the put's deltas cancel, $F e^{\sigma^2 T/2}$, or $F e^{-\sigma^2 T/2}$ when the premium is paid in the foreign currency. For EURUSD at 1.1000 with a 10 percent vol, that is 1.127847, with deltas of +0.4852 and −0.4852. The quoted ATM vol is the vol at that strike, which the formula turns into the strike in one line.
+> At-the-money is a rule for choosing a strike, not a single number. Spot ATM strikes at today's rate, forward ATM at the forward, where call and put cost the same. The currency market's rule is the delta-neutral straddle: the strike where the call's and the put's deltas cancel, $`F e^{\sigma^2 T/2}`$, or $`F e^{-\sigma^2 T/2}`$ when the premium is paid in the foreign currency. For EURUSD at 1.1000 with a 10 percent vol, that is 1.127847, with deltas of +0.4852 and −0.4852. The quoted ATM vol is the vol at that strike, which the formula turns into the strike in one line.
 
 ---
 

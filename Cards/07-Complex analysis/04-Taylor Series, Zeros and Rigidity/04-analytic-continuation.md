@@ -26,32 +26,38 @@ To scale: 100 units per 1, 0 at (110, 135). Centres 0, 0.5 + 0.5i, 1 + 0.4i, 1.2
 
 ## The formula
 
-Notation first, in words. The discount factor is $z = 1/(1+r)$, with $r$ the annual rate; below, $z$ may be any complex number. $|z|$ is the distance from $z$ to 0. The sign Σ means "add up" over the terms its limits name. **Holomorphic** means having a complex derivative at every point of a region.
+Notation first, in words. The discount factor is $`z = 1/(1+r)`$, with $`r`$ the annual rate; below, $`z`$ may be any complex number. $`|z|`$ is the distance from $`z`$ to 0. The sign Σ means "add up" over the terms its limits name. **Holomorphic** means having a complex derivative at every point of a region.
 
-$$P = \sum_{n=1}^{\infty} z^n = \frac{z}{1-z} = \frac{1}{r} \qquad \text{when } |z| < 1$$
+```math
+P = \sum_{n=1}^{\infty} z^n = \frac{z}{1-z} = \frac{1}{r} \qquad \text{when } |z| < 1
+```
 
 **Read it aloud:** the perpetuity adds every year's discount factor; inside the unit disc that is z over one minus z, one over the rate.
 
 Underneath is the geometric series, one payment longer:
 
-$$f(z) = \sum_{n=0}^{\infty} z^n = \frac{1}{1-z}, \qquad P = f(z) - 1$$
+```math
+f(z) = \sum_{n=0}^{\infty} z^n = \frac{1}{1-z}, \qquad P = f(z) - 1
+```
 
-The sum works only for $|z| < 1$; the right-hand side works everywhere except the point 1. The theorem makes it the only continuation:
+The sum works only for $`|z| < 1`$; the right-hand side works everywhere except the point 1. The theorem makes it the only continuation:
 
-$$f,\ g \text{ holomorphic on a connected open } U,\ \ f = g \text{ on a set piling up at a point of } U \implies f = g \text{ on all of } U$$
+```math
+f,\ g \text{ holomorphic on a connected open } U,\ \ f = g \text{ on a set piling up at a point of } U \implies f = g \text{ on all of } U
+```
 
 **Read it aloud:** two holomorphic functions on one connected region that agree on a small patch agree everywhere on it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r$ | the annual interest rate | 5%, then −0.5% | price 1/r falls |
-| $z$ | the discount factor 1/(1 + r) | 0.952381; 1.005025 | past 1, no sum |
-| $n$, $N$, $k$ | a year; payments counted; a term's index | 100 payments | — |
-| $P$ | the perpetuity's price | $20; continued, −200 | — |
-| $f$, $g$ | holomorphic functions; $f$ is 1/(1 − z), $g$ a rival | f(0.5 + 0.5i) = 1 + i | — |
-| $U$ | a connected open region | the plane without the point 1 | more room for the theorem |
-| $c$, $v$ | a disc's centre; the value v = f(c) carried there | c = 1.02, v = −50 | radius 1/\|v\| shrinks |
-| $t$ | the strength of a smoothing weight | 0.01 | constant moves off −1/12 |
+| $`r`$ | the annual interest rate | 5%, then −0.5% | price 1/r falls |
+| $`z`$ | the discount factor 1/(1 + r) | 0.952381; 1.005025 | past 1, no sum |
+| $`n`$, $`N`$, $`k`$ | a year; payments counted; a term's index | 100 payments | — |
+| $`P`$ | the perpetuity's price | $20; continued, −200 | — |
+| $`f`$, $`g`$ | holomorphic functions; $`f`$ is 1/(1 − z), $`g`$ a rival | f(0.5 + 0.5i) = 1 + i | — |
+| $`U`$ | a connected open region | the plane without the point 1 | more room for the theorem |
+| $`c`$, $`v`$ | a disc's centre; the value v = f(c) carried there | c = 1.02, v = −50 | radius 1/\|v\| shrinks |
+| $`t`$ | the strength of a smoothing weight | 0.01 | constant moves off −1/12 |
 
 ### When it holds
 
@@ -74,16 +80,16 @@ Multiply the first N terms by z and subtract: all but two cancel, so 1 + z + …
 
 ### Step 2: the formula is a continuation
 
-The function 1/(1 − z) has derivative 1/(1 − z)^2 everywhere except 1. The plane without that point, $U$, is open and connected: a path can step round the gap. So $f$ is holomorphic on $U$ and agrees with the sum on the unit disc: a continuation.
+The function 1/(1 − z) has derivative 1/(1 − z)^2 everywhere except 1. The plane without that point, $`U`$, is open and connected: a path can step round the gap. So $`f`$ is holomorphic on $`U`$ and agrees with the sum on the unit disc: a continuation.
 
 ### Step 3: it is the only one
 
-Let $g$ be any holomorphic function on $U$ that agrees with the sum on the unit disc. Then $f - g$ is holomorphic on $U$ and zero on the disc. A holomorphic function whose zeros pile up inside a connected region is zero on all of it ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)), so $g = f$. Positive rates alone suffice: their z fill the segment from 0 to 1.
+Let $`g`$ be any holomorphic function on $`U`$ that agrees with the sum on the unit disc. Then $`f - g`$ is holomorphic on $`U`$ and zero on the disc. A holomorphic function whose zeros pile up inside a connected region is zero on all of it ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)), so $`g = f`$. Positive rates alone suffice: their z fill the segment from 0 to 1.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let h = f − g, and A the points of $U$ where h and all its derivatives vanish. A is open: there h's Taylor series is 0. Its complement is open: a non-zero derivative stays non-zero nearby. A connected set cannot split into two disjoint non-empty open pieces, and A holds the unit disc, so A is all of $U$.
+Let h = f − g, and A the points of $`U`$ where h and all its derivatives vanish. A is open: there h's Taylor series is 0. Its complement is open: a non-zero derivative stays non-zero nearby. A connected set cannot split into two disjoint non-empty open pieces, and A holds the unit disc, so A is all of $`U`$.
 
 If h vanished only on points piling up at q, a first non-zero Taylor coefficient at q would make q an isolated zero. So every coefficient is 0 and q is in A.
 
@@ -91,17 +97,19 @@ If h vanished only on points piling up at q, a first non-zero Taylor coefficient
 
 ### Step 4: walking forward along a chain of discs
 
-Usually no ready-made formula exists, and the continuation is built by walking. The sum's termwise derivative, 1 + 2z + 3z^2 + …, is also the sum times itself, so f′ = f^2 on the unit disc, and by Step 3 wherever $f$ goes.
+Usually no ready-made formula exists, and the continuation is built by walking. The sum's termwise derivative, 1 + 2z + 3z^2 + …, is also the sum times itself, so f′ = f^2 on the unit disc, and by Step 3 wherever $`f`$ goes.
 
-Differentiating again, f″ = 2f f′ = 2f^3; in general the k-th derivative is k! times the (k+1)-th power of f. So at a centre $c$ with value $v$ the Taylor coefficients are v, v^2, v^3, …:
+Differentiating again, f″ = 2f f′ = 2f^3; in general the k-th derivative is k! times the (k+1)-th power of f. So at a centre $`c`$ with value $`v`$ the Taylor coefficients are v, v^2, v^3, …:
 
-$$f(z) = \sum_{k=0}^{\infty} v^{k+1} (z - c)^k, \qquad |z - c| < 1/|v|$$
+```math
+f(z) = \sum_{k=0}^{\infty} v^{k+1} (z - c)^k, \qquad |z - c| < 1/|v|
+```
 
 One number fixes the local series, which settles on a disc of radius 1/|v|. The walk carries it: sum the current series at the next centre to get the next v.
 
 From v = 1 at 0 it hands on 1 + i at 0.5 + 0.5i, 2.5i at 1 + 0.4i, −4 + 2i at 1.2 + 0.1i, and −50 at 1.02. That disc, radius 0.020000, holds T with ratio 0.748744 and gives f(T) = −199, so P = −200, without ever using 1/(1 − z). Every step's ratio, distance over radius, stays below 1.
 
-Any route round 1 lands on the same value, because 1/(1 − z) is one function on $U$. For the logarithm, one lap round 0 adds 2πi, so in general a walk's result can depend on its route.
+Any route round 1 lands on the same value, because 1/(1 − z) is one function on $`U`$. For the logarithm, one lap round 0 adds 2πi, so in general a walk's result can depend on its route.
 
 ### Step 5: what −200 is, and is not
 
@@ -113,7 +121,7 @@ The zeta function ζ(s) is the sum 1 + 1/2^s + 1/3^s + …, which settles only f
 
 There the sum would be 1 + 2 + 3 + …, which reaches 5050 by 100 terms and keeps growing. So "1 + 2 + 3 + … = −1/12" names ζ's continued value, as −200 names 1/r.
 
-Smoothing shows Step 5's split: weight the n-th term by e^(−nt) for small $t$; the total is a growing 1/t^2, plus −1/12, plus vanishing terms. At t = 0.01 the total minus 1/t^2 is −0.083333.
+Smoothing shows Step 5's split: weight the n-th term by e^(−nt) for small $`t`$; the total is a growing 1/t^2, plus −1/12, plus vanishing terms. At t = 0.01 the total minus 1/t^2 is −0.083333.
 
 Another route, Schwarz reflection, mirrors a function real on part of the real axis across it.
 

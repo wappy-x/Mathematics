@@ -35,19 +35,27 @@ Orange: the knock-out's delta. Green: zero. Dark blue: minus one. At 1.10 the op
 
 ## The formula
 
-Notation first, in words. $G$ is the price today of the contract's payoff with everything at or above the wall cut off, and no wall watched during the life. For the knock-out that is a plain call at 1.10, minus a plain call at 1.20, minus 0.10 dollars paid if EURUSD finishes above 1.20. For the one-touch it is its partner, the **no-touch** piece: one dollar paid if EURUSD finishes below 1.20. A prime means slope in spot: $G'$ is the delta of $G$, $G''$ its gamma. The price of the barrier contract comes from the mirror formula on [Knock-out and knock-in](02-barrier-options-by-reflection.md), written for a wall above spot:
+Notation first, in words. $`G`$ is the price today of the contract's payoff with everything at or above the wall cut off, and no wall watched during the life. For the knock-out that is a plain call at 1.10, minus a plain call at 1.20, minus 0.10 dollars paid if EURUSD finishes above 1.20. For the one-touch it is its partner, the **no-touch** piece: one dollar paid if EURUSD finishes below 1.20. A prime means slope in spot: $`G'`$ is the delta of $`G`$, $`G''`$ its gamma. The price of the barrier contract comes from the mirror formula on [Knock-out and knock-in](02-barrier-options-by-reflection.md), written for a wall above spot:
 
-$$V(S) = G(S) - w\,G(m), \qquad w = \left(\frac{H}{S}\right)^{2\lambda},\quad m = \frac{H^2}{S},\quad \lambda = \frac{r_d - r_f - \tfrac12\sigma^2}{\sigma^2}$$
+```math
+V(S) = G(S) - w\,G(m), \qquad w = \left(\frac{H}{S}\right)^{2\lambda},\quad m = \frac{H^2}{S},\quad \lambda = \frac{r_d - r_f - \tfrac12\sigma^2}{\sigma^2}
+```
 
 Differentiate once and twice in spot, with the chain rule, noting that both the weight and the mirror spot move when spot moves:
 
-$$\Delta = G'(S) + \frac{2\lambda w}{S}\,G(m) + \frac{w\,m}{S}\,G'(m)$$
+```math
+\Delta = G'(S) + \frac{2\lambda w}{S}\,G(m) + \frac{w\,m}{S}\,G'(m)
+```
 
-$$\Gamma = G''(S) - \frac{2\lambda(2\lambda+1)\,w}{S^2}\,G(m) - \frac{(4\lambda+2)\,w\,m}{S^2}\,G'(m) - \frac{w\,m^2}{S^2}\,G''(m)$$
+```math
+\Gamma = G''(S) - \frac{2\lambda(2\lambda+1)\,w}{S^2}\,G(m) - \frac{(4\lambda+2)\,w\,m}{S^2}\,G'(m) - \frac{w\,m^2}{S^2}\,G''(m)
+```
 
-Differentiate in volatility; only the weight carries extra volatility, through $\lambda$:
+Differentiate in volatility; only the weight carries extra volatility, through $`\lambda`$:
 
-$$\text{vega} = \partial_\sigma G(S) + \frac{4\ln(H/S)\,(r_d - r_f)}{\sigma^3}\,w\,G(m) - w\,\partial_\sigma G(m)$$
+```math
+\text{vega} = \partial_\sigma G(S) + \frac{4\ln(H/S)\,(r_d - r_f)}{\sigma^3}\,w\,G(m) - w\,\partial_\sigma G(m)
+```
 
 **Read it aloud:** a barrier Greek is the plain Greek, minus the weighted mirror's Greek, plus the terms that appear because the mirror moves when spot or volatility moves.
 
@@ -55,24 +63,26 @@ Vanna is the slope of delta in volatility and volga is the slope of vega in vola
 
 The blow-up at the wall has a short approximate form, the **wall-delta rule**, for the knock-out close to expiry:
 
-$$\Delta(H) \approx 1 - \frac{(H-K)\sqrt{2/\pi}}{H\,\sigma\sqrt{T}}$$
+```math
+\Delta(H) \approx 1 - \frac{(H-K)\sqrt{2/\pi}}{H\,\sigma\sqrt{T}}
+```
 
 In words: the delta at the wall grows like one over the square root of the time left, scaled by how deep in the money the wall sits.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | EURUSD today, dollars per euro | 1.10 to 1.199 | knock-out rises, peaks at 1.1528, then falls to 0 at the wall |
-| $K$ | strike of the euro call | 1.10 | knock-out falls |
-| $H$, $\delta$ | the wall, 1.20; the shift a desk moves it by when pricing | 1.20; 10 pips | knock-out rises: more room to pay |
-| $T$, $t$ | time left to expiry, in years; a moment during the life | one month, 1/12 | knock-out delta at the wall shrinks |
-| $r_d$, $r_f$ | dollar and euro interest rates, continuously compounded | 5%, 3% | $r_d$ up tilts EURUSD toward the wall |
-| $\sigma$ | volatility: the yearly spread of log moves in EURUSD | 10% | knock-out rises at 1.10, falls past 1.1182 |
-| $\nu$, $\lambda$ | $\nu = r_d - r_f - \tfrac12\sigma^2$ is the drift of log EURUSD; $\lambda = \nu/\sigma^2$ is that drift in units of yearly variance | 0.015; 1.5 | |
-| $w$, $m$ | the mirror weight $(H/S)^{2\lambda}$ and the mirror spot $H^2/S$ | 1.025423 and 1.210084 at spot 1.19 | |
-| $G$, $C$, $D$, $k$ | price of the cut-off payoff; plain Garman–Kohlhagen call; cash digital paying one dollar above a strike $k$ | $G(1.19) = 0.041442$ | |
-| $V$, $N$, $\varphi$ | price of the knock-out or one-touch; bell-curve area left of a point; bell-curve height | 125.59 pips at 1.19 | |
-| $\Delta$, $\Gamma$ | delta, euros per euro of notional (or per dollar of payout); gamma, reported as change in delta per one-cent move | −1.2161; −0.1395 | |
-| $d_1$, $d_2$ | the two bell-curve distances of [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md) | | |
+| $`S`$ | EURUSD today, dollars per euro | 1.10 to 1.199 | knock-out rises, peaks at 1.1528, then falls to 0 at the wall |
+| $`K`$ | strike of the euro call | 1.10 | knock-out falls |
+| $`H`$, $`\delta`$ | the wall, 1.20; the shift a desk moves it by when pricing | 1.20; 10 pips | knock-out rises: more room to pay |
+| $`T`$, $`t`$ | time left to expiry, in years; a moment during the life | one month, 1/12 | knock-out delta at the wall shrinks |
+| $`r_d`$, $`r_f`$ | dollar and euro interest rates, continuously compounded | 5%, 3% | $`r_d`$ up tilts EURUSD toward the wall |
+| $`\sigma`$ | volatility: the yearly spread of log moves in EURUSD | 10% | knock-out rises at 1.10, falls past 1.1182 |
+| $`\nu`$, $`\lambda`$ | $`\nu = r_d - r_f - \tfrac12\sigma^2`$ is the drift of log EURUSD; $`\lambda = \nu/\sigma^2`$ is that drift in units of yearly variance | 0.015; 1.5 | |
+| $`w`$, $`m`$ | the mirror weight $`(H/S)^{2\lambda}`$ and the mirror spot $`H^2/S`$ | 1.025423 and 1.210084 at spot 1.19 | |
+| $`G`$, $`C`$, $`D`$, $`k`$ | price of the cut-off payoff; plain Garman–Kohlhagen call; cash digital paying one dollar above a strike $`k`$ | $`G(1.19) = 0.041442`$ | |
+| $`V`$, $`N`$, $`\varphi`$ | price of the knock-out or one-touch; bell-curve area left of a point; bell-curve height | 125.59 pips at 1.19 | |
+| $`\Delta`$, $`\Gamma`$ | delta, euros per euro of notional (or per dollar of payout); gamma, reported as change in delta per one-cent move | −1.2161; −0.1395 | |
+| $`d_1`$, $`d_2`$ | the two bell-curve distances of [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md) | | |
 
 Units: the knock-out in pips per euro of notional, the one-touch in percent of payout. Gamma per one-cent (100-pip) move; vega, vanna and volga per volatility point (one percent of volatility).
 
@@ -95,26 +105,28 @@ At 1.19 the knock-out is worth 125.59 pips. At 1.20 it is worth nothing. The pri
 
 ### Step 1: differentiate the mirror formula
 
-$V = G(S) - w\,G(m)$ has three places where spot enters: $G(S)$ directly, the weight $w = (H/S)^{2\lambda}$, and the mirror spot $m = H^2/S$. The weight's slope in spot is $-2\lambda w/S$. The mirror spot's slope is $-m/S$: as spot rises toward the wall, the mirror falls toward it from the other side. The chain rule gives the delta formula term by term. Differentiating again, with $w/S$ and $w/S^2$ each picking up one more factor of $1/S$, gives the gamma formula.
+$`V = G(S) - w\,G(m)`$ has three places where spot enters: $`G(S)`$ directly, the weight $`w = (H/S)^{2\lambda}`$, and the mirror spot $`m = H^2/S`$. The weight's slope in spot is $`-2\lambda w/S`$. The mirror spot's slope is $`-m/S`$: as spot rises toward the wall, the mirror falls toward it from the other side. The chain rule gives the delta formula term by term. Differentiating again, with $`w/S`$ and $`w/S^2`$ each picking up one more factor of $`1/S`$, gives the gamma formula.
 
-The pieces $G'$ and $G''$ are Garman–Kohlhagen Greeks of calls and digitals ([The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)). For the digital paying one dollar above strike $k$, with $v = \sigma\sqrt{T}$:
+The pieces $`G'`$ and $`G''`$ are Garman–Kohlhagen Greeks of calls and digitals ([The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)). For the digital paying one dollar above strike $`k`$, with $`v = \sigma\sqrt{T}`$:
 
-$$D = e^{-r_d T}N(d_2),\quad D' = \frac{e^{-r_d T}\varphi(d_2)}{x\,v},\quad D'' = -\frac{e^{-r_d T}\varphi(d_2)\,d_1}{x^2 v^2},\quad \partial_\sigma D = -\frac{e^{-r_d T}\varphi(d_2)\,d_1}{\sigma}$$
+```math
+D = e^{-r_d T}N(d_2),\quad D' = \frac{e^{-r_d T}\varphi(d_2)}{x\,v},\quad D'' = -\frac{e^{-r_d T}\varphi(d_2)\,d_1}{x^2 v^2},\quad \partial_\sigma D = -\frac{e^{-r_d T}\varphi(d_2)\,d_1}{\sigma}
+```
 
-where $x$ is the spot the digital is priced from.
+where $`x`$ is the spot the digital is priced from.
 
 <details>
 <summary>Detailed proof of the gamma and vega lines</summary>
 
-Write $u = w/S$. Since $w' = -2\lambda w/S$, $u' = -(2\lambda+1)w/S^2$. The delta is $G'(S) + 2\lambda u\,G(m) + H^2 (w/S^2)\,G'(m)$, using $m/S = H^2/S^2$. Differentiate the second term: $2\lambda[u' G(m) + u\,G'(m)\,m'] = -2\lambda(2\lambda+1)wG(m)/S^2 - 2\lambda w m G'(m)/S^2$. For the third, $(w/S^2)' = -(2\lambda+2)w/S^3$, so its derivative is $-(2\lambda+2)w m G'(m)/S^2 - w m^2 G''(m)/S^2$. Adding the two $G'(m)$ terms gives $-(4\lambda+2)$, which is the gamma line.
+Write $`u = w/S`$. Since $`w' = -2\lambda w/S`$, $`u' = -(2\lambda+1)w/S^2`$. The delta is $`G'(S) + 2\lambda u\,G(m) + H^2 (w/S^2)\,G'(m)`$, using $`m/S = H^2/S^2`$. Differentiate the second term: $`2\lambda[u' G(m) + u\,G'(m)\,m'] = -2\lambda(2\lambda+1)wG(m)/S^2 - 2\lambda w m G'(m)/S^2`$. For the third, $`(w/S^2)' = -(2\lambda+2)w/S^3`$, so its derivative is $`-(2\lambda+2)w m G'(m)/S^2 - w m^2 G''(m)/S^2`$. Adding the two $`G'(m)`$ terms gives $`-(4\lambda+2)`$, which is the gamma line.
 
-For vega, only $G$ and $w$ depend on $\sigma$; $m$ does not. $\lambda = (r_d - r_f)/\sigma^2 - \tfrac12$, so $\partial_\sigma\lambda = -2(r_d - r_f)/\sigma^3$, and $\partial_\sigma w = w \cdot 2\ln(H/S)\cdot\partial_\sigma\lambda$. Then $\partial_\sigma V = \partial_\sigma G(S) - \partial_\sigma w\,G(m) - w\,\partial_\sigma G(m)$, which is the vega line. For the digital, $\partial_\sigma d_2 = -d_1/\sigma$ follows from writing $d_2 = \ln(x/k)/v + (r_d - r_f)\sqrt{T}/\sigma - v/2$ and differentiating each term.
+For vega, only $`G`$ and $`w`$ depend on $`\sigma`$; $`m`$ does not. $`\lambda = (r_d - r_f)/\sigma^2 - \tfrac12`$, so $`\partial_\sigma\lambda = -2(r_d - r_f)/\sigma^3`$, and $`\partial_\sigma w = w \cdot 2\ln(H/S)\cdot\partial_\sigma\lambda`$. Then $`\partial_\sigma V = \partial_\sigma G(S) - \partial_\sigma w\,G(m) - w\,\partial_\sigma G(m)`$, which is the vega line. For the digital, $`\partial_\sigma d_2 = -d_1/\sigma`$ follows from writing $`d_2 = \ln(x/k)/v + (r_d - r_f)\sqrt{T}/\sigma - v/2`$ and differentiating each term.
 
 </details>
 
 ### Step 2: delta passes one because the mirror term is steep
 
-At 1.19 the three delta terms are $G'(S) = -0.539732$, $2\lambda w\,G(m)/S = 0.072814$, and $w m\,G'(m)/S = -0.749201$. Their sum is minus 1.2161. The cut-off payoff alone already has negative delta at 1.19: it is short 0.10 dollars of digital at 1.20, and that digital gains value fast as spot nears its strike from below. The mirror adds a second steep piece. Near the wall the two combine so that the price reaches exactly zero at 1.20.
+At 1.19 the three delta terms are $`G'(S) = -0.539732`$, $`2\lambda w\,G(m)/S = 0.072814`$, and $`w m\,G'(m)/S = -0.749201`$. Their sum is minus 1.2161. The cut-off payoff alone already has negative delta at 1.19: it is short 0.10 dollars of digital at 1.20, and that digital gains value fast as spot nears its strike from below. The mirror adds a second steep piece. Near the wall the two combine so that the price reaches exactly zero at 1.20.
 
 ### Step 3: gamma turns negative because the price is a hump
 
@@ -122,19 +134,19 @@ The knock-out's price rises from 132.67 pips at 1.10 to 374.61 at 1.15, then fal
 
 ### Step 4: vega turns negative because vega is gamma summed along the life
 
-More volatility gives a plain call more upside and costs nothing, since the downside is capped. A knock-out pays for that upside with more touches. Which effect wins has an exact answer. The price satisfies the Garman–Kohlhagen pricing equation between the two boundaries, the wall and expiry, with value zero on the wall. Differentiate that equation in $\sigma$: vega satisfies the same equation, zero on the wall and at expiry, with an extra source term $\sigma S^2\Gamma$. Solving it by averaging along paths, vega equals the discounted average of $\sigma S_t^2\,\Gamma$ collected over the life, on paths that have not touched. So vega is gamma summed along the surviving paths. Where gamma is mostly negative ahead of spot, vega is negative.
+More volatility gives a plain call more upside and costs nothing, since the downside is capped. A knock-out pays for that upside with more touches. Which effect wins has an exact answer. The price satisfies the Garman–Kohlhagen pricing equation between the two boundaries, the wall and expiry, with value zero on the wall. Differentiate that equation in $`\sigma`$: vega satisfies the same equation, zero on the wall and at expiry, with an extra source term $`\sigma S^2\Gamma`$. Solving it by averaging along paths, vega equals the discounted average of $`\sigma S_t^2\,\Gamma`$ collected over the life, on paths that have not touched. So vega is gamma summed along the surviving paths. Where gamma is mostly negative ahead of spot, vega is negative.
 
 That is why the two sign changes nearly coincide: vega crosses zero at 1.1182, gamma at 1.1183. Vega flips about eight cents before the wall. With a week left it flips at 1.1388, with a day at 1.1467: less time left means less of the path runs through the negative-gamma hump.
 
 ### Step 5: the wall-delta rule
 
-At the wall $S = H$, the weight is 1 and the mirror spot is $H$ itself, so $\Delta(H) = 2G'(H) + 2\lambda G(H)/H$. Close to expiry the second term is small. $G'(H)$ is the delta of a call deep in the money (near 1), minus an at-the-money call (near one half), minus 0.10 times the digital's delta at its own strike, $e^{-r_d T}\varphi(d_2)/(H\sigma\sqrt{T})$ with $\varphi(d_2)$ near $\varphi(0) = 1/\sqrt{2\pi}$. Doubling gives the rule. The digital's delta is what blows up: it is the cash jump of 0.10 dollars at the wall spread over one standard deviation of spot, and one standard deviation shrinks like $\sqrt{T}$.
+At the wall $`S = H`$, the weight is 1 and the mirror spot is $`H`$ itself, so $`\Delta(H) = 2G'(H) + 2\lambda G(H)/H`$. Close to expiry the second term is small. $`G'(H)`$ is the delta of a call deep in the money (near 1), minus an at-the-money call (near one half), minus 0.10 times the digital's delta at its own strike, $`e^{-r_d T}\varphi(d_2)/(H\sigma\sqrt{T})`$ with $`\varphi(d_2)`$ near $`\varphi(0) = 1/\sqrt{2\pi}`$. Doubling gives the rule. The digital's delta is what blows up: it is the cash jump of 0.10 dollars at the wall spread over one standard deviation of spot, and one standard deviation shrinks like $`\sqrt{T}`$.
 
 ### Step 6: the shifted wall pays for the unwind
 
-The bank is short the knock-out. Near the wall the option's delta is minus 1.2653 per euro, so the bank's hedge is a short position of 1.2653 euros per euro of notional. When 1.20 trades, the option dies and the bank must buy those euros back, in a market that is rising through the level. If the fill comes 10 pips late, at 1.2010, the cost is $1.2653 \times 0.0010$, or 12.65 pips per euro of notional.
+The bank is short the knock-out. Near the wall the option's delta is minus 1.2653 per euro, so the bank's hedge is a short position of 1.2653 euros per euro of notional. When 1.20 trades, the option dies and the bank must buy those euros back, in a market that is rising through the level. If the fill comes 10 pips late, at 1.2010, the cost is $`1.2653 \times 0.0010`$, or 12.65 pips per euro of notional.
 
-Now price the knock-out as if its wall were at 1.2010. At the moment spot reaches the real wall, the shifted-wall option is still alive, 10 pips from its own wall, and worth about its delta times 10 pips: 12.87. That residual value is the reserve released at knock-out, and it matches the 12.65-pip slippage to within 2%. Shifting the wall by $\delta$ is a way of charging, up front, for an unwind that slips by $\delta$.
+Now price the knock-out as if its wall were at 1.2010. At the moment spot reaches the real wall, the shifted-wall option is still alive, 10 pips from its own wall, and worth about its delta times 10 pips: 12.87. That residual value is the reserve released at knock-out, and it matches the 12.65-pip slippage to within 2%. Shifting the wall by $`\delta`$ is a way of charging, up front, for an unwind that slips by $`\delta`$.
 
 A desk short a one-touch shifts the other way. Pulling the wall to 1.1990 makes the touch come sooner and the contract dearer: 2.14% of payout at 1.19.
 
@@ -150,16 +162,16 @@ Reverse knock-out, spot 1.19, strike 1.10, wall 1.20, dollar rate 5%, euro rate 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| drift in variance units, $\lambda$ | $(0.05 - 0.03 - 0.005)/0.01$ | 1.5 |
-| mirror weight $w$ | $(1.20/1.19)^{3}$ | 1.025423 |
-| mirror spot $m$ | $1.44/1.19$ | 1.210084 |
-| cut-off price at spot, $G(S)$ | call 1.10 − call 1.20 − 0.10 × digital 1.20 | 0.041442 |
-| cut-off price at mirror, $G(m)$ | same, from 1.210084 | 0.028167 |
-| price | $0.041442 - 1.025423 \times 0.028167$ | 0.012559 |
-| delta term 1, $G'(S)$ | Garman–Kohlhagen deltas | −0.539732 |
-| delta term 2, $2\lambda w\,G(m)/S$ | $3 \times 1.025423 \times 0.028167 / 1.19$ | 0.072814 |
-| delta term 3, $w m\,G'(m)/S$ | weighted mirror delta | −0.749201 |
-| **delta** | $-0.539732 + 0.072814 - 0.749201$ | **−1.2161** |
+| drift in variance units, $`\lambda`$ | $`(0.05 - 0.03 - 0.005)/0.01`$ | 1.5 |
+| mirror weight $`w`$ | $`(1.20/1.19)^{3}`$ | 1.025423 |
+| mirror spot $`m`$ | $`1.44/1.19`$ | 1.210084 |
+| cut-off price at spot, $`G(S)`$ | call 1.10 − call 1.20 − 0.10 × digital 1.20 | 0.041442 |
+| cut-off price at mirror, $`G(m)`$ | same, from 1.210084 | 0.028167 |
+| price | $`0.041442 - 1.025423 \times 0.028167`$ | 0.012559 |
+| delta term 1, $`G'(S)`$ | Garman–Kohlhagen deltas | −0.539732 |
+| delta term 2, $`2\lambda w\,G(m)/S`$ | $`3 \times 1.025423 \times 0.028167 / 1.19`$ | 0.072814 |
+| delta term 3, $`w m\,G'(m)/S`$ | weighted mirror delta | −0.749201 |
+| **delta** | $`-0.539732 + 0.072814 - 0.749201`$ | **−1.2161** |
 
 The price is 125.59 pips per euro. A one-pip rise in spot costs the holder about 1.22 pips: for a EUR 10 million notional, the bank's hedge is short EUR 12.2 million, more than the notional itself.
 
@@ -174,7 +186,7 @@ Right answers at 1.19, one month: delta −1.2161. At 1.195: delta −1.26, gamm
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Hedge with the vanilla call's delta | +0.9949 | Wrong sign: buys euros where the book needs to sell them. |
-| Drop the weight's slope term $2\lambda w\,G(m)/S$ | −1.2889 | Treated the mirror weight as fixed; it moves with spot. |
+| Drop the weight's slope term $`2\lambda w\,G(m)/S`$ | −1.2889 | Treated the mirror weight as fixed; it moves with spot. |
 | One-cent bump across the wall, at 1.195 | delta −0.9215, gamma +0.5748 per cent | The up-bump lands past the wall, where the price is flat zero; the bump is wider than the region it measures, and gamma's sign flips. |
 
 ---
@@ -658,11 +670,11 @@ The two outputs agree line for line. The grid's price at 1.10 sits 0.007 pips be
 
 Lean proves the delta, gamma and vega lines of The formula, for any positive wall and spot, and checks the hand table's first numbers.
 
-- Suppose $G$ has slope $G'$ at $S$ and at $m$. Then, for any $\lambda$, $V = G(S) - w\,G(m)$ has the delta line as its slope in spot.
-- Suppose also that $G'$ has slope $G''$ at $S$ and at $m$. Then the delta line has the gamma line as its slope in spot.
-- Suppose $\sigma$ is positive, and $G(S)$ and $G(m)$ have slopes in volatility. Then $V$, with $\lambda$ moving with $\sigma$ and $m$ fixed, has the vega line as its slope in volatility.
-- Take $r_d$ = 0.05, $r_f$ = 0.03 and $\sigma$ = 0.10. Then $\lambda$ is exactly 1.5.
-- Take spot 1.19 and wall 1.20. Then $m$ is exactly $144/119$, or 1.210084, and $w$ is exactly $1728000/1685159$, or 1.025423.
+- Suppose $`G`$ has slope $`G'`$ at $`S`$ and at $`m`$. Then, for any $`\lambda`$, $`V = G(S) - w\,G(m)`$ has the delta line as its slope in spot.
+- Suppose also that $`G'`$ has slope $`G''`$ at $`S`$ and at $`m`$. Then the delta line has the gamma line as its slope in spot.
+- Suppose $`\sigma`$ is positive, and $`G(S)`$ and $`G(m)`$ have slopes in volatility. Then $`V`$, with $`\lambda`$ moving with $`\sigma`$ and $`m`$ fixed, has the vega line as its slope in volatility.
+- Take $`r_d`$ = 0.05, $`r_f`$ = 0.03 and $`\sigma`$ = 0.10. Then $`\lambda`$ is exactly 1.5.
+- Take spot 1.19 and wall 1.20. Then $`m`$ is exactly $`144/119`$, or 1.210084, and $`w`$ is exactly $`1728000/1685159`$, or 1.025423.
 
 The Garman–Kohlhagen pieces, every printed price and Greek, the wall-delta rule and the shifted wall are left to the Python and Rust checks.
 

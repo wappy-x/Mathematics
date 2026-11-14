@@ -38,36 +38,40 @@ The falling line (orange) is the quanto forward. The flat line (green) is the eu
 
 ## The formula
 
-Notation first, in words. A subscript names whose rate it is: $r_d$ is the domestic (dollar) rate, $r_f$ the foreign (euro) rate. A bar over a letter marks a number fixed in the contract. $e^{x}$ is the exponential, the growth factor of continuous compounding.
+Notation first, in words. A subscript names whose rate it is: $`r_d`$ is the domestic (dollar) rate, $`r_f`$ the foreign (euro) rate. A bar over a letter marks a number fixed in the contract. $`e^{x}`$ is the exponential, the growth factor of continuous compounding.
 
-$$F_Q = S\,e^{(r_f - q - \rho\,\sigma_S\,\sigma_X)\,T}$$
+```math
+F_Q = S\,e^{(r_f - q - \rho\,\sigma_S\,\sigma_X)\,T}
+```
 
-**Read it aloud:** the quanto forward is today's share price grown for $T$ years at the euro rate, less the dividend, less correlation times the share's volatility times the currency's volatility.
+**Read it aloud:** the quanto forward is today's share price grown for $`T`$ years at the euro rate, less the dividend, less correlation times the share's volatility times the currency's volatility.
 
 The rate in the exponent has a name of its own, the **quanto drift**:
 
-$$\mu = r_f - q - \rho\,\sigma_S\,\sigma_X$$
+```math
+\mu = r_f - q - \rho\,\sigma_S\,\sigma_X
+```
 
-It is how fast the share's euro price is expected to grow, averaged the way a dollar investor must average to avoid free money. The euro investor's version is the same without the last term, which gives the ordinary euro forward $F = S\,e^{(r_f - q)T}$.
+It is how fast the share's euro price is expected to grow, averaged the way a dollar investor must average to avoid free money. The euro investor's version is the same without the last term, which gives the ordinary euro forward $`F = S\,e^{(r_f - q)T}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_T$ | the share's price in euros, today and at the end | EUR 100 today | rises one for one in proportion |
-| $X_t$, $X_0$, $X_T$, $Y_t$, $Y_T$ | the exchange rate, dollars per euro, at time t, today and at the end; Y is the same rate upside down, euros per dollar | 1.10 today | does not move: today's rate never enters |
-| $\bar X$ | the fixed rate written into the contract, dollars per euro | 1.10 | does not move: it scales the payout, not the level |
-| $r_d$ | the dollar interest rate, continuously compounded | 5% | does not move the forward; it discounts the contract's value |
-| $r_f$ | the euro interest rate, continuously compounded | 3% | rises: the share grows faster in euros |
-| $q$ | the share's dividend yield | 1% | falls: dividends leave the price |
-| $\sigma_S$, $\sigma_X$ | volatilities: yearly wobble of the share (in euros) and of the exchange rate | 20%, 10% | falls when correlation is positive, rises when negative |
-| $\rho$ | correlation between the share's moves and the euro's moves against the dollar; say "rho" | 0.30 | falls: 0.6% lower per 0.30 |
-| $T$ | time to the settlement date, in years | 1 | stretches the gap: 0.6% per year |
-| $\mu$ | the quanto drift, $r_f - q - \rho\sigma_S\sigma_X$ | 1.4% a year | — |
-| $F$, $F_Q$ | the euro forward and the quanto forward | EUR 102.02, EUR 101.41 | — |
-| $W^S$, $W^X$, $dt$ | the random drivers (Brownian motions) of the share and the rate, correlated at $\rho$; $dt$ is a short slice of time | — | — |
+| $`S`$, $`S_T`$ | the share's price in euros, today and at the end | EUR 100 today | rises one for one in proportion |
+| $`X_t`$, $`X_0`$, $`X_T`$, $`Y_t`$, $`Y_T`$ | the exchange rate, dollars per euro, at time t, today and at the end; Y is the same rate upside down, euros per dollar | 1.10 today | does not move: today's rate never enters |
+| $`\bar X`$ | the fixed rate written into the contract, dollars per euro | 1.10 | does not move: it scales the payout, not the level |
+| $`r_d`$ | the dollar interest rate, continuously compounded | 5% | does not move the forward; it discounts the contract's value |
+| $`r_f`$ | the euro interest rate, continuously compounded | 3% | rises: the share grows faster in euros |
+| $`q`$ | the share's dividend yield | 1% | falls: dividends leave the price |
+| $`\sigma_S`$, $`\sigma_X`$ | volatilities: yearly wobble of the share (in euros) and of the exchange rate | 20%, 10% | falls when correlation is positive, rises when negative |
+| $`\rho`$ | correlation between the share's moves and the euro's moves against the dollar; say "rho" | 0.30 | falls: 0.6% lower per 0.30 |
+| $`T`$ | time to the settlement date, in years | 1 | stretches the gap: 0.6% per year |
+| $`\mu`$ | the quanto drift, $`r_f - q - \rho\sigma_S\sigma_X`$ | 1.4% a year | — |
+| $`F`$, $`F_Q`$ | the euro forward and the quanto forward | EUR 102.02, EUR 101.41 | — |
+| $`W^S`$, $`W^X`$, $`dt`$ | the random drivers (Brownian motions) of the share and the rate, correlated at $`\rho`$; $`dt`$ is a short slice of time | — | — |
 
 ### When it holds
 
-- **Volatilities and correlation stay fixed.** If the correlation drifts over the year, the adjustment uses its average over the contract's life; an error in that average moves the log of the forward by the error times $\sigma_S\sigma_X T$.
+- **Volatilities and correlation stay fixed.** If the correlation drifts over the year, the adjustment uses its average over the contract's life; an error in that average moves the log of the forward by the error times $`\sigma_S\sigma_X T`$.
 - **Prices move without jumps.** The product rule below needs smooth wobbles. A devaluation that knocks 20 percent off the euro overnight while the share falls too adds a jump term the formula does not have.
 - **Interest rates are fixed.** Random rates add their own co-movement terms: [Quanto rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md).
 - **The seller can rebalance continuously and cheaply.** The fair level assumes the bank hedges its currency exposure as the share moves. Coarse rebalancing leaves a residual profit or loss: [Hedging a quanto](03-quanto-greeks-and-hedging.md).
@@ -78,7 +82,7 @@ It is how fast the share's euro price is expected to grow, averaged the way a do
 
 ### Step 0: the idea that makes it possible
 
-One share can be bought by a dollar investor. Its dollar price is the euro price times the exchange rate, $S_t X_t$. That product is a dollar asset, so the dollar investor's no-arbitrage rule applies to it directly.
+One share can be bought by a dollar investor. Its dollar price is the euro price times the exchange rate, $`S_t X_t`$. That product is a dollar asset, so the dollar investor's no-arbitrage rule applies to it directly.
 
 In the dollar pricing world (the **risk-neutral** world, where every asset is averaged as if it earned the riskless rate), its total return must be the dollar rate. The exchange rate is also pinned, by covered interest parity.
 
@@ -86,9 +90,11 @@ Two of the three growth rates in the product are forced. The third, the share's 
 
 ### Step 1: the exchange rate must drift at the rate gap
 
-One euro in a euro bank account grows to $e^{r_f t}$ euros, worth $X_t\,e^{r_f t}$ dollars. It pays nothing else, so in the dollar world it must grow at $r_d$. The factor $e^{r_f t}$ supplies $r_f$ of that. The exchange rate supplies the rest:
+One euro in a euro bank account grows to $`e^{r_f t}`$ euros, worth $`X_t\,e^{r_f t}`$ dollars. It pays nothing else, so in the dollar world it must grow at $`r_d`$. The factor $`e^{r_f t}`$ supplies $`r_f`$ of that. The exchange rate supplies the rest:
 
-$$\text{drift of } X = r_d - r_f = 0.05 - 0.03 = 2\% \text{ a year.}$$
+```math
+\text{drift of } X = r_d - r_f = 0.05 - 0.03 = 2\% \text{ a year.}
+```
 
 This is covered interest parity ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)), the same fact that powers the currency option on [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
 
@@ -98,47 +104,61 @@ One day, one move each. If the share rises 1 percent and the euro rises 1 percen
 
 In continuous time this is the product rule of Itô calculus ([Several Brownian motions](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md)). Write each price as a drift plus a random kick:
 
-$$\frac{dS_t}{S_t} = \mu\,dt + \sigma_S\,dW^S_t, \qquad \frac{dX_t}{X_t} = (r_d - r_f)\,dt + \sigma_X\,dW^X_t,$$
+```math
+\frac{dS_t}{S_t} = \mu\,dt + \sigma_S\,dW^S_t, \qquad \frac{dX_t}{X_t} = (r_d - r_f)\,dt + \sigma_X\,dW^X_t,
+```
 
-where $dW^S_t$ and $dW^X_t$ are the kicks over a short time $dt$, each with spread $\sqrt{dt}$, correlated at $\rho$. The product rule reads
+where $`dW^S_t`$ and $`dW^X_t`$ are the kicks over a short time $`dt`$, each with spread $`\sqrt{dt}`$, correlated at $`\rho`$. The product rule reads
 
-$$d(S_t X_t) = X_t\,dS_t + S_t\,dX_t + dS_t\,dX_t .$$
+```math
+d(S_t X_t) = X_t\,dS_t + S_t\,dX_t + dS_t\,dX_t .
+```
 
-The last term is the one ordinary calculus drops. It is the kick times the kick: $\sigma_S\sigma_X\,S_t X_t\,dW^S_t\,dW^X_t$, and correlated kicks multiply to $\rho\,dt$ on average ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Divide through by $S_t X_t$:
+The last term is the one ordinary calculus drops. It is the kick times the kick: $`\sigma_S\sigma_X\,S_t X_t\,dW^S_t\,dW^X_t`$, and correlated kicks multiply to $`\rho\,dt`$ on average ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Divide through by $`S_t X_t`$:
 
-$$\frac{d(S_t X_t)}{S_t X_t} = \big(\mu + r_d - r_f + \rho\,\sigma_S\sigma_X\big)\,dt + \sigma_S\,dW^S_t + \sigma_X\,dW^X_t .$$
+```math
+\frac{d(S_t X_t)}{S_t X_t} = \big(\mu + r_d - r_f + \rho\,\sigma_S\sigma_X\big)\,dt + \sigma_S\,dW^S_t + \sigma_X\,dW^X_t .
+```
 
-The dollar value's growth is the share's growth, plus the currency's, plus the co-movement bonus $\rho\sigma_S\sigma_X$.
+The dollar value's growth is the share's growth, plus the currency's, plus the co-movement bonus $`\rho\sigma_S\sigma_X`$.
 
 ### Step 3: solve for the share's drift
 
-The share pays a dividend yield $q$, so its dollar price must grow at $r_d - q$ in the dollar world. Set the growth from Step 2 equal to that:
+The share pays a dividend yield $`q`$, so its dollar price must grow at $`r_d - q`$ in the dollar world. Set the growth from Step 2 equal to that:
 
-$$\mu + (r_d - r_f) + \rho\,\sigma_S\sigma_X = r_d - q .$$
+```math
+\mu + (r_d - r_f) + \rho\,\sigma_S\sigma_X = r_d - q .
+```
 
-The $r_d$ cancels. What remains is the quanto drift:
+The $`r_d`$ cancels. What remains is the quanto drift:
 
-$$\mu = r_f - q - \rho\,\sigma_S\sigma_X = 0.03 - 0.01 - 0.006 = 1.4\% \text{ a year.}$$
+```math
+\mu = r_f - q - \rho\,\sigma_S\sigma_X = 0.03 - 0.01 - 0.006 = 1.4\% \text{ a year.}
+```
 
 Using the euro world's 2 percent instead would make the dollar share grow at 4.6 percent a year where no-arbitrage allows 4. A simulation in the code shows it: the average dollar value of one share lands on 115.23 dollars against a required 114.49, eleven standard errors off. (A standard error is the typical size of a simulation's random error.) With the adjusted drift it lands on 114.54, within one.
 
 ### Step 4: the forward is the average of the share in the dollar world
 
-The contract pays $\bar X\,(S_T - F_Q)$ dollars at time $T$. Its value today is that payout averaged in the dollar world and discounted at $r_d$:
+The contract pays $`\bar X\,(S_T - F_Q)`$ dollars at time $`T`$. Its value today is that payout averaged in the dollar world and discounted at $`r_d`$:
 
-$$\bar X\,e^{-r_d T}\big(\mathbb{E}^d[S_T] - F_Q\big),$$
+```math
+\bar X\,e^{-r_d T}\big(\mathbb{E}^d[S_T] - F_Q\big),
+```
 
-where $\mathbb{E}^d$ means the average in the dollar world. The contract costs nothing, so $F_Q = \mathbb{E}^d[S_T]$. A price growing at drift $\mu$ with lognormal wobble has average $S\,e^{\mu T}$ ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)). Hence
+where $`\mathbb{E}^d`$ means the average in the dollar world. The contract costs nothing, so $`F_Q = \mathbb{E}^d[S_T]`$. A price growing at drift $`\mu`$ with lognormal wobble has average $`S\,e^{\mu T}`$ ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)). Hence
 
-$$F_Q = S\,e^{(r_f - q - \rho\sigma_S\sigma_X)T} = 100\,e^{0.014} = 101.41 .$$
+```math
+F_Q = S\,e^{(r_f - q - \rho\sigma_S\sigma_X)T} = 100\,e^{0.014} = 101.41 .
+```
 
-Two numbers dropped out. The fixed rate $\bar X$ multiplies the whole payout, so it cannot move the zero-cost level. Today's rate $X_0$ never appeared in $\mu$. The code checks the second by pricing with a spot of 1.30 instead of 1.10: still 101.41.
+Two numbers dropped out. The fixed rate $`\bar X`$ multiplies the whole payout, so it cannot move the zero-cost level. Today's rate $`X_0`$ never appeared in $`\mu`$. The code checks the second by pricing with a spot of 1.30 instead of 1.10: still 101.41.
 
 ### Step 5: the sign, in a two-state story
 
 Why lower when the share and the euro rise together? A one-period toy makes it visible. In the euro world, two equally likely states: the share ends at 120 or at 84, an average of 102. The euro ends strong at 1.21 dollars or weak at 0.99.
 
-A state price is today's cost of one unit of money paid only in that state ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). One dollar paid in a state is worth $1/X_T$ euros there. So the dollar world's odds are the euro world's odds times $1/X_T$, rescaled to add to one. The strong-euro state gets weight 0.5/1.21 against 0.5/0.99 for the weak one: 0.45 and 0.55.
+A state price is today's cost of one unit of money paid only in that state ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). One dollar paid in a state is worth $`1/X_T`$ euros there. So the dollar world's odds are the euro world's odds times $`1/X_T`$, rescaled to add to one. The strong-euro state gets weight 0.5/1.21 against 0.5/0.99 for the weak one: 0.45 and 0.55.
 
 - **Share high when the euro is strong.** Dollar-world average: 0.45 × 120 + 0.55 × 84 = **100.20**, below 102.
 - **Share high when the euro is weak.** 0.55 × 120 + 0.45 × 84 = **103.80**, above 102.
@@ -148,15 +168,17 @@ The dollar investor's world discounts the states where the euro is strong, becau
 <details>
 <summary>Detailed proof: the same drift by changing measure</summary>
 
-Work in the euro world, where the euro bank account is the yardstick. There the share drifts at $r_f - q$, and the dollar, priced in euros as $Y_t = 1/X_t$, drifts at $r_f - r_d$; its random driver is $-W^X$, since a stronger euro is a weaker dollar.
+Work in the euro world, where the euro bank account is the yardstick. There the share drifts at $`r_f - q`$, and the dollar, priced in euros as $`Y_t = 1/X_t`$, drifts at $`r_f - r_d`$; its random driver is $`-W^X`$, since a stronger euro is a weaker dollar.
 
-The dollar world uses the dollar bank account as yardstick. Its odds are the euro world's odds reweighted by the dollar account's euro value, $Y_T e^{r_d T}$, divided by its euro-world average $Y_0 e^{r_f T}$. That ratio is
-$$\exp\!\big(-\sigma_X W^X_T - \tfrac12\sigma_X^2 T\big).$$
-Girsanov's theorem ([Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) says a reweighting of this form, $\exp(\theta W_T - \tfrac12\theta^2 T)$ with $\theta = -\sigma_X$, turns $W^X$ into a driver with an extra drift $\theta = -\sigma_X$ per year. Any driver correlated with $W^X$ at $\rho$ picks up $\rho\theta$: its conditional average moves by $\rho$ times the shift, as for a bivariate normal ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)). So $W^S$ gains drift $-\rho\sigma_X$.
+The dollar world uses the dollar bank account as yardstick. Its odds are the euro world's odds reweighted by the dollar account's euro value, $`Y_T e^{r_d T}`$, divided by its euro-world average $`Y_0 e^{r_f T}`$. That ratio is
 
-Put that into the share: $dS_t/S_t = (r_f - q)\,dt + \sigma_S\,dW^S_t$ becomes $(r_f - q - \rho\sigma_S\sigma_X)\,dt$ plus a fresh dollar-world kick. The exchange rate, which in the euro world drifts at $r_d - r_f + \sigma_X^2$ (the upside-down of a price gains its variance), loses $\sigma_X \cdot \sigma_X$ and drifts at $r_d - r_f$, matching Step 1. Both drifts agree with the product-rule route.
+$`\displaystyle \exp\!\big(-\sigma_X W^X_T - \tfrac12\sigma_X^2 T\big).`$
 
-Road 2 in the code is this proof done numerically: it averages $S_T Y_T$ and $Y_T$ over the euro world on a grid and divides, never using $\mu$.
+Girsanov's theorem ([Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) says a reweighting of this form, $`\exp(\theta W_T - \tfrac12\theta^2 T)`$ with $`\theta = -\sigma_X`$, turns $`W^X`$ into a driver with an extra drift $`\theta = -\sigma_X`$ per year. Any driver correlated with $`W^X`$ at $`\rho`$ picks up $`\rho\theta`$: its conditional average moves by $`\rho`$ times the shift, as for a bivariate normal ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)). So $`W^S`$ gains drift $`-\rho\sigma_X`$.
+
+Put that into the share: $`dS_t/S_t = (r_f - q)\,dt + \sigma_S\,dW^S_t`$ becomes $`(r_f - q - \rho\sigma_S\sigma_X)\,dt`$ plus a fresh dollar-world kick. The exchange rate, which in the euro world drifts at $`r_d - r_f + \sigma_X^2`$ (the upside-down of a price gains its variance), loses $`\sigma_X \cdot \sigma_X`$ and drifts at $`r_d - r_f`$, matching Step 1. Both drifts agree with the product-rule route.
+
+Road 2 in the code is this proof done numerically: it averages $`S_T Y_T`$ and $`Y_T`$ over the euro world on a grid and divides, never using $`\mu`$.
 
 </details>
 
@@ -166,12 +188,12 @@ The alternative route, then, is a change of yardstick: the quanto adjustment is 
 
 ## Worked numbers, by hand
 
-The house market: share EUR 100, $r_d$ = 5%, $r_f$ = 3%, $q$ = 1%, $\sigma_S$ = 20%, $\sigma_X$ = 10%, $\rho$ = 0.30, $T$ = 1 year, fixed rate 1.10.
+The house market: share EUR 100, $`r_d`$ = 5%, $`r_f`$ = 3%, $`q`$ = 1%, $`\sigma_S`$ = 20%, $`\sigma_X`$ = 10%, $`\rho`$ = 0.30, $`T`$ = 1 year, fixed rate 1.10.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| adjustment $\rho\sigma_S\sigma_X$ | 0.30 × 0.20 × 0.10 | 0.006 |
-| quanto drift $\mu$ | 0.03 − 0.01 − 0.006 | 0.014 |
+| adjustment $`\rho\sigma_S\sigma_X`$ | 0.30 × 0.20 × 0.10 | 0.006 |
+| quanto drift $`\mu`$ | 0.03 − 0.01 − 0.006 | 0.014 |
 | euro forward | 100 × e^0.02 | EUR 102.02 |
 | **quanto forward** | 100 × e^0.014 | **EUR 101.41** |
 | gap | 102.02 − 101.41 | EUR 0.61 |
@@ -560,9 +582,9 @@ The two outputs agree byte for byte, the Monte Carlo lines included, because bot
 
 Lean proves Steps 3 and 4 exactly, for any rates, volatilities and correlation, and checks the worked numbers.
 
-- Suppose the share and $Y_T$ move as in the detailed proof, with correlation between −1 and 1. Then the dollar-world average of $S_T$ is exactly $F_Q$, whatever $r_d$ and $X_0$ are.
-- Take the same model and any fixed rate $\bar X > 0$. Then the contract costs nothing exactly when its agreed level is $F_Q$.
-- Take a positive share price, $T > 0$ and any share drift $\mu$ in the dollar world. Then the share's dollar value grows at $r_d - q$ on average exactly when $\mu$ is the quanto drift.
+- Suppose the share and $`Y_T`$ move as in the detailed proof, with correlation between −1 and 1. Then the dollar-world average of $`S_T`$ is exactly $`F_Q`$, whatever $`r_d`$ and $`X_0`$ are.
+- Take the same model and any fixed rate $`\bar X > 0`$. Then the contract costs nothing exactly when its agreed level is $`F_Q`$.
+- Take a positive share price, $`T > 0`$ and any share drift $`\mu`$ in the dollar world. Then the share's dollar value grows at $`r_d - q`$ on average exactly when $`\mu`$ is the quanto drift.
 - The adjustment is 0.006, the quanto drift 0.014 and the required growth 0.04.
 - At correlation 1 the quanto forward is exactly EUR 100.
 - The gap in logs between the two forwards is exactly 0.006.
@@ -908,7 +930,7 @@ example : (55 / 100 : ℚ) * 120 + (45 / 100) * 84 = 1038 / 10 := by norm_num
 - **Quanto notes.** Retail structured notes that pay a foreign index's return in home currency. The note's level is set with the quanto drift, and the options inside it are priced on [Quanto option](02-quanto-option.md).
 - **The hedging desk.** The bank that sells the contract holds euro shares and must keep adjusting its euro position as the share moves; that is where the correlation cost is paid: [Hedging a quanto](03-quanto-greeks-and-hedging.md).
 - **Paying in the floating rate instead.** A contract that pays the share's value converted at the rate on the day keeps the currency risk and uses no adjustment: [Composite option](04-composite-option.md).
-- **Reading the correlation back.** A quoted quanto level pins $\rho$, since everything else is observable: [Correlation from a quanto price](05-implied-correlation-from-a-quanto.md).
+- **Reading the correlation back.** A quoted quanto level pins $`\rho`$, since everything else is observable: [Correlation from a quanto price](05-implied-correlation-from-a-quanto.md).
 - **Interest rates paid in another currency.** A euro rate paid in dollars needs the same correction on the rate's drift: [Quanto rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md).
 
 > **Say it back**
@@ -920,11 +942,11 @@ example : (55 / 100 : ℚ) * 120 + (45 / 100) * 84 = 1038 / 10 := by norm_num
 
 - [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): why the exchange rate drifts at the dollar rate less the euro rate, Step 1.
 - [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the currency as a lognormal asset with a foreign carry, the model used for the exchange rate here.
-- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the kick-times-kick term, and the lognormal average $S\,e^{\mu T}$ used in Step 4.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the kick-times-kick term, and the lognormal average $`S\,e^{\mu T}`$ used in Step 4.
 - [Several Brownian motions](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md): the product rule for two correlated processes, the heart of Step 2.
 - [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the change of yardstick in the folded proof.
 - [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): correlation as the average product of two standardised moves.
-- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): building correlated draws from independent ones, as the code does, and why a shift in one driver moves the other by $\rho$ times as much.
+- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): building correlated draws from independent ones, as the code does, and why a shift in one driver moves the other by $`\rho`$ times as much.
 - [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): state prices, and why changing the currency of account reweights the odds, Step 5.
 
 ## Where this goes next

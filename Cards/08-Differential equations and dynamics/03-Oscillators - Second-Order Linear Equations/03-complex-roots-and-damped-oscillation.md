@@ -36,30 +36,36 @@ Orange: the height, e^(−t)(cos 2t + 0.5 sin 2t). Teal: the envelope 1.118 e^(�
 
 Reminder: y' is the rate of y, y'' the rate of y'. The damper setting is p here, not b as on the previous card: b names the frequency. The equation, and the quadratic an exponential guess produces:
 
-$$y'' + p\,y' + q\,y = 0 \qquad\longrightarrow\qquad r^2 + p\,r + q = 0$$
+```math
+y'' + p\,y' + q\,y = 0 \qquad\longrightarrow\qquad r^2 + p\,r + q = 0
+```
 
-When $p^2 < 4q$ the roots are a conjugate pair: one real part, opposite imaginary parts.
+When $`p^2 < 4q`$ the roots are a conjugate pair: one real part, opposite imaginary parts.
 
-$$r = a \pm i\,b, \qquad a = -\frac{p}{2}, \qquad b = \sqrt{q - \frac{p^2}{4}}$$
+```math
+r = a \pm i\,b, \qquad a = -\frac{p}{2}, \qquad b = \sqrt{q - \frac{p^2}{4}}
+```
 
 Every real solution is then
 
-$$y(t) = e^{a t}\,\bigl(C\cos bt + D\sin bt\bigr), \qquad C = y(0), \qquad D = \frac{y'(0) - a\,C}{b}$$
+```math
+y(t) = e^{a t}\,\bigl(C\cos bt + D\sin bt\bigr), \qquad C = y(0), \qquad D = \frac{y'(0) - a\,C}{b}
+```
 
 **Read it aloud:** a cosine and a sine turning at b radians per second, mixed to fit the start, all multiplied by an exponential that fades at rate a.
 
-The height stays inside the envelope $R\,e^{at}$, with $R = \sqrt{C^2 + D^2}$. The pattern repeats every $T = 2\pi/b$ seconds, each repeat $e^{aT}$ times the last.
+The height stays inside the envelope $`R\,e^{at}`$, with $`R = \sqrt{C^2 + D^2}`$. The pattern repeats every $`T = 2\pi/b`$ seconds, each repeat $`e^{aT}`$ times the last.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since the bump, in s | 0 to 4 s | height nears level |
-| $y$, $y'$, $y''$ | height above level, its velocity, its acceleration | y(0) = 1 cm, y'(0) = 0 cm/s | — |
-| $p$, $q$ | damper setting, per s; spring stiffness, per s^2 | 2 and 5 | p past 4.472: no ringing |
-| $i$ | the number whose square is −1 | — | — |
-| $r$ | a root of the characteristic equation | −1 ± 2i | — |
-| $a$, $b$ | real part: decay rate, per s; imaginary part: angular frequency, rad/s | −1 and 2 | a nearer 0: slower fade; b up: shorter period |
-| $C$, $D$, $R$ | cosine and sine amounts, fixed by the start; envelope height at t = 0 | 1 cm, 0.5 cm, 1.118 cm | — |
-| $T$, $\theta$ | the period, in s; the phase angle, in radians | 3.142 s; 0.464 rad | — |
+| $`t`$ | time since the bump, in s | 0 to 4 s | height nears level |
+| $`y`$, $`y'`$, $`y''`$ | height above level, its velocity, its acceleration | y(0) = 1 cm, y'(0) = 0 cm/s | — |
+| $`p`$, $`q`$ | damper setting, per s; spring stiffness, per s^2 | 2 and 5 | p past 4.472: no ringing |
+| $`i`$ | the number whose square is −1 | — | — |
+| $`r`$ | a root of the characteristic equation | −1 ± 2i | — |
+| $`a`$, $`b`$ | real part: decay rate, per s; imaginary part: angular frequency, rad/s | −1 and 2 | a nearer 0: slower fade; b up: shorter period |
+| $`C`$, $`D`$, $`R`$ | cosine and sine amounts, fixed by the start; envelope height at t = 0 | 1 cm, 0.5 cm, 1.118 cm | — |
+| $`T`$, $`\theta`$ | the period, in s; the phase angle, in radians | 3.142 s; 0.464 rad | — |
 
 ### When it holds
 
@@ -74,7 +80,7 @@ The height stays inside the envelope $R\,e^{at}$, with $R = \sqrt{C^2 + D^2}$. T
 
 ### Step 0: an imaginary rate turns instead of growing
 
-Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$ ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), puts $e^{i\theta}$ on the circle of radius 1, at angle θ from the positive real axis. So $e^{ibt}$ runs round that circle at b radians per second. Multiplying by $e^{at}$ shrinks the radius as it turns: the point spirals in. The real part of the spiral, its shadow on the horizontal axis, is $e^{at}\cos bt$. That shadow is the fading swing.
+Euler's formula, $`e^{i\theta} = \cos\theta + i\sin\theta`$ ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), puts $`e^{i\theta}`$ on the circle of radius 1, at angle θ from the positive real axis. So $`e^{ibt}`$ runs round that circle at b radians per second. Multiplying by $`e^{at}`$ shrinks the radius as it turns: the point spirals in. The real part of the spiral, its shadow on the horizontal axis, is $`e^{at}\cos bt`$. That shadow is the fading swing.
 
 ### The picture: the root's exponential, drawn in the plane
 
@@ -84,20 +90,20 @@ To scale: 200 px per unit on both axes, origin at (100, 170); the start, 1, sits
 
 ### Step 1: the complex exponential solves the equation
 
-For complex r, the rate of $e^{rt}$ is still $r\,e^{rt}$: differentiate $e^{at}(\cos bt + i\sin bt)$ by the product rule and compare. So substituting $e^{rt}$ gives $(r^2 + p\,r + q)\,e^{rt}$, which is zero because r is a root. For the car, $(-1 + 2i)^2 = -3 - 4i$, and $-3 - 4i + 2(-1 + 2i) + 5 = 0$.
+For complex r, the rate of $`e^{rt}`$ is still $`r\,e^{rt}`$: differentiate $`e^{at}(\cos bt + i\sin bt)`$ by the product rule and compare. So substituting $`e^{rt}`$ gives $`(r^2 + p\,r + q)\,e^{rt}`$, which is zero because r is a root. For the car, $`(-1 + 2i)^2 = -3 - 4i`$, and $`-3 - 4i + 2(-1 + 2i) + 5 = 0`$.
 
 ### Step 2: its real and imaginary parts are real solutions
 
-Write the complex solution as $u + iv$, with $u = e^{at}\cos bt$ and $v = e^{at}\sin bt$. Because p and q are real, the left side of the equation splits the same way: (u'' + p u' + q u) + i(v'' + p v' + q v). A complex number is zero only when both parts are, so u and v each solve the equation. The other root, a − ib, gives the same two curves again.
+Write the complex solution as $`u + iv`$, with $`u = e^{at}\cos bt`$ and $`v = e^{at}\sin bt`$. Because p and q are real, the left side of the equation splits the same way: (u'' + p u' + q u) + i(v'' + p v' + q v). A complex number is zero only when both parts are, so u and v each solve the equation. The other root, a − ib, gives the same two curves again.
 
 ### Step 3: the start fixes C and D, and nothing is missed
 
-At t = 0, the mix $C u + D v$ has height C and velocity aC + bD. Matching y(0) and y'(0) gives the formula's C and D, for any start, since b is not zero. Two solutions with the same start agree forever ([Superposition](01-superposition-and-the-shape-of-linear-solutions.md)), so this family holds every solution.
+At t = 0, the mix $`C u + D v`$ has height C and velocity aC + bD. Matching y(0) and y'(0) gives the formula's C and D, for any start, since b is not zero. Two solutions with the same start agree forever ([Superposition](01-superposition-and-the-shape-of-linear-solutions.md)), so this family holds every solution.
 
 <details>
 <summary>Detailed proof: a check with no complex numbers</summary>
 
-Put $y = e^{at}u(t)$. Then $y' = e^{at}(u' + a u)$ and $y'' = e^{at}(u'' + 2a u' + a^2 u)$, so
+Put $`y = e^{at}u(t)`$. Then $`y' = e^{at}(u' + a u)`$ and $`y'' = e^{at}(u'' + 2a u' + a^2 u)`$, so
 y'' + p y' + q y = e^(at) [u'' + (2a + p) u' + (a^2 + p a + q) u].
 With a = −p/2 the middle coefficient is zero, and a^2 + p a + q = q − p^2/4 = b^2. So u'' + b^2 u = 0, the undamped spring, solved by C cos bt + D sin bt. Removing the fade e^(at) leaves pure turning at rate b.
 
@@ -105,13 +111,13 @@ With a = −p/2 the middle coefficient is zero, and a^2 + p a + q = q − p^2/4 
 
 ### Step 4: reading off the envelope, the period and the fade
 
-Treat C and D as the two legs of a right triangle ([Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). Its long side is $R = \sqrt{C^2 + D^2}$, and with θ the angle whose cosine is C/R and sine D/R, the mix becomes $R\cos(bt - \theta)$. A cosine never exceeds 1, so the height stays inside $\pm R\,e^{at}$. For the car, R = 1.118 cm.
+Treat C and D as the two legs of a right triangle ([Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). Its long side is $`R = \sqrt{C^2 + D^2}`$, and with θ the angle whose cosine is C/R and sine D/R, the mix becomes $`R\cos(bt - \theta)`$. A cosine never exceeds 1, so the height stays inside $`\pm R\,e^{at}`$. For the car, R = 1.118 cm.
 
-The envelope halves when $e^{at} = 1/2$, after ln 2 / |a| = 0.693 s. The pattern repeats after $T = 2\pi/b$ = 3.142 s, each repeat $e^{aT}$ = 0.043 times the last.
+The envelope halves when $`e^{at} = 1/2`$, after ln 2 / |a| = 0.693 s. The pattern repeats after $`T = 2\pi/b`$ = 3.142 s, each repeat $`e^{aT}`$ = 0.043 times the last.
 
 ### Step 5: the three regimes
 
-As p rises toward $2\sqrt{q}$, b shrinks and the ringing slows. At $p = 2\sqrt{q}$, 4.472 per s for the car, the roots meet on the real line: critical damping. Beyond it, two negative real roots give a creep with no ringing, handled on [The characteristic equation](02-the-characteristic-equation.md). The sign of the discriminant $p^2 - 4q$ names the regime: negative rings (underdamped), zero sits on the edge (critical), positive creeps (overdamped). Stepped for 10 s, the car crosses level 6 times at p = 2 and never at 4.472 or 6.
+As p rises toward $`2\sqrt{q}`$, b shrinks and the ringing slows. At $`p = 2\sqrt{q}`$, 4.472 per s for the car, the roots meet on the real line: critical damping. Beyond it, two negative real roots give a creep with no ringing, handled on [The characteristic equation](02-the-characteristic-equation.md). The sign of the discriminant $`p^2 - 4q`$ names the regime: negative rings (underdamped), zero sits on the edge (critical), positive creeps (overdamped). Stepped for 10 s, the car crosses level 6 times at p = 2 and never at 4.472 or 6.
 
 ---
 

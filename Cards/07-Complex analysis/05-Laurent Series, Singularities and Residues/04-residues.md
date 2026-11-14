@@ -26,36 +26,42 @@ To scale: 70 units per 1, with 0 at (180, 135), i at (180, 65), −i at (180, 20
 
 ## The formula
 
-Notation first, in words. The residue of f at a is written $\operatorname{Res}(f, a)$. Near an isolated bad point, f is a two-sided power series with coefficients $c_n$ ([Laurent series](01-laurent-series.md)). A ring on the integral sign means one anticlockwise lap.
+Notation first, in words. The residue of f at a is written $`\mathrm{Res}(f, a)`$. Near an isolated bad point, f is a two-sided power series with coefficients $`c_n`$ ([Laurent series](01-laurent-series.md)). A ring on the integral sign means one anticlockwise lap.
 
-$$f(z) = \sum_{n=-\infty}^{\infty} c_n (z-a)^n, \qquad \operatorname{Res}(f, a) = c_{-1} = \frac{1}{2\pi i}\oint_{|z-a|=r} f(z)\,dz$$
+```math
+f(z) = \sum_{n=-\infty}^{\infty} c_n (z-a)^n, \qquad \mathrm{Res}(f, a) = c_{-1} = \frac{1}{2\pi i}\oint_{|z-a|=r} f(z)\,dz
+```
 
 **Read it aloud:** the residue is the coefficient of one over (z minus a), equal to a small loop's integral divided by 2πi.
 
 At a **simple pole** (blowing up like 1/(z − a), no worse):
 
-$$\operatorname{Res}(f, a) = \lim_{z \to a}\,(z-a)\,f(z) = \frac{p(a)}{q'(a)} \quad \text{when } f = \frac{p}{q},\ q(a) = 0,\ q'(a) \neq 0$$
+```math
+\mathrm{Res}(f, a) = \lim_{z \to a}\,(z-a)\,f(z) = \frac{p(a)}{q'(a)} \quad \text{when } f = \frac{p}{q},\ q(a) = 0,\ q'(a) \neq 0
+```
 
 **Read it aloud:** cancel the bad factor and let z arrive at a; for a fraction, top at a over the bottom's slope at a.
 
 At a **pole of order m** (blows up like 1/(z − a)^m):
 
-$$\operatorname{Res}(f, a) = \frac{1}{(m-1)!}\,\lim_{z \to a} \frac{d^{m-1}}{dz^{m-1}}\Big[(z-a)^m f(z)\Big]$$
+```math
+\mathrm{Res}(f, a) = \frac{1}{(m-1)!}\,\lim_{z \to a} \frac{d^{m-1}}{dz^{m-1}}\Big[(z-a)^m f(z)\Big]
+```
 
 **Read it aloud:** cancel all m bad factors, differentiate m − 1 times, let z arrive at a, divide by (m − 1) factorial.
 
-At an **essential singularity** (no m tames it), expand and read off $c_{-1}$.
+At an **essential singularity** (no m tames it), expand and read off $`c_{-1}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$, $a$, $i$ | a point; the bad point; i^2 = −1 | a = i | a new booth |
-| $f$ | the function | 1/(z^2 + 1) | double f, double the residue |
-| $c_n$, $n$ | coefficient of (z − a)^n; the power | n = −1 gives −i/2 | only n = −1 reaches a loop |
-| $\operatorname{Res}(f, a)$ | the residue | −i/2, 1/2, 1/2 | the toll, 2πi Res, follows it |
-| $m$, $(m-1)!$ | pole order; 1 × 2 × … × (m − 1) | 3, and 2! = 2 | one more derivative |
-| $H$ | the tamed factor (z − a)^m f(z) | e^z | — |
-| $p$, $q$, $q'$ | top, bottom, the bottom's derivative | 1, z^2 + 1, 2z | q'(a) = 0 breaks p/q' |
-| $r$, $N$, $h$ | loop radius; points in the loop sum; step toward a | 1/2; 4 to 64; 0.1 to 0.001 | larger N, smaller error |
+| $`z`$, $`a`$, $`i`$ | a point; the bad point; i^2 = −1 | a = i | a new booth |
+| $`f`$ | the function | 1/(z^2 + 1) | double f, double the residue |
+| $`c_n`$, $`n`$ | coefficient of (z − a)^n; the power | n = −1 gives −i/2 | only n = −1 reaches a loop |
+| $`\mathrm{Res}(f, a)`$ | the residue | −i/2, 1/2, 1/2 | the toll, 2πi Res, follows it |
+| $`m`$, $`(m-1)!`$ | pole order; 1 × 2 × … × (m − 1) | 3, and 2! = 2 | one more derivative |
+| $`H`$ | the tamed factor (z − a)^m f(z) | e^z | — |
+| $`p`$, $`q`$, $`q'`$ | top, bottom, the bottom's derivative | 1, z^2 + 1, 2z | q'(a) = 0 breaks p/q' |
+| $`r`$, $`N`$, $`h`$ | loop radius; points in the loop sum; step toward a | 1/2; 4 to 64; 0.1 to 0.001 | larger N, smaller error |
 
 ### When it holds
 
@@ -72,13 +78,15 @@ At an **essential singularity** (no m tames it), expand and read off $c_{-1}$.
 
 On the circle z = a + r e^(it), t from 0 to 2π, the step dz is i r e^(it) dt, so
 
-$$\oint (z-a)^n\,dz = i\,r^{n+1}\int_0^{2\pi} e^{i(n+1)t}\,dt,$$
+```math
+\oint (z-a)^n\,dz = i\,r^{n+1}\int_0^{2\pi} e^{i(n+1)t}\,dt,
+```
 
-and e^(i(n+1)t) circles the origin a whole number of times, averaging 0, unless n = −1; then the integral is 2πi. Term by term, the loop returns 2πi times $c_{-1}$ alone.
+and e^(i(n+1)t) circles the origin a whole number of times, averaging 0, unless n = −1; then the integral is 2πi. Term by term, the loop returns 2πi times $`c_{-1}`$ alone.
 
 ### Step 1: at a simple pole, one multiplication exposes it
 
-A simple pole means the series starts at n = −1. Multiply by (z − a): every term after the first carries a factor (z − a), so letting z arrive at a leaves $c_{-1}$.
+A simple pole means the series starts at n = −1. Multiply by (z − a): every term after the first carries a factor (z − a), so letting z arrive at a leaves $`c_{-1}`$.
 
 For 1/(z^2 + 1) = 1/((z − i)(z + i)), the product (z − i)f(z) is 1/(z + i). At z = i + 0.1 it is 0.024938 − 0.498753i; at i + 0.001, 0.000250 − 0.500000i. The limit is 1/(2i) = −i/2.
 
@@ -86,7 +94,9 @@ For 1/(z^2 + 1) = 1/((z − i)(z + i)), the product (z − i)f(z) is 1/(z + i). 
 
 Write f = p/q with q(a) = 0 and q'(a) ≠ 0. Near a, q(z) = q'(a)(z − a) + (terms in (z − a)^2 and up), so
 
-$$(z-a)\frac{p(z)}{q(z)} = \frac{p(z)}{q'(a) + (\text{terms in } z-a)} \to \frac{p(a)}{q'(a)}.$$
+```math
+(z-a)\frac{p(z)}{q(z)} = \frac{p(z)}{q'(a) + (\text{terms in } z-a)} \to \frac{p(a)}{q'(a)}.
+```
 
 With p = 1 and q = z^2 + 1, q'(i) = 2i: the residue at i is 1/(2i) = −i/2, and at −i it is i/2, with no factoring.
 
@@ -94,7 +104,9 @@ With p = 1 and q = z^2 + 1, q'(i) = 2i: the residue at i is 1/(2i) = −i/2, and
 
 Order m means the series starts at n = −m. Multiply by (z − a)^m and the result, H, is an ordinary power series:
 
-$$H(z) = c_{-m} + c_{-m+1}(z-a) + \cdots + c_{-1}(z-a)^{m-1} + \cdots$$
+```math
+H(z) = c_{-m} + c_{-m+1}(z-a) + \cdots + c_{-1}(z-a)^{m-1} + \cdots
+```
 
 The residue sits in the slot of power m − 1, which by Taylor's formula holds H's (m − 1)-th derivative at a divided by (m − 1)! ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). For e^z/z^3: m = 3, H = e^z = 1 + z + z^2/2! + …, and the z^2 slot is H''(0)/2! = 1/2.
 
@@ -102,16 +114,18 @@ The residue sits in the slot of power m − 1, which by Taylor's formula holds H
 
 Near 0, e^(1/z) = 1 + 1/z + 1/(2! z^2) + …, with infinitely many negative powers, so no m tames it ([Isolated singularities](02-classifying-singularities.md)). Multiply by z:
 
-$$z\,e^{1/z} = z + 1 + \frac{1}{2!\,z} + \frac{1}{3!\,z^2} + \cdots$$
+```math
+z\,e^{1/z} = z + 1 + \frac{1}{2!\,z} + \frac{1}{3!\,z^2} + \cdots
+```
 
 The only 1/z term is z × 1/(2! z^2), so the residue is 1/2. Swapping z for 1/w turns z e^(1/z) dz into −e^w/w^3 dw on a clockwise loop; the two sign flips cancel, so the second and third booths have the same residue, with matching loop errors in the code.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The loop picks out the residue.** For f holomorphic on 0 < |z − a| < R, the Laurent series converges uniformly on each circle |z − a| = r < R ([Laurent series](01-laurent-series.md)): for every ε > 0 the partial sums lie within ε of f there, their integrals within 2πrε of f's. Step 0 then gives 2πi $c_{-1}$ for every such r.
+**The loop picks out the residue.** For f holomorphic on 0 < |z − a| < R, the Laurent series converges uniformly on each circle |z − a| = r < R ([Laurent series](01-laurent-series.md)): for every ε > 0 the partial sums lie within ε of f there, their integrals within 2πrε of f's. Step 0 then gives 2πi $`c_{-1}`$ for every such r.
 
-**Order m.** H(z) = (z − a)^m f(z) extends holomorphically to a, and by uniqueness of the series its Taylor coefficient of (z − a)^j is $c_{j-m}$. Taking j = m − 1 gives $c_{-1}$ = H^(m−1)(a)/(m − 1)!; the limit form holds because H's derivatives are continuous at a. With k > m in place of m, (z − a)^(k−m) H still holds $c_{-1}$ in slot k − 1, so overestimating the order is harmless.
+**Order m.** H(z) = (z − a)^m f(z) extends holomorphically to a, and by uniqueness of the series its Taylor coefficient of (z − a)^j is $`c_{j-m}`$. Taking j = m − 1 gives $`c_{-1}`$ = H^(m−1)(a)/(m − 1)!; the limit form holds because H's derivatives are continuous at a. With k > m in place of m, (z − a)^(k−m) H still holds $`c_{-1}`$ in slot k − 1, so overestimating the order is harmless.
 
 **The quotient.** Write q(z) = (z − a)s(z) with s holomorphic and s(a) = q'(a) ≠ 0; then (z − a)p/q = p/s, whose value at a is p(a)/q'(a).
 
@@ -690,7 +704,7 @@ example : (1 : ℚ) / (Nat.factorial 2) = 1 / 2 := by
 
 ## What this builds on
 
-- [Laurent series](01-laurent-series.md): the two-sided series whose coefficient $c_{-1}$ is the residue, and the loop formula for it.
+- [Laurent series](01-laurent-series.md): the two-sided series whose coefficient $`c_{-1}`$ is the residue, and the loop formula for it.
 - [Isolated singularities](02-classifying-singularities.md): the pole order m, and why e^(1/z) has none.
 
 ## Where this goes next

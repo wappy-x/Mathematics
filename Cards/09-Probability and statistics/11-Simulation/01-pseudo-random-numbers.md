@@ -39,48 +39,54 @@ The line: the seed 7 at step 0, then the generator's 16 outputs, printed by both
 
 ## The formula
 
-Notation first. The **mod** operation gives the remainder after division: 38 mod 16 is 6, since 38 = 2 × 16 + 6. The three-bar sign ≡ reads "leaves the same remainder as" ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)). A subscript counts steps: $x_n$ is the generator's state after $n$ steps, and $x_0$ is the seed.
+Notation first. The **mod** operation gives the remainder after division: 38 mod 16 is 6, since 38 = 2 × 16 + 6. The three-bar sign ≡ reads "leaves the same remainder as" ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)). A subscript counts steps: $`x_n`$ is the generator's state after $`n`$ steps, and $`x_0`$ is the seed.
 
 The simplest family, the **linear congruential generator** (LCG: multiply, add, keep the remainder), is one line:
 
-$$x_{n+1} = (a\,x_n + c) \bmod m, \qquad u_n = \frac{x_n}{m}$$
+```math
+x_{n+1} = (a\,x_n + c) \bmod m, \qquad u_n = \frac{x_n}{m}
+```
 
-**Read it aloud:** multiply the current number by $a$, add $c$, keep the remainder after dividing by $m$; that remainder is the next number, and dividing it by $m$ gives a draw between 0 and 1.
+**Read it aloud:** multiply the current number by $`a`$, add $`c`$, keep the remainder after dividing by $`m`$; that remainder is the next number, and dividing it by $`m`$ gives a draw between 0 and 1.
 
-The example above is $a = 5$, $c = 3$, $m = 16$, seed 7: $5 \times 7 + 3 = 38$, and 38 mod 16 is 6, so $x_1 = 6$ and $u_1 = 6/16 = 0.3750$.
+The example above is $`a = 5`$, $`c = 3`$, $`m = 16`$, seed 7: $`5 \times 7 + 3 = 38`$, and 38 mod 16 is 6, so $`x_1 = 6`$ and $`u_1 = 6/16 = 0.3750`$.
 
-The state can take only $m$ values, so the stream must repeat. The **full-cycle rule** (Hull and Dobell, 1962) says when the loop is as long as possible. For $m$ a power of 2, as in most software:
+The state can take only $`m`$ values, so the stream must repeat. The **full-cycle rule** (Hull and Dobell, 1962) says when the loop is as long as possible. For $`m`$ a power of 2, as in most software:
 
-$$\text{loop length} = m \iff c \text{ is odd and } a \equiv 1 \pmod 4$$
+```math
+\text{loop length} = m \iff c \text{ is odd and } a \equiv 1 \pmod 4
+```
 
-**Read it aloud:** the generator visits all $m$ states before repeating exactly when the added number is odd and the multiplier leaves remainder 1 on division by 4. For other $m$ the rule reads: $c$ shares no factor with $m$, $a - 1$ is divisible by every prime that divides $m$, and by 4 if 4 divides $m$.
+**Read it aloud:** the generator visits all $`m`$ states before repeating exactly when the added number is odd and the multiplier leaves remainder 1 on division by 4. For other $`m`$ the rule reads: $`c`$ shares no factor with $`m`$, $`a - 1`$ is divisible by every prime that divides $`m`$, and by 4 if 4 divides $`m`$.
 
-Uniformity is tested by sorting $N$ draws into $k$ equal bins and adding up the squared surprises ([Chi-square tests](../08-Confidence%20Intervals%20and%20Tests/06-chi-square-tests.md)):
+Uniformity is tested by sorting $`N`$ draws into $`k`$ equal bins and adding up the squared surprises ([Chi-square tests](../08-Confidence%20Intervals%20and%20Tests/06-chi-square-tests.md)):
 
-$$\chi^2 = \sum_{j=1}^{k} \frac{(O_j - E_j)^2}{E_j}$$
+```math
+\chi^2 = \sum_{j=1}^{k} \frac{(O_j - E_j)^2}{E_j}
+```
 
 **Read it aloud:** in each bin, square the gap between the count seen and the count expected, divide by the count expected, and add over the bins.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_n$, $n$ | the state after $n$ steps, a whole number from 0 to $m - 1$ | $x_1 = 6$ | — |
-| $x$, $y$ | in the figure: one output and the output after it | 7 and 6 | — |
-| $x_0$ | the seed: the starting state | 7 (darts: 20260929) | a different stream, same quality |
-| $a$ | the multiplier | 5 | stirs harder; quality depends on its digits, not its size |
-| $c$ | the increment, added each step | 3 | odd (with $a \equiv 1 \pmod 4$) gives the full loop; even gives at most half |
-| $m$ | the modulus: how many states there are | 16 (minstd, Step 1: 2^31 − 1) | longer possible loop |
-| $u_n$ | the draw between 0 and 1, $x_n / m$ | $u_1 = 0.3750$ | — |
-| $S(n)$ | in the proof: $1 + a + a^2 + \dots + a^{n-1}$ | adds $n$ powers of 5 | — |
-| $N$ | number of draws tested | 10,000 | real flaws show up more clearly |
-| $k$ | number of equal bins | 10 | finer test, fewer draws per bin |
-| $O_j$, $E_j$, $j$ | draws seen, and expected, in bin number $j$ | 1031 and 1000 | — |
-| $\chi^2$ | chi-square: the total squared surprise | 18.29 (MT19937) | above 16.919 fails at 5% |
+| $`x_n`$, $`n`$ | the state after $`n`$ steps, a whole number from 0 to $`m - 1`$ | $`x_1 = 6`$ | — |
+| $`x`$, $`y`$ | in the figure: one output and the output after it | 7 and 6 | — |
+| $`x_0`$ | the seed: the starting state | 7 (darts: 20260929) | a different stream, same quality |
+| $`a`$ | the multiplier | 5 | stirs harder; quality depends on its digits, not its size |
+| $`c`$ | the increment, added each step | 3 | odd (with $`a \equiv 1 \pmod 4`$) gives the full loop; even gives at most half |
+| $`m`$ | the modulus: how many states there are | 16 (minstd, Step 1: 2^31 − 1) | longer possible loop |
+| $`u_n`$ | the draw between 0 and 1, $`x_n / m`$ | $`u_1 = 0.3750`$ | — |
+| $`S(n)`$ | in the proof: $`1 + a + a^2 + \dots + a^{n-1}`$ | adds $`n`$ powers of 5 | — |
+| $`N`$ | number of draws tested | 10,000 | real flaws show up more clearly |
+| $`k`$ | number of equal bins | 10 | finer test, fewer draws per bin |
+| $`O_j`$, $`E_j`$, $`j`$ | draws seen, and expected, in bin number $`j`$ | 1031 and 1000 | — |
+| $`\chi^2`$ | chi-square: the total squared surprise | 18.29 (MT19937) | above 16.919 fails at 5% |
 
 ### When it holds
 
 - **The arithmetic is exact.** A multiply that silently drops its top bits is a different generator with a different loop.
 - **The draws are taken in the same order.** One extra draw early in the program, or threads that take turns in no fixed order, shift every later number, and the replay is lost.
-- **For the full-cycle rule as stated, $m$ is a power of 2.** If $c$ is even the loop is at most half as long: $(5x + 2) \bmod 16$ loops after 8.
+- **For the full-cycle rule as stated, $`m`$ is a power of 2.** If $`c`$ is even the loop is at most half as long: $`(5x + 2) \bmod 16`$ loops after 8.
 - **For the tests, the draws are compared with a known law.** A test finds only the pattern it looks for: a generator can pass the bin test and still fail badly on triples, as RANDU does below.
 
 ---
@@ -89,55 +95,55 @@ $$\chi^2 = \sum_{j=1}^{k} \frac{(O_j - E_j)^2}{E_j}$$
 
 ### Step 0: a machine with finitely many states must loop
 
-Only $m$ states are possible, so within $m + 1$ steps some state comes back, and from there the stream repeats. A designer controls only how long the loop is and how patternless the path round it looks. Randomness, here, is a standard the output must meet under testing, not a property of the rule.
+Only $`m`$ states are possible, so within $`m + 1`$ steps some state comes back, and from there the stream repeats. A designer controls only how long the loop is and how patternless the path round it looks. Randomness, here, is a standard the output must meet under testing, not a property of the rule.
 
 ### Step 1: the same seed replays the same stream, and any stretch can be reached directly
 
 The rule's only input is the current state, so the same seed gives the same stream: 3.13856 twice. A different seed starts somewhere else on the loop: 3.14304. The two differ by 0.00448, less than one standard error, which is the size of luck at 100,000 darts ([Monte Carlo](04-monte-carlo-estimates-and-error.md)).
 
-Determinism also allows jumping ahead. The generator Park and Miller called the minimal standard, **minstd**, has $c = 0$, $a = 16807$ and $m = 2^{31} - 1$. With no increment, $n$ steps multiply the seed by $a$ exactly $n$ times, so $x_n = a^n x_0 \bmod m$. Repeated squaring computes $a^{10000}$ with a handful of squarings instead of 10,000 steps. From seed 1, stepping and jumping both land on 1043618065: the value Park and Miller published as the test that an implementation is correct. Jumping is how parallel workers get separate stretches of one stream.
+Determinism also allows jumping ahead. The generator Park and Miller called the minimal standard, **minstd**, has $`c = 0`$, $`a = 16807`$ and $`m = 2^{31} - 1`$. With no increment, $`n`$ steps multiply the seed by $`a`$ exactly $`n`$ times, so $`x_n = a^n x_0 \bmod m`$. Repeated squaring computes $`a^{10000}`$ with a handful of squarings instead of 10,000 steps. From seed 1, stepping and jumping both land on 1043618065: the value Park and Miller published as the test that an implementation is correct. Jumping is how parallel workers get separate stretches of one stream.
 
 ### Step 2: when the loop visits every state
 
-For $m$ a power of 2 the full-cycle rule has a short proof, by counting factors of 2. The shape:
+For $`m`$ a power of 2 the full-cycle rule has a short proof, by counting factors of 2. The shape:
 
-1. When $a$ is odd, each state has exactly one state before it, so the states fall into separate loops. Full cycle means the loop through 0 has length $m$.
-2. From 0, the state after $n$ steps is $c \times S(n) \bmod m$, where $S(n) = 1 + a + \dots + a^{n-1}$.
-3. With $c$ odd, that state is 0 exactly when $m$ divides $S(n)$.
-4. With $a \equiv 1 \pmod 4$, $S(n)$ carries exactly as many factors of 2 as $n$ does. So $S(n)$ first becomes divisible by $m$ at $n = m$.
+1. When $`a`$ is odd, each state has exactly one state before it, so the states fall into separate loops. Full cycle means the loop through 0 has length $`m`$.
+2. From 0, the state after $`n`$ steps is $`c \times S(n) \bmod m`$, where $`S(n) = 1 + a + \dots + a^{n-1}`$.
+3. With $`c`$ odd, that state is 0 exactly when $`m`$ divides $`S(n)`$.
+4. With $`a \equiv 1 \pmod 4`$, $`S(n)`$ carries exactly as many factors of 2 as $`n`$ does. So $`S(n)`$ first becomes divisible by $`m`$ at $`n = m`$.
 
 Each condition is needed: the folded proof shows how the loop shortens when one fails.
 
-The checks test the rule against brute force. For $m = 16$ they run every pair of $a$ and $c$ from 0 to 15 and find 32 with a full loop; the rule picks out the same 32 pairs. For $m = 64$: 512 pairs both ways.
+The checks test the rule against brute force. For $`m = 16`$ they run every pair of $`a`$ and $`c`$ from 0 to 15 and find 32 with a full loop; the rule picks out the same 32 pairs. For $`m = 64`$: 512 pairs both ways.
 
 <details>
 <summary>Detailed proof: the full-cycle rule for m a power of 2, at least 4</summary>
 
-**Loops.** If $a$ is odd it has an inverse on the $m$-clock, so $x \mapsto (ax + c) \bmod m$ can be undone: no two states share a successor. Following successors from any state must then return to it, so the states split into separate loops. The generator has a full cycle exactly when the loop through 0 has length $m$.
+**Loops.** If $`a`$ is odd it has an inverse on the $`m`$-clock, so $`x \mapsto (ax + c) \bmod m`$ can be undone: no two states share a successor. Following successors from any state must then return to it, so the states split into separate loops. The generator has a full cycle exactly when the loop through 0 has length $`m`$.
 
-**The state after n steps.** Start at 0. Then $x_1 = c = c\,S(1)$. If $x_n = c\,S(n)$, then $x_{n+1} = a\,c\,S(n) + c = c\,(a\,S(n) + 1) = c\,S(n+1)$, all mod $m$. With $c$ odd, $c$ has an inverse, so $x_n = 0$ exactly when $m$ divides $S(n)$.
+**The state after n steps.** Start at 0. Then $`x_1 = c = c\,S(1)`$. If $`x_n = c\,S(n)`$, then $`x_{n+1} = a\,c\,S(n) + c = c\,(a\,S(n) + 1) = c\,S(n+1)`$, all mod $`m`$. With $`c`$ odd, $`c`$ has an inverse, so $`x_n = 0`$ exactly when $`m`$ divides $`S(n)`$.
 
-**Counting factors of 2 (for a ≡ 1 mod 4).** If $n$ is odd, $S(n)$ adds $n$ odd numbers and is odd: no factor of 2, like $n$. If $n$ is even, pair the terms: $S(n) = (1 + a)(1 + a^2 + a^4 + \dots + a^{n-2})$. The first factor is 2 more than a multiple of 4, so it carries exactly one factor of 2. The second is $S$ built from $a^2$ over $n/2$ terms, and $a^2 \equiv 1 \pmod 4$ too. By induction on $n$ it carries as many factors of 2 as $n/2$. Together: as many as $n$. Since $m$ is a power of 2, $m$ divides $S(n)$ exactly when $m$ divides $n$; the first such $n$ is $m$, and the loop through 0 has length $m$.
+**Counting factors of 2 (for a ≡ 1 mod 4).** If $`n`$ is odd, $`S(n)`$ adds $`n`$ odd numbers and is odd: no factor of 2, like $`n`$. If $`n`$ is even, pair the terms: $`S(n) = (1 + a)(1 + a^2 + a^4 + \dots + a^{n-2})`$. The first factor is 2 more than a multiple of 4, so it carries exactly one factor of 2. The second is $`S`$ built from $`a^2`$ over $`n/2`$ terms, and $`a^2 \equiv 1 \pmod 4`$ too. By induction on $`n`$ it carries as many factors of 2 as $`n/2`$. Together: as many as $`n`$. Since $`m`$ is a power of 2, $`m`$ divides $`S(n)`$ exactly when $`m`$ divides $`n`$; the first such $`n`$ is $`m`$, and the loop through 0 has length $`m`$.
 
-**Necessity.** If $c$ is even and $a$ odd, $ax + c$ has the parity of $x$, so a stream never changes parity and misses half the states. If $a$ is even, every state after the first has the parity of $c$. If $a \equiv 3 \pmod 4$, then $1 + a$ is a multiple of 4, so for even $n$ the pairing gives $S(n)$ at least one more factor of 2 than $n$; at $n = m/2$ that makes $m$ divide $S(n)$, and the loop through 0 closes by step $m/2$.
+**Necessity.** If $`c`$ is even and $`a`$ odd, $`ax + c`$ has the parity of $`x`$, so a stream never changes parity and misses half the states. If $`a`$ is even, every state after the first has the parity of $`c`$. If $`a \equiv 3 \pmod 4`$, then $`1 + a`$ is a multiple of 4, so for even $`n`$ the pairing gives $`S(n)`$ at least one more factor of 2 than $`n`$; at $`n = m/2`$ that makes $`m`$ divide $`S(n)`$, and the loop through 0 closes by step $`m/2`$.
 
-The toy generator has $a = 5 \equiv 1 \pmod 4$ and $c = 3$ odd: a full loop of 16, as the chart shows.
+The toy generator has $`a = 5 \equiv 1 \pmod 4`$ and $`c = 3`$ odd: a full loop of 16, as the chart shows.
 
 </details>
 
 ### Step 3: a full loop is not randomness
 
-The rule guarantees coverage, not disorder. Take $a = 1$, $c = 1$: the loop is full, and the stream is 8, 9, 10, 11, 12, 13, a counter.
+The rule guarantees coverage, not disorder. Take $`a = 1`$, $`c = 1`$: the loop is full, and the stream is 8, 9, 10, 11, 12, 13, a counter.
 
-The toy generator hides two quieter patterns. Its last binary digit, or **bit**, runs 0, 1, 0, 1 for ever, because with $m$ a power of 2 the lowest bit is itself a generator with only two states. And its consecutive pairs line up. Plot each output $x$ against the next output $y$ and all 16 points fall on four parallel lines.
+The toy generator hides two quieter patterns. Its last binary digit, or **bit**, runs 0, 1, 0, 1 for ever, because with $`m`$ a power of 2 the lowest bit is itself a generator with only two states. And its consecutive pairs line up. Plot each output $`x`$ against the next output $`y`$ and all 16 points fall on four parallel lines.
 
 ### The picture: consecutive outputs of the toy generator, as points (x, y)
 
 <p align="center"><img src="../figures/pseudo-random-numbers.svg" alt="The 16 pairs of consecutive outputs of x to 5x + 3 mod 16, lying on four parallel lines x + 3y = 9, 25, 41, 57" width="420"></p>
 
-Every point satisfies $x + 3y = 9$, 25, 41 or 57: the check lists the 16 pairs and finds exactly those four values. Drawn to scale, one unit to 12.5 drawing units on both axes. The reason is one line of algebra: $y \equiv 5x + 3 \pmod{16}$, and $3 \times 5 = 15 \equiv -1$, so $3y \equiv -x + 9$, which gives $x + 3y \equiv 9 \pmod{16}$. Every LCG does this. George Marsaglia showed in 1968 that consecutive draws of any LCG, taken in pairs, triples or longer runs, lie on a limited number of flat sheets. A good multiplier makes the sheets many and close together; a bad one makes them few.
+Every point satisfies $`x + 3y = 9`$, 25, 41 or 57: the check lists the 16 pairs and finds exactly those four values. Drawn to scale, one unit to 12.5 drawing units on both axes. The reason is one line of algebra: $`y \equiv 5x + 3 \pmod{16}`$, and $`3 \times 5 = 15 \equiv -1`$, so $`3y \equiv -x + 9`$, which gives $`x + 3y \equiv 9 \pmod{16}`$. Every LCG does this. George Marsaglia showed in 1968 that consecutive draws of any LCG, taken in pairs, triples or longer runs, lie on a limited number of flat sheets. A good multiplier makes the sheets many and close together; a bad one makes them few.
 
-The notorious bad one is **RANDU**, IBM's generator of the 1960s: $a = 65539$, $c = 0$, $m = 2^{31}$. Since $65539 = 2^{16} + 3$, squaring gives $a^2 \equiv 6a - 9 \pmod{2^{31}}$, so every output is fixed by the two before: $x_{n+2} \equiv 6x_{n+1} - 9x_n$. In the check, 9 times one output, minus 6 times the next, plus the one after, is a multiple of $2^{31}$ for all 10,000 triples of consecutive outputs. Those triples lie on just 15 planes in the unit cube. For MT19937 (its top 31 bits) the same combination is a multiple of $2^{31}$ in 0 of 10,000 triples.
+The notorious bad one is **RANDU**, IBM's generator of the 1960s: $`a = 65539`$, $`c = 0`$, $`m = 2^{31}`$. Since $`65539 = 2^{16} + 3`$, squaring gives $`a^2 \equiv 6a - 9 \pmod{2^{31}}`$, so every output is fixed by the two before: $`x_{n+2} \equiv 6x_{n+1} - 9x_n`$. In the check, 9 times one output, minus 6 times the next, plus the one after, is a multiple of $`2^{31}`$ for all 10,000 triples of consecutive outputs. Those triples lie on just 15 planes in the unit cube. For MT19937 (its top 31 bits) the same combination is a multiple of $`2^{31}`$ in 0 of 10,000 triples.
 
 ### Step 4: testing uniformity with chi-square
 
@@ -175,9 +181,9 @@ Modern generators keep a much larger state and stir it with bit operations: shif
 
 **MT19937**, the Mersenne Twister of Matsumoto and Nishimura (1998), holds 624 numbers of 32 bits. Each refill mixes every word with its neighbour and with the word 397 places on; each output is then scrambled further, "tempered", before release.
 
-Its loop has length $2^{19937} - 1$, a **Mersenne prime** (a prime one less than a power of 2), which gives the name. The 1998 paper proves it by polynomial algebra over bits, and this card takes it as stated. The check's version, from seed 5489, gives 4123659995 as its 10,000th output, the value the C++ standard fixes as the test of a correct implementation.
+Its loop has length $`2^{19937} - 1`$, a **Mersenne prime** (a prime one less than a power of 2), which gives the name. The 1998 paper proves it by polynomial algebra over bits, and this card takes it as stated. The check's version, from seed 5489, gives 4123659995 as its 10,000th output, the value the C++ standard fixes as the test of a correct implementation.
 
-**SplitMix64**, written out in many checks on this wing, is a counter with a scrambler. Its state steps by a fixed odd number: an LCG with $a = 1$ and odd $c$, so by Step 2 its loop covers all $2^{64}$ states. On its own that is the counter of Step 3. A mixing function then shifts, XORs and multiplies the state so that neighbouring counts give unrelated outputs. Because the state after $n$ steps is the seed plus $n$ times the step, the 10,000th output can be computed directly; the check gets the same number both ways.
+**SplitMix64**, written out in many checks on this wing, is a counter with a scrambler. Its state steps by a fixed odd number: an LCG with $`a = 1`$ and odd $`c`$, so by Step 2 its loop covers all $`2^{64}`$ states. On its own that is the counter of Step 3. A mixing function then shifts, XORs and multiplies the state so that neighbouring counts give unrelated outputs. Because the state after $`n`$ steps is the seed plus $`n`$ times the step, the 10,000th output can be computed directly; the check gets the same number both ways.
 
 Physical noise and cryptographic generators are the other routes; simulation rarely needs them, security always needs the second. How far fixed rules can stand in for true randomness is the subject of Pseudorandomness.
 
@@ -185,17 +191,17 @@ Physical noise and cryptographic generators are the other routes; simulation rar
 
 ## Worked numbers, by hand
 
-The toy generator $x_{n+1} = (5x_n + 3) \bmod 16$, seed 7.
+The toy generator $`x_{n+1} = (5x_n + 3) \bmod 16`$, seed 7.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $x_1$ | 5 × 7 + 3 = 38; 38 − 2 × 16 | 6 |
-| $u_1$ | 6 / 16 | 0.3750 |
-| $x_2$ | 5 × 6 + 3 = 33; 33 − 2 × 16 | 1 |
-| $x_3$ | 5 × 1 + 3 = 8 | 8 |
-| $x_4$ | 5 × 8 + 3 = 43; 43 − 2 × 16 | 11 |
-| $u_2$, $u_3$, $u_4$ | 1/16, 8/16, 11/16 | 0.0625, 0.5000, 0.6875 |
-| the rule | $a = 5$ leaves 1 on division by 4; $c = 3$ is odd | full loop |
+| $`x_1`$ | 5 × 7 + 3 = 38; 38 − 2 × 16 | 6 |
+| $`u_1`$ | 6 / 16 | 0.3750 |
+| $`x_2`$ | 5 × 6 + 3 = 33; 33 − 2 × 16 | 1 |
+| $`x_3`$ | 5 × 1 + 3 = 8 | 8 |
+| $`x_4`$ | 5 × 8 + 3 = 43; 43 − 2 × 16 | 11 |
+| $`u_2`$, $`u_3`$, $`u_4`$ | 1/16, 8/16, 11/16 | 0.0625, 0.5000, 0.6875 |
+| the rule | $`a = 5`$ leaves 1 on division by 4; $`c = 3`$ is odd | full loop |
 | steps until 7 returns | keep going: 10, 5, 12, 15, 14, 9, 0, 3, 2, 13, 4, 7 | **16** |
 
 Each of the 16 values appears exactly once per loop, then the loop replays: the reason real generators have loops far longer than any simulation will use.
@@ -204,10 +210,10 @@ Each of the 16 values appears exactly once per loop, then the loop replays: the 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Even increment: $(5x + 2) \bmod 16$ | loop of 8 | an odd seed never reaches an even state |
-| Multiplier 3, remainder 3 on division by 4: $(3x + 3) \bmod 16$ | loop of 8 | an extra factor of 2 closes the loop at step $m/2$ |
-| Last bit of the toy generator as a coin | 0, 1, 0, 1, … | with $m$ a power of 2, the lowest bit has a loop of 2 |
-| minstd seeded 1 and 2 as "independent" streams | seed 2 gives 0.000016, 0.263076, 0.511211: seed 1's 0.000008, 0.131538, 0.755605 doubled, less 1 once past 1 | with $c = 0$, the seed-2 stream is 2 times the seed-1 stream mod $m$, in 1000 of 1000 outputs |
+| Even increment: $`(5x + 2) \bmod 16`$ | loop of 8 | an odd seed never reaches an even state |
+| Multiplier 3, remainder 3 on division by 4: $`(3x + 3) \bmod 16`$ | loop of 8 | an extra factor of 2 closes the loop at step $`m/2`$ |
+| Last bit of the toy generator as a coin | 0, 1, 0, 1, … | with $`m`$ a power of 2, the lowest bit has a loop of 2 |
+| minstd seeded 1 and 2 as "independent" streams | seed 2 gives 0.000016, 0.263076, 0.511211: seed 1's 0.000008, 0.131538, 0.755605 doubled, less 1 once past 1 | with $`c = 0`$, the seed-2 stream is 2 times the seed-1 stream mod $`m`$, in 1000 of 1000 outputs |
 | Trusting RANDU because it passes the bin test | p = 0.4548, yet 10,000 of 10,000 triples on 15 planes | the test looked at single draws, the flaw lives in triples |
 
 ---
@@ -592,15 +598,15 @@ Every assert was also broken on purpose (a wrong rule, a wrong tempering shift, 
 
 Lean proves the full-cycle rule for every power of 2 from 4 up, plus jumping ahead and RANDU's flaw for every seed.
 
-- Take $m$ a power of 2, at least 4. Then the loop length is $m$ from every seed exactly when $c$ is odd and $a \equiv 1 \pmod 4$.
-- Take $c = 0$ and any seed $x_0$ below $m$. Then $n$ steps give $x_n = a^n x_0 \bmod m$.
-- Take any RANDU state $x$, and the next two states, $y$ and $z$. Then $9x - 6y + z$ is a multiple of $2^{31}$.
+- Take $`m`$ a power of 2, at least 4. Then the loop length is $`m`$ from every seed exactly when $`c`$ is odd and $`a \equiv 1 \pmod 4`$.
+- Take $`c = 0`$ and any seed $`x_0`$ below $`m`$. Then $`n`$ steps give $`x_n = a^n x_0 \bmod m`$.
+- Take any RANDU state $`x`$, and the next two states, $`y`$ and $`z`$. Then $`9x - 6y + z`$ is a multiple of $`2^{31}`$.
 - The toy generator's 16 outputs from seed 7 come out exactly, and 7 first returns at step 16.
 - The even increment and the multiplier 3 each give a loop of 8 from seed 7.
-- Brute force over every $a$ and $c$ from 0 to 15 agrees with the rule, and the rule picks 32 pairs.
-- Take $a = 1$ and $c = 1$. Then the stream from 8 counts 8, 9, 10, 11, 12, 13.
+- Brute force over every $`a`$ and $`c`$ from 0 to 15 agrees with the rule, and the rule picks 32 pairs.
+- Take $`a = 1`$ and $`c = 1`$. Then the stream from 8 counts 8, 9, 10, 11, 12, 13.
 - The toy's pairs lie on the four lines, and its last bit alternates 0, 1.
-- Take RANDU's $a = 65539$. Then $a^2$ and $6a - 9$ leave the same remainder on division by $2^{31}$.
+- Take RANDU's $`a = 65539`$. Then $`a^2`$ and $`6a - 9`$ leave the same remainder on division by $`2^{31}`$.
 - From seed 1, minstd's 10,000th state is 1043618065, by stepping and by jumping.
 
 The chi-square tests, MT19937, SplitMix64, the 15 planes, the seed-2 stream and the darts are left to the Python and Rust checks.
@@ -913,8 +919,8 @@ example : 16807 ^ 10000 * 1 % (2 ^ 31 - 1) = 1043618065 := by decide +kernel
 > **Treating a passed test as proof of randomness.** A test answers one narrow question. RANDU passes the ten-bin test with p = 0.4548, while every one of its 10,000 triples sits on one of 15 planes. A simulation of points in a cube driven by RANDU gives wrong answers that no single-draw test would catch.
 >
 > - **Treating one failed test as proof of a bad generator.** MT19937 scores p = 0.0319 from seed 20260929; across seeds 1 to 100 it falls below 0.05 in 5 runs, exactly the one in twenty a 5% test allows.
-> - **Seeding streams with neighbouring numbers.** With minstd, seed 2 gives exactly twice seed 1's stream, mod $m$: the "independent" runs are tied together in 1000 of 1000 outputs. Take separate stretches by jumping ahead, or use a generator built for splitting.
-> - **Taking low bits from a power-of-2 LCG.** The toy generator's last bit runs 0, 1, 0, 1. Dice made by `x mod 6` from such a generator inherit the pattern; use the high bits, as $u_n = x_n / m$ does.
+> - **Seeding streams with neighbouring numbers.** With minstd, seed 2 gives exactly twice seed 1's stream, mod $`m`$: the "independent" runs are tied together in 1000 of 1000 outputs. Take separate stretches by jumping ahead, or use a generator built for splitting.
+> - **Taking low bits from a power-of-2 LCG.** The toy generator's last bit runs 0, 1, 0, 1. Dice made by `x mod 6` from such a generator inherit the pattern; use the high bits, as $`u_n = x_n / m`$ does.
 > - **Re-running with new seeds until the answer looks right.** Each seed gives a legitimate run; choosing among them afterwards is running many tests and reporting one ([Many tests](../08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md)).
 > - **Using a simulation generator for secrets.** MT19937's state can be rebuilt from 624 consecutive outputs, after which every later output is known. Passwords and keys need a cryptographic generator.
 

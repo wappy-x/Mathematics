@@ -26,21 +26,25 @@ Drawn at 1 km = 22 units; C is the ship. The angle at B is past 90°, so the das
 
 ## The formula
 
-Each side takes the small letter of the corner it faces; the capital also names the corner's angle. So $c$ is the baseline, $a$ the ship's distance from B, $b$ from A.
+Each side takes the small letter of the corner it faces; the capital also names the corner's angle. So $`c`$ is the baseline, $`a`$ the ship's distance from B, $`b`$ from A.
 
-In a right triangle an angle's sine is the side facing it over the longest side; its cosine, the side beside it over the longest ([Sine, cosine and tangent](01-right-triangle-trigonometry.md)). [The unit circle](02-radians-and-the-unit-circle.md) carries both past 90°, where an angle and 180° minus it share a sine. $R$ is the radius of the circle through the corners.
+In a right triangle an angle's sine is the side facing it over the longest side; its cosine, the side beside it over the longest ([Sine, cosine and tangent](01-right-triangle-trigonometry.md)). [The unit circle](02-radians-and-the-unit-circle.md) carries both past 90°, where an angle and 180° minus it share a sine. $`R`$ is the radius of the circle through the corners.
 
-$$\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R$$
+```math
+\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R
+```
 
 **Read it aloud:** each side, divided by the sine of the angle facing it, gives the same length, the diameter of the circle through the three corners.
 
-In the fog the law runs backwards, from the range $a$:
+In the fog the law runs backwards, from the range $`a`$:
 
-$$\sin C = \frac{c \sin A}{a}$$
+```math
+\sin C = \frac{c \sin A}{a}
+```
 
 **Read it aloud:** the sine of the ship's angle is the baseline times the sine of A, over the range.
 
-A sine between 0 and 1 belongs to two angles under 180°: the one from 0° to 90° that the inverse sine, $\arcsin$, returns ([Inverse trig](05-inverse-trig-and-solving-equations.md)), and its mirror, 180° minus that. Each stands only if it leaves a positive angle at B. With $d = c \sin A$, B's square-on distance to A's sightline, and A below 90°:
+A sine between 0 and 1 belongs to two angles under 180°: the one from 0° to 90° that the inverse sine, $`\arcsin`$, returns ([Inverse trig](05-inverse-trig-and-solving-equations.md)), and its mirror, 180° minus that. Each stands only if it leaves a positive angle at B. With $`d = c \sin A`$, B's square-on distance to A's sightline, and A below 90°:
 
 | Range from B | Triangles | In the fog, d = 5.00 km |
 | --- | --- | --- |
@@ -53,14 +57,14 @@ With A at 90° or more, one triangle if the range exceeds c, none otherwise.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $B$, $C$ | lighthouses A and B, the ship, and the angles there | 30°, 105°, 45° | a bigger A or B pushes the ship out |
-| $a$, $b$, $c$ | the sides facing A, B, C | 7.07, 13.66, 10 km | in the fog, a longer range $a$ gives none, one, two, one |
-| $\sin$, $\cos$ | sine and cosine of an angle | sin 30° = 0.5000 | sine rises to 1 at 90°, then falls |
-| $R$ | radius of the circle through the corners | 7.07 km | — |
-| $h$ | the ship's square-on distance from the coast | 6.83 km | — |
-| $d$ | B's square-on distance to A's sightline | 5.00 km | — |
-| $t$, $t_1$, $t_2$ | distance along A's sightline; its two solutions | 3.66, 13.66 km | — |
-| $\arcsin$ | the calculator's angle for a sine; 0° to 90° if the sine is positive | arcsin 0.7071 = 45° | — |
+| $`A`$, $`B`$, $`C`$ | lighthouses A and B, the ship, and the angles there | 30°, 105°, 45° | a bigger A or B pushes the ship out |
+| $`a`$, $`b`$, $`c`$ | the sides facing A, B, C | 7.07, 13.66, 10 km | in the fog, a longer range $`a`$ gives none, one, two, one |
+| $`\sin`$, $`\cos`$ | sine and cosine of an angle | sin 30° = 0.5000 | sine rises to 1 at 90°, then falls |
+| $`R`$ | radius of the circle through the corners | 7.07 km | — |
+| $`h`$ | the ship's square-on distance from the coast | 6.83 km | — |
+| $`d`$ | B's square-on distance to A's sightline | 5.00 km | — |
+| $`t`$, $`t_1`$, $`t_2`$ | distance along A's sightline; its two solutions | 3.66, 13.66 km | — |
+| $`\arcsin`$ | the calculator's angle for a sine; 0° to 90° if the sine is positive | arcsin 0.7071 = 45° | — |
 
 ### When it holds
 
@@ -74,23 +78,25 @@ With A at 90° or more, one triangle if the range exceeds c, none otherwise.
 
 ### Step 0: one height, measured from both ends
 
-Measure the ship's square-on distance from the coast, $h$, from each lighthouse. From A, $h = b \sin A$. B's angle is past 90°, so its right triangle lies beyond B, with angle 180° − 105° = 75°, which has the same sine: $h = a \sin 75° = a \sin B$. Both give 6.83 km:
+Measure the ship's square-on distance from the coast, $`h`$, from each lighthouse. From A, $`h = b \sin A`$. B's angle is past 90°, so its right triangle lies beyond B, with angle 180° − 105° = 75°, which has the same sine: $`h = a \sin 75° = a \sin B`$. Both give 6.83 km:
 
-$$b \sin A = a \sin B$$
+```math
+b \sin A = a \sin B
+```
 
-Divide by $\sin A$ and by $\sin B$, and the first two ratios are equal. At a corner under 90° the right triangle lies inside and uses the angle itself, so this holds for every triangle.
+Divide by $`\sin A`$ and by $`\sin B`$, and the first two ratios are equal. At a corner under 90° the right triangle lies inside and uses the angle itself, so this holds for every triangle.
 
 ### Step 1: a second height gives the third ratio
 
-The height from B onto A's sightline is $c \sin A$ from A and $a \sin C$ from the ship, so $a / \sin A = c / \sin C$. It is 5.00 km, the fog's $d$.
+The height from B onto A's sightline is $`c \sin A`$ from A and $`a \sin C`$ from the ship, so $`a / \sin A = c / \sin C`$. It is 5.00 km, the fog's $`d`$.
 
 ### Step 2: the common ratio is a diameter
 
 Three corners not in a line lie on one circle: the square-on lines through the midpoints of two sides cross at a point equally far from all three.
 
-Draw the diameter from A to E. A diameter is seen at a right angle from its circle ([Angles at a circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)), so triangle A, B, E is right-angled at B and its angle at E has sine $c / 2R$.
+Draw the diameter from A to E. A diameter is seen at a right angle from its circle ([Angles at a circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)), so triangle A, B, E is right-angled at B and its angle at E has sine $`c / 2R`$.
 
-E and the ship see the baseline at equal angles from the same arc, or at angles adding to 180° from opposite arcs; the sines match, so $c / \sin C = 2R$. (If the baseline is a diameter, the ship's angle is 90° and $c = 2R$ at once.)
+E and the ship see the baseline at equal angles from the same arc, or at angles adding to 180° from opposite arcs; the sines match, so $`c / \sin C = 2R`$. (If the baseline is a diameter, the ship's angle is 90° and $`c = 2R`$ at once.)
 
 With A at (0, 0) and B at (10, 0) in km, the centre is (5.00, 5.00): diameter 14.1421 km.
 
@@ -106,26 +112,28 @@ Drawn at 1 km = 19 units. B's dotted square-on line lands midway between the two
 
 ### Step 4: SSA, a circle crossing a line
 
-In the fog the sines give 45° or 135° at the ship, leaving 105° or 15° at B. The grid shows both are real. The point $t$ km out along A's sightline sits at ($t \cos A$, $t \sin A$). By Pythagoras and $\cos^2 A + \sin^2 A = 1$ ([Trig identities](03-trig-identities.md)), its distance from B equals the range when
+In the fog the sines give 45° or 135° at the ship, leaving 105° or 15° at B. The grid shows both are real. The point $`t`$ km out along A's sightline sits at ($`t \cos A`$, $`t \sin A`$). By Pythagoras and $`\cos^2 A + \sin^2 A = 1`$ ([Trig identities](03-trig-identities.md)), its distance from B equals the range when
 
-$$t^2 - 2ct\cos A + c^2 - a^2 = 0$$
+```math
+t^2 - 2ct\cos A + c^2 - a^2 = 0
+```
 
-that is, $(t - c\cos A)^2 = a^2 - d^2$, so $t = c\cos A \pm \sqrt{a^2 - d^2}$; for the fog's range, 8.66 km plus or minus 5.00 km. A range under $d$ puts a negative number under the root: no crossing. Only $t$ above 0 is a ship.
+that is, $`(t - c\cos A)^2 = a^2 - d^2`$, so $`t = c\cos A \pm \sqrt{a^2 - d^2}`$; for the fog's range, 8.66 km plus or minus 5.00 km. A range under $`d`$ puts a negative number under the root: no crossing. Only $`t`$ above 0 is a ship.
 
 <details>
 <summary>Detailed proof: none, one or two</summary>
 
-Call the crossings $t_1$ and $t_2$. The quadratic is $(t - t_1)(t - t_2)$; multiplying out shows they add to $2c\cos A$ and multiply to $c^2 - a^2$.
+Call the crossings $`t_1`$ and $`t_2`$. The quadratic is $`(t - t_1)(t - t_2)`$; multiplying out shows they add to $`2c\cos A`$ and multiply to $`c^2 - a^2`$.
 
 - **Range under d:** no crossing.
-- **A below 90°, range d:** one crossing, $t = c\cos A$, where B's line meets the sightline square on: a right angle at the ship.
+- **A below 90°, range d:** one crossing, $`t = c\cos A`$, where B's line meets the sightline square on: a right angle at the ship.
 - **A below 90°, range between d and c:** sum and product positive, so both crossings lie ahead.
 - **A below 90°, range c or more:** product zero or negative, so exactly one lies ahead.
 - **A at 90° or more:** the sum is not positive, so a crossing lies ahead only when the product is negative, a range over c; then exactly one does.
 
 </details>
 
-At corner A, with $b$ unknown, the law of cosines ([Law of cosines](06-law-of-cosines.md)) is this quadratic, with $b$ for $t$.
+At corner A, with $`b`$ unknown, the law of cosines ([Law of cosines](06-law-of-cosines.md)) is this quadratic, with $`b`$ for $`t`$.
 
 ---
 

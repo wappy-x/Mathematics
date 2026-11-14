@@ -37,31 +37,39 @@ Orange: strike $100. It falls all the way, so each price on it belongs to one vo
 
 Notation first, in words:
 
-- $V$ is the quoted price of the cash digital that pays $1 above the strike.
-- $D = e^{-rT}$ is the discount factor, today's value of $1 paid at expiry.
-- $F$ is the forward price, $S e^{(r-q)T}$: the price agreed today for delivery of one share at expiry.
-- $w = \sigma\sqrt{T}$ is the total volatility, the spread of Acme's log-price (the natural log of its price) over the whole life of the contract.
-- $N(x)$ is the area under the standard bell curve left of $x$, and $N^{-1}$ runs it backwards: the point with a given area to its left, the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+- $`V`$ is the quoted price of the cash digital that pays $1 above the strike.
+- $`D = e^{-rT}`$ is the discount factor, today's value of $1 paid at expiry.
+- $`F`$ is the forward price, $`S e^{(r-q)T}`$: the price agreed today for delivery of one share at expiry.
+- $`w = \sigma\sqrt{T}`$ is the total volatility, the spread of Acme's log-price (the natural log of its price) over the whole life of the contract.
+- $`N(x)`$ is the area under the standard bell curve left of $`x`$, and $`N^{-1}`$ runs it backwards: the point with a given area to its left, the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
 
 The price, from the cash-digital card:
 
-$$V = D\,N(d_2), \qquad d_2 = \frac{\ln(F/K) - \tfrac12 w^2}{w}$$
+```math
+V = D\,N(d_2), \qquad d_2 = \frac{\ln(F/K) - \tfrac12 w^2}{w}
+```
 
 Both inverses start the same way. Divide by the discount and look up the quantile:
 
-$$y = \frac{V}{D}, \qquad z = N^{-1}(y)$$
+```math
+y = \frac{V}{D}, \qquad z = N^{-1}(y)
+```
 
 **Read it aloud:** strip the discount off the price to get the chance of finishing above the strike in the pricing world (where Acme drifts at the riskless rate less the dividend). Then find where that chance sits on the bell curve.
 
-Then $d_2 = z$ is one equation. Solved for the strike:
+Then $`d_2 = z`$ is one equation. Solved for the strike:
 
-$$K = F\,\exp\!\big(-w z - \tfrac12 w^2\big)$$
+```math
+K = F\,\exp\!\big(-w z - \tfrac12 w^2\big)
+```
 
-**Read it aloud:** start at the forward, step down by $z$ spreads, and step down half a spread squared more.
+**Read it aloud:** start at the forward, step down by $`z`$ spreads, and step down half a spread squared more.
 
-Solved for the volatility, with $m = \ln(F/K)$:
+Solved for the volatility, with $`m = \ln(F/K)`$:
 
-$$w^2 + 2 z w - 2m = 0, \qquad w = -z \pm \sqrt{z^2 + 2m}, \qquad \sigma = w/\sqrt{T}$$
+```math
+w^2 + 2 z w - 2m = 0, \qquad w = -z \pm \sqrt{z^2 + 2m}, \qquad \sigma = w/\sqrt{T}
+```
 
 **Read it aloud:** the quote and the strike fix a quadratic in the total volatility; its positive roots are the answers, and there may be one, two or none.
 
@@ -69,32 +77,32 @@ Which it is depends on where the strike sits against the forward:
 
 | Strike against forward | Quotes with an answer | Volatilities |
 | --- | --- | --- |
-| below, $m > 0$ | every quote between 0 and $D$ | exactly one |
-| at, $m = 0$ | quotes below $D/2$ | exactly one |
-| above, $m < 0$ | quotes below $D\,N(-k)$, with $k = \sqrt{-2m}$ | two |
-| above, $m < 0$ | the quote $D\,N(-k)$ itself | one, $w = k$ |
+| below, $`m > 0`$ | every quote between 0 and $`D`$ | exactly one |
+| at, $`m = 0`$ | quotes below $`D/2`$ | exactly one |
+| above, $`m < 0`$ | quotes below $`D\,N(-k)`$, with $`k = \sqrt{-2m}`$ | two |
+| above, $`m < 0`$ | the quote $`D\,N(-k)`$ itself | one, $`w = k`$ |
 | any | every other quote | none |
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | quoted price of the $1 cash digital | $0.494581 | strike falls; volatility falls at $K = 100$ |
-| $D$ | discount factor $e^{-rT}$: $1 at expiry, valued today | 0.951229 | the ceiling on every quote rises |
-| $S$, $r$, $q$, $T$ | spot, riskless rate, dividend yield, years to expiry | 100, 5%, 2%, 1 | through $F$ and $D$ |
-| $F$ | forward price $S e^{(r-q)T}$ | $103.05 | strike rises with it |
-| $K$ | strike: the level Acme must finish above | $100, or $110 | above $F$: two volatilities or none |
-| $\sigma$, $w$ | volatility per year (say "sigma"); total volatility $\sigma\sqrt{T}$ | 20%; 0.20 | (the answer) |
-| $y$ | normalised quote $V/D$: the pricing-world chance of finishing above $K$ | 0.519939 | $z$ rises |
-| $z$ | the quantile $N^{-1}(y)$ | 0.05 | strike falls |
-| $d_2$, $d_1$ | $d_2$: the cash digital's bell-curve point; $d_1 = d_2 + w$: the asset digital's, zero where the cash price turns | $d_2 = 0.05$ at the answer | |
-| $m$ | log-moneyness $\ln(F/K)$: positive when the strike is below the forward | 0.03 | more quotes have one answer |
-| $k$ | turning volatility $\sqrt{-2m}$, only when $m < 0$ | 0.361414 at $K = 110$ | the top quote falls |
-| $N(x)$, $N^{-1}(p)$ | bell-curve area left of $x$; the point with a given area to its left | $N^{-1}(0.519939) = 0.05$ | |
+| $`V`$ | quoted price of the $1 cash digital | $0.494581 | strike falls; volatility falls at $`K = 100`$ |
+| $`D`$ | discount factor $`e^{-rT}`$: $1 at expiry, valued today | 0.951229 | the ceiling on every quote rises |
+| $`S`$, $`r`$, $`q`$, $`T`$ | spot, riskless rate, dividend yield, years to expiry | 100, 5%, 2%, 1 | through $`F`$ and $`D`$ |
+| $`F`$ | forward price $`S e^{(r-q)T}`$ | $103.05 | strike rises with it |
+| $`K`$ | strike: the level Acme must finish above | $100, or $110 | above $`F`$: two volatilities or none |
+| $`\sigma`$, $`w`$ | volatility per year (say "sigma"); total volatility $`\sigma\sqrt{T}`$ | 20%; 0.20 | (the answer) |
+| $`y`$ | normalised quote $`V/D`$: the pricing-world chance of finishing above $`K`$ | 0.519939 | $`z`$ rises |
+| $`z`$ | the quantile $`N^{-1}(y)`$ | 0.05 | strike falls |
+| $`d_2`$, $`d_1`$ | $`d_2`$: the cash digital's bell-curve point; $`d_1 = d_2 + w`$: the asset digital's, zero where the cash price turns | $`d_2 = 0.05`$ at the answer | |
+| $`m`$ | log-moneyness $`\ln(F/K)`$: positive when the strike is below the forward | 0.03 | more quotes have one answer |
+| $`k`$ | turning volatility $`\sqrt{-2m}`$, only when $`m < 0`$ | 0.361414 at $`K = 110`$ | the top quote falls |
+| $`N(x)`$, $`N^{-1}(p)`$ | bell-curve area left of $`x`$; the point with a given area to its left | $`N^{-1}(0.519939) = 0.05`$ | |
 
 ### When it holds
 
-- **One flat volatility.** The inverse assumes Black-Scholes: Acme's log-price is bell-shaped with one $\sigma$. A market digital is priced off the smile (a different implied volatility at each strike), which adds a slope term ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)). The volatility backed out of a market digital is then a quoting device, not the vanilla (ordinary call or put) implied volatility at that strike.
+- **One flat volatility.** The inverse assumes Black-Scholes: Acme's log-price is bell-shaped with one $`\sigma`$. A market digital is priced off the smile (a different implied volatility at each strike), which adds a slope term ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)). The volatility backed out of a market digital is then a quoting device, not the vanilla (ordinary call or put) implied volatility at that strike.
 - **A cash payment at expiry, checked once.** The contract pays a fixed dollar amount if Acme is above the strike on the last day. A touch contract, which pays if Acme reaches the level at any time, has a different price formula and a different inverse.
-- **A quote strictly between 0 and $D$.** A quote of 0 or less, or of $D$ or more, has no strike and no finite positive volatility: a digital cannot be worth less than nothing or more than the discounted dollar it might pay.
+- **A quote strictly between 0 and $`D`$.** A quote of 0 or less, or of $`D`$ or more, has no strike and no finite positive volatility: a digital cannot be worth less than nothing or more than the discounted dollar it might pay.
 - **Every other input known.** The strike inverse needs the volatility; the volatility inverse needs the strike. A quote alone cannot fix both.
 
 ---
@@ -103,73 +111,75 @@ Which it is depends on where the strike sits against the forward:
 
 ### Step 0: a price is one point on the bell curve
 
-A cash digital pays $1 or nothing. Its price is the discounted chance of the $1, counted in the pricing world, where Acme drifts at the riskless rate less the dividend. Divide out the discount and a chance remains, $y$. The bell curve has exactly one point with that much area to its left, $z$. So a quote in dollars carries one number, $z$, and the price formula says $d_2 = z$.
+A cash digital pays $1 or nothing. Its price is the discounted chance of the $1, counted in the pricing world, where Acme drifts at the riskless rate less the dividend. Divide out the discount and a chance remains, $`y`$. The bell curve has exactly one point with that much area to its left, $`z`$. So a quote in dollars carries one number, $`z`$, and the price formula says $`d_2 = z`$.
 
 Both inverses solve that single equation, once for the strike and once for the volatility. The order on every inverse card is the same: existence, uniqueness, boundaries, then the solve.
 
 ### Step 1: the strike, always one
 
-Hold the volatility fixed and raise the strike. $\ln(F/K)$ falls, so $d_2$ falls. It falls from plus infinity at a strike near zero to minus infinity at a huge strike, without jumps. So the price $D\,N(d_2)$ slides from $D$ down to 0, and hits every level in between exactly once. A quote strictly between 0 and $D$ therefore names one strike; any other quote names none.
+Hold the volatility fixed and raise the strike. $`\ln(F/K)`$ falls, so $`d_2`$ falls. It falls from plus infinity at a strike near zero to minus infinity at a huge strike, without jumps. So the price $`D\,N(d_2)`$ slides from $`D`$ down to 0, and hits every level in between exactly once. A quote strictly between 0 and $`D`$ therefore names one strike; any other quote names none.
 
-The solve peels $d_2 = z$ open. Multiply by $w$: $\ln(F/K) - \tfrac12 w^2 = w z$. Rearrange: $\ln(K/F) = -w z - \tfrac12 w^2$. Exponentiate. For the house quote, $z = 0.05$ and $w = 0.20$, so $\ln(K/F) = -0.01 - 0.02 = -0.03$, and $K = 103.05 \times e^{-0.03} = \$100$.
+The solve peels $`d_2 = z`$ open. Multiply by $`w`$: $`\ln(F/K) - \tfrac12 w^2 = w z`$. Rearrange: $`\ln(K/F) = -w z - \tfrac12 w^2`$. Exponentiate. For the house quote, $`z = 0.05`$ and $`w = 0.20`$, so $`\ln(K/F) = -0.01 - 0.02 = -0.03`$, and $`K = 103.05 \times e^{-0.03} = \$100`$.
 
-A digital put, which pays $1 below the strike, is the other half: call plus put pays $1 in every outcome, so the two prices sum to $D$. A put quote enters as one minus the put's price over $D$, and runs the same line. The house put, $0.456648, gives back the $100 strike.
+A digital put, which pays $1 below the strike, is the other half: call plus put pays $1 in every outcome, so the two prices sum to $`D`$. A put quote enters as one minus the put's price over $`D`$, and runs the same line. The house put, $0.456648, gives back the $100 strike.
 
 ### Step 2: the volatility, as a quadratic
 
-Now hold the strike fixed and ask about $w$. Written with $m = \ln(F/K)$, the equation $d_2 = z$ reads
+Now hold the strike fixed and ask about $`w`$. Written with $`m = \ln(F/K)`$, the equation $`d_2 = z`$ reads
 
-$$\frac{m}{w} - \frac{w}{2} = z.$$
+```math
+\frac{m}{w} - \frac{w}{2} = z.
+```
 
-Multiply both sides by $w$ and move everything to one side: $w^2 + 2 z w - 2m = 0$. That multiplication is safe only because $w$ is positive; a negative root of the quadratic solves the multiplied equation but is not a volatility. The quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) gives $w = -z \pm \sqrt{z^2 + 2m}$.
+Multiply both sides by $`w`$ and move everything to one side: $`w^2 + 2 z w - 2m = 0`$. That multiplication is safe only because $`w`$ is positive; a negative root of the quadratic solves the multiplied equation but is not a volatility. The quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) gives $`w = -z \pm \sqrt{z^2 + 2m}`$.
 
-For the house: $z = 0.05$, $m = 0.03$, so $w^2 + 0.1\,w - 0.06 = 0$. The roots are $0.20$ and $-0.30$. Only $0.20$ is a volatility.
+For the house: $`z = 0.05`$, $`m = 0.03`$, so $`w^2 + 0.1\,w - 0.06 = 0`$. The roots are $`0.20`$ and $`-0.30`$. Only $`0.20`$ is a volatility.
 
 ### Step 3: count the positive roots without solving
 
-Two facts hold for any quadratic that starts with $w^2$: its roots multiply to the constant term and add to minus the coefficient of $w$. Here they multiply to $-2m$ and add to $-2z$. That settles every case.
+Two facts hold for any quadratic that starts with $`w^2`$: its roots multiply to the constant term and add to minus the coefficient of $`w`$. Here they multiply to $`-2m`$ and add to $`-2z`$. That settles every case.
 
-- **Strike below the forward, $m > 0$.** The product $-2m$ is negative, so one root is positive and one negative, whatever the quote. Exactly one volatility.
-- **Strike at the forward, $m = 0$.** The roots are $0$ and $-2z$. Zero is not a volatility. The other is positive only when $z < 0$, which means $y < \tfrac12$: the quote must be below $D/2 = 0.475615$.
-- **Strike above the forward, $m < 0$.** The product is positive, so the roots share a sign. They add to $-2z$, so both are positive only when $z < 0$. They are real only when $z^2 \ge -2m$. Together: $z \le -k$ with $k = \sqrt{-2m}$. Strictly below gives two volatilities; equality gives one, $w = k$; above gives none.
+- **Strike below the forward, $`m > 0`$.** The product $`-2m`$ is negative, so one root is positive and one negative, whatever the quote. Exactly one volatility.
+- **Strike at the forward, $`m = 0`$.** The roots are $`0`$ and $`-2z`$. Zero is not a volatility. The other is positive only when $`z < 0`$, which means $`y < \tfrac12`$: the quote must be below $`D/2 = 0.475615`$.
+- **Strike above the forward, $`m < 0`$.** The product is positive, so the roots share a sign. They add to $`-2z`$, so both are positive only when $`z < 0`$. They are real only when $`z^2 \ge -2m`$. Together: $`z \le -k`$ with $`k = \sqrt{-2m}`$. Strictly below gives two volatilities; equality gives one, $`w = k`$; above gives none.
 
-At $K = 110$, $m = 0.03 - \ln 1.1 = -0.065310$, so $k = 0.361414$. The top quote is $D\,N(-k) = 0.341391$, or 34.14 cents. The 20-percent quote of 31.85 cents has $z = -0.426551$, below $-k$, so it has two roots. They multiply to $-2m = 0.130620$; one is $0.20$, so the other is $0.130620 / 0.20 = 0.653102$.
+At $`K = 110`$, $`m = 0.03 - \ln 1.1 = -0.065310`$, so $`k = 0.361414`$. The top quote is $`D\,N(-k) = 0.341391`$, or 34.14 cents. The 20-percent quote of 31.85 cents has $`z = -0.426551`$, below $`-k`$, so it has two roots. They multiply to $`-2m = 0.130620`$; one is $`0.20`$, so the other is $`0.130620 / 0.20 = 0.653102`$.
 
-The picture below plots the left side of the equation, $m/w - w/2$, against $w$. A quote is a horizontal line at its $z$. Each crossing is a volatility.
+The picture below plots the left side of the equation, $`m/w - w/2`$, against $`w`$. A quote is a horizontal line at its $`z`$. Each crossing is a volatility.
 
 <p align="center"><img src="../figures/digital-inverses-vol-and-strike.svg" alt="The normal point z = m/w - w/2 against total volatility w, for strike 100 (one crossing) and strike 110 (a peak and two crossings)" width="560"></p>
 
-Dotted curve: $K = 100$, falling all the way; the dashed line at $z = 0.05$ crosses it once, at $w = 0.20$. Solid curve: $K = 110$, rising to a peak of $-0.3614$ at $w = 0.3614$ (open circle), then falling. The dashed line at $z = -0.4266$ crosses it twice, at $0.20$ and $0.6531$. Any quote line above the peak misses it.
+Dotted curve: $`K = 100`$, falling all the way; the dashed line at $`z = 0.05`$ crosses it once, at $`w = 0.20`$. Solid curve: $`K = 110`$, rising to a peak of $`-0.3614`$ at $`w = 0.3614`$ (open circle), then falling. The dashed line at $`z = -0.4266`$ crosses it twice, at $`0.20`$ and $`0.6531`$. Any quote line above the peak misses it.
 
 <details>
 <summary>Detailed proof</summary>
 
-Fix $F, K, T > 0$ and let $g(w) = m/w - w/2$ on $w > 0$, with $m = \ln(F/K)$. The price is $V(w) = D\,N(g(w))$ and $N$ is continuous and strictly increasing, so the roots of $V(w) = V$ are the roots of $g(w) = z$, $z = N^{-1}(V/D)$, which exists and is unique for $0 < V < D$.
+Fix $`F, K, T > 0`$ and let $`g(w) = m/w - w/2`$ on $`w > 0`$, with $`m = \ln(F/K)`$. The price is $`V(w) = D\,N(g(w))`$ and $`N`$ is continuous and strictly increasing, so the roots of $`V(w) = V`$ are the roots of $`g(w) = z`$, $`z = N^{-1}(V/D)`$, which exists and is unique for $`0 < V < D`$.
 
-*Case $m > 0$.* $g'(w) = -m/w^2 - \tfrac12 < 0$, so $g(w)$ is strictly decreasing. As $w \to 0^+$, $g \to +\infty$; as $w \to \infty$, $g \to -\infty$. By the intermediate value theorem every real $z$ is hit, and strict decrease makes the hit unique.
+*Case $`m > 0`$.* $`g'(w) = -m/w^2 - \tfrac12 < 0`$, so $`g(w)`$ is strictly decreasing. As $`w \to 0^+`$, $`g \to +\infty`$; as $`w \to \infty`$, $`g \to -\infty`$. By the intermediate value theorem every real $`z`$ is hit, and strict decrease makes the hit unique.
 
-*Case $m = 0$.* $g(w) = -w/2$, strictly decreasing from $0$ to $-\infty$. It hits $z$ once when $z < 0$, never when $z \ge 0$.
+*Case $`m = 0`$.* $`g(w) = -w/2`$, strictly decreasing from $`0`$ to $`-\infty`$. It hits $`z`$ once when $`z < 0`$, never when $`z \ge 0`$.
 
-*Case $m < 0$.* Write $k = \sqrt{-2m}$. $g'(w) = -m/w^2 - \tfrac12$ is positive for $w < k$, zero at $w = k$, negative after. So $g(w)$ rises strictly on $(0, k]$ and falls strictly on $[k, \infty)$. Both ends tend to $-\infty$. The top is $g(k) = -k^2/(2k) - k/2 = -k$. Each strictly monotone branch covers $(-\infty, -k)$ once, giving two roots for $z < -k$, the single point $w = k$ for $z = -k$, none for $z > -k$.
+*Case $`m < 0`$.* Write $`k = \sqrt{-2m}`$. $`g'(w) = -m/w^2 - \tfrac12`$ is positive for $`w < k`$, zero at $`w = k`$, negative after. So $`g(w)`$ rises strictly on $`(0, k]`$ and falls strictly on $`[k, \infty)`$. Both ends tend to $`-\infty`$. The top is $`g(k) = -k^2/(2k) - k/2 = -k`$. Each strictly monotone branch covers $`(-\infty, -k)`$ once, giving two roots for $`z < -k`$, the single point $`w = k`$ for $`z = -k`$, none for $`z > -k`$.
 
-*Match with the quadratic.* For $w > 0$, $g(w) = z$ if and only if $w^2 + 2zw - 2m = 0$. So the positive roots of the quadratic are exactly the volatilities, and the counts above agree with Step 3's product-and-sum argument, which reaches them without calculus.
+*Match with the quadratic.* For $`w > 0`$, $`g(w) = z`$ if and only if $`w^2 + 2zw - 2m = 0`$. So the positive roots of the quadratic are exactly the volatilities, and the counts above agree with Step 3's product-and-sum argument, which reaches them without calculus.
 
 </details>
 
 ### Step 4: why a far strike makes the price turn
 
-The turn at $w = k$ has a plain meaning. Raising volatility does two things to a digital struck above the forward.
+The turn at $`w = k`$ has a plain meaning. Raising volatility does two things to a digital struck above the forward.
 
-It widens the spread of outcomes, which puts more weight far up, past the strike. It also pulls the typical outcome down: in the pricing world the average of Acme's final price is fixed at $F$, so a wider spread must drag the middle outcome (the median, $F e^{-w^2/2}$) lower to hold that average. At low volatility the first effect wins and the price rises. At high volatility the second wins and the price falls.
+It widens the spread of outcomes, which puts more weight far up, past the strike. It also pulls the typical outcome down: in the pricing world the average of Acme's final price is fixed at $`F`$, so a wider spread must drag the middle outcome (the median, $`F e^{-w^2/2}`$) lower to hold that average. At low volatility the first effect wins and the price rises. At high volatility the second wins and the price falls.
 
-The balance point is $w = k$, where $-2m = w^2$, which is the same as $\ln(F/K) + \tfrac12 w^2 = 0$: that is $d_1 = 0$. So a cash digital's sensitivity to volatility changes sign exactly where $d_1$ crosses zero ([Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md)). At 20 percent that happens at $K = F e^{w^2/2} = \$105.13$.
+The balance point is $`w = k`$, where $`-2m = w^2`$, which is the same as $`\ln(F/K) + \tfrac12 w^2 = 0`$: that is $`d_1 = 0`$. So a cash digital's sensitivity to volatility changes sign exactly where $`d_1`$ crosses zero ([Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md)). At 20 percent that happens at $`K = F e^{w^2/2} = \$105.13`$.
 
 A vanilla call has no such turn. Its price rises with volatility at every strike, so its implied volatility is always unique ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)). The digital loses that because it pays a capped $1: more spread cannot keep adding value when the payout does not grow.
 
 <details>
 <summary>The asset-or-nothing version</summary>
 
-An asset digital pays one Acme share above the strike ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Its price is $S e^{-qT} N(d_1)$, so the normaliser is $S e^{-qT}$, and $d_1 = m/w + w/2$ leads to $w^2 - 2zw + 2m = 0$. The same product-and-sum argument flips the picture: one volatility when the strike is above the forward, two possible when it is below. The strike inverse stays unique: $K = F\exp(-wz + \tfrac12 w^2)$.
+An asset digital pays one Acme share above the strike ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Its price is $`S e^{-qT} N(d_1)`$, so the normaliser is $`S e^{-qT}`$, and $`d_1 = m/w + w/2`$ leads to $`w^2 - 2zw + 2m = 0`$. The same product-and-sum argument flips the picture: one volatility when the strike is above the forward, two possible when it is below. The strike inverse stays unique: $`K = F\exp(-wz + \tfrac12 w^2)`$.
 
 </details>
 
@@ -179,44 +189,44 @@ The other road needs no algebra at all: walk the volatility up in small steps, w
 
 ## Worked numbers, by hand
 
-House market: $S = 100$, $r = 5\%$, $q = 2\%$, $T = 1$. Quote: the $100-strike cash digital at $0.494581.
+House market: $`S = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`T = 1`$. Quote: the $100-strike cash digital at $0.494581.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| discount $D$ | $e^{-0.05}$ | $0.951229$ |
-| forward $F$ | $100 \times e^{0.03}$ | $\$103.05$ |
-| normalised quote $y$ | $0.494581 / 0.951229$ | $0.519939$ |
-| quantile $z$ | $N^{-1}(0.519939)$ | $0.05$ |
-| moneyness $m$ | $\ln(103.05/100)$ | $0.03$ |
-| quadratic | $w^2 + 0.1\,w - 0.06 = 0$ | roots $0.20$, $-0.30$ |
-| roots multiply to $-2m$ | $-0.06$: one positive, one negative | one volatility |
-| **volatility** | the positive root, over $\sqrt{1}$ | **20%** |
-| strike at 20%, the other way | $103.05 \times e^{-0.2 \times 0.05 - 0.02}$ | **$\$100$** |
+| discount $`D`$ | $`e^{-0.05}`$ | $`0.951229`$ |
+| forward $`F`$ | $`100 \times e^{0.03}`$ | $`\$103.05`$ |
+| normalised quote $`y`$ | $`0.494581 / 0.951229`$ | $`0.519939`$ |
+| quantile $`z`$ | $`N^{-1}(0.519939)`$ | $`0.05`$ |
+| moneyness $`m`$ | $`\ln(103.05/100)`$ | $`0.03`$ |
+| quadratic | $`w^2 + 0.1\,w - 0.06 = 0`$ | roots $`0.20`$, $`-0.30`$ |
+| roots multiply to $`-2m`$ | $`-0.06`$: one positive, one negative | one volatility |
+| **volatility** | the positive root, over $`\sqrt{1}`$ | **20%** |
+| strike at 20%, the other way | $`103.05 \times e^{-0.2 \times 0.05 - 0.02}`$ | **$`\$100`$** |
 
 A trader who sees 49.46 cents on this contract and backs out 20 percent knows the digital is priced on the house volatility; no second answer can hide behind the quote.
 
-The same arithmetic at $K = 110$ and 20 percent:
+The same arithmetic at $`K = 110`$ and 20 percent:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| moneyness $m$ | $0.03 - \ln 1.1$ | $-0.065310$ |
-| quote | $D\,N(m/0.2 - 0.1)$ | $0.318522$ |
-| quantile $z$ | $N^{-1}(0.318522/0.951229)$ | $-0.426551$ |
-| turning volatility $k$ | $\sqrt{0.130620}$ | $0.361414$ |
-| is $z < -k$? | $-0.4266 < -0.3614$ | yes: two roots |
-| **volatilities** | $0.426551 \pm \sqrt{0.426551^2 - 0.130620}$ | **20% and 65.31%** |
-| top quote | $D\,N(-0.361414)$ | $0.341391$ |
+| moneyness $`m`$ | $`0.03 - \ln 1.1`$ | $`-0.065310`$ |
+| quote | $`D\,N(m/0.2 - 0.1)`$ | $`0.318522`$ |
+| quantile $`z`$ | $`N^{-1}(0.318522/0.951229)`$ | $`-0.426551`$ |
+| turning volatility $`k`$ | $`\sqrt{0.130620}`$ | $`0.361414`$ |
+| is $`z < -k`$? | $`-0.4266 < -0.3614`$ | yes: two roots |
+| **volatilities** | $`0.426551 \pm \sqrt{0.426551^2 - 0.130620}`$ | **20% and 65.31%** |
+| top quote | $`D\,N(-0.361414)`$ | $`0.341391`$ |
 
 ### What breaks if you drop a piece
 
-Right answers: 20 percent at $K = 100$; strike $100 at 20 percent.
+Right answers: 20 percent at $`K = 100`$; strike $100 at 20 percent.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Take $N^{-1}$ of the price, not of price over $D$ | 25.89% | Treated the discount as 1. The quantile moves from $0.05$ to below zero and the volatility jumps almost six points. |
-| Use $d_1$ (the asset formula) for a cash quote | no real root | $w^2 - 0.1\,w + 0.06$ has $z^2 - 2m < 0$. A correct quote looks impossible. |
+| Take $`N^{-1}`$ of the price, not of price over $`D`$ | 25.89% | Treated the discount as 1. The quantile moves from $`0.05`$ to below zero and the volatility jumps almost six points. |
+| Use $`d_1`$ (the asset formula) for a cash quote | no real root | $`w^2 - 0.1\,w + 0.06`$ has $`z^2 - 2m < 0`$. A correct quote looks impossible. |
 | Spot in place of the forward in the strike | $97.04 | Dropped the 3-percent carry. The strike lands about $3 low. |
-| At $K = 110$, report the root the solver happened to find | 65.31% or 20% | Both reprice 31.85 cents. Without the count the answer is a coin toss. |
+| At $`K = 110`$, report the root the solver happened to find | 65.31% or 20% | Both reprice 31.85 cents. Without the count the answer is a coin toss. |
 
 ---
 
@@ -225,10 +235,10 @@ Right answers: 20 percent at $K = 100$; strike $100 at 20 percent.
 The code builds its own bell-curve area and quantile, then reaches each answer by three independent roads:
 
 - **Road 1** is the closed form: quantile, then the quadratic (solved in the form that avoids subtracting two nearly equal numbers) or the strike line.
-- **Road 2** never inverts anything: it walks volatility from 0.5 percent to 300 percent in one-point steps, flags every sign change of price minus quote, and bisects each; for the strike it bisects on $K$.
-- **Road 3** reprices each answer by adding up thin slices of the bell curve over Acme's log-price at expiry (Simpson's rule), with no $N$ and no $d_2$.
+- **Road 2** never inverts anything: it walks volatility from 0.5 percent to 300 percent in one-point steps, flags every sign change of price minus quote, and bisects each; for the strike it bisects on $`K`$.
+- **Road 3** reprices each answer by adding up thin slices of the bell curve over Acme's log-price at expiry (Simpson's rule), with no $`N`$ and no $`d_2`$.
 
-Two more checks follow. A fine scan of the $K = 110$ curve must top out at $D\,N(-k)$. And roots are counted three ways, by the moneyness rule, by the quadratic and by the scan, over seven quotes spanning every row of the table.
+Two more checks follow. A fine scan of the $`K = 110`$ curve must top out at $`D\,N(-k)`$. And roots are counted three ways, by the moneyness rule, by the quadratic and by the scan, over seven quotes spanning every row of the table.
 
 Python's bell-curve area is the error-function series written out (the error function is the bell-curve area rescaled); Rust's is Simpson's rule under the bell curve. Both cut the area to exactly 0 or 1 beyond five spreads, where it is within 3 in ten million of those values; only the scan's sign test ever goes there.
 
@@ -421,7 +431,7 @@ figure, K 110 peak       w 0.3614  z -0.3614
 ALL CHECKS PASS
 ```
 
-The quadratic, the scan and the integral agree to six decimals at both strikes. The scan finds one crossing at $K = 100$ and two at $K = 110$, which is the table's count reached without the table. The put line prints 99.999982, not 100, because the put quote was typed in to six decimals.
+The quadratic, the scan and the integral agree to six decimals at both strikes. The scan finds one crossing at $`K = 100`$ and two at $`K = 110`$, which is the table's count reached without the table. The put line prints 99.999982, not 100, because the put quote was typed in to six decimals.
 
 ### Rust
 
@@ -649,17 +659,17 @@ The two outputs are identical line for line.
 
 ### Lean
 
-Lean proves both inverses for every positive spot, expiry and strike, and every quote strictly between 0 and $D$.
+Lean proves both inverses for every positive spot, expiry and strike, and every quote strictly between 0 and $`D`$.
 
-- Take a positive volatility. Then exactly one strike reprices the quote: $K = F\,\exp(-w z - \tfrac12 w^2)$.
-- Take a total volatility $w > 0$. Then $m/w - w/2 = z$ holds exactly when $w^2 + 2 z w - 2m = 0$.
-- Suppose the strike is below the forward, $m > 0$. Then exactly one volatility reprices each quote.
-- Suppose the strike is at the forward, $m = 0$. Then quotes below $D/2$ have exactly one volatility, and other quotes have none.
-- Suppose the strike is above the forward, $m < 0$, and $k = \sqrt{-2m}$. Then quotes below $D\,N(-k)$ have two volatilities, and quotes above it have none.
-- Suppose $m < 0$ and the quote equals $D\,N(-k)$. Then its one volatility is $\sigma = k/\sqrt{T}$.
-- Take $z = 0.05$ and $m = 0.03$. Then $w = 0.20$ solves the price equation, and the quadratic's roots are $0.20$ and $-0.30$.
+- Take a positive volatility. Then exactly one strike reprices the quote: $`K = F\,\exp(-w z - \tfrac12 w^2)`$.
+- Take a total volatility $`w > 0`$. Then $`m/w - w/2 = z`$ holds exactly when $`w^2 + 2 z w - 2m = 0`$.
+- Suppose the strike is below the forward, $`m > 0`$. Then exactly one volatility reprices each quote.
+- Suppose the strike is at the forward, $`m = 0`$. Then quotes below $`D/2`$ have exactly one volatility, and other quotes have none.
+- Suppose the strike is above the forward, $`m < 0`$, and $`k = \sqrt{-2m}`$. Then quotes below $`D\,N(-k)`$ have two volatilities, and quotes above it have none.
+- Suppose $`m < 0`$ and the quote equals $`D\,N(-k)`$. Then its one volatility is $`\sigma = k/\sqrt{T}`$.
+- Take $`z = 0.05`$ and $`m = 0.03`$. Then $`w = 0.20`$ solves the price equation, and the quadratic's roots are $`0.20`$ and $`-0.30`$.
 
-The bell-curve values, the $K = 110$ numbers and the turn at $d_1 = 0$ are left to the Python and Rust checks.
+The bell-curve values, the $`K = 110`$ numbers and the turn at $`d_1 = 0`$ are left to the Python and Rust checks.
 
 ```lean
 -- Digital inverses: under Black-Scholes a cash digital's quote strictly between 0 and the discount factor names exactly one strike, given by a closed form, while the number of volatilities it implies is one, two or none according to where the strike sits against the forward.
@@ -1034,22 +1044,22 @@ example : -(1 / 5 : ℚ) * (1 / 20) - (1 / 5) ^ 2 / 2 = -(3 / 100) := by norm_nu
 
 > [!TIP]
 > **Try changing**
-> - **Strike $120 at 20 percent.** Guess first: does the second volatility move nearer to 20 percent or further away? Set `K = 120` in the try row. Further: the second root is 152.32 percent. The roots still multiply to $-2m$, and $m$ is now more negative.
+> - **Strike $120 at 20 percent.** Guess first: does the second volatility move nearer to 20 percent or further away? Set `K = 120` in the try row. Further: the second root is 152.32 percent. The roots still multiply to $`-2m`$, and $`m`$ is now more negative.
 > - **A quote of 25 cents at 20 percent.** Guess first: above or below $110? `strike_closed(0.25, 0.20)` gives $114.68. A cheaper digital must sit further out.
-> - **A quote of 35 cents at $K = 110$.** Guess first: how many volatilities? None: the top quote there is 34.14 cents. The count row for 0.35 prints 0 by all three methods, while 34 cents prints 2.
-> - **Strike at the forward, $103.05.** Guess first: which of 40 and 48 cents has a volatility? Only 40: the ceiling is $D/2 = 47.56$ cents, and the count rows print 1 and 0.
+> - **A quote of 35 cents at $`K = 110`$.** Guess first: how many volatilities? None: the top quote there is 34.14 cents. The count row for 0.35 prints 0 by all three methods, while 34 cents prints 2.
+> - **Strike at the forward, $103.05.** Guess first: which of 40 and 48 cents has a volatility? Only 40: the ceiling is $`D/2 = 47.56`$ cents, and the count rows print 1 and 0.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Treating a digital's implied volatility as unique, the way a vanilla's is.** A vanilla price rises with volatility at every strike, so a solver that converges has found the only answer. A cash digital struck above the forward rises and then falls. At $K = 110$ the quote 31.85 cents is 20 percent and 65.31 percent at once. A solver started low returns one; started high it returns the other. Count the roots from the moneyness table first, then choose the branch on purpose, usually the one nearer the vanilla volatility at that strike.
+> **Treating a digital's implied volatility as unique, the way a vanilla's is.** A vanilla price rises with volatility at every strike, so a solver that converges has found the only answer. A cash digital struck above the forward rises and then falls. At $`K = 110`$ the quote 31.85 cents is 20 percent and 65.31 percent at once. A solver started low returns one; started high it returns the other. Count the roots from the moneyness table first, then choose the branch on purpose, usually the one nearer the vanilla volatility at that strike.
 >
-> - **Dropping the discount.** $N^{-1}(V)$ instead of $N^{-1}(V/D)$ gives 25.89 percent for a 20-percent quote.
-> - **Keeping the negative root.** At $K = 100$ the quadratic also gives $-0.30$. It solves the equation multiplied through by $w$, not the price equation.
-> - **Mixing the cash and asset formulas.** A cash quote run through $d_1$ reports no real root for a perfectly good price.
-> - **Trusting a count near the top.** A quote just under 34.14 cents at $K = 110$ has two nearby roots; a rounding error in the quote can swap two answers for none. Close to the turn, the volatility is poorly determined by the price.
+> - **Dropping the discount.** $`N^{-1}(V)`$ instead of $`N^{-1}(V/D)`$ gives 25.89 percent for a 20-percent quote.
+> - **Keeping the negative root.** At $`K = 100`$ the quadratic also gives $`-0.30`$. It solves the equation multiplied through by $`w`$, not the price equation.
+> - **Mixing the cash and asset formulas.** A cash quote run through $`d_1`$ reports no real root for a perfectly good price.
+> - **Trusting a count near the top.** A quote just under 34.14 cents at $`K = 110`$ has two nearby roots; a rounding error in the quote can swap two answers for none. Close to the turn, the volatility is poorly determined by the price.
 
 ---
 
@@ -1061,16 +1071,16 @@ example : -(1 / 5 : ℚ) * (1 / 20) - (1 / 5) ^ 2 / 2 = -(3 / 100) := by norm_nu
 - **Model validation.** An independent check that a pricing library's digital inverse returns every positive root, and none of the negative ones, is exactly the root count on this card run over a grid of quotes.
 
 > **Say it back**
-> A cash digital's price, divided by the discount, is a chance, and the bell curve turns that chance into one number $z$. The price formula then says $d_2 = z$. Solved for the strike, that gives one answer for every quote between zero and the discounted dollar. Solved for the volatility, it gives a quadratic whose roots multiply to $-2\ln(F/K)$: one positive root when the strike is below the forward, and up to two when it is above, because the price rises and then falls as volatility grows. The turn sits where $d_1 = 0$, and quotes above the top of that turn fit no volatility at all.
+> A cash digital's price, divided by the discount, is a chance, and the bell curve turns that chance into one number $`z`$. The price formula then says $`d_2 = z`$. Solved for the strike, that gives one answer for every quote between zero and the discounted dollar. Solved for the volatility, it gives a quadratic whose roots multiply to $`-2\ln(F/K)`$: one positive root when the strike is below the forward, and up to two when it is above, because the price rises and then falls as volatility grows. The turn sits where $`d_1 = 0`$, and quotes above the top of that turn fit no volatility at all.
 
 ---
 
 ## What this builds on
 
-- [Cash-or-nothing digital](01-cash-or-nothing-digital.md): the price $D\,N(d_2)$ that this card runs backwards.
-- [Asset-or-nothing digital](02-asset-or-nothing-digital.md): the $d_1$ price whose inverse is the mirror image in the fold "The asset-or-nothing version" under Step 4.
+- [Cash-or-nothing digital](01-cash-or-nothing-digital.md): the price $`D\,N(d_2)`$ that this card runs backwards.
+- [Asset-or-nothing digital](02-asset-or-nothing-digital.md): the $`d_1`$ price whose inverse is the mirror image in the fold "The asset-or-nothing version" under Step 4.
 - [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the roots, and the product-and-sum facts that count them without solving.
-- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the unique $z$ behind every quote strictly between 0 and $D$.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the unique $`z`$ behind every quote strictly between 0 and $`D`$.
 
 ---
 
@@ -1079,7 +1089,7 @@ example : -(1 / 5 : ℚ) * (1 / 20) - (1 / 5) ^ 2 / 2 = -(3 / 100) := by norm_nu
 - [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the vanilla inverse, where rising prices make the implied volatility unique at every strike.
 - [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): the market's own volatility at each strike, which a single flat-volatility inverse cannot reproduce.
 
-The question left open is what a single flat volatility cannot say: once the market prices each strike on its own volatility, a digital quote no longer fixes one $\sigma$, and reading it backwards means reading the whole smile.
+The question left open is what a single flat volatility cannot say: once the market prices each strike on its own volatility, a digital quote no longer fixes one $`\sigma`$, and reading it backwards means reading the whole smile.
 
 ---
 
@@ -1087,8 +1097,8 @@ The question left open is what a single flat volatility cannot say: once the mar
 
 Verified 2026-09-24: every link below resolves to the publisher's page for the cited work; DOIs checked against Crossref.
 
-- Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The $N(d_2)$ term, the cash half of the call and the price of the digital on this card.
-- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield, which puts the forward, not spot, into $m$.
+- Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The $`N(d_2)`$ term, the cash half of the call and the price of the digital on this card.
+- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield, which puts the forward, not spot, into $`m`$.
 - Manaster, Steven, and Gary J. Koehler. "The Calculation of Implied Variances from the Black-Scholes Model: A Note." *Journal of Finance* 37, no. 1 (1982): 227–230. [doi:10.1111/j.1540-6261.1982.tb01105.x](https://doi.org/10.1111/j.1540-6261.1982.tb01105.x). Uniqueness of the vanilla implied volatility, the property the digital loses.
 - Haug, Espen Gaarder. *The Complete Guide to Option Pricing Formulas*, 2nd ed. McGraw-Hill, 2007. [Publisher page](https://www.mheducation.com/highered/mhp/product/complete-guide-to-option-pricing-formulas-2e.html). Cash-or-nothing and asset-or-nothing formulas with dividend yield, in the form inverted here.
-- Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). Binary options among the exotic options, priced from $N(d_2)$ and $N(d_1)$.
+- Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). Binary options among the exotic options, priced from $`N(d_2)`$ and $`N(d_1)`$.

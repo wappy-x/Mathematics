@@ -34,38 +34,42 @@ The two multipliers are reciprocals: 1.221403 is e raised to 0.20, and 0.818731 
 
 ## The formula
 
-Notation first, in words. A step's length is written $\Delta t$, one symbol for one quantity — a step in years — not two symbols multiplied. A step's *log move* is the amount it adds to the natural logarithm of the share price: an up step adds it, a down step takes it away.
+Notation first, in words. A step's length is written $`\Delta t`$, one symbol for one quantity — a step in years — not two symbols multiplied. A step's *log move* is the amount it adds to the natural logarithm of the share price: an up step adds it, a down step takes it away.
 
-$$u = e^{\sigma\sqrt{\Delta t}}, \qquad d = \frac{1}{u} = e^{-\sigma\sqrt{\Delta t}}, \qquad \Delta t = \frac{T}{n}$$
+```math
+u = e^{\sigma\sqrt{\Delta t}}, \qquad d = \frac{1}{u} = e^{-\sigma\sqrt{\Delta t}}, \qquad \Delta t = \frac{T}{n}
+```
 
 **Read it aloud:** an up step multiplies the share by e raised to the volatility times the square root of the step, and a down step divides by exactly that.
 
-$$p = \frac{e^{(r-q)\Delta t} - d}{u - d}$$
+```math
+p = \frac{e^{(r-q)\Delta t} - d}{u - d}
+```
 
 **Read it aloud:** the weight on the up branch is whatever makes the share's average growth over a step equal the bank's — growth at the riskless rate, the rate money earns with no risk taken — after the dividends that leak out of the price.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100.00 | rises: more share to receive |
-| $K$ | the strike, the price the option may buy at | $100.00 | falls: further to climb before it pays |
-| $T$ | the option's life, in years | 1 | rises: room for a bigger move |
-| $n$ | how many steps the tree is chopped into | 1 to 2,001 | closes on the limit, alternating sides |
-| $\Delta t$ | one step's length, $T$ divided by $n$ | 1 down to 0.0005 | coarser tree, bigger error |
-| $\sigma$ | volatility, the typical size of one year's log move. Say "sigma" | 20% | rises: wider branches, dearer option |
-| $r$ | the riskless rate, continuously compounded | 5% | rises: the $100.00 paid later is worth less now |
-| $q$ | the dividend yield, continuously compounded | 2% | rises: the up weight falls, and so does the price |
-| $e^{-r\Delta t}$ | one step's discount factor: a dollar at the step's end, valued today | 0.951229 on a year-long step | — |
-| $u$ | the up factor, the multiplier on an up step | 1.221403 on a year-long step | — |
-| $d$ | the down factor, one divided by $u$ | 0.818731 on a year-long step | — |
-| $p$ | the weight on the up branch, a pricing weight and not a forecast | 0.525797 on a year-long step | — |
-| $C_n$ | the price the $n$-step tree returns | 9.226034 at 2,000 steps | — |
+| $`S`$ | Acme's price today | $100.00 | rises: more share to receive |
+| $`K`$ | the strike, the price the option may buy at | $100.00 | falls: further to climb before it pays |
+| $`T`$ | the option's life, in years | 1 | rises: room for a bigger move |
+| $`n`$ | how many steps the tree is chopped into | 1 to 2,001 | closes on the limit, alternating sides |
+| $`\Delta t`$ | one step's length, $`T`$ divided by $`n`$ | 1 down to 0.0005 | coarser tree, bigger error |
+| $`\sigma`$ | volatility, the typical size of one year's log move. Say "sigma" | 20% | rises: wider branches, dearer option |
+| $`r`$ | the riskless rate, continuously compounded | 5% | rises: the $100.00 paid later is worth less now |
+| $`q`$ | the dividend yield, continuously compounded | 2% | rises: the up weight falls, and so does the price |
+| $`e^{-r\Delta t}`$ | one step's discount factor: a dollar at the step's end, valued today | 0.951229 on a year-long step | — |
+| $`u`$ | the up factor, the multiplier on an up step | 1.221403 on a year-long step | — |
+| $`d`$ | the down factor, one divided by $`u`$ | 0.818731 on a year-long step | — |
+| $`p`$ | the weight on the up branch, a pricing weight and not a forecast | 0.525797 on a year-long step | — |
+| $`C_n`$ | the price the $`n`$-step tree returns | 9.226034 at 2,000 steps | — |
 
-Because $d$ is one divided by $u$, an up followed by a down lands back where it started: the tree *recombines*, and $n$ steps end in $n + 1$ prices rather than two raised to the $n$. The down branch carries the weight left over, one minus $p$ ([The risk-neutral probability](02-risk-neutral-probability.md)).
+Because $`d`$ is one divided by $`u`$, an up followed by a down lands back where it started: the tree *recombines*, and $`n`$ steps end in $`n + 1`$ prices rather than two raised to the $`n`$. The down branch carries the weight left over, one minus $`p`$ ([The risk-neutral probability](02-risk-neutral-probability.md)).
 
 ### When it holds
 
 - **One fixed volatility for the whole life.** Every branch is sized by the same 20 percent. If Acme's volatility moves, the tree prices a share that does not exist, and no number of steps repairs it.
-- **The weight has to be a weight.** It lands between 0 and 1 only when the bank's one-step growth sits between the two branches, which needs the size of $r - q$ times the square root of $\Delta t$ to stay under $\sigma$. A share with 2 percent volatility on a year-long step fails that: the formula returns 1.256313, and the tree still hands back a number.
+- **The weight has to be a weight.** It lands between 0 and 1 only when the bank's one-step growth sits between the two branches, which needs the size of $`r - q`$ times the square root of $`\Delta t`$ to stay under $`\sigma`$. A share with 2 percent volatility on a year-long step fails that: the formula returns 1.256313, and the tree still hands back a number.
 - **Nothing happens between the nodes.** The payoff is read off the end price, and the holder cannot act early — letting them act is one extra comparison per node, on [Early exercise](05-american-exercise-on-a-tree.md). A dividend paid on a date rather than as a yield knocks the recombination out: [Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md).
 - **Convergence is about the limit, not any one tree.** It certifies no step count, and the section on how the price moves shows why eyeballing a few is dangerous.
 
@@ -81,51 +85,59 @@ A tree cannot be a bell curve; it has finitely many ends. But it can match that 
 
 ### Step 1: the branch size carries the volatility
 
-Set one step's log move to $\sigma\sqrt{\Delta t}$: up adds it, down subtracts it. Spread, from here on, means the average squared distance from the middle. With equal weights the two outcomes sit symmetrically about the middle, so the spread of that move is the size squared, $\sigma^2\Delta t$.
+Set one step's log move to $`\sigma\sqrt{\Delta t}`$: up adds it, down subtracts it. Spread, from here on, means the average squared distance from the middle. With equal weights the two outcomes sit symmetrically about the middle, so the spread of that move is the size squared, $`\sigma^2\Delta t`$.
 
-Spreads of independent moves add, so $n$ steps give $\sigma^2 T$: over Acme's year, 20 percent squared, whatever $n$ is. That is why the square root is there: halve the step and the move shrinks by one over root two, not by half, because it is the *squares* that must add up to the year.
+Spreads of independent moves add, so $`n`$ steps give $`\sigma^2 T`$: over Acme's year, 20 percent squared, whatever $`n`$ is. That is why the square root is there: halve the step and the move shrinks by one over root two, not by half, because it is the *squares* that must add up to the year.
 
 ### Step 2: the weight carries the drift
 
 Now the centre, which this card calls the *drift*: the average log move per year. Demand that the share's average growth over one step equals the bank's growth after dividends leak out:
 
-$$p\,u + (1-p)\,d = e^{(r-q)\Delta t}$$
+```math
+p\,u + (1-p)\,d = e^{(r-q)\Delta t}
+```
 
-One equation, one unknown, and rearranged it is the $p$ from The formula. On a year-long step the bank's growth after dividends is 1.030455, the branches are 1.221403 and 0.818731, and the weight is 0.525797: a hair over a coin flip, and a pricing weight rather than a forecast ([The risk-neutral probability](02-risk-neutral-probability.md)).
+One equation, one unknown, and rearranged it is the $`p`$ from The formula. On a year-long step the bank's growth after dividends is 1.030455, the branches are 1.221403 and 0.818731, and the weight is 0.525797: a hair over a coin flip, and a pricing weight rather than a forecast ([The risk-neutral probability](02-risk-neutral-probability.md)).
 
-The demand holds at the far end too, not only step by step. Averaging the 2,001 end prices of the 2,000-step tree with their weights gives 103.045453. To the last printed digit, that is the forward price — what the share is worth for delivery in a year, $S e^{(r-q)T}$.
+The demand holds at the far end too, not only step by step. Averaging the 2,001 end prices of the 2,000-step tree with their weights gives 103.045453. To the last printed digit, that is the forward price — what the share is worth for delivery in a year, $`S e^{(r-q)T}`$.
 
 ### Step 3: what the two choices actually deliver, per step
 
-The weights are not equal, so Step 1's clean statement is slightly off. With weight $p$ on a move of size $\sigma\sqrt{\Delta t}$, the average log move is that size times $2p - 1$, and the spread is the size squared minus the average squared. Expand both for a small step. The average is $(r - q - \tfrac12\sigma^2)\Delta t$ and the spread $\sigma^2\Delta t$, each off by a remainder the size of $\Delta t$ squared. That is the centre and spread the continuous model asks for, with an error that shrinks faster than the step.
+The weights are not equal, so Step 1's clean statement is slightly off. With weight $`p`$ on a move of size $`\sigma\sqrt{\Delta t}`$, the average log move is that size times $`2p - 1`$, and the spread is the size squared minus the average squared. Expand both for a small step. The average is $`(r - q - \tfrac12\sigma^2)\Delta t`$ and the spread $`\sigma^2\Delta t`$, each off by a remainder the size of $`\Delta t`$ squared. That is the centre and spread the continuous model asks for, with an error that shrinks faster than the step.
 
-On a 10-step tree the checks print a drift per year of 0.010032 against a target of 0.010000, and a spread of 0.999748 of $\sigma^2\Delta t$ against a predicted 0.999750; on a 2,000-step tree both agree to six decimals.
+On a 10-step tree the checks print a drift per year of 0.010032 against a target of 0.010000, and a spread of 0.999748 of $`\sigma^2\Delta t`$ against a predicted 0.999750; on a 2,000-step tree both agree to six decimals.
 
 <details>
 <summary>The algebra behind the expansion, if you want it</summary>
 
 The weight, written out in full, is
-$$p = \frac{e^{(r-q)\Delta t} - e^{-\sigma\sqrt{\Delta t}}}{e^{\sigma\sqrt{\Delta t}} - e^{-\sigma\sqrt{\Delta t}}}.$$
-Expand all three exponentials in powers of the step, remembering that the move squared is $\sigma^2\Delta t$, one order higher than the move. The top is $\sigma\sqrt{\Delta t} + (r - q - \tfrac12\sigma^2)\Delta t + \dots$, the bottom $2\sigma\sqrt{\Delta t} + \tfrac13\sigma^3\Delta t\sqrt{\Delta t} + \dots$. Dividing,
-$$p = \frac12 + \frac{r - q - \tfrac12\sigma^2}{2\sigma}\sqrt{\Delta t} + \dots$$
-Twice the weight minus one is then $(r - q - \tfrac12\sigma^2)\sqrt{\Delta t}/\sigma$, so the average log move is $(r - q - \tfrac12\sigma^2)\Delta t$ plus a remainder of order $\Delta t$ squared. The spread is the move squared minus that average squared, $\sigma^2\Delta t - (r - q - \tfrac12\sigma^2)^2\Delta t^2$: as a fraction of the target, short by $((r - q - \tfrac12\sigma^2)/\sigma)^2\Delta t$, which for Acme is 0.0025 times the step. On a 10-step tree that is 0.000250, the predicted 0.999750 against the 0.999748 measured.
+
+$`\displaystyle p = \frac{e^{(r-q)\Delta t} - e^{-\sigma\sqrt{\Delta t}}}{e^{\sigma\sqrt{\Delta t}} - e^{-\sigma\sqrt{\Delta t}}}.`$
+
+Expand all three exponentials in powers of the step, remembering that the move squared is $`\sigma^2\Delta t`$, one order higher than the move. The top is $`\sigma\sqrt{\Delta t} + (r - q - \tfrac12\sigma^2)\Delta t + \dots`$, the bottom $`2\sigma\sqrt{\Delta t} + \tfrac13\sigma^3\Delta t\sqrt{\Delta t} + \dots`$. Dividing,
+
+$`\displaystyle p = \frac12 + \frac{r - q - \tfrac12\sigma^2}{2\sigma}\sqrt{\Delta t} + \dots`$
+
+Twice the weight minus one is then $`(r - q - \tfrac12\sigma^2)\sqrt{\Delta t}/\sigma`$, so the average log move is $`(r - q - \tfrac12\sigma^2)\Delta t`$ plus a remainder of order $`\Delta t`$ squared. The spread is the move squared minus that average squared, $`\sigma^2\Delta t - (r - q - \tfrac12\sigma^2)^2\Delta t^2`$: as a fraction of the target, short by $`((r - q - \tfrac12\sigma^2)/\sigma)^2\Delta t`$, which for Acme is 0.0025 times the step. On a 10-step tree that is 0.000250, the predicted 0.999750 against the 0.999748 measured.
 
 </details>
 
 ### Step 4: many steps pile up into the bell curve
 
-The log of the end price is a sum of $n$ moves, each up or down by the same amount, each weighted by $p$. Step 3 pinned one move's average and spread, and both add over the $n$ steps: the sum has centre $(r - q - \tfrac12\sigma^2)T$ and spread $\sigma^2 T$, each missed by a remainder that shrinks with the step. At 10 steps the centre is out by 0.000032, a third of a percent of the drift it aims at; at 2,000 steps by nothing the six printed decimals can show.
+The log of the end price is a sum of $`n`$ moves, each up or down by the same amount, each weighted by $`p`$. Step 3 pinned one move's average and spread, and both add over the $`n`$ steps: the sum has centre $`(r - q - \tfrac12\sigma^2)T`$ and spread $`\sigma^2 T`$, each missed by a remainder that shrinks with the step. At 10 steps the centre is out by 0.000032, a third of a percent of the drift it aims at; at 2,000 steps by nothing the six printed decimals can show.
 
-What changes most with $n$ is the shape, and a sum of many two-way moves fills in towards a bell curve ([Normal approximation](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). So the end price stops being 2,001 spikes and becomes the distribution the Black-Scholes formula averages the payoff over: same centre, same spread, same shape, same price.
+What changes most with $`n`$ is the shape, and a sum of many two-way moves fills in towards a bell curve ([Normal approximation](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). So the end price stops being 2,001 spikes and becomes the distribution the Black-Scholes formula averages the payoff over: same centre, same spread, same shape, same price.
 
 <details>
 <summary>Detailed proof: matching the distribution is not quite enough</summary>
 
 Step 4 settles the *distribution* of the end price and says nothing about the *average of the payoff*. Those differ: a payment of a thousand dollars with a chance of one in a thousand shrinks to nothing as a distribution while keeping an average of one dollar. A call's payoff is unbounded, so the gap needs closing.
 
-**A ceiling for every tree at once.** The branches multiply to one, so either branch squared equals the sum of the branches times that branch, minus one. Take weighted averages, using that a branch averages $e^{(r-q)\Delta t}$ by construction: the average squared end price after $n$ steps is
-$$S^2\left((u + d)\,e^{(r-q)\Delta t} - 1\right)^{n}.$$
-The two branches added come to $2 + \sigma^2\Delta t$ plus a smaller remainder, so the bracket is at most one plus a constant times $\Delta t$, the constant built from $\sigma$, $r - q$ and $T$ alone, and that raised to the $n$ is at most e raised to the constant times $T$. Every tree therefore holds its average squared end price under one fixed ceiling.
+**A ceiling for every tree at once.** The branches multiply to one, so either branch squared equals the sum of the branches times that branch, minus one. Take weighted averages, using that a branch averages $`e^{(r-q)\Delta t}`$ by construction: the average squared end price after $`n`$ steps is
+
+$`\displaystyle S^2\left((u + d)\,e^{(r-q)\Delta t} - 1\right)^{n}.`$
+
+The two branches added come to $`2 + \sigma^2\Delta t`$ plus a smaller remainder, so the bracket is at most one plus a constant times $`\Delta t`$, the constant built from $`\sigma`$, $`r - q`$ and $`T`$ alone, and that raised to the $`n`$ is at most e raised to the constant times $`T`$. Every tree therefore holds its average squared end price under one fixed ceiling.
 
 **Cap the payoff.** A payoff capped at a large amount sits between two staircases built from finitely many bets of the form "does the share finish above this level". Convergence of the distribution prices every one of those bets correctly in the limit, so the capped average converges, and shrinking the stair height makes the squeeze exact.
 
@@ -141,18 +153,18 @@ Nothing here proves a *rate*, and nothing says a tree's hedge holdings or exerci
 
 ## Worked numbers, by hand
 
-Acme on a tree: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year. One step first: at a step of a whole year the entire method is four multiplications.
+Acme on a tree: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year. One step first: at a step of a whole year the entire method is four multiplications.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the log move, $0.20 \times \sqrt{1}$ | up factor e raised to 0.2, down factor its reciprocal | 1.221403 and 0.818731 |
-| the two end prices | $100 \times 1.221403$, $100 \times 0.818731$ | 122.140276 and 81.873075 |
-| what the call pays there | $122.140276 - 100$, nothing below | 22.140276 |
-| bank growth after dividends | e raised to $(0.05 - 0.02)$ | 1.030455 |
-| the weight on the up branch | $(1.030455 - 0.818731) / (1.221403 - 0.818731)$ | 0.525797 |
-| one step's discount | e raised to $-0.05$ | 0.951229 |
-| **the one-step price** | $0.951229 \times 0.525797 \times 22.140276$ | **11.073541** |
-| two steps, same recipe | $\Delta t = 0.5$, up factor 1.151910, weight 0.517959 | **8.342293** |
+| the log move, $`0.20 \times \sqrt{1}`$ | up factor e raised to 0.2, down factor its reciprocal | 1.221403 and 0.818731 |
+| the two end prices | $`100 \times 1.221403`$, $`100 \times 0.818731`$ | 122.140276 and 81.873075 |
+| what the call pays there | $`122.140276 - 100`$, nothing below | 22.140276 |
+| bank growth after dividends | e raised to $`(0.05 - 0.02)`$ | 1.030455 |
+| the weight on the up branch | $`(1.030455 - 0.818731) / (1.221403 - 0.818731)`$ | 0.525797 |
+| one step's discount | e raised to $`-0.05`$ | 0.951229 |
+| **the one-step price** | $`0.951229 \times 0.525797 \times 22.140276`$ | **11.073541** |
+| two steps, same recipe | $`\Delta t = 0.5`$, up factor 1.151910, weight 0.517959 | **8.342293** |
 | 2,000 steps, same recipe | by machine | **9.226034** |
 | Black-Scholes, the limit | the continuous price being chased | **9.227006** |
 
@@ -165,7 +177,7 @@ Every line below is a 2,000-step tree with one piece changed. The right answer i
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Dividend left out of the weight | 10.449584 | The share now grows at 5 percent, not 3, so this prices a call on a company that pays nothing out |
-| Move sized $\sigma\Delta t$, not $\sigma\sqrt{\Delta t}$ | 2.896925 | At 2,000 steps the branches are 45 times too narrow; only the discounted forward gain is left |
+| Move sized $`\sigma\Delta t`$, not $`\sigma\sqrt{\Delta t}`$ | 2.896925 | At 2,000 steps the branches are 45 times too narrow; only the discounted forward gain is left |
 | A fair coin, weight 0.5 | 8.651564 | The weight is the only place the drift lives, and a fair coin grows the share at 2 percent |
 | Stopping at 10 steps | 9.035326 | 19 cents low, where 11 steps would have been 17 cents high |
 
@@ -192,7 +204,7 @@ The payoff has a kink at $100.00: flat below, sloping above, and the tree sees t
 
 Acme starts at the strike, and an up followed by a down returns to the start. So an *even* number of steps lands an end node exactly on the kink: the two-step tree ends at 132.689644, 100.000000 and 75.363832. An *odd* number straddles it. Even trees come out below the limit, odd trees above, with no exception in the checks: of every consecutive pair of step counts from 10 to 41, all 31 land on opposite sides.
 
-That gives a free trick. Average the $n$-step price with the $n + 1$-step price and the errors largely cancel: at 2,000 and 2,001 steps the average is 9.226981, an error of -0.000025 against -0.000972 for 2,000 steps alone. Forty times closer, for one extra run.
+That gives a free trick. Average the $`n`$-step price with the $`n + 1`$-step price and the errors largely cancel: at 2,000 and 2,001 steps the average is 9.226981, an error of -0.000025 against -0.000972 for 2,000 steps alone. Forty times closer, for one extra run.
 
 ### Force two: doubling the steps halves the error
 
@@ -208,7 +220,7 @@ steps   distance from 9.227006, one block = 0.001 dollars
  2000   █                                        -0.000972
 ```
 
-Every doubling of the step count halves the distance: the error falls like one over $n$, not one over $n$ squared, which is why 2,000 steps buys three decimal places and not six. It is also why averaging pays, the leading part of the error being the same size on both sides.
+Every doubling of the step count halves the distance: the error falls like one over $`n`$, not one over $`n`$ squared, which is why 2,000 steps buys three decimal places and not six. It is also why averaging pays, the leading part of the error being the same size on both sides.
 
 ### Both forces in one picture
 
@@ -665,11 +677,11 @@ The two outputs match line for line, to the last printed digit.
 
 Lean proves the three general claims for every share meeting their conditions, plus the card's Acme arithmetic.
 
-- Take a share price $S$, strike $K$, volatility $\sigma$ and life $T$, all above zero, and any $r$ and $q$. Then $C_n$ closes on the Black-Scholes price as $n$ grows.
-- Lean writes $C_n$ as one weighted sum over the end prices, the second road in the code.
-- Lean writes the Black-Scholes price as the call's payoff averaged over the bell curve, then discounted by $e^{-rT}$.
-- Take a step $\Delta t$ and a volatility $\sigma$, both above zero. Then $p$ lies strictly between 0 and 1 exactly when the size of $r - q$ times $\sqrt{\Delta t}$ stays under $\sigma$.
-- Take a tree of at least one step, with $\sigma$ and $T$ above zero. Then its end prices, averaged with their weights, give exactly the forward $S e^{(r-q)T}$.
+- Take a share price $`S`$, strike $`K`$, volatility $`\sigma`$ and life $`T`$, all above zero, and any $`r`$ and $`q`$. Then $`C_n`$ closes on the Black-Scholes price as $`n`$ grows.
+- Lean writes $`C_n`$ as one weighted sum over the end prices, the second road in the code.
+- Lean writes the Black-Scholes price as the call's payoff averaged over the bell curve, then discounted by $`e^{-rT}`$.
+- Take a step $`\Delta t`$ and a volatility $`\sigma`$, both above zero. Then $`p`$ lies strictly between 0 and 1 exactly when the size of $`r - q`$ times $`\sqrt{\Delta t}`$ stays under $`\sigma`$.
+- Take a tree of at least one step, with $`\sigma`$ and $`T`$ above zero. Then its end prices, averaged with their weights, give exactly the forward $`S e^{(r-q)T}`$.
 - For Acme, an up step then a down step from 100 lands back on exactly 100.
 - Two steps end in 3 prices, not 4, and 2,000 steps end in 2,001.
 - Acme's drift is exactly 0.01 a year, and its spread falls short by exactly 0.0025 times the step.
@@ -1181,10 +1193,10 @@ example : (Finset.Icc 10 40).card = 31 := by decide
 > [!warning]
 > **Reading a price off a tree that has not arrived.** At 20 steps it is 9.130450, at 21 steps 9.315376: nearly 19 cents apart, both wrong, one on each side. Use a step count in the hundreds at least, or average consecutive counts, and never trust a tree whose answer has not been watched move.
 >
-> - **Treating $u$ and $d$ as forecasts.** They are not where Acme is expected to go, but the pair whose spread matches a 20 percent volatility. A bull and a bear who agree on volatility build the same tree.
-> - **Treating $p$ as the chance of a rise.** It is a pricing weight ([The risk-neutral probability](02-risk-neutral-probability.md)); swap in a fair coin and the same tree returns 8.651564.
-> - **Dropping the dividend yield from the weight.** The growth there is $e^{(r-q)\Delta t}$, not $e^{r\Delta t}$: drop the 2 percent and the answer is 10.449584, a 13 percent overprice with no visible bug.
-> - **Writing the move as $\sigma\Delta t$.** Volatility scales with the square root of time; at 2,000 steps that slip returns 2.896925, the discounted gain on the forward rather than an option price.
+> - **Treating $`u`$ and $`d`$ as forecasts.** They are not where Acme is expected to go, but the pair whose spread matches a 20 percent volatility. A bull and a bear who agree on volatility build the same tree.
+> - **Treating $`p`$ as the chance of a rise.** It is a pricing weight ([The risk-neutral probability](02-risk-neutral-probability.md)); swap in a fair coin and the same tree returns 8.651564.
+> - **Dropping the dividend yield from the weight.** The growth there is $`e^{(r-q)\Delta t}`$, not $`e^{r\Delta t}`$: drop the 2 percent and the answer is 10.449584, a 13 percent overprice with no visible bug.
+> - **Writing the move as $`\sigma\Delta t`$.** Volatility scales with the square root of time; at 2,000 steps that slip returns 2.896925, the discounted gain on the forward rather than an option price.
 
 ---
 

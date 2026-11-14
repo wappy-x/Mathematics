@@ -8,7 +8,7 @@
 
 A fair die is rolled again and again, and the faces are averaged. A single roll is anything from 1 to 6. Its long-run average is 3.5. How many rolls make the average land within 0.1 of 3.5 with probability at least 0.99?
 
-One inequality answers with a number and no simulation: 29,167 rolls. The chance of missing by 0.1 or more is at most 291.67 divided by the number of rolls, and 291.67 / 29,167 is just under 0.01. The guarantee is generous. At that count a sharper inequality puts the chance of a miss below 3.786e-22, that is $3.786 \times 10^{-22}$, and 1,000 simulated runs of 29,167 rolls never miss once. The worst of them lands 0.031388 from 3.5.
+One inequality answers with a number and no simulation: 29,167 rolls. The chance of missing by 0.1 or more is at most 291.67 divided by the number of rolls, and 291.67 / 29,167 is just under 0.01. The guarantee is generous. At that count a sharper inequality puts the chance of a miss below 3.786e-22, that is $`3.786 \times 10^{-22}`$, and 1,000 simulated runs of 29,167 rolls never miss once. The worst of them lands 0.031388 from 3.5.
 
 The probability wing proves this for averages of dice and checks it by simulation ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)). This card proves it for random variables on any probability space, names the one hypothesis the variance proof really needs (no two draws correlated), and proves a second version that needs no variance at all, only a finite mean.
 
@@ -34,51 +34,55 @@ Orange: Chebyshev's ceiling 291.67/n, capped at 1, since no probability exceeds 
 
 ## The formula
 
-Notation, as a reminder. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the collection of sets we allow ourselves to measure (a sigma-algebra), and a measure of total size 1. A random variable is a real function on $\Omega$ measurable with respect to $\mathcal{F}$; its mean $E[X] = \int X \, dP$ is its integral against $P$ ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). The law of a random variable is its distribution: the chance it gives to each set of values.
+Notation, as a reminder. A probability space $`(\Omega, \mathcal{F}, P)`$ is a set of outcomes, the collection of sets we allow ourselves to measure (a sigma-algebra), and a measure of total size 1. A random variable is a real function on $`\Omega`$ measurable with respect to $`\mathcal{F}`$; its mean $`E[X] = \int X \, dP`$ is its integral against $`P`$ ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). The law of a random variable is its distribution: the chance it gives to each set of values.
 
-For the die, $\Omega$ is the set of all infinite sequences of faces, and $P$ is the product measure that gives each of the first n faces probability 1/6 independently; it exists by [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md). The roll $X_i$ reads the i-th face off the sequence.
+For the die, $`\Omega`$ is the set of all infinite sequences of faces, and $`P`$ is the product measure that gives each of the first n faces probability 1/6 independently; it exists by [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md). The roll $`X_i`$ reads the i-th face off the sequence.
 
-Write $S_n = X_1 + \cdots + X_n$ for the total of the first n draws and $\bar{X}_n = S_n / n$ for their average.
+Write $`S_n = X_1 + \cdots + X_n`$ for the total of the first n draws and $`\bar{X}_n = S_n / n`$ for their average.
 
-**The weak law, finite variance.** Let $X_1, X_2, \ldots$ be random variables on $(\Omega, \mathcal{F}, P)$ with a common mean $m$, variances at most $\sigma^2 < \infty$, and no correlation between any two: $E[(X_i - m)(X_j - m)] = 0$ whenever $i \ne j$. Then for every margin $\varepsilon > 0$ and every n,
+**The weak law, finite variance.** Let $`X_1, X_2, \ldots`$ be random variables on $`(\Omega, \mathcal{F}, P)`$ with a common mean $`m`$, variances at most $`\sigma^2 < \infty`$, and no correlation between any two: $`E[(X_i - m)(X_j - m)] = 0`$ whenever $`i \ne j`$. Then for every margin $`\varepsilon > 0`$ and every n,
 
-$$P\big(\lvert \bar{X}_n - m \rvert \ge \varepsilon\big) \;\le\; \frac{\sigma^2}{n\,\varepsilon^2} \;\longrightarrow\; 0 \quad (n \to \infty).$$
+```math
+P\big(\lvert \bar{X}_n - m \rvert \ge \varepsilon\big) \;\le\; \frac{\sigma^2}{n\,\varepsilon^2} \;\longrightarrow\; 0 \quad (n \to \infty).
+```
 
 **Read it aloud:** the chance that the average of n draws misses the mean by at least epsilon is at most the variance divided by n times epsilon squared, and that goes to zero as n grows.
 
-The limit is **convergence in probability** of $\bar{X}_n$ to $m$ ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)). Independent draws are uncorrelated, so the law covers them.
+The limit is **convergence in probability** of $`\bar{X}_n`$ to $`m`$ ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)). Independent draws are uncorrelated, so the law covers them.
 
-**The explicit count.** For a confidence $1 - \delta$, with $0 < \delta < 1$:
+**The explicit count.** For a confidence $`1 - \delta`$, with $`0 < \delta < 1`$:
 
-$$N = \Big\lceil \frac{\sigma^2}{\delta\,\varepsilon^2} \Big\rceil \quad\text{gives}\quad P\big(\lvert \bar{X}_n - m \rvert < \varepsilon\big) \ge 1 - \delta \ \text{ for every } n \ge N.$$
+```math
+N = \Big\lceil \frac{\sigma^2}{\delta\,\varepsilon^2} \Big\rceil \quad\text{gives}\quad P\big(\lvert \bar{X}_n - m \rvert < \varepsilon\big) \ge 1 - \delta \ \text{ for every } n \ge N.
+```
 
-**Read it aloud:** round the variance over delta times epsilon squared up to a whole number; from that many draws on, the average lands within epsilon with probability at least one minus delta. If $\sigma^2 = 0$, take $N = 1$.
+**Read it aloud:** round the variance over delta times epsilon squared up to a whole number; from that many draws on, the average lands within epsilon with probability at least one minus delta. If $`\sigma^2 = 0`$, take $`N = 1`$.
 
-For the die, $\sigma^2/\varepsilon^2$ = (35/12)/0.01 = 875/3 = 291.666667, and $N$ = ⌈29,166.67⌉ = 29,167.
+For the die, $`\sigma^2/\varepsilon^2`$ = (35/12)/0.01 = 875/3 = 291.666667, and $`N`$ = ⌈29,166.67⌉ = 29,167.
 
-**The weak law, finite mean (Khintchine, 1929).** If $X_1, X_2, \ldots$ all have the law of one $X$ with $E\lvert X \rvert < \infty$ and are independent in pairs, then $\bar{X}_n \to E[X]$ in probability. No variance is assumed, and no count like $N$ follows from $E\lvert X \rvert$ alone.
+**The weak law, finite mean (Khintchine, 1929).** If $`X_1, X_2, \ldots`$ all have the law of one $`X`$ with $`E\lvert X \rvert < \infty`$ and are independent in pairs, then $`\bar{X}_n \to E[X]`$ in probability. No variance is assumed, and no count like $`N`$ follows from $`E\lvert X \rvert`$ alone.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$, $P$, $E$ | the outcomes; the sets we may measure, a sigma-algebra; the probability measure; the mean, an integral against $P$ | all infinite roll sequences; events such as "roll 1 is a six"; each face 1/6 | — |
-| $X_i$, $X$ | the i-th draw, a measurable function on $\Omega$; one draw with the common law | the face on roll i | — |
-| $n$ | the number of draws averaged | 1,000 or 29,167 | the bound falls like 1/n |
-| $S_n$ | the total of the first n draws | its mean is 3.5n | spreads like the square root of n |
-| $\bar{X}_n$ | the average $S_n/n$ | 3.5 on average | — |
-| $m$ | the common mean | 3.5 | shifts the target, not the bound |
-| $Z_i$ | the i-th draw's miss, $X_i - m$ | the face on roll i minus 3.5 | — |
-| $\sigma^2$, $\sigma$ | the variance, the mean squared distance from $m$; its square root | 35/12 = 2.916667 | the bound and $N$ rise in proportion |
-| $\varepsilon$ | the margin | 0.1 | $N$ falls like one over its square |
-| $\delta$ | the allowed chance of a miss; $1 - \delta$ is the confidence | 0.01 | $N$ falls like one over it |
-| $N$ | the guaranteed count | 29,167 | — |
-| $Y_i$, $T_n$, $m_n$ | in the finite-mean proof: $X_i$ cut to 0 where it exceeds n in size, the total of the cut draws, and the mean of one cut draw | a Pareto draw cut at n | — |
-| $k$ | in Step 4: the number of real dice in the recipe | 4 dice give 15 faces | $2^k - 1$ faces, independent in pairs |
-| $t$, $M$ | in the Chernoff comparison: a parameter, and $M(t)$ the mean of $e^{tX}$ | best $t$ = 0.034311 | — |
+| $`\Omega`$, $`\mathcal{F}`$, $`P`$, $`E`$ | the outcomes; the sets we may measure, a sigma-algebra; the probability measure; the mean, an integral against $`P`$ | all infinite roll sequences; events such as "roll 1 is a six"; each face 1/6 | — |
+| $`X_i`$, $`X`$ | the i-th draw, a measurable function on $`\Omega`$; one draw with the common law | the face on roll i | — |
+| $`n`$ | the number of draws averaged | 1,000 or 29,167 | the bound falls like 1/n |
+| $`S_n`$ | the total of the first n draws | its mean is 3.5n | spreads like the square root of n |
+| $`\bar{X}_n`$ | the average $`S_n/n`$ | 3.5 on average | — |
+| $`m`$ | the common mean | 3.5 | shifts the target, not the bound |
+| $`Z_i`$ | the i-th draw's miss, $`X_i - m`$ | the face on roll i minus 3.5 | — |
+| $`\sigma^2`$, $`\sigma`$ | the variance, the mean squared distance from $`m`$; its square root | 35/12 = 2.916667 | the bound and $`N`$ rise in proportion |
+| $`\varepsilon`$ | the margin | 0.1 | $`N`$ falls like one over its square |
+| $`\delta`$ | the allowed chance of a miss; $`1 - \delta`$ is the confidence | 0.01 | $`N`$ falls like one over it |
+| $`N`$ | the guaranteed count | 29,167 | — |
+| $`Y_i`$, $`T_n`$, $`m_n`$ | in the finite-mean proof: $`X_i`$ cut to 0 where it exceeds n in size, the total of the cut draws, and the mean of one cut draw | a Pareto draw cut at n | — |
+| $`k`$ | in Step 4: the number of real dice in the recipe | 4 dice give 15 faces | $`2^k - 1`$ faces, independent in pairs |
+| $`t`$, $`M`$ | in the Chernoff comparison: a parameter, and $`M(t)`$ the mean of $`e^{tX}`$ | best $`t`$ = 0.034311 | — |
 
 ### When it holds
 
 - **No correlation between any two draws.** This is the hypothesis the proof uses. Drop it and the law can fail outright: if every roll copies the first, the average is one roll, and it misses 3.5 by 0.1 or more with probability 1.000000 at every n.
-- **A finite variance, for the count $N$.** The proof and the formula for $N$ need it. With independent draws from one law and a finite mean, the law survives (Step 5), but the guarantee comes slower and needs the tail of the law, not one number.
+- **A finite variance, for the count $`N`$.** The proof and the formula for $`N`$ need it. With independent draws from one law and a finite mean, the law survives (Step 5), but the guarantee comes slower and needs the tail of the law, not one number.
 - **A finite mean, at all.** Without one there is nothing to settle on: the average of Cauchy draws is as wild as one draw ([Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
 - **One fixed n at a time.** The bound is about the average at each n separately. It does not say that one run is inside the margin from some roll on, for good. That is the strong law.
 
@@ -92,31 +96,37 @@ Square the total's distance from its mean and expand. Most terms are cross terms
 
 ### Step 1: the average aims at the mean
 
-The integral is linear on integrable functions ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). So $E[S_n] = E[X_1] + \cdots + E[X_n] = nm$ and $E[\bar{X}_n] = m$. No independence is used. Every roll averages 3.5, so every average of rolls does.
+The integral is linear on integrable functions ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). So $`E[S_n] = E[X_1] + \cdots + E[X_n] = nm`$ and $`E[\bar{X}_n] = m`$. No independence is used. Every roll averages 3.5, so every average of rolls does.
 
 ### Step 2: the variance of the total is the sum of the variances
 
-Put $Z_i = X_i - m$, the i-th draw's miss. Then $S_n - nm = Z_1 + \cdots + Z_n$, and
+Put $`Z_i = X_i - m`$, the i-th draw's miss. Then $`S_n - nm = Z_1 + \cdots + Z_n`$, and
 
-$$E\big[(S_n - nm)^2\big] \;=\; \sum_{i=1}^{n} E[Z_i^2] \;+\; \sum_{i \ne j} E[Z_i Z_j].$$
+```math
+E\big[(S_n - nm)^2\big] \;=\; \sum_{i=1}^{n} E[Z_i^2] \;+\; \sum_{i \ne j} E[Z_i Z_j].
+```
 
-Each product $Z_i Z_j$ is integrable, since $2\lvert Z_i Z_j \rvert \le Z_i^2 + Z_j^2$. The cross terms are 0 by hypothesis. For independent draws that is a theorem: the joint law of two draws is the product of their laws, and Fubini's theorem splits the integral of a product into the product of integrals ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)), so $E[Z_i Z_j] = E[Z_i]\,E[Z_j] = 0 \cdot 0$. What remains is at most $n\sigma^2$, and dividing by $n^2$:
+Each product $`Z_i Z_j`$ is integrable, since $`2\lvert Z_i Z_j \rvert \le Z_i^2 + Z_j^2`$. The cross terms are 0 by hypothesis. For independent draws that is a theorem: the joint law of two draws is the product of their laws, and Fubini's theorem splits the integral of a product into the product of integrals ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)), so $`E[Z_i Z_j] = E[Z_i]\,E[Z_j] = 0 \cdot 0`$. What remains is at most $`n\sigma^2`$, and dividing by $`n^2`$:
 
-$$E\big[(\bar{X}_n - m)^2\big] \;\le\; \frac{\sigma^2}{n}.$$
+```math
+E\big[(\bar{X}_n - m)^2\big] \;\le\; \frac{\sigma^2}{n}.
+```
 
 For the die, equality holds: 35/12/1000 = 0.002916667 at 1,000 rolls, and the exact law of the sum of 1,000 dice gives the same 0.002916667.
 
-This line already says $\bar{X}_n \to m$ in $L^2$, the mean-square sense, and convergence in $L^2$ implies convergence in probability ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)). Step 3 makes that implication a number.
+This line already says $`\bar{X}_n \to m`$ in $`L^2`$, the mean-square sense, and convergence in $`L^2`$ implies convergence in probability ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)). Step 3 makes that implication a number.
 
 ### Step 3: Chebyshev turns the spread into a guarantee
 
-Chebyshev's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) is Markov's inequality applied to the squared miss: $P(\lvert Y - m \rvert \ge \varepsilon) \le E[(Y - m)^2]/\varepsilon^2$ for any random variable with mean $m$ and a finite second moment. With $Y = \bar{X}_n$ and Step 2:
+Chebyshev's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) is Markov's inequality applied to the squared miss: $`P(\lvert Y - m \rvert \ge \varepsilon) \le E[(Y - m)^2]/\varepsilon^2`$ for any random variable with mean $`m`$ and a finite second moment. With $`Y = \bar{X}_n`$ and Step 2:
 
-$$P\big(\lvert \bar{X}_n - m \rvert \ge \varepsilon\big) \;\le\; \frac{\sigma^2}{n\,\varepsilon^2}.$$
+```math
+P\big(\lvert \bar{X}_n - m \rvert \ge \varepsilon\big) \;\le\; \frac{\sigma^2}{n\,\varepsilon^2}.
+```
 
-Fix $\varepsilon$. The right side goes to 0 as n grows, which is the weak law.
+Fix $`\varepsilon`$. The right side goes to 0 as n grows, which is the weak law.
 
-Now fix $\delta$ as well. The right side is at most $\delta$ exactly when $n \ge \sigma^2/(\delta\varepsilon^2)$, and rounding up gives the first whole number that works. For the die, 291.666667 / 29,167 = 0.00999989 is below 0.01, and 291.666667 / 29,166 = 0.01000023 is above it. So 29,167 is the smallest count this inequality certifies.
+Now fix $`\delta`$ as well. The right side is at most $`\delta`$ exactly when $`n \ge \sigma^2/(\delta\varepsilon^2)`$, and rounding up gives the first whole number that works. For the die, 291.666667 / 29,167 = 0.00999989 is below 0.01, and 291.666667 / 29,166 = 0.01000023 is above it. So 29,167 is the smallest count this inequality certifies.
 
 It is not the smallest count that works for the die: at 1,000 rolls the exact chance of a miss is already 0.065410, and it falls much faster than 1/n.
 
@@ -130,46 +140,49 @@ Dice give a concrete case. Roll 4 real dice and write each face as 0 to 5. For e
 
 Listing all 1,296 outcomes shows every face is fair, and every pair of faces shows each of its 36 combinations exactly 36 times: the faces are independent in pairs. They are not independent in threes. Faces 1, 2 and "1 plus 2" all show 1 with chance 1/36, not 1/216, since the third is fixed by the first two.
 
-The average of the 15 faces has variance exactly 7/36, which is (35/12)/15, as Step 2 predicts. Its chance of missing 3.5 by 1 or more is 0.032407. Fifteen independent dice give 0.022109. The tails differ, because the laws differ; the variances agree, so Chebyshev's ceiling, 0.194444, covers both. With k real dice the same recipe gives $2^k - 1$ faces independent in pairs, so their averages converge in probability to 3.5 as k grows.
+The average of the 15 faces has variance exactly 7/36, which is (35/12)/15, as Step 2 predicts. Its chance of missing 3.5 by 1 or more is 0.032407. Fifteen independent dice give 0.022109. The tails differ, because the laws differ; the variances agree, so Chebyshev's ceiling, 0.194444, covers both. With k real dice the same recipe gives $`2^k - 1`$ faces independent in pairs, so their averages converge in probability to 3.5 as k grows.
 
 ### Step 5: with a finite mean only, cut the large values off
 
-Now drop the variance. Take independent draws from one law with $E\lvert X \rvert < \infty$. The proof, due to Khintchine, cuts each draw at a level that grows with n and handles two pieces.
+Now drop the variance. Take independent draws from one law with $`E\lvert X \rvert < \infty`$. The proof, due to Khintchine, cuts each draw at a level that grows with n and handles two pieces.
 
-- **The cut draws.** Let $Y_i$ equal $X_i$ where $\lvert X_i \rvert \le n$ and 0 elsewhere, and let $T_n$ be their total. Each $Y_i$ is bounded, so it has a variance, and Step 3 applies to $T_n / n$. Its variance is at most $E[X^2 \text{ on } \lvert X \rvert \le n]/n$, and that tends to 0 by dominated convergence ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)).
-- **The rare large values.** $S_n$ and $T_n$ differ only if some draw exceeds n in size. That has chance at most $n\,P(\lvert X \rvert > n)$, which is at most $E[\lvert X \rvert \text{ on } \lvert X \rvert > n]$ by Markov's inequality and tends to 0, again by dominated convergence.
+- **The cut draws.** Let $`Y_i`$ equal $`X_i`$ where $`\lvert X_i \rvert \le n`$ and 0 elsewhere, and let $`T_n`$ be their total. Each $`Y_i`$ is bounded, so it has a variance, and Step 3 applies to $`T_n / n`$. Its variance is at most $`E[X^2 \text{ on } \lvert X \rvert \le n]/n`$, and that tends to 0 by dominated convergence ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)).
+- **The rare large values.** $`S_n`$ and $`T_n`$ differ only if some draw exceeds n in size. That has chance at most $`n\,P(\lvert X \rvert > n)`$, which is at most $`E[\lvert X \rvert \text{ on } \lvert X \rvert > n]`$ by Markov's inequality and tends to 0, again by dominated convergence.
 
-A Pareto law makes the pieces concrete: $P(X > x) = x^{-1.5}$ for $x \ge 1$. Its mean is 3; its variance is infinite. Cut at n, the chance of a large value is at most $n \cdot n^{-1.5} = n^{-1/2}$, and the cut draws' mean squared value is $3(\sqrt{n} - 1)$.
+A Pareto law makes the pieces concrete: $`P(X > x) = x^{-1.5}`$ for $`x \ge 1`$. Its mean is 3; its variance is infinite. Cut at n, the chance of a large value is at most $`n \cdot n^{-1.5} = n^{-1/2}`$, and the cut draws' mean squared value is $`3(\sqrt{n} - 1)`$.
 
-For a margin of 0.5, once $n \ge 144$, the two pieces give a ceiling of $n^{-1/2} + 12(\sqrt{n} - 1)/(0.25\,n)$: 0.485200 at $10^4$ draws, 0.048952 at $10^6$, 0.004900 at $10^8$. The ceiling falls only like one over the square root of n.
+For a margin of 0.5, once $`n \ge 144`$, the two pieces give a ceiling of $`n^{-1/2} + 12(\sqrt{n} - 1)/(0.25\,n)`$: 0.485200 at $`10^4`$ draws, 0.048952 at $`10^6`$, 0.004900 at $`10^8`$. The ceiling falls only like one over the square root of n.
 
-In 200 simulated runs of $10^4$ draws, 4 averages miss 3 by 0.5 or more, and no run holds a draw above $10^4$.
+In 200 simulated runs of $`10^4`$ draws, 4 averages miss 3 by 0.5 or more, and no run holds a draw above $`10^4`$.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, P)$ is a probability space, and every $X_i$ is a real function on $\Omega$ measurable with respect to $\mathcal{F}$. The integral against $P$ is linear and monotone on integrable functions ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). For a set $A$, $\mathbf{1}_A$ is its indicator: 1 on $A$ and 0 off it.
+**Setting.** $`(\Omega, \mathcal{F}, P)`$ is a probability space, and every $`X_i`$ is a real function on $`\Omega`$ measurable with respect to $`\mathcal{F}`$. The integral against $`P`$ is linear and monotone on integrable functions ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). For a set $`A`$, $`\mathbf{1}_A`$ is its indicator: 1 on $`A`$ and 0 off it.
 
-**Theorem 1 (weak law in $L^2$).** Suppose $E[X_i^2] < \infty$, $E[X_i] = m$ and $E[(X_i - m)^2] \le \sigma^2$ for every i, and $E[(X_i - m)(X_j - m)] = 0$ for $i \ne j$. Then $E[(\bar{X}_n - m)^2] \le \sigma^2/n$ and $P(\lvert \bar{X}_n - m \rvert \ge \varepsilon) \le \sigma^2/(n\varepsilon^2)$ for every $\varepsilon > 0$. *Proof.* $\lvert X_i \rvert \le (1 + X_i^2)/2$ makes each $X_i$ integrable. With $Z_i = X_i - m$, $Z_i^2 \le 2X_i^2 + 2m^2$ and $\lvert Z_i Z_j \rvert \le (Z_i^2 + Z_j^2)/2$ make every term of $(S_n - nm)^2 = \sum_i Z_i^2 + \sum_{i \ne j} Z_i Z_j$ integrable, so linearity gives $E[(S_n - nm)^2] = \sum_i E[Z_i^2] \le n\sigma^2$. Divide by $n^2$ and apply Chebyshev's inequality to $\bar{X}_n$, whose mean is $m$ ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)).
+**Theorem 1 (weak law in $`L^2`$).** Suppose $`E[X_i^2] < \infty`$, $`E[X_i] = m`$ and $`E[(X_i - m)^2] \le \sigma^2`$ for every i, and $`E[(X_i - m)(X_j - m)] = 0`$ for $`i \ne j`$. Then $`E[(\bar{X}_n - m)^2] \le \sigma^2/n`$ and $`P(\lvert \bar{X}_n - m \rvert \ge \varepsilon) \le \sigma^2/(n\varepsilon^2)`$ for every $`\varepsilon > 0`$. *Proof.* $`\lvert X_i \rvert \le (1 + X_i^2)/2`$ makes each $`X_i`$ integrable. With $`Z_i = X_i - m`$, $`Z_i^2 \le 2X_i^2 + 2m^2`$ and $`\lvert Z_i Z_j \rvert \le (Z_i^2 + Z_j^2)/2`$ make every term of $`(S_n - nm)^2 = \sum_i Z_i^2 + \sum_{i \ne j} Z_i Z_j`$ integrable, so linearity gives $`E[(S_n - nm)^2] = \sum_i E[Z_i^2] \le n\sigma^2`$. Divide by $`n^2`$ and apply Chebyshev's inequality to $`\bar{X}_n`$, whose mean is $`m`$ ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)).
 
-**Corollary 1 (independent draws).** If the $X_i$ are independent in pairs with finite second moments, then $E[Z_i Z_j] = E[Z_i]E[Z_j] = 0$ for $i \ne j$, because the joint law of $(X_i, X_j)$ is the product of their laws and Fubini's theorem applies to the integrable product ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). Theorem 1 applies.
+**Corollary 1 (independent draws).** If the $`X_i`$ are independent in pairs with finite second moments, then $`E[Z_i Z_j] = E[Z_i]E[Z_j] = 0`$ for $`i \ne j`$, because the joint law of $`(X_i, X_j)`$ is the product of their laws and Fubini's theorem applies to the integrable product ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). Theorem 1 applies.
 
-**Corollary 2 (the count).** Let $0 < \delta < 1$ and $N = \lceil \sigma^2/(\delta\varepsilon^2) \rceil$. For $n \ge N$, $\sigma^2/(n\varepsilon^2) \le \sigma^2/(N\varepsilon^2) \le \delta$, so $P(\lvert \bar{X}_n - m \rvert \ge \varepsilon) \le \delta$, and the complement gives $P(\lvert \bar{X}_n - m \rvert < \varepsilon) \ge 1 - \delta$. For $n < N$ the ratio exceeds $\delta$, so $N$ is the least count the inequality certifies.
+**Corollary 2 (the count).** Let $`0 < \delta < 1`$ and $`N = \lceil \sigma^2/(\delta\varepsilon^2) \rceil`$. For $`n \ge N`$, $`\sigma^2/(n\varepsilon^2) \le \sigma^2/(N\varepsilon^2) \le \delta`$, so $`P(\lvert \bar{X}_n - m \rvert \ge \varepsilon) \le \delta`$, and the complement gives $`P(\lvert \bar{X}_n - m \rvert < \varepsilon) \ge 1 - \delta`$. For $`n < N`$ the ratio exceeds $`\delta`$, so $`N`$ is the least count the inequality certifies.
 
-**Lemma 1.** If $E\lvert X \rvert < \infty$, then $E[\lvert X \rvert \mathbf{1}_{\{\lvert X \rvert > n\}}] \to 0$, and $n\,P(\lvert X \rvert > n) \le E[\lvert X \rvert \mathbf{1}_{\{\lvert X \rvert > n\}}]$. *Proof.* $\lvert X \rvert$ is finite almost surely, so $\lvert X \rvert \mathbf{1}_{\{\lvert X \rvert > n\}} \to 0$ almost surely, and it is dominated by the integrable $\lvert X \rvert$; dominated convergence gives the limit ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). The inequality is monotonicity applied to $n\mathbf{1}_{\{\lvert X \rvert > n\}} \le \lvert X \rvert \mathbf{1}_{\{\lvert X \rvert > n\}}$.
+**Lemma 1.** If $`E\lvert X \rvert < \infty`$, then $`E[\lvert X \rvert \mathbf{1}_{\{\lvert X \rvert > n\}}] \to 0`$, and $`n\,P(\lvert X \rvert > n) \le E[\lvert X \rvert \mathbf{1}_{\{\lvert X \rvert > n\}}]`$. *Proof.* $`\lvert X \rvert`$ is finite almost surely, so $`\lvert X \rvert \mathbf{1}_{\{\lvert X \rvert > n\}} \to 0`$ almost surely, and it is dominated by the integrable $`\lvert X \rvert`$; dominated convergence gives the limit ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). The inequality is monotonicity applied to $`n\mathbf{1}_{\{\lvert X \rvert > n\}} \le \lvert X \rvert \mathbf{1}_{\{\lvert X \rvert > n\}}`$.
 
-**Lemma 2.** If $E\lvert X \rvert < \infty$, then $E[X^2 \mathbf{1}_{\{\lvert X \rvert \le n\}}]/n \to 0$. *Proof.* $X^2 \mathbf{1}_{\{\lvert X \rvert \le n\}}/n = \lvert X \rvert \cdot (\lvert X \rvert/n)\mathbf{1}_{\{\lvert X \rvert \le n\}} \le \lvert X \rvert \min(\lvert X \rvert/n, 1)$. The right side is at most $\lvert X \rvert$ and tends to 0 wherever $\lvert X \rvert$ is finite, so its integral tends to 0 by dominated convergence.
+**Lemma 2.** If $`E\lvert X \rvert < \infty`$, then $`E[X^2 \mathbf{1}_{\{\lvert X \rvert \le n\}}]/n \to 0`$. *Proof.* $`X^2 \mathbf{1}_{\{\lvert X \rvert \le n\}}/n = \lvert X \rvert \cdot (\lvert X \rvert/n)\mathbf{1}_{\{\lvert X \rvert \le n\}} \le \lvert X \rvert \min(\lvert X \rvert/n, 1)`$. The right side is at most $`\lvert X \rvert`$ and tends to 0 wherever $`\lvert X \rvert`$ is finite, so its integral tends to 0 by dominated convergence.
 
-**Theorem 2 (weak law in $L^1$).** Let $X_1, X_2, \ldots$ be independent in pairs, each with the law of $X$, and $E\lvert X \rvert < \infty$, $m = E[X]$. Then $P(\lvert \bar{X}_n - m \rvert \ge \varepsilon) \to 0$ for every $\varepsilon > 0$. *Proof.* Fix n and put $Y_i = X_i \mathbf{1}_{\{\lvert X_i \rvert \le n\}}$ for $i \le n$, $T_n = Y_1 + \cdots + Y_n$ and $m_n = E[Y_1]$, the same for every i since the laws agree. Each $Y_i$ is a measurable function of $X_i$ alone, so the $Y_i$ are independent in pairs, and they are bounded by n. By Theorem 1 and Corollary 1, with $\sigma^2$ replaced by $E[Y_1^2] = E[X^2\mathbf{1}_{\{\lvert X \rvert \le n\}}]$:
-$$P\big(\lvert T_n/n - m_n \rvert \ge \varepsilon/2\big) \le \frac{4\,E[X^2\mathbf{1}_{\{\lvert X \rvert \le n\}}]}{n\,\varepsilon^2} \to 0$$
-by Lemma 2. Next, $\lvert m - m_n \rvert = \lvert E[X\mathbf{1}_{\{\lvert X \rvert > n\}}] \rvert \le E[\lvert X \rvert\mathbf{1}_{\{\lvert X \rvert > n\}}] \to 0$ by Lemma 1, so for all large n, $\lvert m - m_n \rvert < \varepsilon/2$, and then $\lvert T_n/n - m \rvert \ge \varepsilon$ forces $\lvert T_n/n - m_n \rvert \ge \varepsilon/2$. Finally $S_n \ne T_n$ only on the union of the sets $\{\lvert X_i \rvert > n\}$, $i \le n$, whose probability is at most $n\,P(\lvert X \rvert > n) \to 0$ by Lemma 1 and subadditivity. Combining, for all large n,
-$$P\big(\lvert \bar{X}_n - m \rvert \ge \varepsilon\big) \le P(S_n \ne T_n) + P\big(\lvert T_n/n - m_n \rvert \ge \varepsilon/2\big) \to 0.$$
+**Theorem 2 (weak law in $`L^1`$).** Let $`X_1, X_2, \ldots`$ be independent in pairs, each with the law of $`X`$, and $`E\lvert X \rvert < \infty`$, $`m = E[X]`$. Then $`P(\lvert \bar{X}_n - m \rvert \ge \varepsilon) \to 0`$ for every $`\varepsilon > 0`$. *Proof.* Fix n and put $`Y_i = X_i \mathbf{1}_{\{\lvert X_i \rvert \le n\}}`$ for $`i \le n`$, $`T_n = Y_1 + \cdots + Y_n`$ and $`m_n = E[Y_1]`$, the same for every i since the laws agree. Each $`Y_i`$ is a measurable function of $`X_i`$ alone, so the $`Y_i`$ are independent in pairs, and they are bounded by n. By Theorem 1 and Corollary 1, with $`\sigma^2`$ replaced by $`E[Y_1^2] = E[X^2\mathbf{1}_{\{\lvert X \rvert \le n\}}]`$:
 
-**The Pareto numbers.** For $P(X > x) = x^{-1.5}$ on $x \ge 1$, the density is $1.5x^{-2.5}$. Then $n\,P(X > n) = n^{-1/2}$; $E[X^2\mathbf{1}_{\{X \le n\}}] = \int_1^n 1.5x^{-0.5}\,dx = 3(\sqrt{n} - 1)$; and $m - m_n = \int_n^\infty 1.5x^{-1.5}\,dx = 3n^{-1/2}$, which is at most $\varepsilon/2 = 0.25$ once $n \ge 144$. The bound in the proof is then $n^{-1/2} + 4 \cdot 3(\sqrt{n} - 1)/(n \cdot 0.25)$, the formula in Step 5.
+$`\displaystyle P\big(\lvert T_n/n - m_n \rvert \ge \varepsilon/2\big) \le \frac{4\,E[X^2\mathbf{1}_{\{\lvert X \rvert \le n\}}]}{n\,\varepsilon^2} \to 0`$
+
+by Lemma 2. Next, $`\lvert m - m_n \rvert = \lvert E[X\mathbf{1}_{\{\lvert X \rvert > n\}}] \rvert \le E[\lvert X \rvert\mathbf{1}_{\{\lvert X \rvert > n\}}] \to 0`$ by Lemma 1, so for all large n, $`\lvert m - m_n \rvert < \varepsilon/2`$, and then $`\lvert T_n/n - m \rvert \ge \varepsilon`$ forces $`\lvert T_n/n - m_n \rvert \ge \varepsilon/2`$. Finally $`S_n \ne T_n`$ only on the union of the sets $`\{\lvert X_i \rvert > n\}`$, $`i \le n`$, whose probability is at most $`n\,P(\lvert X \rvert > n) \to 0`$ by Lemma 1 and subadditivity. Combining, for all large n,
+
+$`\displaystyle P\big(\lvert \bar{X}_n - m \rvert \ge \varepsilon\big) \le P(S_n \ne T_n) + P\big(\lvert T_n/n - m_n \rvert \ge \varepsilon/2\big) \to 0.`$
+
+**The Pareto numbers.** For $`P(X > x) = x^{-1.5}`$ on $`x \ge 1`$, the density is $`1.5x^{-2.5}`$. Then $`n\,P(X > n) = n^{-1/2}`$; $`E[X^2\mathbf{1}_{\{X \le n\}}] = \int_1^n 1.5x^{-0.5}\,dx = 3(\sqrt{n} - 1)`$; and $`m - m_n = \int_n^\infty 1.5x^{-1.5}\,dx = 3n^{-1/2}`$, which is at most $`\varepsilon/2 = 0.25`$ once $`n \ge 144`$. The bound in the proof is then $`n^{-1/2} + 4 \cdot 3(\sqrt{n} - 1)/(n \cdot 0.25)`$, the formula in Step 5.
 
 </details>
 
-A second road replaces Chebyshev by the exponential form of Markov's inequality, the Chernoff bound $P(S_n \ge n(m + \varepsilon)) \le (e^{-t(m + \varepsilon)}M(t))^n$ for every $t > 0$, for independent draws with $M(t)$ finite. Its ceiling falls exponentially in n: for the die at 29,167 rolls both tails together are below 3.786e-22, though at 1,000 rolls it gives 0.359961 against Chebyshev's 0.291667. The probability wing works it out on coin flips ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)).
+A second road replaces Chebyshev by the exponential form of Markov's inequality, the Chernoff bound $`P(S_n \ge n(m + \varepsilon)) \le (e^{-t(m + \varepsilon)}M(t))^n`$ for every $`t > 0`$, for independent draws with $`M(t)`$ finite. Its ceiling falls exponentially in n: for the die at 29,167 rolls both tails together are below 3.786e-22, though at 1,000 rolls it gives 0.359961 against Chebyshev's 0.291667. The probability wing works it out on coin flips ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)).
 
 ---
 
@@ -192,14 +205,14 @@ At 29,167 rolls the average's standard deviation is 0.010000, so a miss by 0.1 i
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Every roll copies the first | P(miss) 1.000000 at every n; the average's variance stays 2.916667 | the cross terms are not 0, so the variance never shrinks |
-| Standard deviation used where the variance belongs | n = 17,079, where Chebyshev only gives 0.017078 | the bound needs $\sigma^2$, not $\sigma$ |
+| Standard deviation used where the variance belongs | n = 17,079, where Chebyshev only gives 0.017078 | the bound needs $`\sigma^2`$, not $`\sigma`$ |
 | 1 − δ used where δ belongs | n = 295, where Chebyshev gives 0.988701 and the exact chance of a miss is 0.322985 | δ is the chance allowed to fail, not the confidence |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code checks the die at finite n; that the chance of a miss tends to 0 for every law meeting the hypotheses rests on the proof. Four roads reach the chance of a miss: Chebyshev's bound in exact fractions, with $N$ checked on both sides; the exact law of the sum of up to 1,000 dice, built one roll at a time and checked at 4 rolls against a full listing; the Chernoff bound, minimised over $t$ by a golden-section search (shrinking a bracket around the minimum); and 1,000 simulated runs of 29,167 rolls from SplitMix64, a short pseudo-random recipe written out in both languages, seed 20260929. A miss is tested in whole numbers, $\lvert 10 S_n - 35n \rvert \ge n$, so no rounding decides a boundary case. The 15 faces are checked on all 1,296 outcomes; the Pareto part prints the truncation ceiling and simulates 200 runs of $10^4$ draws.
+The code checks the die at finite n; that the chance of a miss tends to 0 for every law meeting the hypotheses rests on the proof. Four roads reach the chance of a miss: Chebyshev's bound in exact fractions, with $`N`$ checked on both sides; the exact law of the sum of up to 1,000 dice, built one roll at a time and checked at 4 rolls against a full listing; the Chernoff bound, minimised over $`t`$ by a golden-section search (shrinking a bracket around the minimum); and 1,000 simulated runs of 29,167 rolls from SplitMix64, a short pseudo-random recipe written out in both languages, seed 20260929. A miss is tested in whole numbers, $`\lvert 10 S_n - 35n \rvert \ge n`$, so no rounding decides a boundary case. The 15 faces are checked on all 1,296 outcomes; the Pareto part prints the truncation ceiling and simulates 200 runs of $`10^4`$ draws.
 
 ### Python
 
@@ -563,11 +576,11 @@ The two outputs are identical line for line.
 
 Lean proves all three theorems for random variables on any probability space, and checks the card's exact arithmetic.
 
-- Suppose the draws share a mean $m$, variances at most $\sigma^2$, and no correlation between any two; fix $\varepsilon > 0$. Then for every $n \ge 1$, the average misses $m$ by at least $\varepsilon$ with chance at most $\sigma^2/(n\varepsilon^2)$.
+- Suppose the draws share a mean $`m`$, variances at most $`\sigma^2`$, and no correlation between any two; fix $`\varepsilon > 0`$. Then for every $`n \ge 1`$, the average misses $`m`$ by at least $`\varepsilon`$ with chance at most $`\sigma^2/(n\varepsilon^2)`$.
 - Under the same hypotheses, the chance of that miss tends to 0 as n grows.
-- Suppose also $0 < \delta < 1$, and put $N = \lceil \sigma^2/(\delta\varepsilon^2) \rceil$. Then for every $n \ge 1$ with $n \ge N$, the average lands within $\varepsilon$ of $m$ with probability at least $1 - \delta$.
-- Take $1 \le n < N$. Then the ceiling $\sigma^2/(n\varepsilon^2)$ is above $\delta$, so $N$ is the least count the inequality certifies.
-- Suppose the draws are independent in pairs, each with the law of one $X$, and $E\lvert X \rvert < \infty$. Then for every $\varepsilon > 0$, the chance $\bar{X}_n$ misses $E[X]$ by at least $\varepsilon$ tends to 0.
+- Suppose also $`0 < \delta < 1`$, and put $`N = \lceil \sigma^2/(\delta\varepsilon^2) \rceil`$. Then for every $`n \ge 1`$ with $`n \ge N`$, the average lands within $`\varepsilon`$ of $`m`$ with probability at least $`1 - \delta`$.
+- Take $`1 \le n < N`$. Then the ceiling $`\sigma^2/(n\varepsilon^2)`$ is above $`\delta`$, so $`N`$ is the least count the inequality certifies.
+- Suppose the draws are independent in pairs, each with the law of one $`X`$, and $`E\lvert X \rvert < \infty`$. Then for every $`\varepsilon > 0`$, the chance $`\bar{X}_n`$ misses $`E[X]`$ by at least $`\varepsilon`$ tends to 0.
 - The hand arithmetic holds exactly as fractions: variance 35/12, constant 875/3, and the count 29,167, while 29,166 is not certified.
 - Listing all 1,296 outcomes of 4 dice gives the average of the 15 faces variance 7/36, as Step 2 predicts.
 - Faces 1, 2 and "1 plus 2" all show 1 with chance 1/36, not 1/216.
@@ -823,14 +836,14 @@ example : (3 : ℚ) / 12 = 1 / 4 ∧ (12 : ℕ) ^ 2 = 144 := by norm_num
 >
 > - **Reading the weak law as "every run settles".** It bounds each n separately. Whether one run eventually stays within 0.1 for good is a different question, answered by the strong law.
 > - **Thinking independence is the hypothesis.** The proof needs only zero correlation between pairs. The 15 faces built from 4 dice are tied together in threes and still give variance 7/36, as 15 independent dice do.
-> - **Using $\sigma$ for $\sigma^2$.** The count comes out at 17,079, where the guarantee is only 0.017078.
+> - **Using $`\sigma`$ for $`\sigma^2`$.** The count comes out at 17,079, where the guarantee is only 0.017078.
 > - **Swapping δ and 1 − δ.** The count comes out at 295, where the exact chance of a miss is 0.322985.
 
 ---
 
 ## Where you meet it in real life
 
-- **Estimation.** A sample average is a consistent estimator of a mean: its chance of missing by any fixed margin shrinks as the sample grows. The count $N$ is the conservative sample size used when only a variance bound is known.
+- **Estimation.** A sample average is a consistent estimator of a mean: its chance of missing by any fixed margin shrinks as the sample grows. The count $`N`$ is the conservative sample size used when only a variance bound is known.
 - **Monte Carlo.** A simulated average of a payoff or a probability converges in probability to the true value, and Chebyshev gives an error guarantee that needs no normal approximation.
 - **Pooling risk.** An insurer's average claim per policy settles near the expected claim when claims are uncorrelated. Flood damage on one street is correlated: the cross terms return and the variance stops shrinking.
 - **Information theory.** Applied to the logarithms of the probabilities of a long message, the weak law says that a long message of n symbols, with probability near 1, has a log-probability per symbol close to the source's entropy (its average information per symbol, in bits), so its probability is about 2 to the power minus n times the entropy. That is the idea behind Typical sequences.
@@ -844,7 +857,7 @@ example : (3 : ℚ) / 12 = 1 / 4 ∧ (12 : ℕ) ^ 2 = 144 := by norm_num
 
 - [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md): Chebyshev's inequality for any random variable with a finite second moment, the whole of Step 3.
 - [Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): independence as a product law, so the mean of a product is the product of means and the cross terms vanish.
-- [Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): convergence in probability, the promise the weak law makes, and why $L^2$ convergence implies it.
+- [Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): convergence in probability, the promise the weak law makes, and why $`L^2`$ convergence implies it.
 - [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): the same law for dice, stated without measure and checked by simulation.
 
 ## Where this goes next
@@ -859,6 +872,6 @@ The weak law bounds the chance of a miss at each n but says nothing about a sing
 
 Verified 2026-09-29: every link below resolves to the publisher's or author's page for the work named.
 
-- Durrett, Rick. *Probability: Theory and Examples*, 5th ed. Cambridge University Press, 2019. [Author's page for the book](https://services.math.duke.edu/~rtd/PTE/pte.html). Section 2.2, "Weak Laws of Large Numbers", proves the law for uncorrelated variables in $L^2$ and the finite-mean law by truncation.
+- Durrett, Rick. *Probability: Theory and Examples*, 5th ed. Cambridge University Press, 2019. [Author's page for the book](https://services.math.duke.edu/~rtd/PTE/pte.html). Section 2.2, "Weak Laws of Large Numbers", proves the law for uncorrelated variables in $`L^2`$ and the finite-mean law by truncation.
 - Billingsley, Patrick. *Probability and Measure*, Anniversary ed. Wiley, 2012. [Publisher page](https://www.wiley.com/en-us/Probability+and+Measure%2C+Anniversary+Edition-p-9781118122372). The laws of large numbers proved on a measure space, with independence as a product measure.
 - Tchébychef, P. "Des valeurs moyennes." *Journal de Mathématiques Pures et Appliquées*, 2nd series, 12 (1867): 177–184. [NUMDAM](https://www.numdam.org/item/JMPA_1867_2_12__177_0/). The inequality and the finite-variance law for averages, in the original.

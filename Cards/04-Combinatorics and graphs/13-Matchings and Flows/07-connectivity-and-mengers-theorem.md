@@ -37,38 +37,42 @@ Each line runs both ways. S and T are the termini; J is the junction every route
 
 ## The formula
 
-Notation first, in words. A network is a graph $G$: stations are its vertex set $V$, lines its edge set $E$ ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). A **route** repeats no station. Routes are **line-disjoint** when they share no line, **station-disjoint** when they share no station but their ends. $c(G)$ counts the separate pieces of $G$ ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)); $G - e$ is $G$ with line $e$ removed.
+Notation first, in words. A network is a graph $`G`$: stations are its vertex set $`V`$, lines its edge set $`E`$ ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). A **route** repeats no station. Routes are **line-disjoint** when they share no line, **station-disjoint** when they share no station but their ends. $`c(G)`$ counts the separate pieces of $`G`$ ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)); $`G - e`$ is $`G`$ with line $`e`$ removed.
 
-The **line connectivity** $\lambda(S,T)$, read "lambda of S T", is the fewest lines whose closure leaves no route from $S$ to $T$. The **station connectivity** $\kappa(S,T)$, read "kappa", is the fewest stations, other than $S$ and $T$, whose closure does the same.
+The **line connectivity** $`\lambda(S,T)`$, read "lambda of S T", is the fewest lines whose closure leaves no route from $`S`$ to $`T`$. The **station connectivity** $`\kappa(S,T)`$, read "kappa", is the fewest stations, other than $`S`$ and $`T`$, whose closure does the same.
 
 Menger's theorem, line form:
 
-$$\text{most line-disjoint routes from } S \text{ to } T \;=\; \lambda(S,T)$$
+```math
+\text{most line-disjoint routes from } S \text{ to } T \;=\; \lambda(S,T)
+```
 
 **Read it aloud:** trains running at once on separate lines number as many as the lines that must close to stop them all.
 
-Station form, for $S$ and $T$ not joined by a line:
+Station form, for $`S`$ and $`T`$ not joined by a line:
 
-$$\text{most station-disjoint routes from } S \text{ to } T \;=\; \kappa(S,T)$$
+```math
+\text{most station-disjoint routes from } S \text{ to } T \;=\; \kappa(S,T)
+```
 
 **Read it aloud:** routes sharing no station on the way number as many as the stations that must close.
 
-A line $e$ is a **bridge** when $c(G - e) > c(G)$. That happens exactly when $e$ lies on no loop: a loop through $e$ is a detour round it. A station is a **cut vertex** when removing it, with its lines, adds a piece. For a whole network, the connectivities are the fewest lines, or stations, whose removal splits it: a bridge makes the first 1, a cut vertex the second.
+A line $`e`$ is a **bridge** when $`c(G - e) > c(G)`$. That happens exactly when $`e`$ lies on no loop: a loop through $`e`$ is a detour round it. A station is a **cut vertex** when removing it, with its lines, adds a piece. For a whole network, the connectivities are the fewest lines, or stations, whose removal splits it: a bridge makes the first 1, a cut vertex the second.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$, $V$, $E$ | network, stations, lines | 8 stations, 9 lines | more lines, more routes |
-| $S$, $T$ | the stations kept apart | the termini | — |
-| $e$, $G - e$ | one line; the network without it | C–T; C–T closed | — |
-| $c(G)$ | number of separate pieces | 1 | — |
-| $\lambda(S,T)$ | fewest lines parting $S$ from $T$ | 2 | more trains on separate lines |
-| $\kappa(S,T)$ | fewest stations parting them | 1, station J | more station-disjoint routes |
-| $k$ | a number of routes or closures | 2 | — |
+| $`G`$, $`V`$, $`E`$ | network, stations, lines | 8 stations, 9 lines | more lines, more routes |
+| $`S`$, $`T`$ | the stations kept apart | the termini | — |
+| $`e`$, $`G - e`$ | one line; the network without it | C–T; C–T closed | — |
+| $`c(G)`$ | number of separate pieces | 1 | — |
+| $`\lambda(S,T)`$ | fewest lines parting $`S`$ from $`T`$ | 2 | more trains on separate lines |
+| $`\kappa(S,T)`$ | fewest stations parting them | 1, station J | more station-disjoint routes |
+| $`k`$ | a number of routes or closures | 2 | — |
 
 ### When it holds
 
 - **Finite networks.** The proof peels routes one at a time; infinite networks need more care.
-- **Station form needs the ends apart.** If a line joins $S$ to $T$, no set of stations separates them and $\kappa(S,T)$ is undefined.
+- **Station form needs the ends apart.** If a line joins $`S`$ to $`T`$, no set of stations separates them and $`\kappa(S,T)`$ is undefined.
 - **Disjoint means disjoint.** Count all routes instead and get 4, though 2 closures stop them all.
 - **One-way lines are fine.** The theorem then counts one-way routes and closures; the proof is unchanged.
 
@@ -78,29 +82,29 @@ A line $e$ is a **bridge** when $c(G - e) > c(G)$. That happens exactly when $e$
 
 ### Step 0: routes are a flow, closures are a cut
 
-Give every line a capacity of 1 in each direction: it carries at most one unit each way. Then send a flow, units that leave $S$, pass through stations without piling up, and arrive at $T$ ([Flows](05-flow-networks-and-ford-fulkerson.md)). A train is one unit of flow, one per line.
+Give every line a capacity of 1 in each direction: it carries at most one unit each way. Then send a flow, units that leave $`S`$, pass through stations without piling up, and arrive at $`T`$ ([Flows](05-flow-networks-and-ford-fulkerson.md)). A train is one unit of flow, one per line.
 
 ### Step 1: closures can never be fewer than routes
 
-Suppose $k$ routes share no line. A closed line lies on at most one of them, so fewer than $k$ closures leave a route open. On the railway, two separate routes force two closures.
+Suppose $`k`$ routes share no line. A closed line lies on at most one of them, so fewer than $`k`$ closures leave a route open. On the railway, two separate routes force two closures.
 
 ### Step 2: routes and whole-number flows are the same thing
 
-One unit along each of $k$ line-disjoint routes is a legal flow of value $k$.
+One unit along each of $`k`$ line-disjoint routes is a legal flow of value $`k`$.
 
-The other way round, use Ford-Fulkerson, the method of [Flows](05-flow-networks-and-ford-fulkerson.md): push units along any route with room left. With whole-number capacities it ends at a whole-number flow, so each line carries 0 or 1. From $S$, follow lines carrying a unit; every unit entering a station leaves it, so the walk reaches $T$. Remove that route's units and repeat. A flow of value $k$ peels into $k$ routes, no line used twice.
+The other way round, use Ford-Fulkerson, the method of [Flows](05-flow-networks-and-ford-fulkerson.md): push units along any route with room left. With whole-number capacities it ends at a whole-number flow, so each line carries 0 or 1. From $`S`$, follow lines carrying a unit; every unit entering a station leaves it, so the walk reaches $`T`$. Remove that route's units and repeat. A flow of value $`k`$ peels into $`k`$ routes, no line used twice.
 
 ### Step 3: a cheapest cut is a smallest set of closures
 
-A cut splits the stations into an $S$ side and a $T$ side; its price is the number of lines crossing. Closing them separates, so every price is at least $\lambda(S,T)$. Conversely, after any separating closures, put on the $S$ side every station $S$ still reaches. Every line leaving that side is closed, so that cut costs no more than the closures. The cheapest cut costs exactly $\lambda(S,T)$.
+A cut splits the stations into an $`S`$ side and a $`T`$ side; its price is the number of lines crossing. Closing them separates, so every price is at least $`\lambda(S,T)`$. Conversely, after any separating closures, put on the $`S`$ side every station $`S`$ still reaches. Every line leaving that side is closed, so that cut costs no more than the closures. The cheapest cut costs exactly $`\lambda(S,T)`$.
 
 ### Step 4: glue with max-flow min-cut
 
-Most line-disjoint routes equal the largest flow (Step 2), which equals the cheapest cut ([Max-flow min-cut](06-max-flow-min-cut.md)), which equals $\lambda(S,T)$ (Step 3). That is the line form.
+Most line-disjoint routes equal the largest flow (Step 2), which equals the cheapest cut ([Max-flow min-cut](06-max-flow-min-cut.md)), which equals $`\lambda(S,T)`$ (Step 3). That is the line form.
 
 ### Step 5: split each station to get the station form
 
-Replace every station $x$ other than $S$ and $T$ by an entrance and an exit, joined by one one-way road of capacity 1. Lines arrive at the entrance and leave from the exit. Give each line capacity 8, the number of stations. Closing all six middle stations costs only 6, so no cheapest cut uses a line.
+Replace every station $`x`$ other than $`S`$ and $`T`$ by an entrance and an exit, joined by one one-way road of capacity 1. Lines arrive at the entrance and leave from the exit. Give each line capacity 8, the number of stations. Closing all six middle stations costs only 6, so no cheapest cut uses a line.
 
 ```mermaid
 flowchart LR
@@ -111,18 +115,18 @@ flowchart LR
     Jo --> D((D))
 ```
 
-Every unit through $x$ uses its inside road, so routes share no station, and a cheapest cut is a set of inside roads: a set of stations. Steps 1 to 4 on this split network give the station form. J's inside road carries one unit, so the answer drops from 2 to 1.
+Every unit through $`x`$ uses its inside road, so routes share no station, and a cheapest cut is a set of inside roads: a set of stations. Steps 1 to 4 on this split network give the station form. J's inside road carries one unit, so the answer drops from 2 to 1.
 
 <details>
 <summary>Detailed proof: peeling a whole-number flow into routes</summary>
 
-Take a flow of value $k$, each line carrying 0 or 1. If a line carries a unit both ways, zero both: each end's in-count and out-count drop together, and the value holds.
+Take a flow of value $`k`$, each line carrying 0 or 1. If a line carries a unit both ways, zero both: each end's in-count and out-count drop together, and the value holds.
 
-From $S$, follow a line carrying a unit out. At any station but $T$ a unit came in, so one goes out; lines are finite, so the walk reaches $T$.
+From $`S`$, follow a line carrying a unit out. At any station but $`T`$ a unit came in, so one goes out; lines are finite, so the walk reaches $`T`$.
 
-If it revisits a station, cut out the loop and zero its units. What remains is a route; zero its units, and $S$ now sends $k - 1$ with every other station balanced.
+If it revisits a station, cut out the loop and zero its units. What remains is a route; zero its units, and $`S`$ now sends $`k - 1`$ with every other station balanced.
 
-Repeat $k$ times. The routes share no line, since each line held at most one unit.
+Repeat $`k`$ times. The routes share no line, since each line held at most one unit.
 
 </details>
 
@@ -136,10 +140,10 @@ A second road needs no flows: try every set of lines, smallest first, until one 
 | --- | --- | --- |
 | routes from S to T | west: via A or via B; east: via C, or via D and E | 4 routes |
 | routes sharing no line | S–A–J–C–T and S–B–J–D–E–T | 2 |
-| lines that separate | close S–A and S–B | **2**, so $\lambda(S,T)$ = 2 |
+| lines that separate | close S–A and S–B | **2**, so $`\lambda(S,T)`$ = 2 |
 | pairs of lines that separate | one line off each west route, or one off each east route | 10 |
 | routes sharing no station | every route passes J | 1 |
-| stations that separate | close J | **1**, so $\kappa(S,T)$ = 1 |
+| stations that separate | close J | **1**, so $`\kappa(S,T)`$ = 1 |
 | bridges | every line lies on a loop | none |
 | cut vertices | removing J leaves a west piece and an east piece | J |
 | C–T closed: line connectivity | 2 routes left, both via D and E | **1** |
@@ -357,12 +361,12 @@ The two outputs match line for line.
 
 Lean proves Menger's theorem in both forms, and the bridge rule, for every finite network with two-way lines.
 
-- Line form: for any two different stations $S$ and $T$, the most line-disjoint routes equal $\lambda(S,T)$.
-- Station form: for $S$ and $T$ not joined by a line, the most station-disjoint routes equal $\kappa(S,T)$.
+- Line form: for any two different stations $`S`$ and $`T`$, the most line-disjoint routes equal $`\lambda(S,T)`$.
+- Station form: for $`S`$ and $`T`$ not joined by a line, the most station-disjoint routes equal $`\kappa(S,T)`$.
 - A line is a bridge exactly when it lies on no loop.
 - The railway has 9 lines, is one piece, and has no bridge.
 - Closing S–A and S–B parts S from T; closing S–A alone does not.
-- Closing J parts S from T, so $\kappa(S,T)$ is at most 1.
+- Closing J parts S from T, so $`\kappa(S,T)`$ is at most 1.
 - With C–T closed, J–C is a bridge.
 
 The counts of 4 routes and 10 separating pairs, the full bridge and cut-vertex lists, and the flows are left to the Python and Rust checks.

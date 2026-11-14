@@ -36,11 +36,13 @@ The sloping line is each quote inverted on its own: five strikes, five volatilit
 
 ## The formula
 
-Notation first, in words. The two knobs travel as one pair, written $\theta$ and read "theta": it holds the volatility $\sigma$ ("sigma") and the dividend yield $q$.
+Notation first, in words. The two knobs travel as one pair, written $`\theta`$ and read "theta": it holds the volatility $`\sigma`$ ("sigma") and the dividend yield $`q`$.
 
-The quotes are numbered 1 to 5, low strike to high, and a small i below a symbol picks one out, so $y_i$ is quote number i's market price. Each quote also carries a scale $s_i$: a number of dollars, fixed before the fit starts, saying how many dollars of miss on that quote count as one unit of error.
+The quotes are numbered 1 to 5, low strike to high, and a small i below a symbol picks one out, so $`y_i`$ is quote number i's market price. Each quote also carries a scale $`s_i`$: a number of dollars, fixed before the fit starts, saying how many dollars of miss on that quote count as one unit of error.
 
-$$e_i(\theta) = \frac{C_i(\theta) - y_i}{s_i}, \qquad L(\theta) = \frac12 \sum_{i=1}^{5} e_i(\theta)^2$$
+```math
+e_i(\theta) = \frac{C_i(\theta) - y_i}{s_i}, \qquad L(\theta) = \frac12 \sum_{i=1}^{5} e_i(\theta)^2
+```
 
 **Read it aloud:** take each quote's miss in dollars, divide by that quote's scale, square it, add the five up, and halve the total.
 
@@ -48,21 +50,23 @@ The halving is bookkeeping: differentiating a square produces a 2, and the one-h
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | the pair of knobs being chosen | volatility and dividend yield | — |
-| $\sigma$ | volatility: how jumpy Acme's price is | 18.39% fitted on dollar scales, 30% to start | model prices rise, so the fit lowers the other knob |
-| $q$ | dividend yield: the payout rate on the share | 1.23% fitted | model prices fall, so the fit raises volatility |
-| $y_i$ | the market's price of quote number i | $23.10 at the $80 strike | the fit chases that quote |
-| $C_i$ | the model's price of the same option | 15 cents above that quote at the fit | — |
-| $s_i$ | the scale: dollars per unit of miss on that quote | 1, or that quote's vega | that quote matters less |
-| $e_i$ | the scaled miss on that quote | +0.15 in dollars at the $80 strike | — |
-| $L$ | the loss: half the sum of squared scaled misses | 0.044952 at the fit | the fit is worse, or the model is wrong |
-| $J$ | the slope table: how each model price moves when each knob moves | five rows, two columns | steps get shorter |
-| $\lambda$ | the damping: how much a long step is penalised | starts at 0.001, tripled after a refused step, divided by three after an accepted one | steps shorten and aim downhill |
-| $d$ | the step: the change added to both knobs at once | five of them settle set B | — |
+| $`\theta`$ | the pair of knobs being chosen | volatility and dividend yield | — |
+| $`\sigma`$ | volatility: how jumpy Acme's price is | 18.39% fitted on dollar scales, 30% to start | model prices rise, so the fit lowers the other knob |
+| $`q`$ | dividend yield: the payout rate on the share | 1.23% fitted | model prices fall, so the fit raises volatility |
+| $`y_i`$ | the market's price of quote number i | $23.10 at the $80 strike | the fit chases that quote |
+| $`C_i`$ | the model's price of the same option | 15 cents above that quote at the fit | — |
+| $`s_i`$ | the scale: dollars per unit of miss on that quote | 1, or that quote's vega | that quote matters less |
+| $`e_i`$ | the scaled miss on that quote | +0.15 in dollars at the $80 strike | — |
+| $`L`$ | the loss: half the sum of squared scaled misses | 0.044952 at the fit | the fit is worse, or the model is wrong |
+| $`J`$ | the slope table: how each model price moves when each knob moves | five rows, two columns | steps get shorter |
+| $`\lambda`$ | the damping: how much a long step is penalised | starts at 0.001, tripled after a refused step, divided by three after an accepted one | steps shorten and aim downhill |
+| $`d`$ | the step: the change added to both knobs at once | five of them settle set B | — |
 
 The slope table has one row per quote and one column per knob, each entry divided by that quote's scale:
 
-$$J_{i1} = \frac{1}{s_i}\frac{\partial C_i}{\partial \sigma}, \qquad J_{i2} = \frac{1}{s_i}\frac{\partial C_i}{\partial q}$$
+```math
+J_{i1} = \frac{1}{s_i}\frac{\partial C_i}{\partial \sigma}, \qquad J_{i2} = \frac{1}{s_i}\frac{\partial C_i}{\partial q}
+```
 
 The first derivative in each row is that quote's vega, the dollars it gains per one unit of volatility. At 20% volatility and a 2% payout the five vegas are $15.39, $28.92, $37.90, $38.11 and $31.42, and those same five numbers serve as the vega scales below.
 
@@ -70,11 +74,13 @@ The second derivative is dollars per one unit of dividend yield, negative everyw
 
 One step of the fit then solves a two-by-two system:
 
-$$\left(J^{\mathsf T}J + \lambda\,\operatorname{diag}(J^{\mathsf T}J)\right) d = -\,J^{\mathsf T}e$$
+```math
+\left(J^{\mathsf T}J + \lambda\,\mathrm{diag}(J^{\mathsf T}J)\right) d = -\,J^{\mathsf T}e
+```
 
 **Read it aloud:** ask the slopes for the step that would wipe out the misses if the model were a straight line, then shorten it by as much as the damping insists.
 
-$J^{\mathsf T}J$ is the two-by-two table of column dot products, and $J^{\mathsf T}e$, with the five misses stacked into one column, is the loss's gradient. At $\lambda$ zero this is the Gauss-Newton step, at $\lambda$ positive Levenberg's damped step, and taking the damping from the diagonal rather than from a plain 1 is Marquardt's change. Here $\operatorname{diag}(J^{\mathsf T}J)$ keeps that table's two diagonal entries, one per knob, and sets the other two to zero.
+$`J^{\mathsf T}J`$ is the two-by-two table of column dot products, and $`J^{\mathsf T}e`$, with the five misses stacked into one column, is the loss's gradient. At $`\lambda`$ zero this is the Gauss-Newton step, at $`\lambda`$ positive Levenberg's damped step, and taking the damping from the diagonal rather than from a plain 1 is Marquardt's change. Here $`\mathrm{diag}(J^{\mathsf T}J)`$ keeps that table's two diagonal entries, one per knob, and sets the other two to zero.
 
 ### When it holds
 
@@ -99,53 +105,65 @@ Squares are blind to sign, so a quote ten cents dear and one ten cents cheap bot
 <details>
 <summary>Why squares rather than the size of the miss</summary>
 
-Adding up unsigned misses is a defensible score, and desks sometimes use it. Its derivative jumps from $-1$ to $+1$ as a miss changes sign, so the loss gains creases and the step equations stop being linear. Squares give a smooth bowl. There is a statistical reading too: were each quote's error an independent bell-curve draw of width $s_i$, the squared sum would be the negative log-likelihood, so minimising it picks the most likely knobs ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). That reading is a loan from statistics, not a fact about quotes: a bid-ask spread is not a standard deviation.
+Adding up unsigned misses is a defensible score, and desks sometimes use it. Its derivative jumps from $`-1`$ to $`+1`$ as a miss changes sign, so the loss gains creases and the step equations stop being linear. Squares give a smooth bowl. There is a statistical reading too: were each quote's error an independent bell-curve draw of width $`s_i`$, the squared sum would be the negative log-likelihood, so minimising it picks the most likely knobs ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). That reading is a loan from statistics, not a fact about quotes: a bid-ask spread is not a standard deviation.
 
 </details>
 
 ### Step 1: pretend the model is a straight line, just for one step
 
-Near any pair of knobs, a small change $d$ moves the model's prices almost exactly along their slopes:
+Near any pair of knobs, a small change $`d`$ moves the model's prices almost exactly along their slopes:
 
-$$e(\theta + d) \approx e(\theta) + J d$$
+```math
+e(\theta + d) \approx e(\theta) + J d
+```
 
-That is a straight-line stand-in for a curved model, trusted only nearby. Substituted into the loss it makes a quadratic bowl in $d$, and a bowl has one lowest point, found by setting its slope to zero:
+That is a straight-line stand-in for a curved model, trusted only nearby. Substituted into the loss it makes a quadratic bowl in $`d`$, and a bowl has one lowest point, found by setting its slope to zero:
 
-$$J^{\mathsf T}J\,d = -\,J^{\mathsf T}e$$
+```math
+J^{\mathsf T}J\,d = -\,J^{\mathsf T}e
+```
 
 These are the normal equations that fit a straight line through data ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)), here solving for a step rather than a slope. Take the step, rebuild the slopes there, repeat: that is the Gauss-Newton method, and when it works it is fast. The five-quote fit below takes five accepted steps.
 
 ### Step 2: damp the step, because the straight line was a lie
 
-Nothing in Step 1 keeps the step small, and the stand-in is trustworthy only while it is. From a volatility of 70% and a payout of 10%, the undamped step lands at a volatility of $-0.004732$. The model cannot price a negative volatility, so the search ends before it starts.
+Nothing in Step 1 keeps the step small, and the stand-in is trustworthy only while it is. From a volatility of 70% and a payout of 10%, the undamped step lands at a volatility of $`-0.004732`$. The model cannot price a negative volatility, so the search ends before it starts.
 
-Kenneth Levenberg's 1944 fix charges the step for its own length: add half of $\lambda$ times the step's squared length to the bowl, and the lowest point moves in.
+Kenneth Levenberg's 1944 fix charges the step for its own length: add half of $`\lambda`$ times the step's squared length to the bowl, and the lowest point moves in.
 
-$$\left(J^{\mathsf T}J + \lambda I\right) d = -\,J^{\mathsf T}e$$
+```math
+\left(J^{\mathsf T}J + \lambda I\right) d = -\,J^{\mathsf T}e
+```
 
-Here $I$ is the two-by-two identity table, 1 on the diagonal and 0 elsewhere, so both knobs pay the same charge. Large $\lambda$ gives a short step pointing straight downhill; small $\lambda$ gives Step 1 back. The damping is a leash on this step, not a penalty on the knobs.
+Here $`I`$ is the two-by-two identity table, 1 on the diagonal and 0 elsewhere, so both knobs pay the same charge. Large $`\lambda`$ gives a short step pointing straight downhill; small $`\lambda`$ gives Step 1 back. The damping is a leash on this step, not a penalty on the knobs.
 
-Donald Marquardt's 1963 change is the one in the formula above: charge each knob by its own column, $\lambda\operatorname{diag}(J^{\mathsf T}J)$, rather than both the same. It matters because "the step's length" means nothing until units are fixed — quote volatility in basis points (hundredths of a percent) instead of percent and the same move looks a hundred times longer, which a plain $\lambda I$ would punish a hundred times harder. Each column's own size settles the question.
+Donald Marquardt's 1963 change is the one in the formula above: charge each knob by its own column, $`\lambda\mathrm{diag}(J^{\mathsf T}J)`$, rather than both the same. It matters because "the step's length" means nothing until units are fixed — quote volatility in basis points (hundredths of a percent) instead of percent and the same move looks a hundred times longer, which a plain $`\lambda I`$ would punish a hundred times harder. Each column's own size settles the question.
 
 ### Step 3: trust the loss, not the model of the loss
 
-A damped step is still a guess from a stand-in, so every step is checked against the real loss and kept only if the real loss falls. A refusal means the stand-in is being trusted too far: triple $\lambda$, shorten the step, try again. An acceptance means it is working: divide $\lambda$ by three and be bolder next time.
+A damped step is still a guess from a stand-in, so every step is checked against the real loss and kept only if the real loss falls. A refusal means the stand-in is being trusted too far: triple $`\lambda`$, shorten the step, try again. An acceptance means it is working: divide $`\lambda`$ by three and be bolder next time.
 
 That rule is what rescues the ruinous start — from 70% volatility the damped run reaches the same 18.3890% as the gentle start, in nine accepted steps. The stopping rule belongs in the report too: the run stops when an accepted step improves the loss by less than a hundred-millionth of one plus the loss, and it prints which rule stopped it.
 
 <details>
 <summary>Detailed proof: the damped step exists, is unique, and goes downhill</summary>
 
-Write the damped matrix as $H = J^{\mathsf T}J + D$, the damping as $D = \lambda I$ in Levenberg's version or $D = \lambda\operatorname{diag}(J^{\mathsf T}J)$ in Marquardt's, and the loss's own slope in the knobs as $g = J^{\mathsf T}e$. Take the damping positive, and for Marquardt's version take every diagonal entry of $J^{\mathsf T}J$ positive too.
+Write the damped matrix as $`H = J^{\mathsf T}J + D`$, the damping as $`D = \lambda I`$ in Levenberg's version or $`D = \lambda\mathrm{diag}(J^{\mathsf T}J)`$ in Marquardt's, and the loss's own slope in the knobs as $`g = J^{\mathsf T}e`$. Take the damping positive, and for Marquardt's version take every diagonal entry of $`J^{\mathsf T}J`$ positive too.
 
-**One solution, not none and not many.** For any non-zero vector $z$, the first part gives $z^{\mathsf T}J^{\mathsf T}Jz = \lVert Jz\rVert^2 \ge 0$ and the damping gives $z^{\mathsf T}Dz > 0$, so $z^{\mathsf T}Hz > 0$. No non-zero vector can then satisfy $Hz = 0$, which would force $z^{\mathsf T}Hz = 0$, so the damped matrix is invertible and the step equations have exactly one solution. In two knobs the determinant shows it outright: for a slope table with columns u and w, under Levenberg's damping, Cauchy-Schwarz gives
-$$\det H = (\lVert u\rVert^2 + \lambda)(\lVert w\rVert^2 + \lambda) - (u\cdot w)^2 \ge \lambda^2 + \lambda(\lVert u\rVert^2 + \lVert w\rVert^2) > 0.$$
+**One solution, not none and not many.** For any non-zero vector $`z`$, the first part gives $`z^{\mathsf T}J^{\mathsf T}Jz = \lVert Jz\rVert^2 \ge 0`$ and the damping gives $`z^{\mathsf T}Dz > 0`$, so $`z^{\mathsf T}Hz > 0`$. No non-zero vector can then satisfy $`Hz = 0`$, which would force $`z^{\mathsf T}Hz = 0`$, so the damped matrix is invertible and the step equations have exactly one solution. In two knobs the determinant shows it outright: for a slope table with columns u and w, under Levenberg's damping, Cauchy-Schwarz gives
+
+$`\displaystyle \det H = (\lVert u\rVert^2 + \lambda)(\lVert w\rVert^2 + \lambda) - (u\cdot w)^2 \ge \lambda^2 + \lambda(\lVert u\rVert^2 + \lVert w\rVert^2) > 0.`$
+
 Note what this needs: positive damping, and for Marquardt's version a non-zero diagonal. The zero-strike tickets of Step 4 have a zero diagonal entry, and the claim fails there, exactly as the checks report.
 
-**The step points downhill.** The loss's slope is $\nabla L = J^{\mathsf T}e$, since each term contributes its own miss times its own slope. If that slope is not zero then the step $d = -H^{-1}g$ is not zero either, and
-$$g\cdot d = -\,d^{\mathsf T}Hd = -\lVert Jd\rVert^2 - d^{\mathsf T}Dd < 0.$$
+**The step points downhill.** The loss's slope is $`\nabla L = J^{\mathsf T}e`$, since each term contributes its own miss times its own slope. If that slope is not zero then the step $`d = -H^{-1}g`$ is not zero either, and
+
+$`\displaystyle g\cdot d = -\,d^{\mathsf T}Hd = -\lVert Jd\rVert^2 - d^{\mathsf T}Dd < 0.`$
+
 The slope and the step point into opposite half-spaces, which is what downhill means. Since the loss is differentiable, moving a fraction t of the step gives
-$$L(\theta + t\,d) = L(\theta) + t\,(g\cdot d) + o(t),$$
+
+$`\displaystyle L(\theta + t\,d) = L(\theta) + t\,(g\cdot d) + o(t),`$
+
 so for every small enough fraction the loss falls, and tripling the damping shrinks the step towards nothing until the retry loop finds one.
 
 **What is not proved.** That the run reaches a minimum, that the minimum found is the lowest, or that the fitted knobs are the market's. A continuous loss does attain a smallest value on a closed bounded box of knobs ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)); finding it is a separate matter.
@@ -154,7 +172,7 @@ so for every small enough fraction the loss falls, and tripling the damping shri
 
 ### Step 4: ask whether the quotes can tell the knobs apart
 
-A small loss is no evidence that the knobs are pinned down. The evidence lives in the slope table: do its two columns point in genuinely different directions, which is to ask whether the determinant $\det(J^{\mathsf T}J)$ is zero. The checks print three cases.
+A small loss is no evidence that the knobs are pinned down. The evidence lives in the slope table: do its two columns point in genuinely different directions, which is to ask whether the determinant $`\det(J^{\mathsf T}J)`$ is zero. The checks print three cases.
 
 - **Five strikes:** 36,105,559.7.
 - **One quote alone:** zero, since one row makes the columns multiples of each other.
@@ -164,7 +182,7 @@ The size of the first number says nothing on its own, since it carries the slope
 
 The single quote shows the failure plainest. The $100-strike call is quoted at $9.23, and the pairs producing it run 18% volatility with a 0.75% payout, 19% with 1.36%, 20% with 2.00%, 21% with 2.66%, 22% with 3.33%.
 
-Every pair reprices it perfectly, so the loss is zero along a whole curve, and where the fit lands depends only on where it began: from 16% volatility it stops at 16.3611% with a payout of $-0.2044\%$, from 26% at 25.1813% with 5.5871%. Two runs, two answers, both flawless by their own score.
+Every pair reprices it perfectly, so the loss is zero along a whole curve, and where the fit lands depends only on where it began: from 16% volatility it stops at 16.3611% with a payout of $`-0.2044\%`$, from 26% at 25.1813% with 5.5871%. Two runs, two answers, both flawless by their own score.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -178,7 +196,7 @@ xychart-beta
 
 The rising line is the curve of perfect fits; the flat line is the payout that actually made the quote, 2%. They cross once, at 20% volatility, and nothing in the one quote marks the crossing as special. A second strike marks it: the ratio of a row's two slopes falls as the strike rises, so a second row points a different way, the columns separate, and the curve collapses to a point.
 
-Damping cannot supply what the quotes withhold. On the five zero-strike tickets Levenberg's $\lambda I$ still returns one well-defined step, and that step moves volatility by exactly 0.000000: nothing in the data points either way. Marquardt's diagonal damping returns no step at all: its determinant is 0.000000, since scaling a zero column leaves it zero. A unique step and an unidentified parameter sit together happily, which is why a converged optimiser is never on its own a reason to believe a number.
+Damping cannot supply what the quotes withhold. On the five zero-strike tickets Levenberg's $`\lambda I`$ still returns one well-defined step, and that step moves volatility by exactly 0.000000: nothing in the data points either way. Marquardt's diagonal damping returns no step at all: its determinant is 0.000000, since scaling a zero column leaves it zero. A unique step and an unidentified parameter sit together happily, which is why a converged optimiser is never on its own a reason to believe a number.
 
 A second road reaches the same fitted pair with none of this machinery: cover the knobs with a grid, keep the best corner, shrink the grid around it, repeat. No slopes, no damping, far slower, and it agrees to six decimals. Derivative-free and global searches belong to [Nonlinear least squares](../../15-Optimization/02-Unconstrained%20Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md).
 
@@ -635,10 +653,10 @@ The two outputs match line for line, from two different bell curves and two diff
 
 Lean proves the damped step is unique and downhill for any number of quotes and knobs, and the one-quote determinant.
 
-- Take a positive $\lambda$ and Levenberg's damping $\lambda I$. Then the damped matrix is invertible, and the step equations have exactly one solution.
-- Under the same damping, suppose the loss's slope $g = J^{\mathsf T}e$ is not zero. Then the step goes downhill: $g\cdot d < 0$.
-- Take a positive $\lambda$, Marquardt's damping, and every diagonal entry of $J^{\mathsf T}J$ positive. Then the same three facts hold: invertible, one solution, downhill.
-- Take a slope table with one row and two columns. Then $\det(J^{\mathsf T}J) = 0$, so one quote cannot tell the two knobs apart.
+- Take a positive $`\lambda`$ and Levenberg's damping $`\lambda I`$. Then the damped matrix is invertible, and the step equations have exactly one solution.
+- Under the same damping, suppose the loss's slope $`g = J^{\mathsf T}e`$ is not zero. Then the step goes downhill: $`g\cdot d < 0`$.
+- Take a positive $`\lambda`$, Marquardt's damping, and every diagonal entry of $`J^{\mathsf T}J`$ positive. Then the same three facts hold: invertible, one solution, downhill.
+- Take a slope table with one row and two columns. Then $`\det(J^{\mathsf T}J) = 0`$, so one quote cannot tell the two knobs apart.
 
 The fits, the misses, the five-strike and ticket determinants and the retry loop are left to the Python and Rust checks.
 

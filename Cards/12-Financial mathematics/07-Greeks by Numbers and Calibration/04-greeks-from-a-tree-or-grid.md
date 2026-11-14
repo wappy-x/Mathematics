@@ -46,55 +46,63 @@ Acme's price on top of each box, the option's worth below. The two boxes at thre
 
 ## The formula
 
-Notation first, in words. A node is named by two counts: steps passed, and how many were up moves. $V_n(j)$ is the option's worth after $n$ steps of which $j$ were up, and $S_n(j)$ is Acme's price there. Those are labels, not multiplications, and both come from the earlier card unchanged.
+Notation first, in words. A node is named by two counts: steps passed, and how many were up moves. $`V_n(j)`$ is the option's worth after $`n`$ steps of which $`j`$ were up, and $`S_n(j)`$ is Acme's price there. Those are labels, not multiplications, and both come from the earlier card unchanged.
 
-The number of steps is written $M$ here, not $N$ as on that card, because on this shelf $N$ already means the bell curve's area to the left of a point. One step lasts $\Delta t = T/M$ years; those two letters always travel together, since $\Delta$ alone is delta.
+The number of steps is written $`M`$ here, not $`N`$ as on that card, because on this shelf $`N`$ already means the bell curve's area to the left of a point. One step lasts $`\Delta t = T/M`$ years; those two letters always travel together, since $`\Delta`$ alone is delta.
 
 Delta comes off the pair one step in:
 
-$$\Delta_{\text{node}} = \frac{V_1(1) - V_1(0)}{S_1(1) - S_1(0)}$$
+```math
+\Delta_{\text{node}} = \frac{V_1(1) - V_1(0)}{S_1(1) - S_1(0)}
+```
 
 **Read it aloud:** the gap between the option's two possible worths, divided by the gap between Acme's two possible prices.
 
-Gamma comes off the triple two steps in, whose prices are not evenly spaced. The gap above the middle node is $h_+ = S(u^2 - 1)$ and below it $h_- = S(1 - d^2)$; $h_+$ is the larger, because multiplying up twice travels further in dollars than dividing down twice: $22.14 against $18.13 here.
+Gamma comes off the triple two steps in, whose prices are not evenly spaced. The gap above the middle node is $`h_+ = S(u^2 - 1)`$ and below it $`h_- = S(1 - d^2)`$; $`h_+`$ is the larger, because multiplying up twice travels further in dollars than dividing down twice: $22.14 against $18.13 here.
 
-$$\Gamma_{\text{node}} = \frac{2}{h_+ + h_-}\left(\frac{V_2(2) - V_2(1)}{h_+} - \frac{V_2(1) - V_2(0)}{h_-}\right)$$
+```math
+\Gamma_{\text{node}} = \frac{2}{h_+ + h_-}\left(\frac{V_2(2) - V_2(1)}{h_+} - \frac{V_2(1) - V_2(0)}{h_-}\right)
+```
 
 **Read it aloud:** the slope above the middle node minus the slope below it, doubled, then spread over the distance between the two outer nodes.
 
-Theta comes off the middle node of that triple. Because $u\,d = 1$ — the defining habit of a recombining tree — an up step then a down step returns to $S$ exactly, so that node holds today's stock price at a later date:
+Theta comes off the middle node of that triple. Because $`u\,d = 1`$ — the defining habit of a recombining tree — an up step then a down step returns to $`S`$ exactly, so that node holds today's stock price at a later date:
 
-$$\Theta_{\text{node}} = \frac{V_2(1) - V_0(0)}{2\,\Delta t}$$
+```math
+\Theta_{\text{node}} = \frac{V_2(1) - V_0(0)}{2\,\Delta t}
+```
 
 **Read it aloud:** the same option at the same stock price two steps later, minus today, divided by the years that went by.
 
-A finite-difference grid stores prices against $x = \ln(S/100)$, the log of the price in units of today's, because the model's jumpiness is constant in logs. Write $U$ for the worth at a grid point, $U_x$ and $U_{xx}$ for its slope and bend along the grid, and $a$ for the grid's spacing in $x$. Grid slopes are per log unit, not per dollar, and converting is a chain rule:
+A finite-difference grid stores prices against $`x = \ln(S/100)`$, the log of the price in units of today's, because the model's jumpiness is constant in logs. Write $`U`$ for the worth at a grid point, $`U_x`$ and $`U_{xx}`$ for its slope and bend along the grid, and $`a`$ for the grid's spacing in $`x`$. Grid slopes are per log unit, not per dollar, and converting is a chain rule:
 
-$$C_S = \frac{U_x}{S}, \qquad C_{SS} = \frac{U_{xx} - U_x}{S^2}$$
+```math
+C_S = \frac{U_x}{S}, \qquad C_{SS} = \frac{U_{xx} - U_x}{S^2}
+```
 
 **Read it aloud:** divide the log-grid slope by the price to get dollars per dollar; for the bend, subtract the slope first, then divide by the price twice.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $K$ | Acme's price today; the strike it may buy at | $100 and $100 | $S$ up: delta climbs toward 1 |
-| $T$, $M$ | life in years; steps the tree cuts it into, each lasting $\Delta t = T/M$ | 1 year; 4 steps, then up to 1024 | more steps: finer, slower, more accurate |
-| $r$, $q$ | the riskless rate; the dividend yield Acme pays out | 5% and 2% | $q$ up: delta falls, dividends leaking out |
-| $\sigma$ | volatility, how jumpy Acme is. Say "sigma". | 20% | wider branches, so wider gaps between nodes |
-| $u$, $d$, $p$ | the up factor, the down factor, the risk-neutral weight on an up step | 1.105171, 0.904837, 0.512599 | — |
-| $V$, $n$, $j$ | the worth at a node $V_n(j)$: $n$ steps in, $j$ of them up | $8.76 at the root | — |
-| $h$ | the dollar gap from the middle node two steps in to its neighbours, up ($h_+$) and down ($h_-$) | $22.14 and $18.13 | bigger gaps: more bias, less noise |
-| $\Delta$, $C_S$ | delta: dollars gained per dollar Acme gains; the price's slope in $S$ | 0.584104 from four steps | — |
-| $\Gamma$, $C_{SS}$ | gamma: delta gained per dollar Acme gains; the price's bend in $S$ | 0.024206 from four steps | — |
-| $\Theta$ | theta: dollars lost per year as the calendar advances, Acme held still | −$6.17 a year from four steps | — |
-| $U$, $U_x$, $U_{xx}$, $a$ | the worth at a grid point in $x = \ln(S/100)$; its slope and bend there; the grid's spacing in $x$ | $a$ = 0.010, then 0.002 | smaller $a$: less bias, then rounding noise |
-| $N$ | the bell curve's area to the left of a point: the house meaning of the letter, which is why steps are $M$ | — | — |
+| $`S`$, $`K`$ | Acme's price today; the strike it may buy at | $100 and $100 | $`S`$ up: delta climbs toward 1 |
+| $`T`$, $`M`$ | life in years; steps the tree cuts it into, each lasting $`\Delta t = T/M`$ | 1 year; 4 steps, then up to 1024 | more steps: finer, slower, more accurate |
+| $`r`$, $`q`$ | the riskless rate; the dividend yield Acme pays out | 5% and 2% | $`q`$ up: delta falls, dividends leaking out |
+| $`\sigma`$ | volatility, how jumpy Acme is. Say "sigma". | 20% | wider branches, so wider gaps between nodes |
+| $`u`$, $`d`$, $`p`$ | the up factor, the down factor, the risk-neutral weight on an up step | 1.105171, 0.904837, 0.512599 | — |
+| $`V`$, $`n`$, $`j`$ | the worth at a node $`V_n(j)`$: $`n`$ steps in, $`j`$ of them up | $8.76 at the root | — |
+| $`h`$ | the dollar gap from the middle node two steps in to its neighbours, up ($`h_+`$) and down ($`h_-`$) | $22.14 and $18.13 | bigger gaps: more bias, less noise |
+| $`\Delta`$, $`C_S`$ | delta: dollars gained per dollar Acme gains; the price's slope in $`S`$ | 0.584104 from four steps | — |
+| $`\Gamma`$, $`C_{SS}`$ | gamma: delta gained per dollar Acme gains; the price's bend in $`S`$ | 0.024206 from four steps | — |
+| $`\Theta`$ | theta: dollars lost per year as the calendar advances, Acme held still | −$6.17 a year from four steps | — |
+| $`U`$, $`U_x`$, $`U_{xx}`$, $`a`$ | the worth at a grid point in $`x = \ln(S/100)`$; its slope and bend there; the grid's spacing in $`x`$ | $`a`$ = 0.010, then 0.002 | smaller $`a`$: less bias, then rounding noise |
+| $`N`$ | the bell curve's area to the left of a point: the house meaning of the letter, which is why steps are $`M`$ | — | — |
 
 ### When it holds
 
 - **Smooth ground around the nodes.** The reading fits a line or a parabola through neighbouring prices. If they straddle a corner — the payoff's kink at the strike in the last column, or a barrier — the fit describes the corner, not the option.
-- **A recombining tree.** With $u\,d = 1$ the middle node two steps in returns to today's price. Without it no node holds today's price at a later date, and theta has nothing to compare against.
-- **The estimate is dated, and not today.** The pair one step in lives at $\Delta t$, three months out on a four-step tree, and the triple at $2\Delta t$; quoted as today's Greek, either carries a stale date.
-- **The spacing belongs to the tree.** The gaps are about $S\sigma\sqrt{\Delta t}$ wide, so refining shrinks them whether that helps or not, and whatever error a node price already carries is then divided by smaller numbers.
+- **A recombining tree.** With $`u\,d = 1`$ the middle node two steps in returns to today's price. Without it no node holds today's price at a later date, and theta has nothing to compare against.
+- **The estimate is dated, and not today.** The pair one step in lives at $`\Delta t`$, three months out on a four-step tree, and the triple at $`2\Delta t`$; quoted as today's Greek, either carries a stale date.
+- **The spacing belongs to the tree.** The gaps are about $`S\sigma\sqrt{\Delta t}`$ wide, so refining shrinks them whether that helps or not, and whatever error a node price already carries is then divided by smaller numbers.
 - **Two errors, not one.** A node number differs from a formula number because a difference quotient is not a derivative and because the tree's price is not the model's; blame the wrong one and the fix is wasted.
 
 ---
@@ -109,17 +117,17 @@ Backward induction fills in a value for every date-and-price pair on the tree, t
 
 The line through the two nodes one step in — the chord — has a slope equal to the price curve's true slope somewhere between them; that much is the mean value theorem.
 
-The reading wants the slope at the middle, and the chord misses it by two pieces: the curve's bend times how much the two gaps differ, plus the bend's own slope times the width squared. Neither is a choice: the width is about $S\sigma\sqrt{\Delta t}$ and the gaps differ by about $S\sigma^2\Delta t$, so both pieces are of size $\Delta t$ — the size of the dating error of Step 3.
+The reading wants the slope at the middle, and the chord misses it by two pieces: the curve's bend times how much the two gaps differ, plus the bend's own slope times the width squared. Neither is a choice: the width is about $`S\sigma\sqrt{\Delta t}`$ and the gaps differ by about $`S\sigma^2\Delta t`$, so both pieces are of size $`\Delta t`$ — the size of the dating error of Step 3.
 
-The chord is a price slope, not a hedge. With dividends leaking out, the share count that copies the option over the step is this chord times $e^{-q\Delta t}$, which is why the hedge column on the multi-step tree card reads a little under the delta here.
+The chord is a price slope, not a hedge. With dividends leaking out, the share count that copies the option over the step is this chord times $`e^{-q\Delta t}`$, which is why the hedge column on the multi-step tree card reads a little under the delta here.
 
 ### Step 2: three prices fix one parabola, and its bend is gamma
 
 Put the middle node at the origin and measure sideways in dollars. Exactly one parabola passes through all three nodes, since three points at distinct positions pin three coefficients, and a parabola's curvature is the same everywhere and equals twice its squared-term coefficient. So the node gamma is that doubled coefficient.
 
-The chord slope up to the higher node is the linear coefficient plus the squared one times $h_+$; the chord down to the lower node is the linear coefficient minus the squared one times $h_-$. Subtracting kills the linear term and leaves the squared coefficient times the total width. The node gamma is therefore twice the gap between the two one-sided slopes, divided by that width — the formula above.
+The chord slope up to the higher node is the linear coefficient plus the squared one times $`h_+`$; the chord down to the lower node is the linear coefficient minus the squared one times $`h_-`$. Subtracting kills the linear term and leaves the squared coefficient times the total width. The node gamma is therefore twice the gap between the two one-sided slopes, divided by that width — the formula above.
 
-On the four-quarter tree those one-sided slopes are 0.313009 below and 0.800355 above: the option's slope nearly triples across $40 of stock price, and gamma is made of exactly that. The check runs the same three-point recipe on a genuine parabola, $3 + 2x + 5x^2$ sampled at gaps 1.5 and 4.0, and recovers chord slope 14.500000 and curvature 10.000000 — the hand-algebra answers, exactly.
+On the four-quarter tree those one-sided slopes are 0.313009 below and 0.800355 above: the option's slope nearly triples across $40 of stock price, and gamma is made of exactly that. The check runs the same three-point recipe on a genuine parabola, $`3 + 2x + 5x^2`$ sampled at gaps 1.5 and 4.0, and recovers chord slope 14.500000 and curvature 10.000000 — the hand-algebra answers, exactly.
 
 <details>
 <summary>Detailed proof: the parabola through three unequally spaced prices, and what price errors do to it</summary>
@@ -127,18 +135,26 @@ On the four-quarter tree those one-sided slopes are 0.313009 below and 0.800355 
 **Uniqueness.** Two quadratics agreeing with the three prices differ by a polynomial of degree at most two with three distinct roots, so the difference is zero.
 
 **The coefficients.** Measure sideways from the middle node and write the two one-sided slopes as
-$$d_+ = \frac{V_2(2) - V_2(1)}{h_+} = b + c\,h_+, \qquad d_- = \frac{V_2(1) - V_2(0)}{h_-} = b - c\,h_-,$$
+
+$`\displaystyle d_+ = \frac{V_2(2) - V_2(1)}{h_+} = b + c\,h_+, \qquad d_- = \frac{V_2(1) - V_2(0)}{h_-} = b - c\,h_-,`$
+
 the parabola's linear and squared coefficients being those two letters. Subtracting and solving gives
-$$c = \frac{d_+ - d_-}{h_+ + h_-}, \qquad b = \frac{h_-\,d_+ + h_+\,d_-}{h_+ + h_-}, \qquad \Gamma_{\text{node}} = 2c.$$
-With equal gaps this collapses to the familiar $(V_+ - 2V_0 + V_-)/h^2$; on a tree the gaps are never equal, and the collapse costs 0.029717 against 0.024206.
 
-**Truncation** — the error of using a chord where a slope is wanted. Suppose the true same-date price curve has three continuous derivatives across an interval holding all three stock prices, bounded there by the numbers $B_2$ and $B_3$ ($B$ for bound; $M$ still counts steps):
-$$\lvert C_{SS} \rvert \le B_2, \qquad \lvert C_{SSS} \rvert \le B_3.$$
+$`\displaystyle c = \frac{d_+ - d_-}{h_+ + h_-}, \qquad b = \frac{h_-\,d_+ + h_+\,d_-}{h_+ + h_-}, \qquad \Gamma_{\text{node}} = 2c.`$
+
+With equal gaps this collapses to the familiar $`(V_+ - 2V_0 + V_-)/h^2`$; on a tree the gaps are never equal, and the collapse costs 0.029717 against 0.024206.
+
+**Truncation** — the error of using a chord where a slope is wanted. Suppose the true same-date price curve has three continuous derivatives across an interval holding all three stock prices, bounded there by the numbers $`B_2`$ and $`B_3`$ ($`B`$ for bound; $`M`$ still counts steps):
+
+$`\displaystyle \lvert C_{SS} \rvert \le B_2, \qquad \lvert C_{SSS} \rvert \le B_3.`$
+
 Taylor's theorem about the middle node then bounds the two readings:
-$$\lvert \Gamma_{\text{node}} - C_{SS} \rvert \le \frac{B_3\,(h_+^2 + h_-^2)}{3\,(h_+ + h_-)}, \qquad \lvert \Delta_{\text{chord}} - C_S \rvert \le \frac{B_2\,(h_+^2 + h_-^2)}{2\,(h_+ + h_-)}.$$
-Each bound falls like the spacing itself. The readings beat their own bounds on a recombining tree: the two gaps differ by only about $4S\sigma^2\Delta t$, and that near-symmetry cancels the leading term, leaving an error of order $\Delta t$ — the rate the printed table shows. A payoff kink has no bounded second derivative, which is why the assumptions forbid straddling one.
 
-**Price errors.** If each node price is wrong by up to one cent, the delta reading moves by at most $2/(h_+ + h_-)$ cents and the gamma reading by at most $4/(h_+h_-)$ cents, the worst case being a middle error of the opposite sign to the outer two. Truncation falls as the gaps shrink; this term rises.
+$`\displaystyle \lvert \Gamma_{\text{node}} - C_{SS} \rvert \le \frac{B_3\,(h_+^2 + h_-^2)}{3\,(h_+ + h_-)}, \qquad \lvert \Delta_{\text{chord}} - C_S \rvert \le \frac{B_2\,(h_+^2 + h_-^2)}{2\,(h_+ + h_-)}.`$
+
+Each bound falls like the spacing itself. The readings beat their own bounds on a recombining tree: the two gaps differ by only about $`4S\sigma^2\Delta t`$, and that near-symmetry cancels the leading term, leaving an error of order $`\Delta t`$ — the rate the printed table shows. A payoff kink has no bounded second derivative, which is why the assumptions forbid straddling one.
+
+**Price errors.** If each node price is wrong by up to one cent, the delta reading moves by at most $`2/(h_+ + h_-)`$ cents and the gamma reading by at most $`4/(h_+h_-)`$ cents, the worst case being a middle error of the opposite sign to the outer two. Truncation falls as the gaps shrink; this term rises.
 
 At 1024 steps a cent at each node already buys 0.025600 of gamma error, more than gamma itself. The tree below carries fifteen digits, so its printed errors keep falling; a pricer good only to the cent meets that floor while the tree is still coarse.
 
@@ -148,19 +164,19 @@ At 1024 steps a cent at each node already buys 0.025600 of gamma error, more tha
 
 The four-step node delta is 0.584104. The formula says 0.586851 today and 0.576983 at the node's own date, nine months from expiry. The node number is far nearer today's answer than its own date's, which looks like luck and partly is.
 
-Two errors of size $\Delta t$ are in play, pulling opposite ways. Dating the estimate three months late pushes it down, since a call's delta at the money drifts toward one half as expiry nears; spreading the chord over a $20 interval pushes it up. The printed table shows the same squeeze at every step count. The cancellation is a fact about this example, not a theorem.
+Two errors of size $`\Delta t`$ are in play, pulling opposite ways. Dating the estimate three months late pushes it down, since a call's delta at the money drifts toward one half as expiry nears; spreading the chord over a $20 interval pushes it up. The printed table shows the same squeeze at every step count. The cancellation is a fact about this example, not a theorem.
 
 ### Step 4: theta needs a node at the same price, which recombination supplies
 
-Theta holds the stock still and lets only the calendar move, and nothing on a tree holds the stock still except a recombining node: an up step then a down step multiplies by $u\,d$, which is 1, so the middle node two steps in is Acme at $100 again, six months later. Its worth against today's, over the half year, is theta — −6.172862 a year here, against the formula's −5.089319.
+Theta holds the stock still and lets only the calendar move, and nothing on a tree holds the stock still except a recombining node: an up step then a down step multiplies by $`u\,d`$, which is 1, so the middle node two steps in is Acme at $100 again, six months later. Its worth against today's, over the half year, is theta — −6.172862 a year here, against the formula's −5.089319.
 
 Reading along a branch instead, the up node two steps in against today, folds a $22 stock move into the answer and gives **+29.267282 a year**. A call at the money loses to the calendar in this market, so the sign alone catches the error.
 
 ### Step 5: a grid in logs, and the coordinate trap
 
-Since $S = 100\,e^x$ has slope $S$ in $x$, the chain rule gives $U_x = S\,C_S$, and again $U_{xx} = S\,C_S + S^2\,C_{SS}$. Solving that pair is the conversion above, whose second half carries a first-derivative term owed to the coordinate, not to the option.
+Since $`S = 100\,e^x`$ has slope $`S`$ in $`x`$, the chain rule gives $`U_x = S\,C_S`$, and again $`U_{xx} = S\,C_S + S^2\,C_{SS}`$. Solving that pair is the conversion above, whose second half carries a first-derivative term owed to the coordinate, not to the option.
 
-At spacing 0.010 the grid reads delta 0.586885 and gamma 0.018946, against the formulas' 0.586851 and 0.018951. At spacing 0.002, five times finer, it reads 0.586852 and 0.018950. Delta's error falls twenty-five-fold, the square law in the open; gamma's does the same, below the last printed digit. Read $U_x$ as a share delta and the answer is 58.688461, a hundred times too big; drop the $-U_x$ term and gamma reads 0.024815, a gap no refinement closes, because the mistake is algebra, not spacing.
+At spacing 0.010 the grid reads delta 0.586885 and gamma 0.018946, against the formulas' 0.586851 and 0.018951. At spacing 0.002, five times finer, it reads 0.586852 and 0.018950. Delta's error falls twenty-five-fold, the square law in the open; gamma's does the same, below the last printed digit. Read $`U_x`$ as a share delta and the answer is 58.688461, a hundred times too big; drop the $`-U_x`$ term and gamma reads 0.024815, a gap no refinement closes, because the mistake is algebra, not spacing.
 
 ### The other roads to a Greek
 
@@ -170,21 +186,21 @@ Three sibling cards reach the same numbers without reading nodes: [Bump and reva
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, cut into $M = 4$ quarters.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year, cut into $`M = 4`$ quarters.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| one step's length and log move, $\Delta t = T/M$ and $\sigma\sqrt{\Delta t}$ | $1/4$; $0.20 \times 0.5$ | 0.25 years; 0.10 |
-| up and down factors, $u = e^{0.10}$, $d = e^{-0.10}$ | | 1.105171 and 0.904837 |
-| the two nodes one step in, $S_1(0)$ and $S_1(1)$ | $100 \times 0.904837$, $100 \times 1.105171$ | 90.483742 and 110.517092 |
-| their worths, $V_1(0)$ and $V_1(1)$ | from the backward walk | 2.872305 and 14.573873 |
-| **node delta**, dated three months in | $(14.573873 - 2.872305)/(110.517092 - 90.483742)$ | **0.584104** |
-| the three nodes two steps in | $100 \times d^2$, $100$, $100 \times u^2$ | 81.873075, 100.000000, 122.140276 |
-| their worths, $V_2(0)$, $V_2(1)$, $V_2(2)$ | from the backward walk | 0.000000, 5.673896, 23.393969 |
-| the gaps, $h_-$ and $h_+$ | $100 - 81.873075$, $122.140276 - 100$ | 18.126925 and 22.140276 |
-| the slopes below and above the middle node | $5.673896/18.126925$, $(23.393969 - 5.673896)/22.140276$ | 0.313009 and 0.800355 |
-| **node gamma**, dated six months in | $2 \times (0.800355 - 0.313009)/(22.140276 + 18.126925)$ | **0.024206** |
-| **node theta**, per year | $(5.673896 - 8.760327)/(2 \times 0.25)$ | **−6.172862** |
+| one step's length and log move, $`\Delta t = T/M`$ and $`\sigma\sqrt{\Delta t}`$ | $`1/4`$; $`0.20 \times 0.5`$ | 0.25 years; 0.10 |
+| up and down factors, $`u = e^{0.10}`$, $`d = e^{-0.10}`$ | | 1.105171 and 0.904837 |
+| the two nodes one step in, $`S_1(0)`$ and $`S_1(1)`$ | $`100 \times 0.904837`$, $`100 \times 1.105171`$ | 90.483742 and 110.517092 |
+| their worths, $`V_1(0)`$ and $`V_1(1)`$ | from the backward walk | 2.872305 and 14.573873 |
+| **node delta**, dated three months in | $`(14.573873 - 2.872305)/(110.517092 - 90.483742)`$ | **0.584104** |
+| the three nodes two steps in | $`100 \times d^2`$, $`100`$, $`100 \times u^2`$ | 81.873075, 100.000000, 122.140276 |
+| their worths, $`V_2(0)`$, $`V_2(1)`$, $`V_2(2)`$ | from the backward walk | 0.000000, 5.673896, 23.393969 |
+| the gaps, $`h_-`$ and $`h_+`$ | $`100 - 81.873075`$, $`122.140276 - 100`$ | 18.126925 and 22.140276 |
+| the slopes below and above the middle node | $`5.673896/18.126925`$, $`(23.393969 - 5.673896)/22.140276`$ | 0.313009 and 0.800355 |
+| **node gamma**, dated six months in | $`2 \times (0.800355 - 0.313009)/(22.140276 + 18.126925)`$ | **0.024206** |
+| **node theta**, per year | $`(5.673896 - 8.760327)/(2 \times 0.25)`$ | **−6.172862** |
 
 In the world: the option gains about 58 cents per dollar Acme gains, that rate steepens by about 0.024 per further dollar, and if Acme goes nowhere the option melts at roughly $6.17 a year. The formulas say 0.586851, 0.018951 and −5.089319 — the shelf's house delta of 0.5869, reached below by four roads.
 
@@ -193,8 +209,8 @@ In the world: the option gains about 58 cents per dollar Acme gains, that rate s
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Gamma with the two gaps taken as equal | 0.029717, against 0.024206 | The gaps are $22.14 and $18.13; averaging them charges the wrong distance twice |
-| The grid slope $U_x$ read as a share delta | 58.688461, against 0.586851 | Grid slopes are per log unit; one division by the price converts them |
-| Grid gamma with the $-U_x$ term dropped | 0.024815, against 0.018951 | The chain rule leaves a first-derivative term behind, and refining never removes it |
+| The grid slope $`U_x`$ read as a share delta | 58.688461, against 0.586851 | Grid slopes are per log unit; one division by the price converts them |
+| Grid gamma with the $`-U_x`$ term dropped | 0.024815, against 0.018951 | The chain rule leaves a first-derivative term behind, and refining never removes it |
 | Theta taken along an up move | +29.267282 a year, against −6.172862 | That difference holds a $22 rise in Acme as well as six months of clock |
 
 The code prints every number in that table.
@@ -230,7 +246,7 @@ steps in the tree   distance from the formula's gamma, one block per 1 per cent
      1024                                   0.08 per cent
 ```
 
-Four times the steps, a quarter of the error: it falls like $\Delta t$ itself.
+Four times the steps, a quarter of the error: it falls like $`\Delta t`$ itself.
 
 ### Both Greeks in one picture
 
@@ -694,13 +710,13 @@ The two outputs agree line for line at six decimals, by different routes to the 
 
 Lean proves the two error bounds, the parabola rule and the grid conversion for every curve meeting their conditions, plus the card's parabola fixture.
 
-- Suppose the price curve has three continuous derivatives across the three nodes, its second and third bounded by $B_2$ and $B_3$. Then the chord between the outer nodes misses $C_S$ by at most $B_2(h_+^2 + h_-^2)/(2(h_+ + h_-))$.
-- Under those conditions, the node gamma misses $C_{SS}$ by at most $B_3(h_+^2 + h_-^2)/(3(h_+ + h_-))$.
+- Suppose the price curve has three continuous derivatives across the three nodes, its second and third bounded by $`B_2`$ and $`B_3`$. Then the chord between the outer nodes misses $`C_S`$ by at most $`B_2(h_+^2 + h_-^2)/(2(h_+ + h_-))`$.
+- Under those conditions, the node gamma misses $`C_{SS}`$ by at most $`B_3(h_+^2 + h_-^2)/(3(h_+ + h_-))`$.
 - Three prices at distinct places fit exactly one parabola, and twice its squared coefficient equals the node gamma.
-- That parabola's chord between the outer nodes equals its linear coefficient plus the squared one times $h_+ - h_-$.
-- Suppose the price has two continuous derivatives at every positive stock price. Then $C_S = U_x/S$ and $C_{SS} = (U_{xx} - U_x)/S^2$ at every grid point.
-- The parabola $3 + 2x + 5x^2$ at gaps 1.5 and 4 gives chord slope 14.5 and node gamma 10.
-- An up step then a down step returns to $S$ exactly, since $u\,d = 1$.
+- That parabola's chord between the outer nodes equals its linear coefficient plus the squared one times $`h_+ - h_-`$.
+- Suppose the price has two continuous derivatives at every positive stock price. Then $`C_S = U_x/S`$ and $`C_{SS} = (U_{xx} - U_x)/S^2`$ at every grid point.
+- The parabola $`3 + 2x + 5x^2`$ at gaps 1.5 and 4 gives chord slope 14.5 and node gamma 10.
+- An up step then a down step returns to $`S`$ exactly, since $`u\,d = 1`$.
 
 The tree's own prices, delta, gamma and theta for Acme, and the price-error bounds are left to the Python and Rust checks.
 
@@ -949,7 +965,7 @@ example (S x : ℝ) : S * exp x * exp (-x) = S := by
 ## The usual mistake
 
 > [!warning]
-> **Quoting a node Greek as today's Greek.** The pair one step in lives at $\Delta t$, the triple at $2\Delta t$: on a four-step tree, a delta three months stale and a gamma six months stale. That staleness is the size of everything else wrong with them, so a node Greek without its date is an unlabelled number.
+> **Quoting a node Greek as today's Greek.** The pair one step in lives at $`\Delta t`$, the triple at $`2\Delta t`$: on a four-step tree, a delta three months stale and a gamma six months stale. That staleness is the size of everything else wrong with them, so a node Greek without its date is an unlabelled number.
 >
 > - **Reaching for the equal-spacing formula.** A tree's gaps are never equal: splitting the difference turns gamma 0.024206 into 0.029717.
 > - **Mixing up coordinates.** A log-grid slope is per log unit, so read straight off it gives 58.688461 where delta is 0.586851.
@@ -974,7 +990,7 @@ example (S x : ℝ) : S * exp x * exp (-x) = S := by
 ## What this builds on
 
 - [Many steps](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md): the backward walk that fills the nodes, and the labels this card reads them by.
-- [Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the grid in $x = \ln(S/100)$, and why a solver works in logs, not dollars.
+- [Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the grid in $`x = \ln(S/100)`$, and why a solver works in logs, not dollars.
 
 ## Where this goes next
 
@@ -989,7 +1005,7 @@ Every reading here leaned on smooth ground between the nodes; an American tree c
 Verified 19 Sep 2026: every link below resolves to the publisher's page.
 
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The chapter "Basic Numerical Procedures" gives these node readings in the form used here.
-- Cox, John C., Stephen A. Ross, and Mark Rubinstein. "Option Pricing: A Simplified Approach." *Journal of Financial Economics* 7, no. 3 (1979): 229–263. [doi:10.1016/0304-405X(79)90015-1](https://doi.org/10.1016/0304-405X(79)90015-1). The recombining tree whose nodes this card reads, including $u\,d = 1$.
+- Cox, John C., Stephen A. Ross, and Mark Rubinstein. "Option Pricing: A Simplified Approach." *Journal of Financial Economics* 7, no. 3 (1979): 229–263. [doi:10.1016/0304-405X(79)90015-1](https://doi.org/10.1016/0304-405X(79)90015-1). The recombining tree whose nodes this card reads, including $`u\,d = 1`$.
 - Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The closed-form price and its derivatives with a dividend yield: the comparison target throughout.
 - Fornberg, Bengt. "Generation of Finite Difference Formulas on Arbitrarily Spaced Grids." *Mathematics of Computation* 51, no. 184 (1988): 699–706. [doi:10.1090/S0025-5718-1988-0935077-0](https://doi.org/10.1090/S0025-5718-1988-0935077-0). Weights for difference formulas on uneven spacing, which is what a tree always has.
 - Tavella, Domingo, and Curt Randall. *Pricing Financial Instruments: The Finite Difference Method*. Wiley, 2000. [Publisher page](https://www.wiley.com/en-us/Pricing+Financial+Instruments%3A+The+Finite+Difference+Method-p-9780471197607). Grids in log coordinates, and the conversion of grid slopes back into share sensitivities.

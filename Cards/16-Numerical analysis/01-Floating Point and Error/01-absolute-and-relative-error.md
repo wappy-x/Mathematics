@@ -33,48 +33,56 @@ The beam's bar is too short to draw. The bolt's is twenty blocks. The millimetre
 
 ## The formula
 
-First, a name for the result we got. Write $x$ for the **true value** (3,000 mm) and $\hat x$, read "x hat" or "the computed x", for the **value we got** (2,998 mm). The hat means "measured, cut or computed, and possibly wrong".
+First, a name for the result we got. Write $`x`$ for the **true value** (3,000 mm) and $`\hat x`$, read "x hat" or "the computed x", for the **value we got** (2,998 mm). The hat means "measured, cut or computed, and possibly wrong".
 
-$$E_{\text{abs}} = |\hat x - x| \qquad\qquad E_{\text{rel}} = \frac{|\hat x - x|}{|x|} \quad (x \neq 0)$$
+```math
+E_{\text{abs}} = |\hat x - x| \qquad\qquad E_{\text{rel}} = \frac{|\hat x - x|}{|x|} \quad (x \neq 0)
+```
 
 **Read it aloud:** the absolute error is the distance between what we got and the truth; the relative error is that distance divided by the size of the truth.
 
-The bars $|\ \ |$ mean "size, ignoring the sign". The signed miss $\hat x - x = -2$ mm says the beam is short. The error sizes drop the sign and keep the 2.
+The bars $`|\ \ |`$ mean "size, ignoring the sign". The signed miss $`\hat x - x = -2`$ mm says the beam is short. The error sizes drop the sign and keep the 2.
 
 Converting between the two is one multiply or one divide:
 
-$$E_{\text{abs}} = E_{\text{rel}} \times |x| \qquad\qquad E_{\text{rel}} = E_{\text{abs}} \div |x|$$
+```math
+E_{\text{abs}} = E_{\text{rel}} \times |x| \qquad\qquad E_{\text{rel}} = E_{\text{abs}} \div |x|
+```
 
 A tape rated at 0.1 percent can be off by 0.001 × 3,000 = 3.000 mm on the beam and by 0.001 × 20 = 0.020 mm on the bolt. One rating, two very different millimetre figures.
 
-**Correct significant digits.** Write the true value in scientific notation, $|x| = $ (a front number at least 1 and below 10) $\times 10^k$, so $10^k \le |x| < 10^{k+1}$. The beam is $3 \times 10^3$ mm, so $k = 3$. The result $\hat x$ has $p$ **correct significant digits** when its miss is at most half a unit in the $p$-th digit of $x$:
+**Correct significant digits.** Write the true value in scientific notation, $|x| = $ (a front number at least 1 and below 10) $`\times 10^k`$, so $`10^k \le |x| < 10^{k+1}`$. The beam is $`3 \times 10^3`$ mm, so $`k = 3`$. The result $`\hat x`$ has $`p`$ **correct significant digits** when its miss is at most half a unit in the $`p`$-th digit of $`x`$:
 
-$$E_{\text{abs}} \le \tfrac12 \times 10^{\,k-p+1}$$
+```math
+E_{\text{abs}} \le \tfrac12 \times 10^{\,k-p+1}
+```
 
 For the beam, digit 3 is the tens-of-millimetres digit, so half a unit is 5 mm. The 2 mm miss fits; the 0.5 mm half-unit of digit 4 does not. Three correct digits.
 
 The theorem proved below links digits to the relative error:
 
-$$E_{\text{rel}} \le 5 \times 10^{-(p+1)} \;\Rightarrow\; \text{at least } p \text{ correct digits} \;\Rightarrow\; E_{\text{rel}} \le 5 \times 10^{-p}$$
+```math
+E_{\text{rel}} \le 5 \times 10^{-(p+1)} \;\Rightarrow\; \text{at least } p \text{ correct digits} \;\Rightarrow\; E_{\text{rel}} \le 5 \times 10^{-p}
+```
 
 **Read it aloud:** a relative error of at most half of ten to the minus p guarantees p good digits, and p good digits force it to be at most five times ten to the minus p.
 
-As a rule of thumb, the number of correct digits is close to $-\log_{10} E_{\text{rel}}$: 3.176 for the beam, 1.000 for the bolt.
+As a rule of thumb, the number of correct digits is close to $`-\log_{10} E_{\text{rel}}`$: 3.176 for the beam, 1.000 for the bolt.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the true value | 3,000 mm beam; 20 mm bolt | the same miss becomes a smaller fraction |
-| $\hat x$, "the computed x" | the value we got: cut, measured or computed | 2,998 mm; 18 mm | further from $x$, bigger errors |
-| $E_{\text{abs}}$ | absolute error: the miss, in the quantity's units | 2 mm on both | fewer correct digits |
-| $E_{\text{rel}}$ | relative error: the miss as a fraction of $\lvert x\rvert$, no units | 6.667e-4, meaning 6.667 × 10^-4 (0.0667 percent); 1.000e-1 (10 percent) | fewer correct digits |
-| $k$ | the power of ten in $x$'s scientific notation | 3 for the beam; 1 for the bolt | each digit is worth ten times more |
-| $p$ | the count of correct significant digits | 3 for the beam; 1 for the bolt | a tighter half-unit test to pass |
-| $c$ | a unit-change factor, used in Why it works | 1/1000, millimetres to metres | both errors in new units; the relative one unchanged |
+| $`x`$ | the true value | 3,000 mm beam; 20 mm bolt | the same miss becomes a smaller fraction |
+| $`\hat x`$, "the computed x" | the value we got: cut, measured or computed | 2,998 mm; 18 mm | further from $`x`$, bigger errors |
+| $`E_{\text{abs}}`$ | absolute error: the miss, in the quantity's units | 2 mm on both | fewer correct digits |
+| $`E_{\text{rel}}`$ | relative error: the miss as a fraction of $`\lvert x\rvert`$, no units | 6.667e-4, meaning 6.667 × 10^-4 (0.0667 percent); 1.000e-1 (10 percent) | fewer correct digits |
+| $`k`$ | the power of ten in $`x`$'s scientific notation | 3 for the beam; 1 for the bolt | each digit is worth ten times more |
+| $`p`$ | the count of correct significant digits | 3 for the beam; 1 for the bolt | a tighter half-unit test to pass |
+| $`c`$ | a unit-change factor, used in Why it works | 1/1000, millimetres to metres | both errors in new units; the relative one unchanged |
 
 ### When it holds
 
-- **The true value is not zero, and not close to it.** At $x = 0$ the relative error divides by zero. Near zero it explodes: a beam meant to leave 1 mm of clearance in a 3,001 mm opening leaves 3 mm, a relative error of 200 percent on the clearance.
-- **You divide by the true value.** In practice the truth is often unknown, so people divide by $\hat x$. That gives $E_{\text{rel}} / (1 - E_{\text{rel}})$ for a short result: 11.1111 percent for the bolt instead of 10. Harmless when the error is small, misleading when it is not.
+- **The true value is not zero, and not close to it.** At $`x = 0`$ the relative error divides by zero. Near zero it explodes: a beam meant to leave 1 mm of clearance in a 3,001 mm opening leaves 3 mm, a relative error of 200 percent on the clearance.
+- **You divide by the true value.** In practice the truth is often unknown, so people divide by $`\hat x`$. That gives $`E_{\text{rel}} / (1 - E_{\text{rel}})`$ for a short result: 11.1111 percent for the bolt instead of 10. Harmless when the error is small, misleading when it is not.
 - **The digit count refers to the true value's digits.** Comparing the characters of 2,998 and 3,000 finds no digit in common, yet the cut is good to three digits. The half-unit test is the one that counts.
 - **The error is a true error, an estimate or a bound, and you say which.** Here the true lengths are known, so every error on this card is a **true error**. Usually only a bound is known; the formulas are the same, read as "at most".
 
@@ -88,36 +96,36 @@ A miss of 2 mm is a size. Whether it matters depends on the scale of the thing i
 
 ### Step 1: the relative error has no units
 
-Measure the beam in metres instead: $x = 3$ m, $\hat x = 2.998$ m. The absolute error becomes 0.002000 m, a different number. The relative error is still 6.667e-4.
+Measure the beam in metres instead: $`x = 3`$ m, $`\hat x = 2.998`$ m. The absolute error becomes 0.002000 m, a different number. The relative error is still 6.667e-4.
 
-The reason is one line. Changing units multiplies $x$ and $\hat x$ by the same factor $c$ (here $c = 1/1000$). The top of the fraction becomes $c\,|\hat x - x|$ and the bottom becomes $c\,|x|$. The $c$ cancels. That is why a relative error can compare a beam with a bolt, a rent with a lunch, or a distance to the Moon with a microchip.
+The reason is one line. Changing units multiplies $`x`$ and $`\hat x`$ by the same factor $`c`$ (here $`c = 1/1000`$). The top of the fraction becomes $`c\,|\hat x - x|`$ and the bottom becomes $`c\,|x|`$. The $`c`$ cancels. That is why a relative error can compare a beam with a bolt, a rent with a lunch, or a distance to the Moon with a microchip.
 
 ### Step 2: digits measure the miss at the scale of the number
 
-Scientific notation puts every number on the same footing: one digit in front, then a power of ten ([Scientific notation](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/04-scientific-notation.md)). The first significant digit of $x$ is worth $10^k$, the second $10^{k-1}$, and the $p$-th $10^{k-p+1}$.
+Scientific notation puts every number on the same footing: one digit in front, then a power of ten ([Scientific notation](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/04-scientific-notation.md)). The first significant digit of $`x`$ is worth $`10^k`$, the second $`10^{k-1}`$, and the $`p`$-th $`10^{k-p+1}`$.
 
-Rounding to $p$ digits can move a number by up to half of that last unit. So "p correct digits" means "the miss is no bigger than a rounding at digit p would allow": $E_{\text{abs}} \le \tfrac12 \times 10^{k-p+1}$. That is a convention, chosen because it matches what rounding does. Higham's standard reference writes "less than" half a unit where this card writes "at most". The two differ only when the miss is exactly half a unit, and no example on this card sits on that edge.
+Rounding to $`p`$ digits can move a number by up to half of that last unit. So "p correct digits" means "the miss is no bigger than a rounding at digit p would allow": $`E_{\text{abs}} \le \tfrac12 \times 10^{k-p+1}`$. That is a convention, chosen because it matches what rounding does. Higham's standard reference writes "less than" half a unit where this card writes "at most". The two differ only when the miss is exactly half a unit, and no example on this card sits on that edge.
 
 ### Step 3: the relative error pins the digits to within one
 
-The digit test uses the absolute error and the power $k$. The relative error uses the absolute error and $|x|$. Since $|x|$ sits between $10^k$ and $10^{k+1}$, the two tests can disagree by at most one factor of ten, which is one digit.
+The digit test uses the absolute error and the power $`k`$. The relative error uses the absolute error and $`|x|`$. Since $`|x|`$ sits between $`10^k`$ and $`10^{k+1}`$, the two tests can disagree by at most one factor of ten, which is one digit.
 
 <details>
 <summary>Detailed proof: both directions of the bracket</summary>
 
-Write $10^k \le |x| < 10^{k+1}$.
+Write $`10^k \le |x| < 10^{k+1}`$.
 
-**p correct digits force a small relative error.** Suppose $E_{\text{abs}} \le \tfrac12 \times 10^{k-p+1}$. Divide both sides by $|x|$, which is at least $10^k$:
+**p correct digits force a small relative error.** Suppose $`E_{\text{abs}} \le \tfrac12 \times 10^{k-p+1}`$. Divide both sides by $`|x|`$, which is at least $`10^k`$:
 
-$$E_{\text{rel}} \le \frac{\tfrac12 \times 10^{k-p+1}}{10^k} = \tfrac12 \times 10^{1-p} = 5 \times 10^{-p}.$$
+$`\displaystyle E_{\text{rel}} \le \frac{\tfrac12 \times 10^{k-p+1}}{10^k} = \tfrac12 \times 10^{1-p} = 5 \times 10^{-p}.`$
 
-**A small enough relative error guarantees p correct digits.** Suppose $E_{\text{rel}} \le 5 \times 10^{-(p+1)} = \tfrac12 \times 10^{-p}$. Multiply by $|x|$, which is less than $10^{k+1}$:
+**A small enough relative error guarantees p correct digits.** Suppose $`E_{\text{rel}} \le 5 \times 10^{-(p+1)} = \tfrac12 \times 10^{-p}`$. Multiply by $`|x|`$, which is less than $`10^{k+1}`$:
 
-$$E_{\text{abs}} = E_{\text{rel}}\,|x| < \tfrac12 \times 10^{-p} \times 10^{k+1} = \tfrac12 \times 10^{k-p+1}.$$
+$`\displaystyle E_{\text{abs}} = E_{\text{rel}}\,|x| < \tfrac12 \times 10^{-p} \times 10^{k+1} = \tfrac12 \times 10^{k-p+1}.`$
 
-That is the half-unit test for digit $p$. Both directions are proved.
+That is the half-unit test for digit $`p`$. Both directions are proved.
 
-**The rule of thumb.** If $p$ digits are correct, the first direction gives $p \le -\log_{10} E_{\text{rel}} + \log_{10} 5$, and $\log_{10} 5 \approx 0.699$. If digit $p + 1$ is not correct, the second direction (taken the other way round) gives $E_{\text{rel}} > 5 \times 10^{-(p+2)}$, so $p > -\log_{10} E_{\text{rel}} - 1.301$. The true count lies in that window, from $-\log_{10} E_{\text{rel}} - 1.301$ up to $-\log_{10} E_{\text{rel}} + 0.699$. It is two units wide, so it holds two whole numbers: the same two the bracket allows. They need not sit either side of $-\log_{10} E_{\text{rel}}$: for the beam, at 3.176, they are 2 and 3.
+**The rule of thumb.** If $`p`$ digits are correct, the first direction gives $`p \le -\log_{10} E_{\text{rel}} + \log_{10} 5`$, and $`\log_{10} 5 \approx 0.699`$. If digit $`p + 1`$ is not correct, the second direction (taken the other way round) gives $`E_{\text{rel}} > 5 \times 10^{-(p+2)}`$, so $`p > -\log_{10} E_{\text{rel}} - 1.301`$. The true count lies in that window, from $`-\log_{10} E_{\text{rel}} - 1.301`$ up to $`-\log_{10} E_{\text{rel}} + 0.699`$. It is two units wide, so it holds two whole numbers: the same two the bracket allows. They need not sit either side of $`-\log_{10} E_{\text{rel}}`$: for the beam, at 3.176, they are 2 and 3.
 
 </details>
 
@@ -127,7 +135,7 @@ The bracket is tight: both ends happen. A 10 m rail cut 4 mm short and a 97.5 m 
 
 ## Worked numbers, by hand
 
-The beam: $x = 3000$ mm, $\hat x = 2998$ mm. Then the bolt: $x = 20$ mm, $\hat x = 18$ mm.
+The beam: $`x = 3000`$ mm, $`\hat x = 2998`$ mm. Then the bolt: $`x = 20`$ mm, $`\hat x = 18`$ mm.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -135,12 +143,12 @@ The beam: $x = 3000$ mm, $\hat x = 2998$ mm. Then the bolt: $x = 20$ mm, $\hat x
 | beam, absolute error | size of −2 | 2 mm |
 | beam, relative error | 2 ÷ 3,000 | 6.667e-4 |
 | as a percent | 6.667e-4 × 100 | 0.0667 percent |
-| beam in scientific notation | 3,000 = 3 × 10^3 | $k = 3$ |
+| beam in scientific notation | 3,000 = 3 × 10^3 | $`k = 3`$ |
 | half a unit in digit 3 | ½ × 10^(3 − 3 + 1) | 5 mm, and 2 ≤ 5 passes |
 | half a unit in digit 4 | ½ × 10^(3 − 4 + 1) | 0.5 mm, and 2 > 0.5 fails |
 | beam, correct digits | passes at 3, fails at 4 | **3 digits** |
 | bolt, relative error | 2 ÷ 20 | 1.000e-1, 10 percent |
-| bolt in scientific notation | 20 = 2 × 10^1 | $k = 1$ |
+| bolt in scientific notation | 20 = 2 × 10^1 | $`k = 1`$ |
 | half a unit in digits 1 and 2 | 5 mm passes, 0.5 mm fails | **1 digit** |
 | bolt against beam | 1.000e-1 ÷ 6.667e-4 | **150.0 times worse** |
 
@@ -153,7 +161,7 @@ A check from the relative error alone: for the beam it allows 2 or 3 digits (bra
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Quote only the absolute error | "2 mm" for both parts | Hides a factor of 150.0 between them; a miss means nothing without the size of the thing |
-| Divide by the cut length, not the true one | bolt 11.1111 percent instead of 10; beam 6.671e-4 instead of 6.667e-4 | The bottom of the fraction is the result, not the truth; it gives $E_{\text{rel}}/(1 - E_{\text{rel}})$ |
+| Divide by the cut length, not the true one | bolt 11.1111 percent instead of 10; beam 6.671e-4 instead of 6.667e-4 | The bottom of the fraction is the result, not the truth; it gives $`E_{\text{rel}}/(1 - E_{\text{rel}})`$ |
 | Count the characters 2998 and 3000 share | 0 correct digits instead of 3 | A carry across 3,000 changes every written digit while the value moves only 2 mm |
 | Take the relative error of a near-zero quantity | 200 percent on a 1 mm clearance | The true value is tiny, so any miss is a huge fraction of it |
 
@@ -163,7 +171,7 @@ A check from the relative error alone: for the beam it allows 2 or 3 digits (bra
 
 The code repeats every number on the card for the beam, the bolt, two rails, the clearance and four "Try changing" cases. Lengths are whole millimetres, so the misses are exact. It reaches the digit count by **two independent roads**: the half-unit test on the absolute error, and the bracket from the relative error alone, which must contain it and be at most one digit wide.
 
-A third check is the $-\log_{10}$ window from the proof. It also converts each relative error back to millimetres, changes units to metres, and tests the identity behind the wrong denominator. Last, it runs the shelf's shared example: a fitness tracker that adds 0.1 ten million times.
+A third check is the $`-\log_{10}`$ window from the proof. It also converts each relative error back to millimetres, changes units to metres, and tests the identity behind the wrong denominator. Last, it runs the shelf's shared example: a fitness tracker that adds 0.1 ten million times.
 
 ### Python
 
@@ -448,13 +456,13 @@ ALL CHECKS PASS
 
 Lean proves the digit bracket, the unit change and the wrong-denominator identity for every allowed value, and checks the card's whole-millimetre examples.
 
-- For any true value $x$ that is not zero, a relative error of at most $5 \times 10^{-(p+1)}$ guarantees $p$ correct digits.
-- The other way round, $p$ correct digits force a relative error of at most $5 \times 10^{-p}$.
-- Multiplying the true and computed values by the same nonzero factor $c$ leaves the relative error unchanged.
-- For a short result, $0 < \hat x \le x$, dividing the miss by $\hat x$ gives exactly $E_{\text{rel}} / (1 - E_{\text{rel}})$.
+- For any true value $`x`$ that is not zero, a relative error of at most $`5 \times 10^{-(p+1)}`$ guarantees $`p`$ correct digits.
+- The other way round, $`p`$ correct digits force a relative error of at most $`5 \times 10^{-p}`$.
+- Multiplying the true and computed values by the same nonzero factor $`c`$ leaves the relative error unchanged.
+- For a short result, $`0 < \hat x \le x`$, dividing the miss by $`\hat x`$ gives exactly $`E_{\text{rel}} / (1 - E_{\text{rel}})`$.
 - The hand arithmetic holds exactly: the beam, the bolt, the factor of 150, the tape, the two rails and the 200 percent clearance.
 
-The decimals, the $-\log_{10}$ window, the matching-characters mistake, the Try changing cases and the tracker are left to the Python and Rust checks.
+The decimals, the $`-\log_{10}`$ window, the matching-characters mistake, the Try changing cases and the tracker are left to the Python and Rust checks.
 
 ```lean
 -- Absolute and relative error: the relative error fixes the number of correct significant digits to within one.
@@ -612,7 +620,7 @@ example : |(3 : ℝ) - 1| / |(1 : ℝ)| = 2 := by norm_num
 ## What this builds on
 
 - [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): a percent is a fraction of a named whole. A relative error is that fraction, with the true value as the whole.
-- [Scientific notation](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/04-scientific-notation.md): a front number times a power of ten. The power $k$ fixes what each significant digit is worth, which the digit test needs.
+- [Scientific notation](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/04-scientific-notation.md): a front number times a power of ten. The power $`k`$ fixes what each significant digit is worth, which the digit test needs.
 
 ## Where this goes next
 

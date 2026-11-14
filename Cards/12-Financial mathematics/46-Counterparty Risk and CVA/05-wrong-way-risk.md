@@ -40,46 +40,54 @@ Steep curve: the default chance at 50% correlation, once the share price is know
 
 ## The formula
 
-Notation first, in words. Northwind's year-end share price is driven by one bell-curve draw $Y$, the **share score**: average 0, spread 1, a low value meaning a low price. Northwind's health is a second bell-curve draw $Z$, the **credit score**. Northwind defaults within the year when $Z$ falls below a cutoff $a$. The two scores have correlation $\rho$.
+Notation first, in words. Northwind's year-end share price is driven by one bell-curve draw $`Y`$, the **share score**: average 0, spread 1, a low value meaning a low price. Northwind's health is a second bell-curve draw $`Z`$, the **credit score**. Northwind defaults within the year when $`Z`$ falls below a cutoff $`a`$. The two scores have correlation $`\rho`$.
 
-The payoff the fund is owed is the **exposure** $X$; $B$ is 1 if Northwind defaults and 0 if not. $N$ is the bell-curve area to the left of a point, as on the Black-Scholes cards, $\varphi$ is the bell-curve height, and $\mathbb{E}$ is an average over all outcomes.
+The payoff the fund is owed is the **exposure** $`X`$; $`B`$ is 1 if Northwind defaults and 0 if not. $`N`$ is the bell-curve area to the left of a point, as on the Black-Scholes cards, $`\varphi`$ is the bell-curve height, and $`\mathbb{E}`$ is an average over all outcomes.
 
-$$\mathrm{CVA} = L\,\mathbb{E}\!\left[e^{-rT}XB\right] = L\int_{-\infty}^{\infty} e^{-rT}\,X(y)\,\varphi(y)\,p_\rho(y)\,dy, \qquad p_\rho(y) = N\!\left(\frac{a-\rho y}{\sqrt{1-\rho^2}}\right)$$
+```math
+\mathrm{CVA} = L\,\mathbb{E}\!\left[e^{-rT}XB\right] = L\int_{-\infty}^{\infty} e^{-rT}\,X(y)\,\varphi(y)\,p_\rho(y)\,dy, \qquad p_\rho(y) = N\!\left(\frac{a-\rho y}{\sqrt{1-\rho^2}}\right)
+```
 
 **Read it aloud:** for each possible share outcome, take what the put pays, discount it, weight it by how often that outcome occurs and by Northwind's default chance in that outcome, add it all up, and keep the 60% that recovery does not return.
 
 Split the average of a product into the product of averages plus a correction:
 
-$$\mathrm{CVA} = \underbrace{L\,p\,P}_{\text{the independent CVA}} + \underbrace{L\,\mathrm{Cov}\!\left(e^{-rT}X,\;B\right)}_{\text{the wrong-way term}}$$
+```math
+\mathrm{CVA} = \underbrace{L\,p\,P}_{\text{the independent CVA}} + \underbrace{L\,\mathrm{Cov}\!\left(e^{-rT}X,\;B\right)}_{\text{the wrong-way term}}
+```
 
 **Read it aloud:** CVA is the loss share times the default chance times the clean price, plus the loss share times how strongly the discounted payoff and the default move together. Cov is covariance: the average of the product minus the product of the averages.
 
-For the put the integral has a closed form. It uses $N_2(h, k; \rho)$, the chance that two bell-curve draws with correlation $\rho$ fall below $h$ and $k$ together:
+For the put the integral has a closed form. It uses $`N_2(h, k; \rho)`$, the chance that two bell-curve draws with correlation $`\rho`$ fall below $`h`$ and $`k`$ together:
 
-$$\mathrm{CVA}_{\text{put}}(\rho) = L\left[K e^{-rT} N_2(-d_2,\,a;\,\rho) - S e^{-qT} N_2\!\left(-d_1,\,a-\rho\sigma\sqrt{T};\,\rho\right)\right]$$
+```math
+\mathrm{CVA}_{\text{put}}(\rho) = L\left[K e^{-rT} N_2(-d_2,\,a;\,\rho) - S e^{-qT} N_2\!\left(-d_1,\,a-\rho\sigma\sqrt{T};\,\rho\right)\right]
+```
 
 **Read it aloud:** the cash the put hands over, counted only in worlds where it pays and Northwind has failed, minus the shares it takes in, counted the same way; the shares' count uses a cutoff shifted by the correlation times one volatility unit.
 
 The call is the mirror, with the correlation's sign flipped:
 
-$$\mathrm{CVA}_{\text{call}}(\rho) = L\left[S e^{-qT} N_2\!\left(d_1,\,a-\rho\sigma\sqrt{T};\,-\rho\right) - K e^{-rT} N_2(d_2,\,a;\,-\rho)\right]$$
+```math
+\mathrm{CVA}_{\text{call}}(\rho) = L\left[S e^{-qT} N_2\!\left(d_1,\,a-\rho\sigma\sqrt{T};\,-\rho\right) - K e^{-rT} N_2(d_2,\,a;\,-\rho)\right]
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $K$, $S_T$ | Northwind's share price today, the strike, the share price at year end | $100, $100, depends on $Y$ | higher $S$: the put and its CVA shrink |
-| $r$, $q$, $\sigma$, $T$ | bank rate, dividend yield, volatility, years to expiry | 5%, 2%, 20%, 1 | higher $\sigma$: the put is worth more, CVA rises |
-| $P$, $C$, $d_1$, $d_2$ | clean put and call (prices with no default risk), and the Black-Scholes distances as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) | $6.33 and $9.23; 0.25 and 0.05 | CVA scales with the clean price |
-| $\lambda$, $p$ | Northwind's hazard rate, and its one-year default chance $1 - e^{-\lambda T}$ | 2%, 1.9801% | CVA rises almost in proportion |
-| $R$, $L$ | recovery rate, and the loss share $L = 1 - R$ | 40%, 60% | higher $L$: CVA rises in proportion |
-| $Y$, $y$, $\varepsilon$ | the share score, one value of it, and Northwind's private credit noise | bell-curve draws | — |
-| $Z$, $a$ | the credit score $Z = \rho Y + \sqrt{1-\rho^2}\,\varepsilon$, and the default cutoff $N^{-1}(p)$ | $a = -2.0579$ | higher $a$: more defaults |
-| $\rho$ | correlation between share score and credit score | 50% | put CVA rises, call CVA falls |
-| $p_\rho(y)$ | default chance once the share score is known to be $y$ | 4.43% if the shares end at $80 | — |
-| $X$, $B$ | exposure (what Northwind owes at year end), and default (1 or 0) | the put's payoff | — |
-| $N$, $N_2$, $\varphi$, $h$, $k$ | bell-curve area to the left; the same for a correlated pair, below $h$ and $k$; bell-curve height | $N(a) = p$ | — |
-| $U$, $V$, $f$, $g$ | any two quantities in a covariance; two functions of the share score in the proofs | $U$ the discounted payoff, $V$ the default | — |
+| $`S`$, $`K`$, $`S_T`$ | Northwind's share price today, the strike, the share price at year end | $100, $100, depends on $`Y`$ | higher $`S`$: the put and its CVA shrink |
+| $`r`$, $`q`$, $`\sigma`$, $`T`$ | bank rate, dividend yield, volatility, years to expiry | 5%, 2%, 20%, 1 | higher $`\sigma`$: the put is worth more, CVA rises |
+| $`P`$, $`C`$, $`d_1`$, $`d_2`$ | clean put and call (prices with no default risk), and the Black-Scholes distances as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) | $6.33 and $9.23; 0.25 and 0.05 | CVA scales with the clean price |
+| $`\lambda`$, $`p`$ | Northwind's hazard rate, and its one-year default chance $`1 - e^{-\lambda T}`$ | 2%, 1.9801% | CVA rises almost in proportion |
+| $`R`$, $`L`$ | recovery rate, and the loss share $`L = 1 - R`$ | 40%, 60% | higher $`L`$: CVA rises in proportion |
+| $`Y`$, $`y`$, $`\varepsilon`$ | the share score, one value of it, and Northwind's private credit noise | bell-curve draws | — |
+| $`Z`$, $`a`$ | the credit score $`Z = \rho Y + \sqrt{1-\rho^2}\,\varepsilon`$, and the default cutoff $`N^{-1}(p)`$ | $`a = -2.0579`$ | higher $`a`$: more defaults |
+| $`\rho`$ | correlation between share score and credit score | 50% | put CVA rises, call CVA falls |
+| $`p_\rho(y)`$ | default chance once the share score is known to be $`y`$ | 4.43% if the shares end at $80 | — |
+| $`X`$, $`B`$ | exposure (what Northwind owes at year end), and default (1 or 0) | the put's payoff | — |
+| $`N`$, $`N_2`$, $`\varphi`$, $`h`$, $`k`$ | bell-curve area to the left; the same for a correlated pair, below $`h`$ and $`k`$; bell-curve height | $`N(a) = p`$ | — |
+| $`U`$, $`V`$, $`f`$, $`g`$ | any two quantities in a covariance; two functions of the share score in the proofs | $`U`$ the discounted payoff, $`V`$ the default | — |
 
-The helpers: the share price at year end is $S_T = S e^{(r - q - \sigma^2/2)T + \sigma\sqrt{T}\,Y}$, as in [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md). The put pays when $Y < -d_2$, that is when the shares end below $100. The cutoff $a = N^{-1}(p)$ is the point with 1.98% of the bell curve to its left.
+The helpers: the share price at year end is $`S_T = S e^{(r - q - \sigma^2/2)T + \sigma\sqrt{T}\,Y}`$, as in [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md). The put pays when $`Y < -d_2`$, that is when the shares end below $100. The cutoff $`a = N^{-1}(p)`$ is the point with 1.98% of the bell curve to its left.
 
 ### When it holds
 
@@ -87,7 +95,7 @@ The helpers: the share price at year end is $S_T = S e^{(r - q - \sigma^2/2)T + 
 - **A Gaussian link.** Bell-curve scores give joint extremes little weight. A fatter-tailed copula puts more weight on "shares crash and Northwind fails together", and raises the put's CVA further ([Tail dependence](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md)).
 - **No jump at default.** In this model a failing Northwind's shares are merely low. Real shares of a defaulted firm fall toward zero. That pushes the put's CVA toward its ceiling, $1.13, computed below.
 - **Fixed recovery.** Recoveries are lower when the firm fails in a bad state; a fixed 40% understates the loss.
-- **A correlation nobody quotes.** No market trades $\rho$. It is a judgement or a stress parameter, and the answer triples between 0% and 50%.
+- **A correlation nobody quotes.** No market trades $`\rho`$. It is a judgement or a stress parameter, and the answer triples between 0% and 50%.
 
 ---
 
@@ -99,61 +107,61 @@ CVA is an average of a product: payoff times default. If a big payoff and a defa
 
 ### Step 1: the covariance split
 
-Covariance is defined as $\mathrm{Cov}(U, V) = \mathbb{E}[UV] - \mathbb{E}[U]\,\mathbb{E}[V]$, for any two quantities $U$ and $V$ with finite averages. Rearranged, $\mathbb{E}[UV] = \mathbb{E}[U]\,\mathbb{E}[V] + \mathrm{Cov}(U, V)$. Put $U = e^{-rT}X$ and $V = B$. The average of the discounted payoff is the clean put, $P$, because the put's price is its discounted average payoff ([Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md)). The average of $B$ is $p$. Multiply by $L$ and the split in The formula follows. It is exact and needs no model. The model is needed to compute the covariance.
+Covariance is defined as $`\mathrm{Cov}(U, V) = \mathbb{E}[UV] - \mathbb{E}[U]\,\mathbb{E}[V]`$, for any two quantities $`U`$ and $`V`$ with finite averages. Rearranged, $`\mathbb{E}[UV] = \mathbb{E}[U]\,\mathbb{E}[V] + \mathrm{Cov}(U, V)`$. Put $`U = e^{-rT}X`$ and $`V = B`$. The average of the discounted payoff is the clean put, $`P`$, because the put's price is its discounted average payoff ([Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md)). The average of $`B`$ is $`p`$. Multiply by $`L`$ and the split in The formula follows. It is exact and needs no model. The model is needed to compute the covariance.
 
 ### Step 2: join the scores without moving the default chance
 
-Northwind's credit score is $Z = \rho Y + \sqrt{1-\rho^2}\,\varepsilon$, with $\varepsilon$ a private bell-curve draw independent of $Y$. The weights are chosen so that the variance is $\rho^2 + (1 - \rho^2) = 1$ at every correlation. So $Z$ is a standard bell-curve draw whatever $\rho$ is, and the chance that $Z < a$ is $N(a) = p = 1.98\%$. Correlation only decides which worlds the defaults fall in.
+Northwind's credit score is $`Z = \rho Y + \sqrt{1-\rho^2}\,\varepsilon`$, with $`\varepsilon`$ a private bell-curve draw independent of $`Y`$. The weights are chosen so that the variance is $`\rho^2 + (1 - \rho^2) = 1`$ at every correlation. So $`Z`$ is a standard bell-curve draw whatever $`\rho`$ is, and the chance that $`Z < a`$ is $`N(a) = p = 1.98\%`$. Correlation only decides which worlds the defaults fall in.
 
-This is the one-factor construction of [The one-factor Gaussian copula](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md), with Northwind's share score playing the economy factor. That card weights the factor by $\sqrt{\rho}$, because its $\rho$ is the correlation between two firms. Here $\rho$ is the correlation between the credit score and the factor itself, so the weight is $\rho$.
+This is the one-factor construction of [The one-factor Gaussian copula](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md), with Northwind's share score playing the economy factor. That card weights the factor by $`\sqrt{\rho}`$, because its $`\rho`$ is the correlation between two firms. Here $`\rho`$ is the correlation between the credit score and the factor itself, so the weight is $`\rho`$.
 
 ### Step 3: the default chance once the share score is known
 
-Fix $Y = y$. Then $Z < a$ means $\sqrt{1-\rho^2}\,\varepsilon < a - \rho y$, that is $\varepsilon < (a - \rho y)/\sqrt{1-\rho^2}$. The private noise is still a standard bell-curve draw, so the chance is $p_\rho(y)$. For positive $\rho$ it falls as $y$ rises: a higher share price means a healthier Northwind. At 50% correlation, shares ending at $100 leave a default chance of 0.95%; shares ending at $60 raise it to 19.14%.
+Fix $`Y = y`$. Then $`Z < a`$ means $`\sqrt{1-\rho^2}\,\varepsilon < a - \rho y`$, that is $`\varepsilon < (a - \rho y)/\sqrt{1-\rho^2}`$. The private noise is still a standard bell-curve draw, so the chance is $`p_\rho(y)`$. For positive $`\rho`$ it falls as $`y`$ rises: a higher share price means a healthier Northwind. At 50% correlation, shares ending at $100 leave a default chance of 0.95%; shares ending at $60 raise it to 19.14%.
 
 ### Step 4: average over the share score
 
-Average in two stages: first over Northwind's private noise with the share score held fixed, then over the share score. The first stage turns $B$ into $p_\rho(y)$. The second is the integral in The formula. This is the first road in the code, and it works for any payoff: replace the put's $X(y)$ with any other.
+Average in two stages: first over Northwind's private noise with the share score held fixed, then over the share score. The first stage turns $`B`$ into $`p_\rho(y)`$. The second is the integral in The formula. This is the first road in the code, and it works for any payoff: replace the put's $`X(y)`$ with any other.
 
 ### Step 5: the closed form, by splitting the payoff
 
-The put's payoff is $K$ in cash minus one share, in the worlds where $Y < -d_2$. The cash half contributes $K e^{-rT}$ times the chance that $Y < -d_2$ and $Z < a$ together, which is $N_2(-d_2, a; \rho)$. The share half is worth more in the worlds where the shares are high, so it is averaged under a slid bell curve, as in Step 3 of the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+The put's payoff is $`K`$ in cash minus one share, in the worlds where $`Y < -d_2`$. The cash half contributes $`K e^{-rT}`$ times the chance that $`Y < -d_2`$ and $`Z < a`$ together, which is $`N_2(-d_2, a; \rho)`$. The share half is worth more in the worlds where the shares are high, so it is averaged under a slid bell curve, as in Step 3 of the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
-Sliding $Y$ up by one volatility unit, $\sigma\sqrt{T}$, slides $Z$ up by $\rho\sigma\sqrt{T}$, since $Z$ carries $\rho$ of $Y$. Both cutoffs move: $-d_2$ becomes $-d_1$, and $a$ becomes $a - \rho\sigma\sqrt{T}$.
+Sliding $`Y`$ up by one volatility unit, $`\sigma\sqrt{T}`$, slides $`Z`$ up by $`\rho\sigma\sqrt{T}`$, since $`Z`$ carries $`\rho`$ of $`Y`$. Both cutoffs move: $`-d_2`$ becomes $`-d_1`$, and $`a`$ becomes $`a - \rho\sigma\sqrt{T}`$.
 
 <details>
 <summary>Detailed proof: the share half, by completing the square</summary>
 
-The share half is $\mathbb{E}[e^{-rT} S_T\, \mathbf{1}\{Y < -d_2\}\, \mathbf{1}\{Z < a\}]$, where $\mathbf{1}\{\cdot\}$ is 1 when the condition holds and 0 otherwise. Write $v = \sigma\sqrt{T}$, so $e^{-rT}S_T = S e^{-qT} e^{vY - v^2/2}$.
+The share half is $`\mathbb{E}[e^{-rT} S_T\, \mathbf{1}\{Y < -d_2\}\, \mathbf{1}\{Z < a\}]`$, where $`\mathbf{1}\{\cdot\}`$ is 1 when the condition holds and 0 otherwise. Write $`v = \sigma\sqrt{T}`$, so $`e^{-rT}S_T = S e^{-qT} e^{vY - v^2/2}`$.
 
-Condition on $Y = y$ as in Step 3. The share half becomes $S e^{-qT}\int_{-\infty}^{-d_2} e^{vy - v^2/2}\,\varphi(y)\,p_\rho(y)\,dy$. Completing the square gives $e^{vy - v^2/2}\varphi(y) = \varphi(y - v)$. Substitute $u = y - v$: the upper limit becomes $-d_2 - v = -d_1$, and $p_\rho(u + v) = N\big((a - \rho v - \rho u)/\sqrt{1-\rho^2}\big)$, which is $p_\rho(u)$ with the cutoff $a$ replaced by $a - \rho v$.
+Condition on $`Y = y`$ as in Step 3. The share half becomes $`S e^{-qT}\int_{-\infty}^{-d_2} e^{vy - v^2/2}\,\varphi(y)\,p_\rho(y)\,dy`$. Completing the square gives $`e^{vy - v^2/2}\varphi(y) = \varphi(y - v)`$. Substitute $`u = y - v`$: the upper limit becomes $`-d_2 - v = -d_1`$, and $`p_\rho(u + v) = N\big((a - \rho v - \rho u)/\sqrt{1-\rho^2}\big)`$, which is $`p_\rho(u)`$ with the cutoff $`a`$ replaced by $`a - \rho v`$.
 
-What remains is $\int_{-\infty}^{-d_1}\varphi(u)\,N\big((a' - \rho u)/\sqrt{1-\rho^2}\big)\,du$ with $a' = a - \rho v$. By Step 3 read backwards, that is the chance that a standard pair with correlation $\rho$ falls below $-d_1$ and $a'$ together: $N_2(-d_1, a - \rho v; \rho)$. The cash half is the same integral without the slide. Subtract and multiply by $L$.
+What remains is $`\int_{-\infty}^{-d_1}\varphi(u)\,N\big((a' - \rho u)/\sqrt{1-\rho^2}\big)\,du`$ with $`a' = a - \rho v`$. By Step 3 read backwards, that is the chance that a standard pair with correlation $`\rho`$ falls below $`-d_1`$ and $`a'`$ together: $`N_2(-d_1, a - \rho v; \rho)`$. The cash half is the same integral without the slide. Subtract and multiply by $`L`$.
 
-For the call, the region is $Y > -d_2$. Replacing $Y$ by $-Y$ turns "above $-d_2$" into "below $d_2$" and flips the correlation's sign, which gives the call formula.
+For the call, the region is $`Y > -d_2`$. Replacing $`Y`$ by $`-Y`$ turns "above $`-d_2`$" into "below $`d_2`$" and flips the correlation's sign, which gives the call formula.
 
 </details>
 
 ### Step 6: why the put's CVA rises and the call's falls
 
-For $\rho > 0$ both the put's payoff and $p_\rho(y)$ fall as $y$ rises. Two quantities that both fall with the same variable have positive covariance, so the wrong-way term is positive and the put's CVA exceeds $L p P$. The call's payoff rises with $y$ while $p_\rho(y)$ falls; their covariance is negative, and the call's CVA is below $L p C$. Flip the sign of $\rho$ and the roles swap: the put becomes right-way.
+For $`\rho > 0`$ both the put's payoff and $`p_\rho(y)`$ fall as $`y`$ rises. Two quantities that both fall with the same variable have positive covariance, so the wrong-way term is positive and the put's CVA exceeds $`L p P`$. The call's payoff rises with $`y`$ while $`p_\rho(y)`$ falls; their covariance is negative, and the call's CVA is below $`L p C`$. Flip the sign of $`\rho`$ and the roles swap: the put becomes right-way.
 
 <details>
 <summary>Detailed proof: two falling functions have positive covariance</summary>
 
-Let $f$ and $g$ be functions of $Y$ that are both non-increasing, with finite averages of $f$, $g$ and their product. Take $Y'$, an independent copy of $Y$. For any pair of values, $(f(Y) - f(Y'))(g(Y) - g(Y'))$ is never negative: when $Y < Y'$ both brackets are at least zero, and when $Y > Y'$ both are at most zero.
+Let $`f`$ and $`g`$ be functions of $`Y`$ that are both non-increasing, with finite averages of $`f`$, $`g`$ and their product. Take $`Y'`$, an independent copy of $`Y`$. For any pair of values, $`(f(Y) - f(Y'))(g(Y) - g(Y'))`$ is never negative: when $`Y < Y'`$ both brackets are at least zero, and when $`Y > Y'`$ both are at most zero.
 
-Average it. Expanding gives $2\,\mathbb{E}[fg] - 2\,\mathbb{E}[f]\,\mathbb{E}[g] = 2\,\mathrm{Cov}(f(Y), g(Y))$, using independence for the cross terms. So the covariance is at least zero. It is strictly positive when both functions change on a set of outcomes with positive chance: the put's payoff falls strictly below $-d_2$, and for $0 < \rho < 1$, $p_\rho$ falls strictly everywhere.
+Average it. Expanding gives $`2\,\mathbb{E}[fg] - 2\,\mathbb{E}[f]\,\mathbb{E}[g] = 2\,\mathrm{Cov}(f(Y), g(Y))`$, using independence for the cross terms. So the covariance is at least zero. It is strictly positive when both functions change on a set of outcomes with positive chance: the put's payoff falls strictly below $`-d_2`$, and for $`0 < \rho < 1`$, $`p_\rho`$ falls strictly everywhere.
 
-Now $\mathrm{Cov}(e^{-rT}X, B) = \mathrm{Cov}(e^{-rT}X, p_\rho(Y))$, because averaging $B$ over the private noise first gives $p_\rho(Y)$. Take $f$ the discounted put payoff and $g = p_\rho$: positive covariance. For the call, $f$ rises, so $-f$ falls, and the covariance is negative. This is a statement about this monotone model, not about every trade called a put.
+Now $`\mathrm{Cov}(e^{-rT}X, B) = \mathrm{Cov}(e^{-rT}X, p_\rho(Y))`$, because averaging $`B`$ over the private noise first gives $`p_\rho(Y)`$. Take $`f`$ the discounted put payoff and $`g = p_\rho`$: positive covariance. For the call, $`f`$ rises, so $`-f`$ falls, and the covariance is negative. This is a statement about this monotone model, not about every trade called a put.
 
 </details>
 
 ### Step 7: the extremes
 
-At $\rho = 1$ the credit score is the share score, and Northwind defaults exactly when $Y < a$. The cutoff $a = -2.0579$ lies inside the put's paying region, so the CVA is $L[K e^{-rT} N(a) - S e^{-qT} N(a - \sigma\sqrt{T})] = 0.4258$, 5.66 times the independent figure. The call is then never owed anything in a default world, and its CVA is zero.
+At $`\rho = 1`$ the credit score is the share score, and Northwind defaults exactly when $`Y < a`$. The cutoff $`a = -2.0579`$ lies inside the put's paying region, so the CVA is $`L[K e^{-rT} N(a) - S e^{-qT} N(a - \sigma\sqrt{T})] = 0.4258`$, 5.66 times the independent figure. The call is then never owed anything in a default world, and its CVA is zero.
 
-No model can go past one bound. The put never pays more than $K$. So its CVA is at most $L K e^{-rT} p = 0.6 \times 95.1229 \times 0.019801 = 1.1301$, which is what the CVA would be if Northwind's shares went to zero at the moment it failed.
+No model can go past one bound. The put never pays more than $`K`$. So its CVA is at most $`L K e^{-rT} p = 0.6 \times 95.1229 \times 0.019801 = 1.1301`$, which is what the CVA would be if Northwind's shares went to zero at the moment it failed.
 
 That is the extreme case of a put on the counterparty's own shares: in every default world the protection is owed its maximum. A model in which the shares jump toward zero at default moves the CVA from the Gaussian figure toward this ceiling.
 
@@ -168,12 +176,12 @@ The Northwind put at 50% correlation, by the closed form.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | clean put | Black-Scholes, house market | $6.330081 |
-| default chance | $1 - e^{-0.02}$ | 0.019801 |
+| default chance | $`1 - e^{-0.02}`$ | 0.019801 |
 | cutoff | the point with 1.9801% of the bell curve to its left | −2.057870 |
 | independent CVA | 0.6 × 0.019801 × 6.330081 | 0.075206 |
-| discounted strike and share | $100e^{-0.05}$, $100e^{-0.02}$ | 95.122942 and 98.019867 |
-| cash-half area | $N_2(-0.05, -2.0579; 0.5)$ | 0.017950 |
-| share-half area | $N_2(-0.25, -2.0579 - 0.1; 0.5)$ | 0.013513 |
+| discounted strike and share | $`100e^{-0.05}`$, $`100e^{-0.02}`$ | 95.122942 and 98.019867 |
+| cash-half area | $`N_2(-0.05, -2.0579; 0.5)`$ | 0.017950 |
+| share-half area | $`N_2(-0.25, -2.0579 - 0.1; 0.5)`$ | 0.013513 |
 | put CVA at 50% | 0.6 × (95.122942 × 0.017950 − 98.019867 × 0.013513) | **0.229705** |
 | times the independent figure | 0.229705 / 0.075206 | **3.05** |
 | exposure given default | 0.229705 / (0.6 × 0.019801) | 19.334150 |
@@ -211,17 +219,17 @@ ceiling: shares go to 0    █████████████████�
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | The CVA card's product, at 50% correlation | 0.0752 | Treats payoff and default as unrelated; misses most of the charge. |
-| 50% read as the copula card's variance share | 0.3117 | That card's $\rho$ weights the factor by $\sqrt{\rho}$; plugging 50% there means a correlation equal to the square root of 50%. |
-| Sign of $\rho$ flipped | 0.0063 | A low credit score means default; positive $\rho$ means shares and health fall together. Flip it and the put looks right-way. |
+| 50% read as the copula card's variance share | 0.3117 | That card's $`\rho`$ weights the factor by $`\sqrt{\rho}`$; plugging 50% there means a correlation equal to the square root of 50%. |
+| Sign of $`\rho`$ flipped | 0.0063 | A low credit score means default; positive $`\rho`$ means shares and health fall together. Flip it and the put looks right-way. |
 | The ceiling quoted as the price | 1.1301 | A bound, reached only if the shares go to zero at default in every case. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code prices the Northwind put and call at eight correlations by two independent roads: the one-dimensional integral of Step 4 (Simpson's rule, which adds up an integral over many thin slices), and the closed form of Step 5. Its $N_2$ is built from Plackett's identity, which writes $N_2$ as $N(h)N(k)$ plus an integral of the pair's density over the correlation from 0 to $\rho$.
+The code prices the Northwind put and call at eight correlations by two independent roads: the one-dimensional integral of Step 4 (Simpson's rule, which adds up an integral over many thin slices), and the closed form of Step 5. Its $`N_2`$ is built from Plackett's identity, which writes $`N_2`$ as $`N(h)N(k)`$ plus an integral of the pair's density over the correlation from 0 to $`\rho`$.
 
-A third road simulates a million pairs of scores at 50% correlation. A fourth checks an identity: put CVA minus call CVA equals $L[K e^{-rT}N(a) - S e^{-qT}N(a - \rho\sigma\sqrt{T})]$, since the put minus the call is cash minus a share in every world. Its own normal area, root finder, integrator and random numbers are written out.
+A third road simulates a million pairs of scores at 50% correlation. A fourth checks an identity: put CVA minus call CVA equals $`L[K e^{-rT}N(a) - S e^{-qT}N(a - \rho\sigma\sqrt{T})]`$, since the put minus the call is cash minus a share in every world. Its own normal area, root finder, integrator and random numbers are written out.
 
 ### Python
 
@@ -639,9 +647,9 @@ The two outputs agree line for line, including the simulation, since both use th
 
 Lean proves the three facts on this card that need no model: the covariance split, the sign of the wrong-way term, and the put's ceiling.
 
-- Suppose the exposure $X$ has a finite average and $B$ marks any default event. Then $\mathrm{CVA} = L\,p\,P + L\,\mathrm{Cov}(e^{-rT}X,\,B)$ exactly.
-- Suppose $f$ and $g$ both fall as the share score $Y$ rises, with finite averages of $f$, $g$ and their product. Then $\mathrm{Cov}(f(Y),\,g(Y)) \ge 0$.
-- Take a put with strike $K \ge 0$ on shares never priced below zero, and recovery $R \le 1$. Then its CVA is at most $L K e^{-rT} p$, in any model.
+- Suppose the exposure $`X`$ has a finite average and $`B`$ marks any default event. Then $`\mathrm{CVA} = L\,p\,P + L\,\mathrm{Cov}(e^{-rT}X,\,B)`$ exactly.
+- Suppose $`f`$ and $`g`$ both fall as the share score $`Y`$ rises, with finite averages of $`f`$, $`g`$ and their product. Then $`\mathrm{Cov}(f(Y),\,g(Y)) \ge 0`$.
+- Take a put with strike $`K \ge 0`$ on shares never priced below zero, and recovery $`R \le 1`$. Then its CVA is at most $`L K e^{-rT} p`$, in any model.
 - The chart's put payoffs are right. It pays $40, $30, $20 and $10 at year-end prices of $60, $70, $80 and $90, and nothing from $100 to $140.
 
 Everything that needs the Gaussian link is left to the Python and Rust checks: the closed form, every number, and strictly positive covariance.
@@ -820,7 +828,7 @@ example : ∀ s ∈ ([100, 110, 120, 130, 140] : List ℤ), max (100 - s) 0 = 0 
 > [!warning]
 > **Reading wrong-way risk as a higher default chance.** It is not. Northwind's default chance is 1.98% at every correlation on this card; the cutoff never moves. What moves is where the defaults fall: at 50% correlation they land mostly in the worlds where the put pays. Bumping the default chance instead would raise the call's CVA too, when in fact the call's CVA falls to under a tenth of its independent figure.
 >
-> - **Mixing correlation conventions.** The copula card's $\rho$ is a variance share, and the correlation with the factor is its square root. Read 50% that way and the put's CVA comes out at 0.3117.
+> - **Mixing correlation conventions.** The copula card's $`\rho`$ is a variance share, and the correlation with the factor is its square root. Read 50% that way and the put's CVA comes out at 0.3117.
 > - **Assuming right-way risk nets against wrong-way.** Buying the call as well does not cancel the put's charge: in Northwind's default worlds the call is owed almost nothing and the put almost everything. Their CVAs differ by 0.2204, exactly the identity in the code.
 > - **Treating the Gaussian number as the worst case.** Bell-curve scores never send the shares to zero at default. A firm's own shares usually do fall close to zero when it fails, which pushes the put's CVA toward the 1.1301 ceiling.
 
@@ -842,7 +850,7 @@ example : ∀ s ∈ ([100, 110, 120, 130, 140] : List ℤ), max (100 - s) 0 = 0 
 
 ## What this builds on
 
-- [CVA](03-cva.md): the loss-from-default average and the independent product $L p P$ that this card corrects.
+- [CVA](03-cva.md): the loss-from-default average and the independent product $`L p P`$ that this card corrects.
 - [The one-factor Gaussian copula](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): a factor plus private noise, a cutoff that keeps each default chance fixed, and the conditional default chance given the factor.
 - [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the clean put, $6.33, and the slid bell curve behind the share half.
 
@@ -851,7 +859,7 @@ example : ∀ s ∈ ([100, 110, 120, 130, 140] : List ℤ), max (100 - s) 0 = 0 
 - [CVA risk numbers](06-cva-risk-numbers-and-hedging.md): the card after this one on the shelf. How CVA moves when the share price, volatility or credit spread moves, and how a desk hedges it; under wrong-way risk the share hedge and the credit hedge can no longer be set separately.
 - [Tail dependence](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md): a copula that gives joint crashes more weight than the Gaussian, pushing the put's CVA toward its ceiling.
 
-This card leaves the correlation itself open: no market quotes $\rho$, so how should a bank choose it, and how much should it charge for getting it wrong?
+This card leaves the correlation itself open: no market quotes $`\rho`$, so how should a bank choose it, and how much should it charge for getting it wrong?
 
 ---
 
@@ -862,4 +870,4 @@ Verified 2026-09-28: every link below resolves; the Basel page was read, and eac
 - Basel Committee on Banking Supervision. *Basel Framework*, CRE53, "Internal models method for counterparty credit risk", paragraphs 53.47 and 53.48. [bis.org](https://www.bis.org/committees/bcbs/basel-framework/standard/cre/53/inforce/2023-01-01/published/2020-03-27). Defines specific wrong-way risk and gives the own-stock put as its example.
 - Hull, John, and Alan White. "CVA and Wrong-Way Risk." *Financial Analysts Journal* 68, no. 5 (2012): 58–69. [doi:10.2469/faj.v68.n5.6](https://doi.org/10.2469/faj.v68.n5.6). The hazard-rate route: default intensity as a function of the trade's value.
 - Li, David X. "On Default Correlation: A Copula Function Approach." *The Journal of Fixed Income* 9, no. 4 (2000): 43–54. [doi:10.3905/jfi.2000.319253](https://doi.org/10.3905/jfi.2000.319253). The Gaussian copula for default times, used here to join default to a share price.
-- Plackett, R. L. "A Reduction Formula for Normal Multivariate Integrals." *Biometrika* 41, no. 3–4 (1954): 351–360. [doi:10.1093/biomet/41.3-4.351](https://doi.org/10.1093/biomet/41.3-4.351). The identity the code uses to build $N_2$ as an integral over the correlation.
+- Plackett, R. L. "A Reduction Formula for Normal Multivariate Integrals." *Biometrika* 41, no. 3–4 (1954): 351–360. [doi:10.1093/biomet/41.3-4.351](https://doi.org/10.1093/biomet/41.3-4.351). The identity the code uses to build $`N_2`$ as an integral over the correlation.

@@ -37,38 +37,44 @@ Orange: steps of 3.20 s (r = 0.40). Teal: steps of 4.00 s (r = 0.50). Dark blue:
 
 ## The formula
 
-Notation first, as in [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md). $u(x, t)$ is the temperature at $x$ metres and $t$ seconds. Grid points sit $h$ = 0.01 m apart; time moves in steps of $\Delta t$. $u_j^n$ is the reading at point $j$ after $n$ steps; the raised $n$ is a label, not a power. The **diffusivity** $\alpha$, wing 08's κ, says how fast heat spreads. The **mesh ratio** $r = \alpha\Delta t/h^2$ is the time step in grid units.
+Notation first, as in [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md). $`u(x, t)`$ is the temperature at $`x`$ metres and $`t`$ seconds. Grid points sit $`h`$ = 0.01 m apart; time moves in steps of $`\Delta t`$. $`u_j^n`$ is the reading at point $`j`$ after $`n`$ steps; the raised $`n`$ is a label, not a power. The **diffusivity** $`\alpha`$, wing 08's κ, says how fast heat spreads. The **mesh ratio** $`r = \alpha\Delta t/h^2`$ is the time step in grid units.
 
-A **Fourier mode** is one wave pattern on the grid, $u_j = e^{i\xi jh}$. Here $i$ is the square root of −1, and $\xi$, read "xi", is the **wavenumber**: radians of wave per metre. The product $\xi h$ is how far the wave turns between neighbouring points. By Euler's formula, $e^{i\xi jh} = \cos(\xi jh) + i\sin(\xi jh)$, so a mode is a cosine and a sine wave travelling together.
+A **Fourier mode** is one wave pattern on the grid, $`u_j = e^{i\xi jh}`$. Here $`i`$ is the square root of −1, and $`\xi`$, read "xi", is the **wavenumber**: radians of wave per metre. The product $`\xi h`$ is how far the wave turns between neighbouring points. By Euler's formula, $`e^{i\xi jh} = \cos(\xi jh) + i\sin(\xi jh)`$, so a mode is a cosine and a sine wave travelling together.
 
-Put the mode into the scheme and look for the factor it comes back multiplied by. That factor $g(\xi)$ is the mode's **amplification factor**, or growth factor:
+Put the mode into the scheme and look for the factor it comes back multiplied by. That factor $`g(\xi)`$ is the mode's **amplification factor**, or growth factor:
 
-$$u_j^n = g(\xi)^n\, e^{i\xi jh} \qquad\Longrightarrow\qquad \text{stable} \iff |g(\xi)| \le 1 \text{ for every } \xi.$$
+```math
+u_j^n = g(\xi)^n\, e^{i\xi jh} \qquad\Longrightarrow\qquad \text{stable} \iff |g(\xi)| \le 1 \text{ for every } \xi.
+```
 
 **Read it aloud:** if every wave the grid can hold comes back from one step no larger than it went in, nothing can grow; if one wave comes back larger, that wave grows every step.
 
 For the explicit heat step, the mode gives
 
-$$g(\xi) = 1 - 4r\sin^2\!\Big(\frac{\xi h}{2}\Big), \qquad\text{so}\qquad r \le \tfrac12, \quad\text{that is}\quad \Delta t \le \frac{h^2}{2\alpha}.$$
+```math
+g(\xi) = 1 - 4r\sin^2\!\Big(\frac{\xi h}{2}\Big), \qquad\text{so}\qquad r \le \tfrac12, \quad\text{that is}\quad \Delta t \le \frac{h^2}{2\alpha}.
+```
 
-For a wave moving at speed $c$, the **Courant number** is $\nu = |c|\Delta t/h$, the number of cells the true signal crosses in one step. The **CFL condition** for an explicit scheme whose stencil reaches one cell each way is
+For a wave moving at speed $`c`$, the **Courant number** is $`\nu = |c|\Delta t/h`$, the number of cells the true signal crosses in one step. The **CFL condition** for an explicit scheme whose stencil reaches one cell each way is
 
-$$\nu = \frac{|c|\,\Delta t}{h} \le 1, \qquad\text{that is}\qquad \Delta t \le \frac{h}{|c|}.$$
+```math
+\nu = \frac{|c|\,\Delta t}{h} \le 1, \qquad\text{that is}\qquad \Delta t \le \frac{h}{|c|}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $x$, $t$ | temperature, or the sound's displacement; place in m; time in s | 100 C in the middle 10 cm at the start | — |
-| $\alpha$ | diffusivity: how fast heat spreads, in m²/s | 1.25e-5 (illustrative, typical of carbon steel) | the safe heat step shrinks |
-| $c$ | wave speed, in m/s | sound in steel, 5000 (illustrative) | the safe wave step shrinks |
-| $h$, $\Delta t$ | grid spacing; time step | 0.01 m; 4.00 s (heat), 2.00 µs (sound) | larger error per step |
-| $r$ | mesh ratio αΔt/h²: the heat step in grid units | 0.40, 0.50, 0.51 | above 1/2 the explicit heat step blows up |
-| $\nu$ | Courant number \|c\|Δt/h: cells the signal crosses per step | 0.9, 1, 1.02, 2 | above 1 every explicit one-cell scheme fails |
-| $u_j^n$, $j$, $n$ | computed value at point j after n steps | middle point j = 50 | — |
-| $\xi$, $k$, $\xi h$ | wavenumber in radians per m; mode number, with ξ = kπ on this bar; turn of the wave from one point to the next | k = 1 (one hump) to k = 99 (sharpest zigzag); ξh = kπ/100 | sharper wave; at ξh = π neighbours have opposite sign |
-| $a_m$, $m$ | weight a scheme puts on the old reading m cells away | r, 1 − 2r, r at m = −1, 0, 1 | a negative weight can let a zigzag grow |
-| $i$ | square root of −1 | — | — |
-| $g(\xi)$ | amplification factor: what one step multiplies the mode by | −1.039497 for k = 99 at r = 0.51 | size above 1: that wave grows |
-| $\beta$ | middle coefficient of the leapfrog's equation for g | 1 − 2ν² sin²(ξh/2) | below −1: one root grows |
+| $`u`$, $`x`$, $`t`$ | temperature, or the sound's displacement; place in m; time in s | 100 C in the middle 10 cm at the start | — |
+| $`\alpha`$ | diffusivity: how fast heat spreads, in m²/s | 1.25e-5 (illustrative, typical of carbon steel) | the safe heat step shrinks |
+| $`c`$ | wave speed, in m/s | sound in steel, 5000 (illustrative) | the safe wave step shrinks |
+| $`h`$, $`\Delta t`$ | grid spacing; time step | 0.01 m; 4.00 s (heat), 2.00 µs (sound) | larger error per step |
+| $`r`$ | mesh ratio αΔt/h²: the heat step in grid units | 0.40, 0.50, 0.51 | above 1/2 the explicit heat step blows up |
+| $`\nu`$ | Courant number \|c\|Δt/h: cells the signal crosses per step | 0.9, 1, 1.02, 2 | above 1 every explicit one-cell scheme fails |
+| $`u_j^n`$, $`j`$, $`n`$ | computed value at point j after n steps | middle point j = 50 | — |
+| $`\xi`$, $`k`$, $`\xi h`$ | wavenumber in radians per m; mode number, with ξ = kπ on this bar; turn of the wave from one point to the next | k = 1 (one hump) to k = 99 (sharpest zigzag); ξh = kπ/100 | sharper wave; at ξh = π neighbours have opposite sign |
+| $`a_m`$, $`m`$ | weight a scheme puts on the old reading m cells away | r, 1 − 2r, r at m = −1, 0, 1 | a negative weight can let a zigzag grow |
+| $`i`$ | square root of −1 | — | — |
+| $`g(\xi)`$ | amplification factor: what one step multiplies the mode by | −1.039497 for k = 99 at r = 0.51 | size above 1: that wave grows |
+| $`\beta`$ | middle coefficient of the leapfrog's equation for g | 1 − 2ν² sin²(ξh/2) | below −1: one root grows |
 
 ### When it holds
 
@@ -84,92 +90,100 @@ $$\nu = \frac{|c|\,\Delta t}{h} \le 1, \qquad\text{that is}\qquad \Delta t \le \
 
 ### Step 0: a wave goes in and the same wave comes out
 
-A scheme with constant weights does the same thing at every point. Shift a pattern one cell along the grid and the scheme's output shifts one cell too. A Fourier mode is the one pattern that a one-cell shift only multiplies, by $e^{i\xi h}$. So the scheme cannot change the mode's shape. It can only multiply the whole mode by one number, $g(\xi)$. Finding that number is the whole method.
+A scheme with constant weights does the same thing at every point. Shift a pattern one cell along the grid and the scheme's output shifts one cell too. A Fourier mode is the one pattern that a one-cell shift only multiplies, by $`e^{i\xi h}`$. So the scheme cannot change the mode's shape. It can only multiply the whole mode by one number, $`g(\xi)`$. Finding that number is the whole method.
 
 ### Step 1: put the mode in and divide it out
 
-Take a scheme that reads neighbours $j + m$ on the old level with weights $a_m$:
+Take a scheme that reads neighbours $`j + m`$ on the old level with weights $`a_m`$:
 
-$$u_j^{n+1} = \sum_m a_m\,u_{j+m}^n.$$
+```math
+u_j^{n+1} = \sum_m a_m\,u_{j+m}^n.
+```
 
-Put in $u_j^n = g^n e^{i\xi jh}$. Every term carries the factor $g^n e^{i\xi jh}$, so divide it out:
+Put in $`u_j^n = g^n e^{i\xi jh}`$. Every term carries the factor $`g^n e^{i\xi jh}`$, so divide it out:
 
-$$g(\xi) = \sum_m a_m\, e^{im\xi h}.$$
+```math
+g(\xi) = \sum_m a_m\, e^{im\xi h}.
+```
 
-An implicit scheme also has weights $b_m$ on the new level; then $g$ is the old sum divided by the new sum. The code feeds every scheme's stencil one wave and divides.
+An implicit scheme also has weights $`b_m`$ on the new level; then $`g`$ is the old sum divided by the new sum. The code feeds every scheme's stencil one wave and divides.
 
-For the heat step the weights are $r$, $1 - 2r$, $r$. The two neighbours give $r(e^{i\xi h} + e^{-i\xi h}) = 2r\cos(\xi h)$, and $1 - \cos(\xi h) = 2\sin^2(\xi h/2)$ turns the sum into $1 - 4r\sin^2(\xi h/2)$. Wing 08 derives the same factor with real sine waves ([Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)).
+For the heat step the weights are $`r`$, $`1 - 2r`$, $`r`$. The two neighbours give $`r(e^{i\xi h} + e^{-i\xi h}) = 2r\cos(\xi h)`$, and $`1 - \cos(\xi h) = 2\sin^2(\xi h/2)`$ turns the sum into $`1 - 4r\sin^2(\xi h/2)`$. Wing 08 derives the same factor with real sine waves ([Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)).
 
 ### Step 2: every start is a sum of waves, and each grows on its own
 
-Any set of grid readings is a sum of Fourier modes. On a repeating grid that is [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md). On the bar with cold ends it is the sine series of [Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md). Each mode is multiplied by its own $g$ every step, and the modes never mix. After $n$ steps mode $k$ has been multiplied by $g(\xi_k)^n$.
+Any set of grid readings is a sum of Fourier modes. On a repeating grid that is [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md). On the bar with cold ends it is the sine series of [Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md). Each mode is multiplied by its own $`g`$ every step, and the modes never mix. After $`n`$ steps mode $`k`$ has been multiplied by $`g(\xi_k)^n`$.
 
-So the run's size is controlled by the largest $|g|$. If every $|g| \le 1$, the total size can never grow. If one $|g| > 1$, that mode grows like $|g|^n$ from whatever tiny amount of it the start contains. Even rounding error supplies some.
+So the run's size is controlled by the largest $`|g|`$. If every $`|g| \le 1`$, the total size can never grow. If one $`|g| > 1`$, that mode grows like $`|g|^n`$ from whatever tiny amount of it the start contains. Even rounding error supplies some.
 
-The check runs the loop for 300 steps. It also splits the start into its 99 sine modes, multiplies each by $g^{300}$ and adds them up. The two middle readings agree to rounding at all three step sizes.
+The check runs the loop for 300 steps. It also splits the start into its 99 sine modes, multiplies each by $`g^{300}`$ and adds them up. The two middle readings agree to rounding at all three step sizes.
 
 <details>
 <summary>Detailed proof: |g| ≤ 1 for every mode is exactly stability on a repeating grid, for a scheme with one old level</summary>
 
-Take $N$ points on a repeating grid and measure a set of readings by its root-mean-square size, $\lVert u\rVert^2 = \frac1N\sum_j |u_j|^2$. Write the start as $u_j^0 = \sum_k A_k e^{i\xi_k jh}$ with $\xi_k h = 2\pi k/N$. Parseval's identity for the discrete Fourier transform says $\lVert u\rVert^2 = \sum_k |A_k|^2$.
+Take $`N`$ points on a repeating grid and measure a set of readings by its root-mean-square size, $`\lVert u\rVert^2 = \frac1N\sum_j |u_j|^2`$. Write the start as $`u_j^0 = \sum_k A_k e^{i\xi_k jh}`$ with $`\xi_k h = 2\pi k/N`$. Parseval's identity for the discrete Fourier transform says $`\lVert u\rVert^2 = \sum_k |A_k|^2`$.
 
-One step sends the coefficient $A_k$ to $g(\xi_k)\,A_k$, because each mode only gets multiplied (Step 1). After $n$ steps,
+One step sends the coefficient $`A_k`$ to $`g(\xi_k)\,A_k`$, because each mode only gets multiplied (Step 1). After $`n`$ steps,
 
-$$\lVert u^n\rVert^2 = \sum_k |g(\xi_k)|^{2n}\,|A_k|^2 \le \Big(\max_k |g(\xi_k)|\Big)^{2n}\,\lVert u^0\rVert^2.$$
+$`\displaystyle \lVert u^n\rVert^2 = \sum_k |g(\xi_k)|^{2n}\,|A_k|^2 \le \Big(\max_k |g(\xi_k)|\Big)^{2n}\,\lVert u^0\rVert^2.`$
 
-If every $|g| \le 1$, then $\lVert u^n\rVert \le \lVert u^0\rVert$ for every $n$: stable. If $|g| \le 1 + K\Delta t$, then $\lVert u^n\rVert \le (1 + K\Delta t)^n\lVert u^0\rVert \le e^{Kt}\lVert u^0\rVert$ at time $t = n\Delta t$: still stable.
+If every $`|g| \le 1`$, then $`\lVert u^n\rVert \le \lVert u^0\rVert`$ for every $`n`$: stable. If $`|g| \le 1 + K\Delta t`$, then $`\lVert u^n\rVert \le (1 + K\Delta t)^n\lVert u^0\rVert \le e^{Kt}\lVert u^0\rVert`$ at time $`t = n\Delta t`$: still stable.
 
-The bound is sharp. Start with the single worst mode, and the run grows by exactly $\max|g|$ each step. If $\max|g|$ stays above $1 + K\Delta t$ for every $K$ as the grid is refined, that start grows without limit at a fixed time: unstable.
+The bound is sharp. Start with the single worst mode, and the run grows by exactly $`\max|g|`$ each step. If $`\max|g|`$ stays above $`1 + K\Delta t`$ for every $`K`$ as the grid is refined, that start grows without limit at a fixed time: unstable.
 
-On the bar with cold ends, the sine modes $\sin(k\pi x_j)$ for $k = 1, \dots, 99$ are the eigenvectors of the explicit step's symmetric matrix, with eigenvalues $g(k\pi)$. The same argument holds with the sine series in place of the transform.
+On the bar with cold ends, the sine modes $`\sin(k\pi x_j)`$ for $`k = 1, \dots, 99`$ are the eigenvectors of the explicit step's symmetric matrix, with eigenvalues $`g(k\pi)`$. The same argument holds with the sine series in place of the transform.
 
 </details>
 
 ### Step 3: the sharpest zigzag decides the heat step
 
-At $r$ = 0.51, the smooth one-hump mode has $g$ = 0.999497. It looks perfectly safe. The sharpest zigzag, $k$ = 99, has $g$ = −1.039497. The minus sign flips the zigzag every step, and the size grows by 1.039497 each time.
+At $`r`$ = 0.51, the smooth one-hump mode has $`g`$ = 0.999497. It looks perfectly safe. The sharpest zigzag, $`k`$ = 99, has $`g`$ = −1.039497. The minus sign flips the zigzag every step, and the size grows by 1.039497 each time.
 
-The check projects the readings after steps 299 and 300 onto the $k$ = 99 sine wave and divides: −1.039497, matching the formula.
+The check projects the readings after steps 299 and 300 onto the $`k`$ = 99 sine wave and divides: −1.039497, matching the formula.
 
-The size $|1 - 4r\sin^2(\xi h/2)|$ is largest when $\sin^2$ is near 1, at $\xi h$ near π. Every grid has such a mode as $h$ shrinks, so the safe range for every grid is $r \le 1/2$. On this exact 99-mode grid the limit is $r \le$ 0.500123, which is $\Delta t \le$ 4.00099 s. The clean rule $\Delta t \le h^2/(2\alpha)$ = 4.0000 s keeps a hair of margin.
+The size $`|1 - 4r\sin^2(\xi h/2)|`$ is largest when $`\sin^2`$ is near 1, at $`\xi h`$ near π. Every grid has such a mode as $`h`$ shrinks, so the safe range for every grid is $`r \le 1/2`$. On this exact 99-mode grid the limit is $`r \le`$ 0.500123, which is $`\Delta t \le`$ 4.00099 s. The clean rule $`\Delta t \le h^2/(2\alpha)`$ = 4.0000 s keeps a hair of margin.
 
-At $r$ = 0.50 the zigzag's factor is −0.999507: it barely shrinks. That is stable, but any zigzag in the start lingers. At $r$ = 0.40 the factor is −0.599605, and zigzags die within a few steps.
+At $`r`$ = 0.50 the zigzag's factor is −0.999507: it barely shrinks. That is stable, but any zigzag in the start lingers. At $`r`$ = 0.40 the factor is −0.599605, and zigzags die within a few steps.
 
 ### Step 4: a moving wave gives a complex factor
 
-Heat has no direction, so its weights are symmetric and $g$ is real. A quantity carried along at speed $c$, the **transport equation** $u_t + c\,u_x = 0$, has lopsided weights. Then $g$ is a complex number. Its size says whether the wave grows. Its angle says how far the wave moves per step, so a wrong angle means the wave travels at the wrong speed.
+Heat has no direction, so its weights are symmetric and $`g`$ is real. A quantity carried along at speed $`c`$, the **transport equation** $`u_t + c\,u_x = 0`$, has lopsided weights. Then $`g`$ is a complex number. Its size says whether the wave grows. Its angle says how far the wave moves per step, so a wrong angle means the wave travels at the wrong speed.
 
 Three explicit schemes for transport, each written with the Courant number ν:
 
 | Scheme | Update | Growth factor g | Size squared, \|g\|² |
 | --- | --- | --- | --- |
-| centred | $u_j - \frac{\nu}{2}(u_{j+1} - u_{j-1})$ | $1 - i\nu\sin\xi h$ | $1 + \nu^2\sin^2\xi h$ |
-| upwind | $u_j - \nu(u_j - u_{j-1})$ | $1 - \nu + \nu e^{-i\xi h}$ | $1 - 4\nu(1-\nu)\sin^2\frac{\xi h}{2}$ |
-| Lax-Wendroff | adds a correction $\frac{\nu^2}{2}(u_{j+1} - 2u_j + u_{j-1})$ to centred | $1 - i\nu\sin\xi h - 2\nu^2\sin^2\frac{\xi h}{2}$ | $1 - 4\nu^2(1-\nu^2)\sin^4\frac{\xi h}{2}$ |
+| centred | $`u_j - \frac{\nu}{2}(u_{j+1} - u_{j-1})`$ | $`1 - i\nu\sin\xi h`$ | $`1 + \nu^2\sin^2\xi h`$ |
+| upwind | $`u_j - \nu(u_j - u_{j-1})`$ | $`1 - \nu + \nu e^{-i\xi h}`$ | $`1 - 4\nu(1-\nu)\sin^2\frac{\xi h}{2}`$ |
+| Lax-Wendroff | adds a correction $`\frac{\nu^2}{2}(u_{j+1} - 2u_j + u_{j-1})`$ to centred | $`1 - i\nu\sin\xi h - 2\nu^2\sin^2\frac{\xi h}{2}`$ | $`1 - 4\nu^2(1-\nu^2)\sin^4\frac{\xi h}{2}`$ |
 
 The centred scheme's size is above 1 for every step size. At ν = 0.5 its worst factor is 1.118034. Upwind and Lax-Wendroff are stable for ν up to 1 and grow beyond it: at ν = 1.2 their worst factors are 1.399915 and 1.879667. [Flow problems](06-upwind-schemes-and-conservation-laws.md) explains why they differ so.
 
 ### Step 5: a three-level scheme gives a quadratic for g
 
-Sound in the bar obeys the **wave equation** $u_{tt} = c^2 u_{xx}$: the acceleration of each bit of steel is proportional to the bend. The **leapfrog** scheme uses two old levels:
+Sound in the bar obeys the **wave equation** $`u_{tt} = c^2 u_{xx}`$: the acceleration of each bit of steel is proportional to the bend. The **leapfrog** scheme uses two old levels:
 
-$$u_j^{n+1} = 2u_j^n - u_j^{n-1} + \nu^2\big(u_{j+1}^n - 2u_j^n + u_{j-1}^n\big).$$
+```math
+u_j^{n+1} = 2u_j^n - u_j^{n-1} + \nu^2\big(u_{j+1}^n - 2u_j^n + u_{j-1}^n\big).
+```
 
-Put in the mode and divide out $g^{n-1}e^{i\xi jh}$. The result is a quadratic:
+Put in the mode and divide out $`g^{n-1}e^{i\xi jh}`$. The result is a quadratic:
 
-$$g^2 - 2\beta g + 1 = 0, \qquad \beta = 1 - 2\nu^2\sin^2\Big(\frac{\xi h}{2}\Big).$$
+```math
+g^2 - 2\beta g + 1 = 0, \qquad \beta = 1 - 2\nu^2\sin^2\Big(\frac{\xi h}{2}\Big).
+```
 
-The two roots multiply to 1. If $|\beta| < 1$ they are two different complex numbers of size exactly 1: the wave keeps its size for ever, as sound in a perfect bar does. At $\beta = -1$ they meet in a double root −1; then $n(-1)^n$ also solves the step, and the wave grows in proportion to the step count $n$. If $\beta < -1$ they are real, and one is larger than 1 in size. So every mode needs $\nu\sin(\xi h/2) < 1$. A repeating grid holds the zigzag $\xi h = \pi$ and needs $\nu < 1$. This bar's sharpest mode has $\sin(99\pi/200) < 1$, so here the limit is $\nu$ below 1.0001234, and $\nu = 1$ is safe.
+The two roots multiply to 1. If $`|\beta| < 1`$ they are two different complex numbers of size exactly 1: the wave keeps its size for ever, as sound in a perfect bar does. At $`\beta = -1`$ they meet in a double root −1; then $`n(-1)^n`$ also solves the step, and the wave grows in proportion to the step count $`n`$. If $`\beta < -1`$ they are real, and one is larger than 1 in size. So every mode needs $`\nu\sin(\xi h/2) < 1`$. A repeating grid holds the zigzag $`\xi h = \pi`$ and needs $`\nu < 1`$. This bar's sharpest mode has $`\sin(99\pi/200) < 1`$, so here the limit is $`\nu`$ below 1.0001234, and $`\nu = 1`$ is safe.
 
-At ν = 1.02 the $k$ = 99 root is −1.488966, and the check measures the run's $k$ = 99 mode growing by that factor each step. After 50 steps, 102 µs, the middle computes 1561964.149968 µm, more than a metre and a half; the true middle is at rest.
+At ν = 1.02 the $`k`$ = 99 root is −1.488966, and the check measures the run's $`k`$ = 99 mode growing by that factor each step. After 50 steps, 102 µs, the middle computes 1561964.149968 µm, more than a metre and a half; the true middle is at rest.
 
 ### Step 6: the CFL condition, from where the answer comes from
 
-The true answer at point $x$ and time $t$ depends only on starting data between $x - ct$ and $x + ct$. This stretch is the **domain of dependence**. For a bar starting at rest, d'Alembert's formula ([The wave equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/05-the-wave-equation-and-dalemberts-formula.md)) says more: half of the starting shape runs each way, so only the two end points $x \pm ct$ matter.
+The true answer at point $`x`$ and time $`t`$ depends only on starting data between $`x - ct`$ and $`x + ct`$. This stretch is the **domain of dependence**. For a bar starting at rest, d'Alembert's formula ([The wave equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/05-the-wave-equation-and-dalemberts-formula.md)) says more: half of the starting shape runs each way, so only the two end points $`x \pm ct`$ matter.
 
-An explicit scheme whose stencil reaches one cell each way is slower. After $n$ steps, the reading at point $j$ depends only on starting data at points $j - n$ to $j + n$. That is a reach of $nh$ in each direction, at time $n\Delta t$.
+An explicit scheme whose stencil reaches one cell each way is slower. After $`n`$ steps, the reading at point $`j`$ depends only on starting data at points $`j - n`$ to $`j + n`$. That is a reach of $`nh`$ in each direction, at time $`n\Delta t`$.
 
-The true reach is $c\,n\Delta t = \nu\, nh$. If ν > 1, the true answer depends on starting data the scheme never reads. Change that data, and the true answer changes while the computed one cannot. So the computed answers cannot converge to the true ones for every start. This is the Courant-Friedrichs-Lewy theorem, from 1928.
+The true reach is $`c\,n\Delta t = \nu\, nh`$. If ν > 1, the true answer depends on starting data the scheme never reads. Change that data, and the true answer changes while the computed one cannot. So the computed answers cannot converge to the true ones for every start. This is the Courant-Friedrichs-Lewy theorem, from 1928.
 
 <p align="center"><img src="../figures/von-neumann-analysis-and-the-cfl-condition.svg" alt="Two panels drawn in grid units. In each, a point P sits five steps up, and a solid triangle of grid dots shows the scheme's reach: five cells each way at the bottom. Left panel, Courant number 0.5: dashed sound lines from P reach 2.5 cells, inside the triangle. Right panel, Courant number 2: dashed sound lines reach 10 cells, outside the triangle, and land on a pulse the scheme never reads." width="420"></p>
 
@@ -179,29 +193,29 @@ The CFL condition is necessary, but not sufficient on its own. The centred trans
 
 ### Step 7: heat moves at infinite speed
 
-The heat equation sends a little heat everywhere at once. Its domain of dependence is the whole bar. So the stencil's reach per unit time, $h/\Delta t$, must grow without limit as the grid is refined. With $r$ fixed at 0.5, $\Delta t$ falls like $h^2$, so $h/\Delta t$ grows like $1/h$: 0.25 cm/s at $h$ = 0.01 m, 2.50 cm/s at $h$ = 0.001 m. The heat limit is the CFL idea for a signal with no top speed.
+The heat equation sends a little heat everywhere at once. Its domain of dependence is the whole bar. So the stencil's reach per unit time, $`h/\Delta t`$, must grow without limit as the grid is refined. With $`r`$ fixed at 0.5, $`\Delta t`$ falls like $`h^2`$, so $`h/\Delta t`$ grows like $`1/h`$: 0.25 cm/s at $`h`$ = 0.01 m, 2.50 cm/s at $`h`$ = 0.001 m. The heat limit is the CFL idea for a signal with no top speed.
 
-The price is steps. The explicit step costs 5 flops (floating-point adds or multiplies) per point. At $h$ = 0.01 m, 1200 s of heating costs 148500 flops. At $h$ = 0.001 m, $\Delta t$ falls to 0.040 s, and the same 1200 s costs 149850000 flops.
+The price is steps. The explicit step costs 5 flops (floating-point adds or multiplies) per point. At $`h`$ = 0.01 m, 1200 s of heating costs 148500 flops. At $`h`$ = 0.001 m, $`\Delta t`$ falls to 0.040 s, and the same 1200 s costs 149850000 flops.
 
 ### Step 8: stability plus accuracy gives convergence
 
-By the Lax equivalence theorem of [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md), a **consistent** linear scheme (one that matches the equation as $h$ and $\Delta t$ shrink) converges exactly when it is stable. Von Neumann analysis checks the stability half.
+By the Lax equivalence theorem of [Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md), a **consistent** linear scheme (one that matches the equation as $`h`$ and $`\Delta t`$ shrink) converges exactly when it is stable. Von Neumann analysis checks the stability half.
 
 ---
 
 ## Worked numbers, by hand
 
-Heat in the steel bar, then sound in it. $h$ = 0.01 m, $\alpha$ = 1.25e-5 m²/s, $c$ = 5000 m/s. These illustrative values are rounder than the 1.2e-5 m²/s and 5047.5 m/s of [Three families](01-pde-families-elliptic-parabolic-hyperbolic.md), so the limits come out at exactly 4 s and 2 µs.
+Heat in the steel bar, then sound in it. $`h`$ = 0.01 m, $`\alpha`$ = 1.25e-5 m²/s, $`c`$ = 5000 m/s. These illustrative values are rounder than the 1.2e-5 m²/s and 5047.5 m/s of [Three families](01-pde-families-elliptic-parabolic-hyperbolic.md), so the limits come out at exactly 4 s and 2 µs.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| heat limit | $h^2/(2\alpha) = 0.0001 / 0.000025$ | 4.0000 s |
-| r at a 4.08 s step | $1.25\text{e-}5 \times 4.08 / 0.0001$ | 0.51 |
-| smooth mode, k = 1 | $1 - 2.04\,\sin^2(\pi/200)$ | 0.999497 |
-| sharpest zigzag, k = 99 | $1 - 2.04\,\sin^2(99\pi/200)$ | **−1.039497** |
-| sound limit | $h/c = 0.01/5000$ | 2.00 µs |
-| ν at a 2.04 µs step | $5000 \times 2.04\text{e-}6 / 0.01$ | 1.02 |
-| leapfrog, k = 99 | the root $\beta - \sqrt{\beta^2 - 1}$ | **−1.488966** |
+| heat limit | $`h^2/(2\alpha) = 0.0001 / 0.000025`$ | 4.0000 s |
+| r at a 4.08 s step | $`1.25\text{e-}5 \times 4.08 / 0.0001`$ | 0.51 |
+| smooth mode, k = 1 | $`1 - 2.04\,\sin^2(\pi/200)`$ | 0.999497 |
+| sharpest zigzag, k = 99 | $`1 - 2.04\,\sin^2(99\pi/200)`$ | **−1.039497** |
+| sound limit | $`h/c = 0.01/5000`$ | 2.00 µs |
+| ν at a 2.04 µs step | $`5000 \times 2.04\text{e-}6 / 0.01`$ | 1.02 |
+| leapfrog, k = 99 | the root $`\beta - \sqrt{\beta^2 - 1}`$ | **−1.488966** |
 
 A step just past the heat limit makes the sharpest zigzag grow 1.039497-fold per step, enough to swamp the bar within 300 steps.
 
@@ -612,16 +626,16 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the von Neumann test on any repeating grid, the heat limit $r \le 1/2$, and that any one-cell explicit scheme needs the CFL condition.
+Lean proves the von Neumann test on any repeating grid, the heat limit $`r \le 1/2`$, and that any one-cell explicit scheme needs the CFL condition.
 
-- Take a linear scheme with one old level and the same weights at every point, on a repeating grid of $N$ points. It is stable exactly when every Fourier mode's growth factor has $|g| \le 1$.
-- Stable here means: after any number of steps, the sum of $|u_j|^2$ is at most a fixed constant times its starting value.
-- With $r \ge 0$, every factor $1 - 4r\sin^2(\xi h/2)$ has size at most 1 exactly when $r \le 1/2$.
-- Take any explicit scheme whose stencil reaches one cell each way, with $\nu > 1$ and $n \ge 1$ steps. Two smooth starting shapes give the same computed reading at point $j$. Yet d'Alembert's formula for a bar starting at rest gives them different true answers there.
+- Take a linear scheme with one old level and the same weights at every point, on a repeating grid of $`N`$ points. It is stable exactly when every Fourier mode's growth factor has $`|g| \le 1`$.
+- Stable here means: after any number of steps, the sum of $`|u_j|^2`$ is at most a fixed constant times its starting value.
+- With $`r \ge 0`$, every factor $`1 - 4r\sin^2(\xi h/2)`$ has size at most 1 exactly when $`r \le 1/2`$.
+- Take any explicit scheme whose stencil reaches one cell each way, with $`\nu > 1`$ and $`n \ge 1`$ steps. Two smooth starting shapes give the same computed reading at point $`j`$. Yet d'Alembert's formula for a bar starting at rest gives them different true answers there.
 - The card's exact numbers check out: the 4 s heat limit, r = 0.51 at 4.08 s, the 2 µs sound limit and ν = 1.02 at 2.04 µs.
 - So do the centred scheme's worst size squared, 5/4 at ν = 0.5, leapfrog's double root −1 at ν = 1, both reaches in cm/s and both flop counts.
 
-The bar's sine modes, the leapfrog roots, the $1 + K\Delta t$ allowance and every run are left to the Python and Rust checks.
+The bar's sine modes, the leapfrog roots, the $`1 + K\Delta t`$ allowance and every run are left to the Python and Rust checks.
 
 ```lean
 -- Von Neumann analysis: a linear scheme with constant weights on a repeating grid stays bounded exactly when no Fourier mode comes back larger than it went in, the explicit heat step passes this test exactly when r ≤ 1/2, and an explicit one-cell scheme with Courant number above 1 cannot see data that changes the true wave.

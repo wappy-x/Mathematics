@@ -22,7 +22,7 @@ The cure is to charge a **price** as well as a fine: a flat rate per unit of bre
 
 **A quadratic penalty enforces a rule only as its fine weight grows without limit, which stretches the problem; an augmented Lagrangian adds a price that is corrected every round, so the plan converges with the fine held fixed.**
 
-**What kind of fact this is:** two methods, with theorems proved on this card in Why it works: a penalty minimiser obeys the KKT conditions (named after Karush, Kuhn and Tucker: the equations the best plan and its prices satisfy) with stand-in prices equal to fine times breach, and, for a quadratic cost with straight-line rules, each price correction shrinks the error by a fixed factor $1/(1 + \rho\sigma)$. Convergence for general smooth problems is stated, with its source. The answer, 237.5 kW, is certified by zero KKT residuals on a convex problem and confirmed by a grid scan.
+**What kind of fact this is:** two methods, with theorems proved on this card in Why it works: a penalty minimiser obeys the KKT conditions (named after Karush, Kuhn and Tucker: the equations the best plan and its prices satisfy) with stand-in prices equal to fine times breach, and, for a quadratic cost with straight-line rules, each price correction shrinks the error by a fixed factor $`1/(1 + \rho\sigma)`$. Convergence for general smooth problems is stated, with its source. The answer, 237.5 kW, is certified by zero KKT residuals on a convex problem and confirmed by a grid scan.
 
 ### The picture: three ways to close the gap
 
@@ -43,47 +43,53 @@ Orange is the penalty alone, with the fine weight multiplied by 10 each round, f
 
 ## The formula
 
-Notation first, in words. The plan is $x = (x_1, x_2, x_3)$, the three flows in L/s; $x^*$ is the best plan. The **shortfall** $h(x) = 150 - x_1 - x_2 - x_3$ must equal 0. The **overpressure** $g(x) = 0.5x_1 - 25$, in metres, must be at most 0.
+Notation first, in words. The plan is $`x = (x_1, x_2, x_3)`$, the three flows in L/s; $`x^*`$ is the best plan. The **shortfall** $`h(x) = 150 - x_1 - x_2 - x_3`$ must equal 0. The **overpressure** $`g(x) = 0.5x_1 - 25`$, in metres, must be at most 0.
 
-The shelf's standard form, on the [KKT conditions](02-kkt-conditions.md) card, writes the cost as $f_0$ and this ceiling as $f_1 \le 0$; this card and its code call them $f$ and $g$. Their prices, the KKT multipliers of the [KKT conditions](02-kkt-conditions.md) card, are $\nu$ ("nu") for the equality and $\lambda \ge 0$ for the ceiling. The fine weight is $\rho$ ("rho"), the letter [ADMM](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/07-admm.md) (the alternating direction method of multipliers) reuses.
+The shelf's standard form, on the [KKT conditions](02-kkt-conditions.md) card, writes the cost as $`f_0`$ and this ceiling as $`f_1 \le 0`$; this card and its code call them $`f`$ and $`g`$. Their prices, the KKT multipliers of the [KKT conditions](02-kkt-conditions.md) card, are $`\nu`$ ("nu") for the equality and $`\lambda \ge 0`$ for the ceiling. The fine weight is $`\rho`$ ("rho"), the letter [ADMM](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/07-admm.md) (the alternating direction method of multipliers) reuses.
 
 The **quadratic penalty** fines the squared breach:
 
-$$P_\rho(x) = f(x) + \frac{\rho}{2}\Big(h(x)^2 + \max\big(0, g(x)\big)^2\Big).$$
+```math
+P_\rho(x) = f(x) + \frac{\rho}{2}\Big(h(x)^2 + \max\big(0, g(x)\big)^2\Big).
+```
 
-The **augmented Lagrangian** adds prices to the fine, and round $k$ minimises it, then corrects the prices from the breach left:
+The **augmented Lagrangian** adds prices to the fine, and round $`k`$ minimises it, then corrects the prices from the breach left:
 
-$$L_\rho(x; \nu, \lambda) = f(x) + \nu\, h(x) + \frac{\rho}{2}h(x)^2 + \frac{1}{2\rho}\Big(\max\big(0, \lambda + \rho\, g(x)\big)^2 - \lambda^2\Big),$$
+```math
+L_\rho(x; \nu, \lambda) = f(x) + \nu\, h(x) + \frac{\rho}{2}h(x)^2 + \frac{1}{2\rho}\Big(\max\big(0, \lambda + \rho\, g(x)\big)^2 - \lambda^2\Big),
+```
 
-$$\nu_{k+1} = \nu_k + \rho\, h(x_k), \qquad \lambda_{k+1} = \max\big(0, \lambda_k + \rho\, g(x_k)\big).$$
+```math
+\nu_{k+1} = \nu_k + \rho\, h(x_k), \qquad \lambda_{k+1} = \max\big(0, \lambda_k + \rho\, g(x_k)\big).
+```
 
 **Read it aloud:** charge the bill, plus a price on each unit of breach, plus a fine on its square; find the cheapest plan; then raise each price by the fine weight times the breach that plan left, never letting a ceiling's price fall below zero.
 
-While the cap is breached, the last term is $\lambda g + \tfrac{\rho}{2}g^2$: a price and a fine, as for the demand rule. With $\nu = \lambda = 0$ the augmented Lagrangian is the penalty, so round 0 of each method is the same solve.
+While the cap is breached, the last term is $`\lambda g + \tfrac{\rho}{2}g^2`$: a price and a fine, as for the demand rule. With $`\nu = \lambda = 0`$ the augmented Lagrangian is the penalty, so round 0 of each method is the same solve.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (x_1, x_2, x_3)$; $x^*$, $x_\rho$, $x_k$ | flows of pumps A, B, C; the best plan, the penalty's plan at weight $\rho$, round $k$'s plan | $x^* = (50, 62.5, 37.5)$ L/s | — |
-| $f(x)$ | power drawn, minimised ($f_0$ in the standard form) | $0.02x_1^2 + 0.03x_2^2 + 0.05x_3^2$; 237.5 kW at $x^*$ | — |
-| $h(x)$ | shortfall against demand, must be 0 | $150 - x_1 - x_2 - x_3$ L/s | — |
-| $g(x)$ | overpressure at the low district, must be $\le 0$ ($f_1$ in the standard form) | $0.5x_1 - 25$ m | — |
-| $\nabla f$, $\nabla^2 f$; $^{\mathsf T}$ | gradient (the slope of $f$ along each flow) and Hessian (the matrix of its curvatures); transpose (rows turned into columns) | $\nabla^2 f = \operatorname{diag}(0.04, 0.06, 0.10)$ | — |
-| $\nu$, $\lambda$; $y = (\nu, \lambda)$, $y^*$ | prices of the demand rule and of the pressure cap ($\lambda$ never negative), as one list; the true prices | $\nu^*$ = 3.75 kW per L/s (£0.75 an hour), $\lambda^*$ = 3.5 kW per m (£0.70 an hour) | a larger guess pulls more flow; holds pump A lower |
-| $\rho$ | fine weight, in kW per square unit of breach | 1 and 10 | breach shrinks, stretch $\kappa$ grows |
-| $P_\rho$, $L_\rho$ | penalty function; augmented Lagrangian | — | — |
-| $k$ | round: one minimisation, one price correction | $k = 0, 1, 2, \dots$ | — |
-| $L$, $\mu$, $\kappa = L/\mu$ | steepest and gentlest curvature of the function being minimised, and their ratio, the stretch | $\kappa$ = 40 at $\rho = 1$, 387 at $\rho = 10$ | gradient descent needs steps in proportion to $\kappa$ |
-| $J$, $S$, $\sigma$ | the rules' gradients as rows; $S = J(\nabla^2 f)^{-1}J^{\mathsf T}$; its smallest eigenvalue | `J = [[-1, -1, -1], [0.5, 0, 0]]`; $\sigma$ = 3.0369 | each round's shrink factor $1/(1+\rho\sigma)$ falls |
-| $c$ | rate of an exact penalty, charged per unit (not squared) of breach | 4 and 3 kW per unit | exact once $c$ passes the largest price |
-| $q$, $e$, $M$, $I$ | in the proof: the cost's straight-line part, the rules' constants, $\nabla^2 f + \rho J^{\mathsf T}J$, the identity matrix | $q = 0$; $e = (150, -25)$ | — |
+| $`x = (x_1, x_2, x_3)`$; $`x^*`$, $`x_\rho`$, $`x_k`$ | flows of pumps A, B, C; the best plan, the penalty's plan at weight $`\rho`$, round $`k`$'s plan | $`x^* = (50, 62.5, 37.5)`$ L/s | — |
+| $`f(x)`$ | power drawn, minimised ($`f_0`$ in the standard form) | $`0.02x_1^2 + 0.03x_2^2 + 0.05x_3^2`$; 237.5 kW at $`x^*`$ | — |
+| $`h(x)`$ | shortfall against demand, must be 0 | $`150 - x_1 - x_2 - x_3`$ L/s | — |
+| $`g(x)`$ | overpressure at the low district, must be $`\le 0`$ ($`f_1`$ in the standard form) | $`0.5x_1 - 25`$ m | — |
+| $`\nabla f`$, $`\nabla^2 f`$; $`^{\mathsf T}`$ | gradient (the slope of $`f`$ along each flow) and Hessian (the matrix of its curvatures); transpose (rows turned into columns) | $`\nabla^2 f = \mathrm{diag}(0.04, 0.06, 0.10)`$ | — |
+| $`\nu`$, $`\lambda`$; $`y = (\nu, \lambda)`$, $`y^*`$ | prices of the demand rule and of the pressure cap ($`\lambda`$ never negative), as one list; the true prices | $`\nu^*`$ = 3.75 kW per L/s (£0.75 an hour), $`\lambda^*`$ = 3.5 kW per m (£0.70 an hour) | a larger guess pulls more flow; holds pump A lower |
+| $`\rho`$ | fine weight, in kW per square unit of breach | 1 and 10 | breach shrinks, stretch $`\kappa`$ grows |
+| $`P_\rho`$, $`L_\rho`$ | penalty function; augmented Lagrangian | — | — |
+| $`k`$ | round: one minimisation, one price correction | $`k = 0, 1, 2, \dots`$ | — |
+| $`L`$, $`\mu`$, $`\kappa = L/\mu`$ | steepest and gentlest curvature of the function being minimised, and their ratio, the stretch | $`\kappa`$ = 40 at $`\rho = 1`$, 387 at $`\rho = 10`$ | gradient descent needs steps in proportion to $`\kappa`$ |
+| $`J`$, $`S`$, $`\sigma`$ | the rules' gradients as rows; $`S = J(\nabla^2 f)^{-1}J^{\mathsf T}`$; its smallest eigenvalue | `J = [[-1, -1, -1], [0.5, 0, 0]]`; $`\sigma`$ = 3.0369 | each round's shrink factor $`1/(1+\rho\sigma)`$ falls |
+| $`c`$ | rate of an exact penalty, charged per unit (not squared) of breach | 4 and 3 kW per unit | exact once $`c`$ passes the largest price |
+| $`q`$, $`e`$, $`M`$, $`I`$ | in the proof: the cost's straight-line part, the rules' constants, $`\nabla^2 f + \rho J^{\mathsf T}J`$, the identity matrix | $`q = 0`$; $`e = (150, -25)`$ | — |
 
 ### When it holds
 
 - **The rules have prices at the answer.** The method converges to the KKT prices, so they must exist: the rules' gradients should be independent there (LICQ, the linear independence constraint qualification, from [KKT conditions](02-kkt-conditions.md)). Where no prices exist, the price updates have nothing to settle on.
 - **Each round's minimisation is accurate enough.** The price correction reads the breach off the round's plan. A rough plan gives a rough price; general theory asks the round's error to shrink as the rounds go on.
-- **The fine weight is large enough to make each round convex near the answer.** Here the cost curves up in every direction, so any $\rho > 0$ works. On a nonconvex problem a small $\rho$ can leave a round with no minimum near $x^*$; the stated theorem needs $\rho$ above a threshold, not growing without limit.
-- **The rules are on comparable scales.** One $\rho$ fines a square L/s and a square metre alike. Measure head in millimetres and the cap's fine is a million times heavier than the demand's, and the stretch returns.
-- **Ceilings get the clamp.** Drop $\max(0, \cdot)$ and a slack cap is treated as a target: What breaks, below.
+- **The fine weight is large enough to make each round convex near the answer.** Here the cost curves up in every direction, so any $`\rho > 0`$ works. On a nonconvex problem a small $`\rho`$ can leave a round with no minimum near $`x^*`$; the stated theorem needs $`\rho`$ above a threshold, not growing without limit.
+- **The rules are on comparable scales.** One $`\rho`$ fines a square L/s and a square metre alike. Measure head in millimetres and the cap's fine is a million times heavier than the demand's, and the stretch returns.
+- **Ceilings get the clamp.** Drop $`\max(0, \cdot)`$ and a slack cap is treated as a target: What breaks, below.
 
 ---
 
@@ -91,74 +97,80 @@ While the cap is breached, the last term is $\lambda g + \tfrac{\rho}{2}g^2$: a 
 
 ### Step 0: a fine makes the solver pay a stand-in price, and the breach is that price over the weight
 
-The slope of a fine $\tfrac{\rho}{2}h^2$ is $\rho h$ times the slope of $h$, so near the answer a fine acts like a price of $\rho h$ per unit. That stand-in must come close to the true price, 3.75, so the breach $h$ is about $3.75/\rho$: zero only at an infinite weight. Supplying the price directly removes the need for the weight to grow.
+The slope of a fine $`\tfrac{\rho}{2}h^2`$ is $`\rho h`$ times the slope of $`h`$, so near the answer a fine acts like a price of $`\rho h`$ per unit. That stand-in must come close to the true price, 3.75, so the breach $`h`$ is about $`3.75/\rho`$: zero only at an infinite weight. Supplying the price directly removes the need for the weight to grow.
 
 ### Step 1: the penalty minimiser is a KKT point with stand-in prices
 
-Set the gradient of $P_\rho$ to zero while the cap is breached:
+Set the gradient of $`P_\rho`$ to zero while the cap is breached:
 
-$$\nabla f(x_\rho) + (\rho\, h(x_\rho))\,\nabla h + (\rho\, g(x_\rho))\,\nabla g = 0.$$
+```math
+\nabla f(x_\rho) + (\rho\, h(x_\rho))\,\nabla h + (\rho\, g(x_\rho))\,\nabla g = 0.
+```
 
-This is the KKT stationarity equation $\nabla f + \nu\nabla h + \lambda\nabla g = 0$ with $\nu = \rho h$ and $\lambda = \rho g$. At $\rho = 1000$ the plan is 0.00375 L/s short and 0.00350 m over, so the stand-in prices are 3.7496 and 3.4986: close to 3.75 and 3.5, and the breaches are those prices divided by 1000. Step 4 makes "close" exact.
+This is the KKT stationarity equation $`\nabla f + \nu\nabla h + \lambda\nabla g = 0`$ with $`\nu = \rho h`$ and $`\lambda = \rho g`$. At $`\rho = 1000`$ the plan is 0.00375 L/s short and 0.00350 m over, so the stand-in prices are 3.7496 and 3.4986: close to 3.75 and 3.5, and the breaches are those prices divided by 1000. Step 4 makes "close" exact.
 
 ### Step 2: a large weight stretches the problem, and stretch is slow
 
-The curvature of $P_\rho$ is $\nabla^2 f + \rho\,(\nabla h\,\nabla h^{\mathsf T} + \nabla g\,\nabla g^{\mathsf T})$. Across the rules (directions that change $h$ or $g$) it grows like $\rho$. Along the one direction that changes neither, $(0, 1, -1)$ (move flow from pump C to pump B), the fine is silent and the curvature is that of the bill. So the stretch $\kappa$ grows in proportion to $\rho$: 40 at $\rho = 1$, then 387, 3,861 and 38,602.
+The curvature of $`P_\rho`$ is $`\nabla^2 f + \rho\,(\nabla h\,\nabla h^{\mathsf T} + \nabla g\,\nabla g^{\mathsf T})`$. Across the rules (directions that change $`h`$ or $`g`$) it grows like $`\rho`$. Along the one direction that changes neither, $`(0, 1, -1)`$ (move flow from pump C to pump B), the fine is silent and the curvature is that of the bill. So the stretch $`\kappa`$ grows in proportion to $`\rho`$: 40 at $`\rho = 1`$, then 387, 3,861 and 38,602.
 
-Gradient descent needs a number of steps proportional to $\kappa$ ([Convergence rates](../02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md)). From $(50, 50, 50)$, with step $1/L$, reaching within 0.001 L/s of each penalty minimiser takes 381, 3,779, 37,756 and 377,525 steps. Each tenfold rise in $\rho$ costs ten times the work, and buys one more correct decimal.
+Gradient descent needs a number of steps proportional to $`\kappa`$ ([Convergence rates](../02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md)). From $`(50, 50, 50)`$, with step $`1/L`$, reaching within 0.001 L/s of each penalty minimiser takes 381, 3,779, 37,756 and 377,525 steps. Each tenfold rise in $`\rho`$ costs ten times the work, and buys one more correct decimal.
 
 ### Step 3: price the breach, and the right price needs no fine at all
 
-Set the gradient of $L_\rho$ to zero while $\lambda + \rho g \ge 0$:
+Set the gradient of $`L_\rho`$ to zero while $`\lambda + \rho g \ge 0`$:
 
-$$\nabla f(x_k) + (\nu_k + \rho\, h(x_k))\,\nabla h + (\lambda_k + \rho\, g(x_k))\,\nabla g = 0.$$
+```math
+\nabla f(x_k) + (\nu_k + \rho\, h(x_k))\,\nabla h + (\lambda_k + \rho\, g(x_k))\,\nabla g = 0.
+```
 
 The stand-in prices are now old price plus weight times breach. That is the update rule: it reads off the prices the round's plan already obeys.
 
-Now suppose the prices are already right, $\nu_k = 3.75$ and $\lambda_k = 3.5$. At $x^*$ both breaches are zero, the fine and its slope vanish, and the equation above is the KKT equation itself. So $x^*$ minimises $L_\rho$ for every $\rho > 0$, and the next breach is zero.
+Now suppose the prices are already right, $`\nu_k = 3.75`$ and $`\lambda_k = 3.5`$. At $`x^*`$ both breaches are zero, the fine and its slope vanish, and the equation above is the KKT equation itself. So $`x^*`$ minimises $`L_\rho`$ for every $`\rho > 0`$, and the next breach is zero.
 
-The fine is only there to correct a wrong price, so it need not grow. With the true prices loaded at $\rho = 1$, gradient descent reaches within 0.001 L/s of $x^*$ itself in 387 steps.
+The fine is only there to correct a wrong price, so it need not grow. With the true prices loaded at $`\rho = 1`$, gradient descent reaches within 0.001 L/s of $`x^*`$ itself in 387 steps.
 
-### Step 4: each round shrinks the price error by $1/(1 + \rho\sigma)$
+### Step 4: each round shrinks the price error by $`1/(1 + \rho\sigma)`$
 
-For a quadratic cost and straight-line rules, write the prices as one list $y = (\nu, \lambda)$ and its error as $y_k - y^*$. The proof below shows one round multiplies that error by the matrix $(I + \rho S)^{-1}$, where $S = J(\nabla^2 f)^{-1}J^{\mathsf T}$ measures how strongly the bill resists each rule. For the pumps,
+For a quadratic cost and straight-line rules, write the prices as one list $`y = (\nu, \lambda)`$ and its error as $`y_k - y^*`$. The proof below shows one round multiplies that error by the matrix $`(I + \rho S)^{-1}`$, where $`S = J(\nabla^2 f)^{-1}J^{\mathsf T}`$ measures how strongly the bill resists each rule. For the pumps,
 
-$$S = \begin{pmatrix} 51.6667 & -12.5 \\ -12.5 & 6.25 \end{pmatrix}, \qquad \sigma = 3.0369,$$
+```math
+S = \begin{pmatrix} 51.6667 & -12.5 \\ -12.5 & 6.25 \end{pmatrix}, \qquad \sigma = 3.0369,
+```
 
-so the slowest error shrinks by $1/(1 + \sigma) = 0.2477$ a round at $\rho = 1$, and by $0.0319$ at $\rho = 10$. The run shows 0.2477 from round 4 on. A fixed $\rho$ gives a fixed factor: linear convergence (a constant shrink per round), and a bigger $\rho$ buys a better factor at the price of stretch.
+so the slowest error shrinks by $`1/(1 + \sigma) = 0.2477`$ a round at $`\rho = 1`$, and by $`0.0319`$ at $`\rho = 10`$. The run shows 0.2477 from round 4 on. A fixed $`\rho`$ gives a fixed factor: linear convergence (a constant shrink per round), and a bigger $`\rho`$ buys a better factor at the price of stretch.
 
-The penalty is this same round taken once from $y = 0$. Its price error is $(I + \rho S)^{-1}y^*$: about $S^{-1}y^*/\rho$ for large $\rho$, and at most $\lVert y^*\rVert/(1 + \rho\sigma)$ in size, so its plan error falls like $1/\rho$: 1.02 L/s at $\rho = 10$, 0.105 at 100, 0.0105 at 1000. The check confirms the stand-in prices against this formula at every $\rho$.
+The penalty is this same round taken once from $`y = 0`$. Its price error is $`(I + \rho S)^{-1}y^*`$: about $`S^{-1}y^*/\rho`$ for large $`\rho`$, and at most $`\lVert y^*\rVert/(1 + \rho\sigma)`$ in size, so its plan error falls like $`1/\rho`$: 1.02 L/s at $`\rho = 10`$, 0.105 at 100, 0.0105 at 1000. The check confirms the stand-in prices against this formula at every $`\rho`$.
 
 <details>
 <summary>Detailed proof: one round multiplies the price error by (I + ρS)⁻¹</summary>
 
-Let the cost be $f(x) = \tfrac12 x^{\mathsf T}(\nabla^2 f)\,x + q^{\mathsf T}x$ with $\nabla^2 f$ positive definite; here $\nabla^2 f = \operatorname{diag}(0.04, 0.06, 0.10)$ and $q = 0$. Let the active rules be $Jx + e = 0$, with prices $y$: the rows of $J$ are the gradients of $h$ and $g$, and $(h, g) = Jx + e$. The cap stays active in every round of the run, so this covers it.
+Let the cost be $`f(x) = \tfrac12 x^{\mathsf T}(\nabla^2 f)\,x + q^{\mathsf T}x`$ with $`\nabla^2 f`$ positive definite; here $`\nabla^2 f = \mathrm{diag}(0.04, 0.06, 0.10)`$ and $`q = 0`$. Let the active rules be $`Jx + e = 0`$, with prices $`y`$: the rows of $`J`$ are the gradients of $`h`$ and $`g`$, and $`(h, g) = Jx + e`$. The cap stays active in every round of the run, so this covers it.
 
-KKT at the answer: $\nabla^2 f\,x^* + q + J^{\mathsf T}y^* = 0$ and $Jx^* + e = 0$.
+KKT at the answer: $`\nabla^2 f\,x^* + q + J^{\mathsf T}y^* = 0`$ and $`Jx^* + e = 0`$.
 
-The round minimises $f + y_k^{\mathsf T}(Jx + e) + \tfrac{\rho}{2}\lVert Jx + e\rVert^2$, so $\nabla^2 f\,x_k + q + J^{\mathsf T}\big(y_k + \rho (Jx_k + e)\big) = 0$. Subtract the KKT equation and use $Jx_k + e = J(x_k - x^*)$:
+The round minimises $`f + y_k^{\mathsf T}(Jx + e) + \tfrac{\rho}{2}\lVert Jx + e\rVert^2`$, so $`\nabla^2 f\,x_k + q + J^{\mathsf T}\big(y_k + \rho (Jx_k + e)\big) = 0`$. Subtract the KKT equation and use $`Jx_k + e = J(x_k - x^*)`$:
 
-$$M(x_k - x^*) = -J^{\mathsf T}(y_k - y^*), \qquad M = \nabla^2 f + \rho J^{\mathsf T}J.$$
+$`\displaystyle M(x_k - x^*) = -J^{\mathsf T}(y_k - y^*), \qquad M = \nabla^2 f + \rho J^{\mathsf T}J.`$
 
-The update is $y_{k+1} = y_k + \rho J(x_k - x^*)$, so
+The update is $`y_{k+1} = y_k + \rho J(x_k - x^*)`$, so
 
-$$y_{k+1} - y^* = \big(I - \rho J M^{-1}J^{\mathsf T}\big)(y_k - y^*).$$
+$`\displaystyle y_{k+1} - y^* = \big(I - \rho J M^{-1}J^{\mathsf T}\big)(y_k - y^*).`$
 
-Now $M(\nabla^2 f)^{-1}J^{\mathsf T} = J^{\mathsf T} + \rho J^{\mathsf T}S = J^{\mathsf T}(I + \rho S)$. Multiply on the left by $JM^{-1}$: $S = JM^{-1}J^{\mathsf T}(I + \rho S)$, so $JM^{-1}J^{\mathsf T} = S(I + \rho S)^{-1}$. Then
+Now $`M(\nabla^2 f)^{-1}J^{\mathsf T} = J^{\mathsf T} + \rho J^{\mathsf T}S = J^{\mathsf T}(I + \rho S)`$. Multiply on the left by $`JM^{-1}`$: $`S = JM^{-1}J^{\mathsf T}(I + \rho S)`$, so $`JM^{-1}J^{\mathsf T} = S(I + \rho S)^{-1}`$. Then
 
-$$I - \rho S(I + \rho S)^{-1} = (I + \rho S)^{-1}.$$
+$`\displaystyle I - \rho S(I + \rho S)^{-1} = (I + \rho S)^{-1}.`$
 
-$S$ is symmetric and positive definite when $J$ has independent rows, so its eigenvalues are positive and the largest eigenvalue of $(I + \rho S)^{-1}$ is $1/(1 + \rho\sigma) < 1$. The plan error follows from the price error through the first displayed equation. For general smooth problems a similar linear rate holds near the answer once $\rho$ passes a threshold, with the Hessian of the Lagrangian in place of $\nabla^2 f$; the first source below, chapter 17, states the convergence theorem as an error bound.
+$`S`$ is symmetric and positive definite when $`J`$ has independent rows, so its eigenvalues are positive and the largest eigenvalue of $`(I + \rho S)^{-1}`$ is $`1/(1 + \rho\sigma) < 1`$. The plan error follows from the price error through the first displayed equation. For general smooth problems a similar linear rate holds near the answer once $`\rho`$ passes a threshold, with the Hessian of the Lagrangian in place of $`\nabla^2 f`$; the first source below, chapter 17, states the convergence theorem as an error bound.
 
 </details>
 
 ### Step 5: why a ceiling's price is clamped at zero
 
-A ceiling only pushes one way: KKT asks $\lambda \ge 0$, and $\lambda = 0$ when the cap is slack. The term $\tfrac{1}{2\rho}(\max(0, \lambda + \rho g)^2 - \lambda^2)$ builds this in. When $\lambda + \rho g < 0$ the term is the constant $-\lambda^2/(2\rho)$: it exerts no force on the plan, and the update sets $\lambda$ to 0. Remove the clamp and a slack cap becomes an equality, pulling the plan up to it.
+A ceiling only pushes one way: KKT asks $`\lambda \ge 0`$, and $`\lambda = 0`$ when the cap is slack. The term $`\tfrac{1}{2\rho}(\max(0, \lambda + \rho g)^2 - \lambda^2)`$ builds this in. When $`\lambda + \rho g < 0`$ the term is the constant $`-\lambda^2/(2\rho)`$: it exerts no force on the plan, and the update sets $`\lambda`$ to 0. Remove the clamp and a slack cap becomes an equality, pulling the plan up to it.
 
-A different repair skips prices altogether. The **exact penalty** charges $c\,(|h| + \max(0, g))$, per unit of breach rather than its square. Its minimiser is $x^*$ itself once $c$ exceeds the largest price, 3.75 (the first source below, chapter 17, states the theorem).
+A different repair skips prices altogether. The **exact penalty** charges $`c\,(|h| + \max(0, g))`$, per unit of breach rather than its square. Its minimiser is $`x^*`$ itself once $`c`$ exceeds the largest price, 3.75 (the first source below, chapter 17, states the theorem).
 
-The check confirms it near $x^*$: at $c = 4$ nothing within 1 L/s beats 237.5 kW; at $c = 3$ a plan that breaks the rules scores 236.08 kW. The catch is the kink at the answer, which smooth methods such as gradient descent cannot handle; it serves as a yardstick inside [Sequential quadratic programming](09-sequential-quadratic-programming.md), which writes the rate $c$ as $\rho$.
+The check confirms it near $`x^*`$: at $`c = 4`$ nothing within 1 L/s beats 237.5 kW; at $`c = 3`$ a plan that breaks the rules scores 236.08 kW. The catch is the kink at the answer, which smooth methods such as gradient descent cannot handle; it serves as a yardstick inside [Sequential quadratic programming](09-sequential-quadratic-programming.md), which writes the rate $`c`$ as $`\rho`$.
 
 ---
 
@@ -168,16 +180,16 @@ The answer first, from the KKT conditions with the cap binding, then the first p
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| without the cap | flows in proportion to $1/0.02$, $1/0.03$, $1/0.05$, adding to 150 | 72.5806, 48.3871, 29.0323 L/s; 217.7419 kW |
-| head at the low district | $0.5 \times 72.5806$ | 36.2903 m, 11.2903 m over |
-| cap binds | $0.5x_1 = 25$ | $x_1 = 50$ L/s |
-| B and C share the rest | 100 L/s in proportion $1/0.03 : 1/0.05 = 5 : 3$ | 62.5, 37.5 L/s |
-| demand price | $0.06 \times 62.5 = 0.10 \times 37.5$ | $\nu^*$ = 3.75 kW per L/s |
-| cap price | $0.04 \times 50 + 0.5\lambda = 3.75$ | $\lambda^*$ = 3.5 kW per m |
-| power | $50 + 117.1875 + 70.3125$ | **237.5 kW**, £47.50 an hour |
-| round 0, penalty at $\rho = 1$ | minimise $P_1$ (code) | 54.9501, 57.2590, 34.3554 L/s; 3.4355 L/s short, 2.4751 m over |
-| first price correction | $\nu_1 = 0 + 1 \times 3.4355$, $\lambda_1 = \max(0, 0 + 1 \times 2.4751)$ | 3.4355, 2.4751 |
-| shrink per round | $1/(1 + 3.0369)$ | 0.2477 |
+| without the cap | flows in proportion to $`1/0.02`$, $`1/0.03`$, $`1/0.05`$, adding to 150 | 72.5806, 48.3871, 29.0323 L/s; 217.7419 kW |
+| head at the low district | $`0.5 \times 72.5806`$ | 36.2903 m, 11.2903 m over |
+| cap binds | $`0.5x_1 = 25`$ | $`x_1 = 50`$ L/s |
+| B and C share the rest | 100 L/s in proportion $`1/0.03 : 1/0.05 = 5 : 3`$ | 62.5, 37.5 L/s |
+| demand price | $`0.06 \times 62.5 = 0.10 \times 37.5`$ | $`\nu^*`$ = 3.75 kW per L/s |
+| cap price | $`0.04 \times 50 + 0.5\lambda = 3.75`$ | $`\lambda^*`$ = 3.5 kW per m |
+| power | $`50 + 117.1875 + 70.3125`$ | **237.5 kW**, £47.50 an hour |
+| round 0, penalty at $`\rho = 1`$ | minimise $`P_1`$ (code) | 54.9501, 57.2590, 34.3554 L/s; 3.4355 L/s short, 2.4751 m over |
+| first price correction | $`\nu_1 = 0 + 1 \times 3.4355`$, $`\lambda_1 = \max(0, 0 + 1 \times 2.4751)`$ | 3.4355, 2.4751 |
+| shrink per round | $`1/(1 + 3.0369)`$ | 0.2477 |
 
 Run pump A at 50 L/s, B at 62.5 and C at 37.5: 237.5 kW, the least any plan meeting demand within the cap can draw, which is 19.7581 kW more than ignoring the cap. One more L/s of demand would cost about £0.75 an hour; one more metre of rating at the low district would save about £0.70.
 
@@ -185,11 +197,11 @@ Run pump A at 50 L/s, B at 62.5 and C at 37.5: 237.5 kW, the least any plan meet
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Stop the penalty at $\rho = 1$ | head 27.4751 m, 2.4751 m over; 3.4355 L/s short; 217.7626 kW | The fine is cheaper than obeying; the low "power" is a broken rule |
-| Drop the clamp, with the cap at 40 m (slack) | $\lambda = -1.15$; head forced to 40 m; 219.8750 kW against 217.7419 | A negative price rewards pressure, so the ceiling becomes a target |
-| Correct the price with the wrong sign, $\nu - \rho h$ | 975.5133 L/s from $x^*$ after 10 rounds | Each round pushes the price away from the plan's own stand-in price |
-| Raise $\rho$ to 10, keep the step size tuned at $\rho = 1$ | step 0.3171, above $2/L$; error 1.442e+46 L/s after 50 steps | The fine's curvature grew, so the old step overshoots ([Gradient descent](../02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md)) |
-| Exact penalty with rate $c = 3$, below the price 3.75 | 236.08 kW within 1 L/s of $x^*$, under 237.5 | Breaking demand costs 3 per L/s but saves 3.75; the fine is too cheap to be exact |
+| Stop the penalty at $`\rho = 1`$ | head 27.4751 m, 2.4751 m over; 3.4355 L/s short; 217.7626 kW | The fine is cheaper than obeying; the low "power" is a broken rule |
+| Drop the clamp, with the cap at 40 m (slack) | $`\lambda = -1.15`$; head forced to 40 m; 219.8750 kW against 217.7419 | A negative price rewards pressure, so the ceiling becomes a target |
+| Correct the price with the wrong sign, $`\nu - \rho h`$ | 975.5133 L/s from $`x^*`$ after 10 rounds | Each round pushes the price away from the plan's own stand-in price |
+| Raise $`\rho`$ to 10, keep the step size tuned at $`\rho = 1`$ | step 0.3171, above $`2/L`$; error 1.442e+46 L/s after 50 steps | The fine's curvature grew, so the old step overshoots ([Gradient descent](../02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md)) |
+| Exact penalty with rate $`c = 3`$, below the price 3.75 | 236.08 kW within 1 L/s of $`x^*`$, under 237.5 | Breaking demand costs 3 per L/s but saves 3.75; the fine is too cheap to be exact |
 
 ---
 
@@ -199,9 +211,9 @@ The script solves the pumps by three independent roads.
 
 - Road 1 solves the KKT equations with the cap binding, five equations in five unknowns, by elimination, and prints the residuals.
 - Road 2 scans every plan on a 0.5 L/s grid that meets demand and the cap, using no prices at all.
-- Road 3 runs the penalty for $\rho$ from 1 to a million and the augmented Lagrangian at $\rho = 1$ and $\rho = 10$, each round solved exactly by elimination, and checks the stand-in prices and the shrink factor against the formulas of Step 4.
+- Road 3 runs the penalty for $`\rho`$ from 1 to a million and the augmented Lagrangian at $`\rho = 1`$ and $`\rho = 10`$, each round solved exactly by elimination, and checks the stand-in prices and the shrink factor against the formulas of Step 4.
 
-Gradient descent with step $1/L$ counts the cost of stretch, and power iteration (multiplying by a matrix again and again) finds $L$ and $\mu$. The last block prints the failures in the table.
+Gradient descent with step $`1/L`$ counts the cost of stretch, and power iteration (multiplying by a matrix again and again) finds $`L`$ and $`\mu`$. The last block prints the failures in the table.
 
 ### Python
 
@@ -615,21 +627,21 @@ exact penalty, rate 3: value at x* 237.5000 kW, lowest within 1 L/s 236.0800 kW
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line. The three roads agree on (50, 62.5, 37.5) L/s and 237.5 kW. The augmented Lagrangian reaches within 0.001 L/s at $k = 7$, its eighth round, with $\kappa = 40$; the penalty needs $\rho = 10^5$ and $\kappa$ = 3,860,111 for the same accuracy.
+The two outputs match line for line. The three roads agree on (50, 62.5, 37.5) L/s and 237.5 kW. The augmented Lagrangian reaches within 0.001 L/s at $`k = 7`$, its eighth round, with $`\kappa = 40`$; the penalty needs $`\rho = 10^5`$ and $`\kappa`$ = 3,860,111 for the same accuracy.
 
 ### Lean
 
 Lean proves Steps 1 and 4 for any number of flows and rules, and checks the pump numbers exactly.
 
-- Take a quadratic cost whose curvature $\nabla^2 f$ is positive definite, and straight-line rules $Jx + e = 0$ with true prices $y^*$. One round, solved exactly at any fixed $\rho > 0$, gives $M(x_k - x^*) = -J^{\mathsf T}(y_k - y^*)$.
-- That round multiplies the price error by exactly $(I + \rho S)^{-1}$.
-- So the length of the price error shrinks by at least $1/(1 + \rho\sigma)$. Here $\sigma$ is the smallest eigenvalue of $S$, or any smaller number that is at least 0.
-- When the rules' gradients are independent (LICQ), $S$ is symmetric and positive definite.
-- Take any cost and rules that are smooth at the plan. A plan that minimises the penalty $P_\rho$, even only among nearby plans, obeys the KKT stationarity equation.
-- Its stand-in prices are $\rho h$ and $\rho \max(0, g)$, and the ceiling's stand-in price is never negative.
-- The hand numbers hold exactly: the uncapped plan, the zero KKT residuals, the power bill, the pumps' $S$, and the unclamped 40 m cap.
+- Take a quadratic cost whose curvature $`\nabla^2 f`$ is positive definite, and straight-line rules $`Jx + e = 0`$ with true prices $`y^*`$. One round, solved exactly at any fixed $`\rho > 0`$, gives $`M(x_k - x^*) = -J^{\mathsf T}(y_k - y^*)`$.
+- That round multiplies the price error by exactly $`(I + \rho S)^{-1}`$.
+- So the length of the price error shrinks by at least $`1/(1 + \rho\sigma)`$. Here $`\sigma`$ is the smallest eigenvalue of $`S`$, or any smaller number that is at least 0.
+- When the rules' gradients are independent (LICQ), $`S`$ is symmetric and positive definite.
+- Take any cost and rules that are smooth at the plan. A plan that minimises the penalty $`P_\rho`$, even only among nearby plans, obeys the KKT stationarity equation.
+- Its stand-in prices are $`\rho h`$ and $`\rho \max(0, g)`$, and the ceiling's stand-in price is never negative.
+- The hand numbers hold exactly: the uncapped plan, the zero KKT residuals, the power bill, the pumps' $`S`$, and the unclamped 40 m cap.
 
-Left to the Python and Rust checks: $\sigma = 3.0369$, the run's rounds, the stretch $\kappa$, step counts, the grid scan and the exact penalty.
+Left to the Python and Rust checks: $`\sigma = 3.0369`$, the run's rounds, the stretch $`\kappa`$, step counts, the grid scan and the exact penalty.
 
 ```lean
 -- Penalties and augmented Lagrangians: for a positive definite quadratic cost with straight-line rules, one augmented-Lagrangian round multiplies the price error by (I + ρS)⁻¹ and so shrinks it by at least 1/(1 + ρσ) with the fine weight held fixed; a quadratic-penalty minimiser obeys the KKT equation with stand-in prices ρh and ρ·max(0, g); S is positive definite when the rules' gradients are independent; and the card's pump numbers check exactly.
@@ -975,22 +987,22 @@ example :
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this network, so expect some to stop it.
-> - **Guess first: does a looser cap make the cap's price rise or fall?** Change `0.5, 25.0` to `0.5, 30.0`. Pump A rises to 60 L/s, the power falls to 223.8750 kW, and $\lambda$ falls to 1.95 kW per m: each extra metre is worth less as the cap loosens. The grid scan, which stops at 50 L/s, trips an assert.
-> - **Guess first: how many rounds at $\rho = 100$?** Change `(1.0, 10.0)` to `(1.0, 100.0)`. The shrink factor is $1/(1 + 100\sigma)$, so the error drops to $10^{-8.42}$ L/s by round 3, with $\kappa$ = 3861.4. After that, rounding error sets the floor.
-> - **Guess first: where is the exact penalty's threshold?** Change `(4.0, 3.0)` to `(3.8, 3.7)`. At 3.8 nothing near $x^*$ beats 237.5 kW; at 3.7 a plan scores 237.4667. The threshold is the demand price, 3.75. An assert stops it, since 3.7 misses by less than 1 kW.
-> - **Guess first: does a cheaper pump C relieve the cap?** Change `[0.02, 0.03, 0.05]` to `[0.02, 0.03, 0.04]`. Pump A still sits at the cap's 50 L/s, B and C carry 57.1429 and 42.8571, the power is 221.4286 kW, and $\lambda$ falls to 2.8571 kW per m. The 0.5 L/s grid misses 57.1429, so an assert stops it.
+> - **Guess first: does a looser cap make the cap's price rise or fall?** Change `0.5, 25.0` to `0.5, 30.0`. Pump A rises to 60 L/s, the power falls to 223.8750 kW, and $`\lambda`$ falls to 1.95 kW per m: each extra metre is worth less as the cap loosens. The grid scan, which stops at 50 L/s, trips an assert.
+> - **Guess first: how many rounds at $`\rho = 100`$?** Change `(1.0, 10.0)` to `(1.0, 100.0)`. The shrink factor is $`1/(1 + 100\sigma)`$, so the error drops to $`10^{-8.42}`$ L/s by round 3, with $`\kappa`$ = 3861.4. After that, rounding error sets the floor.
+> - **Guess first: where is the exact penalty's threshold?** Change `(4.0, 3.0)` to `(3.8, 3.7)`. At 3.8 nothing near $`x^*`$ beats 237.5 kW; at 3.7 a plan scores 237.4667. The threshold is the demand price, 3.75. An assert stops it, since 3.7 misses by less than 1 kW.
+> - **Guess first: does a cheaper pump C relieve the cap?** Change `[0.02, 0.03, 0.05]` to `[0.02, 0.03, 0.04]`. Pump A still sits at the cap's 50 L/s, B and C carry 57.1429 and 42.8571, the power is 221.4286 kW, and $`\lambda`$ falls to 2.8571 kW per m. The 0.5 L/s grid misses 57.1429, so an assert stops it.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Raising the fine until the breach disappears.** The breach is the price divided by the weight, so it never disappears; it only shrinks one decimal per tenfold rise. To get within 0.001 L/s the penalty needs $\rho = 10^5$, where the stretch is 3,860,111; gradient descent, already at 377,525 steps for $\rho = 1000$, needs about ten times more for each tenfold rise. The augmented Lagrangian gets there with $\rho = 1$ and $\kappa = 40$. Correct the price instead of raising the fine.
+> **Raising the fine until the breach disappears.** The breach is the price divided by the weight, so it never disappears; it only shrinks one decimal per tenfold rise. To get within 0.001 L/s the penalty needs $`\rho = 10^5`$, where the stretch is 3,860,111; gradient descent, already at 377,525 steps for $`\rho = 1000`$, needs about ten times more for each tenfold rise. The augmented Lagrangian gets there with $`\rho = 1`$ and $`\kappa = 40`$. Correct the price instead of raising the fine.
 >
-> - **Reading a penalty answer as a plan.** At $\rho = 1$ the "plan" draws 217.7626 kW, less than the true 237.5, because it is 3.4355 L/s short and 2.4751 m over. Check the breaches before the bill.
-> - **Dropping the clamp on a ceiling.** With a slack 40 m cap the price goes to $-1.15$ and the plan is pulled up to 40 m, drawing 219.8750 kW instead of 217.7419.
-> - **Flipping the sign of the update.** $\nu - \rho h$ runs 975.5133 L/s away in 10 rounds.
-> - **Keeping the step size when $\rho$ grows.** A step of 0.3171, safe at $\rho = 1$, blows up to 1.442e+46 L/s at $\rho = 10$.
+> - **Reading a penalty answer as a plan.** At $`\rho = 1`$ the "plan" draws 217.7626 kW, less than the true 237.5, because it is 3.4355 L/s short and 2.4751 m over. Check the breaches before the bill.
+> - **Dropping the clamp on a ceiling.** With a slack 40 m cap the price goes to $`-1.15`$ and the plan is pulled up to 40 m, drawing 219.8750 kW instead of 217.7419.
+> - **Flipping the sign of the update.** $`\nu - \rho h`$ runs 975.5133 L/s away in 10 rounds.
+> - **Keeping the step size when $`\rho`$ grows.** A step of 0.3171, safe at $`\rho = 1`$, blows up to 1.442e+46 L/s at $`\rho = 10`$.
 
 ---
 
@@ -1002,23 +1014,23 @@ example :
 - **Machine learning with constraints.** Training a model under a fairness or budget rule often uses the same price-and-fine loop; ADMM, which splits the round into pieces, is the version used for very large problems.
 
 > **Say it back**
-> A quadratic penalty turns each rule into a fine on the squared breach, and its minimiser obeys the KKT equations with stand-in prices equal to weight times breach. So the breach is the price divided by the weight, and it vanishes only as the weight grows without limit, which stretches the problem and slows every downhill method. The augmented Lagrangian adds a price per unit of breach and corrects it each round by weight times breach left. Once the price is right the breach is zero at any weight, and for a quadratic bill with straight rules each round shrinks the price error by $1/(1 + \rho\sigma)$. For the pumps that settles on 50, 62.5 and 37.5 L/s, 237.5 kW, with prices 3.75 kW per L/s and 3.5 kW per m.
+> A quadratic penalty turns each rule into a fine on the squared breach, and its minimiser obeys the KKT equations with stand-in prices equal to weight times breach. So the breach is the price divided by the weight, and it vanishes only as the weight grows without limit, which stretches the problem and slows every downhill method. The augmented Lagrangian adds a price per unit of breach and corrects it each round by weight times breach left. Once the price is right the breach is zero at any weight, and for a quadratic bill with straight rules each round shrinks the price error by $`1/(1 + \rho\sigma)`$. For the pumps that settles on 50, 62.5 and 37.5 L/s, 237.5 kW, with prices 3.75 kW per L/s and 3.5 kW per m.
 
 ---
 
 ## What this builds on
 
-- [KKT conditions](02-kkt-conditions.md): the equations every method here converges to, and the prices $\nu$ and $\lambda \ge 0$ that the augmented Lagrangian learns.
-- [Convergence rates](../02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md): why gradient steps grow in proportion to the stretch $\kappa$, the reason big fines are slow.
+- [KKT conditions](02-kkt-conditions.md): the equations every method here converges to, and the prices $`\nu`$ and $`\lambda \ge 0`$ that the augmented Lagrangian learns.
+- [Convergence rates](../02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md): why gradient steps grow in proportion to the stretch $`\kappa`$, the reason big fines are slow.
 - [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md): the price update is a step uphill on the dual function, which is why the prices converge.
 
 ## Where this goes next
 
-- [ADMM](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/07-admm.md): splits each augmented-Lagrangian round into easier pieces and reuses the fine weight $\rho$.
+- [ADMM](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/07-admm.md): splits each augmented-Lagrangian round into easier pieces and reuses the fine weight $`\rho`$.
 - [Interior point methods](08-interior-point-methods.md): the other way to grow a weight, a barrier that keeps the plan strictly inside the limits instead of fining it from outside.
 - [Sequential quadratic programming](09-sequential-quadratic-programming.md): Newton's method on the KKT equations, with an exact penalty as its yardstick.
 
-Every round here is solved exactly; how loosely a round may be solved while the prices still converge, and how to choose $\rho$ without knowing $\sigma$, are left open.
+Every round here is solved exactly; how loosely a round may be solved while the prices still converge, and how to choose $`\rho`$ without knowing $`\sigma`$, are left open.
 
 ---
 

@@ -36,32 +36,36 @@ The curving line is the fuel bill. The straight line is its tangent at one hour:
 
 ## The formula
 
-A reminder from [The derivative](01-the-derivative.md): $f'(x)$, also written dy/dx, is the rate of y per unit of x at one point.
+A reminder from [The derivative](01-the-derivative.md): $`f'(x)`$, also written dy/dx, is the rate of y per unit of x at one point.
 
-One new notation, in words first: $f \circ g$, read "f after g", hands an input to $g$ and the result to $f$. So $(f \circ g)(t) = f(g(t))$. Here $g$ is the **inner** function and $f$ the **outer** one.
+One new notation, in words first: $`f \circ g`$, read "f after g", hands an input to $`g`$ and the result to $`f`$. So $`(f \circ g)(t) = f(g(t))`$. Here $`g`$ is the **inner** function and $`f`$ the **outer** one.
 
-$$(f \circ g)'(t) = f'(g(t))\,g'(t)$$
+```math
+(f \circ g)'(t) = f'(g(t))\,g'(t)
+```
 
 **Read it aloud:** the rate of the whole chain is the outer rate, read at the value the inner function hands over, times the inner rate.
 
-On the drive the chain has three links. With $s(t)$ the km driven by hour $t$, $G(s)$ the litres burned by km $s$, $p$ the price per litre and $C(t) = p\,G(s(t))$ the dollars spent by hour $t$:
+On the drive the chain has three links. With $`s(t)`$ the km driven by hour $`t`$, $`G(s)`$ the litres burned by km $`s`$, $`p`$ the price per litre and $`C(t) = p\,G(s(t))`$ the dollars spent by hour $`t`$:
 
-$$C'(t) = p \cdot G'(s(t)) \cdot s'(t)$$
+```math
+C'(t) = p \cdot G'(s(t)) \cdot s'(t)
+```
 
 The units check it: (dollars per litre) × (litres per km) × (km per hour) = dollars per hour. That cancelling is a memory aid, not a proof; Step 1 shows where it breaks.
 
-The example's functions are $s(t) = 60t + 20t^2$ km and $G(s) = 0.05s + 0.0002s^2$ litres. The power rule from [Product and quotient rules](02-product-and-quotient-rules.md) gives speed $s'(t) = 60 + 40t$ and burn rate $G'(s) = 0.05 + 0.0004s$.
+The example's functions are $`s(t) = 60t + 20t^2`$ km and $`G(s) = 0.05s + 0.0002s^2`$ litres. The power rule from [Product and quotient rules](02-product-and-quotient-rules.md) gives speed $`s'(t) = 60 + 40t`$ and burn rate $`G'(s) = 0.05 + 0.0004s`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | hours since leaving town | 1 h | grows: faster car, steeper road |
-| $s$, $s'$ | km driven by hour t; speed in km/h | 80 km; 100 km/h | grows in proportion to speed |
-| $G$, $G'$ | litres burned by km s; litres per km there | 5.28 L; 0.082 L/km | grows in proportion to burn rate |
-| $p$ | fuel price, dollars per litre | 1.80 | grows in proportion |
-| $C$, $C'$ | dollars spent by hour t; dollars per hour | 9.504; 14.76 | — |
-| $f$, $g$ | any outer and inner function | G and s | — |
-| $h$, $k$ | a time step; the distance it adds | 0.01 h; 1.002 km | the secant (the average rate over the step) drifts from 14.76 |
-| $r$, $e$ | slippage: how far the step's average rates miss the exact ones | 0.200 km/h; 0.0002004 L/km | both shrink to 0 with the step |
+| $`t`$ | hours since leaving town | 1 h | grows: faster car, steeper road |
+| $`s`$, $`s'`$ | km driven by hour t; speed in km/h | 80 km; 100 km/h | grows in proportion to speed |
+| $`G`$, $`G'`$ | litres burned by km s; litres per km there | 5.28 L; 0.082 L/km | grows in proportion to burn rate |
+| $`p`$ | fuel price, dollars per litre | 1.80 | grows in proportion |
+| $`C`$, $`C'`$ | dollars spent by hour t; dollars per hour | 9.504; 14.76 | — |
+| $`f`$, $`g`$ | any outer and inner function | G and s | — |
+| $`h`$, $`k`$ | a time step; the distance it adds | 0.01 h; 1.002 km | the secant (the average rate over the step) drifts from 14.76 |
+| $`r`$, $`e`$ | slippage: how far the step's average rates miss the exact ones | 0.200 km/h; 0.0002004 L/km | both shrink to 0 with the step |
 
 The flow of the chain, with each rate read at the car's actual position:
 
@@ -90,7 +94,9 @@ Add a small time step h. The car goes about 100h km further, each extra km burns
 
 Write Δ for "change over the step". The tempting line is
 
-$$\frac{\Delta C}{\Delta t} = \frac{\Delta C}{\Delta s} \cdot \frac{\Delta s}{\Delta t}$$
+```math
+\frac{\Delta C}{\Delta t} = \frac{\Delta C}{\Delta s} \cdot \frac{\Delta s}{\Delta t}
+```
 
 and let the step shrink. It fails when Δs is zero. Park the car at 80 km: every step adds 0 km, and ΔC/Δs is 0 divided by 0, yet the bill's rate is plainly 0. A car that reverses and pulls forward ever faster near one instant is back at the same spot after arbitrarily small steps, so shrinking does not rescue it. The honest proof never divides by the inner change.
 
@@ -98,13 +104,17 @@ and let the step shrink. It fails when Δs is zero. Park the car at 80 km: every
 
 For the inner link, the extra distance over a step h is exactly
 
-$$k = s(1+h) - s(1) = (100 + r)\,h, \qquad r = 20h.$$
+```math
+k = s(1+h) - s(1) = (100 + r)\,h, \qquad r = 20h.
+```
 
 Here r, in km/h, is the **slippage**: how far the step's average speed misses 100 km/h. Likewise e, in L/km, is how far the step's average burn misses 0.082.
 
 For the outer link, the extra fuel over an extra k km is exactly
 
-$$G(80 + k) - G(80) = (0.082 + e)\,k, \qquad e = 0.0002k.$$
+```math
+G(80 + k) - G(80) = (0.082 + e)\,k, \qquad e = 0.0002k.
+```
 
 It holds for every k, k = 0 included: a product, not a quotient, so a parked car causes no trouble.
 
@@ -112,7 +122,9 @@ It holds for every k, k = 0 included: a product, not a quotient, so a parked car
 
 Put the first equation into the second and multiply by p:
 
-$$\frac{C(1+h) - C(1)}{h} = p\,(0.082 + e)(100 + r).$$
+```math
+\frac{C(1+h) - C(1)}{h} = p\,(0.082 + e)(100 + r).
+```
 
 The only division is by h, never zero. At h = 0.01 hour: k = 1.002 km, r = 0.200, e = 0.0002004, and the right side is 1.80 × 0.0822004 × 100.2 = 14.825664, the same as the secant computed from the bill directly.
 
@@ -135,7 +147,7 @@ For 0 < |h| < δ, (f(g(t + h)) − f(g(t)))/h = (f'(u) + e(k(h)))(g'(t) + r(h)),
 
 </details>
 
-A longer chain is the two-link rule used twice. A second road is to expand $C(t)$ into powers of $t$ and differentiate term by term; it works here because everything is a polynomial, and the code does it. The chain done mechanically by computer is Forward-mode automatic differentiation.
+A longer chain is the two-link rule used twice. A second road is to expand $`C(t)`$ into powers of $`t`$ and differentiate term by term; it works here because everything is a polynomial, and the code does it. The chain done mechanically by computer is Forward-mode automatic differentiation.
 
 ---
 

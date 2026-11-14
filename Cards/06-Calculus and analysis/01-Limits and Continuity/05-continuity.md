@@ -26,36 +26,42 @@ To scale: 80 pixels per kilometre, 16 pixels per dollar. Steps S are the stepped
 
 ## The formula
 
-A reminder from [Limits](01-limits.md): $\lim_{d \to a} f(d) = L$ says "f(d) heads for L as d heads for a", and the value at a plays no part.
+A reminder from [Limits](01-limits.md): $`\lim_{d \to a} f(d) = L`$ says "f(d) heads for L as d heads for a", and the value at a plays no part.
 
-Two new marks, in words first: a small minus sign above the a, $\lim_{d \to a^-}$, means approach from below only; a small plus sign, $\lim_{d \to a^+}$, from above only. These are the **one-sided limits**.
+Two new marks, in words first: a small minus sign above the a, $`\lim_{d \to a^-}`$, means approach from below only; a small plus sign, $`\lim_{d \to a^+}`$, from above only. These are the **one-sided limits**.
 
-$$f \text{ is continuous at } a \quad\text{when}\quad \lim_{d \to a} f(d) = f(a)$$
+```math
+f \text{ is continuous at } a \quad\text{when}\quad \lim_{d \to a} f(d) = f(a)
+```
 
 **Read it aloud:** f is continuous at a when f(d) heads for f(a) as d heads for a.
 
-Three demands: $f(a)$ exists, the limit exists (both one-sided limits agree), and the two are equal. Continuous at every point of an interval is **continuous on the interval**; at an endpoint only the inside side counts.
+Three demands: $`f(a)`$ exists, the limit exists (both one-sided limits agree), and the two are equal. Continuous at every point of an interval is **continuous on the interval**; at an endpoint only the inside side counts.
 
-The two fares, with the ceiling $\lceil d \rceil$ meaning d rounded up to a whole number:
+The two fares, with the ceiling $`\lceil d \rceil`$ meaning d rounded up to a whole number:
 
-$$S(d) = 3 + 2\lceil d \rceil, \qquad M(d) = 3 + 2d$$
+```math
+S(d) = 3 + 2\lceil d \rceil, \qquad M(d) = 3 + 2d
+```
 
-The theorem: if $f$ and $g$ are continuous at a point, so are
+The theorem: if $`f`$ and $`g`$ are continuous at a point, so are
 
-$$f + g, \qquad f \cdot g, \qquad \text{and the chain (composition) } f(g(t)) \text{ at } t = a, \text{ if } f \text{ is continuous at } g(a).$$
+```math
+f + g, \qquad f \cdot g, \qquad \text{and the chain (composition) } f(g(t)) \text{ at } t = a, \text{ if } f \text{ is continuous at } g(a).
+```
 
 **Read it aloud:** sums, products and chains of continuous functions are continuous, the outer one needing continuity where the inner one lands.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $d$ | distance driven, in km | 1 km, 2 km | the fare rises |
-| $a$, $L$ | the point tested; the value approached | 1 km; 5 dollars from below | — |
-| $S(d)$ | stepped fare | 5 dollars at 1 km, 7 at 1.001 km | jumps 2 dollars at each whole km |
-| $M(d)$ | metered fare | 7 dollars at 2 km | rises 2 dollars per km, smoothly |
-| $\lceil d \rceil$ | kilometres started | 2 at 1.001 km | steps up at each whole km |
-| $\lim_{d \to a^-}$, $\lim_{d \to a^+}$ | one-sided limits | 5 and 7 dollars at 1 km | — |
-| $f$, $g$ | two functions continuous at the point | fare 3 + t; surge 1 + 0.05 t | — |
-| $t$, $d(t)$ | minutes since pickup; distance, 0.5 t km | 4 min, 2 km | more fare |
+| $`d`$ | distance driven, in km | 1 km, 2 km | the fare rises |
+| $`a`$, $`L`$ | the point tested; the value approached | 1 km; 5 dollars from below | — |
+| $`S(d)`$ | stepped fare | 5 dollars at 1 km, 7 at 1.001 km | jumps 2 dollars at each whole km |
+| $`M(d)`$ | metered fare | 7 dollars at 2 km | rises 2 dollars per km, smoothly |
+| $`\lceil d \rceil`$ | kilometres started | 2 at 1.001 km | steps up at each whole km |
+| $`\lim_{d \to a^-}`$, $`\lim_{d \to a^+}`$ | one-sided limits | 5 and 7 dollars at 1 km | — |
+| $`f`$, $`g`$ | two functions continuous at the point | fare 3 + t; surge 1 + 0.05 t | — |
+| $`t`$, $`d(t)`$ | minutes since pickup; distance, 0.5 t km | 4 min, 2 km | more fare |
 
 ### The four ways to fail
 
@@ -113,13 +119,13 @@ A constant wins the game with any window; the function returning its own input w
 <details>
 <summary>Detailed proof</summary>
 
-Write ε (epsilon) for the output tolerance and δ (delta) for the input window, both positive. f is continuous at a when for every ε there is a δ with $|f(x) - f(a)| < \varepsilon$ whenever $|x - a| < \delta$. This is the limit definition with x = a also allowed, which costs nothing: f(a) is within any tolerance of itself.
+Write ε (epsilon) for the output tolerance and δ (delta) for the input window, both positive. f is continuous at a when for every ε there is a δ with $`|f(x) - f(a)| < \varepsilon`$ whenever $`|x - a| < \delta`$. This is the limit definition with x = a also allowed, which costs nothing: f(a) is within any tolerance of itself.
 
-**Sums.** Pick δ1 for f and δ2 for g, each with tolerance ε/2. Within the smaller, $|(f+g)(x) - (f+g)(a)| \le |f(x) - f(a)| + |g(x) - g(a)| < \varepsilon$.
+**Sums.** Pick δ1 for f and δ2 for g, each with tolerance ε/2. Within the smaller, $`|(f+g)(x) - (f+g)(a)| \le |f(x) - f(a)| + |g(x) - g(a)| < \varepsilon`$.
 
-**Products.** Split $f(x)g(x) - f(a)g(a)$ as $(f(x) - f(a))\,g(x) + f(a)\,(g(x) - g(a))$. Take η (eta) as the smaller of 1 and ε / (|f(a)| + |g(a)| + 1), and a window where f and g each move less than η. There |g(x)| < |g(a)| + 1, so the product moves less than η(|g(a)| + 1 + |f(a)|), at most ε.
+**Products.** Split $`f(x)g(x) - f(a)g(a)`$ as $`(f(x) - f(a))\,g(x) + f(a)\,(g(x) - g(a))`$. Take η (eta) as the smaller of 1 and ε / (|f(a)| + |g(a)| + 1), and a window where f and g each move less than η. There |g(x)| < |g(a)| + 1, so the product moves less than η(|g(a)| + 1 + |f(a)|), at most ε.
 
-**Compositions.** Let g be continuous at a and f at b = g(a). Given ε, f gives a window γ (gamma) around b. With γ as tolerance, g gives δ with $|g(x) - b| < \gamma$ whenever $|x - a| < \delta$. So within δ of a, f(g(x)) is within ε of f(b).
+**Compositions.** Let g be continuous at a and f at b = g(a). Given ε, f gives a window γ (gamma) around b. With γ as tolerance, g gives δ with $`|g(x) - b| < \gamma`$ whenever $`|x - a| < \delta`$. So within δ of a, f(g(x)) is within ε of f(b).
 
 </details>
 

@@ -28,30 +28,38 @@ To scale, seen from far above the triangle's middle: the Earth's 6371 km radius 
 
 Notation first, in words. The corners are A (London), B (New York) and C (the pole), and each side takes the small letter of the corner it faces. A side is measured as a **central angle**: the angle at the sphere's centre between the arrows to its two ends. Its length on the surface is the radius times that angle in radians ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)):
 
-$$s = R\,c$$
+```math
+s = R\,c
+```
 
-$$\cos c = \cos a\cos b + \sin a\sin b\cos C$$
+```math
+\cos c = \cos a\cos b + \sin a\sin b\cos C
+```
 
 **Read it aloud:** the third side's cosine is the other two sides' cosines multiplied, plus their sines multiplied times the cosine of the angle between them.
 
-$$\frac{\sin A}{\sin a} = \frac{\sin B}{\sin b} = \frac{\sin C}{\sin c}$$
+```math
+\frac{\sin A}{\sin a} = \frac{\sin B}{\sin b} = \frac{\sin C}{\sin c}
+```
 
 **Read it aloud:** each corner's sine over the sine of the side facing it gives one shared number.
 
-$$K = R^2\,E, \qquad E = A + B + C - \pi$$
+```math
+K = R^2\,E, \qquad E = A + B + C - \pi
+```
 
 **Read it aloud:** the area is the radius squared times the excess, the amount by which the angles, in radians, overshoot π radians, which is 180°.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $R$ | the sphere's radius | 6371 km | lengths grow, areas grow as its square |
-| $a$, $b$ | sides from the pole to New York and to London: 90° minus the latitude | 49.2872° and 38.4926° (5480.49 km, 4280.18 km) | the route lengthens |
-| $C$ | the angle at the pole: the gap in longitude | 73.8782° | the route lengthens |
-| $c$ | the route's central angle | 50.094212° = 0.874309 rad | — |
-| $s$ | the route's length on the surface | 5570.22 km | — |
-| $A$, $B$ | the corner angles at London and New York | 71.67° and 51.21° | — |
-| $E$ | the excess: angle sum minus 180°, in radians | 16.76° = 0.292537 rad | the area grows in step |
-| $K$ | the area enclosed | 11873957 km^2 | — |
+| $`R`$ | the sphere's radius | 6371 km | lengths grow, areas grow as its square |
+| $`a`$, $`b`$ | sides from the pole to New York and to London: 90° minus the latitude | 49.2872° and 38.4926° (5480.49 km, 4280.18 km) | the route lengthens |
+| $`C`$ | the angle at the pole: the gap in longitude | 73.8782° | the route lengthens |
+| $`c`$ | the route's central angle | 50.094212° = 0.874309 rad | — |
+| $`s`$ | the route's length on the surface | 5570.22 km | — |
+| $`A`$, $`B`$ | the corner angles at London and New York | 71.67° and 51.21° | — |
+| $`E`$ | the excess: angle sum minus 180°, in radians | 16.76° = 0.292537 rad | the area grows in step |
+| $`K`$ | the area enclosed | 11873957 km^2 | — |
 
 The pole makes the inputs easy to read off a map ([Cylindrical and spherical coordinates](../04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md)); the laws hold for any corners.
 

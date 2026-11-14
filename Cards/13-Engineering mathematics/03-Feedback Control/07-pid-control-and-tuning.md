@@ -36,55 +36,61 @@ Orange: the thermometer, one reading per minute from the 0.1-minute log, with ±
 
 ## The formula
 
-The controller watches the **error** $e = r - y$: the setpoint $r$ minus the measured temperature $y$, both as changes from 20 °C. It sets the radiator change $u$, in kW from the 1.5 kW baseline. Three strengths, called **gains**, are new notation here: the proportional gain $K_p$, the integral gain $K_i$ and the derivative gain $K_d$. The PID law is
+The controller watches the **error** $`e = r - y`$: the setpoint $`r`$ minus the measured temperature $`y`$, both as changes from 20 °C. It sets the radiator change $`u`$, in kW from the 1.5 kW baseline. Three strengths, called **gains**, are new notation here: the proportional gain $`K_p`$, the integral gain $`K_i`$ and the derivative gain $`K_d`$. The PID law is
 
-$$u(t) = K_p\,e(t) + K_i\int_0^t e(t')\,dt' + K_d\,\frac{de}{dt}.$$
+```math
+u(t) = K_p\,e(t) + K_i\int_0^t e(t')\,dt' + K_d\,\frac{de}{dt}.
+```
 
 **Read it aloud:** the heat change is a proportional gain times the error now, plus an integral gain times the error added up so far, plus a derivative gain times the rate the error is changing.
 
-Engineers often write it with one gain and two times: $K_i = K_p/T_i$ and $K_d = K_p T_d$. The integral time $T_i$ is how long a steady error takes to double the proportional push. The derivative time $T_d$ is how far ahead the derivative term looks along the trend.
+Engineers often write it with one gain and two times: $`K_i = K_p/T_i`$ and $`K_d = K_p T_d`$. The integral time $`T_i`$ is how long a steady error takes to double the proportional push. The derivative time $`T_d`$ is how far ahead the derivative term looks along the trend.
 
-The bump test fits a **first-order-plus-dead-time** model, a single lag behind a pure delay; the factor $e^{-\theta s}$ is the delay of $\theta$ minutes:
+The bump test fits a **first-order-plus-dead-time** model, a single lag behind a pure delay; the factor $`e^{-\theta s}`$ is the delay of $`\theta`$ minutes:
 
-$$G(s) = \frac{K\,e^{-\theta s}}{\tau s + 1}, \qquad y(t) = K\,\Delta u\,\Big(1 - e^{-(t-\theta)/\tau}\Big) \ \text{for } t > \theta.$$
+```math
+G(s) = \frac{K\,e^{-\theta s}}{\tau s + 1}, \qquad y(t) = K\,\Delta u\,\Big(1 - e^{-(t-\theta)/\tau}\Big) \ \text{for } t > \theta.
+```
 
 **Read it aloud:** after a heat step, the room waits the delay, then rises towards the gain times the step, covering 63.2% of the way in one lag.
 
-Two tuning rules turn $(K, \tau, \theta)$ into gains:
+Two tuning rules turn $`(K, \tau, \theta)`$ into gains:
 
-$$\text{Ziegler–Nichols (ZN) PID: } K_p = \frac{1.2\,\tau}{K\theta},\ T_i = 2\theta,\ T_d = \frac{\theta}{2}; \qquad \text{lambda PI: } K_p = \frac{\tau}{K(\lambda + \theta)},\ T_i = \tau,\ T_d = 0.$$
+```math
+\text{Ziegler–Nichols (ZN) PID: } K_p = \frac{1.2\,\tau}{K\theta},\ T_i = 2\theta,\ T_d = \frac{\theta}{2}; \qquad \text{lambda PI: } K_p = \frac{\tau}{K(\lambda + \theta)},\ T_i = \tau,\ T_d = 0.
+```
 
-The lambda rule asks the engineer to choose one number, $\lambda$, the time constant wanted for the closed loop. This card takes $\lambda$ = 1 min, equal to the delay, which Skogestad's version of the rule (SIMC, Simple Internal Model Control) recommends as a robust default.
+The lambda rule asks the engineer to choose one number, $`\lambda`$, the time constant wanted for the closed loop. This card takes $`\lambda`$ = 1 min, equal to the delay, which Skogestad's version of the rule (SIMC, Simple Internal Model Control) recommends as a robust default.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $y$, $r$, $e$, $\Delta u$ | heat change in kW; temperature change in °C; setpoint; error $r - y$; the bump size | bump $\Delta u$ = 1 kW; setpoint step 1 °C | — |
-| $K_p$ | proportional gain, kW per °C of error | 1.800 (ZN), 0.750 (lambda) | faster, less stable |
-| $K_i$, $T_i$ | integral gain in kW per °C per min; integral time in min | 0.900 and 2.000 min (ZN); 0.250 and 3.000 min (lambda) | $K_i$ up: offset cleared faster, more overshoot |
-| $K_d$, $T_d$ | derivative gain in kW·min per °C; derivative time in min | 0.900 and 0.500 min (ZN); 0 (lambda) | more braking, more noise passed through |
-| $K$ | the room's gain: settled °C per kW | 2 °C/kW (fitted 1.997) | the same gains push harder |
-| $\tau$ | the room's lag, the time constant | 3 min (fitted 2.962) | slower room |
-| $\theta$ | the pipe's delay, dead time | 1 min (fitted 1.017) | lower safe gain |
-| $\lambda$ | chosen closed-loop time constant | 1 min | gentler, more robust loop |
-| $G(s)$, $C(s)$, $L(s)$, $s$, $j$ | room model; controller $K_p(1 + 1/(T_i s) + T_d s)$; loop gain $C G$; Laplace variable; $\sqrt{-1}$ | $s = j\omega$ for frequencies | — |
-| $\omega$, $\omega_c$, $\omega_{180}$, $\pi$ | angular frequency in rad/min; where the loop gain is 1; where its phase is −180°, which is $\pi$ rad, half a cycle | $\omega_c$ = 0.5000 rad/min (lambda) | — |
-| $K_u$, $P_u$, $\omega_u$ | ultimate gain: the proportional gain that just sustains oscillation; its period; its frequency | 2.6842 kW/°C, 3.5737 min, 1.7582 rad/min | — |
-| $t$, $f$, $t_f$, $t_{28}$, $t_{63}$, $d$ | time in min; a fraction of the bump's rise; the time the model's rise passes the fraction $f$; times the record passes 28.3% and 63.2% of it; door heat loss in kW | 2.005 and 3.979 min; $d$ = −0.5 kW | — |
-| $T(s)$ | complementary sensitivity: the closed loop from setpoint to temperature, here the one lambda tuning asks for | $e^{-s}/(s + 1)$ with $\lambda$ = 1 min | — |
+| $`u`$, $`y`$, $`r`$, $`e`$, $`\Delta u`$ | heat change in kW; temperature change in °C; setpoint; error $`r - y`$; the bump size | bump $`\Delta u`$ = 1 kW; setpoint step 1 °C | — |
+| $`K_p`$ | proportional gain, kW per °C of error | 1.800 (ZN), 0.750 (lambda) | faster, less stable |
+| $`K_i`$, $`T_i`$ | integral gain in kW per °C per min; integral time in min | 0.900 and 2.000 min (ZN); 0.250 and 3.000 min (lambda) | $`K_i`$ up: offset cleared faster, more overshoot |
+| $`K_d`$, $`T_d`$ | derivative gain in kW·min per °C; derivative time in min | 0.900 and 0.500 min (ZN); 0 (lambda) | more braking, more noise passed through |
+| $`K`$ | the room's gain: settled °C per kW | 2 °C/kW (fitted 1.997) | the same gains push harder |
+| $`\tau`$ | the room's lag, the time constant | 3 min (fitted 2.962) | slower room |
+| $`\theta`$ | the pipe's delay, dead time | 1 min (fitted 1.017) | lower safe gain |
+| $`\lambda`$ | chosen closed-loop time constant | 1 min | gentler, more robust loop |
+| $`G(s)`$, $`C(s)`$, $`L(s)`$, $`s`$, $`j`$ | room model; controller $`K_p(1 + 1/(T_i s) + T_d s)`$; loop gain $`C G`$; Laplace variable; $`\sqrt{-1}`$ | $`s = j\omega`$ for frequencies | — |
+| $`\omega`$, $`\omega_c`$, $`\omega_{180}`$, $`\pi`$ | angular frequency in rad/min; where the loop gain is 1; where its phase is −180°, which is $`\pi`$ rad, half a cycle | $`\omega_c`$ = 0.5000 rad/min (lambda) | — |
+| $`K_u`$, $`P_u`$, $`\omega_u`$ | ultimate gain: the proportional gain that just sustains oscillation; its period; its frequency | 2.6842 kW/°C, 3.5737 min, 1.7582 rad/min | — |
+| $`t`$, $`f`$, $`t_f`$, $`t_{28}`$, $`t_{63}`$, $`d`$ | time in min; a fraction of the bump's rise; the time the model's rise passes the fraction $`f`$; times the record passes 28.3% and 63.2% of it; door heat loss in kW | 2.005 and 3.979 min; $`d`$ = −0.5 kW | — |
+| $`T(s)`$ | complementary sensitivity: the closed loop from setpoint to temperature, here the one lambda tuning asks for | $`e^{-s}/(s + 1)`$ with $`\lambda`$ = 1 min | — |
 
-Two numbers judge a loop, both from the loop gain $L(j\omega)$, which is the controller and room in series, read at frequency $\omega$ ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)). The **gain margin** (GM) is how many times the loop gain could grow before the loop oscillates. The **phase margin** (PM) is how much extra lag, in degrees, it could take at $\omega_c$.
+Two numbers judge a loop, both from the loop gain $`L(j\omega)`$, which is the controller and room in series, read at frequency $`\omega`$ ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)). The **gain margin** (GM) is how many times the loop gain could grow before the loop oscillates. The **phase margin** (PM) is how much extra lag, in degrees, it could take at $`\omega_c`$.
 
 ### The picture: the loop
 
 <p align="center"><img src="../figures/pid-control-and-tuning.svg" alt="Schematic of the heating loop: setpoint and thermometer compared, PID controller, pipe delay, room lag, door disturbance, feedback" width="420"></p>
 
-Schematic, not to scale. The circle subtracts the measured temperature $y$ from the setpoint $r$. The door's heat loss enters at the room, after the pipe, so the controller sees it only through $y$.
+Schematic, not to scale. The circle subtracts the measured temperature $`y`$ from the setpoint $`r`$. The door's heat loss enters at the room, after the pipe, so the controller sees it only through $`y`$.
 
 ### When it holds
 
-- **Small changes about 20 °C and 1.5 kW.** The fit is a straight-line model of the room near its operating point. Far from it the slope drifts: a radiator's output is not a straight line in the room temperature ([PID in practice](08-pid-on-real-hardware.md) shows the curve), so $K$ = 2 °C/kW is the slope at 20 °C, not a constant. A drifting $K$ is a model error the loop must survive, as the third bullet shows.
+- **Small changes about 20 °C and 1.5 kW.** The fit is a straight-line model of the room near its operating point. Far from it the slope drifts: a radiator's output is not a straight line in the room temperature ([PID in practice](08-pid-on-real-hardware.md) shows the curve), so $`K`$ = 2 °C/kW is the slope at 20 °C, not a constant. A drifting $`K`$ is a model error the loop must survive, as the third bullet shows.
 - **One lag behind one delay.** Heavy walls add a second lag, which the fit folds into a longer apparent delay.
-- **The room stays the room.** Hotter boiler water raises $K$. Lower flow lengthens $\theta$. The Ziegler–Nichols gains lose stability at a 50% gain rise or a doubled delay, and both are shown below.
+- **The room stays the room.** Hotter boiler water raises $`K`$. Lower flow lengthens $`\theta`$. The Ziegler–Nichols gains lose stability at a 50% gain rise or a doubled delay, and both are shown below.
 - **The radiator can deliver what is asked.** Between 0 and 3 kW. A 4 °C setpoint asks for 2.0 kW extra, but the radiator gives at most 1.5 kW more, so the room tops out at 23.0 °C. Past the limit the integral keeps growing while the radiator cannot respond: integral windup, shown in What breaks.
 - **A quiet thermometer for the derivative.** The derivative term multiplies the rate of change of the reading, so it multiplies reading noise too: [PID in practice](08-pid-on-real-hardware.md).
 
@@ -98,68 +104,84 @@ The proportional term answers "how far off is it now", the integral term "how lo
 
 ### Step 1: proportional action alone leaves an offset
 
-At rest, the room sits at $y = K u$. A proportional controller sets $u = K_p e$. With $e = r - y$, these give $e = r - K K_p e$, so
+At rest, the room sits at $`y = K u`$. A proportional controller sets $`u = K_p e`$. With $`e = r - y`$, these give $`e = r - K K_p e`$, so
 
-$$e_{\text{rest}} = \frac{r}{1 + K K_p}.$$
+```math
+e_{\text{rest}} = \frac{r}{1 + K K_p}.
+```
 
-A warmer room needs more heat, and a proportional controller gives more heat only while an error remains. With $K_p$ = 1.8 kW/°C, a 1 °C step leaves $1/(1 + 2 \times 1.8)$ = 0.2174 °C of error for ever. The simulation agrees: 0.2174 °C after 80 minutes. This is the type-0 offset of [Steady-state error](03-steady-state-error-and-system-type.md).
+A warmer room needs more heat, and a proportional controller gives more heat only while an error remains. With $`K_p`$ = 1.8 kW/°C, a 1 °C step leaves $`1/(1 + 2 \times 1.8)`$ = 0.2174 °C of error for ever. The simulation agrees: 0.2174 °C after 80 minutes. This is the type-0 offset of [Steady-state error](03-steady-state-error-and-system-type.md).
 
 ### Step 2: the integral term drives the error to zero, and pays a known debt
 
-Suppose the loop settles. Then $e$ and $u$ are constant and the derivative term is zero, so the integral term, $u$ minus the proportional term, is constant too. Its rate of change is $K_i e$, so $e = 0$. Any settled state of a PI or PID loop has zero error, whatever the door or the walls do. That is the integrator's pole at $s = 0$, where its $1/s$ becomes infinite, making the loop type 1.
+Suppose the loop settles. Then $`e`$ and $`u`$ are constant and the derivative term is zero, so the integral term, $`u`$ minus the proportional term, is constant too. Its rate of change is $`K_i e`$, so $`e = 0`$. Any settled state of a PI or PID loop has zero error, whatever the door or the walls do. That is the integrator's pole at $`s = 0`$, where its $`1/s`$ becomes infinite, making the loop type 1.
 
-The same argument prices a disturbance. The door removes 0.5 kW. Once the room has recovered, $e$ and its rate are back at zero, so the proportional and derivative terms are back at their old values. The extra 0.5 kW must all come from the integral term: $K_i \int e\,dt = 0.5$. So the error added up over the whole recovery is
+The same argument prices a disturbance. The door removes 0.5 kW. Once the room has recovered, $`e`$ and its rate are back at zero, so the proportional and derivative terms are back at their old values. The extra 0.5 kW must all come from the integral term: $`K_i \int e\,dt = 0.5`$. So the error added up over the whole recovery is
 
-$$\int e\,dt = \frac{\lvert d \rvert}{K_i}.$$
+```math
+\int e\,dt = \frac{\lvert d \rvert}{K_i}.
+```
 
 For the Ziegler–Nichols gains that is 0.5/0.9 = 0.5556 °C·min. For the lambda gains it is 0.5/0.25 = 2.0000 °C·min. The simulation gives 0.5555 and 2.0000. A larger integral gain means a smaller debt, and no tuning escapes this budget.
 
 ### Step 3: two points on the bump record give the lag and the delay
 
-After the delay, the model's rise covers the fraction $f$ of its total at time $t_f = \theta + \tau\ln\!\big(1/(1 - f)\big)$. Pick two fractions whose logarithms are easy. For 28.3%, $\ln(1/0.717)$ = 0.3327, about one third. For 63.2%, $\ln(1/0.368)$ = 0.9997, about one. So
+After the delay, the model's rise covers the fraction $`f`$ of its total at time $`t_f = \theta + \tau\ln\!\big(1/(1 - f)\big)`$. Pick two fractions whose logarithms are easy. For 28.3%, $`\ln(1/0.717)`$ = 0.3327, about one third. For 63.2%, $`\ln(1/0.368)`$ = 0.9997, about one. So
 
-$$t_{28} = \theta + \tfrac{\tau}{3}, \qquad t_{63} = \theta + \tau \quad\Longrightarrow\quad \tau = 1.5\,(t_{63} - t_{28}), \qquad \theta = t_{63} - \tau.$$
+```math
+t_{28} = \theta + \tfrac{\tau}{3}, \qquad t_{63} = \theta + \tau \quad\Longrightarrow\quad \tau = 1.5\,(t_{63} - t_{28}), \qquad \theta = t_{63} - \tau.
+```
 
 The gain is the settled rise over the bump. This is C. L. Smith's two-point method (1972), as taught by Seborg and coauthors; it needs two readings off the record. A least-squares fit of all 221 readings is a second, independent road, and the code takes it.
 
 ### Step 4: the delay caps the gain
 
-A pure delay of $\theta$ shifts a sine of frequency $\omega$ by $\omega\theta$ radians and leaves its size alone. The lag adds $\arctan(\tau\omega)$ more. Under proportional control with gain $K_p$, the loop gain is $L(j\omega) = K_p K e^{-j\omega\theta}/(1 + j\tau\omega)$. At the frequency $\omega_u$ where the total lag reaches half a cycle,
+A pure delay of $`\theta`$ shifts a sine of frequency $`\omega`$ by $`\omega\theta`$ radians and leaves its size alone. The lag adds $`\arctan(\tau\omega)`$ more. Under proportional control with gain $`K_p`$, the loop gain is $`L(j\omega) = K_p K e^{-j\omega\theta}/(1 + j\tau\omega)`$. At the frequency $`\omega_u`$ where the total lag reaches half a cycle,
 
-$$\arctan(\tau\omega_u) + \theta\,\omega_u = \pi,$$
+```math
+\arctan(\tau\omega_u) + \theta\,\omega_u = \pi,
+```
 
 the fed-back signal returns inverted, and the subtraction at the circle turns into an addition. If the loop gain there is 1 or more, a swing feeds itself. So the largest proportional gain is
 
-$$K_u = \frac{\sqrt{1 + \tau^2\omega_u^2}}{K}, \qquad P_u = \frac{2\pi}{\omega_u}.$$
+```math
+K_u = \frac{\sqrt{1 + \tau^2\omega_u^2}}{K}, \qquad P_u = \frac{2\pi}{\omega_u}.
+```
 
-For the room, $\omega_u$ = 1.7582 rad/min, $K_u$ = 2.6842 kW/°C and $P_u$ = 3.5737 min. Without the delay there would be no such limit: a single lag never reaches −180°. The simulation finds $K_u$ = 2.6725 and $P_u$ = 3.5900 min. The small gap is the simulation's own: each heater setting is held for one 0.01 min step, which adds half a step of delay.
+For the room, $`\omega_u`$ = 1.7582 rad/min, $`K_u`$ = 2.6842 kW/°C and $`P_u`$ = 3.5737 min. Without the delay there would be no such limit: a single lag never reaches −180°. The simulation finds $`K_u`$ = 2.6725 and $`P_u`$ = 3.5900 min. The small gap is the simulation's own: each heater setting is held for one 0.01 min step, which adds half a step of delay.
 
 ### Step 5: lambda tuning picks the closed loop and solves for the controller
 
-Ask for a closed loop that copies the setpoint after the unavoidable delay, smoothed by a chosen time constant $\lambda$: $T(s) = e^{-\theta s}/(\lambda s + 1)$, the complementary sensitivity of [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md). The controller that delivers it satisfies $T = CG/(1 + CG)$, so $C = T/\big(G(1 - T)\big)$. Replace the delay in $1 - T$ by its first-order approximation $e^{-\theta s} \approx 1 - \theta s$, and the controller comes out as a PI controller whose integral time cancels the room's lag:
+Ask for a closed loop that copies the setpoint after the unavoidable delay, smoothed by a chosen time constant $`\lambda`$: $`T(s) = e^{-\theta s}/(\lambda s + 1)`$, the complementary sensitivity of [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md). The controller that delivers it satisfies $`T = CG/(1 + CG)`$, so $`C = T/\big(G(1 - T)\big)`$. Replace the delay in $`1 - T`$ by its first-order approximation $`e^{-\theta s} \approx 1 - \theta s`$, and the controller comes out as a PI controller whose integral time cancels the room's lag:
 
-$$C(s) = \frac{\tau}{K(\lambda + \theta)}\Big(1 + \frac{1}{\tau s}\Big).$$
+```math
+C(s) = \frac{\tau}{K(\lambda + \theta)}\Big(1 + \frac{1}{\tau s}\Big).
+```
 
 <details>
 <summary>Detailed proof</summary>
 
-With $G = K e^{-\theta s}/(\tau s + 1)$ and $T = e^{-\theta s}/(\lambda s + 1)$,
-$$1 - T = \frac{\lambda s + 1 - e^{-\theta s}}{\lambda s + 1} \approx \frac{\lambda s + 1 - (1 - \theta s)}{\lambda s + 1} = \frac{(\lambda + \theta)s}{\lambda s + 1}.$$
-Then
-$$C = \frac{T}{G(1 - T)} = \frac{e^{-\theta s}}{\lambda s + 1}\cdot\frac{\tau s + 1}{K e^{-\theta s}}\cdot\frac{\lambda s + 1}{(\lambda + \theta)s} = \frac{\tau s + 1}{K(\lambda + \theta)s} = \frac{\tau}{K(\lambda + \theta)}\Big(1 + \frac{1}{\tau s}\Big).$$
-So $K_p = \tau/(K(\lambda + \theta))$ and $T_i = \tau$. The delay cancels exactly; only the approximation in $1 - T$ is not exact.
+With $`G = K e^{-\theta s}/(\tau s + 1)`$ and $`T = e^{-\theta s}/(\lambda s + 1)`$,
 
-The margins follow in closed form. With this $C$, the lag cancels and $L(s) = e^{-\theta s}/((\lambda + \theta)s)$. Its size at $s = j\omega$ is $1/((\lambda + \theta)\omega)$ and its phase is $-\pi/2 - \theta\omega$. The size is 1 at $\omega_c = 1/(\lambda + \theta)$, so the phase margin is $\pi/2 - \theta/(\lambda + \theta)$ radians. The phase is $-\pi$ at $\omega_{180} = \pi/(2\theta)$, where the size is $2\theta/(\pi(\lambda + \theta))$, so the gain margin is $\pi(\lambda + \theta)/(2\theta)$. With $\lambda = \theta$ the gain margin is $\pi$ for every room of this shape. Since a change in delay leaves $\omega_c$ alone, the loop stays stable until the delay reaches the value that uses up the phase margin: $\theta' = (\lambda + \theta)\,\pi/2$, which is 3.142 min here.
+$`\displaystyle 1 - T = \frac{\lambda s + 1 - e^{-\theta s}}{\lambda s + 1} \approx \frac{\lambda s + 1 - (1 - \theta s)}{\lambda s + 1} = \frac{(\lambda + \theta)s}{\lambda s + 1}.`$
+
+Then
+
+$`\displaystyle C = \frac{T}{G(1 - T)} = \frac{e^{-\theta s}}{\lambda s + 1}\cdot\frac{\tau s + 1}{K e^{-\theta s}}\cdot\frac{\lambda s + 1}{(\lambda + \theta)s} = \frac{\tau s + 1}{K(\lambda + \theta)s} = \frac{\tau}{K(\lambda + \theta)}\Big(1 + \frac{1}{\tau s}\Big).`$
+
+So $`K_p = \tau/(K(\lambda + \theta))`$ and $`T_i = \tau`$. The delay cancels exactly; only the approximation in $`1 - T`$ is not exact.
+
+The margins follow in closed form. With this $`C`$, the lag cancels and $`L(s) = e^{-\theta s}/((\lambda + \theta)s)`$. Its size at $`s = j\omega`$ is $`1/((\lambda + \theta)\omega)`$ and its phase is $`-\pi/2 - \theta\omega`$. The size is 1 at $`\omega_c = 1/(\lambda + \theta)`$, so the phase margin is $`\pi/2 - \theta/(\lambda + \theta)`$ radians. The phase is $`-\pi`$ at $`\omega_{180} = \pi/(2\theta)`$, where the size is $`2\theta/(\pi(\lambda + \theta))`$, so the gain margin is $`\pi(\lambda + \theta)/(2\theta)`$. With $`\lambda = \theta`$ the gain margin is $`\pi`$ for every room of this shape. Since a change in delay leaves $`\omega_c`$ alone, the loop stays stable until the delay reaches the value that uses up the phase margin: $`\theta' = (\lambda + \theta)\,\pi/2`$, which is 3.142 min here.
 
 </details>
 
-In words: the integral time equals the lag, so the controller's zero cancels the room's pole: the factor $\tau s + 1$ on the controller's top line cancels the same factor on the room's bottom line. What is left is an integrator behind the delay, its speed set by one number. A larger $\lambda$ gives a slower, safer loop, and the margins are known in advance.
+In words: the integral time equals the lag, so the controller's zero cancels the room's pole: the factor $`\tau s + 1`$ on the controller's top line cancels the same factor on the room's bottom line. What is left is an integrator behind the delay, its speed set by one number. A larger $`\lambda`$ gives a slower, safer loop, and the margins are known in advance.
 
 ### Step 6: Ziegler–Nichols is a recipe aimed at fast recovery
 
-Ziegler and Nichols, in 1942, tuned many real loops by hand. They aimed for swings that shrink to a quarter each cycle, and wrote the gains that gave it in terms of the bump's delay and slope; the slope is $K/\tau$ per kW, hence $\tau/(K\theta)$ in the rule. Their second recipe uses the ultimate gain and period: $K_p = 0.6\,K_u$, $T_i = P_u/2$, $T_d = P_u/8$. Both are rules of thumb fitted to experience. Quarter decay is aggressive: quick recovery from the door, at the price of a gain margin of 1.452.
+Ziegler and Nichols, in 1942, tuned many real loops by hand. They aimed for swings that shrink to a quarter each cycle, and wrote the gains that gave it in terms of the bump's delay and slope; the slope is $`K/\tau`$ per kW, hence $`\tau/(K\theta)`$ in the rule. Their second recipe uses the ultimate gain and period: $`K_p = 0.6\,K_u`$, $`T_i = P_u/2`$, $`T_d = P_u/8`$. Both are rules of thumb fitted to experience. Quarter decay is aggressive: quick recovery from the door, at the price of a gain margin of 1.452.
 
-Another road to the same gains places the closed-loop poles by hand, on a plot of how they move as one gain rises ([Root locus](05-root-locus.md)); a third shapes $L(j\omega)$ directly ([Loop shaping](09-lead-lag-compensation-and-loop-shaping.md)).
+Another road to the same gains places the closed-loop poles by hand, on a plot of how they move as one gain rises ([Root locus](05-root-locus.md)); a third shapes $`L(j\omega)`$ directly ([Loop shaping](09-lead-lag-compensation-and-loop-shaping.md)).
 
 ---
 
@@ -170,25 +192,25 @@ From the bump record to the lambda gains and their margins. The bump was 1 kW.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | baseline and settled level | mean of the first 2 min; mean of the last 2 min | 20.001 °C; 21.998 °C |
-| gain $K$ | (21.998 − 20.001) °C per 1 kW | 1.997 °C/kW |
-| two read-off times | where the record crosses 28.3% and 63.2% of its rise | $t_{28}$ = 2.005 min, $t_{63}$ = 3.979 min |
-| lag $\tau$ | 1.5 × (3.979 − 2.005), from the unrounded gap 1.9747 | 2.962 min |
-| delay $\theta$ | 3.979 − 2.962 | 1.017 min |
+| gain $`K`$ | (21.998 − 20.001) °C per 1 kW | 1.997 °C/kW |
+| two read-off times | where the record crosses 28.3% and 63.2% of its rise | $`t_{28}`$ = 2.005 min, $`t_{63}`$ = 3.979 min |
+| lag $`\tau`$ | 1.5 × (3.979 − 2.005), from the unrounded gap 1.9747 | 2.962 min |
+| delay $`\theta`$ | 3.979 − 2.962 | 1.017 min |
 | check by least squares | best fit of all 221 readings | 1.999 °C/kW, 3.000 min, 1.000 min |
-| model used | rounded | $K$ = 2 °C/kW, $\tau$ = 3 min, $\theta$ = 1 min |
-| lambda PI, $\lambda$ = 1 min | $K_p$ = 3 / (2 × (1 + 1)); $T_i$ = $\tau$ | 0.750 kW/°C; 3.000 min |
-| loop gain | $L(s) = e^{-s}/(2s)$ | — |
-| crossover | $1/(2\omega_c) = 1$ | $\omega_c$ = 0.5000 rad/min |
-| phase margin | 90° minus $\theta\omega_c$ = 0.5 rad | 61.35° |
-| gain margin | phase −180° at $\omega_{180} = \pi/2$ = 1.5708 rad/min, where the size is $1/\pi$ | GM = $\pi$ = 3.142 |
+| model used | rounded | $`K`$ = 2 °C/kW, $`\tau`$ = 3 min, $`\theta`$ = 1 min |
+| lambda PI, $`\lambda`$ = 1 min | $`K_p`$ = 3 / (2 × (1 + 1)); $`T_i`$ = $`\tau`$ | 0.750 kW/°C; 3.000 min |
+| loop gain | $`L(s) = e^{-s}/(2s)`$ | — |
+| crossover | $`1/(2\omega_c) = 1`$ | $`\omega_c`$ = 0.5000 rad/min |
+| phase margin | 90° minus $`\theta\omega_c`$ = 0.5 rad | 61.35° |
+| gain margin | phase −180° at $`\omega_{180} = \pi/2`$ = 1.5708 rad/min, where the size is $`1/\pi`$ | GM = $`\pi`$ = 3.142 |
 | Ziegler–Nichols PID | 1.2 × 3 / (2 × 1); 2 × 1; 1 / 2 | 1.800 kW/°C; 2.000 min; 0.500 min |
-| **lambda PI gains** | | **$K_p$ = 0.750 kW/°C, $K_i$ = 0.250 kW/°C per min, GM 3.142, PM 61.35°** |
+| **lambda PI gains** | | **$`K_p`$ = 0.750 kW/°C, $`K_i`$ = 0.250 kW/°C per min, GM 3.142, PM 61.35°** |
 
 A room thermostat with these gains could see its gain grow by a factor of 3.142, or its pipe delay grow to 3.142 min, before it began to oscillate.
 
 ### Testing the loop: a setpoint step, then the door
 
-The setpoint rises from 20 °C to 21 °C at $t$ = 0. At $t$ = 20 min the door opens and stays open, taking 0.5 kW.
+The setpoint rises from 20 °C to 21 °C at $`t`$ = 0. At $`t`$ = 20 min the door opens and stays open, taking 0.5 kW.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -215,20 +237,20 @@ Both end with no error: 0.0000 °C and 0.0012 °C at 40 min, the second still cl
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| P only, $K_p$ = 1.8 kW/°C | 0.2174 °C short of a 1 °C step, for ever | No integral: more heat needs a standing error |
-| P only at 1.1 $K_u$ = 2.953 kW/°C | the swing grows ×4.00 every 20 min | Above the ultimate gain, the delay turns each correction into a push the wrong way |
+| P only, $`K_p`$ = 1.8 kW/°C | 0.2174 °C short of a 1 °C step, for ever | No integral: more heat needs a standing error |
+| P only at 1.1 $`K_u`$ = 2.953 kW/°C | the swing grows ×4.00 every 20 min | Above the ultimate gain, the delay turns each correction into a push the wrong way |
 | Lambda PI, 2.5 °C step, radiator 0 to 3 kW, no anti-windup (stop integrating while the radiator is flat out) | 0.365 °C overshoot, 17.10 min to settle (with anti-windup: 0.000 °C, 11.87 min) | The integral kept growing while the radiator was flat out, then had to unwind |
 | Ziegler–Nichols PID, pipe delay doubles to 2 min | GM 0.809, PM −19.04°, the swing grows ×7.289 every 20 min | Quarter-decay gains left too little margin; lambda PI on the same room: GM 1.571, PM 32.70°, swing ×0.039 |
 
-The time-domain figures on this card come from the simulation's 0.01 min step, whose held heater setting adds half a step to the pipe delay (Step 4). A 0.001 min step moves the Ziegler–Nichols overshoot and settling only a little, to 0.458 °C and 7.63 min. Near a stability edge the half step matters more: the swing growth falls to ×6.84 with the doubled delay, and to ×2.32 on the $K$ = 3 room of Try changing. The verdicts, grows or shrinks, stay the same.
+The time-domain figures on this card come from the simulation's 0.01 min step, whose held heater setting adds half a step to the pipe delay (Step 4). A 0.001 min step moves the Ziegler–Nichols overshoot and settling only a little, to 0.458 °C and 7.63 min. Near a stability edge the half step matters more: the swing growth falls to ×6.84 with the doubled delay, and to ×2.32 on the $`K`$ = 3 room of Try changing. The verdicts, grows or shrinks, stay the same.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads. Road 1 makes the bump record from the true room plus SplitMix64 noise (seed 2026) and fits it twice: two-point, and least squares over a grid of delays and lags. Road 2 is the frequency domain: the ultimate gain, and each tuning's margins by bisection on $\lvert L(j\omega)\rvert = 1$ and on a phase of −180°. Road 3 simulates the loop: an exact step for the lag, a buffer of past heater settings for the pipe, and the PID law with its derivative taken on the measurement, so a setpoint step does not jolt the radiator.
+Three independent roads. Road 1 makes the bump record from the true room plus SplitMix64 noise (seed 2026) and fits it twice: two-point, and least squares over a grid of delays and lags. Road 2 is the frequency domain: the ultimate gain, and each tuning's margins by bisection on $`\lvert L(j\omega)\rvert = 1`$ and on a phase of −180°. Road 3 simulates the loop: an exact step for the lag, a buffer of past heater settings for the pipe, and the PID law with its derivative taken on the measurement, so a setpoint step does not jolt the radiator.
 
-The asserts tie the roads together: simulated and frequency-domain ultimate gains within 1%; gains at 0.98 times the gain margin decay and at 1.02 times grow; every loop with GM below 1 grows in simulation; the integrated door error equals $\lvert d \rvert/K_i$; the two-minute delay is unstable in both roads or neither. Road 3 is run once more at a 0.001 min step, to show which figures depend on the step.
+The asserts tie the roads together: simulated and frequency-domain ultimate gains within 1%; gains at 0.98 times the gain margin decay and at 1.02 times grow; every loop with GM below 1 grows in simulation; the integrated door error equals $`\lvert d \rvert/K_i`$; the two-minute delay is unstable in both roads or neither. Road 3 is run once more at a 0.001 min step, to show which figures depend on the step.
 
 ### Python
 
@@ -636,12 +658,12 @@ The two outputs agree line for line.
 
 Lean proves Step 1, Step 2 and the lambda loop's margins for every room of this shape, and checks the worked numbers.
 
-- Take lambda PI gains on a room with positive $K$, $\tau$, $\theta$ and $\lambda$. Then $L(j\omega) = e^{-j\theta\omega}/((\lambda + \theta)j\omega)$ for every $\omega > 0$, of size $1/((\lambda + \theta)\omega)$.
-- Take $\omega_c = 1/(\lambda + \theta)$. Then the loop gain has size 1 and phase $-\pi/2 - \theta/(\lambda + \theta)$, so the phase margin is $\pi/2 - \theta/(\lambda + \theta)$.
-- Take $\omega_{180} = \pi/(2\theta)$. Then the loop gain equals $-2\theta/(\pi(\lambda + \theta))$, a phase of $-\pi$, so the gain margin is $\pi(\lambda + \theta)/(2\theta)$.
-- Suppose $K, K_p \ge 0$, the room rests at $y = K u$, $u = K_p e$ and $e = r - y$. Then $e = r/(1 + K K_p)$.
-- Suppose $u$ follows the PID law with $K_i \ne 0$ and a continuous error $e$. Suppose also that $e$ and $u$ stay constant from some time on. Then that constant error is 0.
-- The worked gains are exact: $K_p$ = 0.750 and $K_i$ = 0.250 for lambda PI, and 1.800, 0.900 and 0.900 for Ziegler–Nichols.
+- Take lambda PI gains on a room with positive $`K`$, $`\tau`$, $`\theta`$ and $`\lambda`$. Then $`L(j\omega) = e^{-j\theta\omega}/((\lambda + \theta)j\omega)`$ for every $`\omega > 0`$, of size $`1/((\lambda + \theta)\omega)`$.
+- Take $`\omega_c = 1/(\lambda + \theta)`$. Then the loop gain has size 1 and phase $`-\pi/2 - \theta/(\lambda + \theta)`$, so the phase margin is $`\pi/2 - \theta/(\lambda + \theta)`$.
+- Take $`\omega_{180} = \pi/(2\theta)`$. Then the loop gain equals $`-2\theta/(\pi(\lambda + \theta))`$, a phase of $`-\pi`$, so the gain margin is $`\pi(\lambda + \theta)/(2\theta)`$.
+- Suppose $`K, K_p \ge 0`$, the room rests at $`y = K u`$, $`u = K_p e`$ and $`e = r - y`$. Then $`e = r/(1 + K K_p)`$.
+- Suppose $`u`$ follows the PID law with $`K_i \ne 0`$ and a continuous error $`e`$. Suppose also that $`e`$ and $`u`$ stay constant from some time on. Then that constant error is 0.
+- The worked gains are exact: $`K_p`$ = 0.750 and $`K_i`$ = 0.250 for lambda PI, and 1.800, 0.900 and 0.900 for Ziegler–Nichols.
 - So are the P only offset of 5/23 °C, the door debts of 5/9 and 2 °C·min, and the radiator's 23 °C ceiling.
 
 The fits, the ultimate gain, the Ziegler–Nichols margins, the door debt in general and every simulation are left to the Python and Rust checks.
@@ -833,7 +855,7 @@ example (θ τ : ℚ) : (3 / 2) * ((θ + τ) - (θ + τ / 3)) = τ := by ring
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
-> - **A gentler loop.** Set $\lambda$ = 3 min, so $K_p = 3/(2 \times 4)$. Guess the gain margin. The formula in the folded proof gives $\pi \times 4/2$: **$K_p$ = 0.3750 kW/°C, GM 6.283**, twice as robust and slower.
+> - **A gentler loop.** Set $`\lambda`$ = 3 min, so $`K_p = 3/(2 \times 4)`$. Guess the gain margin. The formula in the folded proof gives $`\pi \times 4/2`$: **$`K_p`$ = 0.3750 kW/°C, GM 6.283**, twice as robust and slower.
 > - **Hotter boiler water.** Run `margins(*TUNE['ZN PID'], k=3.0)`. Guess whether the Ziegler–Nichols loop survives a 50% rise in the room's gain. It does not: **GM 0.968**, just below 1, and the simulated swing grows ×2.911 every 20 min.
 > - **A longer pipe for lambda PI.** Raise `th` in `growth` until the swing grows. Guess the limit. The phase margin of 61.35° at 0.5 rad/min runs out at **3.142 min** of total delay; the code confirms the swing shrinks at 3.10 min and grows at 3.20 min.
 
@@ -845,8 +867,8 @@ example (θ τ : ℚ) : (3 / 2) * ((θ + τ) - (θ + τ / 3)) = τ := by ring
 > **Treating a tuning rule's gains as finished.** A rule is a starting point computed from one bump test on one day. Ziegler–Nichols PID on this room has a gain margin of 1.452: a 50% rise in the room's gain gives GM 0.968, and a doubled pipe delay gives GM 0.809. Both loops oscillate with growing swings. A loop is fit for use only after it has been checked against a disturbance and against the model being wrong, by its margins or by simulation.
 >
 > - **Leaving out the integral.** Proportional control on this room leaves 0.2174 °C of a 1 °C step unreached, however long it waits.
-> - **Mixing minutes and seconds.** The gains here are per minute. Typed into a controller that counts seconds, $K_i$, $K_d$, $T_i$ and $T_d$ are off by a factor of 60.
-> - **Reading the 63.2% time as the lag.** The 63.2% point is at $\theta + \tau$, 3.979 min, not at $\tau$. Forgetting to subtract the delay makes the lag look like 3.979 min instead of 2.962 min.
+> - **Mixing minutes and seconds.** The gains here are per minute. Typed into a controller that counts seconds, $`K_i`$, $`K_d`$, $`T_i`$ and $`T_d`$ are off by a factor of 60.
+> - **Reading the 63.2% time as the lag.** The 63.2% point is at $`\theta + \tau`$, 3.979 min, not at $`\tau`$. Forgetting to subtract the delay makes the lag look like 3.979 min instead of 2.962 min.
 > - **Ignoring the radiator's limits.** Without anti-windup, a 2.5 °C step overshoots by 0.365 °C instead of 0.000 °C: [PID in practice](08-pid-on-real-hardware.md).
 
 ---
@@ -872,7 +894,7 @@ example (θ τ : ℚ) : (3 / 2) * ((θ + τ) - (θ + τ / 3)) = τ := by ring
 ## Where this goes next
 
 - [PID in practice](08-pid-on-real-hardware.md): anti-windup, a filtered derivative, a fast inner loop (cascade) and feedforward.
-- [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): shaping $L(j\omega)$ directly when three terms are not enough.
+- [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): shaping $`L(j\omega)`$ directly when three terms are not enough.
 - [Adapting as you go](../10-Robustness%20and%20Adaptation/04-gain-scheduling-and-adaptive-control.md): changing the gains as the room's gain and delay change, instead of tuning once for the worst case.
 
 This card tunes a loop for a radiator that can deliver anything asked of it, read by a quiet thermometer; what changes with a valve that has limits, a noisy thermometer and disturbances that can be measured is the question [PID in practice](08-pid-on-real-hardware.md) answers.
@@ -885,6 +907,6 @@ Verified 2026-10-06: every link below resolves to the publisher's page.
 
 - Ziegler, J. G., and N. B. Nichols. "Optimum Settings for Automatic Controllers." *Transactions of the ASME* 64, no. 8 (1942): 759–765. [doi:10.1115/1.4019264](https://doi.org/10.1115/1.4019264). The two Ziegler–Nichols recipes and their quarter-decay aim.
 - Rivera, Daniel E., Manfred Morari, and Sigurd Skogestad. "Internal Model Control: PID Controller Design." *Industrial & Engineering Chemistry Process Design and Development* 25, no. 1 (1986): 252–265. [doi:10.1021/i200032a041](https://doi.org/10.1021/i200032a041). Deriving PID gains from a model and one chosen closed-loop speed.
-- Skogestad, Sigurd. "Simple Analytic Rules for Model Reduction and PID Controller Tuning." *Journal of Process Control* 13, no. 4 (2003): 291–309. [doi:10.1016/S0959-1524(02)00062-8](https://doi.org/10.1016/S0959-1524(02)00062-8). The SIMC rules used here, with $\lambda$ equal to the delay as the default.
+- Skogestad, Sigurd. "Simple Analytic Rules for Model Reduction and PID Controller Tuning." *Journal of Process Control* 13, no. 4 (2003): 291–309. [doi:10.1016/S0959-1524(02)00062-8](https://doi.org/10.1016/S0959-1524(02)00062-8). The SIMC rules used here, with $`\lambda`$ equal to the delay as the default.
 - Seborg, Dale E., Thomas F. Edgar, Duncan A. Mellichamp, and Francis J. Doyle III. *Process Dynamics and Control*, 4th ed. Wiley. [Publisher's page](https://www.wiley.com/en-us/Process+Dynamics+and+Control%2C+4th+Edition-p-9781119285915). Fitting first-order-plus-dead-time models from step tests, including the two-point method.
 - Åström, Karl J., and Richard M. Murray. *Feedback Systems: An Introduction for Scientists and Engineers*, 2nd ed. Princeton University Press. [Authors' book site](https://fbswiki.org/wiki/index.php/Main_Page). The PID chapter: the three terms, integral action, Ziegler–Nichols and windup.

@@ -30,55 +30,61 @@ Top: the five-point curvature stencil. Middle: the uneven stencil, its points sp
 
 ## The formula
 
-Notation first, in words. $f$ is a smooth function, here the position's value after every rate moves $x$ bp, and $f^{(k)}$ is its $k$-th derivative. A stencil uses $n$ points $x + s_j h$: $h$ is the step in bp, each **offset** $s_j$ is a fixed number such as −2 or 1, and $c_j$ is that point's **weight**.
+Notation first, in words. $`f`$ is a smooth function, here the position's value after every rate moves $`x`$ bp, and $`f^{(k)}`$ is its $`k`$-th derivative. A stencil uses $`n`$ points $`x + s_j h`$: $`h`$ is the step in bp, each **offset** $`s_j`$ is a fixed number such as −2 or 1, and $`c_j`$ is that point's **weight**.
 
 The stencil reads
 
-$$f^{(k)}(x) \;\approx\; \frac{1}{h^k}\sum_{j=1}^{n} c_j\, f(x + s_j h),$$
+```math
+f^{(k)}(x) \;\approx\; \frac{1}{h^k}\sum_{j=1}^{n} c_j\, f(x + s_j h),
+```
 
-with weights chosen by the **moment conditions**, one for each power $m = 0, 1, \dots, n-1$:
+with weights chosen by the **moment conditions**, one for each power $`m = 0, 1, \dots, n-1`$:
 
-$$\sum_{j=1}^{n} c_j\, s_j^{\,m} \;=\; \begin{cases} k! & m = k,\\ 0 & m \ne k. \end{cases}$$
+```math
+\sum_{j=1}^{n} c_j\, s_j^{\,m} \;=\; \begin{cases} k! & m = k,\\ 0 & m \ne k. \end{cases}
+```
 
 The error is then
 
-$$\text{stencil} - f^{(k)}(x) \;=\; E\,h^{\,p-k} f^{(p)}(x) + \dots, \qquad E = \frac{1}{p!}\sum_{j} c_j\, s_j^{\,p},$$
+```math
+\text{stencil} - f^{(k)}(x) \;=\; E\,h^{\,p-k} f^{(p)}(x) + \dots, \qquad E = \frac{1}{p!}\sum_{j} c_j\, s_j^{\,p},
+```
 
-where $p$ is the first power, $n$ or above, whose moment is not zero.
+where $`p`$ is the first power, $`n`$ or above, whose moment is not zero.
 
-**Read it aloud:** the weights must reproduce the $k$-th power and cancel every other power below $n$; the first power that survives gives the error and the order, $p - k$.
+**Read it aloud:** the weights must reproduce the $`k`$-th power and cancel every other power below $`n`$; the first power that survives gives the error and the order, $`p - k`$.
 
 The stencils on this card, all solved from those conditions:
 
 | Stencil | Weights | Leading error |
 | --- | --- | --- |
-| slope, 5 points | $\tfrac{1}{12}, -\tfrac{2}{3}, 0, \tfrac{2}{3}, -\tfrac{1}{12}$ on $-2..2$, over $h$ | $-\tfrac{1}{30}h^4 f^{(5)}$ |
-| curvature, 5 points | $-\tfrac{1}{12}, \tfrac{4}{3}, -\tfrac{5}{2}, \tfrac{4}{3}, -\tfrac{1}{12}$, over $h^2$ | $-\tfrac{1}{90}h^4 f^{(6)}$ |
-| cross term, 4 corners | $+\tfrac14, -\tfrac14, -\tfrac14, +\tfrac14$ at $(+,+), (+,-), (-,+), (-,-)$, over $h^2$ | $\tfrac{h^2}{6}(P_{aaab} + P_{abbb})$ |
-| curvature, gaps $h_-$ and $h_+$ | $\tfrac{2}{h_-(h_-+h_+)}, -\tfrac{2}{h_-h_+}, \tfrac{2}{h_+(h_-+h_+)}$ | $\tfrac{h_+ - h_-}{3} f^{(3)}$ |
+| slope, 5 points | $`\tfrac{1}{12}, -\tfrac{2}{3}, 0, \tfrac{2}{3}, -\tfrac{1}{12}`$ on $`-2..2`$, over $`h`$ | $`-\tfrac{1}{30}h^4 f^{(5)}`$ |
+| curvature, 5 points | $`-\tfrac{1}{12}, \tfrac{4}{3}, -\tfrac{5}{2}, \tfrac{4}{3}, -\tfrac{1}{12}`$, over $`h^2`$ | $`-\tfrac{1}{90}h^4 f^{(6)}`$ |
+| cross term, 4 corners | $`+\tfrac14, -\tfrac14, -\tfrac14, +\tfrac14`$ at $`(+,+), (+,-), (-,+), (-,-)`$, over $`h^2`$ | $`\tfrac{h^2}{6}(P_{aaab} + P_{abbb})`$ |
+| curvature, gaps $`h_-`$ and $`h_+`$ | $`\tfrac{2}{h_-(h_-+h_+)}, -\tfrac{2}{h_-h_+}, \tfrac{2}{h_+(h_-+h_+)}`$ | $`\tfrac{h_+ - h_-}{3} f^{(3)}`$ |
 
-For the cross term, $a$ is the move of the short-end rate and $b$ the move of the 30-year rate, in bp, with the curve straight between them. $P_{ab}$ is the derivative once in each.
+For the cross term, $`a`$ is the move of the short-end rate and $`b`$ the move of the 30-year rate, in bp, with the curve straight between them. $`P_{ab}`$ is the derivative once in each.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $P$ | parallel move of every rate, in bp; the value after it | 0; $9,185,555.57 | value falls |
-| $P'$, $P''$ | slope in $ per bp; curvature in $ per bp² | −15,330.686730; 36.595897 | — |
-| $a$, $b$, $P(a, b)$ | short-end and 30-year moves, in bp; the value after them. $P_{+-}$ is $P(+h, -h)$; each subscript $a$ or $b$ is one derivative | 0 and 0 | — |
-| $P_{ab}$ | cross term: change in the short-end slope per bp of 30-year move | 2.236328 $ per bp² | — |
-| $f$, $f^{(k)}$, $k$ | a smooth function; its $k$-th derivative | $f = P$; $k$ = 1 or 2 | larger $k$: more points |
-| $h$ | the step, in bp | 1 bp; 25 bp | the stencil's error grows as $h^{p-k}$ |
-| $s_j$, $n$ | offsets in steps; number of points | −2, −1, 0, 1, 2; 5 | more points: higher order possible |
-| $c_j$ | weights | $-\tfrac{1}{12}, \tfrac43, -\tfrac52, \tfrac43, -\tfrac{1}{12}$ | — |
-| $m$, $p$, $E$ | a power in the conditions; first power not cancelled; its constant | $p$ = 6; $E = -\tfrac{1}{90}$ | — |
-| $h_-$, $h_+$ | the two gaps of an uneven stencil, below and above | 10 bp; 25 bp | unequal gaps: order drops to 1 |
-| $u$ | unit roundoff: the largest relative rounding in one operation | $2^{-53}$ | — |
-| $\ell_j$, $L$, $q$, $d$, $R$ | letters used only in the folded proof, each defined there | — | — |
+| $`x`$, $`P`$ | parallel move of every rate, in bp; the value after it | 0; $9,185,555.57 | value falls |
+| $`P'`$, $`P''`$ | slope in $ per bp; curvature in $ per bp² | −15,330.686730; 36.595897 | — |
+| $`a`$, $`b`$, $`P(a, b)`$ | short-end and 30-year moves, in bp; the value after them. $`P_{+-}`$ is $`P(+h, -h)`$; each subscript $`a`$ or $`b`$ is one derivative | 0 and 0 | — |
+| $`P_{ab}`$ | cross term: change in the short-end slope per bp of 30-year move | 2.236328 $ per bp² | — |
+| $`f`$, $`f^{(k)}`$, $`k`$ | a smooth function; its $`k`$-th derivative | $`f = P`$; $`k`$ = 1 or 2 | larger $`k`$: more points |
+| $`h`$ | the step, in bp | 1 bp; 25 bp | the stencil's error grows as $`h^{p-k}`$ |
+| $`s_j`$, $`n`$ | offsets in steps; number of points | −2, −1, 0, 1, 2; 5 | more points: higher order possible |
+| $`c_j`$ | weights | $`-\tfrac{1}{12}, \tfrac43, -\tfrac52, \tfrac43, -\tfrac{1}{12}`$ | — |
+| $`m`$, $`p`$, $`E`$ | a power in the conditions; first power not cancelled; its constant | $`p`$ = 6; $`E = -\tfrac{1}{90}`$ | — |
+| $`h_-`$, $`h_+`$ | the two gaps of an uneven stencil, below and above | 10 bp; 25 bp | unequal gaps: order drops to 1 |
+| $`u`$ | unit roundoff: the largest relative rounding in one operation | $`2^{-53}`$ | — |
+| $`\ell_j`$, $`L`$, $`q`$, $`d`$, $`R`$ | letters used only in the folded proof, each defined there | — | — |
 
 ### When it holds
 
-- **Smooth across the whole stencil.** The error term needs $f^{(p)}$ bounded over every point used. A kink inside, such as an option's strike, breaks the expansion and the stated rate.
+- **Smooth across the whole stencil.** The error term needs $`f^{(p)}`$ bounded over every point used. A kink inside, such as an option's strike, breaks the expansion and the stated rate.
 - **Distinct offsets.** Two points at one place make two equal columns in the conditions, and no unique weights exist.
-- **A step that is not too small.** The Taylor terms the stencil leaves out, its **truncation error**, shrink with $h$. Rounding adds about $u\,\lvert P\rvert\sum_j\lvert c_j\rvert / h^k$, which grows as $h$ shrinks. At 1 bp the five-point curvature already sits at that floor.
+- **A step that is not too small.** The Taylor terms the stencil leaves out, its **truncation error**, shrink with $`h`$. Rounding adds about $`u\,\lvert P\rvert\sum_j\lvert c_j\rvert / h^k`$, which grows as $`h`$ shrinks. At 1 bp the five-point curvature already sits at that floor.
 - **The real gaps.** Weights solved for equal spacing are wrong for any other. On −10 and +25 bp they give −708.35.
 
 ---
@@ -87,60 +93,62 @@ For the cross term, $a$ is the move of the short-end rate and $b$ the move of th
 
 ### Step 0: every value is a Taylor series about the same centre
 
-By [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md), each value $f(x + s_j h)$ is $f(x)$, plus $s_j h f'(x)$, plus $s_j^2 h^2 f''(x)/2$, and so on. So a weighted sum of values is a weighted sum of the same derivatives. Choose the weights so only the $k$-th derivative survives, with coefficient 1.
+By [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md), each value $`f(x + s_j h)`$ is $`f(x)`$, plus $`s_j h f'(x)`$, plus $`s_j^2 h^2 f''(x)/2`$, and so on. So a weighted sum of values is a weighted sum of the same derivatives. Choose the weights so only the $`k`$-th derivative survives, with coefficient 1.
 
 ### Step 1: the moment conditions
 
-Multiply each expansion by $c_j$ and add. The coefficient of $h^m f^{(m)}(x)/m!$ is $\sum_j c_j s_j^m$, the $m$-th **moment** of the stencil. After dividing by $h^k$, only $f^{(k)}$ survives below power $n$ exactly when the $k$-th moment is $k!$ and the others are 0.
+Multiply each expansion by $`c_j`$ and add. The coefficient of $`h^m f^{(m)}(x)/m!`$ is $`\sum_j c_j s_j^m`$, the $`m`$-th **moment** of the stencil. After dividing by $`h^k`$, only $`f^{(k)}`$ survives below power $`n`$ exactly when the $`k`$-th moment is $`k!`$ and the others are 0.
 
-That is $n$ linear equations in $n$ weights. Their matrix, with rows of powers $s_j^m$, is a **Vandermonde matrix**, invertible when the offsets are distinct. So the weights exist and are unique.
+That is $`n`$ linear equations in $`n`$ weights. Their matrix, with rows of powers $`s_j^m`$, is a **Vandermonde matrix**, invertible when the offsets are distinct. So the weights exist and are unique.
 
 <details>
 <summary>Detailed proof: unique weights, and the same weights from the interpolating polynomial</summary>
 
-**Uniqueness.** Suppose two weight lists both satisfy the conditions. Their difference $d$ has every moment from 0 to $n-1$ equal to zero. Then $\sum_j d_j\, q(s_j) = 0$ for every polynomial $q$ of degree below $n$. Take $q$ to be the Lagrange basis polynomial $\ell_i$, which is 1 at $s_i$ and 0 at the other offsets. This gives $d_i = 0$ for every $i$.
+**Uniqueness.** Suppose two weight lists both satisfy the conditions. Their difference $`d`$ has every moment from 0 to $`n-1`$ equal to zero. Then $`\sum_j d_j\, q(s_j) = 0`$ for every polynomial $`q`$ of degree below $`n`$. Take $`q`$ to be the Lagrange basis polynomial $`\ell_i`$, which is 1 at $`s_i`$ and 0 at the other offsets. This gives $`d_i = 0`$ for every $`i`$.
 
-**The second road.** Let $L(s) = \sum_j f(x + s_j h)\,\ell_j(s)$, the polynomial of degree below $n$ through the $n$ values. Its $k$-th derivative at 0, over $h^k$, uses weights $\ell_j^{(k)}(0)$. When $f$ is a polynomial of degree below $n$, $L$ equals it exactly, so these weights pass every moment condition and, by uniqueness, are the same weights. The check computes both and asserts the fractions agree.
+**The second road.** Let $`L(s) = \sum_j f(x + s_j h)\,\ell_j(s)`$, the polynomial of degree below $`n`$ through the $`n`$ values. Its $`k`$-th derivative at 0, over $`h^k`$, uses weights $`\ell_j^{(k)}(0)`$. When $`f`$ is a polynomial of degree below $`n`$, $`L`$ equals it exactly, so these weights pass every moment condition and, by uniqueness, are the same weights. The check computes both and asserts the fractions agree.
 
-**The error term.** Taylor's theorem with remainder of order $p + 1$ gives
-$$\frac{1}{h^k}\sum_j c_j f(x + s_j h) = f^{(k)}(x) + \frac{h^{p-k}}{p!}\Big(\sum_j c_j s_j^p\Big) f^{(p)}(x) + R,$$
-with $\lvert R\rvert \le \frac{h^{p+1-k}}{(p+1)!}\sum_j \lvert c_j\rvert\,\lvert s_j\rvert^{p+1} \max \lvert f^{(p+1)}\rvert$ over the stencil. The moments from 0 to $p - 1$ other than the $k$-th vanish by the choice of $p$. So the leading error is $E h^{p-k} f^{(p)}(x)$, and the order is $p - k$.
+**The error term.** Taylor's theorem with remainder of order $`p + 1`$ gives
+
+$`\displaystyle \frac{1}{h^k}\sum_j c_j f(x + s_j h) = f^{(k)}(x) + \frac{h^{p-k}}{p!}\Big(\sum_j c_j s_j^p\Big) f^{(p)}(x) + R,`$
+
+with $`\lvert R\rvert \le \frac{h^{p+1-k}}{(p+1)!}\sum_j \lvert c_j\rvert\,\lvert s_j\rvert^{p+1} \max \lvert f^{(p+1)}\rvert`$ over the stencil. The moments from 0 to $`p - 1`$ other than the $`k`$-th vanish by the choice of $`p`$. So the leading error is $`E h^{p-k} f^{(p)}(x)`$, and the order is $`p - k`$.
 
 </details>
 
 ### Step 2: symmetry buys one extra order
 
-On equal spacing centred at 0, the curvature weights are mirror images, $c_{-j} = c_j$, so every odd moment cancels by itself. Five points match powers 0 to 4 and power 5 for free. The first failure is power 6: order $6 - 2 = 4$.
+On equal spacing centred at 0, the curvature weights are mirror images, $`c_{-j} = c_j`$, so every odd moment cancels by itself. Five points match powers 0 to 4 and power 5 for free. The first failure is power 6: order $`6 - 2 = 4`$.
 
-By hand, with three unknowns: the centre weight $c_0$, the inner pair $c_1$, the outer pair $c_2$.
+By hand, with three unknowns: the centre weight $`c_0`$, the inner pair $`c_1`$, the outer pair $`c_2`$.
 
 | Condition | Equation | Meaning |
 | --- | --- | --- |
-| power 0 | $c_0 + 2c_1 + 2c_2 = 0$ | a constant gives zero curvature |
-| power 2 | $2c_1 + 8c_2 = 2$ | $x^2$ has curvature 2 |
-| power 4 | $2c_1 + 32c_2 = 0$ | $x^4$ has zero curvature at 0 |
-| solution | $c_2 = -\tfrac{1}{12}$, $c_1 = \tfrac43$, $c_0 = -\tfrac52$ | |
-| power 6, the error | $(2 \times \tfrac43 - 2 \times \tfrac{64}{12}) / 720 = -\tfrac{1}{90}$ | the leading error constant |
+| power 0 | $`c_0 + 2c_1 + 2c_2 = 0`$ | a constant gives zero curvature |
+| power 2 | $`2c_1 + 8c_2 = 2`$ | $`x^2`$ has curvature 2 |
+| power 4 | $`2c_1 + 32c_2 = 0`$ | $`x^4`$ has zero curvature at 0 |
+| solution | $`c_2 = -\tfrac{1}{12}`$, $`c_1 = \tfrac43`$, $`c_0 = -\tfrac52`$ | |
+| power 6, the error | $`(2 \times \tfrac43 - 2 \times \tfrac{64}{12}) / 720 = -\tfrac{1}{90}`$ | the leading error constant |
 
-The five-point slope has $c_{-j} = -c_j$, so the even moments cancel, and its error is $-\tfrac{1}{30}h^4 f^{(5)}$. At 1 bp it misses by 2.986e-8 dollars per bp; the three-point slope misses by −1.669e-2.
+The five-point slope has $`c_{-j} = -c_j`$, so the even moments cancel, and its error is $`-\tfrac{1}{30}h^4 f^{(5)}`$. At 1 bp it misses by 2.986e-8 dollars per bp; the three-point slope misses by −1.669e-2.
 
 ### Step 3: the cross term is the same recipe in two directions
 
-Expand $P(a, b)$ in both moves at once: each term is a power $a^{i} b^{j}$ times a derivative over $i!\,j!$. Put points at the four corners $(\pm h, \pm h)$. Require the weights to keep the $ab$ term and cancel $1$, $a$ and $b$: four conditions, four weights, solution $\tfrac14, -\tfrac14, -\tfrac14, \tfrac14$.
+Expand $`P(a, b)`$ in both moves at once: each term is a power $`a^{i} b^{j}`$ times a derivative over $`i!\,j!`$. Put points at the four corners $`(\pm h, \pm h)`$. Require the weights to keep the $`ab`$ term and cancel $`1`$, $`a`$ and $`b`$: four conditions, four weights, solution $`\tfrac14, -\tfrac14, -\tfrac14, \tfrac14`$.
 
-The moments never asked for come out as follows. The $a^2$, $b^2$ and $a^2b^2$ moments are 0 by symmetry. The $a^3b$ and $ab^3$ moments are each $\tfrac16$. So the cross stencil is second order, with error $\tfrac{h^2}{6}(P_{aaab} + P_{abbb})$.
+The moments never asked for come out as follows. The $`a^2`$, $`b^2`$ and $`a^2b^2`$ moments are 0 by symmetry. The $`a^3b`$ and $`ab^3`$ moments are each $`\tfrac16`$. So the cross stencil is second order, with error $`\tfrac{h^2}{6}(P_{aaab} + P_{abbb})`$.
 
-A second road: apply the central slope in $a$, weights $-\tfrac12, 0, \tfrac12$, to the central slope in $b$. Each corner gets $\tfrac{\pm1}{2}\times\tfrac{\pm1}{2}$: the same four weights.
+A second road: apply the central slope in $`a`$, weights $`-\tfrac12, 0, \tfrac12`$, to the central slope in $`b`$. Each corner gets $`\tfrac{\pm1}{2}\times\tfrac{\pm1}{2}`$: the same four weights.
 
-[Correlation Greeks and implied correlation](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md) already uses this rule, over $4h^2$, for a cross-gamma between two shares. This step derives it and gives its error.
+[Correlation Greeks and implied correlation](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md) already uses this rule, over $`4h^2`$, for a cross-gamma between two shares. This step derives it and gives its error.
 
 ### Step 4: unequal gaps cost one order
 
-Put three points at $-h_-$, 0 and $+h_+$ and solve powers 0, 1 and 2: the weights in the formula table. The power-3 moment no longer cancels. It is $2(h_+ - h_-)$; divided by $3!$ it gives the error $\tfrac{h_+ - h_-}{3} f^{(3)}$, first order.
+Put three points at $`-h_-`$, 0 and $`+h_+`$ and solve powers 0, 1 and 2: the weights in the formula table. The power-3 moment no longer cancels. It is $`2(h_+ - h_-)`$; divided by $`3!`$ it gives the error $`\tfrac{h_+ - h_-}{3} f^{(3)}`$, first order.
 
-For −10 and +25 bp the weights are $\tfrac{1}{175}$, $-\tfrac{1}{125}$ and $\tfrac{2}{875}$ per bp², and the error constant is 5 bp. The curvature is 36.106831, off by −0.489066; the leading term predicts −0.500597.
+For −10 and +25 bp the weights are $`\tfrac{1}{175}`$, $`-\tfrac{1}{125}`$ and $`\tfrac{2}{875}`$ per bp², and the error constant is 5 bp. The curvature is 36.106831, off by −0.489066; the leading term predicts −0.500597.
 
-A fourth point restores the order. With a scenario at +50 bp the weights are $\tfrac{1}{140}, -\tfrac{13}{1250}, \tfrac{16}{4375}, -\tfrac{1}{2500}$, and the error is $-\tfrac{125}{3} f^{(4)}$ bp². The curvature reads 36.584254, off by −0.011643, against a predicted −0.012310.
+A fourth point restores the order. With a scenario at +50 bp the weights are $`\tfrac{1}{140}, -\tfrac{13}{1250}, \tfrac{16}{4375}, -\tfrac{1}{2500}`$, and the error is $`-\tfrac{125}{3} f^{(4)}`$ bp². The curvature reads 36.584254, off by −0.011643, against a predicted −0.012310.
 
 [Greeks from a tree or grid](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md) already fits this three-point parabola to uneven tree prices for gamma. The recipe here adds the error term and the fourth point.
 
@@ -148,7 +156,7 @@ A fourth point restores the order. With a scenario at +50 bp the weights are $\t
 
 Curvature errors at four steps, against the exact 36.595897, in $ per bp²:
 
-| Step $h$ | 3 points | 5 points |
+| Step $`h`$ | 3 points | 5 points |
 | --- | --- | --- |
 | 50 bp | 6.1604e-2 | −2.0764e-4 |
 | 25 bp | 1.5391e-2 | −1.2952e-5 |
@@ -174,7 +182,7 @@ Orange: three points, slope 2 on this log scale. Teal: five points, slope 4.
 
 ## Worked numbers, by hand
 
-The curvature from the stored scenario grid, $h$ = 25 bp.
+The curvature from the stored scenario grid, $`h`$ = 25 bp.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -186,13 +194,13 @@ The curvature from the stored scenario grid, $h$ = 25 bp.
 | exact curvature | from the cash flows | 36.595897 |
 | errors | three points; five points | 1.5391e-2; −1.2952e-5 |
 
-The cross term from four repricings, $h$ = 1 bp:
+The cross term from four repricings, $`h`$ = 1 bp:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| both up; short up, long down | $P(+1, +1)$; $P(+1, -1)$ | 9,170,243.1673; 9,194,711.8204 |
-| short down, long up; both down | $P(-1, +1)$; $P(-1, -1)$ | 9,176,426.9758; 9,200,904.5742 |
-| corner sum | $P_{++} - P_{+-} - P_{-+} + P_{--}$ | 8.945316 |
+| both up; short up, long down | $`P(+1, +1)`$; $`P(+1, -1)`$ | 9,170,243.1673; 9,194,711.8204 |
+| short down, long up; both down | $`P(-1, +1)`$; $`P(-1, -1)`$ | 9,176,426.9758; 9,200,904.5742 |
+| corner sum | $`P_{++} - P_{+-} - P_{-+} + P_{--}`$ | 8.945316 |
 | cross term | 8.945316 ÷ (4 × 1²) | **2.236329** |
 | exact | from the cash flows | 2.236328 |
 
@@ -202,10 +210,10 @@ The −50 bp value is exactly $10,000,000: at a 4.00% rate a 4% coupon bond is w
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The 1, −2, 1 rule on the −10 and +25 bp scenarios, with $h$ = 17.5 bp, their average | −708.3542 | Unequal gaps leave the slope term uncancelled, and it swamps the curvature |
-| Moving both ends together, up 1 bp and down 1 bp, and dividing by $4h^2$ as for the cross term | 9.148980 | That measures $(P_{aa} + 2P_{ab} + P_{bb})/4$, a quarter of the parallel curvature, not $P_{ab}$ = 2.236328 |
-| A one-sided cross term from up moves only: $P_{++} - P_{+0} - P_{0+} + P_{00}$ | 2.234132, off by −0.002196 | First order: error $\tfrac{h}{2}(P_{aab} + P_{abb})$, predicted −0.002197; the four corners miss by 1.0328e-6 |
-| Five points at 1 bp, expecting the $h^4$ error | off by −6.536e-9, not the predicted −3.314e-11 | Rounding, estimated at 5.44e-9, is now far larger than the truncation error |
+| The 1, −2, 1 rule on the −10 and +25 bp scenarios, with $`h`$ = 17.5 bp, their average | −708.3542 | Unequal gaps leave the slope term uncancelled, and it swamps the curvature |
+| Moving both ends together, up 1 bp and down 1 bp, and dividing by $`4h^2`$ as for the cross term | 9.148980 | That measures $`(P_{aa} + 2P_{ab} + P_{bb})/4`$, a quarter of the parallel curvature, not $`P_{ab}`$ = 2.236328 |
+| A one-sided cross term from up moves only: $`P_{++} - P_{+0} - P_{0+} + P_{00}`$ | 2.234132, off by −0.002196 | First order: error $`\tfrac{h}{2}(P_{aab} + P_{abb})`$, predicted −0.002197; the four corners miss by 1.0328e-6 |
+| Five points at 1 bp, expecting the $`h^4`$ error | off by −6.536e-9, not the predicted −3.314e-11 | Rounding, estimated at 5.44e-9, is now far larger than the truncation error |
 
 The code prints every row.
 
@@ -629,22 +637,22 @@ The two outputs match line for line. The values use only +, −, × and ÷, whic
 
 ### Lean
 
-Lean proves the recipe for any distinct offsets, smooth $f$ and positive gaps, and checks every stencil's weights and moments on this card.
+Lean proves the recipe for any distinct offsets, smooth $`f`$ and positive gaps, and checks every stencil's weights and moments on this card.
 
-- On $n$ distinct offsets, for any derivative order $k$ below $n$, exactly one list of weights passes the moment conditions.
-- Let $f$ have $p + 1$ continuous derivatives across the stencil, and let $h > 0$. Stopping the Taylor expansion of $f(x + s_j h)$ at power $p$ misses by at most $\lvert s_j\rvert^{p+1} h^{p+1}/(p+1)!$ times the largest $\lvert f^{(p+1)}\rvert$.
-- Suppose the weights pass the moment conditions for every power below $p$, with $k$ below $p$. Then the stencil equals $f^{(k)}(x) + E\,h^{p-k} f^{(p)}(x)$, with $E$ the power-$p$ moment over $p!$.
-- What is left over is at most $\frac{h^{p+1-k}}{(p+1)!}\sum_j \lvert c_j\rvert\,\lvert s_j\rvert^{p+1}$ times the largest $\lvert f^{(p+1)}\rvert$ across the stencil. So the order is $p - k$.
-- For any positive gaps $h_-$ and $h_+$, the uneven curvature weights have moments 0, 0 and 2 for powers 0, 1 and 2.
-- Their power-3 moment over $3!$ is $\tfrac{h_+ - h_-}{3}$, the constant of the first-order error.
-- The five-point slope weights pass powers 0 to 4, and the power-5 moment over $5!$ is $-\tfrac{1}{30}$.
-- The five-point curvature weights pass powers 0 to 5, and the power-6 moment over $6!$ is $-\tfrac{1}{90}$.
-- The hand solution in Step 2 is right: $c_2 = -\tfrac{1}{12}$, $c_1 = \tfrac43$, $c_0 = -\tfrac52$.
-- The corner weights $\tfrac14, -\tfrac14, -\tfrac14, \tfrac14$ keep the $ab$ moment at 1 and cancel $1$, $a$, $b$, $a^2$, $b^2$ and $a^2b^2$.
-- Their $a^3b$ and $ab^3$ moments over $3!$ are $\tfrac16$ each, and they are the central slope in $a$ times the central slope in $b$.
-- On −10, 0 and +25 bp the weights are $\tfrac{1}{175}$, $-\tfrac{1}{125}$ and $\tfrac{2}{875}$ per bp², with error constant 5 bp.
-- With +50 bp added, the weights $\tfrac{1}{140}, -\tfrac{13}{1250}, \tfrac{16}{4375}, -\tfrac{1}{2500}$ pass powers 0 to 3, and the error constant is $-\tfrac{125}{3}$ bp².
-- For the three-point stencils, the slope's power-3 moment over $3!$ is $\tfrac16$, and the curvature's power-4 moment over $4!$ is $\tfrac{1}{12}$.
+- On $`n`$ distinct offsets, for any derivative order $`k`$ below $`n`$, exactly one list of weights passes the moment conditions.
+- Let $`f`$ have $`p + 1`$ continuous derivatives across the stencil, and let $`h > 0`$. Stopping the Taylor expansion of $`f(x + s_j h)`$ at power $`p`$ misses by at most $`\lvert s_j\rvert^{p+1} h^{p+1}/(p+1)!`$ times the largest $`\lvert f^{(p+1)}\rvert`$.
+- Suppose the weights pass the moment conditions for every power below $`p`$, with $`k`$ below $`p`$. Then the stencil equals $`f^{(k)}(x) + E\,h^{p-k} f^{(p)}(x)`$, with $`E`$ the power-$`p`$ moment over $`p!`$.
+- What is left over is at most $`\frac{h^{p+1-k}}{(p+1)!}\sum_j \lvert c_j\rvert\,\lvert s_j\rvert^{p+1}`$ times the largest $`\lvert f^{(p+1)}\rvert`$ across the stencil. So the order is $`p - k`$.
+- For any positive gaps $`h_-`$ and $`h_+`$, the uneven curvature weights have moments 0, 0 and 2 for powers 0, 1 and 2.
+- Their power-3 moment over $`3!`$ is $`\tfrac{h_+ - h_-}{3}`$, the constant of the first-order error.
+- The five-point slope weights pass powers 0 to 4, and the power-5 moment over $`5!`$ is $`-\tfrac{1}{30}`$.
+- The five-point curvature weights pass powers 0 to 5, and the power-6 moment over $`6!`$ is $`-\tfrac{1}{90}`$.
+- The hand solution in Step 2 is right: $`c_2 = -\tfrac{1}{12}`$, $`c_1 = \tfrac43`$, $`c_0 = -\tfrac52`$.
+- The corner weights $`\tfrac14, -\tfrac14, -\tfrac14, \tfrac14`$ keep the $`ab`$ moment at 1 and cancel $`1`$, $`a`$, $`b`$, $`a^2`$, $`b^2`$ and $`a^2b^2`$.
+- Their $`a^3b`$ and $`ab^3`$ moments over $`3!`$ are $`\tfrac16`$ each, and they are the central slope in $`a`$ times the central slope in $`b`$.
+- On −10, 0 and +25 bp the weights are $`\tfrac{1}{175}`$, $`-\tfrac{1}{125}`$ and $`\tfrac{2}{875}`$ per bp², with error constant 5 bp.
+- With +50 bp added, the weights $`\tfrac{1}{140}, -\tfrac{13}{1250}, \tfrac{16}{4375}, -\tfrac{1}{2500}`$ pass powers 0 to 3, and the error constant is $`-\tfrac{125}{3}`$ bp².
+- For the three-point stencils, the slope's power-3 moment over $`3!`$ is $`\tfrac16`$, and the curvature's power-4 moment over $`4!`$ is $`\tfrac{1}{12}`$.
 
 The bond's values, the cross term's two-direction error, rounding, the observed orders and the chart are left to the Python and Rust checks.
 
@@ -935,8 +943,8 @@ example :
 > [!TIP]
 > **Try changing**
 >
-> - **Guess first:** what if the uneven scenarios are made even? Change `SU = [-10, 0, 25]` to `SU = [-25, 0, 25]`. Answer: weights `1/625 -2/625 1/625`, the 1, −2, 1 rule over 25². The $f^{(3)}$ term vanishes and the error line now reads $\tfrac{625}{12}f^{(4)}$: second order again. The curvature is off by 0.015391, against a predicted 0.015388. The four-point stencil, still on −10, 0, 25 and 50 bp, no longer beats that fivefold, so the last assert of the uneven block fails.
-> - **Guess first:** what do seven points buy? Change `S5` to `[-3, -2, -1, 0, 1, 2, 3]`. Answer: curvature weights `1/90 -3/20 3/2 -49/18 3/2 -3/20 1/90`, error $\tfrac{1}{560}h^6 f^{(8)}$: sixth order. The assert pinning the five-point weights fails.
+> - **Guess first:** what if the uneven scenarios are made even? Change `SU = [-10, 0, 25]` to `SU = [-25, 0, 25]`. Answer: weights `1/625 -2/625 1/625`, the 1, −2, 1 rule over 25². The $`f^{(3)}`$ term vanishes and the error line now reads $`\tfrac{625}{12}f^{(4)}`$: second order again. The curvature is off by 0.015391, against a predicted 0.015388. The four-point stencil, still on −10, 0, 25 and 50 bp, no longer beats that fivefold, so the last assert of the uneven block fails.
+> - **Guess first:** what do seven points buy? Change `S5` to `[-3, -2, -1, 0, 1, 2, 3]`. Answer: curvature weights `1/90 -3/20 3/2 -49/18 3/2 -3/20 1/90`, error $`\tfrac{1}{560}h^6 f^{(8)}`$: sixth order. The assert pinning the five-point weights fails.
 > - **Guess first:** do the fourth-order errors keep falling by 16 at smaller steps? Change `HS` to `(16, 8, 4, 2)`. Answer: −2.172e-6, −1.365e-7, −8.385e-9, then +1.322e-9 at 2 bp. The sign flips, rounding has taken over, and the order calculation stops with an error.
 
 ---
@@ -946,9 +954,9 @@ example :
 > [!warning]
 > **Using equal-step weights on unequal steps.** The 1, −2, 1 rule cancels the slope only because its two gaps are equal. On the −10 and +25 bp scenarios it returns −708.3542, a curvature with the wrong sign. Solve for the real gaps: 36.106831, or 36.584254 with a fourth point.
 >
-> - **Moving both rates together for a cross term.** Over $4h^2$ that returns 9.148980, a quarter of the parallel curvature, not the cross term 2.236328. The mixed corners, one rate up and the other down, are essential.
+> - **Moving both rates together for a cross term.** Over $`4h^2`$ that returns 9.148980, a quarter of the parallel curvature, not the cross term 2.236328. The mixed corners, one rate up and the other down, are essential.
 > - **Taking the cross term from one side.** Up moves only drop to first order: off by −0.002196 at 1 bp, against 1.0328e-6 for four corners.
-> - **Assuming a higher order always helps.** At 1 bp the five-point curvature is off by −6.536e-9, all rounding. Its $h^4$ advantage pays where truncation dominates, as on the 25 bp grid.
+> - **Assuming a higher order always helps.** At 1 bp the five-point curvature is off by −6.536e-9, all rounding. Its $`h^4`$ advantage pays where truncation dominates, as on the 25 bp grid.
 
 ---
 
@@ -967,7 +975,7 @@ example :
 ## What this builds on
 
 - [Forward, backward and central differences](01-forward-backward-and-central-differences.md): the three-point slopes, their error terms, and weight-matching done by hand for one case. This card makes that matching a general recipe.
-- [Finite differences on a grid](../07-PDE%20Solvers/02-finite-differences-consistency-stability-and-convergence.md): the 1, −2, 1 curvature rule and its $h^2/12$ error, used here as the baseline.
+- [Finite differences on a grid](../07-PDE%20Solvers/02-finite-differences-consistency-stability-and-convergence.md): the 1, −2, 1 curvature rule and its $`h^2/12`$ error, used here as the baseline.
 - [Greeks from a tree or grid](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md): the first use of a three-point curvature on unequal gaps, a tree's gamma.
 - [Correlation Greeks and implied correlation](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md): the first use of the four-corner cross-gamma.
 

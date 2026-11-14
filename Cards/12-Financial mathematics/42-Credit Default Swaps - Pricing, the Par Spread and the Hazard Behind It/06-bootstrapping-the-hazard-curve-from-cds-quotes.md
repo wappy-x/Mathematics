@@ -40,47 +40,53 @@ Orange: the par spread (the premium that makes a new contract worth nothing to e
 
 ## The formula
 
-Notation first, in words. The quoted tenors are $T_1 = 1$, $T_2 = 3$, $T_3 = 5$ years, with $T_0 = 0$ for today. The quote for tenor $T_i$ is $s_i$, written as a decimal: 120 bp is 0.0120. The hazard on the stretch from $T_{i-1}$ to $T_i$ is the flat number $\lambda_i$ (Greek "lambda"). The survival curve $S(t)$ is the chance Northwind has not defaulted by time $t$.
+Notation first, in words. The quoted tenors are $`T_1 = 1`$, $`T_2 = 3`$, $`T_3 = 5`$ years, with $`T_0 = 0`$ for today. The quote for tenor $`T_i`$ is $`s_i`$, written as a decimal: 120 bp is 0.0120. The hazard on the stretch from $`T_{i-1}`$ to $`T_i`$ is the flat number $`\lambda_i`$ (Greek "lambda"). The survival curve $`S(t)`$ is the chance Northwind has not defaulted by time $`t`$.
 
-Discounting uses $D(t) = e^{-rt}$, today's value of one dollar paid at $t$, with the riskless rate $r = 5\%$ ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Premiums fall on the quarter-dates $t_j = 0.25, 0.50, \ldots$ years.
+Discounting uses $`D(t) = e^{-rt}`$, today's value of one dollar paid at $`t`$, with the riskless rate $`r = 5\%`$ ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Premiums fall on the quarter-dates $`t_j = 0.25, 0.50, \ldots`$ years.
 
 A step-shaped hazard makes survival a product of flat decays ([The piecewise-flat hazard curve](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/03-piecewise-flat-hazard-curve.md)):
 
-$$S(1) = e^{-\lambda_1}, \qquad S(3) = e^{-\lambda_1 - 2\lambda_2}, \qquad S(5) = e^{-\lambda_1 - 2\lambda_2 - 2\lambda_3}.$$
+```math
+S(1) = e^{-\lambda_1}, \qquad S(3) = e^{-\lambda_1 - 2\lambda_2}, \qquad S(5) = e^{-\lambda_1 - 2\lambda_2 - 2\lambda_3}.
+```
 
-A contract of tenor $T$ has two legs ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)). The premium leg is the spread times the **risky annuity** $A(T)$, the value of one dollar a year paid quarterly while Northwind survives. The protection leg $P(T)$ is the value of the payout:
+A contract of tenor $`T`$ has two legs ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)). The premium leg is the spread times the **risky annuity** $`A(T)`$, the value of one dollar a year paid quarterly while Northwind survives. The protection leg $`P(T)`$ is the value of the payout:
 
-$$A(T) = \sum_{t_j \le T} 0.25\, D(t_j)\, S(t_j), \qquad P(T) = L \int_0^T D(t)\,\lambda(t)\,S(t)\,dt.$$
+```math
+A(T) = \sum_{t_j \le T} 0.25\, D(t_j)\, S(t_j), \qquad P(T) = L \int_0^T D(t)\,\lambda(t)\,S(t)\,dt.
+```
 
-Here $L = 1 - R$ is the loss on default, with recovery $R = 40\%$, and $\lambda(t)$ is whichever piece is in force at time $t$. A quote is fair when the legs match: $s_i\,A(T_i) = P(T_i)$.
+Here $`L = 1 - R`$ is the loss on default, with recovery $`R = 40\%`$, and $`\lambda(t)`$ is whichever piece is in force at time $`t`$. A quote is fair when the legs match: $`s_i\,A(T_i) = P(T_i)`$.
 
-The bootstrap is that match, written for one new piece. Freeze the pieces before $T_{i-1}$. Let $W_i = D(T_{i-1})\,S(T_{i-1})$ be the discounted survival at the start of the new piece, and $d_i = T_i - T_{i-1}$ its length. Then $\lambda_i$ is the one number that solves
+The bootstrap is that match, written for one new piece. Freeze the pieces before $`T_{i-1}`$. Let $`W_i = D(T_{i-1})\,S(T_{i-1})`$ be the discounted survival at the start of the new piece, and $`d_i = T_i - T_{i-1}`$ its length. Then $`\lambda_i`$ is the one number that solves
 
-$$P(T_{i-1}) + L\,W_i\,\frac{\lambda_i}{r+\lambda_i}\Big(1 - e^{-(r+\lambda_i)\,d_i}\Big) \;=\; s_i\Big(A(T_{i-1}) + W_i \sum_{T_{i-1} < t_j \le T_i} 0.25\, e^{-(r+\lambda_i)(t_j - T_{i-1})}\Big).$$
+```math
+P(T_{i-1}) + L\,W_i\,\frac{\lambda_i}{r+\lambda_i}\Big(1 - e^{-(r+\lambda_i)\,d_i}\Big) \;=\; s_i\Big(A(T_{i-1}) + W_i \sum_{T_{i-1} < t_j \le T_i} 0.25\, e^{-(r+\lambda_i)(t_j - T_{i-1})}\Big).
+```
 
 **Read it aloud:** the protection already earned before the new piece, plus the protection the new piece adds, must equal the quoted premium times all the premium-years up to the new tenor; only the new piece's hazard is free to move.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s_i$, $i$ | quoted par spread ($i$ counts the tenors) for tenor $T_i$, a decimal a year | 0.0120, 0.0200, 0.0250 | that tenor's piece rises; earlier pieces do not move |
-| $T_i$, $T$, $T_0$, $T_1$, $T_2$ | quoted tenors in years; $T$ any tenor; $T_0 = 0$ is today | 1, 3, 5 | — |
-| $\lambda_i$, $\lambda_1$, $\lambda_2$, $\lambda_3$ | flat hazard on the stretch from $T_{i-1}$ to $T_i$, a year | 0.019826, 0.040440, 0.056837 | survival falls faster on that stretch |
-| $S(t)$, $t$ | chance of no default by time $t$ (years from today) | 0.980369, 0.904198, 0.807041 at 1, 3, 5 | — |
-| $D(t)$, $r$ | discount factor $e^{-rt}$; riskless rate | $r$ = 0.05 | the pieces barely move; the legs both shrink |
-| $R$, $L$ | recovery fraction; loss $L = 1 - R$ | 0.40 and 0.60 | higher $L$ means lower pieces for the same quotes |
-| $t_j$ | quarterly premium dates | 0.25, 0.50, …, 5.00 | — |
-| $A(T)$ | risky annuity: premium-years while alive, discounted | 0.957480, 2.644421, 4.027235 | — |
-| $P(T)$ | protection leg: discounted expected payout per dollar | 0.011490, 0.052888, 0.100681 | — |
-| $W_i$, $d_i$, $W_2$, $d_2$ | discounted survival at the start of the new piece; its length | $W_2$ = 0.932556, $d_2$ = 2 | — |
-| $F$, $g$, $a$, $E$, $\tau_h$, $h$ | helpers in the Detailed proof: the leg mismatch, the new piece's protection per dollar of weight, its premium-years per dollar of weight, an exponential draw, a default time at flat hazard $h$ | — | — |
-| $s_{\min}$ | the floor: the lowest quote the new piece can match, reached at zero hazard | 215.24 bp after a 600 bp one-year quote | a quote below it has no curve |
+| $`s_i`$, $`i`$ | quoted par spread ($`i`$ counts the tenors) for tenor $`T_i`$, a decimal a year | 0.0120, 0.0200, 0.0250 | that tenor's piece rises; earlier pieces do not move |
+| $`T_i`$, $`T`$, $`T_0`$, $`T_1`$, $`T_2`$ | quoted tenors in years; $`T`$ any tenor; $`T_0 = 0`$ is today | 1, 3, 5 | — |
+| $`\lambda_i`$, $`\lambda_1`$, $`\lambda_2`$, $`\lambda_3`$ | flat hazard on the stretch from $`T_{i-1}`$ to $`T_i`$, a year | 0.019826, 0.040440, 0.056837 | survival falls faster on that stretch |
+| $`S(t)`$, $`t`$ | chance of no default by time $`t`$ (years from today) | 0.980369, 0.904198, 0.807041 at 1, 3, 5 | — |
+| $`D(t)`$, $`r`$ | discount factor $`e^{-rt}`$; riskless rate | $`r`$ = 0.05 | the pieces barely move; the legs both shrink |
+| $`R`$, $`L`$ | recovery fraction; loss $`L = 1 - R`$ | 0.40 and 0.60 | higher $`L`$ means lower pieces for the same quotes |
+| $`t_j`$ | quarterly premium dates | 0.25, 0.50, …, 5.00 | — |
+| $`A(T)`$ | risky annuity: premium-years while alive, discounted | 0.957480, 2.644421, 4.027235 | — |
+| $`P(T)`$ | protection leg: discounted expected payout per dollar | 0.011490, 0.052888, 0.100681 | — |
+| $`W_i`$, $`d_i`$, $`W_2`$, $`d_2`$ | discounted survival at the start of the new piece; its length | $`W_2`$ = 0.932556, $`d_2`$ = 2 | — |
+| $`F`$, $`g`$, $`a`$, $`E`$, $`\tau_h`$, $`h`$ | helpers in the Detailed proof: the leg mismatch, the new piece's protection per dollar of weight, its premium-years per dollar of weight, an exponential draw, a default time at flat hazard $`h`$ | — | — |
+| $`s_{\min}`$ | the floor: the lowest quote the new piece can match, reached at zero hazard | 215.24 bp after a 600 bp one-year quote | a quote below it has no curve |
 
-Inside one flat piece, discounting and survival decay at constant rates, so their product decays at the single rate $r + \lambda_i$; that gives the protection term its closed form.
+Inside one flat piece, discounting and survival decay at constant rates, so their product decays at the single rate $`r + \lambda_i`$; that gives the protection term its closed form.
 
 ### When it holds
 
-- **A known discount curve, unrelated to default.** The method takes $D(t)$ as given. If rates and default move together, the legs need a joint model and flat pieces fitted this way are biased.
-- **A known recovery.** Every piece scales roughly with $1/L$; a different recovery moves the whole curve ([Recovery assumptions](05-recovery-assumptions-and-what-they-change.md)).
+- **A known discount curve, unrelated to default.** The method takes $`D(t)`$ as given. If rates and default move together, the legs need a joint model and flat pieces fitted this way are biased.
+- **A known recovery.** Every piece scales roughly with $`1/L`$; a different recovery moves the whole curve ([Recovery assumptions](05-recovery-assumptions-and-what-they-change.md)).
 - **Quotes on one set of terms.** All three must be par spreads for contracts with the same premium dates, credit events and settlement. A quote on other terms has to be converted first, or the pieces absorb the difference.
 - **Flat pieces are a choice.** The quotes fix only the average hazard over each stretch, weighted by the legs. Beyond the last tenor they fix nothing: carrying 5.68% on gives 285.73 bp at ten years, zero hazard gives 148.27 bp.
 - **Each quote between its floor and ceiling.** Otherwise no nonnegative hazard matches it (Step 2).
@@ -93,52 +99,56 @@ Inside one flat piece, discounting and survival decay at constant rates, so thei
 
 ### Step 0: a contract only reads the hazard up to its own end date
 
-A one-year contract stops at year one. What Northwind's hazard does in year two cannot touch its legs. So the one-year quote involves $\lambda_1$ alone. The three-year quote involves $\lambda_1$ and $\lambda_2$. The five-year quote involves all three.
+A one-year contract stops at year one. What Northwind's hazard does in year two cannot touch its legs. So the one-year quote involves $`\lambda_1`$ alone. The three-year quote involves $`\lambda_1`$ and $`\lambda_2`$. The five-year quote involves all three.
 
-Each equation adds one unknown to the one before. That shape is called **triangular**, and it is solved from the top: the first equation gives $\lambda_1$, which turns the second into an equation in $\lambda_2$ alone, and so on.
+Each equation adds one unknown to the one before. That shape is called **triangular**, and it is solved from the top: the first equation gives $`\lambda_1`$, which turns the second into an equation in $`\lambda_2`$ alone, and so on.
 
 ### Step 1: split each leg at the knots, and the old pieces become fixed numbers
 
-The dates where the hazard changes, $T_1$ and $T_2$, are the **knots**. Cut both legs of the three-year contract at the one-year knot. The part before one year uses only $\lambda_1$, now known: it is $A(1)$ and $P(1)$, two numbers.
+The dates where the hazard changes, $`T_1`$ and $`T_2`$, are the **knots**. Cut both legs of the three-year contract at the one-year knot. The part before one year uses only $`\lambda_1`$, now known: it is $`A(1)`$ and $`P(1)`$, two numbers.
 
-The part after the knot uses $\lambda_2$. On that stretch, write time as $T_1 + u$. Survival keeps decaying from where it was: $S(T_1 + u) = S(T_1)\,e^{-\lambda_2 u}$. Discounting too: $D(T_1 + u) = D(T_1)\,e^{-ru}$. Their product is $W_2\,e^{-(r+\lambda_2)u}$.
+The part after the knot uses $`\lambda_2`$. On that stretch, write time as $`T_1 + u`$. Survival keeps decaying from where it was: $`S(T_1 + u) = S(T_1)\,e^{-\lambda_2 u}`$. Discounting too: $`D(T_1 + u) = D(T_1)\,e^{-ru}`$. Their product is $`W_2\,e^{-(r+\lambda_2)u}`$.
 
-Premium dates in the stretch each contribute $0.25 \times W_2\,e^{-(r+\lambda_2)u}$. The protection leg integrates $L\,\lambda_2$ times the same product:
+Premium dates in the stretch each contribute $`0.25 \times W_2\,e^{-(r+\lambda_2)u}`$. The protection leg integrates $`L\,\lambda_2`$ times the same product:
 
-$$L\,\lambda_2\,W_2 \int_0^{2} e^{-(r+\lambda_2)u}\,du = L\,W_2\,\frac{\lambda_2}{r+\lambda_2}\Big(1 - e^{-(r+\lambda_2)\cdot 2}\Big).$$
+```math
+L\,\lambda_2\,W_2 \int_0^{2} e^{-(r+\lambda_2)u}\,du = L\,W_2\,\frac{\lambda_2}{r+\lambda_2}\Big(1 - e^{-(r+\lambda_2)\cdot 2}\Big).
+```
 
-That is the equation in The formula, for $i = 2$. The five-year step is identical, with $W_3 = D(3)\,S(3)$ and the frozen totals $A(3)$ and $P(3)$.
+That is the equation in The formula, for $`i = 2`$. The five-year step is identical, with $`W_3 = D(3)\,S(3)`$ and the frozen totals $`A(3)`$ and $`P(3)`$.
 
 ### Step 2: each step has exactly one answer, when the quote is in range
 
-Hold everything but $\lambda_i$ fixed. Raise $\lambda_i$ and two things happen. The protection the new piece adds rises: default comes sooner, so the payout arrives earlier and more often inside the window. The premium-years it adds fall: survival drops, so fewer premiums are paid. The contract's fair spread, protection divided by annuity, therefore rises steadily with $\lambda_i$. A steadily rising quantity crosses any level at most once.
+Hold everything but $`\lambda_i`$ fixed. Raise $`\lambda_i`$ and two things happen. The protection the new piece adds rises: default comes sooner, so the payout arrives earlier and more often inside the window. The premium-years it adds fall: survival drops, so fewer premiums are paid. The contract's fair spread, protection divided by annuity, therefore rises steadily with $`\lambda_i`$. A steadily rising quantity crosses any level at most once.
 
-It crosses at all only between two limits. At $\lambda_i = 0$ the new piece adds premium-years and no protection, giving the lowest spread reachable, the floor:
+It crosses at all only between two limits. At $`\lambda_i = 0`$ the new piece adds premium-years and no protection, giving the lowest spread reachable, the floor:
 
-$$s_{\min} = \frac{P(T_{i-1})}{A(T_{i-1}) + W_i \sum_{T_{i-1} < t_j \le T_i} 0.25\, e^{-r(t_j - T_{i-1})}}.$$
+```math
+s_{\min} = \frac{P(T_{i-1})}{A(T_{i-1}) + W_i \sum_{T_{i-1} < t_j \le T_i} 0.25\, e^{-r(t_j - T_{i-1})}}.
+```
 
-As $\lambda_i$ grows without bound, Northwind defaults at the very start of the stretch for certain. The new premium-years vanish and the new protection approaches $L\,W_i$, so the spread approaches the ceiling $(P(T_{i-1}) + L\,W_i)/A(T_{i-1})$ without reaching it. For the first piece there are no earlier premium-years, the floor is zero and there is no ceiling.
+As $`\lambda_i`$ grows without bound, Northwind defaults at the very start of the stretch for certain. The new premium-years vanish and the new protection approaches $`L\,W_i`$, so the spread approaches the ceiling $`(P(T_{i-1}) + L\,W_i)/A(T_{i-1})`$ without reaching it. For the first piece there are no earlier premium-years, the floor is zero and there is no ceiling.
 
 So: a quote strictly between floor and ceiling has exactly one nonnegative piece. A quote at the floor has the piece zero. A quote below the floor, or at or above the ceiling, has none. Existence of the crossing is the intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)); bisection (halving a bracket that contains the root) finds it.
 
 <details>
 <summary>Detailed proof: the fair spread rises strictly with the new piece</summary>
 
-Fix the frozen totals $A(T_{i-1}) \ge 0$ and $P(T_{i-1}) \ge 0$, $W_i > 0$, $d_i > 0$, $r \ge 0$, $L > 0$ and a quote $s_i > 0$. Define $F(h) = P(T_{i-1}) + L\,W_i\,g(h) - s_i\,[A(T_{i-1}) + W_i\,a(h)]$ for $h \ge 0$, where $a(h) = \sum 0.25\, e^{-(r+h)(t_j - T_{i-1})}$ over the stretch's premium dates and $g(h) = h\int_0^{d_i} e^{-(r+h)u}\,du$.
+Fix the frozen totals $`A(T_{i-1}) \ge 0`$ and $`P(T_{i-1}) \ge 0`$, $`W_i > 0`$, $`d_i > 0`$, $`r \ge 0`$, $`L > 0`$ and a quote $`s_i > 0`$. Define $`F(h) = P(T_{i-1}) + L\,W_i\,g(h) - s_i\,[A(T_{i-1}) + W_i\,a(h)]`$ for $`h \ge 0`$, where $`a(h) = \sum 0.25\, e^{-(r+h)(t_j - T_{i-1})}`$ over the stretch's premium dates and $`g(h) = h\int_0^{d_i} e^{-(r+h)u}\,du`$.
 
-Each term of $a(h)$ falls strictly as $h$ rises, so $-s_i\,a(h)$ rises strictly. For $g$: let $E$ be a random draw from the exponential distribution with mean one, and set $\tau_h = E/h$, a default time with flat hazard $h$. Then $g(h)$ equals the expected value of $e^{-r\tau_h}$ counted only when $\tau_h \le d_i$. Raising $h$ moves every $\tau_h$ earlier; $e^{-ru}$ counted on $u \le d_i$ does not fall as $u$ moves earlier; so $g$ does not fall. Hence $F$ is continuous and strictly increasing.
+Each term of $`a(h)`$ falls strictly as $`h`$ rises, so $`-s_i\,a(h)`$ rises strictly. For $`g`$: let $`E`$ be a random draw from the exponential distribution with mean one, and set $`\tau_h = E/h`$, a default time with flat hazard $`h`$. Then $`g(h)`$ equals the expected value of $`e^{-r\tau_h}`$ counted only when $`\tau_h \le d_i`$. Raising $`h`$ moves every $`\tau_h`$ earlier; $`e^{-ru}`$ counted on $`u \le d_i`$ does not fall as $`u`$ moves earlier; so $`g`$ does not fall. Hence $`F`$ is continuous and strictly increasing.
 
-At the ends: $F(0) = P(T_{i-1}) - s_i[A(T_{i-1}) + W_i\,a(0)]$, which is negative exactly when $s_i > s_{\min}$. As $h$ grows, $a(h) \to 0$ and $g(h) \to 1$, so $F \to P(T_{i-1}) + L\,W_i - s_i\,A(T_{i-1})$, positive exactly when $s_i$ is below the ceiling. A continuous strictly increasing function that starts negative and ends positive crosses zero exactly once. If $F(0) = 0$ the root is $h = 0$. If $F(0) > 0$, or the limit is not positive, $F$ has no zero on $h \ge 0$. The fair spread $P/A$ has the same sign pattern as $F$ divided by the positive annuity, so it rises through $s_i$ at the same point.
+At the ends: $`F(0) = P(T_{i-1}) - s_i[A(T_{i-1}) + W_i\,a(0)]`$, which is negative exactly when $`s_i > s_{\min}`$. As $`h`$ grows, $`a(h) \to 0`$ and $`g(h) \to 1`$, so $`F \to P(T_{i-1}) + L\,W_i - s_i\,A(T_{i-1})`$, positive exactly when $`s_i`$ is below the ceiling. A continuous strictly increasing function that starts negative and ends positive crosses zero exactly once. If $`F(0) = 0`$ the root is $`h = 0`$. If $`F(0) > 0`$, or the limit is not positive, $`F`$ has no zero on $`h \ge 0`$. The fair spread $`P/A`$ has the same sign pattern as $`F`$ divided by the positive annuity, so it rises through $`s_i`$ at the same point.
 
 </details>
 
 ### Step 3: freezing is why every quote still reprices
 
-When $\lambda_3$ is chosen, the one-year and three-year contracts do not read it (Step 0). Their legs are the same numbers they were when their own pieces were solved, so they still match. By induction, after the last step all three quotes match at once. That check is the **round trip**: rebuild the survival curve from the pieces, price each quoted tenor from scratch, and get the quotes back. The code does it with a different integrator from the one that fitted the pieces, and gets 120, 200 and 250 bp to six decimals.
+When $`\lambda_3`$ is chosen, the one-year and three-year contracts do not read it (Step 0). Their legs are the same numbers they were when their own pieces were solved, so they still match. By induction, after the last step all three quotes match at once. That check is the **round trip**: rebuild the survival curve from the pieces, price each quoted tenor from scratch, and get the quotes back. The code does it with a different integrator from the one that fitted the pieces, and gets 120, 200 and 250 bp to six decimals.
 
 ### Step 4: rebuild survival, then price what nobody quotes
 
-The pieces give $S(t)$ at every date: $S(2) = e^{-\lambda_1 - \lambda_2} = 0.941514$. A two-year contract uses piece one for its first year and piece two for its second. Its fair spread is $P(2)/A(2)$, which comes to 180.12 bp.
+The pieces give $`S(t)`$ at every date: $`S(2) = e^{-\lambda_1 - \lambda_2} = 0.941514`$. A two-year contract uses piece one for its first year and piece two for its second. Its fair spread is $`P(2)/A(2)`$, which comes to 180.12 bp.
 
 It is above the 160 bp straight line because year two runs at the second piece, 4.04%. That high piece is exactly what the three-year quote needed to lift its average from 120 to 200 bp. The straight line averages the averages; the curve prices year two at year two's own hazard. The second picture shows the gap between the hazard in each year and the average the spreads imply.
 
@@ -156,7 +166,7 @@ Orange: the bootstrapped hazard in force during each year, a staircase. Green: t
 
 Ten years runs past the last quote, so a tail must be assumed. This card carries 5.68% on, giving 285.73 bp; any other tail leaves the three quotes untouched and changes the ten-year price.
 
-A second route solves all three equations at once by Newton's method (repeatedly replacing the equations by their straight-line approximations and solving those), starting from the triangle guesses $s_i/L$. It lands on the same three pieces. Its table of sensitivities (the Jacobian: how much each quote's fair spread moves per unit of each piece) comes out with zeros above the diagonal: quote $i$ has no sensitivity to later pieces. That is Step 0, measured.
+A second route solves all three equations at once by Newton's method (repeatedly replacing the equations by their straight-line approximations and solving those), starting from the triangle guesses $`s_i/L`$. It lands on the same three pieces. Its table of sensitivities (the Jacobian: how much each quote's fair spread moves per unit of each piece) comes out with zeros above the diagonal: quote $`i`$ has no sensitivity to later pieces. That is Step 0, measured.
 
 ---
 
@@ -165,20 +175,20 @@ A second route solves all three equations at once by Newton's method (repeatedly
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | first guess | 120 bp ÷ 0.60 | 0.020000 |
-| piece 1 | solve $s_1 A(1) = P(1)$ by bisection | $\lambda_1$ = 0.019826 |
-| legs to 1 year | $A(1)$ = 0.957480; 0.0120 × 0.957480 | $P(1)$ = 0.011490 |
-| survival at 1 | $e^{-0.019826}$ | 0.980369 |
-| weight for piece 2 | $e^{-0.05}$ × 0.980369 | $W_2$ = 0.932556 |
-| piece 2 | freeze $A(1)$, $P(1)$; solve the formula for $i = 2$ | $\lambda_2$ = 0.040440 |
-| check 3 years | 0.0200 × $A(3)$ = 0.0200 × 2.644421 | 0.052888 = $P(3)$ |
-| survival at 3 | $e^{-0.019826 - 2 \times 0.040440}$ | 0.904198 |
-| piece 3 | freeze $A(3)$, $P(3)$; solve for $i = 3$ | $\lambda_3$ = 0.056837 |
-| check 5 years | 0.0250 × 4.027235 | 0.100681 = $P(5)$ |
-| survival at 5 | $e^{-0.019826 - 2 \times 0.040440 - 2 \times 0.056837}$ | 0.807041 |
-| 2 years, unquoted | $P(2)/A(2)$ | **180.12 bp** |
-| 10 years, tail at $\lambda_3$ | $P(10)/A(10)$ | **285.73 bp** |
+| piece 1 | solve $`s_1 A(1) = P(1)`$ by bisection | $`\lambda_1`$ = 0.019826 |
+| legs to 1 year | $`A(1)`$ = 0.957480; 0.0120 × 0.957480 | $`P(1)`$ = 0.011490 |
+| survival at 1 | $`e^{-0.019826}`$ | 0.980369 |
+| weight for piece 2 | $`e^{-0.05}`$ × 0.980369 | $`W_2`$ = 0.932556 |
+| piece 2 | freeze $`A(1)`$, $`P(1)`$; solve the formula for $`i = 2`$ | $`\lambda_2`$ = 0.040440 |
+| check 3 years | 0.0200 × $`A(3)`$ = 0.0200 × 2.644421 | 0.052888 = $`P(3)`$ |
+| survival at 3 | $`e^{-0.019826 - 2 \times 0.040440}`$ | 0.904198 |
+| piece 3 | freeze $`A(3)`$, $`P(3)`$; solve for $`i = 3`$ | $`\lambda_3`$ = 0.056837 |
+| check 5 years | 0.0250 × 4.027235 | 0.100681 = $`P(5)`$ |
+| survival at 5 | $`e^{-0.019826 - 2 \times 0.040440 - 2 \times 0.056837}`$ | 0.807041 |
+| 2 years, unquoted | $`P(2)/A(2)`$ | **180.12 bp** |
+| 10 years, tail at $`\lambda_3`$ | $`P(10)/A(10)`$ | **285.73 bp** |
 
-The first piece sits just under the triangle's 2%: premiums arrive at quarter-ends, a little later than the protection they pay for, so the fair spread runs slightly above $L\lambda$ and the fitted hazard slightly below $s/L$. The same legs price a flat 2% hazard at 121.06 bp over five years, the shelf's Northwind contract ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)).
+The first piece sits just under the triangle's 2%: premiums arrive at quarter-ends, a little later than the protection they pay for, so the fair spread runs slightly above $`L\lambda`$ and the fitted hazard slightly below $`s/L`$. The same legs price a flat 2% hazard at 121.06 bp over five years, the shelf's Northwind contract ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)).
 
 In the world: two years of Northwind protection is worth about 180 bp a year; selling it at 160 gives value away on every dollar covered.
 
@@ -187,7 +197,7 @@ In the world: two years of Northwind protection is worth about 180 bp a year; se
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | straight line between quotes for 2 years | 160.00 bp, not 180.12 | spreads are averages; averaging them again ignores that year two carries the higher piece |
-| triangle $s_i/L$ used as the pieces (2.00%, 3.33%, 4.17%) | 3 years reprices at 172.90 bp, 5 years at 200.83 | each $s_i/L$ is an average over the whole tenor, not the rate on its own stretch |
+| triangle $`s_i/L`$ used as the pieces (2.00%, 3.33%, 4.17%) | 3 years reprices at 172.90 bp, 5 years at 200.83 | each $`s_i/L`$ is an average over the whole tenor, not the rate on its own stretch |
 | each tenor's own flat hazard as its piece (1.98%, 3.30%, 4.12%) | 3 years at 171.18 bp, 5 years at 198.72 | the same error by a better road: a flat fit to the whole tenor is still an average |
 | no defaults after 5 years | 10 years at 148.27 bp, not 285.73 | the quotes say nothing past 5 years; the tail is an assumption that must be stated |
 
@@ -941,7 +951,7 @@ example : (1 : ℚ) - 40 / 100 = 60 / 100 := by norm_num
 > [!warning]
 > **Reading the spread curve as if it were the hazard curve.** A spread is an average over its whole tenor. Interpolating spreads prices year two at the average of years zero to three, which gives 160 bp instead of 180.12. The hazard in year two is 4.04%, twice the first year's; the spreads rise gently only because they carry the cheap first year with them.
 >
-> - **Using $s/L$ tenor by tenor as the pieces.** The credit triangle gives averages too: that curve reprices the five-year quote at 200.83 bp, not 250.
+> - **Using $`s/L`$ tenor by tenor as the pieces.** The credit triangle gives averages too: that curve reprices the five-year quote at 200.83 bp, not 250.
 > - **Refitting old pieces when a new quote arrives.** The one-year contract then no longer reprices; the whole point of the order is that each quote is matched once and stays matched.
 > - **Clamping a negative piece to zero and carrying on.** The three-year contract then prices at the floor, 215.24 bp, not the 200 bp quoted. The curve silently stops matching the market; flag the quotes instead.
 > - **Mixing terms.** A quote on a different recovery, coupon or set of credit events changes the legs; fed in unconverted, its difference lands in one piece and looks like a jump in default risk.

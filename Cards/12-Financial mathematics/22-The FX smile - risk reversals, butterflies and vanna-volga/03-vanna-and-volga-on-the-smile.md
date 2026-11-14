@@ -39,38 +39,44 @@ Orange: vega, a low hump that peaks near the forward. Green: vanna, negative for
 
 ## The formula
 
-$$\mathrm{Va} = \frac{\partial \mathcal{V}}{\partial S} = -\,e^{-r_f T}\,\varphi(d_1)\,\frac{d_2}{\sigma}, \qquad \mathrm{Vo} = \frac{\partial \mathcal{V}}{\partial \sigma} = \mathcal{V}\,\frac{d_1 d_2}{\sigma}, \qquad \mathcal{V} = S\,e^{-r_f T}\varphi(d_1)\sqrt{T}$$
+```math
+\mathrm{Va} = \frac{\partial \mathcal{V}}{\partial S} = -\,e^{-r_f T}\,\varphi(d_1)\,\frac{d_2}{\sigma}, \qquad \mathrm{Vo} = \frac{\partial \mathcal{V}}{\partial \sigma} = \mathcal{V}\,\frac{d_1 d_2}{\sigma}, \qquad \mathcal{V} = S\,e^{-r_f T}\varphi(d_1)\sqrt{T}
+```
 
 **Read it aloud:** vanna is minus the discounted bell-curve height at d1, times d2, per unit of vol; volga is vega times d1 times d2, per unit of vol.
 
-The symbol $\partial$ means a partial derivative: the slope in one input with every other input held fixed ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Both formulas hold for a call and for a put at the same strike.
+The symbol $`\partial`$ means a partial derivative: the slope in one input with every other input held fixed ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Both formulas hold for a call and for a put at the same strike.
 
 | Symbol | Plain meaning | In our example | Push it up and vanna, volga… |
 | --- | --- | --- | --- |
-| $S$, $F$ | spot, dollars per euro today; the forward $F = S e^{(r_d - r_f)T}$ | 1.10; 1.122221 | spot up at fixed strike: $d_1$, $d_2$ rise, vanna turns more negative |
-| $K$ | the strike, dollars per euro | 1.10 in the worked example | a higher strike lowers $d_1$, $d_2$: vanna rises through zero |
-| $K_{25p}$, $K_{\text{ATM}}$, $K_{25c}$ | the three pillar strikes: 25-delta put, delta-neutral straddle, 25-delta call | 1.052466, 1.127847, 1.201425 | — |
-| $r_d$, $r_f$, $e^{-r_f T}$, $T$ | dollar rate, euro rate, continuously compounded; the euro discount factor; years to expiry | 5%, 3%; 0.970446; 1 | — |
-| $\sigma$, $\sigma_{25p}$, $\sigma_{25c}$ | the flat vol all Greeks are taken at; the wing vols the market quotes | 10.00%; 10.75%, 9.75% | at strike 1.10, vol 15%: vanna −0.147327 |
-| $d_1$, $d_2$ | distances from strike to forward in units of $\sigma\sqrt{T}$, with the half-variance shift; $d_2 = d_1 - \sigma\sqrt{T}$ | 0.25, 0.15 | — |
-| $\varphi$, $N$ | the bell curve's height $\varphi(x)$, and its area to the left, $N(x)$ | $\varphi(0.25)$ = 0.386668 | — |
-| $\mathcal{V}$ | vega: price change per 1.00 of vol, dollars per euro | 0.412764 | — |
-| $\mathrm{Va}$ | vanna: vega's change per 1.00 of spot; equally, delta's change per 1.00 of vol | −0.562861 | — |
-| $\mathrm{Vo}$ | volga: vega's change per 1.00 of vol | 0.154787 | at strike 1.30: 3.353794 |
-| $a$, $w$, $\Delta$ | the 25-delta distance, $e^{-r_f T}N(-a) = 0.25$; straddles sold per strangle to cancel vega; delta, the euro hedge per euro of option | 0.650720; 0.803095 | — |
-| $C$, $P$, $\partial$, $dS$, $d\sigma$ | a euro call and a euro put, priced by Garman-Kohlhagen; the partial-derivative sign; a small move in spot, in vol | — | — |
+| $`S`$, $`F`$ | spot, dollars per euro today; the forward $`F = S e^{(r_d - r_f)T}`$ | 1.10; 1.122221 | spot up at fixed strike: $`d_1`$, $`d_2`$ rise, vanna turns more negative |
+| $`K`$ | the strike, dollars per euro | 1.10 in the worked example | a higher strike lowers $`d_1`$, $`d_2`$: vanna rises through zero |
+| $`K_{25p}`$, $`K_{\text{ATM}}`$, $`K_{25c}`$ | the three pillar strikes: 25-delta put, delta-neutral straddle, 25-delta call | 1.052466, 1.127847, 1.201425 | — |
+| $`r_d`$, $`r_f`$, $`e^{-r_f T}`$, $`T`$ | dollar rate, euro rate, continuously compounded; the euro discount factor; years to expiry | 5%, 3%; 0.970446; 1 | — |
+| $`\sigma`$, $`\sigma_{25p}`$, $`\sigma_{25c}`$ | the flat vol all Greeks are taken at; the wing vols the market quotes | 10.00%; 10.75%, 9.75% | at strike 1.10, vol 15%: vanna −0.147327 |
+| $`d_1`$, $`d_2`$ | distances from strike to forward in units of $`\sigma\sqrt{T}`$, with the half-variance shift; $`d_2 = d_1 - \sigma\sqrt{T}`$ | 0.25, 0.15 | — |
+| $`\varphi`$, $`N`$ | the bell curve's height $`\varphi(x)`$, and its area to the left, $`N(x)`$ | $`\varphi(0.25)`$ = 0.386668 | — |
+| $`\mathcal{V}`$ | vega: price change per 1.00 of vol, dollars per euro | 0.412764 | — |
+| $`\mathrm{Va}`$ | vanna: vega's change per 1.00 of spot; equally, delta's change per 1.00 of vol | −0.562861 | — |
+| $`\mathrm{Vo}`$ | volga: vega's change per 1.00 of vol | 0.154787 | at strike 1.30: 3.353794 |
+| $`a`$, $`w`$, $`\Delta`$ | the 25-delta distance, $`e^{-r_f T}N(-a) = 0.25`$; straddles sold per strangle to cancel vega; delta, the euro hedge per euro of option | 0.650720; 0.803095 | — |
+| $`C`$, $`P`$, $`\partial`$, $`dS`$, $`d\sigma`$ | a euro call and a euro put, priced by Garman-Kohlhagen; the partial-derivative sign; a small move in spot, in vol | — | — |
 
 The helper distances, as on [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md):
 
-$$d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: $d_1$ counts steps of size $\sigma\sqrt{T}$ from strike to forward, plus half a step; $d_2$ is the same count minus half a step. The signs of vanna and volga come from these two numbers alone.
+In words: $`d_1`$ counts steps of size $`\sigma\sqrt{T}`$ from strike to forward, plus half a step; $`d_2`$ is the same count minus half a step. The signs of vanna and volga come from these two numbers alone.
 
 The desk trades, written as combinations of options, all Greeks taken at the flat vol:
 
-$$\text{straddle} = C(K_{\text{ATM}}) + P(K_{\text{ATM}}), \quad \text{RR} = C(K_{25c}) - P(K_{25p}), \quad \text{BF} = C(K_{25c}) + P(K_{25p}) - w\,\text{straddle}$$
+```math
+\text{straddle} = C(K_{\text{ATM}}) + P(K_{\text{ATM}}), \quad \text{RR} = C(K_{25c}) - P(K_{25p}), \quad \text{BF} = C(K_{25c}) + P(K_{25p}) - w\,\text{straddle}
+```
 
-The risk reversal buys the call wing and sells the put wing. The butterfly buys the strangle (both wings) and sells $w$ straddles, with $w$ chosen so the butterfly carries no vega.
+The risk reversal buys the call wing and sells the put wing. The butterfly buys the strangle (both wings) and sells $`w`$ straddles, with $`w`$ chosen so the butterfly carries no vega.
 
 **Conventions verified 2026-09-27:** spot delta with the premium not adjusted, ATM as the delta-neutral straddle, risk reversal as call vol minus put vol, butterfly as a smile strangle. These are the house conventions of [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md); the checks rebuild the three pillar strikes from the quotes to six decimals. The broker's butterfly quote is converted on [The broker butterfly](02-market-strangle-and-smile-strangle.md).
 
@@ -79,7 +85,7 @@ The risk reversal buys the call wing and sells the put wing. The butterfly buys 
 - **Garman-Kohlhagen at one vol.** The formulas are slopes of the model price. On a smile each option has its own implied vol, and the Greeks change with the vol chosen: the risk reversal's vega is 0.013526 at the flat 10 percent and exactly zero with each leg at its own vol.
 - **Strike held fixed.** Vanna moves spot and keeps the strike. If the smile is marked by delta instead of strike, spot moving also moves each option's vol, and the true hedge differs; that is [Hedging with the smile](06-smile-adjusted-delta-and-sticky-delta.md).
 - **Small moves.** Vanna and volga are second-order terms of a Taylor expansion (a polynomial stand-in for the price near today's inputs). For a large vol jump the third-order terms matter and the second-order estimate drifts off by roughly those terms.
-- **Away from expiry.** As $T$ shrinks, $\sigma\sqrt{T}$ shrinks, $d_1$ and $d_2$ blow up away from the strike and pile together at it; near expiry both Greeks spike at the strike and vanish elsewhere.
+- **Away from expiry.** As $`T`$ shrinks, $`\sigma\sqrt{T}`$ shrinks, $`d_1`$ and $`d_2`$ blow up away from the strike and pile together at it; near expiry both Greeks spike at the strike and vanish elsewhere.
 - **The house delta convention.** The trade Greeks depend on where the 25-delta strikes sit. A premium-adjusted or forward delta moves the strikes and every trade number with them.
 
 ---
@@ -88,127 +94,133 @@ The risk reversal buys the call wing and sells the put wing. The butterfly buys 
 
 ### Step 0: vega is a function too, and it has slopes
 
-The option's price depends on spot $S$ and vol $\sigma$ (and on the strike, rates and time, which stay fixed here). Vega is the slope of the price in $\sigma$. That slope is itself a function of $S$ and $\sigma$, so it has two slopes of its own: one in $S$ (vanna) and one in $\sigma$ (volga). Nothing more is needed than the chain rule and three small facts.
+The option's price depends on spot $`S`$ and vol $`\sigma`$ (and on the strike, rates and time, which stay fixed here). Vega is the slope of the price in $`\sigma`$. That slope is itself a function of $`S`$ and $`\sigma`$, so it has two slopes of its own: one in $`S`$ (vanna) and one in $`\sigma`$ (volga). Nothing more is needed than the chain rule and three small facts.
 
-These are exactly the terms a flat-vol hedge leaves open. Expand a price change to second order in a spot move $dS$ and a vol move $d\sigma$: the three terms with $d\sigma$ in them are $\mathcal{V}\,d\sigma$, $\mathrm{Va}\,dS\,d\sigma$ and $\tfrac12\mathrm{Vo}\,d\sigma^2$. A model that believes vol never moves prices none of them. The same expansion drives [Vanna-volga pricing](04-vanna-volga-pricing.md); this card computes the three numbers it needs.
+These are exactly the terms a flat-vol hedge leaves open. Expand a price change to second order in a spot move $`dS`$ and a vol move $`d\sigma`$: the three terms with $`d\sigma`$ in them are $`\mathcal{V}\,d\sigma`$, $`\mathrm{Va}\,dS\,d\sigma`$ and $`\tfrac12\mathrm{Vo}\,d\sigma^2`$. A model that believes vol never moves prices none of them. The same expansion drives [Vanna-volga pricing](04-vanna-volga-pricing.md); this card computes the three numbers it needs.
 
 ### Step 1: three facts to differentiate with
 
-- **The bell curve's slope.** $\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}$, so its slope is $\varphi'(x) = -x\,\varphi(x)$. The curve falls on the right of zero and rises on the left.
-- **$d_1$ against spot.** Only $\ln S$ contains $S$, and the slope of $\ln S$ is $1/S$. So $\partial d_1/\partial S = 1/(S\sigma\sqrt{T})$.
-- **$d_1$ against vol.** Write $d_1 = \ln(F/K)/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}$. Its slope in $\sigma$ is $-\ln(F/K)/(\sigma^2\sqrt{T}) + \tfrac12\sqrt{T}$, which is $-d_2/\sigma$. Check: $d_2/\sigma = \ln(F/K)/(\sigma^2\sqrt{T}) - \tfrac12\sqrt{T}$.
+- **The bell curve's slope.** $`\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}`$, so its slope is $`\varphi'(x) = -x\,\varphi(x)`$. The curve falls on the right of zero and rises on the left.
+- **$`d_1`$ against spot.** Only $`\ln S`$ contains $`S`$, and the slope of $`\ln S`$ is $`1/S`$. So $`\partial d_1/\partial S = 1/(S\sigma\sqrt{T})`$.
+- **$`d_1`$ against vol.** Write $`d_1 = \ln(F/K)/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}`$. Its slope in $`\sigma`$ is $`-\ln(F/K)/(\sigma^2\sqrt{T}) + \tfrac12\sqrt{T}`$, which is $`-d_2/\sigma`$. Check: $`d_2/\sigma = \ln(F/K)/(\sigma^2\sqrt{T}) - \tfrac12\sqrt{T}`$.
 
 ### Step 2: vanna, the slope of vega in spot
 
-Vega is $S\,e^{-r_f T}\varphi(d_1)\sqrt{T}$. Spot appears twice: in front, and inside $d_1$. The product rule takes the slope of each in turn:
+Vega is $`S\,e^{-r_f T}\varphi(d_1)\sqrt{T}`$. Spot appears twice: in front, and inside $`d_1`$. The product rule takes the slope of each in turn:
 
-$$\frac{\partial \mathcal{V}}{\partial S} = e^{-r_f T}\sqrt{T}\Big[\varphi(d_1) + S\,\varphi'(d_1)\frac{1}{S\sigma\sqrt{T}}\Big] = e^{-r_f T}\sqrt{T}\,\varphi(d_1)\Big[1 - \frac{d_1}{\sigma\sqrt{T}}\Big]$$
+```math
+\frac{\partial \mathcal{V}}{\partial S} = e^{-r_f T}\sqrt{T}\Big[\varphi(d_1) + S\,\varphi'(d_1)\frac{1}{S\sigma\sqrt{T}}\Big] = e^{-r_f T}\sqrt{T}\,\varphi(d_1)\Big[1 - \frac{d_1}{\sigma\sqrt{T}}\Big]
+```
 
-The bracket is $(\sigma\sqrt{T} - d_1)/(\sigma\sqrt{T}) = -d_2/(\sigma\sqrt{T})$. The $\sqrt{T}$ cancels:
+The bracket is $`(\sigma\sqrt{T} - d_1)/(\sigma\sqrt{T}) = -d_2/(\sigma\sqrt{T})`$. The $`\sqrt{T}`$ cancels:
 
-$$\mathrm{Va} = -\,e^{-r_f T}\varphi(d_1)\,\frac{d_2}{\sigma}$$
+```math
+\mathrm{Va} = -\,e^{-r_f T}\varphi(d_1)\,\frac{d_2}{\sigma}
+```
 
-Everything in front of $d_2$ is positive. **Vanna has the sign of $-d_2$.**
+Everything in front of $`d_2`$ is positive. **Vanna has the sign of $`-d_2`$.**
 
 ### Step 3: volga, the slope of vega in vol
 
-Now only $d_1$ contains $\sigma$ (the front factor $S\,e^{-r_f T}\sqrt{T}$ does not). One chain rule:
+Now only $`d_1`$ contains $`\sigma`$ (the front factor $`S\,e^{-r_f T}\sqrt{T}`$ does not). One chain rule:
 
-$$\frac{\partial \mathcal{V}}{\partial \sigma} = S\,e^{-r_f T}\sqrt{T}\,\varphi'(d_1)\,\frac{\partial d_1}{\partial \sigma} = S\,e^{-r_f T}\sqrt{T}\,\big(-d_1\varphi(d_1)\big)\Big(-\frac{d_2}{\sigma}\Big) = \mathcal{V}\,\frac{d_1 d_2}{\sigma}$$
+```math
+\frac{\partial \mathcal{V}}{\partial \sigma} = S\,e^{-r_f T}\sqrt{T}\,\varphi'(d_1)\,\frac{\partial d_1}{\partial \sigma} = S\,e^{-r_f T}\sqrt{T}\,\big(-d_1\varphi(d_1)\big)\Big(-\frac{d_2}{\sigma}\Big) = \mathcal{V}\,\frac{d_1 d_2}{\sigma}
+```
 
-Vega is positive. **Volga has the sign of $d_1 d_2$.**
+Vega is positive. **Volga has the sign of $`d_1 d_2`$.**
 
 ### Step 4: a call and a put share all three
 
-Put-call parity says $C - P = S e^{-r_f T} - K e^{-r_d T}$. The right-hand side has no $\sigma$ in it. So its slope in $\sigma$ is zero, and every slope of that slope is zero too: the call and put at the same strike have the same vega, the same vanna and the same volga. The checks confirm it by bumping the put's price on its own: −0.562861 and 0.154787, the call's values. This is why a straddle's Greeks are twice the call's, and why a risk reversal's are "call wing minus put wing" with no sign fuss.
+Put-call parity says $`C - P = S e^{-r_f T} - K e^{-r_d T}`$. The right-hand side has no $`\sigma`$ in it. So its slope in $`\sigma`$ is zero, and every slope of that slope is zero too: the call and put at the same strike have the same vega, the same vanna and the same volga. The checks confirm it by bumping the put's price on its own: −0.562861 and 0.154787, the call's values. This is why a straddle's Greeks are twice the call's, and why a risk reversal's are "call wing minus put wing" with no sign fuss.
 
 ### Step 5: the signs, strike by strike
 
-Both $d_1$ and $d_2$ fall as the strike rises. $d_2$ crosses zero at $K = F e^{-\sigma^2 T/2}$, which is 1.116624. $d_1$ crosses zero at $K = F e^{\sigma^2 T/2}$, which is 1.127847, the delta-neutral ATM strike. That splits the strikes into three bands:
+Both $`d_1`$ and $`d_2`$ fall as the strike rises. $`d_2`$ crosses zero at $`K = F e^{-\sigma^2 T/2}`$, which is 1.116624. $`d_1`$ crosses zero at $`K = F e^{\sigma^2 T/2}`$, which is 1.127847, the delta-neutral ATM strike. That splits the strikes into three bands:
 
-| Strike band | $d_1$, $d_2$ | Vanna | Volga |
+| Strike band | $`d_1`$, $`d_2`$ | Vanna | Volga |
 | --- | --- | --- | --- |
 | below 1.116624 (low strikes, the put wing) | both positive | negative | positive |
-| 1.116624 to 1.127847 (a sliver around the forward) | $d_1$ positive, $d_2$ negative | positive | negative, and tiny: −0.010633 at the forward |
+| 1.116624 to 1.127847 (a sliver around the forward) | $`d_1`$ positive, $`d_2`$ negative | positive | negative, and tiny: −0.010633 at the forward |
 | above 1.127847 (the call wing) | both negative | positive | positive |
 
-Volga is zero at both ends of the sliver, so it is zero at the delta-neutral strike. Vanna is zero only at the lower end, where $d_2 = 0$.
+Volga is zero at both ends of the sliver, so it is zero at the delta-neutral strike. Vanna is zero only at the lower end, where $`d_2 = 0`$.
 
-In words: as a function of spot, vega peaks where $d_2 = 0$. For a strike below 1.116624, spot is already past that peak, so a rising euro lowers vega; for a strike above it, a rising euro climbs toward the peak, so vega rises. Volga is positive in both wings because extra vol is what brings a far option into play. At the money vega already sits on its peak, and more vol barely changes it.
+In words: as a function of spot, vega peaks where $`d_2 = 0`$. For a strike below 1.116624, spot is already past that peak, so a rising euro lowers vega; for a strike above it, a rising euro climbs toward the peak, so vega rises. Volga is positive in both wings because extra vol is what brings a far option into play. At the money vega already sits on its peak, and more vol barely changes it.
 
 ### Step 6: the three trades, when the wings are symmetric
 
-Take the clean case first. Suppose every leg is at one vol $\sigma$, and the 25-delta wings sit symmetric in $d_1$: the call wing at $d_1 = -a$, the put wing at $d_1 = +a$, where $e^{-r_f T}N(-a) = 0.25$ gives $a$ = 0.650720. The ATM strike has $d_1 = 0$. Plug into Steps 2 and 3:
+Take the clean case first. Suppose every leg is at one vol $`\sigma`$, and the 25-delta wings sit symmetric in $`d_1`$: the call wing at $`d_1 = -a`$, the put wing at $`d_1 = +a`$, where $`e^{-r_f T}N(-a) = 0.25`$ gives $`a`$ = 0.650720. The ATM strike has $`d_1 = 0`$. Plug into Steps 2 and 3:
 
 | Trade | Vega | Vanna | Volga |
 | --- | --- | --- | --- |
-| ATM straddle | $2\mathcal{V}_0$ | $\mathcal{V}_{\text{straddle}}/S$ | 0 |
-| risk reversal | 0 | $2e^{-r_f T}\varphi(a)\,a/\sigma$ | $2\mathcal{V}_a\,a\sqrt{T}$ |
-| vega-neutral butterfly | 0 | 0 | $2\mathcal{V}_a\,a^2/\sigma$ |
+| ATM straddle | $`2\mathcal{V}_0`$ | $`\mathcal{V}_{\text{straddle}}/S`$ | 0 |
+| risk reversal | 0 | $`2e^{-r_f T}\varphi(a)\,a/\sigma`$ | $`2\mathcal{V}_a\,a\sqrt{T}`$ |
+| vega-neutral butterfly | 0 | 0 | $`2\mathcal{V}_a\,a^2/\sigma`$ |
 
-Here $\mathcal{V}_0$ is one ATM option's vega and $\mathcal{V}_a$ one wing option's. On the house numbers the risk reversal's vanna is 4.077156 and its volga 0.448487; the butterfly's volga is 2.918395 with vega and vanna exactly zero.
+Here $`\mathcal{V}_0`$ is one ATM option's vega and $`\mathcal{V}_a`$ one wing option's. On the house numbers the risk reversal's vanna is 4.077156 and its volga 0.448487; the butterfly's volga is 2.918395 with vega and vanna exactly zero.
 
-So in the symmetric case the butterfly is a pure volga trade. The risk reversal has no vega and carries a volga only $\sigma\sqrt{T}/a$ times the butterfly's.
+So in the symmetric case the butterfly is a pure volga trade. The risk reversal has no vega and carries a volga only $`\sigma\sqrt{T}/a`$ times the butterfly's.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Straddle.** At $d_1 = 0$, $d_2 = -\sigma\sqrt{T}$. Volga is $\mathcal{V}\,d_1 d_2/\sigma = 0$ for each leg. Vanna per leg is $-e^{-r_f T}\varphi(0)(-\sigma\sqrt{T})/\sigma = e^{-r_f T}\varphi(0)\sqrt{T}$, which is the leg's vega divided by $S$. Two legs double both.
+**Straddle.** At $`d_1 = 0`$, $`d_2 = -\sigma\sqrt{T}`$. Volga is $`\mathcal{V}\,d_1 d_2/\sigma = 0`$ for each leg. Vanna per leg is $`-e^{-r_f T}\varphi(0)(-\sigma\sqrt{T})/\sigma = e^{-r_f T}\varphi(0)\sqrt{T}`$, which is the leg's vega divided by $`S`$. Two legs double both.
 
-**Wing legs.** The two wing options share $\varphi(\pm a) = \varphi(a)$, so they share vega $\mathcal{V}_a$. Call wing, $d_1 = -a$, $d_2 = -a - \sigma\sqrt{T}$: vanna $e^{-r_f T}\varphi(a)(a + \sigma\sqrt{T})/\sigma$, volga $\mathcal{V}_a\,a(a + \sigma\sqrt{T})/\sigma$. Put wing, $d_1 = a$, $d_2 = a - \sigma\sqrt{T}$: vanna $-e^{-r_f T}\varphi(a)(a - \sigma\sqrt{T})/\sigma$, volga $\mathcal{V}_a\,a(a - \sigma\sqrt{T})/\sigma$.
+**Wing legs.** The two wing options share $`\varphi(\pm a) = \varphi(a)`$, so they share vega $`\mathcal{V}_a`$. Call wing, $`d_1 = -a`$, $`d_2 = -a - \sigma\sqrt{T}`$: vanna $`e^{-r_f T}\varphi(a)(a + \sigma\sqrt{T})/\sigma`$, volga $`\mathcal{V}_a\,a(a + \sigma\sqrt{T})/\sigma`$. Put wing, $`d_1 = a`$, $`d_2 = a - \sigma\sqrt{T}`$: vanna $`-e^{-r_f T}\varphi(a)(a - \sigma\sqrt{T})/\sigma`$, volga $`\mathcal{V}_a\,a(a - \sigma\sqrt{T})/\sigma`$.
 
-**Risk reversal = call wing minus put wing.** Vega: $\mathcal{V}_a - \mathcal{V}_a = 0$. Vanna: $e^{-r_f T}\varphi(a)\big[(a + \sigma\sqrt{T}) + (a - \sigma\sqrt{T})\big]/\sigma = 2e^{-r_f T}\varphi(a)\,a/\sigma$. Volga: $\mathcal{V}_a\,a\big[(a + \sigma\sqrt{T}) - (a - \sigma\sqrt{T})\big]/\sigma = 2\mathcal{V}_a\,a\sqrt{T}$.
+**Risk reversal = call wing minus put wing.** Vega: $`\mathcal{V}_a - \mathcal{V}_a = 0`$. Vanna: $`e^{-r_f T}\varphi(a)\big[(a + \sigma\sqrt{T}) + (a - \sigma\sqrt{T})\big]/\sigma = 2e^{-r_f T}\varphi(a)\,a/\sigma`$. Volga: $`\mathcal{V}_a\,a\big[(a + \sigma\sqrt{T}) - (a - \sigma\sqrt{T})\big]/\sigma = 2\mathcal{V}_a\,a\sqrt{T}`$.
 
-**Strangle = call wing plus put wing.** Vega $2\mathcal{V}_a$. Vanna: $e^{-r_f T}\varphi(a)\big[(a + \sigma\sqrt{T}) - (a - \sigma\sqrt{T})\big]/\sigma = 2e^{-r_f T}\varphi(a)\sqrt{T} = 2\mathcal{V}_a/S$. Volga: $\mathcal{V}_a\,a\big[(a + \sigma\sqrt{T}) + (a - \sigma\sqrt{T})\big]/\sigma = 2\mathcal{V}_a a^2/\sigma$.
+**Strangle = call wing plus put wing.** Vega $`2\mathcal{V}_a`$. Vanna: $`e^{-r_f T}\varphi(a)\big[(a + \sigma\sqrt{T}) - (a - \sigma\sqrt{T})\big]/\sigma = 2e^{-r_f T}\varphi(a)\sqrt{T} = 2\mathcal{V}_a/S`$. Volga: $`\mathcal{V}_a\,a\big[(a + \sigma\sqrt{T}) + (a - \sigma\sqrt{T})\big]/\sigma = 2\mathcal{V}_a a^2/\sigma`$.
 
-**Butterfly = strangle minus $w$ straddles, $w = 2\mathcal{V}_a/(2\mathcal{V}_0)$.** Vega: $2\mathcal{V}_a - w\cdot 2\mathcal{V}_0 = 0$ by the choice of $w$. Vanna: $2\mathcal{V}_a/S - w\cdot 2\mathcal{V}_0/S = 0$, because both the strangle's and the straddle's vanna are their vega over $S$. Volga: $2\mathcal{V}_a a^2/\sigma - w\cdot 0$.
+**Butterfly = strangle minus $`w`$ straddles, $`w = 2\mathcal{V}_a/(2\mathcal{V}_0)`$.** Vega: $`2\mathcal{V}_a - w\cdot 2\mathcal{V}_0 = 0`$ by the choice of $`w`$. Vanna: $`2\mathcal{V}_a/S - w\cdot 2\mathcal{V}_0/S = 0`$, because both the strangle's and the straddle's vanna are their vega over $`S`$. Volga: $`2\mathcal{V}_a a^2/\sigma - w\cdot 0`$.
 
-The one fact doing the work: at one vol and symmetric $d_1$, any symmetric pair of legs has vanna equal to its vega over $S$. Cancel the vega and the vanna goes with it.
+The one fact doing the work: at one vol and symmetric $`d_1`$, any symmetric pair of legs has vanna equal to its vega over $`S`$. Cancel the vega and the vanna goes with it.
 
 </details>
 
 ### Step 7: the house smile breaks the symmetry a little
 
-The market's wing strikes are not built at one vol. The put wing is set at 10.75 percent, the call wing at 9.75 percent, which places them at 1.052466 and 1.201425. Taken at the flat 10 percent, their $d_1$ values are no longer exactly $\pm a$. The clean zeros of Step 6 become small leaks:
+The market's wing strikes are not built at one vol. The put wing is set at 10.75 percent, the call wing at 9.75 percent, which places them at 1.052466 and 1.201425. Taken at the flat 10 percent, their $`d_1`$ values are no longer exactly $`\pm a`$. The clean zeros of Step 6 become small leaks:
 
 - the risk reversal's vega is 0.013526, against the straddle's 0.851734;
-- the vega-neutral butterfly, selling $w$ = 0.803095 straddles per strangle, keeps a vanna of −0.104421;
+- the vega-neutral butterfly, selling $`w`$ = 0.803095 straddles per strangle, keeps a vanna of −0.104421;
 - the risk reversal's volga is 0.241148.
 
 The pattern survives. The risk reversal carries 39.497347 times the butterfly's vanna. The butterfly carries 12.381266 times the risk reversal's volga. Each trade still loads mainly on one Greek, and the leaks are what [Vanna-volga pricing](04-vanna-volga-pricing.md) handles by solving for exact weights instead of assuming purity.
 
 ### Another road: vanna as the slope of delta
 
-Vanna has a second reading. Delta, the euro hedge per euro of option, is $\Delta = e^{-r_f T}N(d_1)$. Its slope in $\sigma$ is $e^{-r_f T}\varphi(d_1)\cdot(-d_2/\sigma)$, which is vanna again. Mixed partial derivatives of a smooth function do not care about order: the slope of vega in spot equals the slope of delta in vol. On a desk this is the more useful reading. A vol move changes the delta hedge by vanna times the move; the single-Greek treatment is on [Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md).
+Vanna has a second reading. Delta, the euro hedge per euro of option, is $`\Delta = e^{-r_f T}N(d_1)`$. Its slope in $`\sigma`$ is $`e^{-r_f T}\varphi(d_1)\cdot(-d_2/\sigma)`$, which is vanna again. Mixed partial derivatives of a smooth function do not care about order: the slope of vega in spot equals the slope of delta in vol. On a desk this is the more useful reading. A vol move changes the delta hedge by vanna times the move; the single-Greek treatment is on [Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md).
 
 ---
 
 ## Worked numbers, by hand
 
-EURUSD: $S = 1.10$, $K = 1.10$, $r_d = 5\%$, $r_f = 3\%$, $T = 1$, $\sigma = 10\%$.
+EURUSD: $`S = 1.10`$, $`K = 1.10`$, $`r_d = 5\%`$, $`r_f = 3\%`$, $`T = 1`$, $`\sigma = 10\%`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forward $F$ | $1.10 \times e^{0.05 - 0.03}$ | 1.122221 |
-| $d_1$ | $(\ln 1 + (0.02 + 0.005)) / 0.10$ | 0.25 |
-| $d_2$ | $0.25 - 0.10$ | 0.15 |
-| $\varphi(d_1)$ | $e^{-0.03125}/\sqrt{2\pi}$ | 0.386668 |
-| $e^{-r_f T}$ | $e^{-0.03}$ | 0.970446 |
-| vega $\mathcal{V}$ | $1.10 \times 0.970446 \times 0.386668$ | 0.412764 |
-| **vanna** | $-0.970446 \times 0.386668 \times 0.15 / 0.10$ | **−0.562861** |
-| **volga** | $0.412764 \times 0.25 \times 0.15 / 0.10$ | **0.154787** |
+| forward $`F`$ | $`1.10 \times e^{0.05 - 0.03}`$ | 1.122221 |
+| $`d_1`$ | $`(\ln 1 + (0.02 + 0.005)) / 0.10`$ | 0.25 |
+| $`d_2`$ | $`0.25 - 0.10`$ | 0.15 |
+| $`\varphi(d_1)`$ | $`e^{-0.03125}/\sqrt{2\pi}`$ | 0.386668 |
+| $`e^{-r_f T}`$ | $`e^{-0.03}`$ | 0.970446 |
+| vega $`\mathcal{V}`$ | $`1.10 \times 0.970446 \times 0.386668`$ | 0.412764 |
+| **vanna** | $`-0.970446 \times 0.386668 \times 0.15 / 0.10`$ | **−0.562861** |
+| **volga** | $`0.412764 \times 0.25 \times 0.15 / 0.10`$ | **0.154787** |
 
-Both $d$'s are positive, so the 1.10 call sits in the low-strike band of Step 5: vanna negative, volga positive. In the world: if the euro rises, this call's vega falls by about vanna times the move, so a vega hedge sized this morning is now too big.
+Both $`d`$'s are positive, so the 1.10 call sits in the low-strike band of Step 5: vanna negative, volga positive. In the world: if the euro rises, this call's vega falls by about vanna times the move, so a vega hedge sized this morning is now too big.
 
 The pillars and the two zero points, all Greeks at the flat 10 percent:
 
-| Strike | $K$ | Vega | Vanna | Volga |
+| Strike | $`K`$ | Vega | Vanna | Volga |
 | --- | --- | --- | --- | --- |
 | 25-delta put pillar | 1.052466 | 0.335249 | −1.803464 | 1.372286 |
 | spot | 1.100000 | 0.412764 | −0.562861 | 0.154787 |
-| $d_2 = 0$ | 1.116624 | 0.423743 | 0.000000 | 0.000000 |
+| $`d_2 = 0`$ | 1.116624 | 0.423743 | 0.000000 | 0.000000 |
 | forward | 1.122221 | 0.425335 | 0.193334 | −0.010633 |
-| ATM pillar, $d_1 = 0$ | 1.127847 | 0.425867 | 0.387152 | 0.000000 |
+| ATM pillar, $`d_1 = 0`$ | 1.127847 | 0.425867 | 0.387152 | 0.000000 |
 | 25-delta call pillar | 1.201425 | 0.348774 | 2.320882 | 1.613435 |
 
 The three trades, built from those rows (a put leg shares its call's Greeks):
@@ -219,7 +231,7 @@ The three trades, built from those rows (a put leg shares its call's Greeks):
 | risk reversal | 0.013526 | 4.124346 | 0.241148 |
 | strangle | 0.684023 | 0.517418 | 2.985721 |
 | unit butterfly (strangle minus one straddle) | −0.167711 | −0.256885 | 2.985721 |
-| vega-neutral butterfly ($w$ = 0.803095) | 0.000000 | −0.104421 | 2.985721 |
+| vega-neutral butterfly ($`w`$ = 0.803095) | 0.000000 | −0.104421 | 2.985721 |
 
 **The straddle is the vega trade, the risk reversal the vanna trade, the vega-neutral butterfly the volga trade.** The straddle's volga is zero to machine precision: the checks confirm it is below one part in a trillion.
 
@@ -249,15 +261,15 @@ Correct values at strike 1.10: vanna −0.562861, volga 0.154787.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drop the minus sign in vanna | +0.562861 | Every sign in Step 5 flips: the risk reversal would look short vanna when it is long. |
-| Write $d_1$ where vanna needs $d_2$ | −0.938101 | The zero moves to the ATM strike, so the straddle would show no vanna at all. |
-| Forget the euro discount $e^{-r_f T}$ | −0.580002 | Too big by the factor $e^{0.03}$: vega is built on a euro amount due in a year, discounted at the euro rate. |
-| Volga as vega times $d_1^2/\sigma$ | 0.257978 | The zero at $d_2 = 0$ vanishes and volga is never negative; the sliver around the forward disappears. |
+| Write $`d_1`$ where vanna needs $`d_2`$ | −0.938101 | The zero moves to the ATM strike, so the straddle would show no vanna at all. |
+| Forget the euro discount $`e^{-r_f T}`$ | −0.580002 | Too big by the factor $`e^{0.03}`$: vega is built on a euro amount due in a year, discounted at the euro rate. |
+| Volga as vega times $`d_1^2/\sigma`$ | 0.257978 | The zero at $`d_2 = 0`$ vanishes and volga is never negative; the sliver around the forward disappears. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach vanna and volga at strike 1.10 by four independent roads. Road 1 is the closed forms. Road 2 bumps the Garman-Kohlhagen price itself, call and put separately, and takes second differences. Road 3 takes the vol-slope of delta and the spot- and vol-slopes of vega. Road 4 builds symmetric wings and checks the trade formulas of Step 6. Then they rebuild the three pillars from the quotes, tabulate the Greeks, add up the trades and print the chart points. Python builds the bell-curve area from its Taylor series; Rust adds thin slices under the curve (Simpson's rule). Six asserts; four deliberate breaks (vanna's sign flipped, volga with $d_1^2$, the euro discount dropped, the ATM strike moved) each tripped one.
+The scripts reach vanna and volga at strike 1.10 by four independent roads. Road 1 is the closed forms. Road 2 bumps the Garman-Kohlhagen price itself, call and put separately, and takes second differences. Road 3 takes the vol-slope of delta and the spot- and vol-slopes of vega. Road 4 builds symmetric wings and checks the trade formulas of Step 6. Then they rebuild the three pillars from the quotes, tabulate the Greeks, add up the trades and print the chart points. Python builds the bell-curve area from its Taylor series; Rust adds thin slices under the curve (Simpson's rule). Six asserts; four deliberate breaks (vanna's sign flipped, volga with $`d_1^2`$, the euro discount dropped, the ATM strike moved) each tripped one.
 
 ### Python
 
@@ -645,13 +657,13 @@ The two outputs agree line for line.
 
 Lean proves the vanna and volga formulas, Step 4 and Step 6, for any positive spot, strike, vol and time.
 
-- Take spot, strike, vol and time all above zero. Then vega's slope in spot, vanna, is $-e^{-r_f T}\varphi(d_1)\,d_2/\sigma$.
-- Take the same inputs. Then vega's slope in vol, volga, is $\mathcal{V}\,d_1 d_2/\sigma$.
+- Take spot, strike, vol and time all above zero. Then vega's slope in spot, vanna, is $`-e^{-r_f T}\varphi(d_1)\,d_2/\sigma`$.
+- Take the same inputs. Then vega's slope in vol, volga, is $`\mathcal{V}\,d_1 d_2/\sigma`$.
 - Take the same inputs. Then a call and a put at the same strike have the same vega, vanna and volga.
-- Suppose every leg uses one vol, the ATM strike has $d_1 = 0$, and the wings have $d_1 = -a$ and $+a$. Then the straddle has no volga, and its vanna is its vega divided by spot.
+- Suppose every leg uses one vol, the ATM strike has $`d_1 = 0`$, and the wings have $`d_1 = -a`$ and $`+a`$. Then the straddle has no volga, and its vanna is its vega divided by spot.
 - Take the same legs. Then the risk reversal has no vega, and its vanna and volga match the Step 6 table.
-- Take the same legs. Then the vega-neutral butterfly has no vega, no vanna, and volga $2\mathcal{V}_a\,a^2/\sigma$.
-- The worked arithmetic matches: $d_1$ = 0.25, $d_2$ = 0.15, and wing vols of 10.75 and 9.75 percent.
+- Take the same legs. Then the vega-neutral butterfly has no vega, no vanna, and volga $`2\mathcal{V}_a\,a^2/\sigma`$.
+- The worked arithmetic matches: $`d_1`$ = 0.25, $`d_2`$ = 0.15, and wing vols of 10.75 and 9.75 percent.
 
 The sign bands of Step 5, the leaks of Step 7 and the Greek values in the tables are left to the Python and Rust checks.
 
@@ -882,7 +894,7 @@ example : ((10 : ℚ) / 100 + 25 / 10000 - (-1 / 100) / 2 = 1075 / 10000) ∧
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
-> - **Raise the vol to 15 percent at strike 1.10.** Replace `ATM` by `0.15` in `vanna(K0, ATM)`. Vanna shrinks from −0.562861 to **−0.147327**. More vol drags $d_2$ toward zero, and the strike 1.10 slides toward the zero-vanna band.
+> - **Raise the vol to 15 percent at strike 1.10.** Replace `ATM` by `0.15` in `vanna(K0, ATM)`. Vanna shrinks from −0.562861 to **−0.147327**. More vol drags $`d_2`$ toward zero, and the strike 1.10 slides toward the zero-vanna band.
 > - **Go far into the call wing.** Evaluate `volga(1.30, ATM)`. It is **3.353794**, against 0.154787 at 1.10. Far wings are almost pure vol-of-vol exposure: the option matters only if vol rises.
 > - **Make the smile symmetric.** Set `RR = 0` and `BF = 0`. The wing strikes become the symmetric pair of Step 6, and the vega-neutral butterfly's vanna goes from −0.104421 to **0.000000**, with volga **2.918395**. The leak in Step 7 was the smile's own tilt.
 
@@ -891,7 +903,7 @@ example : ((10 : ℚ) / 100 + 25 / 10000 - (-1 / 100) / 2 = 1075 / 10000) ∧
 ## The usual mistake
 
 > [!warning]
-> **Treating the three trades as pure.** The risk reversal is not only vanna and the butterfly is not only volga. A unit butterfly, one strangle against one straddle, is short 0.167711 of vega: a dealer who buys it to go long vol-of-vol is also short vol. Only after scaling to $w$ = 0.803095 straddles does the vega go, and even then 0.104421 of vanna stays behind on the house smile. The labels name each trade's main load, not its only one.
+> **Treating the three trades as pure.** The risk reversal is not only vanna and the butterfly is not only volga. A unit butterfly, one strangle against one straddle, is short 0.167711 of vega: a dealer who buys it to go long vol-of-vol is also short vol. Only after scaling to $`w`$ = 0.803095 straddles does the vega go, and even then 0.104421 of vanna stays behind on the house smile. The labels name each trade's main load, not its only one.
 >
 > Four smaller traps:
 > - **"Volga is zero at the money, so the straddle is pure vega."** The straddle's volga is zero, but its vanna is 0.774304, vega divided by spot. A straddle cannot hedge a tilt without dragging vanna along.
@@ -911,7 +923,7 @@ example : ((10 : ℚ) / 100 + 25 / 10000 - (-1 / 100) / 2 = 1075 / 10000) ∧
 - **Stock options too.** Read the euro rate as a dividend yield and this is the equity version; volga alone is on [Volga](../09-The%20Greeks%2C%20one%20each/07-volga.md).
 
 > **Say it back**
-> Vega is not fixed: it moves when spot moves and when vol moves. Vanna, $-e^{-r_f T}\varphi(d_1)d_2/\sigma$, is its slope in spot and has the sign of $-d_2$. Volga, $\mathcal{V}d_1d_2/\sigma$, is its slope in vol and has the sign of $d_1 d_2$, zero at the delta-neutral strike. With symmetric wings at one vol, the straddle carries vega, the risk reversal vanna with no vega, and the vega-neutral butterfly volga alone. On the real smile the pattern holds with small leaks, which is why three quotes are enough to price the three risks.
+> Vega is not fixed: it moves when spot moves and when vol moves. Vanna, $`-e^{-r_f T}\varphi(d_1)d_2/\sigma`$, is its slope in spot and has the sign of $`-d_2`$. Volga, $`\mathcal{V}d_1d_2/\sigma`$, is its slope in vol and has the sign of $`d_1 d_2`$, zero at the delta-neutral strike. With symmetric wings at one vol, the straddle carries vega, the risk reversal vanna with no vega, and the vega-neutral butterfly volga alone. On the real smile the pattern holds with small leaks, which is why three quotes are enough to price the three risks.
 
 ---
 

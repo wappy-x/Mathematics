@@ -43,37 +43,43 @@ The [States as vectors](02-state-vectors-operators-and-measurement.md) card gave
 
 A hat marks an operator (here a matrix acting on the state), not an estimate. Here the column has two entries, because there are two spots. The three Pauli matrices (after Wolfgang Pauli, 1927) do all the work:
 
-$$\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad \sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad \sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad \hat S_{\mathbf n}=\frac{\hbar}{2}\,\sigma_{\mathbf n},\quad \sigma_{\mathbf n}=n_x\sigma_x+n_y\sigma_y+n_z\sigma_z$$
+```math
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad \sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad \sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad \hat S_{\mathbf n}=\frac{\hbar}{2}\,\sigma_{\mathbf n},\quad \sigma_{\mathbf n}=n_x\sigma_x+n_y\sigma_y+n_z\sigma_z
+```
 
-$$P_+=\bigl|\langle \mathbf n_+|\psi\rangle\bigr|^2=\cos^2\frac{\alpha}{2}$$
+```math
+P_+=\bigl|\langle \mathbf n_+|\psi\rangle\bigr|^2=\cos^2\frac{\alpha}{2}
+```
 
-$$U(t)=\cos\frac{\omega t}{2}\,I-i\,\sin\frac{\omega t}{2}\,\sigma_{\mathbf n},\qquad \omega=\frac{g\,\mu_B\,B}{\hbar}$$
+```math
+U(t)=\cos\frac{\omega t}{2}\,I-i\,\sin\frac{\omega t}{2}\,\sigma_{\mathbf n},\qquad \omega=\frac{g\,\mu_B\,B}{\hbar}
+```
 
 **Read it aloud:** a magnet along the direction n asks the question "σ along n", whose answers are up and down; an atom prepared up along one axis lands up along a magnet tilted by α with chance cos² of half α; and a steady field B turns the spin about the field's direction at ω radians per second.
 
-Here σ is the Pauli matrix, not a stress or a standard deviation. $\langle \mathbf n_+|\psi\rangle$ is the complex dot product from [States as vectors](02-state-vectors-operators-and-measurement.md): conjugate the first column's entries, multiply entry by entry, add.
+Here σ is the Pauli matrix, not a stress or a standard deviation. $`\langle \mathbf n_+|\psi\rangle`$ is the complex dot product from [States as vectors](02-state-vectors-operators-and-measurement.md): conjugate the first column's entries, multiply entry by entry, add.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\psi$ | the atom's spin state: a column of two complex numbers $(a, b)$ with $\lvert a\rvert^2+\lvert b\rvert^2=1$ | up along z: $(1, 0)$ | — |
-| $\sigma_x,\sigma_y,\sigma_z$, $I$, $i$ | the three Pauli matrices; the identity matrix; $i=\sqrt{-1}$ | above | — |
-| $\mathbf n$, $\sigma_{\mathbf n}$, $\lvert\mathbf n_\pm\rangle$ | the magnet's axis as a unit arrow $(n_x,n_y,n_z)$; its 2 × 2 matrix; that matrix's eigenvectors, the "up" and "down along n" columns | 60° from z towards x: $(0.866, 0, 0.5)$ | — |
-| $\alpha$ | the angle between the axis the atom was prepared along and the magnet's axis | 60° ($\pi/3$ rad) | the up chance falls, to 0 at 180° |
-| $P_+$, $P_-$ | the chance of the up spot and of the down spot; they add to 1 | 0.75 and 0.25 | — |
-| $\hbar$, $\hat S_{\mathbf n}$ | the reduced Planck constant, $h/2\pi$ = 1.054571818 × 10⁻³⁴ J s; the spin along n, whose only readings are $\pm\hbar/2$ | $\pm\hbar/2$ along every axis | — |
-| $g$, $\mu_B$ | the electron's g factor, 2.00231930436: how much stronger the magnet made by its spin is than the same amount of orbiting motion would make, about 2; the Bohr magneton, 9.2740100657 × 10⁻²⁴ J/T: the natural unit of an electron's magnetism. The atom's moment is $(g/2)\mu_B$ | moment 9.2848 × 10⁻²⁴ J/T | the push and the turning rate rise |
-| $B$, $\partial B/\partial z$ | the magnetic field, in tesla; how fast it changes across the gap, in T/m | 0.5 T; 1000 T/m | $B$ turns the spin faster; the gradient splits the spots wider |
-| $m$, $L$, $v$, $F$ | one silver atom's mass; the magnet's length; the atom's speed; the push on it | 1.7912 × 10⁻²⁵ kg, 0.035 m, 500 m/s, 9.2848 × 10⁻²¹ N | heavier or faster atoms split less |
-| $\hat H$ | the energy matrix (the Hamiltonian): $\frac{g\mu_B}{2}B\,\sigma_{\mathbf n}$ for a field along n | $\frac{g\mu_B}{2}(0.5\ \text{T})\,\sigma_z$ | — |
-| $\omega$, $t$ | the Larmor rate, in rad/s; time | 88.0430 × 10⁹ rad/s, which as a frequency, $\omega/2\pi$, is 14.0125 GHz; 0 to 72 ps | faster swinging |
-| $U(t)$ | the turning matrix: it carries the state from time 0 to time $t$ | $U(2\pi/\omega)=-I$ | — |
+| $`\psi`$ | the atom's spin state: a column of two complex numbers $`(a, b)`$ with $`\lvert a\rvert^2+\lvert b\rvert^2=1`$ | up along z: $`(1, 0)`$ | — |
+| $`\sigma_x,\sigma_y,\sigma_z`$, $`I`$, $`i`$ | the three Pauli matrices; the identity matrix; $`i=\sqrt{-1}`$ | above | — |
+| $`\mathbf n`$, $`\sigma_{\mathbf n}`$, $`\lvert\mathbf n_\pm\rangle`$ | the magnet's axis as a unit arrow $`(n_x,n_y,n_z)`$; its 2 × 2 matrix; that matrix's eigenvectors, the "up" and "down along n" columns | 60° from z towards x: $`(0.866, 0, 0.5)`$ | — |
+| $`\alpha`$ | the angle between the axis the atom was prepared along and the magnet's axis | 60° ($`\pi/3`$ rad) | the up chance falls, to 0 at 180° |
+| $`P_+`$, $`P_-`$ | the chance of the up spot and of the down spot; they add to 1 | 0.75 and 0.25 | — |
+| $`\hbar`$, $`\hat S_{\mathbf n}`$ | the reduced Planck constant, $`h/2\pi`$ = 1.054571818 × 10⁻³⁴ J s; the spin along n, whose only readings are $`\pm\hbar/2`$ | $`\pm\hbar/2`$ along every axis | — |
+| $`g`$, $`\mu_B`$ | the electron's g factor, 2.00231930436: how much stronger the magnet made by its spin is than the same amount of orbiting motion would make, about 2; the Bohr magneton, 9.2740100657 × 10⁻²⁴ J/T: the natural unit of an electron's magnetism. The atom's moment is $`(g/2)\mu_B`$ | moment 9.2848 × 10⁻²⁴ J/T | the push and the turning rate rise |
+| $`B`$, $`\partial B/\partial z`$ | the magnetic field, in tesla; how fast it changes across the gap, in T/m | 0.5 T; 1000 T/m | $`B`$ turns the spin faster; the gradient splits the spots wider |
+| $`m`$, $`L`$, $`v`$, $`F`$ | one silver atom's mass; the magnet's length; the atom's speed; the push on it | 1.7912 × 10⁻²⁵ kg, 0.035 m, 500 m/s, 9.2848 × 10⁻²¹ N | heavier or faster atoms split less |
+| $`\hat H`$ | the energy matrix (the Hamiltonian): $`\frac{g\mu_B}{2}B\,\sigma_{\mathbf n}`$ for a field along n | $`\frac{g\mu_B}{2}(0.5\ \text{T})\,\sigma_z`$ | — |
+| $`\omega`$, $`t`$ | the Larmor rate, in rad/s; time | 88.0430 × 10⁹ rad/s, which as a frequency, $`\omega/2\pi`$, is 14.0125 GHz; 0 to 72 ps | faster swinging |
+| $`U(t)`$ | the turning matrix: it carries the state from time 0 to time $`t`$ | $`U(2\pi/\omega)=-I`$ | — |
 
 ### When it holds
 
 - **One spin one-half carries the magnetism.** Silver has 47 electrons; 46 pair off with no net moment, and the outer one has no orbital motion, so its spin is the whole magnet. An atom with spin 1 makes three spots and needs 3 × 3 matrices.
 - **The field is strong compared with the electron's magnetic coupling to the nucleus.** The silver nucleus has a small spin of its own, also one-half. In a weak field the two spins lock into one combined spin of 1. Nearly all the magnetism is still the electron's, but it now rides on twice the spin, so it turns at half the rate: in Earth's 50 μT the electron-alone formula says 1.4012 MHz, but the silver atom turns at about 0.7006 MHz. In the 0.5 T magnet the electron goes its own way and the two-state model holds.
 - **The atom flies like a ball, and has no charge.** A silver atom is heavy and neutral, so its path through the magnet is a classical one with one of two forces. Free electrons cannot be sorted this way: their charge feels a far larger sideways force from the field, and its spread across the beam's width blurs the two spots together.
-- **Nothing disturbs the phase.** The swinging chance in time assumes an isolated spin. Collisions and field noise blur the relative phase of $a$ and $b$, and the swing dies away; that loss is the central problem of Qubits (planned).
+- **Nothing disturbs the phase.** The swinging chance in time assumes an isolated spin. Collisions and field noise blur the relative phase of $`a`$ and $`b`$, and the swing dies away; that loss is the central problem of Qubits (planned).
 
 ---
 
@@ -81,76 +87,82 @@ Here σ is the Pauli matrix, not a stress or a standard deviation. $\langle \mat
 
 ### Step 0: two spots means two numbers
 
-Each spot is one answer, so the state needs one complex number per answer: $\psi=(a,b)$, with $\lvert a\rvert^2$ the chance of up along z and $\lvert b\rvert^2$ the chance of down. "Up along z" is $(1,0)$ and "down along z" is $(0,1)$. The z magnet's matrix must have these as eigenvectors, with readings $+1$ and $-1$ (in units of $\hbar/2$). That is $\sigma_z$.
+Each spot is one answer, so the state needs one complex number per answer: $`\psi=(a,b)`$, with $`\lvert a\rvert^2`$ the chance of up along z and $`\lvert b\rvert^2`$ the chance of down. "Up along z" is $`(1,0)`$ and "down along z" is $`(0,1)`$. The z magnet's matrix must have these as eigenvectors, with readings $`+1`$ and $`-1`$ (in units of $`\hbar/2`$). That is $`\sigma_z`$.
 
-Every other axis must also be a 2 × 2 matrix with readings $\pm1$, because every axis gives two spots. The experiments fix which matrices.
+Every other axis must also be a 2 × 2 matrix with readings $`\pm1`$, because every axis gives two spots. The experiments fix which matrices.
 
 ### Step 1: the x axis from a 50/50 split
 
-Up-along-z atoms split 50/50 at an x magnet. So "up along x" must overlap $(1,0)$ with squared size $\tfrac12$, and also $(0,1)$ with squared size $\tfrac12$. The real choice is $\tfrac{1}{\sqrt2}(1,1)$ for up and $\tfrac{1}{\sqrt2}(1,-1)$ for down. The matrix with these eigenvectors and readings $\pm1$ is `[[0, 1], [1, 0]]`: that is $\sigma_x$. It swaps the two entries, so $(1,1)$ comes back as itself and $(1,-1)$ as its negative.
+Up-along-z atoms split 50/50 at an x magnet. So "up along x" must overlap $`(1,0)`$ with squared size $`\tfrac12`$, and also $`(0,1)`$ with squared size $`\tfrac12`$. The real choice is $`\tfrac{1}{\sqrt2}(1,1)`$ for up and $`\tfrac{1}{\sqrt2}(1,-1)`$ for down. The matrix with these eigenvectors and readings $`\pm1`$ is `[[0, 1], [1, 0]]`: that is $`\sigma_x`$. It swaps the two entries, so $`(1,1)`$ comes back as itself and $`(1,-1)`$ as its negative.
 
 ### Step 2: the y axis forces complex numbers
 
-A y magnet also splits up-along-z atoms 50/50, and it splits up-along-x atoms 50/50 too. So "up along y" must have overlap $\tfrac12$ (squared) with all four columns above. A real column $(c, d)$ cannot: overlap $\tfrac12$ with $(1,0)$ and $(0,1)$ means $c^2=d^2=\tfrac12$, so $d = \pm c$, and then it *is* up or down along x.
+A y magnet also splits up-along-z atoms 50/50, and it splits up-along-x atoms 50/50 too. So "up along y" must have overlap $`\tfrac12`$ (squared) with all four columns above. A real column $`(c, d)`$ cannot: overlap $`\tfrac12`$ with $`(1,0)`$ and $`(0,1)`$ means $`c^2=d^2=\tfrac12`$, so $`d = \pm c`$, and then it *is* up or down along x.
 
-The way out is a complex entry: $\tfrac{1}{\sqrt2}(1, i)$. Its squared overlap with $\tfrac1{\sqrt2}(1,1)$ is $\lvert 1+i\rvert^2/4 = 2/4 = \tfrac12$. The matrix with eigenvectors $\tfrac{1}{\sqrt2}(1,\pm i)$ and readings $\pm1$ is $\sigma_y$. Three axes at right angles need complex numbers: this is where quantum mechanics stops being real-valued ([Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)).
+The way out is a complex entry: $`\tfrac{1}{\sqrt2}(1, i)`$. Its squared overlap with $`\tfrac1{\sqrt2}(1,1)`$ is $`\lvert 1+i\rvert^2/4 = 2/4 = \tfrac12`$. The matrix with eigenvectors $`\tfrac{1}{\sqrt2}(1,\pm i)`$ and readings $`\pm1`$ is $`\sigma_y`$. Three axes at right angles need complex numbers: this is where quantum mechanics stops being real-valued ([Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)).
 
-The three matrices then obey $\sigma_x\sigma_y=i\sigma_z$, each squares to $I$, and any two different ones *anticommute*: $\sigma_x\sigma_y=-\sigma_y\sigma_x$. The checks multiply them out.
+The three matrices then obey $`\sigma_x\sigma_y=i\sigma_z`$, each squares to $`I`$, and any two different ones *anticommute*: $`\sigma_x\sigma_y=-\sigma_y\sigma_x`$. The checks multiply them out.
 
 ### Step 3: any axis, and the half angle
 
-For an axis $\mathbf n$ the matrix is $\sigma_{\mathbf n}=n_x\sigma_x+n_y\sigma_y+n_z\sigma_z$. Square it. The cross terms cancel in pairs because the Pauli matrices anticommute, and each $\sigma^2$ is $I$, so $\sigma_{\mathbf n}^2=(n_x^2+n_y^2+n_z^2)I=I$. A matrix that squares to $I$ can only have eigenvalues $+1$ or $-1$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). So **every** axis gives exactly two spots, as the experiment says.
+For an axis $`\mathbf n`$ the matrix is $`\sigma_{\mathbf n}=n_x\sigma_x+n_y\sigma_y+n_z\sigma_z`$. Square it. The cross terms cancel in pairs because the Pauli matrices anticommute, and each $`\sigma^2`$ is $`I`$, so $`\sigma_{\mathbf n}^2=(n_x^2+n_y^2+n_z^2)I=I`$. A matrix that squares to $`I`$ can only have eigenvalues $`+1`$ or $`-1`$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). So **every** axis gives exactly two spots, as the experiment says.
 
-Take the axis tilted by $\alpha$ from z towards x: $\mathbf n=(\sin\alpha,0,\cos\alpha)$. Then $\sigma_{\mathbf n}$ = `[[cos α, sin α], [sin α, −cos α]]`. Its up eigenvector is $(\cos\tfrac\alpha2,\ \sin\tfrac\alpha2)$; multiplying out, with the angle-difference rules for sine and cosine, returns the same column. The overlap with up-along-z is $\cos\tfrac\alpha2$, so
+Take the axis tilted by $`\alpha`$ from z towards x: $`\mathbf n=(\sin\alpha,0,\cos\alpha)`$. Then $`\sigma_{\mathbf n}`$ = `[[cos α, sin α], [sin α, −cos α]]`. Its up eigenvector is $`(\cos\tfrac\alpha2,\ \sin\tfrac\alpha2)`$; multiplying out, with the angle-difference rules for sine and cosine, returns the same column. The overlap with up-along-z is $`\cos\tfrac\alpha2`$, so
 
-$$P_+=\cos^2\frac{\alpha}{2},\qquad P_-=\sin^2\frac{\alpha}{2}.$$
+```math
+P_+=\cos^2\frac{\alpha}{2},\qquad P_-=\sin^2\frac{\alpha}{2}.
+```
 
-Why half the angle? Up and down along one axis point opposite ways in space, 180° apart. As columns they share no overlap, so they are 90° apart. Every angle in space is halved in the column space. At $\alpha = 60°$, $\cos^2 30° = 0.75$. The polarizer on [States as vectors](02-state-vectors-operators-and-measurement.md) runs the other way: its matrix carries $2\alpha$, because light's polarization repeats after 180°.
+Why half the angle? Up and down along one axis point opposite ways in space, 180° apart. As columns they share no overlap, so they are 90° apart. Every angle in space is halved in the column space. At $`\alpha = 60°`$, $`\cos^2 30° = 0.75`$. The polarizer on [States as vectors](02-state-vectors-operators-and-measurement.md) runs the other way: its matrix carries $`2\alpha`$, because light's polarization repeats after 180°.
 
 ### Step 4: the spin turns in a steady field
 
-The energy of a magnet in a field is $-(\text{moment})\cdot B$. The electron's moment is $(g/2)\mu_B$ and points opposite its spin, so for a field along n the energy matrix is $\hat H=\frac{g\mu_B}{2}B\,\sigma_{\mathbf n}$. Schrödinger's equation ([Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md)) says $i\hbar\,\frac{d\psi}{dt}=\hat H\psi$, so $\psi(t)=e^{-i\hat Ht/\hbar}\psi(0)$ ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)).
+The energy of a magnet in a field is $`-(\text{moment})\cdot B`$. The electron's moment is $`(g/2)\mu_B`$ and points opposite its spin, so for a field along n the energy matrix is $`\hat H=\frac{g\mu_B}{2}B\,\sigma_{\mathbf n}`$. Schrödinger's equation ([Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md)) says $`i\hbar\,\frac{d\psi}{dt}=\hat H\psi`$, so $`\psi(t)=e^{-i\hat Ht/\hbar}\psi(0)`$ ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)).
 
-Because $\sigma_{\mathbf n}^2=I$, that exponential collapses to two terms:
+Because $`\sigma_{\mathbf n}^2=I`$, that exponential collapses to two terms:
 
-$$U(t)=e^{-i\omega t\,\sigma_{\mathbf n}/2}=\cos\frac{\omega t}{2}\,I-i\sin\frac{\omega t}{2}\,\sigma_{\mathbf n},\qquad \omega=\frac{g\mu_B B}{\hbar}.$$
+```math
+U(t)=e^{-i\omega t\,\sigma_{\mathbf n}/2}=\cos\frac{\omega t}{2}\,I-i\sin\frac{\omega t}{2}\,\sigma_{\mathbf n},\qquad \omega=\frac{g\mu_B B}{\hbar}.
+```
 
 <details>
 <summary>Why the exponential collapses</summary>
 
-Write $x=\omega t/2$. The power series is $e^{-ix\sigma}=\sum_k (-ix)^k\sigma^k/k!$. Even powers of $\sigma$ are $I$ and odd powers are $\sigma$. So the even terms add to $(1-x^2/2!+x^4/4!-\dots)I=\cos x\,I$ and the odd terms to $-i(x-x^3/3!+\dots)\sigma=-i\sin x\,\sigma$. The code sums 40 terms of the series and compares.
+Write $`x=\omega t/2`$. The power series is $`e^{-ix\sigma}=\sum_k (-ix)^k\sigma^k/k!`$. Even powers of $`\sigma`$ are $`I`$ and odd powers are $`\sigma`$. So the even terms add to $`(1-x^2/2!+x^4/4!-\dots)I=\cos x\,I`$ and the odd terms to $`-i(x-x^3/3!+\dots)\sigma=-i\sin x\,\sigma`$. The code sums 40 terms of the series and compares.
 
 </details>
 
-For a field along z, $U(t)$ only multiplies $a$ by $e^{-i\omega t/2}$ and $b$ by $e^{+i\omega t/2}$. The sizes $\lvert a\rvert$ and $\lvert b\rvert$ never change, so the chance of up along z never changes.
+For a field along z, $`U(t)`$ only multiplies $`a`$ by $`e^{-i\omega t/2}`$ and $`b`$ by $`e^{+i\omega t/2}`$. The sizes $`\lvert a\rvert`$ and $`\lvert b\rvert`$ never change, so the chance of up along z never changes.
 
-Only the *relative phase* of $a$ and $b$ (the angle between them as arrows in the complex plane) turns, at rate $\omega$. That phase is what an x or y magnet reads. Start up along x, $\tfrac1{\sqrt2}(1,1)$, and the chance of still finding up along x is
+Only the *relative phase* of $`a`$ and $`b`$ (the angle between them as arrows in the complex plane) turns, at rate $`\omega`$. That phase is what an x or y magnet reads. Start up along x, $`\tfrac1{\sqrt2}(1,1)`$, and the chance of still finding up along x is
 
-$$P_{+x}(t)=\cos^2\frac{\omega t}{2}.$$
+```math
+P_{+x}(t)=\cos^2\frac{\omega t}{2}.
+```
 
-In space this is the spin's arrow sweeping round the field at $\omega$: **Larmor precession**, the quantum version of a gyroscope's wobble ([Precession](../07-Mechanics%20and%20Structures/03-gyroscopes-and-precession.md)). The turning matrix after one full turn, $\omega t = 2\pi$, is $-I$, not $I$. Every probability is unchanged, but the sign of the column has flipped. It takes two full turns, 720°, to bring the column back.
+In space this is the spin's arrow sweeping round the field at $`\omega`$: **Larmor precession**, the quantum version of a gyroscope's wobble ([Precession](../07-Mechanics%20and%20Structures/03-gyroscopes-and-precession.md)). The turning matrix after one full turn, $`\omega t = 2\pi`$, is $`-I`$, not $`I`$. Every probability is unchanged, but the sign of the column has flipped. It takes two full turns, 720°, to bring the column back.
 
 ### Step 5: why the magnet splits the beam
 
-In the magnet the field is mostly along z and grows across the gap. The energy is $\pm\frac{g\mu_B}{2}B$, so the force, the downhill slope of energy, is $F=\pm\frac{g\mu_B}{2}\,\partial B/\partial z$. The x and y parts of the spin precess around z at 14.0125 GHz and average out to nothing over the flight: 980873 turns in 70 μs. Only the z part survives, and it has two values. Two forces, two spots.
+In the magnet the field is mostly along z and grows across the gap. The energy is $`\pm\frac{g\mu_B}{2}B`$, so the force, the downhill slope of energy, is $`F=\pm\frac{g\mu_B}{2}\,\partial B/\partial z`$. The x and y parts of the spin precess around z at 14.0125 GHz and average out to nothing over the flight: 980873 turns in 70 μs. Only the z part survives, and it has two values. Two forces, two spots.
 
 ---
 
 ## Worked numbers, by hand
 
-The bench magnet: gradient 1000 T/m, 0.035 m long, field 0.5 T at the beam. Silver atoms at 500 m/s, mass $107.8682 \times 1.66053906892\times10^{-27}$ kg.
+The bench magnet: gradient 1000 T/m, 0.035 m long, field 0.5 T at the beam. Silver atoms at 500 m/s, mass $`107.8682 \times 1.66053906892\times10^{-27}`$ kg.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| moment of one atom | $\frac{2.00232}{2}\times 9.27401\times10^{-24}$ | 9.2848 × 10⁻²⁴ J/T |
-| push, $F$ | moment × 1000 T/m | 9.2848 × 10⁻²¹ N |
-| acceleration | $F / 1.7912\times10^{-25}$ kg | 51835.6 m/s² |
+| moment of one atom | $`\frac{2.00232}{2}\times 9.27401\times10^{-24}`$ | 9.2848 × 10⁻²⁴ J/T |
+| push, $`F`$ | moment × 1000 T/m | 9.2848 × 10⁻²¹ N |
+| acceleration | $`F / 1.7912\times10^{-25}`$ kg | 51835.6 m/s² |
 | time in magnet | 0.035 m / 500 m/s | 70.0 μs |
-| sideways drift | $\tfrac12 \times 51835.6 \times (70.0\times10^{-6})^2$ | 0.1270 mm |
+| sideways drift | $`\tfrac12 \times 51835.6 \times (70.0\times10^{-6})^2`$ | 0.1270 mm |
 | gap between spots | 2 × 0.1270 mm | 0.2540 mm |
-| up chance at 60° tilt | $\cos^2 30° = (0.866025)^2$ | 0.750000 |
+| up chance at 60° tilt | $`\cos^2 30° = (0.866025)^2`$ | 0.750000 |
 | of 10000 atoms | 10000 × 0.75 | 7500 up, 2500 down |
-| Larmor rate at 0.5 T | $2.00232 \times 9.27401\times10^{-24} \times 0.5 / 1.054572\times10^{-34}$ | 88.0430 × 10⁹ rad/s |
+| Larmor rate at 0.5 T | $`2.00232 \times 9.27401\times10^{-24} \times 0.5 / 1.054572\times10^{-34}`$ | 88.0430 × 10⁹ rad/s |
 | as a frequency | ω / 2π | **14.0125 GHz, one turn every 71.3650 ps** |
 
 So the spots sit a quarter of a millimetre apart, wide enough to see with a microscope, and a 60° magnet sends three atoms in four up.
@@ -159,9 +171,9 @@ So the spots sit a quarter of a millimetre apart, wide enough to see with a micr
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Full angle: $\cos^2 60°$ | 0.250000, not 0.750000 | Angles in space are halved in the column space |
-| Amplitudes used as chances: $\cos 30° + \sin 30°$ | 1.366025 total chance | Chances are the *squares* of the overlaps; unsquared they add to more than 1 |
-| The g factor left out | 6.9981 GHz, not 14.0125 GHz | The energy gap between up and down is $g\mu_B B$, and $g$ is about 2: dropping it halves the rate |
+| Full angle: $`\cos^2 60°`$ | 0.250000, not 0.750000 | Angles in space are halved in the column space |
+| Amplitudes used as chances: $`\cos 30° + \sin 30°`$ | 1.366025 total chance | Chances are the *squares* of the overlaps; unsquared they add to more than 1 |
+| The g factor left out | 6.9981 GHz, not 14.0125 GHz | The energy gap between up and down is $`g\mu_B B`$, and $`g`$ is about 2: dropping it halves the rate |
 | Assume z is remembered after the x magnet | 5000 up, 0 down, not 2500 and 2500 | The x magnet leaves the atom up along x, which is 50/50 along z |
 | Electron-alone formula in Earth's 50 μT | 1.4012 MHz, but the atom turns at about 0.7006 MHz | Outside the model's range: in a weak field the nucleus's spin locks on, and the combined spin of 1 turns at half the rate |
 
@@ -199,7 +211,7 @@ Orange: up along x, for an atom started up along x; the formula and the RK4 solu
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the Pauli matrices by hand and multiply them out. The 60° chance takes three independent roads: the half-angle formula; the eigenvector of the tilted magnet's matrix, found from its quadratic with no angle used; and the column (1, 0) turned 60° about y by the matrix exponential's power series, $e^{-i(\pi/6)\sigma_y}$, whose first entry squared is the chance.
+The scripts build the Pauli matrices by hand and multiply them out. The 60° chance takes three independent roads: the half-angle formula; the eigenvector of the tilted magnet's matrix, found from its quadratic with no angle used; and the column (1, 0) turned 60° about y by the matrix exponential's power series, $`e^{-i(\pi/6)\sigma_y}`$, whose first entry squared is the chance.
 
 Then 100000 atoms drawn with that chance from a SplitMix64 generator, seed 2026, show the scatter a real count has; they are a demonstration, not a fourth road.
 
@@ -559,15 +571,15 @@ The two outputs agree line for line, including the simulated count, because both
 Lean proves the half-angle rule for every tilt, the two readings for every axis, and the turning formula for every time.
 
 - Take a magnet tilted by any angle α from z towards x, and any up and down eigenvectors of length 1. Then an atom up along z lands up with chance cos² of α/2, and down with chance sin² of α/2.
-- Take any axis n as a unit arrow. Then its matrix $\sigma_{\mathbf n}$ squares to $I$, so its only readings are +1 and −1.
-- Take any axis n as a unit arrow, any rate ω and any time t. Then the matrix exponential $e^{-i\omega t\,\sigma_{\mathbf n}/2}$ equals Step 4's two-term formula for $U(t)$.
-- Each Pauli matrix squares to $I$. Also $\sigma_x\sigma_y=i\sigma_z$ and $\sigma_x\sigma_y=-\sigma_y\sigma_x$.
+- Take any axis n as a unit arrow. Then its matrix $`\sigma_{\mathbf n}`$ squares to $`I`$, so its only readings are +1 and −1.
+- Take any axis n as a unit arrow, any rate ω and any time t. Then the matrix exponential $`e^{-i\omega t\,\sigma_{\mathbf n}/2}`$ equals Step 4's two-term formula for $`U(t)`$.
+- Each Pauli matrix squares to $`I`$. Also $`\sigma_x\sigma_y=i\sigma_z`$ and $`\sigma_x\sigma_y=-\sigma_y\sigma_x`$.
 - Take the axis tilted by α from z towards x. Then its matrix is `[[cos α, sin α], [sin α, −cos α]]`.
 - At a 60° tilt the up chance is cos² 30° = 3/4: 7500 up and 2500 down out of 10000.
 - At tilts of 90°, 120° and 180° the up chances are 1/2, 1/4 and 0.
 - The full-angle mistake, cos² 60°, gives 1/4, not 3/4.
 - Magnets along z, then x, then z again: 10000 atoms, 5000 kept, then 2500 up and 2500 down.
-- After one full turn, ωt = 2π, the formula gives $-I$. After two full turns it gives $I$.
+- After one full turn, ωt = 2π, the formula gives $`-I`$. After two full turns it gives $`I`$.
 
 Lean works with the matrices alone, so the drift, the Larmor rate and the swinging chances are left to the Python and Rust checks.
 
@@ -775,7 +787,7 @@ example (nx ny nz : ℝ) :
 > [!TIP]
 > **Try changing**
 > - Guess first: what share goes up if the second magnet is tilted 90°? Then 120°? Then 180°? The loop prints **0.500000**, **0.250000** and **0.000000**. At 180° the magnet is the first one upside down, so every atom lands "down".
-> - Guess first: what field puts the electron's turning at 9.5 GHz, the frequency of a common microwave bench? Solve $\omega/2\pi = 9.5$ GHz for $B$: **0.3390 T**. Put `B = 0.339` and the rate prints **9.5005 GHz**.
+> - Guess first: what field puts the electron's turning at 9.5 GHz, the frequency of a common microwave bench? Solve $`\omega/2\pi = 9.5`$ GHz for $`B`$: **0.3390 T**. Put `B = 0.339` and the rate prints **9.5005 GHz**.
 > - Guess first: after exactly one Larmor period, is the column back where it started? `U(2 pi)` prints **−1.000000 I**: same chances, opposite sign. `U(4 pi)` prints **1.000000 I**.
 
 ---
@@ -785,9 +797,9 @@ example (nx ny nz : ℝ) :
 > [!warning]
 > **Picturing spin as a little arrow with a definite direction that the magnet reads off.** An arrow at 60° to the magnet would give every atom the same middle-sized push, one spot in the middle. The atoms land in two spots, and which spot each one takes is a chance, 0.75 against 0.25. Up along z says nothing definite about x: ask about x and the z answer is gone, 2500 up and 2500 down at the third magnet.
 >
-> - **The full angle in place of the half angle.** $\cos^2 60°$ gives 0.250000; the truth is 0.750000.
+> - **The full angle in place of the half angle.** $`\cos^2 60°`$ gives 0.250000; the truth is 0.750000.
 > - **Adding the overlaps instead of their squares.** 0.866 + 0.5 = 1.366025, a "probability" above 1.
-> - **Forgetting $g$.** The spin rate comes out 6.9981 GHz instead of 14.0125 GHz.
+> - **Forgetting $`g`$.** The spin rate comes out 6.9981 GHz instead of 14.0125 GHz.
 > - **Using the electron-alone model in a weak field.** In Earth's 50 μT a silver atom turns at about 0.7006 MHz, half the 1.4012 MHz the two-state model gives.
 
 ---
@@ -796,7 +808,7 @@ example (nx ny nz : ℝ) :
 
 - **Electron spin resonance.** A lab spectrometer tunes a microwave source near 9.5 GHz and sweeps a magnet through 0.3390 T. When the field makes the spin's rate match the microwaves, the sample absorbs. It finds unpaired electrons, for instance in reactive molecule fragments, catalysts and irradiated materials.
 - **MRI scanners.** The hydrogen nucleus, a proton, is also spin one-half, with a far smaller moment. In a 1.5 T scanner it turns at 63.8662 MHz, and the scanner listens for that radio signal from water in the body.
-- **Atomic magnetometers.** The swinging rate is proportional to $B$, so timing it measures the field. Atomic magnetometers time it to read fields far weaker than Earth's 50 μT, for instance from the heart and brain.
+- **Atomic magnetometers.** The swinging rate is proportional to $`B`$, so timing it measures the field. Atomic magnetometers time it to read fields far weaker than Earth's 50 μT, for instance from the heart and brain.
 - **Qubits.** A quantum computer's basic unit is any two-state system run by exactly these matrices: Qubits (planned).
 
 > **Say it back**
@@ -808,12 +820,12 @@ example (nx ny nz : ℝ) :
 
 - [States as vectors](02-state-vectors-operators-and-measurement.md): the rules this card runs on. A state is a column, a measurement is a matrix, the readings are its eigenvalues, and chances are squared overlaps.
 - [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): how a 2 × 2 matrix's special directions and stretch factors come out of a quadratic, which is how the check finds the tilted magnet's spots.
-- [Moving shapes with matrices](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/04-transformations-with-matrices.md): rotation by a matrix. $U(t)$ is a rotation too, written in the two-number column space at half the angle.
+- [Moving shapes with matrices](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/04-transformations-with-matrices.md): rotation by a matrix. $`U(t)`$ is a rotation too, written in the two-number column space at half the angle.
 
 ## Where this goes next
 
 - [Hydrogen in outline](07-the-hydrogen-atom-in-outline.md): spin joins the electron's orbit to make the full set of quantum numbers, and its magnet splits the spectral lines.
-- [Symmetry and conservation](08-symmetry-and-conserved-quantities.md): turning matrices like $U(t)$ as symmetries, and what they conserve. A field along z leaves the spin along z unchanged, as the flat green line shows.
+- [Symmetry and conservation](08-symmetry-and-conserved-quantities.md): turning matrices like $`U(t)`$ as symmetries, and what they conserve. A field along z leaves the spin along z unchanged, as the flat green line shows.
 - Mass gap (planned): the gauge theories built on the same 2 × 2 matrices.
 - Qubits (planned): two-state systems as computing units, gates as turning matrices, and the loss of phase that limits them.
 
@@ -828,5 +840,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Gerlach, Walther, and Otto Stern. "Der experimentelle Nachweis der Richtungsquantelung im Magnetfeld." *Zeitschrift für Physik* 9 (1922): 349–352. [doi:10.1007/BF01326983](https://doi.org/10.1007/BF01326983). The silver-beam experiment and its two spots.
 - Pauli, Wolfgang. "Zur Quantenmechanik des magnetischen Elektrons." *Zeitschrift für Physik* 43 (1927): 601–623. [doi:10.1007/BF01397326](https://doi.org/10.1007/BF01397326). The two-component state and the three matrices.
 - Griffiths, David J., and Darrell F. Schroeter. *Introduction to Quantum Mechanics*, 3rd ed. Cambridge University Press, 2018. [Publisher page](https://www.cambridge.org/highereducation/books/introduction-to-quantum-mechanics/990799CA07A83FC5312402AF6860311E). Spin one-half, Larmor precession and the Stern–Gerlach analysis, at this card's level.
-- NIST. *CODATA Internationally Recommended 2022 Values of the Fundamental Physical Constants*. [Bohr magneton](https://physics.nist.gov/cgi-bin/cuu/Value?mub). Source of $\mu_B$, the electron g factor, $\hbar$, the atomic mass constant and the proton's 42.577478461 MHz/T; the electron's gyromagnetic ratio ([NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gammaebar)) checks the Larmor rate.
+- NIST. *CODATA Internationally Recommended 2022 Values of the Fundamental Physical Constants*. [Bohr magneton](https://physics.nist.gov/cgi-bin/cuu/Value?mub). Source of $`\mu_B`$, the electron g factor, $`\hbar`$, the atomic mass constant and the proton's 42.577478461 MHz/T; the electron's gyromagnetic ratio ([NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gammaebar)) checks the Larmor rate.
 - Commission on Isotopic Abundances and Atomic Weights. "Atomic Weight of Silver." [ciaaw.org](https://www.ciaaw.org/silver.htm). The standard atomic weight of silver, 107.8682.

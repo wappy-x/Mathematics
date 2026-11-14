@@ -38,46 +38,54 @@ First line (orange): Nelson-Siegel, four dials. Second line (green): Svensson, s
 
 ## The formula
 
-Notation first, in words. Time $t$ is years from today. The **forward rate** $f(t)$ is the rate the curve charges, per year, for a loan that starts at $t$ and lasts a moment. The **zero rate** $R(t)$ is the average of the forward rate from today to $t$. The **discount factor** $D(t)$ is today's price of one dollar paid at $t$. Greek letters name the dials: beta (β) for sizes, tau (τ) for time scales.
+Notation first, in words. Time $`t`$ is years from today. The **forward rate** $`f(t)`$ is the rate the curve charges, per year, for a loan that starts at $`t`$ and lasts a moment. The **zero rate** $`R(t)`$ is the average of the forward rate from today to $`t`$. The **discount factor** $`D(t)`$ is today's price of one dollar paid at $`t`$. Greek letters name the dials: beta (β) for sizes, tau (τ) for time scales.
 
 Svensson's forward rate is a level plus three shapes:
 
-$$f(t) = \beta_0 + \beta_1\, e^{-t/\tau_1} + \beta_2\, \frac{t}{\tau_1}\, e^{-t/\tau_1} + \beta_3\, \frac{t}{\tau_2}\, e^{-t/\tau_2}$$
+```math
+f(t) = \beta_0 + \beta_1\, e^{-t/\tau_1} + \beta_2\, \frac{t}{\tau_1}\, e^{-t/\tau_1} + \beta_3\, \frac{t}{\tau_2}\, e^{-t/\tau_2}
+```
 
 **Read it aloud:** the rate far out, plus a piece that starts at full size and fades, plus a hump that rises from zero and fades, plus a second hump on its own clock.
 
-Nelson-Siegel is the same formula with the last term removed: $\beta_3 = 0$, and $\tau_2$ plays no part.
+Nelson-Siegel is the same formula with the last term removed: $`\beta_3 = 0`$, and $`\tau_2`$ plays no part.
 
-Averaging the forward rate from today to $t$ gives the zero rate:
+Averaging the forward rate from today to $`t`$ gives the zero rate:
 
-$$R(t) = \beta_0 + \beta_1\, L\!\left(\tfrac{t}{\tau_1}\right) + \beta_2\, H\!\left(\tfrac{t}{\tau_1}\right) + \beta_3\, H\!\left(\tfrac{t}{\tau_2}\right), \qquad L(x) = \frac{1 - e^{-x}}{x}, \quad H(x) = L(x) - e^{-x}$$
+```math
+R(t) = \beta_0 + \beta_1\, L\!\left(\tfrac{t}{\tau_1}\right) + \beta_2\, H\!\left(\tfrac{t}{\tau_1}\right) + \beta_3\, H\!\left(\tfrac{t}{\tau_2}\right), \qquad L(x) = \frac{1 - e^{-x}}{x}, \quad H(x) = L(x) - e^{-x}
+```
 
-**Read it aloud:** each dial times its **loading**, the share of that dial that reaches maturity $t$.
+**Read it aloud:** each dial times its **loading**, the share of that dial that reaches maturity $`t`$.
 
-A bond is a list of payments, so its model price is each payment discounted by the curve. Bond number i pays coupon $c_i$ at years 1, 2, … up to its maturity $n_i$, and 100 dollars at $n_i$:
+A bond is a list of payments, so its model price is each payment discounted by the curve. Bond number i pays coupon $`c_i`$ at years 1, 2, … up to its maturity $`n_i`$, and 100 dollars at $`n_i`$:
 
-$$\hat P_i = \sum_{k=1}^{n_i} c_i\, e^{-k\,R(k)} \;+\; 100\, e^{-n_i\,R(n_i)}$$
+```math
+\hat P_i = \sum_{k=1}^{n_i} c_i\, e^{-k\,R(k)} \;+\; 100\, e^{-n_i\,R(n_i)}
+```
 
 The fit chooses the dials that make the score smallest:
 
-$$S = \sum_{i=1}^{12} \left(\hat P_i - P_i\right)^2$$
+```math
+S = \sum_{i=1}^{12} \left(\hat P_i - P_i\right)^2
+```
 
 **Read it aloud:** for every bond, the model's price minus the market's price, squared, and added up over the twelve.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | maturity: years from today | 1 to 30 | — |
-| $f(t)$ | forward rate: the rate for a loan starting at $t$ and lasting a moment | Svensson's forward averages to 4.50300510% over 10 years | — |
-| $R(t)$ | zero rate: the average forward from today to $t$ | Nelson-Siegel 4.53% at 10 years | every bond paying near $t$ gets cheaper |
-| $D(t)$ | discount factor, $e^{-t R(t)}$: today's price of a dollar paid at $t$ | 0.893511 at 3 years | — |
-| $\beta_0$ | level: where the forward and zero rates settle far out | Nelson-Siegel 3.8595%, Svensson 3.5045% | every rate rises, the long end one for one |
-| $\beta_1$ | start: the short end minus the level; its negative is the slope | Nelson-Siegel −2.2528% | the short end rises, so the curve flattens |
-| $\beta_2$ | hump size | Nelson-Siegel 5.1761% | the middle maturities rise |
-| $\tau_1$ | time scale of the fade and the first hump, in years | Nelson-Siegel 3.1347 | the fade lasts longer and the hump moves later |
-| $\beta_3$, $\tau_2$ | Svensson's second hump: its size and its time scale | 2.4856% and 6.9781 years | a second bulge grows, and moves later |
-| $L$, $H$ | slope loading and hump loading, functions of $x$ = maturity over time scale | at 10 years, Nelson-Siegel: 0.30 and 0.26 | — |
-| $P_i$, $\hat P_i$, $c_i$, $n_i$ | market price, model price, coupon and maturity of bond number i | 3-year bond: 97.67, 97.7638, 3.00, 3 | — |
-| $S$ | score: sum of squared price misses, in dollars squared | Nelson-Siegel 0.189162, Svensson 0.000036 | the fit is worse |
+| $`t`$ | maturity: years from today | 1 to 30 | — |
+| $`f(t)`$ | forward rate: the rate for a loan starting at $`t`$ and lasting a moment | Svensson's forward averages to 4.50300510% over 10 years | — |
+| $`R(t)`$ | zero rate: the average forward from today to $`t`$ | Nelson-Siegel 4.53% at 10 years | every bond paying near $`t`$ gets cheaper |
+| $`D(t)`$ | discount factor, $`e^{-t R(t)}`$: today's price of a dollar paid at $`t`$ | 0.893511 at 3 years | — |
+| $`\beta_0`$ | level: where the forward and zero rates settle far out | Nelson-Siegel 3.8595%, Svensson 3.5045% | every rate rises, the long end one for one |
+| $`\beta_1`$ | start: the short end minus the level; its negative is the slope | Nelson-Siegel −2.2528% | the short end rises, so the curve flattens |
+| $`\beta_2`$ | hump size | Nelson-Siegel 5.1761% | the middle maturities rise |
+| $`\tau_1`$ | time scale of the fade and the first hump, in years | Nelson-Siegel 3.1347 | the fade lasts longer and the hump moves later |
+| $`\beta_3`$, $`\tau_2`$ | Svensson's second hump: its size and its time scale | 2.4856% and 6.9781 years | a second bulge grows, and moves later |
+| $`L`$, $`H`$ | slope loading and hump loading, functions of $`x`$ = maturity over time scale | at 10 years, Nelson-Siegel: 0.30 and 0.26 | — |
+| $`P_i`$, $`\hat P_i`$, $`c_i`$, $`n_i`$ | market price, model price, coupon and maturity of bond number i | 3-year bond: 97.67, 97.7638, 3.00, 3 | — |
+| $`S`$ | score: sum of squared price misses, in dollars squared | Nelson-Siegel 0.189162, Svensson 0.000036 | the fit is worse |
 
 Conventions verified 28 Sep 2026: the card's bonds pay one coupon a year, on anniversaries of the fit date. So there is no interest accrued between coupons, and the quoted price is the whole price. US Treasury notes and bonds pay coupons twice a year and are quoted as **clean** prices, which leave out the interest accrued since the last coupon. A real fit adds that accrued interest back before comparing prices.
 
@@ -85,7 +93,7 @@ Conventions verified 28 Sep 2026: the card's bonds pay one coupon a year, on ann
 
 - **The curve really is one level, one fade and one or two humps.** When the market's curve has an extra bend, the fit smears the miss across neighbouring bonds. Here Nelson-Siegel's misses reach 20.58 cents because the true curve has a second hump.
 - **The prices are comparable.** Same settlement date, clean and accrued interest handled the same way, no bond priced for a special reason such as being the cheapest to deliver into a futures contract. Otherwise the misses measure the data, not the curve.
-- **The dials are identified.** Svensson with $\tau_1 = \tau_2$, or with $\beta_3 = 0$, has more dials than the prices can pin down. The fit still prices the bonds; the reading of the dials is lost.
+- **The dials are identified.** Svensson with $`\tau_1 = \tau_2`$, or with $`\beta_3 = 0`$, has more dials than the prices can pin down. The fit still prices the bonds; the reading of the dials is lost.
 - **Inside the bonds' range.** Past 30 years the curve runs on its assumed shape alone, with no price to check it.
 - **One morning at a time.** A fit describes today's curve, not how rates move tomorrow.
 
@@ -101,18 +109,18 @@ The family is chosen for reading, not only for fitting. Rate curves move mostly 
 
 ### Step 1: from a forward rate to a bond price
 
-A dollar paid at $t$ is worth today what is left after the forward rate has been charged, moment by moment, from today to $t$: $D(t) = e^{-\int_0^t f(s)\,ds}$. Writing the integral as $t$ times the average forward, $t\,R(t)$, gives $D(t) = e^{-t R(t)}$. So the zero rate is the average of the forward rate, and averaging each of the three shapes gives its loading. A bond's price is then the sum of its payments, each times its discount factor.
+A dollar paid at $`t`$ is worth today what is left after the forward rate has been charged, moment by moment, from today to $`t`$: $`D(t) = e^{-\int_0^t f(s)\,ds}`$. Writing the integral as $`t`$ times the average forward, $`t\,R(t)`$, gives $`D(t) = e^{-t R(t)}`$. So the zero rate is the average of the forward rate, and averaging each of the three shapes gives its loading. A bond's price is then the sum of its payments, each times its discount factor.
 
 <details>
 <summary>Detailed proof: the loadings are averages of the forward shapes</summary>
 
-Put $x = t/\tau$. The flat piece averages to itself: 1.
+Put $`x = t/\tau`$. The flat piece averages to itself: 1.
 
-The fading piece: $\int_0^t e^{-s/\tau}\,ds = \tau\,(1 - e^{-x})$. Divide by $t$: $\frac{1 - e^{-x}}{x} = L(x)$.
+The fading piece: $`\int_0^t e^{-s/\tau}\,ds = \tau\,(1 - e^{-x})`$. Divide by $`t`$: $`\frac{1 - e^{-x}}{x} = L(x)`$.
 
-The hump: substitute $u = s/\tau$, so $\int_0^t \frac{s}{\tau} e^{-s/\tau}\,ds = \tau \int_0^x u\,e^{-u}\,du = \tau\,\big(1 - (1 + x)e^{-x}\big)$, integrating by parts. Divide by $t$: $\frac{1 - e^{-x}}{x} - e^{-x} = L(x) - e^{-x} = H(x)$.
+The hump: substitute $`u = s/\tau`$, so $`\int_0^t \frac{s}{\tau} e^{-s/\tau}\,ds = \tau \int_0^x u\,e^{-u}\,du = \tau\,\big(1 - (1 + x)e^{-x}\big)`$, integrating by parts. Divide by $`t`$: $`\frac{1 - e^{-x}}{x} - e^{-x} = L(x) - e^{-x} = H(x)`$.
 
-The second hump is the same calculation on $\tau_2$. Adding the four averages, each times its dial, gives $R(t)$. At $t = 0$ both loadings are defined by their limits, $L = 1$ and $H = 0$, which are the averages over a vanishing interval.
+The second hump is the same calculation on $`\tau_2`$. Adding the four averages, each times its dial, gives $`R(t)`$. At $`t = 0`$ both loadings are defined by their limits, $`L = 1`$ and $`H = 0`$, which are the averages over a vanishing interval.
 
 </details>
 
@@ -120,9 +128,9 @@ The checks confirm this without the algebra. They add up Svensson's forward rate
 
 ### Step 2: reading the dials
 
-The loadings decide what each dial means. Far out, $x$ is large, both $L$ and $H$ shrink to zero, and the zero rate settles at $\beta_0$: the **level**. Near today, $x$ is small, $L$ is close to 1 and $H$ close to 0, so the zero rate starts at $\beta_0 + \beta_1$. The long end minus the short end is therefore $-\beta_1$: the **slope**. A negative $\beta_1$ means an upward-sloping curve.
+The loadings decide what each dial means. Far out, $`x`$ is large, both $`L`$ and $`H`$ shrink to zero, and the zero rate settles at $`\beta_0`$: the **level**. Near today, $`x`$ is small, $`L`$ is close to 1 and $`H`$ close to 0, so the zero rate starts at $`\beta_0 + \beta_1`$. The long end minus the short end is therefore $`-\beta_1`$: the **slope**. A negative $`\beta_1`$ means an upward-sloping curve.
 
-$H$ is zero at both ends and positive between: the **curvature**, or hump. For the zero rate the hump peaks at $x$ = 1.7933, which on the Nelson-Siegel fit is 1.7933 × 3.1347 = 5.6215 years. The forward rate's hump, $\frac{t}{\tau_1} e^{-t/\tau_1}$, peaks earlier, at exactly $t = \tau_1$.
+$`H`$ is zero at both ends and positive between: the **curvature**, or hump. For the zero rate the hump peaks at $`x`$ = 1.7933, which on the Nelson-Siegel fit is 1.7933 × 3.1347 = 5.6215 years. The forward rate's hump, $`\frac{t}{\tau_1} e^{-t/\tau_1}`$, peaks earlier, at exactly $`t = \tau_1`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -135,16 +143,16 @@ xychart-beta
     line [0.13, 0.21, 0.26, 0.29, 0.30, 0.29, 0.26, 0.23, 0.20, 0.15, 0.13, 0.10]
 ```
 
-First line (orange, flat at 1): the level reaches every maturity in full. Second line (green): the slope loading $L$, strongest at the short end and fading. Third line (dark): the hump loading $H$, weak at both ends and strongest in the middle.
+First line (orange, flat at 1): the level reaches every maturity in full. Second line (green): the slope loading $`L`$, strongest at the short end and fading. Third line (dark): the hump loading $`H`$, weak at both ends and strongest in the middle.
 
 Read off this morning's Nelson-Siegel fit:
 
 | Dial | Value | What the curve does |
 | --- | --- | --- |
-| level $\beta_0$ | 3.8595% | the zero rate at 10,000 years is 3.8604%, still creeping down to it |
-| short end $\beta_0 + \beta_1$ | 1.6067% | the zero rate at a thousandth of a year is 1.6079% |
-| slope $-\beta_1$ | 2.2528% | the long end sits 2.2528% above the short end |
-| hump $\beta_2$ | 5.1761% | a bulge in the zero rate peaking near 5.6215 years |
+| level $`\beta_0`$ | 3.8595% | the zero rate at 10,000 years is 3.8604%, still creeping down to it |
+| short end $`\beta_0 + \beta_1`$ | 1.6067% | the zero rate at a thousandth of a year is 1.6079% |
+| slope $`-\beta_1`$ | 2.2528% | the long end sits 2.2528% above the short end |
+| hump $`\beta_2`$ | 5.1761% | a bulge in the zero rate peaking near 5.6215 years |
 
 ### Step 3: does a best fit exist, and is it the only one?
 
@@ -154,24 +162,26 @@ Read off this morning's Nelson-Siegel fit:
 
 **Boundary cases.** Three settings make dials invisible:
 
-- $\tau_1$ near zero: every loading has faded before the first bond pays, so $\beta_1$ and $\beta_2$ touch no price.
-- $\tau_1$ very large: $L$ stays near 1 and $H$ near 0 at every bond's maturity, so the slope dial copies the level dial.
-- Svensson with $\tau_2 = \tau_1$: the two hump loadings are identical, and only $\beta_2 + \beta_3$ is fixed by the prices. With $\beta_3 = 0$, any $\tau_2$ gives the same prices.
+- $`\tau_1`$ near zero: every loading has faded before the first bond pays, so $`\beta_1`$ and $`\beta_2`$ touch no price.
+- $`\tau_1`$ very large: $`L`$ stays near 1 and $`H`$ near 0 at every bond's maturity, so the slope dial copies the level dial.
+- Svensson with $`\tau_2 = \tau_1`$: the two hump loadings are identical, and only $`\beta_2 + \beta_3`$ is fixed by the prices. With $`\beta_3 = 0`$, any $`\tau_2`$ gives the same prices.
 
 ### Step 4: turning the dials, two independent ways
 
 **Road 1, Gauss-Newton.** Near any setting of the dials, a small change in the dials changes each price by roughly a fixed multiple of each change. Those multiples form a table, the **Jacobian**: one row per bond, one column per dial. Replacing the prices by that straight-line approximation turns the problem into an ordinary least-squares problem, which is solved exactly by a small system of linear equations.
 
-Take that step, halve it if the score got worse, and repeat. The checks first sweep $\tau_1$ from 0.25 to 10 years with only the beta dials moving, then free all four dials from the best sweep point.
+Take that step, halve it if the score got worse, and repeat. The checks first sweep $`\tau_1`$ from 0.25 to 10 years with only the beta dials moving, then free all four dials from the best sweep point.
 
 <details>
 <summary>The algebra behind the Gauss-Newton step</summary>
 
-Write *r* for the list of twelve misses $\hat P_i - P_i$, and *J* for the Jacobian. The entry in row i and column j is the change in $\hat P_i$ per unit change of dial j. For a beta dial that entry is minus the sum, over bond i's payment dates, of date × payment × discount factor × that dial's loading at the date. The checks estimate every column by nudging the dial up and down by a millionth.
+Write *r* for the list of twelve misses $`\hat P_i - P_i`$, and *J* for the Jacobian. The entry in row i and column j is the change in $`\hat P_i`$ per unit change of dial j. For a beta dial that entry is minus the sum, over bond i's payment dates, of date × payment × discount factor × that dial's loading at the date. The checks estimate every column by nudging the dial up and down by a millionth.
 
 After a step *δ* ("delta") in the dials the misses are about *r* + *Jδ*. Their sum of squares is smallest where its slope in every direction is zero:
-$$J^\top J\,\delta = -J^\top r$$
-Here $J^\top$ is *J* turned on its side, rows swapped for columns. That is four equations in four unknowns (six for Svensson), solved by Gaussian elimination. Where the columns of *J* are independent, the step is unique. Along it the score first falls, so a short enough step always improves it.
+
+$`\displaystyle J^\top J\,\delta = -J^\top r`$
+
+Here $`J^\top`$ is *J* turned on its side, rows swapped for columns. That is four equations in four unknowns (six for Svensson), solved by Gaussian elimination. Where the columns of *J* are independent, the step is unique. Along it the score first falls, so a short enough step always improves it.
 
 </details>
 
@@ -181,7 +191,7 @@ Both roads land on the same four numbers: 3.8595%, −2.2528%, 5.1761% and 3.134
 
 ### Step 5: six dials never fit worse than four
 
-Svensson with $\beta_3 = 0$ is Nelson-Siegel. So every Nelson-Siegel curve is also a Svensson curve, and Svensson's best score can only be equal or lower: 0.000036 against 0.189162 dollars squared. Extra dials never raise the score. The question is whether they lower it by more than noise.
+Svensson with $`\beta_3 = 0`$ is Nelson-Siegel. So every Nelson-Siegel curve is also a Svensson curve, and Svensson's best score can only be equal or lower: 0.000036 against 0.189162 dollars squared. Extra dials never raise the score. The question is whether they lower it by more than noise.
 
 Here Svensson's typical miss, the root of the mean squared miss, is 0.173 cents, the size of rounding to the cent. Nelson-Siegel's is 12.555 cents, and its misses run in waves: negative, positive, negative, positive, negative along the maturities. A pattern in the misses is a missing shape.
 
@@ -191,16 +201,16 @@ A different road fits yields rather than prices. Price misses weigh long bonds m
 
 ## Worked numbers, by hand
 
-Price the 3-year bond, coupon 3.00 dollars, on the Nelson-Siegel fit. At one year $x$ = 1/3.1347, so $L$ = 0.8562 and $H$ = 0.1293 (the code prints them).
+Price the 3-year bond, coupon 3.00 dollars, on the Nelson-Siegel fit. At one year $`x`$ = 1/3.1347, so $`L`$ = 0.8562 and $`H`$ = 0.1293 (the code prints them).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | zero rate at 1 year | 3.8595 + (−2.2528)(0.8562) + 5.1761(0.1293) | 2.6000% (2.5999 from the rounded inputs) |
-| discount factor at 1 year | $e^{-1 \times 2.6000\%}$ | 0.974335 |
+| discount factor at 1 year | $`e^{-1 \times 2.6000\%}`$ | 0.974335 |
 | zero rate at 2 years | same recipe | 3.2858% |
-| discount factor at 2 years | $e^{-2 \times 3.2858\%}$ | 0.936396 |
+| discount factor at 2 years | $`e^{-2 \times 3.2858\%}`$ | 0.936396 |
 | zero rate at 3 years | same recipe | 3.7532% |
-| discount factor at 3 years | $e^{-3 \times 3.7532\%}$ | 0.893511 |
+| discount factor at 3 years | $`e^{-3 \times 3.7532\%}`$ | 0.893511 |
 | model price | 3 × 0.974335 + 3 × 0.936396 + 103 × 0.893511 | 97.7638 |
 | market price | quoted | 97.67 |
 | **miss** | 97.7638 − 97.67 | **+9.38 cents** |
@@ -226,8 +236,8 @@ First line (orange): Nelson-Siegel, swinging between −18.05 and +20.58 cents i
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Treat each bond's yield to maturity as the zero rate at its maturity, and fit to those | dials 3.9080%, −2.4172%, 5.1598%; worst price miss 0.5246 dollars, against 20.58 cents for the proper fit | a yield is one flat rate for a whole stream of payments; a zero rate belongs to a single date |
-| Discount with the forward rate $f(t)$ in place of the zero rate $R(t)$ | the 30-year bond at 107.4188 instead of 102.8495 | a dollar at 30 years is discounted by the average forward over 30 years, not the forward at year 30 |
-| Hold $\tau_1$ at 1.3684 years, the value Diebold and Li fixed for monthly US data | score 4.897487 against 0.189162; start −5.9522%, hump 7.5400% | with the time scale wrong the other dials contort to compensate, and they stop meaning level, slope and hump |
+| Discount with the forward rate $`f(t)`$ in place of the zero rate $`R(t)`$ | the 30-year bond at 107.4188 instead of 102.8495 | a dollar at 30 years is discounted by the average forward over 30 years, not the forward at year 30 |
+| Hold $`\tau_1`$ at 1.3684 years, the value Diebold and Li fixed for monthly US data | score 4.897487 against 0.189162; start −5.9522%, hump 7.5400% | with the time scale wrong the other dials contort to compensate, and they stop meaning level, slope and hump |
 
 The **yield to maturity** in the first row is the one flat rate, continuously compounded here, that reprices a bond. The checks find it for each bond by bisection, halving an interval of rates 200 times.
 
@@ -640,16 +650,16 @@ The two outputs agree line for line, each language taking both roads with its ow
 
 Lean proves the averaging formula, the reading of the dials and the existence of a best fit, for any positive time scales.
 
-- Suppose both time scales and the maturity $t$ are positive. Then the average of $f$ from today to $t$ is exactly the formula for $R(t)$.
-- Suppose the same. Then $e^{-\int_0^t f(s)\,ds} = e^{-t R(t)}$, the discount factor $D(t)$.
-- Suppose both time scales are positive. Then $R(t)$ settles at the level $\beta_0$ as $t$ grows without end.
-- Suppose both time scales are positive. Then $R(t)$ starts at $\beta_0 + \beta_1$ as $t$ shrinks to zero.
-- Take any $x > 0$. Then the hump loading $H(x)$ is positive.
-- Suppose each dial is held in a closed range, with both time scales above a positive floor. Then some dials in that range give the smallest score $S$.
-- That best fit exists for any bonds and any market prices. Holding $\beta_3$ at 0 gives the Nelson-Siegel case.
+- Suppose both time scales and the maturity $`t`$ are positive. Then the average of $`f`$ from today to $`t`$ is exactly the formula for $`R(t)`$.
+- Suppose the same. Then $`e^{-\int_0^t f(s)\,ds} = e^{-t R(t)}`$, the discount factor $`D(t)`$.
+- Suppose both time scales are positive. Then $`R(t)`$ settles at the level $`\beta_0`$ as $`t`$ grows without end.
+- Suppose both time scales are positive. Then $`R(t)`$ starts at $`\beta_0 + \beta_1`$ as $`t`$ shrinks to zero.
+- Take any $`x > 0`$. Then the hump loading $`H(x)`$ is positive.
+- Suppose each dial is held in a closed range, with both time scales above a positive floor. Then some dials in that range give the smallest score $`S`$.
+- That best fit exists for any bonds and any market prices. Holding $`\beta_3`$ at 0 gives the Nelson-Siegel case.
 - The twelve bonds pay on thirty different dates.
 
-The fitted dials, prices and misses, and the hump's peak at $x$ = 1.7933, are left to the Python and Rust checks.
+The fitted dials, prices and misses, and the hump's peak at $`x`$ = 1.7933, are left to the Python and Rust checks.
 
 ```lean
 -- Fitting a curve with four or six parameters: the Svensson zero rate is the average of its forward rate, its dials read as level, start and hump, and a best least-squares fit to bond prices exists when the dials stay in a closed box.
@@ -939,7 +949,7 @@ example :
 > **Reading the dials as facts about the market.** They are facts about the fit. The same twelve prices give a level of 3.8595% under Nelson-Siegel and 3.5045% under Svensson, and the true curve's level is 3.5000%. A four-dial curve that lacks a shape the market has will bend its other dials to make up for it. Compare dials only between fits of the same form, with the same time scales.
 >
 > Smaller traps:
-> - **The slope's sign.** $\beta_1$ is the short end minus the level. This morning's −2.2528% means the curve slopes up by 2.2528%.
+> - **The slope's sign.** $`\beta_1`$ is the short end minus the level. This morning's −2.2528% means the curve slopes up by 2.2528%.
 > - **Time scale units.** Diebold and Li write the Nelson-Siegel decay as a rate, lambda (λ), of 0.0609 per month. As a time scale in years that is 1 / (12 × 0.0609) = 1.3684. Mixing months and years moves the hump by a factor of twelve.
 > - **A tiny score is not a better curve.** Six dials always fit at least as well as four. What earns the extra dials is misses that fall to the size of the noise, as Svensson's 0.173 cents does here, and dials that stay put from one morning to the next.
 > - **Believing the curve past the last bond.** Beyond 30 years the fitted curve heads for its level with no price to check it.
@@ -953,7 +963,7 @@ example :
 - **Level, slope and curvature over time.** Diebold and Li fit Nelson-Siegel each month with the time scale fixed, and forecast the three beta dials as time series. [Level, slope and curvature](01-principal-components-of-the-curve.md) finds the same three patterns in the data without assuming a shape.
 - **Hedging a book.** A fitted curve can be bumped one dial at a time, or at single maturities as in [Key-rate durations](02-key-rate-durations-and-curve-hedging.md).
 - **Roll-down.** The fitted curve's slope says how a bond's yield should drift as it ages: [Carry and roll-down](05-carry-and-roll-down.md).
-- **Rates below zero.** Nothing in the formula stops $\beta_0 + \beta_1$ from being negative. The European Central Bank's euro-area curve is a Svensson fit, and its short end sat below zero for years after 2014: [Negative rates](06-negative-rates-and-floors.md).
+- **Rates below zero.** Nothing in the formula stops $`\beta_0 + \beta_1`$ from being negative. The European Central Bank's euro-area curve is a Svensson fit, and its short end sat below zero for years after 2014: [Negative rates](06-negative-rates-and-floors.md).
 
 > **Say it back**
 > Nelson-Siegel writes the forward curve as a level, a fading start and one hump: four dials. Svensson adds a second hump: six. Averaging the forward gives the zero rate, which gives each discount factor, which prices every bond. The dials are chosen to make the total squared price miss smallest. The level is where the curve settles, minus the start is the slope, and the hump is the middle. A four-dial curve that lacks a shape the market has will misread them.

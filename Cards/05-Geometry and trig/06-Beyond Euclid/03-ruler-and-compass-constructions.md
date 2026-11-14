@@ -26,31 +26,35 @@ To scale, 1 = 100 units. The arc at O marks 360°/17. The foot of P1 lies 0.9325
 
 ## The formula
 
-Write $n$ for the number of sides and $c$ for the cosine of 360°/n: on a circle of radius 1, the distance from the centre to the foot of the first corner. Drawing $c$ is the whole job: the perpendicular there meets the circle at the first corner, and the compass steps off the rest.
+Write $`n`$ for the number of sides and $`c`$ for the cosine of 360°/n: on a circle of radius 1, the distance from the centre to the foot of the first corner. Drawing $`c`$ is the whole job: the perpendicular there meets the circle at the first corner, and the compass steps off the rest.
 
-A **field** is a set of numbers closed under adding, subtracting, multiplying and dividing by anything but zero ([Fields](../../03-Algebra/09-Rings%20and%20Fields/02-fields.md)); $F$ is the field of numbers built so far, starting with the fractions.
+A **field** is a set of numbers closed under adding, subtracting, multiplying and dividing by anything but zero ([Fields](../../03-Algebra/09-Rings%20and%20Fields/02-fields.md)); $`F`$ is the field of numbers built so far, starting with the fractions.
 
 One construction step can only do this:
 
-$$\text{new number} = p + q\sqrt{k}, \qquad p,\ q,\ k \text{ in } F$$
+```math
+\text{new number} = p + q\sqrt{k}, \qquad p,\ q,\ k \text{ in } F
+```
 
 **Read it aloud:** each step makes an old number plus an old number times the square root of an old number.
 
 For the 17-gon, four such steps suffice, each a quadratic whose coefficients come from the step before:
 
-$$A,\ B = \frac{-1 \pm \sqrt{17}}{2}, \qquad A_1 = \frac{A + \sqrt{A^2 + 4}}{2}, \qquad B_1 = \frac{B + \sqrt{B^2 + 4}}{2}, \qquad 2c = \frac{A_1 + \sqrt{A_1^2 - 4B_1}}{2}$$
+```math
+A,\ B = \frac{-1 \pm \sqrt{17}}{2}, \qquad A_1 = \frac{A + \sqrt{A^2 + 4}}{2}, \qquad B_1 = \frac{B + \sqrt{B^2 + 4}}{2}, \qquad 2c = \frac{A_1 + \sqrt{A_1^2 - 4B_1}}{2}
+```
 
 **Read it aloud:** the square root of 17, two more roots built on it, one last root, and half the result is the 17-gon's cosine.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of equal sides | 17, and 7 | corners closer together |
-| $c$ | cosine of 360°/n, on a unit circle | 0.932472 for 17; 0.623490 for 7 | corner nearer the start |
-| $F$ | the field of numbers built so far | fractions, then with √17 added | more in reach |
-| $p$, $q$, $k$ | numbers already in $F$; $k$ goes under the new root | $k$ = 17 at the first step | — |
-| $A$, $B$ | each twice a sum of four cosines | 1.561553 and −2.561553 | — |
-| $A_1$, $B_1$ | each twice a sum of two cosines | 2.049481 and 0.344151 | — |
-| $x$ | the unknown in a cubic | cos 20°, or the cube root of 2 | — |
+| $`n`$ | number of equal sides | 17, and 7 | corners closer together |
+| $`c`$ | cosine of 360°/n, on a unit circle | 0.932472 for 17; 0.623490 for 7 | corner nearer the start |
+| $`F`$ | the field of numbers built so far | fractions, then with √17 added | more in reach |
+| $`p`$, $`q`$, $`k`$ | numbers already in $`F`$; $`k`$ goes under the new root | $`k`$ = 17 at the first step | — |
+| $`A`$, $`B`$ | each twice a sum of four cosines | 1.561553 and −2.561553 | — |
+| $`A_1`$, $`B_1`$ | each twice a sum of two cosines | 2.049481 and 0.344151 | — |
+| $`x`$ | the unknown in a cubic | cos 20°, or the cube root of 2 | — |
 
 The full test, from Gauss and Wantzel: an n-gon can be built exactly when n is a power of 2 times distinct **Fermat primes**, primes of the form 2^(2^j) + 1 for a whole number j, such as 3, 5 and 17. From 3 to 20 that allows 3, 4, 5, 6, 8, 10, 12, 15, 16, 17 and 20, and rules out 7, 9, 11, 13, 14, 18 and 19.
 
@@ -66,7 +70,7 @@ The full test, from Gauss and Wantzel: an n-gon can be built exactly when n is a
 
 ### Step 0: every step solves a quadratic at worst
 
-Put the page on a grid, known points at coordinates in $F$; lines and circles through them have equations with coefficients in $F$. Two lines cross where two linear equations agree, inside $F$. A line meets a circle where a quadratic is zero, and the quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) gives $p + q\sqrt{k}$. Subtracting two circles' equations cancels the squared terms and leaves a line, so two circles are the line-and-circle case again.
+Put the page on a grid, known points at coordinates in $`F`$; lines and circles through them have equations with coefficients in $`F`$. Two lines cross where two linear equations agree, inside $`F`$. A line meets a circle where a quadratic is zero, and the quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) gives $`p + q\sqrt{k}`$. Subtracting two circles' equations cancels the squared terms and leaves a line, so two circles are the line-and-circle case again.
 
 ### Step 1: the tools reach every field operation and every square root
 
@@ -95,7 +99,7 @@ Gauss grouped them: A = 2(c1 + c2 + c4 + c8) and B = 2(c3 + c5 + c6 + c7). The s
 
 Multiplying out with 2 cos u × 2 cos v = 2 cos(u + v) + 2 cos(u − v) gives 32 terms, each cosine four times, so A × B = −4. Numbers with sum −1 and product −4 solve y^2 + y − 4 = 0: one square root of 17.
 
-Halve again. A1 = 2(c1 + c4) and its partner 2(c2 + c8) add to A and multiply to −1; B1 = 2(c3 + c5) and its partner likewise with B. Last, 2c1 and 2c4 add to A1 and multiply to 2c5 + 2c3 = B1. Four quadratics, and c1 is the 17-gon's $c$. It works because 17 − 1 = 16 halves four times.
+Halve again. A1 = 2(c1 + c4) and its partner 2(c2 + c8) add to A and multiply to −1; B1 = 2(c3 + c5) and its partner likewise with B. Last, 2c1 and 2c4 add to A1 and multiply to 2c5 + 2c3 = B1. Four quadratics, and c1 is the 17-gon's $`c`$. It works because 17 − 1 = 16 halves four times.
 
 ### Step 3: the 7-gon leaves a cubic
 
@@ -108,9 +112,9 @@ If a fraction p/q in lowest terms were a root, multiplying through by q^3 shows 
 <details>
 <summary>Detailed proof: square roots never reach a root of such a cubic</summary>
 
-Take the first field $F$ in the tower (the chain of fields, each the one below plus one new square root) that holds a root: $p + q\sqrt{k}$, with $p$, $q$, $k$ in the field below, $q$ not zero, $\sqrt{k}$ not below. Substituting gives X + Y√k = 0 with X, Y below; Y must be 0, or √k = −X/Y would lie below, so X = 0 too.
+Take the first field $`F`$ in the tower (the chain of fields, each the one below plus one new square root) that holds a root: $`p + q\sqrt{k}`$, with $`p`$, $`q`$, $`k`$ in the field below, $`q`$ not zero, $`\sqrt{k}`$ not below. Substituting gives X + Y√k = 0 with X, Y below; Y must be 0, or √k = −X/Y would lie below, so X = 0 too.
 
-Then $p - q\sqrt{k}$ gives X − Y√k = 0: a second root. A cubic's three roots add to minus its x^2 coefficient over its x^3 one, here −1/2, so the third is −1/2 − 2p, in the field below, against the choice of $F$. Descending ends at a fraction root, which the candidates excluded.
+Then $`p - q\sqrt{k}`$ gives X − Y√k = 0: a second root. A cubic's three roots add to minus its x^2 coefficient over its x^3 one, here −1/2, so the third is −1/2 − 2p, in the field below, against the choice of $`F`$. Descending ends at a fraction root, which the candidates excluded.
 
 </details>
 

@@ -35,49 +35,57 @@ Orange: one year to go. Green: a quarter of a year to go. Dark blue: the payoff 
 
 ## The formula
 
-Notation first, in words. Time is in years. The share price at time $t$ is $X_t$, a stochastic process (the value at time t, one run of it a sample path). $W_t$ is Brownian motion, the random walk seen from far away. In $dX_t = \mu\,dt + \sigma\,dW_t$ the last piece is shorthand for an Ito integral, never a derivative, because the path has none. The generator $L$ is the process's instantaneous average rate of change ([The generator](01-infinitesimal-generator.md)): for this process it sends a smooth function $g$ to $\mu\, g' + \tfrac12 \sigma^2 g''$. A partial derivative such as $\partial_t u$ is the rate of change of $u$ as $t$ moves with the price held still; $\partial_{xx} u$ is the bend of $u$ in the price.
+Notation first, in words. Time is in years. The share price at time $`t`$ is $`X_t`$, a stochastic process (the value at time t, one run of it a sample path). $`W_t`$ is Brownian motion, the random walk seen from far away. In $`dX_t = \mu\,dt + \sigma\,dW_t`$ the last piece is shorthand for an Ito integral, never a derivative, because the path has none. The generator $`L`$ is the process's instantaneous average rate of change ([The generator](01-infinitesimal-generator.md)): for this process it sends a smooth function $`g`$ to $`\mu\, g' + \tfrac12 \sigma^2 g''`$. A partial derivative such as $`\partial_t u`$ is the rate of change of $`u`$ as $`t`$ moves with the price held still; $`\partial_{xx} u`$ is the bend of $`u`$ in the price.
 
-The payoff rule is $f$, paid on the payment date $T$; here $f(y) = \max(y - K, 0)$ with strike $K$ = $100. The quantity on this card is the expected payoff seen from price $x$ at time $t$:
+The payoff rule is $`f`$, paid on the payment date $`T`$; here $`f(y) = \max(y - K, 0)`$ with strike $`K`$ = $100. The quantity on this card is the expected payoff seen from price $`x`$ at time $`t`$:
 
-$$u(t, x) = E\big[\, f(X_T) \mid X_t = x \,\big].$$
+```math
+u(t, x) = E\big[\, f(X_T) \mid X_t = x \,\big].
+```
 
 The Kolmogorov backward equation says it solves
 
-$$\partial_t u + L u = 0 \quad (t < T), \qquad u(T, x) = f(x), \qquad L u = \mu\, \partial_x u + \tfrac12 \sigma^2\, \partial_{xx} u .$$
+```math
+\partial_t u + L u = 0 \quad (t < T), \qquad u(T, x) = f(x), \qquad L u = \mu\, \partial_x u + \tfrac12 \sigma^2\, \partial_{xx} u .
+```
 
 **Read it aloud:** the clock rate of the expected payoff plus the generator applied to it is zero, and on the payment date the expected payoff is the payoff.
 
-Measured in time to go, $\tau = T - t$, the sign flips and Brownian motion gives the heat equation:
+Measured in time to go, $`\tau = T - t`$, the sign flips and Brownian motion gives the heat equation:
 
-$$\partial_\tau u = \mu\, \partial_x u + \tfrac12 \sigma^2\, \partial_{xx} u, \qquad u(0, x) = f(x).$$
+```math
+\partial_\tau u = \mu\, \partial_x u + \tfrac12 \sigma^2\, \partial_{xx} u, \qquad u(0, x) = f(x).
+```
 
 **Read it aloud:** as the time to go grows, the expected payoff spreads like heat, at diffusivity one half sigma squared, carried along by the drift.
 
-For constant $\mu$ and $\sigma$ the solution is an average over the bell curve, and for the call payoff it has a closed form:
+For constant $`\mu`$ and $`\sigma`$ the solution is an average over the bell curve, and for the call payoff it has a closed form:
 
-$$u(\tau, x) = \int f\big(x + \mu\tau + \sigma\sqrt{\tau}\, z\big)\,\varphi(z)\,dz = (x + \mu\tau - K)\,N(d) + \sigma\sqrt{\tau}\;\varphi(d), \qquad d = \frac{x + \mu\tau - K}{\sigma\sqrt{\tau}} .$$
+```math
+u(\tau, x) = \int f\big(x + \mu\tau + \sigma\sqrt{\tau}\, z\big)\,\varphi(z)\,dz = (x + \mu\tau - K)\,N(d) + \sigma\sqrt{\tau}\;\varphi(d), \qquad d = \frac{x + \mu\tau - K}{\sigma\sqrt{\tau}} .
+```
 
-**Read it aloud:** the expected payoff is the amount the share is expected to finish above the strike, weighted by the chance it finishes there, plus a premium for the spread. Here $\varphi$ is the bell-curve height and $N(d)$ the bell-curve area to the left of $d$.
+**Read it aloud:** the expected payoff is the amount the share is expected to finish above the strike, weighted by the chance it finishes there, plus a premium for the spread. Here $`\varphi`$ is the bell-curve height and $`N(d)`$ the bell-curve area to the left of $`d`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$; $\partial_\tau u$, $\partial_x u$, $\partial_{xx} u$ | expected payoff from a given start; its rate in time to go, its slope and its bend in the price | 7.978846 at $100 with a year to go | — |
-| $f$, $g$ | the payoff rule on the payment date; $g$ is any smooth function the generator acts on | `max(y - 100, 0)` dollars | — |
-| $x$ | today's price, the starting point | $100 | rises, never faster than the price itself |
-| $t$, $T$, $\tau$ | today's date, the payment date, the time to go $\tau = T - t$, in years | $\tau$ = 1 | rises: more spread, more chance of finishing high |
-| $X_t$, $W_t$, $r_t$ | the share price at time $t$; Brownian motion; the house interest rate | $X_t = 100 + 20 W_t$ | — |
-| $\sigma$ | the noise size: dollars of spread per root-year (0.02 for the rate) | $20 | rises in proportion at the strike |
-| $\mu$ | the drift, dollars per year | 0, then $5 | rises: the start is effectively $5 a year higher |
-| $K$ | the strike, the level the payoff is counted from | $100 | falls |
-| $L$ | the generator: the instantaneous average rate of change | $\tfrac12 \sigma^2$ times the bend, 200 times it here | — |
-| $N$, $\varphi$, $d$ | bell-curve area to the left, bell-curve height, distance to the strike in spread units | $d$ = 0, $\varphi(0)$ = 0.398942 | — |
-| $h$, $\delta$ | the tree's time step and its move size $\delta = \sigma\sqrt{h}$ | 0.0025 years, $1 | coarser: error grows in proportion to $h$ |
-| $\kappa$, $\theta$ | the rate's pull speed and its long-run level | 0.5 per year, 0.04 | — |
+| $`u`$; $`\partial_\tau u`$, $`\partial_x u`$, $`\partial_{xx} u`$ | expected payoff from a given start; its rate in time to go, its slope and its bend in the price | 7.978846 at $100 with a year to go | — |
+| $`f`$, $`g`$ | the payoff rule on the payment date; $`g`$ is any smooth function the generator acts on | `max(y - 100, 0)` dollars | — |
+| $`x`$ | today's price, the starting point | $100 | rises, never faster than the price itself |
+| $`t`$, $`T`$, $`\tau`$ | today's date, the payment date, the time to go $`\tau = T - t`$, in years | $`\tau`$ = 1 | rises: more spread, more chance of finishing high |
+| $`X_t`$, $`W_t`$, $`r_t`$ | the share price at time $`t`$; Brownian motion; the house interest rate | $`X_t = 100 + 20 W_t`$ | — |
+| $`\sigma`$ | the noise size: dollars of spread per root-year (0.02 for the rate) | $20 | rises in proportion at the strike |
+| $`\mu`$ | the drift, dollars per year | 0, then $5 | rises: the start is effectively $5 a year higher |
+| $`K`$ | the strike, the level the payoff is counted from | $100 | falls |
+| $`L`$ | the generator: the instantaneous average rate of change | $`\tfrac12 \sigma^2`$ times the bend, 200 times it here | — |
+| $`N`$, $`\varphi`$, $`d`$ | bell-curve area to the left, bell-curve height, distance to the strike in spread units | $`d`$ = 0, $`\varphi(0)`$ = 0.398942 | — |
+| $`h`$, $`\delta`$ | the tree's time step and its move size $`\delta = \sigma\sqrt{h}`$ | 0.0025 years, $1 | coarser: error grows in proportion to $`h`$ |
+| $`\kappa`$, $`\theta`$ | the rate's pull speed and its long-run level | 0.5 per year, 0.04 | — |
 
 ### When it holds
 
-- **The payoff depends only on the final price, and the process is Markov: today's price carries everything.** Then the expected payoff is a function of $t$ and $x$ alone. If the payoff depends on the path, such as whether the share touched $80, the equation needs a boundary condition, here $u = 0$ at $80, or extra state; without one the answer is $7.98 where the right one is $7.81.
-- **The coefficients are known functions of the state and time.** Drift and noise must be $\mu(x, t)$ and $\sigma(x, t)$, smooth and not growing faster than the price. Otherwise the solution can fail to exist or explode.
+- **The payoff depends only on the final price, and the process is Markov: today's price carries everything.** Then the expected payoff is a function of $`t`$ and $`x`$ alone. If the payoff depends on the path, such as whether the share touched $80, the equation needs a boundary condition, here $`u = 0`$ at $80, or extra state; without one the answer is $7.98 where the right one is $7.81.
+- **The coefficients are known functions of the state and time.** Drift and noise must be $`\mu(x, t)`$ and $`\sigma(x, t)`$, smooth and not growing faster than the price. Otherwise the solution can fail to exist or explode.
 - **The payoff does not grow too fast.** A payoff growing like a power of the price is fine. Without such a bound the expectation can be infinite. And among fast-growing functions the equation has more than one solution with the same end condition (Tychonoff's example), so only the growth bound picks out the expectation.
 - **Ito calculus, not ordinary calculus.** The second-derivative term comes from Ito's lemma. Dropping it gives $0 for the at-the-money contract.
 
@@ -87,79 +95,93 @@ $$u(\tau, x) = \int f\big(x + \mu\tau + \sigma\sqrt{\tau}\, z\big)\,\varphi(z)\,
 
 ### Step 0: today's expectation is the average of the next instant's expectations
 
-Stand at time $t$ with the share at $x$. Wait a short time $h$. The share is now somewhere near $x$, and from wherever it is, the expected payoff is $u(t + h, \cdot)$ evaluated there. The tower rule for conditional expectation (averaging in two stages gives the same as averaging once) and the Markov property (the future depends on the past only through the present price) give
+Stand at time $`t`$ with the share at $`x`$. Wait a short time $`h`$. The share is now somewhere near $`x`$, and from wherever it is, the expected payoff is $`u(t + h, \cdot)`$ evaluated there. The tower rule for conditional expectation (averaging in two stages gives the same as averaging once) and the Markov property (the future depends on the past only through the present price) give
 
-$$u(t, x) = E\big[\, u(t + h, X_{t+h}) \mid X_t = x \,\big].$$
+```math
+u(t, x) = E\big[\, u(t + h, X_{t+h}) \mid X_t = x \,\big].
+```
 
-Everything below expands the right side for small $h$.
+Everything below expands the right side for small $`h`$.
 
 ### Step 1: the coin-flip version is exact, and is a finite-difference scheme
 
-Replace Brownian motion by a walk that moves $\delta$ up or $\delta$ down each step $h$, with equal chances and $\delta = \sigma\sqrt{h}$. With $h$ = 0.0025 years the move is $1. Step 0 becomes an exact recursion:
+Replace Brownian motion by a walk that moves $`\delta`$ up or $`\delta`$ down each step $`h`$, with equal chances and $`\delta = \sigma\sqrt{h}`$. With $`h`$ = 0.0025 years the move is $1. Step 0 becomes an exact recursion:
 
-$$u(t, x) = \tfrac12\, u(t + h, x + \delta) + \tfrac12\, u(t + h, x - \delta).$$
+```math
+u(t, x) = \tfrac12\, u(t + h, x + \delta) + \tfrac12\, u(t + h, x - \delta).
+```
 
-Subtract $u(t + h, x)$ from both sides and divide by $h$. The left side becomes minus the clock rate. The right side becomes $\delta^2 / (2h)$ times the second difference divided by $\delta^2$:
+Subtract $`u(t + h, x)`$ from both sides and divide by $`h`$. The left side becomes minus the clock rate. The right side becomes $`\delta^2 / (2h)`$ times the second difference divided by $`\delta^2`$:
 
-$$\frac{u(t + h, x) - u(t, x)}{h} + \frac{\delta^2}{2h}\cdot\frac{u(t + h, x + \delta) - 2u(t + h, x) + u(t + h, x - \delta)}{\delta^2} = 0 .$$
+```math
+\frac{u(t + h, x) - u(t, x)}{h} + \frac{\delta^2}{2h}\cdot\frac{u(t + h, x + \delta) - 2u(t + h, x) + u(t + h, x - \delta)}{\delta^2} = 0 .
+```
 
-Since $\delta^2 = \sigma^2 h$, the factor $\delta^2 / (2h)$ is $\tfrac12 \sigma^2$, whatever the step. The second fraction tends to the bend $\partial_{xx} u$, the first to $\partial_t u$. In the limit, $\partial_t u + \tfrac12\sigma^2\,\partial_{xx} u = 0$.
+Since $`\delta^2 = \sigma^2 h`$, the factor $`\delta^2 / (2h)`$ is $`\tfrac12 \sigma^2`$, whatever the step. The second fraction tends to the bend $`\partial_{xx} u`$, the first to $`\partial_t u`$. In the limit, $`\partial_t u + \tfrac12\sigma^2\,\partial_{xx} u = 0`$.
 
 This is the whole equation in miniature. Rolling the recursion back from the payoff date is the coin-flip tree, and the code does exactly that. At steps of 0.01, 0.0025, 0.000625 and 0.000156 years the tree's error at $100 is −0.019922, −0.004985, −0.001247 and −0.000312: each quartering of the step quarters the error.
 
 ### Step 2: any diffusion, through the generator
 
-For a general diffusion $dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t$ the generator is defined by the small-time average:
+For a general diffusion $`dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t`$ the generator is defined by the small-time average:
 
-$$E\big[\, g(X_{t+h}) \mid X_t = x \,\big] = g(x) + h\, L g(x) + o(h), \qquad L g = \mu\, g' + \tfrac12 \sigma^2 g'' .$$
+```math
+E\big[\, g(X_{t+h}) \mid X_t = x \,\big] = g(x) + h\, L g(x) + o(h), \qquad L g = \mu\, g' + \tfrac12 \sigma^2 g'' .
+```
 
-Here $o(h)$ means a remainder that shrinks faster than $h$. Apply it in Step 0 with $g = u(t + h, \cdot)$:
+Here $`o(h)`$ means a remainder that shrinks faster than $`h`$. Apply it in Step 0 with $`g = u(t + h, \cdot)`$:
 
-$$u(t, x) = u(t + h, x) + h\, L u(t + h, \cdot)(x) + o(h).$$
+```math
+u(t, x) = u(t + h, x) + h\, L u(t + h, \cdot)(x) + o(h).
+```
 
-Move $u(t + h, x)$ across and divide by $h$: minus the clock rate equals $L u$. That is $\partial_t u + L u = 0$. The drift enters through $\mu\,\partial_x u$: the average move pushes the start along the slope.
+Move $`u(t + h, x)`$ across and divide by $`h`$: minus the clock rate equals $`L u`$. That is $`\partial_t u + L u = 0`$. The drift enters through $`\mu\,\partial_x u`$: the average move pushes the start along the slope.
 
 ### Step 3: the same fact, read as a martingale
 
-The process $M_t = u(t, X_t)$ is the best forecast of the payoff given what is known at time $t$: $M_t = E[f(X_T) \mid F_t]$, conditioning on everything known by time $t$. By the tower rule it is a martingale, a fair game whose best forecast of tomorrow is today. Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) writes its change as
+The process $`M_t = u(t, X_t)`$ is the best forecast of the payoff given what is known at time $`t`$: $`M_t = E[f(X_T) \mid F_t]`$, conditioning on everything known by time $`t`$. By the tower rule it is a martingale, a fair game whose best forecast of tomorrow is today. Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) writes its change as
 
-$$dM_t = \big(\partial_t u + L u\big)(t, X_t)\,dt + \sigma\,\partial_x u(t, X_t)\,dW_t .$$
+```math
+dM_t = \big(\partial_t u + L u\big)(t, X_t)\,dt + \sigma\,\partial_x u(t, X_t)\,dW_t .
+```
 
 A martingale cannot carry a steady drift in time, so the bracket must vanish wherever the process can go. The equation is the condition for the forecast to be fair.
 
 ### Step 4: solve it for Brownian motion
 
-In time to go, with $\mu = 0$, the equation reads $\partial_\tau u = \tfrac12\sigma^2\,\partial_{xx} u$. That is the heat equation ([The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md)) with diffusivity $\tfrac12\sigma^2$, 200 square dollars per year here. Its solution from an initial profile $f$ is the average of $f$ over a bell curve of spread $\sigma\sqrt{\tau}$ centred on $x$. That is exactly $E[f(x + \sigma W_\tau)]$, since $W_\tau$ is normal with variance $\tau$. The heat equation and Brownian expectation are one object written two ways.
+In time to go, with $`\mu = 0`$, the equation reads $`\partial_\tau u = \tfrac12\sigma^2\,\partial_{xx} u`$. That is the heat equation ([The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md)) with diffusivity $`\tfrac12\sigma^2`$, 200 square dollars per year here. Its solution from an initial profile $`f`$ is the average of $`f`$ over a bell curve of spread $`\sigma\sqrt{\tau}`$ centred on $`x`$. That is exactly $`E[f(x + \sigma W_\tau)]`$, since $`W_\tau`$ is normal with variance $`\tau`$. The heat equation and Brownian expectation are one object written two ways.
 
 For the call, split the payoff into the part above the strike and evaluate the two halves.
 
 <details>
 <summary>The algebra behind the call formula</summary>
 
-Write $s = \sigma\sqrt{\tau}$ and $m = x + \mu\tau$. The payoff is positive when $m + s z > K$, that is when $z > -d$ with $d = (m - K)/s$. So
-$$u = \int_{-d}^{\infty} (m - K + s z)\,\varphi(z)\,dz = (m - K)\,N(d) + s\int_{-d}^{\infty} z\,\varphi(z)\,dz .$$
-The first piece uses the bell curve's symmetry: the area to the right of $-d$ is $N(d)$. For the second, $z\,\varphi(z)$ is minus the derivative of $\varphi(z)$, so its integral from $-d$ to infinity is $\varphi(-d) = \varphi(d)$. Hence $u = (m - K)N(d) + s\,\varphi(d)$.
+Write $`s = \sigma\sqrt{\tau}`$ and $`m = x + \mu\tau`$. The payoff is positive when $`m + s z > K`$, that is when $`z > -d`$ with $`d = (m - K)/s`$. So
+
+$`\displaystyle u = \int_{-d}^{\infty} (m - K + s z)\,\varphi(z)\,dz = (m - K)\,N(d) + s\int_{-d}^{\infty} z\,\varphi(z)\,dz .`$
+
+The first piece uses the bell curve's symmetry: the area to the right of $`-d`$ is $`N(d)`$. For the second, $`z\,\varphi(z)`$ is minus the derivative of $`\varphi(z)`$, so its integral from $`-d`$ to infinity is $`\varphi(-d) = \varphi(d)`$. Hence $`u = (m - K)N(d) + s\,\varphi(d)`$.
 
 </details>
 
 ### Step 5: any diffusion, the house rate
 
-The shelf's house example is the interest rate $r_t$ of [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), pulled toward 0.04 at speed 0.5 per year with noise 0.02. Its generator is $L g = \kappa(\theta - x)\, g' + \tfrac12\sigma^2 g''$. The backward equation in time to go is $\partial_\tau u = \kappa(\theta - x)\,\partial_x u + \tfrac12\sigma^2\,\partial_{xx} u$.
+The shelf's house example is the interest rate $`r_t`$ of [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), pulled toward 0.04 at speed 0.5 per year with noise 0.02. Its generator is $`L g = \kappa(\theta - x)\, g' + \tfrac12\sigma^2 g''`$. The backward equation in time to go is $`\partial_\tau u = \kappa(\theta - x)\,\partial_x u + \tfrac12\sigma^2\,\partial_{xx} u`$.
 
-Try $u(\tau, x) = \theta + (x - \theta)e^{-\kappa\tau}$, the expected rate. Its $\tau$-rate is $-\kappa(x - \theta)e^{-\kappa\tau}$. Its slope in $x$ is $e^{-\kappa\tau}$, so the drift term gives $\kappa(\theta - x)e^{-\kappa\tau}$: the same. Its bend is zero. It solves the equation, and from 0.06 with a year to go it gives 0.052131, about 5.21 percent.
+Try $`u(\tau, x) = \theta + (x - \theta)e^{-\kappa\tau}`$, the expected rate. Its $`\tau`$-rate is $`-\kappa(x - \theta)e^{-\kappa\tau}`$. Its slope in $`x`$ is $`e^{-\kappa\tau}`$, so the drift term gives $`\kappa(\theta - x)e^{-\kappa\tau}`$: the same. Its bend is zero. It solves the equation, and from 0.06 with a year to go it gives 0.052131, about 5.21 percent.
 
-The expected square of the rate brings the noise term in. It is the expected rate squared plus $\sigma^2(1 - e^{-2\kappa\tau})/(2\kappa)$, the variance. At a year to go and a rate of 0.06 both sides of the equation, by central differences, are −0.000485225. Simulating 4000 rate paths on 1,000 Euler steps over the year gives 0.052190 and 0.0029827 against 0.052131 and 0.0029704, each within one printed standard error.
+The expected square of the rate brings the noise term in. It is the expected rate squared plus $`\sigma^2(1 - e^{-2\kappa\tau})/(2\kappa)`$, the variance. At a year to go and a rate of 0.06 both sides of the equation, by central differences, are −0.000485225. Simulating 4000 rate paths on 1,000 Euler steps over the year gives 0.052190 and 0.0029827 against 0.052131 and 0.0029704, each within one printed standard error.
 
 <details>
 <summary>Detailed proof</summary>
 
 **What is proved here.** (a) For Brownian motion with constant drift the bell-curve average solves the equation. (b) Any smooth solution with polynomial growth is the expectation, so the solution is unique in that class. (c) For a general diffusion, the existence of a smooth solution is stated with its source.
 
-**(a) The Brownian solution solves the equation.** Write the average as $u(\tau, x) = \int f(y)\, p(\tau, y - x - \mu\tau)\,dy$ with the kernel $p(\tau, w) = (2\pi\sigma^2\tau)^{-1/2} e^{-w^2/(2\sigma^2\tau)}$. Direct differentiation gives $\partial_\tau p = \big(w^2/(2\sigma^2\tau^2) - 1/(2\tau)\big)\,p$ and $\partial_{ww} p = \big(w^2/(\sigma^4\tau^2) - 1/(\sigma^2\tau)\big)\,p$, so $\partial_\tau p = \tfrac12\sigma^2\,\partial_{ww} p$. Differentiating under the integral is allowed for $\tau > 0$ because the kernel and its derivatives decay faster than any power, and $f$ grows at most like a power ([Dominated convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). The $\mu\tau$ shift adds $\mu\,\partial_x u$ by the chain rule. As $\tau \to 0$ the kernel concentrates at $x$ and $u \to f(x)$ at every point where $f$ is continuous.
+**(a) The Brownian solution solves the equation.** Write the average as $`u(\tau, x) = \int f(y)\, p(\tau, y - x - \mu\tau)\,dy`$ with the kernel $`p(\tau, w) = (2\pi\sigma^2\tau)^{-1/2} e^{-w^2/(2\sigma^2\tau)}`$. Direct differentiation gives $`\partial_\tau p = \big(w^2/(2\sigma^2\tau^2) - 1/(2\tau)\big)\,p`$ and $`\partial_{ww} p = \big(w^2/(\sigma^4\tau^2) - 1/(\sigma^2\tau)\big)\,p`$, so $`\partial_\tau p = \tfrac12\sigma^2\,\partial_{ww} p`$. Differentiating under the integral is allowed for $`\tau > 0`$ because the kernel and its derivatives decay faster than any power, and $`f`$ grows at most like a power ([Dominated convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). The $`\mu\tau`$ shift adds $`\mu\,\partial_x u`$ by the chain rule. As $`\tau \to 0`$ the kernel concentrates at $`x`$ and $`u \to f(x)`$ at every point where $`f`$ is continuous.
 
-**(b) Verification.** Let $v(t, x)$ be smooth for $t < T$, solve $\partial_t v + L v = 0$, equal $f$ at $T$, and grow at most like a power of $x$. Apply Ito's lemma to $v(s, X_s)$ from $s = t$ to $s = T - \varepsilon$: the time term vanishes by the equation, leaving an Ito integral of $\sigma\,\partial_x v$. Polynomial growth of $\partial_x v$ and of $\sigma$, with the finite moments of the process under the Lipschitz bound, make that integral a true martingale with mean zero. So $v(t, x) = E[v(T - \varepsilon, X_{T - \varepsilon}) \mid X_t = x]$. Let $\varepsilon \to 0$: continuity at $T$ and dominated convergence give $v(t, x) = E[f(X_T) \mid X_t = x] = u(t, x)$. Any two such solutions are therefore equal. Without the growth bound uniqueness fails: Tychonoff built a nonzero solution of the heat equation that starts at zero.
+**(b) Verification.** Let $`v(t, x)`$ be smooth for $`t < T`$, solve $`\partial_t v + L v = 0`$, equal $`f`$ at $`T`$, and grow at most like a power of $`x`$. Apply Ito's lemma to $`v(s, X_s)`$ from $`s = t`$ to $`s = T - \varepsilon`$: the time term vanishes by the equation, leaving an Ito integral of $`\sigma\,\partial_x v`$. Polynomial growth of $`\partial_x v`$ and of $`\sigma`$, with the finite moments of the process under the Lipschitz bound, make that integral a true martingale with mean zero. So $`v(t, x) = E[v(T - \varepsilon, X_{T - \varepsilon}) \mid X_t = x]`$. Let $`\varepsilon \to 0`$: continuity at $`T`$ and dominated convergence give $`v(t, x) = E[f(X_T) \mid X_t = x] = u(t, x)`$. Any two such solutions are therefore equal. Without the growth bound uniqueness fails: Tychonoff built a nonzero solution of the heat equation that starts at zero.
 
-**(c) General diffusions.** For an Ito diffusion whose drift and noise satisfy a Lipschitz bound, and a twice-differentiable payoff that vanishes outside a bounded interval, $u$ is differentiable enough and solves the equation: Øksendal, Theorem 8.1.1. Extensions to growing coefficients and kinked payoffs are in Karatzas and Shreve, Section 5.7. This card proves the Brownian case completely and gives the general case's key steps (Steps 0 to 3), not its full proof.
+**(c) General diffusions.** For an Ito diffusion whose drift and noise satisfy a Lipschitz bound, and a twice-differentiable payoff that vanishes outside a bounded interval, $`u`$ is differentiable enough and solves the equation: Øksendal, Theorem 8.1.1. Extensions to growing coefficients and kinked payoffs are in Karatzas and Shreve, Section 5.7. This card proves the Brownian case completely and gives the general case's key steps (Steps 0 to 3), not its full proof.
 
 </details>
 
@@ -169,32 +191,32 @@ The equation has a forward twin. The backward one fixes the payoff and lets the 
 
 ## Worked numbers, by hand
 
-The share at $100, strike $100, a year to go, $\sigma$ = $20 per root-year, no drift.
+The share at $100, strike $100, a year to go, $`\sigma`$ = $20 per root-year, no drift.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| spread over the year, $\sigma\sqrt{\tau}$ | 20 × 1 | $20 |
-| distance in spread units, $d$ | (100 − 100) / 20 | 0 |
-| bell-curve height, $\varphi(0)$ | 1 / root(2 pi) | 0.398942 |
-| first term, $(x - K)\,N(d)$ | 0 × anything | 0 |
+| spread over the year, $`\sigma\sqrt{\tau}`$ | 20 × 1 | $20 |
+| distance in spread units, $`d`$ | (100 − 100) / 20 | 0 |
+| bell-curve height, $`\varphi(0)`$ | 1 / root(2 pi) | 0.398942 |
+| first term, $`(x - K)\,N(d)`$ | 0 × anything | 0 |
 | **expected payoff** | 20 × 0.398942 | **$7.978846** |
-| start at $110: $d$ | 10 / 20 | 0.5 |
+| start at $110: $`d`$ | 10 / 20 | 0.5 |
 | first term | 10 × N(0.5) = 10 × 0.691462 | 6.914625 |
 | second term | 20 × φ(0.5) = 20 × 0.352065 | 7.041307 |
 | **expected payoff from $110** | 6.914625 + 7.041307 | **$13.955931** |
 
 From $100 the contract is expected to pay about $7.98; from $110, about $13.96. The extra ten dollars today adds less than ten to the expected payoff, because a high start still finishes below the strike some of the time.
 
-Does the formula solve the equation? Both checks measure the two sides at $100 with a year to go by central differences. The $\tau$-rate is 3.989423 dollars per year. The bend times one half sigma squared, 200, is 3.989423. A second payoff makes the check by hand. For $f(y) = (y - 100)^2$ the solution is $u = (x - 100)^2 + \sigma^2\tau$. Its $\tau$-rate is $\sigma^2$, 400; its bend is 2, and 200 × 2 is 400. The equation holds, and at $100 a year out the expected square is 400; Simpson's rule gives 400.000000 and the simulation 401.459689 with standard error 1.273080.
+Does the formula solve the equation? Both checks measure the two sides at $100 with a year to go by central differences. The $`\tau`$-rate is 3.989423 dollars per year. The bend times one half sigma squared, 200, is 3.989423. A second payoff makes the check by hand. For $`f(y) = (y - 100)^2`$ the solution is $`u = (x - 100)^2 + \sigma^2\tau`$. Its $`\tau`$-rate is $`\sigma^2`$, 400; its bend is 2, and 200 × 2 is 400. The equation holds, and at $100 a year out the expected square is 400; Simpson's rule gives 400.000000 and the simulation 401.459689 with standard error 1.273080.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Ordinary chain rule: no second-derivative term | $0.000000 (right: $7.978846) | Without Ito's term the expected payoff is the payoff at today's price. The spread is the whole value at the strike. With $5 drift it gives $5.000000 against $10.726894. |
-| Generator without the one half | $11.283792 | Uses $\sigma^2$ where $\tfrac12\sigma^2$ belongs: the same as a share with root 2 times the noise. |
-| Drift sign flipped | $5.726894 (right: $10.726894) | The backward equation carries $+\mu\,\partial_x u$. Its forward twin has the sign the other way, and borrowing it runs the drift backward. |
-| A knock-out at $80 ignored | $7.978846 (right: $7.809032) | A contract cancelled if the share touches $80 has a payoff that depends on the path, not only on the final price; the share itself is still Markov. It needs the boundary condition $u = 0$ at $80; by the reflection principle the right value is $7.978846 minus the value from $60. |
+| Generator without the one half | $11.283792 | Uses $`\sigma^2`$ where $`\tfrac12\sigma^2`$ belongs: the same as a share with root 2 times the noise. |
+| Drift sign flipped | $5.726894 (right: $10.726894) | The backward equation carries $`+\mu\,\partial_x u`$. Its forward twin has the sign the other way, and borrowing it runs the drift backward. |
+| A knock-out at $80 ignored | $7.978846 (right: $7.809032) | A contract cancelled if the share touches $80 has a payoff that depends on the path, not only on the final price; the share itself is still Markov. It needs the boundary condition $`u = 0`$ at $80; by the reflection principle the right value is $7.978846 minus the value from $60. |
 
 The last row is the dropped-hypothesis case. Both checks reach $7.809032 by the reflection formula ([Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)), and the tree with the $80 level made absorbing gives 7.808179 at 1600 steps and 7.808818 at 6400.
 
@@ -556,10 +578,10 @@ The two outputs are identical line for line.
 
 Lean proves the backward equation for Brownian motion with constant drift, the call formula and the house-rate solution, and checks the worked numbers.
 
-- Take constant drift $\mu$, noise $\sigma > 0$, and a payoff $f$ growing at most like a power of the price. Then with time left, $\partial_\tau u = \mu\, \partial_x u + \tfrac12 \sigma^2\, \partial_{xx} u$.
-- Take the same share and payoff. Then as the time to go shrinks to zero, $u$ tends to $f(x)$ at every price where $f$ is continuous.
-- Take the call payoff $\max(y - K, 0)$, noise $\sigma > 0$ and time to go $\tau > 0$. Then $u = (x + \mu\tau - K) N(d) + \sigma\sqrt{\tau} \varphi(d)$, the closed form above.
-- Take the house rate with pull speed $\kappa$, long-run level $\theta$ and noise $\sigma$. Then the expected rate $\theta + (x - \theta)e^{-\kappa\tau}$ solves its backward equation.
+- Take constant drift $`\mu`$, noise $`\sigma > 0`$, and a payoff $`f`$ growing at most like a power of the price. Then with time left, $`\partial_\tau u = \mu\, \partial_x u + \tfrac12 \sigma^2\, \partial_{xx} u`$.
+- Take the same share and payoff. Then as the time to go shrinks to zero, $`u`$ tends to $`f(x)`$ at every price where $`f`$ is continuous.
+- Take the call payoff $`\max(y - K, 0)`$, noise $`\sigma > 0`$ and time to go $`\tau > 0`$. Then $`u = (x + \mu\tau - K) N(d) + \sigma\sqrt{\tau} \varphi(d)`$, the closed form above.
+- Take the house rate with pull speed $`\kappa`$, long-run level $`\theta`$ and noise $`\sigma`$. Then the expected rate $`\theta + (x - \theta)e^{-\kappa\tau}`$ solves its backward equation.
 - The expected rate equals today's rate when no time is left.
 - With noise 20 and a year to go, the spread is 20 and one half sigma squared is 200.
 - From $100 and from $110 the distance to the strike in spread units is 0 and one half.
@@ -1261,7 +1283,7 @@ end KolmogorovBackwardEquation
 
 > [!TIP]
 > **Try changing**
-> - **Half the noise** (`SIG` from 20.0 to 10.0). Guess first: does the expected payoff at $100 halve, or fall to a quarter? The closed-form line prints 3.989423, half of 7.978846, the same $3.99 the chart shows at $100 with a quarter of a year to go. At the strike the expected payoff is $\sigma\sqrt{\tau}\,\varphi(0)$, so halving the noise does what quartering the time does.
+> - **Half the noise** (`SIG` from 20.0 to 10.0). Guess first: does the expected payoff at $100 halve, or fall to a quarter? The closed-form line prints 3.989423, half of 7.978846, the same $3.99 the chart shows at $100 with a quarter of a year to go. At the strike the expected payoff is $`\sigma\sqrt{\tau}\,\varphi(0)`$, so halving the noise does what quartering the time does.
 > - **Drift of $5 a year** (`MU`). Guess first: how does drift compare with a higher start? The drift case gives $10.726894; the chart's driftless value from $105 is $10.73. Constant drift only moves the start.
 > - **A coarser tree.** Put 16 at the front of the tree's step counts (`n` = 16, move $5). Guess first: the move is 2.5 times the $2 move at `n` = 100; what happens to the error? It is −0.123621, about 6.2 times −0.019922: the error follows the time step, which is the move squared over sigma squared, and 2.5 squared is 6.25.
 > - **The knock-out level** (`BAR`). Guess first: does the barrier at $80 cost much? Only $0.169814, the value from $60 printed on the barrier line, because a share starting at $100 seldom both falls to $80 and comes back above $100.
@@ -1271,13 +1293,13 @@ end KolmogorovBackwardEquation
 ## The usual mistake
 
 > [!warning]
-> **Solving forward from today instead of backward from the payoff.** The backward equation's known data sit at the payment date, $u(T, x) = f(x)$, and the solution runs toward today. Marching it forward in clock time with the sign as written is the heat equation run backward, which amplifies every wiggle. In time to go $\tau$ it runs forward safely. The variable is the starting point $x$, not the final price.
+> **Solving forward from today instead of backward from the payoff.** The backward equation's known data sit at the payment date, $`u(T, x) = f(x)`$, and the solution runs toward today. Marching it forward in clock time with the sign as written is the heat equation run backward, which amplifies every wiggle. In time to go $`\tau`$ it runs forward safely. The variable is the starting point $`x`$, not the final price.
 >
 > Smaller traps:
 > - **Confusing it with the forward equation.** The backward equation is about a payoff as a function of the start; the forward one is about a density as a function of the end. With drift their first-order terms carry opposite signs, and swapping them gives $5.726894 for an expected payoff of $10.726894.
-> - **Ordinary calculus.** Writing $du = \partial_t u\,dt + \partial_x u\,dX_t$ drops the second-derivative term, and the at-the-money expected payoff comes out at $0.000000.
-> - **Losing the one half.** The generator carries $\tfrac12\sigma^2$, not $\sigma^2$; the error puts the expected payoff at $11.283792.
-> - **Reading $u$ as a price.** It is an expected payoff, with no discounting and no change of measure. Pricing needs the Feynman-Kac form and a pricing measure Q, the probabilities used for pricing in place of the real-world ones.
+> - **Ordinary calculus.** Writing $`du = \partial_t u\,dt + \partial_x u\,dX_t`$ drops the second-derivative term, and the at-the-money expected payoff comes out at $0.000000.
+> - **Losing the one half.** The generator carries $`\tfrac12\sigma^2`$, not $`\sigma^2`$; the error puts the expected payoff at $11.283792.
+> - **Reading $`u`$ as a price.** It is an expected payoff, with no discounting and no change of measure. Pricing needs the Feynman-Kac form and a pricing measure Q, the probabilities used for pricing in place of the real-world ones.
 
 ---
 
@@ -1285,7 +1307,7 @@ end KolmogorovBackwardEquation
 
 - **Bachelier's option price.** Louis Bachelier priced options in 1900 with exactly this solution: a price moving as Brownian motion in dollars, not in percent. Desks use the same formula when prices can go negative, as oil futures did in April 2020, and for interest-rate options quoted in "normal" volatility.
 - **Pricing equations in finance.** The Black-Scholes equation is a backward equation with discounting, for a share whose noise is proportional to its price: [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md).
-- **Hitting probabilities.** The chance that a process reaches one level before another solves the backward equation with no clock term, $L u = 0$, with $u$ = 1 at one boundary and 0 at the other: the continuous gambler's ruin, worked for the house rate on [The generator](01-infinitesimal-generator.md).
+- **Hitting probabilities.** The chance that a process reaches one level before another solves the backward equation with no clock term, $`L u = 0`$, with $`u`$ = 1 at one boundary and 0 at the other: the continuous gambler's ruin, worked for the house rate on [The generator](01-infinitesimal-generator.md).
 - **Value functions.** With a decision added at each instant, the backward equation becomes the dynamic-programming equation of control and reinforcement learning. Stopping at the best moment is the version on [Optimal stopping](07-optimal-stopping-and-snell-envelope.md).
 
 > **Say it back**
@@ -1295,7 +1317,7 @@ end KolmogorovBackwardEquation
 
 ## What this builds on
 
-- [The generator](01-infinitesimal-generator.md): the generator $L$, the small-time average rate of change, that Step 2 expands.
+- [The generator](01-infinitesimal-generator.md): the generator $`L`$, the small-time average rate of change, that Step 2 expands.
 - [Feynman-Kac](../07-Changing%20Measure/06-feynman-kac-formula.md): the expectation-equals-PDE link with discounting; this card is its undiscounted core, derived from the generator.
 - [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md): the equation and its smoothing; Step 4 shows it is the backward equation of Brownian motion.
 

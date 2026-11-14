@@ -34,15 +34,17 @@ Caption: frame 1 covers the stage at height 1, frame 2 the right half at height 
 
 Notation first, in words.
 
-- A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the stage, $\Omega$ is [0, 1] in metres and the measure is length, $\lambda$.
-- The integral $\int f\,d\mu$ is read "the integral of f against mu"; on the stage it is total light in watts ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
-- The indicator $\mathbf 1_A$ is one on A, zero off it, so frame n is $f_n = n\,\mathbf 1_{[1-1/n,\,1)}$.
+- A measure space $`(\Omega,\mathcal F,\mu)`$ is a set of points $`\Omega`$, the collection $`\mathcal F`$ of sets we allow ourselves to measure, and a measure $`\mu`$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the stage, $`\Omega`$ is [0, 1] in metres and the measure is length, $`\lambda`$.
+- The integral $`\int f\,d\mu`$ is read "the integral of f against mu"; on the stage it is total light in watts ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
+- The indicator $`\mathbf 1_A`$ is one on A, zero off it, so frame n is $`f_n = n\,\mathbf 1_{[1-1/n,\,1)}`$.
 
 A reminder from [Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md): the **lower limit** of a sequence of numbers, written lim inf, is its eventual floor: take the smallest value from position k onward, then let k grow. The **upper limit**, lim sup, is the eventual ceiling. A sequence converges exactly when the two agree. For functions, both are taken seat by seat, and both are measurable.
 
-**Fatou's lemma.** If every $f_n$ is measurable with values in $[0,\infty]$, then
+**Fatou's lemma.** If every $`f_n`$ is measurable with values in $`[0,\infty]`$, then
 
-$$\int \liminf_{n\to\infty} f_n \,d\mu \;\le\; \liminf_{n\to\infty} \int f_n\,d\mu .$$
+```math
+\int \liminf_{n\to\infty} f_n \,d\mu \;\le\; \liminf_{n\to\infty} \int f_n\,d\mu .
+```
 
 **Read it aloud:** the total of the eventual floor is at most the eventual floor of the totals.
 
@@ -50,38 +52,42 @@ On the stage: the left side is the total light of the dark stage, 0 W; the right
 
 The proof runs through the **running infimum**, the dimmest reading at a seat from frame k onward:
 
-$$g_k(x) = \inf_{n\ge k} f_n(x), \qquad g_1 \le g_2 \le \cdots, \qquad \lim_{k\to\infty} g_k = \liminf_{n\to\infty} f_n .$$
+```math
+g_k(x) = \inf_{n\ge k} f_n(x), \qquad g_1 \le g_2 \le \cdots, \qquad \lim_{k\to\infty} g_k = \liminf_{n\to\infty} f_n .
+```
 
 In words: drop the early frames one at a time; the floor can only rise, and it rises to the lower limit.
 
-**Reverse Fatou.** If $0 \le f_n \le G$ for every n, with $\int G\,d\mu < \infty$, then
+**Reverse Fatou.** If $`0 \le f_n \le G`$ for every n, with $`\int G\,d\mu < \infty`$, then
 
-$$\limsup_{n\to\infty} \int f_n\,d\mu \;\le\; \int \limsup_{n\to\infty} f_n\,d\mu .$$
+```math
+\limsup_{n\to\infty} \int f_n\,d\mu \;\le\; \int \limsup_{n\to\infty} f_n\,d\mu .
+```
 
 **Read it aloud:** under one roof of finite total, the eventual ceiling of the totals is at most the total of the eventual ceiling.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f_n$ | frame n: brightness at each point, W/m | n on the strip from 1 − 1/n m to the edge | brighter frames, larger totals |
-| $n$, $k$ | frame numbers; k is where a tail of frames starts | frames 1, 2, 4, …, 1000 | later frames, narrower strips |
-| $x$ | a seat: distance from the left wing, m | 0.9 m, lit in frames 1 to 10 | nearer the edge, lit for longer |
-| $N$ | the last frame that lights a seat x | N = 10 at 0.9 m | grows without bound near the edge |
-| $j$, $J$ | strip number: strip j runs from 1 − 1/j to 1 − 1/(j + 1) m, and frame j is the last one lighting it; J the last strip counted | strip 10 runs from 0.9 to 0.909091 m; J = 10, 100, 1000, 1000000 in the roof rows | more strips reach nearer the edge |
-| $m$ | a counting number in the sum of 1/m^2 | m = 4, 5, 6, … for k = 3 | — |
-| $\Omega$, $\mathcal F$, $\mu$, $Z_n$, $Z$ | the space, its measurable sets, a measure; $Z_n$ a set of measure zero where a hypothesis fails, $Z$ the union of the $Z_n$ | [0, 1], its Borel sets (the standard measurable sets on the line, built from intervals; [Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), length; no such set is needed on the stage | — |
-| $\lambda$ | length on the line (Lebesgue measure) | strip of frame 4 has length 0.25 | — |
-| $\mathbf 1_A$ | indicator: one on A, zero off it | one on [0.75, 1) in frame 4 | — |
-| $\int f\,d\mu$, $b_k$ | integral of f against μ: total light; $b_k$ the smallest total from frame k on | 1 W in every frame; 1.3333 W at k = 3 with house lights | — |
-| $\liminf_n$, $\limsup_n$ | eventual floor and eventual ceiling of a sequence | both 0 at every seat for the spotlight | — |
-| $g_k$, $a_k$ | running infimum: the floor from frame k on; $a_k$ its total | 0 everywhere for the bare spotlight; 0.3641 W at k = 3 with house lights | rises with k |
-| $h_n$, $h_k$ | house lights in frame n (or k), the same at every seat | 0.5(1 − 1/n) W/m; 0.3333 at frame 3 | raises every floor |
-| $G$ | a roof: one function above every frame, with finite total | 2 W/m for the flicker; none exists for the spotlight | — |
+| $`f_n`$ | frame n: brightness at each point, W/m | n on the strip from 1 − 1/n m to the edge | brighter frames, larger totals |
+| $`n`$, $`k`$ | frame numbers; k is where a tail of frames starts | frames 1, 2, 4, …, 1000 | later frames, narrower strips |
+| $`x`$ | a seat: distance from the left wing, m | 0.9 m, lit in frames 1 to 10 | nearer the edge, lit for longer |
+| $`N`$ | the last frame that lights a seat x | N = 10 at 0.9 m | grows without bound near the edge |
+| $`j`$, $`J`$ | strip number: strip j runs from 1 − 1/j to 1 − 1/(j + 1) m, and frame j is the last one lighting it; J the last strip counted | strip 10 runs from 0.9 to 0.909091 m; J = 10, 100, 1000, 1000000 in the roof rows | more strips reach nearer the edge |
+| $`m`$ | a counting number in the sum of 1/m^2 | m = 4, 5, 6, … for k = 3 | — |
+| $`\Omega`$, $`\mathcal F`$, $`\mu`$, $`Z_n`$, $`Z`$ | the space, its measurable sets, a measure; $`Z_n`$ a set of measure zero where a hypothesis fails, $`Z`$ the union of the $`Z_n`$ | [0, 1], its Borel sets (the standard measurable sets on the line, built from intervals; [Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), length; no such set is needed on the stage | — |
+| $`\lambda`$ | length on the line (Lebesgue measure) | strip of frame 4 has length 0.25 | — |
+| $`\mathbf 1_A`$ | indicator: one on A, zero off it | one on [0.75, 1) in frame 4 | — |
+| $`\int f\,d\mu`$, $`b_k`$ | integral of f against μ: total light; $`b_k`$ the smallest total from frame k on | 1 W in every frame; 1.3333 W at k = 3 with house lights | — |
+| $`\liminf_n`$, $`\limsup_n`$ | eventual floor and eventual ceiling of a sequence | both 0 at every seat for the spotlight | — |
+| $`g_k`$, $`a_k`$ | running infimum: the floor from frame k on; $`a_k`$ its total | 0 everywhere for the bare spotlight; 0.3641 W at k = 3 with house lights | rises with k |
+| $`h_n`$, $`h_k`$ | house lights in frame n (or k), the same at every seat | 0.5(1 − 1/n) W/m; 0.3333 at frame 3 | raises every floor |
+| $`G`$ | a roof: one function above every frame, with finite total | 2 W/m for the flicker; none exists for the spotlight | — |
 
 ### When it holds
 
-- **Values of zero or more.** A shadow of depth n on the same strip, $-f_n$, has total −1 W in every frame and limit 0; Fatou would read 0 ≤ −1, which is false. Functions bounded below by one integrable function, $f_n \ge -G$, are fine: apply the lemma to $f_n + G$.
+- **Values of zero or more.** A shadow of depth n on the same strip, $`-f_n`$, has total −1 W in every frame and limit 0; Fatou would read 0 ≤ −1, which is false. Functions bounded below by one integrable function, $`f_n \ge -G`$, are fine: apply the lemma to $`f_n + G`$.
 - **Measurable functions.** A function is measurable when every set "where the value is below a" is one of the sets we may measure ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)). Nothing else is asked: no finite total, no convergence, no bound above.
-- **Any measure space.** Infinite totals are allowed on either side, and $\mu(\Omega)$ may be infinite. A hypothesis that holds only almost everywhere, except on a set of size zero, is enough ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
+- **Any measure space.** Infinite totals are allowed on either side, and $`\mu(\Omega)`$ may be infinite. A hypothesis that holds only almost everywhere, except on a set of size zero, is enough ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
 - **The reverse form needs a roof.** Without one the spotlight gives lim sup of totals 1 W against a total of 0 W for the lim sup, and 1 ≤ 0 is false.
 - **An inequality, not an equality.** Equality is guaranteed by rising frames (monotone convergence) or by one roof and a genuine limit (dominated convergence).
 
@@ -95,48 +101,52 @@ At one seat, look at all frames from k onward and keep the dimmest reading. That
 
 ### Step 1: the floors rise to the lower limit
 
-The running infimum $g_k = \inf_{n\ge k} f_n$ is measurable, as an infimum of countably many measurable functions. It is at least 0. It rises with k. By the definition of the lower limit, it rises to $\liminf_n f_n$ at every seat.
+The running infimum $`g_k = \inf_{n\ge k} f_n`$ is measurable, as an infimum of countably many measurable functions. It is at least 0. It rises with k. By the definition of the lower limit, it rises to $`\liminf_n f_n`$ at every seat.
 
 For the bare spotlight, every floor is 0: any seat has a dark frame coming, so the dimmest reading in any tail is 0. The seat at 0.9 m is dark from frame 11 on; the seat at 0.999 m from frame 1001 on.
 
 ### Step 2: each floor sits under every later total
 
-For each n ≥ k, $g_k \le f_n$ at every seat. The integral respects order, so $\int g_k\,d\mu \le \int f_n\,d\mu$. That holds for every n ≥ k, so
+For each n ≥ k, $`g_k \le f_n`$ at every seat. The integral respects order, so $`\int g_k\,d\mu \le \int f_n\,d\mu`$. That holds for every n ≥ k, so
 
-$$\int g_k\,d\mu \;\le\; \inf_{n\ge k} \int f_n\,d\mu .$$
+```math
+\int g_k\,d\mu \;\le\; \inf_{n\ge k} \int f_n\,d\mu .
+```
 
 ### Step 3: let k grow
 
-The left side rises to $\int \liminf_n f_n\,d\mu$, by monotone convergence on the rising floors. The right side is the running infimum of the totals, which rises to $\liminf_n \int f_n\,d\mu$ by definition. An inequality that holds at every k survives the limit. That is the lemma.
+The left side rises to $`\int \liminf_n f_n\,d\mu`$, by monotone convergence on the rising floors. The right side is the running infimum of the totals, which rises to $`\liminf_n \int f_n\,d\mu`$ by definition. An inequality that holds at every k survives the limit. That is the lemma.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space and each $f_n:\Omega\to[0,\infty]$ is measurable.
+**Setting.** $`(\Omega,\mathcal F,\mu)`$ is a measure space and each $`f_n:\Omega\to[0,\infty]`$ is measurable.
 
-**1. The floors are measurable and rise.** Put $g_k=\inf_{n\ge k}f_n$. For a number a, $\{g_k<a\}=\bigcup_{n\ge k}\{f_n<a\}$: an infimum is below a exactly when some term is below a. A countable union of sets in $\mathcal F$ is in $\mathcal F$, so $g_k$ is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)). The set $\{n\ge k+1\}$ is inside $\{n\ge k\}$, and an infimum over fewer numbers is at least as large, so $g_k\le g_{k+1}$. Each $g_k\ge0$.
+**1. The floors are measurable and rise.** Put $`g_k=\inf_{n\ge k}f_n`$. For a number a, $`\{g_k<a\}=\bigcup_{n\ge k}\{f_n<a\}`$: an infimum is below a exactly when some term is below a. A countable union of sets in $`\mathcal F`$ is in $`\mathcal F`$, so $`g_k`$ is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)). The set $`\{n\ge k+1\}`$ is inside $`\{n\ge k\}`$, and an infimum over fewer numbers is at least as large, so $`g_k\le g_{k+1}`$. Each $`g_k\ge0`$.
 
-**2. Their limit is the lower limit.** By definition, $\liminf_n f_n(x)=\sup_k \inf_{n\ge k}f_n(x)=\lim_k g_k(x)$, the limit of a rising sequence in $[0,\infty]$. Here sup, the supremum, is the least number that no term exceeds, possibly $\infty$.
+**2. Their limit is the lower limit.** By definition, $`\liminf_n f_n(x)=\sup_k \inf_{n\ge k}f_n(x)=\lim_k g_k(x)`$, the limit of a rising sequence in $`[0,\infty]`$. Here sup, the supremum, is the least number that no term exceeds, possibly $`\infty`$.
 
-**3. Monotone convergence.** The $g_k$ are measurable, at least 0 and rising to $\liminf_n f_n$. By [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md), $\int \liminf_n f_n\,d\mu=\lim_k\int g_k\,d\mu$.
+**3. Monotone convergence.** The $`g_k`$ are measurable, at least 0 and rising to $`\liminf_n f_n`$. By [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md), $`\int \liminf_n f_n\,d\mu=\lim_k\int g_k\,d\mu`$.
 
-**4. Comparison.** For $n\ge k$, $g_k\le f_n$ everywhere, so $\int g_k\,d\mu\le\int f_n\,d\mu$ by monotonicity of the integral ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). Taking the infimum over $n\ge k$ on the right: $\int g_k\,d\mu\le b_k$, where $b_k=\inf_{n\ge k}\int f_n\,d\mu$.
+**4. Comparison.** For $`n\ge k`$, $`g_k\le f_n`$ everywhere, so $`\int g_k\,d\mu\le\int f_n\,d\mu`$ by monotonicity of the integral ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). Taking the infimum over $`n\ge k`$ on the right: $`\int g_k\,d\mu\le b_k`$, where $`b_k=\inf_{n\ge k}\int f_n\,d\mu`$.
 
-**5. Pass to the limit.** The numbers $b_k$ rise with k, and $\lim_k b_k=\liminf_n\int f_n\,d\mu$ by definition. If $a_k\le b_k$ for every k and both sequences rise, then $\lim a_k\le\lim b_k$ in $[0,\infty]$: each $a_k\le b_k\le\lim b$, so the supremum of the $a_k$ is at most $\lim b$. With $a_k=\int g_k\,d\mu$ and step 3, $\int\liminf_n f_n\,d\mu\le\liminf_n\int f_n\,d\mu$. No subtraction was used, so infinite values cause no trouble. ∎
+**5. Pass to the limit.** The numbers $`b_k`$ rise with k, and $`\lim_k b_k=\liminf_n\int f_n\,d\mu`$ by definition. If $`a_k\le b_k`$ for every k and both sequences rise, then $`\lim a_k\le\lim b_k`$ in $`[0,\infty]`$: each $`a_k\le b_k\le\lim b`$, so the supremum of the $`a_k`$ is at most $`\lim b`$. With $`a_k=\int g_k\,d\mu`$ and step 3, $`\int\liminf_n f_n\,d\mu\le\liminf_n\int f_n\,d\mu`$. No subtraction was used, so infinite values cause no trouble. ∎
 
-**Almost everywhere.** If each $f_n\ge0$ only outside a null set $Z_n$, let Z be the union of the $Z_n$, still of measure zero as a countable union of null sets. Set every $f_n$ to 0 on Z. Integrals do not change when a function changes on a null set ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), and the lower limit changes only on Z. Apply the lemma to the modified functions.
+**Almost everywhere.** If each $`f_n\ge0`$ only outside a null set $`Z_n`$, let Z be the union of the $`Z_n`$, still of measure zero as a countable union of null sets. Set every $`f_n`$ to 0 on Z. Integrals do not change when a function changes on a null set ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), and the lower limit changes only on Z. Apply the lemma to the modified functions.
 
-**Reverse Fatou.** Suppose $0\le f_n\le G$ with $\int G\,d\mu<\infty$. Then G is finite outside a null set, which the almost-everywhere paragraph lets us ignore, so $G-f_n$ is measurable and at least 0. Apply the lemma to $G-f_n$. Seat by seat, $\liminf_n(G-f_n)=G-\limsup_n f_n$, since subtracting from a fixed finite number turns floors into ceilings. Every $f_n$ and $\limsup_n f_n$ lies between 0 and G, so all of them are integrable and the integral subtracts ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)): $\int(G-f_n)\,d\mu=\int G\,d\mu-\int f_n\,d\mu$, and likewise for the lim sup. The lemma becomes
-$$\int G\,d\mu-\int\limsup_n f_n\,d\mu\le\liminf_n\Big(\int G\,d\mu-\int f_n\,d\mu\Big)=\int G\,d\mu-\limsup_n\int f_n\,d\mu .$$
-Subtract the finite number $\int G\,d\mu$ from both sides and change signs: $\limsup_n\int f_n\,d\mu\le\int\limsup_n f_n\,d\mu$. ∎ The finite roof is used twice: to make $G-f_n$ a function of zero or more, and to make the subtraction legal.
+**Reverse Fatou.** Suppose $`0\le f_n\le G`$ with $`\int G\,d\mu<\infty`$. Then G is finite outside a null set, which the almost-everywhere paragraph lets us ignore, so $`G-f_n`$ is measurable and at least 0. Apply the lemma to $`G-f_n`$. Seat by seat, $`\liminf_n(G-f_n)=G-\limsup_n f_n`$, since subtracting from a fixed finite number turns floors into ceilings. Every $`f_n`$ and $`\limsup_n f_n`$ lies between 0 and G, so all of them are integrable and the integral subtracts ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)): $`\int(G-f_n)\,d\mu=\int G\,d\mu-\int f_n\,d\mu`$, and likewise for the lim sup. The lemma becomes
+
+$`\displaystyle \int G\,d\mu-\int\limsup_n f_n\,d\mu\le\liminf_n\Big(\int G\,d\mu-\int f_n\,d\mu\Big)=\int G\,d\mu-\limsup_n\int f_n\,d\mu .`$
+
+Subtract the finite number $`\int G\,d\mu`$ from both sides and change signs: $`\limsup_n\int f_n\,d\mu\le\int\limsup_n f_n\,d\mu`$. ∎ The finite roof is used twice: to make $`G-f_n`$ a function of zero or more, and to make the subtraction legal.
 
 </details>
 
 ### Step 4: the proof on the stage, with house lights
 
-The bare spotlight's floors are all 0, which hides the machinery. Add house lights that fade up: in frame n they give $h_n = 0.5(1 - 1/n)$ W/m at every seat, on top of the spotlight. Frame n now carries $h_n + 1$ W.
+The bare spotlight's floors are all 0, which hides the machinery. Add house lights that fade up: in frame n they give $`h_n = 0.5(1 - 1/n)`$ W/m at every seat, on top of the spotlight. Frame n now carries $`h_n + 1`$ W.
 
-At a seat left of $1 - 1/k$, every frame from k on is dark except for the house lights, which are dimmest at frame k: the floor is $h_k$. At a seat on the strip where frame j is the last lit one, with j ≥ k, the floor is the first dark frame's house lights, $h_{j+1}$.
+At a seat left of $`1 - 1/k`$, every frame from k on is dark except for the house lights, which are dimmest at frame k: the floor is $`h_k`$. At a seat on the strip where frame j is the last lit one, with j ≥ k, the floor is the first dark frame's house lights, $`h_{j+1}`$.
 
 For k = 3 that is 0.3333 W/m on the first 0.6667 m, area 0.2222 W, plus 0.1419 W from the strips near the edge: 0.3641 W. That sits below every later total, the smallest being 1.3333 W at frame 3.
 
@@ -152,7 +162,7 @@ xychart-beta
     line [1.00, 1.25, 1.33, 1.38, 1.40, 1.42, 1.43, 1.44]
 ```
 
-Caption, values to 2 places: the lower line is $\int g_k$, the total of the floor from frame k on, rising toward 0.5 W. The upper line is the smallest frame total from frame k on, rising toward 1.5 W. The lower line never crosses the upper one; that is Step 2.
+Caption, values to 2 places: the lower line is $`\int g_k`$, the total of the floor from frame k on, rising toward 0.5 W. The upper line is the smallest frame total from frame k on, rising toward 1.5 W. The lower line never crosses the upper one; that is Step 2.
 
 The first two values of the lower line agree because frame 1 has no house light but a spotlight of 1 W/m over the whole stage, so it never sets the floor.
 
@@ -164,11 +174,11 @@ A finite stage can lose total without anything escaping. Let the lights **flicke
 
 ### Step 6: the reverse form under a roof
 
-The flicker has a roof: $G = 2$ W/m everywhere, total 2 W, above every frame. Each seat's ceiling is 2, so the lim sup has total 2 W. Reverse Fatou reads 1 ≤ 2, and the full chain is 0 ≤ 1 ≤ 1 ≤ 2: total of the floor, floor of the totals, ceiling of the totals, total of the ceiling.
+The flicker has a roof: $`G = 2`$ W/m everywhere, total 2 W, above every frame. Each seat's ceiling is 2, so the lim sup has total 2 W. Reverse Fatou reads 1 ≤ 2, and the full chain is 0 ≤ 1 ≤ 1 ≤ 2: total of the floor, floor of the totals, ceiling of the totals, total of the ceiling.
 
 The spotlight has no roof. The smallest function above every frame is, on the strip where frame j is the last lit one, the brightness j of that frame.
 
-Its total over strips 1 to J is $1/2 + 1/3 + \cdots + 1/(J+1)$, a harmonic sum: 2.0199 W up to 0.909091 m, 4.1973 W up to 0.990099 m, 6.4865 W up to 0.999001 m, 13.3927 W up to 0.999999 m, growing without bound. With no finite roof, reverse Fatou has nothing to stand on, and indeed it fails: 1 W against 0 W.
+Its total over strips 1 to J is $`1/2 + 1/3 + \cdots + 1/(J+1)`$, a harmonic sum: 2.0199 W up to 0.909091 m, 4.1973 W up to 0.990099 m, 6.4865 W up to 0.999001 m, 13.3927 W up to 0.999999 m, growing without bound. With no finite roof, reverse Fatou has nothing to stand on, and indeed it fails: 1 W against 0 W.
 
 Another route to the same inequality is to prove dominated convergence first and read Fatou off it, but that runs backwards: [Dominated convergence](02-dominated-convergence-theorem.md) proves dominated convergence by applying Fatou to roof plus and minus each frame.
 
@@ -693,7 +703,7 @@ example : ¬ ((0 : ℤ) ≤ -1) := by decide
 ## Where you meet it in real life
 
 - **Probability.** For random quantities of zero or more, the average of the eventual floor is at most the eventual floor of the averages ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). A lottery paying n dollars with probability 1/n averages 1 dollar forever while the chance of any prize shrinks to 0: the same kind of leak, which [Uniform integrability](05-uniform-integrability.md) rules out.
-- **Limits keep their size bounds.** If functions converge almost everywhere, the limit's total size is at most the eventual floor of theirs. That is how the proof that $L^p$ spaces are complete shows a limit stays in the space ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)). An $L^p$ space holds the functions whose p-th power has a finite integral; complete means a sequence whose members draw ever closer together has a limit inside the space.
+- **Limits keep their size bounds.** If functions converge almost everywhere, the limit's total size is at most the eventual floor of theirs. That is how the proof that $`L^p`$ spaces are complete shows a limit stays in the space ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)). An $`L^p`$ space holds the functions whose p-th power has a finite integral; complete means a sequence whose members draw ever closer together has a limit inside the space.
 - **Martingales.** A fair game whose value is zero or more keeps a constant average in time. Once the game's value is known to settle to a limit, Fatou bounds the average of that limit by the constant ([Filtrations and martingales](../09-Conditional%20Expectation/06-filtrations-and-martingales.md)).
 - **Which convergence loses mass.** The spotlight converges at every seat yet not in total; sorting out which kinds of convergence carry totals with them is [Modes of convergence](04-modes-of-convergence.md). The Riemann version of the same trap, tents of area 1 on [0, 1], is [Swapping limits](../../06-Calculus%20and%20analysis/06-Series/08-swapping-limits-with-integrals-and-derivatives.md).
 

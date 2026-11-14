@@ -43,35 +43,39 @@ Every line crosses between the groups, so no trio closes.
 
 ## The formula
 
-Notation first, in words. The rack is a graph: servers are vertices, links are edges, and $\lvert E\rvert$ counts the links. $K(r+1)$ names r + 1 points all linked to each other, a **clique**; $K(3)$ is the closed trio, a triangle. $K(a, b)$ names groups of a and b points with every cross pair linked. $T(n, r)$, the **Turán graph**, is n points in r groups whose sizes differ by at most one, cross pairs linked. $\lfloor x \rfloor$ rounds x down.
+Notation first, in words. The rack is a graph: servers are vertices, links are edges, and $`\lvert E\rvert`$ counts the links. $`K(r+1)`$ names r + 1 points all linked to each other, a **clique**; $`K(3)`$ is the closed trio, a triangle. $`K(a, b)`$ names groups of a and b points with every cross pair linked. $`T(n, r)`$, the **Turán graph**, is n points in r groups whose sizes differ by at most one, cross pairs linked. $`\lfloor x \rfloor`$ rounds x down.
 
 Mantel's theorem, for a network with no triangle:
 
-$$\lvert E\rvert \le \left\lfloor \frac{n^2}{4} \right\rfloor$$
+```math
+\lvert E\rvert \le \left\lfloor \frac{n^2}{4} \right\rfloor
+```
 
 **Read it aloud:** a network on n points with no closed trio has at most n squared over four links, rounded down.
 
-Turán's theorem, for a network with no $K(r+1)$:
+Turán's theorem, for a network with no $`K(r+1)`$:
 
-$$\lvert E\rvert \le \text{links of } T(n, r) \le \left(1 - \frac{1}{r}\right)\frac{n^2}{2}$$
+```math
+\lvert E\rvert \le \text{links of } T(n, r) \le \left(1 - \frac{1}{r}\right)\frac{n^2}{2}
+```
 
 **Read it aloud:** with no r + 1 points all linked, the links are at most those of the evenly split r-group network, at most 1 − 1/r of n squared over two.
 
-Mantel is Turán with r = 2: for 10 servers $T(10, 2)$ is $K(5, 5)$.
+Mantel is Turán with r = 2: for 10 servers $`T(10, 2)`$ is $`K(5, 5)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | points (servers) | 10 | cap grows as n squared |
-| $\lvert E\rvert$ | links | 25 at the cap | past it, a clique |
-| $\deg(v)$, $u$, $v$ | links at v; u, v a link's ends | 5 each | — |
-| $C(n, 2)$ | n choose 2: all pairs | 45 | — |
-| $\sum$ | add up over what is written beneath | ten degrees squared: 250 | — |
-| $K(a, b)$ | two groups, cross pairs linked | $K(5, 5)$, 25 links | uneven: fewer |
-| $K(r+1)$ | r + 1 all linked: a clique | $K(3)$, a triangle | easier to avoid |
-| $T(n, r)$, $r$ | Turán graph: r near-equal groups | $T(10, 3)$: 4, 3, 3 | more links |
-| $\lfloor x \rfloor$ | round x down | 20.25 becomes 20 | — |
+| $`n`$ | points (servers) | 10 | cap grows as n squared |
+| $`\lvert E\rvert`$ | links | 25 at the cap | past it, a clique |
+| $`\deg(v)`$, $`u`$, $`v`$ | links at v; u, v a link's ends | 5 each | — |
+| $`C(n, 2)`$ | n choose 2: all pairs | 45 | — |
+| $`\sum`$ | add up over what is written beneath | ten degrees squared: 250 | — |
+| $`K(a, b)`$ | two groups, cross pairs linked | $`K(5, 5)`$, 25 links | uneven: fewer |
+| $`K(r+1)`$ | r + 1 all linked: a clique | $`K(3)`$, a triangle | easier to avoid |
+| $`T(n, r)`$, $`r`$ | Turán graph: r near-equal groups | $`T(10, 3)`$: 4, 3, 3 | more links |
+| $`\lfloor x \rfloor`$ | round x down | 20.25 becomes 20 | — |
 
-The links of $T(n, r)$ are all pairs minus the pairs inside each group: for groups of 4, 3 and 3, 45 − 6 − 3 − 3 = 33.
+The links of $`T(n, r)`$ are all pairs minus the pairs inside each group: for groups of 4, 3 and 3, 45 − 6 − 3 − 3 = 33.
 
 ### When it holds
 
@@ -85,26 +89,30 @@ The links of $T(n, r)$ are all pairs minus the pairs inside each group: for grou
 
 ### Step 0: a link's two ends share no neighbour
 
-Take a link, say S1–S6, in a network with no triangle. A server linked to both would close a trio, so their neighbours are different servers, at most n in all: $\deg(u) + \deg(v) \le n$ for every link u–v, where $\deg(v)$ counts v's links. In the two-group network, 5 + 5 = 10 = n.
+Take a link, say S1–S6, in a network with no triangle. A server linked to both would close a trio, so their neighbours are different servers, at most n in all: $`\deg(u) + \deg(v) \le n`$ for every link u–v, where $`\deg(v)`$ counts v's links. In the two-group network, 5 + 5 = 10 = n.
 
 ### Step 1: add that inequality over every link
 
-Add this over all links. Server v sits on $\deg(v)$ links and brings $\deg(v)$ to each, so it contributes $\deg(v)$ squared:
+Add this over all links. Server v sits on $`\deg(v)`$ links and brings $`\deg(v)`$ to each, so it contributes $`\deg(v)`$ squared:
 
-$$\sum_{\text{links } uv} \big(\deg(u) + \deg(v)\big) = \sum_{v} \deg(v)^2 \le n\,\lvert E\rvert$$
+```math
+\sum_{\text{links } uv} \big(\deg(u) + \deg(v)\big) = \sum_{v} \deg(v)^2 \le n\,\lvert E\rvert
+```
 
 In the example: 25 links of 10 make 250; ten degrees of 5, squared, make 250; n × 25 = 250.
 
 ### Step 2: squares cannot be too small
 
-The degrees add to $2\lvert E\rvert$, since each link has two ends. Numbers with a fixed total have the smallest sum of squares when all are equal, so
+The degrees add to $`2\lvert E\rvert`$, since each link has two ends. Numbers with a fixed total have the smallest sum of squares when all are equal, so
 
-$$\sum_{v} \deg(v)^2 \ge \frac{(2\lvert E\rvert)^2}{n}$$
+```math
+\sum_{v} \deg(v)^2 \ge \frac{(2\lvert E\rvert)^2}{n}
+```
 
 <details>
 <summary>The algebra behind this</summary>
 
-Let a be the average degree, $2\lvert E\rvert / n$. Each $(\deg(v) - a)^2$ is at least 0. Summed and expanded, that says the sum of squares minus $n a^2$ is at least 0, since the degrees add to $n a$. And $n a^2 = (2\lvert E\rvert)^2 / n$.
+Let a be the average degree, $`2\lvert E\rvert / n`$. Each $`(\deg(v) - a)^2`$ is at least 0. Summed and expanded, that says the sum of squares minus $`n a^2`$ is at least 0, since the degrees add to $`n a`$. And $`n a^2 = (2\lvert E\rvert)^2 / n`$.
 
 </details>
 
@@ -112,11 +120,13 @@ Let a be the average degree, $2\lvert E\rvert / n$. Each $(\deg(v) - a)^2$ is at
 
 Steps 1 and 2 hold the same sum between two bounds:
 
-$$\frac{4\lvert E\rvert^2}{n} \le \sum_{v} \deg(v)^2 \le n\,\lvert E\rvert$$
+```math
+\frac{4\lvert E\rvert^2}{n} \le \sum_{v} \deg(v)^2 \le n\,\lvert E\rvert
+```
 
-Divide by $\lvert E\rvert$ and multiply by n/4: $\lvert E\rvert \le n^2/4$, and a whole number of links sits at or below $\lfloor n^2/4 \rfloor$. For 10 servers, 4 × 25 × 25 / 10 = 250 and the bounds meet; 26 links would push the left past the right.
+Divide by $`\lvert E\rvert`$ and multiply by n/4: $`\lvert E\rvert \le n^2/4`$, and a whole number of links sits at or below $`\lfloor n^2/4 \rfloor`$. For 10 servers, 4 × 25 × 25 / 10 = 250 and the bounds meet; 26 links would push the left past the right.
 
-Equality needs every degree n/2 and every link's ends to see all n servers, so the two neighbour sets of any link split the servers into two groups of n/2, neither linked inside, every cross pair linked: $K(5, 5)$ is the only 25-link wiring, up to relabelling. It is bipartite, two sides with no link inside a side ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)), so every loop is even and none is a triangle.
+Equality needs every degree n/2 and every link's ends to see all n servers, so the two neighbour sets of any link split the servers into two groups of n/2, neither linked inside, every cross pair linked: $`K(5, 5)`$ is the only 25-link wiring, up to relabelling. It is bipartite, two sides with no link inside a side ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)), so every loop is even and none is a triangle.
 
 ### The picture: where the 26th link lands
 
@@ -131,16 +141,16 @@ S1 and S2 share all five of group B as neighbours, so each of S6 to S10 closes a
 
 ### Step 4: Turán, the same cap for bigger cliques
 
-Forbid four servers all linked. Groups of 4, 3 and 3 give 33 links, and any four servers include two from one group, so no $K(4)$ appears. Turán's theorem says 33 is the most. The bound $(1 - 1/r)\,n^2/2$ is exact when r divides n; here it reads 33.33, and the truth is 33.
+Forbid four servers all linked. Groups of 4, 3 and 3 give 33 links, and any four servers include two from one group, so no $`K(4)`$ appears. Turán's theorem says 33 is the most. The bound $`(1 - 1/r)\,n^2/2`$ is exact when r divides n; here it reads 33.33, and the truth is 33.
 
 <details>
 <summary>Detailed proof: Turán's theorem by removing one clique</summary>
 
-Take G on n points with no $K(r+1)$ and the most links. For n at most r, $T(n, r)$ links every pair: nothing to prove. Otherwise G holds a $K(r)$, a set A of r points all linked: without one, any missing link could be added safely, contradicting maximality.
+Take G on n points with no $`K(r+1)`$ and the most links. For n at most r, $`T(n, r)`$ links every pair: nothing to prove. Otherwise G holds a $`K(r)`$, a set A of r points all linked: without one, any missing link could be added safely, contradicting maximality.
 
-Count G's links in three parts. Inside A: $C(r, 2)$. From A to the other n − r points: each is linked to at most r − 1 of A, or it would complete a $K(r+1)$, so at most $(n - r)(r - 1)$. Among the other n − r: no $K(r+1)$ either, so by induction on n at most the links of $T(n - r, r)$.
+Count G's links in three parts. Inside A: $`C(r, 2)`$. From A to the other n − r points: each is linked to at most r − 1 of A, or it would complete a $`K(r+1)`$, so at most $`(n - r)(r - 1)`$. Among the other n − r: no $`K(r+1)`$ either, so by induction on n at most the links of $`T(n - r, r)`$.
 
-Take one point from each group of $T(n, r)$: they form a $K(r)$ with $C(r, 2)$ links, each other point is linked to r − 1 of them, and what is left is $T(n - r, r)$. The parts match term by term, so G has at most the links of $T(n, r)$. With r = 2 this is a second proof of Mantel: the caps run 1, 4, 9, 16, 25 on 2, 4, 6, 8, 10 points.
+Take one point from each group of $`T(n, r)`$: they form a $`K(r)`$ with $`C(r, 2)`$ links, each other point is linked to r − 1 of them, and what is left is $`T(n - r, r)`$. The parts match term by term, so G has at most the links of $`T(n, r)`$. With r = 2 this is a second proof of Mantel: the caps run 1, 4, 9, 16, 25 on 2, 4, 6, 8, 10 points.
 
 </details>
 
@@ -379,8 +389,8 @@ Lean proves both theorems, and when each cap is reached, for every network of pl
 
 - With no triangle, a network on n points has at most n^2/4 links, rounded down.
 - It has exactly that many only when it is two groups as equal as possible, every cross pair linked, none inside.
-- With no r + 1 points all linked, it has at most the links of $T(n, r)$, and only $T(n, r)$ has exactly that many, up to relabelling.
-- $T(n, r)$ itself has no r + 1 points all linked, and its links are at most $(1 - 1/r)\,n^2/2$.
+- With no r + 1 points all linked, it has at most the links of $`T(n, r)`$, and only $`T(n, r)`$ has exactly that many, up to relabelling.
+- $`T(n, r)`$ itself has no r + 1 points all linked, and its links are at most $`(1 - 1/r)\,n^2/2`$.
 
 The star, the search through every network on up to six servers, and the decimal shares are left to the Python and Rust checks.
 

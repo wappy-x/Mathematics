@@ -26,27 +26,31 @@ Scale: seams 40 units, pentagon centred at (180, 117), hexagons turned in 72° s
 
 ## The formula
 
-$V$ counts vertices (corners), $E$ edges (seams, each between two faces) and $F$ faces, as on [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md). A **polyhedron** is a solid bounded by flat polygon faces; the football's pattern is one; pumping it up only bulges the panels.
+$`V`$ counts vertices (corners), $`E`$ edges (seams, each between two faces) and $`F`$ faces, as on [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md). A **polyhedron** is a solid bounded by flat polygon faces; the football's pattern is one; pumping it up only bulges the panels.
 
-$$V - E + F = 2$$
+```math
+V - E + F = 2
+```
 
 **Read it aloud:** corners, minus edges, plus faces, is two for any polyhedron that could be pumped up into a ball.
 
-Every edge borders two faces and has two ends, so adding up the sides of all faces counts each edge twice, and so does adding up the edges at all corners. On a regular solid, with $p$ sides on every face and $q$ faces, so $q$ edges, at every corner:
+Every edge borders two faces and has two ends, so adding up the sides of all faces counts each edge twice, and so does adding up the edges at all corners. On a regular solid, with $`p`$ sides on every face and $`q`$ faces, so $`q`$ edges, at every corner:
 
-$$pF = 2E, \qquad qV = 2E$$
+```math
+pF = 2E, \qquad qV = 2E
+```
 
-On the ball, $P$ counts pentagons and $H$ hexagons.
+On the ball, $`P`$ counts pentagons and $`H`$ hexagons.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | vertices: corners | 60 on the ball | a corner added mid-edge adds an edge: no change |
-| $E$ | edges: seams between two faces | 90 | an edge across a face splits it: no change |
-| $F$ | faces: flat panels | 32 | a face left off: falls by one |
-| $P$ | pentagons on the ball | 12 | cannot move: forced |
-| $H$ | hexagons on the ball | 20 | free: no change |
-| $p$ | sides per face of a regular solid | 5 on the dodecahedron | from 6 up, nothing closes |
-| $q$ | faces (and edges) per corner | 3 on the ball | from 6 up, nothing closes |
+| $`V`$ | vertices: corners | 60 on the ball | a corner added mid-edge adds an edge: no change |
+| $`E`$ | edges: seams between two faces | 90 | an edge across a face splits it: no change |
+| $`F`$ | faces: flat panels | 32 | a face left off: falls by one |
+| $`P`$ | pentagons on the ball | 12 | cannot move: forced |
+| $`H`$ | hexagons on the ball | 20 | free: no change |
+| $`p`$ | sides per face of a regular solid | 5 on the dodecahedron | from 6 up, nothing closes |
+| $`q`$ | faces (and edges) per corner | 3 on the ball | from 6 up, nothing closes |
 
 ### When it holds
 
@@ -81,7 +85,9 @@ The panels have 5 × 12 + 6 × 20 = 180 sides. Each seam was counted from both s
 
 Split V − E + F among the panels. Three panels share each corner and two share each seam, so a panel carries a third of each of its corners, minus half of each of its seams, plus one for itself. A hexagon carries 6/3 − 6/2 + 1 = 0; a pentagon carries 5/3 − 5/2 + 1 = 1/6. The shares total 2, so there are 2 ÷ 1/6 = 12 pentagons. In symbols, with F = P + H and 2E = 3V = 5P + 6H:
 
-$$V - E + F = \frac{5P + 6H}{3} - \frac{5P + 6H}{2} + P + H = \frac{P}{6} = 2$$
+```math
+V - E + F = \frac{5P + 6H}{3} - \frac{5P + 6H}{2} + P + H = \frac{P}{6} = 2
+```
 
 The hexagons cancel, so P = 12 on every such ball.
 
@@ -89,7 +95,9 @@ The hexagons cancel, so P = 12 on every such ball.
 
 A convex solid is **regular** when all its faces are one regular polygon (equal sides, equal angles) with p sides, and q faces meet at every corner; a polygon needs 3 sides and a corner 3 faces. Put pF = 2E and qV = 2E into Euler's count and divide by 2E:
 
-$$\frac{1}{p} + \frac{1}{q} = \frac{1}{2} + \frac{1}{E}$$
+```math
+\frac{1}{p} + \frac{1}{q} = \frac{1}{2} + \frac{1}{E}
+```
 
 E is positive, so one over p plus one over q beats a half. Multiplying by 2pq gives 2p + 2q > pq, or (p − 2)(q − 2) < 4. Both brackets are whole numbers of at least 1, so the product is 1, 2 or 3: five pairs, counted by E = 2pq ÷ (2p + 2q − pq), V = 2E ÷ q and F = 2E ÷ p:
 

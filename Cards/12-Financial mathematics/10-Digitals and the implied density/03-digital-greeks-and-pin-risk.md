@@ -37,48 +37,60 @@ Delta is scaled by 100 to read as shares per \$100 of payout. Flat line: one yea
 
 ## The formula
 
-Notation first, in words. The cash digital's price is $c$ and the asset digital's price is $a$; the asset digital pays one Acme share, instead of \$1, if Acme closes above the strike ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Their prices are
+Notation first, in words. The cash digital's price is $`c`$ and the asset digital's price is $`a`$; the asset digital pays one Acme share, instead of \$1, if Acme closes above the strike ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Their prices are
 
-$$c = e^{-rT}N(d_2), \qquad a = S\,e^{-qT}N(d_1),$$
+```math
+c = e^{-rT}N(d_2), \qquad a = S\,e^{-qT}N(d_1),
+```
 
 with the two distances as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card:
 
-$$d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}.$$
+```math
+d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}.
+```
 
-In words: $d_2$ is how many spreads Acme's median finishing price sits above the strike; $d_1$ is one spread further.
+In words: $`d_2`$ is how many spreads Acme's median finishing price sits above the strike; $`d_1`$ is one spread further.
 
-The Greeks are slopes of these prices, one input moved at a time with the rest frozen: partial derivatives ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). A subscript names the product: $\Delta_c$ is the cash digital's delta, $\Delta_a$ the asset digital's. The bell curve's height at $x$ is $\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}$; its area to the left of $x$ is $N(x)$.
+The Greeks are slopes of these prices, one input moved at a time with the rest frozen: partial derivatives ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). A subscript names the product: $`\Delta_c`$ is the cash digital's delta, $`\Delta_a`$ the asset digital's. The bell curve's height at $`x`$ is $`\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}`$; its area to the left of $`x`$ is $`N(x)`$.
 
 The cash digital:
 
-$$\Delta_c = \frac{e^{-rT}\varphi(d_2)}{S\sigma\sqrt{T}}, \qquad \Gamma_c = -\frac{e^{-rT}\varphi(d_2)\,d_1}{S^2\sigma^2T}, \qquad \mathcal{V}_c = -\frac{e^{-rT}\varphi(d_2)\,d_1}{\sigma},$$
+```math
+\Delta_c = \frac{e^{-rT}\varphi(d_2)}{S\sigma\sqrt{T}}, \qquad \Gamma_c = -\frac{e^{-rT}\varphi(d_2)\,d_1}{S^2\sigma^2T}, \qquad \mathcal{V}_c = -\frac{e^{-rT}\varphi(d_2)\,d_1}{\sigma},
+```
 
-$$\Theta_c = r\,c + e^{-rT}\varphi(d_2)\left(\frac{d_1}{2T} - \frac{r-q}{\sigma\sqrt{T}}\right), \qquad \rho_c = -T\,c + \frac{e^{-rT}\varphi(d_2)\sqrt{T}}{\sigma}.$$
+```math
+\Theta_c = r\,c + e^{-rT}\varphi(d_2)\left(\frac{d_1}{2T} - \frac{r-q}{\sigma\sqrt{T}}\right), \qquad \rho_c = -T\,c + \frac{e^{-rT}\varphi(d_2)\sqrt{T}}{\sigma}.
+```
 
 **Read it aloud:** every cash Greek is the bell curve's height at the strike's distance, discounted, times how fast that distance moves with the input; theta and rho add a term for the discount itself.
 
 The asset digital:
 
-$$\Delta_a = e^{-qT}N(d_1) + \frac{e^{-qT}\varphi(d_1)}{\sigma\sqrt{T}}, \qquad \Gamma_a = -\frac{e^{-qT}\varphi(d_1)\,d_2}{S\sigma^2T}, \qquad \mathcal{V}_a = -\frac{S\,e^{-qT}\varphi(d_1)\,d_2}{\sigma},$$
+```math
+\Delta_a = e^{-qT}N(d_1) + \frac{e^{-qT}\varphi(d_1)}{\sigma\sqrt{T}}, \qquad \Gamma_a = -\frac{e^{-qT}\varphi(d_1)\,d_2}{S\sigma^2T}, \qquad \mathcal{V}_a = -\frac{S\,e^{-qT}\varphi(d_1)\,d_2}{\sigma},
+```
 
-$$\Theta_a = q\,a - S\,e^{-qT}\varphi(d_1)\left(\frac{r-q}{\sigma\sqrt{T}} - \frac{d_2}{2T}\right), \qquad \rho_a = \frac{S\,e^{-qT}\varphi(d_1)\sqrt{T}}{\sigma}.$$
+```math
+\Theta_a = q\,a - S\,e^{-qT}\varphi(d_1)\left(\frac{r-q}{\sigma\sqrt{T}} - \frac{d_2}{2T}\right), \qquad \rho_a = \frac{S\,e^{-qT}\varphi(d_1)\sqrt{T}}{\sigma}.
+```
 
-**Read it aloud:** the same pattern with $d_1$ and $d_2$ swapped in the sign-carrying factor, plus one extra delta term because the payout is itself a share.
+**Read it aloud:** the same pattern with $`d_1`$ and $`d_2`$ swapped in the sign-carrying factor, plus one extra delta term because the payout is itself a share.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $c$, $a$, $V$ | prices of the cash digital (pays \$1) and the asset digital (pays one share); $V$ is any product's price | \$0.494581, \$58.685115 | — |
-| $S$ | Acme's price today | \$100 | cash delta falls away from the peak |
-| $K$ | the strike: the level Acme must close above | \$100 | the spike moves with it |
-| $T$ | time left to expiry, in years | 1 | wider, lower hump |
-| $r$, $q$ | bank rate and dividend yield, continuously compounded | 5%, 2% | raise and lower the odds of finishing above $K$ |
-| $\sigma$ | volatility: the spread of a year's log return | 20% | cash digital cheaper at the strike |
-| $d_1$, $d_2$, $m$ | the strike's distance in spread units, counted in shares and in dollars; $m$ is the log-distance above the strike of the forward $S e^{(r-q)T}$, the price agreed today for a share delivered at $T$ | 0.25, 0.05, 0.03 | — |
-| $\varphi$, $N$ | the bell curve's height; $N(x)$ is its area left of $x$ | $\varphi(d_2) = 0.398444$ | — |
-| $e^{-rT}$, $e^{-qT}$ | today's value of \$1 due at $T$; the share fraction held today to own one share at $T$ | 0.951229, 0.980199 | — |
-| $\Delta$, $\Delta_c$, $\Delta_a$, $\Gamma$, $\Gamma_c$, $\Gamma_a$ | delta: price change per \$1 of Acme; gamma: delta's change per \$1 | 0.018951, −0.000237 (cash) | — |
-| $\mathcal{V}_c$, $\mathcal{V}_a$, $\Theta$, $\Theta_c$, $\Theta_a$ | vega: per unit of volatility; theta: per year that passes, Acme fixed | −0.473764, 0.015254 (cash) | — |
-| $\rho$, $\rho_c$, $\rho_a$ | rho: per unit of the bank rate | 1.400477 (cash) | — |
+| $`c`$, $`a`$, $`V`$ | prices of the cash digital (pays \$1) and the asset digital (pays one share); $`V`$ is any product's price | \$0.494581, \$58.685115 | — |
+| $`S`$ | Acme's price today | \$100 | cash delta falls away from the peak |
+| $`K`$ | the strike: the level Acme must close above | \$100 | the spike moves with it |
+| $`T`$ | time left to expiry, in years | 1 | wider, lower hump |
+| $`r`$, $`q`$ | bank rate and dividend yield, continuously compounded | 5%, 2% | raise and lower the odds of finishing above $`K`$ |
+| $`\sigma`$ | volatility: the spread of a year's log return | 20% | cash digital cheaper at the strike |
+| $`d_1`$, $`d_2`$, $`m`$ | the strike's distance in spread units, counted in shares and in dollars; $`m`$ is the log-distance above the strike of the forward $`S e^{(r-q)T}`$, the price agreed today for a share delivered at $`T`$ | 0.25, 0.05, 0.03 | — |
+| $`\varphi`$, $`N`$ | the bell curve's height; $`N(x)`$ is its area left of $`x`$ | $`\varphi(d_2) = 0.398444`$ | — |
+| $`e^{-rT}`$, $`e^{-qT}`$ | today's value of \$1 due at $`T`$; the share fraction held today to own one share at $`T`$ | 0.951229, 0.980199 | — |
+| $`\Delta`$, $`\Delta_c`$, $`\Delta_a`$, $`\Gamma`$, $`\Gamma_c`$, $`\Gamma_a`$ | delta: price change per \$1 of Acme; gamma: delta's change per \$1 | 0.018951, −0.000237 (cash) | — |
+| $`\mathcal{V}_c`$, $`\mathcal{V}_a`$, $`\Theta`$, $`\Theta_c`$, $`\Theta_a`$ | vega: per unit of volatility; theta: per year that passes, Acme fixed | −0.473764, 0.015254 (cash) | — |
+| $`\rho`$, $`\rho_c`$, $`\rho_a`$ | rho: per unit of the bank rate | 1.400477 (cash) | — |
 
 The Greeks at the house market, from both check scripts:
 
@@ -97,7 +109,7 @@ The Greeks at the house market, from both check scripts:
 - **Volatility is one fixed number.** Real markets price a different volatility at each strike. Then the digital also moves when that curve tilts, a term the next card adds; flat-volatility Greeks miss it.
 - **Acme moves continuously.** A jump through the strike, overnight or on news, flips the payout with no chance to trade in between. No delta covers that; the formulas assume the path has no gaps.
 - **Trading is free and continuous.** Near expiry the delta changes so fast that daily or hourly rebalancing leaves large errors, and each trade costs a spread. The Greeks stay correct as slopes; the hedge they describe stops being achievable.
-- **The payout switches exactly at $K$.** The formulas are slopes of a jump. A pricing grid or tree that treats the jump crudely produces noisy Greeks near the strike, a numerical problem separate from the model.
+- **The payout switches exactly at $`K`$.** The formulas are slopes of a jump. A pricing grid or tree that treats the jump crudely produces noisy Greeks near the strike, a numerical problem separate from the model.
 
 ---
 
@@ -105,43 +117,43 @@ The Greeks at the house market, from both check scripts:
 
 ### Step 0: every Greek is one slope times the bell curve's height
 
-The cash price is $e^{-rT}N(d_2)$. Only two pieces move when an input moves: the discount $e^{-rT}$ and the distance $d_2$. The slope of $N$ at $d_2$ is the bell curve's height there, $\varphi(d_2)$. So by the chain rule (the slope of a function of a function is the product of the two slopes), each Greek is $e^{-rT}\varphi(d_2)$ times the slope of $d_2$ in that input, plus a discount term where $r$ or $T$ enters the discount. The whole card is five slopes of $d_2$, five of $d_1$, and bookkeeping.
+The cash price is $`e^{-rT}N(d_2)`$. Only two pieces move when an input moves: the discount $`e^{-rT}`$ and the distance $`d_2`$. The slope of $`N`$ at $`d_2`$ is the bell curve's height there, $`\varphi(d_2)`$. So by the chain rule (the slope of a function of a function is the product of the two slopes), each Greek is $`e^{-rT}\varphi(d_2)`$ times the slope of $`d_2`$ in that input, plus a discount term where $`r`$ or $`T`$ enters the discount. The whole card is five slopes of $`d_2`$, five of $`d_1`$, and bookkeeping.
 
 ### Step 1: how the distances move
 
-Write $m = \ln(S/K) + (r-q)T$, the forward's log-distance above the strike. Then $d_2 = m/(\sigma\sqrt{T}) - \tfrac12\sigma\sqrt{T}$ and $d_1 = m/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}$. Differentiating term by term:
+Write $`m = \ln(S/K) + (r-q)T`$, the forward's log-distance above the strike. Then $`d_2 = m/(\sigma\sqrt{T}) - \tfrac12\sigma\sqrt{T}`$ and $`d_1 = m/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}`$. Differentiating term by term:
 
-| Input | Slope of $d_2$ | Slope of $d_1$ |
+| Input | Slope of $`d_2`$ | Slope of $`d_1`$ |
 | --- | --- | --- |
-| Acme's price $S$ | $\frac{1}{S\sigma\sqrt{T}}$ | $\frac{1}{S\sigma\sqrt{T}}$ |
-| volatility $\sigma$ | $-d_1/\sigma$ | $-d_2/\sigma$ |
-| time left $T$ | $(r-q)/(\sigma\sqrt{T}) - d_1/(2T)$ | $(r-q)/(\sigma\sqrt{T}) - d_2/(2T)$ |
-| bank rate $r$ | $\sqrt{T}/\sigma$ | $\sqrt{T}/\sigma$ |
+| Acme's price $`S`$ | $`\frac{1}{S\sigma\sqrt{T}}`$ | $`\frac{1}{S\sigma\sqrt{T}}`$ |
+| volatility $`\sigma`$ | $`-d_1/\sigma`$ | $`-d_2/\sigma`$ |
+| time left $`T`$ | $`(r-q)/(\sigma\sqrt{T}) - d_1/(2T)`$ | $`(r-q)/(\sigma\sqrt{T}) - d_2/(2T)`$ |
+| bank rate $`r`$ | $`\sqrt{T}/\sigma`$ | $`\sqrt{T}/\sigma`$ |
 
-The volatility row is the one that matters. Raising $\sigma$ divides $m$ by more and grows $\tfrac12\sigma\sqrt{T}$. The two effects combine into $-(m/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T})/\sigma$, which is $-d_1/\sigma$.
+The volatility row is the one that matters. Raising $`\sigma`$ divides $`m`$ by more and grows $`\tfrac12\sigma\sqrt{T}`$. The two effects combine into $`-(m/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T})/\sigma`$, which is $`-d_1/\sigma`$.
 
 ### Step 2: the cash delta, and why it equals the call's gamma at the strike
 
-Multiply the height by the first row: $\Delta_c = e^{-rT}\varphi(d_2)/(S\sigma\sqrt{T})$. For Acme that is 0.379012 / 20 = 0.018951.
+Multiply the height by the first row: $`\Delta_c = e^{-rT}\varphi(d_2)/(S\sigma\sqrt{T})`$. For Acme that is 0.379012 / 20 = 0.018951.
 
-The ordinary call's gamma is $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$ ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)). The two numerators are tied by the **density identity** $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$, so the call's gamma is $K/S$ times the cash delta. At $S = K$ they coincide: 0.018951 both. The call's delta climbs from 0 to about 1 as Acme rises through the strike, and the cash digital pays exactly when the call pays out, so the slope of one tracks the steepness of the other.
+The ordinary call's gamma is $`e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})`$ ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)). The two numerators are tied by the **density identity** $`S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)`$, so the call's gamma is $`K/S`$ times the cash delta. At $`S = K`$ they coincide: 0.018951 both. The call's delta climbs from 0 to about 1 as Acme rises through the strike, and the cash digital pays exactly when the call pays out, so the slope of one tracks the steepness of the other.
 
 <details>
 <summary>The algebra behind the density identity</summary>
 
-$d_1^2 - d_2^2 = (d_1 - d_2)(d_1 + d_2) = \sigma\sqrt{T}\cdot 2m/(\sigma\sqrt{T}) = 2m$. So $\varphi(d_1)/\varphi(d_2) = e^{-(d_1^2 - d_2^2)/2} = e^{-m} = K e^{-(r-q)T}/S$. Multiply both sides by $S e^{-qT}\varphi(d_2)$: $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$. At the house market both sides equal 100 × 0.379012.
+$`d_1^2 - d_2^2 = (d_1 - d_2)(d_1 + d_2) = \sigma\sqrt{T}\cdot 2m/(\sigma\sqrt{T}) = 2m`$. So $`\varphi(d_1)/\varphi(d_2) = e^{-(d_1^2 - d_2^2)/2} = e^{-m} = K e^{-(r-q)T}/S`$. Multiply both sides by $`S e^{-qT}\varphi(d_2)`$: $`S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)`$. At the house market both sides equal 100 × 0.379012.
 
 </details>
 
 ### Step 3: vega and gamma turn negative, below the strike
 
-The volatility row gives $\mathcal{V}_c = e^{-rT}\varphi(d_2)\cdot(-d_1/\sigma)$. It is negative whenever $d_1 > 0$. At Acme's \$100, $d_1 = 0.25$, so vega is −0.473764: one more point of volatility, 20 to 21 percent, takes about half a cent off the bet (−0.004738 per point).
+The volatility row gives $`\mathcal{V}_c = e^{-rT}\varphi(d_2)\cdot(-d_1/\sigma)`$. It is negative whenever $`d_1 > 0`$. At Acme's \$100, $`d_1 = 0.25`$, so vega is −0.473764: one more point of volatility, 20 to 21 percent, takes about half a cent off the bet (−0.004738 per point).
 
-Why more volatility hurts: Acme's median finishing price is the forward shrunk by $e^{-\sigma^2T/2}$. Wider swings with the same average need a lower middle, so extra volatility drags the median down, and the odds of finishing above it fall.
+Why more volatility hurts: Acme's median finishing price is the forward shrunk by $`e^{-\sigma^2T/2}`$. Wider swings with the same average need a lower middle, so extra volatility drags the median down, and the odds of finishing above it fall.
 
-Far below the strike the other effect wins. There Acme needs a big move to finish above \$100, and extra volatility supplies big moves: at \$90 the cash vega is +0.468780. The crossover is $d_1 = 0$, which solves to $S = K e^{-(r - q + \sigma^2/2)T}$, which is 95.122942. A search for the zero of vega lands on the same point.
+Far below the strike the other effect wins. There Acme needs a big move to finish above \$100, and extra volatility supplies big moves: at \$90 the cash vega is +0.468780. The crossover is $`d_1 = 0`$, which solves to $`S = K e^{-(r - q + \sigma^2/2)T}`$, which is 95.122942. A search for the zero of vega lands on the same point.
 
-Gamma is the slope of delta, the hump in the overview picture: positive on the rising side, negative on the falling side, zero at the top. Differentiating $\Delta_c$ in $S$ gives $\Gamma_c = -e^{-rT}\varphi(d_2)\,d_1/(S^2\sigma^2T)$: the same $-d_1$ factor, the same crossover at \$95.12. At \$97, between the crossover and the strike, gamma is already negative, −0.000098; at \$90 it is positive, 0.000289. A brute-force scan finds delta's peak at \$95.12.
+Gamma is the slope of delta, the hump in the overview picture: positive on the rising side, negative on the falling side, zero at the top. Differentiating $`\Delta_c`$ in $`S`$ gives $`\Gamma_c = -e^{-rT}\varphi(d_2)\,d_1/(S^2\sigma^2T)`$: the same $`-d_1`$ factor, the same crossover at \$95.12. At \$97, between the crossover and the strike, gamma is already negative, −0.000098; at \$90 it is positive, 0.000289. A brute-force scan finds delta's peak at \$95.12.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -157,54 +169,54 @@ Falling line: the cash digital's vega. Flat line: zero. An ordinary option's veg
 
 ### Step 4: theta and rho carry a discount term
 
-Time and the bank rate enter twice: through the distance and through the discount $e^{-rT}$. Theta is the change in price per year that passes with Acme held still, so it is minus the slope in $T$. The discount grows toward 1 as payment nears, adding $r\,c$; the distance adds the bell curve's height times the time row with its sign flipped. At the house market the two parts are 0.05 × 0.494581 and 0.379012 × (0.125 − 0.15), giving a theta of 0.015254 a year: the bet at the strike creeps up in value as the days pass.
+Time and the bank rate enter twice: through the distance and through the discount $`e^{-rT}`$. Theta is the change in price per year that passes with Acme held still, so it is minus the slope in $`T`$. The discount grows toward 1 as payment nears, adding $`r\,c`$; the distance adds the bell curve's height times the time row with its sign flipped. At the house market the two parts are 0.05 × 0.494581 and 0.379012 × (0.125 − 0.15), giving a theta of 0.015254 a year: the bet at the strike creeps up in value as the days pass.
 
-Rho has the same two parts with opposite signs. A higher bank rate shrinks the discount, costing $T\,c$, and lifts the forward, raising the odds, worth $e^{-rT}\varphi(d_2)\sqrt{T}/\sigma$. Net: 1.400477 per unit of rate.
+Rho has the same two parts with opposite signs. A higher bank rate shrinks the discount, costing $`T\,c`$, and lifts the forward, raising the odds, worth $`e^{-rT}\varphi(d_2)\sqrt{T}/\sigma`$. Net: 1.400477 per unit of rate.
 
-The checks test theta a second way. Every price in this model obeys the pricing equation $\Theta + (r-q)S\Delta + \tfrac12\sigma^2S^2\Gamma - rV = 0$, where $V$ is the product's price ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)). Feeding in the formulas' delta, gamma and theta, the balance is zero for both digitals to six places.
+The checks test theta a second way. Every price in this model obeys the pricing equation $`\Theta + (r-q)S\Delta + \tfrac12\sigma^2S^2\Gamma - rV = 0`$, where $`V`$ is the product's price ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)). Feeding in the formulas' delta, gamma and theta, the balance is zero for both digitals to six places.
 
 ### Step 5: the asset digital is a call plus cash digitals
 
-An asset digital's payout is the call's payout plus $K$ dollars in the same event ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Slopes add, so every asset Greek is the call's Greek plus $K$ times the cash Greek. Delta: 0.586851 plus 100 × 0.018951 gives 2.481909. Gamma: 0.018951 plus 100 × (−0.000237) gives −0.004738. Vega: the call's plus 100 cash vegas lands on −9.475289.
+An asset digital's payout is the call's payout plus $`K`$ dollars in the same event ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Slopes add, so every asset Greek is the call's Greek plus $`K`$ times the cash Greek. Delta: 0.586851 plus 100 × 0.018951 gives 2.481909. Gamma: 0.018951 plus 100 × (−0.000237) gives −0.004738. Vega: the call's plus 100 cash vegas lands on −9.475289.
 
-Differentiating $S e^{-qT}N(d_1)$ directly gives the formulas in the table. Delta gains a second term by the product rule, because $S$ appears twice. Gamma and vega carry $-d_2$ where the cash versions carry $-d_1$. So the asset digital's crossover is $d_2 = 0$, at $S = K e^{-(r-q-\sigma^2/2)T}$, which is 99.004983: closer to the strike than the cash digital's, since counting in shares puts the odds one spread higher.
+Differentiating $`S e^{-qT}N(d_1)`$ directly gives the formulas in the table. Delta gains a second term by the product rule, because $`S`$ appears twice. Gamma and vega carry $`-d_2`$ where the cash versions carry $`-d_1`$. So the asset digital's crossover is $`d_2 = 0`$, at $`S = K e^{-(r-q-\sigma^2/2)T}`$, which is 99.004983: closer to the strike than the cash digital's, since counting in shares puts the odds one spread higher.
 
 <details>
 <summary>Detailed proof: theta and the asset Greeks</summary>
 
-**Time.** With $m = \ln(S/K) + (r-q)T$, $\partial m/\partial T = r - q$. Then $\partial d_2/\partial T = (r-q)/(\sigma\sqrt{T}) - m/(2\sigma T^{3/2}) - \sigma/(4\sqrt{T})$. The last two terms are $-\tfrac{1}{2T}\left(m/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}\right) = -d_1/(2T)$. The same steps with $+\sigma/(4\sqrt{T})$ give $\partial d_1/\partial T = (r-q)/(\sigma\sqrt{T}) - d_2/(2T)$.
+**Time.** With $`m = \ln(S/K) + (r-q)T`$, $`\partial m/\partial T = r - q`$. Then $`\partial d_2/\partial T = (r-q)/(\sigma\sqrt{T}) - m/(2\sigma T^{3/2}) - \sigma/(4\sqrt{T})`$. The last two terms are $`-\tfrac{1}{2T}\left(m/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}\right) = -d_1/(2T)`$. The same steps with $`+\sigma/(4\sqrt{T})`$ give $`\partial d_1/\partial T = (r-q)/(\sigma\sqrt{T}) - d_2/(2T)`$.
 
-**Cash theta.** $\partial c/\partial T = -r\,e^{-rT}N(d_2) + e^{-rT}\varphi(d_2)\,\partial d_2/\partial T$. Theta is minus this: $\Theta_c = r\,c + e^{-rT}\varphi(d_2)\left(d_1/(2T) - (r-q)/(\sigma\sqrt{T})\right)$.
+**Cash theta.** $`\partial c/\partial T = -r\,e^{-rT}N(d_2) + e^{-rT}\varphi(d_2)\,\partial d_2/\partial T`$. Theta is minus this: $`\Theta_c = r\,c + e^{-rT}\varphi(d_2)\left(d_1/(2T) - (r-q)/(\sigma\sqrt{T})\right)`$.
 
-**Asset delta.** $\partial a/\partial S = e^{-qT}N(d_1) + S e^{-qT}\varphi(d_1)\cdot 1/(S\sigma\sqrt{T})$, the product rule. The $S$ cancels in the second term.
+**Asset delta.** $`\partial a/\partial S = e^{-qT}N(d_1) + S e^{-qT}\varphi(d_1)\cdot 1/(S\sigma\sqrt{T})`$, the product rule. The $`S`$ cancels in the second term.
 
-**Asset gamma.** Differentiate again. The first term gives the call's gamma, $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$. The second is $e^{-qT}\varphi'(d_1)/(\sigma\sqrt{T})$ times $\frac{1}{S\sigma\sqrt{T}}$, and $\varphi'(x) = -x\varphi(x)$. Together: $e^{-qT}\varphi(d_1)\left(\sigma\sqrt{T} - d_1\right)/(S\sigma^2T)$, and $\sigma\sqrt{T} - d_1 = -d_2$.
+**Asset gamma.** Differentiate again. The first term gives the call's gamma, $`e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})`$. The second is $`e^{-qT}\varphi'(d_1)/(\sigma\sqrt{T})`$ times $`\frac{1}{S\sigma\sqrt{T}}`$, and $`\varphi'(x) = -x\varphi(x)`$. Together: $`e^{-qT}\varphi(d_1)\left(\sigma\sqrt{T} - d_1\right)/(S\sigma^2T)`$, and $`\sigma\sqrt{T} - d_1 = -d_2`$.
 
-**Asset vega, rho, theta.** $\partial a/\partial\sigma = S e^{-qT}\varphi(d_1)\cdot(-d_2/\sigma)$. $\partial a/\partial r = S e^{-qT}\varphi(d_1)\sqrt{T}/\sigma$. $\partial a/\partial T = -q\,a + S e^{-qT}\varphi(d_1)\,\partial d_1/\partial T$; minus this is $\Theta_a$.
+**Asset vega, rho, theta.** $`\partial a/\partial\sigma = S e^{-qT}\varphi(d_1)\cdot(-d_2/\sigma)`$. $`\partial a/\partial r = S e^{-qT}\varphi(d_1)\sqrt{T}/\sigma`$. $`\partial a/\partial T = -q\,a + S e^{-qT}\varphi(d_1)\,\partial d_1/\partial T`$; minus this is $`\Theta_a`$.
 
-**Cash gamma.** $\Delta_c = e^{-rT}\varphi(d_2)/(S\sigma\sqrt{T})$. Its slope in $S$ is $e^{-rT}/(\sigma\sqrt{T})$ times $\left(-d_2\varphi(d_2)/(S^2\sigma\sqrt{T}) - \varphi(d_2)/S^2\right)$, which is $-e^{-rT}\varphi(d_2)(d_2 + \sigma\sqrt{T})/(S^2\sigma^2T)$, and $d_2 + \sigma\sqrt{T} = d_1$.
+**Cash gamma.** $`\Delta_c = e^{-rT}\varphi(d_2)/(S\sigma\sqrt{T})`$. Its slope in $`S`$ is $`e^{-rT}/(\sigma\sqrt{T})`$ times $`\left(-d_2\varphi(d_2)/(S^2\sigma\sqrt{T}) - \varphi(d_2)/S^2\right)`$, which is $`-e^{-rT}\varphi(d_2)(d_2 + \sigma\sqrt{T})/(S^2\sigma^2T)`$, and $`d_2 + \sigma\sqrt{T} = d_1`$.
 
 </details>
 
 ### Step 6: the last days, when the step becomes a cliff
 
-The cash price is a smoothed step in Acme's price: near 0 well below the strike, near one discounted dollar well above. The step's width, in log-price, is the spread $\sigma\sqrt{T}$: 20 percent of the share price with a year left, and a small fraction of that with a day left. Delta is the step's slope, roughly its height over its width. At the strike the height stays near \$1 while the width shrinks with the square root of time, so delta grows like $\frac{1}{\sqrt{T}}$. Each quartering of the time left about doubles it: 0.018951 at a year, 0.039386 at three months.
+The cash price is a smoothed step in Acme's price: near 0 well below the strike, near one discounted dollar well above. The step's width, in log-price, is the spread $`\sigma\sqrt{T}`$: 20 percent of the share price with a year left, and a small fraction of that with a day left. Delta is the step's slope, roughly its height over its width. At the strike the height stays near \$1 while the width shrinks with the square root of time, so delta grows like $`\frac{1}{\sqrt{T}}`$. Each quartering of the time left about doubles it: 0.018951 at a year, 0.039386 at three months.
 
-Away from the strike the bell-curve height $\varphi(d_2)$ collapses instead. With one day left, delta is 0.381036 at \$100 and 0.060701 at \$98. The turning point $K e^{-(r-q+\sigma^2/2)T}$ has closed in to 99.986302, so gamma flips sign almost exactly at the strike, where it is −0.004763. In the limit the price is a cliff, flat on both sides and vertical at $K$, and a hedge built from its slope holds no shares, then very many, then none. That is **pin risk**: the correct hedge is too large and changes too fast to trade.
+Away from the strike the bell-curve height $`\varphi(d_2)`$ collapses instead. With one day left, delta is 0.381036 at \$100 and 0.060701 at \$98. The turning point $`K e^{-(r-q+\sigma^2/2)T}`$ has closed in to 99.986302, so gamma flips sign almost exactly at the strike, where it is −0.004763. In the limit the price is a cliff, flat on both sides and vertical at $`K`$, and a hedge built from its slope holds no shares, then very many, then none. That is **pin risk**: the correct hedge is too large and changes too fast to trade.
 
-Another route prices and hedges a digital without this cliff: approximate it by a spread of two ordinary calls struck either side of $K$, whose delta is capped. The next card builds it: [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md).
+Another route prices and hedges a digital without this cliff: approximate it by a spread of two ordinary calls struck either side of $`K`$, whose delta is capped. The next card builds it: [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Acme: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, so $d_1 = 0.25$ and $d_2 = 0.05$.
+Acme: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year, so $`d_1 = 0.25`$ and $`d_2 = 0.05`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| bell-curve height at $d_2$ | $e^{-0.05^2/2}/\sqrt{2\pi}$ | 0.398444 |
-| discounted height, $e^{-rT}\varphi(d_2)$ | 0.951229 × 0.398444 | 0.379012 |
-| $S\sigma\sqrt{T}$ | 100 × 0.20 × 1 | 20 |
+| bell-curve height at $`d_2`$ | $`e^{-0.05^2/2}/\sqrt{2\pi}`$ | 0.398444 |
+| discounted height, $`e^{-rT}\varphi(d_2)`$ | 0.951229 × 0.398444 | 0.379012 |
+| $`S\sigma\sqrt{T}`$ | 100 × 0.20 × 1 | 20 |
 | **cash delta** | 0.379012 / 20 | **0.018951** |
 | cash gamma | −0.379012 × 0.25 / (100 × 100 × 0.04) | −0.000237 |
 | **cash vega** | −0.379012 × 0.25 / 0.20 | **−0.473764** |
@@ -213,16 +225,16 @@ Acme: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, so $d_
 | asset delta | 0.980199 × 0.598706 + 0.379012 / 0.20 | 2.481909 |
 | asset vega | −100 × 0.379012 × 0.05 / 0.20 | −9.475289 |
 
-The asset delta and vega rows use the density identity: at $S = K$, $S e^{-qT}\varphi(d_1)$ is 100 times the discounted height. One year out, a bank short the cash bet is hedged with a small stake, and a rise in volatility from 20 to 21 percent hands it about half a cent per dollar of payout: the reverse of an ordinary option seller's experience.
+The asset delta and vega rows use the density identity: at $`S = K`$, $`S e^{-qT}\varphi(d_1)`$ is 100 times the discounted height. One year out, a bank short the cash bet is hedged with a small stake, and a rise in volatility from 20 to 21 percent hands it about half a cent per dollar of payout: the reverse of an ordinary option seller's experience.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the chain-rule factor $\frac{1}{S\sigma\sqrt{T}}$ from the cash delta | 0.379012 (right: 0.018951) | That is the slope in $d_2$, not in dollars of Acme |
-| Hedge the asset digital with a call's delta, $e^{-qT}N(d_1)$ | 0.586851 (right: 2.481909) | The product rule's second term is missing: the payout is a share *and* it switches on |
+| Drop the chain-rule factor $`\frac{1}{S\sigma\sqrt{T}}`$ from the cash delta | 0.379012 (right: 0.018951) | That is the slope in $`d_2`$, not in dollars of Acme |
+| Hedge the asset digital with a call's delta, $`e^{-qT}N(d_1)`$ | 0.586851 (right: 2.481909) | The product rule's second term is missing: the payout is a share *and* it switches on |
 | Freeze the discount when moving the bank rate | 1.895058 (right: 1.400477) | Only the odds moved; paying later at a higher rate is worth less |
-| Keep the one-year delta into the last day | 0.018951 held (needed: 0.381036) | Delta at the strike grows like $\frac{1}{\sqrt{T}}$ |
+| Keep the one-year delta into the last day | 0.018951 held (needed: 0.381036) | Delta at the strike grows like $`\frac{1}{\sqrt{T}}`$ |
 
 ---
 
@@ -278,7 +290,7 @@ The bet worth \$0.462906 the evening before becomes \$1 or \$0, and the 0.379774
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads reach every Greek of both digitals. Road 1 is the formulas above. Road 2 prices both bets by brute force: bisection finds the bell-curve point where Acme finishes at the strike, Simpson's rule averages the payouts beyond it, and each Greek is the slope of that price under a small nudge to one input; no $d_1$, no $d_2$, no $N$. Road 3 takes the ordinary call's own Greeks and adds $K$ cash Greeks to reach the asset Greeks. The bell-curve area is a series written out in both languages. Every number on the card is printed.
+Three independent roads reach every Greek of both digitals. Road 1 is the formulas above. Road 2 prices both bets by brute force: bisection finds the bell-curve point where Acme finishes at the strike, Simpson's rule averages the payouts beyond it, and each Greek is the slope of that price under a small nudge to one input; no $`d_1`$, no $`d_2`$, no $`N`$. Road 3 takes the ordinary call's own Greeks and adds $`K`$ cash Greeks to reach the asset Greeks. The bell-curve area is a series written out in both languages. Every number on the card is printed.
 
 ### Python
 
@@ -720,13 +732,13 @@ The two outputs agree line for line at the printed precision. The bumped Greeks 
 
 Lean proves the cash digital's Greeks, where vega and gamma change sign, and pin risk, for all inputs meeting the conditions.
 
-- Take $S$, $K$, $\sigma$ and $T$ all above zero, and any $r$ and $q$. Then $\Delta_c$, $\Gamma_c$ and $\mathcal{V}_c$ are the slopes given in The formula.
-- Take the same inputs. Then $\Theta_c$ and $\rho_c$ are the slopes given there, each with its discount term.
-- Take the same inputs, and call $K e^{-(r - q + \sigma^2/2)T}$ the crossover. Then $\mathcal{V}_c$ and $\Gamma_c$ are negative exactly above the crossover, and positive exactly below it.
-- Take $S = K$, with $K$ and $\sigma$ above zero, and any $r$ and $q$. Then $\Delta_c$ grows without limit as $T$ shrinks toward zero.
-- With the house numbers, $d_2 = 0.05$ and $d_1 = 0.25$.
-- The by-hand factors hold: $S\sigma\sqrt{T} = 20$, $S^2\sigma^2T = 400$, and $d_1/\sigma = 5/4$.
-- Theta's bracket comes to 0.125 − 0.15 = −1/40, and rho's factor $\sqrt{T}/\sigma$ is 5.
+- Take $`S`$, $`K`$, $`\sigma`$ and $`T`$ all above zero, and any $`r`$ and $`q`$. Then $`\Delta_c`$, $`\Gamma_c`$ and $`\mathcal{V}_c`$ are the slopes given in The formula.
+- Take the same inputs. Then $`\Theta_c`$ and $`\rho_c`$ are the slopes given there, each with its discount term.
+- Take the same inputs, and call $`K e^{-(r - q + \sigma^2/2)T}`$ the crossover. Then $`\mathcal{V}_c`$ and $`\Gamma_c`$ are negative exactly above the crossover, and positive exactly below it.
+- Take $`S = K`$, with $`K`$ and $`\sigma`$ above zero, and any $`r`$ and $`q`$. Then $`\Delta_c`$ grows without limit as $`T`$ shrinks toward zero.
+- With the house numbers, $`d_2 = 0.05`$ and $`d_1 = 0.25`$.
+- The by-hand factors hold: $`S\sigma\sqrt{T} = 20`$, $`S^2\sigma^2T = 400`$, and $`d_1/\sigma = 5/4`$.
+- Theta's bracket comes to 0.125 − 0.15 = −1/40, and rho's factor $`\sqrt{T}/\sigma`$ is 5.
 - The crossover exponents come to 0.05 for the cash digital and 0.01 for the asset digital.
 
 The asset digital's Greeks, the bell-curve values, the pricing equation and the hedge story are left to the Python and Rust checks.
@@ -1123,13 +1135,13 @@ example : (5 / 100 : ℚ) - 2 / 100 - (1 / 5) ^ 2 / 2 = 1 / 100 := by norm_num
 - **Siblings on this shelf.** Differentiating the call twice in strike gives the market's density: [The butterfly and the implied density](05-butterfly-and-the-implied-density.md). A vega that changes sign means some digital prices match two volatilities: [Digital inverses](06-digital-inverses-vol-and-strike.md).
 
 > **Say it back**
-> A digital's price is a discounted bell-curve area, so each Greek is the bell curve's height times how fast the strike's distance moves with one input. The cash digital's delta equals the ordinary call's gamma at the strike. Its vega and gamma carry a factor of minus $d_1$, so they turn negative above a crossover just below the strike: more volatility makes the Acme bet cheaper. As expiry nears, the smoothed step becomes a cliff and the delta at the strike grows like one over the square root of time. A share hedge that tracks that slope is too large and too fast to run: that is pin risk.
+> A digital's price is a discounted bell-curve area, so each Greek is the bell curve's height times how fast the strike's distance moves with one input. The cash digital's delta equals the ordinary call's gamma at the strike. Its vega and gamma carry a factor of minus $`d_1`$, so they turn negative above a crossover just below the strike: more volatility makes the Acme bet cheaper. As expiry nears, the smoothed step becomes a cliff and the delta at the strike grows like one over the square root of time. A share hedge that tracks that slope is too large and too fast to run: that is pin risk.
 
 ---
 
 ## What this builds on
 
-- [Asset-or-nothing digital](02-asset-or-nothing-digital.md): both pricing formulas this card differentiates, and the building block, asset digital equals call plus $K$ cash digitals.
+- [Asset-or-nothing digital](02-asset-or-nothing-digital.md): both pricing formulas this card differentiates, and the building block, asset digital equals call plus $`K`$ cash digitals.
 - [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): vega's definition, units and the per-point quote, for an option whose vega is always positive.
 - [Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the call's gamma, which equals the cash digital's delta at the strike.
 - [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes with every other input frozen, and the chain rule that carries the whole card.

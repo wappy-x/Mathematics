@@ -36,17 +36,23 @@ Orange: damper 6 per second, roots −1 and −5. Teal: damper 4.472 per second,
 
 Reminder: a differential equation links an unknown function to its own rates; y' is the rate of y, y'' the rate of y' ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). Here the acceleration y'' equals −5y − b y': the spring's pull minus the damper's drag.
 
-$$a\,y'' + b\,y' + c\,y = 0 \qquad\longrightarrow\qquad a\,r^2 + b\,r + c = 0$$
+```math
+a\,y'' + b\,y' + c\,y = 0 \qquad\longrightarrow\qquad a\,r^2 + b\,r + c = 0
+```
 
 **Read it aloud:** replace the second rate by r squared, the first rate by r and y by 1; the roots r are the rates of the exponential solutions.
 
-The quadratic is the **characteristic equation**. Its discriminant, $\Delta = b^2 - 4ac$, sorts the cases:
+The quadratic is the **characteristic equation**. Its discriminant, $`\Delta = b^2 - 4ac`$, sorts the cases:
 
-$$\Delta > 0:\quad y = C_1 e^{r_1 t} + C_2 e^{r_2 t}, \qquad r_{1,2} = \frac{-b \pm \sqrt{\Delta}}{2a}$$
+```math
+\Delta > 0:\quad y = C_1 e^{r_1 t} + C_2 e^{r_2 t}, \qquad r_{1,2} = \frac{-b \pm \sqrt{\Delta}}{2a}
+```
 
 **Read it aloud:** two real roots give two exponentials, mixed in amounts fixed by the start.
 
-$$\Delta = 0:\quad y = (C_1 + C_2\,t)\,e^{r t}, \qquad r = -\frac{b}{2a}$$
+```math
+\Delta = 0:\quad y = (C_1 + C_2\,t)\,e^{r t}, \qquad r = -\frac{b}{2a}
+```
 
 **Read it aloud:** one repeated root gives its exponential times a straight line in t.
 
@@ -54,14 +60,14 @@ For the car, a = 1, c = 5 and b is the damper setting. A negative discriminant g
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since release, in s | 0 to 3 s | the height shrinks |
-| $y$, $y'$, $y''$ | height above level, its velocity, its acceleration | y(0) = 1 cm, y'(0) = 0 cm/s | — |
-| $a$, $b$, $c$ | constant multipliers of acceleration, velocity, height | a = 1; b = 6 or 4.472 per s; c = 5 per s^2 | b past critical: slower creep; c past b^2/4a: bouncing |
-| $\Delta$ | the discriminant, b^2 − 4ac; its sign picks the case | 16 at b = 6; 0 at b = 4.472 | — |
-| $r$, $r_1$, $r_2$ | roots: decay rates, in per s | −1 and −5; −2.236 twice | nearer zero: slower settling |
-| $C_1$, $C_2$ | amounts of each shape, fixed by the start | 1.25 and −0.25; 1 and 2.236 | — |
-| $u$ | the factor in y = e^(rt) u | 1 + 2.236t | — |
-| $h$ | Euler's step length, in s | 0.01, 0.005, 0.0025 | bigger error |
+| $`t`$ | time since release, in s | 0 to 3 s | the height shrinks |
+| $`y`$, $`y'`$, $`y''`$ | height above level, its velocity, its acceleration | y(0) = 1 cm, y'(0) = 0 cm/s | — |
+| $`a`$, $`b`$, $`c`$ | constant multipliers of acceleration, velocity, height | a = 1; b = 6 or 4.472 per s; c = 5 per s^2 | b past critical: slower creep; c past b^2/4a: bouncing |
+| $`\Delta`$ | the discriminant, b^2 − 4ac; its sign picks the case | 16 at b = 6; 0 at b = 4.472 | — |
+| $`r`$, $`r_1`$, $`r_2`$ | roots: decay rates, in per s | −1 and −5; −2.236 twice | nearer zero: slower settling |
+| $`C_1`$, $`C_2`$ | amounts of each shape, fixed by the start | 1.25 and −0.25; 1 and 2.236 | — |
+| $`u`$ | the factor in y = e^(rt) u | 1 + 2.236t | — |
+| $`h`$ | Euler's step length, in s | 0.01, 0.005, 0.0025 | bigger error |
 
 ### When it holds
 
@@ -82,7 +88,9 @@ The rate of e^(rt) is r e^(rt), by the chain rule, and its second rate is r^2 e^
 
 Put y = e^(rt) in:
 
-$$a\,r^2 e^{rt} + b\,r\,e^{rt} + c\,e^{rt} = (a r^2 + b r + c)\,e^{rt}.$$
+```math
+a\,r^2 e^{rt} + b\,r\,e^{rt} + c\,e^{rt} = (a r^2 + b r + c)\,e^{rt}.
+```
 
 An exponential is never zero, so this vanishes for every t exactly when a r^2 + b r + c = 0. For b = 6: r^2 + 6r + 5 = (r + 1)(r + 5), roots −1 and −5, by [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) or by bisection, which halves a bracket around each root.
 
@@ -100,7 +108,9 @@ At b = 4.472 the roots merge into −2.236. The mix C1 e^(rt) + C2 e^(rt) is onl
 
 Write y = e^(rt) u with u unknown. The product rule turns the equation into
 
-$$a\,u'' + (2ar + b)\,u' + (a r^2 + b r + c)\,u = 0.$$
+```math
+a\,u'' + (2ar + b)\,u' + (a r^2 + b r + c)\,u = 0.
+```
 
 The last bracket is zero since r is a root; the middle one is zero since a repeated root sits at r = −b/(2a). So u'' = 0 and u = C1 + C2 t. The start gives C1 = 1, C2 = 2.236. The extra t is forced, not guessed.
 

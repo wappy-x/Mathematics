@@ -39,53 +39,61 @@ Orange: the rate from differencing two encoder readings, jumping between −1.37
 
 ## The formula
 
-Notation first, in words. The state is the list of numbers the model carries ([State space](01-state-space-models-and-the-matrix-exponential.md)): here the angle $\theta$ (theta) from upright, in radians, and the rate $\omega$ (omega), in radians per second. Step $k$ is the $k$-th tick of the 100 hertz clock. A hat means "the filter's estimate of"; a raised minus means "before the reading of this step"; a raised T is the transpose, rows turned into columns ([Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)).
+Notation first, in words. The state is the list of numbers the model carries ([State space](01-state-space-models-and-the-matrix-exponential.md)): here the angle $`\theta`$ (theta) from upright, in radians, and the rate $`\omega`$ (omega), in radians per second. Step $`k`$ is the $`k`$-th tick of the 100 hertz clock. A hat means "the filter's estimate of"; a raised minus means "before the reading of this step"; a raised T is the transpose, rows turned into columns ([Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)).
 
 Three words from probability recur. A normal law is the bell-shaped spread of random errors. A covariance matrix lists each part's variance (its squared typical error) and how the parts' errors move together. The sd (standard deviation) is the square root of a variance: the typical size of an error.
 
-The model, near upright, is that the pole's angular acceleration is $(g/l)\,\theta - u/l$, where $g/l = 16$ per second squared and $u$ is the cart's acceleration, chosen by the balancing rule. The balancing rule sets $u = l\,(32\,\hat\theta + 8\,\hat\omega)$ from the filter's estimates, a rule from [Pole placement](04-pole-placement-and-observers.md); here it only matters that the filter knows each $u$. One 0.01 s step of the model, with a random push $w_k$ and encoder noise $v_k$, is
+The model, near upright, is that the pole's angular acceleration is $`(g/l)\,\theta - u/l`$, where $`g/l = 16`$ per second squared and $`u`$ is the cart's acceleration, chosen by the balancing rule. The balancing rule sets $`u = l\,(32\,\hat\theta + 8\,\hat\omega)`$ from the filter's estimates, a rule from [Pole placement](04-pole-placement-and-observers.md); here it only matters that the filter knows each $`u`$. One 0.01 s step of the model, with a random push $`w_k`$ and encoder noise $`v_k`$, is
 
-$$x_k = F\,x_{k-1} + G\,u_{k-1} + w_k, \qquad y_k = H\,x_k + v_k .$$
+```math
+x_k = F\,x_{k-1} + G\,u_{k-1} + w_k, \qquad y_k = H\,x_k + v_k .
+```
 
-The random push is an unknown angular acceleration of sd 1 rad/s², held constant through each 0.01 s step. Each 1 rad/s² of it moves the angle by 0.000050 rad and the rate by 0.010003 rad/s, together, so $Q$ = `[[0.000050², 0.000050 × 0.010003], [0.000050 × 0.010003, 0.010003²]]`: one push drives both parts, so they are perfectly correlated.
+The random push is an unknown angular acceleration of sd 1 rad/s², held constant through each 0.01 s step. Each 1 rad/s² of it moves the angle by 0.000050 rad and the rate by 0.010003 rad/s, together, so $`Q`$ = `[[0.000050², 0.000050 × 0.010003], [0.000050 × 0.010003, 0.010003²]]`: one push drives both parts, so they are perfectly correlated.
 
 The filter runs two moves per step. **Predict:**
 
-$$\hat x_k^- = F\,\hat x_{k-1} + G\,u_{k-1}, \qquad P_k^- = F\,P_{k-1}\,F^T + Q .$$
+```math
+\hat x_k^- = F\,\hat x_{k-1} + G\,u_{k-1}, \qquad P_k^- = F\,P_{k-1}\,F^T + Q .
+```
 
 **Correct:**
 
-$$\nu_k = y_k - H\,\hat x_k^-, \qquad S_k = H\,P_k^-\,H^T + R, \qquad K_k = P_k^-\,H^T S_k^{-1},$$
+```math
+\nu_k = y_k - H\,\hat x_k^-, \qquad S_k = H\,P_k^-\,H^T + R, \qquad K_k = P_k^-\,H^T S_k^{-1},
+```
 
-$$\hat x_k = \hat x_k^- + K_k\,\nu_k, \qquad P_k = (I - K_k H)\,P_k^- .$$
+```math
+\hat x_k = \hat x_k^- + K_k\,\nu_k, \qquad P_k = (I - K_k H)\,P_k^- .
+```
 
 **Read it aloud:** run the model forward and let the uncertainty grow by the random push; then take the reading minus what the prediction said it would be, and move each estimate by its gain times that surprise, the gain being how much the prediction's error reaches into the reading divided by how uncertain the reading is in all.
 
-$Q$, $R$, $K$ and $P$ here are the push and noise sizes, the filter's gain and its error covariance, not the prices, gain and Riccati solution of [The LQR](06-linear-quadratic-regulator.md); [LQG](09-lqg-and-the-separation-principle.md) uses both sets and renames the filter's to keep them apart.
+$`Q`$, $`R`$, $`K`$ and $`P`$ here are the push and noise sizes, the filter's gain and its error covariance, not the prices, gain and Riccati solution of [The LQR](06-linear-quadratic-regulator.md); [LQG](09-lqg-and-the-separation-principle.md) uses both sets and renames the filter's to keep them apart.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_k$, $k$ | the true state at step $k$; steps are 0.01 s apart | rate −0.76 rad/s at 0.1 s in the chart's run | — |
-| $\theta$, $\omega$ | the angle from upright (rad); its rate (rad/s), never measured | both start near zero | — |
-| $\hat x_k^-$, $\hat x_k$ | the estimate before and after reading $k$ | step 1: rate −0.027683 rad/s after | — |
-| $P_k^-$, $P_k$ | covariance matrix of the estimate's error, before and after | settles at rate sd 0.031422 rad/s | — |
-| $F$, $A$ | one step of the unforced pendulum, $e^{0.01A}$; $A$ the pendulum's rate-of-change matrix | F = `[[1.000800, 0.010003], [0.160043, 1.000800]]`; A = `[[0, 1], [16, 0]]` | a faster fall widens every prediction |
-| $G$, $u_k$ | how a cart acceleration moves the state; that acceleration (m/s²) | G = (−0.000082, −0.016314) | — |
-| $g$, $l$ | gravity; the pole's length | 9.81 m/s²; 0.613125 m | — |
-| $Q$, $w_k$ | covariance of one step's random push; the push | push sd 1 rad/s²: angle sd 0.000050 rad and rate sd 0.010003 rad/s per step, fully correlated | the gain rises: readings count for more |
-| $y_k$, $H$, $I$ | the encoder reading; `H = [1, 0]` picks out the angle; $I$ the matrix that changes nothing | $y_1$ = −0.024350 rad | — |
-| $R$, $v_k$ | the encoder's noise variance; the noise | 0.005 squared | the gain falls: readings count for less |
-| $\nu_k$, $S_k$ | the surprise (innovation): reading minus predicted reading; its predicted variance | steady surprise sd 0.005548 rad | — |
-| $K_k$ | the gain: how far each estimate moves per unit of surprise | steady 0.187853 on angle, 1.952854 per s on rate | — |
+| $`x_k`$, $`k`$ | the true state at step $`k`$; steps are 0.01 s apart | rate −0.76 rad/s at 0.1 s in the chart's run | — |
+| $`\theta`$, $`\omega`$ | the angle from upright (rad); its rate (rad/s), never measured | both start near zero | — |
+| $`\hat x_k^-`$, $`\hat x_k`$ | the estimate before and after reading $`k`$ | step 1: rate −0.027683 rad/s after | — |
+| $`P_k^-`$, $`P_k`$ | covariance matrix of the estimate's error, before and after | settles at rate sd 0.031422 rad/s | — |
+| $`F`$, $`A`$ | one step of the unforced pendulum, $`e^{0.01A}`$; $`A`$ the pendulum's rate-of-change matrix | F = `[[1.000800, 0.010003], [0.160043, 1.000800]]`; A = `[[0, 1], [16, 0]]` | a faster fall widens every prediction |
+| $`G`$, $`u_k`$ | how a cart acceleration moves the state; that acceleration (m/s²) | G = (−0.000082, −0.016314) | — |
+| $`g`$, $`l`$ | gravity; the pole's length | 9.81 m/s²; 0.613125 m | — |
+| $`Q`$, $`w_k`$ | covariance of one step's random push; the push | push sd 1 rad/s²: angle sd 0.000050 rad and rate sd 0.010003 rad/s per step, fully correlated | the gain rises: readings count for more |
+| $`y_k`$, $`H`$, $`I`$ | the encoder reading; `H = [1, 0]` picks out the angle; $`I`$ the matrix that changes nothing | $`y_1`$ = −0.024350 rad | — |
+| $`R`$, $`v_k`$ | the encoder's noise variance; the noise | 0.005 squared | the gain falls: readings count for less |
+| $`\nu_k`$, $`S_k`$ | the surprise (innovation): reading minus predicted reading; its predicted variance | steady surprise sd 0.005548 rad | — |
+| $`K_k`$ | the gain: how far each estimate moves per unit of surprise | steady 0.187853 on angle, 1.952854 per s on rate | — |
 
 The cart's own position and speed follow exactly from the accelerations the controller commanded, so in this example all the uncertainty sits in the pole's two states, and the filter carries those two. The same recursion runs unchanged on all four, with four-by-four matrices.
 
 ### When it holds
 
-- **The model is linear.** The equation uses $\theta$ where the true pole has $\sin\theta$. Far from upright the predictions bend wrong and the recursion is no longer exact; [Filtering a nonlinear plant](08-extended-kalman-filter-and-nonlinear-estimation.md) handles that. Started 0.5 rad from upright on the curved pole, $\theta'' = 16\sin\theta - (u/l)\cos\theta$ plus the push, the filter's squared surprises over the first 0.5 s average 1.250 times their predicted variance and its rate error is 0.1254 rad/s; on the straight model, from the same lean, they are 1.001 and 0.1120 rad/s.
+- **The model is linear.** The equation uses $`\theta`$ where the true pole has $`\sin\theta`$. Far from upright the predictions bend wrong and the recursion is no longer exact; [Filtering a nonlinear plant](08-extended-kalman-filter-and-nonlinear-estimation.md) handles that. Started 0.5 rad from upright on the curved pole, $`\theta'' = 16\sin\theta - (u/l)\cos\theta`$ plus the push, the filter's squared surprises over the first 0.5 s average 1.250 times their predicted variance and its rate error is 0.1254 rad/s; on the straight model, from the same lean, they are 1.001 and 0.1120 rad/s.
 - **The noises are white and independent.** Each step's push and each reading's error must be fresh. A slow wobble in the table shared across steps makes the surprises correlated, and the gain is then no longer the best.
-- **$Q$ and $R$ are the true sizes.** The filter's $P$ is its claim, computed from them. Tell it the push is 100 times smaller than it is and it claims more accuracy than it has, by a margin the surprises reveal (What breaks, below).
-- **The input is in the prediction.** The cart's acceleration moves the pole; a prediction without $G\,u$ drifts away from the truth every step the cart works.
+- **$`Q`$ and $`R`$ are the true sizes.** The filter's $`P`$ is its claim, computed from them. Tell it the push is 100 times smaller than it is and it claims more accuracy than it has, by a margin the surprises reveal (What breaks, below).
+- **The input is in the prediction.** The cart's acceleration moves the pole; a prediction without $`G\,u`$ drifts away from the truth every step the cart works.
 - **The readings can see the hidden states.** Here the rate shows up in how the angle changes. A state that never touches the readings, such as the cart's position seen from a pivot encoder, can never be pinned down: if it were uncertain, its uncertainty would grow without limit ([Can you steer every state, and can you see every state](03-controllability-and-observability.md)).
 
 ---
@@ -94,62 +102,68 @@ The cart's own position and speed follow exactly from the accelerations the cont
 
 ### Step 0: a normal belief stays normal
 
-The filter's belief about the state is a normal law: a centre $\hat x$ and a covariance $P$. Both of its moves keep it normal. Predicting is a fixed linear map plus fresh independent normal noise. Correcting is conditioning on a reading that is linear in the state plus normal noise. So two summaries, centre and covariance, carry the whole belief from step to step, and the filter only has to update those two.
+The filter's belief about the state is a normal law: a centre $`\hat x`$ and a covariance $`P`$. Both of its moves keep it normal. Predicting is a fixed linear map plus fresh independent normal noise. Correcting is conditioning on a reading that is linear in the state plus normal noise. So two summaries, centre and covariance, carry the whole belief from step to step, and the filter only has to update those two.
 
 ### Step 1: predict by pushing the belief through the model
 
-If the error at step $k-1$ has covariance $P_{k-1}$, then after the step it is $F$ times that error plus the fresh push $w_k$. A fixed matrix on both sides of a covariance, $F P F^T$, is the rule for a linear map of a normal vector ([Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). Independent noise adds its own covariance $Q$. The known input $G\,u$ moves the centre and adds no uncertainty.
+If the error at step $`k-1`$ has covariance $`P_{k-1}`$, then after the step it is $`F`$ times that error plus the fresh push $`w_k`$. A fixed matrix on both sides of a covariance, $`F P F^T`$, is the rule for a linear map of a normal vector ([Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). Independent noise adds its own covariance $`Q`$. The known input $`G\,u`$ moves the centre and adds no uncertainty.
 
-$F$ itself is one 0.01 s step of the pendulum without the cart, $e^{0.01A}$ for `A = [[0, 1], [16, 0]]`. For this matrix it works out to cosh and sinh of 0.04: `F = [[cosh 0.04, sinh(0.04)/4], [4 sinh 0.04, cosh 0.04]]`. The entry 0.160043 is why the angle's error leaks into the rate: an upright pole tips faster the further it leans.
+$`F`$ itself is one 0.01 s step of the pendulum without the cart, $`e^{0.01A}`$ for `A = [[0, 1], [16, 0]]`. For this matrix it works out to cosh and sinh of 0.04: `F = [[cosh 0.04, sinh(0.04)/4], [4 sinh 0.04, cosh 0.04]]`. The entry 0.160043 is why the angle's error leaks into the rate: an upright pole tips faster the further it leans.
 
 ### Step 2: correct by conditioning on the reading
 
-Before the reading, the state and the reading are jointly normal. Their covariances follow from $y = Hx + v$:
+Before the reading, the state and the reading are jointly normal. Their covariances follow from $`y = Hx + v`$:
 
-- the state's covariance is $P^-$;
-- the state and the reading co-vary by $P^- H^T$;
-- the reading's variance is $H P^- H^T + R = S$.
+- the state's covariance is $`P^-`$;
+- the state and the reading co-vary by $`P^- H^T`$;
+- the reading's variance is $`H P^- H^T + R = S`$.
 
 Conditioning one block of a normal vector on another ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md) does one number, the multivariate card does blocks) gives
 
-$$E[x \mid y] = \hat x^- + P^- H^T S^{-1}\,(y - H\hat x^-), \qquad \operatorname{Cov}[x \mid y] = P^- - P^- H^T S^{-1} H P^- .$$
+```math
+E[x \mid y] = \hat x^- + P^- H^T S^{-1}\,(y - H\hat x^-), \qquad \mathrm{Cov}[x \mid y] = P^- - P^- H^T S^{-1} H P^- .
+```
 
-That is the gain, $K = P^- H^T S^{-1}$, and the corrected covariance, $(I - KH)P^-$. With one encoder, $S$ is a single number, and $K$ is the first column of $P^-$ divided by it: (angle variance, angle-rate covariance) over $S$. The rate moves on an angle surprise exactly in proportion to how the two errors co-vary. That is how a state no sensor reads still gets corrected.
+That is the gain, $`K = P^- H^T S^{-1}`$, and the corrected covariance, $`(I - KH)P^-`$. With one encoder, $`S`$ is a single number, and $`K`$ is the first column of $`P^-`$ divided by it: (angle variance, angle-rate covariance) over $`S`$. The rate moves on an angle surprise exactly in proportion to how the two errors co-vary. That is how a state no sensor reads still gets corrected.
 
-In one dimension this is the precision-weighted average of [Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md). In matrices, precisions (inverse covariances) still add: $P^{-1} = (P^-)^{-1} + H^T R^{-1} H$. The code computes the correction both ways and gets the same six decimals.
+In one dimension this is the precision-weighted average of [Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md). In matrices, precisions (inverse covariances) still add: $`P^{-1} = (P^-)^{-1} + H^T R^{-1} H`$. The code computes the correction both ways and gets the same six decimals.
 
 ### Step 3: the gain is the best one even without normality
 
-Take any gain $K$, not just the formula's. The new error is $(I - KH)$ times the old error minus $K$ times the encoder noise, so its covariance is
+Take any gain $`K`$, not just the formula's. The new error is $`(I - KH)`$ times the old error minus $`K`$ times the encoder noise, so its covariance is
 
-$$P(K) = (I - KH)\,P^-\,(I - KH)^T + K R K^T .$$
+```math
+P(K) = (I - KH)\,P^-\,(I - KH)^T + K R K^T .
+```
 
-Completing the square shows $P(K)$ equals the formula's covariance plus a term that is never negative and vanishes only at the formula's gain. No other linear correction does better on any state, and the argument used only the noise covariances, not their normal shape.
+Completing the square shows $`P(K)`$ equals the formula's covariance plus a term that is never negative and vanishes only at the formula's gain. No other linear correction does better on any state, and the argument used only the noise covariances, not their normal shape.
 
 <details>
 <summary>Completing the square</summary>
 
-Write $K^* = P^- H^T S^{-1}$ and expand, using $S = H P^- H^T + R$:
+Write $`K^* = P^- H^T S^{-1}`$ and expand, using $`S = H P^- H^T + R`$:
 
-$$P(K) = P^- - K H P^- - P^- H^T K^T + K S K^T = P^- - K^* S K^{*T} + (K - K^*)\,S\,(K - K^*)^T .$$
+$`\displaystyle P(K) = P^- - K H P^- - P^- H^T K^T + K S K^T = P^- - K^* S K^{*T} + (K - K^*)\,S\,(K - K^*)^T .`$
 
-$S$ is positive, so the last term is a covariance-shaped matrix that is zero only when $K = K^*$. The first two terms are $P^- - P^- H^T S^{-1} H P^-$, Step 2's corrected covariance. The code uses $P(K)$ as written, the Joseph form, because it stays right for any gain; that is what lets it score a deliberately wrong gain.
+$`S`$ is positive, so the last term is a covariance-shaped matrix that is zero only when $`K = K^*`$. The first two terms are $`P^- - P^- H^T S^{-1} H P^-`$, Step 2's corrected covariance. The code uses $`P(K)`$ as written, the Joseph form, because it stays right for any gain; that is what lets it score a deliberately wrong gain.
 
 </details>
 
 ### Step 4: the surprises of a right filter are pure noise
 
-The surprise $\nu_k$ is the reading minus its best prediction from all earlier readings. The error of a best prediction is uncorrelated with everything it was built from, and every earlier surprise was built from earlier readings. So the surprises are uncorrelated with each other; with normal noise, independent. Each has variance $S_k$.
+The surprise $`\nu_k`$ is the reading minus its best prediction from all earlier readings. The error of a best prediction is uncorrelated with everything it was built from, and every earlier surprise was built from earlier readings. So the surprises are uncorrelated with each other; with normal noise, independent. Each has variance $`S_k`$.
 
-That gives a test that needs no access to the truth. Divide each surprise by $\sqrt{S_k}$. The squares should average 1, and each should be uncorrelated with the one before. A filter with the wrong $Q$, a missing input, or a hand-picked gain leaves part of each surprise predictable from the last, and the test shows it.
+That gives a test that needs no access to the truth. Divide each surprise by $`\sqrt{S_k}`$. The squares should average 1, and each should be uncorrelated with the one before. A filter with the wrong $`Q`$, a missing input, or a hand-picked gain leaves part of each surprise predictable from the last, and the test shows it.
 
 ### Step 5: the uncertainty runs on its own, and settles
 
-Put the correction inside the next prediction and $P^-$ obeys
+Put the correction inside the next prediction and $`P^-`$ obeys
 
-$$P_{k+1}^- = F\left(P_k^- - P_k^- H^T S_k^{-1} H P_k^-\right)F^T + Q .$$
+```math
+P_{k+1}^- = F\left(P_k^- - P_k^- H^T S_k^{-1} H P_k^-\right)F^T + Q .
+```
 
-This is the **Riccati recursion**: no reading appears in it. The gains can be computed before the cart moves. When every unstable motion shows up in the readings and every one is stirred by the push $Q$, it settles to one steady $P$ and one steady gain, whatever the start. Here it settles within about half a second. The same kind of equation, mirrored, gives the regulator's gain ([The LQR](06-linear-quadratic-regulator.md) solves its continuous-time form).
+This is the **Riccati recursion**: no reading appears in it. The gains can be computed before the cart moves. When every unstable motion shows up in the readings and every one is stirred by the push $`Q`$, it settles to one steady $`P`$ and one steady gain, whatever the start. Here it settles within about half a second. The same kind of equation, mirrored, gives the regulator's gain ([The LQR](06-linear-quadratic-regulator.md) solves its continuous-time form).
 
 ---
 
@@ -162,10 +176,10 @@ Step 1, from a start that knows nothing beyond "near upright": centre zero, angl
 | predicted angle variance | 1.000800² × 0.05² + 0.010003² × 0.5² + 0.000050² | 0.002529 |
 | predicted rate variance | 0.160043² × 0.05² + 1.000800² × 0.5² + 0.010003² | 0.250564 |
 | predicted angle-rate covariance | 1.000800 × 0.160043 × 0.05² + 0.010003 × 1.000800 × 0.5² + 0.000050 × 0.010003 | 0.002904 |
-| surprise variance $S$ | 0.002529 + 0.005² | 0.002554 |
+| surprise variance $`S`$ | 0.002529 + 0.005² | 0.002554 |
 | gain on angle | 0.002529 / 0.002554 | 0.990212 |
 | gain on rate (per s) | 0.002904 / 0.002554 | 1.136873 |
-| surprise $\nu_1$ | −0.024350 − 0 | −0.024350 |
+| surprise $`\nu_1`$ | −0.024350 − 0 | −0.024350 |
 | angle estimate | 0 + 0.990212 × (−0.024350) | −0.024111 |
 | **rate estimate** | 0 + 1.136873 × (−0.024350) | **−0.027683** |
 
@@ -178,8 +192,8 @@ Each row runs the broken filter alongside the right one on the same 2,000 simula
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Difference two readings for the rate | rate error 0.7064 rad/s | Every reading's error is divided by 0.01 s; nothing averages it away |
-| Tell the filter $Q$ is 100 times smaller | rate error 0.0481; squared surprises 1.835 times their predicted variance, correlated +0.455 | The filter trusts its model too much and lags behind each push |
-| Leave $G\,u$ out of the prediction | rate error 0.0498; correlated +0.120 | The cart's pushes look like surprises, one after another |
+| Tell the filter $`Q`$ is 100 times smaller | rate error 0.0481; squared surprises 1.835 times their predicted variance, correlated +0.455 | The filter trusts its model too much and lags behind each push |
+| Leave $`G\,u`$ out of the prediction | rate error 0.0498; correlated +0.120 | The cart's pushes look like surprises, one after another |
 | Use twice the steady gain | rate error 0.0344; squared surprises 0.995 times their predicted variance, but correlated −0.148 | Each correction overshoots and the next surprise pulls it back |
 
 The last row is the reason to check correlation and not only size: a wrong gain's surprises can be the right size and still be predictable.
@@ -246,7 +260,7 @@ Orange: after each prediction. Green: after each reading. The gap between them i
 
 ## Code, from first principles, and it actually runs
 
-The script builds the 0.01 s step from cosh and sinh and checks it against the matrix exponential's own series. It works step 1 by hand and repeats the correction in precision form. It runs the Riccati recursion to the steady gain, then finds the same gain a second way: a brute-force search over fixed gains that uses only Step 3's error formula and never the gain formula. It then simulates 2,000 runs of two seconds, with random numbers from a written-out SplitMix64 generator and Box-Muller normals, and scores the right filter and three broken ones on the same draws. Last, it starts the filter 0.5 rad from upright on the curved pole. Five roads: the gain formula, the search, the precision form, the simulation's actual errors against $P$, and the surprise test. The asserts tie each road to another.
+The script builds the 0.01 s step from cosh and sinh and checks it against the matrix exponential's own series. It works step 1 by hand and repeats the correction in precision form. It runs the Riccati recursion to the steady gain, then finds the same gain a second way: a brute-force search over fixed gains that uses only Step 3's error formula and never the gain formula. It then simulates 2,000 runs of two seconds, with random numbers from a written-out SplitMix64 generator and Box-Muller normals, and scores the right filter and three broken ones on the same draws. Last, it starts the filter 0.5 rad from upright on the curved pole. Five roads: the gain formula, the search, the precision form, the simulation's actual errors against $`P`$, and the surprise test. The asserts tie each road to another.
 
 ### Python
 
@@ -672,12 +686,12 @@ The two outputs match line for line, random runs included: both programs draw th
 
 ### Lean
 
-Lean proves the matrix facts behind the correction, for every size of state and reading. Here $P^-$ is a covariance and $R$ is a positive noise covariance.
+Lean proves the matrix facts behind the correction, for every size of state and reading. Here $`P^-`$ is a covariance and $`R`$ is a positive noise covariance.
 
-- Any gain's error covariance $P(K)$ is the formula's covariance plus a never-negative term.
-- That term vanishes only at $K = P^- H^T S^{-1}$.
-- The formula's covariance equals $(I - KH)P^-$.
-- When $P^-$ is invertible, the precisions add.
+- Any gain's error covariance $`P(K)`$ is the formula's covariance plus a never-negative term.
+- That term vanishes only at $`K = P^- H^T S^{-1}`$.
+- The formula's covariance equals $`(I - KH)P^-`$.
+- When $`P^-`$ is invertible, the precisions add.
 
 The pendulum's numbers (beyond A squaring to 16 I), the simulated runs and the surprise test are left to the Python and Rust checks.
 
@@ -858,8 +872,8 @@ example : !![(0 : ℤ), 1; 16, 0] * !![0, 1; 16, 0] = (16 : ℤ) • (1 : Matrix
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the right filter's behaviour, so a broken change should trip one.
 > - **Guess first:** does the chart's seed matter to any assert? Change `run(1, 200, VAR[:1])` to seed 2. The chart lines change and every assert still passes: they rest on the 2,000 runs and on the formulas, not on one run.
-> - **Guess first:** what if $S$ forgets the prediction's share? In `correct`, set `S = R`. The gain form no longer matches the precision form, and the first assert after the series check stops it.
-> - **Guess first:** what if the filter believes in no push at all? In `VAR`, set the first entry's `1.0` to `0.0`. Its real error rises and its surprises swell, and the assert comparing the simulation with the steady $P$ stops it.
+> - **Guess first:** what if $`S`$ forgets the prediction's share? In `correct`, set `S = R`. The gain form no longer matches the precision form, and the first assert after the series check stops it.
+> - **Guess first:** what if the filter believes in no push at all? In `VAR`, set the first entry's `1.0` to `0.0`. Its real error rises and its surprises swell, and the assert comparing the simulation with the steady $`P`$ stops it.
 > - **Guess first:** does halving the encoder noise halve the rate error? Set `SR` to `0.0025`. Every assert still passes, because every road recomputes from the new noise. The steady rate sd falls, but by far less than half: the random push feeds the error too.
 
 ---
@@ -867,12 +881,12 @@ example : !![(0 : ℤ), 1; 16, 0] * !![0, 1; 16, 0] = (16 : ℤ) • (1 : Matrix
 ## The usual mistake
 
 > [!warning]
-> **Believing $P$ without checking the surprises.** $P$ is the filter's claim about its own error, computed from $Q$ and $R$ before any reading arrives. It is right only if the model is. Tell the filter the push is 100 times smaller than it is and the surprises come out 1.835 times their claimed variance and correlated +0.455 from one step to the next. Plots of the estimate look smooth either way. The surprises, divided by $\sqrt{S}$, are the check: squares averaging 1, no correlation.
+> **Believing $`P`$ without checking the surprises.** $`P`$ is the filter's claim about its own error, computed from $`Q`$ and $`R`$ before any reading arrives. It is right only if the model is. Tell the filter the push is 100 times smaller than it is and the surprises come out 1.835 times their claimed variance and correlated +0.455 from one step to the next. Plots of the estimate look smooth either way. The surprises, divided by $`\sqrt{S}`$, are the check: squares averaging 1, no correlation.
 >
 > - **Differencing for the rate.** The rate comes out wrong by 0.7064 rad/s, more than the pole ever moves once balanced.
-> - **Forgetting the input.** Without $G\,u$ in the prediction the rate error is 0.0498 rad/s, and the surprises lean +0.120 on each other.
+> - **Forgetting the input.** Without $`G\,u`$ in the prediction the rate error is 0.0498 rad/s, and the surprises lean +0.120 on each other.
 > - **Turning the gain up to make the filter "faster".** Twice the steady gain gives 0.0344 rad/s, worse than 0.0316, with surprises of the right size but correlated −0.148.
-> - **Reading $S$ as the encoder's noise.** The surprise's sd is 0.005548 rad, not 0.005: it carries the prediction's own error as well.
+> - **Reading $`S`$ as the encoder's noise.** The surprise's sd is 0.005548 rad, not 0.005: it carries the prediction's own error as well.
 
 ---
 
@@ -900,10 +914,10 @@ example : !![(0 : ℤ), 1; 16, 0] * !![0, 1; 16, 0] = (16 : ℤ) • (1 : Matrix
 
 ## Where this goes next
 
-- [Filtering a nonlinear plant](08-extended-kalman-filter-and-nonlinear-estimation.md): the pole swung far from upright, where $\sin\theta$ is not $\theta$ and the recursion must be linearised as it runs.
+- [Filtering a nonlinear plant](08-extended-kalman-filter-and-nonlinear-estimation.md): the pole swung far from upright, where $`\sin\theta`$ is not $`\theta`$ and the recursion must be linearised as it runs.
 - [LQG](09-lqg-and-the-separation-principle.md): the regulator fed the filter's estimates, and why the two can be designed apart.
 
-This card assumes $Q$ and $R$ are known; it leaves open how to estimate them from the surprises themselves when they are not.
+This card assumes $`Q`$ and $`R`$ are known; it leaves open how to estimate them from the surprises themselves when they are not.
 
 ---
 
@@ -913,6 +927,6 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Kalman, R. E. "A New Approach to Linear Filtering and Prediction Problems." *Journal of Basic Engineering* 82, no. 1 (1960): 35–45. [doi:10.1115/1.3662552](https://doi.org/10.1115/1.3662552). The original discrete recursion and its Riccati equation.
 - Kailath, T. "An Innovations Approach to Least-Squares Estimation, Part I: Linear Filtering in Additive White Noise." *IEEE Transactions on Automatic Control* 13, no. 6 (1968): 646–655. [doi:10.1109/TAC.1968.1099025](https://doi.org/10.1109/TAC.1968.1099025). The surprises as a white sequence carrying all the readings' information: Step 4.
-- Mehra, R. "On the Identification of Variances and Adaptive Kalman Filtering." *IEEE Transactions on Automatic Control* 15, no. 2 (1970): 175–184. [doi:10.1109/TAC.1970.1099422](https://doi.org/10.1109/TAC.1970.1099422). Testing the surprises for whiteness and estimating $Q$ and $R$ from them.
+- Mehra, R. "On the Identification of Variances and Adaptive Kalman Filtering." *IEEE Transactions on Automatic Control* 15, no. 2 (1970): 175–184. [doi:10.1109/TAC.1970.1099422](https://doi.org/10.1109/TAC.1970.1099422). Testing the surprises for whiteness and estimating $`Q`$ and $`R`$ from them.
 - Bar-Shalom, Y., X.-R. Li, and T. Kirubarajan. *Estimation with Applications to Tracking and Navigation*. Wiley, 2001. [doi:10.1002/0471221279](https://doi.org/10.1002/0471221279). The normalised-surprise consistency tests used in the code, and tracking practice.
 - Simon, D. *Optimal State Estimation: Kalman, H Infinity, and Nonlinear Approaches*. Wiley, 2006. [doi:10.1002/0470045345](https://doi.org/10.1002/0470045345). The Joseph form, the information form, and a modern textbook route.

@@ -34,30 +34,34 @@ To scale: 300 px per nm across, and energy upward at 70 px per eV. Each wave is 
 
 Notation reminder: ψ (psi) is the **wavefunction**, the wave that describes the electron ([States as vectors](02-state-vectors-operators-and-measurement.md)). ħ (h-bar) is Planck's constant divided by 2π. A curly ∂ is a rate of change with only one variable moving: ∂ψ/∂t with time moving, ∂²ψ/∂x² the bending along x.
 
-$$i\hbar\,\frac{\partial \psi}{\partial t} \;=\; -\frac{\hbar^2}{2m}\,\frac{\partial^2 \psi}{\partial x^2} \;+\; V\,\psi$$
+```math
+i\hbar\,\frac{\partial \psi}{\partial t} \;=\; -\frac{\hbar^2}{2m}\,\frac{\partial^2 \psi}{\partial x^2} \;+\; V\,\psi
+```
 
 **Read it aloud:** how fast the wave turns in time is set by how sharply it bends in space, which is its kinetic energy, plus the potential energy where it sits.
 
 Inside a box of width L with walls the electron cannot cross, the answer is a list:
 
-$$E_n = \frac{n^2 h^2}{8\,m\,L^2} = \frac{n^2 \pi^2 \hbar^2}{2\,m\,L^2}, \qquad \varphi_n(x) = \sqrt{\frac{2}{L}}\,\sin\frac{n\pi x}{L}, \qquad n = 1, 2, 3, \dots$$
+```math
+E_n = \frac{n^2 h^2}{8\,m\,L^2} = \frac{n^2 \pi^2 \hbar^2}{2\,m\,L^2}, \qquad \varphi_n(x) = \sqrt{\frac{2}{L}}\,\sin\frac{n\pi x}{L}, \qquad n = 1, 2, 3, \dots
+```
 
 **Read it aloud:** the n-th level is n squared times one fixed energy, and its shape is a sine with n half-waves between the walls, scaled so the chances add up to one.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $t$ | position across the box from one wall, in m; time, in s | 0 to 1 nm | — |
-| $L$ | the box's width, in m | 1 nm | every level falls as 1/L²: 2 nm gives E₁ = 0.0940 eV |
-| $\psi$, $\varphi_n$ | the wavefunction ψ(x, t); $\varphi_n(x)$ (phi) the n-th standing shape. $\lvert\psi\rvert^2$ is the chance per metre of finding the electron at x | $\varphi_1$ peaks at 44721 per root metre | — |
-| $V$ | potential energy at x, in J: zero inside the box, too high to climb at the walls | 0 inside | levels rise if the floor rises |
-| $m$ | the particle's mass, in kg | 9.1093837139 × 10⁻³¹ kg, the electron | every level falls as 1/m |
-| $h$, $\hbar$, $c$ | Planck's constant, J s; ħ = h/(2π); c the speed of light, m/s | h = 6.62607015 × 10⁻³⁴, ħ = 1.054571818 × 10⁻³⁴; hc = 1.9864 × 10⁻²⁵ J m | — |
-| $E$, $E_n$ | energy, in J or eV; $E_n$ the n-th allowed level | E₁ = 6.0247 × 10⁻²⁰ J = 0.37603 eV | — |
-| $n$ | the level number: how many half-waves fit | 1, 2, 3 | energy grows as n² |
-| $A$ | the wave's size; the normaliser $A = \sqrt{2/L}$ makes the total chance one | 44721 per root metre | — |
-| $i$ | the square root of −1 | — | — |
-| $f$, $\omega$ | frequency in Hz (a string's note, or a level's E/h); ω = 2πf, in rad/s | 110 Hz; 90.9 THz | — |
-| $p$, $k$, $\lambda$ | momentum, in kg m/s; wavenumber k = 2π/λ, in rad/m; wavelength λ, in m | level n: λ = 2L/n | — |
+| $`x`$, $`t`$ | position across the box from one wall, in m; time, in s | 0 to 1 nm | — |
+| $`L`$ | the box's width, in m | 1 nm | every level falls as 1/L²: 2 nm gives E₁ = 0.0940 eV |
+| $`\psi`$, $`\varphi_n`$ | the wavefunction ψ(x, t); $`\varphi_n(x)`$ (phi) the n-th standing shape. $`\lvert\psi\rvert^2`$ is the chance per metre of finding the electron at x | $`\varphi_1`$ peaks at 44721 per root metre | — |
+| $`V`$ | potential energy at x, in J: zero inside the box, too high to climb at the walls | 0 inside | levels rise if the floor rises |
+| $`m`$ | the particle's mass, in kg | 9.1093837139 × 10⁻³¹ kg, the electron | every level falls as 1/m |
+| $`h`$, $`\hbar`$, $`c`$ | Planck's constant, J s; ħ = h/(2π); c the speed of light, m/s | h = 6.62607015 × 10⁻³⁴, ħ = 1.054571818 × 10⁻³⁴; hc = 1.9864 × 10⁻²⁵ J m | — |
+| $`E`$, $`E_n`$ | energy, in J or eV; $`E_n`$ the n-th allowed level | E₁ = 6.0247 × 10⁻²⁰ J = 0.37603 eV | — |
+| $`n`$ | the level number: how many half-waves fit | 1, 2, 3 | energy grows as n² |
+| $`A`$ | the wave's size; the normaliser $`A = \sqrt{2/L}`$ makes the total chance one | 44721 per root metre | — |
+| $`i`$ | the square root of −1 | — | — |
+| $`f`$, $`\omega`$ | frequency in Hz (a string's note, or a level's E/h); ω = 2πf, in rad/s | 110 Hz; 90.9 THz | — |
+| $`p`$, $`k`$, $`\lambda`$ | momentum, in kg m/s; wavenumber k = 2π/λ, in rad/m; wavelength λ, in m | level n: λ = 2L/n | — |
 
 ### When it holds
 
@@ -76,31 +80,39 @@ A wave trapped between two walls bounces back and forth. Most wavelengths cancel
 
 ### Step 1: where the equation comes from
 
-Two experimental facts. Electrons diffract like waves, with wavelength λ = h/p (momentum p). And a wave's energy is E = hf, its frequency times h. Write a travelling wave as $e^{i(kx - \omega t)}$, with k = 2π/λ and ω = 2πf. Then p = ħk and E = ħω.
+Two experimental facts. Electrons diffract like waves, with wavelength λ = h/p (momentum p). And a wave's energy is E = hf, its frequency times h. Write a travelling wave as $`e^{i(kx - \omega t)}`$, with k = 2π/λ and ω = 2πf. Then p = ħk and E = ħω.
 
 Taking ∂/∂t of this wave multiplies it by −iω. Taking ∂²/∂x² multiplies it by −k². So
 
-$$i\hbar\,\frac{\partial\psi}{\partial t} = \hbar\omega\,\psi = E\,\psi, \qquad -\frac{\hbar^2}{2m}\frac{\partial^2\psi}{\partial x^2} = \frac{\hbar^2k^2}{2m}\,\psi = \frac{p^2}{2m}\,\psi.$$
+```math
+i\hbar\,\frac{\partial\psi}{\partial t} = \hbar\omega\,\psi = E\,\psi, \qquad -\frac{\hbar^2}{2m}\frac{\partial^2\psi}{\partial x^2} = \frac{\hbar^2k^2}{2m}\,\psi = \frac{p^2}{2m}\,\psi.
+```
 
 Energy is kinetic plus potential, E = p²/2m + V. Ask the equation to say that for every wave at once, and it is the formula above. This is a motivation, not a proof: the equation is a postulate (a starting assumption), kept because its predictions match experiment.
 
 ### Step 2: split off time
 
-Try a wave that keeps one shape and only turns in time: $\psi(x,t) = \varphi(x)\,e^{-iEt/\hbar}$. The time derivative brings down −iE/ħ, and the equation becomes
+Try a wave that keeps one shape and only turns in time: $`\psi(x,t) = \varphi(x)\,e^{-iEt/\hbar}`$. The time derivative brings down −iE/ħ, and the equation becomes
 
-$$-\frac{\hbar^2}{2m}\,\varphi'' + V\varphi = E\,\varphi .$$
+```math
+-\frac{\hbar^2}{2m}\,\varphi'' + V\varphi = E\,\varphi .
+```
 
-Here φ'' is the bending of the shape, its second derivative along x. This is the **time-independent** equation. The factor $e^{-iEt/\hbar}$ spins at frequency E/h but has size one, so |ψ|² does not change: a state with one energy sits still. That is why such a state is called **stationary**.
+Here φ'' is the bending of the shape, its second derivative along x. This is the **time-independent** equation. The factor $`e^{-iEt/\hbar}`$ spins at frequency E/h but has size one, so |ψ|² does not change: a state with one energy sits still. That is why such a state is called **stationary**.
 
 ### Step 3: the walls turn the energy into an eigenvalue
 
 Inside the box V = 0. At the walls the wave must be zero: a wave that leaked out would need infinite energy. So
 
-$$-\varphi'' = \frac{2mE}{\hbar^2}\,\varphi, \qquad \varphi(0) = 0, \qquad \varphi(L) = 0 .$$
+```math
+-\varphi'' = \frac{2mE}{\hbar^2}\,\varphi, \qquad \varphi(0) = 0, \qquad \varphi(L) = 0 .
+```
 
 This is the pinned string's problem, already solved: minus the bending equals a constant times the shape, zero at both ends. A constant that allows a nonzero shape is an **eigenvalue** (an allowed value of that constant). A nonzero shape exists only when the constant is (nπ/L)², and the shape is then sin(nπx/L) ([Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md)). Set 2mE/ħ² = (nπ/L)² and solve for E:
 
-$$E_n = \frac{n^2\pi^2\hbar^2}{2mL^2}.$$
+```math
+E_n = \frac{n^2\pi^2\hbar^2}{2mL^2}.
+```
 
 Replace ħ by h/(2π) and it is n²h²/(8mL²). Units check: J² s² over kg m² is J. Energy is **quantised** (allowed only on a list) for the same reason the string has a lowest note: the second wall rejects every shape that does not close up on it.
 
@@ -110,7 +122,9 @@ n = 0 gives sin(0) = 0 everywhere, no electron at all. So the lowest level is n 
 
 The equation fixes the shape and leaves the size free: any multiple of a solution is a solution. Physics fixes the size. |φ|² is the chance per metre of finding the electron at x, and the electron is somewhere in the box, so
 
-$$\int_0^L A^2 \sin^2\frac{n\pi x}{L}\,dx = A^2\,\frac{L}{2} = 1 \quad\Longrightarrow\quad A = \sqrt{\frac{2}{L}}.$$
+```math
+\int_0^L A^2 \sin^2\frac{n\pi x}{L}\,dx = A^2\,\frac{L}{2} = 1 \quad\Longrightarrow\quad A = \sqrt{\frac{2}{L}}.
+```
 
 The integral is L/2 because sin² averages one half over whole half-waves. For L = 1 nm, A is 44721 per root metre. Different levels are perpendicular: the product of two different shapes integrates to zero. That is the Sturm-Liouville theorem for this equation ([Sturm-Liouville](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md)), and the code confirms it by numerical integration.
 
@@ -503,9 +517,9 @@ The two outputs match line for line.
 
 Lean proves the box's energy levels, its normaliser and its middle-third chances, for every width, mass and level number.
 
-- Take m, L and ħ above zero, and solve the time-independent equation with V = 0, zero at both walls. Then a nonzero solution exists exactly when $E = n^2\pi^2\hbar^2/(2mL^2)$ for some $n \ge 1$.
-- Take levels j and k, both at least 1. Then the integral of $\varphi_j\varphi_k$ from 0 to L is 1 when j = k, and 0 otherwise. So each total chance is one, and different levels are perpendicular.
-- Take any box width L. Then the chance in the middle third for level 1 is $1/3 + \sqrt{3}/(2\pi)$. For level 2 it is $1/3 - \sqrt{3}/(4\pi)$.
+- Take m, L and ħ above zero, and solve the time-independent equation with V = 0, zero at both walls. Then a nonzero solution exists exactly when $`E = n^2\pi^2\hbar^2/(2mL^2)`$ for some $`n \ge 1`$.
+- Take levels j and k, both at least 1. Then the integral of $`\varphi_j\varphi_k`$ from 0 to L is 1 when j = k, and 0 otherwise. So each total chance is one, and different levels are perpendicular.
+- Take any box width L. Then the chance in the middle third for level 1 is $`1/3 + \sqrt{3}/(2\pi)`$. For level 2 it is $`1/3 - \sqrt{3}/(4\pi)`$.
 - The levels go 1 : 4 : 9 : 16 : 25, and their gaps go 3 : 5 : 7. The string's notes go 110, 220, 330, 440, 550 Hz.
 
 The eV values, the shooting solve, the finite well and the 1099 nm light are left to the Python and Rust checks.

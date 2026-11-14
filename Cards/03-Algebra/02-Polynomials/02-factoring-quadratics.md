@@ -39,33 +39,41 @@ The curve touches the bottom at t = 0 and t = 4: one touch per bracket of 5t(4 -
 
 The rule underneath all of it, the arrow below read as "so": if two things multiply to zero, at least one of them is zero.
 
-$$A \times B = 0 \;\Longrightarrow\; A = 0 \;\text{ or }\; B = 0$$
+```math
+A \times B = 0 \;\Longrightarrow\; A = 0 \;\text{ or }\; B = 0
+```
 
 Three rewrites get a polynomial into that shape. First, the common factor: what every term shares comes out front.
 
-$$20t - 5t^2 = 5t(4 - t)$$
+```math
+20t - 5t^2 = 5t(4 - t)
+```
 
-Second, reverse-multiplying a quadratic — a polynomial whose highest power is 2 ([Polynomials](01-polynomials.md)). Here x is the unknown, $b$ the number stuck to it, $c$ the one on its own, $p$ and $q$ the two you are hunting:
+Second, reverse-multiplying a quadratic — a polynomial whose highest power is 2 ([Polynomials](01-polynomials.md)). Here x is the unknown, $`b`$ the number stuck to it, $`c`$ the one on its own, $`p`$ and $`q`$ the two you are hunting:
 
-$$x^2 + bx + c = (x + p)(x + q) \quad\text{whenever}\quad p + q = b \;\text{ and }\; p \times q = c$$
+```math
+x^2 + bx + c = (x + p)(x + q) \quad\text{whenever}\quad p + q = b \;\text{ and }\; p \times q = c
+```
 
 That x^2 is bare, no number in front. With a number there the hunt changes; [The quadratic formula](03-quadratic-formula.md) still works.
 
-Third, a square minus a square, with $k$ the number being squared:
+Third, a square minus a square, with $`k`$ the number being squared:
 
-$$x^2 - k^2 = (x + k)(x - k)$$
+```math
+x^2 - k^2 = (x + k)(x - k)
+```
 
 **Read it aloud:** find two numbers that add to the middle one and multiply to the last, put them in brackets, and the polynomial is zero wherever a bracket is.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | seconds since the kick | 0 to 4 | past 4 the height goes negative, meaning below the boot: the model has stopped |
-| $x$ | the side of the square slab, in metres | 11 | the patio grows both ways at once, so its area climbs faster than x |
-| $b$ | the middle number, stuck to x | −11 | the bracket numbers add to more, so the zeros slide |
-| $c$ | the last number, with no x | 30 | the bracket numbers multiply to more, and whole-number pairs get rarer |
-| $p$, $q$ | the two numbers inside the brackets | −5 and −6 | the zeros sit at −p and −q, so both move |
-| $k$ | the number squared in a square-minus-a-square | 3 | the pond is wider, less paving left |
-| $A$, $B$ | two things multiplied | 5t and 4 − t | — |
+| $`t`$ | seconds since the kick | 0 to 4 | past 4 the height goes negative, meaning below the boot: the model has stopped |
+| $`x`$ | the side of the square slab, in metres | 11 | the patio grows both ways at once, so its area climbs faster than x |
+| $`b`$ | the middle number, stuck to x | −11 | the bracket numbers add to more, so the zeros slide |
+| $`c`$ | the last number, with no x | 30 | the bracket numbers multiply to more, and whole-number pairs get rarer |
+| $`p`$, $`q`$ | the two numbers inside the brackets | −5 and −6 | the zeros sit at −p and −q, so both move |
+| $`k`$ | the number squared in a square-minus-a-square | 3 | the pond is wider, less paving left |
+| $`A`$, $`B`$ | two things multiplied | 5t and 4 − t | — |
 
 ### When it holds
 
@@ -95,7 +103,9 @@ Multiply back to check: 5t × 4 = 20t, 5t × (−t) = −5t^2. Same polynomial, 
 
 Multiply two brackets out and watch where the pieces land:
 
-$$(x + p)(x + q) = x^2 + qx + px + pq = x^2 + (p + q)x + pq$$
+```math
+(x + p)(x + q) = x^2 + qx + px + pq = x^2 + (p + q)x + pq
+```
 
 The middle number is p + q. The last is p × q. Run it backwards: hunt two numbers that add to the middle one and multiply to the last.
 
@@ -103,14 +113,16 @@ Now a patio. A square slab, x metres a side. Trim 5 m off one side and 6 m off t
 
 Handed x^2 - 11x + 30 cold, hunt two numbers adding to −11 and multiplying to +30. Both must be negative. The whole-number pairs multiplying to 30 are 1 and 30, 2 and 15, 3 and 10, 5 and 6. Only 5 and 6 add to 11, so −5 and −6:
 
-$$x^2 - 11x + 30 = (x - 5)(x - 6)$$
+```math
+x^2 - 11x + 30 = (x - 5)(x - 6)
+```
 
 At x = 11 the slab leaves 6 m by 5 m: 30 square metres, both forms agreeing. Same move as the football, on a quadratic with no common factor.
 
 <details>
 <summary>The four multiplications, written out</summary>
 
-Every term of the first bracket times every term of the second: $x \times x = x^2$, $x \times q = qx$, $p \times x = px$, $p \times q = pq$. With $p = -5$, $q = -6$: $x^2 - 6x - 5x + 30$.
+Every term of the first bracket times every term of the second: $`x \times x = x^2`$, $`x \times q = qx`$, $`p \times x = px`$, $`p \times q = pq`$. With $`p = -5`$, $`q = -6`$: $`x^2 - 6x - 5x + 30`$.
 
 </details>
 

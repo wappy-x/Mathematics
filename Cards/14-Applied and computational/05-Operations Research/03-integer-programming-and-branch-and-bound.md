@@ -35,56 +35,60 @@ Schematic. Each box is one fractional problem. Both branches start with their pa
 
 ## The formula
 
-Each candidate site gets a letter $x_i$ that can only be 0 or 1: 1 means lease site $i$, 0 means pass. A variable restricted to 0 or 1 is a **binary variable**. A sum of them counts the yeses, and a sum of them times prices adds up the price of whatever was chosen.
+Each candidate site gets a letter $`x_i`$ that can only be 0 or 1: 1 means lease site $`i`$, 0 means pass. A variable restricted to 0 or 1 is a **binary variable**. A sum of them counts the yeses, and a sum of them times prices adds up the price of whatever was chosen.
 
 The sites' figures are synthetic (invented for this card), in £k a year:
 
 | Site | A | B | C | D | E | F | G | H | I | J | K | L |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Lease $a_i$ | 60 | 40 | 110 | 70 | 60 | 40 | 60 | 50 | 90 | 60 | 110 | 70 |
-| Saving $s_i$ | 145 | 40 | 240 | 140 | 115 | 70 | 70 | 80 | 125 | 115 | 110 | 125 |
+| Lease $`a_i`$ | 60 | 40 | 110 | 70 | 60 | 40 | 60 | 50 | 90 | 60 | 110 | 70 |
+| Saving $`s_i`$ | 145 | 40 | 240 | 140 | 115 | 70 | 70 | 80 | 125 | 115 | 110 | 125 |
 
 The whole decision, written as an **integer program** (a linear program whose variables must be whole numbers):
 
-$$z_{IP} = \max \sum_{i=1}^{n} s_i x_i \quad\text{subject to}\quad \sum_{i=1}^{n} x_i = p,\qquad \sum_{i=1}^{n} a_i x_i \le b,\qquad x_i \in \{0, 1\}$$
+```math
+z_{IP} = \max \sum_{i=1}^{n} s_i x_i \quad\text{subject to}\quad \sum_{i=1}^{n} x_i = p,\qquad \sum_{i=1}^{n} a_i x_i \le b,\qquad x_i \in \{0, 1\}
+```
 
-**Read it aloud:** choose a yes or no for every site to make the total saving as large as possible, with exactly $p$ yeses and the yeses' leases adding to at most the budget.
+**Read it aloud:** choose a yes or no for every site to make the total saving as large as possible, with exactly $`p`$ yeses and the yeses' leases adding to at most the budget.
 
-The $\sum$ sign means "add up over every site $i$ from 1 to $n$". In the shape of [Linear programs](01-modelling-with-linear-programs.md), the savings $s_i$ play the part of $c$, the goal's value per unit. The budget is one row of $Ax \le b$ (the limits, one row each), with 200 as its entry of $b$. The exact count is two rows, at most 3 and at least 3, the way that card writes "exactly". Once fractions are allowed (below), each $x_i \le 1$ is one more row.
+The $`\sum`$ sign means "add up over every site $`i`$ from 1 to $`n`$". In the shape of [Linear programs](01-modelling-with-linear-programs.md), the savings $`s_i`$ play the part of $`c`$, the goal's value per unit. The budget is one row of $`Ax \le b`$ (the limits, one row each), with 200 as its entry of $`b`$. The exact count is two rows, at most 3 and at least 3, the way that card writes "exactly". Once fractions are allowed (below), each $`x_i \le 1`$ is one more row.
 
-Now drop the hardest rule. Replace "$x_i$ is 0 or 1" with "$x_i$ is anywhere from 0 to 1". The result is the **LP relaxation** (LP: linear program; relaxation: the same problem with a rule loosened). Its best value is written $z_{LP}$. [Approximation](../02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md) already rounds such a relaxation for vertex cover (picking the fewest points of a network so that every line touches a chosen point); this card branches on it instead. Two facts carry the card:
+Now drop the hardest rule. Replace "$`x_i`$ is 0 or 1" with "$`x_i`$ is anywhere from 0 to 1". The result is the **LP relaxation** (LP: linear program; relaxation: the same problem with a rule loosened). Its best value is written $`z_{LP}`$. [Approximation](../02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md) already rounds such a relaxation for vertex cover (picking the fewest points of a network so that every line touches a chosen point); this card branches on it instead. Two facts carry the card:
 
-$$z_{LP} \ge z_{IP}, \qquad \text{gap} = \frac{z_{LP} - z_{IP}}{z_{IP}}$$
+```math
+z_{LP} \ge z_{IP}, \qquad \text{gap} = \frac{z_{LP} - z_{IP}}{z_{IP}}
+```
 
-**Read it aloud:** the relaxed best is never below the true best, and the **integrality gap** is how far above it sits, as a share of the true best. Here $(430 - 410)/410$ is 4.88%.
+**Read it aloud:** the relaxed best is never below the true best, and the **integrality gap** is how far above it sits, as a share of the true best. Here $`(430 - 410)/410`$ is 4.88%.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | candidate sites | 12 | more choices; the search usually grows |
-| $p$ | depots to open, exactly | 3 | — |
-| $i$ | which site, 1 to $n$ (letters A to L) | C is site 3 | — |
-| $x_i$ | the decision for site $i$: 1 lease it, 0 pass | $x_A = 1$, $x_C = 0$ in the best plan | — (the solver chooses it) |
-| $s_i$ | site $i$'s yearly saving, £k | $s_C = 240$ | that site is more likely chosen |
-| $a_i$ | site $i$'s yearly lease, £k | $a_C = 110$ | that site is less likely chosen |
-| $b$ | the lease budget, £k a year | 200 | best saving rises: 455 at 210 |
-| $z_{IP}$ | best saving with whole decisions | £410k (A, D, L) | — (this is the answer) |
-| $z_{LP}$ | best saving with fractions allowed: the ceiling | £430k | — |
-| gap | the integrality gap: $z_{LP} - z_{IP}$, also as a share of $z_{IP}$; fixed by the problem, whatever the search does | £20k, 4.88% | the search has more to rule out |
-| $y_1$, $y_2$ | dual values: prices on the count and the budget, £k per depot and £k per £k of lease (Step 1) | −35 and 2.5 | — |
-| $x_{AD}$ | a binary for "both A and D open" (below) | 0 in the overlap model's best plan, C, F, H | — |
+| $`n`$ | candidate sites | 12 | more choices; the search usually grows |
+| $`p`$ | depots to open, exactly | 3 | — |
+| $`i`$ | which site, 1 to $`n`$ (letters A to L) | C is site 3 | — |
+| $`x_i`$ | the decision for site $`i`$: 1 lease it, 0 pass | $`x_A = 1`$, $`x_C = 0`$ in the best plan | — (the solver chooses it) |
+| $`s_i`$ | site $`i`$'s yearly saving, £k | $`s_C = 240`$ | that site is more likely chosen |
+| $`a_i`$ | site $`i`$'s yearly lease, £k | $`a_C = 110`$ | that site is less likely chosen |
+| $`b`$ | the lease budget, £k a year | 200 | best saving rises: 455 at 210 |
+| $`z_{IP}`$ | best saving with whole decisions | £410k (A, D, L) | — (this is the answer) |
+| $`z_{LP}`$ | best saving with fractions allowed: the ceiling | £430k | — |
+| gap | the integrality gap: $`z_{LP} - z_{IP}`$, also as a share of $`z_{IP}`$; fixed by the problem, whatever the search does | £20k, 4.88% | the search has more to rule out |
+| $`y_1`$, $`y_2`$ | dual values: prices on the count and the budget, £k per depot and £k per £k of lease (Step 1) | −35 and 2.5 | — |
+| $`x_{AD}`$ | a binary for "both A and D open" (below) | 0 in the overlap model's best plan, C, F, H | — |
 
 ### Writing rules with binary variables
 
 Yes-or-no variables turn business rules into straight-line limits:
 
-- **Count:** $\sum x_i = 3$ opens exactly 3 depots.
-- **Either-or:** $x_A + x_D \le 1$ forbids leasing both.
-- **If-then:** $x_B \le x_C$ allows B only if C is open.
-- **Both:** a new binary $x_{AD}$ with $x_{AD} \ge x_A + x_D - 1$ is forced to 1 when A and D are both open. Subtracting $50x_{AD}$ from the saving charges a £50k overlap only then. So a product of two decisions, which is not a straight-line expression, is replaced by straight-line limits.
+- **Count:** $`\sum x_i = 3`$ opens exactly 3 depots.
+- **Either-or:** $`x_A + x_D \le 1`$ forbids leasing both.
+- **If-then:** $`x_B \le x_C`$ allows B only if C is open.
+- **Both:** a new binary $`x_{AD}`$ with $`x_{AD} \ge x_A + x_D - 1`$ is forced to 1 when A and D are both open. Subtracting $`50x_{AD}`$ from the saving charges a £50k overlap only then. So a product of two decisions, which is not a straight-line expression, is replaced by straight-line limits.
 
 ### When it holds
 
-- **Savings add up.** The model scores a plan as the sum of its sites' savings, which assumes each depot serves its own patch. If A and D share shops and the pair saves £50k less than the sum, the plan A, D, L really saves £360k, and the true best becomes C, F, H at £390k. The fix is the $x_{AD}$ rule above.
+- **Savings add up.** The model scores a plan as the sum of its sites' savings, which assumes each depot serves its own patch. If A and D share shops and the pair saves £50k less than the sum, the plan A, D, L really saves £360k, and the true best becomes C, F, H at £390k. The fix is the $`x_{AD}`$ rule above.
 - **The decisions are whole.** A lease cannot be three-quarters signed. If decisions could be split (hours of rented space, say), the relaxed £430k is the answer and there is no gap.
 - **The ceiling is exact.** A ceiling that comes out too low, from a sloppy solve or a loose tolerance, can cut off the branch that held the best plan.
 - **The figures are known.** Savings are estimates; a small error in one can change the winner, so rerun with the figures moved.
@@ -96,23 +100,25 @@ Yes-or-no variables turn business rules into straight-line limits:
 
 ### Step 0: loosening a rule can only raise the best
 
-Every whole plan is also a fractional plan: a 0 or a 1 is a number between 0 and 1. So the relaxed problem chooses from a larger set, and the best of a larger set is at least as good. That is $z_{LP} \ge z_{IP}$, and it holds inside any branch too: a fractional answer is a cheap ceiling on what any whole plan in that branch can save.
+Every whole plan is also a fractional plan: a 0 or a 1 is a number between 0 and 1. So the relaxed problem chooses from a larger set, and the best of a larger set is at least as good. That is $`z_{LP} \ge z_{IP}`$, and it holds inside any branch too: a fractional answer is a cheap ceiling on what any whole plan in that branch can save.
 
 ### Step 1: the relaxation is solved by checking corners
 
-With fractions allowed, the problem is a linear program, and its best plan sits at a corner of the allowed region ([Linear programs](01-modelling-with-linear-programs.md) proves this). A corner of a region in 12 unknowns is a point where 12 independent limits hold with equality. Only two limits here are not of the form "$x_i = 0$" or "$x_i = 1$": the count and the budget. So at any corner at least 10 sites sit at exactly 0 or 1.
+With fractions allowed, the problem is a linear program, and its best plan sits at a corner of the allowed region ([Linear programs](01-modelling-with-linear-programs.md) proves this). A corner of a region in 12 unknowns is a point where 12 independent limits hold with equality. Only two limits here are not of the form "$`x_i = 0`$" or "$`x_i = 1`$": the count and the budget. So at any corner at least 10 sites sit at exactly 0 or 1.
 
 That makes the corners easy to list. Choose which sites sit at 1. If they already make 3, that is a whole plan. Otherwise two more sites share what is left, and the count and the budget give two equations in their two shares. One fractional site alone is impossible: the count would be a whole number plus a fraction, not 3.
 
-The code checks 1,226 candidate corners and finds a best one at A and F open, C at 0.75, D at 0.25: leases $60 + 82.5 + 17.5 + 40 = 200$, savings $145 + 180 + 35 + 70 = 430$. Two more corners tie at £430k, with E or J sharing the split with C instead of D (E and J have the same figures); C is split in all three.
+The code checks 1,226 candidate corners and finds a best one at A and F open, C at 0.75, D at 0.25: leases $`60 + 82.5 + 17.5 + 40 = 200`$, savings $`145 + 180 + 35 + 70 = 430`$. Two more corners tie at £430k, with E or J sharing the split with C instead of D (E and J have the same figures); C is split in all three.
 
-A second road to the same ceiling, with no search at all: put a price $y_1$ on each depot and a price $y_2$ (not negative) on each £k of lease. For any plan that obeys the rules,
+A second road to the same ceiling, with no search at all: put a price $`y_1`$ on each depot and a price $`y_2`$ (not negative) on each £k of lease. For any plan that obeys the rules,
 
-$$\sum_i s_i x_i = \sum_i (s_i - y_1 - y_2 a_i)\,x_i + y_1\sum_i x_i + y_2\sum_i a_i x_i \le \sum_i \max(0,\ s_i - y_1 - y_2 a_i) + 3y_1 + 200y_2.$$
+```math
+\sum_i s_i x_i = \sum_i (s_i - y_1 - y_2 a_i)\,x_i + y_1\sum_i x_i + y_2\sum_i a_i x_i \le \sum_i \max(0,\ s_i - y_1 - y_2 a_i) + 3y_1 + 200y_2.
+```
 
-Each $x_i$ is at most 1, the count is 3 and the leases are at most 200, which gives the inequality. Choose the prices that make C and D break even, $s_i - y_1 - y_2 a_i = 0$ for both: $y_2 = (240 - 140)/(110 - 70) = 2.5$ and $y_1 = 240 - 2.5 \times 110 = -35$. Only A and F have something left over, 30 and 5. The bound is $-105 + 500 + 30 + 5 = 430$, the same ceiling.
+Each $`x_i`$ is at most 1, the count is 3 and the leases are at most 200, which gives the inequality. Choose the prices that make C and D break even, $`s_i - y_1 - y_2 a_i = 0`$ for both: $`y_2 = (240 - 140)/(110 - 70) = 2.5`$ and $`y_1 = 240 - 2.5 \times 110 = -35`$. Only A and F have something left over, 30 and 5. The bound is $`-105 + 500 + 30 + 5 = 430`$, the same ceiling.
 
-These prices are the dual values of [Shadow prices](02-shadow-prices-and-sensitivity.md): $y_2 = 2.5$ says each extra £1k of lease budget lifts the ceiling by £2.5k. The negative $y_1$ says that, at the margin, requiring more depots on the same budget would lower the ceiling.
+These prices are the dual values of [Shadow prices](02-shadow-prices-and-sensitivity.md): $`y_2 = 2.5`$ says each extra £1k of lease budget lifts the ceiling by £2.5k. The negative $`y_1`$ says that, at the margin, requiring more depots on the same budget would lower the ceiling.
 
 ### Step 2: splitting on a fraction loses no whole plan
 
@@ -148,11 +154,11 @@ The 12 sites, the 3 depots and the £200k budget, searched best-first.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | Count the choices | 220 ways to pick 3 of 12; 109 fit the budget | 109 to check by brute force |
-| Relax: ceiling | leases $60 + 82.5 + 17.5 + 40 = 200$; savings $145 + 180 + 35 + 70$ | £430k |
-| Price check on the ceiling | $3 \times (-35) + 200 \times 2.5 + 30 + 5 = -105 + 500 + 30 + 5$ | £430k |
-| Branch on C, closed | A, D, L: leases $60 + 70 + 70 = 200$; savings $145 + 140 + 125$ | £410k, whole: incumbent |
-| Branch on C, open | C, F, A half, B half: leases $110 + 40 + 30 + 20 = 200$; savings $240 + 70 + 72.5 + 20$ | £402.5k, below £410k: cut off |
-| Integrality gap | $430 - 410 = 20$; $20 / 410$ | £20k, 4.88% |
+| Relax: ceiling | leases $`60 + 82.5 + 17.5 + 40 = 200`$; savings $`145 + 180 + 35 + 70`$ | £430k |
+| Price check on the ceiling | $`3 \times (-35) + 200 \times 2.5 + 30 + 5 = -105 + 500 + 30 + 5`$ | £430k |
+| Branch on C, closed | A, D, L: leases $`60 + 70 + 70 = 200`$; savings $`145 + 140 + 125`$ | £410k, whole: incumbent |
+| Branch on C, open | C, F, A half, B half: leases $`110 + 40 + 30 + 20 = 200`$; savings $`240 + 70 + 72.5 + 20`$ | £402.5k, below £410k: cut off |
+| Integrality gap | $`430 - 410 = 20`$; $`20 / 410`$ | £20k, 4.88% |
 | **Best plan** | A, D, L, proved by 3 relaxations | **£410k a year** |
 
 So the chain should lease A, D and L. No other choice of 3 sites within £200k saves more, and the proof took 3 small problems instead of 109 checks.
@@ -551,8 +557,8 @@ The two outputs are identical, line for line.
 
 Lean proves the ceiling, the price bound and a one-split proof of best, for any sites, count and budget, and checks the depot numbers.
 
-- Take any whole plan. Then its saving is at most $z_{LP}$, the best saving with fractions allowed.
-- Take a price $y_1$ on each depot and a price $y_2 \ge 0$ on each £k of lease. Then every fractional plan saves at most $\sum_i \max(0, s_i - y_1 - y_2 a_i) + p y_1 + b y_2$.
+- Take any whole plan. Then its saving is at most $`z_{LP}`$, the best saving with fractions allowed.
+- Take a price $`y_1`$ on each depot and a price $`y_2 \ge 0`$ on each £k of lease. Then every fractional plan saves at most $`\sum_i \max(0, s_i - y_1 - y_2 a_i) + p y_1 + b y_2`$.
 - Suppose the incumbent beats or ties every whole plan with one site closed, and the ceiling with that site open is no higher. Then no whole plan saves more.
 - There are 220 ways to pick 3 of the 12 sites, and 109 fit the £200k budget.
 - A, D and L use exactly £200k and save £410k, and no choice within £200k saves more.
@@ -720,7 +726,7 @@ example : lease 0 + lease 2 + lease 3 = 240 ∧ save 0 + save 2 + save 3 = 525 :
 > [!TIP]
 > **Try changing**
 > - Guess first: raise the budget to £210k. What happens to the integrality gap? The `budget 210` line: ceiling £455k and best whole plan A, C, F at £455k. The gap is 0; the rounded plan that broke the budget is now allowed and best.
-> - Guess first: cut the budget to £190k. The `budget 190` line: ceiling £405k, best whole plan A, D, J at £400k, tied with A, D, E (sites E and J have the same figures). The ceiling fell from £430k to £405k: £10k of budget times the price $y_2 = 2.5$.
+> - Guess first: cut the budget to £190k. The `budget 190` line: ceiling £405k, best whole plan A, D, J at £400k, tied with A, D, E (sites E and J have the same figures). The ceiling fell from £430k to £405k: £10k of budget times the price $`y_2 = 2.5`$.
 > - Guess first: a budget of £240k. Ceiling and best whole plan agree at A, C, D, £525k. A loose budget often leaves no gap at all.
 > - Guess first: make the cut-off careless. In `search`, change `inc[0] + EPS` to `inc[0] + 30`. The depth-first run finds C, F, H at £390k, then cuts off the C-closed branch (£410k is within 30 of 390) and stops at the wrong plan. The assert that compares the search with brute force fails.
 
@@ -755,7 +761,7 @@ example : lease 0 + lease 2 + lease 3 = 240 ∧ save 0 + save 2 + save 3 = 525 :
 ## What this builds on
 
 - [Linear programs](01-modelling-with-linear-programs.md): the model shape, and the theorem that the best plan sits at a corner. Every node of the search tree is one of these.
-- [Shadow prices](02-shadow-prices-and-sensitivity.md): the dual values. The price certificate in Step 1 is a pair of them, and $y_2 = 2.5$ is the budget's shadow price in the relaxation.
+- [Shadow prices](02-shadow-prices-and-sensitivity.md): the dual values. The price certificate in Step 1 is a pair of them, and $`y_2 = 2.5`$ is the budget's shadow price in the relaxation.
 - [The travelling salesman](../../04-Combinatorics%20and%20graphs/11-Tours%20-%20Euler%20and%20Hamilton/04-travelling-salesman-in-outline.md): a yes-or-no problem with too many answers to list, and no known fast method. Branch and bound is how large tours are solved exactly in practice.
 - [Approximation](../02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md): rounds a relaxation for vertex cover and proves the result at most twice the best. Here rounding breaks a rule, so the card searches instead.
 

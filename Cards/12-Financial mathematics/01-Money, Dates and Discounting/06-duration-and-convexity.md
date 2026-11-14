@@ -40,59 +40,69 @@ The bending line is the bond's real price. The straight line is duration's predi
 
 Three pieces of notation first, in words.
 
-- The tall sigma sign, with $t$ running from 1 to $N$, says: write one term for each year and add them up.
-- A **derivative**, written $dP/dy$, is the rate at which the price changes as the yield changes — the slope of the curve above. Doing it twice, $d^2P/dy^2$, gives the rate at which that slope itself changes: the bend.
-- Capital delta marks a change, so $\Delta y$ is a yield move and $\Delta P$ the price move it causes.
+- The tall sigma sign, with $`t`$ running from 1 to $`N`$, says: write one term for each year and add them up.
+- A **derivative**, written $`dP/dy`$, is the rate at which the price changes as the yield changes — the slope of the curve above. Doing it twice, $`d^2P/dy^2`$, gives the rate at which that slope itself changes: the bend.
+- Capital delta marks a change, so $`\Delta y`$ is a yield move and $`\Delta P`$ the price move it causes.
 
-Rates are decimals inside a formula: one percentage point is $\Delta y = 0.01$.
+Rates are decimals inside a formula: one percentage point is $`\Delta y = 0.01`$.
 
-The price of a bond, from the previous card, with $A_t$ standing for the whole amount paid in year $t$ — the coupon, and in the final year the coupon plus the face:
+The price of a bond, from the previous card, with $`A_t`$ standing for the whole amount paid in year $`t`$ — the coupon, and in the final year the coupon plus the face:
 
-$$P(y) \;=\; \sum_{t=1}^{N} \frac{A_t}{(1+y)^{t}}$$
+```math
+P(y) \;=\; \sum_{t=1}^{N} \frac{A_t}{(1+y)^{t}}
+```
 
 Each payment's share of today's price is its **weight**. The weights are what turn a pile of dates into one number:
 
-$$w_t \;=\; \frac{A_t/(1+y)^t}{P}, \qquad D_{\text{Mac}} \;=\; \sum_{t=1}^{N} t\,w_t, \qquad D_{\text{mod}} \;=\; \frac{D_{\text{Mac}}}{1+y}$$
+```math
+w_t \;=\; \frac{A_t/(1+y)^t}{P}, \qquad D_{\text{Mac}} \;=\; \sum_{t=1}^{N} t\,w_t, \qquad D_{\text{mod}} \;=\; \frac{D_{\text{Mac}}}{1+y}
+```
 
 **Read it aloud:** weigh each payment by the share of the price it accounts for, average the payment years under those weights to get Macaulay duration, then divide by one plus the yield to get modified duration — the fraction of its price the bond loses per unit of yield.
 
-Convexity is the same list of payments weighted by $t(t+1)$ instead of $t$, with two extra years of discounting:
+Convexity is the same list of payments weighted by $`t(t+1)`$ instead of $`t`$, with two extra years of discounting:
 
-$$C \;=\; \frac{1}{P}\sum_{t=1}^{N} \frac{t(t+1)\,A_t}{(1+y)^{t+2}}$$
+```math
+C \;=\; \frac{1}{P}\sum_{t=1}^{N} \frac{t(t+1)\,A_t}{(1+y)^{t+2}}
+```
 
 And the two of them together answer the question the card asks:
 
-$$\frac{\Delta P}{P} \;\approx\; -\,D_{\text{mod}}\,\Delta y \;+\; \tfrac12\,C\,(\Delta y)^2$$
+```math
+\frac{\Delta P}{P} \;\approx\; -\,D_{\text{mod}}\,\Delta y \;+\; \tfrac12\,C\,(\Delta y)^2
+```
 
 **Read it aloud:** the price falls by duration times the yield move, then bends back up by half the convexity times the move squared.
 
 | Symbol | Plain meaning | In the house bond | Push it up and the price move… |
 | --- | --- | --- | --- |
-| $P$ | the price: what the bond sells for today | $1,043.29 | — |
-| $y$ | the yield: the one rate every payment is discounted at | 5% | shrinks, because everything is discounted harder already |
-| $A_t$ | the amount paid in year $t$ | 60 four times, then 1,060 | grows: more money is exposed to the rate |
-| $t$ | which year a payment lands in | 1 to 5 | — |
-| $N$ | years until the last payment | 5 | grows sharply: far-off money is rate-sensitive money |
-| $w_t$ | that payment's share of today's price | 0.054772 in year 1, 0.796072 in year 5 | pulls the average year toward that payment |
-| $D_{\text{Mac}}$ | Macaulay duration: the weighted average year a dollar comes back | 4.477751 years | grows |
-| $D_{\text{mod}}$ | modified duration: fraction of price lost per unit of yield | 4.264525 | grows in proportion |
-| $C$ | convexity: how fast the slope itself changes, in years squared | 23.444091 | the correction grows, and always upward |
-| $M$ | the most the third derivative can reach in size across a move | the error bound's only input | — |
-| $R$ | what the two terms leave out | at most 0.026649 on the one-point rise | — |
+| $`P`$ | the price: what the bond sells for today | $1,043.29 | — |
+| $`y`$ | the yield: the one rate every payment is discounted at | 5% | shrinks, because everything is discounted harder already |
+| $`A_t`$ | the amount paid in year $`t`$ | 60 four times, then 1,060 | grows: more money is exposed to the rate |
+| $`t`$ | which year a payment lands in | 1 to 5 | — |
+| $`N`$ | years until the last payment | 5 | grows sharply: far-off money is rate-sensitive money |
+| $`w_t`$ | that payment's share of today's price | 0.054772 in year 1, 0.796072 in year 5 | pulls the average year toward that payment |
+| $`D_{\text{Mac}}`$ | Macaulay duration: the weighted average year a dollar comes back | 4.477751 years | grows |
+| $`D_{\text{mod}}`$ | modified duration: fraction of price lost per unit of yield | 4.264525 | grows in proportion |
+| $`C`$ | convexity: how fast the slope itself changes, in years squared | 23.444091 | the correction grows, and always upward |
+| $`M`$ | the most the third derivative can reach in size across a move | the error bound's only input | — |
+| $`R`$ | what the two terms leave out | at most 0.026649 on the one-point rise | — |
 
 One more number falls straight out, and desks quote it more often than duration. A **basis point** is a hundredth of a percentage point. **DV01** is the cash lost on a one-basis-point rise:
 
-$$\text{DV01} \;=\; D_{\text{mod}} \times P \times 0.0001$$
+```math
+\text{DV01} \;=\; D_{\text{mod}} \times P \times 0.0001
+```
 
 For the house bond that is $0.444916, a shade under 45 cents per 1,000 dollars of face. Duration is a percentage; DV01 is cash, and cash is what adds up across a book, all of a desk's positions.
 
 ### When it holds
 
-- **One yield moves, and it moves every payment together.** A curve that twists — short rates up, long rates down — is not a move in $y$ at all, and no single duration describes it.
+- **One yield moves, and it moves every payment together.** A curve that twists — short rates up, long rates down — is not a move in $`y`$ at all, and no single duration describes it.
 - **The payments are fixed.** Nothing may cancel, reschedule or repay early. When the payments themselves react to rates, as a callable bond's or a mortgage's do, the bend can turn the other way: [Negative convexity](../35-Mortgages%2C%20Callables%20and%20Prepayment/03-negative-convexity.md).
 - **The move is modest.** What the two terms leave out grows as the cube of the move. On this bond a one-point move leaves under three cents unaccounted for; a three-point rise leaves 0.680863 dollars unaccounted for, and the two numbers are no longer enough.
-- **The yield stays above minus one hundred percent,** so $(1+y)$ is positive and the discounting means something.
-- **The quote is annual, as here.** Conventions verified 14 September 2026: this card uses one coupon a year discounted at an annual yield. A bond quoted with two coupons a year discounts once per half-year, so with $t$ still in years $(1+y)^t$ becomes $(1+y/2)^{2t}$, modified duration divides by $(1+y/2)$, and convexity weights each year by $t(t+\tfrac12)$. The calendar rule that fixes each $t$ is its own card: [Day counts](02-day-counts-and-dates.md).
+- **The yield stays above minus one hundred percent,** so $`(1+y)`$ is positive and the discounting means something.
+- **The quote is annual, as here.** Conventions verified 14 September 2026: this card uses one coupon a year discounted at an annual yield. A bond quoted with two coupons a year discounts once per half-year, so with $`t`$ still in years $`(1+y)^t`$ becomes $`(1+y/2)^{2t}`$, modified duration divides by $`(1+y/2)`$, and convexity weights each year by $`t(t+\tfrac12)`$. The calendar rule that fixes each $`t`$ is its own card: [Day counts](02-day-counts-and-dates.md).
 
 ---
 
@@ -106,24 +116,30 @@ So the price is a function of one number, and everything known about such functi
 
 ### Step 1: differentiate once, and a weighted average time falls out
 
-Each payment contributes $A_t/(1+y)^t$ to the price: the amount, times the discount factor for its year ([Discount factors](01-compounding-and-discount-factors.md)). Nudge the yield up and that term shrinks, and it shrinks faster the further off the payment is, because it is being divided by $(1+y)$ more times. Differentiating one term gives $-t\,A_t/(1+y)^{t+1}$: the extra factor of $t$ is the whole story, and it is why long bonds are dangerous.
+Each payment contributes $`A_t/(1+y)^t`$ to the price: the amount, times the discount factor for its year ([Discount factors](01-compounding-and-discount-factors.md)). Nudge the yield up and that term shrinks, and it shrinks faster the further off the payment is, because it is being divided by $`(1+y)`$ more times. Differentiating one term gives $`-t\,A_t/(1+y)^{t+1}`$: the extra factor of $`t`$ is the whole story, and it is why long bonds are dangerous.
 
-Add the terms and pull out one factor of $(1+y)$:
+Add the terms and pull out one factor of $`(1+y)`$:
 
-$$-\frac{dP}{dy} \;=\; \frac{1}{1+y}\sum_{t=1}^{N} \frac{t\,A_t}{(1+y)^{t}}$$
+```math
+-\frac{dP}{dy} \;=\; \frac{1}{1+y}\sum_{t=1}^{N} \frac{t\,A_t}{(1+y)^{t}}
+```
 
-Divide by the price. Each $A_t/(1+y)^t$ over $P$ is the weight $w_t$, so what is left is an average of the years $t$ under those weights:
+Divide by the price. Each $`A_t/(1+y)^t`$ over $`P`$ is the weight $`w_t`$, so what is left is an average of the years $`t`$ under those weights:
 
-$$-\frac{1}{P}\frac{dP}{dy} \;=\; \frac{1}{1+y}\sum_{t=1}^{N} t\,w_t \;=\; \frac{D_{\text{Mac}}}{1+y} \;=\; D_{\text{mod}}$$
+```math
+-\frac{1}{P}\frac{dP}{dy} \;=\; \frac{1}{1+y}\sum_{t=1}^{N} t\,w_t \;=\; \frac{D_{\text{Mac}}}{1+y} \;=\; D_{\text{mod}}
+```
 
 The checks confirm it the honest way: they get the slope by nudging the yield up and down, never touching the weights, and land on the same 4.264525.
 
 <details>
 <summary>The algebra behind this</summary>
 
-Write one term as $A_t (1+y)^{-t}$. The power rule sends $(1+y)^{-t}$ to $-t(1+y)^{-t-1}$, so the term's derivative is $-t A_t (1+y)^{-t-1}$. Summing over $t$ gives
-$$\frac{dP}{dy} = -\sum_{t=1}^{N} t\,A_t\,(1+y)^{-t-1} = -\frac{1}{1+y}\sum_{t=1}^{N} t\,A_t\,(1+y)^{-t}.$$
-Divide both sides by $-P$ and insert $w_t = A_t(1+y)^{-t}/P$. The weights are non-negative and add to one, since their numerators are the pieces the price was built from, so $\sum t\,w_t$ is a genuine average of the numbers 1 to $N$ and must land between them.
+Write one term as $`A_t (1+y)^{-t}`$. The power rule sends $`(1+y)^{-t}`$ to $`-t(1+y)^{-t-1}`$, so the term's derivative is $`-t A_t (1+y)^{-t-1}`$. Summing over $`t`$ gives
+
+$`\displaystyle \frac{dP}{dy} = -\sum_{t=1}^{N} t\,A_t\,(1+y)^{-t-1} = -\frac{1}{1+y}\sum_{t=1}^{N} t\,A_t\,(1+y)^{-t}.`$
+
+Divide both sides by $`-P`$ and insert $`w_t = A_t(1+y)^{-t}/P`$. The weights are non-negative and add to one, since their numerators are the pieces the price was built from, so $`\sum t\,w_t`$ is a genuine average of the numbers 1 to $`N`$ and must land between them.
 
 </details>
 
@@ -137,57 +153,67 @@ A bond with no coupons pays once, at maturity, so all the weight sits at one dat
 
 ### Step 3: differentiate twice, and the bend is always upward
 
-Differentiate the terms of $dP/dy$ once more. Each $-t A_t (1+y)^{-t-1}$ becomes $t(t+1) A_t (1+y)^{-t-2}$:
+Differentiate the terms of $`dP/dy`$ once more. Each $`-t A_t (1+y)^{-t-1}`$ becomes $`t(t+1) A_t (1+y)^{-t-2}`$:
 
-$$\frac{d^2P}{dy^2} \;=\; \sum_{t=1}^{N} \frac{t(t+1)\,A_t}{(1+y)^{t+2}}$$
+```math
+\frac{d^2P}{dy^2} \;=\; \sum_{t=1}^{N} \frac{t(t+1)\,A_t}{(1+y)^{t+2}}
+```
 
-Divide by the price and that is $C$, convexity, 23.444091 for the house bond.
+Divide by the price and that is $`C`$, convexity, 23.444091 for the house bond.
 
-Now look at what the formula cannot do. Every payment $A_t$ is positive, every $t(t+1)$ is positive, every power of $(1+y)$ is positive. A sum of positive things is positive, so the second derivative is positive for any bond whose payments are all positive.
+Now look at what the formula cannot do. Every payment $`A_t`$ is positive, every $`t(t+1)`$ is positive, every power of $`(1+y)`$ is positive. A sum of positive things is positive, so the second derivative is positive for any bond whose payments are all positive.
 
 A positive second derivative means the slope is rising: the curve flattens as the yield climbs, and it sits above every tangent it has. That is the promise in the first picture, and it holds for far more than this one bond.
 
 <details>
 <summary>The algebra behind this</summary>
 
-Applying the power rule to $(1+y)^{-t-1}$ gives $(-t-1)(1+y)^{-t-2}$. The term $-t A_t (1+y)^{-t-1}$ therefore differentiates to $t(t+1) A_t (1+y)^{-t-2}$, and summing gives the displayed second derivative.
+Applying the power rule to $`(1+y)^{-t-1}`$ gives $`(-t-1)(1+y)^{-t-2}`$. The term $`-t A_t (1+y)^{-t-1}`$ therefore differentiates to $`t(t+1) A_t (1+y)^{-t-2}`$, and summing gives the displayed second derivative.
 
-In weights, $C = \frac{1}{(1+y)^2}\sum_t t(t+1) w_t$: a weighted average of $t(t+1)$, discounted twice more. Since $t(t+1)$ grows about as the square of $t$, convexity grows about as the square of a bond's length while duration grows in proportion to it — which is why convexity matters far more on a thirty-year bond than on a two-year one.
+In weights, $`C = \frac{1}{(1+y)^2}\sum_t t(t+1) w_t`$: a weighted average of $`t(t+1)`$, discounted twice more. Since $`t(t+1)`$ grows about as the square of $`t`$, convexity grows about as the square of a bond's length while duration grows in proportion to it — which is why convexity matters far more on a thirty-year bond than on a two-year one.
 
-One more differentiation gives $\frac{d^3P}{dy^3} = -\sum_t t(t+1)(t+2) A_t (1+y)^{-t-3}$, which Step 4 needs.
+One more differentiation gives $`\frac{d^3P}{dy^3} = -\sum_t t(t+1)(t+2) A_t (1+y)^{-t-3}`$, which Step 4 needs.
 
 </details>
 
 ### Step 4: Taylor's theorem stitches them together and bounds the leftover
 
-Taylor's theorem says a function with three continuous derivatives equals its value, plus its slope times the step, plus half its bend times the step squared, plus a remainder $R$. $R$ is one sixth of the third derivative, taken somewhere along the way, times the step cubed. Written for the price, moving the yield by $\Delta y$:
+Taylor's theorem says a function with three continuous derivatives equals its value, plus its slope times the step, plus half its bend times the step squared, plus a remainder $`R`$. $`R`$ is one sixth of the third derivative, taken somewhere along the way, times the step cubed. Written for the price, moving the yield by $`\Delta y`$:
 
-$$P(y+\Delta y) \;=\; P(y)\Big[1 - D_{\text{mod}}\,\Delta y + \tfrac12\,C\,(\Delta y)^2\Big] \;+\; R$$
+```math
+P(y+\Delta y) \;=\; P(y)\Big[1 - D_{\text{mod}}\,\Delta y + \tfrac12\,C\,(\Delta y)^2\Big] \;+\; R
+```
 
-The remainder is not left vague. The third derivative is a sum of terms sitting over powers of $(1+y)$, so its size is largest at the low end of the move. Take the lower of the two yields — the starting one on a rise, the ending one on a fall — and call it the move's floor. The largest size the third derivative reaches anywhere on that move, written $M$, then caps the leftover:
+The remainder is not left vague. The third derivative is a sum of terms sitting over powers of $`(1+y)`$, so its size is largest at the low end of the move. Take the lower of the two yields — the starting one on a rise, the ending one on a fall — and call it the move's floor. The largest size the third derivative reaches anywhere on that move, written $`M`$, then caps the leftover:
 
-$$M \;=\; \sum_{t=1}^{N} \frac{t(t+1)(t+2)\,A_t}{(1+y_{\text{floor}})^{t+3}}, \qquad |R| \;\le\; \frac{M\,|\Delta y|^3}{6}$$
+```math
+M \;=\; \sum_{t=1}^{N} \frac{t(t+1)(t+2)\,A_t}{(1+y_{\text{floor}})^{t+3}}, \qquad |R| \;\le\; \frac{M\,|\Delta y|^3}{6}
+```
 
 That is a certificate, computed before the move is made, and it covers the whole move rather than just its endpoint. On the one-point rise it says the leftover is at most 0.026649 dollars; the actual leftover is 0.026155. On the one-point fall it says at most 0.028743; the actual is 0.027159. Both are asserted in the checks.
 
 <details>
 <summary>Detailed proof: why the low end of the move bounds the whole of it</summary>
 
-The price is a finite sum of powers of $(1+y)$, so it has continuous derivatives of every order wherever $(1+y)$ is positive. Fix the starting yield $y$ and a move $\Delta y$ with both ends above minus one hundred percent, and write $y_{\text{floor}}$ for the lower of the two.
+The price is a finite sum of powers of $`(1+y)`$, so it has continuous derivatives of every order wherever $`(1+y)`$ is positive. Fix the starting yield $`y`$ and a move $`\Delta y`$ with both ends above minus one hundred percent, and write $`y_{\text{floor}}`$ for the lower of the two.
 
-Taylor's theorem with the Lagrange form of the remainder gives, for some yield $u$ strictly between $y$ and $y + \Delta y$,
-$$P(y+\Delta y) = P(y) + P'(y)\,\Delta y + \tfrac12 P''(y)\,(\Delta y)^2 + \tfrac16 P'''(u)\,(\Delta y)^3 .$$
-Substituting $P'(y) = -D_{\text{mod}} P(y)$ from Step 1 and $P''(y) = C\,P(y)$ from Step 3 produces the bracketed form above, with $R = \tfrac16 P'''(u)(\Delta y)^3$.
+Taylor's theorem with the Lagrange form of the remainder gives, for some yield $`u`$ strictly between $`y`$ and $`y + \Delta y`$,
 
-The bound now only needs the size of $P'''$ on the segment. From Step 3's last line,
-$$|P'''(u)| = \sum_{t=1}^{N} \frac{t(t+1)(t+2)\,A_t}{(1+u)^{t+3}},$$
-and every term of that sum shrinks as $u$ grows, because $u$ sits in a denominator raised to a positive power. So the whole expression is largest at the move's floor, giving $|P'''(u)| \le M$ and $|R| \le M|\Delta y|^3/6$.
+$`\displaystyle P(y+\Delta y) = P(y) + P'(y)\,\Delta y + \tfrac12 P''(y)\,(\Delta y)^2 + \tfrac16 P'''(u)\,(\Delta y)^3 .`$
+
+Substituting $`P'(y) = -D_{\text{mod}} P(y)`$ from Step 1 and $`P''(y) = C\,P(y)`$ from Step 3 produces the bracketed form above, with $`R = \tfrac16 P'''(u)(\Delta y)^3`$.
+
+The bound now only needs the size of $`P'''`$ on the segment. From Step 3's last line,
+
+$`\displaystyle |P'''(u)| = \sum_{t=1}^{N} \frac{t(t+1)(t+2)\,A_t}{(1+u)^{t+3}},`$
+
+and every term of that sum shrinks as $`u`$ grows, because $`u`$ sits in a denominator raised to a positive power. So the whole expression is largest at the move's floor, giving $`|P'''(u)| \le M`$ and $`|R| \le M|\Delta y|^3/6`$.
 
 Two limits. It bounds the truncation error alone: a wrongly assembled payment schedule, or a yield that is itself a guess, needs its own accounting. And as the floor approaches minus one hundred percent the bound blows up, so no claim is made that every move is well approximated.
 
 </details>
 
-The third derivative is negative for a bond with positive payments, so the remainder has the opposite sign to the cube of the move. The two-term estimate therefore sits above the true price on a rise and below it on a fall. Both appear in the checks, as an error of $-0.026155$ going up and $+0.027159$ coming down.
+The third derivative is negative for a bond with positive payments, so the remainder has the opposite sign to the cube of the move. The two-term estimate therefore sits above the true price on a rise and below it on a fall. Both appear in the checks, as an error of $`-0.026155`$ going up and $`+0.027159`$ coming down.
 
 There is a second road to any single answer here, needing no calculus: reprice the bond at the new yield and subtract. It is exact, and the checks use it as the yardstick. Duration and convexity earn their keep elsewhere — they combine across a portfolio, so one line on a risk report can stand for a thousand positions.
 
@@ -199,21 +225,21 @@ The house bond, at a five percent yield, to six decimals.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| year 1 payment, discounted | $60 / 1.05$ | 57.142857 |
-| year 2 | $60 / 1.05^2$ | 54.421769 |
-| year 3 | $60 / 1.05^3$ | 51.830256 |
-| year 4 | $60 / 1.05^4$ | 49.362148 |
-| year 5, coupon plus face | $1060 / 1.05^5$ | 830.537736 |
+| year 1 payment, discounted | $`60 / 1.05`$ | 57.142857 |
+| year 2 | $`60 / 1.05^2`$ | 54.421769 |
+| year 3 | $`60 / 1.05^3`$ | 51.830256 |
+| year 4 | $`60 / 1.05^4`$ | 49.362148 |
+| year 5, coupon plus face | $`1060 / 1.05^5`$ | 830.537736 |
 | price | the five added | **1,043.294767** |
-| year 5's weight | $830.537736 / 1043.294767$ | 0.796072 |
-| Macaulay duration | $0.054772 + 0.104327 + 0.149038 + 0.189255 + 3.980360$ | **4.477751 years** |
-| modified duration | $4.477751 / 1.05$ | **4.264525** |
-| convexity | weighted $t(t+1)$, twice more discounted | **23.444091** |
-| DV01 | $4.264525 \times 1043.294767 \times 0.0001$ | **0.444916** |
-| a one-point rise, duration only | $1043.294767 \times (1 - 4.264525 \times 0.01)$ | **998.803201** |
-| the convexity correction | $\tfrac12 \times 23.444091 \times 0.01^2$ | **+0.117220%** |
+| year 5's weight | $`830.537736 / 1043.294767`$ | 0.796072 |
+| Macaulay duration | $`0.054772 + 0.104327 + 0.149038 + 0.189255 + 3.980360`$ | **4.477751 years** |
+| modified duration | $`4.477751 / 1.05`$ | **4.264525** |
+| convexity | weighted $`t(t+1)`$, twice more discounted | **23.444091** |
+| DV01 | $`4.264525 \times 1043.294767 \times 0.0001`$ | **0.444916** |
+| a one-point rise, duration only | $`1043.294767 \times (1 - 4.264525 \times 0.01)`$ | **998.803201** |
+| the convexity correction | $`\tfrac12 \times 23.444091 \times 0.01^2`$ | **+0.117220%** |
 | the same rise, with convexity | duration-only plus that correction | **1,000.026155** |
-| the bond, simply repriced at 6% | $60/1.06 + \dots + 1060/1.06^5$ | **1,000.000000** |
+| the bond, simply repriced at 6% | $`60/1.06 + \dots + 1060/1.06^5`$ | **1,000.000000** |
 
 In the world: the bond loses 4.149812 percent of its value when the market yield rises one point. Duration on its own claimed 4.264525 percent; the convexity term hands back 0.117220 percentage points of it, and what is still missing is under three cents on a bond worth over a thousand dollars.
 
@@ -697,10 +723,10 @@ The two outputs match line for line, from two programs that share no code.
 
 Lean proves the price-move bound, the derivative link and the upward bend for every fixed-payment bond, and checks the house bond's numbers.
 
-- Suppose the payments are fixed and never negative, and both yields stay above minus one hundred percent. Then $|R| \le M\,|\Delta y|^3/6$, with $M$ read at the move's floor.
+- Suppose the payments are fixed and never negative, and both yields stay above minus one hundred percent. Then $`|R| \le M\,|\Delta y|^3/6`$, with $`M`$ read at the move's floor.
 - On those same terms, the two-term estimate is never below the true price on a rise, and never above it on a fall.
-- Take any fixed payments and a yield above minus one hundred percent. Then minus the slope over the price is $D_{\text{mod}}$, and the bend over the price is $C$.
-- Suppose the bond has at least one payment, and every payment is positive. Then the second derivative of the price and $C$ are both positive.
+- Take any fixed payments and a yield above minus one hundred percent. Then minus the slope over the price is $`D_{\text{mod}}`$, and the bend over the price is $`C`$.
+- Suppose the bond has at least one payment, and every payment is positive. Then the second derivative of the price and $`C`$ are both positive.
 - On those terms, the price curve sits strictly above the tangent duration draws, at every other yield above minus one hundred percent.
 - Repriced at 6 percent, the house bond is worth exactly 1,000.
 - A five-year zero-coupon bond has a Macaulay duration of exactly 5 years.
@@ -1214,8 +1240,8 @@ example : (266485 / 10000000 : ℝ) ≤
 > [!warning]
 > **Reading duration as a date.** "Duration 4.48 years" sounds like a maturity, and it is not one. It is the average year a dollar comes back, weighted by what each payment contributes to today's price — 4.477751 years on a bond that runs five. Only a bond with no coupons has the two coincide. And modified duration, 4.264525, is not a time at all: it is a fraction of the price per unit of yield, which happens to be written in the same units.
 >
-> - **Using the wrong duration in the price formula.** Macaulay where modified belongs prices the one-point rise at 996.578622 when the answer is 1,000.000000. The two differ by one factor of $(1+y)$, so at a five percent yield the predicted fall comes out five percent too big.
-> - **Feeding in the wrong units.** A hundred basis points is $\Delta y = 0.01$. Typed as 1.0 the formula returns −3,405.861841, a negative price, which at least announces itself. Ten basis points typed as 10 does not.
+> - **Using the wrong duration in the price formula.** Macaulay where modified belongs prices the one-point rise at 996.578622 when the answer is 1,000.000000. The two differ by one factor of $`(1+y)`$, so at a five percent yield the predicted fall comes out five percent too big.
+> - **Feeding in the wrong units.** A hundred basis points is $`\Delta y = 0.01`$. Typed as 1.0 the formula returns −3,405.861841, a negative price, which at least announces itself. Ten basis points typed as 10 does not.
 > - **Dropping the one-half.** Taylor's second term carries a half. Without it the same rise prices at 1001.249110, past the true price rather than short of it.
 > - **Believing every bond is convex.** Positive payments make the bend positive, and only positive payments. A bond the issuer can repay early, or a pool of mortgages that can be refinanced, has payments that move with rates, and its curve can bend the other way: [Negative convexity](../35-Mortgages%2C%20Callables%20and%20Prepayment/03-negative-convexity.md).
 
@@ -1230,7 +1256,7 @@ example : (266485 / 10000000 : ℝ) ≤
 - **Reading a price backwards.** Everything here starts from a yield. Markets quote prices, and getting the yield out of a price takes a search rather than a formula: [Yield from price](07-yield-from-price.md).
 
 > **Say it back**
-> A bond's price is a curve drawn against its yield: falling, and bending. Duration is the slope of that curve, convexity the bend. Macaulay duration is the average year a dollar comes back, weighted by each payment's share of the price; divide it by one plus the yield to get modified duration, the fraction of the price lost per unit of yield. Convexity weights the same payments by $t(t+1)$ and is positive whenever the payments are, so the curve always sits above its tangent: a rise costs less than duration threatens and a fall pays more than it promises. Together they predict a price move to second order, with a leftover that grows as the cube of the move and can be bounded before the move happens.
+> A bond's price is a curve drawn against its yield: falling, and bending. Duration is the slope of that curve, convexity the bend. Macaulay duration is the average year a dollar comes back, weighted by each payment's share of the price; divide it by one plus the yield to get modified duration, the fraction of the price lost per unit of yield. Convexity weights the same payments by $`t(t+1)`$ and is positive whenever the payments are, so the curve always sits above its tangent: a rise costs less than duration threatens and a fall pays more than it promises. Together they predict a price move to second order, with a leftover that grows as the cube of the move and can be bounded before the move happens.
 
 ---
 

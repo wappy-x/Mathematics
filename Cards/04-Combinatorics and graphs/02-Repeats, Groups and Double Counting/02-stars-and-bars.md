@@ -48,11 +48,13 @@ Deciding which branch is asked is half the work.
 
 ## The formula
 
-One reminder first. $C(m, r)$, read "m choose r", counts the ways to pick r things out of m when the order of the pick does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
+One reminder first. $`C(m, r)`$, read "m choose r", counts the ways to pick r things out of m when the order of the pick does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
-Write $n$ for the identical items and $k$ for the labelled boxes. With empty boxes allowed:
+Write $`n`$ for the identical items and $`k`$ for the labelled boxes. With empty boxes allowed:
 
-$$\text{ways} = C(n + k - 1,\ k - 1)$$
+```math
+\text{ways} = C(n + k - 1,\ k - 1)
+```
 
 **Read it aloud:** lay the items in a row, add one bar fewer than there are boxes, and choose which places in the row hold the bars.
 
@@ -60,7 +62,9 @@ Five scoops across three flavours: C(5 + 3 − 1, 3 − 1) = C(7, 2) = 21.
 
 Now the other question: twelve identical tins on three labelled shelves, no shelf left bare.
 
-$$\text{ways, no box empty} = C(n - 1,\ k - 1)$$
+```math
+\text{ways, no box empty} = C(n - 1,\ k - 1)
+```
 
 **Read it aloud:** with the items already in a row, put the bars into the gaps between them, at most one to a gap.
 
@@ -68,12 +72,12 @@ Twelve tins on three shelves: C(12 − 1, 3 − 1) = C(11, 2) = 55.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | identical items to share out | 5 scoops; 12 tins | rises, and fast |
-| $k$ | labelled boxes receiving them | 3 flavours; 3 shelves | rises too |
-| $C(m, r)$ | ways to pick r of m, order ignored | C(7, 2) = 21 | — |
-| $k - 1$ | the bars: one fewer than the boxes | 2 bars | more ways to cut |
-| $n + k - 1$ | places in the row, stars and bars | 7 places | — |
-| $n - 1$ | gaps between items, for no empty box | 11 for the tins | — |
+| $`n`$ | identical items to share out | 5 scoops; 12 tins | rises, and fast |
+| $`k`$ | labelled boxes receiving them | 3 flavours; 3 shelves | rises too |
+| $`C(m, r)`$ | ways to pick r of m, order ignored | C(7, 2) = 21 | — |
+| $`k - 1`$ | the bars: one fewer than the boxes | 2 bars | more ways to cut |
+| $`n + k - 1`$ | places in the row, stars and bars | 7 places | — |
+| $`n - 1`$ | gaps between items, for no empty box | 11 for the tins | — |
 
 ### When it holds
 
@@ -100,7 +104,7 @@ Neither direction loses or invents anything, and the two undo each other, so the
 
 ### Step 2: counting the rows is a choose
 
-A row holds 5 stars and 2 bars, so it is 7 places long. Fix which 2 hold bars and the row is settled: the rest hold stars. The rows number C(7, 2) = 21, so the tubs do too. In general the row is $n + k - 1$ places long and holds $k - 1$ bars: the first formula.
+A row holds 5 stars and 2 bars, so it is 7 places long. Fix which 2 hold bars and the row is settled: the rest hold stars. The rows number C(7, 2) = 21, so the tubs do too. In general the row is $`n + k - 1`$ places long and holds $`k - 1`$ bars: the first formula.
 
 One more route skips the row entirely. Fix the chocolate at 0, then 1, up to 5; the rest splits between two flavours in 6, 5, 4, 3, 2 and 1 ways, adding to 21.
 
@@ -113,11 +117,11 @@ A second picture agrees. Stand the twelve tins in a row: 11 gaps between neighbo
 <details>
 <summary>Detailed proof: the same match, written formally</summary>
 
-Write $n$ for the items and $k$ for the boxes, and number the row's places 1 up to $n + k - 1$. Choose $k - 1$ of those numbers as bar places and write them in order as $b_1 < \cdots < b_{k-1}$. Set $b_0 = 0$ in front and $b_k = n + k$ behind, and take box i's contents to be
+Write $`n`$ for the items and $`k`$ for the boxes, and number the row's places 1 up to $`n + k - 1`$. Choose $`k - 1`$ of those numbers as bar places and write them in order as $`b_1 < \cdots < b_{k-1}`$. Set $`b_0 = 0`$ in front and $`b_k = n + k`$ behind, and take box i's contents to be
 
-$$x_i = b_i - b_{i-1} - 1 \qquad i = 1, 2, \ldots, k$$
+$`\displaystyle x_i = b_i - b_{i-1} - 1 \qquad i = 1, 2, \ldots, k`$
 
-the distance between its two boundary numbers, less one for the boundary itself. Each is 0 or more since the boundaries increase, and adding all k cancels every interior boundary, leaving $n$. Going back, put a bar after the stars of each of the first $k - 1$ boxes. The two constructions undo each other, so the fillings number $C(n + k - 1, k - 1)$; removing one item from every box first turns the no-empty count into $C(n - 1, k - 1)$.
+the distance between its two boundary numbers, less one for the boundary itself. Each is 0 or more since the boundaries increase, and adding all k cancels every interior boundary, leaving $`n`$. Going back, put a bar after the stars of each of the first $`k - 1`$ boxes. The two constructions undo each other, so the fillings number $`C(n + k - 1, k - 1)`$; removing one item from every box first turns the no-empty count into $`C(n - 1, k - 1)`$.
 
 </details>
 
@@ -363,9 +367,9 @@ The two outputs match line for line.
 
 Lean proves all three counts for every number of items and boxes, not just the gelato counter.
 
-- $n$ identical items go into $k$ labelled boxes, empties allowed, in $C(n + k - 1,\ k - 1)$ ways.
-- With no box empty, the count is $C(n - 1,\ k - 1)$, which is 0 when there are fewer items than boxes.
-- A whole number $n$ has $2^{n-1}$ compositions: each of the $n - 1$ gaps is cut or left alone.
+- $`n`$ identical items go into $`k`$ labelled boxes, empties allowed, in $`C(n + k - 1,\ k - 1)`$ ways.
+- With no box empty, the count is $`C(n - 1,\ k - 1)`$, which is 0 when there are fewer items than boxes.
+- A whole number $`n`$ has $`2^{n-1}`$ compositions: each of the $`n - 1`$ gaps is cut or left alone.
 - The card's numbers: 21 tubs listed one by one, 6 using every flavour, 55 shelvings, 32 compositions, and the wrong turns 35, 10 and 6.
 
 Building and decoding the rows, and the 5 shapes left when the labels go, are left to the Python and Rust checks.

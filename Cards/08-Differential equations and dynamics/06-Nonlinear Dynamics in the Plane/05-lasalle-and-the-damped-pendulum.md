@@ -41,33 +41,39 @@ The line is the energy V: steep while the seat is fast, flat near the turnaround
 
 A prime means a rate, as across this wing: θ′ is how fast the angle changes, V′ how fast the energy does. From [The pendulum](03-the-nonlinear-pendulum.md), with drag added:
 
-$$\theta'' + c\,\theta' + \sin\theta = 0, \qquad v = \theta'$$
+```math
+\theta'' + c\,\theta' + \sin\theta = 0, \qquad v = \theta'
+```
 
 **Read it aloud:** angular acceleration is minus the sine of the angle (gravity) minus c times the speed (drag).
 
-Time runs in units of $\sqrt{l/g}$: rod length $l$ = 1 m, gravity $g$ = 9.81 m/s^2, so one unit is 0.3193 s.
+Time runs in units of $`\sqrt{l/g}`$: rod length $`l`$ = 1 m, gravity $`g`$ = 9.81 m/s^2, so one unit is 0.3193 s.
 
-$$V(\theta, v) = \tfrac12 v^2 + 1 - \cos\theta, \qquad V' = -c\,v^2$$
+```math
+V(\theta, v) = \tfrac12 v^2 + 1 - \cos\theta, \qquad V' = -c\,v^2
+```
 
 **Read it aloud:** energy is motion energy plus height energy, and it drains at c times the square of the speed.
 
-$V$ is counted in units of the seat's weight times $l$: 0 hanging at rest, 2 upside down.
+$`V`$ is counted in units of the seat's weight times $`l`$: 0 hanging at rest, 2 upside down.
 
-**LaSalle's principle.** Let $K$ be a closed, bounded region no motion leaves once inside, with $V' \le 0$ throughout. Let $Z$ be the points of $K$ where $V' = 0$, and $M$ the largest invariant set in $Z$: every state whose whole motion, past and future, stays in $Z$. Then
+**LaSalle's principle.** Let $`K`$ be a closed, bounded region no motion leaves once inside, with $`V' \le 0`$ throughout. Let $`Z`$ be the points of $`K`$ where $`V' = 0`$, and $`M`$ the largest invariant set in $`Z`$: every state whose whole motion, past and future, stays in $`Z`$. Then
 
-$$\text{every motion starting in } K \text{ approaches } M \text{ as } t \to \infty.$$
+```math
+\text{every motion starting in } K \text{ approaches } M \text{ as } t \to \infty.
+```
 
 **Read it aloud:** a trapped motion whose energy never rises ends on the pause points it could stay on for ever.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$, $v$ | angle from straight down, in radians; angular speed | π/3 and 0 at release | past π, over the top |
-| $t$, $l$, $g$ | time in units of √(l/g); rod length; gravity | 1 m, 9.81 m/s^2; unit 0.3193 s | longer rods, slower swings |
-| $c$ | drag per unit of speed | 0.5 per time unit | faster settling; at 0, none |
-| $V$, $V'$ | energy; its rate along the motion | 0.500 and 0.000 at release | above 2, the trap is lost |
-| $K$ | the trap | angles within ±π, V ≤ 0.5 | same conclusion |
-| $Z$, $M$ | where V′ = 0; the part a whole motion can stay on | line v = 0; point (0, 0) | a bigger M says less |
-| $\lambda$ | Jacobian eigenvalues at a rest point | −0.250 ± 0.9682i at the bottom | positive: a saddle, one way in and one way out |
+| $`\theta`$, $`v`$ | angle from straight down, in radians; angular speed | π/3 and 0 at release | past π, over the top |
+| $`t`$, $`l`$, $`g`$ | time in units of √(l/g); rod length; gravity | 1 m, 9.81 m/s^2; unit 0.3193 s | longer rods, slower swings |
+| $`c`$ | drag per unit of speed | 0.5 per time unit | faster settling; at 0, none |
+| $`V`$, $`V'`$ | energy; its rate along the motion | 0.500 and 0.000 at release | above 2, the trap is lost |
+| $`K`$ | the trap | angles within ±π, V ≤ 0.5 | same conclusion |
+| $`Z`$, $`M`$ | where V′ = 0; the part a whole motion can stay on | line v = 0; point (0, 0) | a bigger M says less |
+| $`\lambda`$ | Jacobian eigenvalues at a rest point | −0.250 ± 0.9682i at the bottom | positive: a saddle, one way in and one way out |
 
 ### When it holds
 
@@ -88,7 +94,9 @@ Energy that never rises levels off, so the late swing loses almost none. Losing 
 
 By the chain rule:
 
-$$V' = \sin\theta \cdot \theta' + v \cdot v' = \sin\theta \cdot v + v(-\sin\theta - c v) = -c\,v^2.$$
+```math
+V' = \sin\theta \cdot \theta' + v \cdot v' = \sin\theta \cdot v + v(-\sin\theta - c v) = -c\,v^2.
+```
 
 Gravity's terms cancel: climbing trades motion energy for height one for one. Drag's term is zero exactly when v = 0. At release V′ = 0, yet the acceleration is −sin 60° = −0.866: the swing leaves the pause line at once.
 

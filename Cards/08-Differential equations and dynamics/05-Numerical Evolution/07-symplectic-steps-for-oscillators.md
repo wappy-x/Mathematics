@@ -14,7 +14,7 @@ A different stepper uses the same 100 steps a year. Change the speed by half a s
 
 A **state** is a position–velocity pair, a point in a plane. **Leapfrog keeps the area of every patch of states exactly, which pins a spring's or a planet's energy in a narrow band for as long as the run lasts; Euler stretches that area every step, so its energy climbs without limit.**
 
-**What kind of fact this is:** a method. The band is a theorem for the spring $q'' = -q$, proved on this card in Why it works; for the planet the matching theorem is stated and the code measures it.
+**What kind of fact this is:** a method. The band is a theorem for the spring $`q'' = -q`$, proved on this card in Why it works; for the planet the matching theorem is stated and the code measures it.
 
 ### The picture: the first year, drawn to scale
 
@@ -26,38 +26,44 @@ Scale: 60 px per AU, the Sun at the centre. The dashed path is Euler every 5 ste
 
 ## The formula
 
-Reminder: $q'' = -q$ says the acceleration of $q$ is minus $q$ itself, as for a mass on a spring ([Normal modes](../04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md)). Measure distance in AU and time so one orbit takes $2\pi$ units; on the true circle the planet's $x$-coordinate $q = \cos t$ obeys it exactly. As a pair: $q' = v$, $v' = -q$, with $v$ the velocity. The step size $h$ is the time one step covers; $q_n$, $v_n$ are the values after $n$ steps.
+Reminder: $`q'' = -q`$ says the acceleration of $`q`$ is minus $`q`$ itself, as for a mass on a spring ([Normal modes](../04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md)). Measure distance in AU and time so one orbit takes $`2\pi`$ units; on the true circle the planet's $`x`$-coordinate $`q = \cos t`$ obeys it exactly. As a pair: $`q' = v`$, $`v' = -q`$, with $`v`$ the velocity. The step size $`h`$ is the time one step covers; $`q_n`$, $`v_n`$ are the values after $`n`$ steps.
 
-$$v_{n+1/2} = v_n - \tfrac{h}{2}\,q_n, \qquad q_{n+1} = q_n + h\,v_{n+1/2}, \qquad v_{n+1} = v_{n+1/2} - \tfrac{h}{2}\,q_{n+1}$$
+```math
+v_{n+1/2} = v_n - \tfrac{h}{2}\,q_n, \qquad q_{n+1} = q_n + h\,v_{n+1/2}, \qquad v_{n+1} = v_{n+1/2} - \tfrac{h}{2}\,q_{n+1}
+```
 
 **Read it aloud:** give the velocity half a step of pull, move the position a whole step at that velocity, then give the other half of the pull, felt at the new position.
 
-As one matrix $A$ applied to the state:
+As one matrix $`A`$ applied to the state:
 
-$$\begin{pmatrix} q_{n+1} \\ v_{n+1} \end{pmatrix} = \begin{pmatrix} a & h \\ -hb & a \end{pmatrix} \begin{pmatrix} q_n \\ v_n \end{pmatrix}, \qquad a = 1 - \tfrac{h^2}{2}, \quad b = 1 - \tfrac{h^2}{4}$$
+```math
+\begin{pmatrix} q_{n+1} \\ v_{n+1} \end{pmatrix} = \begin{pmatrix} a & h \\ -hb & a \end{pmatrix} \begin{pmatrix} q_n \\ v_n \end{pmatrix}, \qquad a = 1 - \tfrac{h^2}{2}, \quad b = 1 - \tfrac{h^2}{4}
+```
 
-The energy is $E = \tfrac12(q^2 + v^2)$. Leapfrog keeps a slightly different quantity exactly, the **hidden energy** (in the literature, the modified energy):
+The energy is $`E = \tfrac12(q^2 + v^2)`$. Leapfrog keeps a slightly different quantity exactly, the **hidden energy** (in the literature, the modified energy):
 
-$$\tilde E = \tfrac12\,(b\,q^2 + v^2) \quad \text{is the same after every step.}$$
+```math
+\tilde E = \tfrac12\,(b\,q^2 + v^2) \quad \text{is the same after every step.}
+```
 
 **Read it aloud:** weigh the position a hair less than the velocity, and the total never moves.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $q$, $v$ | position and velocity, scaled | the planet's x in AU, and its rate | a larger start scales everything |
-| $t$, $h$ | time, one orbit = $2\pi$; the step size | $h = 2\pi/100 = 0.0628319$ | the band widens as $h^2$ |
-| $n$, $q_n$, $v_n$, $v_{n+1/2}$ | steps taken; state after them; the half-kicked velocity | up to 100,000 steps | — |
-| $a$, $b$ | the step's coefficients | 0.998026079 and 0.999013040 | $b$ reaches 0 at $h = 2$ |
-| $A$ | the step as a matrix | rows ($a$, $h$) and ($-hb$, $a$) | its determinant stays exactly 1 |
-| $E$, $\tilde E$ | energy; the hidden energy leapfrog keeps | 0.5; 0.499507 | — |
-| $\theta$ | angle leapfrog turns per step | 0.062842193, against $h$ = 0.062831853 | the timing error grows |
-| $r$ | the planet's distance from the Sun, AU | 1 on the true orbit | — |
+| $`q`$, $`v`$ | position and velocity, scaled | the planet's x in AU, and its rate | a larger start scales everything |
+| $`t`$, $`h`$ | time, one orbit = $`2\pi`$; the step size | $`h = 2\pi/100 = 0.0628319`$ | the band widens as $`h^2`$ |
+| $`n`$, $`q_n`$, $`v_n`$, $`v_{n+1/2}`$ | steps taken; state after them; the half-kicked velocity | up to 100,000 steps | — |
+| $`a`$, $`b`$ | the step's coefficients | 0.998026079 and 0.999013040 | $`b`$ reaches 0 at $`h = 2`$ |
+| $`A`$ | the step as a matrix | rows ($`a`$, $`h`$) and ($`-hb`$, $`a`$) | its determinant stays exactly 1 |
+| $`E`$, $`\tilde E`$ | energy; the hidden energy leapfrog keeps | 0.5; 0.499507 | — |
+| $`\theta`$ | angle leapfrog turns per step | 0.062842193, against $`h`$ = 0.062831853 | the timing error grows |
+| $`r`$ | the planet's distance from the Sun, AU | 1 on the true orbit | — |
 
 ### When it holds
 
 - **No friction, no driving force.** The true motion must keep its energy; for a damped spring keeping area is the wrong target.
-- **A fixed step.** Change $h$ as [Adaptive steps](05-adaptive-step-size.md) does, and each step keeps a different hidden energy; the drift comes back.
-- **A small enough step.** For $q'' = -q$ the band needs $h < 2$; at $h = 2.5$ one pattern of motion reaches 4096 in 6 steps.
+- **A fixed step.** Change $`h`$ as [Adaptive steps](05-adaptive-step-size.md) does, and each step keeps a different hidden energy; the drift comes back.
+- **A small enough step.** For $`q'' = -q`$ the band needs $`h < 2`$; at $`h = 2.5`$ one pattern of motion reaches 4096 in 6 steps.
 - **A pull that depends on position only.** Then kick and drift are each exact; a velocity-dependent pull, like a magnetic force, needs a different splitting.
 
 ---
@@ -66,50 +72,58 @@ $$\tilde E = \tfrac12\,(b\,q^2 + v^2) \quad \text{is the same after every step.}
 
 ### Step 0: split the motion into two pieces that can each be done exactly
 
-Freeze the position and $v' = -q$ is trivial: the velocity changes by $-hq$. That is a **kick**. Freeze the velocity and $q' = v$ is trivial: the position changes by $h$ times $v$. That is a **drift**. Each is a shear: it slides one coordinate by an amount set by the other, which leaves the area of every patch of the $(q, v)$ plane unchanged. A chain of shears keeps area too.
+Freeze the position and $`v' = -q`$ is trivial: the velocity changes by $`-hq`$. That is a **kick**. Freeze the velocity and $`q' = v`$ is trivial: the position changes by $`h`$ times $`v`$. That is a **drift**. Each is a shear: it slides one coordinate by an amount set by the other, which leaves the area of every patch of the $`(q, v)`$ plane unchanged. A chain of shears keeps area too.
 
 ### Step 1: leapfrog's matrix has determinant 1
 
-Substitute the half kick into the drift: $q_{n+1} = a\,q_n + h\,v_n$. Substitute that into the last half kick: $v_{n+1} = -hb\,q_n + a\,v_n$. The determinant of a 2-by-2 matrix is the factor by which it scales areas ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). Here it is
+Substitute the half kick into the drift: $`q_{n+1} = a\,q_n + h\,v_n`$. Substitute that into the last half kick: $`v_{n+1} = -hb\,q_n + a\,v_n`$. The determinant of a 2-by-2 matrix is the factor by which it scales areas ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). Here it is
 
-$$a^2 + h^2 b = 1 - h^2 + \tfrac{h^4}{4} + h^2 - \tfrac{h^4}{4} = 1.$$
+```math
+a^2 + h^2 b = 1 - h^2 + \tfrac{h^4}{4} + h^2 - \tfrac{h^4}{4} = 1.
+```
 
 A step that keeps area in the plane of positions and velocities is called **symplectic**, the word used from here on. In two dimensions symplectic means determinant 1.
 
 ### Step 2: Euler's matrix stretches area, and energy with it
 
-Euler's step for the same pair is $q_{n+1} = q_n + h v_n$, $v_{n+1} = v_n - h q_n$. Its matrix has rows (1, $h$) and ($-h$, 1), determinant $1 + h^2$. Square and add the two new values; the cross terms cancel:
+Euler's step for the same pair is $`q_{n+1} = q_n + h v_n`$, $`v_{n+1} = v_n - h q_n`$. Its matrix has rows (1, $`h`$) and ($`-h`$, 1), determinant $`1 + h^2`$. Square and add the two new values; the cross terms cancel:
 
-$$(q + hv)^2 + (v - hq)^2 = (1 + h^2)(q^2 + v^2).$$
+```math
+(q + hv)^2 + (v - hq)^2 = (1 + h^2)(q^2 + v^2).
+```
 
-So Euler's energy is multiplied by exactly $1 + h^2$ = 1.003947842 each step. After one orbit of 100 steps it is 0.741455, not 0.5; after 1,000 orbits, 6.5165e+170.
+So Euler's energy is multiplied by exactly $`1 + h^2`$ = 1.003947842 each step. After one orbit of 100 steps it is 0.741455, not 0.5; after 1,000 orbits, 6.5165e+170.
 
 ### Step 3: leapfrog keeps a hidden energy, so its energy is trapped in a band
 
-Put one leapfrog step into $b\,q^2 + v^2$:
+Put one leapfrog step into $`b\,q^2 + v^2`$:
 
-$$b(aq + hv)^2 + (-hbq + av)^2 = b(a^2 + h^2 b)\,q^2 + (a^2 + h^2 b)\,v^2 = b\,q^2 + v^2.$$
+```math
+b(aq + hv)^2 + (-hbq + av)^2 = b(a^2 + h^2 b)\,q^2 + (a^2 + h^2 b)\,v^2 = b\,q^2 + v^2.
+```
 
-The cross terms $2abh\,qv$ cancel, and Step 1's identity does the rest. So $\tilde E$ never changes. The real energy differs from it by a bounded amount: $E = \tilde E + \tfrac{h^2}{8} q^2$. Start at $q = 1$, $v = 0$. Then $\tilde E = b/2$, and since $b\,q^2 \le 2\tilde E$, the position never exceeds 1. Hence
+The cross terms $`2abh\,qv`$ cancel, and Step 1's identity does the rest. So $`\tilde E`$ never changes. The real energy differs from it by a bounded amount: $`E = \tilde E + \tfrac{h^2}{8} q^2`$. Start at $`q = 1`$, $`v = 0`$. Then $`\tilde E = b/2`$, and since $`b\,q^2 \le 2\tilde E`$, the position never exceeds 1. Hence
 
-$$\tfrac{b}{2} \le E_n \le \tfrac12 \quad \text{for every } n.$$
+```math
+\tfrac{b}{2} \le E_n \le \tfrac12 \quad \text{for every } n.
+```
 
 That band is 0.499507 to 0.5, a width of 0.099%. The proof counted no steps, so it holds for a run of any length.
 
 ### Step 4: what symplectic does not promise
 
-Leapfrog turns the state by an angle $\theta = 2\arcsin(h/2)$ per step; the true motion turns by $h$. The difference, about $h^3/24$ per step, never cancels. After 1,000 orbits leapfrog is 1.0340 radians (rad) ahead: energy right to 0.099%, position 0.5114 where the truth is 1. Symplectic keeps the size of the orbit, not the clock.
+Leapfrog turns the state by an angle $`\theta = 2\arcsin(h/2)`$ per step; the true motion turns by $`h`$. The difference, about $`h^3/24`$ per step, never cancels. After 1,000 orbits leapfrog is 1.0340 radians (rad) ahead: energy right to 0.099%, position 0.5114 where the truth is 1. Symplectic keeps the size of the orbit, not the clock.
 
 <details>
 <summary>Detailed proof: the rotation, the stability limit, and the planet</summary>
 
-**Rotation.** Since $a^2 + h^2 b = 1$, for $0 < h < 2$ there is one angle $\theta$ between 0 and π with $\cos\theta = a$ and $\sin\theta = h\sqrt b$; since $\cos\theta = 1 - 2\sin^2(\theta/2)$, $\theta = 2\arcsin(h/2)$. Written in $\sqrt b\,q$ and $v$, the step's matrix has rows ($\cos\theta$, $\sin\theta$) and ($-\sin\theta$, $\cos\theta$): a rotation. Adding angles, from (1, 0): $q_n = \cos(n\theta)$, $v_n = -\sqrt b\,\sin(n\theta)$. The code checks the loop against this at all 100,000 steps.
+**Rotation.** Since $`a^2 + h^2 b = 1`$, for $`0 < h < 2`$ there is one angle $`\theta`$ between 0 and π with $`\cos\theta = a`$ and $`\sin\theta = h\sqrt b`$; since $`\cos\theta = 1 - 2\sin^2(\theta/2)`$, $`\theta = 2\arcsin(h/2)`$. Written in $`\sqrt b\,q`$ and $`v`$, the step's matrix has rows ($`\cos\theta`$, $`\sin\theta`$) and ($`-\sin\theta`$, $`\cos\theta`$): a rotation. Adding angles, from (1, 0): $`q_n = \cos(n\theta)`$, $`v_n = -\sqrt b\,\sin(n\theta)`$. The code checks the loop against this at all 100,000 steps.
 
-**Order.** The Taylor series of arcsin gives $\theta - h = h^3/24 + \dots$; over one orbit of $2\pi/h$ steps that is second order in $h$.
+**Order.** The Taylor series of arcsin gives $`\theta - h = h^3/24 + \dots`$; over one orbit of $`2\pi/h`$ steps that is second order in $`h`$.
 
-**Stability limit.** At $h \ge 2$, $a \le -1$ and $b \le 0$, so $\tilde E$ bounds nothing. The matrix's stretch factors along fixed directions (its eigenvalues) are $a \pm \sqrt{a^2 - 1}$. At $h = 2.5$, $a$ = −2.125 and the larger is −4.0; the start (1, −0.75) lies along it. Area is still kept: one direction stretches as the other squeezes.
+**Stability limit.** At $`h \ge 2`$, $`a \le -1`$ and $`b \le 0`$, so $`\tilde E`$ bounds nothing. The matrix's stretch factors along fixed directions (its eigenvalues) are $`a \pm \sqrt{a^2 - 1}`$. At $`h = 2.5`$, $`a`$ = −2.125 and the larger is −4.0; the start (1, −0.75) lies along it. Area is still kept: one direction stretches as the other squeezes.
 
-**The planet.** Under the inverse-square pull, kick and drift are still shears, so the step keeps area (in four dimensions, the sum of the two position–velocity areas). Backward error analysis, proved in the Acta Numerica survey below, says a symplectic method with a fixed small step follows a nearby energy-keeping system. So the energy stays in a band of width proportional to $h^2$ for times that grow exponentially as $h$ shrinks, far longer than any real run. Stated here without proof.
+**The planet.** Under the inverse-square pull, kick and drift are still shears, so the step keeps area (in four dimensions, the sum of the two position–velocity areas). Backward error analysis, proved in the Acta Numerica survey below, says a symplectic method with a fixed small step follows a nearby energy-keeping system. So the energy stays in a band of width proportional to $`h^2`$ for times that grow exponentially as $`h`$ shrinks, far longer than any real run. Stated here without proof.
 
 </details>
 
@@ -121,13 +135,13 @@ The general setting, motion written from its energy function, is [Hamilton's equ
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| step size | $2\pi/100$ | 0.0628319 |
-| position after one step from (1, 0) | $a = 1 - h^2/2$ | 0.998026079 |
-| weight in the hidden energy | $b = 1 - h^2/4$ | 0.999013040 |
-| leapfrog's area factor | $a^2 + h^2 b$ | **1.000000000000** |
-| Euler's area and energy factor | $1 + h^2$ | 1.003947842 |
+| step size | $`2\pi/100`$ | 0.0628319 |
+| position after one step from (1, 0) | $`a = 1 - h^2/2`$ | 0.998026079 |
+| weight in the hidden energy | $`b = 1 - h^2/4`$ | 0.999013040 |
+| leapfrog's area factor | $`a^2 + h^2 b`$ | **1.000000000000** |
+| Euler's area and energy factor | $`1 + h^2`$ | 1.003947842 |
 | Euler's energy after one orbit | 0.5 × 1.003947842^100 | 0.741455 |
-| leapfrog's energy floor | $b/2$ | **0.499507** |
+| leapfrog's energy floor | $`b/2`$ | **0.499507** |
 
 Over 1,000 orbits leapfrog's energy stays between 0.499507 and 0.5, while Euler's reaches 6.5165e+170.
 
@@ -135,15 +149,15 @@ Over 1,000 orbits leapfrog's energy stays between 0.499507 and 0.5, while Euler'
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Euler instead of leapfrog | planet at 1.7166 AU after 1 year | each step stretches area by $1 + h^2$ |
-| Step beyond the limit, $h = 2.5$ | $q$ = 4096 after 6 steps | $b < 0$: the hidden energy no longer bounds anything |
-| Trust the clock because the energy is right | $q$ = 0.5114 after 1,000 orbits, truth 1 | the angle per step is 0.062842193, not 0.062831853 |
+| Euler instead of leapfrog | planet at 1.7166 AU after 1 year | each step stretches area by $`1 + h^2`$ |
+| Step beyond the limit, $`h = 2.5`$ | $`q`$ = 4096 after 6 steps | $`b < 0`$: the hidden energy no longer bounds anything |
+| Trust the clock because the energy is right | $`q`$ = 0.5114 after 1,000 orbits, truth 1 | the angle per step is 0.062842193, not 0.062831853 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Two roads. Road one steps leapfrog and Euler in loops, for the spring and for the planet under the inverse-square pull. Road two is closed form: the rotation formula of the Detailed proof, $(1 + h^2)^n$ for Euler's energy, the exact circle for the planet. Halving the step cuts leapfrog's error by 4, Euler's by about 2. The planet has no closed form here; the asserts pin leapfrog's $h^2$ band and Euler's first-year overshoot.
+Two roads. Road one steps leapfrog and Euler in loops, for the spring and for the planet under the inverse-square pull. Road two is closed form: the rotation formula of the Detailed proof, $`(1 + h^2)^n`$ for Euler's energy, the exact circle for the planet. Halving the step cuts leapfrog's error by 4, Euler's by about 2. The planet has no closed form here; the asserts pin leapfrog's $`h^2`$ band and Euler's first-year overshoot.
 
 ### Python
 
@@ -347,11 +361,11 @@ The two outputs match line for line.
 
 Lean proves the spring's facts exactly, for every step size, start and number of steps the claims allow.
 
-- Leapfrog keeps the hidden energy $\tilde E = \tfrac12(b\,q^2 + v^2)$ exactly, for every step size, every start and every number of steps.
-- For a fixed step $h$ with $0 < h < 2$, started at $q = 1$, $v = 0$: the energy stays between $b/2$ and $1/2$ after every step, however many.
-- Euler's step multiplies the energy by exactly $1 + h^2$, so after $n$ steps it is $(1 + h^2)^n$ times the start.
-- At $h = 2.5$: $a = -2.125$, and the larger stretch factor is $a - \sqrt{a^2 - 1} = -4$.
-- At $h = 2.5$, one step sends (1, −0.75) to (−4, 3), and six steps reach $q$ = 4096, $v$ = −3072.
+- Leapfrog keeps the hidden energy $`\tilde E = \tfrac12(b\,q^2 + v^2)`$ exactly, for every step size, every start and every number of steps.
+- For a fixed step $`h`$ with $`0 < h < 2`$, started at $`q = 1`$, $`v = 0`$: the energy stays between $`b/2`$ and $`1/2`$ after every step, however many.
+- Euler's step multiplies the energy by exactly $`1 + h^2`$, so after $`n`$ steps it is $`(1 + h^2)^n`$ times the start.
+- At $`h = 2.5`$: $`a = -2.125`$, and the larger stretch factor is $`a - \sqrt{a^2 - 1} = -4`$.
+- At $`h = 2.5`$, one step sends (1, −0.75) to (−4, 3), and six steps reach $`q`$ = 4096, $`v`$ = −3072.
 
 The decimals, the timing lead, the error orders, the planet and the figure are left to the Python and Rust checks.
 
@@ -494,9 +508,9 @@ end
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Twice as many steps.** In the line that sets `hi1`, call `planet(200, "leap")`: the first planet line prints 0.00049 AU, a quarter, since the band shrinks as $h^2$; the last assert stops the run, as the two runs now match.
-> - **Inside the limit.** In the six-step loop, change `leap(q, v, 2.5)` to `leap(q, v, 1.9)`: $q$ and $v$ stay in single digits instead of reaching 4096, because $b$ is still positive.
-> - **Kick once, not twice.** In `leap`, make the first kick `v -= h * q` and drop the last half kick. This is symplectic Euler: still bounded, but its band grows with $h$ rather than $h^2$, and the first assert stops the run.
+> - **Twice as many steps.** In the line that sets `hi1`, call `planet(200, "leap")`: the first planet line prints 0.00049 AU, a quarter, since the band shrinks as $`h^2`$; the last assert stops the run, as the two runs now match.
+> - **Inside the limit.** In the six-step loop, change `leap(q, v, 2.5)` to `leap(q, v, 1.9)`: $`q`$ and $`v`$ stay in single digits instead of reaching 4096, because $`b`$ is still positive.
+> - **Kick once, not twice.** In `leap`, make the first kick `v -= h * q` and drop the last half kick. This is symplectic Euler: still bounded, but its band grows with $`h`$ rather than $`h^2`$, and the first assert stops the run.
 
 ---
 
@@ -506,8 +520,8 @@ end
 > **Reading "symplectic" as "conserves energy".** Leapfrog's energy is not constant: it wobbles between 0.499507 and 0.5. What is constant is a nearby hidden energy, and that is what traps the real one in a band.
 >
 > - **Expecting the right timing.** The orbit keeps its size but runs ahead: 1.0340 rad after 1,000 orbits.
-> - **Any step size.** Above $h = 2$ the band disappears.
-> - **Adaptive steps.** Each new $h$ brings a new hidden energy, and the drift returns.
+> - **Any step size.** Above $`h = 2`$ the band disappears.
+> - **Adaptive steps.** Each new $`h`$ brings a new hidden energy, and the drift returns.
 
 ---
 
@@ -518,14 +532,14 @@ end
 - **Particle accelerators.** A beam tracked round a ring for millions of turns needs area-keeping maps.
 
 > **Say it back**
-> Leapfrog is a half kick, a drift and a half kick. Each piece slides one coordinate by the other, so the step keeps area: determinant 1. Euler's step has determinant $1 + h^2$ and multiplies the energy by it every step. Leapfrog keeps a hidden energy exactly, which pins the real energy in a band 0.099% wide at 100 steps an orbit. It does not keep the timing, and it needs a fixed step below the limit.
+> Leapfrog is a half kick, a drift and a half kick. Each piece slides one coordinate by the other, so the step keeps area: determinant 1. Euler's step has determinant $`1 + h^2`$ and multiplies the energy by it every step. Leapfrog keeps a hidden energy exactly, which pins the real energy in a band 0.099% wide at 100 steps an orbit. It does not keep the timing, and it needs a fixed step below the limit.
 
 ---
 
 ## What this builds on
 
 - [Euler's method](01-eulers-method.md): the stepper whose energy growth this card measures.
-- [Normal modes](../04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): $q'' = -q$ as a pair of first-order equations, and its energy.
+- [Normal modes](../04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): $`q'' = -q`$ as a pair of first-order equations, and its energy.
 - [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the determinant as the factor that scales area.
 
 ## Where this goes next

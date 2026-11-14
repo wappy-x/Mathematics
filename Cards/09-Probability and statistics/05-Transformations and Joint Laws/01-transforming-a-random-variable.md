@@ -30,40 +30,46 @@ To scale, from the `figure,` line both checks print. The horizontal band holds s
 
 Notation first, in words.
 
-- $X$ is the fill error in ml and $x$ one value of it; $Y$ is the squared error in ml squared and $y$ one value.
-- As on [Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md), a density is written f and a cumulative distribution (CDF) F; here a small letter after it says whose it is, so $f_X$ is the density of X and $F_Y$ the CDF of Y.
-- X ~ N(0, σ^2) says X follows the normal law with centre 0 and spread σ; $\varphi$ is the standard bell's height and $\Phi$ its area to the left, as on [Normal](../04-Continuous%20Distributions/04-normal-distribution.md).
-- The map applied to X is $g$, here squaring.
-- A **branch** is a stretch of inputs on which g only rises or only falls; on branch number $j$, g can be run backwards, and $h_j$ is that backwards map, from an output y to the one input on that branch that lands on it.
+- $`X`$ is the fill error in ml and $`x`$ one value of it; $`Y`$ is the squared error in ml squared and $`y`$ one value.
+- As on [Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md), a density is written f and a cumulative distribution (CDF) F; here a small letter after it says whose it is, so $`f_X`$ is the density of X and $`F_Y`$ the CDF of Y.
+- X ~ N(0, σ^2) says X follows the normal law with centre 0 and spread σ; $`\varphi`$ is the standard bell's height and $`\Phi`$ its area to the left, as on [Normal](../04-Continuous%20Distributions/04-normal-distribution.md).
+- The map applied to X is $`g`$, here squaring.
+- A **branch** is a stretch of inputs on which g only rises or only falls; on branch number $`j`$, g can be run backwards, and $`h_j`$ is that backwards map, from an output y to the one input on that branch that lands on it.
 
-$$f_Y(y) = \sum_{j} f_X\big(h_j(y)\big)\,\big\lvert h_j'(y)\big\rvert$$
+```math
+f_Y(y) = \sum_{j} f_X\big(h_j(y)\big)\,\big\lvert h_j'(y)\big\rvert
+```
 
 **Read it aloud:** the density of Y at y is, for every input that lands on y, the density of X there times the rate at which that input moves as y moves, all added up.
 
-For squaring there are two branches: negative errors, run backwards by $h_1(y) = -\sqrt{y}$, and positive errors, by $h_2(y) = \sqrt{y}$. Both move at speed 1/(2√y); the first runs downward. For the normal X the sum simplifies:
+For squaring there are two branches: negative errors, run backwards by $`h_1(y) = -\sqrt{y}`$, and positive errors, by $`h_2(y) = \sqrt{y}`$. Both move at speed 1/(2√y); the first runs downward. For the normal X the sum simplifies:
 
-$$f_Y(y) = \frac{f_X(\sqrt{y}) + f_X(-\sqrt{y})}{2\sqrt{y}} = \frac{1}{\sigma\sqrt{2\pi y}}\; e^{-y/(2\sigma^2)}, \qquad y > 0$$
+```math
+f_Y(y) = \frac{f_X(\sqrt{y}) + f_X(-\sqrt{y})}{2\sqrt{y}} = \frac{1}{\sigma\sqrt{2\pi y}}\; e^{-y/(2\sigma^2)}, \qquad y > 0
+```
 
 **Read it aloud:** the squared error's density is the bell's height at both square roots, added, divided by twice the square root.
 
 The CDF route gives the same law as areas, with no derivative in sight:
 
-$$F_Y(y) = P(-\sqrt{y} \le X \le \sqrt{y}) = F_X(\sqrt{y}) - F_X(-\sqrt{y}) = 2\,\Phi\!\left(\frac{\sqrt{y}}{\sigma}\right) - 1$$
+```math
+F_Y(y) = P(-\sqrt{y} \le X \le \sqrt{y}) = F_X(\sqrt{y}) - F_X(-\sqrt{y}) = 2\,\Phi\!\left(\frac{\sqrt{y}}{\sigma}\right) - 1
+```
 
 **Read it aloud:** the chance the squared error is at most y is the chance the error lies within √y of zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $x$ | the fill error, and one value of it | normal, centre 0 ml, spread 2 ml | — |
-| $Y$, $y$ | the squared error X^2, and one value of it | P(Y > 4) = 0.3173 | larger y: less density, more area to the left |
-| $\sigma$ | the spread of the fill error | 2 ml; σ^2 = 4 | squared errors grow as σ^2 |
-| $g$ | the map applied to X | squaring | — |
-| $j$, $I_j$ | which branch, and its stretch of inputs | 1: errors below 0; 2: errors above 0 | — |
-| $h_j$ | the map run backwards on branch j | −√y and √y | — |
-| $h_j'$ | the rate $h_j$ moves as y moves; its size $\lvert h_j'\rvert$ is the stretch factor | −1/(2√y) and 1/(2√y), size 1/(2√y) on both branches | bigger stretch factor: a taller density |
-| $f_X$, $F_X$ | density and CDF of the fill error | f_X(2) = 0.120985 per ml | — |
-| $f_Y$, $F_Y$ | density and CDF of the squared error | f_Y(4) = 0.060493 per ml^2 | — |
-| $\varphi$, $\Phi$ | standard bell height and area to the left | Φ(1) = 0.84134 | — |
+| $`X`$, $`x`$ | the fill error, and one value of it | normal, centre 0 ml, spread 2 ml | — |
+| $`Y`$, $`y`$ | the squared error X^2, and one value of it | P(Y > 4) = 0.3173 | larger y: less density, more area to the left |
+| $`\sigma`$ | the spread of the fill error | 2 ml; σ^2 = 4 | squared errors grow as σ^2 |
+| $`g`$ | the map applied to X | squaring | — |
+| $`j`$, $`I_j`$ | which branch, and its stretch of inputs | 1: errors below 0; 2: errors above 0 | — |
+| $`h_j`$ | the map run backwards on branch j | −√y and √y | — |
+| $`h_j'`$ | the rate $`h_j`$ moves as y moves; its size $`\lvert h_j'\rvert`$ is the stretch factor | −1/(2√y) and 1/(2√y), size 1/(2√y) on both branches | bigger stretch factor: a taller density |
+| $`f_X`$, $`F_X`$ | density and CDF of the fill error | f_X(2) = 0.120985 per ml | — |
+| $`f_Y`$, $`F_Y`$ | density and CDF of the squared error | f_Y(4) = 0.060493 per ml^2 | — |
+| $`\varphi`$, $`\Phi`$ | standard bell height and area to the left | Φ(1) = 0.84134 | — |
 | E, Var | long-run average and variance | E[Y] = 4, Var(Y) = 32 | — |
 
 ### When it holds
@@ -114,13 +120,17 @@ Cut the inputs where the map turns, so that on each piece it only rises or only 
 <details>
 <summary>Detailed proof: the branch sum is a density of Y</summary>
 
-Let the inputs be cut into non-overlapping open intervals $I_j$ whose union holds all of X's chance; the cut points are single values, chance zero each, since X has a density. On $I_j$ the map g is smooth with slope never zero, so it rises or falls throughout and has a smooth backwards map $h_j$, defined on the image $g(I_j)$.
+Let the inputs be cut into non-overlapping open intervals $`I_j`$ whose union holds all of X's chance; the cut points are single values, chance zero each, since X has a density. On $`I_j`$ the map g is smooth with slope never zero, so it rises or falls throughout and has a smooth backwards map $`h_j`$, defined on the image $`g(I_j)`$.
 
 Fix any interval B of outputs. The event that Y lands in B splits over the pieces:
-$$P(Y \in B) = \sum_j P\big(X \in I_j,\ g(X) \in B\big) = \sum_j \int_{\{x \in I_j:\ g(x) \in B\}} f_X(x)\,dx.$$
-In the j-th integral substitute $x = h_j(y)$, so $dx = h_j'(y)\,dy$ ([Substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md)). On a falling branch the limits swap as well as the sign of $h_j'$, and the two cancel into the size $\lvert h_j'(y)\rvert$. The x-range becomes the y-range $B \cap g(I_j)$:
-$$P(Y \in B) = \sum_j \int_{B \cap g(I_j)} f_X\big(h_j(y)\big)\,\lvert h_j'(y)\rvert\,dy = \int_B \sum_j f_X\big(h_j(y)\big)\,\lvert h_j'(y)\rvert\,dy,$$
-where a branch contributes zero at any y outside its image. The chance of every interval of outputs is the area under the branch sum over that interval, which is what it means to be a density of Y. Taking B to be all outputs gives total area 1. No continuity of $f_X$ was needed, only that the pieces hold all the chance.
+
+$`\displaystyle P(Y \in B) = \sum_j P\big(X \in I_j,\ g(X) \in B\big) = \sum_j \int_{\{x \in I_j:\ g(x) \in B\}} f_X(x)\,dx.`$
+
+In the j-th integral substitute $`x = h_j(y)`$, so $`dx = h_j'(y)\,dy`$ ([Substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md)). On a falling branch the limits swap as well as the sign of $`h_j'`$, and the two cancel into the size $`\lvert h_j'(y)\rvert`$. The x-range becomes the y-range $`B \cap g(I_j)`$:
+
+$`\displaystyle P(Y \in B) = \sum_j \int_{B \cap g(I_j)} f_X\big(h_j(y)\big)\,\lvert h_j'(y)\rvert\,dy = \int_B \sum_j f_X\big(h_j(y)\big)\,\lvert h_j'(y)\rvert\,dy,`$
+
+where a branch contributes zero at any y outside its image. The chance of every interval of outputs is the area under the branch sum over that interval, which is what it means to be a density of Y. Taking B to be all outputs gives total area 1. No continuity of $`f_X`$ was needed, only that the pieces hold all the chance.
 
 </details>
 
@@ -577,14 +587,14 @@ Orange: the branch-sum formula, in percent per ml^2, falling steeply from the sp
 
 ### Lean
 
-Lean proves the branch sum formula, the squared-error law for every spread σ above 0, and the uniform law of $F_X(X)$.
+Lean proves the branch sum formula, the squared-error law for every spread σ above 0, and the uniform law of $`F_X(X)`$.
 
-- Suppose X has a density, and g splits the inputs into branches, each smooth and strictly rising or falling, with slope never zero. Then $f_Y(y)$ is the branch sum, counting only branches that reach y.
-- Take $X \sim N(0, \sigma^2)$ with σ above 0, and $Y = X^2$. Then the density of Y is the bell's height at both square roots, added, divided by twice the square root, for y above 0. That equals $\frac{1}{\sigma\sqrt{2\pi y}}\, e^{-y/(2\sigma^2)}$.
-- Take the same X and Y. Then $F_Y(y) = 2\Phi(\sqrt{y}/\sigma) - 1$ for every y at least 0.
-- Suppose the CDF of X has no jumps and no flat stretch. Then $P(F_X(X) \le u) = u$ for every u between 0 and 1.
-- The hand arithmetic holds exactly: $\sqrt{4} = 2$, a stretch factor of one quarter, and two halves adding to 1 at y = 1.
-- Also exact: the strip from 1 to 1.5 ml maps to the band from 1 to 2.25. With σ = 2, $\sigma^2 = 4$ and $2\sigma^4 = 32$.
+- Suppose X has a density, and g splits the inputs into branches, each smooth and strictly rising or falling, with slope never zero. Then $`f_Y(y)`$ is the branch sum, counting only branches that reach y.
+- Take $`X \sim N(0, \sigma^2)`$ with σ above 0, and $`Y = X^2`$. Then the density of Y is the bell's height at both square roots, added, divided by twice the square root, for y above 0. That equals $`\frac{1}{\sigma\sqrt{2\pi y}}\, e^{-y/(2\sigma^2)}`$.
+- Take the same X and Y. Then $`F_Y(y) = 2\Phi(\sqrt{y}/\sigma) - 1`$ for every y at least 0.
+- Suppose the CDF of X has no jumps and no flat stretch. Then $`P(F_X(X) \le u) = u`$ for every u between 0 and 1.
+- The hand arithmetic holds exactly: $`\sqrt{4} = 2`$, a stretch factor of one quarter, and two halves adding to 1 at y = 1.
+- Also exact: the strip from 1 to 1.5 ml maps to the band from 1 to 2.25. With σ = 2, $`\sigma^2 = 4`$ and $`2\sigma^4 = 32`$.
 
 The decimals, the Simpson areas, the median, the simulation and the What breaks rows are left to the Python and Rust checks.
 

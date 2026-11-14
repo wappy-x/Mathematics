@@ -36,58 +36,68 @@ Orange: the book's profit after one trading day, repricing the call in full at e
 
 ## The formula
 
-Notation first, in words. The Greek letters are the option's sensitivities, each defined on its own card: $\Delta$ (delta) is the slope of the price in the share price, $\Gamma$ (gamma) is how fast that slope changes, $\Theta$ (theta) is the change in price per year of calendar time with nothing else moving.
+Notation first, in words. The Greek letters are the option's sensitivities, each defined on its own card: $`\Delta`$ (delta) is the slope of the price in the share price, $`\Gamma`$ (gamma) is how fast that slope changes, $`\Theta`$ (theta) is the change in price per year of calendar time with nothing else moving.
 
-A small $\delta$ in front of a letter means "the change over one step": $\delta t$ is one step of the clock, $\delta S$ is the share's move over that step.
+A small $`\delta`$ in front of a letter means "the change over one step": $`\delta t`$ is one step of the clock, $`\delta S`$ is the share's move over that step.
 
-$$\Theta \;+\; \tfrac12\,\sigma^2 S^2\,\Gamma \;+\; (r-q)\,S\,\Delta \;=\; r\,V$$
+```math
+\Theta \;+\; \tfrac12\,\sigma^2 S^2\,\Gamma \;+\; (r-q)\,S\,\Delta \;=\; r\,V
+```
 
 **Read it aloud:** what the clock takes, plus what the curvature is expected to give back, plus what the hedge shares earn net of what they cost to carry, equals the bank interest on the option's price.
 
 Solved for theta, it reads as a bill with two lines:
 
-$$\Theta \;=\; -\tfrac12\,\sigma^2 S^2\,\Gamma \;+\; \big(r\,V - (r-q)\,S\,\Delta\big)$$
+```math
+\Theta \;=\; -\tfrac12\,\sigma^2 S^2\,\Gamma \;+\; \big(r\,V - (r-q)\,S\,\Delta\big)
+```
 
 The first line is the **rent** on gamma. The second is **carry**: the interest and dividends on the hedge and on the option's own price. With both rates at zero, theta is exactly minus the rent.
 
-For the seller who holds $\Delta$ shares and funds them at the bank, the profit over one step is, to second order in the move,
+For the seller who holds $`\Delta`$ shares and funds them at the bank, the profit over one step is, to second order in the move,
 
-$$\text{seller's profit over one step} \;\approx\; \tfrac12\,\Gamma\,\big(\sigma^2 S^2\,\delta t \;-\; (\delta S)^2\big)$$
+```math
+\text{seller's profit over one step} \;\approx\; \tfrac12\,\Gamma\,\big(\sigma^2 S^2\,\delta t \;-\; (\delta S)^2\big)
+```
 
 **Read it aloud:** half the gamma, times the squared move the price was charging for, minus the squared move that happened.
 
 Set the bracket to zero and the **break-even move** falls out:
 
-$$\lvert\delta S\rvert \;=\; \sigma\,S\,\sqrt{\delta t}$$
+```math
+\lvert\delta S\rvert \;=\; \sigma\,S\,\sqrt{\delta t}
+```
 
-Add the steps up, carrying each day's result to expiry at the bank rate, and let the share's true volatility be $\sigma_{\text{real}}$:
+Add the steps up, carrying each day's result to expiry at the bank rate, and let the share's true volatility be $`\sigma_{\text{real}}`$:
 
-$$\text{seller's profit at expiry} \;\approx\; \tfrac12\int_0^T e^{r(T-t)}\,\Gamma_t\,S_t^2\,\big(\sigma^2 - \sigma_{\text{real}}^2\big)\,dt$$
+```math
+\text{seller's profit at expiry} \;\approx\; \tfrac12\int_0^T e^{r(T-t)}\,\Gamma_t\,S_t^2\,\big(\sigma^2 - \sigma_{\text{real}}^2\big)\,dt
+```
 
 The buyer who hedges holds the mirror book and earns the same with the sign flipped: realised variance minus implied.
 
 | Symbol | Plain meaning | In our example | Push it up and the seller's result… |
 | --- | --- | --- | --- |
-| $V$ | the call's price today, the premium collected | $9.23 | the funding line $r\,V$ grows |
-| $S$ | Acme's price today | $100 | near the strike, gamma times $S^2$ is largest; far away, both rent and risk fade |
-| $\Delta$ | delta, shares held against the call | 0.586851 | the hedge's carry grows |
-| $\Gamma$ | gamma, change in delta per dollar Acme moves | 0.018951 per dollar | more rent in, more loss per big move |
-| $\Theta$ | theta, change in the call's price per year of calendar time | −$5.09 a year | (solved for) |
-| $\sigma$ | implied volatility: the jumpiness written into the price; its square is the variance | 20% | rent and break-even both rise |
-| $\sigma_{\text{real}}$ | realised volatility: the jumpiness Acme actually delivers | 20% or 30% in the runs | above $\sigma$, the seller loses |
-| $r$, $q$ | the bank rate; the dividend yield, both continuously compounded | 5%, 2% | change the carry line, not the rent |
-| $T$, $t$ | expiry, in years; today's date in years. $e^{r(T-t)}$ carries a dollar made at $t$ to expiry | 1; 0 | longer life, smaller gamma, more days to add up |
-| $\delta t$, $\delta S$ | one rebalancing step in years; Acme's move over it | 1/252; varies | break-even grows like $\sqrt{\delta t}$ |
-| $n$ | rebalances over the life, so $\delta t = T/n$ | 252 | the spread of the result shrinks like $1/\sqrt{n}$ |
-| $\mu$, $W$ | Acme's drift; the Brownian motion driving its noise (Detailed proof) | any drift | drift drops out of the hedged result |
-| $X$, $E$ | the seller's wealth; the surplus, wealth minus the call's model value (Detailed proof) | $0 surplus at the start | a positive surplus at expiry is profit |
+| $`V`$ | the call's price today, the premium collected | $9.23 | the funding line $`r\,V`$ grows |
+| $`S`$ | Acme's price today | $100 | near the strike, gamma times $`S^2`$ is largest; far away, both rent and risk fade |
+| $`\Delta`$ | delta, shares held against the call | 0.586851 | the hedge's carry grows |
+| $`\Gamma`$ | gamma, change in delta per dollar Acme moves | 0.018951 per dollar | more rent in, more loss per big move |
+| $`\Theta`$ | theta, change in the call's price per year of calendar time | −$5.09 a year | (solved for) |
+| $`\sigma`$ | implied volatility: the jumpiness written into the price; its square is the variance | 20% | rent and break-even both rise |
+| $`\sigma_{\text{real}}`$ | realised volatility: the jumpiness Acme actually delivers | 20% or 30% in the runs | above $`\sigma`$, the seller loses |
+| $`r`$, $`q`$ | the bank rate; the dividend yield, both continuously compounded | 5%, 2% | change the carry line, not the rent |
+| $`T`$, $`t`$ | expiry, in years; today's date in years. $`e^{r(T-t)}`$ carries a dollar made at $`t`$ to expiry | 1; 0 | longer life, smaller gamma, more days to add up |
+| $`\delta t`$, $`\delta S`$ | one rebalancing step in years; Acme's move over it | 1/252; varies | break-even grows like $`\sqrt{\delta t}`$ |
+| $`n`$ | rebalances over the life, so $`\delta t = T/n`$ | 252 | the spread of the result shrinks like $`1/\sqrt{n}`$ |
+| $`\mu`$, $`W`$ | Acme's drift; the Brownian motion driving its noise (Detailed proof) | any drift | drift drops out of the hedged result |
+| $`X`$, $`E`$ | the seller's wealth; the surplus, wealth minus the call's model value (Detailed proof) | $0 surplus at the start | a positive surplus at expiry is profit |
 
 ### When it holds
 
 - **A share that moves continuously.** A sudden gap costs the seller half the gamma times the jump squared at once, with no chance to rebalance.
-- **Frequent rebalancing.** Rebalancing $n$ times leaves noise whose spread falls like $1/\sqrt{n}$: $1.48 monthly against $0.43 daily on Acme.
+- **Frequent rebalancing.** Rebalancing $`n`$ times leaves noise whose spread falls like $`1/\sqrt{n}`$: $1.48 monthly against $0.43 daily on Acme.
 - **Known volatility.** If Acme's true volatility differs from the 20 percent in the price, the seller gains or loses the gamma-weighted variance gap: about $3.99 lost at 30 percent.
-- **No trading costs.** Every real rebalance crosses a bid-offer spread (the gap between the buying and selling price), a leak that grows with $n$.
+- **No trading costs.** Every real rebalance crosses a bid-offer spread (the gap between the buying and selling price), a leak that grows with $`n`$.
 - **Away from the last days.** At the strike near expiry gamma grows without limit, and the second-order formula understates a day's loss.
 
 ---
@@ -104,21 +114,25 @@ Hedged continuously, the squared moves add up to a known total (quadratic variat
 
 Over one step the call's price changes by, to second order (the Taylor expansion from [The Greeks together](09-greeks-together-taylor-pnl.md)):
 
-$$\delta V \;\approx\; \Theta\,\delta t \;+\; \Delta\,\delta S \;+\; \tfrac12\,\Gamma\,(\delta S)^2$$
+```math
+\delta V \;\approx\; \Theta\,\delta t \;+\; \Delta\,\delta S \;+\; \tfrac12\,\Gamma\,(\delta S)^2
+```
 
 The bend's term carries a half, as every second-order Taylor term does.
 
 ### Step 2: write down the seller's day
 
-The seller owes the call, holds $\Delta$ shares, and owes the bank $\Delta S - V$: the cost of the shares less the $9.23 collected. Over one step:
+The seller owes the call, holds $`\Delta`$ shares, and owes the bank $`\Delta S - V`$: the cost of the shares less the $9.23 collected. Over one step:
 
-- the call owed changes by $-\delta V$;
-- the shares gain $\Delta\,\delta S$ and pay dividends $q\,\Delta S\,\delta t$;
-- the loan costs interest $r(\Delta S - V)\,\delta t$.
+- the call owed changes by $`-\delta V`$;
+- the shares gain $`\Delta\,\delta S`$ and pay dividends $`q\,\Delta S\,\delta t`$;
+- the loan costs interest $`r(\Delta S - V)\,\delta t`$.
 
-Add them and substitute Step 1. The $\Delta\,\delta S$ terms cancel: that is what the hedge was for. What is left is
+Add them and substitute Step 1. The $`\Delta\,\delta S`$ terms cancel: that is what the hedge was for. What is left is
 
-$$-\Theta\,\delta t \;-\; \tfrac12\,\Gamma\,(\delta S)^2 \;-\; \big((r-q)\,S\,\Delta - r\,V\big)\,\delta t.$$
+```math
+-\Theta\,\delta t \;-\; \tfrac12\,\Gamma\,(\delta S)^2 \;-\; \big((r-q)\,S\,\Delta - r\,V\big)\,\delta t.
+```
 
 Theta is income, the bend a cost on every move, and the last bracket the net financing: 0.52 cents a trading day on Acme.
 
@@ -126,61 +140,71 @@ Theta is income, the bend a cost on every move, and the last bracket the net fin
 
 [The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md) is Step 0's no-free-money demand as an equation:
 
-$$\Theta + \tfrac12\sigma^2 S^2\Gamma + (r-q)S\Delta - rV = 0.$$
+```math
+\Theta + \tfrac12\sigma^2 S^2\Gamma + (r-q)S\Delta - rV = 0.
+```
 
-Rearranged: $-\Theta - \big((r-q)S\Delta - rV\big) = \tfrac12\sigma^2S^2\Gamma$, which is exactly the part of Step 2 that does not depend on the move. Substitute, and the seller's step becomes
+Rearranged: $`-\Theta - \big((r-q)S\Delta - rV\big) = \tfrac12\sigma^2S^2\Gamma`$, which is exactly the part of Step 2 that does not depend on the move. Substitute, and the seller's step becomes
 
-$$\tfrac12\,\Gamma\,\big(\sigma^2 S^2\,\delta t - (\delta S)^2\big).$$
+```math
+\tfrac12\,\Gamma\,\big(\sigma^2 S^2\,\delta t - (\delta S)^2\big).
+```
 
-On Acme: theta brings in 2.02 cents a trading day, 0.52 cents goes on the loan net of dividends, and the remaining 1.50 cents is the rent, $\tfrac12\sigma^2S^2\Gamma\,\delta t$.
+On Acme: theta brings in 2.02 cents a trading day, 0.52 cents goes on the loan net of dividends, and the remaining 1.50 cents is the rent, $`\tfrac12\sigma^2S^2\Gamma\,\delta t`$.
 
 ### Step 4: the break-even move
 
-The bracket is zero when the move is $\sigma S\sqrt{\delta t}$. For one trading day that is $0.20 \times 100 \times \sqrt{1/252} = \$1.26$: one standard deviation of Acme's daily move at 20 percent volatility. A smaller day is a win for the seller; a bigger one, either way, a loss.
+The bracket is zero when the move is $`\sigma S\sqrt{\delta t}`$. For one trading day that is $`0.20 \times 100 \times \sqrt{1/252} = \$1.26`$: one standard deviation of Acme's daily move at 20 percent volatility. A smaller day is a win for the seller; a bigger one, either way, a loss.
 
 Full repricing puts the break-evens at $1.272956 up and $1.246134 down: unequal because the bend itself changes as Acme moves, a third-order effect. Their average, 1.259545, is within a twentieth of a cent of the formula's 1.259882.
 
 <details>
 <summary>Why the square root of the step?</summary>
 
-Randomness adds up in variance, not in size: five independent days have five times the variance of one, so the typical five-day move is only $\sqrt5$ times bigger. Hedge weekly and the break-even is $2.82 against $1.26: five times the rent, about 2.2 times the move.
+Randomness adds up in variance, not in size: five independent days have five times the variance of one, so the typical five-day move is only $`\sqrt5`$ times bigger. Hedge weekly and the break-even is $2.82 against $1.26: five times the rent, about 2.2 times the move.
 
 </details>
 
 ### Step 5: add up the days
 
-Over a year the squared daily moves add up to the realised variance (the [Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md) card): in the limit, $(\delta S)^2$ adds up to $\sigma_{\text{real}}^2 S^2\,\delta t$ per step. Each day's result earns the bank rate until expiry, so it gets the factor $e^{r(T-t)}$.
+Over a year the squared daily moves add up to the realised variance (the [Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md) card): in the limit, $`(\delta S)^2`$ adds up to $`\sigma_{\text{real}}^2 S^2\,\delta t`$ per step. Each day's result earns the bank rate until expiry, so it gets the factor $`e^{r(T-t)}`$.
 
 At exactly 20 percent the bracket averages zero, and so does the book. At 30 percent the continuous-time bracket is negative at every instant and gamma is positive, so the continuously hedged seller loses on every path.
 
 <details>
 <summary>Detailed proof: the continuously hedged book, exactly</summary>
 
-Let Acme follow $dS = \mu S\,dt + \sigma_{\text{real}} S\,dW$: a drift $\mu$ of any size plus noise from a Brownian motion $W$ (a random walk with infinitely small steps; see [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)). Let the seller hold $\Delta = \partial V/\partial S$ shares, computed at the model volatility $\sigma$, and fund everything at the bank. Call the seller's wealth $X$, and the surplus, wealth minus the call's model value, $E = X - V$.
+Let Acme follow $`dS = \mu S\,dt + \sigma_{\text{real}} S\,dW`$: a drift $`\mu`$ of any size plus noise from a Brownian motion $`W`$ (a random walk with infinitely small steps; see [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)). Let the seller hold $`\Delta = \partial V/\partial S`$ shares, computed at the model volatility $`\sigma`$, and fund everything at the bank. Call the seller's wealth $`X`$, and the surplus, wealth minus the call's model value, $`E = X - V`$.
 
-The wealth changes by $dX = \Delta\,dS + q\Delta S\,dt + r(X - \Delta S)\,dt$. [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md) (the chain rule for random paths, with an extra second-derivative term) applied to the call's model value gives $dV = \big(\Theta + \mu S\Delta + \tfrac12\sigma_{\text{real}}^2 S^2\Gamma\big)dt + \Delta\,\sigma_{\text{real}} S\,dW$.
+The wealth changes by $`dX = \Delta\,dS + q\Delta S\,dt + r(X - \Delta S)\,dt`$. [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md) (the chain rule for random paths, with an extra second-derivative term) applied to the call's model value gives $`dV = \big(\Theta + \mu S\Delta + \tfrac12\sigma_{\text{real}}^2 S^2\Gamma\big)dt + \Delta\,\sigma_{\text{real}} S\,dW`$.
 
-Subtract. The Brownian-noise terms are identical and cancel, and so do the drift terms $\mu S\Delta$: the share's direction drops out. What remains is
-$$dE = rE\,dt - \big(\Theta + (r-q)S\Delta - rV + \tfrac12\sigma_{\text{real}}^2 S^2\Gamma\big)dt.$$
-The Black-Scholes equation at volatility $\sigma$ replaces the first three terms in the bracket by $-\tfrac12\sigma^2S^2\Gamma$, so
-$$dE = rE\,dt + \tfrac12\big(\sigma^2 - \sigma_{\text{real}}^2\big)S^2\Gamma\,dt, \qquad E_0 = 0.$$
-Multiply by $e^{-rt}$, integrate from 0 to $T$, and multiply back by $e^{rT}$. At expiry the call's model value is its payoff, so the surplus at expiry is the seller's profit:
-$$E_T = \tfrac12\int_0^T e^{r(T-t)}\big(\sigma^2 - \sigma_{\text{real}}^2\big)S_t^2\,\Gamma_t\,dt.$$
-The same lines go through with $\sigma_{\text{real}}$ varying over time. This is the robustness result of El Karoui, Jeanblanc-Picqué and Shreve: a hedger whose volatility is at least the realised one, all the time, never loses on a call.
+Subtract. The Brownian-noise terms are identical and cancel, and so do the drift terms $`\mu S\Delta`$: the share's direction drops out. What remains is
+
+$`\displaystyle dE = rE\,dt - \big(\Theta + (r-q)S\Delta - rV + \tfrac12\sigma_{\text{real}}^2 S^2\Gamma\big)dt.`$
+
+The Black-Scholes equation at volatility $`\sigma`$ replaces the first three terms in the bracket by $`-\tfrac12\sigma^2S^2\Gamma`$, so
+
+$`\displaystyle dE = rE\,dt + \tfrac12\big(\sigma^2 - \sigma_{\text{real}}^2\big)S^2\Gamma\,dt, \qquad E_0 = 0.`$
+
+Multiply by $`e^{-rt}`$, integrate from 0 to $`T`$, and multiply back by $`e^{rT}`$. At expiry the call's model value is its payoff, so the surplus at expiry is the seller's profit:
+
+$`\displaystyle E_T = \tfrac12\int_0^T e^{r(T-t)}\big(\sigma^2 - \sigma_{\text{real}}^2\big)S_t^2\,\Gamma_t\,dt.`$
+
+The same lines go through with $`\sigma_{\text{real}}`$ varying over time. This is the robustness result of El Karoui, Jeanblanc-Picqué and Shreve: a hedger whose volatility is at least the realised one, all the time, never loses on a call.
 
 </details>
 
 ### Step 6: why the spread falls like one over root n, and why the loss is the price gap
 
-With matched volatility the bracket averages zero but is not zero on any one day. The move is $\sigma S\sqrt{\delta t}$ times a bell-curve draw, so the day's result is $\tfrac12\Gamma\sigma^2S^2\delta t$ times one minus that draw squared: noise of size proportional to $\delta t = T/n$.
+With matched volatility the bracket averages zero but is not zero on any one day. The move is $`\sigma S\sqrt{\delta t}`$ times a bell-curve draw, so the day's result is $`\tfrac12\Gamma\sigma^2S^2\delta t`$ times one minus that draw squared: noise of size proportional to $`\delta t = T/n`$.
 
-Adding $n$ independent days gives variance proportional to $n \times (T/n)^2 = T^2/n$, so the spread goes like $1/\sqrt{n}$. Four times the rebalancing halves it.
+Adding $`n`$ independent days gives variance proportional to $`n \times (T/n)^2 = T^2/n`$, so the spread goes like $`1/\sqrt{n}`$. Four times the rebalancing halves it.
 
-With mismatched volatility, a shorter argument gives the average loss. When Acme drifts at $r - q$, any self-financing book of shares and cash (one that adds and withdraws no money after the start) grows on average at the bank rate.
+With mismatched volatility, a shorter argument gives the average loss. When Acme drifts at $`r - q`$, any self-financing book of shares and cash (one that adds and withdraws no money after the start) grows on average at the bank rate.
 
 The seller's book starts at the $9.23 collected and ends on average at that amount carried at 5 percent. The call's payoff, averaged over a 30 percent world and discounted, is the 30 percent Black-Scholes price.
 
-So the average loss at expiry is $C(30\%) - C(20\%)$ carried forward a year: $3.7933 grows to $3.9878. Today's value of that loss, $3.7933, is to first order [Vega](03-vega.md) times the ten-point gap, $3.7901: the vega gap.
+So the average loss at expiry is $`C(30\%) - C(20\%)`$ carried forward a year: $3.7933 grows to $3.9878. Today's value of that loss, $3.7933, is to first order [Vega](03-vega.md) times the ten-point gap, $3.7901: the vega gap.
 
 The same identity can be reached from the other end: solve the Black-Scholes equation first and read it at one point, which is how the [Theta](04-theta.md) card uses it to check its closed form.
 
@@ -188,18 +212,18 @@ The same identity can be reached from the other end: solve the Black-Scholes equ
 
 ## Worked numbers, by hand
 
-Acme at $S = 100$ with the strike at the same level, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year; greeks from the sibling cards.
+Acme at $`S = 100`$ with the strike at the same level, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year; greeks from the sibling cards.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| rent, $\tfrac12\sigma^2S^2\Gamma$ | $0.5 \times 0.04 \times 10{,}000 \times 0.018951$ | $3.790116 a year |
-| carry on the hedge, $(r-q)S\Delta$ | $0.03 \times 100 \times 0.586851$ | $1.760553 a year |
-| funding on the price, $r\,V$ | $0.05 \times 9.227006$ | $0.461350 a year |
-| theta from the identity | $0.461350 - 1.760553 - 3.790116$ | −$5.089319 a year |
-| theta per trading day | $-5.089319 / 252$ | −$0.020196 |
-| rent per trading day | $3.790116 / 252$ | $0.015040 |
-| net carry per trading day | $(1.760553 - 0.461350)/252$ | $0.005156 |
-| **break-even daily move** | $0.20 \times 100 \times \sqrt{1/252}$ | **$1.259882** |
+| rent, $`\tfrac12\sigma^2S^2\Gamma`$ | $`0.5 \times 0.04 \times 10{,}000 \times 0.018951`$ | $3.790116 a year |
+| carry on the hedge, $`(r-q)S\Delta`$ | $`0.03 \times 100 \times 0.586851`$ | $1.760553 a year |
+| funding on the price, $`r\,V`$ | $`0.05 \times 9.227006`$ | $0.461350 a year |
+| theta from the identity | $`0.461350 - 1.760553 - 3.790116`$ | −$5.089319 a year |
+| theta per trading day | $`-5.089319 / 252`$ | −$0.020196 |
+| rent per trading day | $`3.790116 / 252`$ | $0.015040 |
+| net carry per trading day | $`(1.760553 - 0.461350)/252`$ | $0.005156 |
+| **break-even daily move** | $`0.20 \times 100 \times \sqrt{1/252}`$ | **$1.259882** |
 
 The identity's theta matches the closed-form theta of the [Theta](04-theta.md) card, −$5.089319 a year. That card quotes −$0.013943 per calendar day, dividing by 365; this card counts the 252 trading days, when the hedge can be rebalanced.
 
@@ -210,9 +234,9 @@ A dealer short this call keeps one and a half cents on a trading day when Acme m
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drop the half in the rent | theta −$8.879435 | the bend's Taylor term is half gamma times the move squared |
-| Use $\sigma$ where $\sigma^2$ belongs | theta −$20.249782 | the rent is paid on the squared move, so on variance |
+| Use $`\sigma`$ where $`\sigma^2`$ belongs | theta −$20.249782 | the rent is paid on the squared move, so on variance |
 | Call theta minus the rent, forgetting carry | −$3.790116 | the loan net of dividends takes about a quarter of theta |
-| Break-even as $\sigma S\,\delta t$ | $0.079365 | moves grow like the root of time, not time |
+| Break-even as $`\sigma S\,\delta t`$ | $0.079365 | moves grow like the root of time, not time |
 | Weigh theta alone against the bend, ignoring the loan | break-even $1.459934 | theta also pays the net financing, 0.52 cents a day |
 
 ---
@@ -245,7 +269,7 @@ rebalances     spread of the result at expiry ($)
 252 (daily)    ██████████                          0.4281
 ```
 
-Twelve times the rebalancing, about a third of the spread. The average stays near zero at every frequency: +0.0209, −0.0196, −0.0099. Spread times $\sqrt{n}$ stays put: 6.7659, 6.8333, 6.7964. That constant is the $1/\sqrt{n}$ law.
+Twelve times the rebalancing, about a third of the spread. The average stays near zero at every frequency: +0.0209, −0.0196, −0.0099. Spread times $`\sqrt{n}`$ stays put: 6.7659, 6.8333, 6.7964. That constant is the $`1/\sqrt{n}`$ law.
 
 ### Force two: how jumpy the world really is
 
@@ -269,7 +293,7 @@ Orange: Acme at 20 percent, as priced. A narrow spike at zero; 90 percent of yea
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads. Road 1 bumps the call's price for delta and gamma, and checks the identity against the closed-form theta and a bumped-clock theta. Road 2 reprices the seller's book one trading day later and finds the break-even moves by bisection, never using $\sigma S\sqrt{\delta t}$. Road 3 hedges 2,000 simulated years step by step ([Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md), exact here because the log-price step is a bell-curve draw), tracking cash, interest, dividends and trades. The bell-curve area is a power series and the random numbers a hand-written generator, the same in both languages, so the outputs agree digit for digit.
+Three independent roads. Road 1 bumps the call's price for delta and gamma, and checks the identity against the closed-form theta and a bumped-clock theta. Road 2 reprices the seller's book one trading day later and finds the break-even moves by bisection, never using $`\sigma S\sqrt{\delta t}`$. Road 3 hedges 2,000 simulated years step by step ([Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md), exact here because the log-price step is a bell-curve draw), tracking cash, interest, dividends and trades. The bell-curve area is a power series and the random numbers a hand-written generator, the same in both languages, so the outputs agree digit for digit.
 
 ### Python
 
@@ -673,12 +697,12 @@ The outputs are identical. Road 1 gives the house theta, −5.089319, three ways
 
 Lean proves the seller's step, the break-even move and the expiry formula for all values meeting the conditions below, and Acme's worked numbers.
 
-- Suppose the call's price changes by exactly the three terms of Step 1, and the Greeks obey the Black-Scholes equation. Then the seller's step is exactly $\tfrac12\,\Gamma\,\big(\sigma^2 S^2\,\delta t - (\delta S)^2\big)$.
-- Take $\Gamma$ and $S$ positive, and $\sigma$ and $\delta t$ not negative. Then the step is a profit when $\lvert\delta S\rvert < \sigma S\sqrt{\delta t}$, zero at equality, and a loss beyond it.
-- Suppose the surplus $E$ starts at zero, grows as the Detailed proof's $dE$ says, and $S_t$, $\Gamma_t$ are continuous. Then $E_T$ equals the card's integral: each instant's variance gap, weighted by gamma and $S_t^2$, carried to expiry.
+- Suppose the call's price changes by exactly the three terms of Step 1, and the Greeks obey the Black-Scholes equation. Then the seller's step is exactly $`\tfrac12\,\Gamma\,\big(\sigma^2 S^2\,\delta t - (\delta S)^2\big)`$.
+- Take $`\Gamma`$ and $`S`$ positive, and $`\sigma`$ and $`\delta t`$ not negative. Then the step is a profit when $`\lvert\delta S\rvert < \sigma S\sqrt{\delta t}`$, zero at equality, and a loss beyond it.
+- Suppose the surplus $`E`$ starts at zero, grows as the Detailed proof's $`dE`$ says, and $`S_t`$, $`\Gamma_t`$ are continuous. Then $`E_T`$ equals the card's integral: each instant's variance gap, weighted by gamma and $`S_t^2`$, carried to expiry.
 - Acme's numbers hold exactly: 200 of rent per unit of gamma, carry 1.760553, and theta −5.089319 from the identity.
 - The daily break-even lies between $1.25 and $1.27.
-- Weekly hedging multiplies the break-even by $\sqrt5$, and going from 21 to 252 rebalances divides the noise's variance by 12.
+- Weekly hedging multiplies the break-even by $`\sqrt5`$, and going from 21 to 252 rebalances divides the noise's variance by 12.
 
 How close the second-order step is to full repricing, and the hedge on random paths, are left to the Python and Rust checks.
 
@@ -843,7 +867,7 @@ example : ((21 : ℚ) * (1 / 21) ^ 2) / (252 * (1 / 252) ^ 2) = 12 := by norm_nu
 - **Market makers.** A dealer short options and hedged daily watches the day's break-even move, $1.26 on the Acme call. A quieter day pays; a busier one costs.
 - **Volatility trading.** A desk that buys options and delta hedges them bets that realised volatility beats implied: this card's formula with the sign flipped, "long gamma, short theta" on the desk.
 - **Variance swaps.** A contract paying realised variance minus a fixed strike, with the gamma weighting stripped out by holding a spread of strikes; see [Realised variance](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md).
-- **Risk reports.** One common desk measure, "dollar gamma" (definitions vary by desk), is $\tfrac12\Gamma S^2$ times one percent squared, for the profit from a one-percent move. It is the rent formula read per unit of variance.
+- **Risk reports.** One common desk measure, "dollar gamma" (definitions vary by desk), is $`\tfrac12\Gamma S^2`$ times one percent squared, for the profit from a one-percent move. It is the rent formula read per unit of variance.
 - **Jumps and earnings days.** A share that gaps overnight breaks the continuous-hedge assumption. The seller pays the whole bend at once; see [Greeks under jumps](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md).
 
 > **Say it back**

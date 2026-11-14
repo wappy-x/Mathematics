@@ -46,46 +46,52 @@ The two sit 13.48 apart everywhere, and the lower crosses zero at 88.48 basis po
 
 Four helper quantities, each named before it is used.
 
-- The **head start** $m = F - K$ is how far the level $F$ sits above the strike $K$, negative here.
-- One **standard deviation** of the ending level is $s = \sigma_N\sqrt{T}$, the volatility $\sigma_N$ stretched over the wait $T$: 60 basis points for one year.
-- The **standardised head start** is $d = m/s$.
-- The **discount factor** $D = e^{-rT}$ moves expiry-day money to today at the bank rate $r$.
+- The **head start** $`m = F - K`$ is how far the level $`F`$ sits above the strike $`K`$, negative here.
+- One **standard deviation** of the ending level is $`s = \sigma_N\sqrt{T}`$, the volatility $`\sigma_N`$ stretched over the wait $`T`$: 60 basis points for one year.
+- The **standardised head start** is $`d = m/s`$.
+- The **discount factor** $`D = e^{-rT}`$ moves expiry-day money to today at the bank rate $`r`$.
 
-Two readings of the bell curve appear: $N(x)$, the area to the left of $x$, a chance between 0 and 1, and $\varphi(x)$ (say "phi"), the height at $x$.
+Two readings of the bell curve appear: $`N(x)`$, the area to the left of $`x`$, a chance between 0 and 1, and $`\varphi(x)`$ (say "phi"), the height at $`x`$.
 
-$$\text{call} = D\bigl[\,m\,N(d) + s\,\varphi(d)\,\bigr], \qquad \text{put} = D\bigl[\,-m\,N(-d) + s\,\varphi(d)\,\bigr]$$
+```math
+\text{call} = D\bigl[\,m\,N(d) + s\,\varphi(d)\,\bigr], \qquad \text{put} = D\bigl[\,-m\,N(-d) + s\,\varphi(d)\,\bigr]
+```
 
 **Read it aloud:** the head start, weighted by the chance of still being ahead, plus a payment for the wander, shrunk to today's money.
 
-The model behind it is one line: with $Z$ a draw from the standard bell curve, the level on expiry day is
+The model behind it is one line: with $`Z`$ a draw from the standard bell curve, the level on expiry day is
 
-$$F_T = F + \sigma_N\sqrt{T}\,Z$$
+```math
+F_T = F + \sigma_N\sqrt{T}\,Z
+```
 
 No multiplication by the level, no logarithm, no floor. That line is the whole departure from the rest of the shelf.
 
 | Symbol | Plain meaning | In our example | Push it up and the premium… |
 | --- | --- | --- | --- |
-| $F$ | the forward level quoted today for expiry day | 50 basis points | rises: more head start |
-| $F_T$ | that level on expiry day, unknown today | — | — |
-| $K$ | the strike the payment is measured against | 75 basis points | falls: further to climb |
-| $T$ | the wait to expiry, in years | 1 | rises: more room to wander |
-| $r$ | the bank rate, continuously compounded | 0.50 percent | falls, slightly: harder discounting |
-| $\sigma_N$ | normal volatility: the wander in a year, in the level's own units | 60 basis points per root year | rises, always: more spread adds upside, while the payment stops at nothing |
-| $\sigma$ | percentage volatility, for contrast | 120 percent a year | — |
-| $D$ | the discount factor, $e^{-rT}$ | 0.995012 | — |
-| $m$ | the head start, $F - K$ | −25 basis points | rises: dearer |
-| $s$ | one standard deviation of the ending level | 60 basis points | rises: dearer |
-| $d$ | the head start counted in standard deviations | −0.416667 | — |
-| $N(x)$ | the bell curve's area to the left of $x$ | $N(d) = 0.338461$ | — |
-| $\varphi(x)$ | the bell curve's height at $x$ | $\varphi(d) = 0.365772$ | — |
+| $`F`$ | the forward level quoted today for expiry day | 50 basis points | rises: more head start |
+| $`F_T`$ | that level on expiry day, unknown today | — | — |
+| $`K`$ | the strike the payment is measured against | 75 basis points | falls: further to climb |
+| $`T`$ | the wait to expiry, in years | 1 | rises: more room to wander |
+| $`r`$ | the bank rate, continuously compounded | 0.50 percent | falls, slightly: harder discounting |
+| $`\sigma_N`$ | normal volatility: the wander in a year, in the level's own units | 60 basis points per root year | rises, always: more spread adds upside, while the payment stops at nothing |
+| $`\sigma`$ | percentage volatility, for contrast | 120 percent a year | — |
+| $`D`$ | the discount factor, $`e^{-rT}`$ | 0.995012 | — |
+| $`m`$ | the head start, $`F - K`$ | −25 basis points | rises: dearer |
+| $`s`$ | one standard deviation of the ending level | 60 basis points | rises: dearer |
+| $`d`$ | the head start counted in standard deviations | −0.416667 | — |
+| $`N(x)`$ | the bell curve's area to the left of $`x`$ | $`N(d) = 0.338461`$ | — |
+| $`\varphi(x)`$ | the bell curve's height at $`x`$ | $`\varphi(d) = 0.365772`$ | — |
 
 Two facts come free. Subtract the put from the call: the area terms add to one, the wander terms cancel, leaving
 
-$$\text{call} - \text{put} = D\,(F - K)$$
+```math
+\text{call} - \text{put} = D\,(F - K)
+```
 
 Here that is −24.875312 basis points, with no volatility in it anywhere.
 
-And the put formula is the call formula with $F$ and $K$ exchanged: a put on 0.50 percent struck at 0.75 is worth what a call on 0.75 struck at 0.50 is worth, 38.292870 basis points. The bell curve is symmetric, so the two problems are one. The percentage model swaps the same way, but only while the level and the strike stay above zero, where its logarithm exists; here the swap holds wherever they sit.
+And the put formula is the call formula with $`F`$ and $`K`$ exchanged: a put on 0.50 percent struck at 0.75 is worth what a call on 0.75 struck at 0.50 is worth, 38.292870 basis points. The bell curve is symmetric, so the two problems are one. The percentage model swaps the same way, but only while the level and the strike stay above zero, where its logarithm exists; here the swap holds wherever they sit.
 
 ### When it holds
 
@@ -94,7 +100,7 @@ And the put formula is the call formula with $F$ and $K$ exchanged: a put on 0.5
 - **One volatility for one strike.** Matched on today's level, this model prices the 75 basis point strike at 13.42 where the percentage model says 17.02. Neither is wrong.
 - **One known bank rate, and one date.** Volatility runs to expiry, the discount to the day the cash arrives; here they are the same day, but a caplet usually fixes its rate months before it pays. The underlying of a rate option is itself a rate, so discounting and payment move together: the honest discount is the market's own zero-coupon bond price (the price today of one unit paid on that day), a change of yardstick handled in [Changing the unit of account](05-change-of-numeraire-in-pricing.md).
 
-**Conventions verified 19 Sep 2026:** normal volatility is quoted in basis points per square root of a year, and the rate here is continuously compounded with $T$ in calendar years. Live quotes carry day-count and compounding conventions that differ by market and do get changed; convert before substituting.
+**Conventions verified 19 Sep 2026:** normal volatility is quoted in basis points per square root of a year, and the rate here is continuously compounded with $`T`$ in calendar years. Live quotes carry day-count and compounding conventions that differ by market and do get changed; convert before substituting.
 
 ---
 
@@ -104,60 +110,68 @@ And the put formula is the call formula with $F$ and $K$ exchanged: a put on 0.5
 
 Signing a forward takes no money today, so any pricing rule the market obeys must give a position that cost nothing an average gain of nothing, or anyone could sign a billion and stand back ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). In the world used for pricing, then, the average of the level on expiry day is the level quoted today. The forward goes nowhere on average; it only spreads.
 
-The model then makes one further assumption: that spread is a plain bell curve of width $s = \sigma_N\sqrt{T}$, centred on today's quote. Nothing multiplies the level, which is what keeps zero from being special.
+The model then makes one further assumption: that spread is a plain bell curve of width $`s = \sigma_N\sqrt{T}`$, centred on today's quote. Nothing multiplies the level, which is what keeps zero from being special.
 
 The premium is the average payment in that world, shrunk to today's money. The whole card is one averaging problem.
 
 ### Step 1: average a straight line with a floor under it
 
-The payment on expiry day is the ending head start $m + sZ$ when that is positive, and nothing otherwise. Averaging it needs one fact about the bell curve, and no more:
+The payment on expiry day is the ending head start $`m + sZ`$ when that is positive, and nothing otherwise. Averaging it needs one fact about the bell curve, and no more:
 
-$$\mathbb{E}\bigl[\max(m + sZ,\, 0)\bigr] = m\,N(d) + s\,\varphi(d), \qquad d = \frac{m}{s}$$
+```math
+\mathbb{E}\bigl[\max(m + sZ,\, 0)\bigr] = m\,N(d) + s\,\varphi(d), \qquad d = \frac{m}{s}
+```
 
-In words: the payment is positive exactly when the draw lands above $-d$, so the average splits in two over that stretch. The first piece is the head start times the chance of landing there, which by symmetry is $N(d)$.
+In words: the payment is positive exactly when the draw lands above $`-d`$, so the average splits in two over that stretch. The first piece is the head start times the chance of landing there, which by symmetry is $`N(d)`$.
 
-The second adds up the draw itself across the same stretch, weighted by the curve's height. Here the bell curve helps: its slope at any point is minus that point times its height, so adding up the draw across the tail returns the curve's *height* at the edge, $\varphi(d)$. An area for one piece, a height for the other: that is why the two terms look so unlike.
+The second adds up the draw itself across the same stretch, weighted by the curve's height. Here the bell curve helps: its slope at any point is minus that point times its height, so adding up the draw across the tail returns the curve's *height* at the edge, $`\varphi(d)`$. An area for one piece, a height for the other: that is why the two terms look so unlike.
 
 <details>
 <summary>Detailed proof: the one lemma, both integrals</summary>
 
-Let $Z$ be a standard bell-curve draw, of height $\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}$ at $z$. Take any real $m$, any $s > 0$, and $d = m/s$. Then $m + sz > 0$ exactly when $z > -d$, so
-$$\mathbb{E}\bigl[\max(m+sZ,0)\bigr] = \int_{-d}^{\infty}(m + sz)\,\varphi(z)\,dz = m\int_{-d}^{\infty}\varphi(z)\,dz + s\int_{-d}^{\infty} z\,\varphi(z)\,dz$$
+Let $`Z`$ be a standard bell-curve draw, of height $`\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}`$ at $`z`$. Take any real $`m`$, any $`s > 0`$, and $`d = m/s`$. Then $`m + sz > 0`$ exactly when $`z > -d`$, so
+
+$`\displaystyle \mathbb{E}\bigl[\max(m+sZ,0)\bigr] = \int_{-d}^{\infty}(m + sz)\,\varphi(z)\,dz = m\int_{-d}^{\infty}\varphi(z)\,dz + s\int_{-d}^{\infty} z\,\varphi(z)\,dz`$
+
 Both integrals are finite, since the height falls off faster than any power.
 
-**First integral.** It is the chance that a draw exceeds $-d$. The curve is symmetric about zero, so that equals the chance of landing below $d$: $N(d)$.
+**First integral.** It is the chance that a draw exceeds $`-d`$. The curve is symmetric about zero, so that equals the chance of landing below $`d`$: $`N(d)`$.
 
-**Second integral.** Differentiate the height: $\varphi'(z) = -z\,\varphi(z)$. So $z\,\varphi(z)$ is the derivative of $-\varphi(z)$, and the integral is $\bigl[-\varphi(z)\bigr]_{-d}^{\infty} = 0 + \varphi(-d) = \varphi(d)$, by symmetry again.
+**Second integral.** Differentiate the height: $`\varphi'(z) = -z\,\varphi(z)`$. So $`z\,\varphi(z)`$ is the derivative of $`-\varphi(z)`$, and the integral is $`\bigl[-\varphi(z)\bigr]_{-d}^{\infty} = 0 + \varphi(-d) = \varphi(d)`$, by symmetry again.
 
-Add the pieces and multiply by the discount factor. Under the model the ending head start is $F_T - K = m + sZ$, with $m = F - K$ and $s = \sigma_N\sqrt{T}$: that is the call. For the put the payment is positive when $z < -d$, and the same two integrals over that stretch give $-m\,N(-d) + s\,\varphi(d)$, the second flipping sign while the edge height stays. Nothing needed $F$ or $K$ positive, and nothing needed a logarithm. And since a bell curve of positive width puts weight on both sides of any strike, both premiums strictly exceed their floors at any positive volatility — at negative levels too. $\blacksquare$
+Add the pieces and multiply by the discount factor. Under the model the ending head start is $`F_T - K = m + sZ`$, with $`m = F - K`$ and $`s = \sigma_N\sqrt{T}`$: that is the call. For the put the payment is positive when $`z < -d`$, and the same two integrals over that stretch give $`-m\,N(-d) + s\,\varphi(d)`$, the second flipping sign while the edge height stays. Nothing needed $`F`$ or $`K`$ positive, and nothing needed a logarithm. And since a bell curve of positive width puts weight on both sides of any strike, both premiums strictly exceed their floors at any positive volatility — at negative levels too. $`\blacksquare`$
 
 </details>
 
 ### Step 2: the two terms, read as money
 
-Put numbers in. The head start term is $-25 \times 0.338461 = -8.461528$ basis points; the wander term is $60 \times 0.365772 = 21.946342$. The first is **negative**, so every basis point of the 13.42 comes out of the second. The buyer is paying for movement, not for a position.
+Put numbers in. The head start term is $`-25 \times 0.338461 = -8.461528`$ basis points; the wander term is $`60 \times 0.365772 = 21.946342`$. The first is **negative**, so every basis point of the 13.42 comes out of the second. The buyer is paying for movement, not for a position.
 
-At the money the head start is zero, so the first term vanishes whatever the chance of exercise is. Since the bell curve's height at zero is $1/\sqrt{2\pi} \approx 0.3989$:
+At the money the head start is zero, so the first term vanishes whatever the chance of exercise is. Since the bell curve's height at zero is $`1/\sqrt{2\pi} \approx 0.3989`$:
 
-$$\text{call} = \text{put} = D\,\sigma_N\sqrt{\frac{T}{2\pi}} \approx 0.4 \times \sigma_N\sqrt{T} \times D$$
+```math
+\text{call} = \text{put} = D\,\sigma_N\sqrt{\frac{T}{2\pi}} \approx 0.4 \times \sigma_N\sqrt{T} \times D
+```
 
 Sixty basis points, one year, discount 0.995012: **23.817153 basis points**. Nothing else in option pricing is that simple; it checks a normal-volatility quote in the head.
 
 ### Step 3: the sensitivities, and one exact cancellation
 
-Differentiate the call formula with respect to the level. Three terms appear: the chance of exercise, the head start times the curve's height divided by $s$, and $s$ times the curve's slope divided by $s$. The middle is $d\,\varphi(d)$, because $m/s$ *is* $d$; the last is $-d\,\varphi(d)$, because the slope is minus the point times the height. They cancel exactly:
+Differentiate the call formula with respect to the level. Three terms appear: the chance of exercise, the head start times the curve's height divided by $`s`$, and $`s`$ times the curve's slope divided by $`s`$. The middle is $`d\,\varphi(d)`$, because $`m/s`$ *is* $`d`$; the last is $`-d\,\varphi(d)`$, because the slope is minus the point times the height. They cancel exactly:
 
-$$\frac{\partial\,\text{call}}{\partial F} = D\,N(d)$$
+```math
+\frac{\partial\,\text{call}}{\partial F} = D\,N(d)
+```
 
-That slope is the hedge in futures settled every day: 0.336773 contracts per option. A forward's mark (its value today) moves by the discount factor, not by one, so a forward hedge takes $N(d) = 0.338461$ instead. The same cancellation tidies the other sensitivities too.
+That slope is the hedge in futures settled every day: 0.336773 contracts per option. A forward's mark (its value today) moves by the discount factor, not by one, so a forward hedge takes $`N(d) = 0.338461`$ instead. The same cancellation tidies the other sensitivities too.
 
 | Sensitivity | What it answers | Call | Put | In this example |
 | --- | --- | --- | --- | --- |
-| Delta | how much the premium moves per unit of level | $D\,N(d)$ | $-D\,N(-d)$ | 0.336773 and −0.658239 |
-| Gamma | how much delta moves per unit of level | $D\,\varphi(d)/s$ | the same | 0.006066 per basis point of level; the formula is in decimals |
-| Vega | per unit of normal volatility | $D\sqrt{T}\,\varphi(d)$ | the same | 0.363948: a basis point of volatility is worth 0.36 of a basis point of premium |
-| Theta | per year of waiting, so divide by 365 for a day | $r\times\text{premium} - D\,\sigma_N\,\varphi(d)/(2\sqrt{T})$ | the same shape | −0.029730 and −0.029389 basis points a day |
-| Rho | per unit of the bank rate | $-T\times\text{premium}$ | the same shape | minus the premium at one year: 13.417558 basis points down per unit of rate |
+| Delta | how much the premium moves per unit of level | $`D\,N(d)`$ | $`-D\,N(-d)`$ | 0.336773 and −0.658239 |
+| Gamma | how much delta moves per unit of level | $`D\,\varphi(d)/s`$ | the same | 0.006066 per basis point of level; the formula is in decimals |
+| Vega | per unit of normal volatility | $`D\sqrt{T}\,\varphi(d)`$ | the same | 0.363948: a basis point of volatility is worth 0.36 of a basis point of premium |
+| Theta | per year of waiting, so divide by 365 for a day | $`r\times\text{premium} - D\,\sigma_N\,\varphi(d)/(2\sqrt{T})`$ | the same shape | −0.029730 and −0.029389 basis points a day |
+| Rho | per unit of the bank rate | $`-T\times\text{premium}`$ | the same shape | minus the premium at one year: 13.417558 basis points down per unit of rate |
 
 Gamma and vega are strictly positive, the curve's height never being zero, and a call's delta runs between 0 and the discount factor, never above. Theta has no guaranteed sign: it is the wander melting away against the discount unwinding, and at the money with a high enough bank rate the second wins.
 
@@ -165,7 +179,7 @@ Gamma and vega are strictly positive, the curve's height never being zero, and a
 
 Desks quote this contract in normal volatility, not in basis points of premium, so the formula is run backwards: premium in, volatility out. Three questions come first.
 
-**Does an answer exist?** As volatility falls to nothing the level stops moving, and the premium falls to the discounted payment already guaranteed: $D\max(m,0)$ for the call, zero here, and $D\max(-m,0)$ for the put, 24.875312 basis points. As volatility grows the premium grows without limit, unlike the percentage model, where a call can never beat the discounted forward. The premiums reachable at positive volatility are everything strictly above the floor.
+**Does an answer exist?** As volatility falls to nothing the level stops moving, and the premium falls to the discounted payment already guaranteed: $`D\max(m,0)`$ for the call, zero here, and $`D\max(-m,0)`$ for the put, 24.875312 basis points. As volatility grows the premium grows without limit, unlike the percentage model, where a call can never beat the discounted forward. The premiums reachable at positive volatility are everything strictly above the floor.
 
 **Is it unique?** Yes: vega is strictly positive, so the premium climbs strictly as volatility climbs. One price, one volatility.
 
@@ -177,9 +191,11 @@ Only then is it worth solving. The check doubles a trial volatility from one bas
 
 A desk raised on the percentage models thinks in a volatility of 20 percent, not 20 basis points of wander. At the money the translation is as simple as possible:
 
-$$\sigma_N \approx \sigma \, F$$
+```math
+\sigma_N \approx \sigma \, F
+```
 
-where $\sigma$ is the percentage volatility. A percentage move applied to a level is an absolute move of that size times the level, the only quantity either formula measures at the money.
+where $`\sigma`$ is the percentage volatility. A percentage move applied to a level is an absolute move of that size times the level, the only quantity either formula measures at the money.
 
 Matched that way, the normal price sits above the percentage one by a *fraction* — not an amount of money — of about the percentage volatility squared times the years, divided by 24. The next section measures it; the next card converts properly, in both directions and away from the money: [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
 
@@ -187,7 +203,9 @@ Matched that way, the normal price sits above the percentage one by a *fraction*
 
 The other route is the one Black and Scholes took: hold the contract, sell enough forwards that a small move cancels, and demand that the riskless position left over earn the bank rate ([Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md)). Out comes an equation the premium must obey:
 
-$$\frac{\partial V}{\partial t} + \tfrac12\sigma_N^2\,\frac{\partial^2 V}{\partial F^2} - rV = 0$$
+```math
+\frac{\partial V}{\partial t} + \tfrac12\sigma_N^2\,\frac{\partial^2 V}{\partial F^2} - rV = 0
+```
 
 where the premium is written V and t is today's clock time. The lognormal version carries the level squared in front of the second derivative, which is what makes moves proportional to the level; here it is absent.
 
@@ -201,17 +219,17 @@ Rate 50 basis points, strike 75, normal volatility 60, one year, bank rate 0.50 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| head start, $m = F - K$ | $50 - 75$ | −25 basis points |
-| one standard deviation, $s = \sigma_N\sqrt{T}$ | $60 \times 1$ | 60 basis points |
-| standardised head start, $d = m/s$ | $-25 / 60$ | −0.416667 |
-| chance of exercise, $N(d)$ | bell-curve area | 0.338461 |
-| curve height there, $\varphi(d)$ | bell-curve height | 0.365772 |
-| head start term, $m\,N(d)$ | $-25 \times 0.338461$ | −8.461528 basis points |
-| wander term, $s\,\varphi(d)$ | $60 \times 0.365772$ | 21.946342 basis points |
-| sum inside the brackets | $-8.461528 + 21.946342$ | 13.484814 basis points |
-| discount factor, $D$ | $e^{-0.005}$ | 0.995012 |
-| **premium** | $0.995012 \times 13.484814$ | **13.417558 basis points** |
-| breakeven rate on expiry day | $75 + 13.484814$ | 88.484814 basis points |
+| head start, $`m = F - K`$ | $`50 - 75`$ | −25 basis points |
+| one standard deviation, $`s = \sigma_N\sqrt{T}`$ | $`60 \times 1`$ | 60 basis points |
+| standardised head start, $`d = m/s`$ | $`-25 / 60`$ | −0.416667 |
+| chance of exercise, $`N(d)`$ | bell-curve area | 0.338461 |
+| curve height there, $`\varphi(d)`$ | bell-curve height | 0.365772 |
+| head start term, $`m\,N(d)`$ | $`-25 \times 0.338461`$ | −8.461528 basis points |
+| wander term, $`s\,\varphi(d)`$ | $`60 \times 0.365772`$ | 21.946342 basis points |
+| sum inside the brackets | $`-8.461528 + 21.946342`$ | 13.484814 basis points |
+| discount factor, $`D`$ | $`e^{-0.005}`$ | 0.995012 |
+| **premium** | $`0.995012 \times 13.484814`$ | **13.417558 basis points** |
+| breakeven rate on expiry day | $`75 + 13.484814`$ | 88.484814 basis points |
 
 So the right costs 13.42 basis points of the notional today, a little over half the 25 basis points the rate must climb before it pays at all. The put on the same rate and strike is worth 38.292870, and call minus put is −24.875312, the discounted head start, as parity demands.
 
@@ -259,9 +277,9 @@ The wrong answers come from the run.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drop the wander term | −8.419326 bp | A negative premium, which no right can have: out of the money the wander pays for everything. |
-| Put the area $N(d)$ where the height belongs | 11.787056 bp | The second term measures how much chance is piled up at the strike: a height, not an area. |
-| Treat exercise as certain, $N(d) = 1$ | −3.038428 bp | Charges the holder for the outcomes where the rate finishes below the strike, as though they had to be taken. |
-| Use $\sigma_N T$ where $\sigma_N\sqrt{T}$ belongs, four years | 82.106473 bp, against 35.687313 | Wander adds up in variance, so sizes add up in the square root of time. Too dear when long, too cheap when short. |
+| Put the area $`N(d)`$ where the height belongs | 11.787056 bp | The second term measures how much chance is piled up at the strike: a height, not an area. |
+| Treat exercise as certain, $`N(d) = 1`$ | −3.038428 bp | Charges the holder for the outcomes where the rate finishes below the strike, as though they had to be taken. |
+| Use $`\sigma_N T`$ where $`\sigma_N\sqrt{T}`$ belongs, four years | 82.106473 bp, against 35.687313 | Wander adds up in variance, so sizes add up in the square root of time. Too dear when long, too cheap when short. |
 
 ---
 
@@ -696,11 +714,11 @@ The two outputs match line for line.
 
 Lean proves both premium formulas and put-call parity in this model, for any level and strike, negative ones included.
 
-- Take any $F$ and $K$, any bank rate $r$, $\sigma_N > 0$ and $T > 0$. Then the call, the discounted average of $\max(F_T - K, 0)$, is $D[m\,N(d) + s\,\varphi(d)]$.
-- Take the same $F$, $K$, $r$, $\sigma_N$ and $T$. Then the put, the discounted average of $\max(K - F_T, 0)$, is $D[-m\,N(-d) + s\,\varphi(d)]$.
-- Take any level $F$ and strike $K$, negative ones included. Then call minus put is $D(F - K)$, whatever the volatility.
-- The worked steps check out: $m = -25$, $s = 60$, and $d = -25/60 = -5/12$.
-- Over four years $s$ is 120, not 240: wander adds up in the square root of time.
+- Take any $`F`$ and $`K`$, any bank rate $`r`$, $`\sigma_N > 0`$ and $`T > 0`$. Then the call, the discounted average of $`\max(F_T - K, 0)`$, is $`D[m\,N(d) + s\,\varphi(d)]`$.
+- Take the same $`F`$, $`K`$, $`r`$, $`\sigma_N`$ and $`T`$. Then the put, the discounted average of $`\max(K - F_T, 0)`$, is $`D[-m\,N(-d) + s\,\varphi(d)]`$.
+- Take any level $`F`$ and strike $`K`$, negative ones included. Then call minus put is $`D(F - K)`$, whatever the volatility.
+- The worked steps check out: $`m = -25`$, $`s = 60`$, and $`d = -25/60 = -5/12`$.
+- Over four years $`s`$ is 120, not 240: wander adds up in the square root of time.
 
 The decimals, the swap, the sensitivities and the backwards solve are left to the Python and Rust checks.
 

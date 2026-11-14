@@ -6,9 +6,9 @@
 
 ## General Overview
 
-The banana valley is the shelf's test landscape. Its height over the map point (u, v) is $f(u, v) = (1 - u)^2 + 100\,(v - u^2)^2$, and the job is to **minimise** it: choose u and v to make the height as small as possible, with nothing limiting the choice. The floor of the valley follows the curve $v = u^2$, with steep walls either side, and falls gently along that curve to the lowest point, (1, 1), at height 0. (Some of the shelf's other cards call the coordinates x and y. This card needs the letter y for something else.)
+The banana valley is the shelf's test landscape. Its height over the map point (u, v) is $`f(u, v) = (1 - u)^2 + 100\,(v - u^2)^2`$, and the job is to **minimise** it: choose u and v to make the height as small as possible, with nothing limiting the choice. The floor of the valley follows the curve $`v = u^2`$, with steep walls either side, and falls gently along that curve to the lowest point, (1, 1), at height 0. (Some of the shelf's other cards call the coordinates x and y. This card needs the letter y for something else.)
 
-Start at (0, 1), one unit above the floor where it crosses u = 0. The height there is 101. Feeling only the slope, gradient descent with a careful step length needs 20,494 steps to get the slope below $10^{-8}$. Newton's method also measures how the slope *bends*, and gets there in **eight steps**. BFGS (named after Broyden, Fletcher, Goldfarb and Shanno, who each found it in 1970) never measures the bend. It works it out from how the slope changed between its own steps, and gets there in 27.
+Start at (0, 1), one unit above the floor where it crosses u = 0. The height there is 101. Feeling only the slope, gradient descent with a careful step length needs 20,494 steps to get the slope below $`10^{-8}`$. Newton's method also measures how the slope *bends*, and gets there in **eight steps**. BFGS (named after Broyden, Fletcher, Goldfarb and Shanno, who each found it in 1970) never measures the bend. It works it out from how the slope changed between its own steps, and gets there in 27.
 
 Both use one idea: near any point, the land looks like a bowl, so measure or estimate its curvature and jump to its bottom. Two things can go wrong. At the start the land curves *down* across the valley, so the "bowl" is a saddle and its centre is no place to go. And a bowl fitted at one point can be wildly wrong a long way off.
 
@@ -26,34 +26,38 @@ Drawn to scale, 150 units per map unit on both axes. The solid path is the lifte
 
 ## The formula
 
-Notation from [Gradient descent](02-gradient-descent-and-its-rate.md): $x_k$ is the point after $k$ steps, counting from $k = 0$ at the start, $d_k$ the direction and $\alpha_k$ the step length. This card introduces three more: $s_k$ for the step actually taken, $y_k$ for the change in gradient it caused, and $B_k$ for the curvature matrix BFGS remembers. $B_k$ is never written $H_k$, to keep it apart from the true Hessian.
+Notation from [Gradient descent](02-gradient-descent-and-its-rate.md): $`x_k`$ is the point after $`k`$ steps, counting from $`k = 0`$ at the start, $`d_k`$ the direction and $`\alpha_k`$ the step length. This card introduces three more: $`s_k`$ for the step actually taken, $`y_k`$ for the change in gradient it caused, and $`B_k`$ for the curvature matrix BFGS remembers. $`B_k`$ is never written $`H_k`$, to keep it apart from the true Hessian.
 
-**Newton's step, lifted where needed.** This lift is the **Hessian modification**. Solve for the direction, then search along it ($^{\mathsf T}$, transpose, turns a column into a row):
+**Newton's step, lifted where needed.** This lift is the **Hessian modification**. Solve for the direction, then search along it ($`^{\mathsf T}`$, transpose, turns a column into a row):
 
-$$\bigl(\nabla^2 f(x_k) + \tau_k I\bigr)\, d_k = -\nabla f(x_k), \qquad \tau_k = \max\bigl(0,\; \delta - \lambda_{\min}(\nabla^2 f(x_k))\bigr), \qquad x_{k+1} = x_k + \alpha_k d_k$$
+```math
+\bigl(\nabla^2 f(x_k) + \tau_k I\bigr)\, d_k = -\nabla f(x_k), \qquad \tau_k = \max\bigl(0,\; \delta - \lambda_{\min}(\nabla^2 f(x_k))\bigr), \qquad x_{k+1} = x_k + \alpha_k d_k
+```
 
 **Read it aloud:** add just enough curvature in every direction that the lowest curvature is at least δ, jump towards the bottom of that bowl, and let a line search decide how far.
 
 **BFGS.** Same search, but the matrix is remembered, not measured:
 
-$$B_k d_k = -\nabla f(x_k), \quad s_k = x_{k+1} - x_k, \quad y_k = \nabla f(x_{k+1}) - \nabla f(x_k), \quad B_{k+1} = B_k - \frac{B_k s_k s_k^{\mathsf T} B_k}{s_k^{\mathsf T} B_k s_k} + \frac{y_k y_k^{\mathsf T}}{y_k^{\mathsf T} s_k}$$
+```math
+B_k d_k = -\nabla f(x_k), \quad s_k = x_{k+1} - x_k, \quad y_k = \nabla f(x_{k+1}) - \nabla f(x_k), \quad B_{k+1} = B_k - \frac{B_k s_k s_k^{\mathsf T} B_k}{s_k^{\mathsf T} B_k s_k} + \frac{y_k y_k^{\mathsf T}}{y_k^{\mathsf T} s_k}
+```
 
 **Read it aloud:** after each step, wipe out what the old matrix believed about curvature along the step, and write in what the step actually measured.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $u$, $v$ | the height being minimised; the two map coordinates | $f(0, 1) = 101$ | — |
-| $x_k$, $k$, $x^*$ | the point (u, v) after k steps; the minimiser | $x_0 = (0, 1)$; $x^* = (1, 1)$ | — |
-| $\nabla f$ | the gradient: slope in u, slope in v | $(-2, 200)$ at the start | — |
-| $\nabla^2 f$, $I$ | the Hessian (table of second derivatives); the identity matrix (1 on the diagonal, 0 elsewhere) | `[[-398, 0], [0, 200]]` at the start | — |
-| $\lambda_{\min}$ | the lowest curvature in any direction: the Hessian's smallest eigenvalue | −398 at the start; 0.3994 at (1, 1) | — |
-| $\delta$, $\tau_k$ | the curvature floor; the lift added to every direction | δ = 0.001; $\tau_0$ = 398.001 | δ = 10: 390 steps, not 8 |
-| $m_k(d)$ | the bowl (quadratic model) fitted at $x_k$, as a function of the move d | — | — |
-| $d_k$ | the direction, the move to the bowl's bottom | $(2000, -0.334)$ at k = 0 | — |
-| $\alpha_k$, $c_1$, $c_2$ | step length from the line search; the Armijo and curvature constants | $\alpha_0$ = 1/2048; 0.0001 and 0.9 | — |
-| $s_k$, $y_k$, $t$ | the step taken, $\alpha_k d_k$; the change in gradient across it; how far along the step, 0 to 1 | — | — |
-| $B_k$, $w$ | BFGS's remembered Hessian; any direction, in proofs | $B_0 = I$; `[[800.5, -399.3], [-399.3, 199.6]]` at the end | — |
-| $e_k$, $C$ | the error: distance from $x_k$ to (1, 1); the constant in Newton's squaring rule | $e_{k+1}/e_k^2$ from 3.35 to 10.87 | — |
+| $`f`$, $`u`$, $`v`$ | the height being minimised; the two map coordinates | $`f(0, 1) = 101`$ | — |
+| $`x_k`$, $`k`$, $`x^*`$ | the point (u, v) after k steps; the minimiser | $`x_0 = (0, 1)`$; $`x^* = (1, 1)`$ | — |
+| $`\nabla f`$ | the gradient: slope in u, slope in v | $`(-2, 200)`$ at the start | — |
+| $`\nabla^2 f`$, $`I`$ | the Hessian (table of second derivatives); the identity matrix (1 on the diagonal, 0 elsewhere) | `[[-398, 0], [0, 200]]` at the start | — |
+| $`\lambda_{\min}`$ | the lowest curvature in any direction: the Hessian's smallest eigenvalue | −398 at the start; 0.3994 at (1, 1) | — |
+| $`\delta`$, $`\tau_k`$ | the curvature floor; the lift added to every direction | δ = 0.001; $`\tau_0`$ = 398.001 | δ = 10: 390 steps, not 8 |
+| $`m_k(d)`$ | the bowl (quadratic model) fitted at $`x_k`$, as a function of the move d | — | — |
+| $`d_k`$ | the direction, the move to the bowl's bottom | $`(2000, -0.334)`$ at k = 0 | — |
+| $`\alpha_k`$, $`c_1`$, $`c_2`$ | step length from the line search; the Armijo and curvature constants | $`\alpha_0`$ = 1/2048; 0.0001 and 0.9 | — |
+| $`s_k`$, $`y_k`$, $`t`$ | the step taken, $`\alpha_k d_k`$; the change in gradient across it; how far along the step, 0 to 1 | — | — |
+| $`B_k`$, $`w`$ | BFGS's remembered Hessian; any direction, in proofs | $`B_0 = I`$; `[[800.5, -399.3], [-399.3, 199.6]]` at the end | — |
+| $`e_k`$, $`C`$ | the error: distance from $`x_k`$ to (1, 1); the constant in Newton's squaring rule | $`e_{k+1}/e_k^2`$ from 3.35 to 10.87 | — |
 
 ### When it holds
 
@@ -61,7 +65,7 @@ $$B_k d_k = -\nabla f(x_k), \quad s_k = x_{k+1} - x_k, \quad y_k = \nabla f(x_{k
 - **A lift whenever the land curves down.** Without it, the step heads for the centre of a saddle. At (0.7, 0.5) plain Newton climbs, from height 0.10 to 1.17.
 - **A small floor δ.** The lift must switch off near the bottom. With δ = 10, above the true lowest curvature 0.3994 at (1, 1), the lift never switches off and Newton slows from 8 steps to 390.
 - **A line search.** The bowl is only local. Without the search the lifted first step lands at u = 2000, height 1.600e+15.
-- **For BFGS, the curvature condition: $y_k^{\mathsf T} s_k > 0$.** The update divides by it. A Wolfe line search guarantees it ([Line search](04-line-search-armijo-and-wolfe.md)); without it the remembered matrix can stop being a bowl.
+- **For BFGS, the curvature condition: $`y_k^{\mathsf T} s_k > 0`$.** The update divides by it. A Wolfe line search guarantees it ([Line search](04-line-search-armijo-and-wolfe.md)); without it the remembered matrix can stop being a bowl.
 
 ---
 
@@ -69,25 +73,29 @@ $$B_k d_k = -\nabla f(x_k), \quad s_k = x_{k+1} - x_k, \quad y_k = \nabla f(x_{k
 
 ### Step 0: near any point, the land is a bowl, and a bowl's bottom can be found exactly
 
-Taylor's theorem for two variables ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)) says that close to $x_k$ the height is nearly
+Taylor's theorem for two variables ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)) says that close to $`x_k`$ the height is nearly
 
-$$m_k(d) = f(x_k) + \nabla f(x_k)^{\mathsf T} d + \tfrac12\, d^{\mathsf T} \nabla^2 f(x_k)\, d .$$
+```math
+m_k(d) = f(x_k) + \nabla f(x_k)^{\mathsf T} d + \tfrac12\, d^{\mathsf T} \nabla^2 f(x_k)\, d .
+```
 
 **Read it aloud:** today's height, plus the slope times the move, plus half the curvature times the move twice.
 
-If the Hessian is positive definite (curves up in every direction), $m_k$ is a bowl, and its bottom is where its own gradient is zero: $\nabla f(x_k) + \nabla^2 f(x_k)\,d = 0$. That is Newton's step with no lift. It is also [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) applied to the equation "gradient = 0": the tangent-line trick, done with a tangent plane for each slope.
+If the Hessian is positive definite (curves up in every direction), $`m_k`$ is a bowl, and its bottom is where its own gradient is zero: $`\nabla f(x_k) + \nabla^2 f(x_k)\,d = 0`$. That is Newton's step with no lift. It is also [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) applied to the equation "gradient = 0": the tangent-line trick, done with a tangent plane for each slope.
 
 ### Step 1: when the land curves down, the model's centre is a saddle
 
-At the start the Hessian is `[[-398, 0], [0, 200]]`. Across u the land curves *down*, by −398: moving sideways from (0, 1), either way, brings the point nearer the floor curve $v = u^2$, so the height falls faster and faster. A model that curves down one way and up the other is a saddle, and "the point where its gradient is zero" is the top of the pass, not a bottom.
+At the start the Hessian is `[[-398, 0], [0, 200]]`. Across u the land curves *down*, by −398: moving sideways from (0, 1), either way, brings the point nearer the floor curve $`v = u^2`$, so the height falls faster and faster. A model that curves down one way and up the other is a saddle, and "the point where its gradient is zero" is the top of the pass, not a bottom.
 
 Sometimes that point is still downhill, sometimes not. At (0.7, 0.5) the lowest curvature is −0.6772, and the plain Newton step has slope +0.16 along it: it points uphill. Taking it raises the height from 0.10 to 1.17.
 
 ### Step 2: the lift makes every step point downhill
 
-Adding $\tau I$ adds τ to the curvature in every direction, because $(\nabla^2 f + \tau I) w = \nabla^2 f\, w + \tau w$. So every eigenvalue rises by exactly τ. Choosing $\tau_k = \max(0, \delta - \lambda_{\min})$ makes the lowest one at least δ, so the lifted matrix is positive definite. Its inverse is positive definite too (its eigenvalues are the reciprocals), and then
+Adding $`\tau I`$ adds τ to the curvature in every direction, because $`(\nabla^2 f + \tau I) w = \nabla^2 f\, w + \tau w`$. So every eigenvalue rises by exactly τ. Choosing $`\tau_k = \max(0, \delta - \lambda_{\min})`$ makes the lowest one at least δ, so the lifted matrix is positive definite. Its inverse is positive definite too (its eigenvalues are the reciprocals), and then
 
-$$\nabla f^{\mathsf T} d = -\nabla f^{\mathsf T} \bigl(\nabla^2 f + \tau I\bigr)^{-1} \nabla f < 0$$
+```math
+\nabla f^{\mathsf T} d = -\nabla f^{\mathsf T} \bigl(\nabla^2 f + \tau I\bigr)^{-1} \nabla f < 0
+```
 
 whenever the gradient is not zero. **Read it aloud:** the slope along the lifted step is minus a positive number, so the step goes downhill. At (0.7, 0.5) the lifted step's slope is −126.07.
 
@@ -95,52 +103,56 @@ If the Hessian already curves up by at least δ, τ = 0 and this is plain Newton
 
 ### Step 3: the line search decides how far
 
-At the start τ = 398.001, and the lifted matrix is `[[0.001, 0], [0, 598.001]]`. Across u the bowl is now almost flat, so its bottom is far away: the direction is (2000, −0.334). A bowl fitted at one point means nothing 2000 units off. Backtracking (halve until the height drops by at least $c_1 = 0.0001$ of what the slope promised; [Line search](04-line-search-armijo-and-wolfe.md)) accepts 1/2048 of it. That lands at (0.976563, 0.999837), just above the valley floor, and the height falls from 101 to 0.2136.
+At the start τ = 398.001, and the lifted matrix is `[[0.001, 0], [0, 598.001]]`. Across u the bowl is now almost flat, so its bottom is far away: the direction is (2000, −0.334). A bowl fitted at one point means nothing 2000 units off. Backtracking (halve until the height drops by at least $`c_1 = 0.0001`$ of what the slope promised; [Line search](04-line-search-armijo-and-wolfe.md)) accepts 1/2048 of it. That lands at (0.976563, 0.999837), just above the valley floor, and the height falls from 101 to 0.2136.
 
 The next two steps also need a lift (3.468, then 0.954) and cut steps (1/512, 1/256). From step 3 the Hessian curves up everywhere, τ = 0, and the full step passes the test.
 
 ### Step 4: near the bottom, the error squares
 
-Once τ = 0 and α = 1, this is exactly Newton's method on the gradient. [Convergence rates](03-rates-of-convergence-and-conditioning.md) proves in one variable that the error then shrinks like its square, $e_{k+1} \le C\,e_k^2$ for some constant C. In several variables the same argument holds provided the Hessian at the minimum is invertible and changes smoothly near it (Nocedal and Wright, chapter 3, in Sources). Here it is `[[802, -400], [-400, 200]]`, with determinant 400 and lowest curvature 0.3994, so it is positive definite.
+Once τ = 0 and α = 1, this is exactly Newton's method on the gradient. [Convergence rates](03-rates-of-convergence-and-conditioning.md) proves in one variable that the error then shrinks like its square, $`e_{k+1} \le C\,e_k^2`$ for some constant C. In several variables the same argument holds provided the Hessian at the minimum is invertible and changes smoothly near it (Nocedal and Wright, chapter 3, in Sources). Here it is `[[802, -400], [-400, 200]]`, with determinant 400 and lowest curvature 0.3994, so it is positive definite.
 
-The measured ratios $e_{k+1}/e_k^2$ for k = 4 to 7 are 3.35, 10.25, 3.97 and 10.87 (the last is partly rounding error: $e_8$ is only a few times the smallest gap between neighbouring numbers the computer can store near 1). They stay bounded while the errors shrink towards 0. That is the quadratic rate. The slope falls from 1.94e-07 to 9.89e-14 in the last step, and the run stops.
+The measured ratios $`e_{k+1}/e_k^2`$ for k = 4 to 7 are 3.35, 10.25, 3.97 and 10.87 (the last is partly rounding error: $`e_8`$ is only a few times the smallest gap between neighbouring numbers the computer can store near 1). They stay bounded while the errors shrink towards 0. That is the quadratic rate. The slope falls from 1.94e-07 to 9.89e-14 in the last step, and the run stops.
 
 The price is the Hessian. It holds a second derivative for every pair of variables, and solving with it costs far more than one gradient. For the banana that is nothing; for a model with a million variables it is out of reach.
 
 ### Step 5: BFGS remembers curvature from the slopes
 
-Walk from $x_k$ to $x_{k+1}$. The gradient changes by $y_k$. Along the straight step, the change in gradient is the Hessian, averaged along the step, times the step:
+Walk from $`x_k`$ to $`x_{k+1}`$. The gradient changes by $`y_k`$. Along the straight step, the change in gradient is the Hessian, averaged along the step, times the step:
 
-$$y_k = \Bigl(\int_0^1 \nabla^2 f(x_k + t s_k)\, dt\Bigr)\, s_k .$$
+```math
+y_k = \Bigl(\int_0^1 \nabla^2 f(x_k + t s_k)\, dt\Bigr)\, s_k .
+```
 
-**Read it aloud:** the slopes changed by the average curvature along the step times the step, where $t$ runs from 0 to 1 along it. So any matrix that claims to be the curvature should send $s_k$ to $y_k$. That is the **secant equation**, the many-variable version of using a slope through two points:
+**Read it aloud:** the slopes changed by the average curvature along the step times the step, where $`t`$ runs from 0 to 1 along it. So any matrix that claims to be the curvature should send $`s_k`$ to $`y_k`$. That is the **secant equation**, the many-variable version of using a slope through two points:
 
-$$B_{k+1} s_k = y_k .$$
+```math
+B_{k+1} s_k = y_k .
+```
 
-The BFGS formula meets it exactly. Multiply the update by $s_k$: the middle term gives $B_k s_k \cdot (s_k^{\mathsf T} B_k s_k)/(s_k^{\mathsf T} B_k s_k) = B_k s_k$, cancelling the first, and the last gives $y_k (y_k^{\mathsf T} s_k)/(y_k^{\mathsf T} s_k) = y_k$. In the run the worst miss over all 27 updates is 1.7e-14 of the size of $y_k$: rounding error.
+The BFGS formula meets it exactly. Multiply the update by $`s_k`$: the middle term gives $`B_k s_k \cdot (s_k^{\mathsf T} B_k s_k)/(s_k^{\mathsf T} B_k s_k) = B_k s_k`$, cancelling the first, and the last gives $`y_k (y_k^{\mathsf T} s_k)/(y_k^{\mathsf T} s_k) = y_k`$. In the run the worst miss over all 27 updates is 1.7e-14 of the size of $`y_k`$: rounding error.
 
-One equation does not fix a whole matrix: in two variables it pins down the curvature along the step only. BFGS picks one by a least-change rule: its inverse is the symmetric matrix closest to the old inverse, in a weighted sense, among all that satisfy the secant equation (Nocedal and Wright, chapter 6, in Sources). It is a **rank-two update**: it adds two matrices, each of the form "a column times a row". Practical codes update the inverse of $B_k$ by an equally cheap formula, so a step costs arithmetic on the order of the square of the number of variables, against the cube for solving with a fresh Hessian.
+One equation does not fix a whole matrix: in two variables it pins down the curvature along the step only. BFGS picks one by a least-change rule: its inverse is the symmetric matrix closest to the old inverse, in a weighted sense, among all that satisfy the secant equation (Nocedal and Wright, chapter 6, in Sources). It is a **rank-two update**: it adds two matrices, each of the form "a column times a row". Practical codes update the inverse of $`B_k`$ by an equally cheap formula, so a step costs arithmetic on the order of the square of the number of variables, against the cube for solving with a fresh Hessian.
 
 ### Step 6: the memory stays a bowl when the curvature condition holds
 
 <details>
 <summary>Detailed proof: if $B_k$ is positive definite and $y_k^{\mathsf T} s_k > 0$, so is $B_{k+1}$</summary>
 
-Take any direction $w \ne 0$. Multiply the update by $w$ on both sides:
+Take any direction $`w \ne 0`$. Multiply the update by $`w`$ on both sides:
 
-$$w^{\mathsf T} B_{k+1} w = \Bigl(w^{\mathsf T} B_k w - \frac{(w^{\mathsf T} B_k s_k)^2}{s_k^{\mathsf T} B_k s_k}\Bigr) + \frac{(y_k^{\mathsf T} w)^2}{y_k^{\mathsf T} s_k}.$$
+$`\displaystyle w^{\mathsf T} B_{k+1} w = \Bigl(w^{\mathsf T} B_k w - \frac{(w^{\mathsf T} B_k s_k)^2}{s_k^{\mathsf T} B_k s_k}\Bigr) + \frac{(y_k^{\mathsf T} w)^2}{y_k^{\mathsf T} s_k}.`$
 
-Because $B_k$ is positive definite, $w^{\mathsf T} B_k s_k$ behaves like a dot product ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)), and the Cauchy–Schwarz inequality for it, $(w^{\mathsf T} B_k s_k)^2 \le (w^{\mathsf T} B_k w)(s_k^{\mathsf T} B_k s_k)$, makes the bracket at least 0. The last term is at least 0 because $y_k^{\mathsf T} s_k > 0$. The bracket is 0 only when $w$ is a nonzero multiple of $s_k$. Then $y_k^{\mathsf T} w$ is that multiple times $y_k^{\mathsf T} s_k$, which is not 0, so the last term is positive. Either way the total is strictly positive.
+Because $`B_k`$ is positive definite, $`w^{\mathsf T} B_k s_k`$ behaves like a dot product ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)), and the Cauchy–Schwarz inequality for it, $`(w^{\mathsf T} B_k s_k)^2 \le (w^{\mathsf T} B_k w)(s_k^{\mathsf T} B_k s_k)`$, makes the bracket at least 0. The last term is at least 0 because $`y_k^{\mathsf T} s_k > 0`$. The bracket is 0 only when $`w`$ is a nonzero multiple of $`s_k`$. Then $`y_k^{\mathsf T} w`$ is that multiple times $`y_k^{\mathsf T} s_k`$, which is not 0, so the last term is positive. Either way the total is strictly positive.
 
 </details>
 
-In words: the update removes the old curvature along the step and puts back the curvature the step measured. If that is positive, nothing goes flat or negative. A Wolfe line search guarantees $y_k^{\mathsf T} s_k > 0$ at every step, proved on [Line search](04-line-search-armijo-and-wolfe.md). So BFGS never needs a lift: starting from $B_0 = I$, every $B_k$ is a bowl and every direction points downhill, by Step 2's argument.
+In words: the update removes the old curvature along the step and puts back the curvature the step measured. If that is positive, nothing goes flat or negative. A Wolfe line search guarantees $`y_k^{\mathsf T} s_k > 0`$ at every step, proved on [Line search](04-line-search-armijo-and-wolfe.md). So BFGS never needs a lift: starting from $`B_0 = I`$, every $`B_k`$ is a bowl and every direction points downhill, by Step 2's argument.
 
 ### Step 7: how fast BFGS gets there
 
-BFGS is **superlinear**: the ratio $e_{k+1}/e_k$ falls towards 0, though the error does not square. Over its last five steps the run measures 0.3063, 0.0340, 0.0480, 0.0080 and 0.0022. This is stated, not proved here. Dennis and Moré showed that a quasi-Newton method is superlinear exactly when $B_k$ becomes right along the steps it takes; Nocedal and Wright (chapter 6) prove BFGS does this near a minimum where the Hessian is positive definite and does not change too fast (Sources). The memory shows it: at the end $B_k$ is `[[800.5, -399.3], [-399.3, 199.6]]` against the true `[[802, -400], [-400, 200]]`.
+BFGS is **superlinear**: the ratio $`e_{k+1}/e_k`$ falls towards 0, though the error does not square. Over its last five steps the run measures 0.3063, 0.0340, 0.0480, 0.0080 and 0.0022. This is stated, not proved here. Dennis and Moré showed that a quasi-Newton method is superlinear exactly when $`B_k`$ becomes right along the steps it takes; Nocedal and Wright (chapter 6) prove BFGS does this near a minimum where the Hessian is positive definite and does not change too fast (Sources). The memory shows it: at the end $`B_k`$ is `[[800.5, -399.3], [-399.3, 199.6]]` against the true `[[802, -400], [-400, 200]]`.
 
-On an exact bowl, with each step going to the lowest point along its line, BFGS is known to do better still: it finishes in as many steps as there are variables, and its matrix then equals the bowl's curvature exactly. This card does not prove that. The code checks it on the bowl with curvature `[[3, 1], [1, 2]]`: after two steps it stands at (0.200000, 0.400000), the true bottom, with $B_2$ = `[[3.000000, 1.000000], [1.000000, 2.000000]]`.
+On an exact bowl, with each step going to the lowest point along its line, BFGS is known to do better still: it finishes in as many steps as there are variables, and its matrix then equals the bowl's curvature exactly. This card does not prove that. The code checks it on the bowl with curvature `[[3, 1], [1, 2]]`: after two steps it stands at (0.200000, 0.400000), the true bottom, with $`B_2`$ = `[[3.000000, 1.000000], [1.000000, 2.000000]]`.
 
 ---
 
@@ -150,16 +162,16 @@ The first lifted Newton step, from (0, 1):
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Height | $(1 - 0)^2 + 100\,(1 - 0)^2$ | 101 |
-| Slope in u | $-2(1 - 0) - 400 \times 0 \times (1 - 0)$ | −2 |
-| Slope in v | $200\,(1 - 0)$ | 200 |
-| Hessian | $2 - 400 \times 1 + 1200 \times 0$; $-400 \times 0$; 200 | `[[-398, 0], [0, 200]]` |
+| Height | $`(1 - 0)^2 + 100\,(1 - 0)^2`$ | 101 |
+| Slope in u | $`-2(1 - 0) - 400 \times 0 \times (1 - 0)`$ | −2 |
+| Slope in v | $`200\,(1 - 0)`$ | 200 |
+| Hessian | $`2 - 400 \times 1 + 1200 \times 0`$; $`-400 \times 0`$; 200 | `[[-398, 0], [0, 200]]` |
 | Lowest curvature | the smaller diagonal entry, since the off-diagonal entries are 0 | −398 |
-| Lift | $0.001 - (-398)$ | 398.001 |
-| Lifted matrix | $-398 + 398.001$; $200 + 398.001$ | `[[0.001, 0], [0, 598.001]]` |
-| Direction | $2 / 0.001$; $-200 / 598.001$ | (2000, −0.334) |
+| Lift | $`0.001 - (-398)`$ | 398.001 |
+| Lifted matrix | $`-398 + 398.001`$; $`200 + 398.001`$ | `[[0.001, 0], [0, 598.001]]` |
+| Direction | $`2 / 0.001`$; $`-200 / 598.001`$ | (2000, −0.334) |
 | Line search | halve from 1 until the Armijo test passes | 1/2048 |
-| New point | $0 + 2000/2048$; v moves by a hair | (0.976563, 0.999837), height 0.2136 |
+| New point | $`0 + 2000/2048`$; v moves by a hair | (0.976563, 0.999837), height 0.2136 |
 | Seven more steps | lifts 3.468 and 0.954, then plain Newton | **(1, 1) after 8 steps, slope 9.89e-14** |
 
 The run stops at the bottom, (1, 1), height 0, after eight steps, as the shelf's example says; the sum-of-squares argument certifies it as the global minimum, and the Hessian there, with determinant 400 and lowest curvature 0.3994, confirms it is a strict one.
@@ -171,13 +183,13 @@ The run stops at the bottom, (1, 1), height 0, after eight steps, as the shelf's
 | Plain Newton at (0.7, 0.5), where the lowest curvature is −0.6772 | slope along the step +0.16; height 0.10 rises to 1.17 | The model is a saddle; its centre is uphill. |
 | Lift, but no line search | first step lands at u = 2000, height 1.600e+15 | The lifted bowl is nearly flat across u, so its bottom is absurdly far. |
 | Floor δ = 10 instead of 0.001 | 390 steps instead of 8 | The lift never switches off near (1, 1), whose true lowest curvature is 0.3994, so Newton turns into a slow, linear method. |
-| BFGS that never updates $B_k$ | 20,494 steps instead of 27 | With $B_k = I$ forever, the direction is minus the gradient: gradient descent. The memory is the method. |
+| BFGS that never updates $`B_k`$ | 20,494 steps instead of 27 | With $`B_k = I`$ forever, the direction is minus the gradient: gradient descent. The memory is the method. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code runs the lifted Newton method with backtracking, and BFGS with a weak Wolfe line search found by bisection, both from (0, 1), with stopping test "length of the gradient below $10^{-8}$". Linear systems are solved by elimination. It takes five independent roads:
+The code runs the lifted Newton method with backtracking, and BFGS with a weak Wolfe line search found by bisection, both from (0, 1), with stopping test "length of the gradient below $`10^{-8}`$". Linear systems are solved by elimination. It takes five independent roads:
 
 1. The two methods reach the same point.
 2. The certificate: f is a sum of squares, so (1, 1) with f = 0 is the global minimum, and the Hessian there is positive definite.
@@ -586,8 +598,8 @@ ALL CHECKS PASS
 Lean proves the card's three proved facts in any number of variables, and checks the whole-number worked values exactly.
 
 - With two smooth derivatives and a floor δ above 0, the lifted Newton step points downhill wherever the gradient is not zero.
-- Starting from $B_0 = I$, if the curvature condition $y_k^{\mathsf T} s_k > 0$ holds at every step, every $B_k$ is positive definite.
-- Each BFGS update meets the secant equation $B_{k+1} s_k = y_k$.
+- Starting from $`B_0 = I`$, if the curvature condition $`y_k^{\mathsf T} s_k > 0`$ holds at every step, every $`B_k`$ is positive definite.
+- Each BFGS update meets the secant equation $`B_{k+1} s_k = y_k`$.
 - The banana valley has height 0 at (1, 1), and no point is lower.
 - At the start the height is 101, the slopes are −2 and 200, and the Hessian is `[[-398, 0], [0, 200]]`.
 - At (1, 1) the Hessian is `[[802, -400], [-400, 200]]` with determinant 400, and the test bowl's bottom is (0.2, 0.4).
@@ -875,7 +887,7 @@ example : !![(3 : ℚ), 1; 1, 2] *ᵥ ![1 / 5, 2 / 5] = ![1, 1] := by
 > **Try changing**
 > - Guess first: from the classic start (−1.2, 1), where the Hessian already curves up, does lifted Newton still win by the same margin? Set `start = (-1.2, 1.0)`. Newton takes 21 steps and BFGS 35: the line search keeps cutting Newton's steps as it follows the curved floor.
 > - Guess first: plain Newton from (0, 1), with no lift and no line search (`modify=False, search=False`). It finishes in 5 steps, but the highest height after the start is 99.99. It got lucky.
-> - Guess first: tighten the tolerance from $10^{-8}$ to $10^{-12}$. Newton still takes 8, because its last step already took the slope from 1.94e-07 to 9.89e-14. BFGS needs 29, two more.
+> - Guess first: tighten the tolerance from $`10^{-8}`$ to $`10^{-12}`$. Newton still takes 8, because its last step already took the slope from 1.94e-07 to 9.89e-14. BFGS needs 29, two more.
 
 ---
 
@@ -886,16 +898,16 @@ example : !![(3 : ℚ), 1; 1, 2] *ᵥ ![1 / 5, 2 / 5] = ![1, 1] := by
 >
 > - **Lifting without a line search.** The lift makes the step downhill, not sensible in size: the first step from (0, 1) would land at u = 2000.
 > - **A floor δ set too high.** A lift that stays on at the bottom throws away the quadratic rate: δ = 10 takes 390 steps.
-> - **BFGS with a plain Armijo search.** Nothing then guarantees $y_k^{\mathsf T} s_k > 0$. On the banana from (−1.2, 1), the Armijo step at step 30 of gradient descent gives $s_k^{\mathsf T} y_k$ = −92.39 ([Line search](04-line-search-armijo-and-wolfe.md)); a BFGS update from $B = I$ with that pair is no longer a bowl, and the next direction climbs, slope +102.27. Use Wolfe steps, or skip the update when the test fails.
+> - **BFGS with a plain Armijo search.** Nothing then guarantees $`y_k^{\mathsf T} s_k > 0`$. On the banana from (−1.2, 1), the Armijo step at step 30 of gradient descent gives $`s_k^{\mathsf T} y_k`$ = −92.39 ([Line search](04-line-search-armijo-and-wolfe.md)); a BFGS update from $`B = I`$ with that pair is no longer a bowl, and the next direction climbs, slope +102.27. Use Wolfe steps, or skip the update when the test fails.
 
 ---
 
 ## Where you meet it in real life
 
-- **Statistics packages.** Fitting a model by maximum likelihood minimises a smooth function of a few dozen parameters, and BFGS is a standard choice. At the end its $B_k$ can serve as a rough Hessian for standard errors.
+- **Statistics packages.** Fitting a model by maximum likelihood minimises a smooth function of a few dozen parameters, and BFGS is a standard choice. At the end its $`B_k`$ can serve as a rough Hessian for standard errors.
 - **Chemistry.** Finding a molecule's resting shape minimises its energy over atom positions. True Hessians are costly there, so geometry optimisers update a remembered Hessian with BFGS-type formulas.
 - **Structural engineering.** Nonlinear finite element solvers find equilibrium by Newton's method on the stored energy's gradient. Near buckling the stiffness matrix (the Hessian) stops being positive definite, so a plain Newton step can head the wrong way, as in Step 1. Solvers then guard the step, typically by arc-length control: stepping a fixed distance along the path of load and displacement instead of raising the load.
-- **Machine learning.** Logistic regression and other smooth models with many weights are trained by [L-BFGS](06-l-bfgs-and-limited-memory-updates.md), which keeps only the last few $(s_k, y_k)$ pairs instead of the full matrix.
+- **Machine learning.** Logistic regression and other smooth models with many weights are trained by [L-BFGS](06-l-bfgs-and-limited-memory-updates.md), which keeps only the last few $`(s_k, y_k)`$ pairs instead of the full matrix.
 
 > **Say it back**
 > Near any point the land looks like a bowl, and Newton's method jumps towards the bottom of the bowl fitted from the second derivatives. Where the land curves down, the fitted shape is a saddle, so Newton adds just enough curvature to make it a bowl, which makes the step point downhill. A line search then decides how far to trust the bowl. BFGS skips the second derivatives: it builds its bowl from how the slope changed across each step, and a Wolfe line search keeps that bowl from going flat. On the banana from (0, 1), Newton takes 8 steps, BFGS 27, and gradient descent 20,494.
@@ -904,7 +916,7 @@ example : !![(3 : ℚ), 1; 1, 2] *ᵥ ![1 / 5, 2 / 5] = ![1, 1] := by
 
 ## What this builds on
 
-- [Line search](04-line-search-armijo-and-wolfe.md): the Armijo test that trims Newton's steps, and the Wolfe test that guarantees $y_k^{\mathsf T} s_k > 0$ for BFGS.
+- [Line search](04-line-search-armijo-and-wolfe.md): the Armijo test that trims Newton's steps, and the Wolfe test that guarantees $`y_k^{\mathsf T} s_k > 0`$ for BFGS.
 - [Convergence rates](03-rates-of-convergence-and-conditioning.md): what linear, superlinear and quadratic mean, and the proof that Newton's error squares near a minimum.
 - [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line step for one equation, here applied to the gradient.
 
@@ -930,4 +942,4 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Rosenbrock, H. H. (1960). An automatic method for finding the greatest or least value of a function. *The Computer Journal* 3(3), 175–184. [doi:10.1093/comjnl/3.3.175](https://doi.org/10.1093/comjnl/3.3.175). The banana valley's origin.
 - Broyden, C. G. (1970). The convergence of a class of double-rank minimization algorithms 1. General considerations. *IMA Journal of Applied Mathematics* 6(1), 76–90. [doi:10.1093/imamat/6.1.76](https://doi.org/10.1093/imamat/6.1.76). One of the four 1970 papers that derived the update independently and gave BFGS its letters.
 - Fletcher, R. (1970). A new approach to variable metric algorithms. *The Computer Journal* 13(3), 317–322. [doi:10.1093/comjnl/13.3.317](https://doi.org/10.1093/comjnl/13.3.317). Another of the four independent derivations of the update.
-- Dennis, J. E. and Moré, J. J. (1974). A characterization of superlinear convergence and its application to quasi-Newton methods. *Mathematics of Computation* 28(126), 549–560. [doi:10.1090/S0025-5718-1974-0343581-1](https://doi.org/10.1090/S0025-5718-1974-0343581-1). The condition on $B_k$ that makes a quasi-Newton method superlinear.
+- Dennis, J. E. and Moré, J. J. (1974). A characterization of superlinear convergence and its application to quasi-Newton methods. *Mathematics of Computation* 28(126), 549–560. [doi:10.1090/S0025-5718-1974-0343581-1](https://doi.org/10.1090/S0025-5718-1974-0343581-1). The condition on $`B_k`$ that makes a quasi-Newton method superlinear.

@@ -28,32 +28,34 @@ Open circles mark **inflection points**, where the bend changes direction: at he
 
 ## The formula
 
-$$P_{cr} = \frac{\pi^2 E I}{(K L)^2}$$
+```math
+P_{cr} = \frac{\pi^2 E I}{(K L)^2}
+```
 
 **Read it aloud:** the critical load is pi squared, times the material's stiffness, times the section's resistance to bending, divided by the square of the effective length.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P$, $P_{cr}$, $P_{sq}$ | end load along the tube, in N; $P_{cr}$ the critical (buckling) load; $P_{sq} = \sigma_y A$ the squash load | 40 kN applied; 31.71 kN critical, pinned; 130.8 kN squash | — |
-| $E$ | Young's modulus: the steel's stiffness, stress per unit strain, in Pa | 210 GPa, the design value for structural steel in EN 1993-1-1 (Sources); [Stress, strain and bending](07-stress-strain-and-beam-bending.md) uses a handbook value a little lower | rises in proportion |
-| $I$ | second moment of area: how far the steel sits from the bending axis, in m⁴ | 137676 mm⁴ | rises in proportion |
-| $D$, $t$, $A$ | outside diameter and wall thickness of the tube; $A$ its steel area | 48.3 mm, 4.0 mm, 556.7 mm² | $P_{cr}$ rises with $D$ and $t$; the squash load rises with $A$ |
-| $L$, $x$ | length of the tube; $x$ the height along it, from the base | 3 m | falls as $1/L^2$ |
-| $K$, $L_e$ | end factor; effective length $L_e = KL$, the length of the equivalent pinned tube | 1, 2, 0.6992, 0.5 | falls as $1/K^2$ |
-| $\sigma$, $\sigma_y$ | stress, force per area, in Pa; $\sigma_y$ the yield stress, where steel starts to flow | 57.0 MPa at buckling; 235 MPa, grade S235 in EN 1993-1-1 | — |
-| $r$ | radius of gyration, $\sqrt{I/A}$: the typical distance of the steel from the axis | 15.73 mm | rises, because the slenderness $L/r$ falls |
-| $y$, $M$ | sideways bow at height $x$, with $y'$, $y''$ its slope and curvature; $M$ the bending moment, force times lever arm, in N m | — | — |
-| $k$, $n$, $\pi$ | $\sqrt{P/EI}$, in 1/m: how tightly a bowed shape can curl under load $P$; $n$ the mode number, the count of half-waves; $\pi$ the circle constant | $kL = \pi$ at the pinned critical load, $n = 1$ | shorter waves fit |
-| $a$, $b$, $c$, $d$, $\Delta U$ | free constants of a solution ($a$ is also the bow size in Step 4); $\Delta U$ the change in stored energy when the tube bows | — | — |
-| $e_0$, $\delta$, $W$ | starting bow at mid-height; bow under load; section modulus $I/(D/2)$, which turns moment into peak stress | 3 mm; 25.67 mm at 28 kN; 5701 mm³ | — |
+| $`P`$, $`P_{cr}`$, $`P_{sq}`$ | end load along the tube, in N; $`P_{cr}`$ the critical (buckling) load; $`P_{sq} = \sigma_y A`$ the squash load | 40 kN applied; 31.71 kN critical, pinned; 130.8 kN squash | — |
+| $`E`$ | Young's modulus: the steel's stiffness, stress per unit strain, in Pa | 210 GPa, the design value for structural steel in EN 1993-1-1 (Sources); [Stress, strain and bending](07-stress-strain-and-beam-bending.md) uses a handbook value a little lower | rises in proportion |
+| $`I`$ | second moment of area: how far the steel sits from the bending axis, in m⁴ | 137676 mm⁴ | rises in proportion |
+| $`D`$, $`t`$, $`A`$ | outside diameter and wall thickness of the tube; $`A`$ its steel area | 48.3 mm, 4.0 mm, 556.7 mm² | $`P_{cr}`$ rises with $`D`$ and $`t`$; the squash load rises with $`A`$ |
+| $`L`$, $`x`$ | length of the tube; $`x`$ the height along it, from the base | 3 m | falls as $`1/L^2`$ |
+| $`K`$, $`L_e`$ | end factor; effective length $`L_e = KL`$, the length of the equivalent pinned tube | 1, 2, 0.6992, 0.5 | falls as $`1/K^2`$ |
+| $`\sigma`$, $`\sigma_y`$ | stress, force per area, in Pa; $`\sigma_y`$ the yield stress, where steel starts to flow | 57.0 MPa at buckling; 235 MPa, grade S235 in EN 1993-1-1 | — |
+| $`r`$ | radius of gyration, $`\sqrt{I/A}`$: the typical distance of the steel from the axis | 15.73 mm | rises, because the slenderness $`L/r`$ falls |
+| $`y`$, $`M`$ | sideways bow at height $`x`$, with $`y'`$, $`y''`$ its slope and curvature; $`M`$ the bending moment, force times lever arm, in N m | — | — |
+| $`k`$, $`n`$, $`\pi`$ | $`\sqrt{P/EI}`$, in 1/m: how tightly a bowed shape can curl under load $`P`$; $`n`$ the mode number, the count of half-waves; $`\pi`$ the circle constant | $`kL = \pi`$ at the pinned critical load, $`n = 1`$ | shorter waves fit |
+| $`a`$, $`b`$, $`c`$, $`d`$, $`\Delta U`$ | free constants of a solution ($`a`$ is also the bow size in Step 4); $`\Delta U`$ the change in stored energy when the tube bows | — | — |
+| $`e_0`$, $`\delta`$, $`W`$ | starting bow at mid-height; bow under load; section modulus $`I/(D/2)`$, which turns moment into peak stress | 3 mm; 25.67 mm at 28 kN; 5701 mm³ | — |
 
-The tube's **slenderness** is $L_e/r$: 190.8 for the 3 m pinned tube. Dividing $P_{cr}$ by $A$ gives the buckling stress $\pi^2 E / (L_e/r)^2$. It equals the yield stress at $L_e/r = \pi\sqrt{E/\sigma_y}$ = 93.9. Above that, the tube buckles while the steel is still elastic. Below it, the steel yields first.
+The tube's **slenderness** is $`L_e/r`$: 190.8 for the 3 m pinned tube. Dividing $`P_{cr}`$ by $`A`$ gives the buckling stress $`\pi^2 E / (L_e/r)^2`$. It equals the yield stress at $`L_e/r = \pi\sqrt{E/\sigma_y}`$ = 93.9. Above that, the tube buckles while the steel is still elastic. Below it, the steel yields first.
 
 ### When it holds
 
-- **The tube is straight and the load is centred.** A real tube with a 3 mm bow (one thousandth of its length) starts to yield at 29.05 kN, not 31.71 kN. The bow multiplies as the load nears $P_{cr}$ (see below).
+- **The tube is straight and the load is centred.** A real tube with a 3 mm bow (one thousandth of its length) starts to yield at 29.05 kN, not 31.71 kN. The bow multiplies as the load nears $`P_{cr}`$ (see below).
 - **The steel stays elastic: slenderness above 93.9.** A 0.5 m pinned tube gets 1141 kN from the formula but crushes at 130.8 kN. The fixed-fixed 3 m tube (effective length 1.5 m) sits right at the edge: 126.82 kN from the formula, 96.9 % of squash. With a 1.5 mm bow it starts to yield at 88.3 kN. In this range design codes use measured column curves, not Euler.
-- **The ends behave as idealised.** Scaffold couplers are neither perfect pins nor perfect clamps. Choosing the wrong $K$ moves the answer by a factor of four (see What breaks).
+- **The ends behave as idealised.** Scaffold couplers are neither perfect pins nor perfect clamps. Choosing the wrong $`K`$ moves the answer by a factor of four (see What breaks).
 - **Small slopes.** The theory finds the load where a bent shape becomes possible. It does not say how far the tube then bends; that needs the full large-bend equation.
 - **The load stays vertical.** A load that tilts with the tube's top, such as a hose thrust, follows different rules.
 
@@ -65,64 +67,72 @@ The tube's **slenderness** is $L_e/r$: 190.8 for the 3 m pinned tube. Dividing $
 
 Suppose the tube has bowed sideways by a small amount. Two things happen at each height.
 
-The load at the top now pushes on a lever. At a height where the tube sits $y$ to the side of the line between the ends, the end load acts with a lever arm $y$, so it bends the tube there with moment $P y$. More bow means more lever, which means more bending. The load feeds the bow.
+The load at the top now pushes on a lever. At a height where the tube sits $`y`$ to the side of the line between the ends, the end load acts with a lever arm $`y`$, so it bends the tube there with moment $`P y`$. More bow means more lever, which means more bending. The load feeds the bow.
 
-The tube's bending stiffness pushes back. [Stress, strain and bending](07-stress-strain-and-beam-bending.md) shows that a beam bent to curvature $y''$ resists with a moment $EI$ times that curvature.
+The tube's bending stiffness pushes back. [Stress, strain and bending](07-stress-strain-and-beam-bending.md) shows that a beam bent to curvature $`y''`$ resists with a moment $`EI`$ times that curvature.
 
-Both grow in proportion to the size of the bow. So the size cancels, and only the load decides who wins. Below one particular load the stiffness wins for every shape, and the tube springs back straight. At that load some shape exactly balances: a bent tube can rest with no side force at all. That load is $P_{cr}$.
+Both grow in proportion to the size of the bow. So the size cancels, and only the load decides who wins. Below one particular load the stiffness wins for every shape, and the tube springs back straight. At that load some shape exactly balances: a bent tube can rest with no side force at all. That load is $`P_{cr}`$.
 
 ### Step 1: the pinned tube is the guitar string's eigenvalue problem
 
 For the pinned tube the two moments balance when
 
-$$EI\,y'' + P\,y = 0, \qquad y(0) = 0,\; y(L) = 0.$$
+```math
+EI\,y'' + P\,y = 0, \qquad y(0) = 0,\; y(L) = 0.
+```
 
-Divide by $EI$: $-y'' = (P/EI)\,y$. This is the eigenvalue problem of the string pinned at both ends ([Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md)). Only special values of $P/EI$ let a nonzero shape fit between the pins: $(n\pi/L)^2$ for $n = 1, 2, 3, \dots$, with shape $\sin(n\pi x/L)$. The smallest, $n = 1$, is one smooth arch:
+Divide by $`EI`$: $`-y'' = (P/EI)\,y`$. This is the eigenvalue problem of the string pinned at both ends ([Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md)). Only special values of $`P/EI`$ let a nonzero shape fit between the pins: $`(n\pi/L)^2`$ for $`n = 1, 2, 3, \dots`$, with shape $`\sin(n\pi x/L)`$. The smallest, $`n = 1`$, is one smooth arch:
 
-$$P_{cr} = \frac{\pi^2 EI}{L^2}.$$
+```math
+P_{cr} = \frac{\pi^2 EI}{L^2}.
+```
 
-Below it, only $y = 0$ satisfies the equation: the straight tube is the only resting shape. The higher loads ($n = 2$, an S-shape, at four times as much) are only reached if something braces the tube at mid-height.
+Below it, only $`y = 0`$ satisfies the equation: the straight tube is the only resting shape. The higher loads ($`n = 2`$, an S-shape, at four times as much) are only reached if something braces the tube at mid-height.
 
 ### Step 2: other ends, through the fourth-order equation
 
 A clamped end carries a moment of its own, which the pinned equation ignores. Differentiate the balance twice to remove it:
 
-$$EI\,y'''' + P\,y'' = 0.$$
+```math
+EI\,y'''' + P\,y'' = 0.
+```
 
-With $k = \sqrt{P/EI}$ every solution is $a + bx + c\cos kx + d\sin kx$, four free constants. Each end supplies two conditions:
+With $`k = \sqrt{P/EI}`$ every solution is $`a + bx + c\cos kx + d\sin kx`$, four free constants. Each end supplies two conditions:
 
-- **pinned:** no bow, no moment, so $y = 0$ and $y'' = 0$;
-- **clamped:** no bow, no slope, so $y = 0$ and $y' = 0$;
-- **free:** no moment and no side force, so $y'' = 0$ and $EI\,y''' + P\,y' = 0$.
+- **pinned:** no bow, no moment, so $`y = 0`$ and $`y'' = 0`$;
+- **clamped:** no bow, no slope, so $`y = 0`$ and $`y' = 0`$;
+- **free:** no moment and no side force, so $`y'' = 0`$ and $`EI\,y''' + P\,y' = 0`$.
 
-Four conditions on four constants have a nonzero answer only when their determinant is zero. The determinant is one number made from the conditions' coefficients, and it is zero exactly when a nonzero answer exists ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). That happens at $kL = \pi$ (pinned-pinned), $\pi/2$ (flagpole), $2\pi$ (fixed-fixed), and at the first root of $\tan kL = kL$, which is $kL$ = 4.4934 (fixed-pinned). Writing $kL = \pi/K$ gives every case in one formula, with $K$ = 1, 2, 0.5 and 0.6992.
+Four conditions on four constants have a nonzero answer only when their determinant is zero. The determinant is one number made from the conditions' coefficients, and it is zero exactly when a nonzero answer exists ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). That happens at $`kL = \pi`$ (pinned-pinned), $`\pi/2`$ (flagpole), $`2\pi`$ (fixed-fixed), and at the first root of $`\tan kL = kL`$, which is $`kL`$ = 4.4934 (fixed-pinned). Writing $`kL = \pi/K`$ gives every case in one formula, with $`K`$ = 1, 2, 0.5 and 0.6992.
 
 <details>
 <summary>Detailed working: the fixed-pinned tube</summary>
 
-Clamp the base: $y(0) = 0$ and $y'(0) = 0$ give $a = -c$ and $b = -kd$, so
+Clamp the base: $`y(0) = 0`$ and $`y'(0) = 0`$ give $`a = -c`$ and $`b = -kd`$, so
 
-$$y = c(\cos kx - 1) + d(\sin kx - kx).$$
+$`\displaystyle y = c(\cos kx - 1) + d(\sin kx - kx).`$
 
-Pin the top: $y''(L) = 0$ gives $c\cos kL + d\sin kL = 0$, so $c = -d\tan kL$. Put that into $y(L) = 0$:
+Pin the top: $`y''(L) = 0`$ gives $`c\cos kL + d\sin kL = 0`$, so $`c = -d\tan kL`$. Put that into $`y(L) = 0`$:
 
-$$-d\tan kL\,(\cos kL - 1) + d(\sin kL - kL) = d(\tan kL - kL) = 0.$$
+$`\displaystyle -d\tan kL\,(\cos kL - 1) + d(\sin kL - kL) = d(\tan kL - kL) = 0.`$
 
-A nonzero $d$ needs $\tan kL = kL$. Its first root past zero is 4.4934, so $K = \pi/4.4934$ = 0.6992. The curvature $y''$ vanishes where $\tan kx = \tan kL$, at $x = L(1 - \pi/kL)$ = 0.903 m: the inflection point in the picture.
+A nonzero $`d`$ needs $`\tan kL = kL`$. Its first root past zero is 4.4934, so $`K = \pi/4.4934`$ = 0.6992. The curvature $`y''`$ vanishes where $`\tan kx = \tan kL`$, at $`x = L(1 - \pi/kL)`$ = 0.903 m: the inflection point in the picture.
 
 </details>
 
 ### Step 3: why K is a length, read off the shape
 
-Between two inflection points the curvature, and so the moment, is zero at both ends. That stretch is a pinned tube. So the buckled shape of any column contains a pinned tube of length $KL$, and $P_{cr}$ is that tube's load. Clamped at both ends, the middle half (0.75 m to 2.25 m) is a pinned 1.5 m tube: four times as strong. The flagpole is half of a pinned tube of length 6 m, mirrored below its base: a quarter as strong.
+Between two inflection points the curvature, and so the moment, is zero at both ends. That stretch is a pinned tube. So the buckled shape of any column contains a pinned tube of length $`KL`$, and $`P_{cr}`$ is that tube's load. Clamped at both ends, the middle half (0.75 m to 2.25 m) is a pinned 1.5 m tube: four times as strong. The flagpole is half of a pinned tube of length 6 m, mirrored below its base: a quarter as strong.
 
 ### Step 4: stability is an energy question
 
-The words "stable" and "critical" come from energy. Bow the pinned tube into $y = a\sin(\pi x/L)$. Bending stores energy $\tfrac12\int EI\,(y'')^2\,dx$. The ends draw together by $\tfrac12\int (y')^2\,dx$, so the load lowers through that distance and releases $P$ times it. For this shape both are $a^2$ times a constant, and the change in total energy is
+The words "stable" and "critical" come from energy. Bow the pinned tube into $`y = a\sin(\pi x/L)`$. Bending stores energy $`\tfrac12\int EI\,(y'')^2\,dx`$. The ends draw together by $`\tfrac12\int (y')^2\,dx`$, so the load lowers through that distance and releases $`P`$ times it. For this shape both are $`a^2`$ times a constant, and the change in total energy is
 
-$$\Delta U = \frac{\pi^2 a^2}{4L}\left(\frac{\pi^2 EI}{L^2} - P\right).$$
+```math
+\Delta U = \frac{\pi^2 a^2}{4L}\left(\frac{\pi^2 EI}{L^2} - P\right).
+```
 
-Below $P_{cr}$ any bow costs energy, so the straight tube is a valley: stable. Above it, bowing releases energy, so the straight tube is a hilltop: unstable, and the smallest nudge sends it left or right. This is the **pitchfork** of [Bifurcations](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/10-bifurcations-of-equilibria.md): one resting state splits into two, bowed left and bowed right, as the load passes $P_{cr}$. The code's third road uses exactly this test.
+Below $`P_{cr}`$ any bow costs energy, so the straight tube is a valley: stable. Above it, bowing releases energy, so the straight tube is a hilltop: unstable, and the smallest nudge sends it left or right. This is the **pitchfork** of [Bifurcations](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/10-bifurcations-of-equilibria.md): one resting state splits into two, bowed left and bowed right, as the load passes $`P_{cr}`$. The code's third road uses exactly this test.
 
 ---
 
@@ -133,10 +143,10 @@ The 3 m tube, pinned at both ends.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | inside diameter | 48.3 − 2 × 4.0 | 40.3 mm |
-| steel area $A$ | $\tfrac{\pi}{4}(48.3^2 - 40.3^2)$ | 556.7 mm² |
-| second moment $I$ | $\tfrac{\pi}{64}(48.3^4 - 40.3^4)$ | 137676 mm⁴ |
-| stiffness $EI$ | 210 × 10⁹ Pa × 137676 × 10⁻¹² m⁴ | 28912 N m² |
-| critical load, $K = 1$ | 9.8696 × 28912 / 3² | 31.71 kN |
+| steel area $`A`$ | $`\tfrac{\pi}{4}(48.3^2 - 40.3^2)`$ | 556.7 mm² |
+| second moment $`I`$ | $`\tfrac{\pi}{64}(48.3^4 - 40.3^4)`$ | 137676 mm⁴ |
+| stiffness $`EI`$ | 210 × 10⁹ Pa × 137676 × 10⁻¹² m⁴ | 28912 N m² |
+| critical load, $`K = 1`$ | 9.8696 × 28912 / 3² | 31.71 kN |
 | squash load | 235 MPa × 556.7 mm² | 130.8 kN |
 | buckling stress | 31.71 kN / 556.7 mm² | 57.0 MPa |
 | slenderness | 3000 mm / 15.73 mm | 190.8, above 93.9 |
@@ -144,9 +154,9 @@ The 3 m tube, pinned at both ends.
 
 The tube folds at under a quarter of the load its steel could carry, so any check of this prop against crushing alone would pass it four times over. A 40 kN load is 1.26 times its critical load.
 
-The same tube with the four sets of ends, $P_{cr} = 31.71\text{ kN} / K^2$:
+The same tube with the four sets of ends, $`P_{cr} = 31.71\text{ kN} / K^2`$:
 
-| Ends | $K$ | Effective length | $P_{cr}$ | Share of squash |
+| Ends | $`K`$ | Effective length | $`P_{cr}`$ | Share of squash |
 | --- | --- | --- | --- | --- |
 | pinned-pinned | 1.0000 | 3.000 m | 31.71 kN | 24.2 % |
 | fixed-free (flagpole) | 2.0000 | 6.000 m | 7.93 kN | 6.1 % |
@@ -157,8 +167,8 @@ The same tube with the four sets of ends, $P_{cr} = 31.71\text{ kN} / K^2$:
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Treat the tube as a solid bar | 61.52 kN, not 31.71 | the solid bar's $I$ counts steel that is not there; nearly double, on the unsafe side |
-| Forget to square $K$, flagpole | 15.85 kN, not 7.93 | $K$ stretches the length, and length enters squared |
+| Treat the tube as a solid bar | 61.52 kN, not 31.71 | the solid bar's $`I`$ counts steel that is not there; nearly double, on the unsafe side |
+| Forget to square $`K`$, flagpole | 15.85 kN, not 7.93 | $`K`$ stretches the length, and length enters squared |
 | Take coupler ends as clamps when they act as pins | 126.82 kN, not 31.71 | the end factor is a modelling choice; four times too optimistic |
 | Use Euler on a 0.5 m tube | 1141 kN, but it crushes at 130.8 | far too stocky: slenderness below 93.9, so the steel yields first |
 
@@ -172,11 +182,13 @@ Euler's tube stays perfectly straight right up to 31.71 kN, then bends. Real tub
 
 ### One tube, loaded step by step
 
-Give the pinned tube a starting bow $e_0$ = 3 mm at mid-height, one thousandth of its length. Under load $P$ the bow becomes
+Give the pinned tube a starting bow $`e_0`$ = 3 mm at mid-height, one thousandth of its length. Under load $`P`$ the bow becomes
 
-$$\delta = \frac{e_0}{1 - P/P_{cr}}.$$
+```math
+\delta = \frac{e_0}{1 - P/P_{cr}}.
+```
 
-(The load's moment $P\delta$ feeds the bow, which feeds the moment; summing that chain gives the factor $1/(1 - P/P_{cr})$.) The peak stress is the squeeze $P/A$ plus the bending $P\delta/W$.
+(The load's moment $`P\delta`$ feeds the bow, which feeds the moment; summing that chain gives the factor $`1/(1 - P/P_{cr})`$.) The peak stress is the squeeze $`P/A`$ plus the bending $`P\delta/W`$.
 
 | Load | Bow | Squeeze | Bending | Peak stress |
 | --- | --- | --- | --- | --- |
@@ -224,7 +236,7 @@ xychart-beta
 
 Loads in even 2 kN steps. Orange, rising: squeeze only, the straight tube. Teal: squeeze plus bending with a 3 mm bow. Dark: with a 1 mm bow. Orange, flat along the top: the yield stress, 235 MPa.
 
-The 3 mm tube reaches it at 29.05 kN, just past the right edge; the 1 mm tube at 30.75 kN. Both arrive just short of 31.71 kN, because near $P_{cr}$ the bow, and with it the stress, shoots up whatever it started at. For a slender tube Euler's number is the ceiling the real tube creeps up to.
+The 3 mm tube reaches it at 29.05 kN, just past the right edge; the 1 mm tube at 30.75 kN. Both arrive just short of 31.71 kN, because near $`P_{cr}`$ the bow, and with it the stress, shoots up whatever it started at. For a slender tube Euler's number is the ceiling the real tube creeps up to.
 
 ---
 
@@ -232,15 +244,15 @@ The 3 mm tube reaches it at 29.05 kN, just past the right edge; the 1 mm tube at
 
 The code reaches the critical load three independent ways.
 
-- **Road one** is Euler's formula, with the fixed-pinned $kL$ found by bisection on $\tan kL = kL$. Bisection halves an interval that contains the root until the interval is tiny ([Bisection](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/01-bisection-and-bracketing.md)).
+- **Road one** is Euler's formula, with the fixed-pinned $`kL`$ found by bisection on $`\tan kL = kL`$. Bisection halves an interval that contains the root until the interval is tiny ([Bisection](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/01-bisection-and-bracketing.md)).
 - **Road two** never uses the formula: it shoots the fourth-order equation from the base with Runge-Kutta 4 for each pair of ends, forms the two-by-two determinant of the top conditions, scans the load in 1 kN steps until the determinant changes sign, and bisects. Runge-Kutta 4 steps a differential equation forward, using four slope samples per step ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)).
 - **Road three** models the pinned tube as a chain of stiff links joined by springs, writes its energy as a matrix, and finds the first load at which elimination meets a negative pivot (a sign that some bow releases energy); with 10, 20 and 40 links it closes in on 31.71 kN from below.
 
 Other numbers are found twice as well:
 
 - The bowed tube is checked twice too: the amplification formula against a Runge-Kutta solution of the bent-tube equation.
-- The tube's area and $I$, and with them the squash load, are found twice: by the ring formulas and by adding up 4000 thin rings.
-- Each first-yield load is found twice: by bisection on the peak stress, and as the smaller root of the quadratic $(\sigma_y - P/A)(1 - P/P_{cr}) = P e_0/W$.
+- The tube's area and $`I`$, and with them the squash load, are found twice: by the ring formulas and by adding up 4000 thin rings.
+- Each first-yield load is found twice: by bisection on the peak stress, and as the smaller root of the quadratic $`(\sigma_y - P/A)(1 - P/P_{cr}) = P e_0/W`$.
 
 ### Python
 
@@ -611,9 +623,9 @@ ALL CHECKS PASS
 
 Lean proves Steps 1 and 4 for the ideal pinned tube, for all values meeting each bullet's conditions.
 
-- Take $E > 0$, $I > 0$ and $L > 0$. Then $\pi^2 EI/L^2$ is the smallest load at which a bent pinned tube can rest. Below it, the only bow fitting $EI\,y'' + P\,y = 0$ with $y(0) = y(L) = 0$ is $y = 0$.
-- Take a length $L > 0$ and a mode number $n \ge 1$. Then $\sin(n\pi x/L)$ is a resting shape at load $n^2$ times $P_{cr}$. For $n = 2$, the S-shape, that is four times as much.
-- Take $L > 0$ and bow the pinned tube into $y = a\sin(\pi x/L)$. Then $\Delta U = \frac{\pi^2 a^2}{4L}\left(\frac{\pi^2 EI}{L^2} - P\right)$, the formula in Step 4. Here $\Delta U$ is the bending energy minus the work the load releases.
+- Take $`E > 0`$, $`I > 0`$ and $`L > 0`$. Then $`\pi^2 EI/L^2`$ is the smallest load at which a bent pinned tube can rest. Below it, the only bow fitting $`EI\,y'' + P\,y = 0`$ with $`y(0) = y(L) = 0`$ is $`y = 0`$.
+- Take a length $`L > 0`$ and a mode number $`n \ge 1`$. Then $`\sin(n\pi x/L)`$ is a resting shape at load $`n^2`$ times $`P_{cr}`$. For $`n = 2`$, the S-shape, that is four times as much.
+- Take $`L > 0`$ and bow the pinned tube into $`y = a\sin(\pi x/L)`$. Then $`\Delta U = \frac{\pi^2 a^2}{4L}\left(\frac{\pi^2 EI}{L^2} - P\right)`$, the formula in Step 4. Here $`\Delta U`$ is the bending energy minus the work the load releases.
 - The card's exact ratios also check: the flagpole gets a quarter of the pinned load, and fixed-fixed four times.
 
 The other ends in Step 2, the starting-bow formula and every decimal on the card are left to the Python and Rust checks.
@@ -895,9 +907,9 @@ example : (2 : ℕ) ^ 2 = 4 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - Guess first: the thinner EN 39 tube, 3.2 mm wall instead of 4.0 mm. Change the wall from `0.0040` to `0.0032` in the settings line. The critical load drops to 26.68 kN. The bow table then stops the program at its 28 kN row: that load is now past $P_{cr}$, where $e_0/(1 - P/P_{cr})$ turns negative and no longer describes a bow.
+> - Guess first: the thinner EN 39 tube, 3.2 mm wall instead of 4.0 mm. Change the wall from `0.0040` to `0.0032` in the settings line. The critical load drops to 26.68 kN. The bow table then stops the program at its 28 kN row: that load is now past $`P_{cr}`$, where $`e_0/(1 - P/P_{cr})`$ turns negative and no longer describes a bow.
 > - Guess first: cut the tube to 2 m. Change `L` from `3.0` to `2.0`. The load rises by (3/2)², to 71.34 kN.
-> - Guess first: aluminium, a third as stiff. Change `E` from `210e9` to `70e9`. The load falls to 10.57 kN; the squash load depends on the alloy, not on $E$. The bow table stops the program at its 20 kN row, for the same reason: 20 kN is past the new $P_{cr}$.
+> - Guess first: aluminium, a third as stiff. Change `E` from `210e9` to `70e9`. The load falls to 10.57 kN; the squash load depends on the alloy, not on $`E`$. The bow table stops the program at its 20 kN row, for the same reason: 20 kN is past the new $`P_{cr}`$.
 > - Guess first: is 40 kN safe on a fixed-pinned tube? It is 62 % of that tube's Euler load, before any allowance for a bow.
 
 ---
@@ -905,10 +917,10 @@ example : (2 : ℕ) ^ 2 = 4 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Checking a column for crushing and stopping there.** The squash load $\sigma_y A$ looks like the strength of the tube, and for a short block it is. For the 3 m tube it is 130.8 kN, while the tube folds at 31.71 kN. Buckling is a stiffness failure: a stronger grade of steel raises the squash load and leaves the buckling load exactly where it was, because $E$ is the same for every grade.
+> **Checking a column for crushing and stopping there.** The squash load $`\sigma_y A`$ looks like the strength of the tube, and for a short block it is. For the 3 m tube it is 130.8 kN, while the tube folds at 31.71 kN. Buckling is a stiffness failure: a stronger grade of steel raises the squash load and leaves the buckling load exactly where it was, because $`E`$ is the same for every grade.
 >
 > Smaller traps:
-> - **The solid-bar $I$.** Using $\pi D^4/64$ for a tube gives 61.52 kN, nearly twice the truth.
+> - **The solid-bar $`I`$.** Using $`\pi D^4/64`$ for a tube gives 61.52 kN, nearly twice the truth.
 > - **Optimistic ends.** Calling scaffold couplers clamps gives 126.82 kN; as pins the answer is 31.71 kN.
 > - **Euler on a stocky member.** A 0.5 m tube gets 1141 kN from the formula; it crushes at 130.8 kN.
 > - **Trusting Euler's number for a bent tube.** With a 3 mm bow the steel starts to yield at 29.05 kN, and with 40 kN on it nothing holds.
@@ -917,26 +929,26 @@ example : (2 : ℕ) ^ 2 = 4 := by norm_num
 
 ## Where you meet it in real life
 
-- **Scaffolds and back-props.** Every adjustable prop has a load chart that falls steeply as it is extended. That curve is $1/L^2$ with the starting bows of the stress chart above built in.
+- **Scaffolds and back-props.** Every adjustable prop has a load chart that falls steeply as it is extended. That curve is $`1/L^2`$ with the starting bows of the stress chart above built in.
 - **Steel building columns.** Design codes give a column curve: Euler at high slenderness, the squash load at low slenderness, and a measured blend between them where real columns fail by bending and yielding together.
-- **Laboratory testing.** Measuring the bow at a few loads well below failure and plotting it the right way gives $P_{cr}$ without breaking the specimen (Southwell's plot).
+- **Laboratory testing.** Measuring the bow at a few loads well below failure and plotting it the right way gives $`P_{cr}`$ without breaking the specimen (Southwell's plot).
 - **Drink cans and rockets.** A thin shell under end load buckles too, but far below its own ideal value, because tiny dents matter much more for shells than for columns.
-- **The ringing tube.** Load a pinned column and its lowest sideways ringing frequency falls; the square of the frequency drops in proportion to $1 - P/P_{cr}$ and reaches zero at buckling. [Vibration modes](06-vibration-modes-and-resonance.md) sets up the same eigenvalue picture of modes and frequencies for a footbridge.
+- **The ringing tube.** Load a pinned column and its lowest sideways ringing frequency falls; the square of the frequency drops in proportion to $`1 - P/P_{cr}`$ and reaches zero at buckling. [Vibration modes](06-vibration-modes-and-resonance.md) sets up the same eigenvalue picture of modes and frequencies for a footbridge.
 
 > **Say it back**
-> A column under end load has two moments fighting: the load's leverage on any sideways bow, and the column's bending stiffness. Both grow with the bow, so only the load decides the winner, and the tie is Euler's critical load π²EI/(KL)². The ends set $K$, the length of the pinned stretch between inflection points. The 3 m scaffold tube buckles at 31.71 kN pinned, under a quarter of the 130.8 kN that would crush its steel. Real tubes start bent, so their bow grows as the load climbs and they give out just below Euler's number.
+> A column under end load has two moments fighting: the load's leverage on any sideways bow, and the column's bending stiffness. Both grow with the bow, so only the load decides the winner, and the tie is Euler's critical load π²EI/(KL)². The ends set $`K`$, the length of the pinned stretch between inflection points. The 3 m scaffold tube buckles at 31.71 kN pinned, under a quarter of the 130.8 kN that would crush its steel. Real tubes start bent, so their bow grows as the load climbs and they give out just below Euler's number.
 
 ---
 
 ## What this builds on
 
-- [Stress, strain and bending](07-stress-strain-and-beam-bending.md): stress and strain, and the beam law that a bent member resists with moment $EI$ times its curvature. Step 0 uses it directly.
-- [Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md): only special values of a parameter let a nonzero shape fit between pins. Here the parameter is $P/EI$, and the lowest value is the buckling load.
+- [Stress, strain and bending](07-stress-strain-and-beam-bending.md): stress and strain, and the beam law that a bent member resists with moment $`EI`$ times its curvature. Step 0 uses it directly.
+- [Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md): only special values of a parameter let a nonzero shape fit between pins. Here the parameter is $`P/EI`$, and the lowest value is the buckling load.
 - [Bifurcations](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/10-bifurcations-of-equilibria.md): the pitchfork, where one resting state splits into two. A buckling column is the standard example.
 
 ## Where this goes next
 
-- [Vibration modes](06-vibration-modes-and-resonance.md): the same eigenvalue picture, worked for a footbridge's sway; under end load a column's lowest frequency falls, reaching zero at $P_{cr}$.
+- [Vibration modes](06-vibration-modes-and-resonance.md): the same eigenvalue picture, worked for a footbridge's sway; under end load a column's lowest frequency falls, reaching zero at $`P_{cr}`$.
 - [Sturm-Liouville](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): columns whose stiffness changes along their length, such as a tapered mast, still have a rising list of buckling loads, by the same theory.
 - [Lagrangian and Hamiltonian mechanics](04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): Step 4's energy test, done for any system described by a few coordinates.
 
@@ -948,7 +960,7 @@ The question left open: once a column has buckled, how far does it bend, and can
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Southwell, R. V. "On the analysis of experimental observations in problems of elastic stability." *Proceedings of the Royal Society of London A* 135, no. 828 (1932): 601–616. [doi:10.1098/rspa.1932.0055](https://doi.org/10.1098/rspa.1932.0055). The bow amplification $e_0/(1 - P/P_{cr})$ and how to read $P_{cr}$ from a test without breaking the column.
+- Southwell, R. V. "On the analysis of experimental observations in problems of elastic stability." *Proceedings of the Royal Society of London A* 135, no. 828 (1932): 601–616. [doi:10.1098/rspa.1932.0055](https://doi.org/10.1098/rspa.1932.0055). The bow amplification $`e_0/(1 - P/P_{cr})`$ and how to read $`P_{cr}`$ from a test without breaking the column.
 - Shanley, F. R. "Inelastic Column Theory." *Journal of the Aeronautical Sciences* 14, no. 5 (1947): 261–268. [doi:10.2514/8.1346](https://doi.org/10.2514/8.1346). What happens below slenderness 93.9, where the steel yields before Euler's load is reached.
 - Bažant, Zdeněk P., and Luigi Cedolin. *Stability of Structures: Elastic, Inelastic, Fracture and Damage Theories*. World Scientific, 2010. [doi:10.1142/7828](https://doi.org/10.1142/7828). Euler columns with every end condition, the energy test for stability, imperfections and post-buckling.
 - CEN. *EN 1993-1-1:2005, Eurocode 3: Design of steel structures, Part 1-1: General rules and rules for buildings*. Brussels: CEN, 2005. [European Commission Eurocode 3 page](https://eurocodes.jrc.ec.europa.eu/EN-Eurocodes/eurocode-3-design-steel-structures). Clause 3.2.6 sets the design value E = 210 GPa for structural steel; Table 3.1 gives grade S235 its 235 MPa yield stress.

@@ -40,7 +40,9 @@ Same records, same sort, one changed line. The bottom bar barely shows. Both num
 
 Notation first, in words. The log has n records. Call them by **rank**: the record with rank 1 is the oldest, rank n the newest, whatever order they sit in. C is the number of comparisons one run of randomised quicksort makes; it is a random number, because the pivots are. E[C] is its **expectation**, the long-run average ([Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)). H_n is the **harmonic number** 1 + 1/2 + 1/3 + … + 1/n.
 
-$$E[C] = \sum_{1 \le i < j \le n} \frac{2}{j - i + 1} = 2(n+1)H_n - 4n \approx 2n \ln n$$
+```math
+E[C] = \sum_{1 \le i < j \le n} \frac{2}{j - i + 1} = 2(n+1)H_n - 4n \approx 2n \ln n
+```
 
 **Read it aloud:** the expected number of comparisons is the sum, over every pair of ranks, of two divided by the number of ranks from the first to the second; that sum comes to two times n plus one times the harmonic number, minus four n, which grows like 2n times the natural log of n.
 
@@ -48,15 +50,15 @@ The pair term 2/(j − i + 1) is the heart of it. Two records next to each other
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | records to sort | 1,000 (and 10,000,000 for the full day) | rises a bit faster than n: 10 times the records, 11.57 times the comparisons |
-| $C$ | comparisons in one run; random, because the pivots are | between 9,689 and 13,582 in 400 runs | — |
-| $E[C]$ | the expected comparisons: the average over the method's own coins | 10,985.9 | — |
-| $i$, $j$ | two ranks, with i smaller than j | ranks 3 and 5 | a wider gap j − i makes a meeting less likely |
-| $X_{ij}$ | the **indicator** of a pair: 1 if ranks i and j are ever compared, 0 if not | 1 for ranks 4 and 5, in every run | — |
-| $d$, $m$ | the gap j − i between two ranks, and m = d + 1, the size of their block | gap 2, block 3, for ranks 3 and 5 | a bigger block makes a meeting less likely |
-| $H_n$ | the harmonic number 1 + 1/2 + … + 1/n, which grows like ln n | 7.4855 for n = 1,000 | — |
-| $k$ | spot checks a Monte Carlo test makes (below) | 60 | the test misses less often |
-| $f$ | the share of neighbouring record pairs that are out of order | 50 of 999 | the test misses less often |
+| $`n`$ | records to sort | 1,000 (and 10,000,000 for the full day) | rises a bit faster than n: 10 times the records, 11.57 times the comparisons |
+| $`C`$ | comparisons in one run; random, because the pivots are | between 9,689 and 13,582 in 400 runs | — |
+| $`E[C]`$ | the expected comparisons: the average over the method's own coins | 10,985.9 | — |
+| $`i`$, $`j`$ | two ranks, with i smaller than j | ranks 3 and 5 | a wider gap j − i makes a meeting less likely |
+| $`X_{ij}`$ | the **indicator** of a pair: 1 if ranks i and j are ever compared, 0 if not | 1 for ranks 4 and 5, in every run | — |
+| $`d`$, $`m`$ | the gap j − i between two ranks, and m = d + 1, the size of their block | gap 2, block 3, for ranks 3 and 5 | a bigger block makes a meeting less likely |
+| $`H_n`$ | the harmonic number 1 + 1/2 + … + 1/n, which grows like ln n | 7.4855 for n = 1,000 | — |
+| $`k`$ | spot checks a Monte Carlo test makes (below) | 60 | the test misses less often |
+| $`f`$ | the share of neighbouring record pairs that are out of order | 50 of 999 | the test misses less often |
 
 ### When it holds
 
@@ -75,7 +77,9 @@ Following quicksort round by round is messy: the sizes of the pieces are random,
 
 The expectation of a sum is the sum of the expectations, even when the pieces depend on each other. And the expectation of an indicator is the chance of its event. Both facts are proved on [Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md). Here the indicators are badly tangled: if one pivot splits ranks 3 and 5, it also splits ranks 2 and 5. Linearity does not care. So, writing P(…) for the chance of the event in brackets,
 
-$$E[C] = \sum_{i<j} E[X_{ij}] = \sum_{i<j} P(\text{ranks } i \text{ and } j \text{ are compared}).$$
+```math
+E[C] = \sum_{i<j} E[X_{ij}] = \sum_{i<j} P(\text{ranks } i \text{ and } j \text{ are compared}).
+```
 
 All that is left is one chance per pair.
 
@@ -90,7 +94,9 @@ Sooner or later a pivot lands inside the block, and that first pivot decides eve
 
 Which record of the block is hit first? Each pivot is uniform over its piece, and the whole block sits in that piece. So, given that the pivot lands in the block, each of the j − i + 1 records is equally likely. Two of them make the pair meet:
 
-$$P(\text{ranks } i \text{ and } j \text{ are compared}) = \frac{2}{j - i + 1}.$$
+```math
+P(\text{ranks } i \text{ and } j \text{ are compared}) = \frac{2}{j - i + 1}.
+```
 
 For ranks 3 and 5, the chance is 2/3. For neighbours, 2/2 = 1: they must meet, since nothing sits between them to split them. For the oldest and the newest of 1,000, the chance is 2/1,000.
 
@@ -100,7 +106,9 @@ Look at what the argument never used: the order of the records in the log. It ta
 
 Group the pairs by their gap d = j − i. There are n − d pairs with gap d, and each has chance 2/(d + 1). Then write m = d + 1, which runs from 2 to n:
 
-$$E[C] = \sum_{m=2}^{n} \frac{2(n + 1 - m)}{m} = 2(n+1)\big(H_n - 1\big) - 2(n - 1) = 2(n+1)H_n - 4n.$$
+```math
+E[C] = \sum_{m=2}^{n} \frac{2(n + 1 - m)}{m} = 2(n+1)\big(H_n - 1\big) - 2(n - 1) = 2(n+1)H_n - 4n.
+```
 
 <details>
 <summary>The middle step, line by line</summary>
@@ -147,7 +155,9 @@ Here is one for the same log. Before trusting last night's sort, a quick test as
 
 Suppose a glitch left 50 of the 999 neighbouring pairs swapped, so f = 50/999. Each check finds a bad pair with chance f, and the checks are independent. So all k miss with chance
 
-$$P(\text{wrong "looks sorted"}) = (1 - f)^k.$$
+```math
+P(\text{wrong "looks sorted"}) = (1 - f)^k.
+```
 
 With k = 60 checks, that is 0.0459. The checks ran the test 20,000 times and it missed 0.0480 of the time, within two standard errors of 0.0459. On a truly sorted log it never says "out of order": 0 of 1,000. The test costs 60 comparisons; a full sort costs 10,985.9 on average.
 

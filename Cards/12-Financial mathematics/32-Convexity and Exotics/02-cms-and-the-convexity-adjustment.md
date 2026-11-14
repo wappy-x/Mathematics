@@ -38,55 +38,63 @@ Straight line: the rate the coupon pays. Curved line: the same payoff counted in
 
 ## The formula
 
-Notation first, in words. Times are in years from today. $T$ is the fixing date, five years out. $U$ is the payment date, $T + 1$. $S_T$ is the 10-year swap rate observed at $T$, unknown today. $D(t)$ is today's price of one dollar paid at time $t$, the discount factor; on the flat curve $D(t) = 1.045^{-t}$. $A_T$ is the swap's **annuity** at $T$: the value then of one dollar paid at the end of each of the swap's ten years. $A_0$ is its value today. $\mathbb{E}^A[\,\cdot\,]$ is an average taken with the weights of the **annuity measure** ([The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)): the weights under which the forward swap rate $F$ has no drift, $\mathbb{E}^A[S_T] = F$.
+Notation first, in words. Times are in years from today. $`T`$ is the fixing date, five years out. $`U`$ is the payment date, $`T + 1`$. $`S_T`$ is the 10-year swap rate observed at $`T`$, unknown today. $`D(t)`$ is today's price of one dollar paid at time $`t`$, the discount factor; on the flat curve $`D(t) = 1.045^{-t}`$. $`A_T`$ is the swap's **annuity** at $`T`$: the value then of one dollar paid at the end of each of the swap's ten years. $`A_0`$ is its value today. $`\mathbb{E}^A[\,\cdot\,]`$ is an average taken with the weights of the **annuity measure** ([The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)): the weights under which the forward swap rate $`F`$ has no drift, $`\mathbb{E}^A[S_T] = F`$.
 
-The fair rate of a CMS coupon, the fixed rate that makes it worth the same as the floating coupon, is, with $h$ defined two displays below,
+The fair rate of a CMS coupon, the fixed rate that makes it worth the same as the floating coupon, is, with $`h`$ defined two displays below,
 
-$$K_{\text{CMS}} = \frac{\mathbb{E}^A[\,S_T\, w(S_T)\,]}{\mathbb{E}^A[\,w(S_T)\,]} = F + \frac{\mathbb{E}^A[\,h(S_T)\,]}{\mathbb{E}^A[\,w(S_T)\,]}$$
+```math
+K_{\text{CMS}} = \frac{\mathbb{E}^A[\,S_T\, w(S_T)\,]}{\mathbb{E}^A[\,w(S_T)\,]} = F + \frac{\mathbb{E}^A[\,h(S_T)\,]}{\mathbb{E}^A[\,w(S_T)\,]}
+```
 
 **Read it aloud:** average the rate over the swaption market's scenarios, but let each scenario count in proportion to what the payment date's dollar is worth there relative to the annuity.
 
-The weight $w$ is the payment bond over the annuity, written as a function of the rate by assuming the whole curve sits flat at $S_T$ on the fixing date:
+The weight $`w`$ is the payment bond over the annuity, written as a function of the rate by assuming the whole curve sits flat at $`S_T`$ on the fixing date:
 
-$$w(s) = \frac{(1+s)^{-1}}{G(s)}, \qquad G(s) = \sum_{i=1}^{10} (1+s)^{-i}$$
+```math
+w(s) = \frac{(1+s)^{-1}}{G(s)}, \qquad G(s) = \sum_{i=1}^{10} (1+s)^{-i}
+```
 
-In words: the top is one dollar paid a year after the fixing; the bottom is the annuity, ten such dollars, one a year. Both are discounted at the rate $s$ itself. The Greek capital sigma, $\sum$, means "add the terms for $i = 1$ to $10$".
+In words: the top is one dollar paid a year after the fixing; the bottom is the annuity, ten such dollars, one a year. Both are discounted at the rate $`s`$ itself. The Greek capital sigma, $`\sum`$, means "add the terms for $`i = 1`$ to $`10`$".
 
 The adjustment's numerator comes from swaption prices, Hagan's replication:
 
-$$\mathbb{E}^A[h(S_T)] = \int_0^F h''(k)\, R(k)\, dk + \int_F^\infty h''(k)\, P(k)\, dk, \qquad h(s) = (s-F)\,\big(w(s) - w(F)\big)$$
+```math
+\mathbb{E}^A[h(S_T)] = \int_0^F h''(k)\, R(k)\, dk + \int_F^\infty h''(k)\, P(k)\, dk, \qquad h(s) = (s-F)\,\big(w(s) - w(F)\big)
+```
 
-In words: buy receiver swaptions at every strike below the forward and payer swaptions at every strike above it, in the amounts $h''(k)\,dk$; the strip's cost is the numerator. The denominator is found the same way with $w''$ in place of $h''$, plus $w(F)$.
+In words: buy receiver swaptions at every strike below the forward and payer swaptions at every strike above it, in the amounts $`h''(k)\,dk`$; the strip's cost is the numerator. The denominator is found the same way with $`w''`$ in place of $`h''`$, plus $`w(F)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the adjustment… |
 | --- | --- | --- | --- |
-| $S_T$ | the 10-year swap rate read at the fixing | unknown today | — |
-| $F$ | the forward 10-year swap rate for the fixing date | 4.5% | grows, roughly as its square |
-| $T$, $U$ | the fixing date and the payment date | 5 and 6 years | a later $T$ grows it (40.20 bp at 10 years); a later $U$ shrinks it, then turns it negative |
-| $\sigma$ | Black volatility of the swap rate: the spread of its log per root-year | 20% | grows: 46.48 bp at 30% |
-| $D(t)$, $t$ | today's price of a dollar paid at time $t$ | $D(U) = 0.767896$ | — |
-| $A_T$, $A_0$, $A$ | the annuity at the fixing, today, and as a unit of account | $A_0 = 6.349569$ | — |
-| $G(s)$, $s$, $\sum$ | the annuity on a flat curve at rate $s$; the sum of its ten terms | 7.912718 at 4.5% | — |
-| $w(s)$, $W_T$, $c$ | payment bond over annuity: modelled as a function of the rate, the true ratio at $T$, and the constant between them | 0.120937 at 4.5% | a steeper $w$ gives a bigger adjustment |
-| $h(s)$, $f$, $k$ | the payoff the strip replicates; any smooth payoff; a swaption strike | — | — |
-| $R(k)$, $P(k)$, $N$, $d_1$, $d_2$ | receiver and payer swaption prices per unit of annuity; the bell-curve area and Black's two cut-offs | Black's formula at 20% | — |
-| $K_{\text{CMS}}$ | the CMS coupon's fair rate | 4.6796% | — |
-| $Q$, $B$, $X$ | in the proof only: the risk-neutral measure, the bank account, any positive traded asset used as the unit | — | — |
+| $`S_T`$ | the 10-year swap rate read at the fixing | unknown today | — |
+| $`F`$ | the forward 10-year swap rate for the fixing date | 4.5% | grows, roughly as its square |
+| $`T`$, $`U`$ | the fixing date and the payment date | 5 and 6 years | a later $`T`$ grows it (40.20 bp at 10 years); a later $`U`$ shrinks it, then turns it negative |
+| $`\sigma`$ | Black volatility of the swap rate: the spread of its log per root-year | 20% | grows: 46.48 bp at 30% |
+| $`D(t)`$, $`t`$ | today's price of a dollar paid at time $`t`$ | $`D(U) = 0.767896`$ | — |
+| $`A_T`$, $`A_0`$, $`A`$ | the annuity at the fixing, today, and as a unit of account | $`A_0 = 6.349569`$ | — |
+| $`G(s)`$, $`s`$, $`\sum`$ | the annuity on a flat curve at rate $`s`$; the sum of its ten terms | 7.912718 at 4.5% | — |
+| $`w(s)`$, $`W_T`$, $`c`$ | payment bond over annuity: modelled as a function of the rate, the true ratio at $`T`$, and the constant between them | 0.120937 at 4.5% | a steeper $`w`$ gives a bigger adjustment |
+| $`h(s)`$, $`f`$, $`k`$ | the payoff the strip replicates; any smooth payoff; a swaption strike | — | — |
+| $`R(k)`$, $`P(k)`$, $`N`$, $`d_1`$, $`d_2`$ | receiver and payer swaption prices per unit of annuity; the bell-curve area and Black's two cut-offs | Black's formula at 20% | — |
+| $`K_{\text{CMS}}`$ | the CMS coupon's fair rate | 4.6796% | — |
+| $`Q`$, $`B`$, $`X`$ | in the proof only: the risk-neutral measure, the bank account, any positive traded asset used as the unit | — | — |
 
-$R$ and $P$ are Black's swaption formulas from [Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md), with the annuity factor left off: $P(k) = F\,N(d_1) - k\,N(d_2)$, $R(k) = k\,N(-d_2) - F\,N(-d_1)$, where $N$ is the bell-curve area to the left and $d_{1,2} = \big(\ln(F/k) \pm \sigma^2 T/2\big)/(\sigma\sqrt{T})$.
+$`R`$ and $`P`$ are Black's swaption formulas from [Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md), with the annuity factor left off: $`P(k) = F\,N(d_1) - k\,N(d_2)`$, $`R(k) = k\,N(-d_2) - F\,N(-d_1)`$, where $`N`$ is the bell-curve area to the left and $`d_{1,2} = \big(\ln(F/k) \pm \sigma^2 T/2\big)/(\sigma\sqrt{T})`$.
 
-A quick formula, exact when $w$ is a straight line, gives most of the answer by hand:
+A quick formula, exact when $`w`$ is a straight line, gives most of the answer by hand:
 
-$$K_{\text{CMS}} - F \approx F^2\left(e^{\sigma^2 T} - 1\right)\frac{w'(F)}{w(F)}$$
+```math
+K_{\text{CMS}} - F \approx F^2\left(e^{\sigma^2 T} - 1\right)\frac{w'(F)}{w(F)}
+```
 
-In words: the variance of the rate under the annuity measure, times how steeply the weight rises, per unit of weight. $w'$ is the slope of $w$; $w''$ and $h''$ are the second derivatives, the rate at which the slope changes.
+In words: the variance of the rate under the annuity measure, times how steeply the weight rises, per unit of weight. $`w'`$ is the slope of $`w`$; $`w''`$ and $`h''`$ are the second derivatives, the rate at which the slope changes.
 
 ### When it holds
 
 - **Swaption prices are known at every strike.** Here a flat 20 percent Black volatility supplies them. Real markets have a smile (volatility that differs by strike), and the strip must use the market's price strike by strike; using one at-the-money volatility for all strikes misprices the wings.
-- **The whole curve moves with the 10-year rate.** The weight $w$ assumes a flat curve at $S_T$. If the curve twists, two scenarios with the same 10-year rate have different weights, and no strip of swaptions on one rate can see the difference. The error is small for mild twists, but it is a model error, not a rounding error.
+- **The whole curve moves with the 10-year rate.** The weight $`w`$ assumes a flat curve at $`S_T`$. If the curve twists, two scenarios with the same 10-year rate have different weights, and no strip of swaptions on one rate can see the difference. The error is small for mild twists, but it is a model error, not a rounding error.
 - **Rates stay positive.** The lognormal Black model and the lower limit 0 in the receiver integral both assume it. Negative rates need shifted or normal volatilities ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)) and a receiver integral that starts below zero.
-- **The payer wing is thin enough.** The payer integral runs to infinity, and its weights $h''(k)$ stay between 0.86 and 1.03 for every strike up to 30 percent. If the smile makes high-strike payers expensive, the integral, and the CMS price, grow sharply. That is Hagan's warning: CMS prices are hostage to the far upside of the smile.
+- **The payer wing is thin enough.** The payer integral runs to infinity, and its weights $`h''(k)`$ stay between 0.86 and 1.03 for every strike up to 30 percent. If the smile makes high-strike payers expensive, the integral, and the CMS price, grow sharply. That is Hagan's warning: CMS prices are hostage to the far upside of the smile.
 - **The payment lag is the one stated.** The weight depends on when the coupon is paid. Paid on the fixing date the adjustment is 22.77 bp; paid at the swap's end it is −19.55 bp.
 - **Conventions verified 2026-09-28.** The example pays annually with accrual fraction 1 on a flat annually compounded curve. Real USD swaps on SOFR pay the fixed leg annually on Act/360, and swaption volatilities are mostly quoted as normal (basis-point) volatilities; convert those to Black before using this card's formulas.
 
@@ -96,57 +104,63 @@ In words: the variance of the rate under the annuity measure, times how steeply 
 
 ### Step 0: price the coupon in the unit where the rate has no drift
 
-The swap rate is one traded price divided by another: the floating leg's value divided by the annuity. Counted in annuities it has no drift, and the swaption market prices in exactly that unit. The CMS coupon is paid in a different unit: one dollar on date $U$. So the plan is to write the coupon in annuity units, where swaptions describe the rate, and account for the conversion factor between the two units. That factor is where the adjustment lives.
+The swap rate is one traded price divided by another: the floating leg's value divided by the annuity. Counted in annuities it has no drift, and the swaption market prices in exactly that unit. The CMS coupon is paid in a different unit: one dollar on date $`U`$. So the plan is to write the coupon in annuity units, where swaptions describe the rate, and account for the conversion factor between the two units. That factor is where the adjustment lives.
 
 ### Step 1: the conversion factor is the payment bond over the annuity
 
-The coupon pays $S_T$ at $U$. Its value today is $D(U)$ times the average of $S_T$ under the weights that belong to the payment date. Changing the unit from the payment bond to the annuity multiplies each scenario's weight by the ratio of the two assets in that scenario, divided by the same ratio today. Writing $W_T$ for the payment bond's price at the fixing divided by $A_T$, and dividing by the coupon's value per unit rate,
+The coupon pays $`S_T`$ at $`U`$. Its value today is $`D(U)`$ times the average of $`S_T`$ under the weights that belong to the payment date. Changing the unit from the payment bond to the annuity multiplies each scenario's weight by the ratio of the two assets in that scenario, divided by the same ratio today. Writing $`W_T`$ for the payment bond's price at the fixing divided by $`A_T`$, and dividing by the coupon's value per unit rate,
 
-$$K_{\text{CMS}} = \frac{\mathbb{E}^A[\,S_T\, W_T\,]}{\mathbb{E}^A[\,W_T\,]}.$$
+```math
+K_{\text{CMS}} = \frac{\mathbb{E}^A[\,S_T\, W_T\,]}{\mathbb{E}^A[\,W_T\,]}.
+```
 
 This is exact. It uses nothing but the absence of free money.
 
-If $W_T$ were a constant, it would cancel and $K_{\text{CMS}}$ would be $F$. It is not constant, and it rises with the rate: at 4.5 percent the ratio is 0.120937, and its slope is 3.959847 times its own size per unit of rate. So scenarios with high rates count extra, and the average moves above $F$. This is the same mechanism as the gap between futures and forwards on [Futures against forwards](01-futures-forward-convexity.md): a payment made in the wrong unit, averaged under the wrong weights.
+If $`W_T`$ were a constant, it would cancel and $`K_{\text{CMS}}`$ would be $`F`$. It is not constant, and it rises with the rate: at 4.5 percent the ratio is 0.120937, and its slope is 3.959847 times its own size per unit of rate. So scenarios with high rates count extra, and the average moves above $`F`$. This is the same mechanism as the gap between futures and forwards on [Futures against forwards](01-futures-forward-convexity.md): a payment made in the wrong unit, averaged under the wrong weights.
 
 <details>
 <summary>Detailed proof: the change of unit</summary>
 
-Let $B$ be the bank account and $Q$ the risk-neutral measure. For any positive traded asset $X$ with no payouts before $T$, the measure $Q^X$ with density $dQ^X/dQ = X_T/(X_0 B_T)$ makes every traded price divided by $X$ a martingale. Take $X$ = the payment bond, price $P(t, U)$ at time $t$, and $X$ = the annuity $A$. The coupon's value today is $D(U)\,\mathbb{E}^{U}[S_T]$, since $S_T$ paid at $U$ divided by the bond, which is worth 1 at $U$, is $S_T$ itself. The ratio of densities is
-$$\frac{dQ^U}{dQ^A} = \frac{P(T,U)/D(U)}{A_T/A_0} = \frac{A_0}{D(U)}\,W_T.$$
-A density averages to 1, so $\mathbb{E}^A[W_T] = D(U)/A_0$. Then $\mathbb{E}^U[S_T] = \mathbb{E}^A[S_T\, W_T]\,A_0/D(U) = \mathbb{E}^A[S_T W_T]/\mathbb{E}^A[W_T]$. Subtracting $F = \mathbb{E}^A[S_T]$ gives $K_{\text{CMS}} - F = \operatorname{Cov}^A(S_T, W_T)/\mathbb{E}^A[W_T]$: the adjustment is the covariance of the rate with the weight. Nothing here fixes the sign; the payment date does.
+Let $`B`$ be the bank account and $`Q`$ the risk-neutral measure. For any positive traded asset $`X`$ with no payouts before $`T`$, the measure $`Q^X`$ with density $`dQ^X/dQ = X_T/(X_0 B_T)`$ makes every traded price divided by $`X`$ a martingale. Take $`X`$ = the payment bond, price $`P(t, U)`$ at time $`t`$, and $`X`$ = the annuity $`A`$. The coupon's value today is $`D(U)\,\mathbb{E}^{U}[S_T]`$, since $`S_T`$ paid at $`U`$ divided by the bond, which is worth 1 at $`U`$, is $`S_T`$ itself. The ratio of densities is
+
+$`\displaystyle \frac{dQ^U}{dQ^A} = \frac{P(T,U)/D(U)}{A_T/A_0} = \frac{A_0}{D(U)}\,W_T.`$
+
+A density averages to 1, so $`\mathbb{E}^A[W_T] = D(U)/A_0`$. Then $`\mathbb{E}^U[S_T] = \mathbb{E}^A[S_T\, W_T]\,A_0/D(U) = \mathbb{E}^A[S_T W_T]/\mathbb{E}^A[W_T]`$. Subtracting $`F = \mathbb{E}^A[S_T]`$ gives $`K_{\text{CMS}} - F = \mathrm{Cov}^A(S_T, W_T)/\mathbb{E}^A[W_T]`$: the adjustment is the covariance of the rate with the weight. Nothing here fixes the sign; the payment date does.
 
 </details>
 
 ### Step 2: make the weight a function of the rate
 
-Swaptions describe the rate $S_T$ and nothing else about the curve. To use them, the weight must be written as a function of the rate. Hagan's standard choice: on the fixing date the curve is flat at $S_T$ and compounds once a year. Then the payment bond is $(1+S_T)^{-1}$, the annuity is $G(S_T)$, and $W_T = c\,w(S_T)$ for a constant $c$ that makes today's bond prices come out right. The constant cancels from top and bottom of Step 1's ratio, so only the shape of $w$ matters. On today's flat curve the check prints $w(F) = D(U)/A_0 = 0.120937$ both ways, a sign the mapping agrees with today's curve.
+Swaptions describe the rate $`S_T`$ and nothing else about the curve. To use them, the weight must be written as a function of the rate. Hagan's standard choice: on the fixing date the curve is flat at $`S_T`$ and compounds once a year. Then the payment bond is $`(1+S_T)^{-1}`$, the annuity is $`G(S_T)`$, and $`W_T = c\,w(S_T)`$ for a constant $`c`$ that makes today's bond prices come out right. The constant cancels from top and bottom of Step 1's ratio, so only the shape of $`w`$ matters. On today's flat curve the check prints $`w(F) = D(U)/A_0 = 0.120937`$ both ways, a sign the mapping agrees with today's curve.
 
 ### Step 3: any smooth payoff is a strip of options
 
-For any function $f$ with a second derivative, and any rate $s > 0$,
+For any function $`f`$ with a second derivative, and any rate $`s > 0`$,
 
-$$f(s) = f(F) + f'(F)(s-F) + \int_0^F f''(k)\,(k-s)^+\,dk + \int_F^\infty f''(k)\,(s-k)^+\,dk,$$
+```math
+f(s) = f(F) + f'(F)(s-F) + \int_0^F f''(k)\,(k-s)^+\,dk + \int_F^\infty f''(k)\,(s-k)^+\,dk,
+```
 
-where $(x)^+$ means $x$ if positive, else 0. In words: a curved payoff is a straight line plus a heap of hockey sticks, one at every strike, each sized by how sharply the payoff bends there. Below the forward the hockey sticks are receivers, $(k - s)^+$; above it, payers, $(s - k)^+$.
+where $`(x)^+`$ means $`x`$ if positive, else 0. In words: a curved payoff is a straight line plus a heap of hockey sticks, one at every strike, each sized by how sharply the payoff bends there. Below the forward the hockey sticks are receivers, $`(k - s)^+`$; above it, payers, $`(s - k)^+`$.
 
 <details>
 <summary>Detailed proof: the strip identity</summary>
 
-Take $s > F$. Only the second integral is non-zero, and only for $k$ between $F$ and $s$. Integrate by parts: $\int_F^s f''(k)(s-k)\,dk = \big[f'(k)(s-k)\big]_F^s + \int_F^s f'(k)\,dk = -f'(F)(s-F) + f(s) - f(F)$. Adding back $f(F) + f'(F)(s-F)$ leaves $f(s)$. For $s < F$ the first integral does the same job on the interval from $s$ to $F$, with the signs mirrored. For $s = F$ both integrals vanish. The identity holds rate by rate, with no probability in it, which is why it is called static: the strip is bought once and never traded again.
+Take $`s > F`$. Only the second integral is non-zero, and only for $`k`$ between $`F`$ and $`s`$. Integrate by parts: $`\int_F^s f''(k)(s-k)\,dk = \big[f'(k)(s-k)\big]_F^s + \int_F^s f'(k)\,dk = -f'(F)(s-F) + f(s) - f(F)`$. Adding back $`f(F) + f'(F)(s-F)`$ leaves $`f(s)`$. For $`s < F`$ the first integral does the same job on the interval from $`s`$ to $`F`$, with the signs mirrored. For $`s = F`$ both integrals vanish. The identity holds rate by rate, with no probability in it, which is why it is called static: the strip is bought once and never traded again.
 
 </details>
 
 ### Step 4: price the strip with swaptions
 
-Apply Step 3 to $h(s) = (s - F)\big(w(s) - w(F)\big)$. It is zero at $F$ and so is its slope there, so only the integrals survive. Average under the annuity measure. The average of $(s - k)^+$ is the payer swaption's price in annuity units, $P(k)$, and the average of $(k - s)^+$ is the receiver's, $R(k)$. That gives Hagan's formula for the numerator. The same step on $w$ gives the denominator, $\mathbb{E}^A[w] = w(F) + \int_0^F w''R\,dk + \int_F^\infty w''P\,dk$, where the straight-line term averages away because $\mathbb{E}^A[S_T] = F$.
+Apply Step 3 to $`h(s) = (s - F)\big(w(s) - w(F)\big)`$. It is zero at $`F`$ and so is its slope there, so only the integrals survive. Average under the annuity measure. The average of $`(s - k)^+`$ is the payer swaption's price in annuity units, $`P(k)`$, and the average of $`(k - s)^+`$ is the receiver's, $`R(k)`$. That gives Hagan's formula for the numerator. The same step on $`w`$ gives the denominator, $`\mathbb{E}^A[w] = w(F) + \int_0^F w''R\,dk + \int_F^\infty w''P\,dk`$, where the straight-line term averages away because $`\mathbb{E}^A[S_T] = F`$.
 
-Why $h$ and not $s\,w(s)$ directly: $s\,w(s) = F\,w(F) + w(F)(s - F) + F\big(w(s) - w(F)\big) + h(s)$. Average it. The second piece is zero, and the first and third add to $F\,\mathbb{E}^A[w]$. So $\mathbb{E}^A[S_T w] = F\,\mathbb{E}^A[w] + \mathbb{E}^A[h]$; divide by $\mathbb{E}^A[w]$ to get $K_{\text{CMS}} = F + \mathbb{E}^A[h]/\mathbb{E}^A[w]$.
+Why $`h`$ and not $`s\,w(s)`$ directly: $`s\,w(s) = F\,w(F) + w(F)(s - F) + F\big(w(s) - w(F)\big) + h(s)`$. Average it. The second piece is zero, and the first and third add to $`F\,\mathbb{E}^A[w]`$. So $`\mathbb{E}^A[S_T w] = F\,\mathbb{E}^A[w] + \mathbb{E}^A[h]`$; divide by $`\mathbb{E}^A[w]`$ to get $`K_{\text{CMS}} = F + \mathbb{E}^A[h]/\mathbb{E}^A[w]`$.
 
 ### Step 5: the sign and the size
 
-The strip's weights are $h''(k) = 2w'(k) + (k - F)\,w''(k)$. With the coupon paid one year after the fixing, $w$ rises with the rate and bends only gently, so the weights are positive and every option in the strip is bought, not sold. A positive-weighted strip of options costs something, so the adjustment is positive. For the example the receivers below 4.5 percent contribute 5.7096 bp and the payers above contribute 12.2507 bp: 17.9603 bp in all. The payers carry two thirds of it, because a lognormal rate has a long right tail.
+The strip's weights are $`h''(k) = 2w'(k) + (k - F)\,w''(k)`$. With the coupon paid one year after the fixing, $`w`$ rises with the rate and bends only gently, so the weights are positive and every option in the strip is bought, not sold. A positive-weighted strip of options costs something, so the adjustment is positive. For the example the receivers below 4.5 percent contribute 5.7096 bp and the payers above contribute 12.2507 bp: 17.9603 bp in all. The payers carry two thirds of it, because a lognormal rate has a long right tail.
 
-A second road, the quick formula, replaces $w$ by its tangent line at $F$: $w(s) \approx w(F) + w'(F)(s - F)$. Then the covariance of Step 1 is the slope times the variance of $S_T$, which for a lognormal rate is $F^2(e^{\sigma^2 T} - 1)$, and the denominator is $w(F)$. It gives 17.7536 bp, 1.2 percent low, because it drops the bend of $w$. The coupon paid at a different point in time follows the same derivation with a different $w$: [Timing adjustments](03-timing-and-in-arrears-adjustments.md).
+A second road, the quick formula, replaces $`w`$ by its tangent line at $`F`$: $`w(s) \approx w(F) + w'(F)(s - F)`$. Then the covariance of Step 1 is the slope times the variance of $`S_T`$, which for a lognormal rate is $`F^2(e^{\sigma^2 T} - 1)`$, and the denominator is $`w(F)`$. It gives 17.7536 bp, 1.2 percent low, because it drops the bend of $`w`$. The coupon paid at a different point in time follows the same derivation with a different $`w`$: [Timing adjustments](03-timing-and-in-arrears-adjustments.md).
 
 ---
 
@@ -156,17 +170,17 @@ The quick formula, then the replicated answer from the code.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| annuity at the forward, $G(F)$ | $1.045^{-1} + \dots + 1.045^{-10}$ | 7.912718 |
-| weight at the forward, $w(F)$ | $1.045^{-1} / 7.912718$ | 0.120937 |
-| same from today's curve, $D(U)/A_0$ | $0.767896 / 6.349569$ | 0.120937 |
-| weight's slope per unit weight, $w'(F)/w(F)$ | nudge $F$ by 0.001 percent each way | 3.959847 |
-| lognormal spread, $e^{\sigma^2 T} - 1$ | $e^{0.04 \times 5} - 1$ | 0.221403 |
-| variance of the rate, $F^2(e^{\sigma^2 T} - 1)$ | $0.045^2 \times 0.221403$ | 0.00044834 |
-| quick adjustment | $0.00044834 \times 3.959847$ | 17.75 bp |
+| annuity at the forward, $`G(F)`$ | $`1.045^{-1} + \dots + 1.045^{-10}`$ | 7.912718 |
+| weight at the forward, $`w(F)`$ | $`1.045^{-1} / 7.912718`$ | 0.120937 |
+| same from today's curve, $`D(U)/A_0`$ | $`0.767896 / 6.349569`$ | 0.120937 |
+| weight's slope per unit weight, $`w'(F)/w(F)`$ | nudge $`F`$ by 0.001 percent each way | 3.959847 |
+| lognormal spread, $`e^{\sigma^2 T} - 1`$ | $`e^{0.04 \times 5} - 1`$ | 0.221403 |
+| variance of the rate, $`F^2(e^{\sigma^2 T} - 1)`$ | $`0.045^2 \times 0.221403`$ | 0.00044834 |
+| quick adjustment | $`0.00044834 \times 3.959847`$ | 17.75 bp |
 | replicated adjustment, strip of swaptions | receivers 5.7096 + payers 12.2507 | **17.96 bp** |
-| CMS rate | $4.5\% + 0.1796\%$ | **4.6796%** |
-| coupon at the forward | $10{,}000{,}000 \times 0.767896 \times 4.5\%$ | $345,553.08 |
-| CMS coupon | $10{,}000{,}000 \times 0.767896 \times 4.6796\%$ | **$359,344.72** |
+| CMS rate | $`4.5\% + 0.1796\%`$ | **4.6796%** |
+| coupon at the forward | $`10{,}000{,}000 \times 0.767896 \times 4.5\%`$ | $345,553.08 |
+| CMS coupon | $`10{,}000{,}000 \times 0.767896 \times 4.6796\%`$ | **$359,344.72** |
 
 The fund's one coupon is worth 13,791.64 dollars more than the forward says. A desk that paid the forward rate on this coupon would give that away.
 
@@ -175,9 +189,9 @@ The fund's one coupon is worth 13,791.64 dollars more than the forward says. A d
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Price the coupon at the forward rate | 0 bp, $345,553.08 | The forward is the average in annuity units, not in payment-date dollars |
-| Take the quick formula as exact | 17.75 bp | The tangent line drops the bend of $w$: 1.2 percent low here, worse at long expiries |
-| Treat the coupon as paid on the fixing date | 22.77 bp | A dollar paid sooner leans harder on high rates: the lag shapes $w$ |
-| Copy the positive sign to a coupon paid at the swap's end | −19.55 bp | Paid ten years after the fixing, $w$ falls with the rate and the strip is sold, not bought |
+| Take the quick formula as exact | 17.75 bp | The tangent line drops the bend of $`w`$: 1.2 percent low here, worse at long expiries |
+| Treat the coupon as paid on the fixing date | 22.77 bp | A dollar paid sooner leans harder on high rates: the lag shapes $`w`$ |
+| Copy the positive sign to a coupon paid at the swap's end | −19.55 bp | Paid ten years after the fixing, $`w`$ falls with the rate and the strip is sold, not bought |
 
 ### How the adjustment grows with the fixing date
 
@@ -193,7 +207,7 @@ xychart-beta
     line [3.27, 6.68, 10.22, 17.75, 25.91, 39.44]
 ```
 
-Upper line: the exact adjustment from the direct integral. Lower line: the quick formula. The fixing dates are not evenly spaced along the axis. The adjustment grows faster than the time to fixing, because the variance $F^2(e^{\sigma^2 T} - 1)$ does, and the quick formula falls further behind as the rate's distribution gets more lopsided.
+Upper line: the exact adjustment from the direct integral. Lower line: the quick formula. The fixing dates are not evenly spaced along the axis. The adjustment grows faster than the time to fixing, because the variance $`F^2(e^{\sigma^2 T} - 1)`$ does, and the quick formula falls further behind as the rate's distribution gets more lopsided.
 
 ### How the price moves
 
@@ -209,7 +223,7 @@ The delta above 1 is the convexity at work: a higher forward raises the rate and
 
 ## Code, from first principles, and it actually runs
 
-The code prices the one coupon four independent ways. Road 1 builds the swaption strip: Black prices at every strike, from a normal CDF written out as a series, weighted by $h''$ and summed by Simpson's rule. Road 2 skips swaptions and integrates the weighted rate directly over the lognormal distribution. Road 3 is a Monte Carlo with a hand-written random-number generator and 200,000 paths. Road 4 is the quick formula. The asserts compare the strip with the direct integral (at the one-year lag and again at the ten-year lag, where the sign flips), the simulation with the direct integral inside four standard errors, the quick formula with the direct integral inside 3 percent, $w(F)$ with today's $D(U)/A_0$, payer-minus-receiver parity with $F - k$, and the sign against the payment date both ways. Python and Rust print identical outputs.
+The code prices the one coupon four independent ways. Road 1 builds the swaption strip: Black prices at every strike, from a normal CDF written out as a series, weighted by $`h''`$ and summed by Simpson's rule. Road 2 skips swaptions and integrates the weighted rate directly over the lognormal distribution. Road 3 is a Monte Carlo with a hand-written random-number generator and 200,000 paths. Road 4 is the quick formula. The asserts compare the strip with the direct integral (at the one-year lag and again at the ten-year lag, where the sign flips), the simulation with the direct integral inside four standard errors, the quick formula with the direct integral inside 3 percent, $`w(F)`$ with today's $`D(U)/A_0`$, payer-minus-receiver parity with $`F - k`$, and the sign against the payment date both ways. Python and Rust print identical outputs.
 
 ### Python
 
@@ -576,10 +590,10 @@ ALL CHECKS PASS
 
 Lean proves the replication's algebra and calculus, for every payoff, weight and forward, plus the flat-curve check for this example.
 
-- Take any payoff $f$ with a continuous second derivative, a forward $F > 0$ and a rate $s > 0$. Then $f(s)$ is the straight line $f(F) + f'(F)(s-F)$ plus the receiver and payer integrals of Step 3.
-- Suppose $\mathbb{E}^A[S_T] = F$, $\mathbb{E}^A[w(S_T)]$ is not zero, and every average is finite. Then $K_{\text{CMS}} = F + \mathbb{E}^A[h(S_T)]/\mathbb{E}^A[w(S_T)]$.
-- Take $w$ with a continuous second derivative. Then the strip's weights are $h''(k) = 2w'(k) + (k-F)\,w''(k)$ at every strike $k$.
-- Take the flat 4.5 percent curve of the example. Then $w(F)$ and $D(U)/A_0$ are equal as exact fractions, not just to six decimal places.
+- Take any payoff $`f`$ with a continuous second derivative, a forward $`F > 0`$ and a rate $`s > 0`$. Then $`f(s)`$ is the straight line $`f(F) + f'(F)(s-F)`$ plus the receiver and payer integrals of Step 3.
+- Suppose $`\mathbb{E}^A[S_T] = F`$, $`\mathbb{E}^A[w(S_T)]`$ is not zero, and every average is finite. Then $`K_{\text{CMS}} = F + \mathbb{E}^A[h(S_T)]/\mathbb{E}^A[w(S_T)]`$.
+- Take $`w`$ with a continuous second derivative. Then the strip's weights are $`h''(k) = 2w'(k) + (k-F)\,w''(k)`$ at every strike $`k`$.
+- Take the flat 4.5 percent curve of the example. Then $`w(F)`$ and $`D(U)/A_0`$ are equal as exact fractions, not just to six decimal places.
 
 The change of unit in Step 1, Black's swaption prices and every basis-point figure are left to the Python and Rust checks.
 
@@ -765,7 +779,7 @@ example :
 
 > [!TIP]
 > **Try changing**
-> - **Volatility to 30 percent.** Guess first: half as much again as 18 bp? The adjustment is 46.48 bp, more than double, because it grows with $e^{\sigma^2 T} - 1$, not with $\sigma$. At 10 percent it is 4.12 bp.
+> - **Volatility to 30 percent.** Guess first: half as much again as 18 bp? The adjustment is 46.48 bp, more than double, because it grows with $`e^{\sigma^2 T} - 1`$, not with $`\sigma`$. At 10 percent it is 4.12 bp.
 > - **The fixing to ten years out.** Guess first. The sweep prints 40.20 bp: more than twice the five-year figure.
 > - **The payment to the swap's last date**, `d=10` in `by_strip`. Guess first: the sign. The strip prints −19.55 bp, matching the direct integral. The strip is sold, not bought.
 > - **The random seed.** The Monte Carlo moves by about its standard error, 0.10 bp; the other three roads do not move at all.
@@ -779,7 +793,7 @@ example :
 >
 > - **Assuming the adjustment is always positive.** Its sign is set by how the payment bond moves against the annuity. Paid at the swap's end, the same coupon's adjustment is −19.55 bp.
 > - **Using at-the-money volatility across the strip.** The payers above the forward carry two thirds of the 17.96 bp. A smile that lifts high-strike volatility lifts the CMS price, sometimes a lot.
-> - **Truncating the payer integral early.** The weights $h''(k)$ stay near 1 up to 30 percent strikes; only the option prices fade. Cutting the integral at a strike the options have not yet made worthless underprices the coupon.
+> - **Truncating the payer integral early.** The weights $`h''(k)`$ stay near 1 up to 30 percent strikes; only the option prices fade. Cutting the integral at a strike the options have not yet made worthless underprices the coupon.
 > - **Trusting the quick formula at long expiries.** It is 1.2 percent low at five years and 1.9 percent low at ten (39.44 against 40.20 bp).
 
 ---
@@ -788,7 +802,7 @@ example :
 
 - **CMS swaps and CMS legs.** Insurers and pension funds receive CMS rates to match liabilities tied to long rates. Every coupon is priced as a forward plus its adjustment, one strip per fixing date.
 - **CMS spread notes.** Notes paying the gap between the 10-year and 2-year rates, the "steepeners", need two adjusted rates and how they move together: [Structured rate notes](06-structured-notes-in-outline.md).
-- **CMS caps and floors.** An option on a CMS rate is the same replication with a different $h$: weights start at the strike instead of at the forward.
+- **CMS caps and floors.** An option on a CMS rate is the same replication with a different $`h`$: weights start at the strike instead of at the forward.
 - **Rates paid in another currency.** A CMS rate paid in a second currency adds a correlation term on top: [Quanto rates](04-quanto-adjustments-for-rates.md).
 - **Smile calibration at the wings.** Because CMS prices depend on far out-of-the-money payers, dealers use quoted CMS spreads to pin down the upper wing of the swaption smile ([SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
 
@@ -815,6 +829,6 @@ The question this card leaves open: when the curve twists instead of moving with
 
 Verified 2026-09-28: every link below resolves to the publisher's page.
 
-- Hagan, Patrick S. "Convexity Conundrums: Pricing CMS Swaps, Caps, and Floors." *Wilmott* 2003, no. 2 (March 2003): 38–45. [doi:10.1002/wilm.42820030211](https://doi.org/10.1002/wilm.42820030211). The replication in swaptions, the flat-curve weight $w$ and the warning about the payer wing.
+- Hagan, Patrick S. "Convexity Conundrums: Pricing CMS Swaps, Caps, and Floors." *Wilmott* 2003, no. 2 (March 2003): 38–45. [doi:10.1002/wilm.42820030211](https://doi.org/10.1002/wilm.42820030211). The replication in swaptions, the flat-curve weight $`w`$ and the warning about the payer wing.
 - Pelsser, Antoon. "Mathematical Foundation of Convexity Correction." *Quantitative Finance* 3, no. 1 (2003): 59–65. [doi:10.1088/1469-7688/3/1/306](https://doi.org/10.1088/1469-7688/3/1/306). The change of unit behind Step 1: convexity corrections as changes of measure.
 - Brigo, Damiano, and Fabio Mercurio. *Interest Rate Models — Theory and Practice: With Smile, Inflation and Credit*, 2nd ed. Springer, 2006. [Publisher page](https://link.springer.com/book/10.1007/978-3-540-34604-3). Annuity and forward measures and CMS convexity adjustments in textbook form.

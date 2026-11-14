@@ -44,28 +44,32 @@ Orange, lowest: convection. Green, middle: radiation. Dark, top: the total. Radi
 
 ## The formula
 
-$$Q = A\left[\,h\,(T_s - T_\infty) \;+\; \varepsilon\,\sigma\,(T_s^4 - T_\text{sur}^4)\,\right]$$
+```math
+Q = A\left[\,h\,(T_s - T_\infty) \;+\; \varepsilon\,\sigma\,(T_s^4 - T_\text{sur}^4)\,\right]
+```
 
 **Read it aloud:** the heat leaving the panel is its area times the sum of two fluxes: a convection coefficient times the surface's lead over the air, and the paint's emissivity times the Stefan–Boltzmann constant times the difference of the fourth powers of the surface and wall temperatures, in kelvin.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $Q$, $q$ | heat output of the panel, in W; the same per square metre of surface (a **flux**), in W/m² | 535.9 W; 194.8 W/m² by convection plus 251.8 W/m² by radiation | — |
-| $A$ | surface area that gives off heat: both faces | 2 × 0.6 m × 1.0 m = 1.2 m² | rises in proportion |
-| $T_s$ | surface temperature; a bare $T$ is any temperature in kelvin | 60 °C = 333.15 K | rises faster than in proportion |
-| $T_\infty$, $T_\text{sur}$ | room air far from the panel; the room's walls, floor and ceiling | both 20 °C = 293.15 K | falls |
-| $h$ | **convection coefficient**: watts carried off per m² for each kelvin the surface leads the air; $\delta$, the still-air film it acts like, $k/h$ thick | 4.87 W/(m² K); 5.60 mm | rises in proportion to the convection part |
-| $\varepsilon$ | **emissivity**: how much of a perfect emitter's glow the surface gives off, 0 to 1 (here ε is not the small parameter of the modelling shelf) | white paint, 0.90 | rises in proportion to the radiation part |
-| $\sigma$ | Stefan–Boltzmann constant (NIST CODATA); in the fold, $E_\lambda$ is a black body's output per metre of wavelength, $x$ a stand-in variable, and $h_P$, $k_B$, $c$ and $\lambda$ are Planck's constant, Boltzmann's constant, the speed of light and the wavelength | 5.670374419 × 10⁻⁸ W/(m² K⁴) | — |
-| $h_r$ | **radiation coefficient**: the radiation part written as watts per m² per kelvin of difference | 6.29 W/(m² K) | — |
-| $L$ | height of the panel: the distance the warmed air climbs | 0.60 m | $h$ falls slowly: 5.20 W/(m² K) at 0.30 m |
-| $\mathrm{Ra}$, $\mathrm{Nu}$ | **Rayleigh number**: buoyancy against the air's stickiness and heat spreading, no units; **Nusselt number**: $hL/k$, how many still-air films fit in the panel's height | 643 million; 107.1 | $h$ rises with Ra |
-| $k$, $\nu$, $\alpha$, $\Pr$ | air's thermal conductivity, kinematic viscosity, thermal diffusivity (written κ on Fourier's law), and their ratio $\nu/\alpha$, the Prandtl number | 0.0273 W/(m K); Pr 0.704 | — |
-| $g$, $\beta$ | standard gravity; air's expansion per kelvin, 1 over its absolute temperature | 9.80665 m/s²; 1/313.15 K⁻¹ | buoyancy rises |
+| $`Q`$, $`q`$ | heat output of the panel, in W; the same per square metre of surface (a **flux**), in W/m² | 535.9 W; 194.8 W/m² by convection plus 251.8 W/m² by radiation | — |
+| $`A`$ | surface area that gives off heat: both faces | 2 × 0.6 m × 1.0 m = 1.2 m² | rises in proportion |
+| $`T_s`$ | surface temperature; a bare $`T`$ is any temperature in kelvin | 60 °C = 333.15 K | rises faster than in proportion |
+| $`T_\infty`$, $`T_\text{sur}`$ | room air far from the panel; the room's walls, floor and ceiling | both 20 °C = 293.15 K | falls |
+| $`h`$ | **convection coefficient**: watts carried off per m² for each kelvin the surface leads the air; $`\delta`$, the still-air film it acts like, $`k/h`$ thick | 4.87 W/(m² K); 5.60 mm | rises in proportion to the convection part |
+| $`\varepsilon`$ | **emissivity**: how much of a perfect emitter's glow the surface gives off, 0 to 1 (here ε is not the small parameter of the modelling shelf) | white paint, 0.90 | rises in proportion to the radiation part |
+| $`\sigma`$ | Stefan–Boltzmann constant (NIST CODATA); in the fold, $`E_\lambda`$ is a black body's output per metre of wavelength, $`x`$ a stand-in variable, and $`h_P`$, $`k_B`$, $`c`$ and $`\lambda`$ are Planck's constant, Boltzmann's constant, the speed of light and the wavelength | 5.670374419 × 10⁻⁸ W/(m² K⁴) | — |
+| $`h_r`$ | **radiation coefficient**: the radiation part written as watts per m² per kelvin of difference | 6.29 W/(m² K) | — |
+| $`L`$ | height of the panel: the distance the warmed air climbs | 0.60 m | $`h`$ falls slowly: 5.20 W/(m² K) at 0.30 m |
+| $`\mathrm{Ra}`$, $`\mathrm{Nu}`$ | **Rayleigh number**: buoyancy against the air's stickiness and heat spreading, no units; **Nusselt number**: $`hL/k`$, how many still-air films fit in the panel's height | 643 million; 107.1 | $`h`$ rises with Ra |
+| $`k`$, $`\nu`$, $`\alpha`$, $`\Pr`$ | air's thermal conductivity, kinematic viscosity, thermal diffusivity (written κ on Fourier's law), and their ratio $`\nu/\alpha`$, the Prandtl number | 0.0273 W/(m K); Pr 0.704 | — |
+| $`g`$, $`\beta`$ | standard gravity; air's expansion per kelvin, 1 over its absolute temperature | 9.80665 m/s²; 1/313.15 K⁻¹ | buoyancy rises |
 
 The convection coefficient comes from Churchill and Chu's all-range fit for a vertical plate:
 
-$$\mathrm{Nu} = \frac{hL}{k} = \left(0.825 + \frac{0.387\,\mathrm{Ra}^{1/6}}{\left[1 + (0.492/\Pr)^{9/16}\right]^{8/27}}\right)^{2}, \qquad \mathrm{Ra} = \frac{g\,\beta\,(T_s - T_\infty)\,L^3}{\nu\,\alpha}.$$
+```math
+\mathrm{Nu} = \frac{hL}{k} = \left(0.825 + \frac{0.387\,\mathrm{Ra}^{1/6}}{\left[1 + (0.492/\Pr)^{9/16}\right]^{8/27}}\right)^{2}, \qquad \mathrm{Ra} = \frac{g\,\beta\,(T_s - T_\infty)\,L^3}{\nu\,\alpha}.
+```
 
 The air properties are taken at the **film temperature**, halfway between surface and air: 313.15 K. Ra and Pr are dimensionless groups of the kind built in [Buckingham Pi](../01-Units%20and%20Modelling/02-dimensional-analysis-and-buckingham-pi.md).
 
@@ -74,8 +78,8 @@ The air properties are taken at the **film temperature**, halfway between surfac
 - **Temperatures in kelvin in the radiation term.** The fourth power measures from absolute zero. Put 60 and 20 in and radiation shrinks to 0.8 W, and the panel's output to 234.5 W.
 - **A small surface in a big room whose walls are all at one temperature.** Then everything the panel emits is absorbed by the room, and the room's own glow returns in full. A panel close to a wall partly faces that wall, which warms up and sends more back, so the back face gives off less than this.
 - **A grey surface: emissivity the same at every wavelength that matters.** White paint is close to 0.9 across the thermal infrared, where a 60 °C surface glows (peak at 8.70 μm). The same paint is a poor emitter of visible light, which is why it looks white; that does not matter here.
-- **Still room air, smooth laminar rise (Ra below about 10⁹).** At 643 million the panel is inside that. A draught or a fan replaces this $h$ with a forced-convection one several times larger. Even in still air, $h$ is a fit, and the fits differ: Churchill and Chu's laminar-only fit and the smooth-flow theory give 3.75 and 3.73 W/(m² K), against the all-range fit's 4.87 used here, so the convection half is known only to roughly that spread.
-- **The radiation term kept as fourth powers, not straightened.** Near room temperature a straight line does well if it is taken at the mean of the two temperatures: $4\varepsilon\sigma T^3$ at 313.15 K gives 6.27 W/(m² K) against the true 6.29. Taken at the wall temperature it gives 205.7 W/m² against the true 251.8 at 60 °C. Far from room temperature it fails: for a stove top at 300 °C, the straight line at room temperature gives 1,440 W/m² against the true 5,130 W/m².
+- **Still room air, smooth laminar rise (Ra below about 10⁹).** At 643 million the panel is inside that. A draught or a fan replaces this $`h`$ with a forced-convection one several times larger. Even in still air, $`h`$ is a fit, and the fits differ: Churchill and Chu's laminar-only fit and the smooth-flow theory give 3.75 and 3.73 W/(m² K), against the all-range fit's 4.87 used here, so the convection half is known only to roughly that spread.
+- **The radiation term kept as fourth powers, not straightened.** Near room temperature a straight line does well if it is taken at the mean of the two temperatures: $`4\varepsilon\sigma T^3`$ at 313.15 K gives 6.27 W/(m² K) against the true 6.29. Taken at the wall temperature it gives 205.7 W/m² against the true 251.8 at 60 °C. Far from room temperature it fails: for a stove top at 300 °C, the straight line at room temperature gives 1,440 W/m² against the true 5,130 W/m².
 
 ---
 
@@ -87,52 +91,58 @@ In steady running the paint stores no heat. Every watt the steel brings to the s
 
 ### Step 1: convection is conduction through a thin film of still air
 
-Air sticks to the paint, so right at the surface it does not move. Heat must first cross a thin layer of nearly still air by conduction, exactly as in [Fourier's law](05-heat-conduction-and-fouriers-law.md). If that layer were $\delta$ thick, the flux would be $k(T_s - T_\infty)/\delta$. So the coefficient is just
+Air sticks to the paint, so right at the surface it does not move. Heat must first cross a thin layer of nearly still air by conduction, exactly as in [Fourier's law](05-heat-conduction-and-fouriers-law.md). If that layer were $`\delta`$ thick, the flux would be $`k(T_s - T_\infty)/\delta`$. So the coefficient is just
 
-$$h \approx \frac{k}{\delta}.$$
+```math
+h \approx \frac{k}{\delta}.
+```
 
-Here $h$ = 4.87 W/(m² K) and air's conductivity is 0.0273 W/(m K), so the panel behaves as if wrapped in a still-air film 5.60 mm thick. Air is a good insulator, which is why convection from a still surface is weak.
+Here $`h`$ = 4.87 W/(m² K) and air's conductivity is 0.0273 W/(m K), so the panel behaves as if wrapped in a still-air film 5.60 mm thick. Air is a good insulator, which is why convection from a still surface is weak.
 
-The definition $q = h(T_s - T_\infty)$ is called Newton's law of cooling. On its own it says nothing; all the physics is in what sets $\delta$.
+The definition $`q = h(T_s - T_\infty)`$ is called Newton's law of cooling. On its own it says nothing; all the physics is in what sets $`\delta`$.
 
 ### Step 2: buoyancy sets the film's thickness
 
-The warm film is lighter than the room air, by a fraction $\beta(T_s - T_\infty)$, so it rises. Its own stickiness ($\nu$) holds it back, and heat leaking sideways ($\alpha$) thickens it. Weigh the push against the two brakes over the panel's height $L$ and one number comes out, the Rayleigh number. For perfectly smooth flow up a plate the equations of the film can be solved exactly, and the film thickens as $L/\mathrm{Ra}^{1/4}$, so
+The warm film is lighter than the room air, by a fraction $`\beta(T_s - T_\infty)`$, so it rises. Its own stickiness ($`\nu`$) holds it back, and heat leaking sideways ($`\alpha`$) thickens it. Weigh the push against the two brakes over the panel's height $`L`$ and one number comes out, the Rayleigh number. For perfectly smooth flow up a plate the equations of the film can be solved exactly, and the film thickens as $`L/\mathrm{Ra}^{1/4}`$, so
 
-$$h \propto \frac{k}{L}\,\mathrm{Ra}^{1/4} \propto \left(\frac{T_s - T_\infty}{L}\right)^{1/4}.$$
+```math
+h \propto \frac{k}{L}\,\mathrm{Ra}^{1/4} \propto \left(\frac{T_s - T_\infty}{L}\right)^{1/4}.
+```
 
-Two things follow. A hotter panel drives faster air and a thinner film, so $h$ itself grows with the temperature difference, slowly. And a taller panel has a thicker film near its top, so each square metre does slightly worse.
+Two things follow. A hotter panel drives faster air and a thinner film, so $`h`$ itself grows with the temperature difference, slowly. And a taller panel has a thicker film near its top, so each square metre does slightly worse.
 
-That exact solution gives Nu = 82.0 here, so $h$ = 3.73 W/(m² K). Real panels are not ideal plates, so engineers use fits to measurements, and Churchill and Chu published two. Their laminar-only fit, for Ra below 10⁹, gives Nu = 82.5 here, so $h$ = 3.75 W/(m² K): the measurements agree with the theory.
+That exact solution gives Nu = 82.0 here, so $`h`$ = 3.73 W/(m² K). Real panels are not ideal plates, so engineers use fits to measurements, and Churchill and Chu published two. Their laminar-only fit, for Ra below 10⁹, gives Nu = 82.5 here, so $`h`$ = 3.75 W/(m² K): the measurements agree with the theory.
 
-Their all-range fit draws one curve through smooth and turbulent (churning, eddying) plates alike; it gives Nu = 107.1, so $h = 107.1 \times 0.0273 / 0.60$ = 4.87 W/(m² K). This card uses the all-range fit, which heat-transfer texts such as Bergman's give as suitable for most engineering calculations.
+Their all-range fit draws one curve through smooth and turbulent (churning, eddying) plates alike; it gives Nu = 107.1, so $`h = 107.1 \times 0.0273 / 0.60`$ = 4.87 W/(m² K). This card uses the all-range fit, which heat-transfer texts such as Bergman's give as suitable for most engineering calculations.
 
 Just below 10⁹, where this panel sits, it runs 30% above the laminar fit, because its one curve has to bend up to meet the turbulent data. With the laminar fit the panel would give 482.1 W, 62.7% of it radiation. That gap is a fair measure of the uncertainty in the convection half; the radiation half has no such doubt.
 
-The same bend changes the height rule. The all-range curve grows faster than $\mathrm{Ra}^{1/4}$ well inside the smooth range, on its way to the turbulent law $\mathrm{Nu} \propto \mathrm{Ra}^{1/3}$, where height cancels out. So by the fit a 0.30 m panel has $h$ = 5.20 W/(m² K), not the 5.79 that the 1/4 power predicts from 4.87. That is the shape of the fitted curve, not a change in the flow: the smooth rise up a 0.30 m plate follows the 1/4 power.
+The same bend changes the height rule. The all-range curve grows faster than $`\mathrm{Ra}^{1/4}`$ well inside the smooth range, on its way to the turbulent law $`\mathrm{Nu} \propto \mathrm{Ra}^{1/3}`$, where height cancels out. So by the fit a 0.30 m panel has $`h`$ = 5.20 W/(m² K), not the 5.79 that the 1/4 power predicts from 4.87. That is the shape of the fitted curve, not a change in the flow: the smooth rise up a 0.30 m plate follows the 1/4 power.
 
 ### Step 3: every surface glows, and the glow grows as the fourth power
 
-Any body above absolute zero gives off light from its thermal jiggling. A perfect emitter (a **black body**) gives off $\sigma T^4$ watts per square metre. Paint gives off a fraction $\varepsilon$ of that.
+Any body above absolute zero gives off light from its thermal jiggling. A perfect emitter (a **black body**) gives off $`\sigma T^4`$ watts per square metre. Paint gives off a fraction $`\varepsilon`$ of that.
 
-Why the fourth power? Heat a body and two things happen. Each bit of light (a photon) carries energy in proportion to $T$, because the spectrum slides to shorter wavelengths. And the number of ways light can fit in a region grows as the cube of the highest frequency in play, which itself grows in proportion to $T$, so the count of active ways goes as $T^3$. One power from energy per photon, three from the three directions of space: $T^4$.
+Why the fourth power? Heat a body and two things happen. Each bit of light (a photon) carries energy in proportion to $`T`$, because the spectrum slides to shorter wavelengths. And the number of ways light can fit in a region grows as the cube of the highest frequency in play, which itself grows in proportion to $`T`$, so the count of active ways goes as $`T^3`$. One power from energy per photon, three from the three directions of space: $`T^4`$.
 
-The panel emits $\varepsilon\sigma T_s^4$. The walls, at $T_\text{sur}$, glow too, and the panel absorbs the same fraction $\varepsilon$ of what reaches it (a good emitter is an equally good absorber). The net loss is the difference:
+The panel emits $`\varepsilon\sigma T_s^4`$. The walls, at $`T_\text{sur}`$, glow too, and the panel absorbs the same fraction $`\varepsilon`$ of what reaches it (a good emitter is an equally good absorber). The net loss is the difference:
 
-$$q_\text{rad} = \varepsilon\sigma\,(T_s^4 - T_\text{sur}^4).$$
+```math
+q_\text{rad} = \varepsilon\sigma\,(T_s^4 - T_\text{sur}^4).
+```
 
 <details>
 <summary>From Planck's spectrum to σ</summary>
 
 Planck's law gives a black body's output per square metre per metre of wavelength:
 
-$$E_\lambda(T) = \frac{2\pi h_P c^2}{\lambda^5\left(e^{h_P c/(\lambda k_B T)} - 1\right)}.$$
+$`\displaystyle E_\lambda(T) = \frac{2\pi h_P c^2}{\lambda^5\left(e^{h_P c/(\lambda k_B T)} - 1\right)}.`$
 
-Add it up over all wavelengths. Substitute $x = h_P c/(\lambda k_B T)$: every $\lambda$ becomes $h_P c/(x k_B T)$, and four factors of $T$ come out in front,
+Add it up over all wavelengths. Substitute $`x = h_P c/(\lambda k_B T)`$: every $`\lambda`$ becomes $`h_P c/(x k_B T)`$, and four factors of $`T`$ come out in front,
 
-$$\int_0^\infty E_\lambda\,d\lambda = \frac{2\pi k_B^4 T^4}{h_P^3 c^2}\int_0^\infty \frac{x^3}{e^x - 1}\,dx = \frac{2\pi k_B^4 T^4}{h_P^3 c^2}\cdot\frac{\pi^4}{15}.$$
+$`\displaystyle \int_0^\infty E_\lambda\,d\lambda = \frac{2\pi k_B^4 T^4}{h_P^3 c^2}\int_0^\infty \frac{x^3}{e^x - 1}\,dx = \frac{2\pi k_B^4 T^4}{h_P^3 c^2}\cdot\frac{\pi^4}{15}.`$
 
-So $\sigma = 2\pi^5 k_B^4/(15 h_P^3 c^2)$, built from three constants that the SI now fixes exactly. The code's second road does this sum numerically, wavelength by wavelength, from 0.1 μm to 10 mm, for both temperatures, and never uses $\sigma$ or a fourth power. It lands on 251.7673 W/m², the same as the formula to every printed digit. The same sum shows the spectrum's peak at 8.70 μm, as Wien's displacement law predicts: the peak wavelength is a fixed constant divided by the absolute temperature.
+So $`\sigma = 2\pi^5 k_B^4/(15 h_P^3 c^2)`$, built from three constants that the SI now fixes exactly. The code's second road does this sum numerically, wavelength by wavelength, from 0.1 μm to 10 mm, for both temperatures, and never uses $`\sigma`$ or a fourth power. It lands on 251.7673 W/m², the same as the formula to every printed digit. The same sum shows the spectrum's peak at 8.70 μm, as Wien's displacement law predicts: the peak wavelength is a fixed constant divided by the absolute temperature.
 
 </details>
 
@@ -140,19 +150,23 @@ So $\sigma = 2\pi^5 k_B^4/(15 h_P^3 c^2)$, built from three constants that the S
 
 The difference of fourth powers factors exactly:
 
-$$T_s^4 - T_\text{sur}^4 = (T_s - T_\text{sur})(T_s + T_\text{sur})(T_s^2 + T_\text{sur}^2).$$
+```math
+T_s^4 - T_\text{sur}^4 = (T_s - T_\text{sur})(T_s + T_\text{sur})(T_s^2 + T_\text{sur}^2).
+```
 
-So radiation can be written in convection's shape, $q_\text{rad} = h_r(T_s - T_\text{sur})$, with
+So radiation can be written in convection's shape, $`q_\text{rad} = h_r(T_s - T_\text{sur})`$, with
 
-$$h_r = \varepsilon\sigma\,(T_s + T_\text{sur})(T_s^2 + T_\text{sur}^2) = 6.29\ \text{W/(m}^2\,\text{K)}.$$
+```math
+h_r = \varepsilon\sigma\,(T_s + T_\text{sur})(T_s^2 + T_\text{sur}^2) = 6.29\ \text{W/(m}^2\,\text{K)}.
+```
 
-Now the two routes stand side by side on one scale: 4.87 for convection, 6.29 for radiation. That is the comparison the engineer needs. At room temperatures $h_r$ is close to $4\varepsilon\sigma T^3$, with T the mean of the two temperatures (6.27 against 6.29 here), and is the same size as still-air convection. Neither route can be dropped.
+Now the two routes stand side by side on one scale: 4.87 for convection, 6.29 for radiation. That is the comparison the engineer needs. At room temperatures $`h_r`$ is close to $`4\varepsilon\sigma T^3`$, with T the mean of the two temperatures (6.27 against 6.29 here), and is the same size as still-air convection. Neither route can be dropped.
 
-Unlike $h$, the radiation coefficient is not a property of the air. It grows as the cube of temperature. At 300 °C radiation dwarfs still-air convection; on a cold, shiny surface it fades.
+Unlike $`h`$, the radiation coefficient is not a property of the air. It grows as the cube of temperature. At 300 °C radiation dwarfs still-air convection; on a cold, shiny surface it fades.
 
 ### Step 5: turn the balance round
 
-An engineer sizing a radiator often knows the heat the room needs and wants the surface temperature. The balance is then one equation in $T_s$, with a fourth power and an $h$ that depends on $T_s$. No rearranging solves it, but the output only rises with $T_s$, so halving an interval until it is tight (bisection) always works. For 400 W this panel needs a surface at 51.46 °C. Asked for 535.9 W it returns 60.0000 °C, which checks the solver.
+An engineer sizing a radiator often knows the heat the room needs and wants the surface temperature. The balance is then one equation in $`T_s`$, with a fourth power and an $`h`$ that depends on $`T_s`$. No rearranging solves it, but the output only rises with $`T_s`$, so halving an interval until it is tight (bisection) always works. For 400 W this panel needs a surface at 51.46 °C. Asked for 535.9 W it returns 60.0000 °C, which checks the solver.
 
 ---
 
@@ -165,10 +179,10 @@ The panel: 0.60 m by 1.00 m, both faces, white paint ε = 0.90, surface 60 °C, 
 | film temperature | (60 + 20) / 2 + 273.15 | 313.15 K |
 | Rayleigh number | 9.80665 × 40 × 0.6³ / (313.15 × 17.21 × 10⁻⁶ × 24.45 × 10⁻⁶) | 643 million |
 | Nusselt number, Churchill–Chu | fit above, Pr = 0.704 | 107.1 |
-| convection coefficient $h$ | 107.1 × 0.0273 / 0.60 | 4.87 W/(m² K) |
+| convection coefficient $`h`$ | 107.1 × 0.0273 / 0.60 | 4.87 W/(m² K) |
 | convection flux | 4.87 × 40 | 194.8 W/m² |
 | radiation flux | 0.90 × 5.670 × 10⁻⁸ × (333.15⁴ − 293.15⁴) | 251.8 W/m² |
-| radiation coefficient $h_r$ | 251.8 / 40 | 6.29 W/(m² K) |
+| radiation coefficient $`h_r`$ | 251.8 / 40 | 6.29 W/(m² K) |
 | area | 2 × 0.60 × 1.00 | 1.2 m² |
 | convection, whole panel | 1.2 × 194.8 | 233.7 W |
 | radiation, whole panel | 1.2 × 251.8 | 302.1 W |
@@ -177,7 +191,7 @@ The panel: 0.60 m by 1.00 m, both faces, white paint ε = 0.90, surface 60 °C, 
 
 The panel gives the room about 536 W, and a little more than half of it travels as infrared light, warming the walls, furniture and people it shines on before the air.
 
-The air properties (ν, α, $k$) are read from a handbook table at 300 K and 350 K and interpolated to 313.15 K: ν = 17.21 mm²/s, α = 24.45 mm²/s, $k$ = 0.0273 W/(m K).
+The air properties (ν, α, $`k`$) are read from a handbook table at 300 K and 350 K and interpolated to 313.15 K: ν = 17.21 mm²/s, α = 24.45 mm²/s, $`k`$ = 0.0273 W/(m K).
 
 ### What breaks if you drop a piece
 
@@ -186,15 +200,15 @@ The air properties (ν, α, $k$) are read from a handbook table at 300 K and 350
 | Celsius in the fourth power: 60⁴ − 20⁴ | 234.5 W, not 535.9 | Fourth powers measure from absolute zero. In Celsius the radiation is 0.8 W, and more than half the output vanishes |
 | Radiation left out, "a radiator heats the air" | 233.7 W, not 535.9 | The larger route is gone |
 | Radiation straightened at room temperature, 4εσT_sur³ × 40 K | 480.6 W, not 535.9 | The straight line is the slope at 20 °C; the true curve is steeper by 60 °C |
-| Output scaled with the temperature difference, 60 °C to 45 °C | 334.9 W, not 303.6 | Both $h$ and $h_r$ fall as the panel cools, so output falls faster than the difference |
+| Output scaled with the temperature difference, 60 °C to 45 °C | 334.9 W, not 303.6 | Both $`h`$ and $`h_r`$ fall as the panel cools, so output falls faster than the difference |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code computes the panel's output from the convection fit and the radiation law. Road one is the formula. Road two checks the radiation half on its own: it adds up Planck's spectrum numerically, by Simpson's rule (a parabola through each three neighbouring samples) over 4,000 steps in the logarithm of wavelength, and never uses $\sigma$ or a fourth power.
+The code computes the panel's output from the convection fit and the radiation law. Road one is the formula. Road two checks the radiation half on its own: it adds up Planck's spectrum numerically, by Simpson's rule (a parabola through each three neighbouring samples) over 4,000 steps in the logarithm of wavelength, and never uses $`\sigma`$ or a fourth power.
 
-The convection half is a fitted formula and has no second road of its own. The code sets it beside the same authors' laminar-only fit and the smooth-flow theory, asserts that those two agree within 2%, and that the all-range fit's $h$ lies within 35% of the theory's. The Prandtl number worked out from the table's ν and α is checked against the table's own Prandtl column.
+The convection half is a fitted formula and has no second road of its own. The code sets it beside the same authors' laminar-only fit and the smooth-flow theory, asserts that those two agree within 2%, and that the all-range fit's $`h`$ lies within 35% of the theory's. The Prandtl number worked out from the table's ν and α is checked against the table's own Prandtl column.
 
 A third calculation turns the balance round, solving by bisection for the surface temperature that sheds 535.9 W, and gets 60 °C back; that checks the solver, not the balance. The spectrum's peak is checked against Wien's constant from NIST. Every number on this card, including the chart and the mistakes, is printed.
 
@@ -596,13 +610,13 @@ ALL CHECKS PASS
 
 Lean proves the facts of Steps 4 and 5 for any positive temperatures in kelvin, and checks the worked numbers.
 
-- Suppose $A$, $\varepsilon$, $\sigma$ and $T_\text{sur}$ are positive, $h \ge 0$, and air and walls are cooler than $T_s$. Then the radiation term equals $h_r(T_s - T_\text{sur})$ exactly, and $h_r$ and $Q$ are positive.
-- Suppose $\varepsilon$, $\sigma$ and $T_\text{sur}$ are positive, with $T_\text{sur}$ below $T_s$. Then the straight line at the wall temperature is below the one at the mean, and that is below the true $h_r$.
-- Suppose $\varepsilon$ and $\sigma$ are positive. Then the radiation term $\varepsilon\sigma(T_s^4 - T_\text{sur}^4)$ always rises as $T_s$ rises, from absolute zero up.
+- Suppose $`A`$, $`\varepsilon`$, $`\sigma`$ and $`T_\text{sur}`$ are positive, $`h \ge 0`$, and air and walls are cooler than $`T_s`$. Then the radiation term equals $`h_r(T_s - T_\text{sur})`$ exactly, and $`h_r`$ and $`Q`$ are positive.
+- Suppose $`\varepsilon`$, $`\sigma`$ and $`T_\text{sur}`$ are positive, with $`T_\text{sur}`$ below $`T_s`$. Then the straight line at the wall temperature is below the one at the mean, and that is below the true $`h_r`$.
+- Suppose $`\varepsilon`$ and $`\sigma`$ are positive. Then the radiation term $`\varepsilon\sigma(T_s^4 - T_\text{sur}^4)`$ always rises as $`T_s`$ rises, from absolute zero up.
 - The surface leads the room by 40 K, the film temperature is 313.15 K, and the area is 1.2 m².
-- Step 4's factoring holds at 333.15 K and 293.15 K. In Celsius, $60^4 - 20^4$ is 12,800,000, far below the kelvin difference.
+- Step 4's factoring holds at 333.15 K and 293.15 K. In Celsius, $`60^4 - 20^4`$ is 12,800,000, far below the kelvin difference.
 
-The convection fit, the total's rise with $T_s$, the spectrum sum and the decimals are left to the Python and Rust checks.
+The convection fit, the total's rise with $`T_s`$, the spectrum sum and the decimals are left to the Python and Rust checks.
 
 ```lean
 -- Convection and radiation: the radiation loss εσ(Ts⁴ - Tsur⁴) is exactly a coefficient h_r = εσ(Ts + Tsur)(Ts² + Tsur²) times the temperature lead, so a warm panel's output is area times two coefficient-times-lead fluxes, and straightening the fourth power at the wall or mean temperature always comes out low.
@@ -706,7 +720,7 @@ example : (2 : ℚ) * (6 / 10) * 1 = 6 / 5 := by norm_num
 > **Try changing**
 > - Guess first: the panel is painted with metallic aluminium paint, emissivity about 0.30. Call `total(TS, 0.30)`. Output falls to 334.4 W: radiation drops by two thirds, convection is untouched.
 > - Guess first: a heat pump runs the panel at 45 °C instead of 60 °C. Call `total(45.0)`. Output is 303.6 W, not the 334.9 W that scaling by the temperature difference suggests. Matching 535.9 W at 45 °C takes a panel 1.765 m long.
-> - Guess first: half the height, 0.30 m, same 1.0 m length, so 0.3 m² per face. Call `total(TS, EPS, 0.30, 0.60)`. Output 275.8 W, more than half of 535.9 W, because $h$ rises to 5.20 W/(m² K) on the shorter plate.
+> - Guess first: half the height, 0.30 m, same 1.0 m length, so 0.3 m² per face. Call `total(TS, EPS, 0.30, 0.60)`. Output 275.8 W, more than half of 535.9 W, because $`h`$ rises to 5.20 W/(m² K) on the shorter plate.
 > - Guess first: the same panel in a vacuum, as on a spacecraft. Keep only the radiation term: 302.1 W. Without air, radiation is the only way out.
 
 ---
@@ -718,7 +732,7 @@ example : (2 : ℚ) * (6 / 10) * 1 = 6 / 5 := by norm_num
 >
 > - **Calling radiation negligible at room temperature.** Here it is 56.4% of the output. Its coefficient, 6.29 W/(m² K), beats still-air convection's 4.87. Dropping it gives 233.7 W.
 > - **Straightening the fourth power far from room temperature.** At 60 °C the straight line, 4εσT³, gives 480.6 W against 535.9. At a 300 °C stove top it gives 1,440 W/m² against 5,130.
-> - **Treating $h$ as a fixed property of air.** It depends on the temperature difference and the panel's height. Scaling the 60 °C output down to a 45 °C surface by the difference gives 334.9 W; the panel really gives 303.6 W. Over this range the output grows about as the temperature difference to the power 1.21.
+> - **Treating $`h`$ as a fixed property of air.** It depends on the temperature difference and the panel's height. Scaling the 60 °C output down to a 45 °C surface by the difference gives 334.9 W; the panel really gives 303.6 W. Over this range the output grows about as the temperature difference to the power 1.21.
 > - **Using the air temperature for the walls.** Radiation goes to surfaces, not to the air. A cold outside wall or a large window takes more radiation than the room's air temperature suggests.
 
 ---
@@ -726,15 +740,15 @@ example : (2 : ℚ) * (6 / 10) * 1 = 6 / 5 := by norm_num
 ## Where you meet it in real life
 
 - **Heat-pump retrofits.** A heat pump works best at low water temperatures. This card's balance shows why a radiator then needs to be larger: at a 45 °C surface the panel gives 303.6 W instead of 535.9 W, so it must grow to 1.765 m long to match.
-- **Radiator ratings.** A radiator's catalogue output is measured at one temperature difference and scaled to others with an exponent above 1, because both $h$ and $h_r$ grow with the difference. This card's model gives 1.21 over 25 to 40 K.
+- **Radiator ratings.** A radiator's catalogue output is measured at one temperature difference and scaled to others with an exponent above 1, because both $`h`$ and $`h_r`$ grow with the difference. This card's model gives 1.21 over 25 to 40 K.
 - **Double glazing with low-emissivity coatings.** In the still gap between two panes, radiation carries much of the heat. A thin metal-oxide coating cuts the glass's emissivity, and with it that route.
-- **Spacecraft radiators.** In a vacuum there is no convection. A satellite sheds its electronics' heat only by radiation, so its radiator panels are sized from $\varepsilon\sigma T^4$ alone.
+- **Spacecraft radiators.** In a vacuum there is no convection. A satellite sheds its electronics' heat only by radiation, so its radiator panels are sized from $`\varepsilon\sigma T^4`$ alone.
 - **Thermal cameras.** A camera reads the infrared glow and converts it to temperature through the fourth-power law. Set the wrong emissivity and a shiny pipe reads far colder than it is.
 
 > **Say it back**
 > A warm surface loses heat by convection and radiation at the same time, and the two add.
-> Convection is conduction through a thin film of still air whose thickness buoyancy sets, written as $h(T_s - T_\infty)$; for this panel $h$ is 4.87 W/(m² K).
-> Radiation is the surface's glow minus the room's glow back, $\varepsilon\sigma(T_s^4 - T_\text{sur}^4)$, with temperatures in kelvin.
+> Convection is conduction through a thin film of still air whose thickness buoyancy sets, written as $`h(T_s - T_\infty)`$; for this panel $`h`$ is 4.87 W/(m² K).
+> Radiation is the surface's glow minus the room's glow back, $`\varepsilon\sigma(T_s^4 - T_\text{sur}^4)`$, with temperatures in kelvin.
 > Factoring the fourth powers turns radiation into a coefficient, 6.29 W/(m² K) here, so the two routes can be compared directly; at room temperature they are the same size.
 > The 60 °C panel gives 535.9 W, 56.4% of it as radiation.
 
@@ -744,9 +758,9 @@ example : (2 : ℚ) * (6 / 10) * 1 = 6 / 5 := by norm_num
 
 - [Fourier's law](05-heat-conduction-and-fouriers-law.md): conduction through a solid, which brings the heat from the water to the paint, and conduction through the still-air film, which is what convection really is at the surface.
 
-  That card lumps the convection and radiation at a wall's face into one surface-film resistance. This card supplies it: the two coefficients act side by side, so they add, and for the panel the film resistance is $1/(h + h_r)$ = 0.0896 m² K/W.
+  That card lumps the convection and radiation at a wall's face into one surface-film resistance. This card supplies it: the two coefficients act side by side, so they add, and for the panel the film resistance is $`1/(h + h_r)`$ = 0.0896 m² K/W.
 
-  A wall face is a different case: on that card the inside face sits only 0.691 K below the room air. For a 2.5 m wall the same fit gives $h$ = 1.31 and $h_r$ = 5.12 W/(m² K), so $1/(h + h_r)$ = 0.1555 m² K/W, close to the design value of 0.13 used there. The panel's 0.0896 belongs to a hot surface and does not replace it. Radiation across the gap is also why an empty wall cavity leaks far more than still air's conductivity suggests.
+  A wall face is a different case: on that card the inside face sits only 0.691 K below the room air. For a 2.5 m wall the same fit gives $`h`$ = 1.31 and $`h_r`$ = 5.12 W/(m² K), so $`1/(h + h_r)`$ = 0.1555 m² K/W, close to the design value of 0.13 used there. The panel's 0.0896 belongs to a hot surface and does not replace it. Radiation across the gap is also why an empty wall cavity leaks far more than still air's conductivity suggests.
 
 ## Where this goes next
 

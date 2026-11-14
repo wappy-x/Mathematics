@@ -35,32 +35,38 @@ The one line is the bell's height, to two decimals, at half-unit steps. From thr
 
 Reminders. An improper integral is the limit of integrals as a cutoff heads for infinity ([Improper integrals](../04-Integrals/07-improper-integrals.md)). In polar coordinates a small patch has area r dr dθ, the r being the Jacobian factor ([Change of variables](03-change-of-variables-and-jacobians.md)).
 
-$$I \;=\; \int_{-\infty}^{\infty} e^{-x^2}\,dx \;=\; \sqrt{\pi} \;=\; 1.772453850906\ldots$$
+```math
+I \;=\; \int_{-\infty}^{\infty} e^{-x^2}\,dx \;=\; \sqrt{\pi} \;=\; 1.772453850906\ldots
+```
 
 **Read it aloud:** the area under e to the minus x squared, from far left to far right, is the square root of π.
 
-For any positive number $a$,
+For any positive number $`a`$,
 
-$$\int_{-\infty}^{\infty} e^{-a x^2}\,dx = \sqrt{\pi / a}, \qquad \text{so with } a = \tfrac12:\quad \int_{-\infty}^{\infty} e^{-x^2/2}\,dx = \sqrt{2\pi} = 2.506628.$$
+```math
+\int_{-\infty}^{\infty} e^{-a x^2}\,dx = \sqrt{\pi / a}, \qquad \text{so with } a = \tfrac12:\quad \int_{-\infty}^{\infty} e^{-x^2/2}\,dx = \sqrt{2\pi} = 2.506628.
+```
 
 Dividing by that total gives the bell of the chart:
 
-$$\varphi(x) = \frac{1}{\sqrt{2\pi}}\, e^{-x^2/2}, \qquad \int_{-\infty}^{\infty} \varphi(x)\,dx = 1.$$
+```math
+\varphi(x) = \frac{1}{\sqrt{2\pi}}\, e^{-x^2/2}, \qquad \int_{-\infty}^{\infty} \varphi(x)\,dx = 1.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | position along the line; a second, independent copy of it | −3 to 3 on the chart | the height falls fast |
-| $e$ | the base of natural exponentials, built by series in wing 01 | e^(−1) at x = 1 | — |
-| $\pi$ | the circle constant; the check builds it from a series | 3.141592653590 | — |
-| $I$ | the whole area under e^(−x^2) | 1.772454 | — |
-| $R$, $s$, $I_R$ | a cutoff; a disk's radius; the area from −R to R | R = 2 gives 1.764163 | I_R climbs to I |
-| $r$, $\theta$ | polar address: distance from the origin, angle in radians | disk of radius 1 | wider rings, more area |
-| $a$ | the squeeze factor on the exponent | 1, then 1/2 for the bell | narrower curve, area √(π/a) |
-| $\varphi$ | the bell: e^(−x^2/2) scaled to area 1 | peak 0.398942 | — |
+| $`x`$, $`y`$ | position along the line; a second, independent copy of it | −3 to 3 on the chart | the height falls fast |
+| $`e`$ | the base of natural exponentials, built by series in wing 01 | e^(−1) at x = 1 | — |
+| $`\pi`$ | the circle constant; the check builds it from a series | 3.141592653590 | — |
+| $`I`$ | the whole area under e^(−x^2) | 1.772454 | — |
+| $`R`$, $`s`$, $`I_R`$ | a cutoff; a disk's radius; the area from −R to R | R = 2 gives 1.764163 | I_R climbs to I |
+| $`r`$, $`\theta`$ | polar address: distance from the origin, angle in radians | disk of radius 1 | wider rings, more area |
+| $`a`$ | the squeeze factor on the exponent | 1, then 1/2 for the bell | narrower curve, area √(π/a) |
+| $`\varphi`$ | the bell: e^(−x^2/2) scaled to area 1 | peak 0.398942 | — |
 
 ### When it holds
 
-- **A positive squeeze factor.** With $a = 0$ the curve is flat at 1 and the strip from −10 to 10 already holds 20.000000; no finite total exists.
+- **A positive squeeze factor.** With $`a = 0`$ the curve is flat at 1 and the strip from −10 to 10 already holds 20.000000; no finite total exists.
 - **Both tails converge on their own.** The whole-line area is the left tail plus the right tail, each a limit; here the tail beyond a cutoff R on either side is below e^(−R^2)/(2R).
 - **Angles in radians.** The polar patch r dr dθ is exact only in radians; in degrees the π would not appear.
 - **The positive root.** I^2 = π has two roots; a positive curve takes the positive one.
@@ -77,7 +83,9 @@ Multiply e^(−x^2) by e^(−y^2) and the exponents add: e^(−(x^2 + y^2)). Tha
 
 Past a cutoff R, x/R is at least 1, so slipping it in can only raise the area:
 
-$$\int_R^{\infty} e^{-x^2}\,dx \;\le\; \frac{1}{R}\int_R^{\infty} x\,e^{-x^2}\,dx \;=\; \frac{e^{-R^2}}{2R}.$$
+```math
+\int_R^{\infty} e^{-x^2}\,dx \;\le\; \frac{1}{R}\int_R^{\infty} x\,e^{-x^2}\,dx \;=\; \frac{e^{-R^2}}{2R}.
+```
 
 The x buys the antiderivative −e^(−x^2)/2. Both tails together are at most e^(−R^2)/R. The tolerance game, with numbers: to land within 0.01 of the whole area, R = 2 suffices, bound 0.009158, actual tails 0.008291. Within 0.0001 needs R = 3: bound 0.000041, actual 0.000039. So I_R heads for a limit I as R heads for infinity.
 
@@ -85,7 +93,9 @@ The x buys the antiderivative −e^(−x^2)/2. Both tails together are at most e
 
 On the square from −R to R both ways, I_R times itself is a double integral, because the integrand splits into an x part times a y part ([Double integrals](01-double-integrals.md)):
 
-$$I_R^{\,2} = \int_{-R}^{R} e^{-x^2}\,dx \int_{-R}^{R} e^{-y^2}\,dy = \iint_{\text{square}} e^{-(x^2+y^2)}\,dx\,dy.$$
+```math
+I_R^{\,2} = \int_{-R}^{R} e^{-x^2}\,dx \int_{-R}^{R} e^{-y^2}\,dy = \iint_{\text{square}} e^{-(x^2+y^2)}\,dx\,dy.
+```
 
 Nothing infinite has happened yet. At R = 1, I_R is 1.493648 and its square 2.230985.
 
@@ -93,7 +103,9 @@ Nothing infinite has happened yet. At R = 1, I_R is 1.493648 and its square 2.23
 
 Over a disk of radius s centred at the origin, write x^2 + y^2 = r^2 and a patch as r dr dθ:
 
-$$\int_0^{2\pi}\!\!\int_0^{s} e^{-r^2}\, r\,dr\,d\theta \;=\; 2\pi\Big[-\tfrac12 e^{-r^2}\Big]_0^{s} \;=\; \pi\big(1 - e^{-s^2}\big).$$
+```math
+\int_0^{2\pi}\!\!\int_0^{s} e^{-r^2}\, r\,dr\,d\theta \;=\; 2\pi\Big[-\tfrac12 e^{-r^2}\Big]_0^{s} \;=\; \pi\big(1 - e^{-s^2}\big).
+```
 
 The factor r is the whole trick: r e^(−r^2) is the rate of −e^(−r^2)/2. At s = 1 the disk holds 1.985865. A 1000 by 1000 grid of small squares inside that disk, with no polar coordinates, gives 1.985950.
 
@@ -105,7 +117,9 @@ Scale: 60 pixels per unit, origin at (180, 120), R = 1.
 
 The disk of radius R fits inside the square. Every corner of the square is at distance R√2 from the centre, so the square fits inside the disk of radius R√2. The integrand is positive, so a bigger region holds more:
 
-$$\pi\big(1 - e^{-R^2}\big) \;\le\; I_R^{\,2} \;\le\; \pi\big(1 - e^{-2R^2}\big).$$
+```math
+\pi\big(1 - e^{-R^2}\big) \;\le\; I_R^{\,2} \;\le\; \pi\big(1 - e^{-2R^2}\big).
+```
 
 At R = 1: 1.985865 ≤ 2.230985 ≤ 2.716424. At R = 2: 3.084052 ≤ 3.112270 ≤ 3.140539. At R = 3: 3.141205 ≤ 3.141454 ≤ 3.141593. Both walls close on π, because e^(−R^2) heads for 0.
 
@@ -116,13 +130,13 @@ By Step 1, I_R heads for I, so I_R^2 heads for I^2. By Step 4, I_R^2 heads for �
 <details>
 <summary>Detailed proof</summary>
 
-Let $f(x) = e^{-x^2}$, continuous and positive.
+Let $`f(x) = e^{-x^2}`$, continuous and positive.
 
-Convergence. For $T > R > 0$ the integral of f from R to T is below $e^{-R^2}/(2R)$ and grows with T, so it has a limit (the real numbers have no gaps). With the mirror tail, $I = \lim I_R$ exists and $0 \le I - I_R \le e^{-R^2}/R$.
+Convergence. For $`T > R > 0`$ the integral of f from R to T is below $`e^{-R^2}/(2R)`$ and grows with T, so it has a limit (the real numbers have no gaps). With the mirror tail, $`I = \lim I_R`$ exists and $`0 \le I - I_R \le e^{-R^2}/R`$.
 
-Regions. On the closed square $Q_R = [-R, R]^2$, iterated integration gives $I_R^2 = \iint_{Q_R} e^{-(x^2+y^2)}\,dA$. On the closed disk $B_s = \{x^2 + y^2 \le s^2\}$ the polar map fails to be one-to-one only on the origin and one ray, sets of zero area, so change of variables gives $\pi(1 - e^{-s^2})$.
+Regions. On the closed square $`Q_R = [-R, R]^2`$, iterated integration gives $`I_R^2 = \iint_{Q_R} e^{-(x^2+y^2)}\,dA`$. On the closed disk $`B_s = \{x^2 + y^2 \le s^2\}`$ the polar map fails to be one-to-one only on the origin and one ray, sets of zero area, so change of variables gives $`\pi(1 - e^{-s^2})`$.
 
-Squeeze. $B_R \subset Q_R \subset B_{R\sqrt2}$ and the integrand is positive, so $\pi(1 - e^{-R^2}) \le I_R^2 \le \pi(1 - e^{-2R^2})$. Given $\varepsilon > 0$, choose a cutoff with $\pi e^{-R_0^2} < \varepsilon$; then for every $R > R_0$ both walls lie within $\varepsilon$ of $\pi$, so $|I_R^2 - \pi| < \varepsilon$. Also $I_R^2 \to I^2$, since squaring is continuous. Limits are unique, so $I^2 = \pi$, and $I > 0$ gives $I = \sqrt\pi$. Every double integral was over a bounded region.
+Squeeze. $`B_R \subset Q_R \subset B_{R\sqrt2}`$ and the integrand is positive, so $`\pi(1 - e^{-R^2}) \le I_R^2 \le \pi(1 - e^{-2R^2})`$. Given $`\varepsilon > 0`$, choose a cutoff with $`\pi e^{-R_0^2} < \varepsilon`$; then for every $`R > R_0`$ both walls lie within $`\varepsilon`$ of $`\pi`$, so $`|I_R^2 - \pi| < \varepsilon`$. Also $`I_R^2 \to I^2`$, since squaring is continuous. Limits are unique, so $`I^2 = \pi`$, and $`I > 0`$ gives $`I = \sqrt\pi`$. Every double integral was over a bounded region.
 
 </details>
 

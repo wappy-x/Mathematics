@@ -37,29 +37,33 @@ Each triangle is a student sitting three exams; each line between the triangles 
 
 ## The formula
 
-Notation first, in words. A graph $G$ is two lists: its dots, collected as $V$, and its joined pairs, the lines, collected as $E$ ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). Write $n$ for the dot count, 6 here. A **colouring** is a rule $c$ handing the dot $v$ a colour $c(v)$, the colours numbered 1, 2, 3 upward, $k$ of them on offer. It is **proper** when
+Notation first, in words. A graph $`G`$ is two lists: its dots, collected as $`V`$, and its joined pairs, the lines, collected as $`E`$ ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). Write $`n`$ for the dot count, 6 here. A **colouring** is a rule $`c`$ handing the dot $`v`$ a colour $`c(v)`$, the colours numbered 1, 2, 3 upward, $`k`$ of them on offer. It is **proper** when
 
-$$c(u) \ne c(v) \quad \text{for every line joining the dots } u \text{ and } v$$
+```math
+c(u) \ne c(v) \quad \text{for every line joining the dots } u \text{ and } v
+```
 
 **Read it aloud:** no line carries one colour at both ends.
 
-The **chromatic number** $\chi(G)$, written with the Greek letter chi, is the smallest $k$ admitting a proper colouring in $k$ colours.
+The **chromatic number** $`\chi(G)`$, written with the Greek letter chi, is the smallest $`k`$ admitting a proper colouring in $`k`$ colours.
 
-Two counts hem it in. The **clique number** $\omega(G)$ is the size of the largest set of dots joined in every pair: 3 here, Algebra with Biology with Chemistry. The **maximum degree** $\Delta(G)$ is the largest line count at one dot — a dot's line count is its degree — and it is 3 here.
+Two counts hem it in. The **clique number** $`\omega(G)`$ is the size of the largest set of dots joined in every pair: 3 here, Algebra with Biology with Chemistry. The **maximum degree** $`\Delta(G)`$ is the largest line count at one dot — a dot's line count is its degree — and it is 3 here.
 
-$$\omega(G) \le \chi(G) \le \Delta(G) + 1$$
+```math
+\omega(G) \le \chi(G) \le \Delta(G) + 1
+```
 
 **Read it aloud:** never fewer colours than the biggest all-joined group, never more than one past the busiest dot's line count.
 
-**Brooks' theorem** (1941) takes one off the ceiling, with two exceptions. A graph in one piece that is neither **complete** — every pair of dots joined — nor an odd ring, a cycle of odd length ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)), has $\chi(G) \le \Delta(G)$.
+**Brooks' theorem** (1941) takes one off the ceiling, with two exceptions. A graph in one piece that is neither **complete** — every pair of dots joined — nor an odd ring, a cycle of odd length ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)), has $`\chi(G) \le \Delta(G)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$, $V$, $E$, $n$ | a graph: dots, lines, dot count | six exams, nine clashes, $n$ = 6 | more lines can force more colours |
-| $c$, $v$, $u$, $k$ | the colouring rule; two dots; colours offered | $c$(Algebra) = 1 | — |
-| $\chi$ | fewest colours a proper colouring needs | 3 sessions | — |
-| $\Delta$ | largest line count at one dot | 3 clashes | ceiling rises |
-| $\omega$, $\alpha$ | largest set joined in every pair; largest with no line inside | 3 exams; 2 exams | floor up; floor down |
+| $`G`$, $`V`$, $`E`$, $`n`$ | a graph: dots, lines, dot count | six exams, nine clashes, $`n`$ = 6 | more lines can force more colours |
+| $`c`$, $`v`$, $`u`$, $`k`$ | the colouring rule; two dots; colours offered | $`c`$(Algebra) = 1 | — |
+| $`\chi`$ | fewest colours a proper colouring needs | 3 sessions | — |
+| $`\Delta`$ | largest line count at one dot | 3 clashes | ceiling rises |
+| $`\omega`$, $`\alpha`$ | largest set joined in every pair; largest with no line inside | 3 exams; 2 exams | floor up; floor down |
 
 ### When it holds
 
@@ -77,42 +81,42 @@ Read a colouring backwards: collect the exams per colour. Session 1 holds Algebr
 
 ### Step 1: mutual clashes set a floor
 
-Algebra, Biology and Chemistry clash in every pair, so no two share a group: three groups at least. The largest all-joined set always spends one colour per dot, which is $\chi(G) \ge \omega(G)$, here 3.
+Algebra, Biology and Chemistry clash in every pair, so no two share a group: three groups at least. The largest all-joined set always spends one colour per dot, which is $`\chi(G) \ge \omega(G)`$, here 3.
 
-A second floor never looks for a triangle. The **independence number** $\alpha(G)$ is the size of the largest independent set — 2 here, Biology and Drama. One colour's dots are such a set, so no session holds 3 exams, and six exams need at least 6 ÷ 2 = 3 sessions. Two counts, both 3.
+A second floor never looks for a triangle. The **independence number** $`\alpha(G)`$ is the size of the largest independent set — 2 here, Biology and Drama. One colour's dots are such a set, so no session holds 3 exams, and six exams need at least 6 ÷ 2 = 3 sessions. Two counts, both 3.
 
 ### Step 2: one dot at a time never needs more than one past the busiest count
 
 Fix any order of the dots, walk it, and give each dot the lowest-numbered colour no already-coloured neighbour carries. That is **greedy colouring**: each dot decided once, never revisited.
 
-At a dot's turn at most $\Delta(G)$ neighbours hold colours, so one of the first $\Delta(G) + 1$ is always free, whatever the order. Each line's later end avoided its earlier end's colour, so the result is proper: $\chi(G) \le \Delta(G) + 1$, at most 4 here.
+At a dot's turn at most $`\Delta(G)`$ neighbours hold colours, so one of the first $`\Delta(G) + 1`$ is always free, whatever the order. Each line's later end avoided its earlier end's colour, so the result is proper: $`\chi(G) \le \Delta(G) + 1`$, at most 4 here.
 
 ### Step 3: the order decides what greedy spends
 
 Take the exams as listed. Algebra 1, Biology 2, Chemistry 3; Drama clashes only with Algebra so far, so 2; Economics 1; French clashes with Chemistry, Drama and Economics, finds 1, 2 and 3 barred, and opens a fourth session — four, on a graph needing three.
 
-Visit Algebra, French, Biology, Drama, Chemistry, Economics instead and the rule spends 1, 1, 2, 2, 3, 3 in that order — the timetable above. Some order always spends exactly $\chi(G)$ colours — the classes of a best colouring, listed one after another — but finding that order needs that colouring in hand: the whole problem.
+Visit Algebra, French, Biology, Drama, Chemistry, Economics instead and the rule spends 1, 1, 2, 2, 3, 3 in that order — the timetable above. Some order always spends exactly $`\chi(G)`$ colours — the classes of a best colouring, listed one after another — but finding that order needs that colouring in hand: the whole problem.
 
 ### Step 4: Brooks meets the floor and settles this graph
 
 The exam graph is in one piece. Algebra and Economics do not clash, so it is not complete. Every exam has three clashes, where a ring would give two. So Brooks applies and three colours suffice.
 
-Floor 3, ceiling 3, so $\chi(G) = 3$ — settled by counting, with no colouring searched for. That is what a bound is worth: on a graph too big to search, arithmetic still answers.
+Floor 3, ceiling 3, so $`\chi(G) = 3`$ — settled by counting, with no colouring searched for. That is what a bound is worth: on a graph too big to search, arithmetic still answers.
 
 <details>
 <summary>Detailed proof: the order behind Brooks' theorem</summary>
 
 Steps 1 and 2 prove the floors and the ceiling in full. Brooks' order is what exceeds the card; this is its shape.
 
-Suppose some dot has fewer than $\Delta(G)$ lines. Grow a tree of shortest routes out from it and colour in reverse tree order, each child before its parent. Every other dot still has an uncoloured neighbour, its parent, so it sees at most $\Delta(G) - 1$ colours, and the root has fewer than $\Delta(G)$ neighbours.
+Suppose some dot has fewer than $`\Delta(G)`$ lines. Grow a tree of shortest routes out from it and colour in reverse tree order, each child before its parent. Every other dot still has an uncoloured neighbour, its parent, so it sees at most $`\Delta(G) - 1`$ colours, and the root has fewer than $`\Delta(G)`$ neighbours.
 
-When every dot has exactly $\Delta(G)$ lines, the proof finds one dot with two unjoined neighbours such that removing that pair leaves the rest in one piece. Colour those two alike first, then work inward, and that dot sees at most $\Delta(G) - 1$ colours among $\Delta(G)$ neighbours.
+When every dot has exactly $`\Delta(G)`$ lines, the proof finds one dot with two unjoined neighbours such that removing that pair leaves the rest in one piece. Colour those two alike first, then work inward, and that dot sees at most $`\Delta(G) - 1`$ colours among $`\Delta(G)`$ neighbours.
 
-The graphs in one piece with every count at $\Delta(G)$ and no such triple are the complete graphs and the rings. Among those, the ones needing $\Delta(G) + 1$ are the complete graphs and the odd rings. Showing the triple exists otherwise is the hard step; both textbooks in Sources prove the theorem in full.
+The graphs in one piece with every count at $`\Delta(G)`$ and no such triple are the complete graphs and the rings. Among those, the ones needing $`\Delta(G) + 1`$ are the complete graphs and the odd rings. Showing the triple exists otherwise is the hard step; both textbooks in Sources prove the theorem in full.
 
 </details>
 
-A second route counts instead of searching: how many proper colourings $k$ colours allow, with $\chi(G)$ the smallest $k$ whose count is not zero ([The chromatic polynomial](04-chromatic-polynomial.md)).
+A second route counts instead of searching: how many proper colourings $`k`$ colours allow, with $`\chi(G)`$ the smallest $`k`$ whose count is not zero ([The chromatic polynomial](04-chromatic-polynomial.md)).
 
 ---
 
@@ -121,9 +125,9 @@ A second route counts instead of searching: how many proper colourings $k$ colou
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | clashes from the enrolments | 3 + 3 + 1 + 1 + 1 | 9 |
-| clashes at each exam | three others apiece | $\Delta$ = 3 |
-| largest all-clashing set | Algebra, Biology, Chemistry | $\omega$ = 3, floor 3 |
-| largest clash-free set | Biology, Drama | $\alpha$ = 2, 6 ÷ 2 = 3 |
+| clashes at each exam | three others apiece | $`\Delta`$ = 3 |
+| largest all-clashing set | Algebra, Biology, Chemistry | $`\omega`$ = 3, floor 3 |
+| largest clash-free set | Biology, Drama | $`\alpha`$ = 2, 6 ÷ 2 = 3 |
 | greedy ceiling | 3 + 1 | at most 4 |
 | Brooks ceiling | one piece, not complete, not a ring | at most 3 |
 | floor meets ceiling | 3 and 3 | **3 sessions** |
@@ -144,7 +148,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The answer comes twice by roads sharing no arithmetic: every assignment of $k$ colours is tried in turn, $k$ counting up from 1; and the floors and ceilings are read off the clash lists. Greedy runs in two orders, and two smaller graphs carry the mistakes.
+Nothing is imported. The answer comes twice by roads sharing no arithmetic: every assignment of $`k`$ colours is tried in turn, $`k`$ counting up from 1; and the floors and ceilings are read off the clash lists. Greedy runs in two orders, and two smaller graphs carry the mistakes.
 
 ### Python
 
@@ -350,13 +354,13 @@ The two outputs match line for line.
 
 Lean proves the two bounds and the second floor for every graph with finitely many dots, then checks the exam graph's numbers.
 
-- Every graph needs at least as many colours as its largest all-joined group: $\omega(G) \le \chi(G)$.
-- Every graph manages with one colour past its busiest dot's line count: $\chi(G) \le \Delta(G) + 1$.
-- The dot count is at most $\chi(G)$ times $\alpha(G)$, the second floor of Step 1.
-- The exam graph has 9 clashes, 3 at every exam, $\omega$ = 3 and $\alpha$ = 2.
+- Every graph needs at least as many colours as its largest all-joined group: $`\omega(G) \le \chi(G)`$.
+- Every graph manages with one colour past its busiest dot's line count: $`\chi(G) \le \Delta(G) + 1`$.
+- The dot count is at most $`\chi(G)`$ times $`\alpha(G)`$, the second floor of Step 1.
+- The exam graph has 9 clashes, 3 at every exam, $`\omega`$ = 3 and $`\alpha`$ = 2.
 - Greedy's listed-order colours 1, 2, 3, 2, 1, 4 and the three-session timetable both keep clashing exams apart.
 - The exam graph is in one piece and not complete, and it needs exactly 3 sessions.
-- The triangle has a busiest count of 2 and needs 3; the ring of five exams has $\omega$ = 2 and needs 3.
+- The triangle has a busiest count of 2 and needs 3; the ring of five exams has $`\omega`$ = 2 and needs 3.
 
 Running greedy and trying every colouring are left to the Python and Rust checks; Brooks' own proof stays with the sources.
 
@@ -593,7 +597,7 @@ example : (cycleGraph 5).cliqueNum = 2 ∧ (cycleGraph 5).chromaticNumber = 3 :=
 
 ## Where this goes next
 
-- [The chromatic polynomial](04-chromatic-polynomial.md): counts the colourings in $k$ colours rather than hunting one.
+- [The chromatic polynomial](04-chromatic-polynomial.md): counts the colourings in $`k`$ colours rather than hunting one.
 - [Colouring maps](05-five-and-four-colour-theorems.md): the ceiling for graphs drawn flat with no crossings.
 - [Edge colouring](06-edge-colouring-and-round-robin.md): the same question asked of the lines.
 - [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md): clash graphs with thousands of exams.

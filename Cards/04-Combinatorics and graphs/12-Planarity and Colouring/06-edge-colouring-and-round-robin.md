@@ -33,29 +33,33 @@ The season's first weekend, built below; four more of this shape finish it.
 
 Notation first.
 
-- A capital Greek delta before a network's name, $\Delta(G)$, is its largest degree: the busiest dot's line count, read "delta of G" ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)).
-- The chromatic index is a primed chi, $\chi'(G)$, read "chi prime of G": the fewest colours in a **proper** edge colouring, where no two lines of a colour meet at a dot. Plain chi is the dot version.
-- $K_n$ is the **complete network**: all $n$ dots pairwise joined.
+- A capital Greek delta before a network's name, $`\Delta(G)`$, is its largest degree: the busiest dot's line count, read "delta of G" ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)).
+- The chromatic index is a primed chi, $`\chi'(G)`$, read "chi prime of G": the fewest colours in a **proper** edge colouring, where no two lines of a colour meet at a dot. Plain chi is the dot version.
+- $`K_n`$ is the **complete network**: all $`n`$ dots pairwise joined.
 
 Vizing's theorem, 1964:
 
-$$\Delta(G) \;\le\; \chi'(G) \;\le\; \Delta(G) + 1$$
+```math
+\Delta(G) \;\le\; \chi'(G) \;\le\; \Delta(G) + 1
+```
 
 **Read it aloud:** the lines need as many colours as the busiest dot has lines, or one more, and nothing else.
 
 Two exact answers sit inside it. A **bipartite** network splits its dots into two sides with every line crossing between them — teachers one side, classes the other ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). There the lower end always holds: König, 1916.
 
-$$\chi'(G) = \Delta(G) \quad \text{for bipartite } G, \qquad \chi'(K_n) = n - 1 \ \text{ for even } n, \qquad \chi'(K_n) = n \ \text{ for odd } n \ge 3$$
+```math
+\chi'(G) = \Delta(G) \quad \text{for bipartite } G, \qquad \chi'(K_n) = n - 1 \ \text{ for even } n, \qquad \chi'(K_n) = n \ \text{ for odd } n \ge 3
+```
 
 Six clubs: busiest count 5, chromatic index 5, five weekends. Five clubs: busiest count 4, chromatic index 5 — five weekends still, one resting.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many dots in the network | 6 | more matches |
-| $\Delta(G)$ | the busiest dot's line count | 5 | the floor rises |
-| $\chi'(G)$ | fewest colours for the lines | 5 | — |
-| $K_n$ | all $n$ dots pairwise joined | the league | — |
-| $i$, $j$, $k$ | two rotating labels, and the weekend | A is 0, E is 4; weekends 0 to 4 | — |
+| $`n`$ | how many dots in the network | 6 | more matches |
+| $`\Delta(G)`$ | the busiest dot's line count | 5 | the floor rises |
+| $`\chi'(G)`$ | fewest colours for the lines | 5 | — |
+| $`K_n`$ | all $`n`$ dots pairwise joined | the league | — |
+| $`i`$, $`j`$, $`k`$ | two rotating labels, and the weekend | A is 0, E is 4; weekends 0 to 4 | — |
 
 ### When it holds
 
@@ -83,17 +87,19 @@ Six clubs are even: 15 matches at 3 a weekend is 5, Step 1's floor again — the
 
 ### Step 3: the rotation builds the five weekends
 
-Sit F out of the wheel: F is the **pin**, playing every weekend and never moving. Put A, B, C, D, E round a circle with labels 0 to 4, number the weekends $k = 0$ to 4, and wrap label arithmetic at 5.
+Sit F out of the wheel: F is the **pin**, playing every weekend and never moving. Put A, B, C, D, E round a circle with labels 0 to 4, number the weekends $`k = 0`$ to 4, and wrap label arithmetic at 5.
 
-$$\text{weekend } k: \quad \text{the pin meets label } k, \quad \text{and labels } i \text{ and } j \text{ meet when } i + j \equiv 2k \ (\mathrm{mod}\ 5)$$
+```math
+\text{weekend } k: \quad \text{the pin meets label } k, \quad \text{and labels } i \text{ and } j \text{ meet when } i + j \equiv 2k \ (\mathrm{mod}\ 5)
+```
 
-Here $\equiv$ with $(\mathrm{mod}\ 5)$ means the two sides leave the same remainder after dividing by 5 ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
+Here $`\equiv`$ with $`(\mathrm{mod}\ 5)`$ means the two sides leave the same remainder after dividing by 5 ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
 
 Weekend 0: the pin meets label 0, A; labels adding to 0 are 1 + 4 and 2 + 3, so B-E and C-D — the picture above.
 
-**Nothing clashes.** Any label but $k$ has one partner, $2k$ minus itself, which is the label itself only when the label is $k$ — already booked against the pin. Every club plays once, three matches a weekend.
+**Nothing clashes.** Any label but $`k`$ has one partner, $`2k`$ minus itself, which is the label itself only when the label is $`k`$ — already booked against the pin. Every club plays once, three matches a weekend.
 
-**Every match happens, once.** Two labels fix their weekend, since $2k$ must be their sum, and multiplying by 2 can be undone at 5, because 3 times 2 leaves 1: multiply the sum by 3 and $k$ comes back. A and B add to 1, so $k$ is 3, the fourth weekend. Five weekends of three is 15 — every pair once.
+**Every match happens, once.** Two labels fix their weekend, since $`2k`$ must be their sum, and multiplying by 2 can be undone at 5, because 3 times 2 leaves 1: multiply the sum by 3 and $`k`$ comes back. A and B add to 1, so $`k`$ is 3, the fourth weekend. Five weekends of three is 15 — every pair once.
 
 Doubling undoes only when the rotating count is odd, which is what the pin is for: rotate all six and only even label sums ever come up — 6 of the 15 matches, and A never meets B.
 

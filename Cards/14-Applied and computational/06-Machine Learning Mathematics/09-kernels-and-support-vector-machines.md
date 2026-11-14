@@ -26,9 +26,9 @@ With the **radial kernel**, similarity that fades with distance, on synthetic da
 
 <p align="center"><img src="../figures/kernels-and-support-vector-machines.svg" alt="Six orders to scale: three honest open dots near the origin, three fraud filled dots up and to the right, a shaded strip between the lines x1 + x2 = 1 and x1 + x2 = 4 with the boundary x1 + x2 = 2.5 down its middle, and a dashed perceptron line at x1 + x2 = 3" width="420"></p>
 
-Before the ring, a simpler case: six orders where every fraud is both big and late. Drawn to scale, across is the amount score $x_1$, up the hour score $x_2$.
+Before the ring, a simpler case: six orders where every fraud is both big and late. Drawn to scale, across is the amount score $`x_1`$, up the hour score $`x_2`$.
 
-Open dots are honest, at (0, 0), (1, 0) and (0, 1); filled dots are fraud, at (2, 2), (3, 3) and (4, 1). The number beside each line is its value of $x_1 + x_2$.
+Open dots are honest, at (0, 0), (1, 0) and (0, 1); filled dots are fraud, at (2, 2), (3, 3) and (4, 1). The number beside each line is its value of $`x_1 + x_2`$.
 
 The shaded strip, from 1 to 4, is the widest empty strip any straight line allows, and the SVM's boundary, solid, runs down its middle at 2.5. The three ringed orders touch the strip: they are the **support vectors**, the word used from here on, and they alone fix the boundary.
 
@@ -38,44 +38,48 @@ The dashed line at 3 is where a perceptron stopped. It splits the orders too, bu
 
 ## The formula
 
-The perceptron card ([The perceptron and its stack](03-perceptron-and-neural-networks.md)) scores an order $x$ as $s(x) = w \cdot x + b$, with weights $w$ and a bias $b$, and flags fraud when $s > 0$. Labels are $y = +1$ for fraud and $y = -1$ for honest. This card keeps all of that and adds the slack $\xi_i$, the penalty $C$ and the kernel $K(x, x')$.
+The perceptron card ([The perceptron and its stack](03-perceptron-and-neural-networks.md)) scores an order $`x`$ as $`s(x) = w \cdot x + b`$, with weights $`w`$ and a bias $`b`$, and flags fraud when $`s > 0`$. Labels are $`y = +1`$ for fraud and $`y = -1`$ for honest. This card keeps all of that and adds the slack $`\xi_i`$, the penalty $`C`$ and the kernel $`K(x, x')`$.
 
-The SVM chooses $w$ and $b$ by solving
+The SVM chooses $`w`$ and $`b`$ by solving
 
-$$\min_{w,\,b,\,\xi}\ \tfrac12\lvert w\rvert^2 + C\sum_{i=1}^{n}\xi_i \quad\text{subject to}\quad y_i\,(w\cdot x_i + b) \ge 1 - \xi_i,\quad \xi_i \ge 0 .$$
+```math
+\min_{w,\,b,\,\xi}\ \tfrac12\lvert w\rvert^2 + C\sum_{i=1}^{n}\xi_i \quad\text{subject to}\quad y_i\,(w\cdot x_i + b) \ge 1 - \xi_i,\quad \xi_i \ge 0 .
+```
 
 **Read it aloud:** keep the weights as short as possible, which makes the gap as wide as possible, plus a charge of C for every unit by which an order crosses its edge of the gap.
 
-The gap between the edges is $2/\lvert w\rvert$. The answer turns out to be a weighted sum over the training orders, so the score can be written with a kernel in place of each dot product:
+The gap between the edges is $`2/\lvert w\rvert`$. The answer turns out to be a weighted sum over the training orders, so the score can be written with a kernel in place of each dot product:
 
-$$s(x) = \sum_{i=1}^{n} \alpha_i\, y_i\, K(x_i, x) + b, \qquad K(x, x') = e^{-\gamma\,\lvert x - x'\rvert^2}.$$
+```math
+s(x) = \sum_{i=1}^{n} \alpha_i\, y_i\, K(x_i, x) + b, \qquad K(x, x') = e^{-\gamma\,\lvert x - x'\rvert^2}.
+```
 
 **Read it aloud:** the score of a new order is a vote of the training orders, each weighted by how much it matters and how similar it is to the new one, plus the bias.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_i$ | an order as (amount score, hour score); $x_i$ is training order $i$ | £100 at the usual hour: (2, 0) | further out on the ring, more likely flagged |
-| $y_i$ | the label: +1 fraud, −1 honest | (2, 2): +1 | — |
-| $n$ | the number of training orders | 6 here; 160 on the ring | the kernel table grows as $n^2$ |
-| $w$, $\lvert w\rvert$, $2/\lvert w\rvert$ | the weights, their length, and the margin: the width of the empty strip | (0.6667, 0.6667), length 0.9428, margin 2.1213 | a narrower gap |
-| $b$ | the bias: slides the boundary without turning it | −1.6667 | more orders flagged |
-| $s(x)$ | the score; above 0 means flag | (2, 0) on the ring: +1.6770 | — |
-| $\xi_i$ | slack: how far order $i$ crosses its edge, in units of $1/\lvert w\rvert$ | 2.00 for an honest order deep among fraud | — |
-| $C$ | the price per unit of slack | 1 on six orders; 10 on the ring | fewer crossings, narrower gap |
-| $\alpha_i$, $L$ | order $i$'s weight in the answer, zero unless it touches or crosses the gap; $L$ is the cost with every limit's price attached (Step 3's fold) | 0.2222, 0.2222, 0.4444, rest 0 | that order pulls the boundary harder |
-| $K(x, x')$ | the kernel: a similarity that stands in for $x \cdot x'$ | $e^{-2.5} = 0.082085$ for (1, 0) and (2, 2) | — |
-| $\phi(x)$ | the hidden features a kernel stands for: $K(x, x') = \phi(x)\cdot\phi(x')$ | $(x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2)$ for the squared kernel | — |
-| $\gamma$ | the radial kernel's reach setting: big means similarity fades fast | 0.5 | a wigglier boundary |
+| $`x`$, $`x_i`$ | an order as (amount score, hour score); $`x_i`$ is training order $`i`$ | £100 at the usual hour: (2, 0) | further out on the ring, more likely flagged |
+| $`y_i`$ | the label: +1 fraud, −1 honest | (2, 2): +1 | — |
+| $`n`$ | the number of training orders | 6 here; 160 on the ring | the kernel table grows as $`n^2`$ |
+| $`w`$, $`\lvert w\rvert`$, $`2/\lvert w\rvert`$ | the weights, their length, and the margin: the width of the empty strip | (0.6667, 0.6667), length 0.9428, margin 2.1213 | a narrower gap |
+| $`b`$ | the bias: slides the boundary without turning it | −1.6667 | more orders flagged |
+| $`s(x)`$ | the score; above 0 means flag | (2, 0) on the ring: +1.6770 | — |
+| $`\xi_i`$ | slack: how far order $`i`$ crosses its edge, in units of $`1/\lvert w\rvert`$ | 2.00 for an honest order deep among fraud | — |
+| $`C`$ | the price per unit of slack | 1 on six orders; 10 on the ring | fewer crossings, narrower gap |
+| $`\alpha_i`$, $`L`$ | order $`i`$'s weight in the answer, zero unless it touches or crosses the gap; $`L`$ is the cost with every limit's price attached (Step 3's fold) | 0.2222, 0.2222, 0.4444, rest 0 | that order pulls the boundary harder |
+| $`K(x, x')`$ | the kernel: a similarity that stands in for $`x \cdot x'`$ | $`e^{-2.5} = 0.082085`$ for (1, 0) and (2, 2) | — |
+| $`\phi(x)`$ | the hidden features a kernel stands for: $`K(x, x') = \phi(x)\cdot\phi(x')`$ | $`(x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2)`$ for the squared kernel | — |
+| $`\gamma`$ | the radial kernel's reach setting: big means similarity fades fast | 0.5 | a wigglier boundary |
 
-Two clashes: the perceptron card used $\gamma$ for a margin. Here $\gamma$ is only the radial kernel's setting; the margin is always written $2/\lvert w\rvert$. And $\alpha_i$ here is an order's weight in the answer, not the mixing weight $\alpha_k$ of [EM](08-em-algorithm.md).
+Two clashes: the perceptron card used $`\gamma`$ for a margin. Here $`\gamma`$ is only the radial kernel's setting; the margin is always written $`2/\lvert w\rvert`$. And $`\alpha_i`$ here is an order's weight in the answer, not the mixing weight $`\alpha_k`$ of [EM](08-em-algorithm.md).
 
 ### When it holds
 
 - **Features on one scale.** The radial kernel measures distance, so a feature in pounds swamps one in scores. Measure the amount in pounds and the ring SVM misses 46 frauds and raises 31 false alarms, against 20 and 4.
 - **Future orders look like the training orders.** The boundary is drawn round what it saw. If fraudsters move to ordinary amounts at ordinary hours, the circle never sees them.
-- **C and γ chosen on orders held back.** With $\gamma = 50$ every training order becomes its own island: 0 training errors, then 87 of 100 test frauds missed.
+- **C and γ chosen on orders held back.** With $`\gamma = 50`$ every training order becomes its own island: 0 training errors, then 87 of 100 test frauds missed.
 - **n small enough for an n by n table.** The kernel needs every pair of training orders: 20,000 orders make 400 million entries, 3.2 GB.
-- **A genuine kernel.** $K$ must be a dot product of some features (the radial one is, Step 4). An arbitrary similarity score can make the problem have no best answer.
+- **A genuine kernel.** $`K`$ must be a dot product of some features (the radial one is, Step 4). An arbitrary similarity score can make the problem have no best answer.
 
 ---
 
@@ -87,62 +91,68 @@ Many straight lines split the six orders in the picture. A line that grazes an o
 
 ### Step 1: the gap is 2 over the length of the weights
 
-The distance from a point to a plane, measured along the normal (the direction at right angles to the plane), is $\lvert w \cdot x + b\rvert / \lvert w\rvert$ ([Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md)). Here the "plane" is the boundary $w \cdot x + b = 0$ and the normal is $w$.
+The distance from a point to a plane, measured along the normal (the direction at right angles to the plane), is $`\lvert w \cdot x + b\rvert / \lvert w\rvert`$ ([Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md)). Here the "plane" is the boundary $`w \cdot x + b = 0`$ and the normal is $`w`$.
 
-Doubling $w$ and $b$ draws the same boundary, so fix the scale: choose it so the nearest orders score exactly ±1. Then every order obeys $y_i(w \cdot x_i + b) \ge 1$, the strip's two edges are the lines $s = -1$ and $s = +1$, and each edge lies $1/\lvert w\rvert$ from the boundary. The strip is $2/\lvert w\rvert$ wide.
+Doubling $`w`$ and $`b`$ draws the same boundary, so fix the scale: choose it so the nearest orders score exactly ±1. Then every order obeys $`y_i(w \cdot x_i + b) \ge 1`$, the strip's two edges are the lines $`s = -1`$ and $`s = +1`$, and each edge lies $`1/\lvert w\rvert`$ from the boundary. The strip is $`2/\lvert w\rvert`$ wide.
 
-So the widest strip is the shortest $w$. Minimising $\tfrac12\lvert w\rvert^2$ instead of $\lvert w\rvert$ gives the same answer and a smooth bowl. A bowl under straight-line limits has one bottom ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)), so the widest strip is unique.
+So the widest strip is the shortest $`w`$. Minimising $`\tfrac12\lvert w\rvert^2`$ instead of $`\lvert w\rvert`$ gives the same answer and a smooth bowl. A bowl under straight-line limits has one bottom ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)), so the widest strip is unique.
 
 ### Step 2: slack pays for orders that will not fit
 
-Add a seventh order: an honest customer at (3, 2), a large late order that sits in the middle of the three frauds. Now no straight line splits the groups. Along the direction $(1, 2)/\sqrt5$ the nearest frauds, (2, 2) and (4, 1), sit at $6/\sqrt5$, and the honest order at (3, 2) sits beyond them at $7/\sqrt5$: a clearance of $-1/\sqrt5 = -0.4472$, a negative gap. A scan of every direction, 0.01 degree apart, finds nothing better: −0.4473, as close as its steps reach.
+Add a seventh order: an honest customer at (3, 2), a large late order that sits in the middle of the three frauds. Now no straight line splits the groups. Along the direction $`(1, 2)/\sqrt5`$ the nearest frauds, (2, 2) and (4, 1), sit at $`6/\sqrt5`$, and the honest order at (3, 2) sits beyond them at $`7/\sqrt5`$: a clearance of $`-1/\sqrt5 = -0.4472`$, a negative gap. A scan of every direction, 0.01 degree apart, finds nothing better: −0.4473, as close as its steps reach.
 
-Slack $\xi_i$ lets order $i$ fall short of its edge by that much, at a cost of $C\,\xi_i$. With $C = 1$ the SVM picks $w = (0.5000, 0.5000)$ and $b = -1.5000$, the boundary $x_1 + x_2 = 3$, a strip 2.8284 wide, and pays slack 0.50 for the fraud at (2, 2) and 2.00 for the honest order at (3, 2). Cheaper slack, $C = 0.1$, buys a wider strip, 3.6011, with more orders inside it. Large C means "trust every label"; small C means "keep the boundary simple".
+Slack $`\xi_i`$ lets order $`i`$ fall short of its edge by that much, at a cost of $`C\,\xi_i`$. With $`C = 1`$ the SVM picks $`w = (0.5000, 0.5000)`$ and $`b = -1.5000`$, the boundary $`x_1 + x_2 = 3`$, a strip 2.8284 wide, and pays slack 0.50 for the fraud at (2, 2) and 2.00 for the honest order at (3, 2). Cheaper slack, $`C = 0.1`$, buys a wider strip, 3.6011, with more orders inside it. Large C means "trust every label"; small C means "keep the boundary simple".
 
 ### Step 3: the best weights are a weighted sum of the orders
 
-First, why the best weights are built from the orders at all. Split $w$ into a part that is a combination of the orders $x_i$ and a part perpendicular to every one of them. The perpendicular part adds nothing to any $w \cdot x_i$, so it changes no limit and no slack, and it only makes $\lvert w\rvert^2$ bigger. So the best $w$ has no such part: it is a weighted sum of the orders.
+First, why the best weights are built from the orders at all. Split $`w`$ into a part that is a combination of the orders $`x_i`$ and a part perpendicular to every one of them. The perpendicular part adds nothing to any $`w \cdot x_i`$, so it changes no limit and no slack, and it only makes $`\lvert w\rvert^2`$ bigger. So the best $`w`$ has no such part: it is a weighted sum of the orders.
 
-Lagrange multipliers ([Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)) say which weights: one multiplier $\alpha_i \ge 0$ per order, a price on its limit. At the best point the gradient of the cost (the direction in which it climbs fastest) lines up with the limits' gradients, which gives
+Lagrange multipliers ([Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)) say which weights: one multiplier $`\alpha_i \ge 0`$ per order, a price on its limit. At the best point the gradient of the cost (the direction in which it climbs fastest) lines up with the limits' gradients, which gives
 
-$$w = \sum_{i} \alpha_i\, y_i\, x_i, \qquad \sum_i \alpha_i\, y_i = 0 .$$
+```math
+w = \sum_{i} \alpha_i\, y_i\, x_i, \qquad \sum_i \alpha_i\, y_i = 0 .
+```
 
-An order beyond its edge of the strip, on its own side, meets its limit with room to spare, so its price is zero: $\alpha_i = 0$. Only orders on or inside the strip can get weight. Those that do are the support vectors. In the picture, (1, 0) and (0, 1) get 0.2222 each and (2, 2) gets 0.4444. The other three get 0.
+An order beyond its edge of the strip, on its own side, meets its limit with room to spare, so its price is zero: $`\alpha_i = 0`$. Only orders on or inside the strip can get weight. Those that do are the support vectors. In the picture, (1, 0) and (0, 1) get 0.2222 each and (2, 2) gets 0.4444. The other three get 0.
 
 <details>
 <summary>The algebra: from the multipliers to a problem that only uses dot products</summary>
 
-Write the hard-margin cost with its prices: $L = \tfrac12\lvert w\rvert^2 - \sum_i \alpha_i\,[\,y_i(w\cdot x_i + b) - 1\,]$.
+Write the hard-margin cost with its prices: $`L = \tfrac12\lvert w\rvert^2 - \sum_i \alpha_i\,[\,y_i(w\cdot x_i + b) - 1\,]`$.
 
-Set the rate of change in $w$ to zero: $w - \sum_i \alpha_i y_i x_i = 0$. Set the rate in $b$ to zero: $\sum_i \alpha_i y_i = 0$.
+Set the rate of change in $`w`$ to zero: $`w - \sum_i \alpha_i y_i x_i = 0`$. Set the rate in $`b`$ to zero: $`\sum_i \alpha_i y_i = 0`$.
 
-Put $w$ back into $L$. The $b$ term vanishes because $\sum_i \alpha_i y_i = 0$, and $\lvert w\rvert^2 = \sum_i\sum_j \alpha_i\alpha_j y_i y_j\, x_i \cdot x_j$. What is left is the **dual problem**:
+Put $`w`$ back into $`L`$. The $`b`$ term vanishes because $`\sum_i \alpha_i y_i = 0`$, and $`\lvert w\rvert^2 = \sum_i\sum_j \alpha_i\alpha_j y_i y_j\, x_i \cdot x_j`$. What is left is the **dual problem**:
 
-$$\max_{\alpha}\ \sum_i \alpha_i - \tfrac12\sum_i\sum_j \alpha_i\alpha_j\, y_i y_j\, x_i\cdot x_j \quad\text{with}\quad 0 \le \alpha_i \le C,\ \ \sum_i \alpha_i y_i = 0.$$
+$`\displaystyle \max_{\alpha}\ \sum_i \alpha_i - \tfrac12\sum_i\sum_j \alpha_i\alpha_j\, y_i y_j\, x_i\cdot x_j \quad\text{with}\quad 0 \le \alpha_i \le C,\ \ \sum_i \alpha_i y_i = 0.`$
 
-The cap $\alpha_i \le C$ is what slack adds. At the best point the two problems have the same value, so $\lvert w\rvert^2 = \sum_i \alpha_i$ in the hard-margin case: 0.8889 both ways for the six orders. Why "zero price when there is room to spare" holds for inequality limits, and why the two values meet, is the Karush–Kuhn–Tucker (KKT) conditions card in the optimisation wing (planned).
+The cap $`\alpha_i \le C`$ is what slack adds. At the best point the two problems have the same value, so $`\lvert w\rvert^2 = \sum_i \alpha_i`$ in the hard-margin case: 0.8889 both ways for the six orders. Why "zero price when there is room to spare" holds for inequality limits, and why the two values meet, is the Karush–Kuhn–Tucker (KKT) conditions card in the optimisation wing (planned).
 
 </details>
 
-The fold rewrites the problem in the prices $\alpha_i$ alone: the dual problem. The orders enter the dual, and the score $s(x) = \sum_i \alpha_i y_i\, x_i \cdot x + b$, **only through dot products**. That is the opening for Step 4.
+The fold rewrites the problem in the prices $`\alpha_i`$ alone: the dual problem. The orders enter the dual, and the score $`s(x) = \sum_i \alpha_i y_i\, x_i \cdot x + b`$, **only through dot products**. That is the opening for Step 4.
 
 ### Step 4: a kernel is a dot product of features nobody has to compute
 
-Lift each order into more features: $\phi(x) = (x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2)$. Then
+Lift each order into more features: $`\phi(x) = (x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2)`$. Then
 
-$$\phi(x)\cdot\phi(x') = x_1^2x_1'^2 + 2x_1x_2x_1'x_2' + x_2^2x_2'^2 = (x\cdot x')^2 .$$
+```math
+\phi(x)\cdot\phi(x') = x_1^2x_1'^2 + 2x_1x_2x_1'x_2' + x_2^2x_2'^2 = (x\cdot x')^2 .
+```
 
-The lifted dot product costs one ordinary dot product and a squaring. And in lifted coordinates, a circle round the centre, $x_1^2 + x_2^2$ equal to a fixed number, becomes $\phi_1 + \phi_3$ equal to that number: a flat plane. A straight cut in the lifted space is a circle back in the plane of orders. So run the whole SVM with $(x \cdot x')^2$ in place of $x \cdot x'$, and its "straight line" is a curve.
+The lifted dot product costs one ordinary dot product and a squaring. And in lifted coordinates, a circle round the centre, $`x_1^2 + x_2^2`$ equal to a fixed number, becomes $`\phi_1 + \phi_3`$ equal to that number: a flat plane. A straight cut in the lifted space is a circle back in the plane of orders. So run the whole SVM with $`(x \cdot x')^2`$ in place of $`x \cdot x'`$, and its "straight line" is a curve.
 
 The radial kernel goes further. Split it:
 
-$$e^{-\gamma\lvert x - x'\rvert^2} = e^{-\gamma\lvert x\rvert^2}\; e^{-\gamma\lvert x'\rvert^2}\; \sum_{k=0}^{\infty} \frac{(2\gamma\, x\cdot x')^k}{k!}.$$
+```math
+e^{-\gamma\lvert x - x'\rvert^2} = e^{-\gamma\lvert x\rvert^2}\; e^{-\gamma\lvert x'\rvert^2}\; \sum_{k=0}^{\infty} \frac{(2\gamma\, x\cdot x')^k}{k!}.
+```
 
-Each power $(x \cdot x')^k$ is a dot product of lifted features, as above for $k = 2$. A sum of dot products is a dot product of the features laid end to end. Multiplying by $e^{-\gamma\lvert x\rvert^2}$ and $e^{-\gamma\lvert x'\rvert^2}$ just rescales each order's features. So the radial kernel is a dot product over infinitely many features, yet it costs one distance and one exponential. For (1, 0) and (2, 2) with $\gamma = 0.5$, the 30-term series and $e^{-2.5}$ agree: 0.082085.
+Each power $`(x \cdot x')^k`$ is a dot product of lifted features, as above for $`k = 2`$. A sum of dot products is a dot product of the features laid end to end. Multiplying by $`e^{-\gamma\lvert x\rvert^2}`$ and $`e^{-\gamma\lvert x'\rvert^2}`$ just rescales each order's features. So the radial kernel is a dot product over infinitely many features, yet it costs one distance and one exponential. For (1, 0) and (2, 2) with $`\gamma = 0.5`$, the 30-term series and $`e^{-2.5}`$ agree: 0.082085.
 
 ### Step 5: what the solver does
 
-The code solves the dual one pair of orders at a time: it shifts the two $\alpha$ that most want to move, keeping $\sum_i \alpha_i y_i$ at zero, until no pair can raise the dual. This is sequential minimal optimisation (SMO), the method inside common SVM libraries; its convergence proof belongs to the optimisation wing. The check here is direct: on the ring, the cost (printed as `primal`) and the dual value meet at 213.041234, a gap of 0.000000017.
+The code solves the dual one pair of orders at a time: it shifts the two $`\alpha`$ that most want to move, keeping $`\sum_i \alpha_i y_i`$ at zero, until no pair can raise the dual. This is sequential minimal optimisation (SMO), the method inside common SVM libraries; its convergence proof belongs to the optimisation wing. The check here is direct: on the ring, the cost (printed as `primal`) and the dual value meet at 213.041234, a gap of 0.000000017.
 
 ---
 
@@ -152,20 +162,20 @@ The six orders in the picture, hard margin (no slack allowed).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| nearest honest orders | (1, 0) and (0, 1) both have $x_1 + x_2 = 1$ | edge at 1 |
-| nearest fraud | (2, 2) has $x_1 + x_2 = 4$ | edge at 4 |
-| boundary | halfway between the edges | $x_1 + x_2 = 2.5$ |
-| scale so the edges score ±1 | $s = \tfrac23(x_1 + x_2) - \tfrac53$ | $w = (0.6667, 0.6667)$, $b = -1.6667$ |
-| check an edge | (1, 0): $\tfrac23 - \tfrac53$ | −1 |
-| length of $w$ | $\sqrt{(2/3)^2 + (2/3)^2} = \sqrt{8/9}$ | 0.9428 |
-| margin | $2 / 0.9428$, the same as $3/\sqrt2$ | **2.1213** |
-| weights on the orders | $\alpha$ for (1, 0), (0, 1), (2, 2) | 0.2222, 0.2222, 0.4444 |
-| rebuild $w$ | $0.4444\,(2, 2) - 0.2222\,(1, 0) - 0.2222\,(0, 1)$ | (0.6667, 0.6667) |
-| one radial kernel value | (1, 0) and (2, 2): $\lvert x - x'\rvert^2 = 1 + 4 = 5$, $e^{-0.5 \times 5}$ | 0.082085 |
+| nearest honest orders | (1, 0) and (0, 1) both have $`x_1 + x_2 = 1`$ | edge at 1 |
+| nearest fraud | (2, 2) has $`x_1 + x_2 = 4`$ | edge at 4 |
+| boundary | halfway between the edges | $`x_1 + x_2 = 2.5`$ |
+| scale so the edges score ±1 | $`s = \tfrac23(x_1 + x_2) - \tfrac53`$ | $`w = (0.6667, 0.6667)`$, $`b = -1.6667`$ |
+| check an edge | (1, 0): $`\tfrac23 - \tfrac53`$ | −1 |
+| length of $`w`$ | $`\sqrt{(2/3)^2 + (2/3)^2} = \sqrt{8/9}`$ | 0.9428 |
+| margin | $`2 / 0.9428`$, the same as $`3/\sqrt2`$ | **2.1213** |
+| weights on the orders | $`\alpha`$ for (1, 0), (0, 1), (2, 2) | 0.2222, 0.2222, 0.4444 |
+| rebuild $`w`$ | $`0.4444\,(2, 2) - 0.2222\,(1, 0) - 0.2222\,(0, 1)`$ | (0.6667, 0.6667) |
+| one radial kernel value | (1, 0) and (2, 2): $`\lvert x - x'\rvert^2 = 1 + 4 = 5`$, $`e^{-0.5 \times 5}`$ | 0.082085 |
 
-The boundary sits 1.0607 from the nearest order on each side, the most any straight line can manage for these six. The perceptron's line, $x_1 + x_2 = 3$, splits them too but leaves only 0.7071 on the fraud side.
+The boundary sits 1.0607 from the nearest order on each side, the most any straight line can manage for these six. The perceptron's line, $`x_1 + x_2 = 3`$, splits them too but leaves only 0.7071 on the fraud side.
 
-On the 160-order ring, the radial SVM with $\gamma = 0.5$ and $C = 10$ keeps 32 support vectors. A £100 order at the usual hour, (2, 0), scores +1.6770: flagged. A £5 order at 9pm, (−2.75, 0.50), scores +2.3179: flagged. A £70 order at 7pm, (0.50, −0.50), scores −3.6994: passed.
+On the 160-order ring, the radial SVM with $`\gamma = 0.5`$ and $`C = 10`$ keeps 32 support vectors. A £100 order at the usual hour, (2, 0), scores +1.6770: flagged. A £5 order at 9pm, (−2.75, 0.50), scores +2.3179: flagged. A £70 order at 7pm, (0.50, −0.50), scores −3.6994: passed.
 
 ### What breaks if you drop a piece
 
@@ -173,7 +183,7 @@ On the 160-order ring, the radial SVM with $\gamma = 0.5$ and $C = 10$ keeps 32 
 | --- | --- | --- |
 | Demand no slack once an honest order sits among the fraud | best gap −0.4472: no line exists | A hard margin needs data a line can split |
 | Use a straight line on the ring | linear SVM: weights 0, all 100 test frauds missed; best straight cut by scanning: 78 missed | No line separates a ring. The SVM's cheapest line is no line at all: a score of −1 everywhere |
-| Radial kernel with $\gamma = 50$ | 0 training errors, 87 of 100 test frauds missed | Each order is its own island: memorised, not learned |
+| Radial kernel with $`\gamma = 50`$ | 0 training errors, 87 of 100 test frauds missed | Each order is its own island: memorised, not learned |
 | Amount in pounds instead of a score | 46 frauds missed, 31 false alarms | Distance is all pounds; the hour hardly counts |
 
 Test errors out of 400 orders, the same 160 training orders each time:
@@ -190,13 +200,13 @@ linear SVM                    ████████████████�
 
 The ideal rule knows how the data were made: honest orders lie within 1.6, fraud between 1.2 and 3.0, and in the overlap honest orders are 8.86 times as dense, so the best possible boundary is the circle at 1.6. The SVM, never told this, draws a wobbly loop: 1.60 from the centre along the amount axis, but anywhere from 1.43 to 2.12 round the circle, 1.73 on average. From 160 training orders it finds the circle only roughly, and makes 24 test errors to the ideal rule's 12.
 
-The linear SVM's 88 support vectors mean little. With the weights at zero, many different sets of $\alpha_i$ give the same best cost, so another solver could report another count.
+The linear SVM's 88 support vectors mean little. With the weights at zero, many different sets of $`\alpha_i`$ give the same best cost, so another solver could report another count.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the data from a SplitMix64 generator written out (seed 2026), so every order is synthetic and both languages see the same ones. The solver is SMO written out. The widest gap on six orders is reached three independent ways: the dual solver, a brute-force scan of 36,000 directions, and $3/\sqrt2$ by hand. The kernel identity is checked two ways: the lifted features against $(x\cdot x')^2$ on 200 random pairs, and the 30-term series against $e^{-2.5}$. On the ring:
+Both programs build the data from a SplitMix64 generator written out (seed 2026), so every order is synthetic and both languages see the same ones. The solver is SMO written out. The widest gap on six orders is reached three independent ways: the dual solver, a brute-force scan of 36,000 directions, and $`3/\sqrt2`$ by hand. The kernel identity is checked two ways: the lifted features against $`(x\cdot x')^2`$ on 200 random pairs, and the 30-term series against $`e^{-2.5}`$. On the ring:
 
 - the cost and dual values must meet;
 - the boundary's average distance from the centre, over 360 rays one degree apart, must lie within 0.2 of the generator's 1.6;
@@ -592,15 +602,15 @@ The two outputs match line for line.
 
 Lean proves the three facts of Steps 1, 3 and 4 for any training orders, and checks the six-order worked numbers.
 
-- Suppose $w \ne 0$ and every order scores at least 1 on its own side. Then every order lies at least $1/\lvert w\rvert$ from the boundary.
-- Suppose an order scores exactly +1 or −1, so it is a support vector. Then it lies exactly $1/\lvert w\rvert$ from the boundary.
-- Take any $w \ne 0$ and $b$. Then every point on one edge lies exactly $2/\lvert w\rvert$ from the other edge.
-- Suppose $w$, $b$ and the slacks $\xi_i$ give the lowest cost the SVM allows, for any price $C$. Then $w$ is a weighted sum of the training orders.
-- Take the lifted features $\phi(x) = (x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2)$. Then $\phi(x)\cdot\phi(x') = (x\cdot x')^2$ for any two orders.
-- Take orders of any number of scores, and any $\gamma \ge 0$. Then the radial kernel is a dot product of some hidden features.
+- Suppose $`w \ne 0`$ and every order scores at least 1 on its own side. Then every order lies at least $`1/\lvert w\rvert`$ from the boundary.
+- Suppose an order scores exactly +1 or −1, so it is a support vector. Then it lies exactly $`1/\lvert w\rvert`$ from the boundary.
+- Take any $`w \ne 0`$ and $`b`$. Then every point on one edge lies exactly $`2/\lvert w\rvert`$ from the other edge.
+- Suppose $`w`$, $`b`$ and the slacks $`\xi_i`$ give the lowest cost the SVM allows, for any price $`C`$. Then $`w`$ is a weighted sum of the training orders.
+- Take the lifted features $`\phi(x) = (x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2)`$. Then $`\phi(x)\cdot\phi(x') = (x\cdot x')^2`$ for any two orders.
+- Take orders of any number of scores, and any $`\gamma \ge 0`$. Then the radial kernel is a dot product of some hidden features.
 - On the six orders, the support vectors score exactly −1 and +1, and the other three lie beyond their edges.
-- Take the weights on the orders: 2/9, 2/9 and 4/9. Then they rebuild $w$ and add up to $\lvert w\rvert^2$, which is 8/9.
-- Take the honest order at (3, 2) and the answer for $C = 1$. Then the slacks are 1/2 and 2, and the rest are 0.
+- Take the weights on the orders: 2/9, 2/9 and 4/9. Then they rebuild $`w`$ and add up to $`\lvert w\rvert^2`$, which is 8/9.
+- Take the honest order at (3, 2) and the answer for $`C = 1`$. Then the slacks are 1/2 and 2, and the rest are 0.
 
 The solver, the weights it finds and every result on the ring are left to the Python and Rust checks.
 
@@ -867,9 +877,9 @@ end KernelsAndSupportVectorMachines
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the card's numbers, so a change may stop the program after the printed lines.
-> - **Cheaper slack on the ring.** Guess first: does $C = 0.1$ catch more fraud or less? In the `radial, gamma 0.5, C 10` run, change `10.0` to `0.1`; the script's `try: radial, C 0.1` line does exactly this. Less: 91 of 100 missed, 0 false alarms, 83 support vectors. Slack is so cheap that calling every order honest costs little.
-> - **A shorter reach.** Guess first: what does $\gamma = 2$ do? Change `rbf(0.5)` to `rbf(2.0)` in that run, as the `try: radial, gamma 2` line does. 46 support vectors, 21 frauds missed and 17 false alarms: a wigglier curve that fits the training orders more closely and the test orders worse: 38 errors against 24.
-> - **Cheaper slack on the six orders.** Guess first: with the honest order at (3, 2), does $C = 0.1$ widen or narrow the strip? The loop `for C in (1.0, 0.1)` runs both prices. It widens from 2.8284 to 3.6011, and four orders carry slack instead of two.
+> - **Cheaper slack on the ring.** Guess first: does $`C = 0.1`$ catch more fraud or less? In the `radial, gamma 0.5, C 10` run, change `10.0` to `0.1`; the script's `try: radial, C 0.1` line does exactly this. Less: 91 of 100 missed, 0 false alarms, 83 support vectors. Slack is so cheap that calling every order honest costs little.
+> - **A shorter reach.** Guess first: what does $`\gamma = 2`$ do? Change `rbf(0.5)` to `rbf(2.0)` in that run, as the `try: radial, gamma 2` line does. 46 support vectors, 21 frauds missed and 17 false alarms: a wigglier curve that fits the training orders more closely and the test orders worse: 38 errors against 24.
+> - **Cheaper slack on the six orders.** Guess first: with the honest order at (3, 2), does $`C = 0.1`$ widen or narrow the strip? The loop `for C in (1.0, 0.1)` runs both prices. It widens from 2.8284 to 3.6011, and four orders carry slack instead of two.
 
 ---
 
@@ -878,7 +888,7 @@ end KernelsAndSupportVectorMachines
 > [!warning]
 > **Feeding raw features to a radial kernel.** The kernel only sees distance, so the feature with the biggest numbers decides everything. With the amount in pounds the ring SVM misses 46 of 100 frauds and raises 31 false alarms; with both features as scores, 20 and 4. Put every feature on a comparable scale before training.
 >
-> - **Judging by training errors.** $\gamma = 50$ makes 0 mistakes on the 160 training orders and then misses 87 of 100 new frauds. Always score on orders the solver never saw.
+> - **Judging by training errors.** $`\gamma = 50`$ makes 0 mistakes on the 160 training orders and then misses 87 of 100 new frauds. Always score on orders the solver never saw.
 > - **Reading the score as a probability.** A score of +1.6770 means "1.6770 on the scale where the edge is 1", not a 1.677 chance. Turning scores into probabilities takes a separate fitted step.
 > - **Thinking a bigger C is always safer.** A huge C insists on every label; with the honest order at (3, 2), demanding no slack at all has no solution (best gap −0.4472).
 > - **Forgetting how rare fraud is.** The synthetic sample is a quarter fraud; a real shop's orders are not. Fitted to such a sample, the boundary flags too much on the real stream unless the two kinds of error are priced separately.
@@ -899,12 +909,12 @@ end KernelsAndSupportVectorMachines
 
 ## What this builds on
 
-- [The perceptron and its stack](03-perceptron-and-neural-networks.md): the score $w \cdot x + b$, the ±1 labels, and a line that splits the orders without caring how close it passes.
+- [The perceptron and its stack](03-perceptron-and-neural-networks.md): the score $`w \cdot x + b`$, the ±1 labels, and a line that splits the orders without caring how close it passes.
 - [Principal components](07-principal-components-and-dimension-reduction.md): another method built entirely from dot products between data points, and so another place the kernel swap applies.
-- [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): the operation the kernel replaces, and the length $\lvert w\rvert = \sqrt{w \cdot w}$.
-- [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md): one price per limit; at the best point the gradients line up, which makes $w$ a weighted sum of orders.
-- [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): the bowl $\tfrac12\lvert w\rvert^2$ has one bottom, so the widest strip is unique.
-- [Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md): the distance from a point to a plane along its normal, which makes the margin $2/\lvert w\rvert$.
+- [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): the operation the kernel replaces, and the length $`\lvert w\rvert = \sqrt{w \cdot w}`$.
+- [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md): one price per limit; at the best point the gradients line up, which makes $`w`$ a weighted sum of orders.
+- [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): the bowl $`\tfrac12\lvert w\rvert^2`$ has one bottom, so the widest strip is unique.
+- [Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md): the distance from a point to a plane along its normal, which makes the margin $`2/\lvert w\rvert`$.
 
 ## Where this goes next
 

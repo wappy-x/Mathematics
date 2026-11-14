@@ -28,32 +28,38 @@ To scale: 160 units per 1, origin at (120, 120). At x = π/4 the n = 1 arrow is 
 
 Notation first, in words. The sigma sign adds the terms for every whole number n, negative ones included. Vertical bars, as in |c|, give the modulus: the length of the arrow c. The coefficient c_n is a complex number: its length sets the loudness of tone n, its angle where that arrow starts.
 
-$$f(x)=\sum_{n=-\infty}^{\infty} c_n\, e^{inx}, \qquad c_n=\frac{1}{2\pi}\int_{-\pi}^{\pi} f(x)\, e^{-inx}\, dx$$
+```math
+f(x)=\sum_{n=-\infty}^{\infty} c_n\, e^{inx}, \qquad c_n=\frac{1}{2\pi}\int_{-\pi}^{\pi} f(x)\, e^{-inx}\, dx
+```
 
 **Read it aloud:** the signal is a sum of spinning arrows; the amount of arrow n is the signal's average over a cycle, once turned back by n times the angle.
 
 Two partner arrows, n and −n, give one real sine-and-cosine pair:
 
-$$a_n=c_n+c_{-n}, \qquad b_n=i\,(c_n - c_{-n}), \qquad f(x)=c_0+\sum_{n=1}^{\infty} \big(a_n \cos nx+b_n \sin nx\big)$$
+```math
+a_n=c_n+c_{-n}, \qquad b_n=i\,(c_n - c_{-n}), \qquad f(x)=c_0+\sum_{n=1}^{\infty} \big(a_n \cos nx+b_n \sin nx\big)
+```
 
 **Read it aloud:** the cosine amount is the sum of the partners; the sine amount is i times their difference.
 
 For the square wave, f = +1 on (0, π) and −1 on (−π, 0):
 
-$$c_n=\frac{2}{i\pi n}\ \ (n \text{ odd}), \qquad c_n=0\ \ (n \text{ even}), \qquad f(x)=\frac{4}{\pi}\Big(\sin x+\frac{\sin 3x}{3}+\frac{\sin 5x}{5}+\cdots\Big)$$
+```math
+c_n=\frac{2}{i\pi n}\ \ (n \text{ odd}), \qquad c_n=0\ \ (n \text{ even}), \qquad f(x)=\frac{4}{\pi}\Big(\sin x+\frac{\sin 3x}{3}+\frac{\sin 5x}{5}+\cdots\Big)
+```
 
 **Read it aloud:** only odd tones; arrow n > 0 starts straight down, its partner straight up, each of length two over π|n|; as sines, four over π n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | position in the cycle, in radians | x = 2π × 220 × t, t in seconds | the pattern repeats every 2π |
-| $f(x)$ | the signal's height at x | +1 on (0, π), −1 on (−π, 0) | every c_n grows in proportion |
-| $n$ | tone number; arrow n turns n times per cycle | ±1, ±3, ±5: 220, 660, 1100 Hz | higher pitch, n × 220 Hz |
-| $e^{inx}$ | the arrow of length 1 at angle nx | at x = 0 every arrow points to 1 | — |
-| $c_n$ | amount of arrow n: length and starting angle | c_1 = −0.636620i, c_(−1) = +0.636620i | falls like 1/n across a jump |
-| $a_n$, $b_n$ | cosine and sine amounts in the real form | a_n = 0; b_1, b_3, b_5 = 1.273240, 0.424413, 0.254648 | — |
-| $S_N(x)$ | partial sum: the arrows from −N to N added | S_5(π/2) = 1.103474 | closer to f, except next to the jump |
-| $N$ | highest tone kept | 1, 5, 21, 101 | overshoot moves toward the jump; its peak falls only toward 1.178980 |
+| $`x`$ | position in the cycle, in radians | x = 2π × 220 × t, t in seconds | the pattern repeats every 2π |
+| $`f(x)`$ | the signal's height at x | +1 on (0, π), −1 on (−π, 0) | every c_n grows in proportion |
+| $`n`$ | tone number; arrow n turns n times per cycle | ±1, ±3, ±5: 220, 660, 1100 Hz | higher pitch, n × 220 Hz |
+| $`e^{inx}`$ | the arrow of length 1 at angle nx | at x = 0 every arrow points to 1 | — |
+| $`c_n`$ | amount of arrow n: length and starting angle | c_1 = −0.636620i, c_(−1) = +0.636620i | falls like 1/n across a jump |
+| $`a_n`$, $`b_n`$ | cosine and sine amounts in the real form | a_n = 0; b_1, b_3, b_5 = 1.273240, 0.424413, 0.254648 | — |
+| $`S_N(x)`$ | partial sum: the arrows from −N to N added | S_5(π/2) = 1.103474 | closer to f, except next to the jump |
+| $`N`$ | highest tone kept | 1, 5, 21, 101 | overshoot moves toward the jump; its peak falls only toward 1.178980 |
 
 ### When it holds
 
@@ -74,7 +80,9 @@ An arrow that turns a whole number of times, k ≠ 0, per cycle points every way
 
 For a whole number k ≠ 0, e^(ikx) has antiderivative e^(ikx)/(ik), by [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md). At x = π and x = −π it takes the same value, since e^(ikπ) and e^(−ikπ) are both (−1)^k. With k = m − n, e^(imx) e^(−inx) is e^(ikx), so
 
-$$\frac{1}{2\pi}\int_{-\pi}^{\pi} e^{imx}\, e^{-inx}\, dx=\begin{cases} 1 & m=n \\ 0 & m \neq n \end{cases}$$
+```math
+\frac{1}{2\pi}\int_{-\pi}^{\pi} e^{imx}\, e^{-inx}\, dx=\begin{cases} 1 & m=n \\ 0 & m \neq n \end{cases}
+```
 
 This is orthogonality: two different arrows, one turned back against the other, average to zero.
 
@@ -94,7 +102,9 @@ If f is smooth and repeats, [Integration by parts](../../06-Calculus%20and%20ana
 
 The average of |f|^2 over a cycle equals the sum of |c_n|^2: the power of a signal is the sum of the powers of its tones. For the square wave |f|^2 = 1, and each odd pair contributes 2 × 4/(π^2 n^2), so
 
-$$1=\frac{8}{\pi^2}\Big(1+\frac{1}{9}+\frac{1}{25}+\cdots\Big), \qquad 1+\frac{1}{9}+\frac{1}{25}+\cdots=\frac{\pi^2}{8}$$
+```math
+1=\frac{8}{\pi^2}\Big(1+\frac{1}{9}+\frac{1}{25}+\cdots\Big), \qquad 1+\frac{1}{9}+\frac{1}{25}+\cdots=\frac{\pi^2}{8}
+```
 
 Three terms give 1.151111; the full odd sum is 1.233700550.
 

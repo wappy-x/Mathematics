@@ -26,39 +26,43 @@ One sample: the first two hours of the code's simulation, seed 20260930, with ca
 
 ## The formula
 
-A reminder from [Poisson process](01-poisson-process.md): $N(t)$ counts the calls by time $t$, in hours, and a **Poisson process with rate** $\lambda$ has independent exponential waits between calls, with mean $1/\lambda$. That card proves the counting description this card works with: the process starts at 0, rises one call at a time, its counts in windows that do not overlap are independent, and the count in a window of length $t$ is Poisson with mean $\mu = \lambda t$, so exactly $k$ calls has chance $e^{-\mu}\mu^k/k!$. It states the converse, so either description fixes the process.
+A reminder from [Poisson process](01-poisson-process.md): $`N(t)`$ counts the calls by time $`t`$, in hours, and a **Poisson process with rate** $`\lambda`$ has independent exponential waits between calls, with mean $`1/\lambda`$. That card proves the counting description this card works with: the process starts at 0, rises one call at a time, its counts in windows that do not overlap are independent, and the count in a window of length $`t`$ is Poisson with mean $`\mu = \lambda t`$, so exactly $`k`$ calls has chance $`e^{-\mu}\mu^k/k!`$. It states the converse, so either description fixes the process.
 
-Label each call sales with chance $p$, by a fresh coin that ignores the call times and the other labels. Write $N_1(t)$ for the sales calls by time $t$ and $N_2(t)$ for the support calls, so $N_1(t) + N_2(t) = N(t)$.
+Label each call sales with chance $`p`$, by a fresh coin that ignores the call times and the other labels. Write $`N_1(t)`$ for the sales calls by time $`t`$ and $`N_2(t)`$ for the support calls, so $`N_1(t) + N_2(t) = N(t)`$.
 
-**Splitting.** $N_1$ and $N_2$ are independent Poisson processes with rates $\lambda_1 = p\lambda$ and $\lambda_2 = (1-p)\lambda$. In one window, with $n = a + b$:
+**Splitting.** $`N_1`$ and $`N_2`$ are independent Poisson processes with rates $`\lambda_1 = p\lambda`$ and $`\lambda_2 = (1-p)\lambda`$. In one window, with $`n = a + b`$:
 
-$$P\big(N_1(t) = a,\ N_2(t) = b\big) \;=\; \frac{e^{-\lambda t}(\lambda t)^{n}}{n!}\binom{n}{a}p^{a}(1-p)^{b} \;=\; \frac{e^{-p\lambda t}(p\lambda t)^{a}}{a!}\cdot\frac{e^{-(1-p)\lambda t}\big((1-p)\lambda t\big)^{b}}{b!}.$$
+```math
+P\big(N_1(t) = a,\ N_2(t) = b\big) \;=\; \frac{e^{-\lambda t}(\lambda t)^{n}}{n!}\binom{n}{a}p^{a}(1-p)^{b} \;=\; \frac{e^{-p\lambda t}(p\lambda t)^{a}}{a!}\cdot\frac{e^{-(1-p)\lambda t}\big((1-p)\lambda t\big)^{b}}{b!}.
+```
 
 **Read it aloud:** the chance the switchboard takes a + b calls and the coins send a of them to sales equals the chance sales alone gets a calls times the chance support alone gets b.
 
-**Merging.** If $N_1$ and $N_2$ are independent Poisson processes with rates $\lambda_1$ and $\lambda_2$, then
+**Merging.** If $`N_1`$ and $`N_2`$ are independent Poisson processes with rates $`\lambda_1`$ and $`\lambda_2`$, then
 
-$$N_1(t) + N_2(t) \text{ is a Poisson process with rate } \lambda_1 + \lambda_2,$$
+```math
+N_1(t) + N_2(t) \text{ is a Poisson process with rate } \lambda_1 + \lambda_2,
+```
 
-and each call on the merged stream came from the first with chance $\lambda_1/(\lambda_1 + \lambda_2)$, independently of all the others.
+and each call on the merged stream came from the first with chance $`\lambda_1/(\lambda_1 + \lambda_2)`$, independently of all the others.
 
 **Read it aloud:** independent streams pool into one stream of the same kind, at the summed rate, and the pooled stream's source labels are fresh coins.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N(t)$ | calls the switchboard has taken by time t | 9 in the pictured 2 hours | — |
-| $t$ | time since the start, in hours | 1 hour | every count grows |
-| $\lambda$ | the switchboard's rate: calls per hour on average | 4 | both desks busier |
-| $p$ | chance a call's coin says sales | 0.25 | sales busier, support quieter |
-| $r$, $p_1$ to $p_r$ | for more than two labels: how many, and each label's chance | here 2 labels, chances 0.25 and 0.75 | — |
-| $N_1(t)$, $N_2(t)$ | sales calls and support calls by time t | 1 and 2 in the worked hour | — |
-| $\lambda_1$, $\lambda_2$ | the desks' rates, $p\lambda$ and $(1-p)\lambda$ | 1 and 3 an hour | merged rate grows by the same amount |
-| $a$, $b$, $n$ | a sales count, a support count, their total | 1, 2, 3 | — |
-| $\binom{n}{a}$ | the number of orders in which a of n calls can be sales | 3 | — |
-| $k$, $\mu$, $\mu_1$, $\mu_2$ | a count, and a mean in the Poisson chance $e^{-\mu}\mu^k/k!$; the two lines' means | 3 and 4; 1 and 3 | the likeliest count moves up |
-| $m$ | slots per hour in the grid of Step 0 and the code | 10 to 10000 | grid answer closer to the formula |
-| $s$ | a waiting time, in hours, in Step 4 | the wait for the next merged call | — |
-| $L_i$, $K_j$, $\Delta_j$, $r_j$, $j$, $a_j$, $b_j$, $k_j$, $C$, $D$, $M$, $M_1$, $M_2$ | in the Detailed proof only: the i-th coin; the switchboard's count in window j; its length; calls up to its end; the window number; sales, support and total counts in it; events about each desk; the stream that is split and its two parts | — | — |
+| $`N(t)`$ | calls the switchboard has taken by time t | 9 in the pictured 2 hours | — |
+| $`t`$ | time since the start, in hours | 1 hour | every count grows |
+| $`\lambda`$ | the switchboard's rate: calls per hour on average | 4 | both desks busier |
+| $`p`$ | chance a call's coin says sales | 0.25 | sales busier, support quieter |
+| $`r`$, $`p_1`$ to $`p_r`$ | for more than two labels: how many, and each label's chance | here 2 labels, chances 0.25 and 0.75 | — |
+| $`N_1(t)`$, $`N_2(t)`$ | sales calls and support calls by time t | 1 and 2 in the worked hour | — |
+| $`\lambda_1`$, $`\lambda_2`$ | the desks' rates, $`p\lambda`$ and $`(1-p)\lambda`$ | 1 and 3 an hour | merged rate grows by the same amount |
+| $`a`$, $`b`$, $`n`$ | a sales count, a support count, their total | 1, 2, 3 | — |
+| $`\binom{n}{a}`$ | the number of orders in which a of n calls can be sales | 3 | — |
+| $`k`$, $`\mu`$, $`\mu_1`$, $`\mu_2`$ | a count, and a mean in the Poisson chance $`e^{-\mu}\mu^k/k!`$; the two lines' means | 3 and 4; 1 and 3 | the likeliest count moves up |
+| $`m`$ | slots per hour in the grid of Step 0 and the code | 10 to 10000 | grid answer closer to the formula |
+| $`s`$ | a waiting time, in hours, in Step 4 | the wait for the next merged call | — |
+| $`L_i`$, $`K_j`$, $`\Delta_j`$, $`r_j`$, $`j`$, $`a_j`$, $`b_j`$, $`k_j`$, $`C`$, $`D`$, $`M`$, $`M_1`$, $`M_2`$ | in the Detailed proof only: the i-th coin; the switchboard's count in window j; its length; calls up to its end; the window number; sales, support and total counts in it; events about each desk; the stream that is split and its two parts | — | — |
 
 ### When it holds
 
@@ -73,21 +77,23 @@ and each call on the merged stream came from the first with chance $\lambda_1/(\
 
 ### Step 0: in a tiny slot of time, the two desks never compete
 
-Cut an hour into $m$ equal slots, the slot road [Poisson process](01-poisson-process.md) also takes. Each slot holds a call with chance about $\lambda/m$, independently of other slots; two calls in one slot become negligible as $m$ grows. Label the call, and the slot holds a sales call with chance $p\lambda/m$ and a support call with chance $(1-p)\lambda/m$.
+Cut an hour into $`m`$ equal slots, the slot road [Poisson process](01-poisson-process.md) also takes. Each slot holds a call with chance about $`\lambda/m`$, independently of other slots; two calls in one slot become negligible as $`m`$ grows. Label the call, and the slot holds a sales call with chance $`p\lambda/m`$ and a support call with chance $`(1-p)\lambda/m`$.
 
-The only link between the desks is that one slot cannot serve both, a chance of about $p(1-p)\lambda^2/m^2$ per slot, of order $1/m$ over the hour: it vanishes in the limit, leaving two separate streams at rates $p\lambda$ and $(1-p)\lambda$. In the code, the chance of 1 sales and 2 support calls is 0.090699 at 10 slots an hour and 0.082429 at 10000, the error shrinking about tenfold per tenfold refinement towards the formula's 0.082420.
+The only link between the desks is that one slot cannot serve both, a chance of about $`p(1-p)\lambda^2/m^2`$ per slot, of order $`1/m`$ over the hour: it vanishes in the limit, leaving two separate streams at rates $`p\lambda`$ and $`(1-p)\lambda`$. In the code, the chance of 1 sales and 2 support calls is 0.090699 at 10 slots an hour and 0.082429 at 10000, the error shrinking about tenfold per tenfold refinement towards the formula's 0.082420.
 
 ### Step 1: one window, where the factorials cancel
 
-Fix one window of length $t$. To get $a$ sales calls and $b$ support calls, the switchboard must take exactly $n = a + b$ calls, and the coins must send $a$ of them to sales. The coins are independent of the count, so the two chances multiply:
+Fix one window of length $`t`$. To get $`a`$ sales calls and $`b`$ support calls, the switchboard must take exactly $`n = a + b`$ calls, and the coins must send $`a`$ of them to sales. The coins are independent of the count, so the two chances multiply:
 
-$$\frac{e^{-\lambda t}(\lambda t)^{n}}{n!}\cdot\frac{n!}{a!\,b!}p^{a}(1-p)^{b}.$$
+```math
+\frac{e^{-\lambda t}(\lambda t)^{n}}{n!}\cdot\frac{n!}{a!\,b!}p^{a}(1-p)^{b}.
+```
 
-The $n!$ cancels. Split $(\lambda t)^n$ as $(\lambda t)^a(\lambda t)^b$ and $e^{-\lambda t}$ as $e^{-p\lambda t}e^{-(1-p)\lambda t}$. What remains is a sales part in $a$ alone times a support part in $b$ alone: the formula's right side. A joint chance that factors like that for every $a$ and $b$ is independence, and summing over $b$ shows the sales count is Poisson with mean $p\lambda t$.
+The $`n!`$ cancels. Split $`(\lambda t)^n`$ as $`(\lambda t)^a(\lambda t)^b`$ and $`e^{-\lambda t}`$ as $`e^{-p\lambda t}e^{-(1-p)\lambda t}`$. What remains is a sales part in $`a`$ alone times a support part in $`b`$ alone: the formula's right side. A joint chance that factors like that for every $`a`$ and $`b`$ is independence, and summing over $`b`$ shows the sales count is Poisson with mean $`p\lambda t`$.
 
 In the example, one hour: 0.195367 for 3 calls times 0.421875 for the coins gives 0.082420, and so does 0.367879 × 0.224042, the chances of 1 sales call and of 2 support calls taken separately.
 
-More than two labels work the same way. With $r$ labels of chances $p_1$ to $p_r$, the binomial becomes a multinomial, the $n!$ cancels in the same way, and the $r$ streams are independent Poisson processes at rates $p_1\lambda$ to $p_r\lambda$. Step 2 and the Detailed proof run the same way with the multinomial in place of the binomial.
+More than two labels work the same way. With $`r`$ labels of chances $`p_1`$ to $`p_r`$, the binomial becomes a multinomial, the $`n!`$ cancels in the same way, and the $`r`$ streams are independent Poisson processes at rates $`p_1\lambda`$ to $`p_r\lambda`$. Step 2 and the Detailed proof run the same way with the multinomial in place of the binomial.
 
 ### Step 2: many windows, and whole streams
 
@@ -113,40 +119,47 @@ Orange: told that support took k calls, the chance sales took none stays at abou
 
 ### Step 4: merging is splitting run backwards
 
-Split a Poisson stream at $\lambda_1 + \lambda_2$ = 4 calls an hour with coins of chance $\lambda_1/(\lambda_1 + \lambda_2)$ = 0.25. Steps 1 and 2 give two independent Poisson streams at 1 and 3 an hour, which add back to the original. The two separate phone lines are also independent Poisson streams at 1 and 3 an hour. A Poisson process's chances are fixed by its rate, and independence makes a pair's joint chances the product, so the phone lines behave in every respect like the split pair. Their sum therefore behaves like the stream that was split, Poisson at 4 an hour, and the source of each merged call is a fresh coin.
+Split a Poisson stream at $`\lambda_1 + \lambda_2`$ = 4 calls an hour with coins of chance $`\lambda_1/(\lambda_1 + \lambda_2)`$ = 0.25. Steps 1 and 2 give two independent Poisson streams at 1 and 3 an hour, which add back to the original. The two separate phone lines are also independent Poisson streams at 1 and 3 an hour. A Poisson process's chances are fixed by its rate, and independence makes a pair's joint chances the product, so the phone lines behave in every respect like the split pair. Their sum therefore behaves like the stream that was split, Poisson at 4 an hour, and the source of each merged call is a fresh coin.
 
-The waits show it too. From any moment, the waits for the next sales call and the next support call are independent exponentials with rates $\lambda_1$ and $\lambda_2$, and the merged stream waits for whichever comes first. That wait exceeds $s$ hours only if both do:
+The waits show it too. From any moment, the waits for the next sales call and the next support call are independent exponentials with rates $`\lambda_1`$ and $`\lambda_2`$, and the merged stream waits for whichever comes first. That wait exceeds $`s`$ hours only if both do:
 
-$$P(\text{both waits exceed } s) = e^{-\lambda_1 s}\,e^{-\lambda_2 s} = e^{-(\lambda_1+\lambda_2)s},$$
+```math
+P(\text{both waits exceed } s) = e^{-\lambda_1 s}\,e^{-\lambda_2 s} = e^{-(\lambda_1+\lambda_2)s},
+```
 
-an exponential wait with rate 4, mean 0.2500 hours. Sales rings first with chance $\lambda_1/(\lambda_1 + \lambda_2)$ = 0.2500. The simulated merged stream gives a mean gap of 0.2503 ± 0.0003 hours and a sales share of 0.2499 ± 0.0005.
+an exponential wait with rate 4, mean 0.2500 hours. Sales rings first with chance $`\lambda_1/(\lambda_1 + \lambda_2)`$ = 0.2500. The simulated merged stream gives a mean gap of 0.2503 ± 0.0003 hours and a sales share of 0.2499 ± 0.0005.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-**Merged counts by convolution.** In a window where the lines have means $\mu_1$ and $\mu_2$, the chance of $k$ calls in all sums over how many came from line 1:
-$$\sum_{i=0}^{k}\frac{e^{-\mu_1}\mu_1^{i}}{i!}\cdot\frac{e^{-\mu_2}\mu_2^{k-i}}{(k-i)!} = \frac{e^{-(\mu_1+\mu_2)}}{k!}\sum_{i=0}^{k}\binom{k}{i}\mu_1^{i}\mu_2^{k-i} = \frac{e^{-(\mu_1+\mu_2)}(\mu_1+\mu_2)^{k}}{k!},$$
+**Merged counts by convolution.** In a window where the lines have means $`\mu_1`$ and $`\mu_2`$, the chance of $`k`$ calls in all sums over how many came from line 1:
+
+$`\displaystyle \sum_{i=0}^{k}\frac{e^{-\mu_1}\mu_1^{i}}{i!}\cdot\frac{e^{-\mu_2}\mu_2^{k-i}}{(k-i)!} = \frac{e^{-(\mu_1+\mu_2)}}{k!}\sum_{i=0}^{k}\binom{k}{i}\mu_1^{i}\mu_2^{k-i} = \frac{e^{-(\mu_1+\mu_2)}(\mu_1+\mu_2)^{k}}{k!},`$
+
 the last step by the binomial theorem. The code checks this sum against the Poisson chance at 4 an hour for k = 0 to 8.
 
-**Which line rang first.** The sales wait has density $\lambda_1 e^{-\lambda_1 s}$; the support wait exceeds $s$ with chance $e^{-\lambda_2 s}$. So
-$$P(\text{sales first}) = \int_0^\infty \lambda_1 e^{-\lambda_1 s}e^{-\lambda_2 s}\,ds = \frac{\lambda_1}{\lambda_1+\lambda_2}.$$
+**Which line rang first.** The sales wait has density $`\lambda_1 e^{-\lambda_1 s}`$; the support wait exceeds $`s`$ with chance $`e^{-\lambda_2 s}`$. So
+
+$`\displaystyle P(\text{sales first}) = \int_0^\infty \lambda_1 e^{-\lambda_1 s}e^{-\lambda_2 s}\,ds = \frac{\lambda_1}{\lambda_1+\lambda_2}.`$
 
 </details>
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $N$ is a Poisson process with rate $\lambda > 0$: $N(0) = 0$, its paths rise by jumps of size 1, and for times $0 = t_0 < t_1 < \dots < t_J$ the increments $K_j = N(t_j) - N(t_{j-1})$ are independent, Poisson with means $\lambda\Delta_j$, where $\Delta_j = t_j - t_{j-1}$. The coins $L_1, L_2, \dots$ are independent, each 1 with probability $p$ ($0 \le p \le 1$, reading $0^0$ as 1) and 0 otherwise, and the whole sequence is independent of $N$. Put $N_1(t) = L_1 + \dots + L_{N(t)}$ (0 when $N(t) = 0$) and $N_2 = N - N_1$.
+**Setting.** $`N`$ is a Poisson process with rate $`\lambda > 0`$: $`N(0) = 0`$, its paths rise by jumps of size 1, and for times $`0 = t_0 < t_1 < \dots < t_J`$ the increments $`K_j = N(t_j) - N(t_{j-1})`$ are independent, Poisson with means $`\lambda\Delta_j`$, where $`\Delta_j = t_j - t_{j-1}`$. The coins $`L_1, L_2, \dots`$ are independent, each 1 with probability $`p`$ ($`0 \le p \le 1`$, reading $`0^0`$ as 1) and 0 otherwise, and the whole sequence is independent of $`N`$. Put $`N_1(t) = L_1 + \dots + L_{N(t)}`$ (0 when $`N(t) = 0`$) and $`N_2 = N - N_1`$.
 
-**1. Finite windows.** Fix nonnegative whole numbers $a_j, b_j$ and put $k_j = a_j + b_j$, $r_j = k_1 + \dots + k_j$, $r_0 = 0$. The event that $N_1$ rises by $a_j$ and $N_2$ by $b_j$ over window $j$, for every $j$, equals the event that $K_j = k_j$ for every $j$ and the coins $L_{r_{j-1}+1}, \dots, L_{r_j}$ sum to $a_j$ for every $j$. These blocks of coins are disjoint and fixed once the $k_j$ are, and the coins are independent of $N$, so the chance is
-$$\prod_{j}\frac{e^{-\lambda\Delta_j}(\lambda\Delta_j)^{k_j}}{k_j!}\binom{k_j}{a_j}p^{a_j}(1-p)^{b_j} = \prod_{j}\frac{e^{-p\lambda\Delta_j}(p\lambda\Delta_j)^{a_j}}{a_j!}\cdot\frac{e^{-(1-p)\lambda\Delta_j}((1-p)\lambda\Delta_j)^{b_j}}{b_j!},$$
-by the algebra of Step 1 in each window. Summing over all $b_j$ shows the increments of $N_1$ are independent Poisson with means $p\lambda\Delta_j$; with $N_1(0) = 0$ and unit jumps (each jump of $N$ goes to exactly one of $N_1$, $N_2$), $N_1$ is a Poisson process with rate $p\lambda$. The same holds for $N_2$ with $(1-p)\lambda$. The product form also shows that the vector of $N_1$'s increments is independent of the vector of $N_2$'s, for any finite list of times.
+**1. Finite windows.** Fix nonnegative whole numbers $`a_j, b_j`$ and put $`k_j = a_j + b_j`$, $`r_j = k_1 + \dots + k_j`$, $`r_0 = 0`$. The event that $`N_1`$ rises by $`a_j`$ and $`N_2`$ by $`b_j`$ over window $`j`$, for every $`j`$, equals the event that $`K_j = k_j`$ for every $`j`$ and the coins $`L_{r_{j-1}+1}, \dots, L_{r_j}`$ sum to $`a_j`$ for every $`j`$. These blocks of coins are disjoint and fixed once the $`k_j`$ are, and the coins are independent of $`N`$, so the chance is
 
-**2. Whole streams.** Events of the form $\{N_1(s_1) \in A_1, \dots, N_1(s_q) \in A_q\}$, finitely many fixed times and sets of whole numbers, form a π-system (closed under intersection) generating the σ-algebra of $N_1$; likewise for $N_2$. For one such event of each kind, merge the two time lists: both events are determined by the increments over the merged list, which part 1 makes independent, so the chances multiply. Fix the $N_2$ event $D$. The $N_1$ events $C$ with $P(C \cap D) = P(C)P(D)$ contain the whole space, and are closed under complements and countable disjoint unions: a λ-system containing the π-system. By Dynkin's π-λ theorem it contains the whole σ-algebra of $N_1$. Repeating with $C$ fixed and $D$ varying proves the σ-algebras of $N_1$ and $N_2$ independent.
+$`\displaystyle \prod_{j}\frac{e^{-\lambda\Delta_j}(\lambda\Delta_j)^{k_j}}{k_j!}\binom{k_j}{a_j}p^{a_j}(1-p)^{b_j} = \prod_{j}\frac{e^{-p\lambda\Delta_j}(p\lambda\Delta_j)^{a_j}}{a_j!}\cdot\frac{e^{-(1-p)\lambda\Delta_j}((1-p)\lambda\Delta_j)^{b_j}}{b_j!},`$
 
-**3. Merging.** Let $N_1'$, $N_2'$ be independent Poisson processes with rates $\lambda_1$, $\lambda_2$, and split a Poisson process $M$ with rate $\lambda_1 + \lambda_2$ by coins with $p = \lambda_1/(\lambda_1+\lambda_2)$ into $M_1$, $M_2$: by parts 1 and 2, independent Poisson processes with rates $\lambda_1$, $\lambda_2$. The finite-dimensional laws of a Poisson process are fixed by its rate, and independence makes a pair's the product, so the two pairs share their finite-dimensional laws, hence by the π-λ theorem their law. Every function of the pair, such as the sum or the record of which one jumped, has the same law too: $N_1' + N_2'$ has the law of $M_1 + M_2 = M$, and its source labels that of the coins.
+by the algebra of Step 1 in each window. Summing over all $`b_j`$ shows the increments of $`N_1`$ are independent Poisson with means $`p\lambda\Delta_j`$; with $`N_1(0) = 0`$ and unit jumps (each jump of $`N`$ goes to exactly one of $`N_1`$, $`N_2`$), $`N_1`$ is a Poisson process with rate $`p\lambda`$. The same holds for $`N_2`$ with $`(1-p)\lambda`$. The product form also shows that the vector of $`N_1`$'s increments is independent of the vector of $`N_2`$'s, for any finite list of times.
 
-**4. No two calls at once.** The m-th call of $N_1'$ and the n-th of $N_2'$ are independent and each has a density, so by Fubini they coincide with chance 0; a countable union over m and n is still null.
+**2. Whole streams.** Events of the form $`\{N_1(s_1) \in A_1, \dots, N_1(s_q) \in A_q\}`$, finitely many fixed times and sets of whole numbers, form a π-system (closed under intersection) generating the σ-algebra of $`N_1`$; likewise for $`N_2`$. For one such event of each kind, merge the two time lists: both events are determined by the increments over the merged list, which part 1 makes independent, so the chances multiply. Fix the $`N_2`$ event $`D`$. The $`N_1`$ events $`C`$ with $`P(C \cap D) = P(C)P(D)`$ contain the whole space, and are closed under complements and countable disjoint unions: a λ-system containing the π-system. By Dynkin's π-λ theorem it contains the whole σ-algebra of $`N_1`$. Repeating with $`C`$ fixed and $`D`$ varying proves the σ-algebras of $`N_1`$ and $`N_2`$ independent.
+
+**3. Merging.** Let $`N_1'`$, $`N_2'`$ be independent Poisson processes with rates $`\lambda_1`$, $`\lambda_2`$, and split a Poisson process $`M`$ with rate $`\lambda_1 + \lambda_2`$ by coins with $`p = \lambda_1/(\lambda_1+\lambda_2)`$ into $`M_1`$, $`M_2`$: by parts 1 and 2, independent Poisson processes with rates $`\lambda_1`$, $`\lambda_2`$. The finite-dimensional laws of a Poisson process are fixed by its rate, and independence makes a pair's the product, so the two pairs share their finite-dimensional laws, hence by the π-λ theorem their law. Every function of the pair, such as the sum or the record of which one jumped, has the same law too: $`N_1' + N_2'`$ has the law of $`M_1 + M_2 = M`$, and its source labels that of the coins.
+
+**4. No two calls at once.** The m-th call of $`N_1'`$ and the n-th of $`N_2'`$ are independent and each has a density, so by Fubini they coincide with chance 0; a countable union over m and n is still null.
 
 The argument is complete given the counting description of [Poisson process](01-poisson-process.md) and wing 10's π-λ theorem ([Pi-systems and Dynkin's theorem](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) and Fubini ([Tonelli and Fubini](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)).
 
@@ -163,13 +176,13 @@ One hour at the switchboard: 4 calls an hour, sales with chance 0.25. The chance
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | the desks' rates | 0.25 × 4 and 0.75 × 4 | 1 and 3 an hour |
-| switchboard takes exactly 3 | $e^{-4} \times 4^3 / 3!$ | 0.195367 |
+| switchboard takes exactly 3 | $`e^{-4} \times 4^3 / 3!`$ | 0.195367 |
 | the coins give 1 sales, 2 support | 3 orders × 0.25 × 0.75 × 0.75 | 0.421875 |
 | road one: total, then coins | 0.195367 × 0.421875 | **0.082420** |
-| sales alone gets exactly 1 | $e^{-1} \times 1^1 / 1!$ | 0.367879 |
-| support alone gets exactly 2 | $e^{-3} \times 3^2 / 2!$ | 0.224042 |
+| sales alone gets exactly 1 | $`e^{-1} \times 1^1 / 1!`$ | 0.367879 |
+| support alone gets exactly 2 | $`e^{-3} \times 3^2 / 2!`$ | 0.224042 |
 | road two: desks separately | 0.367879 × 0.224042 | **0.082420** |
-| merged lines, 1 + 3 an hour | $e^{-4} \times 4^3 / 3!$ for 3 calls | 0.195367, as on the switchboard |
+| merged lines, 1 + 3 an hour | $`e^{-4} \times 4^3 / 3!`$ for 3 calls | 0.195367, as on the switchboard |
 
 About 1 hour in 12 goes exactly this way. The two roads agree for every pair of counts, not just this one, which is the independence.
 
@@ -583,13 +596,13 @@ ALL CHECKS PASS
 
 Lean proves splitting and merging in one window, and the race between the two waits, for every rate and label chance.
 
-- Suppose the count in one window is Poisson with mean $\lambda t$, and independent coins, each sales with chance $p$, ignore it. Then the sales and support counts are independent and Poisson, with means $p\lambda t$ and $(1-p)\lambda t$.
-- Suppose two lines' counts in one window are independent and Poisson, with means $\mu_1$ and $\mu_2$. Then their sum is Poisson with mean $\mu_1 + \mu_2$.
-- Suppose also the two lines took $n$ calls between them, and put $p = \mu_1/(\mu_1 + \mu_2)$. Then exactly $a$ of the calls came from the first line with chance $\binom{n}{a}p^a(1-p)^{n-a}$.
-- Suppose the waits for the next sales and support calls are independent exponentials with rates $\lambda_1 > 0$ and $\lambda_2 > 0$. Then the wait for whichever comes first is exponential with rate $\lambda_1 + \lambda_2$. Sales rings first with chance $\lambda_1/(\lambda_1 + \lambda_2)$.
+- Suppose the count in one window is Poisson with mean $`\lambda t`$, and independent coins, each sales with chance $`p`$, ignore it. Then the sales and support counts are independent and Poisson, with means $`p\lambda t`$ and $`(1-p)\lambda t`$.
+- Suppose two lines' counts in one window are independent and Poisson, with means $`\mu_1`$ and $`\mu_2`$. Then their sum is Poisson with mean $`\mu_1 + \mu_2`$.
+- Suppose also the two lines took $`n`$ calls between them, and put $`p = \mu_1/(\mu_1 + \mu_2)`$. Then exactly $`a`$ of the calls came from the first line with chance $`\binom{n}{a}p^a(1-p)^{n-a}`$.
+- Suppose the waits for the next sales and support calls are independent exponentials with rates $`\lambda_1 > 0`$ and $`\lambda_2 > 0`$. Then the wait for whichever comes first is exponential with rate $`\lambda_1 + \lambda_2`$. Sales rings first with chance $`\lambda_1/(\lambda_1 + \lambda_2)`$.
 - The desks' rates are 0.25 × 4 = 1 and 0.75 × 4 = 3 an hour, and 1/(1 + 3) = 0.25.
 - The coins give 1 sales and 2 support with chance 27/64, and all 3 say support with chance 27/64 too.
-- The worked hour's two roads agree exactly: $e^{-4}4^3/3!$ times 27/64 equals $e^{-1}$ times $e^{-3}3^2/2!$.
+- The worked hour's two roads agree exactly: $`e^{-4}4^3/3!`$ times 27/64 equals $`e^{-1}`$ times $`e^{-3}3^2/2!`$.
 - The enumeration covers 131071 label words.
 - Calls on the quarter hour leave sales silent with chance 81/256, and the covariance is −3/4.
 

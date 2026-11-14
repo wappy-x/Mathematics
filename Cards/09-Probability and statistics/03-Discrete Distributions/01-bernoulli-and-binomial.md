@@ -36,40 +36,46 @@ Bars: the fair coin, symmetric about 5 heads. Line: the coin that lands heads 60
 
 ## The formula
 
-Notation first, in words. A random variable is a quantity whose value depends on chance, written as a capital letter; here X is the number of heads, and $P(X = k)$ is read "the chance that X equals k". C(n, k) is the number of ways to choose k items from n, as in [The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md). This card introduces one more piece: **X ~ Binomial(n, p)**, read "X follows the binomial law with n trials and chance p".
+Notation first, in words. A random variable is a quantity whose value depends on chance, written as a capital letter; here X is the number of heads, and $`P(X = k)`$ is read "the chance that X equals k". C(n, k) is the number of ways to choose k items from n, as in [The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md). This card introduces one more piece: **X ~ Binomial(n, p)**, read "X follows the binomial law with n trials and chance p".
 
-$$P(X = k) = C(n, k)\; p^k\,(1-p)^{n-k}, \qquad k = 0, 1, \dots, n$$
+```math
+P(X = k) = C(n, k)\; p^k\,(1-p)^{n-k}, \qquad k = 0, 1, \dots, n
+```
 
 **Read it aloud:** the number of ways to choose which k of the n tries succeed, times the chance of k successes, times the chance of the other n minus k failing.
 
 The long-run average and the spread follow:
 
-$$E[X] = np, \qquad \mathrm{Var}(X) = np(1-p)$$
+```math
+E[X] = np, \qquad \mathrm{Var}(X) = np(1-p)
+```
 
 **Read it aloud:** on average, tries times chance succeed; the variance is that average times the chance of failure.
 
-A mass is the chance of one exact count, $P(X = k)$. The tail, the chance of at least j successes, is a sum of masses:
+A mass is the chance of one exact count, $`P(X = k)`$. The tail, the chance of at least j successes, is a sum of masses:
 
-$$P(X \ge j) = \sum_{k=j}^{n} C(n, k)\; p^k\,(1-p)^{n-k}$$
+```math
+P(X \ge j) = \sum_{k=j}^{n} C(n, k)\; p^k\,(1-p)^{n-k}
+```
 
 **Read it aloud:** add the chances of exactly j, exactly j plus one, and so on up to all n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the number of tries, fixed in advance | 10 flips | more possible counts; each single count gets rarer |
-| $k$ | one possible count of successes | 7 heads | chance rises toward the peak near np, then falls |
-| $j$ | the threshold of a tail | 7: "7 or more" | the tail shrinks |
-| $p$ | the chance of success on one try | 0.5 fair; 0.6 bent | the whole law slides right |
-| $1-p$ | the chance of failure on one try | 0.5; 0.4 | the law slides left |
-| $X$ | the number of successes, a random variable | heads in ten flips | — |
-| $B_i$ | 1 if try number i succeeds, 0 if not | 1 when flip i is a head | — |
-| $C(n, k)$ | ways to choose which k tries succeed | C(10, 7) = 120 | largest at k = n/2 |
-| $P(X = k)$ | chance of exactly k successes | 0.117188 fair; 0.214991 bent | — |
-| $P(X \ge j)$ | chance of at least j successes | 0.171875 fair; 0.382281 bent | — |
-| $E[X]$ | the long-run average of X | 5 fair; 6 bent | rises with n and with p |
-| $\mathrm{Var}(X)$ | the average squared distance of X from E[X] | 2.5 fair; 2.4 bent | rises with n; largest at p = 0.5 |
+| $`n`$ | the number of tries, fixed in advance | 10 flips | more possible counts; each single count gets rarer |
+| $`k`$ | one possible count of successes | 7 heads | chance rises toward the peak near np, then falls |
+| $`j`$ | the threshold of a tail | 7: "7 or more" | the tail shrinks |
+| $`p`$ | the chance of success on one try | 0.5 fair; 0.6 bent | the whole law slides right |
+| $`1-p`$ | the chance of failure on one try | 0.5; 0.4 | the law slides left |
+| $`X`$ | the number of successes, a random variable | heads in ten flips | — |
+| $`B_i`$ | 1 if try number i succeeds, 0 if not | 1 when flip i is a head | — |
+| $`C(n, k)`$ | ways to choose which k tries succeed | C(10, 7) = 120 | largest at k = n/2 |
+| $`P(X = k)`$ | chance of exactly k successes | 0.117188 fair; 0.214991 bent | — |
+| $`P(X \ge j)`$ | chance of at least j successes | 0.171875 fair; 0.382281 bent | — |
+| $`E[X]`$ | the long-run average of X | 5 fair; 6 bent | rises with n and with p |
+| $`\mathrm{Var}(X)`$ | the average squared distance of X from E[X] | 2.5 fair; 2.4 bent | rises with n; largest at p = 0.5 |
 
-A single try, n = 1, is the **Bernoulli law**, Bernoulli(p): X is 1 with chance p and 0 with chance 1 − p. Each $B_i$ above is one. At p = 0 or p = 1 the formula still holds, reading $0^0$ as 1: all the chance sits at 0 or at n successes.
+A single try, n = 1, is the **Bernoulli law**, Bernoulli(p): X is 1 with chance p and 0 with chance 1 − p. Each $`B_i`$ above is one. At p = 0 or p = 1 the formula still holds, reading $`0^0`$ as 1: all the chance sits at 0 or at n successes.
 
 ### When it holds
 
@@ -90,7 +96,9 @@ The event "exactly 7 heads" is a pile of strings: HHHHHHHTTT, HHHHHHTHTT, and so
 
 Independence means the chance of several tries turning out a given way is the product of their separate chances. HHHHHHHTTT has seven factors of p and three of 1 − p. Reordering the letters reorders the factors, and multiplication does not care about order. So every string with k heads has chance
 
-$$p^k (1-p)^{n-k}.$$
+```math
+p^k (1-p)^{n-k}.
+```
 
 For the fair coin that is 0.5 to the tenth power, 1/1,024 = 0.0009765625, the same for all 1,024 strings. For the bent coin, a string with 7 heads has chance 0.6 to the seventh times 0.4 cubed: 0.0017915904.
 
@@ -98,41 +106,43 @@ For the fair coin that is 0.5 to the tenth power, 1/1,024 = 0.0009765625, the sa
 
 A string with k heads is fixed by saying which k of the n positions hold the heads. So the strings in the pile match the ways of choosing k positions from n, one for one. That count is C(n, k). For 7 of 10 it is 120.
 
-Multiplying Steps 1 and 2 gives the mass: $P(X = k) = C(n, k)\, p^k (1-p)^{n-k}$.
+Multiplying Steps 1 and 2 gives the mass: $`P(X = k) = C(n, k)\, p^k (1-p)^{n-k}`$.
 
 ### Step 3: the chances add up to one
 
-Sum the mass over every k from 0 to n. The binomial theorem, $(a + b)^n = \sum_k C(n, k) a^k b^{n-k}$, with a = p and b = 1 − p, turns the sum into $(p + 1 - p)^n = 1^n = 1$. The name of the law comes from this: its masses are the terms of a binomial expansion.
+Sum the mass over every k from 0 to n. The binomial theorem, $`(a + b)^n = \sum_k C(n, k) a^k b^{n-k}`$, with a = p and b = 1 − p, turns the sum into $`(p + 1 - p)^n = 1^n = 1`$. The name of the law comes from this: its masses are the terms of a binomial expansion.
 
 ### Step 4: the average is np
 
-Write X as a sum of switches: $X = B_1 + B_2 + \dots + B_n$, where $B_i$ is 1 if flip i is a head. One switch averages p, since it is 1 with chance p and 0 otherwise. The average of a sum is the sum of the averages. So $E[X] = np$: 5 heads for the fair coin, 6 for the bent one. This step never used independence; it holds for the copied coin too.
+Write X as a sum of switches: $`X = B_1 + B_2 + \dots + B_n`$, where $`B_i`$ is 1 if flip i is a head. One switch averages p, since it is 1 with chance p and 0 otherwise. The average of a sum is the sum of the averages. So $`E[X] = np`$: 5 heads for the fair coin, 6 for the bent one. This step never used independence; it holds for the copied coin too.
 
 ### Step 5: the variance is np(1 − p)
 
-One switch has variance $E[B_i^2] - p^2$. A switch squared is itself, since 0 squared is 0 and 1 squared is 1, so the variance is $p - p^2 = p(1-p)$. For independent tries, variances add ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so $\mathrm{Var}(X) = np(1-p)$: 2.5 for the fair coin, 2.4 for the bent one.
+One switch has variance $`E[B_i^2] - p^2`$. A switch squared is itself, since 0 squared is 0 and 1 squared is 1, so the variance is $`p - p^2 = p(1-p)`$. For independent tries, variances add ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so $`\mathrm{Var}(X) = np(1-p)`$: 2.5 for the fair coin, 2.4 for the bent one.
 
 This step does use independence. The copied coin has the same average, 5, but variance 25.
 
 <details>
 <summary>Detailed proof: the variance by counting pairs</summary>
 
-Expand the square of the sum: $X^2 = \sum_i B_i^2 + \sum_{i \ne l} B_i B_l$, the second sum over ordered pairs of different tries, n(n − 1) of them.
+Expand the square of the sum: $`X^2 = \sum_i B_i^2 + \sum_{i \ne l} B_i B_l`$, the second sum over ordered pairs of different tries, n(n − 1) of them.
 
-Each $B_i^2 = B_i$ averages p. Each product $B_i B_l$ is 1 exactly when both tries succeed; independence gives that chance as $p^2$. So
-$$E[X^2] = np + n(n-1)p^2.$$
-Subtract the squared average $(np)^2$: $np + n^2p^2 - np^2 - n^2p^2 = np - np^2 = np(1-p)$.
+Each $`B_i^2 = B_i`$ averages p. Each product $`B_i B_l`$ is 1 exactly when both tries succeed; independence gives that chance as $`p^2`$. So
+
+$`\displaystyle E[X^2] = np + n(n-1)p^2.`$
+
+Subtract the squared average $`(np)^2`$: $`np + n^2p^2 - np^2 - n^2p^2 = np - np^2 = np(1-p)`$.
 
 Only pairs were used, so pairwise independence is enough for the variance. The mass in Step 1 needs every try independent of all the others at once.
 
-For the copied coin every product $B_i B_l$ equals the first flip's switch and averages p, not $p^2$. Then $E[X^2] = np + n(n-1)p = n^2 p$, and the variance is $n^2p - n^2p^2 = n^2 p(1-p)$: 25 for ten fair flips.
+For the copied coin every product $`B_i B_l`$ equals the first flip's switch and averages p, not $`p^2`$. Then $`E[X^2] = np + n(n-1)p = n^2 p`$, and the variance is $`n^2p - n^2p^2 = n^2 p(1-p)`$: 25 for ten fair flips.
 
 </details>
 
 <details>
 <summary>The average straight from the mass, a second road</summary>
 
-The identity $k\,C(n, k) = n\,C(n-1, k-1)$ says: choosing a team of k from n and then a captain from the team is the same as choosing the captain from n first, then the other k − 1 from the remaining n − 1. Put it in the average: $\sum_k k\,C(n,k)p^k(1-p)^{n-k} = np \sum_k C(n-1,k-1)p^{k-1}(1-p)^{n-k}$. The last sum is the whole Binomial(n − 1, p) law, which adds to 1. So the average is np again.
+The identity $`k\,C(n, k) = n\,C(n-1, k-1)`$ says: choosing a team of k from n and then a captain from the team is the same as choosing the captain from n first, then the other k − 1 from the remaining n − 1. Put it in the average: $`\sum_k k\,C(n,k)p^k(1-p)^{n-k} = np \sum_k C(n-1,k-1)p^{k-1}(1-p)^{n-k}`$. The last sum is the whole Binomial(n − 1, p) law, which adds to 1. So the average is np again.
 
 </details>
 
@@ -575,9 +585,9 @@ The two outputs are identical. The simulated chance of exactly 7 fair heads, 0.1
 
 Lean proves the mass, the average and the variance for every number of tries n, every chance p and every count k.
 
-- Take n tries, fixed in advance, each a success or a failure with one shared chance p, all independent. Then $P(X = k) = C(n, k)\, p^k (1-p)^{n-k}$.
-- Take n tries with one shared chance p, independent or not. Then $E[X] = np$.
-- Take n independent tries with one shared chance p. Then $\mathrm{Var}(X) = np(1-p)$.
+- Take n tries, fixed in advance, each a success or a failure with one shared chance p, all independent. Then $`P(X = k) = C(n, k)\, p^k (1-p)^{n-k}`$.
+- Take n tries with one shared chance p, independent or not. Then $`E[X] = np`$.
+- Take n independent tries with one shared chance p. Then $`\mathrm{Var}(X) = np(1-p)`$.
 - Ten flips make 1,024 strings: 120 with exactly 7 heads, and 176 with 7 or more.
 - For the fair coin, one string has chance 1/1,024, and exactly 7 heads has chance 120/1,024.
 - For the bent coin, one 7-head string has chance exactly 0.0017915904, and exactly 7 heads has 120 times that.
@@ -767,7 +777,7 @@ example : ((10 : ℚ) ^ 2) * (1 / 2) * (1 - 1 / 2) = 25 := by norm_num
 > [!warning]
 > **Calling any count of yes-no outcomes binomial.** The formula needs a fixed number of tries, one shared chance, and independence. Ten loans from one town default together in a bad year; ten cards dealt from one deck change the odds as they go. Each outcome is still yes or no, but the count follows another law. Copy one flip onto ten and the chance of 7 heads falls from 0.117188 to 0, and the variance rises from 2.5 to 25.
 >
-> - **Forgetting the count of strings.** Using $p^k(1-p)^{n-k}$ alone gives 0.000977 for 7 fair heads, 120 times too small.
+> - **Forgetting the count of strings.** Using $`p^k(1-p)^{n-k}`$ alone gives 0.000977 for 7 fair heads, 120 times too small.
 > - **"At least" read as "more than".** Starting the tail at 8 gives 0.054688 instead of 0.171875.
 > - **Variance np.** That is the average, 5, not the variance, 2.5; the factor 1 − p is the part that shrinks the spread as p nears 0 or 1.
 

@@ -14,7 +14,9 @@ Suppose the surveyor's device can only add, multiply and divide, and stores just
 
 The fix keeps the same five coefficients and rearranges them into one polynomial divided by another:
 
-$$\tan x \approx \frac{945x - 105x^3 + x^5}{945 - 420x^2 + 15x^4}$$
+```math
+\tan x \approx \frac{945x - 105x^3 + x^5}{945 - 420x^2 + 15x^4}
+```
 
 At 1.5 this gives 14.100000 km, off by 1.420e-03 km, under 1.5 m. Its bottom line is zero at 1.5708079, close to the true pole. At 2 radians it gives −2.185859 against the true −2.185040. This ratio is the **Padé approximant** of tan, named after Henri Padé, who set out the theory in his 1892 thesis.
 
@@ -41,41 +43,45 @@ Orange: the true height, tan x. Teal: the Taylor polynomial of degree 9, built f
 
 ## The formula
 
-Notation first, in words. The function f has Taylor coefficients $c_0, c_1, c_2, \dots$ at 0, so $f(x) = c_0 + c_1x + c_2x^2 + \cdots$. A **Padé approximant** $[m/n]$ is a top polynomial P of degree m over a bottom polynomial Q of degree n, with Q's constant term fixed at 1. It is chosen so that
+Notation first, in words. The function f has Taylor coefficients $`c_0, c_1, c_2, \dots`$ at 0, so $`f(x) = c_0 + c_1x + c_2x^2 + \cdots`$. A **Padé approximant** $`[m/n]`$ is a top polynomial P of degree m over a bottom polynomial Q of degree n, with Q's constant term fixed at 1. It is chosen so that
 
-$$Q(x)\,f(x) - P(x) = O\!\left(x^{m+n+1}\right) \quad\text{as } x \to 0, \qquad P(x) = \sum_{k=0}^{m} p_kx^k, \quad Q(x) = 1 + \sum_{j=1}^{n} q_jx^j$$
+```math
+Q(x)\,f(x) - P(x) = O\!\left(x^{m+n+1}\right) \quad\text{as } x \to 0, \qquad P(x) = \sum_{k=0}^{m} p_kx^k, \quad Q(x) = 1 + \sum_{j=1}^{n} q_jx^j
+```
 
 **Read it aloud:** the bottom polynomial times the function, minus the top polynomial, has no terms below the power m plus n plus 1.
 
-Here $O(x^{k})$ means "terms of power k and higher" (from the [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md) card). Dividing by Q, which is 1 at 0, gives the same statement for P/Q: its series matches f's through the power $N = m + n$.
+Here $`O(x^{k})`$ means "terms of power k and higher" (from the [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md) card). Dividing by Q, which is 1 at 0, gives the same statement for P/Q: its series matches f's through the power $`N = m + n`$.
 
-The recipe has two lines. Take $q_0 = 1$ and $c_i = 0$ for negative i. First the bottom, from n equations; then the top:
+The recipe has two lines. Take $`q_0 = 1`$ and $`c_i = 0`$ for negative i. First the bottom, from n equations; then the top:
 
-$$\sum_{j=0}^{n} q_j\,c_{k-j} = 0 \quad (k = m+1, \dots, m+n), \qquad p_k = \sum_{j=0}^{\min(k,n)} q_j\,c_{k-j} \quad (k = 0, \dots, m)$$
+```math
+\sum_{j=0}^{n} q_j\,c_{k-j} = 0 \quad (k = m+1, \dots, m+n), \qquad p_k = \sum_{j=0}^{\min(k,n)} q_j\,c_{k-j} \quad (k = 0, \dots, m)
+```
 
 **Read it aloud:** the bottom's coefficients make the powers just above m vanish in Q times f; the top is then the low part of Q times f.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $x$ | the function; its input | tan; the angle, 1.5 radians | nearer π/2, harder for both stand-ins |
-| $c_k$ | Taylor coefficient of $x^k$ at 0 (k counts powers) | 1, 1/3, 2/15, 17/315, 62/2835 for k = 1, 3, 5, 7, 9; zero for even k | — |
-| $m$, $n$ | degrees of the top and the bottom | 5 and 4 | more of either, closer match |
-| $N$ | $m + n$, the highest Taylor power used | 9 | error at 1.5 falls from 8.101e+00 at N = 3 to 2.740e-07 at N = 13 |
-| $P$, $p_k$ | the top polynomial and its coefficients | $(945x - 105x^3 + x^5)/945$ | — |
-| $Q$, $q_j$ | the bottom polynomial, $q_0 = 1$ (j counts powers) | $1 - 4x^2/9 + x^4/63$ | — |
-| $[m/n]$ | the approximant P/Q | $[5/4]$: 14.100000 at 1.5 | — |
-| $O(x^k)$ | terms of power k and higher, as x → 0 | $Q\tan x - P$ starts with 1.018e-07 $x^{11}$ | — |
-| $x^*$ | a pole of the approximant: a root of Q | 1.5708079, against π/2 = 1.5707963 | — |
-| $\rho$ | distance from 0 to the nearest pole that Q does not capture | $3\pi/2$ for $[m/2]$ | larger ρ, faster convergence |
-| $g$ | tan with its poles at ±π/2 multiplied out | $(1 - (2x/\pi)^2)\tan x$ | — |
-| $\delta$ | in the proof: how far $q_2$ is from $-(2/\pi)^2$ | shrinks like $3^{-m}$ | larger δ, the pole and the values drift |
+| $`f`$, $`x`$ | the function; its input | tan; the angle, 1.5 radians | nearer π/2, harder for both stand-ins |
+| $`c_k`$ | Taylor coefficient of $`x^k`$ at 0 (k counts powers) | 1, 1/3, 2/15, 17/315, 62/2835 for k = 1, 3, 5, 7, 9; zero for even k | — |
+| $`m`$, $`n`$ | degrees of the top and the bottom | 5 and 4 | more of either, closer match |
+| $`N`$ | $`m + n`$, the highest Taylor power used | 9 | error at 1.5 falls from 8.101e+00 at N = 3 to 2.740e-07 at N = 13 |
+| $`P`$, $`p_k`$ | the top polynomial and its coefficients | $`(945x - 105x^3 + x^5)/945`$ | — |
+| $`Q`$, $`q_j`$ | the bottom polynomial, $`q_0 = 1`$ (j counts powers) | $`1 - 4x^2/9 + x^4/63`$ | — |
+| $`[m/n]`$ | the approximant P/Q | $`[5/4]`$: 14.100000 at 1.5 | — |
+| $`O(x^k)`$ | terms of power k and higher, as x → 0 | $`Q\tan x - P`$ starts with 1.018e-07 $`x^{11}`$ | — |
+| $`x^*`$ | a pole of the approximant: a root of Q | 1.5708079, against π/2 = 1.5707963 | — |
+| $`\rho`$ | distance from 0 to the nearest pole that Q does not capture | $`3\pi/2`$ for $`[m/2]`$ | larger ρ, faster convergence |
+| $`g`$ | tan with its poles at ±π/2 multiplied out | $`(1 - (2x/\pi)^2)\tan x`$ | — |
+| $`\delta`$ | in the proof: how far $`q_2`$ is from $`-(2/\pi)^2`$ | shrinks like $`3^{-m}`$ | larger δ, the pole and the values drift |
 
 ### When it holds
 
-- **The trouble is a pole.** A pole is a zero in a denominator, and Q can supply one. A function with no pole gets one anyway if Q is allowed one: $[0/3]$ of $e^x$ has a pole at 1.596072 and gives 16.000000 at 1.5, where $e^{1.5}$ = 4.481689.
+- **The trouble is a pole.** A pole is a zero in a denominator, and Q can supply one. A function with no pole gets one anyway if Q is allowed one: $`[0/3]`$ of $`e^x`$ has a pole at 1.596072 and gives 16.000000 at 1.5, where $`e^{1.5}`$ = 4.481689.
 - **The bottom degree n covers the poles that matter.** With n = 0 the ratio is the Taylor polynomial again: 5.400335 at 1.5. For tan, n = 2 captures the pair ±π/2.
-- **The equations for Q can be solved.** Their matrix is constant along each diagonal (a **Toeplitz** matrix; list the unknowns in reverse order and it becomes the **Hankel** matrix of the literature, constant along each anti-diagonal). For $[5/4]$ of tan, oddness splits it into two 2-by-2 systems, each with determinant $c_5^2 - c_3c_7 = 84/4725 - 85/4725 = -1/4725$, a near-cancellation. At high degree such systems grow ill-conditioned (their condition number κ grows large), and rounded coefficients can then plant false poles.
-- **The point lies inside the disc where the theorem works.** De Montessus's theorem covers |x| < ρ, away from the captured poles. For $[m/2]$ of tan that is |x| < 3π/2 = 4.7124.
+- **The equations for Q can be solved.** Their matrix is constant along each diagonal (a **Toeplitz** matrix; list the unknowns in reverse order and it becomes the **Hankel** matrix of the literature, constant along each anti-diagonal). For $`[5/4]`$ of tan, oddness splits it into two 2-by-2 systems, each with determinant $`c_5^2 - c_3c_7 = 84/4725 - 85/4725 = -1/4725`$, a near-cancellation. At high degree such systems grow ill-conditioned (their condition number κ grows large), and rounded coefficients can then plant false poles.
+- **The point lies inside the disc where the theorem works.** De Montessus's theorem covers |x| < ρ, away from the captured poles. For $`[m/2]`$ of tan that is |x| < 3π/2 = 4.7124.
 
 ---
 
@@ -89,55 +95,57 @@ A ratio can place a zero in its denominator exactly where the function blows up.
 
 ### Step 1: matching a ratio is a linear problem
 
-Asking that P/Q match f through $x^N$ looks nonlinear, because the unknowns q sit in a denominator. Multiply through by Q. The demand becomes $Qf - P = O(x^{N+1})$, and every unknown now appears to the first power.
+Asking that P/Q match f through $`x^N`$ looks nonlinear, because the unknowns q sit in a denominator. Multiply through by Q. The demand becomes $`Qf - P = O(x^{N+1})`$, and every unknown now appears to the first power.
 
-Count them. P has m + 1 coefficients. Q has n, since $q_0 = 1$. The powers $x^0$ to $x^{m+n}$ of $Qf - P$ give m + n + 1 equations. The counts agree.
+Count them. P has m + 1 coefficients. Q has n, since $`q_0 = 1`$. The powers $`x^0`$ to $`x^{m+n}`$ of $`Qf - P`$ give m + n + 1 equations. The counts agree.
 
 ### Step 2: solve for the bottom first
 
-P has no powers above m. So in the powers $x^{m+1}$ to $x^{m+n}$, the equation $Qf - P = 0$ involves Q alone. That is n equations in the n unknowns $q_1, \dots, q_n$: the left half of the recipe. Once Q is known, the powers $x^0$ to $x^m$ give each $p_k$ directly: the right half.
+P has no powers above m. So in the powers $`x^{m+1}`$ to $`x^{m+n}`$, the equation $`Qf - P = 0`$ involves Q alone. That is n equations in the n unknowns $`q_1, \dots, q_n`$: the left half of the recipe. Once Q is known, the powers $`x^0`$ to $`x^m`$ give each $`p_k`$ directly: the right half.
 
-For tan, with $[5/4]$, the code solves these equations by Gaussian elimination. Times 945, the top comes out as 945, −105, 1 and the bottom as 945, −420, 15. These are the coefficients of the closed form that Johann Lambert's continued fraction for tan gives, an independent road. The defining property also checks out, though only partly as a test: the terms $x^0$ to $x^5$ of $Q\tan x - P$ vanish by construction, because the top is defined as that part. The terms $x^6$ to $x^9$, the solved equations, are at most 8.674e-19, which is rounding. The first true mismatch is 1.018e-07 at $x^{11}$.
+For tan, with $`[5/4]`$, the code solves these equations by Gaussian elimination. Times 945, the top comes out as 945, −105, 1 and the bottom as 945, −420, 15. These are the coefficients of the closed form that Johann Lambert's continued fraction for tan gives, an independent road. The defining property also checks out, though only partly as a test: the terms $`x^0`$ to $`x^5`$ of $`Q\tan x - P`$ vanish by construction, because the top is defined as that part. The terms $`x^6`$ to $`x^9`$, the solved equations, are at most 8.674e-19, which is rounding. The first true mismatch is 1.018e-07 at $`x^{11}`$.
 
 ### Step 3: the bottom finds the pole
 
-For the row $[m/2]$ of tan, with m odd, the equations for Q are short. Because tan is odd, $q_1 = 0$. The other equation reads $q_2c_m + c_{m+2} = 0$. So Q is $1 - x^2c_{m+2}/c_m$, with its root at
+For the row $`[m/2]`$ of tan, with m odd, the equations for Q are short. Because tan is odd, $`q_1 = 0`$. The other equation reads $`q_2c_m + c_{m+2} = 0`$. So Q is $`1 - x^2c_{m+2}/c_m`$, with its root at
 
-$$x^* = \sqrt{c_m / c_{m+2}}$$
+```math
+x^* = \sqrt{c_m / c_{m+2}}
+```
 
 **Read it aloud:** the approximant's pole is the square root of one Taylor coefficient over the next.
 
-This is the ratio test for the radius of convergence, read off by the algebra. For m = 3 it gives $\sqrt{(1/3)/(2/15)} = \sqrt{2.5}$ = 1.5811388. As the degree grows the roots close in on π/2. The code's main table climbs a staircase, $[1/2]$, $[3/2]$, $[3/4]$, $[5/4]$, $[5/6]$, $[7/6]$, and its poles are 1.7320508, 1.5811388, 1.5712334, 1.5708079, 1.5707965, 1.5707963. Only the first two lie on the row $[m/2]$; the rest have a degree-4 or degree-6 bottom and do not come from the formula above.
+This is the ratio test for the radius of convergence, read off by the algebra. For m = 3 it gives $`\sqrt{(1/3)/(2/15)} = \sqrt{2.5}`$ = 1.5811388. As the degree grows the roots close in on π/2. The code's main table climbs a staircase, $`[1/2]`$, $`[3/2]`$, $`[3/4]`$, $`[5/4]`$, $`[5/6]`$, $`[7/6]`$, and its poles are 1.7320508, 1.5811388, 1.5712334, 1.5708079, 1.5707965, 1.5707963. Only the first two lie on the row $`[m/2]`$; the rest have a degree-4 or degree-6 bottom and do not come from the formula above.
 
-The pole also carries the right strength. Near π/2, the [Laurent series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md) of tan starts $-1/(x - \pi/2)$, so its **residue** (the coefficient of that term) is −1. The residue of $[5/4]$ at its pole, $P(x^*)/Q'(x^*)$, is −1.000077410.
+The pole also carries the right strength. Near π/2, the [Laurent series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md) of tan starts $`-1/(x - \pi/2)`$, so its **residue** (the coefficient of that term) is −1. The residue of $`[5/4]`$ at its pole, $`P(x^*)/Q'(x^*)`$, is −1.000077410.
 
 ### Step 4: what is left is smooth, so it converges farther
 
-Multiply tan by $1 - (2x/\pi)^2$, which is zero at ±π/2. The result g has no pole there. Its nearest poles are now ±3π/2, so its Taylor series converges three times as far, with ρ = 3π/2. At 1.5 its terms shrink by about $(1.5/(3\pi/2))^2$ = 0.1013 per step of two powers, against 0.9119 for tan itself.
+Multiply tan by $`1 - (2x/\pi)^2`$, which is zero at ±π/2. The result g has no pole there. Its nearest poles are now ±3π/2, so its Taylor series converges three times as far, with ρ = 3π/2. At 1.5 its terms shrink by about $`(1.5/(3\pi/2))^2`$ = 0.1013 per step of two powers, against 0.9119 for tan itself.
 
-The Padé top P is, by Step 2, the low part of Q times f. Q is close to $1 - (2x/\pi)^2$, so P is close to the Taylor polynomial of g, which converges fast. Dividing by Q puts the pole back.
+The Padé top P is, by Step 2, the low part of Q times f. Q is close to $`1 - (2x/\pi)^2`$, so P is close to the Taylor polynomial of g, which converges fast. Dividing by Q puts the pole back.
 
 **De Montessus's theorem** makes this general. Suppose f is analytic at 0 and **meromorphic** in the disc |x| < ρ: smooth there apart from exactly n poles, counted with multiplicity. Then, as m → ∞ with n fixed:
 
 - the n roots of Q tend to f's n poles;
-- $[m/n]$ tends to f at every x in the disc away from the poles, with error falling roughly like $(|x|/\rho)^m$.
+- $`[m/n]`$ tends to f at every x in the disc away from the poles, with error falling roughly like $`(|x|/\rho)^m`$.
 
-For tan's row $[m/2]$ the errors at 1.5 are 8.101e+00, 1.351e+00, 1.364e-01, 1.347e-02 and 1.350e-03 for m = 1, 3, 5, 7, 9. Their ratios are 0.1668, 0.1009, 0.0988 and 0.1002, against the theorem's 0.1013.
+For tan's row $`[m/2]`$ the errors at 1.5 are 8.101e+00, 1.351e+00, 1.364e-01, 1.347e-02 and 1.350e-03 for m = 1, 3, 5, 7, 9. Their ratios are 0.1668, 0.1009, 0.0988 and 0.1002, against the theorem's 0.1013.
 
 <details>
 <summary>Detailed proof: the row [m/2] of tan converges, for |x| below π/2</summary>
 
-**The coefficients.** The partial fractions of tan are $\tan x = \sum_{k\ge 0} 2x/\bigl((k+\tfrac12)^2\pi^2 - x^2\bigr)$. Expanding each term as a geometric series gives, for odd j,
+**The coefficients.** The partial fractions of tan are $`\tan x = \sum_{k\ge 0} 2x/\bigl((k+\tfrac12)^2\pi^2 - x^2\bigr)`$. Expanding each term as a geometric series gives, for odd j,
 
-$$c_j = 2\left(\frac{2}{\pi}\right)^{j+1}\Bigl(1 + 3^{-(j+1)} + 5^{-(j+1)} + \cdots\Bigr).$$
+$`\displaystyle c_j = 2\left(\frac{2}{\pi}\right)^{j+1}\Bigl(1 + 3^{-(j+1)} + 5^{-(j+1)} + \cdots\Bigr).`$
 
-**The pole.** By Step 3, $q_2 = -c_{m+2}/c_m$. The bracket is $1 + O(3^{-m})$ for both coefficients, so $q_2 = -(2/\pi)^2(1 + O(3^{-m}))$. The root $x^*$ tends to π/2, with an error of size $3^{-m}$.
+**The pole.** By Step 3, $`q_2 = -c_{m+2}/c_m`$. The bracket is $`1 + O(3^{-m})`$ for both coefficients, so $`q_2 = -(2/\pi)^2(1 + O(3^{-m}))`$. The root $`x^*`$ tends to π/2, with an error of size $`3^{-m}`$.
 
-**The rest.** Write $Q = 1 - (2x/\pi)^2 + \delta x^2$ with $\delta = O(3^{-m})$. Then $Qf = g + \delta x^2\tan x$. By Step 2, P is the part of $Qf$ up to $x^m$, and the powers $x^{m+1}$ and $x^{m+2}$ of $Qf$ are zero. So
+**The rest.** Write $`Q = 1 - (2x/\pi)^2 + \delta x^2`$ with $`\delta = O(3^{-m})`$. Then $`Qf = g + \delta x^2\tan x`$. By Step 2, P is the part of $`Qf`$ up to $`x^m`$, and the powers $`x^{m+1}`$ and $`x^{m+2}`$ of $`Qf`$ are zero. So
 
-$$f - \frac{P}{Q} = \frac{1}{Q}\Bigl(\text{tail of } g \text{ beyond } x^{m+2} \;+\; \delta\cdot\text{tail of } x^2\tan x \text{ beyond } x^{m+2}\Bigr).$$
+$`\displaystyle f - \frac{P}{Q} = \frac{1}{Q}\Bigl(\text{tail of } g \text{ beyond } x^{m+2} \;+\; \delta\cdot\text{tail of } x^2\tan x \text{ beyond } x^{m+2}\Bigr).`$
 
-g has radius 3π/2, so its tail at x is of size $(2|x|/(3\pi))^{m}$. The tail of $x^2\tan x$ is of size $(2|x|/\pi)^{m}$, and multiplied by $\delta = O(3^{-m})$ it is again of size $(2|x|/(3\pi))^m$. For a fixed x with |x| below π/2, Q(x) tends to $1 - (2x/\pi)^2$, which is not zero. Both pieces fall like $(|x|/\rho)^m$ with ρ = 3π/2. $\blacksquare$
+g has radius 3π/2, so its tail at x is of size $`(2|x|/(3\pi))^{m}`$. The tail of $`x^2\tan x`$ is of size $`(2|x|/\pi)^{m}`$, and multiplied by $`\delta = O(3^{-m})`$ it is again of size $`(2|x|/(3\pi))^m`$. For a fixed x with |x| below π/2, Q(x) tends to $`1 - (2x/\pi)^2`$, which is not zero. Both pieces fall like $`(|x|/\rho)^m`$ with ρ = 3π/2. $`\blacksquare`$
 
 For π/2 < |x| < 3π/2 the same two pieces work, with each tail written as a function minus its truncation. The general statement, for any n poles, is proved in Baker and Graves-Morris (Sources). This card states it and proves the case above.
 
@@ -145,9 +153,9 @@ For π/2 < |x| < 3π/2 the same two pieces work, with each tail written as a fun
 
 ### Step 5: what it costs, and a free error estimate
 
-Cost is counted in flops (one addition or multiplication of two doubles). In Horner form in $x^2$, $[5/4]$ costs about 10 flops: one square, four for the top, four for the bottom, one division. The Taylor series needs 100 terms, about 200 flops, to do as well at 1.5.
+Cost is counted in flops (one addition or multiplication of two doubles). In Horner form in $`x^2`$, $`[5/4]`$ costs about 10 flops: one square, four for the top, four for the bottom, one division. The Taylor series needs 100 terms, about 200 flops, to do as well at 1.5.
 
-The step between two neighbouring approximants estimates the error of the poorer one. $[5/4] - [3/4]$ = 0.057447, while the true error of $[3/4]$ is 0.058867: a ratio of 0.9759. This is an estimate, not a bound.
+The step between two neighbouring approximants estimates the error of the poorer one. $`[5/4] - [3/4]`$ = 0.057447, while the true error of $`[3/4]`$ is 0.058867: a ratio of 0.9759. This is an estimate, not a bound.
 
 ### The picture: errors at 1.5, with the same coefficients
 
@@ -161,24 +169,24 @@ xychart-beta
     line [0.91, 0.13, -1.23, -2.85, -4.64, -6.56]
 ```
 
-Orange: the Taylor polynomial of degree N. Teal: the Padé approximant from the same coefficients, $[1/2]$, $[3/2]$, $[3/4]$, $[5/4]$, $[5/6]$, $[7/6]$. The Taylor error barely moves, from 1.148e+01 to 7.235e+00; the Padé error falls from 8.101e+00 to 2.740e-07, and faster at each step.
+Orange: the Taylor polynomial of degree N. Teal: the Padé approximant from the same coefficients, $`[1/2]`$, $`[3/2]`$, $`[3/4]`$, $`[5/4]`$, $`[5/6]`$, $`[7/6]`$. The Taylor error barely moves, from 1.148e+01 to 7.235e+00; the Padé error falls from 8.101e+00 to 2.740e-07, and faster at each step.
 
 ---
 
 ## Worked numbers, by hand
 
-Build $[5/4]$ of tan from $c_1, c_3, c_5, c_7, c_9$ = 1, 1/3, 2/15, 17/315, 62/2835, then read the balloon's height at 1.5 radians.
+Build $`[5/4]`$ of tan from $`c_1, c_3, c_5, c_7, c_9`$ = 1, 1/3, 2/15, 17/315, 62/2835, then read the balloon's height at 1.5 radians.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| odd function | the equations for powers 6 and 8 force $q_1 = q_3 = 0$ | 0 |
-| power 7 | $q_2c_5 + q_4c_3 = -c_7$ | two equations in $q_2$, $q_4$ |
-| power 9 | $q_2c_7 + q_4c_5 = -c_9$ | |
-| determinant | $c_5^2 - c_3c_7 = 84/4725 - 85/4725$ | −1/4725 = −0.000211640212 |
-| $q_2$ | $(c_3c_9 - c_5c_7) \div \text{det} = (4/42525) \div (-1/4725)$ | −4/9 = −0.444444444 |
-| $q_4$ | $(c_7^2 - c_5c_9) \div \text{det}$ | 1/63 = 0.015873016 |
-| $p_1$, $p_3$, $p_5$ | $c_1$; $c_3 + q_2c_1$; $c_5 + q_2c_3 + q_4c_1$ | 1; −1/9 = −0.111111111; 1/945 = 0.001058201 |
-| times 945 | top and bottom | $(945x - 105x^3 + x^5)/(945 - 420x^2 + 15x^4)$ |
+| odd function | the equations for powers 6 and 8 force $`q_1 = q_3 = 0`$ | 0 |
+| power 7 | $`q_2c_5 + q_4c_3 = -c_7`$ | two equations in $`q_2`$, $`q_4`$ |
+| power 9 | $`q_2c_7 + q_4c_5 = -c_9`$ | |
+| determinant | $`c_5^2 - c_3c_7 = 84/4725 - 85/4725`$ | −1/4725 = −0.000211640212 |
+| $`q_2`$ | $`(c_3c_9 - c_5c_7) \div \text{det} = (4/42525) \div (-1/4725)`$ | −4/9 = −0.444444444 |
+| $`q_4`$ | $`(c_7^2 - c_5c_9) \div \text{det}`$ | 1/63 = 0.015873016 |
+| $`p_1`$, $`p_3`$, $`p_5`$ | $`c_1`$; $`c_3 + q_2c_1`$; $`c_5 + q_2c_3 + q_4c_1`$ | 1; −1/9 = −0.111111111; 1/945 = 0.001058201 |
+| times 945 | top and bottom | $`(945x - 105x^3 + x^5)/(945 - 420x^2 + 15x^4)`$ |
 | top at 1.5 | 1417.5 − 354.375 + 7.59375 | 1070.71875 |
 | bottom at 1.5 | 945 − 945 + 75.9375 | 75.9375 |
 | ratio | 1070.71875 ÷ 75.9375 | **14.100000 km** |
@@ -189,16 +197,16 @@ The balloon is 14.100000 km up by the Padé ratio, against 14.1014199472 km true
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No denominator: the Taylor polynomial, $[9/0]$ | 5.400335, off 8.701e+00 | a polynomial has no pole to spend |
-| Sign slip: $+c_k$ on the right of the Q equations | 3.199535 | Q no longer cancels the powers 6 to 9; this Q does not change sign between 1 and 2 |
-| Taylor series past the pole, x = 2, degree 99 | 8.084e+10, where tan 2 = −2.185040 | outside the radius π/2 the terms grow; $[5/4]$ gives −2.185859 |
-| A denominator where there is no pole: $[0/3]$ of $e^x$ | 16.000000 at 1.5, where $e^{1.5}$ = 4.481689 | Q has a root at 1.596072 that $e^x$ does not have: a false pole |
+| No denominator: the Taylor polynomial, $`[9/0]`$ | 5.400335, off 8.701e+00 | a polynomial has no pole to spend |
+| Sign slip: $`+c_k`$ on the right of the Q equations | 3.199535 | Q no longer cancels the powers 6 to 9; this Q does not change sign between 1 and 2 |
+| Taylor series past the pole, x = 2, degree 99 | 8.084e+10, where tan 2 = −2.185040 | outside the radius π/2 the terms grow; $`[5/4]`$ gives −2.185859 |
+| A denominator where there is no pole: $`[0/3]`$ of $`e^x`$ | 16.000000 at 1.5, where $`e^{1.5}`$ = 4.481689 | Q has a root at 1.596072 that $`e^x`$ does not have: a false pole |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds tan's Taylor coefficients from the rule tan′ = 1 + tan², with no tables. It then reaches the approximant three independent ways. The first is the recipe's linear equations, solved by elimination. The second is Lambert's closed form. The third is the defining property $Q\tan x - P = O(x^{11})$, checked on the series; its terms below $x^6$ hold by construction, so the test lies in $x^6$ to $x^{11}$. The reference values, tan as sin over cos and π/2, come from the math library and are labelled so. Asserts check the coefficients, the closed form, the pole moving in on π/2, the residue, the ratio 0.1013 from de Montessus's theorem, and each failure.
+The code builds tan's Taylor coefficients from the rule tan′ = 1 + tan², with no tables. It then reaches the approximant three independent ways. The first is the recipe's linear equations, solved by elimination. The second is Lambert's closed form. The third is the defining property $`Q\tan x - P = O(x^{11})`$, checked on the series; its terms below $`x^6`$ hold by construction, so the test lies in $`x^6`$ to $`x^{11}`$. The reference values, tan as sin over cos and π/2, come from the math library and are labelled so. Asserts check the coefficients, the closed form, the pole moving in on π/2, the residue, the ratio 0.1013 from de Montessus's theorem, and each failure.
 
 ### Python
 
@@ -575,12 +583,12 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the Padé recipe for any Taylor series and any degrees m and n, and the card's $[5/4]$ of tan in exact fractions.
+Lean proves the Padé recipe for any Taylor series and any degrees m and n, and the card's $`[5/4]`$ of tan in exact fractions.
 
-- If $q_0 = 1$, the numbers $q_1, \dots, q_n$ solve the bottom equations, and P is built by the recipe, then $Qf - P$ has no terms below $x^{m+n+1}$. So the series of P/Q matches f's through $x^{m+n}$.
-- Tan's Taylor coefficients $c_1, c_3, c_5, c_7, c_9$ are 1, 1/3, 2/15, 17/315 and 62/2835, and the even ones through $c_{10}$ are zero.
-- With $Q = 1 - 4x^2/9 + x^4/63$ and $P = x - x^3/9 + x^5/945$, $Q\tan x - P$ has no terms below $x^{11}$. Its $x^{11}$ term is exactly 1/9823275, the 1.018e-07 the code prints.
-- The hand table's fractions check out: the determinant −1/4725, $q_2 = -4/9$, $q_4 = 1/63$, $p_3 = -1/9$, $p_5 = 1/945$ and the ratio 14.1 at 1.5. So does Step 3's $c_3/c_5 = 5/2$.
+- If $`q_0 = 1`$, the numbers $`q_1, \dots, q_n`$ solve the bottom equations, and P is built by the recipe, then $`Qf - P`$ has no terms below $`x^{m+n+1}`$. So the series of P/Q matches f's through $`x^{m+n}`$.
+- Tan's Taylor coefficients $`c_1, c_3, c_5, c_7, c_9`$ are 1, 1/3, 2/15, 17/315 and 62/2835, and the even ones through $`c_{10}`$ are zero.
+- With $`Q = 1 - 4x^2/9 + x^4/63`$ and $`P = x - x^3/9 + x^5/945`$, $`Q\tan x - P`$ has no terms below $`x^{11}`$. Its $`x^{11}`$ term is exactly 1/9823275, the 1.018e-07 the code prints.
+- The hand table's fractions check out: the determinant −1/4725, $`q_2 = -4/9`$, $`q_4 = 1/63`$, $`p_3 = -1/9`$, $`p_5 = 1/945`$ and the ratio 14.1 at 1.5. So does Step 3's $`c_3/c_5 = 5/2`$.
 
 The computed decimals, the poles, the residue, de Montessus's rate and every row of What breaks are left to the Python and Rust checks.
 
@@ -804,9 +812,9 @@ example : (1 / 3 : ℚ) / (2 / 15) = 5 / 2 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - **Guess first:** read the height at x = 1.57 instead of 1.5, a hair short of π/2, where tan is 1255.765592 (the first `try:` line). How close do the ratios get? $[5/4]$ gives 1237.898299 and $[7/6]$ gives 1255.761369; the Taylor polynomial of degree 13 gives 9.199240.
+> - **Guess first:** read the height at x = 1.57 instead of 1.5, a hair short of π/2, where tan is 1255.765592 (the first `try:` line). How close do the ratios get? $`[5/4]`$ gives 1237.898299 and $`[7/6]`$ gives 1255.761369; the Taylor polynomial of degree 13 gives 9.199240.
 > - **Guess first:** in `pade`, delete the minus in `-sign * c[k]`. The bottom polynomial has no root between 1 and 2 any more, and the bisection assert stops the run: no pole, no tracking.
-> - **Guess first:** go far past the pole, to x = 3, where tan is −0.142547 (the second `try:` line). Does the ratio still track? $[5/4]$ gives −0.150000 and $[7/6]$ gives −0.142575, while the Taylor polynomial of degree 13 gives 7889.993646. The point lies inside de Montessus's disc, |x| < 4.7124.
+> - **Guess first:** go far past the pole, to x = 3, where tan is −0.142547 (the second `try:` line). Does the ratio still track? $`[5/4]`$ gives −0.150000 and $`[7/6]`$ gives −0.142575, while the Taylor polynomial of degree 13 gives 7889.993646. The point lies inside de Montessus's disc, |x| < 4.7124.
 > - **Guess first:** in the row test, change `pade(c, m, 2)` to `pade(c, m, 4)`. Now the poles at ±3π/2 are captured too, the next ones sit at ±5π/2, and the errors fall faster than 0.1013 per step. The assert pinned to 0.1013 fails.
 
 ---
@@ -814,19 +822,19 @@ example : (1 / 3 : ℚ) / (2 / 15) = 5 / 2 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Trusting every pole of the approximant.** Q will produce roots whether or not the function has poles there. $[0/3]$ of $e^x$ has a pole at 1.596072, and at 1.5 it gives 16.000000 against 4.481689. A real pole settles as the degree grows: tan's run 1.7320508, 1.5811388, 1.5712334, 1.5708079, 1.5707965, 1.5707963. A false one wanders, or sits next to a zero of P and nearly cancels.
+> **Trusting every pole of the approximant.** Q will produce roots whether or not the function has poles there. $`[0/3]`$ of $`e^x`$ has a pole at 1.596072, and at 1.5 it gives 16.000000 against 4.481689. A real pole settles as the degree grows: tan's run 1.7320508, 1.5811388, 1.5712334, 1.5708079, 1.5707965, 1.5707963. A false one wanders, or sits next to a zero of P and nearly cancels.
 >
-> - **More Taylor terms instead.** Near a pole the terms shrink slowly. At 1.5 the series needs 100 terms, about 200 flops, to match $[5/4]$'s 10 flops.
-> - **A sign slip in the Q equations.** Writing $+c_k$ on the right gives 3.199535 at 1.5, worse than the Taylor polynomial's 5.400335.
-> - **Using the Taylor series past the pole.** At x = 2 its degree-99 sum is 8.084e+10; the true value is −2.185040 and $[5/4]$ gives −2.185859.
-> - **Reading the step between approximants as a bound.** $[5/4] - [3/4]$ = 0.057447 estimates the error 0.058867 of $[3/4]$, a ratio of 0.9759. It is an estimate; nothing stops it from being too small.
+> - **More Taylor terms instead.** Near a pole the terms shrink slowly. At 1.5 the series needs 100 terms, about 200 flops, to match $`[5/4]`$'s 10 flops.
+> - **A sign slip in the Q equations.** Writing $`+c_k`$ on the right gives 3.199535 at 1.5, worse than the Taylor polynomial's 5.400335.
+> - **Using the Taylor series past the pole.** At x = 2 its degree-99 sum is 8.084e+10; the true value is −2.185040 and $`[5/4]`$ gives −2.185859.
+> - **Reading the step between approximants as a bound.** $`[5/4] - [3/4]`$ = 0.057447 estimates the error 0.058867 of $`[3/4]`$, a ratio of 0.9759. It is an estimate; nothing stops it from being too small.
 
 ---
 
 ## Where you meet it in real life
 
-- **Control engineering.** A time delay multiplies a transfer function by $e^{-x}$ (x is the Laplace variable times the delay). That factor is not a ratio of polynomials, so the usual pole-and-zero stability tests cannot take it as it is. Its $[1/1]$ approximant is $(1 - x/2)/(1 + x/2)$ and its $[2/2]$ has 1/12 = 0.083333 on $x^2$ top and bottom; the code rebuilds both, as used on [Time delays](../../13-Engineering%20mathematics/03-Feedback%20Control/10-smith-predictor-and-time-delays.md).
-- **Stiff differential equations.** On a decaying test equation, the trapezoid rule multiplies by the $[1/1]$ approximant of the exponential at each step. Higher approximants $[k/k]$ of the exponential are the step factors of other implicit methods, with the same safe behaviour on fast-decaying parts.
+- **Control engineering.** A time delay multiplies a transfer function by $`e^{-x}`$ (x is the Laplace variable times the delay). That factor is not a ratio of polynomials, so the usual pole-and-zero stability tests cannot take it as it is. Its $`[1/1]`$ approximant is $`(1 - x/2)/(1 + x/2)`$ and its $`[2/2]`$ has 1/12 = 0.083333 on $`x^2`$ top and bottom; the code rebuilds both, as used on [Time delays](../../13-Engineering%20mathematics/03-Feedback%20Control/10-smith-predictor-and-time-delays.md).
+- **Stiff differential equations.** On a decaying test equation, the trapezoid rule multiplies by the $`[1/1]`$ approximant of the exponential at each step. Higher approximants $`[k/k]`$ of the exponential are the step factors of other implicit methods, with the same safe behaviour on fast-decaying parts.
 - **The matrix exponential in software.** The widely used scaling-and-squaring method computes the exponential of a matrix from a high-degree Padé approximant of a scaled-down copy, then squares the result back up (Higham 2005, in Sources).
 - **Physics series that diverge.** Perturbation series in statistical physics and quantum theory often have small radii. Padé approximants of them locate the nearby singularities and sum the series past them.
 - **Function libraries.** Routines for functions with poles, such as tan, often evaluate a ratio of two short polynomials on a reduced range. There the coefficients are fitted for the smallest worst error, the rational version of [Weierstrass and the minimax fit](08-weierstrass-and-best-approximation.md), rather than matched at one point.
@@ -849,7 +857,7 @@ example : (1 / 3 : ℚ) / (2 / 15) = 5 / 2 := by norm_num
 
 ## Where this goes next
 
-- [Stiffness](../06-ODE%20Solvers/05-stiffness-a-stability-and-the-dahlquist-barriers.md): the step factors of implicit methods are ratios of polynomials, and the trapezoid rule's is the $[1/1]$ approximant of the exponential.
+- [Stiffness](../06-ODE%20Solvers/05-stiffness-a-stability-and-the-dahlquist-barriers.md): the step factors of implicit methods are ratios of polynomials, and the trapezoid rule's is the $`[1/1]`$ approximant of the exponential.
 - [Gaussian quadrature](../05-Quadrature/03-gaussian-quadrature.md): sample points at the zeros of an orthogonal polynomial, so n samples integrate every polynomial up to degree 2n − 1. A link not drawn there: the nodes and weights of a Gauss rule are the poles and residues of a Padé approximant, through continued fractions.
 
 The Padé ratio matches the function at one point; the open question is how to choose a ratio that is as good as possible over a whole interval at once.
@@ -860,7 +868,7 @@ The Padé ratio matches the function at one point; the open question is how to c
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Padé, H. "Sur la représentation approchée d'une fonction par des fractions rationnelles." *Annales scientifiques de l'École normale supérieure* 9 (1892): S3–S93. [doi:10.24033/asens.378](https://doi.org/10.24033/asens.378). The thesis that set out the table of approximants $[m/n]$.
+- Padé, H. "Sur la représentation approchée d'une fonction par des fractions rationnelles." *Annales scientifiques de l'École normale supérieure* 9 (1892): S3–S93. [doi:10.24033/asens.378](https://doi.org/10.24033/asens.378). The thesis that set out the table of approximants $`[m/n]`$.
 - de Montessus de Ballore, R. "Sur les fractions continues algébriques." *Bulletin de la Société mathématique de France* 30 (1902): 28–36. [doi:10.24033/bsmf.653](https://doi.org/10.24033/bsmf.653). The convergence theorem for a row of the table near n poles.
 - Baker, G. A., Jr., and P. Graves-Morris. *Padé Approximants*, 2nd ed. Cambridge University Press, 1996. [doi:10.1017/CBO9780511530074](https://doi.org/10.1017/CBO9780511530074). The standard reference: construction, the Hankel equations, convergence theory and false poles.
 - Higham, N. J. "The scaling and squaring method for the matrix exponential revisited." *SIAM Journal on Matrix Analysis and Applications* 26 (2005): 1179–1193. [doi:10.1137/04061101X](https://doi.org/10.1137/04061101X). Padé approximants of the exponential in production software.

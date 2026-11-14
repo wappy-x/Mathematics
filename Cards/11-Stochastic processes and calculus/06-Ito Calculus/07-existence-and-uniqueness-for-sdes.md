@@ -28,57 +28,65 @@ xychart-beta
     line [0.00, 0.50, 1.00, 1.50, 2.00, 2.50, 3.00, 3.50, 4.00, 4.50, 5.00]
 ```
 
-Orange: the CIR noise size $0.25\sqrt{r}$, in percentage points. Green: the line $2.5\,r$, the most a noise with Lipschitz constant 2.5 could be at a rate $r$ if it is 0 at zero. Below 1 percent the curve is above the line. No line, however steep, stays above the curve all the way down: the Lipschitz condition fails at zero.
+Orange: the CIR noise size $`0.25\sqrt{r}`$, in percentage points. Green: the line $`2.5\,r`$, the most a noise with Lipschitz constant 2.5 could be at a rate $`r`$ if it is 0 at zero. Below 1 percent the curve is above the line. No line, however steep, stays above the curve all the way down: the Lipschitz condition fails at zero.
 
 ---
 
 ## The formula
 
-Time $t$ is in years. $W_t$ is Brownian motion, the random walk seen from far away. An SDE for a quantity $X_t$, its value at time $t$, is written $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$, where $\mu(x, t)$ is the drift function and $\sigma(x, t)$ the noise-size function ([Stochastic differential equations](04-stochastic-differential-equations.md)). The $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has no slope. So the equation means the integral equation
+Time $`t`$ is in years. $`W_t`$ is Brownian motion, the random walk seen from far away. An SDE for a quantity $`X_t`$, its value at time $`t`$, is written $`dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t`$, where $`\mu(x, t)`$ is the drift function and $`\sigma(x, t)`$ the noise-size function ([Stochastic differential equations](04-stochastic-differential-equations.md)). The $`dW_t`$ is shorthand for an Ito integral, never a derivative, because the path has no slope. So the equation means the integral equation
 
-$$X_t = X_0 + \int_0^t \mu(X_s, s)\,ds + \int_0^t \sigma(X_s, s)\,dW_s .$$
+```math
+X_t = X_0 + \int_0^t \mu(X_s, s)\,ds + \int_0^t \sigma(X_s, s)\,dW_s .
+```
 
-A **solution** is a continuous process that satisfies this equation for every $t$, almost surely (with probability 1), and is *adapted*: at time $t$ it is built from the start and the noise path up to $t$, the information $F_t$, and nothing later.
+A **solution** is a continuous process that satisfies this equation for every $`t`$, almost surely (with probability 1), and is *adapted*: at time $`t`$ it is built from the start and the noise path up to $`t`$, the information $`F_t`$, and nothing later.
 
-**The theorem (Ito, 1951).** Fix a horizon $T$. Suppose one constant $K$ does both jobs below, for all states $x$ and $y$ and all times $t$ up to $T$:
+**The theorem (Ito, 1951).** Fix a horizon $`T`$. Suppose one constant $`K`$ does both jobs below, for all states $`x`$ and $`y`$ and all times $`t`$ up to $`T`$:
 
-$$\lvert\mu(x,t)-\mu(y,t)\rvert + \lvert\sigma(x,t)-\sigma(y,t)\rvert \le K\,\lvert x-y\rvert, \qquad \lvert\mu(x,t)\rvert + \lvert\sigma(x,t)\rvert \le K\,(1+\lvert x\rvert).$$
+```math
+\lvert\mu(x,t)-\mu(y,t)\rvert + \lvert\sigma(x,t)-\sigma(y,t)\rvert \le K\,\lvert x-y\rvert, \qquad \lvert\mu(x,t)\rvert + \lvert\sigma(x,t)\rvert \le K\,(1+\lvert x\rvert).
+```
 
-Let the start $X_0$ be independent of the noise, with $E[X_0^2]$, the average of its square, finite. Then the integral equation has a solution $X$ on $[0, T]$ with $E[\sup_{t \le T} X_t^2]$, the average of its largest square up to $T$, finite, and any two solutions agree at every $t \le T$, almost surely.
+Let the start $`X_0`$ be independent of the noise, with $`E[X_0^2]`$, the average of its square, finite. Then the integral equation has a solution $`X`$ on $`[0, T]`$ with $`E[\sup_{t \le T} X_t^2]`$, the average of its largest square up to $`T`$, finite, and any two solutions agree at every $`t \le T`$, almost surely.
 
 **Read it aloud:** if the drift and noise size never react to the state more sharply than K times the change, and never grow faster than a straight line, then each start and each run of the noise fix one path.
 
 The proof builds the solution by **Picard iteration** ([Picard iteration](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md)), the loop that proves the same theorem for an ordinary differential equation (ODE), one with no noise: start from a flat guess and feed each guess back into the right-hand side.
 
-$$X^{(0)}_t = X_0, \qquad X^{(k+1)}_t = X_0 + \int_0^t \mu\big(X^{(k)}_s, s\big)\,ds + \int_0^t \sigma\big(X^{(k)}_s, s\big)\,dW_s .$$
+```math
+X^{(0)}_t = X_0, \qquad X^{(k+1)}_t = X_0 + \int_0^t \mu\big(X^{(k)}_s, s\big)\,ds + \int_0^t \sigma\big(X^{(k)}_s, s\big)\,dW_s .
+```
 
 **Read it aloud:** the next guess is the start plus the drift and the noise read along the previous guess.
 
-The example is CIR. Its rate $r_t$ starts at $r_0$ and obeys
+The example is CIR. Its rate $`r_t`$ starts at $`r_0`$ and obeys
 
-$$dr_t = \kappa\,(\theta - r_t)\,dt + \sigma\sqrt{r_t}\;dW_t .$$
+```math
+dr_t = \kappa\,(\theta - r_t)\,dt + \sigma\sqrt{r_t}\;dW_t .
+```
 
 **Read it aloud:** the rate moves toward the level theta at speed kappa, plus sigma times the square root of the rate times a Brownian step.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $T$, $F_t$ | time in years; the horizon the theorem covers; the filtration, what is known by time $t$ | $T$ = 1 year | a longer horizon needs the same $K$ to hold longer; the bound $M$ grows |
-| $X_t$, $X_0$, $X$, $Y$, $Z$, $PY$ | the quantity a general SDE describes, its start, the solution as a whole; two other processes, and the Picard map applied to $Y$ | the rate, $X_t = r_t$ | — |
-| $W_t$, $W$, $W_1$, $dW_t$ | Brownian motion: where the noise path has got to by time $t$; the whole path; its value at one year; its step, shorthand inside an Ito integral | $W_t$ normal, mean 0, variance $t$ | — |
-| $\mu(x,t)$, $\sigma(x,t)$, $\Delta\mu$, $\Delta\sigma$ | the drift function and the noise-size function; their changes between two guesses | $0.5(0.04 - x)$ and $0.25\sqrt{x}$ | — |
-| $K$ | one constant bounding how sharply the coefficients react to the state, and how fast they grow | the drift needs 0.5; the noise has none at 0 | a larger $K$ admits more equations, and Picard converges more slowly |
-| $r_t$, $r_0$, $r$ | the interest rate at time $t$, as a decimal; its value today; a rate in general | $r_0$ = 0.01 | — |
-| $\kappa$, $\theta$ | the pull speed per year and the level the rate is pulled toward | 0.5 and 0.04 | the rate is held further from zero; past $2\kappa\theta = \sigma^2$ it never touches it |
-| $\sigma$ | the CIR noise scale | 0.25 | the rate reaches zero more often |
-| $X^{(k)}$, $k$, $D_k$, $e(t)$, $M$, $C$ | the Picard guess after $k$ rounds; the mean square of the largest gap between guesses $k$ and $k+1$, or between two solutions; the constant $2K^2(T+4)$; a bound on the first gap | 12 guesses on a 64-step grid | a larger $M$ makes the factorial win later |
-| $n$, $\Delta t$ | grid steps in a year; the step length $1/n$ | 16 to 1024 | the simulation's errors shrink |
-| $\tau$, $f$, $w$, $\Phi$, $\tau_N$, $N$ | the explosion time; the function $f(w) = 1/(1-w)$ that solves the exploding SDE; $w$, a number standing for $W_t$; the standard normal CDF, the chance a standard normal draw falls below a value; in the proof, the first time a solution reaches size $N$ | $\tau$ = the first time $W$ reaches 1; $\Phi(1)$ = 0.8413 | — |
-| $\delta$, $h$, $y$, $a$, $b$ | a change in the rate; a second state beside $x$; a bound $h(\delta)$ on how far the noise size moves for that change; any two numbers, in Step 1's bound | $h(u) = 0.25\sqrt{u}$ for CIR | a larger $h$ near 0 can lose uniqueness |
+| $`t`$, $`T`$, $`F_t`$ | time in years; the horizon the theorem covers; the filtration, what is known by time $`t`$ | $`T`$ = 1 year | a longer horizon needs the same $`K`$ to hold longer; the bound $`M`$ grows |
+| $`X_t`$, $`X_0`$, $`X`$, $`Y`$, $`Z`$, $`PY`$ | the quantity a general SDE describes, its start, the solution as a whole; two other processes, and the Picard map applied to $`Y`$ | the rate, $`X_t = r_t`$ | — |
+| $`W_t`$, $`W`$, $`W_1`$, $`dW_t`$ | Brownian motion: where the noise path has got to by time $`t`$; the whole path; its value at one year; its step, shorthand inside an Ito integral | $`W_t`$ normal, mean 0, variance $`t`$ | — |
+| $`\mu(x,t)`$, $`\sigma(x,t)`$, $`\Delta\mu`$, $`\Delta\sigma`$ | the drift function and the noise-size function; their changes between two guesses | $`0.5(0.04 - x)`$ and $`0.25\sqrt{x}`$ | — |
+| $`K`$ | one constant bounding how sharply the coefficients react to the state, and how fast they grow | the drift needs 0.5; the noise has none at 0 | a larger $`K`$ admits more equations, and Picard converges more slowly |
+| $`r_t`$, $`r_0`$, $`r`$ | the interest rate at time $`t`$, as a decimal; its value today; a rate in general | $`r_0`$ = 0.01 | — |
+| $`\kappa`$, $`\theta`$ | the pull speed per year and the level the rate is pulled toward | 0.5 and 0.04 | the rate is held further from zero; past $`2\kappa\theta = \sigma^2`$ it never touches it |
+| $`\sigma`$ | the CIR noise scale | 0.25 | the rate reaches zero more often |
+| $`X^{(k)}`$, $`k`$, $`D_k`$, $`e(t)`$, $`M`$, $`C`$ | the Picard guess after $`k`$ rounds; the mean square of the largest gap between guesses $`k`$ and $`k+1`$, or between two solutions; the constant $`2K^2(T+4)`$; a bound on the first gap | 12 guesses on a 64-step grid | a larger $`M`$ makes the factorial win later |
+| $`n`$, $`\Delta t`$ | grid steps in a year; the step length $`1/n`$ | 16 to 1024 | the simulation's errors shrink |
+| $`\tau`$, $`f`$, $`w`$, $`\Phi`$, $`\tau_N`$, $`N`$ | the explosion time; the function $`f(w) = 1/(1-w)`$ that solves the exploding SDE; $`w`$, a number standing for $`W_t`$; the standard normal CDF, the chance a standard normal draw falls below a value; in the proof, the first time a solution reaches size $`N`$ | $`\tau`$ = the first time $`W`$ reaches 1; $`\Phi(1)`$ = 0.8413 | — |
+| $`\delta`$, $`h`$, $`y`$, $`a`$, $`b`$ | a change in the rate; a second state beside $`x`$; a bound $`h(\delta)`$ on how far the noise size moves for that change; any two numbers, in Step 1's bound | $`h(u) = 0.25\sqrt{u}`$ for CIR | a larger $`h`$ near 0 can lose uniqueness |
 
 ### When it holds
 
-- **Lipschitz in the state, for both coefficients.** Drop it for the noise and the iteration loses its contraction: on the CIR rate the Picard gaps are still 7.18e-06 after 12 rounds, where the Lipschitz cousin below reaches 7.83e-12. Uniqueness can still hold, by a different proof (Yamada–Watanabe, below); for a noise size $\lvert x\rvert^{0.4}$ from zero it fails, and two solutions leave the same start.
-- **At most linear growth.** Drop it and a solution can run off to infinity. The SDE $dX = X^3\,dt + X^2\,dW$ from 1 does so before $t = 1$ on 31.73 percent of paths, about 1 in 3.
+- **Lipschitz in the state, for both coefficients.** Drop it for the noise and the iteration loses its contraction: on the CIR rate the Picard gaps are still 7.18e-06 after 12 rounds, where the Lipschitz cousin below reaches 7.83e-12. Uniqueness can still hold, by a different proof (Yamada–Watanabe, below); for a noise size $`\lvert x\rvert^{0.4}`$ from zero it fails, and two solutions leave the same start.
+- **At most linear growth.** Drop it and a solution can run off to infinity. The SDE $`dX = X^3\,dt + X^2\,dW`$ from 1 does so before $`t = 1`$ on 31.73 percent of paths, about 1 in 3.
 - **A start with finite variance, independent of the noise.** A start that peeks at future noise is not a start. With infinite variance the moment bound fails, though one solution per start survives.
 
 ---
@@ -91,26 +99,30 @@ For an ODE, Picard's map takes a guessed curve to the start plus the integral of
 
 ### Step 1: one Picard round shrinks the mean-square gap
 
-Write $\Delta\mu$ and $\Delta\sigma$ for the change in each coefficient between two guesses at the same moment; the Lipschitz condition bounds each by $K$ times their gap. The next guesses differ by a time integral of $\Delta\mu$ plus an Ito integral of $\Delta\sigma$. Square, using $(a + b)^2 \le 2a^2 + 2b^2$, and take the average of the largest value up to time $t$.
+Write $`\Delta\mu`$ and $`\Delta\sigma`$ for the change in each coefficient between two guesses at the same moment; the Lipschitz condition bounds each by $`K`$ times their gap. The next guesses differ by a time integral of $`\Delta\mu`$ plus an Ito integral of $`\Delta\sigma`$. Square, using $`(a + b)^2 \le 2a^2 + 2b^2`$, and take the average of the largest value up to time $`t`$.
 
-- **The drift part.** An ordinary integral over $[0, t]$, squared, is at most $t$ times the integral of the square: the Cauchy–Schwarz inequality, which says the square of an average is at most the average of the square. With $t \le T$ that gives at most $T K^2$ times the time integral of the squared gap.
-- **The noise part.** An Ito integral is a martingale, a fair-game process whose average future value is its present value. Its largest value is controlled by Doob's maximal inequality: a martingale's largest square averages at most 4 times its final square ([Doob's inequalities](../02-Martingales/05-doob-inequalities.md)). The final square averages exactly the time integral of $\Delta\sigma^2$, by the Ito isometry ([The Ito integral](01-ito-integral.md)). That gives at most $4K^2$ times the same integral.
+- **The drift part.** An ordinary integral over $`[0, t]`$, squared, is at most $`t`$ times the integral of the square: the Cauchy–Schwarz inequality, which says the square of an average is at most the average of the square. With $`t \le T`$ that gives at most $`T K^2`$ times the time integral of the squared gap.
+- **The noise part.** An Ito integral is a martingale, a fair-game process whose average future value is its present value. Its largest value is controlled by Doob's maximal inequality: a martingale's largest square averages at most 4 times its final square ([Doob's inequalities](../02-Martingales/05-doob-inequalities.md)). The final square averages exactly the time integral of $`\Delta\sigma^2`$, by the Ito isometry ([The Ito integral](01-ito-integral.md)). That gives at most $`4K^2`$ times the same integral.
 
-Together, with $D_k(t)$ the mean square of the largest gap between guesses $k$ and $k+1$ up to time $t$:
+Together, with $`D_k(t)`$ the mean square of the largest gap between guesses $`k`$ and $`k+1`$ up to time $`t`$:
 
-$$D_k(t) \le M \int_0^t D_{k-1}(s)\,ds, \qquad M = 2K^2(T + 4).$$
+```math
+D_k(t) \le M \int_0^t D_{k-1}(s)\,ds, \qquad M = 2K^2(T + 4).
+```
 
 **Read it aloud:** each round's gap is at most M times the time integral of the previous round's gap.
 
 ### Step 2: the factorial wins
 
-Apply Step 1 again and again. If $D_0(t) \le C$ for a constant $C$, then $D_1(t) \le CMt$, $D_2(t) \le C(Mt)^2/2$, and in general
+Apply Step 1 again and again. If $`D_0(t) \le C`$ for a constant $`C`$, then $`D_1(t) \le CMt`$, $`D_2(t) \le C(Mt)^2/2`$, and in general
 
-$$D_k(t) \le C\,\frac{(Mt)^k}{k!} .$$
+```math
+D_k(t) \le C\,\frac{(Mt)^k}{k!} .
+```
 
-The $k!$ grows faster than any power, so however large $M$ and $T$ are, the gaps eventually fall faster than any fixed ratio. The ODE proof has the same factorial; the noise changes only the constant $M$: the Ito isometry stands in for the bound on an ordinary integral, and Doob's inequality adds the factor 4.
+The $`k!`$ grows faster than any power, so however large $`M`$ and $`T`$ are, the gaps eventually fall faster than any fixed ratio. The ODE proof has the same factorial; the noise changes only the constant $`M`$: the Ito isometry stands in for the bound on an ordinary integral, and Doob's inequality adds the factor 4.
 
-The code runs this loop on a grid of 64 steps in one year, for 1000 runs of the noise, twice: for CIR, and for a **Lipschitz cousin** with noise size $1.25\,r$, which matches CIR's at a rate of 4 percent.
+The code runs this loop on a grid of 64 steps in one year, for 1000 runs of the noise, twice: for CIR, and for a **Lipschitz cousin** with noise size $`1.25\,r`$, which matches CIR's at a rate of 4 percent.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -128,61 +140,65 @@ A second road reaches the cousin's limit: Euler's forward loop solves the same g
 
 ### Step 3: why the square root stalls the iteration
 
-Near zero, two guesses a gap $\delta$ apart get noise sizes up to $0.25\sqrt{\delta}$ apart, not $K\delta$. Squared, that is of order $\delta$, not $\delta^2$. So the next squared gap is of the order of the previous gap, not of its square, and once the gaps are small a round need not shrink them.
+Near zero, two guesses a gap $`\delta`$ apart get noise sizes up to $`0.25\sqrt{\delta}`$ apart, not $`K\delta`$. Squared, that is of order $`\delta`$, not $`\delta^2`$. So the next squared gap is of the order of the previous gap, not of its square, and once the gaps are small a round need not shrink them.
 
-This happens on paths that come close to zero, and from $r_0$ = 0.01 many do. On the 64-step grid both iterations still reach Euler's path by round 64, because each round fixes one more step; what the square root removes is the factorial speed, and in continuous time the proof.
+This happens on paths that come close to zero, and from $`r_0`$ = 0.01 many do. On the 64-step grid both iterations still reach Euler's path by round 64, because each round fixes one more step; what the square root removes is the factorial speed, and in continuous time the proof.
 
 ### Step 4: uniqueness by Gronwall
 
-For two solutions driven by the same noise, let $e(t)$ be the mean square of their largest gap up to time $t$. Step 1's estimate gives $e(t) \le M \int_0^t e(s)\,ds$, and Gronwall's lemma ([Gronwall's inequality](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md)) says such a nonnegative function is 0. The two solutions agree.
+For two solutions driven by the same noise, let $`e(t)`$ be the mean square of their largest gap up to time $`t`$. Step 1's estimate gives $`e(t) \le M \int_0^t e(s)\,ds`$, and Gronwall's lemma ([Gronwall's inequality](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md)) says such a nonnegative function is 0. The two solutions agree.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** Under the Lipschitz and growth conditions with constant $K$ on $[0, T]$, and $E[X_0^2] < \infty$ with $X_0$ independent of $W$, there is a continuous adapted $X$ with $E\sup_{t\le T}X_t^2 < \infty$ solving the integral equation, and any two continuous adapted solutions agree for all $t \le T$, almost surely.
+**Claim.** Under the Lipschitz and growth conditions with constant $`K`$ on $`[0, T]`$, and $`E[X_0^2] < \infty`$ with $`X_0`$ independent of $`W`$, there is a continuous adapted $`X`$ with $`E\sup_{t\le T}X_t^2 < \infty`$ solving the integral equation, and any two continuous adapted solutions agree for all $`t \le T`$, almost surely.
 
-**1. The key estimate.** For adapted continuous $Y, Z$ with finite mean square sup, let $PY$ denote the right-hand side of the integral equation with $Y$ inserted. Then $(PY - PZ)_t = \int_0^t \Delta\mu\,ds + \int_0^t \Delta\sigma\,dW$ with $\lvert\Delta\mu\rvert, \lvert\Delta\sigma\rvert \le K\lvert Y_s - Z_s\rvert$. By $(a+b)^2 \le 2a^2+2b^2$, Cauchy–Schwarz on the first term and Doob's $L^2$ maximal inequality with the Ito isometry on the second,
-$E\sup_{s\le t}\lvert PY - PZ\rvert^2 \le 2TK^2\int_0^t E\lvert Y_s - Z_s\rvert^2 ds + 8K^2\int_0^t E\lvert Y_s - Z_s\rvert^2 ds \le M\int_0^t E\sup_{u\le s}\lvert Y_u - Z_u\rvert^2 ds.$
+**1. The key estimate.** For adapted continuous $`Y, Z`$ with finite mean square sup, let $`PY`$ denote the right-hand side of the integral equation with $`Y`$ inserted. Then $`(PY - PZ)_t = \int_0^t \Delta\mu\,ds + \int_0^t \Delta\sigma\,dW`$ with $`\lvert\Delta\mu\rvert, \lvert\Delta\sigma\rvert \le K\lvert Y_s - Z_s\rvert`$. By $`(a+b)^2 \le 2a^2+2b^2`$, Cauchy–Schwarz on the first term and Doob's $`L^2`$ maximal inequality with the Ito isometry on the second,
+$`E\sup_{s\le t}\lvert PY - PZ\rvert^2 \le 2TK^2\int_0^t E\lvert Y_s - Z_s\rvert^2 ds + 8K^2\int_0^t E\lvert Y_s - Z_s\rvert^2 ds \le M\int_0^t E\sup_{u\le s}\lvert Y_u - Z_u\rvert^2 ds.`$
 
-**2. The first gap is finite.** By the growth condition, $D_0(t) = E\sup_{s\le t}\lvert X^{(1)}_s - X_0\rvert^2 \le 2TK^2\int_0^t E(1+\lvert X_0\rvert)^2ds + 8K^2\int_0^t E(1+\lvert X_0\rvert)^2 ds \le C$ with $C = MT\,E(1+\lvert X_0\rvert)^2 < \infty$. Each Ito integral here is defined because its integrand is adapted with finite mean-square integral, by the same bound and induction.
+**2. The first gap is finite.** By the growth condition, $`D_0(t) = E\sup_{s\le t}\lvert X^{(1)}_s - X_0\rvert^2 \le 2TK^2\int_0^t E(1+\lvert X_0\rvert)^2ds + 8K^2\int_0^t E(1+\lvert X_0\rvert)^2 ds \le C`$ with $`C = MT\,E(1+\lvert X_0\rvert)^2 < \infty`$. Each Ito integral here is defined because its integrand is adapted with finite mean-square integral, by the same bound and induction.
 
-**3. Convergence.** Step 1 and induction give $D_k(T) \le C(MT)^k/k!$. By Chebyshev's inequality (a chance of exceeding a level is at most the mean square over the level squared), $P\big(\sup_{t\le T}\lvert X^{(k+1)}_t - X^{(k)}_t\rvert > 2^{-k}\big) \le 4^k D_k(T)$, and $\sum_k 4^k C(MT)^k/k! = Ce^{4MT}$ is finite. By the Borel–Cantelli lemma (if the chances add to a finite total, only finitely many of the events happen), almost surely the gaps are eventually below $2^{-k}$, so $X^{(k)}$ converges uniformly on $[0,T]$ to a continuous adapted limit $X$. The same bound shows $X^{(k)} \to X$ in mean-square sup, so $E\sup X_t^2 < \infty$.
+**3. Convergence.** Step 1 and induction give $`D_k(T) \le C(MT)^k/k!`$. By Chebyshev's inequality (a chance of exceeding a level is at most the mean square over the level squared), $`P\big(\sup_{t\le T}\lvert X^{(k+1)}_t - X^{(k)}_t\rvert > 2^{-k}\big) \le 4^k D_k(T)`$, and $`\sum_k 4^k C(MT)^k/k! = Ce^{4MT}`$ is finite. By the Borel–Cantelli lemma (if the chances add to a finite total, only finitely many of the events happen), almost surely the gaps are eventually below $`2^{-k}`$, so $`X^{(k)}`$ converges uniformly on $`[0,T]`$ to a continuous adapted limit $`X`$. The same bound shows $`X^{(k)} \to X`$ in mean-square sup, so $`E\sup X_t^2 < \infty`$.
 
-**4. The limit solves the equation.** By Step 1 with $Y = X^{(k)}$, $Z = X$, $E\sup\lvert PX^{(k)} - PX\rvert^2 \le MT\,E\sup\lvert X^{(k)} - X\rvert^2 \to 0$. Since $PX^{(k)} = X^{(k+1)} \to X$, also $PX = X$.
+**4. The limit solves the equation.** By Step 1 with $`Y = X^{(k)}`$, $`Z = X`$, $`E\sup\lvert PX^{(k)} - PX\rvert^2 \le MT\,E\sup\lvert X^{(k)} - X\rvert^2 \to 0`$. Since $`PX^{(k)} = X^{(k+1)} \to X`$, also $`PX = X`$.
 
-**5. Uniqueness.** For two solutions $X, Y$ with finite mean-square sup, $e(t) = E\sup_{s\le t}\lvert X_s - Y_s\rvert^2$ is finite and, by Step 1, $e(t) \le M\int_0^t e(s)\,ds$. Gronwall's lemma gives $e \equiv 0$. For solutions without that moment bound, stop both at $\tau_N$, the first time either reaches size $N$; the stopped processes satisfy the same estimate, agree up to $\tau_N$, and $\tau_N \to T$ by continuity as $N \to \infty$. This is Øksendal's Theorem 5.2.1, and Karatzas and Shreve, Section 5.2.
+**5. Uniqueness.** For two solutions $`X, Y`$ with finite mean-square sup, $`e(t) = E\sup_{s\le t}\lvert X_s - Y_s\rvert^2`$ is finite and, by Step 1, $`e(t) \le M\int_0^t e(s)\,ds`$. Gronwall's lemma gives $`e \equiv 0`$. For solutions without that moment bound, stop both at $`\tau_N`$, the first time either reaches size $`N`$; the stopped processes satisfy the same estimate, agree up to $`\tau_N`$, and $`\tau_N \to T`$ by continuity as $`N \to \infty`$. This is Øksendal's Theorem 5.2.1, and Karatzas and Shreve, Section 5.2.
 
 </details>
 
 ### Step 5: CIR still has one solution, by a sharper theorem
 
-The CIR drift is Lipschitz with constant 0.5. Its noise grows at most linearly, since $\sqrt{x} \le (1 + x)/2$; the code finds the ratio of the two never above 1.0000 on rates from 0 to 1. Only the Lipschitz condition fails, and only at zero. In its place the square root has a weaker property, $\lvert\sqrt{x} - \sqrt{y}\rvert \le \sqrt{\lvert x - y\rvert}$, with a largest ratio of exactly 1.0000 on rates from 0 to 4 percent: a change $\delta$ moves the noise by at most a constant times $\sqrt{\delta}$.
+The CIR drift is Lipschitz with constant 0.5. Its noise grows at most linearly, since $`\sqrt{x} \le (1 + x)/2`$; the code finds the ratio of the two never above 1.0000 on rates from 0 to 1. Only the Lipschitz condition fails, and only at zero. In its place the square root has a weaker property, $`\lvert\sqrt{x} - \sqrt{y}\rvert \le \sqrt{\lvert x - y\rvert}`$, with a largest ratio of exactly 1.0000 on rates from 0 to 4 percent: a change $`\delta`$ moves the noise by at most a constant times $`\sqrt{\delta}`$.
 
-The theorem of Toshio Yamada and Shinzo Watanabe (1971) uses exactly that. In one dimension, if the drift is Lipschitz and the noise size changes by at most $h(\delta)$ for a change $\delta$, where $h$ is so small near 0 that $\int_0 h(u)^{-2}\,du$ is infinite, then two solutions driven by the same noise agree.
+The theorem of Toshio Yamada and Shinzo Watanabe (1971) uses exactly that. In one dimension, if the drift is Lipschitz and the noise size changes by at most $`h(\delta)`$ for a change $`\delta`$, where $`h`$ is so small near 0 that $`\int_0 h(u)^{-2}\,du`$ is infinite, then two solutions driven by the same noise agree.
 
-With $h(u) = 0.25\sqrt{u}$, the integral is $\int_0 du/(0.0625\,u)$, which is infinite: uniqueness holds. With $h(u) = u^{0.4}$ it is finite, and for $dX = \lvert X\rvert^{0.4}\,dW$ from zero, both $X \equiv 0$ and a process that leaves zero are solutions (Karatzas and Shreve, Chapter 5). The square root sits exactly on the boundary that still works.
+With $`h(u) = 0.25\sqrt{u}`$, the integral is $`\int_0 du/(0.0625\,u)`$, which is infinite: uniqueness holds. With $`h(u) = u^{0.4}`$ it is finite, and for $`dX = \lvert X\rvert^{0.4}\,dW`$ from zero, both $`X \equiv 0`$ and a process that leaves zero are solutions (Karatzas and Shreve, Chapter 5). The square root sits exactly on the boundary that still works.
 
 Existence follows: continuous coefficients with linear growth give a solution driven by some Brownian motion (Skorokhod's theorem), and the same paper shows that this plus uniqueness gives one built from the given noise. This card states the Yamada–Watanabe theorem; it does not prove it.
 
 The code tests this with two repairs of Euler's scheme on the same Brownian steps: **full truncation**, which reads a negative value as 0 inside both coefficients, and **reflection**, which flips a negative value to positive after each step. With two solutions, the repairs could settle on different ones. Over 2000 simulated years their average gap at year end falls from 0.00210 at 16 steps to 0.00011 at 1024, a ratio of 19.1. That is consistent with one solution; Yamada–Watanabe proves it, and a simulation cannot.
 
-The CIR mean is $\theta + (r_0 - \theta)e^{-\kappa t}$, 0.021804 at one year, and the simulation gives 0.021608 ± 0.000587. The variance formula gives 6.854e-04, the simulation 6.891e-04 ± 5.1e-05. A third road: Ito's lemma gives $\tfrac{d}{dt}E[r_t] = \kappa(\theta - E[r_t])$ and $\tfrac{d}{dt}E[r_t^2] = (2\kappa\theta + \sigma^2)E[r_t] - 2\kappa E[r_t^2]$, and solving these step by step returns 6.854e-04.
+The CIR mean is $`\theta + (r_0 - \theta)e^{-\kappa t}`$, 0.021804 at one year, and the simulation gives 0.021608 ± 0.000587. The variance formula gives 6.854e-04, the simulation 6.891e-04 ± 5.1e-05. A third road: Ito's lemma gives $`\tfrac{d}{dt}E[r_t] = \kappa(\theta - E[r_t])`$ and $`\tfrac{d}{dt}E[r_t^2] = (2\kappa\theta + \sigma^2)E[r_t] - 2\kappa E[r_t^2]`$, and solving these step by step returns 6.854e-04.
 
-Whether the rate touches zero is the Feller test: zero is reached when $2\kappa\theta < \sigma^2$. Here 0.0400 against 0.0625, a ratio of 0.64, so the rate touches zero and the drift pushes it straight back up. Plain Euler, which takes the square root of whatever value it has, fails on about 2 paths in 5 at every step size: 0.4140 at 16 steps, 0.3755 at 1024.
+Whether the rate touches zero is the Feller test: zero is reached when $`2\kappa\theta < \sigma^2`$. Here 0.0400 against 0.0625, a ratio of 0.64, so the rate touches zero and the drift pushes it straight back up. Plain Euler, which takes the square root of whatever value it has, fails on about 2 paths in 5 at every step size: 0.4140 at 16 steps, 0.3755 at 1024.
 
 ### Step 6: an SDE that explodes
 
 Drop the growth condition and existence can fail for all time. Take
 
-$$dX_t = X_t^3\,dt + X_t^2\,dW_t, \qquad X_0 = 1 .$$
+```math
+dX_t = X_t^3\,dt + X_t^2\,dW_t, \qquad X_0 = 1 .
+```
 
-The coefficients are smooth, so Lipschitz on every bounded range of states, and the solution is unique while it stays finite. But $x^3$ is not below $K(1 + \lvert x\rvert)$ for any $K$.
+The coefficients are smooth, so Lipschitz on every bounded range of states, and the solution is unique while it stays finite. But $`x^3`$ is not below $`K(1 + \lvert x\rvert)`$ for any $`K`$.
 
-The candidate $X_t = f(W_t)$ with $f(w) = 1/(1-w)$ solves it: by Ito's lemma ([Ito's lemma](02-itos-lemma.md)), $f'(w) = f^2$ gives the noise $X^2$, and $\tfrac12 f''(w) = f^3$ gives the drift $X^3$. By finite differences at $w$ = 0.3, where $X$ = 1.428571, the code finds a drift of 2.915452 and a noise of 2.040816, equal to $X^3$ and $X^2$.
+The candidate $`X_t = f(W_t)`$ with $`f(w) = 1/(1-w)`$ solves it: by Ito's lemma ([Ito's lemma](02-itos-lemma.md)), $`f'(w) = f^2`$ gives the noise $`X^2`$, and $`\tfrac12 f''(w) = f^3`$ gives the drift $`X^3`$. By finite differences at $`w`$ = 0.3, where $`X`$ = 1.428571, the code finds a drift of 2.915452 and a noise of 2.040816, equal to $`X^3`$ and $`X^2`$.
 
-The solution reaches infinity at $\tau$, the first time the Brownian path reaches 1. The chance that happens within a year is, by the reflection principle (the walk version is [Reflection principle](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)), twice the chance that $W_1$ ends above 1:
+The solution reaches infinity at $`\tau`$, the first time the Brownian path reaches 1. The chance that happens within a year is, by the reflection principle (the walk version is [Reflection principle](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)), twice the chance that $`W_1`$ ends above 1:
 
-$$P(\tau \le 1) = 2\,\big(1 - \Phi(1)\big) = 0.3173 .$$
+```math
+P(\tau \le 1) = 2\,\big(1 - \Phi(1)\big) = 0.3173 .
+```
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -196,7 +212,7 @@ xychart-beta
 
 Orange: the share of 2000 simulated years in which the Brownian path, watched on 16 to 1024 grid steps, reached 1. Green: the exact 31.73 percent. A grid misses crossings between its points, so every count is low and finer grids miss less: 0.2510 ± 0.0097 at 16 steps, 0.3005 ± 0.0103 at 1024.
 
-Without the noise, the ODE $x' = x^3$ from 1 explodes at $t$ = 0.5 on every path ([Blow-up](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/03-blow-up-and-the-life-span-of-a-solution.md)). The SDE explodes within a year on about 1 path in 3, and, since a Brownian path reaches 1 eventually, every path explodes at some finite time.
+Without the noise, the ODE $`x' = x^3`$ from 1 explodes at $`t`$ = 0.5 on every path ([Blow-up](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/03-blow-up-and-the-life-span-of-a-solution.md)). The SDE explodes within a year on about 1 path in 3, and, since a Brownian path reaches 1 eventually, every path explodes at some finite time.
 
 **Another road.** In several dimensions the theorem and proof are unchanged, with absolute values read as lengths ([Several Brownian motions](06-multidimensional-ito-and-correlation.md)). The Yamada–Watanabe theorem is one-dimensional only.
 
@@ -204,7 +220,7 @@ Without the noise, the ODE $x' = x^3$ from 1 explodes at $t$ = 0.5 on every path
 
 ## Worked numbers, by hand
 
-The CIR rate: $r_0$ = 0.01, $\kappa$ = 0.5 a year, $\theta$ = 0.04, $\sigma$ = 0.25, one year ahead.
+The CIR rate: $`r_0`$ = 0.01, $`\kappa`$ = 0.5 a year, $`\theta`$ = 0.04, $`\sigma`$ = 0.25, one year ahead.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -224,8 +240,8 @@ The rate's noise has no Lipschitz constant at zero, and by Feller's test the rat
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Run Picard on CIR and expect the factorial | E[largest gap squared] 7.18e-06 after 12 rounds (cousin: 7.83e-12) | the square root has no Lipschitz constant at 0, so a round need not shrink the gap |
-| Drop the growth condition, $dX = X^3\,dt + X^2\,dW$ | explodes within a year with chance 0.3173 | the drift outruns every straight line |
-| Plain Euler on CIR, taking $\sqrt{r}$ of a negative | fails on 0.3755 ± 0.0108 of years at 1024 steps (0.4140 at 16) | the true rate touches zero, and a step near zero overshoots |
+| Drop the growth condition, $`dX = X^3\,dt + X^2\,dW`$ | explodes within a year with chance 0.3173 | the drift outruns every straight line |
+| Plain Euler on CIR, taking $`\sqrt{r}`$ of a negative | fails on 0.3755 ± 0.0108 of years at 1024 steps (0.4140 at 16) | the true rate touches zero, and a step near zero overshoots |
 | Count explosions on a coarse grid | 0.2510 ± 0.0097 at 16 steps (exact 0.3173) | the path crosses 1 between grid points |
 
 The code prints every row.
@@ -652,15 +668,15 @@ The two outputs match line for line.
 
 Lean proves the parts of Steps 2, 4, 5 and 6 that need no Ito integral, and checks the worked numbers.
 
-- Suppose every round obeys Step 1's estimate, and the first gap $D_0$ is at most $C$. Then $D_k(t) \le C(Mt)^k/k!$ for every round $k$ and time $t \le T$.
-- The Chebyshev bounds in the Detailed proof add to a finite total. Their sum $\sum_k 4^k C(MT)^k/k!$ is exactly $Ce^{4MT}$.
-- Suppose $e(t) \ge 0$ and $e(t) \le M \int_0^t e(s)\,ds$ for $t \le T$. Then $e(t) = 0$ at every $t \le T$, as Step 4 needs.
-- The CIR drift is Lipschitz with constant 0.5, and the noise size $0.25\sqrt{x}$ has no Lipschitz constant on rates $x \ge 0$.
-- Take any rates $x, y \ge 0$. Then $\sqrt{x} \le (1+x)/2$ and $\lvert\sqrt{x} - \sqrt{y}\rvert \le \sqrt{\lvert x - y\rvert}$.
-- Take $h(u) = 0.25\sqrt{u}$. Then $\int_0^1 h(u)^{-2}\,du$ is infinite; for $h(u) = u^{0.4}$ it is finite.
-- Take $f(w) = 1/(1-w)$. Then $f(0) = 1$, $f' = f^2$, and the derivative of $f^2$ is $2f^3$, at every $w \ne 1$.
-- No $K$ makes $\lvert x^3\rvert + \lvert x^2\rvert \le K(1 + \lvert x\rvert)$ for every $x$, so the growth condition fails.
-- As $w$ rises to 1, $f(w)$ grows without bound.
+- Suppose every round obeys Step 1's estimate, and the first gap $`D_0`$ is at most $`C`$. Then $`D_k(t) \le C(Mt)^k/k!`$ for every round $`k`$ and time $`t \le T`$.
+- The Chebyshev bounds in the Detailed proof add to a finite total. Their sum $`\sum_k 4^k C(MT)^k/k!`$ is exactly $`Ce^{4MT}`$.
+- Suppose $`e(t) \ge 0`$ and $`e(t) \le M \int_0^t e(s)\,ds`$ for $`t \le T`$. Then $`e(t) = 0`$ at every $`t \le T`$, as Step 4 needs.
+- The CIR drift is Lipschitz with constant 0.5, and the noise size $`0.25\sqrt{x}`$ has no Lipschitz constant on rates $`x \ge 0`$.
+- Take any rates $`x, y \ge 0`$. Then $`\sqrt{x} \le (1+x)/2`$ and $`\lvert\sqrt{x} - \sqrt{y}\rvert \le \sqrt{\lvert x - y\rvert}`$.
+- Take $`h(u) = 0.25\sqrt{u}`$. Then $`\int_0^1 h(u)^{-2}\,du`$ is infinite; for $`h(u) = u^{0.4}`$ it is finite.
+- Take $`f(w) = 1/(1-w)`$. Then $`f(0) = 1`$, $`f' = f^2`$, and the derivative of $`f^2`$ is $`2f^3`$, at every $`w \ne 1`$.
+- No $`K`$ makes $`\lvert x^3\rvert + \lvert x^2\rvert \le K(1 + \lvert x\rvert)`$ for every $`x`$, so the growth condition fails.
+- As $`w`$ rises to 1, $`f(w)`$ grows without bound.
 - The worked numbers check exactly: the ratios 2.5, 25 and 250, the Feller test, and one Euler step's mean 0.01125.
 
 Lean has no Ito integral yet, so Step 1 and the limits rest on the cited proofs, and every simulation on the Python and Rust checks.
@@ -947,19 +963,19 @@ example : (1 : ℚ) / (1 - 3 / 10) = 10 / 7 ∧ (10 / 7 : ℚ) ^ 3 = 1000 / 343 
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Satisfy the Feller test.** Set `SIG` to 0.10, so $\sigma^2$ = 0.01 is below $2\kappa\theta$ = 0.04 and the rate stays away from zero. Guess whether CIR's Picard line still stalls. It does not: after 12 rounds its mean squared gap is 1.53e-16, below the cousin's, and the assert that CIR stays above 1e-6 stops the run. The noise also shrank 2.5 times, so the run does not isolate the boundary.
+> - **Satisfy the Feller test.** Set `SIG` to 0.10, so $`\sigma^2`$ = 0.01 is below $`2\kappa\theta`$ = 0.04 and the rate stays away from zero. Guess whether CIR's Picard line still stalls. It does not: after 12 rounds its mean squared gap is 1.53e-16, below the cousin's, and the assert that CIR stays above 1e-6 stops the run. The noise also shrank 2.5 times, so the run does not isolate the boundary.
 > - **Give the cousin a square root.** Change `cousin` to return `0.25 * math.sqrt(abs(x))`. Guess whether its Picard line still bends upward. It flattens like CIR's, and the assert that the gap falls below 1e-8 stops the run.
-> - **Start the exploding SDE at 2.** Then $X = 1/(0.5 - W)$, and explosion comes when $W$ reaches 0.5. Change the barrier `wmax >= 1.0` to 0.5 and `Phi(1.0)` in the line for `p_ex` to `Phi(0.5)`. Guess the chance first. The exact value is 0.6171, and the 1024-step grid finds 0.6025 ± 0.0109; every check passes.
+> - **Start the exploding SDE at 2.** Then $`X = 1/(0.5 - W)`$, and explosion comes when $`W`$ reaches 0.5. Change the barrier `wmax >= 1.0` to 0.5 and `Phi(1.0)` in the line for `p_ex` to `Phi(0.5)`. Guess the chance first. The exact value is 0.6171, and the 1024-step grid finds 0.6025 ± 0.0109; every check passes.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Reading the theorem as "if and only if".** The Lipschitz and growth conditions are sufficient, not necessary. CIR fails the Lipschitz condition at zero and still has exactly one solution, by Yamada–Watanabe; an equation with $\lvert x\rvert^{0.4}$ noise fails it and has two. When a coefficient breaks a hypothesis, the next step is a sharper theorem or a counterexample.
+> **Reading the theorem as "if and only if".** The Lipschitz and growth conditions are sufficient, not necessary. CIR fails the Lipschitz condition at zero and still has exactly one solution, by Yamada–Watanabe; an equation with $`\lvert x\rvert^{0.4}`$ noise fails it and has two. When a coefficient breaks a hypothesis, the next step is a sharper theorem or a counterexample.
 >
-> - **Checking Lipschitz on the drift only.** The CIR drift passes with constant 0.5; the trouble is all in $\sigma\sqrt{r}$, whose ratio to $r$ reaches 250 at 0.0001 percent.
-> - **Calling a smooth coefficient safe.** $x^3$ and $x^2$ are smooth, so locally Lipschitz, and still the solution explodes within a year with chance 0.3173. Local Lipschitz gives uniqueness up to explosion; the growth condition suffices to rule explosion out.
+> - **Checking Lipschitz on the drift only.** The CIR drift passes with constant 0.5; the trouble is all in $`\sigma\sqrt{r}`$, whose ratio to $`r`$ reaches 250 at 0.0001 percent.
+> - **Calling a smooth coefficient safe.** $`x^3`$ and $`x^2`$ are smooth, so locally Lipschitz, and still the solution explodes within a year with chance 0.3173. Local Lipschitz gives uniqueness up to explosion; the growth condition suffices to rule explosion out.
 > - **Running plain Euler on a square root.** About 2 paths in 5 need the square root of a negative number, at every step size tried. Truncation or reflection fixes it; the two agree to 0.00011 at 1024 steps.
 
 ---
@@ -972,7 +988,7 @@ example : (1 : ℚ) / (1 - 3 / 10) = 10 / 7 ∧ (10 / 7 : ℚ) ^ 3 = 1000 / 343 
 - **Self-accelerating reactions.** A rate law that grows faster than a straight line is where explosion becomes possible; the growth condition is the first check.
 
 > **Say it back**
-> An SDE has exactly one solution when its drift and noise size are Lipschitz in the state and grow at most linearly. The proof is Picard iteration in mean square: Doob's inequality and the Ito isometry make the gaps fall like a factorial, and Gronwall's lemma gives uniqueness. CIR's square-root noise has no Lipschitz constant at zero and Picard stalls there, but Yamada–Watanabe still gives one solution. Dropping the growth condition can make a solution explode: $dX = X^3\,dt + X^2\,dW$ from 1 is $1/(1 - W_t)$, which reaches infinity within a year with chance 0.3173.
+> An SDE has exactly one solution when its drift and noise size are Lipschitz in the state and grow at most linearly. The proof is Picard iteration in mean square: Doob's inequality and the Ito isometry make the gaps fall like a factorial, and Gronwall's lemma gives uniqueness. CIR's square-root noise has no Lipschitz constant at zero and Picard stalls there, but Yamada–Watanabe still gives one solution. Dropping the growth condition can make a solution explode: $`dX = X^3\,dt + X^2\,dW`$ from 1 is $`1/(1 - W_t)`$, which reaches infinity within a year with chance 0.3173.
 
 ---
 

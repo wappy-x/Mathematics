@@ -26,42 +26,48 @@ Scale: 34 px per unit on both axes, origin at (120, 120). Solid: the loop. Short
 
 ## The formula
 
-A state is a point in the plane: the voltage $x$ and its rate $v$ ($x'$ is the rate of $x$, as across this wing). The warm-up law is solvable by hand and written in polar coordinates: $r$ is distance from the origin, $\theta$ the angle.
+A state is a point in the plane: the voltage $`x`$ and its rate $`v`$ ($`x'`$ is the rate of $`x`$, as across this wing). The warm-up law is solvable by hand and written in polar coordinates: $`r`$ is distance from the origin, $`\theta`$ the angle.
 
-$$r' = r\,(1 - r^2), \qquad \theta' = 1$$
+```math
+r' = r\,(1 - r^2), \qquad \theta' = 1
+```
 
 **Read it aloud:** the point turns steadily; its distance grows below 1 and shrinks above 1.
 
 The second is the van der Pol law, the heart model:
 
-$$x' = v, \qquad v' = \mu\,(1 - x^2)\,v - x$$
+```math
+x' = v, \qquad v' = \mu\,(1 - x^2)\,v - x
+```
 
-**Read it aloud:** the rate of $v$ is a spring pulling back to zero, plus a push along the motion while the voltage is small, and a drag once it passes 1 either way.
+**Read it aloud:** the rate of $`v`$ is a spring pulling back to zero, plus a push along the motion while the voltage is small, and a drag once it passes 1 either way.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the state's position: a scaled voltage, no unit | starts 0.1 and 4 | — |
-| $v$ | the rate of $x$, per time unit | starts at 0 | — |
-| $\mu$ | the strength of the push and the drag | 1 | slow crawls and quick jumps; a longer period |
-| $t$ | time, in model units of 0.12 s | 0 to 60 | — |
-| $r$ | distance of the state from the origin (polar model) | starts 0.1 and 2 | — |
-| $\theta$ | angle of the state, in radians (polar model) | grows by 1 per unit | — |
-| $r_0$ | the starting distance | 0.1 | earlier arrival near 1 from inside |
-| $a$ | a start on the positive $x$ axis, with $v$ = 0; $P(a)$ is where it lands after one lap | 2.0086 on the loop | — |
-| $T$ | the period: the time for one lap of the loop | 6.6633 units, 0.800 s | the beat slows |
-| $F$, $b$ | used only in the folded proof: $F(x) = \mu(x^3/3 - x)$, and $b$ a start on the upper y axis | — | — |
+| $`x`$ | the state's position: a scaled voltage, no unit | starts 0.1 and 4 | — |
+| $`v`$ | the rate of $`x`$, per time unit | starts at 0 | — |
+| $`\mu`$ | the strength of the push and the drag | 1 | slow crawls and quick jumps; a longer period |
+| $`t`$ | time, in model units of 0.12 s | 0 to 60 | — |
+| $`r`$ | distance of the state from the origin (polar model) | starts 0.1 and 2 | — |
+| $`\theta`$ | angle of the state, in radians (polar model) | grows by 1 per unit | — |
+| $`r_0`$ | the starting distance | 0.1 | earlier arrival near 1 from inside |
+| $`a`$ | a start on the positive $`x`$ axis, with $`v`$ = 0; $`P(a)`$ is where it lands after one lap | 2.0086 on the loop | — |
+| $`T`$ | the period: the time for one lap of the loop | 6.6633 units, 0.800 s | the beat slows |
+| $`F`$, $`b`$ | used only in the folded proof: $`F(x) = \mu(x^3/3 - x)`$, and $`b`$ a start on the upper y axis | — | — |
 
 Solved, the polar model gives the distance at every time:
 
-$$r(t) = \frac{1}{\sqrt{1 + \left(\frac{1}{r_0^{2}} - 1\right) e^{-2t}}}$$
+```math
+r(t) = \frac{1}{\sqrt{1 + \left(\frac{1}{r_0^{2}} - 1\right) e^{-2t}}}
+```
 
-The factor $e^{-2t}$ wipes out the start's offset.
+The factor $`e^{-2t}`$ wipes out the start's offset.
 
 ### When it holds
 
 - **Two dimensions, a law fixed in time.** Drive the circuit with an outside periodic push and it can turn chaotic.
 - **A smooth law.** Paths then never cross, so a path inside the loop stays inside. Without it, spiralling on is not guaranteed.
-- **Strength above zero.** At $\mu$ = 0 every circle is a loop and none attracts. Below zero the law is the same law run backwards in time, so the loop repels.
+- **Strength above zero.** At $`\mu`$ = 0 every circle is a loop and none attracts. Below zero the law is the same law run backwards in time, so the loop repels.
 - **Isolated.** Nested loops, as in a centre (a rest point ringed by closed loops), are not limit cycles, however closed each one is. A linear law never has one: scale a loop and you get another.
 
 ---
@@ -74,40 +80,40 @@ On a centre every nearby start runs its own loop, so a nudge moves the rhythm fo
 
 ### Step 1: the polar model has one distance that does not change
 
-The angle turns at rate 1 regardless. The distance law $r' = r(1 - r^2)$ is a phase line (one rate law read along one axis). Its rate is zero at $r$ = 0 and $r$ = 1, positive between, negative above. Every start but the origin moves toward $r$ = 1 from either side: the unit circle is a limit cycle.
+The angle turns at rate 1 regardless. The distance law $`r' = r(1 - r^2)`$ is a phase line (one rate law read along one axis). Its rate is zero at $`r`$ = 0 and $`r`$ = 1, positive between, negative above. Every start but the origin moves toward $`r`$ = 1 from either side: the unit circle is a limit cycle.
 
 ### Step 2: solving it shows how fast
 
-Put $u = 1/r^2$. The chain rule gives $u' = -2r'/r^3 = -2(1 - r^2)/r^2 = -2u + 2$. That is a linear law: $u - 1$ shrinks by the factor $e^{-2t}$. So $u = 1 + (u_0 - 1)e^{-2t}$, and $r = 1/\sqrt{u}$ is the formula above. The gap to the loop fades like $e^{-2t}$: after one lap of $2\pi$ time units it has shrunk by $e^{-4\pi}$, or 3.49e-06.
+Put $`u = 1/r^2`$. The chain rule gives $`u' = -2r'/r^3 = -2(1 - r^2)/r^2 = -2u + 2`$. That is a linear law: $`u - 1`$ shrinks by the factor $`e^{-2t}`$. So $`u = 1 + (u_0 - 1)e^{-2t}`$, and $`r = 1/\sqrt{u}`$ is the formula above. The gap to the loop fades like $`e^{-2t}`$: after one lap of $`2\pi`$ time units it has shrunk by $`e^{-4\pi}`$, or 3.49e-06.
 
 ### Step 3: van der Pol trades energy the same way
 
-Take the spring's energy $E = (x^2 + v^2)/2$. Along a path its rate is $xv + v(\mu(1 - x^2)v - x) = \mu(1 - x^2)v^2$. Where $x$ lies between −1 and 1 that rate is positive: energy flows in. Outside, it drains. Small motions gain each lap, large ones lose.
+Take the spring's energy $`E = (x^2 + v^2)/2`$. Along a path its rate is $`xv + v(\mu(1 - x^2)v - x) = \mu(1 - x^2)v^2`$. Where $`x`$ lies between −1 and 1 that rate is positive: energy flows in. Outside, it drains. Small motions gain each lap, large ones lose.
 
 Linearisation confirms the first half. At the origin the Jacobian (the table of the law's rates of change) has trace 1 and determinant 1.
 
-The trace is the sum of its diagonal entries; the determinant is the product of the diagonal entries minus the product of the other two. The eigenvalues, the growth and turning rates near the rest point, are then $(1 \pm \sqrt{1 - 4})/2$ = 0.500 ± 0.866i: a spiral outward ([Linearisation](02-linearisation-and-the-jacobian.md)).
+The trace is the sum of its diagonal entries; the determinant is the product of the diagonal entries minus the product of the other two. The eigenvalues, the growth and turning rates near the rest point, are then $`(1 \pm \sqrt{1 - 4})/2`$ = 0.500 ± 0.866i: a spiral outward ([Linearisation](02-linearisation-and-the-jacobian.md)).
 
 ### Step 4: one lap as a map
 
-Start on the positive $x$ axis at a point $a$ with $v$ = 0. Follow the path once round to its next crossing of that half-axis; call the landing point $P(a)$, the return map. A loop is a start that lands on itself, $P(a) = a$. Below the loop $P(a) > a$, above it $P(a) < a$, so bisection (repeated halving of an interval that holds the loop) on that sign finds the loop without waiting for anything to settle.
+Start on the positive $`x`$ axis at a point $`a`$ with $`v`$ = 0. Follow the path once round to its next crossing of that half-axis; call the landing point $`P(a)`$, the return map. A loop is a start that lands on itself, $`P(a) = a`$. Below the loop $`P(a) > a`$, above it $`P(a) < a`$, so bisection (repeated halving of an interval that holds the loop) on that sign finds the loop without waiting for anything to settle.
 
 ### Step 5: the pull per lap is an integral
 
-A small patch of starts changes area at a relative rate equal to the Jacobian's trace, here $\mu(1 - x^2)$. Over one lap, a patch on the loop keeps its width along the loop, since loop points return to themselves, so the whole area change lands on the width across it.
+A small patch of starts changes area at a relative rate equal to the Jacobian's trace, here $`\mu(1 - x^2)`$. Over one lap, a patch on the loop keeps its width along the loop, since loop points return to themselves, so the whole area change lands on the width across it.
 
-The return map's slope is the exponential of the trace integrated over a lap: 8.597e-04, a small gap cut to under a thousandth in one beat. The polar model gives $e^{-4\pi}$ again.
+The return map's slope is the exponential of the trace integrated over a lap: 8.597e-04, a small gap cut to under a thousandth in one beat. The polar model gives $`e^{-4\pi}`$ again.
 
 <details>
 <summary>Detailed proof: van der Pol has exactly one loop, and it attracts (Liénard's theorem)</summary>
 
-Write $F(x) = \mu(x^3/3 - x)$ and $y = v - \mu(x - x^3/3)$, so the law becomes $x' = y - F(x)$, $y' = -x$. Take $E = (x^2 + y^2)/2$; then $E' = -xF(x)$.
+Write $`F(x) = \mu(x^3/3 - x)`$ and $`y = v - \mu(x - x^3/3)`$, so the law becomes $`x' = y - F(x)`$, $`y' = -x`$. Take $`E = (x^2 + y^2)/2`$; then $`E' = -xF(x)`$.
 
-The law is unchanged by $(x, y) \to (-x, -y)$, so a path from $(0, b)$ on the upper y axis closes exactly when its energy change $\Delta(b)$, up to the lower y axis, is zero.
+The law is unchanged by $`(x, y) \to (-x, -y)`$, so a path from $`(0, b)`$ on the upper y axis closes exactly when its energy change $`\Delta(b)`$, up to the lower y axis, is zero.
 
-$F$ is negative for $x$ between 0 and $\sqrt{3}$ and positive beyond, so $-xF(x)$ is positive in the band and negative outside it. A half-lap inside the band gains energy: $\Delta(b) > 0$ for small $b$.
+$`F`$ is negative for $`x`$ between 0 and $`\sqrt{3}`$ and positive beyond, so $`-xF(x)`$ is positive in the band and negative outside it. A half-lap inside the band gains energy: $`\Delta(b) > 0`$ for small $`b`$.
 
-Once it leaves the band, splitting the path at $x = \sqrt{3}$ and comparing pieces shows $\Delta(b)$ strictly decreasing, to minus infinity. So $\Delta(b)$ has exactly one zero: one loop, with paths climbing out below it and falling in above it. Full estimates: Perko, section 3.8.
+Once it leaves the band, splitting the path at $`x = \sqrt{3}`$ and comparing pieces shows $`\Delta(b)`$ strictly decreasing, to minus infinity. So $`\Delta(b)`$ has exactly one zero: one loop, with paths climbing out below it and falling in above it. Full estimates: Perko, section 3.8.
 
 </details>
 
@@ -117,33 +123,33 @@ Another route to existence, with no formula at all, traps the path in a ring it 
 
 ## Worked numbers, by hand
 
-The polar model from $r_0$ = 0.1 at $t$ = 5, then the heart model.
+The polar model from $`r_0`$ = 0.1 at $`t`$ = 5, then the heart model.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | offset of the start | 1/0.1^2 − 1 | 99 |
-| decay by $t$ = 5 | e^(−2 × 5) | 4.540e-05 |
+| decay by $`t`$ = 5 | e^(−2 × 5) | 4.540e-05 |
 | offset left | 99 × 4.540e-05 | 0.004495 |
 | distance | 1 / √(1 + 0.004495) | **0.99776** |
-| from $r_0$ = 2 instead | the same four steps | **1.000017** |
+| from $`r_0`$ = 2 instead | the same four steps | **1.000017** |
 | rest point of van der Pol | trace 1, determinant 1 | 0.500 ± 0.866i, a source (paths leave it) |
 | the beat | 6.6633 × 0.12 s | **0.800 s**, 75.0 a minute |
 
-By $t$ = 5 both polar starts sit within a quarter of a percent of the unit circle, one from each side.
+By $`t`$ = 5 both polar starts sit within a quarter of a percent of the unit circle, one from each side.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Strength $\mu$ set to 0 | amplitudes stay 0.1000 and 4.0000 | A frictionless spring: every circle is a loop, none attracts |
-| Keeping only the linear law $v' = v - x$ | largest size 1363 by $t$ = 20, not 2 | Without the drag term the outward spiral never stops |
+| Strength $`\mu`$ set to 0 | amplitudes stay 0.1000 and 4.0000 | A frictionless spring: every circle is a loop, none attracts |
+| Keeping only the linear law $`v' = v - x`$ | largest size 1363 by $`t`$ = 20, not 2 | Without the drag term the outward spiral never stops |
 | Period taken as 2π = 6.2832 | 5.7% short, 79.6 beats a minute | The loop is not a circle; its speed varies round the lap |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both scripts step with Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). Road one steps the polar model in $x$ and $v$, $x' = x(1 - r^2) - v$, $v' = v(1 - r^2) + x$, and meets its closed form. Halving the step cuts the error by 16.2, the fourth-order rate. Road two settles van der Pol from both starts, finds the loop again by bisection on the return map, and measures the pull per lap by the map's slope and by the trace integral.
+Both scripts step with Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). Road one steps the polar model in $`x`$ and $`v`$, $`x' = x(1 - r^2) - v`$, $`v' = v(1 - r^2) + x`$, and meets its closed form. Halving the step cuts the error by 16.2, the fourth-order rate. Road two settles van der Pol from both starts, finds the loop again by bisection on the return map, and measures the pull per lap by the map's slope and by the trace integral.
 
 ### Python
 
@@ -340,10 +346,10 @@ The two outputs match line for line.
 Lean proves the polar model's pull onto the unit circle for every start but the origin, and van der Pol's energy rate exactly.
 
 - In the polar model, any path that starts at a distance above 0 tends to distance 1: the unit circle attracts it.
-- The formula for $r(t)$ starts at $r_0$, obeys $r' = r(1 - r^2)$ from time 0 on, and tends to 1.
-- Along any van der Pol path, the spring's energy $E = (x^2 + v^2)/2$ changes at rate $\mu(1 - x^2)v^2$, for every strength $\mu$.
-- The hand arithmetic holds exactly: the offset is 99 from $r_0$ = 0.1 and −3/4 from $r_0$ = 2.
-- At the rest point with $\mu$ = 1, the Jacobian has trace 1 and determinant 1, and 1 − 4 = −3 is negative: a spiral outward.
+- The formula for $`r(t)`$ starts at $`r_0`$, obeys $`r' = r(1 - r^2)`$ from time 0 on, and tends to 1.
+- Along any van der Pol path, the spring's energy $`E = (x^2 + v^2)/2`$ changes at rate $`\mu(1 - x^2)v^2`$, for every strength $`\mu`$.
+- The hand arithmetic holds exactly: the offset is 99 from $`r_0`$ = 0.1 and −3/4 from $`r_0`$ = 2.
+- At the rest point with $`\mu`$ = 1, the Jacobian has trace 1 and determinant 1, and 1 − 4 = −3 is negative: a spiral outward.
 
 Van der Pol's single loop, its peak 2.0086, its period 6.6633 and the pull per lap are left to the Python and Rust checks.
 
@@ -542,7 +548,7 @@ example : (1 : ℤ) ^ 2 - 4 * 1 = -3 ∧ (1 : ℚ) / 2 > 0 := by norm_num
 > [!warning]
 > **Calling every closed loop a limit cycle.** The loops of [Predator and prey](06-predator-prey.md) and a frictionless pendulum's swings are closed, but each has neighbours on loops of their own, so a nudge changes the rhythm for good. A limit cycle is isolated, and nudges die out.
 >
-> - **Trusting the rest point's spiral.** The linear law spirals out without end, 1363 by $t$ = 20; the drag far out stops the real one.
+> - **Trusting the rest point's spiral.** The linear law spirals out without end, 1363 by $`t`$ = 20; the drag far out stops the real one.
 > - **Using the spring's period.** 2π = 6.2832 undercounts the loop's 6.6633 by 5.7%, a heart rate of 79.6 instead of 75.0.
 > - **Trusting a picture.** A nearly settled path looks closed on a graph; the return map's fixed point, or a proof, decides.
 
@@ -555,7 +561,7 @@ example : (1 : ℤ) ^ 2 - 4 * 1 = -3 ∧ (1 : ℚ) / 2 > 0 := by norm_num
 - **Clocks.** An escapement tops up each swing, turning the damped pendulum of [LaSalle's principle](05-lasalle-and-the-damped-pendulum.md) into a limit cycle.
 
 > **Say it back**
-> A limit cycle is a closed loop that stands alone: nearby starts spiral onto it. It arises where a law pumps energy in near rest and drains it far out. The polar model shows this exactly, gaps fading like $e^{-2t}$. Van der Pol's heart model settles from 0.1 and from 4 onto one loop, peak 2.0086, period 6.6633. A return map finds the same loop, and each lap cuts a gap to under a thousandth.
+> A limit cycle is a closed loop that stands alone: nearby starts spiral onto it. It arises where a law pumps energy in near rest and drains it far out. The polar model shows this exactly, gaps fading like $`e^{-2t}`$. Van der Pol's heart model settles from 0.1 and from 4 onto one loop, peak 2.0086, period 6.6633. A return map finds the same loop, and each lap cuts a gap to under a thousandth.
 
 ---
 
@@ -568,7 +574,7 @@ example : (1 : ℤ) ^ 2 - 4 * 1 = -3 ∧ (1 : ℚ) / 2 > 0 := by norm_num
 ## Where this goes next
 
 - [Poincare-Bendixson](09-poincare-bendixson-and-bendixsons-criterion.md): when a trapped path must end on a loop, and when no loop can exist.
-- [Bifurcations](10-bifurcations-of-equilibria.md): how a loop is born from a rest point as a strength like $\mu$ crosses zero.
+- [Bifurcations](10-bifurcations-of-equilibria.md): how a loop is born from a rest point as a strength like $`\mu`$ crosses zero.
 
 This card found each loop by a formula or by Liénard's theorem. The question it leaves open: for a general law in the plane, how do you prove a loop exists, or that none can?
 

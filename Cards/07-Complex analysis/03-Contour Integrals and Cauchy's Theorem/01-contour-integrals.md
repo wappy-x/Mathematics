@@ -28,32 +28,38 @@ To scale: 80 units per 1, centre 0 at (180, 120). The runner at angle π/4 is at
 
 Notation first, in words. A path C is traced by a point z(t) as a real t runs from a to b, direction included. Its integral is a tall S with C beneath; on a closed loop the S carries a small circle, the loop integral sign, read "integral round C".
 
-$$\int_C f(z)\,dz = \int_a^b f\big(z(t)\big)\,z'(t)\,dt$$
+```math
+\int_C f(z)\,dz = \int_a^b f\big(z(t)\big)\,z'(t)\,dt
+```
 
 **Read it aloud:** integrate, over t, f at the moving point times the point's velocity.
 
-As a sum of strides, with footfalls $z_k$ and $N$ strides:
+As a sum of strides, with footfalls $`z_k`$ and $`N`$ strides:
 
-$$\int_C f(z)\,dz = \lim_{N\to\infty} \sum_{k=0}^{N-1} f(z_k)\,(z_{k+1}-z_k)$$
+```math
+\int_C f(z)\,dz = \lim_{N\to\infty} \sum_{k=0}^{N-1} f(z_k)\,(z_{k+1}-z_k)
+```
 
 **Read it aloud:** f at each footfall times the stride to the next, added up, as the strides shrink.
 
 The track's two facts:
 
-$$\oint_{|z|=1} z^n\,dz = \begin{cases} 2\pi i & n=-1\\ 0 & \text{every other whole number } n\end{cases} \qquad\qquad \left|\int_C f(z)\,dz\right| \le M L$$
+```math
+\oint_{|z|=1} z^n\,dz = \begin{cases} 2\pi i & n=-1\\ 0 & \text{every other whole number } n\end{cases} \qquad\qquad \left|\int_C f(z)\,dz\right| \le M L
+```
 
 **Read it aloud:** round the unit circle a whole power of z gives 2πi only for 1/z; along any path the integral's size is at most f's largest size there times the length: the ML bound.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$, $\oint$ | the directed path; the loop sign | one anticlockwise lap | two laps double it |
-| $t$, $a$, $b$ | the parameter, from a to b | angle, 0 to 2π | more track |
-| $z(t)$, $dz$ | the point at t; a stride, $z'(t)\,dt$ | e^(it); i e^(it) dt | — |
-| $f$, $\bar z$ | the function; the conjugate, "z-bar" | z̄, z, 1/z, e^z/z^2 | doubling f doubles it |
-| $z_k$, $N$, $k$ | footfalls; strides; their count | N = 8, 64, 512 | closer to the integral |
-| $n$, $R$ | a whole power; the radius | −1; 63.661977 m | — |
-| $M$, $L$ | largest size of f on C; length | e; 2π | a looser bound |
-| $i$, $\pi$, $e$ | square root of −1; half turn; 2.718282 | 2πi = 6.283185i | — |
+| $`C`$, $`\oint`$ | the directed path; the loop sign | one anticlockwise lap | two laps double it |
+| $`t`$, $`a`$, $`b`$ | the parameter, from a to b | angle, 0 to 2π | more track |
+| $`z(t)`$, $`dz`$ | the point at t; a stride, $`z'(t)\,dt`$ | e^(it); i e^(it) dt | — |
+| $`f`$, $`\bar z`$ | the function; the conjugate, "z-bar" | z̄, z, 1/z, e^z/z^2 | doubling f doubles it |
+| $`z_k`$, $`N`$, $`k`$ | footfalls; strides; their count | N = 8, 64, 512 | closer to the integral |
+| $`n`$, $`R`$ | a whole power; the radius | −1; 63.661977 m | — |
+| $`M`$, $`L`$ | largest size of f on C; length | e; 2π | a looser bound |
+| $`i`$, $`\pi`$, $`e`$ | square root of −1; half turn; 2.718282 | 2πi = 6.283185i | — |
 
 ### When it holds
 
@@ -69,7 +75,7 @@ $$\oint_{|z|=1} z^n\,dz = \begin{cases} 2\pi i & n=-1\\ 0 & \text{every other wh
 
 ### Step 0: a stride is velocity times a small time
 
-From t to t + Δt the runner moves z(t + Δt) − z(t), close to $z'(t)\,\Delta t$ for small Δt. So each term f(footfall) × stride is close to f(z(t)) z'(t) Δt, and the sum of strides is a Riemann sum for an ordinary integral over t. Writing f = u + iv and dz = dx + i dy, its real and imaginary parts are (u dx − v dy) and (v dx + u dy): two real line integrals ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). By the chain rule, a change of speed changes z'(t) and dt in opposite ways, so the integral belongs to the path, not the stopwatch.
+From t to t + Δt the runner moves z(t + Δt) − z(t), close to $`z'(t)\,\Delta t`$ for small Δt. So each term f(footfall) × stride is close to f(z(t)) z'(t) Δt, and the sum of strides is a Riemann sum for an ordinary integral over t. Writing f = u + iv and dz = dx + i dy, its real and imaginary parts are (u dx − v dy) and (v dx + u dy): two real line integrals ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). By the chain rule, a change of speed changes z'(t) and dt in opposite ways, so the integral belongs to the path, not the stopwatch.
 
 ### Step 1: the track's velocity is a quarter turn of its position
 
@@ -77,9 +83,11 @@ On the track z(t) = e^(it) = cos t + i sin t, so z'(t) = −sin t + i cos t, whi
 
 ### Step 2: whole powers round the track
 
-Put z = e^(it) and dz = i e^(it) dt into $z^n$:
+Put z = e^(it) and dz = i e^(it) dt into $`z^n`$:
 
-$$\oint_{|z|=1} z^n\,dz = \int_0^{2\pi} e^{int}\, i e^{it}\,dt = i\int_0^{2\pi} e^{i(n+1)t}\,dt$$
+```math
+\oint_{|z|=1} z^n\,dz = \int_0^{2\pi} e^{int}\, i e^{it}\,dt = i\int_0^{2\pi} e^{i(n+1)t}\,dt
+```
 
 If n = −1 the integrand is 1, and the answer is 2πi. Otherwise it is cos((n + 1)t) + i sin((n + 1)t), whole waves with as much area above the axis as below: 0. For z itself, n = 1.
 
@@ -87,7 +95,7 @@ For 1/z the picture is plain: the stride iz dt times 1/z is i dt, every stride t
 
 ### Step 3: the conjugate on the track is 1/z
 
-On the track the modulus |z|, the distance from 0, is 1, and z times its conjugate is |z|^2 = 1, so z̄ = 1/z at every footfall and its lap gives 2πi too. Off the track the two differ: on the track in metres, radius R, the conjugate's lap is $2\pi i R^2$ = 25464.790895i, while 1/z still gives 2πi.
+On the track the modulus |z|, the distance from 0, is 1, and z times its conjugate is |z|^2 = 1, so z̄ = 1/z at every footfall and its lap gives 2πi too. Off the track the two differ: on the track in metres, radius R, the conjugate's lap is $`2\pi i R^2`$ = 25464.790895i, while 1/z still gives 2πi.
 
 <details>
 <summary>Why the conjugate measures area</summary>

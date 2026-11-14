@@ -43,29 +43,33 @@ Solid lines: the doctors' proposing result. Dotted: the hospitals'. Each of the 
 
 ## The formula
 
-Notation in words first. A **matching** is a set of doctor–hospital pairs with nobody in two pairs ([Matchings](01-matchings-and-augmenting-paths.md)); write it $M$, and $M(d)$ for doctor $d$'s hospital, $M(h)$ for hospital $h$'s doctor. Each ranking is a strict total order ([Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)): no ties. Write $h \succ_d h'$ for "doctor $d$ prefers hospital $h$ to hospital $h'$", and $\succeq$ for "prefers or is the same".
+Notation in words first. A **matching** is a set of doctor–hospital pairs with nobody in two pairs ([Matchings](01-matchings-and-augmenting-paths.md)); write it $`M`$, and $`M(d)`$ for doctor $`d`$'s hospital, $`M(h)`$ for hospital $`h`$'s doctor. Each ranking is a strict total order ([Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)): no ties. Write $`h \succ_d h'`$ for "doctor $`d`$ prefers hospital $`h`$ to hospital $`h'`$", and $`\succeq`$ for "prefers or is the same".
 
 A doctor and a hospital not paired together form a **blocking pair** when each prefers the other to the partner they have. A matching is **stable** when it has none:
 
-$$M \text{ is stable} \iff \text{no pair } (d, h) \text{ has } h \succ_d M(d) \text{ and } d \succ_h M(h)$$
+```math
+M \text{ is stable} \iff \text{no pair } (d, h) \text{ has } h \succ_d M(d) \text{ and } d \succ_h M(h)
+```
 
 **Read it aloud:** no doctor and hospital would both rather have each other than their partners.
 
-The theorem is about **deferred acceptance**, the propose-and-hold procedure. With $n$ doctors and $n$ hospitals, call its result $M_D$ with doctors proposing, $M_H$ with hospitals proposing.
+The theorem is about **deferred acceptance**, the propose-and-hold procedure. With $`n`$ doctors and $`n`$ hospitals, call its result $`M_D`$ with doctors proposing, $`M_H`$ with hospitals proposing.
 
-$$\text{proposals} \le n^2 - n + 1, \qquad M_D \text{ is stable}, \qquad M_D(d) \succeq_d M(d) \text{ and } M(h) \succeq_h M_D(h) \text{ for every stable } M$$
+```math
+\text{proposals} \le n^2 - n + 1, \qquad M_D \text{ is stable}, \qquad M_D(d) \succeq_d M(d) \text{ and } M(h) \succeq_h M_D(h) \text{ for every stable } M
+```
 
 **Read it aloud:** it stops within n squared minus n plus one proposals, its result is stable, and against any stable placement every doctor does at least as well, every hospital at least as badly.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many on each side | 3 | more proposals |
-| $d$, $h$ | one doctor, one hospital | Asha, Riverside | — |
-| $M$ | a matching: pairs sharing no doctor and no hospital | one of 3! = 3 × 2 × 1 = 6 | — |
-| $M(d)$, $M(h)$ | the partner $M$ gives $d$ or $h$ | Asha's is Riverside under $M_D$ | — |
-| $\succ_d$, $\succ_h$, $\succeq$ | "prefers", and "prefers or is the same", read off one ranking | Asha: Riverside over Southbank | — |
-| $(d, h)$ | a blocking pair: both prefer each other to their partners | Ben and Northgate, in 2 of the 6 placements | — |
-| $M_D$, $M_H$ | the doctors' and the hospitals' proposing results | solid and dotted lines in the picture | — |
+| $`n`$ | how many on each side | 3 | more proposals |
+| $`d`$, $`h`$ | one doctor, one hospital | Asha, Riverside | — |
+| $`M`$ | a matching: pairs sharing no doctor and no hospital | one of 3! = 3 × 2 × 1 = 6 | — |
+| $`M(d)`$, $`M(h)`$ | the partner $`M`$ gives $`d`$ or $`h`$ | Asha's is Riverside under $`M_D`$ | — |
+| $`\succ_d`$, $`\succ_h`$, $`\succeq`$ | "prefers", and "prefers or is the same", read off one ranking | Asha: Riverside over Southbank | — |
+| $`(d, h)`$ | a blocking pair: both prefer each other to their partners | Ben and Northgate, in 2 of the 6 placements | — |
+| $`M_D`$, $`M_H`$ | the doctors' and the hospitals' proposing results | solid and dotted lines in the picture | — |
 
 ### When it holds
 
@@ -87,13 +91,13 @@ A hospital keeps its best offer so far and turns the rest away, but may drop the
 
 No doctor asks the same hospital twice: at most 3 × 3 = 9 proposals.
 
-Sharper: once asked, a hospital holds someone for good. A doctor reaching her last choice was turned away by the other $n - 1$ hospitals, which therefore hold the other $n - 1$ doctors, so the procedure ends when she is held. So only one doctor ever reaches her last choice. The others make at most $n - 1$ proposals each and she makes $n$: at most $(n - 1)^2 + n = n^2 - n + 1$, which is 7 here.
+Sharper: once asked, a hospital holds someone for good. A doctor reaching her last choice was turned away by the other $`n - 1`$ hospitals, which therefore hold the other $`n - 1`$ doctors, so the procedure ends when she is held. So only one doctor ever reaches her last choice. The others make at most $`n - 1`$ proposals each and she makes $`n`$: at most $`(n - 1)^2 + n = n^2 - n + 1`$, which is 7 here.
 
 Across all 46656 ways six people could rank each other, the code finds 7 reached, never passed.
 
 ### Step 2: everyone is placed
 
-A doctor turned away by all $n$ hospitals would need them all holding other doctors, and there are only $n - 1$ others.
+A doctor turned away by all $`n`$ hospitals would need them all holding other doctors, and there are only $`n - 1`$ others.
 
 ### Step 3: the result is stable
 
@@ -108,19 +112,19 @@ Call a hospital **achievable** for a doctor when some stable placement pairs the
 
 **Claim.** With doctors proposing, no doctor is rejected by a hospital achievable for her.
 
-Take the first rejection, in time, of a doctor $d$ by a hospital $h$ achievable for her, through a stable $M$ with $M(d) = h$. Then $h$ keeps some $d'$ with $d' \succ_h d$. Let $h' = M(d')$, so $h' \ne h$. Having reached $h$, $d'$ was rejected by every hospital he ranks above $h$. If $h' \succ_{d'} h$, that includes $h'$, achievable for him through $M$: an earlier rejection of the same kind, impossible. So $h \succ_{d'} M(d')$, and with $d' \succ_h M(h)$ the pair $(d', h)$ blocks $M$. Contradiction.
+Take the first rejection, in time, of a doctor $`d`$ by a hospital $`h`$ achievable for her, through a stable $`M`$ with $`M(d) = h`$. Then $`h`$ keeps some $`d'`$ with $`d' \succ_h d`$. Let $`h' = M(d')`$, so $`h' \ne h`$. Having reached $`h`$, $`d'`$ was rejected by every hospital he ranks above $`h`$. If $`h' \succ_{d'} h`$, that includes $`h'`$, achievable for him through $`M`$: an earlier rejection of the same kind, impossible. So $`h \succ_{d'} M(d')`$, and with $`d' \succ_h M(h)`$ the pair $`(d', h)`$ blocks $`M`$. Contradiction.
 
-**Doctors get their best.** Working down her list, never rejected by an achievable hospital, each doctor ends at her best achievable one: $M_D(d) \succeq_d M(d)$ for every stable $M$.
+**Doctors get their best.** Working down her list, never rejected by an achievable hospital, each doctor ends at her best achievable one: $`M_D(d) \succeq_d M(d)`$ for every stable $`M`$.
 
-**Hospitals get their worst.** If $M_D(h) \succ_h M(h)$ for a stable $M$, put $d = M_D(h)$. Then $M(d) \ne h$, so $h \succ_d M(d)$ by the line above, and $(d, h)$ blocks $M$. So $M(h) \succeq_h M_D(h)$.
+**Hospitals get their worst.** If $`M_D(h) \succ_h M(h)`$ for a stable $`M`$, put $`d = M_D(h)`$. Then $`M(d) \ne h`$, so $`h \succ_d M(d)`$ by the line above, and $`(d, h)`$ blocks $`M`$. So $`M(h) \succeq_h M_D(h)`$.
 
-**Order does not matter.** Nothing used the order of proposals, so rounds or one at a time give the same $M_D$.
+**Order does not matter.** Nothing used the order of proposals, so rounds or one at a time give the same $`M_D`$.
 
 </details>
 
 ### Step 5: the other side gets its worst
 
-If a stable placement gave some hospital a doctor it likes less than its $M_D$ partner, that partner, who by Step 4 likes the hospital more than any stable alternative, would block it.
+If a stable placement gave some hospital a doctor it likes less than its $`M_D`$ partner, that partner, who by Step 4 likes the hospital more than any stable alternative, would block it.
 
 Swap the roles: every hospital asks a different doctor, nobody is turned away, and it stops in one round. Each hospital has its first choice; by Steps 4 and 5 with the sides swapped, each doctor sits at her worst stable partner, here her last choice.
 
@@ -136,9 +140,9 @@ A second road needs no procedure: list all 3! = 6 placements and test the 3 × 3
 | round 2 | Asha asks Riverside, which ranks her above Carys | Carys turned away |
 | round 3 | Carys asks Southbank, which holds nobody | nobody turned away |
 | proposals | 3 + 1 + 1 | **5**, within the ceiling 7 |
-| doctors' ranks under $M_D$ | Asha 2nd, Ben 1st, Carys 2nd | hospitals each get their 2nd |
+| doctors' ranks under $`M_D`$ | Asha 2nd, Ben 1st, Carys 2nd | hospitals each get their 2nd |
 | hospitals proposing | three different first choices | **1 round, 3 proposals** |
-| ranks under $M_H$ | doctors 3rd, 3rd, 3rd | hospitals 1st, 1st, 1st |
+| ranks under $`M_H`$ | doctors 3rd, 3rd, 3rd | hospitals 1st, 1st, 1st |
 | every placement listed | 3! = 6, each tested pair by pair | **2 stable** |
 
 Which side proposes decides whether doctors get second choices or last ones.
@@ -149,7 +153,7 @@ Which side proposes decides whether doctors get second choices or last ones.
 | --- | --- | --- |
 | Accepting the first offer for good | Asha–Southbank, Ben–Northgate, Carys–Riverside; blocked by Asha and Riverside | Riverside locked in Carys before Asha asked |
 | Maximising doctors' total happiness | rank sum 4: Asha–Northgate, Ben–Southbank, Carys–Riverside; blocked by Ben and Northgate | Ben and Northgate both prefer each other |
-| Reading any unmet wish as instability | 2 doctors short of first choice under $M_D$, 0 blocking pairs | A wish counts only if returned |
+| Reading any unmet wish as instability | 2 doctors short of first choice under $`M_D`$, 0 blocking pairs | A wish counts only if returned |
 
 The code prints all three.
 
@@ -690,7 +694,7 @@ end StableMatching
 >
 > - **Committing instead of holding.** Mistake 1's placement is blocked by Asha and Riverside.
 > - **Maximising total happiness.** The lowest doctor rank total, 4, is blocked by Ben and Northgate.
-> - **Unmet wishes read as blocking.** Under $M_D$, 2 doctors miss their first choice and 0 pairs block.
+> - **Unmet wishes read as blocking.** Under $`M_D`$, 2 doctors miss their first choice and 0 pairs block.
 
 ---
 

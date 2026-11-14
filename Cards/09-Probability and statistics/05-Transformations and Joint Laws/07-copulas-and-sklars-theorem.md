@@ -37,55 +37,65 @@ Top line, orange: the Clayton copula, flat near 70.71% however rare the day. Mid
 
 ## The formula
 
-Notation first, in words. For market A, $F(x)$ is the chance that A's return is at or below $x$: its cumulative distribution. It is also $x$'s **percentile rank** in A, the share of days at or below it. For B the same thing is written $G(y)$. The joint version, the chance that both happen, is written $H(x, y)$. Reminder: $\Phi$ is the standard normal's cumulative area and $\Phi^{-1}$ its quantile, the cutoff with a given area to its left.
+Notation first, in words. For market A, $`F(x)`$ is the chance that A's return is at or below $`x`$: its cumulative distribution. It is also $`x`$'s **percentile rank** in A, the share of days at or below it. For B the same thing is written $`G(y)`$. The joint version, the chance that both happen, is written $`H(x, y)`$. Reminder: $`\Phi`$ is the standard normal's cumulative area and $`\Phi^{-1}`$ its quantile, the cutoff with a given area to its left.
 
 Sklar's theorem:
 
-$$H(x, y) = C\big(F(x),\, G(y)\big)$$
+```math
+H(x, y) = C\big(F(x),\, G(y)\big)
+```
 
 **Read it aloud:** the chance that A ends at or below x and B at or below y equals a fixed function, the copula, applied to the two markets' own percentile ranks of x and y.
 
-The copula works on percentile ranks $u$ and $v$, numbers between 0 and 1. Read the other way, it is the joint law with the margins peeled off, where $F^{-1}(u)$ is A's return with rank $u$:
+The copula works on percentile ranks $`u`$ and $`v`$, numbers between 0 and 1. Read the other way, it is the joint law with the margins peeled off, where $`F^{-1}(u)`$ is A's return with rank $`u`$:
 
-$$C(u, v) = H\big(F^{-1}(u),\, G^{-1}(v)\big)$$
+```math
+C(u, v) = H\big(F^{-1}(u),\, G^{-1}(v)\big)
+```
 
 The two copulas on this card:
 
-$$C^{\text{Gauss}}_{\rho}(u, v) = P\big(Z_1 \le \Phi^{-1}(u),\ Z_2 \le \Phi^{-1}(v)\big), \qquad C^{\text{Clayton}}_{\theta}(u, v) = \left(u^{-\theta} + v^{-\theta} - 1\right)^{-1/\theta}$$
+```math
+C^{\text{Gauss}}_{\rho}(u, v) = P\big(Z_1 \le \Phi^{-1}(u),\ Z_2 \le \Phi^{-1}(v)\big), \qquad C^{\text{Clayton}}_{\theta}(u, v) = \left(u^{-\theta} + v^{-\theta} - 1\right)^{-1/\theta}
+```
 
-Here $Z_1$ and $Z_2$ are standard normal scores with correlation $\rho$. In words: the Gaussian copula is whatever joining a pair of bell curves with correlation $\rho$ produces, stripped of the bell shape; the Clayton copula is one closed formula with one dial, $\theta$.
+Here $`Z_1`$ and $`Z_2`$ are standard normal scores with correlation $`\rho`$. In words: the Gaussian copula is whatever joining a pair of bell curves with correlation $`\rho`$ produces, stripped of the bell shape; the Clayton copula is one closed formula with one dial, $`\theta`$.
 
 The measure of extreme clustering, the **lower tail dependence**:
 
-$$\lambda_L = \lim_{p \to 0} \frac{C(p, p)}{p} = \lim_{p \to 0} P\big(V \le p \mid U \le p\big)$$
+```math
+\lambda_L = \lim_{p \to 0} \frac{C(p, p)}{p} = \lim_{p \to 0} P\big(V \le p \mid U \le p\big)
+```
 
-Here $U$ and $V$ are A's and B's percentile ranks on a random day. In words: given A has its worst day in 1/p, the chance B does too, in the limit of ever rarer days.
+Here $`U`$ and $`V`$ are A's and B's percentile ranks on a random day. In words: given A has its worst day in 1/p, the chance B does too, in the limit of ever rarer days.
 
 The rank agreement both models share is **Kendall's tau**: pick two days at random; score +1 if the same day was the higher one in both markets, −1 if not; average over all pairs. Each copula ties tau to its dial:
 
-$$\tau = \tfrac{2}{\pi}\arcsin\rho \ \ \text{(Gaussian)}, \qquad \tau = \frac{\theta}{\theta + 2} \ \ \text{(Clayton)}$$
+```math
+\tau = \tfrac{2}{\pi}\arcsin\rho \ \ \text{(Gaussian)}, \qquad \tau = \frac{\theta}{\theta + 2} \ \ \text{(Clayton)}
+```
 
-With $\tau = 0.5$: $\rho = \sin(\pi/4) = 0.7071$ and $\theta = 2$.
+With $`\tau = 0.5`$: $`\rho = \sin(\pi/4) = 0.7071`$ and $`\theta = 2`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $Y$ | the two markets' daily returns, in percent | spreads 1.0% and 1.5% | spreads rescale the cutoffs, never the copula |
-| $F$, $G$ | each market's own cumulative distribution (its margin); $F^{-1}$ turns a rank back into a return | $F$(−2%) = 0.022750 | — |
-| $H$ | the joint cumulative distribution | $H$(−2%, −2.4%) = 0.021016 under Clayton | — |
-| $C$ | the copula: the joint law of the two percentile ranks | $C$(0.01, 0.01) = 0.007071 under Clayton | more joint crashes |
-| $u$, $v$, $U$, $V$, $r$, $n$ | percentile ranks between 0 and 1; $U = F(X)$ and $V = G(Y)$ are the random ones; rank $r$ among $n$ days sits at $r/(n+1)$ | 0.01, the worst day in 100 | — |
-| $p$ | how rare the day being asked about is | 0.01 | the conditional chance rises toward 1 |
-| $\Phi$, $\Phi^{-1}$, $\varphi$ | the standard normal's area to the left, its reverse, and the bell's height | $\Phi^{-1}$(0.01) = −2.326 | — |
-| $\rho$, $Z_1$, $Z_2$ | correlation of two standard normal scores; the Gaussian copula's dial | 0.7071 | more joint crashes, still zero in the limit |
-| $\theta$ | the Clayton copula's dial | 2 | stronger crash clustering, $\lambda_L = 2^{-1/\theta}$ rises |
-| $\tau$, $D_1$, $D_2$, $D_3$ | Kendall's tau: agreeing pairs of days minus disagreeing, as a share; the three differences in its proof | 0.5 | both dials rise |
-| $\lambda_L$ | lower tail dependence: joint-crash chance in the rare-day limit | Gaussian 0, Clayton 0.7071 | — |
-| $W$, $E_1$, $E_2$ | a shared calm level (gamma law) and two private shocks (exponential law) that build Clayton | $W = Z^2/2$ when $\theta = 2$ | — |
-| $a$, $t$, $c$, $S$, $s$ | letters local to two proofs: the cutoff $a = \Phi^{-1}(p)$ in standard units and its size $t = -a$; the spread ratio $c$ and the rescaled average $S$ of the two scores (Gaussian limit); the input $s$ of the gamma law's average (Step 4) | $a$ = −2.326 at the worst day in 100 | — |
+| $`X`$, $`Y`$ | the two markets' daily returns, in percent | spreads 1.0% and 1.5% | spreads rescale the cutoffs, never the copula |
+| $`F`$, $`G`$ | each market's own cumulative distribution (its margin); $`F^{-1}`$ turns a rank back into a return | $`F`$(−2%) = 0.022750 | — |
+| $`H`$ | the joint cumulative distribution | $`H`$(−2%, −2.4%) = 0.021016 under Clayton | — |
+| $`C`$ | the copula: the joint law of the two percentile ranks | $`C`$(0.01, 0.01) = 0.007071 under Clayton | more joint crashes |
+| $`u`$, $`v`$, $`U`$, $`V`$, $`r`$, $`n`$ | percentile ranks between 0 and 1; $`U = F(X)`$ and $`V = G(Y)`$ are the random ones; rank $`r`$ among $`n`$ days sits at $`r/(n+1)`$ | 0.01, the worst day in 100 | — |
+| $`p`$ | how rare the day being asked about is | 0.01 | the conditional chance rises toward 1 |
+| $`\Phi`$, $`\Phi^{-1}`$, $`\varphi`$ | the standard normal's area to the left, its reverse, and the bell's height | $`\Phi^{-1}`$(0.01) = −2.326 | — |
+| $`\rho`$, $`Z_1`$, $`Z_2`$ | correlation of two standard normal scores; the Gaussian copula's dial | 0.7071 | more joint crashes, still zero in the limit |
+| $`\theta`$ | the Clayton copula's dial | 2 | stronger crash clustering, $`\lambda_L = 2^{-1/\theta}`$ rises |
+| $`\tau`$, $`D_1`$, $`D_2`$, $`D_3`$ | Kendall's tau: agreeing pairs of days minus disagreeing, as a share; the three differences in its proof | 0.5 | both dials rise |
+| $`\lambda_L`$ | lower tail dependence: joint-crash chance in the rare-day limit | Gaussian 0, Clayton 0.7071 | — |
+| $`W`$, $`E_1`$, $`E_2`$ | a shared calm level (gamma law) and two private shocks (exponential law) that build Clayton | $`W = Z^2/2`$ when $`\theta = 2`$ | — |
+| $`a`$, $`t`$, $`c`$, $`S`$, $`s`$ | letters local to two proofs: the cutoff $`a = \Phi^{-1}(p)`$ in standard units and its size $`t = -a`$; the spread ratio $`c`$ and the rescaled average $`S`$ of the two scores (Gaussian limit); the input $`s`$ of the gamma law's average (Step 4) | $`a`$ = −2.326 at the worst day in 100 | — |
 
 ### When it holds
 
-- **Continuous margins.** Then the copula is unique. For a coin toss, $F(X)$ takes only the values 0.5 and 1, is not uniform, and many copulas fit the same law (What breaks, last row).
+- **Continuous margins.** Then the copula is unique. For a coin toss, $`F(X)`$ takes only the values 0.5 and 1, is not uniform, and many copulas fit the same law (What breaks, last row).
 - **Any joint law has a copula.** Existence needs no assumption; only uniqueness needs continuity.
 - **Increasing transformations only.** A copula survives any increasing change to one variable, such as quoting returns in basis points (hundredths of a percent) or cubing them. A decreasing change, such as switching both markets from returns to losses, flips the copula: lower tail becomes upper tail.
 - **Tail dependence is a limit.** It describes ever rarer days. At any fixed rarity even the Gaussian gives a positive joint chance, 0.002735 at the worst day in 100.
@@ -99,36 +109,40 @@ With $\tau = 0.5$: $\rho = \sin(\pi/4) = 0.7071$ and $\theta = 2$.
 
 Replace each day's return by its percentile rank in its own market: the share of days that came out lower. A's worst day in 100 gets rank 0.01. By the definition of a percentile, ranks at or below 0.01 happen on 1% of days, ranks at or below 0.5 on half of them. Every rank is equally common. The rank has the **uniform law** on 0 to 1, whatever shape the returns had.
 
-In symbols, for a continuous and increasing $F$, with $U = F(X)$:
+In symbols, for a continuous and increasing $`F`$, with $`U = F(X)`$:
 
-$$P(U \le u) = P\big(X \le F^{-1}(u)\big) = F\big(F^{-1}(u)\big) = u$$
+```math
+P(U \le u) = P\big(X \le F^{-1}(u)\big) = F\big(F^{-1}(u)\big) = u
+```
 
-That is the probability integral transform: the cumulative-distribution route of [Transforming a variable](01-transforming-a-random-variable.md), applied with $F$ itself as the function. Run backwards, it is how simulations draw from any law ([Inverse transform](../11-Simulation/02-inverse-transform-sampling.md)). Both markets become uniform. Whatever joint behaviour remains is pure dependence.
+That is the probability integral transform: the cumulative-distribution route of [Transforming a variable](01-transforming-a-random-variable.md), applied with $`F`$ itself as the function. Run backwards, it is how simulations draw from any law ([Inverse transform](../11-Simulation/02-inverse-transform-sampling.md)). Both markets become uniform. Whatever joint behaviour remains is pure dependence.
 
 ### Step 1: the joint law of the ranks is the copula
 
-Define $C$ as the joint cumulative distribution of the two ranks: $C(u, v) = P(U \le u, V \le v)$. Its margins are uniform, by Step 0. Now compute the original joint law. Because $F$ is increasing, "A's return at or below $x$" is the same event as "A's rank at or below $F(x)$". Same for B. So
+Define $`C`$ as the joint cumulative distribution of the two ranks: $`C(u, v) = P(U \le u, V \le v)`$. Its margins are uniform, by Step 0. Now compute the original joint law. Because $`F`$ is increasing, "A's return at or below $`x`$" is the same event as "A's rank at or below $`F(x)`$". Same for B. So
 
-$$H(x, y) = P\big(X \le x,\ Y \le y\big) = P\big(U \le F(x),\ V \le G(y)\big) = C\big(F(x),\, G(y)\big)$$
+```math
+H(x, y) = P\big(X \le x,\ Y \le y\big) = P\big(U \le F(x),\ V \le G(y)\big) = C\big(F(x),\, G(y)\big)
+```
 
-That is Sklar's formula. Uniqueness: as $x$ runs over all returns, $F(x)$ runs over every number between 0 and 1, so $H$ fixes $C$ at every point.
+That is Sklar's formula. Uniqueness: as $`x`$ runs over all returns, $`F(x)`$ runs over every number between 0 and 1, so $`H`$ fixes $`C`$ at every point.
 
-Check it on the example. Under Clayton with $\theta = 2$, $F$(−2%) = $\Phi$(−2) = 0.022750 and $G$(−2.4%) = $\Phi$(−1.6) = 0.054799. The formula gives $H$ = 0.021016. In 4,000 simulated days, both fell that far on 89 days: 0.022250, with standard error 0.002268. The formula sits within one standard error.
+Check it on the example. Under Clayton with $`\theta = 2`$, $`F`$(−2%) = $`\Phi`$(−2) = 0.022750 and $`G`$(−2.4%) = $`\Phi`$(−1.6) = 0.054799. The formula gives $`H`$ = 0.021016. In 4,000 simulated days, both fell that far on 89 days: 0.022250, with standard error 0.002268. The formula sits within one standard error.
 
 <details>
 <summary>Detailed proof: Sklar's theorem, both directions</summary>
 
-**Existence and uniqueness, continuous margins.** Let $F$ and $G$ be continuous. Set $U = F(X)$, $V = G(Y)$. For every $u$ in (0, 1) there is an $x$ with $F(x) = u$, because a continuous cumulative distribution climbs from 0 to 1 without jumps. Where $F$ is flat, $X$ falls with chance 0, so $X \le x$ and $F(X) \le F(x)$ differ only on an event of chance 0. Hence $P(U \le u) = u$, and $H(x, y) = P(U \le F(x), V \le G(y))$. Call that joint law $C$. Any other $C'$ with $H(x, y) = C'(F(x), G(y))$ agrees with $C$ at every $(F(x), G(y))$, which is every point of the square. So $C' = C$.
+**Existence and uniqueness, continuous margins.** Let $`F`$ and $`G`$ be continuous. Set $`U = F(X)`$, $`V = G(Y)`$. For every $`u`$ in (0, 1) there is an $`x`$ with $`F(x) = u`$, because a continuous cumulative distribution climbs from 0 to 1 without jumps. Where $`F`$ is flat, $`X`$ falls with chance 0, so $`X \le x`$ and $`F(X) \le F(x)`$ differ only on an event of chance 0. Hence $`P(U \le u) = u`$, and $`H(x, y) = P(U \le F(x), V \le G(y))`$. Call that joint law $`C`$. Any other $`C'`$ with $`H(x, y) = C'(F(x), G(y))`$ agrees with $`C`$ at every $`(F(x), G(y))`$, which is every point of the square. So $`C' = C`$.
 
-**Converse.** Take any copula $C$ (a joint law with uniform margins) and any margins $F$, $G$. Draw $(U, V)$ from $C$ and set $X = F^{-1}(U)$, $Y = G^{-1}(V)$, with $F^{-1}(u)$ the smallest $x$ where $F(x) \ge u$. Then $X \le x$ exactly when $U \le F(x)$, so $P(X \le x, Y \le y) = C(F(x), G(y))$, and letting y grow without bound shows $X$ has law $F$. The result is a joint law with margins $F$ and $G$ and copula $C$.
+**Converse.** Take any copula $`C`$ (a joint law with uniform margins) and any margins $`F`$, $`G`$. Draw $`(U, V)`$ from $`C`$ and set $`X = F^{-1}(U)`$, $`Y = G^{-1}(V)`$, with $`F^{-1}(u)`$ the smallest $`x`$ where $`F(x) \ge u`$. Then $`X \le x`$ exactly when $`U \le F(x)`$, so $`P(X \le x, Y \le y) = C(F(x), G(y))`$, and letting y grow without bound shows $`X`$ has law $`F`$. The result is a joint law with margins $`F`$ and $`G`$ and copula $`C`$.
 
-**Discrete margins.** Existence still holds (Nelsen, section 2.3, fills the gaps between the values $F$ takes). Uniqueness fails: $C$ is pinned only on the grid of values $F$ and $G$ actually take.
+**Discrete margins.** Existence still holds (Nelsen, section 2.3, fills the gaps between the values $`F`$ takes). Uniqueness fails: $`C`$ is pinned only on the grid of values $`F`$ and $`G`$ actually take.
 
 </details>
 
 ### Step 2: mix and match
 
-The converse in the fold above is how the code builds its markets. Draw two ranks from any copula. Push A's through $\Phi^{-1}$ times 1.0% and B's through $\Phi^{-1}$ times 1.5%. Out come the bell curves of the opening, joined by the chosen copula.
+The converse in the fold above is how the code builds its markets. Draw two ranks from any copula. Push A's through $`\Phi^{-1}`$ times 1.0% and B's through $`\Phi^{-1}`$ times 1.5%. Out come the bell curves of the opening, joined by the chosen copula.
 
 With the Gaussian copula and bell-curve margins, the result is the bivariate normal ([Bivariate normal](05-bivariate-normal-and-conditioning.md)). With the Clayton copula and the same margins, the result is a joint law that is not normal at all, though each market alone is. A joint law is not fixed by its margins and a correlation number.
 
@@ -136,54 +150,66 @@ With the Gaussian copula and bell-curve margins, the result is the bivariate nor
 
 An increasing change to a variable leaves its ranks alone. Quote A in basis points instead of percent, or cube every return: the order of the days is unchanged. So any statistic built from ranks, Kendall's tau included, depends on the copula and on nothing else.
 
-That gives a way to build the Gaussian copula from data without trusting the margins. Rank each market's days. Then fit $\rho$ by one of two roads:
+That gives a way to build the Gaussian copula from data without trusting the margins. Rank each market's days. Then fit $`\rho`$ by one of two roads:
 
-- **Through tau.** Compute Kendall's tau from the ranks and invert $\tau = \tfrac{2}{\pi}\arcsin\rho$ to get $\rho = \sin(\pi\tau/2)$.
-- **Through normal scores.** Turn rank $r$ of $n$ days into the score $\Phi^{-1}(r/(n+1))$, and take the correlation of the two markets' scores.
+- **Through tau.** Compute Kendall's tau from the ranks and invert $`\tau = \tfrac{2}{\pi}\arcsin\rho`$ to get $`\rho = \sin(\pi\tau/2)`$.
+- **Through normal scores.** Turn rank $`r`$ of $`n`$ days into the score $`\Phi^{-1}(r/(n+1))`$, and take the correlation of the two markets' scores.
 
-In 4,000 simulated days from the Clayton world, tau from the ranks is 0.4909, giving $\rho$ = 0.6969. The normal-score road gives 0.6757. They differ because the data were not made by a Gaussian copula; each road fits the closest Gaussian a different way.
+In 4,000 simulated days from the Clayton world, tau from the ranks is 0.4909, giving $`\rho`$ = 0.6969. The normal-score road gives 0.6757. They differ because the data were not made by a Gaussian copula; each road fits the closest Gaussian a different way.
 
 <details>
 <summary>Detailed proof: tau for the Gaussian copula</summary>
 
-Take two independent days. The differences $D_1$ of A's scores and $D_2$ of B's scores are again a pair of bell curves with correlation $\rho$. The days agree when $D_1$ and $D_2$ have the same sign. Rescale both to spread 1 and write $D_2 = \rho D_1 + \sqrt{1-\rho^2}\,D_3$ with $D_3$ an independent standard normal. The pair $(D_1, D_3)$ has a circular density, so its angle is uniform on the full turn. $D_1 > 0$ is a half-turn of angles; $D_2 > 0$ is another half-turn, rotated by the angle whose cosine is $\rho$. The two overlap in a wedge of $\pi - \arccos\rho = \pi/2 + \arcsin\rho$. So
-$$P(D_1 > 0, D_2 > 0) = \frac{\pi/2 + \arcsin\rho}{2\pi} = \frac14 + \frac{\arcsin\rho}{2\pi}.$$
-Both negative has the same chance, so agreement has chance $\tfrac12 + \arcsin\rho/\pi$, disagreement $\tfrac12 - \arcsin\rho/\pi$, and tau, their difference, is $\tfrac{2}{\pi}\arcsin\rho$. For Clayton, a direct integral gives $\theta/(\theta+2)$ (Nelsen, section 5.1); the code meets it on data at 0.4909 against 0.5.
+Take two independent days. The differences $`D_1`$ of A's scores and $`D_2`$ of B's scores are again a pair of bell curves with correlation $`\rho`$. The days agree when $`D_1`$ and $`D_2`$ have the same sign. Rescale both to spread 1 and write $`D_2 = \rho D_1 + \sqrt{1-\rho^2}\,D_3`$ with $`D_3`$ an independent standard normal. The pair $`(D_1, D_3)`$ has a circular density, so its angle is uniform on the full turn. $`D_1 > 0`$ is a half-turn of angles; $`D_2 > 0`$ is another half-turn, rotated by the angle whose cosine is $`\rho`$. The two overlap in a wedge of $`\pi - \arccos\rho = \pi/2 + \arcsin\rho`$. So
+
+$`\displaystyle P(D_1 > 0, D_2 > 0) = \frac{\pi/2 + \arcsin\rho}{2\pi} = \frac14 + \frac{\arcsin\rho}{2\pi}.`$
+
+Both negative has the same chance, so agreement has chance $`\tfrac12 + \arcsin\rho/\pi`$, disagreement $`\tfrac12 - \arcsin\rho/\pi`$, and tau, their difference, is $`\tfrac{2}{\pi}\arcsin\rho`$. For Clayton, a direct integral gives $`\theta/(\theta+2)`$ (Nelsen, section 5.1); the code meets it on data at 0.4909 against 0.5.
 
 </details>
 
 ### Step 4: the Clayton copula from a shared calm level
 
-Where does a formula like $(u^{-\theta} + v^{-\theta} - 1)^{-1/\theta}$ come from? From one shared cause. Let $W$ be a calm level common to both markets, drawn from the gamma law with shape $1/\theta$ ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). Give each market a private shock, $E_1$ and $E_2$, independent exponential waits with average 1. Set each rank to
+Where does a formula like $`(u^{-\theta} + v^{-\theta} - 1)^{-1/\theta}`$ come from? From one shared cause. Let $`W`$ be a calm level common to both markets, drawn from the gamma law with shape $`1/\theta`$ ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). Give each market a private shock, $`E_1`$ and $`E_2`$, independent exponential waits with average 1. Set each rank to
 
-$$U = \left(1 + E_1/W\right)^{-1/\theta}, \qquad V = \left(1 + E_2/W\right)^{-1/\theta}.$$
+```math
+U = \left(1 + E_1/W\right)^{-1/\theta}, \qquad V = \left(1 + E_2/W\right)^{-1/\theta}.
+```
 
-When calm runs low, $E/W$ is large for both markets at once, and both ranks are dragged toward 0 together. That is a joint crash. When calm is high, each market does its own thing.
+When calm runs low, $`E/W`$ is large for both markets at once, and both ranks are dragged toward 0 together. That is a joint crash. When calm is high, each market does its own thing.
 
-Given $W$, the two ranks are independent, and $U \le u$ exactly when $E_1 \ge W(u^{-\theta} - 1)$, which has chance $e^{-W(u^{-\theta} - 1)}$. Multiply the two chances and average over $W$, writing $E[\,\cdot\,]$ for that average:
+Given $`W`$, the two ranks are independent, and $`U \le u`$ exactly when $`E_1 \ge W(u^{-\theta} - 1)`$, which has chance $`e^{-W(u^{-\theta} - 1)}`$. Multiply the two chances and average over $`W`$, writing $`E[\,\cdot\,]`$ for that average:
 
-$$C(u, v) = E\Big[e^{-W(u^{-\theta} + v^{-\theta} - 2)}\Big] = \left(1 + u^{-\theta} + v^{-\theta} - 2\right)^{-1/\theta},$$
+```math
+C(u, v) = E\Big[e^{-W(u^{-\theta} + v^{-\theta} - 2)}\Big] = \left(1 + u^{-\theta} + v^{-\theta} - 2\right)^{-1/\theta},
+```
 
-using the gamma law's average $E[e^{-sW}] = (1 + s)^{-1/\theta}$, one integral against the gamma density. Setting $v = 1$ returns $u$, so each rank is uniform: a genuine copula. This is Marshall and Olkin's construction (1988). With $\theta = 2$ the shape is 1/2, and $W$ can be drawn as $Z^2/2$ for a standard normal $Z$; the code does exactly that.
+using the gamma law's average $`E[e^{-sW}] = (1 + s)^{-1/\theta}`$, one integral against the gamma density. Setting $`v = 1`$ returns $`u`$, so each rank is uniform: a genuine copula. This is Marshall and Olkin's construction (1988). With $`\theta = 2`$ the shape is 1/2, and $`W`$ can be drawn as $`Z^2/2`$ for a standard normal $`Z`$; the code does exactly that.
 
 ### Step 5: tail dependence, one limit each
 
-**Clayton.** Put $u = v = p$:
+**Clayton.** Put $`u = v = p`$:
 
-$$\frac{C(p, p)}{p} = \frac{(2p^{-\theta} - 1)^{-1/\theta}}{p} = \left(2 - p^{\theta}\right)^{-1/\theta} \longrightarrow 2^{-1/\theta}.$$
+```math
+\frac{C(p, p)}{p} = \frac{(2p^{-\theta} - 1)^{-1/\theta}}{p} = \left(2 - p^{\theta}\right)^{-1/\theta} \longrightarrow 2^{-1/\theta}.
+```
 
-With $\theta = 2$ that is $1/\sqrt2$ = 0.7071. Already at the worst day in 10, the ratio is 0.7089; the limit arrives almost at once.
+With $`\theta = 2`$ that is $`1/\sqrt2`$ = 0.7071. Already at the worst day in 10, the ratio is 0.7089; the limit arrives almost at once.
 
-**Gaussian.** The limit is 0 for every $\rho$ below 1. The shape of the proof: for both scores to fall below a far cutoff, their average must fall below it too. The average of two correlated bell curves is a bell curve with a smaller spread, $\sqrt{(1+\rho)/2}$, and a narrower bell's tail thins faster than a wider one's. So the joint chance shrinks faster than $p$, and the ratio goes to 0. It goes slowly: 0.2735 at 1 in 100, 0.1025 at 1 in 10,000, 0.040965 at 1 in a million.
+**Gaussian.** The limit is 0 for every $`\rho`$ below 1. The shape of the proof: for both scores to fall below a far cutoff, their average must fall below it too. The average of two correlated bell curves is a bell curve with a smaller spread, $`\sqrt{(1+\rho)/2}`$, and a narrower bell's tail thins faster than a wider one's. So the joint chance shrinks faster than $`p`$, and the ratio goes to 0. It goes slowly: 0.2735 at 1 in 100, 0.1025 at 1 in 10,000, 0.040965 at 1 in a million.
 
 <details>
 <summary>Detailed proof: the Gaussian limit is zero</summary>
 
-Let $a = \Phi^{-1}(p)$, so $a \to -\infty$ as $p \to 0$, and write $t = -a$. If $Z_1 \le a$ and $Z_2 \le a$, then $S = (Z_1 + Z_2)/\sqrt{2(1+\rho)}$, which is standard normal, satisfies $S \le c\,a$ with $c = \sqrt{2/(1+\rho)} > 1$. So
-$$0 \le \frac{C(p, p)}{p} \le \frac{\Phi(-c t)}{\Phi(-t)}.$$
-Integration by parts gives the bounds $\varphi(t)\,t/(1+t^2) \le \Phi(-t) \le \varphi(t)/t$ for $t > 0$, with $\varphi$ the bell's height. Top bound on the numerator, bottom bound on the denominator:
-$$\frac{\Phi(-c t)}{\Phi(-t)} \le \frac{1 + t^2}{c\,t^2}\, e^{-(c^2 - 1)t^2/2} \longrightarrow 0.$$
-The squeeze gives $\lambda_L = 0$.
+Let $`a = \Phi^{-1}(p)`$, so $`a \to -\infty`$ as $`p \to 0`$, and write $`t = -a`$. If $`Z_1 \le a`$ and $`Z_2 \le a`$, then $`S = (Z_1 + Z_2)/\sqrt{2(1+\rho)}`$, which is standard normal, satisfies $`S \le c\,a`$ with $`c = \sqrt{2/(1+\rho)} > 1`$. So
+
+$`\displaystyle 0 \le \frac{C(p, p)}{p} \le \frac{\Phi(-c t)}{\Phi(-t)}.`$
+
+Integration by parts gives the bounds $`\varphi(t)\,t/(1+t^2) \le \Phi(-t) \le \varphi(t)/t`$ for $`t > 0`$, with $`\varphi`$ the bell's height. Top bound on the numerator, bottom bound on the denominator:
+
+$`\displaystyle \frac{\Phi(-c t)}{\Phi(-t)} \le \frac{1 + t^2}{c\,t^2}\, e^{-(c^2 - 1)t^2/2} \longrightarrow 0.`$
+
+The squeeze gives $`\lambda_L = 0`$.
 
 </details>
 
@@ -193,25 +219,25 @@ A second road to tail dependence is the shared scale of the Student t copula, sy
 
 ## Worked numbers, by hand
 
-The joint crash at the worst day in 100, both models, with $\tau$ = 0.5.
+The joint crash at the worst day in 100, both models, with $`\tau`$ = 0.5.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| A's cutoff | $\Phi^{-1}$(0.01) × 1.0% | −2.326% |
-| B's cutoff | $\Phi^{-1}$(0.01) × 1.5% | −3.490% |
-| Gaussian dial | $\rho = \sin(\pi \times 0.5/2) = \sin(\pi/4)$ | 0.7071 |
-| Clayton dial | $\theta = 2 \times 0.5/(1 - 0.5)$ | 2 |
-| Clayton, each rank | $0.01^{-2}$ | 10000 |
-| Clayton, combine | $10000 + 10000 - 1$ | 19999 |
-| Clayton joint chance | $19999^{-1/2} = 1/141.418$ | **0.007071** |
-| Clayton, given A crashed | $0.007071 / 0.01$ | **70.71%** |
+| A's cutoff | $`\Phi^{-1}`$(0.01) × 1.0% | −2.326% |
+| B's cutoff | $`\Phi^{-1}`$(0.01) × 1.5% | −3.490% |
+| Gaussian dial | $`\rho = \sin(\pi \times 0.5/2) = \sin(\pi/4)`$ | 0.7071 |
+| Clayton dial | $`\theta = 2 \times 0.5/(1 - 0.5)`$ | 2 |
+| Clayton, each rank | $`0.01^{-2}`$ | 10000 |
+| Clayton, combine | $`10000 + 10000 - 1`$ | 19999 |
+| Clayton joint chance | $`19999^{-1/2} = 1/141.418`$ | **0.007071** |
+| Clayton, given A crashed | $`0.007071 / 0.01`$ | **70.71%** |
 | Gaussian joint chance | one-dimensional integral (code) | 0.002735 |
-| Gaussian, given A crashed | $0.002735 / 0.01$ | **27.35%** |
-| Independent | $0.01 \times 0.01$ | 0.000100 |
+| Gaussian, given A crashed | $`0.002735 / 0.01`$ | **27.35%** |
+| Independent | $`0.01 \times 0.01`$ | 0.000100 |
 
 Read back: in a Clayton world, B has its worst day in 100 on about 7 of every 10 of A's worst days; in a Gaussian world with the same bell curves and tau, on fewer than 3 in 10.
 
-Sklar's formula at one point, Clayton world: $F$(−2%) = 0.022750 and $G$(−2.4%) = 0.054799. Their inverse squares are 1932.1 and 333.0, the sum minus 1 is 2264.1, and $2264.1^{-1/2}$ = 0.021016. The Gaussian copula at the same point gives 0.012255.
+Sklar's formula at one point, Clayton world: $`F`$(−2%) = 0.022750 and $`G`$(−2.4%) = 0.054799. Their inverse squares are 1932.1 and 333.0, the sum minus 1 is 2264.1, and $`2264.1^{-1/2}`$ = 0.021016. The Gaussian copula at the same point gives 0.012255.
 
 ### What breaks if you drop a piece
 
@@ -219,10 +245,10 @@ Sklar's formula at one point, Clayton world: $F$(−2%) = 0.022750 and $G$(−2.
 | --- | --- | --- |
 | Treat the two crashes as independent | 0.000100 joint chance, against 0.007071 | the shared calm level is ignored |
 | Fit a Gaussian copula from ranks, then count joint crashes in the worst 40 of 4,000 days | expects 10.6 days (26.4%) | the sample shows 26 days, 65.0% ± 7.5: the copula family was wrong, not the fit |
-| Trust the Gaussian at the worst day in 10,000 | 10.25% | Clayton says 70.71%; the Gaussian thins toward 0 however high $\rho$ is |
-| Drop continuity: two fair coin tosses | $P(F(X) \le 0.25)$ = 0.00, not 0.25 | two copulas, the product $u v$ and a patchwork, both give 0.2500 at (0.5, 0.5) but 0.0625 and 0.1250 at (0.25, 0.25): no unique copula |
+| Trust the Gaussian at the worst day in 10,000 | 10.25% | Clayton says 70.71%; the Gaussian thins toward 0 however high $`\rho`$ is |
+| Drop continuity: two fair coin tosses | $`P(F(X) \le 0.25)`$ = 0.00, not 0.25 | two copulas, the product $`u v`$ and a patchwork, both give 0.2500 at (0.5, 0.5) but 0.0625 and 0.1250 at (0.25, 0.25): no unique copula |
 
-The patchwork copula puts a quarter of its weight on the diagonal of each quarter of the square; both it and $u v$ reproduce the coins' joint law exactly.
+The patchwork copula puts a quarter of its weight on the diagonal of each quarter of the square; both it and $`u v`$ reproduce the coins' joint law exactly.
 
 ---
 
@@ -619,13 +645,13 @@ The two outputs agree line for line.
 
 ### Lean
 
-Lean proves Sklar's theorem for continuous margins, its converse for any margins, and Clayton's tail limit for every dial $\theta$ above 0.
+Lean proves Sklar's theorem for continuous margins, its converse for any margins, and Clayton's tail limit for every dial $`\theta`$ above 0.
 
-- Take any joint law $H$ whose margins $F$ and $G$ are continuous. Then exactly one copula $C$ gives $H(x, y) = C(F(x), G(y))$ for every $x$ and $y$.
-- Take any copula $C$ and any margins $F$ and $G$, continuous or not. Then some joint law has margins exactly $F$ and $G$, and $H(x, y) = C(F(x), G(y))$.
-- Take the Clayton copula with dial $\theta$ above 0. Then $C(p, p)/p$ tends to $2^{-1/\theta}$ as $p$ shrinks to 0, so $\lambda_L$ is not 0.
+- Take any joint law $`H`$ whose margins $`F`$ and $`G`$ are continuous. Then exactly one copula $`C`$ gives $`H(x, y) = C(F(x), G(y))`$ for every $`x`$ and $`y`$.
+- Take any copula $`C`$ and any margins $`F`$ and $`G`$, continuous or not. Then some joint law has margins exactly $`F`$ and $`G`$, and $`H(x, y) = C(F(x), G(y))`$.
+- Take the Clayton copula with dial $`\theta`$ above 0. Then $`C(p, p)/p`$ tends to $`2^{-1/\theta}`$ as $`p`$ shrinks to 0, so $`\lambda_L`$ is not 0.
 - The hand arithmetic holds exactly: the Clayton dial 2 from tau 0.5, the 10000 and 19999, and independence's 0.0001.
-- Take the two fair coins. Then $uv$ and the patchwork both give 0.25 at (0.5, 0.5), but 0.0625 and 0.125 at (0.25, 0.25).
+- Take the two fair coins. Then $`uv`$ and the patchwork both give 0.25 at (0.5, 0.5), but 0.0625 and 0.125 at (0.25, 0.25).
 - Take a coin's two rank values, 0.5 and 1. Then neither is at or below 0.25.
 
 The Gaussian copula, Kendall's tau, the simulations and the patchwork's copula test are left to the Python and Rust checks.
@@ -1104,8 +1130,8 @@ example : ¬ ((1 / 2 : ℚ) ≤ 1 / 4) ∧ ¬ ((1 : ℚ) ≤ 1 / 4) := by norm_n
 > Guess first, then run.
 > - **Double B's spread.** Set `SA, SB = 1.0, 3.0`. B's cutoff moves to −6.979%, but tau from the ranks stays 0.4909 and the joint count stays 26 of 40. Margins never touch ranks.
 > - **Draw a different 4,000-day sample.** Change `Rng(7)` to `Rng(8)`. The count becomes 28 of 40 (70.0% ± 7.2) against a Gaussian forecast of 11.0. One sample moves; the gap does not.
-> - **Change the rank agreement.** Set `TAU = 0.75`, so $\theta$ = 6. The shared-calm simulation's assert fails: $Z^2/2$ has the gamma law of shape 1/2 only, which belongs to $\theta = 2$. The check catches a construction used outside its range.
-> - **Break the Clayton formula.** Change `-1.0 / TH` to `-1.2 / TH` in `clayton`. The margin test $C(u, 1) = u$ fails at once: the formula is no longer a copula.
+> - **Change the rank agreement.** Set `TAU = 0.75`, so $`\theta`$ = 6. The shared-calm simulation's assert fails: $`Z^2/2`$ has the gamma law of shape 1/2 only, which belongs to $`\theta = 2`$. The check catches a construction used outside its range.
+> - **Break the Clayton formula.** Change `-1.0 / TH` to `-1.2 / TH` in `clayton`. The margin test $`C(u, 1) = u`$ fails at once: the formula is no longer a copula.
 
 ---
 
@@ -1129,7 +1155,7 @@ example : ¬ ((1 / 2 : ℚ) ≤ 1 / 4) ∧ ¬ ((1 : ℚ) ≤ 1 / 4) := by norm_n
 - **Extremes of one sample.** How the largest and smallest of many draws behave is the next card on this shelf, [Order statistics](08-order-statistics-and-extremes.md).
 
 > **Say it back**
-> Any joint law of continuous variables splits into each variable's own law and a copula, the joint law of their percentile ranks. The split is unique, and any copula can be dressed in any margins. Ranks do not change under increasing transformations, so rank statistics such as Kendall's tau see only the copula, and a Gaussian copula can be fitted from ranks alone. Two copulas with the same tau can still disagree wildly in the corner: the Gaussian's chance of a joint crash thins to zero for ever rarer days, while Clayton's stays at $2^{-1/\theta}$. That corner is tail dependence.
+> Any joint law of continuous variables splits into each variable's own law and a copula, the joint law of their percentile ranks. The split is unique, and any copula can be dressed in any margins. Ranks do not change under increasing transformations, so rank statistics such as Kendall's tau see only the copula, and a Gaussian copula can be fitted from ranks alone. Two copulas with the same tau can still disagree wildly in the corner: the Gaussian's chance of a joint crash thins to zero for ever rarer days, while Clayton's stays at $`2^{-1/\theta}`$. That corner is tail dependence.
 
 ---
 

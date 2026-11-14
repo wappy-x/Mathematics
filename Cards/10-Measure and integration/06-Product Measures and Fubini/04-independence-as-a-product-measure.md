@@ -34,58 +34,70 @@ On the right, learning that x + y is small forces x to be small too.
 
 Notation first, in words.
 
-- A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the sets we allow ourselves to measure, and a probability on them: here the board, its Borel sets, and area, Lebesgue measure $\lambda$. $\mathcal{F}$ is a sigma-algebra, a family of sets closed under complements and countable unions; the Borel sets are the smallest such family holding every rectangle ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
-- $\sigma(X)$ is the sigma-algebra a random variable X generates, every event "X lands in B" for a Borel set B: what learning X can tell ([Random variables as measurable maps](../03-Measurable%20Functions/04-random-variables-and-their-information.md)).
-- $\mu_X$ is the law of X, $P(X \in B)$ as a measure on the line ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
-- $\mu_{(X,Y)}$ is the joint law, $P((X, Y) \in C)$ for Borel sets C of the plane.
-- $\mu \otimes \nu$ is the product measure, giving every rectangle A × B the size $\mu(A)\,\nu(B)$ ([Product measure](02-product-measure.md)).
+- A probability space $`(\Omega, \mathcal{F}, P)`$ is a set of outcomes, the sets we allow ourselves to measure, and a probability on them: here the board, its Borel sets, and area, Lebesgue measure $`\lambda`$. $`\mathcal{F}`$ is a sigma-algebra, a family of sets closed under complements and countable unions; the Borel sets are the smallest such family holding every rectangle ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
+- $`\sigma(X)`$ is the sigma-algebra a random variable X generates, every event "X lands in B" for a Borel set B: what learning X can tell ([Random variables as measurable maps](../03-Measurable%20Functions/04-random-variables-and-their-information.md)).
+- $`\mu_X`$ is the law of X, $`P(X \in B)`$ as a measure on the line ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
+- $`\mu_{(X,Y)}`$ is the joint law, $`P((X, Y) \in C)`$ for Borel sets C of the plane.
+- $`\mu \otimes \nu`$ is the product measure, giving every rectangle A × B the size $`\mu(A)\,\nu(B)`$ ([Product measure](02-product-measure.md)).
 
-**Definition.** Two sigma-algebras $\mathcal{G}$ and $\mathcal{H}$ inside $\mathcal{F}$ are independent when every event of one and every event of the other multiply:
+**Definition.** Two sigma-algebras $`\mathcal{G}`$ and $`\mathcal{H}`$ inside $`\mathcal{F}`$ are independent when every event of one and every event of the other multiply:
 
-$$P(A \cap B) = P(A)\,P(B) \quad \text{for every } A \in \mathcal{G} \text{ and every } B \in \mathcal{H}.$$
+```math
+P(A \cap B) = P(A)\,P(B) \quad \text{for every } A \in \mathcal{G} \text{ and every } B \in \mathcal{H}.
+```
 
 Two random variables are independent when their sigma-algebras are:
 
-$$X, Y \text{ independent} \iff P(X \in A,\ Y \in B) = P(X \in A)\,P(Y \in B) \quad \text{for all Borel sets } A, B.$$
+```math
+X, Y \text{ independent} \iff P(X \in A,\ Y \in B) = P(X \in A)\,P(Y \in B) \quad \text{for all Borel sets } A, B.
+```
 
 **Read it aloud:** anything learnable from X and anything learnable from Y happen together with the product of their chances.
 
-**Theorem 1, the pi-system test.** If $\mathcal{P}_1$ and $\mathcal{P}_2$ are pi-systems (families closed under overlap of two members) and every member of one multiplies with every member of the other, the sigma-algebras they generate are independent. For random variables the rays are enough:
+**Theorem 1, the pi-system test.** If $`\mathcal{P}_1`$ and $`\mathcal{P}_2`$ are pi-systems (families closed under overlap of two members) and every member of one multiplies with every member of the other, the sigma-algebras they generate are independent. For random variables the rays are enough:
 
-$$P(X \le s,\ Y \le t) = P(X \le s)\,P(Y \le t) \ \text{ for all } s, t \;\Longrightarrow\; X, Y \text{ independent.}$$
+```math
+P(X \le s,\ Y \le t) = P(X \le s)\,P(Y \le t) \ \text{ for all } s, t \;\Longrightarrow\; X, Y \text{ independent.}
+```
 
 **Read it aloud:** the product rule on "at most s, at most t" for all thresholds gives it on all Borel sets.
 
 **Theorem 2, the joint law is a product.**
 
-$$X, Y \text{ independent} \iff \mu_{(X,Y)} = \mu_X \otimes \mu_Y.$$
+```math
+X, Y \text{ independent} \iff \mu_{(X,Y)} = \mu_X \otimes \mu_Y.
+```
 
 **Read it aloud:** independence means the pair's law is the product of the two laws.
 
 **Theorem 3, products and sums.** Write E for the average, the integral against P, and Var for the variance. If X and Y are independent and each has a finite average of its absolute value, then
 
-$$E[XY] = E[X]\,E[Y],$$
+```math
+E[XY] = E[X]\,E[Y],
+```
 
 and if each has a finite average square, then
 
-$$\mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).$$
+```math
+\mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).
+```
 
 **Read it aloud:** for independent quantities the product's average is the product of averages, and the sum's variance is the sum of variances.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$, $P$, $\lambda$ | outcomes, measurable sets, probability; $\lambda$ is Lebesgue measure (area here) | the board, its Borel sets, area | — |
-| $x$, $y$, $u$, $w$ | the dart's coordinates in metres; u = x − 0.5 and w = u^2 (What breaks) | a point such as (0.3, 0.8) | — |
-| $X$, $Y$ | two random variables in general | x and y; or x and x + y | — |
-| $\mathcal{G}$, $\mathcal{H}$, $\sigma(X)$ | sigma-algebras inside $\mathcal{F}$; $\sigma(X)$ is what learning X can tell | $\sigma(x)$: every event "x lands in B" | a bigger family is harder to keep independent |
-| $A$, $B$, $L$, $C$ | events, or Borel sets of the line; C is also a Borel set of the plane in the notation and proofs | x ≤ 0.5; L = left half, B = bottom half (Step 1), C = "bottom-left or top-right quarter" | — |
-| $\mathcal{P}_1$, $\mathcal{P}_2$ | pi-systems: families closed under overlap of two members | the rays {x ≤ s} and {y ≤ t} | — |
-| $s$, $t$ | ray thresholds | 0.5 and 0.5 | raise either and the rectangle grows |
-| $\mathcal{B}(\mathbb{R})$ | the Borel sets of the line | [0, 0.5] | — |
-| $\mu_X$, $\mu_Y$, $\mu_{(X,Y)}$ | the laws of X and Y; their joint law on the plane | uniform on [0, 1]; area on the board | — |
-| $\otimes$ | product measure: rectangles get the product of side sizes | area = length ⊗ length | — |
-| $\mathcal{D}_A$, $\mathcal{D}'_B$, $\mathcal{R}_X$, $h$, $f$, $X'$, $Y'$, $\omega$ | in the folded proofs: the events that multiply with A, or with B; the ray events {X ≤ s}; a function of the pair; the shift x ↦ x − E[X]; the centred X − E[X] and Y − E[Y]; one outcome | $\mathcal{R}_x$: the strips {x ≤ s}; x' = x − 0.5 | — |
-| $E$, $\mathrm{Var}$, $\mathrm{Cov}$ | average; variance, the average squared distance from the average; covariance, E[XY] − E[X]E[Y] | E[x] = 1/2, Var(x) = 1/12 | — |
+| $`\Omega`$, $`\mathcal{F}`$, $`P`$, $`\lambda`$ | outcomes, measurable sets, probability; $`\lambda`$ is Lebesgue measure (area here) | the board, its Borel sets, area | — |
+| $`x`$, $`y`$, $`u`$, $`w`$ | the dart's coordinates in metres; u = x − 0.5 and w = u^2 (What breaks) | a point such as (0.3, 0.8) | — |
+| $`X`$, $`Y`$ | two random variables in general | x and y; or x and x + y | — |
+| $`\mathcal{G}`$, $`\mathcal{H}`$, $`\sigma(X)`$ | sigma-algebras inside $`\mathcal{F}`$; $`\sigma(X)`$ is what learning X can tell | $`\sigma(x)`$: every event "x lands in B" | a bigger family is harder to keep independent |
+| $`A`$, $`B`$, $`L`$, $`C`$ | events, or Borel sets of the line; C is also a Borel set of the plane in the notation and proofs | x ≤ 0.5; L = left half, B = bottom half (Step 1), C = "bottom-left or top-right quarter" | — |
+| $`\mathcal{P}_1`$, $`\mathcal{P}_2`$ | pi-systems: families closed under overlap of two members | the rays {x ≤ s} and {y ≤ t} | — |
+| $`s`$, $`t`$ | ray thresholds | 0.5 and 0.5 | raise either and the rectangle grows |
+| $`\mathcal{B}(\mathbb{R})`$ | the Borel sets of the line | [0, 0.5] | — |
+| $`\mu_X`$, $`\mu_Y`$, $`\mu_{(X,Y)}`$ | the laws of X and Y; their joint law on the plane | uniform on [0, 1]; area on the board | — |
+| $`\otimes`$ | product measure: rectangles get the product of side sizes | area = length ⊗ length | — |
+| $`\mathcal{D}_A`$, $`\mathcal{D}'_B`$, $`\mathcal{R}_X`$, $`h`$, $`f`$, $`X'`$, $`Y'`$, $`\omega`$ | in the folded proofs: the events that multiply with A, or with B; the ray events {X ≤ s}; a function of the pair; the shift x ↦ x − E[X]; the centred X − E[X] and Y − E[Y]; one outcome | $`\mathcal{R}_x`$: the strips {x ≤ s}; x' = x − 0.5 | — |
+| $`E`$, $`\mathrm{Var}`$, $`\mathrm{Cov}`$ | average; variance, the average squared distance from the average; covariance, E[XY] − E[X]E[Y] | E[x] = 1/2, Var(x) = 1/12 | — |
 
 ### When it holds
 
@@ -100,7 +112,7 @@ $$\mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).$$
 
 ### Step 0: independence is two measures agreeing on rectangles
 
-Two measures live on the plane. The joint law gives the true chance that the pair (X, Y) lands in a set. The product law $\mu_X \otimes \mu_Y$ gives the chance it would have if its coordinates ignored each other. On a rectangle A × B they give $P(X \in A, Y \in B)$ and $P(X \in A)\,P(Y \in B)$. Independence says these agree on every rectangle.
+Two measures live on the plane. The joint law gives the true chance that the pair (X, Y) lands in a set. The product law $`\mu_X \otimes \mu_Y`$ gives the chance it would have if its coordinates ignored each other. On a rectangle A × B they give $`P(X \in A, Y \in B)`$ and $`P(X \in A)\,P(Y \in B)`$. Independence says these agree on every rectangle.
 
 Rectangles overlap in rectangles, so they form a pi-system, and they generate the Borel sets of the plane ([Product sigma-algebras](01-product-sigma-algebras.md)). Dynkin's theorem ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) does the rest: two probability measures that agree on a pi-system agree on everything it generates. Theorem 1 is Dynkin's theorem applied twice, once from each side; Theorem 2 is that uniqueness on the rectangle pi-system; Theorem 3 integrates against the product.
 
@@ -118,23 +130,23 @@ Now record the column and the column plus the row, 0 to 6, which generates 128 e
 
 Fix one event A of the first pi-system and collect every event that multiplies with A. That collection holds the whole space, survives proper differences because chances of nested events subtract, and survives increasing unions because chances pass to the limit. So it is a lambda-system containing the second pi-system, and Dynkin's theorem puts the whole generated sigma-algebra inside it. Swap the roles and repeat.
 
-Rays overlap in rays and generate $\sigma(X)$, so the chance of "X at most s and Y at most t" settles independence. On the dart it is the area s × t of a corner rectangle, and the code checks four against simulation.
+Rays overlap in rays and generate $`\sigma(X)`$, so the chance of "X at most s and Y at most t" settles independence. On the dart it is the area s × t of a corner rectangle, and the code checks four against simulation.
 
 <details>
 <summary>Detailed proof of Theorem 1</summary>
 
-**Setting.** $\mathcal{P}_1$ and $\mathcal{P}_2$ are pi-systems inside $\mathcal{F}$, and $P(A \cap B) = P(A)P(B)$ for every $A \in \mathcal{P}_1$, $B \in \mathcal{P}_2$.
+**Setting.** $`\mathcal{P}_1`$ and $`\mathcal{P}_2`$ are pi-systems inside $`\mathcal{F}`$, and $`P(A \cap B) = P(A)P(B)`$ for every $`A \in \mathcal{P}_1`$, $`B \in \mathcal{P}_2`$.
 
-**First half.** Fix $A \in \mathcal{P}_1$ and let $\mathcal{D}_A$ be the events $B \in \mathcal{F}$ with $P(A \cap B) = P(A)P(B)$.
-- $\Omega \in \mathcal{D}_A$: $P(A \cap \Omega) = P(A) = P(A) \cdot 1$.
-- Proper differences: if $B \subseteq C$ are in $\mathcal{D}_A$, then $A \cap (C \setminus B) = (A \cap C) \setminus (A \cap B)$ with $A \cap B \subseteq A \cap C$, so by additivity of $P$, with every chance finite, $P(A \cap (C \setminus B)) = P(A \cap C) - P(A \cap B) = P(A)(P(C) - P(B)) = P(A)P(C \setminus B)$.
-- Increasing unions: if $B_1 \subseteq B_2 \subseteq \dots$ are in $\mathcal{D}_A$ with union $B$, then $A \cap B_n$ increases to $A \cap B$, and continuity from below ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $P(A \cap B) = \lim P(A \cap B_n) = \lim P(A)P(B_n) = P(A)P(B)$.
+**First half.** Fix $`A \in \mathcal{P}_1`$ and let $`\mathcal{D}_A`$ be the events $`B \in \mathcal{F}`$ with $`P(A \cap B) = P(A)P(B)`$.
+- $`\Omega \in \mathcal{D}_A`$: $`P(A \cap \Omega) = P(A) = P(A) \cdot 1`$.
+- Proper differences: if $`B \subseteq C`$ are in $`\mathcal{D}_A`$, then $`A \cap (C \setminus B) = (A \cap C) \setminus (A \cap B)`$ with $`A \cap B \subseteq A \cap C`$, so by additivity of $`P`$, with every chance finite, $`P(A \cap (C \setminus B)) = P(A \cap C) - P(A \cap B) = P(A)(P(C) - P(B)) = P(A)P(C \setminus B)`$.
+- Increasing unions: if $`B_1 \subseteq B_2 \subseteq \dots`$ are in $`\mathcal{D}_A`$ with union $`B`$, then $`A \cap B_n`$ increases to $`A \cap B`$, and continuity from below ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $`P(A \cap B) = \lim P(A \cap B_n) = \lim P(A)P(B_n) = P(A)P(B)`$.
 
-So $\mathcal{D}_A$ is a lambda-system containing $\mathcal{P}_2$. Dynkin's pi-lambda theorem gives $\sigma(\mathcal{P}_2) \subseteq \mathcal{D}_A$. As $A$ was any member of $\mathcal{P}_1$: every $A \in \mathcal{P}_1$ multiplies with every $B \in \sigma(\mathcal{P}_2)$.
+So $`\mathcal{D}_A`$ is a lambda-system containing $`\mathcal{P}_2`$. Dynkin's pi-lambda theorem gives $`\sigma(\mathcal{P}_2) \subseteq \mathcal{D}_A`$. As $`A`$ was any member of $`\mathcal{P}_1`$: every $`A \in \mathcal{P}_1`$ multiplies with every $`B \in \sigma(\mathcal{P}_2)`$.
 
-**Second half.** Fix $B \in \sigma(\mathcal{P}_2)$ and let $\mathcal{D}'_B$ be the events $A$ with $P(A \cap B) = P(A)P(B)$. The same three checks, with the roles swapped, show it is a lambda-system; the first half shows it contains $\mathcal{P}_1$. Dynkin gives $\sigma(\mathcal{P}_1) \subseteq \mathcal{D}'_B$. So $\sigma(\mathcal{P}_1)$ and $\sigma(\mathcal{P}_2)$ are independent.
+**Second half.** Fix $`B \in \sigma(\mathcal{P}_2)`$ and let $`\mathcal{D}'_B`$ be the events $`A`$ with $`P(A \cap B) = P(A)P(B)`$. The same three checks, with the roles swapped, show it is a lambda-system; the first half shows it contains $`\mathcal{P}_1`$. Dynkin gives $`\sigma(\mathcal{P}_1) \subseteq \mathcal{D}'_B`$. So $`\sigma(\mathcal{P}_1)`$ and $`\sigma(\mathcal{P}_2)`$ are independent.
 
-**Rays.** Let $\mathcal{R}_X$ be the events $\{X \le s\}$, $s$ real. It is a pi-system: $\{X \le s\} \cap \{X \le s'\} = \{X \le \min(s, s')\}$. Its sigma-algebra is $\sigma(X)$. One way, each ray event lies in $\sigma(X)$, so $\sigma(\mathcal{R}_X) \subseteq \sigma(X)$. The other way, the Borel sets $B$ with $\{X \in B\} \in \sigma(\mathcal{R}_X)$ form a sigma-algebra, because taking preimages commutes with complements and countable unions; it holds every ray $(-\infty, s]$, and rays generate $\mathcal{B}(\mathbb{R})$ ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), so it holds every Borel set. Apply the first two parts to $\mathcal{R}_X$ and $\mathcal{R}_Y$.
+**Rays.** Let $`\mathcal{R}_X`$ be the events $`\{X \le s\}`$, $`s`$ real. It is a pi-system: $`\{X \le s\} \cap \{X \le s'\} = \{X \le \min(s, s')\}`$. Its sigma-algebra is $`\sigma(X)`$. One way, each ray event lies in $`\sigma(X)`$, so $`\sigma(\mathcal{R}_X) \subseteq \sigma(X)`$. The other way, the Borel sets $`B`$ with $`\{X \in B\} \in \sigma(\mathcal{R}_X)`$ form a sigma-algebra, because taking preimages commutes with complements and countable unions; it holds every ray $`(-\infty, s]`$, and rays generate $`\mathcal{B}(\mathbb{R})`$ ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), so it holds every Borel set. Apply the first two parts to $`\mathcal{R}_X`$ and $`\mathcal{R}_Y`$.
 
 </details>
 
@@ -147,11 +159,11 @@ On the dart the joint law is area, which is length ⊗ length. The pair (x, x + 
 <details>
 <summary>Detailed proof of Theorem 2</summary>
 
-**The pair is measurable.** The preimage of a rectangle $A \times B$ under $\omega \mapsto (X(\omega), Y(\omega))$ is $\{X \in A\} \cap \{Y \in B\}$, which lies in $\mathcal{F}$. The sets of the plane whose preimage lies in $\mathcal{F}$ form a sigma-algebra, since preimages commute with complements and countable unions; it holds every rectangle, so it holds the product sigma-algebra $\mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})$, which equals the Borel sets of the plane ([Product sigma-algebras](01-product-sigma-algebras.md)). So $\mu_{(X,Y)}(C) = P((X, Y) \in C)$ is a probability measure on the plane, the pushforward of $P$.
+**The pair is measurable.** The preimage of a rectangle $`A \times B`$ under $`\omega \mapsto (X(\omega), Y(\omega))`$ is $`\{X \in A\} \cap \{Y \in B\}`$, which lies in $`\mathcal{F}`$. The sets of the plane whose preimage lies in $`\mathcal{F}`$ form a sigma-algebra, since preimages commute with complements and countable unions; it holds every rectangle, so it holds the product sigma-algebra $`\mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})`$, which equals the Borel sets of the plane ([Product sigma-algebras](01-product-sigma-algebras.md)). So $`\mu_{(X,Y)}(C) = P((X, Y) \in C)`$ is a probability measure on the plane, the pushforward of $`P`$.
 
-**Independent implies product.** For Borel $A$, $B$: $\mu_{(X,Y)}(A \times B) = P(X \in A, Y \in B) = P(X \in A)P(Y \in B) = \mu_X(A)\mu_Y(B) = (\mu_X \otimes \mu_Y)(A \times B)$, the last step by the defining property of product measure ([Product measure](02-product-measure.md)). Rectangles form a pi-system, since $(A \times B) \cap (A' \times B') = (A \cap A') \times (B \cap B')$, and generate the product sigma-algebra. Both measures have total 1. The uniqueness theorem ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) gives $\mu_{(X,Y)} = \mu_X \otimes \mu_Y$.
+**Independent implies product.** For Borel $`A`$, $`B`$: $`\mu_{(X,Y)}(A \times B) = P(X \in A, Y \in B) = P(X \in A)P(Y \in B) = \mu_X(A)\mu_Y(B) = (\mu_X \otimes \mu_Y)(A \times B)`$, the last step by the defining property of product measure ([Product measure](02-product-measure.md)). Rectangles form a pi-system, since $`(A \times B) \cap (A' \times B') = (A \cap A') \times (B \cap B')`$, and generate the product sigma-algebra. Both measures have total 1. The uniqueness theorem ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) gives $`\mu_{(X,Y)} = \mu_X \otimes \mu_Y`$.
 
-**Product implies independent.** Evaluate both sides on $A \times B$ and read the chain above from right to left.
+**Product implies independent.** Evaluate both sides on $`A \times B`$ and read the chain above from right to left.
 
 </details>
 
@@ -162,15 +174,19 @@ The average of a function of the pair is its integral against the pair's law ([E
 <details>
 <summary>Detailed proof of Theorem 3, the product</summary>
 
-**Change of variables on the plane.** For a Borel function $h \ge 0$ on the plane, $E[h(X, Y)] = \int h \, d\mu_{(X,Y)}$. For an indicator $h = 1_C$ this is the definition of $\mu_{(X,Y)}$; it passes to simple functions by linearity and to every $h \ge 0$ by monotone convergence, the same three steps as on the line ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). For integrable h, split into positive and negative parts.
+**Change of variables on the plane.** For a Borel function $`h \ge 0`$ on the plane, $`E[h(X, Y)] = \int h \, d\mu_{(X,Y)}`$. For an indicator $`h = 1_C`$ this is the definition of $`\mu_{(X,Y)}`$; it passes to simple functions by linearity and to every $`h \ge 0`$ by monotone convergence, the same three steps as on the line ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). For integrable h, split into positive and negative parts.
 
-**Integrability, by Tonelli.** Take $h(x, y) = |x|\,|y| \ge 0$. By the change of variables and Theorem 2,
-$$E|XY| = \int |x|\,|y| \; d(\mu_X \otimes \mu_Y) = \int \Big( \int |x|\,|y| \, \mu_Y(dy) \Big) \mu_X(dx) = \int |x| \, E|Y| \, \mu_X(dx) = E|X| \, E|Y| < \infty,$$
+**Integrability, by Tonelli.** Take $`h(x, y) = |x|\,|y| \ge 0`$. By the change of variables and Theorem 2,
+
+$`\displaystyle E|XY| = \int |x|\,|y| \; d(\mu_X \otimes \mu_Y) = \int \Big( \int |x|\,|y| \, \mu_Y(dy) \Big) \mu_X(dx) = \int |x| \, E|Y| \, \mu_X(dx) = E|X| \, E|Y| < \infty,`$
+
 the second step by Tonelli, the third and fourth by the change of variables on the line. So XY is integrable.
 
-**The value, by Fubini.** Now $h(x, y) = xy$ is integrable against $\mu_X \otimes \mu_Y$, so Fubini allows the iterated integral:
-$$E[XY] = \int \Big( \int x y \, \mu_Y(dy) \Big) \mu_X(dx) = \int x \, E[Y] \, \mu_X(dx) = E[X]\,E[Y].$$
-The inner integral is $x \int y \, \mu_Y(dy) = x E[Y]$ by linearity, and $E[Y]$ is a constant that leaves the outer integral.
+**The value, by Fubini.** Now $`h(x, y) = xy`$ is integrable against $`\mu_X \otimes \mu_Y`$, so Fubini allows the iterated integral:
+
+$`\displaystyle E[XY] = \int \Big( \int x y \, \mu_Y(dy) \Big) \mu_X(dx) = \int x \, E[Y] \, \mu_X(dx) = E[X]\,E[Y].`$
+
+The inner integral is $`x \int y \, \mu_Y(dy) = x E[Y]`$ by linearity, and $`E[Y]`$ is a constant that leaves the outer integral.
 
 </details>
 
@@ -181,11 +197,11 @@ Measurable functions of independent quantities are independent: whatever x − 0
 <details>
 <summary>Detailed proof of Theorem 3, the variances</summary>
 
-Suppose $E[X^2]$ and $E[Y^2]$ are finite. Then $E|X| \le 1 + E[X^2]$, since $|x| \le 1 + x^2$, so X and Y are integrable. Put $X' = X - E[X]$ and $Y' = Y - E[Y]$.
+Suppose $`E[X^2]`$ and $`E[Y^2]`$ are finite. Then $`E|X| \le 1 + E[X^2]`$, since $`|x| \le 1 + x^2`$, so X and Y are integrable. Put $`X' = X - E[X]`$ and $`Y' = Y - E[Y]`$.
 
-$X' = f(X)$ with $f(x) = x - E[X]$ continuous, hence Borel, so $\{X' \in B\} = \{X \in f^{-1}(B)\}$ and $\sigma(X') \subseteq \sigma(X)$; likewise $\sigma(Y') \subseteq \sigma(Y)$. Events of the smaller families are events of the larger ones, so they multiply: $X'$ and $Y'$ are independent. By Step 4, $E[X'Y'] = E[X']E[Y'] = 0 \cdot 0 = 0$.
+$`X' = f(X)`$ with $`f(x) = x - E[X]`$ continuous, hence Borel, so $`\{X' \in B\} = \{X \in f^{-1}(B)\}`$ and $`\sigma(X') \subseteq \sigma(X)`$; likewise $`\sigma(Y') \subseteq \sigma(Y)`$. Events of the smaller families are events of the larger ones, so they multiply: $`X'`$ and $`Y'`$ are independent. By Step 4, $`E[X'Y'] = E[X']E[Y'] = 0 \cdot 0 = 0`$.
 
-By linearity of the integral, $\mathrm{Var}(X + Y) = E[(X' + Y')^2] = E[X'^2] + 2E[X'Y'] + E[Y'^2] = \mathrm{Var}(X) + \mathrm{Var}(Y)$. Every term is finite because $|X'Y'| \le (X'^2 + Y'^2)/2$.
+By linearity of the integral, $`\mathrm{Var}(X + Y) = E[(X' + Y')^2] = E[X'^2] + 2E[X'Y'] + E[Y'^2] = \mathrm{Var}(X) + \mathrm{Var}(Y)`$. Every term is finite because $`|X'Y'| \le (X'^2 + Y'^2)/2`$.
 
 </details>
 

@@ -37,30 +37,36 @@ Staff left, shifts right. Every line crosses the gap.
 
 ## The formula
 
-Notation first, in words. A graph $G$ is two lists: the dots, collected as $V$, and the joined pairs, the lines, collected as $E$ ([Graphs](01-graphs-vertices-and-edges.md)). A **bipartition** names two heaps, $X$ and $Y$.
+Notation first, in words. A graph $`G`$ is two lists: the dots, collected as $`V`$, and the joined pairs, the lines, collected as $`E`$ ([Graphs](01-graphs-vertices-and-edges.md)). A **bipartition** names two heaps, $`X`$ and $`Y`$.
 
-$$V = X \cup Y, \qquad X \cap Y = \{\,\}, \qquad \text{every line joins a dot of } X \text{ to a dot of } Y$$
+```math
+V = X \cup Y, \qquad X \cap Y = \{\,\}, \qquad \text{every line joins a dot of } X \text{ to a dot of } Y
+```
 
-**Read it aloud:** every dot sits in $X$ or in $Y$, none in both, and each line runs from one heap to the other.
+**Read it aloud:** every dot sits in $`X`$ or in $`Y`$, none in both, and each line runs from one heap to the other.
 
 A graph with such a cut is **bipartite**. A **cycle** is a closed route repeating no dot, its length its number of lines ([Walks, paths and cycles](03-walks-paths-and-cycles.md)); a length is odd when halving it leaves one over ([Even and odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md)). The theorem is one line:
 
-$$G \text{ is bipartite} \qquad\Longleftrightarrow\qquad G \text{ has no cycle of odd length}$$
+```math
+G \text{ is bipartite} \qquad\Longleftrightarrow\qquad G \text{ has no cycle of odd length}
+```
 
 **Read it aloud:** the two heaps exist exactly when no closed route uses an odd number of lines.
 
-Finding the heaps means counting steps. Pick a starting dot, the **root**, and let $d(v)$ be the fewest lines from the root to the dot $v$ ([Connected or not](04-connectivity-and-breadth-first-search.md)). Colour $v$ by whether that count is even or odd, its remainder after division by two:
+Finding the heaps means counting steps. Pick a starting dot, the **root**, and let $`d(v)`$ be the fewest lines from the root to the dot $`v`$ ([Connected or not](04-connectivity-and-breadth-first-search.md)). Colour $`v`$ by whether that count is even or odd, its remainder after division by two:
 
-$$c(v) = d(v) \bmod 2$$
+```math
+c(v) = d(v) \bmod 2
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | one graph: dots and joined pairs | the roster | — |
-| $V$, $E$ | the dots; the lines | 9 dots; 9 lines | more lines, a clash grows likelier |
-| $X$, $Y$ | the two heaps, no line inside either | 5 staff; 4 shifts | — |
-| $d(v)$ | steps from the root, by the shortest route | Dan is 4 from Ana | more layers, same rule |
-| $c(v)$ | 0 if $d(v)$ is even, 1 if odd | Dan 0, Tue-am 1 | — |
-| $u$, $v$, $w$ | a line's ends; where their routes last met | Drip, Grind, Bean | — |
+| $`G`$ | one graph: dots and joined pairs | the roster | — |
+| $`V`$, $`E`$ | the dots; the lines | 9 dots; 9 lines | more lines, a clash grows likelier |
+| $`X`$, $`Y`$ | the two heaps, no line inside either | 5 staff; 4 shifts | — |
+| $`d(v)`$ | steps from the root, by the shortest route | Dan is 4 from Ana | more layers, same rule |
+| $`c(v)`$ | 0 if $`d(v)`$ is even, 1 if odd | Dan 0, Tue-am 1 | — |
+| $`u`$, $`v`$, $`w`$ | a line's ends; where their routes last met | Drip, Grind, Bean | — |
 
 ### When it holds
 
@@ -84,13 +90,15 @@ The pentagon fails on sight. Name the nights A and B: Bean A, Crema B, Drip A, G
 
 ### Step 2: no odd cycle forces a cut
 
-The other direction builds the cut from distances: colour every dot by the parity of $d(v)$. Every dot gets a colour: the search covers the root's whole piece, and any dot left over becomes a new root. What remains is to check that no line joins two dots of one colour.
+The other direction builds the cut from distances: colour every dot by the parity of $`d(v)`$. Every dot gets a colour: the search covers the root's whole piece, and any dot left over becomes a new root. What remains is to check that no line joins two dots of one colour.
 
-Suppose the line from $u$ to $v$ did. Each dot records the one dot it was reached from, so each has a single route back to the root, and that route is a shortest one. Let $w$ be the last dot the two routes share; past $w$ they have parted for good. Shortest routes make the stretch from $w$ to $u$ count $d(u) - d(w)$ lines. That stretch, the line, and the stretch from $v$ back to $w$ close a loop of
+Suppose the line from $`u`$ to $`v`$ did. Each dot records the one dot it was reached from, so each has a single route back to the root, and that route is a shortest one. Let $`w`$ be the last dot the two routes share; past $`w`$ they have parted for good. Shortest routes make the stretch from $`w`$ to $`u`$ count $`d(u) - d(w)`$ lines. That stretch, the line, and the stretch from $`v`$ back to $`w`$ close a loop of
 
-$$(d(u) - d(w)) + 1 + (d(v) - d(w)) \text{ lines}$$
+```math
+(d(u) - d(w)) + 1 + (d(v) - d(w)) \text{ lines}
+```
 
-Equal parities make $d(u)$ and $d(v)$ add to an even number; taking off twice $d(w)$ keeps it even; the extra line makes the count odd. That is an odd cycle, which the assumption forbids, so the colours are the heaps.
+Equal parities make $`d(u)`$ and $`d(v)`$ add to an even number; taking off twice $`d(w)`$ keeps it even; the extra line makes the count odd. That is an odd cycle, which the assumption forbids, so the colours are the heaps.
 
 In the pentagon the search from Bean puts Crema and Latte one step out, Drip and Grind two. The line between those two joins dots at equal distance: 2 + 1 + 2 = 5 lines, the ring itself.
 
@@ -110,7 +118,7 @@ Steps out from Bean, the 2 and 2 the check prints for the clash.
 <details>
 <summary>Detailed proof: the two stretches really are a cycle</summary>
 
-Both stretches are pieces of shortest routes, so neither repeats a dot; past $w$ they share none, each dot having one recorded route; and each meets the line only at its end. So the figure really is a cycle, of odd length by the count above. Disconnected graphs need nothing extra: heaps are named piece by piece and pooled.
+Both stretches are pieces of shortest routes, so neither repeats a dot; past $`w`$ they share none, each dot having one recorded route; and each meets the line only at its end. So the figure really is a cycle, of odd length by the count above. Disconnected graphs need nothing extra: heaps are named piece by piece and pooled.
 
 </details>
 
@@ -338,7 +346,7 @@ The two outputs match line for line.
 Lean proves three facts for every graph with plain lines, then checks the card's roster, cafes and metro map.
 
 - A graph is bipartite exactly when it has no cycle of odd length.
-- With no odd cycle and any root, each line in the root's piece joins a dot with even $d(v)$ to one with odd $d(v)$.
+- With no odd cycle and any root, each line in the root's piece joins a dot with even $`d(v)`$ to one with odd $`d(v)`$.
 - Two graphs on one sheet cut in two exactly when each of them does.
 - The roster has 9 lines: 2 2 2 2 1 at the staff, 3 2 2 2 at the shifts.
 - Staff against shifts is a working cut, and exactly 2 of the roster's 512 cuts work.
@@ -719,7 +727,7 @@ example : IsTwoSideCut metro {0, 2, 4} {1, 3, 5} := by
 
 ## What this builds on
 
-- [Connected or not](04-connectivity-and-breadth-first-search.md): the search in layers, the distance $d(v)$, and the record of where each dot was reached from.
+- [Connected or not](04-connectivity-and-breadth-first-search.md): the search in layers, the distance $`d(v)`$, and the record of where each dot was reached from.
 - [Even and odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md): why a parity, once fixed, settles the question.
 
 ## Where this goes next

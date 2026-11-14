@@ -35,44 +35,50 @@ Orange: the exact solution, read every 4 weeks from one Brownian path drawn in w
 
 ## The formula
 
-Notation first, in words. Time $t$ is in years. $W_t$ is Brownian motion, the random walk seen from far away ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)): it starts at 0, and its change over any stretch of time is a normal draw with mean 0 and variance equal to the stretch's length in years. A general SDE for a quantity $X_t$ is written
+Notation first, in words. Time $`t`$ is in years. $`W_t`$ is Brownian motion, the random walk seen from far away ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)): it starts at 0, and its change over any stretch of time is a normal draw with mean 0 and variance equal to the stretch's length in years. A general SDE for a quantity $`X_t`$ is written
 
-$$dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t .$$
+```math
+dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t .
+```
 
-The $dW_t$ is shorthand for an Ito integral, never a derivative: a Brownian path has no slope at any point ([The Ito integral](01-ito-integral.md)). The equation is a short way to write the integral equation
+The $`dW_t`$ is shorthand for an Ito integral, never a derivative: a Brownian path has no slope at any point ([The Ito integral](01-ito-integral.md)). The equation is a short way to write the integral equation
 
-$$X_t = X_0 + \int_0^t \mu(X_s, s)\,ds + \int_0^t \sigma(X_s, s)\,dW_s .$$
+```math
+X_t = X_0 + \int_0^t \mu(X_s, s)\,ds + \int_0^t \sigma(X_s, s)\,dW_s .
+```
 
 The first integral is the ordinary kind, added up over time. The second adds up Brownian steps, each weighted by the noise size at the **start** of its step. That left-endpoint rule is what "Ito" means.
 
-For the share, the drift function is $\mu(x, t) = 0.05x$ and the noise-size function is $\sigma(x, t) = 0.20x$. With the constants written $\mu$ = 0.05 and $\sigma$ = 0.20, the share's SDE and its solution are
+For the share, the drift function is $`\mu(x, t) = 0.05x`$ and the noise-size function is $`\sigma(x, t) = 0.20x`$. With the constants written $`\mu`$ = 0.05 and $`\sigma`$ = 0.20, the share's SDE and its solution are
 
-$$dS_t = \mu S_t\,dt + \sigma S_t\,dW_t, \qquad S_t = S_0 \exp\!\Big(\big(\mu - \tfrac12\sigma^2\big)t + \sigma W_t\Big).$$
+```math
+dS_t = \mu S_t\,dt + \sigma S_t\,dW_t, \qquad S_t = S_0 \exp\!\Big(\big(\mu - \tfrac12\sigma^2\big)t + \sigma W_t\Big).
+```
 
 **Read it aloud:** the share's change over a moment is 5 percent a year of its price times the time, plus 20 percent of its price times a Brownian step; and the price that does this is $100 times e raised to "0.03 a year times the time, plus 0.2 times where the Brownian path has got to".
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time from today, in years | 0 to 1 | the median rises at 3 percent a year; the spread widens like the square root of $t$ |
-| $S_t$, $S_0$, $S$ | the share price at time $t$; the price today; the price process as a whole | $S_0$ = $100 | — |
-| $X_t$, $X$ | the quantity a general SDE describes, or any solution of it | the share, $X_t = S_t$ | — |
-| $\mu$ | the drift: average growth per year, as a fraction of the price | 0.05 | the mean price rises, $S_0 e^{\mu t}$ |
-| $\sigma$ | the noise size, called volatility: the spread of yearly moves, per square root of a year | 0.20 | the mean stays put; the median falls, since the log grows at $\mu - \tfrac12\sigma^2$ |
-| $\mu(x,t)$, $\sigma(x,t)$, $x$ | the drift function and the noise-size function of a general SDE; $x$ a plain number standing for the price, also the unknown of the ordinary equation $dx/dt = \mu x$ | 0.05x and 0.20x; $x$ = 100 today | — |
-| $W_t$, $W$, $W_1$, $w$ | Brownian motion: where the noise path has got to by time $t$; the whole path; its value at one year; a plain number standing for it | a normal draw, mean 0, variance $t$ | the price rises, as e to $\sigma W_t$ |
-| $dt$, $dW_t$ | a small time step, and the Brownian step over it; shorthand for the two integrals | a day is 1/252 year; its Brownian step has sd 0.0630 | — |
-| $\Delta t$, $n$, $Z$, $Z_k$ | a finite step, the number of steps, a standard normal draw, the draw for step k | $\Delta t = 1/n$; $n$ = 4 to 65536 | the simulation error shrinks like the square root of $\Delta t$ |
-| $f$, $f_t$, $f_w$, $f_{ww}$, $g$ | a function of time and Brownian position, its slopes in $t$ and in $w$, its curvature in $w$; $g$ a function of the price alone | $f(t, w) = S_0 e^{0.03t + 0.2w}$; $g = \ln$ | — |
-| $Y_t$, $Y$, $a$ | the logarithm of the price, $\ln S_t$; its drift $\mu - \tfrac12\sigma^2$ | $\ln 100$ today; $a$ = 0.03 | — |
-| $F_t$ | the filtration: what is known by time $t$, here the noise path up to $t$ | — | — |
-| $R_t$, $R$, $R_0$, $[X, R]$, $c$ | in the uniqueness proof: the reciprocal $1/S_t$, the whole process, its value today; the cross variation of $X$ and $R$, what the products of their steps add up to; any fixed number in $E[e^{cW_s}]$ | $R_0$ = 0.01 | — |
+| $`t`$ | time from today, in years | 0 to 1 | the median rises at 3 percent a year; the spread widens like the square root of $`t`$ |
+| $`S_t`$, $`S_0`$, $`S`$ | the share price at time $`t`$; the price today; the price process as a whole | $`S_0`$ = $100 | — |
+| $`X_t`$, $`X`$ | the quantity a general SDE describes, or any solution of it | the share, $`X_t = S_t`$ | — |
+| $`\mu`$ | the drift: average growth per year, as a fraction of the price | 0.05 | the mean price rises, $`S_0 e^{\mu t}`$ |
+| $`\sigma`$ | the noise size, called volatility: the spread of yearly moves, per square root of a year | 0.20 | the mean stays put; the median falls, since the log grows at $`\mu - \tfrac12\sigma^2`$ |
+| $`\mu(x,t)`$, $`\sigma(x,t)`$, $`x`$ | the drift function and the noise-size function of a general SDE; $`x`$ a plain number standing for the price, also the unknown of the ordinary equation $`dx/dt = \mu x`$ | 0.05x and 0.20x; $`x`$ = 100 today | — |
+| $`W_t`$, $`W`$, $`W_1`$, $`w`$ | Brownian motion: where the noise path has got to by time $`t`$; the whole path; its value at one year; a plain number standing for it | a normal draw, mean 0, variance $`t`$ | the price rises, as e to $`\sigma W_t`$ |
+| $`dt`$, $`dW_t`$ | a small time step, and the Brownian step over it; shorthand for the two integrals | a day is 1/252 year; its Brownian step has sd 0.0630 | — |
+| $`\Delta t`$, $`n`$, $`Z`$, $`Z_k`$ | a finite step, the number of steps, a standard normal draw, the draw for step k | $`\Delta t = 1/n`$; $`n`$ = 4 to 65536 | the simulation error shrinks like the square root of $`\Delta t`$ |
+| $`f`$, $`f_t`$, $`f_w`$, $`f_{ww}`$, $`g`$ | a function of time and Brownian position, its slopes in $`t`$ and in $`w`$, its curvature in $`w`$; $`g`$ a function of the price alone | $`f(t, w) = S_0 e^{0.03t + 0.2w}`$; $`g = \ln`$ | — |
+| $`Y_t`$, $`Y`$, $`a`$ | the logarithm of the price, $`\ln S_t`$; its drift $`\mu - \tfrac12\sigma^2`$ | $`\ln 100`$ today; $`a`$ = 0.03 | — |
+| $`F_t`$ | the filtration: what is known by time $`t`$, here the noise path up to $`t`$ | — | — |
+| $`R_t`$, $`R`$, $`R_0`$, $`[X, R]`$, $`c`$ | in the uniqueness proof: the reciprocal $`1/S_t`$, the whole process, its value today; the cross variation of $`X`$ and $`R`$, what the products of their steps add up to; any fixed number in $`E[e^{cW_s}]`$ | $`R_0`$ = 0.01 | — |
 
 ### When it holds
 
-- **The Ito reading of the noise.** The noise size is read at the start of each step. Read it at the midpoint instead, called the Stratonovich reading, and the same symbols describe a different share: its solution is $S_0 e^{\mu t + \sigma W_t}$, with a median of $105.13 instead of $103.05. The code shows each formula failing the other reading's integral equation.
-- **Well-behaved coefficients.** A drift and noise size that grow at most in proportion to $x$, and change by at most a fixed multiple of any change in $x$ (the Lipschitz condition), guarantee exactly one solution. Drop that, and an SDE can explode in finite time or have two solutions from one start; [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) shows both. The share's coefficients pass.
-- **Built from the past only.** A solution at time $t$ may use the noise path up to $t$ and nothing later; in the wing's terms it is adapted to the filtration $F_t$, what is known by time $t$. A formula that used $W_1$ to set the price at half a year would not be a solution, whatever its algebra.
-- **Constant $\mu$ and $\sigma$.** The closed form is for this SDE. Most SDEs, including the share with a volatility that moves, have no closed form. They are solved by simulation, which this card also does.
+- **The Ito reading of the noise.** The noise size is read at the start of each step. Read it at the midpoint instead, called the Stratonovich reading, and the same symbols describe a different share: its solution is $`S_0 e^{\mu t + \sigma W_t}`$, with a median of $105.13 instead of $103.05. The code shows each formula failing the other reading's integral equation.
+- **Well-behaved coefficients.** A drift and noise size that grow at most in proportion to $`x`$, and change by at most a fixed multiple of any change in $`x`$ (the Lipschitz condition), guarantee exactly one solution. Drop that, and an SDE can explode in finite time or have two solutions from one start; [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) shows both. The share's coefficients pass.
+- **Built from the past only.** A solution at time $`t`$ may use the noise path up to $`t`$ and nothing later; in the wing's terms it is adapted to the filtration $`F_t`$, what is known by time $`t`$. A formula that used $`W_1`$ to set the price at half a year would not be a solution, whatever its algebra.
+- **Constant $`\mu`$ and $`\sigma`$.** The closed form is for this SDE. Most SDEs, including the share with a volatility that moves, have no closed form. They are solved by simulation, which this card also does.
 
 ---
 
@@ -80,64 +86,70 @@ $$dS_t = \mu S_t\,dt + \sigma S_t\,dW_t, \qquad S_t = S_0 \exp\!\Big(\big(\mu - 
 
 ### Step 0: a solution is judged by its increments
 
-An ordinary differential equation $dx/dt = 0.05x$ is checked by differentiating a candidate and comparing slopes ([A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md)). A Brownian path has no slope, so that test is unavailable. What is left is the integral equation: a candidate solves the SDE if, with probability 1, its total change from 0 to $t$ equals the time integral of the drift plus the Ito integral of the noise size. Ito's lemma is the tool that computes a candidate's change in exactly that form.
+An ordinary differential equation $`dx/dt = 0.05x`$ is checked by differentiating a candidate and comparing slopes ([A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md)). A Brownian path has no slope, so that test is unavailable. What is left is the integral equation: a candidate solves the SDE if, with probability 1, its total change from 0 to $`t`$ equals the time integral of the drift plus the Ito integral of the noise size. Ito's lemma is the tool that computes a candidate's change in exactly that form.
 
 ### Step 1: read the rule before solving it
 
-At $100, over one trading day of 1/252 year, the drift adds $\mu S\,\Delta t$ = $0.0198. The noise adds $\sigma S$ times a Brownian step of standard deviation $\sqrt{1/252}$, a shove with standard deviation $1.2599. The shove is 63.5 times the push. Day to day, the share is almost pure noise.
+At $100, over one trading day of 1/252 year, the drift adds $`\mu S\,\Delta t`$ = $0.0198. The noise adds $`\sigma S`$ times a Brownian step of standard deviation $`\sqrt{1/252}`$, a shove with standard deviation $1.2599. The shove is 63.5 times the push. Day to day, the share is almost pure noise.
 
-Over $t$ years the drift's total grows like $\mu t$ and the noise's spread like $\sigma\sqrt{t}$. They are equal when $t = \sigma^2/\mu^2$, at 16 years. That is the whole reading: the noise wins over a day, the drift over a decade.
+Over $`t`$ years the drift's total grows like $`\mu t`$ and the noise's spread like $`\sigma\sqrt{t}`$. They are equal when $`t = \sigma^2/\mu^2`$, at 16 years. That is the whole reading: the noise wins over a day, the drift over a decade.
 
 ### Step 2: find the candidate by taking logarithms
 
-Prices multiply, so try the logarithm $Y_t = \ln S_t$. Ito's lemma for a function $g$ of $S_t$ says $dg = g'(S)\,dS + \tfrac12 g''(S)\,(dS)^2$, where $(dS)^2 = \sigma^2 S^2\,dt$ because $(dW_t)^2 = dt$ ([Ito's lemma](02-itos-lemma.md)). With $g = \ln$, $g' = 1/S$ and $g'' = -1/S^2$:
+Prices multiply, so try the logarithm $`Y_t = \ln S_t`$. Ito's lemma for a function $`g`$ of $`S_t`$ says $`dg = g'(S)\,dS + \tfrac12 g''(S)\,(dS)^2`$, where $`(dS)^2 = \sigma^2 S^2\,dt`$ because $`(dW_t)^2 = dt`$ ([Ito's lemma](02-itos-lemma.md)). With $`g = \ln`$, $`g' = 1/S`$ and $`g'' = -1/S^2`$:
 
-$$dY_t = \frac{1}{S_t}\big(\mu S_t\,dt + \sigma S_t\,dW_t\big) - \frac{1}{2}\frac{1}{S_t^2}\,\sigma^2 S_t^2\,dt = \big(\mu - \tfrac12\sigma^2\big)dt + \sigma\,dW_t .$$
+```math
+dY_t = \frac{1}{S_t}\big(\mu S_t\,dt + \sigma S_t\,dW_t\big) - \frac{1}{2}\frac{1}{S_t^2}\,\sigma^2 S_t^2\,dt = \big(\mu - \tfrac12\sigma^2\big)dt + \sigma\,dW_t .
+```
 
-The coefficients are now constants. The integral equation for $Y$ integrates at once: $Y_t = Y_0 + (\mu - \tfrac12\sigma^2)t + \sigma W_t$. Exponentiate and the candidate appears. For the share, the log drifts at 0.05 − 0.02 = 0.03 a year.
+The coefficients are now constants. The integral equation for $`Y`$ integrates at once: $`Y_t = Y_0 + (\mu - \tfrac12\sigma^2)t + \sigma W_t`$. Exponentiate and the candidate appears. For the share, the log drifts at 0.05 − 0.02 = 0.03 a year.
 
 This step assumed a positive solution exists, so it found a candidate, not a proof. The proof is the next step.
 
 ### Step 3: verify the candidate by Ito's lemma
 
-Write the candidate as a function of time and Brownian position: $S_t = f(t, W_t)$ with $f(t, w) = S_0 e^{at + \sigma w}$ and $a = \mu - \tfrac12\sigma^2$. Its slopes are $f_t = a f$, $f_w = \sigma f$ and $f_{ww} = \sigma^2 f$. Ito's lemma in time and $W$ reads
+Write the candidate as a function of time and Brownian position: $`S_t = f(t, W_t)`$ with $`f(t, w) = S_0 e^{at + \sigma w}`$ and $`a = \mu - \tfrac12\sigma^2`$. Its slopes are $`f_t = a f`$, $`f_w = \sigma f`$ and $`f_{ww} = \sigma^2 f`$. Ito's lemma in time and $`W`$ reads
 
-$$df = \big(f_t + \tfrac12 f_{ww}\big)\,dt + f_w\,dW_t = \big(a + \tfrac12\sigma^2\big) f\,dt + \sigma f\,dW_t = \mu S_t\,dt + \sigma S_t\,dW_t .$$
+```math
+df = \big(f_t + \tfrac12 f_{ww}\big)\,dt + f_w\,dW_t = \big(a + \tfrac12\sigma^2\big) f\,dt + \sigma f\,dW_t = \mu S_t\,dt + \sigma S_t\,dW_t .
+```
 
-That is the share's SDE, term for term. The candidate also starts at $f(0, 0) = S_0$, and it uses only $W_t$, so it is built from the past. All three conditions hold.
+That is the share's SDE, term for term. The candidate also starts at $`f(0, 0) = S_0`$, and it uses only $`W_t`$, so it is built from the past. All three conditions hold.
 
-The code repeats this with no algebra: it measures $f_t$, $f_w$ and $f_{ww}$ by finite differences at $t$ = 0.5, $w$ = 0.3, and prints a drift per dollar of 0.050000 and a noise size per dollar of 0.200000. The ordinary-calculus guess $S_0 e^{\mu t + \sigma W_t}$ prints a drift of 0.070000: it solves an SDE with drift $\mu + \tfrac12\sigma^2$, not this one.
+The code repeats this with no algebra: it measures $`f_t`$, $`f_w`$ and $`f_{ww}`$ by finite differences at $`t`$ = 0.5, $`w`$ = 0.3, and prints a drift per dollar of 0.050000 and a noise size per dollar of 0.200000. The ordinary-calculus guess $`S_0 e^{\mu t + \sigma W_t}`$ prints a drift of 0.070000: it solves an SDE with drift $`\mu + \tfrac12\sigma^2`$, not this one.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** On a probability space carrying a Brownian motion $W$ with its filtration, the process $S_t = S_0\exp(at + \sigma W_t)$, $a = \mu - \tfrac12\sigma^2$, solves $dS = \mu S\,dt + \sigma S\,dW$, and any continuous adapted solution $X$ with $X_0 = S_0$ equals $S$ for all $t$, almost surely.
+**Claim.** On a probability space carrying a Brownian motion $`W`$ with its filtration, the process $`S_t = S_0\exp(at + \sigma W_t)`$, $`a = \mu - \tfrac12\sigma^2`$, solves $`dS = \mu S\,dt + \sigma S\,dW`$, and any continuous adapted solution $`X`$ with $`X_0 = S_0`$ equals $`S`$ for all $`t`$, almost surely.
 
-**1. It is a solution.** $f(t,w) = S_0 e^{at+\sigma w}$ is twice continuously differentiable. Ito's formula in integral form gives, for every $t$, almost surely,
-$S_t - S_0 = \int_0^t (f_t + \tfrac12 f_{ww})(s, W_s)\,ds + \int_0^t f_w(s, W_s)\,dW_s = \int_0^t \mu S_s\,ds + \int_0^t \sigma S_s\,dW_s.$
-The Ito integral is defined because $\sigma S_s$ is adapted and $E\int_0^t S_s^2\,ds = \int_0^t S_0^2 e^{(2\mu + \sigma^2)s}\,ds < \infty$, using $E[e^{cW_s}] = e^{c^2 s/2}$.
+**1. It is a solution.** $`f(t,w) = S_0 e^{at+\sigma w}`$ is twice continuously differentiable. Ito's formula in integral form gives, for every $`t`$, almost surely,
+$`S_t - S_0 = \int_0^t (f_t + \tfrac12 f_{ww})(s, W_s)\,ds + \int_0^t f_w(s, W_s)\,dW_s = \int_0^t \mu S_s\,ds + \int_0^t \sigma S_s\,dW_s.`$
+The Ito integral is defined because $`\sigma S_s`$ is adapted and $`E\int_0^t S_s^2\,ds = \int_0^t S_0^2 e^{(2\mu + \sigma^2)s}\,ds < \infty`$, using $`E[e^{cW_s}] = e^{c^2 s/2}`$.
 
-**2. It is the only one.** $S$ is positive, so $R_t = 1/S_t = S_0^{-1}\exp(-at - \sigma W_t)$ is defined, and Ito's formula gives $dR = (-a + \tfrac12\sigma^2)R\,dt - \sigma R\,dW = (-\mu + \sigma^2)R\,dt - \sigma R\,dW$. Let $X$ be any solution. By the product rule ([Ito's product rule](03-ito-product-rule.md)), $d(XR) = X\,dR + R\,dX + d[X, R]$, where the cross term is $d[X,R] = (\sigma X)(-\sigma R)\,dt$. Collecting,
-$d(XR) = XR\big[(-\mu + \sigma^2)\,dt - \sigma\,dW + \mu\,dt + \sigma\,dW - \sigma^2\,dt\big] = 0.$
-So $X_t R_t = X_0 R_0 = 1$ for all $t$, almost surely, and $X_t = S_t$. The Lipschitz theorem of [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) gives the same conclusion for every SDE with well-behaved coefficients, by Picard iteration: put a guess into the right side of the integral equation, and repeat with each result until it settles.
+**2. It is the only one.** $`S`$ is positive, so $`R_t = 1/S_t = S_0^{-1}\exp(-at - \sigma W_t)`$ is defined, and Ito's formula gives $`dR = (-a + \tfrac12\sigma^2)R\,dt - \sigma R\,dW = (-\mu + \sigma^2)R\,dt - \sigma R\,dW`$. Let $`X`$ be any solution. By the product rule ([Ito's product rule](03-ito-product-rule.md)), $`d(XR) = X\,dR + R\,dX + d[X, R]`$, where the cross term is $`d[X,R] = (\sigma X)(-\sigma R)\,dt`$. Collecting,
+$`d(XR) = XR\big[(-\mu + \sigma^2)\,dt - \sigma\,dW + \mu\,dt + \sigma\,dW - \sigma^2\,dt\big] = 0.`$
+So $`X_t R_t = X_0 R_0 = 1`$ for all $`t`$, almost surely, and $`X_t = S_t`$. The Lipschitz theorem of [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) gives the same conclusion for every SDE with well-behaved coefficients, by Picard iteration: put a guess into the right side of the integral equation, and repeat with each result until it settles.
 
 </details>
 
 ### Step 4: verify the candidate on a path, by adding up the integral equation
 
-The integral equation can also be checked directly. Draw one Brownian path on a fine grid of $n$ steps. Compute the candidate at every grid point. Then form the residual: the candidate's total change, minus the sum of drift × step, minus the sum of noise size × Brownian step. For a true solution the residual shrinks to 0 as the grid refines.
+The integral equation can also be checked directly. Draw one Brownian path on a fine grid of $`n`$ steps. Compute the candidate at every grid point. Then form the residual: the candidate's total change, minus the sum of drift × step, minus the sum of noise size × Brownian step. For a true solution the residual shrinks to 0 as the grid refines.
 
-On one path with $W_1$ = 1.3049, the claimed solution's residual is −0.7572 at $n$ = 16, −0.5412 at 256, +0.0152 at 4096 and −0.0063 at 65536. A single path wanders on the way down, but the residual goes to 0. The ordinary-calculus guess settles at +2.4919 instead. That leftover is the term its author forgot: $\tfrac12\sigma^2$ times the time integral of the price, which on this path is 2.4983.
+On one path with $`W_1`$ = 1.3049, the claimed solution's residual is −0.7572 at $`n`$ = 16, −0.5412 at 256, +0.0152 at 4096 and −0.0063 at 65536. A single path wanders on the way down, but the residual goes to 0. The ordinary-calculus guess settles at +2.4919 instead. That leftover is the term its author forgot: $`\tfrac12\sigma^2`$ times the time integral of the price, which on this path is 2.4983.
 
 Weighting each Brownian step by the average of the noise size at its two ends, the midpoint reading, flips the verdict. Now the ordinary-calculus guess reaches +0.0000 and the claimed solution sticks at −2.4724. Ordinary calculus is exact for the midpoint reading. That is why mixing the two silently produces a wrong answer that looks right.
 
 ### Step 5: simulate when no formula exists
 
-Euler's scheme for SDEs, called Euler–Maruyama, turns the integral equation into a loop. Split the year into $n$ steps of $\Delta t = 1/n$ and repeat
+Euler's scheme for SDEs, called Euler–Maruyama, turns the integral equation into a loop. Split the year into $`n`$ steps of $`\Delta t = 1/n`$ and repeat
 
-$$S_{k+1} = S_k + \mu S_k\,\Delta t + \sigma S_k\,\sqrt{\Delta t}\,Z_k ,$$
+```math
+S_{k+1} = S_k + \mu S_k\,\Delta t + \sigma S_k\,\sqrt{\Delta t}\,Z_k ,
+```
 
-with $Z_k$ a fresh standard normal draw. The noise size is taken at the start of the step, as the Ito reading requires. The share has an exact solution, so the scheme's error can be measured. Run both on the same Brownian steps, over 4000 simulated years, and average the gap at year end:
+with $`Z_k`$ a fresh standard normal draw. The noise size is taken at the start of the step, as the Ito reading requires. The share has an exact solution, so the scheme's error can be measured. Run both on the same Brownian steps, over 4000 simulated years, and average the gap at year end:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -150,7 +162,7 @@ xychart-beta
 
 One line: the average of |Euler − exact| at year end, $1.1638, $0.5995, $0.3038 and $0.1486, each with a standard error below 2 cents. Each fourfold refinement halves the gap. From 4 to 256 steps, 64 times as many, the gap falls by a factor of 7.83, close to the square root of 64. An error that falls like the square root of the step is called strong order one half; [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) proves it.
 
-The same 4000 years check the solution's law. The exact formula gives a mean of $105.1271 and a variance of 451.03. The simulation gives $105.6213 ± 0.3363 and 452.33 ± 12.52, both inside the 4 standard errors the asserts allow. The mean of $\ln(S_1/S_0)$ comes out at 0.0350 ± 0.0031, against 0.03.
+The same 4000 years check the solution's law. The exact formula gives a mean of $105.1271 and a variance of 451.03. The simulation gives $105.6213 ± 0.3363 and 452.33 ± 12.52, both inside the 4 standard errors the asserts allow. The mean of $`\ln(S_1/S_0)`$ comes out at 0.0350 ± 0.0031, against 0.03.
 
 The share of years ending below $100 is 0.4308 ± 0.0078, against 0.4404 from the formula. That sample is too small to rule out 0.4013, the chance the ordinary-calculus guess gives, so the code also draws 20000 one-step years of the exact solution: 0.4394 ± 0.0035, 11 standard errors from 0.4013.
 
@@ -160,19 +172,19 @@ The share of years ending below $100 is 0.4308 ± 0.0078, against 0.4404 from th
 
 ## Worked numbers, by hand
 
-The share: $S_0$ = $100, $\mu$ = 0.05, $\sigma$ = 0.20 a year, one year ahead. The last four rows, and the first row of What breaks, are the numbers [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md) derives from this solution's law; they are repeated here to read the solution back.
+The share: $`S_0`$ = $100, $`\mu`$ = 0.05, $`\sigma`$ = 0.20 a year, one year ahead. The last four rows, and the first row of What breaks, are the numbers [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md) derives from this solution's law; they are repeated here to read the solution back.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| log drift $\mu - \tfrac12\sigma^2$ | 0.05 − 0.5 × 0.04 | 0.03 |
+| log drift $`\mu - \tfrac12\sigma^2`$ | 0.05 − 0.5 × 0.04 | 0.03 |
 | one day's drift at $100 | 0.05 × 100 / 252 | $0.0198 |
 | one day's noise sd at $100 | 0.20 × 100 × √(1/252) | $1.2599 |
-| one Euler day, $Z$ = 1 | 100 + 0.0198 + 1.2599 | $101.2797 |
+| one Euler day, $`Z`$ = 1 | 100 + 0.0198 + 1.2599 | $101.2797 |
 | exact, same day and Brownian step | 100 × e^(0.03/252 + 0.2 × 0.0630) | $101.2799 |
-| solution at $W_1$ = 0.5 | 100 × e^(0.03 + 0.2 × 0.5) = 100 × e^0.13 | **$113.8828** |
+| solution at $`W_1`$ = 0.5 | 100 × e^(0.03 + 0.2 × 0.5) = 100 × e^0.13 | **$113.8828** |
 | ordinary-calculus guess, same path | 100 × e^(0.05 + 0.1) | $116.1834 |
-| mean after a year, $S_0 e^{\mu}$ | 100 × e^0.05 | $105.1271 |
-| median after a year, $S_0 e^{0.03}$ | 100 × e^0.03 | $103.0455 |
+| mean after a year, $`S_0 e^{\mu}`$ | 100 × e^0.05 | $105.1271 |
+| median after a year, $`S_0 e^{0.03}`$ | 100 × e^0.03 | $103.0455 |
 | standard deviation | 100 × e^0.05 × √(e^0.04 − 1) | $21.2374 |
 | chance of ending below $100 | normal chance below −0.03/0.2 = −0.15 | 0.4404 |
 
@@ -182,10 +194,10 @@ A path that has wandered half a unit up by year end puts the share at $113.88. A
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Solve by the ordinary chain rule, $S_0 e^{\mu t + \sigma W_t}$ | mean $107.2508, median $105.1271 (right: $105.1271 and $103.0455) | the $\tfrac12\sigma^2$ term from $(dW)^2 = dt$ was dropped; this is the midpoint reading's solution |
+| Solve by the ordinary chain rule, $`S_0 e^{\mu t + \sigma W_t}`$ | mean $107.2508, median $105.1271 (right: $105.1271 and $103.0455) | the $`\tfrac12\sigma^2`$ term from $`(dW)^2 = dt`$ was dropped; this is the midpoint reading's solution |
 | Check the right solution with midpoint sums | residual −2.4724, not 0 | the Ito integral uses the start of each step |
-| Daily noise as $\sigma$/252 | 0.0794 percent a day (right: 1.2599 percent) | Brownian variance grows with time, so the size grows with its square root |
-| One Euler step of a year, $\sigma$ = 0.8 | price below 0 with chance 0.0939 ± 0.0021 (exact 0.0947) | a step too long for the noise; the true solution is never negative |
+| Daily noise as $`\sigma`$/252 | 0.0794 percent a day (right: 1.2599 percent) | Brownian variance grows with time, so the size grows with its square root |
+| One Euler step of a year, $`\sigma`$ = 0.8 | price below 0 with chance 0.0939 ± 0.0021 (exact 0.0947) | a step too long for the noise; the true solution is never negative |
 
 The code prints every row. The first is the common one: quoting a share's 5 percent drift as its typical growth mixes the two calculi.
 
@@ -195,7 +207,7 @@ The code prints every row. The first is the common one: quoting a share's 5 perc
 
 Five roads: the formula, with the normal chance by Simpson's rule on the bell curve; Ito's lemma by finite differences; both candidates plugged into the integral equation on one path of 65536 Brownian steps, with left and midpoint sums; Euler–Maruyama against the exact solution on the same Brownian steps at four step sizes; and 4000 simulated years, each estimate with its standard error. Random draws come from SplitMix64 with seed 20260930 (plus 1, 2 and 3 for the pictured year, the 4000 years, and 20000 one-step years for the long Euler step and the chance of ending below $100), with normals by Box–Muller written out.
 
-The asserts compare the finite-difference drift with $\mu$, the residuals with zero and with the separately computed missing term, the error ratio with its expected range, and every simulated number with the formula within 4 standard errors; the 20000-year chance of ending below $100 must also sit more than 4 standard errors from the ordinary-calculus 0.4013.
+The asserts compare the finite-difference drift with $`\mu`$, the residuals with zero and with the separately computed missing term, the error ratio with its expected range, and every simulated number with the formula within 4 standard errors; the 20000-year chance of ending below $100 must also sit more than 4 standard errors from the ordinary-calculus 0.4013.
 
 ### Python
 
@@ -585,14 +597,14 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves Steps 2 and 3 of Why it works, and the usual mistake, for any constant $\mu$ and $\sigma$.
+Lean proves Steps 2 and 3 of Why it works, and the usual mistake, for any constant $`\mu`$ and $`\sigma`$.
 
-- Take $f(t, w) = S_0 e^{at + \sigma w}$ with $a = \mu - \tfrac12\sigma^2$. Then $f(0, 0) = S_0$: the formula starts at today's price.
-- Take the same $f$ at any time and any Brownian position. Then its drift $f_t + \tfrac12 f_{ww}$ equals $\mu f$, and its noise size $f_w$ equals $\sigma f$.
-- Suppose a positive price follows $dS = \mu S\,dt + \sigma S\,dW$, and take $g = \ln$. Then Ito's lemma gives the logarithm the constant drift $\mu - \tfrac12\sigma^2$ and the constant noise size $\sigma$.
-- Take the ordinary-calculus guess $S_0 e^{\mu t + \sigma w}$. Then its noise size is $\sigma$ times it, but its drift is $(\mu + \tfrac12\sigma^2)$ times it, not $\mu$ times it.
-- Take the share, with $\mu$ = 0.05 and $\sigma$ = 0.20. Then the log drift is 0.03, the guess's drift is 0.07, and $\sigma^2/\mu^2$ = 16 years.
-- Take $W_1$ = 0.5. Then the solution's exponent is 0.13 and the guess's is 0.15.
+- Take $`f(t, w) = S_0 e^{at + \sigma w}`$ with $`a = \mu - \tfrac12\sigma^2`$. Then $`f(0, 0) = S_0`$: the formula starts at today's price.
+- Take the same $`f`$ at any time and any Brownian position. Then its drift $`f_t + \tfrac12 f_{ww}`$ equals $`\mu f`$, and its noise size $`f_w`$ equals $`\sigma f`$.
+- Suppose a positive price follows $`dS = \mu S\,dt + \sigma S\,dW`$, and take $`g = \ln`$. Then Ito's lemma gives the logarithm the constant drift $`\mu - \tfrac12\sigma^2`$ and the constant noise size $`\sigma`$.
+- Take the ordinary-calculus guess $`S_0 e^{\mu t + \sigma w}`$. Then its noise size is $`\sigma`$ times it, but its drift is $`(\mu + \tfrac12\sigma^2)`$ times it, not $`\mu`$ times it.
+- Take the share, with $`\mu`$ = 0.05 and $`\sigma`$ = 0.20. Then the log drift is 0.03, the guess's drift is 0.07, and $`\sigma^2/\mu^2`$ = 16 years.
+- Take $`W_1`$ = 0.5. Then the solution's exponent is 0.13 and the guess's is 0.15.
 - The cut-off −0.03/0.2 for ending below $100 equals −0.15.
 
 Lean has no Ito integral yet, so the integral equation on a path and the simulations by Euler's scheme are left to the Python and Rust checks.
@@ -718,10 +730,10 @@ example : -(3 / 100 : ℚ) / (1 / 5) = -15 / 100 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Solving an Ito equation with ordinary calculus.** The rule $dS = \mu S\,dt + \sigma S\,dW$ looks like $dx/dt = \mu x$ with noise added, and ordinary calculus answers $S_0 e^{\mu t + \sigma W_t}$. That process satisfies a different SDE, with drift $\mu + \tfrac12\sigma^2$. Its mean after a year is $107.2508 instead of $105.1271, and its median $105.1271 instead of $103.0455. The Brownian step has size $\sqrt{dt}$, so its square is of size $dt$ and cannot be dropped; Ito's lemma keeps it.
+> **Solving an Ito equation with ordinary calculus.** The rule $`dS = \mu S\,dt + \sigma S\,dW`$ looks like $`dx/dt = \mu x`$ with noise added, and ordinary calculus answers $`S_0 e^{\mu t + \sigma W_t}`$. That process satisfies a different SDE, with drift $`\mu + \tfrac12\sigma^2`$. Its mean after a year is $107.2508 instead of $105.1271, and its median $105.1271 instead of $103.0455. The Brownian step has size $`\sqrt{dt}`$, so its square is of size $`dt`$ and cannot be dropped; Ito's lemma keeps it.
 >
-> - **Reading $dW_t/dt$ as a rate.** It does not exist. The path has no slope, and $dW_t$ means only "inside an Ito integral".
-> - **Reading $\mu$ as the typical growth.** The mean grows at $\mu$ = 5 percent a year; the median at $\mu - \tfrac12\sigma^2$ = 3 percent, and 44.04 percent of years end below the start.
+> - **Reading $`dW_t/dt`$ as a rate.** It does not exist. The path has no slope, and $`dW_t`$ means only "inside an Ito integral".
+> - **Reading $`\mu`$ as the typical growth.** The mean grows at $`\mu`$ = 5 percent a year; the median at $`\mu - \tfrac12\sigma^2`$ = 3 percent, and 44.04 percent of years end below the start.
 > - **Treating one simulated path as the answer.** The pictured year ends at $124.55; another seed ends elsewhere. Claims about the law need many paths and a standard error, such as $105.6213 ± 0.3363 for the mean.
 > - **Trusting a coarse Euler step.** With 4 steps a year the scheme is off by $1.1638 on average, and with one long step and large noise it can print a negative share price.
 
@@ -735,7 +747,7 @@ example : -(3 / 100 : ℚ) / (1 / 5) = -15 / 100 := by norm_num
 - **Physics and biology.** A pollen grain in water and a population with random good and bad years are each modelled as a drift plus a noise times a Brownian step.
 
 > **Say it back**
-> A stochastic differential equation gives a quantity's small change as a drift times the time plus a noise size times a Brownian step. The $dW_t$ is shorthand for an Ito integral, which weights each Brownian step by the noise size at its start. A solution is a process built from the noise so far whose changes add up to the integral equation, and Ito's lemma checks a candidate. For the share, $dS = 0.05\,S\,dt + 0.20\,S\,dW$ is solved by $S_t = 100\,e^{0.03t + 0.2W_t}$, and the ordinary-calculus answer $100\,e^{0.05t + 0.2W_t}$ fails the check. Euler's scheme simulates any SDE step by step, with an error that halves each time the step is cut by four.
+> A stochastic differential equation gives a quantity's small change as a drift times the time plus a noise size times a Brownian step. The $`dW_t`$ is shorthand for an Ito integral, which weights each Brownian step by the noise size at its start. A solution is a process built from the noise so far whose changes add up to the integral equation, and Ito's lemma checks a candidate. For the share, $`dS = 0.05\,S\,dt + 0.20\,S\,dW`$ is solved by $`S_t = 100\,e^{0.03t + 0.2W_t}`$, and the ordinary-calculus answer $`100\,e^{0.05t + 0.2W_t}`$ fails the check. Euler's scheme simulates any SDE step by step, with an error that halves each time the step is cut by four.
 
 ---
 

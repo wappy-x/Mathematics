@@ -32,54 +32,60 @@ xychart-beta
     line [1.000, 0.201, 0.094, 0.050, 0.032, 0.022, 0.018, 0.016]
 ```
 
-Orange: clustering, as a share of the ring's 0.6667. Green: path length, as a share of the ring's 250.45. The steps along the bottom are not evenly spaced: each is about three times the last. Rewire one link in a thousand ($\beta = 0.001$) and paths shrink to 0.201 of their length, to 50.42 handshakes, while clustering has barely moved. By $\beta = 0.1$ the network is a **small world**: it keeps 0.733 of the ring's clustering, and its 5.60 handshakes are close to pure chance's 3.954.
+Orange: clustering, as a share of the ring's 0.6667. Green: path length, as a share of the ring's 250.45. The steps along the bottom are not evenly spaced: each is about three times the last. Rewire one link in a thousand ($`\beta = 0.001`$) and paths shrink to 0.201 of their length, to 50.42 handshakes, while clustering has barely moved. By $`\beta = 0.1`$ the network is a **small world**: it keeps 0.733 of the ring's clustering, and its 5.60 handshakes are close to pure chance's 3.954.
 
 ---
 
 ## The formula
 
-Notation, in words first. This shelf's notation for degrees starts here. A person's **degree** $k$ is their friend count. The **mean degree** $\langle k\rangle$, read "average k", is the average friend count. The **degree distribution** $p_k$ is the share of people with exactly $k$ friends. Clustering $C$ and path length $L$ are defined in the table. Each model then predicts these three things.
+Notation, in words first. This shelf's notation for degrees starts here. A person's **degree** $`k`$ is their friend count. The **mean degree** $`\langle k\rangle`$, read "average k", is the average friend count. The **degree distribution** $`p_k`$ is the share of people with exactly $`k`$ friends. Clustering $`C`$ and path length $`L`$ are defined in the table. Each model then predicts these three things.
 
-**Pure chance**, Erdős–Rényi: $n$ people, links placed at random, so each pair is linked with chance $p = \langle k\rangle/(n-1)$.
+**Pure chance**, Erdős–Rényi: $`n`$ people, links placed at random, so each pair is linked with chance $`p = \langle k\rangle/(n-1)`$.
 
-$$p_k \approx e^{-\langle k\rangle}\frac{\langle k\rangle^k}{k!}, \qquad C \approx p, \qquad L \approx \frac{\ln n - \gamma}{\ln \langle k\rangle} + \frac12$$
+```math
+p_k \approx e^{-\langle k\rangle}\frac{\langle k\rangle^k}{k!}, \qquad C \approx p, \qquad L \approx \frac{\ln n - \gamma}{\ln \langle k\rangle} + \frac12
+```
 
-**Read it aloud:** friend counts follow the Poisson law (the count law for many small, independent chances) with average $\langle k\rangle$; two of your friends are linked only with the background chance $p$; and the path length grows like the logarithm of the population divided by the logarithm of the average degree.
+**Read it aloud:** friend counts follow the Poisson law (the count law for many small, independent chances) with average $`\langle k\rangle`$; two of your friends are linked only with the background chance $`p`$; and the path length grows like the logarithm of the population divided by the logarithm of the average degree.
 
-**Ring with rewiring**, Watts–Strogatz: start from a ring where each person is linked to the $h$ nearest on each side, so $\langle k\rangle = 2h$. Then move the far end of each link to a random person with chance $\beta$.
+**Ring with rewiring**, Watts–Strogatz: start from a ring where each person is linked to the $`h`$ nearest on each side, so $`\langle k\rangle = 2h`$. Then move the far end of each link to a random person with chance $`\beta`$.
 
-$$C_0 = \frac{3(h-1)}{2(2h-1)}, \qquad L_0 \approx \frac{n}{4h}, \qquad C(\beta) \approx C_0\,(1-\beta)^3$$
+```math
+C_0 = \frac{3(h-1)}{2(2h-1)}, \qquad L_0 \approx \frac{n}{4h}, \qquad C(\beta) \approx C_0\,(1-\beta)^3
+```
 
 **Read it aloud:** the ring's clustering is three times h minus one over twice two h minus one; its path length is about n over four h; and after rewiring, clustering shrinks by the chance that all three links of a triangle survive.
 
-**Preferential attachment**, Barabási–Albert: people join one at a time, and each newcomer links to $m$ existing people, picking each one with chance proportional to their current degree. So $\langle k\rangle = 2m$.
+**Preferential attachment**, Barabási–Albert: people join one at a time, and each newcomer links to $`m`$ existing people, picking each one with chance proportional to their current degree. So $`\langle k\rangle = 2m`$.
 
-$$p_k = \frac{2m(m+1)}{k(k+1)(k+2)} \quad (k \ge m), \qquad \text{share with } k \text{ or more friends} = \frac{m(m+1)}{k(k+1)}$$
+```math
+p_k = \frac{2m(m+1)}{k(k+1)(k+2)} \quad (k \ge m), \qquad \text{share with } k \text{ or more friends} = \frac{m(m+1)}{k(k+1)}
+```
 
 **Read it aloud:** the share of people with k friends falls like one over k cubed, so the share with at least k falls only like one over k squared: a power-law tail.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of people (vertices) | 5,000 | paths lengthen, but only like $\ln n$ outside the ring |
-| $k$, $j$ | one person's friend count (degree); $j$ is the same count used as a running index in a sum | 10 on the ring | — |
-| $\langle k\rangle$ | mean degree: the average friend count | 10 (9.994 for growth) | paths shorten |
-| $p_k$ | degree distribution: share of people with exactly $k$ friends | Poisson for chance, power law for growth | — |
-| $C$, $C_0$ | clustering: for each person, the share of their friend pairs who are friends; averaged over everyone. $C_0$ is the unrewired ring's | 0.0021, 0.4887, 0.0126; ring 0.6667 | more closed triangles |
-| $L$, $L_0$, $d$ | path length: average handshakes on the shortest chain between two people. $L_0$ is the unrewired ring's; $d$ is a number of handshakes | 3.954, 5.601, 3.447; ring 250.45 | slower spread |
-| $p$ | chance that a given pair is linked, pure chance | 0.0020 | more links, more clustering |
-| $\gamma$ | Euler's constant, a fixed number, about 0.5772 | 0.5772 | — |
-| $h$ | ring neighbours on each side | 5 | more clustering, shorter ring paths |
-| $\beta$ | rewiring chance per ring link (say "beta") | 0.01 and 0.1 | clustering falls slowly, paths fall fast |
-| $t$, $N_k$ | inside the fold: people joined so far, and how many of them have exactly $k$ friends | 5,000 at the end | — |
-| $m$ | links each newcomer brings, preferential attachment | 5 | more hubs, shorter paths |
+| $`n`$ | number of people (vertices) | 5,000 | paths lengthen, but only like $`\ln n`$ outside the ring |
+| $`k`$, $`j`$ | one person's friend count (degree); $`j`$ is the same count used as a running index in a sum | 10 on the ring | — |
+| $`\langle k\rangle`$ | mean degree: the average friend count | 10 (9.994 for growth) | paths shorten |
+| $`p_k`$ | degree distribution: share of people with exactly $`k`$ friends | Poisson for chance, power law for growth | — |
+| $`C`$, $`C_0`$ | clustering: for each person, the share of their friend pairs who are friends; averaged over everyone. $`C_0`$ is the unrewired ring's | 0.0021, 0.4887, 0.0126; ring 0.6667 | more closed triangles |
+| $`L`$, $`L_0`$, $`d`$ | path length: average handshakes on the shortest chain between two people. $`L_0`$ is the unrewired ring's; $`d`$ is a number of handshakes | 3.954, 5.601, 3.447; ring 250.45 | slower spread |
+| $`p`$ | chance that a given pair is linked, pure chance | 0.0020 | more links, more clustering |
+| $`\gamma`$ | Euler's constant, a fixed number, about 0.5772 | 0.5772 | — |
+| $`h`$ | ring neighbours on each side | 5 | more clustering, shorter ring paths |
+| $`\beta`$ | rewiring chance per ring link (say "beta") | 0.01 and 0.1 | clustering falls slowly, paths fall fast |
+| $`t`$, $`N_k`$ | inside the fold: people joined so far, and how many of them have exactly $`k`$ friends | 5,000 at the end | — |
+| $`m`$ | links each newcomer brings, preferential attachment | 5 | more hubs, shorter paths |
 
-Notation clashes on this shelf, in one line: $L$ here is path length, not the Laplacian $L = D - A$ of [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md), and $m$ here is links per newcomer, not the total number of links it counts on [Centrality](01-centrality-and-pagerank.md) and [PageRank by power iteration](02-power-iteration-and-the-damping-factor.md).
+Notation clashes on this shelf, in one line: $`L`$ here is path length, not the Laplacian $`L = D - A`$ of [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md), and $`m`$ here is links per newcomer, not the total number of links it counts on [Centrality](01-centrality-and-pagerank.md) and [PageRank by power iteration](02-power-iteration-and-the-damping-factor.md).
 
 ### When it holds
 
 - **Pure chance needs independent links.** Real friendships are not independent: a friend of a friend is far likelier to be a friend. Ignore that and the model predicts clustering of 0.0021 where the ring keeps 0.6667.
 - **Short paths need a connected network.** Path length is averaged over pairs who *can* reach each other. With only 4 friends each on average, pure chance leaves some pairs with no chain at all, about 1 in 18 of the pairs searched (try changing, below), and "average handshakes" stops describing everybody.
-- **The rewiring formula counts surviving triangles only.** It ignores new triangles formed by chance, so it slightly underestimates: 0.6469 predicted against 0.6488 measured at $\beta = 0.01$.
+- **The rewiring formula counts surviving triangles only.** It ignores new triangles formed by chance, so it slightly underestimates: 0.6469 predicted against 0.6488 measured at $`\beta = 0.01`$.
 - **The power law needs growth *and* preference.** Drop the preference and newcomers pick uniformly: the tail becomes exponential (shrinks by a fixed factor per extra friend), and the network has 1 person with 50 or more friends instead of 64.
 - **The power law is a large-network limit.** At 5,000 people the tail is cut off near the top: no one can have more friends than people have joined. The best-connected person has 273.
 
@@ -93,54 +99,58 @@ Clustering asks about one person's own circle. Path length asks about the whole 
 
 ### Step 1: pure chance gives short paths but no clustering
 
-The [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md) card proves that in this model one person's degree is binomial: a count of 4,999 separate yes-or-no chances, one per possible friend. It is close to Poisson when $p$ is small. The code here uses Erdős and Rényi's own version: exactly 25,000 links, each a uniformly random new pair. That is the same model to the precision that matters.
+The [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md) card proves that in this model one person's degree is binomial: a count of 4,999 separate yes-or-no chances, one per possible friend. It is close to Poisson when $`p`$ is small. The code here uses Erdős and Rényi's own version: exactly 25,000 links, each a uniformly random new pair. That is the same model to the precision that matters.
 
-**Clustering.** Take two of your friends. Whether they are linked is decided by their own random draw, which knows nothing about you. So the chance is just $p = 10/4999 = 0.0020$. Measured: 0.0021.
+**Clustering.** Take two of your friends. Whether they are linked is decided by their own random draw, which knows nothing about you. So the chance is just $`p = 10/4999 = 0.0020`$. Measured: 0.0021.
 
-**Path length.** Start from one person. They have about 10 friends, those have about 10 each, and so on. Within $d$ handshakes they reach roughly $\langle k\rangle^d$ people. That covers all $n$ when $\langle k\rangle^d = n$, so $d = \ln n / \ln\langle k\rangle = 3.6990$. This rough count ignores that the circles overlap near the end and that the first step is special. A careful version, by Fronczak, Fronczak and Hołyst, adds the $-\gamma$ and $+\tfrac12$ corrections and gives 3.9483. The search over the network measures 3.9544.
+**Path length.** Start from one person. They have about 10 friends, those have about 10 each, and so on. Within $`d`$ handshakes they reach roughly $`\langle k\rangle^d`$ people. That covers all $`n`$ when $`\langle k\rangle^d = n`$, so $`d = \ln n / \ln\langle k\rangle = 3.6990`$. This rough count ignores that the circles overlap near the end and that the first step is special. A careful version, by Fronczak, Fronczak and Hołyst, adds the $`-\gamma`$ and $`+\tfrac12`$ corrections and gives 3.9483. The search over the network measures 3.9544.
 
 ### Step 2: the ring has clustering but long paths
 
-**Clustering, by counting.** Number one person's ring friends by their offsets: $-h, \dots, -1$ on one side and $1, \dots, h$ on the other. Two friends are linked when their offsets differ by $h$ or less. On one side, every pair is that close: $h(h-1)/2$ pairs, twice over for both sides. Across the person, offsets $-i$ and $+j$ are linked when $i + j \le h$, which gives $h(h-1)/2$ more. That is $3h(h-1)/2 = 30$ linked pairs out of $h(2h-1) = 45$ pairs of friends. Clustering is $30/45 = 0.6667$, the same for everyone.
+**Clustering, by counting.** Number one person's ring friends by their offsets: $`-h, \dots, -1`$ on one side and $`1, \dots, h`$ on the other. Two friends are linked when their offsets differ by $`h`$ or less. On one side, every pair is that close: $`h(h-1)/2`$ pairs, twice over for both sides. Across the person, offsets $`-i`$ and $`+j`$ are linked when $`i + j \le h`$, which gives $`h(h-1)/2`$ more. That is $`3h(h-1)/2 = 30`$ linked pairs out of $`h(2h-1) = 45`$ pairs of friends. Clustering is $`30/45 = 0.6667`$, the same for everyone.
 
-**Path length, by counting.** Each handshake moves at most $h$ places round the ring. So a person's distance in places, divided by $h$ and rounded up, is their distance in handshakes. Distances run from 1 place to half the ring, so the average is about a quarter of the ring divided by $h$: $5000/20 = 250$. The exact average over every offset is 250.4501, and the search over the network gives the same 250.4501.
+**Path length, by counting.** Each handshake moves at most $`h`$ places round the ring. So a person's distance in places, divided by $`h`$ and rounded up, is their distance in handshakes. Distances run from 1 place to half the ring, so the average is about a quarter of the ring divided by $`h`$: $`5000/20 = 250`$. The exact average over every offset is 250.4501, and the search over the network gives the same 250.4501.
 
 ### Step 3: rewiring keeps the clustering and kills the distance
 
-**Clustering.** A triangle of friends on the ring survives if none of its three links was moved. Each link stays with chance $1-\beta$, separately, so the triangle survives with chance $(1-\beta)^3$. Clustering falls by that factor: $0.6667 \times 0.729 = 0.4860$ at $\beta = 0.1$, against 0.4887 measured. At $\beta = 0.01$ it falls by under 3 percent.
+**Clustering.** A triangle of friends on the ring survives if none of its three links was moved. Each link stays with chance $`1-\beta`$, separately, so the triangle survives with chance $`(1-\beta)^3`$. Clustering falls by that factor: $`0.6667 \times 0.729 = 0.4860`$ at $`\beta = 0.1`$, against 0.4887 measured. At $`\beta = 0.01`$ it falls by under 3 percent.
 
-**Path length.** The ring has $nh = 25{,}000$ links, so $\beta = 0.01$ moves about 250 of them. Each moved link is a shortcut across the ring. A message now walks to the nearest shortcut, jumps, and walks again. With 250 shortcuts the nearest one is rarely far, and the path length drops from 250.45 to 12.634. At $\beta = 0.1$, 2,500 shortcuts, it is 5.601, and 84 percent of pairs are within six handshakes. No formula as simple as Step 1's exists for this middle region; the chart and the code measure it.
+**Path length.** The ring has $`nh = 25{,}000`$ links, so $`\beta = 0.01`$ moves about 250 of them. Each moved link is a shortcut across the ring. A message now walks to the nearest shortcut, jumps, and walks again. With 250 shortcuts the nearest one is rarely far, and the path length drops from 250.45 to 12.634. At $`\beta = 0.1`$, 2,500 shortcuts, it is 5.601, and 84 percent of pairs are within six handshakes. No formula as simple as Step 1's exists for this middle region; the chart and the code measure it.
 
-**Degrees.** Rewiring moves only the far end of a link, so each person keeps the 5 links that start at them, and friend counts stay close to 10: the most anyone has is 12 at $\beta = 0.01$ and 15 at $\beta = 0.1$. The rewired ring has no hubs.
+**Degrees.** Rewiring moves only the far end of a link, so each person keeps the 5 links that start at them, and friend counts stay close to 10: the most anyone has is 12 at $`\beta = 0.01`$ and 15 at $`\beta = 0.1`$. The rewired ring has no hubs.
 
 ### Step 4: preference makes the rich richer, and the tail a power law
 
 When a newcomer picks a person with chance proportional to degree, someone with 40 friends is four times as likely to gain a friend as someone with 10. Early arrivals start ahead and stay ahead.
 
-Count the people with each degree as the network grows. A person of degree $k$ gains a link at a rate proportional to $k$. In the long run the share $p_k$ settles where people arriving at degree $k$ balance people leaving it. That balance gives
+Count the people with each degree as the network grows. A person of degree $`k`$ gains a link at a rate proportional to $`k`$. In the long run the share $`p_k`$ settles where people arriving at degree $`k`$ balance people leaving it. That balance gives
 
-$$p_k = p_{k-1}\,\frac{k-1}{k+2}, \qquad p_m = \frac{2}{m+2}.$$
+```math
+p_k = p_{k-1}\,\frac{k-1}{k+2}, \qquad p_m = \frac{2}{m+2}.
+```
 
-Multiply the ratios from $m$ up to $k$ and almost everything cancels, leaving $p_k = 2m(m+1)/\big(k(k+1)(k+2)\big)$. For the share with $k$ or more, write each term as a difference:
+Multiply the ratios from $`m`$ up to $`k`$ and almost everything cancels, leaving $`p_k = 2m(m+1)/\big(k(k+1)(k+2)\big)`$. For the share with $`k`$ or more, write each term as a difference:
 
-$$\frac{2m(m+1)}{j(j+1)(j+2)} = m(m+1)\left[\frac{1}{j(j+1)} - \frac{1}{(j+1)(j+2)}\right].$$
+```math
+\frac{2m(m+1)}{j(j+1)(j+2)} = m(m+1)\left[\frac{1}{j(j+1)} - \frac{1}{(j+1)(j+2)}\right].
+```
 
-Adding these from $j = k$ upwards, each bracket cancels half of the next, and only $m(m+1)/\big(k(k+1)\big)$ remains. With $m = 5$ that is $30/420 = 0.0714$ for 20 or more friends, about 357 people. The run has 359. Bollobás, Riordan, Spencer and Tusnády proved this law rigorously for a precisely stated version of the model.
+Adding these from $`j = k`$ upwards, each bracket cancels half of the next, and only $`m(m+1)/\big(k(k+1)\big)`$ remains. With $`m = 5`$ that is $`30/420 = 0.0714`$ for 20 or more friends, about 357 people. The run has 359. Bollobás, Riordan, Spencer and Tusnády proved this law rigorously for a precisely stated version of the model.
 
 <details>
 <summary>The balance equation, step by step</summary>
 
-At time $t$ there are about $t$ people and $mt$ links, so the degrees add to $2mt$. A newcomer's $m$ picks land on one given person of degree $k$ with total chance $m \cdot k/(2mt) = k/(2t)$.
+At time $`t`$ there are about $`t`$ people and $`mt`$ links, so the degrees add to $`2mt`$. A newcomer's $`m`$ picks land on one given person of degree $`k`$ with total chance $`m \cdot k/(2mt) = k/(2t)`$.
 
-Let $N_k$ be the number of people with degree $k$. When one newcomer joins, the expected change is
+Let $`N_k`$ be the number of people with degree $`k`$. When one newcomer joins, the expected change is
 
-$$\Delta N_k = \frac{k-1}{2t}N_{k-1} - \frac{k}{2t}N_k \quad (k > m), \qquad \Delta N_m = 1 - \frac{m}{2t}N_m.$$
+$`\displaystyle \Delta N_k = \frac{k-1}{2t}N_{k-1} - \frac{k}{2t}N_k \quad (k > m), \qquad \Delta N_m = 1 - \frac{m}{2t}N_m.`$
 
-The first term counts people moving up from $k-1$, the second people leaving $k$. In the long run $N_k \approx p_k t$, so $\Delta N_k \approx p_k$. Substituting: $p_k = \tfrac{k-1}{2}p_{k-1} - \tfrac{k}{2}p_k$, which rearranges to $p_k = p_{k-1}(k-1)/(k+2)$. The same step for $k = m$ gives $p_m = 1 - \tfrac m2 p_m$, so $p_m = 2/(m+2)$. This is the mean-field (average-behaviour) argument; the rigorous proof controls the random fluctuations around it.
+The first term counts people moving up from $`k-1`$, the second people leaving $`k`$. In the long run $`N_k \approx p_k t`$, so $`\Delta N_k \approx p_k`$. Substituting: $`p_k = \tfrac{k-1}{2}p_{k-1} - \tfrac{k}{2}p_k`$, which rearranges to $`p_k = p_{k-1}(k-1)/(k+2)`$. The same step for $`k = m`$ gives $`p_m = 1 - \tfrac m2 p_m`$, so $`p_m = 2/(m+2)`$. This is the mean-field (average-behaviour) argument; the rigorous proof controls the random fluctuations around it.
 
 </details>
 
-**Without preference** the same balance has every person gaining at the same rate, and each extra friend multiplies the share by $m/(m+1)$: an exponential tail. In the long run the share with 15 or more friends above the minimum, 20 or more in all, is $(5/6)^{15}$, so about 324.5274 of the 5,000 people. The run has 326.
+**Without preference** the same balance has every person gaining at the same rate, and each extra friend multiplies the share by $`m/(m+1)`$: an exponential tail. In the long run the share with 15 or more friends above the minimum, 20 or more in all, is $`(5/6)^{15}`$, so about 324.5274 of the 5,000 people. The run has 326.
 
 Further out, this long-run law does not apply at 5,000 people, because no one has been around long enough. Even the oldest person starts with 5 friends and is picked by each newcomer with chance 5 over the number already joined. So they expect only 39.0549 friends. Reaching 50 takes a lucky draw, and the run has 1.
 
@@ -154,17 +164,17 @@ The example: 5,000 people, 10 friends each on average.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| links | $5000 \times 10 / 2$ | 25,000 |
-| chance a pair is linked, $p$ | $10 / 4999$ | 0.0020 |
-| pure chance, clustering | $C \approx p$ | 0.0020 |
-| $\ln n$ and $\ln\langle k\rangle$ | $\ln 5000$, $\ln 10$ | 8.5172 and 2.3026 |
-| pure chance, rough path length | $8.5172 / 2.3026$ | 3.6990 |
-| ring, clustering $C_0$ | $30 / 45$ | 0.6667 |
-| ring, path length $L_0$ | $5000 / (4 \times 5)$ | 250 |
-| rewired 0.1, clustering | $0.6667 \times 0.9^3 = 0.6667 \times 0.729$ | 0.4860 |
-| growth, share with 20+ friends | $5 \times 6 / (20 \times 21) = 30/420$ | 0.0714 |
-| growth, people with 50+ friends | $5000 \times 30 / (50 \times 51)$ | 58.8235 |
-| **pure chance, path length** | $(8.5172 - 0.5772)/2.3026 + 0.5$ | **3.9483** |
+| links | $`5000 \times 10 / 2`$ | 25,000 |
+| chance a pair is linked, $`p`$ | $`10 / 4999`$ | 0.0020 |
+| pure chance, clustering | $`C \approx p`$ | 0.0020 |
+| $`\ln n`$ and $`\ln\langle k\rangle`$ | $`\ln 5000`$, $`\ln 10`$ | 8.5172 and 2.3026 |
+| pure chance, rough path length | $`8.5172 / 2.3026`$ | 3.6990 |
+| ring, clustering $`C_0`$ | $`30 / 45`$ | 0.6667 |
+| ring, path length $`L_0`$ | $`5000 / (4 \times 5)`$ | 250 |
+| rewired 0.1, clustering | $`0.6667 \times 0.9^3 = 0.6667 \times 0.729`$ | 0.4860 |
+| growth, share with 20+ friends | $`5 \times 6 / (20 \times 21) = 30/420`$ | 0.0714 |
+| growth, people with 50+ friends | $`5000 \times 30 / (50 \times 51)`$ | 58.8235 |
+| **pure chance, path length** | $`(8.5172 - 0.5772)/2.3026 + 0.5`$ | **3.9483** |
 
 So two random people among the 5,000 are about four handshakes apart if friendships were pure chance: six degrees is, if anything, generous for a network this size.
 
@@ -173,10 +183,10 @@ So two random people among the 5,000 are about four handshakes apart if friendsh
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Model friendships as pure chance | clustering 0.0021, against 0.4887 for the rewired ring | Independent links almost never close a triangle |
-| Keep the ring, no long links | path length 250.45, against 5.601 at $\beta = 0.1$ | Every handshake moves at most 5 places |
-| Use the rough $\ln n/\ln\langle k\rangle$ for path length | 3.6990, against 3.9544 measured | Ignores that the circles overlap and the first step is special |
+| Keep the ring, no long links | path length 250.45, against 5.601 at $`\beta = 0.1`$ | Every handshake moves at most 5 places |
+| Use the rough $`\ln n/\ln\langle k\rangle`$ for path length | 3.6990, against 3.9544 measured | Ignores that the circles overlap and the first step is special |
 | Grow the network without preference | best-connected 54, people with 50+ friends 1 | No rich-get-richer, so no power law: against 273 and 64 |
-| Take $m$ as the average degree | 5, against 9.994 | Every link has two ends, so $\langle k\rangle = 2m$ |
+| Take $`m`$ as the average degree | 5, against 9.994 | Every link has two ends, so $`\langle k\rangle = 2m`$ |
 
 ---
 
@@ -598,15 +608,15 @@ Line for line the same as Python, though the two store the networks differently:
 
 ### Lean
 
-Lean proves the ring's clustering for every big enough ring, and preferential attachment's degree law and tail for every $m \ge 1$.
+Lean proves the ring's clustering for every big enough ring, and preferential attachment's degree law and tail for every $`m \ge 1`$.
 
-- Take a ring of $n$ people, each linked to the $h$ nearest on each side, with $h \ge 1$ and $n > 3h$. Then every person has $2h$ friends, and clustering $C_0 = 3(h-1)/(2(2h-1))$.
-- Suppose the shares $p_k$ satisfy Step 4's balance, starting from $p_m = 2/(m+2)$, with $m \ge 1$. Then $p_k = 2m(m+1)/(k(k+1)(k+2))$ for every $k \ge m$.
-- Take $k \ge m \ge 1$. Then the degree law's terms for every $j \ge k$ add up to exactly $m(m+1)/(k(k+1))$.
-- The ring with $h = 5$ has 30 linked friend pairs out of 45, so its clustering is $2/3$.
+- Take a ring of $`n`$ people, each linked to the $`h`$ nearest on each side, with $`h \ge 1`$ and $`n > 3h`$. Then every person has $`2h`$ friends, and clustering $`C_0 = 3(h-1)/(2(2h-1))`$.
+- Suppose the shares $`p_k`$ satisfy Step 4's balance, starting from $`p_m = 2/(m+2)`$, with $`m \ge 1`$. Then $`p_k = 2m(m+1)/(k(k+1)(k+2))`$ for every $`k \ge m`$.
+- Take $`k \ge m \ge 1`$. Then the degree law's terms for every $`j \ge k`$ add up to exactly $`m(m+1)/(k(k+1))`$.
+- The ring with $`h = 5`$ has 30 linked friend pairs out of 45, so its clustering is $`2/3`$.
 - Summed over every offset from one person, the ring's handshakes total exactly 1,252,000.
-- At $\beta = 0.1$, the rewiring formula gives $C_0 (1-\beta)^3 = 243/500$, which is 0.486.
-- With $m = 5$, the share with 20 or more friends is $30/420 = 1/14$, about 357 of 5,000 people.
+- At $`\beta = 0.1`$, the rewiring formula gives $`C_0 (1-\beta)^3 = 243/500`$, which is 0.486.
+- With $`m = 5`$, the share with 20 or more friends is $`30/420 = 1/14`$, about 357 of 5,000 people.
 
 Lean does not draw random networks, so the seeded runs and the approximate formulas are left to the Python and Rust checks.
 
@@ -936,20 +946,20 @@ example : 2 * 5 = 10 := by norm_num
 > **Try changing**
 > - Guess first: halve the friends under pure chance. Set the links to `10000`, 4 friends each. The path length rises to **6.231**, and the formula gives 6.227. But only 0.9453 of the pairs searched (from every 10th person) are connected at all: about 1 in 18 has no chain.
 > - Guess first: fewer links per newcomer. Set `m = 2`. Hubs survive: the best-connected person has **212** friends and 13 people have 50 or more. Paths lengthen to 4.708.
-> - Guess first: a thinner ring. Set `h = 2` with $\beta = 0.01$. Clustering is 0.4845 but paths are **38.915**, and only 0.0066 of pairs are within six handshakes: 4 friends each and 1 percent shortcuts are not a small world at this size.
-> - Guess first: rewire everything. Read the last chart point, $\beta = 1$: path length 3.97, clustering 0.003 of the ring's. Fully rewired, the ring is close to pure chance, though not exactly: each person keeps the 5 links that start at them.
+> - Guess first: a thinner ring. Set `h = 2` with $`\beta = 0.01`$. Clustering is 0.4845 but paths are **38.915**, and only 0.0066 of pairs are within six handshakes: 4 friends each and 1 percent shortcuts are not a small world at this size.
+> - Guess first: rewire everything. Read the last chart point, $`\beta = 1`$: path length 3.97, clustering 0.003 of the ring's. Fully rewired, the ring is close to pure chance, though not exactly: each person keeps the 5 links that start at them.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Thinking "small world" just means short paths.** Pure chance already gives short paths: 3.954 handshakes among 5,000 people. The surprise in real networks is short paths *together with* high clustering, which pure chance cannot give (0.0021). A small world is judged against both: clustering far above the random network's, path length close to it. The rewired ring at $\beta = 0.1$ has 0.4887 and 5.601.
+> **Thinking "small world" just means short paths.** Pure chance already gives short paths: 3.954 handshakes among 5,000 people. The surprise in real networks is short paths *together with* high clustering, which pure chance cannot give (0.0021). A small world is judged against both: clustering far above the random network's, path length close to it. The rewired ring at $`\beta = 0.1`$ has 0.4887 and 5.601.
 >
 > Smaller traps:
 > - **Your friends are not typical.** Pick a friendship at random and look at one end: you are picking people in proportion to their friend count. Under growth with preference, that friend has on average **25.8683** friends, while the average person has 9.994. Under pure chance the gap is small: 10.9802.
-> - **The newcomer's link count is not the average degree.** Each newcomer brings $m = 5$ links, but each link adds a friend at both ends, so the average is 9.994, not 5.
-> - **The rough path-length count runs short.** $\ln n / \ln\langle k\rangle$ gives 3.6990; the run gives 3.9544.
+> - **The newcomer's link count is not the average degree.** Each newcomer brings $`m = 5`$ links, but each link adds a friend at both ends, so the average is 9.994, not 5.
+> - **The rough path-length count runs short.** $`\ln n / \ln\langle k\rangle`$ gives 3.6990; the run gives 3.9544.
 > - **Judging hubs by a near cutoff.** Growth without preference already gives 326 people with 20 or more friends, close to the 359 with preference. The two differ further out: 1 person against 64 with 50 or more. A tail is read far from the average, never near it.
 
 ---
@@ -963,7 +973,7 @@ example : 2 * 5 = 10 := by norm_num
 - **A city's bike-share stations.** Link two stations when riders travel between them. Most links then join nearby stations and a few join distant ones, which is the rewired ring's shape: local clusters, plus long hops that make the city small.
 
 > **Say it back**
-> Three recipes build networks with the same average friend count. Pure chance gives short paths but almost no clustering. A ring gives clustering but long paths; moving a few of its links to random people keeps the clustering and collapses the distance, because clustering is local and distance is global. Growth where newcomers prefer popular people gives hubs and a power-law tail, $m(m+1)/(k(k+1))$, and short paths, but little clustering. Real social networks need both tricks.
+> Three recipes build networks with the same average friend count. Pure chance gives short paths but almost no clustering. A ring gives clustering but long paths; moving a few of its links to random people keeps the clustering and collapses the distance, because clustering is local and distance is global. Growth where newcomers prefer popular people gives hubs and a power-law tail, $`m(m+1)/(k(k+1))`$, and short paths, but little clustering. Real social networks need both tricks.
 
 ---
 
@@ -991,5 +1001,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Travers, Jeffrey, and Stanley Milgram. "An Experimental Study of the Small World Problem." *Sociometry* 32, no. 4 (1969): 425–443. [doi:10.2307/2786545](https://doi.org/10.2307/2786545). The letter-chain experiment behind "six degrees".
 - Watts, Duncan J., and Steven H. Strogatz. "Collective dynamics of 'small-world' networks." *Nature* 393 (1998): 440–442. [doi:10.1038/30918](https://doi.org/10.1038/30918). The rewired ring, clustering and path length, and the chart on this card.
 - Barabási, Albert-László, and Réka Albert. "Emergence of Scaling in Random Networks." *Science* 286 (1999): 509–512. [doi:10.1126/science.286.5439.509](https://doi.org/10.1126/science.286.5439.509). Growth with preferential attachment and its power-law degrees.
-- Bollobás, Béla, Oliver Riordan, Joel Spencer, and Gábor Tusnády. "The degree sequence of a scale-free random graph process." *Random Structures & Algorithms* 18, no. 3 (2001): 279–290. [doi:10.1002/rsa.1009](https://doi.org/10.1002/rsa.1009). The rigorous proof of the degree law $2m(m+1)/(k(k+1)(k+2))$.
-- Fronczak, Agata, Piotr Fronczak, and Janusz A. Hołyst. "Average path length in random networks." *Physical Review E* 70 (2004): 056110. [doi:10.1103/PhysRevE.70.056110](https://doi.org/10.1103/PhysRevE.70.056110). The path-length formula with the $\gamma$ and $\tfrac12$ corrections.
+- Bollobás, Béla, Oliver Riordan, Joel Spencer, and Gábor Tusnády. "The degree sequence of a scale-free random graph process." *Random Structures & Algorithms* 18, no. 3 (2001): 279–290. [doi:10.1002/rsa.1009](https://doi.org/10.1002/rsa.1009). The rigorous proof of the degree law $`2m(m+1)/(k(k+1)(k+2))`$.
+- Fronczak, Agata, Piotr Fronczak, and Janusz A. Hołyst. "Average path length in random networks." *Physical Review E* 70 (2004): 056110. [doi:10.1103/PhysRevE.70.056110](https://doi.org/10.1103/PhysRevE.70.056110). The path-length formula with the $`\gamma`$ and $`\tfrac12`$ corrections.

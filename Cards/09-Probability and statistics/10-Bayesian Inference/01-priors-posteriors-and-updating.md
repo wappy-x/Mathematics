@@ -38,41 +38,45 @@ Orange, flat: the prior, every bias equally plausible. Green, humped: the poster
 
 ## The formula
 
-Notation first. $\theta$, the Greek letter theta, is the coin's bias. $n$ is the number of flips, $h$ the heads and $t = n - h$ the tails. $D$ stands for the data, here "7 heads in 10 flips". Inside the integral, $u$ stands for the bias so it does not clash with $\theta$.
+Notation first. $`\theta`$, the Greek letter theta, is the coin's bias. $`n`$ is the number of flips, $`h`$ the heads and $`t = n - h`$ the tails. $`D`$ stands for the data, here "7 heads in 10 flips". Inside the integral, $`u`$ stands for the bias so it does not clash with $`\theta`$.
 
-A density $f$ spreads belief over a range of values the way a density spreads chance ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)): the chance that $\theta$ lands in an interval is the area under $f$ over that interval.
+A density $`f`$ spreads belief over a range of values the way a density spreads chance ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)): the chance that $`\theta`$ lands in an interval is the area under $`f`$ over that interval.
 
-$$f(\theta \mid D) = \frac{P(D \mid \theta)\, f(\theta)}{P(D)}, \qquad P(D) = \int_0^1 P(D \mid u)\, f(u)\, du$$
+```math
+f(\theta \mid D) = \frac{P(D \mid \theta)\, f(\theta)}{P(D)}, \qquad P(D) = \int_0^1 P(D \mid u)\, f(u)\, du
+```
 
 **Read it aloud:** the belief in each bias after the data is the belief before, times the chance that a coin with that bias would produce the data, divided by the total of that product over every bias.
 
 For flips of a coin, the chance of the data at a fixed bias is the binomial chance:
 
-$$P(D \mid \theta) = \binom{n}{h}\, \theta^{h} (1 - \theta)^{t}$$
+```math
+P(D \mid \theta) = \binom{n}{h}\, \theta^{h} (1 - \theta)^{t}
+```
 
-With $h = 7$ heads and $t = 3$ tails, the posterior from a flat prior is $1320\,\theta^{7}(1-\theta)^{3}$. Where the 1320 comes from is Step 3 below.
+With $`h = 7`$ heads and $`t = 3`$ tails, the posterior from a flat prior is $`1320\,\theta^{7}(1-\theta)^{3}`$. Where the 1320 comes from is Step 3 below.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | the bias: the coin's chance of heads on one flip, unknown | somewhere in 0 to 1 | — (it is what the card learns about) |
-| $n$, $h$, $t$ | flips, heads, tails, with $n = h + t$ | 10, 7, 3 | more flips: a narrower posterior |
-| $D$ | the data actually seen | 7 heads in 10 flips | — |
-| $f(\theta)$ | the **prior**: density of belief in each bias before the data | 1 for every bias (flat) | more prior weight near a value pulls the posterior toward it |
-| $P(D \mid \theta)$ | the **likelihood**: chance of the data if the bias were $\theta$, read as a function of $\theta$ | 0.2668 at $\theta = 0.7$ | a bias that explains the data better gains belief |
-| $\binom{n}{h}$ | the number of orders in which $h$ heads can fall among $n$ flips | 120 | — (it cancels in the division) |
-| $P(D)$ | the **evidence**: chance of the data averaged over the prior | 1/11 = 0.0909 | — (computed, not chosen) |
-| $f(\theta \mid D)$ | the **posterior**: density of belief after the data | $1320\,\theta^{7}(1-\theta)^{3}$, peak 2.94 at 0.7 | — |
-| $u$ | a stand-in letter for the bias inside the integral, so it does not clash with $\theta$ | runs from 0 to 1 | — |
-| $m$, $w$ | number of cells in a grid of candidate biases, and each cell's width $w = 1/m$ | 11 candidates, then 4000 cells | more cells: closer to the exact answer |
-| $I(a, b)$, $a$, $b$, $c$ | the area under $\theta^{a}(1-\theta)^{b}$ from 0 to 1, for whole numbers $a$ and $b$; $c$ is the power in the sceptic's prior | $I(7, 3) = 1/1320$; $c = 10$ | larger $c$: a prior more sure the coin is fair |
-| $E[\theta \mid D]$ | the posterior mean: the average bias under the posterior | 2/3 = 0.6667 | — |
+| $`\theta`$ | the bias: the coin's chance of heads on one flip, unknown | somewhere in 0 to 1 | — (it is what the card learns about) |
+| $`n`$, $`h`$, $`t`$ | flips, heads, tails, with $`n = h + t`$ | 10, 7, 3 | more flips: a narrower posterior |
+| $`D`$ | the data actually seen | 7 heads in 10 flips | — |
+| $`f(\theta)`$ | the **prior**: density of belief in each bias before the data | 1 for every bias (flat) | more prior weight near a value pulls the posterior toward it |
+| $`P(D \mid \theta)`$ | the **likelihood**: chance of the data if the bias were $`\theta`$, read as a function of $`\theta`$ | 0.2668 at $`\theta = 0.7`$ | a bias that explains the data better gains belief |
+| $`\binom{n}{h}`$ | the number of orders in which $`h`$ heads can fall among $`n`$ flips | 120 | — (it cancels in the division) |
+| $`P(D)`$ | the **evidence**: chance of the data averaged over the prior | 1/11 = 0.0909 | — (computed, not chosen) |
+| $`f(\theta \mid D)`$ | the **posterior**: density of belief after the data | $`1320\,\theta^{7}(1-\theta)^{3}`$, peak 2.94 at 0.7 | — |
+| $`u`$ | a stand-in letter for the bias inside the integral, so it does not clash with $`\theta`$ | runs from 0 to 1 | — |
+| $`m`$, $`w`$ | number of cells in a grid of candidate biases, and each cell's width $`w = 1/m`$ | 11 candidates, then 4000 cells | more cells: closer to the exact answer |
+| $`I(a, b)`$, $`a`$, $`b`$, $`c`$ | the area under $`\theta^{a}(1-\theta)^{b}`$ from 0 to 1, for whole numbers $`a`$ and $`b`$; $`c`$ is the power in the sceptic's prior | $`I(7, 3) = 1/1320`$; $`c = 10`$ | larger $`c`$: a prior more sure the coin is fair |
+| $`E[\theta \mid D]`$ | the posterior mean: the average bias under the posterior | 2/3 = 0.6667 | — |
 
 ### When it holds
 
-- **The prior is a real probability law, with area 1.** A "prior" that is flat over every number, with infinite area, can still give a sensible posterior, but the evidence $P(D)$ then means nothing and each case needs its own check.
+- **The prior is a real probability law, with area 1.** A "prior" that is flat over every number, with infinite area, can still give a sensible posterior, but the evidence $`P(D)`$ then means nothing and each case needs its own check.
 - **The flips are independent once the bias is fixed, and the bias does not change.** That is what makes the likelihood a binomial chance. A coin that wears as it is flipped, or flips recorded twice, break it; What breaks shows the double count.
 - **The prior gives some weight to every bias that could be true.** A bias with prior weight zero keeps posterior weight zero forever, whatever the data say.
-- **The data are possible under the model.** $P(D)$ sits in a denominator. If every bias the prior allows makes the data impossible, the formula divides by zero and the model, not the arithmetic, needs fixing.
+- **The data are possible under the model.** $`P(D)`$ sits in a denominator. If every bias the prior allows makes the data impossible, the formula divides by zero and the model, not the arithmetic, needs fixing.
 - **The posterior is a statement inside the model.** It says how plausible each bias is given this prior and this likelihood. It is not a guarantee about a method's long-run record, which is what a confidence interval gives.
 
 ---
@@ -87,41 +91,47 @@ The bias is fixed but unknown. Bayesian updating puts a probability law on it an
 
 Start with a list. Suppose the coin must be one of eleven: bias 0.0, 0.1, …, 1.0, each with prior chance 1/11. These eleven hypotheses do not overlap and cover every case, so Bayes' rule in its general form from [Bayes' rule](../01-Chance%20and%20Events/06-bayes-rule.md) applies directly:
 
-$$P(\theta = 0.7 \mid D) = \frac{P(D \mid 0.7) \times \tfrac{1}{11}}{\sum_{\text{all 11 candidates}} P(D \mid \text{candidate}) \times \tfrac{1}{11}}.$$
+```math
+P(\theta = 0.7 \mid D) = \frac{P(D \mid 0.7) \times \tfrac{1}{11}}{\sum_{\text{all 11 candidates}} P(D \mid \text{candidate}) \times \tfrac{1}{11}}.
+```
 
-The top is $120 \times 0.7^{7} \times 0.3^{3} / 11 = 0.024257$. The bottom adds eleven such terms: 0.082727. So the bias-0.7 coin gets posterior chance 0.2932, up from 1/11 = 0.0909. Worked numbers lists every candidate.
+The top is $`120 \times 0.7^{7} \times 0.3^{3} / 11 = 0.024257`$. The bottom adds eleven such terms: 0.082727. So the bias-0.7 coin gets posterior chance 0.2932, up from 1/11 = 0.0909. Worked numbers lists every candidate.
 
 ### Step 2: more candidates, and chance becomes density
 
-Split 0 to 1 into $m$ cells of width $w = 1/m$ and put a candidate at the middle of each. A prior density $f$ gives the cell at $\theta$ a prior chance of about $f(\theta)\,w$. Bayes' rule on the list gives that cell a posterior chance of
+Split 0 to 1 into $`m`$ cells of width $`w = 1/m`$ and put a candidate at the middle of each. A prior density $`f`$ gives the cell at $`\theta`$ a prior chance of about $`f(\theta)\,w`$. Bayes' rule on the list gives that cell a posterior chance of
 
-$$\frac{P(D \mid \theta)\, f(\theta)\, w}{\sum_{\text{cells}} P(D \mid u)\, f(u)\, w}.$$
+```math
+\frac{P(D \mid \theta)\, f(\theta)\, w}{\sum_{\text{cells}} P(D \mid u)\, f(u)\, w}.
+```
 
-Divide by the width $w$ to turn chance per cell into chance per unit of bias. The bottom is a sum of heights times widths: the area under $P(D \mid u) f(u)$, which becomes the integral $P(D)$ as the cells shrink. What is left is the formula. Nothing new was assumed. The continuous version is the list version with the list made fine.
+Divide by the width $`w`$ to turn chance per cell into chance per unit of bias. The bottom is a sum of heights times widths: the area under $`P(D \mid u) f(u)`$, which becomes the integral $`P(D)`$ as the cells shrink. What is left is the formula. Nothing new was assumed. The continuous version is the list version with the list made fine.
 
-With 4000 cells the code gets the area under $\theta^{7}(1-\theta)^{3}$ as 0.00075758, the same as the exact value to eight places.
+With 4000 cells the code gets the area under $`\theta^{7}(1-\theta)^{3}`$ as 0.00075758, the same as the exact value to eight places.
 
 ### Step 3: normalise, exactly
 
-The posterior is proportional to $\theta^{7}(1-\theta)^{3}$: the constant 120 and the flat prior's 1 cancel between top and bottom. To make it a density, divide by its area. Write $I(a, b)$ for the area under $\theta^{a}(1-\theta)^{b}$ from 0 to 1. Expand the bracket and integrate term by term:
+The posterior is proportional to $`\theta^{7}(1-\theta)^{3}`$: the constant 120 and the flat prior's 1 cancel between top and bottom. To make it a density, divide by its area. Write $`I(a, b)`$ for the area under $`\theta^{a}(1-\theta)^{b}`$ from 0 to 1. Expand the bracket and integrate term by term:
 
-$$\theta^{7}(1-\theta)^{3} = \theta^{7} - 3\theta^{8} + 3\theta^{9} - \theta^{10}, \qquad I(7,3) = \tfrac18 - \tfrac39 + \tfrac{3}{10} - \tfrac{1}{11} = \tfrac{1}{1320}.$$
+```math
+\theta^{7}(1-\theta)^{3} = \theta^{7} - 3\theta^{8} + 3\theta^{9} - \theta^{10}, \qquad I(7,3) = \tfrac18 - \tfrac39 + \tfrac{3}{10} - \tfrac{1}{11} = \tfrac{1}{1320}.
+```
 
-So the posterior density is $1320\,\theta^{7}(1-\theta)^{3}$, and the evidence is $P(D) = 120/1320 = 1/11$. That last number has a plain meaning: before any flip, with a flat prior, all eleven head counts from 0 to 10 are equally likely.
+So the posterior density is $`1320\,\theta^{7}(1-\theta)^{3}`$, and the evidence is $`P(D) = 120/1320 = 1/11`$. That last number has a plain meaning: before any flip, with a flat prior, all eleven head counts from 0 to 10 are equally likely.
 
-Every question about the bias is now an area. The posterior mean $E[\theta \mid D]$, the average bias under the posterior, is $1320 \times I(8,3)$, and $I(8,3) = 1/1980$ by the same expansion, so the mean is $1320/1980 = 2/3$.
+Every question about the bias is now an area. The posterior mean $`E[\theta \mid D]`$, the average bias under the posterior, is $`1320 \times I(8,3)`$, and $`I(8,3) = 1/1980`$ by the same expansion, so the mean is $`1320/1980 = 2/3`$.
 
-The chance the coin favours heads is the area to the right of 0.5, which comes to $227/256 = 0.8867$. The posterior's spread, its standard deviation, is 0.1307. How to turn areas like these into an interval and a decision is [Credible intervals and decisions](05-credible-intervals-and-decisions.md).
+The chance the coin favours heads is the area to the right of 0.5, which comes to $`227/256 = 0.8867`$. The posterior's spread, its standard deviation, is 0.1307. How to turn areas like these into an interval and a decision is [Credible intervals and decisions](05-credible-intervals-and-decisions.md).
 
 ### Step 4: today's posterior is tomorrow's prior
 
-Take the flips one at a time. After each flip, multiply the current belief by $\theta$ for a head or $1 - \theta$ for a tail, and rescale. After ten flips the product is $\theta^{7}(1-\theta)^{3}$ whatever the order, because multiplication does not care about order. Heads first or tails first, one at a time or all at once, the code lands on mean 0.6667 every time.
+Take the flips one at a time. After each flip, multiply the current belief by $`\theta`$ for a head or $`1 - \theta`$ for a tail, and rescale. After ten flips the product is $`\theta^{7}(1-\theta)^{3}`$ whatever the order, because multiplication does not care about order. Heads first or tails first, one at a time or all at once, the code lands on mean 0.6667 every time.
 
 This is why the method is called updating. A posterior is a prior, ready for the next flip. The rescaling after each step changes nothing in the end: rescaling is a division by a constant, and constants cancel at the final normalisation.
 
 ### Step 5: the prior washes out
 
-Take a second, stubborn prior: a sceptic who thinks coins are nearly fair, with density proportional to $(\theta(1-\theta))^{10}$. Its peak is at 0.5, height 3.70, and its spread is 0.1043. After 7 heads in 10, the flat prior's posterior mean is 0.6667 and the sceptic's is 0.5625: a gap of 0.1042. Now keep flipping at the same rate of 70 percent heads.
+Take a second, stubborn prior: a sceptic who thinks coins are nearly fair, with density proportional to $`(\theta(1-\theta))^{10}`$. Its peak is at 0.5, height 3.70, and its spread is 0.1043. After 7 heads in 10, the flat prior's posterior mean is 0.6667 and the sceptic's is 0.5625: a gap of 0.1042. Now keep flipping at the same rate of 70 percent heads.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -137,26 +147,30 @@ Orange: the flat prior. Green: the sceptic. The two start together at 0.50, spli
 
 The reason is in the logarithm of the posterior:
 
-$$\ln f(\theta \mid D) = \ln f(\theta) + h \ln \theta + t \ln(1-\theta) + \text{a constant}.$$
+```math
+\ln f(\theta \mid D) = \ln f(\theta) + h \ln \theta + t \ln(1-\theta) + \text{a constant}.
+```
 
-The prior's term is fixed. The data's terms grow in proportion to the number of flips. After enough flips, the data outweigh any prior that gave the truth some room. The posterior also narrows: its spread falls from 0.1307 at 10 flips to 0.0453 at 100, roughly by $1/\sqrt{n}$.
+The prior's term is fixed. The data's terms grow in proportion to the number of flips. After enough flips, the data outweigh any prior that gave the truth some room. The posterior also narrows: its spread falls from 0.1307 at 10 flips to 0.0453 at 100, roughly by $`1/\sqrt{n}`$.
 
 <details>
 <summary>Detailed proof: the exact area, and the size of the gap</summary>
 
-**Claim 1.** For whole numbers $a, b \ge 0$, $I(a, b) = \int_0^1 \theta^{a}(1-\theta)^{b}\, d\theta = \dfrac{a!\, b!}{(a+b+1)!}$.
+**Claim 1.** For whole numbers $`a, b \ge 0`$, $`I(a, b) = \int_0^1 \theta^{a}(1-\theta)^{b}\, d\theta = \dfrac{a!\, b!}{(a+b+1)!}`$.
 
-**Proof.** For $b = 0$, $I(a, 0) = 1/(a+1) = a!\,0!/(a+1)!$. For $b \ge 1$, integrate by parts, raising the power of $\theta$ and lowering the power of $1 - \theta$:
-$$I(a,b) = \Big[\tfrac{\theta^{a+1}}{a+1}(1-\theta)^{b}\Big]_0^1 + \tfrac{b}{a+1}\int_0^1 \theta^{a+1}(1-\theta)^{b-1}\,d\theta = \tfrac{b}{a+1}\, I(a+1, b-1),$$
-since the bracket vanishes at both ends. Repeating $b$ times gives $I(a,b) = \frac{b!\,a!}{(a+b)!}\, I(a+b, 0) = \frac{a!\,b!}{(a+b+1)!}$. Check: $I(7,3) = 7!\,3!/11! = 1/1320$.
+**Proof.** For $`b = 0`$, $`I(a, 0) = 1/(a+1) = a!\,0!/(a+1)!`$. For $`b \ge 1`$, integrate by parts, raising the power of $`\theta`$ and lowering the power of $`1 - \theta`$:
 
-**Claim 2.** With a prior proportional to $(\theta(1-\theta))^{c}$ and $h$ heads in $n$ flips, the posterior mean is $\dfrac{c+h+1}{2c+n+2}$.
+$`\displaystyle I(a,b) = \Big[\tfrac{\theta^{a+1}}{a+1}(1-\theta)^{b}\Big]_0^1 + \tfrac{b}{a+1}\int_0^1 \theta^{a+1}(1-\theta)^{b-1}\,d\theta = \tfrac{b}{a+1}\, I(a+1, b-1),`$
 
-**Proof.** The posterior is proportional to $\theta^{c+h}(1-\theta)^{c+t}$. Its mean is $I(c+h+1, c+t)/I(c+h, c+t)$. By Claim 1 the factorials cancel down to $(c+h+1)/(2c+h+t+2)$. The flat prior is $c = 0$, giving $(h+1)/(n+2) = 8/12$ here, Laplace's rule of succession. The sceptic is $c = 10$, giving $18/32 = 0.5625$.
+since the bracket vanishes at both ends. Repeating $`b`$ times gives $`I(a,b) = \frac{b!\,a!}{(a+b)!}\, I(a+b, 0) = \frac{a!\,b!}{(a+b+1)!}`$. Check: $`I(7,3) = 7!\,3!/11! = 1/1320`$.
 
-**Claim 3.** The two posterior means differ by $\dfrac{10\,(2h - n)}{(n+2)(n+22)}$, which is less than $10/(n+22)$ in size.
+**Claim 2.** With a prior proportional to $`(\theta(1-\theta))^{c}`$ and $`h`$ heads in $`n`$ flips, the posterior mean is $`\dfrac{c+h+1}{2c+n+2}`$.
 
-**Proof.** Cross-multiply: $(h+1)(n+22) - (h+11)(n+2) = 20h - 10n$. Divide by $(n+2)(n+22)$. Since $\lvert 2h - n\rvert \le n < n + 2$, the size is below $10/(n+22)$. At $n = 10$, $h = 7$: $40/384 = 0.1042$. At $n = 1000$, $h = 700$: $4000/1024044 = 0.0039$. The gap shrinks like $1/n$: the prior washes out.
+**Proof.** The posterior is proportional to $`\theta^{c+h}(1-\theta)^{c+t}`$. Its mean is $`I(c+h+1, c+t)/I(c+h, c+t)`$. By Claim 1 the factorials cancel down to $`(c+h+1)/(2c+h+t+2)`$. The flat prior is $`c = 0`$, giving $`(h+1)/(n+2) = 8/12`$ here, Laplace's rule of succession. The sceptic is $`c = 10`$, giving $`18/32 = 0.5625`$.
+
+**Claim 3.** The two posterior means differ by $`\dfrac{10\,(2h - n)}{(n+2)(n+22)}`$, which is less than $`10/(n+22)`$ in size.
+
+**Proof.** Cross-multiply: $`(h+1)(n+22) - (h+11)(n+2) = 20h - 10n`$. Divide by $`(n+2)(n+22)`$. Since $`\lvert 2h - n\rvert \le n < n + 2`$, the size is below $`10/(n+22)`$. At $`n = 10`$, $`h = 7`$: $`40/384 = 0.1042`$. At $`n = 1000`$, $`h = 700`$: $`4000/1024044 = 0.0039`$. The gap shrinks like $`1/n`$: the prior washes out.
 
 </details>
 
@@ -172,18 +186,18 @@ The eleven candidate coins, prior 1/11 each, after 7 heads in 10. Candidates 0.0
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| likelihood at 0.7 | $120 \times 0.7^{7} \times 0.3^{3}$ | 0.266828 |
-| prior × likelihood, 0.5 | $120 \times 0.5^{10} / 11$ | 0.010653 |
-| prior × likelihood, 0.6 | $120 \times 0.6^{7} \times 0.4^{3} / 11$ | 0.019545 |
-| prior × likelihood, 0.7 | $0.266828 / 11$ | 0.024257 |
-| prior × likelihood, 0.8 | $120 \times 0.8^{7} \times 0.2^{3} / 11$ | 0.018302 |
-| prior × likelihood, 0.9 | $120 \times 0.9^{7} \times 0.1^{3} / 11$ | 0.005218 |
-| evidence, the list's $P(D)$ | the five above plus 0.1 to 0.4, from the output | 0.082727 |
-| posterior at 0.7 | $0.024257 / 0.082727$ | 0.2932 |
-| posterior mean on the list | $\sum \text{candidate} \times \text{posterior}$ | 0.6670 |
-| exact area | $\tfrac18 - \tfrac39 + \tfrac3{10} - \tfrac1{11}$ | 1/1320 |
-| exact evidence | $120 / 1320$ | 1/11 = 0.0909 |
-| **exact posterior mean** | $1320 \times I(8,3) = 1320/1980$ | **2/3 = 0.6667** |
+| likelihood at 0.7 | $`120 \times 0.7^{7} \times 0.3^{3}`$ | 0.266828 |
+| prior × likelihood, 0.5 | $`120 \times 0.5^{10} / 11`$ | 0.010653 |
+| prior × likelihood, 0.6 | $`120 \times 0.6^{7} \times 0.4^{3} / 11`$ | 0.019545 |
+| prior × likelihood, 0.7 | $`0.266828 / 11`$ | 0.024257 |
+| prior × likelihood, 0.8 | $`120 \times 0.8^{7} \times 0.2^{3} / 11`$ | 0.018302 |
+| prior × likelihood, 0.9 | $`120 \times 0.9^{7} \times 0.1^{3} / 11`$ | 0.005218 |
+| evidence, the list's $`P(D)`$ | the five above plus 0.1 to 0.4, from the output | 0.082727 |
+| posterior at 0.7 | $`0.024257 / 0.082727`$ | 0.2932 |
+| posterior mean on the list | $`\sum \text{candidate} \times \text{posterior}`$ | 0.6670 |
+| exact area | $`\tfrac18 - \tfrac39 + \tfrac3{10} - \tfrac1{11}`$ | 1/1320 |
+| exact evidence | $`120 / 1320`$ | 1/11 = 0.0909 |
+| **exact posterior mean** | $`1320 \times I(8,3) = 1320/1980`$ | **2/3 = 0.6667** |
 
 After 7 heads in 10, and starting from no preference among biases, the best single guess for the bias is 0.67, with a spread of 0.13; the chance the coin favours heads is 0.8867, about 8 in 9. Eleven candidates already put the mean at 0.6670; the fine grid and the exact integral agree at 0.6667.
 
@@ -203,7 +217,7 @@ After 7 heads in 10, and starting from no preference among biases, the best sing
 The scripts reach the posterior by four roads.
 
 - Road 1 is Bayes' rule on the list of eleven candidate coins.
-- Road 2 is exact: it expands $\theta^{7}(1-\theta)^{3}$ and integrates term by term in whole-number fractions, giving 1/1320, 2/3 and 227/256 as fractions.
+- Road 2 is exact: it expands $`\theta^{7}(1-\theta)^{3}`$ and integrates term by term in whole-number fractions, giving 1/1320, 2/3 and 227/256 as fractions.
 - Road 3 is a grid of 4000 cells, worked on the log scale so that 1000 flips do not underflow (shrink below the smallest number the computer can store); it takes any prior.
 - Road 4 simulates: 200,000 biases drawn from the flat prior, each flipped ten times by a small random-number generator written out in both languages (SplitMix64, seed 20260929), keeping only those that show 7 heads.
 
@@ -620,14 +634,14 @@ The two outputs match line for line, including the simulated numbers, because bo
 
 ### Lean
 
-Lean proves Claims 1 to 3 for all whole numbers $c$, $h$ and $t$, and checks the card's worked numbers.
+Lean proves Claims 1 to 3 for all whole numbers $`c`$, $`h`$ and $`t`$, and checks the card's worked numbers.
 
-- Take a prior proportional to $(\theta(1-\theta))^{c}$, rescaled to area 1, and $h$ heads in $n$ flips. Then the prior has area 1, the evidence $P(D)$ is above 0, and the posterior has area 1.
-- Take the same prior and data. Then the posterior mean is $(c+h+1)/(2c+n+2)$.
-- Take whole numbers $a$ and $b$. Then $I(a, b) = a!\,b!/(a+b+1)!$.
-- Take $h$ heads in $n$ flips. Then the flat and sceptic posterior means differ by $10(2h-n)/((n+2)(n+22))$. That gap is smaller in size than $10/(n+22)$.
+- Take a prior proportional to $`(\theta(1-\theta))^{c}`$, rescaled to area 1, and $`h`$ heads in $`n`$ flips. Then the prior has area 1, the evidence $`P(D)`$ is above 0, and the posterior has area 1.
+- Take the same prior and data. Then the posterior mean is $`(c+h+1)/(2c+n+2)`$.
+- Take whole numbers $`a`$ and $`b`$. Then $`I(a, b) = a!\,b!/(a+b+1)!`$.
+- Take $`h`$ heads in $`n`$ flips. Then the flat and sceptic posterior means differ by $`10(2h-n)/((n+2)(n+22))`$. That gap is smaller in size than $`10/(n+22)`$.
 - A fair coin shows 7 or more heads in 10 in 176 of 1024 outcomes. There are 120 orders for 7 heads among 10 flips.
-- Take 7 heads in 10 and a flat prior. Then $I(7,3) = 1/1320$, $I(8,3) = 1/1980$, the evidence is 1/11 and the posterior mean is 2/3.
+- Take 7 heads in 10 and a flat prior. Then $`I(7,3) = 1/1320`$, $`I(8,3) = 1/1980`$, the evidence is 1/11 and the posterior mean is 2/3.
 - The term-by-term sum for the chance the coin favours heads comes to 227/256.
 - After 7 heads in 10, the flat mean is 2/3 and the sceptic's is 9/16. The gap is 40/384 at 10 flips and 4000/1024044 at 1000.
 - Ten heads in ten give a flat mean of 11/12. The same flips fed in twice give 15/22, not 2/3.
@@ -805,7 +819,7 @@ example : ((10 + 1 : ℕ) : ℚ) / (10 + 2 : ℕ) = 11 / 12 ∧ ((14 + 1 : ℕ) 
 > **Try changing**
 > Guess first, then run it.
 > - **Ten heads in ten.** Set `H = 10` in Python (`const H: i64 = 10` in Rust). A natural guess is 1. The mean goes to 0.9167, which is (10 + 1)/(10 + 2), and the chance the coin favours heads to 0.9995. The flat prior still keeps some doubt. The exact-area assert stops the run, since the area is no longer 1/1320.
-> - **A hundred flips.** Set `N = 100` and `H = 70` in the Python (the Rust's whole-number fractions overflow at that size). Guess how the spread changes. It falls from 0.1307 to 0.0453, about $1/\sqrt{10}$ of the old spread for ten times the flips. The exact-area assert then stops the run, as intended.
+> - **A hundred flips.** Set `N = 100` and `H = 70` in the Python (the Rust's whole-number fractions overflow at that size). Guess how the spread changes. It falls from 0.1307 to 0.0453, about $`1/\sqrt{10}`$ of the old spread for ten times the flips. The exact-area assert then stops the run, as intended.
 > - **Fence the prior, fewer flips.** In break 2, replace `700, 300` with `H, T`. Guess where the mean lands. It is 0.5245: the fence at 0.6 already bites after ten flips, though the flips point at 0.7. The fence assert then stops the run, since it still expects the 1000-flip answer; the `try:` line prints the same 0.5245 with no edit.
 > - **Another seed.** Change 20260929. The simulated numbers move by a standard error or two; the exact ones do not move.
 
@@ -832,7 +846,7 @@ example : ((10 + 1 : ℕ) : ℚ) / (10 + 2 : ℕ) = 11 / 12 ∧ ((14 + 1 : ℕ) 
 - **Rates of rare events.** Accidents per year or calls per hour are unknown rates updated the same way, with a different likelihood: [Gamma-Poisson](04-gamma-poisson.md).
 
 > **Say it back**
-> An unknown number, like a coin's bias, gets a prior: a density saying how plausible each value is before the data. Multiply the prior by the likelihood, the chance each value gives to the data seen, and divide by the total area so the result is a probability law again: that is the posterior. For 7 heads in 10 from a flat prior, the posterior is $1320\,\theta^{7}(1-\theta)^{3}$, with mean 2/3 and a chance of 0.8867 that the coin favours heads. Updating one flip at a time gives the same answer as all at once. As data pile up, any prior that gave the truth some room is outweighed, and the posteriors from different priors agree.
+> An unknown number, like a coin's bias, gets a prior: a density saying how plausible each value is before the data. Multiply the prior by the likelihood, the chance each value gives to the data seen, and divide by the total area so the result is a probability law again: that is the posterior. For 7 heads in 10 from a flat prior, the posterior is $`1320\,\theta^{7}(1-\theta)^{3}`$, with mean 2/3 and a chance of 0.8867 that the coin favours heads. Updating one flip at a time gives the same answer as all at once. As data pile up, any prior that gave the truth some room is outweighed, and the posteriors from different priors agree.
 
 ---
 
@@ -843,7 +857,7 @@ example : ((10 + 1 : ℕ) : ℚ) / (10 + 2 : ℕ) = 11 / 12 ∧ ((14 + 1 : ℕ) 
 
 ## Where this goes next
 
-- [Beta-binomial](02-beta-binomial.md): the priors $\theta^{a}(1-\theta)^{b}$ used here form a family that the coin's data keep inside itself, so updating becomes adding heads and tails to two counters. That card names the curve $\theta^{a}(1-\theta)^{b}$ Beta($a + 1$, $b + 1$), one more than each power, so the flat-prior posterior $\theta^{7}(1-\theta)^{3}$ here is its Beta(8, 4).
+- [Beta-binomial](02-beta-binomial.md): the priors $`\theta^{a}(1-\theta)^{b}`$ used here form a family that the coin's data keep inside itself, so updating becomes adding heads and tails to two counters. That card names the curve $`\theta^{a}(1-\theta)^{b}`$ Beta($`a + 1`$, $`b + 1`$), one more than each power, so the flat-prior posterior $`\theta^{7}(1-\theta)^{3}`$ here is its Beta(8, 4).
 - [Normal-normal](03-normal-normal.md): the same update for an unknown average measured with bell-curve noise, where certainty adds up measurement by measurement.
 - [Deciding under uncertainty](../../14-Applied%20and%20computational/05-Operations%20Research/08-decision-theory-and-the-value-of-information.md): turning a posterior into an action, and pricing the next flip before paying for it.
 

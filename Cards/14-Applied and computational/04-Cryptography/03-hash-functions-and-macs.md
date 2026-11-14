@@ -14,11 +14,11 @@ Change 250,000 to 260,000 and the fingerprint becomes `5be035ac…e3725`: 129 of
 
 A fingerprint proves the text is unchanged, not who sent it: anyone can compute one. So when the buyer's laptop sends the bank a payment order, it attaches a **MAC tag** (message authentication code): a fingerprint mixed with a secret key only the laptop and the bank share. The standard recipe is **HMAC** (hash-based MAC). A slow, salted form of it, **PBKDF2** (password-based key derivation function 2), is how the bank should store passwords. A salt is a random string stored per customer.
 
-The safety margin is a count of work. Finding any two contracts with the same SHA-256 fingerprint takes about $2^{128}$ tries, 3.4 × 10^38: not $2^{256}$, because of the birthday effect. Many drafts make far more pairs than drafts, and any pair may match.
+The safety margin is a count of work. Finding any two contracts with the same SHA-256 fingerprint takes about $`2^{128}`$ tries, 3.4 × 10^38: not $`2^{256}`$, because of the birthday effect. Many drafts make far more pairs than drafts, and any pair may match.
 
-**A hash turns any data into a short fingerprint that is easy to compute and hard to match: finding two inputs with the same $n$-bit fingerprint costs about $2^{n/2}$ tries and matching a given one costs about $2^n$; a MAC mixes in a secret key so that only key holders can make a valid tag, and HMAC does this safely where the obvious recipe fails.**
+**A hash turns any data into a short fingerprint that is easy to compute and hard to match: finding two inputs with the same $`n`$-bit fingerprint costs about $`2^{n/2}`$ tries and matching a given one costs about $`2^n`$; a MAC mixes in a secret key so that only key holders can make a valid tag, and HMAC does this safely where the obvious recipe fails.**
 
-**What kind of fact this is:** the costs $2^{n/2}$ and $2^n$ are theorems about an ideal hash, one that behaves like a random function, proved in Why it works. That SHA-256 behaves like one is an assumption, unproved but unbroken by decades of public attack. HMAC's security is a theorem resting on an assumption about SHA-256's inner step, quoted from its source.
+**What kind of fact this is:** the costs $`2^{n/2}`$ and $`2^n`$ are theorems about an ideal hash, one that behaves like a random function, proved in Why it works. That SHA-256 behaves like one is an assumption, unproved but unbroken by decades of public attack. HMAC's security is a theorem resting on an assumption about SHA-256's inner step, quoted from its source.
 
 ### The picture: one recipe, three jobs
 
@@ -43,44 +43,50 @@ An attacker can try to break a hash in three ways. Each has a name, and resistin
 - **Second-preimage resistance.** Given the real contract, find a *different* contract with the same fingerprint.
 - **Collision resistance.** Find *any* two different messages with the same fingerprint, both chosen freely.
 
-For an ideal hash with an $n$-bit output, so $d = 2^n$ possible fingerprints, the work in tries is
+For an ideal hash with an $`n`$-bit output, so $`d = 2^n`$ possible fingerprints, the work in tries is
 
-$$\text{(second) preimage: about } 2^{n}, \qquad \text{collision: half-chance at } \sqrt{2\ln 2}\;2^{n/2} \approx 1.1774 \cdot 2^{n/2},\ \text{ average } T \approx \sqrt{\pi/2}\;2^{n/2} \approx 1.2533 \cdot 2^{n/2}$$
+```math
+\text{(second) preimage: about } 2^{n}, \qquad \text{collision: half-chance at } \sqrt{2\ln 2}\;2^{n/2} \approx 1.1774 \cdot 2^{n/2},\ \text{ average } T \approx \sqrt{\pi/2}\;2^{n/2} \approx 1.2533 \cdot 2^{n/2}
+```
 
 and the two keyed recipes are
 
-$$t = \mathrm{HMAC}(k, m) = h\big((k \oplus \text{opad}) \,\|\, h((k \oplus \text{ipad}) \,\|\, m)\big)$$
+```math
+t = \mathrm{HMAC}(k, m) = h\big((k \oplus \text{opad}) \,\|\, h((k \oplus \text{ipad}) \,\|\, m)\big)
+```
 
-$$U_1 = \mathrm{HMAC}(P,\ s \,\|\, 1), \quad U_i = \mathrm{HMAC}(P,\ U_{i-1}), \quad \text{key} = U_1 \oplus U_2 \oplus \cdots \oplus U_r$$
+```math
+U_1 = \mathrm{HMAC}(P,\ s \,\|\, 1), \quad U_i = \mathrm{HMAC}(P,\ U_{i-1}), \quad \text{key} = U_1 \oplus U_2 \oplus \cdots \oplus U_r
+```
 
 In the password line, the 1 is the block number written as four bytes.
 
-**Read it aloud:** matching a given fingerprint takes about $2^n$ guesses but any matching pair only about $2^{n/2}$; the tag hashes key and message, then hashes the key again over that; the password key runs the tag $r$ times and combines every round.
+**Read it aloud:** matching a given fingerprint takes about $`2^n`$ guesses but any matching pair only about $`2^{n/2}`$; the tag hashes key and message, then hashes the key again over that; the password key runs the tag $`r`$ times and combines every round.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $h(m)$ | the hash (fingerprint) of message $m$, here SHA-256 | `af6f5fbf…` for the contract | — |
-| $m$ | the message: any string of bytes | the 55-byte contract; the payment order | longer messages cost more blocks, same 256 bits out |
-| $n$ | bits in the fingerprint | 256 | each extra bit doubles guessing; two extra bits double collision work |
-| $d$ | number of possible fingerprints, $2^n$ | $2^{256}$ | collisions come later, at about $\sqrt{d}$ tries |
-| $T$, $T_{1/2}$, $q$ | $T$: tries until two messages first share a fingerprint, a chance quantity; $T_{1/2}$: the number of drafts that gives an even chance of a shared one; $q$: a number of drafts so far | average $T$ 1.2533 × 2^128; $T_{1/2}$ = 1.1774 × 2^128 | — |
-| $k$, $t$ | the shared secret key, and the tag it makes | a 32-byte toy key; a 256-bit tag | a longer random key makes guessing it hopeless |
+| $`h(m)`$ | the hash (fingerprint) of message $`m`$, here SHA-256 | `af6f5fbf…` for the contract | — |
+| $`m`$ | the message: any string of bytes | the 55-byte contract; the payment order | longer messages cost more blocks, same 256 bits out |
+| $`n`$ | bits in the fingerprint | 256 | each extra bit doubles guessing; two extra bits double collision work |
+| $`d`$ | number of possible fingerprints, $`2^n`$ | $`2^{256}`$ | collisions come later, at about $`\sqrt{d}`$ tries |
+| $`T`$, $`T_{1/2}`$, $`q`$ | $`T`$: tries until two messages first share a fingerprint, a chance quantity; $`T_{1/2}`$: the number of drafts that gives an even chance of a shared one; $`q`$: a number of drafts so far | average $`T`$ 1.2533 × 2^128; $`T_{1/2}`$ = 1.1774 × 2^128 | — |
+| $`k`$, $`t`$ | the shared secret key, and the tag it makes | a 32-byte toy key; a 256-bit tag | a longer random key makes guessing it hopeless |
 | ipad, opad | the bytes 0x36 and 0x5C, each repeated 64 times | mixed into the key for the inner and outer hash | — |
-| $\oplus$, $\Vert$ | exclusive or, bit by bit; and "join end to end" | $k \oplus$ ipad; $s \,\Vert\, 1$ | — |
-| $P$, $s$ | a password, and a salt: a public random string stored per customer | `letmein1`, `customer-000001` | a longer salt keeps every customer's lock different |
-| $r$ | rounds of HMAC in the password recipe | 1,000 in the run; 100,000 in the cost sums | each guess costs $2r + 2$ inner steps |
-| $U_i$ | the $i$-th HMAC output in the password chain | 32 bytes each | — |
-| $\pi$, $e$, $\ln$ | the circle constant 3.14159…, inside $\sqrt{\pi/2} = 1.2533$; $e$ = 2.71828…, and $\ln$ its logarithm, inside $\sqrt{2 \ln 2} = 1.1774$ | — | — |
+| $`\oplus`$, $`\Vert`$ | exclusive or, bit by bit; and "join end to end" | $`k \oplus`$ ipad; $`s \,\Vert\, 1`$ | — |
+| $`P`$, $`s`$ | a password, and a salt: a public random string stored per customer | `letmein1`, `customer-000001` | a longer salt keeps every customer's lock different |
+| $`r`$ | rounds of HMAC in the password recipe | 1,000 in the run; 100,000 in the cost sums | each guess costs $`2r + 2`$ inner steps |
+| $`U_i`$ | the $`i`$-th HMAC output in the password chain | 32 bytes each | — |
+| $`\pi`$, $`e`$, $`\ln`$ | the circle constant 3.14159…, inside $`\sqrt{\pi/2} = 1.2533`$; $`e`$ = 2.71828…, and $`\ln`$ its logarithm, inside $`\sqrt{2 \ln 2} = 1.1774`$ | — | — |
 
-Here $\oplus$ is the exclusive or from [The one-time pad](01-one-time-pad-and-perfect-secrecy.md): a bit is 1 when exactly one of the two input bits is 1.
+Here $`\oplus`$ is the exclusive or from [The one-time pad](01-one-time-pad-and-perfect-secrecy.md): a bit is 1 when exactly one of the two input bits is 1.
 
 ### When it holds
 
-- **The hash has no shortcut.** The counts assume an attacker can only try messages and look. SHA-1, a 160-bit hash, promised $2^{80}$ collision work; a published attack found one in $2^{63.1}$, about $2^{17}$ times less.
-- **$n$ is the number of bits actually kept.** Cut to 32 bits, the run below found two contract references with the same fingerprint after 45,147 tries.
-- **The attacker chooses both messages for a collision.** If one is fixed, as with a contract already signed, the job is a second preimage: $2^n$, not $2^{n/2}$.
-- **The key is secret and the recipe is HMAC.** The tempting tag $h(k \,\|\, m)$ lets anyone extend a message and compute a valid tag without the key. The run below forges a payment order this way.
-- **Passwords have many possible values.** PBKDF2 multiplies the cost of each guess by about $2r$; a password from a short list still falls.
+- **The hash has no shortcut.** The counts assume an attacker can only try messages and look. SHA-1, a 160-bit hash, promised $`2^{80}`$ collision work; a published attack found one in $`2^{63.1}`$, about $`2^{17}`$ times less.
+- **$`n`$ is the number of bits actually kept.** Cut to 32 bits, the run below found two contract references with the same fingerprint after 45,147 tries.
+- **The attacker chooses both messages for a collision.** If one is fixed, as with a contract already signed, the job is a second preimage: $`2^n`$, not $`2^{n/2}`$.
+- **The key is secret and the recipe is HMAC.** The tempting tag $`h(k \,\|\, m)`$ lets anyone extend a message and compute a valid tag without the key. The run below forges a payment order this way.
+- **Passwords have many possible values.** PBKDF2 multiplies the cost of each guess by about $`2r`$; a password from a short list still falls.
 
 ---
 
@@ -88,7 +94,7 @@ Here $\oplus$ is the exclusive or from [The one-time pad](01-one-time-pad-and-pe
 
 ### Step 0: collisions must exist, so the promise is only about effort
 
-SHA-256 takes messages of any length and returns one of $2^{256}$ fingerprints. There are $2^{264}$ different 33-byte messages alone. By [Pigeonhole](../../01-Foundations/08-Relations%20and%20Functions/08-pigeonhole-principle.md), with more messages than fingerprints, some fingerprint is shared; here some fingerprint is shared by at least 256 of them. So a hash can never promise "no collisions". It promises only that finding one takes an impossible amount of work.
+SHA-256 takes messages of any length and returns one of $`2^{256}`$ fingerprints. There are $`2^{264}`$ different 33-byte messages alone. By [Pigeonhole](../../01-Foundations/08-Relations%20and%20Functions/08-pigeonhole-principle.md), with more messages than fingerprints, some fingerprint is shared; here some fingerprint is shared by at least 256 of them. So a hash can never promise "no collisions". It promises only that finding one takes an impossible amount of work.
 
 ### Step 1: how SHA-256 builds the fingerprint
 
@@ -96,27 +102,29 @@ SHA-256 works on 64-byte blocks. It pads the message with a 1 bit, then zeros, t
 
 It starts from eight fixed 32-bit words, the **state**. A **compression function** takes the state and one block and returns a new state: 64 rounds of adding, rotating and mixing bits. Each block is folded in this way, in order. The final state, written out, is the fingerprint. This chaining is the **Merkle–Damgård construction**.
 
-The constants hide nothing: the starting words are the first 32 bits after the point of the square roots of the first 8 primes ($\sqrt{2} = 1.6a09e667…$ in hexadecimal gives `6a09e667`), and the 64 round constants come from cube roots of the first 64 primes, `428a2f98` to `c67178f2`. The code rebuilds them all from the primes.
+The constants hide nothing: the starting words are the first 32 bits after the point of the square roots of the first 8 primes ($`\sqrt{2} = 1.6a09e667…`$ in hexadecimal gives `6a09e667`), and the 64 round constants come from cube roots of the first 64 primes, `428a2f98` to `c67178f2`. The code rebuilds them all from the primes.
 
 The rounds make every output bit depend on every input bit. Flipping each of the contract's 440 bits in turn changes on average 127.83 of the 256 output bits, against 128 for a random string, and never fewer than 106.
 
-### Step 2: matching a given fingerprint costs about $2^n$ tries
+### Step 2: matching a given fingerprint costs about $`2^n`$ tries
 
-An attacker holds the signed contract and wants a different one, at GBP 25,000, with the same fingerprint. With no shortcut, each draft matches with chance $1/2^n$, so the wait is geometric ([Waiting for a success](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/02-geometric-and-negative-binomial.md)), with average $2^n$.
+An attacker holds the signed contract and wants a different one, at GBP 25,000, with the same fingerprint. With no shortcut, each draft matches with chance $`1/2^n`$, so the wait is geometric ([Waiting for a success](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/02-geometric-and-negative-binomial.md)), with average $`2^n`$.
 
-The code tests this on fingerprints cut to $n$ = 8, 10 and 12 bits, 20 attacks each. Measured over all 60, the work was 0.822 times $2^n$. With a standard error of 0.129 (the typical chance scatter of such an average), that is within the four standard errors the code allows. For $n = 256$ the work is $2^{256}$: a preimage and a second preimage cost the same.
+The code tests this on fingerprints cut to $`n`$ = 8, 10 and 12 bits, 20 attacks each. Measured over all 60, the work was 0.822 times $`2^n`$. With a standard error of 0.129 (the typical chance scatter of such an average), that is within the four standard errors the code allows. For $`n = 256`$ the work is $`2^{256}`$: a preimage and a second preimage cost the same.
 
-### Step 3: finding any pair costs only about $2^{n/2}$
+### Step 3: finding any pair costs only about $`2^{n/2}`$
 
-Now the attacker writes both contracts. Each new draft is compared with *every* earlier one, so after $q$ drafts there are $q(q-1)/2$ pairs, each matching with chance $1/d$.
+Now the attacker writes both contracts. Each new draft is compared with *every* earlier one, so after $`q`$ drafts there are $`q(q-1)/2`$ pairs, each matching with chance $`1/d`$.
 
-This is the birthday problem with $d$ days. [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md) shows the chance of no match is about $e^{-q^2/(2d)}$, which falls to one half near $q = \sqrt{2d \ln 2}$. Call that count $T_{1/2}$ and put $d = 2^n$:
+This is the birthday problem with $`d`$ days. [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md) shows the chance of no match is about $`e^{-q^2/(2d)}`$, which falls to one half near $`q = \sqrt{2d \ln 2}`$. Call that count $`T_{1/2}`$ and put $`d = 2^n`$:
 
-$$T_{1/2} \approx \sqrt{2 \ln 2}\;\sqrt{2^n} = 1.1774 \cdot 2^{n/2}.$$
+```math
+T_{1/2} \approx \sqrt{2 \ln 2}\;\sqrt{2^n} = 1.1774 \cdot 2^{n/2}.
+```
 
-The average wait, the average of $T$, adds up the chance that the first $q$ drafts are all different, for $q = 0, 1, 2, \ldots$, which comes to a little more than $\sqrt{\pi d/2} = 1.2533 \cdot 2^{n/2}$. The code computes that sum exactly and runs 40 collision hunts at each of 8, 12, 16 and 20 bits:
+The average wait, the average of $`T`$, adds up the chance that the first $`q`$ drafts are all different, for $`q = 0, 1, 2, \ldots`$, which comes to a little more than $`\sqrt{\pi d/2} = 1.2533 \cdot 2^{n/2}`$. The code computes that sum exactly and runs 40 collision hunts at each of 8, 12, 16 and 20 bits:
 
-| Bits kept, $n$ | Measured average | Exact average | $\sqrt{\pi/2 \cdot 2^n}$ |
+| Bits kept, $`n`$ | Measured average | Exact average | $`\sqrt{\pi/2 \cdot 2^n}`$ |
 | ---: | ---: | ---: | ---: |
 | 8 | 24.57 | 20.73 | 20.05 |
 | 12 | 77.67 | 80.88 | 80.21 |
@@ -125,7 +133,7 @@ The average wait, the average of $T$, adds up the chance that the first $q$ draf
 
 Each measured average is within four standard errors of the exact one, the tolerance the code asserts. Four extra bits multiply the work by 4, not 16: the square root.
 
-So an $n$-bit hash gives $n/2$ bits of collision security. SHA-256 gives 128-bit security: about $2^{128}$ operations, if no shortcut exists.
+So an $`n`$-bit hash gives $`n/2`$ bits of collision security. SHA-256 gives 128-bit security: about $`2^{128}`$ operations, if no shortcut exists.
 
 ### Step 4: a collision in the chain means a collision in one step
 
@@ -142,11 +150,11 @@ If the lengths are equal, both have the same number of blocks. Look at the last 
 
 </details>
 
-### Step 5: why $h(k \,\|\, m)$ is not a MAC, and HMAC is
+### Step 5: why $`h(k \,\|\, m)`$ is not a MAC, and HMAC is
 
-The fingerprint *is* the final state. Anyone who sees $h(k \,\|\, m)$ holds the state after the key and the message have been folded in. They know the padding too, because it depends only on the total length: the message's, which they see, plus the key's, which is usually known or found by trying a few lengths.
+The fingerprint *is* the final state. Anyone who sees $`h(k \,\|\, m)`$ holds the state after the key and the message have been folded in. They know the padding too, because it depends only on the total length: the message's, which they see, plus the key's, which is usually known or found by trying a few lengths.
 
-So they can load that state and keep folding in more blocks. The result is a valid fingerprint of $k \,\|\, m \,\|\, \text{padding} \,\|\, \text{extra}$, computed without $k$. This is a **length-extension attack**.
+So they can load that state and keep folding in more blocks. The result is a valid fingerprint of $`k \,\|\, m \,\|\, \text{padding} \,\|\, \text{extra}`$, computed without $`k`$. This is a **length-extension attack**.
 
 ```mermaid
 flowchart LR
@@ -160,13 +168,13 @@ In the run, the order `from=laptop&pay=250000.00&to=12345678` gets the naive tag
 
 HMAC wraps the inner hash in a second, outer hash with a different key mix. Extending the outer hash gives the hash of (outer key block, inner result, padding, extra), which is not the HMAC of any message. In the run, the bank recomputes HMAC on the forged order and rejects it.
 
-RFC 2104, the internet standard (Request for Comments) that defines HMAC, bases HMAC's security on properties of the compression function when its starting state is secret; this card quotes that result. A forger left to guess a tag is right with chance $1/2^{256}$ per guess.
+RFC 2104, the internet standard (Request for Comments) that defines HMAC, bases HMAC's security on properties of the compression function when its starting state is secret; this card quotes that result. A forger left to guess a tag is right with chance $`1/2^{256}`$ per guess.
 
 ### Step 6: slow on purpose, and salted, for passwords
 
-A bank must check passwords without storing them, so it stores a hash. A fast hash helps a thief who steals the file: each guess costs one compression, and all $26^8$ = 208,827,064,576 eight-letter lower-case passwords cost that many.
+A bank must check passwords without storing them, so it stores a hash. A fast hash helps a thief who steals the file: each guess costs one compression, and all $`26^8`$ = 208,827,064,576 eight-letter lower-case passwords cost that many.
 
-PBKDF2 makes each guess cost $r$ rounds of HMAC. Plain code spends 4 compressions per round. Careful code folds the two key blocks into the state once and reuses them, so it spends 2 per round plus 2: at $r = 1{,}000$ the run counted 4,000 and 2,002, with identical outputs. At $r = 100{,}000$, trying all 8-letter passwords costs 41,765,830,569,329,152 compressions.
+PBKDF2 makes each guess cost $`r`$ rounds of HMAC. Plain code spends 4 compressions per round. Careful code folds the two key blocks into the state once and reuses them, so it spends 2 per round plus 2: at $`r = 1{,}000`$ the run counted 4,000 and 2,002, with identical outputs. At $`r = 100{,}000`$, trying all 8-letter passwords costs 41,765,830,569,329,152 compressions.
 
 The salt is a random string stored beside each customer's key. Two customers with the password `letmein1` store the same plain hash, `2e844ad6…`. With salts they store `646c75ea…` and `dc56a537…`. Without salt, one pass over the guesses checks all 1,000,000 customers at once. With salt, each customer needs a separate pass: 1,000,000 times the work.
 
@@ -178,12 +186,12 @@ How much work would forging a SHA-256 collision for the contract take?
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| 1. Possible fingerprints | $d = 2^{256}$ | $2^{256}$ |
-| 2. Square root | $\sqrt{d} = 2^{128}$ | 3.4028 × 10^38 |
-| 3. Half-chance factor | $\sqrt{2 \ln 2}$ | 1.1774 |
+| 1. Possible fingerprints | $`d = 2^{256}`$ | $`2^{256}`$ |
+| 2. Square root | $`\sqrt{d} = 2^{128}`$ | 3.4028 × 10^38 |
+| 3. Half-chance factor | $`\sqrt{2 \ln 2}`$ | 1.1774 |
 | 4. Drafts for a half chance of a pair | 1.1774 × 3.4028 × 10^38 | **4.0065 × 10^38** |
-| 5. Average drafts to the first pair | $\sqrt{\pi/2} \cdot 2^{128}$ | 1.2533 × 2^128 |
-| 6. To match the real contract instead | $2^{256}$ | $2^{128}$ times more |
+| 5. Average drafts to the first pair | $`\sqrt{\pi/2} \cdot 2^{128}`$ | 1.2533 × 2^128 |
+| 6. To match the real contract instead | $`2^{256}`$ | $`2^{128}`$ times more |
 
 Forging a pair of contracts with the same SHA-256 fingerprint takes about 4 × 10^38 hashes for an even chance. That is 128-bit security.
 
@@ -191,10 +199,10 @@ Forging a pair of contracts with the same SHA-256 fingerprint takes about 4 × 1
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Tag the payment order as $h(k \,\Vert\, m)$ | forged order to account 66666666 accepted | the tag is the hash's state; anyone can extend it |
-| Keep only 32 bits of the fingerprint | two contract references collide after 45,147 tries | $n$ is the bits kept; $2^{16}$ work is nothing |
-| Rate a 64-bit checksum by guessing, $2^{64}$ | collision after about 5,382,943,231 tries on average | collisions cost $2^{n/2}$, not $2^n$ |
-| Trust SHA-1's promised $2^{80}$ | broken in $2^{63.1}$ | a shortcut beats the ideal count |
+| Tag the payment order as $`h(k \,\Vert\, m)`$ | forged order to account 66666666 accepted | the tag is the hash's state; anyone can extend it |
+| Keep only 32 bits of the fingerprint | two contract references collide after 45,147 tries | $`n`$ is the bits kept; $`2^{16}`$ work is nothing |
+| Rate a 64-bit checksum by guessing, $`2^{64}`$ | collision after about 5,382,943,231 tries on average | collisions cost $`2^{n/2}`$, not $`2^n`$ |
+| Trust SHA-1's promised $`2^{80}`$ | broken in $`2^{63.1}`$ | a shortcut beats the ideal count |
 | Store passwords as one fast hash, no salt | 208,827,064,576 compressions crack every 8-letter password for all 1,000,000 customers at once | no slowness and no salt |
 
 ---
@@ -204,9 +212,9 @@ Forging a pair of contracts with the same SHA-256 fingerprint takes about 4 × 1
 Nothing imported holds an answer: SHA-256, HMAC and PBKDF2 are written out, constants included. Attacks run on fingerprints cut to a few bits, insecure on purpose. Four roads check the work.
 
 - The recipes meet published test vectors, known inputs with their correct outputs, from the standards FIPS 180-4, RFC 4231 and RFC 7914.
-- Measured collision and second-preimage searches meet the exact birthday sum and $2^n$.
+- Measured collision and second-preimage searches meet the exact birthday sum and $`2^n`$.
 - The forgery made without the key is checked against the tag the bank computes with it.
-- The password code counts its own compressions, plain and careful, against $4r$ and $2r + 2$, and both versions give the same key.
+- The password code counts its own compressions, plain and careful, against $`4r`$ and $`2r + 2`$, and both versions give the same key.
 
 The Rust program prints the same lines.
 
@@ -626,11 +634,11 @@ The 32-bit hunt matched references 10,262 and 45,146 on `1aa7161d`, an early fin
 
 ### Lean
 
-Lean proves the core of Steps 0, 2, 3 and 4, for every number of bits $n$ and every number of drafts $q$.
+Lean proves the core of Steps 0, 2, 3 and 4, for every number of bits $`n`$ and every number of drafts $`q`$.
 
-- Suppose a hash sends a finite set of messages to the $2^n$ fingerprints. Then some fingerprint is shared by at least the number of messages divided by $2^n$.
-- Suppose an ideal $n$-bit hash is tried on $q$ different drafts. Then the chance that two drafts share a fingerprint is at most $q(q-1)/2$ pairs times $1/2^n$. So a half chance needs more than $2^{n/2}$ drafts.
-- Suppose an ideal $n$-bit hash is tried on $q$ drafts against one given fingerprint. Then the chance that any draft matches is at most $q/2^n$. So a half chance needs at least half of $2^n$ drafts.
+- Suppose a hash sends a finite set of messages to the $`2^n`$ fingerprints. Then some fingerprint is shared by at least the number of messages divided by $`2^n`$.
+- Suppose an ideal $`n`$-bit hash is tried on $`q`$ different drafts. Then the chance that two drafts share a fingerprint is at most $`q(q-1)/2`$ pairs times $`1/2^n`$. So a half chance needs more than $`2^{n/2}`$ drafts.
+- Suppose an ideal $`n`$-bit hash is tried on $`q`$ drafts against one given fingerprint. Then the chance that any draft matches is at most $`q/2^n`$. So a half chance needs at least half of $`2^n`$ drafts.
 - Suppose the padding keeps messages apart, gives equal lengths the same number of blocks, and puts the length in the last block. Then two different messages with one fingerprint force two different step inputs with the same output: a compression collision.
 - The card's hand arithmetic is right: the 33-byte message count, 3.4028 × 10^38, the 59 bytes of glue, the SHA-1 shortfall and the password costs.
 
@@ -882,12 +890,12 @@ example : (26 : ℕ) ^ 8 * (2 * 100000 + 2) * 10 ^ 6 = 41765830569329152000000 :
 ## The usual mistake
 
 > [!warning]
-> **Making a tag by hashing the key and message together, $h(k \,\|\, m)$.** It looks like a MAC, and with SHA-256 it is forgeable. The tag is the hash's internal state, so anyone can extend the message and compute the new tag without the key. In the run, a payment order redirected to account 66666666 passed the bank's check. Use HMAC, which hashes twice with two key mixes.
+> **Making a tag by hashing the key and message together, $`h(k \,\|\, m)`$.** It looks like a MAC, and with SHA-256 it is forgeable. The tag is the hash's internal state, so anyone can extend the message and compute the new tag without the key. In the run, a payment order redirected to account 66666666 passed the bank's check. Use HMAC, which hashes twice with two key mixes.
 >
 > - **Hashing passwords with one fast, unsalted hash.** One pass of 208,827,064,576 compressions tries every 8-letter lower-case password for all 1,000,000 customers at once. PBKDF2 at 100,000 rounds raises one pass to 41,765,830,569,329,152, and salts multiply it by 1,000,000.
-> - **Reading $n$ bits as $n$ bits of collision security.** A 64-bit checksum collides after about 5,382,943,231 tries on average, not $2^{64}$. Collision security is $n/2$ bits.
+> - **Reading $`n`$ bits as $`n`$ bits of collision security.** A 64-bit checksum collides after about 5,382,943,231 tries on average, not $`2^{64}`$. Collision security is $`n/2`$ bits.
 > - **Cutting a hash short without redoing the sum.** At 32 bits, two contract references collided after 45,147 tries.
-> - **Trusting an old hash's label.** SHA-1's 160 bits promised $2^{80}$ collision work; it fell to $2^{63.1}$.
+> - **Trusting an old hash's label.** SHA-1's 160 bits promised $`2^{80}`$ collision work; it fell to $`2^{63.1}`$.
 
 ---
 
@@ -900,14 +908,14 @@ example : (26 : ℕ) ^ 8 * (2 * 100000 + 2) * 10 ^ 6 = 41765830569329152000000 :
 - **Signed documents and certificates.** A signature is made on a document's hash, so it is only as strong as the hash's collision resistance ([Digital signatures](07-digital-signatures.md)).
 
 > **Say it back**
-> A hash turns any data into a short fingerprint that anyone can recompute but nobody can steer. Pigeonhole guarantees collisions exist, so the promise is about work: about $2^n$ tries to match a given $n$-bit fingerprint, and about $2^{n/2}$ to find any matching pair, by the birthday effect. SHA-256 therefore gives 128-bit security against collisions. A MAC adds a secret key; the naive $h(k \,\|\, m)$ falls to length extension, and HMAC's second, outer hash closes that hole. For passwords, PBKDF2 runs HMAC many rounds with a salt, so each guess costs thousands of times more and no two customers share a lock.
+> A hash turns any data into a short fingerprint that anyone can recompute but nobody can steer. Pigeonhole guarantees collisions exist, so the promise is about work: about $`2^n`$ tries to match a given $`n`$-bit fingerprint, and about $`2^{n/2}`$ to find any matching pair, by the birthday effect. SHA-256 therefore gives 128-bit security against collisions. A MAC adds a secret key; the naive $`h(k \,\|\, m)`$ falls to length extension, and HMAC's second, outer hash closes that hole. For passwords, PBKDF2 runs HMAC many rounds with a salt, so each guess costs thousands of times more and no two customers share a lock.
 
 ---
 
 ## What this builds on
 
 - [AES](02-symmetric-ciphers-and-aes.md): the shared secret key and symmetric encryption; a MAC is what keeps that key's messages from being altered, and some MACs are built from AES itself.
-- [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md): the birthday chance and its square-root threshold $\sqrt{2d \ln 2}$; this card sets $d = 2^n$.
+- [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md): the birthday chance and its square-root threshold $`\sqrt{2d \ln 2}`$; this card sets $`d = 2^n`$.
 - [Pigeonhole](../../01-Foundations/08-Relations%20and%20Functions/08-pigeonhole-principle.md): why every hash with more inputs than outputs has collisions, so security can only mean "hard to find".
 
 ## Where this goes next

@@ -31,42 +31,48 @@ To scale: 80 px per metre across, 0.5 px per millimetre of sag, so the sag is dr
 
 ## The formula
 
-The cable obeys $-T\,u''(x) = f(x)$: tension times curvature balances the load. Multiply by a **test function** $v$ (any shape the cable could take, with $v(0) = 0$) and integrate by parts, as on the sibling card [Finite elements](07-finite-elements-galerkin-and-hat-functions.md). The result is the **weak form**: find $u$ with $u(0) = 0$ such that
+The cable obeys $`-T\,u''(x) = f(x)`$: tension times curvature balances the load. Multiply by a **test function** $`v`$ (any shape the cable could take, with $`v(0) = 0`$) and integrate by parts, as on the sibling card [Finite elements](07-finite-elements-galerkin-and-hat-functions.md). The result is the **weak form**: find $`u`$ with $`u(0) = 0`$ such that
 
-$$a(u, v) = \int_0^L T\,u'\,v'\,dx \;=\; \int_0^L f\,v\,dx \;+\; P\,v(L) \quad\text{for every } v \text{ with } v(0) = 0.$$
+```math
+a(u, v) = \int_0^L T\,u'\,v'\,dx \;=\; \int_0^L f\,v\,dx \;+\; P\,v(L) \quad\text{for every } v \text{ with } v(0) = 0.
+```
 
-The computer looks for $u_h = \sum_i U_i\,\varphi_i$, a sum of **hat functions** $\varphi_i$ (each is 1 at node $i$, 0 at every other node, and a straight line in between). Testing with each hat gives $K U = F$, where
+The computer looks for $`u_h = \sum_i U_i\,\varphi_i`$, a sum of **hat functions** $`\varphi_i`$ (each is 1 at node $`i`$, 0 at every other node, and a straight line in between). Testing with each hat gives $`K U = F`$, where
 
-$$K_{ij} = \sum_{\text{elements } e} \int_e T\,\varphi_i'\,\varphi_j'\,dx, \qquad F_i = \sum_{\text{elements } e} \int_e f\,\varphi_i\,dx \;+\; \begin{cases} P & i = n \\ 0 & \text{otherwise.}\end{cases}$$
+```math
+K_{ij} = \sum_{\text{elements } e} \int_e T\,\varphi_i'\,\varphi_j'\,dx, \qquad F_i = \sum_{\text{elements } e} \int_e f\,\varphi_i\,dx \;+\; \begin{cases} P & i = n \\ 0 & \text{otherwise.}\end{cases}
+```
 
-The error theorem, in root-mean-square (RMS) form, where $\mathrm{RMS}(g) = \sqrt{\tfrac1L\int_0^L g^2\,dx}$:
+The error theorem, in root-mean-square (RMS) form, where $`\mathrm{RMS}(g) = \sqrt{\tfrac1L\int_0^L g^2\,dx}`$:
 
-$$\mathrm{RMS}(u' - u_h') \;\le\; \frac{h}{\pi}\,\mathrm{RMS}(u''), \qquad \mathrm{RMS}(u - u_h) \;\le\; \Big(\frac{h}{\pi}\Big)^{2}\,\mathrm{RMS}(u'').$$
+```math
+\mathrm{RMS}(u' - u_h') \;\le\; \frac{h}{\pi}\,\mathrm{RMS}(u''), \qquad \mathrm{RMS}(u - u_h) \;\le\; \Big(\frac{h}{\pi}\Big)^{2}\,\mathrm{RMS}(u'').
+```
 
 **Read it aloud:** the stiffness matrix and the load list are sums over the elements, and the ring's pull is one more load at the last node. The average slope error is at most h over pi times the average curvature; the average sag error is at most that factor squared times the curvature.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$ | tension in the cable, N | 2000 N | every sag shrinks in proportion |
-| $L$, $x$ | cable length; distance from the wall, m | 4 m | — |
-| $f(x)$, $w$ | load per metre, N/m; $w$ a uniform load | $20 + 10x$, RMS 41.633 N/m; $w$ = 20 N/m in Try changing | every sag grows in proportion |
-| $P$, $Q$ | pull on the ring at $x = L$; a lamp's point load, N | 40 N; 100 N at $x = 4/3$ m | tip sag grows by $PL/T$ |
-| $u$, $u'$, $u''$ | exact sag (m, down is positive), its slope, its curvature (1/m) | tip 266.667 mm; slope 0.100 at the wall; RMS $u''$ 2.0817e-02 /m | — |
-| $n$, $h$ | number of elements; element length $L/n$, m | 4; 1 m | $h$ up: both errors grow, as $h$ and $h^2$ |
-| $\varphi_i$ | hat function of node $i$ | five hats, nodes 0 to 4 | — |
-| $u_h$, $U_i$, $Iu$, $e$ | computed sag; its value at node $i$; the interpolant (straight pieces through the true node values); an error $u - Iu$ (as a subscript or superscript, $e$ numbers an element) | 94.167, 173.333, 232.500, 266.667 mm | — |
-| $k^{(e)}$, $K$, $F$ | element matrix of element $e$, $\tfrac{T}{h}$ times `[[1, -1], [-1, 1]]`; stiffness matrix; load list, one entry per node | 2000 N/m times that pattern; 5 by 5, 13 nonzeros; 11.667 to 68.333 N | — |
-| $a(u, v)$, $v$, $\mathrm{RMS}$ | energy form $\int T u' v'\,dx$; a test function; root-mean-square over the cable | — | — |
-| $M$, $\alpha$, $C$ | constants of the general theorem: upper and lower bounds of the energy form (this $\alpha$ is not the shelf's diffusivity); the interpolation constant | 1, 1 and $1/\pi$ in energy terms on the cable | $M/\alpha$ up: weaker best-fit guarantee |
-| $R$ | force the bolt puts on the cable, N | −200.000 (minus: upward) | — |
+| $`T`$ | tension in the cable, N | 2000 N | every sag shrinks in proportion |
+| $`L`$, $`x`$ | cable length; distance from the wall, m | 4 m | — |
+| $`f(x)`$, $`w`$ | load per metre, N/m; $`w`$ a uniform load | $`20 + 10x`$, RMS 41.633 N/m; $`w`$ = 20 N/m in Try changing | every sag grows in proportion |
+| $`P`$, $`Q`$ | pull on the ring at $`x = L`$; a lamp's point load, N | 40 N; 100 N at $`x = 4/3`$ m | tip sag grows by $`PL/T`$ |
+| $`u`$, $`u'`$, $`u''`$ | exact sag (m, down is positive), its slope, its curvature (1/m) | tip 266.667 mm; slope 0.100 at the wall; RMS $`u''`$ 2.0817e-02 /m | — |
+| $`n`$, $`h`$ | number of elements; element length $`L/n`$, m | 4; 1 m | $`h`$ up: both errors grow, as $`h`$ and $`h^2`$ |
+| $`\varphi_i`$ | hat function of node $`i`$ | five hats, nodes 0 to 4 | — |
+| $`u_h`$, $`U_i`$, $`Iu`$, $`e`$ | computed sag; its value at node $`i`$; the interpolant (straight pieces through the true node values); an error $`u - Iu`$ (as a subscript or superscript, $`e`$ numbers an element) | 94.167, 173.333, 232.500, 266.667 mm | — |
+| $`k^{(e)}`$, $`K`$, $`F`$ | element matrix of element $`e`$, $`\tfrac{T}{h}`$ times `[[1, -1], [-1, 1]]`; stiffness matrix; load list, one entry per node | 2000 N/m times that pattern; 5 by 5, 13 nonzeros; 11.667 to 68.333 N | — |
+| $`a(u, v)`$, $`v`$, $`\mathrm{RMS}`$ | energy form $`\int T u' v'\,dx`$; a test function; root-mean-square over the cable | — | — |
+| $`M`$, $`\alpha`$, $`C`$ | constants of the general theorem: upper and lower bounds of the energy form (this $`\alpha`$ is not the shelf's diffusivity); the interpolation constant | 1, 1 and $`1/\pi`$ in energy terms on the cable | $`M/\alpha`$ up: weaker best-fit guarantee |
+| $`R`$ | force the bolt puts on the cable, N | −200.000 (minus: upward) | — |
 
 ### When it holds
 
-- **The exact curvature $u''$ has a finite RMS value (it is square-integrable).** A smooth load gives this. A single point load does not: $u'$ jumps there. Hang one 100 N lamp at $x = 4/3$ m and the slope error falls only like $h^{0.5}$ (observed order 0.500), not $h$.
-- **At least one essential condition.** With the bolt removed, nothing stops the whole cable sliding up or down the post. $K$ has no inverse: elimination hits a zero pivot in row 5 of 5.
-- **Exact integrals for $K$ and $F$.** Here they are exact. With a rough quadrature rule (a rule that estimates an integral from a few sample values) the nodes stop being exact, and the quadrature error adds to the bound.
-- **One space dimension for exact nodes.** In 2D and 3D the nodes are not exact. The best-fit property and the rates $h$ and $h^2$ survive, with an unknown constant in place of $1/\pi$, as long as no triangle becomes a thin sliver.
-- **Small slopes.** The equation $-Tu'' = f$ assumes the slope stays small. Here it is at most 0.100, at the wall.
+- **The exact curvature $`u''`$ has a finite RMS value (it is square-integrable).** A smooth load gives this. A single point load does not: $`u'`$ jumps there. Hang one 100 N lamp at $`x = 4/3`$ m and the slope error falls only like $`h^{0.5}`$ (observed order 0.500), not $`h`$.
+- **At least one essential condition.** With the bolt removed, nothing stops the whole cable sliding up or down the post. $`K`$ has no inverse: elimination hits a zero pivot in row 5 of 5.
+- **Exact integrals for $`K`$ and $`F`$.** Here they are exact. With a rough quadrature rule (a rule that estimates an integral from a few sample values) the nodes stop being exact, and the quadrature error adds to the bound.
+- **One space dimension for exact nodes.** In 2D and 3D the nodes are not exact. The best-fit property and the rates $`h`$ and $`h^2`$ survive, with an unknown constant in place of $`1/\pi`$, as long as no triangle becomes a thin sliver.
+- **Small slopes.** The equation $`-Tu'' = f`$ assumes the slope stays small. Here it is at most 0.100, at the wall.
 
 ---
 
@@ -78,51 +84,57 @@ The method does not guess node values and hope. Among all the shapes made of str
 
 ### Step 1: assembly is adding, because integrals over the cable are sums over elements
 
-Each entry $K_{ij} = \int_0^L T\varphi_i'\varphi_j'\,dx$ splits into one integral per element. On element $e$, only the two hats of its end nodes are nonzero. Their slopes are $-1/h$ (left node's hat) and $+1/h$ (right node's hat). So the element contributes
+Each entry $`K_{ij} = \int_0^L T\varphi_i'\varphi_j'\,dx`$ splits into one integral per element. On element $`e`$, only the two hats of its end nodes are nonzero. Their slopes are $`-1/h`$ (left node's hat) and $`+1/h`$ (right node's hat). So the element contributes
 
-$$k^{(e)} = \int_e T \begin{pmatrix} \varphi_{\text{left}}'^{\,2} & \varphi_{\text{left}}'\varphi_{\text{right}}' \\ \varphi_{\text{right}}'\varphi_{\text{left}}' & \varphi_{\text{right}}'^{\,2}\end{pmatrix} dx = \frac{T}{h}\begin{pmatrix} 1 & -1 \\ -1 & 1\end{pmatrix}.$$
+```math
+k^{(e)} = \int_e T \begin{pmatrix} \varphi_{\text{left}}'^{\,2} & \varphi_{\text{left}}'\varphi_{\text{right}}' \\ \varphi_{\text{right}}'\varphi_{\text{left}}' & \varphi_{\text{right}}'^{\,2}\end{pmatrix} dx = \frac{T}{h}\begin{pmatrix} 1 & -1 \\ -1 & 1\end{pmatrix}.
+```
 
-Element $e$ joins nodes $e - 1$ and $e$, so these four numbers go into rows and columns $e - 1$ and $e$ of $K$, added to whatever is already there. Node 1 belongs to elements 1 and 2, so its diagonal entry is 2000 + 2000 = 4000. The load entries add the same way.
+Element $`e`$ joins nodes $`e - 1`$ and $`e`$, so these four numbers go into rows and columns $`e - 1`$ and $`e`$ of $`K`$, added to whatever is already there. Node 1 belongs to elements 1 and 2, so its diagonal entry is 2000 + 2000 = 4000. The load entries add the same way.
 
-The result is **sparse** (mostly zeros): each row touches only its neighbours. Here 13 of 25 entries are nonzero, and $K$ is tridiagonal, so [The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md) solves it in $8n - 7$ flops: 25 at $n = 4$, 8185 at $n = 1024$. Dense elimination at $n = 1024$ would cost about $2n^3/3$, 7.158e+08 flops. The [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md) card in the engineering wing assembles a cantilever the same way; this card spends its effort on the boundaries and the error.
+The result is **sparse** (mostly zeros): each row touches only its neighbours. Here 13 of 25 entries are nonzero, and $`K`$ is tridiagonal, so [The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md) solves it in $`8n - 7`$ flops: 25 at $`n = 4`$, 8185 at $`n = 1024`$. Dense elimination at $`n = 1024`$ would cost about $`2n^3/3`$, 7.158e+08 flops. The [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md) card in the engineering wing assembles a cantilever the same way; this card spends its effort on the boundaries and the error.
 
 ### Step 2: the two boundary kinds come out of integration by parts
 
-Multiply $-Tu'' = f$ by a test function $v$ and integrate by parts:
+Multiply $`-Tu'' = f`$ by a test function $`v`$ and integrate by parts:
 
-$$\int_0^L T u' v'\,dx \;-\; \big[\,T u'\,v\,\big]_{x=0}^{x=L} \;=\; \int_0^L f v\,dx.$$
+```math
+\int_0^L T u' v'\,dx \;-\; \big[\,T u'\,v\,\big]_{x=0}^{x=L} \;=\; \int_0^L f v\,dx.
+```
 
 The bracket holds the two ends, and they behave differently.
 
-- **At the ring, $x = L$:** the physics says $T u'(L) = P$. So the bracket term is $P\,v(L)$, a known number times $v(L)$. It moves to the right-hand side as a load. Nothing else is needed: any $u$ that satisfies the weak form for every $v$ automatically has $Tu'(L) = P$. That is why it is called **natural**.
-- **At the bolt, $x = 0$:** $T u'(0)$ is the bolt's force, which is unknown. The weak form removes it by demanding $v(0) = 0$, and the answer is forced to obey $u(0) = 0$. Both demands act on the unknowns, so the condition is called **essential**. In the matrix: delete row 0 and column 0.
+- **At the ring, $`x = L`$:** the physics says $`T u'(L) = P`$. So the bracket term is $`P\,v(L)`$, a known number times $`v(L)`$. It moves to the right-hand side as a load. Nothing else is needed: any $`u`$ that satisfies the weak form for every $`v`$ automatically has $`Tu'(L) = P`$. That is why it is called **natural**.
+- **At the bolt, $`x = 0`$:** $`T u'(0)`$ is the bolt's force, which is unknown. The weak form removes it by demanding $`v(0) = 0`$, and the answer is forced to obey $`u(0) = 0`$. Both demands act on the unknowns, so the condition is called **essential**. In the matrix: delete row 0 and column 0.
 
-The deleted row is not wasted. Put the solved sags back into it, and it returns the bolt's force: $R$ = −200.000 N, which is 200 N upward. That is the whole load: every planter plus the 40 N on the ring.
+The deleted row is not wasted. Put the solved sags back into it, and it returns the bolt's force: $`R`$ = −200.000 N, which is 200 N upward. That is the whole load: every planter plus the 40 N on the ring.
 
 ### Step 3: the error is orthogonal to every element shape, so the answer is the best fit
 
-The true $u$ satisfies the weak form for every test function, and the computed $u_h$ for every hat. Subtracting gives $a(u - u_h, \varphi_i) = 0$ for every hat, the ring's hat included: **Galerkin orthogonality**. Pythagoras in the energy form then says no shape made of the elements has a smaller energy error than $u_h$: **Céa's lemma**, in its symmetric form. [Finite elements](07-finite-elements-galerkin-and-hat-functions.md) proves both in its Step 3. Here the energy error is $T$ times the integral of the squared slope error. The code computes the four orthogonality numbers for the cable; the largest, divided by $T$, is 6.2e-17, which is rounding.
+The true $`u`$ satisfies the weak form for every test function, and the computed $`u_h`$ for every hat. Subtracting gives $`a(u - u_h, \varphi_i) = 0`$ for every hat, the ring's hat included: **Galerkin orthogonality**. Pythagoras in the energy form then says no shape made of the elements has a smaller energy error than $`u_h`$: **Céa's lemma**, in its symmetric form. [Finite elements](07-finite-elements-galerkin-and-hat-functions.md) proves both in its Step 3. Here the energy error is $`T`$ times the integral of the squared slope error. The code computes the four orthogonality numbers for the cable; the largest, divided by $`T`$, is 6.2e-17, which is rounding.
 
 ### Step 4: on a cable, the best fit goes through the true nodes
 
-Let $I u$ be the **interpolant**: the straight pieces that join the true sag values at the nodes. On each element, $u - Iu$ is zero at both ends. The slope of a hat is constant on each element, so
+Let $`I u`$ be the **interpolant**: the straight pieces that join the true sag values at the nodes. On each element, $`u - Iu`$ is zero at both ends. The slope of a hat is constant on each element, so
 
-$$a(u - Iu,\ \varphi_i) = \sum_e T\,(\pm\tfrac1h) \int_e (u - Iu)'\,dx = \sum_e T\,(\pm\tfrac1h)\,\big[u - Iu\big]_{\text{ends of } e} = 0.$$
+```math
+a(u - Iu,\ \varphi_i) = \sum_e T\,(\pm\tfrac1h) \int_e (u - Iu)'\,dx = \sum_e T\,(\pm\tfrac1h)\,\big[u - Iu\big]_{\text{ends of } e} = 0.
+```
 
-So $Iu$ also satisfies every Galerkin equation. $K$ (with the bolt row removed) has an inverse, so the solution is unique, and $u_h = Iu$. That is why all four node sags match the exact ones to about 1e-16 m.
+So $`Iu`$ also satisfies every Galerkin equation. $`K`$ (with the bolt row removed) has an inverse, so the solution is unique, and $`u_h = Iu`$. That is why all four node sags match the exact ones to about 1e-16 m.
 
-A third road gives the same nodes. Element $e$ carries all the load to its right, so its far end sits lower than its near end by (load carried) × $h/T$. The loads carried are 188.333, 158.333, 118.333 and 68.333 N, and $h$ = 1 m. Adding the drops from the wall gives the same four sags.
+A third road gives the same nodes. Element $`e`$ carries all the load to its right, so its far end sits lower than its near end by (load carried) × $`h/T`$. The loads carried are 188.333, 158.333, 118.333 and 68.333 N, and $`h`$ = 1 m. Adding the drops from the wall gives the same four sags.
 
 ### Step 5: how far straight pieces can stray from a curve
 
-On one element, $e(x) = u - Iu$ is zero at both ends, and $e'' = u''$ because $Iu$ is straight. The fold of Step 5 on [Finite elements](07-finite-elements-galerkin-and-hat-functions.md) proves, by Wirtinger's inequality, integration by parts and the Cauchy-Schwarz inequality, that then $\int_e e'^2 \le (h/\pi)^2 \int_e u''^2$ and $\int_e e^2 \le (h/\pi)^4 \int_e u''^2$. Step 4 says $u_h = Iu$ here, so sum over the elements, divide by $L$ and take square roots: that is the formula. On a short element the error is close to a parabola, and for a parabola the slope bound is exactly $\sqrt{12}/\pi$ = 1.103 times the truth, the ratio in the output. Most of that gap comes from the Cauchy-Schwarz step, not from Wirtinger's.
+On one element, $`e(x) = u - Iu`$ is zero at both ends, and $`e'' = u''`$ because $`Iu`$ is straight. The fold of Step 5 on [Finite elements](07-finite-elements-galerkin-and-hat-functions.md) proves, by Wirtinger's inequality, integration by parts and the Cauchy-Schwarz inequality, that then $`\int_e e'^2 \le (h/\pi)^2 \int_e u''^2`$ and $`\int_e e^2 \le (h/\pi)^4 \int_e u''^2`$. Step 4 says $`u_h = Iu`$ here, so sum over the elements, divide by $`L`$ and take square roots: that is the formula. On a short element the error is close to a parabola, and for a parabola the slope bound is exactly $`\sqrt{12}/\pi`$ = 1.103 times the truth, the ratio in the output. Most of that gap comes from the Cauchy-Schwarz step, not from Wirtinger's.
 
 ### Step 6: what changes in two and three dimensions
 
 The same three ingredients carry over: assembly by adding, boundary kinds from integration by parts, and best fit from Galerkin orthogonality. Two things change.
 
 - **Nodes are no longer exact.** Step 4 used the fact that a hat's slope is constant and an element has only two ends. On triangles the error does not vanish at the nodes.
-- **The constants are unknown.** Céa's lemma gives an error at most $M/\alpha$ times the best fit, where $M$ and $\alpha$ bound the energy form above and below. Interpolation on triangles of size $h$ gives slope error at most $C h$ times the second derivatives, if no angle shrinks toward zero. The sag error is $C h^2$ by a duality argument (Aubin and Nitsche), which needs a convex region or a smooth edge.
+- **The constants are unknown.** Céa's lemma gives an error at most $`M/\alpha`$ times the best fit, where $`M`$ and $`\alpha`$ bound the energy form above and below. Interpolation on triangles of size $`h`$ gives slope error at most $`C h`$ times the second derivatives, if no angle shrinks toward zero. The sag error is $`C h^2`$ by a duality argument (Aubin and Nitsche), which needs a convex region or a smooth edge.
 
 This card states that general theorem without proof; Braess (Sources) proves it. The tools it needs, Sobolev spaces and the Lax-Milgram theorem, belong to the functional-analysis wing.
 
@@ -132,20 +144,20 @@ This card states that general theorem without proof; Braess (Sources) proves it.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| element matrix | $T/h$ = 2000/1, times `[[1, -1], [-1, 1]]` | 2000, −2000, −2000, 2000 N/m |
+| element matrix | $`T/h`$ = 2000/1, times `[[1, -1], [-1, 1]]` | 2000, −2000, −2000, 2000 N/m |
 | node 1 diagonal | 2000 from element 1 + 2000 from element 2 | 4000 N/m |
 | node 4 diagonal | element 4 only | 2000 N/m |
-| load at node 1 | $1 \times (20 + 2 \times 30)/6 + 1 \times (2 \times 30 + 40)/6$ | 30.000 N |
-| load at node 4 | $1 \times (50 + 2 \times 60)/6$ + the ring's 40 N | 68.333 N |
+| load at node 1 | $`1 \times (20 + 2 \times 30)/6 + 1 \times (2 \times 30 + 40)/6`$ | 30.000 N |
+| load at node 4 | $`1 \times (50 + 2 \times 60)/6`$ + the ring's 40 N | 68.333 N |
 | bolt | delete row 0 and column 0 | 4 unknowns |
 | element 1 carries | 30 + 40 + 50 + 68.333 | 188.333 N |
-| sag at node 1 | load carried × $h/T$ = 188.333 × 1 / 2000 m | 94.167 mm |
+| sag at node 1 | load carried × $`h/T`$ = 188.333 × 1 / 2000 m | 94.167 mm |
 | sag at node 2 | 94.167 + 158.333 × 1/2000 × 1000 | 173.333 mm |
 | tip sag | 232.500 + 68.333 × 1/2000 × 1000 | **266.667 mm** |
-| bolt force | row 0: $2000 \times 0 - 2000 \times 0.094167 - 11.667$ | −200.000 N |
-| slope error bound | $(1/\pi) \times$ 2.0817e-02 | 6.626e-03 |
+| bolt force | row 0: $`2000 \times 0 - 2000 \times 0.094167 - 11.667`$ | −200.000 N |
+| slope error bound | $`(1/\pi) \times`$ 2.0817e-02 | 6.626e-03 |
 | true slope error | measured by 4-point Gauss on each element | 5.998e-03, ratio 1.105 |
-| sag error bound | $(1/\pi)^2 \times$ 2.0817e-02 m, in mm | 2.109 mm |
+| sag error bound | $`(1/\pi)^2 \times`$ 2.0817e-02 m, in mm | 2.109 mm |
 | true sag error | measured the same way | 1.896 mm, ratio 1.112 |
 
 The ring sits 266.667 mm below the bolt, exactly. Between nodes the four straight pieces miss the true curve by 1.896 mm RMS, and the theorem guaranteed no more than 2.109 mm before anything was computed.
@@ -155,11 +167,11 @@ The ring sits 266.667 mm below the bolt, exactly. Between nodes the four straigh
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Overwrite element entries instead of adding them | zero pivot in row 2 of 4: no answer | node 1's diagonal is 2000, not 4000, so the first elimination step leaves 2000 − 2000 = 0 in row 2 |
-| Leave out the ring's 40 N (natural load) | tip 186.667 mm, not 266.667 | the natural condition became $Tu'(L) = 0$, a ring with no weight |
+| Leave out the ring's 40 N (natural load) | tip 186.667 mm, not 266.667 | the natural condition became $`Tu'(L) = 0`$, a ring with no weight |
 | Treat the ring as fixed (natural made essential) | middle sag 40.000 mm, not 173.333 | the cable is now bolted at both ends: a different problem |
-| Keep node 0 (no essential condition) | zero pivot in row 5 of 5: no answer | nothing holds the cable; $K$ has no inverse |
+| Keep node 0 (no essential condition) | zero pivot in row 5 of 5: no answer | nothing holds the cable; $`K`$ has no inverse |
 
-The theorem's own hypothesis fails for a point load. One 100 N lamp at $x = 4/3$ m, with no planters, gives a slope error of 1.1785e-02 at $n = 4$. That matches the closed form $\tfrac{Q}{T}\sqrt{2h/(9L)}$ with $Q$ = 100 N. Its observed order is 0.500: halving $h$ cuts the error by only $\sqrt2$.
+The theorem's own hypothesis fails for a point load. One 100 N lamp at $`x = 4/3`$ m, with no planters, gives a slope error of 1.1785e-02 at $`n = 4`$. That matches the closed form $`\tfrac{Q}{T}\sqrt{2h/(9L)}`$ with $`Q`$ = 100 N. Its observed order is 0.500: halving $`h`$ cuts the error by only $`\sqrt2`$.
 
 ### The picture: error against element length
 
@@ -176,15 +188,15 @@ xychart-beta
 
 Orange: slope error under the planters, slope 1. Green: sag error under the planters, slope 2. Dark: slope error under the single lamp, slope 0.5, because the lamp breaks the hypothesis. Each slope on this log-log plot is the observed order.
 
-At $n = 1024$ the slope error is 2.347e-05 against a bound of 2.588e-05, and the sag error is 2.900e-05 mm against 3.218e-05 mm. The observed orders are 1.000 and 2.000, as the theorem says. The full table is in the output below.
+At $`n = 1024`$ the slope error is 2.347e-05 against a bound of 2.588e-05, and the sag error is 2.900e-05 mm against 3.218e-05 mm. The observed orders are 1.000 and 2.000, as the theorem says. The full table is in the output below.
 
-Rounding does not stop the fall in this range. The node error, which is pure rounding, grows from 1.7e-16 m at $n = 4$ to 2.9e-13 m at $n = 1024$, as the matrix's condition number grows like $n^2$ (see [Matrix norms and the condition number](../03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md)). That is still five orders of magnitude below the 2.900e-05 mm sag error. The trouble here is discretization, not stability.
+Rounding does not stop the fall in this range. The node error, which is pure rounding, grows from 1.7e-16 m at $`n = 4`$ to 2.9e-13 m at $`n = 1024`$, as the matrix's condition number grows like $`n^2`$ (see [Matrix norms and the condition number](../03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md)). That is still five orders of magnitude below the 2.900e-05 mm sag error. The trouble here is discretization, not stability.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code assembles the cable for any $n$, removes the bolt row, adds the ring's pull as a load, and solves with the Thomas algorithm. It measures the true errors with 4-point [Gaussian quadrature](../05-Quadrature/03-gaussian-quadrature.md) on each element, exact for these polynomials. Four independent roads check it: the closed-form sag at the nodes; the element-by-element force balance; closed-form errors for the planters' sag at $n = 4$, for a uniform load and for the lamp; and the theorem's bound with its orders 1 and 2.
+The code assembles the cable for any $`n`$, removes the bolt row, adds the ring's pull as a load, and solves with the Thomas algorithm. It measures the true errors with 4-point [Gaussian quadrature](../05-Quadrature/03-gaussian-quadrature.md) on each element, exact for these polynomials. Four independent roads check it: the closed-form sag at the nodes; the element-by-element force balance; closed-form errors for the planters' sag at $`n = 4`$, for a uniform load and for the lamp; and the theorem's bound with its orders 1 and 2.
 
 ### Python
 
@@ -598,17 +610,17 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves assembly, exact nodes and the error bound for any cable with $T > 0$, $L > 0$ and any number of elements.
+Lean proves assembly, exact nodes and the error bound for any cable with $`T > 0`$, $`L > 0`$ and any number of elements.
 
-- The stiffness matrix $K_{ij} = \int_0^L T\,\varphi_i'\,\varphi_j'\,dx$ is the sum of the element matrices $\tfrac{T}{h}$ times `[[1, -1], [-1, 1]]`, each added into its two nodes' rows and columns.
-- Take a cable with $-T\,u'' = f$, the bolt $u(0) = 0$ and the ring $T\,u'(L) = P$. The curvature $u''$ exists at every point and has a finite RMS value.
-- Remove node 0 by the bolt ($U_0 = 0$). Let $U$ solve every other row of $K U = F$, with exact integrals and $P$ added at node $n$.
-- Then every node is exact: $U_i = u(ih)$ for $i = 0, \dots, n$.
-- Under the same conditions, $\mathrm{RMS}(u' - u_h') \le \tfrac{h}{\pi}\,\mathrm{RMS}(u'')$ and $\mathrm{RMS}(u - u_h) \le \big(\tfrac{h}{\pi}\big)^2\,\mathrm{RMS}(u'')$.
+- The stiffness matrix $`K_{ij} = \int_0^L T\,\varphi_i'\,\varphi_j'\,dx`$ is the sum of the element matrices $`\tfrac{T}{h}`$ times `[[1, -1], [-1, 1]]`, each added into its two nodes' rows and columns.
+- Take a cable with $`-T\,u'' = f`$, the bolt $`u(0) = 0`$ and the ring $`T\,u'(L) = P`$. The curvature $`u''`$ exists at every point and has a finite RMS value.
+- Remove node 0 by the bolt ($`U_0 = 0`$). Let $`U`$ solve every other row of $`K U = F`$, with exact integrals and $`P`$ added at node $`n`$.
+- Then every node is exact: $`U_i = u(ih)`$ for $`i = 0, \dots, n`$.
+- Under the same conditions, $`\mathrm{RMS}(u' - u_h') \le \tfrac{h}{\pi}\,\mathrm{RMS}(u'')`$ and $`\mathrm{RMS}(u - u_h) \le \big(\tfrac{h}{\pi}\big)^2\,\mathrm{RMS}(u'')`$.
 - On the 4 m cable: the element matrix is 2000 N/m times that pattern, node 1's diagonal is 4000, and 13 of 25 entries are nonzero.
 - The loads are 35/3, 30, 40, 50 and 205/3 N, the last one including the ring's 40 N.
-- The node sags 565/6000, 1040/6000, 465/2000 and 1600/6000 m solve $K U = F$ and equal the exact sag.
-- The loads carried, times $h/T$, add up to the same sags, and the bolt row returns $R$ = −200 N.
+- The node sags 565/6000, 1040/6000, 465/2000 and 1600/6000 m solve $`K U = F`$ and equal the exact sag.
+- The loads carried, times $`h/T`$, add up to the same sags, and the bolt row returns $`R`$ = −200 N.
 - Overwriting gives a zero pivot, dropping the 40 N leaves a tip of 560/3 mm, and the Thomas cost is 25 and 8185 flops.
 
 Rounding, the observed orders, the bound-to-error ratios, the lamp's point load and the chart are left to the Python and Rust checks.
@@ -1456,20 +1468,20 @@ example : 8 * 4 - 7 = 25 ∧ 8 * 1024 - 7 = 8185 := by decide
 > **Try changing**
 > - Guess first: double the number of elements from 4 to 8. Which error halves and which quarters? Run `errors(solve(8), u_ex, du_ex)`. The slope error goes from 5.998e-03 to 3.003e-03; the sag error from 1.896 mm to 0.4748 mm.
 > - Guess first: take the weight off the ring. Call `solve(4, p_end=0.0)`. The tip rises from 266.667 mm to 186.667 mm: the missing 40 N acts through the whole 4 m at 2000 N tension.
-> - Guess first: replace the planters by a uniform 20 N/m and leave the ring free. Call `solve(4, 20.0, 0.0, 0.0)` and measure it with `errors`. The slope error is 2.886751e-03, exactly $\tfrac{w}{2T}\cdot\tfrac{h}{\sqrt3}$ with $w$ = 20 N/m.
-> - Guess first: replace the planters by one 100 N lamp at 4/3 m. The slope error at $n = 4$ is 1.1785e-02, and each halving of $h$ now cuts it by only $\sqrt2$: order 0.500.
+> - Guess first: replace the planters by a uniform 20 N/m and leave the ring free. Call `solve(4, 20.0, 0.0, 0.0)` and measure it with `errors`. The slope error is 2.886751e-03, exactly $`\tfrac{w}{2T}\cdot\tfrac{h}{\sqrt3}`$ with $`w`$ = 20 N/m.
+> - Guess first: replace the planters by one 100 N lamp at 4/3 m. The slope error at $`n = 4`$ is 1.1785e-02, and each halving of $`h`$ now cuts it by only $`\sqrt2`$: order 0.500.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Fixing what should be free.** A natural condition is not imposed on the unknowns. It is already inside the weak form, and only its load, if any, goes into $F$. Pinning the ring as if it were a bolt solves a different problem: the middle of the cable sags 40.000 mm instead of 173.333 mm. Deleting a row is only for essential conditions, where the value is known and the force is not.
+> **Fixing what should be free.** A natural condition is not imposed on the unknowns. It is already inside the weak form, and only its load, if any, goes into $`F`$. Pinning the ring as if it were a bolt solves a different problem: the middle of the cable sags 40.000 mm instead of 173.333 mm. Deleting a row is only for essential conditions, where the value is known and the force is not.
 >
 > - **Overwriting instead of adding.** `K[i][i] = k` in place of `K[i][i] += k` leaves node 1's diagonal at 2000 instead of 4000. Elimination hits a zero pivot in row 2 of 4.
 > - **Dropping the natural load.** A free ring and a weighted ring are both natural conditions. Forgetting the 40 N gives a tip sag of 186.667 mm instead of 266.667 mm.
 > - **No essential condition at all.** With only natural ends the cable can slide as a whole. Elimination hits a zero pivot in row 5 of 5.
-> - **Judging accuracy at the nodes.** On a cable the nodes are exact at every $n$: off by 1.7e-16 m with four elements. The slope between them is still off by 5.998e-03. Measure the error over the whole element, not at the nodes.
+> - **Judging accuracy at the nodes.** On a cable the nodes are exact at every $`n`$: off by 1.7e-16 m with four elements. The slope between them is still off by 5.998e-03. Measure the error over the whole element, not at the nodes.
 
 ---
 
@@ -1478,7 +1490,7 @@ example : 8 * 4 - 7 = 25 ∧ 8 * 1024 - 7 = 8185 := by decide
 - **Structural analysis software.** Every support in a building or bridge model is an essential condition; every applied force on a free edge is a natural one. The software assembles element matrices exactly as in Step 1.
 - **Heat in a steel bar.** The shelf's house example is the same equation with temperature in place of sag. An end held cold is essential. An insulated end, with no heat flowing out, is natural: it needs nothing done at all.
 - **Groundwater and oil reservoirs.** A river that fixes the water level is an essential condition. An impermeable rock layer, where no water crosses, is a natural one.
-- **Choosing the mesh.** The error theorem tells an engineer where to put small elements: where the curvature, $u''$, is large. Adaptive mesh refinement (making elements smaller where the error is large) automates that choice.
+- **Choosing the mesh.** The error theorem tells an engineer where to put small elements: where the curvature, $`u''`$, is large. Adaptive mesh refinement (making elements smaller where the error is large) automates that choice.
 
 > **Say it back**
 > Each element gives a small matrix, and assembly adds each one into the rows and columns of its own nodes. An essential condition fixes a value, so its row and column come out of the system. A natural condition fixes a force, so it enters only as a load. The computed answer is the best fit the elements allow in energy, and on a cable it is exact at the nodes. Between the nodes the slope error falls like the element length h and the value error like h squared, at most (h/π) and (h/π) squared times the curvature.
@@ -1487,15 +1499,15 @@ example : 8 * 4 - 7 = 25 ∧ 8 * 1024 - 7 = 8185 := by decide
 
 ## What this builds on
 
-- [Finite elements](07-finite-elements-galerkin-and-hat-functions.md): the weak form $a(u, v) = (f, v)$, hat functions and the Galerkin idea, which this card assembles and analyses.
+- [Finite elements](07-finite-elements-galerkin-and-hat-functions.md): the weak form $`a(u, v) = (f, v)`$, hat functions and the Galerkin idea, which this card assembles and analyses.
 - [Sparse storage and Krylov methods](../03-Numerical%20Linear%20Algebra/10-sparse-matrices-and-krylov-methods.md): how a matrix with millions of rows, almost all zeros, is stored and solved; here the tridiagonal case is enough.
-- [Lp spaces](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/01-lp-spaces.md): the L2 size of a function, $\sqrt{\int g^2}$, which is the RMS error times $\sqrt L$.
+- [Lp spaces](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/01-lp-spaces.md): the L2 size of a function, $`\sqrt{\int g^2}`$, which is the RMS error times $`\sqrt L`$.
 - [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): the engineering wing's cantilever, the first assembly and support in the library.
 
 ## Where this goes next
 
-- Galerkin (planned): Galerkin's method in general, beyond the cable's symmetric energy form, where Céa's lemma gains the constant $M/\alpha$.
-- [Spectral methods](10-spectral-methods-and-the-fft.md): use smooth global functions in place of hats, and gain accuracy much faster than any power of $h$ when the answer is smooth.
+- Galerkin (planned): Galerkin's method in general, beyond the cable's symmetric energy form, where Céa's lemma gains the constant $`M/\alpha`$.
+- [Spectral methods](10-spectral-methods-and-the-fft.md): use smooth global functions in place of hats, and gain accuracy much faster than any power of $`h`$ when the answer is smooth.
 
 This card leaves open what happens when the curvature is concentrated in a few places: how to find them from the computed answer alone, and how to refine there.
 

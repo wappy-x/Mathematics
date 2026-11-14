@@ -12,7 +12,7 @@ The engineer wants one number: how far does the tip drop? The design here allows
 
 This beam has a textbook formula. A wing, a car door or a boiler bracket does not. The finite element method handles all of them the same way.
 
-Cut the shape into a few simple pieces, called **elements**, joined at points called **nodes**. Work out, once, how one piece pushes back when its ends move. Add those pieces up into one big table of push-backs, the **stiffness matrix** $K$. Fix whatever is held, put on the loads $F$, and solve one linear system, $K u = F$, for the list $u$ of how far every node moves.
+Cut the shape into a few simple pieces, called **elements**, joined at points called **nodes**. Work out, once, how one piece pushes back when its ends move. Add those pieces up into one big table of push-backs, the **stiffness matrix** $`K`$. Fix whatever is held, put on the loads $`F`$, and solve one linear system, $`K u = F`$, for the list $`u`$ of how far every node moves.
 
 Here three 1 m elements give a tip drop of 14.69 mm, under the limit. With the beam's own weight added it is 16.32 mm, still under.
 
@@ -40,50 +40,44 @@ flowchart LR
 
 ## The formula
 
-Each node can move in two ways: drop by a distance $v$ (positive down) and turn by a small angle $\theta$, the slope of the beam there. One element with end nodes 1 and 2 therefore has four end movements, $(v_1, \theta_1, v_2, \theta_2)$. Its **element stiffness matrix** $k$ gives the four end forces and moments that hold it in that shape:
+Each node can move in two ways: drop by a distance $`v`$ (positive down) and turn by a small angle $`\theta`$, the slope of the beam there. One element with end nodes 1 and 2 therefore has four end movements, $`(v_1, \theta_1, v_2, \theta_2)`$. Its **element stiffness matrix** $`k`$ gives the four end forces and moments that hold it in that shape:
 
-$$
-\begin{pmatrix} F_1 \\ M_1 \\ F_2 \\ M_2 \end{pmatrix}
-= \frac{EI}{\ell^3}
-\begin{pmatrix}
-12 & 6\ell & -12 & 6\ell \\
-6\ell & 4\ell^2 & -6\ell & 2\ell^2 \\
--12 & -6\ell & 12 & -6\ell \\
-6\ell & 2\ell^2 & -6\ell & 4\ell^2
-\end{pmatrix}
-\begin{pmatrix} v_1 \\ \theta_1 \\ v_2 \\ \theta_2 \end{pmatrix}
-$$
+```math
+\begin{pmatrix} F_1 \\ M_1 \\ F_2 \\ M_2 \end{pmatrix} = \frac{EI}{\ell^3} \begin{pmatrix} 12 & 6\ell & -12 & 6\ell \\ 6\ell & 4\ell^2 & -6\ell & 2\ell^2 \\ -12 & -6\ell & 12 & -6\ell \\ 6\ell & 2\ell^2 & -6\ell & 4\ell^2 \end{pmatrix} \begin{pmatrix} v_1 \\ \theta_1 \\ v_2 \\ \theta_2 \end{pmatrix}
+```
 
 **Read it aloud:** the forces at a piece's ends are its bending stiffness over its length cubed, times a fixed table of numbers, times how its ends have moved.
 
-Adding every element's $k$ into the rows and columns of its own two nodes gives the whole structure's stiffness matrix $K$, and
+Adding every element's $`k`$ into the rows and columns of its own two nodes gives the whole structure's stiffness matrix $`K`$, and
 
-$$K\,u = F, \qquad u = (v_1, \theta_1, v_2, \theta_2, v_3, \theta_3), \qquad F = (0, 0, 0, 0, P, 0).$$
+```math
+K\,u = F, \qquad u = (v_1, \theta_1, v_2, \theta_2, v_3, \theta_3), \qquad F = (0, 0, 0, 0, P, 0).
+```
 
 **Read it aloud:** the whole beam's stiffness times the list of every node's movement equals the list of loads put on the nodes.
 
-The wall node is left out of $u$ because it cannot move. Solving $K u = F$ is the job of [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md); the code here uses Gaussian elimination written out.
+The wall node is left out of $`u`$ because it cannot move. Solving $`K u = F`$ is the job of [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md); the code here uses Gaussian elimination written out.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P$ | load at the tip, N | 1000 N | every movement grows in proportion |
-| $L$, $x$ | length of the cantilever, and distance from the wall, m | $L$ = 3 m | tip drop grows as $L^3$ |
-| $\ell$, $s$ | length of one element, m; $s = x/\ell$, position along one element, 0 to 1 | $\ell$ = 1 m | at the nodes, nothing here: the answer is exact for any $\ell$ |
-| $E$, $I$, $EI$ | Young's modulus (how stiff the steel is: stress per unit stretch), second moment of area (how well the section's shape resists bending), and their product, the bending stiffness, N m² | 200 GPa, 306.31 cm⁴, 612626 N m² | every movement shrinks |
-| $v$, $\theta$ | drop of a node (m, down positive) and its slope (rad) | tip: 14.69 mm, 0.007345 rad | — |
-| $k$ | element stiffness matrix: end forces per unit end movement | the 4 by 4 above, units of $EI/\ell^3$ = 612626 N/m | — |
-| $K$ | the assembled stiffness matrix of the whole beam | 6 by 6 after the wall is fixed | — |
-| $u$, $d$ | list of all free node movements; $d$, the four end movements of one element | 6 numbers; 4 numbers | — |
-| $F$; $F_1, M_1, F_2, M_2$ | list of loads on the free nodes; the end forces (N) and moments (N m) of one element | $P$ at the tip, zeros elsewhere | $u$ grows in proportion |
-| $N_1 \dots N_4$ | shape functions: the four cubic curves an element can be bent into | used in Why it works | — |
-| $w$ | the beam's own weight per metre, N/m | 98.46 N/m | adds $wL^4/8EI$ to the tip |
-| $M$, $W$, $c$, $\sigma$ | bending moment (N m); section modulus $I/c$ (m³), with $c$ the distance to the outer face; bending stress (Pa) | at the wall $M$ = 3000 N m, $W$ = 51.05 cm³, $c$ = half the 120 mm depth, $\sigma$ = 58.76 MPa | stress grows with $P$ and $L$ |
+| $`P`$ | load at the tip, N | 1000 N | every movement grows in proportion |
+| $`L`$, $`x`$ | length of the cantilever, and distance from the wall, m | $`L`$ = 3 m | tip drop grows as $`L^3`$ |
+| $`\ell`$, $`s`$ | length of one element, m; $`s = x/\ell`$, position along one element, 0 to 1 | $`\ell`$ = 1 m | at the nodes, nothing here: the answer is exact for any $`\ell`$ |
+| $`E`$, $`I`$, $`EI`$ | Young's modulus (how stiff the steel is: stress per unit stretch), second moment of area (how well the section's shape resists bending), and their product, the bending stiffness, N m² | 200 GPa, 306.31 cm⁴, 612626 N m² | every movement shrinks |
+| $`v`$, $`\theta`$ | drop of a node (m, down positive) and its slope (rad) | tip: 14.69 mm, 0.007345 rad | — |
+| $`k`$ | element stiffness matrix: end forces per unit end movement | the 4 by 4 above, units of $`EI/\ell^3`$ = 612626 N/m | — |
+| $`K`$ | the assembled stiffness matrix of the whole beam | 6 by 6 after the wall is fixed | — |
+| $`u`$, $`d`$ | list of all free node movements; $`d`$, the four end movements of one element | 6 numbers; 4 numbers | — |
+| $`F`$; $`F_1, M_1, F_2, M_2`$ | list of loads on the free nodes; the end forces (N) and moments (N m) of one element | $`P`$ at the tip, zeros elsewhere | $`u`$ grows in proportion |
+| $`N_1 \dots N_4`$ | shape functions: the four cubic curves an element can be bent into | used in Why it works | — |
+| $`w`$ | the beam's own weight per metre, N/m | 98.46 N/m | adds $`wL^4/8EI`$ to the tip |
+| $`M`$, $`W`$, $`c`$, $`\sigma`$ | bending moment (N m); section modulus $`I/c`$ (m³), with $`c`$ the distance to the outer face; bending stress (Pa) | at the wall $`M`$ = 3000 N m, $`W`$ = 51.05 cm³, $`c`$ = half the 120 mm depth, $`\sigma`$ = 58.76 MPa | stress grows with $`P`$ and $`L`$ |
 
 ### When it holds
 
-- **Linear elastic steel.** $K$ is a fixed matrix only while stress stays in proportion to strain. Counting the tip load alone, without the beam's own weight, it yields (starts to bend permanently) at a tip load of 4680 N. At 10000 N the method still reports 146.9 mm and 588 MPa, but the steel is past the 275 MPa yield stress of grade S275 (EN 1993-1-1, Table 3.1, cited on [Stress, strain and bending](../07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md)) and both numbers are wrong.
+- **Linear elastic steel.** $`K`$ is a fixed matrix only while stress stays in proportion to strain. Counting the tip load alone, without the beam's own weight, it yields (starts to bend permanently) at a tip load of 4680 N. At 10000 N the method still reports 146.9 mm and 588 MPa, but the steel is past the 275 MPa yield stress of grade S275 (EN 1993-1-1, Table 3.1, cited on [Stress, strain and bending](../07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md)) and both numbers are wrong.
 - **Small slopes.** The tip turns 0.007345 rad, well under a degree, so treating slope as the angle is safe. A fishing rod bent into a curve breaks this, and the matrix must be rebuilt as the shape changes.
-- **Loads put on the nodes the right way.** Between nodes this beam carries no load, so its true shape on each piece is a cubic, and the element's cubics contain it: the nodes are exact. A spread load such as the beam's own weight bends each piece into a quartic (a fourth-degree curve) instead. It goes onto the nodes as **consistent loads** (the four end loads $\int_0^\ell w\,N_i\,dx$, which do the same work on the element's shapes as the spread load): $w\ell/2$, $w\ell^2/12$, $w\ell/2$, $-w\ell^2/12$ per element. With them a beam's node answers stay exact, 1.627 mm, and only the cubic between nodes approximates the quartic. Putting the weight on as plain forces drops the end moments $\pm w\ell^2/12$ and gives 1.687 mm.
+- **Loads put on the nodes the right way.** Between nodes this beam carries no load, so its true shape on each piece is a cubic, and the element's cubics contain it: the nodes are exact. A spread load such as the beam's own weight bends each piece into a quartic (a fourth-degree curve) instead. It goes onto the nodes as **consistent loads** (the four end loads $`\int_0^\ell w\,N_i\,dx`$, which do the same work on the element's shapes as the spread load): $`w\ell/2`$, $`w\ell^2/12`$, $`w\ell/2`$, $`-w\ell^2/12`$ per element. With them a beam's node answers stay exact, 1.627 mm, and only the cubic between nodes approximates the quartic. Putting the weight on as plain forces drops the end moments $`\pm w\ell^2/12`$ and gives 1.687 mm.
 - **A rigid wall.** The model fixes both the drop and the slope at the wall. A real bolted end plate lets the beam turn a little, which adds drop the model misses.
 - **A slender beam.** The elements use the bending equation from [Stress, strain and bending](../07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md), which ignores shear. A 3 m beam that is 0.12 m deep is slender enough.
 
@@ -97,33 +91,37 @@ Cut the beam at a node. The two pieces meeting there each push on the node with 
 
 ### Step 1: an unloaded piece of beam bends into a cubic
 
-The beam card gives $EI\,v'' = -M(x)$: curvature is moment over bending stiffness. With no load between its ends, the moment along a piece changes in a straight line, so $v''$ is a straight line and $v$ is a cubic. A cubic has four coefficients, and four end values fix it: $v_1, \theta_1, v_2, \theta_2$.
+The beam card gives $`EI\,v'' = -M(x)`$: curvature is moment over bending stiffness. With no load between its ends, the moment along a piece changes in a straight line, so $`v''`$ is a straight line and $`v`$ is a cubic. A cubic has four coefficients, and four end values fix it: $`v_1, \theta_1, v_2, \theta_2`$.
 
-Write $s = x/\ell$ for the position along the element, 0 at the left end and 1 at the right. The four **shape functions** are the cubics that are 1 in one end value and 0 in the other three:
+Write $`s = x/\ell`$ for the position along the element, 0 at the left end and 1 at the right. The four **shape functions** are the cubics that are 1 in one end value and 0 in the other three:
 
-$$N_1 = 1 - 3s^2 + 2s^3,\quad N_2 = \ell(s - 2s^2 + s^3),\quad N_3 = 3s^2 - 2s^3,\quad N_4 = \ell(s^3 - s^2).$$
+```math
+N_1 = 1 - 3s^2 + 2s^3,\quad N_2 = \ell(s - 2s^2 + s^3),\quad N_3 = 3s^2 - 2s^3,\quad N_4 = \ell(s^3 - s^2).
+```
 
-Any shape of the element is $v = N_1 v_1 + N_2 \theta_1 + N_3 v_2 + N_4 \theta_2$.
+Any shape of the element is $`v = N_1 v_1 + N_2 \theta_1 + N_3 v_2 + N_4 \theta_2`$.
 
 ### Step 2: the stiffness matrix comes from the stored energy
 
-A bent beam stores energy $\tfrac12 \int EI\,(v'')^2\,dx$. Put the element's cubic in, and the energy becomes $\tfrac12 d^{\mathsf T} k\, d$, where $d$ is the list of four end values, $d^{\mathsf T}$ is the same list written as a row, and the entry in row $i$, column $j$ of $k$ is
+A bent beam stores energy $`\tfrac12 \int EI\,(v'')^2\,dx`$. Put the element's cubic in, and the energy becomes $`\tfrac12 d^{\mathsf T} k\, d`$, where $`d`$ is the list of four end values, $`d^{\mathsf T}`$ is the same list written as a row, and the entry in row $`i`$, column $`j`$ of $`k`$ is
 
-$$k_{ij} = \int_0^\ell EI\,N_i''\,N_j''\,dx.$$
+```math
+k_{ij} = \int_0^\ell EI\,N_i''\,N_j''\,dx.
+```
 
-One entry by hand: $N_1'' = (-6 + 12s)/\ell^2$, so $k_{11} = \dfrac{EI}{\ell^3}\int_0^1 (12s - 6)^2\,ds = \dfrac{EI}{\ell^3}\cdot 12$. The other fifteen follow the same way and give the matrix in The formula. The code computes all sixteen by numerical integration and checks them against the table.
+One entry by hand: $`N_1'' = (-6 + 12s)/\ell^2`$, so $`k_{11} = \dfrac{EI}{\ell^3}\int_0^1 (12s - 6)^2\,ds = \dfrac{EI}{\ell^3}\cdot 12`$. The other fifteen follow the same way and give the matrix in The formula. The code computes all sixteen by numerical integration and checks them against the table.
 
 Each column has a physical reading. Column 1 is the set of end forces and moments needed to drop the left end by 1 m while holding the other three end values at zero.
 
 ### Step 3: assembly is adding, because energies add
 
-The beam's total energy is the sum of its elements' energies. Node 1 belongs to element 1 (as its right end) and element 2 (as its left end), so its movements appear in both, and their entries add. Node 1's up-down diagonal entry is $12 + 12 = 24$. Its turning diagonal entry is $4 + 4 = 8$. The coupling between its drop and its turn is $-6 + 6 = 0$.
+The beam's total energy is the sum of its elements' energies. Node 1 belongs to element 1 (as its right end) and element 2 (as its left end), so its movements appear in both, and their entries add. Node 1's up-down diagonal entry is $`12 + 12 = 24`$. Its turning diagonal entry is $`4 + 4 = 8`$. The coupling between its drop and its turn is $`-6 + 6 = 0`$.
 
-The loads do work $F^{\mathsf T} u$. The beam settles where the total, $\tfrac12 u^{\mathsf T} K u - F^{\mathsf T} u$, is least, and setting its slope to zero gives $K u = F$. The same equation is the force balance of Step 0, node by node.
+The loads do work $`F^{\mathsf T} u`$. The beam settles where the total, $`\tfrac12 u^{\mathsf T} K u - F^{\mathsf T} u`$, is least, and setting its slope to zero gives $`K u = F`$. The same equation is the force balance of Step 0, node by node.
 
 ### Step 4: supports make the matrix solvable
 
-Before the wall is fixed, $K$ is 8 by 8 and has no inverse. Lift the whole beam 1 m without bending it, or turn it as a rigid stick: $K$ times either movement is 0 N, so no force resists it, and a load would push the beam away without limit. Fixing $v_0 = \theta_0 = 0$ removes those two rows and columns. What is left, 6 by 6, has an inverse, and the solve gives one answer.
+Before the wall is fixed, $`K`$ is 8 by 8 and has no inverse. Lift the whole beam 1 m without bending it, or turn it as a rigid stick: $`K`$ times either movement is 0 N, so no force resists it, and a load would push the beam away without limit. Fixing $`v_0 = \theta_0 = 0`$ removes those two rows and columns. What is left, 6 by 6, has an inverse, and the solve gives one answer.
 
 ### Step 5: why the nodes are exact here, and not in general
 
@@ -147,21 +145,21 @@ Triangles, bricks and curved elements; the general recipe for turning any differ
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| bending stiffness | $EI \approx$ 200 GPa × 306.31 cm⁴ | 612626 N m² |
-| one element, $\ell$ = 1 m | $EI/\ell^3$ | 612626 N/m |
-| first row of $k$ | in units of $EI/\ell^3$ | 12, 6, −12, 6 |
+| bending stiffness | $`EI \approx`$ 200 GPa × 306.31 cm⁴ | 612626 N m² |
+| one element, $`\ell`$ = 1 m | $`EI/\ell^3`$ | 612626 N/m |
+| first row of $`k`$ | in units of $`EI/\ell^3`$ | 12, 6, −12, 6 |
 | node 1, shared by elements 1 and 2 | drop 12 + 12, turn 4 + 4, coupling −6 + 6 | 24, 8, 0 |
-| free $K$, units $EI/\ell^3$ | rows listed below | 6 by 6 |
-| unit of movement | $P\ell^3/EI$ = 1000 / 612626 m | 1.6323 mm |
-| solve $Ku = F$ | $u$ in units of $P\ell^3/EI$ | 1.3333, 2.5000, 4.6667, 4.0000, 9.0000, 4.5000 |
+| free $`K`$, units $`EI/\ell^3`$ | rows listed below | 6 by 6 |
+| unit of movement | $`P\ell^3/EI`$ = 1000 / 612626 m | 1.6323 mm |
+| solve $`Ku = F`$ | $`u`$ in units of $`P\ell^3/EI`$ | 1.3333, 2.5000, 4.6667, 4.0000, 9.0000, 4.5000 |
 | check row 1 (node 1 drop) | 24 × 1.3333 − 12 × 4.6667 + 6 × 4.0000 = 32 − 56 + 24 | 0 P |
 | check row 5 (tip drop) | −56 − 24 + 12 × 9.0000 − 6 × 4.5000 = −56 − 24 + 108 − 27 | 1 P |
 | tip drop | 9.0000 × 1.6323 mm | **14.69 mm** |
-| against the formula | $PL^3/3EI$ | 14.69 mm |
-| own weight added | $wL^4/8EI$ = 1.627 mm | 16.32 mm, limit 16.67 mm |
-| stress at the wall | $PL/W$ = 3000 N m / 51.05 cm³ | 58.76 MPa |
+| against the formula | $`PL^3/3EI`$ | 14.69 mm |
+| own weight added | $`wL^4/8EI`$ = 1.627 mm | 16.32 mm, limit 16.67 mm |
+| stress at the wall | $`PL/W`$ = 3000 N m / 51.05 cm³ | 58.76 MPa |
 
-The six free rows of $K$, in units of $EI/\ell^3$, ordered $v_1, \theta_1, v_2, \theta_2, v_3, \theta_3$:
+The six free rows of $`K`$, in units of $`EI/\ell^3`$, ordered $`v_1, \theta_1, v_2, \theta_2, v_3, \theta_3`$:
 
 ```
  24   0  -12   6    0   0
@@ -172,23 +170,23 @@ The six free rows of $K$, in units of $EI/\ell^3$, ordered $v_1, \theta_1, v_2, 
   0   0    6   2   -6   4
 ```
 
-Check rows 1 and 5 equal the loads, 0 and $P$: the solve is right. The tip drops 14.69 mm under the crate and 16.32 mm with the beam's own weight, inside the 16.67 mm limit, and under the crate alone the steel at the wall works at 58.76 MPa, far below yield. The hoist beam passes, and drop, not strength, is the tighter limit.
+Check rows 1 and 5 equal the loads, 0 and $`P`$: the solve is right. The tip drops 14.69 mm under the crate and 16.32 mm with the beam's own weight, inside the 16.67 mm limit, and under the crate alone the steel at the wall works at 58.76 MPa, far below yield. The hoist beam passes, and drop, not strength, is the tighter limit.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No supports | $K$ × rigid lift = 0.0 N, no answer | Nothing holds the beam, so $K$ has no inverse |
+| No supports | $`K`$ × rigid lift = 0.0 N, no answer | Nothing holds the beam, so $`K`$ has no inverse |
 | Assemble by overwriting, not adding | tip −3.26 mm, rising | Node 1 and node 2 lose one element's stiffness each |
-| Own weight lumped as nodal forces only | 1.687 mm against 1.627 mm | The end moments $\pm w\ell^2/12$ of each element are dropped |
+| Own weight lumped as nodal forces only | 1.687 mm against 1.627 mm | The end moments $`\pm w\ell^2/12`$ of each element are dropped |
 | Finite differences on the same 3 pieces | 15.51 mm against 14.69 mm | Differences approximate the derivatives; elements keep each piece exact |
-| Load past yield, 10000 N | 146.9 mm, 588 MPa | Yield is at 4680 N; beyond it $K$ no longer describes the steel |
+| Load past yield, 10000 N | 146.9 mm, 588 MPa | Yield is at 4680 N; beyond it $`K`$ no longer describes the steel |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the element matrix from the formula, then again by integrating $EI\,N_i''\,N_j''$ by Simpson's rule (a weighted sum of the integrand at evenly spaced points), and checks the two agree. It assembles $K$, fixes the wall and solves by Gaussian elimination. The tip drop is then reached four independent ways: the elements; the closed form $PL^3/3EI$; an energy integral of the bending moment, by Simpson's rule; and finite differences on 300 steps. It also checks the wall reactions against the load, repeats the solve with 1, 2 and 6 elements, and prints every number on the card.
+The code builds the element matrix from the formula, then again by integrating $`EI\,N_i''\,N_j''`$ by Simpson's rule (a weighted sum of the integrand at evenly spaced points), and checks the two agree. It assembles $`K`$, fixes the wall and solves by Gaussian elimination. The tip drop is then reached four independent ways: the elements; the closed form $`PL^3/3EI`$; an energy integral of the bending moment, by Simpson's rule; and finite differences on 300 steps. It also checks the wall reactions against the load, repeats the solve with 1, 2 and 6 elements, and prints every number on the card.
 
 ### Python
 
@@ -564,11 +562,11 @@ The two outputs match line for line.
 
 Lean proves Steps 2, 4 and 5 of Why it works, for any number of equal elements, and checks the worked numbers.
 
-- Take $n \ge 1$ equal elements, the wall fixed, $EI > 0$, $\ell > 0$ and tip load $P$. Then $K u = F$ has exactly one solution: the true drop $v$ and slope $\theta$ at every node.
-- Take any element length $\ell > 0$ and the four shape functions $N_1 \dots N_4$. Then each entry $k_{ij}$ equals $\int_0^\ell EI\,N_i''\,N_j''\,dx$.
-- Take $K$ before the wall is fixed, for any number of elements. Then $K$ times a rigid lift or a rigid turn is zero, so $K$ has no inverse.
-- For three 1 m elements, Lean checks the six free rows of $K$ listed above. It checks the solve $u = (4/3, 5/2, 14/3, 4, 9, 9/2)$, in units of $P\ell^3/EI$.
-- It also checks the hand integral for $k_{11}$ and node 1's entries 24, 8 and 0.
+- Take $`n \ge 1`$ equal elements, the wall fixed, $`EI > 0`$, $`\ell > 0`$ and tip load $`P`$. Then $`K u = F`$ has exactly one solution: the true drop $`v`$ and slope $`\theta`$ at every node.
+- Take any element length $`\ell > 0`$ and the four shape functions $`N_1 \dots N_4`$. Then each entry $`k_{ij}`$ equals $`\int_0^\ell EI\,N_i''\,N_j''\,dx`$.
+- Take $`K`$ before the wall is fixed, for any number of elements. Then $`K`$ times a rigid lift or a rigid turn is zero, so $`K`$ has no inverse.
+- For three 1 m elements, Lean checks the six free rows of $`K`$ listed above. It checks the solve $`u = (4/3, 5/2, 14/3, 4, 9, 9/2)`$, in units of $`P\ell^3/EI`$.
+- It also checks the hand integral for $`k_{11}`$ and node 1's entries 24, 8 and 0.
 
 The numbers in millimetres, the own-weight loads, finite differences and the yield limit are left to the Python and Rust checks.
 
@@ -1176,14 +1174,14 @@ example : (24 * (4/3) - 12 * (14/3) + 6 * 4 : ℚ) = 0 ∧
 > - **Guess first:** do six elements beat three? Set `NE = 6`. The tip is still 14.6909 mm: when the true shape is a cubic on each piece, more pieces add nothing at the nodes. But the lumped own-weight answer moves from 1.687 mm to 1.642 mm, closer to the true 1.627 mm, and the assert that expects a large lumping error stops the program. Smaller pieces fix an approximate load; they cannot improve an exact one.
 > - **Guess first:** what does a 5000 N load do? Set `P = 5000.0`. The tip drops 73.45 mm and the wall stress is 294 MPa, past the 275 MPa yield. The code reports both without complaint; only the engineer knows the model has left its range.
 > - **Guess first:** what does a 4 m beam need? Set `L = 4.0`. The tip drops 34.82 mm against a limit of 22.22 mm: drop grows as the cube of length, the limit only in proportion.
-> - **Guess first:** what happens if the matrix is overwritten instead of added? In `fem`, change `add=True` to `add=False`. The tip moves up, −3.26 mm, and the assert that compares it with $PL^3/3EI$ stops the program.
+> - **Guess first:** what happens if the matrix is overwritten instead of added? In `fem`, change `add=True` to `add=False`. The tip moves up, −3.26 mm, and the assert that compares it with $`PL^3/3EI`$ stops the program.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Forgetting the supports.** Without the wall, $K$ times a rigid lift or a rigid turn is 0.0 N: the beam can float away for free, $K$ has no inverse, and a solver either stops on a zero pivot (a zero where elimination must divide) or prints meaningless large numbers. Every model needs enough supports to stop all rigid movement before the solve.
+> **Forgetting the supports.** Without the wall, $`K`$ times a rigid lift or a rigid turn is 0.0 N: the beam can float away for free, $`K`$ has no inverse, and a solver either stops on a zero pivot (a zero where elimination must divide) or prints meaningless large numbers. Every model needs enough supports to stop all rigid movement before the solve.
 >
 > - **Overwriting shared entries instead of adding them.** The tip comes out at −3.26 mm, moving up under a downward load.
 > - **Putting a spread load on the nodes as forces only.** The own-weight drop comes out 1.687 mm instead of 1.627 mm; the element end moments carry the rest.
@@ -1196,7 +1194,7 @@ example : (24 * (4/3) - 12 * (14/3) + 6 * 4 : ℚ) = 0 ∧
 - **Aircraft.** The method grew out of 1950s work on jet aircraft wings, where a skin with stiffeners was cut into triangles and bars and assembled into one stiffness matrix exactly as here (the 1956 paper in Sources).
 - **Bridges and buildings.** Frame programs treat every beam and column as elements like the three on this card, with six movements per node in 3D instead of two.
 - **Heat in a radiator panel.** Replace drop by temperature and stiffness by heat conductance, and the same assembly gives the temperatures inside a radiator or a boiler wall: [Fourier's law](05-heat-conduction-and-fouriers-law.md) sets the element matrix.
-- **Car crashes and implants.** The same four steps run on millions of solid elements, with materials that yield, which is where the linear $K$ of this card is replaced step by step.
+- **Car crashes and implants.** The same four steps run on millions of solid elements, with materials that yield, which is where the linear $`K`$ of this card is replaced step by step.
 
 > **Say it back**
 > Cut the structure into elements joined at nodes. For a beam element, the four end movements fix a cubic shape, and its stored energy gives a 4 by 4 stiffness matrix. Add each element's matrix into one big K wherever elements share a node, fix the supports, and solve K u = F. For the 3 m cantilever with 1 kN at the tip, three elements give 14.69 mm, exactly the formula, because the true shape is a cubic on each piece. For general shapes the answer is approximate and improves as the pieces shrink.
@@ -1205,7 +1203,7 @@ example : (24 * (4/3) - 12 * (14/3) + 6 * 4 : ℚ) = 0 ∧
 
 ## What this builds on
 
-- [Stress, strain and bending](../07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md): the bending equation $EI\,v'' = -M$, the stored energy, and the 120 mm I-section with its 306.31 cm⁴.
+- [Stress, strain and bending](../07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md): the bending equation $`EI\,v'' = -M`$, the stored energy, and the 120 mm I-section with its 306.31 cm⁴.
 - [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md): when a square system has exactly one answer, and why a missing support leaves none.
 - [Finite differences](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md): the grid method this one is contrasted with, and the 300-step check on the tip drop.
 
@@ -1225,5 +1223,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Cook, Robert D., David S. Malkus, Michael E. Plesha and Robert J. Witt. *Concepts and Applications of Finite Element Analysis*, 4th ed. Wiley, 2001. [Publisher's page](https://www.wiley.com/en-us/Concepts+and+Applications+of+Finite+Element+Analysis%2C+4th+Edition-p-9780471356059). The beam element, its cubic shape functions, assembly, supports and consistent loads.
 - Turner, M. J., R. W. Clough, H. C. Martin and L. J. Topp. "Stiffness and Deflection Analysis of Complex Structures." *Journal of the Aeronautical Sciences* 23 (1956): 805–823. [doi:10.2514/8.3664](https://doi.org/10.2514/8.3664). The direct stiffness method: element matrices added into one structure matrix.
 - Courant, R. "Variational methods for the solution of problems of equilibrium and vibrations." *Bulletin of the American Mathematical Society* 49 (1943): 1–23. [doi:10.1090/S0002-9904-1943-07818-4](https://doi.org/10.1090/S0002-9904-1943-07818-4). Least energy over piecewise polynomial shapes, the idea behind Step 5.
-- Goodno, Barry J., and James M. Gere. *Mechanics of Materials*, 9th ed. Cengage, 2018. [Publisher's page](https://www.cengage.com/c/mechanics-of-materials-9e-goodno-gere/9781337093347). The cantilever formulas $PL^3/3EI$ and $wL^4/8EI$, and steel at E = 200 GPa and 7850 kg/m³.
+- Goodno, Barry J., and James M. Gere. *Mechanics of Materials*, 9th ed. Cengage, 2018. [Publisher's page](https://www.cengage.com/c/mechanics-of-materials-9e-goodno-gere/9781337093347). The cantilever formulas $`PL^3/3EI`$ and $`wL^4/8EI`$, and steel at E = 200 GPa and 7850 kg/m³.
 - NIST. "Standard acceleration of gravity." CODATA recommended values. [NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gn). The 9.80665 m/s² that turns 1000 N into 102.0 kg and the beam's mass into 98.46 N/m.

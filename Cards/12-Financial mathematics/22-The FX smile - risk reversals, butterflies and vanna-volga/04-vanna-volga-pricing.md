@@ -38,41 +38,47 @@ Orange: the overlay in pips. Green: zero. Low strikes carry a large positive ove
 
 ## The formula
 
-$$O^{\text{VV}} = O^{\text{BS}}(\sigma_{\text{ATM}}) + \sum_{i=1}^{3} x_i\,\big[C_i^{\text{mkt}} - C_i^{\text{BS}}\big], \qquad A\,x = g$$
+```math
+O^{\text{VV}} = O^{\text{BS}}(\sigma_{\text{ATM}}) + \sum_{i=1}^{3} x_i\,\big[C_i^{\text{mkt}} - C_i^{\text{BS}}\big], \qquad A\,x = g
+```
 
 **Read it aloud:** the flat price, plus, for each of the three quoted options, how much of it the hedge holds times how much dearer the market sells it than the flat model does; the amounts are the ones that give the hedge the target's vega, vanna and volga.
 
-Written out, the system $A\,x = g$ is three equations in three unknowns: row one says the basket's vega equals the target's, row two its vanna, row three its volga. Every Greek is taken at the flat volatility.
+Written out, the system $`A\,x = g`$ is three equations in three unknowns: row one says the basket's vega equals the target's, row two its vanna, row three its volga. Every Greek is taken at the flat volatility.
 
-$$\begin{pmatrix} \mathcal{V}_1 & \mathcal{V}_2 & \mathcal{V}_3\\ \mathrm{Va}_1 & \mathrm{Va}_2 & \mathrm{Va}_3\\ \mathrm{Vo}_1 & \mathrm{Vo}_2 & \mathrm{Vo}_3 \end{pmatrix} \begin{pmatrix} x_1\\ x_2\\ x_3 \end{pmatrix} = \begin{pmatrix} \mathcal{V}_O\\ \mathrm{Va}_O\\ \mathrm{Vo}_O \end{pmatrix}$$
+```math
+\begin{pmatrix} \mathcal{V}_1 & \mathcal{V}_2 & \mathcal{V}_3\\ \mathrm{Va}_1 & \mathrm{Va}_2 & \mathrm{Va}_3\\ \mathrm{Vo}_1 & \mathrm{Vo}_2 & \mathrm{Vo}_3 \end{pmatrix} \begin{pmatrix} x_1\\ x_2\\ x_3 \end{pmatrix} = \begin{pmatrix} \mathcal{V}_O\\ \mathrm{Va}_O\\ \mathrm{Vo}_O \end{pmatrix}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the VV price… |
 | --- | --- | --- | --- |
-| $O^{\text{BS}}$, $O^{\text{VV}}$ | the target's price: flat at the ATM vol, then with the overlay | 311.65 and 306.55 pips | moves one for one |
-| $K$, $K_i$ | the target's strike; the three pillar strikes, $i = 1, 2, 3$ | 1.15; 1.052466, 1.127847, 1.201425 | a higher $K$ lowers the price |
-| $S$, $F$ | spot, dollars per euro today; the one-year forward, $F = S e^{(r_d - r_f)T}$ | 1.10; 1.122221 | raises the call's price |
-| $r_d$, $r_f$, $T$ | dollar rate, euro rate, both continuously compounded; years to expiry | 5%, 3%, 1 | — |
-| $\sigma_i$, $\sigma_1$, $\sigma_2$, $\sigma_3$, $\sigma_{\text{ATM}}$ | the pillars' market vols; the flat vol, which equals the ATM pillar's | 10.75%, 10.00%, 9.75% | a higher $\sigma_1$ raises low-strike prices most |
-| $C_i^{\text{mkt}}$, $C_i^{\text{BS}}$, $\Delta p_i$ | each pillar as a call, priced at its own vol and at the flat vol; the gap between the two | 851.76, 400.54, 153.90 against 826.26, 400.54, 162.57; gaps +25.51, 0.00, −8.67 pips | a bigger gap adds its weight times the push |
-| $x_i$ | how many euros of each pillar the hedge holds per euro of target | −0.115838, 0.870240, 0.246905 | — |
-| $\mathcal{V}$, $\mathrm{Va}$, $\mathrm{Vo}$, $\Theta$, $\Delta$, $\Gamma$, $dS$ | vega, vanna, volga, per 1.00 of vol, subscript O for the target; theta, delta, gamma; a small move in spot | target: 0.417886, 1.118861, 0.239402 | — |
-| $A$, $g$ | the 3×3 table of pillar Greeks; the target's Greek column | $\det A$ = 2.619639 | — |
-| $y_j$, $y_1$, $y_2$, $y_3$ | the market price of one unit of vega, of vanna, of volga | 0.00078397, −0.00086237, 0.00053379 | — |
-| $d_1$, $d_2$, $\varphi$, $N$ | the Black-Scholes distances; bell-curve height and area | as on the Garman-Kohlhagen card | — |
-| $\ell_i$, $\ell_1$, $\ell_2$, $\ell_3$, $z_i$ | the three weights that fit a parabola in log-strike through the pillars; $z_i = \ln K_i$ | 1.15 sits between pillars 2 and 3 | — |
+| $`O^{\text{BS}}`$, $`O^{\text{VV}}`$ | the target's price: flat at the ATM vol, then with the overlay | 311.65 and 306.55 pips | moves one for one |
+| $`K`$, $`K_i`$ | the target's strike; the three pillar strikes, $`i = 1, 2, 3`$ | 1.15; 1.052466, 1.127847, 1.201425 | a higher $`K`$ lowers the price |
+| $`S`$, $`F`$ | spot, dollars per euro today; the one-year forward, $`F = S e^{(r_d - r_f)T}`$ | 1.10; 1.122221 | raises the call's price |
+| $`r_d`$, $`r_f`$, $`T`$ | dollar rate, euro rate, both continuously compounded; years to expiry | 5%, 3%, 1 | — |
+| $`\sigma_i`$, $`\sigma_1`$, $`\sigma_2`$, $`\sigma_3`$, $`\sigma_{\text{ATM}}`$ | the pillars' market vols; the flat vol, which equals the ATM pillar's | 10.75%, 10.00%, 9.75% | a higher $`\sigma_1`$ raises low-strike prices most |
+| $`C_i^{\text{mkt}}`$, $`C_i^{\text{BS}}`$, $`\Delta p_i`$ | each pillar as a call, priced at its own vol and at the flat vol; the gap between the two | 851.76, 400.54, 153.90 against 826.26, 400.54, 162.57; gaps +25.51, 0.00, −8.67 pips | a bigger gap adds its weight times the push |
+| $`x_i`$ | how many euros of each pillar the hedge holds per euro of target | −0.115838, 0.870240, 0.246905 | — |
+| $`\mathcal{V}`$, $`\mathrm{Va}`$, $`\mathrm{Vo}`$, $`\Theta`$, $`\Delta`$, $`\Gamma`$, $`dS`$ | vega, vanna, volga, per 1.00 of vol, subscript O for the target; theta, delta, gamma; a small move in spot | target: 0.417886, 1.118861, 0.239402 | — |
+| $`A`$, $`g`$ | the 3×3 table of pillar Greeks; the target's Greek column | $`\det A`$ = 2.619639 | — |
+| $`y_j`$, $`y_1`$, $`y_2`$, $`y_3`$ | the market price of one unit of vega, of vanna, of volga | 0.00078397, −0.00086237, 0.00053379 | — |
+| $`d_1`$, $`d_2`$, $`\varphi`$, $`N`$ | the Black-Scholes distances; bell-curve height and area | as on the Garman-Kohlhagen card | — |
+| $`\ell_i`$, $`\ell_1`$, $`\ell_2`$, $`\ell_3`$, $`z_i`$ | the three weights that fit a parabola in log-strike through the pillars; $`z_i = \ln K_i`$ | 1.15 sits between pillars 2 and 3 | — |
 
 The three Greeks of a call, from [Vanna and volga](03-vanna-and-volga-on-the-smile.md), one line each:
 
-$$\mathcal{V} = S e^{-r_f T}\varphi(d_1)\sqrt{T}, \qquad \mathrm{Va} = -\,\frac{\mathcal{V}\,d_2}{S\,\sigma\sqrt{T}}, \qquad \mathrm{Vo} = \frac{\mathcal{V}\,d_1 d_2}{\sigma}$$
+```math
+\mathcal{V} = S e^{-r_f T}\varphi(d_1)\sqrt{T}, \qquad \mathrm{Va} = -\,\frac{\mathcal{V}\,d_2}{S\,\sigma\sqrt{T}}, \qquad \mathrm{Vo} = \frac{\mathcal{V}\,d_1 d_2}{\sigma}
+```
 
-Vega is largest near the money. Vanna has the sign of $-d_2$: positive wherever $d_2 < 0$, which covers the ATM pillar, the call pillar and the 1.15 target; there a rising euro brings the option toward the money and lifts its vega. Volga carries the factor $d_1 d_2$, so it vanishes where $d_1 = 0$, which is the ATM pillar's defining property.
+Vega is largest near the money. Vanna has the sign of $`-d_2`$: positive wherever $`d_2 < 0`$, which covers the ATM pillar, the call pillar and the 1.15 target; there a rising euro brings the option toward the money and lifts its vega. Volga carries the factor $`d_1 d_2`$, so it vanishes where $`d_1 = 0`$, which is the ATM pillar's defining property.
 
 **Conventions verified 2026-09-27:** spot delta with the premium paid in dollars, ATM as the delta-neutral straddle, butterfly read as a smile strangle, risk reversal as call vol minus put vol. These are the house conventions fixed on [Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) and [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md); the checks reproduce the house pillar strikes to six decimals. Many pairs quote a broker butterfly instead, which needs the conversion on [The broker butterfly](02-market-strangle-and-smile-strangle.md) first.
 
 ### When it holds
 
 - **Volatility moves only a little over the hedge's life.** The argument matches three terms of a Taylor expansion (a polynomial approximation). A large vol move brings in third-order terms nobody hedged, and the price is off by roughly those terms.
-- **The three pillars are genuinely different options.** The system needs $\det A \neq 0$. If two pillar strikes merge, two columns of $A$ coincide, the determinant is zero, and the weights do not exist. Here it is 2.619639.
+- **The three pillars are genuinely different options.** The system needs $`\det A \neq 0`$. If two pillar strikes merge, two columns of $`A`$ coincide, the determinant is zero, and the weights do not exist. Here it is 2.619639.
 - **The target sits between or near the pillars.** Outside the 25-delta strikes the overlay extrapolates a curve through three points, and nothing holds it down: at 1.50 it is +1.65 pips on a flat price of 0.66. Nothing in the method rules out arbitrage between strikes.
 - **The Greeks are taken at the flat vol.** Taking each pillar's Greeks at its own market vol loses the exact fit to the pillars (see What breaks).
 - **The target's risk is vol risk of the kind a vanilla has.** For a barrier that can knock out tomorrow, a hedge sized today overstates the vol risk still alive; desks shrink the overlay for that, on [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md).
@@ -87,37 +93,43 @@ A flat-vol model is wrong about one thing: it thinks volatility never moves. Its
 
 ### Step 1: name the three risks
 
-Over a short interval, let the exchange rate move by $dS$ and the volatility by $d\sigma$. Expand the target's price change to second order (a Taylor expansion, which keeps first and second powers of the small moves):
+Over a short interval, let the exchange rate move by $`dS`$ and the volatility by $`d\sigma`$. Expand the target's price change to second order (a Taylor expansion, which keeps first and second powers of the small moves):
 
-$$dO \approx \Theta\,dt + \Delta\,dS + \tfrac12\Gamma\,dS^2 + \mathcal{V}\,d\sigma + \mathrm{Va}\,dS\,d\sigma + \tfrac12\mathrm{Vo}\,d\sigma^2$$
+```math
+dO \approx \Theta\,dt + \Delta\,dS + \tfrac12\Gamma\,dS^2 + \mathcal{V}\,d\sigma + \mathrm{Va}\,dS\,d\sigma + \tfrac12\mathrm{Vo}\,d\sigma^2
+```
 
-Here $\Theta$ (theta) is decay with time, $\Delta$ (delta) and $\Gamma$ (gamma) are the first and second sensitivities to the exchange rate. The first three terms are the ones Black-Scholes already balances: the delta hedge removes $\Delta\,dS$, and theta pays for gamma. The last three involve $d\sigma$. In a flat-vol world $d\sigma = 0$ and they vanish, so the flat model charges nothing for them. Those three are the risks it cannot see: vega, vanna, volga.
+Here $`\Theta`$ (theta) is decay with time, $`\Delta`$ (delta) and $`\Gamma`$ (gamma) are the first and second sensitivities to the exchange rate. The first three terms are the ones Black-Scholes already balances: the delta hedge removes $`\Delta\,dS`$, and theta pays for gamma. The last three involve $`d\sigma`$. In a flat-vol world $`d\sigma = 0`$ and they vanish, so the flat model charges nothing for them. Those three are the risks it cannot see: vega, vanna, volga.
 
 ### Step 2: build the hedge by solving three equations
 
-The basket holds $x_1, x_2, x_3$ euros of the three pillar calls. Its vega is $x_1\mathcal{V}_1 + x_2\mathcal{V}_2 + x_3\mathcal{V}_3$, and the same for vanna and volga. Setting each equal to the target's gives $A\,x = g$.
+The basket holds $`x_1, x_2, x_3`$ euros of the three pillar calls. Its vega is $`x_1\mathcal{V}_1 + x_2\mathcal{V}_2 + x_3\mathcal{V}_3`$, and the same for vanna and volga. Setting each equal to the target's gives $`A\,x = g`$.
 
-A 3×3 system has exactly one solution when its determinant is not zero ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). Here $\det A = 2.619639$. The Python check finds $x$ by elimination ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)); the Rust check by Cramer's rule, a ratio of determinants. Both give −0.115838, 0.870240, 0.246905: sell a little of the put pillar, buy most of an ATM, buy a quarter of the call pillar.
+A 3×3 system has exactly one solution when its determinant is not zero ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). Here $`\det A = 2.619639`$. The Python check finds $`x`$ by elimination ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)); the Rust check by Cramer's rule, a ratio of determinants. Both give −0.115838, 0.870240, 0.246905: sell a little of the put pillar, buy most of an ATM, buy a quarter of the call pillar.
 
 ### Step 3: charge the hedge's market-minus-model cost
 
-The hedged book is target minus basket. Step 0 says the flat model prices it right, so with $O^{\text{mkt}}$ the target's market price:
+The hedged book is target minus basket. Step 0 says the flat model prices it right, so with $`O^{\text{mkt}}`$ the target's market price:
 
-$$O^{\text{mkt}} - \sum_i x_i C_i^{\text{mkt}} = O^{\text{BS}} - \sum_i x_i C_i^{\text{BS}}$$
+```math
+O^{\text{mkt}} - \sum_i x_i C_i^{\text{mkt}} = O^{\text{BS}} - \sum_i x_i C_i^{\text{BS}}
+```
 
-Move the basket to the right-hand side and this is the formula. For the 1.15 call the three terms $x_i\,\Delta p_i$ are −2.95, 0.00 and −2.14 pips. The middle one is zero because the ATM pillar trades at the flat vol, so its gap is zero. The overlay is −5.09 pips.
+Move the basket to the right-hand side and this is the formula. For the 1.15 call the three terms $`x_i\,\Delta p_i`$ are −2.95, 0.00 and −2.14 pips. The middle one is zero because the ATM pillar trades at the flat vol, so its gap is zero. The overlay is −5.09 pips.
 
 ### Step 4: the three pillars come back exactly
 
-Feed the method one of its own pillars, say pillar 1. Its Greek column $g$ is the first column of $A$. The unique solution is $x = (1, 0, 0)$: hold one of itself. The formula returns $C_1^{\text{BS}} + (C_1^{\text{mkt}} - C_1^{\text{BS}}) = C_1^{\text{mkt}}$. The same holds for pillars 2 and 3. The checks price all three this way and get 851.76, 400.54 and 153.90 pips, the market prices, to twelve decimals. This is a theorem, with no approximation in it, and it is the first test of any implementation.
+Feed the method one of its own pillars, say pillar 1. Its Greek column $`g`$ is the first column of $`A`$. The unique solution is $`x = (1, 0, 0)`$: hold one of itself. The formula returns $`C_1^{\text{BS}} + (C_1^{\text{mkt}} - C_1^{\text{BS}}) = C_1^{\text{mkt}}`$. The same holds for pillars 2 and 3. The checks price all three this way and get 851.76, 400.54 and 153.90 pips, the market prices, to twelve decimals. This is a theorem, with no approximation in it, and it is the first test of any implementation.
 
 ### Step 5: read the overlay as three market prices of risk
 
-The overlay is $x \cdot \Delta p$, the sum of $x_i\,\Delta p_i$. Since $x = A^{-1} g$ ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)), regroup the same sum around $g$:
+The overlay is $`x \cdot \Delta p`$, the sum of $`x_i\,\Delta p_i`$. Since $`x = A^{-1} g`$ ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)), regroup the same sum around $`g`$:
 
-$$\sum_i x_i\,\Delta p_i = \sum_j g_j\,y_j, \qquad \text{where } A^{\mathsf T} y = \Delta p$$
+```math
+\sum_i x_i\,\Delta p_i = \sum_j g_j\,y_j, \qquad \text{where } A^{\mathsf T} y = \Delta p
+```
 
-$A^{\mathsf T}$ is $A$ with rows and columns swapped. The three numbers $y_j$ do not depend on the target. They are fixed by the three quotes: $y_1$ is what the market charges, above the flat model, for one unit of vega; $y_2$ for one unit of vanna; $y_3$ for one unit of volga. Any target's overlay is then its own three Greeks times those three prices.
+$`A^{\mathsf T}`$ is $`A`$ with rows and columns swapped. The three numbers $`y_j`$ do not depend on the target. They are fixed by the three quotes: $`y_1`$ is what the market charges, above the flat model, for one unit of vega; $`y_2`$ for one unit of vanna; $`y_3`$ for one unit of volga. Any target's overlay is then its own three Greeks times those three prices.
 
 ```
 charge for each risk, 1.15 EUR call, pips (one █ = 0.5 pip)
@@ -131,34 +143,38 @@ The vanna charge dominates. The risk reversal is negative: the 25-delta put trad
 
 ### Step 6: the closed form for a vanilla target
 
-For a vanilla call at strike $K$ the weights need no solve. With $z = \ln K$ and $z_i = \ln K_i$, let $\ell_i$ be the three weights that fit a curve $a + bz + cz^2$ through three points (Lagrange weights):
+For a vanilla call at strike $`K`$ the weights need no solve. With $`z = \ln K`$ and $`z_i = \ln K_i`$, let $`\ell_i`$ be the three weights that fit a curve $`a + bz + cz^2`$ through three points (Lagrange weights):
 
-$$x_i = \frac{\mathcal{V}(K)}{\mathcal{V}(K_i)}\,\ell_i(z), \qquad \ell_1(z) = \frac{(z - z_2)(z - z_3)}{(z_1 - z_2)(z_1 - z_3)}$$
+```math
+x_i = \frac{\mathcal{V}(K)}{\mathcal{V}(K_i)}\,\ell_i(z), \qquad \ell_1(z) = \frac{(z - z_2)(z - z_3)}{(z_1 - z_2)(z_1 - z_3)}
+```
 
-and $\ell_2$, $\ell_3$ by cycling the indices. The checks compute both and they agree to ten decimals.
+and $`\ell_2`$, $`\ell_3`$ by cycling the indices. The checks compute both and they agree to ten decimals.
 
 <details>
 <summary>Detailed proof</summary>
 
-Substitute the proposed $x_i$ into each row of $A\,x = g$.
+Substitute the proposed $`x_i`$ into each row of $`A\,x = g`$.
 
-**Vega row.** $\sum_i x_i\mathcal{V}_i = \mathcal{V}(K)\sum_i \ell_i(z)$. Lagrange weights reproduce any curve of degree at most two through the three points; the constant 1 is one, so $\sum_i \ell_i = 1$. The row holds.
+**Vega row.** $`\sum_i x_i\mathcal{V}_i = \mathcal{V}(K)\sum_i \ell_i(z)`$. Lagrange weights reproduce any curve of degree at most two through the three points; the constant 1 is one, so $`\sum_i \ell_i = 1`$. The row holds.
 
-**Vanna row.** $\mathrm{Va} = -\mathcal{V}\,d_2/(S\sigma\sqrt{T})$, and every factor except $\mathcal{V}$ and $d_2$ is the same for all strikes at the flat vol. So the row reads $\sum_i \ell_i(z)\,d_2(z_i) = d_2(z)$. Now $d_2 = (\ln S - z + (r_d - r_f - \tfrac12\sigma^2)T)/(\sigma\sqrt{T})$ is a straight line in $z$, degree one. The weights reproduce it. The row holds.
+**Vanna row.** $`\mathrm{Va} = -\mathcal{V}\,d_2/(S\sigma\sqrt{T})`$, and every factor except $`\mathcal{V}`$ and $`d_2`$ is the same for all strikes at the flat vol. So the row reads $`\sum_i \ell_i(z)\,d_2(z_i) = d_2(z)`$. Now $`d_2 = (\ln S - z + (r_d - r_f - \tfrac12\sigma^2)T)/(\sigma\sqrt{T})`$ is a straight line in $`z`$, degree one. The weights reproduce it. The row holds.
 
-**Volga row.** $\mathrm{Vo} = \mathcal{V}\,d_1 d_2/\sigma$. The row reads $\sum_i \ell_i(z)\,d_1(z_i)d_2(z_i) = d_1(z)d_2(z)$. Both $d_1$ and $d_2$ are straight lines in $z$, so their product is degree two. The weights reproduce it. The row holds.
+**Volga row.** $`\mathrm{Vo} = \mathcal{V}\,d_1 d_2/\sigma`$. The row reads $`\sum_i \ell_i(z)\,d_1(z_i)d_2(z_i) = d_1(z)d_2(z)`$. Both $`d_1`$ and $`d_2`$ are straight lines in $`z`$, so their product is degree two. The weights reproduce it. The row holds.
 
-All three rows hold, and $\det A \neq 0$ makes the solution unique, so these are the weights. The proof used only that vega, vanna and volga are vega times 1, a line in $\ln K$, and a quadratic in $\ln K$. A target whose Greeks lack that shape, such as a digital, needs the full solve.
+All three rows hold, and $`\det A \neq 0`$ makes the solution unique, so these are the weights. The proof used only that vega, vanna and volga are vega times 1, a line in $`\ln K`$, and a quadratic in $`\ln K`$. A target whose Greeks lack that shape, such as a digital, needs the full solve.
 
 </details>
 
 ### Step 7: the implied vol it produces, to first order
 
-Each gap is, to first order, vega times the vol difference: $\Delta p_i \approx \mathcal{V}_i(\sigma_i - \sigma_{\text{ATM}})$. Put that and the Step 6 weights into the overlay: $\sum_i x_i\Delta p_i \approx \mathcal{V}(K)\sum_i \ell_i(z)(\sigma_i - \sigma_{\text{ATM}})$. A call priced at vol $\sigma(K)$ is, to first order, $O^{\text{BS}} + \mathcal{V}(K)(\sigma(K) - \sigma_{\text{ATM}})$. Equate and cancel vega:
+Each gap is, to first order, vega times the vol difference: $`\Delta p_i \approx \mathcal{V}_i(\sigma_i - \sigma_{\text{ATM}})`$. Put that and the Step 6 weights into the overlay: $`\sum_i x_i\Delta p_i \approx \mathcal{V}(K)\sum_i \ell_i(z)(\sigma_i - \sigma_{\text{ATM}})`$. A call priced at vol $`\sigma(K)`$ is, to first order, $`O^{\text{BS}} + \mathcal{V}(K)(\sigma(K) - \sigma_{\text{ATM}})`$. Equate and cancel vega:
 
-$$\sigma(K) \approx \sum_i \ell_i(\ln K)\,\sigma_i$$
+```math
+\sigma(K) \approx \sum_i \ell_i(\ln K)\,\sigma_i
+```
 
-a parabola in log-strike through the three quotes. At 1.15 it gives 9.8788 percent. A call's price rises strictly with vol, from its floor $\max(Se^{-r_fT} - Ke^{-r_dT}, 0)$ toward $Se^{-r_fT}$, so any price strictly between has exactly one implied vol. Bisection finds it for 306.55 pips: 9.8780 percent. The gap is 0.0743 basis points of vol, where a basis point is 0.01 percentage point. The next card, [The vanna-volga smile](05-vanna-volga-smile-curve.md), builds this curve properly, with its second-order correction.
+a parabola in log-strike through the three quotes. At 1.15 it gives 9.8788 percent. A call's price rises strictly with vol, from its floor $`\max(Se^{-r_fT} - Ke^{-r_dT}, 0)`$ toward $`Se^{-r_fT}`$, so any price strictly between has exactly one implied vol. Bisection finds it for 306.55 pips: 9.8780 percent. The gap is 0.0743 basis points of vol, where a basis point is 0.01 percentage point. The next card, [The vanna-volga smile](05-vanna-volga-smile-curve.md), builds this curve properly, with its second-order correction.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -176,26 +192,26 @@ Orange: the vol implied by the vanna-volga price. Green: the first-order parabol
 
 ## Worked numbers, by hand
 
-EURUSD: $S = 1.10$, $r_d = 5\%$, $r_f = 3\%$, $T = 1$; ATM 10.00%, risk reversal −1.00% (call-pillar vol minus put-pillar vol), butterfly +0.25% (the average of the two wing vols minus the ATM vol). Target: EUR call at $K = 1.15$. Prices in pips, 0.0001 dollars per euro.
+EURUSD: $`S = 1.10`$, $`r_d = 5\%`$, $`r_f = 3\%`$, $`T = 1`$; ATM 10.00%, risk reversal −1.00% (call-pillar vol minus put-pillar vol), butterfly +0.25% (the average of the two wing vols minus the ATM vol). Target: EUR call at $`K = 1.15`$. Prices in pips, 0.0001 dollars per euro.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forward $F$ | $1.10 \times e^{0.05 - 0.03}$ | 1.122221 |
-| pillar vols | $10 + 0.25 + 0.5$, $10$, $10 + 0.25 - 0.5$ | 10.75%, 10.00%, 9.75% |
+| forward $`F`$ | $`1.10 \times e^{0.05 - 0.03}`$ | 1.122221 |
+| pillar vols | $`10 + 0.25 + 0.5`$, $`10`$, $`10 + 0.25 - 0.5`$ | 10.75%, 10.00%, 9.75% |
 | pillar strikes | from delta, [Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) | 1.052466, 1.127847, 1.201425 |
 | pillars at market vols | Garman-Kohlhagen, each at its own vol | 851.76, 400.54, 153.90 |
 | pillars at 10% | Garman-Kohlhagen, all at 10% | 826.26, 400.54, 162.57 |
-| gaps $\Delta p_i$ | market minus flat | +25.51, 0.00, −8.67 |
-| target Greeks $g$ | vega, vanna, volga at 10% | 0.417886, 1.118861, 0.239402 |
-| weights $x$ | solve $A\,x = g$ | −0.115838, 0.870240, 0.246905 |
-| $x_i\,\Delta p_i$ | $-0.115838 \times 25.51$; $0$; $0.246905 \times (-8.67)$ | −2.95, 0.00, −2.14 |
-| overlay | $-2.95 + 0 - 2.14$ | −5.09 |
-| flat price $O^{\text{BS}}$ | Garman-Kohlhagen at 10% | 311.65 |
-| **VV price** | $311.647 - 5.095$, unrounded | **306.55** |
+| gaps $`\Delta p_i`$ | market minus flat | +25.51, 0.00, −8.67 |
+| target Greeks $`g`$ | vega, vanna, volga at 10% | 0.417886, 1.118861, 0.239402 |
+| weights $`x`$ | solve $`A\,x = g`$ | −0.115838, 0.870240, 0.246905 |
+| $`x_i\,\Delta p_i`$ | $`-0.115838 \times 25.51`$; $`0`$; $`0.246905 \times (-8.67)`$ | −2.95, 0.00, −2.14 |
+| overlay | $`-2.95 + 0 - 2.14`$ | −5.09 |
+| flat price $`O^{\text{BS}}`$ | Garman-Kohlhagen at 10% | 311.65 |
+| **VV price** | $`311.647 - 5.095`$, unrounded | **306.55** |
 | on 10 million euros | price in dollars per euro, times 10,000,000 | 306,552.66 dollars |
 | its implied vol | bisection on the price | 9.8780% |
 
-The pillar matrix $A$, one row per Greek, one column per pillar, all at 10 percent:
+The pillar matrix $`A`$, one row per Greek, one column per pillar, all at 10 percent:
 
 | | put pillar 1.052466 | ATM 1.127847 | call pillar 1.201425 | target 1.15 |
 | --- | --- | --- | --- | --- |
@@ -203,7 +219,7 @@ The pillar matrix $A$, one row per Greek, one column per pillar, all at 10 perce
 | vanna | −1.803464 | 0.387152 | 2.320882 | 1.118861 |
 | volga | 1.372286 | −0.000000 | 1.613435 | 0.239402 |
 
-The ATM pillar's volga prints as zero: its strike is where $d_1 = 0$. The bank quotes 306,552.66 dollars, not 311,647.34: the negative risk reversal makes calls above the forward cheaper than a flat 10 percent says.
+The ATM pillar's volga prints as zero: its strike is where $`d_1 = 0`$. The bank quotes 306,552.66 dollars, not 311,647.34: the negative risk reversal makes calls above the forward cheaper than a flat 10 percent says.
 
 ### What breaks if you drop a piece
 
@@ -213,14 +229,14 @@ Correct answer 306.55 pips.
 | --- | --- | --- |
 | Price at the smile vol 9.8788%, then add the overlay | 301.49 pips | The smile was counted twice. The flat term takes the ATM vol and nothing else. |
 | Hedge vega only, with the ATM pillar | 311.65 pips | The ATM gap is zero, so no correction at all. Vega alone cannot see the tilt or the curvature. |
-| Greeks taken at each pillar's own vol | 306.17 pips; pillar 1 comes back at 855.35, not 851.76 | Exactness on the pillars is lost: $g$ for a pillar is no longer a column of $A$. |
+| Greeks taken at each pillar's own vol | 306.17 pips; pillar 1 comes back at 855.35, not 851.76 | Exactness on the pillars is lost: $`g`$ for a pillar is no longer a column of $`A`$. |
 | Risk reversal read as put minus call | 318.30 pips | Put and call vols swap to 9.75% and 10.75%; the tilt runs the wrong way. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts rebuild the pillars from the three quotes, then reach the price by independent roads: weights by elimination (Python) or Cramer's rule (Rust), and again by the closed form of Step 6; the overlay again as Greeks times prices of risk; the flat price again by Simpson's rule (summing thin slices under the curve); the Greeks again by nudging the price; the pillars priced back through the method; the implied vol against the first-order curve. Python builds the bell-curve area from its Taylor series, Rust from thin slices. Seven asserts; three deliberate breaks (vanna's sign flipped, volga's $d_1 d_2$ made $d_1^2$, the ATM strike moved) each tripped one.
+The scripts rebuild the pillars from the three quotes, then reach the price by independent roads: weights by elimination (Python) or Cramer's rule (Rust), and again by the closed form of Step 6; the overlay again as Greeks times prices of risk; the flat price again by Simpson's rule (summing thin slices under the curve); the Greeks again by nudging the price; the pillars priced back through the method; the implied vol against the first-order curve. Python builds the bell-curve area from its Taylor series, Rust from thin slices. Seven asserts; three deliberate breaks (vanna's sign flipped, volga's $`d_1 d_2`$ made $`d_1^2`$, the ATM strike moved) each tripped one.
 
 ### Python
 
@@ -579,9 +595,9 @@ The two outputs are identical line for line, from different normal CDFs and diff
 
 Lean proves the three exact facts in Why it works: the pillars come back, the closed-form weights, and the overlay as prices of risk.
 
-- Take any 3×3 table $A$ with $\det A \neq 0$, and feed the method its own pillar $j$. Then the vanna-volga price is that pillar's market price exactly.
-- Take a call at strike $K$, Greeks at the flat vol, positive spot, vol, time and strikes, and $\det A \neq 0$. Then the hedge weights are exactly the Step 6 closed form, and no other weights solve $A\,x = g$.
-- Suppose $A\,x = g$ and $A^{\mathsf T} y = \Delta p$. Then the overlay equals the target's vega, vanna and volga times the market prices of one unit of each.
+- Take any 3×3 table $`A`$ with $`\det A \neq 0`$, and feed the method its own pillar $`j`$. Then the vanna-volga price is that pillar's market price exactly.
+- Take a call at strike $`K`$, Greeks at the flat vol, positive spot, vol, time and strikes, and $`\det A \neq 0`$. Then the hedge weights are exactly the Step 6 closed form, and no other weights solve $`A\,x = g`$.
+- Suppose $`A\,x = g`$ and $`A^{\mathsf T} y = \Delta p`$. Then the overlay equals the target's vega, vanna and volga times the market prices of one unit of each.
 
 The numbers, such as the 306.55-pip price, the first-order smile and the implied vols, are left to the Python and Rust checks.
 
@@ -754,10 +770,10 @@ end VannaVolga
 > [!warning]
 > **Treating the overlay as a correction to be added to a smile price.** The flat term is priced at the ATM vol, always. The overlay is the whole smile correction. Priced at the smile vol and then corrected, the 1.15 call comes out at 301.49 pips instead of 306.55: 5 pips wrong, in a number that looks plausible.
 >
-> - **Reading the price of vega as "the ATM vol is off".** The ATM gap is zero, yet $y_1 = 0.00078397$. The vega price is set by all three quotes together, here mainly by the ATM option's vanna.
+> - **Reading the price of vega as "the ATM vol is off".** The ATM gap is zero, yet $`y_1 = 0.00078397`$. The vega price is set by all three quotes together, here mainly by the ATM option's vanna.
 > - **Mixing Greek units.** Vega per 1.00 of vol and vega per vol point differ by 100; volga by 10,000. Scaling all Greeks the same way leaves the weights unchanged; scaling only the target's row does not.
 > - **Trusting the far wings.** Outside the 25-delta strikes the method extrapolates. At 1.00 the implied vol already differs from the first-order curve by a tenth of a point, and further out the overlay can dwarf the flat price.
-> - **Using the wrong butterfly.** A broker butterfly fixes one strangle's price, not the two wing vols; feeding it in as a smile strangle mis-states $\sigma_1$ and $\sigma_3$ before the method starts.
+> - **Using the wrong butterfly.** A broker butterfly fixes one strangle's price, not the two wing vols; feeding it in as a smile strangle mis-states $`\sigma_1`$ and $`\sigma_3`$ before the method starts.
 
 ---
 
@@ -777,8 +793,8 @@ end VannaVolga
 - [Vanna and volga](03-vanna-and-volga-on-the-smile.md): the three Greeks, their closed forms, and why each quote carries one of them.
 - [Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): how 25-delta and ATM quotes become the strikes 1.052466, 1.127847, 1.201425.
 - [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): the solve for the weights.
-- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): $x = A^{-1}g$, and the swap to $A^{\mathsf T}y = \Delta p$ that gives the prices of risk.
-- [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): why $\det A \neq 0$ means one hedge and one price, and Cramer's rule in the Rust check.
+- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): $`x = A^{-1}g`$, and the swap to $`A^{\mathsf T}y = \Delta p`$ that gives the prices of risk.
+- [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): why $`\det A \neq 0`$ means one hedge and one price, and Cramer's rule in the Rust check.
 
 ## Where this goes next
 

@@ -28,7 +28,9 @@ To scale: 80 units per 1, centre (150, 120), rim radius 80; a = 1/2 at (190, 120
 
 Notation first. An inside point is r e^(it): distance r from the centre, angle t. A rim point is e^(is), with height h(s).
 
-$$u(re^{it}) = \frac{1}{2\pi}\int_0^{2\pi} P_r(t-s)\,h(s)\,ds, \qquad P_r(\theta) = \frac{1-r^2}{1-2r\cos\theta+r^2}$$
+```math
+u(re^{it}) = \frac{1}{2\pi}\int_0^{2\pi} P_r(t-s)\,h(s)\,ds, \qquad P_r(\theta) = \frac{1-r^2}{1-2r\cos\theta+r^2}
+```
 
 **Read it aloud:** the height at radius r and angle t is the average, over all rim angles s, of rim height times the Poisson kernel at the angle between them.
 
@@ -36,20 +38,22 @@ The denominator is |e^(is) − r e^(it)|^2, the squared distance to the rim poin
 
 For the upper half-plane, the region above the real line:
 
-$$u(x+iy) = \frac{1}{\pi}\int_{-\infty}^{\infty} \frac{y}{(x-q)^2+y^2}\,h(q)\,dq$$
+```math
+u(x+iy) = \frac{1}{\pi}\int_{-\infty}^{\infty} \frac{y}{(x-q)^2+y^2}\,h(q)\,dq
+```
 
 **Read it aloud:** the height at x + iy averages the heights along the line, each weighted by y over its squared distance.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | height of the skin inside the disc | 20 + 5r cos t | — |
-| $h$ | height on the rim at angle s | 20 + 5 cos s | every inside height rises by as much |
-| $r$, $t$ | the inside point's distance from the centre and angle | 1/2 and 0 | r towards 1: height tends to h(t) |
-| $s$ | a rim point's angle, averaged over | 0 to 2π | — |
-| $P_r$ | the Poisson kernel: the weight a rim point gets | 3 at s = 0, 0.33 at s = π | larger r: weight piles up near s = t |
-| $a$, $z$ | the inside point a = r e^(it); a rim point z = e^(is) | a = 1/2 | outside the rim: formula fails |
-| $f$ | holomorphic (it has a complex derivative), with real part u | 20 + 5z | — |
-| $q$, $p$, $w$ | a point on the line; the Cayley map w = (p − i)/(p + i) of p = x + iy | p = 3i, w = 1/2 | — |
+| $`u`$ | height of the skin inside the disc | 20 + 5r cos t | — |
+| $`h`$ | height on the rim at angle s | 20 + 5 cos s | every inside height rises by as much |
+| $`r`$, $`t`$ | the inside point's distance from the centre and angle | 1/2 and 0 | r towards 1: height tends to h(t) |
+| $`s`$ | a rim point's angle, averaged over | 0 to 2π | — |
+| $`P_r`$ | the Poisson kernel: the weight a rim point gets | 3 at s = 0, 0.33 at s = π | larger r: weight piles up near s = t |
+| $`a`$, $`z`$ | the inside point a = r e^(it); a rim point z = e^(is) | a = 1/2 | outside the rim: formula fails |
+| $`f`$ | holomorphic (it has a complex derivative), with real part u | 20 + 5z | — |
+| $`q`$, $`p`$, $`w`$ | a point on the line; the Cayley map w = (p − i)/(p + i) of p = x + iy | p = 3i, w = 1/2 | — |
 
 ### When it holds
 
@@ -70,24 +74,30 @@ Cauchy's integral formula recovers a holomorphic f inside from its rim values ([
 
 For f holomorphic on and inside the rim |z| = 1, and a inside,
 
-$$f(a) = \frac{1}{2\pi i}\oint \frac{f(z)}{z-a}\,dz.$$
+```math
+f(a) = \frac{1}{2\pi i}\oint \frac{f(z)}{z-a}\,dz.
+```
 
 ### Step 2: add zero, from the reflected point
 
 Take a ≠ 0; a = 0 is the mean value property. Reflect a in the rim: 1/ā (ā is a-bar, the conjugate) lies on a's ray at distance 1/r, so 2 for a = 1/2. It is outside the rim, so f(z)/(z − 1/ā) has no bad point inside, and its loop integral is 0 by Cauchy's theorem ([Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)). Subtract it:
 
-$$f(a) = \frac{1}{2\pi i}\oint f(z)\Big(\frac{1}{z-a} - \frac{1}{z-1/\bar a}\Big)dz.$$
+```math
+f(a) = \frac{1}{2\pi i}\oint f(z)\Big(\frac{1}{z-a} - \frac{1}{z-1/\bar a}\Big)dz.
+```
 
 ### Step 3: on the rim, the bracket is the kernel
 
 Walk the rim as z = e^(is). Then dz = iz ds, so 2πi becomes 2π and the bracket gains a factor z. Using z z̄ = 1, it collapses to
 
-$$\frac{1-|a|^2}{|z-a|^2} = P_r(t-s).$$
+```math
+\frac{1-|a|^2}{|z-a|^2} = P_r(t-s).
+```
 
 <details>
 <summary>The algebra behind this</summary>
 
-$\frac{z}{z-a} - \frac{z}{z-1/\bar a} = \frac{z}{z-a} + \frac{\bar a z}{1-\bar a z}$. Multiplying the second fraction top and bottom by z̄ makes it $\frac{\bar a}{\bar z-\bar a}$. Over the common denominator $(z-a)(\bar z-\bar a) = |z-a|^2$ the top is $z(\bar z-\bar a) + \bar a(z-a) = 1 - |a|^2$. Finally $|e^{is} - re^{it}|^2 = 1 - 2r\cos(t-s) + r^2$.
+$`\frac{z}{z-a} - \frac{z}{z-1/\bar a} = \frac{z}{z-a} + \frac{\bar a z}{1-\bar a z}`$. Multiplying the second fraction top and bottom by z̄ makes it $`\frac{\bar a}{\bar z-\bar a}`$. Over the common denominator $`(z-a)(\bar z-\bar a) = |z-a|^2`$ the top is $`z(\bar z-\bar a) + \bar a(z-a) = 1 - |a|^2`$. Finally $`|e^{is} - re^{it}|^2 = 1 - 2r\cos(t-s) + r^2`$.
 
 </details>
 
@@ -112,9 +122,9 @@ The converse holds. For any continuous rim h, the right side is harmonic inside,
 <details>
 <summary>Detailed proof: the rim values are recovered</summary>
 
-Harmonic inside: $P_r(t-s) = \mathrm{Re}\,\frac{z+a}{z-a}$ with z = e^(is), so $u(a) = \mathrm{Re}\,\frac{1}{2\pi}\int_0^{2\pi} \frac{z+a}{z-a}h(s)\,ds$, the real part of a function holomorphic in a. It is harmonic.
+Harmonic inside: $`P_r(t-s) = \mathrm{Re}\,\frac{z+a}{z-a}`$ with z = e^(is), so $`u(a) = \mathrm{Re}\,\frac{1}{2\pi}\int_0^{2\pi} \frac{z+a}{z-a}h(s)\,ds`$, the real part of a function holomorphic in a. It is harmonic.
 
-Recovery: by total weight 1, $u(re^{it}) - h(t) = \frac{1}{2\pi}\int_{-\pi}^{\pi} P_r(\alpha)\big(h(t-\alpha)-h(t)\big)d\alpha$. Let M be the largest |h| and ε > 0. Continuity on the closed rim gives δ > 0 with |h(t − α) − h(t)| < ε/2 whenever |α| < δ. There, positive weights of total 1 bound the integral by ε/2. For δ ≤ |α| ≤ π and r ≥ 1/2 the denominator is $(1-r)^2 + 2r(1-\cos\alpha) \ge 1-\cos\delta$, so that part is at most $2M(1-r^2)/(1-\cos\delta)$, below ε/2 once r is near 1. So u tends to h uniformly. Uniqueness is the maximum principle: two solutions differ by a harmonic function that is 0 on the rim, hence 0 inside.
+Recovery: by total weight 1, $`u(re^{it}) - h(t) = \frac{1}{2\pi}\int_{-\pi}^{\pi} P_r(\alpha)\big(h(t-\alpha)-h(t)\big)d\alpha`$. Let M be the largest |h| and ε > 0. Continuity on the closed rim gives δ > 0 with |h(t − α) − h(t)| < ε/2 whenever |α| < δ. There, positive weights of total 1 bound the integral by ε/2. For δ ≤ |α| ≤ π and r ≥ 1/2 the denominator is $`(1-r)^2 + 2r(1-\cos\alpha) \ge 1-\cos\delta`$, so that part is at most $`2M(1-r^2)/(1-\cos\delta)`$, below ε/2 once r is near 1. So u tends to h uniformly. Uniqueness is the maximum principle: two solutions differ by a harmonic function that is 0 on the rim, hence 0 inside.
 
 </details>
 
@@ -125,7 +135,7 @@ The Cayley map w = (p − i)/(p + i) is a Möbius map ([Mobius transformations](
 <details>
 <summary>The change of variable</summary>
 
-Write C(p) = (p − i)/(p + i), q on the line: $1 - |C(p)|^2 = \frac{4y}{|p+i|^2}$, and $C(q) - C(p) = \frac{2i(q-p)}{(q+i)(p+i)}$, so $|C(q)-C(p)|^2 = \frac{4|q-p|^2}{(1+q^2)|p+i|^2}$. The disc kernel becomes $\frac{y(1+q^2)}{|q-p|^2}$, and e^(is) = C(q) gives $ds = \frac{2\,dq}{1+q^2}$. So $\frac{1}{2\pi}P\,ds = \frac{1}{\pi}\frac{y}{(x-q)^2+y^2}\,dq$.
+Write C(p) = (p − i)/(p + i), q on the line: $`1 - |C(p)|^2 = \frac{4y}{|p+i|^2}`$, and $`C(q) - C(p) = \frac{2i(q-p)}{(q+i)(p+i)}`$, so $`|C(q)-C(p)|^2 = \frac{4|q-p|^2}{(1+q^2)|p+i|^2}`$. The disc kernel becomes $`\frac{y(1+q^2)}{|q-p|^2}`$, and e^(is) = C(q) gives $`ds = \frac{2\,dq}{1+q^2}`$. So $`\frac{1}{2\pi}P\,ds = \frac{1}{\pi}\frac{y}{(x-q)^2+y^2}\,dq`$.
 
 </details>
 

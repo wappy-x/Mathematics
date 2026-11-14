@@ -36,54 +36,62 @@ Flat line (orange): the level premium, $112.06. Rising line (green): the cost of
 
 ## The formula
 
-Notation first, in words. The sibling card [Life annuities and insurance](02-life-annuities-and-insurance-values.md) builds two prices. $A_{x:n}$ is today's value of $1 paid at the end of the year of death, if death comes within $n$ years of age $x$. $\ddot a_{x:n}$, read "a double-dot", is today's value of $1 paid at the start of each year while alive, at most $n$ payments. Both are per dollar, so a benefit of $S$ dollars (the **sum insured**, here $100,000) is worth $S\,A_{x:n}$.
+Notation first, in words. The sibling card [Life annuities and insurance](02-life-annuities-and-insurance-values.md) builds two prices. $`A_{x:n}`$ is today's value of $1 paid at the end of the year of death, if death comes within $`n`$ years of age $`x`$. $`\ddot a_{x:n}`$, read "a double-dot", is today's value of $1 paid at the start of each year while alive, at most $`n`$ payments. Both are per dollar, so a benefit of $`S`$ dollars (the **sum insured**, here $100,000) is worth $`S\,A_{x:n}`$.
 
 The premium, by equivalence:
 
-$$P = \frac{S\,A_{x:n}}{\ddot a_{x:n}}$$
+```math
+P = \frac{S\,A_{x:n}}{\ddot a_{x:n}}
+```
 
 **Read it aloud:** the premium is the benefit's value spread evenly over the payments she is expected to make.
 
-The reserve after $t$ years, looking forward:
+The reserve after $`t`$ years, looking forward:
 
-$$V_t = S\,A_{x+t:\,n-t} \;-\; P\,\ddot a_{x+t:\,n-t}$$
+```math
+V_t = S\,A_{x+t:\,n-t} \;-\; P\,\ddot a_{x+t:\,n-t}
+```
 
-**Read it aloud:** the reserve is what the remaining cover is worth, minus what the remaining premiums are worth, both valued for a life now aged $x + t$.
+**Read it aloud:** the reserve is what the remaining cover is worth, minus what the remaining premiums are worth, both valued for a life now aged $`x + t`$.
 
 The recursion, one year at a time:
 
-$$(V_t + P)\,e^{r} \;=\; q_{x+t}\,S \;+\; p_{x+t}\,V_{t+1}$$
+```math
+(V_t + P)\,e^{r} \;=\; q_{x+t}\,S \;+\; p_{x+t}\,V_{t+1}
+```
 
-Here $q_{x+t}$ is the chance a life aged $x + t$ dies within the year, $p_{x+t} = 1 - q_{x+t}$, and $e^{r}$ grows a dollar for one year at the rate $r$.
+Here $`q_{x+t}`$ is the chance a life aged $`x + t`$ dies within the year, $`p_{x+t} = 1 - q_{x+t}`$, and $`e^{r}`$ grows a dollar for one year at the rate $`r`$.
 
 **Read it aloud:** the reserve plus this year's premium, grown for one year at interest, pays the death benefit to those who die and the next reserve to those who live.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | the **sum insured**: paid at the end of the year of death | $100,000 | premium and reserve rise in proportion |
-| $x$, $n$; $y$, $m$ | age at issue, years of cover; in the proof, age now, years left | 40, 20; 50, 10 | older or longer: dearer, bigger reserve |
-| $t$, $k$ | years since issue; $k$ counts years inside a sum | 10 | the reserve rises, peaks at year 13, falls to 0 |
-| $r$, $v$ | the interest rate, continuously compounded; one year's discount factor, $e^{-r}$ | 5%; 0.951229 | premium and reserve fall |
-| $q_{x+k}$, $q_y$, $q$ | chance a life aged $x + k$ dies within the year | 0.0012085 at 50 | premium and reserve rise |
-| $p_{x+k}$, $p_y$ | chance that life survives the year, $1 - q_{x+k}$ | one minus the row above | — |
-| ${}_kp_x$ | chance a life aged $x$ survives $k$ years | — | — |
-| $A_{x:n}$ | value of $1 paid at the end of the year of death, if within $n$ years | 0.014423 at 40 for 20 years | premium rises |
-| $\ddot a_{x:n}$ | value of $1 paid at the start of each year while alive, $n$ at most | 12.870699 at 40 for 20 years | premium falls |
-| $P$ | the level **net premium**: no expenses, no profit | $112.06 a year | reserve falls |
-| $V_t$, $V_{10}$ | the **reserve** at year $t$, just before that year's premium | $552.43 at year 10 | — |
-| $F_t$, $l_t$ | the fund per survivor of the **office** (the insurer), and its survivors, at year $t$ | $552.43 and 9,923.3 at year 10 | — |
+| $`S`$ | the **sum insured**: paid at the end of the year of death | $100,000 | premium and reserve rise in proportion |
+| $`x`$, $`n`$; $`y`$, $`m`$ | age at issue, years of cover; in the proof, age now, years left | 40, 20; 50, 10 | older or longer: dearer, bigger reserve |
+| $`t`$, $`k`$ | years since issue; $`k`$ counts years inside a sum | 10 | the reserve rises, peaks at year 13, falls to 0 |
+| $`r`$, $`v`$ | the interest rate, continuously compounded; one year's discount factor, $`e^{-r}`$ | 5%; 0.951229 | premium and reserve fall |
+| $`q_{x+k}`$, $`q_y`$, $`q`$ | chance a life aged $`x + k`$ dies within the year | 0.0012085 at 50 | premium and reserve rise |
+| $`p_{x+k}`$, $`p_y`$ | chance that life survives the year, $`1 - q_{x+k}`$ | one minus the row above | — |
+| $`{}_kp_x`$ | chance a life aged $`x`$ survives $`k`$ years | — | — |
+| $`A_{x:n}`$ | value of $1 paid at the end of the year of death, if within $`n`$ years | 0.014423 at 40 for 20 years | premium rises |
+| $`\ddot a_{x:n}`$ | value of $1 paid at the start of each year while alive, $`n`$ at most | 12.870699 at 40 for 20 years | premium falls |
+| $`P`$ | the level **net premium**: no expenses, no profit | $112.06 a year | reserve falls |
+| $`V_t`$, $`V_{10}`$ | the **reserve** at year $`t`$, just before that year's premium | $552.43 at year 10 | — |
+| $`F_t`$, $`l_t`$ | the fund per survivor of the **office** (the insurer), and its survivors, at year $`t`$ | $552.43 and 9,923.3 at year 10 | — |
 
 The two prices, written out:
 
-$$A_{x:n} = \sum_{k=0}^{n-1} v^{k+1}\,{}_kp_x\,q_{x+k}, \qquad \ddot a_{x:n} = \sum_{k=0}^{n-1} v^{k}\,{}_kp_x$$
+```math
+A_{x:n} = \sum_{k=0}^{n-1} v^{k+1}\,{}_kp_x\,q_{x+k}, \qquad \ddot a_{x:n} = \sum_{k=0}^{n-1} v^{k}\,{}_kp_x
+```
 
-In words: to pay a death benefit in year $k + 1$, she must survive $k$ years and then die; the money is paid a year after that year begins. A premium in year $k + 1$ needs only survival to its start.
+In words: to pay a death benefit in year $`k + 1`$, she must survive $`k`$ years and then die; the money is paid a year after that year begins. A premium in year $`k + 1`$ needs only survival to its start.
 
-The death rates come from Makeham's law (a formula for how the force of mortality, the instantaneous death rate, grows with age): force $= 0.00022 + 0.0000027 \times 1.124^{\text{age}}$. It is the formula behind the Standard Ultimate Life Table in Dickson, Hardy and Waters; the check reproduces that table's 0.000527 at 40 and 0.001209 at 50.
+The death rates come from Makeham's law (a formula for how the force of mortality, the instantaneous death rate, grows with age): force $`= 0.00022 + 0.0000027 \times 1.124^{\text{age}}`$. It is the formula behind the Standard Ultimate Life Table in Dickson, Hardy and Waters; the check reproduces that table's 0.000527 at 40 and 0.001209 at 50.
 
 ### When it holds
 
-- **The death rates are right.** The whole price is built on $q$. If the insured group dies 10% faster than the table says, both the premium and the reserve are too small.
+- **The death rates are right.** The whole price is built on $`q`$. If the insured group dies 10% faster than the table says, both the premium and the reserve are too small.
 - **The interest is earned.** Money held is assumed to grow at 5%. If it earns less, the reserve falls short: earning 0% from year 10, the same $112.06 policy needs $857.77 at year 10, not $552.43.
 - **Many independent policies.** Equivalence sets the average right. One policy on its own either costs $100,000 or nothing. Only a large pool of independent lives makes the average what the office actually pays.
 - **Everyone pays until death or expiry.** Lapses (policyholders who stop paying and walk away) are ignored. A term policy that lapses leaves its reserve behind; pricing that counts on this is fragile.
@@ -101,44 +109,56 @@ Once the premium is fixed, the balance holds only on day one. A year later she i
 
 ### Step 1: value the benefit
 
-The $100,000 is paid at the end of year $k + 1$ if she is alive at the start of it and dies during it. The chance of that is ${}_kp_x\,q_{x+k}$. Discounting from the payment date gives $v^{k+1}$. Add over the 20 years:
+The $100,000 is paid at the end of year $`k + 1`$ if she is alive at the start of it and dies during it. The chance of that is $`{}_kp_x\,q_{x+k}`$. Discounting from the payment date gives $`v^{k+1}`$. Add over the 20 years:
 
-$$S\,A_{40:20} = 100{,}000 \times 0.014423 = \$1{,}442.34.$$
+```math
+S\,A_{40:20} = 100{,}000 \times 0.014423 = \$1{,}442.34.
+```
 
 ### Step 2: value the premiums
 
-A premium of $P$ is paid at the start of year $k + 1$ if she is alive then, chance ${}_kp_x$, discounted by $v^k$. The first premium is certain and undiscounted. Adding the 20 years gives $P\,\ddot a_{40:20}$, with $\ddot a_{40:20} = 12.870699$. That is the expected discounted number of premiums: fewer than 20, because of discounting and because some lives stop paying at death.
+A premium of $`P`$ is paid at the start of year $`k + 1`$ if she is alive then, chance $`{}_kp_x`$, discounted by $`v^k`$. The first premium is certain and undiscounted. Adding the 20 years gives $`P\,\ddot a_{40:20}`$, with $`\ddot a_{40:20} = 12.870699`$. That is the expected discounted number of premiums: fewer than 20, because of discounting and because some lives stop paying at death.
 
 ### Step 3: set them equal
 
-$$P\,\ddot a_{40:20} = S\,A_{40:20} \quad\Longrightarrow\quad P = \frac{1{,}442.34}{12.870699} = \$112.06.$$
+```math
+P\,\ddot a_{40:20} = S\,A_{40:20} \quad\Longrightarrow\quad P = \frac{1{,}442.34}{12.870699} = \$112.06.
+```
 
 ### Step 4: stand at year 10 and look forward
 
 She is alive at 50. What happened before is sunk: the premiums paid are in the fund, and no benefit is owed for past years. The future depends only on her present age, because the death rates depend only on age. So the rest of the policy is a fresh 10-year term policy on a life aged 50, still paying $112.06.
 
-On that fresh policy the balance no longer holds. The cover is worth $S\,A_{50:10} = \$1{,}450.66$. The premiums are worth $P\,\ddot a_{50:10} = 112.06 \times 8.015347 = \$898.23$. The office expects to pay out $552.43 more than it takes in, in today's money. That is the reserve:
+On that fresh policy the balance no longer holds. The cover is worth $`S\,A_{50:10} = \$1{,}450.66`$. The premiums are worth $`P\,\ddot a_{50:10} = 112.06 \times 8.015347 = \$898.23`$. The office expects to pay out $552.43 more than it takes in, in today's money. That is the reserve:
 
-$$V_{10} = 1{,}450.66 - 898.23 = \$552.43.$$
+```math
+V_{10} = 1{,}450.66 - 898.23 = \$552.43.
+```
 
 The reserve is the expected present value of the office's future loss on this policy, given that the policy is still in force.
 
 ### Step 5: the recursion, by splitting off one year
 
-Every year of cover looks the same from inside. At the start of year $t + 1$ the office holds $V_t$ and receives $P$. It grows for one year. At the end of the year, with chance $q_{x+t}$ the life has died and the office pays $S$; with chance $p_{x+t}$ she is alive and the office must hold $V_{t+1}$. On average the money in must match:
+Every year of cover looks the same from inside. At the start of year $`t + 1`$ the office holds $`V_t`$ and receives $`P`$. It grows for one year. At the end of the year, with chance $`q_{x+t}`$ the life has died and the office pays $`S`$; with chance $`p_{x+t}`$ she is alive and the office must hold $`V_{t+1}`$. On average the money in must match:
 
-$$(V_t + P)\,e^{r} = q_{x+t}\,S + p_{x+t}\,V_{t+1}.$$
+```math
+(V_t + P)\,e^{r} = q_{x+t}\,S + p_{x+t}\,V_{t+1}.
+```
 
-At year 10 both sides come to $698.57. The recursion runs backwards from a known end: when cover expires nothing more is owed, so $V_{20} = 0$. From there each earlier reserve follows in one line.
+At year 10 both sides come to $698.57. The recursion runs backwards from a known end: when cover expires nothing more is owed, so $`V_{20} = 0`$. From there each earlier reserve follows in one line.
 
 <details>
 <summary>Detailed proof: the prospective reserve obeys the recursion</summary>
 
-Split the first year off each price. For a life aged $y$ with $m$ years left, the benefit is either paid at the end of this year (chance $q_y$) or, if the life survives (chance $p_y$), the rest of the policy is worth a fresh $A_{y+1:m-1}$ a year from now:
-$$A_{y:m} = v\,q_y + v\,p_y\,A_{y+1:m-1}, \qquad \ddot a_{y:m} = 1 + v\,p_y\,\ddot a_{y+1:m-1}.$$
-Put $y = x + t$ and $m = n - t$, multiply the first by $S$ and the second by $P$, and subtract:
-$$V_t = S\,A_{y:m} - P\,\ddot a_{y:m} = v\,q_y\,S + v\,p_y\,(S\,A_{y+1:m-1} - P\,\ddot a_{y+1:m-1}) - P = v\,q_y\,S + v\,p_y\,V_{t+1} - P.$$
-Move $P$ across and multiply by $e^{r} = 1/v$. At the end, $A_{y:0} = \ddot a_{y:0} = 0$, so $V_n = 0$. Rearranged, $(V_t + P)e^r - V_{t+1} = q_y\,(S - V_{t+1})$: each year the survivors' money pays the death cost on the **sum at risk**, $S - V_{t+1}$, the part of the benefit the reserve does not already cover.
+Split the first year off each price. For a life aged $`y`$ with $`m`$ years left, the benefit is either paid at the end of this year (chance $`q_y`$) or, if the life survives (chance $`p_y`$), the rest of the policy is worth a fresh $`A_{y+1:m-1}`$ a year from now:
+
+$`\displaystyle A_{y:m} = v\,q_y + v\,p_y\,A_{y+1:m-1}, \qquad \ddot a_{y:m} = 1 + v\,p_y\,\ddot a_{y+1:m-1}.`$
+
+Put $`y = x + t`$ and $`m = n - t`$, multiply the first by $`S`$ and the second by $`P`$, and subtract:
+
+$`\displaystyle V_t = S\,A_{y:m} - P\,\ddot a_{y:m} = v\,q_y\,S + v\,p_y\,(S\,A_{y+1:m-1} - P\,\ddot a_{y+1:m-1}) - P = v\,q_y\,S + v\,p_y\,V_{t+1} - P.`$
+
+Move $`P`$ across and multiply by $`e^{r} = 1/v`$. At the end, $`A_{y:0} = \ddot a_{y:0} = 0`$, so $`V_n = 0`$. Rearranged, $`(V_t + P)e^r - V_{t+1} = q_y\,(S - V_{t+1})`$: each year the survivors' money pays the death cost on the **sum at risk**, $`S - V_{t+1}`$, the part of the benefit the reserve does not already cover.
 
 </details>
 
@@ -146,7 +166,7 @@ Move $P$ across and multiply by $e^{r} = 1/v$. At the end, $A_{y:0} = \ddot a_{y
 
 Run the office forward instead. Start 10,000 policies at 40 with an empty fund. Each year, the survivors pay the premium, the fund earns interest, and the expected deaths are paid. At year 10 the fund holds $5,481,963.30 for 9,923.3 expected survivors: $552.43 each. That is the reserve again, reached from the past rather than the future. It is called the **retrospective reserve**.
 
-The two agree for a reason. Let $F_t$ be the fund per survivor and $l_t$ the survivors. One year of the office says $l_{t+1}F_{t+1} = (l_tF_t + l_tP)e^r - l_t\,q_{x+t}\,S$. Divide by $l_t$ and use $l_{t+1} = l_t\,p_{x+t}$: $(F_t + P)e^r = q_{x+t}\,S + p_{x+t}\,F_{t+1}$. That is the same recursion. The fund starts at 0; the reserve starts at 0 because the premium was set by equivalence. Two sequences that obey the same one-step rule from the same start are equal at every step. So equivalence is exactly the condition that makes "what the pool has saved" and "what the pool will need" the same number.
+The two agree for a reason. Let $`F_t`$ be the fund per survivor and $`l_t`$ the survivors. One year of the office says $`l_{t+1}F_{t+1} = (l_tF_t + l_tP)e^r - l_t\,q_{x+t}\,S`$. Divide by $`l_t`$ and use $`l_{t+1} = l_t\,p_{x+t}`$: $`(F_t + P)e^r = q_{x+t}\,S + p_{x+t}\,F_{t+1}`$. That is the same recursion. The fund starts at 0; the reserve starts at 0 because the premium was set by equivalence. Two sequences that obey the same one-step rule from the same start are equal at every step. So equivalence is exactly the condition that makes "what the pool has saved" and "what the pool will need" the same number.
 
 ### The other door: continuous time
 
@@ -156,21 +176,21 @@ Shrink the year to an instant and the recursion becomes a differential equation,
 
 ## Worked numbers, by hand
 
-The policy: $S$ = $100,000, issue age 40, 20 years, $r$ = 5%, death rates from Makeham's law.
+The policy: $`S`$ = $100,000, issue age 40, 20 years, $`r`$ = 5%, death rates from Makeham's law.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| one year's discount, $v$ | $e^{-0.05}$ | 0.951229 |
-| benefit per $1, 20 years from 40 | sum of $v^{k+1}\,{}_kp_{40}\,q_{40+k}$ | 0.014423 |
-| premiums per $1, 20 years from 40 | sum of $v^{k}\,{}_kp_{40}$ | 12.870699 |
-| value of the benefit | $100{,}000 \times 0.014423$ | $1,442.34 |
-| net premium $P$ | $1{,}442.34 / 12.870699$ | $112.06 |
+| one year's discount, $`v`$ | $`e^{-0.05}`$ | 0.951229 |
+| benefit per $1, 20 years from 40 | sum of $`v^{k+1}\,{}_kp_{40}\,q_{40+k}`$ | 0.014423 |
+| premiums per $1, 20 years from 40 | sum of $`v^{k}\,{}_kp_{40}`$ | 12.870699 |
+| value of the benefit | $`100{,}000 \times 0.014423`$ | $1,442.34 |
+| net premium $`P`$ | $`1{,}442.34 / 12.870699`$ | $112.06 |
 | benefit per $1, 10 years from 50 | same sum from 50 | 0.014507 |
 | premiums per $1, 10 years from 50 | same sum from 50 | 8.015347 |
-| value of the remaining cover | $100{,}000 \times 0.014507$ | $1,450.66 |
-| value of the remaining premiums | $112.06 \times 8.015347$ | $898.23 |
-| **reserve at year 10, $V_{10}$** | $1{,}450.66 - 898.23$ | **$552.43** |
-| check by one step of the recursion | $(552.43 + 112.06)\,e^{0.05}$ vs $0.0012085 \times 100{,}000 + (1 - 0.0012085) \times 578.41$ | $698.57 both |
+| value of the remaining cover | $`100{,}000 \times 0.014507`$ | $1,450.66 |
+| value of the remaining premiums | $`112.06 \times 8.015347`$ | $898.23 |
+| **reserve at year 10, $`V_{10}`$** | $`1{,}450.66 - 898.23`$ | **$552.43** |
+| check by one step of the recursion | $`(552.43 + 112.06)\,e^{0.05}`$ vs $`0.0012085 \times 100{,}000 + (1 - 0.0012085) \times 578.41`$ | $698.57 both |
 
 For every policy still in force at year 10, the office must hold $552.43, or it cannot meet the cover promised for ages 50 to 59 out of the $112.06 premiums still to come.
 
@@ -200,7 +220,7 @@ xychart-beta
     line [0.00, 65.12, 129.81, 193.58, 255.86, 315.98, 373.16, 426.52, 475.01, 517.44, 552.43, 578.41, 593.56, 595.81, 582.76, 551.71, 499.52, 422.64, 316.98, 177.88, 0.00]
 ```
 
-The single line is the reserve $V_t$, taken just before each year's premium. Three forces shape it.
+The single line is the reserve $`V_t`$, taken just before each year's premium. Three forces shape it.
 
 - **Overpayment, years 0 to 9.** Each premium exceeds that year's cost: $112.06 against $50.15 in year 0. The excess piles up.
 - **Interest, years 10 to 13.** From year 10 the year's cost, $114.96, exceeds the premium. The reserve still rises, to its peak of $595.81 at year 13, because the interest on more than $550 held is larger than the shortfall.
@@ -610,10 +630,10 @@ The two outputs are identical line for line. The simulation agrees with the rese
 
 Lean proves the recursion and the retrospective reserve for any death rates, interest rate, sum insured and premium.
 
-- Take an $n$-year term policy. Then $V_n = 0$: nothing is owed when cover expires.
-- Take any year $t$ before expiry. Then $(V_t + P)\,e^{r} = q_{x+t}\,S + p_{x+t}\,V_{t+1}$.
-- Take a life aged $y$ with $m$ years left. Then $A_{y:m}$ and $\ddot a_{y:m}$ split off their first year as in the detailed proof.
-- Start an office with an empty fund and a nonzero number of policies. Then $l_tF_t = l_tV_t$ for every $t \le n$ exactly when the premium is set by equivalence.
+- Take an $`n`$-year term policy. Then $`V_n = 0`$: nothing is owed when cover expires.
+- Take any year $`t`$ before expiry. Then $`(V_t + P)\,e^{r} = q_{x+t}\,S + p_{x+t}\,V_{t+1}`$.
+- Take a life aged $`y`$ with $`m`$ years left. Then $`A_{y:m}`$ and $`\ddot a_{y:m}`$ split off their first year as in the detailed proof.
+- Start an office with an empty fund and a nonzero number of policies. Then $`l_tF_t = l_tV_t`$ for every $`t \le n`$ exactly when the premium is set by equivalence.
 
 Every number on the card, from the Makeham death rates to the simulated office, is left to the Python and Rust checks.
 
@@ -779,7 +799,7 @@ end
 
 > [!TIP]
 > **Try changing**
-> - **Double the sum insured to $200,000.** Guess first. Premium $224.13 and reserve $1,104.87: exactly double, since every benefit term scales with $S$.
+> - **Double the sum insured to $200,000.** Guess first. Premium $224.13 and reserve $1,104.87: exactly double, since every benefit term scales with $`S`$.
 > - **Issue at 50 instead of 40**, same 20 years. Guess first. Premium $311.31, reserve at year 10 $1,756.93. Deaths accelerate with age, so the gap between the level premium and the late years' cost is wider.
 > - **Set the rate to 0%.** Guess first. Premium $137.33 and reserve $606.94. Without interest, the early overpayment has to be larger to carry the late years unaided.
 
@@ -805,7 +825,7 @@ end
 - **Lapse-supported pricing.** Some products were priced expecting many policyholders to stop paying and leave their reserves behind. When fewer lapsed than planned, insurers lost money: the "Many independent policies" and "Everyone pays" assumptions failing in public.
 - **The other "reserve".** A motor or home insurer's reserves are money held for claims already incurred but not yet settled, estimated from claim triangles (past claims laid out by the year they arose and the year they were paid): [Reserving](07-reserving-chain-ladder-and-bornhuetter-ferguson.md). Same word, different quantity.
 - **Blending experience with the table.** When an office's own deaths run above or below the table, it adjusts the rates it prices with: [Credibility and reinsurance](08-credibility-and-reinsurance.md).
-- **Where the death rates come from.** Every $q$ on this card is a row of a life table: [Life tables](01-survival-life-tables-and-force-of-mortality.md).
+- **Where the death rates come from.** Every $`q`$ on this card is a row of a life table: [Life tables](01-survival-life-tables-and-force-of-mortality.md).
 
 > **Say it back**
 > A net premium is set by equivalence: expected present value in equals expected present value out, which is fair because a large pool pays close to the average. A level premium over a rising risk overpays early and underpays late. The reserve is the difference between the value of the remaining cover and the value of the remaining premiums, $552.43 at year 10 on the $100,000 policy. It obeys a one-year recursion, reserve plus premium grown at interest equals deaths paid plus the next reserve, run back from zero at expiry. The same recursion, run forward, is the pool's saved fund, and equivalence makes the two agree.
@@ -814,7 +834,7 @@ end
 
 ## What this builds on
 
-- [Life annuities and insurance](02-life-annuities-and-insurance-values.md): the two prices, $A_{x:n}$ and $\ddot a_{x:n}$, and the one-year split that the recursion's proof uses.
+- [Life annuities and insurance](02-life-annuities-and-insurance-values.md): the two prices, $`A_{x:n}`$ and $`\ddot a_{x:n}`$, and the one-year split that the recursion's proof uses.
 
 ## Where this goes next
 
@@ -831,4 +851,4 @@ Verified 2026-09-28: every link below resolves to the publisher's page.
 
 - Dickson, David C. M., Mary R. Hardy, and Howard R. Waters. *Actuarial Mathematics for Life Contingent Risks*, 3rd ed. Cambridge University Press, 2019. [doi:10.1017/9781108784184](https://doi.org/10.1017/9781108784184). The equivalence principle, policy values and their recursion, Thiele's equation, and the Standard Ultimate Life Table whose Makeham rates this card uses.
 - Society of Actuaries. *Standard Ultimate Life Table*. [PDF](https://www.soa.org/globalassets/assets/files/edu/2018/ltam-standard-ultimate-life-table.pdf). The table itself, at 5% effective annual interest (this card uses 5% continuously compounded, so its dollar values differ); its death rates at 40, 50 and 59 match the ones the checks compute.
-- Makeham, William Matthew. "On the Law of Mortality and the Construction of Annuity Tables." *The Assurance Magazine, and Journal of the Institute of Actuaries* 8, no. 6 (1860): 301–310. [doi:10.1017/S204616580000126X](https://doi.org/10.1017/S204616580000126X). The age-free term added to Gompertz's law: the mortality formula behind every $q$ here.
+- Makeham, William Matthew. "On the Law of Mortality and the Construction of Annuity Tables." *The Assurance Magazine, and Journal of the Institute of Actuaries* 8, no. 6 (1860): 301–310. [doi:10.1017/S204616580000126X](https://doi.org/10.1017/S204616580000126X). The age-free term added to Gompertz's law: the mortality formula behind every $`q`$ here.

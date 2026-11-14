@@ -26,17 +26,23 @@ Drawn at 1 cm = 36 units, page corner at the lower left. Dashed: the logo before
 
 ## The formula
 
-Notation first. A point (x, y) gets a third coordinate, $w$, and is written as a column of three numbers, x, y and 1: these are **homogeneous coordinates** (homogeneous: every point carries the same extra entry). A direction, such as the logo's "up" arrow, gets 0 there instead. The four moves are these matrices:
+Notation first. A point (x, y) gets a third coordinate, $`w`$, and is written as a column of three numbers, x, y and 1: these are **homogeneous coordinates** (homogeneous: every point carries the same extra entry). A direction, such as the logo's "up" arrow, gets 0 there instead. The four moves are these matrices:
 
-$$R(\theta)=\begin{pmatrix}\cos\theta&-\sin\theta&0\\ \sin\theta&\cos\theta&0\\ 0&0&1\end{pmatrix}\qquad T(a,b)=\begin{pmatrix}1&0&a\\ 0&1&b\\ 0&0&1\end{pmatrix}$$
+```math
+R(\theta)=\begin{pmatrix}\cos\theta&-\sin\theta&0\\ \sin\theta&\cos\theta&0\\ 0&0&1\end{pmatrix}\qquad T(a,b)=\begin{pmatrix}1&0&a\\ 0&1&b\\ 0&0&1\end{pmatrix}
+```
 
-$$F=\begin{pmatrix}-1&0&0\\ 0&1&0\\ 0&0&1\end{pmatrix}\qquad S(k)=\begin{pmatrix}k&0&0\\ 0&k&0\\ 0&0&1\end{pmatrix}$$
+```math
+F=\begin{pmatrix}-1&0&0\\ 0&1&0\\ 0&0&1\end{pmatrix}\qquad S(k)=\begin{pmatrix}k&0&0\\ 0&k&0\\ 0&0&1\end{pmatrix}
+```
 
 **Read it aloud:** R turns by θ anticlockwise about the page corner; T slides a across and b up; F mirrors in the up-axis; S scales by k from the page corner.
 
 Moves chain by multiplying, and the move made first sits on the right. Turning about the corner (p, q) instead of the page corner is three moves:
 
-$$H = T(p,q)\;R(\theta)\;T(-p,-q)$$
+```math
+H = T(p,q)\;R(\theta)\;T(-p,-q)
+```
 
 **Read it aloud:** slide the pivot to the page corner, turn there, slide it back; the product H does all three at once.
 
@@ -44,14 +50,14 @@ For the logo, H's top two rows are `0.866025 -0.500000 0.901924` and `0.500000 0
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$, $r$, $\varphi$ | a point across and up, in cm; or its distance and angle (phi) from a centre | B is (7, 1): 4 cm from A, at 0° | the point starts further out |
-| $\theta$ | the turning angle, anticlockwise (theta) | 30° | the logo tips further |
-| $R$ | the rotation matrix | cos 30° = 0.866025, sin 30° = 0.5 | — |
-| $T$, $a$, $b$ | the shift matrix; how far across and up it slides | slides of (−3, −1), then (3, 1) | every point moves the same distance |
-| $F$, $S$, $k$ | the mirror and the scale matrices; the scale factor | k = 1.5 | the logo grows, area by k × k |
-| $p$, $q$ | the pivot's coordinates | A = (3, 1) | the turn swings round a new pin |
-| $H$ | the whole move as one matrix | rows above | — |
-| $w$ | the third coordinate: 1 for a point, 0 for a direction | 1 for each corner | at 0 the shift column is ignored |
+| $`x`$, $`y`$, $`r`$, $`\varphi`$ | a point across and up, in cm; or its distance and angle (phi) from a centre | B is (7, 1): 4 cm from A, at 0° | the point starts further out |
+| $`\theta`$ | the turning angle, anticlockwise (theta) | 30° | the logo tips further |
+| $`R`$ | the rotation matrix | cos 30° = 0.866025, sin 30° = 0.5 | — |
+| $`T`$, $`a`$, $`b`$ | the shift matrix; how far across and up it slides | slides of (−3, −1), then (3, 1) | every point moves the same distance |
+| $`F`$, $`S`$, $`k`$ | the mirror and the scale matrices; the scale factor | k = 1.5 | the logo grows, area by k × k |
+| $`p`$, $`q`$ | the pivot's coordinates | A = (3, 1) | the turn swings round a new pin |
+| $`H`$ | the whole move as one matrix | rows above | — |
+| $`w`$ | the third coordinate: 1 for a point, 0 for a direction | 1 for each corner | at 0 the shift column is ignored |
 
 ### When it holds
 
@@ -73,7 +79,7 @@ Multiply any matrix into the zero vector and zero comes out. A slide by (a, b) m
 
 A matrix's columns are where it sends the axis arrows (1, 0) and (0, 1) ([Linear maps](../../03-Algebra/04-Matrices/04-linear-maps-as-matrices.md)). Turn (1, 0) by θ: it lands on the unit circle at (cos θ, sin θ). Turn (0, 1), which already sits a quarter turn ahead: it lands at (−sin θ, cos θ). Those are the two columns of R.
 
-Polar coordinates give the same matrix. A point at distance $r$ and angle $\varphi$ is (r cos φ, r sin φ). Turning adds θ to the angle, and the addition formulas ([Trig identities](../03-Trigonometry/03-trig-identities.md)) expand the result to x cos θ − y sin θ and x sin θ + y cos θ. That is R times (x, y), and the code's second road.
+Polar coordinates give the same matrix. A point at distance $`r`$ and angle $`\varphi`$ is (r cos φ, r sin φ). Turning adds θ to the angle, and the addition formulas ([Trig identities](../03-Trigonometry/03-trig-identities.md)) expand the result to x cos θ − y sin θ and x sin θ + y cos θ. That is R times (x, y), and the code's second road.
 
 F keeps y and negates x; S multiplies both by k. Each is read off from where the axis arrows go.
 

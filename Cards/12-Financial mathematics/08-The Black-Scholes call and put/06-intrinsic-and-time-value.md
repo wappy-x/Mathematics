@@ -40,11 +40,15 @@ The smooth line is the premium. The bent line is what exercising would pay: flat
 
 ## The formula
 
-One piece of notation, in words first: `max` of two things means take whichever is larger, so $\max(S - K, 0)$ is the gain from exercising when there is one and zero when there is not. The floor at zero is there because exercising is a right, and nobody exercises at a loss.
+One piece of notation, in words first: `max` of two things means take whichever is larger, so $`\max(S - K, 0)`$ is the gain from exercising when there is one and zero when there is not. The floor at zero is there because exercising is a right, and nobody exercises at a loss.
 
-$$\text{intrinsic value} = \max(S - K,\, 0) \text{ for a call}, \qquad \max(K - S,\, 0) \text{ for a put}$$
+```math
+\text{intrinsic value} = \max(S - K,\, 0) \text{ for a call}, \qquad \max(K - S,\, 0) \text{ for a put}
+```
 
-$$\text{time value} = V - \text{intrinsic value}$$
+```math
+\text{time value} = V - \text{intrinsic value}
+```
 
 **Read it aloud:** what exercising this minute would pay, floored at zero, and then whatever the premium is above that.
 
@@ -52,33 +56,35 @@ The second line is a subtraction, so the content of this card is the size and si
 
 A contract is *in the money* when exercising now would pay something, and *out of the money* when it would pay nothing. It is *at the money* when the strike equals the share price. For a strike where the contract is in the money:
 
-$$\text{a call's time value} = P + \underbrace{K\left(1 - e^{-rT}\right) - S\left(1 - e^{-qT}\right)}_{\text{the carry}}, \qquad \text{a put's time value} = C - \text{the carry}$$
+```math
+\text{a call's time value} = P + \underbrace{K\left(1 - e^{-rT}\right) - S\left(1 - e^{-qT}\right)}_{\text{the carry}}, \qquad \text{a put's time value} = C - \text{the carry}
+```
 
 Out of the money the intrinsic value is zero and the time value is the whole premium.
 
-The premiums come from the cards next door: $C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)$ ([Black–Scholes call](01-black-scholes-call.md)) and $P = K e^{-rT} N(-d_2) - S e^{-qT} N(-d_1)$ ([Black-Scholes put](02-black-scholes-put.md)). A screen quote does the same job: the split needs a premium from somewhere, not this model in particular.
+The premiums come from the cards next door: $`C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)`$ ([Black–Scholes call](01-black-scholes-call.md)) and $`P = K e^{-rT} N(-d_2) - S e^{-qT} N(-d_1)`$ ([Black-Scholes put](02-black-scholes-put.md)). A screen quote does the same job: the split needs a premium from somewhere, not this model in particular.
 
 | Symbol | Plain meaning | In our example | Push it up and the time value… |
 | --- | --- | --- | --- |
-| $V$, as $C$ for a call and $P$ for a put | the premium the contract costs today | $9.23, and $26.97 for the 130-put | is what gets split |
-| $S$ | Acme's price today | $100 | rises for a call up to the strike, then falls |
-| $K$ | the strike the contract buys or sells at | $100, and $130 for the put | the same hump, peaking where $K$ meets $S$ |
-| $T$ | time to the one usable date, in years | 1 year | pulls both ways: more room to move, more carry |
-| $r$ | the riskless rate cash earns, continuously compounded | 5% | rises for a call, which pays the strike later; falls for a put |
-| $q$ | the dividend yield paid to shareholders each year | 2% | the reverse of $r$ |
-| $\sigma$ | volatility, how jumpy the share is. Say "sigma". | 20% | rises, while intrinsic value never moves: all of it lands here |
-| $N(x)$ | the bell-curve area left of $x$, a chance between 0 and 1 | — | — |
-| $d_1$, $d_2$ | the Black–Scholes cut-offs, in wiggle units of $\sigma\sqrt{T}$ | both negative at the 130 strike | — |
-| $e^{-rT}$, $e^{-qT}$ | the discount on a dollar due at $T$; the fraction of a share to buy now to hold one whole share at $T$ | applied to the strike, $123.66; applied to the share, $98.02 | — |
-| $K(1 - e^{-rT}) - S(1 - e^{-qT})$ | the **carry**: interest kept by paying the strike late, less dividends missed | $4.36 at the 130 strike | a call's rises, a put's falls |
+| $`V`$, as $`C`$ for a call and $`P`$ for a put | the premium the contract costs today | $9.23, and $26.97 for the 130-put | is what gets split |
+| $`S`$ | Acme's price today | $100 | rises for a call up to the strike, then falls |
+| $`K`$ | the strike the contract buys or sells at | $100, and $130 for the put | the same hump, peaking where $`K`$ meets $`S`$ |
+| $`T`$ | time to the one usable date, in years | 1 year | pulls both ways: more room to move, more carry |
+| $`r`$ | the riskless rate cash earns, continuously compounded | 5% | rises for a call, which pays the strike later; falls for a put |
+| $`q`$ | the dividend yield paid to shareholders each year | 2% | the reverse of $`r`$ |
+| $`\sigma`$ | volatility, how jumpy the share is. Say "sigma". | 20% | rises, while intrinsic value never moves: all of it lands here |
+| $`N(x)`$ | the bell-curve area left of $`x`$, a chance between 0 and 1 | — | — |
+| $`d_1`$, $`d_2`$ | the Black–Scholes cut-offs, in wiggle units of $`\sigma\sqrt{T}`$ | both negative at the 130 strike | — |
+| $`e^{-rT}`$, $`e^{-qT}`$ | the discount on a dollar due at $`T`$; the fraction of a share to buy now to hold one whole share at $`T`$ | applied to the strike, $123.66; applied to the share, $98.02 | — |
+| $`K(1 - e^{-rT}) - S(1 - e^{-qT})`$ | the **carry**: interest kept by paying the strike late, less dividends missed | $4.36 at the 130 strike | a call's rises, a put's falls |
 
 ### When it holds
 
 - **The split itself always holds.** It subtracts two numbers that exist. Conditions attach to the shape of the leftover.
 - **European exercise, one date only.** An American contract can be exercised today, so its premium never sits below its intrinsic value. A negative time value is a European fact, and it is why early exercise is sometimes worth it.
-- **A premium from the same moment as $S$.** Split a stale quote against a live share price and the leftover measures the delay, not the time left.
+- **A premium from the same moment as $`S`$.** Split a stale quote against a live share price and the leftover measures the delay, not the time left.
 - **The peak at the strike needs no model.** Step 4 proves it from one no-arbitrage inequality about neighbouring strikes. No-arbitrage means no trade can lock in a sure profit from nothing ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). Black–Scholes only adds strictness where that inequality allows a flat step.
-- **One axis at a time.** This card walks the strike with Acme fixed at $100. Walking Acme instead peaks at $100 too, as long as the dividend yield is not negative. The premium then moves by $e^{-qT}N(d_1)$ per dollar of Acme, under a dollar, so above the strike the intrinsic value outruns it. At $q = -10\%$, a share that costs money to hold, that fails: the call's time value at a spot (today's share price) of 180 is $23.81 against $18.08 at the money, and the peak leaves the strike.
+- **One axis at a time.** This card walks the strike with Acme fixed at $100. Walking Acme instead peaks at $100 too, as long as the dividend yield is not negative. The premium then moves by $`e^{-qT}N(d_1)`$ per dollar of Acme, under a dollar, so above the strike the intrinsic value outruns it. At $`q = -10\%`$, a share that costs money to hold, that fails: the call's time value at a spot (today's share price) of 180 is $23.81 against $18.08 at the money, and the peak leaves the strike.
 
 ---
 
@@ -94,7 +100,7 @@ A 130-call on a $100 share would lose $30 if exercised, so nobody does it: its i
 
 It is tempting to conclude that a premium can never sit below its intrinsic value either. For an American contract that is true: anyone could buy it cheap and exercise at once. A European contract cannot be exercised today, so nothing forces it.
 
-What no-arbitrage does force is a floor in today's dollars — for a put, the discounted strike less the share needed to deliver, $K e^{-rT} - S e^{-qT}$ ([Option price bounds](04-option-price-bounds.md)). On the 130-put that floor is $123.66 − $98.02 = $25.64, and the premium of $26.97 clears it.
+What no-arbitrage does force is a floor in today's dollars — for a put, the discounted strike less the share needed to deliver, $`K e^{-rT} - S e^{-qT}`$ ([Option price bounds](04-option-price-bounds.md)). On the 130-put that floor is $123.66 − $98.02 = $25.64, and the premium of $26.97 clears it.
 
 The puzzle is now visible: the real floor is $25.64, the screen's intrinsic value is $30.00, and the $4.36 between them is what the leftover must absorb.
 
@@ -102,13 +108,17 @@ The puzzle is now visible: the real floor is $25.64, the screen's intrinsic valu
 
 Put–call parity ties a call and a put on the same share, strike and date together:
 
-$$C - P = S e^{-qT} - K e^{-rT}$$
+```math
+C - P = S e^{-qT} - K e^{-rT}
+```
 
-Take a call in the money, so $S > K$, and its time value is $C - (S - K)$. Substitute $C = P + S e^{-qT} - K e^{-rT}$ and gather terms:
+Take a call in the money, so $`S > K`$, and its time value is $`C - (S - K)`$. Substitute $`C = P + S e^{-qT} - K e^{-rT}`$ and gather terms:
 
-$$C - (S - K) = P + K\left(1 - e^{-rT}\right) - S\left(1 - e^{-qT}\right)$$
+```math
+C - (S - K) = P + K\left(1 - e^{-rT}\right) - S\left(1 - e^{-qT}\right)
+```
 
-In words: **an in-the-money call's time value is the price of the out-of-the-money put at the same strike, plus the carry.** Both halves of the carry are plain interest: $K(1 - e^{-rT})$ is what is kept by paying the strike a year late, and $S(1 - e^{-qT})$ is the dividends missed by not holding the share yet. The same rearrangement on an in-the-money put gives the mirror, with the carry subtracted.
+In words: **an in-the-money call's time value is the price of the out-of-the-money put at the same strike, plus the carry.** Both halves of the carry are plain interest: $`K(1 - e^{-rT})`$ is what is kept by paying the strike a year late, and $`S(1 - e^{-qT})`$ is the dividends missed by not holding the share yet. The same rearrangement on an in-the-money put gives the mirror, with the carry subtracted.
 
 The identity splits the work in two. The *partner* — the out-of-the-money contract at the same strike — carries all of the volatility; the carry carries none. Every question about the sign of a time value is a race between those two.
 
@@ -118,42 +128,46 @@ Push the strike away from the share and the partner becomes hopeless. The partne
 
 For the 130-put the race is short. Partner call $1.33, carry $4.36, leftover $1.33 − $4.36 = −$3.03. Interest wins and the sign follows.
 
-Nothing random is needed to see it. Set volatility to zero, so Acme crawls along its forward path, growing at the rate $r - q$, and lands on $103.05 with certainty. The 130-put then pays $130 − $103.05 = $26.95 on the day, worth $25.64 today after one discount. Against $30 of intrinsic value that is a time value of −$4.36: exactly minus the carry, with no chance and no bell curve in the arithmetic. Both checks confirm the two agree to nine decimals.
+Nothing random is needed to see it. Set volatility to zero, so Acme crawls along its forward path, growing at the rate $`r - q`$, and lands on $103.05 with certainty. The 130-put then pays $130 − $103.05 = $26.95 on the day, worth $25.64 today after one discount. Against $30 of intrinsic value that is a time value of −$4.36: exactly minus the carry, with no chance and no bell curve in the arithmetic. Both checks confirm the two agree to nine decimals.
 
 ### Step 4: the peak sits at the strike
 
 Waiting is worth most when it might change the outcome. Deep in the money, exercise is all but certain and waiting changes only the interest. Deep out of the money, walking away is all but certain and there is nothing to wait for. At the strike it is a coin flip: any move either way flips which of those happens.
 
-The proof needs one fact about strikes and no model. Buy the call struck at $K$, sell the call struck one dollar higher; this pair is a *call spread*. On the day that pair pays between $0 and $1, so today it costs between nothing and the present value of a dollar due at $T$:
+The proof needs one fact about strikes and no model. Buy the call struck at $`K`$, sell the call struck one dollar higher; this pair is a *call spread*. On the day that pair pays between $0 and $1, so today it costs between nothing and the present value of a dollar due at $`T`$:
 
-$$0 \;\le\; C(K) - C(K + 1) \;\le\; e^{-rT}$$
+```math
+0 \;\le\; C(K) - C(K + 1) \;\le\; e^{-rT}
+```
 
 Raising the strike by a dollar therefore cuts a call's premium by *less than a dollar*, and that slack is the whole argument.
 
-Below the share, a call's time value is $C(K) - (S - K)$: step the strike up and the subtracted intrinsic value drops a full dollar while the premium drops less, so the leftover rises. Above the share the intrinsic value is already zero, the time value *is* the premium, and the premium falls. Rising, then falling, with the turn where the strike meets the share price; the put runs the same way with put spreads.
+Below the share, a call's time value is $`C(K) - (S - K)`$: step the strike up and the subtracted intrinsic value drops a full dollar while the premium drops less, so the leftover rises. Above the share the intrinsic value is already zero, the time value *is* the premium, and the premium falls. Rising, then falling, with the turn where the strike meets the share price; the put runs the same way with put spreads.
 
 The bound scales with the gap between the two strikes, so the checks use quarter-dollar gaps. They walk the strike from $50 to $150 in quarter-dollar steps: both leftovers rise at every step up to $100, fall at every step after, and no spread breaks the bound.
 
 <details>
 <summary>Detailed proof: the spread bound, and why the turn is strict</summary>
 
-**The bound.** Hold the call struck at $K$, short the call struck at $K + 1$, same share and date. Below $K$ both expire worthless and the pair pays nothing. Between the strikes it pays Acme's price less $K$, under a dollar. Above the higher strike the two payoffs differ by exactly a dollar. So the pair pays between $0 and $1 whatever happens, and a thing that never pays less than nothing cannot cost less than nothing, while a thing that never pays more than a dollar on that date cannot cost more than a dollar delivered then, which is $e^{-rT}$. No model of the share price appears.
+**The bound.** Hold the call struck at $`K`$, short the call struck at $`K + 1`$, same share and date. Below $`K`$ both expire worthless and the pair pays nothing. Between the strikes it pays Acme's price less $`K`$, under a dollar. Above the higher strike the two payoffs differ by exactly a dollar. So the pair pays between $0 and $1 whatever happens, and a thing that never pays less than nothing cannot cost less than nothing, while a thing that never pays more than a dollar on that date cannot cost more than a dollar delivered then, which is $`e^{-rT}`$. No model of the share price appears.
 
-**The turn.** For $K < S$ the time value is $C(K) - S + K$: step the strike up a dollar and the premium falls by at most $e^{-rT}$ while the $+K$ term gains exactly $1$, a net gain of at least $1 - e^{-rT}$, positive whenever $r > 0$. For $K > S$ the time value is $C(K)$ itself, and the left half of the bound says a premium never rises with its strike.
+**The turn.** For $`K < S`$ the time value is $`C(K) - S + K`$: step the strike up a dollar and the premium falls by at most $`e^{-rT}`$ while the $`+K`$ term gains exactly $`1`$, a net gain of at least $`1 - e^{-rT}`$, positive whenever $`r > 0`$. For $`K > S`$ the time value is $`C(K)`$ itself, and the left half of the bound says a premium never rises with its strike.
 
-**Strictness.** Under Black–Scholes the slope is exactly $\partial C / \partial K = -e^{-rT} N(d_2)$, strictly between $-e^{-rT}$ and $0$ at every finite strike, so both moves are strict and the turn is a single peak, not a plateau. The put's version swaps the call spread for the put spread and the signs with it.
+**Strictness.** Under Black–Scholes the slope is exactly $`\partial C / \partial K = -e^{-rT} N(d_2)`$, strictly between $`-e^{-rT}`$ and $`0`$ at every finite strike, so both moves are strict and the turn is a single peak, not a plateau. The put's version swaps the call spread for the put spread and the signs with it.
 
 </details>
 
 ### Step 5: how far below zero it can go
 
-In the money a put's time value is $C - \text{carry}$, and no premium is negative, so there it has a floor:
+In the money a put's time value is $`C - \text{carry}`$, and no premium is negative, so there it has a floor:
 
-$$\text{a put's time value, in the money} \ge -\left[K\left(1 - e^{-rT}\right) - S\left(1 - e^{-qT}\right)\right]$$
+```math
+\text{a put's time value, in the money} \ge -\left[K\left(1 - e^{-rT}\right) - S\left(1 - e^{-qT}\right)\right]
+```
 
 On the 130-put that floor is −$4.36, and the actual −$3.03 sits above it by exactly the partner call's $1.33. The zero-volatility case in Step 3 *is* the floor, reached because a certain world leaves the partner worthless. So this leftover can go negative but not far: never below minus the carry, a year's interest on the strike less the dividends missed.
 
-A second route redraws the same map. Subtract the present-value floor, $\max(S e^{-qT} - K e^{-rT}, 0)$ and its mirror, instead of the screen's intrinsic value. Parity turns both leftovers into whichever premium is the smaller of the two, so they are equal at every strike and never negative — the volatility value with the interest stripped out.
+A second route redraws the same map. Subtract the present-value floor, $`\max(S e^{-qT} - K e^{-rT}, 0)`$ and its mirror, instead of the screen's intrinsic value. Parity turns both leftovers into whichever premium is the smaller of the two, so they are equal at every strike and never negative — the volatility value with the interest stripped out.
 
 It is the better quantity for mathematics and the wrong one for reading a screen, where "intrinsic" means what exercising this minute pays. The premium's own shape across strikes and dates is [Shape across strikes and expiries](05-strike-and-calendar-shape.md).
 
@@ -161,23 +175,23 @@ It is the better quantity for mathematics and the wrong one for reading a screen
 
 ## Worked numbers, by hand
 
-Acme at $S = 100$, one year, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$. Two contracts: the house call struck at 100, and the put struck at 130.
+Acme at $`S = 100`$, one year, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$. Two contracts: the house call struck at 100, and the put struck at 130.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the house call's premium | the call formula at $K = 100$ | $9.23 |
-| what exercising it now would pay | $\max(100 - 100, 0)$ | $0.00 |
-| **the house call's time value** | $9.23 - 0.00$ | **$9.23** |
-| the 130-put's premium | the put formula at $K = 130$ | $26.97 |
-| what exercising it now would pay | $\max(130 - 100, 0)$ | $30.00 |
-| **the 130-put's time value** | $26.97 - 30.00$ | **−$3.03** |
-| the strike, due in a year | $130 \times e^{-0.05}$ | $123.66 |
-| the share to deliver, bought today | $100 \times e^{-0.02}$ | $98.02 |
-| the put's no-arbitrage floor | $123.66 - 98.02$ | $25.64 |
-| the carry | $30.00 - 25.64$ | $4.36 |
-| the partner call at $K = 130$ | the call formula at $K = 130$ | $1.33 |
-| **the premium, built the other way** | $25.64 + 1.33$ | **$26.97** |
-| **the time value, built the other way** | $1.33 - 4.36$ | **−$3.03** |
+| the house call's premium | the call formula at $`K = 100`$ | $9.23 |
+| what exercising it now would pay | $`\max(100 - 100, 0)`$ | $0.00 |
+| **the house call's time value** | $`9.23 - 0.00`$ | **$9.23** |
+| the 130-put's premium | the put formula at $`K = 130`$ | $26.97 |
+| what exercising it now would pay | $`\max(130 - 100, 0)`$ | $30.00 |
+| **the 130-put's time value** | $`26.97 - 30.00`$ | **−$3.03** |
+| the strike, due in a year | $`130 \times e^{-0.05}`$ | $123.66 |
+| the share to deliver, bought today | $`100 \times e^{-0.02}`$ | $98.02 |
+| the put's no-arbitrage floor | $`123.66 - 98.02`$ | $25.64 |
+| the carry | $`30.00 - 25.64`$ | $4.36 |
+| the partner call at $`K = 130`$ | the call formula at $`K = 130`$ | $1.33 |
+| **the premium, built the other way** | $`25.64 + 1.33`$ | **$26.97** |
+| **the time value, built the other way** | $`1.33 - 4.36`$ | **−$3.03** |
 
 The house call is pure waiting: nothing to cash in, $9.23 for the year. The 130-put is the reverse — $30 that looks cashable and is not, because $4.36 of it is interest nobody has paid yet, offset by $1.33 for the right to change one's mind. Walk the strike and both leftovers make a hump over the share price:
 
@@ -199,9 +213,9 @@ The taller hump is the call's, the shorter the put's, and the flat line is zero.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Dropping the floor at zero, on the 130-call | intrinsic −$30, time value $31.33 | Nobody exercises at a loss; the real split is $0 plus $1.33 |
-| Using the put's intrinsic value, $\max(K - S, 0)$, on the 60-call | intrinsic $0, time value $40.96 | Wrong direction: the call's is $\max(S - K, 0) = 40$, leaving 96 cents |
-| Discounting the intrinsic value, $e^{-rT}(S - K)$, at the 60 strike | intrinsic $38.05, leftover $2.91 | Exercising today pays $40 today: intrinsic value is a present-day number already |
-| Assuming a put is worth at least $K - S$ | the 130-put quoted at $30.00 when it is $26.97 | $3.03 of free money that is not there |
+| Using the put's intrinsic value, $`\max(K - S, 0)`$, on the 60-call | intrinsic $0, time value $40.96 | Wrong direction: the call's is $`\max(S - K, 0) = 40`$, leaving 96 cents |
+| Discounting the intrinsic value, $`e^{-rT}(S - K)`$, at the 60 strike | intrinsic $38.05, leftover $2.91 | Exercising today pays $40 today: intrinsic value is a present-day number already |
+| Assuming a put is worth at least $`K - S`$ | the 130-put quoted at $30.00 when it is $26.97 | $3.03 of free money that is not there |
 | Pricing a deep-in-the-money call at intrinsic value | the 60-call quoted at $40.00 when it is $40.96 | Gives away the carry: interest on a strike not yet paid, less dividends missed |
 
 Both checks print each wrong answer in that table.
@@ -213,7 +227,7 @@ Both checks print each wrong answer in that table.
 Nothing below imports anything that already knows an option price. The numbers are reached five ways:
 
 1. the two Black–Scholes formulas;
-2. a brute-force average of the payoff over the bell curve that never mentions $d_1$ or $d_2$;
+2. a brute-force average of the payoff over the bell curve that never mentions $`d_1`$ or $`d_2`$;
 3. the parity identity, which builds each time value out of the *other* contract plus the carry;
 4. an exact zero-volatility ledger, where the 130-put's price is one discount of one certain payment;
 5. a no-arbitrage bound on call spreads at all 400 steps of the strike grid, which pins the peak with no model at all.
@@ -655,9 +669,9 @@ The two outputs agree line for line, produced by different code reaching the bel
 
 Lean proves Steps 2, 4 and 5 for any share price and strike, using only no-arbitrage facts and no pricing model.
 
-- Suppose $r$ and $T$ are positive, and every call spread costs between nothing and $e^{-rT}$ per dollar of strike gap. Then a call's time value rises strictly as the strike climbs to $S$, never rises after, and is largest at $K = S$.
-- Suppose put–call parity holds and the call is in the money, $K < S$. Then the call's time value equals the put's premium $P$ plus the carry.
-- Suppose put–call parity holds, the call premium $C$ is not negative, and the put is in the money, $S < K$. Then the put's time value is at least minus the carry.
+- Suppose $`r`$ and $`T`$ are positive, and every call spread costs between nothing and $`e^{-rT}`$ per dollar of strike gap. Then a call's time value rises strictly as the strike climbs to $`S`$, never rises after, and is largest at $`K = S`$.
+- Suppose put–call parity holds and the call is in the money, $`K < S`$. Then the call's time value equals the put's premium $`P`$ plus the carry.
+- Suppose put–call parity holds, the call premium $`C`$ is not negative, and the put is in the money, $`S < K`$. Then the put's time value is at least minus the carry.
 - With Acme at $100, the intrinsic values come out as the card says. The house call and the 130-call get $0, the 130-put $30, and the 60-call $40.
 
 Every dollar figure from Black–Scholes, the put's hump, and the strict fall above the strike are left to the Python and Rust checks.
@@ -772,7 +786,7 @@ example : max ((60 : ℝ) - 100) 0 = 0 := by norm_num
 >
 > **Conventions verified 19 Sep 2026:** listed US single-share options are American-style, so a premium below the exercise gain is not something a single-share chain will show; most index options, SPX (options on the S&P 500 index) among them, are European, and that is where the −$3.03 lives.
 >
-> - **Mixing the two intrinsic values.** Screens mean $\max(K - S, 0)$, which is $30.00 here. Bounds and parity use the present-value version, $K e^{-rT} - S e^{-qT}$, which is $25.64. Know which one a number is before subtracting it.
+> - **Mixing the two intrinsic values.** Screens mean $`\max(K - S, 0)`$, which is $30.00 here. Bounds and parity use the present-value version, $`K e^{-rT} - S e^{-qT}`$, which is $25.64. Know which one a number is before subtracting it.
 > - **Treating time value as volatility value.** It is volatility value *plus* carry: at the 130 strike, $1.33 of volatility against $4.36 of interest running the other way. A deep-in-the-money contract can hold plenty of time value and almost no volatility.
 > - **Believing a call's time value is always positive.** In the money it is the partner put plus the carry, and the carry turns negative once the dividends missed outweigh the interest kept. Only a share paying nothing makes that rule safe.
 
@@ -782,7 +796,7 @@ example : max ((60 : ℝ) - 100) 0 = 0 := by norm_num
 
 - **An option chain.** The column marked "extrinsic" beside the premium is this card's leftover under another name.
 - **Early exercise.** Exercising an American contract early cashes the intrinsic value and throws the value of waiting away, so it pays exactly when that value is negative. Hence deep-in-the-money American puts get exercised early, and a European one cannot escape its −$3.03.
-- **Quoting in volatility.** The market's whole opinion about jumpiness sits in the leftover, so trading desks read implied volatility (the $\sigma$ that makes the formula match the quoted premium) near the money, where the leftover is biggest, and distrust it far away, where it is mostly interest.
+- **Quoting in volatility.** The market's whole opinion about jumpiness sits in the leftover, so trading desks read implied volatility (the $`\sigma`$ that makes the formula match the quoted premium) near the money, where the leftover is biggest, and distrust it far away, where it is mostly interest.
 - **Price floors.** The $25.64 under the 130-put is the no-arbitrage bound: [Option price bounds](04-option-price-bounds.md) has it at every strike, and [The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md) what happens when the model behind the premium is wrong.
 
 > **Say it back**
@@ -793,7 +807,7 @@ example : max ((60 : ℝ) - 100) 0 = 0 := by norm_num
 ## What this builds on
 
 - [Put-call parity](03-put-call-parity.md): the identity that turns each leftover into the other contract plus the carry. Step 2 is one rearrangement of it.
-- [Black–Scholes call](01-black-scholes-call.md) and [Black-Scholes put](02-black-scholes-put.md): the premiums being split, and $d_1$, $d_2$ and $N(x)$.
+- [Black–Scholes call](01-black-scholes-call.md) and [Black-Scholes put](02-black-scholes-put.md): the premiums being split, and $`d_1`$, $`d_2`$ and $`N(x)`$.
 - [Option price bounds](04-option-price-bounds.md): the present-value floor under a premium, which is the floor the screen's intrinsic value is not.
 
 ## Where this goes next

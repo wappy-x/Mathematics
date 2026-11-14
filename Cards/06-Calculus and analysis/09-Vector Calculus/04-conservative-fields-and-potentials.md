@@ -24,30 +24,34 @@ To scale, 0.6 units per metre; arrows 1 unit per newton. Solid: straight. Dotted
 
 ## The formula
 
-Notation first, in words. A field $F$ puts an arrow at every point; $P$ is its east part and $Q$ its upward part. The gradient $\nabla\phi$ of a function $\phi$ is the arrow of its two partial rates, $(\partial\phi/\partial x, \partial\phi/\partial y)$ ([Gradient](../07-Several%20Variables/03-gradient-and-directional-derivatives.md)). A **potential** for $F$ is a function with $\nabla\phi = F$.
+Notation first, in words. A field $`F`$ puts an arrow at every point; $`P`$ is its east part and $`Q`$ its upward part. The gradient $`\nabla\phi`$ of a function $`\phi`$ is the arrow of its two partial rates, $`(\partial\phi/\partial x, \partial\phi/\partial y)`$ ([Gradient](../07-Several%20Variables/03-gradient-and-directional-derivatives.md)). A **potential** for $`F`$ is a function with $`\nabla\phi = F`$.
 
-$$W = \int_C F \cdot dr = \phi(B) - \phi(A)$$
+```math
+W = \int_C F \cdot dr = \phi(B) - \phi(A)
+```
 
 **Read it aloud:** the work along any route from A to B is the potential at B minus the potential at A.
 
 The test, for a field with continuous partial rates:
 
-$$\text{a potential exists} \;\Rightarrow\; \frac{\partial Q}{\partial x} = \frac{\partial P}{\partial y}$$
+```math
+\text{a potential exists} \;\Rightarrow\; \frac{\partial Q}{\partial x} = \frac{\partial P}{\partial y}
+```
 
 **Read it aloud:** the upward part's rate going east equals the east part's rate going up. Their difference is the curl ([Divergence and curl](03-divergence-and-curl.md)), so a conservative field has zero curl; the converse needs a region with no holes.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$, $P$, $Q$ | the field; its east and upward parts, newtons | bottle: $(0, -19.6)$ N | more work on every route |
-| $x$, $y$; $r(t)$, $t$ | metres east and up; position at clock reading t | straight: $(400t, 300t)$ | — |
-| $C$, $A$, $B$ | the route, its start and its end | A $(0, 0)$, B $(400, 300)$ | reversing C flips the sign |
-| $W$ | work done by the field along C, joules | −5880 J | — |
-| $\phi$, $U$ | the potential, with $\nabla\phi = F$; potential energy $U = -\phi$ | $\phi = -19.6y$, $U = 19.6y$ | a constant added changes no work |
-| $\partial P/\partial y$, $\partial Q/\partial x$ | the cross rates the test compares | both 0 for the bottle | unequal: no potential |
-| $m$, $g$, $h$ | mass, surface gravity, height gained | 2 kg, 9.8 m/s^2, 300 m | work −mgh grows with each |
-| $k$, $R$, $r$ | pull constant $gR^2$ per kg; planet radius; distance from centre (no clock t) | $R$ = 6,371 km | $\phi = k/r$ grows as r shrinks |
+| $`F`$, $`P`$, $`Q`$ | the field; its east and upward parts, newtons | bottle: $`(0, -19.6)`$ N | more work on every route |
+| $`x`$, $`y`$; $`r(t)`$, $`t`$ | metres east and up; position at clock reading t | straight: $`(400t, 300t)`$ | — |
+| $`C`$, $`A`$, $`B`$ | the route, its start and its end | A $`(0, 0)`$, B $`(400, 300)`$ | reversing C flips the sign |
+| $`W`$ | work done by the field along C, joules | −5880 J | — |
+| $`\phi`$, $`U`$ | the potential, with $`\nabla\phi = F`$; potential energy $`U = -\phi`$ | $`\phi = -19.6y`$, $`U = 19.6y`$ | a constant added changes no work |
+| $`\partial P/\partial y`$, $`\partial Q/\partial x`$ | the cross rates the test compares | both 0 for the bottle | unequal: no potential |
+| $`m`$, $`g`$, $`h`$ | mass, surface gravity, height gained | 2 kg, 9.8 m/s^2, 300 m | work −mgh grows with each |
+| $`k`$, $`R`$, $`r`$ | pull constant $`gR^2`$ per kg; planet radius; distance from centre (no clock t) | $`R`$ = 6,371 km | $`\phi = k/r`$ grows as r shrinks |
 
-Physics writes $F = -\nabla U$, so work is the drop in potential energy. Both conventions give −5880 J here.
+Physics writes $`F = -\nabla U`$, so work is the drop in potential energy. Both conventions give −5880 J here.
 
 ### When it holds
 
@@ -66,13 +70,15 @@ If a function's rise over each small step equals the field's work on that step, 
 
 ### Step 1: the endpoint formula
 
-Along a route $r(t)$, the chain rule ([Chain rule in several variables](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)) gives the potential's rate along the route:
+Along a route $`r(t)`$, the chain rule ([Chain rule in several variables](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)) gives the potential's rate along the route:
 
-$$\frac{d}{dt}\,\phi(r(t)) = \nabla\phi(r(t)) \cdot r'(t) = F(r(t)) \cdot r'(t).$$
+```math
+\frac{d}{dt}\,\phi(r(t)) = \nabla\phi(r(t)) \cdot r'(t) = F(r(t)) \cdot r'(t).
+```
 
-The right side is the line integral's integrand, so the integral is the potential's change: $\phi(B) - \phi(A)$, by the fundamental theorem of calculus ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)).
+The right side is the line integral's integrand, so the integral is the potential's change: $`\phi(B) - \phi(A)`$, by the fundamental theorem of calculus ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)).
 
-For the bottle, $\phi = -19.6y$ has gradient $(0, -19.6)$, so every trail gives −19.6 × 300 = −5880 J.
+For the bottle, $`\phi = -19.6y`$ has gradient $`(0, -19.6)`$, so every trail gives −19.6 × 300 = −5880 J.
 
 ### Step 2: same ends, same work is the same as zero round every loop
 
@@ -80,45 +86,51 @@ Up one trail and down another is a loop; going down flips the second route's sig
 
 ### Step 3: route-independence builds the potential
 
-Fix a base point. Call the work from there to any point that point's potential; route-independence makes it one number. A short extra step east adds about $P$ times the step, so the eastward rate is $P$; likewise upward, $Q$.
+Fix a base point. Call the work from there to any point that point's potential; route-independence makes it one number. A short extra step east adds about $`P`$ times the step, so the eastward rate is $`P`$; likewise upward, $`Q`$.
 
 <details>
 <summary>Detailed proof: path independence gives a potential</summary>
 
-Let $F$ be continuous on an open connected region D, with route-independent work. Fix p in D and let φ(q) be the work from p to q. For small |s| the segment from q to q + (s, 0) lies in D, so
-$$\phi(q + (s, 0)) - \phi(q) = \int_0^s P(q + (u, 0))\,du.$$
+Let $`F`$ be continuous on an open connected region D, with route-independent work. Fix p in D and let φ(q) be the work from p to q. For small |s| the segment from q to q + (s, 0) lies in D, so
+
+$`\displaystyle \phi(q + (s, 0)) - \phi(q) = \int_0^s P(q + (u, 0))\,du.`$
+
 P is continuous: for every ε > 0 some δ > 0 keeps |P(q + (u, 0)) − P(q)| < ε when |u| < δ. So for |s| < δ the difference quotient is within ε of P(q), and ∂φ/∂x = P(q). Likewise ∂φ/∂y = Q(q). Two potentials differ by a function with zero gradient, constant on a connected region.
 
 </details>
 
 ### Step 4: the test, and why a potential passes it
 
-If $\nabla\phi = F$, then $P = \partial\phi/\partial x$ and $Q = \partial\phi/\partial y$. So $\partial P/\partial y$ and $\partial Q/\partial x$ are the two mixed second rates of φ, which agree when they are continuous ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)). Zero curl is necessary.
+If $`\nabla\phi = F`$, then $`P = \partial\phi/\partial x`$ and $`Q = \partial\phi/\partial y`$. So $`\partial P/\partial y`$ and $`\partial Q/\partial x`$ are the two mixed second rates of φ, which agree when they are continuous ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)). Zero curl is necessary.
 
-Far from the ground gravity weakens. Per kilogram, a planet pulls toward its centre with strength $k/r^2$; $k = gR^2$ makes it 9.8 N at the surface. As a field, $F = -k\,(x, y)/r^3$. By the quotient rule both cross rates are $3kxy/r^5$, 0.107331 at (1, 2) with k = 1: the test passes.
+Far from the ground gravity weakens. Per kilogram, a planet pulls toward its centre with strength $`k/r^2`$; $`k = gR^2`$ makes it 9.8 N at the surface. As a field, $`F = -k\,(x, y)/r^3`$. By the quotient rule both cross rates are $`3kxy/r^5`$, 0.107331 at (1, 2) with k = 1: the test passes.
 
 ### Step 5: finding the potential
 
-Integrate the east part in x, holding y fixed. The constant of integration may depend on y; call it c(y), and choose it so the upward rate matches $Q$.
+Integrate the east part in x, holding y fixed. The constant of integration may depend on y; call it c(y), and choose it so the upward rate matches $`Q`$.
 
-For the planet, $\int -kx\,(x^2 + y^2)^{-3/2}\,dx = k\,(x^2+y^2)^{-1/2} + c(y)$. Its upward rate is already $-ky/r^3 = Q$, so c(y) is a constant: $\phi = k/r$. From the surface to twice the radius the work is $k/2R - k/R = -gR/2$, −31.2179 MJ (megajoules, millions of joules) per kg, straight out or by a quarter-circle, a climb and a quarter-circle back; the pull is across the arcs.
+For the planet, $`\int -kx\,(x^2 + y^2)^{-3/2}\,dx = k\,(x^2+y^2)^{-1/2} + c(y)`$. Its upward rate is already $`-ky/r^3 = Q`$, so c(y) is a constant: $`\phi = k/r`$. From the surface to twice the radius the work is $`k/2R - k/R = -gR/2`$, −31.2179 MJ (megajoules, millions of joules) per kg, straight out or by a quarter-circle, a climb and a quarter-circle back; the pull is across the arcs.
 
-For the bottle's 300 m climb, $2(k/(R + 300) - k/R)$ = −5879.72 J against $-mgh$ = −5880 J: the hillside potential is the planet's, seen close up.
+For the bottle's 300 m climb, $`2(k/(R + 300) - k/R)`$ = −5879.72 J against $`-mgh`$ = −5880 J: the hillside potential is the planet's, seen close up.
 
 <details>
 <summary>Detailed proof: zero curl gives a potential on a rectangle</summary>
 
 Let P and Q have continuous partial rates on an open rectangle, with ∂Q/∂x = ∂P/∂y. Pick (a, b) in it and define
-$$\phi(x, y) = \int_a^x P(s, b)\,ds + \int_b^y Q(x, s)\,ds.$$
+
+$`\displaystyle \phi(x, y) = \int_a^x P(s, b)\,ds + \int_b^y Q(x, s)\,ds.`$
+
 The fundamental theorem gives ∂φ/∂y = Q(x, y). Differentiating under the integral sign, allowed as ∂Q/∂x is continuous,
-$$\frac{\partial\phi}{\partial x} = P(x, b) + \int_b^y \frac{\partial Q}{\partial x}(x, s)\,ds = P(x, b) + \int_b^y \frac{\partial P}{\partial y}(x, s)\,ds = P(x, y).$$
+
+$`\displaystyle \frac{\partial\phi}{\partial x} = P(x, b) + \int_b^y \frac{\partial Q}{\partial x}(x, s)\,ds = P(x, b) + \int_b^y \frac{\partial P}{\partial y}(x, s)\,ds = P(x, y).`$
+
 Joining these local potentials into one needs no holes; that step is on [Green's theorem](06-greens-theorem.md).
 
 </details>
 
 ### Step 6: the hole that breaks the test
 
-Water circling a drain at the origin, strength 1 m^2/s, has velocity $F = (-y, x)/(x^2 + y^2)$ m/s, undefined at the drain. Both cross rates are $(y^2 - x^2)/(x^2+y^2)^2$, 0.12 at (1, 2): zero curl wherever it is defined.
+Water circling a drain at the origin, strength 1 m^2/s, has velocity $`F = (-y, x)/(x^2 + y^2)`$ m/s, undefined at the drain. Both cross rates are $`(y^2 - x^2)/(x^2+y^2)^2`$, 0.12 at (1, 2): zero curl wherever it is defined.
 
 Yet round a square of half-side 1 about the drain, the loop integral (the **circulation**) is 6.283185 m^2/s: 2π. Half-side 2 gives 2π again. A square beside the drain, centred at (4, 0), gives 0.
 
@@ -138,9 +150,9 @@ The wind on [Line integrals of a field](02-line-integrals.md) fails the test out
 | --- | --- | --- |
 | gravity on the bottle | 2 kg × 9.8 m/s^2 | 19.6 N, down |
 | test | ∂Q/∂x = 0, ∂P/∂y = 0 | passes |
-| find the potential | ∫ 0 dx = c(y); c′(y) = −19.6 | $\phi = -19.6y$ |
+| find the potential | ∫ 0 dx = c(y); c′(y) = −19.6 | $`\phi = -19.6y`$ |
 | work, A to B, any trail | φ(B) − φ(A) = −19.6 × 300 − 0 | **−5880 J** |
-| planet potential, per kg | ∫ P dx, c(y) constant | $\phi = k/r$ |
+| planet potential, per kg | ∫ P dx, c(y) constant | $`\phi = k/r`$ |
 | surface to twice the radius | k/2R − k/R = −9.8 × 6,371,000 / 2 | **−31.2179 MJ** |
 | whirlpool, one lap round the drain | the angle gains a full turn | **2π = 6.283185** |
 
@@ -152,14 +164,14 @@ The walker supplies 5880 J on any trail; lifting 1 kg to twice the radius takes 
 | --- | --- | --- |
 | Zero curl, so every loop gives 0 | 0 predicted; the square gives 6.283185 | The test is local; the drain is a hole |
 | Integrate P in x and stop | potential 0, work 0 J, not −5880 J | c(y) holds the height term |
-| Use potential energy $U$ as the potential | +5880 J, not −5880 J | $F = -\nabla U$: the sign flips |
+| Use potential energy $`U`$ as the potential | +5880 J, not −5880 J | $`F = -\nabla U`$: the sign flips |
 | Use g h for a climb of h = R | −62.4358 MJ per kg, not −31.2179 MJ | g weakens with distance |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Two roads to every work value: Simpson's rule (a strip sum fitting a parabola over each pair of strips) on $F(r(t)) \cdot r'(t)$ along each route, and the potential difference found by hand. The cross rates are difference quotients checked against the hand formulas. The whirlpool loops are squares, compared against π built by halving an interval until cos crosses zero.
+Two roads to every work value: Simpson's rule (a strip sum fitting a parabola over each pair of strips) on $`F(r(t)) \cdot r'(t)`$ along each route, and the potential difference found by hand. The cross rates are difference quotients checked against the hand formulas. The whirlpool loops are squares, compared against π built by halving an interval until cos crosses zero.
 
 ### Python
 
@@ -370,7 +382,7 @@ Lean proves the endpoint formula and the test in general, and that the whirlpool
 - The route may have corners, like the switchbacks. The same holds in space of any dimension, not only the plane.
 - Let P and Q have continuous partial rates on an open region, and let the field (P, Q) have a potential there.
 - Then ∂Q/∂x = ∂P/∂y at every point of the region: zero curl.
-- The whirlpool $(-y, x)/(x^2 + y^2)$ has equal cross rates at every point except the drain.
+- The whirlpool $`(-y, x)/(x^2 + y^2)`$ has equal cross rates at every point except the drain.
 - Yet no single function on the plane, drain removed, has the whirlpool as its gradient.
 - Gravity on the bottle is 19.6 N, and φ(B) − φ(A) = −19.6 × 300 = −5880 J.
 - Three switchbacks of 100 m each also give −5880 J. Using U as the potential gives +5880 J.
@@ -627,7 +639,7 @@ example : ∀ g R : ℚ, -(g * R) = 2 * (-(g * R / 2)) := by intro g R; ring
 > **Reading zero curl as a guarantee.** The test is local. The whirlpool has zero curl wherever it is defined, yet a loop round its drain gives 6.283185, not 0. The guarantee needs a region with no holes.
 >
 > - **Stopping after the first integral.** For the bottle it gives 0; all −5880 J hides in c(y).
-> - **Potential energy for potential.** $U$ is $-\phi$; used as φ it gives +5880 J.
+> - **Potential energy for potential.** $`U`$ is $`-\phi`$; used as φ it gives +5880 J.
 > - **−mgh at planetary scale.** One Earth radius up: −62.4358 MJ per kg, twice the true −31.2179 MJ.
 > - **Two routes agreeing.** That proves nothing about a third; a potential does.
 

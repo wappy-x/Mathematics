@@ -26,7 +26,7 @@ Both are quoted in **basis points**: one basis point is one hundredth of one per
 
 **What kind of fact this is:** a definition — two of them, one dug out of a price by search, the other divided out of it. The uniqueness that makes the search legitimate is proved on this card in Why it works.
 
-**Conventions verified 14 Sep 2026:** spreads are quoted in basis points a year. This card uses annual coupons on whole-year dates and continuously compounded zero rates (one rate for each payment date, defined in The formula), so the discount factor for $T$ years is $e^{-r_T T}$ ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). Real markets vary the coupon frequency and the day count ([Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)); those choices move a quoted spread by a basis point or two on a bond like this one.
+**Conventions verified 14 Sep 2026:** spreads are quoted in basis points a year. This card uses annual coupons on whole-year dates and continuously compounded zero rates (one rate for each payment date, defined in The formula), so the discount factor for $`T`$ years is $`e^{-r_T T}`$ ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). Real markets vary the coupon frequency and the day count ([Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)); those choices move a quoted spread by a basis point or two on a bond like this one.
 
 ### The picture: the price falls as the spread rises, and crosses the quote
 
@@ -46,23 +46,29 @@ The falling line is the bond priced off the curve with a spread added to every z
 
 ## The formula
 
-A **zero rate** is the single rate that discounts one payment landing on one date, with nothing in between; the curve supplies one for each of the bond's dates. The bond's price on the curve, with a spread $z$ added to every zero rate, is one sum:
+A **zero rate** is the single rate that discounts one payment landing on one date, with nothing in between; the curve supplies one for each of the bond's dates. The bond's price on the curve, with a spread $`z`$ added to every zero rate, is one sum:
 
-$$V(z) \;=\; \sum_i C_i \, e^{-(r_{t_i} + z)\,t_i}$$
+```math
+V(z) \;=\; \sum_i C_i \, e^{-(r_{t_i} + z)\,t_i}
+```
 
 The sum runs over every payment the bond makes: five of them for Northwind, the last one carrying the face amount along with the coupon.
 
 **Read it aloud:** take each payment the bond promises, discount it at the curve's rate for that date plus the same extra rate everywhere, and add the discounted payments up.
 
-The z-spread is the value of $z$ that makes that sum equal the market price:
+The z-spread is the value of $`z`$ that makes that sum equal the market price:
 
-$$V(z) = P \quad\Longrightarrow\quad z = \text{the z-spread}$$
+```math
+V(z) = P \quad\Longrightarrow\quad z = \text{the z-spread}
+```
 
 **Read it aloud:** the z-spread is the one constant rate which, added to the whole curve, reprices the bond exactly.
 
 The asset-swap spread comes from the same gap, divided instead of solved:
 
-$$A \;=\; \frac{V(0) - P}{F \sum_i D(t_i)}$$
+```math
+A \;=\; \frac{V(0) - P}{F \sum_i D(t_i)}
+```
 
 **Read it aloud:** the price gap, spread evenly over the years as a yearly payment on the face amount, each year's payment discounted on the curve.
 
@@ -70,25 +76,25 @@ The sum on the bottom is the **annuity**: the discount factors for the payment d
 
 | Symbol | Plain meaning | In our example | Push it up and the spread… |
 | --- | --- | --- | --- |
-| $P$ | the bond's market price, per $100 of face | 94.833 | falls: a dearer bond is a safer bond |
-| $V$ | the bond's price computed off the curve | 100.239842 at $z = 0$ | rises: a bigger gap to explain |
-| $C_i$ | the payment due on date $t_i$: a coupon, plus the face at the end | 4, 4, 4, 4, 104 | rises, and the price with it |
-| $c$ | the annual coupon in dollars per $100 of face | 4.00 | the two spreads drift apart |
-| $F$ | the face amount, repaid at the end | 100 | — |
-| $t_i$ | the year each payment lands | 1, 2, 3, 4, 5 | — |
-| $T$ | the year the last payment lands | 5 | falls: the gap is spread over more years |
-| $r_t$ | the curve's zero rate, read off at each payment date, continuously compounded | 3.00% to 3.90% | falls: the curve explains more of the price |
-| $D$ | the discount factor $D(t) = e^{-r_t t}$ | 0.970446 at 1 year, 0.822835 at 5 | — |
-| $z$ | the z-spread, added to every zero rate | 119.99 bp | — |
-| $A$ | the asset-swap spread, paid yearly on the face | 120.44 bp | — |
-| $y$ | the bond's yield: one rate that reprices it alone | 5.0694% continuously compounded, 5.2001% a year | rises with the spread, but is not the spread |
+| $`P`$ | the bond's market price, per $100 of face | 94.833 | falls: a dearer bond is a safer bond |
+| $`V`$ | the bond's price computed off the curve | 100.239842 at $`z = 0`$ | rises: a bigger gap to explain |
+| $`C_i`$ | the payment due on date $`t_i`$: a coupon, plus the face at the end | 4, 4, 4, 4, 104 | rises, and the price with it |
+| $`c`$ | the annual coupon in dollars per $100 of face | 4.00 | the two spreads drift apart |
+| $`F`$ | the face amount, repaid at the end | 100 | — |
+| $`t_i`$ | the year each payment lands | 1, 2, 3, 4, 5 | — |
+| $`T`$ | the year the last payment lands | 5 | falls: the gap is spread over more years |
+| $`r_t`$ | the curve's zero rate, read off at each payment date, continuously compounded | 3.00% to 3.90% | falls: the curve explains more of the price |
+| $`D`$ | the discount factor $`D(t) = e^{-r_t t}`$ | 0.970446 at 1 year, 0.822835 at 5 | — |
+| $`z`$ | the z-spread, added to every zero rate | 119.99 bp | — |
+| $`A`$ | the asset-swap spread, paid yearly on the face | 120.44 bp | — |
+| $`y`$ | the bond's yield: one rate that reprices it alone | 5.0694% continuously compounded, 5.2001% a year | rises with the spread, but is not the spread |
 
 ### When it holds
 
 - **The bond's payments are fixed and known.** A floating-rate note or a callable bond has payments that move, and a single spread then absorbs that movement as if it were credit risk. Stripping the option value out first is [Option-adjusted spread](../35-Mortgages%2C%20Callables%20and%20Prepayment/04-option-adjusted-spread.md).
 - **One agreed curve.** A spread is measured against a chosen curve; quote the same bond over government bonds instead of swaps and the number changes by the gap between those two curves. A spread without its curve named is meaningless.
-- **The spread is the same at every date.** A real issuer's credit deteriorates or improves with time, so the true compensation has a term structure. One constant $z$ is the flat line that happens to fit this bond's total price, not the truth at each date.
-- **A price, not a probability.** $z$ is fitted to a price. It bundles default odds, recovery, illiquidity and risk appetite into one rate, and nothing in the arithmetic separates them. Prising them apart is [Implied hazard from a bond price, and why the CDS disagrees](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md).
+- **The spread is the same at every date.** A real issuer's credit deteriorates or improves with time, so the true compensation has a term structure. One constant $`z`$ is the flat line that happens to fit this bond's total price, not the truth at each date.
+- **A price, not a probability.** $`z`$ is fitted to a price. It bundles default odds, recovery, illiquidity and risk appetite into one rate, and nothing in the arithmetic separates them. Prising them apart is [Implied hazard from a bond price, and why the CDS disagrees](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md).
 - **A positive price.** Any price above zero has a spread. A price *above* the curve's price gives a negative spread, which is ordinary for the safest government bonds against a swap curve.
 
 ---
@@ -103,60 +109,70 @@ That is the whole idea. Every remaining step is bookkeeping about *how* the extr
 
 ### Step 1: one spread fits, and only one
 
-Before solving for $z$ it is worth knowing a solution exists and is unique, or the solver is hunting something that may not be there.
+Before solving for $`z`$ it is worth knowing a solution exists and is unique, or the solver is hunting something that may not be there.
 
-$V(z)$ adds up terms $C_i e^{-(r_{t_i}+z)t_i}$. Every payment $C_i$ is positive and every date $t_i$ is in the future, so raising $z$ shrinks every term at once: the total falls, always, with no flat spots.
+$`V(z)`$ adds up terms $`C_i e^{-(r_{t_i}+z)t_i}`$. Every payment $`C_i`$ is positive and every date $`t_i`$ is in the future, so raising $`z`$ shrinks every term at once: the total falls, always, with no flat spots.
 
-Push $z$ far enough up and the price goes to zero; pull it far enough down and the price goes to infinity. A quantity that slides smoothly from infinity to zero, never turning back, passes each price in between exactly once.
+Push $`z`$ far enough up and the price goes to zero; pull it far enough down and the price goes to infinity. A quantity that slides smoothly from infinity to zero, never turning back, passes each price in between exactly once.
 
 <details>
 <summary>Detailed proof: exactly one spread fits any positive price</summary>
 
-Fix the payments $C_i > 0$ at dates $t_1 < t_2 < \dots$, every one of them in the future, and the curve's rates $r_t$ at those dates. Write
-$$V(z) = \sum_i C_i e^{-(r_{t_i}+z)t_i}.$$
-**Continuity.** Each term is a constant times $e^{-z t_i}$, continuous in $z$; a finite sum of continuous functions is continuous.
+Fix the payments $`C_i > 0`$ at dates $`t_1 < t_2 < \dots`$, every one of them in the future, and the curve's rates $`r_t`$ at those dates. Write
+
+$`\displaystyle V(z) = \sum_i C_i e^{-(r_{t_i}+z)t_i}.`$
+
+**Continuity.** Each term is a constant times $`e^{-z t_i}`$, continuous in $`z`$; a finite sum of continuous functions is continuous.
 
 **Strictly falling.** Differentiate term by term:
-$$V'(z) = -\sum_i t_i\,C_i\,e^{-(r_{t_i}+z)t_i} < 0,$$
-since every $t_i$ and every $C_i$ is positive and an exponential is never zero. So $V$ is strictly decreasing: no two spreads give the same price.
 
-**The full range.** As $z \to -\infty$ each term grows without bound, so $V(z) \to +\infty$. As $z \to +\infty$ each term goes to zero, so $V(z) \to 0$. A continuous function on the whole line with those two limits takes every value in $(0, \infty)$, by the intermediate value theorem.
+$`\displaystyle V'(z) = -\sum_i t_i\,C_i\,e^{-(r_{t_i}+z)t_i} < 0,`$
 
-Together: for any market price $P > 0$ there is exactly one $z$ with $V(z) = P$. Differentiating once more gives $V''(z) = \sum t_i^2 C_i e^{-(r_{t_i}+z)t_i} > 0$, so $V$ is convex, which is why Newton's method started at $z = 0$ walks straight down to the root instead of oscillating.
+since every $`t_i`$ and every $`C_i`$ is positive and an exponential is never zero. So $`V`$ is strictly decreasing: no two spreads give the same price.
 
-**Where it fails.** Let one $C_i$ be negative — a fee, or a package with a payment running the other way — and $V'$ can change sign. Two spreads can then fit one price, and the word "the" z-spread stops being safe.
+**The full range.** As $`z \to -\infty`$ each term grows without bound, so $`V(z) \to +\infty`$. As $`z \to +\infty`$ each term goes to zero, so $`V(z) \to 0`$. A continuous function on the whole line with those two limits takes every value in $`(0, \infty)`$, by the intermediate value theorem.
+
+Together: for any market price $`P > 0`$ there is exactly one $`z`$ with $`V(z) = P`$. Differentiating once more gives $`V''(z) = \sum t_i^2 C_i e^{-(r_{t_i}+z)t_i} > 0`$, so $`V`$ is convex, which is why Newton's method started at $`z = 0`$ walks straight down to the root instead of oscillating.
+
+**Where it fails.** Let one $`C_i`$ be negative — a fee, or a package with a payment running the other way — and $`V'`$ can change sign. Two spreads can then fit one price, and the word "the" z-spread stops being safe.
 
 </details>
 
-Boundary cases follow from the same picture. $P = V(0)$ gives $z = 0$: the bond is priced exactly on the curve. $P > V(0)$ gives $z < 0$. As $P$ falls towards zero, $z$ runs off to infinity. That is why a bond trading at a few cents is quoted on its recovery value instead of a spread: the cents on the dollar a holder expects to salvage in a default.
+Boundary cases follow from the same picture. $`P = V(0)`$ gives $`z = 0`$: the bond is priced exactly on the curve. $`P > V(0)`$ gives $`z < 0`$. As $`P`$ falls towards zero, $`z`$ runs off to infinity. That is why a bond trading at a few cents is quoted on its recovery value instead of a spread: the cents on the dollar a holder expects to salvage in a default.
 
 ### Step 2: solving for it, twice
 
-There is no formula for $z$. It comes out of a search, and two searches confirm each other.
+There is no formula for $`z`$. It comes out of a search, and two searches confirm each other.
 
 **Bisection.** Start with a spread too small (0 basis points gives $100.24, above the quote) and one too large (300 basis points gives $87.29, below it). Take the midpoint, price the bond, and keep whichever half still straddles the quote. Each pass halves the uncertainty, so two hundred passes leave nothing. Step 1 guarantees the straddle never breaks. The code opens wider still, from minus 50% to plus 100%, so the same routine lands on any bond it is handed.
 
-**Newton's method.** Guess a spread, measure how fast the price is falling there, and step to where a straight line of that slope would hit the quote. The slope is the derivative from Step 1, $V'(z) = -\sum t_i C_i e^{-(r_{t_i}+z)t_i}$. Convexity keeps it converging. It reaches the same 119.99 basis points from a standing start of zero.
+**Newton's method.** Guess a spread, measure how fast the price is falling there, and step to where a straight line of that slope would hit the quote. The slope is the derivative from Step 1, $`V'(z) = -\sum t_i C_i e^{-(r_{t_i}+z)t_i}`$. Convexity keeps it converging. It reaches the same 119.99 basis points from a standing start of zero.
 
 ### Step 3: the asset swap charges the same gap a different way
 
-An **asset swap** is a package sold as one trade. The buyer pays par — the face amount, $100 — and receives the bond plus a swap. In the swap the buyer hands over the bond's fixed coupons and receives a floating rate plus a fixed extra, $A$, each year. The buyer ends up holding a floating-rate asset. $A$ is what the package pays for taking Northwind's credit risk.
+An **asset swap** is a package sold as one trade. The buyer pays par — the face amount, $100 — and receives the bond plus a swap. In the swap the buyer hands over the bond's fixed coupons and receives a floating rate plus a fixed extra, $`A`$, each year. The buyer ends up holding a floating-rate asset. $`A`$ is what the package pays for taking Northwind's credit risk.
 
 Setting the package's value to zero at the start gives the formula above, and the derivation is short because the floating leg collapses.
 
 <details>
 <summary>The algebra behind it, if you want it</summary>
 
-Value everything on the curve. The buyer pays $F$ and receives the bond, worth $P$ in the market. Each year the buyer receives the floating fixing plus $A$ on notional $F$, and pays the coupon $c$.
+Value everything on the curve. The buyer pays $`F`$ and receives the bond, worth $`P`$ in the market. Each year the buyer receives the floating fixing plus $`A`$ on notional $`F`$, and pays the coupon $`c`$.
 
-**The floating leg telescopes.** The rate fixed for the year ending at $t_i$ is the curve's own forward rate, which by construction satisfies $1 + L_i = D(t_{i-1})/D(t_i)$. So that year's floating payment, discounted, is
-$$F\left(\frac{D(t_{i-1})}{D(t_i)} - 1\right) D(t_i) = F\,\bigl(D(t_{i-1}) - D(t_i)\bigr).$$
-Add over the years and the middle terms cancel in pairs, leaving $F\bigl(D(t_0) - D(T)\bigr) = F\bigl(1 - D(T)\bigr)$. A floating leg is worth par today minus par at the end, whatever the curve does in between.
+**The floating leg telescopes.** The rate fixed for the year ending at $`t_i`$ is the curve's own forward rate, which by construction satisfies $`1 + L_i = D(t_{i-1})/D(t_i)`$. So that year's floating payment, discounted, is
+
+$`\displaystyle F\left(\frac{D(t_{i-1})}{D(t_i)} - 1\right) D(t_i) = F\,\bigl(D(t_{i-1}) - D(t_i)\bigr).`$
+
+Add over the years and the middle terms cancel in pairs, leaving $`F\bigl(D(t_0) - D(T)\bigr) = F\bigl(1 - D(T)\bigr)`$. A floating leg is worth par today minus par at the end, whatever the curve does in between.
 
 **Set the package to zero.**
-$$-F + P + \Bigl[F\bigl(1 - D(T)\bigr) + A\,F\sum_i D(t_i)\Bigr] - c\sum_i D(t_i) = 0.$$
-The two $F$ terms cancel, and $F D(T) + c\sum_i D(t_i)$ is exactly $V(0)$, the bond priced on the curve. What survives is
-$$A\,F\sum_i D(t_i) = V(0) - P,$$
+
+$`\displaystyle -F + P + \Bigl[F\bigl(1 - D(T)\bigr) + A\,F\sum_i D(t_i)\Bigr] - c\sum_i D(t_i) = 0.`$
+
+The two $`F`$ terms cancel, and $`F D(T) + c\sum_i D(t_i)`$ is exactly $`V(0)`$, the bond priced on the curve. What survives is
+
+$`\displaystyle A\,F\sum_i D(t_i) = V(0) - P,`$
+
 which is the formula. No root-finding: one division.
 
 </details>
@@ -193,14 +209,14 @@ The curve, bootstrapped this morning out of deposits, futures and swaps: zero ra
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the five discount factors | $e^{-0.0300 \times 1}$ down to $e^{-0.0390 \times 5}$ | 0.970446 … 0.822835 |
+| the five discount factors | $`e^{-0.0300 \times 1}`$ down to $`e^{-0.0390 \times 5}`$ | 0.970446 … 0.822835 |
 | the annuity | the five factors added up | 4.489094 |
-| price on the curve | $4 \times 4.489094 + 100 \times 0.822835$ | $100.2398 |
+| price on the curve | $`4 \times 4.489094 + 100 \times 0.822835`$ | $100.2398 |
 | the dealer's quote | from the screen | $94.8330 |
-| the gap | $100.2398 - 94.8330$ | $5.4068 |
+| the gap | $`100.2398 - 94.8330`$ | $5.4068 |
 | bracket the spread | 60 bp gives $97.50, above; 120 bp gives $94.83, below | between the two |
 | solve, bisection then Newton | both land on the same root | **119.99 bp** |
-| the asset-swap spread | $5.406842 \div 4.489094$, read per $100 of face | **120.44 bp** |
+| the asset-swap spread | $`5.406842 \div 4.489094`$, read per $100 of face | **120.44 bp** |
 
 Northwind is paying about 1.2% a year more than the risk-free curve, every year, on every dollar lent to it. That is the price of its credit.
 
@@ -223,7 +239,7 @@ Every number in that table is printed by the code below.
 
 A spread is quoted as a rate, but it is traded as a price. A credit desk that buys Northwind at 120 over and watches the market move to 220 over has lost money, and the amount is worth knowing before the trade, not after.
 
-Widening the spread by one basis point costs **$0.043764** per $100 of face. That number is the slope of the price against the spread, $-V'(z)$ divided by 10,000, and it has a name: the **spread DV01**, the price given up per basis point of spread.
+Widening the spread by one basis point costs **$0.043764** per $100 of face. That number is the slope of the price against the spread, $`-V'(z)`$ divided by 10,000, and it has a name: the **spread DV01**, the price given up per basis point of spread.
 
 | Spread | Price | Given up against the curve |
 | --- | --- | --- |
@@ -682,10 +698,10 @@ The two outputs match line for line. They were produced by different code, diffe
 
 Lean proves the z-spread's existence, uniqueness and sign, and the asset-swap formula, for every bond meeting the conditions below.
 
-- Take every payment $C_i$ positive, every date $t_i$ in the future, and a price $P$ above zero. Then exactly one $z$ gives $V(z) = P$.
-- Take the same payments and dates, and let $z$ reprice the bond at $P$. Then $z$ is positive, zero or negative as $P$ is below, equal to or above $V(0)$.
-- Take annual payments on whole-year dates, valued on the curve. Then the floating leg is worth $F(1 - D(T))$, whatever the curve does.
-- Take a positive face $F$ and at least one year of payments. Then the asset-swap package is worth zero exactly when $A = (V(0) - P)/(F \sum_i D(t_i))$.
+- Take every payment $`C_i`$ positive, every date $`t_i`$ in the future, and a price $`P`$ above zero. Then exactly one $`z`$ gives $`V(z) = P`$.
+- Take the same payments and dates, and let $`z`$ reprice the bond at $`P`$. Then $`z`$ is positive, zero or negative as $`P`$ is below, equal to or above $`V(0)`$.
+- Take annual payments on whole-year dates, valued on the curve. Then the floating leg is worth $`F(1 - D(T))`$, whatever the curve does.
+- Take a positive face $`F`$ and at least one year of payments. Then the asset-swap package is worth zero exactly when $`A = (V(0) - P)/(F \sum_i D(t_i))`$.
 - The worked arithmetic holds exactly: 120 basis points as 1.20%, the 5.4068 gap, the price given up at each spread, and the I-spread.
 
 The discount factors, the spreads of 119.99 and 120.44 basis points and the spread DV01 are left to the Python and Rust checks.

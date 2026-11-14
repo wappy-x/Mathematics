@@ -37,53 +37,59 @@ Orange: plain Crank-Nicolson, swinging above and below the truth. Teal: Crank-Ni
 
 ## The formula
 
-Notation from this shelf, in one line each. $u(x, t)$ is the temperature in °C at $x$ metres along the bar and $t$ seconds after noon. The heat equation is $u_t = \alpha u_{xx}$: the rate of change in time is the **diffusivity** $\alpha$ (how fast heat spreads, in m²/s) times the bend along the bar ([Three families](01-pde-families-elliptic-parabolic-hyperbolic.md)). On the grid, $u_j^n$ is the reading at node $j$ (at $x = jh$) after $n$ time steps; the raised $n$ is a label, not a power. The space step is $h$, the time step $\Delta t$, and $r = \alpha\Delta t/h^2$ is the time step measured in grid units.
+Notation from this shelf, in one line each. $`u(x, t)`$ is the temperature in °C at $`x`$ metres along the bar and $`t`$ seconds after noon. The heat equation is $`u_t = \alpha u_{xx}`$: the rate of change in time is the **diffusivity** $`\alpha`$ (how fast heat spreads, in m²/s) times the bend along the bar ([Three families](01-pde-families-elliptic-parabolic-hyperbolic.md)). On the grid, $`u_j^n`$ is the reading at node $`j`$ (at $`x = jh`$) after $`n`$ time steps; the raised $`n`$ is a label, not a power. The space step is $`h`$, the time step $`\Delta t`$, and $`r = \alpha\Delta t/h^2`$ is the time step measured in grid units.
 
-This card introduces the **theta scheme**. A dial $\theta$, read "theta", between 0 and 1, says how much of the bend is read on the new time row:
+This card introduces the **theta scheme**. A dial $`\theta`$, read "theta", between 0 and 1, says how much of the bend is read on the new time row:
 
-$$\frac{u_j^{n+1} - u_j^n}{\Delta t} = \frac{\alpha}{h^2}\Big[\theta\,\big(u_{j-1}^{n+1} - 2u_j^{n+1} + u_{j+1}^{n+1}\big) + (1-\theta)\,\big(u_{j-1}^{n} - 2u_j^{n} + u_{j+1}^{n}\big)\Big]$$
+```math
+\frac{u_j^{n+1} - u_j^n}{\Delta t} = \frac{\alpha}{h^2}\Big[\theta\,\big(u_{j-1}^{n+1} - 2u_j^{n+1} + u_{j+1}^{n+1}\big) + (1-\theta)\,\big(u_{j-1}^{n} - 2u_j^{n} + u_{j+1}^{n}\big)\Big]
+```
 
 **Read it aloud:** the change over one step equals the diffusivity times a blend of the bend now and the bend one step later, the dial setting the blend.
 
 Three settings have names:
 
-- $\theta = 0$: the **explicit** scheme. The bend is read on the old row only, so nothing needs solving.
-- $\theta = 1$: the **implicit** scheme, backward Euler on every node at once.
-- $\theta = \tfrac12$: **Crank-Nicolson**, the even average, after the 1947 paper below.
+- $`\theta = 0`$: the **explicit** scheme. The bend is read on the old row only, so nothing needs solving.
+- $`\theta = 1`$: the **implicit** scheme, backward Euler on every node at once.
+- $`\theta = \tfrac12`$: **Crank-Nicolson**, the even average, after the 1947 paper below.
 
-Multiply by $\Delta t$ and gather the new row on the left. Each node gives one equation in three unknowns:
+Multiply by $`\Delta t`$ and gather the new row on the left. Each node gives one equation in three unknowns:
 
-$$-\theta r\,u_{j-1}^{n+1} + (1 + 2\theta r)\,u_j^{n+1} - \theta r\,u_{j+1}^{n+1} = u_j^n + (1-\theta)\,r\,\big(u_{j-1}^{n} - 2u_j^{n} + u_{j+1}^{n}\big)$$
+```math
+-\theta r\,u_{j-1}^{n+1} + (1 + 2\theta r)\,u_j^{n+1} - \theta r\,u_{j+1}^{n+1} = u_j^n + (1-\theta)\,r\,\big(u_{j-1}^{n} - 2u_j^{n} + u_{j+1}^{n}\big)
+```
 
 The 49 equations form a **tridiagonal** system: each row has entries only on the diagonal and its two neighbours.
 
-A wave that wiggles $k$ times along the bar, $\sin(k\pi x)$, comes out of one step multiplied by its **amplification factor** $g$:
+A wave that wiggles $`k`$ times along the bar, $`\sin(k\pi x)`$, comes out of one step multiplied by its **amplification factor** $`g`$:
 
-$$g = \frac{1 - (1-\theta)\,4rs}{1 + \theta\,4rs}, \qquad s = \sin^2\!\Big(\frac{k\pi h}{2}\Big)$$
+```math
+g = \frac{1 - (1-\theta)\,4rs}{1 + \theta\,4rs}, \qquad s = \sin^2\!\Big(\frac{k\pi h}{2}\Big)
+```
 
 **Read it aloud:** the factor is one minus the old row's share of the damping, over one plus the new row's share.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $u_j^n$ | temperature in °C; the grid reading at node $j$ after $n$ steps | 100 everywhere at noon | — |
-| $x$, $t$ | place along the bar in m; time since noon in s | 0 to 1 m; 3600 s | — |
-| $\alpha$ | diffusivity: how fast heat spreads, in m²/s | 1e-5 (illustrative and round, near carbon steel; cards 01 and 02 use 1.2e-5) | everything happens sooner |
-| $h$, $j$ | space step in m; node number | 0.02 m; 1 to 49 | coarser grid, bigger space error |
-| $\Delta t$, $n$ | time step in s; step number | 200 s; 0 to 18 | bigger time error, as $\Delta t^2$ for Crank-Nicolson |
-| $r$ | $\alpha\Delta t/h^2$: the time step in grid units | 5 | past 1/2 the explicit scheme blows up |
-| $\theta$ | the dial: the new row's share of the bend | 0, 1/2 or 1 | at 1/2 or more, stable at any $r$ |
-| $k$, $s$ | wave number (wiggles along the bar); $\sin^2(k\pi h/2)$ | 1 (smooth) to 49 (zigzag) | sharper wave: exact and implicit steps damp it more; Crank-Nicolson barely does |
-| $g$ | amplification factor: what one step multiplies wave $k$ by | 0.980460 ($k = 1$); −0.818019 ($k = 49$) | above 1 in size: blow-up |
-| $\lambda_k$ | the exact decay rate of grid wave $k$, per s | 4α s/h² | — |
-| $z$ | $-\lambda_k\Delta t$: the exponent of the exact decay over one step, $e^z$ | −0.019733 for $k = 1$ | — |
-| $\tau$ | truncation error: what the exact solution leaves over in the scheme | of order $\Delta t^2 + h^2$ at $\theta = \tfrac12$ | — |
+| $`u`$, $`u_j^n`$ | temperature in °C; the grid reading at node $`j`$ after $`n`$ steps | 100 everywhere at noon | — |
+| $`x`$, $`t`$ | place along the bar in m; time since noon in s | 0 to 1 m; 3600 s | — |
+| $`\alpha`$ | diffusivity: how fast heat spreads, in m²/s | 1e-5 (illustrative and round, near carbon steel; cards 01 and 02 use 1.2e-5) | everything happens sooner |
+| $`h`$, $`j`$ | space step in m; node number | 0.02 m; 1 to 49 | coarser grid, bigger space error |
+| $`\Delta t`$, $`n`$ | time step in s; step number | 200 s; 0 to 18 | bigger time error, as $`\Delta t^2`$ for Crank-Nicolson |
+| $`r`$ | $`\alpha\Delta t/h^2`$: the time step in grid units | 5 | past 1/2 the explicit scheme blows up |
+| $`\theta`$ | the dial: the new row's share of the bend | 0, 1/2 or 1 | at 1/2 or more, stable at any $`r`$ |
+| $`k`$, $`s`$ | wave number (wiggles along the bar); $`\sin^2(k\pi h/2)`$ | 1 (smooth) to 49 (zigzag) | sharper wave: exact and implicit steps damp it more; Crank-Nicolson barely does |
+| $`g`$ | amplification factor: what one step multiplies wave $`k`$ by | 0.980460 ($`k = 1`$); −0.818019 ($`k = 49`$) | above 1 in size: blow-up |
+| $`\lambda_k`$ | the exact decay rate of grid wave $`k`$, per s | 4α s/h² | — |
+| $`z`$ | $`-\lambda_k\Delta t`$: the exponent of the exact decay over one step, $`e^z`$ | −0.019733 for $`k = 1`$ | — |
+| $`\tau`$ | truncation error: what the exact solution leaves over in the scheme | of order $`\Delta t^2 + h^2`$ at $`\theta = \tfrac12`$ | — |
 
 ### When it holds
 
-- **The dial is at least one half.** Below it the scheme blows up once $r$ passes $1/(2 - 4\theta)$. At $\theta = 0.4$ and $r = 5$ the bar reaches 190.8 °C, hotter than it started.
-- **The dial is exactly one half, for second order.** Any other setting leaves a first-order error. At $\theta = 0.6$ the error only halves when the step halves.
+- **The dial is at least one half.** Below it the scheme blows up once $`r`$ passes $`1/(2 - 4\theta)`$. At $`\theta = 0.4`$ and $`r = 5`$ the bar reaches 190.8 °C, hotter than it started.
+- **The dial is exactly one half, for second order.** Any other setting leaves a first-order error. At $`\theta = 0.6`$ the error only halves when the step halves.
 - **The start is smooth, or the start is damped.** A jump puts weight on the sharpest waves, which Crank-Nicolson barely damps. Undamped, the first step reads −7.3 °C beside the ice.
-- **Constant diffusivity and even spacing.** The factor $g$ needs both. With varying $\alpha$ the scheme still runs, but the stability proof needs the energy method instead.
+- **Constant diffusivity and even spacing.** The factor $`g`$ needs both. With varying $`\alpha`$ the scheme still runs, but the stability proof needs the energy method instead.
 
 ---
 
@@ -91,63 +97,67 @@ $$g = \frac{1 - (1-\theta)\,4rs}{1 + \theta\,4rs}, \qquad s = \sin^2\!\Big(\frac
 
 ### Step 0: in time, Crank-Nicolson is the trapezoidal rule
 
-Hold the space grid fixed. The 49 readings then obey 49 ordinary differential equations: each reading's rate is $\alpha/h^2$ times its bend. The theta scheme is a time-stepping rule for that system. At $\theta = 1$ it is backward Euler. At $\theta = \tfrac12$ it averages the slope at the start and the slope at the end of the step: the **trapezoidal rule**. The stiff-equations card compares those two on one fast equation ([Stiff equations](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md)). Here the grid supplies 49 of them, and the zigzag wave is the fast one.
+Hold the space grid fixed. The 49 readings then obey 49 ordinary differential equations: each reading's rate is $`\alpha/h^2`$ times its bend. The theta scheme is a time-stepping rule for that system. At $`\theta = 1`$ it is backward Euler. At $`\theta = \tfrac12`$ it averages the slope at the start and the slope at the end of the step: the **trapezoidal rule**. The stiff-equations card compares those two on one fast equation ([Stiff equations](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md)). Here the grid supplies 49 of them, and the zigzag wave is the fast one.
 
 The finance wing already runs this scheme on a log-price grid, with the same growth-factor test ([Pricing on a grid](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)). This card does the heat equation in its own terms.
 
 ### Step 1: centring at the half step cancels the first-order error
 
-Put the exact solution into the scheme. The amount by which it fails to satisfy it is the **truncation error** $\tau$ ([Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md)). Expand everything by Taylor's theorem about the half step, $t_{n+1/2} = t_n + \Delta t/2$. The time difference and the blended bend agree term by term, except for:
+Put the exact solution into the scheme. The amount by which it fails to satisfy it is the **truncation error** $`\tau`$ ([Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md)). Expand everything by Taylor's theorem about the half step, $`t_{n+1/2} = t_n + \Delta t/2`$. The time difference and the blended bend agree term by term, except for:
 
-$$\tau = \big(\tfrac12 - \theta\big)\,\Delta t\,u_{tt} \;-\; \frac{\Delta t^2}{12}\,u_{ttt} \;-\; \frac{\alpha h^2}{12}\,u_{xxxx} \;+\; \dots$$
+```math
+\tau = \big(\tfrac12 - \theta\big)\,\Delta t\,u_{tt} \;-\; \frac{\Delta t^2}{12}\,u_{ttt} \;-\; \frac{\alpha h^2}{12}\,u_{xxxx} \;+\; \dots
+```
 
-The first term is $+\tfrac12\Delta t\,u_{tt}$ for the explicit scheme and $-\tfrac12\Delta t\,u_{tt}$ for the implicit one. They are equal in size and opposite in sign, so the even average cancels them. That is the whole reason for one half. Every other dial leaves the first term, which is first order in $\Delta t$.
+The first term is $`+\tfrac12\Delta t\,u_{tt}`$ for the explicit scheme and $`-\tfrac12\Delta t\,u_{tt}`$ for the implicit one. They are equal in size and opposite in sign, so the even average cancels them. That is the whole reason for one half. Every other dial leaves the first term, which is first order in $`\Delta t`$.
 
 <details>
 <summary>Detailed proof: the truncation error of the theta scheme</summary>
 
-Every derivative below is taken at the half step, $t_{n+1/2}$. Taylor's theorem there gives $u^{n+1} - u^n = \Delta t\,u_t + \tfrac{\Delta t^3}{24}u_{ttt} + O(\Delta t^5)$, the even powers cancelling. So the time difference is $u_t + \tfrac{\Delta t^2}{24}u_{ttt}$.
+Every derivative below is taken at the half step, $`t_{n+1/2}`$. Taylor's theorem there gives $`u^{n+1} - u^n = \Delta t\,u_t + \tfrac{\Delta t^3}{24}u_{ttt} + O(\Delta t^5)`$, the even powers cancelling. So the time difference is $`u_t + \tfrac{\Delta t^2}{24}u_{ttt}`$.
 
-For the bend, the space difference gives $u_{xx} + \tfrac{h^2}{12}u_{xxxx} + O(h^4)$ on each row. Blend the two rows: $\theta\,u_{xx}^{n+1} + (1-\theta)\,u_{xx}^n = u_{xx} + (\theta - \tfrac12)\,\Delta t\,u_{xxt} + \tfrac{\Delta t^2}{8}u_{xxtt} + O(\Delta t^3)$.
+For the bend, the space difference gives $`u_{xx} + \tfrac{h^2}{12}u_{xxxx} + O(h^4)`$ on each row. Blend the two rows: $`\theta\,u_{xx}^{n+1} + (1-\theta)\,u_{xx}^n = u_{xx} + (\theta - \tfrac12)\,\Delta t\,u_{xxt} + \tfrac{\Delta t^2}{8}u_{xxtt} + O(\Delta t^3)`$.
 
-Subtract $\alpha$ times the blend from the time difference. The heat equation gives $u_t = \alpha u_{xx}$, so $\alpha u_{xxt} = u_{tt}$ and $\alpha u_{xxtt} = u_{ttt}$. What is left is
-$$\tau = (\tfrac12 - \theta)\,\Delta t\,u_{tt} + \big(\tfrac{1}{24} - \tfrac18\big)\Delta t^2 u_{ttt} - \tfrac{\alpha h^2}{12}u_{xxxx} + \dots$$
-The middle coefficient is $-\tfrac{1}{12}$, which gives the formula in the body.
+Subtract $`\alpha`$ times the blend from the time difference. The heat equation gives $`u_t = \alpha u_{xx}`$, so $`\alpha u_{xxt} = u_{tt}`$ and $`\alpha u_{xxtt} = u_{ttt}`$. What is left is
+
+$`\displaystyle \tau = (\tfrac12 - \theta)\,\Delta t\,u_{tt} + \big(\tfrac{1}{24} - \tfrac18\big)\Delta t^2 u_{ttt} - \tfrac{\alpha h^2}{12}u_{xxxx} + \dots`$
+
+The middle coefficient is $`-\tfrac{1}{12}`$, which gives the formula in the body.
 
 </details>
 
-The code checks this on the smoothest wave. One step multiplies it by 0.980460; the exact decay is 0.980461. Their difference is −6.278e-7, and the Taylor term $z^3/12$ predicts −6.403e-7. The small gap between the two is the next Taylor term.
+The code checks this on the smoothest wave. One step multiplies it by 0.980460; the exact decay is 0.980461. Their difference is −6.278e-7, and the Taylor term $`z^3/12`$ predicts −6.403e-7. The small gap between the two is the next Taylor term.
 
 ### Step 2: each wave is multiplied by its own factor
 
-On this grid the sine waves $\sin(k\pi x_j)$, $k = 1$ to 49, pass through the scheme without changing shape. The bend of wave $k$ is exactly $-4s/h^2$ times the wave, with $s = \sin^2(k\pi h/2)$. Put that into both rows of the scheme: the new row carries $1 + \theta\,4rs$ and the old row $1 - (1-\theta)\,4rs$. Their ratio is $g$. This is the von Neumann method from [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md), applied to the whole family at once.
+On this grid the sine waves $`\sin(k\pi x_j)`$, $`k = 1`$ to 49, pass through the scheme without changing shape. The bend of wave $`k`$ is exactly $`-4s/h^2`$ times the wave, with $`s = \sin^2(k\pi h/2)`$. Put that into both rows of the scheme: the new row carries $`1 + \theta\,4rs`$ and the old row $`1 - (1-\theta)\,4rs`$. Their ratio is $`g`$. This is the von Neumann method from [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md), applied to the whole family at once.
 
-At $r = 5$ the two ends of the range look like this:
+At $`r = 5`$ the two ends of the range look like this:
 
-| Wave | 4rs | Explicit $g$ | Crank-Nicolson $g$ | Implicit $g$ | Exact decay |
+| Wave | 4rs | Explicit $`g`$ | Crank-Nicolson $`g`$ | Implicit $`g`$ | Exact decay |
 | --- | --- | --- | --- | --- | --- |
-| $k = 1$, one hump | 0.019733 | 0.980267 | 0.980460 | 0.980649 | 0.980461 |
-| $k = 49$, zigzag | 19.980267 | −18.980267 | −0.818019 | 0.047664 | 2.102e-9 |
+| $`k = 1`$, one hump | 0.019733 | 0.980267 | 0.980460 | 0.980649 | 0.980461 |
+| $`k = 49`$, zigzag | 19.980267 | −18.980267 | −0.818019 | 0.047664 | 2.102e-9 |
 
 The smooth wave is copied well by all three. The zigzag should vanish almost at once. The explicit step multiplies it by −18.980267 instead. Crank-Nicolson multiplies it by −0.818019: most of it survives, with its sign flipped. Only the implicit step gets near zero.
 
 ### Step 3: stable at any step when the dial is one half or more
 
-A scheme is stable when no wave grows: $|g| \le 1$ for every $k$. Since $4rs \ge 0$, the factor is never above 1. The only danger is $g < -1$, which works out to $(1 - 2\theta)\,4rs > 2$.
+A scheme is stable when no wave grows: $`|g| \le 1`$ for every $`k`$. Since $`4rs \ge 0`$, the factor is never above 1. The only danger is $`g < -1`$, which works out to $`(1 - 2\theta)\,4rs > 2`$.
 
-- For $\theta \ge \tfrac12$ the left side is zero or negative, so this never happens, whatever the step. The scheme is **unconditionally stable**.
-- For $\theta < \tfrac12$ the worst case is $s$ near 1, so the scheme needs $r \le 1/(2 - 4\theta)$. That is 0.50 for the explicit scheme and 2.50 for $\theta = 0.4$.
+- For $`\theta \ge \tfrac12`$ the left side is zero or negative, so this never happens, whatever the step. The scheme is **unconditionally stable**.
+- For $`\theta < \tfrac12`$ the worst case is $`s`$ near 1, so the scheme needs $`r \le 1/(2 - 4\theta)`$. That is 0.50 for the explicit scheme and 2.50 for $`\theta = 0.4`$.
 
-At $r = 5$, $\theta = 0.4$ gives the zigzag the factor −1.221978. Eighteen steps take the largest reading to 1.908e2 °C. The explicit scheme reaches 1.331e23.
+At $`r = 5`$, $`\theta = 0.4`$ gives the zigzag the factor −1.221978. Eighteen steps take the largest reading to 1.908e2 °C. The explicit scheme reaches 1.331e23.
 
 <details>
 <summary>Detailed proof: |g| ≤ 1 for every wave exactly when θ ≥ 1/2 or r is small enough</summary>
 
-Write $p = 4rs$, with $0 < p < 4r$. Then $g = (1 - (1-\theta)p)/(1 + \theta p)$, and the denominator is positive.
+Write $`p = 4rs`$, with $`0 < p < 4r`$. Then $`g = (1 - (1-\theta)p)/(1 + \theta p)`$, and the denominator is positive.
 
-Upper side: $g \le 1$ means $1 - (1-\theta)p \le 1 + \theta p$, that is $-p \le 0$. True for every wave.
+Upper side: $`g \le 1`$ means $`1 - (1-\theta)p \le 1 + \theta p`$, that is $`-p \le 0`$. True for every wave.
 
-Lower side: $g \ge -1$ means $1 - (1-\theta)p \ge -1 - \theta p$, that is $(1 - 2\theta)\,p \le 2$. For $\theta \ge \tfrac12$ the left side is at most 0, so it holds for all $p$. For $\theta < \tfrac12$ it holds for all waves only if $(1 - 2\theta)\cdot 4r \le 2$, the sharpest wave having $s$ just below 1: $r \le 1/(2 - 4\theta)$.
+Lower side: $`g \ge -1`$ means $`1 - (1-\theta)p \ge -1 - \theta p`$, that is $`(1 - 2\theta)\,p \le 2`$. For $`\theta \ge \tfrac12`$ the left side is at most 0, so it holds for all $`p`$. For $`\theta < \tfrac12`$ it holds for all waves only if $`(1 - 2\theta)\cdot 4r \le 2`$, the sharpest wave having $`s`$ just below 1: $`r \le 1/(2 - 4\theta)`$.
 
 With stability and the consistency of Step 1, the Lax equivalence theorem gives convergence ([Finite differences on a grid](02-finite-differences-consistency-stability-and-convergence.md)).
 
@@ -155,12 +165,12 @@ With stability and the consistency of Step 1, the Lax equivalence theorem gives 
 
 ### Step 4: stable is not the same as damped
 
-The language of [Stiffness](../06-ODE%20Solvers/05-stiffness-a-stability-and-the-dahlquist-barriers.md), on this wing's ODE-solver shelf, names the difference. A method is **A-stable** when it shrinks every decaying wave at every step size. It is **L-stable** when, in addition, its factor goes to 0 as a wave gets infinitely fast. Let $4rs$ grow without limit in the formula for $g$: the factor tends to $(\theta - 1)/\theta$.
+The language of [Stiffness](../06-ODE%20Solvers/05-stiffness-a-stability-and-the-dahlquist-barriers.md), on this wing's ODE-solver shelf, names the difference. A method is **A-stable** when it shrinks every decaying wave at every step size. It is **L-stable** when, in addition, its factor goes to 0 as a wave gets infinitely fast. Let $`4rs`$ grow without limit in the formula for $`g`$: the factor tends to $`(\theta - 1)/\theta`$.
 
-| $r$ | 1 | 5 | 50 | 5000 |
+| $`r`$ | 1 | 5 | 50 | 5000 |
 | --- | --- | --- | --- | --- |
-| Crank-Nicolson, zigzag $g$ | −0.332895 | −0.818019 | −0.980179 | −0.999800 |
-| Implicit, zigzag $g$ | 0.200158 | 0.047664 | 0.004980 | 0.000050 |
+| Crank-Nicolson, zigzag $`g`$ | −0.332895 | −0.818019 | −0.980179 | −0.999800 |
+| Implicit, zigzag $`g`$ | 0.200158 | 0.047664 | 0.004980 | 0.000050 |
 
 Crank-Nicolson tends to −1: A-stable but not L-stable. The longer the step, the less it damps the sharpest waves. Backward Euler tends to 0: L-stable.
 
@@ -168,12 +178,12 @@ This matters here because of the start. The bar is 100 °C next to an end held a
 
 ### Step 5: damp the start, keep the order
 
-The repair, named after Rannacher, replaces the first step with two backward Euler half-steps. Each half-step has $r = 2.5$:
+The repair, named after Rannacher, replaces the first step with two backward Euler half-steps. Each half-step has $`r = 2.5`$:
 
 - The zigzag is multiplied by 0.008279 over the pair, so it is gone.
 - The smooth wave is multiplied by 0.980556 against the exact 0.980461. That one step is only first-order accurate.
 
-One first-order step makes a local error of order $\Delta t^2$, the same size as the whole run's Crank-Nicolson error. So the run stays second order. The damped run never dips below 0 °C. Rannacher proved the general result for diffusion problems with rough data; Giles and Carter gave the analysis for this start-up.
+One first-order step makes a local error of order $`\Delta t^2`$, the same size as the whole run's Crank-Nicolson error. So the run stays second order. The damped run never dips below 0 °C. Rannacher proved the general result for diffusion problems with rough data; Giles and Carter gave the analysis for this start-up.
 
 The errors below are measured against the grid's exact answer in time, so they hold the time error alone. They are the largest error over the 49 nodes at 1 pm.
 
@@ -182,9 +192,9 @@ The errors below are measured against the grid's exact answer in time, so they h
 | Crank-Nicolson | 6.756e0 | 1.529e-1 | 3.850e-3 | 9.627e-4 | 2.407e-4 |
 | Crank-Nicolson, damped start | 6.751e-2 | 8.104e-3 | 2.022e-3 | 5.051e-4 | 1.263e-4 |
 | Implicit | 1.351e0 | 6.687e-1 | 3.321e-1 | 1.654e-1 | 8.254e-2 |
-| $\theta = 0.6$ | 2.071e-1 | 1.176e-1 | 6.235e-2 | 3.206e-2 | 1.625e-2 |
+| $`\theta = 0.6`$ | 2.071e-1 | 1.176e-1 | 6.235e-2 | 3.206e-2 | 1.625e-2 |
 
-The ratios as the step halves tell the order. The damped run gives 8.33, then 4.01, 4.00, 4.00: second order. The implicit run gives 2.02, 2.01, 2.01, 2.00, and $\theta = 0.6$ climbs to 1.97: first order. Plain Crank-Nicolson gives 44.19 and 39.71 at long steps, where the flipped zigzag still lingers, then 4.00 once the steps are short. Rounding error stays far below all of these.
+The ratios as the step halves tell the order. The damped run gives 8.33, then 4.01, 4.00, 4.00: second order. The implicit run gives 2.02, 2.01, 2.01, 2.00, and $`\theta = 0.6`$ climbs to 1.97: first order. Plain Crank-Nicolson gives 44.19 and 39.71 at long steps, where the flipped zigzag still lingers, then 4.00 once the steps are short. Rounding error stays far below all of these.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -203,15 +213,15 @@ Orange: plain Crank-Nicolson. Teal: damped start. Dark blue: implicit. A slope o
 
 Each step of a dial above 0 is a tridiagonal system. The Thomas algorithm solves it in 8 flops (floating-point operations) per unknown, less 7: 385 for the 49 unknowns here. One sweep down removes each unknown's link to the node before it; one sweep back up reads the answers off.
 
-The sweep never divides by anything small. The diagonal, $1 + 2\theta r$, is larger than the two off-diagonal entries together, $2\theta r$. Here the sweep's pivots fall from 6 and settle at $3 + \sqrt{2.75} = 4.658312$.
+The sweep never divides by anything small. The diagonal, $`1 + 2\theta r`$, is larger than the two off-diagonal entries together, $`2\theta r`$. Here the sweep's pivots fall from 6 and settle at $`3 + \sqrt{2.75} = 4.658312`$.
 
 | Run to 1 pm | Steps | Flops | Largest time error |
 | --- | --- | --- | --- |
-| Explicit, 20 s ($r = 0.5$) | 180 | 44100 | 1.313e-1 |
+| Explicit, 20 s ($`r = 0.5`$) | 180 | 44100 | 1.313e-1 |
 | Crank-Nicolson, 200 s | 18 | 11340 | 1.529e-1 |
 | Crank-Nicolson with damped start, 200 s | 18 | 11480 | 8.104e-3 |
 
-The damped run costs 11480 flops against 44100 for the explicit run, and its error is far smaller. Even the explicit run rings a little: at $r = 0.5$ its zigzag factor sits just inside −1.
+The damped run costs 11480 flops against 44100 for the explicit run, and its error is far smaller. Even the explicit run rings a little: at $`r = 0.5`$ its zigzag factor sits just inside −1.
 
 The space grid adds its own error. The grid's exact answer at the centre is 87.488531 °C, against the true bar's 87.518521, a space error of −2.999e-2 °C. The damped run's centre, 87.496635 °C, is off the true bar by −2.189e-2 °C: that space error plus a time error of +8.104e-3 °C. The space error falls fourfold as h halves, to −7.496e-3 °C at 1 cm and −1.874e-3 °C at 5 mm. A finer space grid, not a shorter time step, is the next thing to buy.
 
@@ -219,15 +229,15 @@ The space grid adds its own error. The grid's exact answer at the centre is 87.4
 
 ## Worked numbers, by hand
 
-The first Crank-Nicolson step at node 1, 2 cm from the ice, with $\Delta t = 200$ s.
+The first Crank-Nicolson step at node 1, 2 cm from the ice, with $`\Delta t = 200`$ s.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| time step in grid units, $r$ | 1e-5 × 200 ÷ 0.02² | 5 |
-| the row of the system | $-r/2$, $1 + r$, $-r/2$ | −2.5, 6, −2.5 |
+| time step in grid units, $`r`$ | 1e-5 × 200 ÷ 0.02² | 5 |
+| the row of the system | $`-r/2`$, $`1 + r`$, $`-r/2`$ | −2.5, 6, −2.5 |
 | right side, node 1 | 100 + 2.5 × (0 − 2 × 100 + 100) | −150 |
 | right side, inner nodes | 100 + 2.5 × (100 − 200 + 100) | 100 |
-| sweep down, row 1: the stored link to node 2, $c'_1$, and right side, $d'_1$ | −2.5 ÷ 6; −150 ÷ 6 | −0.416667; −25 |
+| sweep down, row 1: the stored link to node 2, $`c'_1`$, and right side, $`d'_1`$ | −2.5 ÷ 6; −150 ÷ 6 | −0.416667; −25 |
 | node 2, from the full sweep | — | 42.395980 |
 | sweep back up, node 1 | −25 + 0.416667 × 42.395980 | **−7.335008** |
 
@@ -237,8 +247,8 @@ After one step of 200 s the grid says the steel 2 cm from the ice is at −7.3 �
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Explicit steps of 200 s ($\theta = 0$, $r = 5$) | largest reading 1.331e23 °C | the zigzag's factor is −18.980267 |
-| A dial below one half ($\theta = 0.4$) | largest reading 1.908e2 °C | stable only for $r \le 2.50$; the zigzag's factor is −1.221978 |
+| Explicit steps of 200 s ($`\theta = 0`$, $`r = 5`$) | largest reading 1.331e23 °C | the zigzag's factor is −18.980267 |
+| A dial below one half ($`\theta = 0.4`$) | largest reading 1.908e2 °C | stable only for $`r \le 2.50`$; the zigzag's factor is −1.221978 |
 | No damped start | −7.3 °C at node 1 after one step | the jump's sharp waves flip sign, factor −0.818019 |
 | Implicit steps for safety | time error 6.687e-1 at 200 s | first order; the damped run's is 8.104e-3 |
 
@@ -246,7 +256,7 @@ After one step of 200 s the grid says the steel 2 cm from the ice is at −7.3 �
 
 ## Code, from first principles, and it actually runs
 
-The code holds the bar on 49 nodes and takes three roads to every answer. Road one steps the theta scheme, each step solved by a written-out Thomas sweep. Road two never solves anything: it splits the starting bar into the grid's 49 sine waves and multiplies each by its factor $g$ once per step. Road three is the true bar, summed as a Fourier series, and checked by the grid's exact-in-time centre closing in on it fourfold each time h halves. The asserts check that roads one and two agree to 1e-9, that the space error falls at order 2, that measured factors equal the formula, that Crank-Nicolson's error on the smooth wave matches the Taylor term $z^3/12$, that the observed orders are 2 and 1, and that the unstable dials blow up.
+The code holds the bar on 49 nodes and takes three roads to every answer. Road one steps the theta scheme, each step solved by a written-out Thomas sweep. Road two never solves anything: it splits the starting bar into the grid's 49 sine waves and multiplies each by its factor $`g`$ once per step. Road three is the true bar, summed as a Fourier series, and checked by the grid's exact-in-time centre closing in on it fourfold each time h halves. The asserts check that roads one and two agree to 1e-9, that the space error falls at order 2, that measured factors equal the formula, that Crank-Nicolson's error on the smooth wave matches the Taylor term $`z^3/12`$, that the observed orders are 2 and 1, and that the unstable dials blow up.
 
 ### Python
 
@@ -581,11 +591,11 @@ The two outputs match line for line.
 
 Lean proves the theta scheme's wave factor, its stability rule, its second-order test and its limit for every dial, plus the hand arithmetic exactly.
 
-- Take a constant diffusivity $\alpha$, even spacing $h$, any time step and a dial $\theta$ from 0 to 1. One theta step multiplies every wave $\sin(k\pi x)$ by its factor $g$.
-- No wave grows, $|g| \le 1$ for every $k$, exactly when $\theta \ge \tfrac12$ or $r \le 1/(2 - 4\theta)$.
-- The one-step factor differs from the exact decay $e^z$ by order $z^3$ as $z$ goes to 0 exactly when $\theta = \tfrac12$.
-- For a dial above 0, $g$ tends to $(\theta - 1)/\theta$ as $4rs$ grows without limit. That limit is 0 only for the implicit scheme, and −1 for Crank-Nicolson.
-- The hand arithmetic holds exactly: $r = 5$, the 20 s limit and step counts, the row, right sides and first sweep values, both step limits and the flops.
+- Take a constant diffusivity $`\alpha`$, even spacing $`h`$, any time step and a dial $`\theta`$ from 0 to 1. One theta step multiplies every wave $`\sin(k\pi x)`$ by its factor $`g`$.
+- No wave grows, $`|g| \le 1`$ for every $`k`$, exactly when $`\theta \ge \tfrac12`$ or $`r \le 1/(2 - 4\theta)`$.
+- The one-step factor differs from the exact decay $`e^z`$ by order $`z^3`$ as $`z`$ goes to 0 exactly when $`\theta = \tfrac12`$.
+- For a dial above 0, $`g`$ tends to $`(\theta - 1)/\theta`$ as $`4rs`$ grows without limit. That limit is 0 only for the implicit scheme, and −1 for Crank-Nicolson.
+- The hand arithmetic holds exactly: $`r = 5`$, the 20 s limit and step counts, the row, right sides and first sweep values, both step limits and the flops.
 
 The Taylor terms, the damped start, the measured orders, the full sweep and the figures are left to the Python and Rust checks.
 
@@ -835,19 +845,19 @@ example : 18 * (385 + 245) = 11340 ∧ 2 * 385 + 17 * (385 + 245) = 11480 ∧
 
 > [!TIP]
 > **Try changing**
-> - **Guess first: is a dial of 0.5001 still second order?** Add `("theta 0.5001", 0.5001, True)` to the order table's list. Answer: its errors almost match the damped Crank-Nicolson run's, with ratios 8.34, 4.03, 4.04, 4.06. The ratios creep up because a first-order term, 0.0001 times $\Delta t\,u_{tt}$, starts to show at short steps.
+> - **Guess first: is a dial of 0.5001 still second order?** Add `("theta 0.5001", 0.5001, True)` to the order table's list. Answer: its errors almost match the damped Crank-Nicolson run's, with ratios 8.34, 4.03, 4.04, 4.06. The ratios creep up because a first-order term, 0.0001 times $`\Delta t\,u_{tt}`$, starts to show at short steps.
 > - **Guess first: what about 0.55?** Add `("theta 0.55", 0.55, True)` the same way. Answer: ratios 2.02, 2.00, 2.00, 2.00. Five hundredths off one half is enough to lose second order.
-> - **Guess first: what happens just past the explicit limit?** Change `run(20.0, 0.0)` to `run(22.5, 0.0)`, so $r = 0.5625$. Answer: the centre reads about 2.1e14 °C at 1 pm.
-> - **Guess first: does a dial of 0.45 survive $r = 5$?** Change `(0.0, 0.4)` in the what-breaks loop to `(0.0, 0.45)`. Answer: its limit is $r \le 5.00$, exactly our step, so the zigzag factor is −0.999802. Nothing blows up, the largest reading is 8.752e1 °C, and the assert stops the run.
+> - **Guess first: what happens just past the explicit limit?** Change `run(20.0, 0.0)` to `run(22.5, 0.0)`, so $`r = 0.5625`$. Answer: the centre reads about 2.1e14 °C at 1 pm.
+> - **Guess first: does a dial of 0.45 survive $`r = 5`$?** Change `(0.0, 0.4)` in the what-breaks loop to `(0.0, 0.45)`. Answer: its limit is $`r \le 5.00`$, exactly our step, so the zigzag factor is −0.999802. Nothing blows up, the largest reading is 8.752e1 °C, and the assert stops the run.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Reading "unconditionally stable" as "safe at any step".** Stability only promises that nothing grows. Crank-Nicolson's factor for sharp waves tends to −1, so a jump in the start survives as a sign-flipping wiggle: −7.3 °C beside the ice after one 200 s step. Damp the start, or keep $r$ small where the data is rough.
+> **Reading "unconditionally stable" as "safe at any step".** Stability only promises that nothing grows. Crank-Nicolson's factor for sharp waves tends to −1, so a jump in the start survives as a sign-flipping wiggle: −7.3 °C beside the ice after one 200 s step. Damp the start, or keep $`r`$ small where the data is rough.
 >
-> - **Setting the dial a little below one half to save work.** Nothing is saved: the cost per step is the same, and at $\theta = 0.4$, $r = 5$, the bar reaches 1.908e2 °C.
+> - **Setting the dial a little below one half to save work.** Nothing is saved: the cost per step is the same, and at $`\theta = 0.4`$, $`r = 5`$, the bar reaches 1.908e2 °C.
 > - **Using full implicit steps to be safe.** They are safe and first order: a time error of 6.687e-1 at 200 s, against 8.104e-3 damped.
 > - **Judging the order from long steps.** Plain Crank-Nicolson's error ratios are 44.19 and 39.71 at 400 and 200 s, which looks better than second order. It is the lingering zigzag dying, not accuracy.
 > - **Blaming the time step for the space error.** At 200 s the damped run's time error is 8.104e-3, but its centre is off the true bar by −2.189e-2. Shorter steps cannot remove the grid's −2.999e-2.

@@ -41,32 +41,38 @@ Orange: today's curve. Green: one year on, shock one standard deviation up. Dark
 
 The model says each forward rate moves, over a tiny slice of time, by a drift plus a volatility times a random kick:
 
-$$df(t,T) = \alpha(t,T)\,dt + \sigma(t,T)\,dW(t).$$
+```math
+df(t,T) = \alpha(t,T)\,dt + \sigma(t,T)\,dW(t).
+```
 
 No-arbitrage then forces the drift:
 
-$$\boxed{\;\alpha(t,T) = \sigma(t,T)\int_t^T \sigma(t,u)\,du\;}$$
+```math
+\boxed{\;\alpha(t,T) = \sigma(t,T)\int_t^T \sigma(t,u)\,du\;}
+```
 
 **Read it aloud:** the drift of the forward rate for date T equals its own volatility times the area under the volatility curve from now out to T.
 
-This card's volatility is $\sigma(t,T) = \sigma\,e^{-a(T-t)}$: a front volatility of 1 percentage point per square-root year that fades at speed 0.3 a year as the start date moves out. Putting it in gives the drift in closed form:
+This card's volatility is $`\sigma(t,T) = \sigma\,e^{-a(T-t)}`$: a front volatility of 1 percentage point per square-root year that fades at speed 0.3 a year as the start date moves out. Putting it in gives the drift in closed form:
 
-$$\alpha(t,T) = \frac{\sigma^2}{a}\,e^{-a(T-t)}\left(1 - e^{-a(T-t)}\right) = \sigma^2\,e^{-a(T-t)}\,b(T-t), \qquad b(h) = \frac{1 - e^{-ah}}{a}.$$
+```math
+\alpha(t,T) = \frac{\sigma^2}{a}\,e^{-a(T-t)}\left(1 - e^{-a(T-t)}\right) = \sigma^2\,e^{-a(T-t)}\,b(T-t), \qquad b(h) = \frac{1 - e^{-ah}}{a}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $T$ | $t$ is now, in years from today; $T$ is the start date of the instant loan the forward rate is for | $t = 0$, $T = 5$ | a later $T$ adds more volatility area but fades its own volatility |
-| $f(t,T)$ | the **forward rate**: the rate fixed at time $t$ for an instant loan starting at $T$; today's curve is $f(0,T) = 0.05 - 0.01\,e^{-0.3T}$ | $f(0,5) = 4.78\%$ | not an input to the drift at all |
-| $P(t,T)$ | price at time $t$ of $1 paid at $T$: $P(t,T) = e^{-\int_t^T f(t,u)\,du}$ | $P(0,5) = 0.799231739$ | a higher forward curve lowers it |
-| $r(t)$ | the **short rate**: the front of the curve, $r(t) = f(t,t)$, the rate on a loan starting now | $r(1) = 5.13\%$ after a one-sd up shock | — |
-| $D(t)$ | the bank's discount along one path of rates, $D(t) = e^{-\int_0^t r(u)\,du}$: one over what $1 grows to when rolled at the short rate | random; its average with the bond is the test | — |
-| $\sigma(t,T)$, $\sigma$, $a$ | volatility of the forward for date $T$, in rate units per square-root year; $\sigma$ is its front value and $a$ its fading speed | $\sigma = 0.01$, $a = 0.3$, $\sigma(0,5) = 0.0022313$ | drift scales with $\sigma^2$; a bigger $a$ shrinks it |
-| $W$, $dW$, $dt$ | the single shared random shock (a Brownian motion); $dW$ is its kick over a tiny slice of time $dt$, mean zero, spread $\sqrt{dt}$ | one draw moves every maturity | — |
-| $\alpha(t,T)$ | the **drift** of the forward rate, per year: forced, not chosen | $\alpha(0,5) = 0.0000577810$, about 0.58 bp a year | — |
-| $A(t,T)$ | the **volatility area** $\int_t^T \sigma(t,u)\,du$: also the volatility of the bond $P(t,T)$ | $A(0,5) = 0.0258957$ | more area, more drift |
-| $b(h)$, $h$ | $h = T - t$ is time to the start date; $b(h)$ is the volatility area per unit of $\sigma$ | $b(5) = 2.58957$ | — |
-| $M$, $V$ | for the five-year bond held one year: $M$ is the total drift the curve piles up, $V$ the variance of the log of the discounted bond | $M = V/2 = 0.000304328$ | the theorem says $M$ must equal $V/2$ |
-| $\theta(t)$ | the Hull-White target drift of the short rate, rebuilt from this model | $\theta(1) = 0.01507520$ | — |
+| $`t`$, $`T`$ | $`t`$ is now, in years from today; $`T`$ is the start date of the instant loan the forward rate is for | $`t = 0`$, $`T = 5`$ | a later $`T`$ adds more volatility area but fades its own volatility |
+| $`f(t,T)`$ | the **forward rate**: the rate fixed at time $`t`$ for an instant loan starting at $`T`$; today's curve is $`f(0,T) = 0.05 - 0.01\,e^{-0.3T}`$ | $`f(0,5) = 4.78\%`$ | not an input to the drift at all |
+| $`P(t,T)`$ | price at time $`t`$ of $1 paid at $`T`$: $`P(t,T) = e^{-\int_t^T f(t,u)\,du}`$ | $`P(0,5) = 0.799231739`$ | a higher forward curve lowers it |
+| $`r(t)`$ | the **short rate**: the front of the curve, $`r(t) = f(t,t)`$, the rate on a loan starting now | $`r(1) = 5.13\%`$ after a one-sd up shock | — |
+| $`D(t)`$ | the bank's discount along one path of rates, $`D(t) = e^{-\int_0^t r(u)\,du}`$: one over what $1 grows to when rolled at the short rate | random; its average with the bond is the test | — |
+| $`\sigma(t,T)`$, $`\sigma`$, $`a`$ | volatility of the forward for date $`T`$, in rate units per square-root year; $`\sigma`$ is its front value and $`a`$ its fading speed | $`\sigma = 0.01`$, $`a = 0.3`$, $`\sigma(0,5) = 0.0022313`$ | drift scales with $`\sigma^2`$; a bigger $`a`$ shrinks it |
+| $`W`$, $`dW`$, $`dt`$ | the single shared random shock (a Brownian motion); $`dW`$ is its kick over a tiny slice of time $`dt`$, mean zero, spread $`\sqrt{dt}`$ | one draw moves every maturity | — |
+| $`\alpha(t,T)`$ | the **drift** of the forward rate, per year: forced, not chosen | $`\alpha(0,5) = 0.0000577810`$, about 0.58 bp a year | — |
+| $`A(t,T)`$ | the **volatility area** $`\int_t^T \sigma(t,u)\,du`$: also the volatility of the bond $`P(t,T)`$ | $`A(0,5) = 0.0258957`$ | more area, more drift |
+| $`b(h)`$, $`h`$ | $`h = T - t`$ is time to the start date; $`b(h)`$ is the volatility area per unit of $`\sigma`$ | $`b(5) = 2.58957`$ | — |
+| $`M`$, $`V`$ | for the five-year bond held one year: $`M`$ is the total drift the curve piles up, $`V`$ the variance of the log of the discounted bond | $`M = V/2 = 0.000304328`$ | the theorem says $`M`$ must equal $`V/2`$ |
+| $`\theta(t)`$ | the Hull-White target drift of the short rate, rebuilt from this model | $`\theta(1) = 0.01507520`$ | — |
 
 A basis point (bp) is one hundredth of a percent, 0.0001. The drift here is tiny next to the shakes: 0.58 bp a year against a five-year forward volatility of 22 bp per square-root year. Small is not the same as optional, as the what-breaks table shows.
 
@@ -81,7 +87,7 @@ xychart-beta
     line [0.00, 0.64, 0.83, 0.80, 0.70, 0.58, 0.46, 0.36, 0.27, 0.21, 0.16]
 ```
 
-The single line is $\alpha(0,T)$. It is zero at the front, where there is no volatility area yet. It is small at the far end, where the forward's own volatility has faded. It peaks between, at $T = \ln 2 / a = 2.31$ years, where it equals $\sigma^2/(4a) = 0.0000833333$ a year.
+The single line is $`\alpha(0,T)`$. It is zero at the front, where there is no volatility area yet. It is small at the far end, where the forward's own volatility has faded. It peaks between, at $`T = \ln 2 / a = 2.31`$ years, where it equals $`\sigma^2/(4a) = 0.0000833333`$ a year.
 
 ### When it holds
 
@@ -89,7 +95,7 @@ The single line is $\alpha(0,T)$. It is zero at the front, where there is no vol
 - **The shocks are continuous.** Brownian kicks, no jumps. A curve that can jump by 25 bp on a central-bank day needs extra drift terms for the jumps.
 - **The volatility is well behaved.** Here it is fixed in advance, so every rate is a bell curve and the discounted bond is a genuine fair bet. A bell curve has no floor: rates can go negative, here with small probability. Make volatility proportional to the rate itself and the forced drift grows like the rate squared: HJM proved such rates blow up in finite time.
 - **One curve prices everything.** Bonds, the bank account and the forwards all come from one curve. Since 2008 desks discount on one curve and project coupons on another; each extra curve carries its own drift condition.
-- **Today's curve is smooth.** The drift needs integrals and the Hull-White link needs a slope of $f(0,T)$. Quoted rates exist only at a few maturities, called pillars, so an interpolated curve comes first.
+- **Today's curve is smooth.** The drift needs integrals and the Hull-White link needs a slope of $`f(0,T)`$. Quoted rates exist only at a few maturities, called pillars, so an interpolated curve comes first.
 
 ---
 
@@ -97,79 +103,93 @@ The single line is $\alpha(0,T)$. It is zero at the front, where there is no vol
 
 ### Step 0: a bond bought with borrowed money must be a fair bet
 
-Borrow $799,231.74 at the short rate, rolling the loan every instant. Buy the five-year promise with it. Hold one year. The position cost nothing. If on average it ends worth more than the loan, that is money for nothing on average, and a bank that believed the model would do the trade in size. So the pricing rule demands that a bond, divided by the bank's rolled-up account, has no drift: it must be a **fair bet**, a quantity whose expected future value equals its value today. Everything below turns that one demand into a formula for $\alpha(t,T)$.
+Borrow $799,231.74 at the short rate, rolling the loan every instant. Buy the five-year promise with it. Hold one year. The position cost nothing. If on average it ends worth more than the loan, that is money for nothing on average, and a bank that believed the model would do the trade in size. So the pricing rule demands that a bond, divided by the bank's rolled-up account, has no drift: it must be a **fair bet**, a quantity whose expected future value equals its value today. Everything below turns that one demand into a formula for $`\alpha(t,T)`$.
 
 ### Step 1: a bond is the whole curve, summed
 
-A promise of $1 at $T$ is a chain of instant loans from now to $T$. Each link costs the forward rate for its date. Chain them and the log of the price is minus the area under the curve:
+A promise of $1 at $`T`$ is a chain of instant loans from now to $`T`$. Each link costs the forward rate for its date. Chain them and the log of the price is minus the area under the curve:
 
-$$\ln P(t,T) = -\int_t^T f(t,u)\,du.$$
+```math
+\ln P(t,T) = -\int_t^T f(t,u)\,du.
+```
 
 So the bond moves when the curve moves. How it moves is the next step.
 
 ### Step 2: the curve's move gives the bond's move
 
-Two things change $\ln P(t,T)$ over a tiny slice $dt$. The left end of the area slides right: the strip at $u = t$ drops out, and its height is $f(t,t) = r(t)$. That adds $r(t)\,dt$. And every forward inside the area moves by its own $df(t,u)$. Adding up those moves over $u$ from $t$ to $T$:
+Two things change $`\ln P(t,T)`$ over a tiny slice $`dt`$. The left end of the area slides right: the strip at $`u = t`$ drops out, and its height is $`f(t,t) = r(t)`$. That adds $`r(t)\,dt`$. And every forward inside the area moves by its own $`df(t,u)`$. Adding up those moves over $`u`$ from $`t`$ to $`T`$:
 
-$$d\ln P(t,T) = r(t)\,dt \;-\; \Big(\int_t^T \alpha(t,u)\,du\Big)dt \;-\; A(t,T)\,dW(t).$$
+```math
+d\ln P(t,T) = r(t)\,dt \;-\; \Big(\int_t^T \alpha(t,u)\,du\Big)dt \;-\; A(t,T)\,dW(t).
+```
 
-The shock term collects $\int_t^T \sigma(t,u)\,du$, which is why $A(t,T)$ is the bond's volatility.
+The shock term collects $`\int_t^T \sigma(t,u)\,du`$, which is why $`A(t,T)`$ is the bond's volatility.
 
 ### Step 3: Itô's correction when un-logging
 
-The bond is e raised to its log. When a quantity shakes, its exponential gains an extra half-variance of drift: Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) adds $\tfrac12 A^2\,dt$. So
+The bond is e raised to its log. When a quantity shakes, its exponential gains an extra half-variance of drift: Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) adds $`\tfrac12 A^2\,dt`$. So
 
-$$\frac{dP(t,T)}{P(t,T)} = \Big(r(t) - \int_t^T \alpha(t,u)\,du + \tfrac12 A(t,T)^2\Big)dt \;-\; A(t,T)\,dW(t).$$
+```math
+\frac{dP(t,T)}{P(t,T)} = \Big(r(t) - \int_t^T \alpha(t,u)\,du + \tfrac12 A(t,T)^2\Big)dt \;-\; A(t,T)\,dW(t).
+```
 
 ### Step 4: remove the bank's growth and demand zero drift
 
-Dividing by the bank account removes $r(t)\,dt$. What remains must have no drift, for every maturity $T$:
+Dividing by the bank account removes $`r(t)\,dt`$. What remains must have no drift, for every maturity $`T`$:
 
-$$\int_t^T \alpha(t,u)\,du = \tfrac12 A(t,T)^2.$$
+```math
+\int_t^T \alpha(t,u)\,du = \tfrac12 A(t,T)^2.
+```
 
-The total drift piled up between now and $T$ must exactly pay for the half-variance the bond gains from shaking.
+The total drift piled up between now and $`T`$ must exactly pay for the half-variance the bond gains from shaking.
 
 ### Step 5: differentiate in the maturity
 
-Both sides are zero at $T = t$, so they are equal for every $T$ exactly when their slopes in $T$ are equal. The slope of the left side is $\alpha(t,T)$. The slope of $\tfrac12 A^2$ is $A$ times the slope of $A$, which is $\sigma(t,T)$. Hence
+Both sides are zero at $`T = t`$, so they are equal for every $`T`$ exactly when their slopes in $`T`$ are equal. The slope of the left side is $`\alpha(t,T)`$. The slope of $`\tfrac12 A^2`$ is $`A`$ times the slope of $`A`$, which is $`\sigma(t,T)`$. Hence
 
-$$\alpha(t,T) = \sigma(t,T)\,A(t,T) = \sigma(t,T)\int_t^T\sigma(t,u)\,du.$$
+```math
+\alpha(t,T) = \sigma(t,T)\,A(t,T) = \sigma(t,T)\int_t^T\sigma(t,u)\,du.
+```
 
 The step also runs backwards: this drift makes every discounted bond drift-free. Nothing in the result mentions today's curve or anyone's forecast. Only the volatilities appear.
 
 <details>
 <summary>Detailed proof</summary>
 
-The body used two moves without justifying them. First, Step 2 swapped "integrate over maturities" with "add up random kicks over time". For volatility fixed in advance and continuous on the triangle $0 \le t \le T \le H$ (here $H = 10$ years), this is a stochastic Fubini theorem: approximate $\sigma(s,u)$ by step functions in $u$, where the swap is a finite sum; the Itô isometry (the mean square of a stochastic integral equals the integral of the squared integrand) makes the error vanish in mean square. The moving lower limit is handled by writing $\int_t^T f(t,u)\,du$ as $\int_0^T$ minus $\int_0^t$ and differentiating each piece; the piece lost at the left end is $f(t,t)\,dt = r(t)\,dt$.
+The body used two moves without justifying them. First, Step 2 swapped "integrate over maturities" with "add up random kicks over time". For volatility fixed in advance and continuous on the triangle $`0 \le t \le T \le H`$ (here $`H = 10`$ years), this is a stochastic Fubini theorem: approximate $`\sigma(s,u)`$ by step functions in $`u`$, where the swap is a finite sum; the Itô isometry (the mean square of a stochastic integral equals the integral of the squared integrand) makes the error vanish in mean square. The moving lower limit is handled by writing $`\int_t^T f(t,u)\,du`$ as $`\int_0^T`$ minus $`\int_0^t`$ and differentiating each piece; the piece lost at the left end is $`f(t,t)\,dt = r(t)\,dt`$.
 
-Second, zero drift makes the discounted bond a *local* fair bet only. With fixed volatility it is a genuine one: after the drift condition, the discounted bond equals $P(0,T)\exp\!\big(-\int_0^t A(s,T)\,dW(s) - \tfrac12\int_0^t A(s,T)^2\,ds\big)$. The exponent is a bell curve with a fixed variance, and e raised to a bell-curve draw minus half its variance averages exactly one. So the expected discounted bond is $P(0,T)$ at every date.
+Second, zero drift makes the discounted bond a *local* fair bet only. With fixed volatility it is a genuine one: after the drift condition, the discounted bond equals $`P(0,T)\exp\!\big(-\int_0^t A(s,T)\,dW(s) - \tfrac12\int_0^t A(s,T)^2\,ds\big)`$. The exponent is a bell curve with a fixed variance, and e raised to a bell-curve draw minus half its variance averages exactly one. So the expected discounted bond is $`P(0,T)`$ at every date.
 
-Third, the converse. If the discounted bond is a fair bet, its drift must be zero almost everywhere in time, because a continuous process can be split into a drift part and a fair-bet part in only one way. That gives Step 4's identity, and Step 5 follows. With several independent shocks the same argument runs shock by shock and the condition becomes $\alpha = \sum_i \sigma_i(t,T)\int_t^T\sigma_i(t,u)\,du$.
+Third, the converse. If the discounted bond is a fair bet, its drift must be zero almost everywhere in time, because a continuous process can be split into a drift part and a fair-bet part in only one way. That gives Step 4's identity, and Step 5 follows. With several independent shocks the same argument runs shock by shock and the condition becomes $`\alpha = \sum_i \sigma_i(t,T)\int_t^T\sigma_i(t,u)\,du`$.
 
 </details>
 
 ### Step 6: the exponential volatility is Hull-White
 
-With $\sigma(t,T) = \sigma e^{-a(T-t)}$, every forward rate is driven by the same single random number: the shocks so far, each faded by $e^{-a(t-u)}$. Call their sum the state. The whole curve at time $t$ is today's curve, plus the drift piled up, plus $\sigma e^{-a(T-t)}$ times the state. At $T = t$ that gives the short rate, so the state is $r(t)$ minus known pieces, and **the whole curve is a function of $r(t)$ alone.** Most volatility choices make the curve depend on the whole path of past shocks; this fading shape is what lets one number carry the state.
+With $`\sigma(t,T) = \sigma e^{-a(T-t)}`$, every forward rate is driven by the same single random number: the shocks so far, each faded by $`e^{-a(t-u)}`$. Call their sum the state. The whole curve at time $`t`$ is today's curve, plus the drift piled up, plus $`\sigma e^{-a(T-t)}`$ times the state. At $`T = t`$ that gives the short rate, so the state is $`r(t)`$ minus known pieces, and **the whole curve is a function of $`r(t)`$ alone.** Most volatility choices make the curve depend on the whole path of past shocks; this fading shape is what lets one number carry the state.
 
 The drift piled up at the front is a convexity term, the amount by which the average short rate sits above today's forward for the same date:
 
-$$\int_0^t \alpha(u,t)\,du = \frac{\sigma^2}{2a^2}\left(1 - e^{-at}\right)^2.$$
+```math
+\int_0^t \alpha(u,t)\,du = \frac{\sigma^2}{2a^2}\left(1 - e^{-at}\right)^2.
+```
 
-Differentiating $r(t)$ in time and replacing the state by $r(t)$ gives
+Differentiating $`r(t)`$ in time and replacing the state by $`r(t)`$ gives
 
-$$dr(t) = \big(\theta(t) - a\,r(t)\big)dt + \sigma\,dW(t), \qquad \theta(t) = \frac{\partial f(0,t)}{\partial t} + a\,f(0,t) + \frac{\sigma^2}{2a}\left(1 - e^{-2at}\right).$$
+```math
+dr(t) = \big(\theta(t) - a\,r(t)\big)dt + \sigma\,dW(t), \qquad \theta(t) = \frac{\partial f(0,t)}{\partial t} + a\,f(0,t) + \frac{\sigma^2}{2a}\left(1 - e^{-2at}\right).
+```
 
-That is the Hull-White model, with the $\theta(t)$ that fits today's curve exactly ([Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md)). HJM did not choose $a$ or $\sigma$; it took them as the volatility shape and returned the short-rate model.
+That is the Hull-White model, with the $`\theta(t)`$ that fits today's curve exactly ([Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md)). HJM did not choose $`a`$ or $`\sigma`$; it took them as the volatility shape and returned the short-rate model.
 
 <details>
 <summary>The algebra behind Step 6</summary>
 
-Write $c(t) = \frac{\sigma^2}{2a^2}(1 - e^{-at})^2$ and let $S(t) = \sigma\int_0^t e^{-a(t-u)}\,dW(u)$ be the faded shocks. Then $r(t) = f(0,t) + c(t) + S(t)$, and $dS = -a\,S\,dt + \sigma\,dW$. Differentiate: $dr = \big(\partial_t f(0,t) + c'(t) - a S\big)dt + \sigma\,dW$. Replace $S(t)$ by $r - f(0,t) - c(t)$: the drift becomes $\partial_t f(0,t) + a f(0,t) + c'(t) + a\,c(t) - a\,r$. Finally $c'(t) + a\,c(t) = \frac{\sigma^2}{a}(1-e^{-at})e^{-at} + \frac{\sigma^2}{2a}(1-e^{-at})^2 = \frac{\sigma^2}{2a}(1 - e^{-at})(1 + e^{-at}) = \frac{\sigma^2}{2a}(1 - e^{-2at})$.
+Write $`c(t) = \frac{\sigma^2}{2a^2}(1 - e^{-at})^2`$ and let $`S(t) = \sigma\int_0^t e^{-a(t-u)}\,dW(u)`$ be the faded shocks. Then $`r(t) = f(0,t) + c(t) + S(t)`$, and $`dS = -a\,S\,dt + \sigma\,dW`$. Differentiate: $`dr = \big(\partial_t f(0,t) + c'(t) - a S\big)dt + \sigma\,dW`$. Replace $`S(t)`$ by $`r - f(0,t) - c(t)`$: the drift becomes $`\partial_t f(0,t) + a f(0,t) + c'(t) + a\,c(t) - a\,r`$. Finally $`c'(t) + a\,c(t) = \frac{\sigma^2}{a}(1-e^{-at})e^{-at} + \frac{\sigma^2}{2a}(1-e^{-at})^2 = \frac{\sigma^2}{2a}(1 - e^{-at})(1 + e^{-at}) = \frac{\sigma^2}{2a}(1 - e^{-2at})`$.
 
 </details>
 
-Setting $a$ toward zero gives constant volatility, drift $\sigma^2(T-t)$, and the Ho-Lee model. Discrete versions of the same argument, with forward rates over accrual periods instead of instants, give the market models on [Market models](03-libor-and-sofr-market-models.md).
+Setting $`a`$ toward zero gives constant volatility, drift $`\sigma^2(T-t)`$, and the Ho-Lee model. Discrete versions of the same argument, with forward rates over accrual periods instead of instants, give the market models on [Market models](03-libor-and-sofr-market-models.md).
 
 ---
 
@@ -179,14 +199,14 @@ The five-year forward today, and the five-year bond held for one year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| volatility of the five-year forward, $\sigma(0,5)$ | $0.01 \times e^{-1.5} = 0.01 \times 0.22313$ | $0.0022313$ |
-| volatility area, $A(0,5) = \sigma\,b(5)$ | $0.01 \times (1 - 0.22313)/0.3 = 0.01 \times 2.58957$ | $0.0258957$ |
-| forced drift, $\alpha(0,5)$ | $0.0022313 \times 0.0258957$ | $0.0000577810$ a year, 0.58 bp |
-| peak drift, at $T = 2.31$ | $\sigma^2/(4a) = 0.0001/1.2$ | $0.0000833333$ |
-| today's bond, $P(0,5)$ | $e^{-(0.05 \times 5 - 0.01 \times 2.58957)} = e^{-0.224104}$ | $0.799231739$ |
-| drift piled up over the year, $M$ | double integral of $\alpha$, by quadrature (numerical integration) | $0.000304328$ |
-| half the variance of the log, $V/2$ | $\tfrac12\int_0^1 A(v,5)^2\,dv$, by quadrature | $0.000304328$ |
-| **expected discounted bond after a year** | $0.799231739 \times e^{-M + V/2}$ | **$0.799231739$** |
+| volatility of the five-year forward, $`\sigma(0,5)`$ | $`0.01 \times e^{-1.5} = 0.01 \times 0.22313`$ | $`0.0022313`$ |
+| volatility area, $`A(0,5) = \sigma\,b(5)`$ | $`0.01 \times (1 - 0.22313)/0.3 = 0.01 \times 2.58957`$ | $`0.0258957`$ |
+| forced drift, $`\alpha(0,5)`$ | $`0.0022313 \times 0.0258957`$ | $`0.0000577810`$ a year, 0.58 bp |
+| peak drift, at $`T = 2.31`$ | $`\sigma^2/(4a) = 0.0001/1.2`$ | $`0.0000833333`$ |
+| today's bond, $`P(0,5)`$ | $`e^{-(0.05 \times 5 - 0.01 \times 2.58957)} = e^{-0.224104}`$ | $`0.799231739`$ |
+| drift piled up over the year, $`M`$ | double integral of $`\alpha`$, by quadrature (numerical integration) | $`0.000304328`$ |
+| half the variance of the log, $`V/2`$ | $`\tfrac12\int_0^1 A(v,5)^2\,dv`$, by quadrature | $`0.000304328`$ |
+| **expected discounted bond after a year** | $`0.799231739 \times e^{-M + V/2}`$ | **$`0.799231739`$** |
 
 The bond bought with borrowed money is worth, on average, exactly what it cost. The drift piled up by the curve, 0.000304328, cancels the half-variance the bond gains from shaking, 0.000304328, to all nine printed digits. That is Step 4 on real numbers.
 
@@ -197,8 +217,8 @@ Same bond, $1,000,000 due in five years, bought today at $799,231.74 with money 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drift set to zero ("rates have no trend") | 0.799475005, a free $243.27 | Nothing pays for the bond's half-variance, so the average bond beats the bank |
-| Drift sign flipped, $-\sigma A$ | 0.799718345, a free $486.61 | Twice the error: the drift pushes the wrong way by the full amount |
-| Drift $\tfrac12\sigma(t,T)^2$, the stock-model habit | 0.799412930, a free $181.19 | Half-variance of the forward itself, not its volatility times the volatility area |
+| Drift sign flipped, $`-\sigma A`$ | 0.799718345, a free $486.61 | Twice the error: the drift pushes the wrong way by the full amount |
+| Drift $`\tfrac12\sigma(t,T)^2`$, the stock-model habit | 0.799412930, a free $181.19 | Half-variance of the forward itself, not its volatility times the volatility area |
 
 ```
 Free expected gain on $1,000,000 due in 5 years, held 1 year  (one █ = $25)
@@ -214,7 +234,7 @@ A few hundred dollars on a million sounds small. It is free, it scales with the 
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the drift condition by **four independent roads**. Road 1 computes $\alpha(t,T)$ from the closed form and again by integrating the volatility with Simpson's rule (adding up thin slices under a curve). Road 2 uses the exact bell-curve law of the discounted bond: the drift enters only its centre and the volatility only its spread, and the two are computed by separate double integrals. Road 3 simulates 100,000 curves over one year with a random-number generator written in the script, prices the bond on each, and averages. Road 4 rebuilds Hull-White from the curve: $\theta(t)$ by differentiating the expected short rate numerically, and the one-year-on bond priced once from the whole curve and once from $r(1)$ alone. Every chart value is printed at the end.
+The code reaches the drift condition by **four independent roads**. Road 1 computes $`\alpha(t,T)`$ from the closed form and again by integrating the volatility with Simpson's rule (adding up thin slices under a curve). Road 2 uses the exact bell-curve law of the discounted bond: the drift enters only its centre and the volatility only its spread, and the two are computed by separate double integrals. Road 3 simulates 100,000 curves over one year with a random-number generator written in the script, prices the bond on each, and averages. Road 4 rebuilds Hull-White from the curve: $`\theta(t)`$ by differentiating the expected short rate numerically, and the one-year-on bond priced once from the whole curve and once from $`r(1)`$ alone. Every chart value is printed at the end.
 
 ### Python
 
@@ -622,12 +642,12 @@ The two outputs agree line for line. The Monte Carlo lines agree too, because bo
 
 Lean proves Step 5 in both directions, the drift for this card's fading volatility, and the Hull-White link of Step 6.
 
-- Suppose $\alpha(t,u)$ and $\sigma(t,u)$ are continuous in the maturity $u$, for a fixed $t$. Then Step 4's identity holds at every $T \ge t$ exactly when the boxed drift formula does.
-- Take $\sigma(t,T) = \sigma e^{-a(T-t)}$ with $a > 0$. Then the forced drift is $\frac{\sigma^2}{a}e^{-a(T-t)}\left(1 - e^{-a(T-t)}\right)$.
-- Take the same volatility. Then the drift never exceeds $\sigma^2/(4a)$, and it reaches that peak when $T - t = \ln 2/a$.
-- Take the same volatility. Then the convexity term of Step 6 equals $\frac{\sigma^2}{2a^2}(1 - e^{-at})^2$.
-- Write $c(t)$ for that convexity term and $c'(t)$ for its slope. Then $c'(t) + a\,c(t) = \frac{\sigma^2}{2a}(1 - e^{-2at})$, the last term of $\theta(t)$.
-- Take $\sigma = 0.01$ and $a = 0.3$. Then the peak drift $\sigma^2/(4a)$ is exactly $1/12000$.
+- Suppose $`\alpha(t,u)`$ and $`\sigma(t,u)`$ are continuous in the maturity $`u`$, for a fixed $`t`$. Then Step 4's identity holds at every $`T \ge t`$ exactly when the boxed drift formula does.
+- Take $`\sigma(t,T) = \sigma e^{-a(T-t)}`$ with $`a > 0`$. Then the forced drift is $`\frac{\sigma^2}{a}e^{-a(T-t)}\left(1 - e^{-a(T-t)}\right)`$.
+- Take the same volatility. Then the drift never exceeds $`\sigma^2/(4a)`$, and it reaches that peak when $`T - t = \ln 2/a`$.
+- Take the same volatility. Then the convexity term of Step 6 equals $`\frac{\sigma^2}{2a^2}(1 - e^{-at})^2`$.
+- Write $`c(t)`$ for that convexity term and $`c'(t)`$ for its slope. Then $`c'(t) + a\,c(t) = \frac{\sigma^2}{2a}(1 - e^{-2at})`$, the last term of $`\theta(t)`$.
+- Take $`\sigma = 0.01`$ and $`a = 0.3`$. Then the peak drift $`\sigma^2/(4a)`$ is exactly $`1/12000`$.
 
 Steps 0 to 3, the bond prices and the simulated curves are left to the Python and Rust checks.
 
@@ -801,7 +821,7 @@ example : ((1 : ℝ) / 100) ^ 2 / (4 * (3 / 10)) = 1 / 12000 := by norm_num
 > Guess the direction first. Then run it.
 > - **Double the front volatility.** Set `SIG = 0.02`. Guess: the drift doubles? It quadruples, because it is volatility times volatility area: the 0.58 bp becomes four times as big, and every free gain in the what-breaks table grows about fourfold.
 > - **Starve the Monte Carlo.** Set `N = 10000`. The standard error grows by the square root of ten, the zero-drift average drifts inside three standard errors of today's price, and the fourth assert fails. A $243.27 error on a million is real money and still hard to see by simulation; that is why road 2 exists.
-> - **Let the volatility stop fading.** Set `A = 1e-4`. The drift chart loses its hump and becomes the straight line $\sigma^2 T$: the Ho-Lee model. Long forwards now drift the most.
+> - **Let the volatility stop fading.** Set `A = 1e-4`. The drift chart loses its hump and becomes the straight line $`\sigma^2 T`$: the Ho-Lee model. Long forwards now drift the most.
 > - **Break the drift on purpose.** Replace `alpha` by `0.5 * vol(t, T) ** 2`. Road 1 fails at once: the closed form no longer matches the quadrature of the volatility.
 
 ---
@@ -812,16 +832,16 @@ example : ((1 : ℝ) / 100) ^ 2 / (4 * (3 / 10)) = 1 / 12000 := by norm_num
 > **Treating the drift as a forecast.** It is not one. The 0.58 bp a year on the five-year forward is not anyone's view that rates will rise; it is the payment the curve must make so that a bond bought with borrowed money stays a fair bet. Two economists who disagree about the Federal Reserve but agree on volatilities must agree on the drift.
 >
 > Smaller traps:
-> - **Copying the stock habit.** A stock in the pricing world drifts at the short rate, and its log drifts at the rate minus half its variance. Forward rates are not prices. Using $\tfrac12\sigma(t,T)^2$ as the drift leaves a free $181.19 per $1,000,000 on the five-year bond.
-> - **Integrating from zero instead of from now.** The volatility area runs from $t$, the current date, to $T$. Integrate from 0 and the drift keeps counting volatility that has already been spent.
-> - **Reading the forward curve as expected future short rates.** Even in the pricing world, the forward $f(0,1) = 4.26\%$ is not the average of $r(1)$. The average sits above it by the convexity term of Step 6, 0.0000373196, and the gap widens with the horizon.
+> - **Copying the stock habit.** A stock in the pricing world drifts at the short rate, and its log drifts at the rate minus half its variance. Forward rates are not prices. Using $`\tfrac12\sigma(t,T)^2`$ as the drift leaves a free $181.19 per $1,000,000 on the five-year bond.
+> - **Integrating from zero instead of from now.** The volatility area runs from $`t`$, the current date, to $`T`$. Integrate from 0 and the drift keeps counting volatility that has already been spent.
+> - **Reading the forward curve as expected future short rates.** Even in the pricing world, the forward $`f(0,1) = 4.26\%`$ is not the average of $`r(1)`$. The average sits above it by the convexity term of Step 6, 0.0000373196, and the gap widens with the horizon.
 > - **Forgetting that one shock means perfect correlation.** With one factor, the two-year and ten-year forwards always move in the same direction. Curve twists need a second shock, and the drift condition then sums over shocks.
 
 ---
 
 ## Where you meet it in real life
 
-- **Every Gaussian (bell-curve) rates model on a desk.** Hull-White, and its two-factor cousin G2++ ([Beyond one factor](../30-Short-Rate%20Models/07-two-factor-and-lognormal-short-rate-models.md)), are HJM models with exponential volatilities. Desks calibrate $a$ and $\sigma$, and the drift comes from this card's formula. See [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md).
+- **Every Gaussian (bell-curve) rates model on a desk.** Hull-White, and its two-factor cousin G2++ ([Beyond one factor](../30-Short-Rate%20Models/07-two-factor-and-lognormal-short-rate-models.md)), are HJM models with exponential volatilities. Desks calibrate $`a`$ and $`\sigma`$, and the drift comes from this card's formula. See [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md).
 - **Simulating curves for risk.** Counterparty-exposure engines simulate whole forward curves thousands of times. A missing or wrong drift puts a slow leak of value into every simulated swap, and the leak compounds over thirty-year trades.
 - **Market models.** The LIBOR and SOFR market models are HJM on a grid of accrual periods: pick the volatilities of the quoted forward rates and no-arbitrage sets their drifts. See [Market models](03-libor-and-sofr-market-models.md) and [Swap market model](05-swap-market-model-in-outline.md).
 - **Calibration.** Because the drift is not a free parameter, fitting a forward-rate model to caps and swaptions means fitting volatilities only: [Calibrating a market model](04-calibrating-a-market-model.md).
@@ -835,7 +855,7 @@ example : ((1 : ℝ) / 100) ^ 2 / (4 * (3 / 10)) = 1 / 12000 := by norm_num
 ## What this builds on
 
 - [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the half-variance correction in Step 3, the whole reason the drift is not zero.
-- [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md): the short-rate model this card recovers in Step 6, with its $\theta(t)$ fitted to today's curve.
+- [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md): the short-rate model this card recovers in Step 6, with its $`\theta(t)`$ fitted to today's curve.
 
 ## Where this goes next
 

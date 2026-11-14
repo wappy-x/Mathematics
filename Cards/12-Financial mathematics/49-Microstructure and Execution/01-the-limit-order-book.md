@@ -40,7 +40,7 @@ Nothing has traded yet: every buyer wants to pay less than every seller will tak
 
 ## The formula
 
-Notation first, in words. At any moment $b$ is the **best bid**: the highest price any waiting buyer will pay. $a$ is the **best ask**: the lowest price any waiting seller will take. $Q_b$ and $Q_a$ count the shares waiting at exactly those two prices.
+Notation first, in words. At any moment $`b`$ is the **best bid**: the highest price any waiting buyer will pay. $`a`$ is the **best ask**: the lowest price any waiting seller will take. $`Q_b`$ and $`Q_a`$ count the shares waiting at exactly those two prices.
 
 **The matching rule.** Give every waiting order a key: its price, then its arrival number. An incoming buy meets the waiting sells in order of the smallest key, and keeps trading while the ask it meets is at or below its own limit. A market buy has no limit. An incoming sell meets the waiting buys highest price first, then earliest, while the bid is at or above its limit.
 
@@ -48,21 +48,27 @@ Each trade happens at the **waiting** order's price. Whatever is left of a limit
 
 The readings:
 
-$$s = a - b, \qquad m = \frac{a + b}{2}, \qquad I = \frac{Q_b - Q_a}{Q_b + Q_a}$$
+```math
+s = a - b, \qquad m = \frac{a + b}{2}, \qquad I = \frac{Q_b - Q_a}{Q_b + Q_a}
+```
 
 **Read it aloud:** the spread is the best ask minus the best bid; the mid is halfway between them; the imbalance is the bid queue minus the ask queue, as a fraction of both.
 
-While both sides hold orders, $I$ lies strictly between −1 (the ask queue dwarfs the bid queue) and +1 (the reverse). If either side is empty, $b$ or $a$ does not exist and $s$, $m$ and $I$ are undefined. $I$ leans the fair value toward the side that is about to run out:
+While both sides hold orders, $`I`$ lies strictly between −1 (the ask queue dwarfs the bid queue) and +1 (the reverse). If either side is empty, $`b`$ or $`a`$ does not exist and $`s`$, $`m`$ and $`I`$ are undefined. $`I`$ leans the fair value toward the side that is about to run out:
 
-$$m_w = \frac{a\,Q_b + b\,Q_a}{Q_b + Q_a} = m + I\,\frac{s}{2}$$
+```math
+m_w = \frac{a\,Q_b + b\,Q_a}{Q_b + Q_a} = m + I\,\frac{s}{2}
+```
 
 **Read it aloud:** the size-weighted mid weights each price by the *other* side's queue, and that is the same as the mid pushed toward the ask by the imbalance times half the spread.
 
 Depth adds up more than the top level:
 
-$$D_b = \text{shares at the 3 best bid prices}, \qquad D_a = \text{shares at the 3 best ask prices}$$
+```math
+D_b = \text{shares at the 3 best bid prices}, \qquad D_a = \text{shares at the 3 best ask prices}
+```
 
-The flow version of imbalance watches the best queues change, one order at a time. For order number $n$, its contribution $e_n$ is a bid part minus an ask part:
+The flow version of imbalance watches the best queues change, one order at a time. For order number $`n`$, its contribution $`e_n`$ is a bid part minus an ask part:
 
 | What the best bid did after order n | Bid part |
 | --- | --- |
@@ -70,25 +76,27 @@ The flow version of imbalance watches the best queues change, one order at a tim
 | stayed put | + change in shares at the best bid |
 | fell | − shares that were waiting at the old best bid |
 
-The ask part is the same table read on the ask side, with "fell" and "rose" swapped. Adding the $e_n$ over a stretch of orders gives the **order flow imbalance**, written OFI:
+The ask part is the same table read on the ask side, with "fell" and "rose" swapped. Adding the $`e_n`$ over a stretch of orders gives the **order flow imbalance**, written OFI:
 
-$$\text{OFI} = \sum_{n} e_n$$
+```math
+\text{OFI} = \sum_{n} e_n
+```
 
 **Read it aloud:** buying pressure is shares added to the best bid or taken from the best ask; selling pressure is the mirror; OFI is the first minus the second.
 
 | Symbol | Plain meaning | In our example, after order 10 | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $b$ | best bid: highest price a waiting buyer will pay | $100.00 | spread narrows |
-| $a$ | best ask: lowest price a waiting seller will take | $100.01 | spread widens |
-| $s$ | spread, $a - b$ | $0.01 | trading at once costs more |
-| $m$ | mid, halfway between $b$ and $a$ | $100.005 | the quoted fair value rises |
-| $Q_b$ | shares waiting at the best bid | 200 | imbalance moves toward +1 |
-| $Q_a$ | shares waiting at the best ask | 50 | imbalance moves toward −1 |
-| $I$ | top imbalance, between −1 and +1 | 0.600 | weighted mid moves toward $a$ |
-| $D_b$, $D_a$ | depth: shares at the three best prices on each side | 700 and 650 | a large order moves the price less |
-| $m_w$ | size-weighted mid | $100.008 | — |
-| $n$, $e_n$ | an order's number, and what it did to the two best queues, in shares | order 10: +200 | OFI rises |
-| $p$, $r$ | an incoming order's limit price, and the shares of it left to wait | order 10: $100.00, 200 | a higher bid is more likely to set a new best |
+| $`b`$ | best bid: highest price a waiting buyer will pay | $100.00 | spread narrows |
+| $`a`$ | best ask: lowest price a waiting seller will take | $100.01 | spread widens |
+| $`s`$ | spread, $`a - b`$ | $0.01 | trading at once costs more |
+| $`m`$ | mid, halfway between $`b`$ and $`a`$ | $100.005 | the quoted fair value rises |
+| $`Q_b`$ | shares waiting at the best bid | 200 | imbalance moves toward +1 |
+| $`Q_a`$ | shares waiting at the best ask | 50 | imbalance moves toward −1 |
+| $`I`$ | top imbalance, between −1 and +1 | 0.600 | weighted mid moves toward $`a`$ |
+| $`D_b`$, $`D_a`$ | depth: shares at the three best prices on each side | 700 and 650 | a large order moves the price less |
+| $`m_w`$ | size-weighted mid | $100.008 | — |
+| $`n`$, $`e_n`$ | an order's number, and what it did to the two best queues, in shares | order 10: +200 | OFI rises |
+| $`p`$, $`r`$ | an incoming order's limit price, and the shares of it left to wait | order 10: $100.00, 200 | a higher bid is more likely to set a new best |
 
 ### When it holds
 
@@ -112,9 +120,9 @@ The rule also sets incentives. Price priority rewards a better price. Time prior
 
 A book is **crossed** when the best bid is at or above the best ask. The rule makes that impossible after any order finishes.
 
-Suppose the book is uncrossed, $b < a$, when an incoming buy with limit $p$ arrives. It trades while the best ask is at or below $p$, and removing asks can only raise $a$.
+Suppose the book is uncrossed, $`b < a`$, when an incoming buy with limit $`p`$ arrives. It trades while the best ask is at or below $`p`$, and removing asks can only raise $`a`$.
 
-It stops for one of two reasons. Either it is used up and nothing new rests, so $b$ is unchanged and still below $a$. Or the best ask is now above $p$; the rest joins the bids at $p$, below the new $a$, and the old $b$ was already below it. Either way $b < a$ afterwards.
+It stops for one of two reasons. Either it is used up and nothing new rests, so $`b`$ is unchanged and still below $`a`$. Or the best ask is now above $`p`$; the rest joins the bids at $`p`$, below the new $`a`$, and the old $`b`$ was already below it. Either way $`b < a`$ afterwards.
 
 A sell is the mirror, and by induction (one order at a time) the book is never crossed. The random test in the code runs 2032 orders and counts crossed books after each one: zero.
 
@@ -134,9 +142,11 @@ That gives an independent road to the book. Start each order at its full size, s
 
 ### Step 4: the weighted mid is the mid, pushed by imbalance
 
-Write $m_w$ with $a = m + s/2$ and $b = m - s/2$:
+Write $`m_w`$ with $`a = m + s/2`$ and $`b = m - s/2`$:
 
-$$m_w = \frac{(m + s/2)\,Q_b + (m - s/2)\,Q_a}{Q_b + Q_a} = m + \frac{s}{2}\cdot\frac{Q_b - Q_a}{Q_b + Q_a} = m + I\,\frac{s}{2}.$$
+```math
+m_w = \frac{(m + s/2)\,Q_b + (m - s/2)\,Q_a}{Q_b + Q_a} = m + \frac{s}{2}\cdot\frac{Q_b - Q_a}{Q_b + Q_a} = m + I\,\frac{s}{2}.
+```
 
 The weights look backwards at first: the ask price gets the *bid* queue. The reason is what happens next.
 
@@ -155,16 +165,16 @@ Take a buy (a sell is the mirror). A buy never removes bids and never adds asks.
 
 **Ask side.**
 
-- If it takes some but not all of the old best ask queue, $a$ stays put and the queue shrinks by the shares taken: the table's ask part is minus that, so $e_n$ gains plus that.
-- If it empties the old best level, $a$ rises; the table's ask part for a rise is minus the old queue, so $e_n$ gains the whole old queue, which is exactly what the buy took at that price.
+- If it takes some but not all of the old best ask queue, $`a`$ stays put and the queue shrinks by the shares taken: the table's ask part is minus that, so $`e_n`$ gains plus that.
+- If it empties the old best level, $`a`$ rises; the table's ask part for a rise is minus the old queue, so $`e_n`$ gains the whole old queue, which is exactly what the buy took at that price.
 - Shares it takes at deeper prices appear in neither road.
 - If it takes nothing, the ask side is unchanged in both.
 
-**Bid side.** If nothing rests, the bids are unchanged: zero in both. If $r$ shares rest at limit $p$:
+**Bid side.** If nothing rests, the bids are unchanged: zero in both. If $`r`$ shares rest at limit $`p`$:
 
-- when $p$ is above the old $b$, the bid rises and the table gives $+r$, the whole new queue;
-- when $p$ equals the old $b$, the queue grows by $r$: $+r$;
-- when $p$ is below the old $b$, nothing at the top changes: zero, and the order road also gives zero because the rest sits behind the best.
+- when $`p`$ is above the old $`b`$, the bid rises and the table gives $`+r`$, the whole new queue;
+- when $`p`$ equals the old $`b`$, the queue grows by $`r`$: $`+r`$;
+- when $`p`$ is below the old $`b`$, nothing at the top changes: zero, and the order road also gives zero because the rest sits behind the best.
 
 Every case matches, so the sums match. The code checks both roads on the ten orders (350 each) and on the random run (18500 each).
 
@@ -180,16 +190,16 @@ The book after order 10: asks 50 at $100.01, 200 at $100.02, 400 at $100.03; bid
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| best bid $b$, best ask $a$ | top of each side | $100.00, $100.01 |
-| spread $s$ | 100.01 − 100.00 | $0.01 |
-| mid $m$ | (100.01 + 100.00) / 2 | $100.005 |
-| top queues $Q_b$, $Q_a$ | shares at those two prices | 200, 50 |
-| imbalance $I$ | (200 − 50) / (200 + 50) | 0.600 |
-| depth $D_b$ | 200 + 200 + 300 | 700 |
-| depth $D_a$ | 50 + 200 + 400 | 650 |
+| best bid $`b`$, best ask $`a`$ | top of each side | $100.00, $100.01 |
+| spread $`s`$ | 100.01 − 100.00 | $0.01 |
+| mid $`m`$ | (100.01 + 100.00) / 2 | $100.005 |
+| top queues $`Q_b`$, $`Q_a`$ | shares at those two prices | 200, 50 |
+| imbalance $`I`$ | (200 − 50) / (200 + 50) | 0.600 |
+| depth $`D_b`$ | 200 + 200 + 300 | 700 |
+| depth $`D_a`$ | 50 + 200 + 400 | 650 |
 | depth imbalance | (700 − 650) / (700 + 650) | 0.037 |
 | weighted mid, by weights | (100.01 × 200 + 100.00 × 50) / 250 | $100.008 |
-| weighted mid, by $m + I s/2$ | 100.005 + 0.600 × 0.005 | **$100.008** |
+| weighted mid, by $`m + I s/2`$ | 100.005 + 0.600 × 0.005 | **$100.008** |
 
 The top of the book leans hard toward buyers, 0.600; the three levels together are close to even, 0.037. Both are true. The top says the next tick is more likely up; the depth says a large order in either direction meets about the same wall.
 
@@ -210,7 +220,7 @@ The three trades, by hand: order 8, the market buy of 350, takes 300 from order 
 
 The mystery: from order 7 to order 9 the top prices never move. Best bid $99.99, best ask $100.01, spread $0.02 throughout, yet two orders traded. The queues under those prices moved, and that is where the pressure shows.
 
-| Order | What arrived | Bid | Ask | Spread | $Q_b$ | $Q_a$ | $I$ | $e_n$ |
+| Order | What arrived | Bid | Ask | Spread | $`Q_b`$ | $`Q_a`$ | $`I`$ | $`e_n`$ |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | buy 300 at $99.98 | $99.98 | none | — | 300 | — | — | — |
 | 2 | sell 200 at $100.02 | $99.98 | $100.02 | $0.04 | 300 | 200 | 0.200 | — |
@@ -223,7 +233,7 @@ The mystery: from order 7 to order 9 the top prices never move. Best bid $99.99,
 | 9 | sell 100, limit $99.98 | $99.99 | $100.01 | $0.02 | 200 | 50 | 0.600 | −100 |
 | 10 | buy 200 at $100.00 | $100.00 | $100.01 | $0.01 | 200 | 50 | 0.600 | +200 |
 
-Order 7 changed nothing at the top: 400 shares at $100.03 sit behind the best ask, so $e_n$ is 0 and so is the change in $I$. Order 8 emptied most of the ask queue: $I$ jumped from −0.143 to 0.714. Order 10 posted inside the spread, became the new best bid, and halved the spread from $0.02 to $0.01.
+Order 7 changed nothing at the top: 400 shares at $100.03 sit behind the best ask, so $`e_n`$ is 0 and so is the change in $`I`$. Order 8 emptied most of the ask queue: $`I`$ jumped from −0.143 to 0.714. Order 10 posted inside the spread, became the new best bid, and halved the spread from $0.02 to $0.01.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -234,7 +244,7 @@ xychart-beta
     line [0.20, -0.33, -0.50, 0, -0.14, -0.14, 0.71, 0.60, 0.60]
 ```
 
-The line is the top imbalance $I$ after each order, from order 2, the first moment both sides exist. Sellers dominate the top through order 7; the market buy flips it.
+The line is the top imbalance $`I`$ after each order, from order 2, the first moment both sides exist. Sellers dominate the top through order 7; the market buy flips it.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -245,7 +255,7 @@ xychart-beta
     bar [100, -300, 200, -100, 0, 350, -100, 200]
 ```
 
-Each bar is one order's $e_n$: above zero is pressure to buy, below is pressure to sell. Over orders 3 to 10 they add to OFI = +350 shares, and the mid rose half a cent, from $100.000 after order 2 to $100.005 after order 10.
+Each bar is one order's $`e_n`$: above zero is pressure to buy, below is pressure to sell. Over orders 3 to 10 they add to OFI = +350 shares, and the mid rose half a cent, from $100.000 after order 2 to $100.005 after order 10.
 
 On real data, Cont, Kukanov and Stoikov found that over short intervals the mid moves roughly in proportion to OFI divided by depth. A thin book moves further for the same pressure.
 
@@ -666,9 +676,9 @@ The two outputs are identical line for line: both languages run the same integer
 
 Lean proves the weighted-mid identity, the imbalance bounds and the no-crossing step for one buy, and checks the worked numbers.
 
-- Suppose both sides hold orders, so $Q_b > 0$ and $Q_a > 0$. Then the size-weighted mid is $m_w = m + I\,s/2$.
-- Suppose both sides hold orders. Then the top imbalance $I$ lies strictly between −1 and +1.
-- Take an uncrossed book and a buy with limit $p$ that only removes asks, then rests nothing or rests at $p$ below every remaining ask. Then the book is still uncrossed.
+- Suppose both sides hold orders, so $`Q_b > 0`$ and $`Q_a > 0`$. Then the size-weighted mid is $`m_w = m + I\,s/2`$.
+- Suppose both sides hold orders. Then the top imbalance $`I`$ lies strictly between −1 and +1.
+- Take an uncrossed book and a buy with limit $`p`$ that only removes asks, then rests nothing or rests at $`p`$ below every remaining ask. Then the book is still uncrossed.
 - After order 10, the top imbalance is 0.600 and the weighted mid is $100.008 by both formulas. The depths are 700 and 650.
 - The top imbalance is −1/7, or −0.143, after order 6, and 5/7, or 0.714, after order 8.
 - Every share is accounted for: 2250 = 1350 + 2 × 450. OFI over orders 3 to 10 adds to +350.

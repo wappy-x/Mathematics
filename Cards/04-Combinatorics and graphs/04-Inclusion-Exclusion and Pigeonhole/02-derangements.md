@@ -36,39 +36,43 @@ The wobbling line is clean draws per 10,000. The flat line is 3,679, the level i
 
 Three shorthands, all met earlier.
 
-- $n!$, "n factorial", counts the ways $n$ things line up: 6! = 720 ([Factorials](../01-Counting%20Principles/03-factorial.md)).
+- $`n!`$, "n factorial", counts the ways $`n`$ things line up: 6! = 720 ([Factorials](../01-Counting%20Principles/03-factorial.md)).
 - C(6, 2), "six choose two", counts the ways to pick 2 of 6 when order does not matter: 15 ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
-- The capital sigma sign, with a counter $k$ below and a stopping value above, says to add the term on its right once for each $k$ in that range ([The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)).
+- The capital sigma sign, with a counter $`k`$ below and a stopping value above, says to add the term on its right once for each $`k`$ in that range ([The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)).
 
-One shorthand is new: D(6) is the number of draws among six people with nobody on their own name, D(n) the count among $n$. Elsewhere it is written !n, read "subfactorial n".
+One shorthand is new: D(6) is the number of draws among six people with nobody on their own name, D(n) the count among $`n`$. Elsewhere it is written !n, read "subfactorial n".
 
-$$D(n) \;=\; \sum_{k=0}^{n} (-1)^k \, C(n,k)\,(n-k)! \;=\; \sum_{k=0}^{n} (-1)^k \, \frac{n!}{k!} \;=\; n!\left(1 - \frac{1}{1!} + \frac{1}{2!} - \cdots \pm \frac{1}{n!}\right)$$
+```math
+D(n) \;=\; \sum_{k=0}^{n} (-1)^k \, C(n,k)\,(n-k)! \;=\; \sum_{k=0}^{n} (-1)^k \, \frac{n!}{k!} \;=\; n!\left(1 - \frac{1}{1!} + \frac{1}{2!} - \cdots \pm \frac{1}{n!}\right)
+```
 
-**Read it aloud:** start with every draw, take off the ones where some chosen person holds their own name, put back the ones removed twice, and keep alternating up to all $n$: the sieve, also called inclusion-exclusion.
+**Read it aloud:** start with every draw, take off the ones where some chosen person holds their own name, put back the ones removed twice, and keep alternating up to all $`n`$: the sieve, also called inclusion-exclusion.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | people in the draw | 6 | D(n) grows, fast |
-| $n!$ | all the ways the names come out | 720 | — |
-| $D(n)$ | draws with nobody on their own name | 265 | — |
-| $k$ | people one term pins | 0 up to 6 | the term shrinks |
-| $C(n,k)$ | ways to choose the pinned $k$ | C(6, 2) = 15 | more terms of that size |
-| $(n-k)!$ | ways the rest come out | 4! = 24 | — |
-| $D(n)/n!$ | the clean share | 265/720 = 0.3681 | it settles on 0.3679 |
-| $e$ | the compounding number | 2.718282, and 1 over it 0.367879 | — |
+| $`n`$ | people in the draw | 6 | D(n) grows, fast |
+| $`n!`$ | all the ways the names come out | 720 | — |
+| $`D(n)`$ | draws with nobody on their own name | 265 | — |
+| $`k`$ | people one term pins | 0 up to 6 | the term shrinks |
+| $`C(n,k)`$ | ways to choose the pinned $`k`$ | C(6, 2) = 15 | more terms of that size |
+| $`(n-k)!`$ | ways the rest come out | 4! = 24 | — |
+| $`D(n)/n!`$ | the clean share | 265/720 = 0.3681 | it settles on 0.3679 |
+| $`e`$ | the compounding number | 2.718282, and 1 over it 0.367879 | — |
 
 A **recurrence** builds each count from the ones before it, starting from two seeds fixed by hand.
 
-$$D(n) = (n-1)\bigl(D(n-1) + D(n-2)\bigr), \qquad D(0) = 1, \quad D(1) = 0$$
+```math
+D(n) = (n-1)\bigl(D(n-1) + D(n-2)\bigr), \qquad D(0) = 1, \quad D(1) = 0
+```
 
-Person one has $n-1$ names to draw, and each case leaves a smaller draw of the same kind (Step 3). Shorter still is $D(n) = n\,D(n-1) + (-1)^n$.
+Person one has $`n-1`$ names to draw, and each case leaves a smaller draw of the same kind (Step 3). Shorter still is $`D(n) = n\,D(n-1) + (-1)^n`$.
 
 ### When it holds
 
 - **Every name drawn exactly once.** Put each name back in the hat and each of the six has five allowed names: 5^6 = 15,625 lists, not 265 draws.
 - **One barred name each, no two the same.** Bar Ann from her husband's name too and the pinned blocks lose the size the sieve assumes.
 - **The seeds are D(0) = 1 and D(1) = 0.** The empty draw has nobody to go wrong; one person can only draw themselves. Start at D(0) = 0 and every count after collapses to 0.
-- **Rounding works from one person up.** D(n) is the nearest whole number to n! divided by $e$: 720 × 0.367879 = 264.873, nearest 265. At zero people it fails, since 0.367879 rounds to 0.
+- **Rounding works from one person up.** D(n) is the nearest whole number to n! divided by $`e`$: 720 × 0.367879 = 264.873, nearest 265. At zero people it fails, since 0.367879 rounds to 0.
 
 ---
 
@@ -82,15 +86,17 @@ Listing clean draws directly means holding six conditions in the air at once. Ev
 
 For each colleague, collect the draws in which that colleague holds their own name: six colleagues, six blocks. Ann's block has 5! = 120 members: her name is settled and the other five come out any way at all — including ways that put Ben on his own name too. A block says "at least Ann", never "only Ann".
 
-Pinning any $k$ people leaves $(n-k)!$ draws, with C(n, k) choices of which $k$: at $k$ = 2 that is C(6, 2) = 15 blocks of 24.
+Pinning any $`k`$ people leaves $`(n-k)!`$ draws, with C(n, k) choices of which $`k`$: at $`k`$ = 2 that is C(6, 2) = 15 blocks of 24.
 
 ### Step 2: the alternating sum repairs the overlaps
 
-Adding the six blocks counts a draw with two people on their own names twice, one with three three times, and so on. Subtracting the pairs over-corrects the other way. Alternating leaves each spoilt draw counted once ([Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md)). Take that off 720, reading the untouched 720 as the term for $k$ = 0.
+Adding the six blocks counts a draw with two people on their own names twice, one with three three times, and so on. Subtracting the pairs over-corrects the other way. Alternating leaves each spoilt draw counted once ([Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md)). Take that off 720, reading the untouched 720 as the term for $`k`$ = 0.
 
 The formula's middle form is the first tidied — the two factors of each term collapse:
 
-$$C(n,k)\,(n-k)! = \frac{n!}{k!\,(n-k)!}\,(n-k)! = \frac{n!}{k!}$$
+```math
+C(n,k)\,(n-k)! = \frac{n!}{k!\,(n-k)!}\,(n-k)! = \frac{n!}{k!}
+```
 
 ### Step 3: a second road, splitting on person one's name
 
@@ -109,17 +115,17 @@ Person one draws one of the five other names, say Ben's. Either Ben holds person
 <details>
 <summary>Detailed proof: the no-swap case is a smaller draw of the same kind</summary>
 
-In the no-swap case person one holds Ben's name and Ben does not hold person one's. Five remain: four barred from their own names, Ben barred from person one's name. Rename person one's name "Ben's name" and all five are barred from the name carrying their own label — a derangement of five. The renaming reverses, so nothing is double-counted and nothing missed. The two cases exclude each other and cover every clean draw, so their counts add, and the $n-1$ choices of whose name person one drew multiply: $D(n) = (n-1)(D(n-1) + D(n-2))$.
+In the no-swap case person one holds Ben's name and Ben does not hold person one's. Five remain: four barred from their own names, Ben barred from person one's name. Rename person one's name "Ben's name" and all five are barred from the name carrying their own label — a derangement of five. The renaming reverses, so nothing is double-counted and nothing missed. The two cases exclude each other and cover every clean draw, so their counts add, and the $`n-1`$ choices of whose name person one drew multiply: $`D(n) = (n-1)(D(n-1) + D(n-2))`$.
 
-Rewriting it as $D(n) - n\,D(n-1) = -\bigl(D(n-1) - (n-1)D(n-2)\bigr)$ gives the one-step form: the bracket is that same expression one step down, so it flips sign each step from $D(1) - D(0) = -1$.
+Rewriting it as $`D(n) - n\,D(n-1) = -\bigl(D(n-1) - (n-1)D(n-2)\bigr)`$ gives the one-step form: the bracket is that same expression one step down, so it flips sign each step from $`D(1) - D(0) = -1`$.
 
 </details>
 
 ### Step 4: why the share stops moving
 
-Divide the formula by $n!$ and the clean share is 1 − 1/1! + 1/2! − 1/3! + … ± 1/n!, one term for each step of the sieve. Those terms shrink fast: a seventh colleague moves the share by 0.000198, an eighth by 0.000025.
+Divide the formula by $`n!`$ and the clean share is 1 − 1/1! + 1/2! − 1/3! + … ± 1/n!, one term for each step of the sieve. Those terms shrink fast: a seventh colleague moves the share by 0.000198, an eighth by 0.000025.
 
-It closes on 1 divided by $e$, the compounding number the code reaches as 2.718282 ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)): 0.367879. Why an endless alternating sum of 1/k! comes to exactly that is settled on [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md); this card checks it twice.
+It closes on 1 divided by $`e`$, the compounding number the code reaches as 2.718282 ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)): 0.367879. Why an endless alternating sum of 1/k! comes to exactly that is settled on [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md); this card checks it twice.
 
 ---
 
@@ -355,14 +361,14 @@ ALL CHECKS PASS
 
 Lean proves the card's facts for every number of people, not just six.
 
-- The sieve gives D(n) for every $n$, in both the $C(n,k)\,(n-k)!$ form and the $n!/k!$ form.
-- The seeds are D(0) = 1 and D(1) = 0, and $D(n) = (n-1)\bigl(D(n-1) + D(n-2)\bigr)$ from two people up.
-- The shorter form $D(n) = n\,D(n-1) + (-1)^n$ holds from one person up.
-- The clean share D(n)/n! closes on 1 divided by $e$.
-- From one person up, D(n) is the nearest whole number to n! divided by $e$.
+- The sieve gives D(n) for every $`n`$, in both the $`C(n,k)\,(n-k)!`$ form and the $`n!/k!`$ form.
+- The seeds are D(0) = 1 and D(1) = 0, and $`D(n) = (n-1)\bigl(D(n-1) + D(n-2)\bigr)`$ from two people up.
+- The shorter form $`D(n) = n\,D(n-1) + (-1)^n`$ holds from one person up.
+- The clean share D(n)/n! closes on 1 divided by $`e`$.
+- From one person up, D(n) is the nearest whole number to n! divided by $`e`$.
 - It also re-checks the card's numbers: 720 and 265, the counts up to 14833, the running totals, 15,625 and the three mistakes.
 
-Printing the table and reaching $e$ by compounding are left to the Python and Rust checks.
+Printing the table and reaching $`e`$ by compounding are left to the Python and Rust checks.
 
 ```lean
 -- Derangements: the number of shuffles of n names with nobody on their own name equals the alternating sieve sum of (-1)^k C(n, k) (n - k)!, which is also n!/k! summed with signs, obeys D(n) = (n - 1)(D(n - 1) + D(n - 2)) from D(0) = 1, D(1) = 0, and is the nearest whole number to n!/e from one person up, with the share D(n)/n! closing on 1/e.
@@ -588,7 +594,7 @@ example : 720 - 6 * 120 = 0 ∧ 265 - 1 = 264 ∧ 5 * 44 + 9 = 229 := by decide
 ## Where this goes next
 
 - [Counting shuffles by their loops](../08-Partitions/05-permutations-by-cycles.md): sorting shuffles by the loops they fall into, where derangements are those with no loop of length one.
-- [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): why the endless alternating sum of 1/k! comes to 1 divided by $e$.
+- [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): why the endless alternating sum of 1/k! comes to 1 divided by $`e`$.
 
 This card counts the draws with nobody on their own name; how many leave exactly two, and why those counts add back to 720, is what [Counting shuffles by their loops](../08-Partitions/05-permutations-by-cycles.md) takes up.
 

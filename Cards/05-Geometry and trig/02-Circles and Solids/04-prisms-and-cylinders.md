@@ -26,34 +26,38 @@ Scale 1 m = 55 units across and up; the round ends are drawn a quarter as deep a
 
 ## The formula
 
-Notation first, in words. $B$ is the base area, which is also the area of every slice parallel to the base. $h$ is the height, measured square on (at right angles) between the ends. $P$ is the perimeter, the distance once round the base. $V$ is the volume. $L$ is the **lateral area**, the area of the walls alone. $S$ is the **surface area**, the whole skin: walls and both ends.
+Notation first, in words. $`B`$ is the base area, which is also the area of every slice parallel to the base. $`h`$ is the height, measured square on (at right angles) between the ends. $`P`$ is the perimeter, the distance once round the base. $`V`$ is the volume. $`L`$ is the **lateral area**, the area of the walls alone. $`S`$ is the **surface area**, the whole skin: walls and both ends.
 
-$$V = B\,h \qquad L = P\,h \qquad S = P\,h + 2B$$
+```math
+V = B\,h \qquad L = P\,h \qquad S = P\,h + 2B
+```
 
 **Read it aloud:** the volume is one slice's area times the height; the walls are the way round times the height; the surface area adds the two ends.
 
-For a cylinder of radius $r$ (centre to rim), the circle card ([Circles](01-circle-circumference-and-area.md)) gives $B = \pi r^2$ and $P = 2\pi r$. Here $\pi$ (pi) is every circle's circumference divided by its diameter, about 3.141593.
+For a cylinder of radius $`r`$ (centre to rim), the circle card ([Circles](01-circle-circumference-and-area.md)) gives $`B = \pi r^2`$ and $`P = 2\pi r`$. Here $`\pi`$ (pi) is every circle's circumference divided by its diameter, about 3.141593.
 
-$$V = \pi r^2 h \qquad L = 2\pi r\,h \qquad S = 2\pi r\,h + 2\pi r^2$$
+```math
+V = \pi r^2 h \qquad L = 2\pi r\,h \qquad S = 2\pi r\,h + 2\pi r^2
+```
 
 **Read it aloud:** a cylinder holds pi times the radius squared times the height; its wall is once round the rim times the height.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | volume; in cubic metres, times 1000 for litres | 9.424778 cubic metres, 9424.78 litres | — |
-| $B$ | base area, and every slice's | 3.141593 square metres | volume grows in step |
-| $h$ | height between the ends, square on | 3 m | volume and walls grow in step |
-| $P$ | perimeter: once round the base | 6.283185 m | more wall for the same base area |
-| $L$ | lateral area: the walls alone | 18.849556 square metres | — |
-| $S$ | surface area: walls and both ends | 25.132741 square metres | — |
-| $r$ | radius, half the width | 1 m | twice the radius, four times the litres |
-| $\pi$ | circumference divided by diameter | 3.141593 | — |
+| $`V`$ | volume; in cubic metres, times 1000 for litres | 9.424778 cubic metres, 9424.78 litres | — |
+| $`B`$ | base area, and every slice's | 3.141593 square metres | volume grows in step |
+| $`h`$ | height between the ends, square on | 3 m | volume and walls grow in step |
+| $`P`$ | perimeter: once round the base | 6.283185 m | more wall for the same base area |
+| $`L`$ | lateral area: the walls alone | 18.849556 square metres | — |
+| $`S`$ | surface area: walls and both ends | 25.132741 square metres | — |
+| $`r`$ | radius, half the width | 1 m | twice the radius, four times the litres |
+| $`\pi`$ | circumference divided by diameter | 3.141593 | — |
 
 ### When it holds
 
 - **Every slice matches.** The cone-shaped hopper under the tank narrows to a point and holds a third of the matching cylinder ([Pyramids, cones and spheres](05-pyramids-cones-and-spheres.md)).
-- **Height square on.** A leaning prism still holds $B\,h$ with $h$ its upright height; using the longer sloping edge instead overstates the volume.
-- **Walls square on.** A leaning prism's walls are slanted parallelograms (opposite sides parallel), with more area than $P\,h$.
+- **Height square on.** A leaning prism still holds $`B\,h`$ with $`h`$ its upright height; using the longer sloping edge instead overstates the volume.
+- **Walls square on.** A leaning prism's walls are slanted parallelograms (opposite sides parallel), with more area than $`P\,h`$.
 - **Inside measurements, flat ends.** Capacity uses the inside width and depth; a domed lid or sloping floor changes the water held.
 
 ---
@@ -79,9 +83,9 @@ Push a stack of coins so it leans: each coin is unchanged, so the stack holds th
 <details>
 <summary>Detailed proof</summary>
 
-Inside columns do not overlap and lie in the solid, so the volume is at least their squares' total area times $h$. Touching columns cover the solid, so it is at most their total area times $h$. As the grid is refined, both areas approach $B$: that is what the base having area $B$ means. A fixed number caught between two quantities that both approach $B\,h$ can only be $B\,h$.
+Inside columns do not overlap and lie in the solid, so the volume is at least their squares' total area times $`h`$. Touching columns cover the solid, so it is at most their total area times $`h`$. As the grid is refined, both areas approach $`B`$: that is what the base having area $`B`$ means. A fixed number caught between two quantities that both approach $`B\,h`$ can only be $`B\,h`$.
 
-At every height a leaning prism's slice is the upright prism's, shifted sideways, so Cavalieri's principle gives it $B\,h$ too. [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md) proves the principle.
+At every height a leaning prism's slice is the upright prism's, shifted sideways, so Cavalieri's principle gives it $`B\,h`$ too. [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md) proves the principle.
 
 </details>
 
@@ -101,7 +105,7 @@ Scale 1 m = 30 units. The shaded wall's left and right edges were the single cut
 
 Put a square inside the tank's circle, corners on the rim, and another outside, sides touching it. Prisms on them hold 6000 and 12000 litres, bracketing the tank. Double the sides again and again: each new corner goes on the rim, halfway between two old ones. Each new side is the long side of a right-angled triangle. Its short sides are half the old side and the gap from the old side's middle out to the rim ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)), so no π enters.
 
-At 16 sides the prisms hold 9184.40 to 9547.79 litres; at 4096, 9424.77 to 9424.78. Their walls close in on 18.849556 square metres. Every prism obeys $V = B\,h$ and $L = P\,h$, so the cylinder they close in on does too. Book XII of Euclid's *Elements* doubles the sides of an inside square the same way to compare cylinders.
+At 16 sides the prisms hold 9184.40 to 9547.79 litres; at 4096, 9424.77 to 9424.78. Their walls close in on 18.849556 square metres. Every prism obeys $`V = B\,h`$ and $`L = P\,h`$, so the cylinder they close in on does too. Book XII of Euclid's *Elements* doubles the sides of an inside square the same way to compare cylinders.
 
 Solids whose slices change size need the slices added one by one: [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md).
 
@@ -127,7 +131,7 @@ Full, the tank holds 9424.78 litres, and its dipstick reads 31.4159 litres to th
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | The 2 m width as the radius | 37699.11 litres | The radius is squared: twice it, four times the litres |
-| Circumference as base area | 18849.56 litres | $2\pi r$ is a length round the rim, not an area |
+| Circumference as base area | 18849.56 litres | $`2\pi r`$ is a length round the rim, not an area |
 | 100 litres to the cubic metre | 942.48 litres | It is 10 × 10 × 10 litre cubes |
 | Paint for the walls only | 18.85 of 25.13 square metres | Lid and floor forgotten |
 
@@ -331,8 +335,8 @@ The two outputs match line for line.
 
 Lean proves the volume rule for any solid whose slices all match its base, and the cylinder formula for every size.
 
-- A solid holds $B\,h$ when its slice at every height from 0 to $h$ matches the base, and it has nothing above or below. The slices may shift sideways or turn, so a leaning prism counts.
-- A cylinder of radius $r$ and height $h$ holds $\pi r^2 h$.
+- A solid holds $`B\,h`$ when its slice at every height from 0 to $`h`$ matches the base, and it has nothing above or below. The slices may shift sideways or turn, so a leaning prism counts.
+- A cylinder of radius $`r`$ and height $`h`$ holds $`\pi r^2 h`$.
 - A cylinder twice as wide and just as tall holds four times as much. So the width put in for the radius gives four times the truth.
 - The box sums hold: 1000 litre cubes to the cubic metre, 12000 litres in the box, and 32 square metres of skin.
 - Counting litre cubes on the tank's floor gives 8280 wholly inside and 10320 touching, as Step 1 says.
@@ -483,9 +487,9 @@ example : 344 * 30 = 10320 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Putting the width in for the radius.** A tank 2 m across has radius 1 m. Put 2 into $\pi r^2 h$ and out comes 37699.11 litres, four times the truth: the radius is squared.
+> **Putting the width in for the radius.** A tank 2 m across has radius 1 m. Put 2 into $`\pi r^2 h`$ and out comes 37699.11 litres, four times the truth: the radius is squared.
 >
-> - **Circumference for area.** $2\pi r$ is a length; as a base area it gives 18849.56 litres.
+> - **Circumference for area.** $`2\pi r`$ is a length; as a base area it gives 18849.56 litres.
 > - **The litre conversion.** A cubic metre is 1000 litres, not 100; the slip gives 942.48.
 > - **Walls without ends.** 18.85 square metres of paint, for a closed tank needing 25.13.
 > - **A tank on its side.** Still 9424.78 litres, but its horizontal slices differ in width, so depth no longer converts at a fixed rate.
@@ -505,7 +509,7 @@ example : 344 * 30 = 10320 := by decide
 
 ## What this builds on
 
-- [Circles](01-circle-circumference-and-area.md): $B = \pi r^2$ and $P = 2\pi r$ for the round slice, and π as circumference divided by diameter.
+- [Circles](01-circle-circumference-and-area.md): $`B = \pi r^2`$ and $`P = 2\pi r`$ for the round slice, and π as circumference divided by diameter.
 
 ## Where this goes next
 

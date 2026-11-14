@@ -35,25 +35,29 @@ From left: t = 0 (orange), 1.5 h (green), 3 h (dark blue). Same shape, 2 km furt
 
 ## The formula
 
-Notation first. As on [A partial differential equation](01-what-a-pde-says.md), a subscript names the variable a partial derivative is taken in: $u_t$ is the rate of change of $u$ in time with place held fixed, and $u_x$ the rate of change along the river with time held fixed.
+Notation first. As on [A partial differential equation](01-what-a-pde-says.md), a subscript names the variable a partial derivative is taken in: $`u_t`$ is the rate of change of $`u`$ in time with place held fixed, and $`u_x`$ the rate of change along the river with time held fixed.
 
-$$u_t + c\,u_x = 0, \qquad u(x, 0) = f(x) \quad\Longrightarrow\quad u(x, t) = f(x - c t)$$
+```math
+u_t + c\,u_x = 0, \qquad u(x, 0) = f(x) \quad\Longrightarrow\quad u(x, t) = f(x - c t)
+```
 
 **Read it aloud:** the value at place x and time t is the starting value at x − ct, where that water was at time 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | the carried quantity | concentration, mg/L | — |
-| $x$, $t$ | place along the river; time since the spill | km; hours | later t looks further upstream |
-| $c$ | the current's speed; c(x) if it varies | 2 km/h, or 2 + x/2 km/h | the plume arrives sooner |
-| $f$ | the starting shape, at t = 0 | 10 e^(−x^2) mg/L | every later value scales with it |
-| $a$ | a label: where a parcel of water was at t = 0 | x − ct for a constant speed | — |
-| $X$, $s$ | one parcel's path: its place at time s | X(s) = a + 2s | — |
-| $u_t$, $u_x$ | rate in time at a fixed place; rate along the river at a fixed time | rising, then falling, at the station | — |
+| $`u`$ | the carried quantity | concentration, mg/L | — |
+| $`x`$, $`t`$ | place along the river; time since the spill | km; hours | later t looks further upstream |
+| $`c`$ | the current's speed; c(x) if it varies | 2 km/h, or 2 + x/2 km/h | the plume arrives sooner |
+| $`f`$ | the starting shape, at t = 0 | 10 e^(−x^2) mg/L | every later value scales with it |
+| $`a`$ | a label: where a parcel of water was at t = 0 | x − ct for a constant speed | — |
+| $`X`$, $`s`$ | one parcel's path: its place at time s | X(s) = a + 2s | — |
+| $`u_t`$, $`u_x`$ | rate in time at a fixed place; rate along the river at a fixed time | rising, then falling, at the station | — |
 
 For a speed that varies with place, each parcel's path solves an ordinary differential equation, the **characteristic equation**:
 
-$$X'(s) = c\big(X(s)\big), \qquad X(0) = a, \qquad\text{and then}\quad u\big(X(s), s\big) = f(a).$$
+```math
+X'(s) = c\big(X(s)\big), \qquad X(0) = a, \qquad\text{and then}\quad u\big(X(s), s\big) = f(a).
+```
 
 ### The picture: characteristics on a map of place against time
 
@@ -81,7 +85,9 @@ A station on the bank sees the concentration change. A float drifting with the c
 
 Follow the path X(s) = a + cs. The value seen along it is u(X(s), s), a function of the single variable s. By the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md) in two variables,
 
-$$\frac{d}{ds}\,u\big(X(s), s\big) = u_x\,X'(s) + u_t = c\,u_x + u_t = 0.$$
+```math
+\frac{d}{ds}\,u\big(X(s), s\big) = u_x\,X'(s) + u_t = c\,u_x + u_t = 0.
+```
 
 So the value along the path is constant, equal to f(a). Along this line the PDE has become the ordinary equation "rate of change = 0".
 
@@ -97,7 +103,9 @@ Put u = f(x − ct), and write f′ for the slope of the spill's shape. The chai
 
 With speed c(x) the path solves X′ = c(X), and Step 1 goes through word for word: the value is constant along each path, now a curve. For c(x) = 2 + x/2, (X + 4)′ = (X + 4)/2, so X(s) + 4 = (a + 4) e^(s/2). Run it back from (x, t):
 
-$$a = (x + 4)\,e^{-t/2} - 4, \qquad u(x, t) = f\big((x + 4)\,e^{-t/2} - 4\big).$$
+```math
+a = (x + 4)\,e^{-t/2} - 4, \qquad u(x, t) = f\big((x + 4)\,e^{-t/2} - 4\big).
+```
 
 The gap between any two paths grows by the factor e^(t/2), and so does the plume's width. The peak stays at 10 mg/L.
 

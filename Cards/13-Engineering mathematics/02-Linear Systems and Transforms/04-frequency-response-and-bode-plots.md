@@ -40,55 +40,63 @@ Orange: the throttle, in percent. Green: the simulated speed change, in m/s. Aft
 
 Three pieces of notation first, in words.
 
-- Engineers write $j$ for the square root of −1; the rest of the library writes i.
-- The **transfer function** $G(s)$ says what the system does to each exponential $e^{st}$: feed it in, and $G(s)\,e^{st}$ comes out ([Transfer functions](02-impulse-response-and-transfer-functions.md)).
-- A **decibel** (dB) measures a gain on a log scale: the gain $g$ is $20\log_{10} g$ decibels, so a gain of 10 is +20 dB, a gain of 1 is 0 dB and a gain of 0.1 is −20 dB.
+- Engineers write $`j`$ for the square root of −1; the rest of the library writes i.
+- The **transfer function** $`G(s)`$ says what the system does to each exponential $`e^{st}`$: feed it in, and $`G(s)\,e^{st}`$ comes out ([Transfer functions](02-impulse-response-and-transfer-functions.md)).
+- A **decibel** (dB) measures a gain on a log scale: the gain $`g`$ is $`20\log_{10} g`$ decibels, so a gain of 10 is +20 dB, a gain of 1 is 0 dB and a gain of 0.1 is −20 dB.
 
-For the car, with throttle $u$ in percent and speed change $y$ in m/s, two first-order equations make the model. The engine delivers thrust $F$, counted in the throttle percent it settles to, with a 0.5 s time constant: $\tau_2 F' = -F + u$. The car's speed follows the thrust against its drag: $\tau_1 y' = -y + K F$.
+For the car, with throttle $`u`$ in percent and speed change $`y`$ in m/s, two first-order equations make the model. The engine delivers thrust $`F`$, counted in the throttle percent it settles to, with a 0.5 s time constant: $`\tau_2 F' = -F + u`$. The car's speed follows the thrust against its drag: $`\tau_1 y' = -y + K F`$.
 
-Started from rest, the Laplace transform (which trades a signal in time for a function of $s$) turns each derivative into a factor $s$, so the thrust is $1/(\tau_2 s + 1)$ times the throttle and the speed is $K/(\tau_1 s + 1)$ times the thrust. Their product is the transfer function:
+Started from rest, the Laplace transform (which trades a signal in time for a function of $`s`$) turns each derivative into a factor $`s`$, so the thrust is $`1/(\tau_2 s + 1)`$ times the throttle and the speed is $`K/(\tau_1 s + 1)`$ times the thrust. Their product is the transfer function:
 
-$$G(s) = \frac{K}{(\tau_1 s + 1)(\tau_2 s + 1)}$$
+```math
+G(s) = \frac{K}{(\tau_1 s + 1)(\tau_2 s + 1)}
+```
 
-Drive it with $u(t) = A\sin(\omega t)$. Once the start-up motion has died away, the output is
+Drive it with $`u(t) = A\sin(\omega t)`$. Once the start-up motion has died away, the output is
 
-$$y(t) = A\,\lvert G(j\omega)\rvert\,\sin\!\big(\omega t + \varphi(\omega)\big), \qquad \varphi(\omega) = \arg G(j\omega)$$
+```math
+y(t) = A\,\lvert G(j\omega)\rvert\,\sin\!\big(\omega t + \varphi(\omega)\big), \qquad \varphi(\omega) = \arg G(j\omega)
+```
 
 **Read it aloud:** a sine at angular frequency omega comes out as a sine at the same omega, its height multiplied by the size of G at j omega, and shifted by the angle of G at j omega.
 
 The Bode plot is the pair of curves
 
-$$M(\omega) = 20\log_{10}\lvert G(j\omega)\rvert \ \text{dB}, \qquad \varphi(\omega) \ \text{in degrees},$$
+```math
+M(\omega) = 20\log_{10}\lvert G(j\omega)\rvert \ \text{dB}, \qquad \varphi(\omega) \ \text{in degrees},
+```
 
-each drawn against $\omega$ on a log scale. For the car, one factor at a time:
+each drawn against $`\omega`$ on a log scale. For the car, one factor at a time:
 
-$$M(\omega) = 20\log_{10}K - 10\log_{10}\!\big(1 + \omega^2\tau_1^2\big) - 10\log_{10}\!\big(1 + \omega^2\tau_2^2\big), \qquad \varphi(\omega) = -\arctan(\omega\tau_1) - \arctan(\omega\tau_2)$$
+```math
+M(\omega) = 20\log_{10}K - 10\log_{10}\!\big(1 + \omega^2\tau_1^2\big) - 10\log_{10}\!\big(1 + \omega^2\tau_2^2\big), \qquad \varphi(\omega) = -\arctan(\omega\tau_1) - \arctan(\omega\tau_2)
+```
 
 **Read it aloud:** in decibels, each factor's contribution is subtracted; in angle, each factor's lag is added.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G(s)$, $G$ | the transfer function: what the car does to each exponential | throttle in, speed out | — |
-| $s$ | the Laplace variable, a complex rate in 1/s | set to $j\omega$ on this card | — |
-| $j$ | the square root of −1, as engineers write it | — | — |
-| $\omega$, $f$ | angular frequency of the wobble in rad/s; $f = \omega/2\pi$ in hertz | 0.1 rad/s is 0.0159 Hz, one cycle per 62.83 s | gain falls, lag grows |
-| $K$ | the steady gain: settled speed change per held throttle change | 1 (m/s) per % | every dB value rises; +6.02 dB for doubling |
-| $\tau_1$, $\tau_2$ | time constants: the time scale on which the car and the engine each settle | 10 s and 0.5 s | corners move to lower frequency |
-| $\omega_c$ | a corner frequency, one over a time constant | 0.1 rad/s and 2 rad/s | the roll-off starts later |
-| $g$, $\lvert G(j\omega)\rvert$ | the gain: output swing per input swing | 0.7062 (m/s)/% at 0.1 rad/s | bigger speed swing |
-| $M$ | the gain in decibels, $20\log_{10}$ of it | −3.02 dB at 0.1 rad/s | — |
-| $\varphi$ | the phase: the output's shift, negative for a lag | −47.86° at 0.1 rad/s | output arrives earlier |
-| $u$, $y$, $A$ | throttle in %, speed change in m/s, throttle swing size | $A$ = 1% | output swing grows in proportion |
-| $F$ | the engine's delivered thrust, counted in the throttle % it settles to | follows the throttle with a 0.5 s time constant | speed rises in proportion |
-| $T_d$, $t$, $r$, $h$ | a pure delay in s; time in s; a past time in s; the impulse response | $T_d$ = 1 s in What breaks | — |
+| $`G(s)`$, $`G`$ | the transfer function: what the car does to each exponential | throttle in, speed out | — |
+| $`s`$ | the Laplace variable, a complex rate in 1/s | set to $`j\omega`$ on this card | — |
+| $`j`$ | the square root of −1, as engineers write it | — | — |
+| $`\omega`$, $`f`$ | angular frequency of the wobble in rad/s; $`f = \omega/2\pi`$ in hertz | 0.1 rad/s is 0.0159 Hz, one cycle per 62.83 s | gain falls, lag grows |
+| $`K`$ | the steady gain: settled speed change per held throttle change | 1 (m/s) per % | every dB value rises; +6.02 dB for doubling |
+| $`\tau_1`$, $`\tau_2`$ | time constants: the time scale on which the car and the engine each settle | 10 s and 0.5 s | corners move to lower frequency |
+| $`\omega_c`$ | a corner frequency, one over a time constant | 0.1 rad/s and 2 rad/s | the roll-off starts later |
+| $`g`$, $`\lvert G(j\omega)\rvert`$ | the gain: output swing per input swing | 0.7062 (m/s)/% at 0.1 rad/s | bigger speed swing |
+| $`M`$ | the gain in decibels, $`20\log_{10}`$ of it | −3.02 dB at 0.1 rad/s | — |
+| $`\varphi`$ | the phase: the output's shift, negative for a lag | −47.86° at 0.1 rad/s | output arrives earlier |
+| $`u`$, $`y`$, $`A`$ | throttle in %, speed change in m/s, throttle swing size | $`A`$ = 1% | output swing grows in proportion |
+| $`F`$ | the engine's delivered thrust, counted in the throttle % it settles to | follows the throttle with a 0.5 s time constant | speed rises in proportion |
+| $`T_d`$, $`t`$, $`r`$, $`h`$ | a pure delay in s; time in s; a past time in s; the impulse response | $`T_d`$ = 1 s in What breaks | — |
 
-A phase in degrees turns into a time lag by dividing the phase in radians by $\omega$: −47.86° at 0.1 rad/s is a lag of 8.35 s.
+A phase in degrees turns into a time lag by dividing the phase in radians by $`\omega`$: −47.86° at 0.1 rad/s is a lag of 8.35 s.
 
 ### When it holds
 
 - **Linear.** The model describes small changes about a steady cruise. Outside that range it is wrong: a 50% throttle swing at 0.01 rad/s is predicted to swing the speed by 49.8 m/s, more than a car on a level road can gain or lose by throttle, since the engine runs out of power and the throttle hits its stops.
-- **Time-invariant.** The same car on the same road. A hill, a trailer or a headwind changes $K$ and $\tau_1$, and the plot with them.
-- **Stable.** Every pole, a value of $s$ where $G(s)$ becomes infinite ([Poles and zeros](03-poles-zeros-and-stability.md)), must sit in the left half of the complex plane, or the start-up motion never dies away. An unstable car has a $G(j\omega)$ that can still be computed, size 0.7062 at an angle of −137.86° at 0.1 rad/s, but the simulated speed reaches 231.0 million m/s by 200 s: there is no settled sine to measure.
+- **Time-invariant.** The same car on the same road. A hill, a trailer or a headwind changes $`K`$ and $`\tau_1`$, and the plot with them.
+- **Stable.** Every pole, a value of $`s`$ where $`G(s)`$ becomes infinite ([Poles and zeros](03-poles-zeros-and-stability.md)), must sit in the left half of the complex plane, or the start-up motion never dies away. An unstable car has a $`G(j\omega)`$ that can still be computed, size 0.7062 at an angle of −137.86° at 0.1 rad/s, but the simulated speed reaches 231.0 million m/s by 200 s: there is no settled sine to measure.
 - **Settled.** The formula describes the output after several times the longest time constant. In the chart above that is after about 50 s.
 - **Every lag in the model.** A pure delay leaves the gain alone and adds lag that the straight-line sketch cannot show; it must be added by hand.
 
@@ -98,69 +106,73 @@ A phase in degrees turns into a time lag by dividing the phase in radians by $\o
 
 ### Step 0: a sine is two exponentials, and exponentials pass through unchanged
 
-A linear time-invariant system answers the exponential $e^{st}$ with the same exponential times one complex number, $G(s)$. That is what the transfer function means. Euler's formula ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)) writes a sine as two such exponentials: $\sin(\omega t) = \big(e^{j\omega t} - e^{-j\omega t}\big)/2j$. Each passes through, multiplied by $G$ at $s = j\omega$ or $s = -j\omega$. Putting the two back together gives a sine again. Everything on this card is that one move: evaluate $G(s)$ along the imaginary axis, $s = j\omega$.
+A linear time-invariant system answers the exponential $`e^{st}`$ with the same exponential times one complex number, $`G(s)`$. That is what the transfer function means. Euler's formula ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)) writes a sine as two such exponentials: $`\sin(\omega t) = \big(e^{j\omega t} - e^{-j\omega t}\big)/2j`$. Each passes through, multiplied by $`G`$ at $`s = j\omega`$ or $`s = -j\omega`$. Putting the two back together gives a sine again. Everything on this card is that one move: evaluate $`G(s)`$ along the imaginary axis, $`s = j\omega`$.
 
-### Step 1: the settled response to $e^{j\omega t}$ is $G(j\omega)\,e^{j\omega t}$
+### Step 1: the settled response to $`e^{j\omega t}`$ is $`G(j\omega)\,e^{j\omega t}`$
 
-The output is the input convolved with the impulse response $h$, the output after a sharp unit kick ([Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md)). Switch $e^{j\omega t}$ on at time 0, and the output at time $t$ is $e^{j\omega t}$ times the integral of $h(r)e^{-j\omega r}$ over past times $r$ from 0 to $t$. As $t$ grows, that integral approaches $G(j\omega)$, provided $h$ dies away fast enough. Stability is exactly that condition ([Poles and zeros](03-poles-zeros-and-stability.md)).
+The output is the input convolved with the impulse response $`h`$, the output after a sharp unit kick ([Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md)). Switch $`e^{j\omega t}`$ on at time 0, and the output at time $`t`$ is $`e^{j\omega t}`$ times the integral of $`h(r)e^{-j\omega r}`$ over past times $`r`$ from 0 to $`t`$. As $`t`$ grows, that integral approaches $`G(j\omega)`$, provided $`h`$ dies away fast enough. Stability is exactly that condition ([Poles and zeros](03-poles-zeros-and-stability.md)).
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $h$ be the impulse response, with $\int_0^\infty \lvert h(r)\rvert\,dr$ finite (true when every pole has negative real part, since $h$ is then a sum of decaying exponentials times polynomials). Its Laplace transform $G(s) = \int_0^\infty h(r)e^{-sr}dr$ then converges at $s = j\omega$.
+Let $`h`$ be the impulse response, with $`\int_0^\infty \lvert h(r)\rvert\,dr`$ finite (true when every pole has negative real part, since $`h`$ is then a sum of decaying exponentials times polynomials). Its Laplace transform $`G(s) = \int_0^\infty h(r)e^{-sr}dr`$ then converges at $`s = j\omega`$.
 
-Input $u(t) = e^{j\omega t}$ for $t \ge 0$, zero before. Convolution gives
-$$y(t) = \int_0^t h(r)\,e^{j\omega(t-r)}\,dr = e^{j\omega t}\int_0^t h(r)e^{-j\omega r}dr = e^{j\omega t}\Big(G(j\omega) - \int_t^\infty h(r)e^{-j\omega r}dr\Big).$$
-The last integral is at most $\int_t^\infty \lvert h(r)\rvert dr$ in size, which tends to 0. So $y(t) - G(j\omega)e^{j\omega t} \to 0$: the transient dies and the settled part is $G(j\omega)e^{j\omega t}$.
+Input $`u(t) = e^{j\omega t}`$ for $`t \ge 0`$, zero before. Convolution gives
 
-For a real $h$, $G(-j\omega)$ is the complex conjugate of $G(j\omega)$. Write $G(j\omega) = \lvert G\rvert e^{j\varphi}$. The input $\sin\omega t = (e^{j\omega t} - e^{-j\omega t})/2j$ settles to
-$$\frac{\lvert G\rvert e^{j\varphi}e^{j\omega t} - \lvert G\rvert e^{-j\varphi}e^{-j\omega t}}{2j} = \lvert G\rvert\sin(\omega t + \varphi).$$
-If a pole has positive real part, $h$ grows, the integral from $t$ to infinity does not exist, and the transient swamps the sine: the unstable case in What breaks.
+$`\displaystyle y(t) = \int_0^t h(r)\,e^{j\omega(t-r)}\,dr = e^{j\omega t}\int_0^t h(r)e^{-j\omega r}dr = e^{j\omega t}\Big(G(j\omega) - \int_t^\infty h(r)e^{-j\omega r}dr\Big).`$
+
+The last integral is at most $`\int_t^\infty \lvert h(r)\rvert dr`$ in size, which tends to 0. So $`y(t) - G(j\omega)e^{j\omega t} \to 0`$: the transient dies and the settled part is $`G(j\omega)e^{j\omega t}`$.
+
+For a real $`h`$, $`G(-j\omega)`$ is the complex conjugate of $`G(j\omega)`$. Write $`G(j\omega) = \lvert G\rvert e^{j\varphi}`$. The input $`\sin\omega t = (e^{j\omega t} - e^{-j\omega t})/2j`$ settles to
+
+$`\displaystyle \frac{\lvert G\rvert e^{j\varphi}e^{j\omega t} - \lvert G\rvert e^{-j\varphi}e^{-j\omega t}}{2j} = \lvert G\rvert\sin(\omega t + \varphi).`$
+
+If a pole has positive real part, $`h`$ grows, the integral from $`t`$ to infinity does not exist, and the transient swamps the sine: the unstable case in What breaks.
 
 </details>
 
 ### Step 2: a real sine comes out as a real sine, scaled and shifted
 
-The impulse response of a real car is a real function. Its value at $-j\omega$ is then the mirror image, the complex conjugate, of its value at $j\omega$. The two exponentials recombine into one sine of height $\lvert G(j\omega)\rvert$ times the input's, shifted by the angle $\varphi = \arg G(j\omega)$. The frequency is untouched: a linear time-invariant system cannot create a new frequency.
+The impulse response of a real car is a real function. Its value at $`-j\omega`$ is then the mirror image, the complex conjugate, of its value at $`j\omega`$. The two exponentials recombine into one sine of height $`\lvert G(j\omega)\rvert`$ times the input's, shifted by the angle $`\varphi = \arg G(j\omega)`$. The frequency is untouched: a linear time-invariant system cannot create a new frequency.
 
 ### Step 3: logs turn the product of factors into a sum
 
-$G(j\omega)$ for the car is a product: $K$, times $1/(1 + j\omega\tau_1)$, times $1/(1 + j\omega\tau_2)$. Sizes of complex numbers multiply and their angles add. Take $20\log_{10}$ of the size and the product becomes a sum ([Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)). So the Bode plot of a chain of simple factors is the plain sum of their plots, in dB and in degrees. Hendrik Bode drew the plots this way at Bell Labs in the 1930s for exactly that reason: a designer could add straight lines by hand.
+$`G(j\omega)`$ for the car is a product: $`K`$, times $`1/(1 + j\omega\tau_1)`$, times $`1/(1 + j\omega\tau_2)`$. Sizes of complex numbers multiply and their angles add. Take $`20\log_{10}`$ of the size and the product becomes a sum ([Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)). So the Bode plot of a chain of simple factors is the plain sum of their plots, in dB and in degrees. Hendrik Bode drew the plots this way at Bell Labs in the 1930s for exactly that reason: a designer could add straight lines by hand.
 
 ### Step 4: one factor, two straight lines
 
-Take one factor $1/(1 + j\omega\tau)$ with corner $\omega_c = 1/\tau$. Its size is $1/\sqrt{1 + \omega^2\tau^2}$.
+Take one factor $`1/(1 + j\omega\tau)`$ with corner $`\omega_c = 1/\tau`$. Its size is $`1/\sqrt{1 + \omega^2\tau^2}`$.
 
-- Well below the corner, $\omega\tau$ is small, the size is close to 1, and the magnitude is close to 0 dB: a flat line.
-- Well above the corner, the 1 is negligible, the size is close to $1/(\omega\tau)$, and the magnitude is $-20\log_{10}(\omega/\omega_c)$ dB. Each tenfold rise in frequency, one **decade**, lowers it by 20 dB: a straight line of slope −20 dB per decade on a log axis.
-- The two lines meet at the corner. There the true size is $1/\sqrt 2$, which is $-10\log_{10}2$ = −3.01 dB. That is the sketch's worst error: the code sweeps 4,001 frequencies across four decades and finds the largest gap at 3.0103 dB.
+- Well below the corner, $`\omega\tau`$ is small, the size is close to 1, and the magnitude is close to 0 dB: a flat line.
+- Well above the corner, the 1 is negligible, the size is close to $`1/(\omega\tau)`$, and the magnitude is $`-20\log_{10}(\omega/\omega_c)`$ dB. Each tenfold rise in frequency, one **decade**, lowers it by 20 dB: a straight line of slope −20 dB per decade on a log axis.
+- The two lines meet at the corner. There the true size is $`1/\sqrt 2`$, which is $`-10\log_{10}2`$ = −3.01 dB. That is the sketch's worst error: the code sweeps 4,001 frequencies across four decades and finds the largest gap at 3.0103 dB.
 
-The phase is $-\arctan(\omega\tau)$: 0° far below the corner, −45° at it, −90° far above. The straight-line phase sketch holds 0° up to a decade below the corner, falls 45° per decade for two decades, and holds −90° from a decade above. Its worst error is 5.71°, a decade either side of the corner, where the true phase is $\arctan 0.1$ away from the line; the sweep finds 5.711°.
+The phase is $`-\arctan(\omega\tau)`$: 0° far below the corner, −45° at it, −90° far above. The straight-line phase sketch holds 0° up to a decade below the corner, falls 45° per decade for two decades, and holds −90° from a decade above. Its worst error is 5.71°, a decade either side of the corner, where the true phase is $`\arctan 0.1`$ away from the line; the sweep finds 5.711°.
 
-Two more pieces appear in most plots. A **zero**, a factor $1 + j\omega\tau$ on top, is a pole turned upside down: its dB and degrees are the pole's with the sign flipped, so it climbs at +20 dB per decade above its corner and its phase rises to +90°. At 1 rad/s the zero $1 + 10s$ gives +20.04 dB and +84.289°.
+Two more pieces appear in most plots. A **zero**, a factor $`1 + j\omega\tau`$ on top, is a pole turned upside down: its dB and degrees are the pole's with the sign flipped, so it climbs at +20 dB per decade above its corner and its phase rises to +90°. At 1 rad/s the zero $`1 + 10s`$ gives +20.04 dB and +84.289°.
 
-An **integrator** $1/s$ is a system that adds up its input, as position adds up speed. Its size is $1/\omega$ and its angle −90° at every frequency: a straight line of −20 dB per decade through 0 dB at 1 rad/s, with no corner.
+An **integrator** $`1/s`$ is a system that adds up its input, as position adds up speed. Its size is $`1/\omega`$ and its angle −90° at every frequency: a straight line of −20 dB per decade through 0 dB at 1 rad/s, with no corner.
 
 ### Step 5: add the pieces, decade by decade
 
-For the car the corners sit at 0.1 rad/s and 2 rad/s. Below 0.1 rad/s both factors are flat: 0 dB, because $K$ = 1 is 0 dB. From 0.1 to 2 rad/s the car's factor falls at −20 dB per decade, reaching −26.02 dB at 2 rad/s. Above 2 rad/s the engine's factor adds its own −20, for −40 dB per decade: −66.02 dB by 20 rad/s.
+For the car the corners sit at 0.1 rad/s and 2 rad/s. Below 0.1 rad/s both factors are flat: 0 dB, because $`K`$ = 1 is 0 dB. From 0.1 to 2 rad/s the car's factor falls at −20 dB per decade, reaching −26.02 dB at 2 rad/s. Above 2 rad/s the engine's factor adds its own −20, for −40 dB per decade: −66.02 dB by 20 rad/s.
 
 The code measures the true slope far out, between 100 and 1,000 rad/s, at −39.998 dB per decade. The phase sketch adds the two factors' ramps and ends at −180°, which the exact phase approaches but never reaches.
 
-A second road to the same complex number draws it as one curve in the plane, size and angle together, as $\omega$ runs from 0 upwards. That is the Nyquist plot, which counts encirclements to judge a feedback loop: [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
+A second road to the same complex number draws it as one curve in the plane, size and angle together, as $`\omega`$ runs from 0 upwards. That is the Nyquist plot, which counts encirclements to judge a feedback loop: [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The throttle wobbles ±1% at $\omega$ = 1 rad/s, one cycle every 6.28 s. Corners at 0.1 and 2 rad/s.
+The throttle wobbles ±1% at $`\omega`$ = 1 rad/s, one cycle every 6.28 s. Corners at 0.1 and 2 rad/s.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| car factor, $\omega\tau_1$ | 1 × 10 | 10 |
+| car factor, $`\omega\tau_1`$ | 1 × 10 | 10 |
 | car factor, magnitude | −10 log10(1 + 100) | −20.04 dB |
 | car factor, phase | −arctan 10 | −84.289° |
-| engine factor, $\omega\tau_2$ | 1 × 0.5 | 0.5 |
+| engine factor, $`\omega\tau_2`$ | 1 × 0.5 | 0.5 |
 | engine factor, magnitude | −10 log10(1 + 0.25) | −0.97 dB |
 | engine factor, phase | −arctan 0.5 | −26.565° |
 | total magnitude | −20.04 − 0.97 | −21.01 dB |
@@ -203,9 +215,9 @@ Orange: the exact phase. Green: the straight-line sketch, the two factors' 45°-
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $10\log_{10}$ instead of $20\log_{10}$, at 1 rad/s | −10.51 dB (right: −21.01 dB) | Ten is for power, which goes as the square of a swing; a gain of swings takes twenty |
+| $`10\log_{10}`$ instead of $`20\log_{10}`$, at 1 rad/s | −10.51 dB (right: −21.01 dB) | Ten is for power, which goes as the square of a swing; a gain of swings takes twenty |
 | Read the sketch at the 0.1 rad/s corner | 1.0000 m/s swing (right: 0.7062 m/s) | The straight lines are 3.01 dB high at a corner; the true swing is already seven tenths of the input's |
-| Leave out a 1 s engine delay, at 1 rad/s | −110.85° (right: −168.15°, simulated −168.15°) | A delay has gain 1 at every frequency, so the magnitude plot hides it; its lag, $\omega T_d$ in radians, grows without limit |
+| Leave out a 1 s engine delay, at 1 rad/s | −110.85° (right: −168.15°, simulated −168.15°) | A delay has gain 1 at every frequency, so the magnitude plot hides it; its lag, $`\omega T_d`$ in radians, grows without limit |
 | Use the formula on an unstable car (pole at +0.1 rad/s) | 0.7062 at −137.86° predicted; simulated speed 231.0 million m/s at 200 s | No settled sine exists; the growing start-up motion swamps it |
 
 ---
@@ -215,7 +227,7 @@ Orange: the exact phase. Green: the straight-line sketch, the two factors' 45°-
 The code builds the car's gain and phase three independent ways at six frequencies from 0.01 to 10 rad/s.
 
 - Road 1 is the closed form, one factor at a time.
-- Road 2 expands the denominator into a polynomial and evaluates it at $s = j\omega$ with complex arithmetic.
+- Road 2 expands the denominator into a polynomial and evaluates it at $`s = j\omega`$ with complex arithmetic.
 - Road 3 ignores the transfer function. It simulates the two equations behind it with a fourth-order Runge-Kutta step (RK4), a standard way to step differential equations forward in small time steps. It wobbles the throttle and waits at least 150 s for the start-up motion to die. Then it measures the settled speed swing over one whole cycle by multiplying it by a sine and by a cosine and averaging.
 
 The straight-line sketch is printed beside them and checked against the exact curve at its worst points and far from the corners. Then the code reproduces every number in What breaks, including a simulated delay and a simulated unstable car, and prints every charted point.
@@ -609,13 +621,13 @@ The two outputs agree line for line at the printed precision.
 
 Lean proves the sine-in, sine-out theorem, the car's Bode formulas and the sketch's worst error in general, not just for the car's numbers.
 
-- Suppose a system starts from rest, and its impulse response $h$ has $\int_0^\infty \lvert h(r)\rvert\,dr$ finite. Then its output to $A\sin(\omega t)$ settles to $A\,\lvert G(j\omega)\rvert\sin(\omega t + \varphi(\omega))$.
-- Take the car with any $K > 0$ and any $\tau_1$, $\tau_2$ and $\omega$. Then $M(\omega)$ and $\varphi(\omega)$ are exactly the one-factor-at-a-time formulas above.
-- Take one factor $1/(1 + j\omega\tau)$ with $\tau > 0$. Then the magnitude sketch is never more than $10\log_{10}2$ dB off, and exactly that far at the corner.
+- Suppose a system starts from rest, and its impulse response $`h`$ has $`\int_0^\infty \lvert h(r)\rvert\,dr`$ finite. Then its output to $`A\sin(\omega t)`$ settles to $`A\,\lvert G(j\omega)\rvert\sin(\omega t + \varphi(\omega))`$.
+- Take the car with any $`K > 0`$ and any $`\tau_1`$, $`\tau_2`$ and $`\omega`$. Then $`M(\omega)`$ and $`\varphi(\omega)`$ are exactly the one-factor-at-a-time formulas above.
+- Take one factor $`1/(1 + j\omega\tau)`$ with $`\tau > 0`$. Then the magnitude sketch is never more than $`10\log_{10}2`$ dB off, and exactly that far at the corner.
 - The decibel examples hold: gains of 10, 1 and 0.1 are +20, 0 and −20 dB.
-- At a corner the factor has size $1/\sqrt 2$ and angle −45°.
-- The integrator $1/s$ has size 1 at 1 rad/s and 0.1 at 10 rad/s, with angle −90°.
-- The zero $1 + 10s$ at 1 rad/s has the reciprocal of the car factor's size.
+- At a corner the factor has size $`1/\sqrt 2`$ and angle −45°.
+- The integrator $`1/s`$ has size 1 at 1 rad/s and 0.1 at 10 rad/s, with angle −90°.
+- The zero $`1 + 10s`$ at 1 rad/s has the reciprocal of the car factor's size.
 
 Decimal values, the phase sketch's 5.71° error, the delay and the simulations are left to the Python and Rust checks.
 
@@ -910,10 +922,10 @@ open BodePlots
 > [!warning]
 > **Reading the straight-line sketch as the system.** The sketch is a drawing aid. It is 3.01 dB high at every isolated corner, more where corners crowd together, and it misses whatever has no corner: a pure delay adds lag without changing the gain, so a sketch drawn from poles alone can show a comfortable −110.85° where the true phase is −168.15°. Lightly damped pairs of poles peak above the sketch instead of below it ([Damping ratio and natural frequency](06-second-order-systems-damping-and-natural-frequency.md)). Sketch to think; compute to decide.
 >
-> - **Ten instead of twenty.** Decibels of a gain of swings are $20\log_{10}$, since power goes as the square of a swing. Using ten halves every number: −10.51 dB where −21.01 dB is right.
+> - **Ten instead of twenty.** Decibels of a gain of swings are $`20\log_{10}`$, since power goes as the square of a swing. Using ten halves every number: −10.51 dB where −21.01 dB is right.
 > - **Hertz for radians per second.** The corner at 0.1 rad/s is 0.0159 Hz. A plot labelled in one and read in the other is off by a factor of 2π along the whole axis.
 > - **Measuring before it settles.** In the chart in the overview the speed reads 0.75 m/s at 25 s, in the first cycle, against the settled 0.7062. A gain read from the first cycle is wrong.
-> - **Trusting the plot of an unstable system.** $G(j\omega)$ exists for the unstable car too, but nothing in the real car settles to it.
+> - **Trusting the plot of an unstable system.** $`G(j\omega)`$ exists for the unstable car too, but nothing in the real car settles to it.
 
 ---
 
@@ -923,16 +935,16 @@ open BodePlots
 - **Audio.** A loudspeaker's or amplifier's data sheet shows a magnitude plot in dB against frequency in hertz. Its −3 dB points are the corners.
 - **Measuring a machine you cannot model.** Shake it with sines at many frequencies and record gain and phase: the Bode plot comes straight from the bench, and the corners reveal the time constants.
 - **Digital filters.** The same curves, with the frequency axis ending at half the sampling rate: [The z-transform](08-z-transform-and-discrete-time-systems.md).
-- **The steady gain.** The left end of the magnitude plot, at $\omega$ = 0, is $G(0) = K$, the settled response to a held step: [Final value and bandwidth](05-final-value-theorem-and-steady-gain.md).
+- **The steady gain.** The left end of the magnitude plot, at $`\omega`$ = 0, is $`G(0) = K`$, the settled response to a held step: [Final value and bandwidth](05-final-value-theorem-and-steady-gain.md).
 
 > **Say it back**
-> A stable linear system answers a sine with a sine of the same frequency. Its height is multiplied by the size of the transfer function at $s = j\omega$ and its timing shifted by that number's angle. On log scales the factors of the transfer function add, so each pole contributes a flat line, a corner and a −20 dB-per-decade slope, with its phase falling to −90°. The cruise-controlled car follows throttle wobbles slower than 0.1 rad/s and ignores most faster ones: at 1 rad/s it passes 0.0890 m/s per percent, 1.93 s late. The sketch is 3.01 dB off at each corner and blind to delays, so the exact curve decides.
+> A stable linear system answers a sine with a sine of the same frequency. Its height is multiplied by the size of the transfer function at $`s = j\omega`$ and its timing shifted by that number's angle. On log scales the factors of the transfer function add, so each pole contributes a flat line, a corner and a −20 dB-per-decade slope, with its phase falling to −90°. The cruise-controlled car follows throttle wobbles slower than 0.1 rad/s and ignores most faster ones: at 1 rad/s it passes 0.0890 m/s per percent, 1.93 s late. The sketch is 3.01 dB off at each corner and blind to delays, so the exact curve decides.
 
 ---
 
 ## What this builds on
 
-- [Transfer functions](02-impulse-response-and-transfer-functions.md): $G(s)$ and the impulse response $h$; this card evaluates the first along the imaginary axis.
+- [Transfer functions](02-impulse-response-and-transfer-functions.md): $`G(s)`$ and the impulse response $`h`$; this card evaluates the first along the imaginary axis.
 - [Poles and zeros](03-poles-zeros-and-stability.md): the corners are the poles, and the settled sine exists only when they are stable.
 - [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): a sine as two exponentials, the move that makes Step 0 work.
 - [Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): the log of a product is a sum, which turns factors into straight lines.

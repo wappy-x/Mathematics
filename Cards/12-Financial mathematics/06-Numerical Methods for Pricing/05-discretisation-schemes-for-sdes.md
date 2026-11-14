@@ -38,34 +38,40 @@ The upper line is Euler, the lower Milstein. Both start badly wrong and climb to
 
 Notation first, in words. An **SDE**, a stochastic differential equation, is a rule for one instant: the drift over the next instant, and the size of the random kick over the same instant. Acme's rule is geometric Brownian motion ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): drift and kick are both proportional to the price.
 
-A step of length $h$ years gets one kick, written $\Delta W$, drawn from the bell curve with average zero and spread $\sqrt h$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). Subscripts count steps: step $k$ turns reading $k$ into reading $k+1$.
+A step of length $`h`$ years gets one kick, written $`\Delta W`$, drawn from the bell curve with average zero and spread $`\sqrt h`$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). Subscripts count steps: step $`k`$ turns reading $`k`$ into reading $`k+1`$.
 
 Three rules for that one step, all fed the same kick:
 
-$$S_{k+1} \;=\; S_k \, e^{(\mu - \frac12 \sigma^2) h \;+\; \sigma \Delta W_{k+1}}$$
+```math
+S_{k+1} \;=\; S_k \, e^{(\mu - \frac12 \sigma^2) h \;+\; \sigma \Delta W_{k+1}}
+```
 
-$$Y_{k+1} \;=\; Y_k \left( 1 + \mu h + \sigma \Delta W_{k+1} \right)$$
+```math
+Y_{k+1} \;=\; Y_k \left( 1 + \mu h + \sigma \Delta W_{k+1} \right)
+```
 
-$$Y_{k+1} \;=\; Y_k \left( 1 + \mu h + \sigma \Delta W_{k+1} + \tfrac12 \sigma^2 \left( \Delta W_{k+1}^2 - h \right) \right)$$
+```math
+Y_{k+1} \;=\; Y_k \left( 1 + \mu h + \sigma \Delta W_{k+1} + \tfrac12 \sigma^2 \left( \Delta W_{k+1}^2 - h \right) \right)
+```
 
 **Read it aloud:** the first is exact and multiplies by a number that is always positive; the second, Euler, multiplies by one plus the drift plus the kick; the third, Milstein, adds a term that is large whenever the kick was large in either direction.
 
 | Symbol | Plain meaning | In our example | Push it up and the bias… |
 | --- | --- | --- | --- |
-| $S_t$, $S_T$, $S$ | the exact price, now and at expiry | starts at $100 | — |
-| $Y_k$, $Y_N$, $Y$, $k$ | the stepped reading after $k$ steps, and at the end | starts at $100 too | — |
-| $h$, $N$ | a step's length in years, and steps to the year | 0.083333, 12 | more steps, less bias |
-| $\Delta W$ | a step's random kick, spread $\sqrt h$ | root of 0.083333 | — |
-| $\mu$, $\sigma$ | drift per year, and volatility | 3%, 20% | both raise it, volatility faster |
-| $r$, $q$, $K$, $T$ | bank rate, dividend yield, strike, years | 5%, 2%, $100, 1 | — |
-| $C$ | the call's worth | $9.23 | — |
-| $v_t$, $v$ | the variance rate: volatility squared, free to move | starts at 0.09 | — |
-| $\kappa$, $\theta$, $\eta$ | the variance's pull-back speed, resting level, own volatility | 0.693147, 0.04, 0.235482 | a bigger $\eta$ breaks Euler first |
-| $m$, $w$ | the next reading's exact average and variance | 0.065000, 0.002200 | — |
-| $\psi$ | the relative spread, $w$ over $m$ squared | 0.520710 | past the switch the recipe changes |
-| $a$, $b$, $p$, $\beta$, $U$ | the branches' scale and shift; the weight at zero, its rate, the draw that picks | 0.009098, 2.478748 | — |
+| $`S_t`$, $`S_T`$, $`S`$ | the exact price, now and at expiry | starts at $100 | — |
+| $`Y_k`$, $`Y_N`$, $`Y`$, $`k`$ | the stepped reading after $`k`$ steps, and at the end | starts at $100 too | — |
+| $`h`$, $`N`$ | a step's length in years, and steps to the year | 0.083333, 12 | more steps, less bias |
+| $`\Delta W`$ | a step's random kick, spread $`\sqrt h`$ | root of 0.083333 | — |
+| $`\mu`$, $`\sigma`$ | drift per year, and volatility | 3%, 20% | both raise it, volatility faster |
+| $`r`$, $`q`$, $`K`$, $`T`$ | bank rate, dividend yield, strike, years | 5%, 2%, $100, 1 | — |
+| $`C`$ | the call's worth | $9.23 | — |
+| $`v_t`$, $`v`$ | the variance rate: volatility squared, free to move | starts at 0.09 | — |
+| $`\kappa`$, $`\theta`$, $`\eta`$ | the variance's pull-back speed, resting level, own volatility | 0.693147, 0.04, 0.235482 | a bigger $`\eta`$ breaks Euler first |
+| $`m`$, $`w`$ | the next reading's exact average and variance | 0.065000, 0.002200 | — |
+| $`\psi`$ | the relative spread, $`w`$ over $`m`$ squared | 0.520710 | past the switch the recipe changes |
+| $`a`$, $`b`$, $`p`$, $`\beta`$, $`U`$ | the branches' scale and shift; the weight at zero, its rate, the draw that picks | 0.009098, 2.478748 | — |
 
-Two measures carry the rest of the card, and they are not the same. The **path gap** is the typical distance between the stepped reading and the exact one at the year's end, on the same kicks: the square root of the average of $(Y_N - S_T)^2$. The **price bias** is the gap between the two average discounted payoffs. Euler's path gap shrinks like $\sqrt h$ and Milstein's like $h$; the price bias of both shrinks only like $h$.
+Two measures carry the rest of the card, and they are not the same. The **path gap** is the typical distance between the stepped reading and the exact one at the year's end, on the same kicks: the square root of the average of $`(Y_N - S_T)^2`$. The **price bias** is the gap between the two average discounted payoffs. Euler's path gap shrinks like $`\sqrt h`$ and Milstein's like $`h`$; the price bias of both shrinks only like $`h`$.
 
 ### When it holds
 
@@ -81,78 +87,92 @@ Two measures carry the rest of the card, and they are not the same. The **path g
 
 ### Step 0: the exact factor already contains both schemes
 
-The exact rule multiplies the price by $e^{(\mu - \frac12\sigma^2)h + \sigma\Delta W}$. Expand that exponential the ordinary way — one, plus the exponent, plus half the exponent squared — and track sizes. The kick has spread $\sqrt h$, so it counts as half a power of the step.
+The exact rule multiplies the price by $`e^{(\mu - \frac12\sigma^2)h + \sigma\Delta W}`$. Expand that exponential the ordinary way — one, plus the exponent, plus half the exponent squared — and track sizes. The kick has spread $`\sqrt h`$, so it counts as half a power of the step.
 
-$$e^{(\mu - \frac12\sigma^2)h + \sigma\Delta W} \;=\; \underbrace{1 + \mu h + \sigma \Delta W}_{\text{Euler}} \;+\; \underbrace{\tfrac12\sigma^2\left(\Delta W^2 - h\right)}_{\text{Milstein's extra}} \;+\; \text{terms of size } h^{3/2}.$$
+```math
+e^{(\mu - \frac12\sigma^2)h + \sigma\Delta W} \;=\; \underbrace{1 + \mu h + \sigma \Delta W}_{\text{Euler}} \;+\; \underbrace{\tfrac12\sigma^2\left(\Delta W^2 - h\right)}_{\text{Milstein's extra}} \;+\; \text{terms of size } h^{3/2}.
+```
 
-The $-\tfrac12\sigma^2 h$ in the exponent and the $+\tfrac12\sigma^2 h$ from the squared kick cancel, which is why the extra term is the kick squared *minus* the step. Euler is the exact factor cut after the half-power terms; Milstein is the same factor cut one term later.
+The $`-\tfrac12\sigma^2 h`$ in the exponent and the $`+\tfrac12\sigma^2 h`$ from the squared kick cancel, which is why the extra term is the kick squared *minus* the step. Euler is the exact factor cut after the half-power terms; Milstein is the same factor cut one term later.
 
 ### Step 1: mistakes that average to zero pile up slowly
 
-Euler throws away $\tfrac12\sigma^2(\Delta W^2 - h)$ once per step. That piece has size $h$ and $N = T/h$ steps are taken, so a careless count predicts a total error of $N \times h = T$: no shrinking at all. The count is wrong, because the piece averages to zero — a bell-curve kick has $\Delta W^2$ averaging exactly $h$.
+Euler throws away $`\tfrac12\sigma^2(\Delta W^2 - h)`$ once per step. That piece has size $`h`$ and $`N = T/h`$ steps are taken, so a careless count predicts a total error of $`N \times h = T`$: no shrinking at all. The count is wrong, because the piece averages to zero — a bell-curve kick has $`\Delta W^2`$ averaging exactly $`h`$.
 
-Errors that average to zero do not add in a line. They add like a random walk: $N$ of them grow like $\sqrt N$. Euler's path gap is therefore about $\sqrt N \times h = \sqrt{Th}$, shrinking like $\sqrt h$. Milstein discards terms of size $h^{3/2}$, also averaging to zero, and the same count gives $\sqrt T \, h$. One extra term per step doubles the exponent.
+Errors that average to zero do not add in a line. They add like a random walk: $`N`$ of them grow like $`\sqrt N`$. Euler's path gap is therefore about $`\sqrt N \times h = \sqrt{Th}`$, shrinking like $`\sqrt h`$. Milstein discards terms of size $`h^{3/2}`$, also averaging to zero, and the same count gives $`\sqrt T \, h`$. One extra term per step doubles the exponent.
 
 ### Step 2: where the extra term comes from
 
-Step 0 is suggestive, not a derivation, since $\Delta W$ is not smooth enough to expand in. The honest route integrates the SDE over the step and substitutes it into itself. Write $W_t$ for the running total of the kicks up to time $t$ ([Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)). The inner integral that appears is the kick measured against itself,
+Step 0 is suggestive, not a derivation, since $`\Delta W`$ is not smooth enough to expand in. The honest route integrates the SDE over the step and substitutes it into itself. Write $`W_t`$ for the running total of the kicks up to time $`t`$ ([Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)). The inner integral that appears is the kick measured against itself,
 
-$$\int_{t}^{t+h} \left( W_u - W_t \right) dW_u \;=\; \tfrac12 \left( \Delta W^2 - h \right),$$
+```math
+\int_{t}^{t+h} \left( W_u - W_t \right) dW_u \;=\; \tfrac12 \left( \Delta W^2 - h \right),
+```
 
-which is Itô's rule, the chain rule with an extra second-derivative term ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)), applied to a square. In general the correction is the diffusion times its own slope times that integral, proved on [Milstein and the two kinds of error](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/05-milstein-and-strong-weak-convergence.md). For Acme the diffusion is $\sigma$ times the price and its slope is $\sigma$, giving $\tfrac12\sigma^2(\Delta W^2 - h)$ times the price.
+which is Itô's rule, the chain rule with an extra second-derivative term ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)), applied to a square. In general the correction is the diffusion times its own slope times that integral, proved on [Milstein and the two kinds of error](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/05-milstein-and-strong-weak-convergence.md). For Acme the diffusion is $`\sigma`$ times the price and its slope is $`\sigma`$, giving $`\tfrac12\sigma^2(\Delta W^2 - h)`$ times the price.
 
 ### Step 3: a closer path is not a cheaper mistake
 
 At twelve steps Milstein's path gap is 0.061309 against Euler's 0.859104, fourteen times closer — yet Euler's price bias is −0.03 cents and Milstein's is −2.08. Two things are going on.
 
-First, **both schemes get the average level wrong in the same way.** Milstein's extra term averages to zero, so both share the average terminal reading $100 \times (1 + \mu h)^N$. At twelve steps that is 103.041596 against the exact 103.045453: short by four tenths of a cent per share, because each step's factor $1 + \mu h$ falls short of the exact $e^{\mu h}$, twelve times over. That error does not average away, has size $h$, and Milstein does not touch it — which is why the price bias of both shrinks only like $h$.
+First, **both schemes get the average level wrong in the same way.** Milstein's extra term averages to zero, so both share the average terminal reading $`100 \times (1 + \mu h)^N`$. At twelve steps that is 103.041596 against the exact 103.045453: short by four tenths of a cent per share, because each step's factor $`1 + \mu h`$ falls short of the exact $`e^{\mu h}`$, twelve times over. That error does not average away, has size $`h`$, and Milstein does not touch it — which is why the price bias of both shrinks only like $`h`$.
 
 Second, **Euler makes a second mistake that pays.** The call pays only above $100. Euler's straight line crosses $100 at a kick where the exact rule is still below it, so it collects payoffs in a band of years where the exact rule collects nothing. That gain partly cancels the money Euler loses far up, where a straight line falls hopelessly behind an exponential. Milstein's curve crosses $100 almost where the exact rule does, so it keeps the upside loss with no offsetting gain.
 
 ### Step 4: the path gap can be computed exactly, with no paths at all
 
-Both schemes multiply independent factors, and so does the exact rule. The average of a product of independent things is the product of their averages, so the average of $(Y_N - S_T)^2$ can be written in closed form. Expand the square into three averages: the stepped reading squared, the exact reading squared, and the two multiplied. For Euler, with $h = T/N$ and $E[\,\cdot\,]$ for an average,
+Both schemes multiply independent factors, and so does the exact rule. The average of a product of independent things is the product of their averages, so the average of $`(Y_N - S_T)^2`$ can be written in closed form. Expand the square into three averages: the stepped reading squared, the exact reading squared, and the two multiplied. For Euler, with $`h = T/N`$ and $`E[\,\cdot\,]`$ for an average,
 
-$$E\left[\left(Y_N - S_T\right)^2\right] \;=\; S_0^2 \left[ \left( (1+\mu h)^2 + \sigma^2 h \right)^{N} \;+\; e^{(2\mu + \sigma^2)T} \;-\; 2\, e^{\mu T} \left( 1 + (\mu + \sigma^2) h \right)^{N} \right].$$
+```math
+E\left[\left(Y_N - S_T\right)^2\right] \;=\; S_0^2 \left[ \left( (1+\mu h)^2 + \sigma^2 h \right)^{N} \;+\; e^{(2\mu + \sigma^2)T} \;-\; 2\, e^{\mu T} \left( 1 + (\mu + \sigma^2) h \right)^{N} \right].
+```
 
 No simulation, no random number, no rate: exact at every step count, including steps so coarse that the scheme's factors turn negative. It is the ruler the simulation is checked against, and the check prints both — sampled 0.865785 against computed 0.859104 at twelve steps.
 
 <details>
 <summary>Detailed proof: the three averages, and Milstein's version of the same formula</summary>
 
-Write $Y_N = S_0 \prod_k A_k$ with the Euler factor $A = 1 + \mu h + \sigma\Delta W$, and $S_T = S_0 \prod_k G_k$ with the exact factor $G = e^{(\mu - \frac12\sigma^2)h + \sigma\Delta W}$. The kicks are independent, so each product's average is the product of one-step averages.
+Write $`Y_N = S_0 \prod_k A_k`$ with the Euler factor $`A = 1 + \mu h + \sigma\Delta W`$, and $`S_T = S_0 \prod_k G_k`$ with the exact factor $`G = e^{(\mu - \frac12\sigma^2)h + \sigma\Delta W}`$. The kicks are independent, so each product's average is the product of one-step averages.
 
-The kick has average zero and squared average $h$, so $E[A^2] = (1+\mu h)^2 + \sigma^2 h$. Completing the square in the bell-curve density gives $E[e^{\sigma\Delta W}] = e^{\sigma^2 h/2}$ and $E[\Delta W e^{\sigma \Delta W}] = \sigma h\, e^{\sigma^2 h /2}$, hence $E[G^2] = e^{(2\mu + \sigma^2)h}$ and $E[AG] = e^{\mu h}(1 + (\mu + \sigma^2)h)$. Raise each to the power $N$, with $e^{\mu h N} = e^{\mu T}$, and the three displayed terms appear. Every product is integrable by Cauchy–Schwarz, and signs are kept throughout, so no step assumes the factors are positive.
+The kick has average zero and squared average $`h`$, so $`E[A^2] = (1+\mu h)^2 + \sigma^2 h`$. Completing the square in the bell-curve density gives $`E[e^{\sigma\Delta W}] = e^{\sigma^2 h/2}`$ and $`E[\Delta W e^{\sigma \Delta W}] = \sigma h\, e^{\sigma^2 h /2}`$, hence $`E[G^2] = e^{(2\mu + \sigma^2)h}`$ and $`E[AG] = e^{\mu h}(1 + (\mu + \sigma^2)h)`$. Raise each to the power $`N`$, with $`e^{\mu h N} = e^{\mu T}`$, and the three displayed terms appear. Every product is integrable by Cauchy–Schwarz, and signs are kept throughout, so no step assumes the factors are positive.
 
-Milstein's factor has the same average $1 + \mu h$, since its extra term averages to zero, while its squared and cross averages each gain one piece of size $\tfrac12\sigma^4h^2$:
-$$E[A^2] = (1+\mu h)^2 + \sigma^2 h + \tfrac12 \sigma^4 h^2, \qquad E[AG] = e^{\mu h}\left(1 + (\mu + \sigma^2) h + \tfrac12\sigma^4 h^2 \right).$$
-These need the bell curve's fourth moment, $E[\Delta W^4] = 3h^2$, and $E[(\Delta W^2 - h)e^{\sigma\Delta W}] = \sigma^2h^2 e^{\sigma^2 h/2}$. In the same three-term expression they give Milstein's exact path gap: the `extra` line in both check scripts. Subtracting three nearly equal numbers loses precision, so the scripts go through `log1p` and `expm1` instead.
+Milstein's factor has the same average $`1 + \mu h`$, since its extra term averages to zero, while its squared and cross averages each gain one piece of size $`\tfrac12\sigma^4h^2`$:
+
+$`\displaystyle E[A^2] = (1+\mu h)^2 + \sigma^2 h + \tfrac12 \sigma^4 h^2, \qquad E[AG] = e^{\mu h}\left(1 + (\mu + \sigma^2) h + \tfrac12\sigma^4 h^2 \right).`$
+
+These need the bell curve's fourth moment, $`E[\Delta W^4] = 3h^2`$, and $`E[(\Delta W^2 - h)e^{\sigma\Delta W}] = \sigma^2h^2 e^{\sigma^2 h/2}`$. In the same three-term expression they give Milstein's exact path gap: the `extra` line in both check scripts. Subtracting three nearly equal numbers loses precision, so the scripts go through `log1p` and `expm1` instead.
 
 </details>
 
 ### Step 5: the scheme meets a square root
 
-Acme's volatility was a constant. Real volatility moves, and Heston's way to let it move gives the **variance rate** — volatility squared, written $v_t$ — its own rule, pulled back toward a resting level at speed $\kappa$ with a kick multiplied by $\eta\sqrt{v_t}$:
+Acme's volatility was a constant. Real volatility moves, and Heston's way to let it move gives the **variance rate** — volatility squared, written $`v_t`$ — its own rule, pulled back toward a resting level at speed $`\kappa`$ with a kick multiplied by $`\eta\sqrt{v_t}`$:
 
-$$dv_t \;=\; \kappa\left(\theta - v_t\right) dt \;+\; \eta \sqrt{v_t}\, dW_t .$$
+```math
+dv_t \;=\; \kappa\left(\theta - v_t\right) dt \;+\; \eta \sqrt{v_t}\, dW_t .
+```
 
-The square root protects the model. As the variance falls toward zero the kick shrinks with it, so the process is pushed back up rather than through the floor. With the numbers here — variance starting at 0.09, resting level 0.04, speed 0.693147 so half the gap closes in a year, and $\eta$ set so that $2\kappa\theta$ and $\eta^2$ are both 0.055452 — the model sits exactly on the boundary of the condition that keeps the variance clear of zero, and never reaches it.
+The square root protects the model. As the variance falls toward zero the kick shrinks with it, so the process is pushed back up rather than through the floor. With the numbers here — variance starting at 0.09, resting level 0.04, speed 0.693147 so half the gap closes in a year, and $`\eta`$ set so that $`2\kappa\theta`$ and $`\eta^2`$ are both 0.055452 — the model sits exactly on the boundary of the condition that keeps the variance clear of zero, and never reaches it.
 
 Euler ignores that. Its reading after one year-long step is the current variance, plus the pull-back, plus a bell-curve kick of fixed spread: average 0.055343, variance 0.004991. That bell curve's left tail is below zero, and the chance of a negative variance is 0.216698. More than one step in five hands back a variance with no square root, in a model whose exact law never goes below zero.
 
 **Full truncation** is the cheap repair: let the reading land where it lands, and wherever the next step needs a variance — in the pull-back and under the square root — use zero in place of a negative reading. It works, and it distorts. The variance so used averages 0.064086, near the exact 0.065000, while its own variance swells to 0.003349 against 0.002200 — half again too wide.
 
-Andersen's **quadratic-exponential scheme**, or QE, repairs it properly. The exact law of the next reading is awkward to draw from, but its average $m$ and variance $w$ are elementary. QE draws from a *different* law, built to be non-negative and to carry exactly those two numbers. Which law depends on the relative spread $\psi$:
+Andersen's **quadratic-exponential scheme**, or QE, repairs it properly. The exact law of the next reading is awkward to draw from, but its average $`m`$ and variance $`w`$ are elementary. QE draws from a *different* law, built to be non-negative and to carry exactly those two numbers. Which law depends on the relative spread $`\psi`$:
 
-$$\psi = \frac{w}{m^2}, \qquad b^2 = \frac{2}{\psi} - 1 + \sqrt{\frac{2}{\psi}}\sqrt{\frac{2}{\psi}-1}, \qquad a = \frac{m}{1+b^2}, \qquad Y = a\left(b + Z\right)^2 .$$
+```math
+\psi = \frac{w}{m^2}, \qquad b^2 = \frac{2}{\psi} - 1 + \sqrt{\frac{2}{\psi}}\sqrt{\frac{2}{\psi}-1}, \qquad a = \frac{m}{1+b^2}, \qquad Y = a\left(b + Z\right)^2 .
+```
 
-For a tight spread, square a shifted bell-curve draw $Z$: squaring makes a negative reading impossible, while the shift $b$ and the scale $a$ set the average and the spread. Here $\psi$ is 0.520710, the shift 2.478748, the scale 0.009098, and the law that comes out has average 0.065000 and variance 0.002200 — the exact two, not approximations.
+For a tight spread, square a shifted bell-curve draw $`Z`$: squaring makes a negative reading impossible, while the shift $`b`$ and the scale $`a`$ set the average and the spread. Here $`\psi`$ is 0.520710, the shift 2.478748, the scale 0.009098, and the law that comes out has average 0.065000 and variance 0.002200 — the exact two, not approximations.
 
-A wide spread is beyond that family: no shifted square has a relative spread above 2. So QE switches, at a level conventionally set between 1 and 2, to a weight $p$ at zero plus an exponential tail at rate $\beta$:
+A wide spread is beyond that family: no shifted square has a relative spread above 2. So QE switches, at a level conventionally set between 1 and 2, to a weight $`p`$ at zero plus an exponential tail at rate $`\beta`$:
 
-$$p = \frac{\psi - 1}{\psi + 1}, \qquad \beta = \frac{1-p}{m}, \qquad Y = \begin{cases} 0, & U \le p, \\ \dfrac{1}{\beta}\ln\!\left(\dfrac{1-p}{1-U}\right), & U > p, \end{cases}$$
+```math
+p = \frac{\psi - 1}{\psi + 1}, \qquad \beta = \frac{1-p}{m}, \qquad Y = \begin{cases} 0, & U \le p, \\ \dfrac{1}{\beta}\ln\!\left(\dfrac{1-p}{1-U}\right), & U > p, \end{cases}
+```
 
-where $U$ is drawn evenly between 0 and 1. Doubling the variance model's own volatility takes $\psi$ to 2.082840, past any such level, and this branch puts weight 0.351248 at zero with a tail at rate 9.980806 — again matching the average 0.065000 and the variance 0.008800.
+where $`U`$ is drawn evenly between 0 and 1. Doubling the variance model's own volatility takes $`\psi`$ to 2.082840, past any such level, and this branch puts weight 0.351248 at zero with a tail at rate 9.980806 — again matching the average 0.065000 and the variance 0.008800.
 
 The caveat travels with the method: matching two numbers is not copying a law. The exact process never sits at zero on a chosen date, while the exponential branch puts a third of its weight there. Drawing from the exact law is possible but slower, which is why QE became the desk standard.
 
@@ -170,22 +190,22 @@ flowchart TB
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, so $\mu = 3\%$. Twelve steps, 40,000 random years, every scheme fed the identical kicks.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year, so $`\mu = 3\%`$. Twelve steps, 40,000 random years, every scheme fed the identical kicks.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the step length | $1 \div 12$ | 0.083333 |
+| the step length | $`1 \div 12`$ | 0.083333 |
 | the exact price | Black–Scholes | 9.227006 |
 | the price from exact one-step rules | average of 40,000 discounted payoffs | 9.213424 |
-| its sampling wobble | spread $\div \sqrt{40{,}000}$ | 0.068865 |
+| its sampling wobble | spread $`\div \sqrt{40{,}000}`$ | 0.068865 |
 | Euler, same records | average of its discounted payoffs | 9.213165 |
 | Milstein, same records | average of its discounted payoffs | 9.192576 |
 | Euler's path gap | the exact-moment formula | 0.859104 |
 | Milstein's path gap | the same, one term longer | 0.061309 |
-| Euler's average terminal reading | $100 \times 1.0025^{12}$ | 103.041596 |
-| the exact average terminal reading | $100 \times e^{0.03}$ | 103.045453 |
-| **Euler's price bias, in cents** | $100 \times (9.213165 - 9.213424)$ | **−0.03** |
-| **Milstein's price bias, in cents** | $100 \times (9.192576 - 9.213424)$ | **−2.08** |
+| Euler's average terminal reading | $`100 \times 1.0025^{12}`$ | 103.041596 |
+| the exact average terminal reading | $`100 \times e^{0.03}`$ | 103.045453 |
+| **Euler's price bias, in cents** | $`100 \times (9.213165 - 9.213424)`$ | **−0.03** |
+| **Milstein's price bias, in cents** | $`100 \times (9.192576 - 9.213424)`$ | **−2.08** |
 
 Twelve monthly Euler steps price the call within three hundredths of a cent of its own exact-rule simulation, inside a wobble of 0.33 cents. Milstein, whose paths are fourteen times closer, is two cents cheap with a wobble of 0.02: those two cents are real.
 
@@ -203,7 +223,7 @@ Milstein  12 steps   █                                     $0.061309
 Milstein  48 steps                                         $0.015376
 ```
 
-Quartering the step from twelve to forty-eight divides Euler's gap by 2.001294 and Milstein's by 3.987429: the $\sqrt h$ rate and the $h$ rate, each within a third of a per cent.
+Quartering the step from twelve to forty-eight divides Euler's gap by 2.001294 and Milstein's by 3.987429: the $`\sqrt h`$ rate and the $`h`$ rate, each within a third of a per cent.
 
 ### The same question, for the variance
 
@@ -211,14 +231,14 @@ Quartering the step from twelve to forty-eight divides Euler's gap by 2.001294 a
 | --- | --- | --- |
 | the exact average of next year's variance | half the gap, 0.09 toward 0.04 | 0.065000 |
 | the exact variance of that reading | the model's moments | 0.002200 |
-| the relative spread | $0.002200 \div 0.065000^2$ | 0.520710 |
-| plain Euler's average | $0.09 + 0.693147 \times (0.04 - 0.09)$ | 0.055343 |
-| plain Euler's variance | $\eta^2 \times 0.09$ | 0.004991 |
-| **its chance of a negative variance** | area left of $-0.055343 / \sqrt{0.004991}$ | **0.216698** |
+| the relative spread | $`0.002200 \div 0.065000^2`$ | 0.520710 |
+| plain Euler's average | $`0.09 + 0.693147 \times (0.04 - 0.09)`$ | 0.055343 |
+| plain Euler's variance | $`\eta^2 \times 0.09`$ | 0.004991 |
+| **its chance of a negative variance** | area left of $`-0.055343 / \sqrt{0.004991}`$ | **0.216698** |
 | floored at zero: the average | quadrature, and a closed form | 0.064086 |
 | floored at zero: the variance | the same quadrature | 0.003349 |
-| QE, squared branch: the average | $a(1+b^2)$, $a$ = 0.009098, $b$ = 2.478748 | 0.065000 |
-| QE, squared branch: the variance | $2a^2(1+2b^2)$ | 0.002200 |
+| QE, squared branch: the average | $`a(1+b^2)`$, $`a`$ = 0.009098, $`b`$ = 2.478748 | 0.065000 |
+| QE, squared branch: the variance | $`2a^2(1+2b^2)`$ | 0.002200 |
 
 Flooring cures the sign, not the spread. QE returns the two exact numbers, and never a negative one.
 
@@ -228,7 +248,7 @@ Flooring cures the sign, not the spread. QE returns the two exact numbers, and n
 | --- | --- | --- |
 | The whole year in one Euler step | 9.101453, a bias of −11.20 cents against a wobble of 1.20 | A year is not an instant, and the frozen drift stays frozen for all of it |
 | Choosing Milstein because its paths are closer | 9.192576, a bias of −2.08 cents against Euler's −0.03 | Path accuracy and price accuracy are different measures |
-| Adding the drift over a step where the exact rule exponentiates it | 103.041596, not 103.045453 | $1 + \mu h$ is short of $e^{\mu h}$, and twelve steps compound the shortfall |
+| Adding the drift over a step where the exact rule exponentiates it | 103.041596, not 103.045453 | $`1 + \mu h`$ is short of $`e^{\mu h}`$, and twelve steps compound the shortfall |
 | Euler on the variance, no floor | 0.055343 and 0.004991 against 0.065000 and 0.002200, 0.216698 of readings negative | A bell-curve kick has no floor, and a square root no answer below zero |
 | Flooring the negative readings at zero | average 0.064086, variance 0.003349 against 0.002200 | The floor fixes the sign and widens the spread |
 
@@ -689,14 +709,14 @@ The two outputs match line for line: two bell-curve areas, one from `erf` and on
 
 Lean proves Step 4's exact path gaps at every step count, and Step 5's QE moment matching for every target average and variance.
 
-- Take $N$ steps over $T$ years, all three rules fed the same independent kicks. Then Euler's average of $(Y_N - S_T)^2$ is Step 4's formula, exactly.
+- Take $`N`$ steps over $`T`$ years, all three rules fed the same independent kicks. Then Euler's average of $`(Y_N - S_T)^2`$ is Step 4's formula, exactly.
 - That holds however coarse the step, even when Euler's factors turn negative.
-- Take Milstein's factor on the same kicks. Then the same formula holds, with $\tfrac12\sigma^4h^2$ added inside each $N$-th power.
-- Suppose the relative spread $\psi$ is at most 2. Then the squared branch $a(b+Z)^2$ is never negative, averages $m$, and has variance $w$.
-- Suppose $\psi$ is at least 1. Then the exponential branch is never negative, averages $m$, and has variance $w$.
+- Take Milstein's factor on the same kicks. Then the same formula holds, with $`\tfrac12\sigma^4h^2`$ added inside each $`N`$-th power.
+- Suppose the relative spread $`\psi`$ is at most 2. Then the squared branch $`a(b+Z)^2`$ is never negative, averages $`m`$, and has variance $`w`$.
+- Suppose $`\psi`$ is at least 1. Then the exponential branch is never negative, averages $`m`$, and has variance $`w`$.
 - Acme's numbers check exactly: the drift 3%, the cut-off −5.15 for one year-long step, and the reading −17 after a kick of −6.
-- The variance numbers check exactly: $2\kappa\theta$ equals $\eta^2$, $m$ = 0.065, $w$ = 0.0022, and $\psi$ = 88/169.
-- Doubling $\eta$ checks too: $\psi$ = 352/169, $p$ = 183/521, $\beta$ = 5200/521, and the branch returns 0.065 and 0.0088.
+- The variance numbers check exactly: $`2\kappa\theta`$ equals $`\eta^2`$, $`m`$ = 0.065, $`w`$ = 0.0022, and $`\psi`$ = 88/169.
+- Doubling $`\eta`$ checks too: $`\psi`$ = 352/169, $`p`$ = 183/521, $`\beta`$ = 5200/521, and the branch returns 0.065 and 0.0088.
 
 Lean takes the step rules as given; the shrinking rates, price bias and simulations are left to the Python and Rust checks.
 

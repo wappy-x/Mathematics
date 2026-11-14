@@ -36,51 +36,59 @@ Upper line: spot at $80, a falling curve (backwardation). Lower line: spot at $7
 
 ## The formula
 
-Notation first. The model is written in the shorthand of Itô calculus ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)). $dX_t$ is the change in $X_t$ over a short step of time $dt$. $dW_t$ is a random shock over that step, with average zero and variance $dt$. The model for the log of spot, $X_t = \ln S_t$, is an Ornstein-Uhlenbeck process: a random walk with a pull toward a level ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)).
+Notation first. The model is written in the shorthand of Itô calculus ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)). $`dX_t`$ is the change in $`X_t`$ over a short step of time $`dt`$. $`dW_t`$ is a random shock over that step, with average zero and variance $`dt`$. The model for the log of spot, $`X_t = \ln S_t`$, is an Ornstein-Uhlenbeck process: a random walk with a pull toward a level ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)).
 
-$$dX_t = \kappa\,(a - X_t)\,dt + \sigma\,dW_t$$
+```math
+dX_t = \kappa\,(a - X_t)\,dt + \sigma\,dW_t
+```
 
-**Read it aloud:** over each short step, the log price moves toward the level by a fraction $\kappa\,dt$ of the gap, then takes a random kick of size $\sigma$.
+**Read it aloud:** over each short step, the log price moves toward the level by a fraction $`\kappa\,dt`$ of the gap, then takes a random kick of size $`\sigma`$.
 
-The futures price for delivery in $T$ years, with today's spot $S$:
+The futures price for delivery in $`T`$ years, with today's spot $`S`$:
 
-$$F(T) = \exp\!\Big(e^{-\kappa T}\ln S \;+\; \big(1 - e^{-\kappa T}\big)\,a \;+\; \frac{\sigma^2}{4\kappa}\big(1 - e^{-2\kappa T}\big)\Big)$$
+```math
+F(T) = \exp\!\Big(e^{-\kappa T}\ln S \;+\; \big(1 - e^{-\kappa T}\big)\,a \;+\; \frac{\sigma^2}{4\kappa}\big(1 - e^{-2\kappa T}\big)\Big)
+```
 
-**Read it aloud:** take today's log price and the level, blend them with weight $e^{-\kappa T}$ on today, add half the spread the kicks have built up by delivery, and turn the log back into a price.
+**Read it aloud:** take today's log price and the level, blend them with weight $`e^{-\kappa T}`$ on today, add half the spread the kicks have built up by delivery, and turn the log back into a price.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_t$, $S_T$ | spot price of a barrel today, at time $t$, and on delivery day | $80 | short futures rise most, long ones hardly at all |
-| $X_t$, $X_T$ | log of spot now and on delivery day, $\ln S_t$ | $\ln 80 = 4.3820$ | same as raising spot |
-| $a$ | the level: the long-run value of the log price, so $e^a$ is a price | $\ln 75 = 4.3175$ | long futures rise almost one for one |
-| $\kappa$ | the speed: the fraction of the gap closed per year, said "kappa" | 1 per year | the curve reaches the level sooner |
-| $\sigma$ | spot volatility: size of the random kicks per year | 30% | every future rises a little: the spread term grows |
-| $T$, $t$, $T_i$, $i$ | years to delivery; time running from today; the maturity of quote number $i$ | 1 and 5 | the future moves toward the long-run price |
-| $dt$, $dX_t$, $dW_t$, $s$, $dW_s$ | a short step of time; the change in the log price over it; the random shock over it; a past time and the shock then | | |
-| $F(T)$, $F_i$ | model futures price for delivery at $T$; a quoted price at maturity $T_i$ | $78.31 at one year | |
-| $e^{-\kappa T}$ | weight left on today's spot at delivery | 0.3679 at one year | |
-| $m(T)$, $v(T)$ | average and variance of the log price at delivery | $m = 4.3412$ and $v/2 = 0.0195$ at one year | |
-| $\sigma_F(T)$ | volatility of the future itself | 11.04% at one year | |
+| $`S`$, $`S_t`$, $`S_T`$ | spot price of a barrel today, at time $`t`$, and on delivery day | $80 | short futures rise most, long ones hardly at all |
+| $`X_t`$, $`X_T`$ | log of spot now and on delivery day, $`\ln S_t`$ | $`\ln 80 = 4.3820`$ | same as raising spot |
+| $`a`$ | the level: the long-run value of the log price, so $`e^a`$ is a price | $`\ln 75 = 4.3175`$ | long futures rise almost one for one |
+| $`\kappa`$ | the speed: the fraction of the gap closed per year, said "kappa" | 1 per year | the curve reaches the level sooner |
+| $`\sigma`$ | spot volatility: size of the random kicks per year | 30% | every future rises a little: the spread term grows |
+| $`T`$, $`t`$, $`T_i`$, $`i`$ | years to delivery; time running from today; the maturity of quote number $`i`$ | 1 and 5 | the future moves toward the long-run price |
+| $`dt`$, $`dX_t`$, $`dW_t`$, $`s`$, $`dW_s`$ | a short step of time; the change in the log price over it; the random shock over it; a past time and the shock then | | |
+| $`F(T)`$, $`F_i`$ | model futures price for delivery at $`T`$; a quoted price at maturity $`T_i`$ | $78.31 at one year | |
+| $`e^{-\kappa T}`$ | weight left on today's spot at delivery | 0.3679 at one year | |
+| $`m(T)`$, $`v(T)`$ | average and variance of the log price at delivery | $`m = 4.3412`$ and $`v/2 = 0.0195`$ at one year | |
+| $`\sigma_F(T)`$ | volatility of the future itself | 11.04% at one year | |
 
-Two helper formulas come out of the same model. The first is the volatility of a future with $T$ years left:
+Two helper formulas come out of the same model. The first is the volatility of a future with $`T`$ years left:
 
-$$\sigma_F(T) = \sigma\,e^{-\kappa T}$$
+```math
+\sigma_F(T) = \sigma\,e^{-\kappa T}
+```
 
-In words: a future moves by the fraction $e^{-\kappa T}$ of any move in log spot, so its volatility is the spot volatility shrunk by the same fraction. At one year that is 11.04 percent; at five years, 0.20 percent.
+In words: a future moves by the fraction $`e^{-\kappa T}`$ of any move in log spot, so its volatility is the spot volatility shrunk by the same fraction. At one year that is 11.04 percent; at five years, 0.20 percent.
 
-The second is where the curve ends, letting $T$ run to infinity:
+The second is where the curve ends, letting $`T`$ run to infinity:
 
-$$F(\infty) = \exp\!\Big(a + \frac{\sigma^2}{4\kappa}\Big) = 75\,e^{0.0225} = 76.71$$
+```math
+F(\infty) = \exp\!\Big(a + \frac{\sigma^2}{4\kappa}\Big) = 75\,e^{0.0225} = 76.71
+```
 
-In words: the price at the level, $e^a$, nudged up by the long-run spread of the log price. A gap between the log price and the level halves every $\ln 2/\kappa$ years, 0.69 years here.
+In words: the price at the level, $`e^a`$, nudged up by the long-run spread of the log price. A gap between the log price and the level halves every $`\ln 2/\kappa`$ years, 0.69 years here.
 
 ### When it holds
 
 - **The level is fixed.** If the level itself drifts (new reserves, new technology), long-dated futures move far more than 0.20 percent a year. Gibson and Schwartz add a second random factor that gives the long end moves of its own; it is named here, not built.
 - **Speed and volatility are constant.** Crude reverts faster in a glut than in a squeeze. With one fixed speed the curve's bend is the same in every regime, and the fit below then blames the strip's noise. The strip is the row of quoted futures prices, one per delivery date.
-- **The level is the pricing-world level.** A futures price is an average taken in the pricing (risk-neutral) world, where the reward for bearing oil risk is folded into the drift. The $a$ read off futures is that pricing-world level, not a forecast. Treating it as a forecast mistakes a price for a prediction.
+- **The level is the pricing-world level.** A futures price is an average taken in the pricing (risk-neutral) world, where the reward for bearing oil risk is folded into the drift. The $`a`$ read off futures is that pricing-world level, not a forecast. Treating it as a forecast mistakes a price for a prediction.
 - **Interest rates are not random, or at least not tied to oil.** Then a futures price equals the pricing-world average of spot at delivery. If rates move with oil, futures and forwards separate and the formula needs a correction.
-- **The kicks are normal, with no jumps.** A supply shock that moves spot sharply overnight is not in the model; the front of the curve then gaps by far more than $\sigma_F$ suggests.
+- **The kicks are normal, with no jumps.** A supply shock that moves spot sharply overnight is not in the model; the front of the curve then gaps by far more than $`\sigma_F`$ suggests.
 
 ---
 
@@ -88,69 +96,79 @@ In words: the price at the level, $e^a$, nudged up by the long-run spread of the
 
 ### Step 0: a future is the pricing-world average of spot at delivery
 
-A futures contract costs nothing to enter and is settled every day. A position that costs nothing can have no average gain in the pricing world, so the futures price today equals the pricing-world average of the spot price on delivery day. With rates not tied to oil this holds exactly. So pricing the curve means one thing: averaging $S_T$.
+A futures contract costs nothing to enter and is settled every day. A position that costs nothing can have no average gain in the pricing world, so the futures price today equals the pricing-world average of the spot price on delivery day. With rates not tied to oil this holds exactly. So pricing the curve means one thing: averaging $`S_T`$.
 
-The log price $X_T$ turns out to be a sum of many small normal kicks, and a sum of normal kicks is normal. For a normal $X_T$ with average $m(T)$ and variance $v(T)$, the average of $e^{X_T}$ is $e^{m + v/2}$, not $e^{m}$. So only those two numbers are needed.
+The log price $`X_T`$ turns out to be a sum of many small normal kicks, and a sum of normal kicks is normal. For a normal $`X_T`$ with average $`m(T)`$ and variance $`v(T)`$, the average of $`e^{X_T}`$ is $`e^{m + v/2}`$, not $`e^{m}`$. So only those two numbers are needed.
 
 ### Step 1: undo the pull, and the kicks simply add
 
-Multiply $X_t$ by $e^{\kappa t}$. That factor grows at exactly the rate the pull shrinks the gap, so in the product the pull cancels. Itô's product rule gives
+Multiply $`X_t`$ by $`e^{\kappa t}`$. That factor grows at exactly the rate the pull shrinks the gap, so in the product the pull cancels. Itô's product rule gives
 
-$$d\big(e^{\kappa t}X_t\big) = \kappa a\,e^{\kappa t}\,dt + \sigma e^{\kappa t}\,dW_t .$$
+```math
+d\big(e^{\kappa t}X_t\big) = \kappa a\,e^{\kappa t}\,dt + \sigma e^{\kappa t}\,dW_t .
+```
 
-Add up both sides from $0$ to $T$ and divide by $e^{\kappa T}$:
+Add up both sides from $`0`$ to $`T`$ and divide by $`e^{\kappa T}`$:
 
-$$X_T = e^{-\kappa T}X_0 + \big(1 - e^{-\kappa T}\big)a + \sigma\int_0^T e^{-\kappa (T-s)}\,dW_s .$$
+```math
+X_T = e^{-\kappa T}X_0 + \big(1 - e^{-\kappa T}\big)a + \sigma\int_0^T e^{-\kappa (T-s)}\,dW_s .
+```
 
-The first two terms are fixed today. The last is a weighted sum of normal kicks, a kick at time $s$ discounted by $e^{-\kappa(T-s)}$: an old kick has had longer to be pulled back.
+The first two terms are fixed today. The last is a weighted sum of normal kicks, a kick at time $`s`$ discounted by $`e^{-\kappa(T-s)}`$: an old kick has had longer to be pulled back.
 
 <details>
 <summary>Detailed proof: the product rule step and the variance</summary>
 
-For $Y_t = e^{\kappa t}X_t$, the product rule gives $dY_t = \kappa e^{\kappa t}X_t\,dt + e^{\kappa t}\,dX_t$. The factor $e^{\kappa t}$ has no random part, so there is no extra Itô term. Substituting $dX_t = \kappa(a - X_t)\,dt + \sigma\,dW_t$, the $\kappa e^{\kappa t}X_t\,dt$ terms cancel, leaving $dY_t = \kappa a e^{\kappa t}dt + \sigma e^{\kappa t}dW_t$. Integrating, $Y_T - Y_0 = a(e^{\kappa T} - 1) + \sigma\int_0^T e^{\kappa s}dW_s$. Divide by $e^{\kappa T}$ for $X_T$.
+For $`Y_t = e^{\kappa t}X_t`$, the product rule gives $`dY_t = \kappa e^{\kappa t}X_t\,dt + e^{\kappa t}\,dX_t`$. The factor $`e^{\kappa t}`$ has no random part, so there is no extra Itô term. Substituting $`dX_t = \kappa(a - X_t)\,dt + \sigma\,dW_t`$, the $`\kappa e^{\kappa t}X_t\,dt`$ terms cancel, leaving $`dY_t = \kappa a e^{\kappa t}dt + \sigma e^{\kappa t}dW_t`$. Integrating, $`Y_T - Y_0 = a(e^{\kappa T} - 1) + \sigma\int_0^T e^{\kappa s}dW_s`$. Divide by $`e^{\kappa T}`$ for $`X_T`$.
 
-The integral of a fixed function against $dW_s$ is normal with average zero. Its variance is the integral of the function squared (Itô's isometry, [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)):
-$$v(T) = \sigma^2\int_0^T e^{-2\kappa(T-s)}\,ds = \frac{\sigma^2}{2\kappa}\big(1 - e^{-2\kappa T}\big).$$
-Then $F(T) = E[e^{X_T}] = e^{m(T) + v(T)/2}$, where $E[\,\cdot\,]$ is the pricing-world average, and $v/2$ is the $\sigma^2(1 - e^{-2\kappa T})/4\kappa$ term.
+The integral of a fixed function against $`dW_s`$ is normal with average zero. Its variance is the integral of the function squared (Itô's isometry, [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)):
+
+$`\displaystyle v(T) = \sigma^2\int_0^T e^{-2\kappa(T-s)}\,ds = \frac{\sigma^2}{2\kappa}\big(1 - e^{-2\kappa T}\big).`$
+
+Then $`F(T) = E[e^{X_T}] = e^{m(T) + v(T)/2}`$, where $`E[\,\cdot\,]`$ is the pricing-world average, and $`v/2`$ is the $`\sigma^2(1 - e^{-2\kappa T})/4\kappa`$ term.
 
 </details>
 
 ### Step 2: the average is a blend
 
-Take the average of $X_T$. The kicks average to zero, so
+Take the average of $`X_T`$. The kicks average to zero, so
 
-$$m(T) = e^{-\kappa T}\ln S + \big(1 - e^{-\kappa T}\big)\,a .$$
+```math
+m(T) = e^{-\kappa T}\ln S + \big(1 - e^{-\kappa T}\big)\,a .
+```
 
-This is a weighted average of today's log price and the level. At delivery in zero years all the weight is on today. As delivery moves out, the weight on today decays like $e^{-\kappa T}$ and shifts to the level. At one year, 0.3679 of the weight is still on today; at five years, 0.0067.
+This is a weighted average of today's log price and the level. At delivery in zero years all the weight is on today. As delivery moves out, the weight on today decays like $`e^{-\kappa T}`$ and shifts to the level. At one year, 0.3679 of the weight is still on today; at five years, 0.0067.
 
-The same answer follows from a smaller equation. The average obeys $dm/dt = \kappa(a - m)$: the gap between the average and the level shrinks at rate $\kappa$. The check steps that equation forward numerically, without using the exponential solution, as its second road.
+The same answer follows from a smaller equation. The average obeys $`dm/dt = \kappa(a - m)`$: the gap between the average and the level shrinks at rate $`\kappa`$. The check steps that equation forward numerically, without using the exponential solution, as its second road.
 
 ### Step 3: the spread grows, then stops
 
-The variance obeys $dv/dt = \sigma^2 - 2\kappa v$. Kicks add $\sigma^2$ per year; the pull removes twice $\kappa$ times the current variance, because it shrinks every deviation and variance is a square. Starting from zero, the variance climbs and levels off where the two balance, at $\sigma^2/2\kappa$. Half of that, 0.0225 here, is the most the spread can add to the log of any future. At one year it has reached 0.0195.
+The variance obeys $`dv/dt = \sigma^2 - 2\kappa v`$. Kicks add $`\sigma^2`$ per year; the pull removes twice $`\kappa`$ times the current variance, because it shrinks every deviation and variance is a square. Starting from zero, the variance climbs and levels off where the two balance, at $`\sigma^2/2\kappa`$. Half of that, 0.0225 here, is the most the spread can add to the log of any future. At one year it has reached 0.0195.
 
-Without reversion the variance of the log grows forever in proportion to $T$. With reversion it stops, so the curve can flatten.
+Without reversion the variance of the log grows forever in proportion to $`T`$. With reversion it stops, so the curve can flatten.
 
 ### Step 4: exponentiate, and the long end appears
 
-Put Steps 2 and 3 into $e^{m + v/2}$ and the futures formula at the top of the card is the result. Let $T$ grow. The weight on today dies, $m$ tends to $a$, and $v/2$ tends to $\sigma^2/4\kappa$. The curve flattens at $e^{a + \sigma^2/4\kappa} = 76.71$, not at $e^a = 75$. The level is a level for the *log* price; the average *price* sits higher because a price averaged over a spread of outcomes gains from the high ones more than it loses from the low ones.
+Put Steps 2 and 3 into $`e^{m + v/2}`$ and the futures formula at the top of the card is the result. Let $`T`$ grow. The weight on today dies, $`m`$ tends to $`a`$, and $`v/2`$ tends to $`\sigma^2/4\kappa`$. The curve flattens at $`e^{a + \sigma^2/4\kappa} = 76.71`$, not at $`e^a = 75`$. The level is a level for the *log* price; the average *price* sits higher because a price averaged over a spread of outcomes gains from the high ones more than it loses from the low ones.
 
 ### Step 5: why long futures barely move, the Samuelson effect
 
-Tomorrow, the same formula prices the same contract with one day less to run and a new spot. Only one input is random: $\ln S$, and it enters with the coefficient $e^{-\kappa T}$. So any change in log spot changes log $F(T)$ by $e^{-\kappa T}$ times that change. The future's volatility is $\sigma e^{-\kappa T}$. A future's volatility therefore rises as delivery approaches. A five-year contract is nearly asleep at 0.20 percent. Four years later it has one year left and moves at 11.04 percent. In its last weeks it moves almost like spot.
+Tomorrow, the same formula prices the same contract with one day less to run and a new spot. Only one input is random: $`\ln S`$, and it enters with the coefficient $`e^{-\kappa T}`$. So any change in log spot changes log $`F(T)`$ by $`e^{-\kappa T}`$ times that change. The future's volatility is $`\sigma e^{-\kappa T}`$. A future's volatility therefore rises as delivery approaches. A five-year contract is nearly asleep at 0.20 percent. Four years later it has one year left and moves at 11.04 percent. In its last weeks it moves almost like spot.
 
 ### Step 6: reading the speed and the level off a strip
 
-A market quotes a strip of futures. The model has two numbers to find, $\kappa$ and $a$, with $\sigma$ taken from option prices. The fit chooses them to make the model's log prices as close as possible to the quoted log prices, in the sense of least squares ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)):
+A market quotes a strip of futures. The model has two numbers to find, $`\kappa`$ and $`a`$, with $`\sigma`$ taken from option prices. The fit chooses them to make the model's log prices as close as possible to the quoted log prices, in the sense of least squares ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)):
 
-$$\min_{\kappa,\,a}\ \sum_i \big(\ln F_i - \ln F(T_i)\big)^2 .$$
+```math
+\min_{\kappa,\,a}\ \sum_i \big(\ln F_i - \ln F(T_i)\big)^2 .
+```
 
 Before solving, what the problem can and cannot do.
 
-- **Existence.** For any fixed speed, the model's log price is a straight line in $a$ with slope $1 - e^{-\kappa T_i}$. A straight-line least-squares problem always has an answer, and it is unique as long as one maturity is above zero. So the best level exists for every speed, in closed form.
-- **Uniqueness in the speed.** What is left is a search over one number, $\kappa$. Nothing guarantees a single minimum for every strip. For a strip that bends steadily toward one level there is one in practice. The check confirms it by two methods that share no steps and start from different places.
-- **Boundary cases.** A strip that is flat at spot does not pin the speed: the fit keeps improving as $\kappa$ runs off to zero or to infinity. As $\kappa$ goes to zero the pull vanishes and the level stops mattering, so it cannot be found. As $\kappa$ grows without limit the curve jumps to its long-run value at once, and only $a + \sigma^2/4\kappa$ can be found. At least three maturities that bend are needed to pin two numbers and test the fit.
-- **Why $\sigma$ is not fitted too.** At the long end $\sigma$ and $a$ enter only through $a + \sigma^2/4\kappa$. A strip alone can barely tell a higher level from more volatility. Options on the futures can ([Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md)).
+- **Existence.** For any fixed speed, the model's log price is a straight line in $`a`$ with slope $`1 - e^{-\kappa T_i}`$. A straight-line least-squares problem always has an answer, and it is unique as long as one maturity is above zero. So the best level exists for every speed, in closed form.
+- **Uniqueness in the speed.** What is left is a search over one number, $`\kappa`$. Nothing guarantees a single minimum for every strip. For a strip that bends steadily toward one level there is one in practice. The check confirms it by two methods that share no steps and start from different places.
+- **Boundary cases.** A strip that is flat at spot does not pin the speed: the fit keeps improving as $`\kappa`$ runs off to zero or to infinity. As $`\kappa`$ goes to zero the pull vanishes and the level stops mattering, so it cannot be found. As $`\kappa`$ grows without limit the curve jumps to its long-run value at once, and only $`a + \sigma^2/4\kappa`$ can be found. At least three maturities that bend are needed to pin two numbers and test the fit.
+- **Why $`\sigma`$ is not fitted too.** At the long end $`\sigma`$ and $`a`$ enter only through $`a + \sigma^2/4\kappa`$. A strip alone can barely tell a higher level from more volatility. Options on the futures can ([Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md)).
 
 The first method computes the best level in closed form for each trial speed, then narrows the interval of speeds by the golden ratio each round. The second, Gauss-Newton, moves both numbers at once along the direction a straight-line approximation of the model says will cut the error, halving the step whenever the error rises. On the strip below, both find a speed of 0.9979 and a level of $74.99, close to the 1 and $75 the strip was built from, a few cents of noise away.
 
@@ -166,14 +184,14 @@ Crude at $80, level $75, speed 1 per year, volatility 30 percent.
 
 | Step | Arithmetic | One year | Five years |
 | --- | --- | --- | --- |
-| weight on today | $e^{-\kappa T}$ | 0.3679 | 0.0067 |
-| log of spot | $\ln 80$ | 4.3820 | 4.3820 |
-| the level | $a = \ln 75$ | 4.3175 | 4.3175 |
-| blend, $m(T)$ | weight × 4.3820 + (1 − weight) × 4.3175 | 4.3412 | 4.3179 |
-| spread term, $v(T)/2$ | $0.30^2\,(1 - e^{-2\kappa T})/4$ | 0.0195 | 0.0225 |
+| weight on today | $`e^{-\kappa T}`$ | 0.3679 | 0.0067 |
+| log of spot | $`\ln 80`$ | 4.3820 | 4.3820 |
+| the level | $`a = \ln 75`$ | 4.3175 | 4.3175 |
+| blend, $`m(T)`$ | weight × 4.3820 + (1 − weight) × 4.3175 | 4.3412 | 4.3179 |
+| spread term, $`v(T)/2`$ | $`0.30^2\,(1 - e^{-2\kappa T})/4`$ | 0.0195 | 0.0225 |
 | log of the future | blend + spread term | 4.3607 | 4.3404 |
-| **futures price** | $e^{\text{log of the future}}$ | **$78.31** | **$76.74** |
-| futures volatility | $0.30 \times$ weight | 11.04% | 0.20% |
+| **futures price** | $`e^{\text{log of the future}}`$ | **$78.31** | **$76.74** |
+| futures volatility | $`0.30 \times`$ weight | 11.04% | 0.20% |
 
 A one-year contract prices a barrel at $78.31: most of the way from $80 toward the level. A five-year contract prices it at $76.74, already close to the long end, $76.71.
 
@@ -181,10 +199,10 @@ A one-year contract prices a barrel at $78.31: most of the way from $80 toward t
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the spread term $v/2$ | $76.80 at one year, $75.03 at five (right: $78.31, $76.74) | The average of a price is above the price at the average log. |
-| Let the price revert, not its log: $75 + 5e^{-\kappa T}$ | $76.84 at one year (right: $78.31) | A different model. It also lets prices go negative in a deep enough slump. |
+| Drop the spread term $`v/2`$ | $76.80 at one year, $75.03 at five (right: $78.31, $76.74) | The average of a price is above the price at the average log. |
+| Let the price revert, not its log: $`75 + 5e^{-\kappa T}`$ | $76.84 at one year (right: $78.31) | A different model. It also lets prices go negative in a deep enough slump. |
 | Read the long end as the level, $75 | $75.00 against the model's $76.71 | The level is for the log price. The long-run future carries the spread term. |
-| Price the five-year future's vol like spot's, as a carry model does | 30.00% (right: 0.20%) | In a carry model the log future moves one for one with log spot. Reversion cuts that to $e^{-\kappa T}$. |
+| Price the five-year future's vol like spot's, as a carry model does | 30.00% (right: 0.20%) | In a carry model the log future moves one for one with log spot. Reversion cuts that to $`e^{-\kappa T}`$. |
 
 ---
 
@@ -207,7 +225,7 @@ The front falls with spot. The back holds. The picture at the top of the card is
 
 ### Force one: the move fades with maturity
 
-Every future moves by a fraction $e^{-\kappa T}$ of the move in log spot. So each future's volatility is spot's 30 percent cut by that fraction:
+Every future moves by a fraction $`e^{-\kappa T}`$ of the move in log spot. So each future's volatility is spot's 30 percent cut by that fraction:
 
 ```
 futures volatility, percent per year, one block = 1 point
@@ -227,7 +245,7 @@ Read the same bars upward, for one contract as delivery approaches. Five years o
 
 ## Code, from first principles, and it actually runs
 
-The futures price is reached by three independent roads. Road one is the closed form. Road two never uses the exponential solution: it steps the two equations for the average and variance of the log price forward with a Runge-Kutta scheme (four slope samples per step), then applies $e^{m + v/2}$. Road three simulates the log price itself: 10,000 pairs of paths in steps of 0.01 years, from a random-number generator written in the script. The futures volatility is checked by bumping spot inside road two. The fit of the speed and level is done by golden-section search and by Gauss-Newton, and both must agree. Every what-breaks and try-changing number is printed.
+The futures price is reached by three independent roads. Road one is the closed form. Road two never uses the exponential solution: it steps the two equations for the average and variance of the log price forward with a Runge-Kutta scheme (four slope samples per step), then applies $`e^{m + v/2}`$. Road three simulates the log price itself: 10,000 pairs of paths in steps of 0.01 years, from a random-number generator written in the script. The futures volatility is checked by bumping spot inside road two. The fit of the speed and level is done by golden-section search and by Gauss-Newton, and both must agree. Every what-breaks and try-changing number is printed.
 
 ### Python
 
@@ -413,7 +431,7 @@ try: kappa = 0.25, 5-year futures vol             8.60%
 ALL CHECKS PASS
 ```
 
-The closed form and the Runge-Kutta road agree to four decimals at every maturity. The simulation lands within two standard errors of them at every maturity, as a random estimate should. The bump reproduces $\sigma e^{-\kappa T}$ at every maturity. The two fits agree to the printed digits.
+The closed form and the Runge-Kutta road agree to four decimals at every maturity. The simulation lands within two standard errors of them at every maturity, as a random estimate should. The bump reproduces $`\sigma e^{-\kappa T}`$ at every maturity. The two fits agree to the printed digits.
 
 ### Rust
 
@@ -637,15 +655,15 @@ The two outputs match line for line, the simulation included, since both run the
 
 ### Lean
 
-Lean proves the futures formula, the fading weight on spot moves and the long end, for any speed $\kappa > 0$.
+Lean proves the futures formula, the fading weight on spot moves and the long end, for any speed $`\kappa > 0`$.
 
-- Suppose $\kappa > 0$, $T \ge 0$, and $m$, $v$ obey the equations of Steps 2 and 3 from $\ln S$ and zero. Suppose also that $X_T$ is normal with average $m(T)$ and variance $v(T)$. Then the average of $e^{X_T}$ is exactly the formula for $F(T)$.
-- Take any two spot prices. Then the log of every future changes by exactly $e^{-\kappa T}$ times the change in log spot.
-- Suppose $\kappa > 0$. Then $F(T)$ tends to $e^{a + \sigma^2/4\kappa}$ as $T$ grows, whatever today's spot.
+- Suppose $`\kappa > 0`$, $`T \ge 0`$, and $`m`$, $`v`$ obey the equations of Steps 2 and 3 from $`\ln S`$ and zero. Suppose also that $`X_T`$ is normal with average $`m(T)`$ and variance $`v(T)`$. Then the average of $`e^{X_T}`$ is exactly the formula for $`F(T)`$.
+- Take any two spot prices. Then the log of every future changes by exactly $`e^{-\kappa T}`$ times the change in log spot.
+- Suppose $`\kappa > 0`$. Then $`F(T)`$ tends to $`e^{a + \sigma^2/4\kappa}`$ as $`T`$ grows, whatever today's spot.
 - Take spot falling from $80 to $70. Then the move is exactly -12.50 percent.
-- Take $\sigma = 0.30$ and $\kappa = 1$. Then $\sigma^2/4\kappa$ is exactly 0.0225.
+- Take $`\sigma = 0.30`$ and $`\kappa = 1`$. Then $`\sigma^2/4\kappa`$ is exactly 0.0225.
 
-That $X_T$ is normal, the dollar prices, the simulation and the fit are left to the Python and Rust checks.
+That $`X_T`$ is normal, the dollar prices, the simulation and the fit are left to the Python and Rust checks.
 
 ```lean
 -- A spot price that reverts: if the log price at delivery is normal with the mean and variance the Schwartz model's moment equations give, its average price is the Schwartz futures formula, a future's log moves by e^(-κT) times a move in log spot, and the curve flattens at exp(a + σ²/4κ).
@@ -811,7 +829,7 @@ example : ((3 : ℚ) / 10) ^ 2 / (4 * 1) = 9 / 400 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first. Each answer is printed on a `try:` line of the output, so a guess can be checked before editing anything.
-> - **Slow the pull.** Set `KAPPA = 0.25`. The five-year future rises from $76.74 to **$82.98**, above today's spot. The long-run price becomes 75 times $e^{0.30^2/(4 \times 0.25)}$, **$82.06**: a weak pull lets the log price spread wider, and the spread term grows. The five-year future's volatility rises to **8.60%**. The fit's asserts then stop the run, since the strip was built with speed 1.
+> - **Slow the pull.** Set `KAPPA = 0.25`. The five-year future rises from $76.74 to **$82.98**, above today's spot. The long-run price becomes 75 times $`e^{0.30^2/(4 \times 0.25)}`$, **$82.06**: a weak pull lets the log price spread wider, and the spread term grows. The five-year future's volatility rises to **8.60%**. The fit's asserts then stop the run, since the strip was built with speed 1.
 > - **Start below the level.** Set `S0 = 70.0`. The one-year future is **$74.56**, above spot: the curve now rises, in contango, with no storage cost in sight. The fit's asserts stop this run too, since the strip was quoted against spot at 80.
 > - **Break the formula.** Change `(4 * k)` to `(2 * k)` in `fut`. The first assert stops the run: the closed form no longer matches the Runge-Kutta road.
 
@@ -820,25 +838,25 @@ example : ((3 : ℚ) / 10) ^ 2 / (4 * 1) = 9 / 400 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading the level as where the curve ends, or as a forecast.** The level $a$ belongs to the log price, and it is fitted in the pricing world. The long end of the curve is $e^{a + \sigma^2/4\kappa}$, $76.71 here, not $75. And a level fitted to futures includes the market's charge for bearing oil risk. It is not an estimate of where oil will trade.
+> **Reading the level as where the curve ends, or as a forecast.** The level $`a`$ belongs to the log price, and it is fitted in the pricing world. The long end of the curve is $`e^{a + \sigma^2/4\kappa}`$, $76.71 here, not $75. And a level fitted to futures includes the market's charge for bearing oil risk. It is not an estimate of where oil will trade.
 >
 > - **Dropping the spread term.** Averaging the log and exponentiating gives $75.03 for the five-year future; the right price is $76.74.
 > - **Using spot volatility for a far future.** Hedging a five-year exposure with 30 percent volatility overstates its risk; the model says 0.20 percent. Real long-dated contracts move more than that, which is the one-factor model's known weakness and the reason for a second factor.
-> - **Fitting $\sigma$ from the strip.** At the long end the strip only sees $a + \sigma^2/4\kappa$. Freeing $\sigma$ lets the fit trade level against volatility and slide along that ridge.
+> - **Fitting $`\sigma`$ from the strip.** At the long end the strip only sees $`a + \sigma^2/4\kappa`$. Freeing $`\sigma`$ lets the fit trade level against volatility and slide along that ridge.
 > - **Confusing the half-life with the speed.** A speed of 1 per year closes half the gap in 0.69 years, not in one year and not in half a year.
 
 ---
 
 ## Where you meet it in real life
 
-- **Producer hedging.** Output sold five years forward is priced off a future that barely responds to today's spot, so hedge ratios follow the $e^{-\kappa T}$ weight, not one for one.
+- **Producer hedging.** Output sold five years forward is priced off a future that barely responds to today's spot, so hedge ratios follow the $`e^{-\kappa T}`$ weight, not one for one.
 - **Valuing a mine or a field.** Schwartz built the model to value natural-resource projects. A project whose cash flows lie mostly in years five to twenty is priced off the flat long end, not off today's spot.
 - **Gas and power curves.** Both revert fast, because inventories are thin or impossible. The seasonal pattern sits on top of the reversion ([Seasonal curves](05-seasonality-and-the-gas-curve.md)).
 - **When carry stops pinning the curve.** Storage puts a ceiling on contango ([Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md)), but nothing puts a floor under backwardation. A reverting spot model fills that gap with a shape.
-- **Interest rates.** The same process drives Vasicek's short rate, the interest rate on the shortest loans. There the level is a long-run interest rate and the same $e^{-\kappa T}$ weight shapes the yield curve.
+- **Interest rates.** The same process drives Vasicek's short rate, the interest rate on the shortest loans. There the level is a long-run interest rate and the same $`e^{-\kappa T}`$ weight shapes the yield curve.
 
 > **Say it back**
-> The Schwartz model lets the log of spot wander, with a pull toward a fixed level at a fixed speed. A future is the pricing-world average of spot at delivery. That average blends today's log price and the level with a weight that fades like $e^{-\kappa T}$, plus half the spread the kicks leave behind. So the curve starts at spot and flattens a little above the level. Every future moves by the same fading weight times a spot move, so long-dated futures barely move.
+> The Schwartz model lets the log of spot wander, with a pull toward a fixed level at a fixed speed. A future is the pricing-world average of spot at delivery. That average blends today's log price and the level with a weight that fades like $`e^{-\kappa T}`$, plus half the spread the kicks leave behind. So the curve starts at spot and flattens a little above the level. Every future moves by the same fading weight times a spot move, so long-dated futures barely move.
 
 ---
 
@@ -846,14 +864,14 @@ example : ((3 : ℚ) / 10) ^ 2 / (4 * 1) = 9 / 400 := by norm_num
 
 - [Contango and backwardation](04-contango-backwardation-and-roll-yield.md): the two curve shapes this model produces from one formula, depending on which side of the level spot sits.
 - [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the pulled random walk itself, its solution and its variance.
-- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the product rule used in Step 1, and the notation $dX_t$, $dW_t$.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the product rule used in Step 1, and the notation $`dX_t`$, $`dW_t`$.
 - [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the straight-line fit that finds the level in closed form for each speed.
 
 ## Where this goes next
 
-- [Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): options on these futures, where the fading volatility $\sigma e^{-\kappa T}$ becomes an implied volatility that depends on the contract, and the call skew appears.
+- [Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): options on these futures, where the fading volatility $`\sigma e^{-\kappa T}`$ becomes an implied volatility that depends on the contract, and the call skew appears.
 
-A strip pins the speed and the level but not the volatility; what option prices on the futures reveal about $\sigma$, and why they disagree across strikes, is the question left open here.
+A strip pins the speed and the level but not the volatility; what option prices on the futures reveal about $`\sigma`$, and why they disagree across strikes, is the question left open here.
 
 ---
 
@@ -865,4 +883,4 @@ Verified 2026-09-27: every link below resolves to the publisher's page.
 - Gibson, Rajna, and Eduardo S. Schwartz. "Stochastic Convenience Yield and the Pricing of Oil Contingent Claims." *The Journal of Finance* 45, no. 3 (1990): 959–976. [doi:10.1111/j.1540-6261.1990.tb05114.x](https://doi.org/10.1111/j.1540-6261.1990.tb05114.x). The two-factor extension named on this card.
 - Bessembinder, Hendrik, Jay F. Coughenour, Paul J. Seguin, and Margaret Monroe Smoller. "Mean Reversion in Equilibrium Asset Prices: Evidence from the Futures Term Structure." *The Journal of Finance* 50, no. 1 (1995): 361–375. [doi:10.1111/j.1540-6261.1995.tb05178.x](https://doi.org/10.1111/j.1540-6261.1995.tb05178.x). Reads the reversion speed off futures curves, the idea behind Step 6.
 - Uhlenbeck, G. E., and L. S. Ornstein. "On the Theory of the Brownian Motion." *Physical Review* 36, no. 5 (1930): 823–841. [doi:10.1103/PhysRev.36.823](https://doi.org/10.1103/PhysRev.36.823). The pulled random walk, first written for a particle in a fluid.
-- Vasicek, Oldřich. "An Equilibrium Characterization of the Term Structure." *Journal of Financial Economics* 5, no. 2 (1977): 177–188. [doi:10.1016/0304-405X(77)90016-2](https://doi.org/10.1016/0304-405X(77)90016-2). The same process used for interest rates, and the same $e^{-\kappa T}$ weights shaping a curve.
+- Vasicek, Oldřich. "An Equilibrium Characterization of the Term Structure." *Journal of Financial Economics* 5, no. 2 (1977): 177–188. [doi:10.1016/0304-405X(77)90016-2](https://doi.org/10.1016/0304-405X(77)90016-2). The same process used for interest rates, and the same $`e^{-\kappa T}`$ weights shaping a curve.

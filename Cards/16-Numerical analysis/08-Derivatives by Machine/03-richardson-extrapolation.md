@@ -38,51 +38,59 @@ Orange is the plain central difference; green is Richardson's combination of bum
 
 ## The formula
 
-Notation first, in words. $x$ is the yield in basis points, so 5% is $x_0 = 500$. $P(x)$ is the bond's price in dollars at yield $x$. $P'$, $P'''$ and $P^{(5)}$ are its first, third and fifth derivatives with respect to $x$. The bump is $h$ basis points each way.
+Notation first, in words. $`x`$ is the yield in basis points, so 5% is $`x_0 = 500`$. $`P(x)`$ is the bond's price in dollars at yield $`x`$. $`P'`$, $`P'''`$ and $`P^{(5)}`$ are its first, third and fifth derivatives with respect to $`x`$. The bump is $`h`$ basis points each way.
 
 The central difference, from [Forward, backward and central differences](01-forward-backward-and-central-differences.md), and its full error series:
 
-$$D(h) = \frac{P(x_0 + h) - P(x_0 - h)}{2h} = P'(x_0) + \frac{h^2}{6}P'''(x_0) + \frac{h^4}{120}P^{(5)}(x_0) + \cdots$$
+```math
+D(h) = \frac{P(x_0 + h) - P(x_0 - h)}{2h} = P'(x_0) + \frac{h^2}{6}P'''(x_0) + \frac{h^4}{120}P^{(5)}(x_0) + \cdots
+```
 
 **Read it aloud:** the bumped slope is the true slope, plus a sixth of the step squared times the third derivative, plus a smaller term in the step to the fourth, with no odd powers.
 
 Richardson's combination of the 1 bp and 2 bp answers:
 
-$$R(h) = \frac{4D(h) - D(2h)}{3} = D(h) + \frac{D(h) - D(2h)}{3} = P'(x_0) - \frac{h^4}{30}P^{(5)}(x_0) + \cdots$$
+```math
+R(h) = \frac{4D(h) - D(2h)}{3} = D(h) + \frac{D(h) - D(2h)}{3} = P'(x_0) - \frac{h^4}{30}P^{(5)}(x_0) + \cdots
+```
 
 **Read it aloud:** take the small-step answer and push it further, by a third of how far it moved from the large-step answer; what is left of the error starts at the step to the fourth.
 
-The general rule, for any method whose answer $A(h)$ has error $c\,h^p$ plus higher powers, with steps $h$ and $rh$:
+The general rule, for any method whose answer $`A(h)`$ has error $`c\,h^p`$ plus higher powers, with steps $`h`$ and $`rh`$:
 
-$$R = \frac{r^p A(h) - A(rh)}{r^p - 1}$$
+```math
+R = \frac{r^p A(h) - A(rh)}{r^p - 1}
+```
 
 **Read it aloud:** weight the small-step answer by the step ratio raised to the error's power, subtract the large-step answer, and divide by the weights' total.
 
-The same two answers also measure the error of $D(h)$, for free:
+The same two answers also measure the error of $`D(h)`$, for free:
 
-$$D(h) - P'(x_0) \approx \frac{D(2h) - D(h)}{3}$$
+```math
+D(h) - P'(x_0) \approx \frac{D(2h) - D(h)}{3}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_0$, $y$ | yield in basis points; the yield where the slope is wanted; the yield as a decimal, $x/10{,}000$ | $x_0 = 500$, y = 0.05 | the price falls |
-| $P(x)$ | the bond's price in dollars at yield $x$ | 846.2754897312 at 500 bp | — |
-| $P'(x_0)$ | the true sensitivity, dollars per bp | −1.3620117671 | — |
-| $P''$ to $P^{(6)}$ | higher derivatives of the price; $P'''$ per bp³ and $P^{(5)}$ per bp⁵ lead the errors | $P'''$ = −8.643616e-06, $P^{(5)}$ = −7.818464e-11 | larger truncation error |
-| $h$ | the bump, in bp each way | 1 and 2 | larger truncation, smaller rounding |
-| $D(h)$ | central difference with bump $h$ | −1.362013207700 at h = 1 | — |
-| $R(h)$ | Richardson's combination of $D(h)$ and $D(2h)$ | −1.362011767094 at h = 1 | — |
-| $A(h)$, $c$, $p$, $r$ | any method's answer at step h; its leading error coefficient; that error's power; the step ratio | for $D$: $c = P'''/6$, p = 2, r = 2 | — |
-| $u$ | unit roundoff, $2^{-53}$: the largest relative rounding in one double operation | 1.110e-16 | larger rounding floor |
-| $\eta$ | rounding error in one computed price, dollars (Greek eta) | about 1.588e-12 | larger best step, larger floor |
-| $h^\ast$ | the bump that minimises the modelled total error | 0.744 bp for $R$, 0.0082 bp for $D$ | — |
-| $s$, $M_6$, $\xi_\pm$ | proof helpers: a bump size standing for h or 2h; a ceiling on the size of $P^{(6)}$; unknown points inside the bumps | — | — |
+| $`x`$, $`x_0`$, $`y`$ | yield in basis points; the yield where the slope is wanted; the yield as a decimal, $`x/10{,}000`$ | $`x_0 = 500`$, y = 0.05 | the price falls |
+| $`P(x)`$ | the bond's price in dollars at yield $`x`$ | 846.2754897312 at 500 bp | — |
+| $`P'(x_0)`$ | the true sensitivity, dollars per bp | −1.3620117671 | — |
+| $`P''`$ to $`P^{(6)}`$ | higher derivatives of the price; $`P'''`$ per bp³ and $`P^{(5)}`$ per bp⁵ lead the errors | $`P'''`$ = −8.643616e-06, $`P^{(5)}`$ = −7.818464e-11 | larger truncation error |
+| $`h`$ | the bump, in bp each way | 1 and 2 | larger truncation, smaller rounding |
+| $`D(h)`$ | central difference with bump $`h`$ | −1.362013207700 at h = 1 | — |
+| $`R(h)`$ | Richardson's combination of $`D(h)`$ and $`D(2h)`$ | −1.362011767094 at h = 1 | — |
+| $`A(h)`$, $`c`$, $`p`$, $`r`$ | any method's answer at step h; its leading error coefficient; that error's power; the step ratio | for $`D`$: $`c = P'''/6`$, p = 2, r = 2 | — |
+| $`u`$ | unit roundoff, $`2^{-53}`$: the largest relative rounding in one double operation | 1.110e-16 | larger rounding floor |
+| $`\eta`$ | rounding error in one computed price, dollars (Greek eta) | about 1.588e-12 | larger best step, larger floor |
+| $`h^\ast`$ | the bump that minimises the modelled total error | 0.744 bp for $`R`$, 0.0082 bp for $`D`$ | — |
+| $`s`$, $`M_6`$, $`\xi_\pm`$ | proof helpers: a bump size standing for h or 2h; a ceiling on the size of $`P^{(6)}`$; unknown points inside the bumps | — | — |
 
 ### When it holds
 
-- **The error power is known.** The weights 4 and 3 assume an $h^2$ error. Used with weights 2 and 1, as if the error were size $h$, the answer is off by 2.881e-06, worse than the plain 1 bp bump.
-- **The step ratio matches the weights.** Bumps of 1 and 3 bp need $r^p = 9$: then the error is 6.320e-12. Using 4 leaves 2.401e-06.
-- **The function is smooth across both bumps.** The series needs six continuous derivatives between $x_0 - 2h$ and $x_0 + 2h$. A price capped half a basis point away has a kink inside the bumps, and the combination is off by 0.2841.
-- **Truncation is larger than rounding.** Once the step is so small that the rounding error $1.5\eta/h$ leads, cancelling the truncation term buys nothing. For this bond that happens below about 1/4 bp.
+- **The error power is known.** The weights 4 and 3 assume an $`h^2`$ error. Used with weights 2 and 1, as if the error were size $`h`$, the answer is off by 2.881e-06, worse than the plain 1 bp bump.
+- **The step ratio matches the weights.** Bumps of 1 and 3 bp need $`r^p = 9`$: then the error is 6.320e-12. Using 4 leaves 2.401e-06.
+- **The function is smooth across both bumps.** The series needs six continuous derivatives between $`x_0 - 2h`$ and $`x_0 + 2h`$. A price capped half a basis point away has a kink inside the bumps, and the combination is off by 0.2841.
+- **Truncation is larger than rounding.** Once the step is so small that the rounding error $`1.5\eta/h`$ leads, cancelling the truncation term buys nothing. For this bond that happens below about 1/4 bp.
 
 ---
 
@@ -96,80 +104,90 @@ The error must follow a known power of the step, with a fixed but unknown coeffi
 
 ### Step 1: the central difference has only even powers
 
-Expand both bumped prices with [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) about $x_0$:
+Expand both bumped prices with [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) about $`x_0`$:
 
-$$P(x_0 \pm h) = P \pm hP' + \tfrac{h^2}{2}P'' \pm \tfrac{h^3}{6}P''' + \tfrac{h^4}{24}P^{(4)} \pm \tfrac{h^5}{120}P^{(5)} + \cdots$$
+```math
+P(x_0 \pm h) = P \pm hP' + \tfrac{h^2}{2}P'' \pm \tfrac{h^3}{6}P''' + \tfrac{h^4}{24}P^{(4)} \pm \tfrac{h^5}{120}P^{(5)} + \cdots
+```
 
-Subtract the down price from the up price. The even-order terms appear with the same sign in both, so they cancel. The odd ones double. Divide by $2h$:
+Subtract the down price from the up price. The even-order terms appear with the same sign in both, so they cancel. The odd ones double. Divide by $`2h`$:
 
-$$D(h) = P' + \tfrac{h^2}{6}P''' + \tfrac{h^4}{120}P^{(5)} + \cdots$$
+```math
+D(h) = P' + \tfrac{h^2}{6}P''' + \tfrac{h^4}{120}P^{(5)} + \cdots
+```
 
-A quicker way to see that no odd powers can appear: swapping $h$ for $-h$ swaps the two prices and flips the sign of $2h$, so $D(-h) = D(h)$. A function equal to its own mirror image has only even powers.
+A quicker way to see that no odd powers can appear: swapping $`h`$ for $`-h`$ swaps the two prices and flips the sign of $`2h`$, so $`D(-h) = D(h)`$. A function equal to its own mirror image has only even powers.
 
 For the bond at 1 bp, the series predicts an error of −1.441e-06. The measured error is −1.441e-06.
 
 ### Step 2: two bumps cancel the step-squared term
 
-Call the leading coefficient $c = P'''/6$. Then
+Call the leading coefficient $`c = P'''/6`$. Then
 
-- $D(1) \approx P' + c$
-- $D(2) \approx P' + 4c$
+- $`D(1) \approx P' + c`$
+- $`D(2) \approx P' + 4c`$
 
-Four times the first, minus the second, removes $c$ and leaves three copies of $P'$. Divide by 3:
+Four times the first, minus the second, removes $`c`$ and leaves three copies of $`P'`$. Divide by 3:
 
-$$R(1) = \frac{4D(1) - D(2)}{3}$$
+```math
+R(1) = \frac{4D(1) - D(2)}{3}
+```
 
-Carry the next term along. $D(h)$ has $\tfrac{h^4}{120}P^{(5)}$ and $D(2h)$ has 16 times that. So $R(h)$ keeps $\tfrac{4 - 16}{3}\cdot\tfrac{h^4}{120}P^{(5)} = -\tfrac{h^4}{30}P^{(5)}$. For the bond at 1 bp this predicts +2.606e-12. The measured error is +3.149e-12. The remaining gap is rounding, which Step 4 sizes.
+Carry the next term along. $`D(h)`$ has $`\tfrac{h^4}{120}P^{(5)}`$ and $`D(2h)`$ has 16 times that. So $`R(h)`$ keeps $`\tfrac{4 - 16}{3}\cdot\tfrac{h^4}{120}P^{(5)} = -\tfrac{h^4}{30}P^{(5)}`$. For the bond at 1 bp this predicts +2.606e-12. The measured error is +3.149e-12. The remaining gap is rounding, which Step 4 sizes.
 
-The same algebra with any step ratio $r$ and error power $p$ gives the general rule $(r^pA(h) - A(rh))/(r^p - 1)$.
+The same algebra with any step ratio $`r`$ and error power $`p`$ gives the general rule $`(r^pA(h) - A(rh))/(r^p - 1)`$.
 
-Spread over the four prices, $R(h)$ puts weights $\tfrac{1}{12h}(1, -8, 8, -1)$ on $P(x_0 - 2h)$, $P(x_0 - h)$, $P(x_0 + h)$, $P(x_0 + 2h)$. That is the five-point fourth-order stencil, built directly on [Stencils to order](02-stencils-for-higher-and-mixed-derivatives.md). Richardson reaches it without solving for any weights.
+Spread over the four prices, $`R(h)`$ puts weights $`\tfrac{1}{12h}(1, -8, 8, -1)`$ on $`P(x_0 - 2h)`$, $`P(x_0 - h)`$, $`P(x_0 + h)`$, $`P(x_0 + 2h)`$. That is the five-point fourth-order stencil, built directly on [Stencils to order](02-stencils-for-higher-and-mixed-derivatives.md). Richardson reaches it without solving for any weights.
 
 <details>
 <summary>Detailed proof: the error of R(h), with its remainder</summary>
 
-Assume $P$ has six continuous derivatives on $[x_0 - 2h, x_0 + 2h]$. Taylor's theorem with remainder gives, for $s = h$ and $s = 2h$,
+Assume $`P`$ has six continuous derivatives on $`[x_0 - 2h, x_0 + 2h]`$. Taylor's theorem with remainder gives, for $`s = h`$ and $`s = 2h`$,
 
-$$D(s) = P' + \frac{s^2}{6}P''' + \frac{s^4}{120}P^{(5)} + \frac{s^5}{1440}\Bigl(P^{(6)}(\xi_+) - P^{(6)}(\xi_-)\Bigr)$$
+$`\displaystyle D(s) = P' + \frac{s^2}{6}P''' + \frac{s^4}{120}P^{(5)} + \frac{s^5}{1440}\Bigl(P^{(6)}(\xi_+) - P^{(6)}(\xi_-)\Bigr)`$
 
-for some points $\xi_\pm$ within $s$ of $x_0$. The last term is at most $s^5 M_6/720$ in size, where $M_6$ bounds $|P^{(6)}|$ on the interval.
+for some points $`\xi_\pm`$ within $`s`$ of $`x_0`$. The last term is at most $`s^5 M_6/720`$ in size, where $`M_6`$ bounds $`|P^{(6)}|`$ on the interval.
 
-Form $4D(h) - D(2h)$. The $P'$ terms give $3P'$. The $s^2$ terms give $\tfrac{4h^2 - 4h^2}{6}P''' = 0$. The $s^4$ terms give $\tfrac{4h^4 - 16h^4}{120}P^{(5)} = -\tfrac{h^4}{10}P^{(5)}$. The remainders total at most $\tfrac{4h^5 + 32h^5}{720}M_6$. Divide by 3:
+Form $`4D(h) - D(2h)`$. The $`P'`$ terms give $`3P'`$. The $`s^2`$ terms give $`\tfrac{4h^2 - 4h^2}{6}P''' = 0`$. The $`s^4`$ terms give $`\tfrac{4h^4 - 16h^4}{120}P^{(5)} = -\tfrac{h^4}{10}P^{(5)}`$. The remainders total at most $`\tfrac{4h^5 + 32h^5}{720}M_6`$. Divide by 3:
 
-$$\Bigl|R(h) - P' + \tfrac{h^4}{30}P^{(5)}\Bigr| \le \frac{h^5 M_6}{60}.$$
+$`\displaystyle \Bigl|R(h) - P' + \tfrac{h^4}{30}P^{(5)}\Bigr| \le \frac{h^5 M_6}{60}.`$
 
-So the error of $R(h)$ is $-\tfrac{h^4}{30}P^{(5)}$ plus something of size $h^5$ at most. (If $P$ also has a seventh derivative, as the bond's price does, the even-power symmetry of Step 1 makes that leftover of size $h^6$.) The check confirms the leading term directly: at h = 8 bp the measured error of $R$ is 1.00009 times $-\tfrac{h^4}{30}P^{(5)}$. $\blacksquare$
+So the error of $`R(h)`$ is $`-\tfrac{h^4}{30}P^{(5)}`$ plus something of size $`h^5`$ at most. (If $`P`$ also has a seventh derivative, as the bond's price does, the even-power symmetry of Step 1 makes that leftover of size $`h^6`$.) The check confirms the leading term directly: at h = 8 bp the measured error of $`R`$ is 1.00009 times $`-\tfrac{h^4}{30}P^{(5)}`$. $`\blacksquare`$
 
 </details>
 
 ### Step 3: the gap between the two answers is the error estimate
 
-From the same two lines, $D(2) - D(1) \approx 3c$. So the error of the 1 bp answer is about a third of the gap:
+From the same two lines, $`D(2) - D(1) \approx 3c`$. So the error of the 1 bp answer is about a third of the gap:
 
-$$D(1) - P' \approx \frac{D(2) - D(1)}{3} = -1.441\text{e-}06$$
+```math
+D(1) - P' \approx \frac{D(2) - D(1)}{3} = -1.441\text{e-}06
+```
 
-Estimate over truth: 1.00000. The desk gets the error of its plain bump without knowing the true slope. This is an **estimate**, not a bound: it is right only while the $h^2$ term leads.
+Estimate over truth: 1.00000. The desk gets the error of its plain bump without knowing the true slope. This is an **estimate**, not a bound: it is right only while the $`h^2`$ term leads.
 
 ### Step 4: rounding sets a floor, and moves the best step
 
-Each computed price is slightly wrong. For this bond a main cause is storing the bumped yield: $1 + y$ is rounded to a double, a relative change of at most $u = 2^{-53}$ (see [Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)). That shifts the yield by $u(1 + y)$, which is $u(1+y)\times 10^4$ bp, and moves the price by $|P'|$ times that:
+Each computed price is slightly wrong. For this bond a main cause is storing the bumped yield: $`1 + y`$ is rounded to a double, a relative change of at most $`u = 2^{-53}`$ (see [Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)). That shifts the yield by $`u(1 + y)`$, which is $`u(1+y)\times 10^4`$ bp, and moves the price by $`|P'|`$ times that:
 
-$$\eta \approx u\,(1 + y)\,|P'| \times 10^4 = 1.588\text{e-}12 \text{ dollars}$$
+```math
+\eta \approx u\,(1 + y)\,|P'| \times 10^4 = 1.588\text{e-}12 \text{ dollars}
+```
 
-The two prices in $D(h)$ are divided by $2h$, so rounding adds up to $\eta/h$. $R(h)$ uses four prices with weights $\tfrac43\cdot\tfrac1{2h}$ and $\tfrac13\cdot\tfrac1{4h}$, each used twice, so its rounding is up to $1.5\eta/h$. Extrapolation trades a little more rounding for far less truncation.
+The two prices in $`D(h)`$ are divided by $`2h`$, so rounding adds up to $`\eta/h`$. $`R(h)`$ uses four prices with weights $`\tfrac43\cdot\tfrac1{2h}`$ and $`\tfrac13\cdot\tfrac1{4h}`$, each used twice, so its rounding is up to $`1.5\eta/h`$. Extrapolation trades a little more rounding for far less truncation.
 
-The modelled total for $R$ is $|P^{(5)}|h^4/30 + 1.5\eta/h$. Setting its slope to zero gives $h^5 = 45\eta / (4|P^{(5)}|)$:
+The modelled total for $`R`$ is $`|P^{(5)}|h^4/30 + 1.5\eta/h`$. Setting its slope to zero gives $`h^5 = 45\eta / (4|P^{(5)}|)`$:
 
-| | Best bump $h^\ast$, model | Error there, model | Best in the sweep, measured |
+| | Best bump $`h^\ast`$, model | Error there, model | Best in the sweep, measured |
 | --- | --- | --- | --- |
-| Central $D(h)$ | 0.0082 bp | 2.90e-10 | 2.66e-11 at 0.0039 bp |
-| Richardson $R(h)$ | 0.744 bp | 4.00e-12 | 9.79e-13 at 0.2500 bp |
+| Central $`D(h)`$ | 0.0082 bp | 2.90e-10 | 2.66e-11 at 0.0039 bp |
+| Richardson $`R(h)`$ | 0.744 bp | 4.00e-12 | 9.79e-13 at 0.2500 bp |
 
-The model is an estimate of the typical size. Real rounding errors partly cancel, so the measured minima sit below it, by a factor of 4.1 for $R$ and 10.9 for $D$. The pattern is the point: extrapolation wants a step 91 times larger, and there it is still more accurate. Why the best step lands where it does in general is the subject of [Choosing the step](04-choosing-the-step-truncation-against-rounding.md).
+The model is an estimate of the typical size. Real rounding errors partly cancel, so the measured minima sit below it, by a factor of 4.1 for $`R`$ and 10.9 for $`D`$. The pattern is the point: extrapolation wants a step 91 times larger, and there it is still more accurate. Why the best step lands where it does in general is the subject of [Choosing the step](04-choosing-the-step-truncation-against-rounding.md).
 
 ### Step 5: what it costs
 
-$D(1)$ costs two repricings. $R(1)$ costs four: the 1 bp pair and the 2 bp pair. For two extra repricings the error fell from 1.441e-06 to 3.149e-12, a factor of 4.5751e+05. The plain central difference never reaches that accuracy on this bond: its best error in the sweep is 2.66e-11.
+$`D(1)`$ costs two repricings. $`R(1)`$ costs four: the 1 bp pair and the 2 bp pair. For two extra repricings the error fell from 1.441e-06 to 3.149e-12, a factor of 4.5751e+05. The plain central difference never reaches that accuracy on this bond: its best error in the sweep is 2.66e-11.
 
 ---
 
@@ -179,10 +197,10 @@ From the check's output, at a 5% yield, in dollars per bp.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| bump 1 bp each way | $D(1)$ | −1.362013207700 |
-| bump 2 bp each way | $D(2)$ | −1.362017529518 |
+| bump 1 bp each way | $`D(1)`$ | −1.362013207700 |
+| bump 2 bp each way | $`D(2)`$ | −1.362017529518 |
 | gap between them | −1.362017529518 − (−1.362013207700) | −0.000004321818 |
-| error estimate for $D(1)$ | gap ÷ 3 | −0.000001440606 |
+| error estimate for $`D(1)`$ | gap ÷ 3 | −0.000001440606 |
 | extrapolate | −1.362013207700 − (−0.000001440606) | **−1.362011767094** |
 | true error | against −1.3620117671 from the formula | **+3.149e-12** |
 
@@ -192,20 +210,20 @@ The bond loses $1.362011767094 for each basis point the yield rises, per $1,000 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Weights 2 and 1: $2D(1) - D(2)$ | −1.3620088859, off +2.881e-06 | treats the error as size h; worse than $D(1)$ alone |
+| Weights 2 and 1: $`2D(1) - D(2)`$ | −1.3620088859, off +2.881e-06 | treats the error as size h; worse than $`D(1)`$ alone |
 | Forward differences with weights 4 and 3 | −1.3609470737, off +1.065e-03 | a forward difference's error is size h, so it needs weights 2 and 1 |
-| Bumps of 1 and 3 bp with weights 4 and 3 | −1.3620093661, off +2.401e-06 | ratio 3 needs $3^2 = 9$; with 9 and 8, off +6.320e-12 |
-| Richardson at h = 1/65,536 bp | −1.3620117164, off +5.071e-08 | rounding, $1.5\eta/h$, dominates; 16103 times worse than at 1 bp |
-| Prices rounded to the cent, h = 1 bp | −1.3591666667, off +2.845e-03 | $\eta$ is now half a cent; the step must grow |
+| Bumps of 1 and 3 bp with weights 4 and 3 | −1.3620093661, off +2.401e-06 | ratio 3 needs $`3^2 = 9`$; with 9 and 8, off +6.320e-12 |
+| Richardson at h = 1/65,536 bp | −1.3620117164, off +5.071e-08 | rounding, $`1.5\eta/h`$, dominates; 16103 times worse than at 1 bp |
+| Prices rounded to the cent, h = 1 bp | −1.3591666667, off +2.845e-03 | $`\eta`$ is now half a cent; the step must grow |
 | A price capped at its 499.5 bp value | −1.0779599760, off +2.841e-01 | a kink inside the bumps: no Taylor series, nothing to cancel |
 
-The rounded-to-the-cent row shows how a coarse pricer changes the advice. With $\eta$ half a cent, the plain 1 bp bump is off +2.012e-03 and an 8 bp bump +1.368e-04. Richardson with bumps of 32 and 64 bp is off +5.864e-05: wide bumps, extrapolated, beat the 1 bp and 8 bp bumps. A narrow bump can land closer by luck, but nothing in the prices says which one; the wide, extrapolated pair is reliably near the best the noise allows.
+The rounded-to-the-cent row shows how a coarse pricer changes the advice. With $`\eta`$ half a cent, the plain 1 bp bump is off +2.012e-03 and an 8 bp bump +1.368e-04. Richardson with bumps of 32 and 64 bp is off +5.864e-05: wide bumps, extrapolated, beat the 1 bp and 8 bp bumps. A narrow bump can land closer by luck, but nothing in the prices says which one; the wide, extrapolated pair is reliably near the best the noise allows.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code prices the bond by repeated multiplication of the yearly discount factor, then reaches the slope three independent ways: the price formula differentiated term by term (the known answer); the central difference and Richardson's combination at bumps from 64 bp down to 1/65,536 bp; and the Taylor series, which predicts each method's error from $P'''$ and $P^{(5)}$ alone. Asserts check the gain, the observed orders against 2 and 4, the series against the measured errors, the free estimate, the rounding floor, and every row of What breaks. Only +, −, × and ÷ touch the prices, so Python and Rust agree to the bit; logs and powers appear only in the reporting lines.
+The code prices the bond by repeated multiplication of the yearly discount factor, then reaches the slope three independent ways: the price formula differentiated term by term (the known answer); the central difference and Richardson's combination at bumps from 64 bp down to 1/65,536 bp; and the Taylor series, which predicts each method's error from $`P'''`$ and $`P^{(5)}`$ alone. Asserts check the gain, the observed orders against 2 and 4, the series against the measured errors, the free estimate, the rounding floor, and every row of What breaks. Only +, −, × and ÷ touch the prices, so Python and Rust agree to the bit; logs and powers appear only in the reporting lines.
 
 ### Python
 
@@ -525,10 +543,10 @@ The two outputs match line for line.
 
 Lean proves the remainder bound of the Detailed proof, the general rule and the five-point stencil, for any function and bump meeting their hypotheses.
 
-- If $P$ has six continuous derivatives on $[x_0 - 2h, x_0 + 2h]$, with $\lvert P^{(6)}\rvert \le M_6$ there, then $\bigl\lvert R(h) - P'(x_0) + \tfrac{h^4}{30}P^{(5)}(x_0)\bigr\rvert \le h^5 M_6/60$.
-- Say $A(h)$ is the true value, plus $c\,h^p$, plus a leftover at most a fixed multiple of some power $h^q$ for small $h$. If $r^p \ne 1$, then $(r^pA(h) - A(rh))/(r^p - 1)$ is the true value plus a leftover of that same size, whatever $c$ is.
-- For any $h \ne 0$, $R(h)$ equals the five-point stencil $\bigl(P(x_0 - 2h) - 8P(x_0 - h) + 8P(x_0 + h) - P(x_0 + 2h)\bigr)/(12h)$.
-- The card's fractions check out: $-\tfrac{1}{30}$ and $\tfrac{1}{60}$, the weights 4 and 3, the factor 9 for 1 and 3 bp, the 1.5 and the 45/4.
+- If $`P`$ has six continuous derivatives on $`[x_0 - 2h, x_0 + 2h]`$, with $`\lvert P^{(6)}\rvert \le M_6`$ there, then $`\bigl\lvert R(h) - P'(x_0) + \tfrac{h^4}{30}P^{(5)}(x_0)\bigr\rvert \le h^5 M_6/60`$.
+- Say $`A(h)`$ is the true value, plus $`c\,h^p`$, plus a leftover at most a fixed multiple of some power $`h^q`$ for small $`h`$. If $`r^p \ne 1`$, then $`(r^pA(h) - A(rh))/(r^p - 1)`$ is the true value plus a leftover of that same size, whatever $`c`$ is.
+- For any $`h \ne 0`$, $`R(h)`$ equals the five-point stencil $`\bigl(P(x_0 - 2h) - 8P(x_0 - h) + 8P(x_0 + h) - P(x_0 + 2h)\bigr)/(12h)`$.
+- The card's fractions check out: $`-\tfrac{1}{30}`$ and $`\tfrac{1}{60}`$, the weights 4 and 3, the factor 9 for 1 and 3 bp, the 1.5 and the 45/4.
 
 The bond's numbers, the observed orders, the rounding floor, the best bump and every row of What breaks are left to Python and Rust.
 
@@ -731,7 +749,7 @@ example : (3 : ℚ) / 2 * 30 / 4 = 45 / 4 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Extrapolating where rounding already rules.** Richardson cancels truncation error, the part that falls with the step. It cannot cancel rounding, which grows as the step shrinks, and it makes rounding 1.5 times worse. At 1/65,536 bp the combined answer is off +5.071e-08, 16103 times worse than at 1 bp. Shrink the step only while the error ratio between neighbouring steps still reads 4 for $D$ or 16 for $R$.
+> **Extrapolating where rounding already rules.** Richardson cancels truncation error, the part that falls with the step. It cannot cancel rounding, which grows as the step shrinks, and it makes rounding 1.5 times worse. At 1/65,536 bp the combined answer is off +5.071e-08, 16103 times worse than at 1 bp. Shrink the step only while the error ratio between neighbouring steps still reads 4 for $`D`$ or 16 for $`R`$.
 >
 > - **Wrong weights for the power.** Weights 2 and 1 on a central difference give an error of +2.881e-06, worse than doing nothing.
 > - **Steps not in the assumed ratio.** Bumps of 1 and 3 bp with the factor 4 leave +2.401e-06; the factor must be 9.
@@ -757,7 +775,7 @@ example : (3 : ℚ) / 2 * 30 / 4 = 45 / 4 := by norm_num
 
 ## What this builds on
 
-- [Forward, backward and central differences](01-forward-backward-and-central-differences.md): the central difference and its $h^2$ error, which this card cancels.
+- [Forward, backward and central differences](01-forward-backward-and-central-differences.md): the central difference and its $`h^2`$ error, which this card cancels.
 - [Error bounds and Romberg](../05-Quadrature/02-error-bounds-and-romberg.md): the same cancellation on the trapezoid rule, and the even-power series behind it.
 - [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the expansion of each bumped price in Step 1.
 - [Duration and convexity](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): why a bond's slope against yield is the number a desk hedges with.
@@ -775,7 +793,7 @@ Extrapolation pushes the floor down but cannot remove it, because the bumped pri
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Richardson, L. F. "The approximate arithmetical solution by finite differences of physical problems involving differential equations, with an application to the stresses in a masonry dam." *Philosophical Transactions of the Royal Society A* 210 (1911): 307–357. [doi:10.1098/rsta.1911.0009](https://doi.org/10.1098/rsta.1911.0009). The first use of $h^2$ extrapolation, on a finite-difference grid.
+- Richardson, L. F. "The approximate arithmetical solution by finite differences of physical problems involving differential equations, with an application to the stresses in a masonry dam." *Philosophical Transactions of the Royal Society A* 210 (1911): 307–357. [doi:10.1098/rsta.1911.0009](https://doi.org/10.1098/rsta.1911.0009). The first use of $`h^2`$ extrapolation, on a finite-difference grid.
 - Richardson, L. F., and J. A. Gaunt. "The deferred approach to the limit." *Philosophical Transactions of the Royal Society A* 226 (1927): 299–361. [doi:10.1098/rsta.1927.0008](https://doi.org/10.1098/rsta.1927.0008). The general method: known powers of the step, removed one at a time.
 - Joyce, D. C. "Survey of extrapolation processes in numerical analysis." *SIAM Review* 13 (1971): 435–490. [doi:10.1137/1013092](https://doi.org/10.1137/1013092). Richardson's method alongside its relatives, with their error analysis.
 - Sidi, A. *Practical Extrapolation Methods: Theory and Applications*. Cambridge University Press, 2003. [Publisher page](https://www.cambridge.org/core/books/practical-extrapolation-methods/21A93C2B0793CF09B2F3ABEF78F3F9B9). A modern treatment of the theory, including how errors in the inputs pass through the combination.

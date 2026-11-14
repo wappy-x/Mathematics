@@ -36,47 +36,57 @@ Bars: the first six (geometric); each bar is five sixths of the one before. Line
 
 ## The formula
 
-Notation first, in words. $p$ is the chance of a six on one roll, here 1/6, and $q = 1 - p$ the chance of a miss. As on the [Binomial](01-bernoulli-and-binomial.md) card, a capital letter is a random count and $P(X = k)$ is the chance it takes the value $k$. $P(A \mid B)$ is the chance of A given B. $E[X]$ is the average value of $X$ in the long run, and $\operatorname{Var}(X)$ its variance: the average squared distance from that mean. "$X \sim \text{Geometric}(p)$" is read "X follows the geometric law with chance p".
+Notation first, in words. $`p`$ is the chance of a six on one roll, here 1/6, and $`q = 1 - p`$ the chance of a miss. As on the [Binomial](01-bernoulli-and-binomial.md) card, a capital letter is a random count and $`P(X = k)`$ is the chance it takes the value $`k`$. $`P(A \mid B)`$ is the chance of A given B. $`E[X]`$ is the average value of $`X`$ in the long run, and $`\mathrm{Var}(X)`$ its variance: the average squared distance from that mean. "$`X \sim \text{Geometric}(p)`$" is read "X follows the geometric law with chance p".
 
-The first six. Let $X$ be the roll on which it lands.
+The first six. Let $`X`$ be the roll on which it lands.
 
-$$P(X = k) = q^{\,k-1}\,p, \qquad k = 1, 2, 3, \dots$$
+```math
+P(X = k) = q^{\,k-1}\,p, \qquad k = 1, 2, 3, \dots
+```
 
 **Read it aloud:** the chance the first six comes on roll k is the chance of k − 1 misses in a row, times the chance of a six.
 
 The tail, the mean and the variance:
 
-$$P(X > k) = q^{\,k}, \qquad E[X] = \frac{1}{p}, \qquad \operatorname{Var}(X) = \frac{q}{p^2}.$$
+```math
+P(X > k) = q^{\,k}, \qquad E[X] = \frac{1}{p}, \qquad \mathrm{Var}(X) = \frac{q}{p^2}.
+```
 
-Memorylessness, for any whole numbers $s, t \ge 0$ (with p below 1, so that s misses can happen):
+Memorylessness, for any whole numbers $`s, t \ge 0`$ (with p below 1, so that s misses can happen):
 
-$$P(X > s + t \mid X > s) = P(X > t).$$
+```math
+P(X > s + t \mid X > s) = P(X > t).
+```
 
 **Read it aloud:** given s misses so far, the chance of t more misses is the same as if no roll had yet been made.
 
-The r-th six. A rule may ask for $r$ sixes; let $T_r$ be the roll on which the r-th lands, so $T_1 = X$.
+The r-th six. A rule may ask for $`r`$ sixes; let $`T_r`$ be the roll on which the r-th lands, so $`T_1 = X`$.
 
-$$P(T_r = k) = \binom{k-1}{r-1}\,p^{\,r}\,q^{\,k-r}, \qquad k = r, r+1, \dots$$
+```math
+P(T_r = k) = \binom{k-1}{r-1}\,p^{\,r}\,q^{\,k-r}, \qquad k = r, r+1, \dots
+```
 
-$$E[T_r] = \frac{r}{p}, \qquad \operatorname{Var}(T_r) = \frac{r\,q}{p^2}.$$
+```math
+E[T_r] = \frac{r}{p}, \qquad \mathrm{Var}(T_r) = \frac{r\,q}{p^2}.
+```
 
 **Read it aloud:** roll k must be a six, and the other r − 1 sixes can sit anywhere among the first k − 1 rolls.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | chance of a success (a six) on one try | 1/6 = 0.166667 | waits shorten; mean 1/p falls |
-| $q$ | chance of a miss, 1 − p | 5/6 = 0.833333 | waits lengthen; tails fatten |
-| $X$ | rolls up to and including the first six | often 1 to 10; mean 6 | — |
-| $k$ | one particular roll number | 5 | its chance shrinks by q per roll |
-| $r$ | how many sixes the wait needs | 3 | mean r/p grows in step |
-| $T_r$, $T_3$ | the roll on which the r-th six lands; $T_3$ for the third | mean 18 | — |
-| $G_1$, $G_2$, $G_3$ | the gaps: rolls from one six to the next | each with mean 6 | — |
-| $s$, $t$ | rolls already missed; further rolls asked about | 4 missed, 3 more | memoryless: s has no effect |
-| $n$ | a fixed number of rolls | 12 or 18 | P(T_r > n) falls |
-| $\binom{k-1}{r-1}$ | ways to place the earlier r − 1 sixes among k − 1 rolls | C(4, 2) = 6 | more placements, more chance |
-| $E[X]$ | the long-run average wait | 6 rolls | — |
-| $\operatorname{Var}(X)$ | variance: average squared distance from the mean | 30 (rolls squared) | wider spread of waits |
-| $\sqrt{\operatorname{Var}(X)}$ | standard deviation: the square root of the variance, a typical distance from the mean | 5.477226 rolls | wider spread of waits |
+| $`p`$ | chance of a success (a six) on one try | 1/6 = 0.166667 | waits shorten; mean 1/p falls |
+| $`q`$ | chance of a miss, 1 − p | 5/6 = 0.833333 | waits lengthen; tails fatten |
+| $`X`$ | rolls up to and including the first six | often 1 to 10; mean 6 | — |
+| $`k`$ | one particular roll number | 5 | its chance shrinks by q per roll |
+| $`r`$ | how many sixes the wait needs | 3 | mean r/p grows in step |
+| $`T_r`$, $`T_3`$ | the roll on which the r-th six lands; $`T_3`$ for the third | mean 18 | — |
+| $`G_1`$, $`G_2`$, $`G_3`$ | the gaps: rolls from one six to the next | each with mean 6 | — |
+| $`s`$, $`t`$ | rolls already missed; further rolls asked about | 4 missed, 3 more | memoryless: s has no effect |
+| $`n`$ | a fixed number of rolls | 12 or 18 | P(T_r > n) falls |
+| $`\binom{k-1}{r-1}`$ | ways to place the earlier r − 1 sixes among k − 1 rolls | C(4, 2) = 6 | more placements, more chance |
+| $`E[X]`$ | the long-run average wait | 6 rolls | — |
+| $`\mathrm{Var}(X)`$ | variance: average squared distance from the mean | 30 (rolls squared) | wider spread of waits |
+| $`\sqrt{\mathrm{Var}(X)}`$ | standard deviation: the square root of the variance, a typical distance from the mean | 5.477226 rolls | wider spread of waits |
 
 ### When it holds
 
@@ -97,17 +107,21 @@ A wait is a pattern: some misses, then a six. Independence says the chance of a 
 
 The first six lands on roll k exactly when rolls 1 to k − 1 miss and roll k hits. Multiply:
 
-$$P(X = k) = \underbrace{q \times q \times \cdots \times q}_{k-1 \text{ misses}} \times p = q^{\,k-1} p.$$
+```math
+P(X = k) = \underbrace{q \times q \times \cdots \times q}_{k-1 \text{ misses}} \times p = q^{\,k-1} p.
+```
 
-These chances add up to 1. The sum $p(1 + q + q^2 + \cdots)$ is a geometric series with ratio q below 1, so it equals $p / (1 - q) = p / p = 1$. The law takes its name from that series. So the wait ends with probability 1, even though no fixed number of rolls guarantees a six.
+These chances add up to 1. The sum $`p(1 + q + q^2 + \cdots)`$ is a geometric series with ratio q below 1, so it equals $`p / (1 - q) = p / p = 1`$. The law takes its name from that series. So the wait ends with probability 1, even though no fixed number of rolls guarantees a six.
 
 ### Step 2: the tail is one line
 
 "No six yet after k rolls" means the first k rolls all missed. That is one pattern, with chance
 
-$$P(X > k) = q^{\,k}.$$
+```math
+P(X > k) = q^{\,k}.
+```
 
-No summing needed. For the die, $P(X > 3) = (5/6)^3 = 0.578704$.
+No summing needed. For the die, $`P(X > 3) = (5/6)^3 = 0.578704`$.
 
 ### Step 3: the mean, by restarting
 
@@ -122,56 +136,70 @@ flowchart LR
 
 Averaging over the two branches:
 
-$$E[X] = 1 + q\,E[X] \quad\Longrightarrow\quad (1 - q)\,E[X] = 1 \quad\Longrightarrow\quad E[X] = \frac{1}{p}.$$
+```math
+E[X] = 1 + q\,E[X] \quad\Longrightarrow\quad (1 - q)\,E[X] = 1 \quad\Longrightarrow\quad E[X] = \frac{1}{p}.
+```
 
-A second road: a wait of length X is "still waiting" after 0, 1, …, X − 1 rolls, X checkpoints in all, so $E[X] = \sum_{j \ge 0} P(X > j) = 1 + q + q^2 + \cdots = 1/p$. For the die, 6 rolls. Restarting on the square of X gives the variance $q/p^2 = 30$ (detailed proof below).
+A second road: a wait of length X is "still waiting" after 0, 1, …, X − 1 rolls, X checkpoints in all, so $`E[X] = \sum_{j \ge 0} P(X > j) = 1 + q + q^2 + \cdots = 1/p`$. For the die, 6 rolls. Restarting on the square of X gives the variance $`q/p^2 = 30`$ (detailed proof below).
 
 ### Step 4: memorylessness
 
 Given s misses, the chance of t more is a ratio of two tails from Step 2:
 
-$$P(X > s + t \mid X > s) = \frac{q^{\,s+t}}{q^{\,s}} = q^{\,t} = P(X > t).$$
+```math
+P(X > s + t \mid X > s) = \frac{q^{\,s+t}}{q^{\,s}} = q^{\,t} = P(X > t).
+```
 
 After four misses, the chance of three more is 0.578704, the same as from a standing start. Conversely, a wait in whole tries that forgets its past must be geometric (detailed proof below).
 
 ### Step 5: the negative binomial mass
 
-The r-th six lands on roll k exactly when two things happen together. Roll k is a six. And the first k − 1 rolls hold exactly r − 1 sixes. The second event is a binomial count (the [Binomial](01-bernoulli-and-binomial.md) card): its chance is $\binom{k-1}{r-1} p^{r-1} q^{k-r}$. The two involve different rolls, so they multiply:
+The r-th six lands on roll k exactly when two things happen together. Roll k is a six. And the first k − 1 rolls hold exactly r − 1 sixes. The second event is a binomial count (the [Binomial](01-bernoulli-and-binomial.md) card): its chance is $`\binom{k-1}{r-1} p^{r-1} q^{k-r}`$. The two involve different rolls, so they multiply:
 
-$$P(T_r = k) = \binom{k-1}{r-1}\,p^{\,r-1} q^{\,k-r} \times p = \binom{k-1}{r-1}\,p^{\,r}\,q^{\,k-r}.$$
+```math
+P(T_r = k) = \binom{k-1}{r-1}\,p^{\,r-1} q^{\,k-r} \times p = \binom{k-1}{r-1}\,p^{\,r}\,q^{\,k-r}.
+```
 
 ### Step 6: the r-th wait is r first waits laid end to end
 
-Cut the wait for the third six at each six. $G_1$ rolls to the first six, then $G_2$ more to the second, then $G_3$ more to the third:
+Cut the wait for the third six at each six. $`G_1`$ rolls to the first six, then $`G_2`$ more to the second, then $`G_3`$ more to the third:
 
-$$T_3 = G_1 + G_2 + G_3.$$
+```math
+T_3 = G_1 + G_2 + G_3.
+```
 
-By Step 0, the rolls after a six start a fresh wait, so each gap is geometric with the same p, and the gaps are independent: each uses its own rolls. Averages add, so $E[T_3] = 3 \times 6 = 18$. For independent counts variances also add (the [Adding counts](06-sums-of-discrete-variables.md) card), so $\operatorname{Var}(T_3) = 3 \times 30 = 90$.
+By Step 0, the rolls after a six start a fresh wait, so each gap is geometric with the same p, and the gaps are independent: each uses its own rolls. Averages add, so $`E[T_3] = 3 \times 6 = 18`$. For independent counts variances also add (the [Adding counts](06-sums-of-discrete-variables.md) card), so $`\mathrm{Var}(T_3) = 3 \times 30 = 90`$.
 
-The negative binomial is not memoryless. After two rolls, both may already be sixes, and then one more six ends the wait. So $P(T_3 > 3 \mid T_3 > 2) = 1 - p^3 = 0.995370$, while from scratch $P(T_3 > 1) = 1$. The wait remembers progress.
+The negative binomial is not memoryless. After two rolls, both may already be sixes, and then one more six ends the wait. So $`P(T_3 > 3 \mid T_3 > 2) = 1 - p^3 = 0.995370`$, while from scratch $`P(T_3 > 1) = 1`$. The wait remembers progress.
 
 ### Step 7: the same event, counted two ways
 
 The third six comes after roll n exactly when the first n rolls hold fewer than three sixes. So one tail can be read off the binomial, adding the chances of j = 0, 1 or 2 sixes in n rolls:
 
-$$P(T_3 > n) = \sum_{j=0}^{2} \binom{n}{j} p^{\,j} q^{\,n-j}.$$
+```math
+P(T_3 > n) = \sum_{j=0}^{2} \binom{n}{j} p^{\,j} q^{\,n-j}.
+```
 
 For n = 18 both sides give 0.402654: the wait for the third six overshoots its own mean of 18 rolls about 40 times in 100.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The masses sum to 1 (negative binomial).** By Step 6, $T_r = G_1 + \cdots + G_r$ with each gap finite with probability 1 (Step 1), so $T_r$ is finite with probability 1 and its masses, which partition that event by the value of k, add to 1.
+**The masses sum to 1 (negative binomial).** By Step 6, $`T_r = G_1 + \cdots + G_r`$ with each gap finite with probability 1 (Step 1), so $`T_r`$ is finite with probability 1 and its masses, which partition that event by the value of k, add to 1.
 
-**The variance of X, by restarting.** Write $X = 1 + X'$ on a miss, where $X'$ is a fresh wait with the same law, and $X = 1$ on a six. Square and average:
-$$E[X^2] = p \cdot 1 + q\,E[(1 + X')^2] = 1 + 2q\,E[X] + q\,E[X^2].$$
-So $p\,E[X^2] = 1 + 2q/p$, which gives $E[X^2] = (p + 2q)/p^2 = (2 - p)/p^2$. Subtract the squared mean:
-$$\operatorname{Var}(X) = \frac{2 - p}{p^2} - \frac{1}{p^2} = \frac{1 - p}{p^2} = \frac{q}{p^2}.$$
-For p = 1/6: $(5/6) \times 36 = 30$. The restart step is legitimate because $E[X^2]$ is finite: $\sum k^2 q^{k-1}$ converges by the ratio test.
+**The variance of X, by restarting.** Write $`X = 1 + X'`$ on a miss, where $`X'`$ is a fresh wait with the same law, and $`X = 1`$ on a six. Square and average:
 
-**Only the geometric forgets.** Let $S(k) = P(X > k)$ for a wait in whole tries, with $S(0) = 1$. Memorylessness with every s and t says $S(s + t) = S(s)\,S(t)$. Put $a = S(1)$. Then $S(2) = a^2$, $S(3) = a^3$, and by induction $S(k) = a^k$. So $P(X = k) = S(k-1) - S(k) = a^{k-1}(1 - a)$: geometric with chance $p = 1 - a$.
+$`\displaystyle E[X^2] = p \cdot 1 + q\,E[(1 + X')^2] = 1 + 2q\,E[X] + q\,E[X^2].`$
 
-**Tail-sum formula.** For a count taking values 1, 2, …, $X = \sum_{j \ge 0} \mathbf{1}[X > j]$, where $\mathbf{1}[\cdot]$ is 1 when the bracket is true and 0 otherwise. The terms are never negative, so the average can be taken term by term: $E[X] = \sum_{j \ge 0} P(X > j)$.
+So $`p\,E[X^2] = 1 + 2q/p`$, which gives $`E[X^2] = (p + 2q)/p^2 = (2 - p)/p^2`$. Subtract the squared mean:
+
+$`\displaystyle \mathrm{Var}(X) = \frac{2 - p}{p^2} - \frac{1}{p^2} = \frac{1 - p}{p^2} = \frac{q}{p^2}.`$
+
+For p = 1/6: $`(5/6) \times 36 = 30`$. The restart step is legitimate because $`E[X^2]`$ is finite: $`\sum k^2 q^{k-1}`$ converges by the ratio test.
+
+**Only the geometric forgets.** Let $`S(k) = P(X > k)`$ for a wait in whole tries, with $`S(0) = 1`$. Memorylessness with every s and t says $`S(s + t) = S(s)\,S(t)`$. Put $`a = S(1)`$. Then $`S(2) = a^2`$, $`S(3) = a^3`$, and by induction $`S(k) = a^k`$. So $`P(X = k) = S(k-1) - S(k) = a^{k-1}(1 - a)`$: geometric with chance $`p = 1 - a`$.
+
+**Tail-sum formula.** For a count taking values 1, 2, …, $`X = \sum_{j \ge 0} \mathbf{1}[X > j]`$, where $`\mathbf{1}[\cdot]`$ is 1 when the bracket is true and 0 otherwise. The terms are never negative, so the average can be taken term by term: $`E[X] = \sum_{j \ge 0} P(X > j)`$.
 
 </details>
 
@@ -654,13 +682,13 @@ The outputs agree byte for byte. Counting gives the formula's 0.080376 and 0.019
 Lean proves the card's rules for every chance p above 0 and every r of at least 1, and checks the worked arithmetic exactly.
 
 - Take independent tries, each a success with the same chance p above 0. Then the first-success wait X ends with probability 1.
-- Take the same tries. Then $P(X = k) = q^{\,k-1}\,p$ for every roll number k from 1 on.
-- Take the same tries and any whole number k. Then $P(X > k) = q^{\,k}$.
-- Take the same tries. Then $E[X] = 1/p$ and $\operatorname{Var}(X) = q/p^2$.
-- Suppose also p is below 1, and s, t are whole numbers. Then $P(X > s + t \mid X > s) = P(X > t)$.
-- Take the same tries and r at least 1. Then the r-th-success wait $T_r$ ends with probability 1.
-- Take r at least 1 and k at least r. Then $P(T_r = k) = \binom{k-1}{r-1}\,p^{\,r}\,q^{\,k-r}$.
-- Take r at least 1. Then $E[T_r] = r/p$ and $\operatorname{Var}(T_r) = r\,q/p^2$.
+- Take the same tries. Then $`P(X = k) = q^{\,k-1}\,p`$ for every roll number k from 1 on.
+- Take the same tries and any whole number k. Then $`P(X > k) = q^{\,k}`$.
+- Take the same tries. Then $`E[X] = 1/p`$ and $`\mathrm{Var}(X) = q/p^2`$.
+- Suppose also p is below 1, and s, t are whole numbers. Then $`P(X > s + t \mid X > s) = P(X > t)`$.
+- Take the same tries and r at least 1. Then the r-th-success wait $`T_r`$ ends with probability 1.
+- Take r at least 1 and k at least r. Then $`P(T_r = k) = \binom{k-1}{r-1}\,p^{\,r}\,q^{\,k-r}`$.
+- Take r at least 1. Then $`E[T_r] = r/p`$ and $`\mathrm{Var}(T_r) = r\,q/p^2`$.
 - The worked arithmetic: the die's chances, means and variances, the counted sequences, Step 7 for n = 12 and 18, and the mistakes.
 
 The decimals, the count of sequences, the sums to roll 600, the simulation and the chart are left to the Python and Rust checks.
@@ -1279,7 +1307,7 @@ example : 1 / (1 / 100 : ℚ) = 100 := by norm_num
 > - **A coin instead of a die.** Guess first: flips until the first head. Set p = 1/2. Mean 2 flips, variance 2.
 > - **Ten sixes.** Guess first: how long, and how spread? Set r = 10. Mean 60 rolls, standard deviation 17.320508.
 > - **A rare prize.** Guess first: a 1-in-100 chance per try. Set p = 1/100. Mean 100 tries, standard deviation 99.498744: almost as large as the mean.
-> - **A long drought.** Guess first: the chance of no six in 20 rolls. The tail $q^{20}$ gives 0.026084, between 2 and 3 games in 100.
+> - **A long drought.** Guess first: the chance of no six in 20 rolls. The tail $`q^{20}`$ gives 0.026084, between 2 and 3 games in 100.
 
 ---
 

@@ -16,7 +16,7 @@ VaR does not say the desk cannot lose more. On about two or three trading days a
 
 **Value at risk at 99% over one day is the loss level that tomorrow's loss stays at or below with 99% chance: a quantile of the loss distribution, and nothing more.**
 
-**What kind of fact this is:** a definition; for a book whose P&L is normal, the formula $-\mu + z\sigma$ (minus the average P&L plus $z$ standard deviations, defined under The formula) is a theorem, proved on this card in Why it works.
+**What kind of fact this is:** a definition; for a book whose P&L is normal, the formula $`-\mu + z\sigma`$ (minus the average P&L plus $`z`$ standard deviations, defined under The formula) is a theorem, proved on this card in Why it works.
 
 ### The picture: where the line sits
 
@@ -35,49 +35,55 @@ The one line is the bell curve of tomorrow's P&L: out of 1,000 days, how many la
 
 ## The formula
 
-Notation first, in words. Call tomorrow's P&L $X$, in dollars. Call the loss $L$; a loss is P&L with the sign turned round, so $L = -X$, and a $300,000 loss is $L = 300{,}000$. The **confidence level** $\alpha$ (say "alpha") is the chance the line must cover: 0.99 here. $F_L(\ell)$ is the chance that the loss is at most $\ell$, the loss distribution's cumulative chance up to the level $\ell$.
+Notation first, in words. Call tomorrow's P&L $`X`$, in dollars. Call the loss $`L`$; a loss is P&L with the sign turned round, so $`L = -X`$, and a $300,000 loss is $`L = 300{,}000`$. The **confidence level** $`\alpha`$ (say "alpha") is the chance the line must cover: 0.99 here. $`F_L(\ell)`$ is the chance that the loss is at most $`\ell`$, the loss distribution's cumulative chance up to the level $`\ell`$.
 
 The definition:
 
-$$\text{VaR}_\alpha = \min\{\,\ell : F_L(\ell) \ge \alpha\,\}$$
+```math
+\text{VaR}_\alpha = \min\{\,\ell : F_L(\ell) \ge \alpha\,\}
+```
 
 **Read it aloud:** value at risk is the smallest loss level that tomorrow's loss stays at or below with at least 99% chance.
 
 In words once more: slide a line along the loss axis from the left; stop the first time 99% of the chance lies at or to the left of it.
 
-For a book whose one-day P&L is normal (bell-shaped), with average $\mu$ and standard deviation $\sigma$, the definition becomes one line:
+For a book whose one-day P&L is normal (bell-shaped), with average $`\mu`$ and standard deviation $`\sigma`$, the definition becomes one line:
 
-$$\text{VaR}_\alpha = -\mu + z_\alpha\,\sigma, \qquad z_\alpha = N^{-1}(\alpha)$$
+```math
+\text{VaR}_\alpha = -\mu + z_\alpha\,\sigma, \qquad z_\alpha = N^{-1}(\alpha)
+```
 
 **Read it aloud:** go down from the average by the number of standard deviations that leaves 1% of a bell curve behind, and read the answer as a loss.
 
-Over a horizon of $h$ trading days, when days are independent and alike:
+Over a horizon of $`h`$ trading days, when days are independent and alike:
 
-$$\text{VaR}_\alpha(h) = -h\mu + z_\alpha\,\sigma\sqrt{h}$$
+```math
+\text{VaR}_\alpha(h) = -h\mu + z_\alpha\,\sigma\sqrt{h}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and VaR… |
 | --- | --- | --- | --- |
-| $X$ | tomorrow's profit and loss, in dollars; positive is a gain | unknown today | — |
-| $L$ | tomorrow's loss, $-X$: a gain counts as a negative loss | unknown today | — |
-| $\ell$ | a candidate loss level, a point on the loss axis | $418,742.62 at the answer | — |
-| $F_L$ | the chance the loss is at most a given level; climbs from 0 to 1 | $F_L$ = 0.99 at the VaR | — |
-| $\alpha$ | the confidence level: the chance the VaR line must cover | 0.99 | rises, slowly at first, then fast near 1 |
-| $\text{VaR}_\alpha$ | value at risk at confidence $\alpha$, stated as a positive loss | $418,742.62 | — |
-| $\mu$ | average one-day P&L | $0 | falls, dollar for dollar |
-| $\sigma$ | standard deviation of one-day P&L: the typical swing | $180,000 | rises in proportion |
-| $N$ | the standard bell curve's cumulative chance: area to the left of a point | $N(2.326348) = 0.99$ | — |
-| $N^{-1}$ | its inverse, the **normal quantile**: the point with a given area to its left | $N^{-1}(0.99) = 2.326348$ | — |
-| $z_\alpha$ | that point for the chosen $\alpha$: how many standard deviations out the line sits | 2.326348 | rises with $\alpha$ |
-| $h$ | horizon, in trading days | 1 | rises like $\sqrt{h}$ when $\mu = 0$ |
+| $`X`$ | tomorrow's profit and loss, in dollars; positive is a gain | unknown today | — |
+| $`L`$ | tomorrow's loss, $`-X`$: a gain counts as a negative loss | unknown today | — |
+| $`\ell`$ | a candidate loss level, a point on the loss axis | $418,742.62 at the answer | — |
+| $`F_L`$ | the chance the loss is at most a given level; climbs from 0 to 1 | $`F_L`$ = 0.99 at the VaR | — |
+| $`\alpha`$ | the confidence level: the chance the VaR line must cover | 0.99 | rises, slowly at first, then fast near 1 |
+| $`\text{VaR}_\alpha`$ | value at risk at confidence $`\alpha`$, stated as a positive loss | $418,742.62 | — |
+| $`\mu`$ | average one-day P&L | $0 | falls, dollar for dollar |
+| $`\sigma`$ | standard deviation of one-day P&L: the typical swing | $180,000 | rises in proportion |
+| $`N`$ | the standard bell curve's cumulative chance: area to the left of a point | $`N(2.326348) = 0.99`$ | — |
+| $`N^{-1}`$ | its inverse, the **normal quantile**: the point with a given area to its left | $`N^{-1}(0.99) = 2.326348`$ | — |
+| $`z_\alpha`$ | that point for the chosen $`\alpha`$: how many standard deviations out the line sits | 2.326348 | rises with $`\alpha`$ |
+| $`h`$ | horizon, in trading days | 1 | rises like $`\sqrt{h}`$ when $`\mu = 0`$ |
 
 The words "profit and loss distribution" and "loss distribution" name the same randomness seen from two sides. This card follows the regulators' habit: VaR is quoted as a positive number of dollars that could be lost.
 
 ### When it holds
 
 - **The definition holds for any P&L distribution at all.** It needs only chances for tomorrow's outcomes. It is a definition, so it cannot fail; it can only be computed from a wrong distribution.
-- **The formula $-\mu + z\sigma$ needs a normal P&L.** A book of shares and bonds is close to normal over one day in calm markets. Real daily returns have fatter tails than the bell curve, so the normal VaR sits too low at high confidence; [Extreme value theory](07-extreme-value-theory-and-tails.md) measures by how much.
+- **The formula $`-\mu + z\sigma`$ needs a normal P&L.** A book of shares and bonds is close to normal over one day in calm markets. Real daily returns have fatter tails than the bell curve, so the normal VaR sits too low at high confidence; [Extreme value theory](07-extreme-value-theory-and-tails.md) measures by how much.
 - **Options bend the distribution.** The 1,000 Acme calls gain more on up days than they lose on down days, so their P&L is lopsided, not normal. With 1,000 calls in a $15 million book the bend is small; with a large option book it is not, and [Options in the book](04-delta-gamma-var-and-cornish-fisher.md) handles it.
-- **The $\sqrt{h}$ rule needs days that are independent and alike.** Real markets have calm weeks and wild weeks, and wild days cluster. Scaling a calm day by $\sqrt{10}$ understates a ten-day loss that starts in a storm.
+- **The $`\sqrt{h}`$ rule needs days that are independent and alike.** Real markets have calm weeks and wild weeks, and wild days cluster. Scaling a calm day by $`\sqrt{10}`$ understates a ten-day loss that starts in a storm.
 - **The book is held fixed over the horizon.** A desk that cuts positions after a bad day loses less than a ten-day VaR says; one that doubles up loses more.
 
 ---
@@ -92,51 +98,55 @@ A point like that is a **quantile** (the value below which a given share of the 
 
 ### Step 1: the definition always gives exactly one answer
 
-The house convention for any inverse is to settle existence, uniqueness and the edge cases before solving. The inverse here is "find the loss level with chance $\alpha$ below it".
+The house convention for any inverse is to settle existence, uniqueness and the edge cases before solving. The inverse here is "find the loss level with chance $`\alpha`$ below it".
 
-- **Existence.** $F_L$ climbs from 0 far to the left to 1 far to the right, never falls, and at each point includes the chance of landing exactly there. So for any $\alpha$ strictly between 0 and 1, some levels have $F_L(\ell) \ge \alpha$, and among them there is a smallest. The minimum in the definition is attained.
-- **Uniqueness.** The minimum of a set is one number, so the definition names one VaR. When $F_L$ is smooth and strictly rising, as for the normal book, the equation $F_L(\ell) = \alpha$ has exactly one root and VaR is that root.
-- **Edge case: a jump.** A position that loses $1,000,000 with chance 0.5% and nothing otherwise has $F_L$ jump from 0 to 0.995 at a loss of zero, then to 1 at $1,000,000. No level has $F_L$ exactly 0.99. The definition picks the smallest level that reaches 0.99: zero. Its 99% VaR is **$0**. Its 99.6% VaR is **$1,000,000**.
-- **Edge case: a flat stretch.** If no outcome falls between two loss levels, $F_L$ is flat there and several levels reach $\alpha$ at once. The definition takes the leftmost.
-- **Edge case: no swing.** If $\sigma = 0$ the loss is certainly $-\mu$, and VaR is $-\mu$ at every $\alpha$; the formula gives the same.
-- **Edge case: $\alpha$ near 1.** A normal loss has no worst value, so VaR grows without limit as $\alpha$ approaches 1. At $\alpha = 1$ the definition asks for the worst possible loss, which a normal book does not have.
+- **Existence.** $`F_L`$ climbs from 0 far to the left to 1 far to the right, never falls, and at each point includes the chance of landing exactly there. So for any $`\alpha`$ strictly between 0 and 1, some levels have $`F_L(\ell) \ge \alpha`$, and among them there is a smallest. The minimum in the definition is attained.
+- **Uniqueness.** The minimum of a set is one number, so the definition names one VaR. When $`F_L`$ is smooth and strictly rising, as for the normal book, the equation $`F_L(\ell) = \alpha`$ has exactly one root and VaR is that root.
+- **Edge case: a jump.** A position that loses $1,000,000 with chance 0.5% and nothing otherwise has $`F_L`$ jump from 0 to 0.995 at a loss of zero, then to 1 at $1,000,000. No level has $`F_L`$ exactly 0.99. The definition picks the smallest level that reaches 0.99: zero. Its 99% VaR is **$0**. Its 99.6% VaR is **$1,000,000**.
+- **Edge case: a flat stretch.** If no outcome falls between two loss levels, $`F_L`$ is flat there and several levels reach $`\alpha`$ at once. The definition takes the leftmost.
+- **Edge case: no swing.** If $`\sigma = 0`$ the loss is certainly $`-\mu`$, and VaR is $`-\mu`$ at every $`\alpha`$; the formula gives the same.
+- **Edge case: $`\alpha`$ near 1.** A normal loss has no worst value, so VaR grows without limit as $`\alpha`$ approaches 1. At $`\alpha = 1`$ the definition asks for the worst possible loss, which a normal book does not have.
 
 ### Step 2: for a normal book, turn the loss into a standard bell curve
 
-The P&L $X$ is normal with average $\mu$ and standard deviation $\sigma$. Standardise it: $(X - \mu)/\sigma$ is a standard bell curve draw, with average 0 and standard deviation 1. Write $P(\dots)$ for the chance of the event in brackets. The loss stays at or below $\ell$ exactly when the P&L stays at or above $-\ell$:
+The P&L $`X`$ is normal with average $`\mu`$ and standard deviation $`\sigma`$. Standardise it: $`(X - \mu)/\sigma`$ is a standard bell curve draw, with average 0 and standard deviation 1. Write $`P(\dots)`$ for the chance of the event in brackets. The loss stays at or below $`\ell`$ exactly when the P&L stays at or above $`-\ell`$:
 
-$$F_L(\ell) = P(X \ge -\ell) = P\!\left(\frac{X - \mu}{\sigma} \ge \frac{-\ell - \mu}{\sigma}\right) = N\!\left(\frac{\ell + \mu}{\sigma}\right).$$
+```math
+F_L(\ell) = P(X \ge -\ell) = P\!\left(\frac{X - \mu}{\sigma} \ge \frac{-\ell - \mu}{\sigma}\right) = N\!\left(\frac{\ell + \mu}{\sigma}\right).
+```
 
 The last step uses the bell curve's mirror symmetry: the chance of landing above minus 2 equals the chance of landing below 2, and the same for any number.
 
 ### Step 3: solve
 
-Set $F_L(\ell) = \alpha$. $N$ is smooth and strictly rising, so it has an inverse, and
+Set $`F_L(\ell) = \alpha`$. $`N`$ is smooth and strictly rising, so it has an inverse, and
 
-$$\frac{\ell + \mu}{\sigma} = N^{-1}(\alpha) = z_\alpha \quad\Longrightarrow\quad \text{VaR}_\alpha = -\mu + z_\alpha\,\sigma.$$
+```math
+\frac{\ell + \mu}{\sigma} = N^{-1}(\alpha) = z_\alpha \quad\Longrightarrow\quad \text{VaR}_\alpha = -\mu + z_\alpha\,\sigma.
+```
 
-For the book: $z_{0.99} = 2.326348$, so VaR is $2.326348 \times \$180{,}000 = \$418{,}742.62$. The same point read as P&L, the 1% quantile of $X$, is $-\$418{,}742.62$. The two are one line on one axis, named from opposite sides.
+For the book: $`z_{0.99} = 2.326348`$, so VaR is $`2.326348 \times \$180{,}000 = \$418{,}742.62`$. The same point read as P&L, the 1% quantile of $`X`$, is $`-\$418{,}742.62`$. The two are one line on one axis, named from opposite sides.
 
 ### Step 4: stretch the horizon
 
-A ten-day P&L is the sum of ten one-day P&Ls. If the days are independent and alike, the averages add, to $10\mu$, and so do the **variances** (squared standard deviations), to $10\sigma^2$. A sum of independent normal draws is normal. So the ten-day standard deviation is $\sigma\sqrt{10}$, not $10\sigma$, and with $\mu = 0$ the ten-day VaR is the one-day VaR times $\sqrt{10} = 3.162278$: **$1,324,180.42**.
+A ten-day P&L is the sum of ten one-day P&Ls. If the days are independent and alike, the averages add, to $`10\mu`$, and so do the **variances** (squared standard deviations), to $`10\sigma^2`$. A sum of independent normal draws is normal. So the ten-day standard deviation is $`\sigma\sqrt{10}`$, not $`10\sigma`$, and with $`\mu = 0`$ the ten-day VaR is the one-day VaR times $`\sqrt{10} = 3.162278`$: **$1,324,180.42**.
 
 The square root is the heart of the matter. Ten independent days partly cancel each other: a bad Monday is as likely to be followed by a good Tuesday as by a bad one. Swings add in variance, not in size.
 
 <details>
 <summary>Detailed proof: variances add, and normal plus normal is normal</summary>
 
-Write the ten days as $X_1, \dots, X_{10}$, independent, each with average $\mu$ and variance $\sigma^2$. The average of a sum is the sum of the averages: $E[\sum X_i] = 10\mu$.
+Write the ten days as $`X_1, \dots, X_{10}`$, independent, each with average $`\mu`$ and variance $`\sigma^2`$. The average of a sum is the sum of the averages: $`E[\sum X_i] = 10\mu`$.
 
-For the variance, expand the square of the centred sum: $\text{Var}(\sum X_i) = \sum_i \text{Var}(X_i) + \sum_{i \ne j} \text{Cov}(X_i, X_j)$. Independence makes every covariance (the average product of two centred days) zero, leaving $10\sigma^2$.
+For the variance, expand the square of the centred sum: $`\text{Var}(\sum X_i) = \sum_i \text{Var}(X_i) + \sum_{i \ne j} \text{Cov}(X_i, X_j)`$. Independence makes every covariance (the average product of two centred days) zero, leaving $`10\sigma^2`$.
 
-For normality, use the moment generating function $E[e^{tX}] = e^{\mu t + \sigma^2 t^2/2}$ of a normal draw. For independent draws the function of the sum is the product of the functions, $e^{10\mu t + 10\sigma^2 t^2/2}$, which is the function of a normal with average $10\mu$ and variance $10\sigma^2$. A distribution is fixed by this function where it exists, so the sum is that normal. Step 3 applied to it gives $\text{VaR}_\alpha(h) = -h\mu + z_\alpha \sigma\sqrt{h}$.
+For normality, use the moment generating function $`E[e^{tX}] = e^{\mu t + \sigma^2 t^2/2}`$ of a normal draw. For independent draws the function of the sum is the product of the functions, $`e^{10\mu t + 10\sigma^2 t^2/2}`$, which is the function of a normal with average $`10\mu`$ and variance $`10\sigma^2`$. A distribution is fixed by this function where it exists, so the sum is that normal. Step 3 applied to it gives $`\text{VaR}_\alpha(h) = -h\mu + z_\alpha \sigma\sqrt{h}`$.
 
 </details>
 
 ### Step 5: choose the confidence level
 
-$z_\alpha$ climbs slowly through the middle of the bell curve and fast in the tail. Going from 95% to 99% multiplies VaR by 1.41. Going from 99% to 99.9% multiplies it by another 1.33, even though it trims the tail by only 0.9 percentage points against the first step's 4.
+$`z_\alpha`$ climbs slowly through the middle of the bell curve and fast in the tail. Going from 95% to 99% multiplies VaR by 1.41. Going from 99% to 99.9% multiplies it by another 1.33, even though it trims the tail by only 0.9 percentage points against the first step's 4.
 
 The choice is a policy, not a law:
 
@@ -162,17 +172,17 @@ Here the P&L distribution arrived as a formula. A desk can also build it from th
 
 ## Worked numbers, by hand
 
-The house book: one-day P&L normal, average $\mu = \$0$, standard deviation $\sigma = \$180{,}000$.
+The house book: one-day P&L normal, average $`\mu = \$0`$, standard deviation $`\sigma = \$180{,}000`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| confidence level $\alpha$ | one bad day in a hundred | $0.99$ |
-| $z_{0.99}$ | normal table: the point with 99% of the area to its left | $2.326348$ |
-| **99% one-day VaR** | $-0 + 2.326348 \times 180{,}000$ | **$\$418{,}742.62$** |
-| the same line as P&L | $0 - 2.326348 \times 180{,}000$ | $-\$418{,}742.62$ |
-| 95% one-day VaR | $1.644854 \times 180{,}000$ | $\$296{,}073.65$ |
-| 99% ten-day VaR | $418{,}742.62 \times \sqrt{10} = 418{,}742.62 \times 3.162278$ | $\$1{,}324{,}180.42$ |
-| days past the 99% line in a 250-day year | $250 \times 0.01$ | $2.5$ |
+| confidence level $`\alpha`$ | one bad day in a hundred | $`0.99`$ |
+| $`z_{0.99}`$ | normal table: the point with 99% of the area to its left | $`2.326348`$ |
+| **99% one-day VaR** | $`-0 + 2.326348 \times 180{,}000`$ | **$`\$418{,}742.62`$** |
+| the same line as P&L | $`0 - 2.326348 \times 180{,}000`$ | $`-\$418{,}742.62`$ |
+| 95% one-day VaR | $`1.644854 \times 180{,}000`$ | $`\$296{,}073.65`$ |
+| 99% ten-day VaR | $`418{,}742.62 \times \sqrt{10} = 418{,}742.62 \times 3.162278`$ | $`\$1{,}324{,}180.42`$ |
+| days past the 99% line in a 250-day year | $`250 \times 0.01`$ | $`2.5`$ |
 
 The desk should expect its daily loss to beat $418,742.62 on two or three days a year. If it happens on twelve, the model is wrong; counting those days is [Backtesting VaR](08-backtesting-var.md).
 
@@ -191,8 +201,8 @@ Twenty days is twenty times as many days, and only 4.47 times the VaR: the squar
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | 95% multiplier used for a 99% VaR | $296,073.65 | 1.644854 leaves 5% beyond the line, not 1%. The true VaR is 1.41 times the reported one. |
-| One-day VaR scaled to ten days by 10 | $4,187,426.17 (right: $1,324,180.42) | Swings add in variance. Ten days scale by $\sqrt{10}$, not 10. |
-| Annual standard deviation fed in as daily | $6,647,332.97 | A yearly swing is $\sqrt{252}$ times a daily one. The horizon of $\sigma$ must match the horizon of the VaR. |
+| One-day VaR scaled to ten days by 10 | $4,187,426.17 (right: $1,324,180.42) | Swings add in variance. Ten days scale by $`\sqrt{10}`$, not 10. |
+| Annual standard deviation fed in as daily | $6,647,332.97 | A yearly swing is $`\sqrt{252}`$ times a daily one. The horizon of $`\sigma`$ must match the horizon of the VaR. |
 | The 1% P&L quantile reported as VaR | −$418,742.62 | Same line, read on the P&L axis. VaR is quoted as a positive loss. |
 
 ---
@@ -201,7 +211,7 @@ Twenty days is twenty times as many days, and only 4.47 times the VaR: the squar
 
 Both programs reach the 99% one-day VaR three independent ways.
 
-- Road 1 is the formula, with $z$ found by a bisection root finder (halve an interval until it traps the answer) on a normal cumulative chance built from its power series.
+- Road 1 is the formula, with $`z`$ found by a bisection root finder (halve an interval until it traps the answer) on a normal cumulative chance built from its power series.
 - Road 2 is the definition itself: bisection on the loss level until the tail area beyond it, integrated from the bell curve by Simpson's rule (a weighted sum over thin slices), equals 1%.
 - Road 3 simulates 1,000,000 days with a random-number generator written in the script, sorts the losses, and takes the smallest one with 99% of the days at or below it.
 
@@ -556,14 +566,14 @@ The two outputs agree line for line, the simulations included, because both prog
 
 ### Lean
 
-Lean proves, for every confidence level strictly between 0 and 1, that VaR always exists and the normal formulas for one and $h$ days.
+Lean proves, for every confidence level strictly between 0 and 1, that VaR always exists and the normal formulas for one and $`h`$ days.
 
-- Take any loss distribution and any $\alpha$ strictly between 0 and 1. Then some smallest level $\ell$ has $F_L(\ell) \ge \alpha$, so the minimum is attained.
-- Take a normal P&L with average $\mu$ and standard deviation $\sigma \ge 0$, and $z$ with $N(z) = \alpha$. Then $\text{VaR}_\alpha = -\mu + z\sigma$, even when $\sigma = 0$.
-- Take $h$ independent days, each P&L normal with average $\mu$ and standard deviation $\sigma$, and the same $z$. Then $\text{VaR}_\alpha(h) = -h\mu + z\sigma\sqrt{h}$.
-- In a 250-day year, a 99% VaR is broken on $250 \times 0.01 = 2.5$ days.
+- Take any loss distribution and any $`\alpha`$ strictly between 0 and 1. Then some smallest level $`\ell`$ has $`F_L(\ell) \ge \alpha`$, so the minimum is attained.
+- Take a normal P&L with average $`\mu`$ and standard deviation $`\sigma \ge 0`$, and $`z`$ with $`N(z) = \alpha`$. Then $`\text{VaR}_\alpha = -\mu + z\sigma`$, even when $`\sigma = 0`$.
+- Take $`h`$ independent days, each P&L normal with average $`\mu`$ and standard deviation $`\sigma`$, and the same $`z`$. Then $`\text{VaR}_\alpha(h) = -h\mu + z\sigma\sqrt{h}`$.
+- In a 250-day year, a 99% VaR is broken on $`250 \times 0.01 = 2.5`$ days.
 
-The decimals, such as $z_{0.99} = 2.326348$, the simulations and the lumpy position are left to the Python and Rust checks.
+The decimals, such as $`z_{0.99} = 2.326348`$, the simulations and the lumpy position are left to the Python and Rust checks.
 
 ```lean
 -- Value at risk: the smallest loss level reached with chance at least α always exists, and for a normal P&L it equals minus the mean plus z standard deviations, scaling with the square root of the horizon over independent normal days.
@@ -749,7 +759,7 @@ example : (250 : ℚ) * (1 - 99 / 100) = 5 / 2 := by norm_num
 > **Try changing**
 > Guess first, then run.
 > - **Give the book an average profit.** Set the average to +$5,000 a day (the `try: mean +5000` row). Guess: VaR falls by $5,000. It does: **$413,742.62**.
-> - **Halve the swing.** Set the standard deviation to $90,000. VaR halves exactly, to **$209,371.31**, because the formula is linear in $\sigma$.
+> - **Halve the swing.** Set the standard deviation to $90,000. VaR halves exactly, to **$209,371.31**, because the formula is linear in $`\sigma`$.
 > - **Ask for one day in a thousand.** Set the confidence to 99.9%. VaR rises to **$556,241.82**, 1.33 times as much, for a tenth of the chance.
 > - **Change the seed.** Replace 20260928 with any other number. Road 3 moves by a few hundred dollars and stays within four standard errors of road 1; roads 1 and 2 do not move at all.
 
@@ -779,13 +789,13 @@ example : (250 : ℚ) * (1 - 99 / 100) = 5 / 2 := by norm_num
 Conventions verified 2026-09-28: Basel's 1996 rule (99%, ten days, multiplier at least 3) and its 2019 replacement (expected shortfall at 97.5%) are as stated; national start dates for the 2019 rule differ.
 
 > **Say it back**
-> Tomorrow's profit and loss is random, and its distribution says how likely each outcome is. Value at risk at 99% over one day is the loss level that tomorrow's loss stays at or below with 99% chance: the 99% quantile of the loss. For a normal book it is minus the average plus 2.326348 standard deviations, $418,742.62 for the house book. Over $h$ independent days the swing grows like $\sqrt{h}$, not $h$. VaR marks where the worst 1% of days begins and says nothing about how bad they get.
+> Tomorrow's profit and loss is random, and its distribution says how likely each outcome is. Value at risk at 99% over one day is the loss level that tomorrow's loss stays at or below with 99% chance: the 99% quantile of the loss. For a normal book it is minus the average plus 2.326348 standard deviations, $418,742.62 for the house book. Over $`h`$ independent days the swing grows like $`\sqrt{h}`$, not $`h`$. VaR marks where the worst 1% of days begins and says nothing about how bad they get.
 
 ---
 
 ## What this builds on
 
-- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the inverse of the bell curve's cumulative chance, $N^{-1}$, which turns "99%" into 2.326348 standard deviations.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the inverse of the bell curve's cumulative chance, $`N^{-1}`$, which turns "99%" into 2.326348 standard deviations.
 
 ## Where this goes next
 

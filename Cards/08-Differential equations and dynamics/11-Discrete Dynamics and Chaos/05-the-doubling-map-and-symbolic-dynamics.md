@@ -26,32 +26,38 @@ Drawn to scale: 1 m on either axis is 180 units. Solid lines: the map, broken at
 
 ## The formula
 
-Reminder: a map $x_{n+1} = g(x_n)$ gives the place after round n + 1 from the place after round n. "mod 1" means drop the whole part ([Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md)).
+Reminder: a map $`x_{n+1} = g(x_n)`$ gives the place after round n + 1 from the place after round n. "mod 1" means drop the whole part ([Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md)).
 
-$$x_{n+1} = 2x_n \bmod 1$$
+```math
+x_{n+1} = 2x_n \bmod 1
+```
 
 **Read it aloud:** the next place is twice the current place, with any whole metre thrown away.
 
-Write the start in binary as $x_0 = 0.b_1 b_2 b_3 \ldots$. The theorem:
+Write the start in binary as $`x_0 = 0.b_1 b_2 b_3 \ldots`$. The theorem:
 
-$$x_n = 0.b_{n+1} b_{n+2} b_{n+3} \ldots \quad\text{(base two)}$$
+```math
+x_n = 0.b_{n+1} b_{n+2} b_{n+3} \ldots \quad\text{(base two)}
+```
 
 **Read it aloud:** after n rounds the place is the start's binary digits with the first n deleted.
 
-Deleting the first symbol of an endless string is the **shift**, $\sigma$; studying a map through the strings it shifts is **symbolic dynamics**. A start $y_0$ sharing N digits with $x_0$ stays within $2^{-(N-n)}$ of it for rounds n ≤ N, then parts; and the places back after n rounds are exactly
+Deleting the first symbol of an endless string is the **shift**, $`\sigma`$; studying a map through the strings it shifts is **symbolic dynamics**. A start $`y_0`$ sharing N digits with $`x_0`$ stays within $`2^{-(N-n)}`$ of it for rounds n ≤ N, then parts; and the places back after n rounds are exactly
 
-$$x = \frac{k}{2^n - 1}, \qquad k = 0, 1, \ldots, 2^n - 2.$$
+```math
+x = \frac{k}{2^n - 1}, \qquad k = 0, 1, \ldots, 2^n - 2.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_n$ ($x_0$, $x_1$, $x_N$, $x$) | place after round n, in metres; $x_0$ or $x$ the start | 0.7, 0.4, 0.8 | first digit 1 from 0.5 m |
-| $n$ | the round count | 30 | n digits used up |
-| $b_k$ ($b_1$) | the start's k-th binary digit | $b_1 = 1$ | — |
-| $\sigma$ | the shift: delete the first digit | 1011… becomes 011… | — |
-| $y_n$ ($y_0$, $y_N$, $y$) | a second raisin's place | 1/7 m at round 30 | — |
-| $N$ | leading digits two starts share | 30 | later parting |
-| $k$ | labels the returning places | 1 gives 1/7 | — |
-| $w$, $z$, $T$ | a digit block; the number listing every block; the tent map | 0110; 98 digits; 2/7 → 4/7 | — |
+| $`x_n`$ ($`x_0`$, $`x_1`$, $`x_N`$, $`x`$) | place after round n, in metres; $`x_0`$ or $`x`$ the start | 0.7, 0.4, 0.8 | first digit 1 from 0.5 m |
+| $`n`$ | the round count | 30 | n digits used up |
+| $`b_k`$ ($`b_1`$) | the start's k-th binary digit | $`b_1 = 1`$ | — |
+| $`\sigma`$ | the shift: delete the first digit | 1011… becomes 011… | — |
+| $`y_n`$ ($`y_0`$, $`y_N`$, $`y`$) | a second raisin's place | 1/7 m at round 30 | — |
+| $`N`$ | leading digits two starts share | 30 | later parting |
+| $`k`$ | labels the returning places | 1 gives 1/7 | — |
+| $`w`$, $`z`$, $`T`$ | a digit block; the number listing every block; the tent map | 0110; 98 digits; 2/7 → 4/7 | — |
 
 ### When it holds
 
@@ -71,15 +77,15 @@ In base ten, multiplying by ten moves every digit one place left. In base two, d
 <details>
 <summary>Detailed proof</summary>
 
-Write $x_0 = \sum_{k \ge 1} b_k 2^{-k}$, not ending in endless 1s. Then $2x_0 = b_1 + \sum_{k \ge 2} b_k 2^{-(k-1)}$ with the tail in [0, 1), so $x_1 = 0.b_2 b_3 \ldots$; induction does the rest.
+Write $`x_0 = \sum_{k \ge 1} b_k 2^{-k}`$, not ending in endless 1s. Then $`2x_0 = b_1 + \sum_{k \ge 2} b_k 2^{-(k-1)}`$ with the tail in [0, 1), so $`x_1 = 0.b_2 b_3 \ldots`$; induction does the rest.
 
-**Sensitivity.** Flip digit N + 1 of $x$ to get $y$. Then $|x - y| = 2^{-(N+1)}$, and $x_N$, $y_N$ differ only in their first digit, so $|x_N - y_N| = 1/2$.
+**Sensitivity.** Flip digit N + 1 of $`x`$ to get $`y`$. Then $`|x - y| = 2^{-(N+1)}`$, and $`x_N`$, $`y_N`$ differ only in their first digit, so $`|x_N - y_N| = 1/2`$.
 
-**Dense cycles.** Let $w$ be the first N digits of $x$. The point $0.www\ldots$ returns after N rounds and lies within $2^{-N}$ of $x$.
+**Dense cycles.** Let $`w`$ be the first N digits of $`x`$. The point $`0.www\ldots`$ returns after N rounds and lies within $`2^{-N}`$ of $`x`$.
 
-**Returning places.** $x_n = x_0$ means $2^n x_0 - x_0$ is a whole number $k$, so $x_0 = k/(2^n - 1)$ with $0 \le k < 2^n - 1$.
+**Returning places.** $`x_n = x_0`$ means $`2^n x_0 - x_0`$ is a whole number $`k`$, so $`x_0 = k/(2^n - 1)`$ with $`0 \le k < 2^n - 1`$.
 
-**A dense orbit.** Let $z$ list every binary word, shortest first. A stretch of width $2^{-N}$ holds the numbers starting with some word $w$ of length N. If $w$ starts at place m + 1 of $z$, round m puts $z$ in that stretch.
+**A dense orbit.** Let $`z`$ list every binary word, shortest first. A stretch of width $`2^{-N}`$ holds the numbers starting with some word $`w`$ of length N. If $`w`$ starts at place m + 1 of $`z`$, round m puts $`z`$ in that stretch.
 
 </details>
 
@@ -118,7 +124,7 @@ Banks and co-authors showed in 1992 that for a continuous map on an infinite set
 
 Li and Yorke proved in 1975: if a continuous map of an interval to itself has a point that returns after exactly three rounds, it has cycles of every length. It also has uncountably many starts (too many to list one by one) whose orbits keep drawing close and parting forever. Sharkovskii had proved the first half in 1964.
 
-The doubling map jumps at the cut, so the theorem is shown on the **tent map** $T$: stretch to 2 m and fold back instead of cutting. It has the cycle 2/7 → 4/7 → 6/7 → 2/7, so the conclusion applies. The logistic map of [The logistic map](03-the-logistic-map-and-period-doubling.md) has a window of three-round cycles, so every cycle length appears there.
+The doubling map jumps at the cut, so the theorem is shown on the **tent map** $`T`$: stretch to 2 m and fold back instead of cutting. It has the cycle 2/7 → 4/7 → 6/7 → 2/7, so the conclusion applies. The logistic map of [The logistic map](03-the-logistic-map-and-period-doubling.md) has a window of three-round cycles, so every cycle length appears there.
 
 ---
 
@@ -354,7 +360,7 @@ ALL CHECKS PASS
 Lean proves the digit shift, the places back after n rounds, and Devaney's three conditions, for every start on the strip.
 
 - Take a start whose binary digits do not end in endless 1s. Then after n rounds the place is those digits with the first n deleted.
-- Take n of 1 or more. Then a place is back after n rounds exactly when it equals $k/(2^n - 1)$, with k from 0 to $2^n - 2$.
+- Take n of 1 or more. Then a place is back after n rounds exactly when it equals $`k/(2^n - 1)`$, with k from 0 to $`2^n - 2`$.
 - Sensitive dependence: beside every start, as close as you like, sits another that is at least 0.5 m away after some round.
 - Dense periodic points: as close as you like to every start lies a place on a cycle.
 - A dense orbit: one start's orbit comes as close as you like to every place on the strip.

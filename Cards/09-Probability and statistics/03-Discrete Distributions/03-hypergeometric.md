@@ -36,33 +36,37 @@ Bars: the real lottery, drawn without putting balls back (hypergeometric). Line:
 
 ## The formula
 
-Notation first, in words. $\binom{a}{b}$, read "a choose b", is the number of ways to pick b items from a, order ignored, as on [Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md); it is written C(a, b) in the code. X is the count of marked items in the sample. Writing $X \sim \text{Hypergeometric}(N, K, n)$ is read "X follows the hypergeometric law with a pool of N, K of them marked, n drawn".
+Notation first, in words. $`\binom{a}{b}`$, read "a choose b", is the number of ways to pick b items from a, order ignored, as on [Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md); it is written C(a, b) in the code. X is the count of marked items in the sample. Writing $`X \sim \text{Hypergeometric}(N, K, n)`$ is read "X follows the hypergeometric law with a pool of N, K of them marked, n drawn".
 
-$$P(X = k) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}$$
+```math
+P(X = k) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}
+```
 
 **Read it aloud:** choose which k of the marked items are drawn, choose which of the unmarked items fill the other places, and divide by all the samples that could have been drawn.
 
 The count can only take values that both pools can supply: at least n − (N − K), at least 0, at most K and at most n. In the lottery every value from 0 to 6 is possible.
 
-The long-run average and the spread follow. As a reminder, $E[X]$ is the average value of X in the long run and $Var(X)$ is the average squared distance from it, as on [Expectation](../02-Random%20Variables/02-expectation.md) and [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md).
+The long-run average and the spread follow. As a reminder, $`E[X]`$ is the average value of X in the long run and $`Var(X)`$ is the average squared distance from it, as on [Expectation](../02-Random%20Variables/02-expectation.md) and [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md).
 
-$$E[X] = n\,p, \qquad Var(X) = n\,p\,(1-p)\,\frac{N-n}{N-1}, \qquad p = \frac{K}{N}$$
+```math
+E[X] = n\,p, \qquad Var(X) = n\,p\,(1-p)\,\frac{N-n}{N-1}, \qquad p = \frac{K}{N}
+```
 
-The last factor, $\frac{N-n}{N-1}$, is the **finite-population correction**: the amount by which drawing without replacement shrinks the binomial variance $n\,p\,(1-p)$. It needs N ≥ 2; a pool of one ball leaves nothing random.
+The last factor, $`\frac{N-n}{N-1}`$, is the **finite-population correction**: the amount by which drawing without replacement shrinks the binomial variance $`n\,p\,(1-p)`$. It needs N ≥ 2; a pool of one ball leaves nothing random.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | how many items are in the pool | 49 balls | fewer matches; each draw matters less, so closer to binomial |
-| $K$ | how many of them are marked | 6 numbers on the ticket | more matches |
-| $n$ | how many items are drawn | 6 balls | more matches, and more of the pool used up |
-| $X$ | the random count of marked items in the sample | matches on the ticket | — |
-| $k$ | one value the count might take | 3 | — |
-| $p$ | the marked share of the pool, K/N | 6/49 | more matches on average |
-| $\binom{a}{b}$ | ways to choose b items from a, order ignored | $\binom{49}{6}$ = 13,983,816 | — |
-| $E[X]$ | the long-run average count | 0.734694 matches | — |
-| $Var(X)$ | the spread of the count, in squared matches | 0.577572 | — |
-| $I_i$ | indicator: 1 if draw number i is a marked ball, else 0 | for the first draw, 1 if that ball is on the ticket | — |
-| $\frac{N-n}{N-1}$ | the finite-population correction | 43/48 = 0.895833 | nearer 1: less correction |
+| $`N`$ | how many items are in the pool | 49 balls | fewer matches; each draw matters less, so closer to binomial |
+| $`K`$ | how many of them are marked | 6 numbers on the ticket | more matches |
+| $`n`$ | how many items are drawn | 6 balls | more matches, and more of the pool used up |
+| $`X`$ | the random count of marked items in the sample | matches on the ticket | — |
+| $`k`$ | one value the count might take | 3 | — |
+| $`p`$ | the marked share of the pool, K/N | 6/49 | more matches on average |
+| $`\binom{a}{b}`$ | ways to choose b items from a, order ignored | $`\binom{49}{6}`$ = 13,983,816 | — |
+| $`E[X]`$ | the long-run average count | 0.734694 matches | — |
+| $`Var(X)`$ | the spread of the count, in squared matches | 0.577572 | — |
+| $`I_i`$ | indicator: 1 if draw number i is a marked ball, else 0 | for the first draw, 1 if that ball is on the ticket | — |
+| $`\frac{N-n}{N-1}`$ | the finite-population correction | 43/48 = 0.895833 | nearer 1: less correction |
 
 ### When it holds
 
@@ -81,11 +85,11 @@ The machine draws balls in an order, but a ticket cares only about which six cam
 
 ### Step 1: count all possible draws
 
-Drawn in order, the first ball can be any of 49, the second any of the 48 left, and so on: 49 × 48 × 47 × 46 × 45 × 44 = 10,068,347,520 ordered draws. Each set of six balls appears in 6! = 720 orders (6! is 6 × 5 × 4 × 3 × 2 × 1). Dividing gives $\binom{49}{6}$ = 13,983,816 sets. In general there are $\binom{N}{n}$.
+Drawn in order, the first ball can be any of 49, the second any of the 48 left, and so on: 49 × 48 × 47 × 46 × 45 × 44 = 10,068,347,520 ordered draws. Each set of six balls appears in 6! = 720 orders (6! is 6 × 5 × 4 × 3 × 2 × 1). Dividing gives $`\binom{49}{6}`$ = 13,983,816 sets. In general there are $`\binom{N}{n}`$.
 
 ### Step 2: split each favourable draw into two independent choices
 
-A draw with exactly k matches is k balls from the 6 on the ticket plus 6 − k balls from the 43 that are not. Any choice of the first part combined with any choice of the second gives such a draw. Every such draw splits back into one pair of choices. So the count is a product: $\binom{K}{k}\binom{N-K}{n-k}$.
+A draw with exactly k matches is k balls from the 6 on the ticket plus 6 − k balls from the 43 that are not. Any choice of the first part combined with any choice of the second gives such a draw. Every such draw splits back into one pair of choices. So the count is a product: $`\binom{K}{k}\binom{N-K}{n-k}`$.
 
 For three matches, 20 ways to pick which ticket numbers came up, times 12,341 ways to pick the other three balls from the 43, makes 246,820 draws.
 
@@ -95,25 +99,29 @@ Favourable over total gives the formula. The seven counts for k = 0 to 6 add up 
 
 ### Step 4: the average needs no independence
 
-Write the count as a sum of switches, called **indicators**: $I_i$ is 1 if draw i lands on the ticket and 0 otherwise, so X is $I_1 + \dots + I_6$. Taken alone, draw i is equally likely to be any of the 49 balls, so it matches with chance 6/49. Averages add whether or not the indicators depend on each other, so $E[X] = n\,p$ = 0.734694, the same as the binomial.
+Write the count as a sum of switches, called **indicators**: $`I_i`$ is 1 if draw i lands on the ticket and 0 otherwise, so X is $`I_1 + \dots + I_6`$. Taken alone, draw i is equally likely to be any of the 49 balls, so it matches with chance 6/49. Averages add whether or not the indicators depend on each other, so $`E[X] = n\,p`$ = 0.734694, the same as the binomial.
 
 ### Step 5: the spread is where dependence shows
 
-Two named draws both match with chance 6/49 × 5/48 = 0.012755. If the draws were independent it would be $p^2$ = 0.014994. The difference is the **covariance** of two indicators, as on [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): −0.0022387. It is negative because a match on one draw leaves one fewer ticket number for the other.
+Two named draws both match with chance 6/49 × 5/48 = 0.012755. If the draws were independent it would be $`p^2`$ = 0.014994. The difference is the **covariance** of two indicators, as on [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): −0.0022387. It is negative because a match on one draw leaves one fewer ticket number for the other.
 
 The variance of a sum is the sum of the separate variances plus every covariance between pairs. The 30 ordered pairs of draws, each with that negative covariance, pull the variance down from 0.644731 to 0.577572.
 
 <details>
 <summary>Detailed proof: the variance formula</summary>
 
-Each indicator has $Var(I_i) = p\,(1-p)$, since it is 1 with chance p.
+Each indicator has $`Var(I_i) = p\,(1-p)`$, since it is 1 with chance p.
 
 For two different draws i and j, the pair of balls is equally likely to be any of the N(N − 1) ordered pairs of distinct balls, K(K − 1) of which are both marked. So
-$$P(I_i = 1, I_j = 1) = \frac{K(K-1)}{N(N-1)}, \qquad Cov(I_i, I_j) = \frac{K(K-1)}{N(N-1)} - p^2 = -\frac{p\,(1-p)}{N-1}.$$
-The last step puts both terms over $N^2(N-1)$ and simplifies $K(K-1)N - K^2(N-1) = -K(N-K)$.
+
+$`\displaystyle P(I_i = 1, I_j = 1) = \frac{K(K-1)}{N(N-1)}, \qquad Cov(I_i, I_j) = \frac{K(K-1)}{N(N-1)} - p^2 = -\frac{p\,(1-p)}{N-1}.`$
+
+The last step puts both terms over $`N^2(N-1)`$ and simplifies $`K(K-1)N - K^2(N-1) = -K(N-K)`$.
 
 The variance of the sum is n separate variances plus n(n − 1) ordered pairs:
-$$Var(X) = n\,p\,(1-p) - n(n-1)\frac{p\,(1-p)}{N-1} = n\,p\,(1-p)\left(1 - \frac{n-1}{N-1}\right) = n\,p\,(1-p)\,\frac{N-n}{N-1}.$$
+
+$`\displaystyle Var(X) = n\,p\,(1-p) - n(n-1)\frac{p\,(1-p)}{N-1} = n\,p\,(1-p)\left(1 - \frac{n-1}{N-1}\right) = n\,p\,(1-p)\,\frac{N-n}{N-1}.`$
+
 With n = 1 there are no pairs and the factor is 1. With n = N the factor is 0: drawing the whole pool leaves nothing random.
 
 </details>
@@ -124,7 +132,7 @@ Hold the shares fixed and grow the pool: 6 marked in 49, then 60 in 490, then 60
 
 The chance of exactly three matches in six draws climbs from 0.017650 to 0.024155, then 0.024749, then 0.024808 with 49,000 balls, and the binomial gives 0.024815.
 
-The correction factor $\frac{N-n}{N-1}$ tends to 1 at the same time. So the binomial is a fair stand-in when the sample is a small share of the pool. Six balls from 49 is 12.24 percent of the pool, and the tail shows it.
+The correction factor $`\frac{N-n}{N-1}`$ tends to 1 at the same time. So the binomial is a fair stand-in when the sample is a small share of the pool. Six balls from 49 is 12.24 percent of the pool, and the tail shows it.
 
 A second road to the same law follows the machine ball by ball: the chance of a hit is the ticket numbers left over the balls left, and a path of hits and misses multiplies those chances. Summing the 64 paths by their number of hits gives exactly the counting answer, and the code checks it.
 
@@ -137,8 +145,8 @@ The chance of exactly three matches.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | all possible draws | 49 × 48 × 47 × 46 × 45 × 44 / 720 | 13,983,816 |
-| which ticket numbers match | $\binom{6}{3}$ | 20 |
-| which other balls come out | $\binom{43}{3}$ = 43 × 42 × 41 / 6 | 12,341 |
+| which ticket numbers match | $`\binom{6}{3}`$ | 20 |
+| which other balls come out | $`\binom{43}{3}`$ = 43 × 42 × 41 / 6 | 12,341 |
 | favourable draws | 20 × 12,341 | 246,820 |
 | chance | 246,820 / 13,983,816 | **0.01765040** |
 | average matches | 6 × 6/49 | 0.734694 |
@@ -545,16 +553,16 @@ The two outputs match line for line, simulation included, since both draw the sa
 
 Lean proves the counting formula, the average and the spread for every pool, and checks the card's lottery numbers.
 
-- Take a pool of N items, K marked, every set of n items equally likely, and k from 0 to n. Then the chance of exactly k marked items in the sample is $\frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}$.
-- Take the same pool with n at most N. Then the average count is $E[X] = n\,p$, with $p = K/N$.
-- Take the same pool with n at most N and N at least 2. Then $Var(X) = n\,p\,(1-p)\,\frac{N-n}{N-1}$, the binomial variance times the finite-population correction.
-- Ordered draws: 10,068,347,520, divided by 720 orders, give $\binom{49}{6}$ = 13,983,816 sets.
+- Take a pool of N items, K marked, every set of n items equally likely, and k from 0 to n. Then the chance of exactly k marked items in the sample is $`\frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}`$.
+- Take the same pool with n at most N. Then the average count is $`E[X] = n\,p`$, with $`p = K/N`$.
+- Take the same pool with n at most N and N at least 2. Then $`Var(X) = n\,p\,(1-p)\,\frac{N-n}{N-1}`$, the binomial variance times the finite-population correction.
+- Ordered draws: 10,068,347,520, divided by 720 orders, give $`\binom{49}{6}`$ = 13,983,816 sets.
 - The seven match counts, from 6,096,454 down to 1, add up to 13,983,816.
 - Three matches: 20 times 12,341 makes 246,820 draws; at least three matches makes 260,624.
 - The overcounting mistake, 3 matches then any 3 balls, counts 303,600 draws.
 - The average 36/49 and the variance from the full table both match the formulas, with correction 43/48.
-- Two named draws both match with chance 6/49 × 5/48, a covariance of $-p\,(1-p)/(N-1)$.
-- A 6-from-39 game has $\binom{39}{6}$ = 3,262,623 possible draws.
+- Two named draws both match with chance 6/49 × 5/48, a covariance of $`-p\,(1-p)/(N-1)`$.
+- A 6-from-39 game has $`\binom{39}{6}`$ = 3,262,623 possible draws.
 
 Decimals, the binomial, the ball-by-ball road, large pools, the chart and the simulation are left to Python and Rust.
 

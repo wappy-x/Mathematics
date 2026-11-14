@@ -37,40 +37,46 @@ The first line is the exact continuous response; the second is the zero-order-ho
 
 ## The formula
 
-Reminders. The transfer function G(s) says what the system does to each exponential e^(st) ([Transfer functions](02-impulse-response-and-transfer-functions.md)). In a sampled system $z$ plays the same role for sequences, and multiplying by z^(−1) delays a sequence by one step ([The z-transform](08-z-transform-and-discrete-time-systems.md)).
+Reminders. The transfer function G(s) says what the system does to each exponential e^(st) ([Transfer functions](02-impulse-response-and-transfer-functions.md)). In a sampled system $`z`$ plays the same role for sequences, and multiplying by z^(−1) delays a sequence by one step ([The z-transform](08-z-transform-and-discrete-time-systems.md)).
 
-The cup and the sensor, each a lump with one temperature. Write $x_1$ for the cup's temperature above room, $x_2$ for the sensor's, $u$ for the heater power and $y$ for the reading:
+The cup and the sensor, each a lump with one temperature. Write $`x_1`$ for the cup's temperature above room, $`x_2`$ for the sensor's, $`u`$ for the heater power and $`y`$ for the reading:
 
-$$\frac{dx_1}{dt} = \frac{R\,u - x_1}{\tau_1}, \qquad \frac{dx_2}{dt} = \frac{x_1 - x_2}{\tau_2}, \qquad y = x_2, \qquad G(s) = \frac{R}{(\tau_1 s + 1)(\tau_2 s + 1)} = \frac{2}{s^2 + 5s + 4}.$$
+```math
+\frac{dx_1}{dt} = \frac{R\,u - x_1}{\tau_1}, \qquad \frac{dx_2}{dt} = \frac{x_1 - x_2}{\tau_2}, \qquad y = x_2, \qquad G(s) = \frac{R}{(\tau_1 s + 1)(\tau_2 s + 1)} = \frac{2}{s^2 + 5s + 4}.
+```
 
 Stack the two temperatures into the state x = (x_1, x_2): the numbers that, with the input, fix everything that happens next. In matrix form, dx/dt = A x + B u with `A = [[-1, 0], [4, -4]]` in 1/s and `B = [0.5, 0]` in K/(W s).
 
 **Zero-order hold (ZOH).** If the power is held at u[k] from sample k to sample k + 1, then
 
-$$x[k+1] = A_d\,x[k] + B_d\,u[k], \qquad A_d = e^{AT}, \qquad B_d = \int_0^T e^{A\sigma}\,d\sigma\;B.$$
+```math
+x[k+1] = A_d\,x[k] + B_d\,u[k], \qquad A_d = e^{AT}, \qquad B_d = \int_0^T e^{A\sigma}\,d\sigma\;B.
+```
 
 **Read it aloud:** the state one tick later is the matrix exponential of A times the tick, applied to the state now, plus the effect of holding the power flat for one tick.
 
-**Tustin.** Replace every $s$ in G(s) by a function of $z$:
+**Tustin.** Replace every $`s`$ in G(s) by a function of $`z`$:
 
-$$s \;\longrightarrow\; \frac{2}{T}\,\frac{z - 1}{z + 1}, \qquad\text{and then on the unit circle}\qquad \omega_a = \frac{2}{T}\tan\frac{\omega T}{2}.$$
+```math
+s \;\longrightarrow\; \frac{2}{T}\,\frac{z - 1}{z + 1}, \qquad\text{and then on the unit circle}\qquad \omega_a = \frac{2}{T}\tan\frac{\omega T}{2}.
+```
 
 **Read it aloud:** Tustin's model swings at frequency ω exactly as the continuous system swings at the bent frequency ω_a, which runs off to infinity as ω reaches half the sampling rate.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | heater power, held between samples | step to 10 W | every temperature rises in proportion |
-| $x_1$, $x_2$, $y$ | cup and sensor temperature above room; the reading y = x2 | settle at 5.0 K | — |
-| $R$ | thermal resistance from cup to room: kelvin of rise per watt | 0.5 K/W | higher final temperature |
-| $\tau_1$, $\tau_2$ | time constants of the cup and the sensor | 1.0 s, 0.25 s | slower response; Tustin and ZOH agree better |
-| $A$, $B$ | the continuous model dx/dt = A x + B u | see above | — |
-| $T$, $f_s$ | sampling interval and sampling rate f_s = 1/T | 0.1 s, 10 Hz | larger T: Tustin's errors grow, ZOH stays exact |
-| $k$ | sample number; time is kT | 0, 1, 2, … | — |
-| $A_d$, $B_d$ | the sampled model's matrices | `[[0.904837, 0], [0.312690, 0.670320]]`, `[0.047581, 0.008495]` | — |
-| $e^{AT}$, $\sigma$ | matrix exponential; σ is time inside the tick | — | — |
-| $z$ | the shift variable: z = e^(jωT) on the unit circle | — | — |
-| $\omega$, $\omega_a$, $\omega_0$, $j$ | angular frequency in rad/s; Tustin's bent frequency; the one frequency prewarping keeps exact; j is the square root of −1 | 1 Hz is 2π rad/s; ω₀ = 2π × 2 rad/s | ω_a grows faster than ω |
-| $s$, $G$, $G_d$ | Laplace variable and transfer function; G_d, the sampled model's transfer function in z | 2/(s^2 + 5s + 4) | — |
+| $`u`$ | heater power, held between samples | step to 10 W | every temperature rises in proportion |
+| $`x_1`$, $`x_2`$, $`y`$ | cup and sensor temperature above room; the reading y = x2 | settle at 5.0 K | — |
+| $`R`$ | thermal resistance from cup to room: kelvin of rise per watt | 0.5 K/W | higher final temperature |
+| $`\tau_1`$, $`\tau_2`$ | time constants of the cup and the sensor | 1.0 s, 0.25 s | slower response; Tustin and ZOH agree better |
+| $`A`$, $`B`$ | the continuous model dx/dt = A x + B u | see above | — |
+| $`T`$, $`f_s`$ | sampling interval and sampling rate f_s = 1/T | 0.1 s, 10 Hz | larger T: Tustin's errors grow, ZOH stays exact |
+| $`k`$ | sample number; time is kT | 0, 1, 2, … | — |
+| $`A_d`$, $`B_d`$ | the sampled model's matrices | `[[0.904837, 0], [0.312690, 0.670320]]`, `[0.047581, 0.008495]` | — |
+| $`e^{AT}`$, $`\sigma`$ | matrix exponential; σ is time inside the tick | — | — |
+| $`z`$ | the shift variable: z = e^(jωT) on the unit circle | — | — |
+| $`\omega`$, $`\omega_a`$, $`\omega_0`$, $`j`$ | angular frequency in rad/s; Tustin's bent frequency; the one frequency prewarping keeps exact; j is the square root of −1 | 1 Hz is 2π rad/s; ω₀ = 2π × 2 rad/s | ω_a grows faster than ω |
+| $`s`$, $`G`$, $`G_d`$ | Laplace variable and transfer function; G_d, the sampled model's transfer function in z | 2/(s^2 + 5s + 4) | — |
 
 Engineers write j for the square root of −1; the rest of the library writes i.
 
@@ -94,13 +100,17 @@ A digital controller does not output a curve; it outputs a number and holds it. 
 
 The solution of dx/dt = A x + B u from time 0, with state x(0), is the variation-of-constants formula ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)):
 
-$$x(T) = e^{AT}x(0) + \int_0^T e^{A(T-\tau)}\,B\,u(\tau)\,d\tau.$$
+```math
+x(T) = e^{AT}x(0) + \int_0^T e^{A(T-\tau)}\,B\,u(\tau)\,d\tau.
+```
 
 With u constant at u[k], it comes out of the integral. Substituting σ = T − τ turns the integral into the one that defines B_d. So x[k+1] = A_d x[k] + B_d u[k], exactly.
 
 For this cup A is lower triangular, so its exponential can be written out. The cup's own decay is e^(−t), the sensor's e^(−4t), and the sensor's response to the cup is the difference of the two, weighted by 4/(4 − 1):
 
-$$e^{At} = \begin{pmatrix} e^{-t} & 0 \\ \tfrac{4}{3}\left(e^{-t} - e^{-4t}\right) & e^{-4t}\end{pmatrix}.$$
+```math
+e^{At} = \begin{pmatrix} e^{-t} & 0 \\ \tfrac{4}{3}\left(e^{-t} - e^{-4t}\right) & e^{-4t}\end{pmatrix}.
+```
 
 At t = 0.1 s this is `[[0.904837418, 0], [0.312689829, 0.670320046]]`, and integrating it against B gives B_d = `[0.047581291, 0.008495062]` K/W.
 
@@ -131,7 +141,9 @@ So the ZOH model's phase at frequency ω is close to the continuous phase minus 
 
 The exact relation is z = e^(sT), so s = (1/T) ln z. Tustin approximates the logarithm by the first term of its series: ln z ≈ 2 (z − 1)/(z + 1). In the time domain this is the trapezoid rule: each step averages the slope at its start and its end,
 
-$$x[k] = x[k-1] + \tfrac{T}{2}\big(f(x[k-1],\,u[k-1]) + f(x[k],\,u[k])\big),$$
+```math
+x[k] = x[k-1] + \tfrac{T}{2}\big(f(x[k-1],\,u[k-1]) + f(x[k],\,u[k])\big),
+```
 
 where f(x, u) = A x + B u. The code runs this implicit update, solving a 2-by-2 system each tick, and gets the same samples as the Tustin difference equation to below 1e-12 K.
 
@@ -141,7 +153,9 @@ The trapezoid rule assumes the input ramps linearly from one sample to the next.
 
 Put z = e^(jωT) on the unit circle. Then
 
-$$\frac{z - 1}{z + 1} = \frac{e^{j\omega T/2} - e^{-j\omega T/2}}{e^{j\omega T/2} + e^{-j\omega T/2}} = j\tan\frac{\omega T}{2},$$
+```math
+\frac{z - 1}{z + 1} = \frac{e^{j\omega T/2} - e^{-j\omega T/2}}{e^{j\omega T/2} + e^{-j\omega T/2}} = j\tan\frac{\omega T}{2},
+```
 
 so Tustin's s becomes j (2/T) tan(ωT/2) = j ω_a. Tustin's model at frequency ω is the continuous G at the frequency ω_a, exactly.
 
@@ -637,17 +651,17 @@ The two outputs match line for line.
 
 Lean proves the zero-order hold exact, Tustin's stability and Tustin's frequency bend, for any linear model and tick, and checks the worked numbers.
 
-- Suppose the state obeys $dx/dt = Ax + Bu$ over a tick $T$, with $u$ held flat. Then $x(T) = e^{AT}x(0) + \int_0^T e^{A\sigma}B\,u\,d\sigma$. So the sampled model $x[k+1] = A_d\,x[k] + B_d\,u[k]$ is exact at the samples.
-- Take a tick $T > 0$, any $s$ with $sT/2 \ne 1$, and $z = (1 + sT/2)/(1 - sT/2)$. Then $|z| < 1$ exactly when $s$ is in the left half-plane.
-- Every point inside the unit circle is such a $z$ for some $s$ in the left half-plane.
-- Take any tick $T$, any frequency $\omega$, and $z = e^{j\omega T}$ on the unit circle. Then $(2/T)(z - 1)/(z + 1) = j\,\omega_a$, with $\omega_a = (2/T)\tan(\omega T/2)$.
-- Take $R$ = 0.5 K/W, $\tau_1$ = 1.0 s and $\tau_2$ = 0.25 s. Then $G(s) = 2/(s^2 + 5s + 4)$.
-- Take Tustin at $T$ = 0.1 s. Then its denominator is 504, −792, 304, and its poles are 19/21 and 2/3.
+- Suppose the state obeys $`dx/dt = Ax + Bu`$ over a tick $`T`$, with $`u`$ held flat. Then $`x(T) = e^{AT}x(0) + \int_0^T e^{A\sigma}B\,u\,d\sigma`$. So the sampled model $`x[k+1] = A_d\,x[k] + B_d\,u[k]`$ is exact at the samples.
+- Take a tick $`T > 0`$, any $`s`$ with $`sT/2 \ne 1`$, and $`z = (1 + sT/2)/(1 - sT/2)`$. Then $`|z| < 1`$ exactly when $`s`$ is in the left half-plane.
+- Every point inside the unit circle is such a $`z`$ for some $`s`$ in the left half-plane.
+- Take any tick $`T`$, any frequency $`\omega`$, and $`z = e^{j\omega T}`$ on the unit circle. Then $`(2/T)(z - 1)/(z + 1) = j\,\omega_a`$, with $`\omega_a = (2/T)\tan(\omega T/2)`$.
+- Take $`R`$ = 0.5 K/W, $`\tau_1`$ = 1.0 s and $`\tau_2`$ = 0.25 s. Then $`G(s) = 2/(s^2 + 5s + 4)`$.
+- Take Tustin at $`T`$ = 0.1 s. Then its denominator is 504, −792, 304, and its poles are 19/21 and 2/3.
 - Take Tustin's model and a 10 W step. Then it reads 5/126 K (0.0396825 K) at 0 s and 80/441 K (0.1814059 K) at 0.1 s.
-- Take forward Euler at $T$ = 0.6 s. Then the sensor's pole 1 − 4 × 0.6 = −1.40 lies outside the unit circle, past the 0.50 s limit.
-- Take $R$ = 0.5 K/W. Then holding the cup 2.0 K below room needs $u$ = −4.0 W, and a 10 W step settles at 5.0 K.
+- Take forward Euler at $`T`$ = 0.6 s. Then the sensor's pole 1 − 4 × 0.6 = −1.40 lies outside the unit circle, past the 0.50 s limit.
+- Take $`R`$ = 0.5 K/W. Then holding the cup 2.0 K below room needs $`u`$ = −4.0 W, and a 10 W step settles at 5.0 K.
 
-The numbers in $A_d$ and $B_d$, every simulation, and the half-tick delay are left to the Python and Rust checks.
+The numbers in $`A_d`$ and $`B_d`$, every simulation, and the half-tick delay are left to the Python and Rust checks.
 
 ```lean
 -- Discretising a design: the zero-order-hold model is exact at the samples, Tustin's map sends the stable half-plane onto the unit disc, and on the unit circle Tustin's s is j times the bent frequency (2/T) tan(ωT/2).

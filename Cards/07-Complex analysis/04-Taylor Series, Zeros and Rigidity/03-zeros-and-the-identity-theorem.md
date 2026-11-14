@@ -26,26 +26,30 @@ To scale: 35 units per unit, origin at (180, 120). Sine's zeros sit at x = 70.04
 
 ## The formula
 
-Notation first, in words. The letter $a$ names a zero, a point with f(a) = 0. The Taylor coefficients $c_k$ are the numbers in f(z) = c_0 + c_1(z − a) + c_2(z − a)^2 + …. Each c_k = f^(k)(a)/k!, the k-th derivative at a over k factorial ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). A **domain** $D$ is open and connected: any two of its points join by a path inside it.
+Notation first, in words. The letter $`a`$ names a zero, a point with f(a) = 0. The Taylor coefficients $`c_k`$ are the numbers in f(z) = c_0 + c_1(z − a) + c_2(z − a)^2 + …. Each c_k = f^(k)(a)/k!, the k-th derivative at a over k factorial ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). A **domain** $`D`$ is open and connected: any two of its points join by a path inside it.
 
-$$f(z) = (z - a)^m\, g(z), \qquad g(a) = c_m \neq 0$$
+```math
+f(z) = (z - a)^m\, g(z), \qquad g(a) = c_m \neq 0
+```
 
 **Read it aloud:** near a zero, f is (z − a) multiplied in m times, then a leftover g not zero at a; the order m is the place of the first non-zero Taylor coefficient, so also of the first non-zero derivative at a.
 
-$$f_1(z_n) = f_2(z_n) \text{ for all } n,\quad z_n \in D,\quad z_n \neq a,\quad z_n \to a \in D \;\Longrightarrow\; f_1 = f_2 \text{ on all of } D$$
+```math
+f_1(z_n) = f_2(z_n) \text{ for all } n,\quad z_n \in D,\quad z_n \neq a,\quad z_n \to a \in D \;\Longrightarrow\; f_1 = f_2 \text{ on all of } D
+```
 
 **Read it aloud:** two holomorphic functions that agree along points closing in on a point inside a domain are the same function on the whole domain.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | a holomorphic function, not zero everywhere | sin z; z^2(z − 1) | — |
-| $a$ | a zero of f | 0 | — |
-| $c_k$, $k$ | the k-th Taylor coefficient at a | sine: c_1 = 1, c_3 = −0.166667 | — |
-| $m$ | the order | 1 for sine, 2 for the cubic | f hugs 0 harder |
-| $g$ | the leftover, not zero at a | sine: g(0) = 1; cubic: z − 1 | — |
-| $D$ | the domain | the whole plane | — |
-| $z_n$, $n$ | points of agreement | 1/n, closing in on 0 | — |
-| $f_1$, $f_2$, $h$ | two functions; h = f_1 − f_2 | sin^2 z + cos^2 z and 1 | — |
+| $`f`$ | a holomorphic function, not zero everywhere | sin z; z^2(z − 1) | — |
+| $`a`$ | a zero of f | 0 | — |
+| $`c_k`$, $`k`$ | the k-th Taylor coefficient at a | sine: c_1 = 1, c_3 = −0.166667 | — |
+| $`m`$ | the order | 1 for sine, 2 for the cubic | f hugs 0 harder |
+| $`g`$ | the leftover, not zero at a | sine: g(0) = 1; cubic: z − 1 | — |
+| $`D`$ | the domain | the whole plane | — |
+| $`z_n`$, $`n`$ | points of agreement | 1/n, closing in on 0 | — |
+| $`f_1`$, $`f_2`$, $`h`$ | two functions; h = f_1 − f_2 | sin^2 z + cos^2 z and 1 | — |
 
 ### When it holds
 
@@ -66,7 +70,9 @@ A holomorphic function equals its Taylor series on every disc round a inside D (
 
 If f is not zero everywhere near a, let c_m be its first non-zero coefficient. Every later term carries at least m factors of (z − a):
 
-$$f(z) = (z-a)^m \big(c_m + c_{m+1}(z-a) + c_{m+2}(z-a)^2 + \cdots\big) = (z-a)^m g(z)$$
+```math
+f(z) = (z-a)^m \big(c_m + c_{m+1}(z-a) + c_{m+2}(z-a)^2 + \cdots\big) = (z-a)^m g(z)
+```
 
 The bracket is a power series on the same disc, so g is holomorphic there, with g(a) = c_m. Sine's coefficients at 0 are 0, 1, 0, −0.166667: m = 1. At small real r = 0.1, 0.01, 0.001, sin(r)/r reads 0.998334, 0.999983, 1.000000, closing in on g(0) = 1. The cubic's are 0, 0, −1, 1: m = 2, and z^2(z − 1)/z^2 reads −0.900000, −0.990000, −0.999000.
 

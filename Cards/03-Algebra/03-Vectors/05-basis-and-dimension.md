@@ -36,29 +36,33 @@ The straight climbing line is the river: every point reachable going downstream 
 
 ## The formula
 
-Two names first, in words. The list you steer by is the **basis**; write its members $b_1$ and $b_2$. The amounts used against them are the vector's **coordinates relative to that basis**, written with the vector in square brackets and the basis name attached: $[v]_B$.
+Two names first, in words. The list you steer by is the **basis**; write its members $`b_1`$ and $`b_2`$. The amounts used against them are the vector's **coordinates relative to that basis**, written with the vector in square brackets and the basis name attached: $`[v]_B`$.
 
-A vector $v$ is rebuilt by scaling each basis vector and adding:
+A vector $`v`$ is rebuilt by scaling each basis vector and adding:
 
-$$v = x\,b_1 + y\,b_2$$
+```math
+v = x\,b_1 + y\,b_2
+```
 
 The two amounts, in order, are the coordinates:
 
-$$[v]_B = (x, y)$$
+```math
+[v]_B = (x, y)
+```
 
 **Read it aloud:** so much of the first direction plus so much of the second lands on the point, and those two amounts are its address in that basis.
 
-The list $b_1$, $b_2$ is a basis when both hold: it **spans**, so every point is some mix of the two ([Linear combinations and span](03-linear-combinations-and-span.md)), and it is **independent**, so neither is a multiple of the other and neither is spare ([Linear independence](04-linear-independence.md)).
+The list $`b_1`$, $`b_2`$ is a basis when both hold: it **spans**, so every point is some mix of the two ([Linear combinations and span](03-linear-combinations-and-span.md)), and it is **independent**, so neither is a multiple of the other and neither is spare ([Linear independence](04-linear-independence.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $v$ | the vector being described | the buoy, (5, 3) | the coordinates move with it |
-| $b_1$ | the first basis vector | (1, 1): one stroke downstream | fewer strokes needed: $x$ falls |
-| $b_2$ | the second basis vector | (-1, 1): one stroke across | the crossing shrinks: $y$ moves toward 0 |
-| $x$ | the amount of $b_1$ in the mix | 4 strokes downstream | the point slides downstream |
-| $y$ | the amount of $b_2$ in the mix | -1: one stroke back across | the point slides across |
-| $[v]_B$ | the coordinates of $v$ in that basis | (4, -1) | — |
-| $e_1$ and $e_2$ | the **standard basis**: (1, 0) and (0, 1), one east and one north | coordinates against these are just the entries, (5, 3) | — |
+| $`v`$ | the vector being described | the buoy, (5, 3) | the coordinates move with it |
+| $`b_1`$ | the first basis vector | (1, 1): one stroke downstream | fewer strokes needed: $`x`$ falls |
+| $`b_2`$ | the second basis vector | (-1, 1): one stroke across | the crossing shrinks: $`y`$ moves toward 0 |
+| $`x`$ | the amount of $`b_1`$ in the mix | 4 strokes downstream | the point slides downstream |
+| $`y`$ | the amount of $`b_2`$ in the mix | -1: one stroke back across | the point slides across |
+| $`[v]_B`$ | the coordinates of $`v`$ in that basis | (4, -1) | — |
+| $`e_1`$ and $`e_2`$ | the **standard basis**: (1, 0) and (0, 1), one east and one north | coordinates against these are just the entries, (5, 3) | — |
 | the cross-number | whether two vectors reach the whole plane ([Linear combinations and span](03-linear-combinations-and-span.md)) | 1 × 1 − (-1) × 1 = 2 | only zero versus not-zero matters |
 
 The number of vectors in a basis is the space's **dimension**: 2 here, under either basis.
@@ -79,7 +83,7 @@ flowchart TD
 
 - **The list spans.** Every point must be some mix of the basis vectors. Steer by (1, 1) and (2, 2) and the cross-number is 0: both lie on the river, and the buoy has no address.
 - **The list is independent.** Nothing in it may be a mix of the others. Keep a spare third vector and the buoy has two addresses, (4, -1, 0) and (3, 0, 2).
-- **The list is in a fixed order.** The first amount goes with $b_1$, the second with $b_2$. Swap the amounts and you land on (-5, 3), not the buoy.
+- **The list is in a fixed order.** The first amount goes with $`b_1`$, the second with $`b_2`$. Swap the amounts and you land on (-5, 3), not the buoy.
 - **Some finite list spans the space.** Otherwise there is no finite basis to count, and the swap argument in the fold does not apply.
 
 ---
@@ -98,20 +102,22 @@ If the list spans the plane, some mix of it lands on the buoy, so at least one p
 
 Suppose the buoy had two addresses in the river basis:
 
-$$x\,b_1 + y\,b_2 = v \quad\text{and}\quad x'\,b_1 + y'\,b_2 = v$$
+```math
+x\,b_1 + y\,b_2 = v \quad\text{and}\quad x'\,b_1 + y'\,b_2 = v
+```
 
-for two different pairs. Subtract: the right side is the zero vector, the left is $(x - x')\,b_1 + (y - y')\,b_2$. The pairs differ, so one bracket is not zero — a mix of $b_1$ and $b_2$ with a non-zero amount landing on the zero vector, which independence forbids ([Linear independence](04-linear-independence.md)). The assumption of two addresses collapses ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
+for two different pairs. Subtract: the right side is the zero vector, the left is $`(x - x')\,b_1 + (y - y')\,b_2`$. The pairs differ, so one bracket is not zero — a mix of $`b_1`$ and $`b_2`$ with a non-zero amount landing on the zero vector, which independence forbids ([Linear independence](04-linear-independence.md)). The assumption of two addresses collapses ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
 
 That is the payoff of independence: not a tidier list, a *unique* address.
 
 ### Step 3: reading the address is a solve
 
-Two lists are equal when they agree slot by slot, so $x\,b_1 + y\,b_2 = v$ is two equations sharing two unknowns. For the buoy:
+Two lists are equal when they agree slot by slot, so $`x\,b_1 + y\,b_2 = v`$ is two equations sharing two unknowns. For the buoy:
 
-- east: $x$ × 1 + $y$ × (-1) = 5, so $x - y = 5$
-- north: $x$ × 1 + $y$ × 1 = 3, so $x + y = 3$
+- east: $`x`$ × 1 + $`y`$ × (-1) = 5, so $`x - y = 5`$
+- north: $`x`$ × 1 + $`y`$ × 1 = 3, so $`x + y = 3`$
 
-Add them and $y$ cancels: 2$x$ = 8, so $x$ = 4. Back into the second: $y$ = 3 − 4 = -1. The address is (4, -1). Coordinates are computed, not eyeballed.
+Add them and $`y`$ cancels: 2$`x`$ = 8, so $`x`$ = 4. Back into the second: $`y`$ = 3 − 4 = -1. The address is (4, -1). Coordinates are computed, not eyeballed.
 
 ### Step 4: why every basis of this plane has exactly two vectors
 
@@ -138,15 +144,15 @@ Stack the vectors as the columns of a matrix and all of this becomes one questio
 
 ## Worked numbers, by hand
 
-The buoy at (5, 3), read against the river basis $b_1$ = (1, 1) and $b_2$ = (-1, 1).
+The buoy at (5, 3), read against the river basis $`b_1`$ = (1, 1) and $`b_2`$ = (-1, 1).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | is the river basis independent? | cross-number 1 × 1 − (-1) × 1 | 2, not zero |
-| east | $x$ − $y$ | 5 |
-| north | $x$ + $y$ | 3 |
-| add them | 2$x$ = 5 + 3 | **$x$ = 4** |
-| back-substitute | $y$ = 3 − 4 | **$y$ = -1** |
+| east | $`x`$ − $`y`$ | 5 |
+| north | $`x`$ + $`y`$ | 3 |
+| add them | 2$`x`$ = 5 + 3 | **$`x`$ = 4** |
+| back-substitute | $`y`$ = 3 − 4 | **$`y`$ = -1** |
 | rebuild the buoy | 4 × (1, 1) − 1 × (-1, 1) = (4 + 1, 4 − 1) | **(5, 3)** |
 | the buoy in the standard basis | 5 × (1, 0) + 3 × (0, 1) | **(5, 3)** |
 | vectors in each basis | 2 and 2 | **dimension 2** |

@@ -36,21 +36,25 @@ Each round drops the divisor's degree.
 
 Division with remainder over a field:
 
-$$f = q g + r, \qquad r = 0 \ \text{ or } \ \deg r < \deg g$$
+```math
+f = q g + r, \qquad r = 0 \ \text{ or } \ \deg r < \deg g
+```
 
 **Read it aloud:** the polynomial is a quotient times the divisor, plus a remainder that is nothing at all, or of lower degree than the divisor.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$, $F[x]$ | the coefficient field, and all polynomials in x over it | the fractions | more factors available |
-| $f$ | the polynomial divided | x^3 - 6x^2 + 11x - 6 | — |
-| $g$ | the divisor, never zero | x^2 - 1 | fewer rounds |
-| $q$ | the quotient: copies of g removed | x - 6 | — |
-| $r$ | the remainder, when no copy fits | 12x - 12 | zero means g divides f |
-| $\deg f$ | the degree: highest power present | 3 | — |
-| $h$ | the greatest common divisor (gcd), made monic | x - 1 | — |
+| $`F`$, $`F[x]`$ | the coefficient field, and all polynomials in x over it | the fractions | more factors available |
+| $`f`$ | the polynomial divided | x^3 - 6x^2 + 11x - 6 | — |
+| $`g`$ | the divisor, never zero | x^2 - 1 | fewer rounds |
+| $`q`$ | the quotient: copies of g removed | x - 6 | — |
+| $`r`$ | the remainder, when no copy fits | 12x - 12 | zero means g divides f |
+| $`\deg f`$ | the degree: highest power present | 3 | — |
+| $`h`$ | the greatest common divisor (gcd), made monic | x - 1 | — |
 
-$$\gcd(f, g) = \gcd(g, r)$$
+```math
+\gcd(f, g) = \gcd(g, r)
+```
 
 In plain words: swapping (polynomial, divisor) for (divisor, remainder) changes nothing about what divides both.
 
@@ -78,11 +82,15 @@ Anything dividing f and g divides f - q g, which is r; anything dividing g and r
 
 ### Step 2: run the loop on the sheet
 
-$$x^3 - 6x^2 + 11x - 6 = (x - 6)(x^2 - 1) + 12x - 12$$
+```math
+x^3 - 6x^2 + 11x - 6 = (x - 6)(x^2 - 1) + 12x - 12
+```
 
 The remainder becomes the next divisor, stripped of its constant 12.
 
-$$x^2 - 1 = (x + 1)(x - 1) + 0$$
+```math
+x^2 - 1 = (x + 1)(x - 1) + 0
+```
 
 Zero remainder, so the loop stops at x - 1. No root was found on the way.
 

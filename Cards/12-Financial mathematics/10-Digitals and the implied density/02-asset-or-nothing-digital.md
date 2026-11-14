@@ -39,42 +39,48 @@ Orange, top: the asset-or-nothing digital. Nothing up to \$100, then a jump to t
 
 ## The formula
 
-$$A = S\,e^{-qT}\,N(d_1)$$
+```math
+A = S\,e^{-qT}\,N(d_1)
+```
 
 **Read it aloud:** the price of the share bet is one share delivered at expiry, valued today, times the chance of finishing above the strike counted in shares.
 
-The mirror contract pays the share if Acme finishes *below* the strike, and costs $S\,e^{-qT}\,N(-d_1)$. The call is rebuilt from the two kinds of digital:
+The mirror contract pays the share if Acme finishes *below* the strike, and costs $`S\,e^{-qT}\,N(-d_1)`$. The call is rebuilt from the two kinds of digital:
 
-$$C = \underbrace{S\,e^{-qT}N(d_1)}_{\text{asset digital}} \;-\; K \times \underbrace{e^{-rT}N(d_2)}_{\text{cash digital}}$$
+```math
+C = \underbrace{S\,e^{-qT}N(d_1)}_{\text{asset digital}} \;-\; K \times \underbrace{e^{-rT}N(d_2)}_{\text{cash digital}}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | price today of the asset-or-nothing call | \$58.69 | is the answer |
-| $S$ | Acme's price today | \$100 | rises: the prize is dearer and more likely |
-| $S_T$ | Acme's price at expiry, the prize's value when the switch is on | unknown today | — |
-| $K$ | the strike, the line Acme must clear | \$100 | falls: harder to clear |
-| $T$ | time to expiry, in years | 1 | rises here: $d_1$ grows with time faster than dividends drain the share; at long horizons the drain wins |
-| $r$ | riskless rate, continuously compounded | 5% | rises: in the pretend world (the risk-neutral world of Why it works, Step 0) the share drifts up faster |
-| $q$ | dividend yield, continuously compounded | 2% | falls: dividends leave the share before the prize is handed over |
-| $\sigma$ | volatility, how jumpy Acme is per year; say "sigma" | 20% | falls here; rises once $\sigma$ passes $\sqrt{2(r-q)} \approx 24.5\%$, where $d_2$ crosses zero |
-| $N(x)$, $\varphi(x)$ | bell-curve area to the left of $x$, and the curve's height at $x$ | — | — |
-| $d_1$, $d_2$ | distance from strike, in wiggle units, counted in shares and in cash | 0.25 and 0.05 | — |
-| $e^{-qT}$, $e^{-rT}$ | dividend drag, and the discount on a dollar due at $T$ | 0.980199 and 0.951229 | — |
-| $F$ | the forward, $S\,e^{(r-q)T}$: the average share at expiry in the pretend world | \$103.05 | — |
+| $`A`$ | price today of the asset-or-nothing call | \$58.69 | is the answer |
+| $`S`$ | Acme's price today | \$100 | rises: the prize is dearer and more likely |
+| $`S_T`$ | Acme's price at expiry, the prize's value when the switch is on | unknown today | — |
+| $`K`$ | the strike, the line Acme must clear | \$100 | falls: harder to clear |
+| $`T`$ | time to expiry, in years | 1 | rises here: $`d_1`$ grows with time faster than dividends drain the share; at long horizons the drain wins |
+| $`r`$ | riskless rate, continuously compounded | 5% | rises: in the pretend world (the risk-neutral world of Why it works, Step 0) the share drifts up faster |
+| $`q`$ | dividend yield, continuously compounded | 2% | falls: dividends leave the share before the prize is handed over |
+| $`\sigma`$ | volatility, how jumpy Acme is per year; say "sigma" | 20% | falls here; rises once $`\sigma`$ passes $`\sqrt{2(r-q)} \approx 24.5\%`$, where $`d_2`$ crosses zero |
+| $`N(x)`$, $`\varphi(x)`$ | bell-curve area to the left of $`x`$, and the curve's height at $`x`$ | — | — |
+| $`d_1`$, $`d_2`$ | distance from strike, in wiggle units, counted in shares and in cash | 0.25 and 0.05 | — |
+| $`e^{-qT}`$, $`e^{-rT}`$ | dividend drag, and the discount on a dollar due at $`T`$ | 0.980199 and 0.951229 | — |
+| $`F`$ | the forward, $`S\,e^{(r-q)T}`$: the average share at expiry in the pretend world | \$103.05 | — |
 
 The two distances, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-Here $\sigma\sqrt{T}$ is the standard deviation of Acme's log-price at expiry; the Black–Scholes call card calls it one wiggle unit. In words: $d_2$ counts how many wiggle units separate Acme's expected log-price from the strike, and $d_1$ adds one more wiggle unit. The extra unit is the whole difference between counting in shares and counting in cash.
+Here $`\sigma\sqrt{T}`$ is the standard deviation of Acme's log-price at expiry; the Black–Scholes call card calls it one wiggle unit. In words: $`d_2`$ counts how many wiggle units separate Acme's expected log-price from the strike, and $`d_1`$ adds one more wiggle unit. The extra unit is the whole difference between counting in shares and counting in cash.
 
 ### When it holds
 
-- **Constant volatility, log-price on a bell curve.** Real markets price a smile: each strike carries its own volatility. Then the formula with the strike's volatility misprices the digital, and the market price is the call minus $K$ times the call's slope in the strike, a skew term included ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)).
-- **A steady dividend yield.** $e^{-qT}$ assumes dividends leak out continuously and are reinvested. Lumpy cash dividends need the share price less their present value in place of $S\,e^{-qT}$.
+- **Constant volatility, log-price on a bell curve.** Real markets price a smile: each strike carries its own volatility. Then the formula with the strike's volatility misprices the digital, and the market price is the call minus $`K`$ times the call's slope in the strike, a skew term included ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)).
+- **A steady dividend yield.** $`e^{-qT}`$ assumes dividends leak out continuously and are reinvested. Lumpy cash dividends need the share price less their present value in place of $`S\,e^{-qT}`$.
 - **One look, at expiry.** The switch reads Acme once. A contract paying the share the moment Acme first touches the line is a different product at a higher price.
 - **Delivery or its cash value.** Handing over the share or its closing price in cash costs the same. A finish exactly on \$100 has zero chance in the model, so "above" and "at or above" price the same.
-- **The rebuild needs none of this.** Call equals asset digital minus $K$ cash digitals in any market without free money: the payoffs match in every future.
+- **The rebuild needs none of this.** Call equals asset digital minus $`K`$ cash digitals in any market without free money: the payoffs match in every future.
 
 ---
 
@@ -82,80 +88,86 @@ Here $\sigma\sqrt{T}$ is the standard deviation of Acme's log-price at expiry; t
 
 ### Step 0: price is the average payoff in the pretend world, pulled back to today
 
-Pricing uses the pretend world of the call card, the risk-neutral world ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)): every asset, dividends included, grows at the riskless rate, so Acme's price drifts at $r - q$, and a price is the average payoff discounted by $e^{-rT}$. The payoff here is $S_T$ when the switch is on and 0 when it is off. The whole card turns on one fact: that payoff is a product of two things that move together, the switch and the share.
+Pricing uses the pretend world of the call card, the risk-neutral world ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)): every asset, dividends included, grows at the riskless rate, so Acme's price drifts at $`r - q`$, and a price is the average payoff discounted by $`e^{-rT}`$. The payoff here is $`S_T`$ when the switch is on and 0 when it is off. The whole card turns on one fact: that payoff is a product of two things that move together, the switch and the share.
 
 ### Step 1: the average of a product is not the product of averages
 
-Take the naive route first. The chance of finishing above \$100 in the pretend world is $N(d_2) = 0.519939$. The average share at expiry is the forward, $F = \$103.05$. Multiply and discount: 0.951229 × 0.519939 × 103.05 gives \$50.96. Wrong.
+Take the naive route first. The chance of finishing above \$100 in the pretend world is $`N(d_2) = 0.519939`$. The average share at expiry is the forward, $`F = \$103.05`$. Multiply and discount: 0.951229 × 0.519939 × 103.05 gives \$50.96. Wrong.
 
 The error is in using the average share over *all* futures. The prize is only handed over in the futures above \$100, and those are the futures where the share is dear. Averaged only over the futures where the switch is on, the share is worth **\$118.66**, not \$103.05. So the price is
 
-$$A = e^{-rT} \times (\text{chance above}) \times (\text{average share, given above}) = 0.951229 \times 0.519939 \times 118.66 = \$58.69.$$
+```math
+A = e^{-rT} \times (\text{chance above}) \times (\text{average share, given above}) = 0.951229 \times 0.519939 \times 118.66 = \$58.69.
+```
 
 The gap between \$50.96 and \$58.69 is the switch and the share moving together.
 
 ### Step 2: fold the dear shares into the chance
 
-Split that same price a second way. Give each future a weight: the share's value there divided by its average, $S_T / F$. The weights average to exactly 1, since the average of $S_T$ is $F$. So they reweight the pretend world's chances into a new set of chances that still add up to 1. This new set counts each future in proportion to what a share is worth in it. It is the **share-weighted chance**, and the change-of-numeraire card calls it the share measure ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
+Split that same price a second way. Give each future a weight: the share's value there divided by its average, $`S_T / F`$. The weights average to exactly 1, since the average of $`S_T`$ is $`F`$. So they reweight the pretend world's chances into a new set of chances that still add up to 1. This new set counts each future in proportion to what a share is worth in it. It is the **share-weighted chance**, and the change-of-numeraire card calls it the share measure ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
 
 The price then reads
 
-$$A = e^{-rT}\,F \times (\text{share-weighted chance of finishing above}).$$
+```math
+A = e^{-rT}\,F \times (\text{share-weighted chance of finishing above}).
+```
 
-And $e^{-rT}F = S\,e^{(r-q)T}e^{-rT} = S\,e^{-qT}$: one share delivered at expiry, valued today. That $e^{-qT}$ is the fraction of a share to buy now so that, with dividends reinvested, it grows into exactly one share by expiry. The formula has taken shape: $A = S\,e^{-qT}\times$ a chance.
+And $`e^{-rT}F = S\,e^{(r-q)T}e^{-rT} = S\,e^{-qT}`$: one share delivered at expiry, valued today. That $`e^{-qT}`$ is the fraction of a share to buy now so that, with dividends reinvested, it grows into exactly one share by expiry. The formula has taken shape: $`A = S\,e^{-qT}\times`$ a chance.
 
-Why must the share-weighted chance exceed the plain one? The weight $S_T/F$ rises with Acme's price: below 1 in low futures, above 1 in high ones. Reweighting moves chance from low futures to high ones, so the chance of finishing above any line can only rise. The ratio of the two chances is the ratio in Step 1: 118.66 / 103.05 = 1.151494, and 0.598706 / 0.519939 = 1.151494.
+Why must the share-weighted chance exceed the plain one? The weight $`S_T/F`$ rises with Acme's price: below 1 in low futures, above 1 in high ones. Reweighting moves chance from low futures to high ones, so the chance of finishing above any line can only rise. The ratio of the two chances is the ratio in Step 1: 118.66 / 103.05 = 1.151494, and 0.598706 / 0.519939 = 1.151494.
 
 ### Step 3: reweighting slides the bell curve one wiggle unit to the right
 
-In the pretend world, Acme's log-price at expiry sits on a bell curve. Its centre is $\ln S + (r - q - \tfrac12\sigma^2)T$ and its spread is $\sigma\sqrt{T}$. Multiplying the curve by the share's value, which grows like $e^{\sigma\sqrt{T}\,z}$ for a draw $z$ wiggle units from the centre, gives back a bell curve of the same shape moved right by exactly $\sigma\sqrt{T}$. Same event, shifted curve: the chance of clearing the strike rises from $N(d_2)$ to $N(d_2 + \sigma\sqrt{T}) = N(d_1)$.
+In the pretend world, Acme's log-price at expiry sits on a bell curve. Its centre is $`\ln S + (r - q - \tfrac12\sigma^2)T`$ and its spread is $`\sigma\sqrt{T}`$. Multiplying the curve by the share's value, which grows like $`e^{\sigma\sqrt{T}\,z}`$ for a draw $`z`$ wiggle units from the centre, gives back a bell curve of the same shape moved right by exactly $`\sigma\sqrt{T}`$. Same event, shifted curve: the chance of clearing the strike rises from $`N(d_2)`$ to $`N(d_2 + \sigma\sqrt{T}) = N(d_1)`$.
 
-So $A = S\,e^{-qT}N(d_1) = 0.980199 \times 100 \times 0.598706 = \$58.69$.
+So $`A = S\,e^{-qT}N(d_1) = 0.980199 \times 100 \times 0.598706 = \$58.69`$.
 
 <details>
 <summary>Detailed proof: the share-weighted chance is $N(d_1)$</summary>
 
-Write Acme at expiry as $S_T = S\,e^{m + vz}$ with $m = (r - q - \tfrac12\sigma^2)T$, $v = \sigma\sqrt{T}$, and $z$ a standard bell-curve draw with height $\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}$. Acme finishes above $K$ exactly when $z > (\ln(K/S) - m)/v$, and that cut-off equals $-d_2$.
+Write Acme at expiry as $`S_T = S\,e^{m + vz}`$ with $`m = (r - q - \tfrac12\sigma^2)T`$, $`v = \sigma\sqrt{T}`$, and $`z`$ a standard bell-curve draw with height $`\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}`$. Acme finishes above $`K`$ exactly when $`z > (\ln(K/S) - m)/v`$, and that cut-off equals $`-d_2`$.
 
-The price is $e^{-rT}\int_{-d_2}^{\infty} S\,e^{m+vz}\,\varphi(z)\,dz$. Complete the square in the exponent:
-$$vz - \tfrac12 z^2 = \tfrac12 v^2 - \tfrac12 (z - v)^2 .$$
-So $e^{vz}\varphi(z) = e^{v^2/2}\,\varphi(z - v)$: the same bell curve, centred one wiggle unit to the right. The constants collect as $e^{-rT}\,S\,e^{m + v^2/2} = S\,e^{-rT}e^{(r-q)T} = S\,e^{-qT}$, because $m + \tfrac12 v^2 = (r-q)T$. What is left is $\int_{-d_2}^{\infty}\varphi(z - v)\,dz$. Substitute $u = z - v$: the lower limit becomes $-d_2 - v = -d_1$, and $\int_{-d_1}^{\infty}\varphi(u)\,du = N(d_1)$ by the curve's symmetry. Hence $A = S\,e^{-qT}N(d_1)$.
+The price is $`e^{-rT}\int_{-d_2}^{\infty} S\,e^{m+vz}\,\varphi(z)\,dz`$. Complete the square in the exponent:
 
-The same computation with the constant $e^{v^2/2}$ divided out is the share-weighted chance itself: the weight $S_T/F$ equals $e^{vz - v^2/2}$, and the integral above $-d_2$ of $e^{vz - v^2/2}\varphi(z)$ is $N(d_1)$. The put's range is $z < -d_2$, which gives $N(-d_1)$.
+$`\displaystyle vz - \tfrac12 z^2 = \tfrac12 v^2 - \tfrac12 (z - v)^2 .`$
+
+So $`e^{vz}\varphi(z) = e^{v^2/2}\,\varphi(z - v)`$: the same bell curve, centred one wiggle unit to the right. The constants collect as $`e^{-rT}\,S\,e^{m + v^2/2} = S\,e^{-rT}e^{(r-q)T} = S\,e^{-qT}`$, because $`m + \tfrac12 v^2 = (r-q)T`$. What is left is $`\int_{-d_2}^{\infty}\varphi(z - v)\,dz`$. Substitute $`u = z - v`$: the lower limit becomes $`-d_2 - v = -d_1`$, and $`\int_{-d_1}^{\infty}\varphi(u)\,du = N(d_1)`$ by the curve's symmetry. Hence $`A = S\,e^{-qT}N(d_1)`$.
+
+The same computation with the constant $`e^{v^2/2}`$ divided out is the share-weighted chance itself: the weight $`S_T/F`$ equals $`e^{vz - v^2/2}`$, and the integral above $`-d_2`$ of $`e^{vz - v^2/2}\varphi(z)`$ is $`N(d_1)`$. The put's range is $`z < -d_2`$, which gives $`N(-d_1)`$.
 
 </details>
 
 ### Step 4: the call is two digitals, in every market
 
-The call pays $\max(S_T - K, 0)$. In every future:
+The call pays $`\max(S_T - K, 0)`$. In every future:
 
-- Acme above $K$: the call pays $S_T - K$. The asset digital pays $S_T$ and $K$ cash digitals pay $K$. The difference is $S_T - K$.
-- Acme at or below $K$: all three pay nothing.
+- Acme above $`K`$: the call pays $`S_T - K`$. The asset digital pays $`S_T`$ and $`K`$ cash digitals pay $`K`$. The difference is $`S_T - K`$.
+- Acme at or below $`K`$: all three pay nothing.
 
-Two portfolios with the same payoff in every future must cost the same today, or selling the dear one and buying the cheap one is free money. So $C = A - K \times (\text{cash digital})$ with no assumption about how Acme moves: 58.685115 − 100 × 0.494581 = \$9.23, the house call.
+Two portfolios with the same payoff in every future must cost the same today, or selling the dear one and buying the cheap one is free money. So $`C = A - K \times (\text{cash digital})`$ with no assumption about how Acme moves: 58.685115 − 100 × 0.494581 = \$9.23, the house call.
 
-Put the Black-Scholes prices of the two digitals into this and the call formula appears term by term. That is where the call's two halves come from: the share half *is* an asset digital, the cash half *is* $K$ cash digitals.
+Put the Black-Scholes prices of the two digitals into this and the call formula appears term by term. That is where the call's two halves come from: the share half *is* an asset digital, the cash half *is* $`K`$ cash digitals.
 
 ### Step 5: the put side, and the prepaid share
 
-The two asset digitals, above and below \$100, together always hand over one share. A share delivered for certain at expiry costs $S\,e^{-qT}$ today. So the asset put costs 98.02 − 58.69 = \$39.33, and $N(d_1) + N(-d_1) = 1$ says the same thing in the formula. The same argument on cash gives cash call plus cash put $= e^{-rT} = 0.951229$. And the ordinary put, which pays $K - S_T$ below the line, is $K$ cash puts minus one asset put: 100 × 0.456648 − 39.33 = \$6.33.
+The two asset digitals, above and below \$100, together always hand over one share. A share delivered for certain at expiry costs $`S\,e^{-qT}`$ today. So the asset put costs 98.02 − 58.69 = \$39.33, and $`N(d_1) + N(-d_1) = 1`$ says the same thing in the formula. The same argument on cash gives cash call plus cash put $`= e^{-rT} = 0.951229`$. And the ordinary put, which pays $`K - S_T`$ below the line, is $`K`$ cash puts minus one asset put: 100 × 0.456648 − 39.33 = \$6.33.
 
-A second road runs through the call alone. The call's slope in the strike is minus the cash digital, so $A = C - K \times (\text{slope of } C \text{ in } K)$. A tight call spread measures that slope in the market ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)). The code takes it as road 3.
+A second road runs through the call alone. The call's slope in the strike is minus the cash digital, so $`A = C - K \times (\text{slope of } C \text{ in } K)`$. A tight call spread measures that slope in the market ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)). The code takes it as road 3.
 
 ---
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$ | $(\ln 1 + (0.05 - 0.02 + 0.02) \times 1) / 0.20$ | 0.25 |
-| $d_2$ | 0.25 − 0.20 | 0.05 |
-| $N(d_1)$, chance counted in shares | bell-curve table | 0.598706 |
-| $N(d_2)$, chance counted in cash | bell-curve table | 0.519939 |
-| $e^{-qT}$ | $e^{-0.02}$ | 0.980199 |
-| prepaid share, $S\,e^{-qT}$ | 100 × 0.980199 | \$98.02 |
+| $`d_1`$ | $`(\ln 1 + (0.05 - 0.02 + 0.02) \times 1) / 0.20`$ | 0.25 |
+| $`d_2`$ | 0.25 − 0.20 | 0.05 |
+| $`N(d_1)`$, chance counted in shares | bell-curve table | 0.598706 |
+| $`N(d_2)`$, chance counted in cash | bell-curve table | 0.519939 |
+| $`e^{-qT}`$ | $`e^{-0.02}`$ | 0.980199 |
+| prepaid share, $`S\,e^{-qT}`$ | 100 × 0.980199 | \$98.02 |
 | **asset call** | 98.02 × 0.598706 | **\$58.69** |
 | asset put | 98.02 × (1 − 0.598706) | \$39.33 |
 | 100 cash digitals | 100 × 0.951229 × 0.519939 | \$49.46 |
@@ -183,10 +195,10 @@ Orange: the plain chance in the pretend world. Green: the share-weighted chance.
 
 | Greek | What it measures | Formula | Asset call | Asset put |
 | --- | --- | --- | --- | --- |
-| delta | dollars gained per \$1 rise in Acme | $e^{-qT}\big(N(d_1) + \varphi(d_1)/(\sigma\sqrt{T})\big)$ | 2.481909 | −1.501710 |
-| vega | dollars per 1.00 rise in volatility | $-S\,e^{-qT}\varphi(d_1)\,d_2/\sigma$ | −9.475289 | +9.475289 |
+| delta | dollars gained per \$1 rise in Acme | $`e^{-qT}\big(N(d_1) + \varphi(d_1)/(\sigma\sqrt{T})\big)`$ | 2.481909 | −1.501710 |
+| vega | dollars per 1.00 rise in volatility | $`-S\,e^{-qT}\varphi(d_1)\,d_2/\sigma`$ | −9.475289 | +9.475289 |
 
-Delta above 1 looks strange: the contract gains \$2.48 for a \$1 move in a share it only might deliver. Two effects add. The share itself moves, which accounts for $e^{-qT}N(d_1) = 0.586851$ of it. The chance of receiving a prize worth about \$100 also rises, and that is the rest. The put's delta follows from Step 5: the two deltas add to $e^{-qT}$. Vega is small and negative here, −0.094753 per volatility point, because $d_2$ is just above zero; it changes sign where $d_2$ does. The code confirms both by nudging the price. How these grow near expiry is [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md).
+Delta above 1 looks strange: the contract gains \$2.48 for a \$1 move in a share it only might deliver. Two effects add. The share itself moves, which accounts for $`e^{-qT}N(d_1) = 0.586851`$ of it. The chance of receiving a prize worth about \$100 also rises, and that is the rest. The put's delta follows from Step 5: the two deltas add to $`e^{-qT}`$. Vega is small and negative here, −0.094753 per volatility point, because $`d_2`$ is just above zero; it changes sign where $`d_2`$ does. The code confirms both by nudging the price. How these grow near expiry is [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md).
 
 ### What breaks if you drop a piece
 
@@ -194,11 +206,11 @@ Right answer: \$58.69.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $N(d_2)$ in place of $N(d_1)$ | \$50.96 | Plain chance times the average share: the dear shares are counted at the average price |
-| No $e^{-qT}$ | \$59.87 | Charges for dividends the holder never receives |
-| Today's $S$ times one cash digital | \$49.46 | Pays \$100 flat where the contract pays the share at expiry |
-| $e^{-rT}$ in place of $e^{-qT}$ | \$56.95 | Discounts a share as if it were cash; the share grows at $r - q$ and the two rates cancel to $q$ |
-| Call rebuilt as asset minus one cash digital | \$58.19 | Dropped the $K$: the call hands over \$100, not \$1 |
+| $`N(d_2)`$ in place of $`N(d_1)`$ | \$50.96 | Plain chance times the average share: the dear shares are counted at the average price |
+| No $`e^{-qT}`$ | \$59.87 | Charges for dividends the holder never receives |
+| Today's $`S`$ times one cash digital | \$49.46 | Pays \$100 flat where the contract pays the share at expiry |
+| $`e^{-rT}`$ in place of $`e^{-qT}`$ | \$56.95 | Discounts a share as if it were cash; the share grows at $`r - q`$ and the two rates cancel to $`q`$ |
+| Call rebuilt as asset minus one cash digital | \$58.19 | Dropped the $`K`$: the call hands over \$100, not \$1 |
 
 Every number in the table is printed by both checks.
 
@@ -206,7 +218,7 @@ Every number in the table is printed by both checks.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the \$58.69 by **four independent roads**: the formula; a brute-force average of the payoff over the bell curve by Simpson's rule, with no $d_1$ in sight; the call minus $K$ times its slope in the strike; and a simulation of 400,000 expiry prices from a random-number generator written out in the code. Then the asset put is priced by its own integral, the two asset digitals are checked to make the prepaid share, the call and the put are rebuilt from digitals and matched to the house values, the two chances are recomputed as integrals, and delta and vega are checked by nudging. Python builds the bell-curve area from a power series; Rust adds up thin slices under the curve. Nothing imported knows the answer.
+The scripts reach the \$58.69 by **four independent roads**: the formula; a brute-force average of the payoff over the bell curve by Simpson's rule, with no $`d_1`$ in sight; the call minus $`K`$ times its slope in the strike; and a simulation of 400,000 expiry prices from a random-number generator written out in the code. Then the asset put is priced by its own integral, the two asset digitals are checked to make the prepaid share, the call and the put are rebuilt from digitals and matched to the house values, the two chances are recomputed as integrals, and delta and vega are checked by nudging. Python builds the bell-curve area from a power series; Rust adds up thin slices under the curve. Nothing imported knows the answer.
 
 ### Python
 
@@ -397,7 +409,7 @@ band, share-weighted %     1.85   6.50  13.26  18.27  18.83  15.63  11.00   6.81
 ALL CHECKS PASS
 ```
 
-The four roads agree. The simulation lands at 58.671428, inside one standard error (0.023293) of the formula. The share-weighted chance, computed as an integral with no $d_1$, matches $N(d_1)$, and the ratio of the chances matches the ratio of the averages from Step 1.
+The four roads agree. The simulation lands at 58.671428, inside one standard error (0.023293) of the formula. The share-weighted chance, computed as an integral with no $`d_1`$, matches $`N(d_1)`$, and the ratio of the chances matches the ratio of the averages from Step 1.
 
 ### Rust
 
@@ -610,15 +622,15 @@ The two outputs agree line for line at the printed precision, though the bell-cu
 
 Lean proves the asset digital prices in the card's model, and the call rebuild in every market, for all inputs meeting the conditions.
 
-- Take the pretend world of Step 3, with $S$, $K$, $\sigma$ and $T$ all above zero. Then the asset call costs $S\,e^{-qT}N(d_1)$.
-- Take the same world. Then the asset put, paying the share at or below the strike, costs $S\,e^{-qT}N(-d_1)$.
-- Take the same world. Then the asset call and the asset put together cost $S\,e^{-qT}$, one prepaid share.
-- Take any pretend world where Acme's average price at expiry is finite, and any $K$, $r$ and $T$. Then the call costs the asset digital minus $K$ cash digitals.
-- With the house numbers, $d_1 = 0.25$ and $d_2 = 0.05$.
-- In the detailed proof, $m + \tfrac12 v^2 = (r - q)T$ comes to 0.01 + 0.02 = 0.03.
+- Take the pretend world of Step 3, with $`S`$, $`K`$, $`\sigma`$ and $`T`$ all above zero. Then the asset call costs $`S\,e^{-qT}N(d_1)`$.
+- Take the same world. Then the asset put, paying the share at or below the strike, costs $`S\,e^{-qT}N(-d_1)`$.
+- Take the same world. Then the asset call and the asset put together cost $`S\,e^{-qT}`$, one prepaid share.
+- Take any pretend world where Acme's average price at expiry is finite, and any $`K`$, $`r`$ and $`T`$. Then the call costs the asset digital minus $`K`$ cash digitals.
+- With the house numbers, $`d_1 = 0.25`$ and $`d_2 = 0.05`$.
+- In the detailed proof, $`m + \tfrac12 v^2 = (r - q)T`$ comes to 0.01 + 0.02 = 0.03.
 - The by-hand sums hold: 100 × 0.980199 = 98.0199, 58.69 − 49.46 = 9.23, and 98.02 − 58.69 = 39.33.
 
-The bell-curve areas such as $N(d_1)$, the Greeks, the bands and the simulation are left to the Python and Rust checks.
+The bell-curve areas such as $`N(d_1)`$, the Greeks, the bands and the simulation are left to the Python and Rust checks.
 
 ```lean
 -- Asset-or-nothing digital: if the finishing price is S e^((r - q - σ²/2)T + σ√T Z) with Z a standard bell-curve draw under the pricing measure, the discounted average of the share-if-above payoff is S e^(-qT) N(d₁), the share-if-at-or-below payoff is worth S e^(-qT) N(-d₁) so the two together are one prepaid share S e^(-qT), and in any model at all the ordinary call is worth the asset digital minus K cash digitals.
@@ -899,9 +911,9 @@ example : (9802 / 100 : ℚ) - 5869 / 100 = 3933 / 100 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
-> - **Double the volatility.** Set `sigma = 0.40`. The price rises to **\$59.63**. Now halve it, `0.10`: it rises too, to **\$62.42**. The price has a low point between, where $d_2$ crosses zero. A call only ever gains from volatility; an asset digital does not.
+> - **Double the volatility.** Set `sigma = 0.40`. The price rises to **\$59.63**. Now halve it, `0.10`: it rises too, to **\$62.42**. The price has a low point between, where $`d_2`$ crosses zero. A call only ever gains from volatility; an asset digital does not.
 > - **Raise the strike.** Set `K = 120`. The price falls to **\$24.91**: Acme must climb 20% before the switch turns on.
-> - **Remove the dividend.** Set `q = 0`. The price rises to **\$63.68**. The prepaid share is a full \$100, and $d_1$ grows as well.
+> - **Remove the dividend.** Set `q = 0`. The price rises to **\$63.68**. The prepaid share is a full \$100, and $`d_1`$ grows as well.
 > - **Swap the chances.** Replace `N(d1)` with `N(d2)` in `aon`. The Simpson assert fails at once: the formula gives \$50.96 while the integral still gives \$58.69.
 
 ---
@@ -909,31 +921,31 @@ example : (9802 / 100 : ℚ) - 5869 / 100 = 3933 / 100 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating the price as the share times the chance of being paid.** The plain chance of finishing above \$100 is 0.519939, and that fraction of a prepaid share is \$50.96. The contract is worth \$58.69. The shares it hands over are not average shares: they are the ones that finished above \$100, worth \$118.66 on average against a forward of \$103.05. Weighting the chance by the share's value is what turns $N(d_2)$ into $N(d_1)$.
+> **Treating the price as the share times the chance of being paid.** The plain chance of finishing above \$100 is 0.519939, and that fraction of a prepaid share is \$50.96. The contract is worth \$58.69. The shares it hands over are not average shares: they are the ones that finished above \$100, worth \$118.66 on average against a forward of \$103.05. Weighting the chance by the share's value is what turns $`N(d_2)`$ into $`N(d_1)`$.
 >
-> - **Dropping the dividend drag.** $S\,N(d_1)$ gives \$59.87. The holder receives the share at expiry, not the dividends paid before it.
+> - **Dropping the dividend drag.** $`S\,N(d_1)`$ gives \$59.87. The holder receives the share at expiry, not the dividends paid before it.
 > - **Pricing the prize at today's value.** \$100 times one cash digital gives \$49.46. The prize is the share at expiry, not a fixed \$100.
-> - **Discounting at the riskless rate.** $S\,e^{-rT}N(d_1)$ gives \$56.95. A share is not a dollar: it grows at $r - q$ in the pretend world, and discounting at $r$ leaves $q$.
+> - **Discounting at the riskless rate.** $`S\,e^{-rT}N(d_1)`$ gives \$56.95. A share is not a dollar: it grows at $`r - q`$ in the pretend world, and discounting at $`r`$ leaves $`q`$.
 > - **Using the strike's volatility under a smile.** The formula with the market's volatility at \$100 is not the market price of the digital; the call-spread route with its skew term is.
 
 ---
 
 ## Where you meet it in real life
 
-- **Inside every call price.** The share half of the Black-Scholes call, $S\,e^{-qT}N(d_1)$, is this contract. The call's hedge, $e^{-qT}N(d_1)$ shares worth \$58.69 in total, holds exactly the asset digital's value in stock ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)).
+- **Inside every call price.** The share half of the Black-Scholes call, $`S\,e^{-qT}N(d_1)`$, is this contract. The call's hedge, $`e^{-qT}N(d_1)`$ shares worth \$58.69 in total, holds exactly the asset digital's value in stock ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)).
 - **Reverse convertibles.** A structured note that repays \$100 cash if a share finishes above a strike, and delivers the share if it finishes below, is 100 cash digitals plus one asset put.
-- **Currency digitals.** In foreign exchange the asset is a unit of foreign currency, $q$ becomes the foreign interest rate, and "paid in the other currency" is an asset digital ([Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md)).
+- **Currency digitals.** In foreign exchange the asset is a unit of foreign currency, $`q`$ becomes the foreign interest rate, and "paid in the other currency" is an asset digital ([Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md)).
 - **Reading volatility off prices.** Desks run the formula backwards to find the volatility or strike behind a quoted digital, with the non-monotone volatility effect above as the catch ([Digital inverses](06-digital-inverses-vol-and-strike.md)).
 - **The market's view of where Acme ends.** Cash digitals across strikes trace the pretend world's chances, and their slope is its density ([The butterfly and the implied density](05-butterfly-and-the-implied-density.md)).
 
 > **Say it back**
-> An asset-or-nothing digital hands over the share at expiry if it finishes above the strike, and nothing otherwise. Its price is a prepaid share, $S\,e^{-qT}$, times the chance of finishing above, counted with each future weighted by the share's value there. That weighting slides the bell curve one wiggle unit right, so the chance is $N(d_1)$, not the plain $N(d_2)$. An ordinary call pays the same as one asset digital minus $K$ cash digitals in every future, so it costs the same: \$58.69 minus \$49.46 is \$9.23.
+> An asset-or-nothing digital hands over the share at expiry if it finishes above the strike, and nothing otherwise. Its price is a prepaid share, $`S\,e^{-qT}`$, times the chance of finishing above, counted with each future weighted by the share's value there. That weighting slides the bell curve one wiggle unit right, so the chance is $`N(d_1)`$, not the plain $`N(d_2)`$. An ordinary call pays the same as one asset digital minus $`K`$ cash digitals in every future, so it costs the same: \$58.69 minus \$49.46 is \$9.23.
 
 ---
 
 ## What this builds on
 
-- [Cash-or-nothing digital](01-cash-or-nothing-digital.md): the dollar bet, $e^{-rT}N(d_2)$, which this card subtracts $K$ times to rebuild the call.
+- [Cash-or-nothing digital](01-cash-or-nothing-digital.md): the dollar bet, $`e^{-rT}N(d_2)`$, which this card subtracts $`K`$ times to rebuild the call.
 - [Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): the rigorous form of Step 2, counting the world's chances in shares instead of dollars.
 
 ## Where this goes next
@@ -950,7 +962,7 @@ The price rests on one volatility for every strike; what a digital is worth when
 
 Verified 2026-09-24: every link below resolves to the publisher's page.
 
-- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield $q$ and the $S\,e^{-qT}N(d_1)$ term.
+- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield $`q`$ and the $`S\,e^{-qT}N(d_1)`$ term.
 - Geman, Hélyette, Nicole El Karoui, and Jean-Charles Rochet. "Changes of Numéraire, Changes of Probability Measure and Option Pricing." *Journal of Applied Probability* 32, no. 2 (1995): 443–458. [doi:10.2307/3215299](https://doi.org/10.2307/3215299). The share measure behind Steps 2 and 3.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). Binary options, cash-or-nothing and asset-or-nothing, in the exotic options chapter.
 - Shreve, Steven E. *Stochastic Calculus for Finance II: Continuous-Time Models*. Springer, 2004. [Publisher page](https://link.springer.com/book/9780387401010). Risk-neutral pricing and change of numéraire done carefully.

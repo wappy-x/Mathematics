@@ -39,26 +39,30 @@ The line starting at 0 is the height, 4 sin x cm. The line starting at 4 is its 
 
 A reminder of notation: the derivative of f at x, written f'(x) or dy/dx and read "the rate of y per unit of x", is the limit of the rise over the run, (f(x + h) − f(x))/h, as the step h heads for 0 ([The derivative](01-the-derivative.md)). d/dx in front of a function means its derivative, with x as the input.
 
-$$\frac{d}{dx}\sin x = \cos x, \qquad \frac{d}{dx}\cos x = -\sin x$$
+```math
+\frac{d}{dx}\sin x = \cos x, \qquad \frac{d}{dx}\cos x = -\sin x
+```
 
 **Read it aloud:** in radians, sine changes at the rate cos x, and cosine at the rate minus sin x.
 
 Secant is sec x = 1/cos x. By the quotient rule, wherever cos x is not zero:
 
-$$\frac{d}{dx}\tan x = \frac{1}{\cos^2 x} = \sec^2 x, \qquad \frac{d}{dx}\sec x = \frac{\sin x}{\cos^2 x} = \sec x \tan x$$
+```math
+\frac{d}{dx}\tan x = \frac{1}{\cos^2 x} = \sec^2 x, \qquad \frac{d}{dx}\sec x = \frac{\sin x}{\cos^2 x} = \sec x \tan x
+```
 
-For the piston, with arm length r, $y = r\sin x$, so dy/dx = r cos x cm per radian; turning at $\omega$ radians per second, the chain rule gives dy/dt = r cos x × $\omega$ cm/s.
+For the piston, with arm length r, $`y = r\sin x`$, so dy/dx = r cos x cm per radian; turning at $`\omega`$ radians per second, the chain rule gives dy/dt = r cos x × $`\omega`$ cm/s.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | crank angle above the horizontal, radians | 30° | the rate r cos x falls, to 0 at 90° |
-| $h$ | a small extra turn: the run | 0.1, 0.01, 0.001 | the quotient drifts from the rate |
-| $r$ | crank arm length | 4 cm | every rate scales with it |
-| $y$ | piston height above the centre | 2 cm | — |
-| $\sin x$, $\cos x$ | height and reach on an arm of length 1 | 0.500000, 0.866025 | — |
-| $\tan x$, $\sec x$ | sin x / cos x, and 1 / cos x | rates 1.333333, 0.666667 | both rates blow up near 90° |
-| $t$, $\omega$ | time in s; turning rate in radians per s | $\omega$ = 50 | speed grows in step |
-| $L$ | connecting rod length, second case | 14 cm | the rod's extra push fades |
+| $`x`$ | crank angle above the horizontal, radians | 30° | the rate r cos x falls, to 0 at 90° |
+| $`h`$ | a small extra turn: the run | 0.1, 0.01, 0.001 | the quotient drifts from the rate |
+| $`r`$ | crank arm length | 4 cm | every rate scales with it |
+| $`y`$ | piston height above the centre | 2 cm | — |
+| $`\sin x`$, $`\cos x`$ | height and reach on an arm of length 1 | 0.500000, 0.866025 | — |
+| $`\tan x`$, $`\sec x`$ | sin x / cos x, and 1 / cos x | rates 1.333333, 0.666667 | both rates blow up near 90° |
+| $`t`$, $`\omega`$ | time in s; turning rate in radians per s | $`\omega`$ = 50 | speed grows in step |
+| $`L`$ | connecting rod length, second case | 14 cm | the rod's extra push fades |
 
 ### When it holds
 
@@ -75,7 +79,9 @@ For the piston, with arm length r, $y = r\sin x$, so dy/dx = r cos x cm per radi
 
 The rate at x = 30° asks how sin(x + h) differs from sin x. The addition formula splits sin(x + h) into sin x cos h + cos x sin h. Then
 
-$$\frac{\sin(x+h) - \sin x}{h} = \sin x \cdot \frac{\cos h - 1}{h} + \cos x \cdot \frac{\sin h}{h}$$
+```math
+\frac{\sin(x+h) - \sin x}{h} = \sin x \cdot \frac{\cos h - 1}{h} + \cos x \cdot \frac{\sin h}{h}
+```
 
 Only two quotients depend on h, and neither involves x. Settle their limits and every angle's rate follows.
 
@@ -85,11 +91,13 @@ At 30° with h = 0.1: 0.500000 × (−0.049958) + 0.866025 × 0.998334 = 0.83960
 
 For h between 0 and a right angle, in radians, [Small angles](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md) nests a triangle inside a slice of circle inside a larger triangle and reads off
 
-$$\sin h < h < \tan h$$
+```math
+\sin h < h < \tan h
+```
 
 Dividing the left half by h gives (sin h)/h < 1. Dividing the right half by h and multiplying by cos h, positive there, gives cos h < (sin h)/h. The ratio is trapped between cos h and 1.
 
-The tolerance game makes "heads for 1" precise: name a target band around 1, then find a step h small enough to land inside it ([Limits](../01-Limits%20and%20Continuity/01-limits.md)). To land within 0.001 of 1, cos h above 0.999 suffices. Step 2 shows 1 − cos h is at most $h^2/2$, so any h below 0.044721 will do.
+The tolerance game makes "heads for 1" precise: name a target band around 1, then find a step h small enough to land inside it ([Limits](../01-Limits%20and%20Continuity/01-limits.md)). To land within 0.001 of 1, cos h above 0.999 suffices. Step 2 shows 1 − cos h is at most $`h^2/2`$, so any h below 0.044721 will do.
 
 At h = 0.04, cos h is 0.999200 and (sin h)/h is 0.999733: inside the band. Every tighter target gets its own h the same way: that is lim (h → 0) (sin h)/h = 1, read "(sin h)/h heads for 1 as h heads for 0".
 
@@ -97,9 +105,11 @@ A negative h changes nothing: sin(−h)/(−h) equals sin h/h, since sine is odd
 
 ### Step 2: (cos h − 1)/h heads for 0
 
-The half-angle identity gives $1 - \cos h = 2\sin^2(h/2)$. The sandwich says sin(h/2) < h/2, so $1 - \cos h < 2(h/2)^2 = h^2/2$. Divide by h:
+The half-angle identity gives $`1 - \cos h = 2\sin^2(h/2)`$. The sandwich says sin(h/2) < h/2, so $`1 - \cos h < 2(h/2)^2 = h^2/2`$. Divide by h:
 
-$$0 < \frac{1 - \cos h}{h} < \frac{h}{2}$$
+```math
+0 < \frac{1 - \cos h}{h} < \frac{h}{2}
+```
 
 For negative h the quotient flips sign but keeps its size. It is squeezed to 0 ([Limit laws and the squeeze](../01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md)). At h = 0.01, (cos h − 1)/h is −0.005000, a hair inside the bound.
 
@@ -107,7 +117,9 @@ For negative h the quotient flips sign but keeps its size. It is squeezed to 0 (
 
 Put the two limits into Step 0's split. The first term heads for sin x × 0, the second for cos x × 1:
 
-$$\frac{d}{dx}\sin x = \cos x$$
+```math
+\frac{d}{dx}\sin x = \cos x
+```
 
 For the piston, y = 4 sin x, so dy/dx = 4 cos 30° = 3.464102 cm per radian.
 
@@ -115,23 +127,27 @@ For the piston, y = 4 sin x, so dy/dx = 4 cos 30° = 3.464102 cm per radian.
 
 The addition formula for cosine is cos(x + h) = cos x cos h − sin x sin h. The same split gives
 
-$$\frac{\cos(x+h) - \cos x}{h} = \cos x \cdot \frac{\cos h - 1}{h} - \sin x \cdot \frac{\sin h}{h} \;\longrightarrow\; -\sin x$$
+```math
+\frac{\cos(x+h) - \cos x}{h} = \cos x \cdot \frac{\cos h - 1}{h} - \sin x \cdot \frac{\sin h}{h} \;\longrightarrow\; -\sin x
+```
 
 The pin's sideways reach, 4 cos x, changes at −2.000000 cm per radian: it moves back towards the piston's line as it rises, as the arrow shows.
 
 ### Step 5: tangent and secant by the quotient rule
 
-Tangent is sin x over cos x. The quotient rule ([Product and quotient rules](02-product-and-quotient-rules.md)) gives a top of cos x · cos x + sin x · sin x, which is 1, over $\cos^2 x$: the rate is $\sec^2 x$, 1.333333 at 30°.
+Tangent is sin x over cos x. The quotient rule ([Product and quotient rules](02-product-and-quotient-rules.md)) gives a top of cos x · cos x + sin x · sin x, which is 1, over $`\cos^2 x`$: the rate is $`\sec^2 x`$, 1.333333 at 30°.
 
-Secant is 1 over cos x, so its rate is sin x over $\cos^2 x$, which is sec x tan x: 0.666667 at 30°.
+Secant is 1 over cos x, so its rate is sin x over $`\cos^2 x`$, which is sec x tan x: 0.666667 at 30°.
 
 ### Step 6: from per radian to per second, and a real engine
 
 The crank turns at 50 radians a second, so x = 50t with t in seconds. The chain rule ([Chain rule](03-chain-rule.md)) multiplies the rates: 3.464102 cm per radian × 50 radians per second = 173.205 cm/s.
 
-Most engines use a connecting rod of length L from the pin to a piston above the centre. The piston sits $r\sin x$ up plus the rod's upright part, $\sqrt{L^2 - (r\cos x)^2}$ by Pythagoras. The rate of cosine and the chain rule give:
+Most engines use a connecting rod of length L from the pin to a piston above the centre. The piston sits $`r\sin x`$ up plus the rod's upright part, $`\sqrt{L^2 - (r\cos x)^2}`$ by Pythagoras. The rate of cosine and the chain rule give:
 
-$$\frac{dy}{dx} = r\cos x + \frac{r^2 \cos x \sin x}{\sqrt{L^2 - r^2\cos^2 x}}$$
+```math
+\frac{dy}{dx} = r\cos x + \frac{r^2 \cos x \sin x}{\sqrt{L^2 - r^2\cos^2 x}}
+```
 
 With L = 14 cm at 30° this is 3.97486 cm per radian, against the yoke's 3.46410: the tilting rod adds a push.
 
@@ -140,7 +156,7 @@ With L = 14 cm at 30° this is 3.97486 cm per radian, against the yoke's 3.46410
 
 Here ε (epsilon) is any allowed error above 0, however small, and δ (delta) is a step size small enough to keep the error under it.
 
-For every ε > 0, take δ = min(1, √(2ε)). If 0 < h < δ, the sandwich gives cos h < sin h / h < 1, so $\lvert \sin h / h - 1 \rvert < 1 - \cos h < h^2/2 < \varepsilon$; negative h gives the same ratio.
+For every ε > 0, take δ = min(1, √(2ε)). If 0 < h < δ, the sandwich gives cos h < sin h / h < 1, so $`\lvert \sin h / h - 1 \rvert < 1 - \cos h < h^2/2 < \varepsilon`$; negative h gives the same ratio.
 
 For (cos h − 1)/h, take δ = min(1, 2ε): then its size is below |h|/2 < ε.
 
@@ -169,7 +185,7 @@ A second road to cosine's rule: cos x = sin(π/2 − x), and the chain rule give
 | --- | --- | --- |
 | Angle in degrees | rate 0.017453 at 0, not 1 | the sandwich's h/2 area needs radians |
 | Minus sign dropped on cosine | sideways rate +2, not −2 | the pin moves inward as it rises |
-| $\tan^2 x$ for tangent's rate | 0.333333, not 1.333333 | $\sec^2 x$ is $1 + \tan^2 x$; the 1 was lost |
+| $`\tan^2 x`$ for tangent's rate | 0.333333, not 1.333333 | $`\sec^2 x`$ is $`1 + \tan^2 x`$; the 1 was lost |
 | Tangent's rule across 90° | quotient −9999.67 over 0.02 | no value at 90°, so no rate |
 
 The code prints all four.
@@ -359,8 +375,8 @@ ALL CHECKS PASS
 Lean proves the rules for sine, cosine, tangent and secant at every angle in radians, with cos x not zero for the last two.
 
 - At every angle x, the rate of sin x is cos x and the rate of cos x is minus sin x.
-- Wherever cos x is not zero, tangent's rate is 1 / $\cos^2 x$, which is $\sec^2 x$.
-- Wherever cos x is not zero, secant's rate is sin x / $\cos^2 x$, which is sec x tan x.
+- Wherever cos x is not zero, tangent's rate is 1 / $`\cos^2 x`$, which is $`\sec^2 x`$.
+- Wherever cos x is not zero, secant's rate is sin x / $`\cos^2 x`$, which is sec x tan x.
 - As h heads for 0, (sin h)/h heads for 1 and (cos h − 1)/h heads for 0.
 
 Lean also checks the 30° values exactly. The rise-over-run quotients, the piston speed and the rod engine are left to the Python and Rust checks.
@@ -447,7 +463,7 @@ example : (sin (π / 6) / cos (π / 6)) ^ 2 = 1 / 3 := by
 > **Using the rules in degrees.** The sandwich compares a length with an angle, which works only when the angle is arc length on a radius-1 circle: a radian. In degrees, the rate of sin x is (π/180) cos x, 0.017453 at 0, not 1.
 >
 > - **Dropping cosine's minus sign.** The pin's sideways reach shrinks as it rises: −2, not +2 cm per radian.
-> - **Writing $\tan^2 x$ for tangent's rate.** At 30° that gives 0.333333 instead of 1.333333.
+> - **Writing $`\tan^2 x`$ for tangent's rate.** At 30° that gives 0.333333 instead of 1.333333.
 > - **Proving (sin h)/h → 1 with a rule that uses sine's derivative.** That argues in a circle.
 
 ---

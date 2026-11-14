@@ -20,39 +20,43 @@ Two copies started one part in a hundred million apart agree to within 0.002 for
 
 <p align="center"><img src="../figures/the-lorenz-system-and-strange-attractors.svg" alt="The Lorenz path from t = 15 to 25 seen side-on in the x-z plane: two lobes round the lobe centres at x = -8.49 and 8.49, z = 27, joined in the middle like a butterfly&#x27;s wings" width="420"></p>
 
-Scale: 4 units per unit of $x$ and $z$ (pure numbers), origin at the foot of the vertical axis. Time 15 to 25, a printed point every 0.025. Circles: the lobe centres, never reached. Triangle: direction of travel.
+Scale: 4 units per unit of $`x`$ and $`z`$ (pure numbers), origin at the foot of the vertical axis. Time 15 to 25, a printed point every 0.025. Circles: the lobe centres, never reached. Triangle: direction of travel.
 
 ---
 
 ## The formula
 
-A prime means rate of change in time, so $x'$ is how fast $x$ changes.
+A prime means rate of change in time, so $`x'`$ is how fast $`x`$ changes.
 
-$$x' = \sigma(y - x), \qquad y' = x(\rho - z) - y, \qquad z' = xy - \beta z.$$
+```math
+x' = \sigma(y - x), \qquad y' = x(\rho - z) - y, \qquad z' = xy - \beta z.
+```
 
 **Read it aloud:** the roll chases the temperature gap; the gap is fed by the roll, eaten by the bend, and fades; the bend grows when roll and gap act together, and fades at rate beta.
 
-Lorenz's values: $\sigma = 10$, $\rho = 28$, $\beta = 8/3$, start (1, 1, 1). The resting points, where all three rates vanish, are the origin and the two **lobe centres**
+Lorenz's values: $`\sigma = 10`$, $`\rho = 28`$, $`\beta = 8/3`$, start (1, 1, 1). The resting points, where all three rates vanish, are the origin and the two **lobe centres**
 
-$$C_\pm = \left(\pm\sqrt{\beta(\rho - 1)},\ \pm\sqrt{\beta(\rho - 1)},\ \rho - 1\right) = (\pm 8.485281,\ \pm 8.485281,\ 27).$$
+```math
+C_\pm = \left(\pm\sqrt{\beta(\rho - 1)},\ \pm\sqrt{\beta(\rho - 1)},\ \rho - 1\right) = (\pm 8.485281,\ \pm 8.485281,\ 27).
+```
 
-The Jacobian $J$, the table of partial slopes of the three rates ([Linearisation](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md)), is `[[-sigma, sigma, 0], [rho - z, -1, -x], [y, x, -beta]]`. Its diagonal sum, the **divergence**, is $-(\sigma + 1 + \beta) = -13.666667$ everywhere: the rate at which the flow shrinks volume.
+The Jacobian $`J`$, the table of partial slopes of the three rates ([Linearisation](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md)), is `[[-sigma, sigma, 0], [rho - z, -1, -x], [y, x, -beta]]`. Its diagonal sum, the **divergence**, is $`-(\sigma + 1 + \beta) = -13.666667`$ everywhere: the rate at which the flow shrinks volume.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$, $z$ | roll speed; temperature gap; bend of the profile | start (1, 1, 1) | — |
-| $t$ | time, in the model's scaled units | agreement until about 25 | — |
-| $\sigma$ | how fast friction evens out motion, relative to how fast heat spreads | 10 | faster roll response |
-| $\rho$ | heating, relative to the least that starts a roll | 28 | above 24.736842 no resting point attracts |
-| $\beta$ | a shape factor of the roll's cell | 8/3 = 2.666667 | faster fading of the bend |
-| $C_\pm$ | the two lobe centres, resting points | (±8.485281, ±8.485281, 27) | move out as $\rho$ grows |
-| $J$, $\lambda$ | the Jacobian; its eigenvalues, growth rates of nudges near a resting point | at the lobes −13.854578 and 0.093956 ± 10.194505i | positive real part: nudges grow |
-| $\Lambda$ | long-run growth rate of the gap between two runs, the Lyapunov exponent | 0.917773 | shorter forecast horizon |
+| $`x`$, $`y`$, $`z`$ | roll speed; temperature gap; bend of the profile | start (1, 1, 1) | — |
+| $`t`$ | time, in the model's scaled units | agreement until about 25 | — |
+| $`\sigma`$ | how fast friction evens out motion, relative to how fast heat spreads | 10 | faster roll response |
+| $`\rho`$ | heating, relative to the least that starts a roll | 28 | above 24.736842 no resting point attracts |
+| $`\beta`$ | a shape factor of the roll's cell | 8/3 = 2.666667 | faster fading of the bend |
+| $`C_\pm`$ | the two lobe centres, resting points | (±8.485281, ±8.485281, 27) | move out as $`\rho`$ grows |
+| $`J`$, $`\lambda`$ | the Jacobian; its eigenvalues, growth rates of nudges near a resting point | at the lobes −13.854578 and 0.093956 ± 10.194505i | positive real part: nudges grow |
+| $`\Lambda`$ | long-run growth rate of the gap between two runs, the Lyapunov exponent | 0.917773 | shorter forecast horizon |
 
 ### When it holds
 
 - **Three variables.** In the plane a trapped, restless path must close into a loop ([Poincare-Bendixson](../06-Nonlinear%20Dynamics%20in%20the%20Plane/09-poincare-bendixson-and-bendixsons-criterion.md)).
-- **Heating above 24.736842.** Below it the lobe centres attract nearby paths (from about 24.06 they share space with the butterfly); at $\rho = 20$ the path from (1, 1, 1) rests at (−7.118052, −7.118052, 19).
+- **Heating above 24.736842.** Below it the lobe centres attract nearby paths (from about 24.06 they share space with the butterfly); at $`\rho = 20`$ the path from (1, 1, 1) rests at (−7.118052, −7.118052, 19).
 - **As air, only near the onset of rolling.** Lorenz dropped every other motion; the chaos is exact, the match to air is not.
 - **No exact arithmetic.** Each computed step is a nudge, so one run is faithful only until nudges grow.
 
@@ -66,42 +70,44 @@ Chaos in a flow needs three things at once: nearby paths separate, paths stay bo
 
 ### Step 1: three resting points
 
-Set all rates to zero. The first law gives $y = x$; the third, $x^2 = \beta z$; the second, $x(\rho - 1 - z) = 0$. So $x = 0$, the origin, or $z = 27$ and $x^2 = 72$, so $x = \pm 8.485281$. Newton's method (repeatedly solving the straight-line approximation) from (8, 8, 25) lands on the same point.
+Set all rates to zero. The first law gives $`y = x`$; the third, $`x^2 = \beta z`$; the second, $`x(\rho - 1 - z) = 0`$. So $`x = 0`$, the origin, or $`z = 27`$ and $`x^2 = 72`$, so $`x = \pm 8.485281`$. Newton's method (repeatedly solving the straight-line approximation) from (8, 8, 25) lands on the same point.
 
 ### Step 2: none of them holds the path
 
-Near a resting point a nudge grows or shrinks like $e^{\lambda t}$, for each eigenvalue $\lambda$ of $J$. At the origin they are the roots of $\lambda^2 + 11\lambda - 270 = 0$, and $-\beta$: 11.827723, −22.827723, −2.666667. One is positive: the origin repels along one direction.
+Near a resting point a nudge grows or shrinks like $`e^{\lambda t}`$, for each eigenvalue $`\lambda`$ of $`J`$. At the origin they are the roots of $`\lambda^2 + 11\lambda - 270 = 0`$, and $`-\beta`$: 11.827723, −22.827723, −2.666667. One is positive: the origin repels along one direction.
 
 At a lobe centre they solve
 
-$$\lambda^3 + (\sigma + \beta + 1)\lambda^2 + \beta(\sigma + \rho)\lambda + 2\sigma\beta(\rho - 1) = 0,$$
+```math
+\lambda^3 + (\sigma + \beta + 1)\lambda^2 + \beta(\sigma + \rho)\lambda + 2\sigma\beta(\rho - 1) = 0,
+```
 
 with roots −13.854578 and 0.093956 ± 10.194505i: a fast pull onto a surface, and a slow outward spiral round the centre. Their sum, pairwise products and product match the matrix's trace (−13.666667), 2-by-2 minors (101.333333) and determinant (−1440). Here the 2-by-2 minors are the three determinants left after deleting one row and its matching column, added up.
 
-The real part crosses zero at $\rho = 24.736842$; above it, no resting point holds nearby paths.
+The real part crosses zero at $`\rho = 24.736842`$; above it, no resting point holds nearby paths.
 
 ### Step 3: every path is trapped, and volume shrinks to nothing
 
-A squared distance from a point high on the $z$ axis falls whenever the path is far out, so every path enters a fixed ball and stays.
+A squared distance from a point high on the $`z`$ axis falls whenever the path is far out, so every path enters a fixed ball and stays.
 
 <details>
 <summary>Detailed proof: the trapping ball</summary>
 
-Let V be $x^2 + y^2 + (z - \sigma - \rho)^2$. Differentiate along a path and substitute the laws; the cross terms cancel:
+Let V be $`x^2 + y^2 + (z - \sigma - \rho)^2`$. Differentiate along a path and substitute the laws; the cross terms cancel:
 
-$V' = -2\sigma x^2 - 2y^2 - 2\beta\left(z - \tfrac{\sigma + \rho}{2}\right)^2 + \tfrac{\beta(\sigma + \rho)^2}{2}.$
+$`V' = -2\sigma x^2 - 2y^2 - 2\beta\left(z - \tfrac{\sigma + \rho}{2}\right)^2 + \tfrac{\beta(\sigma + \rho)^2}{2}.`$
 
-This is negative outside the ellipsoid $\sigma x^2 + y^2 + \beta(z - \tfrac{\sigma + \rho}{2})^2 = \tfrac{\beta(\sigma + \rho)^2}{4}$. Let M be V's largest value on that ellipsoid. Where V is at least M + 1 it falls at a rate bounded away from zero, so every path reaches V at most M + 1 in finite time and stays.
+This is negative outside the ellipsoid $`\sigma x^2 + y^2 + \beta(z - \tfrac{\sigma + \rho}{2})^2 = \tfrac{\beta(\sigma + \rho)^2}{4}`$. Let M be V's largest value on that ellipsoid. Where V is at least M + 1 it falls at a rate bounded away from zero, so every path reaches V at most M + 1 in finite time and stays.
 
 </details>
 
-A box of starts carried by the flow changes volume at the divergence times its volume (Liouville's formula). The divergence is constant, so volume is multiplied by $e^{-13.666667\,t}$, by 0.001077 every half unit; a flowed box of side 1e-6 measures the same. Paths end in a bounded set of zero volume: the butterfly.
+A box of starts carried by the flow changes volume at the divergence times its volume (Liouville's formula). The divergence is constant, so volume is multiplied by $`e^{-13.666667\,t}`$, by 0.001077 every half unit; a flowed box of side 1e-6 measures the same. Paths end in a bounded set of zero volume: the butterfly.
 
 ### Step 4: nearby starts separate exponentially
 
 Runs from (1, 1, 1) and (1.00000001, 1, 1) stay below 2e-8 apart until about time 12, spiralling near one lobe centre. Then the gap grows from 2.4e-07 at time 15 to 0.16 at 30, a rate of 0.894374 per unit.
 
-The second road uses one run. It carries a small arrow along the path by $J$ and rescales it each time unit; the average log-stretch over 500 units is the **Lyapunov exponent** $\Lambda$ = 0.917773, the exponent of [The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md) for a flow. From 1e-8 to the butterfly's size, about 10, takes $\ln(10^9)/\Lambda$ = 22.58 units after the calm spell. Each extra digit buys 2.51 units.
+The second road uses one run. It carries a small arrow along the path by $`J`$ and rescales it each time unit; the average log-stretch over 500 units is the **Lyapunov exponent** $`\Lambda`$ = 0.917773, the exponent of [The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md) for a flow. From 1e-8 to the butterfly's size, about 10, takes $`\ln(10^9)/\Lambda`$ = 22.58 units after the calm spell. Each extra digit buys 2.51 units.
 
 The flow stretches one direction at 0.917773, leaves the direction of travel alone, and squeezes the third at 14.5844, summing to the divergence. The Kaplan-Yorke estimate of dimension, the two unsqueezed directions plus the share of the squeezed one that the stretch fills ([Fractals](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/05-self-similarity-and-fractal-dimension.md)) is 2 + 0.9178/14.5844 = 2.0629: a sheet, plus a sliver.
 
@@ -109,9 +115,9 @@ The flow stretches one direction at 0.917773, leaves the direction of travel alo
 
 An **attractor** is a closed, bounded set that paths on it never leave, that pulls in every path starting near it, and no smaller piece of which does the same. Its **basin** is every start whose path approaches it. A **strange attractor** separates nearby paths exponentially.
 
-The butterfly's basin appears to be all of space except the resting points and the paths that run into them, such as the $z$ axis, which leads straight to the origin. From (1, 1, 1), (30, −40, 90) and (−0.01, 0, 0) the average height over 200 units is 23.49, 23.53 and 23.56.
+The butterfly's basin appears to be all of space except the resting points and the paths that run into them, such as the $`z`$ axis, which leads straight to the origin. From (1, 1, 1), (30, −40, 90) and (−0.01, 0, 0) the average height over 200 units is 23.49, 23.53 and 23.56.
 
-A **Poincaré section** records the flow only when it crosses a chosen surface, turning it into a map, a rule $x_{n+1} = g(x_n)$ ([Iteration](01-iteration-and-cobweb-plots.md)). Lorenz recorded each top, where $z$ stops rising: 134 tops from time 10 to 110, between 31.82 and 45.61. Each top against the next falls on a thin tent-shaped curve, a one-dimensional map.
+A **Poincaré section** records the flow only when it crosses a chosen surface, turning it into a map, a rule $`x_{n+1} = g(x_n)`$ ([Iteration](01-iteration-and-cobweb-plots.md)). Lorenz recorded each top, where $`z`$ stops rising: 134 tops from time 10 to 110, between 31.82 and 45.61. Each top against the next falls on a thin tent-shaped curve, a one-dimensional map.
 
 Every top below 38.5 was followed by a higher one, 84 of 84; the first, 33.84, 34.57, 35.50, 36.78, 38.82, 42.98, climb by growing steps, Step 2's widening spiral seen once a lap.
 
@@ -121,12 +127,12 @@ Every top below 38.5 was followed by a higher one, 84 of 84; the first, 33.84, 3
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| lobe height | $\rho - 1$ | 27 |
-| lobe width | $x^2 = \beta \times 27$ = 72, square root | **±8.485281** |
-| volume after half a unit | $e^{0.5 \times (-13.666667)}$ | 0.001077 |
-| heating threshold | $\sigma(\sigma + \beta + 3)/(\sigma - \beta - 1)$ | 24.736842 |
+| lobe height | $`\rho - 1`$ | 27 |
+| lobe width | $`x^2 = \beta \times 27`$ = 72, square root | **±8.485281** |
+| volume after half a unit | $`e^{0.5 \times (-13.666667)}`$ | 0.001077 |
+| heating threshold | $`\sigma(\sigma + \beta + 3)/(\sigma - \beta - 1)`$ | 24.736842 |
 | gap at time 25, 30, 35 | from the two runs | 2.0e-03, 0.16, **8.3** |
-| stretch time, 1e-8 to 10 | $\ln(10^9) / 0.917773$ | 22.58 |
+| stretch time, 1e-8 to 10 | $`\ln(10^9) / 0.917773`$ | 22.58 |
 
 ### What breaks if you drop a piece
 
@@ -353,12 +359,12 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves three facts from Why it works, for every positive $\sigma$ and $\beta$.
+Lean proves three facts from Why it works, for every positive $`\sigma`$ and $`\beta`$.
 
-- Take any heating $\rho$. Then one fixed ball, set by $\sigma$, $\rho$ and $\beta$ alone, traps every path: each enters it in finite time and stays.
-- Take any point $(x, y, z)$. Then the divergence, the diagonal sum of $J$, is exactly $-(\sigma + 1 + \beta)$.
-- Suppose the heating $\rho$ is above 1. Then the resting points are exactly the origin and the two lobe centres $C_\pm$.
-- The hand arithmetic holds exactly: lobe height 27, $x^2 = 72$, the origin's 11 and 270, and the determinant −1440. The heating threshold is exactly 470/19 = 24.736842, below 28.
+- Take any heating $`\rho`$. Then one fixed ball, set by $`\sigma`$, $`\rho`$ and $`\beta`$ alone, traps every path: each enters it in finite time and stays.
+- Take any point $`(x, y, z)`$. Then the divergence, the diagonal sum of $`J`$, is exactly $`-(\sigma + 1 + \beta)`$.
+- Suppose the heating $`\rho`$ is above 1. Then the resting points are exactly the origin and the two lobe centres $`C_\pm`$.
+- The hand arithmetic holds exactly: lobe height 27, $`x^2 = 72`$, the origin's 11 and 270, and the determinant −1440. The heating threshold is exactly 470/19 = 24.736842, below 28.
 
 Volume shrinking at that rate, the eigenvalues, the separation of runs and the Lyapunov exponent are left to the Python and Rust checks.
 

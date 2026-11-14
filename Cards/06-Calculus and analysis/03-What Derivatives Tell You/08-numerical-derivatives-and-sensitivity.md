@@ -38,44 +38,52 @@ Orange: forward difference, one bump up. Green: central difference, one bump eac
 
 ## The formula
 
-Write $C(S)$ for the call's value in dollars when the stock stands at $S$ dollars; its derivative $C'(S)$ is the delta. Three primes, $C'''(S)$, mean the third derivative. The bump is $h$ dollars. $C$ is the Black–Scholes price; here it is just a smooth function the code evaluates.
+Write $`C(S)`$ for the call's value in dollars when the stock stands at $`S`$ dollars; its derivative $`C'(S)`$ is the delta. Three primes, $`C'''(S)`$, mean the third derivative. The bump is $`h`$ dollars. $`C`$ is the Black–Scholes price; here it is just a smooth function the code evaluates.
 
-$$D_+(h) = \frac{C(S+h) - C(S)}{h}, \qquad D_0(h) = \frac{C(S+h) - C(S-h)}{2h}$$
+```math
+D_+(h) = \frac{C(S+h) - C(S)}{h}, \qquad D_0(h) = \frac{C(S+h) - C(S-h)}{2h}
+```
 
 **Read it aloud:** forward is the price change over one bump up, per dollar; central is the change from one bump down to one bump up, per dollar of that span.
 
 Their truncation errors, proved below:
 
-$$D_+(h) - C'(S) = \tfrac{h}{2}\,C''(\xi), \qquad D_0(h) - C'(S) = \tfrac{h^2}{6}\,C'''(\xi)$$
+```math
+D_+(h) - C'(S) = \tfrac{h}{2}\,C''(\xi), \qquad D_0(h) - C'(S) = \tfrac{h^2}{6}\,C'''(\xi)
+```
 
-**Read it aloud:** forward is off by half the step times the second derivative at some unknown point $\xi$ ("xi") in the range; central by a sixth of the step squared times the third, at another such point.
+**Read it aloud:** forward is off by half the step times the second derivative at some unknown point $`\xi`$ ("xi") in the range; central by a sixth of the step squared times the third, at another such point.
 
-If each computed price is off by at most $\eta$ dollars, the total errors $E_+$ and $E_0$, each the distance from a computed quotient to the true delta, obey
+If each computed price is off by at most $`\eta`$ dollars, the total errors $`E_+`$ and $`E_0`$, each the distance from a computed quotient to the true delta, obey
 
-$$E_+(h) \le \frac{h M_2}{2} + \frac{2\eta}{h}, \qquad E_0(h) \le \frac{h^2 M_3}{6} + \frac{\eta}{h}$$
+```math
+E_+(h) \le \frac{h M_2}{2} + \frac{2\eta}{h}, \qquad E_0(h) \le \frac{h^2 M_3}{6} + \frac{\eta}{h}
+```
 
 and the bounds are smallest at
 
-$$h^\ast_+ = 2\sqrt{\eta / M_2}, \qquad h^\ast_0 = \left(3\eta / M_3\right)^{1/3}.$$
+```math
+h^\ast_+ = 2\sqrt{\eta / M_2}, \qquad h^\ast_0 = \left(3\eta / M_3\right)^{1/3}.
+```
 
 **Read it aloud:** the best forward bump grows as the square root of the noise, the best central bump as its cube root.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$ | the call price in dollars, as a function of the stock price | 9.227005508154 at 100 | — |
-| $S$ | the stock price where the delta is wanted, in dollars | 100 dollars | moves the target delta itself |
-| $h$, $h^\ast$ | the bump in dollars, and the bump that minimises the error bound | 1 dollar down to $10^{-12}$ dollars; best central bump 0.00024 | truncation grows, rounding shrinks |
-| $C'$ | the delta: dollars of option per dollar of stock | 0.586851146135 | — |
-| $C''$, $C'''$ | the second derivative (gamma, per dollar) and the third (per dollar squared) | 0.018950578755 and −0.000426388022 | larger truncation error at every bump |
-| $D_+$, $D_0$; $E_+$, $E_0$ | forward and central difference quotients; their total errors | 0.596254007798 and 0.586780115041 at a 1-dollar bump | — |
-| $\eta$, $\varepsilon$ | the most a computed price is off; $\varepsilon$ = $2^{-52}$, the gap between 1 and the next stored double-precision number | 2.05e-15 dollars in full precision, 0.005 on cent quotes | best bump grows |
-| $M_2$, $M_3$, $\xi$ | the largest sizes of $C''$ and $C'''$ over the bumped range, and an unknown point inside it | near 0.018950578755 and 0.000426388022 | best bump shrinks |
+| $`C`$ | the call price in dollars, as a function of the stock price | 9.227005508154 at 100 | — |
+| $`S`$ | the stock price where the delta is wanted, in dollars | 100 dollars | moves the target delta itself |
+| $`h`$, $`h^\ast`$ | the bump in dollars, and the bump that minimises the error bound | 1 dollar down to $`10^{-12}`$ dollars; best central bump 0.00024 | truncation grows, rounding shrinks |
+| $`C'`$ | the delta: dollars of option per dollar of stock | 0.586851146135 | — |
+| $`C''`$, $`C'''`$ | the second derivative (gamma, per dollar) and the third (per dollar squared) | 0.018950578755 and −0.000426388022 | larger truncation error at every bump |
+| $`D_+`$, $`D_0`$; $`E_+`$, $`E_0`$ | forward and central difference quotients; their total errors | 0.596254007798 and 0.586780115041 at a 1-dollar bump | — |
+| $`\eta`$, $`\varepsilon`$ | the most a computed price is off; $`\varepsilon`$ = $`2^{-52}`$, the gap between 1 and the next stored double-precision number | 2.05e-15 dollars in full precision, 0.005 on cent quotes | best bump grows |
+| $`M_2`$, $`M_3`$, $`\xi`$ | the largest sizes of $`C''`$ and $`C'''`$ over the bumped range, and an unknown point inside it | near 0.018950578755 and 0.000426388022 | best bump shrinks |
 
 ### When it holds
 
-- **Smooth across the bumped range.** The laws need $C''$ (forward) or $C'''$ (central) continuous from $S - h$ to $S + h$. At a kink there is no derivative to find: the option's value on expiry day, $\max(S - 100, 0)$, has a corner at 100, where forward gives 1 and central 0.5 at every step.
-- **Bounded noise.** Double precision gives $\eta$ near $\varepsilon$ times the price; cent quotes give $\eta$ = 0.005. Simulated prices carry random noise instead, the business of [Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md).
-- **Rough inputs to the best step.** $M_2$, $M_3$ and $\eta$ are guesses; a factor of ten wrong moves the best step only by the square or cube root of ten, and the error is flat near its minimum.
+- **Smooth across the bumped range.** The laws need $`C''`$ (forward) or $`C'''`$ (central) continuous from $`S - h`$ to $`S + h`$. At a kink there is no derivative to find: the option's value on expiry day, $`\max(S - 100, 0)`$, has a corner at 100, where forward gives 1 and central 0.5 at every step.
+- **Bounded noise.** Double precision gives $`\eta`$ near $`\varepsilon`$ times the price; cent quotes give $`\eta`$ = 0.005. Simulated prices carry random noise instead, the business of [Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md).
+- **Rough inputs to the best step.** $`M_2`$, $`M_3`$ and $`\eta`$ are guesses; a factor of ten wrong moves the best step only by the square or cube root of ten, and the error is flat near its minimum.
 
 ---
 
@@ -87,35 +95,35 @@ A difference quotient is a chord's slope; the derivative is the tangent's. [Tayl
 
 ### Step 1: the forward error is proportional to the step
 
-Taylor's theorem with one term and a remainder gives $C(S+h) = C(S) + h\,C'(S) + \tfrac{h^2}{2} C''(\xi)$ for some $\xi$ between $S$ and $S+h$. Subtract $C(S)$ and divide by $h$: the forward difference equals the delta plus $\tfrac{h}{2} C''(\xi)$. Halve the bump, halve the error. At a one-cent bump the ratio of actual to predicted is 0.99993.
+Taylor's theorem with one term and a remainder gives $`C(S+h) = C(S) + h\,C'(S) + \tfrac{h^2}{2} C''(\xi)`$ for some $`\xi`$ between $`S`$ and $`S+h`$. Subtract $`C(S)`$ and divide by $`h`$: the forward difference equals the delta plus $`\tfrac{h}{2} C''(\xi)`$. Halve the bump, halve the error. At a one-cent bump the ratio of actual to predicted is 0.99993.
 
 ### Step 2: the central error is proportional to the step squared
 
-Expand one term further, once up and once down. The expansions differ in sign only in their odd terms, so subtracting cancels the price and the curvature term exactly. Divide by $2h$: the error is $\tfrac{h^2}{6}$ times a third derivative. Halve the bump, quarter the error. At a ten-cent bump the ratio of actual to predicted is 1.00000.
+Expand one term further, once up and once down. The expansions differ in sign only in their odd terms, so subtracting cancels the price and the curvature term exactly. Divide by $`2h`$: the error is $`\tfrac{h^2}{6}`$ times a third derivative. Halve the bump, quarter the error. At a ten-cent bump the ratio of actual to predicted is 1.00000.
 
 <details>
 <summary>Detailed proof: the central error</summary>
 
-Suppose $C'''$ is continuous on the interval from $S-h$ to $S+h$. Taylor's theorem with remainder gives
-$C(S+h) = C(S) + hC'(S) + \tfrac{h^2}{2}C''(S) + \tfrac{h^3}{6}C'''(\xi_+)$ and
-$C(S-h) = C(S) - hC'(S) + \tfrac{h^2}{2}C''(S) - \tfrac{h^3}{6}C'''(\xi_-)$,
-with $\xi_+$ in $(S, S+h)$ and $\xi_-$ in $(S-h, S)$. Subtracting and dividing by $2h$:
-$D_0(h) - C'(S) = \tfrac{h^2}{6}\cdot\tfrac{C'''(\xi_+) + C'''(\xi_-)}{2}$.
-The average lies between the two values, and a continuous function takes every value between two of its values (the intermediate value theorem). So some $\xi$ between $\xi_-$ and $\xi_+$ has $C'''(\xi)$ equal to that average, which gives $D_0(h) - C'(S) = \tfrac{h^2}{6}C'''(\xi)$. The forward case is one term shorter and needs no averaging.
+Suppose $`C'''`$ is continuous on the interval from $`S-h`$ to $`S+h`$. Taylor's theorem with remainder gives
+$`C(S+h) = C(S) + hC'(S) + \tfrac{h^2}{2}C''(S) + \tfrac{h^3}{6}C'''(\xi_+)`$ and
+$`C(S-h) = C(S) - hC'(S) + \tfrac{h^2}{2}C''(S) - \tfrac{h^3}{6}C'''(\xi_-)`$,
+with $`\xi_+`$ in $`(S, S+h)`$ and $`\xi_-`$ in $`(S-h, S)`$. Subtracting and dividing by $`2h`$:
+$`D_0(h) - C'(S) = \tfrac{h^2}{6}\cdot\tfrac{C'''(\xi_+) + C'''(\xi_-)}{2}`$.
+The average lies between the two values, and a continuous function takes every value between two of its values (the intermediate value theorem). So some $`\xi`$ between $`\xi_-`$ and $`\xi_+`$ has $`C'''(\xi)`$ equal to that average, which gives $`D_0(h) - C'(S) = \tfrac{h^2}{6}C'''(\xi)`$. The forward case is one term shorter and needs no averaging.
 
 </details>
 
 ### Step 3: noise in the prices is divided by the step
 
-A computer stores each price to a fixed number of binary digits, so each carries an error up to $\eta$. A difference of two prices can be off by $2\eta$; forward divides that by $h$, central by $2h$, giving $2\eta/h$ and $\eta/h$. Subtracting two nearly equal prices leaves only their differing digits: this loss is called **cancellation**.
+A computer stores each price to a fixed number of binary digits, so each carries an error up to $`\eta`$. A difference of two prices can be off by $`2\eta`$; forward divides that by $`h`$, central by $`2h`$, giving $`2\eta/h`$ and $`\eta/h`$. Subtracting two nearly equal prices leaves only their differing digits: this loss is called **cancellation**.
 
 ### Step 4: the best step balances the two
 
-The central bound is a rising term, $h^2 M_3/6$, plus a falling one, $\eta/h$. Its rate of change with $h$ is $h M_3/3 - \eta/h^2$. That is zero where $h^3 = 3\eta/M_3$, and the bound is smallest there ([Optimisation](03-monotonicity-and-optimisation.md)). The forward bound, $hM_2/2 + 2\eta/h$, has rate $M_2/2 - 2\eta/h^2$, zero at $h = 2\sqrt{\eta/M_2}$.
+The central bound is a rising term, $`h^2 M_3/6`$, plus a falling one, $`\eta/h`$. Its rate of change with $`h`$ is $`h M_3/3 - \eta/h^2`$. That is zero where $`h^3 = 3\eta/M_3`$, and the bound is smallest there ([Optimisation](03-monotonicity-and-optimisation.md)). The forward bound, $`hM_2/2 + 2\eta/h`$, has rate $`M_2/2 - 2\eta/h^2`$, zero at $`h = 2\sqrt{\eta/M_2}`$.
 
-In full precision, $\eta$ = 2.05e-15 dollars, giving best bumps of 0.00000066 (forward) and 0.00024 (central). The run's best rows are 1e-6 and 1e-4: within a factor of ten, as much as a rule built on bounds can promise.
+In full precision, $`\eta`$ = 2.05e-15 dollars, giving best bumps of 0.00000066 (forward) and 0.00024 (central). The run's best rows are 1e-6 and 1e-4: within a factor of ten, as much as a rule built on bounds can promise.
 
-Combining central differences at $h$ and $2h$ cancels the $h^2$ term, called Richardson extrapolation; Forward, backward and central differences builds it.
+Combining central differences at $`h`$ and $`2h`$ cancels the $`h^2`$ term, called Richardson extrapolation; Forward, backward and central differences builds it.
 
 ---
 
@@ -131,7 +139,7 @@ Combining central differences at $h$ and $2h$ cancels the $h^2$ term, called Ric
 | forward error, and its law | h × 0.018950578755 / 2 | +0.009402861664 against +0.009475289378 |
 | central error, and its law | h^2 × (−0.000426388022) / 6 | −0.000071031094 against −0.000071064670 |
 
-On cent quotes, $\eta$ = 0.005 and the best bumps move to 1.03 dollars (forward) and 3.28 dollars (central). Central bumps of 1 and 3 dollars give 0.5850 and 0.5867.
+On cent quotes, $`\eta`$ = 0.005 and the best bumps move to 1.03 dollars (forward) and 3.28 dollars (central). Central bumps of 1 and 3 dollars give 0.5850 and 0.5867.
 
 ### What breaks if you drop a piece
 
@@ -141,7 +149,7 @@ On cent quotes, $\eta$ = 0.005 and the best bumps move to 1.03 dollars (forward)
 | Forward instead of central at 1 dollar | 0.596254007798, error 10^−2.03 against 10^−4.15 | The curvature term was left in |
 | One-cent bump on cent-quoted prices | 0.5000 | One cent of quote change over a two-cent span |
 | Ten-cent bump on cent-quoted prices | 0.6000 | Whole-cent quotes, still too coarse for the span |
-| Bump the expiry value $\max(S - 100, 0)$ at 100 | forward 1.000, central 0.500, at $1 and at 1e-6 | A corner: no derivative for either to find |
+| Bump the expiry value $`\max(S - 100, 0)`$ at 100 | forward 1.000, central 0.500, at $1 and at 1e-6 | A corner: no derivative for either to find |
 
 The code prints all five.
 
@@ -149,7 +157,7 @@ The code prints all five.
 
 ## Code, from first principles, and it actually runs
 
-The price formula needs the area under the bell curve $e^{-x^2/2}/\sqrt{2\pi}$ to the left of a point, written N in the code and summed from its own series. Road one bumps the price at 13 step sizes, forward and central. Road two takes the delta and the second and third derivatives from their closed forms. The asserts check that the roads meet, that both truncation laws hold, that the tiniest bump loses to the best, and that cent quotes need a big bump.
+The price formula needs the area under the bell curve $`e^{-x^2/2}/\sqrt{2\pi}`$ to the left of a point, written N in the code and summed from its own series. Road one bumps the price at 13 step sizes, forward and central. Road two takes the delta and the second and third derivatives from their closed forms. The asserts check that the roads meet, that both truncation laws hold, that the tiniest bump loses to the best, and that cent quotes need a big bump.
 
 ### Python
 
@@ -330,12 +338,12 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves both truncation laws and the central error bound for every smooth $C$ and positive bump, plus the kink and cent cases.
+Lean proves both truncation laws and the central error bound for every smooth $`C`$ and positive bump, plus the kink and cent cases.
 
-- Let $C$ have a continuous third derivative from $S - h$ to $S + h$, with $h > 0$. Then the central difference misses the delta by exactly $\tfrac{h^2}{6} C'''(\xi)$, for some $\xi$ strictly inside that range.
-- Let $C$ have a continuous second derivative over the same range. Then the forward difference misses the delta by exactly $\tfrac{h}{2} C''(\xi)$, for some $\xi$ between $S$ and $S + h$.
-- Add that $C'''$ stays within $M_3$ in size there, and each of the two computed prices is off by at most $\eta$. Then the central total error is at most $h^2 M_3/6 + \eta/h$.
-- The expiry value $\max(S - 100, 0)$, bumped at 100: forward gives 1 and central gives 1/2, at a 1-dollar bump and at a 1e-6 bump.
+- Let $`C`$ have a continuous third derivative from $`S - h`$ to $`S + h`$, with $`h > 0`$. Then the central difference misses the delta by exactly $`\tfrac{h^2}{6} C'''(\xi)`$, for some $`\xi`$ strictly inside that range.
+- Let $`C`$ have a continuous second derivative over the same range. Then the forward difference misses the delta by exactly $`\tfrac{h}{2} C''(\xi)`$, for some $`\xi`$ between $`S`$ and $`S + h`$.
+- Add that $`C'''`$ stays within $`M_3`$ in size there, and each of the two computed prices is off by at most $`\eta`$. Then the central total error is at most $`h^2 M_3/6 + \eta/h`$.
+- The expiry value $`\max(S - 100, 0)`$, bumped at 100: forward gives 1 and central gives 1/2, at a 1-dollar bump and at a 1e-6 bump.
 - On cent quotes, a one-cent bump each way gives one cent over a two-cent span: 1/2.
 
 The forward total-error bound, the best steps, the Black–Scholes numbers, the chart and the tables are left to the Python and Rust checks.

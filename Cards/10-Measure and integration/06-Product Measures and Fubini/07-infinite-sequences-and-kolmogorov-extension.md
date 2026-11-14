@@ -26,33 +26,43 @@ Each row is the bottom edge of the board, 0 to 1 m, shaded where one digit equal
 
 ## The formula
 
-Notation first, in words. $\Omega$ is the bottom edge of the board, the interval from 0 up to but not including 1, and $\lambda$ is length on it: Lebesgue measure ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). A uniform dart is a point drawn with probability $\lambda$. The n-th binary digit of a point x is $d_n$: double x n times, keep the whole-number part, and read whether it is odd.
+Notation first, in words. $`\Omega`$ is the bottom edge of the board, the interval from 0 up to but not including 1, and $`\lambda`$ is length on it: Lebesgue measure ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). A uniform dart is a point drawn with probability $`\lambda`$. The n-th binary digit of a point x is $`d_n`$: double x n times, keep the whole-number part, and read whether it is odd.
 
-$$d_n(x) = \lfloor 2^n x \rfloor \bmod 2$$
+```math
+d_n(x) = \lfloor 2^n x \rfloor \bmod 2
+```
 
-Here $\lfloor y \rfloor$ is the whole-number part of y, and "mod 2" is the remainder on division by 2.
+Here $`\lfloor y \rfloor`$ is the whole-number part of y, and "mod 2" is the remainder on division by 2.
 
-**The digit theorem.** For every n and every pattern of 0s and 1s $e_1, \dots, e_n$:
+**The digit theorem.** For every n and every pattern of 0s and 1s $`e_1, \dots, e_n`$:
 
-$$\lambda\{x : d_1(x) = e_1, \dots, d_n(x) = e_n\} = 2^{-n} = \prod_{i=1}^{n} \lambda\{x : d_i(x) = e_i\}$$
+```math
+\lambda\{x : d_1(x) = e_1, \dots, d_n(x) = e_n\} = 2^{-n} = \prod_{i=1}^{n} \lambda\{x : d_i(x) = e_i\}
+```
 
 **Read it aloud:** any fixed pattern in the first n digits has chance one half multiplied by itself n times, the product of the digits' separate chances; so the digits are independent fair coins.
 
-**The splitting theorem.** Every whole number n ≥ 1 is a power of 2 times an odd number in exactly one way, $n = 2^{k-1}(2j - 1)$. Call (k, j) the slot of position n. Pile k collects the digits in slots (k, 1), (k, 2), (k, 3), … and reads them as a new binary number:
+**The splitting theorem.** Every whole number n ≥ 1 is a power of 2 times an odd number in exactly one way, $`n = 2^{k-1}(2j - 1)`$. Call (k, j) the slot of position n. Pile k collects the digits in slots (k, 1), (k, 2), (k, 3), … and reads them as a new binary number:
 
-$$U_k = \sum_{j=1}^{\infty} d_{2^{k-1}(2j-1)}\, 2^{-j}, \qquad k = 1, 2, 3, \dots$$
+```math
+U_k = \sum_{j=1}^{\infty} d_{2^{k-1}(2j-1)}\, 2^{-j}, \qquad k = 1, 2, 3, \dots
+```
 
 **Read it aloud:** the k-th new number takes as its j-th digit the old digit in slot (k, j).
 
-Then $U_1, U_2, U_3, \dots$ are independent and each is uniform on the unit interval. For any distribution function $F$ with quantile map $Q(u) = \inf\{t : F(t) \ge u\}$ for 0 < u < 1, the draws $X_k = Q(U_k)$ are independent, each with law $F$ ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). The pairs $(U_1, U_2), (U_3, U_4), \dots$ are independent darts on the board.
+Then $`U_1, U_2, U_3, \dots`$ are independent and each is uniform on the unit interval. For any distribution function $`F`$ with quantile map $`Q(u) = \inf\{t : F(t) \ge u\}`$ for 0 < u < 1, the draws $`X_k = Q(U_k)`$ are independent, each with law $`F`$ ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). The pairs $`(U_1, U_2), (U_3, U_4), \dots`$ are independent darts on the board.
 
-**Kolmogorov's extension theorem.** For every n let $\mu_n$ be a probability on the Borel sets of $\mathbb{R}^n$, the n-long lists of reals. The family is **consistent** when adding a coordinate and asking nothing of it changes nothing:
+**Kolmogorov's extension theorem.** For every n let $`\mu_n`$ be a probability on the Borel sets of $`\mathbb{R}^n`$, the n-long lists of reals. The family is **consistent** when adding a coordinate and asking nothing of it changes nothing:
 
-$$\mu_{n+1}(A \times \mathbb{R}) = \mu_n(A) \quad \text{for every } n \text{ and every Borel set } A \subseteq \mathbb{R}^n$$
+```math
+\mu_{n+1}(A \times \mathbb{R}) = \mu_n(A) \quad \text{for every } n \text{ and every Borel set } A \subseteq \mathbb{R}^n
+```
 
-Then there is exactly one probability $P$ on the whole sequences $\mathbb{R}^{\mathbb{N}}$, with the product sigma-algebra, such that
+Then there is exactly one probability $`P`$ on the whole sequences $`\mathbb{R}^{\mathbb{N}}`$, with the product sigma-algebra, such that
 
-$$P\{\omega : (\omega_1, \dots, \omega_n) \in A\} = \mu_n(A) \quad \text{for every } n \text{ and every Borel set } A \subseteq \mathbb{R}^n$$
+```math
+P\{\omega : (\omega_1, \dots, \omega_n) \in A\} = \mu_n(A) \quad \text{for every } n \text{ and every Borel set } A \subseteq \mathbb{R}^n
+```
 
 **Read it aloud:** if the laws of the first n terms fit together, one law for the whole infinite sequence has all of them as its pieces.
 
@@ -60,19 +70,19 @@ The product sigma-algebra is the smallest sigma-algebra holding every **cylinder
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\lambda$ | the unit interval and length on it | the board's bottom edge, 1 m | — |
-| $x$ | the dart's distance from the left edge | 0.7236 m | its digits change |
-| $d_n$, $n$ | the n-th binary digit of x, and its position | digits 1, 0, 1, 1 | a later digit halves a finer interval |
-| $e_1$, $e_n$ | a fixed pattern of 0s and 1s to match | 1, 0, 1 | a longer pattern halves the chance each time |
-| $U_k$, $k$, $j$ | the k-th new uniform; pile number, and place inside the pile | U_1 = 0.900990 | a higher k takes sparser positions |
-| $F$, $Q$ | a distribution function, and its quantile map | a fair die: Q(u) = ⌊6u⌋ + 1 a.e. | a larger u gives a larger value |
-| $X_k$ | the k-th draw with law F | die rolls 6, 1, 6, 5 | — |
-| $\mu_n$ | the law of the first n terms, a probability on n-long lists | sticky coin: 0.32 on three heads | — |
-| $A$ | a Borel set of n-long lists | "heads, heads, heads" | a bigger A has a bigger chance |
-| $P$, $\omega$, $\omega_i$ | the law of the whole sequence; one sequence; its i-th term | all sticky-coin sequences | — |
-| $T$, $J$, $\mu_J$ | any index set; a finite part of it; the law on the coordinates in J | T = the whole numbers | — |
-| $A_k$, $B_i$, $C_i$, $D_m$ | sets used inside the folded proofs | — | — |
-| $r$, $N$, $m$, $i$, $\varepsilon$, $s(k, j)$ | in the steps and proofs: how many positions are fixed, and the last of them; the whole number a pattern spells (Step 1), later how many digits of a pile are read, with i the number they spell; a small positive floor on chances; the position in slot (k, j), $2^{k-1}(2j-1)$ | positions 2, 5, 7: r = 3, N = 7; pattern 1, 0, 1: m = 5; s(2, 3) = 10 | — |
+| $`\Omega`$, $`\lambda`$ | the unit interval and length on it | the board's bottom edge, 1 m | — |
+| $`x`$ | the dart's distance from the left edge | 0.7236 m | its digits change |
+| $`d_n`$, $`n`$ | the n-th binary digit of x, and its position | digits 1, 0, 1, 1 | a later digit halves a finer interval |
+| $`e_1`$, $`e_n`$ | a fixed pattern of 0s and 1s to match | 1, 0, 1 | a longer pattern halves the chance each time |
+| $`U_k`$, $`k`$, $`j`$ | the k-th new uniform; pile number, and place inside the pile | U_1 = 0.900990 | a higher k takes sparser positions |
+| $`F`$, $`Q`$ | a distribution function, and its quantile map | a fair die: Q(u) = ⌊6u⌋ + 1 a.e. | a larger u gives a larger value |
+| $`X_k`$ | the k-th draw with law F | die rolls 6, 1, 6, 5 | — |
+| $`\mu_n`$ | the law of the first n terms, a probability on n-long lists | sticky coin: 0.32 on three heads | — |
+| $`A`$ | a Borel set of n-long lists | "heads, heads, heads" | a bigger A has a bigger chance |
+| $`P`$, $`\omega`$, $`\omega_i`$ | the law of the whole sequence; one sequence; its i-th term | all sticky-coin sequences | — |
+| $`T`$, $`J`$, $`\mu_J`$ | any index set; a finite part of it; the law on the coordinates in J | T = the whole numbers | — |
+| $`A_k`$, $`B_i`$, $`C_i`$, $`D_m`$ | sets used inside the folded proofs | — | — |
+| $`r`$, $`N`$, $`m`$, $`i`$, $`\varepsilon`$, $`s(k, j)`$ | in the steps and proofs: how many positions are fixed, and the last of them; the whole number a pattern spells (Step 1), later how many digits of a pile are read, with i the number they spell; a small positive floor on chances; the position in slot (k, j), $`2^{k-1}(2j-1)`$ | positions 2, 5, 7: r = 3, N = 7; pattern 1, 0, 1: m = 5; s(2, 3) = 10 | — |
 
 ### When it holds
 
@@ -80,7 +90,7 @@ The product sigma-algebra is the smallest sigma-algebra holding every **cylinder
 - **The piles share no digits.** U built from digits 1, 2, 3, … and V from digits 2, 3, 4, … are correlated at 0.5.
 - **The finite laws are consistent.** "Uniform over the words with an even number of heads" gives the first toss heads with chance 0 on one toss and 0.5 on two; no P has both as pieces.
 - **Coordinates are real, or live in a space like the reals.** The existence proof uses that a probability on n-long lists of reals sits almost entirely on a closed, bounded set. On arbitrary coordinate spaces the theorem can fail.
-- **Questions touch countably many coordinates.** Any index set $T$ works, with laws $\mu_J$ on each finite part $J$ that agree whenever coordinates are dropped. But every event of the product sigma-algebra depends on countably many coordinates, so for a process in continuous time "the path is continuous" is not an event. Brownian motion, in wing 11, needs a further step.
+- **Questions touch countably many coordinates.** Any index set $`T`$ works, with laws $`\mu_J`$ on each finite part $`J`$ that agree whenever coordinates are dropped. But every event of the product sigma-algebra depends on countably many coordinates, so for a process in continuous time "the path is continuous" is not an event. Brownian motion, in wing 11, needs a further step.
 
 ---
 
@@ -88,11 +98,11 @@ The product sigma-algebra is the smallest sigma-algebra holding every **cylinder
 
 ### Step 0: a pattern in the first n digits is one interval of length 2^-n
 
-Fixing the first digit to 1 keeps the right half of the edge. Fixing the second to 0 keeps the left half of that. Each fixed digit halves an interval, so n fixed digits leave one interval of length $2^{-n}$. Halving multiplies lengths, and so the chances multiply. The rest is bookkeeping about which digits are fixed.
+Fixing the first digit to 1 keeps the right half of the edge. Fixing the second to 0 keeps the left half of that. Each fixed digit halves an interval, so n fixed digits leave one interval of length $`2^{-n}`$. Halving multiplies lengths, and so the chances multiply. The rest is bookkeeping about which digits are fixed.
 
 ### Step 1: the digit events, exactly
 
-Read $e_1 e_2 \dots e_n$ as a whole number m in binary. The first n digits of x match exactly when $\lfloor 2^n x \rfloor = m$: when x lies from $m/2^n$ up to but not including $(m+1)/2^n$, an interval of length $2^{-n}$.
+Read $`e_1 e_2 \dots e_n`$ as a whole number m in binary. The first n digits of x match exactly when $`\lfloor 2^n x \rfloor = m`$: when x lies from $`m/2^n`$ up to but not including $`(m+1)/2^n`$, an interval of length $`2^{-n}`$.
 
 The dart: doubling 0.7236 gives 1.4472, so the first digit is 1; keep 0.4472 and double to 0.8944, digit 0; then 1.7888, digit 1; then 1.5776, digit 1. The pattern 1, 0, 1 is m = 5 with n = 3, the interval from 5/8 = 0.625 up to 6/8, and 0.7236 is inside it.
 
@@ -100,7 +110,7 @@ The dart: doubling 0.7236 gives 1.4472, so the first digit is 1; keep 0.4472 and
 
 Fix positions 2, 5 and 7 to 1, 0, 1 and leave the rest free. The four free positions among the first seven each take 0 or 1, so the event is 2^4 = 16 disjoint intervals of length 2^-7: 16/128 = 0.125 = 0.5^3.
 
-In general, r fixed positions, the last at position N, give 2^(N−r) intervals of length 2^-N: chance 2^-r, the product of r halves. A digit's information is the four sets ∅, "digit is 0", "digit is 1" and the whole edge, and the product rule on every finite subfamily of such events is the definition of independence ([Independence as a product](04-independence-as-a-product-measure.md)). So $d_1, d_2, d_3, \dots$ are independent fair coins. The code checks all 8,190 patterns of length 1 to 12.
+In general, r fixed positions, the last at position N, give 2^(N−r) intervals of length 2^-N: chance 2^-r, the product of r halves. A digit's information is the four sets ∅, "digit is 0", "digit is 1" and the whole edge, and the product rule on every finite subfamily of such events is the definition of independence ([Independence as a product](04-independence-as-a-product-measure.md)). So $`d_1, d_2, d_3, \dots`$ are independent fair coins. The code checks all 8,190 patterns of length 1 to 12.
 
 A point such as 0.5 has two binary expansions, 0.1000… and 0.0111…; the rule above always picks the first. Such points are fractions with a power of 2 below the line, countably many, so their total length is 0 and no chance on this card changes.
 
@@ -112,7 +122,7 @@ The dart's first sixteen positions go to piles 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5. 
 
 ### Step 4: each pile is a uniform number
 
-The digits of pile k are a subsequence of independent fair coins, so any pattern in its first m digits has chance $2^{-m}$. So $U_k$ lands in each interval from $i/2^m$ to $(i+1)/2^m$ with chance equal to its length. These dyadic intervals are nested or disjoint, so with ∅ they form a pi-system, a family closed under overlap, and they generate the Borel sets. Two probabilities that agree on a generating pi-system agree everywhere ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)), so the law of $U_k$ is length.
+The digits of pile k are a subsequence of independent fair coins, so any pattern in its first m digits has chance $`2^{-m}`$. So $`U_k`$ lands in each interval from $`i/2^m`$ to $`(i+1)/2^m`$ with chance equal to its length. These dyadic intervals are nested or disjoint, so with ∅ they form a pi-system, a family closed under overlap, and they generate the Borel sets. Two probabilities that agree on a generating pi-system agree everywhere ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)), so the law of $`U_k`$ is length.
 
 ### Step 5: different piles are independent
 
@@ -123,21 +133,21 @@ The code checks this at level 12. The first 12 old digits give pile 1 six digits
 <details>
 <summary>Detailed proof: the piles are independent uniforms</summary>
 
-**Setting.** $\lambda$ on the Borel sets of $\Omega$; the $d_n$ are independent fair coins (Step 2); $s(k, j) = 2^{k-1}(2j-1)$ is one-to-one from pairs onto positions.
+**Setting.** $`\lambda`$ on the Borel sets of $`\Omega`$; the $`d_n`$ are independent fair coins (Step 2); $`s(k, j) = 2^{k-1}(2j-1)`$ is one-to-one from pairs onto positions.
 
-**1. Each $U_k$ is measurable.** Its partial sums are step functions, and a limit of measurable functions is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
+**1. Each $`U_k`$ is measurable.** Its partial sums are step functions, and a limit of measurable functions is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
 
-**2. Each $U_k$ is uniform.** Let $D_m$ be the event that every pile-k digit after the m-th is 1. It lies inside "pile digits m + 1 to r are all 1", of chance $2^{-(r-m)}$ for every r, so it is null, and so is the union over m. Off that null set, $U_k \in [i/2^m, (i+1)/2^m)$ exactly when the first m pile digits spell i, of chance $2^{-m}$ by Step 2. The law of $U_k$ and $\lambda$ agree on the dyadic intervals, a pi-system generating the Borel sets, and both have total 1; the uniqueness theorem makes them equal.
+**2. Each $`U_k`$ is uniform.** Let $`D_m`$ be the event that every pile-k digit after the m-th is 1. It lies inside "pile digits m + 1 to r are all 1", of chance $`2^{-(r-m)}`$ for every r, so it is null, and so is the union over m. Off that null set, $`U_k \in [i/2^m, (i+1)/2^m)`$ exactly when the first m pile digits spell i, of chance $`2^{-m}`$ by Step 2. The law of $`U_k`$ and $`\lambda`$ agree on the dyadic intervals, a pi-system generating the Borel sets, and both have total 1; the uniqueness theorem makes them equal.
 
-**3. $U_1, \dots, U_r$ are independent.** For each k let the events "the first m digits of pile k spell i", over all m and i, with ∅ and $\Omega$, be the family for pile k. It is closed under overlap and generates the information of pile k's digits, which contains that of $U_k$. Pick $A_k$ from the family for pile k, for k = 1 to r. The overlap of the $A_k$ fixes old digits in distinct slots, so by Step 2 its chance is the product of their chances. Independence on generating pi-systems gives independence of the information of $U_1, \dots, U_r$, by the Dynkin argument of [Independence as a product](04-independence-as-a-product-measure.md) applied one family at a time, the other r − 1 events held fixed; an infinite family is independent when every finite part is.
+**3. $`U_1, \dots, U_r`$ are independent.** For each k let the events "the first m digits of pile k spell i", over all m and i, with ∅ and $`\Omega`$, be the family for pile k. It is closed under overlap and generates the information of pile k's digits, which contains that of $`U_k`$. Pick $`A_k`$ from the family for pile k, for k = 1 to r. The overlap of the $`A_k`$ fixes old digits in distinct slots, so by Step 2 its chance is the product of their chances. Independence on generating pi-systems gives independence of the information of $`U_1, \dots, U_r`$, by the Dynkin argument of [Independence as a product](04-independence-as-a-product-measure.md) applied one family at a time, the other r − 1 events held fixed; an infinite family is independent when every finite part is.
 
-**4. Other laws, and darts.** $Q$ is non-decreasing, so measurable, and $Q(U_k)$ has law F ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). The event $Q(U_k) \in B$ is the event $U_k \in Q^{-1}(B)$, so functions of independent variables stay independent. The pairs of uniforms have law length times length on the square ([Product measure](02-product-measure.md)).
+**4. Other laws, and darts.** $`Q`$ is non-decreasing, so measurable, and $`Q(U_k)`$ has law F ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). The event $`Q(U_k) \in B`$ is the event $`U_k \in Q^{-1}(B)`$, so functions of independent variables stay independent. The pairs of uniforms have law length times length on the square ([Product measure](02-product-measure.md)).
 
 </details>
 
 ### Step 6: any law, and more darts
 
-For a fair die, $Q(u) = \lfloor 6u \rfloor + 1$ except at the five points where 6u is whole, a set of length 0, and the dart's four uniforms roll 6, 1, 6, 5. Paired, they are dart 1 at (0.900990, 0.107787) and dart 2 at (0.959763, 0.764359). One throw has become a sequence of independent throws.
+For a fair die, $`Q(u) = \lfloor 6u \rfloor + 1`$ except at the five points where 6u is whole, a set of length 0, and the dart's four uniforms roll 6, 1, 6, 5. Paired, they are dart 1 at (0.900990, 0.107787) and dart 2 at (0.959763, 0.764359). One throw has become a sequence of independent throws.
 
 ### Step 7: Kolmogorov's theorem, when the terms depend on each other
 
@@ -145,28 +155,28 @@ A **sticky coin** is fair on the first toss; each later toss repeats the one bef
 
 Consistency is also necessary. If P exists, "the first n terms lie in A" and "the first n + 1 terms lie in A × ℝ" are the same set, so both laws must give it one number. The even-heads family gives 0 and 0.5, so no P exists for it.
 
-Uniqueness is Step 4's argument again: cylinder sets form a pi-system generating the product sigma-algebra. Existence is the hard half. Set P on each cylinder set by its $\mu_n$, which consistency makes unambiguous, and extend. The extension needs countable additivity on cylinder sets, and that is where real coordinates matter.
+Uniqueness is Step 4's argument again: cylinder sets form a pi-system generating the product sigma-algebra. Existence is the hard half. Set P on each cylinder set by its $`\mu_n`$, which consistency makes unambiguous, and extend. The extension needs countable additivity on cylinder sets, and that is where real coordinates matter.
 
 <details>
 <summary>Detailed proof, in outline: Kolmogorov's extension theorem</summary>
 
 Full proofs: Billingsley, Section 36; Durrett, Theorem A.3.1.
 
-**1. Cylinder sets form an algebra**, closed under complements and finite unions: two of them can be written over a common n, where union and complement act on Borel sets of $\mathbb{R}^n$.
+**1. Cylinder sets form an algebra**, closed under complements and finite unions: two of them can be written over a common n, where union and complement act on Borel sets of $`\mathbb{R}^n`$.
 
 **2. P is well defined and finitely additive there.** A cylinder set with base A over n has base A × ℝ over n + 1, and consistency gives the same value. Disjoint cylinder sets over a common n have disjoint bases.
 
-**3. P is countably additive there.** It suffices that cylinder sets $B_1 \supseteq B_2 \supseteq \dots$ with every $P(B_i) \ge \varepsilon > 0$ share a point. For if disjoint cylinder sets $A_1, A_2, \dots$ have a cylinder set $A$ as their union, the sets $B_i = A \setminus (A_1 \cup \dots \cup A_i)$ decrease and share no point, and finite additivity gives $P(A) = P(A_1) + \dots + P(A_i) + P(B_i)$; so countable additivity is exactly $P(B_i) \to 0$. A probability on $\mathbb{R}^n$ gives each Borel set nearly its full size on a closed, bounded subset (proved in Billingsley). Shrink the base of $B_i$ that way, losing less than $\varepsilon/2^{i+1}$, and intersect the first i shrunken sets to get $C_i$ inside $B_i$ with $P(C_i) > \varepsilon/2$, so $C_i$ holds a point. Each coordinate of these points stays in a closed, bounded set, so a diagonal choice of subsequences, as in Cantor's diagonal argument, makes every coordinate converge. The limit lies in every $C_i$, since the bases are closed, hence in every $B_i$.
+**3. P is countably additive there.** It suffices that cylinder sets $`B_1 \supseteq B_2 \supseteq \dots`$ with every $`P(B_i) \ge \varepsilon > 0`$ share a point. For if disjoint cylinder sets $`A_1, A_2, \dots`$ have a cylinder set $`A`$ as their union, the sets $`B_i = A \setminus (A_1 \cup \dots \cup A_i)`$ decrease and share no point, and finite additivity gives $`P(A) = P(A_1) + \dots + P(A_i) + P(B_i)`$; so countable additivity is exactly $`P(B_i) \to 0`$. A probability on $`\mathbb{R}^n`$ gives each Borel set nearly its full size on a closed, bounded subset (proved in Billingsley). Shrink the base of $`B_i`$ that way, losing less than $`\varepsilon/2^{i+1}`$, and intersect the first i shrunken sets to get $`C_i`$ inside $`B_i`$ with $`P(C_i) > \varepsilon/2`$, so $`C_i`$ holds a point. Each coordinate of these points stays in a closed, bounded set, so a diagonal choice of subsequences, as in Cantor's diagonal argument, makes every coordinate converge. The limit lies in every $`C_i`$, since the bases are closed, hence in every $`B_i`$.
 
 **4. Extend** to the product sigma-algebra ([Caratheodory's extension theorem](../02-Length%20Done%20Properly/05-caratheodory-extension-theorem.md)).
 
 **5. Unique**, since cylinder sets are a generating pi-system ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)).
 
-Only item 3 uses real coordinates. For an arbitrary index set $T$ the proof runs on finite parts $J$, since each cylinder set involves finitely many coordinates.
+Only item 3 uses real coordinates. For an arbitrary index set $`T`$ the proof runs on finite parts $`J`$, since each cylinder set involves finitely many coordinates.
 
 </details>
 
-The sticky coin also has a road back to the dart: toss 1 is heads when $U_1 < 0.5$, and toss k + 1 repeats toss k when $U_{k+1} < 0.8$. Any sequence whose next term has a stated law given the past can be built by such conditional quantile maps; that is the Ionescu-Tulcea theorem. Kolmogorov's theorem asks only for the consistent laws of the first n terms.
+The sticky coin also has a road back to the dart: toss 1 is heads when $`U_1 < 0.5`$, and toss k + 1 repeats toss k when $`U_{k+1} < 0.8`$. Any sequence whose next term has a stated law given the past can be built by such conditional quantile maps; that is the Ionescu-Tulcea theorem. Kolmogorov's theorem asks only for the consistent laws of the first n terms.
 
 **What the code shows, and what only the proof shows.** The code checks every digit pattern of length at most 12, twenty digits of four piles, sticky-coin consistency up to 10 tosses, and 200,000 simulated darts. That every digit of every point behaves, and that every consistent family has a P, only the proofs cover.
 
@@ -590,11 +600,11 @@ The two outputs match line for line.
 
 Lean proves all three theorems in full: for every pattern, every distribution function, and every consistent family of laws on real sequences.
 
-- Take a uniform dart and any pattern of n digits. Then the pattern has chance $2^{-n}$, the product of its digits' separate chances.
-- Take a uniform dart on the unit interval. Then its digits $d_1, d_2, d_3, \dots$ are independent fair coins.
-- Take the piles of the slot rule. Then $U_1, U_2, U_3, \dots$ are independent, and each is uniform on the unit interval.
-- Take any distribution function F with quantile map Q. Then the draws $X_k = Q(U_k)$ are independent, each with law F.
-- Suppose the laws $\mu_n$ are consistent. Then exactly one probability P on whole sequences has every $\mu_n$ as the law of its first n terms.
+- Take a uniform dart and any pattern of n digits. Then the pattern has chance $`2^{-n}`$, the product of its digits' separate chances.
+- Take a uniform dart on the unit interval. Then its digits $`d_1, d_2, d_3, \dots`$ are independent fair coins.
+- Take the piles of the slot rule. Then $`U_1, U_2, U_3, \dots`$ are independent, and each is uniform on the unit interval.
+- Take any distribution function F with quantile map Q. Then the draws $`X_k = Q(U_k)`$ are independent, each with law F.
+- Suppose the laws $`\mu_n`$ are consistent. Then exactly one probability P on whole sequences has every $`\mu_n`$ as the law of its first n terms.
 - The hand numbers hold exactly as whole numbers and fractions. These include the dart's digits, the piles, the 16 cells of Step 2, the die rolls 6, 1, 6, 5 and the sticky coin's 0.32.
 - The break arithmetic holds too. The density-2x dart gives both digits 1 with chance 0.4375, not 0.46875, and the shared-digit correlation is 0.5.
 

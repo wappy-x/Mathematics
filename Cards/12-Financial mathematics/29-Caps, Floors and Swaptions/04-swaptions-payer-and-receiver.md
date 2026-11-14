@@ -40,54 +40,62 @@ Rising line: the payer, which pays when the swap rate ends above 4.30 percent. F
 
 ## The formula
 
-Notation first, in words. The underlying swap starts at $T_0$, the option's expiry, and pays fixed on dates $T_1$ to $T_n$; a small letter set low, like the $i$ in $T_i$, names which date.
+Notation first, in words. The underlying swap starts at $`T_0`$, the option's expiry, and pays fixed on dates $`T_1`$ to $`T_n`$; a small letter set low, like the $`i`$ in $`T_i`$, names which date.
 
-$D(t)$ is the discount factor: today's price of one dollar paid at time $t$. The Greek capital sigma, $\sum$, means "add up the terms for $i = 1$ to $n$". $N(x)$ is the area under the standard bell curve to the left of $x$ (see [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+$`D(t)`$ is the discount factor: today's price of one dollar paid at time $`t`$. The Greek capital sigma, $`\sum`$, means "add up the terms for $`i = 1`$ to $`n`$". $`N(x)`$ is the area under the standard bell curve to the left of $`x`$ (see [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
-$$V_{\text{pay}} = L\,A\,\big[F\,N(d_1) - K\,N(d_2)\big], \qquad V_{\text{rec}} = L\,A\,\big[K\,N(-d_2) - F\,N(-d_1)\big]$$
+```math
+V_{\text{pay}} = L\,A\,\big[F\,N(d_1) - K\,N(d_2)\big], \qquad V_{\text{rec}} = L\,A\,\big[K\,N(-d_2) - F\,N(-d_1)\big]
+```
 
 **Read it aloud:** the money value of one unit of rate on this swap, times the rate that might be received minus the rate that might be paid, each weighted by its own chance of exercise.
 
 The two ingredients come from the curve, exactly as on [The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md), only for a swap that starts later:
 
-$$A = \sum_{i=1}^{n} \alpha_i\, D(T_i), \qquad F = \frac{D(T_0) - D(T_n)}{A}$$
+```math
+A = \sum_{i=1}^{n} \alpha_i\, D(T_i), \qquad F = \frac{D(T_0) - D(T_n)}{A}
+```
 
 The two cut-offs:
 
-$$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: $d_2$ is how many standard deviations of the log swap rate separate the strike from the forward, after the lognormal drag; $d_1$ sits one standard deviation higher. No interest rate appears inside them. Every rate on the curve has already been spent building $A$ and $F$.
+In words: $`d_2`$ is how many standard deviations of the log swap rate separate the strike from the forward, after the lognormal drag; $`d_1`$ sits one standard deviation higher. No interest rate appears inside them. Every rate on the curve has already been spent building $`A`$ and $`F`$.
 
 And the identity that needs no model:
 
-$$V_{\text{pay}} - V_{\text{rec}} = L\,A\,(F - K)$$
+```math
+V_{\text{pay}} - V_{\text{rec}} = L\,A\,(F - K)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V_{\text{pay}}$, $V_{\text{rec}}$ | today's price of the payer and of the receiver swaption | 191,292.21 and 235,981.01 dollars | — |
-| $L$ | the notional: the amount the interest is worked out on, never exchanged | 10,000,000 dollars | both scale in proportion |
-| $A$, $A_T$ | the annuity: today's value of one unit of rate paid on every fixed date of the future swap, in years; $A_T$ is the same thing valued on the expiry date, unknown today | 4.204423 | both rise: each basis point is worth more money |
-| $F$ | the forward swap rate: the fixed rate that makes the swap starting at $T_0$ worth zero today | 4.1937 percent | payer rises, receiver falls |
-| $S_T$ | the five-year swap rate as it actually fixes on the expiry date | unknown today | — |
-| $K$ | the strike: the fixed rate written into the swaption | 4.30 percent | payer falls, receiver rises |
-| $\sigma$ | volatility: the yearly spread of the log of the swap rate. Say "sigma". | 30 percent, as 0.30 | both rise: a wider spread helps, the downside is already capped |
-| $T$, $T_0$ | time to expiry in years, which is also the swap's start date | 1 | both rise: more time for the rate to move |
-| $T_i$, $T_1$, $T_n$, $i$, $n$, $\alpha_i$, $\sum$ | the fixed payment dates; the first; the last; the count of a date; the number of dates; the length of period $i$ as a fraction of a year; add up over $i$ | years 2 to 6; 2; 6; 1 to 5; 5; 1 each | a longer swap adds terms to $A$ |
-| $D(t)$, $t$, $f_i$ | the discount factor at time $t$, a time in years; the one-year forward rate for year $i$, which builds it | D(1) = 0.952381 to D(6) = 0.776060; 5.00 down to 3.90 percent | — |
-| $N(x)$ | the bell-curve area left of $x$: a probability between 0 and 1 | N(d1) = 0.526538, N(d2) = 0.407713 | — |
-| $d_1$, $d_2$ | the rate-side and strike-side cut-offs, in standard deviations | 0.066569 and −0.233431 | — |
+| $`V_{\text{pay}}`$, $`V_{\text{rec}}`$ | today's price of the payer and of the receiver swaption | 191,292.21 and 235,981.01 dollars | — |
+| $`L`$ | the notional: the amount the interest is worked out on, never exchanged | 10,000,000 dollars | both scale in proportion |
+| $`A`$, $`A_T`$ | the annuity: today's value of one unit of rate paid on every fixed date of the future swap, in years; $`A_T`$ is the same thing valued on the expiry date, unknown today | 4.204423 | both rise: each basis point is worth more money |
+| $`F`$ | the forward swap rate: the fixed rate that makes the swap starting at $`T_0`$ worth zero today | 4.1937 percent | payer rises, receiver falls |
+| $`S_T`$ | the five-year swap rate as it actually fixes on the expiry date | unknown today | — |
+| $`K`$ | the strike: the fixed rate written into the swaption | 4.30 percent | payer falls, receiver rises |
+| $`\sigma`$ | volatility: the yearly spread of the log of the swap rate. Say "sigma". | 30 percent, as 0.30 | both rise: a wider spread helps, the downside is already capped |
+| $`T`$, $`T_0`$ | time to expiry in years, which is also the swap's start date | 1 | both rise: more time for the rate to move |
+| $`T_i`$, $`T_1`$, $`T_n`$, $`i`$, $`n`$, $`\alpha_i`$, $`\sum`$ | the fixed payment dates; the first; the last; the count of a date; the number of dates; the length of period $`i`$ as a fraction of a year; add up over $`i`$ | years 2 to 6; 2; 6; 1 to 5; 5; 1 each | a longer swap adds terms to $`A`$ |
+| $`D(t)`$, $`t`$, $`f_i`$ | the discount factor at time $`t`$, a time in years; the one-year forward rate for year $`i`$, which builds it | D(1) = 0.952381 to D(6) = 0.776060; 5.00 down to 3.90 percent | — |
+| $`N(x)`$ | the bell-curve area left of $`x`$: a probability between 0 and 1 | N(d1) = 0.526538, N(d2) = 0.407713 | — |
+| $`d_1`$, $`d_2`$ | the rate-side and strike-side cut-offs, in standard deviations | 0.066569 and −0.233431 | — |
 
-**Conventions verified 28 Sep 2026.** Every accrual here is set by hand to exactly one year and the fixed leg pays annually, so the arithmetic stays visible. Real contracts compute each $\alpha_i$ from calendar dates under a day-count rule named in the contract ([Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)). They also state whether exercise delivers the swap itself (physical settlement, assumed here) or a cash sum computed from a formula annuity (cash settlement).
+**Conventions verified 28 Sep 2026.** Every accrual here is set by hand to exactly one year and the fixed leg pays annually, so the arithmetic stays visible. Real contracts compute each $`\alpha_i`$ from calendar dates under a day-count rule named in the contract ([Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)). They also state whether exercise delivers the swap itself (physical settlement, assumed here) or a cash sum computed from a formula annuity (cash settlement).
 
 Premiums are quoted three ways: upfront as a percentage of notional (1.91 percent here), as basis points a year of annuity (45.50 here), or as a volatility.
 
 ### When it holds
 
-- **The swap rate spreads lognormally with one volatility.** Markets quote a different $\sigma$ at each strike, the smile ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)). Using the wrong one is off by roughly vega (the price change for one volatility point) times the error: 7,018.63 dollars per volatility point here.
+- **The swap rate spreads lognormally with one volatility.** Markets quote a different $`\sigma`$ at each strike, the smile ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)). Using the wrong one is off by roughly vega (the price change for one volatility point) times the error: 7,018.63 dollars per volatility point here.
 - **Rates stay positive.** A lognormal rate can never touch zero, and the formula cannot even be evaluated at a negative forward. Since the 2010s desks quote in normal volatility (the spread in basis points) or shifted volatility (lognormal on the rate plus a fixed shift) instead ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
 - **One exercise date.** This is a European swaption. A Bermudan swaption, exercisable on several dates, has no closed formula.
-- **One curve, no default.** The shortcut $F = (D(T_0) - D(T_n))/A$ needs the same curve to forecast and discount, and both parties to pay; otherwise the floating leg is summed coupon by coupon on its own curve ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
-- **Physical settlement.** A cash-settled swaption pays a formula annuity in place of $A_T$, so the random ratio does not cancel: the formula is then an approximation, and payer minus receiver need not equal the forward swap.
+- **One curve, no default.** The shortcut $`F = (D(T_0) - D(T_n))/A`$ needs the same curve to forecast and discount, and both parties to pay; otherwise the floating leg is summed coupon by coupon on its own curve ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
+- **Physical settlement.** A cash-settled swaption pays a formula annuity in place of $`A_T`$, so the random ratio does not cancel: the formula is then an approximation, and payer minus receiver need not equal the forward swap.
 - **Parity needs none of the rest.** It is a statement about payoffs, true for any volatility and any smile.
 
 ---
@@ -100,9 +108,9 @@ Exercise delivers not cash but a five-year stream of payments, worth whatever th
 
 ### Step 1: what exercise delivers
 
-Write $D_T(t)$ for the discount factor as it will stand on the expiry date. On that date $T_0$, a swap paying $K$ fixed and receiving floating has, by the par-swap theorem applied then, a floating leg worth $1 - D_T(T_n)$ per dollar and a fixed leg worth $K A_T$. The market's five-year swap rate then is $S_T = (1 - D_T(T_n))/A_T$. So the swap is worth $L\,A_T\,(S_T - K)$ to the fixed payer.
+Write $`D_T(t)`$ for the discount factor as it will stand on the expiry date. On that date $`T_0`$, a swap paying $`K`$ fixed and receiving floating has, by the par-swap theorem applied then, a floating leg worth $`1 - D_T(T_n)`$ per dollar and a fixed leg worth $`K A_T`$. The market's five-year swap rate then is $`S_T = (1 - D_T(T_n))/A_T`$. So the swap is worth $`L\,A_T\,(S_T - K)`$ to the fixed payer.
 
-The holder exercises only when that is positive. So the payer pays $L\,A_T \max(S_T - K, 0)$ on the expiry date and the receiver pays $L\,A_T \max(K - S_T, 0)$. The chart above is these payoffs divided by $L\,A_T$.
+The holder exercises only when that is positive. So the payer pays $`L\,A_T \max(S_T - K, 0)`$ on the expiry date and the receiver pays $`L\,A_T \max(K - S_T, 0)`$. The chart above is these payoffs divided by $`L\,A_T`$.
 
 ### Step 2: price in annuity units, and the random annuity cancels
 
@@ -112,45 +120,45 @@ Regroup that sum. Divide every payoff by the annuity it will face, and multiply 
 
 > **today's value = today's annuity × the average, under the annuity measure, of (payoff ÷ annuity on the expiry date).**
 
-For the payer, payoff ÷ annuity is $L\max(S_T - K, 0)$. The random $A_T$ has gone. What remains is $L\,A$ times the average of a plain call payoff on $S_T$.
+For the payer, payoff ÷ annuity is $`L\max(S_T - K, 0)`$. The random $`A_T`$ has gone. What remains is $`L\,A`$ times the average of a plain call payoff on $`S_T`$.
 
 <details>
 <summary>Detailed proof: the annuity weights are probabilities, and $F$ is the average swap rate</summary>
 
-Give each possible outcome on the expiry date a state price $\pi(\omega)$: the price today of one dollar paid at $T$ in that outcome and nothing otherwise. A payoff $X(\omega)$ is worth $\sum_\omega \pi(\omega)X(\omega)$ today.
+Give each possible outcome on the expiry date a state price $`\pi(\omega)`$: the price today of one dollar paid at $`T`$ in that outcome and nothing otherwise. A payoff $`X(\omega)`$ is worth $`\sum_\omega \pi(\omega)X(\omega)`$ today.
 
-Write this as $A \sum_\omega q(\omega)\,X(\omega)/A_T(\omega)$, with weights $q(\omega) = \pi(\omega)A_T(\omega)/A$. Each weight is positive, since state prices and annuities are. Their sum is $\sum \pi A_T / A$. The top, $\sum \pi A_T$, is today's price of a claim worth $A_T$ at the expiry date. Holding the five zero-coupon bonds that make up the annuity from today to $T$ is such a claim, and it costs $A$. So the weights add to one.
+Write this as $`A \sum_\omega q(\omega)\,X(\omega)/A_T(\omega)`$, with weights $`q(\omega) = \pi(\omega)A_T(\omega)/A`$. Each weight is positive, since state prices and annuities are. Their sum is $`\sum \pi A_T / A`$. The top, $`\sum \pi A_T`$, is today's price of a claim worth $`A_T`$ at the expiry date. Holding the five zero-coupon bonds that make up the annuity from today to $`T`$ is such a claim, and it costs $`A`$. So the weights add to one.
 
-Now take the payoff of a portfolio bought today: one zero-coupon bond maturing at $T_0$, less one maturing at $T_n$. At $T$ it is worth $1 - D_T(T_n) = S_T A_T$. Today it costs $D(T_0) - D(T_n) = F A$. The rule gives $F A = A \sum_\omega q(\omega)S_T(\omega)$, so the weighted average of $S_T$ is $F$. **Under the annuity measure the average future swap rate is today's forward swap rate**: the rate has no drift in these units.
+Now take the payoff of a portfolio bought today: one zero-coupon bond maturing at $`T_0`$, less one maturing at $`T_n`$. At $`T`$ it is worth $`1 - D_T(T_n) = S_T A_T`$. Today it costs $`D(T_0) - D(T_n) = F A`$. The rule gives $`F A = A \sum_\omega q(\omega)S_T(\omega)`$, so the weighted average of $`S_T`$ is $`F`$. **Under the annuity measure the average future swap rate is today's forward swap rate**: the rate has no drift in these units.
 
 </details>
 
-### Step 3: the model: a lognormal swap rate centred on $F$
+### Step 3: the model: a lognormal swap rate centred on $`F`$
 
-Step 2 fixes the average of $S_T$ at $F$ but not its spread. The model supplies it: $\ln S_T$ follows a bell curve of spread $\sigma\sqrt{T}$, centred at $\ln F - \tfrac12\sigma^2 T$. The $-\tfrac12\sigma^2 T$ is the lognormal drag that puts the average of $S_T$ itself back on $F$. This is the only assumption on the card, and the only place $\sigma$ enters.
+Step 2 fixes the average of $`S_T`$ at $`F`$ but not its spread. The model supplies it: $`\ln S_T`$ follows a bell curve of spread $`\sigma\sqrt{T}`$, centred at $`\ln F - \tfrac12\sigma^2 T`$. The $`-\tfrac12\sigma^2 T`$ is the lognormal drag that puts the average of $`S_T`$ itself back on $`F`$. This is the only assumption on the card, and the only place $`\sigma`$ enters.
 
 ### Step 4: the average is Black's bracket
 
-The average of $\max(S_T - K, 0)$ splits in two, as for the Black-Scholes call. The strike half is $K$ times the chance $S_T$ ends above $K$, which is $N(d_2)$. The rate half is the average of $S_T$ over those same outcomes; weighting outcomes by the rate slides the bell curve up one standard deviation, so it is $F\,N(d_1)$.
+The average of $`\max(S_T - K, 0)`$ splits in two, as for the Black-Scholes call. The strike half is $`K`$ times the chance $`S_T`$ ends above $`K`$, which is $`N(d_2)`$. The rate half is the average of $`S_T`$ over those same outcomes; weighting outcomes by the rate slides the bell curve up one standard deviation, so it is $`F\,N(d_1)`$.
 
-Their difference is the bracket. Multiply by $L\,A$ and the payer price is done; the receiver follows the same way with the inequalities turned round.
+Their difference is the bracket. Multiply by $`L\,A`$ and the payer price is done; the receiver follows the same way with the inequalities turned round.
 
 <details>
 <summary>The algebra behind the bracket, if wanted</summary>
 
-Write $S_T = F e^{-\frac12 v^2 + v z}$ with $v = \sigma\sqrt T$ and $z$ a standard bell-curve draw. Then $S_T > K$ exactly when $z > -d_2$, which has chance $N(d_2)$. For the rate half, $e^{vz}e^{-z^2/2} = e^{\frac12 v^2}e^{-(z - v)^2/2}$: the bell curve re-centred at $\sigma\sqrt T$. The $e^{\frac12 v^2}$ cancels the drag, and the lower limit $-d_2$ becomes $-d_1$. So the average of $S_T$ over $S_T > K$ is $F\,N(d_1)$.
+Write $`S_T = F e^{-\frac12 v^2 + v z}`$ with $`v = \sigma\sqrt T`$ and $`z`$ a standard bell-curve draw. Then $`S_T > K`$ exactly when $`z > -d_2`$, which has chance $`N(d_2)`$. For the rate half, $`e^{vz}e^{-z^2/2} = e^{\frac12 v^2}e^{-(z - v)^2/2}`$: the bell curve re-centred at $`\sigma\sqrt T`$. The $`e^{\frac12 v^2}`$ cancels the drag, and the lower limit $`-d_2`$ becomes $`-d_1`$. So the average of $`S_T`$ over $`S_T > K`$ is $`F\,N(d_1)`$.
 
 </details>
 
-The simulation in the code shows both chances. Of 200,000 simulated swap rates, 0.4072 end above the strike, against $N(d_2)$ = 0.4077. Weight each by $S_T/F$ and the share becomes 0.5255, against $N(d_1)$ = 0.5265.
+The simulation in the code shows both chances. Of 200,000 simulated swap rates, 0.4072 end above the strike, against $`N(d_2)`$ = 0.4077. Weight each by $`S_T/F`$ and the share becomes 0.5255, against $`N(d_1)`$ = 0.5265.
 
 ### Step 5: payer minus receiver is the forward swap, in any model
 
-For any number $x$, $\max(x - K, 0) - \max(K - x, 0) = x - K$. So holding the payer and having sold the receiver delivers $L\,A_T(S_T - K)$ on the expiry date whatever happens: exactly the forward swap paying $K$.
+For any number $`x`$, $`\max(x - K, 0) - \max(K - x, 0) = x - K`$. So holding the payer and having sold the receiver delivers $`L\,A_T(S_T - K)`$ on the expiry date whatever happens: exactly the forward swap paying $`K`$.
 
-Equal payoffs in every outcome force equal prices, or buying the cheap one and selling the dear one makes money for nothing. So $V_{\text{pay}} - V_{\text{rec}} = L\,A\,(F - K)$. No $\sigma$ appears, and no lognormal assumption was used. This is [Caps and floors](02-caps-floors-and-parity.md) for a swap instead of a strip of caplets.
+Equal payoffs in every outcome force equal prices, or buying the cheap one and selling the dear one makes money for nothing. So $`V_{\text{pay}} - V_{\text{rec}} = L\,A\,(F - K)`$. No $`\sigma`$ appears, and no lognormal assumption was used. This is [Caps and floors](02-caps-floors-and-parity.md) for a swap instead of a strip of caplets.
 
-Here $F$ is 10.63 basis points below the strike, so the forward swap is worth −44,688.80 dollars to the fixed payer: the receiver's extra cost. Struck at $F$ itself, payer and receiver cost the same: 210,237.41 dollars each.
+Here $`F`$ is 10.63 basis points below the strike, so the forward swap is worth −44,688.80 dollars to the fixed payer: the receiver's extra cost. Struck at $`F`$ itself, payer and receiver cost the same: 210,237.41 dollars each.
 
 A second route reaches the same formula through the hedge: hold the payer, enter an opposite forward swap sized so small rate moves cancel, and demand the pair earn nothing extra. That route and its daily arithmetic are on [Swaption Greeks](08-swaption-greeks-and-hedging.md); the measure behind Step 2 gets its full treatment on [The annuity measure](05-the-annuity-measure.md).
 
@@ -164,19 +172,19 @@ The curve is given by six one-year forward rates: 5.00, 4.60, 4.30, 4.10, 4.00 a
 | --- | --- | --- |
 | discount factors D(1) to D(3) | 1 ÷ 1.05; then ÷ 1.046; then ÷ 1.043 | 0.952381, 0.910498, 0.872961 |
 | discount factors D(4) to D(6) | then ÷ 1.041; ÷ 1.040; ÷ 1.039 | 0.838579, 0.806326, 0.776060 |
-| annuity $A$, years 2 to 6 | 0.910498 + 0.872961 + 0.838579 + 0.806326 + 0.776060 | 4.204423 |
-| forward swap rate $F$ | (0.952381 − 0.776060) ÷ 4.204423 | 4.1937 percent |
-| $\ln(F/K)$ | ln(0.041937 ÷ 0.043) | −0.0250292 |
-| half of $\sigma^2 T$ | 0.5 × 0.30 × 0.30 × 1 | 0.045000 |
-| $d_1$ | (−0.0250292 + 0.045) ÷ 0.30 | 0.066569 |
-| $d_2$ | 0.066569 − 0.30 | −0.233431 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.526538, 0.407713 |
+| annuity $`A`$, years 2 to 6 | 0.910498 + 0.872961 + 0.838579 + 0.806326 + 0.776060 | 4.204423 |
+| forward swap rate $`F`$ | (0.952381 − 0.776060) ÷ 4.204423 | 4.1937 percent |
+| $`\ln(F/K)`$ | ln(0.041937 ÷ 0.043) | −0.0250292 |
+| half of $`\sigma^2 T`$ | 0.5 × 0.30 × 0.30 × 1 | 0.045000 |
+| $`d_1`$ | (−0.0250292 + 0.045) ÷ 0.30 | 0.066569 |
+| $`d_2`$ | 0.066569 − 0.30 | −0.233431 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.526538, 0.407713 |
 | rate half, strike half, in basis points | 10,000 × 0.0419371 × 0.526538; 10,000 × 0.043 × 0.407713 | 220.8146, 175.3168 |
 | bracket | 220.8146 − 175.3168 | 45.4978 basis points |
 | money value of one basis point a year | 10,000,000 × 4.204423 × 0.0001 | 4,204.42 dollars |
 | **payer** | 4,204.42 × 45.4978 | **191,292.21 dollars** (1.91 percent of notional) |
-| receiver, same inputs | $L\,A\,[K\,N(-d_2) - F\,N(-d_1)]$ | 235,981.01 dollars |
-| parity check | 191,292.21 − 235,981.01; and $L\,A\,(F - K)$ | −44,688.80 both |
+| receiver, same inputs | $`L\,A\,[K\,N(-d_2) - F\,N(-d_1)]`$ | 235,981.01 dollars |
+| parity check | 191,292.21 − 235,981.01; and $`L\,A\,(F - K)`$ | −44,688.80 both |
 
 The company pays 191,292.21 dollars today, 1.91 percent of the notional, for the right to fix its future five-year borrowing at 4.30 percent. The bracket itself, 45.50 basis points a year, is the premium in the form desks use to compare swaptions of different sizes.
 
@@ -184,11 +192,11 @@ The company pays 191,292.21 dollars today, 1.91 percent of the notional, for the
 
 | Greek | Payer | Receiver | What it says |
 | --- | --- | --- | --- |
-| delta, dollars per basis point of $F$ | 2,213.79 | −1,990.64 | the two differ by 4,204.42, the forward swap's own delta, as parity demands |
-| hedge ratio, forward swap per unit of notional | 0.5265 | −0.4735 | $N(d_1)$ and $-N(-d_1)$ |
-| vega, dollars per volatility point | 7,018.63 | 7,018.63 | equal, because parity has no $\sigma$ in it |
+| delta, dollars per basis point of $`F`$ | 2,213.79 | −1,990.64 | the two differ by 4,204.42, the forward swap's own delta, as parity demands |
+| hedge ratio, forward swap per unit of notional | 0.5265 | −0.4735 | $`N(d_1)`$ and $`-N(-d_1)`$ |
+| vega, dollars per volatility point | 7,018.63 | 7,018.63 | equal, because parity has no $`\sigma`$ in it |
 
-The code checks the payer delta by nudging $F$, and vega by nudging $\sigma$.
+The code checks the payer delta by nudging $`F`$, and vega by nudging $`\sigma`$.
 
 ### What breaks if you drop a piece
 
@@ -197,15 +205,15 @@ Right answer for the payer: 191,292.21 dollars.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Discount once by D(1) = 0.952381 in place of the annuity | 43,331.28 dollars | The option delivers five years of payments, not one; the annuity counts them |
-| Use today's five-year swap rate, 4.4210 percent, as $F$ | 244,970.71 dollars | That swap starts today; the option is on the swap starting in a year |
+| Use today's five-year swap rate, 4.4210 percent, as $`F`$ | 244,970.71 dollars | That swap starts today; the option is on the swap starting in a year |
 | Sum the annuity over years 1 to 5, the fixing dates | 162,384.61 dollars | Fixed payments fall at the end of each period, years 2 to 6 |
-| Use $N(d_2)$ on both halves | −18,220.23 dollars | A negative price for a right that can be thrown away: the rate half needs its own tilted chance |
+| Use $`N(d_2)`$ on both halves | −18,220.23 dollars | A negative price for a right that can be thrown away: the rate half needs its own tilted chance |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the discount factors from the six forwards, finds the forward swap rate twice (the telescoped ratio $(D(T_0) - D(T_n))/A$, and the discount-weighted average of the forwards), then prices the payer by **three independent roads**: Black's formula with a hand-built bell-curve area; a Simpson's-rule average of the payoff over the bell curve that never forms $d_1$ or $d_2$; and a 200,000-path simulation with its own random-number generator. A fourth road checks parity: payer minus receiver, both by the integral, against the forward swap valued coupon by coupon from the forwards, with no $F$ in it. Delta and vega are checked by nudging. Then come the wrong answers, the experiments and the chart points.
+The code builds the discount factors from the six forwards, finds the forward swap rate twice (the telescoped ratio $`(D(T_0) - D(T_n))/A`$, and the discount-weighted average of the forwards), then prices the payer by **three independent roads**: Black's formula with a hand-built bell-curve area; a Simpson's-rule average of the payoff over the bell curve that never forms $`d_1`$ or $`d_2`$; and a 200,000-path simulation with its own random-number generator. A fourth road checks parity: payer minus receiver, both by the integral, against the forward swap valued coupon by coupon from the forwards, with no $`F`$ in it. Delta and vega are checked by nudging. Then come the wrong answers, the experiments and the chart points.
 
 ### Python
 
@@ -390,7 +398,7 @@ chart, receiver, $ thousands    95.06 128.23 167.19 211.72 261.51 316.13 375.14
 ALL CHECKS PASS
 ```
 
-The integral lands within a cent of the formula; the simulation is 1.06 standard errors below it, an ordinary sampling miss. Parity holds to the cent against a swap valued without $F$.
+The integral lands within a cent of the formula; the simulation is 1.06 standard errors below it, an ordinary sampling miss. Parity holds to the cent against a swap valued without $`F`$.
 
 ### Rust
 
@@ -593,9 +601,9 @@ The two outputs agree line for line.
 
 Lean proves Black's swaption formula for a lognormal swap rate, and parity and the annuity measure for any finite set of outcomes.
 
-- Suppose $F$, $K$, $\sigma$ and $T$ are all positive, and $S_T$ is lognormal as in Step 3. Then $L\,A$ times the average of $\max(S_T - K, 0)$ is the payer formula, and the receiver matches too.
-- Take finitely many outcomes, positive $\alpha_i$ and discount factors, and positive state prices that give every zero-coupon bond its price today. Then $V_{\text{pay}} - V_{\text{rec}} = L\,A\,(F - K)$, with no volatility in it.
-- Take the same model. Then the annuity-measure weights are positive and add to one, and the average of $S_T$ under them is $F$.
+- Suppose $`F`$, $`K`$, $`\sigma`$ and $`T`$ are all positive, and $`S_T`$ is lognormal as in Step 3. Then $`L\,A`$ times the average of $`\max(S_T - K, 0)`$ is the payer formula, and the receiver matches too.
+- Take finitely many outcomes, positive $`\alpha_i`$ and discount factors, and positive state prices that give every zero-coupon bond its price today. Then $`V_{\text{pay}} - V_{\text{rec}} = L\,A\,(F - K)`$, with no volatility in it.
+- Take the same model. Then the annuity-measure weights are positive and add to one, and the average of $`S_T`$ under them is $`F`$.
 - The first chart's payoffs are right at all nine swap rates, and payer minus receiver is the rate gap at each.
 
 The curve, the worked decimals, the Greeks and the simulation are left to the Python and Rust checks.
@@ -894,7 +902,7 @@ xychart-beta
     line [95.06, 128.23, 167.19, 211.72, 261.51, 316.13, 375.14]
 ```
 
-Falling line: the payer, cheaper as the fixed rate it must pay goes up. Rising line: the receiver. They cross at the forward swap rate, 4.1937 percent, where parity makes them equal; at every strike the vertical gap between them is $L\,A\,(F - K)$.
+Falling line: the payer, cheaper as the fixed rate it must pay goes up. Rising line: the receiver. They cross at the forward swap rate, 4.1937 percent, where parity makes them equal; at every strike the vertical gap between them is $`L\,A\,(F - K)`$.
 
 ---
 
@@ -907,7 +915,7 @@ Falling line: the payer, cheaper as the fixed rate it must pay goes up. Rising l
 > - **Payer and receiver the wrong way round.** The payer gains when rates *rise*: the right to pay a fixed rate below the market's. A borrower buys payers; an investor who wants to lock in a yield buys receivers.
 > - **Today's swap rate as the underlying.** The option is on the swap that starts at expiry. Today's five-year rate, 4.4210 percent, gives 244,970.71 dollars. On a flat curve the two rates coincide and the bug hides.
 > - **The annuity over the wrong dates.** It runs over the fixed *payment* dates, years 2 to 6. Starting at year 1 gives 162,384.61 dollars.
-> - **Volatility units.** $\sigma$ here is lognormal, 0.30, a proportion of the rate. A normal volatility quoted in basis points is a different number for the same price; feeding one into the other's formula is off by roughly a factor of the rate level.
+> - **Volatility units.** $`\sigma`$ here is lognormal, 0.30, a proportion of the rate. A normal volatility quoted in basis points is a different number for the same price; feeding one into the other's formula is off by roughly a factor of the rate level.
 
 ---
 

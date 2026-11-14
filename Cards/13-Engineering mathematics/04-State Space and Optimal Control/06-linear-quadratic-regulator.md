@@ -34,38 +34,42 @@ The left arrow runs once, at design time. The loop on the right runs every insta
 
 ## The formula
 
-Notation first, in words. The state $x$ is the list of four numbers the model carries ([State space](01-state-space-models-and-the-matrix-exponential.md)): cart position $p$, cart speed $v$, lean $\theta$ (theta) from upright and lean rate $\omega$ (omega). Near upright the plant is $x' = Ax + Bu$ ([Linearisation](02-linearisation-about-an-equilibrium.md)): $p'' = u$ and $\theta'' = 16\,\theta - c\,u$, with $c = 1/l$ for rod length $l$. A raised $\top$ turns a column into a row (the transpose). $Q$ and $R$ are the prices. The bill and its answer are
+Notation first, in words. The state $`x`$ is the list of four numbers the model carries ([State space](01-state-space-models-and-the-matrix-exponential.md)): cart position $`p`$, cart speed $`v`$, lean $`\theta`$ (theta) from upright and lean rate $`\omega`$ (omega). Near upright the plant is $`x' = Ax + Bu`$ ([Linearisation](02-linearisation-about-an-equilibrium.md)): $`p'' = u`$ and $`\theta'' = 16\,\theta - c\,u`$, with $`c = 1/l`$ for rod length $`l`$. A raised $`\top`$ turns a column into a row (the transpose). $`Q`$ and $`R`$ are the prices. The bill and its answer are
 
-$$J = \int_0^\infty \big(x^\top Q\, x + u^\top R\, u\big)\,dt, \qquad u = -Kx, \qquad K = R^{-1}B^\top P,$$
+```math
+J = \int_0^\infty \big(x^\top Q\, x + u^\top R\, u\big)\,dt, \qquad u = -Kx, \qquad K = R^{-1}B^\top P,
+```
 
-$$A^\top P + PA - PBR^{-1}B^\top P + Q = 0 .$$
+```math
+A^\top P + PA - PBR^{-1}B^\top P + Q = 0 .
+```
 
 **Read it aloud:** the total bill is the price of the error plus the price of the push, summed over all time; the cheapest push is minus a gain times the state, and the gain comes from the matrix P that solves the Riccati equation.
 
-Here $Q$ has $q_p$ and $q_\theta$ on its diagonal and zeros elsewhere, so $x^\top Q x = q_p p^2 + q_\theta \theta^2$. With one motor, $R$ is a single number $r$. The best bill from a start $x_0$ is $x_0^\top P x_0$.
+Here $`Q`$ has $`q_p`$ and $`q_\theta`$ on its diagonal and zeros elsewhere, so $`x^\top Q x = q_p p^2 + q_\theta \theta^2`$. With one motor, $`R`$ is a single number $`r`$. The best bill from a start $`x_0`$ is $`x_0^\top P x_0`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_0$ | state $(p, v, \theta, \omega)$, in m, m/s, rad, rad/s; its starting value | $x_0 = (0, 0, 0.05, 0)$ | bill grows as its square |
-| $u$ | push: cart acceleration the motor commands, m/s² | 4.31 m/s² at the start | — |
-| $A$, $B$, $I$ | plant matrices: how the state drifts, how the push enters; $I$ the identity matrix | `B = (0, 1, 0, −c)` | — |
-| $16$, $c$, $l$ | gravity over rod length, per s²; $c = 1/l$, per m; $l$ the rod length | 16; 1.6310; 0.613125 m | faster fall, harder pushes |
-| $q_p$, $q_\theta$ | price per second of cart wander squared, of lean squared (printed `qp`, `qt`) | 4 and 100 | that state is driven out faster |
-| $Q$ | the state prices, as a matrix | $q_p$, 0, $q_\theta$, 0 down the diagonal | — |
-| $r$, $R$ | price per second of push squared | $r$ = 0.04 | gentler pushes, slower settling |
-| $J$, $t$, $\tau$ | the bill: total weighted error and effort; $t$ time, s; $\tau$ (tau) time left before a deadline, s | 0.079000 | — |
-| $P$, $V$ | Riccati solution; $V(x) = x^\top P x$, the bill-to-go | $P_{\theta\theta}$ = 31.5999 | — |
-| $K$, $k_p$ | gain row, $u = -Kx$; $k_p$ its cart-position entry | −10.000, −12.482, −86.231, −17.564 | — |
-| $s$, $j$ | Laplace variable; $j = \sqrt{-1}$ | poles −7.0490 ± 5.8232j, −1.0331 ± 0.9201j | — |
-| $\Delta$, $\Delta_c$, $L$ | open-loop and closed-loop characteristic polynomials; $L = K(sI - A)^{-1}B$, the loop's transfer function | $\Delta(s) = s^2(s^2 - 16)$ | — |
+| $`x`$, $`x_0`$ | state $`(p, v, \theta, \omega)`$, in m, m/s, rad, rad/s; its starting value | $`x_0 = (0, 0, 0.05, 0)`$ | bill grows as its square |
+| $`u`$ | push: cart acceleration the motor commands, m/s² | 4.31 m/s² at the start | — |
+| $`A`$, $`B`$, $`I`$ | plant matrices: how the state drifts, how the push enters; $`I`$ the identity matrix | `B = (0, 1, 0, −c)` | — |
+| $`16`$, $`c`$, $`l`$ | gravity over rod length, per s²; $`c = 1/l`$, per m; $`l`$ the rod length | 16; 1.6310; 0.613125 m | faster fall, harder pushes |
+| $`q_p`$, $`q_\theta`$ | price per second of cart wander squared, of lean squared (printed `qp`, `qt`) | 4 and 100 | that state is driven out faster |
+| $`Q`$ | the state prices, as a matrix | $`q_p`$, 0, $`q_\theta`$, 0 down the diagonal | — |
+| $`r`$, $`R`$ | price per second of push squared | $`r`$ = 0.04 | gentler pushes, slower settling |
+| $`J`$, $`t`$, $`\tau`$ | the bill: total weighted error and effort; $`t`$ time, s; $`\tau`$ (tau) time left before a deadline, s | 0.079000 | — |
+| $`P`$, $`V`$ | Riccati solution; $`V(x) = x^\top P x`$, the bill-to-go | $`P_{\theta\theta}`$ = 31.5999 | — |
+| $`K`$, $`k_p`$ | gain row, $`u = -Kx`$; $`k_p`$ its cart-position entry | −10.000, −12.482, −86.231, −17.564 | — |
+| $`s`$, $`j`$ | Laplace variable; $`j = \sqrt{-1}`$ | poles −7.0490 ± 5.8232j, −1.0331 ± 0.9201j | — |
+| $`\Delta`$, $`\Delta_c`$, $`L`$ | open-loop and closed-loop characteristic polynomials; $`L = K(sI - A)^{-1}B`$, the loop's transfer function | $`\Delta(s) = s^2(s^2 - 16)`$ | — |
 
 ### When it holds
 
-- **A linear plant.** The gain is optimal for the straight-line model about upright. Far from upright the real rod, $\theta'' = 16\sin\theta - c\,u\cos\theta$, curves away from it, and the gain is only a good guess. On the curved rod the base gain brings a 0.05 rad knock inside 5 mrad after 0.972 s, against 0.971 s on the straight model; knocked 1.10 rad, the lean passes 90 degrees after 0.662 s and the rod falls.
-- **A positive price on the push, $r > 0$.** With $r = 0$ any push is free: ever harder pushes keep lowering the bill, though never below zero, so no best gain exists and the gains run off to infinity.
+- **A linear plant.** The gain is optimal for the straight-line model about upright. Far from upright the real rod, $`\theta'' = 16\sin\theta - c\,u\cos\theta`$, curves away from it, and the gain is only a good guess. On the curved rod the base gain brings a 0.05 rad knock inside 5 mrad after 0.972 s, against 0.971 s on the straight model; knocked 1.10 rad, the lean passes 90 degrees after 0.662 s and the rod falls.
+- **A positive price on the push, $`r > 0`$.** With $`r = 0`$ any push is free: ever harder pushes keep lowering the bill, though never below zero, so no best gain exists and the gains run off to infinity.
 - **Every unstable motion steerable.** The rod's fall at +4 per s must be reachable by the motor ([Can you steer every state, and can you see every state](03-controllability-and-observability.md)). If not, no gain stabilises it and the Riccati equation has no stabilising solution.
-- **Every drifting motion priced.** A motion that does not decay on its own must show up in $Q$. Price only the lean and the cart's position goes unseen: the regulator leaves the cart rolling at 0.0831 m/s forever.
-- **The whole state measured.** $u = -Kx$ needs all four numbers now. With one noisy encoder the state has to be estimated first: [LQG](09-lqg-and-the-separation-principle.md).
+- **Every drifting motion priced.** A motion that does not decay on its own must show up in $`Q`$. Price only the lean and the cart's position goes unseen: the regulator leaves the cart rolling at 0.0831 m/s forever.
+- **The whole state measured.** $`u = -Kx`$ needs all four numbers now. With one noisy encoder the state has to be estimated first: [LQG](09-lqg-and-the-separation-principle.md).
 
 ---
 
@@ -73,34 +77,38 @@ Here $Q$ has $q_p$ and $q_\theta$ on its diagonal and zeros elsewhere, so $x^\to
 
 ### Step 0: the bill-to-go is a bowl, and the best push slides down it fastest
 
-Start anywhere and play the best strategy: the bill that remains depends only on where you start. For a linear plant with squared prices, doubling the start doubles every push and quadruples every bill. So the bill-to-go is a quadratic bowl, $V(x) = x^\top P x$. [The HJB equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md) proved this for one state; here the bowl has four directions. The best push balances the price of pushing now against how fast the push lowers the bowl.
+Start anywhere and play the best strategy: the bill that remains depends only on where you start. For a linear plant with squared prices, doubling the start doubles every push and quadruples every bill. So the bill-to-go is a quadratic bowl, $`V(x) = x^\top P x`$. [The HJB equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md) proved this for one state; here the bowl has four directions. The best push balances the price of pushing now against how fast the push lowers the bowl.
 
 ### Step 1: the minimum over the push gives the gain and the Riccati equation
 
-Along the motion the bowl changes at rate $V' = 2x^\top P(Ax + Bu)$. The HJB balance for no deadline says the cheapest running price plus that rate is zero:
+Along the motion the bowl changes at rate $`V' = 2x^\top P(Ax + Bu)`$. The HJB balance for no deadline says the cheapest running price plus that rate is zero:
 
-$$0 = \min_u \Big( x^\top Q x + u^\top R u + 2x^\top P(Ax + Bu) \Big).$$
+```math
+0 = \min_u \Big( x^\top Q x + u^\top R u + 2x^\top P(Ax + Bu) \Big).
+```
 
-The bracket is a bowl in $u$. Its slope in $u$ is $2Ru + 2B^\top P x$ ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)), zero at $u = -R^{-1}B^\top P x$. That is the gain. Put it back: every term is now $x^\top(\cdots)x$, and asking the bracket to vanish for every $x$ is asking the middle matrix to vanish. That matrix is the left side of the algebraic Riccati equation.
+The bracket is a bowl in $`u`$. Its slope in $`u`$ is $`2Ru + 2B^\top P x`$ ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)), zero at $`u = -R^{-1}B^\top P x`$. That is the gain. Put it back: every term is now $`x^\top(\cdots)x`$, and asking the bracket to vanish for every $`x`$ is asking the middle matrix to vanish. That matrix is the left side of the algebraic Riccati equation.
 
 ### Step 2: no other control does better, by completing the square
 
-Take any push history $u(t)$ that brings the state to rest. Using the Riccati equation to replace $Q$, the running price splits into two parts:
+Take any push history $`u(t)`$ that brings the state to rest. Using the Riccati equation to replace $`Q`$, the running price splits into two parts:
 
-$$x^\top Q x + u^\top R u = -\frac{d}{dt}\big(x^\top P x\big) + (u + Kx)^\top R\,(u + Kx).$$
+```math
+x^\top Q x + u^\top R u = -\frac{d}{dt}\big(x^\top P x\big) + (u + Kx)^\top R\,(u + Kx).
+```
 
-Integrate from 0 to forever. The first part totals $x_0^\top P x_0$, because the bowl ends at zero. The second part is never negative, since $r > 0$. So every control pays at least $x_0^\top P x_0$, and only $u = -Kx$ pays exactly that.
+Integrate from 0 to forever. The first part totals $`x_0^\top P x_0`$, because the bowl ends at zero. The second part is never negative, since $`r > 0`$. So every control pays at least $`x_0^\top P x_0`$, and only $`u = -Kx`$ pays exactly that.
 
 <details>
 <summary>Detailed proof: the split of the running price</summary>
 
-Write $x' = Ax + Bu$. Then $\frac{d}{dt}(x^\top P x) = x^\top(A^\top P + PA)x + 2x^\top PBu$. The Riccati equation gives $A^\top P + PA = -Q + PBR^{-1}B^\top P$, so
+Write $`x' = Ax + Bu`$. Then $`\frac{d}{dt}(x^\top P x) = x^\top(A^\top P + PA)x + 2x^\top PBu`$. The Riccati equation gives $`A^\top P + PA = -Q + PBR^{-1}B^\top P`$, so
 
-$$\frac{d}{dt}(x^\top P x) = -x^\top Q x + x^\top PBR^{-1}B^\top P x + 2x^\top PBu.$$
+$`\displaystyle \frac{d}{dt}(x^\top P x) = -x^\top Q x + x^\top PBR^{-1}B^\top P x + 2x^\top PBu.`$
 
-With $K = R^{-1}B^\top P$, the last two terms are $x^\top K^\top R K x + 2x^\top K^\top R u$. Expand $(u + Kx)^\top R (u + Kx) = u^\top R u + 2x^\top K^\top R u + x^\top K^\top R K x$. Subtract: the right side of the split minus the left side is zero.
+With $`K = R^{-1}B^\top P`$, the last two terms are $`x^\top K^\top R K x + 2x^\top K^\top R u`$. Expand $`(u + Kx)^\top R (u + Kx) = u^\top R u + 2x^\top K^\top R u + x^\top K^\top R K x`$. Subtract: the right side of the split minus the left side is zero.
 
-A control of finite bill drives every priced state to zero. The existence conditions above make the unpriced ones follow, so $x^\top P x \to 0$ and the integral of the derivative is exactly $-x_0^\top P x_0$.
+A control of finite bill drives every priced state to zero. The existence conditions above make the unpriced ones follow, so $`x^\top P x \to 0`$ and the integral of the derivative is exactly $`-x_0^\top P x_0`$.
 
 </details>
 
@@ -108,13 +116,15 @@ The code checks the bowl a third way: nudge any one of the four gains by 5 perce
 
 ### Step 3: the right root, reached by running a deadline backward
 
-The Riccati equation is quadratic in $P$, so it has several symmetric solutions. Under the conditions in When it holds, exactly one is positive semidefinite (its bowl never dips below zero), and it is the one that makes $A - BK$ stable. A clean way to find it: give the problem a deadline. With $\tau$ (tau) seconds left the bowl's matrix obeys the Riccati differential equation
+The Riccati equation is quadratic in $`P`$, so it has several symmetric solutions. Under the conditions in When it holds, exactly one is positive semidefinite (its bowl never dips below zero), and it is the one that makes $`A - BK`$ stable. A clean way to find it: give the problem a deadline. With $`\tau`$ (tau) seconds left the bowl's matrix obeys the Riccati differential equation
 
-$$\frac{dP}{d\tau} = A^\top P + PA - PBR^{-1}B^\top P + Q, \qquad P = 0 \text{ when no time is left}.$$
+```math
+\frac{dP}{d\tau} = A^\top P + PA - PBR^{-1}B^\top P + Q, \qquad P = 0 \text{ when no time is left}.
+```
 
 Step it backward and the gain changes with the time left:
 
-| Time left | Gain row $K$ |
+| Time left | Gain row $`K`$ |
 | --- | --- |
 | 0.25 s | 1.070, 0.150, −60.117, −7.912 |
 | 0.5 s | 0.053, −0.225, −60.931, −8.762 |
@@ -127,30 +137,32 @@ Near the deadline the cart is ignored: there is no time left to bring it home, s
 
 ### Step 4: Newton's method, from any gain that already works
 
-Pick a gain that stabilises the loop. Here it is pole placement with all four poles at −2, whose closed-loop polynomial is $(s + 2)^4 = s^4 + 8s^3 + 24s^2 + 32s + 16$. Its exact bill matrix $P_K$ solves a linear equation, the Lyapunov equation $(A - BK)^\top P_K + P_K(A - BK) + Q + K^\top R K = 0$ ([Stability of a state-space model](05-hurwitz-schur-and-lyapunov-stability.md)).
+Pick a gain that stabilises the loop. Here it is pole placement with all four poles at −2, whose closed-loop polynomial is $`(s + 2)^4 = s^4 + 8s^3 + 24s^2 + 32s + 16`$. Its exact bill matrix $`P_K`$ solves a linear equation, the Lyapunov equation $`(A - BK)^\top P_K + P_K(A - BK) + Q + K^\top R K = 0`$ ([Stability of a state-space model](05-hurwitz-schur-and-lyapunov-stability.md)).
 
-Replace the gain by $R^{-1}B^\top P_K$ and repeat. Each round is Newton's method on the Riccati equation, never makes the bill worse, and keeps the loop stable. Nine rounds agree with Step 3 to eight decimals.
+Replace the gain by $`R^{-1}B^\top P_K`$ and repeat. Each round is Newton's method on the Riccati equation, never makes the bill worse, and keeps the loop stable. Nine rounds agree with Step 3 to eight decimals.
 
 ### Step 5: the poles without P, and the margins for free
 
-There is a road to the closed-loop poles that never computes $P$. Kalman's identity says that the closed-loop polynomial $\Delta_c(s)$ satisfies
+There is a road to the closed-loop poles that never computes $`P`$. Kalman's identity says that the closed-loop polynomial $`\Delta_c(s)`$ satisfies
 
-$$\Delta_c(s)\,\Delta_c(-s) = s^4(s^2 - 16)^2 + \frac{q_p}{r}(s^2 - 16)^2 + \frac{q_\theta c^2}{r}\, s^4 .$$
+```math
+\Delta_c(s)\,\Delta_c(-s) = s^4(s^2 - 16)^2 + \frac{q_p}{r}(s^2 - 16)^2 + \frac{q_\theta c^2}{r}\, s^4 .
+```
 
-The first term is the open loop's own polynomial times its mirror. The others are the priced outputs: the cart sees the push through $1/s^2$, the lean through $-c/(s^2 - 16)$. The right side is a quartic in $s^2$. Take the four roots in the left half-plane and they are the regulator's poles: −7.0490 ± 5.8232j and −1.0331 ± 0.9201j, exactly the eigenvalues of $A - BK$.
+The first term is the open loop's own polynomial times its mirror. The others are the priced outputs: the cart sees the push through $`1/s^2`$, the lean through $`-c/(s^2 - 16)`$. The right side is a quartic in $`s^2`$. Take the four roots in the left half-plane and they are the regulator's poles: −7.0490 ± 5.8232j and −1.0331 ± 0.9201j, exactly the eigenvalues of $`A - BK`$.
 
 <details>
 <summary>Where the identity comes from, and the two corollaries</summary>
 
-Add and subtract $sP$ in the Riccati equation, multiply on the left by $B^\top(-sI - A^\top)^{-1}$ and on the right by $(sI - A)^{-1}B$. With $L(s) = K(sI - A)^{-1}B$, the loop's transfer function, the result is
+Add and subtract $`sP`$ in the Riccati equation, multiply on the left by $`B^\top(-sI - A^\top)^{-1}`$ and on the right by $`(sI - A)^{-1}B`$. With $`L(s) = K(sI - A)^{-1}B`$, the loop's transfer function, the result is
 
-$$r\,\big(1 + L(-s)\big)\big(1 + L(s)\big) = r + B^\top(-sI - A^\top)^{-1} Q\, (sI - A)^{-1}B .$$
+$`\displaystyle r\,\big(1 + L(-s)\big)\big(1 + L(s)\big) = r + B^\top(-sI - A^\top)^{-1} Q\, (sI - A)^{-1}B .`$
 
-Each factor $1 + L$ is the closed-loop polynomial over the open-loop one, $\Delta_c/\Delta$. Multiply through by $\Delta(s)\Delta(-s)/r$ and read off the identity above.
+Each factor $`1 + L`$ is the closed-loop polynomial over the open-loop one, $`\Delta_c/\Delta`$. Multiply through by $`\Delta(s)\Delta(-s)/r`$ and read off the identity above.
 
-**Corollary one.** At $s = 0$ the identity reads $\Delta_c(0)^2 = (q_p/r) \times 16^2$. The constant term of $\Delta_c$ is $-16\,k_p$, so the cart gain is $k_p = -\sqrt{q_p/r}$: −10 for the base weights, whatever $q_\theta$ is.
+**Corollary one.** At $`s = 0`$ the identity reads $`\Delta_c(0)^2 = (q_p/r) \times 16^2`$. The constant term of $`\Delta_c`$ is $`-16\,k_p`$, so the cart gain is $`k_p = -\sqrt{q_p/r}`$: −10 for the base weights, whatever $`q_\theta`$ is.
 
-**Corollary two.** On the frequency axis, where $s$ is purely imaginary, the right side is at least $r$, so $\lvert 1 + L(s)\rvert \geq 1$ there. The loop's Nyquist curve ([Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md)) never enters the unit disc around −1. That guarantees the gain may be scaled by anything from one half to infinity, and a phase lag of 60 degrees, without losing stability. The guarantee is a floor: this loop survives down to a scale of 0.241.
+**Corollary two.** On the frequency axis, where $`s`$ is purely imaginary, the right side is at least $`r`$, so $`\lvert 1 + L(s)\rvert \geq 1`$ there. The loop's Nyquist curve ([Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md)) never enters the unit disc around −1. That guarantees the gain may be scaled by anything from one half to infinity, and a phase lag of 60 degrees, without losing stability. The guarantee is a floor: this loop survives down to a scale of 0.241.
 
 </details>
 
@@ -162,31 +174,31 @@ The bill has no natural units, so the prices are a choice. **Bryson's rule** is 
 
 ## Worked numbers, by hand
 
-The base design. The rod is $l = 9.81/16 = 0.613125$ m, so $c = 1/l = 1.6310$ per m. The start is $x_0 = (0, 0, 0.05, 0)$: still, leaning 0.05 rad.
+The base design. The rod is $`l = 9.81/16 = 0.613125`$ m, so $`c = 1/l = 1.6310`$ per m. The start is $`x_0 = (0, 0, 0.05, 0)`$: still, leaning 0.05 rad.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| price of cart wander, $q_p$ | $1 / 0.5^2$ | 4 |
-| price of lean, $q_\theta$ | $1 / 0.1^2$ | 100 |
-| price of push, $r$ | $1 / 5^2$ | 0.04 |
-| cart gain, Step 5 | $-\sqrt{4 / 0.04} = -\sqrt{100}$ | −10.000 |
-| $P$, lean row (from the Riccati solve) | $P_{\theta v}$, $P_{\theta\theta}$, $P_{\theta\omega}$ | 6.6135, 31.5999, 6.1697 |
-| lean gain, $K = R^{-1}B^\top P$ | $(6.6135 - 1.6310 \times 6.1697) / 0.04$ | −86.231 |
-| opening push, $u = -Kx_0$ | $86.231 \times 0.05$ | 4.31 m/s² |
-| bill, $x_0^\top P x_0$ | $31.5999 \times 0.05^2$ | **0.079000** |
+| price of cart wander, $`q_p`$ | $`1 / 0.5^2`$ | 4 |
+| price of lean, $`q_\theta`$ | $`1 / 0.1^2`$ | 100 |
+| price of push, $`r`$ | $`1 / 5^2`$ | 0.04 |
+| cart gain, Step 5 | $`-\sqrt{4 / 0.04} = -\sqrt{100}`$ | −10.000 |
+| $`P`$, lean row (from the Riccati solve) | $`P_{\theta v}`$, $`P_{\theta\theta}`$, $`P_{\theta\omega}`$ | 6.6135, 31.5999, 6.1697 |
+| lean gain, $`K = R^{-1}B^\top P`$ | $`(6.6135 - 1.6310 \times 6.1697) / 0.04`$ | −86.231 |
+| opening push, $`u = -Kx_0`$ | $`86.231 \times 0.05`$ | 4.31 m/s² |
+| bill, $`x_0^\top P x_0`$ | $`31.5999 \times 0.05^2`$ | **0.079000** |
 
 The opening push is 4.31 m/s², inside the 5 m/s² the motor was priced for: the prices did what they were set to do. The push is positive, toward the lean: the cart runs under the falling rod to catch it.
 
-The gain row is −10.000, −12.482, −86.231, −17.564. The cart-position gain is negative, so $u = -Kx = +10p + \cdots$: a cart sitting right of centre is pushed further right. That looks wrong and is not. To bring the cart home leftward, the rod must first be tipped left, and only a push to the right does that.
+The gain row is −10.000, −12.482, −86.231, −17.564. The cart-position gain is negative, so $`u = -Kx = +10p + \cdots`$: a cart sitting right of centre is pushed further right. That looks wrong and is not. To bring the cart home leftward, the rod must first be tipped left, and only a push to the right does that.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $K = B^\top P$, the $R^{-1}$ forgotten | poles 1.8492 ± 0.0913j: the rod falls | the gain shrinks by the factor $r$ = 0.04, below the 0.241 floor |
-| $u = +Kx$, sign flipped | a pole at +22.9472 | the push feeds the fall instead of fighting it |
-| Price only the lean, $q_p = 0$ | after 10 s the cart is 0.854 m away, still rolling at 0.0831 m/s | a motion nobody pays for is a motion nobody stops |
-| Lean limit read as 0.1 degree, not 0.1 rad | opening push 144.8 m/s² against 5 allowed | the bill is in radians, so the lean price is $(180/\pi)^2$ times too big |
+| $`K = B^\top P`$, the $`R^{-1}`$ forgotten | poles 1.8492 ± 0.0913j: the rod falls | the gain shrinks by the factor $`r`$ = 0.04, below the 0.241 floor |
+| $`u = +Kx`$, sign flipped | a pole at +22.9472 | the push feeds the fall instead of fighting it |
+| Price only the lean, $`q_p = 0`$ | after 10 s the cart is 0.854 m away, still rolling at 0.0831 m/s | a motion nobody pays for is a motion nobody stops |
+| Lean limit read as 0.1 degree, not 0.1 rad | opening push 144.8 m/s² against 5 allowed | the bill is in radians, so the lean price is $`(180/\pi)^2`$ times too big |
 | Run the base gain on the curved rod, knocked 1.10 rad | the lean passes 90 degrees after 0.662 s: the rod falls | the gain is optimal for the straight-line model; this far from upright, gravity and the motor's grip both bend away from it |
 
 ---
@@ -195,13 +207,13 @@ The gain row is −10.000, −12.482, −86.231, −17.564. The cart-position ga
 
 The puzzle: three designs, one knock, and no single "best". Each is the cheapest controller for its own bill. Change the bill and the answer moves.
 
-| Design | $q_p$, $q_\theta$, $r$ | Gain row $K$ | Peak push | Rod inside 5 mrad | Cart inside 1 cm |
+| Design | $`q_p`$, $`q_\theta`$, $`r`$ | Gain row $`K`$ | Peak push | Rod inside 5 mrad | Cart inside 1 cm |
 | --- | --- | --- | --- | --- | --- |
 | base | 4, 100, 0.04 | −10.000, −12.482, −86.231, −17.564 | 4.31 m/s² | 0.971 s | 2.331 s |
 | cheap motor | 4, 100, 0.004 | −31.623, −36.816, −220.045, −38.259 | 11.00 m/s² | 0.675 s | 1.972 s |
 | tight lean | 4, 1000, 0.04 | −10.000, −19.227, −191.143, −26.851 | 9.56 m/s² | 0.523 s | 3.847 s |
 
-**Force one: the price of the push.** Hold the state prices and move $r$:
+**Force one: the price of the push.** Hold the state prices and move $`r`$:
 
 ```
 r = 0.4     push  ████████                                   2.13 m/s^2   rod settles 1.420 s
@@ -211,7 +223,7 @@ r = 0.004   push  ████████████████████�
 
 Each tenfold cut in the price of the push at least doubles the opening shove and shortens the settling. The fast pole pair moves out from −7.0490 ± 5.8232j to −11.7481 ± 11.0568j.
 
-**Force two: the price of the lean.** Hold $r$ and raise $q_\theta$ tenfold:
+**Force two: the price of the lean.** Hold $`r`$ and raise $`q_\theta`$ tenfold:
 
 ```
 q_theta = 100    rod settles  ████████                           0.971 s
@@ -245,8 +257,8 @@ The code builds the plant, prices it three ways, and reaches the regulator by **
 
 1. the Riccati differential equation stepped backward until it stops moving;
 2. Newton's method on Lyapunov equations from a pole-placement gain;
-3. the closed-loop poles from Kalman's identity, which never sees $P$;
-4. a simulation of the closed loop whose measured bill must equal $x_0^\top P x_0$.
+3. the closed-loop poles from Kalman's identity, which never sees $`P`$;
+4. a simulation of the closed loop whose measured bill must equal $`x_0^\top P x_0`$.
 
 Eigenvalues come from the characteristic polynomial (Faddeev-LeVerrier) and a root finder (Durand-Kerner); stability tests use the Hurwitz conditions for a quartic ([Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md)). Then every mistake and experiment on the card is rerun, and the base gain is tried on the curved rod.
 
@@ -451,7 +463,7 @@ curved rod, base gain: from 0.05 rad angle inside 5 mrad after 0.972 s; from 1.1
 ALL CHECKS PASS
 ```
 
-The four roads agree. The Riccati equation run backward and Newton's method give the same $P$ to eight decimals. Kalman's identity, which never builds $P$, gives the same poles. The simulated bill matches $x_0^\top P x_0$ to the fifth decimal; the small gap is the trapezoid rule's.
+The four roads agree. The Riccati equation run backward and Newton's method give the same $`P`$ to eight decimals. Kalman's identity, which never builds $`P`$, gives the same poles. The simulated bill matches $`x_0^\top P x_0`$ to the fifth decimal; the small gap is the trapezoid rule's.
 
 ### Rust
 
@@ -692,14 +704,14 @@ The two outputs agree line for line.
 
 Lean proves the split of Step 2 and the price scaling of Step 6, for any number of states and pushes.
 
-- Suppose $P$ is symmetric and solves the Riccati equation, the state price $Q$ is never negative, and the push price $R$ is positive. Then every push history that brings the state to rest, with a finite bill, pays at least $x_0^\top P x_0$.
-- Take the same $P$, $Q$ and $R$, and suppose the loop $u = -Kx$ brings the state to rest. Then that loop pays exactly $x_0^\top P x_0$.
-- Take $P$ and $R$ as above, any state $x$ and any push $u$. Then $x^\top Q x + u^\top R u = -V' + (u + Kx)^\top R\,(u + Kx)$. Here $V'$ is the bowl's rate of change from Step 1.
-- Take any number $c > 0$ and multiply both $Q$ and $R$ by it. Then $cP$ solves the new Riccati equation, and the gain $K$ does not move.
+- Suppose $`P`$ is symmetric and solves the Riccati equation, the state price $`Q`$ is never negative, and the push price $`R`$ is positive. Then every push history that brings the state to rest, with a finite bill, pays at least $`x_0^\top P x_0`$.
+- Take the same $`P`$, $`Q`$ and $`R`$, and suppose the loop $`u = -Kx`$ brings the state to rest. Then that loop pays exactly $`x_0^\top P x_0`$.
+- Take $`P`$ and $`R`$ as above, any state $`x`$ and any push $`u`$. Then $`x^\top Q x + u^\top R u = -V' + (u + Kx)^\top R\,(u + Kx)`$. Here $`V'`$ is the bowl's rate of change from Step 1.
+- Take any number $`c > 0`$ and multiply both $`Q`$ and $`R`$ by it. Then $`cP`$ solves the new Riccati equation, and the gain $`K`$ does not move.
 - The hand arithmetic holds: Bryson's prices 4, 100 and 1/25, and the cart gain −10. Every price times ten keeps the ratios.
-- Pole placement's polynomial $(s + 2)^4$ expands to $s^4 + 8s^3 + 24s^2 + 32s + 16$.
+- Pole placement's polynomial $`(s + 2)^4`$ expands to $`s^4 + 8s^3 + 24s^2 + 32s + 16`$.
 
-Lean does not find $P$ or show the loop is stable, so those, and the computed numbers, are left to the Python and Rust checks.
+Lean does not find $`P`$ or show the loop is stable, so those, and the computed numbers, are left to the Python and Rust checks.
 
 ```lean
 -- The LQR: if P is a symmetric solution of the algebraic Riccati equation and the push price R is positive definite, every push history that brings the state to rest pays at least x₀ᵀPx₀, and the feedback u = -Kx with K = R⁻¹BᵀP pays exactly that.
@@ -936,10 +948,10 @@ example : (40 : ℚ) / (4 / 10) = 4 / (4 / 100) ∧ (1000 : ℚ) / (4 / 10) = 10
 > **Treating the weights as physics.** "Optimal" means optimal for the bill you wrote, and you wrote it. The base design is not better than the cheap-motor design; it is cheapest for a different price list. Pick prices from what matters (Bryson's rule is a start), look at the response, and adjust. The regulator's job is to turn a price list into a stabilising gain with good margins, not to tell you the price list.
 >
 > Smaller traps:
-> - **Forgetting $R^{-1}$.** $K = B^\top P$ without dividing by $r$ shrinks the gain by the factor 0.04 here, and the rod falls: poles 1.8492 ± 0.0913j.
-> - **Mixing units in the bill.** Read the 0.1 lean limit as 0.1 degree instead of 0.1 rad and the lean price grows by $(180/\pi)^2$; the opening push becomes 144.8 m/s². Write every state in the units the model uses, then choose the prices.
-> - **Leaving a state out of the bill.** With $q_p = 0$ the regulator balances the rod and lets the cart roll off at 0.0831 m/s: 0.854 m away after 10 s, and counting.
-> - **"Fixing" the cart gain's sign.** The cart gain is negative and looks backward. Flip $k_p$ alone and a pole sits at +0.5682: the cart creeps away.
+> - **Forgetting $`R^{-1}`$.** $`K = B^\top P`$ without dividing by $`r`$ shrinks the gain by the factor 0.04 here, and the rod falls: poles 1.8492 ± 0.0913j.
+> - **Mixing units in the bill.** Read the 0.1 lean limit as 0.1 degree instead of 0.1 rad and the lean price grows by $`(180/\pi)^2`$; the opening push becomes 144.8 m/s². Write every state in the units the model uses, then choose the prices.
+> - **Leaving a state out of the bill.** With $`q_p = 0`$ the regulator balances the rod and lets the cart roll off at 0.0831 m/s: 0.854 m away after 10 s, and counting.
+> - **"Fixing" the cart gain's sign.** The cart gain is negative and looks backward. Flip $`k_p`$ alone and a pole sits at +0.5682: the cart creeps away.
 
 ---
 
@@ -952,7 +964,7 @@ example : (40 : ℚ) / (4 / 10) = 4 / (4 / 100) ∧ (1000 : ℚ) / (4 / 10) = 10
 - **Hard-disk heads and active suspensions.** Fast mechanical servos where the push is current, and pricing it protects the amplifier and the heat budget.
 
 > **Say it back**
-> The LQR prices error and effort as weighted squares and sums them over all time. For a linear plant the best bill from any state is a quadratic bowl, $x^\top P x$, and the push that minimises the bill is $u = -Kx$ with $K = R^{-1}B^\top P$. $P$ is the stabilising solution of the algebraic Riccati equation, reached by running a deadline backward or by Newton's method on Lyapunov equations. Cheaper effort or dearer error means faster poles and harder pushes, and only the price ratios matter. With the full state measured, the loop keeps a gain margin from one half to infinity and 60 degrees of phase.
+> The LQR prices error and effort as weighted squares and sums them over all time. For a linear plant the best bill from any state is a quadratic bowl, $`x^\top P x`$, and the push that minimises the bill is $`u = -Kx`$ with $`K = R^{-1}B^\top P`$. $`P`$ is the stabilising solution of the algebraic Riccati equation, reached by running a deadline backward or by Newton's method on Lyapunov equations. Cheaper effort or dearer error means faster poles and harder pushes, and only the price ratios matter. With the full state measured, the loop keeps a gain margin from one half to infinity and 60 degrees of phase.
 
 ---
 

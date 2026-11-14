@@ -34,9 +34,11 @@ The low, lopsided line is the ramp x(1 − x)^2; the tall, even line is the arch
 
 ## The formula
 
-Reminder from [The gamma function](02-gamma-function.md): the gamma function is $\Gamma(a) = \int_0^\infty t^{a-1} e^{-t}\,dt$, and at whole numbers it is a shifted factorial, Γ(n) = (n − 1)!. So Γ(5) = 4! = 24.
+Reminder from [The gamma function](02-gamma-function.md): the gamma function is $`\Gamma(a) = \int_0^\infty t^{a-1} e^{-t}\,dt`$, and at whole numbers it is a shifted factorial, Γ(n) = (n − 1)!. So Γ(5) = 4! = 24.
 
-$$B(a,b) = \int_0^1 x^{a-1}(1-x)^{b-1}\,dx = \frac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}, \qquad a > 0,\; b > 0.$$
+```math
+B(a,b) = \int_0^1 x^{a-1}(1-x)^{b-1}\,dx = \frac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}, \qquad a > 0,\; b > 0.
+```
 
 **Read it aloud:** the area under x to the a minus 1, times one minus x to the b minus 1, from 0 to 1, equals gamma of a times gamma of b, over gamma of a plus b.
 
@@ -44,11 +46,11 @@ The "minus 1" matches the gamma function's convention. The ramp x(1 − x)^2 has
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$ | one more than the power on x | 2 for the ramp, 3/2 for the arch | area falls; the bump's bulk moves right |
-| $b$ | one more than the power on 1 − x | 3 for the ramp, 3/2 for the arch | area falls; the bulk moves left |
-| $x$ | position along the base, 0 to 1 | the ramp peaks at x = 1/3 | — |
-| $B$ | the beta function: the bump's area, $B(a,b)$ | 0.083333333 and 0.392699082 | — |
-| $\Gamma$ | the gamma function, a continuous factorial | Γ(5) = 24, Γ(1/2) = 1.772453851 | grows faster than any power |
+| $`a`$ | one more than the power on x | 2 for the ramp, 3/2 for the arch | area falls; the bump's bulk moves right |
+| $`b`$ | one more than the power on 1 − x | 3 for the ramp, 3/2 for the arch | area falls; the bulk moves left |
+| $`x`$ | position along the base, 0 to 1 | the ramp peaks at x = 1/3 | — |
+| $`B`$ | the beta function: the bump's area, $`B(a,b)`$ | 0.083333333 and 0.392699082 | — |
+| $`\Gamma`$ | the gamma function, a continuous factorial | Γ(5) = 24, Γ(1/2) = 1.772453851 | grows faster than any power |
 
 ### When it holds
 
@@ -68,7 +70,9 @@ The product Γ(a)Γ(b) is a volume over the quarter-plane of pairs (s, t), both 
 
 Two separate integrals multiply into one integral over pairs ([Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)):
 
-$$\Gamma(a)\,\Gamma(b) = \int_0^\infty\!\!\int_0^\infty s^{a-1}\, t^{b-1}\, e^{-(s+t)}\,ds\,dt.$$
+```math
+\Gamma(a)\,\Gamma(b) = \int_0^\infty\!\!\int_0^\infty s^{a-1}\, t^{b-1}\, e^{-(s+t)}\,ds\,dt.
+```
 
 ### Step 2: new coordinates, total and share
 
@@ -80,7 +84,9 @@ A small box du by dv lands on a parallelogram with sides (v, 1 − v) du and (u,
 
 Substitute:
 
-$$s^{a-1} t^{b-1} e^{-(s+t)} \cdot u = u^{a+b-1} e^{-u} \cdot v^{a-1}(1-v)^{b-1}.$$
+```math
+s^{a-1} t^{b-1} e^{-(s+t)} \cdot u = u^{a+b-1} e^{-u} \cdot v^{a-1}(1-v)^{b-1}.
+```
 
 The powers of u collect: a − 1 from s, b − 1 from t, 1 from the stretch. One factor holds only u, the other only v, so the u-integral is Γ(a + b), the v-integral is B(a, b), and Γ(a)Γ(b) = Γ(a + b) B(a, b), which is the formula.
 
@@ -99,7 +105,9 @@ On the ramp: Γ(2)Γ(3)/Γ(5) = 1!·2!/4! = 2/24 = 1/12, matching the area from 
 
 Swap x = sin^2 θ. Then 1 − x = cos^2 θ and dx = 2 sin θ cos θ dθ, so
 
-$$B(a,b) = 2\int_0^{\pi/2} \sin^{2a-1}\theta\,\cos^{2b-1}\theta\,d\theta.$$
+```math
+B(a,b) = 2\int_0^{\pi/2} \sin^{2a-1}\theta\,\cos^{2b-1}\theta\,d\theta.
+```
 
 At a = b = 1/2 both powers are 0, the integrand is 1, and B(1/2, 1/2) = 2 · π/2 = π. The formula says the same area is Γ(1/2)^2/Γ(1), and Γ(1) = 1. So Γ(1/2)^2 = π and Γ(1/2) = √π = 1.772453851.
 

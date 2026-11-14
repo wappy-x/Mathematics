@@ -34,42 +34,48 @@ Orange: the true gap between the two rumour counts. Green: the bound e^(0.8t). T
 
 ## The formula
 
-Notation ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)): $y' = f(t, y)$ says "the rate of $y$ at time $t$ is $f(t, y)$". Vertical bars, $|y - z|$, mean the distance between two numbers.
+Notation ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)): $`y' = f(t, y)`$ says "the rate of $`y`$ at time $`t`$ is $`f(t, y)`$". Vertical bars, $`|y - z|`$, mean the distance between two numbers.
 
-**Gronwall's inequality, integral form.** Let $w$ be continuous and never negative for times from 0 to $T$, and $L \ge 0$, $\delta \ge 0$ constants. If, at every such time,
+**Gronwall's inequality, integral form.** Let $`w`$ be continuous and never negative for times from 0 to $`T`$, and $`L \ge 0`$, $`\delta \ge 0`$ constants. If, at every such time,
 
-$$w(t) \le \delta + \int_0^t L\,w(s)\,ds,$$
+```math
+w(t) \le \delta + \int_0^t L\,w(s)\,ds,
+```
 
 then, at every such time,
 
-$$w(t) \le \delta\,e^{Lt}.$$
+```math
+w(t) \le \delta\,e^{Lt}.
+```
 
 **Read it aloud:** a quantity never above a constant δ plus L times its own running total is never above δ grown exponentially at rate L.
 
-**Continuous dependence.** Suppose $|f(t, y) - f(t, z)| \le L\,|y - z|$ in a region, the Lipschitz condition of [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md). If two solutions of $y' = f(t, y)$ start at $y_0$ and $z_0$ and stay in that region up to time $T$, then up to $T$
+**Continuous dependence.** Suppose $`|f(t, y) - f(t, z)| \le L\,|y - z|`$ in a region, the Lipschitz condition of [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md). If two solutions of $`y' = f(t, y)`$ start at $`y_0`$ and $`z_0`$ and stay in that region up to time $`T`$, then up to $`T`$
 
-$$|y(t) - z(t)| \le |y_0 - z_0|\,e^{Lt}.$$
+```math
+|y(t) - z(t)| \le |y_0 - z_0|\,e^{Lt}.
+```
 
 **Read it aloud:** the gap between two solutions is at most the starting gap, grown exponentially at the Lipschitz rate.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $s$, $T$ | time; a running time in an integral; the last time | days; minutes for coffee | the bound grows |
-| $y$, $z$ | two solutions of one law | rumour counts; cup temperatures | — |
-| $y_0$, $z_0$ | their starts | 10 and 11 pupils; 80 and 81 C | — |
-| $f$ | the rate law | 0.8y(1 − y/1000) per day | — |
-| $L$ | Lipschitz constant: most stretch of a difference per unit time | 0.8 per day; 0.1 per minute | the bound grows faster |
-| $k$ | a signed rate (Step 4) | −0.1 per minute | negative shrinks the bound |
-| $w$, $H$ | the bounded quantity, here the gap; $H$, its smooth ceiling | 23.69 pupils on day 6 | — |
-| $\delta$ | the starting gap | 1 pupil; 1 C | the bound scales with it |
+| $`t`$, $`s`$, $`T`$ | time; a running time in an integral; the last time | days; minutes for coffee | the bound grows |
+| $`y`$, $`z`$ | two solutions of one law | rumour counts; cup temperatures | — |
+| $`y_0`$, $`z_0`$ | their starts | 10 and 11 pupils; 80 and 81 C | — |
+| $`f`$ | the rate law | 0.8y(1 − y/1000) per day | — |
+| $`L`$ | Lipschitz constant: most stretch of a difference per unit time | 0.8 per day; 0.1 per minute | the bound grows faster |
+| $`k`$ | a signed rate (Step 4) | −0.1 per minute | negative shrinks the bound |
+| $`w`$, $`H`$ | the bounded quantity, here the gap; $`H`$, its smooth ceiling | 23.69 pupils on day 6 | — |
+| $`\delta`$ | the starting gap | 1 pupil; 1 C | the bound scales with it |
 
-For the rumours, the law's slope 0.8(1 − 2y/1000) lies between −0.8 and 0.8 for counts from 0 to 1,000, so by the [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) $L$ = 0.8 per day. That theorem says the average slope between two values equals the slope at some point between them.
+For the rumours, the law's slope 0.8(1 − 2y/1000) lies between −0.8 and 0.8 for counts from 0 to 1,000, so by the [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) $`L`$ = 0.8 per day. That theorem says the average slope between two values equals the slope at some point between them.
 
 ### When it holds
 
-- **One constant wherever both solutions go.** For $y' = y^2$ the slope 2y grows as solutions climb; a constant read at the start fails (What breaks).
+- **One constant wherever both solutions go.** For $`y' = y^2`$ the slope 2y grows as solutions climb; a constant read at the start fails (What breaks).
 - **Both solutions exist throughout.** If one blows up first ([Blow-up](03-blow-up-and-the-life-span-of-a-solution.md)), there is nothing to compare.
-- **A Lipschitz condition at all.** The leaking bucket of Picard-Lindelöf drains as $h' = -0.2\sqrt{h}$, with $h$ its depth in cm. Run backwards from empty, it has none at zero depth: two runs start 0 apart and end 25 apart.
+- **A Lipschitz condition at all.** The leaking bucket of Picard-Lindelöf drains as $`h' = -0.2\sqrt{h}`$, with $`h`$ its depth in cm. Run backwards from empty, it has none at zero depth: two runs start 0 apart and end 25 apart.
 - **A finite horizon.** The rumour bound passes 1,000 pupils, the whole school, on day 8.63 and says nothing useful after.
 - **L at least zero in the integral form.** A law that pulls solutions together needs the one-sided form of Step 4.
 
@@ -79,44 +85,50 @@ For the rumours, the law's slope 0.8(1 − 2y/1000) lies between −0.8 and 0.8 
 
 ### Step 0: bound the gap by something smooth, then solve for that
 
-The gap $|y - z|$ has a corner wherever the solutions cross, so the proof never differentiates it. It builds a smooth ceiling over the gap, shows the ceiling grows no faster than $L$ times itself, and solves that with an integrating factor (a multiplier that turns the left side into one exact rate).
+The gap $`|y - z|`$ has a corner wherever the solutions cross, so the proof never differentiates it. It builds a smooth ceiling over the gap, shows the ceiling grows no faster than $`L`$ times itself, and solves that with an integrating factor (a multiplier that turns the left side into one exact rate).
 
 ### Step 1: prove the integral form
 
-Call the hypothesis's right side $H$, so $w \le H$. By the fundamental theorem of calculus the rate of $H$ is $L\,w$, which is at most $L\,H$ since $L \ge 0$. By the product rule the rate of $e^{-Lt}H$ is $e^{-Lt}(H' - LH)$, at most zero. So $e^{-Lt}H$ never rises above its value at time 0, which is $\delta$. Multiply back:
+Call the hypothesis's right side $`H`$, so $`w \le H`$. By the fundamental theorem of calculus the rate of $`H`$ is $`L\,w`$, which is at most $`L\,H`$ since $`L \ge 0`$. By the product rule the rate of $`e^{-Lt}H`$ is $`e^{-Lt}(H' - LH)`$, at most zero. So $`e^{-Lt}H`$ never rises above its value at time 0, which is $`\delta`$. Multiply back:
 
-$$w(t) \le H(t) \le \delta\,e^{Lt}.$$
+```math
+w(t) \le H(t) \le \delta\,e^{Lt}.
+```
 
-A negative $L$ would flip the step from $L\,w$ to $L\,H$.
+A negative $`L`$ would flip the step from $`L\,w`$ to $`L\,H`$.
 
 ### Step 2: turn two solutions into the hypothesis
 
-Integrate each equation from 0: $y(t) = y_0 + \int_0^t f(s, y(s))\,ds$, and the same for $z$. Subtract; the size of an integral is at most the integral of the size:
+Integrate each equation from 0: $`y(t) = y_0 + \int_0^t f(s, y(s))\,ds`$, and the same for $`z`$. Subtract; the size of an integral is at most the integral of the size:
 
-$$|y(t) - z(t)| \le |y_0 - z_0| + \int_0^t |f(s, y(s)) - f(s, z(s))|\,ds \le \delta + \int_0^t L\,|y(s) - z(s)|\,ds.$$
+```math
+|y(t) - z(t)| \le |y_0 - z_0| + \int_0^t |f(s, y(s)) - f(s, z(s))|\,ds \le \delta + \int_0^t L\,|y(s) - z(s)|\,ds.
+```
 
-The second inequality uses the Lipschitz condition at every time, so it must hold wherever the solutions go. Step 1 now gives $w(t) \le \delta e^{Lt}$. For the rumours: at most e^(0.8 × 3) = 11.02 pupils after 3 days, against a true 9.02.
+The second inequality uses the Lipschitz condition at every time, so it must hold wherever the solutions go. Step 1 now gives $`w(t) \le \delta e^{Lt}`$. For the rumours: at most e^(0.8 × 3) = 11.02 pupils after 3 days, against a true 9.02.
 
 ### Step 3: uniqueness, and what "well-posed" means
 
-Set $\delta = 0$: two solutions from one start stay 0 apart, so they are the same solution. That is a second proof of uniqueness in Picard-Lindelöf.
+Set $`\delta = 0`$: two solutions from one start stay 0 apart, so they are the same solution. That is a second proof of uniqueness in Picard-Lindelöf.
 
 A problem is **well-posed**, in Jacques Hadamard's term, when a solution exists, is unique, and depends continuously on the data: on a fixed time interval, a small enough change in the start keeps the whole solution as close as required. For a Lipschitz law, Picard-Lindelöf gives the first two and Gronwall the third. The promise is for a fixed horizon only: the rumour bound at day 10 is 2,980.96 pupils.
 
 <details>
 <summary>Detailed proof: continuous dependence in epsilon-and-delta form</summary>
 
-Fix a horizon $T$ and a tolerance $\varepsilon > 0$. Suppose both solutions stay, up to $T$, in a region where $|f(t, y) - f(t, z)| \le L|y - z|$ with $L \ge 0$. Choose any starting gap $\delta < \varepsilon e^{-LT}$. Steps 1 and 2 give, for every $t$ from 0 to $T$,
-$$|y(t) - z(t)| \le \delta e^{Lt} \le \delta e^{LT} < \varepsilon.$$
-The largest gap over the interval is below $\varepsilon$: the whole solution depends continuously on its start.
+Fix a horizon $`T`$ and a tolerance $`\varepsilon > 0`$. Suppose both solutions stay, up to $`T`$, in a region where $`|f(t, y) - f(t, z)| \le L|y - z|`$ with $`L \ge 0`$. Choose any starting gap $`\delta < \varepsilon e^{-LT}`$. Steps 1 and 2 give, for every $`t`$ from 0 to $`T`$,
+
+$`\displaystyle |y(t) - z(t)| \le \delta e^{Lt} \le \delta e^{LT} < \varepsilon.`$
+
+The largest gap over the interval is below $`\varepsilon`$: the whole solution depends continuously on its start.
 
 </details>
 
 ### Step 4: when the law pulls solutions together
 
-The coffee's law, $y' = -0.1(y - 20)$ with $y$ in C, has $L$ = 0.1 per minute, so Step 2 allows 403.4288 C after an hour. True and useless: the integral form lost a sign.
+The coffee's law, $`y' = -0.1(y - 20)`$ with $`y`$ in C, has $`L`$ = 0.1 per minute, so Step 2 allows 403.4288 C after an hour. True and useless: the integral form lost a sign.
 
-Subtract the two cooling laws directly: the gap $w = z - y$ obeys $w' = -0.1\,w$. The one-sided form says: if $w' \le k\,w$ for a constant $k$ of either sign, then $w(t) \le w(0)\,e^{kt}$, because the rate of $e^{-kt}w$ is $e^{-kt}(w' - kw)$, at most zero. With $k = -0.1$ per minute the gap never exceeds 1 C.
+Subtract the two cooling laws directly: the gap $`w = z - y`$ obeys $`w' = -0.1\,w`$. The one-sided form says: if $`w' \le k\,w`$ for a constant $`k`$ of either sign, then $`w(t) \le w(0)\,e^{kt}`$, because the rate of $`e^{-kt}w`$ is $`e^{-kt}(w' - kw)`$, at most zero. With $`k = -0.1`$ per minute the gap never exceeds 1 C.
 
 Differentiating the solution with respect to its start is [The flow](05-the-flow-of-an-equation.md).
 
@@ -139,18 +151,18 @@ The bound holds every day, is tight early, and after day 8.63 allows a gap large
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $L$ read at the start for $y' = y^2$, starts 1 and 1.01 | bound 0.0710 at t = 0.98; true gap 49.02 | The slope 2y grows toward blow-up |
-| No Lipschitz constant: the bucket $h' = -0.2\sqrt{h}$ run backwards from empty | two runs start 0 apart, end 25.00 apart at s = 50 | The square root has no finite slope at zero depth |
+| $`L`$ read at the start for $`y' = y^2`$, starts 1 and 1.01 | bound 0.0710 at t = 0.98; true gap 49.02 | The slope 2y grows toward blow-up |
+| No Lipschitz constant: the bucket $`h' = -0.2\sqrt{h}`$ run backwards from empty | two runs start 0 apart, end 25.00 apart at s = 50 | The square root has no finite slope at zero depth |
 | The integral bound read as the coffee's gap | 2.7183 C at 10 minutes; true gap 0.3679 C | Only the one-sided form sees the cups pulled together |
 | The bound read past its horizon | 2,980.96 pupils on day 10; true gap 2.87 | e^(Lt) knows nothing of the ceiling |
 
-Reversed, with $s$ the time counted back from empty, the bucket obeys $g' = 0.2\sqrt{g}$, $g(0) = 0$; both $g = 0$ and $g = (0.1s)^2$ solve it. The code prints all four rows.
+Reversed, with $`s`$ the time counted back from empty, the bucket obeys $`g' = 0.2\sqrt{g}`$, $`g(0) = 0`$; both $`g = 0`$ and $`g = (0.1s)^2`$ solve it. The code prints all four rows.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Two roads to every gap: subtracting closed-form solutions, and walking both solutions by Euler's rule, a short time h along the slope at a time ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). Stepping never calls exp; its error halves as h halves. $L$ is not typed in: the check scans the law's slope by finite differences (change over a tiny step, divided by the step) and finds 0.8. Asserts test that scan, the gap under the bound, the coffee within 1 C, and the bucket's second solution.
+Two roads to every gap: subtracting closed-form solutions, and walking both solutions by Euler's rule, a short time h along the slope at a time ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). Stepping never calls exp; its error halves as h halves. $`L`$ is not typed in: the check scans the law's slope by finite differences (change over a tiny step, divided by the step) and finds 0.8. Asserts test that scan, the gap under the bound, the coffee within 1 C, and the bucket's second solution.
 
 ### Python
 
@@ -334,14 +346,14 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves continuous dependence and both forms of Gronwall's inequality, for every constant and every time from 0 to $T$.
+Lean proves continuous dependence and both forms of Gronwall's inequality, for every constant and every time from 0 to $`T`$.
 
-- If the rate law has Lipschitz constant $L$ wherever two solutions go, their gap is at most the starting gap times $e^{Lt}$.
-- Suppose $w$ is continuous and never negative, $L \ge 0$, $\delta \ge 0$ and $w(t) \le \delta + \int_0^t L\,w(s)\,ds$. Then $w(t) \le \delta\,e^{Lt}$.
-- If $w' \le k\,w$ for a constant $k$ of either sign, then $w(t) \le w(0)\,e^{kt}$.
+- If the rate law has Lipschitz constant $`L`$ wherever two solutions go, their gap is at most the starting gap times $`e^{Lt}`$.
+- Suppose $`w`$ is continuous and never negative, $`L \ge 0`$, $`\delta \ge 0`$ and $`w(t) \le \delta + \int_0^t L\,w(s)\,ds`$. Then $`w(t) \le \delta\,e^{Lt}`$.
+- If $`w' \le k\,w`$ for a constant $`k`$ of either sign, then $`w(t) \le w(0)\,e^{kt}`$.
 - Two hand sums hold exactly: the rumours start 11 − 10 = 1 pupil apart, and the bucket's (0.1s)² is 25 at s = 50.
 
-The decimals, Euler's steps, the scan for $L$ and the mistakes table are left to the Python and Rust checks.
+The decimals, Euler's steps, the scan for $`L`$ and the mistakes table are left to the Python and Rust checks.
 
 ```lean
 -- Gronwall's inequality: two solutions of a law with Lipschitz constant L stay within their starting gap times e^(Lt), a quantity bounded by δ plus L times its running total stays below δe^(Lt), and a gap with w' ≤ kw stays below w(0)e^(kt).
@@ -509,7 +521,7 @@ example : ((50 : ℚ) / 10) ^ 2 = 25 := by norm_num
 > [!warning]
 > **Reading continuous dependence as "small errors stay small".** They stay small for a fixed time, under a limit that grows like e^(Lt): the rumour bound is 2.23 pupils on day 1 and 2,980.96 on day 10.
 >
-> - **A Lipschitz constant from one point.** For $y' = y^2$ the start gives 2; the bound 0.0710 at t = 0.98 misses a gap of 49.02.
+> - **A Lipschitz constant from one point.** For $`y' = y^2`$ the start gives 2; the bound 0.0710 at t = 0.98 misses a gap of 49.02.
 > - **The bound taken as the gap.** The coffee's integral bound is 2.7183 C at 10 minutes; the gap is 0.3679 C.
 > - **A negative L in the integral form.** Step 1 needs L at least zero; use the one-sided form instead.
 

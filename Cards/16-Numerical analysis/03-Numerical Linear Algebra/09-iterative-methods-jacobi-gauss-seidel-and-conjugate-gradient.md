@@ -47,32 +47,40 @@ The orange line is Jacobi, the green line Gauss-Seidel, the dark line conjugate 
 
 Split A into its diagonal D, the part below the diagonal L, and the part above it U, so A = D + L + U. (On this card L is the lower part of A, not a Cholesky factor.) Write x_i^(k) for junction i's head after k sweeps.
 
-$$\text{Jacobi:}\quad x_i^{(k+1)} = \frac{1}{a_{ii}}\Big(b_i - \sum_{j \ne i} a_{ij}\, x_j^{(k)}\Big)$$
+```math
+\text{Jacobi:}\quad x_i^{(k+1)} = \frac{1}{a_{ii}}\Big(b_i - \sum_{j \ne i} a_{ij}\, x_j^{(k)}\Big)
+```
 
-$$\text{Gauss-Seidel:}\quad x_i^{(k+1)} = \frac{1}{a_{ii}}\Big(b_i - \sum_{j < i} a_{ij}\, x_j^{(k+1)} - \sum_{j > i} a_{ij}\, x_j^{(k)}\Big)$$
+```math
+\text{Gauss-Seidel:}\quad x_i^{(k+1)} = \frac{1}{a_{ii}}\Big(b_i - \sum_{j < i} a_{ij}\, x_j^{(k+1)} - \sum_{j > i} a_{ij}\, x_j^{(k)}\Big)
+```
 
-$$\text{SOR:}\quad x_i \leftarrow x_i + \omega\,\big(\text{Gauss-Seidel value} - x_i\big)$$
+```math
+\text{SOR:}\quad x_i \leftarrow x_i + \omega\,\big(\text{Gauss-Seidel value} - x_i\big)
+```
 
 Each sweep moves the error e_k = x^(k) − x* by a fixed matrix G, and two bounds say how fast it shrinks:
 
-$$e_{k+1} = G\,e_k, \qquad \lVert e_k \rVert_\infty \le q^{k}\,\lVert e_0 \rVert_\infty \ \text{(Jacobi, Gauss-Seidel)}, \qquad \lVert e_k \rVert_A \le 2\left(\frac{\sqrt{\kappa}-1}{\sqrt{\kappa}+1}\right)^{k} \lVert e_0 \rVert_A \ \text{(CG)}$$
+```math
+e_{k+1} = G\,e_k, \qquad \lVert e_k \rVert_\infty \le q^{k}\,\lVert e_0 \rVert_\infty \ \text{(Jacobi, Gauss-Seidel)}, \qquad \lVert e_k \rVert_A \le 2\left(\frac{\sqrt{\kappa}-1}{\sqrt{\kappa}+1}\right)^{k} \lVert e_0 \rVert_A \ \text{(CG)}
+```
 
 **Read it aloud:** solve each junction's equation for its own head, using the neighbours' latest heads; each sweep shrinks the error by at least q, and each conjugate gradient step by at least a factor set by √κ.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $a_{ij}$, $n$ | the matrix of the network's water balance, its entry in row i, column j, and its size | n = 250; diagonal entries 2.1 to 4.1; each pipe between junctions puts −1 off the diagonal | — |
-| $x$, $x^*$, $x^{(k)}$ | heads in metres: any list of them, the exact solution, and the guess after k sweeps | x* runs from 44.800616 m to 3.718894 m; x^(0) is all zeros | — |
-| $b$ | the right-hand side: 50 for each supply pipe at a junction, else 0 | 100 at the corner (0, 0), which has two supply pipes | heads rise in proportion |
-| $D$, $L$, $U$ | the diagonal of A, the part below it, the part above it | D holds the 2.1 to 4.1 | — |
-| $e_k$, $\lVert e_k\rVert_\infty$ | the error x^(k) − x*, and its largest entry in size (the max norm) | 44.800616 m at the start | — |
-| $G$, $p_k$, $T_k$ | the iteration matrix: one sweep sends e_k to G e_k. For Jacobi $G = -D^{-1}(L+U)$. For CG, $p_k$ is the degree-k polynomial with $p_k(0) = 1$ that sends e_0 to e_k; $T_k$ is the Chebyshev polynomial of degree k that bounds it (y, y_0, γ and θ are names inside that proof) | 250 by 250, never stored | — |
-| $\rho(G)$, $\rho_J$ | the spectral radius: the largest size of any eigenvalue of G; ρ_J is Jacobi's | 0.967264 for Jacobi, 0.935600 for Gauss-Seidel | more sweeps; at 1 or above, no convergence |
-| $q$ | the dominance ratio: the largest, over rows, of the off-diagonal sizes added up and divided by the diagonal | 4 ÷ 4.1 = 0.975610 | a weaker guarantee |
-| $\omega$, $\omega^*$ | the relaxation factor of SOR (successive over-relaxation): how far past the Gauss-Seidel value to move; ω* is Young's best value | best 1.6 of the ten tried; ω* = 1.5952 | sweeps fall, then rise again |
-| $\lambda_{\min}$, $\lambda_{\max}$, $\kappa$ | the smallest and largest eigenvalues of A, and the condition number κ = λmax / λmin | 0.126132, 7.995987, 63.3940 | CG needs more steps; its steps per digit grow like √κ |
-| $\lVert v\rVert_A$ | the energy norm: the length of a list v measured by A, $\sqrt{v^{T} A v}$ | 1.719e1 after 10 CG steps | — |
-| $r_k$ | the residual b − A x^(k): how far each junction's water fails to balance, in L/s | relative size below 1e-8 at the stop | — |
+| $`A`$, $`a_{ij}`$, $`n`$ | the matrix of the network's water balance, its entry in row i, column j, and its size | n = 250; diagonal entries 2.1 to 4.1; each pipe between junctions puts −1 off the diagonal | — |
+| $`x`$, $`x^*`$, $`x^{(k)}`$ | heads in metres: any list of them, the exact solution, and the guess after k sweeps | x* runs from 44.800616 m to 3.718894 m; x^(0) is all zeros | — |
+| $`b`$ | the right-hand side: 50 for each supply pipe at a junction, else 0 | 100 at the corner (0, 0), which has two supply pipes | heads rise in proportion |
+| $`D`$, $`L`$, $`U`$ | the diagonal of A, the part below it, the part above it | D holds the 2.1 to 4.1 | — |
+| $`e_k`$, $`\lVert e_k\rVert_\infty`$ | the error x^(k) − x*, and its largest entry in size (the max norm) | 44.800616 m at the start | — |
+| $`G`$, $`p_k`$, $`T_k`$ | the iteration matrix: one sweep sends e_k to G e_k. For Jacobi $`G = -D^{-1}(L+U)`$. For CG, $`p_k`$ is the degree-k polynomial with $`p_k(0) = 1`$ that sends e_0 to e_k; $`T_k`$ is the Chebyshev polynomial of degree k that bounds it (y, y_0, γ and θ are names inside that proof) | 250 by 250, never stored | — |
+| $`\rho(G)`$, $`\rho_J`$ | the spectral radius: the largest size of any eigenvalue of G; ρ_J is Jacobi's | 0.967264 for Jacobi, 0.935600 for Gauss-Seidel | more sweeps; at 1 or above, no convergence |
+| $`q`$ | the dominance ratio: the largest, over rows, of the off-diagonal sizes added up and divided by the diagonal | 4 ÷ 4.1 = 0.975610 | a weaker guarantee |
+| $`\omega`$, $`\omega^*`$ | the relaxation factor of SOR (successive over-relaxation): how far past the Gauss-Seidel value to move; ω* is Young's best value | best 1.6 of the ten tried; ω* = 1.5952 | sweeps fall, then rise again |
+| $`\lambda_{\min}`$, $`\lambda_{\max}`$, $`\kappa`$ | the smallest and largest eigenvalues of A, and the condition number κ = λmax / λmin | 0.126132, 7.995987, 63.3940 | CG needs more steps; its steps per digit grow like √κ |
+| $`\lVert v\rVert_A`$ | the energy norm: the length of a list v measured by A, $`\sqrt{v^{T} A v}`$ | 1.719e1 after 10 CG steps | — |
+| $`r_k`$ | the residual b − A x^(k): how far each junction's water fails to balance, in L/s | relative size below 1e-8 at the stop | — |
 
 The norms and κ come from [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md). The spectral radius ρ(G) is new on this card.
 
@@ -94,7 +102,9 @@ Each row of A x = b says one junction's water balances. Solve that row for its o
 
 Subtract the sweep applied to x* from the sweep applied to x^(k). The right-hand side b cancels, and what is left is
 
-$$e_{k+1} = G\,e_k, \qquad\text{so}\qquad e_k = G^{k} e_0 .$$
+```math
+e_{k+1} = G\,e_k, \qquad\text{so}\qquad e_k = G^{k} e_0 .
+```
 
 The error does not depend on b at all, only on G. Everything below is about making G small.
 
@@ -114,11 +124,15 @@ A matrix is **strictly diagonally dominant** by rows when each diagonal entry is
 
 **Proof.** The exact solution satisfies the Jacobi formula too. Subtract it from the formula for x^(k+1), entry by entry:
 
-$$e_{k+1,i} = -\frac{1}{a_{ii}} \sum_{j\ne i} a_{ij}\, e_{k,j} .$$
+```math
+e_{k+1,i} = -\frac{1}{a_{ii}} \sum_{j\ne i} a_{ij}\, e_{k,j} .
+```
 
 Take sizes. Each |e_{k,j}| is at most ‖e_k‖∞, so
 
-$$|e_{k+1,i}| \le \frac{\sum_{j\ne i} |a_{ij}|}{|a_{ii}|}\,\lVert e_k\rVert_\infty \le q\,\lVert e_k\rVert_\infty .$$
+```math
+|e_{k+1,i}| \le \frac{\sum_{j\ne i} |a_{ij}|}{|a_{ii}|}\,\lVert e_k\rVert_\infty \le q\,\lVert e_k\rVert_\infty .
+```
 
 This holds for every i, so ‖e_{k+1}‖∞ ≤ q ‖e_k‖∞. Repeat k times. Since q < 1, the error goes to zero. ∎
 
@@ -144,7 +158,7 @@ The same dominance proof works, with one extra induction, so ‖e_k‖∞ ≤ q^
 
 Write E = ‖e_k‖∞. Gauss-Seidel's error in entry i is
 
-$$e_{k+1,i} = -\frac{1}{a_{ii}}\Big(\sum_{j<i} a_{ij}\, e_{k+1,j} + \sum_{j>i} a_{ij}\, e_{k,j}\Big).$$
+$`\displaystyle e_{k+1,i} = -\frac{1}{a_{ii}}\Big(\sum_{j<i} a_{ij}\, e_{k+1,j} + \sum_{j>i} a_{ij}\, e_{k,j}\Big).`$
 
 Suppose every new entry before i obeys |e_{k+1,j}| ≤ qE. Since q < 1, each is at most E, and each old entry is at most E. So |e_{k+1,i}| ≤ (Σ_{j≠i} |a_ij| ÷ |a_ii|) E ≤ qE. That carries the claim from the first entry to the last. So ‖e_{k+1}‖∞ ≤ q ‖e_k‖∞.
 
@@ -156,7 +170,9 @@ Two more facts are stated here, with sources. First, Gauss-Seidel converges for 
 
 SOR moves each head past the Gauss-Seidel value by the factor ω. For this kind of matrix, Young proved the best factor is
 
-$$\omega^{*} = \frac{2}{1 + \sqrt{1 - \rho_J^{2}}},$$
+```math
+\omega^{*} = \frac{2}{1 + \sqrt{1 - \rho_J^{2}}},
+```
 
 where ρ_J is Jacobi's spectral radius. Here that gives 1.5952. The code tries ω = 1.0, 1.1, …, 1.9 and finds the fewest sweeps at 1.6: 44 sweeps, against 233 for plain Gauss-Seidel.
 
@@ -170,7 +186,9 @@ After k steps, the error is a polynomial in A applied to the first error: e_k = 
 
 Now use [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): write e_0 along A's perpendicular eigenvectors. Then p(A) multiplies each piece by p(λ), so
 
-$$\lVert e_k\rVert_A \le \Big(\max_{\lambda_{\min}\le\lambda\le\lambda_{\max}} |p(\lambda)|\Big)\, \lVert e_0\rVert_A \quad\text{for every allowed } p .$$
+```math
+\lVert e_k\rVert_A \le \Big(\max_{\lambda_{\min}\le\lambda\le\lambda_{\max}} |p(\lambda)|\Big)\, \lVert e_0\rVert_A \quad\text{for every allowed } p .
+```
 
 Choose p to be a Chebyshev polynomial stretched onto [λmin, λmax]: the polynomial that stays smallest on that interval while fixed at 1 at zero. Its largest size there is at most 2((√κ − 1)/(√κ + 1))^k. That gives the bound in the formula. The fold proves the Chebyshev step; Trefethen and Bau (Lecture 38) give the same argument.
 
@@ -185,7 +203,7 @@ For y ≥ 1, let γ = y + √(y² − 1), so 1/γ = y − √(y² − 1) and y =
 
 Now stretch the interval. The map y(λ) = (λmax + λmin − 2λ) ÷ (λmax − λmin) sends [λmin, λmax] onto [−1, 1], and sends λ = 0 to y_0 = (κ + 1) ÷ (κ − 1), which is above 1. Take
 
-$$p(\lambda) = \frac{T_k\big(y(\lambda)\big)}{T_k(y_0)} .$$
+$`\displaystyle p(\lambda) = \frac{T_k\big(y(\lambda)\big)}{T_k(y_0)} .`$
 
 It has degree k and p(0) = 1, so it is allowed, and on the interval |p(λ)| ≤ 1 ÷ T_k(y_0). Finally y_0² − 1 = 4κ ÷ (κ − 1)², so γ = y_0 + √(y_0² − 1) = (κ + 1 + 2√κ) ÷ (κ − 1) = (√κ + 1) ÷ (√κ − 1). Hence 1 ÷ T_k(y_0) ≤ 2γ^(−k) = 2((√κ − 1)/(√κ + 1))^k. ∎
 

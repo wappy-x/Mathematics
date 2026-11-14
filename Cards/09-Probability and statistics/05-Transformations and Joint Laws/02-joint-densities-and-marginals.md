@@ -28,38 +28,44 @@ The view is from directly above the surface, to scale from the `figure,` lines t
 
 ## The formula
 
-Notation first, in words. As on earlier cards, capital letters are random quantities and lower-case letters their values: $H$ is the height of a randomly chosen adult and $h$ one height it might take; $W$ and $w$ do the same for weight. A region of the plane is called $R$. The joint density is written f(h, w), read "the density at height h and weight w". The double integral sign, from the calculus wing, adds up volume above a region, and the symbol ∈ reads "lands in".
+Notation first, in words. As on earlier cards, capital letters are random quantities and lower-case letters their values: $`H`$ is the height of a randomly chosen adult and $`h`$ one height it might take; $`W`$ and $`w`$ do the same for weight. A region of the plane is called $`R`$. The joint density is written f(h, w), read "the density at height h and weight w". The double integral sign, from the calculus wing, adds up volume above a region, and the symbol ∈ reads "lands in".
 
-$$P\big((H, W) \in R\big) = \iint_R f(h, w)\,dh\,dw$$
+```math
+P\big((H, W) \in R\big) = \iint_R f(h, w)\,dh\,dw
+```
 
 **Read it aloud:** the chance that the pair lands in the region R is the volume under the surface above R.
 
 Any surface that never dips below the floor and holds total volume 1 is a joint density. The marginals come from it by adding across one direction:
 
-$$f_H(h) = \int_{-\infty}^{\infty} f(h, w)\,dw \qquad\qquad f_W(w) = \int_{-\infty}^{\infty} f(h, w)\,dh$$
+```math
+f_H(h) = \int_{-\infty}^{\infty} f(h, w)\,dw \qquad\qquad f_W(w) = \int_{-\infty}^{\infty} f(h, w)\,dh
+```
 
 **Read it aloud:** the density of height alone, at height h, is the area of the surface's cross-section at h, taken across every weight; the same with the roles swapped gives weight alone.
 
-The surface on this card is a tilted bell, fixed by five settings: the centre μ_H = 175 cm and μ_W = 78 kg (the averages), the spreads σ_H = 7 cm and σ_W = 12 kg (the standard deviations), and the tilt ρ (rho) = 0.5, the correlation of height and weight. Three helpers follow from them. The standardised height $z_h$ is (h − 175)/7: how many spreads above average. The standardised weight $z_w$ is (w − 78)/12. The squeeze factor $c$ is the square root of 1 − ρ^2, here 0.8660. The bell's derivation belongs to [Bivariate normal](05-bivariate-normal-and-conditioning.md); here it is taken as given:
+The surface on this card is a tilted bell, fixed by five settings: the centre μ_H = 175 cm and μ_W = 78 kg (the averages), the spreads σ_H = 7 cm and σ_W = 12 kg (the standard deviations), and the tilt ρ (rho) = 0.5, the correlation of height and weight. Three helpers follow from them. The standardised height $`z_h`$ is (h − 175)/7: how many spreads above average. The standardised weight $`z_w`$ is (w − 78)/12. The squeeze factor $`c`$ is the square root of 1 − ρ^2, here 0.8660. The bell's derivation belongs to [Bivariate normal](05-bivariate-normal-and-conditioning.md); here it is taken as given:
 
-$$f(h, w) = \frac{1}{2\pi\,\sigma_H\,\sigma_W\,c}\;e^{-Q/2}, \qquad Q = \frac{z_h^2 - 2\rho\,z_h z_w + z_w^2}{c^2}$$
+```math
+f(h, w) = \frac{1}{2\pi\,\sigma_H\,\sigma_W\,c}\;e^{-Q/2}, \qquad Q = \frac{z_h^2 - 2\rho\,z_h z_w + z_w^2}{c^2}
+```
 
 **Read it aloud:** the surface is highest at the centre and falls off as a bell whose contours are tilted ellipses; Q measures how far a pair sits from the centre, allowing for the tilt.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $H$, $W$ | height and weight of one randomly chosen adult | cm and kg | — |
-| $h$, $w$ | one particular height and weight | 185 cm, 90 kg | the tail region shrinks |
-| $f$ | the joint density: chance per cm per kg | 0.002188 at the centre | more chance near that point |
-| $R$ | a region of the height-weight plane | taller than 185, heavier than 90 | bigger region, more volume |
-| $f_H$, $f_W$ | the marginals: each variable's own density | 0.056992 per cm at 175 cm | — |
-| $\mu_H$, $\mu_W$ | the centre: average height and weight | 175 cm, 78 kg | the bell slides |
-| $\sigma_H$, $\sigma_W$ | the spreads: standard deviations | 7 cm, 12 kg | the bell widens and flattens |
-| $\rho$ | the tilt: the correlation of H and W | 0.5 | the tail corner fills |
-| $z_h$, $z_w$ | distances from the centre in spreads | 1.4286 and 1.0000 at the corner | — |
-| $Q$ | the tilted squared distance from the centre | 0 at the centre | the surface falls |
-| $c$ | the squeeze factor, the square root of 1 − ρ^2 | 0.8660 | wider rings, lower peak |
-| $\Phi$ | the standard normal's area left of a point | 1 − Φ(1) = 0.1587 | — |
+| $`H`$, $`W`$ | height and weight of one randomly chosen adult | cm and kg | — |
+| $`h`$, $`w`$ | one particular height and weight | 185 cm, 90 kg | the tail region shrinks |
+| $`f`$ | the joint density: chance per cm per kg | 0.002188 at the centre | more chance near that point |
+| $`R`$ | a region of the height-weight plane | taller than 185, heavier than 90 | bigger region, more volume |
+| $`f_H`$, $`f_W`$ | the marginals: each variable's own density | 0.056992 per cm at 175 cm | — |
+| $`\mu_H`$, $`\mu_W`$ | the centre: average height and weight | 175 cm, 78 kg | the bell slides |
+| $`\sigma_H`$, $`\sigma_W`$ | the spreads: standard deviations | 7 cm, 12 kg | the bell widens and flattens |
+| $`\rho`$ | the tilt: the correlation of H and W | 0.5 | the tail corner fills |
+| $`z_h`$, $`z_w`$ | distances from the centre in spreads | 1.4286 and 1.0000 at the corner | — |
+| $`Q`$ | the tilted squared distance from the centre | 0 at the centre | the surface falls |
+| $`c`$ | the squeeze factor, the square root of 1 − ρ^2 | 0.8660 | wider rings, lower peak |
+| $`\Phi`$ | the standard normal's area left of a point | 1 − Φ(1) = 0.1587 | — |
 
 The tilt ρ is the correlation of [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): the covariance Cov(H, W) divided by both spreads. The code integrates the covariance off the surface and gets 42.000000 cm kg, which is 0.5 × 7 × 12.
 
@@ -82,11 +88,13 @@ The chance of any region is the sum over its boxes. As the boxes shrink the sum 
 
 ### Step 1: the surface holds total volume 1
 
-Shift the centre to zero and measure in spreads: the substitutions $z_h$ and $z_w$ turn dh dw into σ_H σ_W dz_h dz_w. Then complete the square in Q:
+Shift the centre to zero and measure in spreads: the substitutions $`z_h`$ and $`z_w`$ turn dh dw into σ_H σ_W dz_h dz_w. Then complete the square in Q:
 
-$$Q = z_h^2 + \frac{(z_w - \rho\,z_h)^2}{c^2}$$
+```math
+Q = z_h^2 + \frac{(z_w - \rho\,z_h)^2}{c^2}
+```
 
-The volume splits into a bell in $z_h$ times a bell in $z_w$ centred at ρ z_h with spread $c$. The Gaussian integral gives the first area as the square root of 2π, and the second as c times the square root of 2π. Their product, times the σ_H σ_W from the substitution, is 2π c σ_H σ_W: exactly the number the formula divides by. The code's grid gives 1.0000000000.
+The volume splits into a bell in $`z_h`$ times a bell in $`z_w`$ centred at ρ z_h with spread $`c`$. The Gaussian integral gives the first area as the square root of 2π, and the second as c times the square root of 2π. Their product, times the σ_H σ_W from the substitution, is 2π c σ_H σ_W: exactly the number the formula divides by. The code's grid gives 1.0000000000.
 
 <details>
 <summary>Detailed proof: the volume is 1</summary>
@@ -103,11 +111,13 @@ For fixed z_h the inner integral is a Gaussian integral with centre ρ z_h and s
 
 The chance that height is at most some value a is the chance that the pair lands in the strip of the plane left of a, whatever the weight:
 
-$$P(H \le a) = \int_{-\infty}^{a} \left[\int_{-\infty}^{\infty} f(h, w)\,dw\right] dh$$
+```math
+P(H \le a) = \int_{-\infty}^{a} \left[\int_{-\infty}^{\infty} f(h, w)\,dw\right] dh
+```
 
 The double integral over the strip was taken slice by slice: first across every weight at a fixed height, then along the heights. For a surface that never goes negative the order of slicing never changes the answer ([Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)).
 
-The left side is the cumulative distribution F(a) of height alone. The right side is the running area, up to a, of the bracket. A density is exactly a curve whose running area is the cumulative distribution, and it is the slope of that cumulative distribution ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). So the bracket is the density of height: that is $f_H$. Nothing assumed that height and weight were unrelated.
+The left side is the cumulative distribution F(a) of height alone. The right side is the running area, up to a, of the bracket. A density is exactly a curve whose running area is the cumulative distribution, and it is the slope of that cumulative distribution ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). So the bracket is the density of height: that is $`f_H`$. Nothing assumed that height and weight were unrelated.
 
 This is the joint table's row total from [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md), with boxes shrunk to nothing: adding across a row forgets the column variable.
 
@@ -115,7 +125,9 @@ This is the joint table's row total from [Two variables at once](../02-Random%20
 
 Step 1's inner integral is the whole calculation. At any fixed height, integrating across weight turns the weight factor into c √(2π) σ_W, which cancels against the same numbers in the divisor. What is left depends on height only:
 
-$$f_H(h) = \frac{1}{\sigma_H\sqrt{2\pi}}\,e^{-z_h^2/2}$$
+```math
+f_H(h) = \frac{1}{\sigma_H\sqrt{2\pi}}\,e^{-z_h^2/2}
+```
 
 That is the normal law N(175, 7^2) of [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): average 175 cm, spread 7 cm, so variance 7^2. The tilt ρ has vanished. By the same algebra with the roles swapped, weight alone is N(78, 12^2). At the centre the two marginals are 0.056992 per cm and 0.033245 per kg.
 
@@ -135,13 +147,15 @@ Orange: the weight integral of the surface, computed numerically at each height.
 
 Every tilt from just above −1 to just below 1 gives the same two marginals, since ρ vanished in Step 3. So two plain bells for height and weight are consistent with a surface leaning either way, or with none.
 
-The pair is **independent**, meaning knowing one tells nothing about the other, exactly when the surface is the product of its marginals, $f(h, w) = f_H(h)\,f_W(w)$, at every point outside a set of zero area. For the tilted bell that happens only at ρ = 0, where Q becomes the sum of the two squared distances. At ρ = 0.5 the peak is 0.002188, the product of the marginals there is 0.001895, and the ratio is 1.1547, which is 1/c. The surface is taller in the middle than independence allows, because the tilt piles adults along the leaning axis.
+The pair is **independent**, meaning knowing one tells nothing about the other, exactly when the surface is the product of its marginals, $`f(h, w) = f_H(h)\,f_W(w)`$, at every point outside a set of zero area. For the tilted bell that happens only at ρ = 0, where Q becomes the sum of the two squared distances. At ρ = 0.5 the peak is 0.002188, the product of the marginals there is 0.001895, and the ratio is 1.1547, which is 1/c. The surface is taller in the middle than independence allows, because the tilt piles adults along the leaning axis.
 
 ### Step 5: a region, slice by slice
 
 The same slicing answers the clothing maker's question. For each height above 185 cm, take the cross-section of the surface and keep only the weights above 90 kg. Step 1's completed square makes each piece the tail of a bell in weight, centred at ρ z_h and of spread c in standardised units. Its area is a Φ value:
 
-$$P(H > 185,\ W > 90) = \int_{185}^{\infty} f_H(h)\left[1 - \Phi\!\left(\frac{1 - \rho\,z_h}{c}\right)\right] dh = 0.036110$$
+```math
+P(H > 185,\ W > 90) = \int_{185}^{\infty} f_H(h)\left[1 - \Phi\!\left(\frac{1 - \rho\,z_h}{c}\right)\right] dh = 0.036110
+```
 
 The 1 in the numerator is the standardised weight at 90 kg, (90 − 78)/12. The bracket is the share of adults at height h who weigh more than 90 kg. Reading that bracket as a chance in its own right, given the height, is the work of [Conditional densities](03-conditional-densities.md). No shortcut removes the last integral; it is done numerically.
 
@@ -569,10 +583,10 @@ The two outputs match line for line, including the simulated counts, since both 
 
 Lean proves the marginal rule for any joint density, and the tilted bell's facts for every centre, spread and tilt allowed.
 
-- Suppose the pair $(H, W)$ has a joint density $f$, so the volume above each region $R$ is its chance. Then integrating out weight leaves the density of height alone, its marginal, and the same holds with the roles swapped.
-- Take spreads $\sigma_H$ and $\sigma_W$ above 0, and a tilt $\rho$ between −1 and 1. Then the tilted bell's height marginal is the plain bell N($\mu_H$, $\sigma_H^2$): the tilt vanishes.
-- Take the same settings. Then the tilted bell equals the product of its two marginals at every point exactly when $\rho = 0$.
-- The worked arithmetic: the covariance 42, the standardised heights and weight, $c^2 = 3/4$, and peak over product, $1/c$.
+- Suppose the pair $`(H, W)`$ has a joint density $`f`$, so the volume above each region $`R`$ is its chance. Then integrating out weight leaves the density of height alone, its marginal, and the same holds with the roles swapped.
+- Take spreads $`\sigma_H`$ and $`\sigma_W`$ above 0, and a tilt $`\rho`$ between −1 and 1. Then the tilted bell's height marginal is the plain bell N($`\mu_H`$, $`\sigma_H^2`$): the tilt vanishes.
+- Take the same settings. Then the tilted bell equals the product of its two marginals at every point exactly when $`\rho = 0`$.
+- The worked arithmetic: the covariance 42, the standardised heights and weight, $`c^2 = 3/4`$, and peak over product, $`1/c`$.
 
 The volume 1, the decimals, the tail chance 0.036110, the simulation and the chart are left to the Python and Rust checks.
 

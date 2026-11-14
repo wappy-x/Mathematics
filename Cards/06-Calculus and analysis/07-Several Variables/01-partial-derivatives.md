@@ -34,34 +34,40 @@ Orange: 20 m^2 of glass. Green: 40 m^2. Each curve is a slice with the glass fro
 
 ## The formula
 
-Notation first, in words. A partial derivative is written with a curly d, ∂, read "partial": $\frac{\partial Q}{\partial t}$ is "the rate of Q per unit of t, all else held fixed". A derivative is the limit of average rates ([The derivative](../02-Derivatives/01-the-derivative.md)).
+Notation first, in words. A partial derivative is written with a curly d, ∂, read "partial": $`\frac{\partial Q}{\partial t}`$ is "the rate of Q per unit of t, all else held fixed". A derivative is the limit of average rates ([The derivative](../02-Derivatives/01-the-derivative.md)).
 
-The heat loss in watts, with $t$ cm of board and $g$ m^2 of glass, is
+The heat loss in watts, with $`t`$ cm of board and $`g`$ m^2 of glass, is
 
-$$Q(t,g) = \Delta T\left(\frac{A-g}{R(t)} + Ug\right), \qquad R(t) = 0.5 + \frac{t}{4}$$
+```math
+Q(t,g) = \Delta T\left(\frac{A-g}{R(t)} + Ug\right), \qquad R(t) = 0.5 + \frac{t}{4}
+```
 
 Each partial is the one-input derivative, with the other input frozen:
 
-$$\frac{\partial Q}{\partial t} = \lim_{h\to 0}\frac{Q(t+h,g) - Q(t,g)}{h}, \qquad \frac{\partial Q}{\partial g} = \lim_{k\to 0}\frac{Q(t,g+k) - Q(t,g)}{k}$$
+```math
+\frac{\partial Q}{\partial t} = \lim_{h\to 0}\frac{Q(t+h,g) - Q(t,g)}{h}, \qquad \frac{\partial Q}{\partial g} = \lim_{k\to 0}\frac{Q(t,g+k) - Q(t,g)}{k}
+```
 
 **Read it aloud:** step the board by h with the glass frozen, divide the change in heat loss by h, and let h shrink; likewise for glass.
 
-A partial of a partial is a **second partial**. A **mixed** one is written right to left: $\frac{\partial^2 Q}{\partial g\,\partial t}$ means "the rate in t first, then the rate of that in g". The theorem:
+A partial of a partial is a **second partial**. A **mixed** one is written right to left: $`\frac{\partial^2 Q}{\partial g\,\partial t}`$ means "the rate in t first, then the rate of that in g". The theorem:
 
-$$\frac{\partial^2 Q}{\partial g\,\partial t} = \frac{\partial^2 Q}{\partial t\,\partial g}$$
+```math
+\frac{\partial^2 Q}{\partial g\,\partial t} = \frac{\partial^2 Q}{\partial t\,\partial g}
+```
 
 **Read it aloud:** how much glass changes the value of board equals how much board changes the cost of glass.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $Q(t, g)$ | heat loss, watts | 2,000 W | — |
-| $t$ | insulation board, cm | 6 cm | loss falls, by less each cm |
-| $g$ | glass area, m^2, taken out of the wall | 20 m^2 | loss rises 40 W per m^2 |
-| $R(t)$ | wall's resistance to heat, m^2 °C per W: brick alone 0.5, and each cm of board (0.01 m conducting 0.04 W per m per °C) adds 0.25 | 2.00 at 6 cm | wall leaks less |
-| $A$, $\Delta T$, $U$ | whole wall area; temperature gap; glass's loss per m^2 per °C | 120 m^2; 20 °C; 2.5 W | $\Delta T$ scales every rate; $A$ only the board rate; $U$ only the glass rate |
-| $h$, $k$ | steps in board (cm) and glass (m^2), never 0 | 1 down to 0.001 | quotient drifts from the rate |
-| $\frac{\partial Q}{\partial t}$, $\frac{\partial Q}{\partial g}$ | the partials: output units per unit of the input moved | −125 W per cm, 40 W per m^2 | — |
-| $\frac{\partial^2 Q}{\partial g\,\partial t}$, $\frac{\partial^2 Q}{\partial t\,\partial g}$ | the mixed partials, W per cm per m^2 | 1.25 both | — |
+| $`Q(t, g)`$ | heat loss, watts | 2,000 W | — |
+| $`t`$ | insulation board, cm | 6 cm | loss falls, by less each cm |
+| $`g`$ | glass area, m^2, taken out of the wall | 20 m^2 | loss rises 40 W per m^2 |
+| $`R(t)`$ | wall's resistance to heat, m^2 °C per W: brick alone 0.5, and each cm of board (0.01 m conducting 0.04 W per m per °C) adds 0.25 | 2.00 at 6 cm | wall leaks less |
+| $`A`$, $`\Delta T`$, $`U`$ | whole wall area; temperature gap; glass's loss per m^2 per °C | 120 m^2; 20 °C; 2.5 W | $`\Delta T`$ scales every rate; $`A`$ only the board rate; $`U`$ only the glass rate |
+| $`h`$, $`k`$ | steps in board (cm) and glass (m^2), never 0 | 1 down to 0.001 | quotient drifts from the rate |
+| $`\frac{\partial Q}{\partial t}`$, $`\frac{\partial Q}{\partial g}`$ | the partials: output units per unit of the input moved | −125 W per cm, 40 W per m^2 | — |
+| $`\frac{\partial^2 Q}{\partial g\,\partial t}`$, $`\frac{\partial^2 Q}{\partial t\,\partial g}`$ | the mixed partials, W per cm per m^2 | 1.25 both | — |
 
 ### When it holds
 
@@ -80,9 +86,11 @@ With the glass fixed, heat loss is a function of the board alone, and every one-
 
 ### Step 1: the board rate, from the definition
 
-At 6 cm the resistance is 2.00, and 100 m^2 of wall lose 20 × 100 / 2 = 1,000 W. Step the board by $h$ cm: the wall loss becomes 2,000 / (2 + h/4), and the glass term does not move. So
+At 6 cm the resistance is 2.00, and 100 m^2 of wall lose 20 × 100 / 2 = 1,000 W. Step the board by $`h`$ cm: the wall loss becomes 2,000 / (2 + h/4), and the glass term does not move. So
 
-$$\frac{Q(6+h,20) - Q(6,20)}{h} = \frac{1}{h}\left(\frac{2000}{2+h/4} - 1000\right) = \frac{-1000}{8+h}$$
+```math
+\frac{Q(6+h,20) - Q(6,20)}{h} = \frac{1}{h}\left(\frac{2000}{2+h/4} - 1000\right) = \frac{-1000}{8+h}
+```
 
 Dividing by h is allowed because h is not zero. As h heads for 0 the quotient heads for **−125 W per cm**.
 
@@ -90,15 +98,19 @@ The tolerance game: the quotient is off by 125h / (8 + h). So to land within 0.1
 
 For any setting, the quotient rule ([Product and quotient rules](../02-Derivatives/02-product-and-quotient-rules.md)) gives
 
-$$\frac{\partial Q}{\partial t} = -\frac{\Delta T\,(A-g)}{4\,R(t)^2}$$
+```math
+\frac{\partial Q}{\partial t} = -\frac{\Delta T\,(A-g)}{4\,R(t)^2}
+```
 
 At 14 cm it is −31.25 W per cm, a quarter of the rate at 6 cm: board has diminishing returns.
 
 ### Step 2: the glass rate is a straight line
 
-Freeze the board at 6 cm and add $k$ m^2 of glass. The glass loses 20 × 2.5 × k = 50k W more; the smaller wall loses 20 × k / 2 = 10k W less. The quotient is 40 for every step: **40 W per m^2**. In general
+Freeze the board at 6 cm and add $`k`$ m^2 of glass. The glass loses 20 × 2.5 × k = 50k W more; the smaller wall loses 20 × k / 2 = 10k W less. The quotient is 40 for every step: **40 W per m^2**. In general
 
-$$\frac{\partial Q}{\partial g} = \Delta T\left(U - \frac{1}{R(t)}\right)$$
+```math
+\frac{\partial Q}{\partial g} = \Delta T\left(U - \frac{1}{R(t)}\right)
+```
 
 each square metre swapped costs the glass's loss minus the wall's. At 14 cm it is 45: a better wall makes glass cost more.
 
@@ -112,9 +124,11 @@ On the chart, 20 m^2 more glass moved the slope from −125 to −100: 20 times 
 
 ### Step 4: why the orders must agree
 
-Read the heat loss at the four corners of a small rectangle, board $t$ and $t + h$, glass $g$ and $g + k$:
+Read the heat loss at the four corners of a small rectangle, board $`t`$ and $`t + h`$, glass $`g`$ and $`g + k`$:
 
-$$\text{corners} = Q(t{+}h,g{+}k) - Q(t{+}h,g) - Q(t,g{+}k) + Q(t,g)$$
+```math
+\text{corners} = Q(t{+}h,g{+}k) - Q(t{+}h,g) - Q(t,g{+}k) + Q(t,g)
+```
 
 Grouped one way it is a board step's effect changing with glass; grouped the other, a glass step's effect changing with board. Divided by hk it approximates both mixed partials: 1.111111 at h = k = 1, 1.234568 at 0.1, 1.249844 at 0.001.
 
@@ -135,7 +149,9 @@ Given any tolerance ε above 0, continuity gives a distance δ above 0 within wh
 
 The hypothesis matters. Take G, a function of inputs x and y, equal to 0 at the origin and elsewhere to
 
-$$G(x, y) = \frac{x\,y\,(x^2 - y^2)}{x^2 + y^2}$$
+```math
+G(x, y) = \frac{x\,y\,(x^2 - y^2)}{x^2 + y^2}
+```
 
 Its x-rate along the y-axis is −y; its y-rate along the x-axis is x. So the mixed partial is −1 taking x first, +1 taking y first. The corners quotient at the origin, (h^2 − k^2) / (h^2 + k^2), has no single limit, because G's second partials jump there.
 
@@ -609,7 +625,7 @@ example : (20 : ℚ) * (120 / 2 + 5 / 2 * 21) - 20 * (120 / 2 + 5 / 2 * 20) = 50
 > **Not naming what is held fixed.** "Heat loss per square metre of glass" is 40 W with the total wall fixed and 50 with the brick fixed: partials of two different functions.
 >
 > - **Treating a rate as a change.** One more centimetre saves 111.11 W, not 125; the rate is exact only in the limit.
-> - **Reading the order backwards.** $\frac{\partial^2 Q}{\partial g\,\partial t}$ takes the t-rate first. For the house it makes no difference; for G it flips −1 to +1.
+> - **Reading the order backwards.** $`\frac{\partial^2 Q}{\partial g\,\partial t}`$ takes the t-rate first. For the house it makes no difference; for G it flips −1 to +1.
 > - **Ranking rates in different units.** W per cm against W per m^2 is settled by prices, not sizes.
 
 ---

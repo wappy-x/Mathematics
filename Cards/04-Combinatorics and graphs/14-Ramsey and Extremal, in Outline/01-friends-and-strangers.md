@@ -42,15 +42,19 @@ Solid lines are the five acquainted pairs, the sides of the table. Dotted lines 
 
 Notation first, in words. A party where every pair is decided is the complete graph K(n): n dots, one line for every pair ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)), each line labelled **acquainted** or **strangers**. Three guests whose three lines carry the same label are a trio **all alike** (graph theory says monochromatic triangle: a triangle of one colour).
 
-$R(3,3)$ is the fewest guests that force such a trio however the labels fall; the two 3s give the trio's size for each kind ([Ramsey numbers](02-ramsey-numbers.md) takes the notation further).
+$`R(3,3)`$ is the fewest guests that force such a trio however the labels fall; the two 3s give the trio's size for each kind ([Ramsey numbers](02-ramsey-numbers.md) takes the notation further).
 
-$$R(3,3) = 6$$
+```math
+R(3,3) = 6
+```
 
 **Read it aloud:** six guests always hold three who all know each other or three who are all strangers, and five guests do not.
 
 One equals sign, two claims. That six is enough rests on counting one guest's relationships:
 
-$$\left\lceil \frac{6 - 1}{2} \right\rceil = 3$$
+```math
+\left\lceil \frac{6 - 1}{2} \right\rceil = 3
+```
 
 **Read it aloud:** one guest's five relationships come in two kinds, so one kind holds at least three of them.
 
@@ -58,12 +62,12 @@ That five is not enough needs one arrangement that escapes: the ring above. The 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $R(3,3)$ | the fewest guests that force a trio all alike | 6 | — |
-| $n$ | how many guests | 6 at dinner, 5 at the round table | past 6, still forced |
-| $K(n)$ | n dots, every pair joined by a line | K(6), 15 lines | more lines to label |
-| $C(n, 2)$ | n choose 2: pairs among n guests | 15 | more labellings |
-| $C(n, 3)$ | n choose 3: trios to inspect | 20 | more trios |
-| $\lceil x \rceil$ | round x up to a whole number | 2.5 rounds up to 3 | — |
+| $`R(3,3)`$ | the fewest guests that force a trio all alike | 6 | — |
+| $`n`$ | how many guests | 6 at dinner, 5 at the round table | past 6, still forced |
+| $`K(n)`$ | n dots, every pair joined by a line | K(6), 15 lines | more lines to label |
+| $`C(n, 2)`$ | n choose 2: pairs among n guests | 15 | more labellings |
+| $`C(n, 3)`$ | n choose 3: trios to inspect | 20 | more trios |
+| $`\lceil x \rceil`$ | round x up to a whole number | 2.5 rounds up to 3 | — |
 
 ### When it holds
 
@@ -103,14 +107,14 @@ The two arrows are exhaustive: some pair is acquainted, or none is.
 - **Some pair among the three is acquainted.** Say Ada and Ben. Finn knows both, and they know each other: a trio all alike.
 - **No pair among the three is acquainted.** Then Ada, Ben and Cleo are mutual strangers: a trio all alike again.
 
-Nothing else can happen, so six guests always hold a trio: $R(3,3) \le 6$ (at most 6).
+Nothing else can happen, so six guests always hold a trio: $`R(3,3) \le 6`$ (at most 6).
 
 <details>
 <summary>Detailed proof: the strangers case, and why extra guests cannot help</summary>
 
 Fix any guest v. Split the other five into A, those v knows, and S, those v does not; one holds at least three. If A does, Step 2 applies as written. If S holds a, b and c, swap the words: any stranger pair among them makes three mutual strangers with v; otherwise all three pairs are acquainted, and a, b, c all know one another.
 
-A party of seven or more contains six guests whose labels are already fixed, so the forced trio is still there. That is why $R(3,3) = 6$ settles every party of 6 or more at once.
+A party of seven or more contains six guests whose labels are already fixed, so the forced trio is still there. That is why $`R(3,3) = 6`$ settles every party of 6 or more at once.
 
 </details>
 
@@ -120,7 +124,7 @@ At the round table of Ada, Ben, Cleo, Dev and Eve, the acquainted pairs are the 
 
 A trio all alike would be three lines of one kind closing a triangle. In a ring of five, the only way back to the start uses all five lines, so neither ring holds a triangle. Trio by trio: each of the 10 trios mixes sides and diagonals, and 0 are all alike.
 
-So five guests force nothing: $R(3,3) > 5$. With Step 2, $R(3,3) = 6$.
+So five guests force nothing: $`R(3,3) > 5`$. With Step 2, $`R(3,3) = 6`$.
 
 The ring is the only escape. Of all 1024 labellings of five guests, 12 hold no trio. There are also exactly 12 ways to seat five guests in a ring: 120 orders, each ring counted 10 times (5 starting seats, 2 directions). The code confirms that each of the 12 escapes is one of these rings.
 

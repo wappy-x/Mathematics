@@ -28,55 +28,61 @@ Face k sits at angle 0.5k radians on the circle of radius 1. The hollow dot is t
 
 ## The formula
 
-Notation first. Reminders: the law of X, written $\mu_X$, is the probability $P \circ X^{-1}$ that X carries onto the Borel sets of the line, and $\int f\,d\mu$ is read "the integral of f against μ".
+Notation first. Reminders: the law of X, written $`\mu_X`$, is the probability $`P \circ X^{-1}`$ that X carries onto the Borel sets of the line, and $`\int f\,d\mu`$ is read "the integral of f against μ".
 
-New here: $i$ is the imaginary unit, the number whose square is −1. By Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$ is the point at angle θ on the circle of radius 1 ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). A complex-valued function is integrated one coordinate at a time: $\int (a + ib)\,d\mu = \int a\,d\mu + i\int b\,d\mu$, whenever both real integrals are finite. The characteristic function is written $\varphi_X$, read "phi of X".
+New here: $`i`$ is the imaginary unit, the number whose square is −1. By Euler's formula, $`e^{i\theta} = \cos\theta + i\sin\theta`$ is the point at angle θ on the circle of radius 1 ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). A complex-valued function is integrated one coordinate at a time: $`\int (a + ib)\,d\mu = \int a\,d\mu + i\int b\,d\mu`$, whenever both real integrals are finite. The characteristic function is written $`\varphi_X`$, read "phi of X".
 
-$$\varphi_X(t) = E\big[e^{itX}\big] = \int_{\mathbb R} e^{itx}\,d\mu_X(x) = \int \cos(tx)\,d\mu_X(x) + i\int \sin(tx)\,d\mu_X(x), \qquad t \in \mathbb R.$$
+```math
+\varphi_X(t) = E\big[e^{itX}\big] = \int_{\mathbb R} e^{itx}\,d\mu_X(x) = \int \cos(tx)\,d\mu_X(x) + i\int \sin(tx)\,d\mu_X(x), \qquad t \in \mathbb R.
+```
 
 **Read it aloud:** turn a point round the unit circle by the rate times X, and average where it lands, weighting by X's law.
 
 Three examples, each derived in Why it works: the die, the uniform law on [0, 1], and the standard normal.
 
-$$\varphi_{\text{die}}(t) = \frac16\sum_{k=1}^{6} e^{ikt} = e^{3.5it}\,\frac{\sin 3t}{6\sin(t/2)}, \qquad \varphi_U(t) = \frac{e^{it}-1}{it}, \qquad \varphi_Z(t) = e^{-t^2/2}.$$
+```math
+\varphi_{\text{die}}(t) = \frac16\sum_{k=1}^{6} e^{ikt} = e^{3.5it}\,\frac{\sin 3t}{6\sin(t/2)}, \qquad \varphi_U(t) = \frac{e^{it}-1}{it}, \qquad \varphi_Z(t) = e^{-t^2/2}.
+```
 
 At t = 0, and for the die at every multiple of 2π, the value is 1.
 
-The six theorems. X and Y are random variables on a probability space $(\Omega, \mathcal F, P)$.
+The six theorems. X and Y are random variables on a probability space $`(\Omega, \mathcal F, P)`$.
 
-1. **Bounded and anchored.** $\varphi_X(0) = 1$, $|\varphi_X(t)| \le 1$, and $\varphi_X(-t)$ is the complex conjugate of $\varphi_X(t)$: the same point reflected in the horizontal axis.
-2. **Uniformly continuous.** One step size serves every t: $|\varphi_X(t+h) - \varphi_X(t)|$ is small for all t once h is.
-3. **Independent sums multiply.** If X and Y are independent, $\varphi_{X+Y}(t) = \varphi_X(t)\,\varphi_Y(t)$. So the total $S_n$ of n independent rolls has $\varphi_{S_n} = \varphi_{\text{die}}^{\,n}$.
-4. **Moments from derivatives.** If $E|X|^m < \infty$, then $\varphi_X$ has m continuous derivatives and $\varphi_X^{(k)}(0) = i^k E[X^k]$ for each k up to m.
-5. **Uniqueness.** If $\varphi_X(t) = \varphi_Y(t)$ for every real t, then $\mu_X = \mu_Y$.
-6. **Lévy's continuity theorem.** The double arrow $\Rightarrow$ is read "converges in distribution to" ([Convergence in distribution](05-convergence-in-distribution.md)).
-   - (a) If $X_n \Rightarrow X$, then $\varphi_{X_n}(t) \to \varphi_X(t)$ for every real t.
-   - (b) If $\varphi_{X_n}(t) \to g(t)$ for every real t, and the limit g is continuous at t = 0, then g is the characteristic function of some random variable X, and $X_n \Rightarrow X$.
+1. **Bounded and anchored.** $`\varphi_X(0) = 1`$, $`|\varphi_X(t)| \le 1`$, and $`\varphi_X(-t)`$ is the complex conjugate of $`\varphi_X(t)`$: the same point reflected in the horizontal axis.
+2. **Uniformly continuous.** One step size serves every t: $`|\varphi_X(t+h) - \varphi_X(t)|`$ is small for all t once h is.
+3. **Independent sums multiply.** If X and Y are independent, $`\varphi_{X+Y}(t) = \varphi_X(t)\,\varphi_Y(t)`$. So the total $`S_n`$ of n independent rolls has $`\varphi_{S_n} = \varphi_{\text{die}}^{\,n}`$.
+4. **Moments from derivatives.** If $`E|X|^m < \infty`$, then $`\varphi_X`$ has m continuous derivatives and $`\varphi_X^{(k)}(0) = i^k E[X^k]`$ for each k up to m.
+5. **Uniqueness.** If $`\varphi_X(t) = \varphi_Y(t)`$ for every real t, then $`\mu_X = \mu_Y`$.
+6. **Lévy's continuity theorem.** The double arrow $`\Rightarrow`$ is read "converges in distribution to" ([Convergence in distribution](05-convergence-in-distribution.md)).
+   - (a) If $`X_n \Rightarrow X`$, then $`\varphi_{X_n}(t) \to \varphi_X(t)`$ for every real t.
+   - (b) If $`\varphi_{X_n}(t) \to g(t)`$ for every real t, and the limit g is continuous at t = 0, then g is the characteristic function of some random variable X, and $`X_n \Rightarrow X`$.
 
 For a law on the whole numbers, uniqueness comes with a recipe, the **lattice inversion formula**:
 
-$$P(S_n = k) = \frac{1}{2\pi}\int_{-\pi}^{\pi} e^{-ikt}\,\varphi_{S_n}(t)\,dt.$$
+```math
+P(S_n = k) = \frac{1}{2\pi}\int_{-\pi}^{\pi} e^{-ikt}\,\varphi_{S_n}(t)\,dt.
+```
 
 **Read it aloud:** spin each rate's average back by k times the rate, add up over one full turn of rates, and what survives is the chance of the total k.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $Y$ | random variables; X is one roll of a fair die | faces 1 to 6, each with chance 1/6 | — |
-| $k$, $j$ | whole numbers: a face, or a total | face 3; total 350 | — |
-| $t$ | the rate: radians of turn per pip | 0.5 | the points fan out; the die's average returns to 1 at 2π |
-| $i$, $e^{itX}$ | the imaginary unit, square −1; the point at angle tX on the unit circle | angle 0.5k for face k | — |
-| $\varphi_X$ | the characteristic function: the turned point's average | −0.119777 + 0.661214i at t = 0.5 | — |
-| $\mu_X$, $P$, $E$, $\Omega$ | X's law; the probability; the average (integral against P); the outcomes | 1/6 on each face | — |
-| $S_n$, $n$ | the total of n independent rolls; the number of rolls | n = 100: mean 350, standard deviation 17.08 | φ^n collapses away from t = 0 |
-| $W_n$, $T_n$ | the scaled total (S_n − 3.5n)/√(35n/12); the centred, unscaled total S_n − 3.5n | chance W_100 ≤ 1 is 0.847031 | W_n settles; T_n spreads |
-| $U$, $Z$, $\lambda$ | uniform on [0, 1]; standard normal; Lebesgue measure, length on the line | φ_U(1) = 0.841471 + 0.459698i; φ_Z(1) = 0.606531 | — |
-| $\sigma$, $p_\sigma$, $h_\sigma$ | width of the blurring normal in the uniqueness proof; its density; the blurred X's density | — | — |
-| $f$, $g$ | a bounded continuous test function (in Step 1, any integrable complex function); a pointwise limit of characteristic functions | g(t) = e^(−t^2/2) for W_n | — |
-| $\theta$, $a$, $b$ | an angle; real numbers (parts of a + ib; scale and shift in aX + b) | — | — |
-| $c$, $w$ | Step 1's unit number and the integral it turns | — | — |
-| $x$, $y$, $R$ | points on the line; an integration cut-off | — | — |
-| $q$, $r$, $Z'$, $M$ | density of Z/σ; σ = 1/r; a second normal; rates in inversion | M = 1,024 | — |
-| $u$, $h$, $m$ | half-width of a window of rates; a step in t; a number of derivatives | u = 1; h = 0.0001; m = 2 | — |
+| $`X`$, $`Y`$ | random variables; X is one roll of a fair die | faces 1 to 6, each with chance 1/6 | — |
+| $`k`$, $`j`$ | whole numbers: a face, or a total | face 3; total 350 | — |
+| $`t`$ | the rate: radians of turn per pip | 0.5 | the points fan out; the die's average returns to 1 at 2π |
+| $`i`$, $`e^{itX}`$ | the imaginary unit, square −1; the point at angle tX on the unit circle | angle 0.5k for face k | — |
+| $`\varphi_X`$ | the characteristic function: the turned point's average | −0.119777 + 0.661214i at t = 0.5 | — |
+| $`\mu_X`$, $`P`$, $`E`$, $`\Omega`$ | X's law; the probability; the average (integral against P); the outcomes | 1/6 on each face | — |
+| $`S_n`$, $`n`$ | the total of n independent rolls; the number of rolls | n = 100: mean 350, standard deviation 17.08 | φ^n collapses away from t = 0 |
+| $`W_n`$, $`T_n`$ | the scaled total (S_n − 3.5n)/√(35n/12); the centred, unscaled total S_n − 3.5n | chance W_100 ≤ 1 is 0.847031 | W_n settles; T_n spreads |
+| $`U`$, $`Z`$, $`\lambda`$ | uniform on [0, 1]; standard normal; Lebesgue measure, length on the line | φ_U(1) = 0.841471 + 0.459698i; φ_Z(1) = 0.606531 | — |
+| $`\sigma`$, $`p_\sigma`$, $`h_\sigma`$ | width of the blurring normal in the uniqueness proof; its density; the blurred X's density | — | — |
+| $`f`$, $`g`$ | a bounded continuous test function (in Step 1, any integrable complex function); a pointwise limit of characteristic functions | g(t) = e^(−t^2/2) for W_n | — |
+| $`\theta`$, $`a`$, $`b`$ | an angle; real numbers (parts of a + ib; scale and shift in aX + b) | — | — |
+| $`c`$, $`w`$ | Step 1's unit number and the integral it turns | — | — |
+| $`x`$, $`y`$, $`R`$ | points on the line; an integration cut-off | — | — |
+| $`q`$, $`r`$, $`Z'`$, $`M`$ | density of Z/σ; σ = 1/r; a second normal; rates in inversion | M = 1,024 | — |
+| $`u`$, $`h`$, $`m`$ | half-width of a window of rates; a step in t; a number of derivatives | u = 1; h = 0.0001; m = 2 | — |
 
 ### When it holds
 
@@ -92,31 +98,35 @@ $$P(S_n = k) = \frac{1}{2\pi}\int_{-\pi}^{\pi} e^{-ikt}\,\varphi_{S_n}(t)\,dt.$$
 
 ### Step 0: two bounded test functions per rate, and a product rule built in
 
-For each rate t, the functions cos(tx) and sin(tx) are bounded by 1 and continuous. So every law integrates them, with nothing to check. There are enough of them to tell any two laws apart, which is uniqueness. And the exponential turns sums into products: $e^{it(x+y)} = e^{itx}\,e^{ity}$, which is why independent sums become products of characteristic functions. The rest is dominated convergence, Fubini's theorem and differentiating under the integral, applied to these two functions.
+For each rate t, the functions cos(tx) and sin(tx) are bounded by 1 and continuous. So every law integrates them, with nothing to check. There are enough of them to tell any two laws apart, which is uniqueness. And the exponential turns sums into products: $`e^{it(x+y)} = e^{itx}\,e^{ity}`$, which is why independent sums become products of characteristic functions. The rest is dominated convergence, Fubini's theorem and differentiating under the integral, applied to these two functions.
 
 ### Step 1: the average of points on the circle stays on or inside it
 
-At t = 0 every point is 1, and the law has total mass 1, so $\varphi_X(0) = 1$. Cosine is even and sine is odd, so replacing t by −t keeps the across-coordinate and flips the up-coordinate: the conjugate.
+At t = 0 every point is 1, and the law has total mass 1, so $`\varphi_X(0) = 1`$. Cosine is even and sine is odd, so replacing t by −t keeps the across-coordinate and flips the up-coordinate: the conjugate.
 
-The bound: for a complex function f with finite integral w, $|\int f\,d\mu| \le \int |f|\,d\mu$. If w ≠ 0, rotate by the unit number c = conj(w)/|w|, which turns w onto the positive real axis: |w| = cw = ∫ c·f dμ = ∫ Re(c·f) dμ ≤ ∫ |f| dμ, since a real part never exceeds a size. With f = e^{itx}, of size 1, $|\varphi_X(t)| \le 1$.
+The bound: for a complex function f with finite integral w, $`|\int f\,d\mu| \le \int |f|\,d\mu`$. If w ≠ 0, rotate by the unit number c = conj(w)/|w|, which turns w onto the positive real axis: |w| = cw = ∫ c·f dμ = ∫ Re(c·f) dμ ≤ ∫ |f| dμ, since a real part never exceeds a size. With f = e^{itx}, of size 1, $`|\varphi_X(t)| \le 1`$.
 
 ### Step 2: continuity, the same at every rate
 
 Subtract the values at t + h and t and factor out the point at angle tx:
 
-$$|\varphi_X(t+h) - \varphi_X(t)| = \Big|\int e^{itx}\big(e^{ihx} - 1\big)\,d\mu_X(x)\Big| \le \int \big|e^{ihx} - 1\big|\,d\mu_X(x).$$
+```math
+|\varphi_X(t+h) - \varphi_X(t)| = \Big|\int e^{itx}\big(e^{ihx} - 1\big)\,d\mu_X(x)\Big| \le \int \big|e^{ihx} - 1\big|\,d\mu_X(x).
+```
 
 The right side does not involve t. As h shrinks to 0, the integrand tends to 0 at every x and never exceeds 2. The constant 2 has integral 2 against a probability, so [Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md) sends the right side to 0. One step size serves every t: uniform continuity.
 
 ### Step 3: independent sums multiply
 
-X and Y are independent exactly when the law of the pair (X, Y) is the product measure $\mu_X \otimes \mu_Y$ ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). Then
+X and Y are independent exactly when the law of the pair (X, Y) is the product measure $`\mu_X \otimes \mu_Y`$ ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). Then
 
-$$\varphi_{X+Y}(t) = \iint e^{itx}e^{ity}\,d(\mu_X\otimes\mu_Y)(x,y) = \int e^{itx}\,d\mu_X(x)\int e^{ity}\,d\mu_Y(y).$$
+```math
+\varphi_{X+Y}(t) = \iint e^{itx}e^{ity}\,d(\mu_X\otimes\mu_Y)(x,y) = \int e^{itx}\,d\mu_X(x)\int e^{ity}\,d\mu_Y(y).
+```
 
-The second equality is [Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md), applied to the four bounded real products cos·cos, sin·sin, cos·sin and sin·cos, and reassembled. By induction, n independent rolls give $\varphi_{S_n} = \varphi_{\text{die}}^{\,n}$.
+The second equality is [Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md), applied to the four bounded real products cos·cos, sin·sin, cos·sin and sin·cos, and reassembled. By induction, n independent rolls give $`\varphi_{S_n} = \varphi_{\text{die}}^{\,n}`$.
 
-The die's closed form is a geometric series: the six terms sum to $e^{it}(e^{6it}-1)/(e^{it}-1)$. Pulling $e^{3it}$ from the top bracket and $e^{it/2}$ from the bottom leaves $\sin 3t/\sin(t/2)$ times $e^{3.5it}$. At t = 0.5 sum and closed form both give −0.119777 + 0.661214i.
+The die's closed form is a geometric series: the six terms sum to $`e^{it}(e^{6it}-1)/(e^{it}-1)`$. Pulling $`e^{3it}`$ from the top bracket and $`e^{it/2}`$ from the bottom leaves $`\sin 3t/\sin(t/2)`$ times $`e^{3.5it}`$. At t = 0.5 sum and closed form both give −0.119777 + 0.661214i.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -132,81 +142,98 @@ Orange: one roll. Teal: the total of four rolls, the fourth power. The size is 0
 
 ### Step 4: moments are derivatives at zero
 
-The rate of change of $e^{itx}$ in t is $ix\,e^{itx}$, of size |x|. A chord of the circle is never longer than its arc, so $|e^{iu} - e^{iv}| \le |u - v|$, and every difference quotient in t is capped by |x|. If E|X| is finite, |x| is an integrable cap for all t at once, and [Differentiating under the integral sign](../05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md) gives
+The rate of change of $`e^{itx}`$ in t is $`ix\,e^{itx}`$, of size |x|. A chord of the circle is never longer than its arc, so $`|e^{iu} - e^{iv}| \le |u - v|`$, and every difference quotient in t is capped by |x|. If E|X| is finite, |x| is an integrable cap for all t at once, and [Differentiating under the integral sign](../05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md) gives
 
-$$\varphi_X'(t) = \int ix\,e^{itx}\,d\mu_X(x), \qquad \varphi_X'(0) = i\,E[X].$$
+```math
+\varphi_X'(t) = \int ix\,e^{itx}\,d\mu_X(x), \qquad \varphi_X'(0) = i\,E[X].
+```
 
-The cap $|x|^k$ gives the k-th derivative the same way, and Step 2's argument under the cap $2|x|^k$ makes it continuous. For the die, $\varphi'(0) = i(1+2+\dots+6)/6 = 3.5i$ and $\varphi''(0) = -(1+4+\dots+36)/6 = -91/6$. So E[X] = 3.5, E[X^2] = 15.166667, and the variance is 91/6 − 3.5^2 = 35/12 = 2.916667. The code's finite differences at step h = 0.0001 give 3.5000 and 15.1667.
+The cap $`|x|^k`$ gives the k-th derivative the same way, and Step 2's argument under the cap $`2|x|^k`$ makes it continuous. For the die, $`\varphi'(0) = i(1+2+\dots+6)/6 = 3.5i`$ and $`\varphi''(0) = -(1+4+\dots+36)/6 = -91/6`$. So E[X] = 3.5, E[X^2] = 15.166667, and the variance is 91/6 − 3.5^2 = 35/12 = 2.916667. The code's finite differences at step h = 0.0001 give 3.5000 and 15.1667.
 
-Differentiating $\varphi^n$ gives the total's mean 3.5n and variance 35n/12: at 100 rolls, 350, 291.67 and standard deviation 17.08.
+Differentiating $`\varphi^n`$ gives the total's mean 3.5n and variance 35n/12: at 100 rolls, 350, 291.67 and standard deviation 17.08.
 
 ### Step 5: the uniform and the normal
 
 **Uniform.** The law of U is Lebesgue measure λ restricted to [0, 1]. Each coordinate of the integrand is continuous, so the Lebesgue integral equals the Riemann one ([Riemann meets Lebesgue](../04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md)), and
 
-$$\varphi_U(t) = \int_0^1 e^{itx}\,d\lambda(x) = \Big[\frac{e^{itx}}{it}\Big]_0^1 = \frac{e^{it}-1}{it}.$$
+```math
+\varphi_U(t) = \int_0^1 e^{itx}\,d\lambda(x) = \Big[\frac{e^{itx}}{it}\Big]_0^1 = \frac{e^{it}-1}{it}.
+```
 
 At t = 1 this is sin 1 + i(1 − cos 1) = 0.841471 + 0.459698i, and Simpson's rule agrees. Its size is at most 2/|t|: unlike the die's, it dies away.
 
-**Normal.** Z has density $p(x) = e^{-x^2/2}/\sqrt{2\pi}$. The sine part integrates an odd function and vanishes, so $\varphi_Z(t) = \int \cos(tx)\,p(x)\,dx$. The rate in t is $-x\sin(tx)\,p(x)$, capped by $|x|\,p(x)$, which has finite integral, so differentiating under the integral is allowed:
+**Normal.** Z has density $`p(x) = e^{-x^2/2}/\sqrt{2\pi}`$. The sine part integrates an odd function and vanishes, so $`\varphi_Z(t) = \int \cos(tx)\,p(x)\,dx`$. The rate in t is $`-x\sin(tx)\,p(x)`$, capped by $`|x|\,p(x)`$, which has finite integral, so differentiating under the integral is allowed:
 
-$$\varphi_Z'(t) = -\int x\sin(tx)\,p(x)\,dx = \int \sin(tx)\,p'(x)\,dx = -t\int\cos(tx)\,p(x)\,dx = -t\,\varphi_Z(t).$$
+```math
+\varphi_Z'(t) = -\int x\sin(tx)\,p(x)\,dx = \int \sin(tx)\,p'(x)\,dx = -t\int\cos(tx)\,p(x)\,dx = -t\,\varphi_Z(t).
+```
 
-The middle step uses $p'(x) = -x\,p(x)$; the next is integration by parts on [−R, R], whose boundary term has size at most 2p(R), tending to 0. So φ′ = −tφ with φ(0) = 1. Then $e^{t^2/2}\varphi_Z(t)$ has derivative 0, so it stays at its value 1:
+The middle step uses $`p'(x) = -x\,p(x)`$; the next is integration by parts on [−R, R], whose boundary term has size at most 2p(R), tending to 0. So φ′ = −tφ with φ(0) = 1. Then $`e^{t^2/2}\varphi_Z(t)`$ has derivative 0, so it stays at its value 1:
 
-$$\varphi_Z(t) = e^{-t^2/2}.$$
+```math
+\varphi_Z(t) = e^{-t^2/2}.
+```
 
-Simpson's rule, a numerical solution of φ′ = −tφ and the formula all give φ_Z(1) = 0.606530660. Pulling constants out of the integral gives the scaling rule: for fixed numbers a and b, φ of aX + b at t is $e^{itb}$ times φ_X(at).
+Simpson's rule, a numerical solution of φ′ = −tφ and the formula all give φ_Z(1) = 0.606530660. Pulling constants out of the integral gives the scaling rule: for fixed numbers a and b, φ of aX + b at t is $`e^{itb}`$ times φ_X(at).
 
 ### Step 6: uniqueness
 
-**The die first, where it is a recipe.** For whole numbers j and k, the average of $e^{i(j-k)t}$ over one full turn of rates, −π to π, is 1 when j = k and 0 otherwise. The total's characteristic function is a finite sum, $\varphi_{S_n}(t) = \sum_j P(S_n = j)\,e^{ijt}$. Multiply by $e^{-ikt}$ and average over the turn: only j = k survives. That is lattice inversion, so two laws on the whole numbers with one characteristic function have the same chances.
+**The die first, where it is a recipe.** For whole numbers j and k, the average of $`e^{i(j-k)t}`$ over one full turn of rates, −π to π, is 1 when j = k and 0 otherwise. The total's characteristic function is a finite sum, $`\varphi_{S_n}(t) = \sum_j P(S_n = j)\,e^{ijt}`$. Multiply by $`e^{-ikt}`$ and average over the turn: only j = k survives. That is lattice inversion, so two laws on the whole numbers with one characteristic function have the same chances.
 
-For two dice the coefficient of $e^{7it}$ in $\varphi^2$ is 6/36 = 0.166667. For 100 dice, exact counting and inversion with 1,024 rates both give 0.023322606 for a total of 350.
+For two dice the coefficient of $`e^{7it}`$ in $`\varphi^2`$ is 6/36 = 0.166667. For 100 dice, exact counting and inversion with 1,024 rates both give 0.023322606 for a total of 350.
 
-**The general case: blur, then unblur.** A general law has no finite sum to invert. Instead add an independent narrow normal σZ to X. The blurred X + σZ has a density, and Step 5 with Fubini's theorem gives it in terms of $\varphi_X$ alone:
+**The general case: blur, then unblur.** A general law has no finite sum to invert. Instead add an independent narrow normal σZ to X. The blurred X + σZ has a density, and Step 5 with Fubini's theorem gives it in terms of $`\varphi_X`$ alone:
 
-$$h_\sigma(y) = \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{-ity}\,\varphi_X(t)\,e^{-\sigma^2t^2/2}\,dt.$$
+```math
+h_\sigma(y) = \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{-ity}\,\varphi_X(t)\,e^{-\sigma^2t^2/2}\,dt.
+```
 
 Two laws with one characteristic function therefore have identical blurred versions for every σ. Shrinking σ to 0 returns the originals, which must agree.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $\varphi_X(t) = \varphi_Y(t)$ for every real t. Only laws matter, so each variable may sit on its own space. On a product space ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)) take Z standard normal and independent of X. Fix σ > 0 and write $p_\sigma(y) = e^{-y^2/(2\sigma^2)}/(\sigma\sqrt{2\pi})$ for the density of σZ.
+**Setting.** $`\varphi_X(t) = \varphi_Y(t)`$ for every real t. Only laws matter, so each variable may sit on its own space. On a product space ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)) take Z standard normal and independent of X. Fix σ > 0 and write $`p_\sigma(y) = e^{-y^2/(2\sigma^2)}/(\sigma\sqrt{2\pi})`$ for the density of σZ.
 
-**1. The normal density as an integral over rates.** Z/σ has characteristic function $\varphi_Z(y/\sigma) = e^{-y^2/(2\sigma^2)}$ by Step 5 and the scaling rule. Its law is normal with standard deviation 1/σ, density $q(t) = \sigma e^{-\sigma^2t^2/2}/\sqrt{2\pi}$. Writing that characteristic function as an integral against its density gives $\int e^{ity}\,e^{-\sigma^2t^2/2}\,dt = (\sqrt{2\pi}/\sigma)\,e^{-y^2/(2\sigma^2)}$. Divide by 2π:
-$$\frac{1}{2\pi}\int_{-\infty}^{\infty} e^{ity}\,e^{-\sigma^2t^2/2}\,dt = p_\sigma(y).$$
-The right side is even in y, so the same holds with $e^{-ity}$ in place of $e^{ity}$.
+**1. The normal density as an integral over rates.** Z/σ has characteristic function $`\varphi_Z(y/\sigma) = e^{-y^2/(2\sigma^2)}`$ by Step 5 and the scaling rule. Its law is normal with standard deviation 1/σ, density $`q(t) = \sigma e^{-\sigma^2t^2/2}/\sqrt{2\pi}`$. Writing that characteristic function as an integral against its density gives $`\int e^{ity}\,e^{-\sigma^2t^2/2}\,dt = (\sqrt{2\pi}/\sigma)\,e^{-y^2/(2\sigma^2)}`$. Divide by 2π:
 
-**2. The density of the blurred variable.** X and σZ are independent, so X + σZ has density $h_\sigma(y) = \int p_\sigma(y - x)\,d\mu_X(x)$ ([Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Substitute step 1 at the point y − x:
-$$h_\sigma(y) = \frac{1}{2\pi}\int\!\!\int e^{-it(y-x)}\,e^{-\sigma^2t^2/2}\,dt\,d\mu_X(x).$$
+$`\displaystyle \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{ity}\,e^{-\sigma^2t^2/2}\,dt = p_\sigma(y).`$
 
-**3. Swap the order.** The integrand has size $e^{-\sigma^2t^2/2}$, whose integral against length times $\mu_X$ is $\sqrt{2\pi}/\sigma$, finite. Fubini's theorem ([Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)), applied to the real and imaginary parts, lets the x-integral go inside:
-$$h_\sigma(y) = \frac{1}{2\pi}\int e^{-ity}\,e^{-\sigma^2t^2/2}\Big(\int e^{itx}\,d\mu_X(x)\Big)dt = \frac{1}{2\pi}\int e^{-ity}\,e^{-\sigma^2t^2/2}\,\varphi_X(t)\,dt.$$
-The right side sees X only through $\varphi_X$, so Y + σZ′, with Z′ an independent normal beside Y, has the same density and the same law, for every σ > 0.
+The right side is even in y, so the same holds with $`e^{-ity}`$ in place of $`e^{ity}`$.
 
-**4. Bounded continuous test functions agree.** Let f be bounded and continuous. Equal laws give $E f(X + \sigma Z) = E f(Y + \sigma Z')$. Take σ = 1/r for whole numbers r. At every outcome $f(X + Z/r) \to f(X)$ by continuity, and $|f(X + Z/r)|$ never exceeds the constant sup|f|. Dominated convergence gives $E f(X + Z/r) \to E f(X)$, and likewise for Y. So $E f(X) = E f(Y)$.
+**2. The density of the blurred variable.** X and σZ are independent, so X + σZ has density $`h_\sigma(y) = \int p_\sigma(y - x)\,d\mu_X(x)`$ ([Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Substitute step 1 at the point y − x:
 
-**5. From test functions to the law.** Fix a real a. Let $f_r(x)$ be 1 for x ≤ a, 0 for x ≥ a + 1/r, and linear in between. Each is bounded and continuous, and $f_r(x)$ tends to the indicator of $(-\infty, a]$ at every x as r grows. Dominated convergence once more gives $P(X \le a) = P(Y \le a)$. The half-lines $(-\infty, a]$ are closed under intersection and generate the Borel sets, so two probability measures that agree on them agree on every Borel set ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). So $\mu_X = \mu_Y$. ∎
+$`\displaystyle h_\sigma(y) = \frac{1}{2\pi}\int\!\!\int e^{-it(y-x)}\,e^{-\sigma^2t^2/2}\,dt\,d\mu_X(x).`$
+
+**3. Swap the order.** The integrand has size $`e^{-\sigma^2t^2/2}`$, whose integral against length times $`\mu_X`$ is $`\sqrt{2\pi}/\sigma`$, finite. Fubini's theorem ([Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)), applied to the real and imaginary parts, lets the x-integral go inside:
+
+$`\displaystyle h_\sigma(y) = \frac{1}{2\pi}\int e^{-ity}\,e^{-\sigma^2t^2/2}\Big(\int e^{itx}\,d\mu_X(x)\Big)dt = \frac{1}{2\pi}\int e^{-ity}\,e^{-\sigma^2t^2/2}\,\varphi_X(t)\,dt.`$
+
+The right side sees X only through $`\varphi_X`$, so Y + σZ′, with Z′ an independent normal beside Y, has the same density and the same law, for every σ > 0.
+
+**4. Bounded continuous test functions agree.** Let f be bounded and continuous. Equal laws give $`E f(X + \sigma Z) = E f(Y + \sigma Z')`$. Take σ = 1/r for whole numbers r. At every outcome $`f(X + Z/r) \to f(X)`$ by continuity, and $`|f(X + Z/r)|`$ never exceeds the constant sup|f|. Dominated convergence gives $`E f(X + Z/r) \to E f(X)`$, and likewise for Y. So $`E f(X) = E f(Y)`$.
+
+**5. From test functions to the law.** Fix a real a. Let $`f_r(x)`$ be 1 for x ≤ a, 0 for x ≥ a + 1/r, and linear in between. Each is bounded and continuous, and $`f_r(x)`$ tends to the indicator of $`(-\infty, a]`$ at every x as r grows. Dominated convergence once more gives $`P(X \le a) = P(Y \le a)`$. The half-lines $`(-\infty, a]`$ are closed under intersection and generate the Borel sets, so two probability measures that agree on them agree on every Borel set ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). So $`\mu_X = \mu_Y`$. ∎
 
 </details>
 
 ### Step 7: Lévy's continuity theorem
 
-**Forward, proved.** [Convergence in distribution](05-convergence-in-distribution.md) proves that $X_n \Rightarrow X$ means $E f(X_n) \to E f(X)$ for every bounded continuous f. Cos(tx) and sin(tx) are two such functions, so both coordinates of $\varphi_{X_n}(t)$ converge. That is (a).
+**Forward, proved.** [Convergence in distribution](05-convergence-in-distribution.md) proves that $`X_n \Rightarrow X`$ means $`E f(X_n) \to E f(X)`$ for every bounded continuous f. Cos(tx) and sin(tx) are two such functions, so both coordinates of $`\varphi_{X_n}(t)`$ converge. That is (a).
 
 **Converse, outlined.** Three moves, with the full proof in Durrett, Theorem 3.3.17.
 
 - **No mass escapes.** For any law and any u > 0, the **tail bound** holds:
-$$P\big(|X| > 2/u\big) \le \frac1u\int_{-u}^{u}\big(1 - \varphi_X(t)\big)\,dt.$$
-Fubini moves the t-integral inside, where $\frac1u\int_{-u}^{u}(1 - e^{itx})\,dt = 2\big(1 - \frac{\sin ux}{ux}\big)$: never negative, and at least 1 when |ux| ≥ 2, since then |sin ux| ≤ 1 ≤ |ux|/2. If g is continuous at 0, with g(0) = 1, the bound for g is small once u is small; dominated convergence passes this to every large n. So one u keeps $P(|X_n| > 2/u)$ small for all large n: the laws are **tight**.
+```math
+P\big(|X| > 2/u\big) \le \frac1u\int_{-u}^{u}\big(1 - \varphi_X(t)\big)\,dt.
+```
+Fubini moves the t-integral inside, where $`\frac1u\int_{-u}^{u}(1 - e^{itx})\,dt = 2\big(1 - \frac{\sin ux}{ux}\big)`$: never negative, and at least 1 when |ux| ≥ 2, since then |sin ux| ≤ 1 ≤ |ux|/2. If g is continuous at 0, with g(0) = 1, the bound for g is small once u is small; dominated convergence passes this to every large n. So one u keeps $`P(|X_n| > 2/u)`$ small for all large n: the laws are **tight**.
 - **Some subsequence converges.** Helly's selection theorem, in the same chapter of Durrett: every tight sequence of laws has a subsequence converging in distribution to a probability law.
 - **Every limit is the same.** By (a) each such limit has characteristic function g; by uniqueness they are one law; so the whole sequence converges to it.
 
 At u = 1 on 100 scaled rolls, the chance of |W_100| > 2 is 0.043221 and the bound 0.288900. On 400 unscaled rolls the chance of |T_400| > 2 is 0.941674 and the bound 1.926643: true and useless, because φ has collapsed everywhere but at 0.
 
-**Lévy in action.** The scaled total $W_n = (S_n - 3.5n)/\sqrt{35n/12}$ has characteristic function $\big(\sin 3s/(6\sin(s/2))\big)^n$ at $s = t/\sqrt{35n/12}$.
+**Lévy in action.** The scaled total $`W_n = (S_n - 3.5n)/\sqrt{35n/12}`$ has characteristic function $`\big(\sin 3s/(6\sin(s/2))\big)^n`$ at $`s = t/\sqrt{35n/12}`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -221,13 +248,13 @@ xychart-beta
 
 Orange: one roll, scaled. Teal: four rolls. Dark blue: the normal's e^(−t^2/2). Four rolls already track the bell: at t = 2 the two read 0.10 and 0.14.
 
-At t = 1 the values for 1, 10, 100 and 1,000 rolls are 0.567548, 0.603269, 0.606210 and 0.606499, closing on e^(−1/2) = 0.606531. The limit is continuous at 0, so (b) gives $W_n \Rightarrow Z$. The chance that $W_n \le 1$ is 0.843496, 0.847031 and 0.843711 at 10, 100 and 400 rolls, against the normal's 0.841345. The gaps shrink only unevenly, because the total moves in whole pips.
+At t = 1 the values for 1, 10, 100 and 1,000 rolls are 0.567548, 0.603269, 0.606210 and 0.606499, closing on e^(−1/2) = 0.606531. The limit is continuous at 0, so (b) gives $`W_n \Rightarrow Z`$. The chance that $`W_n \le 1`$ is 0.843496, 0.847031 and 0.843711 at 10, 100 and 400 rolls, against the normal's 0.841345. The gaps shrink only unevenly, because the total moves in whole pips.
 
-The same move proves the die's weak law. The running average $S_n/n$ has characteristic function $\varphi(t/n)^n$. At t = 1 it is −0.809015 − 0.303045i, −0.922899 − 0.345705i and −0.935092 − 0.350272i at 10, 100 and 1,000 rolls, closing on $e^{3.5i}$ = −0.936457 − 0.350783i, the characteristic function of the constant 3.5. So the average converges in distribution to 3.5, which for a constant limit is convergence in probability ([The weak law of large numbers](03-weak-law-of-large-numbers.md)).
+The same move proves the die's weak law. The running average $`S_n/n`$ has characteristic function $`\varphi(t/n)^n`$. At t = 1 it is −0.809015 − 0.303045i, −0.922899 − 0.345705i and −0.935092 − 0.350272i at 10, 100 and 1,000 rolls, closing on $`e^{3.5i}`$ = −0.936457 − 0.350783i, the characteristic function of the constant 3.5. So the average converges in distribution to 3.5, which for a constant limit is convergence in probability ([The weak law of large numbers](03-weak-law-of-large-numbers.md)).
 
 ### Another road
 
-Lévy's inversion formula recovers the chance of any interval from $\varphi_X$ by an integral over rates with a growing cut-off, giving uniqueness at once, at the price of a delicate limit. The probability wing states it ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)); the planned harmonic-analysis card Levy's inversion formula proves it. The blur-and-unblur route above uses only the normal's characteristic function, Fubini and dominated convergence.
+Lévy's inversion formula recovers the chance of any interval from $`\varphi_X`$ by an integral over rates with a growing cut-off, giving uniqueness at once, at the price of a delicate limit. The probability wing states it ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)); the planned harmonic-analysis card Levy's inversion formula proves it. The blur-and-unblur route above uses only the normal's characteristic function, Fubini and dominated convergence.
 
 ---
 
@@ -264,7 +291,7 @@ The six turned faces average to a point 0.671975 from the centre; the function's
 
 ## Code, from first principles, and it actually runs
 
-Both programs print every number on this card, each reached by at least two roads: sum against closed form for the die; Simpson's rule against the hand integral for the uniform; Simpson's rule, a step-by-step solution of φ′ = −tφ and the formula for the normal; finite differences against exact moments; the 100-roll law counted, compared with $\varphi^{100}$ and inverted back. Python counts totals exactly in whole numbers; Rust does so for the chance of 350 and writes its complex arithmetic by hand. The code checks instances at chosen rates and numbers of rolls; only the proofs cover every law and every rate.
+Both programs print every number on this card, each reached by at least two roads: sum against closed form for the die; Simpson's rule against the hand integral for the uniform; Simpson's rule, a step-by-step solution of φ′ = −tφ and the formula for the normal; finite differences against exact moments; the 100-roll law counted, compared with $`\varphi^{100}`$ and inverted back. Python counts totals exactly in whole numbers; Rust does so for the chance of 350 and writes its complex arithmetic by hand. The code checks instances at chosen rates and numbers of rolls; only the proofs cover every law and every rate.
 
 ### Python
 
@@ -670,10 +697,10 @@ The two outputs are identical, line for line.
 
 Lean proves three of the six theorems, for random variables on any probability space: products, uniqueness and Lévy's continuity theorem.
 
-- Suppose X and Y are independent. Then $\varphi_{X+Y}(t) = \varphi_X(t)\,\varphi_Y(t)$ for every real t.
-- Suppose $\varphi_X(t) = \varphi_Y(t)$ for every real t. Then X and Y have the same law: $\mu_X = \mu_Y$.
-- Suppose $X_n \Rightarrow X$. Then $\varphi_{X_n}(t) \to \varphi_X(t)$ for every real t.
-- Suppose $\varphi_{X_n}(t) \to g(t)$ for every real t, and g is continuous at 0. Then g is the characteristic function of some random variable X, and $X_n \Rightarrow X$.
+- Suppose X and Y are independent. Then $`\varphi_{X+Y}(t) = \varphi_X(t)\,\varphi_Y(t)`$ for every real t.
+- Suppose $`\varphi_X(t) = \varphi_Y(t)`$ for every real t. Then X and Y have the same law: $`\mu_X = \mu_Y`$.
+- Suppose $`X_n \Rightarrow X`$. Then $`\varphi_{X_n}(t) \to \varphi_X(t)`$ for every real t.
+- Suppose $`\varphi_{X_n}(t) \to g(t)`$ for every real t, and g is continuous at 0. Then g is the characteristic function of some random variable X, and $`X_n \Rightarrow X`$.
 - The die's hand arithmetic holds exactly as fractions: mean 7/2, E[X^2] 91/6, and variance 35/12.
 - Two dice total 7 in 6 of the 36 pairs. For 100 rolls, the mean is 350 and the variance 875/3.
 
@@ -789,7 +816,7 @@ example : (100 : ℚ) * (35 / 12) = 875 / 3 := by norm_num
 > **Try changing**
 > - **Fewer rates.** Guess first: with M = 20 instead of 1,024, does the chance of 350 survive? No: the inversion gives about 1/20 and the assert fails. Twenty rates cannot tell apart totals 20 apart, so it adds the chances of every total 350 plus a multiple of 20.
 > - **Two hundred rates.** Guess first: does M = 200 fail too? No. Totals 200 from 350 are too unlikely to show in nine decimals.
-> - **A loaded die.** In `ways`, replace `range(1, 7)` by `(1, 2, 3, 4, 5, 5)`. Guess first: which assert fires? The comparison of the 100-roll law's average with $\varphi_{\text{die}}^{\,100}$.
+> - **A loaded die.** In `ways`, replace `range(1, 7)` by `(1, 2, 3, 4, 5, 5)`. Guess first: which assert fires? The comparison of the 100-roll law's average with $`\varphi_{\text{die}}^{\,100}`$.
 
 ---
 
@@ -823,7 +850,7 @@ example : (100 : ℚ) * (35 / 12) = 875 / 3 := by norm_num
 - [Differentiating under the integral sign](../05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md): moments as derivatives at 0, and the normal's equation φ′ = −tφ.
 - [Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): the product rule for independent sums, and the independent blur in the uniqueness proof.
 - [Convergence in distribution](05-convergence-in-distribution.md): the double arrow, the test-function form used in Lévy's forward half, and tightness.
-- [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): the point $e^{i\theta}$ on the unit circle, and the rule that turns sums into products.
+- [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): the point $`e^{i\theta}`$ on the unit circle, and the rule that turns sums into products.
 - [Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md): the same average with a real exponent, which can be infinite; the characteristic function never is.
 - [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): the definition, the normal's bell and density inversion, stated without measure.
 

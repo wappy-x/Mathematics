@@ -8,7 +8,7 @@
 
 A pollen grain floats in a drop of water under a microscope. Water molecules knock it about, and along one axis it drifts left and right with no preference. Measure its position in micrometres (μm, millionths of a metre) to the right of where it was first seen, in a liquid where that position spreads by 1 square micrometre of variance each second, as on [Brownian motion](01-brownian-motion.md).
 
-After 10 seconds its position has a standard deviation of $\sqrt{10}$ = 3.16 μm. A line is drawn on the slide 3 μm to the right of the start. What is the chance the grain touches that line at some moment in the next 10 seconds?
+After 10 seconds its position has a standard deviation of $`\sqrt{10}`$ = 3.16 μm. A line is drawn on the slide 3 μm to the right of the start. What is the chance the grain touches that line at some moment in the next 10 seconds?
 
 Where the grain sits at second 10 does not answer it. A grain can cross the line at second 4 and drift back to 1 μm by second 10. The chance of ending at 3 μm or beyond is 0.1714. The chance of touching the line on the way is exactly twice that, 0.3428: about 1 in 3, against about 1 in 6. This card treats the line as one-sided; touching a line 3 μm away on either side has chance 0.6767, worked in What breaks.
 
@@ -30,52 +30,58 @@ One path, drawn by hand on a half-second grid with straight lines between the po
 
 Notation first.
 
-- The grain's position is $W_t$, a Brownian motion: the random walk seen from far away, with independent steps whose variance grows like the elapsed time ([Brownian motion](01-brownian-motion.md)). Time $t$ is in seconds and $W_0 = 0$.
-- The **running maximum** $M_t$ is the largest position the grain has reached by time $t$, read "the best so far".
-- The **first-passage time** $\tau_a$ is the first moment the grain stands at level $a$, a stopping time: a time recognised when it arrives, without seeing the future.
-- Touching $a$ by time $t$, $\tau_a \le t$, and having a best-so-far of at least $a$, $M_t \ge a$, are the same event, because the path is continuous and cannot reach past $a$ without standing on it.
-- $\Phi$ is the standard normal cumulative distribution: $\Phi(x)$ is the chance a bell-curve draw with mean 0 and variance 1 lands at or below $x$.
+- The grain's position is $`W_t`$, a Brownian motion: the random walk seen from far away, with independent steps whose variance grows like the elapsed time ([Brownian motion](01-brownian-motion.md)). Time $`t`$ is in seconds and $`W_0 = 0`$.
+- The **running maximum** $`M_t`$ is the largest position the grain has reached by time $`t`$, read "the best so far".
+- The **first-passage time** $`\tau_a`$ is the first moment the grain stands at level $`a`$, a stopping time: a time recognised when it arrives, without seeing the future.
+- Touching $`a`$ by time $`t`$, $`\tau_a \le t`$, and having a best-so-far of at least $`a`$, $`M_t \ge a`$, are the same event, because the path is continuous and cannot reach past $`a`$ without standing on it.
+- $`\Phi`$ is the standard normal cumulative distribution: $`\Phi(x)`$ is the chance a bell-curve draw with mean 0 and variance 1 lands at or below $`x`$.
 
-$$P(M_t \ge a) \;=\; P(\tau_a \le t) \;=\; 2\,P(W_t \ge a) \;=\; 2\left(1 - \Phi\!\left(\frac{a}{\sqrt{t}}\right)\right), \qquad a > 0$$
+```math
+P(M_t \ge a) \;=\; P(\tau_a \le t) \;=\; 2\,P(W_t \ge a) \;=\; 2\left(1 - \Phi\!\left(\frac{a}{\sqrt{t}}\right)\right), \qquad a > 0
+```
 
 **Read it aloud:** the chance the best so far has reached a by time t is twice the chance of standing above a at time t.
 
-The exchange behind it, for an ending position $b$ at or below the level:
+The exchange behind it, for an ending position $`b`$ at or below the level:
 
-$$P(M_t \ge a,\; W_t \le b) \;=\; P(W_t \ge 2a - b), \qquad b \le a$$
+```math
+P(M_t \ge a,\; W_t \le b) \;=\; P(W_t \ge 2a - b), \qquad b \le a
+```
 
 **Read it aloud:** touching a and ending at or below b is as likely as ending at or above b's mirror image, as far above a as b is below it.
 
-Turned into the law of the maximum, for any $m \ge 0$:
+Turned into the law of the maximum, for any $`m \ge 0`$:
 
-$$P(M_t \le m) \;=\; 2\,\Phi\!\left(\frac{m}{\sqrt{t}}\right) - 1 \;=\; P(\lvert W_t \rvert \le m)$$
+```math
+P(M_t \le m) \;=\; 2\,\Phi\!\left(\frac{m}{\sqrt{t}}\right) - 1 \;=\; P(\lvert W_t \rvert \le m)
+```
 
-**Read it aloud:** the best so far is spread exactly like the distance from the start at the end. Its average is $\sqrt{2t/\pi}$ and its median is 0.6745 times $\sqrt{t}$.
+**Read it aloud:** the best so far is spread exactly like the distance from the start at the end. Its average is $`\sqrt{2t/\pi}`$ and its median is 0.6745 times $`\sqrt{t}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $W_t$, $W$, $W_{10}$ | the grain's position at time t, in μm; $W$ is the whole path | the path in the picture ends at 1 | — |
-| $t$, $s$, $\Delta t$ | elapsed time in seconds; $s$ a fixed earlier time; $\Delta t$ a sampling step | 10 seconds; samples every 1, 0.1 or 0.01 s | longer: touching more likely, 0.6353 at 40 s |
-| $a$ | the level, μm to the right of the start | 3 μm | higher: less likely, 0.0578 at 6 μm |
-| $M_t$, $M_{10}$ | the running maximum, best position so far | averages 2.5231 μm over 10 s | — |
-| $\tau_a$, $\tau$, $B$ | first time the grain stands at $a$ ($\tau$ for short); $B$ the fresh motion after it | 4 s on the pictured path | — |
-| $\mathcal{F}_t$ | the filtration: what is known by time t, the path up to t | the path drawn up to the dot | — |
-| $\Phi$, $\varphi$ | normal cumulative chance, and the bell-curve height it adds up | $\Phi(0.9487)$ = 0.8286 | — |
-| $b$ | a possible ending position at or below $a$ | 1 μm; its mirror $2a - b$ is 5 | higher: the joint chance rises |
-| $m$ | a possible value of the best so far | 0 to 8 μm in the chart | — |
-| $h$, $n$, $j$ | the coin walk of road 2: step size, number of steps, steps up to the line | 3/96 μm, 10240 steps, 96 | more steps: closer to the formula |
-| $\mu$ | a drift, a steady current pushing the grain | 0.2 μm a second in What breaks | the mirror no longer applies |
-| $\beta$ | a grid's blind spot, as a level shift per root second | 0.5826 | — |
-| $u$, $k$, $\tilde W$, $Z$, $\tau^{(k)}$, $B^{(k)}$, $\zeta$ | helpers: u a time measured after s or after $\tau_a$; k a whole number (the two-wall series, the proof's grid of $2^{-k}$ s); $\tilde W$ the reflected path; Z a standard normal; $\tau^{(k)}$ the first touch rounded up to that grid and $B^{(k)}$ the motion after it; ζ the Riemann zeta function in β's formula (Sources) | — | — |
+| $`W_t`$, $`W`$, $`W_{10}`$ | the grain's position at time t, in μm; $`W`$ is the whole path | the path in the picture ends at 1 | — |
+| $`t`$, $`s`$, $`\Delta t`$ | elapsed time in seconds; $`s`$ a fixed earlier time; $`\Delta t`$ a sampling step | 10 seconds; samples every 1, 0.1 or 0.01 s | longer: touching more likely, 0.6353 at 40 s |
+| $`a`$ | the level, μm to the right of the start | 3 μm | higher: less likely, 0.0578 at 6 μm |
+| $`M_t`$, $`M_{10}`$ | the running maximum, best position so far | averages 2.5231 μm over 10 s | — |
+| $`\tau_a`$, $`\tau`$, $`B`$ | first time the grain stands at $`a`$ ($`\tau`$ for short); $`B`$ the fresh motion after it | 4 s on the pictured path | — |
+| $`\mathcal{F}_t`$ | the filtration: what is known by time t, the path up to t | the path drawn up to the dot | — |
+| $`\Phi`$, $`\varphi`$ | normal cumulative chance, and the bell-curve height it adds up | $`\Phi(0.9487)`$ = 0.8286 | — |
+| $`b`$ | a possible ending position at or below $`a`$ | 1 μm; its mirror $`2a - b`$ is 5 | higher: the joint chance rises |
+| $`m`$ | a possible value of the best so far | 0 to 8 μm in the chart | — |
+| $`h`$, $`n`$, $`j`$ | the coin walk of road 2: step size, number of steps, steps up to the line | 3/96 μm, 10240 steps, 96 | more steps: closer to the formula |
+| $`\mu`$ | a drift, a steady current pushing the grain | 0.2 μm a second in What breaks | the mirror no longer applies |
+| $`\beta`$ | a grid's blind spot, as a level shift per root second | 0.5826 | — |
+| $`u`$, $`k`$, $`\tilde W`$, $`Z`$, $`\tau^{(k)}`$, $`B^{(k)}`$, $`\zeta`$ | helpers: u a time measured after s or after $`\tau_a`$; k a whole number (the two-wall series, the proof's grid of $`2^{-k}`$ s); $`\tilde W`$ the reflected path; Z a standard normal; $`\tau^{(k)}`$ the first touch rounded up to that grid and $`B^{(k)}`$ the motion after it; ζ the Riemann zeta function in β's formula (Sources) | — | — |
 
-The number inside $\Phi$ is $a/\sqrt{t}$: the level measured in the motion's own typical spread at time t. Here $3/\sqrt{10}$ = 0.9487, so the line is a little under one typical spread away.
+The number inside $`\Phi`$ is $`a/\sqrt{t}`$: the level measured in the motion's own typical spread at time t. Here $`3/\sqrt{10}`$ = 0.9487, so the line is a little under one typical spread away.
 
 ### When it holds
 
 - **No drift.** The mirror swaps a step for its negative, which keeps the chance only if the motion is symmetric. With a current of 0.2 μm a second toward the line, doubling the drifting grain's chance of ending beyond 3 gives 0.7518; the truth is 0.5649.
 - **Watched all the time.** The formula is about the continuous path. A grain recorded once a second can cross 3 and come back between two records. In 10000 simulated paths, the once-a-second record reaches 3 in 0.2619 ± 0.0044 of them, not 0.3428.
 - **One level, fixed in advance.** A second wall on the other side needs a mirror in each wall, and mirrors of mirrors. Touching 3 μm on either side has chance 0.6767, not twice 0.3428.
-- **A level above the start, $a > 0$.** Below the start the formula breaks: at $a = -3$ it gives 1.6572, more than certainty, because the best so far starts at 0 and is past −3 from the outset. The chance of touching −3 is the formula at $\lvert a \rvert$, 0.3428, by symmetry. At $a = 0$ the touch is immediate and the chance is 1, which the formula also gives.
+- **A level above the start, $`a > 0`$.** Below the start the formula breaks: at $`a = -3`$ it gives 1.6572, more than certainty, because the best so far starts at 0 and is past −3 from the outset. The chance of touching −3 is the formula at $`\lvert a \rvert`$, 0.3428, by symmetry. At $`a = 0`$ the touch is immediate and the chance is 1, which the formula also gives.
 
 ---
 
@@ -87,44 +93,46 @@ From its first touch, the grain moves as a new Brownian motion started at 3 μm,
 
 ### Step 1: the strong Markov property, at a stopping time
 
-The ordinary Markov property says: at a fixed time s, the future $W_{s+u} - W_s$, the move over the u seconds after s, is a fresh Brownian motion, independent of $\mathcal{F}_s$, the path up to s. That is the independence of increments from [Brownian motion](01-brownian-motion.md), restated.
+The ordinary Markov property says: at a fixed time s, the future $`W_{s+u} - W_s`$, the move over the u seconds after s, is a fresh Brownian motion, independent of $`\mathcal{F}_s`$, the path up to s. That is the independence of increments from [Brownian motion](01-brownian-motion.md), restated.
 
-The **strong Markov property** says the same at a stopping time such as $\tau_a$: on the event that the grain touches, $W_{\tau_a + u} - W_{\tau_a}$ is a fresh Brownian motion, independent of the path up to $\tau_a$. A stopping time is needed. "The last time before 10 seconds that the grain was at 3" is not one, and after it the grain cannot return to 3, so its future is not fresh.
+The **strong Markov property** says the same at a stopping time such as $`\tau_a`$: on the event that the grain touches, $`W_{\tau_a + u} - W_{\tau_a}`$ is a fresh Brownian motion, independent of the path up to $`\tau_a`$. A stopping time is needed. "The last time before 10 seconds that the grain was at 3" is not one, and after it the grain cannot return to 3, so its future is not fresh.
 
-The key step of the proof rounds $\tau_a$ up to a grid of $2^{-k}$ seconds. The rounded time takes countably many values (grid times that can be listed one by one), at each of which the ordinary Markov property applies; as the grid refines, continuity of the path carries the result down to $\tau_a$. The steps are in the Detailed proof below; the full measure-theoretic argument is in Karatzas and Shreve, Section 2.6 (Sources).
+The key step of the proof rounds $`\tau_a`$ up to a grid of $`2^{-k}`$ seconds. The rounded time takes countably many values (grid times that can be listed one by one), at each of which the ordinary Markov property applies; as the grid refines, continuity of the path carries the result down to $`\tau_a`$. The steps are in the Detailed proof below; the full measure-theoretic argument is in Karatzas and Shreve, Section 2.6 (Sources).
 
 ### Step 2: the reflected path is again a Brownian motion
 
-The reflected path equals $W_t$ up to $\tau_a$ and $2a - W_t$ afterwards: $a$ minus the fresh motion instead of $a$ plus it. The fresh motion is independent of the past (Step 1), and minus a Brownian motion is a Brownian motion, since the bell curve is symmetric. The same past glued to a future with the same law gives a path with the same law: the reflected path is a Brownian motion too.
+The reflected path equals $`W_t`$ up to $`\tau_a`$ and $`2a - W_t`$ afterwards: $`a`$ minus the fresh motion instead of $`a`$ plus it. The fresh motion is independent of the past (Step 1), and minus a Brownian motion is a Brownian motion, since the bell curve is symmetric. The same past glued to a future with the same law gives a path with the same law: the reflected path is a Brownian motion too.
 
 ### Step 3: pair the paths
 
-Take a path that touches 3 and ends at or below $b$ = 1. Its reflection ends at or above $2 \times 3 - 1$ = 5. Conversely, a path ending at or above 5 started below 3, so it touched 3; reflecting it after its first touch gives a path that touched 3 and ends at or below 1. The two reflections undo each other, and the reflected path has the same law as the original. So the two events have the same chance:
+Take a path that touches 3 and ends at or below $`b`$ = 1. Its reflection ends at or above $`2 \times 3 - 1`$ = 5. Conversely, a path ending at or above 5 started below 3, so it touched 3; reflecting it after its first touch gives a path that touched 3 and ends at or below 1. The two reflections undo each other, and the reflected path has the same law as the original. So the two events have the same chance:
 
-$$P(M_{10} \ge 3,\; W_{10} \le 1) = P(W_{10} \ge 5) = 0.0569$$
+```math
+P(M_{10} \ge 3,\; W_{10} \le 1) = P(W_{10} \ge 5) = 0.0569
+```
 
-Now set $b = a$. Touching and ending at or below the line is as likely as ending at or above it. Every path that ends above the line touched it. So the touching paths split into two halves of equal chance: those that end above, 0.1714, and those that end below, also 0.1714. The chance of ending exactly on the line is 0, since $W_{10}$ has a density. Adding gives 0.3428, the formula.
+Now set $`b = a`$. Touching and ending at or below the line is as likely as ending at or above it. Every path that ends above the line touched it. So the touching paths split into two halves of equal chance: those that end above, 0.1714, and those that end below, also 0.1714. The chance of ending exactly on the line is 0, since $`W_{10}`$ has a density. Adding gives 0.3428, the formula.
 
 <details>
 <summary>Detailed proof</summary>
 
-Fix $a > 0$ and $t > 0$, and let $\tau = \tau_a$, the first time $W$ equals $a$. The hitting set $\{s : W_s = a\}$ is closed because the path is continuous, so a finite $\tau$ is attained, and $\{\tau \le s\} = \{M_s \ge a\}$, which is decided by the path at rational times up to s; so $\tau$ is a stopping time.
+Fix $`a > 0`$ and $`t > 0`$, and let $`\tau = \tau_a`$, the first time $`W`$ equals $`a`$. The hitting set $`\{s : W_s = a\}`$ is closed because the path is continuous, so a finite $`\tau`$ is attained, and $`\{\tau \le s\} = \{M_s \ge a\}`$, which is decided by the path at rational times up to s; so $`\tau`$ is a stopping time.
 
-**Strong Markov property.** Statement: on $\{\tau < \infty\}$, the process $B_u = W_{\tau + u} - W_\tau$ is a Brownian motion independent of $\mathcal{F}_\tau$, the events whose occurrence is known by time $\tau$. Proof sketch. Let $\tau^{(k)} = \lceil 2^k \tau \rceil / 2^k$. For a grid time $s$, the event $\{\tau^{(k)} = s\}$ lies in $\mathcal{F}_s$, and on it the process $W_{s+u} - W_s$ is independent of $\mathcal{F}_s$ with the Brownian law. Summing over the countably many $s$ shows the same for $B^{(k)}_u = W_{\tau^{(k)} + u} - W_{\tau^{(k)}}$ against any event of $\mathcal{F}_\tau$, which lies in every $\mathcal{F}_{\tau^{(k)}}$. As $k \to \infty$, $\tau^{(k)}$ decreases to $\tau$ and continuity gives $B^{(k)}_u \to B_u$ for every u; finite-dimensional laws pass to the limit by bounded convergence, and they determine the law of a continuous process. Full details: Karatzas and Shreve, Section 2.6; Revuz and Yor, Chapter III.
+**Strong Markov property.** Statement: on $`\{\tau < \infty\}`$, the process $`B_u = W_{\tau + u} - W_\tau`$ is a Brownian motion independent of $`\mathcal{F}_\tau`$, the events whose occurrence is known by time $`\tau`$. Proof sketch. Let $`\tau^{(k)} = \lceil 2^k \tau \rceil / 2^k`$. For a grid time $`s`$, the event $`\{\tau^{(k)} = s\}`$ lies in $`\mathcal{F}_s`$, and on it the process $`W_{s+u} - W_s`$ is independent of $`\mathcal{F}_s`$ with the Brownian law. Summing over the countably many $`s`$ shows the same for $`B^{(k)}_u = W_{\tau^{(k)} + u} - W_{\tau^{(k)}}`$ against any event of $`\mathcal{F}_\tau`$, which lies in every $`\mathcal{F}_{\tau^{(k)}}`$. As $`k \to \infty`$, $`\tau^{(k)}`$ decreases to $`\tau`$ and continuity gives $`B^{(k)}_u \to B_u`$ for every u; finite-dimensional laws pass to the limit by bounded convergence, and they determine the law of a continuous process. Full details: Karatzas and Shreve, Section 2.6; Revuz and Yor, Chapter III.
 
-**Reflection.** Let $\tilde W_s = W_s$ for $s \le \tau$ and $\tilde W_s = 2a - W_s$ for $s > \tau$. On $\{\tau < \infty\}$, $W = $ (path to $\tau$) glued to $a + B$, and $\tilde W = $ (same path) glued to $a - B$. Since $B$ and $-B$ are Brownian motions independent of $\mathcal{F}_\tau$, the two glued processes have the same law. On $\{\tau = \infty\}$ they are equal. So $\tilde W$ is a Brownian motion, and its first passage to $a$ is the same $\tau$.
+**Reflection.** Let $`\tilde W_s = W_s`$ for $`s \le \tau`$ and $`\tilde W_s = 2a - W_s`$ for $`s > \tau`$. On $`\{\tau < \infty\}`$, $W = $ (path to $`\tau`$) glued to $`a + B`$, and $\tilde W = $ (same path) glued to $`a - B`$. Since $`B`$ and $`-B`$ are Brownian motions independent of $`\mathcal{F}_\tau`$, the two glued processes have the same law. On $`\{\tau = \infty\}`$ they are equal. So $`\tilde W`$ is a Brownian motion, and its first passage to $`a`$ is the same $`\tau`$.
 
-**Joint law.** For $b \le a$: $\{M_t \ge a, W_t \le b\} = \{\tau \le t, \tilde W_t \ge 2a - b\}$. Since $2a - b \ge a$ and $\tilde W$ starts below $a$, $\tilde W_t \ge 2a - b$ forces $\tau \le t$. So $P(M_t \ge a, W_t \le b) = P(\tilde W_t \ge 2a - b) = P(W_t \ge 2a - b)$.
+**Joint law.** For $`b \le a`$: $`\{M_t \ge a, W_t \le b\} = \{\tau \le t, \tilde W_t \ge 2a - b\}`$. Since $`2a - b \ge a`$ and $`\tilde W`$ starts below $`a`$, $`\tilde W_t \ge 2a - b`$ forces $`\tau \le t`$. So $`P(M_t \ge a, W_t \le b) = P(\tilde W_t \ge 2a - b) = P(W_t \ge 2a - b)`$.
 
-**Maximum.** At $b = a$: $P(M_t \ge a, W_t \le a) = P(W_t \ge a)$. And $P(M_t \ge a, W_t > a) = P(W_t > a)$, since ending above forces a touch. $P(W_t = a) = 0$, so $P(M_t \ge a) = 2P(W_t \ge a) = 2(1 - \Phi(a/\sqrt t))$. Since $P(\lvert W_t \rvert \ge a) = 2P(W_t \ge a)$ by symmetry, $M_t$ and $\lvert W_t \rvert$ have the same law. Differentiating in $a$ gives the density of $M_t$, $2\varphi(m/\sqrt t)/\sqrt t$ for $m \ge 0$; differentiating the joint law in $a$ and $b$ gives the joint density $\frac{2(2m - b)}{\sqrt{2\pi t^3}}\, e^{-(2m-b)^2/(2t)}$ for $m \ge 0$, $b \le m$.
+**Maximum.** At $`b = a`$: $`P(M_t \ge a, W_t \le a) = P(W_t \ge a)`$. And $`P(M_t \ge a, W_t > a) = P(W_t > a)`$, since ending above forces a touch. $`P(W_t = a) = 0`$, so $`P(M_t \ge a) = 2P(W_t \ge a) = 2(1 - \Phi(a/\sqrt t))`$. Since $`P(\lvert W_t \rvert \ge a) = 2P(W_t \ge a)`$ by symmetry, $`M_t`$ and $`\lvert W_t \rvert`$ have the same law. Differentiating in $`a`$ gives the density of $`M_t`$, $`2\varphi(m/\sqrt t)/\sqrt t`$ for $`m \ge 0`$; differentiating the joint law in $`a`$ and $`b`$ gives the joint density $`\frac{2(2m - b)}{\sqrt{2\pi t^3}}\, e^{-(2m-b)^2/(2t)}`$ for $`m \ge 0`$, $`b \le m`$.
 
-**Mean and median.** $E[M_t] = E\lvert W_t \rvert = \sqrt t\, E\lvert Z \rvert = \sqrt{2t/\pi}$, with $Z$ a standard normal. The median solves $2\Phi(m/\sqrt t) - 1 = 1/2$, so $m = \sqrt t\, \Phi^{-1}(3/4) = 0.6745\sqrt t$.
+**Mean and median.** $`E[M_t] = E\lvert W_t \rvert = \sqrt t\, E\lvert Z \rvert = \sqrt{2t/\pi}`$, with $`Z`$ a standard normal. The median solves $`2\Phi(m/\sqrt t) - 1 = 1/2`$, so $`m = \sqrt t\, \Phi^{-1}(3/4) = 0.6745\sqrt t`$.
 
 </details>
 
 ### Step 4: the law of the best so far
 
-Ask "touched m?" for every level m at once and the whole law of $M_{10}$ comes out: $P(M_{10} \ge m) = P(\lvert W_{10} \rvert \ge m)$. The best so far over 10 seconds averages $\sqrt{20/\pi}$ = 2.5231 μm, with median 2.1329: in half of all 10-second runs the grain gets at least 2.13 μm to the right of where it started.
+Ask "touched m?" for every level m at once and the whole law of $`M_{10}`$ comes out: $`P(M_{10} \ge m) = P(\lvert W_{10} \rvert \ge m)`$. The best so far over 10 seconds averages $`\sqrt{20/\pi}`$ = 2.5231 μm, with median 2.1329: in half of all 10-second runs the grain gets at least 2.13 μm to the right of where it started.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -136,15 +144,15 @@ xychart-beta
     line [50.00, 37.59, 26.35, 17.14, 10.30, 5.69, 2.89, 1.34, 0.57]
 ```
 
-Orange: $P(M_{10} \ge m)$, the chance the best so far reaches m. Green: $P(W_{10} \ge m)$, the chance of ending at or beyond m. Orange is twice green at every level, m = 0 included: the grain starts on 0, so it has reached 0 for certain, while it ends to the right of 0 half the time. The exact coin walk with 2560 steps prints the same nine orange values to within 0.01 of a percentage point.
+Orange: $`P(M_{10} \ge m)`$, the chance the best so far reaches m. Green: $`P(W_{10} \ge m)`$, the chance of ending at or beyond m. Orange is twice green at every level, m = 0 included: the grain starts on 0, so it has reached 0 for certain, while it ends to the right of 0 half the time. The exact coin walk with 2560 steps prints the same nine orange values to within 0.01 of a percentage point.
 
 ### Step 5: first passage, and why the wait has no average
 
-Read the formula as a function of time and it is the law of the first-passage time: $P(\tau_3 \le t) = 2(1 - \Phi(3/\sqrt t))$. At 40 seconds it is 0.6353, at 1000 seconds 0.9244, and as t grows it tends to 1, because $3/\sqrt t$ tends to 0 and $\Phi(0)$ is one half.
+Read the formula as a function of time and it is the law of the first-passage time: $`P(\tau_3 \le t) = 2(1 - \Phi(3/\sqrt t))`$. At 40 seconds it is 0.6353, at 1000 seconds 0.9244, and as t grows it tends to 1, because $`3/\sqrt t`$ tends to 0 and $`\Phi(0)`$ is one half.
 
-The grain touches the line for certain, eventually. Yet the average wait is infinite. The average is the area under the chance of still waiting, and that chance falls only like $1/\sqrt t$, whose area never stops growing. The coin-toss version of this fact is on [Hitting times](../01-Random%20Walks%20and%20Filtrations/06-first-passage-and-hitting-times.md).
+The grain touches the line for certain, eventually. Yet the average wait is infinite. The average is the area under the chance of still waiting, and that chance falls only like $`1/\sqrt t`$, whose area never stops growing. The coin-toss version of this fact is on [Hitting times](../01-Random%20Walks%20and%20Filtrations/06-first-passage-and-hitting-times.md).
 
-A second road to the formula runs through the walk. A fair coin walk with steps of $h$ every $h^2$ seconds obeys its own reflection principle, proved by counting; as the steps shrink, the walk becomes Brownian motion and its touching chance becomes this one. The code does not use the walk's mirror. It computes the walk's chance of touching directly, step by step, and watches it close in.
+A second road to the formula runs through the walk. A fair coin walk with steps of $`h`$ every $`h^2`$ seconds obeys its own reflection principle, proved by counting; as the steps shrink, the walk becomes Brownian motion and its touching chance becomes this one. The code does not use the walk's mirror. It computes the walk's chance of touching directly, step by step, and watches it close in.
 
 ---
 
@@ -154,14 +162,14 @@ The grain, the line 3 μm to the right, 10 seconds.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| typical spread at 10 s | $\sqrt{10}$ | 3.1623 |
-| level in spreads, $a/\sqrt t$ | 3 / 3.1623 | 0.9487 |
-| $\Phi(0.9487)$ | normal table, or Simpson's rule (an area sum over thin strips) in the code | 0.8286 |
-| ends at 3 or beyond, $P(W_{10} \ge 3)$ | 1 − 0.8286 | 0.1714 |
+| typical spread at 10 s | $`\sqrt{10}`$ | 3.1623 |
+| level in spreads, $`a/\sqrt t`$ | 3 / 3.1623 | 0.9487 |
+| $`\Phi(0.9487)`$ | normal table, or Simpson's rule (an area sum over thin strips) in the code | 0.8286 |
+| ends at 3 or beyond, $`P(W_{10} \ge 3)`$ | 1 − 0.8286 | 0.1714 |
 | touches and falls back | the mirror: same as ending beyond | 0.1714 |
 | **touches 3 within 10 s** | 0.1714 + 0.1714 | **0.3428** |
-| touches 3 and ends at or below 1 | $P(W_{10} \ge 5)$ | 0.0569 |
-| average best so far | $\sqrt{20/\pi}$ | 2.5231 |
+| touches 3 and ends at or below 1 | $`P(W_{10} \ge 5)`$ | 0.0569 |
+| average best so far | $`\sqrt{20/\pi}`$ | 2.5231 |
 
 About one grain in three touches the line within 10 seconds. Half of those are back on the start side of the line when the 10 seconds end, and a sixth of those touching grains, 0.0569 out of 0.3428, end no more than 1 μm to the right of the start. That 0.0569 is also the chance of ending beyond 5 μm computed on [Brownian motion](01-brownian-motion.md): the mirror turns one into the other.
 
@@ -189,9 +197,9 @@ Orange: the formula, for the path watched continuously. Green: 10000 simulated p
 | Either side: double the one-sided answer | 0.6856 (right: 0.6767) | Paths touching both +3 and −3 are counted twice |
 | Mirror with a current of 0.2 μm/s | 0.7518 (right: 0.5649) | The motion is not symmetric, so a path and its mirror differ in chance |
 
-The either-side truth comes from mirrors in both walls, an alternating sum of normal chances: subtract the paths that touch one wall, add back those that touch both, and so on. The chance of staying strictly between −a and a is $\sum_k (-1)^k\big[\Phi\big((2k+1)a/\sqrt t\big) - \Phi\big((2k-1)a/\sqrt t\big)\big]$, summed over every whole number k, and one minus it is 0.6767 ([Two walls](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md); Method of images).
+The either-side truth comes from mirrors in both walls, an alternating sum of normal chances: subtract the paths that touch one wall, add back those that touch both, and so on. The chance of staying strictly between −a and a is $`\sum_k (-1)^k\big[\Phi\big((2k+1)a/\sqrt t\big) - \Phi\big((2k-1)a/\sqrt t\big)\big]`$, summed over every whole number k, and one minus it is 0.6767 ([Two walls](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md); Method of images).
 
-The drift truth is $1 - \Phi\big((a - \mu t)/\sqrt t\big) + e^{2\mu a}\,\Phi\big((-a - \mu t)/\sqrt t\big)$, which follows from this card's joint law by weighting each path with an exponential martingale, a fair-game process whose average future value is its present value: [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md) proves that martingale fair, and [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md) does the weighting. The coin walk with 10240 steps confirms both: 0.6768 and 0.5649.
+The drift truth is $`1 - \Phi\big((a - \mu t)/\sqrt t\big) + e^{2\mu a}\,\Phi\big((-a - \mu t)/\sqrt t\big)`$, which follows from this card's joint law by weighting each path with an exponential martingale, a fair-game process whose average future value is its present value: [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md) proves that martingale fair, and [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md) does the weighting. The coin walk with 10240 steps confirms both: 0.6768 and 0.5649.
 
 ---
 
@@ -199,11 +207,11 @@ The drift truth is $1 - \Phi\big((a - \mu t)/\sqrt t\big) + e^{2\mu a}\,\Phi\big
 
 Three roads to 0.3428.
 
-- Road 1: the formula, with $\Phi$ built by Simpson's rule.
-- Road 2, exact and mirror-free: a fair coin walk with steps of $h = 3/j$ μm every $h^2$ seconds, the line exactly $j$ steps up, its touching chance carried forward step by step, for 10 to 10240 steps.
+- Road 1: the formula, with $`\Phi`$ built by Simpson's rule.
+- Road 2, exact and mirror-free: a fair coin walk with steps of $`h = 3/j`$ μm every $`h^2`$ seconds, the line exactly $`j`$ steps up, its touching chance carried forward step by step, for 10 to 10240 steps.
 - Road 3: 10000 simulated paths on a 0.01-second grid, each read at three grids. The random numbers come from SplitMix64, a simple random-number generator (seed 20260930), and Box-Muller, which turns two uniform random numbers into two normal ones, both written out.
 
-A grid sees the level as if raised by $\beta\sqrt{\Delta t}$, $\beta$ = 0.5826 (Broadie, Glasserman and Kou, Sources), so each simulated chance is asserted within four standard errors of that corrected formula. Roads 1 and 2 also price the either-side and drift cases.
+A grid sees the level as if raised by $`\beta\sqrt{\Delta t}`$, $`\beta`$ = 0.5826 (Broadie, Glasserman and Kou, Sources), so each simulated chance is asserted within four standard errors of that corrected formula. Roads 1 and 2 also price the either-side and drift cases.
 
 ### Python
 
@@ -622,15 +630,15 @@ The two outputs agree line for line, the simulation included: both languages run
 
 ### Lean
 
-Lean proves the card's three formulas for any Brownian motion $W$, at every time $t$ and level $a > 0$.
+Lean proves the card's three formulas for any Brownian motion $`W`$, at every time $`t`$ and level $`a > 0`$.
 
-- Take a level $a > 0$ and any time $t$. Then $P(M_t \ge a) = P(\tau_a \le t) = 2\,P(W_t \ge a)$.
-- Take the same $a$ and $t$, and an ending position $b \le a$. Then $P(M_t \ge a,\; W_t \le b) = P(W_t \ge 2a - b)$.
-- Take any time $t$. Then the best so far $M_t$ has the same law as the distance from the start, $\lvert W_t \rvert$.
-- The worked mirror checks exactly: level 3 and ending position 1 give the mirror image $2 \times 3 - 1 = 5$.
+- Take a level $`a > 0`$ and any time $`t`$. Then $`P(M_t \ge a) = P(\tau_a \le t) = 2\,P(W_t \ge a)`$.
+- Take the same $`a`$ and $`t`$, and an ending position $`b \le a`$. Then $`P(M_t \ge a,\; W_t \le b) = P(W_t \ge 2a - b)`$.
+- Take any time $`t`$. Then the best so far $`M_t`$ has the same law as the distance from the start, $`\lvert W_t \rvert`$.
+- The worked mirror checks exactly: level 3 and ending position 1 give the mirror image $`2 \times 3 - 1 = 5`$.
 - The picture's mirrored path checks exactly: after the first touch, each later point becomes 6 minus the original.
 
-The $\Phi$ values, mean, median, drift, two walls and every simulation are left to the Python and Rust checks.
+The $`\Phi`$ values, mean, median, drift, two walls and every simulation are left to the Python and Rust checks.
 
 ```lean
 -- Reflection principle: for a Brownian motion started at 0 and a level a above it, the chance of touching a by time t is twice the chance of being at or above a at time t, so the running maximum has the same law as the distance from the start.
@@ -1326,8 +1334,8 @@ example : [25, 28, 21, 15, 19, 12, 7, 13, 9, 4, 11, 10].map (fun v => 60 - v) =
 > [!TIP]
 > **Try changing**
 > Guess first; the `try:` rows hold the answers, from the same `touch` function.
-> - **Move the line to 6 μm.** The chance falls to **0.0578**, about 1 in 17. Doubling the distance cuts the chance about sixfold, because the level enters through $a/\sqrt t$ and the bell curve's tail falls fast.
-> - **Wait 40 seconds instead of 10.** The chance rises to **0.6353**. Four times the time is the same as half the distance: $3/\sqrt{40}$ equals $1.5/\sqrt{10}$.
+> - **Move the line to 6 μm.** The chance falls to **0.0578**, about 1 in 17. Doubling the distance cuts the chance about sixfold, because the level enters through $`a/\sqrt t`$ and the bell curve's tail falls fast.
+> - **Wait 40 seconds instead of 10.** The chance rises to **0.6353**. Four times the time is the same as half the distance: $`3/\sqrt{40}`$ equals $`1.5/\sqrt{10}`$.
 > - **Wait 1000 seconds.** **0.9244**. Certain in the end, but slowly: the chance of still waiting falls like one over the root of the time.
 > - **Cut `PATHS` to 2500.** The standard errors double, since they shrink like one over the root of the number of paths, and the once-a-second shortfall stays.
 
@@ -1339,7 +1347,7 @@ example : [25, 28, 21, 15, 19, 12, 7, 13, 9, 4, 11, 10].map (fun v => 60 - v) =
 > **Treating "touches the level" as "ends beyond the level".** The end position forgets the path. Ending at 3 or beyond has chance 0.1714; touching 3 has chance 0.3428. Any question about "at some point" or "ever" needs the maximum, not the final value.
 >
 > Smaller traps:
-> - **Checking a sampled record against the continuous formula.** Once-a-second records reach 3 in 0.2619 of paths. The gap is the grid, not bad luck: correct the level by $\beta\sqrt{\Delta t}$, or simulate the crossing inside each step.
+> - **Checking a sampled record against the continuous formula.** Once-a-second records reach 3 in 0.2619 of paths. The gap is the grid, not bad luck: correct the level by $`\beta\sqrt{\Delta t}`$, or simulate the crossing inside each step.
 > - **Doubling for a two-sided band.** "Ever 3 μm from the start, either way" is not 2 × 0.3428 = 0.6856. Paths that touch both sides are counted twice; the truth is 0.6767.
 > - **Mirroring a drifting motion.** With any current the two halves of the mirror are no longer equally likely. With 0.2 μm a second toward the line, the naive mirror gives 0.7518 against 0.5649.
 > - **Reading "touches for certain" as "touches soon".** The first-passage time is finite for sure and has infinite average; after 1000 seconds about 1 grain in 13 is still waiting.
@@ -1386,5 +1394,5 @@ Verified 2026-10-06: every link below resolves to the publisher's page or the DO
 
 - Karatzas, Ioannis, and Steven E. Shreve. *Brownian Motion and Stochastic Calculus*, 2nd ed. Graduate Texts in Mathematics 113. Springer, 1991; corrected printing 1998. [doi:10.1007/978-1-4612-0949-2](https://doi.org/10.1007/978-1-4612-0949-2). Section 2.6: the strong Markov property proved in full, the reflection principle and the joint law of the maximum and the end.
 - Revuz, Daniel, and Marc Yor. *Continuous Martingales and Brownian Motion*, 3rd ed. Grundlehren der mathematischen Wissenschaften 293. Springer, 1999. [doi:10.1007/978-3-662-06400-9](https://doi.org/10.1007/978-3-662-06400-9). Chapter III: the strong Markov property and the reflection principle in the language of Markov processes.
-- Broadie, Mark, Paul Glasserman, and Steven Kou. "A Continuity Correction for Discrete Barrier Options." *Mathematical Finance* 7, no. 4 (1997): 325–349. [doi:10.1111/1467-9965.00035](https://doi.org/10.1111/1467-9965.00035). The level shift $\beta\sqrt{\Delta t}$, with $\beta = -\zeta(1/2)/\sqrt{2\pi}$, that turns the continuous formula into the chance a sampled record touches.
+- Broadie, Mark, Paul Glasserman, and Steven Kou. "A Continuity Correction for Discrete Barrier Options." *Mathematical Finance* 7, no. 4 (1997): 325–349. [doi:10.1111/1467-9965.00035](https://doi.org/10.1111/1467-9965.00035). The level shift $`\beta\sqrt{\Delta t}`$, with $`\beta = -\zeta(1/2)/\sqrt{2\pi}`$, that turns the continuous formula into the chance a sampled record touches.
 - Asmussen, Søren, Peter Glynn, and Jim Pitman. "Discretization Error in Simulation of One-Dimensional Reflecting Brownian Motion." *The Annals of Applied Probability* 5, no. 4 (1995): 875–896. [doi:10.1214/aoap/1177004597](https://doi.org/10.1214/aoap/1177004597). The same constant as the gap between the true maximum and a grid's maximum, used to correct the simulated mean.

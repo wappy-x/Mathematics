@@ -43,35 +43,39 @@ The single line is the book's VaR in thousands of dollars. At 0.5 it is $421,740
 
 ## The formula
 
-Notation first, in words. A list of numbers written in a column, such as the book's three exposures, is a **vector**, named by one letter, $w$. A square table of numbers is a **matrix**, here $\Sigma$ (capital sigma). The expression $w^\top \Sigma w$ means: multiply every entry of the matrix by the exposure of its row and the exposure of its column, then add all nine products. The small raised T ("transpose") marks the first $w$ as laid on its side as a row.
+Notation first, in words. A list of numbers written in a column, such as the book's three exposures, is a **vector**, named by one letter, $`w`$. A square table of numbers is a **matrix**, here $`\Sigma`$ (capital sigma). The expression $`w^\top \Sigma w`$ means: multiply every entry of the matrix by the exposure of its row and the exposure of its column, then add all nine products. The small raised T ("transpose") marks the first $`w`$ as laid on its side as a row.
 
-$$\text{VaR}_{99\%} \;=\; z\,\sigma_P, \qquad \sigma_P \;=\; \sqrt{w^\top \Sigma\, w} \;=\; \sqrt{\sum_{i}\sum_{j} w_i\, w_j\, \rho_{ij}\, \sigma_i\, \sigma_j}$$
+```math
+\text{VaR}_{99\%} \;=\; z\,\sigma_P, \qquad \sigma_P \;=\; \sqrt{w^\top \Sigma\, w} \;=\; \sqrt{\sum_{i}\sum_{j} w_i\, w_j\, \rho_{ij}\, \sigma_i\, \sigma_j}
+```
 
 **Read it aloud:** the one-day loss beaten only one day in a hundred is 2.33 times the spread of the book's profit and loss. That spread squared is every pair of exposures multiplied together, weighted by how much the two factors wiggle and how closely they move.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $w_i$, for factor $i$ = 1, 2, 3 | the **exposure** to factor $i$: dollars gained per unit move of that factor | shares 10,000,000; calls 5,868,511.46; bond −2,500 per basis point | rises, if the factor moves with the rest of the book |
-| $w$ | the three exposures as one column | as above | |
-| $x_i$ | factor $i$'s move over one day: a return, or a yield change in basis points (hundredths of a percent) | | |
-| $\sigma_i$ | factor $i$'s daily **volatility**: the spread of $x_i$ | 1.35%, 1.2599%, 6 bp | rises |
-| $\rho_{ij}$, for factors $i$ and $j$ | the **correlation** of factors $i$ and $j$, between −1 and 1 | 0.5, 0.2, 0.1 | rises when both exposures push the same way |
-| $\Sigma$ | the **covariance matrix**; entry $\Sigma_{ij} = \rho_{ij}\sigma_i\sigma_j$ | printed by the checks | |
-| $\sigma_P$ | the spread (standard deviation) of the book's one-day P&L | $181,290.28 | rises, one for one |
-| $z$ | the bell-curve point with 99% of the area to its left: $N(z) = 0.99$ | 2.326348 | rises with the confidence level |
-| $N(\cdot)$ | the normal CDF (cumulative distribution function): bell-curve area left of a point | $N(0.25) = 0.5987$ | |
-| $\Delta$ | the call's **delta**: dollars the option gains per dollar on Acme, $e^{-qT}N(d_1)$ | 0.586851 | more Acme exposure |
-| $D_{\text{mod}}$ | the bond's **modified duration**: percent it loses per one-point rise in yield | 5 | more yield exposure |
-| $\Delta V$ | the book's profit or loss over one day | | |
-| $L$ | the **Cholesky factor**: a lower-triangular matrix with $LL^\top = \Sigma$ | used by the checks' second road | |
+| $`w_i`$, for factor $`i`$ = 1, 2, 3 | the **exposure** to factor $`i`$: dollars gained per unit move of that factor | shares 10,000,000; calls 5,868,511.46; bond −2,500 per basis point | rises, if the factor moves with the rest of the book |
+| $`w`$ | the three exposures as one column | as above | |
+| $`x_i`$ | factor $`i`$'s move over one day: a return, or a yield change in basis points (hundredths of a percent) | | |
+| $`\sigma_i`$ | factor $`i`$'s daily **volatility**: the spread of $`x_i`$ | 1.35%, 1.2599%, 6 bp | rises |
+| $`\rho_{ij}`$, for factors $`i`$ and $`j`$ | the **correlation** of factors $`i`$ and $`j`$, between −1 and 1 | 0.5, 0.2, 0.1 | rises when both exposures push the same way |
+| $`\Sigma`$ | the **covariance matrix**; entry $`\Sigma_{ij} = \rho_{ij}\sigma_i\sigma_j`$ | printed by the checks | |
+| $`\sigma_P`$ | the spread (standard deviation) of the book's one-day P&L | $181,290.28 | rises, one for one |
+| $`z`$ | the bell-curve point with 99% of the area to its left: $`N(z) = 0.99`$ | 2.326348 | rises with the confidence level |
+| $`N(\cdot)`$ | the normal CDF (cumulative distribution function): bell-curve area left of a point | $`N(0.25) = 0.5987`$ | |
+| $`\Delta`$ | the call's **delta**: dollars the option gains per dollar on Acme, $`e^{-qT}N(d_1)`$ | 0.586851 | more Acme exposure |
+| $`D_{\text{mod}}`$ | the bond's **modified duration**: percent it loses per one-point rise in yield | 5 | more yield exposure |
+| $`\Delta V`$ | the book's profit or loss over one day | | |
+| $`L`$ | the **Cholesky factor**: a lower-triangular matrix with $`LL^\top = \Sigma`$ | used by the checks' second road | |
 
-Delta, $d_1 = 0.25$ and the house inputs $S, K, r, q, \sigma, T$ are as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). In words: $S$ is Acme's price, $K$ the strike, $r$ the interest rate, $q$ Acme's dividend yield, $\sigma$ Acme's yearly volatility and $T$ the years left. $d_1$ measures how far the price sits above the strike, in units of volatility over the time left; it sets delta.
+Delta, $`d_1 = 0.25`$ and the house inputs $`S, K, r, q, \sigma, T`$ are as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). In words: $`S`$ is Acme's price, $`K`$ the strike, $`r`$ the interest rate, $`q`$ Acme's dividend yield, $`\sigma`$ Acme's yearly volatility and $`T`$ the years left. $`d_1`$ measures how far the price sits above the strike, in units of volatility over the time left; it sets delta.
 
 Two helper lines do the mapping:
 
-$$\Delta V \;\approx\; w_1 x_1 + w_2 x_2 + w_3 x_3, \qquad w_2 = n\,m\,S\,\Delta, \qquad w_3 = -\,D_{\text{mod}} \times B \times 0.0001$$
+```math
+\Delta V \;\approx\; w_1 x_1 + w_2 x_2 + w_3 x_3, \qquad w_2 = n\,m\,S\,\Delta, \qquad w_3 = -\,D_{\text{mod}} \times B \times 0.0001
+```
 
-In words: the book's P&L is each exposure times its factor's move. The calls' exposure is contracts $n = 1{,}000$ times shares per contract $m = 100$ times Acme's price times delta. The bond's is minus duration times the bond's value $B = \$5{,}000{,}000$ times one basis point: its **PV01**, the dollars lost when the yield rises by 0.01 percent.
+In words: the book's P&L is each exposure times its factor's move. The calls' exposure is contracts $`n = 1{,}000`$ times shares per contract $`m = 100`$ times Acme's price times delta. The bond's is minus duration times the bond's value $`B = \$5{,}000{,}000`$ times one basis point: its **PV01**, the dollars lost when the yield rises by 0.01 percent.
 
 ### When it holds
 
@@ -101,34 +105,36 @@ Three positions have become three numbers, in dollars per unit move. A book of t
 
 ### Step 2: the spread of a weighted sum
 
-The P&L is $\Delta V = w_1 x_1 + w_2 x_2 + w_3 x_3$. Its variance (spread squared) is the average of $\Delta V$ squared, since its mean is zero. Squaring a sum of three terms gives nine products, $w_i w_j x_i x_j$. Averaging each product gives $w_i w_j$ times the average of $x_i x_j$, and that average is the covariance, $\rho_{ij}\sigma_i\sigma_j$. Add the nine: $\sigma_P^2 = w^\top\Sigma w$.
+The P&L is $`\Delta V = w_1 x_1 + w_2 x_2 + w_3 x_3`$. Its variance (spread squared) is the average of $`\Delta V`$ squared, since its mean is zero. Squaring a sum of three terms gives nine products, $`w_i w_j x_i x_j`$. Averaging each product gives $`w_i w_j`$ times the average of $`x_i x_j`$, and that average is the covariance, $`\rho_{ij}\sigma_i\sigma_j`$. Add the nine: $`\sigma_P^2 = w^\top\Sigma w`$.
 
 The three squares are each position's own risk. The six cross terms, in three equal pairs, are where diversification lives: a positive correlation between exposures of the same sign adds, a negative one subtracts. The bond's exposure is negative and its correlation with shares positive, so its cross terms subtract: the bond is a small hedge.
 
 <details>
 <summary>Detailed proof: the variance and the normal shape</summary>
 
-**Variance.** Let $\Delta V = \sum_i w_i x_i$ with each $x_i$ of mean zero. Then
-$$\operatorname{Var}(\Delta V) = \mathbb{E}\Big[\Big(\sum_i w_i x_i\Big)\Big(\sum_j w_j x_j\Big)\Big] = \sum_i\sum_j w_i w_j\,\mathbb{E}[x_i x_j] = \sum_i\sum_j w_i w_j\,\Sigma_{ij}.$$
+**Variance.** Let $`\Delta V = \sum_i w_i x_i`$ with each $`x_i`$ of mean zero. Then
+
+$`\displaystyle \mathrm{Var}(\Delta V) = \mathbb{E}\Big[\Big(\sum_i w_i x_i\Big)\Big(\sum_j w_j x_j\Big)\Big] = \sum_i\sum_j w_i w_j\,\mathbb{E}[x_i x_j] = \sum_i\sum_j w_i w_j\,\Sigma_{ij}.`$
+
 The middle step is the linearity of expectation: the average of a sum is the sum of the averages, and fixed numbers come outside. Nothing here needs normality; the variance formula holds for any factor law with finite variances.
 
-**Shape.** Normality enters only to turn a spread into a quantile. Write the factor moves as $x = Lg$, where $g = (g_1, g_2, g_3)$ holds three independent standard normals. Here $L$ is a lower-triangular matrix with $L L^\top = \Sigma$: the Cholesky factor. It exists when $\Sigma$ is positive definite, meaning $w^\top\Sigma w > 0$ for every $w$ that is not all zeros. Then $\Delta V = w^\top L g = \sum_k b_k g_k$ with $b = L^\top w$. A sum of independent normals is normal with variance $\sum_k b_k^2 = w^\top L L^\top w = w^\top\Sigma w$. So $\Delta V$ is normal with mean zero and spread $\sigma_P$.
+**Shape.** Normality enters only to turn a spread into a quantile. Write the factor moves as $`x = Lg`$, where $`g = (g_1, g_2, g_3)`$ holds three independent standard normals. Here $`L`$ is a lower-triangular matrix with $`L L^\top = \Sigma`$: the Cholesky factor. It exists when $`\Sigma`$ is positive definite, meaning $`w^\top\Sigma w > 0`$ for every $`w`$ that is not all zeros. Then $`\Delta V = w^\top L g = \sum_k b_k g_k`$ with $`b = L^\top w`$. A sum of independent normals is normal with variance $`\sum_k b_k^2 = w^\top L L^\top w = w^\top\Sigma w`$. So $`\Delta V`$ is normal with mean zero and spread $`\sigma_P`$.
 
-Since $w^\top\Sigma w$ is a variance, it can never be negative: a table of correlations that makes it negative for some $w$ is not a valid table at all. The checks take this road as their second.
+Since $`w^\top\Sigma w`$ is a variance, it can never be negative: a table of correlations that makes it negative for some $`w`$ is not a valid table at all. The checks take this road as their second.
 
-**Quantile.** $P(\Delta V \le -z\sigma_P) = N(-z) = 1 - N(z) = 0.01$ when $N(z) = 0.99$. The loss beaten on 1 day in 100 is $z\sigma_P$.
+**Quantile.** $`P(\Delta V \le -z\sigma_P) = N(-z) = 1 - N(z) = 0.01`$ when $`N(z) = 0.99`$. The loss beaten on 1 day in 100 is $`z\sigma_P`$.
 
 </details>
 
 ### Step 3: from spread to VaR
 
-For a bell curve centred at zero, a loss beyond 2.326348 spreads happens with chance 1 percent. The number 2.326348 is the solution of $N(z) = 0.99$, found in the checks by bisection (halving an interval until it pins the point) on a home-built normal CDF. So VaR is 2.326348 times $\sigma_P$. At 95 percent the multiplier would be 1.644854.
+For a bell curve centred at zero, a loss beyond 2.326348 spreads happens with chance 1 percent. The number 2.326348 is the solution of $`N(z) = 0.99`$, found in the checks by bisection (halving an interval until it pins the point) on a home-built normal CDF. So VaR is 2.326348 times $`\sigma_P`$. At 95 percent the multiplier would be 1.644854.
 
 ### Step 4: splitting the answer by position
 
-Double every position and $\sigma_P$ doubles, so VaR doubles: VaR scales in step with the book. For any such quantity, each position's size times the rate at which VaR changes with it, summed over positions, gives back the total.
+Double every position and $`\sigma_P`$ doubles, so VaR doubles: VaR scales in step with the book. For any such quantity, each position's size times the rate at which VaR changes with it, summed over positions, gives back the total.
 
-Here the rate is explicit. Differentiating $z\sqrt{w^\top\Sigma w}$ in $w_i$ gives $z\,(\Sigma w)_i/\sigma_P$, where $(\Sigma w)_i$ is row $i$ of the matrix times the exposures. Multiply by $w_i$ and add: $z\,w^\top\Sigma w/\sigma_P = z\sigma_P$, the VaR. Each term, $w_i\,z\,(\Sigma w)_i/\sigma_P$, is that position's **component VaR**.
+Here the rate is explicit. Differentiating $`z\sqrt{w^\top\Sigma w}`$ in $`w_i`$ gives $`z\,(\Sigma w)_i/\sigma_P`$, where $`(\Sigma w)_i`$ is row $`i`$ of the matrix times the exposures. Multiply by $`w_i`$ and add: $`z\,w^\top\Sigma w/\sigma_P = z\sigma_P`$, the VaR. Each term, $`w_i\,z\,(\Sigma w)_i/\sigma_P`$, is that position's **component VaR**.
 
 The general rule is on [Whose risk is it](06-var-decomposition-euler-and-component-var.md). So are marginal VaR, the rate at which VaR changes as one position grows, and incremental VaR, the change in VaR from adding or removing a whole position.
 
@@ -138,11 +144,11 @@ A second route skips the matrix: draw many days of factor moves at random, reval
 
 ## Worked numbers, by hand
 
-Daily volatilities: shares 1.35 percent; Acme 20 percent a year divided by $\sqrt{252}$, for 252 trading days a year, 1.2599 percent; the five-year yield 6 basis points. Correlations: shares and Acme 0.5, shares and the yield 0.2, Acme and the yield 0.1. Each exposure times its volatility is a **dollar volatility**, the one-day spread of that position alone.
+Daily volatilities: shares 1.35 percent; Acme 20 percent a year divided by $`\sqrt{252}`$, for 252 trading days a year, 1.2599 percent; the five-year yield 6 basis points. Correlations: shares and Acme 0.5, shares and the yield 0.2, Acme and the yield 0.1. Each exposure times its volatility is a **dollar volatility**, the one-day spread of that position alone.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| call delta | $e^{-0.02} \times N(0.25)$, as on the Black-Scholes card | 0.586851 |
+| call delta | $`e^{-0.02} \times N(0.25)`$, as on the Black-Scholes card | 0.586851 |
 | calls' Acme exposure | 1,000 × 100 × $100 × 0.586851 | $5,868,511.46 |
 | bond PV01 | 5 × $5,000,000 × 0.0001 | $2,500 per bp |
 | dollar vol, shares | $10,000,000 × 0.0135 | $135,000.00 |
@@ -154,12 +160,12 @@ Daily volatilities: shares 1.35 percent; Acme 20 percent a year divided by $\sqr
 | shares with calls | 2 × 0.5 × 135,000 × 73,936.29 | 9,981,399,788 |
 | shares with bond | 2 × 0.2 × 135,000 × (−15,000) | −810,000,000 |
 | calls with bond | 2 × 0.1 × 73,936.29 × (−15,000) | −221,808,884 |
-| $\sigma_P$ | square root of the sum of the six rows | $181,290.28 |
+| $`\sigma_P`$ | square root of the sum of the six rows | $181,290.28 |
 | **VaR, 99%, one day** | 2.326348 × 181,290.28 | **$421,744.26** |
 
 On one trading day in a hundred, the book should lose more than $421,744: the $420,000 of [Value at risk](01-profit-and-loss-distribution-and-var.md), now built from its parts.
 
-Split by position, with each component being exposure × z × (row of $\Sigma$ times exposures) ÷ $\sigma_P$:
+Split by position, with each component being exposure × z × (row of $`\Sigma`$ times exposures) ÷ $`\sigma_P`$:
 
 | Position | Standalone VaR | Component VaR | Share of the total |
 | --- | --- | --- | --- |
@@ -200,7 +206,7 @@ Every number in both tables is printed by the checks below.
 
 The scripts map the book, build the covariance matrix and reach the VaR by four roads:
 
-1. the quadratic form $w^\top\Sigma w$;
+1. the quadratic form $`w^\top\Sigma w`$;
 2. the Cholesky factor, turning the three linked moves into independent ones;
 3. the table of dollar volatilities and correlations used by hand above;
 4. 100,000 simulated days of factor moves, drawn with a home-made random number generator through the Cholesky factor, reading the 1,000th-worst.
@@ -642,13 +648,13 @@ The two outputs are identical line for line. The rows headed "term" are the six 
 
 Lean proves the method's algebra for any number of risk factors: the bell curve, the VaR formula, the spread and the split by position.
 
-- Suppose $\Delta V = \sum_i w_i x_i$ exactly, with factor moves jointly normal and of mean zero, and $\sigma_P > 0$. Then $\Delta V$ is a bell curve centred at zero with spread $\sigma_P$.
-- Take the same moves and any $z$. Then $P(\Delta V \le -z\sigma_P) = 1 - N(z)$, so at $N(z) = 0.99$ the VaR is $z\sigma_P$.
-- Take any factor moves with finite variances, normal or not. Then the variance of $\Delta V$ is $w^\top\Sigma w$.
-- Take any square table $\Sigma$ with $\Sigma_{ij} = \Sigma_{ji}$ and $w^\top\Sigma w > 0$. Then VaR changes with $w_i$ at rate $z(\Sigma w)_i/\sigma_P$, and the component VaRs sum to $z\sigma_P$.
+- Suppose $`\Delta V = \sum_i w_i x_i`$ exactly, with factor moves jointly normal and of mean zero, and $`\sigma_P > 0`$. Then $`\Delta V`$ is a bell curve centred at zero with spread $`\sigma_P`$.
+- Take the same moves and any $`z`$. Then $`P(\Delta V \le -z\sigma_P) = 1 - N(z)`$, so at $`N(z) = 0.99`$ the VaR is $`z\sigma_P`$.
+- Take any factor moves with finite variances, normal or not. Then the variance of $`\Delta V`$ is $`w^\top\Sigma w`$.
+- Take any square table $`\Sigma`$ with $`\Sigma_{ij} = \Sigma_{ji}`$ and $`w^\top\Sigma w > 0`$. Then VaR changes with $`w_i`$ at rate $`z(\Sigma w)_i/\sigma_P`$, and the component VaRs sum to $`z\sigma_P`$.
 - The hand table's whole-number steps are exact, such as the bond's PV01 of $2,500 per basis point.
 
-The decimals, such as delta 0.586851 and $z = 2.326348$, the Cholesky road and the simulation are left to the Python and Rust checks.
+The decimals, such as delta 0.586851 and $`z = 2.326348`$, the Cholesky road and the simulation are left to the Python and Rust checks.
 
 ```lean
 -- Parametric VaR: if the risk-factor moves are jointly normal with mean zero, a book's linear P&L is normal with variance wᵀΣw, its loss quantile is z·√(wᵀΣw), the variance formula holds for any finite-variance factors, and component VaRs add back to the total.
@@ -843,7 +849,7 @@ example : (1000 : ℕ) * 100 = 100000 := by decide
 
 - **RiskMetrics.** J.P. Morgan published this method in 1994, with daily volatilities and correlations for hundreds of factors, so any bank could map its book and compute VaR the same evening. The 1996 technical document is still the fullest account of the mapping.
 - **Trading desk limits.** Banks set a VaR limit for each desk and check it every night. Component VaR tells the desk head which position to cut: here, trimming shares buys the most reduction per dollar ([Whose risk is it](06-var-decomposition-euler-and-component-var.md)).
-- **Bank capital rules.** The Basel Committee let banks base market-risk capital on their own VaR models from 1996. Its revised market-risk standard replaced VaR with expected shortfall, the average loss on the days worse than VaR ([Expected shortfall](05-expected-shortfall-and-coherence.md)), whose normal version uses the same $\sigma_P$.
+- **Bank capital rules.** The Basel Committee let banks base market-risk capital on their own VaR models from 1996. Its revised market-risk standard replaced VaR with expected shortfall, the average loss on the days worse than VaR ([Expected shortfall](05-expected-shortfall-and-coherence.md)), whose normal version uses the same $`\sigma_P`$.
 - **Checking the model.** Every day's actual P&L is compared with the previous evening's VaR; about one exceedance (a day whose loss is larger than VaR) in a hundred days is expected ([Backtesting VaR](08-backtesting-var.md)).
 
 > **Say it back**

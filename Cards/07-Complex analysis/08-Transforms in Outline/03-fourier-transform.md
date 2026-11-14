@@ -35,21 +35,25 @@ First line: the flash, 2 sin(ω/2)/ω, below zero past 2π, its ripples shrinkin
 
 ## The formula
 
-Notation first. A hat, $\hat f$, read "f-hat", names the transform of f. The probe $e^{-i\omega t}$ is a point going clockwise round the unit circle, ω radians a second ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
+Notation first. A hat, $`\hat f`$, read "f-hat", names the transform of f. The probe $`e^{-i\omega t}`$ is a point going clockwise round the unit circle, ω radians a second ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
 
-$$\hat f(\omega) = \int_{-\infty}^{\infty} f(t)\, e^{-i\omega t}\, dt$$
+```math
+\hat f(\omega) = \int_{-\infty}^{\infty} f(t)\, e^{-i\omega t}\, dt
+```
 
 **Read it aloud:** f-hat at ω is the signal times a wave spinning at rate ω, summed over all time.
 
 The **inversion theorem** runs the other way:
 
-$$f(t) = \frac{1}{2\pi}\int_{-\infty}^{\infty} \hat f(\omega)\, e^{i\omega t}\, d\omega$$
+```math
+f(t) = \frac{1}{2\pi}\int_{-\infty}^{\infty} \hat f(\omega)\, e^{i\omega t}\, d\omega
+```
 
 **Read it aloud:** the signal at time t is every frequency's share, spun forward to t, summed over the dial, divided by 2π.
 
 The three pairs on this card:
 
-| Signal $f(t)$ | Transform $\hat f(\omega)$ | At ω = 1 |
+| Signal $`f(t)`$ | Transform $`\hat f(\omega)`$ | At ω = 1 |
 | --- | --- | --- |
 | flash: 1 for −1/2 < t < 1/2, else 0 | 2 sin(ω/2)/ω; 1 at ω = 0 | 0.958851 |
 | Gaussian bell e^(−t^2/2) | √(2π) e^(−ω^2/2) | 1.520347 |
@@ -57,14 +61,14 @@ The three pairs on this card:
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time, seconds from the pulse's middle | −1/2 to 1/2 | — |
-| $\omega$ | frequency, radians per second | 1, π, 2π | the bells fall; the flash ripples toward 0 |
-| $f$, $\hat f$ | the signal; its transform, "f-hat" | flash; 2 sin(ω/2)/ω | — |
-| $z$, $y$ | a point t + iy; its height, Im z | the line Im z = 1 | — |
-| $R$ | half-width of the rectangle | 3, then 8 | its sides fade |
-| $\operatorname{Res}$ | residue: the coefficient of 1/(z − z0) near a pole z0 | 0.183940i at −i | — |
-| $W$ | where the inverse integral is cut off | 400 | the rebuilt flash sharpens |
-| $i$, $\pi$, $e$ | quarter turn, i^2 = −1; half-turn; base of natural logs | pole at −i | — |
+| $`t`$ | time, seconds from the pulse's middle | −1/2 to 1/2 | — |
+| $`\omega`$ | frequency, radians per second | 1, π, 2π | the bells fall; the flash ripples toward 0 |
+| $`f`$, $`\hat f`$ | the signal; its transform, "f-hat" | flash; 2 sin(ω/2)/ω | — |
+| $`z`$, $`y`$ | a point t + iy; its height, Im z | the line Im z = 1 | — |
+| $`R`$ | half-width of the rectangle | 3, then 8 | its sides fade |
+| $`\mathrm{Res}`$ | residue: the coefficient of 1/(z − z0) near a pole z0 | 0.183940i at −i | — |
+| $`W`$ | where the inverse integral is cut off | 400 | the rebuilt flash sharpens |
+| $`i`$, $`\pi`$, $`e`$ | quarter turn, i^2 = −1; half-turn; base of natural logs | pole at −i | — |
 
 ### When it holds
 
@@ -87,7 +91,9 @@ As T grows the samples fill the ω line, the sum becomes an integral, and the sp
 
 The integral runs over the flash's one second, and e^(−iωt) has antiderivative e^(−iωt)/(−iω):
 
-$$\hat f(\omega) = \frac{e^{i\omega/2} - e^{-i\omega/2}}{i\omega} = \frac{2i\sin(\omega/2)}{i\omega} = \frac{2\sin(\omega/2)}{\omega}.$$
+```math
+\hat f(\omega) = \frac{e^{i\omega/2} - e^{-i\omega/2}}{i\omega} = \frac{2i\sin(\omega/2)}{i\omega} = \frac{2\sin(\omega/2)}{\omega}.
+```
 
 At ω = 1 this is 0.958851. At ω = 2π the probe turns once during the flash and the sum is 0. At ω = 0 it is the flash's area, 1.
 
@@ -95,7 +101,9 @@ At ω = 1 this is 0.958851. At ω = 2π the probe turns once during the flash an
 
 Complete the square in the exponent of e^(−t^2/2) e^(−iωt):
 
-$$-\tfrac{t^2}{2} - i\omega t = -\tfrac{(t + i\omega)^2}{2} - \tfrac{\omega^2}{2}.$$
+```math
+-\tfrac{t^2}{2} - i\omega t = -\tfrac{(t + i\omega)^2}{2} - \tfrac{\omega^2}{2}.
+```
 
 So f-hat(ω) is e^(−ω^2/2) times the integral of e^(−z^2/2) along the line z = t + iω, one unit up at ω = 1.
 
@@ -103,7 +111,9 @@ The function e^(−z^2/2) is holomorphic (it has a complex derivative everywhere
 
 On a side the integrand's size is e^(−(R^2 − y^2)/2), which dies fast. At R = 8 both long edges read 2.506628, which is √(2π), the bell's area ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). So
 
-$$\int_{-\infty}^{\infty} e^{-t^2/2}\, e^{-i\omega t}\, dt = \sqrt{2\pi}\; e^{-\omega^2/2}.$$
+```math
+\int_{-\infty}^{\infty} e^{-t^2/2}\, e^{-i\omega t}\, dt = \sqrt{2\pi}\; e^{-\omega^2/2}.
+```
 
 At ω = 1: e^(−1/2) × 2.506628 = 1.520347. The bell comes back as a bell.
 
@@ -130,11 +140,11 @@ The Gaussian rebuilt at t = 1 reads 0.606531, which is e^(−1/2). The Cauchy be
 <details>
 <summary>Detailed proof: the inversion theorem</summary>
 
-For a small width ε > 0, let $I_\varepsilon$ be (1/2π) × the integral of f-hat(ω) e^(iωt) e^(−ε^2 ω^2/2) over ω. The damping rises to 1 as ε → 0 and |f-hat| has finite area, so $I_\varepsilon$ tends to the inverse integral.
+For a small width ε > 0, let $`I_\varepsilon`$ be (1/2π) × the integral of f-hat(ω) e^(iωt) e^(−ε^2 ω^2/2) over ω. The damping rises to 1 as ε → 0 and |f-hat| has finite area, so $`I_\varepsilon`$ tends to the inverse integral.
 
-Write f-hat as its integral over s. The double integrand is at most |f(s)| e^(−ε^2 ω^2/2), with finite double integral, so the order may swap. The inner integral over ω is Step 2 with time and frequency exchanged: the bell $g_\varepsilon(t - s)$ = e^(−(t − s)^2/(2ε^2))/(ε√(2π)), of area 1. So $I_\varepsilon$ − f(t) is the integral of (f(s) − f(t)) $g_\varepsilon(t - s)$ over s.
+Write f-hat as its integral over s. The double integrand is at most |f(s)| e^(−ε^2 ω^2/2), with finite double integral, so the order may swap. The inner integral over ω is Step 2 with time and frequency exchanged: the bell $`g_\varepsilon(t - s)`$ = e^(−(t − s)^2/(2ε^2))/(ε√(2π)), of area 1. So $`I_\varepsilon`$ − f(t) is the integral of (f(s) − f(t)) $`g_\varepsilon(t - s)`$ over s.
 
-Near t, within δ where |f(s) − f(t)| is below a chosen tolerance, the integral is below the tolerance. Beyond δ the bell is at most e^(−δ^2/(2ε^2))/(ε√(2π)), which tends to 0, times the area of |f|, plus |f(t)| times the bell's tail, also tending to 0. So $I_\varepsilon$ → f(t). At a jump each half of the bell carries 1/2: the midpoint.
+Near t, within δ where |f(s) − f(t)| is below a chosen tolerance, the integral is below the tolerance. Beyond δ the bell is at most e^(−δ^2/(2ε^2))/(ε√(2π)), which tends to 0, times the area of |f|, plus |f(t)| times the bell's tail, also tending to 0. So $`I_\varepsilon`$ → f(t). At a jump each half of the bell carries 1/2: the midpoint.
 
 </details>
 

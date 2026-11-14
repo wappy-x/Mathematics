@@ -28,44 +28,48 @@ The area under the teeth, divided by the 60 minutes, is the average wait over th
 
 ## The formula
 
-Notation first, in words. The gaps are $X_1, X_2, \dots$: $X_k$ is the time between bus $k-1$ and bus $k$, with bus 0 leaving at time 0. They are independent and all follow the same law, written $X$ for a typical one. The time of bus $n$ is $S_n = X_1 + \dots + X_n$. As on the Poisson card, $N(t)$ counts the arrivals up to time $t$: the number of $n \ge 1$ with $S_n \le t$. Its average is written $m(t) = E[N(t)]$, the **renewal function**.
+Notation first, in words. The gaps are $`X_1, X_2, \dots`$: $`X_k`$ is the time between bus $`k-1`$ and bus $`k`$, with bus 0 leaving at time 0. They are independent and all follow the same law, written $`X`$ for a typical one. The time of bus $`n`$ is $`S_n = X_1 + \dots + X_n`$. As on the Poisson card, $`N(t)`$ counts the arrivals up to time $`t`$: the number of $`n \ge 1`$ with $`S_n \le t`$. Its average is written $`m(t) = E[N(t)]`$, the **renewal function**.
 
-**Part 1, the elementary renewal theorem.** If the mean gap $\mu = E[X]$ is finite and positive,
+**Part 1, the elementary renewal theorem.** If the mean gap $`\mu = E[X]`$ is finite and positive,
 
-$$\lim_{t \to \infty} \frac{N(t)}{t} = \frac{1}{\mu} \ \text{ almost surely}, \qquad \lim_{t \to \infty} \frac{m(t)}{t} = \frac{1}{\mu}.$$
+```math
+\lim_{t \to \infty} \frac{N(t)}{t} = \frac{1}{\mu} \ \text{ almost surely}, \qquad \lim_{t \to \infty} \frac{m(t)}{t} = \frac{1}{\mu}.
+```
 
 **Read it aloud:** over a long stretch, the number of buses per minute settles at one over the mean gap, on almost every run and on average.
 
-**Part 2, the inspection paradox.** A passenger arrives at a time spread evenly over a long stretch. Let $L$ be the length of the gap the passenger lands in, and $W$ the wait for the next bus. In the long run,
+**Part 2, the inspection paradox.** A passenger arrives at a time spread evenly over a long stretch. Let $`L`$ be the length of the gap the passenger lands in, and $`W`$ the wait for the next bus. In the long run,
 
-$$P(L = x) = \frac{x \, P(X = x)}{\mu}, \qquad E[W] = \frac{E[X^2]}{2\mu} = \frac{\mu}{2} + \frac{\sigma^2}{2\mu}.$$
+```math
+P(L = x) = \frac{x \, P(X = x)}{\mu}, \qquad E[W] = \frac{E[X^2]}{2\mu} = \frac{\mu}{2} + \frac{\sigma^2}{2\mu}.
+```
 
 **Read it aloud:** each gap length is seen in proportion to its chance times its length; the average wait is half the mean gap plus a penalty that grows with how uneven the gaps are.
 
-For gaps with a density instead of a list of values, replace the chance $P(X = x)$ by the density; nothing else changes.
+For gaps with a density instead of a list of values, replace the chance $`P(X = x)`$ by the density; nothing else changes.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_k$, $X$ | the gap before bus $k$; a typical gap | 5 or 15 minutes | — |
-| $\mu$ | mean gap, $E[X]$ | 10 minutes | rate falls, wait rises |
-| $E[X^2]$ | mean of the squared gap | 125 square minutes | wait rises |
-| $\sigma^2$ | variance of the gap, $E[X^2] - \mu^2$ | 25 square minutes | wait rises; the rate does not move |
-| $S_n$ | time of bus $n$ | bus 2 comes at 10, 20 or 30 | — |
-| $t$, $s$ | clock time; $s$ a passenger's arrival time, in minutes | 60 in the hand table | — |
-| $N(t)$ | buses after time 0 up to time $t$ | about 6 per hour | — |
-| $m(t)$ | average of $N(t)$ | 5.870850 at $t$ = 60 | — |
-| $L$ | length of the gap a random passenger lands in | 15 with chance 0.75 | — |
-| $W$ | the passenger's wait | 6.25 minutes on average | — |
-| $k$, $n$, $a$, $b$, $\mu_b$ | counters; in the proof, a floor $a$ and a cap $b$ on gap length, and $\mu_b$ the capped mean | — | — |
-| $T$, $q$ | in the proof: the index of the first bus after $t$, $N(t) + 1$; the chance $P(X \ge a)$ that a gap reaches the floor | — | — |
-| $\bar X_k$, $\bar N(t)$, $\bar m(t)$ | in the proof: gap $k$ capped at $b$; the count of buses with capped gaps, and its average | — | — |
+| $`X_k`$, $`X`$ | the gap before bus $`k`$; a typical gap | 5 or 15 minutes | — |
+| $`\mu`$ | mean gap, $`E[X]`$ | 10 minutes | rate falls, wait rises |
+| $`E[X^2]`$ | mean of the squared gap | 125 square minutes | wait rises |
+| $`\sigma^2`$ | variance of the gap, $`E[X^2] - \mu^2`$ | 25 square minutes | wait rises; the rate does not move |
+| $`S_n`$ | time of bus $`n`$ | bus 2 comes at 10, 20 or 30 | — |
+| $`t`$, $`s`$ | clock time; $`s`$ a passenger's arrival time, in minutes | 60 in the hand table | — |
+| $`N(t)`$ | buses after time 0 up to time $`t`$ | about 6 per hour | — |
+| $`m(t)`$ | average of $`N(t)`$ | 5.870850 at $`t`$ = 60 | — |
+| $`L`$ | length of the gap a random passenger lands in | 15 with chance 0.75 | — |
+| $`W`$ | the passenger's wait | 6.25 minutes on average | — |
+| $`k`$, $`n`$, $`a`$, $`b`$, $`\mu_b`$ | counters; in the proof, a floor $`a`$ and a cap $`b`$ on gap length, and $`\mu_b`$ the capped mean | — | — |
+| $`T`$, $`q`$ | in the proof: the index of the first bus after $`t`$, $`N(t) + 1`$; the chance $`P(X \ge a)`$ that a gap reaches the floor | — | — |
+| $`\bar X_k`$, $`\bar N(t)`$, $`\bar m(t)`$ | in the proof: gap $`k`$ capped at $`b`$; the count of buses with capped gaps, and its average | — | — |
 
 ### When it holds
 
 - **Independent gaps with one law.** Make every gap copy the first and the average rate is 8 buses an hour, not 6.
-- **A finite mean gap.** If $\mu$ is infinite, $N(t)/t$ goes to 0. Part 2 also needs a finite $E[X^2]$; without it the average wait is infinite even when the mean gap is not.
+- **A finite mean gap.** If $`\mu`$ is infinite, $`N(t)/t`$ goes to 0. Part 2 also needs a finite $`E[X^2]`$; without it the average wait is infinite even when the mean gap is not.
 - **Arrival times spread evenly, blind to the buses.** Part 2 averages over arrival times. A passenger who always arrives on a 5-minute mark, the buses' grid, waits 3.75 minutes on average, not 6.25, when a bus that pulls in at that very moment counts as caught, a wait of 0.
-- **Gaps off any grid, for claims at a fixed time.** The average number of buses in the minute after a fixed far-off time settles at $1/\mu$ only when the gaps are not all multiples of one step: Blackwell's renewal theorem, stated in Feller's volume II (Sources), not proved here. This card's gaps sit on a 5-minute grid, so it averages over time throughout.
+- **Gaps off any grid, for claims at a fixed time.** The average number of buses in the minute after a fixed far-off time settles at $`1/\mu`$ only when the gaps are not all multiples of one step: Blackwell's renewal theorem, stated in Feller's volume II (Sources), not proved here. This card's gaps sit on a 5-minute grid, so it averages over time throughout.
 
 ---
 
@@ -73,75 +77,83 @@ For gaps with a density instead of a list of values, replace the chance $P(X = x
 
 ### Step 0: each bus restarts the clock
 
-After bus $n$ leaves, the gaps still to come are $X_{n+1}, X_{n+2}, \dots$. They are independent of everything before, with the same law as the original gaps. So the stop, watched from time $S_n$, is a fresh copy of the stop watched from time 0. Every argument below rests on this, together with the strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)): the average of the first $n$ gaps tends to $\mu$ on almost every run.
+After bus $`n`$ leaves, the gaps still to come are $`X_{n+1}, X_{n+2}, \dots`$. They are independent of everything before, with the same law as the original gaps. So the stop, watched from time $`S_n`$, is a fresh copy of the stop watched from time 0. Every argument below rests on this, together with the strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)): the average of the first $`n`$ gaps tends to $`\mu`$ on almost every run.
 
 ### Step 1: the count is squeezed between two bus times
 
-At time $t$ exactly $N(t)$ buses have come, so bus $N(t)$ is at or before $t$ and bus $N(t)+1$ is after it:
+At time $`t`$ exactly $`N(t)`$ buses have come, so bus $`N(t)`$ is at or before $`t`$ and bus $`N(t)+1`$ is after it:
 
-$$S_{N(t)} \le t < S_{N(t)+1}.$$
+```math
+S_{N(t)} \le t < S_{N(t)+1}.
+```
 
-At $t$ = 60 minutes, if 5 buses have come, the fifth is at or before minute 60 and the sixth is later.
+At $`t`$ = 60 minutes, if 5 buses have come, the fifth is at or before minute 60 and the sixth is later.
 
 ### Step 2: divide by the count, and the rate appears
 
-Divide the squeeze by $N(t)$. The left side, $S_{N(t)}/N(t)$, is the average of the first $N(t)$ gaps. As $t$ grows, $N(t)$ grows without limit, because each gap is finite. So by the strong law the left side tends to $\mu$. The right side is $S_{N(t)+1}/(N(t)+1)$ times $(N(t)+1)/N(t)$, which tends to $\mu$ times 1. The middle, $t/N(t)$, is trapped between them, so it tends to $\mu$ too, on almost every run. Turn it over: $N(t)/t$ tends to $1/\mu$, one bus per 10 minutes, 6 an hour.
+Divide the squeeze by $`N(t)`$. The left side, $`S_{N(t)}/N(t)`$, is the average of the first $`N(t)`$ gaps. As $`t`$ grows, $`N(t)`$ grows without limit, because each gap is finite. So by the strong law the left side tends to $`\mu`$. The right side is $`S_{N(t)+1}/(N(t)+1)`$ times $`(N(t)+1)/N(t)`$, which tends to $`\mu`$ times 1. The middle, $`t/N(t)`$, is trapped between them, so it tends to $`\mu`$ too, on almost every run. Turn it over: $`N(t)/t`$ tends to $`1/\mu`$, one bus per 10 minutes, 6 an hour.
 
 ### Step 3: the average count, through Wald's identity
 
-Almost-sure convergence does not by itself carry over to averages, so $m(t)/t$ needs its own argument.
+Almost-sure convergence does not by itself carry over to averages, so $`m(t)/t`$ needs its own argument.
 
-The index $N(t)+1$ is a **stopping time** ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)): whether bus $n$ is the first after $t$ is known from the first $n$ gaps. For such an index, **Wald's identity** says the average total of the gaps is the average number of gaps times the mean gap:
+The index $`N(t)+1`$ is a **stopping time** ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)): whether bus $`n`$ is the first after $`t`$ is known from the first $`n`$ gaps. For such an index, **Wald's identity** says the average total of the gaps is the average number of gaps times the mean gap:
 
-$$E[S_{N(t)+1}] = \mu \,\big(m(t) + 1\big).$$
+```math
+E[S_{N(t)+1}] = \mu \,\big(m(t) + 1\big).
+```
 
-Now take averages in the squeeze. The first bus after $t$ is after $t$, and in this example it is at most 15 minutes after, since no gap exceeds 15. So $t < \mu(m(t)+1) \le t + 15$, which gives
+Now take averages in the squeeze. The first bus after $`t`$ is after $`t`$, and in this example it is at most 15 minutes after, since no gap exceeds 15. So $`t < \mu(m(t)+1) \le t + 15`$, which gives
 
-$$\frac{t}{\mu} - 1 < m(t) \le \frac{t + 15}{\mu} - 1.$$
+```math
+\frac{t}{\mu} - 1 < m(t) \le \frac{t + 15}{\mu} - 1.
+```
 
-At $t$ = 60 this says the average count lies above 5 and at most 6.5; the exact value is 5.870850. Divide by $t$ and let $t$ grow: both bounds tend to $1/\mu$.
+At $`t`$ = 60 this says the average count lies above 5 and at most 6.5; the exact value is 5.870850. Divide by $`t`$ and let $`t`$ grow: both bounds tend to $`1/\mu`$.
 
-With unbounded gaps the upper bound needs one more move, capping every gap at a level $b$; the folded proof below does it.
+With unbounded gaps the upper bound needs one more move, capping every gap at a level $`b`$; the folded proof below does it.
 
 <details>
 <summary>Detailed proof: Wald's identity, and the elementary renewal theorem for any gap law</summary>
 
-**Wald's identity.** Write $T = N(t)+1$. Then $S_T = \sum_{k \ge 1} X_k \, 1\{T \ge k\}$. The event $T \ge k$ is the event $S_{k-1} \le t$, which depends only on $X_1, \dots, X_{k-1}$, so it is independent of $X_k$. Every term is non-negative, so the sum and the average can be swapped (monotone convergence, wing 10): $E[S_T] = \sum_k E[X_k] \, P(T \ge k) = \mu \sum_k P(T \ge k) = \mu \, E[T]$. The last step is the tail-sum formula for a count: $E[T] = \sum_{k \ge 1} P(T \ge k)$. For $E[T]$ to be finite: the gaps are not all zero, so some $a > 0$ has $P(X \ge a) = q > 0$; the count of gaps up to time $t$ is at most the count of tries until $\lceil t/a \rceil + 1$ gaps of at least $a$ have appeared, whose average is finite.
+**Wald's identity.** Write $`T = N(t)+1`$. Then $`S_T = \sum_{k \ge 1} X_k \, 1\{T \ge k\}`$. The event $`T \ge k`$ is the event $`S_{k-1} \le t`$, which depends only on $`X_1, \dots, X_{k-1}`$, so it is independent of $`X_k`$. Every term is non-negative, so the sum and the average can be swapped (monotone convergence, wing 10): $`E[S_T] = \sum_k E[X_k] \, P(T \ge k) = \mu \sum_k P(T \ge k) = \mu \, E[T]`$. The last step is the tail-sum formula for a count: $`E[T] = \sum_{k \ge 1} P(T \ge k)`$. For $`E[T]`$ to be finite: the gaps are not all zero, so some $`a > 0`$ has $`P(X \ge a) = q > 0`$; the count of gaps up to time $`t`$ is at most the count of tries until $`\lceil t/a \rceil + 1`$ gaps of at least $`a`$ have appeared, whose average is finite.
 
-**Lower bound.** $S_T > t$, so $\mu(m(t)+1) > t$, and $\liminf m(t)/t \ge 1/\mu$. If $\mu$ is infinite this says nothing, and the upper bound alone gives the limit 0.
+**Lower bound.** $`S_T > t`$, so $`\mu(m(t)+1) > t`$, and $`\liminf m(t)/t \ge 1/\mu`$. If $`\mu`$ is infinite this says nothing, and the upper bound alone gives the limit 0.
 
-**Upper bound.** Fix a cap $b$ and let $\bar X_k = \min(X_k, b)$, with mean $\mu_b$. The capped gaps form a renewal process whose buses come no later than the originals, so its count $\bar N(t) \ge N(t)$. Its first bus after $t$ overshoots $t$ by at most $b$, so Wald gives $\mu_b(\bar m(t) + 1) \le t + b$. Hence $m(t)/t \le \bar m(t)/t \le (t+b)/(t\mu_b)$, and $\limsup m(t)/t \le 1/\mu_b$. As $b$ grows, $\mu_b$ rises to $\mu$ by monotone convergence, so $\limsup m(t)/t \le 1/\mu$. With the lower bound, $m(t)/t \to 1/\mu$.
+**Upper bound.** Fix a cap $`b`$ and let $`\bar X_k = \min(X_k, b)`$, with mean $`\mu_b`$. The capped gaps form a renewal process whose buses come no later than the originals, so its count $`\bar N(t) \ge N(t)`$. Its first bus after $`t`$ overshoots $`t`$ by at most $`b`$, so Wald gives $`\mu_b(\bar m(t) + 1) \le t + b`$. Hence $`m(t)/t \le \bar m(t)/t \le (t+b)/(t\mu_b)`$, and $`\limsup m(t)/t \le 1/\mu_b`$. As $`b`$ grows, $`\mu_b`$ rises to $`\mu`$ by monotone convergence, so $`\limsup m(t)/t \le 1/\mu`$. With the lower bound, $`m(t)/t \to 1/\mu`$.
 
 </details>
 
 ### Step 4: the wait, as area under a sawtooth
 
-A passenger arriving at time $s$ waits from $s$ to the next bus. Plotted against $s$, that is the sawtooth in the picture: in a gap of length $x$ it falls from $x$ to 0, a triangle of area $x^2/2$.
+A passenger arriving at time $`s`$ waits from $`s`$ to the next bus. Plotted against $`s`$, that is the sawtooth in the picture: in a gap of length $`x`$ it falls from $`x`$ to 0, a triangle of area $`x^2/2`$.
 
-The average wait over arrivals spread evenly on $[0, t]$ is the area under the sawtooth divided by $t$. Up to the one unfinished tooth at the end, that is
+The average wait over arrivals spread evenly on $`[0, t]`$ is the area under the sawtooth divided by $`t`$. Up to the one unfinished tooth at the end, that is
 
-$$\frac{1}{t}\sum_{k=1}^{N(t)} \frac{X_k^2}{2} \;=\; \frac{N(t)}{t} \cdot \frac{1}{N(t)} \sum_{k=1}^{N(t)} \frac{X_k^2}{2}.$$
+```math
+\frac{1}{t}\sum_{k=1}^{N(t)} \frac{X_k^2}{2} \;=\; \frac{N(t)}{t} \cdot \frac{1}{N(t)} \sum_{k=1}^{N(t)} \frac{X_k^2}{2}.
+```
 
-The first factor tends to $1/\mu$ by Step 2. The second is an average of independent copies of $X^2/2$, so by the strong law it tends to $E[X^2]/2$. The product tends to $E[X^2]/(2\mu)$: 125 over 20, 6.25 minutes. The unfinished tooth, divided by $t$, vanishes when $E[X^2]$ is finite.
+The first factor tends to $`1/\mu`$ by Step 2. The second is an average of independent copies of $`X^2/2`$, so by the strong law it tends to $`E[X^2]/2`$. The product tends to $`E[X^2]/(2\mu)`$: 125 over 20, 6.25 minutes. The unfinished tooth, divided by $`t`$, vanishes when $`E[X^2]`$ is finite.
 
 This argument, a reward per gap averaged over time, is the **renewal-reward theorem** in outline: long-run reward per minute equals mean reward per gap over mean gap length.
 
 ### Step 5: the same answer by length bias
 
-Change the reward to the minutes spent in 15-minute gaps. Per gap it averages 0.5 × 15; over the mean gap of 10 that makes 0.75 of all time, and short gaps take 0.25. So a passenger lands in a long gap with chance 0.75, not 0.5: that is $P(L = x) = x P(X = x)/\mu$.
+Change the reward to the minutes spent in 15-minute gaps. Per gap it averages 0.5 × 15; over the mean gap of 10 that makes 0.75 of all time, and short gaps take 0.25. So a passenger lands in a long gap with chance 0.75, not 0.5: that is $`P(L = x) = x P(X = x)/\mu`$.
 
-Within its gap the arrival is spread evenly, so the wait averages half the gap: 2.5 or 7.5 minutes. Together, 0.25 × 2.5 + 0.75 × 7.5 = 6.25 minutes, by a different path. The average gap a passenger finds is $E[X^2]/\mu$ = 12.5 minutes, not 10.
+Within its gap the arrival is spread evenly, so the wait averages half the gap: 2.5 or 7.5 minutes. Together, 0.25 × 2.5 + 0.75 × 7.5 = 6.25 minutes, by a different path. The average gap a passenger finds is $`E[X^2]/\mu`$ = 12.5 minutes, not 10.
 
 <details>
 <summary>Why the variance appears</summary>
 
-Write $E[X^2] = \mu^2 + \sigma^2$. Then $E[X^2]/(2\mu) = \mu/2 + \sigma^2/(2\mu)$. Buses exactly 10 minutes apart have $\sigma^2 = 0$ and a wait of half the gap. Unevenness adds to the wait while leaving the rate alone; here the penalty is 25 over 20, 1.25 minutes.
+Write $`E[X^2] = \mu^2 + \sigma^2`$. Then $`E[X^2]/(2\mu) = \mu/2 + \sigma^2/(2\mu)`$. Buses exactly 10 minutes apart have $`\sigma^2 = 0`$ and a wait of half the gap. Unevenness adds to the wait while leaving the rate alone; here the penalty is 25 over 20, 1.25 minutes.
 
 </details>
 
 ### The other door: the Poisson case
 
-With exponential gaps of mean $\mu$, $E[X^2] = 2\mu^2$ and the formula gives a wait of $\mu$: the full mean gap, not half. That is the memoryless property of [Poisson process](01-poisson-process.md). At the shelf's switchboard, with calls at 4 an hour, an operator who looks up at a random moment waits 15 minutes on average for the next call, not 7.5.
+With exponential gaps of mean $`\mu`$, $`E[X^2] = 2\mu^2`$ and the formula gives a wait of $`\mu`$: the full mean gap, not half. That is the memoryless property of [Poisson process](01-poisson-process.md). At the shelf's switchboard, with calls at 4 an hour, an operator who looks up at a random moment waits 15 minutes on average for the next call, not 7.5.
 
 ---
 
@@ -149,11 +161,11 @@ With exponential gaps of mean $\mu$, $E[X^2] = 2\mu^2$ and the formula gives a w
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| mean gap $\mu$ | 0.5 × 5 + 0.5 × 15 | 10 minutes |
+| mean gap $`\mu`$ | 0.5 × 5 + 0.5 × 15 | 10 minutes |
 | rate | 1 / 10 per minute | **6 buses an hour** |
 | mean square gap | 0.5 × 25 + 0.5 × 225 | 125 |
 | variance | 125 − 10 × 10 | 25 |
-| sandwich for $m(60)$ | 60/10 − 1 and 75/10 − 1 | between 5 and 6.5 |
+| sandwich for $`m(60)`$ | 60/10 − 1 and 75/10 − 1 | between 5 and 6.5 |
 | share of time in 15-minute gaps | 0.5 × 15 / 10 | 0.75 |
 | share of time in 5-minute gaps | 0.5 × 5 / 10 | 0.25 |
 | wait inside each kind of gap | half the gap | 2.5 and 7.5 minutes |
@@ -176,7 +188,7 @@ xychart-beta
     line [6, 6, 6, 6, 6, 6]
 ```
 
-Rising line: $m(t)/t$ in buses per hour, exact. Flat line: the limit, 6 an hour. By the sandwich the shortfall is under one bus, so it shrinks like one over $t$.
+Rising line: $`m(t)/t`$ in buses per hour, exact. Flat line: the limit, 6 an hour. By the sandwich the shortfall is under one bus, so it shrinks like one over $`t`$.
 
 ### What breaks if you drop a piece
 
@@ -187,7 +199,7 @@ Rising line: $m(t)/t$ in buses per hour, exact. Flat line: the limit, 6 an hour.
 | Passenger always arrives on a 5-minute mark | 3.75 minutes, not 6.25 | arrival tied to the buses' grid; a thousandth of a minute later it is 8.749 |
 | Every gap equal to the first one | 8 buses an hour, not 6 | gaps not independent: the rate averages a 5-minute stop and a 15-minute stop, not one over the average gap |
 
-The third row is measured at minute 6000, with a bus that pulls in at that minute counted as caught; only the average over a whole 5-minute cell comes to 6.25. In the fourth, with chance 0.5 buses come every 5 minutes forever, else every 15, so $N(t)/t$ has no single limit.
+The third row is measured at minute 6000, with a bus that pulls in at that minute counted as caught; only the average over a whole 5-minute cell comes to 6.25. In the fourth, with chance 0.5 buses come every 5 minutes forever, else every 15, so $`N(t)/t`$ has no single limit.
 
 ---
 
@@ -196,7 +208,7 @@ The third row is measured at minute 6000, with a bus that pulls in at that minut
 Three roads.
 
 - **Formulas:** rate and wait.
-- **Exact recursion:** every gap is 1 or 3 five-minute steps, so the average count, the average overshoot past a time and the chance of a bus at each step obey short recursions over every bus pattern, each conditioning on the first gap (Step 0). They give $m(t)$, Wald's identity as two separate computations that must agree, and the exact average wait over arrivals in the first 60, 600 and 6000 minutes. A brute-force count over all 4096 patterns of the first 12 gaps confirms $m(60)$ = 24047/4096 in whole numbers.
+- **Exact recursion:** every gap is 1 or 3 five-minute steps, so the average count, the average overshoot past a time and the chance of a bus at each step obey short recursions over every bus pattern, each conditioning on the first gap (Step 0). They give $`m(t)`$, Wald's identity as two separate computations that must agree, and the exact average wait over arrivals in the first 60, 600 and 6000 minutes. A brute-force count over all 4096 patterns of the first 12 gaps confirms $`m(60)`$ = 24047/4096 in whole numbers.
 - **Simulation:** SplitMix64 (a short random-number generator written into each script), seed 20260929; 40,000 passengers, each on a fresh run of buses, arriving evenly over the first 600 minutes; the switchboard; and one 1,000,000-minute run cut into 100 batches for the rate.
 
 Each simulated number carries its standard error, and its assert allows four. The simulated wait is compared with the exact 600-minute value, 6.263021, since a stop that starts with a bus at time 0 has not yet reached the long run.
@@ -620,14 +632,14 @@ The two outputs are identical line for line.
 
 Lean proves the elementary renewal theorem and the mean wait of the inspection paradox, for any gap law, and checks the worked numbers.
 
-- Take independent gaps with one law, none negative, and a finite positive mean gap $\mu$. Then $N(t)/t \to 1/\mu$ on almost every run.
-- Take the same gaps. Then $m(t)/t \to 1/\mu$, so the average count settles at the same rate.
-- Take the same gaps, and suppose $E[X^2]$ is finite. Then on almost every run, the average wait over arrivals spread evenly on $[0, t]$ tends to $E[X^2]/(2\mu)$.
+- Take independent gaps with one law, none negative, and a finite positive mean gap $`\mu`$. Then $`N(t)/t \to 1/\mu`$ on almost every run.
+- Take the same gaps. Then $`m(t)/t \to 1/\mu`$, so the average count settles at the same rate.
+- Take the same gaps, and suppose $`E[X^2]`$ is finite. Then on almost every run, the average wait over arrivals spread evenly on $`[0, t]`$ tends to $`E[X^2]/(2\mu)`$.
 - The 5-or-15 stop has mean gap 10, mean square gap 125, 6 buses an hour and a mean wait of 6.25 minutes.
 - Long gaps hold 0.75 of the time, and 0.25 × 2.5 + 0.75 × 7.5 = 6.25.
-- The brute-force count over all 4096 patterns gives 24047/4096 for $m(60)$, inside the sandwich of 5 and 6.5.
+- The brute-force count over all 4096 patterns gives 24047/4096 for $`m(60)`$, inside the sandwich of 5 and 6.5.
 
-The law of $L$, the exact recursion and the simulations are left to the Python and Rust checks.
+The law of $`L`$, the exact recursion and the simulations are left to the Python and Rust checks.
 
 ```lean
 -- Renewal processes: for independent, identically distributed gaps with a finite positive mean, arrivals come at one per mean gap in the long run, and the time-averaged wait for the next arrival is the mean square gap over twice the mean gap.
@@ -1326,7 +1338,7 @@ example : (2 * 15 ^ 2 : ℚ) / (2 * 15) = 15 := by norm_num
 
 ## Where you meet it in real life
 
-- **Waiting for buses, trains and lifts.** Transit agencies report "excess wait time": the passengers' average wait minus half the scheduled gap. When buses keep the scheduled average spacing, that excess is the $\sigma^2/(2\mu)$ term, and bunching raises it.
+- **Waiting for buses, trains and lifts.** Transit agencies report "excess wait time": the passengers' average wait minus half the scheduled gap. When buses keep the scheduled average spacing, that excess is the $`\sigma^2/(2\mu)`$ term, and bunching raises it.
 - **Class sizes.** The average class size per class is smaller than the average class size per student, because large classes hold more students: length bias, with size for length.
 - **Replacing parts.** Bulbs replaced on failure form a renewal process: bulbs bought per year is one over the mean life, whatever the spread, and the bulb found burning at a random inspection is on average longer-lived than a typical one.
 - **Queues and chains.** The times a continuous-time chain returns to a state are renewal times, and the long-run share of time spent there is the mean stay over the mean return time: [Continuous-time chains](05-continuous-time-markov-chains-and-queues.md).
@@ -1339,15 +1351,15 @@ example : (2 * 15 ^ 2 : ℚ) / (2 * 15) = 15 := by norm_num
 
 ## What this builds on
 
-- [Poisson process](01-poisson-process.md): the counting process $N(t)$ and the exponential gaps whose memorylessness gives the Poisson case of the paradox.
+- [Poisson process](01-poisson-process.md): the counting process $`N(t)`$ and the exponential gaps whose memorylessness gives the Poisson case of the paradox.
 - [The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md): pins the average gap and the average squared gap on almost every run.
-- [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md): why the index of the first bus after $t$ is a stopping time, the hypothesis Wald's identity needs.
+- [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md): why the index of the first bus after $`t`$ is a stopping time, the hypothesis Wald's identity needs.
 
 ## Where this goes next
 
-- [Daily monitoring](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md): a barrier option checked once a day; its correction rests on this card's mean wait, $E[X^2]/(2\mu)$, read as the mean overshoot of the daily price walk past a far barrier, with the amounts by which the walk beats its previous record as the gaps.
+- [Daily monitoring](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md): a barrier option checked once a day; its correction rests on this card's mean wait, $`E[X^2]/(2\mu)`$, read as the mean overshoot of the daily price walk past a far barrier, with the amounts by which the walk beats its previous record as the gaps.
 
-A passenger's wait past a random moment averages $E[X^2]/(2\mu)$; how far a price checked only at the daily close has overshot a barrier when a close is first seen beyond it, and how far that moves the option's price, is the question [Daily monitoring](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md) answers.
+A passenger's wait past a random moment averages $`E[X^2]/(2\mu)`$; how far a price checked only at the daily close has overshot a barrier when a close is first seen beyond it, and how far that moves the option's price, is the question [Daily monitoring](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md) answers.
 
 ---
 

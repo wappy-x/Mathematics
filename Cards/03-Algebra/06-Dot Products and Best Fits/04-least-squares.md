@@ -38,31 +38,35 @@ The bars are the prices paid, the line is the fit; those four gaps are the subje
 
 Car by car, the wish is slope × age + intercept = price — four equations in two unknowns.
 
-Stack the left-hand sides into a matrix, one row per car: the age, then a 1. Call it $A$, 4 rows × 2 columns:
+Stack the left-hand sides into a matrix, one row per car: the age, then a 1. Call it $`A`$, 4 rows × 2 columns:
 
 `[[1, 1], [2, 1], [3, 1], [4, 1]]`
 
-The first column holds the ages; the second is all ones and carries the intercept, the price at age zero. The unknowns go in $x$ = (slope, intercept), the prices in $b$ = (20, 17, 13, 10). Multiplying $A$ by $x$ ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)) rebuilds all four left-hand sides:
+The first column holds the ages; the second is all ones and carries the intercept, the price at age zero. The unknowns go in $`x`$ = (slope, intercept), the prices in $`b`$ = (20, 17, 13, 10). Multiplying $`A`$ by $`x`$ ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)) rebuilds all four left-hand sides:
 
-$$A x = b$$
+```math
+A x = b
+```
 
 and it has no solution. Least squares swaps it for one that does:
 
-$$A^T A x = A^T b$$
+```math
+A^T A x = A^T b
+```
 
-$A^T$, said "A transpose", is $A$ with rows and columns swapped: the 4 × 2 becomes 2 × 4.
+$`A^T`$, said "A transpose", is $`A`$ with rows and columns swapped: the 4 × 2 becomes 2 × 4.
 
 **Read it aloud:** multiply both sides by the flipped table, and an unsolvable wish becomes two ordinary equations whose answer is the closest line.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | one row per car: its age, then a 1 | `[[1, 1], [2, 1], [3, 1], [4, 1]]`, 4 × 2 | more cars pull on the same two numbers |
-| $x$ | the unknowns: slope, then intercept | (−3.4, 23.5) | — |
-| $b$ | the prices paid, one per car | (20, 17, 13, 10) | raise one, the line tilts that way |
-| $A^T$ | "A transpose": rows and columns swapped | 2 × 4: ages in row one, 1s in row two | — |
-| $A^T A$ | the columns of $A$ dotted with each other | `[[30, 10], [10, 4]]` | — |
-| $A^T b$ | those columns dotted with the prices | (133, 60) | — |
-| $r$ | the leftover: price minus fitted price, the residual | (−0.1, 0.3, −0.3, 0.1) | worse fit; the squares are the score |
+| $`A`$ | one row per car: its age, then a 1 | `[[1, 1], [2, 1], [3, 1], [4, 1]]`, 4 × 2 | more cars pull on the same two numbers |
+| $`x`$ | the unknowns: slope, then intercept | (−3.4, 23.5) | — |
+| $`b`$ | the prices paid, one per car | (20, 17, 13, 10) | raise one, the line tilts that way |
+| $`A^T`$ | "A transpose": rows and columns swapped | 2 × 4: ages in row one, 1s in row two | — |
+| $`A^T A`$ | the columns of $`A`$ dotted with each other | `[[30, 10], [10, 4]]` | — |
+| $`A^T b`$ | those columns dotted with the prices | (133, 60) | — |
+| $`r`$ | the leftover: price minus fitted price, the residual | (−0.1, 0.3, −0.3, 0.1) | worse fit; the squares are the score |
 
 Every entry is a dot product ([The dot product](01-dot-product.md)): multiply matching entries, add them up. Out come 30 × slope + 10 × intercept = 133 and 10 × slope + 4 × intercept = 60.
 
@@ -79,17 +83,17 @@ Every entry is a dot product ([The dot product](01-dot-product.md)): multiply ma
 
 ### Step 0: four prices are one point
 
-Stop counting cars and count coordinates: the four prices are one arrow, $b$ = (20, 17, 13, 10), in a space with one axis per car.
+Stop counting cars and count coordinates: the four prices are one arrow, $`b`$ = (20, 17, 13, 10), in a space with one axis per car.
 
-A line's four predictions are slope × (1, 2, 3, 4) + intercept × (1, 1, 1, 1): every mix of the two columns of $A$. Those mixes sweep out a flat sheet, one point per drawable line — and $b$ is not on it. Fitting is finding the sheet's nearest point.
+A line's four predictions are slope × (1, 2, 3, 4) + intercept × (1, 1, 1, 1): every mix of the two columns of $`A`$. Those mixes sweep out a flat sheet, one point per drawable line — and $`b`$ is not on it. Fitting is finding the sheet's nearest point.
 
 ### Step 1: nearest means perpendicular
 
-That is the projection card ([Projection](02-orthogonal-projection.md)): the nearest point is the shadow, and the leftover is perpendicular. A leaning leftover would run partly along the sheet, and sliding that way would shorten it. So the fit is the shadow of $b$, and $r$ = $b$ − $A x$ points straight out. Squared lengths add that way, by Pythagoras — which is why the score squares each miss.
+That is the projection card ([Projection](02-orthogonal-projection.md)): the nearest point is the shadow, and the leftover is perpendicular. A leaning leftover would run partly along the sheet, and sliding that way would shorten it. So the fit is the shadow of $`b`$, and $`r`$ = $`b`$ − $`A x`$ points straight out. Squared lengths add that way, by Pythagoras — which is why the score squares each miss.
 
 ### Step 2: perpendicular to the sheet means perpendicular to both columns
 
-Everything in the sheet is a mix of the two columns, so an arrow at right angles to both is at right angles to every mix. Two dot products carry the condition: ages column · $r$ = 0, ones column · $r$ = 0. That pair is $A^T r$ = (0, 0) — multiplying by $A^T$ dots each column of $A$ with what follows.
+Everything in the sheet is a mix of the two columns, so an arrow at right angles to both is at right angles to every mix. Two dot products carry the condition: ages column · $`r`$ = 0, ones column · $`r`$ = 0. That pair is $`A^T r`$ = (0, 0) — multiplying by $`A^T`$ dots each column of $`A`$ with what follows.
 
 ```mermaid
 flowchart LR
@@ -103,19 +107,23 @@ The prices split into a shadow a line can hit and a leftover no line can touch.
 
 ### Step 3: write the two zeros out, and the equation appears
 
-Put $r$ = $b$ − $A x$ back into $A^T r$ = 0:
+Put $`r`$ = $`b`$ − $`A x`$ back into $`A^T r`$ = 0:
 
-$$A^T (b - A x) = 0$$
+```math
+A^T (b - A x) = 0
+```
 
-Push $A^T$ through the bracket, move the second piece across:
+Push $`A^T`$ through the bracket, move the second piece across:
 
-$$A^T A x = A^T b$$
+```math
+A^T A x = A^T b
+```
 
 These are the **normal equations**; "normal" is the old word for perpendicular, so the name is the geometry. No calculus, nothing minimised by hand: "the leftover is perpendicular" *is* the equation.
 
 ### Step 4: two equations, two unknowns
 
-$A^T A$ is 2 × 2 however many cars there are: four here, four thousand at a dealership. Its determinant — the number whose vanishing means no unique answer ([The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md)) — is 30 × 4 − 10 × 10 = 20. Working code solves the pair rather than inverting.
+$`A^T A`$ is 2 × 2 however many cars there are: four here, four thousand at a dealership. Its determinant — the number whose vanishing means no unique answer ([The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md)) — is 30 × 4 − 10 × 10 = 20. Working code solves the pair rather than inverting.
 
 **The other road.** Statistics teaches this line with no matrix: slope = sum of (age − average age) × (price − average price), divided by the sum of (age − average age) squared. Then intercept = average price − slope × average age. With average age 2.5 and average price 15: −17 ÷ 5 = −3.4, then 15 + 8.5 = 23.5 — the same equations rearranged. The code runs both.
 
@@ -157,7 +165,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one builds the dot products behind $A^T A$ and $A^T b$ from the raw ages and prices, then cross-multiplies the 2 × 2 system; road two reaches the same line from the two averages. The scripts also dot the leftovers against both columns, reproduce the three wrong answers, and fit a second lot of prices.
+Nothing is imported. Road one builds the dot products behind $`A^T A`$ and $`A^T b`$ from the raw ages and prices, then cross-multiplies the 2 × 2 system; road two reaches the same line from the two averages. The scripts also dot the leftovers against both columns, reproduce the three wrong answers, and fit a second lot of prices.
 
 ### Python
 
@@ -356,10 +364,10 @@ The two outputs match line for line.
 
 Lean proves the card's main facts for any number of cars, and checks the four cars' numbers as exact fractions.
 
-- Any table $A$, any prices $b$: a choice $x$ misses least exactly when it solves $A^T A x = A^T b$.
+- Any table $`A`$, any prices $`b`$: a choice $`x`$ misses least exactly when it solves $`A^T A x = A^T b`$.
 - Squared lengths add, by Pythagoras. Any other choice scores the best squared miss plus the squared gap between the two sets of predictions.
 - When the ages differ, exactly one line misses least. Its slope and intercept are the cross-multiplied formulas in the worked table.
-- The four cars: $A^T A$ = `[[30, 10], [10, 4]]`, $A^T b$ = (133, 60), determinant 20, slope −3.4, intercept 23.5.
+- The four cars: $`A^T A`$ = `[[30, 10], [10, 4]]`, $`A^T b`$ = (133, 60), determinant 20, slope −3.4, intercept 23.5.
 - The fitted prices, the leftovers, their zero dot products with both columns, and the squared miss 0.2.
 - The other road, the three mistakes, the second lot of prices, and the zero determinant when every car is aged 2.
 
@@ -670,20 +678,20 @@ example : Matrix.det !![(16 : ℚ), 8; 8, 4] = 0 := by norm_num [Matrix.det_fin_
 
 ## Where you meet it in real life
 
-- **Every straight trendline in a spreadsheet.** `SLOPE`, `INTERCEPT` and `LINEST` answer these normal equations, by a steadier route than building the small matrix $A^T A$; any table of ages and prices is a depreciation schedule fitted this way.
+- **Every straight trendline in a spreadsheet.** `SLOPE`, `INTERCEPT` and `LINEST` answer these normal equations, by a steadier route than building the small matrix $`A^T A`$; any table of ages and prices is a depreciation schedule fitted this way.
 - **Calibrating an instrument.** Weigh known masses on a new scale, fit a line to what it reports, then read it backwards to correct later readings.
-- **More columns, same equation.** Add mileage: $A$ becomes 4 × 3, $A^T A$ becomes 3 × 3, every word above holds. That is "regression" in most reports.
+- **More columns, same equation.** Add mileage: $`A`$ becomes 4 × 3, $`A^T A`$ becomes 3 × 3, every word above holds. That is "regression" in most reports.
 - **Columns already perpendicular.** Perpendicular columns of length 1 make the small matrix the identity (1s on the diagonal, 0s elsewhere), and the answer is two dot products ([Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md)).
 
 > **Say it back**
-> No line hits all four prices, so the question becomes which line misses least. Stack the ages and a column of ones into $A$, the slope and intercept into $x$, the prices into $b$: the wish $A x = b$ has no answer. Read the prices as one point in a space with an axis per car, the drawable lines as a flat sheet: the fit is the shadow, so the leftover is perpendicular to both columns. Written down, that is $A^T A x = A^T b$ — price = 23.5 − 3.4 × age, squared miss 0.2.
+> No line hits all four prices, so the question becomes which line misses least. Stack the ages and a column of ones into $`A`$, the slope and intercept into $`x`$, the prices into $`b`$: the wish $`A x = b`$ has no answer. Read the prices as one point in a space with an axis per car, the drawable lines as a flat sheet: the fit is the shadow, so the leftover is perpendicular to both columns. Written down, that is $`A^T A x = A^T b`$ — price = 23.5 − 3.4 × age, squared miss 0.2.
 
 ---
 
 ## What this builds on
 
 - [Projection](02-orthogonal-projection.md): the shadow and its perpendicular leftover, here with two columns.
-- [Matrix multiplication](../04-Matrices/03-matrix-multiplication.md): how $A x$ turns two unknowns into four predictions.
+- [Matrix multiplication](../04-Matrices/03-matrix-multiplication.md): how $`A x`$ turns two unknowns into four predictions.
 - [The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md): solving the small square system, and the determinant behind it.
 - [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): judging a miss. 0.3 on a car worth 13 is small; on a car worth 1 it is not.
 
@@ -696,7 +704,7 @@ example : Matrix.det !![(16 : ℚ), 8; 8, 4] = 0 := by norm_num [Matrix.det_fin_
 - [The SVI smile](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): squared misses minimised against traded option prices.
 - [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): a pull-back speed fitted from price history.
 - [Wiener and LMS](../../13-Engineering%20mathematics/05-Signals/07-adaptive-and-optimal-filters.md): these equations re-solved as each reading arrives.
-- [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): why software never forms $A^T A$.
+- [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): why software never forms $`A^T A`$.
 - [Fitting instead of passing through](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/07-least-squares-and-orthogonal-polynomials.md): perpendicular columns, so curves fit without the small matrix.
 
 Nothing here says how far to trust −3.4, and that question opens [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md).
@@ -710,4 +718,4 @@ Verified 19 Sep 2026: every link below resolves to the publisher's page.
 - Stigler, Stephen M. "Gauss and the Invention of Least Squares." *The Annals of Statistics* 9, no. 3 (1981): 465–474. [doi:10.1214/aos/1176345451](https://doi.org/10.1214/aos/1176345451). Legendre published in 1805; Gauss said he had used it since 1795.
 - Strang, Gilbert. "Lecture 16: Projection matrices and least squares." *18.06 Linear Algebra*, Spring 2010. MIT OpenCourseWare. [Lecture page](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/resources/lecture-16-projection-matrices-and-least-squares/). Projection first, then least squares, with this picture.
 - *Introductory Statistics 2e*, section 12.3, "The Regression Equation." OpenStax, Rice University. [Textbook page](https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation). The second road, as statistics teaches it.
-- Björck, Åke. *Numerical Methods in Matrix Computations*. Springer, 2015. [Publisher page](https://link.springer.com/book/10.1007/978-3-319-05089-8). Why working software uses QR, which splits $A$ into perpendicular columns times a triangle of numbers, instead of building the small matrix.
+- Björck, Åke. *Numerical Methods in Matrix Computations*. Springer, 2015. [Publisher page](https://link.springer.com/book/10.1007/978-3-319-05089-8). Why working software uses QR, which splits $`A`$ into perpendicular columns times a triangle of numbers, instead of building the small matrix.

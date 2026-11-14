@@ -8,23 +8,25 @@
 
 A leasing firm buys a machine for $10,000 today. The lessee pays rent once a year for six years: $1,500, $2,000, $2,000, $2,500, $2,500 and $1,500. The numbers are illustrative. The firm wants one number: the yearly rate of return that makes those six rents worth exactly the $10,000 it paid. That rate is the internal rate of return (IRR), and it is wanted to the last digit a double can hold.
 
-Write $x$ for one year's growth factor, 1 plus the rate. Move every cash flow to year 6: the price grows by $x^6$, the first rent by $x^5$, and so on. The deal breaks even when
+Write $`x`$ for one year's growth factor, 1 plus the rate. Move every cash flow to year 6: the price grows by $`x^6`$, the first rent by $`x^5`$, and so on. The deal breaks even when
 
-$$p(x) = 10000x^6 - 1500x^5 - 2000x^4 - 2000x^3 - 2500x^2 - 2500x - 1500 = 0.$$
+```math
+p(x) = 10000x^6 - 1500x^5 - 2000x^4 - 2000x^3 - 2500x^2 - 2500x - 1500 = 0.
+```
 
 So the rate hides in a root of a degree-6 polynomial. Six dates of rent give degree 6, and degree 6 gives six roots. Only one of them is a rate: **x\* = 1.0531829596**, an IRR of **5.3183% a year**. The other five are −0.6237672661 and two pairs of complex numbers.
 
 This card does three jobs on that polynomial.
 
-- **Horner's rule** evaluates $p$ with 6 multiplications and 6 additions, against 21 multiplications for separate powers. Its partial sums are also the quotient left after dividing $p$ by $x$ minus the point used.
+- **Horner's rule** evaluates $`p`$ with 6 multiplications and 6 additions, against 21 multiplications for separate powers. Its partial sums are also the quotient left after dividing $`p`$ by $`x`$ minus the point used.
 - **Deflation** divides out each root once it is found, so the next search cannot find it again.
 - **The companion matrix** is a 6 × 6 matrix whose eigenvalues are exactly the six roots. One eigenvalue solver returns all six together, in 20 QR steps.
 
-Then a warning: change one coefficient of Wilkinson's polynomial $(x - 1)(x - 2)\cdots(x - 20)$ by $2^{-23}$, and ten real roots turn complex. The fault lies with the problem, not the method.
+Then a warning: change one coefficient of Wilkinson's polynomial $`(x - 1)(x - 2)\cdots(x - 20)`$ by $`2^{-23}`$, and ten real roots turn complex. The fault lies with the problem, not the method.
 
 **Horner's rule evaluates a polynomial and divides it by x − z in one pass; the roots of any polynomial are the eigenvalues of its companion matrix, so an eigenvalue solver returns all of them at once with a backward error of a small multiple of the unit roundoff in a norm sense; and how far a root then moves is that backward error times the root's condition number, which is 0.5791 for the lease and above 10^13 in the middle of Wilkinson's polynomial.**
 
-**What kind of fact this is:** three theorems proved on this card in Why it works (Horner's partial sums form the quotient, the companion matrix has $p$ as its characteristic polynomial, and the first-order law for how far a root moves). Horner's rounding bound and the convergence of the QR algorithm are stated with their key steps and named sources. The step counts, errors and costs are measurements printed by the code.
+**What kind of fact this is:** three theorems proved on this card in Why it works (Horner's partial sums form the quotient, the companion matrix has $`p`$ as its characteristic polynomial, and the first-order law for how far a root moves). Horner's rounding bound and the convergence of the QR algorithm are stated with their key steps and named sources. The step counts, errors and costs are measurements printed by the code.
 
 ### The picture: the lease's value across rates
 
@@ -38,56 +40,64 @@ xychart-beta
     line [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
-The falling line is the net present value (NPV): every cash flow discounted to today at the rate on the axis, rents minus price. The flat line is zero. At 0% the rents beat the price by $2,000. At 5% the lease is still worth $105. The curve crosses zero between 5% and 6%, at the IRR, 5.3183%. The other five roots of $p$ never appear on this axis.
+The falling line is the net present value (NPV): every cash flow discounted to today at the rate on the axis, rents minus price. The flat line is zero. At 0% the rents beat the price by $2,000. At 5% the lease is still worth $105. The curve crosses zero between 5% and 6%, at the IRR, 5.3183%. The other five roots of $`p`$ never appear on this axis.
 
 ---
 
 ## The formula
 
-Notation first. The polynomial has degree $n$ and coefficients $a_n, \dots, a_0$, highest power first: $p(x) = a_n x^n + a_{n-1}x^{n-1} + \dots + a_0$. Here $n = 6$, $a_6 = 10000$ and $a_0 = -1500$. A root is written $x^*$, as on the [Newton and secant](02-newton-and-secant-with-convergence-orders.md) card.
+Notation first. The polynomial has degree $`n`$ and coefficients $`a_n, \dots, a_0`$, highest power first: $`p(x) = a_n x^n + a_{n-1}x^{n-1} + \dots + a_0`$. Here $`n = 6`$, $`a_6 = 10000`$ and $`a_0 = -1500`$. A root is written $`x^*`$, as on the [Newton and secant](02-newton-and-secant-with-convergence-orders.md) card.
 
-**Horner's rule.** Evaluate $p$ at a number $z$, real or complex, by nested multiplication:
+**Horner's rule.** Evaluate $`p`$ at a number $`z`$, real or complex, by nested multiplication:
 
-$$b_0 = a_n, \qquad b_k = b_{k-1}\,z + a_{n-k} \quad (k = 1, \dots, n), \qquad p(z) = b_n$$
+```math
+b_0 = a_n, \qquad b_k = b_{k-1}\,z + a_{n-k} \quad (k = 1, \dots, n), \qquad p(z) = b_n
+```
 
-**Read it aloud:** start with the leading coefficient; then, $n$ times, multiply by $z$ and add the next coefficient; the last number is the value.
+**Read it aloud:** start with the leading coefficient; then, $`n`$ times, multiply by $`z`$ and add the next coefficient; the last number is the value.
 
-The same numbers divide $p$ by $x - z$:
+The same numbers divide $`p`$ by $`x - z`$:
 
-$$p(x) = (x - z)\,\big(b_0 x^{n-1} + b_1 x^{n-2} + \dots + b_{n-1}\big) + b_n$$
+```math
+p(x) = (x - z)\,\big(b_0 x^{n-1} + b_1 x^{n-2} + \dots + b_{n-1}\big) + b_n
+```
 
-**Read it aloud:** the partial sums are the quotient's coefficients, and the last one is the remainder, which is $p(z)$.
+**Read it aloud:** the partial sums are the quotient's coefficients, and the last one is the remainder, which is $`p(z)`$.
 
-**The companion matrix.** Divide by $a_n$ and put the other coefficients, with their signs flipped, along the top row:
+**The companion matrix.** Divide by $`a_n`$ and put the other coefficients, with their signs flipped, along the top row:
 
-$$C = \begin{pmatrix} -a_{n-1}/a_n & \cdots & -a_1/a_n & -a_0/a_n \\ 1 & & & 0 \\ & \ddots & & \vdots \\ & & 1 & 0 \end{pmatrix}, \qquad \det(xI - C) = \frac{p(x)}{a_n}$$
+```math
+C = \begin{pmatrix} -a_{n-1}/a_n & \cdots & -a_1/a_n & -a_0/a_n \\ 1 & & & 0 \\ & \ddots & & \vdots \\ & & 1 & 0 \end{pmatrix}, \qquad \det(xI - C) = \frac{p(x)}{a_n}
+```
 
-**Read it aloud:** the characteristic polynomial of the companion matrix is $p$ divided by its leading coefficient, so the matrix's eigenvalues are exactly the roots of $p$.
+**Read it aloud:** the characteristic polynomial of the companion matrix is $`p`$ divided by its leading coefficient, so the matrix's eigenvalues are exactly the roots of $`p`$.
 
-**How far a root moves.** Change each coefficient by a small relative amount, at most $\eta$. A simple root $x^*$ then moves, to first order, by at most
+**How far a root moves.** Change each coefficient by a small relative amount, at most $`\eta`$. A simple root $`x^*`$ then moves, to first order, by at most
 
-$$|\delta x^*| \;\le\; \kappa\,\eta\,|x^*|, \qquad \kappa = \frac{\sum_k |a_k|\,|x^*|^k}{|x^*|\,|p'(x^*)|}$$
+```math
+|\delta x^*| \;\le\; \kappa\,\eta\,|x^*|, \qquad \kappa = \frac{\sum_k |a_k|\,|x^*|^k}{|x^*|\,|p'(x^*)|}
+```
 
 **Read it aloud:** the root's relative move is at most its condition number times the relative change in the coefficients.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p(x)$, $p'(x)$ | the polynomial, and its slope | the lease's value moved to year 6; $p'(1.05) = 43834.596875$ | — |
-| $n$, $a_k$ | the degree; the coefficient of $x^k$, with $a_n$ the leading one | $n = 6$; $a_6 = 10000$, $a_0 = -1500$ | more roots, more work |
-| $x$, $z$ | the growth factor 1 + rate; any point where $p$ is evaluated, perhaps complex, with $i = \sqrt{-1}$ | $x = 1.05$ for 5% | — |
-| $b_k$, $q$ | Horner's partial sums, with $b_n = p(z)$; $q$ the quotient they spell out | 10000, 9000, 7450, … , −140.9784375 at 1.05 | — |
-| $x^*$ | a root: $p(x^*) = 0$ | 1.0531829596088371 | — |
-| $C$, $v$, $c_k$, $I$ | the companion matrix; its eigenvector $(x^{*\,n-1}, \dots, x^*, 1)$; $c_k = a_k/a_n$; $I$ the identity matrix | top row 0.15, 0.20, 0.20, 0.25, 0.25, 0.15 | — |
-| $H$, $Q$, $R$, $\mu$ | inside the QR algorithm: the working matrix, a rotation, a triangle, a shift | $H$ starts as $C$ | — |
-| $\delta a_k$, $\delta p$, $\delta x^*$ | a small change in a coefficient; the change in $p$ it makes; the move of the root it causes | price +1%, rents −1%: root moves 0.006069 | — |
-| $\kappa$ | the root's condition number | 0.5791 for the IRR; 3.54e13 for Wilkinson's root 16 | the root moves more per rounding |
-| $\eta$, $\hat x$, $\hat p$, $S$ | backward error of a computed root $\hat x$: $\lvert p(\hat x)\rvert / \sum_k \lvert a_k\rvert \lvert \hat x\rvert^k$; a hat marks a computed value; $S$, in the proof, the sum on the bottom | 16.4 u for the eigenvalue road's IRR | the computed root is the exact root of a more distant polynomial |
-| $u$, $\delta$, $\gamma_{2n}$ | the unit roundoff $2^{-53}$; one rounding's relative error, $\lvert\delta\rvert \le u$; Horner's error constant $2nu/(1 - 2nu)$ | $\gamma_{12}$ for degree 6 | — |
-| $\rho$ | the noise radius: how close to the root Horner's sign can be trusted | 8.13e-16 | no method can pin the root closer |
+| $`p(x)`$, $`p'(x)`$ | the polynomial, and its slope | the lease's value moved to year 6; $`p'(1.05) = 43834.596875`$ | — |
+| $`n`$, $`a_k`$ | the degree; the coefficient of $`x^k`$, with $`a_n`$ the leading one | $`n = 6`$; $`a_6 = 10000`$, $`a_0 = -1500`$ | more roots, more work |
+| $`x`$, $`z`$ | the growth factor 1 + rate; any point where $`p`$ is evaluated, perhaps complex, with $`i = \sqrt{-1}`$ | $`x = 1.05`$ for 5% | — |
+| $`b_k`$, $`q`$ | Horner's partial sums, with $`b_n = p(z)`$; $`q`$ the quotient they spell out | 10000, 9000, 7450, … , −140.9784375 at 1.05 | — |
+| $`x^*`$ | a root: $`p(x^*) = 0`$ | 1.0531829596088371 | — |
+| $`C`$, $`v`$, $`c_k`$, $`I`$ | the companion matrix; its eigenvector $`(x^{*\,n-1}, \dots, x^*, 1)`$; $`c_k = a_k/a_n`$; $`I`$ the identity matrix | top row 0.15, 0.20, 0.20, 0.25, 0.25, 0.15 | — |
+| $`H`$, $`Q`$, $`R`$, $`\mu`$ | inside the QR algorithm: the working matrix, a rotation, a triangle, a shift | $`H`$ starts as $`C`$ | — |
+| $`\delta a_k`$, $`\delta p`$, $`\delta x^*`$ | a small change in a coefficient; the change in $`p`$ it makes; the move of the root it causes | price +1%, rents −1%: root moves 0.006069 | — |
+| $`\kappa`$ | the root's condition number | 0.5791 for the IRR; 3.54e13 for Wilkinson's root 16 | the root moves more per rounding |
+| $`\eta`$, $`\hat x`$, $`\hat p`$, $`S`$ | backward error of a computed root $`\hat x`$: $`\lvert p(\hat x)\rvert / \sum_k \lvert a_k\rvert \lvert \hat x\rvert^k`$; a hat marks a computed value; $`S`$, in the proof, the sum on the bottom | 16.4 u for the eigenvalue road's IRR | the computed root is the exact root of a more distant polynomial |
+| $`u`$, $`\delta`$, $`\gamma_{2n}`$ | the unit roundoff $`2^{-53}`$; one rounding's relative error, $`\lvert\delta\rvert \le u`$; Horner's error constant $`2nu/(1 - 2nu)`$ | $`\gamma_{12}`$ for degree 6 | — |
+| $`\rho`$ | the noise radius: how close to the root Horner's sign can be trusted | 8.13e-16 | no method can pin the root closer |
 
 ### When it holds
 
-- **A simple root.** At a double root $p'(x^*) = 0$ and $\kappa$ is infinite. The double root of $(x - 1.05)^2(x - 0.6)$ comes out with error 2.77e-8, about half the digits.
+- **A simple root.** At a double root $`p'(x^*) = 0`$ and $`\kappa`$ is infinite. The double root of $`(x - 1.05)^2(x - 0.6)`$ comes out with error 2.77e-8, about half the digits.
 - **Small changes.** The law is first order. At 1% it holds: the lease's root moves 0.006069 against a predicted 0.006099. Wilkinson's root 16, with a predicted move of 287, leaves the real line instead.
 - **Minus signs on the top row.** Without them the eigenvalues belong to a different polynomial.
 - **Deflation.** Without it, six Newton starts find only 3 distinct roots, and miss the IRR.
@@ -101,70 +111,76 @@ $$|\delta x^*| \;\le\; \kappa\,\eta\,|x^*|, \qquad \kappa = \frac{\sum_k |a_k|\,
 
 A one-root method, such as [Newton and secant](02-newton-and-secant-with-convergence-orders.md), needs a start near each root and finds one root per run. Nothing in the run says how many roots remain.
 
-A matrix does better. Its eigenvalues are found all together by changes of basis $H \to Q^{-1}HQ$, which keep every eigenvalue. So build a matrix whose eigenvalues are the roots. The [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md) card already did: a step rule's companion matrix has the rule's characteristic roots as eigenvalues. This card runs that link backwards. Horner's rule supplies the arithmetic.
+A matrix does better. Its eigenvalues are found all together by changes of basis $`H \to Q^{-1}HQ`$, which keep every eigenvalue. So build a matrix whose eigenvalues are the roots. The [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md) card already did: a step rule's companion matrix has the rule's characteristic roots as eigenvalues. This card runs that link backwards. Horner's rule supplies the arithmetic.
 
 ### Step 1: Horner's partial sums are synthetic division
 
-The [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md) card divides by $x - z$ and shows the remainder is $p(z)$, with synthetic division as its short form. Horner's rule is that synthetic division. The proof is one expansion. Multiply out
+The [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md) card divides by $`x - z`$ and shows the remainder is $`p(z)`$, with synthetic division as its short form. Horner's rule is that synthetic division. The proof is one expansion. Multiply out
 
-$$(x - z)\big(b_0 x^{n-1} + b_1 x^{n-2} + \dots + b_{n-1}\big) + b_n.$$
+```math
+(x - z)\big(b_0 x^{n-1} + b_1 x^{n-2} + \dots + b_{n-1}\big) + b_n.
+```
 
-The coefficient of $x^n$ is $b_0 = a_n$. The coefficient of $x^{n-k}$, for $k$ from 1 to $n$, is $b_k - z\,b_{k-1}$, which the rule makes equal to $a_{n-k}$. So the expression is $p(x)$. $\blacksquare$
+The coefficient of $`x^n`$ is $`b_0 = a_n`$. The coefficient of $`x^{n-k}`$, for $`k`$ from 1 to $`n`$, is $`b_k - z\,b_{k-1}`$, which the rule makes equal to $`a_{n-k}`$. So the expression is $`p(x)`$. $`\blacksquare`$
 
-The cost is $n$ multiplications and $n$ additions. Separate powers $a_k x^k$, each built from scratch, cost $1 + 2 + \dots + n$ multiplications: 21 at degree 6. A second nested pass on the $b_k$ gives the slope $p'(z)$, since the slope of $(x - z)q(x) + b_n$ at $x = z$ is $q(z)$.
+The cost is $`n`$ multiplications and $`n`$ additions. Separate powers $`a_k x^k`$, each built from scratch, cost $`1 + 2 + \dots + n`$ multiplications: 21 at degree 6. A second nested pass on the $`b_k`$ gives the slope $`p'(z)`$, since the slope of $`(x - z)q(x) + b_n`$ at $`x = z`$ is $`q(z)`$.
 
 ### Step 2: Horner's rounding error has a known size
 
-Each Horner step rounds twice, once after the multiplication and once after the addition. In the standard model of rounding ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)), each rounding multiplies a result by $1 + \delta$ with $|\delta| \le u$. Unrolling the $n$ steps, the term $a_k z^k$ picks up at most $2n$ such factors. So the computed value $\hat p(z)$ obeys
+Each Horner step rounds twice, once after the multiplication and once after the addition. In the standard model of rounding ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)), each rounding multiplies a result by $`1 + \delta`$ with $`|\delta| \le u`$. Unrolling the $`n`$ steps, the term $`a_k z^k`$ picks up at most $`2n`$ such factors. So the computed value $`\hat p(z)`$ obeys
 
-$$|\hat p(z) - p(z)| \;\le\; \gamma_{2n} \sum_k |a_k|\,|z|^k, \qquad \gamma_{2n} = \frac{2nu}{1 - 2nu}.$$
+```math
+|\hat p(z) - p(z)| \;\le\; \gamma_{2n} \sum_k |a_k|\,|z|^k, \qquad \gamma_{2n} = \frac{2nu}{1 - 2nu}.
+```
 
-That is the key step only; Higham's chapter on polynomials has the full proof. Near a root $p$ is tiny, so the computed value is mostly rounding. Divide the bound by the slope to get the **noise radius** $\rho = \gamma_{2n}\sum_k|a_k||x^*|^k / |p'(x^*)|$. Inside it, the sign of $\hat p$ is noise. For the lease, $\rho$ = 8.13e-16 around 1.0531829596. Bisection by signs, run to the last bit, stops at 1.0531829596088369, within about that radius of the root ([Bisection](01-bisection-and-bracketing.md)). The same radius is the floor for any stopping test on $|p|$ ([When to stop](03-stopping-criteria-and-error-estimates.md)).
+That is the key step only; Higham's chapter on polynomials has the full proof. Near a root $`p`$ is tiny, so the computed value is mostly rounding. Divide the bound by the slope to get the **noise radius** $`\rho = \gamma_{2n}\sum_k|a_k||x^*|^k / |p'(x^*)|`$. Inside it, the sign of $`\hat p`$ is noise. For the lease, $`\rho`$ = 8.13e-16 around 1.0531829596. Bisection by signs, run to the last bit, stops at 1.0531829596088369, within about that radius of the root ([Bisection](01-bisection-and-bracketing.md)). The same radius is the floor for any stopping test on $`|p|`$ ([When to stop](03-stopping-criteria-and-error-estimates.md)).
 
 ### Step 3: the companion matrix's eigenvalues are the roots
 
-Take a root $x^*$ and the column $v = (x^{*\,n-1}, \dots, x^*, 1)$. Row 1 of $Cv$ is
+Take a root $`x^*`$ and the column $`v = (x^{*\,n-1}, \dots, x^*, 1)`$. Row 1 of $`Cv`$ is
 
-$$-\frac{a_{n-1}x^{*\,n-1} + \dots + a_1 x^* + a_0}{a_n} = x^{*\,n},$$
+```math
+-\frac{a_{n-1}x^{*\,n-1} + \dots + a_1 x^* + a_0}{a_n} = x^{*\,n},
+```
 
-because $p(x^*) = 0$. Each lower row copies the entry above it, so row $i$ of $Cv$ is $x^{*\,n-i+1}$. Both facts together say $Cv = x^* v$: every root is an eigenvalue ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). The determinant identity says more: repeated roots appear as repeated eigenvalues, and there are no other eigenvalues.
+because $`p(x^*) = 0`$. Each lower row copies the entry above it, so row $`i`$ of $`Cv`$ is $`x^{*\,n-i+1}`$. Both facts together say $`Cv = x^* v`$: every root is an eigenvalue ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). The determinant identity says more: repeated roots appear as repeated eigenvalues, and there are no other eigenvalues.
 
 <details>
 <summary>Detailed proof: det(xI − C) = p(x)/a_n</summary>
 
-Write $c_k = a_k / a_n$. The matrix $xI - C$ has first row $(x + c_{n-1}, c_{n-2}, \dots, c_0)$, the number $x$ on the rest of the diagonal, and $-1$ just below the diagonal.
+Write $`c_k = a_k / a_n`$. The matrix $`xI - C`$ has first row $`(x + c_{n-1}, c_{n-2}, \dots, c_0)`$, the number $`x`$ on the rest of the diagonal, and $`-1`$ just below the diagonal.
 
-Expand the determinant along the first row. Delete row 1 and column $j$. What remains splits into two blocks with zeros above one of them:
+Expand the determinant along the first row. Delete row 1 and column $`j`$. What remains splits into two blocks with zeros above one of them:
 
-- rows 2 to $j$ against columns 1 to $j-1$: $-1$ on the diagonal and $x$ just above it, so its determinant is $(-1)^{j-1}$;
-- rows $j+1$ to $n$ against columns $j+1$ to $n$: $x$ on the diagonal and $-1$ just below it, so its determinant is $x^{n-j}$.
+- rows 2 to $`j`$ against columns 1 to $`j-1`$: $`-1`$ on the diagonal and $`x`$ just above it, so its determinant is $`(-1)^{j-1}`$;
+- rows $`j+1`$ to $`n`$ against columns $`j+1`$ to $`n`$: $`x`$ on the diagonal and $`-1`$ just below it, so its determinant is $`x^{n-j}`$.
 
-The entry in column $j \ge 2$ is $c_{n-j}$ with sign $(-1)^{1+j}$, so it contributes $c_{n-j}\,(-1)^{1+j}(-1)^{j-1}x^{n-j} = c_{n-j}x^{n-j}$. Column 1 contributes $(x + c_{n-1})\,x^{n-1}$. The sum is
+The entry in column $`j \ge 2`$ is $`c_{n-j}`$ with sign $`(-1)^{1+j}`$, so it contributes $`c_{n-j}\,(-1)^{1+j}(-1)^{j-1}x^{n-j} = c_{n-j}x^{n-j}`$. Column 1 contributes $`(x + c_{n-1})\,x^{n-1}`$. The sum is
 
-$$x^n + c_{n-1}x^{n-1} + \dots + c_1 x + c_0 = \frac{p(x)}{a_n}. \qquad \blacksquare$$
+$`\displaystyle x^n + c_{n-1}x^{n-1} + \dots + c_1 x + c_0 = \frac{p(x)}{a_n}. \qquad \blacksquare`$
 
 </details>
 
-For the lease the top row is 0.15, 0.20, 0.20, 0.25, 0.25, 0.15, with ones just below the diagonal and zeros elsewhere. The code checks the result two ways, using [Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): with $p = a_n\prod(x - x^*_j)$, the six roots must sum to $-a_5/a_6 = 0.15$ and multiply to $a_0/a_6 = -0.15$. They print as 0.150000000000 and −0.150000000000.
+For the lease the top row is 0.15, 0.20, 0.20, 0.25, 0.25, 0.15, with ones just below the diagonal and zeros elsewhere. The code checks the result two ways, using [Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): with $`p = a_n\prod(x - x^*_j)`$, the six roots must sum to $`-a_5/a_6 = 0.15`$ and multiply to $`a_0/a_6 = -0.15`$. They print as 0.150000000000 and −0.150000000000.
 
 ### Step 4: the QR algorithm finds every eigenvalue
 
 The eigenvalue solver is the shifted QR algorithm. This card states its steps; the convergence proof is in Francis's paper, not here.
 
-1. Pick a shift $\mu$: the eigenvalue of the bottom-right 2 × 2 corner nearer its last entry.
-2. Factor $H - \mu I = QR$. Here $Q$ is a product of plane rotations, each mixing two neighbouring rows without changing lengths, and $R$ is upper triangular (zero below the diagonal).
-3. Replace $H$ by $RQ + \mu I$. That equals $Q^{-1}HQ$, a similarity, so no eigenvalue changes.
-4. When the entry just left of the bottom corner falls below $u$ times its neighbours, read the corner as an eigenvalue. Drop the last row and column and repeat.
+1. Pick a shift $`\mu`$: the eigenvalue of the bottom-right 2 × 2 corner nearer its last entry.
+2. Factor $`H - \mu I = QR`$. Here $`Q`$ is a product of plane rotations, each mixing two neighbouring rows without changing lengths, and $`R`$ is upper triangular (zero below the diagonal).
+3. Replace $`H`$ by $`RQ + \mu I`$. That equals $`Q^{-1}HQ`$, a similarity, so no eigenvalue changes.
+4. When the entry just left of the bottom corner falls below $`u`$ times its neighbours, read the corner as an eigenvalue. Drop the last row and column and repeat.
 
-The companion matrix is already zero below its first subdiagonal. Each step keeps that shape and costs about $n^2$ operations. Near convergence the shifted step squares the small corner entry, so each eigenvalue takes a few steps. For the lease: 20 QR steps, 2,288 complex multiplications in all.
+The companion matrix is already zero below its first subdiagonal. Each step keeps that shape and costs about $`n^2`$ operations. Near convergence the shifted step squares the small corner entry, so each eigenvalue takes a few steps. For the lease: 20 QR steps, 2,288 complex multiplications in all.
 
-Rotations make the result backward stable as a matrix computation. Edelman and Murakami showed this carries over to the polynomial in a norm sense, though not always coefficient by coefficient. On the lease, the six eigenvalues have backward errors $\eta$ of 2.0 u to 16.4 u. These are estimates, since Horner computes them in doubles. Each eigenvalue is an exact root of the lease polynomial with its coefficients changed by under 17 parts in $2^{53}$.
+Rotations make the result backward stable as a matrix computation. Edelman and Murakami showed this carries over to the polynomial in a norm sense, though not always coefficient by coefficient. On the lease, the six eigenvalues have backward errors $`\eta`$ of 2.0 u to 16.4 u. These are estimates, since Horner computes them in doubles. Each eigenvalue is an exact root of the lease polynomial with its coefficients changed by under 17 parts in $`2^{53}`$.
 
 ### Step 5: deflation in floating point, then polish
 
-The second road finds roots one at a time. Newton's method, with Horner supplying $p$ and $p'$, starts from $0.5 + 0.5i$. At each root found, Horner's partial sums give the quotient, one degree lower, and the next search runs on it.
+The second road finds roots one at a time. Newton's method, with Horner supplying $`p`$ and $`p'`$, starts from $`0.5 + 0.5i`$. At each root found, Horner's partial sums give the quotient, one degree lower, and the next search runs on it.
 
-The quotient's coefficients are rounded, so its roots can drift from those of $p$. The cure is to **polish**: run Newton on the original $p$ from each root before keeping it.
+The quotient's coefficients are rounded, so its roots can drift from those of $`p`$. The cure is to **polish**: run Newton on the original $`p`$ from each root before keeping it.
 
 On the lease, the six polished roots took 57 Newton steps in total. Their backward errors are 0.1 u to 1.0 u. They agree with the eigenvalues to within 1.12e-15 at worst. The drift was negligible here: polishing moved no root by more than 1.24e-16.
 
@@ -172,34 +188,36 @@ Order matters on harder polynomials. Unpolished deflation of Wilkinson's polynom
 
 ### Step 6: a root moves by its condition number times the backward error
 
-Change $p$ to $p + \delta p$ and let the root move to $x^* + \delta x^*$. Taylor's theorem to first order gives $p'(x^*)\,\delta x^* + \delta p(x^*) \approx 0$, so
+Change $`p`$ to $`p + \delta p`$ and let the root move to $`x^* + \delta x^*`$. Taylor's theorem to first order gives $`p'(x^*)\,\delta x^* + \delta p(x^*) \approx 0`$, so
 
-$$\delta x^* \approx -\frac{\delta p(x^*)}{p'(x^*)}.$$
+```math
+\delta x^* \approx -\frac{\delta p(x^*)}{p'(x^*)}.
+```
 
-If each coefficient changes by at most $\eta|a_k|$, then $|\delta p(x^*)| \le \eta\sum|a_k||x^*|^k$. Divide by $|p'(x^*)|$ and the formula's bound appears. This is the polynomial case of [Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md): forward error is about condition number times backward error ([Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md)).
+If each coefficient changes by at most $`\eta|a_k|`$, then $`|\delta p(x^*)| \le \eta\sum|a_k||x^*|^k`$. Divide by $`|p'(x^*)|`$ and the formula's bound appears. This is the polynomial case of [Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md): forward error is about condition number times backward error ([Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md)).
 
 <details>
 <summary>Detailed proof: the backward error of a computed root is exactly |p(x̂)| / Σ|a_k||x̂|^k</summary>
 
-Let $\hat x$ be any number, and write $S = \sum_k |a_k||\hat x|^k$ for short. Ask for the smallest $\eta$ such that $\hat x$ is an exact root of some polynomial with coefficients $a_k + \delta a_k$, $|\delta a_k| \le \eta|a_k|$.
+Let $`\hat x`$ be any number, and write $`S = \sum_k |a_k||\hat x|^k`$ for short. Ask for the smallest $`\eta`$ such that $`\hat x`$ is an exact root of some polynomial with coefficients $`a_k + \delta a_k`$, $`|\delta a_k| \le \eta|a_k|`$.
 
-**No smaller value works.** If $\hat x$ is a root of $p + \delta p$, then $|p(\hat x)| = |\delta p(\hat x)| \le \eta S$, so $\eta \ge |p(\hat x)|/S$.
+**No smaller value works.** If $`\hat x`$ is a root of $`p + \delta p`$, then $`|p(\hat x)| = |\delta p(\hat x)| \le \eta S`$, so $`\eta \ge |p(\hat x)|/S`$.
 
-**That value works.** Take $\delta a_k = -p(\hat x)\,|a_k|\,\overline{\hat x}^{\,k} / (|\hat x|^k S)$, where the bar is the complex conjugate. Then $|\delta a_k| = |a_k|\,|p(\hat x)|/S$ and $\delta p(\hat x) = -p(\hat x)\sum_k|a_k||\hat x|^k / S = -p(\hat x)$. So $\hat x$ is a root of $p + \delta p$. $\blacksquare$
+**That value works.** Take $`\delta a_k = -p(\hat x)\,|a_k|\,\overline{\hat x}^{\,k} / (|\hat x|^k S)`$, where the bar is the complex conjugate. Then $`|\delta a_k| = |a_k|\,|p(\hat x)|/S`$ and $`\delta p(\hat x) = -p(\hat x)\sum_k|a_k||\hat x|^k / S = -p(\hat x)`$. So $`\hat x`$ is a root of $`p + \delta p`$. $`\blacksquare`$
 
-For a complex $\hat x$ the changes $\delta a_k$ may be complex too.
+For a complex $`\hat x`$ the changes $`\delta a_k`$ may be complex too.
 
 </details>
 
-For the lease's IRR, $\kappa$ = 0.5791 and the eigenvalue's backward error is 16.4 u, so the estimate $\kappa\eta x^*$ is 1.11e-15. The eigenvalue sits 1.11e-15 from Newton's root, as estimated, and 1.33e-15 from bisection's, within twice the noise radius. Newton's root has backward error 0.1 u, so its own estimated error is under half a unit in the last place: the 1.11e-15 gap is the eigenvalue's error.
+For the lease's IRR, $`\kappa`$ = 0.5791 and the eigenvalue's backward error is 16.4 u, so the estimate $`\kappa\eta x^*`$ is 1.11e-15. The eigenvalue sits 1.11e-15 from Newton's root, as estimated, and 1.33e-15 from bisection's, within twice the noise radius. Newton's root has backward error 0.1 u, so its own estimated error is under half a unit in the last place: the 1.11e-15 gap is the eigenvalue's error.
 
 In money terms the lease is a calm problem. Raise the price 1% and cut every rent 1%, the worst direction, and the root moves 0.006069 against a predicted 0.006099. The IRR falls from 5.3183% to 4.7114%.
 
 ### Step 7: Wilkinson's polynomial is the opposite case
 
-Multiply out $(x - 1)(x - 2)\cdots(x - 20)$. The coefficient of $x^{19}$ is −210 and the constant is 2432902008176640000 (that is, 20!). Five of the 21 coefficients do not fit exactly in a double. Its condition numbers, from the exact slope, are huge in the middle:
+Multiply out $`(x - 1)(x - 2)\cdots(x - 20)`$. The coefficient of $`x^{19}`$ is −210 and the constant is 2432902008176640000 (that is, 20!). Five of the 21 coefficients do not fit exactly in a double. Its condition numbers, from the exact slope, are huge in the middle:
 
-| Root | $\kappa$ | Computed error | $u\kappa x^*$ |
+| Root | $`\kappa`$ | Computed error | $`u\kappa x^*`$ |
 | --- | --- | --- | --- |
 | 1 | 4.20e2 | 3.89e-14 | 4.66e-14 |
 | 5 | 8.24e8 | 4.76e-7 | 4.57e-7 |
@@ -209,40 +227,40 @@ Multiply out $(x - 1)(x - 2)\cdots(x - 20)$. The coefficient of $x^{19}$ is −2
 
 The last column is the move that a backward error of one unit of rounding would cause. The computed errors rise and fall with it, from the smallest root to the largest. The worst computed error is 0.0070, at root 16. The eigenvalue solver did its job; the roots are fragile.
 
-Wilkinson's own experiment changed the $x^{19}$ coefficient from −210 to $-210 - 2^{-23}$. The first-order law says root 16 moves 287 units, so the law no longer applies. The roots after that change are 1.00, 2.00, 3.00, 4.00, 5.00, 6.00, 7.00, 8.01, 8.92, 20.85, and five complex pairs: 10.10 ± 0.64i, 11.79 ± 1.65i, 13.99 ± 2.52i, 16.73 ± 2.81i and 19.50 ± 1.94i. These match Wilkinson's published values to the digits printed. The cause is roots close together compared with their size: the slope $p'(x^*)$ is the product of the distances to the other 19 roots, and those distances are small next to the powers $|x^*|^k$ on top of $\kappa$.
+Wilkinson's own experiment changed the $`x^{19}`$ coefficient from −210 to $`-210 - 2^{-23}`$. The first-order law says root 16 moves 287 units, so the law no longer applies. The roots after that change are 1.00, 2.00, 3.00, 4.00, 5.00, 6.00, 7.00, 8.01, 8.92, 20.85, and five complex pairs: 10.10 ± 0.64i, 11.79 ± 1.65i, 13.99 ± 2.52i, 16.73 ± 2.81i and 19.50 ± 1.94i. These match Wilkinson's published values to the digits printed. The cause is roots close together compared with their size: the slope $`p'(x^*)`$ is the product of the distances to the other 19 roots, and those distances are small next to the powers $`|x^*|^k`$ on top of $`\kappa`$.
 
 ---
 
 ## Worked numbers, by hand
 
-The lease polynomial at $x = 1.05$, a 5% rate, by Horner; then one Newton step and the deflation.
+The lease polynomial at $`x = 1.05`$, a 5% rate, by Horner; then one Newton step and the deflation.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $b_0$ | the leading coefficient | 10000 |
-| $b_1$ | $10000 \times 1.05 - 1500$ | 9000 |
-| $b_2$ | $9000 \times 1.05 - 2000$ | 7450 |
-| $b_3$ | $7450 \times 1.05 - 2000$ | 5822.5 |
-| $b_4$ | $5822.5 \times 1.05 - 2500$ | 3613.625 |
-| $b_5$ | $3613.625 \times 1.05 - 2500$ | 1294.30625 |
-| $p(1.05) = b_6$ | $1294.30625 \times 1.05 - 1500$ | −140.9784375 |
-| NPV at 5% | $140.9784375 \div 1.05^6$ | $105.20 |
-| slope | a second Horner pass on $b_0, \dots, b_5$ | 43834.596875 |
-| Newton step | $1.05 - (-140.9784375) \div 43834.596875$ | 1.0532161454 |
+| $`b_0`$ | the leading coefficient | 10000 |
+| $`b_1`$ | $`10000 \times 1.05 - 1500`$ | 9000 |
+| $`b_2`$ | $`9000 \times 1.05 - 2000`$ | 7450 |
+| $`b_3`$ | $`7450 \times 1.05 - 2000`$ | 5822.5 |
+| $`b_4`$ | $`5822.5 \times 1.05 - 2500`$ | 3613.625 |
+| $`b_5`$ | $`3613.625 \times 1.05 - 2500`$ | 1294.30625 |
+| $`p(1.05) = b_6`$ | $`1294.30625 \times 1.05 - 1500`$ | −140.9784375 |
+| NPV at 5% | $`140.9784375 \div 1.05^6`$ | $105.20 |
+| slope | a second Horner pass on $`b_0, \dots, b_5`$ | 43834.596875 |
+| Newton step | $`1.05 - (-140.9784375) \div 43834.596875`$ | 1.0532161454 |
 | three more steps | the same, at each new point | 1.0531829596088371 |
 | deflate | Horner at bisection's root: quotient 10000, 9031.8296, 7512.1690, 5911.6884, 3726.0895, 1424.2540 | remainder −9.09e-12 |
-| IRR | $x^* - 1$ | **5.3183% a year** |
+| IRR | $`x^* - 1`$ | **5.3183% a year** |
 
-The lease returns 5.3183% a year. The eigenvalue road gives the same root to within 1.33e-15. The remainder −9.09e-12 left after deflation is rounding noise: the root used sits within the noise radius, where $p$ cannot be told from zero.
+The lease returns 5.3183% a year. The eigenvalue road gives the same root to within 1.33e-15. The remainder −9.09e-12 left after deflation is rounding noise: the root used sits within the noise radius, where $`p`$ cannot be told from zero.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Top row of $C$ without its minus signs | 0 real eigenvalues; largest real part 0.6256 | That matrix belongs to a different polynomial, with no positive real root, so no rate at all |
-| Run Newton from six starts $x + 0.5i$, $x$ = −1 to 1, with no deflation | 3 distinct roots, none of them the IRR | Each start decides its root; nothing removes a found root, so roots repeat |
-| A double root: $(x - 1.05)^2(x - 0.6)$ | 1.0500000276 − 0.0000000021i, error 2.77e-8 | $p'(x^*) = 0$, so $\kappa$ is infinite and half the digits go |
-| Change Wilkinson's −210 by $2^{-23}$ | 16.73 ± 2.81i where 16 and 17 stood | $\kappa$ = 3.54e13 at root 16, whose first-order move is 287, far outside the range where the law holds |
+| Top row of $`C`$ without its minus signs | 0 real eigenvalues; largest real part 0.6256 | That matrix belongs to a different polynomial, with no positive real root, so no rate at all |
+| Run Newton from six starts $`x + 0.5i`$, $`x`$ = −1 to 1, with no deflation | 3 distinct roots, none of them the IRR | Each start decides its root; nothing removes a found root, so roots repeat |
+| A double root: $`(x - 1.05)^2(x - 0.6)`$ | 1.0500000276 − 0.0000000021i, error 2.77e-8 | $`p'(x^*) = 0`$, so $`\kappa`$ is infinite and half the digits go |
+| Change Wilkinson's −210 by $`2^{-23}`$ | 16.73 ± 2.81i where 16 and 17 stood | $`\kappa`$ = 3.54e13 at root 16, whose first-order move is 287, far outside the range where the law holds |
 
 ---
 
@@ -650,12 +668,12 @@ The two outputs match line for line.
 
 Lean proves the card's three theorems for every polynomial, and checks the lease's hand arithmetic exactly.
 
-- Take any polynomial $p$ whose leading coefficient $a_n$ is not zero. Its companion matrix has $\det(xI - C) = p(x)/a_n$, so its eigenvalues are exactly the roots of $p$.
-- Take any polynomial of degree at most $n$ and any point $z$. Horner's partial sums $b_0, \dots, b_{n-1}$ are the quotient after dividing by $x - z$, and the last one, $b_n$, is the remainder $p(z)$.
-- Take any polynomial and any number $\hat x$, real or complex. If $\hat x$ is a root of $p + \delta p$, with every $|\delta a_k| \le \eta|a_k|$, then $|p(\hat x)| \le \eta \sum_k |a_k||\hat x|^k$.
-- Some change with every $|\delta a_k| = |a_k|\,|p(\hat x)| / \sum_k |a_k||\hat x|^k$ makes $\hat x$ an exact root. So that ratio is exactly the backward error.
-- The hand arithmetic holds exactly: Horner at 1.05, $p(1.05) = -140.9784375$, $p'(1.05) = 43834.596875$, $p(1) = -2000$ and the top row.
-- Wilkinson's numbers hold too: $1 + 2 + \dots + 20 = 210$, and his polynomial's constant is $20! = 2432902008176640000$.
+- Take any polynomial $`p`$ whose leading coefficient $`a_n`$ is not zero. Its companion matrix has $`\det(xI - C) = p(x)/a_n`$, so its eigenvalues are exactly the roots of $`p`$.
+- Take any polynomial of degree at most $`n`$ and any point $`z`$. Horner's partial sums $`b_0, \dots, b_{n-1}`$ are the quotient after dividing by $`x - z`$, and the last one, $`b_n`$, is the remainder $`p(z)`$.
+- Take any polynomial and any number $`\hat x`$, real or complex. If $`\hat x`$ is a root of $`p + \delta p`$, with every $`|\delta a_k| \le \eta|a_k|`$, then $`|p(\hat x)| \le \eta \sum_k |a_k||\hat x|^k`$.
+- Some change with every $`|\delta a_k| = |a_k|\,|p(\hat x)| / \sum_k |a_k||\hat x|^k`$ makes $`\hat x`$ an exact root. So that ratio is exactly the backward error.
+- The hand arithmetic holds exactly: Horner at 1.05, $`p(1.05) = -140.9784375`$, $`p'(1.05) = 43834.596875`$, $`p(1) = -2000`$ and the top row.
+- Wilkinson's numbers hold too: $`1 + 2 + \dots + 20 = 210`$, and his polynomial's constant is $`20! = 2432902008176640000`$.
 
 The QR algorithm, Horner's rounding bound, the first-order law and every computed number are left to the Python and Rust checks.
 
@@ -948,14 +966,14 @@ example : (∏ k ∈ Finset.range 20, (X - C ((k : ℤ) + 1))).eval 0 = 24329020
 > - **Make the last rent $3,000 instead of $1,500.** Guess first: above or below 8%? Change `-1500.0]` at the end of `a` to `-3000.0]`. The IRR becomes 8.3578%.
 > - **Set the price to $12,000, the rents' total.** Guess first: what rate breaks even? Change `10000.0` to `12000.0` at the start of `a`. The root is 1.0000000000000000, an IRR of 0.
 > - **Start the deflation road from 2 instead of 0.5 + 0.5i.** Guess first: does it still find the complex roots? In the road-2 loop, change `Z(0.5, 0.5)` to `Z(2.0, 0.0)`. Newton stays on the real line: it returns 1.0531829596 twice and −0.6237672661 four times, and the gap assert stops it.
-> - **Shrink Wilkinson's change from $2^{-23}$ to $2^{-30}$.** Guess first: do the roots stay real? Change `2.0 ** -23` to `2.0 ** -30` in the line that builds `pw`. Complex pairs remain, such as 16.57 ± 0.86i.
+> - **Shrink Wilkinson's change from $`2^{-23}`$ to $`2^{-30}`$.** Guess first: do the roots stay real? Change `2.0 ** -23` to `2.0 ** -30` in the line that builds `pw`. Complex pairs remain, such as 16.57 ± 0.86i.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Blaming the root-finder for an ill-conditioned polynomial.** On Wilkinson's polynomial the eigenvalue solver misses root 16 by 0.0070. It is the same solver that gave the lease backward errors under 17 u. The miss comes from $\kappa$ = 3.54e13 at root 16. No better solver fixes that in double precision; only a better-posed problem does, such as keeping the roots or the factors instead of the multiplied-out coefficients.
+> **Blaming the root-finder for an ill-conditioned polynomial.** On Wilkinson's polynomial the eigenvalue solver misses root 16 by 0.0070. It is the same solver that gave the lease backward errors under 17 u. The miss comes from $`\kappa`$ = 3.54e13 at root 16. No better solver fixes that in double precision; only a better-posed problem does, such as keeping the roots or the factors instead of the multiplied-out coefficients.
 >
 > - **Dropping the top row's minus signs or the deflation.** The first leaves 0 real eigenvalues; with the second, six starts find 3 distinct roots, none of them the IRR.
 > - **Searching for complex roots from a real start.** Real arithmetic stays real: the deflation road from 2 finds only the two real roots.
@@ -970,17 +988,17 @@ example : (∏ k ∈ Finset.range 20, (X - C ((k : ℤ) + 1))).eval 0 = 24329020
 - **Closed forms for step rules.** A linear recurrence's general term is built from the roots of its characteristic polynomial ([The characteristic equation](../../04-Combinatorics%20and%20graphs/05-Recurrences/04-characteristic-equation-and-binet.md)). From degree 5 up there is no general formula for the roots in square roots and higher roots, so they are computed, often as eigenvalues.
 
 > **Say it back**
-> Horner's rule evaluates a degree-$n$ polynomial with $n$ multiplications and $n$ additions, and its partial sums are the quotient after dividing by $x - z$. The companion matrix carries the polynomial's coefficients, with their signs flipped, along its top row, and its eigenvalues are exactly the polynomial's roots. The QR algorithm finds all of them at once, with a backward error of a small multiple of the unit roundoff in a norm sense: the lease's IRR, 5.3183%, came out within 1.33e-15 of bisection. How far a computed root sits from the true one is its condition number times that backward error. For the lease that number is 0.5791; for the middle of Wilkinson's polynomial it is above 10^13.
+> Horner's rule evaluates a degree-$`n`$ polynomial with $`n`$ multiplications and $`n`$ additions, and its partial sums are the quotient after dividing by $`x - z`$. The companion matrix carries the polynomial's coefficients, with their signs flipped, along its top row, and its eigenvalues are exactly the polynomial's roots. The QR algorithm finds all of them at once, with a backward error of a small multiple of the unit roundoff in a norm sense: the lease's IRR, 5.3183%, came out within 1.33e-15 of bisection. How far a computed root sits from the true one is its condition number times that backward error. For the lease that number is 0.5791; for the middle of Wilkinson's polynomial it is above 10^13.
 
 ---
 
 ## What this builds on
 
 - [Newton and secant](02-newton-and-secant-with-convergence-orders.md): the one-root step used on the deflation road, with Horner supplying the value and the slope.
-- [Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): a root $x^*$ means a factor $x - x^*$, and a degree-$n$ polynomial has $n$ roots counted with multiplicity; here, the sum and product checks.
+- [Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): a root $`x^*`$ means a factor $`x - x^*`$, and a degree-$`n`$ polynomial has $`n`$ roots counted with multiplicity; here, the sum and product checks.
 - [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): eigenvalues as the roots of a determinant polynomial, which this card turns around.
 - [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): the companion matrix of a step rule, whose eigenvalues are its characteristic roots.
-- [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): dividing by $x$ minus a number, the remainder theorem and synthetic division, which Horner's rule runs in floating point.
+- [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): dividing by $`x`$ minus a number, the remainder theorem and synthetic division, which Horner's rule runs in floating point.
 - [Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md): the language of backward error used for every computed root.
 
 ## Where this goes next

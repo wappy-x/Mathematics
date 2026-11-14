@@ -35,56 +35,64 @@ The one line is the certainty-equivalent growth rate for each fraction held cons
 
 ## The formula
 
-Notation first, in words. The fortune at time $t$ (in years) is $X_t$, and $x$ is a particular value of it. The control is $u$; for the fortune it is $\pi$, the fraction in shares (here $\pi$ is a fraction, not 3.14159). $W_t$ is Brownian motion, the shares' accumulated surprise, and $dW_t$ is shorthand for an Ito integral, never a derivative, since the path has none ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Subscripts on $V$ are partial derivatives, as on the noiseless card.
+Notation first, in words. The fortune at time $`t`$ (in years) is $`X_t`$, and $`x`$ is a particular value of it. The control is $`u`$; for the fortune it is $`\pi`$, the fraction in shares (here $`\pi`$ is a fraction, not 3.14159). $`W_t`$ is Brownian motion, the shares' accumulated surprise, and $`dW_t`$ is shorthand for an Ito integral, never a derivative, since the path has none ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Subscripts on $`V`$ are partial derivatives, as on the noiseless card.
 
 A **controlled diffusion** is a stochastic differential equation (SDE) whose drift and noise depend on the control:
 
-$$dX_t = b(X_t, u_t)\,dt + s(X_t, u_t)\,dW_t, \qquad X_0 = x_0 .$$
+```math
+dX_t = b(X_t, u_t)\,dt + s(X_t, u_t)\,dW_t, \qquad X_0 = x_0 .
+```
 
-The holder scores the final fortune with a utility $U$ and wants the largest average score. The **value function** is the best average still reachable from fortune $x$ at time $t$:
+The holder scores the final fortune with a utility $`U`$ and wants the largest average score. The **value function** is the best average still reachable from fortune $`x`$ at time $`t`$:
 
-$$V(t, x) = \sup_{\text{policies}} E\big[\,U(X_T) \mid X_t = x\,\big].$$
+```math
+V(t, x) = \sup_{\text{policies}} E\big[\,U(X_T) \mid X_t = x\,\big].
+```
 
-Here $E[\,\cdot \mid X_t = x\,]$ is the average over the noise, given fortune $x$ at time $t$, and $\sup$ is the best over all policies.
+Here $`E[\,\cdot \mid X_t = x\,]`$ is the average over the noise, given fortune $`x`$ at time $`t`$, and $`\sup`$ is the best over all policies.
 
 The HJB equation for it is
 
-$$V_t + \max_u \Big( b(x,u)\,V_x + \tfrac12\, s(x,u)^2\, V_{xx} \Big) = 0, \qquad V(T, x) = U(x).$$
+```math
+V_t + \max_u \Big( b(x,u)\,V_x + \tfrac12\, s(x,u)^2\, V_{xx} \Big) = 0, \qquad V(T, x) = U(x).
+```
 
 **Read it aloud:** the best score changes in time at minus the best expected rate any control can produce now, and that rate is drift times slope plus half the squared noise times curvature.
 
-The bracket is the generator of the controlled process applied to $V$, written $L^u V$ ([The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md)). So HJB reads $V_t + \max_u L^u V = 0$. A reward earned along the way, at rate $f(x,u)$, joins the bracket as $+f$.
+The bracket is the generator of the controlled process applied to $`V`$, written $`L^u V`$ ([The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md)). So HJB reads $`V_t + \max_u L^u V = 0`$. A reward earned along the way, at rate $`f(x,u)`$, joins the bracket as $`+f`$.
 
-For the fortune, a fraction $\pi$ in shares and the rest in the bank give drift $b = x\,(r + \pi(\mu - r))$ and noise size $s = x\,\pi\,\sigma$. The taste for risk is power utility, $U(x) = x^{1-\gamma}/(1-\gamma)$, which for $\gamma = 2$ is $-1/x$. Merton's answer is
+For the fortune, a fraction $`\pi`$ in shares and the rest in the bank give drift $`b = x\,(r + \pi(\mu - r))`$ and noise size $`s = x\,\pi\,\sigma`$. The taste for risk is power utility, $`U(x) = x^{1-\gamma}/(1-\gamma)`$, which for $`\gamma = 2`$ is $`-1/x`$. Merton's answer is
 
-$$\pi^* = \frac{\mu - r}{\gamma\,\sigma^2}, \qquad V(t,x) = U(x)\, e^{(1-\gamma)\, g^*\,(T-t)}, \qquad g^* = r + \frac{(\mu - r)^2}{2\gamma\sigma^2}.$$
+```math
+\pi^* = \frac{\mu - r}{\gamma\,\sigma^2}, \qquad V(t,x) = U(x)\, e^{(1-\gamma)\, g^*\,(T-t)}, \qquad g^* = r + \frac{(\mu - r)^2}{2\gamma\sigma^2}.
+```
 
 **Read it aloud:** keep in shares the excess return over the bank divided by risk aversion times variance; the best score is the utility of the fortune grown at the certainty-equivalent rate.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_t$, $x$, $x_0$ | the fortune at time $t$, dollars; a particular value; the start | $x_0$ = \$200,000 | fraction unchanged; dollars in shares scale with it |
-| $u$, $u_t$, $\pi$, $\pi^*$ | the control; its value at time $t$ under a policy; the fraction of the fortune in shares; the best fraction | $\pi^*$ = 0.4 | — |
-| $W_t$, $dW_t$ | Brownian motion driving the shares; one small increment | — | — |
-| $b$, $s$, $f$ | drift and noise size of the controlled fortune, both depending on $x$ and $u$; a running reward rate | $b = x(r + \pi(\mu-r))$, $s = x\pi\sigma$; $f = 0$ | — |
-| $\mu$, $r$ | the shares' expected return per year; the bank rate, continuously compounded | 0.08; 0.03 | $\mu$ up: more in shares; $r$ up: less |
-| $\sigma$ | the shares' volatility per year; $\sigma^2$ is the variance | 0.25; 0.0625 | best fraction falls with the square |
-| $\gamma$, $U$ | relative risk aversion; the utility that scores a final fortune | 2; $U(x) = -1/x$ | $\gamma$ up: fraction falls in proportion |
-| $V$, $V_t$, $V_x$, $V_{xx}$, $F$ | value function; its rate in time; its slope in the fortune; its curvature; $F$ a candidate solution of HJB | $V(0, x_0) = -1/244{,}280.55$ | — |
-| $L^u$ | the generator under control $u$: drift times slope plus half squared noise times curvature | — | — |
-| $t$, $T$, $h$ | time in years; the horizon; a short step | $T$ = 5; $h$ from 1 to 1/252 | — |
-| $g$, $g^*$, CE | certainty-equivalent growth of a fixed fraction; its best value; certainty-equivalent fortune | $g^*$ = 0.04; CE = \$244,280.55 | — |
-| $A$, $\varphi$ | absolute risk aversion of an exponential taste; the time factor in the guess $V = U(x)\varphi(t)$ | $A$ = 0.00001 per dollar | — |
+| $`X_t`$, $`x`$, $`x_0`$ | the fortune at time $`t`$, dollars; a particular value; the start | $`x_0`$ = \$200,000 | fraction unchanged; dollars in shares scale with it |
+| $`u`$, $`u_t`$, $`\pi`$, $`\pi^*`$ | the control; its value at time $`t`$ under a policy; the fraction of the fortune in shares; the best fraction | $`\pi^*`$ = 0.4 | — |
+| $`W_t`$, $`dW_t`$ | Brownian motion driving the shares; one small increment | — | — |
+| $`b`$, $`s`$, $`f`$ | drift and noise size of the controlled fortune, both depending on $`x`$ and $`u`$; a running reward rate | $`b = x(r + \pi(\mu-r))`$, $`s = x\pi\sigma`$; $`f = 0`$ | — |
+| $`\mu`$, $`r`$ | the shares' expected return per year; the bank rate, continuously compounded | 0.08; 0.03 | $`\mu`$ up: more in shares; $`r`$ up: less |
+| $`\sigma`$ | the shares' volatility per year; $`\sigma^2`$ is the variance | 0.25; 0.0625 | best fraction falls with the square |
+| $`\gamma`$, $`U`$ | relative risk aversion; the utility that scores a final fortune | 2; $`U(x) = -1/x`$ | $`\gamma`$ up: fraction falls in proportion |
+| $`V`$, $`V_t`$, $`V_x`$, $`V_{xx}`$, $`F`$ | value function; its rate in time; its slope in the fortune; its curvature; $`F`$ a candidate solution of HJB | $`V(0, x_0) = -1/244{,}280.55`$ | — |
+| $`L^u`$ | the generator under control $`u`$: drift times slope plus half squared noise times curvature | — | — |
+| $`t`$, $`T`$, $`h`$ | time in years; the horizon; a short step | $`T`$ = 5; $`h`$ from 1 to 1/252 | — |
+| $`g`$, $`g^*`$, CE | certainty-equivalent growth of a fixed fraction; its best value; certainty-equivalent fortune | $`g^*`$ = 0.04; CE = \$244,280.55 | — |
+| $`A`$, $`\varphi`$ | absolute risk aversion of an exponential taste; the time factor in the guess $`V = U(x)\varphi(t)`$ | $`A`$ = 0.00001 per dollar | — |
 
-The helper $g(\pi) = r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2$ is the certainty-equivalent growth of keeping fraction $\pi$ for good: bank rate, plus the shares' extra return, minus a charge for risk that grows with the square of the fraction. The CE fortune is $x_0\, e^{g T}$.
+The helper $`g(\pi) = r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2`$ is the certainty-equivalent growth of keeping fraction $`\pi`$ for good: bank rate, plus the shares' extra return, minus a charge for risk that grows with the square of the fraction. The CE fortune is $`x_0\, e^{g T}`$.
 
 ### When it holds
 
-- **A smooth value function.** The derivation uses $V_x$ and $V_{xx}$. With a cap on the control or a kink in the payoff, the value can have a corner; HJB then holds only in a weaker sense, viscosity solutions (wing 19).
+- **A smooth value function.** The derivation uses $`V_x`$ and $`V_{xx}`$. With a cap on the control or a kink in the payoff, the value can have a corner; HJB then holds only in a weaker sense, viscosity solutions (wing 19).
 - **The fortune moves continuously.** If the shares can jump, the generator gains a jump term and HJB gains an average over jumps ([Jump diffusions](02-jump-diffusions.md)).
 - **The state is seen.** HJB chooses from the current fortune. If the state is only glimpsed through noise, the state must first become the best estimate of it ([Filtering](04-filtering-and-the-kalman-bucy-filter.md)).
 - **Admissible policies.** The verification proof needs the noise part of the score to average to zero. Policies that borrow without limit can break that, the way doubling up breaks optional stopping.
-- **Power utility, for the constant fraction.** With exponential utility, $U(x) = -e^{-Ax}$, the best holding is a dollar sum that ignores the fortune, $(\mu - r)\,e^{-r(T-t)}/(A\sigma^2)$: \$68,856.64 today for $A$ = 0.00001 per dollar, rising to \$80,000.00 at the horizon.
+- **Power utility, for the constant fraction.** With exponential utility, $`U(x) = -e^{-Ax}`$, the best holding is a dollar sum that ignores the fortune, $`(\mu - r)\,e^{-r(T-t)}/(A\sigma^2)`$: \$68,856.64 today for $`A`$ = 0.00001 per dollar, rising to \$80,000.00 at the horizon.
 
 ---
 
@@ -96,60 +104,72 @@ Hold some control for a short stretch, see where the fortune lands, and act opti
 
 ### Step 1: Bellman's rule over a short step
 
-Hold the control $u$ for a short time $h$. Then, up to terms smaller than $h$,
+Hold the control $`u`$ for a short time $`h`$. Then, up to terms smaller than $`h`$,
 
-$$V(t, x) = \max_u E\big[\,V(t+h,\; X_{t+h}) \mid X_t = x\,\big].$$
+```math
+V(t, x) = \max_u E\big[\,V(t+h,\; X_{t+h}) \mid X_t = x\,\big].
+```
 
-The landing point is random, so the right side needs the average of $V$ at a random point. Ordinary calculus would expand $V$ to first order and stop. Here that is not enough.
+The landing point is random, so the right side needs the average of $`V`$ at a random point. Ordinary calculus would expand $`V`$ to first order and stop. Here that is not enough.
 
 ### Step 2: Ito's lemma supplies the second-derivative term
 
-Over the step the fortune moves by about $b\,h + s\,\Delta W$, where $\Delta W$ has mean 0 and variance $h$. Expand $V$ to second order in the move. The first-order noise term averages to zero. The square of the move is about $s^2(\Delta W)^2$, and $(\Delta W)^2$ averages $h$: the same order as the drift. So it survives:
+Over the step the fortune moves by about $`b\,h + s\,\Delta W`$, where $`\Delta W`$ has mean 0 and variance $`h`$. Expand $`V`$ to second order in the move. The first-order noise term averages to zero. The square of the move is about $`s^2(\Delta W)^2`$, and $`(\Delta W)^2`$ averages $`h`$: the same order as the drift. So it survives:
 
-$$E\big[V(t+h, X_{t+h})\big] - V(t,x) = \Big(V_t + b\,V_x + \tfrac12 s^2 V_{xx}\Big)\,h + o(h),$$
+```math
+E\big[V(t+h, X_{t+h})\big] - V(t,x) = \Big(V_t + b\,V_x + \tfrac12 s^2 V_{xx}\Big)\,h + o(h),
+```
 
-where $o(h)$ is smaller than $h$ as $h$ shrinks. This is Ito's lemma averaged ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)), and the bracket is the generator $L^u V$. Put it into Step 1, subtract $V(t,x)$ from both sides, divide by $h$ and let $h$ shrink:
+where $`o(h)`$ is smaller than $`h`$ as $`h`$ shrinks. This is Ito's lemma averaged ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)), and the bracket is the generator $`L^u V`$. Put it into Step 1, subtract $`V(t,x)`$ from both sides, divide by $`h`$ and let $`h`$ shrink:
 
-$$0 = V_t + \max_u \Big( b\,V_x + \tfrac12 s^2 V_{xx} \Big).$$
+```math
+0 = V_t + \max_u \Big( b\,V_x + \tfrac12 s^2 V_{xx} \Big).
+```
 
-That is the HJB equation. With $s = 0$ it is the noiseless equation of the earlier card. The new term $\tfrac12 s^2 V_{xx}$ is the price of noise: when the score is curved downward ($V_{xx} < 0$, a holder who dislikes risk), every unit of squared noise lowers the expected score.
+That is the HJB equation. With $`s = 0`$ it is the noiseless equation of the earlier card. The new term $`\tfrac12 s^2 V_{xx}`$ is the price of noise: when the score is curved downward ($`V_{xx} < 0`$, a holder who dislikes risk), every unit of squared noise lowers the expected score.
 
 ### Step 3: a solution of HJB is the best score
 
-Steps 1 and 2 show that a smooth best score must satisfy HJB. The useful direction is the converse: find any smooth $F$ that solves HJB with $F(T,x) = U(x)$, and it is the best score, with its maximiser the best policy. This **verification theorem** is proved in full below, using only Ito's lemma and the fact that an Ito integral of a square-integrable integrand averages zero. Whether the best score is always smooth enough to solve HJB is a harder question; Fleming and Soner (Sources) prove it under conditions and give the weaker viscosity sense where it fails. This card does not prove that half.
+Steps 1 and 2 show that a smooth best score must satisfy HJB. The useful direction is the converse: find any smooth $`F`$ that solves HJB with $`F(T,x) = U(x)`$, and it is the best score, with its maximiser the best policy. This **verification theorem** is proved in full below, using only Ito's lemma and the fact that an Ito integral of a square-integrable integrand averages zero. Whether the best score is always smooth enough to solve HJB is a harder question; Fleming and Soner (Sources) prove it under conditions and give the weaker viscosity sense where it fails. This card does not prove that half.
 
 <details>
 <summary>Detailed proof: the verification theorem</summary>
 
-Let $F(t, x)$ have a continuous first derivative in $t$ and continuous first and second derivatives in $x$, with $F_t + \max_u L^u F = 0$ and $F(T, x) = U(x)$. Take any admissible policy $u_t$, meaning one for which the fortune exists and $E\int_0^T \big(F_x\, s\big)^2 dt$ is finite.
+Let $`F(t, x)`$ have a continuous first derivative in $`t`$ and continuous first and second derivatives in $`x`$, with $`F_t + \max_u L^u F = 0`$ and $`F(T, x) = U(x)`$. Take any admissible policy $`u_t`$, meaning one for which the fortune exists and $`E\int_0^T \big(F_x\, s\big)^2 dt`$ is finite.
 
-Ito's lemma applied to $F(t, X_t)$ gives
-$$U(X_T) = F(0, x_0) + \int_0^T \big(F_t + L^{u_t} F\big)(t, X_t)\,dt + \int_0^T F_x\, s\,(t, X_t)\,dW_t .$$
-The first integrand is at most 0 at every instant, because the maximum over all controls makes $F_t + L^u F$ exactly 0 and any particular control does no better. The last integral is an Ito integral with a square-integrable integrand, so its average is 0. Taking averages: $E[U(X_T)] \le F(0, x_0)$ for every admissible policy.
+Ito's lemma applied to $`F(t, X_t)`$ gives
 
-Now use the policy $u^*(t, x)$ that attains the maximum at every $(t, x)$, assuming the fortune it drives exists and is admissible. The first integrand is then exactly 0, so $E[U(X_T)] = F(0, x_0)$. No policy beats $F(0,x_0)$, and $u^*$ reaches it: $F$ is the value function and $u^*$ is optimal. The same argument from any start $(t, x)$ gives $F = V$ everywhere.
+$`\displaystyle U(X_T) = F(0, x_0) + \int_0^T \big(F_t + L^{u_t} F\big)(t, X_t)\,dt + \int_0^T F_x\, s\,(t, X_t)\,dW_t .`$
 
-Where admissibility matters: drop the square-integrability condition and the Ito integral can be a local martingale that is not a true martingale, with an average that is not 0. Then the bound, or the equality for $u^*$, can fail, and $F$ need not be the value.
+The first integrand is at most 0 at every instant, because the maximum over all controls makes $`F_t + L^u F`$ exactly 0 and any particular control does no better. The last integral is an Ito integral with a square-integrable integrand, so its average is 0. Taking averages: $`E[U(X_T)] \le F(0, x_0)`$ for every admissible policy.
+
+Now use the policy $`u^*(t, x)`$ that attains the maximum at every $`(t, x)`$, assuming the fortune it drives exists and is admissible. The first integrand is then exactly 0, so $`E[U(X_T)] = F(0, x_0)`$. No policy beats $`F(0,x_0)`$, and $`u^*`$ reaches it: $`F`$ is the value function and $`u^*`$ is optimal. The same argument from any start $`(t, x)`$ gives $`F = V`$ everywhere.
+
+Where admissibility matters: drop the square-integrability condition and the Ito integral can be a local martingale that is not a true martingale, with an average that is not 0. Then the bound, or the equality for $`u^*`$, can fail, and $`F`$ need not be the value.
 
 </details>
 
 ### Step 4: Merton's problem in outline
 
-For the fortune, put $b = x(r + \pi(\mu - r))$ and $s = x\pi\sigma$ into the bracket:
+For the fortune, put $`b = x(r + \pi(\mu - r))`$ and $`s = x\pi\sigma`$ into the bracket:
 
-$$x\,(r + \pi(\mu - r))\,V_x + \tfrac12\, x^2 \pi^2 \sigma^2\, V_{xx}.$$
+```math
+x\,(r + \pi(\mu - r))\,V_x + \tfrac12\, x^2 \pi^2 \sigma^2\, V_{xx}.
+```
 
-In $\pi$ this is a straight line plus a square. With $V_{xx} < 0$ the square bends it into a hill, and the slope is zero at
+In $`\pi`$ this is a straight line plus a square. With $`V_{xx} < 0`$ the square bends it into a hill, and the slope is zero at
 
-$$\pi^* = -\frac{(\mu - r)\, V_x}{\sigma^2\, x\, V_{xx}} .$$
+```math
+\pi^* = -\frac{(\mu - r)\, V_x}{\sigma^2\, x\, V_{xx}} .
+```
 
-The ratio $-x V_{xx}/V_x$ is the holder's relative risk aversion. For power utility it is the constant $\gamma$, so guess $V = U(x)\,\varphi(t)$. Then $V_x = x^{-\gamma}\varphi$ and $V_{xx} = -\gamma x^{-\gamma-1}\varphi$, and the bracket becomes $x^{1-\gamma}\varphi\; g(\pi)$. Since $x^{1-\gamma}\varphi > 0$, maximising the bracket means maximising $g(\pi)$, whose top is $\pi^* = (\mu - r)/(\gamma\sigma^2)$ with height $g^*$. HJB is left as $U\varphi' + (1-\gamma)U\varphi\, g^* = 0$, so $\varphi(t) = e^{(1-\gamma) g^* (T - t)}$, which is 1 at the horizon as required. The verification theorem of Step 3 then certifies the guess.
+The ratio $`-x V_{xx}/V_x`$ is the holder's relative risk aversion. For power utility it is the constant $`\gamma`$, so guess $`V = U(x)\,\varphi(t)`$. Then $`V_x = x^{-\gamma}\varphi`$ and $`V_{xx} = -\gamma x^{-\gamma-1}\varphi`$, and the bracket becomes $`x^{1-\gamma}\varphi\; g(\pi)`$. Since $`x^{1-\gamma}\varphi > 0`$, maximising the bracket means maximising $`g(\pi)`$, whose top is $`\pi^* = (\mu - r)/(\gamma\sigma^2)`$ with height $`g^*`$. HJB is left as $`U\varphi' + (1-\gamma)U\varphi\, g^* = 0`$, so $`\varphi(t) = e^{(1-\gamma) g^* (T - t)}`$, which is 1 at the horizon as required. The verification theorem of Step 3 then certifies the guess.
 
-For the fortune: excess return 0.05, variance 0.0625, risk aversion 2, so $\pi^*$ = 0.05 / 0.125 = 0.4. Nothing in the answer mentions the fortune or the date. The same problem in finance terms, with the rule followed quarter by quarter and the fraction's sensitivity to each input, is [Merton's problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md). Consumption along the way is in Merton (1971), and the hedging demand that appears when the odds move is in Merton (1973), both in Sources.
+For the fortune: excess return 0.05, variance 0.0625, risk aversion 2, so $`\pi^*`$ = 0.05 / 0.125 = 0.4. Nothing in the answer mentions the fortune or the date. The same problem in finance terms, with the rule followed quarter by quarter and the fraction's sensitivity to each input, is [Merton's problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md). Consumption along the way is in Merton (1971), and the hedging demand that appears when the odds move is in Merton (1973), both in Sources.
 
 ### Step 5: an independent road, Bellman on steps that shrink
 
-The continuous-time claim can be tested without Ito's lemma. Let the shares move on steps of $h$ years by one of two factors, $e^{(\mu - \sigma^2/2)h \pm \sigma\sqrt{h}}$, each with chance one half, and let the bank pay $e^{rh}$. Apply Bellman's rule exactly on each step. Power utility makes every step the same problem, whatever the fortune, so one search over the fraction settles the whole five years. A bisection on the slope of one step's score (halving an interval that holds the point where the slope is zero) finds the best fraction for each step size:
+The continuous-time claim can be tested without Ito's lemma. Let the shares move on steps of $`h`$ years by one of two factors, $`e^{(\mu - \sigma^2/2)h \pm \sigma\sqrt{h}}`$, each with chance one half, and let the bank pay $`e^{rh}`$. Apply Bellman's rule exactly on each step. Power utility makes every step the same problem, whatever the fortune, so one search over the fraction settles the whole five years. A bisection on the slope of one step's score (halving an interval that holds the point where the slope is zero) finds the best fraction for each step size:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -162,7 +182,7 @@ xychart-beta
 
 The one line is the best fraction found at each step size. The gap to 0.4 is −0.003925 at yearly decisions and −0.000016 at daily ones (1/252 of a year): it shrinks in proportion to the step, and the certainty-equivalent growth climbs to 0.040000.
 
-Two more checks test the formula rather than search for the fraction afresh. A simulation needs no HJB: it draws the fortune from its exact lognormal law ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Both checks draw 100,000 five-year outcomes from a SplitMix64 generator with seed 2026, normals by Box-Muller, and score each fixed fraction. At 0.4 the simulated CE fortune is \$244,394.43 with a standard error of \$174.75, against \$244,280.55 from the formula: 0.65 standard errors apart. Finite differences put the formula's $V$ into HJB at two points and scan the fraction from 0 to 2 in steps of 0.001; the top is at 0.4000 both times and the equation balances to six decimals. In the code the formula is road 1, finite differences road 2, Bellman road 3 and the simulation road 4.
+Two more checks test the formula rather than search for the fraction afresh. A simulation needs no HJB: it draws the fortune from its exact lognormal law ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Both checks draw 100,000 five-year outcomes from a SplitMix64 generator with seed 2026, normals by Box-Muller, and score each fixed fraction. At 0.4 the simulated CE fortune is \$244,394.43 with a standard error of \$174.75, against \$244,280.55 from the formula: 0.65 standard errors apart. Finite differences put the formula's $`V`$ into HJB at two points and scan the fraction from 0 to 2 in steps of 0.001; the top is at 0.4000 both times and the equation balances to six decimals. In the code the formula is road 1, finite differences road 2, Bellman road 3 and the simulation road 4.
 
 ---
 
@@ -173,23 +193,23 @@ Two more checks test the formula rather than search for the fraction afresh. A s
 | excess return | 0.08 − 0.03 | 0.05 |
 | variance | 0.25 × 0.25 | 0.0625 |
 | risk aversion times variance | 2 × 0.0625 | 0.125 |
-| best fraction $\pi^*$ | 0.05 / 0.125 | **0.4** |
+| best fraction $`\pi^*`$ | 0.05 / 0.125 | **0.4** |
 | dollars in shares today | 0.4 × \$200,000 | \$80,000.00 |
-| best CE growth $g^*$ | 0.03 + 0.05 × 0.05 / (2 × 0.125) | 0.04 |
-| CE fortune at 5 years | 200,000 × $e^{0.2}$ | **\$244,280.55** |
-| all in the bank | 200,000 × $e^{0.15}$ | \$232,366.85 |
+| best CE growth $`g^*`$ | 0.03 + 0.05 × 0.05 / (2 × 0.125) | 0.04 |
+| CE fortune at 5 years | 200,000 × $`e^{0.2}`$ | **\$244,280.55** |
+| all in the bank | 200,000 × $`e^{0.15}`$ | \$232,366.85 |
 
 The holder should treat the random fortune from the best policy as worth \$244,280.55 for certain, against \$232,366.85 for the bank alone.
 
 ### What breaks if you drop a piece
 
-The checks measure each mistake. The HJB residual below is $V_t$ plus the bracket, divided by the size of $V_t$; at the right fraction it is 0, and it equals $(g(\pi) - g^*)/g^*$.
+The checks measure each mistake. The HJB residual below is $`V_t`$ plus the bracket, divided by the size of $`V_t`$; at the right fraction it is 0, and it equals $`(g(\pi) - g^*)/g^*`$.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Ordinary chain rule: drop $\tfrac12 s^2 V_{xx}$ | residual 0.2500 at 0.4, 1.0000 at 1, 12.2500 at 10, 124.7500 at 100; no best fraction | Without the noise term the bracket is a straight line in $\pi$: more shares always look better, so the "answer" is to borrow without limit. With the term, the residual at 1, 10 and 100 is −0.5625, −144.0000 and about −15,500. |
-| $\sigma$ for $\sigma^2$ | fraction 0.1000, CE \$237,505.88 | Risk scales with variance; dividing by volatility shrinks the holding fourfold here. |
-| Risk aversion 1 for 2 | fraction 0.8000, CE \$232,366.85 | Twice the right holding; for a holder with $\gamma$ = 2 this is worth exactly what the bank alone gives. |
+| Ordinary chain rule: drop $`\tfrac12 s^2 V_{xx}`$ | residual 0.2500 at 0.4, 1.0000 at 1, 12.2500 at 10, 124.7500 at 100; no best fraction | Without the noise term the bracket is a straight line in $`\pi`$: more shares always look better, so the "answer" is to borrow without limit. With the term, the residual at 1, 10 and 100 is −0.5625, −144.0000 and about −15,500. |
+| $`\sigma`$ for $`\sigma^2`$ | fraction 0.1000, CE \$237,505.88 | Risk scales with variance; dividing by volatility shrinks the holding fourfold here. |
+| Risk aversion 1 for 2 | fraction 0.8000, CE \$232,366.85 | Twice the right holding; for a holder with $`\gamma`$ = 2 this is worth exactly what the bank alone gives. |
 | A rule that reacts to luck: 0.6 below \$200,000, 0.2 above | CE \$241,383.62, SE \$301.00 | About 9.6 standard errors below the best. Each fraction it uses is worth only 3.75 percent a year. |
 
 The first row is the hypothesis this wing keeps testing: Ito's chain rule in place of the ordinary one. Mixing them silently turns a hill into a ramp.
@@ -618,19 +638,19 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves that Merton's $V$ solves the HJB equation, for every input that meets the conditions below, and checks the card's exact numbers.
+Lean proves that Merton's $`V`$ solves the HJB equation, for every input that meets the conditions below, and checks the card's exact numbers.
 
-- Suppose $\sigma > 0$, $\gamma > 0$, $\gamma \ne 1$ and the fortune $x > 0$. Then, for Merton's $V$, $V_t$ plus the bracket is at most 0 for every fraction $\pi$.
-- Take the same conditions. Then $V_t$ plus the bracket is exactly 0 at $\pi^*$, and at no other fraction.
-- Take Merton's $V$ at the horizon. Then $V(T, x) = U(x)$.
-- Suppose $\sigma > 0$ and $\gamma > 0$. Then $g(\pi) \le g^*$ for every fraction, with equality only at $\pi^*$: the hill has one top.
-- Suppose $\mu > r$, $\gamma \ne 1$, $x > 0$, and the ordinary chain rule drops the noise term. Then $V_t$ plus what is left keeps rising as $\pi$ grows, so no fraction is best.
-- Take the card's inputs: $r = 0.03$, $\mu = 0.08$, $\sigma = 0.25$, $\gamma = 2$. Then $\pi^* = 0.4$, \$80,000 sits in shares today, and $g^* = 0.04$.
+- Suppose $`\sigma > 0`$, $`\gamma > 0`$, $`\gamma \ne 1`$ and the fortune $`x > 0`$. Then, for Merton's $`V`$, $`V_t`$ plus the bracket is at most 0 for every fraction $`\pi`$.
+- Take the same conditions. Then $`V_t`$ plus the bracket is exactly 0 at $`\pi^*`$, and at no other fraction.
+- Take Merton's $`V`$ at the horizon. Then $`V(T, x) = U(x)`$.
+- Suppose $`\sigma > 0`$ and $`\gamma > 0`$. Then $`g(\pi) \le g^*`$ for every fraction, with equality only at $`\pi^*`$: the hill has one top.
+- Suppose $`\mu > r`$, $`\gamma \ne 1`$, $`x > 0`$, and the ordinary chain rule drops the noise term. Then $`V_t`$ plus what is left keeps rising as $`\pi`$ grows, so no fraction is best.
+- Take the card's inputs: $`r = 0.03`$, $`\mu = 0.08`$, $`\sigma = 0.25`$, $`\gamma = 2`$. Then $`\pi^* = 0.4`$, \$80,000 sits in shares today, and $`g^* = 0.04`$.
 - Take the hill at fractions 0, 0.2, 0.4, 0.6, 0.8, 1.0 and 1.2. Then the CE growth is 3.00, 3.75, 4.00, 3.75, 3.00, 1.75 and 0.00 percent a year.
-- Take the two wrong inputs: $\sigma$ for $\sigma^2$, and risk aversion 1 for 2. Then the fraction comes out at 0.1 and 0.8.
+- Take the two wrong inputs: $`\sigma`$ for $`\sigma^2`$, and risk aversion 1 for 2. Then the fraction comes out at 0.1 and 0.8.
 - Take the ordinary chain rule at fractions 0.4, 1, 10 and 100. Then the HJB residual is 0.25, 1, 12.25 and 124.75. With the Ito term kept, it is −0.5625 at 1 and −144 at 10.
 
-The Bellman steps, the simulations, the sample path and the dollar sums that need $e$ are left to the Python and Rust checks.
+The Bellman steps, the simulations, the sample path and the dollar sums that need $`e`$ are left to the Python and Rust checks.
 
 ```lean
 -- Stochastic control: Merton's value function solves the HJB equation, with the best fraction in shares at the unique top of a concave hill, while dropping the noise term leaves a ramp with no top.
@@ -905,10 +925,10 @@ example : (fun p : ℚ => (3 / 100 + p * (5 / 100) - (25 / 100) ^ 2 * p ^ 2 - 4 
 ## The usual mistake
 
 > [!warning]
-> **Doing the calculus as if the path were smooth.** Expand the best score to first order, as for a car on a road, and the noise disappears from the equation. The bracket becomes a straight line in the fraction, more shares always look better, and the "best policy" is to borrow without limit. The second-derivative term $\tfrac12 s^2 V_{xx}$ is not a correction; it is the whole reason a cautious holder stops at 0.4.
+> **Doing the calculus as if the path were smooth.** Expand the best score to first order, as for a car on a road, and the noise disappears from the equation. The bracket becomes a straight line in the fraction, more shares always look better, and the "best policy" is to borrow without limit. The second-derivative term $`\tfrac12 s^2 V_{xx}`$ is not a correction; it is the whole reason a cautious holder stops at 0.4.
 >
 > Smaller traps:
-> - **Volatility where variance belongs.** Dividing by $\sigma$ instead of $\sigma^2$ gives 0.1 in shares instead of 0.4.
+> - **Volatility where variance belongs.** Dividing by $`\sigma`$ instead of $`\sigma^2`$ gives 0.1 in shares instead of 0.4.
 > - **A fixed fraction read as fixed dollars.** The rule keeps 0.4 of the current fortune, so it sells after rises and buys after falls. Freezing the $80,000 is a different, worse policy, and under a power taste it is not what HJB gives.
 > - **Maximising the average fortune.** That is risk aversion 0: the curvature term vanishes and the answer is again unlimited borrowing. A taste for risk is part of the problem, not decoration.
 > - **The max taken outside the average.** HJB chooses the control at each state after seeing it. Fixing one plan in advance is a smaller choice and in general a worse answer. Merton's problem hides this, because its best rule ignores the state; reacting to luck the wrong way costs, as the rule at \$241,383.62 in the table above shows.
@@ -917,8 +937,8 @@ example : (fun p : ℚ => (3 / 100 + p * (5 / 100) - (25 / 100) ^ 2 * p ^ 2 - 4 
 
 ## Where you meet it in real life
 
-- **Rebalancing funds and robo-advisers.** A target mix, such as 60 percent shares, rebalanced as markets move, is a constant-fraction policy of exactly this kind; the target comes from a version of $\pi^*$ with estimated inputs.
-- **The Kelly rule.** With risk aversion 1 (logarithmic utility), the best fraction is $(\mu - r)/\sigma^2$, 0.8 here: the fraction that maximises the long-run growth of the fortune. Gamblers and some funds use it, often at half strength, because at full strength the swings are large.
+- **Rebalancing funds and robo-advisers.** A target mix, such as 60 percent shares, rebalanced as markets move, is a constant-fraction policy of exactly this kind; the target comes from a version of $`\pi^*`$ with estimated inputs.
+- **The Kelly rule.** With risk aversion 1 (logarithmic utility), the best fraction is $`(\mu - r)/\sigma^2`$, 0.8 here: the fraction that maximises the long-run growth of the fortune. Gamblers and some funds use it, often at half strength, because at full strength the swings are large.
 - **Market making.** A dealer quoting buy and sell prices chooses the quotes as a policy of the inventory held; the HJB equation for that problem gives the Avellaneda-Stoikov quotes ([Market making](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/05-market-making-avellaneda-stoikov.md)).
 - **Engineering under noise.** A controller steering a system hit by random disturbances of fixed size, with squared costs, solves HJB with a quadratic guess: a time-varying multiple of the squared state, plus a term in time alone. The multiple obeys the same Riccati equation as without noise ([The HJB equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md)), so the feedback gain is unchanged; the noise adds only the extra term, its cost. Combined with an estimate of the hidden state it becomes the linear-quadratic-Gaussian controller ([Filtering](04-filtering-and-the-kalman-bucy-filter.md)).
 - **Insurance and pensions.** How much risk to reinsure, how fast to pay dividends, how a pension's mix should glide toward retirement: each is a controlled diffusion with a value function.

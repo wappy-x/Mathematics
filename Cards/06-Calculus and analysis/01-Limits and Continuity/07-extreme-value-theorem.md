@@ -33,35 +33,39 @@ The line is the area x(1 − x), sampled every 0.1 metres, peaking at 0.25 over 
 
 ## The formula
 
-Notation first. Square brackets, as in $[a,b]$, mean an interval including both ends; round brackets, as in (0, 1), leave the ends out. $\sup$ is the least upper bound of a set of numbers ([No gaps](02-supremum-and-completeness.md)): the smallest number nothing in the set exceeds, not always a member.
+Notation first. Square brackets, as in $`[a,b]`$, mean an interval including both ends; round brackets, as in (0, 1), leave the ends out. $`\sup`$ is the least upper bound of a set of numbers ([No gaps](02-supremum-and-completeness.md)): the smallest number nothing in the set exceeds, not always a member.
 
-If $f$ is continuous at every point of $[a,b]$ (at an end, judged from inside only), with $a$ and $b$ finite and $a \le b$, then there are inputs $c$ and $d$ in $[a,b]$ with
+If $`f`$ is continuous at every point of $`[a,b]`$ (at an end, judged from inside only), with $`a`$ and $`b`$ finite and $`a \le b`$, then there are inputs $`c`$ and $`d`$ in $`[a,b]`$ with
 
-$$f(d) \le f(x) \le f(c) \quad \text{for every } x \text{ in } [a,b].$$
+```math
+f(d) \le f(x) \le f(c) \quad \text{for every } x \text{ in } [a,b].
+```
 
 **Read it aloud:** some allowed input gives an output nothing beats, and some allowed input gives an output nothing undercuts.
 
-The top is $M = f(c)$, the bottom $m = f(d)$: actual outputs, not bounds only approached. For the bed:
+The top is $`M = f(c)`$, the bottom $`m = f(d)`$: actual outputs, not bounds only approached. For the bed:
 
-$$f(x) = x(1-x) = \tfrac14 - \left(x - \tfrac12\right)^2, \qquad 0 \le x \le 1.$$
+```math
+f(x) = x(1-x) = \tfrac14 - \left(x - \tfrac12\right)^2, \qquad 0 \le x \le 1.
+```
 
-The proof uses a sequence $x_n$, a list of inputs with $n$ as its clock ([Sequences](03-sequences-and-limits.md)). A **subsequence** keeps infinitely many terms, in order, and drops the rest; its k-th kept term is $x_{n_k}$, where $n_k$ is its position in the original list.
+The proof uses a sequence $`x_n`$, a list of inputs with $`n`$ as its clock ([Sequences](03-sequences-and-limits.md)). A **subsequence** keeps infinitely many terms, in order, and drops the rest; its k-th kept term is $`x_{n_k}`$, where $`n_k`$ is its position in the original list.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the rule from input to output | side in metres to area in square metres | — |
-| $x$ | one allowed input | one side of the bed, in metres | area rises to x = 0.5, then falls |
-| $a$, $b$ | the interval's ends, both included | 0 and 1 metre | a wider interval can raise the top |
-| $c$, $d$ | inputs giving the top and the bottom | c = 0.5; d = 0 or d = 1 | found, not set |
-| $M$, $m$, $\sup$ | top and bottom values; $M$ is the $\sup$ of all outputs | 0.25 and 0 square metres | — |
-| $x_n$, $n$ | a list of inputs and its clock | grid bests 0.333333, 0.444444 | later terms |
-| $x_{n_k}$, $n_k$, $k$ | a subsequence, a kept term's old position, the new clock | every other term: $n_k$ = 2k − 1 | — |
-| $g$ | the side itself, $g(x) = x$, on (0, 1) | 0.9 is beaten by 0.95 | has no top |
+| $`f`$ | the rule from input to output | side in metres to area in square metres | — |
+| $`x`$ | one allowed input | one side of the bed, in metres | area rises to x = 0.5, then falls |
+| $`a`$, $`b`$ | the interval's ends, both included | 0 and 1 metre | a wider interval can raise the top |
+| $`c`$, $`d`$ | inputs giving the top and the bottom | c = 0.5; d = 0 or d = 1 | found, not set |
+| $`M`$, $`m`$, $`\sup`$ | top and bottom values; $`M`$ is the $`\sup`$ of all outputs | 0.25 and 0 square metres | — |
+| $`x_n`$, $`n`$ | a list of inputs and its clock | grid bests 0.333333, 0.444444 | later terms |
+| $`x_{n_k}`$, $`n_k`$, $`k`$ | a subsequence, a kept term's old position, the new clock | every other term: $`n_k`$ = 2k − 1 | — |
+| $`g`$ | the side itself, $`g(x) = x`$, on (0, 1) | 0.9 is beaten by 0.95 | has no top |
 
 ### When it holds
 
 - **Continuous everywhere, ends included.** Otherwise the top can be skipped: a rule equal to x below 1 and 0 at x = 1 reaches 0.999, never 1.
-- **Both ends included.** Otherwise the top escapes through the gap: $g(x) = x$ on (0, 1) has no largest value.
+- **Both ends included.** Otherwise the top escapes through the gap: $`g(x) = x`$ on (0, 1) has no largest value.
 - **Both ends finite.** Otherwise outputs can run away: x(1 − x) on [0, infinity) has no bottom, since f(100) = −9900.
 - **Real numbers, with no gaps.** On fractions alone, the point a list piles up at can be missing: on the fractions from 1 to 2, −(x^2 − 2)^2 nears 0 but never reaches it, since no fraction squares to 2.
 
@@ -77,44 +81,44 @@ Inputs with outputs climbing toward the highest cannot escape a closed, bounded 
 
 A list need not settle: the flat beds give 0, 1, 0, 1, …, but every other term gives 0, 0, 0, …, settled.
 
-Halving always finds such a subsequence. Cut $[a,b]$ into closed halves. One holds terms at infinitely many positions, or the list would be finite. Keep it; halve again.
+Halving always finds such a subsequence. Cut $`[a,b]`$ into closed halves. One holds terms at infinitely many positions, or the list would be finite. Keep it; halve again.
 
-The kept halves nest and shrink, and the real numbers have no gaps, so they close down on one point, c. Pick one term from each kept half, each later in the list than the last. The picks head for c, and c is in $[a,b]$ because the halves kept their ends. This is the Bolzano–Weierstrass theorem.
+The kept halves nest and shrink, and the real numbers have no gaps, so they close down on one point, c. Pick one term from each kept half, each later in the list than the last. The picks head for c, and c is in $`[a,b]`$ because the halves kept their ends. This is the Bolzano–Weierstrass theorem.
 
 ### Step 2: continuity carries a settling list to the right output
 
-Continuity at c means outputs head for $f(c)$ whenever inputs head for c. On the bed at 0.5: to keep the area within 0.001 of the top, keep x within 0.0316 of 0.5, since the shortfall is the square of the distance. A subsequence settling at c eventually stays within every such distance, so its outputs settle at $f(c)$.
+Continuity at c means outputs head for $`f(c)`$ whenever inputs head for c. On the bed at 0.5: to keep the area within 0.001 of the top, keep x within 0.0316 of 0.5, since the shortfall is the square of the distance. A subsequence settling at c eventually stays within every such distance, so its outputs settle at $`f(c)`$.
 
 ### Step 3: the outputs cannot run off
 
-Suppose the outputs had no upper bound. Then some input has output above 1, another above 2, and so on. Step 1 gives a subsequence of those inputs settling at some c in the interval; Step 2 sends their outputs to the single number $f(c)$. Yet they pass every whole number. So the outputs are bounded above; the same argument on $-f$, every output's sign flipped, bounds them below.
+Suppose the outputs had no upper bound. Then some input has output above 1, another above 2, and so on. Step 1 gives a subsequence of those inputs settling at some c in the interval; Step 2 sends their outputs to the single number $`f(c)`$. Yet they pass every whole number. So the outputs are bounded above; the same argument on $`-f`$, every output's sign flipped, bounds them below.
 
 ### Step 4: the least upper bound is an actual output
 
-Bounded outputs have a least upper bound, $M$, the $\sup$ of all outputs. For each n some input has output within 1/n of M, or a smaller number would be an upper bound.
+Bounded outputs have a least upper bound, $`M`$, the $`\sup`$ of all outputs. For each n some input has output within 1/n of M, or a smaller number would be an upper bound.
 
-Step 1 gives a subsequence of those inputs settling at some c in $[a,b]$; Step 2 sends its outputs to $f(c)$. They also head for M. A list heads for one number only, so $f(c) = M$: the top is attained. Applying this to $-f$ gives the bottom.
+Step 1 gives a subsequence of those inputs settling at some c in $`[a,b]`$; Step 2 sends its outputs to $`f(c)`$. They also head for M. A list heads for one number only, so $`f(c) = M`$: the top is attained. Applying this to $`-f`$ gives the bottom.
 
 On the bed, grids of step 1/3, 1/9, 1/27 give best inputs 0.333333, 0.444444, 0.481481 with areas 0.222222, 0.246914, 0.249657, climbing toward 0.25: the kind of list Step 4 uses.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $f$ be continuous on $[a,b]$, with $a < b$ finite; if $a = b$ the one output is both extremes.
+Let $`f`$ be continuous on $`[a,b]`$, with $`a < b`$ finite; if $`a = b`$ the one output is both extremes.
 
-**Bolzano–Weierstrass.** For $x_n$ in $[a,b]$, keep closed halves as in Step 1; the k-th has width $(b-a)/2^k$. Let $c$ be the supremum of their left ends, which lies in every kept half. With $n_1 < n_2 < \cdots$ and $x_{n_k}$ in the k-th half, $\lvert x_{n_k} - c\rvert \le (b-a)/2^k$, which heads for 0.
+**Bolzano–Weierstrass.** For $`x_n`$ in $`[a,b]`$, keep closed halves as in Step 1; the k-th has width $`(b-a)/2^k`$. Let $`c`$ be the supremum of their left ends, which lies in every kept half. With $`n_1 < n_2 < \cdots`$ and $`x_{n_k}`$ in the k-th half, $`\lvert x_{n_k} - c\rvert \le (b-a)/2^k`$, which heads for 0.
 
-**Continuity.** Given $\varepsilon > 0$, continuity at c gives $\delta > 0$ with $\lvert f(x) - f(c)\rvert < \varepsilon$ when $\lvert x - c\rvert < \delta$. Eventually $\lvert x_{n_k} - c\rvert < \delta$, so $f(x_{n_k})$ converges to $f(c)$.
+**Continuity.** Given $`\varepsilon > 0`$, continuity at c gives $`\delta > 0`$ with $`\lvert f(x) - f(c)\rvert < \varepsilon`$ when $`\lvert x - c\rvert < \delta`$. Eventually $`\lvert x_{n_k} - c\rvert < \delta`$, so $`f(x_{n_k})`$ converges to $`f(c)`$.
 
-**Bounded.** If not, pick $x_n$ with $f(x_n) > n$. A subsequence converges to c in $[a,b]$, so $f(x_{n_k})$ converges to $f(c)$; yet $f(x_{n_k}) > n_k \ge k$, and a convergent sequence is bounded.
+**Bounded.** If not, pick $`x_n`$ with $`f(x_n) > n`$. A subsequence converges to c in $`[a,b]`$, so $`f(x_{n_k})`$ converges to $`f(c)`$; yet $`f(x_{n_k}) > n_k \ge k`$, and a convergent sequence is bounded.
 
-**Attained.** Let $M = \sup\{f(x) : x \in [a,b]\}$. For each n pick $x_n$ with $M - 1/n < f(x_n) \le M$. A subsequence converges to c in $[a,b]$. Then $f(x_{n_k})$ converges to $f(c)$ and to M, and limits are unique, so $f(c) = M$. For the minimum apply this to $-f$: its maximum $-m$ is attained at some d, so $f(d) = m$.
+**Attained.** Let $`M = \sup\{f(x) : x \in [a,b]\}`$. For each n pick $`x_n`$ with $`M - 1/n < f(x_n) \le M`$. A subsequence converges to c in $`[a,b]`$. Then $`f(x_{n_k})`$ converges to $`f(c)`$ and to M, and limits are unique, so $`f(c) = M`$. For the minimum apply this to $`-f`$: its maximum $`-m`$ is attained at some d, so $`f(d) = m`$.
 
 </details>
 
 ### Step 5: finding the top is a separate job
 
-The theorem says a top exists, not where. For the bed, algebra finds it: $x(1-x) = \tfrac14 - (x - \tfrac12)^2$, and a square is never negative, so the area is at most 0.25, reached only at x = 0.5. Both factors are at least 0, so the bottom is 0, at the ends.
+The theorem says a top exists, not where. For the bed, algebra finds it: $`x(1-x) = \tfrac14 - (x - \tfrac12)^2`$, and a square is never negative, so the area is at most 0.25, reached only at x = 0.5. Both factors are at least 0, so the bottom is 0, at the ends.
 
 The same proof works on any **compact** set, one where every list has a subsequence settling inside it; continuous images of compact sets are compact (What compactness and connectedness buy).
 
@@ -136,7 +140,7 @@ The same proof works on any **compact** set, one where every list has a subseque
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | A coarse grid's best read as the top | 0.222222 at x = 0.333333 | Step 1/3 never lands on 0.5 |
-| Dropping the ends: $g(x) = x$ on (0, 1) | 0.9 beaten by 0.95, 0.999 by 0.9995 | The top 1 is never an output |
+| Dropping the ends: $`g(x) = x`$ on (0, 1) | 0.9 beaten by 0.95, 0.999 by 0.9995 | The top 1 is never an output |
 | A jump: x below 1, 0 at x = 1 | 0.999 at x = 0.999, 0 at x = 1 | Not continuous at 1; the top 1 is skipped |
 | No right end: x(1 − x) on [0, infinity) | f(10) = −90, f(100) = −9900 | No bottom |
 
@@ -304,10 +308,10 @@ The two outputs match line for line.
 
 Lean proves the theorem for every function continuous on a closed interval of real numbers, and checks the bed exactly.
 
-- The theorem itself: if $f$ is continuous on $[a,b]$ with $a \le b$, some $c$ and $d$ in $[a,b]$ give the top and the bottom.
+- The theorem itself: if $`f`$ is continuous on $`[a,b]`$ with $`a \le b`$, some $`c`$ and $`d`$ in $`[a,b]`$ give the top and the bottom.
 - The bed: x(1 − x) = 1/4 − (x − 1/2)^2, and on [0, 1] the area stays between 0 and 0.25.
 - The top 0.25 is reached at x = 0.5 and nowhere else; the bottom 0 at x = 0 and at x = 1.
-- Dropping the ends: $g(x) = x$ on (0, 1) has no largest value.
+- Dropping the ends: $`g(x) = x`$ on (0, 1) has no largest value.
 - A jump: the rule equal to x below 1 and 0 at x = 1 has no largest value on [0, 1].
 - No right end: x(1 − x) on [0, infinity) has no bottom.
 - The worked numbers, and each grid's shortfall of (1/(2N))^2 below 0.25, as exact fractions.
@@ -422,7 +426,7 @@ example : (10 : ℤ) * (1 - 10) = -90 ∧ (100 : ℤ) * (1 - 100) = -9900 := by 
 > **Treating the theorem as a search method.** It guarantees a top exists; it does not locate it. A grid of step 1/3 reports 0.222222, short of the true 0.25 by 0.027778.
 >
 > - **Dropping a hypothesis drops the guarantee, not always the extremes.** x(1 − x) on (0, 1) keeps its top 0.25; it loses only its bottom 0.
-> - **Bounded is not attained.** $g(x) = x$ on (0, 1) stays below 1, yet 0.999 is beaten by 0.9995.
+> - **Bounded is not attained.** $`g(x) = x`$ on (0, 1) stays below 1, yet 0.999 is beaten by 0.9995.
 > - **Unique is not promised.** The bottom 0 is taken at x = 0 and at x = 1.
 
 ---

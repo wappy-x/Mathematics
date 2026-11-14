@@ -45,55 +45,63 @@ Drawn to scale from the `figure,` lines both checks print. Dots: the twelve sale
 
 Notation first, in words.
 
-- A **column** is a list of numbers written top to bottom, one per sale. The prices form the column $y$.
-- The predictors form a table $X$ with one row per sale and one column per predictor, plus a leading column of 1s that carries the base price. It is called the **design matrix**.
-- $X^T$ is $X$ turned on its side (its **transpose**), and $I$ is the identity matrix, 1s down the diagonal and 0s elsewhere.
-- For a column of random numbers, $\operatorname{Cov}(\cdot)$ is the square table of all their covariances, variances down the diagonal: the **covariance matrix**.
-- $E[\cdot]$ is the average over repeated draws of the errors, and $\operatorname{Var}(\cdot)$ is a variance, the square of a spread.
+- A **column** is a list of numbers written top to bottom, one per sale. The prices form the column $`y`$.
+- The predictors form a table $`X`$ with one row per sale and one column per predictor, plus a leading column of 1s that carries the base price. It is called the **design matrix**.
+- $`X^T`$ is $`X`$ turned on its side (its **transpose**), and $`I`$ is the identity matrix, 1s down the diagonal and 0s elsewhere.
+- For a column of random numbers, $`\mathrm{Cov}(\cdot)`$ is the square table of all their covariances, variances down the diagonal: the **covariance matrix**.
+- $`E[\cdot]`$ is the average over repeated draws of the errors, and $`\mathrm{Var}(\cdot)`$ is a variance, the square of a spread.
 - An estimate carries a hat.
 
 The model says each price is a weighted sum of the predictors plus an error:
 
-$$y = X\beta + \varepsilon$$
+```math
+y = X\beta + \varepsilon
+```
 
 **Read it aloud:** each price is a base amount, plus so much per square metre, per year of age and per kilometre (here the last two come out negative), plus an error that averages zero.
 
 The least-squares fit solves the **normal equations**, one linear system for all the coefficients:
 
-$$X^T X \hat\beta = X^T y \qquad\text{so}\qquad \hat\beta = (X^T X)^{-1} X^T y = L y$$
+```math
+X^T X \hat\beta = X^T y \qquad\text{so}\qquad \hat\beta = (X^T X)^{-1} X^T y = L y
+```
 
 **Read it aloud:** pick the coefficients whose misses are perpendicular to every column; that choice is a fixed table of weights applied to the prices.
 
-The Gauss–Markov theorem compares least squares with any rival rule $A y$, where $A$ is a fixed 4-by-12 table of weights with $AX = I$, reported through any fixed mix $c$ of the coefficients. If the errors average zero and $\operatorname{Cov}(\varepsilon) = \sigma^2 I$, then
+The Gauss–Markov theorem compares least squares with any rival rule $`A y`$, where $`A`$ is a fixed 4-by-12 table of weights with $`AX = I`$, reported through any fixed mix $`c`$ of the coefficients. If the errors average zero and $`\mathrm{Cov}(\varepsilon) = \sigma^2 I`$, then
 
-$$\operatorname{Cov}(\hat\beta) = \sigma^2 (X^T X)^{-1}, \qquad \operatorname{Var}(c^T A y) \ \ge\ \operatorname{Var}(c^T \hat\beta) \ \text{ for every } A \text{ with } A X = I$$
+```math
+\mathrm{Cov}(\hat\beta) = \sigma^2 (X^T X)^{-1}, \qquad \mathrm{Var}(c^T A y) \ \ge\ \mathrm{Var}(c^T \hat\beta) \ \text{ for every } A \text{ with } A X = I
+```
 
-**Read it aloud:** the fit's spread is the error spread times the inverse of $X^T X$; any other fixed weighted-sum rule that is right on average for every possible truth has at least as much spread, for any coefficient and any combination of coefficients.
+**Read it aloud:** the fit's spread is the error spread times the inverse of $`X^T X`$; any other fixed weighted-sum rule that is right on average for every possible truth has at least as much spread, for any coefficient and any combination of coefficients.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y$ | the prices, one per sale | 124 to 301, $ thousand | coefficients move with it |
-| $X$ | design matrix: a column of 1s, then one column per predictor | 12 rows, 4 columns | more columns, more to separate |
-| $n$, $p$ | number of sales; number of coefficients | 12 and 4 | more sales, smaller spread |
-| $\beta$, $\beta_1$ | the true coefficients, unknown; $\beta_1$ is the one on area | — | — |
-| $\hat\beta$ | the fitted coefficients | 53.43, 2.288, −1.693, −32.71 | — |
-| $\varepsilon$, $e$ | errors, unknown; $e$ is the fitted misses, price minus fit | one per sale | — |
-| $\sigma$, $s$ | the errors' common spread; its estimate from the misses | $s$ = 7.59, $ thousand | every error bar grows in step |
-| $L$ | the least-squares weights $(X^T X)^{-1} X^T$ | 4 rows of 12 weights | — |
-| $H$ | the hat matrix $X(X^T X)^{-1} X^T$: turns the prices into the fitted prices; its diagonal holds the leverages | 12 rows of 12 | — |
-| $A$, $D$, $M$ | a rival rule's weights; its difference $A - L$; $M$ any fixed weights | the fit to the first 8 sales | larger $D$, more spread |
-| $c$ | a fixed mix of coefficients to report | 10 on area alone: a 10 sq m difference | — |
-| $r_j$, $r_1$ | column j after removing all it shares with the others; $r_1$ for area | area not explained by age and distance | longer $r_j$, smaller error bar |
-| $I$ | identity matrix: 1s on the diagonal | 4 by 4 | — |
+| $`y`$ | the prices, one per sale | 124 to 301, $ thousand | coefficients move with it |
+| $`X`$ | design matrix: a column of 1s, then one column per predictor | 12 rows, 4 columns | more columns, more to separate |
+| $`n`$, $`p`$ | number of sales; number of coefficients | 12 and 4 | more sales, smaller spread |
+| $`\beta`$, $`\beta_1`$ | the true coefficients, unknown; $`\beta_1`$ is the one on area | — | — |
+| $`\hat\beta`$ | the fitted coefficients | 53.43, 2.288, −1.693, −32.71 | — |
+| $`\varepsilon`$, $`e`$ | errors, unknown; $`e`$ is the fitted misses, price minus fit | one per sale | — |
+| $`\sigma`$, $`s`$ | the errors' common spread; its estimate from the misses | $`s`$ = 7.59, $ thousand | every error bar grows in step |
+| $`L`$ | the least-squares weights $`(X^T X)^{-1} X^T`$ | 4 rows of 12 weights | — |
+| $`H`$ | the hat matrix $`X(X^T X)^{-1} X^T`$: turns the prices into the fitted prices; its diagonal holds the leverages | 12 rows of 12 | — |
+| $`A`$, $`D`$, $`M`$ | a rival rule's weights; its difference $`A - L`$; $`M`$ any fixed weights | the fit to the first 8 sales | larger $`D`$, more spread |
+| $`c`$ | a fixed mix of coefficients to report | 10 on area alone: a 10 sq m difference | — |
+| $`r_j`$, $`r_1`$ | column j after removing all it shares with the others; $`r_1`$ for area | area not explained by age and distance | longer $`r_j`$, smaller error bar |
+| $`I`$ | identity matrix: 1s on the diagonal | 4 by 4 | — |
 
 Two helper formulas come out of Why it works. Each coefficient is a one-column slope on what its column does not share with the others, and its standard error is set by that leftover's length:
 
-$$\hat\beta_j = \frac{r_j^T y}{r_j^T r_j}, \qquad \operatorname{se}(\hat\beta_j) = \frac{s}{\sqrt{r_j^T r_j}}, \qquad s = \sqrt{\frac{\text{sum of squared misses}}{n - p}}$$
+```math
+\hat\beta_j = \frac{r_j^T y}{r_j^T r_j}, \qquad \mathrm{se}(\hat\beta_j) = \frac{s}{\sqrt{r_j^T r_j}}, \qquad s = \sqrt{\frac{\text{sum of squared misses}}{n - p}}
+```
 
 ### When it holds
 
 - **The mean is a weighted sum of the columns.** If price bends with area, the coefficients still come out, but they answer a straight-line question the data do not ask; [Diagnostics](04-diagnostics-and-residuals.md) shows how to see the bend.
-- **No column is a weighted sum of the others.** Add walking minutes at 12 per kilometre beside distance and nothing of the new column is left once the others are removed: $X^T X$ has no inverse and the two coefficients have no single answer.
+- **No column is a weighted sum of the others.** Add walking minutes at 12 per kilometre beside distance and nothing of the new column is left once the others are removed: $`X^T X`$ has no inverse and the two coefficients have no single answer.
 - **One common spread, no correlation between errors.** Let the spread grow with distance, 4 thousand dollars per kilometre, and a weighted fit, which counts each sale in proportion to one over its error variance, gives the area coefficient a standard deviation of 0.0907 against least squares' 0.1284. The theorem's conclusion fails.
 - **The columns and the rival's weights are fixed before the prices are seen.** A rule that looks at the prices to choose its weights is outside the comparison.
 - **Normal errors are not needed.** The theorem uses only averages and covariances; the simulation below uses flat, uniform noise. Normality is what the exact t intervals of [Regression error bars](02-regression-inference.md) add.
@@ -104,78 +112,80 @@ $$\hat\beta_j = \frac{r_j^T y}{r_j^T r_j}, \qquad \operatorname{se}(\hat\beta_j)
 
 ### Step 0: the fit is a shadow, and a rival is the shadow plus noise it cannot use
 
-The twelve prices form one point in a space with twelve directions. The four columns of $X$ reach only a flat slice of that space. The fit is the point of the slice nearest the prices, its shadow; the exact term is **orthogonal projection**. The miss sticks straight out of the slice.
+The twelve prices form one point in a space with twelve directions. The four columns of $`X`$ reach only a flat slice of that space. The fit is the point of the slice nearest the prices, its shadow; the exact term is **orthogonal projection**. The miss sticks straight out of the slice.
 
 A rival rule that is right on average can differ from least squares only by a piece blind to the slice: pure noise, uncorrelated with the fit. Adding uncorrelated noise only adds spread. The steps below make that exact.
 
 ### Step 1: the normal equations
 
-Write the miss as $e = y - X\hat\beta$. The fit makes the sum of squared misses as small as possible. At the minimum no small change of the coefficients helps, which forces the miss to be perpendicular to every column: $X^T e = 0$ ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) proves this for a line; the proof never used the number of columns).
+Write the miss as $`e = y - X\hat\beta`$. The fit makes the sum of squared misses as small as possible. At the minimum no small change of the coefficients helps, which forces the miss to be perpendicular to every column: $`X^T e = 0`$ ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) proves this for a line; the proof never used the number of columns).
 
-Expanding gives $X^T X \hat\beta = X^T y$, four equations in four unknowns ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)). When no column copies the others, $X^T X$ has an inverse, and the solution is $\hat\beta = L y$ with $L = (X^T X)^{-1} X^T$.
+Expanding gives $`X^T X \hat\beta = X^T y`$, four equations in four unknowns ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)). When no column copies the others, $`X^T X`$ has an inverse, and the solution is $`\hat\beta = L y`$ with $`L = (X^T X)^{-1} X^T`$.
 
-Two facts about $L$ carry the rest of the card. First, $L X = (X^T X)^{-1} X^T X = I$. Second, $L L^T = (X^T X)^{-1} X^T X (X^T X)^{-1} = (X^T X)^{-1}$.
+Two facts about $`L`$ carry the rest of the card. First, $`L X = (X^T X)^{-1} X^T X = I`$. Second, $`L L^T = (X^T X)^{-1} X^T X (X^T X)^{-1} = (X^T X)^{-1}`$.
 
-The fitted prices are $X\hat\beta = XLy = Hy$, where $H = X(X^T X)^{-1} X^T$ is the **hat matrix**: it puts the hat on the prices. Its diagonal entries are the **leverages**, how far each fitted price follows a change in its own sale's price, which [Diagnostics](04-diagnostics-and-residuals.md) reads.
+The fitted prices are $`X\hat\beta = XLy = Hy`$, where $`H = X(X^T X)^{-1} X^T`$ is the **hat matrix**: it puts the hat on the prices. Its diagonal entries are the **leverages**, how far each fitted price follows a change in its own sale's price, which [Diagnostics](04-diagnostics-and-residuals.md) reads.
 
 ### Step 2: "holding the others fixed" is a one-column slope on the leftover
 
-Split the area column in two: the part age, distance and the 1s can predict, and the leftover $r_1$, which is perpendicular to all three. Take the fitted equation $y = X\hat\beta + e$ and multiply both sides by $r_1^T$, the dot product with the leftover.
+Split the area column in two: the part age, distance and the 1s can predict, and the leftover $`r_1`$, which is perpendicular to all three. Take the fitted equation $`y = X\hat\beta + e`$ and multiply both sides by $`r_1^T`$, the dot product with the leftover.
 
 - Against the 1s, age and distance columns the leftover gives 0, by construction.
-- Against the miss $e$ it gives 0, since $e$ is perpendicular to every column and $r_1$ is built from columns.
-- Against the area column it gives $r_1^T r_1$, since the predictable part of area is perpendicular to $r_1$.
+- Against the miss $`e`$ it gives 0, since $`e`$ is perpendicular to every column and $`r_1`$ is built from columns.
+- Against the area column it gives $`r_1^T r_1`$, since the predictable part of area is perpendicular to $`r_1`$.
 
-So $r_1^T y = \hat\beta_1\, r_1^T r_1$, the helper formula. The area coefficient uses only the part of area that age and distance cannot predict. Among these twelve sales, that is what "holding age and distance fixed" means.
+So $`r_1^T y = \hat\beta_1\, r_1^T r_1`$, the helper formula. The area coefficient uses only the part of area that age and distance cannot predict. Among these twelve sales, that is what "holding age and distance fixed" means.
 
 This is the Frisch–Waugh–Lovell theorem: Frisch and Waugh proved it for time trends in 1933, Lovell in general in 1963.
 
-### Step 3: the fit is unbiased, and its spread is $\sigma^2 (X^T X)^{-1}$
+### Step 3: the fit is unbiased, and its spread is $`\sigma^2 (X^T X)^{-1}`$
 
-Put the model into the fit: $\hat\beta = L(X\beta + \varepsilon) = \beta + L\varepsilon$, by Step 1's $LX = I$. The errors average zero, so $E[\hat\beta] = \beta$: right on average, whatever the truth.
+Put the model into the fit: $`\hat\beta = L(X\beta + \varepsilon) = \beta + L\varepsilon`$, by Step 1's $`LX = I`$. The errors average zero, so $`E[\hat\beta] = \beta`$: right on average, whatever the truth.
 
-For a fixed table of weights $M$, the covariance matrix of $M\varepsilon$ is $M \operatorname{Cov}(\varepsilon) M^T$; entry by entry this is the rule that covariance of weighted sums expands into weighted covariances. With $\operatorname{Cov}(\varepsilon) = \sigma^2 I$, the fit's covariance matrix is $\sigma^2 L L^T = \sigma^2 (X^T X)^{-1}$.
+For a fixed table of weights $`M`$, the covariance matrix of $`M\varepsilon`$ is $`M \mathrm{Cov}(\varepsilon) M^T`$; entry by entry this is the rule that covariance of weighted sums expands into weighted covariances. With $`\mathrm{Cov}(\varepsilon) = \sigma^2 I`$, the fit's covariance matrix is $`\sigma^2 L L^T = \sigma^2 (X^T X)^{-1}`$.
 
-Step 2 gives the second helper: $\hat\beta_j$ weights the prices by $r_j / r_j^T r_j$, so its variance is $\sigma^2 / r_j^T r_j$. When the other columns predict area well, little of area is left over, and the area coefficient wobbles.
+Step 2 gives the second helper: $`\hat\beta_j`$ weights the prices by $`r_j / r_j^T r_j`$, so its variance is $`\sigma^2 / r_j^T r_j`$. When the other columns predict area well, little of area is left over, and the area coefficient wobbles.
 
-In practice $\sigma$ is unknown. It is replaced by $s$, from the sum of squared misses divided by $n - p$, not $n$: fitting four coefficients uses up four of the twelve directions the misses could have taken. [Regression error bars](02-regression-inference.md) shows why.
+In practice $`\sigma`$ is unknown. It is replaced by $`s`$, from the sum of squared misses divided by $`n - p`$, not $`n`$: fitting four coefficients uses up four of the twelve directions the misses could have taken. [Regression error bars](02-regression-inference.md) shows why.
 
-Over the 20,000 simulated markets below, $s^2$ averages 57.7601 ± 0.1573 against the true $\sigma^2$ = 57.76.
+Over the 20,000 simulated markets below, $`s^2`$ averages 57.7601 ± 0.1573 against the true $`\sigma^2`$ = 57.76.
 
 ### Step 4: every unbiased rival pays extra spread (Gauss–Markov)
 
-A **linear** rule makes each coefficient a fixed weighted sum of the prices: $A y$ for a table $A$ of 4 by 12 weights chosen before the prices are seen. It is **unbiased** when $E[A y] = A X \beta = \beta$ for every possible truth, which is exactly $A X = I$.
+A **linear** rule makes each coefficient a fixed weighted sum of the prices: $`A y`$ for a table $`A`$ of 4 by 12 weights chosen before the prices are seen. It is **unbiased** when $`E[A y] = A X \beta = \beta`$ for every possible truth, which is exactly $`A X = I`$.
 
-Write the rival as least squares plus a difference: $A = L + D$. Then $DX = AX - LX = I - I = 0$: the difference is blind to every column. The cross term vanishes, $L D^T = (X^T X)^{-1} (D X)^T = 0$, and so
+Write the rival as least squares plus a difference: $`A = L + D`$. Then $`DX = AX - LX = I - I = 0`$: the difference is blind to every column. The cross term vanishes, $`L D^T = (X^T X)^{-1} (D X)^T = 0`$, and so
 
-$$\operatorname{Cov}(A y) = \sigma^2 (L + D)(L + D)^T = \sigma^2 (X^T X)^{-1} + \sigma^2 D D^T.$$
+```math
+\mathrm{Cov}(A y) = \sigma^2 (L + D)(L + D)^T = \sigma^2 (X^T X)^{-1} + \sigma^2 D D^T.
+```
 
-For any mix $c$ of coefficients, the rival's variance exceeds the fit's by $\sigma^2$ times the squared length of $D^T c$, never negative. Least squares is the **best linear unbiased estimator**, BLUE for short.
+For any mix $`c`$ of coefficients, the rival's variance exceeds the fit's by $`\sigma^2`$ times the squared length of $`D^T c`$, never negative. Least squares is the **best linear unbiased estimator**, BLUE for short.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The class.** A rule is linear when it is $A y$ with $A$ fixed. Its mean is $E[A y] = A X \beta + A E[\varepsilon] = A X \beta$. This equals $\beta$ for every $\beta$ exactly when $A X = I$: if $A X = I$ it holds at once; conversely, taking $\beta$ to be each column of $I$ in turn reads off each column of $A X$ as the matching column of $I$.
+**The class.** A rule is linear when it is $`A y`$ with $`A`$ fixed. Its mean is $`E[A y] = A X \beta + A E[\varepsilon] = A X \beta`$. This equals $`\beta`$ for every $`\beta`$ exactly when $`A X = I`$: if $`A X = I`$ it holds at once; conversely, taking $`\beta`$ to be each column of $`I`$ in turn reads off each column of $`A X`$ as the matching column of $`I`$.
 
-**The covariance rule.** For fixed $M$, entry $(j, k)$ of $\operatorname{Cov}(M\varepsilon)$ is $\operatorname{Cov}(\sum_a M_{ja} \varepsilon_a, \sum_b M_{kb} \varepsilon_b) = \sum_a \sum_b M_{ja} M_{kb} \operatorname{Cov}(\varepsilon_a, \varepsilon_b)$, which is entry $(j, k)$ of $M \operatorname{Cov}(\varepsilon) M^T$. With $\operatorname{Cov}(\varepsilon) = \sigma^2 I$ only the terms $a = b$ survive, giving $\sigma^2 M M^T$. Adding the fixed $A X \beta$ changes no covariance.
+**The covariance rule.** For fixed $`M`$, entry $`(j, k)`$ of $`\mathrm{Cov}(M\varepsilon)`$ is $`\mathrm{Cov}(\sum_a M_{ja} \varepsilon_a, \sum_b M_{kb} \varepsilon_b) = \sum_a \sum_b M_{ja} M_{kb} \mathrm{Cov}(\varepsilon_a, \varepsilon_b)`$, which is entry $`(j, k)`$ of $`M \mathrm{Cov}(\varepsilon) M^T`$. With $`\mathrm{Cov}(\varepsilon) = \sigma^2 I`$ only the terms $`a = b`$ survive, giving $`\sigma^2 M M^T`$. Adding the fixed $`A X \beta`$ changes no covariance.
 
-**The gap.** Put $D = A - L$. Then $D X = 0$, so $L D^T = (X^T X)^{-1} X^T D^T = (X^T X)^{-1} (D X)^T = 0$, and its transpose $D L^T = 0$. Expanding, $(L + D)(L + D)^T = L L^T + L D^T + D L^T + D D^T = (X^T X)^{-1} + D D^T$.
+**The gap.** Put $`D = A - L`$. Then $`D X = 0`$, so $`L D^T = (X^T X)^{-1} X^T D^T = (X^T X)^{-1} (D X)^T = 0`$, and its transpose $`D L^T = 0`$. Expanding, $`(L + D)(L + D)^T = L L^T + L D^T + D L^T + D D^T = (X^T X)^{-1} + D D^T`$.
 
-**Every combination.** For a fixed column $c$, $\operatorname{Var}(c^T A y) = c^T \operatorname{Cov}(A y)\, c = \operatorname{Var}(c^T \hat\beta) + \sigma^2 (D^T c)^T (D^T c)$. The last term is a sum of squares, so it is at least 0.
+**Every combination.** For a fixed column $`c`$, $`\mathrm{Var}(c^T A y) = c^T \mathrm{Cov}(A y)\, c = \mathrm{Var}(c^T \hat\beta) + \sigma^2 (D^T c)^T (D^T c)`$. The last term is a sum of squares, so it is at least 0.
 
-**Equality.** With $\sigma > 0$ the rival ties on the mix $c$ only when $D^T c = 0$. It ties on every coefficient only when every diagonal entry of $D D^T$ is 0, that is, every row of $D$ is zero and $A = L$.
+**Equality.** With $`\sigma > 0`$ the rival ties on the mix $`c`$ only when $`D^T c = 0`$. It ties on every coefficient only when every diagonal entry of $`D D^T`$ is 0, that is, every row of $`D`$ is zero and $`A = L`$.
 
 **What was not used.** Normal errors, independent errors and any distribution beyond means and covariances. The errors may even be dependent, as long as they are uncorrelated with one common variance.
 
 </details>
 
-On the house data, one rival fits the first 8 sales only and ignores the last 4. It is linear and unbiased, since $A X = I$ holds to 1e-9. Per unit of $\sigma^2$, its area variance is 0.000481548 against least squares' 0.000251295: 1.9163 times larger. The gap, 0.000230253, equals the area entry of $D D^T$, as Step 4 says.
+On the house data, one rival fits the first 8 sales only and ignores the last 4. It is linear and unbiased, since $`A X = I`$ holds to 1e-9. Per unit of $`\sigma^2`$, its area variance is 0.000481548 against least squares' 0.000251295: 1.9163 times larger. The gap, 0.000230253, equals the area entry of $`D D^T`$, as Step 4 says.
 
-Two hundred random unbiased rivals, built as $L$ plus a random table with the column-blind property, all lose: the extra variance runs from 0.000064659 to 0.000551976, never below zero.
+Two hundred random unbiased rivals, built as $`L`$ plus a random table with the column-blind property, all lose: the extra variance runs from 0.000064659 to 0.000551976, never below zero.
 
 ### The picture: 20,000 imagined markets
 
-Take the fitted coefficients as the truth, with error spread $\sigma$ = 7.6 thousand dollars, and draw 20,000 fresh sets of twelve prices using flat, uniform noise. Estimate the area coefficient each time by both rules.
+Take the fitted coefficients as the truth, with error spread $`\sigma`$ = 7.6 thousand dollars, and draw 20,000 fresh sets of twelve prices using flat, uniform noise. Estimate the area coefficient each time by both rules.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -193,13 +203,15 @@ Orange: least squares on all 12 sales. Green: the rival fit to the first 8. Both
 
 Fit price on area alone and the slope is 1.768541. The two answers are linked exactly. Let the **drift** of a column be its own slope on area alone. Among these sales, age drifts −0.182352 years per square metre (bigger houses are a little newer). Distance drifts 0.025320 km per square metre (bigger houses are farther out, about 25 metres per square metre). Then
 
-$$\text{slope on area alone} = \hat\beta_1 + \hat\beta_{\text{age}} \times \text{age drift} + \hat\beta_{\text{dist}} \times \text{distance drift}$$
+```math
+\text{slope on area alone} = \hat\beta_1 + \hat\beta_{\text{age}} \times \text{age drift} + \hat\beta_{\text{dist}} \times \text{distance drift}
+```
 
-Proof: take the area-alone slope of both sides of $y = X\hat\beta + e$. Slope is linear in what it measures. The 1s column has slope 0, area has slope 1, and the miss has slope 0 because it is perpendicular to the 1s and to area.
+Proof: take the area-alone slope of both sides of $`y = X\hat\beta + e`$. Slope is linear in what it measures. The 1s column has slope 0, area has slope 1, and the miss has slope 0 because it is perpendicular to the 1s and to area.
 
 On the numbers, newness pushes the lone slope up and the walk pulls it down by more, landing at 1.768541. The lone slope is not wrong arithmetic. It answers a different question: how price differs between houses of different size, letting age and distance come along as they happen to in this town.
 
-A second road to the fit avoids forming $X^T X$: orthogonalise the columns one by one and back-substitute. This is the QR route of [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): QR splits $X$ into perpendicular columns times a triangle of numbers. The checks take a close relative of it, Step 2's leftovers, and land on the same coefficients.
+A second road to the fit avoids forming $`X^T X`$: orthogonalise the columns one by one and back-substitute. This is the QR route of [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): QR splits $`X`$ into perpendicular columns times a triangle of numbers. The checks take a close relative of it, Step 2's leftovers, and land on the same coefficients.
 
 ---
 
@@ -207,15 +219,15 @@ A second road to the fit avoids forming $X^T X$: orthogonalise the columns one b
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $X^T X$, first row | 12 sales; sum of areas; sum of ages; sum of distances | 12, 1301, 226, 21.50 |
-| $X^T X$, area row | area against 1s, area, age, distance | 1301, 151103, 22669, 2585.50 |
-| $X^T X$, age row | age against each column | 226, 22669, 5884, 326.90 |
-| $X^T X$, distance row | distance against each column | 21.50, 2585.50, 326.90, 49.19 |
-| $X^T y$ | each column against the prices | 2532, 292290, 43288, 4902 |
+| $`X^T X`$, first row | 12 sales; sum of areas; sum of ages; sum of distances | 12, 1301, 226, 21.50 |
+| $`X^T X`$, area row | area against 1s, area, age, distance | 1301, 151103, 22669, 2585.50 |
+| $`X^T X`$, age row | age against each column | 226, 22669, 5884, 326.90 |
+| $`X^T X`$, distance row | distance against each column | 21.50, 2585.50, 326.90, 49.19 |
+| $`X^T y`$ | each column against the prices | 2532, 292290, 43288, 4902 |
 | solve the four equations | elimination on the four rows above, done by machine (road 1 of the checks) | 53.425906, 2.288019, −1.692898, −32.708307 |
 | sum of squared misses | 12 misses, squared and added | 460.8341 |
-| $s$ | square root of 460.8341 / (12 − 4) | 7.589747 |
-| area error bar | $s$ times the square root of 0.000251295 | 0.120315 |
+| $`s`$ | square root of 460.8341 / (12 − 4) | 7.589747 |
+| area error bar | $`s`$ times the square root of 0.000251295 | 0.120315 |
 | house of 100 sq m, 20 years, 1.5 km | 53.425906 + 2.288019 × 100 − 1.692898 × 20 − 32.708307 × 1.5 | 199.3074 |
 | same house at 110 sq m | add 10 × 2.288019 | **222.1876** |
 
@@ -229,7 +241,7 @@ The coefficients in words, each with its error bar: $2,288 per square metre (±$
 | --- | --- | --- |
 | Price on area alone, read as "with the rest fixed" | 1.768541 per sq m, not 2.288019 | Distance and age move with area in these sales and ride along |
 | Spreads grow with distance (4 per km), fit still called best | least squares sd 0.128376, weighted fit 0.090650 | Unequal spreads break Gauss–Markov; a linear unbiased weighted fit wins |
-| Walking minutes (12 per km) added beside distance | 0.000000 of the new column left over | Redundant column: $X^T X$ has no inverse, the coefficients no single answer |
+| Walking minutes (12 per km) added beside distance | 0.000000 of the new column left over | Redundant column: $`X^T X`$ has no inverse, the coefficients no single answer |
 | Last 4 sales dropped to "tidy" the data | area sd 0.166776, not 0.120477 | Unbiased still, but 1.9163 times the variance |
 
 The code prints all four.
@@ -238,7 +250,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The fit comes by two roads sharing no arithmetic: the normal equations solved by elimination, and Step 2's leftovers built by [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md), which never forms $X^T X$. Gram-Schmidt makes the other columns perpendicular one by one, then strips their shadows from the column in question. The error bars come out both ways. A third road rebuilds the area-alone slope from the full fit. Gauss–Markov is checked three ways: exact variances for the first-8 rival, 200 random unbiased rivals, and 20,000 simulated markets from a SplitMix64 generator, seed 20260928, written out in both languages; the same markets confirm that $s^2$ averages $\sigma^2$. The last block prints the what-breaks cases and the figure coordinates.
+The fit comes by two roads sharing no arithmetic: the normal equations solved by elimination, and Step 2's leftovers built by [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md), which never forms $`X^T X`$. Gram-Schmidt makes the other columns perpendicular one by one, then strips their shadows from the column in question. The error bars come out both ways. A third road rebuilds the area-alone slope from the full fit. Gauss–Markov is checked three ways: exact variances for the first-8 rival, 200 random unbiased rivals, and 20,000 simulated markets from a SplitMix64 generator, seed 20260928, written out in both languages; the same markets confirm that $`s^2`$ averages $`\sigma^2`$. The last block prints the what-breaks cases and the figure coordinates.
 
 ### Python
 
@@ -632,10 +644,10 @@ The two outputs match line for line, the simulation included, because both draw 
 
 Lean proves the card's three results for any number of sales and coefficients, when no column is a weighted sum of the others.
 
-- Suppose the errors average zero, with one common variance $\sigma^2$ and no correlation. Then the fit is unbiased, and its covariance matrix is $\sigma^2 (X^T X)^{-1}$.
-- Take those errors and any fixed rival table $A$ with $AX = I$. Then $\operatorname{Var}(c^T A y) \ge \operatorname{Var}(c^T \hat\beta)$ for every fixed mix $c$ of coefficients.
-- Take any prices $y$, and let $r_j$ be column $j$ minus a weighted sum of the others, perpendicular to each of them. Then $\hat\beta_j = r_j^T y / r_j^T r_j$.
-- The hand table's sums hold exactly: every entry of $X^T X$ and of $X^T y$.
+- Suppose the errors average zero, with one common variance $`\sigma^2`$ and no correlation. Then the fit is unbiased, and its covariance matrix is $`\sigma^2 (X^T X)^{-1}`$.
+- Take those errors and any fixed rival table $`A`$ with $`AX = I`$. Then $`\mathrm{Var}(c^T A y) \ge \mathrm{Var}(c^T \hat\beta)`$ for every fixed mix $`c`$ of coefficients.
+- Take any prices $`y`$, and let $`r_j`$ be column $`j`$ minus a weighted sum of the others, perpendicular to each of them. Then $`\hat\beta_j = r_j^T y / r_j^T r_j`$.
+- The hand table's sums hold exactly: every entry of $`X^T X`$ and of $`X^T y`$.
 
 The solved coefficients, error bars, Step 5's drift identity, simulations and weighted fit are left to the Python and Rust checks.
 
@@ -965,13 +977,13 @@ example : 5 * 124 + 18 * 140 + 6 * 172 + 14 * 200 + 9 * 180 + 26 * 171 + 10 * 26
 - **Finance.** A share's return regressed on several market factors at once is this card's fit, with the factor loadings as coefficients: [Factor models](../../12-Financial%20mathematics/37-Portfolio%20Theory/05-factor-models-and-apt.md).
 
 > **Say it back**
-> Put the predictors in columns, add a column of 1s, and solve the normal equations for all the coefficients at once. Each coefficient is the slope of price on what its column does not share with the others, which is what "holding the others fixed" means in the data. The fit is unbiased and its covariance matrix is the error variance times the inverse of $X^T X$. Any other fixed weighted-sum rule that is right on average differs from least squares by a piece blind to the columns, so it can only add spread: that is Gauss–Markov. The guarantee needs zero-mean errors with one common spread and no correlation, and nothing about normality.
+> Put the predictors in columns, add a column of 1s, and solve the normal equations for all the coefficients at once. Each coefficient is the slope of price on what its column does not share with the others, which is what "holding the others fixed" means in the data. The fit is unbiased and its covariance matrix is the error variance times the inverse of $`X^T X`$. Any other fixed weighted-sum rule that is right on average differs from least squares by a piece blind to the columns, so it can only add spread: that is Gauss–Markov. The guarantee needs zero-mean errors with one common spread and no correlation, and nothing about normality.
 
 ---
 
 ## What this builds on
 
-- [Regression error bars](02-regression-inference.md): the standard error of a slope and the $n - 2$ divisor, which becomes $n - p$ here, for four coefficients at once.
+- [Regression error bars](02-regression-inference.md): the standard error of a slope and the $`n - 2`$ divisor, which becomes $`n - p`$ here, for four coefficients at once.
 - [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations and the perpendicular miss.
 - [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md): stacking many equations into one matrix equation and solving it.
 

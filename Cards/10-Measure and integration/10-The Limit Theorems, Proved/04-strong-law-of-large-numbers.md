@@ -35,50 +35,56 @@ Orange: the running average of one run, seed 20260929, to two decimals. Green an
 
 ## The formula
 
-Notation first, in words. The space $\Omega$ is the set of all infinite sequences of die faces; one sequence is written $\omega$. The collection $\mathcal{F}$ is the sets of sequences we allow ourselves to measure, and $P$ gives each its probability; the integral against $P$ is the expectation, written $E$. The roll $X_i$ is the face shown at roll i, a measurable function of the sequence. The probability wing states the law of large numbers and checks it by simulation ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)); this card proves the strong law.
+Notation first, in words. The space $`\Omega`$ is the set of all infinite sequences of die faces; one sequence is written $`\omega`$. The collection $`\mathcal{F}`$ is the sets of sequences we allow ourselves to measure, and $`P`$ gives each its probability; the integral against $`P`$ is the expectation, written $`E`$. The roll $`X_i`$ is the face shown at roll i, a measurable function of the sequence. The probability wing states the law of large numbers and checks it by simulation ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)); this card proves the strong law.
 
 Write the sum after n rolls and the running average as
 
-$$S_n = X_1 + \dots + X_n, \qquad \bar X_n = \frac{S_n}{n}.$$
+```math
+S_n = X_1 + \dots + X_n, \qquad \bar X_n = \frac{S_n}{n}.
+```
 
-**The strong law, fourth-moment version.** Let $X_1, X_2, \dots$ be independent, all with the same law (the same probability for each face), with mean $\mu = E[X_1]$ and $E[X_1^4] < \infty$. Then
+**The strong law, fourth-moment version.** Let $`X_1, X_2, \dots`$ be independent, all with the same law (the same probability for each face), with mean $`\mu = E[X_1]`$ and $`E[X_1^4] < \infty`$. Then
 
-$$P\Big(\big\{\omega : \bar X_n(\omega) \to \mu\big\}\Big) = 1.$$
+```math
+P\Big(\big\{\omega : \bar X_n(\omega) \to \mu\big\}\Big) = 1.
+```
 
 **Read it aloud:** the set of sequences on which the running average tends to the mean has probability one; the average converges almost surely, written a.s., read "except on a set of probability zero".
 
-The proof runs on one inequality. Centre each roll, $Y_i = X_i - \mu$, and let $\sigma^2 = E[Y_1^2]$ and $m_4 = E[Y_1^4]$ be the second and fourth moments of the centred roll. For a tolerance $\varepsilon > 0$ let $A_n$ be the bad event $\{|\bar X_n - \mu| > \varepsilon\}$. Then
+The proof runs on one inequality. Centre each roll, $`Y_i = X_i - \mu`$, and let $`\sigma^2 = E[Y_1^2]`$ and $`m_4 = E[Y_1^4]`$ be the second and fourth moments of the centred roll. For a tolerance $`\varepsilon > 0`$ let $`A_n`$ be the bad event $`\{|\bar X_n - \mu| > \varepsilon\}`$. Then
 
-$$E\big[(S_n - n\mu)^4\big] = n\,m_4 + 3n(n-1)\,\sigma^4, \qquad P(A_n) \le \frac{C}{n^2}, \quad C = \frac{m_4 + 3\sigma^4}{\varepsilon^4}.$$
+```math
+E\big[(S_n - n\mu)^4\big] = n\,m_4 + 3n(n-1)\,\sigma^4, \qquad P(A_n) \le \frac{C}{n^2}, \quad C = \frac{m_4 + 3\sigma^4}{\varepsilon^4}.
+```
 
 **Read it aloud:** the fourth power of the total error grows only like n squared, so the chance of a bad average at roll n falls like one over n squared, and those chances add up to a finite total.
 
-**Kolmogorov's strong law.** Let $X_1, X_2, \dots$ be independent with the same law. Then $\bar X_n \to \mu$ a.s. for a finite number $\mu$ if and only if $E|X_1| < \infty$, and then $\mu = E[X_1]$. Etemadi showed that independence of each pair of rolls is enough.
+**Kolmogorov's strong law.** Let $`X_1, X_2, \dots`$ be independent with the same law. Then $`\bar X_n \to \mu`$ a.s. for a finite number $`\mu`$ if and only if $`E|X_1| < \infty`$, and then $`\mu = E[X_1]`$. Etemadi showed that independence of each pair of rolls is enough.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$, $P$, $E$ | roll sequences; measurable sets; probability; expectation | sequences of faces 1 to 6 | — |
-| $X_i$, $\omega$ | the face at roll i; one infinite sequence | run 1 | — |
-| $S_n$, $\bar X_n$ | the sum and the running average after n rolls | average 3.5123 at n = 10,000 | — |
-| $\mu$ | the mean of one roll | 3.5 | the average settles at a higher level |
-| $Y_i$, $Y_1$, $Y_a$ | the centred roll, face minus 3.5 | −2.5 to 2.5 | — |
-| $\sigma^2$, $m_4$ | second and fourth moments of the centred roll | 35/12 and 707/48 | a larger C, a weaker bound |
-| $\varepsilon$ | the tolerance: how far from the mean counts as bad | 0.1 | a smaller C, by the fourth power |
-| $A_n$, $B_j$, $B$ | bad at roll n; bad infinitely often for ε = 1/j; the union over j | P(A_1000) = 0.0627 | — |
-| $C$ | the constant in the bound $C/n^2$ | 402,500 | — |
-| $n$, $N$, $j$ | roll count; a starting roll; an index for tolerances 1/j | N = 402,502 | later start, smaller tail sum |
-| $Z_n$, $Z_k$ | the jump sequence of Step 6 | ±n or 0 | — |
-| $W_i$, $T_k$, $k_j$, $\alpha$ | Etemadi's cut-off roll and its sums; checkpoints near $\alpha^j$ | the fold only | — |
-| $X^+$, $X^-$, $k$, $m$ | the positive and negative parts of a roll; whole-number indices in the fold | a die face is its own positive part | — |
-| $V$, $t$ | Markov's nonnegative quantity and the level it must exceed | $V = (S_n - n\mu)^4$, $t = (n\varepsilon)^4$ | a higher level, a smaller bound |
-| $c$, $L$ | a slope in the converse, $\lvert X_n \rvert > cn$; a would-be limit of the averages in Step 6 | the fold and Step 6 only | — |
+| $`\Omega`$, $`\mathcal{F}`$, $`P`$, $`E`$ | roll sequences; measurable sets; probability; expectation | sequences of faces 1 to 6 | — |
+| $`X_i`$, $`\omega`$ | the face at roll i; one infinite sequence | run 1 | — |
+| $`S_n`$, $`\bar X_n`$ | the sum and the running average after n rolls | average 3.5123 at n = 10,000 | — |
+| $`\mu`$ | the mean of one roll | 3.5 | the average settles at a higher level |
+| $`Y_i`$, $`Y_1`$, $`Y_a`$ | the centred roll, face minus 3.5 | −2.5 to 2.5 | — |
+| $`\sigma^2`$, $`m_4`$ | second and fourth moments of the centred roll | 35/12 and 707/48 | a larger C, a weaker bound |
+| $`\varepsilon`$ | the tolerance: how far from the mean counts as bad | 0.1 | a smaller C, by the fourth power |
+| $`A_n`$, $`B_j`$, $`B`$ | bad at roll n; bad infinitely often for ε = 1/j; the union over j | P(A_1000) = 0.0627 | — |
+| $`C`$ | the constant in the bound $`C/n^2`$ | 402,500 | — |
+| $`n`$, $`N`$, $`j`$ | roll count; a starting roll; an index for tolerances 1/j | N = 402,502 | later start, smaller tail sum |
+| $`Z_n`$, $`Z_k`$ | the jump sequence of Step 6 | ±n or 0 | — |
+| $`W_i`$, $`T_k`$, $`k_j`$, $`\alpha`$ | Etemadi's cut-off roll and its sums; checkpoints near $`\alpha^j`$ | the fold only | — |
+| $`X^+`$, $`X^-`$, $`k`$, $`m`$ | the positive and negative parts of a roll; whole-number indices in the fold | a die face is its own positive part | — |
+| $`V`$, $`t`$ | Markov's nonnegative quantity and the level it must exceed | $`V = (S_n - n\mu)^4`$, $`t = (n\varepsilon)^4`$ | a higher level, a smaller bound |
+| $`c`$, $`L`$ | a slope in the converse, $`\lvert X_n \rvert > cn`$; a would-be limit of the averages in Step 6 | the fold and Step 6 only | — |
 
 ### When it holds
 
 - **Independent rolls.** Copy the first roll into every later roll and the average is the first face forever: P(A_n) = 1 at every n.
 - **One law for every roll.** Without it the average can converge in probability and still fail almost surely: the jump sequence of Step 6.
 - **A finite fourth moment, for this proof.** A die has one. Without it, Kolmogorov's version and Etemadi's proof take over.
-- **A finite mean, for any strong law of this kind.** If $E|X_1| = \infty$ the average is unbounded a.s. The average of standard Cauchy draws has the same law as one draw, so it never settles ([Characteristic functions](06-characteristic-functions.md)).
+- **A finite mean, for any strong law of this kind.** If $`E|X_1| = \infty`$ the average is unbounded a.s. The average of standard Cauchy draws has the same law as one draw, so it never settles ([Characteristic functions](06-characteristic-functions.md)).
 
 ---
 
@@ -86,79 +92,83 @@ $$E\big[(S_n - n\mu)^4\big] = n\,m_4 + 3n(n-1)\,\sigma^4, \qquad P(A_n) \le \fra
 
 ### Step 0: turn "stays close" into "only finitely many bad rolls"
 
-The average converges to the mean exactly when, for every tolerance, only finitely many rolls are bad. The set of sequences with infinitely many bad rolls is the lim sup of the bad events, read "infinitely many of them happen". The first Borel-Cantelli lemma says that if the probabilities of the bad events have a finite sum, that set has probability zero ([The Borel-Cantelli lemmas](01-borel-cantelli-lemmas.md)). So the whole task is a bound on $P(A_n)$ that adds up.
+The average converges to the mean exactly when, for every tolerance, only finitely many rolls are bad. The set of sequences with infinitely many bad rolls is the lim sup of the bad events, read "infinitely many of them happen". The first Borel-Cantelli lemma says that if the probabilities of the bad events have a finite sum, that set has probability zero ([The Borel-Cantelli lemmas](01-borel-cantelli-lemmas.md)). So the whole task is a bound on $`P(A_n)`$ that adds up.
 
-Chebyshev's inequality, the weak law's tool ([The weak law of large numbers](03-weak-law-of-large-numbers.md)), gives $\sigma^2/(n\varepsilon^2)$. That falls like 1/n, whose sum is infinite: for the die its bounds from roll 1,000 add to 671.75 by roll 10,000 and 2014.91 by roll 1,000,000. A higher power of the error falls faster.
+Chebyshev's inequality, the weak law's tool ([The weak law of large numbers](03-weak-law-of-large-numbers.md)), gives $`\sigma^2/(n\varepsilon^2)`$. That falls like 1/n, whose sum is infinite: for the die its bounds from roll 1,000 add to 671.75 by roll 10,000 and 2014.91 by roll 1,000,000. A higher power of the error falls faster.
 
 ### Step 1: the fourth power of the total error grows like n squared
 
-Expand $(Y_1 + \dots + Y_n)^4$ into products $Y_a Y_b Y_c Y_d$, one for each choice of four indices. Take expectations term by term. Independence turns the expectation of a product of different rolls into a product of expectations. Any term with an index that appears exactly once contains a factor $E[Y_a] = 0$, so it vanishes.
+Expand $`(Y_1 + \dots + Y_n)^4`$ into products $`Y_a Y_b Y_c Y_d`$, one for each choice of four indices. Take expectations term by term. Independence turns the expectation of a product of different rolls into a product of expectations. Any term with an index that appears exactly once contains a factor $`E[Y_a] = 0`$, so it vanishes.
 
-Two kinds of term survive. All four indices equal: n terms, each $m_4$. Two different indices, each twice: choose the pair of indices, n(n − 1)/2 ways, and the positions, 6 ways, giving 3n(n − 1) terms, each $\sigma^2 \cdot \sigma^2$. Hence
+Two kinds of term survive. All four indices equal: n terms, each $`m_4`$. Two different indices, each twice: choose the pair of indices, n(n − 1)/2 ways, and the positions, 6 ways, giving 3n(n − 1) terms, each $`\sigma^2 \cdot \sigma^2`$. Hence
 
-$$E\big[(S_n - n\mu)^4\big] = n\,m_4 + 3n(n-1)\,\sigma^4.$$
+```math
+E\big[(S_n - n\mu)^4\big] = n\,m_4 + 3n(n-1)\,\sigma^4.
+```
 
-The die: $\sigma^2$ = 35/12 and $m_4$ = 707/48. At n = 2 the formula gives 80.5. Counting all $6^2$ sequences of two rolls gives 80.5 too; at n = 8, all $6^8$ sequences give 1547, as the formula does.
+The die: $`\sigma^2`$ = 35/12 and $`m_4`$ = 707/48. At n = 2 the formula gives 80.5. Counting all $`6^2`$ sequences of two rolls gives 80.5 too; at n = 8, all $`6^8`$ sequences give 1547, as the formula does.
 
 ### Step 2: Markov's inequality on the fourth power
 
-Markov's inequality says a nonnegative quantity exceeds a level t with probability at most its expectation over t. Apply it to $(S_n - n\mu)^4$ at the level $(n\varepsilon)^4$:
+Markov's inequality says a nonnegative quantity exceeds a level t with probability at most its expectation over t. Apply it to $`(S_n - n\mu)^4`$ at the level $`(n\varepsilon)^4`$:
 
-$$P(A_n) = P\big(|S_n - n\mu| > n\varepsilon\big) \le \frac{n\,m_4 + 3n(n-1)\,\sigma^4}{n^4\varepsilon^4} \le \frac{m_4 + 3\sigma^4}{n^2 \varepsilon^4} = \frac{C}{n^2}.$$
+```math
+P(A_n) = P\big(|S_n - n\mu| > n\varepsilon\big) \le \frac{n\,m_4 + 3n(n-1)\,\sigma^4}{n^4\varepsilon^4} \le \frac{m_4 + 3\sigma^4}{n^2 \varepsilon^4} = \frac{C}{n^2}.
+```
 
-The last step uses n ≤ n^2 and n(n − 1) ≤ n^2. For the die with ε = 0.1, $m_4 + 3\sigma^4$ = 40.25 and C = 402,500. At roll 500 even the middle form is 1.0200, which says nothing; at roll 1,000 the forms give 0.4025 and 0.2551, against the exact 0.0627. The bound is crude. Its value is its shape: $1/n^2$ adds up.
+The last step uses n ≤ n^2 and n(n − 1) ≤ n^2. For the die with ε = 0.1, $`m_4 + 3\sigma^4`$ = 40.25 and C = 402,500. At roll 500 even the middle form is 1.0200, which says nothing; at roll 1,000 the forms give 0.4025 and 0.2551, against the exact 0.0627. The bound is crude. Its value is its shape: $`1/n^2`$ adds up.
 
 ### Step 3: Borel-Cantelli, one tolerance at a time
 
-$\sum_n P(A_n) \le \sum_n \min(1, C/n^2) < \infty$. By the first Borel-Cantelli lemma, the set of sequences in infinitely many $A_n$ has probability zero. Off that set, every sequence has a last bad roll for this tolerance.
+$`\sum_n P(A_n) \le \sum_n \min(1, C/n^2) < \infty`$. By the first Borel-Cantelli lemma, the set of sequences in infinitely many $`A_n`$ has probability zero. Off that set, every sequence has a last bad roll for this tolerance.
 
-The same sum bounds how late that last roll can be: the chance of any bad roll from N on is at most $\sum_{n \ge N} C/n^2 \le C/(N-1)$. For the die this falls below 1 from N = 402,502 and reaches 0.01 at N = 40,250,002. These are guarantees, not estimates: the simulated run settled inside the band for good after roll 1,149.
+The same sum bounds how late that last roll can be: the chance of any bad roll from N on is at most $`\sum_{n \ge N} C/n^2 \le C/(N-1)`$. For the die this falls below 1 from N = 402,502 and reaches 0.01 at N = 40,250,002. These are guarantees, not estimates: the simulated run settled inside the band for good after roll 1,149.
 
 ### Step 4: every tolerance at once
 
-Take the tolerances ε = 1/j for j = 1, 2, 3, …. Each gives a null set $B_j$ of sequences with infinitely many rolls off by more than 1/j. A countable union of null sets is null; an uncountable one need not be, which is why the tolerances run along a sequence. Off the union, a sequence has, for every j, a roll after which it stays within 1/j of μ. That is convergence $\bar X_n(\omega) \to \mu$.
+Take the tolerances ε = 1/j for j = 1, 2, 3, …. Each gives a null set $`B_j`$ of sequences with infinitely many rolls off by more than 1/j. A countable union of null sets is null; an uncountable one need not be, which is why the tolerances run along a sequence. Off the union, a sequence has, for every j, a roll after which it stays within 1/j of μ. That is convergence $`\bar X_n(\omega) \to \mu`$.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, P)$ is a probability space; $X_1, X_2, \dots$ are measurable, independent, with a common law, and $E[X_1^4] < \infty$. Since $|x| \le 1 + x^4$, $E|X_1| < \infty$, so $\mu = E[X_1]$ exists; and $(x - \mu)^4 \le 8(x^4 + \mu^4)$ gives $m_4 = E[Y_1^4] < \infty$. Lower moments of $Y_1$ are finite for the same reason.
+**Setting.** $`(\Omega, \mathcal{F}, P)`$ is a probability space; $`X_1, X_2, \dots`$ are measurable, independent, with a common law, and $`E[X_1^4] < \infty`$. Since $`|x| \le 1 + x^4`$, $`E|X_1| < \infty`$, so $`\mu = E[X_1]`$ exists; and $`(x - \mu)^4 \le 8(x^4 + \mu^4)`$ gives $`m_4 = E[Y_1^4] < \infty`$. Lower moments of $`Y_1`$ are finite for the same reason.
 
-**Lemma 1 (fourth moment).** $E[(\sum_{i \le n} Y_i)^4] = \sum_{a,b,c,d} E[Y_a Y_b Y_c Y_d]$, each product integrable by Hölder's inequality. If some index appears exactly once, say a, then $Y_a$ is independent of the product of the others, so the expectation factors and contains $E[Y_a] = 0$. The surviving index patterns are aaaa (n terms, value $m_4$) and two distinct indices each twice: $\binom{n}{2}$ index pairs times $\binom{4}{2} = 6$ placements, value $E[Y_a^2]E[Y_b^2] = \sigma^4$ by independence. Total $n m_4 + 3n(n-1)\sigma^4$.
+**Lemma 1 (fourth moment).** $`E[(\sum_{i \le n} Y_i)^4] = \sum_{a,b,c,d} E[Y_a Y_b Y_c Y_d]`$, each product integrable by Hölder's inequality. If some index appears exactly once, say a, then $`Y_a`$ is independent of the product of the others, so the expectation factors and contains $`E[Y_a] = 0`$. The surviving index patterns are aaaa (n terms, value $`m_4`$) and two distinct indices each twice: $`\binom{n}{2}`$ index pairs times $`\binom{4}{2} = 6`$ placements, value $`E[Y_a^2]E[Y_b^2] = \sigma^4`$ by independence. Total $`n m_4 + 3n(n-1)\sigma^4`$.
 
-**Lemma 2 (tail bound).** Markov's inequality, $P(V \ge t) \le E[V]/t$ for $V \ge 0$ and t > 0, follows from $t\mathbf{1}_{\{V \ge t\}} \le V$ and integrating. With $V = (S_n - n\mu)^4$ and $t = (n\varepsilon)^4$: $P(A_n) \le (n m_4 + 3n(n-1)\sigma^4)/(n\varepsilon)^4 \le (m_4 + 3\sigma^4)/(n^2\varepsilon^4)$.
+**Lemma 2 (tail bound).** Markov's inequality, $`P(V \ge t) \le E[V]/t`$ for $`V \ge 0`$ and t > 0, follows from $`t\mathbf{1}_{\{V \ge t\}} \le V`$ and integrating. With $`V = (S_n - n\mu)^4`$ and $`t = (n\varepsilon)^4`$: $`P(A_n) \le (n m_4 + 3n(n-1)\sigma^4)/(n\varepsilon)^4 \le (m_4 + 3\sigma^4)/(n^2\varepsilon^4)`$.
 
-**Lemma 3 (first Borel-Cantelli).** If $\sum_n P(A_n) < \infty$ then $P(\limsup_n A_n) = 0$: for every N, $\limsup_n A_n \subseteq \bigcup_{n \ge N} A_n$, whose probability is at most $\sum_{n \ge N} P(A_n)$ by countable subadditivity, a tail of a convergent series.
+**Lemma 3 (first Borel-Cantelli).** If $`\sum_n P(A_n) < \infty`$ then $`P(\limsup_n A_n) = 0`$: for every N, $`\limsup_n A_n \subseteq \bigcup_{n \ge N} A_n`$, whose probability is at most $`\sum_{n \ge N} P(A_n)`$ by countable subadditivity, a tail of a convergent series.
 
-**Theorem.** For $j \ge 1$ let $A_n^{(j)} = \{|\bar X_n - \mu| > 1/j\}$ and $B_j = \limsup_n A_n^{(j)}$. By Lemmas 2 and 3 with ε = 1/j, $P(B_j) = 0$. Let $B = \bigcup_j B_j$; by countable subadditivity $P(B) = 0$. Fix $\omega \notin B$. For each j, $\omega \notin B_j$, so $\omega$ lies in only finitely many $A_n^{(j)}$, and there is $N$ with $|\bar X_n(\omega) - \mu| \le 1/j$ for all $n \ge N$. Every positive tolerance exceeds some 1/j, so $\bar X_n(\omega) \to \mu$ for every $\omega$ outside the null set $B$. The set $\{\bar X_n \to \mu\}$ is in $\mathcal{F}$, being $\bigcap_j \bigcup_N \bigcap_{n \ge N} (A_n^{(j)})^c$.
+**Theorem.** For $`j \ge 1`$ let $`A_n^{(j)} = \{|\bar X_n - \mu| > 1/j\}`$ and $`B_j = \limsup_n A_n^{(j)}`$. By Lemmas 2 and 3 with ε = 1/j, $`P(B_j) = 0`$. Let $`B = \bigcup_j B_j`$; by countable subadditivity $`P(B) = 0`$. Fix $`\omega \notin B`$. For each j, $`\omega \notin B_j`$, so $`\omega`$ lies in only finitely many $`A_n^{(j)}`$, and there is $`N`$ with $`|\bar X_n(\omega) - \mu| \le 1/j`$ for all $`n \ge N`$. Every positive tolerance exceeds some 1/j, so $`\bar X_n(\omega) \to \mu`$ for every $`\omega`$ outside the null set $`B`$. The set $`\{\bar X_n \to \mu\}`$ is in $`\mathcal{F}`$, being $`\bigcap_j \bigcup_N \bigcap_{n \ge N} (A_n^{(j)})^c`$.
 
-**A second road.** By monotone convergence, $E[\sum_n (\bar X_n - \mu)^4] \le \sum_n C\varepsilon^4/n^2 < \infty$, so $\sum_n (\bar X_n - \mu)^4$ is finite a.s. and its terms tend to 0.
+**A second road.** By monotone convergence, $`E[\sum_n (\bar X_n - \mu)^4] \le \sum_n C\varepsilon^4/n^2 < \infty`$, so $`\sum_n (\bar X_n - \mu)^4`$ is finite a.s. and its terms tend to 0.
 
 </details>
 
 ### Step 5: a finite mean is enough
 
-The fourth moment is a convenience of the proof. Kolmogorov proved in 1933 that a finite mean $E|X_1| < \infty$ is enough, and that nothing less will do. Etemadi's 1981 proof needs only pairwise independence. Its shape: split each roll into positive and negative parts; replace roll i by 0 when it exceeds i, which changes only finitely many rolls a.s.; apply Chebyshev and Borel-Cantelli along checkpoints that grow geometrically, where the bounds add up; fill the gaps using that a sum of nonnegative terms only grows.
+The fourth moment is a convenience of the proof. Kolmogorov proved in 1933 that a finite mean $`E|X_1| < \infty`$ is enough, and that nothing less will do. Etemadi's 1981 proof needs only pairwise independence. Its shape: split each roll into positive and negative parts; replace roll i by 0 when it exceeds i, which changes only finitely many rolls a.s.; apply Chebyshev and Borel-Cantelli along checkpoints that grow geometrically, where the bounds add up; fill the gaps using that a sum of nonnegative terms only grows.
 
 <details>
 <summary>Etemadi's proof of Kolmogorov's strong law, outlined</summary>
 
-**Setting.** $X_1, X_2, \dots$ identically distributed, independent in pairs, $E|X_1| < \infty$. Since $X = X^+ - X^-$ with both parts nonnegative, integrable and again pairwise independent with one law, it suffices to treat $X_i \ge 0$.
+**Setting.** $`X_1, X_2, \dots`$ identically distributed, independent in pairs, $`E|X_1| < \infty`$. Since $`X = X^+ - X^-`$ with both parts nonnegative, integrable and again pairwise independent with one law, it suffices to treat $`X_i \ge 0`$.
 
-**1. Truncate.** Let $W_i = X_i \mathbf{1}_{\{X_i \le i\}}$ and $T_n = W_1 + \dots + W_n$. Then $\sum_i P(X_i \ne W_i) = \sum_{i \ge 1} P(X_1 > i) \le \int_0^\infty P(X_1 > t)\,dt = E[X_1] < \infty$, so by the first Borel-Cantelli lemma $X_i = W_i$ for all but finitely many i, a.s. Then $(S_n - T_n)/n \to 0$ a.s.
+**1. Truncate.** Let $`W_i = X_i \mathbf{1}_{\{X_i \le i\}}`$ and $`T_n = W_1 + \dots + W_n`$. Then $`\sum_i P(X_i \ne W_i) = \sum_{i \ge 1} P(X_1 > i) \le \int_0^\infty P(X_1 > t)\,dt = E[X_1] < \infty`$, so by the first Borel-Cantelli lemma $`X_i = W_i`$ for all but finitely many i, a.s. Then $`(S_n - T_n)/n \to 0`$ a.s.
 
-**2. Means.** $E[W_i] = E[X_1 \mathbf{1}_{\{X_1 \le i\}}] \uparrow E[X_1]$ by monotone convergence, so $E[T_n]/n \to E[X_1]$, an average of a convergent sequence.
+**2. Means.** $`E[W_i] = E[X_1 \mathbf{1}_{\{X_1 \le i\}}] \uparrow E[X_1]`$ by monotone convergence, so $`E[T_n]/n \to E[X_1]`$, an average of a convergent sequence.
 
-**3. Geometric checkpoints.** Fix $\alpha > 1$ and let $k_j = \lfloor \alpha^j \rfloor$. Pairwise independence gives $\mathrm{Var}(T_k) = \sum_{i \le k} \mathrm{Var}(W_i) \le \sum_{i \le k} E[W_i^2]$. By Chebyshev, $\sum_j P(|T_{k_j} - E T_{k_j}| > \varepsilon k_j) \le \varepsilon^{-2} \sum_i E[W_i^2] \sum_{j : k_j \ge i} k_j^{-2}$. Since $k_j \ge \alpha^j / 2$, the inner sum is at most $4 i^{-2}/(1 - \alpha^{-2})$. And $\sum_i E[X_1^2 \mathbf{1}_{\{X_1 \le i\}}]/i^2 = E[X_1^2 \sum_{i \ge X_1,\, i \ge 1} i^{-2}] \le E[X_1^2 \cdot 2/\max(1, X_1)] \le 2E[X_1]$. So the probabilities add up; Borel-Cantelli, over ε = 1/m for m = 1, 2, …, gives $T_{k_j}/k_j \to E[X_1]$ a.s.
+**3. Geometric checkpoints.** Fix $`\alpha > 1`$ and let $`k_j = \lfloor \alpha^j \rfloor`$. Pairwise independence gives $`\mathrm{Var}(T_k) = \sum_{i \le k} \mathrm{Var}(W_i) \le \sum_{i \le k} E[W_i^2]`$. By Chebyshev, $`\sum_j P(|T_{k_j} - E T_{k_j}| > \varepsilon k_j) \le \varepsilon^{-2} \sum_i E[W_i^2] \sum_{j : k_j \ge i} k_j^{-2}`$. Since $`k_j \ge \alpha^j / 2`$, the inner sum is at most $`4 i^{-2}/(1 - \alpha^{-2})`$. And $`\sum_i E[X_1^2 \mathbf{1}_{\{X_1 \le i\}}]/i^2 = E[X_1^2 \sum_{i \ge X_1,\, i \ge 1} i^{-2}] \le E[X_1^2 \cdot 2/\max(1, X_1)] \le 2E[X_1]`$. So the probabilities add up; Borel-Cantelli, over ε = 1/m for m = 1, 2, …, gives $`T_{k_j}/k_j \to E[X_1]`$ a.s.
 
-**4. Fill the gaps.** $T_k$ never decreases in k because $W_i \ge 0$. For $k_j \le k \le k_{j+1}$, $\frac{k_j}{k_{j+1}} \cdot \frac{T_{k_j}}{k_j} \le \frac{T_k}{k} \le \frac{k_{j+1}}{k_j} \cdot \frac{T_{k_{j+1}}}{k_{j+1}}$, and $k_{j+1}/k_j \to \alpha$. So a.s. $E[X_1]/\alpha \le \liminf T_k/k \le \limsup T_k/k \le \alpha E[X_1]$. Take $\alpha = 1 + 1/m$ over m = 1, 2, …, a countable family of null exceptions, and $T_k/k \to E[X_1]$ a.s.; by step 1, so does $\bar X_k$. With a finite variance, as for the share of sixes on the Borel-Cantelli card, Chebyshev already adds up along the squares $k^2$ with no truncation, and the same squeeze fills the rolls between squares with no α to shrink, since $(k+1)^2/k^2 \to 1$.
+**4. Fill the gaps.** $`T_k`$ never decreases in k because $`W_i \ge 0`$. For $`k_j \le k \le k_{j+1}`$, $`\frac{k_j}{k_{j+1}} \cdot \frac{T_{k_j}}{k_j} \le \frac{T_k}{k} \le \frac{k_{j+1}}{k_j} \cdot \frac{T_{k_{j+1}}}{k_{j+1}}`$, and $`k_{j+1}/k_j \to \alpha`$. So a.s. $`E[X_1]/\alpha \le \liminf T_k/k \le \limsup T_k/k \le \alpha E[X_1]`$. Take $`\alpha = 1 + 1/m`$ over m = 1, 2, …, a countable family of null exceptions, and $`T_k/k \to E[X_1]`$ a.s.; by step 1, so does $`\bar X_k`$. With a finite variance, as for the share of sixes on the Borel-Cantelli card, Chebyshev already adds up along the squares $`k^2`$ with no truncation, and the same squeeze fills the rolls between squares with no α to shrink, since $`(k+1)^2/k^2 \to 1`$.
 
-**The converse.** If $E|X_1| = \infty$ then $\sum_n P(|X_1| > cn) = \infty$ for every c > 0. The events $\{|X_n| > cn\}$ are independent, so by the second Borel-Cantelli lemma $|X_n| > cn$ infinitely often, a.s. Since $X_n/n = \bar X_n - \frac{n-1}{n}\bar X_{n-1}$, a finite limit of $\bar X_n$ would force $X_n/n \to 0$. So $\bar X_n$ has no finite limit, a.s.
+**The converse.** If $`E|X_1| = \infty`$ then $`\sum_n P(|X_1| > cn) = \infty`$ for every c > 0. The events $`\{|X_n| > cn\}`$ are independent, so by the second Borel-Cantelli lemma $`|X_n| > cn`$ infinitely often, a.s. Since $`X_n/n = \bar X_n - \frac{n-1}{n}\bar X_{n-1}`$, a finite limit of $`\bar X_n`$ would force $`X_n/n \to 0`$. So $`\bar X_n`$ has no finite limit, a.s.
 
 </details>
 
 ### Step 6: strong and weak, told apart by the modes
 
-The strong law is convergence almost surely; the weak law is convergence in probability ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)). On a probability space the first forces the second, so the strong law contains the weak one. In probability asks that $P(A_n)$ shrink. Almost surely asks that $P(\bigcup_{m \ge n} A_m)$, a bad roll at any later time, shrink.
+The strong law is convergence almost surely; the weak law is convergence in probability ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)). On a probability space the first forces the second, so the strong law contains the weak one. In probability asks that $`P(A_n)`$ shrink. Almost surely asks that $`P(\bigcup_{m \ge n} A_m)`$, a bad roll at any later time, shrink.
 
 The code counts both on 200 simulated runs of 10,000 rolls. At roll 1,000, 13 runs are outside the band, near the exact 0.0627 × 200; 27 are outside at roll 1,000 or some later roll.
 
@@ -174,11 +184,11 @@ xychart-beta
 
 Orange: runs outside the band at roll n, the weak law's count. Green: runs outside at roll n or at any later roll up to 10,000, the strong law's count, which the theorem sends to zero with "later" running forever.
 
-**Weak without strong.** A sequence can pass the weak test and fail the strong one, much as the typewriter sequence converges in probability and at no point. (The typewriter sequence is 1 on a strip of [0, 1) and 0 elsewhere; the strips sweep across again and again, each pass with narrower strips.) Take independent $Z_n$ for n ≥ 3, equal to +n or −n each with chance 1/(2n ln n), else 0; here ln is the natural logarithm. Each $Z_n$ has mean 0 and variance n/ln n. The variance of the average is $\frac{1}{n^2}\sum_{k=3}^{n} k/\ln k$, which falls like 1/(2 ln n): 0.037608 at n = 1,000,000. By Chebyshev the average tends to 0 in probability.
+**Weak without strong.** A sequence can pass the weak test and fail the strong one, much as the typewriter sequence converges in probability and at no point. (The typewriter sequence is 1 on a strip of [0, 1) and 0 elsewhere; the strips sweep across again and again, each pass with narrower strips.) Take independent $`Z_n`$ for n ≥ 3, equal to +n or −n each with chance 1/(2n ln n), else 0; here ln is the natural logarithm. Each $`Z_n`$ has mean 0 and variance n/ln n. The variance of the average is $`\frac{1}{n^2}\sum_{k=3}^{n} k/\ln k`$, which falls like 1/(2 ln n): 0.037608 at n = 1,000,000. By Chebyshev the average tends to 0 in probability.
 
-It does not tend to 0 almost surely. The chances $P(|Z_k| = k) = 1/(k \ln k)$ add to 2.6991 by k = 1,000,000 and grow without bound, like ln ln n. The $Z_k$ are independent, so the second Borel-Cantelli lemma says $|Z_k| = k$ for infinitely many k, a.s. But $Z_k/k = \bar Z_k - \frac{k-1}{k}\bar Z_{k-1}$, so a limit L of the averages would force $Z_k/k \to L - L = 0$. The averages have no finite limit, a.s. Kolmogorov's theorem is not contradicted: the $Z_n$ do not share one law.
+It does not tend to 0 almost surely. The chances $`P(|Z_k| = k) = 1/(k \ln k)`$ add to 2.6991 by k = 1,000,000 and grow without bound, like ln ln n. The $`Z_k`$ are independent, so the second Borel-Cantelli lemma says $`|Z_k| = k`$ for infinitely many k, a.s. But $`Z_k/k = \bar Z_k - \frac{k-1}{k}\bar Z_{k-1}`$, so a limit L of the averages would force $`Z_k/k \to L - L = 0`$. The averages have no finite limit, a.s. Kolmogorov's theorem is not contradicted: the $`Z_n`$ do not share one law.
 
-**Why probability one and not another number.** Changing finitely many rolls moves $S_n$ by a fixed amount, which division by n removes. So whether $\bar X_n$ converges depends on no finite set of rolls: it is a tail event, of probability 0 or 1 by Kolmogorov's zero-one law ([Kolmogorov's zero-one law](02-kolmogorov-zero-one-law.md)). For the $Z_n$ it is 0; for the die, 1.
+**Why probability one and not another number.** Changing finitely many rolls moves $`S_n`$ by a fixed amount, which division by n removes. So whether $`\bar X_n`$ converges depends on no finite set of rolls: it is a tail event, of probability 0 or 1 by Kolmogorov's zero-one law ([Kolmogorov's zero-one law](02-kolmogorov-zero-one-law.md)). For the $`Z_n`$ it is 0; for the die, 1.
 
 A second road to Kolmogorov's law runs through backward martingales; Williams gives it (Sources).
 
@@ -189,10 +199,10 @@ A second road to Kolmogorov's law runs through backward martingales; Williams gi
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | centred faces | face − 3.5 | −2.5, −1.5, −0.5, 0.5, 1.5, 2.5 |
-| $\sigma^2$ | 2 × (0.25 + 2.25 + 6.25) / 6 | 35/12 |
-| $m_4$ | 2 × (0.0625 + 5.0625 + 39.0625) / 6 | 707/48 |
+| $`\sigma^2`$ | 2 × (0.25 + 2.25 + 6.25) / 6 | 35/12 |
+| $`m_4`$ | 2 × (0.0625 + 5.0625 + 39.0625) / 6 | 707/48 |
 | fourth moment, n = 2 | 2 × 707/48 + 3 × 2 × 1 × (35/12)^2 = 1414/48 + 7350/144 | 80.5 |
-| $m_4 + 3\sigma^4$ | 707/48 + 3675/144 | 40.25 |
+| $`m_4 + 3\sigma^4`$ | 707/48 + 3675/144 | 40.25 |
 | C, ε = 0.1 | 40.25 / 0.0001 | 402,500 |
 | bound at n = 1,000 | 402,500 / 1,000,000 | 0.4025 |
 | Chebyshev at n = 1,000 | (35/12) / (1,000 × 0.01) | 0.2917 |
@@ -207,7 +217,7 @@ From roll 402,502 on, the proof certifies a chance below 1 of ever leaving the b
 | --- | --- | --- |
 | Chebyshev in place of the fourth power | bounds sum to 2014.91 from roll 1,000 to 1,000,000, still growing | 1/n does not add up |
 | Independence dropped: every roll copies the first | P(A_n) = 1 at every n | the average is the first face forever |
-| One law dropped: the jump sequence $Z_n$ | variance of the average 0.037608 at n = 1,000,000, yet the jump chances sum to 2.6991 and grow | converges in probability, not almost surely |
+| One law dropped: the jump sequence $`Z_n`$ | variance of the average 0.037608 at n = 1,000,000, yet the jump chances sum to 2.6991 and grow | converges in probability, not almost surely |
 | "In probability" read as "stays close" | 13 of 200 runs outside at roll 1,000, 27 outside at some roll from 1,000 to 10,000 | one roll's chance is not the chance of any later exit |
 
 The code prints all four.
@@ -216,7 +226,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The code checks finite stages; that the average stays close forever rests on the proof. Four roads: moments listed in exact fractions against closed forms for a fair k-sided die; the fourth moment of the sum by formula against a count over all $6^n$ sequences, n up to 8; exact tail probabilities, by convolving up to 1,000 dice, against both bounds and against 200 simulated runs from a SplitMix64 generator written out in each language, seed 20260929 (face = output modulo 6, a bias far below what 200 runs can detect); and the jump sequence's divergent sum against the integral test. The Rust does exact fractions with integers by hand.
+The code checks finite stages; that the average stays close forever rests on the proof. Four roads: moments listed in exact fractions against closed forms for a fair k-sided die; the fourth moment of the sum by formula against a count over all $`6^n`$ sequences, n up to 8; exact tail probabilities, by convolving up to 1,000 dice, against both bounds and against 200 simulated runs from a SplitMix64 generator written out in each language, seed 20260929 (face = output modulo 6, a bias far below what 200 runs can detect); and the jump sequence's divergent sum against the integral test. The Rust does exact fractions with integers by hand.
 
 ### Python
 
@@ -595,10 +605,10 @@ The two outputs are identical line for line.
 
 Lean proves three results for independent draws with one law, on any probability space, not only for dice.
 
-- Suppose the rolls are independent, share one law, and have a finite mean, $E|X_1| < \infty$. Then the running average converges to the mean, except on a set of probability zero.
-- Suppose the rolls also have a finite fourth moment, $E[X_1^4] < \infty$. Then $E[(S_n - n\mu)^4] = n m_4 + 3n(n-1)\sigma^4$ for every n.
-- Take the same rolls, any roll count n ≥ 1 and any tolerance ε > 0. Then $P(A_n) \le C/n^2$, with $C = (m_4 + 3\sigma^4)/\varepsilon^4$.
-- The die's hand arithmetic holds exactly as fractions: $\sigma^2$ = 35/12, $m_4$ = 707/48, and C = 402,500 at ε = 0.1.
+- Suppose the rolls are independent, share one law, and have a finite mean, $`E|X_1| < \infty`$. Then the running average converges to the mean, except on a set of probability zero.
+- Suppose the rolls also have a finite fourth moment, $`E[X_1^4] < \infty`$. Then $`E[(S_n - n\mu)^4] = n m_4 + 3n(n-1)\sigma^4`$ for every n.
+- Take the same rolls, any roll count n ≥ 1 and any tolerance ε > 0. Then $`P(A_n) \le C/n^2`$, with $`C = (m_4 + 3\sigma^4)/\varepsilon^4`$.
+- The die's hand arithmetic holds exactly as fractions: $`\sigma^2`$ = 35/12, $`m_4`$ = 707/48, and C = 402,500 at ε = 0.1.
 - The fourth-moment formula gives 80.5 at n = 2 and 1547 at n = 8. Counting all 36 sequences of two rolls also gives 80.5.
 - At roll 1,000 the bound is 0.4025 and Chebyshev's is 7/24. At roll 500 the middle form exceeds 1.
 - The tail bound C/(N − 1) first drops below 1 at N = 402,502, and reaches 0.01 at N = 40,250,002.

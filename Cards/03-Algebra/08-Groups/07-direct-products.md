@@ -38,33 +38,37 @@ The first two bars match: the padlock's joint notch and a 15-dial's notch both t
 Notation in words first.
 
 - A pair goes in round brackets, the first group's member first: (2, 4).
-- The group of all such pairs takes a cross, $G \times H$, said "G cross H" — the cross that counted 15 settings ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)).
-- Bars count members, $\lvert G\rvert$.
-- $*$ is whichever operation the group at hand uses.
-- $e$, the identity, changes nothing.
-- $\operatorname{ord}$ counts the repeats that bring a member home ([Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md)).
-- $\cong$ means the same group relabelled ([Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md)).
+- The group of all such pairs takes a cross, $`G \times H`$, said "G cross H" — the cross that counted 15 settings ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)).
+- Bars count members, $`\lvert G\rvert`$.
+- $`*`$ is whichever operation the group at hand uses.
+- $`e`$, the identity, changes nothing.
+- $`\mathrm{ord}`$ counts the repeats that bring a member home ([Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md)).
+- $`\cong`$ means the same group relabelled ([Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md)).
 
 The rule that makes the pairs a group:
 
-$$(g, h) * (a, b) = (g * a, h * b)$$
+```math
+(g, h) * (a, b) = (g * a, h * b)
+```
 
 **Read it aloud:** combine the first halves in the first group, the second halves in the second, and never let one half reach across.
 
 Two counts follow, for finite groups and members that come home:
 
-$$\lvert G \times H\rvert = \lvert G\rvert \times \lvert H\rvert, \qquad \operatorname{ord}(g, h) = \operatorname{lcm}(\operatorname{ord}(g), \operatorname{ord}(h))$$
+```math
+\lvert G \times H\rvert = \lvert G\rvert \times \lvert H\rvert, \qquad \mathrm{ord}(g, h) = \mathrm{lcm}(\mathrm{ord}(g), \mathrm{ord}(h))
+```
 
 Settings multiply; return times do not. The pair is home only when both halves are home at once — the least common multiple ([Least common multiple](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$, $H$, $\lvert G\rvert$ | the two groups, each with its own operation; how many members one has | the 3-dial, the 5-dial; 3 and 5 | more settings, longer returns |
-| $G \times H$ | the direct product: every pair, one from each group | the 15 settings | — |
-| $g$, $h$, $a$, $b$, $e$ | members, first group then second; $e$ changes nothing | notch counts; (0, 0) | — |
-| $*$, $k$, $m$, $n$ | the group's operation; a repeat count or a reading; two clock sizes | notch addition; 0 to 14; 3 and 5 | — |
-| $\operatorname{ord}$, $\operatorname{lcm}$, $\cong$ | repeats that bring a member home; smallest number two others divide into; the same group relabelled | 15 for the joint notch; lcm(3, 5) = 15; the padlock and one 15-dial | a longer joint return |
-| $\text{Z mod } n$, $\bmod$ | the n-position clock; the remainder left after dividing | Z mod 15, the 15-dial; (10 × 2 + 6 × 4) mod 15 = 14 | — |
+| $`G`$, $`H`$, $`\lvert G\rvert`$ | the two groups, each with its own operation; how many members one has | the 3-dial, the 5-dial; 3 and 5 | more settings, longer returns |
+| $`G \times H`$ | the direct product: every pair, one from each group | the 15 settings | — |
+| $`g`$, $`h`$, $`a`$, $`b`$, $`e`$ | members, first group then second; $`e`$ changes nothing | notch counts; (0, 0) | — |
+| $`*`$, $`k`$, $`m`$, $`n`$ | the group's operation; a repeat count or a reading; two clock sizes | notch addition; 0 to 14; 3 and 5 | — |
+| $`\mathrm{ord}`$, $`\mathrm{lcm}`$, $`\cong`$ | repeats that bring a member home; smallest number two others divide into; the same group relabelled | 15 for the joint notch; lcm(3, 5) = 15; the padlock and one 15-dial | a longer joint return |
+| $`\text{Z mod } n`$, $`\bmod`$ | the n-position clock; the remainder left after dividing | Z mod 15, the 15-dial; (10 × 2 + 6 × 4) mod 15 = 14 | — |
 
 ### When it holds
 
@@ -105,11 +109,15 @@ Two readings landing on one pair would differ by a multiple of 3 and of 5, hence
 
 Writing Z mod n for the n-position clock ([Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)):
 
-$$\text{Z mod 15} \;\cong\; \text{Z mod 3} \times \text{Z mod 5}$$
+```math
+\text{Z mod 15} \;\cong\; \text{Z mod 3} \times \text{Z mod 5}
+```
 
 The reverse, for the pair (a, b):
 
-$$k = (10a + 6b) \bmod 15$$
+```math
+k = (10a + 6b) \bmod 15
+```
 
 10 leaves remainder 1 on 3 and 0 on 5, 6 the opposite, so each coefficient carries its own dial. Pair (2, 4) gives (10 × 2 + 6 × 4) mod 15 = 14 — checked on all 15 settings, and all 225 sums.
 
@@ -390,7 +398,7 @@ Lean proves the card's three general claims for all groups and clock sizes, and 
 
 - Take clocks of m and n positions, each at least 1. Side by side, they are one m × n clock relabelled exactly when m and n share no factor above 1.
 - In any two groups, if both halves come home, a pair's return time is the least common multiple of the halves' return times.
-- For two finite groups, the settings multiply: $\lvert G \times H\rvert = \lvert G\rvert \times \lvert H\rvert$.
+- For two finite groups, the settings multiply: $`\lvert G \times H\rvert = \lvert G\rvert \times \lvert H\rvert`$.
 - The padlock: 15 settings, the joint notch visiting all 15, reading 14 as the pair (2, 4), and all 225 pair sums matching the 15-clock.
 - The switches: every pattern comes home in two flips, while a 4-dial's notch needs four.
 

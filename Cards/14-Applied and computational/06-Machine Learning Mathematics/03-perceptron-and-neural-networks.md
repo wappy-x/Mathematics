@@ -32,48 +32,56 @@ Filled dots are fraud, open dots are normal, drawn to scale. The line runs from 
 
 ## The formula
 
-[Gradient descent](02-gradient-descent-and-stochastic-gradient.md) introduced weights $w$, a bias $b$ and a learning rate $\eta$. This card uses them as they are, and adds layer matrices $W$. Here $W$ is a layer's table of weights, not the queue card's waiting time.
+[Gradient descent](02-gradient-descent-and-stochastic-gradient.md) introduced weights $`w`$, a bias $`b`$ and a learning rate $`\eta`$. This card uses them as they are, and adds layer matrices $`W`$. Here $`W`$ is a layer's table of weights, not the queue card's waiting time.
 
-Each order is measured from a reference order of £400 shipped 300 km, near the middle of these eight made-up orders, in hundreds: $x_1 = (\text{value} - 400)/100$ and $x_2 = (\text{distance} - 300)/100$. Order E, £500 and 500 km, becomes $(1, 2)$. The label $y$ is $+1$ for fraud and $-1$ for normal.
+Each order is measured from a reference order of £400 shipped 300 km, near the middle of these eight made-up orders, in hundreds: $`x_1 = (\text{value} - 400)/100`$ and $`x_2 = (\text{distance} - 300)/100`$. Order E, £500 and 500 km, becomes $`(1, 2)`$. The label $`y`$ is $`+1`$ for fraud and $`-1`$ for normal.
 
-$$s = w_1 x_1 + w_2 x_2 + b, \qquad \text{flag as fraud when } s > 0$$
+```math
+s = w_1 x_1 + w_2 x_2 + b, \qquad \text{flag as fraud when } s > 0
+```
 
 **Read it aloud:** the score is each feature times its weight, added up, plus the bias; a positive score means fraud.
 
-$$\text{if } y\,s \le 0: \qquad w_1 \leftarrow w_1 + \eta\,y\,x_1, \quad w_2 \leftarrow w_2 + \eta\,y\,x_2, \quad b \leftarrow b + \eta\,y$$
+```math
+\text{if } y\,s \le 0: \qquad w_1 \leftarrow w_1 + \eta\,y\,x_1, \quad w_2 \leftarrow w_2 + \eta\,y\,x_2, \quad b \leftarrow b + \eta\,y
+```
 
 **Read it aloud:** when an order lands on the wrong side, or on the line, add the order to the weights if it was fraud and subtract it if it was normal; otherwise leave everything alone.
 
-$$k \;\le\; \left(\frac{R}{\gamma}\right)^2$$
+```math
+k \;\le\; \left(\frac{R}{\gamma}\right)^2
+```
 
-**Read it aloud:** the number of fixes is at most the squared ratio of $R$, the length of the longest order written with its extra 1, to $\gamma$, the clear gap around a separating line measured with that same extra 1.
+**Read it aloud:** the number of fixes is at most the squared ratio of $`R`$, the length of the longest order written with its extra 1, to $`\gamma`$, the clear gap around a separating line measured with that same extra 1.
 
-Both lengths are measured with the bias as a third coordinate: each order becomes $\bar x = (x_1, x_2, 1)$, and a line becomes a flat sheet through the origin in three numbers. That is why $R = \sqrt{26} = 5.0990$, not order B's plain distance 5.0000 from the reference order, and $\gamma = 0.4082$, not the 0.7071 gap between the line and C, D, E and F in the plane of $x_1$ and $x_2$.
+Both lengths are measured with the bias as a third coordinate: each order becomes $`\bar x = (x_1, x_2, 1)`$, and a line becomes a flat sheet through the origin in three numbers. That is why $`R = \sqrt{26} = 5.0990`$, not order B's plain distance 5.0000 from the reference order, and $`\gamma = 0.4082`$, not the 0.7071 gap between the line and C, D, E and F in the plane of $`x_1`$ and $`x_2`$.
 
-$$h = \mathrm{step}(W_1 x + b_1), \qquad \text{output} = \mathrm{step}(W_2 h + b_2)$$
+```math
+h = \mathrm{step}(W_1 x + b_1), \qquad \text{output} = \mathrm{step}(W_2 h + b_2)
+```
 
 **Read it aloud:** a layer is a matrix times the inputs, plus a bias for each unit, squashed; the next layer does the same to the first layer's answers.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (x_1, x_2)$; $\bar x = (x_1, x_2, 1)$ | an order's centred value and distance, in hundreds; $\bar x$ adds a constant 1 so the bias acts like a third weight | order E: $(1, 2)$ | further from the line, the score grows |
-| $y$ | the label: $+1$ fraud, $-1$ normal | E: $+1$ | — |
-| $w = (w_1, w_2)$; $\bar w = (w_1, w_2, b)$ | the weights: how much each feature pushes toward fraud | settled at $(2, 2)$ | that feature counts for more |
-| $b$ | the bias: the score of the reference order, which slides the line without turning it | settled at $-4$ | more orders flagged |
-| $s$ | the score $w_1 x_1 + w_2 x_2 + b$ | E: $+2$ | flagged once above 0 |
-| $\eta$ | the learning rate: the size of each fix | 1 | bigger fixes; from a zero start, the same line |
-| $\mathrm{step}$ | the hard squashing function: 1 if its input is above 0, else 0 | — | — |
-| $k$ | the number of fixes (updates) before the perceptron stops | 6 | — |
-| $R$ | the length of the longest $\bar x$ | $\sqrt{26} = 5.0990$ | the bound grows |
-| $u$, $\gamma$ | a line that separates the data, written as a unit-length $\bar w$; the margin, the smallest $y\,u \cdot \bar x$, the clear gap on either side of $u$ | $u$ = settled line, $\gamma = 0.4082$ | the bound shrinks |
-| $W_1$, $b_1$, $W_2$, $b_2$, $h$ | the layer matrices and their biases; $h$ the hidden units' outputs | $W_1$ = `[[1, 1], [1, 1]]`, $b_1 = (-0.5, -1.5)$, $W_2$ = `[1, -1]`, $b_2 = -0.5$ | — |
-| $\Lambda$ | the smooth squashing function $1/(1 + e^{-s})$, the logistic curve | $\Lambda(0) = 0.5$ | — |
+| $`x = (x_1, x_2)`$; $`\bar x = (x_1, x_2, 1)`$ | an order's centred value and distance, in hundreds; $`\bar x`$ adds a constant 1 so the bias acts like a third weight | order E: $`(1, 2)`$ | further from the line, the score grows |
+| $`y`$ | the label: $`+1`$ fraud, $`-1`$ normal | E: $`+1`$ | — |
+| $`w = (w_1, w_2)`$; $`\bar w = (w_1, w_2, b)`$ | the weights: how much each feature pushes toward fraud | settled at $`(2, 2)`$ | that feature counts for more |
+| $`b`$ | the bias: the score of the reference order, which slides the line without turning it | settled at $`-4`$ | more orders flagged |
+| $`s`$ | the score $`w_1 x_1 + w_2 x_2 + b`$ | E: $`+2`$ | flagged once above 0 |
+| $`\eta`$ | the learning rate: the size of each fix | 1 | bigger fixes; from a zero start, the same line |
+| $`\mathrm{step}`$ | the hard squashing function: 1 if its input is above 0, else 0 | — | — |
+| $`k`$ | the number of fixes (updates) before the perceptron stops | 6 | — |
+| $`R`$ | the length of the longest $`\bar x`$ | $`\sqrt{26} = 5.0990`$ | the bound grows |
+| $`u`$, $`\gamma`$ | a line that separates the data, written as a unit-length $`\bar w`$; the margin, the smallest $`y\,u \cdot \bar x`$, the clear gap on either side of $`u`$ | $`u`$ = settled line, $`\gamma = 0.4082`$ | the bound shrinks |
+| $`W_1`$, $`b_1`$, $`W_2`$, $`b_2`$, $`h`$ | the layer matrices and their biases; $`h`$ the hidden units' outputs | $`W_1`$ = `[[1, 1], [1, 1]]`, $`b_1 = (-0.5, -1.5)`$, $`W_2`$ = `[1, -1]`, $`b_2 = -0.5`$ | — |
+| $`\Lambda`$ | the smooth squashing function $`1/(1 + e^{-s})`$, the logistic curve | $`\Lambda(0) = 0.5`$ | — |
 
 ### When it holds
 
-- **A straight line must separate the classes.** The stopping promise needs a margin $\gamma > 0$. Add one fraud order at £200 and 100 km and no line exists: after 200 passes the perceptron still makes 5 mistakes a pass.
-- **The bias must be free to move.** Without $b$ the line must pass through the reference order. No such line splits these eight, so after 100 passes it still makes 4 mistakes a pass.
-- **Features on a sensible scale, measured from the middle.** The bound grows with $R$. Fed the raw values (value and distance in hundreds, not centred), the same eight orders need 218 fixes over 49 passes, against 6.
+- **A straight line must separate the classes.** The stopping promise needs a margin $`\gamma > 0`$. Add one fraud order at £200 and 100 km and no line exists: after 200 passes the perceptron still makes 5 mistakes a pass.
+- **The bias must be free to move.** Without $`b`$ the line must pass through the reference order. No such line splits these eight, so after 100 passes it still makes 4 mistakes a pass.
+- **Features on a sensible scale, measured from the middle.** The bound grows with $`R`$. Fed the raw values (value and distance in hundreds, not centred), the same eight orders need 218 fixes over 49 passes, against 6.
 - **A score of exactly 0 must count as a mistake.** From a zero start every score is 0. Count 0 as right and the perceptron never moves: it flags nothing and gets 5 of 8.
 - **Stacked layers need a squashing function between them.** Without it two layers collapse into one line (Step 6).
 
@@ -83,58 +91,64 @@ $$h = \mathrm{step}(W_1 x + b_1), \qquad \text{output} = \mathrm{step}(W_2 h + b
 
 ### Step 0: each fix moves the offending order's score the right way
 
-A fix adds $\eta\,y\,\bar x$ to $\bar w$. The order's own score then changes by $\eta\,y\,(x_1^2 + x_2^2 + 1)$, a positive amount times its label. So a fraud order's score rises and a normal order's score falls.
+A fix adds $`\eta\,y\,\bar x`$ to $`\bar w`$. The order's own score then changes by $`\eta\,y\,(x_1^2 + x_2^2 + 1)`$, a positive amount times its label. So a fraud order's score rises and a normal order's score falls.
 
-Order A, normal at $(-3, -2)$, scored 0 at the start. After its fix the weights are $(3, 2)$ and $b = -1$, and its score is $3(-3) + 2(-2) - 1 = -14$: moved down by $9 + 4 + 1$.
+Order A, normal at $`(-3, -2)`$, scored 0 at the start. After its fix the weights are $`(3, 2)`$ and $`b = -1`$, and its score is $`3(-3) + 2(-2) - 1 = -14`$: moved down by $`9 + 4 + 1`$.
 
 A fix for one order can push another across the line, as C and D show in the trace. So the proof tracks a quantity that only goes one way.
 
 ### Step 1: progress toward a good line
 
-Suppose some line $u$, of unit length, separates the data with margin $\gamma$: every order has $y\,u \cdot \bar x \ge \gamma$. Watch the number $u \cdot \bar w$, how far the current weights point along $u$. A fix adds $\eta\,y\,u \cdot \bar x \ge \eta\gamma$. Starting from $\bar w = 0$, after $k$ fixes
+Suppose some line $`u`$, of unit length, separates the data with margin $`\gamma`$: every order has $`y\,u \cdot \bar x \ge \gamma`$. Watch the number $`u \cdot \bar w`$, how far the current weights point along $`u`$. A fix adds $`\eta\,y\,u \cdot \bar x \ge \eta\gamma`$. Starting from $`\bar w = 0`$, after $`k`$ fixes
 
-$$u \cdot \bar w_k \;\ge\; k\,\eta\,\gamma.$$
+```math
+u \cdot \bar w_k \;\ge\; k\,\eta\,\gamma.
+```
 
 ### Step 2: the weights cannot grow fast
 
-A fix happens only when $y\,\bar w \cdot \bar x \le 0$. Expand the squared length after the fix:
+A fix happens only when $`y\,\bar w \cdot \bar x \le 0`$. Expand the squared length after the fix:
 
-$$|\bar w + \eta y \bar x|^2 = |\bar w|^2 + 2\eta\,y\,\bar w \cdot \bar x + \eta^2 |\bar x|^2 \;\le\; |\bar w|^2 + \eta^2 R^2.$$
+```math
+|\bar w + \eta y \bar x|^2 = |\bar w|^2 + 2\eta\,y\,\bar w \cdot \bar x + \eta^2 |\bar x|^2 \;\le\; |\bar w|^2 + \eta^2 R^2.
+```
 
-The middle term is at most 0, because the order was a mistake. So after $k$ fixes $|\bar w_k|^2 \le k\,\eta^2 R^2$.
+The middle term is at most 0, because the order was a mistake. So after $`k`$ fixes $`|\bar w_k|^2 \le k\,\eta^2 R^2`$.
 
 ### Step 3: the squeeze
 
-A dot product with a unit vector is at most the length, so $u \cdot \bar w_k \le |\bar w_k|$. Put Steps 1 and 2 together:
+A dot product with a unit vector is at most the length, so $`u \cdot \bar w_k \le |\bar w_k|`$. Put Steps 1 and 2 together:
 
-$$k\,\eta\,\gamma \;\le\; u \cdot \bar w_k \;\le\; |\bar w_k| \;\le\; \sqrt{k}\,\eta\,R.$$
+```math
+k\,\eta\,\gamma \;\le\; u \cdot \bar w_k \;\le\; |\bar w_k| \;\le\; \sqrt{k}\,\eta\,R.
+```
 
-The left side grows like $k$, the right like $\sqrt k$. Divide by $\sqrt{k}\,\eta\,\gamma$ and square: $k \le (R/\gamma)^2$. The learning rate cancels, and so does the order in which the data arrives.
+The left side grows like $`k`$, the right like $`\sqrt k`$. Divide by $`\sqrt{k}\,\eta\,\gamma`$ and square: $`k \le (R/\gamma)^2`$. The learning rate cancels, and so does the order in which the data arrives.
 
-For the eight orders, take $u$ along the settled line $(2, 2, -4)$. Its length is $\sqrt{24}$ and the closest orders, C, D, E and F, all score 2 on the correct side, so $\gamma = 2/\sqrt{24} = 0.4082$. The farthest order is B, with $R = \sqrt{16 + 9 + 1} = 5.0990$.
+For the eight orders, take $`u`$ along the settled line $`(2, 2, -4)`$. Its length is $`\sqrt{24}`$ and the closest orders, C, D, E and F, all score 2 on the correct side, so $`\gamma = 2/\sqrt{24} = 0.4082`$. The farthest order is B, with $`R = \sqrt{16 + 9 + 1} = 5.0990`$.
 
-The bound is $26 \times 24 / 4 = 156$ fixes. The perceptron used 6. The bound is a guarantee, not a forecast. On 1,000 synthetic orders the bound is 1,885.0 and the run used 41.
+The bound is $`26 \times 24 / 4 = 156`$ fixes. The perceptron used 6. The bound is a guarantee, not a forecast. On 1,000 synthetic orders the bound is 1,885.0 and the run used 41.
 
 ### Step 4: one line cannot split XOR
 
-Now the second pattern. Record whether the card was issued abroad ($x_1 = 1$) and whether the device placing the order is abroad ($x_2 = 1$). A UK card on a UK device is normal; so is a foreign card on a device in its own country, a foreign customer at home. A mismatch is suspicious: fraud is $x_1 \ne x_2$. This is the **XOR** pattern, "exclusive or".
+Now the second pattern. Record whether the card was issued abroad ($`x_1 = 1`$) and whether the device placing the order is abroad ($`x_2 = 1`$). A UK card on a UK device is normal; so is a foreign card on a device in its own country, a foreign customer at home. A mismatch is suspicious: fraud is $`x_1 \ne x_2`$. This is the **XOR** pattern, "exclusive or".
 
 Suppose a line flags exactly the two mismatches. Then
 
-- UK card, UK device: $b \le 0$;
-- both abroad: $w_1 + w_2 + b \le 0$;
-- card abroad only: $w_1 + b > 0$;
-- device abroad only: $w_2 + b > 0$.
+- UK card, UK device: $`b \le 0`$;
+- both abroad: $`w_1 + w_2 + b \le 0`$;
+- card abroad only: $`w_1 + b > 0`$;
+- device abroad only: $`w_2 + b > 0`$.
 
-Add the first two: $w_1 + w_2 + 2b \le 0$. Add the last two: $w_1 + w_2 + 2b > 0$. Both cannot hold, so no such line exists. The checks confirm it by brute force: of 4,913 lines on a grid, the best gets 3 of 4 right.
+Add the first two: $`w_1 + w_2 + 2b \le 0`$. Add the last two: $`w_1 + w_2 + 2b > 0`$. Both cannot hold, so no such line exists. The checks confirm it by brute force: of 4,913 lines on a grid, the best gets 3 of 4 right.
 
-The perceptron does worse than 3 of 4. From a zero start, one pass sets the weights and bias to $(0, 0, -1)$, $(0, 1, 0)$, $(1, 1, 1)$ and back to $(0, 0, 0)$. Every pass is the same 4 mistakes, for ever: 4,000 fixes in 1,000 passes.
+The perceptron does worse than 3 of 4. From a zero start, one pass sets the weights and bias to $`(0, 0, -1)`$, $`(0, 1, 0)`$, $`(1, 1, 1)`$ and back to $`(0, 0, 0)`$. Every pass is the same 4 mistakes, for ever: 4,000 fixes in 1,000 passes.
 
 ### Step 5: two lines, then a vote
 
-XOR needs two lines. Hidden unit 1 asks "is at least one of them abroad?": $h_1 = \mathrm{step}(x_1 + x_2 - 0.5)$. Hidden unit 2 asks "are both abroad?": $h_2 = \mathrm{step}(x_1 + x_2 - 1.5)$. The output unit flags "at least one, but not both": $\mathrm{step}(h_1 - h_2 - 0.5)$.
+XOR needs two lines. Hidden unit 1 asks "is at least one of them abroad?": $`h_1 = \mathrm{step}(x_1 + x_2 - 0.5)`$. Hidden unit 2 asks "are both abroad?": $`h_2 = \mathrm{step}(x_1 + x_2 - 1.5)`$. The output unit flags "at least one, but not both": $`\mathrm{step}(h_1 - h_2 - 0.5)`$.
 
-Each unit is a perceptron. Written as layers, the hidden layer is a matrix times a vector ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)): $W_1$ = `[[1, 1], [1, 1]]`, one row per hidden unit, plus $b_1 = (-0.5, -1.5)$.
+Each unit is a perceptron. Written as layers, the hidden layer is a matrix times a vector ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)): $`W_1`$ = `[[1, 1], [1, 1]]`, one row per hidden unit, plus $`b_1 = (-0.5, -1.5)`$.
 
 ```mermaid
 flowchart LR
@@ -152,37 +166,37 @@ The hidden layer moves the four orders to new positions: (0, 0), (1, 0), (1, 0) 
 
 ### Step 6: why the squashing function is not optional
 
-Remove the step between the layers. The output score becomes $W_2(W_1 x + b_1) + b_2 = (W_2 W_1)\,x + (W_2 b_1 + b_2)$: one matrix times $x$ plus one bias. That is a single perceptron again, so Step 4 forbids it from doing XOR.
+Remove the step between the layers. The output score becomes $`W_2(W_1 x + b_1) + b_2 = (W_2 W_1)\,x + (W_2 b_1 + b_2)`$: one matrix times $`x`$ plus one bias. That is a single perceptron again, so Step 4 forbids it from doing XOR.
 
-In numbers, $W_2 W_1 = (1 - 1,\; 1 - 1) = (0, 0)$ and the bias is $-0.5 + 1.5 - 0.5 = 0.5$. Every order scores 0.5 and is flagged: 2 of 4 right. Any number of layers without squashing is one layer in disguise.
+In numbers, $`W_2 W_1 = (1 - 1,\; 1 - 1) = (0, 0)`$ and the bias is $`-0.5 + 1.5 - 0.5 = 0.5`$. Every order scores 0.5 and is flagged: 2 of 4 right. Any number of layers without squashing is one layer in disguise.
 
 ### Step 7: a smooth squash keeps the decisions and adds a slope
 
-The step function has no slope to follow, so the weights above were set by hand. Replace each step by the logistic curve $\Lambda$, with every weight and bias multiplied by 10. The outputs become 0.0072 for the two matched orders and 0.9924 for the two mismatches: the same decisions, now as smooth numbers.
+The step function has no slope to follow, so the weights above were set by hand. Replace each step by the logistic curve $`\Lambda`$, with every weight and bias multiplied by 10. The outputs become 0.0072 for the two matched orders and 0.9924 for the two mismatches: the same decisions, now as smooth numbers.
 
-A smooth network can be trained by following slopes downhill, which is the job of [Backpropagation](04-backpropagation.md). A single unit with $\Lambda$, fitted by maximum likelihood (choosing the weights that make the observed labels most probable), is already a card of its own: [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md), which calls it one artificial neuron.
+A smooth network can be trained by following slopes downhill, which is the job of [Backpropagation](04-backpropagation.md). A single unit with $`\Lambda`$, fitted by maximum likelihood (choosing the weights that make the observed labels most probable), is already a card of its own: [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md), which calls it one artificial neuron.
 
-The perceptron's own rule is a gradient step too. On the loss $\max(0, -y\,s)$, which is zero for a correct order and grows with how wrong a mistake is, the slope with respect to $\bar w$ is $-y\,\bar x$ for a mistake. A step of size $\eta$ downhill is exactly the perceptron fix.
+The perceptron's own rule is a gradient step too. On the loss $`\max(0, -y\,s)`$, which is zero for a correct order and grows with how wrong a mistake is, the slope with respect to $`\bar w`$ is $`-y\,\bar x`$ for a mistake. A step of size $`\eta`$ downhill is exactly the perceptron fix.
 
 ---
 
 ## Worked numbers, by hand
 
-The eight orders, centred: A $(-3, -2)$, B $(4, 3)$, C $(3, -2)$, D $(-2, 3)$, E $(1, 2)$, F $(2, 1)$, G $(0, -1)$, H $(-1, 1)$. B, E and F are fraud. Start at $w = (0, 0)$, $b = 0$, $\eta = 1$, and visit A to H in order. Only mistakes are shown.
+The eight orders, centred: A $`(-3, -2)`$, B $`(4, 3)`$, C $`(3, -2)`$, D $`(-2, 3)`$, E $`(1, 2)`$, F $`(2, 1)`$, G $`(0, -1)`$, H $`(-1, 1)`$. B, E and F are fraud. Start at $`w = (0, 0)`$, $`b = 0`$, $`\eta = 1`$, and visit A to H in order. Only mistakes are shown.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| pass 1, A (normal), score 0 | $w - (-3, -2)$, $b - 1$ | $w = (3, 2)$, $b = -1$ |
-| pass 1, C (normal), score $+4$ | $(3, 2) - (3, -2)$, $-1 - 1$ | $w = (0, 4)$, $b = -2$ |
-| pass 1, D (normal), score $+10$ | $(0, 4) - (-2, 3)$, $-2 - 1$ | $w = (2, 1)$, $b = -3$ |
-| pass 2, C again, score $+1$ | $(2, 1) - (3, -2)$, $-3 - 1$ | $w = (-1, 3)$, $b = -4$ |
-| pass 2, D again, score $+7$ | $(-1, 3) - (-2, 3)$, $-4 - 1$ | $w = (1, 0)$, $b = -5$ |
-| pass 2, E (fraud), score $-4$ | $(1, 0) + (1, 2)$, $-5 + 1$ | $w = (2, 2)$, $b = -4$ |
+| pass 1, A (normal), score 0 | $`w - (-3, -2)`$, $`b - 1`$ | $`w = (3, 2)`$, $`b = -1`$ |
+| pass 1, C (normal), score $`+4`$ | $`(3, 2) - (3, -2)`$, $`-1 - 1`$ | $`w = (0, 4)`$, $`b = -2`$ |
+| pass 1, D (normal), score $`+10`$ | $`(0, 4) - (-2, 3)`$, $`-2 - 1`$ | $`w = (2, 1)`$, $`b = -3`$ |
+| pass 2, C again, score $`+1`$ | $`(2, 1) - (3, -2)`$, $`-3 - 1`$ | $`w = (-1, 3)`$, $`b = -4`$ |
+| pass 2, D again, score $`+7`$ | $`(-1, 3) - (-2, 3)`$, $`-4 - 1`$ | $`w = (1, 0)`$, $`b = -5`$ |
+| pass 2, E (fraud), score $`-4`$ | $`(1, 0) + (1, 2)`$, $`-5 + 1`$ | $`w = (2, 2)`$, $`b = -4`$ |
 | pass 3, every order | scores A −14, B +10, C −2, D −2, E +2, F +2, G −6, H −4 | 0 mistakes |
-| bound | $R^2 / \gamma^2 = 26 \times 24 / 4$ | 156 |
-| **settled rule** | $2x_1 + 2x_2 - 4 > 0$, so $x_1 + x_2 > 2$ | **flag when value/£100 + distance/100 km > 9** |
+| bound | $`R^2 / \gamma^2 = 26 \times 24 / 4`$ | 156 |
+| **settled rule** | $`2x_1 + 2x_2 - 4 > 0`$, so $`x_1 + x_2 > 2`$ | **flag when value/£100 + distance/100 km > 9** |
 
-Six fixes over two passes, then a clean third pass. Back in pounds and km, $x_1 + x_2 > 2$ means $(\text{value} - 400)/100 + (\text{distance} - 300)/100 > 2$: a £500 order shipped 500 km is flagged, and a £700 order shipped 100 km is not.
+Six fixes over two passes, then a clean third pass. Back in pounds and km, $`x_1 + x_2 > 2`$ means $`(\text{value} - 400)/100 + (\text{distance} - 300)/100 > 2`$: a £500 order shipped 500 km is flagged, and a £700 order shipped 100 km is not.
 
 ### What breaks if you drop a piece
 
@@ -192,7 +206,7 @@ Six fixes over two passes, then a clean third pass. Back in pounds and km, $x_1 
 | Count a score of 0 as right | 0 fixes; flags nothing; 5 of 8 right | from a zero start every score is 0, so nothing ever looks wrong |
 | Feed raw values, not centred | 218 fixes over 49 passes; bound 8,383 | the bias moves 1 per fix while the line sits far from the origin |
 | One perceptron on XOR | 4 mistakes in every pass; weights back to 0 after each | no line exists (Step 4); the best any line does is 3 of 4 |
-| Two layers, no squashing | every score 0.5; 2 of 4 right | $W_2 W_1 = (0, 0)$: the stack collapses to one constant line |
+| Two layers, no squashing | every score 0.5; 2 of 4 right | $`W_2 W_1 = (0, 0)`$: the stack collapses to one constant line |
 
 ---
 
@@ -200,8 +214,8 @@ Six fixes over two passes, then a clean third pass. Back in pounds and km, $x_1 
 
 Both programs train the perceptron on the eight orders and print each fix. They check the result three independent ways:
 
-- the hand trace (6 fixes, ending at $w = (2, 2)$, $b = -4$);
-- the stopping bound, computed by hand as 156 and from the data, on the eight orders and on 1,000 synthetic orders drawn by SplitMix64 (a simple random-number generator, seed 2026) from the rule $0.6x_1 + 0.8x_2 > 1.4$ with a gap of 0.25 kept clear;
+- the hand trace (6 fixes, ending at $`w = (2, 2)`$, $`b = -4`$);
+- the stopping bound, computed by hand as 156 and from the data, on the eight orders and on 1,000 synthetic orders drawn by SplitMix64 (a simple random-number generator, seed 2026) from the rule $`0.6x_1 + 0.8x_2 > 1.4`$ with a gap of 0.25 kept clear;
 - brute force over 4,913 lines, which finds a perfect line for the eight orders and none for XOR.
 
 They then build the two-layer network, test it against the XOR truth table, collapse it without squashing, and print every "what breaks" and "try changing" number.
@@ -590,14 +604,14 @@ The two outputs are identical. On 1,000 orders, 286 of them fraud (a synthetic t
 
 Lean proves the stopping promise, the XOR fact and the two-layer collapse for any data and layer sizes, and checks the worked numbers.
 
-- Suppose a unit-length line $u$ separates the orders with margin $\gamma > 0$, every $\bar x$ has length at most $R$, and $\eta > 0$. Then the perceptron, started from zero weights and visiting orders in any sequence, makes at most $(R/\gamma)^2$ fixes.
+- Suppose a unit-length line $`u`$ separates the orders with margin $`\gamma > 0`$, every $`\bar x`$ has length at most $`R`$, and $`\eta > 0`$. Then the perceptron, started from zero weights and visiting orders in any sequence, makes at most $`(R/\gamma)^2`$ fixes.
 - No single line flags exactly the two mismatches of the XOR pattern.
 - Two layers with no squashing function between them, and any number of hidden units, cannot flag exactly those two mismatches either.
-- Take layer matrices $W_1$, $W_2$ and biases $b_1$, $b_2$ of any sizes. Then $W_2(W_1 x + b_1) + b_2 = (W_2 W_1)\,x + (W_2 b_1 + b_2)$.
-- The hand trace gives 6 fixes, ending at $w = (2, 2)$ and $b = -4$, then a clean third pass.
+- Take layer matrices $`W_1`$, $`W_2`$ and biases $`b_1`$, $`b_2`$ of any sizes. Then $`W_2(W_1 x + b_1) + b_2 = (W_2 W_1)\,x + (W_2 b_1 + b_2)`$.
+- The hand trace gives 6 fixes, ending at $`w = (2, 2)`$ and $`b = -4`$, then a clean third pass.
 - The settled scores and the bound of 156 come out exactly.
 - On XOR, one pass returns the weights to zero, and the two-layer network flags exactly the mismatches.
-- Without squashing, the stack has weights $(0, 0)$ and bias 0.5. The shop's network has 113 numbers to learn.
+- Without squashing, the stack has weights $`(0, 0)`$ and bias 0.5. The shop's network has 113 numbers to learn.
 
 Every other run on the card, such as the 1,000 orders and the logistic outputs, is left to the Python and Rust checks.
 
@@ -799,8 +813,8 @@ example : 8 * 12 + 8 + 8 + 1 = 113 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - Guess first: halve the learning rate, `eta=0.5`. Does the line change? Answer: no. Still 6 fixes, ending at $w = (1.0, 1.0)$, $b = -2.0$: every number halves, and the line $x_1 + x_2 > 2$ is the same.
-> - Guess first: visit the orders H to A instead. Answer: 10 fixes, ending at $w = (3, 3)$, $b = -6$. Different weights, and by luck the same line again.
+> - Guess first: halve the learning rate, `eta=0.5`. Does the line change? Answer: no. Still 6 fixes, ending at $`w = (1.0, 1.0)`$, $`b = -2.0`$: every number halves, and the line $`x_1 + x_2 > 2`$ is the same.
+> - Guess first: visit the orders H to A instead. Answer: 10 fixes, ending at $`w = (3, 3)`$, $`b = -6`$. Different weights, and by luck the same line again.
 > - Guess first: add a fraud order at £200 and 100 km. Answer: no line separates the nine, and in pass 200 it still makes 5 mistakes.
 > - Guess first: use the logistic network with weights times 1, not times 10. Answer: the outputs are 0.4244 and 0.4366, nearly equal. The decisions are still in there, but too faint to read. Scale is something training has to find.
 
@@ -821,7 +835,7 @@ example : 8 * 12 + 8 + 8 + 1 = 113 := by norm_num
 ## Where you meet it in real life
 
 - **Card payment screening.** A fraud score that adds weighted signals and compares the total with a threshold is a perceptron's score.
-- **This shop's own network.** Twelve numbers in, a hidden layer of 8 units, one fraud flag out: $W_1$ is 8 by 12, so the network has $96 + 8 + 8 + 1 = 113$ numbers to learn.
+- **This shop's own network.** Twelve numbers in, a hidden layer of 8 units, one fraud flag out: $`W_1`$ is 8 by 12, so the network has $`96 + 8 + 8 + 1 = 113`$ numbers to learn.
 - **Every modern neural network.** Each layer is the step on this card: a matrix times a vector, plus a bias, through a squashing function.
 - **Processor chips.** Some chips guess which way a program's next branch will go with a small perceptron per branch, trained as the program runs by a variant of this card's rule that also updates on narrow wins, not only on mistakes.
 
@@ -832,14 +846,14 @@ example : 8 * 12 + 8 + 8 + 1 = 113 := by norm_num
 
 ## What this builds on
 
-- [Gradient descent](02-gradient-descent-and-stochastic-gradient.md): weights, bias and learning rate, and stepping downhill one example at a time. The perceptron fix is that step on the loss $\max(0, -y\,s)$.
-- [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md): a layer is a matrix times the input vector. Each row of $W_1$ is one hidden unit's weights.
+- [Gradient descent](02-gradient-descent-and-stochastic-gradient.md): weights, bias and learning rate, and stepping downhill one example at a time. The perceptron fix is that step on the loss $`\max(0, -y\,s)`$.
+- [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md): a layer is a matrix times the input vector. Each row of $`W_1`$ is one hidden unit's weights.
 - [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md): one unit with the logistic squashing function, fitted by maximum likelihood. The smooth cousin of the perceptron.
 
 ## Where this goes next
 
 - [Backpropagation](04-backpropagation.md): the next card. With a smooth squashing function, the chain rule gives every weight in every layer its slope, so the XOR network can be trained instead of set by hand.
-- [Support vector machines](09-kernels-and-support-vector-machines.md): of all the lines that separate the data, pick the one with the widest margin $\gamma$, the quantity that controls this card's bound.
+- [Support vector machines](09-kernels-and-support-vector-machines.md): of all the lines that separate the data, pick the one with the widest margin $`\gamma`$, the quantity that controls this card's bound.
 
 This card set the two-layer weights by hand; how a network finds such weights by itself, when the step function has no slope, is the question it leaves open.
 

@@ -26,38 +26,44 @@ To scale: 100 units across per second, 9 up per m/s. Solid: the true speed. Dash
 
 ## The formula
 
-Reminder: $v' = f(t, v)$ says the rate of the speed $v$ at time $t$ is given by the rule $f$; here $f(t, v) = 9.8 - 0.2v$. A step of length $h$ turns the method's speed $v_n$ after $n$ steps into $v_{n+1}$.
+Reminder: $`v' = f(t, v)`$ says the rate of the speed $`v`$ at time $`t`$ is given by the rule $`f`$; here $`f(t, v) = 9.8 - 0.2v`$. A step of length $`h`$ turns the method's speed $`v_n`$ after $`n`$ steps into $`v_{n+1}`$.
 
-Both take a first sample $k_1 = f(t_n, v_n)$, Euler's slope, at time $t_n = nh$. They differ in the second.
+Both take a first sample $`k_1 = f(t_n, v_n)`$, Euler's slope, at time $`t_n = nh`$. They differ in the second.
 
-$$\text{Midpoint:}\quad k_2 = f\!\left(t_n + \tfrac{h}{2},\ v_n + \tfrac{h}{2}k_1\right), \qquad v_{n+1} = v_n + h\,k_2$$
+```math
+\text{Midpoint:}\quad k_2 = f\!\left(t_n + \tfrac{h}{2},\ v_n + \tfrac{h}{2}k_1\right), \qquad v_{n+1} = v_n + h\,k_2
+```
 
 **Read it aloud:** walk half a step on the first slope, read the slope there, and use that slope for the whole step.
 
-$$\text{Heun:}\quad k_2 = f\!\left(t_n + h,\ v_n + h\,k_1\right), \qquad v_{n+1} = v_n + \tfrac{h}{2}\left(k_1 + k_2\right)$$
+```math
+\text{Heun:}\quad k_2 = f\!\left(t_n + h,\ v_n + h\,k_1\right), \qquad v_{n+1} = v_n + \tfrac{h}{2}\left(k_1 + k_2\right)
+```
 
 **Read it aloud:** walk a whole step on the first slope, read the slope at the far end, and step with the average of the two slopes.
 
 Both are members of one family, which the derivation fixes:
 
-$$v_{n+1} = v_n + h\,(b_1 k_1 + b_2 k_2), \qquad k_2 = f(t_n + c\,h,\ v_n + c\,h\,k_1), \qquad b_1 + b_2 = 1,\quad b_2\,c = \tfrac12$$
+```math
+v_{n+1} = v_n + h\,(b_1 k_1 + b_2 k_2), \qquad k_2 = f(t_n + c\,h,\ v_n + c\,h\,k_1), \qquad b_1 + b_2 = 1,\quad b_2\,c = \tfrac12
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $h$ | time since the jump, and step length, s | 0 to 10; 2 | larger error |
-| $v$, $v'$, $f$ | speed (m/s), its rate (m/s per s), the rule | 42.37 at 10 s; 9.8 − 0.2 × speed | — |
-| $v_n$, $t_n$, $n$ | the method's speed and time after $n$ steps | 41.88 after 5 steps | — |
-| $k_1$, $k_2$ | the two slope samples | Heun: 9.80, 5.88 | — |
-| $b_1$, $b_2$, $c$ | sample weights; where in the step the second is read | Heun ½, ½, 1; midpoint 0, 1, ½ | — |
-| $f_t$, $f_v$ | the rule's rate of change with time alone, with speed alone | 0; −0.2 per s | more bend |
-| $e_n$, $C$, $L$, $N$, $T$ | folded proof: error after $n$ steps, local-error constant, bound on $f_v$ in size, step count, end time | $L$ = 0.2; $T$ = 10 s | old errors grow more |
-| $q$, $x$ | one step's shrink factor on the gap to 49 m/s; $x = 0.2h$ | 0.68 at $x$ = 0.4 | past $h$ = 10 s the gap grows |
+| $`t`$, $`h`$ | time since the jump, and step length, s | 0 to 10; 2 | larger error |
+| $`v`$, $`v'`$, $`f`$ | speed (m/s), its rate (m/s per s), the rule | 42.37 at 10 s; 9.8 − 0.2 × speed | — |
+| $`v_n`$, $`t_n`$, $`n`$ | the method's speed and time after $`n`$ steps | 41.88 after 5 steps | — |
+| $`k_1`$, $`k_2`$ | the two slope samples | Heun: 9.80, 5.88 | — |
+| $`b_1`$, $`b_2`$, $`c`$ | sample weights; where in the step the second is read | Heun ½, ½, 1; midpoint 0, 1, ½ | — |
+| $`f_t`$, $`f_v`$ | the rule's rate of change with time alone, with speed alone | 0; −0.2 per s | more bend |
+| $`e_n`$, $`C`$, $`L`$, $`N`$, $`T`$ | folded proof: error after $`n`$ steps, local-error constant, bound on $`f_v`$ in size, step count, end time | $`L`$ = 0.2; $`T`$ = 10 s | old errors grow more |
+| $`q`$, $`x`$ | one step's shrink factor on the gap to 49 m/s; $`x = 0.2h`$ | 0.68 at $`x`$ = 0.4 | past $`h`$ = 10 s the gap grows |
 
 ### When it holds
 
-- **A smooth rule.** The derivation uses the rule's second rates of change. If the rule jumps, say a parachute opening mid-step, that one step errs in proportion to $h$, and the error at 10 s shrinks only as fast as Euler's.
-- **A fixed end time, small steps.** "Second order" describes the error at a fixed time as $h$ shrinks; at large steps the pattern has not set in.
-- **A step short against the rule's time scale.** One skydiver step multiplies the gap to 49 m/s by $q$; past $h$ = 10 s, $q$ exceeds 1 and the speed runs away. Very fast rules need [Stiff equations](06-stiff-equations-and-backward-euler.md).
+- **A smooth rule.** The derivation uses the rule's second rates of change. If the rule jumps, say a parachute opening mid-step, that one step errs in proportion to $`h`$, and the error at 10 s shrinks only as fast as Euler's.
+- **A fixed end time, small steps.** "Second order" describes the error at a fixed time as $`h`$ shrinks; at large steps the pattern has not set in.
+- **A step short against the rule's time scale.** One skydiver step multiplies the gap to 49 m/s by $`q`$; past $`h`$ = 10 s, $`q`$ exceeds 1 and the speed runs away. Very fast rules need [Stiff equations](06-stiff-equations-and-backward-euler.md).
 
 ---
 
@@ -65,62 +71,72 @@ $$v_{n+1} = v_n + h\,(b_1 k_1 + b_2 k_2), \qquad k_2 = f(t_n + c\,h,\ v_n + c\,h
 
 ### Step 0: a second sample estimates the average slope
 
-Over one step the speed changes by $h$ times the step's average slope. Euler uses the starting slope, 9.80, though the slope falls throughout. A second reading tells the method how fast the slope is changing; placed well, it cancels Euler's leading error.
+Over one step the speed changes by $`h`$ times the step's average slope. Euler uses the starting slope, 9.80, though the slope falls throughout. A second reading tells the method how fast the slope is changing; placed well, it cancels Euler's leading error.
 
 ### Step 1: what the true curve does in one step
 
-Expand the true speed around $t_n$ by [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md), which writes a smooth curve as its value plus its rates of change times powers of the step:
+Expand the true speed around $`t_n`$ by [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md), which writes a smooth curve as its value plus its rates of change times powers of the step:
 
-$$v(t_n + h) = v + h\,v' + \frac{h^2}{2}v'' + \frac{h^3}{6}v''' + \dots$$
+```math
+v(t_n + h) = v + h\,v' + \frac{h^2}{2}v'' + \frac{h^3}{6}v''' + \dots
+```
 
-Here $v' = f$, and the chain rule gives the bend: $v'' = f_t + f_v\,f$, since the rule changes as time moves and as the speed moves. For the skydiver, $f_t = 0$ and $f_v = -0.2$, so the bend is $-0.2$ times the slope: while the speed rises, the slope falls.
+Here $`v' = f`$, and the chain rule gives the bend: $`v'' = f_t + f_v\,f`$, since the rule changes as time moves and as the speed moves. For the skydiver, $`f_t = 0`$ and $`f_v = -0.2`$, so the bend is $`-0.2`$ times the slope: while the speed rises, the slope falls.
 
 ### Step 2: what a two-sample step does
 
 Expand the second sample to first order in the step, using the two-variable Taylor rule:
 
-$$k_2 = f + c\,h\,(f_t + f_v\,f) + (\text{terms in } h^2)$$
+```math
+k_2 = f + c\,h\,(f_t + f_v\,f) + (\text{terms in } h^2)
+```
 
 Put it into the family's update:
 
-$$v_{n+1} = v + h\,(b_1 + b_2)\,f + h^2\,b_2\,c\,(f_t + f_v\,f) + (\text{terms in } h^3)$$
+```math
+v_{n+1} = v + h\,(b_1 + b_2)\,f + h^2\,b_2\,c\,(f_t + f_v\,f) + (\text{terms in } h^3)
+```
 
 ### Step 3: match the terms
 
-The true curve has $h\,f$ and $\tfrac12 h^2 (f_t + f_v f)$. The step matches both, for every smooth rule, exactly when
+The true curve has $`h\,f`$ and $`\tfrac12 h^2 (f_t + f_v f)`$. The step matches both, for every smooth rule, exactly when
 
-$$b_1 + b_2 = 1, \qquad b_2\,c = \tfrac12.$$
+```math
+b_1 + b_2 = 1, \qquad b_2\,c = \tfrac12.
+```
 
-Two conditions on three unknowns leave one free choice. Reading halfway, $c = \tfrac12$, forces $b_2 = 1$, $b_1 = 0$: midpoint. Reading at the far end, $c = 1$, forces $b_1 = b_2 = \tfrac12$: Heun.
+Two conditions on three unknowns leave one free choice. Reading halfway, $`c = \tfrac12`$, forces $`b_2 = 1`$, $`b_1 = 0`$: midpoint. Reading at the far end, $`c = 1`$, forces $`b_1 = b_2 = \tfrac12`$: Heun.
 
-Neither can match the $h^3$ term in general: it holds the rule's second rates of change. So each step misses by an amount proportional to $h^3$, the **local error**.
+Neither can match the $`h^3`$ term in general: it holds the rule's second rates of change. So each step misses by an amount proportional to $`h^3`$, the **local error**.
 
 ### Step 4: the skydiver makes it exact
 
-The skydiver's rule is a straight line in speed. Each step the true gap to 49 m/s shrinks by the factor $e^{-0.2h}$. Both methods multiply it instead by
+The skydiver's rule is a straight line in speed. Each step the true gap to 49 m/s shrinks by the factor $`e^{-0.2h}`$. Both methods multiply it instead by
 
-$$q = 1 - x + \frac{x^2}{2}, \qquad x = 0.2h,$$
+```math
+q = 1 - x + \frac{x^2}{2}, \qquad x = 0.2h,
+```
 
-the first three terms of the series for $e^{-x}$. At $h$ = 2 s, $q$ = 0.6800 against the true 0.6703, and five steps give $49\,(1 - q^5)$ = 41.8757, exactly what stepping gives.
+the first three terms of the series for $`e^{-x}`$. At $`h`$ = 2 s, $`q`$ = 0.6800 against the true 0.6703, and five steps give $`49\,(1 - q^5)`$ = 41.8757, exactly what stepping gives.
 
-### Step 5: local $h^3$ becomes global $h^2$
+### Step 5: local $`h^3`$ becomes global $`h^2`$
 
-Reaching ten seconds takes $10/h$ steps. Each adds an error proportional to $h^3$, and earlier errors are carried along, grown by at most a fixed factor. The total is about $10/h$ times $h^3$: proportional to $h^2$. That is what "order 2" means ([Order of a method](02-local-and-global-error-and-order.md)): halving the step quarters the error.
+Reaching ten seconds takes $`10/h`$ steps. Each adds an error proportional to $`h^3`$, and earlier errors are carried along, grown by at most a fixed factor. The total is about $`10/h`$ times $`h^3`$: proportional to $`h^2`$. That is what "order 2" means ([Order of a method](02-local-and-global-error-and-order.md)): halving the step quarters the error.
 
 <details>
 <summary>Detailed proof: from local error to global error</summary>
 
-Let $e_n$ be the gap between $v_n$ and the true speed at $t_n$, and let $L$ bound $\lvert f_v\rvert$ near the solution.
+Let $`e_n`$ be the gap between $`v_n`$ and the true speed at $`t_n`$, and let $`L`$ bound $`\lvert f_v\rvert`$ near the solution.
 
-First, a step from the true value misses the true curve by at most $C h^3$; $C$ comes from the Taylor remainders of Steps 1 and 2.
+First, a step from the true value misses the true curve by at most $`C h^3`$; $`C`$ comes from the Taylor remainders of Steps 1 and 2.
 
-Second, a step from two speeds $u$ and $z$ lands them at most $(1 + Lh + L^2h^2/2)\,\lvert u - z\rvert$ apart, since each sample differs by at most $L$ times the gap in its input. That factor is at most $e^{Lh}$.
+Second, a step from two speeds $`u`$ and $`z`$ lands them at most $`(1 + Lh + L^2h^2/2)\,\lvert u - z\rvert`$ apart, since each sample differs by at most $`L`$ times the gap in its input. That factor is at most $`e^{Lh}`$.
 
-So $e_{n+1} \le e^{Lh}\,e_n + C h^3$ with $e_0 = 0$, and after $N$ steps $e_N \le C h^3 \,(e^{NLh} - 1)/(e^{Lh} - 1)$. Since $e^{Lh} - 1 \ge Lh$ and $N h = T$, $e_N \le C h^2 (e^{LT} - 1)/L$, a constant times $h^2$.
+So $`e_{n+1} \le e^{Lh}\,e_n + C h^3`$ with $`e_0 = 0`$, and after $`N`$ steps $`e_N \le C h^3 \,(e^{NLh} - 1)/(e^{Lh} - 1)`$. Since $`e^{Lh} - 1 \ge Lh`$ and $`N h = T`$, $`e_N \le C h^2 (e^{LT} - 1)/L`$, a constant times $`h^2`$.
 
 </details>
 
-A second road needs no exact solution: compare answers at $h$, $h/2$ and $h/4$ and read the order from the ratio of successive differences. Built into each step, it becomes [Adaptive steps](05-adaptive-step-size.md).
+A second road needs no exact solution: compare answers at $`h`$, $`h/2`$ and $`h/4`$ and read the order from the ratio of successive differences. Built into each step, it becomes [Adaptive steps](05-adaptive-step-size.md).
 
 ---
 
@@ -128,8 +144,8 @@ A second road needs no exact solution: compare answers at $h$, $h/2$ and $h/4$ a
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| first slope | 9.8 − 0.2 × 0 | $k_1$ = 9.80 |
-| Heun: far end, slope there | 2 × 9.80 = 19.60; 9.8 − 0.2 × 19.60 | $k_2$ = 5.88 |
+| first slope | 9.8 − 0.2 × 0 | $`k_1`$ = 9.80 |
+| Heun: far end, slope there | 2 × 9.80 = 19.60; 9.8 − 0.2 × 19.60 | $`k_2`$ = 5.88 |
 | Heun: step on the average | 2 × (9.80 + 5.88)/2 | 15.68 m/s |
 | midpoint: half-step, slope there | 1 × 9.80; 9.8 − 0.2 × 9.80 | 7.84 |
 | midpoint: step | 2 × 7.84 | 15.68 m/s |
@@ -138,7 +154,7 @@ A second road needs no exact solution: compare answers at $h$, $h/2$ and $h/4$ a
 
 At ten seconds Heun reads 41.88 m/s against the true 42.37: 0.49 slow, where Euler was 2.82 fast. Errors at 10 s, with midpoint's identical to Heun's:
 
-| Step $h$ | Euler error | Heun error |
+| Step $`h`$ | Euler error | Heun error |
 | --- | --- | --- |
 | 2 s | 2.8212 | 0.4928 |
 | 1 s | 1.3701 | 0.1035 |
@@ -147,7 +163,7 @@ At ten seconds Heun reads 41.88 m/s against the true 42.37: 0.49 slow, where Eul
 
 From 0.5 s to 0.25 s Euler's error falls by 2.02 times, Heun's by 4.16. Heun at 0.5 s costs as many slope readings as Euler at 0.25 s, yet errs by 0.0239 against 0.3343.
 
-They agree only because the rule is a straight line in speed. With drag growing as the speed squared, $v' = 9.8 - 9.8\,(v/49)^2$, the exact speed at 10 s is 47.2374; 2 s steps give 46.6380 by midpoint and 46.3210 by Heun. Both stay second order: from 0.5 s to 0.25 s their errors fall by 4.27 and 4.29.
+They agree only because the rule is a straight line in speed. With drag growing as the speed squared, $`v' = 9.8 - 9.8\,(v/49)^2`$, the exact speed at 10 s is 47.2374; 2 s steps give 46.6380 by midpoint and 46.3210 by Heun. Both stay second order: from 0.5 s to 0.25 s their errors fall by 4.27 and 4.29.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -174,7 +190,7 @@ True speed (orange), Euler (green, above throughout), Heun (dark blue, just belo
 
 ## Code, from first principles, and it actually runs
 
-Two independent roads. Road one steps the rule with Euler, midpoint and Heun and compares each with the exact speed $49\,(1 - e^{-0.2t})$ at four step sizes. Road two never steps: the answer after $n$ steps is $49\,(1 - q^n)$, and the code asserts the roads agree at every step. Asserts also pin the local error near $49x^3/6$ and the error ratios near 4 and 2. The quadratic-drag case separates the two methods.
+Two independent roads. Road one steps the rule with Euler, midpoint and Heun and compares each with the exact speed $`49\,(1 - e^{-0.2t})`$ at four step sizes. Road two never steps: the answer after $`n`$ steps is $`49\,(1 - q^n)`$, and the code asserts the roads agree at every step. Asserts also pin the local error near $`49x^3/6`$ and the error ratios near 4 and 2. The quadratic-drag case separates the two methods.
 
 ### Python
 
@@ -363,14 +379,14 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves second order for every rule that is a straight line in speed, and the $h^3$ local error for every smooth rule.
+Lean proves second order for every rule that is a straight line in speed, and the $`h^3`$ local error for every smooth rule.
 
-- Take a rule that is a straight line in speed, $v' = a - k\,v$ with drag $k > 0$, and fix an end time. Heun and midpoint both err there by at most one constant times $h^2$, whatever the number of steps.
-- For such a rule with $k$ not 0, the balance speed is $a/k$. One Heun step and one midpoint step both multiply the gap to it by $q = 1 - x + x^2/2$, where $x = kh$.
-- Take a smooth rule, one whose second rates of change are continuous, and a true speed curve. With $b_1+b_2=1$ and $b_2c=\tfrac12$, one step from the true speed misses the curve by at most a constant times $h^3$ for small $h$.
-- Midpoint and Heun are the family members with $b_1, b_2, c$ equal to 0, 1, ½ and ½, ½, 1.
-- The hand arithmetic holds exactly: slopes 9.80, 5.88 and 7.84, first steps at 15.68, $q$ = 0.68, and $q$ = 1 at $x$ = 2.
-- Five Heun steps of 2 s land exactly on $49\,(1 - q^5)$, which is 41.8757 to four places.
+- Take a rule that is a straight line in speed, $`v' = a - k\,v`$ with drag $`k > 0`$, and fix an end time. Heun and midpoint both err there by at most one constant times $`h^2`$, whatever the number of steps.
+- For such a rule with $`k`$ not 0, the balance speed is $`a/k`$. One Heun step and one midpoint step both multiply the gap to it by $`q = 1 - x + x^2/2`$, where $`x = kh`$.
+- Take a smooth rule, one whose second rates of change are continuous, and a true speed curve. With $`b_1+b_2=1`$ and $`b_2c=\tfrac12`$, one step from the true speed misses the curve by at most a constant times $`h^3`$ for small $`h`$.
+- Midpoint and Heun are the family members with $`b_1, b_2, c`$ equal to 0, 1, ½ and ½, ½, 1.
+- The hand arithmetic holds exactly: slopes 9.80, 5.88 and 7.84, first steps at 15.68, $`q`$ = 0.68, and $`q`$ = 1 at $`x`$ = 2.
+- Five Heun steps of 2 s land exactly on $`49\,(1 - q^5)`$, which is 41.8757 to four places.
 
 The error table, the ratios near 4 and 2, and the speed-squared drag are left to the Python and Rust checks.
 
@@ -769,7 +785,7 @@ example (f : ℝ → ℝ → ℝ) (h t v : ℝ) :
 ## The usual mistake
 
 > [!warning]
-> **Taking "second order" to mean four times better than Euler.** Four is what halving the step does to Heun's own error. Against Euler the gain depends on the step: 0.4928 against 2.8212 at 2 s, 0.0057 against 0.3343 at 0.25 s. It widens as the step shrinks, since one error falls as $h^2$, the other as $h$.
+> **Taking "second order" to mean four times better than Euler.** Four is what halving the step does to Heun's own error. Against Euler the gain depends on the step: 0.4928 against 2.8212 at 2 s, 0.0057 against 0.3343 at 0.25 s. It widens as the step shrinks, since one error falls as $`h^2`$, the other as $`h`$.
 >
 > - **Assuming midpoint and Heun are one method.** With drag as the speed squared they read 46.6380 and 46.3210.
 > - **Reading the order off large steps.** From 2 s to 1 s Heun's error goes from 0.4928 to 0.1035, not yet a clean quarter.
@@ -778,7 +794,7 @@ example (f : ℝ → ℝ → ℝ) (h t v : ℝ) :
 
 ## Where you meet it in real life
 
-- **Integrating a plain function.** When the rule ignores the unknown, $f$ depends on $t$ alone and Heun's step is the trapezoidal rule for areas, while the midpoint step is the midpoint rule: both from [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
+- **Integrating a plain function.** When the rule ignores the unknown, $`f`$ depends on $`t`$ alone and Heun's step is the trapezoidal rule for areas, while the midpoint step is the midpoint rule: both from [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
 - **Adaptive solvers.** Euler and Heun share their first sample, so running both gives a free estimate of Euler's error: the idea behind [Adaptive steps](05-adaptive-step-size.md).
 
 > **Say it back**

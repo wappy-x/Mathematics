@@ -38,43 +38,49 @@ Orange: the Gauss rule. It drops from −2.33 at three samples to −15.92 at fo
 
 A Gauss rule replaces the area under a curve f(t) from −1 to 1 by a weighted sum of n samples:
 
-$$\int_{-1}^{1} f(t)\,dt \;\approx\; \sum_{j=1}^{n} w_j\, f(t_j), \qquad P_n(t_j) = 0, \qquad w_j = \frac{2}{(1 - t_j^2)\,P_n'(t_j)^2}.$$
+```math
+\int_{-1}^{1} f(t)\,dt \;\approx\; \sum_{j=1}^{n} w_j\, f(t_j), \qquad P_n(t_j) = 0, \qquad w_j = \frac{2}{(1 - t_j^2)\,P_n'(t_j)^2}.
+```
 
 **Read it aloud:** the area is about the sum of n weights times n samples, where the sample points are the n zeros of the Legendre polynomial of degree n and each weight comes from that polynomial's slope at its zero.
 
 The beam runs from 0 to 6 m, not from −1 to 1, so stretch the rule. Put x = (a + b)/2 + t (b − a)/2, which sends t = −1 to a and t = 1 to b:
 
-$$\int_{a}^{b} f(x)\,dx \;\approx\; \frac{b - a}{2} \sum_{j=1}^{n} w_j\, f\!\left(\frac{a + b}{2} + \frac{b - a}{2}\,t_j\right).$$
+```math
+\int_{a}^{b} f(x)\,dx \;\approx\; \frac{b - a}{2} \sum_{j=1}^{n} w_j\, f\!\left(\frac{a + b}{2} + \frac{b - a}{2}\,t_j\right).
+```
 
 **Read it aloud:** sample at the stretched points, add up the weighted samples, and multiply by the half-width.
 
 When f is not a polynomial of low degree, the error on −1 to 1 is
 
-$$\int_{-1}^{1} f(t)\,dt - \sum_{j=1}^{n} w_j f(t_j) \;=\; \frac{2^{2n+1}\,(n!)^4}{(2n+1)\,\bigl((2n)!\bigr)^3}\; f^{(2n)}(\xi).$$
+```math
+\int_{-1}^{1} f(t)\,dt - \sum_{j=1}^{n} w_j f(t_j) \;=\; \frac{2^{2n+1}\,(n!)^4}{(2n+1)\,\bigl((2n)!\bigr)^3}\; f^{(2n)}(\xi).
+```
 
 **Read it aloud:** the error is a fixed number, which shrinks very fast as n grows, times the curve's 2n-th derivative somewhere in the interval.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $k$ | number of sample points; a counting index for powers and polynomials | 4 | exact for higher degree: 2n − 1 |
-| $t_j$ | sample points (nodes) on −1 to 1 | ±0.339981, ±0.861136 | — |
-| $w_j$ | weights, one per node, all positive, total 2 | 0.652145, 0.347855 | — |
-| $P_n$, $P_n'$ | Legendre polynomial of degree n; its slope | $P_4$ | one more zero, so one more node |
-| $f(t)$ | the curve to be integrated, on −1 to 1 | 3 × energy per metre at x = 3 + 3t | — |
-| $a$, $b$, $x$ | ends of the real interval; position along it | 0 m, 6 m; nodes at 0.416591 m to 5.583409 m | — |
-| $f^{(2n)}$, $\xi$, $\eta$ | the 2n-th derivative of f; points between −1 and 1 where it is read | zero for n = 4 | larger error |
-| $p$, $q$, $r$; $g$, $K$, $s$ | a test polynomial; quotient and remainder after dividing it by $P_n$; in the remainder proof, a helper function, its constant and its variable | degree up to 7, 3, 3 | — |
-| $\ell_j$, $H$ | Lagrange basis polynomial for node j; the polynomial matching f and its slope at every node | degree 3; degree 7 | — |
-| $L$, $w_0$ | span; load at the right end | 6 m; 12 kN/m | U grows as $L^5$ and $w_0^2$ |
-| $M(x)$, $EI$ | bending moment, the turning effect of the load at x; bending stiffness | $w_0 x (L^2 - x^2)/(6L)$ kN m; 20,000 kN m² (illustrative) | EI up: U falls |
-| $U$, $U_n$ | bending energy, exact; the n-point Gauss value | 59.245714285714 J; $U_4$ equal to rounding level | — |
+| $`n`$, $`k`$ | number of sample points; a counting index for powers and polynomials | 4 | exact for higher degree: 2n − 1 |
+| $`t_j`$ | sample points (nodes) on −1 to 1 | ±0.339981, ±0.861136 | — |
+| $`w_j`$ | weights, one per node, all positive, total 2 | 0.652145, 0.347855 | — |
+| $`P_n`$, $`P_n'`$ | Legendre polynomial of degree n; its slope | $`P_4`$ | one more zero, so one more node |
+| $`f(t)`$ | the curve to be integrated, on −1 to 1 | 3 × energy per metre at x = 3 + 3t | — |
+| $`a`$, $`b`$, $`x`$ | ends of the real interval; position along it | 0 m, 6 m; nodes at 0.416591 m to 5.583409 m | — |
+| $`f^{(2n)}`$, $`\xi`$, $`\eta`$ | the 2n-th derivative of f; points between −1 and 1 where it is read | zero for n = 4 | larger error |
+| $`p`$, $`q`$, $`r`$; $`g`$, $`K`$, $`s`$ | a test polynomial; quotient and remainder after dividing it by $`P_n`$; in the remainder proof, a helper function, its constant and its variable | degree up to 7, 3, 3 | — |
+| $`\ell_j`$, $`H`$ | Lagrange basis polynomial for node j; the polynomial matching f and its slope at every node | degree 3; degree 7 | — |
+| $`L`$, $`w_0`$ | span; load at the right end | 6 m; 12 kN/m | U grows as $`L^5`$ and $`w_0^2`$ |
+| $`M(x)`$, $`EI`$ | bending moment, the turning effect of the load at x; bending stiffness | $`w_0 x (L^2 - x^2)/(6L)`$ kN m; 20,000 kN m² (illustrative) | EI up: U falls |
+| $`U`$, $`U_n`$ | bending energy, exact; the n-point Gauss value | 59.245714285714 J; $`U_4`$ equal to rounding level | — |
 
-The bending energy is $U = \int_0^L M(x)^2 / (2EI)\,dx$, the integral every rule on this card is aimed at.
+The bending energy is $`U = \int_0^L M(x)^2 / (2EI)\,dx`$, the integral every rule on this card is aimed at.
 
 ### When it holds
 
 - **Exact for polynomials of degree at most 2n − 1.** The beam's curve has degree 6. Three points cover only degree 5, and they miss by 2.777e-1 J.
-- **The curve is smooth: it has 2n derivatives.** The square root of x on 0 to 1 has an infinite slope at 0. The error falls only like a power of n: 3.001e-6 at 32 points, observed order 2.94 against the theory's 3, since an end that behaves like a square root makes the error fall like $n^{-3}$ (Sidi, Sources).
+- **The curve is smooth: it has 2n derivatives.** The square root of x on 0 to 1 has an infinite slope at 0. The error falls only like a power of n: 3.001e-6 at 32 points, observed order 2.94 against the theory's 3, since an end that behaves like a square root makes the error fall like $`n^{-3}`$ (Sidi, Sources).
 - **You choose where to sample.** A day of wind readings every ten minutes, the shelf's house example, comes on a fixed grid. Gauss cannot move those points, so use the trapezoid or Simpson rule.
 - **A finite interval with weight 1.** A bell-curve weight or an infinite range needs other polynomials: [Weighted Gauss rules](04-gauss-hermite-and-weighted-rules.md).
 - **"Exact" means in exact arithmetic.** In doubles each sample carries rounding. The weights are positive and add to 2, so that rounding is not magnified: the beam's error is 7.105e-15 J.
@@ -93,28 +99,32 @@ Let the points move as well and there are 2n numbers to set: enough, in principl
 
 Ask for two points t₁, t₂ and two weights w₁, w₂ that integrate 1, t, t² and t³ on −1 to 1 exactly. The exact integrals are 2, 0, 2/3 and 0:
 
-$$w_1 + w_2 = 2, \quad w_1 t_1 + w_2 t_2 = 0, \quad w_1 t_1^2 + w_2 t_2^2 = \tfrac{2}{3}, \quad w_1 t_1^3 + w_2 t_2^3 = 0.$$
+```math
+w_1 + w_2 = 2, \quad w_1 t_1 + w_2 t_2 = 0, \quad w_1 t_1^2 + w_2 t_2^2 = \tfrac{2}{3}, \quad w_1 t_1^3 + w_2 t_2^3 = 0.
+```
 
 The interval is symmetric about 0, so try t₂ = −t₁ and w₁ = w₂. The second and fourth equations then hold at once. The first gives w₁ = w₂ = 1. The third gives 2t₁² = 2/3, so t₁ = −1/√3 = −0.577350269190 and t₂ = 0.577350269190.
 
 On t⁴ the rule gives 2/9 = 0.222222222222 against the true 2/5 = 0.4. So degree 3 is its limit: 2n − 1 with n = 2.
 
-Those two points are the zeros of $P_2(t) = (3t^2 - 1)/2$. That is not luck, and Step 2 says why.
+Those two points are the zeros of $`P_2(t) = (3t^2 - 1)/2`$. That is not luck, and Step 2 says why.
 
 ### Step 2: zeros of an orthogonal polynomial give exactness to degree 2n − 1
 
-The Legendre polynomials $P_0 = 1$, $P_1 = t$, $P_2$, … come from [Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md). There they are shown to be orthogonal: two different ones, multiplied and integrated from −1 to 1, give zero. Any polynomial of degree below n is a mix of $P_0, \dots, P_{n-1}$, so $P_n$ is orthogonal to all of them.
+The Legendre polynomials $`P_0 = 1`$, $`P_1 = t`$, $`P_2`$, … come from [Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md). There they are shown to be orthogonal: two different ones, multiplied and integrated from −1 to 1, give zero. Any polynomial of degree below n is a mix of $`P_0, \dots, P_{n-1}`$, so $`P_n`$ is orthogonal to all of them.
 
-Put the n nodes at the n zeros of $P_n$. Choose each weight $w_j$ as the integral of the Lagrange basis polynomial $\ell_j$: the polynomial of degree n − 1 that is 1 at node j and 0 at the other nodes (Lagrange interpolation, on the interpolation shelf). Then the rule is exact for every polynomial of degree up to n − 1, because such a polynomial equals the sum of its node values times the $\ell_j$.
+Put the n nodes at the n zeros of $`P_n`$. Choose each weight $`w_j`$ as the integral of the Lagrange basis polynomial $`\ell_j`$: the polynomial of degree n − 1 that is 1 at node j and 0 at the other nodes (Lagrange interpolation, on the interpolation shelf). Then the rule is exact for every polynomial of degree up to n − 1, because such a polynomial equals the sum of its node values times the $`\ell_j`$.
 
-Now take any polynomial p of degree up to 2n − 1. Divide it by $P_n$, as in long division:
+Now take any polynomial p of degree up to 2n − 1. Divide it by $`P_n`$, as in long division:
 
-$$p(t) = q(t)\,P_n(t) + r(t), \qquad q \text{ and } r \text{ of degree at most } n - 1.$$
+```math
+p(t) = q(t)\,P_n(t) + r(t), \qquad q \text{ and } r \text{ of degree at most } n - 1.
+```
 
 Compare the two sides term by term.
 
-1. **The exact integral of q P_n is 0**, because q has degree below n and $P_n$ is orthogonal to it.
-2. **The rule's sum for q P_n is 0**, because every node is a zero of $P_n$.
+1. **The exact integral of q P_n is 0**, because q has degree below n and $`P_n`$ is orthogonal to it.
+2. **The rule's sum for q P_n is 0**, because every node is a zero of $`P_n`$.
 3. **The rule is exact on r**, because r has degree at most n − 1.
 
 So the rule and the integral agree on p. The code tests every power of t for n = 1 to 6 and finds the highest exact degree to be 1, 3, 5, 7, 9, 11: 2n − 1 each time.
@@ -122,31 +132,33 @@ So the rule and the integral agree on p. The code tests every power of t for n =
 <details>
 <summary>Detailed proof: P_n has n different zeros, all strictly between −1 and 1</summary>
 
-Suppose $P_n$ changes sign at only k points $s_1, \dots, s_k$ inside (−1, 1), with k < n. Then $P_n(t)\,(t - s_1)\cdots(t - s_k)$ never changes sign on the interval and is not identically zero, so its integral is not zero.
+Suppose $`P_n`$ changes sign at only k points $`s_1, \dots, s_k`$ inside (−1, 1), with k < n. Then $`P_n(t)\,(t - s_1)\cdots(t - s_k)`$ never changes sign on the interval and is not identically zero, so its integral is not zero.
 
-But $(t - s_1)\cdots(t - s_k)$ has degree k < n, so orthogonality makes that integral zero. The contradiction shows $P_n$ changes sign at least n times inside (−1, 1). A polynomial of degree n has at most n zeros, so these are all of them, each simple. Every node of a Gauss rule therefore lies strictly inside the interval: the rule never samples an endpoint.
+But $`(t - s_1)\cdots(t - s_k)`$ has degree k < n, so orthogonality makes that integral zero. The contradiction shows $`P_n`$ changes sign at least n times inside (−1, 1). A polynomial of degree n has at most n zeros, so these are all of them, each simple. Every node of a Gauss rule therefore lies strictly inside the interval: the rule never samples an endpoint.
 
 </details>
 
 ### Step 3: no n points can do better, and every weight is positive
 
-**Degree 2n is out of reach.** Take $p(t) = (t - t_1)^2 \cdots (t - t_n)^2$, of degree 2n. It is zero at every node, so any rule on those nodes gives 0. Its true integral is positive. So no n-point rule, wherever its points, is exact for every polynomial of degree 2n.
+**Degree 2n is out of reach.** Take $`p(t) = (t - t_1)^2 \cdots (t - t_n)^2`$, of degree 2n. It is zero at every node, so any rule on those nodes gives 0. Its true integral is positive. So no n-point rule, wherever its points, is exact for every polynomial of degree 2n.
 
-**Every weight is positive.** Square the Lagrange basis polynomial $\ell_j$. The square has degree 2n − 2, so the rule integrates it exactly. At the nodes it is 1 at node j and 0 elsewhere, so the rule's sum is $w_j$. Hence $w_j$ equals the integral of $\ell_j^2$, which is positive. Taking p = 1 shows the weights add to 2.
+**Every weight is positive.** Square the Lagrange basis polynomial $`\ell_j`$. The square has degree 2n − 2, so the rule integrates it exactly. At the nodes it is 1 at node j and 0 elsewhere, so the rule's sum is $`w_j`$. Hence $`w_j`$ equals the integral of $`\ell_j^2`$, which is positive. Taking p = 1 shows the weights add to 2.
 
 Positive weights matter in floating point: rounding in the samples cannot be magnified by cancellation between large weights of opposite sign, as happens for evenly spaced rules with many points.
 
 ### Step 4: finding the nodes and weights
 
-The code builds $P_n(t)$ by Bonnet's rule from the Legendre card, $(k + 1)P_{k+1} = (2k + 1)\,t\,P_k - k\,P_{k-1}$. It finds each zero by bisection, halving a bracket until the two ends are neighbouring doubles. Each weight then comes from the formula above, $w_j = 2/((1 - t_j^2) P_n'(t_j)^2)$, a classical result stated by Hale and Townsend (Sources).
+The code builds $`P_n(t)`$ by Bonnet's rule from the Legendre card, $`(k + 1)P_{k+1} = (2k + 1)\,t\,P_k - k\,P_{k-1}`$. It finds each zero by bisection, halving a bracket until the two ends are neighbouring doubles. Each weight then comes from the formula above, $`w_j = 2/((1 - t_j^2) P_n'(t_j)^2)`$, a classical result stated by Hale and Townsend (Sources).
 
 For n = 4 there is a closed form, which the code uses as a second road:
 
-$$t = \pm\sqrt{\frac{3 \mp 2\sqrt{6/5}}{7}}, \qquad w = \frac{18 \pm \sqrt{30}}{36}.$$
+```math
+t = \pm\sqrt{\frac{3 \mp 2\sqrt{6/5}}{7}}, \qquad w = \frac{18 \pm \sqrt{30}}{36}.
+```
 
-The inner nodes ±0.339981043584856 carry weight 0.652145154862546; the outer nodes ±0.861136311594053 carry 0.347854845137454. A third road solves the n moment equations, $\sum_j w_j t_j^k = \int_{-1}^1 t^k\,dt$ for k = 0 to n − 1, by elimination. All three agree within 2.220e-16.
+The inner nodes ±0.339981043584856 carry weight 0.652145154862546; the outer nodes ±0.861136311594053 carry 0.347854845137454. A third road solves the n moment equations, $`\sum_j w_j t_j^k = \int_{-1}^1 t^k\,dt`$ for k = 0 to n − 1, by elimination. All three agree within 2.220e-16.
 
-For large n, libraries use the Golub–Welsch method instead: the nodes are the eigenvalues of a small symmetric matrix built from the numbers in Bonnet's rule. Newer codes use Newton's method on $P_n$ and handle very large n quickly (Sources).
+For large n, libraries use the Golub–Welsch method instead: the nodes are the eigenvalues of a small symmetric matrix built from the numbers in Bonnet's rule. Newer codes use Newton's method on $`P_n`$ and handle very large n quickly (Sources).
 
 ### Step 5: the error for a curve that is not a low-degree polynomial
 
@@ -157,17 +169,17 @@ The error formula comes from interpolating f by a polynomial H of degree 2n − 
 
 The remainder for this kind of interpolation, which matches values and slopes (Hermite interpolation), is
 
-$$f(t) - H(t) = \frac{f^{(2n)}(\eta(t))}{(2n)!}\,(t - t_1)^2 \cdots (t - t_n)^2$$
+$`\displaystyle f(t) - H(t) = \frac{f^{(2n)}(\eta(t))}{(2n)!}\,(t - t_1)^2 \cdots (t - t_n)^2`$
 
-for some $\eta(t)$ between −1 and 1. The proof is Rolle's theorem (a smooth function that is zero at two points has zero slope somewhere between them), used 2n times. Fix a t that is not a node, and choose the number K so that $g(s) = f(s) - H(s) - K\,(s - t_1)^2 \cdots (s - t_n)^2$ is zero at s = t. Then g is zero at t and at the n nodes, so g′ is zero at n points strictly between them. g′ is also zero at each node, where f and H share a slope and the squared product has a double zero: 2n zeros of g′ in all. Applying Rolle's theorem 2n − 1 more times leaves a point η where $g^{(2n)}$ is zero. H has degree 2n − 1, so its 2n-th derivative is 0, while the squared product's is (2n)!. So $K = f^{(2n)}(\eta)/(2n)!$, which is the remainder at t.
+for some $`\eta(t)`$ between −1 and 1. The proof is Rolle's theorem (a smooth function that is zero at two points has zero slope somewhere between them), used 2n times. Fix a t that is not a node, and choose the number K so that $`g(s) = f(s) - H(s) - K\,(s - t_1)^2 \cdots (s - t_n)^2`$ is zero at s = t. Then g is zero at t and at the n nodes, so g′ is zero at n points strictly between them. g′ is also zero at each node, where f and H share a slope and the squared product has a double zero: 2n zeros of g′ in all. Applying Rolle's theorem 2n − 1 more times leaves a point η where $`g^{(2n)}`$ is zero. H has degree 2n − 1, so its 2n-th derivative is 0, while the squared product's is (2n)!. So $`K = f^{(2n)}(\eta)/(2n)!`$, which is the remainder at t.
 
 The squared product never goes negative, so the mean value theorem for integrals pulls the derivative out at a single point ξ:
 
-$$\int_{-1}^{1} (f - H)\,dt = \frac{f^{(2n)}(\xi)}{(2n)!} \int_{-1}^{1} (t - t_1)^2 \cdots (t - t_n)^2\,dt.$$
+$`\displaystyle \int_{-1}^{1} (f - H)\,dt = \frac{f^{(2n)}(\xi)}{(2n)!} \int_{-1}^{1} (t - t_1)^2 \cdots (t - t_n)^2\,dt.`$
 
-The product $(t - t_1)\cdots(t - t_n)$ is $P_n$ divided by its leading coefficient, $(2n)!/(2^n (n!)^2)$; Bonnet's rule multiplies that coefficient by (2k + 1)/(k + 1) at each step, which gives this product. The integral of $P_n^2$ is $2/(2n + 1)$, from the Legendre card. Put together:
+The product $`(t - t_1)\cdots(t - t_n)`$ is $`P_n`$ divided by its leading coefficient, $`(2n)!/(2^n (n!)^2)`$; Bonnet's rule multiplies that coefficient by (2k + 1)/(k + 1) at each step, which gives this product. The integral of $`P_n^2`$ is $`2/(2n + 1)`$, from the Legendre card. Put together:
 
-$$\frac{1}{(2n)!} \cdot \frac{2}{2n + 1} \cdot \left(\frac{2^n (n!)^2}{(2n)!}\right)^2 = \frac{2^{2n+1} (n!)^4}{(2n + 1)\bigl((2n)!\bigr)^3}.$$
+$`\displaystyle \frac{1}{(2n)!} \cdot \frac{2}{2n + 1} \cdot \left(\frac{2^n (n!)^2}{(2n)!}\right)^2 = \frac{2^{2n+1} (n!)^4}{(2n + 1)\bigl((2n)!\bigr)^3}.`$
 
 </details>
 
@@ -179,11 +191,11 @@ The constant in front shrinks faster than any power of n, but that alone does no
 
 ## Worked numbers, by hand
 
-The span runs from a = 0 to b = 6 m, so the stretch is x = 3 + 3t and the half-width is 3. The energy per metre is $M(x)^2/(2EI)$, in joules per metre.
+The span runs from a = 0 to b = 6 m, so the stretch is x = 3 + 3t and the half-width is 3. The energy per metre is $`M(x)^2/(2EI)`$, in joules per metre.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| exact U | $1000\,w_0^2 L^5 / (945\,EI)$, from integrating the degree-6 polynomial term by term; the 1000 turns kJ into J | 59.245714285714 J |
+| exact U | $`1000\,w_0^2 L^5 / (945\,EI)`$, from integrating the degree-6 polynomial term by term; the 1000 turns kJ into J | 59.245714285714 J |
 | node 1 | x = 3 + 3 × (−0.861136) | 0.416591 m, energy 0.618764 J/m |
 | node 2 | x = 3 + 3 × (−0.339981) | 1.980057 m, energy 11.207393 J/m |
 | node 3 | x = 3 + 3 × 0.339981 | 4.019943 m, energy 17.669455 J/m |
@@ -611,9 +623,9 @@ ALL CHECKS PASS
 Lean proves the card's three theorems about Gauss rules on −1 to 1, for every number of points n.
 
 - The Legendre polynomial of degree n has n different zeros, all strictly between −1 and 1, and no other zeros.
-- Put the n nodes at those zeros, and give node j the weight $w_j$, the integral of its Lagrange basis polynomial $\ell_j$. Then the rule is exact for every polynomial of degree up to 2n − 1.
+- Put the n nodes at those zeros, and give node j the weight $`w_j`$, the integral of its Lagrange basis polynomial $`\ell_j`$. Then the rule is exact for every polynomial of degree up to 2n − 1.
 - No n-point rule, wherever its points and whatever its weights, is exact for every polynomial of degree 2n.
-- The hand numbers hold exactly: $P_2 = (3t^2 - 1)/2$, its zeros ±1/√3, and the two-point rule on 1, t, t², t³ and t⁴.
+- The hand numbers hold exactly: $`P_2 = (3t^2 - 1)/2`$, its zeros ±1/√3, and the two-point rule on 1, t, t², t³ and t⁴.
 - So do the list 1, 3, 5, 7, 9, 11, the error constant at n = 2 and n = 3, and the beam's exact U and three-point miss.
 
 The weight formula, the error formula, positive weights and every floating-point run are left to the proofs above and the Python and Rust checks.
@@ -1052,7 +1064,7 @@ example : (1000 * 12 ^ 2 * 6 ^ 5 / (945 * 20000) : ℚ) = 10368 / 175 ∧
 - [Error bounds and Romberg](02-error-bounds-and-romberg.md): the error laws of the evenly spaced rules, which this card beats by moving the points instead of extrapolating.
 - [Fitting instead of passing through](../04-Interpolation%20and%20Approximation/07-least-squares-and-orthogonal-polynomials.md): fitting with a basis of orthogonal polynomials; this card uses that basis's zeros as sample points.
 - [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): smooth functions are close to polynomials, which is why a rule exact for polynomials is accurate on smooth curves.
-- [Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md): the polynomials $P_n$, Bonnet's rule and their orthogonality on −1 to 1, the facts the proof rests on.
+- [Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md): the polynomials $`P_n`$, Bonnet's rule and their orthogonality on −1 to 1, the facts the proof rests on.
 
 ## Where this goes next
 
@@ -1070,6 +1082,6 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - NIST Digital Library of Mathematical Functions, §3.5, "Quadrature". [dlmf.nist.gov/3.5](https://dlmf.nist.gov/3.5). Gauss quadrature, exactness to degree 2n − 1, the error term, and tables of Gauss–Legendre nodes and weights.
 - Golub, Gene H., and John H. Welsch. "Calculation of Gauss quadrature rules." *Mathematics of Computation* 23(106), 1969, 221–230. [doi:10.1090/S0025-5718-69-99647-1](https://doi.org/10.1090/S0025-5718-69-99647-1). Nodes as eigenvalues of a symmetric tridiagonal matrix.
-- Hale, Nicholas, and Alex Townsend. "Fast and accurate computation of Gauss–Legendre and Gauss–Jacobi quadrature nodes and weights." *SIAM Journal on Scientific Computing* 35(2), 2013, A652–A674. [doi:10.1137/120889873](https://doi.org/10.1137/120889873). Newton's method on the polynomial for very large n, and the weight formula $w_j = 2/((1 - t_j^2) P_n'(t_j)^2)$ of Step 4.
+- Hale, Nicholas, and Alex Townsend. "Fast and accurate computation of Gauss–Legendre and Gauss–Jacobi quadrature nodes and weights." *SIAM Journal on Scientific Computing* 35(2), 2013, A652–A674. [doi:10.1137/120889873](https://doi.org/10.1137/120889873). Newton's method on the polynomial for very large n, and the weight formula $`w_j = 2/((1 - t_j^2) P_n'(t_j)^2)`$ of Step 4.
 - Trefethen, Lloyd N. "Is Gauss quadrature better than Clenshaw–Curtis?" *SIAM Review* 50(1), 2008, 67–87. [doi:10.1137/060659831](https://doi.org/10.1137/060659831). How fast Gauss rules converge on smooth and on rough integrands.
-- Sidi, Avram. "Asymptotic expansions of Gauss–Legendre quadrature rules for integrals with endpoint singularities." *Mathematics of Computation* 78(265), 2009, 241–253. [doi:10.1090/S0025-5718-08-02135-2](https://doi.org/10.1090/S0025-5718-08-02135-2). The error rate for an integrand that behaves like a power of the distance to an end: $n^{-3}$ for the square root.
+- Sidi, Avram. "Asymptotic expansions of Gauss–Legendre quadrature rules for integrals with endpoint singularities." *Mathematics of Computation* 78(265), 2009, 241–253. [doi:10.1090/S0025-5718-08-02135-2](https://doi.org/10.1090/S0025-5718-08-02135-2). The error rate for an integrand that behaves like a power of the distance to an end: $`n^{-3}`$ for the square root.

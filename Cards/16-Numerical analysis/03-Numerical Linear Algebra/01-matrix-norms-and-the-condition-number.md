@@ -38,55 +38,63 @@ The orange line is groundwater; the green line is runoff. At a true gauge both a
 
 The two balances, flow and chloride, written as one matrix equation:
 
-$$\underbrace{\begin{pmatrix} 1 & 1 \\ 1 & 0.96 \end{pmatrix}}_{A}\begin{pmatrix} g \\ r \end{pmatrix} = \underbrace{\begin{pmatrix} 10 \\ 9.8 \end{pmatrix}}_{b}$$
+```math
+\underbrace{\begin{pmatrix} 1 & 1 \\ 1 & 0.96 \end{pmatrix}}_{A}\begin{pmatrix} g \\ r \end{pmatrix} = \underbrace{\begin{pmatrix} 10 \\ 9.8 \end{pmatrix}}_{b}
+```
 
 The first row is the gauge: g + r = 10. The second row is the chloride balance 50 g + 48 r = 490 grams a second, divided by 50 so that both rows are in m³/s.
 
-Three ways to give a list $x$ a size, its **vector norm**:
+Three ways to give a list $`x`$ a size, its **vector norm**:
 
-$$\|x\|_1 = |x_1| + |x_2|, \qquad \|x\|_2 = \sqrt{x_1^2 + x_2^2}, \qquad \|x\|_\infty = \max(|x_1|, |x_2|)$$
+```math
+\|x\|_1 = |x_1| + |x_2|, \qquad \|x\|_2 = \sqrt{x_1^2 + x_2^2}, \qquad \|x\|_\infty = \max(|x_1|, |x_2|)
+```
 
 **Read it aloud:** the 1-norm adds the sizes, the 2-norm is the straight-line length, and the infinity-norm is the biggest entry.
 
 The size of a matrix is the most it can stretch a list, measured in one chosen vector norm. This is the **induced matrix norm**:
 
-$$\|A\| = \max_{x \ne 0} \frac{\|A x\|}{\|x\|}, \qquad \kappa(A) = \|A\|\,\|A^{-1}\|$$
+```math
+\|A\| = \max_{x \ne 0} \frac{\|A x\|}{\|x\|}, \qquad \kappa(A) = \|A\|\,\|A^{-1}\|
+```
 
 **Read it aloud:** the norm of A is its worst stretch, and the condition number is A's worst stretch times its inverse's worst stretch.
 
 For each vector norm the worst stretch has a closed form. Step 1 proves the first two:
 
-- $\|A\|_1$ is the largest column sum of absolute values.
-- $\|A\|_\infty$ is the largest row sum of absolute values.
-- $\|A\|_2 = \sigma_{\max}$, the largest singular value, and $\|A^{-1}\|_2 = 1/\sigma_{\min}$, so $\kappa_2 = \sigma_{\max}/\sigma_{\min}$.
+- $`\|A\|_1`$ is the largest column sum of absolute values.
+- $`\|A\|_\infty`$ is the largest row sum of absolute values.
+- $`\|A\|_2 = \sigma_{\max}`$, the largest singular value, and $`\|A^{-1}\|_2 = 1/\sigma_{\min}`$, so $`\kappa_2 = \sigma_{\max}/\sigma_{\min}`$.
 
 The rule the card is about, when the readings b change by Δb and the flows change by Δx:
 
-$$\frac{\|\Delta x\|}{\|x\|} \le \kappa(A)\,\frac{\|\Delta b\|}{\|b\|}$$
+```math
+\frac{\|\Delta x\|}{\|x\|} \le \kappa(A)\,\frac{\|\Delta b\|}{\|b\|}
+```
 
 **Read it aloud:** the relative error in the answer is at most κ times the relative error in the readings, with every size measured in the same norm.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the matrix: one row per balance, one column per unknown flow | `[[1, 1], [1, 0.96]]` | rows closer to equal: κ grows |
-| $x = (g, r)$ | the unknowns: groundwater flow g and runoff flow r, in m³/s | (5, 5) | — |
-| $b$ | the readings: gauge flow and scaled chloride load | (10, 9.8) | — |
-| $\Delta b$, $\Delta x$ | a change in the readings, and the change it causes in the flows | (−0.1, 0) gives (2.4, −2.5) | Δx grows up to κ times as fast |
-| $x'$, $\Delta A$ | the flows computed from changed data; a change in the matrix itself | (7.4, 2.5); 0.96 read as 0.9504 | same bound, Step 3 |
-| $\lVert x\rVert_1$, $\lVert x\rVert_2$, $\lVert x\rVert_\infty$ | the 1-, 2- and infinity-norms of a list | 10, 7.0711, 5 for x | — |
-| $\lVert A\rVert$ | the induced norm: A's worst stretch | 2, 1.9802, 2 | — |
-| $A^{-1}$, det A | the inverse matrix, which undoes A; the determinant, $a_{11}a_{22} - a_{12}a_{21}$, zero when there is no inverse | `[[-24, 25], [25, -25]]`, norms 50, 49.5050, 50; det A = −0.04 | big entries: big κ |
-| $\sigma_{\max}$, $\sigma_{\min}$ | largest and smallest singular values: A's longest and shortest stretch | 1.9802, 0.0202 | $\sigma_{\min} \to 0$: κ₂ blows up |
-| $\kappa(A)$; κ₁, κ₂, κ∞ | the condition number: worst magnification of relative error; the subscript names the norm | 100, 98.03, 100 | more digits lost, about $\log_{10}\kappa$ |
-| $u$, $\hat x$ | the unit roundoff $2^{-53}$; "x-hat", the flows the computer returns | 1.11e-16; off by 4.44e-15 | — |
-| $a_{ij}$, $I$, $s$, $t$, $U$, $\Sigma$, $V$ | proof notation: the entry in row i, column j; the identity matrix (ones on the diagonal); the unknown and the sum of squared entries in the singular value equation; the two turns and the stretch of the SVD | $a_{22} = 0.96$ | — |
+| $`A`$ | the matrix: one row per balance, one column per unknown flow | `[[1, 1], [1, 0.96]]` | rows closer to equal: κ grows |
+| $`x = (g, r)`$ | the unknowns: groundwater flow g and runoff flow r, in m³/s | (5, 5) | — |
+| $`b`$ | the readings: gauge flow and scaled chloride load | (10, 9.8) | — |
+| $`\Delta b`$, $`\Delta x`$ | a change in the readings, and the change it causes in the flows | (−0.1, 0) gives (2.4, −2.5) | Δx grows up to κ times as fast |
+| $`x'`$, $`\Delta A`$ | the flows computed from changed data; a change in the matrix itself | (7.4, 2.5); 0.96 read as 0.9504 | same bound, Step 3 |
+| $`\lVert x\rVert_1`$, $`\lVert x\rVert_2`$, $`\lVert x\rVert_\infty`$ | the 1-, 2- and infinity-norms of a list | 10, 7.0711, 5 for x | — |
+| $`\lVert A\rVert`$ | the induced norm: A's worst stretch | 2, 1.9802, 2 | — |
+| $`A^{-1}`$, det A | the inverse matrix, which undoes A; the determinant, $`a_{11}a_{22} - a_{12}a_{21}`$, zero when there is no inverse | `[[-24, 25], [25, -25]]`, norms 50, 49.5050, 50; det A = −0.04 | big entries: big κ |
+| $`\sigma_{\max}`$, $`\sigma_{\min}`$ | largest and smallest singular values: A's longest and shortest stretch | 1.9802, 0.0202 | $`\sigma_{\min} \to 0`$: κ₂ blows up |
+| $`\kappa(A)`$; κ₁, κ₂, κ∞ | the condition number: worst magnification of relative error; the subscript names the norm | 100, 98.03, 100 | more digits lost, about $`\log_{10}\kappa`$ |
+| $`u`$, $`\hat x`$ | the unit roundoff $`2^{-53}`$; "x-hat", the flows the computer returns | 1.11e-16; off by 4.44e-15 | — |
+| $`a_{ij}`$, $`I`$, $`s`$, $`t`$, $`U`$, $`\Sigma`$, $`V`$ | proof notation: the entry in row i, column j; the identity matrix (ones on the diagonal); the unknown and the sum of squared entries in the singular value equation; the two turns and the stretch of the SVD | $`a_{22} = 0.96`$ | — |
 
 A change is written with a capital delta, Δ, read "change in". The inverse and its 2 by 2 formula come from [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md). The singular values come from [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md).
 
 ### When it holds
 
 - **A is square and invertible.** If the two waters had the same chloride, A would be singular (no inverse), and κ would be infinite. Near that point the bound is true but useless.
-- **The same norm is used everywhere.** The bound pairs $\lVert A\rVert$ with the vector norm that defines it. Mix them and the inequality can fail: the worst infinity-norm magnification is 100, above κ₂ = 98.03.
+- **The same norm is used everywhere.** The bound pairs $`\lVert A\rVert`$ with the vector norm that defines it. Mix them and the inequality can fail: the worst infinity-norm magnification is 100, above κ₂ = 98.03.
 - **The rows are in comparable units, for the bound to be useful.** Leave the chloride row in grams a second and the bound still holds, but the infinity-norm κ jumps from 100 to 2499, so it promises far less. The problem has not changed; the norm is adding m³/s to g/s.
 - **The bound is a worst case.** It says nothing about a particular error being that bad. The gauge error reaches half the bound; another error reaches all of it.
 
@@ -104,16 +112,16 @@ That alone is an absolute magnification. The relative one also asks how big x is
 
 The definition says: try every direction and keep the biggest ratio. For the infinity-norm the biggest ratio has a short proof.
 
-Each entry of A x is a row of A times x. A row times x is at most the row's absolute sum times the biggest entry of x. So $\lVert A x\rVert_\infty$ is at most the largest row sum times $\lVert x\rVert_\infty$. Pick x to be ±1 with the signs of that row, and the bound is met. For A the row sums are 2 and 1.96, so $\lVert A\rVert_\infty = 2$. For A⁻¹ they are 49 and 50, so $\lVert A^{-1}\rVert_\infty = 50$.
+Each entry of A x is a row of A times x. A row times x is at most the row's absolute sum times the biggest entry of x. So $`\lVert A x\rVert_\infty`$ is at most the largest row sum times $`\lVert x\rVert_\infty`$. Pick x to be ±1 with the signs of that row, and the bound is met. For A the row sums are 2 and 1.96, so $`\lVert A\rVert_\infty = 2`$. For A⁻¹ they are 49 and 50, so $`\lVert A^{-1}\rVert_\infty = 50`$.
 
 <details>
 <summary>Detailed proof: the infinity-norm is the largest row sum, the 1-norm the largest column sum</summary>
 
-**Infinity-norm.** For row i, $|(A x)_i| = |\sum_j a_{ij} x_j| \le \sum_j |a_{ij}|\,|x_j| \le \big(\sum_j |a_{ij}|\big)\lVert x\rVert_\infty$. Take the largest row, i*, and set $x_j$ to the sign of $a_{i^*j}$ (1 where it is 0). Then $\lVert x\rVert_\infty = 1$ and $(A x)_{i^*} = \sum_j |a_{i^*j}|$, so the bound is met.
+**Infinity-norm.** For row i, $`|(A x)_i| = |\sum_j a_{ij} x_j| \le \sum_j |a_{ij}|\,|x_j| \le \big(\sum_j |a_{ij}|\big)\lVert x\rVert_\infty`$. Take the largest row, i*, and set $`x_j`$ to the sign of $`a_{i^*j}`$ (1 where it is 0). Then $`\lVert x\rVert_\infty = 1`$ and $`(A x)_{i^*} = \sum_j |a_{i^*j}|`$, so the bound is met.
 
-**1-norm.** $\lVert A x\rVert_1 = \sum_i |\sum_j a_{ij} x_j| \le \sum_j |x_j| \sum_i |a_{ij}| \le \big(\max_j \sum_i |a_{ij}|\big)\lVert x\rVert_1$. Take x to be the unit list with a 1 in the largest column's place. Then $A x$ is that column, and the bound is met.
+**1-norm.** $`\lVert A x\rVert_1 = \sum_i |\sum_j a_{ij} x_j| \le \sum_j |x_j| \sum_i |a_{ij}| \le \big(\max_j \sum_i |a_{ij}|\big)\lVert x\rVert_1`$. Take x to be the unit list with a 1 in the largest column's place. Then $`A x`$ is that column, and the bound is met.
 
-**2-norm.** By [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md), A = U Σ Vᵀ with U and V turns that keep lengths. A turn does not change the 2-norm, so the worst stretch of A is the largest entry of Σ, $\sigma_{\max}$. A⁻¹ = V Σ⁻¹ Uᵀ, whose largest stretch is $1/\sigma_{\min}$. For a 2 by 2 matrix, $\sigma^2$ are the two roots of $s^2 - t s + (\det A)^2 = 0$, where t is the sum of the squares of A's entries.
+**2-norm.** By [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md), A = U Σ Vᵀ with U and V turns that keep lengths. A turn does not change the 2-norm, so the worst stretch of A is the largest entry of Σ, $`\sigma_{\max}`$. A⁻¹ = V Σ⁻¹ Uᵀ, whose largest stretch is $`1/\sigma_{\min}`$. For a 2 by 2 matrix, $`\sigma^2`$ are the two roots of $`s^2 - t s + (\det A)^2 = 0`$, where t is the sum of the squares of A's entries.
 
 </details>
 
@@ -123,12 +131,14 @@ A is symmetric, so its singular values are the sizes of its eigenvalues. The eig
 
 Start from the two facts every solve obeys:
 
-1. The answer error is the inverse times the data error: Δx = A⁻¹ Δb. So $\lVert\Delta x\rVert \le \lVert A^{-1}\rVert\,\lVert\Delta b\rVert$.
-2. The data are A times the answer: b = A x. So $\lVert b\rVert \le \lVert A\rVert\,\lVert x\rVert$, which turns around to $1/\lVert x\rVert \le \lVert A\rVert/\lVert b\rVert$.
+1. The answer error is the inverse times the data error: Δx = A⁻¹ Δb. So $`\lVert\Delta x\rVert \le \lVert A^{-1}\rVert\,\lVert\Delta b\rVert`$.
+2. The data are A times the answer: b = A x. So $`\lVert b\rVert \le \lVert A\rVert\,\lVert x\rVert`$, which turns around to $`1/\lVert x\rVert \le \lVert A\rVert/\lVert b\rVert`$.
 
 Multiply the two inequalities:
 
-$$\frac{\lVert\Delta x\rVert}{\lVert x\rVert} \le \lVert A^{-1}\rVert\,\lVert A\rVert\,\frac{\lVert\Delta b\rVert}{\lVert b\rVert} = \kappa(A)\,\frac{\lVert\Delta b\rVert}{\lVert b\rVert}$$
+```math
+\frac{\lVert\Delta x\rVert}{\lVert x\rVert} \le \lVert A^{-1}\rVert\,\lVert A\rVert\,\frac{\lVert\Delta b\rVert}{\lVert b\rVert} = \kappa(A)\,\frac{\lVert\Delta b\rVert}{\lVert b\rVert}
+```
 
 No Taylor step and no "small enough" condition appear. Because the system is linear, the bound holds for any size of Δb, not only small ones.
 
@@ -143,13 +153,13 @@ The code checks this a second way. It tries 360 directions for x and 360 for Δb
 <details>
 <summary>Detailed proof: the same bound for an error in the matrix</summary>
 
-Suppose the matrix is wrong instead, A + ΔA, and $(A + \Delta A)\,x' = b$ with $x' = x + \Delta x$. Subtract $A x = b$: $A\,\Delta x = -\Delta A\,x'$. Multiply by $A^{-1}$ and take norms:
+Suppose the matrix is wrong instead, A + ΔA, and $`(A + \Delta A)\,x' = b`$ with $`x' = x + \Delta x`$. Subtract $`A x = b`$: $`A\,\Delta x = -\Delta A\,x'`$. Multiply by $`A^{-1}`$ and take norms:
 
-$$\lVert\Delta x\rVert \le \lVert A^{-1}\rVert\,\lVert\Delta A\rVert\,\lVert x'\rVert, \qquad\text{so}\qquad \frac{\lVert\Delta x\rVert}{\lVert x'\rVert} \le \kappa(A)\,\frac{\lVert\Delta A\rVert}{\lVert A\rVert}$$
+$`\displaystyle \lVert\Delta x\rVert \le \lVert A^{-1}\rVert\,\lVert\Delta A\rVert\,\lVert x'\rVert, \qquad\text{so}\qquad \frac{\lVert\Delta x\rVert}{\lVert x'\rVert} \le \kappa(A)\,\frac{\lVert\Delta A\rVert}{\lVert A\rVert}`$
 
 The error is measured against the new answer x'. That choice lets the bound hold for any size of ΔA, with no "small enough" condition.
 
-For the stream, read the runoff chloride 1% low. The entry 0.96 becomes 0.9504, a change of 0.48% of $\lVert A\rVert_\infty$. The flows become (5.9677, 4.0323), off by 16.22% of x'. The bound is 48.00%, which is 2.96 times the true error.
+For the stream, read the runoff chloride 1% low. The entry 0.96 becomes 0.9504, a change of 0.48% of $`\lVert A\rVert_\infty`$. The flows become (5.9677, 4.0323), off by 16.22% of x'. The bound is 48.00%, which is 2.96 times the true error.
 
 </details>
 
@@ -157,13 +167,13 @@ For the stream, read the runoff chloride 1% low. The entry 0.96 becomes 0.9504, 
 
 A double stores each reading with a relative error of at most u = 1.11e-16 ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)). By Step 2 that alone can move x, relative to its size, by up to κu = 1.11e-14. A **backward stable** solver (one whose answer is exact for data moved by a few u, as in [Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md)) adds only a few u more. So the computed flows should be right to about κu, an estimate, not a guarantee.
 
-Elimination with partial pivoting (no swap is needed here, since both pivot candidates are 1), in doubles, returns g = 5.000000000000022 and r = 4.999999999999978. The true relative error is 4.44e-15, which is 0.40 times κu. A double holds 15.95 decimal digits. Of those, $\log_{10}\kappa$ = 2.00 are at risk, and 13.95 survive.
+Elimination with partial pivoting (no swap is needed here, since both pivot candidates are 1), in doubles, returns g = 5.000000000000022 and r = 4.999999999999978. The true relative error is 4.44e-15, which is 0.40 times κu. A double holds 15.95 decimal digits. Of those, $`\log_{10}\kappa`$ = 2.00 are at risk, and 13.95 survive.
 
 The lesson splits the blame. If the flows are 50% off, the 1% gauge error caused it, through κ. The arithmetic caused less than one part in a hundred million million.
 
 ### Step 5: compute κ, but never solve with the inverse
 
-κ needs $\lVert A^{-1}\rVert$, and forming A⁻¹ costs more work than factoring A. Forming it also usually leaves a larger residual. Production codes therefore factor A once, as in [LU with partial pivoting](02-lu-decomposition-and-pivoting.md), solve with the factors, and estimate $\lVert A^{-1}\rVert_1$ from a few extra solves with the same factors (Hager's method). For a 2 by 2 matrix the inverse is free, so the code here writes it out.
+κ needs $`\lVert A^{-1}\rVert`$, and forming A⁻¹ costs more work than factoring A. Forming it also usually leaves a larger residual. Production codes therefore factor A once, as in [LU with partial pivoting](02-lu-decomposition-and-pivoting.md), solve with the factors, and estimate $`\lVert A^{-1}\rVert_1`$ from a few extra solves with the same factors (Hager's method). For a 2 by 2 matrix the inverse is free, so the code here writes it out.
 
 ---
 
@@ -175,8 +185,8 @@ The gauge reads 1% low, so Δb = (−0.1, 0). Infinity-norm throughout.
 | --- | --- | --- |
 | det A | 1 × 0.96 − 1 × 1 | −0.04 |
 | A⁻¹ | swap the diagonal, flip the other signs, divide by −0.04 | `[[-24, 25], [25, -25]]` |
-| $\lVert A\rVert_\infty$ | max(1 + 1, 1 + 0.96) | 2 |
-| $\lVert A^{-1}\rVert_\infty$ | max(24 + 25, 25 + 25) | 50 |
+| $`\lVert A\rVert_\infty`$ | max(1 + 1, 1 + 0.96) | 2 |
+| $`\lVert A^{-1}\rVert_\infty`$ | max(24 + 25, 25 + 25) | 50 |
 | κ∞ | 2 × 50 | 100 |
 | Δx = A⁻¹ Δb | (−24 × −0.1, 25 × −0.1) | (2.4, −2.5) |
 | x' | (5 + 2.4, 5 − 2.5) | (7.4, 2.5) |
@@ -592,7 +602,7 @@ The two outputs are identical line for line.
 
 Lean proves Step 2's bound, Step 3's claim that it is reached, and the row-sum formula, for every square matrix.
 
-- If A is square and invertible, $A x = b$ and $A(x + \Delta x) = b + \Delta b$, then $\lVert\Delta x\rVert/\lVert x\rVert \le \kappa(A)\,\lVert\Delta b\rVert/\lVert b\rVert$. This holds for a change of any size, in any one norm used everywhere.
+- If A is square and invertible, $`A x = b`$ and $`A(x + \Delta x) = b + \Delta b`$, then $`\lVert\Delta x\rVert/\lVert x\rVert \le \kappa(A)\,\lVert\Delta b\rVert/\lVert b\rVert`$. This holds for a change of any size, in any one norm used everywhere.
 - For every square invertible A, some nonzero x and Δb make the relative error in x exactly κ(A) times the relative error in b = A x.
 - The infinity-norm of a square matrix, its worst stretch, equals its largest row sum of absolute values.
 - The stream's hand numbers hold exactly: A (5, 5) = (10, 9.8), det A = −0.04, A⁻¹ = `[[-24, 25], [25, -25]]`, and κ∞ = 2 × 50 = 100.

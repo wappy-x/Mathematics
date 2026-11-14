@@ -45,51 +45,65 @@ Rising curve: the Black premium. Low flat line: the quote, 1.89 percent; it cros
 
 The forward prices come first, as on [Swaptions](04-swaptions-payer-and-receiver.md) and [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md). Black treats the forward swap rate as lognormal (its logarithm is bell-shaped); Bachelier treats it as normal (the rate itself is bell-shaped):
 
-$$P_{\text{B}}(\sigma, K) = A\,[\,F\,N(d_1) - K\,N(d_2)\,], \qquad P_{\text{N}}(\sigma_N, K) = A\,[\,(F-K)\,N(d) + \sigma_N\sqrt{T}\,\varphi(d)\,].$$
+```math
+P_{\text{B}}(\sigma, K) = A\,[\,F\,N(d_1) - K\,N(d_2)\,], \qquad P_{\text{N}}(\sigma_N, K) = A\,[\,(F-K)\,N(d) + \sigma_N\sqrt{T}\,\varphi(d)\,].
+```
 
 The backward problems are these four equations, each with its fence:
 
-$$P_{\text{B}}(\sigma) = P_{\text{mkt}} \quad\text{has one root exactly when}\quad A\max(F-K,0) < P_{\text{mkt}} < A\,F,$$
+```math
+P_{\text{B}}(\sigma) = P_{\text{mkt}} \quad\text{has one root exactly when}\quad A\max(F-K,0) < P_{\text{mkt}} < A\,F,
+```
 
-$$P_{\text{N}}(\sigma_N) = P_{\text{mkt}} \quad\text{has one root exactly when}\quad A\max(F-K,0) < P_{\text{mkt}},$$
+```math
+P_{\text{N}}(\sigma_N) = P_{\text{mkt}} \quad\text{has one root exactly when}\quad A\max(F-K,0) < P_{\text{mkt}},
+```
 
-$$P_{\text{B}}(K) = P_{\text{mkt}} \quad\text{has one root exactly when}\quad 0 < P_{\text{mkt}} < A\,F,$$
+```math
+P_{\text{B}}(K) = P_{\text{mkt}} \quad\text{has one root exactly when}\quad 0 < P_{\text{mkt}} < A\,F,
+```
 
-$$N(d_1) = \Delta \quad\Longleftrightarrow\quad K = F\,e^{-\sigma\sqrt{T}\,N^{-1}(\Delta) + \sigma^2 T/2}, \qquad 0 < \Delta < 1.$$
+```math
+N(d_1) = \Delta \quad\Longleftrightarrow\quad K = F\,e^{-\sigma\sqrt{T}\,N^{-1}(\Delta) + \sigma^2 T/2}, \qquad 0 < \Delta < 1.
+```
 
-**At the edges.** A quote exactly at intrinsic value, $A\max(F-K,0)$, the swaption's worth with no randomness, gives zero volatility: a limit, not a root. A Black quote at or above $A F$ has no volatility; that ceiling is the infinite-volatility limit. A strike solve for 0 or for $A F$ has no answer; those are the limits of an infinite and a zero strike.
+**At the edges.** A quote exactly at intrinsic value, $`A\max(F-K,0)`$, the swaption's worth with no randomness, gives zero volatility: a limit, not a root. A Black quote at or above $`A F`$ has no volatility; that ceiling is the infinite-volatility limit. A strike solve for 0 or for $`A F`$ has no answer; those are the limits of an infinite and a zero strike.
 
-**Read it aloud:** a quoted premium has one lognormal volatility if it sits above what the swaption is worth with no randomness and below $A F$, today's value of all the floating payments; it has one normal volatility if it only sits above the no-randomness value; it has one strike if it is positive and below the floating leg; and a delta strictly between 0 and 1 has one strike, in closed form.
+**Read it aloud:** a quoted premium has one lognormal volatility if it sits above what the swaption is worth with no randomness and below $`A F`$, today's value of all the floating payments; it has one normal volatility if it only sits above the no-randomness value; it has one strike if it is positive and below the floating leg; and a delta strictly between 0 and 1 has one strike, in closed form.
 
-At the money ($K = F$) two inverses need no search:
+At the money ($`K = F`$) two inverses need no search:
 
-$$\sigma = \frac{2}{\sqrt{T}}\,N^{-1}\!\left(\frac{1 + P_{\text{mkt}}/(A F)}{2}\right), \qquad \sigma_N = \frac{P_{\text{mkt}}\sqrt{2\pi}}{A\sqrt{T}}.$$
+```math
+\sigma = \frac{2}{\sqrt{T}}\,N^{-1}\!\left(\frac{1 + P_{\text{mkt}}/(A F)}{2}\right), \qquad \sigma_N = \frac{P_{\text{mkt}}\sqrt{2\pi}}{A\sqrt{T}}.
+```
 
 In words: at the money the lognormal premium depends on volatility through one bell-curve area, which can be inverted; the normal premium is a straight line in volatility.
 
 Hagan's expansion links the two volatilities without solving anything:
 
-$$\sigma_N \approx \sigma\,\frac{F-K}{\ln(F/K)}\left(1 - \frac{\sigma^2 T}{24}\right), \qquad \frac{F-K}{\ln(F/K)} \to F \text{ as } K \to F.$$
+```math
+\sigma_N \approx \sigma\,\frac{F-K}{\ln(F/K)}\left(1 - \frac{\sigma^2 T}{24}\right), \qquad \frac{F-K}{\ln(F/K)} \to F \text{ as } K \to F.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P_{\text{mkt}}$, $P$ | the quoted premium, per 1 of notional; $P_{\text{B}}$, $P_{\text{N}}$ are the Black and Bachelier prices | 0.018947098, 1.89% | implied volatility rises; the strike for it falls |
-| $L$ | notional: the amount the swap's interest is computed on | $10,000,000 | dollars scale; volatility unchanged |
-| $r$ | the flat interest rate, continuously compounded | 3.6% | discount factors fall; the forward $e^{r} - 1$ rises |
-| $D(t)$ | discount factor: today's value of 1 paid in t years, here $e^{-0.036t}$ | $D(1)$ 0.964640, $D(6)$ 0.805735 | |
-| $A$ | annuity: today's value of 1 paid on each of the five fixed dates | 4.335052 | the same quote implies a lower volatility |
-| $F$ | forward swap rate: the fixed rate that makes the forward swap worth zero, $(D(1) - D(6))/A$ | 3.6656% | the payer is worth more |
-| $K$ | strike: the fixed rate the payer would pay | 3.6656% at the money | the payer is worth less |
-| $T$ | time to expiry, years | 1 | the same quote implies a lower volatility |
-| $\sigma$ | lognormal (Black) volatility: yearly spread of the log of the rate | 30.00% | premium rises, up to $A F$ |
-| $\sigma_N$ | normal (Bachelier) volatility: yearly spread of the rate itself, in rate units | 0.010956 = 109.56 bp | premium rises, without limit |
-| $d_1$, $d_2$, $d$, $w$ | standardised distances to the strike, with $w = \sigma\sqrt T$ the total swing: $d_1 = \ln(F/K)/(\sigma\sqrt T) + \sigma\sqrt T/2$, $d_2 = d_1 - \sigma\sqrt T$, $d = (F-K)/(\sigma_N\sqrt T)$ | 0.15, −0.15, 0 | |
-| $N$, $\varphi$, $N^{-1}$ | bell-curve area left of $x$, bell-curve height at $x$, and the inverse area: the $x$ with a given area to its left | $N(0.15)$ = 0.559618, $N^{-1}(0.25)$ = −0.674490 | |
-| $\Delta$, $\nu$ | delta: forward swaps the payer behaves like, $N(d_1)$, counted in annuity units; vega: premium gained per unit of $\sigma$, $A F \varphi(d_1)\sqrt T$ | 0.559618, 0.062685 | |
+| $`P_{\text{mkt}}`$, $`P`$ | the quoted premium, per 1 of notional; $`P_{\text{B}}`$, $`P_{\text{N}}`$ are the Black and Bachelier prices | 0.018947098, 1.89% | implied volatility rises; the strike for it falls |
+| $`L`$ | notional: the amount the swap's interest is computed on | $10,000,000 | dollars scale; volatility unchanged |
+| $`r`$ | the flat interest rate, continuously compounded | 3.6% | discount factors fall; the forward $`e^{r} - 1`$ rises |
+| $`D(t)`$ | discount factor: today's value of 1 paid in t years, here $`e^{-0.036t}`$ | $`D(1)`$ 0.964640, $`D(6)`$ 0.805735 | |
+| $`A`$ | annuity: today's value of 1 paid on each of the five fixed dates | 4.335052 | the same quote implies a lower volatility |
+| $`F`$ | forward swap rate: the fixed rate that makes the forward swap worth zero, $`(D(1) - D(6))/A`$ | 3.6656% | the payer is worth more |
+| $`K`$ | strike: the fixed rate the payer would pay | 3.6656% at the money | the payer is worth less |
+| $`T`$ | time to expiry, years | 1 | the same quote implies a lower volatility |
+| $`\sigma`$ | lognormal (Black) volatility: yearly spread of the log of the rate | 30.00% | premium rises, up to $`A F`$ |
+| $`\sigma_N`$ | normal (Bachelier) volatility: yearly spread of the rate itself, in rate units | 0.010956 = 109.56 bp | premium rises, without limit |
+| $`d_1`$, $`d_2`$, $`d`$, $`w`$ | standardised distances to the strike, with $`w = \sigma\sqrt T`$ the total swing: $`d_1 = \ln(F/K)/(\sigma\sqrt T) + \sigma\sqrt T/2`$, $`d_2 = d_1 - \sigma\sqrt T`$, $`d = (F-K)/(\sigma_N\sqrt T)`$ | 0.15, −0.15, 0 | |
+| $`N`$, $`\varphi`$, $`N^{-1}`$ | bell-curve area left of $`x`$, bell-curve height at $`x`$, and the inverse area: the $`x`$ with a given area to its left | $`N(0.15)`$ = 0.559618, $`N^{-1}(0.25)`$ = −0.674490 | |
+| $`\Delta`$, $`\nu`$ | delta: forward swaps the payer behaves like, $`N(d_1)`$, counted in annuity units; vega: premium gained per unit of $`\sigma`$, $`A F \varphi(d_1)\sqrt T`$ | 0.559618, 0.062685 | |
 
 ### When it holds
 
-- **The quote is read in the model it was quoted in.** A normal volatility fed into Black, or the reverse, gives a wrong price with no warning. Divide the normal volatility by $F$ as a shortcut and 30.00% comes back as 29.89%.
+- **The quote is read in the model it was quoted in.** A normal volatility fed into Black, or the reverse, gives a wrong price with no warning. Divide the normal volatility by $`F`$ as a shortcut and 30.00% comes back as 29.89%.
 - **The annuity and forward come from the same curve as the quote.** Change the curve and the same premium means a different volatility. Leave the annuity out altogether and 30.00% comes back as 140.26%.
 - **Exercise is European, on one date.** A Bermudan swaption, exercisable on several dates, is worth at least each European swaption inside it, so no single Black formula prices it.
 - **Black needs a positive forward and strike.** With negative rates the logarithm fails; the normal or shifted conventions on [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md) take over.
@@ -109,69 +123,75 @@ The equity version of this argument is on [Implied volatility](../11-Implied%20v
 
 ### Step 1: the Black premium rises with volatility, from intrinsic to the floating leg
 
-The slope is vega, $\nu = A F \varphi(d_1)\sqrt{T}$. Every factor is positive, so the premium always climbs. At our swaption vega is 0.062685 per unit of volatility.
+The slope is vega, $`\nu = A F \varphi(d_1)\sqrt{T}`$. Every factor is positive, so the premium always climbs. At our swaption vega is 0.062685 per unit of volatility.
 
-At the low end, as $\sigma$ shrinks to zero, the rate stops being random and the payer is worth its intrinsic value, $A\max(F-K, 0)$: zero at the money.
+At the low end, as $`\sigma`$ shrinks to zero, the rate stops being random and the payer is worth its intrinsic value, $`A\max(F-K, 0)`$: zero at the money.
 
-At the high end, $d_1$ runs to plus infinity and $d_2$ to minus infinity, so $N(d_1) \to 1$, $N(d_2) \to 0$ and the premium approaches $A F$. That ceiling has a meaning. $A F = D(1) - D(6)$ is today's value of the floating leg: receiving floating rates for five years with nothing paid back. A payer can never be worth more than that, because it is that leg minus a fixed payment. Here $A F$ is 15.89 percent of notional.
+At the high end, $`d_1`$ runs to plus infinity and $`d_2`$ to minus infinity, so $`N(d_1) \to 1`$, $`N(d_2) \to 0`$ and the premium approaches $`A F`$. That ceiling has a meaning. $`A F = D(1) - D(6)`$ is today's value of the floating leg: receiving floating rates for five years with nothing paid back. A payer can never be worth more than that, because it is that leg minus a fixed payment. Here $`A F`$ is 15.89 percent of notional.
 
 ### Step 2: the Bachelier premium rises with volatility, with no ceiling
 
-The normal vega is $A\sqrt{T}\,\varphi(d) > 0$, so the normal premium also always climbs. At the low end it starts from the same intrinsic value. At the high end the term $\sigma_N\sqrt{T}\,\varphi(d)$ grows like $\sigma_N$ itself, so the premium grows without bound. A normal rate can wander to any height, including far below zero, so the payer's value is not capped by the floating leg.
+The normal vega is $`A\sqrt{T}\,\varphi(d) > 0`$, so the normal premium also always climbs. At the low end it starts from the same intrinsic value. At the high end the term $`\sigma_N\sqrt{T}\,\varphi(d)`$ grows like $`\sigma_N`$ itself, so the premium grows without bound. A normal rate can wander to any height, including far below zero, so the payer's value is not capped by the floating leg.
 
 This is where the two conventions part. A quote at 110 percent of the ceiling, 17.48 percent of notional, has no lognormal volatility: even at 500 percent volatility Black prices only 15.69 percent. It does have a normal volatility, 1,010.71 basis points. A bisection hunting for the lognormal answer between 0 and 500 percent does not complain; it returns 500 percent, the edge of its search. The fence must be tested first.
 
 ### Step 3: at the money, both volatilities have closed forms
 
-Put $K = F$. Then $\ln(F/K) = 0$, so $d_1 = \sigma\sqrt{T}/2$ and $d_2 = -\sigma\sqrt{T}/2$. The bell curve is symmetric, $N(-x) = 1 - N(x)$, so
+Put $`K = F`$. Then $`\ln(F/K) = 0`$, so $`d_1 = \sigma\sqrt{T}/2`$ and $`d_2 = -\sigma\sqrt{T}/2`$. The bell curve is symmetric, $`N(-x) = 1 - N(x)`$, so
 
-$$P_{\text{B}} = A F\,[\,N(\sigma\sqrt T/2) - N(-\sigma\sqrt T/2)\,] = A F\,[\,2N(\sigma\sqrt T/2) - 1\,].$$
+```math
+P_{\text{B}} = A F\,[\,N(\sigma\sqrt T/2) - N(-\sigma\sqrt T/2)\,] = A F\,[\,2N(\sigma\sqrt T/2) - 1\,].
+```
 
-Divide by $A F$, add 1, halve, apply $N^{-1}$, and multiply by $2/\sqrt{T}$: that is the closed form in The formula. For Bachelier, $K = F$ gives $d = 0$ and $\varphi(0) = 1/\sqrt{2\pi}$, so $P_{\text{N}} = A\sigma_N\sqrt{T}/\sqrt{2\pi}$, a straight line through zero. Dividing gives $\sigma_N$.
+Divide by $`A F`$, add 1, halve, apply $`N^{-1}`$, and multiply by $`2/\sqrt{T}`$: that is the closed form in The formula. For Bachelier, $`K = F`$ gives $`d = 0`$ and $`\varphi(0) = 1/\sqrt{2\pi}`$, so $`P_{\text{N}} = A\sigma_N\sqrt{T}/\sqrt{2\pi}`$, a straight line through zero. Dividing gives $`\sigma_N`$.
 
 ### Step 4: Hagan's expansion, and the first guess hiding inside it
 
-Set the two at-the-money premiums equal: $\sigma_N = F\sqrt{2\pi/T}\,[\,2N(\sigma\sqrt T/2) - 1\,]$. Near zero, the bell-curve area grows like $N(x) \approx \tfrac12 + (x - x^3/6)/\sqrt{2\pi}$. Put $x = \sigma\sqrt{T}/2$:
+Set the two at-the-money premiums equal: $`\sigma_N = F\sqrt{2\pi/T}\,[\,2N(\sigma\sqrt T/2) - 1\,]`$. Near zero, the bell-curve area grows like $`N(x) \approx \tfrac12 + (x - x^3/6)/\sqrt{2\pi}`$. Put $`x = \sigma\sqrt{T}/2`$:
 
-$$\sigma_N \approx F\sqrt{\tfrac{2\pi}{T}}\cdot\frac{2}{\sqrt{2\pi}}\left(\frac{\sigma\sqrt T}{2} - \frac{\sigma^3 T^{3/2}}{48}\right) = F\sigma\left(1 - \frac{\sigma^2 T}{24}\right).$$
+```math
+\sigma_N \approx F\sqrt{\tfrac{2\pi}{T}}\cdot\frac{2}{\sqrt{2\pi}}\left(\frac{\sigma\sqrt T}{2} - \frac{\sigma^3 T^{3/2}}{48}\right) = F\sigma\left(1 - \frac{\sigma^2 T}{24}\right).
+```
 
-That is Hagan's at-the-money formula. At 30 percent it gives 0.010955516 against the exact 0.010955655: a gap of 0.0014 basis points. Away from the money, the leading terms of Hagan, Kumar, Lesniewski and Woodward's 2002 expansion replace $F$ by $(F-K)/\ln(F/K)$, a mean of $F$ and $K$ that lies between them. One percent out of the money, at a strike of 4.6656 percent, the exact normal volatility is 123.90 basis points and Hagan's is within 0.0018 basis points of it.
+That is Hagan's at-the-money formula. At 30 percent it gives 0.010955516 against the exact 0.010955655: a gap of 0.0014 basis points. Away from the money, the leading terms of Hagan, Kumar, Lesniewski and Woodward's 2002 expansion replace $`F`$ by $`(F-K)/\ln(F/K)`$, a mean of $`F`$ and $`K`$ that lies between them. One percent out of the money, at a strike of 4.6656 percent, the exact normal volatility is 123.90 basis points and Hagan's is within 0.0018 basis points of it.
 
-Drop the cubic term and the formula becomes $\sigma \approx \sqrt{2\pi/T}\,P_{\text{mkt}}/(AF)$. That is Brenner and Subrahmanyam's 1988 first guess, and it equals the normal volatility divided by $F$. It gives 29.89 percent: close enough to start a search, not close enough to trade.
+Drop the cubic term and the formula becomes $`\sigma \approx \sqrt{2\pi/T}\,P_{\text{mkt}}/(AF)`$. That is Brenner and Subrahmanyam's 1988 first guess, and it equals the normal volatility divided by $`F`$. It gives 29.89 percent: close enough to start a search, not close enough to trade.
 
 <details>
 <summary>Detailed proof: the fence is exact and the root is unique</summary>
 
-Fix $K > 0$, $F > 0$, $T > 0$, $A > 0$ and write $w = \sigma\sqrt T$.
+Fix $`K > 0`$, $`F > 0`$, $`T > 0`$, $`A > 0`$ and write $`w = \sigma\sqrt T`$.
 
-1. $P_{\text{B}}$ is continuous in $w > 0$, since $N$ and $\ln$ are.
-2. $\partial P_{\text{B}}/\partial w = A F\varphi(d_1)$. To see it, differentiate: $A[F\varphi(d_1)\,\partial d_1/\partial w - K\varphi(d_2)\,\partial d_2/\partial w]$. The identity $F\varphi(d_1) = K\varphi(d_2)$ holds because $d_1^2 - d_2^2 = (d_1 - d_2)(d_1 + d_2) = w \cdot 2\ln(F/K)/w = 2\ln(F/K)$. With $\partial d_2/\partial w = \partial d_1/\partial w - 1$, everything cancels except $A F\varphi(d_1) > 0$. So $P_{\text{B}}$ is strictly increasing.
-3. As $w \to 0$: if $F > K$, $d_1, d_2 \to +\infty$ and $P_{\text{B}} \to A(F-K)$; if $F < K$, both $\to -\infty$ and $P_{\text{B}} \to 0$; if $F = K$, $P_{\text{B}} = AF[2N(w/2) - 1] \to 0$. In all cases the limit is $A\max(F-K, 0)$.
-4. As $w \to \infty$: $d_1 \to +\infty$, $d_2 \to -\infty$, so $P_{\text{B}} \to AF$.
-5. A continuous, strictly increasing function on $(0, \infty)$ takes every value strictly between its two limits exactly once, and no value outside them. That is the first fence. The Bachelier case runs the same way with slope $A\sqrt T\varphi(d) > 0$, lower limit $A\max(F-K,0)$ and upper limit $+\infty$.
-6. For the strike, $\partial P_{\text{B}}/\partial K = -A N(d_2) < 0$ by the same cancellation; $P_{\text{B}} \to AF$ as $K \to 0$ and $\to 0$ as $K \to \infty$. That is the third fence.
+1. $`P_{\text{B}}`$ is continuous in $`w > 0`$, since $`N`$ and $`\ln`$ are.
+2. $`\partial P_{\text{B}}/\partial w = A F\varphi(d_1)`$. To see it, differentiate: $`A[F\varphi(d_1)\,\partial d_1/\partial w - K\varphi(d_2)\,\partial d_2/\partial w]`$. The identity $`F\varphi(d_1) = K\varphi(d_2)`$ holds because $`d_1^2 - d_2^2 = (d_1 - d_2)(d_1 + d_2) = w \cdot 2\ln(F/K)/w = 2\ln(F/K)`$. With $`\partial d_2/\partial w = \partial d_1/\partial w - 1`$, everything cancels except $`A F\varphi(d_1) > 0`$. So $`P_{\text{B}}`$ is strictly increasing.
+3. As $`w \to 0`$: if $`F > K`$, $`d_1, d_2 \to +\infty`$ and $`P_{\text{B}} \to A(F-K)`$; if $`F < K`$, both $`\to -\infty`$ and $`P_{\text{B}} \to 0`$; if $`F = K`$, $`P_{\text{B}} = AF[2N(w/2) - 1] \to 0`$. In all cases the limit is $`A\max(F-K, 0)`$.
+4. As $`w \to \infty`$: $`d_1 \to +\infty`$, $`d_2 \to -\infty`$, so $`P_{\text{B}} \to AF`$.
+5. A continuous, strictly increasing function on $`(0, \infty)`$ takes every value strictly between its two limits exactly once, and no value outside them. That is the first fence. The Bachelier case runs the same way with slope $`A\sqrt T\varphi(d) > 0`$, lower limit $`A\max(F-K,0)`$ and upper limit $`+\infty`$.
+6. For the strike, $`\partial P_{\text{B}}/\partial K = -A N(d_2) < 0`$ by the same cancellation; $`P_{\text{B}} \to AF`$ as $`K \to 0`$ and $`\to 0`$ as $`K \to \infty`$. That is the third fence.
 
 </details>
 
 ### Step 5: rate from price, the strike that costs a budget
 
-Hold the volatility at 30 percent and let the strike move. The slope is $\partial P_{\text{B}}/\partial K = -A N(d_2)$: always negative, since raising the fixed rate the payer must pay can only make the right less valuable.
+Hold the volatility at 30 percent and let the strike move. The slope is $`\partial P_{\text{B}}/\partial K = -A N(d_2)`$: always negative, since raising the fixed rate the payer must pay can only make the right less valuable.
 
-At a strike near zero the payer is almost the whole floating leg, worth $A F$; at a very high strike it is worth nothing. So any budget strictly between 0 and 15.89 percent buys exactly one strike.
+At a strike near zero the payer is almost the whole floating leg, worth $`A F`$; at a very high strike it is worth nothing. So any budget strictly between 0 and 15.89 percent buys exactly one strike.
 
-A budget of 1.00 percent buys a strike of 4.2683 percent. Newton's method, stepping by the premium gap divided by $-AN(d_2)$, and bisection land on the same strike to 12 decimals.
+A budget of 1.00 percent buys a strike of 4.2683 percent. Newton's method, stepping by the premium gap divided by $`-AN(d_2)`$, and bisection land on the same strike to 12 decimals.
 
 ### Step 6: strike from delta, in closed form
 
-The payer's delta, in forward swaps, is $\Delta = N(d_1)$ ([Swaption Greeks](08-swaption-greeks-and-hedging.md)). $N$ is strictly increasing and $d_1$ falls as $K$ rises, so delta falls strictly from 1 to 0 across strikes. Invert in two moves: $d_1 = N^{-1}(\Delta)$, then solve $\ln(F/K)/w + w/2 = d_1$ for $K$:
+The payer's delta, in forward swaps, is $`\Delta = N(d_1)`$ ([Swaption Greeks](08-swaption-greeks-and-hedging.md)). $`N`$ is strictly increasing and $`d_1`$ falls as $`K`$ rises, so delta falls strictly from 1 to 0 across strikes. Invert in two moves: $`d_1 = N^{-1}(\Delta)`$, then solve $`\ln(F/K)/w + w/2 = d_1`$ for $`K`$:
 
-$$K = F\,e^{-w N^{-1}(\Delta) + w^2/2}, \qquad w = \sigma\sqrt T.$$
+```math
+K = F\,e^{-w N^{-1}(\Delta) + w^2/2}, \qquad w = \sigma\sqrt T.
+```
 
-At $\Delta = 0.25$, $N^{-1}(0.25) = -0.674490$, and the strike is 4.6942 percent. At the money the delta is 0.559618, above one half because $d_1$ carries the extra $w/2$.
+At $`\Delta = 0.25`$, $`N^{-1}(0.25) = -0.674490`$, and the strike is 4.6942 percent. At the money the delta is 0.559618, above one half because $`d_1`$ carries the extra $`w/2`$.
 
 ### Step 7: why Newton needs a fence of its own
 
-Newton's method steps from a guess $\sigma$ to $\sigma - (P_{\text{B}}(\sigma) - P_{\text{mkt}})/\nu$. Near the answer it doubles the correct digits each step. Far from it, vega can be tiny, and a tiny slope sends the step anywhere.
+Newton's method steps from a guess $`\sigma`$ to $`\sigma - (P_{\text{B}}(\sigma) - P_{\text{mkt}})/\nu`$. Near the answer it doubles the correct digits each step. Far from it, vega can be tiny, and a tiny slope sends the step anywhere.
 
 Take the out-of-the-money payer at 4.6656 percent, quoted at 0.6376 percent of notional. One raw Newton step from 5 percent lands at 1,010,540.85 percent. One raw step from 200 percent lands at −22.59 percent.
 
@@ -187,22 +207,22 @@ The lognormal volatility at the money, from the quote alone:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| 1 | $D(1) = e^{-0.036}$, $D(6) = e^{-0.216}$ | 0.964640, 0.805735 |
-| 2 | $A = e^{-0.072} + e^{-0.108} + e^{-0.144} + e^{-0.18} + e^{-0.216}$ | 4.335052 |
-| 3 | $F = (0.964640 - 0.805735)/4.335052$, equal to $e^{0.036} - 1$ as a flat curve must give | 0.036656 |
-| 4 | ceiling $A F$ | 0.158905 |
-| 5 | $P_{\text{mkt}}/(AF) = 0.018947098/0.158905$ | 0.119235 |
-| 6 | $N^{-1}((1 + 0.119235)/2)$ | 0.150000 |
-| 7 | $\sigma = 2 \times 0.150000/\sqrt{1}$ | **0.300000 = 30.00%** |
+| 1 | $`D(1) = e^{-0.036}`$, $`D(6) = e^{-0.216}`$ | 0.964640, 0.805735 |
+| 2 | $`A = e^{-0.072} + e^{-0.108} + e^{-0.144} + e^{-0.18} + e^{-0.216}`$ | 4.335052 |
+| 3 | $`F = (0.964640 - 0.805735)/4.335052`$, equal to $`e^{0.036} - 1`$ as a flat curve must give | 0.036656 |
+| 4 | ceiling $`A F`$ | 0.158905 |
+| 5 | $`P_{\text{mkt}}/(AF) = 0.018947098/0.158905`$ | 0.119235 |
+| 6 | $`N^{-1}((1 + 0.119235)/2)`$ | 0.150000 |
+| 7 | $`\sigma = 2 \times 0.150000/\sqrt{1}`$ | **0.300000 = 30.00%** |
 
 The other three answers, from the same inputs:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Normal volatility | $0.018947098 \times \sqrt{2\pi}/(4.335052 \times 1)$ | **0.010956 = 109.56 bp** |
-| Hagan check | $0.30 \times 0.036656 \times (1 - 0.09/24)$ | 0.010956 |
-| Strike from delta 0.25 | $0.036656 \times e^{-0.3 \times (-0.674490) + 0.045}$ | **4.6942%** |
-| Strike for a 1.00% budget | bisection on $P_{\text{B}}(K) = 0.01$ at 30% | **4.2683%** |
+| Normal volatility | $`0.018947098 \times \sqrt{2\pi}/(4.335052 \times 1)`$ | **0.010956 = 109.56 bp** |
+| Hagan check | $`0.30 \times 0.036656 \times (1 - 0.09/24)`$ | 0.010956 |
+| Strike from delta 0.25 | $`0.036656 \times e^{-0.3 \times (-0.674490) + 0.045}`$ | **4.6942%** |
+| Strike for a 1.00% budget | bisection on $`P_{\text{B}}(K) = 0.01`$ at 30% | **4.2683%** |
 
 The company's dealer charged $189,470.98, and that sum is exactly what a 30.00 percent lognormal volatility, or a 109.56 basis-point normal volatility, costs for this swaption on this curve.
 
@@ -210,16 +230,16 @@ The company's dealer charged $189,470.98, and that sum is exactly what a 30.00 p
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Annuity left out: quote matched to $F N(d_1) - K N(d_2)$ | 140.26% | the premium is per 1 of notional; the formula without $A$ is per unit of annuity, so the quote looks 4.3 times too big |
-| $T = 6$, the swap's last date, used as expiry | 12.25% | the option decides at year 1; stretching the time spreads the same total uncertainty thinner |
-| Normal volatility divided by $F$ taken as lognormal | 29.89% | the $\sigma^2 T/24$ correction dropped; also the Brenner-Subrahmanyam guess used as the answer |
+| Annuity left out: quote matched to $`F N(d_1) - K N(d_2)`$ | 140.26% | the premium is per 1 of notional; the formula without $`A`$ is per unit of annuity, so the quote looks 4.3 times too big |
+| $`T = 6`$, the swap's last date, used as expiry | 12.25% | the option decides at year 1; stretching the time spreads the same total uncertainty thinner |
+| Normal volatility divided by $`F`$ taken as lognormal | 29.89% | the $`\sigma^2 T/24`$ correction dropped; also the Brenner-Subrahmanyam guess used as the answer |
 | One unguarded Newton step from 5%, out of the money | 1,010,540.85% | vega nearly zero at the start, so the step is enormous |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the curve, price the swaption at 30 percent, then run it backwards. The lognormal volatility is reached by three roads: bisection, a guarded Newton method, and the at-the-money closed form, which inverts the bell-curve area on its own. A fourth road reprices the answer by integrating the payoff against the lognormal density, independent of the Black formula. The normal volatility is reached by bisection and by its closed form, checked by a second integral and by Hagan's expansion at two strikes. The forward is checked against $e^{r} - 1$, which a flat curve forces. The strike for a budget comes from bisection and from Newton, and is repriced by integral; the strike for a delta comes from the closed form and from bisection. The normal curve's area, the root finders and the integrator are all written out; nothing imported knows the answer.
+Both programs build the curve, price the swaption at 30 percent, then run it backwards. The lognormal volatility is reached by three roads: bisection, a guarded Newton method, and the at-the-money closed form, which inverts the bell-curve area on its own. A fourth road reprices the answer by integrating the payoff against the lognormal density, independent of the Black formula. The normal volatility is reached by bisection and by its closed form, checked by a second integral and by Hagan's expansion at two strikes. The forward is checked against $`e^{r} - 1`$, which a flat curve forces. The strike for a budget comes from bisection and from Newton, and is repriced by integral; the strike for a delta comes from the closed form and from bisection. The normal curve's area, the root finders and the integrator are all written out; nothing imported knows the answer.
 
 ### Python
 
@@ -669,9 +689,9 @@ Falling curve: the premium as the strike rises. Flat line: the 1.00 percent budg
 
 Lean proves the first three fences exactly: a quote has one answer precisely when it lies inside its fence.
 
-- Suppose $A$, $F$, $K$ and $T$ are positive. Then a quote $P$ has exactly one positive lognormal volatility precisely when $A\max(F-K,0) < P < A F$.
-- Suppose $A$ and $T$ are positive, while $F$ and $K$ may have any sign. Then $P$ has exactly one positive normal volatility precisely when $A\max(F-K,0) < P$.
-- Suppose $A$, $F$, $T$ and $\sigma$ are positive. Then $P$ has exactly one positive strike precisely when $0 < P < A F$.
+- Suppose $`A`$, $`F`$, $`K`$ and $`T`$ are positive. Then a quote $`P`$ has exactly one positive lognormal volatility precisely when $`A\max(F-K,0) < P < A F`$.
+- Suppose $`A`$ and $`T`$ are positive, while $`F`$ and $`K`$ may have any sign. Then $`P`$ has exactly one positive normal volatility precisely when $`A\max(F-K,0) < P`$.
+- Suppose $`A`$, $`F`$, $`T`$ and $`\sigma`$ are positive. Then $`P`$ has exactly one positive strike precisely when $`0 < P < A F`$.
 
 The numbers, the at-the-money closed forms, Hagan's expansion and the strike from delta are left to the Python and Rust checks.
 
@@ -1253,11 +1273,11 @@ end RateOptionInverses
 ## The usual mistake
 
 > [!warning]
-> **Solving before checking the fence.** A root finder returns a number whether or not a root exists. Feed Black a quote of 17.48 percent, above the 15.89 percent ceiling, and bisection on 0 to 500 percent returns 500 percent. Nothing in that number says it is wrong. The test is one line: the quote must lie strictly between $A\max(F-K,0)$ and $A F$ for a lognormal answer, and above $A\max(F-K,0)$ for a normal one.
+> **Solving before checking the fence.** A root finder returns a number whether or not a root exists. Feed Black a quote of 17.48 percent, above the 15.89 percent ceiling, and bisection on 0 to 500 percent returns 500 percent. Nothing in that number says it is wrong. The test is one line: the quote must lie strictly between $`A\max(F-K,0)`$ and $`A F`$ for a lognormal answer, and above $`A\max(F-K,0)`$ for a normal one.
 >
-> - **Leaving out the annuity.** The quote is per 1 of notional; Black without $A$ is per unit of annuity. The 1.89 percent quote then reads as 140.26 percent volatility.
+> - **Leaving out the annuity.** The quote is per 1 of notional; Black without $`A`$ is per unit of annuity. The 1.89 percent quote then reads as 140.26 percent volatility.
 > - **Using the swap's end as expiry.** The option expires at year 1, not year 6. The same quote then implies 12.25 percent.
-> - **Converting normal to lognormal by dividing by the forward.** That drops Hagan's $\sigma^2T/24$ term and gives 29.89 percent. Small at one year, larger at long expiries and high volatility.
+> - **Converting normal to lognormal by dividing by the forward.** That drops Hagan's $`\sigma^2T/24`$ term and gives 29.89 percent. Small at one year, larger at long expiries and high volatility.
 > - **Running Newton unguarded.** Out of the money, one step from 5 percent jumps to 1,010,540.85 percent, and one from 200 percent to a negative volatility, −22.59 percent.
 
 ---
@@ -1279,7 +1299,7 @@ end RateOptionInverses
 
 ## What this builds on
 
-- [Swaption Greeks](08-swaption-greeks-and-hedging.md): delta as $N(d_1)$ in forward swaps and vega as the slope that makes each inverse unique.
+- [Swaption Greeks](08-swaption-greeks-and-hedging.md): delta as $`N(d_1)`$ in forward swaps and vega as the slope that makes each inverse unique.
 - [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the existence-and-uniqueness argument on a share option, which this card carries to rates, the annuity and the normal convention.
 
 ---

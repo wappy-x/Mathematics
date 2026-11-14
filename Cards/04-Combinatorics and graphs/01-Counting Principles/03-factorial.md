@@ -39,28 +39,34 @@ The climbing line is the orderings, n!. The middle is 2^n, a doubling at each st
 
 ## The formula
 
-$$n! \;=\; n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1, \qquad 0! = 1$$
+```math
+n! \;=\; n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1, \qquad 0! = 1
+```
 
 **Read it aloud:** start at n, count down to 1, multiplying everything passed.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many different things go in the line | 10 songs | explodes: each extra thing multiplies by a larger number |
-| $n!$ | "n factorial": the product of every whole number from 1 to $n$ | 3,628,800 | — |
-| $0!$ | the empty product: the one way to line up nothing | 1 | — |
-| $S_n$ | Stirling's estimate of $n!$, skipping the multiplying | 2.422787 million million million at $n$ = 20 | — |
-| $e$ | the fixed number 2.718281…, the base of natural growth | divides $n$ inside the estimate | — |
-| $\pi$ | the fixed number 3.141592… | sits under the square root in the estimate | — |
+| $`n`$ | how many different things go in the line | 10 songs | explodes: each extra thing multiplies by a larger number |
+| $`n!`$ | "n factorial": the product of every whole number from 1 to $`n`$ | 3,628,800 | — |
+| $`0!`$ | the empty product: the one way to line up nothing | 1 | — |
+| $`S_n`$ | Stirling's estimate of $`n!`$, skipping the multiplying | 2.422787 million million million at $`n`$ = 20 | — |
+| $`e`$ | the fixed number 2.718281…, the base of natural growth | divides $`n`$ inside the estimate | — |
+| $`\pi`$ | the fixed number 3.141592… | sits under the square root in the estimate | — |
 
 Two helper statements follow.
 
-$$n! \;=\; n \times (n-1)!$$
+```math
+n! \;=\; n \times (n-1)!
+```
 
 A line of n things is one thing at the front, then a line of the rest. Second, Stirling's estimate:
 
-$$S_n \;=\; \sqrt{2\pi n}\left(\frac{n}{e}\right)^{n}$$
+```math
+S_n \;=\; \sqrt{2\pi n}\left(\frac{n}{e}\right)^{n}
+```
 
-Take n divided by $e$, use it as a factor n times over, then scale by the square root of $2\pi n$. An estimate, not an equality; Step 5 measures the error.
+Take n divided by $`e`$, use it as a factor n times over, then scale by the square root of $`2\pi n`$. An estimate, not an equality; Step 5 measures the error.
 
 ### When it holds
 
@@ -118,7 +124,7 @@ Nine songs to ten multiplies the count by 10; ten to eleven, by 11. The multipli
 
 ### Step 5: an estimate that skips the multiplying
 
-Twenty multiplications are cheap; a factorial of a million cannot be written out. Stirling's estimate replaces the product with one short expression. At n = 20 it gives 2.422787 against the true 2.432902, both in units of a million million million. Dividing gives 0.995842: low by 0.416 percent, and the percentage shrinks as n grows. Where the square root and the $2\pi$ come from is answered on [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md).
+Twenty multiplications are cheap; a factorial of a million cannot be written out. Stirling's estimate replaces the product with one short expression. At n = 20 it gives 2.422787 against the true 2.432902, both in units of a million million million. Dividing gives 0.995842: low by 0.416 percent, and the percentage shrinks as n grows. Where the square root and the $`2\pi`$ come from is answered on [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md).
 
 A second road reaches the same counts without multiplying: tally the orderings of every subset of the ten songs, that is, every group drawn from them. Each tally is built by asking which song comes last and adding the tallies of the smaller subsets. The full set tallies 3,628,800.
 

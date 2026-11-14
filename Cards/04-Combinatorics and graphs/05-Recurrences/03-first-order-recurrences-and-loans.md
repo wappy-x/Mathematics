@@ -34,35 +34,41 @@ The bowed line is the balance; the straight line shares the debt evenly, $416.67
 
 ## The formula
 
-A recurrence builds each value from the ones before it, and $a(n)$ names the value at step n ([Recurrences](01-recurrences-and-fibonacci.md)). **First-order** means a step looks back exactly one step. The rule holds two fixed numbers: a factor, and an amount added after it.
+A recurrence builds each value from the ones before it, and $`a(n)`$ names the value at step n ([Recurrences](01-recurrences-and-fibonacci.md)). **First-order** means a step looks back exactly one step. The rule holds two fixed numbers: a factor, and an amount added after it.
 
-$$a(n) = r\,a(n-1) + c$$
+```math
+a(n) = r\,a(n-1) + c
+```
 
 **Read it aloud:** each step multiplies the value before it by a fixed factor, then adds a fixed amount.
 
-One value is special: the one a step hands back unchanged. Call it the **fixed point**, written $a^*$ and said "a-star". Demand that the rule return what it was given, gather terms on one side ([Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md)), and the solution follows:
+One value is special: the one a step hands back unchanged. Call it the **fixed point**, written $`a^*`$ and said "a-star". Demand that the rule return what it was given, gather terms on one side ([Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md)), and the solution follows:
 
-$$a^* = \frac{c}{1-r}, \qquad a(n) = r^n\left(a(0) - a^*\right) + a^*$$
+```math
+a^* = \frac{c}{1-r}, \qquad a(n) = r^n\left(a(0) - a^*\right) + a^*
+```
 
 **Read it aloud:** the fixed point never moves; the gap to it multiplies by the factor once per step.
 
-A loan is that rule with the factor 1.005 and minus the payment added, starting from $B_0$ borrowed. Setting the balance to zero at month n and freeing the payment gives the first month's interest, multiplied by $r^n$ and divided by $r^n - 1$:
+A loan is that rule with the factor 1.005 and minus the payment added, starting from $`B_0`$ borrowed. Setting the balance to zero at month n and freeing the payment gives the first month's interest, multiplied by $`r^n`$ and divided by $`r^n - 1`$:
 
-$$P = B_0\,\frac{(r-1)\,r^n}{r^n - 1}$$
+```math
+P = B_0\,\frac{(r-1)\,r^n}{r^n - 1}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a(n)$ | the value after n steps | the balance owing after n months | — |
-| $r$ | the factor multiplying the last value | 1.005 | the payment rises |
-| $c$ | the amount added each step | minus $469.70, the payment | less comes off, so the debt clears later |
-| $n$ | steps taken | months elapsed, 0 to 48 | smaller payments, more interest |
-| $a^*$ | the fixed point, left alone by a step | $93,940.12 | — |
-| $B_0$ | the sum borrowed | $20,000.00 | the payment scales with it |
-| $P$ | the level payment | $469.70 | fewer months needed |
+| $`a(n)`$ | the value after n steps | the balance owing after n months | — |
+| $`r`$ | the factor multiplying the last value | 1.005 | the payment rises |
+| $`c`$ | the amount added each step | minus $469.70, the payment | less comes off, so the debt clears later |
+| $`n`$ | steps taken | months elapsed, 0 to 48 | smaller payments, more interest |
+| $`a^*`$ | the fixed point, left alone by a step | $93,940.12 | — |
+| $`B_0`$ | the sum borrowed | $20,000.00 | the payment scales with it |
+| $`P`$ | the level payment | $469.70 | fewer months needed |
 
 ### When it holds
 
-- **The factor is not 1.** The fixed point divides by $1-r$, so a factor of 1 has none: that rule just adds, and draws a straight line — the territory of [Finite differences](02-finite-differences-and-telescoping-sums.md).
+- **The factor is not 1.** The fixed point divides by $`1-r`$, so a factor of 1 has none: that rule just adds, and draws a straight line — the territory of [Finite differences](02-finite-differences-and-telescoping-sums.md).
 - **The factor and the amount hold still.** A rate that moves breaks the closed form; each change restarts from that day's balance.
 - **One step is one interest period, and nothing is rounded part-way.** Half a percent a month is not six percent a year charged once. The formula's payment is $469.7006, billed as $469.70, the cents settled at the end.
 
@@ -72,21 +78,23 @@ $$P = B_0\,\frac{(r-1)\,r^n}{r^n - 1}$$
 
 ### Step 0: find the value a step leaves alone
 
-A step multiplies by $r$ and adds $c$. Which value comes back unchanged? It equals $r$ times itself plus $c$, so it is $c$ divided by $1-r$.
+A step multiplies by $`r`$ and adds $`c`$. Which value comes back unchanged? It equals $`r`$ times itself plus $`c`$, so it is $`c`$ divided by $`1-r`$.
 
-Here $c$ is minus $469.70 and $r$ is 1.005, giving $93,940.12: a debt growing by exactly $469.70 a month, which the payment cancels. It would sit there forever.
+Here $`c`$ is minus $469.70 and $`r`$ is 1.005, giving $93,940.12: a debt growing by exactly $469.70 a month, which the payment cancels. It would sit there forever.
 
 ### Step 1: measure from the fixed point and the constant disappears
 
-The fixed point obeys the rule too — that is what fixed means — so subtracting its line cancels $c$:
+The fixed point obeys the rule too — that is what fixed means — so subtracting its line cancels $`c`$:
 
-$$\left(r\,a(n-1) + c\right) - \left(r\,a^* + c\right) = r\left(a(n-1) - a^*\right)$$
+```math
+\left(r\,a(n-1) + c\right) - \left(r\,a^* + c\right) = r\left(a(n-1) - a^*\right)
+```
 
 The gap at step n is the factor times the gap at step n−1. Nothing is added.
 
 ### Step 2: a pure multiply is a power
 
-Multiplying by $r$ n times is $r^n$ ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)), so the gap after n steps is $r^n$ times the starting gap. Add the fixed point back for the closed form.
+Multiplying by $`r`$ n times is $`r^n`$ ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)), so the gap after n steps is $`r^n`$ times the starting gap. Add the fixed point back for the closed form.
 
 This loan's gap starts negative: $20,000.00 minus $93,940.12 is minus $73,940.12. The balance sits below the fixed point and the gap stretches by 1.005 a month, further below by more each time. That accelerating fall is the chart's bow.
 
@@ -95,13 +103,13 @@ This loan's gap starts negative: $20,000.00 minus $93,940.12 is minus $73,940.12
 
 The closed form can be had without guessing a fixed point. Apply the rule to itself:
 
-$$a(1) = r\,a(0) + c, \qquad a(2) = r^2 a(0) + c\,(r + 1), \qquad a(3) = r^3 a(0) + c\,(r^2 + r + 1)$$
+$`\displaystyle a(1) = r\,a(0) + c, \qquad a(2) = r^2 a(0) + c\,(r + 1), \qquad a(3) = r^3 a(0) + c\,(r^2 + r + 1)`$
 
-and in general $a(n) = r^n a(0) + c\,(r^{n-1} + \dots + r + 1)$. Multiply that bracket by $r-1$: every middle term cancels against its neighbour, leaving $r^n - 1$. So the bracket is $(r^n - 1)/(r - 1)$ when $r$ is not 1, and
+and in general $`a(n) = r^n a(0) + c\,(r^{n-1} + \dots + r + 1)`$. Multiply that bracket by $`r-1`$: every middle term cancels against its neighbour, leaving $`r^n - 1`$. So the bracket is $`(r^n - 1)/(r - 1)`$ when $`r`$ is not 1, and
 
-$$a(n) = r^n a(0) + c\,\frac{r^n - 1}{r - 1} = r^n a(0) + a^*\left(1 - r^n\right)$$
+$`\displaystyle a(n) = r^n a(0) + c\,\frac{r^n - 1}{r - 1} = r^n a(0) + a^*\left(1 - r^n\right)`$
 
-using $c = a^*(1-r)$: the fixed-point form, rearranged.
+using $`c = a^*(1-r)`$: the fixed-point form, rearranged.
 
 </details>
 
@@ -109,9 +117,11 @@ using $c = a^*(1-r)$: the fixed-point form, rearranged.
 
 Put zero into the closed form at month n:
 
-$$0 = r^n\left(B_0 - a^*\right) + a^* \;\Longrightarrow\; a^*\left(r^n - 1\right) = B_0\,r^n \;\Longrightarrow\; a^* = B_0\,\frac{r^n}{r^n - 1}$$
+```math
+0 = r^n\left(B_0 - a^*\right) + a^* \;\Longrightarrow\; a^*\left(r^n - 1\right) = B_0\,r^n \;\Longrightarrow\; a^* = B_0\,\frac{r^n}{r^n - 1}
+```
 
-The fixed point is the payment divided by the rate, so multiplying by $r-1$ frees the payment. Every later balance falls as the payment rises, so exactly one payment lands on zero: less leaves debt standing, more overshoots into credit. 1.005 multiplied in 48 times is 1.270489, and 20,000.00 × 0.005 × 1.270489 ÷ (1.270489 − 1) is $469.7006, billed as $469.70.
+The fixed point is the payment divided by the rate, so multiplying by $`r-1`$ frees the payment. Every later balance falls as the payment rises, so exactly one payment lands on zero: less leaves debt standing, more overshoots into credit. 1.005 multiplied in 48 times is 1.270489, and 20,000.00 × 0.005 × 1.270489 ÷ (1.270489 − 1) is $469.7006, billed as $469.70.
 
 ### Step 4: flip the sign and the same rule is a savings plan
 
@@ -119,7 +129,7 @@ Pay $469.70 a month into an account starting at zero, at half a percent. Its fix
 
 After 48 months it holds $25,409.78, exactly what the debt would have grown to unpaid: 20,000.00 × 1.270489 is $25,409.78. The payment clearing a loan is the deposit matching the loan left alone — a road to the payment with no fixed point in it.
 
-A third route divides the rule through by $r^n$, turning the left side into a difference that collapses when added up — telescoping, handled on [Finite differences](02-finite-differences-and-telescoping-sums.md).
+A third route divides the rule through by $`r^n`$, turning the left side into a difference that collapses when added up — telescoping, handled on [Finite differences](02-finite-differences-and-telescoping-sums.md).
 
 ---
 
@@ -376,7 +386,7 @@ Lean proves the closed form and the fixed point for every factor other than 1, a
 
 - The fixed point is the one value a step leaves unchanged: the amount added divided by one minus the factor.
 - After n steps the value is the factor to the n, times the starting gap to the fixed point, plus the fixed point.
-- A loan's balance is zero after n months exactly when the payment is $P$, the level payment. So one payment, and only one, clears the debt on time.
+- A loan's balance is zero after n months exactly when the payment is $`P`$, the level payment. So one payment, and only one, clears the debt on time.
 - This loan's figures, worked in exact fractions, match the card to the cent: the payment $469.70 and the fixed point $93,940.12.
 - Month 1 charges $100.00 of interest and leaves $19,630.30; month 2 charges $98.15 and leaves $19,258.75.
 - Paying only the $100.00 interest leaves $20,000.00 where it is. Left unpaid, the debt grows to $25,409.78.

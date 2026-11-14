@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A broker offers an airline a one-year call on the average price of jet fuel at \$5.854 a barrel. The contract reads the price once a week, 52 times; each reading is a **fixing**. At the end of the year it pays, per barrel, the average of the fixings above the \$100 strike. Each fixing reads the futures market. Jet fuel is \$100 today, and futures prices rise along the delivery dates as $100e^{0.05t}$ for delivery in $t$ years, reaching \$105.13 for December. The bank rate is 5 percent.
+A broker offers an airline a one-year call on the average price of jet fuel at \$5.854 a barrel. The contract reads the price once a week, 52 times; each reading is a **fixing**. At the end of the year it pays, per barrel, the average of the fixings above the \$100 strike. Each fixing reads the futures market. Jet fuel is \$100 today, and futures prices rise along the delivery dates as $`100e^{0.05t}`$ for delivery in $`t`$ years, reaching \$105.13 for December. The bank rate is 5 percent.
 
 Every input to the price can be looked up except one: the **volatility**, the yearly spread of the futures price's log changes. Desks argue in volatility, not dollars. So the premium is run backwards: the **implied volatility** is the one volatility at which the pricing formula returns the quote.
 
@@ -37,60 +37,72 @@ First line, lower: the Asian call by Turnbull-Wakeman, rising from its floor of 
 
 ## The formula
 
-Notation first, in words. $Q$ is the quoted premium. $C_{TW}(\sigma)$ is the Turnbull-Wakeman price when every fixing has volatility $\sigma$. The implied volatility $\hat\sigma$, read "sigma hat", is the solution of one equation:
+Notation first, in words. $`Q`$ is the quoted premium. $`C_{TW}(\sigma)`$ is the Turnbull-Wakeman price when every fixing has volatility $`\sigma`$. The implied volatility $`\hat\sigma`$, read "sigma hat", is the solution of one equation:
 
-$$C_{TW}(\hat\sigma) = Q, \qquad C_{TW}(\sigma) = e^{-rT}\big(M_1\,N(e_1) - K\,N(e_2)\big)$$
+```math
+C_{TW}(\hat\sigma) = Q, \qquad C_{TW}(\sigma) = e^{-rT}\big(M_1\,N(e_1) - K\,N(e_2)\big)
+```
 
 **Read it aloud:** find the volatility at which the moment-matched price of the average equals the quote.
 
-The price is Black-76, the plain call formula for a futures price, fed the average's forward $M_1$ and the average's own log-spread $v_A$. [The Asian option desks trade](03-arithmetic-asian-option.md) derives the parts; here they are in one line each.
+The price is Black-76, the plain call formula for a futures price, fed the average's forward $`M_1`$ and the average's own log-spread $`v_A`$. [The Asian option desks trade](03-arithmetic-asian-option.md) derives the parts; here they are in one line each.
 
-$$M_1 = \frac1n\sum_{i=1}^{n} F(0,t_i), \qquad M_2(\sigma) = \frac{1}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} F(0,t_i)\,F(0,t_j)\,e^{\sigma^2\min(t_i,\,t_j)}$$
+```math
+M_1 = \frac1n\sum_{i=1}^{n} F(0,t_i), \qquad M_2(\sigma) = \frac{1}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} F(0,t_i)\,F(0,t_j)\,e^{\sigma^2\min(t_i,\,t_j)}
+```
 
-In words: $M_1$ is the plain average of the futures curve at the fixing dates, the price of the matching swap; $M_2$ is the average's mean square, and it is the only place volatility enters.
+In words: $`M_1`$ is the plain average of the futures curve at the fixing dates, the price of the matching swap; $`M_2`$ is the average's mean square, and it is the only place volatility enters.
 
-$$v_A(\sigma) = \sqrt{\ln\!\big(M_2/M_1^2\big)}, \qquad e_1 = \frac{\ln(M_1/K) + \tfrac12 v_A^2}{v_A}, \qquad e_2 = e_1 - v_A$$
+```math
+v_A(\sigma) = \sqrt{\ln\!\big(M_2/M_1^2\big)}, \qquad e_1 = \frac{\ln(M_1/K) + \tfrac12 v_A^2}{v_A}, \qquad e_2 = e_1 - v_A
+```
 
-In words: $v_A$ is the log-spread a lognormal needs to have both moments; $e_1$ and $e_2$ are the plain call's cut-offs with the average in place of the futures price.
+In words: $`v_A`$ is the log-spread a lognormal needs to have both moments; $`e_1`$ and $`e_2`$ are the plain call's cut-offs with the average in place of the futures price.
 
 A solution exists, and only one, exactly when the quote sits inside a band:
 
-$$e^{-rT}\,(M_1 - K)^+ \;<\; Q \;<\; e^{-rT}\,M_1$$
+```math
+e^{-rT}\,(M_1 - K)^+ \;<\; Q \;<\; e^{-rT}\,M_1
+```
 
 **Read it aloud:** the quote must exceed the discounted payoff with no volatility at all, and stay below the discounted value of the whole average.
 
 Newton's method solves it fast, stepping by the price error over the slope:
 
-$$\sigma_{k+1} = \sigma_k - \frac{C_{TW}(\sigma_k) - Q}{\mathcal{V}(\sigma_k)}, \qquad \mathcal{V}(\sigma) = e^{-rT}\,M_1\,\varphi(e_1)\,\frac{M_2'(\sigma)}{2\,v_A\,M_2}$$
+```math
+\sigma_{k+1} = \sigma_k - \frac{C_{TW}(\sigma_k) - Q}{\mathcal{V}(\sigma_k)}, \qquad \mathcal{V}(\sigma) = e^{-rT}\,M_1\,\varphi(e_1)\,\frac{M_2'(\sigma)}{2\,v_A\,M_2}
+```
 
-In words: $\mathcal{V}$, the vega, is the price's slope in volatility; $\varphi$ is the bell curve's height; and $M_2'$ is the slope of $M_2$, the same double sum with each term multiplied by $2\sigma\min(t_i,t_j)$.
+In words: $`\mathcal{V}`$, the vega, is the price's slope in volatility; $`\varphi`$ is the bell curve's height; and $`M_2'`$ is the slope of $`M_2`$, the same double sum with each term multiplied by $`2\sigma\min(t_i,t_j)`$.
 
 The sanity check reads the vanilla formula's answer back into an Asian vol:
 
-$$\sigma_{\text{van}} \approx \hat\sigma\,\sqrt{c}, \qquad c = \frac{(n+1)(2n+1)}{6n^2} \;\to\; \frac13, \qquad c \approx \frac{t_0 + L/3}{T} \text{ for a window}$$
+```math
+\sigma_{\text{van}} \approx \hat\sigma\,\sqrt{c}, \qquad c = \frac{(n+1)(2n+1)}{6n^2} \;\to\; \frac13, \qquad c \approx \frac{t_0 + L/3}{T} \text{ for a window}
+```
 
 **Read it aloud:** the vol the plain formula reads is the Asian's vol times the square root of the share of variance the average keeps: a third for an average from today to expiry, more for an average squeezed near expiry.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $Q$ | the quoted Asian premium, per barrel | \$5.854 | implied vol rises |
-| $\sigma$, $\sigma_k$, $\hat\sigma$ | a trial volatility; Newton's k-th guess; the implied volatility | 20%; from 30%; 19.91% by the formula, 20.00% by simulation | — |
-| $C_{TW}$ | the Turnbull-Wakeman price at a given volatility | \$5.87 at 20% | is the answer's target |
-| $K$, $r$, $T$ | strike; bank rate, continuously compounded; expiry in years; $e^{-rT}$ discounts a dollar paid at $T$ | \$100; 5%; 1 | $K$ up: implied vol up for the same quote |
-| $n$, $i$, $j$, $t_i$ | number of fixings; their counters; date of fixing $i$ in years | 52 weekly; $t_i = i/52$ | $n$ up: slightly less variance kept |
-| $F(0,t)$, $F_i$, $t$ | today's futures price for delivery at date $t$; the one at fixing $i$ | $100e^{0.05t}$; \$105.13 for December | curve up: implied vol down |
-| $M_1$, $M_2$, $M_2'$ | mean of the average, the swap price; its mean square; that square's slope in $\sigma$ | \$102.59 | $M_1$ up: floor and ceiling rise |
-| $v_A$, $e_1$, $e_2$ | the average's fitted log-spread over the whole life; the cut-offs | 0.1180 at 20% | $v_A$ up: price up |
-| $N$, $\varphi$ | bell-curve area to the left; bell-curve height | — | — |
-| $\mathcal{V}$ | vega, dollars per unit of volatility | \$0.2219 per point at 20% | bigger vega: flatter inverse, a tighter vol |
-| $\sigma_{\text{van}}$, $c$ | the vol the plain formula reads from $Q$; share of the last price's log-variance the average keeps | 11.75%; 0.343 | $c$ up: the two vols converge |
-| $t_0$, $L$, $W$ | start and length of an averaging window; in the proofs, the one random path moving the curve | December: 11/12 and 1/12 of a year | $t_0$ up: $c$ nearer 1 |
+| $`Q`$ | the quoted Asian premium, per barrel | \$5.854 | implied vol rises |
+| $`\sigma`$, $`\sigma_k`$, $`\hat\sigma`$ | a trial volatility; Newton's k-th guess; the implied volatility | 20%; from 30%; 19.91% by the formula, 20.00% by simulation | — |
+| $`C_{TW}`$ | the Turnbull-Wakeman price at a given volatility | \$5.87 at 20% | is the answer's target |
+| $`K`$, $`r`$, $`T`$ | strike; bank rate, continuously compounded; expiry in years; $`e^{-rT}`$ discounts a dollar paid at $`T`$ | \$100; 5%; 1 | $`K`$ up: implied vol up for the same quote |
+| $`n`$, $`i`$, $`j`$, $`t_i`$ | number of fixings; their counters; date of fixing $`i`$ in years | 52 weekly; $`t_i = i/52`$ | $`n`$ up: slightly less variance kept |
+| $`F(0,t)`$, $`F_i`$, $`t`$ | today's futures price for delivery at date $`t`$; the one at fixing $`i`$ | $`100e^{0.05t}`$; \$105.13 for December | curve up: implied vol down |
+| $`M_1`$, $`M_2`$, $`M_2'`$ | mean of the average, the swap price; its mean square; that square's slope in $`\sigma`$ | \$102.59 | $`M_1`$ up: floor and ceiling rise |
+| $`v_A`$, $`e_1`$, $`e_2`$ | the average's fitted log-spread over the whole life; the cut-offs | 0.1180 at 20% | $`v_A`$ up: price up |
+| $`N`$, $`\varphi`$ | bell-curve area to the left; bell-curve height | — | — |
+| $`\mathcal{V}`$ | vega, dollars per unit of volatility | \$0.2219 per point at 20% | bigger vega: flatter inverse, a tighter vol |
+| $`\sigma_{\text{van}}`$, $`c`$ | the vol the plain formula reads from $`Q`$; share of the last price's log-variance the average keeps | 11.75%; 0.343 | $`c`$ up: the two vols converge |
+| $`t_0`$, $`L`$, $`W`$ | start and length of an averaging window; in the proofs, the one random path moving the curve | December: 11/12 and 1/12 of a year | $`t_0`$ up: $`c`$ nearer 1 |
 
 ### When it holds
 
 - **One volatility for every fixing.** Near-dated energy futures usually move more than far-dated ones. The Asian's single implied vol is then a blend of the strip's vols, weighted toward the later fixings, and it need not equal the December option's vol even when the market is consistent.
-- **One random path moves the whole curve.** If the fixings read delivery months that are not perfectly correlated, the true $M_2$ is smaller, the market price is lower, and the implied vol reads low.
-- **The lognormal fit.** Turnbull-Wakeman overprices this contract by 1.9 cents at 20 percent. Divided by the vega of 22 cents a point, that is roughly the gap between its 19.91 percent and the simulation's 20.00 percent, and it grows with the total variance $\sigma^2 T$.
+- **One random path moves the whole curve.** If the fixings read delivery months that are not perfectly correlated, the true $`M_2`$ is smaller, the market price is lower, and the implied vol reads low.
+- **The lognormal fit.** Turnbull-Wakeman overprices this contract by 1.9 cents at 20 percent. Divided by the vega of 22 cents a point, that is roughly the gap between its 19.91 percent and the simulation's 20.00 percent, and it grows with the total variance $`\sigma^2 T`$.
 - **A quote inside the band.** Below \$2.47 or above \$97.59 no volatility fits; a solver without the check returns the edge of its search interval, which means nothing.
 - **No fixings banked.** Part-way through the year, invert the open part of the contract with its shifted strike ([Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md)). If the banked fixings already guarantee payment, the price no longer depends on volatility and no implied vol exists.
 
@@ -104,32 +116,32 @@ A quote maps to one volatility only if the price rises strictly as volatility ri
 
 ### Step 1: the band comes from the swap price
 
-With no volatility every fixing lands on today's futures price, so the average lands on $M_1$, the swap price, \$102.59. The call then pays $M_1 - K$ for sure, worth $e^{-rT}(M_1 - K)$ = \$2.47 today. That is the floor.
+With no volatility every fixing lands on today's futures price, so the average lands on $`M_1`$, the swap price, \$102.59. The call then pays $`M_1 - K`$ for sure, worth $`e^{-rT}(M_1 - K)`$ = \$2.47 today. That is the floor.
 
-With unbounded volatility almost every path's average collapses toward zero while its mean stays at $M_1$: the rare huge paths carry the whole mean. The strike then almost never matters, and the call is worth the discounted average itself, \$97.59. That is the ceiling.
+With unbounded volatility almost every path's average collapses toward zero while its mean stays at $`M_1`$: the rare huge paths carry the whole mean. The strike then almost never matters, and the call is worth the discounted average itself, \$97.59. That is the ceiling.
 
 The floor is commodity-specific. An equity desk grows a spot price at the bank rate less the dividend yield. A fuel desk reads the curve at each fixing date. The December vanilla's floor is higher, \$4.88, because its forward is the curve's far end, \$105.13, not the average of the curve.
 
 ### Step 2: the moment-matched price rises strictly with volatility
 
-Volatility enters only through $M_2$. Each term of $M_2$ is $F_i F_j e^{\sigma^2\min(t_i,t_j)}$, which grows with $\sigma$. So $M_2$ grows, and $v_A$ grows with it. The Black-76 price grows with $v_A$: a wider spread lifts a call, whose loss is capped. A chain of increasing steps is increasing.
+Volatility enters only through $`M_2`$. Each term of $`M_2`$ is $`F_i F_j e^{\sigma^2\min(t_i,t_j)}`$, which grows with $`\sigma`$. So $`M_2`$ grows, and $`v_A`$ grows with it. The Black-76 price grows with $`v_A`$: a wider spread lifts a call, whose loss is capped. A chain of increasing steps is increasing.
 
 <details>
 <summary>Detailed proof: monotone, continuous, and one root</summary>
 
-**Slope in the spread.** Write $B(v) = e^{-rT}\big(M_1 N(e_1) - K N(e_1 - v)\big)$. The identity $M_1\varphi(e_1) = K\varphi(e_2)$ holds because $\ln(M_1/K) = \tfrac12(e_1^2 - e_2^2)$, which is the definition of $e_1$ rearranged. Differentiating, the terms in $\partial e_1/\partial v$ cancel by that identity, leaving $B'(v) = e^{-rT} M_1\varphi(e_1) > 0$.
+**Slope in the spread.** Write $`B(v) = e^{-rT}\big(M_1 N(e_1) - K N(e_1 - v)\big)`$. The identity $`M_1\varphi(e_1) = K\varphi(e_2)`$ holds because $`\ln(M_1/K) = \tfrac12(e_1^2 - e_2^2)`$, which is the definition of $`e_1`$ rearranged. Differentiating, the terms in $`\partial e_1/\partial v`$ cancel by that identity, leaving $`B'(v) = e^{-rT} M_1\varphi(e_1) > 0`$.
 
-**Slope of the spread.** $v_A^2 = \ln M_2 - 2\ln M_1$, and $M_1$ does not involve $\sigma$. So $2 v_A v_A' = M_2'/M_2$. Every term of $M_2'$ is $2\sigma\min(t_i,t_j)F_iF_je^{\sigma^2\min(t_i,t_j)}$, positive for $\sigma > 0$. Hence $v_A' > 0$, and by the chain rule $\mathcal{V} = B'(v_A)\,v_A' > 0$: the formula in The formula.
+**Slope of the spread.** $`v_A^2 = \ln M_2 - 2\ln M_1`$, and $`M_1`$ does not involve $`\sigma`$. So $`2 v_A v_A' = M_2'/M_2`$. Every term of $`M_2'`$ is $`2\sigma\min(t_i,t_j)F_iF_je^{\sigma^2\min(t_i,t_j)}`$, positive for $`\sigma > 0`$. Hence $`v_A' > 0`$, and by the chain rule $`\mathcal{V} = B'(v_A)\,v_A' > 0`$: the formula in The formula.
 
-**Limits.** As $\sigma \to 0$, $M_2 \to M_1^2$ and $v_A \to 0$. If $M_1 > K$, both cut-offs run to $+\infty$ and the price tends to $e^{-rT}(M_1 - K)$; if $M_1 < K$, both run to $-\infty$ and it tends to 0. Either way the limit is the floor. As $\sigma \to \infty$, $M_2 \to \infty$ and $v_A \to \infty$; then $e_1 \to +\infty$ and $e_2 = (\ln(M_1/K) - \tfrac12 v_A^2)/v_A \to -\infty$, so the price tends to $e^{-rT}M_1$.
+**Limits.** As $`\sigma \to 0`$, $`M_2 \to M_1^2`$ and $`v_A \to 0`$. If $`M_1 > K`$, both cut-offs run to $`+\infty`$ and the price tends to $`e^{-rT}(M_1 - K)`$; if $`M_1 < K`$, both run to $`-\infty`$ and it tends to 0. Either way the limit is the floor. As $`\sigma \to \infty`$, $`M_2 \to \infty`$ and $`v_A \to \infty`$; then $`e_1 \to +\infty`$ and $`e_2 = (\ln(M_1/K) - \tfrac12 v_A^2)/v_A \to -\infty`$, so the price tends to $`e^{-rT}M_1`$.
 
-**One root.** The price is continuous and strictly increasing in $\sigma$ and runs between the two limits without reaching either. By the intermediate value theorem each $Q$ strictly inside the band is hit exactly once, and no $Q$ outside it is hit at all.
+**One root.** The price is continuous and strictly increasing in $`\sigma`$ and runs between the two limits without reaching either. By the intermediate value theorem each $`Q`$ strictly inside the band is hit exactly once, and no $`Q`$ outside it is hit at all.
 
 </details>
 
 ### Step 3: two solvers on the formula
 
-**Bisection** brackets the root between 0.0001 percent and 500 percent, checks that the quote lies between the prices at the two ends, and halves until the interval is narrower than $10^{-13}$. It cannot fail, because the price only climbs.
+**Bisection** brackets the root between 0.0001 percent and 500 percent, checks that the quote lies between the prices at the two ends, and halves until the interval is narrower than $`10^{-13}`$. It cannot fail, because the price only climbs.
 
 **Newton's method** replaces the price curve by its tangent at the current guess and jumps to where the tangent meets the quote ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)). The slope is the exact vega from Step 2. From 30 percent the guesses run 19.987221, 19.913274, 19.913267 percent. The curve in the picture is nearly straight, so the first jump lands within a tenth of a point. Bisection and Newton agree to every printed digit.
 
@@ -137,30 +149,30 @@ Volatility enters only through $M_2$. Each term of $M_2$ is $F_i F_j e^{\sigma^2
 
 Turnbull-Wakeman is an approximation. The exact model has no formula, but it has a precise simulation: 50,000 simulated years of weekly fixings, priced with the geometric average as a control, whose exact price corrects most of the noise (the method of [The Asian option desks trade](03-arithmetic-asian-option.md)). At 20 percent it gives \$5.854446 with an error bar of a tenth of a cent.
 
-To invert it, draw the random numbers once and reuse them at every trial volatility. Then the simulated price is a smooth function of $\sigma$, not a new noisy number at each try. The secant method, Newton with the slope estimated from the last two tries, needs 6 simulated prices to find 19.998 percent. The formula's 19.91 percent is the lognormal fit's error expressed in volatility.
+To invert it, draw the random numbers once and reuse them at every trial volatility. Then the simulated price is a smooth function of $`\sigma`$, not a new noisy number at each try. The secant method, Newton with the slope estimated from the last two tries, needs 6 simulated prices to find 19.998 percent. The formula's 19.91 percent is the lognormal fit's error expressed in volatility.
 
 ### Step 5: why the vanilla formula reads the average's spread
 
-Turnbull-Wakeman *is* Black-76, fed $M_1$ and $v_A$. So if the vanilla formula is fed the swap price $M_1$ and asked what volatility reproduces \$5.854, it must answer $v_A(\hat\sigma)$, the average's log-spread over the year: 11.75 percent. The code prints both: they agree to every digit.
+Turnbull-Wakeman *is* Black-76, fed $`M_1`$ and $`v_A`$. So if the vanilla formula is fed the swap price $`M_1`$ and asked what volatility reproduces \$5.854, it must answer $`v_A(\hat\sigma)`$, the average's log-spread over the year: 11.75 percent. The code prints both: they agree to every digit.
 
-That number is a property of the average, not of jet fuel. $\hat\sigma$ is the volatility of each fixing, the same kind of number as the December vanilla's implied vol, and the two can be compared directly. $\sigma_{\text{van}}$ is smaller because averaging cancels part of the movement.
+That number is a property of the average, not of jet fuel. $`\hat\sigma`$ is the volatility of each fixing, the same kind of number as the December vanilla's implied vol, and the two can be compared directly. $`\sigma_{\text{van}}`$ is smaller because averaging cancels part of the movement.
 
 Feeding the December futures instead, \$105.13, gives 7.08 percent. The vanilla formula then also believes the payoff centres on \$105.13 rather than \$102.59, and cuts the volatility further to hold the price down.
 
 ### Step 6: total variance divided by three
 
-The log of an average behaves nearly like the average of the logs, and that is a bell curve whose variance can be counted. For an average taken evenly from today to expiry, it keeps a share $c$ of the last price's log-variance $\sigma^2 T$. Continuous averaging keeps exactly one third. Weekly averaging over 52 weeks keeps 0.343, a touch more because the last fixing sits on the expiry date.
+The log of an average behaves nearly like the average of the logs, and that is a bell curve whose variance can be counted. For an average taken evenly from today to expiry, it keeps a share $`c`$ of the last price's log-variance $`\sigma^2 T`$. Continuous averaging keeps exactly one third. Weekly averaging over 52 weeks keeps 0.343, a touch more because the last fixing sits on the expiry date.
 
-So $v_A \approx \hat\sigma\sqrt{cT}$, and the Asian's vol can be recovered from the vanilla reading: 11.75 percent times the square root of 3 is 20.36 percent; divided by the square root of 0.343 it is 20.07 percent. Both land within half a point of 20.00. What remains is the curve's slope and the lognormal fit.
+So $`v_A \approx \hat\sigma\sqrt{cT}`$, and the Asian's vol can be recovered from the vanilla reading: 11.75 percent times the square root of 3 is 20.36 percent; divided by the square root of 0.343 it is 20.07 percent. Both land within half a point of 20.00. What remains is the curve's slope and the lognormal fit.
 
 <details>
 <summary>Detailed proof: where the three comes from</summary>
 
-Let $W$ be the Brownian path driving every fixing: its values at two dates have covariance equal to the earlier date. The log of fixing $i$ is a constant plus $\sigma W_{t_i}$, so the average of the logs has variance $\sigma^2$ times $\frac{1}{n^2}\sum_i\sum_j \min(t_i,t_j)$.
+Let $`W`$ be the Brownian path driving every fixing: its values at two dates have covariance equal to the earlier date. The log of fixing $`i`$ is a constant plus $`\sigma W_{t_i}`$, so the average of the logs has variance $`\sigma^2`$ times $`\frac{1}{n^2}\sum_i\sum_j \min(t_i,t_j)`$.
 
-With $t_i = iT/n$, the double sum counts each $\min(i,j)$: $\sum_i\sum_j \min(i,j) = \sum_{k=1}^{n}(n-k+1)^2 = n(n+1)(2n+1)/6$. So the variance is $\sigma^2 T\,(n+1)(2n+1)/(6n^2) = \sigma^2 T c$. As $n$ grows, $c \to 2n^3/(6n^3) = 1/3$.
+With $`t_i = iT/n`$, the double sum counts each $`\min(i,j)`$: $`\sum_i\sum_j \min(i,j) = \sum_{k=1}^{n}(n-k+1)^2 = n(n+1)(2n+1)/6`$. So the variance is $`\sigma^2 T\,(n+1)(2n+1)/(6n^2) = \sigma^2 T c`$. As $`n`$ grows, $`c \to 2n^3/(6n^3) = 1/3`$.
 
-For a window of length $L$ ending at $T$, starting at $t_0 = T - L$, split the path at each fixing into its value at the window's start plus its movement after that. The first part is shared by every fixing and contributes $t_0$. The second is a fresh average over length $L$ and contributes $L/3$. So $c \approx (t_0 + L/3)/T$.
+For a window of length $`L`$ ending at $`T`$, starting at $`t_0 = T - L`$, split the path at each fixing into its value at the window's start plus its movement after that. The first part is shared by every fixing and contributes $`t_0`$. The second is a fresh average over length $`L`$ and contributes $`L/3`$. So $`c \approx (t_0 + L/3)/T`$.
 
 </details>
 
@@ -170,7 +182,7 @@ Commodity average options often settle on one calendar month: the average of the
 
 **Conventions verified 28 Sep 2026:** a listed Gulf Coast jet fuel swap averages a daily price over every business day of its contract month ([Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md)). The 52 weekly fixings elsewhere on this card are the shelf's simpler schedule.
 
-Most of the variance is already in place before the window opens, so the average keeps almost all of it: $c \approx 11/12 + 1/36$, and the rule says $\sigma_{\text{van}} \approx$ 19.44 percent.
+Most of the variance is already in place before the window opens, so the average keeps almost all of it: $`c \approx 11/12 + 1/36`$, and the rule says $`\sigma_{\text{van}} \approx`$ 19.44 percent.
 
 The card's own check prices this contract at 20 percent: \$10.12, next to \$10.45 for the December vanilla. Read through the vanilla formula on its swap price, \$104.92, it gives 19.46 percent, against the rule's 19.44. Applying "divide by three" blindly would claim the Asian's vol is 33.70 percent. The rule is about the schedule, not about Asians.
 
@@ -178,21 +190,21 @@ The card's own check prices this contract at 20 percent: \$10.12, next to \$10.4
 
 ## Worked numbers, by hand
 
-Jet fuel: curve $100e^{0.05t}$, $K$ = \$100, $r$ = 5%, $T$ = 1 year, 52 weekly fixings, quote $Q$ = \$5.854.
+Jet fuel: curve $`100e^{0.05t}`$, $`K`$ = \$100, $`r`$ = 5%, $`T`$ = 1 year, 52 weekly fixings, quote $`Q`$ = \$5.854.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| swap price | $M_1 = \frac{1}{52}\sum 100e^{0.05\,i/52}$ | \$102.5915 |
-| floor | $e^{-0.05}(102.5915 - 100)$ | \$2.4651 |
-| ceiling | $e^{-0.05} \times 102.5915$ | \$97.5881 |
+| swap price | $`M_1 = \frac{1}{52}\sum 100e^{0.05\,i/52}`$ | \$102.5915 |
+| floor | $`e^{-0.05}(102.5915 - 100)`$ | \$2.4651 |
+| ceiling | $`e^{-0.05} \times 102.5915`$ | \$97.5881 |
 | quote inside the band? | 2.4651 < 5.854 < 97.5881 | yes: one vol |
-| Turnbull-Wakeman at 20% | Black-76 on $M_1$, $v_A$ = 0.1180 | \$5.873245 |
+| Turnbull-Wakeman at 20% | Black-76 on $`M_1`$, $`v_A`$ = 0.1180 | \$5.873245 |
 | gap to the quote | 5.873245 − 5.854 | \$0.019245 |
 | vega at 20% | per volatility point | \$0.221911 |
 | one Newton step | 20% − 0.019245 / 0.221911 points | 19.9133% |
 | a second step | the step is now tiny | **19.913267%** |
 | simulation, inverted | 6 prices on shared draws | **20.00%** |
-| vanilla formula on $M_1$ | the log-spread at which Black-76 gives 5.854 | 11.75% |
+| vanilla formula on $`M_1`$ | the log-spread at which Black-76 gives 5.854 | 11.75% |
 | times the square root of 3 | continuous-average rule | 20.36% |
 | divided by the square root of 0.343 | weekly-average rule | 20.07% |
 
@@ -600,10 +612,10 @@ Lean proves the facts the inverse rests on, for any positive futures prices, any
 - The Turnbull-Wakeman price rises strictly with volatility.
 - As volatility falls to zero, the price tends to the floor. As volatility grows without bound, it tends to the ceiling.
 - A quote has an implied volatility exactly when it lies strictly between the floor and the ceiling. Such a quote has exactly one.
-- Take any volatility above zero. Then the vanilla formula on the swap price returns that Turnbull-Wakeman premium at exactly one volatility, $v_A/\sqrt{T}$.
-- Take $n$ evenly spaced fixings. Then the share of variance kept is exactly $c = (n+1)(2n+1)/(6n^2)$.
-- As the number of fixings grows, $c$ tends to one third.
-- Take 52 weekly fixings. Then $c$ is exactly 1855/5408, about 0.343.
+- Take any volatility above zero. Then the vanilla formula on the swap price returns that Turnbull-Wakeman premium at exactly one volatility, $`v_A/\sqrt{T}`$.
+- Take $`n`$ evenly spaced fixings. Then the share of variance kept is exactly $`c = (n+1)(2n+1)/(6n^2)`$.
+- As the number of fixings grows, $`c`$ tends to one third.
+- Take 52 weekly fixings. Then $`c`$ is exactly 1855/5408, about 0.343.
 
 The solvers, the simulation, the window rule and every printed number are left to the Python and Rust checks.
 
@@ -1193,7 +1205,7 @@ example : (48230 : ℚ) / 52 ^ 2 / 52 = 1855 / 5408 := by norm_num
 - **The swap underneath.** The floor and the rule both start from the swap price ([Commodity swap](01-commodity-swap-and-average-price-forward.md)); the geometric twin that steers the simulation is priced exactly on [Kemna-Vorst](02-kemna-vorst-geometric-asian.md).
 
 > **Say it back**
-> An Asian quote is turned into a volatility by solving the moment-matched price for $\sigma$. That price rises strictly with volatility, from the discounted swap-price payoff to the discounted swap price, so every quote in between has one answer. For jet fuel, \$5.854 means 20 percent, the same kind of number as a vanilla's vol. The vanilla formula applied to the same premium reads the average's own spread, 11.75 percent. Multiply that by the square root of 3, or by the schedule's own factor, and the fixing's volatility comes back.
+> An Asian quote is turned into a volatility by solving the moment-matched price for $`\sigma`$. That price rises strictly with volatility, from the discounted swap-price payoff to the discounted swap price, so every quote in between has one answer. For jet fuel, \$5.854 means 20 percent, the same kind of number as a vanilla's vol. The vanilla formula applied to the same premium reads the average's own spread, 11.75 percent. Multiply that by the square root of 3, or by the schedule's own factor, and the fixing's volatility comes back.
 
 ---
 

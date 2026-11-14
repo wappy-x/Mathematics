@@ -36,32 +36,36 @@ The gap between the lines, per unit of volatility, is roughly vanna averaged ove
 
 ## The formula
 
-Notation first, in words. A partial derivative, written with a curly ∂, is the slope in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). A 2 raised on the top curly d means two slopes taken one after the other, one per input named underneath. The call's price is written $C$. Vega, the slope of the price in volatility, is written $\mathcal{V}$.
+Notation first, in words. A partial derivative, written with a curly ∂, is the slope in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). A 2 raised on the top curly d means two slopes taken one after the other, one per input named underneath. The call's price is written $`C`$. Vega, the slope of the price in volatility, is written $`\mathcal{V}`$.
 
-$$\text{vanna} \;=\; \frac{\partial \Delta}{\partial \sigma} \;=\; \frac{\partial \mathcal{V}}{\partial S} \;=\; \frac{\partial^2 C}{\partial S\,\partial \sigma} \;=\; -\,e^{-qT}\,\varphi(d_1)\,\frac{d_2}{\sigma}$$
+```math
+\text{vanna} \;=\; \frac{\partial \Delta}{\partial \sigma} \;=\; \frac{\partial \mathcal{V}}{\partial S} \;=\; \frac{\partial^2 C}{\partial S\,\partial \sigma} \;=\; -\,e^{-qT}\,\varphi(d_1)\,\frac{d_2}{\sigma}
+```
 
 **Read it aloud:** vanna is how delta moves per unit of volatility, which is the same as how vega moves per dollar of share price; it equals the dividend drag times the bell-curve height at d1, times d2 divided by volatility, with a minus sign in front.
 
 | Symbol | Plain meaning | In our example | Push it up and vanna… |
 | --- | --- | --- | --- |
-| $S$, $K$ | Acme's price today; the strike, the fixed price in the contract | $100 and $100 | $S$ up past $99.00: turns negative, deepest near $120; $K$ up: the reverse |
-| $T$ | years left to expiry | 1 | at the money, grows in size: −0.049233 at 3 months, −0.094753 at 1 year |
-| $r$, $q$ | the riskless rate, continuously compounded; the dividend yield, the share's yearly payout as a fraction of its price | 5% and 2% | $r$ up: more negative; $q$ up: toward zero, then positive, +0.094753 at 4% |
-| $\sigma$ | volatility: how jumpy Acme is, per square-root year. Say "sigma". | 20% | here flips sign: +0.063169 at 30% |
-| $d_1$, $d_2$ | the two Black-Scholes distances to the strike, in units of $\sigma\sqrt{T}$ | 0.25 and 0.05 | $d_2$ up: more negative |
-| $\varphi$ | the bell-curve height, $\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}$. Say "phi". | 0.386668 at $d_1$ | larger in size |
-| $N$ | the bell-curve area to the left of a point: a probability | inside delta | enters delta, not vanna |
-| $e^{-qT}$ | the dividend drag: the share fraction bought today that grows into one share by expiry | 0.980199 | larger in size |
-| $\Delta$ | delta, $e^{-qT}N(d_1)$: shares per option | 0.586851 | — |
-| $\mathcal{V}$ | vega, $S e^{-qT}\varphi(d_1)\sqrt{T}$: dollars per 1.00 of volatility | 37.901158 | — |
-| $\Gamma$ | gamma: how fast delta moves per dollar of share price | 0.018951 | — |
-| $a$, $b$ | small steps in price and in volatility, for the four-corner difference | 0.05 and 0.0005 (road 4) | — |
+| $`S`$, $`K`$ | Acme's price today; the strike, the fixed price in the contract | $100 and $100 | $`S`$ up past $99.00: turns negative, deepest near $120; $`K`$ up: the reverse |
+| $`T`$ | years left to expiry | 1 | at the money, grows in size: −0.049233 at 3 months, −0.094753 at 1 year |
+| $`r`$, $`q`$ | the riskless rate, continuously compounded; the dividend yield, the share's yearly payout as a fraction of its price | 5% and 2% | $`r`$ up: more negative; $`q`$ up: toward zero, then positive, +0.094753 at 4% |
+| $`\sigma`$ | volatility: how jumpy Acme is, per square-root year. Say "sigma". | 20% | here flips sign: +0.063169 at 30% |
+| $`d_1`$, $`d_2`$ | the two Black-Scholes distances to the strike, in units of $`\sigma\sqrt{T}`$ | 0.25 and 0.05 | $`d_2`$ up: more negative |
+| $`\varphi`$ | the bell-curve height, $`\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}`$. Say "phi". | 0.386668 at $`d_1`$ | larger in size |
+| $`N`$ | the bell-curve area to the left of a point: a probability | inside delta | enters delta, not vanna |
+| $`e^{-qT}`$ | the dividend drag: the share fraction bought today that grows into one share by expiry | 0.980199 | larger in size |
+| $`\Delta`$ | delta, $`e^{-qT}N(d_1)`$: shares per option | 0.586851 | — |
+| $`\mathcal{V}`$ | vega, $`S e^{-qT}\varphi(d_1)\sqrt{T}`$: dollars per 1.00 of volatility | 37.901158 | — |
+| $`\Gamma`$ | gamma: how fast delta moves per dollar of share price | 0.018951 | — |
+| $`a`$, $`b`$ | small steps in price and in volatility, for the four-corner difference | 0.05 and 0.0005 (road 4) | — |
 
 The two distances, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: $d_2$ counts how many units of $\sigma\sqrt{T}$ the forward price, $F = S e^{(r-q)T}$, sits past the strike, less half a unit of volatility drag; $d_1$ is one unit further. Units: vanna on this card is delta per 1.00 of volatility, which is 100 volatility points. Per point, divide by 100: −0.000948.
+In words: $`d_2`$ counts how many units of $`\sigma\sqrt{T}`$ the forward price, $`F = S e^{(r-q)T}`$, sits past the strike, less half a unit of volatility drag; $`d_1`$ is one unit further. Units: vanna on this card is delta per 1.00 of volatility, which is 100 volatility points. Per point, divide by 100: −0.000948.
 
 ### When it holds
 
@@ -83,38 +87,44 @@ That symmetry of second derivatives is the whole reason vanna has two readings. 
 
 ### Step 1: three small facts about the ingredients
 
-The bell-curve height slopes down at a rate set by the point itself: $\varphi'(x) = -x\,\varphi(x)$, since the derivative of $e^{-x^2/2}$ is $-x\,e^{-x^2/2}$.
+The bell-curve height slopes down at a rate set by the point itself: $`\varphi'(x) = -x\,\varphi(x)`$, since the derivative of $`e^{-x^2/2}`$ is $`-x\,e^{-x^2/2}`$.
 
-The distance $d_1$ moves with the share price at rate $\partial d_1/\partial S = 1/(S\sigma\sqrt{T})$, because the only $S$ in $d_1$ sits inside $\ln S$, whose slope is $1/S$.
+The distance $`d_1`$ moves with the share price at rate $`\partial d_1/\partial S = 1/(S\sigma\sqrt{T})`$, because the only $`S`$ in $`d_1`$ sits inside $`\ln S`$, whose slope is $`1/S`$.
 
-The distance $d_1$ moves with volatility at rate $\partial d_1/\partial\sigma = -d_2/\sigma$. To see it, split $d_1$ in two:
+The distance $`d_1`$ moves with volatility at rate $`\partial d_1/\partial\sigma = -d_2/\sigma`$. To see it, split $`d_1`$ in two:
 
-$$d_1 = \frac{\ln(S/K) + (r-q)T}{\sigma\sqrt{T}} + \tfrac12\sigma\sqrt{T}.$$
+```math
+d_1 = \frac{\ln(S/K) + (r-q)T}{\sigma\sqrt{T}} + \tfrac12\sigma\sqrt{T}.
+```
 
 The first piece has volatility only underneath; the second grows in step with it.
 
 <details>
 <summary>The algebra behind this</summary>
 
-A quantity with volatility only underneath has slope minus itself over $\sigma$. The first piece equals $d_1 - \tfrac12\sigma\sqrt{T}$, so its slope is $-(d_1 - \tfrac12\sigma\sqrt{T})/\sigma$. The second piece has slope $\tfrac12\sqrt{T}$, which is $\tfrac12\sigma\sqrt{T}/\sigma$. Add them: $-(d_1 - \sigma\sqrt{T})/\sigma = -d_2/\sigma$.
+A quantity with volatility only underneath has slope minus itself over $`\sigma`$. The first piece equals $`d_1 - \tfrac12\sigma\sqrt{T}`$, so its slope is $`-(d_1 - \tfrac12\sigma\sqrt{T})/\sigma`$. The second piece has slope $`\tfrac12\sqrt{T}`$, which is $`\tfrac12\sigma\sqrt{T}/\sigma`$. Add them: $`-(d_1 - \sigma\sqrt{T})/\sigma = -d_2/\sigma`$.
 
 </details>
 
 ### Step 2: the first reading, delta moved by volatility
 
-Delta is $e^{-qT}N(d_1)$ ([Delta](01-delta.md)). Volatility enters only through $d_1$. The slope of $N$ is $\varphi$, so the chain rule gives
+Delta is $`e^{-qT}N(d_1)`$ ([Delta](01-delta.md)). Volatility enters only through $`d_1`$. The slope of $`N`$ is $`\varphi`$, so the chain rule gives
 
-$$\frac{\partial \Delta}{\partial\sigma} = e^{-qT}\,\varphi(d_1)\,\frac{\partial d_1}{\partial \sigma} = -\,e^{-qT}\,\varphi(d_1)\,\frac{d_2}{\sigma}.$$
+```math
+\frac{\partial \Delta}{\partial\sigma} = e^{-qT}\,\varphi(d_1)\,\frac{\partial d_1}{\partial \sigma} = -\,e^{-qT}\,\varphi(d_1)\,\frac{d_2}{\sigma}.
+```
 
-For Acme: $-0.980199 \times 0.386668 \times 0.05/0.20 = -0.094753$. Measured instead: delta is 0.587361 at 19.5 percent and 0.586412 at 20.5 percent, a change of −0.000949 across one point.
+For Acme: $`-0.980199 \times 0.386668 \times 0.05/0.20 = -0.094753`$. Measured instead: delta is 0.587361 at 19.5 percent and 0.586412 at 20.5 percent, a change of −0.000949 across one point.
 
 ### Step 3: the second reading, vega moved by the share price
 
-Vega is $S e^{-qT}\varphi(d_1)\sqrt{T}$ ([Vega](03-vega.md)). Now $S$ appears twice: in front, and inside $d_1$. The product rule takes each in turn:
+Vega is $`S e^{-qT}\varphi(d_1)\sqrt{T}`$ ([Vega](03-vega.md)). Now $`S`$ appears twice: in front, and inside $`d_1`$. The product rule takes each in turn:
 
-$$\frac{\partial \mathcal{V}}{\partial S} = e^{-qT}\varphi(d_1)\sqrt{T} \;+\; S e^{-qT}\sqrt{T}\,\bigl(-d_1\varphi(d_1)\bigr)\frac{1}{S\sigma\sqrt{T}} = e^{-qT}\varphi(d_1)\Bigl(\sqrt{T} - \frac{d_1}{\sigma}\Bigr).$$
+```math
+\frac{\partial \mathcal{V}}{\partial S} = e^{-qT}\varphi(d_1)\sqrt{T} \;+\; S e^{-qT}\sqrt{T}\,\bigl(-d_1\varphi(d_1)\bigr)\frac{1}{S\sigma\sqrt{T}} = e^{-qT}\varphi(d_1)\Bigl(\sqrt{T} - \frac{d_1}{\sigma}\Bigr).
+```
 
-The bracket is $-(d_1 - \sigma\sqrt{T})/\sigma = -d_2/\sigma$. The same formula arrives. Measured: vega is 37.936766 at $99.50 and 37.842160 at $100.50, a change of −0.094606 across one dollar.
+The bracket is $`-(d_1 - \sigma\sqrt{T})/\sigma = -d_2/\sigma`$. The same formula arrives. Measured: vega is 37.936766 at $99.50 and 37.842160 at $100.50, a change of −0.094606 across one dollar.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -129,27 +139,31 @@ The one line is vega. Vanna is its slope. The hill climbs on the left, where van
 
 ### Step 4: the sign, read from where Acme sits
 
-In $-e^{-qT}\varphi(d_1)\,d_2/\sigma$, every factor but $d_2$ is positive. So vanna has the opposite sign to $d_2$. Setting $d_2 = 0$ and solving for $S$ gives
+In $`-e^{-qT}\varphi(d_1)\,d_2/\sigma`$, every factor but $`d_2`$ is positive. So vanna has the opposite sign to $`d_2`$. Setting $`d_2 = 0`$ and solving for $`S`$ gives
 
-$$\text{crossover price} = K\,e^{-(r - q - \frac12\sigma^2)T} = 100\,e^{-0.01} = 99.004983.$$
+```math
+\text{crossover price} = K\,e^{-(r - q - \frac12\sigma^2)T} = 100\,e^{-0.01} = 99.004983.
+```
 
-- **Acme above the crossover** ($d_2 > 0$): the call is, in the pretend world of pricing (where every asset grows at the bank rate), more likely than not to pay. More volatility makes that less certain and pulls delta down toward the middle. Vanna is negative: −0.094753 at $100, −0.957609 at $120.
-- **Acme below the crossover** ($d_2 < 0$): the call probably expires worthless. More volatility gives it a better chance and pushes delta up. Vanna is positive: +1.432490 at $80.
+- **Acme above the crossover** ($`d_2 > 0`$): the call is, in the pretend world of pricing (where every asset grows at the bank rate), more likely than not to pay. More volatility makes that less certain and pulls delta down toward the middle. Vanna is negative: −0.094753 at $100, −0.957609 at $120.
+- **Acme below the crossover** ($`d_2 < 0`$): the call probably expires worthless. More volatility gives it a better chance and pushes delta up. Vanna is positive: +1.432490 at $80.
 
-The crossover is not the strike. Carry, the $r - q$ drift, and the volatility drag in $d_2$ move it; here to $99.00.
+The crossover is not the strike. Carry, the $`r - q`$ drift, and the volatility drag in $`d_2`$ move it; here to $99.00.
 
-The put's vanna is the same number. Put-call parity, $C - P = S e^{-qT} - K e^{-rT}$ with $P$ the put's price ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)), has no $\sigma$ in its right side, so any slope taken in volatility is identical for the two. Bumping the put's delta in volatility gives −0.094753.
+The put's vanna is the same number. Put-call parity, $`C - P = S e^{-qT} - K e^{-rT}`$ with $`P`$ the put's price ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)), has no $`\sigma`$ in its right side, so any slope taken in volatility is identical for the two. Bumping the put's delta in volatility gives −0.094753.
 
 <details>
 <summary>Detailed proof: why the order of the two slopes does not matter</summary>
 
-Take a price surface $C(S, \sigma)$ whose cross slopes are continuous near the point. Pick a small step $a$ in price and $b$ in volatility, and form the four-corner difference
-$$C(S{+}a, \sigma{+}b) - C(S{+}a, \sigma) - C(S, \sigma{+}b) + C(S, \sigma).$$
-Read it as one quantity, the change across the volatility step, taken at price $S{+}a$ minus at price $S$. The mean value theorem (a smooth change across an interval equals the interval's width times the slope at some point inside it) turns that into $a$ times the price-slope of the volatility-step change, at some price inside the step. That slope is itself a change across the volatility step, so the theorem applies again: the four-corner difference equals $a \times b$ times the cross slope, price first and volatility second, at some point inside the small rectangle.
+Take a price surface $`C(S, \sigma)`$ whose cross slopes are continuous near the point. Pick a small step $`a`$ in price and $`b`$ in volatility, and form the four-corner difference
 
-Read the same four terms the other way, as the change across the price step taken at volatility $\sigma{+}b$ minus at $\sigma$. The same two moves give $a \times b$ times the cross slope in the other order, at another point inside the rectangle.
+$`\displaystyle C(S{+}a, \sigma{+}b) - C(S{+}a, \sigma) - C(S, \sigma{+}b) + C(S, \sigma).`$
 
-Divide by $a \times b$ and shrink the rectangle. Both points close in on $(S, \sigma)$. The cross slopes are continuous, so both tend to their values there, and both equal the limit of the four-corner difference divided by $a \times b$. They are equal. The Black-Scholes price is built from exponentials, logarithms and the bell curve, all smooth while $T > 0$ and $\sigma > 0$, so the condition holds. Road 4 in the code computes exactly this four-corner difference.
+Read it as one quantity, the change across the volatility step, taken at price $`S{+}a`$ minus at price $`S`$. The mean value theorem (a smooth change across an interval equals the interval's width times the slope at some point inside it) turns that into $`a`$ times the price-slope of the volatility-step change, at some price inside the step. That slope is itself a change across the volatility step, so the theorem applies again: the four-corner difference equals $`a \times b`$ times the cross slope, price first and volatility second, at some point inside the small rectangle.
+
+Read the same four terms the other way, as the change across the price step taken at volatility $`\sigma{+}b`$ minus at $`\sigma`$. The same two moves give $`a \times b`$ times the cross slope in the other order, at another point inside the rectangle.
+
+Divide by $`a \times b`$ and shrink the rectangle. Both points close in on $`(S, \sigma)`$. The cross slopes are continuous, so both tend to their values there, and both equal the limit of the four-corner difference divided by $`a \times b`$. They are equal. The Black-Scholes price is built from exponentials, logarithms and the bell curve, all smooth while $`T > 0`$ and $`\sigma > 0`$, so the condition holds. Road 4 in the code computes exactly this four-corner difference.
 
 </details>
 
@@ -159,27 +173,27 @@ A third route skips the calculus: bump the price in both inputs and difference i
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_2$ | $(\ln 1 + (0.05 - 0.02 - 0.02) \times 1)/0.20$ | 0.05 |
-| $d_1$ | $0.05 + 0.20$ | 0.25 |
-| $\varphi(d_1)$ | $e^{-0.03125}/\sqrt{2\pi}$ | 0.386668 |
-| $e^{-qT}$ | $e^{-0.02}$ | 0.980199 |
-| drag times height | $0.980199 \times 0.386668$ | 0.379012 |
-| times $d_2/\sigma$ | $0.379012 \times 0.05/0.20 = 0.379012 \times 0.25$ | 0.094753 |
+| $`d_2`$ | $`(\ln 1 + (0.05 - 0.02 - 0.02) \times 1)/0.20`$ | 0.05 |
+| $`d_1`$ | $`0.05 + 0.20`$ | 0.25 |
+| $`\varphi(d_1)`$ | $`e^{-0.03125}/\sqrt{2\pi}`$ | 0.386668 |
+| $`e^{-qT}`$ | $`e^{-0.02}`$ | 0.980199 |
+| drag times height | $`0.980199 \times 0.386668`$ | 0.379012 |
+| times $`d_2/\sigma`$ | $`0.379012 \times 0.05/0.20 = 0.379012 \times 0.25`$ | 0.094753 |
 | **vanna** | minus sign in front | **−0.094753** |
-| per volatility point | $-0.094753/100$ | −0.000948 |
+| per volatility point | $`-0.094753/100`$ | −0.000948 |
 
-A dealer short this call and hedged with 0.586851 shares holds about 0.00095 of a share too many after a one-point rise in volatility. That is small, because at the money $d_2$ is close to zero.
+A dealer short this call and hedged with 0.586851 shares holds about 0.00095 of a share too many after a one-point rise in volatility. That is small, because at the money $`d_2`$ is close to zero.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $d_1$ in place of $d_2$ | −0.473764 | The slope of $d_1$ in volatility is $-d_2/\sigma$, not $-d_1/\sigma$; five times too large, and the sign flips at the wrong spot |
-| Drop the dividend drag $e^{-qT}$ | −0.096667 | Delta carries $e^{-qT}$, so its slope does too |
+| $`d_1`$ in place of $`d_2`$ | −0.473764 | The slope of $`d_1`$ in volatility is $`-d_2/\sigma`$, not $`-d_1/\sigma`$; five times too large, and the sign flips at the wrong spot |
+| Drop the dividend drag $`e^{-qT}`$ | −0.096667 | Delta carries $`e^{-qT}`$, so its slope does too |
 | Read −0.094753 as per volatility point | delta off by 0.094753, not 0.000948 | Vanna is per 1.00 of volatility, 100 points |
 | Hedge the 120 call with gamma alone on a skew | +0.078544 predicted, +0.051932 actual | Volatility fell as Acme rose; vanna's share was left out |
 
@@ -204,7 +218,7 @@ xychart-beta
 
 Orange: one year to expiry. Green: three months. Dark: zero. Both curves are positive below the strike and negative above, and nearly zero at it. The three-month curve reaches similar heights, 1.33 and −1.09, but squeezed into a band half as wide. Near expiry, a few dollars of movement flips vanna's sign.
 
-The largest vanna sits well away from the strike, near $80 and $120 for the one-year call: roughly one unit of $\sigma\sqrt{T}$ out on each side. At the money it is close to zero. That places vanna risk in the options off the money, the ones the skew prices.
+The largest vanna sits well away from the strike, near $80 and $120 for the one-year call: roughly one unit of $`\sigma\sqrt{T}`$ out on each side. At the money it is close to zero. That places vanna risk in the options off the money, the ones the skew prices.
 
 ### Two forces together: the skew ties volatility to price
 
@@ -212,9 +226,11 @@ The **skew** is the pattern of implied volatility (the volatility that reproduce
 
 A steep skew goes with volatility that moves strongly as the price moves. How strongly, for one fixed option, depends on the model of the smile; [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md) works that out. Here take a round, steep assumption: **each $1 rise in Acme lowers every option's volatility by 0.5 points**, a rate of −0.005 per dollar.
 
-Once volatility is a function of the price, delta changes through two doors. Straight d's, as in $d\Delta/dS$, mark a total slope: everything that moves with the price is allowed to move. The chain rule adds the doors:
+Once volatility is a function of the price, delta changes through two doors. Straight d's, as in $`d\Delta/dS`$, mark a total slope: everything that moves with the price is allowed to move. The chain rule adds the doors:
 
-$$\frac{d\Delta}{dS} = \Gamma + \text{vanna} \times \frac{d\sigma}{dS}.$$
+```math
+\frac{d\Delta}{dS} = \Gamma + \text{vanna} \times \frac{d\sigma}{dS}.
+```
 
 In words: the delta change per dollar is gamma, the direct door, plus vanna times the volatility change per dollar, the side door. Gamma is the same for call and put ([Gamma](02-gamma.md)), and so is vanna, so the put rows below use the call formulas. Three options on Acme at $100, one year, 20 percent:
 
@@ -233,10 +249,10 @@ Take the 120 call. Acme rises $5, to $105, and under the assumption its volatili
 | Reading | Delta change |
 | --- | --- |
 | Actual: delta 0.249080 before, 0.301012 after | +0.051932 |
-| Gamma alone: $5 \times 0.015709$ | +0.078544 |
-| Gamma and vanna: $5 \times (0.015709 - 0.006767)$ | +0.044707 |
+| Gamma alone: $`5 \times 0.015709`$ | +0.078544 |
+| Gamma and vanna: $`5 \times (0.015709 - 0.006767)`$ | +0.044707 |
 
-Gamma alone buys half again as many shares as the move needed. Adding vanna lands much closer. What remains comes from the slopes of gamma and vanna themselves over a $5 move, the terms [The Greeks together](09-greeks-together-taylor-pnl.md) adds up. With no skew, $d\sigma/dS = 0$, the side door shuts and gamma is the whole story; the steeper the skew, the wider the door. That is why vanna is the hedge that matters in a steep skew.
+Gamma alone buys half again as many shares as the move needed. Adding vanna lands much closer. What remains comes from the slopes of gamma and vanna themselves over a $5 move, the terms [The Greeks together](09-greeks-together-taylor-pnl.md) adds up. With no skew, $`d\sigma/dS = 0`$, the side door shuts and gamma is the whole story; the steeper the skew, the wider the door. That is why vanna is the hedge that matters in a steep skew.
 
 ---
 
@@ -613,13 +629,13 @@ The two outputs match line for line.
 
 Lean proves the vanna formula, the put's match and the sign rule for every positive share price, strike, volatility and time.
 
-- Take $S$, $K$, $\sigma$ and $T$ all above zero. Then the slope of the call's delta in volatility is vanna, $-e^{-qT}\varphi(d_1)\,d_2/\sigma$.
+- Take $`S`$, $`K`$, $`\sigma`$ and $`T`$ all above zero. Then the slope of the call's delta in volatility is vanna, $`-e^{-qT}\varphi(d_1)\,d_2/\sigma`$.
 - Under the same conditions, the slope of the call's vega in the share price is that same number.
 - Under the same conditions, the put on the same share, strike and date has the same two slopes, so the same vanna.
-- Take the same conditions. Then vanna is negative exactly when $S$ sits above the crossover price $K e^{-(r - q - \frac12\sigma^2)T}$.
-- Take the same conditions. Then vanna is positive exactly when $S$ sits below that crossover price.
-- Take Acme's house market. Then $d_2 = 0.05$, $d_1 = 0.25$ and $d_2/\sigma = 0.25$ exactly.
-- Take Acme's house market. Then $(r - q - \frac12\sigma^2)T = 0.01$ exactly, so the crossover price is $100\,e^{-0.01}$.
+- Take the same conditions. Then vanna is negative exactly when $`S`$ sits above the crossover price $`K e^{-(r - q - \frac12\sigma^2)T}`$.
+- Take the same conditions. Then vanna is positive exactly when $`S`$ sits below that crossover price.
+- Take Acme's house market. Then $`d_2 = 0.05`$, $`d_1 = 0.25`$ and $`d_2/\sigma = 0.25`$ exactly.
+- Take Acme's house market. Then $`(r - q - \frac12\sigma^2)T = 0.01`$ exactly, so the crossover price is $`100\,e^{-0.01}`$.
 
 Decimal values, such as vanna −0.094753 and the crossover $99.00, and the skew rows are left to the Python and Rust checks.
 
@@ -1009,8 +1025,8 @@ example : ((5 : ℚ) / 100 - 2 / 100 - (1 / 5) ^ 2 / 2) * 1 = 1 / 100 := by norm
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Every row prints before the asserts run, and the first assert is pinned to the house number, so a change to the market prints its answer and then stops.
-> - **Dividends up.** Set `q` to `0.04`: guess the sign of road 1. It prints +0.094753, the house number reversed, because $d_2$ changes sign. The first assert then stops the run.
-> - **Volatility up.** Set `sigma` to `0.30`. Road 1 prints +0.063169: more volatility drags $d_2$ below zero, so the at-the-money call now sits on the positive side.
+> - **Dividends up.** Set `q` to `0.04`: guess the sign of road 1. It prints +0.094753, the house number reversed, because $`d_2`$ changes sign. The first assert then stops the run.
+> - **Volatility up.** Set `sigma` to `0.30`. Road 1 prints +0.063169: more volatility drags $`d_2`$ below zero, so the at-the-money call now sits on the positive side.
 > - **Three months.** Set `T` to `0.25`. Road 1 prints −0.049233, about half the one-year size, and the first assert stops the run.
 > - **No skew.** Set `SKEW` to `0`. The side-door column prints zeros, gamma alone equals gamma plus vanna, and the last assert stops the run: with no skew, vanna has nothing to improve.
 
@@ -1021,9 +1037,9 @@ example : ((5 : ℚ) / 100 - 2 / 100 - (1 / 5) ^ 2 / 2) * 1 = 1 / 100 := by norm
 > [!warning]
 > **Hedging price and volatility as separate risks.** A book, a desk's set of positions, can be delta-hedged and vega-hedged and still lose when the two move together. In equity markets they usually do. The cross term is vanna times the price move times the volatility move, and it belongs to neither hedge. On the 120 call over a $5 rise, gamma alone predicted a delta change of 0.078544; the actual was 0.051932.
 >
-> - **Assuming vanna is zero at the money.** It is zero where $d_2 = 0$: $99.00 here, not $100. At $100 it is −0.094753, and at 4 percent dividends +0.094753.
+> - **Assuming vanna is zero at the money.** It is zero where $`d_2 = 0`$: $99.00 here, not $100. At $100 it is −0.094753, and at 4 percent dividends +0.094753.
 > - **Units.** Vanna is per 1.00 of volatility. Per point it is −0.000948, a hundred times smaller.
-> - **$d_1$ for $d_2$.** The formula has $\varphi(d_1)$ and $d_2$; using $d_1$ twice gives −0.473764.
+> - **$`d_1`$ for $`d_2`$.** The formula has $`\varphi(d_1)`$ and $`d_2`$; using $`d_1`$ twice gives −0.473764.
 > - **One-sided bumps.** Delta from 20 to 21 percent moved −0.000812; vega from $100 to $101 moved −0.140927. Vanna itself changes across a bump; centre the bump on the point.
 
 ---
@@ -1042,8 +1058,8 @@ example : ((5 : ℚ) / 100 - 2 / 100 - (1 / 5) ^ 2 / 2) * 1 = 1 / 100 := by norm
 
 ## What this builds on
 
-- [Vega](03-vega.md): the slope in volatility, $S e^{-qT}\varphi(d_1)\sqrt{T}$; vanna is its slope in price.
-- [Delta](01-delta.md): the slope in price, $e^{-qT}N(d_1)$; vanna is its slope in volatility.
+- [Vega](03-vega.md): the slope in volatility, $`S e^{-qT}\varphi(d_1)\sqrt{T}`$; vanna is its slope in price.
+- [Delta](01-delta.md): the slope in price, $`e^{-qT}N(d_1)`$; vanna is its slope in volatility.
 - [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes in one input with the others held still, and why the order of two such slopes can be swapped.
 
 ## Where this goes next

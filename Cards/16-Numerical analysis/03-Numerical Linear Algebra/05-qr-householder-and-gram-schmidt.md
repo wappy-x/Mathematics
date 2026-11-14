@@ -8,23 +8,23 @@
 
 A delivery van's trip computer logs fuel use every 50 km, for 10,000 km. That gives 200 readings, in litres per 100 km. The readings here are simulated and illustrative: a true trend of 7.2 + 0.03 per thousand km, plus noise. The question is how fast fuel use creeps up as the van wears.
 
-A straight line, fuel = $c_0 + c_1 d$ with $d$ the distance in thousands of km, cannot pass through 200 noisy points. The best fit is found from a **QR factorisation**: the 200 × 2 table of the problem is written as $Q$, two perpendicular columns of length 1, times $R$, a 2 × 2 triangle. The fit is then one triangular solve: back substitution, which finds the last unknown first and works upward. Here it gives **7.191751 + 0.031588 d**: fuel use rises by 0.031588 litres per 100 km for every 1,000 km driven.
+A straight line, fuel = $`c_0 + c_1 d`$ with $`d`$ the distance in thousands of km, cannot pass through 200 noisy points. The best fit is found from a **QR factorisation**: the 200 × 2 table of the problem is written as $`Q`$, two perpendicular columns of length 1, times $`R`$, a 2 × 2 triangle. The fit is then one triangular solve: back substitution, which finds the last unknown first and works upward. Here it gives **7.191751 + 0.031588 d**: fuel use rises by 0.031588 litres per 100 km for every 1,000 km driven.
 
-There are two ways to build $Q$ and $R$.
+There are two ways to build $`Q`$ and $`R`$.
 
 - **Gram-Schmidt** straightens the columns one at a time. From each column it subtracts its shadows on the columns already done ([Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md) runs it by hand).
 - **Householder** reflects the whole table through a mirror, one column at a time. Each mirror clears the entries under the diagonal, until only a triangle is left.
 
-On the straight line, both give the same $R$ to every printed digit, up to the sign of its first row (the fold in Step 1 explains the sign). The difference shows when the columns nearly line up. How nearly they line up is measured by the **condition number** $\kappa$, the table's largest stretch of a vector divided by its smallest ([Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md)).
+On the straight line, both give the same $`R`$ to every printed digit, up to the sign of its first row (the fold in Step 1 explains the sign). The difference shows when the columns nearly line up. How nearly they line up is measured by the **condition number** $`\kappa`$, the table's largest stretch of a vector divided by its smallest ([Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md)).
 
-Now suppose an analyst doubts that the creep is straight and tries a flexible degree-10 trend on the raw distances, so the table has columns $1, d, d^2, \dots, d^{10}$. That is a common trap. The classical Gram-Schmidt $Q$ then has columns that are not perpendicular (orthogonal, in the usual term) at all: the worst dot product between two of them is off by 0.998.
+Now suppose an analyst doubts that the creep is straight and tries a flexible degree-10 trend on the raw distances, so the table has columns $`1, d, d^2, \dots, d^{10}`$. That is a common trap. The classical Gram-Schmidt $`Q`$ then has columns that are not perpendicular (orthogonal, in the usual term) at all: the worst dot product between two of them is off by 0.998.
 
 - **Modified Gram-Schmidt**, which measures each shadow on what is left of the column instead of on the original, is off by 9.98e-10.
 - **Householder** is off by 1.11e-15.
 
-Householder also costs fewer flops (single arithmetic operations) for $R$: 1,595 against 1,997 on the line.
+Householder also costs fewer flops (single arithmetic operations) for $`R`$: 1,595 against 1,997 on the line.
 
-**QR writes a table of numbers as perpendicular unit columns times a triangle; Householder gets there by mirrors, which keep $Q$ perpendicular to rounding level whatever the table, while Gram-Schmidt gets there by subtracting shadows, which can lose perpendicularity in proportion to the condition number (modified) or its square (classical).**
+**QR writes a table of numbers as perpendicular unit columns times a triangle; Householder gets there by mirrors, which keep $`Q`$ perpendicular to rounding level whatever the table, while Gram-Schmidt gets there by subtracting shadows, which can lose perpendicularity in proportion to the condition number (modified) or its square (classical).**
 
 **What kind of fact this is:** the existence of QR and the exact properties of a mirror are theorems, proved on this card in Why it works. The floating-point bounds on lost perpendicularity are theorems stated here with their sources, not proved; the code measures them. The flop counts are exact counts of the code's loops, checked against a formula.
 
@@ -38,56 +38,64 @@ Drawn to scale from the checks' `figure,` line. With only two readings, the firs
 
 ## The formula
 
-The table has $m$ rows (readings) and $n$ columns (unknowns). A QR factorisation is
+The table has $`m`$ rows (readings) and $`n`$ columns (unknowns). A QR factorisation is
 
-$$A = QR, \qquad Q^{\mathsf T}Q = I, \qquad r_{ij} = 0 \text{ for } i > j$$
+```math
+A = QR, \qquad Q^{\mathsf T}Q = I, \qquad r_{ij} = 0 \text{ for } i > j
+```
 
 **Read it aloud:** the table equals a matrix whose columns are perpendicular and of length one, times a square triangle with zeros below its diagonal.
 
-Householder builds it from mirrors. For a column piece $x$ with top entry $x_1$:
+Householder builds it from mirrors. For a column piece $`x`$ with top entry $`x_1`$:
 
-$$v = x + \operatorname{sign}(x_1)\,\lVert x\rVert\, e_1, \qquad H = I - \frac{2\,v v^{\mathsf T}}{v^{\mathsf T}v}, \qquad Hx = -\operatorname{sign}(x_1)\,\lVert x\rVert\, e_1$$
+```math
+v = x + \mathrm{sign}(x_1)\,\lVert x\rVert\, e_1, \qquad H = I - \frac{2\,v v^{\mathsf T}}{v^{\mathsf T}v}, \qquad Hx = -\mathrm{sign}(x_1)\,\lVert x\rVert\, e_1
+```
 
 **Read it aloud:** add the column's length to its top entry to get the mirror's normal; the mirror flips that normal and leaves everything perpendicular to it alone, so the column lands on the first axis with its length kept.
 
-Apply one mirror per column, each to the rows from the diagonal down: $H_n \cdots H_2 H_1 A = R$, and $Q$ is the first $n$ columns of $H_1 H_2 \cdots H_n$.
+Apply one mirror per column, each to the rows from the diagonal down: $`H_n \cdots H_2 H_1 A = R`$, and $`Q`$ is the first $`n`$ columns of $`H_1 H_2 \cdots H_n`$.
 
-Gram-Schmidt builds $Q$ one column at a time. Start column $j$ as $w = a_j$, then for each earlier $k$:
+Gram-Schmidt builds $`Q`$ one column at a time. Start column $`j`$ as $`w = a_j`$, then for each earlier $`k`$:
 
-$$r_{kj} = q_k \cdot a_j \;\text{(classical)} \quad\text{or}\quad r_{kj} = q_k \cdot w \;\text{(modified)}, \qquad w \leftarrow w - r_{kj}\, q_k$$
+```math
+r_{kj} = q_k \cdot a_j \;\text{(classical)} \quad\text{or}\quad r_{kj} = q_k \cdot w \;\text{(modified)}, \qquad w \leftarrow w - r_{kj}\, q_k
+```
 
-and finally $r_{jj} = \lVert w\rVert$, $q_j = w / r_{jj}$.
+and finally $`r_{jj} = \lVert w\rVert`$, $`q_j = w / r_{jj}`$.
 
 **Read it aloud:** subtract from each column its shadow on every finished direction; classical measures every shadow on the original column, modified on what is left so far.
 
-In floating point, the lost perpendicularity is at most a constant times these sizes (written $\lesssim$):
+In floating point, the lost perpendicularity is at most a constant times these sizes (written $`\lesssim`$):
 
-$$\lVert Q^{\mathsf T}Q - I\rVert \lesssim u \;\text{(Householder)}, \qquad \lesssim u\,\kappa \;\text{(modified)}, \qquad \lesssim u\,\kappa^2 \;\text{(classical)}$$
+```math
+\lVert Q^{\mathsf T}Q - I\rVert \lesssim u \;\text{(Householder)}, \qquad \lesssim u\,\kappa \;\text{(modified)}, \qquad \lesssim u\,\kappa^2 \;\text{(classical)}
+```
 
-**Read it aloud:** Householder's columns stay perpendicular to rounding level; modified Gram-Schmidt can lose perpendicularity up to a constant times the condition number times $u$, classical up to a constant times its square times $u$, and in practice the loss is usually near that size.
+**Read it aloud:** Householder's columns stay perpendicular to rounding level; modified Gram-Schmidt can lose perpendicularity up to a constant times the condition number times $`u`$, classical up to a constant times its square times $`u`$, and in practice the loss is usually near that size.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $m$, $n$ | the table: $m$ rows, $n$ columns | 200 × 2: a column of ones and a column of $d$ | more columns: more work and, often, nearer-parallel columns |
-| $a_j$, $q_j$, $w$ | column $j$ of $A$, and of $Q$; the part of $a_j$ that Gram-Schmidt has not yet subtracted away | $a_1$ is all ones; $q_1$ is all $1/14.142136$ | — |
-| $Q$ | the $m \times n$ matrix of perpendicular unit columns | built both ways below | — |
-| $R$, $r_{ij}$ | the $n \times n$ upper triangle, and its entry in row $i$, column $j$ | $r_{11} = 14.142136$, $r_{12} = 70.357125$, $r_{22} = 40.824319$, up to sign | — |
-| $d$ | distance on the trip meter, in thousands of km | 0.00 to 9.95, mean 4.975 | — |
-| $y$, $c_0$, $c_1$ | the fuel readings; the fitted intercept and slope | $c_0 = 7.191751$ L/100 km, $c_1 = 0.031588$ per 1,000 km | — |
-| $H$, $v$, $f$ | a Householder mirror; its normal vector; the factor $2v^{\mathsf T}b/v^{\mathsf T}v$ it applies to a column $b$ | first $v$ has top entry 15.142136 and $v^{\mathsf T}v = 428.284271$; $f = 4.646447$ on $d$ | — |
-| $x$, $x_1$, $e_1$, $\lVert x\rVert$ | the column piece being folded, its top entry, the first axis $(1, 0, \dots, 0)$, and its length; $\operatorname{sign}(x_1)$ is $+1$ when $x_1 \ge 0$, else $-1$ | $x$ = 200 ones, length 14.142136 | — |
-| $Q^{\mathsf T}$, $I$ | $Q$ with rows and columns swapped; the identity matrix | $Q^{\mathsf T}Q = I$ exactly, in exact arithmetic | — |
-| $u$ | the unit roundoff, $2^{-53}$, about $1.1 \times 10^{-16}$ | the size of one rounding error | — |
-| $\kappa$ | the condition number of $A$ with each column scaled to length 1: largest stretch over smallest | 3.72 for the line; 1.34e7 for degree 10 | Gram-Schmidt loses more perpendicularity |
-| $\lVert Q^{\mathsf T}Q - I\rVert$, $p$ | the loss of orthogonality: in the bounds, the 2-norm of $Q^{\mathsf T}Q - I$ (largest stretch, as on [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md)); the code measures its largest entry in size, which is never more than the 2-norm, so the bounds cover it too; and the degree of the fitted trend | at $p = 10$: 9.98e-1 classical, 9.98e-10 modified, 1.11e-15 Householder | grows with $p$ for both Gram-Schmidts |
+| $`A`$, $`m`$, $`n`$ | the table: $`m`$ rows, $`n`$ columns | 200 × 2: a column of ones and a column of $`d`$ | more columns: more work and, often, nearer-parallel columns |
+| $`a_j`$, $`q_j`$, $`w`$ | column $`j`$ of $`A`$, and of $`Q`$; the part of $`a_j`$ that Gram-Schmidt has not yet subtracted away | $`a_1`$ is all ones; $`q_1`$ is all $`1/14.142136`$ | — |
+| $`Q`$ | the $`m \times n`$ matrix of perpendicular unit columns | built both ways below | — |
+| $`R`$, $`r_{ij}`$ | the $`n \times n`$ upper triangle, and its entry in row $`i`$, column $`j`$ | $`r_{11} = 14.142136`$, $`r_{12} = 70.357125`$, $`r_{22} = 40.824319`$, up to sign | — |
+| $`d`$ | distance on the trip meter, in thousands of km | 0.00 to 9.95, mean 4.975 | — |
+| $`y`$, $`c_0`$, $`c_1`$ | the fuel readings; the fitted intercept and slope | $`c_0 = 7.191751`$ L/100 km, $`c_1 = 0.031588`$ per 1,000 km | — |
+| $`H`$, $`v`$, $`f`$ | a Householder mirror; its normal vector; the factor $`2v^{\mathsf T}b/v^{\mathsf T}v`$ it applies to a column $`b`$ | first $`v`$ has top entry 15.142136 and $`v^{\mathsf T}v = 428.284271`$; $`f = 4.646447`$ on $`d`$ | — |
+| $`x`$, $`x_1`$, $`e_1`$, $`\lVert x\rVert`$ | the column piece being folded, its top entry, the first axis $`(1, 0, \dots, 0)`$, and its length; $`\mathrm{sign}(x_1)`$ is $`+1`$ when $`x_1 \ge 0`$, else $`-1`$ | $`x`$ = 200 ones, length 14.142136 | — |
+| $`Q^{\mathsf T}`$, $`I`$ | $`Q`$ with rows and columns swapped; the identity matrix | $`Q^{\mathsf T}Q = I`$ exactly, in exact arithmetic | — |
+| $`u`$ | the unit roundoff, $`2^{-53}`$, about $`1.1 \times 10^{-16}`$ | the size of one rounding error | — |
+| $`\kappa`$ | the condition number of $`A`$ with each column scaled to length 1: largest stretch over smallest | 3.72 for the line; 1.34e7 for degree 10 | Gram-Schmidt loses more perpendicularity |
+| $`\lVert Q^{\mathsf T}Q - I\rVert`$, $`p`$ | the loss of orthogonality: in the bounds, the 2-norm of $`Q^{\mathsf T}Q - I`$ (largest stretch, as on [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md)); the code measures its largest entry in size, which is never more than the 2-norm, so the bounds cover it too; and the degree of the fitted trend | at $`p = 10`$: 9.98e-1 classical, 9.98e-10 modified, 1.11e-15 Householder | grows with $`p`$ for both Gram-Schmidts |
 
 ### When it holds
 
-- **Independent columns.** QR exists for every table, but $R$ has a zero on its diagonal when a column is a mix of earlier ones. Gram-Schmidt then divides by zero, and the fit has no unique answer.
-- **Householder's sign rule.** The sign in $v$ makes $x_1$ and $\lVert x\rVert$ add, never cancel. With the other sign, a column already close to the first axis gives $v$ as a difference of two nearly equal numbers. Then $v$ loses its digits, and the mirror no longer clears the entries below the top.
-- **Well-separated columns, for classical Gram-Schmidt.** Its loss grows like $u\kappa^2$. At degree 10, $\kappa$ = 1.34e7, and the loss reaches 0.998: two columns of $Q$ point almost the same way.
-- **The loss bounds need a constant times $u\kappa$ (modified) or $u\kappa^2$ (classical) below 1.** The constant grows with the table's size, so this can fail while $u\kappa^2$ is still small. At degree 10, $u\kappa^2$ is below 1 (the loss, 9.98e-1, is 50.206 times it), yet classical's loss has reached about 1, the most two unit columns can overlap; past that point no bound applies.
-- **Exact arithmetic makes all three agree.** With positive diagonal entries in $R$, the factorisation is unique, so any difference between the methods is rounding.
+- **Independent columns.** QR exists for every table, but $`R`$ has a zero on its diagonal when a column is a mix of earlier ones. Gram-Schmidt then divides by zero, and the fit has no unique answer.
+- **Householder's sign rule.** The sign in $`v`$ makes $`x_1`$ and $`\lVert x\rVert`$ add, never cancel. With the other sign, a column already close to the first axis gives $`v`$ as a difference of two nearly equal numbers. Then $`v`$ loses its digits, and the mirror no longer clears the entries below the top.
+- **Well-separated columns, for classical Gram-Schmidt.** Its loss grows like $`u\kappa^2`$. At degree 10, $`\kappa`$ = 1.34e7, and the loss reaches 0.998: two columns of $`Q`$ point almost the same way.
+- **The loss bounds need a constant times $`u\kappa`$ (modified) or $`u\kappa^2`$ (classical) below 1.** The constant grows with the table's size, so this can fail while $`u\kappa^2`$ is still small. At degree 10, $`u\kappa^2`$ is below 1 (the loss, 9.98e-1, is 50.206 times it), yet classical's loss has reached about 1, the most two unit columns can overlap; past that point no bound applies.
+- **Exact arithmetic makes all three agree.** With positive diagonal entries in $`R`$, the factorisation is unique, so any difference between the methods is rounding.
 
 ---
 
@@ -95,74 +103,76 @@ $$\lVert Q^{\mathsf T}Q - I\rVert \lesssim u \;\text{(Householder)}, \qquad \les
 
 ### Step 0: two ways to the same triangle
 
-A matrix with perpendicular unit columns keeps lengths and angles. So turning $A$ into a triangle by such matrices loses nothing. There are two ways to do it.
+A matrix with perpendicular unit columns keeps lengths and angles. So turning $`A`$ into a triangle by such matrices loses nothing. There are two ways to do it.
 
-- **Gram-Schmidt** finds $Q$ first. It multiplies $A$ on the right by triangular steps until the columns are perpendicular: $A$ times a triangle equals $Q$.
-- **Householder** finds $R$ first. It multiplies $A$ on the left by mirrors until the table is a triangle: mirrors times $A$ equals $R$.
+- **Gram-Schmidt** finds $`Q`$ first. It multiplies $`A`$ on the right by triangular steps until the columns are perpendicular: $`A`$ times a triangle equals $`Q`$.
+- **Householder** finds $`R`$ first. It multiplies $`A`$ on the left by mirrors until the table is a triangle: mirrors times $`A`$ equals $`R`$.
 
 The first route computes perpendicularity by subtraction, so rounding can spoil it. The second applies matrices that are perpendicular by their form, so rounding cannot spoil it much.
 
 ### Step 1: QR exists, and is unique
 
-Run Gram-Schmidt in exact arithmetic on independent columns, as on the [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md) card. Rearranged, column $j$ is $a_j = r_{1j} q_1 + \dots + r_{jj} q_j$. Column $j$ uses only the first $j$ directions, so the numbers $r_{ij}$ form an upper triangle. That is $A = QR$ with every $r_{jj} > 0$.
+Run Gram-Schmidt in exact arithmetic on independent columns, as on the [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md) card. Rearranged, column $`j`$ is $`a_j = r_{1j} q_1 + \dots + r_{jj} q_j`$. Column $`j`$ uses only the first $`j`$ directions, so the numbers $`r_{ij}`$ form an upper triangle. That is $`A = QR`$ with every $`r_{jj} > 0`$.
 
 <details>
 <summary>Detailed proof: with a positive diagonal, Q and R are unique</summary>
 
-Suppose $Q_1 R_1 = Q_2 R_2$, both with $Q_i^{\mathsf T}Q_i = I$ and positive diagonals. Then $Q_2^{\mathsf T}Q_1 = R_2 R_1^{-1}$. The right side is upper triangular with a positive diagonal. The left side, call it $T$, satisfies $T^{\mathsf T}T = R_1^{-\mathsf T}R_2^{\mathsf T}R_2R_1^{-1} = R_1^{-\mathsf T}R_1^{\mathsf T}R_1R_1^{-1} = I$, because $R_i^{\mathsf T}R_i = A^{\mathsf T}A$ for both. An upper triangular $T$ with $T^{\mathsf T}T = I$ is diagonal: its first column has length 1 and a single entry, so that entry is $\pm 1$; the first row's other entries are then 0, and the argument repeats down the diagonal. With a positive diagonal, $T = I$, so $R_1 = R_2$ and $Q_1 = Q_2$. $\blacksquare$
+Suppose $`Q_1 R_1 = Q_2 R_2`$, both with $`Q_i^{\mathsf T}Q_i = I`$ and positive diagonals. Then $`Q_2^{\mathsf T}Q_1 = R_2 R_1^{-1}`$. The right side is upper triangular with a positive diagonal. The left side, call it $`T`$, satisfies $`T^{\mathsf T}T = R_1^{-\mathsf T}R_2^{\mathsf T}R_2R_1^{-1} = R_1^{-\mathsf T}R_1^{\mathsf T}R_1R_1^{-1} = I`$, because $`R_i^{\mathsf T}R_i = A^{\mathsf T}A`$ for both. An upper triangular $`T`$ with $`T^{\mathsf T}T = I`$ is diagonal: its first column has length 1 and a single entry, so that entry is $`\pm 1`$; the first row's other entries are then 0, and the argument repeats down the diagonal. With a positive diagonal, $`T = I`$, so $`R_1 = R_2`$ and $`Q_1 = Q_2`$. $`\blacksquare`$
 
-Householder makes some diagonal entries negative, as here ($r_{11} = -14.142136$). Flip the sign of that row of $R$ and that column of $Q$ to compare.
+Householder makes some diagonal entries negative, as here ($`r_{11} = -14.142136`$). Flip the sign of that row of $`R`$ and that column of $`Q`$ to compare.
 
 </details>
 
 ### Step 2: a mirror keeps lengths and folds a column onto the axis
 
-$H = I - 2vv^{\mathsf T}/(v^{\mathsf T}v)$ is symmetric. Applying it twice gives $I$: the first flip of the $v$ part is undone by the second. So $H^{\mathsf T}H = HH = I$: a mirror keeps every length and angle.
+$`H = I - 2vv^{\mathsf T}/(v^{\mathsf T}v)`$ is symmetric. Applying it twice gives $`I`$: the first flip of the $`v`$ part is undone by the second. So $`H^{\mathsf T}H = HH = I`$: a mirror keeps every length and angle.
 
-Now choose $v = x - z$, where $z$ is any vector with the same length as $x$. Then
+Now choose $`v = x - z`$, where $`z`$ is any vector with the same length as $`x`$. Then
 
-$$v^{\mathsf T}v = \lVert x\rVert^2 - 2z^{\mathsf T}x + \lVert z\rVert^2 = 2(\lVert x\rVert^2 - z^{\mathsf T}x) = 2\,v^{\mathsf T}x$$
+```math
+v^{\mathsf T}v = \lVert x\rVert^2 - 2z^{\mathsf T}x + \lVert z\rVert^2 = 2(\lVert x\rVert^2 - z^{\mathsf T}x) = 2\,v^{\mathsf T}x
+```
 
-So $Hx = x - 2v\,(v^{\mathsf T}x)/(v^{\mathsf T}v) = x - v = z$. The mirror sends $x$ exactly to $z$. Pick $z = -\operatorname{sign}(x_1)\lVert x\rVert e_1$, a point on the first axis, and every entry of $x$ below the top becomes zero.
+So $`Hx = x - 2v\,(v^{\mathsf T}x)/(v^{\mathsf T}v) = x - v = z`$. The mirror sends $`x`$ exactly to $`z`$. Pick $`z = -\mathrm{sign}(x_1)\lVert x\rVert e_1`$, a point on the first axis, and every entry of $`x`$ below the top becomes zero.
 
 ### Step 3: the sign rule removes the one cancellation
 
-The top entry of $v$ is $x_1 + \operatorname{sign}(x_1)\lVert x\rVert$. Both terms have the same sign, so the sum loses no digits. The other choice, $x_1 - \operatorname{sign}(x_1)\lVert x\rVert$, subtracts two nearly equal numbers when $x$ is already near the axis ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)).
+The top entry of $`v`$ is $`x_1 + \mathrm{sign}(x_1)\lVert x\rVert`$. Both terms have the same sign, so the sum loses no digits. The other choice, $`x_1 - \mathrm{sign}(x_1)\lVert x\rVert`$, subtracts two nearly equal numbers when $`x`$ is already near the axis ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)).
 
-The same algebra gives $v^{\mathsf T}v = 2\lVert x\rVert(\lVert x\rVert + \lvert x_1\rvert)$ without a second dot product. For the column of ones, that is $2 \times 14.142136 \times 15.142136 = 428.284271$.
+The same algebra gives $`v^{\mathsf T}v = 2\lVert x\rVert(\lVert x\rVert + \lvert x_1\rvert)`$ without a second dot product. For the column of ones, that is $`2 \times 14.142136 \times 15.142136 = 428.284271`$.
 
 ### Step 4: one mirror per column makes the triangle
 
-Mirror $k$ acts only on rows $k$ to $m$. It leaves rows above alone, and it maps a column of zeros to zeros. So the zeros made by earlier mirrors stay. After $n$ mirrors the table is $R$.
+Mirror $`k`$ acts only on rows $`k`$ to $`m`$. It leaves rows above alone, and it maps a column of zeros to zeros. So the zeros made by earlier mirrors stay. After $`n`$ mirrors the table is $`R`$.
 
-The mirrors are never stored as $m \times m$ matrices. Each is kept as its vector $v$. Applying it to a column $b$ costs one dot product and one subtraction: $b - f v$, with $f = 2\,v^{\mathsf T}b / v^{\mathsf T}v$. The fit needs $Q^{\mathsf T}y$, which is the same mirrors applied to $y$. $Q$ itself is never formed.
+The mirrors are never stored as $`m \times m`$ matrices. Each is kept as its vector $`v`$. Applying it to a column $`b`$ costs one dot product and one subtraction: $`b - f v`$, with $`f = 2\,v^{\mathsf T}b / v^{\mathsf T}v`$. The fit needs $`Q^{\mathsf T}y`$, which is the same mirrors applied to $`y`$. $`Q`$ itself is never formed.
 
 ### Step 5: why Gram-Schmidt loses perpendicularity
 
-Take column $j$. Its leftover $w$ is the column minus its shadows on earlier directions. When the column nearly lies along earlier ones, $w$ is a small difference of large vectors. Each subtraction leaves rounding errors of size about $u\lVert a_j\rVert$, and some point along the earlier directions. Dividing by $r_{jj} = \lVert w\rVert$, which is small, magnifies them by $\lVert a_j\rVert / r_{jj}$, a number that can be as large as $\kappa$.
+Take column $`j`$. Its leftover $`w`$ is the column minus its shadows on earlier directions. When the column nearly lies along earlier ones, $`w`$ is a small difference of large vectors. Each subtraction leaves rounding errors of size about $`u\lVert a_j\rVert`$, and some point along the earlier directions. Dividing by $`r_{jj} = \lVert w\rVert`$, which is small, magnifies them by $`\lVert a_j\rVert / r_{jj}`$, a number that can be as large as $`\kappa`$.
 
-So $q_j$ leans toward earlier directions by about $u\kappa$. Both versions pay this.
+So $`q_j`$ leans toward earlier directions by about $`u\kappa`$. Both versions pay this.
 
-Classical pays twice. It measures every shadow on the original column $a_j$. Suppose $q_1$ and $q_2$ already lean together by a small error. Then the piece of $a_j$ along that lean is never measured, never removed, and gets divided by $r_{jj}$ too. The lean grows by a factor of about $\kappa$. The first lean was about $u\kappa$, so the new one is about $u\kappa^2$.
+Classical pays twice. It measures every shadow on the original column $`a_j`$. Suppose $`q_1`$ and $`q_2`$ already lean together by a small error. Then the piece of $`a_j`$ along that lean is never measured, never removed, and gets divided by $`r_{jj}`$ too. The lean grows by a factor of about $`\kappa`$. The first lean was about $`u\kappa`$, so the new one is about $`u\kappa^2`$.
 
 Modified measures each shadow on what is left, so a piece left behind by one subtraction is measured again by the next.
 
 The precise results, stated here and not proved:
 
-- **Modified:** $\lVert Q^{\mathsf T}Q - I\rVert$ is at most a constant times $u\kappa$, whenever $u\kappa$ is below a second constant's reciprocal; both constants depend only on $m$ and $n$ (Björck, 1967).
-- **Classical:** the same with $u\kappa^2$ in place of $u\kappa$ (Giraud, Langou, Rozložník and van den Eshof, 2005).
-- **Householder:** the computed $Q$ is within about $mnu$, times a modest constant, of an exactly perpendicular matrix, whatever $\kappa$ is (Higham, chapter 19).
+- **Modified:** $`\lVert Q^{\mathsf T}Q - I\rVert`$ is at most a constant times $`u\kappa`$, whenever $`u\kappa`$ is below a second constant's reciprocal; both constants depend only on $`m`$ and $`n`$ (Björck, 1967).
+- **Classical:** the same with $`u\kappa^2`$ in place of $`u\kappa`$ (Giraud, Langou, Rozložník and van den Eshof, 2005).
+- **Householder:** the computed $`Q`$ is within about $`mnu`$, times a modest constant, of an exactly perpendicular matrix, whatever $`\kappa`$ is (Higham, chapter 19).
 
-The code tests the shape of these bounds. It computes $\kappa$ separately, by power iteration on $R$ (multiplying a vector by the matrix over and over until it settles on the most-stretched direction), and divides each loss by $u\kappa$ or $u\kappa^2$:
+The code tests the shape of these bounds. It computes $`\kappa`$ separately, by power iteration on $`R`$ (multiplying a vector by the matrix over and over until it settles on the most-stretched direction), and divides each loss by $`u\kappa`$ or $`u\kappa^2`$:
 
-| Degree $p$ | $\kappa$ | Classical | Modified | Householder | Classical ÷ $u\kappa^2$ | Modified ÷ $u\kappa$ |
+| Degree $`p`$ | $`\kappa`$ | Classical | Modified | Householder | Classical ÷ $`u\kappa^2`$ | Modified ÷ $`u\kappa`$ |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 (the line) | 3.72 | 1.00e-15 | 1.00e-15 | 6.66e-16 | 0.653 | 2.426 |
 | 4 | 452 | 3.68e-12 | 7.30e-14 | 6.66e-16 | 0.162 | 1.455 |
 | 7 | 7.52e4 | 2.34e-6 | 2.47e-12 | 6.66e-16 | 3.724 | 0.296 |
 | 10 | 1.34e7 | **9.98e-1** | 9.98e-10 | 1.11e-15 | 50.206 | 0.672 |
 
-Across ten degrees the modified loss stays between 0.296 and 2.426 times $u\kappa$. The classical loss stays between 0.127 and 126 times $u\kappa^2$ while it climbs fifteen orders of magnitude. Householder does not move. The theorems give only upper limits: the lower limits in the code's asserts, 0.1 times $u\kappa$ and $u\kappa^2$, describe this code on this table, and another table can sit lower (the first experiment under Try changing reaches 0.048 times $u\kappa^2$).
+Across ten degrees the modified loss stays between 0.296 and 2.426 times $`u\kappa`$. The classical loss stays between 0.127 and 126 times $`u\kappa^2`$ while it climbs fifteen orders of magnitude. Householder does not move. The theorems give only upper limits: the lower limits in the code's asserts, 0.1 times $`u\kappa`$ and $`u\kappa^2`$, describe this code on this table, and another table can sit lower (the first experiment under Try changing reaches 0.048 times $`u\kappa^2`$).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -183,37 +193,37 @@ Classical Gram-Schmidt run twice on each column (project, then project the lefto
 
 Flops (one add, subtract, multiply or divide, as on [Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md)):
 
-- **Gram-Schmidt.** Each pair of columns costs a dot product and a subtraction, about $4m$ flops. There are about $n^2/2$ pairs, so about $2mn^2$ flops.
-- **Householder, $R$ only.** Mirror $k$ is applied to $n - k$ columns of length $m - k$, at about $4(m - k)$ flops each. The sum is about $2mn^2 - 2n^3/3$ flops.
-- **Householder, $Q$ formed.** Applying all the mirrors to the first $n$ columns of $I$ costs about twice the $R$ work again, in this code. A version that skips the known zeros of $I$ needs less.
+- **Gram-Schmidt.** Each pair of columns costs a dot product and a subtraction, about $`4m`$ flops. There are about $`n^2/2`$ pairs, so about $`2mn^2`$ flops.
+- **Householder, $`R`$ only.** Mirror $`k`$ is applied to $`n - k`$ columns of length $`m - k`$, at about $`4(m - k)`$ flops each. The sum is about $`2mn^2 - 2n^3/3`$ flops.
+- **Householder, $`Q`$ formed.** Applying all the mirrors to the first $`n`$ columns of $`I`$ costs about twice the $`R`$ work again, in this code. A version that skips the known zeros of $`I`$ needs less.
 
-The code counts every vector operation of its own loops at $m = 200$. Each count equals the exact sum for those loops, checked by a separate formula.
+The code counts every vector operation of its own loops at $`m = 200`$. Each count equals the exact sum for those loops, checked by a separate formula.
 
-| $n$ | Gram-Schmidt counted | $2mn^2$ | Householder $R$ counted | $2mn^2 - 2n^3/3$ | Extra to form $Q$ |
+| $`n`$ | Gram-Schmidt counted | $`2mn^2`$ | Householder $`R`$ counted | $`2mn^2 - 2n^3/3`$ | Extra to form $`Q`$ |
 | --- | --- | --- | --- | --- | --- |
 | 2 | 1,997 | 1,600 | 1,595 | 1,594.7 | 3,188 |
 | 11 | 50,534 | 48,400 | 47,564 | 47,512.7 | 94,259 |
 | 50 | 1,008,725 | 1,000,000 | 917,875 | 916,666.7 | 1,752,500 |
 
-For a fit, Householder is the cheaper road and the steadier one, as long as $Q$ is not formed. When $Q$ itself is wanted, this code's Householder costs more than twice Gram-Schmidt's total: add the last column to the fourth and compare with the second.
+For a fit, Householder is the cheaper road and the steadier one, as long as $`Q`$ is not formed. When $`Q`$ itself is wanted, this code's Householder costs more than twice Gram-Schmidt's total: add the last column to the fourth and compare with the second.
 
 ---
 
 ## Worked numbers, by hand
 
-Householder on the line. The first column is 200 ones; the second is $d$ = 0.00, 0.05, …, 9.95.
+Householder on the line. The first column is 200 ones; the second is $`d`$ = 0.00, 0.05, …, 9.95.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| length of the ones column | $\sqrt{200}$ | 14.142136 |
-| top of $v$ | $1 + 14.142136$ | 15.142136 |
-| $v^{\mathsf T}v$ | $2 \times 14.142136 \times 15.142136$ | 428.284271 |
-| $v^{\mathsf T}d$ | $15.142136 \times 0 + (\text{sum of the other } d) = 995.00$ | 995.00 |
-| mirror factor $f$ | $2 \times 995.00 / 428.284271$ | 4.646447 |
-| new top of $d$, which is $r_{12}$ | $0 - 4.646447 \times 15.142136$ | −70.357125 |
-| check by Gram-Schmidt | $q_1 \cdot d = 995.00 / 14.142136$ | 70.357125 |
-| $r_{22}$, the length left below the top | $\sqrt{\text{sum of }(d - 4.975)^2} = \sqrt{1666.625000}$ | 40.824319 |
-| the fit | solve $Rc = Q^{\mathsf T}y$ | **$c_0$ = 7.191751, $c_1$ = 0.031588** |
+| length of the ones column | $`\sqrt{200}`$ | 14.142136 |
+| top of $`v`$ | $`1 + 14.142136`$ | 15.142136 |
+| $`v^{\mathsf T}v`$ | $`2 \times 14.142136 \times 15.142136`$ | 428.284271 |
+| $`v^{\mathsf T}d`$ | $`15.142136 \times 0 + (\text{sum of the other } d) = 995.00`$ | 995.00 |
+| mirror factor $`f`$ | $`2 \times 995.00 / 428.284271`$ | 4.646447 |
+| new top of $`d`$, which is $`r_{12}`$ | $`0 - 4.646447 \times 15.142136`$ | −70.357125 |
+| check by Gram-Schmidt | $`q_1 \cdot d = 995.00 / 14.142136`$ | 70.357125 |
+| $`r_{22}`$, the length left below the top | $`\sqrt{\text{sum of }(d - 4.975)^2} = \sqrt{1666.625000}`$ | 40.824319 |
+| the fit | solve $`Rc = Q^{\mathsf T}y`$ | **$`c_0`$ = 7.191751, $`c_1`$ = 0.031588** |
 
 Fuel use rises by 0.031588 litres per 100 km for every 1,000 km. The simulated truth was 0.03, so the noise moved the slope a little. The centred formula, built from sums of products as on [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md), gives the same two numbers: a third road.
 
@@ -221,16 +231,16 @@ Fuel use rises by 0.031588 litres per 100 km for every 1,000 km. The simulated t
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Classical Gram-Schmidt on the degree-10 trend | loss of orthogonality 9.98e-1 | shadows measured on the original column; the loss grows like $u\kappa^2$ |
-| Modified Gram-Schmidt, same table | 9.98e-10 | better, but still $u\kappa$, with $\kappa$ = 1.34e7 |
-| Trusting a small $A - QR$ as proof that $Q$ is fine | classical residual 2.49e-16 while its loss is 9.98e-1 | $QR$ reproduces $A$; it is $Q^{\mathsf T}Q = I$ that failed |
-| Forming $Q$ when only $R$ and $Q^{\mathsf T}y$ are needed | 3,188 extra flops on top of 1,595 | the mirrors can be applied to $y$ directly |
+| Classical Gram-Schmidt on the degree-10 trend | loss of orthogonality 9.98e-1 | shadows measured on the original column; the loss grows like $`u\kappa^2`$ |
+| Modified Gram-Schmidt, same table | 9.98e-10 | better, but still $`u\kappa`$, with $`\kappa`$ = 1.34e7 |
+| Trusting a small $`A - QR`$ as proof that $`Q`$ is fine | classical residual 2.49e-16 while its loss is 9.98e-1 | $`QR`$ reproduces $`A`$; it is $`Q^{\mathsf T}Q = I`$ that failed |
+| Forming $`Q`$ when only $`R`$ and $`Q^{\mathsf T}y`$ are needed | 3,188 extra flops on top of 1,595 | the mirrors can be applied to $`y`$ directly |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code simulates the 200 readings with a SplitMix64 generator, seed 2026, so both languages draw the same noise. It takes three roads to $R$ and the fit: the closed form from sums ($r_{11} = \sqrt{m}$, $r_{12} = \sqrt{m}$ times the mean, $r_{22}$ from the centred sum of squares), Householder mirrors, and Gram-Schmidt. All three agree to 1e-12. Then it raises the degree to 10 and measures the loss of orthogonality three ways, against $\kappa$ found by a separate power iteration. Last, it counts flops and checks each count against an exact formula.
+The code simulates the 200 readings with a SplitMix64 generator, seed 2026, so both languages draw the same noise. It takes three roads to $`R`$ and the fit: the closed form from sums ($`r_{11} = \sqrt{m}`$, $`r_{12} = \sqrt{m}`$ times the mean, $`r_{22}`$ from the centred sum of squares), Householder mirrors, and Gram-Schmidt. All three agree to 1e-12. Then it raises the degree to 10 and measures the loss of orthogonality three ways, against $`\kappa`$ found by a separate power iteration. Last, it counts flops and checks each count against an exact formula.
 
 ### Python
 
@@ -625,12 +635,12 @@ ALL CHECKS PASS
 
 Lean proves Step 1 and the exact algebra of Steps 2 and 3, for tables and column pieces of any size.
 
-- If the columns of $A$ are independent, $A = QR$ for exactly one pair $Q$, $R$. Here $Q^{\mathsf T}Q = I$, and $R$ is upper triangular with every $r_{jj} > 0$.
-- The mirror $H = I - 2vv^{\mathsf T}/(v^{\mathsf T}v)$, with $v = x + \operatorname{sign}(x_1)\lVert x\rVert e_1$, is symmetric, and $HH = I$.
-- That mirror sends $x$ to $-\operatorname{sign}(x_1)\lVert x\rVert e_1$, a point on the first axis.
-- With the sign rule, $v^{\mathsf T}v = 2\lVert x\rVert(\lVert x\rVert + \lvert x_1\rvert)$, with no second dot product.
+- If the columns of $`A`$ are independent, $`A = QR`$ for exactly one pair $`Q`$, $`R`$. Here $`Q^{\mathsf T}Q = I`$, and $`R`$ is upper triangular with every $`r_{jj} > 0`$.
+- The mirror $`H = I - 2vv^{\mathsf T}/(v^{\mathsf T}v)`$, with $`v = x + \mathrm{sign}(x_1)\lVert x\rVert e_1`$, is symmetric, and $`HH = I`$.
+- That mirror sends $`x`$ to $`-\mathrm{sign}(x_1)\lVert x\rVert e_1`$, a point on the first axis.
+- With the sign rule, $`v^{\mathsf T}v = 2\lVert x\rVert(\lVert x\rVert + \lvert x_1\rvert)`$, with no second dot product.
 - The distances add to 995.00, and their centred squares add to 1666.625.
-- The flop formulas give 1,997, 50,534 and 1,008,725 for Gram-Schmidt, and 1,595, 47,564 and 917,875 for Householder's $R$.
+- The flop formulas give 1,997, 50,534 and 1,008,725 for Gram-Schmidt, and 1,595, 47,564 and 917,875 for Householder's $`R`$.
 
 The Python and Rust checks keep the rest: every rounding effect, the measured losses, the fitted line and Step 4's full triangle.
 
@@ -913,28 +923,28 @@ example : ∑ k ∈ Finset.range 50, ((2 * (200 - k) - 1) + (50 - k - 1) * (4 * 
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are tuned to this card's table, so each change below stops the run at an assert.
-> - **Centre the distances before taking powers.** Guess first: does measuring from the middle of the run help Gram-Schmidt? Change `zip(cols[-1], d)` to `zip(cols[-1], dc)`. The run stops at degree 3: every loss there is 6.66e-16, so the classical-grows assert fails. Comment out the three asserts in the sweep to reach degree 10: $\kappa$ falls from 1.34e7 to 1.61e3 and the classical loss from 9.98e-1 to 1.38e-11, only 0.048 times $u\kappa^2$.
+> - **Centre the distances before taking powers.** Guess first: does measuring from the middle of the run help Gram-Schmidt? Change `zip(cols[-1], d)` to `zip(cols[-1], dc)`. The run stops at degree 3: every loss there is 6.66e-16, so the classical-grows assert fails. Comment out the three asserts in the sweep to reach degree 10: $`\kappa`$ falls from 1.34e7 to 1.61e3 and the classical loss from 9.98e-1 to 1.38e-11, only 0.048 times $`u\kappa^2`$.
 > - **Run classical Gram-Schmidt twice in the sweep.** Guess first: does a second pass cost accuracy or only work? Change `loss(gram_schmidt(cols)[0])` to `loss(gram_schmidt(cols, passes=2)[0])`. At degree 3 the classical loss is 6.66e-16, below modified's 6.57e-15, and the same assert stops it.
-> - **Push the degree to 12.** Guess first: does the classical loss keep growing? Change `range(1, 11)` to `range(1, 13)`. It sticks at 1.00e0 from degree 11, because two unit columns cannot overlap by more than 1. At degree 12, classical ÷ $u\kappa^2$ is 0.049 and the assert stops it. Modified reaches 3.08e-8; Householder stays at 1.11e-15.
+> - **Push the degree to 12.** Guess first: does the classical loss keep growing? Change `range(1, 11)` to `range(1, 13)`. It sticks at 1.00e0 from degree 11, because two unit columns cannot overlap by more than 1. At degree 12, classical ÷ $`u\kappa^2`$ is 0.049 and the assert stops it. Modified reaches 3.08e-8; Householder stays at 1.11e-15.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Treating every QR as equally trustworthy.** All three methods give $A = QR$ to rounding level: at degree 10 the classical residual is 2.49e-16. But the classical $Q$ has lost perpendicularity entirely, with loss 9.98e-1. Any later step that assumes $Q^{\mathsf T}Q = I$, such as reading the fit off $Q^{\mathsf T}y$, inherits that error. Check $Q^{\mathsf T}Q - I$, or use Householder.
+> **Treating every QR as equally trustworthy.** All three methods give $`A = QR`$ to rounding level: at degree 10 the classical residual is 2.49e-16. But the classical $`Q`$ has lost perpendicularity entirely, with loss 9.98e-1. Any later step that assumes $`Q^{\mathsf T}Q = I`$, such as reading the fit off $`Q^{\mathsf T}y`$, inherits that error. Check $`Q^{\mathsf T}Q - I`$, or use Householder.
 >
-> - **Flipping Householder's sign for neatness.** A positive diagonal in $R$ looks tidier, but taking $x_1 - \lVert x\rVert$ cancels digits when the column already lies near the axis. Keep the sign rule and flip signs afterwards if needed.
-> - **Forming $Q$ by habit.** For the line it adds 3,188 flops to 1,595. Apply the mirrors to $y$ instead.
-> - **Building $H$ as an $m \times m$ matrix.** That stores $m^2$ entries per mirror and costs about $2m^2$ flops per column it touches, when the vector $v$, with at most $m$ entries, does the same job in about $4m$.
-> - **Blaming the method for a bad table.** Raw powers $1, d, \dots, d^{10}$ have $\kappa$ = 1.34e7. Centring $d$ first brings it to 1.61e3. Conditioning is the table's property; perpendicularity loss is the method's response to it.
+> - **Flipping Householder's sign for neatness.** A positive diagonal in $`R`$ looks tidier, but taking $`x_1 - \lVert x\rVert`$ cancels digits when the column already lies near the axis. Keep the sign rule and flip signs afterwards if needed.
+> - **Forming $`Q`$ by habit.** For the line it adds 3,188 flops to 1,595. Apply the mirrors to $`y`$ instead.
+> - **Building $`H`$ as an $`m \times m`$ matrix.** That stores $`m^2`$ entries per mirror and costs about $`2m^2`$ flops per column it touches, when the vector $`v`$, with at most $`m`$ entries, does the same job in about $`4m`$.
+> - **Blaming the method for a bad table.** Raw powers $`1, d, \dots, d^{10}`$ have $`\kappa`$ = 1.34e7. Centring $`d`$ first brings it to 1.61e3. Conditioning is the table's property; perpendicularity loss is the method's response to it.
 
 ---
 
 ## Where you meet it in real life
 
-- **Fitting curves to data.** Statistics and engineering software solve least-squares fits through Householder QR rather than by forming $A^{\mathsf T}A$; the reason is on [Least squares two ways](06-least-squares-normal-equations-versus-qr.md).
-- **Eigenvalue routines.** The QR algorithm factors a matrix and multiplies the factors back in reverse order, over and over. It needs a $Q$ that stays perpendicular, which is why it uses mirrors or rotations ([Eigenvalues by iteration](07-eigenvalues-power-iteration-and-the-qr-algorithm.md)).
+- **Fitting curves to data.** Statistics and engineering software solve least-squares fits through Householder QR rather than by forming $`A^{\mathsf T}A`$; the reason is on [Least squares two ways](06-least-squares-normal-equations-versus-qr.md).
+- **Eigenvalue routines.** The QR algorithm factors a matrix and multiplies the factors back in reverse order, over and over. It needs a $`Q`$ that stays perpendicular, which is why it uses mirrors or rotations ([Eigenvalues by iteration](07-eigenvalues-power-iteration-and-the-qr-algorithm.md)).
 - **Iterative solvers.** Krylov methods build perpendicular directions one at a time, which is Gram-Schmidt in the modified form, often with a second pass ([Sparse storage and Krylov methods](10-sparse-matrices-and-krylov-methods.md)).
 - **Signal processing and tracking.** Adaptive filters update a QR factorisation as each new sample arrives, because a few rotations update the triangle cheaply and keep its rows accurate.
 
@@ -945,13 +955,13 @@ example : ∑ k ∈ Finset.range 50, ((2 * (200 - k) - 1) + (50 - k - 1) * (4 * 
 
 ## What this builds on
 
-- [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md): $\kappa$, the largest stretch over the smallest, which sets how much perpendicularity Gram-Schmidt loses.
+- [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md): $`\kappa`$, the largest stretch over the smallest, which sets how much perpendicularity Gram-Schmidt loses.
 - [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): the exact process and its perpendicularity proof; this card adds its rounding behaviour and its rival.
 - [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): lengths, shadows and perpendicularity, used in every step of both methods.
 
 ## Where this goes next
 
-- [Least squares two ways](06-least-squares-normal-equations-versus-qr.md): the fit solved through $A^{\mathsf T}A$ against through QR, and why the first squares $\kappa$.
+- [Least squares two ways](06-least-squares-normal-equations-versus-qr.md): the fit solved through $`A^{\mathsf T}A`$ against through QR, and why the first squares $`\kappa`$.
 - [Eigenvalues by iteration](07-eigenvalues-power-iteration-and-the-qr-algorithm.md): QR repeated, to find every eigenvalue at once.
 
 Left open: Householder clears a whole column at once, but many tables are mostly zeros already; how can a factorisation clear one entry at a time and leave the zeros alone?
@@ -963,7 +973,7 @@ Left open: Householder clears a whole column at once, but many tables are mostly
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Householder, Alston S. "Unitary Triangularization of a Nonsymmetric Matrix." *Journal of the ACM* 5, no. 4 (1958): 339–342. [doi:10.1145/320941.320947](https://doi.org/10.1145/320941.320947). The mirror construction and its use to reach a triangle.
-- Björck, Åke. "Solving Linear Least Squares Problems by Gram-Schmidt Orthogonalization." *BIT* 7 (1967): 1–21. [doi:10.1007/BF01934122](https://doi.org/10.1007/BF01934122). The rounding analysis of modified Gram-Schmidt: loss of orthogonality of order $u\kappa$.
-- Giraud, Luc, Julien Langou, Miroslav Rozložník, and Jasper van den Eshof. "Rounding Error Analysis of the Classical Gram-Schmidt Orthogonalization Process." *Numerische Mathematik* 101 (2005): 87–100. [doi:10.1007/s00211-005-0615-4](https://doi.org/10.1007/s00211-005-0615-4). The $u\kappa^2$ bound for classical Gram-Schmidt.
+- Björck, Åke. "Solving Linear Least Squares Problems by Gram-Schmidt Orthogonalization." *BIT* 7 (1967): 1–21. [doi:10.1007/BF01934122](https://doi.org/10.1007/BF01934122). The rounding analysis of modified Gram-Schmidt: loss of orthogonality of order $`u\kappa`$.
+- Giraud, Luc, Julien Langou, Miroslav Rozložník, and Jasper van den Eshof. "Rounding Error Analysis of the Classical Gram-Schmidt Orthogonalization Process." *Numerische Mathematik* 101 (2005): 87–100. [doi:10.1007/s00211-005-0615-4](https://doi.org/10.1007/s00211-005-0615-4). The $`u\kappa^2`$ bound for classical Gram-Schmidt.
 - Trefethen, Lloyd N., and David Bau III. *Numerical Linear Algebra*. SIAM, 1997. [doi:10.1137/1.9780898719574](https://doi.org/10.1137/1.9780898719574). Lectures 7 to 10: QR, both Gram-Schmidts, Householder and their flop counts.
 - Higham, Nicholas J. *Accuracy and Stability of Numerical Algorithms*, 2nd ed. SIAM, 2002. [doi:10.1137/1.9780898718027](https://doi.org/10.1137/1.9780898718027). Chapter 19: the rounding analysis of Householder QR and Gram-Schmidt.

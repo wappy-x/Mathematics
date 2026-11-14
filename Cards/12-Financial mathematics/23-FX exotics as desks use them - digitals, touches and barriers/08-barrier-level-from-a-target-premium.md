@@ -34,42 +34,46 @@ Falling line: the down-and-out call's price. Flat line: the client's target, hal
 
 ## The formula
 
-Notation first, in words. The **spot** $S$ is today's exchange rate in dollars per euro. The dollar is the pricing currency, so its rate $r_d$ discounts, and the euro rate $r_f$ plays the part a dividend yield plays for a share. The vanilla EUR call at spot $x$ is written $C(x)$, priced by the Garman–Kohlhagen formula on [Currency digitals](01-fx-digitals.md). The inverse problem is one equation in one unknown, the barrier $H$:
+Notation first, in words. The **spot** $`S`$ is today's exchange rate in dollars per euro. The dollar is the pricing currency, so its rate $`r_d`$ discounts, and the euro rate $`r_f`$ plays the part a dividend yield plays for a share. The vanilla EUR call at spot $`x`$ is written $`C(x)`$, priced by the Garman–Kohlhagen formula on [Currency digitals](01-fx-digitals.md). The inverse problem is one equation in one unknown, the barrier $`H`$:
 
-$$C_{\text{do}}(H) \;=\; C(S) \;-\; \Big(\frac{H}{S}\Big)^{\alpha}\, C\!\Big(\frac{H^2}{S}\Big) \;=\; P^{*}, \qquad \alpha = \frac{2\,(r_d - r_f - \tfrac12\sigma^2)}{\sigma^2}$$
+```math
+C_{\text{do}}(H) \;=\; C(S) \;-\; \Big(\frac{H}{S}\Big)^{\alpha}\, C\!\Big(\frac{H^2}{S}\Big) \;=\; P^{*}, \qquad \alpha = \frac{2\,(r_d - r_f - \tfrac12\sigma^2)}{\sigma^2}
+```
 
 **Read it aloud:** the knock-out is the vanilla call minus a scaled copy of the same call started from the mirror image of spot in the barrier; find the barrier that makes this equal the target price.
 
 The mirror term is the reflection result from [Knock-out and knock-in](02-barrier-options-by-reflection.md), valid here because the barrier sits at or below the strike. For an upside one-touch paying one dollar at expiry, the same mirror gives
 
-$$\text{OT}(H) \;=\; e^{-r_d T}\Big[\,N\big(d_2(S,H)\big) \;+\; \Big(\frac{H}{S}\Big)^{\alpha} N\big(-d_2(H^2/S,\,H)\big)\Big] \;=\; P^{*}$$
+```math
+\text{OT}(H) \;=\; e^{-r_d T}\Big[\,N\big(d_2(S,H)\big) \;+\; \Big(\frac{H}{S}\Big)^{\alpha} N\big(-d_2(H^2/S,\,H)\big)\Big] \;=\; P^{*}
+```
 
 **Read it aloud:** the one-touch is a discounted dollar times the chance of finishing above the level, plus the chance of touching it and falling back, which the mirror counts.
 
 | Symbol | Plain meaning | In our example | Push it up, target fixed, and the solved level… |
 | --- | --- | --- | --- |
-| $S$, $S_T$, $F$ | spot, dollars per euro today; the rate at expiry; the forward, the rate locked in today for delivery at expiry | 1.10; unknown; 1.122221 | knock-out level rises with spot; touch level rises with spot |
-| $K$, $k$ | strike of the call; strike of a digital | 1.10; 1.171606 for a 30% digital | knock-out level falls: a cheaper call needs a looser barrier |
-| $H$, $m$, $M$ | the barrier or touch level, the unknown; the year's lowest and highest rate | 1.074463 and 1.228604 | (the answer) |
-| $r_d$ | dollar interest rate, continuously compounded | 5% | knock-out level rises; touch level rises (the euro drifts up) |
-| $r_f$ | euro interest rate, continuously compounded | 3% | knock-out level falls; touch level falls (the euro drifts down) |
-| $\sigma$ | volatility: the yearly size of the rate's swings | 10% | knock-out level falls slightly (swings reach a barrier sooner); touch level rises |
-| $T$ | years to expiry | 1 | knock-out level rises slightly (the vanilla grows faster than the knock-out risk); touch level rises |
-| $\alpha$ | the mirror's weight exponent, set by drift over variance | 3.0 | (a fixed input) |
-| $C(x)$ | vanilla EUR call price if spot were $x$ | 0.053556 at 1.10 | (a function) |
-| $d_2(x,k)$ | distance from $x$ to $k$ in units of $\sigma\sqrt{T}$, after drift | | (a helper) |
-| $N(x)$ | area under the bell curve left of $x$ | | (a function) |
-| $P^{*}$ | the target price the client will pay | 0.026778 and 0.30 | knock-out level falls; touch level falls |
+| $`S`$, $`S_T`$, $`F`$ | spot, dollars per euro today; the rate at expiry; the forward, the rate locked in today for delivery at expiry | 1.10; unknown; 1.122221 | knock-out level rises with spot; touch level rises with spot |
+| $`K`$, $`k`$ | strike of the call; strike of a digital | 1.10; 1.171606 for a 30% digital | knock-out level falls: a cheaper call needs a looser barrier |
+| $`H`$, $`m`$, $`M`$ | the barrier or touch level, the unknown; the year's lowest and highest rate | 1.074463 and 1.228604 | (the answer) |
+| $`r_d`$ | dollar interest rate, continuously compounded | 5% | knock-out level rises; touch level rises (the euro drifts up) |
+| $`r_f`$ | euro interest rate, continuously compounded | 3% | knock-out level falls; touch level falls (the euro drifts down) |
+| $`\sigma`$ | volatility: the yearly size of the rate's swings | 10% | knock-out level falls slightly (swings reach a barrier sooner); touch level rises |
+| $`T`$ | years to expiry | 1 | knock-out level rises slightly (the vanilla grows faster than the knock-out risk); touch level rises |
+| $`\alpha`$ | the mirror's weight exponent, set by drift over variance | 3.0 | (a fixed input) |
+| $`C(x)`$ | vanilla EUR call price if spot were $`x`$ | 0.053556 at 1.10 | (a function) |
+| $`d_2(x,k)`$ | distance from $`x`$ to $`k`$ in units of $`\sigma\sqrt{T}`$, after drift | | (a helper) |
+| $`N(x)`$ | area under the bell curve left of $`x`$ | | (a function) |
+| $`P^{*}`$ | the target price the client will pay | 0.026778 and 0.30 | knock-out level falls; touch level falls |
 
-The helper, in one line: $d_2(x,k) = \big(\ln(x/k) + (r_d - r_f - \tfrac12\sigma^2)T\big)/(\sigma\sqrt{T})$, the log-distance from $x$ to $k$ plus the year's drift, measured in units of one year's swing. The factor $e^{-r_d T}$, 0.951229, is the dollar discount: today's value of a dollar paid in a year.
+The helper, in one line: $`d_2(x,k) = \big(\ln(x/k) + (r_d - r_f - \tfrac12\sigma^2)T\big)/(\sigma\sqrt{T})`$, the log-distance from $`x`$ to $`k`$ plus the year's drift, measured in units of one year's swing. The factor $`e^{-r_d T}`$, 0.951229, is the dollar discount: today's value of a dollar paid in a year.
 
-A cash digital, which pays one dollar if the euro finishes above a strike $k$, costs $e^{-r_d T}N(d_2(S,k))$. Its strike inverts in one line, and its volatility sometimes has two answers; both are in Why it works, Step 4.
+A cash digital, which pays one dollar if the euro finishes above a strike $`k`$, costs $`e^{-r_d T}N(d_2(S,k))`$. Its strike inverts in one line, and its volatility sometimes has two answers; both are in Why it works, Step 4.
 
 ### When it holds
 
 - **Continuous monitoring.** The barrier watches every instant. A desk that checks only a daily fixing sees fewer touches, so its knock-out is worth more at each level and the fair level for the same premium sits nearer spot than the one solved here; the correction is on [Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md).
 - **One flat volatility.** A real FX market has a smile (volatility that differs by strike), and barrier prices move with it. The level solved here is the flat-volatility level; [Barriers on a smile](07-barriers-with-the-smile.md) says how far it shifts.
-- **A target strictly inside the price range.** Zero to the vanilla for the knock-out; zero to $e^{-r_d T}$ for the one-touch. Outside it there is no level, and a solver that does not check returns an edge of its bracket as if it were an answer.
+- **A target strictly inside the price range.** Zero to the vanilla for the knock-out; zero to $`e^{-r_d T}`$ for the one-touch. Outside it there is no level, and a solver that does not check returns an edge of its bracket as if it were an answer.
 - **Barrier at or below the strike** for the formula above. A barrier between spot and a lower strike uses a different mirror term (all eight cases on [The eight single barriers in one table](03-the-eight-barrier-types.md)); the monotonicity argument below does not change.
 - **Payment at expiry.** A one-touch that pays at the moment of touching is worth more, so the same 30 percent quote implies a level further out.
 
@@ -85,34 +89,34 @@ A pricing formula maps a level to a price. Reading it backwards needs two facts.
 
 ### Step 1: the knock-out's price falls as the barrier rises
 
-Follow one path of the exchange rate through the year. The knock-out pays the call's payoff only if the path's lowest point stayed above $H$. Raise $H$ from 1.04 to 1.05 and every path that survived the higher wall also survived the lower one; some paths that dipped to 1.045 now die. No path gains. So the payoff, path by path, can only shrink as $H$ rises. Averaging over paths keeps that order.
+Follow one path of the exchange rate through the year. The knock-out pays the call's payoff only if the path's lowest point stayed above $`H`$. Raise $`H`$ from 1.04 to 1.05 and every path that survived the higher wall also survived the lower one; some paths that dipped to 1.045 now die. No path gains. So the payoff, path by path, can only shrink as $`H`$ rises. Averaging over paths keeps that order.
 
 It shrinks strictly. For any two levels below spot, some paths have their lowest point between them and still finish above the strike. Those paths carry positive probability, so the price drops by a positive amount.
 
-The edges fix the range. As $H$ falls toward zero, the mirror factor $(H/S)^{\alpha}$ goes to zero and the mirror call $C(H^2/S)$, a call whose spot has fallen far below its strike, goes to zero too: the price rises to the vanilla, 0.053556. As $H$ rises to spot, $(H/S)^{\alpha}$ goes to one and $H^2/S$ goes to $S$, so the two terms cancel: the price falls to zero. The formula is built from smooth pieces, so it is continuous in between.
+The edges fix the range. As $`H`$ falls toward zero, the mirror factor $`(H/S)^{\alpha}`$ goes to zero and the mirror call $`C(H^2/S)`$, a call whose spot has fallen far below its strike, goes to zero too: the price rises to the vanilla, 0.053556. As $`H`$ rises to spot, $`(H/S)^{\alpha}`$ goes to one and $`H^2/S`$ goes to $`S`$, so the two terms cancel: the price falls to zero. The formula is built from smooth pieces, so it is continuous in between.
 
 Therefore **every target strictly between 0 and 0.053556 names exactly one barrier below spot.** Half the vanilla, 0.026778, is inside. Its level is 1.074463.
 
-The same argument runs on the other side of spot. An up-and-out call dies when the rate climbs to $H$ above spot and strike (between spot and a higher strike it is worth zero at every level); raising that $H$ lets more paths live, so its price rises from zero toward the vanilla. The direction flips; uniqueness does not.
+The same argument runs on the other side of spot. An up-and-out call dies when the rate climbs to $`H`$ above spot and strike (between spot and a higher strike it is worth zero at every level); raising that $`H`$ lets more paths live, so its price rises from zero toward the vanilla. The direction flips; uniqueness does not.
 
 <details>
 <summary>Detailed proof: existence, uniqueness and the boundary cases, for both contracts</summary>
 
-Let $m$ be the lowest value and $M$ the highest value of the rate over the year, $S_T$ the rate at expiry. Write $x^+$ for $\max(x, 0)$, and $\mathbf{1}\{A\}$ for 1 when $A$ happens and 0 when it does not. All prices are $e^{-r_dT}$ times an average in the pricing world of [Knock-out and knock-in](02-barrier-options-by-reflection.md).
+Let $`m`$ be the lowest value and $`M`$ the highest value of the rate over the year, $`S_T`$ the rate at expiry. Write $`x^+`$ for $`\max(x, 0)`$, and $`\mathbf{1}\{A\}`$ for 1 when $`A`$ happens and 0 when it does not. All prices are $`e^{-r_dT}`$ times an average in the pricing world of [Knock-out and knock-in](02-barrier-options-by-reflection.md).
 
-**Knock-out.** Payoff $g_H = (S_T - K)^+\,\mathbf{1}\{m > H\}$. For $H_1 < H_2 < S$: $g_{H_1} - g_{H_2} = (S_T-K)^+\,\mathbf{1}\{H_1 < m \le H_2\} \ge 0$. The event $\{H_1 < m \le H_2,\ S_T > K\}$ has positive probability because the joint law of $(m, S_T)$ has a positive density on $\{m < S,\ S_T > m\}$. So $C_{\text{do}}(H_1) > C_{\text{do}}(H_2)$. Continuity: $m$ has a continuous distribution, so $H \mapsto \mathbf{1}\{m > H\}$ changes only on a set of probability tending to zero as the step shrinks; bounded convergence gives continuity (the closed form confirms it). Limits: $H \to 0$ gives $\mathbf{1}\{m > H\} \to 1$ almost surely, price $\to C(S)$; $H \to S$ gives $\mathbf{1}\{m > H\} \to 0$ almost surely (a Brownian path started at a level dips below it at once), price $\to 0$. By the intermediate value theorem each $P^*$ in $(0, C(S))$ has a root; strict decrease makes it unique. For $P^* \ge C(S)$ or $P^* \le 0$ there is none.
+**Knock-out.** Payoff $`g_H = (S_T - K)^+\,\mathbf{1}\{m > H\}`$. For $`H_1 < H_2 < S`$: $`g_{H_1} - g_{H_2} = (S_T-K)^+\,\mathbf{1}\{H_1 < m \le H_2\} \ge 0`$. The event $`\{H_1 < m \le H_2,\ S_T > K\}`$ has positive probability because the joint law of $`(m, S_T)`$ has a positive density on $`\{m < S,\ S_T > m\}`$. So $`C_{\text{do}}(H_1) > C_{\text{do}}(H_2)`$. Continuity: $`m`$ has a continuous distribution, so $`H \mapsto \mathbf{1}\{m > H\}`$ changes only on a set of probability tending to zero as the step shrinks; bounded convergence gives continuity (the closed form confirms it). Limits: $`H \to 0`$ gives $`\mathbf{1}\{m > H\} \to 1`$ almost surely, price $`\to C(S)`$; $`H \to S`$ gives $`\mathbf{1}\{m > H\} \to 0`$ almost surely (a Brownian path started at a level dips below it at once), price $`\to 0`$. By the intermediate value theorem each $`P^*`$ in $`(0, C(S))`$ has a root; strict decrease makes it unique. For $`P^* \ge C(S)`$ or $`P^* \le 0`$ there is none.
 
-**One-touch, up.** Payoff $\mathbf{1}\{M \ge H\}$, $H > S$. For $S < H_1 < H_2$: $\mathbf{1}\{M \ge H_1\} - \mathbf{1}\{M \ge H_2\} = \mathbf{1}\{H_1 \le M < H_2\}$, positive with positive probability. Limits: $H \to S$ gives $M \ge H$ almost surely, price $\to e^{-r_dT}$ = 0.951229; $H \to \infty$ gives price $\to 0$. Each $P^*$ in $(0, e^{-r_dT})$ has exactly one level.
+**One-touch, up.** Payoff $`\mathbf{1}\{M \ge H\}`$, $`H > S`$. For $`S < H_1 < H_2`$: $`\mathbf{1}\{M \ge H_1\} - \mathbf{1}\{M \ge H_2\} = \mathbf{1}\{H_1 \le M < H_2\}`$, positive with positive probability. Limits: $`H \to S`$ gives $`M \ge H`$ almost surely, price $`\to e^{-r_dT}`$ = 0.951229; $`H \to \infty`$ gives price $`\to 0`$. Each $`P^*`$ in $`(0, e^{-r_dT})`$ has exactly one level.
 
-**Digital strike.** $e^{-r_dT}N(d_2(S,k))$ is continuous and strictly decreasing in $k$ (since $d_2$ is, and $N$ is strictly increasing), with limits $e^{-r_dT}$ as $k \to 0$ and $0$ as $k \to \infty$. Each $P^*$ in $(0, e^{-r_dT})$ has exactly one strike, given in closed form in Step 4.
+**Digital strike.** $`e^{-r_dT}N(d_2(S,k))`$ is continuous and strictly decreasing in $`k`$ (since $`d_2`$ is, and $`N`$ is strictly increasing), with limits $`e^{-r_dT}`$ as $`k \to 0`$ and $`0`$ as $`k \to \infty`$. Each $`P^*`$ in $`(0, e^{-r_dT})`$ has exactly one strike, given in closed form in Step 4.
 
 </details>
 
 ### Step 2: the one-touch's price falls as the level moves away
 
-A one-touch pays if the path's highest point reached $H$. Move $H$ up and every path that reached the higher level also reached the lower one; none is added. The price falls, strictly, for the same reason as Step 1.
+A one-touch pays if the path's highest point reached $`H`$. Move $`H`$ up and every path that reached the higher level also reached the lower one; none is added. The price falls, strictly, for the same reason as Step 1.
 
-The edges: with $H$ just above spot, the rate touches it almost at once, so the price is a sure dollar at expiry, 0.951229. With $H$ far away, the price goes to zero. **A quote strictly between 0 and 0.951229 names one level.** A one-touch quoted above 0.951229 is not an expensive trade; it is an impossible one, since no level makes a touch worth more than a guaranteed dollar.
+The edges: with $`H`$ just above spot, the rate touches it almost at once, so the price is a sure dollar at expiry, 0.951229. With $`H`$ far away, the price goes to zero. **A quote strictly between 0 and 0.951229 names one level.** A one-touch quoted above 0.951229 is not an expensive trade; it is an impossible one, since no level makes a touch worth more than a guaranteed dollar.
 
 At 0.30 the level is 1.228604, above the house 1.20 as it must be: the house touch costs 0.4142, more than 0.30, and price falls as the level moves out.
 
@@ -124,55 +128,57 @@ For the knock-out, 1.00 is too dear (0.0523 is above the target) and 1.10 too ch
 
 ### Step 4: the digital's strike inverts in one line; its volatility does not
 
-A cash digital's price $e^{-r_dT}N(d_2(S,k))$ fixes one point on the bell curve. Divide the price by the discount, find the $z$ that has that area to its left, and solve $d_2 = z$ for the strike:
+A cash digital's price $`e^{-r_dT}N(d_2(S,k))`$ fixes one point on the bell curve. Divide the price by the discount, find the $`z`$ that has that area to its left, and solve $`d_2 = z`$ for the strike:
 
-$$k \;=\; S\,\exp\!\Big(\big(r_d - r_f - \tfrac12\sigma^2\big)T \;-\; \sigma\sqrt{T}\,z\Big)$$
+```math
+k \;=\; S\,\exp\!\Big(\big(r_d - r_f - \tfrac12\sigma^2\big)T \;-\; \sigma\sqrt{T}\,z\Big)
+```
 
 At 0.30 that gives 1.171606. Unique, by Step 0.
 
-Volatility is different. Write $u = \sigma\sqrt{T}$ for one year's swing and let the strike sit above the forward, the rate at which euros can be locked in today for delivery in a year, 1.122221. Then $d_2 = \ln(F/k)/u - u/2$, where $\ln(F/k)$ is negative because the strike is above the forward. As $u$ grows from zero, the first term climbs from minus infinity and the second pulls down. The digital's price climbs, peaks, then falls. For the 1.20 digital the peak is at 36.6 percent volatility, price 0.339730.
+Volatility is different. Write $`u = \sigma\sqrt{T}`$ for one year's swing and let the strike sit above the forward, the rate at which euros can be locked in today for delivery in a year, 1.122221. Then $`d_2 = \ln(F/k)/u - u/2`$, where $`\ln(F/k)`$ is negative because the strike is above the forward. As $`u`$ grows from zero, the first term climbs from minus infinity and the second pulls down. The digital's price climbs, peaks, then falls. For the 1.20 digital the peak is at 36.6 percent volatility, price 0.339730.
 
-So every price strictly between zero and the peak is hit twice. At 10 percent volatility the 1.20 digital costs 0.224231; setting $d_2 = z$ gives a quadratic in $u$ whose two positive roots are 10 percent and 134.0228 percent. Both are honest answers. A price above 0.339730 has none; exactly at it, one. The full case table, strike below, at and above the forward, is on [Digital inverses](../10-Digitals%20and%20the%20implied%20density/06-digital-inverses-vol-and-strike.md).
+So every price strictly between zero and the peak is hit twice. At 10 percent volatility the 1.20 digital costs 0.224231; setting $`d_2 = z`$ gives a quadratic in $`u`$ whose two positive roots are 10 percent and 134.0228 percent. Both are honest answers. A price above 0.339730 has none; exactly at it, one. The full case table, strike below, at and above the forward, is on [Digital inverses](../10-Digitals%20and%20the%20implied%20density/06-digital-inverses-vol-and-strike.md).
 
 <details>
 <summary>The algebra behind the two roots</summary>
 
-Set $d_2 = z$ with $a = \ln(F/k)$: $a/u - u/2 = z$, so $u^2/2 + z\,u - a = 0$ and $u = -z \pm \sqrt{z^2 + 2a}$. With $a < 0$ and $z < 0$, both roots are positive when $z^2 + 2a > 0$, and their product is $-2a$: here 0.100000 times 1.340228 is $-2a$. The peak sits at $u = \sqrt{-2a}$, where the two roots meet, which is the 36.6 percent above.
+Set $`d_2 = z`$ with $`a = \ln(F/k)`$: $`a/u - u/2 = z`$, so $`u^2/2 + z\,u - a = 0`$ and $`u = -z \pm \sqrt{z^2 + 2a}`$. With $`a < 0`$ and $`z < 0`$, both roots are positive when $`z^2 + 2a > 0`$, and their product is $`-2a`$: here 0.100000 times 1.340228 is $`-2a`$. The peak sits at $`u = \sqrt{-2a}`$, where the two roots meet, which is the 36.6 percent above.
 
 </details>
 
 ### The other door
 
-The same levels come out of Monte Carlo: simulate the rate month by month, and between months use the Brownian-bridge chance of having touched (the chance a path pinned at both ends crossed the wall in between, $\exp(-2(b-x)(b-y)/(\sigma^2\Delta t))$ in log terms, from Glasserman in Sources). Here $x$ and $y$ are the logs of rate over spot at the two ends of a month. $b = \ln(H/S)$ is the wall on the same scale, and $\Delta t$ is one month in years. At the solved levels it prices the knock-out at 0.026750 and the touch at 0.300859, each within its sampling error of the target. The equity version of this card, on Acme shares with a volatility inverse for the knock-out, is [Barrier inverses](../16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md).
+The same levels come out of Monte Carlo: simulate the rate month by month, and between months use the Brownian-bridge chance of having touched (the chance a path pinned at both ends crossed the wall in between, $`\exp(-2(b-x)(b-y)/(\sigma^2\Delta t))`$ in log terms, from Glasserman in Sources). Here $`x`$ and $`y`$ are the logs of rate over spot at the two ends of a month. $`b = \ln(H/S)`$ is the wall on the same scale, and $`\Delta t`$ is one month in years. At the solved levels it prices the knock-out at 0.026750 and the touch at 0.300859, each within its sampling error of the target. The equity version of this card, on Acme shares with a volatility inverse for the knock-out, is [Barrier inverses](../16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md).
 
 ---
 
 ## Worked numbers, by hand
 
-House FX market: $S$ = 1.10, $K$ = 1.10, $r_d$ = 5%, $r_f$ = 3%, $\sigma$ = 10%, $T$ = 1. Target: half the vanilla.
+House FX market: $`S`$ = 1.10, $`K`$ = 1.10, $`r_d`$ = 5%, $`r_f`$ = 3%, $`\sigma`$ = 10%, $`T`$ = 1. Target: half the vanilla.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| vanilla EUR call, $C(S)$ | Garman–Kohlhagen | 0.053556 |
-| target $P^{*}$ | 0.053556 / 2 | 0.026778 |
-| mirror exponent $\alpha$ | 2 × (0.05 − 0.03 − 0.005) / 0.01 | 3.0 |
-| bracket | $H$ = 1.00 too dear (0.0523), $H$ = 1.10 worth 0 | straddles |
-| midpoint 1 | $H$ = 1.050000, price 0.041661 | too dear: go up |
-| midpoint 2 | $H$ = 1.075000, price 0.026343 | too cheap: go down |
-| midpoint 3 | $H$ = 1.062500, price 0.035192 | too dear: go up |
-| midpoint 4 | $H$ = 1.068750, price 0.031091 | too dear: go up |
-| midpoint 5 | $H$ = 1.071875, price 0.028801 | too dear: go up |
-| midpoint 6 | $H$ = 1.073438, price 0.027594 | too dear: go up |
-| … 80 rounds | | $H$ = 1.074463 |
-| check: mirror start $H^2/S$ | 1.074463^2 / 1.10 | 1.049519 |
-| check: $(H/S)^{\alpha}$ | (1.074463 / 1.10)^3 | 0.931958 |
-| check: $C(H^2/S)$ | call at spot 1.049519 | 0.028733 |
+| vanilla EUR call, $`C(S)`$ | Garman–Kohlhagen | 0.053556 |
+| target $`P^{*}`$ | 0.053556 / 2 | 0.026778 |
+| mirror exponent $`\alpha`$ | 2 × (0.05 − 0.03 − 0.005) / 0.01 | 3.0 |
+| bracket | $`H`$ = 1.00 too dear (0.0523), $`H`$ = 1.10 worth 0 | straddles |
+| midpoint 1 | $`H`$ = 1.050000, price 0.041661 | too dear: go up |
+| midpoint 2 | $`H`$ = 1.075000, price 0.026343 | too cheap: go down |
+| midpoint 3 | $`H`$ = 1.062500, price 0.035192 | too dear: go up |
+| midpoint 4 | $`H`$ = 1.068750, price 0.031091 | too dear: go up |
+| midpoint 5 | $`H`$ = 1.071875, price 0.028801 | too dear: go up |
+| midpoint 6 | $`H`$ = 1.073438, price 0.027594 | too dear: go up |
+| … 80 rounds | | $`H`$ = 1.074463 |
+| check: mirror start $`H^2/S`$ | 1.074463^2 / 1.10 | 1.049519 |
+| check: $`(H/S)^{\alpha}`$ | (1.074463 / 1.10)^3 | 0.931958 |
+| check: $`C(H^2/S)`$ | call at spot 1.049519 | 0.028733 |
 | check: price | 0.053556 − 0.931958 × 0.028733 | 0.026778 |
 | **knock-out level** | | **1.074463** |
 
 The treasurer's half-price call dies if the euro trades at or below 1.074463 at any moment in the year. That risk is what the discount buys.
 
-The one-touch runs the same way on $\text{OT}(H)$, bracketed by 1.10 (worth 0.951229) and 3.0 (worth almost nothing): **1.228604** for a 30-percent quote. A cash digital at 30 percent sits at strike 1.171606, much closer, because finishing above a level is harder than touching it once.
+The one-touch runs the same way on $`\text{OT}(H)`$, bracketed by 1.10 (worth 0.951229) and 3.0 (worth almost nothing): **1.228604** for a 30-percent quote. A cash digital at 30 percent sits at strike 1.171606, much closer, because finishing above a level is harder than touching it once.
 
 The steepness matters for hedging. At the solved level the knock-out's price falls 0.804506 dollars per unit of barrier, so moving the barrier one pip (0.0001) moves the premium by about 0.80 pips. Both roads agree on that slope; its meaning as a Greek (a price's sensitivity to one input) is on [Greeks at the wall](06-barrier-and-touch-greeks.md).
 
@@ -182,7 +188,7 @@ The steepness matters for hedging. At the solved level the knock-out's price fal
 | --- | --- | --- |
 | Swap the dollar and euro rates | level 1.039516 (right: 1.074463) | The euro's drift flips sign, the mirror exponent changes, and the barrier lands far too low |
 | Use the digital strike as the touch level | touch there costs 0.549987 (quote: 0.30) | A digital needs the rate to finish above; a touch needs it to reach once. At the same price the touch level is further out |
-| "Touch is twice the digital" rule | level 1.234554, true touch there 0.279253 | The factor of two holds when the log-rate has no drift; here its drift $r_d - r_f - \tfrac12\sigma^2$ is 1.5 percent |
+| "Touch is twice the digital" rule | level 1.234554, true touch there 0.279253 | The factor of two holds when the log-rate has no drift; here its drift $`r_d - r_f - \tfrac12\sigma^2`$ is 1.5 percent |
 | Bracket a digital's vol on 1% to 200% | prices 0.000000 and 0.143335, both below 0.224231 | Both ends are cheaper than the quote, so bisection sees no crossing, though two answers exist inside |
 
 Every number in the table is printed by both checks below.
@@ -605,9 +611,9 @@ The two outputs are identical line for line.
 Lean proves the card's three inverse facts for every input meeting their conditions, plus two exact sums from the worked numbers.
 
 - Suppose a knock-out's price is continuous and strictly falling as the barrier rises from zero to spot, going from the vanilla toward zero. Then a target names exactly one barrier below spot when, and only when, it lies strictly between 0 and the vanilla.
-- Suppose an up one-touch's price is continuous and strictly falling as the level moves out from spot, going from $e^{-r_d T}$ toward zero. Then a quote names exactly one level above spot when, and only when, it lies strictly between 0 and $e^{-r_d T}$.
-- Take a strike above the forward, so $a = \ln(F/k) < 0$, and a price that fixes $z < 0$. Then $a/u - u/2 = z$ has two positive roots when $z^2 + 2a > 0$, with product $-2a$. It has one root, $-z$, at the peak, where $z^2 + 2a = 0$. A price above the peak, where $z^2 + 2a < 0$, has none.
-- The mirror exponent $\alpha$ is exactly 3 at the house rates. The first three bisection midpoints are 1.05, 1.075 and 1.0625.
+- Suppose an up one-touch's price is continuous and strictly falling as the level moves out from spot, going from $`e^{-r_d T}`$ toward zero. Then a quote names exactly one level above spot when, and only when, it lies strictly between 0 and $`e^{-r_d T}`$.
+- Take a strike above the forward, so $`a = \ln(F/k) < 0`$, and a price that fixes $`z < 0`$. Then $`a/u - u/2 = z`$ has two positive roots when $`z^2 + 2a > 0`$, with product $`-2a`$. It has one root, $`-z`$, at the peak, where $`z^2 + 2a = 0`$. A price above the peak, where $`z^2 + 2a < 0`$, has none.
+- The mirror exponent $`\alpha`$ is exactly 3 at the house rates. The first three bisection midpoints are 1.05, 1.075 and 1.0625.
 
 The mirror formulas themselves, their falling shape and every solved level are left to the Python and Rust checks.
 

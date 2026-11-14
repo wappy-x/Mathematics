@@ -37,44 +37,54 @@ Orange: the wait for one email, the exponential law. Green: for two. Dark blue: 
 
 ## The formula
 
-Notation first, in words. $T$ is the wait, a random variable, in minutes; $t$ is one number of minutes. $\lambda$ (lambda) is the rate, 0.2 emails per minute. $\alpha$ (alpha) is the **shape**: for a wait, the number of emails awaited, here 3. $\Gamma(\alpha)$ (capital gamma of alpha) is a number, the **gamma integral**:
+Notation first, in words. $`T`$ is the wait, a random variable, in minutes; $`t`$ is one number of minutes. $`\lambda`$ (lambda) is the rate, 0.2 emails per minute. $`\alpha`$ (alpha) is the **shape**: for a wait, the number of emails awaited, here 3. $`\Gamma(\alpha)`$ (capital gamma of alpha) is a number, the **gamma integral**:
 
-$$\Gamma(\alpha) = \int_0^\infty x^{\alpha-1}\,e^{-x}\,dx, \qquad \Gamma(\alpha+1) = \alpha\,\Gamma(\alpha), \qquad \Gamma(k) = (k-1)! \text{ for whole } k$$
+```math
+\Gamma(\alpha) = \int_0^\infty x^{\alpha-1}\,e^{-x}\,dx, \qquad \Gamma(\alpha+1) = \alpha\,\Gamma(\alpha), \qquad \Gamma(k) = (k-1)! \text{ for whole } k
+```
 
 **Read it aloud:** gamma of alpha is the area under a power of x times a falling exponential; each step up in alpha multiplies it by alpha, so on whole numbers it is a factorial shifted by one.
 
 The gamma density, written T ~ Gamma(α, λ) and read "T follows the gamma law with shape alpha and rate lambda":
 
-$$f_T(t) = \frac{\lambda^{\alpha}\,t^{\alpha-1}\,e^{-\lambda t}}{\Gamma(\alpha)} \quad (t > 0), \qquad E[T] = \frac{\alpha}{\lambda}, \qquad \mathrm{Var}(T) = \frac{\alpha}{\lambda^2}$$
+```math
+f_T(t) = \frac{\lambda^{\alpha}\,t^{\alpha-1}\,e^{-\lambda t}}{\Gamma(\alpha)} \quad (t > 0), \qquad E[T] = \frac{\alpha}{\lambda}, \qquad \mathrm{Var}(T) = \frac{\alpha}{\lambda^2}
+```
 
 **Read it aloud:** the chance per minute that the wait ends at t is a power of t that pulls the hump away from zero, times an exponential that pulls the tail down, divided by the constant that makes the area 1.
 
-For a whole shape the chance of still waiting is a Poisson sum ([Poisson](../03-Discrete%20Distributions/04-poisson.md)), the chance that fewer than α emails have come by time t; $j$ counts the emails that have come:
+For a whole shape the chance of still waiting is a Poisson sum ([Poisson](../03-Discrete%20Distributions/04-poisson.md)), the chance that fewer than α emails have come by time t; $`j`$ counts the emails that have come:
 
-$$P(T > t) = e^{-\lambda t} \sum_{j=0}^{\alpha - 1} \frac{(\lambda t)^j}{j!}$$
+```math
+P(T > t) = e^{-\lambda t} \sum_{j=0}^{\alpha - 1} \frac{(\lambda t)^j}{j!}
+```
 
-Now the conversion rate. $V$ is the unknown chance a visitor buys; $v$ is one value of it, between 0 and 1. $a$ and $b$ are the two positive parameters. $B(a,b)$ is the **beta integral**. Written V ~ Beta(a, b):
+Now the conversion rate. $`V`$ is the unknown chance a visitor buys; $`v`$ is one value of it, between 0 and 1. $`a`$ and $`b`$ are the two positive parameters. $`B(a,b)`$ is the **beta integral**. Written V ~ Beta(a, b):
 
-$$f_V(v) = \frac{v^{a-1}(1-v)^{b-1}}{B(a,b)} \quad (0 < v < 1), \qquad B(a,b) = \int_0^1 v^{a-1}(1-v)^{b-1}\,dv = \frac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}$$
+```math
+f_V(v) = \frac{v^{a-1}(1-v)^{b-1}}{B(a,b)} \quad (0 < v < 1), \qquad B(a,b) = \int_0^1 v^{a-1}(1-v)^{b-1}\,dv = \frac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}
+```
 
-$$E[V] = \frac{a}{a+b}, \qquad \mathrm{Var}(V) = \frac{ab}{(a+b)^2\,(a+b+1)}$$
+```math
+E[V] = \frac{a}{a+b}, \qquad \mathrm{Var}(V) = \frac{ab}{(a+b)^2\,(a+b+1)}
+```
 
 **Read it aloud:** belief in a conversion rate v rises with v to the power a − 1 and with 1 − v to the power b − 1; the average is a's share of a + b; and the larger a + b, the tighter the belief.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$, $t$ | the wait for the α-th email, and one number of minutes | 20 minutes | larger t: a smaller chance of still waiting |
-| $\lambda$ | the rate: emails per minute | 0.2 (12 per hour) | every wait shrinks in proportion |
-| $\alpha$ | the shape: emails awaited | 3 | the hump moves right and widens |
-| $\Gamma(\alpha)$ | the gamma integral, the gamma law's constant | Γ(3) = 2 | — |
-| $V$, $v$ | the unknown conversion rate, and one value of it | 0.3 | — |
-| $a$, $b$ | beta's two parameters | 2 and 8 | a up: average up; b up: average down |
-| $B(a,b)$ | the beta integral, the beta law's constant | 1/72 = 0.013889 | — |
-| $f_T$, $f_V$, $F$ | the two densities (chance per minute, chance per unit of rate), and a cumulative chance | peak of f_V: 3.46 near 0.15 | — |
-| $E$, $\mathrm{Var}$ | the long-run average, and the variance | E[T] = 15, Var(T) = 75 | — |
-| $j$ | the counter in the Poisson and binomial sums | 0 to α − 1 | — |
-| $x$, $y$, $s$, $u$ | integration variables; in Step 4, x and y are two waits and u their total | — | — |
-| $n$ | a + b − 1, a count of points in the binomial road | 9 | — |
+| $`T`$, $`t`$ | the wait for the α-th email, and one number of minutes | 20 minutes | larger t: a smaller chance of still waiting |
+| $`\lambda`$ | the rate: emails per minute | 0.2 (12 per hour) | every wait shrinks in proportion |
+| $`\alpha`$ | the shape: emails awaited | 3 | the hump moves right and widens |
+| $`\Gamma(\alpha)`$ | the gamma integral, the gamma law's constant | Γ(3) = 2 | — |
+| $`V`$, $`v`$ | the unknown conversion rate, and one value of it | 0.3 | — |
+| $`a`$, $`b`$ | beta's two parameters | 2 and 8 | a up: average up; b up: average down |
+| $`B(a,b)`$ | the beta integral, the beta law's constant | 1/72 = 0.013889 | — |
+| $`f_T`$, $`f_V`$, $`F`$ | the two densities (chance per minute, chance per unit of rate), and a cumulative chance | peak of f_V: 3.46 near 0.15 | — |
+| $`E`$, $`\mathrm{Var}`$ | the long-run average, and the variance | E[T] = 15, Var(T) = 75 | — |
+| $`j`$ | the counter in the Poisson and binomial sums | 0 to α − 1 | — |
+| $`x`$, $`y`$, $`s`$, $`u`$ | integration variables; in Step 4, x and y are two waits and u their total | — | — |
+| $`n`$ | a + b − 1, a count of points in the binomial road | 9 | — |
 
 ### The picture: three beliefs about the conversion rate
 
@@ -111,20 +121,26 @@ The situation fixes the shape of a curve. Dividing by its total area makes the a
 
 The wait for the third email is longer than t exactly when fewer than three emails arrive in the first t minutes. The count in a window of t minutes is Poisson with average λt ([Poisson](../03-Discrete%20Distributions/04-poisson.md)). So the chance of still waiting is the Poisson chance of 0, 1 or 2:
 
-$$P(T > t) = e^{-\lambda t}\left(1 + \lambda t + \frac{(\lambda t)^2}{2}\right)$$
+```math
+P(T > t) = e^{-\lambda t}\left(1 + \lambda t + \frac{(\lambda t)^2}{2}\right)
+```
 
 The density is the rate at which that chance falls. Differentiating, all but one term cancel in pairs:
 
-$$f_T(t) = \frac{\lambda^3\,t^2\,e^{-\lambda t}}{2}$$
+```math
+f_T(t) = \frac{\lambda^3\,t^2\,e^{-\lambda t}}{2}
+```
 
 With α emails in place of three the same cancellation leaves λ^α t^(α−1) e^(−λt) divided by (α − 1)!.
 
 <details>
 <summary>Detailed proof: the cancellation, for any whole α</summary>
 
-Write $S(t) = e^{-\lambda t} \sum_{j=0}^{\alpha-1} (\lambda t)^j / j!$. The product rule gives two sums. Differentiating the exponential gives $-\lambda e^{-\lambda t} \sum_{j=0}^{\alpha-1} (\lambda t)^j / j!$. Differentiating each power gives $e^{-\lambda t} \sum_{j=1}^{\alpha-1} \lambda (\lambda t)^{j-1} / (j-1)!$, which is the first sum again, with the opposite sign, missing its last term. Everything cancels except that last term:
-$$-S'(t) = \lambda e^{-\lambda t} \frac{(\lambda t)^{\alpha-1}}{(\alpha-1)!} = \frac{\lambda^\alpha t^{\alpha-1} e^{-\lambda t}}{(\alpha-1)!}.$$
-The density is $-S'(t)$ because $S(t) = 1 - F(t)$ and the density is the slope of $F$.
+Write $`S(t) = e^{-\lambda t} \sum_{j=0}^{\alpha-1} (\lambda t)^j / j!`$. The product rule gives two sums. Differentiating the exponential gives $`-\lambda e^{-\lambda t} \sum_{j=0}^{\alpha-1} (\lambda t)^j / j!`$. Differentiating each power gives $`e^{-\lambda t} \sum_{j=1}^{\alpha-1} \lambda (\lambda t)^{j-1} / (j-1)!`$, which is the first sum again, with the opposite sign, missing its last term. Everything cancels except that last term:
+
+$`\displaystyle -S'(t) = \lambda e^{-\lambda t} \frac{(\lambda t)^{\alpha-1}}{(\alpha-1)!} = \frac{\lambda^\alpha t^{\alpha-1} e^{-\lambda t}}{(\alpha-1)!}.`$
+
+The density is $`-S'(t)`$ because $`S(t) = 1 - F(t)`$ and the density is the slope of $`F`$.
 
 </details>
 
@@ -136,11 +152,15 @@ A third road uses the moment generating function, one function that stores every
 
 Put x = λt in the area of λ^α t^(α−1) e^(−λt). The rate cancels and what remains is
 
-$$\int_0^\infty \lambda^\alpha t^{\alpha-1} e^{-\lambda t}\,dt = \int_0^\infty x^{\alpha-1} e^{-x}\,dx = \Gamma(\alpha).$$
+```math
+\int_0^\infty \lambda^\alpha t^{\alpha-1} e^{-\lambda t}\,dt = \int_0^\infty x^{\alpha-1} e^{-x}\,dx = \Gamma(\alpha).
+```
 
 So dividing by Γ(α) makes the area 1, and for whole α this is (α − 1)!, the constant Step 1 found. Integration by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) gives the step rule: differentiate the power x^α, integrate e^(−x), and the boundary term vanishes at both ends:
 
-$$\Gamma(\alpha + 1) = \alpha \int_0^\infty x^{\alpha-1} e^{-x}\,dx = \alpha\,\Gamma(\alpha).$$
+```math
+\Gamma(\alpha + 1) = \alpha \int_0^\infty x^{\alpha-1} e^{-x}\,dx = \alpha\,\Gamma(\alpha).
+```
 
 Starting from Γ(1) = 1, the areas for α = 1, 2, 3, 4 are 1, 1, 2, 6. The check integrates each by Simpson's rule, a numerical method that adds up the area under a curve in many thin slices, and gets 1.000000, 1.000000, 2.000000, 6.000000.
 
@@ -150,7 +170,9 @@ The integral makes sense for any α above 0, not only whole ones. At α = 1/2, p
 
 Multiplying the density by t raises the power by one, which turns Γ(α) into Γ(α + 1):
 
-$$E[T] = \frac{\Gamma(\alpha+1)}{\lambda\,\Gamma(\alpha)} = \frac{\alpha}{\lambda} = 15, \qquad E[T^2] = \frac{\alpha(\alpha+1)}{\lambda^2} = 300, \qquad \mathrm{Var}(T) = 300 - 225 = 75.$$
+```math
+E[T] = \frac{\Gamma(\alpha+1)}{\lambda\,\Gamma(\alpha)} = \frac{\alpha}{\lambda} = 15, \qquad E[T^2] = \frac{\alpha(\alpha+1)}{\lambda^2} = 300, \qquad \mathrm{Var}(T) = 300 - 225 = 75.
+```
 
 The same numbers come from adding. The wait is three independent gaps, each with average 5 and variance 25; averages add, and for independent gaps variances add, giving 15 and 75. The standard deviation is √75 = 8.660 minutes.
 
@@ -162,11 +184,15 @@ Take two independent gamma waits at the same rate, measured in average gaps so t
 
 The joint density of X and Y is the product of their densities. Change variables to the total u and the share v, so X = uv and Y = u(1 − v); the **Jacobian**, the area stretch factor of this change, is u. The exponential depends only on the total, and the powers split:
 
-$$\frac{x^{a-1}\,y^{b-1}\,e^{-(x+y)}}{\Gamma(a)\,\Gamma(b)} \cdot u \;=\; \frac{u^{a+b-1}\,e^{-u}}{\Gamma(a)\,\Gamma(b)} \cdot v^{a-1}(1-v)^{b-1}.$$
+```math
+\frac{x^{a-1}\,y^{b-1}\,e^{-(x+y)}}{\Gamma(a)\,\Gamma(b)} \cdot u \;=\; \frac{u^{a+b-1}\,e^{-u}}{\Gamma(a)\,\Gamma(b)} \cdot v^{a-1}(1-v)^{b-1}.
+```
 
 Integrate out the total: the u-part gives Γ(a + b). What is left is the density of the share, v^(a−1)(1 − v)^(b−1) times Γ(a + b)/(Γ(a)Γ(b)). It is a density, so its area is 1, and therefore
 
-$$B(a,b) = \frac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}.$$
+```math
+B(a,b) = \frac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}.
+```
 
 For the prior used here, B(2, 8) = 1! · 7!/9! = 1/72 = 0.013889. Simpson's rule on the curve v(1 − v)^7 gets the same.
 
@@ -174,7 +200,9 @@ For the prior used here, B(2, 8) = 1! · 7!/9! = 1/72 = 0.013889. Simpson's rule
 <summary>Detailed proof: the change of variables</summary>
 
 The map from (u, v), with u > 0 and 0 < v < 1, to (x, y) = (uv, u(1 − v)) is one to one onto the positive quarter-plane, with inverse u = x + y, v = x/(x + y). Its matrix of partial derivatives has rows `(v, u)` and `(1 − v, −u)`, with determinant v(−u) − u(1 − v) = −u, so the area factor is |−u| = u. Then
-$$\Gamma(a)\,\Gamma(b) = \int_0^\infty\!\!\int_0^\infty x^{a-1} y^{b-1} e^{-(x+y)}\,dx\,dy = \int_0^\infty u^{a+b-1} e^{-u}\,du \int_0^1 v^{a-1}(1-v)^{b-1}\,dv = \Gamma(a+b)\,B(a,b).$$
+
+$`\displaystyle \Gamma(a)\,\Gamma(b) = \int_0^\infty\!\!\int_0^\infty x^{a-1} y^{b-1} e^{-(x+y)}\,dx\,dy = \int_0^\infty u^{a+b-1} e^{-u}\,du \int_0^1 v^{a-1}(1-v)^{b-1}\,dv = \Gamma(a+b)\,B(a,b).`$
+
 Every integrand is positive, so the order of integration can be swapped freely. The factorisation also shows that the total and the share are independent: the share of the wait taken by the first two emails says nothing about how long the whole wait was.
 
 </details>
@@ -193,7 +221,9 @@ On [Beta-binomial](../10-Bayesian%20Inference/02-beta-binomial.md), data add buy
 
 For whole a and b, V has the same law as the a-th smallest of n = a + b − 1 points dropped independently and uniformly on the line from 0 to 1. So V is above v exactly when fewer than a of those points fall below v, a binomial count:
 
-$$P(V > v) = \sum_{j=0}^{a-1} \binom{n}{j} v^j (1 - v)^{n-j}.$$
+```math
+P(V > v) = \sum_{j=0}^{a-1} \binom{n}{j} v^j (1 - v)^{n-j}.
+```
 
 <details>
 <summary>Detailed proof: the a-th smallest of n uniform points</summary>

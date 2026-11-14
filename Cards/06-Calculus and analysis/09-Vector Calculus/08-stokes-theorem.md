@@ -26,37 +26,41 @@ To scale: 60 px per metre, 50 px of arrow per unit of curl. Arrows show the curl
 
 ## The formula
 
-Notation first, in words. A surface is named $S$; its rim is written $\partial S$, read "the boundary of S". On the surface, $\mathbf n$ is an arrow of length one standing straight off it; choosing its side is choosing an **orientation**. The wind $\mathbf F$ has components $F_1$, $F_2$, $F_3$, its speeds east, north and up. A circle on the integral sign, $\oint$, means "add once round a closed loop"; $d\mathbf r$ is a short step along it.
+Notation first, in words. A surface is named $`S`$; its rim is written $`\partial S`$, read "the boundary of S". On the surface, $`\mathbf n`$ is an arrow of length one standing straight off it; choosing its side is choosing an **orientation**. The wind $`\mathbf F`$ has components $`F_1`$, $`F_2`$, $`F_3`$, its speeds east, north and up. A circle on the integral sign, $`\oint`$, means "add once round a closed loop"; $`d\mathbf r`$ is a short step along it.
 
-$$\oint_{\partial S} \mathbf F\cdot d\mathbf r \;=\; \iint_S (\operatorname{curl}\mathbf F)\cdot\mathbf n\,dS$$
+```math
+\oint_{\partial S} \mathbf F\cdot d\mathbf r \;=\; \iint_S (\mathrm{curl}\,\mathbf F)\cdot\mathbf n\,dS
+```
 
-$$\operatorname{curl}\mathbf F = \left(\frac{\partial F_3}{\partial y}-\frac{\partial F_2}{\partial z},\;\frac{\partial F_1}{\partial z}-\frac{\partial F_3}{\partial x},\;\frac{\partial F_2}{\partial x}-\frac{\partial F_1}{\partial y}\right)$$
+```math
+\mathrm{curl}\,\mathbf F = \left(\frac{\partial F_3}{\partial y}-\frac{\partial F_2}{\partial z},\;\frac{\partial F_1}{\partial z}-\frac{\partial F_3}{\partial x},\;\frac{\partial F_2}{\partial x}-\frac{\partial F_1}{\partial y}\right)
+```
 
 **Read it aloud:** the wind's push added once round the rim equals the spin through the surface, added over every patch of it.
 
-**The matching way round.** Walk the rim with head along $\mathbf n$: the surface stays on the left. Equivalently, fingers of the right hand along the walk, thumb along $\mathbf n$. For the bowl, walked anticlockwise from above, $\mathbf n$ points into the hollow, towards the sphere's centre.
+**The matching way round.** Walk the rim with head along $`\mathbf n`$: the surface stays on the left. Equivalently, fingers of the right hand along the walk, thumb along $`\mathbf n`$. For the bowl, walked anticlockwise from above, $`\mathbf n`$ points into the hollow, towards the sphere's centre.
 
-That centre is the origin, x east, y north, z up; the rim is the circle of radius 2 m at height 0. The wind is $\mathbf F = w\,(-y, x, 0)$: it circles the axis, faster farther out.
+That centre is the origin, x east, y north, z up; the rim is the circle of radius 2 m at height 0. The wind is $`\mathbf F = w\,(-y, x, 0)`$: it circles the axis, faster farther out.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $\partial S$ | the surface, and its rim | the bowl; the rim circle | — (another sheet on the same rim changes nothing) |
-| $\mathbf F$, $F_1$, $F_2$, $F_3$ | the wind, and its speeds east, north, up, in m/s | $w(-y, x, 0)$ | double it and both sides double |
-| $\operatorname{curl}\mathbf F$ | the spin of the wind at a point, per second | (0, 0, 1) everywhere | more spin, more circulation |
-| $\partial F_2/\partial x$ and the like | how fast one speed changes per metre along one axis, the others held still | $w$ and $-w$ in the third component | steeper change, more curl |
-| $\cdot$ (dot) | multiply matching components and add: the part of one arrow along the other | curl · n | — |
-| $\mathbf n$ | unit arrow off the surface, matched to the walk | into the hollow | flipping it flips the sign |
-| $\oint$, $dS$, $d\mathbf r$ | add round a loop; a patch of surface; a step along the rim | m^2; m | — |
-| $w$ | the swirl rate, in radians per second | 0.5 | both sides grow in proportion |
-| $R$ | bowl radius, in m | 2 | both sides grow as its square |
-| $u$, $v$ | grid numbers naming a point $r(u, v)$ of the surface | compass angle; angle down from the top | — (any grid gives the same flux) |
+| $`S`$, $`\partial S`$ | the surface, and its rim | the bowl; the rim circle | — (another sheet on the same rim changes nothing) |
+| $`\mathbf F`$, $`F_1`$, $`F_2`$, $`F_3`$ | the wind, and its speeds east, north, up, in m/s | $`w(-y, x, 0)`$ | double it and both sides double |
+| $`\mathrm{curl}\,\mathbf F`$ | the spin of the wind at a point, per second | (0, 0, 1) everywhere | more spin, more circulation |
+| $`\partial F_2/\partial x`$ and the like | how fast one speed changes per metre along one axis, the others held still | $`w`$ and $`-w`$ in the third component | steeper change, more curl |
+| $`\cdot`$ (dot) | multiply matching components and add: the part of one arrow along the other | curl · n | — |
+| $`\mathbf n`$ | unit arrow off the surface, matched to the walk | into the hollow | flipping it flips the sign |
+| $`\oint`$, $`dS`$, $`d\mathbf r`$ | add round a loop; a patch of surface; a step along the rim | m^2; m | — |
+| $`w`$ | the swirl rate, in radians per second | 0.5 | both sides grow in proportion |
+| $`R`$ | bowl radius, in m | 2 | both sides grow as its square |
+| $`u`$, $`v`$ | grid numbers naming a point $`r(u, v)`$ of the surface | compass angle; angle down from the top | — (any grid gives the same flux) |
 
 Units: curl is m/s per m, so per second; curl times m^2, or wind times m, gives m^2/s.
 
 ### When it holds
 
 - **A two-sided surface.** A Möbius band cannot be oriented, so there is nothing to match.
-- **The matching way round.** Point $\mathbf n$ out of the underside and the bowl reads −12.566 against the rim's 12.566.
+- **The matching way round.** Point $`\mathbf n`$ out of the underside and the bowl reads −12.566 against the rim's 12.566.
 - **The whole rim.** A bowl with a drain hole has two rims; the inner one is walked the other way round.
 - **Continuous partial derivatives at every point of the surface.** A wind spinning round a core on the axis (a drain) has zero curl wherever it is defined, yet circulation 12.566 m^2/s. The bowl meets the axis, where that wind is undefined.
 
@@ -70,20 +74,20 @@ Cut the bowl into small patches and walk each edge the matching way round. An ed
 
 ### Step 1: the flat case is Green's theorem
 
-On the lid, the flat disc of radius $R$ with $\mathbf n$ straight up, only the curl's third component, $\partial F_2/\partial x - \partial F_1/\partial y$, crosses. Circulation round the circle equals that added over the disc: [Green's theorem](06-greens-theorem.md), proved there.
+On the lid, the flat disc of radius $`R`$ with $`\mathbf n`$ straight up, only the curl's third component, $`\partial F_2/\partial x - \partial F_1/\partial y`$, crosses. Circulation round the circle equals that added over the disc: [Green's theorem](06-greens-theorem.md), proved there.
 
 For the swirl the upward curl is w − (−w) = 1 per second everywhere, over πR^2 = 4π m^2: flux 4π, the rim's 12.566.
 
 ### Step 2: a curved surface is a flat grid, bent
 
-Name each point of the bowl by grid numbers $u$ and $v$. The rim is then the edge of a flat rectangle of grid numbers. Rewrite the wind's push in grid numbers by the chain rule and apply Green's theorem on the rectangle: what comes out is exactly the curl dotted with the grid's area arrow.
+Name each point of the bowl by grid numbers $`u`$ and $`v`$. The rim is then the edge of a flat rectangle of grid numbers. Rewrite the wind's push in grid numbers by the chain rule and apply Green's theorem on the rectangle: what comes out is exactly the curl dotted with the grid's area arrow.
 
 <details>
 <summary>Detailed proof: one smooth chart</summary>
 
-Let the surface be $r(u, v)$ over a flat region D where Green's theorem holds, r with continuous second partial derivatives, oriented by r_u × r_v (r_u: the rate of r in u, v held still). The anticlockwise edge of D maps to the matching walk round the rim. By the chain rule, F · dr = a du + b dv with a = F(r) · r_u and b = F(r) · r_v. Green on D gives
+Let the surface be $`r(u, v)`$ over a flat region D where Green's theorem holds, r with continuous second partial derivatives, oriented by r_u × r_v (r_u: the rate of r in u, v held still). The anticlockwise edge of D maps to the matching walk round the rim. By the chain rule, F · dr = a du + b dv with a = F(r) · r_u and b = F(r) · r_v. Green on D gives
 
-$$\oint_{\partial D} a\,du + b\,dv = \iint_D \left(\frac{\partial b}{\partial u} - \frac{\partial a}{\partial v}\right) du\,dv.$$
+$`\displaystyle \oint_{\partial D} a\,du + b\,dv = \iint_D \left(\frac{\partial b}{\partial u} - \frac{\partial a}{\partial v}\right) du\,dv.`$
 
 Differentiating, the terms F(r) · r_vu and F(r) · r_uv cancel, as mixed partials agree. What remains is (J r_u) · r_v − (J r_v) · r_u, J the matrix of F's partial derivatives. With A = r_u, B = r_v, the (y, z) terms give (∂F_3/∂y − ∂F_2/∂z)(A_y B_z − A_z B_y), and the other two pairs match: the sum is curl F · (A × B). So the right side is the curl's flux.
 
@@ -93,7 +97,7 @@ Several charts meeting along edges: add their results; shared edges cancel as in
 
 ### Step 3: the bowl by hand, twice
 
-At height z the bowl's $\mathbf n$ has upward part −z/R. A band of sphere between two heights has area 2πR times the height difference (Archimedes), so each metre of depth carries 4π m^2 of bowl.
+At height z the bowl's $`\mathbf n`$ has upward part −z/R. A band of sphere between two heights has area 2πR times the height difference (Archimedes), so each metre of depth carries 4π m^2 of bowl.
 
 For the swirl, curl · n = −z/2, averaging 0.5 over the 2 m of depth: 0.5 × 2 × 4π = 4π.
 

@@ -26,30 +26,34 @@ To scale: 70 px per km both ways. Each strip is 0.2 km across and ends at the ed
 
 ## The formula
 
-Notation first, in words. A doubled integral sign with a region under it, then $dA$, means "add over every small patch of area in that region". Two single integral signs in a row mean "do the inner one first, holding the outer variable fixed".
+Notation first, in words. A doubled integral sign with a region under it, then $`dA`$, means "add over every small patch of area in that region". Two single integral signs in a row mean "do the inner one first, holding the outer variable fixed".
 
-Write $x$ for km east of the outlet, $y$ for km north, and $f(x, y) = 6 + 3y + xy$ for the rain depth there in mm; it matches all three gauges. The catchment is the region $D$. Patch number k has area $\Delta A_k$ and a sample point $(x_k, y_k)$ inside it.
+Write $`x`$ for km east of the outlet, $`y`$ for km north, and $`f(x, y) = 6 + 3y + xy`$ for the rain depth there in mm; it matches all three gauges. The catchment is the region $`D`$. Patch number k has area $`\Delta A_k`$ and a sample point $`(x_k, y_k)`$ inside it.
 
-$$\iint_D f\,dA = \lim_{\text{patches}\to 0}\ \sum_k f(x_k, y_k)\,\Delta A_k$$
+```math
+\iint_D f\,dA = \lim_{\text{patches}\to 0}\ \sum_k f(x_k, y_k)\,\Delta A_k
+```
 
 **Read it aloud:** the double integral of f over D is what depth-times-area sums settle on as every patch shrinks.
 
-Fubini's theorem turns that into two ordinary integrals. Describe $D$ by north strips: $x$ from $a$ to $b$, each strip from $y = g_1(x)$ to $y = g_2(x)$. Or by east strips: $y$ from $c$ to $d$, each strip from $x = h_1(y)$ to $x = h_2(y)$. Then
+Fubini's theorem turns that into two ordinary integrals. Describe $`D`$ by north strips: $`x`$ from $`a`$ to $`b`$, each strip from $`y = g_1(x)`$ to $`y = g_2(x)`$. Or by east strips: $`y`$ from $`c`$ to $`d`$, each strip from $`x = h_1(y)`$ to $`x = h_2(y)`$. Then
 
-$$\iint_D f\,dA = \int_a^b\!\left[\int_{g_1(x)}^{g_2(x)} f(x,y)\,dy\right]dx = \int_c^d\!\left[\int_{h_1(y)}^{h_2(y)} f(x,y)\,dx\right]dy$$
+```math
+\iint_D f\,dA = \int_a^b\!\left[\int_{g_1(x)}^{g_2(x)} f(x,y)\,dy\right]dx = \int_c^d\!\left[\int_{h_1(y)}^{h_2(y)} f(x,y)\,dx\right]dy
+```
 
 **Read it aloud:** add along each north strip, then add the strips west to east; or add along each east strip, then add them south to north.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | rain depth at a point, mm | 6 + 3y + xy | more water |
-| $x$, $y$ | km east and km north of the outlet | the triangle 0 ≤ y ≤ x/2, 0 ≤ x ≤ 4 | — |
-| $D$ | the region added over | the catchment, 4 km^2 | a bigger region collects more |
-| $\Delta A_k$, $dA$ | a patch's area, and the patch in the limit | cells 4/n km by 2/n km | — |
-| $n$ | pieces per side of the grid or strip | 4, 16, 64 | the sums close in on 40 |
-| $a$, $b$, $g_1$, $g_2$ | outer range of x; bottom and top of a north strip | 0, 4; y = 0 and y = x/2 | a higher top edge takes in more land |
-| $c$, $d$, $h_1$, $h_2$ | outer range of y; west and east ends of an east strip | 0, 2; x = 2y and x = 4 | — |
-| $\iint_D f\,dA$ | the total, in mm·km^2 | 40 mm·km^2 = 40,000 m^3 | — |
+| $`f`$ | rain depth at a point, mm | 6 + 3y + xy | more water |
+| $`x`$, $`y`$ | km east and km north of the outlet | the triangle 0 ≤ y ≤ x/2, 0 ≤ x ≤ 4 | — |
+| $`D`$ | the region added over | the catchment, 4 km^2 | a bigger region collects more |
+| $`\Delta A_k`$, $`dA`$ | a patch's area, and the patch in the limit | cells 4/n km by 2/n km | — |
+| $`n`$ | pieces per side of the grid or strip | 4, 16, 64 | the sums close in on 40 |
+| $`a`$, $`b`$, $`g_1`$, $`g_2`$ | outer range of x; bottom and top of a north strip | 0, 4; y = 0 and y = x/2 | a higher top edge takes in more land |
+| $`c`$, $`d`$, $`h_1`$, $`h_2`$ | outer range of y; west and east ends of an east strip | 0, 2; x = 2y and x = 4 | — |
+| $`\iint_D f\,dA`$ | the total, in mm·km^2 | 40 mm·km^2 = 40,000 m^3 | — |
 
 ### When it holds
 
@@ -64,7 +68,7 @@ $$\iint_D f\,dA = \int_a^b\!\left[\int_{g_1(x)}^{g_2(x)} f(x,y)\,dy\right]dx = \
 
 ### Step 0: a thin strip is a one-variable problem
 
-Fix $x$ and walk north. Along that line the depth depends on $y$ alone, so the rain on a thin strip is an ordinary integral times the strip's width, which [The integral](../04-Integrals/01-riemann-integral.md) handles. What needs proof is that strips-then-add equals patch-and-add.
+Fix $`x`$ and walk north. Along that line the depth depends on $`y`$ alone, so the rain on a thin strip is an ordinary integral times the strip's width, which [The integral](../04-Integrals/01-riemann-integral.md) handles. What needs proof is that strips-then-add equals patch-and-add.
 
 ### Step 1: patch sums settle, with actual numbers
 
@@ -91,23 +95,31 @@ R is a rectangle holding D, F is f set to 0 outside D, ε (epsilon) a tolerance,
 
 ### Step 3: north strips, by hand
 
-At fixed $x$ the strip runs from y = 0 to y = x/2. With $x$ held constant, an antiderivative of 6 + 3y + xy in $y$ is 6y + (3 + x)y^2/2:
+At fixed $`x`$ the strip runs from y = 0 to y = x/2. With $`x`$ held constant, an antiderivative of 6 + 3y + xy in $`y`$ is 6y + (3 + x)y^2/2:
 
-$$\int_0^{x/2}(6 + 3y + xy)\,dy = 3x + \tfrac{3}{8}x^2 + \tfrac{1}{8}x^3$$
+```math
+\int_0^{x/2}(6 + 3y + xy)\,dy = 3x + \tfrac{3}{8}x^2 + \tfrac{1}{8}x^3
+```
 
 At x = 2 that strip carries 8.5 mm·km^2 per km of width. Now add the strips:
 
-$$\int_0^4\left(3x + \tfrac{3}{8}x^2 + \tfrac{1}{8}x^3\right)dx = 24 + 8 + 8 = 40$$
+```math
+\int_0^4\left(3x + \tfrac{3}{8}x^2 + \tfrac{1}{8}x^3\right)dx = 24 + 8 + 8 = 40
+```
 
 ### Step 4: east strips, by re-describing the triangle
 
-Swapping the order means rebuilding the limits from the picture. At fixed $y$ the east strip starts at the edge y = x/2, which is x = 2y, and ends at x = 4; $y$ runs from 0 to 2.
+Swapping the order means rebuilding the limits from the picture. At fixed $`y`$ the east strip starts at the edge y = x/2, which is x = 2y, and ends at x = 4; $`y`$ runs from 0 to 2.
 
-$$\int_{2y}^{4}(6 + 3y + xy)\,dx = 24 + 8y - 6y^2 - 2y^3$$
+```math
+\int_{2y}^{4}(6 + 3y + xy)\,dx = 24 + 8y - 6y^2 - 2y^3
+```
 
 At y = 1 that strip carries 24 mm·km^2 per km of thickness. Adding the strips:
 
-$$\int_0^2\left(24 + 8y - 6y^2 - 2y^3\right)dy = 48 + 16 - 16 - 8 = 40$$
+```math
+\int_0^2\left(24 + 8y - 6y^2 - 2y^3\right)dy = 48 + 16 - 16 - 8 = 40
+```
 
 Different antiderivatives, different limits, one total.
 

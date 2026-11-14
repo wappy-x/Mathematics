@@ -37,44 +37,52 @@ Orange: Acme at $90, in the money, where the formula runs cheap for short lives.
 
 ## The formula
 
-For a put, and a share price $S$ above the critical price $S^*$:
+For a put, and a share price $`S`$ above the critical price $`S^*`$:
 
-$$P(S) \;=\; p(S) \;+\; A\left(\frac{S}{S^*}\right)^{\beta_1}, \qquad P(S) = K - S \ \text{ when } S \le S^*$$
+```math
+P(S) \;=\; p(S) \;+\; A\left(\frac{S}{S^*}\right)^{\beta_1}, \qquad P(S) = K - S \ \text{ when } S \le S^*
+```
 
 **Read it aloud:** the American put is the European put plus a lump that is largest at the critical price and fades as a fixed power of the share price above it; at or below the critical price, the put is worth exactly what exercising pays.
 
 The lump's size at the critical price, fixed by making the curve meet the exercise line smoothly:
 
-$$A = -\frac{S^*}{\beta_1}\Big(1 - e^{-qT}\,N\big(-d_1(S^*)\big)\Big)$$
+```math
+A = -\frac{S^*}{\beta_1}\Big(1 - e^{-qT}\,N\big(-d_1(S^*)\big)\Big)
+```
 
 The power, the negative root of a quadratic:
 
-$$\beta_1 = \frac{-(n-1) - \sqrt{(n-1)^2 + 4m/h}}{2}, \qquad m = \frac{2r}{\sigma^2}, \quad n = \frac{2(r-q)}{\sigma^2}, \quad h = 1 - e^{-rT}$$
+```math
+\beta_1 = \frac{-(n-1) - \sqrt{(n-1)^2 + 4m/h}}{2}, \qquad m = \frac{2r}{\sigma^2}, \quad n = \frac{2(r-q)}{\sigma^2}, \quad h = 1 - e^{-rT}
+```
 
 The critical price, the one share price where holding and exercising are worth the same:
 
-$$K - S^* \;=\; p(S^*) - \Big(1 - e^{-qT}N\big(-d_1(S^*)\big)\Big)\frac{S^*}{\beta_1}$$
+```math
+K - S^* \;=\; p(S^*) - \Big(1 - e^{-qT}N\big(-d_1(S^*)\big)\Big)\frac{S^*}{\beta_1}
+```
 
-That last line has $S^*$ on both sides and inside $N$. It has no closed-form solution. Newton's method solves it in five steps ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)).
+That last line has $`S^*`$ on both sides and inside $`N`$. It has no closed-form solution. Newton's method solves it in five steps ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P$, $p$, $V$ | the American put and its European twin, in dollars; $V$ is any option price in the derivation | $6.67 (formula), $6.33 | $P$ rises one for one with $p$ |
-| $\varepsilon$, $f$, $f_h$ | the premium $P - p$; the premium with its life factored out, $\varepsilon = h f$; the rate $f$ changes with $h$ | 34 cents by formula, 33 by tree | — |
-| $S$, $K$, $X$ | Acme's price today; the strike, the price the put lets its holder sell at; any trial share price | $100, $100 | $S$ up: put and premium fall; $K$ up: both rise |
-| $r$, $q$ | the riskless rate and the dividend yield, both continuously compounded | 5%, 2% | $r$ up: premium rises, since exercising early starts interest on $K$ sooner; $q$ up: premium falls |
-| $\sigma$ | volatility, the yearly spread of log returns | 20% | the put gets dearer; the premium moves much less |
-| $T$, $\tau$ | years to expiry; in the derivation, time remaining as it runs down | 1 | premium rises, and so does the error |
-| $h$ | the life factor $1 - e^{-rT}$: 0 on the last day, 1 for a put that never expires | 0.048771 | $\beta_1$ flattens towards its perpetual value |
-| $m$, $n$ | the rate, and the rate less the dividend, each measured in units of $\sigma^2/2$ | 2.5, 1.5 | — |
-| $\beta_1$, $\beta_2$ | the negative and positive roots of the quadratic; the put uses $\beta_1$ | −7.414001, 6.914001 | $\beta_1$ more negative: the lump dies faster above $S^*$ |
-| $S^*$, $S_\infty$ | the critical price for this put; the same for a put that never expires | $78.76, $64.92 | — |
-| $A$, $G$ | the lump's height at $S^*$; the matching gap $G(X)$ that Newton drives to zero | 2.008478 | — |
-| $N$, $\varphi$, $d_1$, $d_2$ | the bell-curve area and height; the Black-Scholes distances, here evaluated at any share price | $d_1(S^*) = -0.943639$ | — |
+| $`P`$, $`p`$, $`V`$ | the American put and its European twin, in dollars; $`V`$ is any option price in the derivation | $6.67 (formula), $6.33 | $`P`$ rises one for one with $`p`$ |
+| $`\varepsilon`$, $`f`$, $`f_h`$ | the premium $`P - p`$; the premium with its life factored out, $`\varepsilon = h f`$; the rate $`f`$ changes with $`h`$ | 34 cents by formula, 33 by tree | — |
+| $`S`$, $`K`$, $`X`$ | Acme's price today; the strike, the price the put lets its holder sell at; any trial share price | $100, $100 | $`S`$ up: put and premium fall; $`K`$ up: both rise |
+| $`r`$, $`q`$ | the riskless rate and the dividend yield, both continuously compounded | 5%, 2% | $`r`$ up: premium rises, since exercising early starts interest on $`K`$ sooner; $`q`$ up: premium falls |
+| $`\sigma`$ | volatility, the yearly spread of log returns | 20% | the put gets dearer; the premium moves much less |
+| $`T`$, $`\tau`$ | years to expiry; in the derivation, time remaining as it runs down | 1 | premium rises, and so does the error |
+| $`h`$ | the life factor $`1 - e^{-rT}`$: 0 on the last day, 1 for a put that never expires | 0.048771 | $`\beta_1`$ flattens towards its perpetual value |
+| $`m`$, $`n`$ | the rate, and the rate less the dividend, each measured in units of $`\sigma^2/2`$ | 2.5, 1.5 | — |
+| $`\beta_1`$, $`\beta_2`$ | the negative and positive roots of the quadratic; the put uses $`\beta_1`$ | −7.414001, 6.914001 | $`\beta_1`$ more negative: the lump dies faster above $`S^*`$ |
+| $`S^*`$, $`S_\infty`$ | the critical price for this put; the same for a put that never expires | $78.76, $64.92 | — |
+| $`A`$, $`G`$ | the lump's height at $`S^*`$; the matching gap $`G(X)`$ that Newton drives to zero | 2.008478 | — |
+| $`N`$, $`\varphi`$, $`d_1`$, $`d_2`$ | the bell-curve area and height; the Black-Scholes distances, here evaluated at any share price | $`d_1(S^*) = -0.943639`$ | — |
 
-The helpers, as on the pilot card: $d_1(X) = \big(\ln(X/K) + (r - q + \tfrac12\sigma^2)T\big)/(\sigma\sqrt{T})$ and $d_2 = d_1 - \sigma\sqrt{T}$. In words: the log distance from the strike to $X$, plus a drift term, counted in units of $\sigma\sqrt{T}$. The European put is $p(X) = K e^{-rT} N(-d_2) - X e^{-qT} N(-d_1)$ ([Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md)).
+The helpers, as on the pilot card: $`d_1(X) = \big(\ln(X/K) + (r - q + \tfrac12\sigma^2)T\big)/(\sigma\sqrt{T})`$ and $`d_2 = d_1 - \sigma\sqrt{T}`$. In words: the log distance from the strike to $`X`$, plus a drift term, counted in units of $`\sigma\sqrt{T}`$. The European put is $`p(X) = K e^{-rT} N(-d_2) - X e^{-qT} N(-d_1)`$ ([Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md)).
 
-A call has the same shape mirrored: the positive root $\beta_2$, a critical price above the strike, and every sign flipped. With no dividend the call's critical price runs off to infinity and the formula returns the European call, as [Merton's theorem](02-mertons-no-early-exercise-theorem.md) says it must.
+A call has the same shape mirrored: the positive root $`\beta_2`$, a critical price above the strike, and every sign flipped. With no dividend the call's critical price runs off to infinity and the formula returns the European call, as [Merton's theorem](02-mertons-no-early-exercise-theorem.md) says it must.
 
 ### When it holds
 
@@ -95,75 +103,83 @@ The premium is simpler than the price: zero at expiry, almost zero far above the
 
 ### Step 1: write the premium as a life factor times a shape
 
-Let $\tau$ be time remaining and $\varepsilon(S, \tau)$ the premium. Multiply the Black-Scholes equation by $2/\sigma^2$ and use $m$ and $n$:
+Let $`\tau`$ be time remaining and $`\varepsilon(S, \tau)`$ the premium. Multiply the Black-Scholes equation by $`2/\sigma^2`$ and use $`m`$ and $`n`$:
 
-$$S^2 \varepsilon_{SS} + n S \varepsilon_S - m \varepsilon - \frac{m}{r}\varepsilon_\tau = 0.$$
+```math
+S^2 \varepsilon_{SS} + n S \varepsilon_S - m \varepsilon - \frac{m}{r}\varepsilon_\tau = 0.
+```
 
-Subscripts mean derivatives: $\varepsilon_S$ is the premium's slope in the share price, $\varepsilon_{SS}$ its curvature, $\varepsilon_\tau$ its rate of change as time remaining grows.
+Subscripts mean derivatives: $`\varepsilon_S`$ is the premium's slope in the share price, $`\varepsilon_{SS}`$ its curvature, $`\varepsilon_\tau`$ its rate of change as time remaining grows.
 
-Now change the clock to $h = 1 - e^{-r\tau}$, which runs from 0 on the last day to 1 for an endless life, and write $\varepsilon = h\,f(S, h)$. The time derivative splits in two. One piece joins the $f$ term. The other carries a factor $(1 - h)$ and a derivative of $f$ in $h$. With no approximation yet:
+Now change the clock to $`h = 1 - e^{-r\tau}`$, which runs from 0 on the last day to 1 for an endless life, and write $`\varepsilon = h\,f(S, h)`$. The time derivative splits in two. One piece joins the $`f`$ term. The other carries a factor $`(1 - h)`$ and a derivative of $`f`$ in $`h`$. With no approximation yet:
 
-$$S^2 f_{SS} + n S f_S - \frac{m}{h} f \;-\; m(1-h)\, f_h \;=\; 0.$$
+```math
+S^2 f_{SS} + n S f_S - \frac{m}{h} f \;-\; m(1-h)\, f_h \;=\; 0.
+```
 
 ### Step 2: drop the one term
 
-Drop $m(1-h) f_h$. That is the whole approximation.
+Drop $`m(1-h) f_h`$. That is the whole approximation.
 
-It is exactly zero at $h = 1$, the put that never expires, because of the $(1-h)$ in front. At $h = 0$, the last day, the premium $\varepsilon = h f$ is zero anyway, so there is nothing to be wrong about. In between, $f_h$ is a real quantity nobody has bounded. That is where the error in the chart comes from, and why it grows with the life.
+It is exactly zero at $`h = 1`$, the put that never expires, because of the $`(1-h)`$ in front. At $`h = 0`$, the last day, the premium $`\varepsilon = h f`$ is zero anyway, so there is nothing to be wrong about. In between, $`f_h`$ is a real quantity nobody has bounded. That is where the error in the chart comes from, and why it grows with the life.
 
 ### Step 3: an equation with no scale has powers for solutions
 
-What is left, $S^2 f'' + n S f' - (m/h) f = 0$, treats $h$ as a fixed number. Every term carries the same net power of $S$: two derivatives against $S^2$, one against $S$, none against none. Measure Acme in cents instead of dollars and the equation is unchanged. Powers are the functions with that property. Try $f = S^\beta$:
+What is left, $`S^2 f'' + n S f' - (m/h) f = 0`$, treats $`h`$ as a fixed number. Every term carries the same net power of $`S`$: two derivatives against $`S^2`$, one against $`S`$, none against none. Measure Acme in cents instead of dollars and the equation is unchanged. Powers are the functions with that property. Try $`f = S^\beta`$:
 
-$$\beta(\beta - 1) + n\beta - \frac{m}{h} = 0 \quad\Longleftrightarrow\quad \beta^2 + (n-1)\beta - \frac{m}{h} = 0.$$
+```math
+\beta(\beta - 1) + n\beta - \frac{m}{h} = 0 \quad\Longleftrightarrow\quad \beta^2 + (n-1)\beta - \frac{m}{h} = 0.
+```
 
-This quadratic gives the method its other name, the quadratic approximation. The roots multiply to $-m/h$, which is negative, so one root is negative and one positive. For Acme they are −7.414001 and 6.914001. The put's premium must vanish as $S$ grows large, where exercising a put is absurd, so the put keeps the negative root $\beta_1$.
+This quadratic gives the method its other name, the quadratic approximation. The roots multiply to $`-m/h`$, which is negative, so one root is negative and one positive. For Acme they are −7.414001 and 6.914001. The put's premium must vanish as $`S`$ grows large, where exercising a put is absurd, so the put keeps the negative root $`\beta_1`$.
 
 ### Step 4: two conditions at the critical price fix the two unknowns
 
-Write the premium as $A (S/S^*)^{\beta_1}$, so $A$ is its height at $S^*$. Two unknowns, $A$ and $S^*$. Two conditions.
+Write the premium as $`A (S/S^*)^{\beta_1}`$, so $`A`$ is its height at $`S^*`$. Two unknowns, $`A`$ and $`S^*`$. Two conditions.
 
-**Value matching.** At $S^*$ holding and exercising are worth the same: $p(S^*) + A = K - S^*$.
+**Value matching.** At $`S^*`$ holding and exercising are worth the same: $`p(S^*) + A = K - S^*`$.
 
-**Smooth pasting.** At $S^*$ the price curve runs tangent to the exercise line, slope −1, not at a corner ([The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md)). The European put's slope is $-e^{-qT}N(-d_1)$; the lump's slope at $S^*$ is $A\beta_1/S^*$. Setting their sum to −1 gives $A$. Putting that $A$ into value matching gives the equation for $S^*$ in The formula.
+**Smooth pasting.** At $`S^*`$ the price curve runs tangent to the exercise line, slope −1, not at a corner ([The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md)). The European put's slope is $`-e^{-qT}N(-d_1)`$; the lump's slope at $`S^*`$ is $`A\beta_1/S^*`$. Setting their sum to −1 gives $`A`$. Putting that $`A`$ into value matching gives the equation for $`S^*`$ in The formula.
 
-The check measures the slope of the finished curve just above $S^*$: −0.999999.
+The check measures the slope of the finished curve just above $`S^*`$: −0.999999.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The equation.** For time remaining $\tau$, any option price $V$ in the hold region satisfies $\tfrac12\sigma^2 S^2 V_{SS} + (r - q) S V_S - rV - V_\tau = 0$. It holds for $P$ and for $p$, and it is linear, so it holds for $\varepsilon = P - p$. Multiplying by $2/\sigma^2$ gives $S^2\varepsilon_{SS} + nS\varepsilon_S - m\varepsilon - (m/r)\varepsilon_\tau = 0$, since $2r/\sigma^2 = m$.
+**The equation.** For time remaining $`\tau`$, any option price $`V`$ in the hold region satisfies $`\tfrac12\sigma^2 S^2 V_{SS} + (r - q) S V_S - rV - V_\tau = 0`$. It holds for $`P`$ and for $`p`$, and it is linear, so it holds for $`\varepsilon = P - p`$. Multiplying by $`2/\sigma^2`$ gives $`S^2\varepsilon_{SS} + nS\varepsilon_S - m\varepsilon - (m/r)\varepsilon_\tau = 0`$, since $`2r/\sigma^2 = m`$.
 
-**The clock change.** With $h = 1 - e^{-r\tau}$, $dh/d\tau = r e^{-r\tau} = r(1-h)$, so $\varepsilon_\tau = r(1-h)\varepsilon_h$. With $\varepsilon = h f$, $\varepsilon_h = f + h f_h$. So $(m/r)\varepsilon_\tau = m(1-h)f + m(1-h)h f_h$.
+**The clock change.** With $`h = 1 - e^{-r\tau}`$, $`dh/d\tau = r e^{-r\tau} = r(1-h)`$, so $`\varepsilon_\tau = r(1-h)\varepsilon_h`$. With $`\varepsilon = h f`$, $`\varepsilon_h = f + h f_h`$. So $`(m/r)\varepsilon_\tau = m(1-h)f + m(1-h)h f_h`$.
 
-**Collect.** Substitute and divide by $h$: $S^2 f_{SS} + nS f_S - mf - m(1-h)f/h - m(1-h)f_h = 0$. Since $m + m(1-h)/h = m/h$, this is $S^2 f_{SS} + nSf_S - (m/h)f - m(1-h)f_h = 0$, exactly.
+**Collect.** Substitute and divide by $`h`$: $`S^2 f_{SS} + nS f_S - mf - m(1-h)f/h - m(1-h)f_h = 0`$. Since $`m + m(1-h)/h = m/h`$, this is $`S^2 f_{SS} + nSf_S - (m/h)f - m(1-h)f_h = 0`$, exactly.
 
-**Drop and solve.** Without $m(1-h)f_h$ the equation is an Euler equation in $S$. With $f = S^\beta$, $S^2 f'' = \beta(\beta-1)S^\beta$ and $S f' = \beta S^\beta$, so $\beta^2 + (n-1)\beta - m/h = 0$. The general solution is $a_1 S^{\beta_1} + a_2 S^{\beta_2}$. As $S$ grows, $S^{\beta_2}$ grows without limit while the put's premium must fall to zero, so $a_2 = 0$.
+**Drop and solve.** Without $`m(1-h)f_h`$ the equation is an Euler equation in $`S`$. With $`f = S^\beta`$, $`S^2 f'' = \beta(\beta-1)S^\beta`$ and $`S f' = \beta S^\beta`$, so $`\beta^2 + (n-1)\beta - m/h = 0`$. The general solution is $`a_1 S^{\beta_1} + a_2 S^{\beta_2}`$. As $`S`$ grows, $`S^{\beta_2}`$ grows without limit while the put's premium must fall to zero, so $`a_2 = 0`$.
 
-**Pasting.** Write the premium as $A(S/S^*)^{\beta_1}$. Its slope at $S^*$ is $A\beta_1/S^*$. The European put's slope is $-e^{-qT}N(-d_1)$. Smooth pasting: $-e^{-qT}N(-d_1(S^*)) + A\beta_1/S^* = -1$, so $A = -(S^*/\beta_1)\big(1 - e^{-qT}N(-d_1(S^*))\big)$.
+**Pasting.** Write the premium as $`A(S/S^*)^{\beta_1}`$. Its slope at $`S^*`$ is $`A\beta_1/S^*`$. The European put's slope is $`-e^{-qT}N(-d_1)`$. Smooth pasting: $`-e^{-qT}N(-d_1(S^*)) + A\beta_1/S^* = -1`$, so $`A = -(S^*/\beta_1)\big(1 - e^{-qT}N(-d_1(S^*))\big)`$.
 
-**Matching.** $p(S^*) + A = K - S^*$. Substituting $A$ gives the critical-price equation. It is one equation in one unknown on the interval from 0 to $K$: at a share price near 0 the left side minus the right is about $K(e^{-rT} - 1)$, below zero, and at $K$ it is $p(K) + A(K) > 0$. The checks find the root there both by Newton and by bisection.
+**Matching.** $`p(S^*) + A = K - S^*`$. Substituting $`A`$ gives the critical-price equation. It is one equation in one unknown on the interval from 0 to $`K`$: at a share price near 0 the left side minus the right is about $`K(e^{-rT} - 1)`$, below zero, and at $`K`$ it is $`p(K) + A(K) > 0`$. The checks find the root there both by Newton and by bisection.
 
 </details>
 
 ### Step 5: solving for the critical price by Newton
 
-Write $G(X)$ for the European put plus the lump, minus the exercise value, all at share price $X$. The critical price is where $G$ is zero. Newton's method replaces $G$ by its tangent line and jumps to where that line crosses zero:
+Write $`G(X)`$ for the European put plus the lump, minus the exercise value, all at share price $`X`$. The critical price is where $`G`$ is zero. Newton's method replaces $`G`$ by its tangent line and jumps to where that line crosses zero:
 
-$$X_{\text{new}} = X - \frac{G(X)}{G'(X)}, \qquad G'(X) = 1 - e^{-qT}N(-d_1)\Big(1 - \frac{1}{\beta_1}\Big) - \frac{1}{\beta_1}\Big(1 + \frac{e^{-qT}\varphi(d_1)}{\sigma\sqrt{T}}\Big).$$
+```math
+X_{\text{new}} = X - \frac{G(X)}{G'(X)}, \qquad G'(X) = 1 - e^{-qT}N(-d_1)\Big(1 - \frac{1}{\beta_1}\Big) - \frac{1}{\beta_1}\Big(1 + \frac{e^{-qT}\varphi(d_1)}{\sigma\sqrt{T}}\Big).
+```
 
-The start is Barone-Adesi and Whaley's seed. It sits near the strike for a short life and slides towards the perpetual boundary, $S_\infty$ = $64.92 for Acme, as the life grows. For Acme the seed is $77.14; five steps land on $78.762927$, and bisection, which knows nothing of slopes, lands on the same number.
+The start is Barone-Adesi and Whaley's seed. It sits near the strike for a short life and slides towards the perpetual boundary, $`S_\infty`$ = $64.92 for Acme, as the life grows. For Acme the seed is $77.14; five steps land on $`78.762927`$, and bisection, which knows nothing of slopes, lands on the same number.
 
 <details>
 <summary>Why the seed matters, and when it does not</summary>
 
-Newton converges fast only near the root. The seed puts the first guess between the endless-life boundary and the strike, where the true $S^*$ lives. For Acme the first step overshoots to $78.87, the second lands at $78.763, and steps three to five agree to six decimals. A first guess far from the root can overshoot below zero, where $\ln(X/K)$ has no value; the seed keeps the search away from there.
+Newton converges fast only near the root. The seed puts the first guess between the endless-life boundary and the strike, where the true $`S^*`$ lives. For Acme the first step overshoots to $78.87, the second lands at $78.763, and steps three to five agree to six decimals. A first guess far from the root can overshoot below zero, where $`\ln(X/K)`$ has no value; the seed keeps the search away from there.
 
 </details>
 
 ### Step 6: the ends of the life are exact
 
-At the far end, $h \to 1$ and the dropped term vanishes, so the formula must reproduce the exact perpetual put of [The perpetual American put](05-perpetual-american-put.md): boundary $K\beta/(\beta-1)$ = $64.92, value $15.77 at $S = 100$. At a 200-year life the formula gives 15.769407 against the exact 15.769332. At the near end the premium is zero. The method is pinned at both ends and approximate in between.
+At the far end, $`h \to 1`$ and the dropped term vanishes, so the formula must reproduce the exact perpetual put of [The perpetual American put](05-perpetual-american-put.md): boundary $`K\beta/(\beta-1)`$ = $64.92, value $15.77 at $`S = 100`$. At a 200-year life the formula gives 15.769407 against the exact 15.769332. At the near end the premium is zero. The method is pinned at both ends and approximate in between.
 
 The other fast route is Bjerksund and Stensland's (1993). They replace the moving boundary with a flat one, a single trigger price for the whole life, and price the put as the European value plus the value of exercising when that trigger is first hit. It needs no Newton search at all. It is named here and not worked; the checks do not compute it.
 
@@ -171,29 +187,29 @@ The other fast route is Bjerksund and Stensland's (1993). They replace the movin
 
 ## Worked numbers, by hand
 
-Acme: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year.
+Acme: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $m$, $n$ | $0.10/0.04$ and $0.06/0.04$ | 2.5, 1.5 |
-| $h$ | $1 - e^{-0.05}$ | 0.048771 |
-| $\beta_1$ | $\big(-0.5 - \sqrt{0.25 + 10/0.048771}\big)/2$ | −7.414001 |
-| perpetual boundary | $100 \times \beta_\infty / (\beta_\infty - 1)$, with $h = 1$ | 64.921894 |
-| Newton seed, then steps 1 to 4 | 77.138402 → 78.869629 → 78.763343 → 78.762927 → 78.762927 | $S^*$ = 78.762927 |
-| $d_1(S^*)$ | $\big(\ln(78.762927/100) + 0.05\big)/0.20$ | −0.943639 |
-| $A$ | $(78.762927 / 7.414001) \times \big(1 - e^{-0.02}N(-0.943639)\big)$ | 2.008478 |
-| $(S/S^*)^{\beta_1}$ | $(100/78.762927)^{-7.414001}$ | 0.170345 |
-| European put $p$ | Black-Scholes | 6.330081 |
-| lump | $2.008478 \times 0.170345$ | 0.342135 |
-| **American put** | $6.330081 + 0.342135$ | **6.672215** |
+| $`m`$, $`n`$ | $`0.10/0.04`$ and $`0.06/0.04`$ | 2.5, 1.5 |
+| $`h`$ | $`1 - e^{-0.05}`$ | 0.048771 |
+| $`\beta_1`$ | $`\big(-0.5 - \sqrt{0.25 + 10/0.048771}\big)/2`$ | −7.414001 |
+| perpetual boundary | $`100 \times \beta_\infty / (\beta_\infty - 1)`$, with $`h = 1`$ | 64.921894 |
+| Newton seed, then steps 1 to 4 | 77.138402 → 78.869629 → 78.763343 → 78.762927 → 78.762927 | $`S^*`$ = 78.762927 |
+| $`d_1(S^*)`$ | $`\big(\ln(78.762927/100) + 0.05\big)/0.20`$ | −0.943639 |
+| $`A`$ | $`(78.762927 / 7.414001) \times \big(1 - e^{-0.02}N(-0.943639)\big)`$ | 2.008478 |
+| $`(S/S^*)^{\beta_1}`$ | $`(100/78.762927)^{-7.414001}`$ | 0.170345 |
+| European put $`p`$ | Black-Scholes | 6.330081 |
+| lump | $`2.008478 \times 0.170345`$ | 0.342135 |
+| **American put** | $`6.330081 + 0.342135`$ | **6.672215** |
 | tree, 2,000 steps | backward induction, exercise checked at every node | 6.660226 |
-| error | $6.672215 - 6.660226$ | +0.011990 |
+| error | $`6.672215 - 6.660226`$ | +0.011990 |
 
 The right to exercise early is worth about 33 cents by the tree and 34 by the formula; the shortcut overstates the American put by 1.2 cents. Above $78.76 the put's holder waits; at or below it, the holder sells the share for $100 today and starts earning interest on the cash.
 
 The same method across lives and share prices, against the tree:
 
-| Life | $S^*$ | Acme $90: formula, tree | Acme $100: formula, tree | Acme $110: formula, tree |
+| Life | $`S^*`$ | Acme $90: formula, tree | Acme $100: formula, tree | Acme $110: formula, tree |
 | --- | --- | --- | --- | --- |
 | 3 months | 85.88 | 10.2817, 10.3213 | 3.6491, 3.6548 | 0.8345, 0.8296 |
 | 6 months | 82.50 | 10.9240, 10.9748 | 4.9733, 4.9766 | 1.8642, 1.8503 |
@@ -213,7 +229,7 @@ xychart-beta
     line [64.92, 64.92, 64.92, 64.92, 64.92]
 ```
 
-Orange: $S^*$, the share price at or below which the formula says to exercise today. Green: the perpetual boundary, $64.92, which $S^*$ approaches as the life grows without limit.
+Orange: $`S^*`$, the share price at or below which the formula says to exercise today. Green: the perpetual boundary, $64.92, which $`S^*`$ approaches as the life grows without limit.
 
 ### What breaks if you drop a piece
 
@@ -222,16 +238,16 @@ Same Acme put. The formula gives 6.672215; the tree 6.660226.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drop the lump | 6.330081 | That is the European put. It says early exercise is worth nothing, false for every put when rates are positive. |
-| Take the positive root $\beta_2$ | −4.890649 | A negative price. The lump grows with the share instead of dying away. |
-| Set $h = 1$, the endless-life power | 7.955605, with $S^*$ at 70.166759 | The endless-life power is far too flat for a one-year life, and the lump reaches too far up. |
-| Skip Newton, use $S^* = K$ | 14.512605 | The lump is pinned at the strike, so its height balloons. |
-| Keep using the formula below $S^*$, at Acme $70 | 31.670206 against 30.000000 | Below $S^*$ the price is the exercise value; the formula is not the price there. |
+| Take the positive root $`\beta_2`$ | −4.890649 | A negative price. The lump grows with the share instead of dying away. |
+| Set $`h = 1`$, the endless-life power | 7.955605, with $`S^*`$ at 70.166759 | The endless-life power is far too flat for a one-year life, and the lump reaches too far up. |
+| Skip Newton, use $`S^* = K`$ | 14.512605 | The lump is pinned at the strike, so its height balloons. |
+| Keep using the formula below $`S^*`$, at Acme $70 | 31.670206 against 30.000000 | Below $`S^*`$ the price is the exercise value; the formula is not the price there. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code prices the Acme put by the formula and by an independent 2,000-step Cox-Ross-Rubinstein tree (a coin-flip tree that checks early exercise at every node). It finds the critical price twice, by Newton and by bisection. It confirms the tree has settled by rerunning it at 4,000 steps, measures smooth pasting on the finished curve, and checks the 200-year limit against the exact perpetual put. Then it builds the error grid and every wrong number above. Python's bell-curve area is the series $\tfrac12 + \varphi(x)(x + x^3/3 + x^5/15 + \dots)$; Rust's is Simpson's rule, thin slices under the curve. No library is imported that knows the answer.
+The code prices the Acme put by the formula and by an independent 2,000-step Cox-Ross-Rubinstein tree (a coin-flip tree that checks early exercise at every node). It finds the critical price twice, by Newton and by bisection. It confirms the tree has settled by rerunning it at 4,000 steps, measures smooth pasting on the finished curve, and checks the 200-year limit against the exact perpetual put. Then it builds the error grid and every wrong number above. Python's bell-curve area is the series $`\tfrac12 + \varphi(x)(x + x^3/3 + x^5/15 + \dots)`$; Rust's is Simpson's rule, thin slices under the curve. No library is imported that knows the answer.
 
 ### Python
 
@@ -637,12 +653,12 @@ The two outputs match line for line, although the bell-curve areas come from dif
 
 Lean proves the method's three exact steps, for any positive rate, volatility, life and strike, and checks a few Acme numbers.
 
-- Take a rate above zero, any yield, and a positive volatility and life. Then $\beta_1$ and $\beta_2$ solve the quadratic and multiply to $-m/h$, with $\beta_1 < 0 < \beta_2$.
-- Take the equation left in Step 3, $S^2 f'' + n S f' - (m/h) f = 0$. Then every mix $a_1 S^{\beta_1} + a_2 S^{\beta_2}$ solves it at every share price above zero.
-- Take such a mix as the share price grows. Then it falls to zero exactly when $a_2 = 0$, so the put keeps only $\beta_1$.
-- Take $S^* > 0$ that solves $K - S^* = p(S^*) + A$, with the card's $A$. Then the price, $K - S$ at or below $S^*$ and the formula above, has slope exactly −1 at $S^*$.
-- Take a dividend yield of zero or more. Then the critical-price equation has a root strictly between 0 and $K$.
-- Take Acme. Then $m = 2.5$, $n = 1.5$, the drift in $d_1$ is 0.05 and $(n-1)^2 = 0.25$, exactly.
+- Take a rate above zero, any yield, and a positive volatility and life. Then $`\beta_1`$ and $`\beta_2`$ solve the quadratic and multiply to $`-m/h`$, with $`\beta_1 < 0 < \beta_2`$.
+- Take the equation left in Step 3, $`S^2 f'' + n S f' - (m/h) f = 0`$. Then every mix $`a_1 S^{\beta_1} + a_2 S^{\beta_2}`$ solves it at every share price above zero.
+- Take such a mix as the share price grows. Then it falls to zero exactly when $`a_2 = 0`$, so the put keeps only $`\beta_1`$.
+- Take $`S^* > 0`$ that solves $`K - S^* = p(S^*) + A`$, with the card's $`A`$. Then the price, $`K - S`$ at or below $`S^*`$ and the formula above, has slope exactly −1 at $`S^*`$.
+- Take a dividend yield of zero or more. Then the critical-price equation has a root strictly between 0 and $`K`$.
+- Take Acme. Then $`m = 2.5`$, $`n = 1.5`$, the drift in $`d_1`$ is 0.05 and $`(n-1)^2 = 0.25`$, exactly.
 - A 2,000-step tree has 2,001,000 nodes before expiry, as the card says.
 
 The prices, the Newton steps, the tree and the error sizes are left to the Python and Rust checks.
@@ -1167,17 +1183,17 @@ end BaroneAdesiWhaley
 > [!warning]
 > **Treating the formula as a price to settle on.** It looks as exact as Black-Scholes and it is not. Its error has no known bound, changes sign, and grows with the life: from under a cent on the three-month at-the-money put to 16 cents on the three-year put with Acme at $110. It is for quoting fast, filling a surface, and seeding slower methods.
 >
-> - **Forgetting the switch to exercise.** Below $S^*$ the put is worth $K - S$. Run the formula there anyway and Acme at $70 prices at 31.670206 for a put that pays 30.000000 today.
+> - **Forgetting the switch to exercise.** Below $`S^*`$ the put is worth $`K - S`$. Run the formula there anyway and Acme at $70 prices at 31.670206 for a put that pays 30.000000 today.
 > - **The wrong root.** The positive root makes the lump grow with the share: −4.890649, a negative price.
-> - **Skipping the search.** Setting $S^* = K$ instead of solving for it gives 14.512605, more than twice the truth.
-> - **The paper's letters.** Barone-Adesi and Whaley write the roots as q1 and q2 and the life factor as K(T). On this card $q$ is the dividend yield and $K$ the strike, so the roots are $\beta_1$, $\beta_2$ and the life factor is $h$.
+> - **Skipping the search.** Setting $`S^* = K`$ instead of solving for it gives 14.512605, more than twice the truth.
+> - **The paper's letters.** Barone-Adesi and Whaley write the roots as q1 and q2 and the life factor as K(T). On this card $`q`$ is the dividend yield and $`K`$ the strike, so the roots are $`\beta_1`$, $`\beta_2`$ and the life factor is $`h`$.
 
 ---
 
 ## Where you meet it in real life
 
 - **Listed single-stock options.** Exchange-traded single-stock options in the US are American. A desk quoting thousands of them, and requoting on every tick, needs a price in microseconds; this formula, or a descendant, often supplies it.
-- **Implied volatility for American options.** Running a pricer backwards for $\sigma$ needs many prices per option. A fast formula makes that affordable, and the volatility it returns inherits its error ([American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md)).
+- **Implied volatility for American options.** Running a pricer backwards for $`\sigma`$ needs many prices per option. A fast formula makes that affordable, and the volatility it returns inherits its error ([American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md)).
 - **Risk runs.** A bank revalues its book overnight and again under every stress scenario. The tree's 2,001,000 node visits per price, against five Newton steps, decide whether the report arrives on time.
 - **Seeding better methods.** A finite-difference solver or a refined approximation can start from this critical price.
 - **The tree it approximates.** The honest reference throughout is the tree of [Early exercise](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md).

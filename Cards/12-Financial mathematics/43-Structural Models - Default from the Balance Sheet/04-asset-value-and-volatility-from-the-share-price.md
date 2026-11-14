@@ -42,46 +42,52 @@ Orange, nearly flat: the asset value that prices the equity at $24.59 million. T
 
 Two equations, one per observation. The first is Merton's price. The second says how the equity's dollar swings relate to the assets' dollar swings.
 
-$$E = V\,N(d_1) - B\,e^{-rT}\,N(d_2), \qquad \sigma_E\,E = N(d_1)\,\sigma_V\,V$$
+```math
+E = V\,N(d_1) - B\,e^{-rT}\,N(d_2), \qquad \sigma_E\,E = N(d_1)\,\sigma_V\,V
+```
 
 **Read it aloud:** the shares are worth the assets' call on the firm after paying the debt; and the shares' dollar swing equals the assets' dollar swing times how many dollars the shares move per dollar of assets.
 
-$E$, $\sigma_E$ are known. $V$, $\sigma_V$ are wanted. Everything else is fixed by the debt contract and the market.
+$`E`$, $`\sigma_E`$ are known. $`V`$, $`\sigma_V`$ are wanted. Everything else is fixed by the debt contract and the market.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $E$ | market value of all the shares, share price times shares outstanding | $24.59m | inferred assets rise, nearly dollar for dollar |
-| $\sigma_E$ | equity volatility: the yearly spread of the share price's percentage moves | 75.5% | inferred asset volatility rises; inferred assets dip slightly |
-| $V$ | market value of the firm's assets, today (wanted) | $100.0m | |
-| $\sigma_V$ | asset volatility: the yearly spread of the assets' percentage moves (wanted) | 20.0% | |
-| $B$ | face value of the debt, paid in full at $T$ if the assets cover it; $B e^{-rT}$ is that face discounted to today | $80m; $76.10m | inferred assets rise; inferred asset volatility falls |
-| $T$ | years until the debt is due | 1 | |
-| $r$ | riskless rate, continuously compounded | 5% | |
-| $d_1$ | how far the assets sit above the discounted debt, in units of the asset swing over the debt's life, plus half a unit | 1.4657 | |
-| $d_2$ | $d_1$ minus one unit, $\sigma_V\sqrt{T}$ | 1.2657 | |
-| $N(x)$ | area under the standard bell curve to the left of $x$: a probability between 0 and 1 | $N(d_1)$ = 0.9286 | |
-| $L$ | leverage multiplier, $V\,N(d_1)/E$: equity volatility divided by asset volatility | 3.777 | |
-| $\phi(x)$ | height of the standard bell curve at $x$; the slope of $N$ | $\phi(d_1)$ = 0.1363 | |
+| $`E`$ | market value of all the shares, share price times shares outstanding | $24.59m | inferred assets rise, nearly dollar for dollar |
+| $`\sigma_E`$ | equity volatility: the yearly spread of the share price's percentage moves | 75.5% | inferred asset volatility rises; inferred assets dip slightly |
+| $`V`$ | market value of the firm's assets, today (wanted) | $100.0m | |
+| $`\sigma_V`$ | asset volatility: the yearly spread of the assets' percentage moves (wanted) | 20.0% | |
+| $`B`$ | face value of the debt, paid in full at $`T`$ if the assets cover it; $`B e^{-rT}`$ is that face discounted to today | $80m; $76.10m | inferred assets rise; inferred asset volatility falls |
+| $`T`$ | years until the debt is due | 1 | |
+| $`r`$ | riskless rate, continuously compounded | 5% | |
+| $`d_1`$ | how far the assets sit above the discounted debt, in units of the asset swing over the debt's life, plus half a unit | 1.4657 | |
+| $`d_2`$ | $`d_1`$ minus one unit, $`\sigma_V\sqrt{T}`$ | 1.2657 | |
+| $`N(x)`$ | area under the standard bell curve to the left of $`x`$: a probability between 0 and 1 | $`N(d_1)`$ = 0.9286 | |
+| $`L`$ | leverage multiplier, $`V\,N(d_1)/E`$: equity volatility divided by asset volatility | 3.777 | |
+| $`\phi(x)`$ | height of the standard bell curve at $`x`$; the slope of $`N`$ | $`\phi(d_1)`$ = 0.1363 | |
 
 The helper numbers, exactly as on the Black-Scholes call with the dividend yield at zero:
 
-$$d_1 = \frac{\ln\!\big(V / (B e^{-rT})\big) + \tfrac12\sigma_V^2\,T}{\sigma_V\sqrt{T}}, \qquad d_2 = d_1 - \sigma_V\sqrt{T}$$
+```math
+d_1 = \frac{\ln\!\big(V / (B e^{-rT})\big) + \tfrac12\sigma_V^2\,T}{\sigma_V\sqrt{T}}, \qquad d_2 = d_1 - \sigma_V\sqrt{T}
+```
 
-In words: $d_1$ is the log-distance from the assets down to the discounted debt, measured in asset swings, with half a swing added.
+In words: $`d_1`$ is the log-distance from the assets down to the discounted debt, measured in asset swings, with half a swing added.
 
-Divide the second equation by $E$ and the leverage multiplier appears:
+Divide the second equation by $`E`$ and the leverage multiplier appears:
 
-$$\sigma_E = L\,\sigma_V, \qquad L = \frac{V\,N(d_1)}{E} > 1$$
+```math
+\sigma_E = L\,\sigma_V, \qquad L = \frac{V\,N(d_1)}{E} > 1
+```
 
-**Read it aloud:** equity volatility is asset volatility scaled up by leverage. For the house firm, $L$ is 3.777, so 20% of asset swing arrives at the shares as 75.5%.
+**Read it aloud:** equity volatility is asset volatility scaled up by leverage. For the house firm, $`L`$ is 3.777, so 20% of asset swing arrives at the shares as 75.5%.
 
 ### When it holds
 
 - **One zero-coupon debt, default only at its due date.** Real firms owe many debts on many dates. If default can come earlier, the equity is a barrier option, not a plain call, and the inferred assets come out too low ([Black-Cox](05-black-cox-first-passage-default.md)).
-- **Assets that wander like a stock, with a constant $\sigma_V$.** If asset volatility shifts through the year, no single $\sigma_V$ fits and the answer is an average of unknown weight.
-- **Positive quotes.** Every positive $E$ and $\sigma_E$ has exactly one answer. Zero equity or zero volatility has none inside the model: the model's outputs are strictly positive.
+- **Assets that wander like a stock, with a constant $`\sigma_V`$.** If asset volatility shifts through the year, no single $`\sigma_V`$ fits and the answer is an average of unknown weight.
+- **Positive quotes.** Every positive $`E`$ and $`\sigma_E`$ has exactly one answer. Zero equity or zero volatility has none inside the model: the model's outputs are strictly positive.
 - **An instantaneous equity volatility.** The second equation holds moment by moment. A volatility measured over a past year blends days when the firm was more or less levered, and carries sampling noise.
-- **Ordinary leverage.** The answer exists for any leverage, but it is only trustworthy while equity is a sizeable slice of assets. Near zero equity a small error in $\sigma_E$ moves the inferred $\sigma_V$ many times over (Worked numbers, below).
+- **Ordinary leverage.** The answer exists for any leverage, but it is only trustworthy while equity is a sizeable slice of assets. Near zero equity a small error in $`\sigma_E`$ moves the inferred $`\sigma_V`$ many times over (Worked numbers, below).
 
 ---
 
@@ -93,26 +99,28 @@ The assets never trade. A claim on them does. If the model knows how the claim's
 
 ### Step 1: the price equation
 
-At the debt's due date, shareholders receive $\max(V_T - B, 0)$: whatever the assets fetch above the debt, or nothing. That is a call's payoff with strike $B$. Merton's model prices it with the Black-Scholes formula, the dividend yield at zero, which is the first equation ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The sibling card derives it: [Merton's model](01-merton-model-equity-as-a-call.md).
+At the debt's due date, shareholders receive $`\max(V_T - B, 0)`$: whatever the assets fetch above the debt, or nothing. That is a call's payoff with strike $`B`$. Merton's model prices it with the Black-Scholes formula, the dividend yield at zero, which is the first equation ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The sibling card derives it: [Merton's model](01-merton-model-equity-as-a-call.md).
 
 ### Step 2: the volatility equation, from Itô's lemma
 
 The equity value is a smooth function of the asset value and the date. Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) says how a smooth function of a wandering quantity wanders. The random part of the function's move is the random part of the input's move, times the function's slope.
 
-The assets' random move in a short time is $\sigma_V V$ times a random shock. The equity's slope against assets is the call's delta, $N(d_1)$ ([How the balance-sheet claims move](02-structural-model-sensitivities.md)). So the equity's random move is $N(d_1)\,\sigma_V V$ times the same shock. By definition it is also $\sigma_E E$ times that shock. Set them equal: $\sigma_E E = N(d_1)\,\sigma_V V$.
+The assets' random move in a short time is $`\sigma_V V`$ times a random shock. The equity's slope against assets is the call's delta, $`N(d_1)`$ ([How the balance-sheet claims move](02-structural-model-sensitivities.md)). So the equity's random move is $`N(d_1)\,\sigma_V V`$ times the same shock. By definition it is also $`\sigma_E E`$ times that shock. Set them equal: $`\sigma_E E = N(d_1)\,\sigma_V V`$.
 
 <details>
 <summary>The algebra behind this</summary>
 
-Write the assets as geometric Brownian motion: $dV = \mu V\,dt + \sigma_V V\,dW$, a drift $\mu V\,dt$ at any rate over a short time step, plus a random shock $\sigma_V V\,dW$. Equity is $E = C(V, t)$, and each subscript on C below marks a slope: against assets once, against assets twice, or against time. Itô's lemma gives
-$$dE = \Big(C_t + \mu V C_V + \tfrac12 \sigma_V^2 V^2 C_{VV}\Big)dt + C_V\,\sigma_V V\,dW.$$
-The bracketed part is drift and plays no role in volatility. The last term, proportional to the shock, is the whole random move. Equity volatility is defined by writing that part as $\sigma_E E\,dW$, so $\sigma_E E = C_V \sigma_V V$. For a call, $C_V = N(d_1)$. The real-world drift never appears, which is why the inversion needs no forecast of returns.
+Write the assets as geometric Brownian motion: $`dV = \mu V\,dt + \sigma_V V\,dW`$, a drift $`\mu V\,dt`$ at any rate over a short time step, plus a random shock $`\sigma_V V\,dW`$. Equity is $`E = C(V, t)`$, and each subscript on C below marks a slope: against assets once, against assets twice, or against time. Itô's lemma gives
+
+$`\displaystyle dE = \Big(C_t + \mu V C_V + \tfrac12 \sigma_V^2 V^2 C_{VV}\Big)dt + C_V\,\sigma_V V\,dW.`$
+
+The bracketed part is drift and plays no role in volatility. The last term, proportional to the shock, is the whole random move. Equity volatility is defined by writing that part as $`\sigma_E E\,dW`$, so $`\sigma_E E = C_V \sigma_V V`$. For a call, $`C_V = N(d_1)`$. The real-world drift never appears, which is why the inversion needs no forecast of returns.
 
 </details>
 
 ### Step 3: why the shares swing harder than the assets
 
-Split the price equation: the shares are worth $V N(d_1)$, a holding of assets, minus $B e^{-rT} N(d_2)$, a debt-like amount that does not swing. For the house firm that is $92.86 million of assets minus $68.27 million. The swinging part is worth 3.777 times the whole. A 1% move in assets moves $92.86 million by 1%, which is 3.777% of the $24.59 million equity. That ratio is $L$. It exceeds 1 whenever debt is outstanding, because the subtracted piece is positive.
+Split the price equation: the shares are worth $`V N(d_1)`$, a holding of assets, minus $`B e^{-rT} N(d_2)`$, a debt-like amount that does not swing. For the house firm that is $92.86 million of assets minus $68.27 million. The swinging part is worth 3.777 times the whole. A 1% move in assets moves $92.86 million by 1%, which is 3.777% of the $24.59 million equity. That ratio is $`L`$. It exceeds 1 whenever debt is outstanding, because the subtracted piece is positive.
 
 The picture makes the same point across firms. Keep the debt at $80 million and asset volatility at 20%, and slide the asset value:
 
@@ -130,41 +138,42 @@ Orange: equity volatility. Teal, flat: the asset volatility that produced it. Th
 
 ### Step 4: one answer, and only one
 
-Hold $E$ fixed. For any trial $\sigma_V$, the call price rises with $V$ (its slope, $N(d_1)$, is positive), from 0 when assets vanish to past any value when assets are large. So exactly one $V$ prices the shares. That traces the flat curve in the first picture.
+Hold $`E`$ fixed. For any trial $`\sigma_V`$, the call price rises with $`V`$ (its slope, $`N(d_1)`$, is positive), from 0 when assets vanish to past any value when assets are large. So exactly one $`V`$ prices the shares. That traces the flat curve in the first picture.
 
-Walk along that curve and watch the dollar swing $\sigma_V\,V\,N(d_1)$. At a tiny $\sigma_V$ it is near zero. At a huge $\sigma_V$ it is huge. In between it only rises. So it passes the observed $\sigma_E E$ exactly once, and that crossing is the answer. The rising part is the only hard step; the folded proof shows its slope is a positive variance, so it cannot dip.
+Walk along that curve and watch the dollar swing $`\sigma_V\,V\,N(d_1)`$. At a tiny $`\sigma_V`$ it is near zero. At a huge $`\sigma_V`$ it is huge. In between it only rises. So it passes the observed $`\sigma_E E`$ exactly once, and that crossing is the answer. The rising part is the only hard step; the folded proof shows its slope is a positive variance, so it cannot dip.
 
 <details>
 <summary>Detailed proof</summary>
 
-Fix $E > 0$, $B > 0$, $T > 0$. Write $u$ for a trial asset volatility and $V(u)$ for the asset value solving the price equation at $u$.
+Fix $`E > 0`$, $`B > 0`$, $`T > 0`$. Write $`u`$ for a trial asset volatility and $`V(u)`$ for the asset value solving the price equation at $`u`$.
 
-**The inner equation has one root.** The call price is continuous and strictly increasing in $V$, with slope $N(d_1) > 0$. It tends to 0 as $V$ falls to 0, and it exceeds $V - B e^{-rT}$ always, so it passes $E$. Hence one $V(u)$, and it lies between $E$ and $E + B e^{-rT}$, since the debt is worth more than 0 and less than its discounted face.
+**The inner equation has one root.** The call price is continuous and strictly increasing in $`V`$, with slope $`N(d_1) > 0`$. It tends to 0 as $`V`$ falls to 0, and it exceeds $`V - B e^{-rT}`$ always, so it passes $`E`$. Hence one $`V(u)`$, and it lies between $`E`$ and $`E + B e^{-rT}`$, since the debt is worth more than 0 and less than its discounted face.
 
-**Along the curve.** Let $G(u) = u\,V(u)\,N(d_1)$, the dollar swing on the price curve. Differentiate the price equation along the curve: $V'(u) = -V\phi(d_1)\sqrt{T} / N(d_1)$, using vega, the call's slope against asset volatility, $V\phi(d_1)\sqrt{T}$. With $\partial d_1/\partial V = 1/(V u\sqrt{T})$ and $\partial d_1/\partial u = -d_2/u$, the chain rule gives, after cancelling,
-$$G'(u) = V\Big[N(d_1) - d_1\,\phi(d_1) - \phi(d_1)^2/N(d_1)\Big].$$
+**Along the curve.** Let $`G(u) = u\,V(u)\,N(d_1)`$, the dollar swing on the price curve. Differentiate the price equation along the curve: $`V'(u) = -V\phi(d_1)\sqrt{T} / N(d_1)`$, using vega, the call's slope against asset volatility, $`V\phi(d_1)\sqrt{T}`$. With $`\partial d_1/\partial V = 1/(V u\sqrt{T})`$ and $`\partial d_1/\partial u = -d_2/u`$, the chain rule gives, after cancelling,
 
-**The bracket is a variance.** Let $Z$ be a standard normal draw, conditioned on $Z \le d_1$. Integrating by parts against the bell curve gives its mean, $-\phi(d_1)/N(d_1)$, and its mean square, $1 - d_1\phi(d_1)/N(d_1)$. Their difference is the variance, and it equals the bracket divided by $N(d_1)$. A variance of a quantity that is not constant is positive, so $G'(u) > 0$.
+$`\displaystyle G'(u) = V\Big[N(d_1) - d_1\,\phi(d_1) - \phi(d_1)^2/N(d_1)\Big].`$
 
-**The ends.** As $u$ falls to 0 the call tends to $\max(V - B e^{-rT}, 0)$, so $V(u)$ tends to $E + B e^{-rT}$ and $G(u)$ tends to 0. As $u$ grows, $d_1$ runs to plus infinity and $d_2$ to minus infinity, so the call tends to $V$, $V(u)$ tends to $E$, and $G(u)$ grows without bound.
+**The bracket is a variance.** Let $`Z`$ be a standard normal draw, conditioned on $`Z \le d_1`$. Integrating by parts against the bell curve gives its mean, $`-\phi(d_1)/N(d_1)`$, and its mean square, $`1 - d_1\phi(d_1)/N(d_1)`$. Their difference is the variance, and it equals the bracket divided by $`N(d_1)`$. A variance of a quantity that is not constant is positive, so $`G'(u) > 0`$.
 
-**Conclusion.** $G(u)$ is continuous and strictly increasing from 0 to infinity, so $G(u) = \sigma_E E$ has exactly one root for every $\sigma_E > 0$. The same bracket shows the two-by-two Jacobian (the table of slopes of both equations against both unknowns) has determinant $N(d_1)\,G'(u) > 0$, so Newton's linear step is always defined.
+**The ends.** As $`u`$ falls to 0 the call tends to $`\max(V - B e^{-rT}, 0)`$, so $`V(u)`$ tends to $`E + B e^{-rT}`$ and $`G(u)`$ tends to 0. As $`u`$ grows, $`d_1`$ runs to plus infinity and $`d_2`$ to minus infinity, so the call tends to $`V`$, $`V(u)`$ tends to $`E`$, and $`G(u)`$ grows without bound.
+
+**Conclusion.** $`G(u)`$ is continuous and strictly increasing from 0 to infinity, so $`G(u) = \sigma_E E`$ has exactly one root for every $`\sigma_E > 0`$. The same bracket shows the two-by-two Jacobian (the table of slopes of both equations against both unknowns) has determinant $`N(d_1)\,G'(u) > 0`$, so Newton's linear step is always defined.
 
 </details>
 
 ### Step 5: the leverage floor, stated correctly
 
-Because $L > 1$, equity volatility always exceeds the asset volatility that produced it. That is a floor, and it bites in one situation: when the asset volatility is fixed in advance.
+Because $`L > 1`$, equity volatility always exceeds the asset volatility that produced it. That is a floor, and it bites in one situation: when the asset volatility is fixed in advance.
 
-If a desk takes $\sigma_V$ = 20% from similar firms and the shares swing less than 20%, no asset value fits both, since no firm with debt has $L$ below 1. At a fixed 20%, $L$ falls toward 1 only as the debt shrinks against the assets: at $1,000 million of assets it is still 1.082366.
+If a desk takes $`\sigma_V`$ = 20% from similar firms and the shares swing less than 20%, no asset value fits both, since no firm with debt has $`L`$ below 1. At a fixed 20%, $`L`$ falls toward 1 only as the debt shrinks against the assets: at $1,000 million of assets it is still 1.082366.
 
-With both unknowns free, there is no floor. Equity volatility of 10% on the same $24.59 million of shares has an answer: assets of $100.69 million swinging 2.44%, with $L$ = 4.0947. A low equity volatility says the assets are very quiet, not that the model has failed.
+With both unknowns free, there is no floor. Equity volatility of 10% on the same $24.59 million of shares has an answer: assets of $100.69 million swinging 2.44%, with $`L`$ = 4.0947. A low equity volatility says the assets are very quiet, not that the model has failed.
 
 ### Step 6: three ways to solve it
 
 - **Newton's method on the pair.** At the current guess, replace each equation by its tangent (its straight-line approximation), solve the two resulting linear equations ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)), and step there. If a step makes the miss bigger, halve it; that halving is the damping. Near the answer the number of correct digits roughly doubles each step.
-- **The fixed-point iteration.** Guess $\sigma_V$. Solve the price equation for $V$. Update $\sigma_V$ to $\sigma_E E / (V N(d_1))$. Repeat. Slower, but it needs only a one-unknown solver, the same one used for implied volatility ([Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)). Vassalou and Xing, and Bharath and Shumway, run a time-series cousin (Sources): solve the price equation on each day of a year of share prices, then reset $\sigma_V$ to the volatility of the resulting daily asset values, and repeat.
-- **Nested bisection.** Step 4's argument, done by halving: an inner search for $V$ at each trial $\sigma_V$, an outer search for the $\sigma_V$ where the dollar swing matches. No slopes at all, so it cannot be fooled by a wrong derivative.
+- **The fixed-point iteration.** Guess $`\sigma_V`$. Solve the price equation for $`V`$. Update $`\sigma_V`$ to $`\sigma_E E / (V N(d_1))`$. Repeat. Slower, but it needs only a one-unknown solver, the same one used for implied volatility ([Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)). Vassalou and Xing, and Bharath and Shumway, run a time-series cousin (Sources): solve the price equation on each day of a year of share prices, then reset $`\sigma_V`$ to the volatility of the resulting daily asset values, and repeat.
+- **Nested bisection.** Step 4's argument, done by halving: an inner search for $`V`$ at each trial $`\sigma_V`$, an outer search for the $`\sigma_V`$ where the dollar swing matches. No slopes at all, so it cannot be fooled by a wrong derivative.
 
 When more than two observations exist (bond prices, option prices, several dates), no pair fits them all exactly, and the job becomes a best fit: [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md).
 
@@ -172,22 +181,22 @@ When more than two observations exist (bond prices, option prices, several dates
 
 ## Worked numbers, by hand
 
-First the forward direction, to see that the house firm produces the quotes. Assets $V$ = $100m, $\sigma_V$ = 20%, $B$ = $80m, $T$ = 1, $r$ = 5%.
+First the forward direction, to see that the house firm produces the quotes. Assets $`V`$ = $100m, $`\sigma_V`$ = 20%, $`B`$ = $80m, $`T`$ = 1, $`r`$ = 5%.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| discounted debt, $B e^{-rT}$ | $80 \times e^{-0.05}$ | $76.10m |
-| log-distance | $\ln(100 / 76.10)$ | 0.2731 |
-| $d_1$ | $0.2731 / 0.20 + 0.10$ | 1.4657 |
-| $d_2$ | $1.4657 - 0.20$ | 1.2657 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.9286, 0.8972 |
-| asset half | $100 \times 0.9286$ | $92.86m |
-| debt half | $76.10 \times 0.8972$ | $68.27m |
-| equity $E$ | $92.86 - 68.27$ | **$24.59m** |
-| leverage $L$ | $92.86 / 24.59$ | 3.777 |
-| equity volatility | $3.777 \times 20\%$ | **75.5%** |
+| discounted debt, $`B e^{-rT}`$ | $`80 \times e^{-0.05}`$ | $76.10m |
+| log-distance | $`\ln(100 / 76.10)`$ | 0.2731 |
+| $`d_1`$ | $`0.2731 / 0.20 + 0.10`$ | 1.4657 |
+| $`d_2`$ | $`1.4657 - 0.20`$ | 1.2657 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.9286, 0.8972 |
+| asset half | $`100 \times 0.9286`$ | $92.86m |
+| debt half | $`76.10 \times 0.8972`$ | $68.27m |
+| equity $`E`$ | $`92.86 - 68.27`$ | **$24.59m** |
+| leverage $`L`$ | $`92.86 / 24.59`$ | 3.777 |
+| equity volatility | $`3.777 \times 20\%`$ | **75.5%** |
 
-Now backwards, from the quotes $24.59m and 75.5%. The first guess treats the debt as riskless: assets are equity plus discounted debt, $24.59 + 76.10$ = $100.69m. Asset volatility is then the equity's dollar swing spread over all the assets: $0.755 \times 24.59 / 100.69$ = 18.44%. Newton takes it from there:
+Now backwards, from the quotes $24.59m and 75.5%. The first guess treats the debt as riskless: assets are equity plus discounted debt, $`24.59 + 76.10`$ = $100.69m. Asset volatility is then the equity's dollar swing spread over all the assets: $`0.755 \times 24.59 / 100.69`$ = 18.44%. Newton takes it from there:
 
 | Newton step | Assets ($m) | Asset volatility | Total miss |
 | --- | --- | --- | --- |
@@ -223,9 +232,9 @@ Same quotes, correct answer $100.0m at 20.0%:
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Equity volatility used as asset volatility, price equation only | assets $79.45m | 75.5% is the levered swing. Fed to the assets, it makes the firm look worth less than its debt. |
-| Share-of-value shortcut: $V = E + B e^{-rT}$, $\sigma_V = \sigma_E E / V$ | $100.69m at 18.44% | Treats the debt as riskless and ignores that equity moves only $N(d_1)$ per asset dollar. It is Newton's starting guess, not the answer. |
-| Debt not discounted: $V = E + B$ | $104.59m | $80m due in a year is worth $76.10m today, and risky debt less than that. |
-| Price equation alone, $\sigma_V$ guessed at 30% | $97.79m | One equation, two unknowns: every guess returns an answer, all of them wrong but one. |
+| Share-of-value shortcut: $`V = E + B e^{-rT}`$, $`\sigma_V = \sigma_E E / V`$ | $100.69m at 18.44% | Treats the debt as riskless and ignores that equity moves only $`N(d_1)`$ per asset dollar. It is Newton's starting guess, not the answer. |
+| Debt not discounted: $`V = E + B`$ | $104.59m | $80m due in a year is worth $76.10m today, and risky debt less than that. |
+| Price equation alone, $`\sigma_V`$ guessed at 30% | $97.79m | One equation, two unknowns: every guess returns an answer, all of them wrong but one. |
 
 Every number here is printed by both checks.
 
@@ -233,7 +242,7 @@ Every number here is printed by both checks.
 
 ## Code, from first principles, and it actually runs
 
-The scripts build their own normal CDF (cumulative distribution function: the bell-curve area $N$, by a power series), root finders, Newton step and random numbers. They take five roads.
+The scripts build their own normal CDF (cumulative distribution function: the bell-curve area $`N`$, by a power series), root finders, Newton step and random numbers. They take five roads.
 
 Road 0 prices the equity a second way, as the discounted average payoff over the bell curve by Simpson's rule (an area summed over many thin strips). Roads 1, 2 and 3 invert the quotes by damped Newton, by the fixed-point iteration and by nested bisection, and must agree.
 
@@ -660,10 +669,10 @@ ALL CHECKS PASS
 
 Lean proves the card's three main facts for every allowed input, not just the house firm.
 
-- Suppose $B > 0$, $T > 0$, $E > 0$ and $\sigma_E > 0$, with any rate $r$. Then exactly one pair $V > 0$, $\sigma_V > 0$ solves both equations.
-- Suppose $V > 0$, $\sigma_V > 0$, $B > 0$ and $T > 0$. Then the equity $E$ is positive, and the leverage multiplier $L$ is greater than 1.
-- Take any number $x$. Then the detailed proof's bracket, $N(x) - x\,\phi(x) - \phi(x)^2 / N(x)$, is positive.
-- The hand sums for $d_2$, the equity and the undiscounted-debt mistake also check out.
+- Suppose $`B > 0`$, $`T > 0`$, $`E > 0`$ and $`\sigma_E > 0`$, with any rate $`r`$. Then exactly one pair $`V > 0`$, $`\sigma_V > 0`$ solves both equations.
+- Suppose $`V > 0`$, $`\sigma_V > 0`$, $`B > 0`$ and $`T > 0`$. Then the equity $`E`$ is positive, and the leverage multiplier $`L`$ is greater than 1.
+- Take any number $`x`$. Then the detailed proof's bracket, $`N(x) - x\,\phi(x) - \phi(x)^2 / N(x)`$, is positive.
+- The hand sums for $`d_2`$, the equity and the undiscounted-debt mistake also check out.
 
 The bell-curve values, the Newton steps, the charts, the simulation and the other dollar figures are left to the Python and Rust checks.
 
@@ -1241,7 +1250,7 @@ end AssetsFromShares
 > - **Quieter shares.** Guess first: with equity volatility at 10% instead of 75.5%, does the solver fail? Change `0.10` in the "equity vol 10%" line. It does not: assets $100.69m at 2.44%.
 > - **A thinner slice.** Guess first: how much does a 1% error in equity volatility move the inferred asset volatility for a firm with $60m of assets? The conditioning table says 5.43%, against 1.32% for the house firm.
 > - **Drop the damping.** Guess first: does Newton still converge from the riskless-debt guess? Delete the halving loop. From this start it does, in the same four steps; the halving guards starts far from the answer, where a full step can overshoot.
-> - **Pin the asset volatility.** Guess first: at a fixed 20% asset volatility, can any asset value give the shares a 15% volatility? No: $L$ stays above 1 for every firm with debt, 1.082366 even at $1,000m of assets.
+> - **Pin the asset volatility.** Guess first: at a fixed 20% asset volatility, can any asset value give the shares a 15% volatility? No: $`L`$ stays above 1 for every firm with debt, 1.082366 even at $1,000m of assets.
 
 ---
 
@@ -1251,9 +1260,9 @@ end AssetsFromShares
 > **Reading the output as a measurement.** The pair is model-implied: it is whatever asset value and volatility make Merton's model reproduce two quotes. It inherits the model's single debt, its default-only-at-maturity rule and its constant volatility, and it inherits every error in the equity-volatility estimate, amplified by leverage. Report it with the inputs and the conditioning, never as the firm's true asset value.
 >
 > Smaller traps:
-> - **Share price for equity value.** $E$ is the value of all the shares. A $24.59 share price with a million shares outstanding is $24.59m; plugged in as $24.59 it is a firm a million times smaller.
+> - **Share price for equity value.** $`E`$ is the value of all the shares. A $24.59 share price with a million shares outstanding is $24.59m; plugged in as $24.59 it is a firm a million times smaller.
 > - **Equity volatility as asset volatility.** A common error, and it moves assets from $100.0m to $79.45m.
-> - **The wrong delta.** The volatility equation uses $N(d_1)$, the call's slope against assets, not $N(d_2)$. $N(d_2)$ is not the call's slope.
+> - **The wrong delta.** The volatility equation uses $`N(d_1)`$, the call's slope against assets, not $`N(d_2)`$. $`N(d_2)`$ is not the call's slope.
 > - **Stale or mismatched volatility.** A year of daily returns measures an average over a year in which leverage moved. The time-series iteration used in practice (Step 6) re-estimates asset volatility from a daily series of inferred asset values for this reason.
 
 ---
@@ -1262,20 +1271,20 @@ end AssetsFromShares
 
 - **Credit monitoring.** Commercial expected-default-frequency models run that time-series iteration on each listed firm's share prices every day, then convert the result into a distance to default ([Distance to default](03-distance-to-default-and-expected-default-frequency.md)). The debt face is a modelling choice; Bharath and Shumway, following the commercial model, take short-term debt plus half the long-term debt.
 - **Academic default research.** Studies of whether default risk is priced in share returns build their default measure by this inversion, firm by firm, month by month.
-- **Pricing a loan to a listed firm.** With $V$ and $\sigma_V$ in hand, the debt's value and credit spread follow from the same model ([How the balance-sheet claims move](02-structural-model-sensitivities.md)).
-- **Early warning in a slide.** As a firm's shares fall, $L$ rises and the equity volatility jumps even if the business is no riskier. The inversion separates the two: a rising $\sigma_E$ with a steady $\sigma_V$ is leverage, not new risk.
+- **Pricing a loan to a listed firm.** With $`V`$ and $`\sigma_V`$ in hand, the debt's value and credit spread follow from the same model ([How the balance-sheet claims move](02-structural-model-sensitivities.md)).
+- **Early warning in a slide.** As a firm's shares fall, $`L`$ rises and the equity volatility jumps even if the business is no riskier. The inversion separates the two: a rising $`\sigma_E`$ with a steady $`\sigma_V`$ is leverage, not new risk.
 - **Where it misleads.** Near zero equity, or for firms whose debt is long and spread over many dates, the answer is fragile or the model is wrong: [Where structural models break](06-where-structural-models-fail.md).
 
 > **Say it back**
-> A firm's assets do not trade, but its shares do, and Merton's model says the shares are a call on the assets. The call's price gives one equation, and Itô's lemma gives a second: equity volatility times equity value equals $N(d_1)$ times asset volatility times asset value. Two equations, two unknowns, and for any positive quotes exactly one answer, found by Newton, by the fixed-point iteration or by bisection. Equity volatility is asset volatility scaled up by leverage, so near zero equity small errors in the quotes become large errors in the answer. The result is model-implied, not measured.
+> A firm's assets do not trade, but its shares do, and Merton's model says the shares are a call on the assets. The call's price gives one equation, and Itô's lemma gives a second: equity volatility times equity value equals $`N(d_1)`$ times asset volatility times asset value. Two equations, two unknowns, and for any positive quotes exactly one answer, found by Newton, by the fixed-point iteration or by bisection. Equity volatility is asset volatility scaled up by leverage, so near zero equity small errors in the quotes become large errors in the answer. The result is model-implied, not measured.
 
 ---
 
 ## What this builds on
 
 - [Merton's model](01-merton-model-equity-as-a-call.md): the shares as a call on the assets, with the debt as the strike, which gives the price equation.
-- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the call formula, its helpers $d_1$ and $d_2$, and the bell-curve area $N$.
-- [How the balance-sheet claims move](02-structural-model-sensitivities.md): the equity's slope against assets, $N(d_1)$, and its vega, both used in the volatility equation and the Newton step.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the call formula, its helpers $`d_1`$ and $`d_2`$, and the bell-curve area $`N`$.
+- [How the balance-sheet claims move](02-structural-model-sensitivities.md): the equity's slope against assets, $`N(d_1)`$, and its vega, both used in the volatility equation and the Newton step.
 - [Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): solving a pair of linear equations, which is each Newton step.
 - [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): how a function of a wandering quantity wanders, which gives the volatility equation.
 - [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): fitting model inputs to market prices; this card is the special case with as many prices as inputs.

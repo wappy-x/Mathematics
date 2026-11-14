@@ -35,42 +35,50 @@ Orange: the exponential law. Green: a rough version that checks for email once a
 
 ## The formula
 
-Notation first. A capital $T$ is the wait itself, a random variable (a quantity whose value is settled by chance), measured in minutes. A lower-case $t$ is one particular number of minutes. $P(T > t)$ reads "the chance the wait is longer than $t$ minutes". The letter $\lambda$, read "lambda", is the rate. The number e, about 2.718, is the base of natural logarithms.
+Notation first. A capital $`T`$ is the wait itself, a random variable (a quantity whose value is settled by chance), measured in minutes. A lower-case $`t`$ is one particular number of minutes. $`P(T > t)`$ reads "the chance the wait is longer than $`t`$ minutes". The letter $`\lambda`$, read "lambda", is the rate. The number e, about 2.718, is the base of natural logarithms.
 
-$$S(t) = P(T > t) = e^{-\lambda t}, \qquad F(t) = 1 - e^{-\lambda t}, \qquad f(t) = \lambda e^{-\lambda t}, \qquad t \ge 0$$
+```math
+S(t) = P(T > t) = e^{-\lambda t}, \qquad F(t) = 1 - e^{-\lambda t}, \qquad f(t) = \lambda e^{-\lambda t}, \qquad t \ge 0
+```
 
-**Read it aloud:** the chance of still waiting after $t$ minutes is e to the minus rate times time; the density, which is how thickly the chance is packed near each moment, starts at the rate and falls away by the same factor.
+**Read it aloud:** the chance of still waiting after $`t`$ minutes is e to the minus rate times time; the density, which is how thickly the chance is packed near each moment, starts at the rate and falls away by the same factor.
 
 Below zero the density is 0: no wait is negative.
 
 The hazard, the chance per minute of an email right now given none yet, is the density divided by the chance of still waiting:
 
-$$h(t) = \frac{f(t)}{S(t)} = \lambda$$
+```math
+h(t) = \frac{f(t)}{S(t)} = \lambda
+```
 
-Memorylessness, for any two lengths of time $s$ and $t$:
+Memorylessness, for any two lengths of time $`s`$ and $`t`$:
 
-$$P(T > s + t \mid T > s) = P(T > t)$$
+```math
+P(T > s + t \mid T > s) = P(T > t)
+```
 
 The bar reads "given".
 
 The average and spread:
 
-$$E[T] = \frac{1}{\lambda}, \qquad \mathrm{Var}(T) = \frac{1}{\lambda^2}, \qquad \text{median} = \frac{\ln 2}{\lambda}$$
+```math
+E[T] = \frac{1}{\lambda}, \qquad \mathrm{Var}(T) = \frac{1}{\lambda^2}, \qquad \text{median} = \frac{\ln 2}{\lambda}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$ | the wait until the next email, a random variable | unknown in advance | — |
-| $t$, $s$ | fixed numbers of minutes | 10 and 5 | longer $t$: smaller chance of still waiting |
-| $\lambda$ | the rate: emails per minute | 0.2 (12 per hour) | waits shorten; mean is $1/\lambda$ |
-| $S(t)$ | survival: chance the wait is longer than $t$ | $S(10) = 0.1353$ | — |
-| $F(t)$ | cumulative distribution: chance the wait is $t$ or less | $F(5) = 0.6321$ | — |
-| $f(t)$ | density: chance per minute of the wait ending near $t$ | $f(0) = 0.2$ | — |
-| $h(t)$ | hazard: chance per minute of an email now, given none yet | 0.2 at every $t$ | constant, which is the whole assumption |
-| $\delta$, $n$ | slice width in minutes, and number of slices $t/\delta$ | 1 minute, 10 slices | finer slices: closer to $e^{-\lambda t}$ |
-| $N(t)$ | count of emails in a window of $t$ minutes | Poisson with mean 2 for 10 minutes | — |
-| $E[T]$ | average wait in the long run | 5 minutes | falls as $\lambda$ rises |
-| $\mathrm{Var}(T)$ | variance: average squared distance from the mean | 25 square minutes; standard deviation 5 | falls as $\lambda$ rises |
-| $G$, $q$, $k$, $m$ | in the proof only: any survival curve, its value at 1 minute, and whole numbers | $q = e^{-0.2}$ here | — |
+| $`T`$ | the wait until the next email, a random variable | unknown in advance | — |
+| $`t`$, $`s`$ | fixed numbers of minutes | 10 and 5 | longer $`t`$: smaller chance of still waiting |
+| $`\lambda`$ | the rate: emails per minute | 0.2 (12 per hour) | waits shorten; mean is $`1/\lambda`$ |
+| $`S(t)`$ | survival: chance the wait is longer than $`t`$ | $`S(10) = 0.1353`$ | — |
+| $`F(t)`$ | cumulative distribution: chance the wait is $`t`$ or less | $`F(5) = 0.6321`$ | — |
+| $`f(t)`$ | density: chance per minute of the wait ending near $`t`$ | $`f(0) = 0.2`$ | — |
+| $`h(t)`$ | hazard: chance per minute of an email now, given none yet | 0.2 at every $`t`$ | constant, which is the whole assumption |
+| $`\delta`$, $`n`$ | slice width in minutes, and number of slices $`t/\delta`$ | 1 minute, 10 slices | finer slices: closer to $`e^{-\lambda t}`$ |
+| $`N(t)`$ | count of emails in a window of $`t`$ minutes | Poisson with mean 2 for 10 minutes | — |
+| $`E[T]`$ | average wait in the long run | 5 minutes | falls as $`\lambda`$ rises |
+| $`\mathrm{Var}(T)`$ | variance: average squared distance from the mean | 25 square minutes; standard deviation 5 | falls as $`\lambda`$ rises |
+| $`G`$, $`q`$, $`k`$, $`m`$ | in the proof only: any survival curve, its value at 1 minute, and whole numbers | $`q = e^{-0.2}`$ here | — |
 
 ### When it holds
 
@@ -86,65 +94,73 @@ $$E[T] = \frac{1}{\lambda}, \qquad \mathrm{Var}(T) = \frac{1}{\lambda^2}, \qquad
 
 ### Step 0: the same chance in every slice of time
 
-Cut time into short slices. Constant hazard means each slice has the same chance of holding the next email, whatever came before. Staying quiet for $t$ minutes is then a run of quiet slices, and chances of independent events multiply. Everything below is that product, taken to the limit; [Densities](01-densities-and-cdfs.md) then turns it into a density.
+Cut time into short slices. Constant hazard means each slice has the same chance of holding the next email, whatever came before. Staying quiet for $`t`$ minutes is then a run of quiet slices, and chances of independent events multiply. Everything below is that product, taken to the limit; [Densities](01-densities-and-cdfs.md) then turns it into a density.
 
 ### Step 1: a quiet spell is a run of quiet slices
 
-Take slices of $\delta$ minutes. The chance of an email in one slice is $\lambda \delta$, so the chance of none is $1 - \lambda\delta$. A wait of $t$ minutes is $n = t/\delta$ slices, and quiet in all of them has chance
+Take slices of $`\delta`$ minutes. The chance of an email in one slice is $`\lambda \delta`$, so the chance of none is $`1 - \lambda\delta`$. A wait of $`t`$ minutes is $`n = t/\delta`$ slices, and quiet in all of them has chance
 
-$$S(t) \approx (1 - \lambda\delta)^{n} = \left(1 - \frac{\lambda t}{n}\right)^{n}.$$
+```math
+S(t) \approx (1 - \lambda\delta)^{n} = \left(1 - \frac{\lambda t}{n}\right)^{n}.
+```
 
-With one-minute slices, $0.8^{10} = 0.107374$. With slices of 0.1, 0.01 and 0.001 minutes: 0.132620, 0.135065, 0.135308. They climb toward 0.135335, which is $e^{-2}$. The limit of $(1 - x/n)^n$ as $n$ grows is $e^{-x}$, the same limit that turns ever-more-frequent compounding into e ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)), here run downhill. So $S(t) = e^{-\lambda t}$.
+With one-minute slices, $`0.8^{10} = 0.107374`$. With slices of 0.1, 0.01 and 0.001 minutes: 0.132620, 0.135065, 0.135308. They climb toward 0.135335, which is $`e^{-2}`$. The limit of $`(1 - x/n)^n`$ as $`n`$ grows is $`e^{-x}`$, the same limit that turns ever-more-frequent compounding into e ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)), here run downhill. So $`S(t) = e^{-\lambda t}`$.
 
 ### Step 2: the same limit as a rate equation
 
-Quiet up to $t + \delta$ means quiet up to $t$, then quiet in one more slice: $S(t + \delta) = S(t)(1 - \lambda\delta)$. Rearrange and let the slice shrink:
+Quiet up to $`t + \delta`$ means quiet up to $`t`$, then quiet in one more slice: $`S(t + \delta) = S(t)(1 - \lambda\delta)`$. Rearrange and let the slice shrink:
 
-$$\frac{S(t+\delta) - S(t)}{\delta} = -\lambda S(t) \quad\longrightarrow\quad S'(t) = -\lambda S(t), \qquad S(0) = 1.$$
+```math
+\frac{S(t+\delta) - S(t)}{\delta} = -\lambda S(t) \quad\longrightarrow\quad S'(t) = -\lambda S(t), \qquad S(0) = 1.
+```
 
-The survival chance falls at a rate proportional to itself. That is the equation of radioactive decay ([Growth, decay and cooling](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md)), and its only solution is $S(t) = e^{-\lambda t}$. Then $F(t) = 1 - e^{-\lambda t}$, and the density is its slope, $f(t) = \lambda e^{-\lambda t}$. Divide $f$ by $S$ and the hazard comes back as 0.2 at 0, 5 and 20 minutes: the assumption in, the assumption out.
+The survival chance falls at a rate proportional to itself. That is the equation of radioactive decay ([Growth, decay and cooling](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md)), and its only solution is $`S(t) = e^{-\lambda t}`$. Then $`F(t) = 1 - e^{-\lambda t}`$, and the density is its slope, $`f(t) = \lambda e^{-\lambda t}`$. Divide $`f`$ by $`S`$ and the hazard comes back as 0.2 at 0, 5 and 20 minutes: the assumption in, the assumption out.
 
 ### Step 3: memorylessness
 
 Condition on 10 quiet minutes. The chance of 5 more is a ratio: lasting 15 minutes, out of lasting 10.
 
-$$P(T > s+t \mid T > s) = \frac{e^{-\lambda (s+t)}}{e^{-\lambda s}} = e^{-\lambda t} = P(T > t).$$
+```math
+P(T > s+t \mid T > s) = \frac{e^{-\lambda (s+t)}}{e^{-\lambda s}} = e^{-\lambda t} = P(T > t).
+```
 
-The work is done by $e^{-\lambda(s+t)} = e^{-\lambda s} e^{-\lambda t}$: survival over a stretch is survival over its pieces, multiplied. At the desk, $0.0498 / 0.1353 = 0.3679 = P(T > 5)$.
+The work is done by $`e^{-\lambda(s+t)} = e^{-\lambda s} e^{-\lambda t}`$: survival over a stretch is survival over its pieces, multiplied. At the desk, $`0.0498 / 0.1353 = 0.3679 = P(T > 5)`$.
 
 The converse holds too: among waits taking any value from 0 upward, the exponential is the only memoryless law. "No memory" and "constant hazard" are one assumption.
 
 <details>
 <summary>Detailed proof: only the exponential law forgets</summary>
 
-Write $G(t) = P(T > t)$. Memorylessness says $G(s + t) = G(s)\,G(t)$ for all $s, t \ge 0$. Let $q = G(1)$.
+Write $`G(t) = P(T > t)`$. Memorylessness says $`G(s + t) = G(s)\,G(t)`$ for all $`s, t \ge 0`$. Let $`q = G(1)`$.
 
-If $q = 1$, then $G(k) = q^k = 1$ for every whole number $k$: the email never comes. If $q = 0$, then $G(1/m)^m = G(1) = 0$ for every whole $m$, so $G(1/m) = 0$: the wait is 0 with certainty and has no density. Otherwise $0 < q < 1$.
+If $`q = 1`$, then $`G(k) = q^k = 1`$ for every whole number $`k`$: the email never comes. If $`q = 0`$, then $`G(1/m)^m = G(1) = 0`$ for every whole $`m`$, so $`G(1/m) = 0`$: the wait is 0 with certainty and has no density. Otherwise $`0 < q < 1`$.
 
-For whole numbers $k$ and $m$, splitting $k/m$ into $k$ equal pieces gives $G(k/m) = G(1/m)^k$, and splitting 1 into $m$ pieces gives $G(1/m) = q^{1/m}$. So $G(r) = q^r$ for every fraction $r \ge 0$.
+For whole numbers $`k`$ and $`m`$, splitting $`k/m`$ into $`k`$ equal pieces gives $`G(k/m) = G(1/m)^k`$, and splitting 1 into $`m`$ pieces gives $`G(1/m) = q^{1/m}`$. So $`G(r) = q^r`$ for every fraction $`r \ge 0`$.
 
-$G$ never rises: a longer wait is never more likely. Any $t$ sits between fractions $r_1 < t < r_2$ as close to $t$ as wanted, so $q^{r_2} \le G(t) \le q^{r_1}$, and both ends close on $q^t$. Hence $G(t) = q^t = e^{-\lambda t}$ with $\lambda = -\ln q > 0$.
+$`G`$ never rises: a longer wait is never more likely. Any $`t`$ sits between fractions $`r_1 < t < r_2`$ as close to $`t`$ as wanted, so $`q^{r_2} \le G(t) \le q^{r_1}`$, and both ends close on $`q^t`$. Hence $`G(t) = q^t = e^{-\lambda t}`$ with $`\lambda = -\ln q > 0`$.
 
 </details>
 
 ### Step 4: the mean, the spread and the median
 
-The average wait weights each wait by its density and adds, which here is an integral running to infinity ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). Integration by parts gives $E[T] = 1/\lambda = 5$ minutes and the average squared wait $E[T^2] = 2/\lambda^2 = 50$, so $\mathrm{Var}(T) = 50 - 25 = 25$ square minutes and the standard deviation is 5 minutes, equal to the mean.
+The average wait weights each wait by its density and adds, which here is an integral running to infinity ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). Integration by parts gives $`E[T] = 1/\lambda = 5`$ minutes and the average squared wait $`E[T^2] = 2/\lambda^2 = 50`$, so $`\mathrm{Var}(T) = 50 - 25 = 25`$ square minutes and the standard deviation is 5 minutes, equal to the mean.
 
 <details>
 <summary>Detailed proof: the mean and variance by parts</summary>
 
-By parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)), with the boundary term $t e^{-\lambda t}$ vanishing at both ends:
-$$E[T] = \int_0^\infty t\,\lambda e^{-\lambda t}\,dt = \Big[-t e^{-\lambda t}\Big]_0^\infty + \int_0^\infty e^{-\lambda t}\,dt = \frac{1}{\lambda}.$$
-Once more, with $t^2$: $E[T^2] = 0 + \int_0^\infty 2t\,e^{-\lambda t}\,dt = \frac{2}{\lambda} E[T] = \frac{2}{\lambda^2}$. Then $\mathrm{Var}(T) = E[T^2] - E[T]^2 = \frac{1}{\lambda^2}$.
+By parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)), with the boundary term $`t e^{-\lambda t}`$ vanishing at both ends:
+
+$`\displaystyle E[T] = \int_0^\infty t\,\lambda e^{-\lambda t}\,dt = \Big[-t e^{-\lambda t}\Big]_0^\infty + \int_0^\infty e^{-\lambda t}\,dt = \frac{1}{\lambda}.`$
+
+Once more, with $`t^2`$: $`E[T^2] = 0 + \int_0^\infty 2t\,e^{-\lambda t}\,dt = \frac{2}{\lambda} E[T] = \frac{2}{\lambda^2}`$. Then $`\mathrm{Var}(T) = E[T^2] - E[T]^2 = \frac{1}{\lambda^2}`$.
 
 </details>
 
-The median solves $e^{-\lambda t} = 1/2$, so it is $\ln 2 / \lambda = 3.4657$ minutes. Half of all waits are shorter than that, below the 5-minute mean: the rare long gaps pull the average right. In general the wait that a share $u$ of waits fall below solves $1 - e^{-\lambda t} = u$, so it is $-\ln(1-u)/\lambda$; at $u = 0.9$ that is 11.5129 minutes.
+The median solves $`e^{-\lambda t} = 1/2`$, so it is $`\ln 2 / \lambda = 3.4657`$ minutes. Half of all waits are shorter than that, below the 5-minute mean: the rare long gaps pull the average right. In general the wait that a share $`u`$ of waits fall below solves $`1 - e^{-\lambda t} = u`$, so it is $`-\ln(1-u)/\lambda`$; at $`u = 0.9`$ that is 11.5129 minutes.
 
 ### Step 5: the Poisson count is the same event
 
-The inbox is quiet for 10 minutes exactly when no email lands in those 10 minutes: $T > t$ is the event $N(t) = 0$. At 0.2 per minute the 10-minute count is Poisson with mean 2 ([Poisson](../03-Discrete%20Distributions/04-poisson.md)), whose chance of zero is $e^{-2} = 0.1353$, the survival chance again. One mechanism, read two ways: count the emails in a window, or time the gap.
+The inbox is quiet for 10 minutes exactly when no email lands in those 10 minutes: $`T > t`$ is the event $`N(t) = 0`$. At 0.2 per minute the 10-minute count is Poisson with mean 2 ([Poisson](../03-Discrete%20Distributions/04-poisson.md)), whose chance of zero is $`e^{-2} = 0.1353`$, the survival chance again. One mechanism, read two ways: count the emails in a window, or time the gap.
 
 The full statement, independent Poisson counts in separate windows exactly when gaps are independent exponentials, needs a process and is proved on [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md).
 
@@ -182,7 +198,7 @@ The last row is the hypothesis dropped: a uniform wait (equally likely anywhere 
 
 The scripts reach the same answers by four roads:
 
-- The closed form $e^{-\lambda t}$.
+- The closed form $`e^{-\lambda t}`$.
 - The slice product of Step 1, with slices shrinking from 1 minute to 0.001.
 - Simpson's rule (an integrator written out in the script) for the total area, the mean, the variance and the 10-minute tail.
 - A simulation that never uses the exponential formula: 24,000 emails dropped at independent random moments across 120,000 minutes, from a SplitMix64 random-number generator with seed 2026 (the number that starts its stream), sorted, and read two ways, as gaps and as counts in 12,000 windows of 10 minutes.
@@ -515,13 +531,13 @@ Bars: the 12,000 simulated windows. Line: the Poisson law with mean 2. The first
 
 ### Lean
 
-Lean proves the survival curve, memorylessness, and the mean, variance and median, for every rate $\lambda$ above 0.
+Lean proves the survival curve, memorylessness, and the mean, variance and median, for every rate $`\lambda`$ above 0.
 
-- Take a wait $T$ that is never negative and not 0 with certainty. Then $P(T > s+t) = P(T > s) P(T > t)$ for all $s, t \ge 0$ exactly when the law is exponential.
-- Take $\lambda > 0$ and a curve $S$ with $S(0) = 1$, continuous from 0 on, and $S' = -\lambda S$ at every $t > 0$. Then $S(t) = e^{-\lambda t}$ for every $t \ge 0$.
-- Take $T$ exponential with rate $\lambda > 0$. Then $E[T] = 1/\lambda$, $\mathrm{Var}(T) = 1/\lambda^2$, and half the chance lies at or below the median $\ln 2/\lambda$.
-- The hand arithmetic holds exactly: rate 0.2 per minute, mean 5, $E[T^2] = 50$, variance 25, and exponents 1, 2 and 3.
-- Also exact: $e^{-3}/e^{-2} = e^{-1}$, the slice product $0.8^{10}$, and the What breaks numbers 5/6, 0.6 and 0.8.
+- Take a wait $`T`$ that is never negative and not 0 with certainty. Then $`P(T > s+t) = P(T > s) P(T > t)`$ for all $`s, t \ge 0`$ exactly when the law is exponential.
+- Take $`\lambda > 0`$ and a curve $`S`$ with $`S(0) = 1`$, continuous from 0 on, and $`S' = -\lambda S`$ at every $`t > 0`$. Then $`S(t) = e^{-\lambda t}`$ for every $`t \ge 0`$.
+- Take $`T`$ exponential with rate $`\lambda > 0`$. Then $`E[T] = 1/\lambda`$, $`\mathrm{Var}(T) = 1/\lambda^2`$, and half the chance lies at or below the median $`\ln 2/\lambda`$.
+- The hand arithmetic holds exactly: rate 0.2 per minute, mean 5, $`E[T^2] = 50`$, variance 25, and exponents 1, 2 and 3.
+- Also exact: $`e^{-3}/e^{-2} = e^{-1}`$, the slice product $`0.8^{10}`$, and the What breaks numbers 5/6, 0.6 and 0.8.
 
 The decimals, the Simpson sums, the slice limit, the simulation and the Poisson link are left to the Python and Rust checks.
 
@@ -846,18 +862,18 @@ example : ((10 : ℚ) - 7) / (10 - 5) = 3 / 5 ∧ ((10 : ℚ) - 2) / 10 = 4 / 5 
 ## Where you meet it in real life
 
 - **Queues and call centres.** Staffing formulas take gaps between calls as exponential, with the rate re-estimated hour by hour.
-- **Radioactive decay.** An atom has a constant chance per second of decaying, so its lifetime is exponential and its half-life is the median, $\ln 2 / \lambda$.
+- **Radioactive decay.** An atom has a constant chance per second of decaying, so its lifetime is exponential and its half-life is the median, $`\ln 2 / \lambda`$.
 - **Reliability.** Electronic parts past their early failures and before wear-out fail at a roughly constant rate; a rising rate needs [Weibull and hazards](09-weibull-and-hazard-rates.md).
-- **Credit risk.** A firm's time to default is modelled with a hazard rate, and at a constant hazard the survival chance is $e^{-\lambda t}$; finance builds on it in [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
+- **Credit risk.** A firm's time to default is modelled with a hazard rate, and at a constant hazard the survival chance is $`e^{-\lambda t}`$; finance builds on it in [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
 
 > **Say it back**
-> If the chance of an email in the next moment never changes, the chance of still waiting shrinks by the same factor every minute, which is $e^{-\lambda t}$. At 12 emails per hour the mean wait is 5 minutes, the median 3.4657, and 10 quiet minutes happen about 1 time in 7. After any quiet spell the wait still to come has the same law as a fresh one, and no other waiting law does that. Timing the gap and counting emails in a window are the same mechanism: no email in 10 minutes has the Poisson chance of zero, 0.1353.
+> If the chance of an email in the next moment never changes, the chance of still waiting shrinks by the same factor every minute, which is $`e^{-\lambda t}`$. At 12 emails per hour the mean wait is 5 minutes, the median 3.4657, and 10 quiet minutes happen about 1 time in 7. After any quiet spell the wait still to come has the same law as a fresh one, and no other waiting law does that. Timing the gap and counting emails in a window are the same mechanism: no email in 10 minutes has the Poisson chance of zero, 0.1353.
 
 ---
 
 ## What this builds on
 
-- [Densities](01-densities-and-cdfs.md): the density $f$, the cumulative distribution $F$, and why the density is the slope of $F$.
+- [Densities](01-densities-and-cdfs.md): the density $`f`$, the cumulative distribution $`F`$, and why the density is the slope of $`F`$.
 - [Poisson](../03-Discrete%20Distributions/04-poisson.md): the count of rare independent events, whose chance of zero is the survival chance here.
 
 ## Where this goes next

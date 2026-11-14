@@ -38,17 +38,21 @@ The poles at −0.25 and −0.1 1/min run together along the axis, meet at −0.
 
 ## The formula
 
-Reminders. A **pole** is a value of s where a transfer function's denominator vanishes; each is the rate of one mode of the response, and a **zero** is where the numerator vanishes ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). The **loop gain** $L(s)$ is everything met once round the loop ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)). Engineers write j for the square root of −1; the rest of the library writes i.
+Reminders. A **pole** is a value of s where a transfer function's denominator vanishes; each is the rate of one mode of the response, and a **zero** is where the numerator vanishes ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). The **loop gain** $`L(s)`$ is everything met once round the loop ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)). Engineers write j for the square root of −1; the rest of the library writes i.
 
-Write the loop gain as one dial $K$ times a fixed shape:
+Write the loop gain as one dial $`K`$ times a fixed shape:
 
-$$L(s) = K\,\frac{N(s)}{D(s)} = K\,\frac{b\,\prod_{k=1}^{m}(s - z_k)}{a\,\prod_{i=1}^{n}(s - p_i)}.$$
+```math
+L(s) = K\,\frac{N(s)}{D(s)} = K\,\frac{b\,\prod_{k=1}^{m}(s - z_k)}{a\,\prod_{i=1}^{n}(s - p_i)}.
+```
 
-Here $N$ and $D$ are polynomials with leading coefficients $b$ and $a$, $z_k$ are the $m$ open-loop zeros and $p_i$ the $n$ open-loop poles. The index is k, not j, because j is the square root of −1.
+Here $`N`$ and $`D`$ are polynomials with leading coefficients $`b`$ and $`a`$, $`z_k`$ are the $`m`$ open-loop zeros and $`p_i`$ the $`n`$ open-loop poles. The index is k, not j, because j is the square root of −1.
 
-The closed-loop poles are the roots of $1 + L(s) = 0$, that is $D(s) + K\,N(s) = 0$. Split it into angle and size:
+The closed-loop poles are the roots of $`1 + L(s) = 0`$, that is $`D(s) + K\,N(s) = 0`$. Split it into angle and size:
 
-$$\sum_{k=1}^{m} \angle(s - z_k) - \sum_{i=1}^{n} \angle(s - p_i) = (2q + 1)\,\pi, \qquad K = \frac{a}{b}\,\frac{\prod_i \lvert s - p_i\rvert}{\prod_k \lvert s - z_k\rvert},$$
+```math
+\sum_{k=1}^{m} \angle(s - z_k) - \sum_{i=1}^{n} \angle(s - p_i) = (2q + 1)\,\pi, \qquad K = \frac{a}{b}\,\frac{\prod_i \lvert s - p_i\rvert}{\prod_k \lvert s - z_k\rvert},
+```
 
 with q any integer.
 
@@ -56,34 +60,38 @@ with q any integer.
 
 For the room there are no zeros, and
 
-$$D(s) = (T_1 s + 1)(T_2 s + 1)(T_3 s + 1) = 80\,s^3 + 68\,s^2 + 16\,s + 1, \qquad D(s) + K = 0.$$
+```math
+D(s) = (T_1 s + 1)(T_2 s + 1)(T_3 s + 1) = 80\,s^3 + 68\,s^2 + 16\,s + 1, \qquad D(s) + K = 0.
+```
 
 The sketching rules, each proved in Why it works:
 
-1. **Start and end.** The $n$ branches start at the open-loop poles at $K = 0$ and end at the $m$ zeros or at infinity.
+1. **Start and end.** The $`n`$ branches start at the open-loop poles at $`K = 0`$ and end at the $`m`$ zeros or at infinity.
 2. **Real axis.** A real point is on the locus when an odd number of real poles and zeros lie to its right.
-3. **Asymptotes.** The $n - m$ branches that leave follow lines from the centroid $\sigma_a$ at angles $\phi_q$:
-$$\sigma_a = \frac{\sum_i p_i - \sum_k z_k}{n - m}, \qquad \phi_q = \frac{(2q + 1)\,180^\circ}{n - m}, \quad q = 0, 1, \ldots, n - m - 1.$$
-4. **Breakaway.** Branches meet on the axis and split where $dK/ds = 0$, with $K = -D(s)/N(s)$.
-5. **Crossing.** Put $s = j\omega$ in $D + K N = 0$; real and imaginary parts give $\omega$ and $K$.
-6. **Damping ray.** A pair with damping ratio $\zeta$ lies on the ray from the origin at angle $\arccos \zeta$ from the negative real axis.
+3. **Asymptotes.** The $`n - m`$ branches that leave follow lines from the centroid $`\sigma_a`$ at angles $`\phi_q`$:
+```math
+\sigma_a = \frac{\sum_i p_i - \sum_k z_k}{n - m}, \qquad \phi_q = \frac{(2q + 1)\,180^\circ}{n - m}, \quad q = 0, 1, \ldots, n - m - 1.
+```
+4. **Breakaway.** Branches meet on the axis and split where $`dK/ds = 0`$, with $`K = -D(s)/N(s)`$.
+5. **Crossing.** Put $`s = j\omega`$ in $`D + K N = 0`$; real and imaginary parts give $`\omega`$ and $`K`$.
+6. **Damping ray.** A pair with damping ratio $`\zeta`$ lies on the ray from the origin at angle $`\arccos \zeta`$ from the negative real axis.
 
 A seventh rule, the angle at which a branch leaves a complex open-loop pole, is the angle condition applied just beside that pole; the room has no complex open-loop poles, so it is not needed here.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | rate of a test exponential e^(st), in 1/min; complex | any point of the plane | — |
-| $L(s)$ | loop gain, thermostat times room | 12.6 / D(s) at the crossing | — |
-| $K$ | the dial: loop gain at zero frequency, dimensionless | 0 to 20 | poles move along the locus |
-| $k_c$ | thermostat gain, kW per °C; $k_c = K / G_0$ | 0.1723 at ζ = 0.5 | faster, then swinging |
-| $G_0$, $y$, $u$ | room's steady rise per kW; room's rise, °C; boiler heat, kW | 10.0 °C per kW | acts like more $K$ |
-| $T_1$, $T_2$, $T_3$ | lags of pipe, radiator, air, in min | 2, 4, 10 | crossing gain moves |
-| $D(s)$, $N(s)$, $a$, $b$ | the loop shape's denominator and numerator, and their leading coefficients | a = 80, N = b = 1 | — |
-| $p_i$, $z_k$, $n$, $m$, $s_0$ | open-loop poles and zeros in 1/min, how many, and a double root | −0.5, −0.25, −0.1; none; n = 3 | — |
-| $\sigma_a$, $\phi_q$, $q$, $\theta$ | asymptotes' centroid in 1/min, their angles, index, and the direction of a far point | −0.2833; 60°, 180°, 300° | — |
-| $\omega$ | where a branch crosses the imaginary axis, rad/min | 0.4472 | — |
-| $\zeta$, $\omega_n$ | damping ratio and natural frequency of a pair | 0.5; 0.2353 rad/min | ζ falls as K rises |
-| $\sigma$, $\omega_d$, $p_3$ | the pair as −σ ± jω_d, and the third pole | 0.1176, 0.2038, −0.6147 | — |
+| $`s`$ | rate of a test exponential e^(st), in 1/min; complex | any point of the plane | — |
+| $`L(s)`$ | loop gain, thermostat times room | 12.6 / D(s) at the crossing | — |
+| $`K`$ | the dial: loop gain at zero frequency, dimensionless | 0 to 20 | poles move along the locus |
+| $`k_c`$ | thermostat gain, kW per °C; $`k_c = K / G_0`$ | 0.1723 at ζ = 0.5 | faster, then swinging |
+| $`G_0`$, $`y`$, $`u`$ | room's steady rise per kW; room's rise, °C; boiler heat, kW | 10.0 °C per kW | acts like more $`K`$ |
+| $`T_1`$, $`T_2`$, $`T_3`$ | lags of pipe, radiator, air, in min | 2, 4, 10 | crossing gain moves |
+| $`D(s)`$, $`N(s)`$, $`a`$, $`b`$ | the loop shape's denominator and numerator, and their leading coefficients | a = 80, N = b = 1 | — |
+| $`p_i`$, $`z_k`$, $`n`$, $`m`$, $`s_0`$ | open-loop poles and zeros in 1/min, how many, and a double root | −0.5, −0.25, −0.1; none; n = 3 | — |
+| $`\sigma_a`$, $`\phi_q`$, $`q`$, $`\theta`$ | asymptotes' centroid in 1/min, their angles, index, and the direction of a far point | −0.2833; 60°, 180°, 300° | — |
+| $`\omega`$ | where a branch crosses the imaginary axis, rad/min | 0.4472 | — |
+| $`\zeta`$, $`\omega_n`$ | damping ratio and natural frequency of a pair | 0.5; 0.2353 rad/min | ζ falls as K rises |
+| $`\sigma`$, $`\omega_d`$, $`p_3`$ | the pair as −σ ± jω_d, and the third pole | 0.1176, 0.2038, −0.6147 | — |
 
 ### When it holds
 
@@ -99,13 +107,15 @@ A seventh rule, the angle at which a branch leaves a complex open-loop pole, is 
 
 ### Step 0: one complex equation, split in two
 
-A closed-loop pole is where $L(s) = -1$. A complex number equals −1 exactly when its size is 1 and its angle is half a turn. A positive K has no angle, so the angle condition alone decides which points can ever be poles; the size condition then reads off the gain. Every rule below is the angle condition seen from a different distance.
+A closed-loop pole is where $`L(s) = -1`$. A complex number equals −1 exactly when its size is 1 and its angle is half a turn. A positive K has no angle, so the angle condition alone decides which points can ever be poles; the size condition then reads off the gain. Every rule below is the angle condition seen from a different distance.
 
 ### Step 1: turn the room into a loop
 
-Call the room's rise y, in °C, and the boiler's heat u, in kW. The pipe water chases $G_0 u$ with lag $T_1$, the radiator chases the water with lag $T_2$, the air chases the radiator with lag $T_3$. Each lag is a factor $1/(T s + 1)$, so $y/u = G_0 / D(s)$. The thermostat sends $u = k_c\,(\text{setpoint} - y)$, so $L(s) = k_c G_0 / D(s) = K / D(s)$ and the closed loop's poles solve
+Call the room's rise y, in °C, and the boiler's heat u, in kW. The pipe water chases $`G_0 u`$ with lag $`T_1`$, the radiator chases the water with lag $`T_2`$, the air chases the radiator with lag $`T_3`$. Each lag is a factor $`1/(T s + 1)`$, so $`y/u = G_0 / D(s)`$. The thermostat sends $`u = k_c\,(\text{setpoint} - y)`$, so $`L(s) = k_c G_0 / D(s) = K / D(s)`$ and the closed loop's poles solve
 
-$$80\,s^3 + 68\,s^2 + 16\,s + (1 + K) = 0.$$
+```math
+80\,s^3 + 68\,s^2 + 16\,s + (1 + K) = 0.
+```
 
 Only the constant term moves with the dial. A root finder written out in the code gives the target the rules must hit:
 
@@ -122,49 +132,53 @@ Every row sums to −0.8500. A cubic's roots add to minus its second coefficient
 
 ### Step 2: start, end, and the real axis
 
-At $K = 0$ the equation is $D(s) = 0$: branches start at the open-loop poles. As K grows, $K N(s)$ dominates, so roots approach the zeros of N; with fewer zeros than poles the spare branches go to infinity.
+At $`K = 0`$ the equation is $`D(s) = 0`$: branches start at the open-loop poles. As K grows, $`K N(s)`$ dominates, so roots approach the zeros of N; with fewer zeros than poles the spare branches go to infinity.
 
 On the real axis, a complex pole pair's angles cancel. A real pole left of a real test point contributes 0; one to its right contributes 180°. The sum is an odd number of half turns exactly when an odd number lie to the right. At −0.15 one pole lies right: on the locus. At −0.4, two: off. At −1.0, three: on.
 
 ### Step 3: from far away, the poles look like one point
 
-Far from the poles every vector to s points almost the same way, so $L(s) \approx K / (80\,(s - \sigma_a)^3)$, with $\sigma_a$ the poles' average, −0.2833. The angle condition becomes $3\theta = 180^\circ, 540^\circ, 900^\circ$: branches leave at 60°, 180° and 300°. Two asymptotes point into the right half-plane, so the pair must cross the imaginary axis at some finite gain.
+Far from the poles every vector to s points almost the same way, so $`L(s) \approx K / (80\,(s - \sigma_a)^3)`$, with $`\sigma_a`$ the poles' average, −0.2833. The angle condition becomes $`3\theta = 180^\circ, 540^\circ, 900^\circ`$: branches leave at 60°, 180° and 300°. Two asymptotes point into the right half-plane, so the pair must cross the imaginary axis at some finite gain.
 
 <details>
 <summary>The algebra behind this</summary>
 
-Divide $D + K N$ by $a$. Its n roots add to minus its $s^{n-1}$ coefficient. When $n - m \ge 2$, $K N$ cannot reach $s^{n-1}$, so the sum stays $\sum p_i$ for every K. As K grows, m roots settle on the zeros, adding to $\sum z_k$; the other $n - m$ keep the rest, so their average stays $\sigma_a$. Their size grows like $K^{1/(n-m)}$, and the balance $s^{n-m} \approx -K b / a$ puts them at the $(n - m)$-th roots of a negative number: the angles $\phi_q$.
+Divide $`D + K N`$ by $`a`$. Its n roots add to minus its $`s^{n-1}`$ coefficient. When $`n - m \ge 2`$, $`K N`$ cannot reach $`s^{n-1}`$, so the sum stays $`\sum p_i`$ for every K. As K grows, m roots settle on the zeros, adding to $`\sum z_k`$; the other $`n - m`$ keep the rest, so their average stays $`\sigma_a`$. Their size grows like $`K^{1/(n-m)}`$, and the balance $`s^{n-m} \approx -K b / a`$ puts them at the $`(n - m)`$-th roots of a negative number: the angles $`\phi_q`$.
 
 </details>
 
 ### Step 4: the breakaway is where the axis gain peaks
 
-On the segment from −0.25 to −0.1 the gain at a real point is $K = -D(s)$. It is 0 at both ends and rises between. Each gain below the peak is met twice, one real pole on each side; at the peak the two meet; above it, no real point has that gain, so the pair leaves the axis. The peak is where
+On the segment from −0.25 to −0.1 the gain at a real point is $`K = -D(s)`$. It is 0 at both ends and rises between. Each gain below the peak is met twice, one real pole on each side; at the peak the two meet; above it, no real point has that gain, so the pair leaves the axis. The peak is where
 
-$$D'(s) = 240\,s^2 + 136\,s + 16 = 0 \quad\Longrightarrow\quad s = -0.166667 \ \text{or}\ -0.4000.$$
+```math
+D'(s) = 240\,s^2 + 136\,s + 16 = 0 \quad\Longrightarrow\quad s = -0.166667 \ \text{or}\ -0.4000.
+```
 
 Step 2 rules out −0.4000, where the gain would be −0.3600. At −0.166667 the gain is 0.148148, and the third pole is −0.85 + 2 × 0.166667 = −0.5167.
 
 <details>
 <summary>Detailed proof: a breakaway needs dK/ds = 0</summary>
 
-At a breakaway $P(s) = D(s) + K N(s)$ has a double root $s_0$, so $P(s_0) = 0$ and $P'(s_0) = 0$. The first gives $K = -D(s_0)/N(s_0)$. Put that into $D'(s_0) + K N'(s_0) = 0$: $D'(s_0) N(s_0) - D(s_0) N'(s_0) = 0$, the numerator of $d(-D/N)/ds$. The converse needs the gain read there to be positive, which is the test −0.4000 fails.
+At a breakaway $`P(s) = D(s) + K N(s)`$ has a double root $`s_0`$, so $`P(s_0) = 0`$ and $`P'(s_0) = 0`$. The first gives $`K = -D(s_0)/N(s_0)`$. Put that into $`D'(s_0) + K N'(s_0) = 0`$: $`D'(s_0) N(s_0) - D(s_0) N'(s_0) = 0`$, the numerator of $`d(-D/N)/ds`$. The converse needs the gain read there to be positive, which is the test −0.4000 fails.
 
 </details>
 
 ### Step 5: the crossing, from real and imaginary parts
 
-Put $s = j\omega$ in $D(s) + K = 0$. With $s^2 = -\omega^2$ and $s^3 = -j\omega^3$:
+Put $`s = j\omega`$ in $`D(s) + K = 0`$. With $`s^2 = -\omega^2`$ and $`s^3 = -j\omega^3`$:
 
-$$(1 + K - 68\,\omega^2) + j\,(16\,\omega - 80\,\omega^3) = 0.$$
+```math
+(1 + K - 68\,\omega^2) + j\,(16\,\omega - 80\,\omega^3) = 0.
+```
 
-The imaginary part gives $\omega^2 = 16/80$, so $\omega = 0.4472$ rad/min, a swing period of 14.05 min. The real part gives $K = 68 \times 0.2 - 1 = 12.6$. The Routh table applied to this cubic finds the same 12.6 ([Routh-Hurwitz](04-routh-hurwitz-criterion.md); that card's workshop is a slower room, whose thermostat gain crosses at 12 kW per °C); the substitution also says where the crossing is.
+The imaginary part gives $`\omega^2 = 16/80`$, so $`\omega = 0.4472`$ rad/min, a swing period of 14.05 min. The real part gives $`K = 68 \times 0.2 - 1 = 12.6`$. The Routh table applied to this cubic finds the same 12.6 ([Routh-Hurwitz](04-routh-hurwitz-criterion.md); that card's workshop is a slower room, whose thermostat gain crosses at 12 kW per °C); the substitution also says where the crossing is.
 
-Evans's check: the angles from the three poles to 0.4472j are 41.81°, 60.79° and 77.40°, adding to 180.00°, and $\lvert D(j\omega)\rvert = 12.6$.
+Evans's check: the angles from the three poles to 0.4472j are 41.81°, 60.79° and 77.40°, adding to 180.00°, and $`\lvert D(j\omega)\rvert = 12.6`$.
 
 ### The picture: how much each swing shrinks or grows
 
-The swing ratio is each swing's size over the one before, $e^{2\pi\,\mathrm{Re}\,p / \mathrm{Im}\,p}$ for the pair's upper pole p.
+The swing ratio is each swing's size over the one before, $`e^{2\pi\,\mathrm{Re}\,p / \mathrm{Im}\,p}`$ for the pair's upper pole p.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -179,12 +193,12 @@ The line is the swing ratio from the root finder. It passes 1 at the crossing ga
 
 ### Step 6: pick the gain for a chosen damping
 
-A pair $-\sigma \pm j\omega_d$ has damping ratio $\sigma/\sqrt{\sigma^2 + \omega_d^2}$, the cosine of its angle from the negative real axis ([Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md)). For ζ = 0.5 the angle is 60°, the pair is $-\sigma \pm j\sigma\sqrt{3}$, and its factor is $s^2 + 2\sigma s + 4\sigma^2$. Write the cubic over 80 as that factor times $(s - p_3)$ and match:
+A pair $`-\sigma \pm j\omega_d`$ has damping ratio $`\sigma/\sqrt{\sigma^2 + \omega_d^2}`$, the cosine of its angle from the negative real axis ([Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md)). For ζ = 0.5 the angle is 60°, the pair is $`-\sigma \pm j\sigma\sqrt{3}`$, and its factor is $`s^2 + 2\sigma s + 4\sigma^2`$. Write the cubic over 80 as that factor times $`(s - p_3)`$ and match:
 
-- $s^2$: $2\sigma - p_3 = 0.85$.
-- $s^1$: $4\sigma^2 - 2\sigma p_3 = 0.2$; with $p_3 = 2\sigma - 0.85$ the $\sigma^2$ terms cancel, leaving $1.7\,\sigma = 0.2$.
+- $`s^2`$: $`2\sigma - p_3 = 0.85`$.
+- $`s^1`$: $`4\sigma^2 - 2\sigma p_3 = 0.2`$; with $`p_3 = 2\sigma - 0.85`$ the $`\sigma^2`$ terms cancel, leaving $`1.7\,\sigma = 0.2`$.
 
-So the pair is $-0.1176 \pm 0.2038j$, the third pole is $-0.6147$, and the constant term gives $1 + K = 80 \times 4\sigma^2 \times 0.6147$: $K = 1.7226$, a thermostat gain of 0.1723 kW per °C, with $\omega_n = 2\sigma = 0.2353$ rad/min.
+So the pair is $`-0.1176 \pm 0.2038j`$, the third pole is $`-0.6147`$, and the constant term gives $`1 + K = 80 \times 4\sigma^2 \times 0.6147`$: $`K = 1.7226`$, a thermostat gain of 0.1723 kW per °C, with $`\omega_n = 2\sigma = 0.2353`$ rad/min.
 
 ### The picture: the room after the setpoint goes from 20 to 21 °C
 
@@ -200,9 +214,9 @@ xychart-beta
 
 Orange: the room at the ζ = 0.5 gain, 1.7226, peaking at 20.7270 °C after 17.33 min and settling at 20.63 °C. Green: the room at the crossing gain, 12.6, swinging for good, its samples running between 20.13 and 21.74 °C. Both sampled every 10 min from the simulation.
 
-The ζ = 0.5 room overshoots its final value by 14.90%; a lone pair with ζ = 0.5 would overshoot by $e^{-\pi\zeta/\sqrt{1-\zeta^2}} = 16.30\%$. The third pole, about five times farther left, trims the peak. The room settles at 0.6327 of the requested degree, $K/(1 + K)$, because a proportional thermostat needs a standing shortfall to keep the heat on ([Steady-state error](03-steady-state-error-and-system-type.md)). On this locus more accuracy means more gain, and more gain means less damping.
+The ζ = 0.5 room overshoots its final value by 14.90%; a lone pair with ζ = 0.5 would overshoot by $`e^{-\pi\zeta/\sqrt{1-\zeta^2}} = 16.30\%`$. The third pole, about five times farther left, trims the peak. The room settles at 0.6327 of the requested degree, $`K/(1 + K)`$, because a proportional thermostat needs a standing shortfall to keep the heat on ([Steady-state error](03-steady-state-error-and-system-type.md)). On this locus more accuracy means more gain, and more gain means less damping.
 
-**Another route.** The Nyquist plot reads the same crossing off $L(j\omega)$: at 0.4472 rad/min and gain 12.6 the loop gain is exactly −1, and that frequency road also handles the delay the rules cannot ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
+**Another route.** The Nyquist plot reads the same crossing off $`L(j\omega)`$: at 0.4472 rad/min and gain 12.6 the loop gain is exactly −1, and that frequency road also handles the delay the rules cannot ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
 
 ---
 
@@ -654,11 +668,11 @@ The two outputs are identical line for line.
 
 Lean proves the angle and size conditions and the breakaway rule for any loop, and the room's crossing gain and worked numbers.
 
-- Take a positive gain $K$, $a/b > 0$, and a point $s$ that is not a zero. Then $D(s) + K\,N(s) = 0$ exactly when both the angle condition and the size condition hold.
-- Suppose $D + K N$ has a double root $s_0$, for any gain $K$. Then $D'(s_0) N(s_0) - D(s_0) N'(s_0) = 0$, the numerator of $dK/ds$.
-- Take a positive loop gain $K$. Then $80 s^3 + 68 s^2 + 16 s + 1 + K$ has a root $j\omega$, with $\omega$ real, exactly when $K = 12.6$.
+- Take a positive gain $`K`$, $`a/b > 0`$, and a point $`s`$ that is not a zero. Then $`D(s) + K\,N(s) = 0`$ exactly when both the angle condition and the size condition hold.
+- Suppose $`D + K N`$ has a double root $`s_0`$, for any gain $`K`$. Then $`D'(s_0) N(s_0) - D(s_0) N'(s_0) = 0`$, the numerator of $`dK/ds`$.
+- Take a positive loop gain $`K`$. Then $`80 s^3 + 68 s^2 + 16 s + 1 + K`$ has a root $`j\omega`$, with $`\omega`$ real, exactly when $`K = 12.6`$.
 - The worked numbers hold as exact fractions. The centroid is −17/60, the breakaway −1/6 at gain 4/27, and the ζ = 0.5 gain 8463/4913.
-- The other root of $D'$, −2/5, needs gain −9/25, so it is off the locus.
+- The other root of $`D'`$, −2/5, needs gain −9/25, so it is off the locus.
 
 The real-axis and asymptote rules, the simulations and the delay are left to the Python and Rust checks.
 

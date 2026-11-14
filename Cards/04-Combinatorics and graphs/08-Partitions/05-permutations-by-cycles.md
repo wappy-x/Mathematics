@@ -35,28 +35,34 @@ Each arrow runs from a hook to where its key went. Three loops, of lengths 2, 2 
 
 Notation first, in words. A rehang is a **destination list**: under each hook in order, the hook its key went to, so the rehang above is `3 5 1 4 2`. Its loops go in brackets, hooks in trace order: (1 3)(2 5)(4) — cycle notation, met on [Permutations](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md), where a loop is a cycle.
 
-Write $c(n,k)$, said "c of n, k", for the rehangs of $n$ keys whose trace makes exactly $k$ loops, so $c(5,3) = 35$. These are the **unsigned Stirling numbers of the first kind**.
+Write $`c(n,k)`$, said "c of n, k", for the rehangs of $`n`$ keys whose trace makes exactly $`k`$ loops, so $`c(5,3) = 35`$. These are the **unsigned Stirling numbers of the first kind**.
 
-$$c(n,k) = (n-1)\,c(n-1,k) + c(n-1,k-1), \qquad c(1,1) = 1$$
+```math
+c(n,k) = (n-1)\,c(n-1,k) + c(n-1,k-1), \qquad c(1,1) = 1
+```
 
 **Read it aloud:** the last key either slips into a rehang of the other n − 1, in any of n − 1 places, or hangs on its own beside a rehang making one loop fewer.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | keys rehung, one per hook | 5 | rows grow far larger |
-| $k$ | loops in the trace | 1 up to 5 | counts fall away past two |
-| $c(n,k)$ | rehangs of n keys, k loops | 35 at k = 3 | — |
-| $n!$ | all the rehangs, "n factorial" | 120 | — |
-| $j$ | a loop's length | 2, 2 and 1 | fewer loops fit |
-| $a_j$ | loops that long | two of 2, one of 1 | more repeats to divide out |
+| $`n`$ | keys rehung, one per hook | 5 | rows grow far larger |
+| $`k`$ | loops in the trace | 1 up to 5 | counts fall away past two |
+| $`c(n,k)`$ | rehangs of n keys, k loops | 35 at k = 3 | — |
+| $`n!`$ | all the rehangs, "n factorial" | 120 | — |
+| $`j`$ | a loop's length | 2, 2 and 1 | fewer loops fit |
+| $`a_j`$ | loops that long | two of 2, one of 1 | more repeats to divide out |
 
 A rehang makes one number of loops, so a row holds all of them ([Factorials](../01-Counting%20Principles/03-factorial.md)):
 
-$$c(n,1) + c(n,2) + \cdots + c(n,n) = n!$$
+```math
+c(n,1) + c(n,2) + \cdots + c(n,n) = n!
+```
 
-A rehang's **cycle type** is its loop lengths, largest first: `3 5 1 4 2` has type 2 + 2 + 1. Rehangs of one type are counted from $n!$: write $a_j$ for how many loops have length $j$, then divide by $j$ raised to $a_j$ and by $a_j$ factorial. For type 2 + 2 + 1:
+A rehang's **cycle type** is its loop lengths, largest first: `3 5 1 4 2` has type 2 + 2 + 1. Rehangs of one type are counted from $`n!`$: write $`a_j`$ for how many loops have length $`j`$, then divide by $`j`$ raised to $`a_j`$ and by $`a_j`$ factorial. For type 2 + 2 + 1:
 
-$$\frac{5!}{2^2 \times 2! \times 1^1 \times 1!} = 15$$
+```math
+\frac{5!}{2^2 \times 2! \times 1^1 \times 1!} = 15
+```
 
 ### When it holds
 
@@ -79,9 +85,9 @@ The loops carve the hooks into groups with nothing in common, their lengths addi
 
 Two cases, and no rehang is in both.
 
-**Hook 5 keeps its own key.** That loop of one is complete, and taking hook 5 off the board leaves a rehang of four keys with one loop fewer: $c(4,k-1)$ of them.
+**Hook 5 keeps its own key.** That loop of one is complete, and taking hook 5 off the board leaves a rehang of four keys with one loop fewer: $`c(4,k-1)`$ of them.
 
-**Hook 5's key goes elsewhere.** Then hook 5 lies in a loop of two or more. Cut it out: the hook that fed hook 5 now sends its key straight to hook 5's target. The loop is a hook shorter, still a loop, so the count holds — a rehang of four keys with k loops. Backwards, hook 5 splices in after any of the four hooks: 4 × $c(4,k)$.
+**Hook 5's key goes elsewhere.** Then hook 5 lies in a loop of two or more. Cut it out: the hook that fed hook 5 now sends its key straight to hook 5's target. The loop is a hook shorter, still a loop, so the count holds — a rehang of four keys with k loops. Backwards, hook 5 splices in after any of the four hooks: 4 × $`c(4,k)`$.
 
 So c(5,k) = 4 c(4,k) + c(4,k−1), and at three loops 4 × 6 + 11 = 35. The multiplier is four, the hooks already there — not three, the loops.
 
@@ -106,7 +112,7 @@ Every rehang makes one number of loops, so a row counts each once: 24 + 50 + 35 
 
 Five breaks into parts seven ways, one cycle type each: 5; 4 + 1; 3 + 2; 3 + 1 + 1; 2 + 2 + 1; 2 + 1 + 1 + 1; 1 + 1 + 1 + 1 + 1.
 
-Write the hooks in a row — 120 orders — chop it into runs of one type's lengths, and read each run as a loop. Every rehang of that type turns up repeatedly: a loop of $j$ hooks starts at any of its $j$, and $a_j$ loops of equal length can be listed $a_j!$ ways. Dividing the repeats out gives 24, 30, 20, 20, 15, 10, 1.
+Write the hooks in a row — 120 orders — chop it into runs of one type's lengths, and read each run as a loop. Every rehang of that type turns up repeatedly: a loop of $`j`$ hooks starts at any of its $`j`$, and $`a_j`$ loops of equal length can be listed $`a_j!`$ ways. Dividing the repeats out gives 24, 30, 20, 20, 15, 10, 1.
 
 By number of parts: 24; 30 + 20 = 50; 20 + 15 = 35; 10; 1 — the recurrence's row, from unrelated arithmetic.
 
@@ -341,16 +347,16 @@ The two outputs match line for line.
 
 Lean proves the recurrence and the cycle-type count for any number of keys, then checks the five-key numbers one by one.
 
-- The recurrence $c(n,k) = (n-1)\,c(n-1,k) + c(n-1,k-1)$ holds for every n and k from 1 up, with $c(1,1) = 1$.
-- $c(n,k)$ is 0 when k is above n, or when k is below 1 and there is at least one key.
-- The rehangs of one cycle type, times $j$ raised to $a_j$ and $a_j$ factorial for each length, make exactly $n!$.
+- The recurrence $`c(n,k) = (n-1)\,c(n-1,k) + c(n-1,k-1)`$ holds for every n and k from 1 up, with $`c(1,1) = 1`$.
+- $`c(n,k)`$ is 0 when k is above n, or when k is below 1 and there is at least one key.
+- The rehangs of one cycle type, times $`j`$ raised to $`a_j`$ and $`a_j`$ factorial for each length, make exactly $`n!`$.
 - A rehang leaves no key on its own hook exactly when it has no loop of length 1.
 - The traced rehang `3 5 1 4 2` has loops of lengths 2, 2 and 1, and `2 3 4 5 1` is one loop of length 5.
 - Rows three, four and five, counted by listing, are 2, 3, 1; 6, 11, 6, 1; and 24, 50, 35, 10, 1.
 - Type 2 + 2 + 1 holds 15 rehangs. The 44 rehangs with no loop of length 1 match the 44 derangements.
 - The mistakes come out at 3 × 6 + 11 = 29, and three blocks number 25, not 35.
 
-That every row adds to $n!$ is left to the Python and Rust checks, which confirm it for five keys.
+That every row adds to $`n!`$ is left to the Python and Rust checks, which confirm it for five keys.
 
 ```lean
 -- Counting shuffles by their loops: the number of rearrangements of n labelled keys whose trace makes exactly k loops (a key left on its own hook counts as a loop of length 1) obeys c(n, k) = (n − 1) c(n − 1, k) + c(n − 1, k − 1) with c(1, 1) = 1, the rearrangements of one cycle type number n! divided by the product of j^(a_j) × a_j!, and the derangements are exactly those with no loop of length 1, with the card's five-key numbers checked.

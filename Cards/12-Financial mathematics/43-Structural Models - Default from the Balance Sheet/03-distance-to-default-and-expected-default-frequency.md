@@ -38,45 +38,51 @@ Orange: the expected default frequency, which falls as the assets are expected t
 
 ## The formula
 
-Notation first, in words. $V$ is the asset value today and $V_T$ its value on the due date. $D$ is the debt due, $T$ the years until it is due, $\sigma$ ("sigma") the asset volatility, $\mu$ ("mu") the assets' real expected growth rate and $r$ the riskless rate. $N(x)$ is the bell-curve area to the left of $x$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). $DD$ is one symbol: the distance to default.
+Notation first, in words. $`V`$ is the asset value today and $`V_T`$ its value on the due date. $`D`$ is the debt due, $`T`$ the years until it is due, $`\sigma`$ ("sigma") the asset volatility, $`\mu`$ ("mu") the assets' real expected growth rate and $`r`$ the riskless rate. $`N(x)`$ is the bell-curve area to the left of $`x`$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). $`DD`$ is one symbol: the distance to default.
 
-$$DD = \frac{\ln(V/D) + \left(\mu - \tfrac12\sigma^2\right)T}{\sigma\sqrt{T}}, \qquad EDF = N(-DD)$$
+```math
+DD = \frac{\ln(V/D) + \left(\mu - \tfrac12\sigma^2\right)T}{\sigma\sqrt{T}}, \qquad EDF = N(-DD)
+```
 
 **Read it aloud:** the distance to default is the log-cushion plus the expected log-growth, divided by the size of one year's typical swing; the default forecast is the bell-curve area more than that many swings below the middle.
 
-The pricing version replaces $\mu$ by $r$. It is Merton's $d_2$:
+The pricing version replaces $`\mu`$ by $`r`$. It is Merton's $`d_2`$:
 
-$$d_2 = \frac{\ln(V/D) + \left(r - \tfrac12\sigma^2\right)T}{\sigma\sqrt{T}}, \qquad \text{pricing default chance} = N(-d_2)$$
+```math
+d_2 = \frac{\ln(V/D) + \left(r - \tfrac12\sigma^2\right)T}{\sigma\sqrt{T}}, \qquad \text{pricing default chance} = N(-d_2)
+```
 
-The two are one shift apart. Write $\lambda = (\mu - r)/\sigma$, the extra growth the assets earn per unit of swing:
+The two are one shift apart. Write $`\lambda = (\mu - r)/\sigma`$, the extra growth the assets earn per unit of swing:
 
-$$DD = d_2 + \lambda\sqrt{T}, \qquad N(-d_2) = N\!\left(N^{-1}(EDF) + \lambda\sqrt{T}\right)$$
+```math
+DD = d_2 + \lambda\sqrt{T}, \qquad N(-d_2) = N\!\left(N^{-1}(EDF) + \lambda\sqrt{T}\right)
+```
 
 **Read it aloud:** the real-world distance is the pricing distance plus the risk reward measured in swings; to turn a forecast into a pricing chance, read its distance off the bell curve, move it that many swings closer to default, and read the curve again.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$, $V_T$ | market value of all the firm's assets, today and on the due date | $100m today | distance grows, EDF falls |
-| $D$ | the debt due: face value of the one zero-coupon loan (no interest payments along the way; all of it paid on the due date) | $80m | distance shrinks, EDF rises |
-| $T$ | years until the debt is due | 1 | for Kestrel at $100m the EDF rises; near the debt it can fall |
-| $\sigma$ | asset volatility: the typical yearly swing in the log of asset value ("sigma") | 20% | distance shrinks, EDF rises |
-| $\mu$ | real expected growth rate of the assets ("mu") | 8% | distance grows, EDF falls |
-| $r$ | riskless rate, continuously compounded | 5% | $d_2$ grows, pricing chance falls |
-| $DD$ | distance to default, counted in standard deviations | 1.416 | — |
-| $EDF$ | expected default frequency: the real-world chance that $V_T$ ends below $D$ | 7.84% | — |
-| $N(x)$, $N^{-1}(p)$, $p$ | bell-curve area left of $x$; its inverse, the $x$ whose area is the chance $p$ | $N(-1.416) = 0.0784$ | — |
-| $d_1$, $d_2$ | Merton's two distances; $d_2$ is $DD$ with $r$ for $\mu$, $d_1 = d_2 + \sigma\sqrt{T}$ | $d_2 = 1.266$ | — |
-| $\lambda$ | market price of risk: $(\mu - r)/\sigma$, extra growth per unit of swing ("lambda") | 0.15 | the two default chances move apart |
-| $Z$ | a standard bell-curve draw: mean 0, one standard deviation of 1 | — | — |
+| $`V`$, $`V_T`$ | market value of all the firm's assets, today and on the due date | $100m today | distance grows, EDF falls |
+| $`D`$ | the debt due: face value of the one zero-coupon loan (no interest payments along the way; all of it paid on the due date) | $80m | distance shrinks, EDF rises |
+| $`T`$ | years until the debt is due | 1 | for Kestrel at $100m the EDF rises; near the debt it can fall |
+| $`\sigma`$ | asset volatility: the typical yearly swing in the log of asset value ("sigma") | 20% | distance shrinks, EDF rises |
+| $`\mu`$ | real expected growth rate of the assets ("mu") | 8% | distance grows, EDF falls |
+| $`r`$ | riskless rate, continuously compounded | 5% | $`d_2`$ grows, pricing chance falls |
+| $`DD`$ | distance to default, counted in standard deviations | 1.416 | — |
+| $`EDF`$ | expected default frequency: the real-world chance that $`V_T`$ ends below $`D`$ | 7.84% | — |
+| $`N(x)`$, $`N^{-1}(p)`$, $`p`$ | bell-curve area left of $`x`$; its inverse, the $`x`$ whose area is the chance $`p`$ | $`N(-1.416) = 0.0784`$ | — |
+| $`d_1`$, $`d_2`$ | Merton's two distances; $`d_2`$ is $`DD`$ with $`r`$ for $`\mu`$, $`d_1 = d_2 + \sigma\sqrt{T}`$ | $`d_2 = 1.266`$ | — |
+| $`\lambda`$ | market price of risk: $`(\mu - r)/\sigma`$, extra growth per unit of swing ("lambda") | 0.15 | the two default chances move apart |
+| $`Z`$ | a standard bell-curve draw: mean 0, one standard deviation of 1 | — | — |
 
-Three pieces of the top line, in words. $\ln(V/D)$ is the cushion measured in logs: 0.2231 for $100m against $80m. $(\mu - \tfrac12\sigma^2)T$ is how far the log of asset value is expected to travel by the due date. $\sigma\sqrt{T}$ is one standard deviation of that travel.
+Three pieces of the top line, in words. $`\ln(V/D)`$ is the cushion measured in logs: 0.2231 for $100m against $80m. $`(\mu - \tfrac12\sigma^2)T`$ is how far the log of asset value is expected to travel by the due date. $`\sigma\sqrt{T}`$ is one standard deviation of that travel.
 
 ### When it holds
 
 - **Asset value wanders like a stock, with a fixed swing size.** If volatility rises in bad times, as it does, the bell curve understates the chance of a large fall, and EDF comes out too low for weak firms.
 - **One debt, due on one date.** Real firms owe many debts at many dates. KMV-style practice sets a **default point** (the debt level that triggers default) at short-term debt plus half of long-term debt, as Bharath and Shumway describe (convention verified 2026-09-28); the result depends on that choice.
 - **Default is checked only on the due date.** A firm whose assets dip below its debt in March and recover by December survives here. [Black-Cox](05-black-cox-first-passage-default.md) counts those dips.
-- **The asset value, its swing and its growth are known.** None is observed. $V$ and $\sigma$ are backed out of the share price in [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md); $\mu$ is an estimate, and a two-point error in it moves Kestrel's EDF by more than a point.
+- **The asset value, its swing and its growth are known.** None is observed. $`V`$ and $`\sigma`$ are backed out of the share price in [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md); $`\mu`$ is an estimate, and a two-point error in it moves Kestrel's EDF by more than a point.
 - **The bell curve's tail is right.** It is not, far from default. Step 5 shows by how much, and why KMV fits the tail to history.
 
 ---
@@ -89,52 +95,58 @@ A $20 million cushion means nothing alone. What matters is how many typical swin
 
 ### Step 1: the log of asset value at the due date is a bell curve
 
-Under the asset model of [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md), asset value grows at expected rate $\mu$ with swings of size $\sigma$. Its logarithm then moves as a straight drift plus bell-curve noise:
+Under the asset model of [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md), asset value grows at expected rate $`\mu`$ with swings of size $`\sigma`$. Its logarithm then moves as a straight drift plus bell-curve noise:
 
-$$\ln V_T = \ln V + \left(\mu - \tfrac12\sigma^2\right)T + \sigma\sqrt{T}\,Z.$$
+```math
+\ln V_T = \ln V + \left(\mu - \tfrac12\sigma^2\right)T + \sigma\sqrt{T}\,Z.
+```
 
-The $-\tfrac12\sigma^2$ is the cost of swinging: a rise of a fifth followed by a fall of a fifth leaves less than the start. [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md) (the chain rule for randomly moving quantities) turns that into exactly $\tfrac12\sigma^2$ a year. For Kestrel the log-drift is $0.08 - 0.02 = 0.06$ and one standard deviation is $0.20$.
+The $`-\tfrac12\sigma^2`$ is the cost of swinging: a rise of a fifth followed by a fall of a fifth leaves less than the start. [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md) (the chain rule for randomly moving quantities) turns that into exactly $`\tfrac12\sigma^2`$ a year. For Kestrel the log-drift is $`0.08 - 0.02 = 0.06`$ and one standard deviation is $`0.20`$.
 
 ### Step 2: default is the bell-curve draw falling below a line
 
-Default happens when $V_T < D$, that is when $\ln V_T < \ln D$. Substitute Step 1 and move everything but $Z$ to the right:
+Default happens when $`V_T < D`$, that is when $`\ln V_T < \ln D`$. Substitute Step 1 and move everything but $`Z`$ to the right:
 
-$$Z < -\frac{\ln(V/D) + \left(\mu - \tfrac12\sigma^2\right)T}{\sigma\sqrt{T}} = -DD.$$
+```math
+Z < -\frac{\ln(V/D) + \left(\mu - \tfrac12\sigma^2\right)T}{\sigma\sqrt{T}} = -DD.
+```
 
-So default is one event: the year's standardised luck comes in more than $DD$ standard deviations below average. For Kestrel the top line is $0.2231 + 0.06 = 0.2831$, and $0.2831 / 0.20 = 1.416$.
+So default is one event: the year's standardised luck comes in more than $`DD`$ standard deviations below average. For Kestrel the top line is $`0.2231 + 0.06 = 0.2831`$, and $`0.2831 / 0.20 = 1.416`$.
 
 ### Step 3: the chance of that event is a bell-curve area
 
-$Z$ is a standard bell-curve draw, so the chance it lands below $-DD$ is $N(-DD)$. For Kestrel, $N(-1.416) = 7.84\%$. That is the model's EDF.
+$`Z`$ is a standard bell-curve draw, so the chance it lands below $`-DD`$ is $`N(-DD)`$. For Kestrel, $`N(-1.416) = 7.84\%`$. That is the model's EDF.
 
 ### Step 4: the pricing chance is the same event with a different drift
 
-A price averages payoffs in the pricing world, where every asset is expected to grow at the riskless rate $r$ ([Merton's model](01-merton-model-equity-as-a-call.md)). Repeat Steps 1 to 3 with $r$ in place of $\mu$ and the top line becomes 0.2531 and the distance $d_2 = 0.2531/0.20 = 1.266$, the chance $N(-1.266) = 10.28\%$.
+A price averages payoffs in the pricing world, where every asset is expected to grow at the riskless rate $`r`$ ([Merton's model](01-merton-model-equity-as-a-call.md)). Repeat Steps 1 to 3 with $`r`$ in place of $`\mu`$ and the top line becomes 0.2531 and the distance $`d_2 = 0.2531/0.20 = 1.266`$, the chance $`N(-1.266) = 10.28\%`$.
 
 Subtract the two distances. Everything cancels except the drifts:
 
-$$DD - d_2 = \frac{(\mu - r)T}{\sigma\sqrt{T}} = \lambda\sqrt{T}.$$
+```math
+DD - d_2 = \frac{(\mu - r)T}{\sigma\sqrt{T}} = \lambda\sqrt{T}.
+```
 
-For Kestrel $\lambda = 0.03/0.20 = 0.15$: the real world puts the firm 0.15 standard deviations further from default than prices do. When $\mu > r$, investors are paid for bearing the firm's risk, and the forecast is below the pricing chance; when $\mu < r$ the order reverses. When $\mu = r$ the shift is zero and the two coincide: at 5%, both are 10.28%.
+For Kestrel $`\lambda = 0.03/0.20 = 0.15`$: the real world puts the firm 0.15 standard deviations further from default than prices do. When $`\mu > r`$, investors are paid for bearing the firm's risk, and the forecast is below the pricing chance; when $`\mu < r`$ the order reverses. When $`\mu = r`$ the shift is zero and the two coincide: at 5%, both are 10.28%.
 
 <details>
 <summary>Detailed proof: going from the forecast to the pricing chance, and back</summary>
 
-**Existence and uniqueness.** $N$ rises strictly from 0 to 1 as $x$ runs over all numbers, and has no jumps. So for every $p$ strictly between 0 and 1 there is exactly one $x$ with $N(x) = p$: that $x$ is $N^{-1}(p)$. Bisection finds it: $N(-10) < p < N(10)$ for any $p$ met here, and halving the bracket 200 times pins it to machine precision.
+**Existence and uniqueness.** $`N`$ rises strictly from 0 to 1 as $`x`$ runs over all numbers, and has no jumps. So for every $`p`$ strictly between 0 and 1 there is exactly one $`x`$ with $`N(x) = p`$: that $`x`$ is $`N^{-1}(p)`$. Bisection finds it: $`N(-10) < p < N(10)`$ for any $`p`$ met here, and halving the bracket 200 times pins it to machine precision.
 
-**The conversion.** From Step 3, $EDF = N(-DD)$, so $N^{-1}(EDF) = -DD$. From Step 4, $-d_2 = -DD + \lambda\sqrt{T}$. Apply $N$: $N(-d_2) = N(N^{-1}(EDF) + \lambda\sqrt{T})$. For Kestrel, $N^{-1}(0.0784) = -1.416$, add 0.15, and $N(-1.266) = 10.28\%$.
+**The conversion.** From Step 3, $`EDF = N(-DD)`$, so $`N^{-1}(EDF) = -DD`$. From Step 4, $`-d_2 = -DD + \lambda\sqrt{T}`$. Apply $`N`$: $`N(-d_2) = N(N^{-1}(EDF) + \lambda\sqrt{T})`$. For Kestrel, $`N^{-1}(0.0784) = -1.416`$, add 0.15, and $`N(-1.266) = 10.28\%`$.
 
-**Boundaries.** An EDF of 0 or 1 has no inverse: the distance would be infinite, and no finite shift moves it. A firm with no swing, $\sigma = 0$, has no distance at all: its assets land exactly on $V e^{\mu T}$ and default is certain or impossible. As $T$ shrinks to 0, $DD$ runs to plus infinity when $V > D$, to minus infinity when $V < D$, and to 0 (an EDF of one half) when $V = D$: over an instant, only the cushion's sign matters.
+**Boundaries.** An EDF of 0 or 1 has no inverse: the distance would be infinite, and no finite shift moves it. A firm with no swing, $`\sigma = 0`$, has no distance at all: its assets land exactly on $`V e^{\mu T}`$ and default is certain or impossible. As $`T`$ shrinks to 0, $`DD`$ runs to plus infinity when $`V > D`$, to minus infinity when $`V < D`$, and to 0 (an EDF of one half) when $`V = D`$: over an instant, only the cushion's sign matters.
 
 </details>
 
 ### Step 5: why agencies calibrate the tail to history
 
-Steps 1 to 3 give a ranking and a number. The ranking is robust: a firm further from default in swings is safer, under almost any shape of luck. The number is not. $N(-DD)$ assumes the year's luck is a bell curve, and a bell curve's tail thins very fast.
+Steps 1 to 3 give a ranking and a number. The ranking is robust: a firm further from default in swings is safer, under almost any shape of luck. The number is not. $`N(-DD)`$ assumes the year's luck is a bell curve, and a bell curve's tail thins very fast.
 
-To see how much rides on that, keep the same spread of luck (variance 1) but use a fatter-tailed shape, the Laplace curve, whose tail is one half of $e^{-\sqrt{2} \times \text{distance}}$ at a given distance in standard deviations. The code also counts it among 400,000 simulated draws.
+To see how much rides on that, keep the same spread of luck (variance 1) but use a fatter-tailed shape, the Laplace curve, whose tail is one half of $`e^{-\sqrt{2} \times \text{distance}}`$ at a given distance in standard deviations. The code also counts it among 400,000 simulated draws.
 
-| Distance in swings | Bell curve $N(-k)$ | Fat tail, formula | Fat tail, counted | Fat over bell |
+| Distance in swings | Bell curve $`N(-k)`$ | Fat tail, formula | Fat tail, counted | Fat over bell |
 | --- | --- | --- | --- | --- |
 | 1 | 15.8655% | 12.1558% | 12.1227% | 0.8 |
 | 2 | 2.2750% | 2.9553% | 2.9490% | 1.3 |
@@ -147,26 +159,26 @@ That is what KMV does: sort thousands of firms by distance to default, count how
 
 ### The other door: the practitioner's shortcut
 
-Drop the logs and the drift, and the distance becomes cushion over swing in dollars: $(V - D)/(\sigma V) = 20/20 = 1.000$, whose bell-curve tail is 15.87%. That shortcut is how the idea is often first stated. It ranks firms almost the same way, and a history-fitted table absorbs much of the difference in level. Bharath and Shumway found that a naive distance, which skips solving for $V$ and $\sigma$, forecasts default about as well as the full model.
+Drop the logs and the drift, and the distance becomes cushion over swing in dollars: $`(V - D)/(\sigma V) = 20/20 = 1.000`$, whose bell-curve tail is 15.87%. That shortcut is how the idea is often first stated. It ranks firms almost the same way, and a history-fitted table absorbs much of the difference in level. Bharath and Shumway found that a naive distance, which skips solving for $`V`$ and $`\sigma`$, forecasts default about as well as the full model.
 
 ---
 
 ## Worked numbers, by hand
 
-Kestrel Freight: $V = \$100$m, $D = \$80$m, $T = 1$ year, $\sigma = 20\%$, $\mu = 8\%$, $r = 5\%$.
+Kestrel Freight: $`V = \$100`$m, $`D = \$80`$m, $`T = 1`$ year, $`\sigma = 20\%`$, $`\mu = 8\%`$, $`r = 5\%`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| cushion in logs, $\ln(V/D)$ | $\ln(100/80) = \ln 1.25$ | 0.2231 |
-| real log-drift, $\mu - \tfrac12\sigma^2$ | $0.08 - 0.02$ | 0.06 |
-| top line | $0.2231 + 0.06 \times 1$ | 0.2831 |
-| one standard deviation, $\sigma\sqrt{T}$ | $0.20 \times 1$ | 0.20 |
-| **distance to default** | $0.2831 / 0.20$ | **1.416** |
-| **EDF**, $N(-1.416)$ | bell-curve table | **7.84%** |
-| pricing top line | $0.2231 + (0.05 - 0.02) \times 1$ | 0.2531 |
-| $d_2$ | $0.2531 / 0.20$ | 1.266 |
-| pricing default chance, $N(-1.266)$ | bell-curve table | 10.28% |
-| shift, $\lambda\sqrt{T}$ | $(0.08 - 0.05)/0.20$ | 0.15 |
+| cushion in logs, $`\ln(V/D)`$ | $`\ln(100/80) = \ln 1.25`$ | 0.2231 |
+| real log-drift, $`\mu - \tfrac12\sigma^2`$ | $`0.08 - 0.02`$ | 0.06 |
+| top line | $`0.2231 + 0.06 \times 1`$ | 0.2831 |
+| one standard deviation, $`\sigma\sqrt{T}`$ | $`0.20 \times 1`$ | 0.20 |
+| **distance to default** | $`0.2831 / 0.20`$ | **1.416** |
+| **EDF**, $`N(-1.416)`$ | bell-curve table | **7.84%** |
+| pricing top line | $`0.2231 + (0.05 - 0.02) \times 1`$ | 0.2531 |
+| $`d_2`$ | $`0.2531 / 0.20`$ | 1.266 |
+| pricing default chance, $`N(-1.266)`$ | bell-curve table | 10.28% |
+| shift, $`\lambda\sqrt{T}`$ | $`(0.08 - 0.05)/0.20`$ | 0.15 |
 
 A bank holding Kestrel's loan should expect it to fail in roughly 7.84% of years like this one, while a buyer pricing the loan charges as if the chance were 10.28%. The 10.28% ties to Merton's card: equity $24.59m, risky debt $75.41m, default put $0.687m (the value today of the lenders' loss from default), credit spread 90.7 bp (basis points: hundredths of a percent).
 
@@ -174,12 +186,12 @@ A bank holding Kestrel's loan should expect it to fail in roughly 7.84% of years
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Log-drift $\mu$ in place of $\mu - \tfrac12\sigma^2$ | distance 1.516, EDF 6.48% | the swinging cost is dropped, so the median asset value is set too high |
-| $N(+DD)$ in place of $N(-DD)$ | 92.16% | that is the chance of survival |
-| $\sigma T$ in place of $\sigma\sqrt{T}$, three-year debt | EDF 25.08% (right: 12.23%) | swings add in variance, so the standard deviation grows with $\sqrt{T}$ |
-| $r$ in place of $\mu$, reported as a forecast | 10.28% (right: 7.84%) | that is the pricing chance; it includes the risk premium |
+| Log-drift $`\mu`$ in place of $`\mu - \tfrac12\sigma^2`$ | distance 1.516, EDF 6.48% | the swinging cost is dropped, so the median asset value is set too high |
+| $`N(+DD)`$ in place of $`N(-DD)`$ | 92.16% | that is the chance of survival |
+| $`\sigma T`$ in place of $`\sigma\sqrt{T}`$, three-year debt | EDF 25.08% (right: 12.23%) | swings add in variance, so the standard deviation grows with $`\sqrt{T}`$ |
+| $`r`$ in place of $`\mu`$, reported as a forecast | 10.28% (right: 7.84%) | that is the pricing chance; it includes the risk premium |
 
-The 6.48% in the first row equals the orange line at 10% growth: forgetting $\tfrac12\sigma^2 = 2\%$ acts like adding two points of growth.
+The 6.48% in the first row equals the orange line at 10% growth: forgetting $`\tfrac12\sigma^2 = 2\%`$ acts like adding two points of growth.
 
 ---
 
@@ -189,7 +201,7 @@ The debt is fixed. The asset value is not: KMV recomputes the distance every day
 
 ### Force one: the asset value
 
-One-year EDF, $\mu = 8\%$, as Kestrel's assets change. One block is 2 percentage points.
+One-year EDF, $`\mu = 8\%`$, as Kestrel's assets change. One block is 2 percentage points.
 
 ```
 assets  $120m  ▌                      1.00%
@@ -205,7 +217,7 @@ A fall from $100m to $90m, ten percent, lifts the forecast from 7.84% to 18.70%.
 
 ### Force two: the horizon
 
-At $100m the one-year distance is 1.416. Over three years the cushion gains three years of drift, $3 \times 0.06$, but the swing grows by $\sqrt3$. The distance falls to 1.164 and the chance that the assets sit below the debt on a three-year due date rises to 12.23%.
+At $100m the one-year distance is 1.416. Over three years the cushion gains three years of drift, $`3 \times 0.06`$, but the swing grows by $`\sqrt3`$. The distance falls to 1.164 and the chance that the assets sit below the debt on a three-year due date rises to 12.23%.
 
 ### Both forces in one picture
 
@@ -227,15 +239,15 @@ Orange: debt due in one year. Green: the same debt due in three years. For a hea
 
 Both programs reach the EDF three independent ways:
 
-- the formula $N(-DD)$ with a normal curve built from its series;
-- Simpson's rule (adding up thin strips under a curve) applied to the density of the asset value in dollars from zero to the debt, which never forms $DD$;
-- 40,000 simulated asset paths stepped forward 100 times with $dV = \mu V\,dt + \sigma V\,dW$ ($dW$ is one small bell-curve step of luck), which never uses the $-\tfrac12\sigma^2$ correction and recovers it.
+- the formula $`N(-DD)`$ with a normal curve built from its series;
+- Simpson's rule (adding up thin strips under a curve) applied to the density of the asset value in dollars from zero to the debt, which never forms $`DD`$;
+- 40,000 simulated asset paths stepped forward 100 times with $`dV = \mu V\,dt + \sigma V\,dW`$ ($`dW`$ is one small bell-curve step of luck), which never uses the $`-\tfrac12\sigma^2`$ correction and recovers it.
 
 The pricing chance is reached three ways too:
 
-- $N(-d_2)$ from Merton's $d_1$;
-- Simpson at drift $r$;
-- the shift of the EDF by $\lambda$ through an inverse normal found by bisection (halving an interval until it traps the answer).
+- $`N(-d_2)`$ from Merton's $`d_1`$;
+- Simpson at drift $`r`$;
+- the shift of the EDF by $`\lambda`$ through an inverse normal found by bisection (halving an interval until it traps the answer).
 
 The fat-tail table is computed by formula and by counting simulated draws. Every chart point, bar and what-breaks value is printed.
 
@@ -618,12 +630,12 @@ The two outputs match line for line.
 
 Lean proves the default chance, the gap between the two distances, and when the two chances meet, for any positive inputs.
 
-- Take $V$, $D$, $T$ and $\sigma$ all positive, and $V_T$ as in Step 1. Then the chance that $V_T < D$ is exactly $N(-DD)$.
-- Take any $T > 0$ and $\sigma > 0$. Then $DD - d_2 = \lambda\sqrt{T}$, for any drifts $\mu$ and $r$.
-- Take the same $T$ and $\sigma$. Then $N(-DD) = N(-d_2)$ exactly when $\mu = r$.
-- Take Kestrel's numbers. Then the log-drifts are 6% and 3%, $\lambda = 0.15$, and the practitioner's shortcut distance is 1.
+- Take $`V`$, $`D`$, $`T`$ and $`\sigma`$ all positive, and $`V_T`$ as in Step 1. Then the chance that $`V_T < D`$ is exactly $`N(-DD)`$.
+- Take any $`T > 0`$ and $`\sigma > 0`$. Then $`DD - d_2 = \lambda\sqrt{T}`$, for any drifts $`\mu`$ and $`r`$.
+- Take the same $`T`$ and $`\sigma`$. Then $`N(-DD) = N(-d_2)`$ exactly when $`\mu = r`$.
+- Take Kestrel's numbers. Then the log-drifts are 6% and 3%, $`\lambda = 0.15`$, and the practitioner's shortcut distance is 1.
 
-Numbers like 7.84%, the inverse $N^{-1}$, the simulation and the fat-tail counts are left to the Python and Rust checks.
+Numbers like 7.84%, the inverse $`N^{-1}`$, the simulation and the fat-tail counts are left to the Python and Rust checks.
 
 ```lean
 -- Distance to default: when log asset value is a bell curve, the default chance is the normal tail beyond the distance to default, and the real-world distance exceeds Merton's d2 by exactly lambda times the square root of T.
@@ -734,8 +746,8 @@ example : ((100 : ℝ) - 80) / (20 / 100 * 100) = 1 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
-> - **A jumpier business.** The `try` row sets $\sigma$ to 30%. Guess: the EDF rises. It more than doubles, to **19.48%**: the swing grows, and the swinging cost $\tfrac12\sigma^2$ grows with its square.
-> - **Faster expected growth.** Set `mu` to 0.12. The EDF falls to **5.31%**, the last point of the orange line in the first chart. The pricing chance stays at 10.28%, and the shift assert still holds with the larger $\lambda$.
+> - **A jumpier business.** The `try` row sets $`\sigma`$ to 30%. Guess: the EDF rises. It more than doubles, to **19.48%**: the swing grows, and the swinging cost $`\tfrac12\sigma^2`$ grows with its square.
+> - **Faster expected growth.** Set `mu` to 0.12. The EDF falls to **5.31%**, the last point of the orange line in the first chart. The pricing chance stays at 10.28%, and the shift assert still holds with the larger $`\lambda`$.
 > - **Assets down to $90m.** Set `V` to 90. The distance falls to 0.889 and the EDF to **18.70%**. The house-equity assert stops the run, since it is pinned to $100m.
 > - **Change the seed.** Replace 20260928. The Euler line moves by about one standard error, 0.0013, the fat-tail counts shift slightly, and the formula roads do not move.
 
@@ -746,10 +758,10 @@ example : ((100 : ℝ) - 80) / (20 / 100 * 100) = 1 := by norm_num
 > [!warning]
 > **Treating the EDF and the pricing default chance as rival estimates of one number.** They answer different questions. The EDF (7.84%) is a forecast: how often firms like Kestrel fail. The pricing chance (10.28%) is the weight a price puts on default, and it includes pay for bearing the risk. Pricing a loan with 7.84% leaves it too dear; setting capital against 10.28% overstates how often losses arrive. [Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md) measures the same gap from market quotes.
 >
-> - **Dropping the swinging cost.** Using $\mu$ as the log-drift gives a distance of 1.516 and an EDF of 6.48%, as if the firm grew two points faster.
-> - **Scaling the swing with $T$.** For three-year debt, $\sigma T$ gives 25.08% where $\sigma\sqrt{T}$ gives 12.23%.
-> - **Trusting the bell curve far out.** A distance of 4 reads as 0.0032% on the bell curve; a fat tail with the same variance says 0.1747%. Far from default, the level comes from counted history, not from $N$.
-> - **Book value for $V$.** The distance uses the market value of assets, not the balance-sheet figure. Book values move slowly and hide exactly the fall the distance is meant to catch.
+> - **Dropping the swinging cost.** Using $`\mu`$ as the log-drift gives a distance of 1.516 and an EDF of 6.48%, as if the firm grew two points faster.
+> - **Scaling the swing with $`T`$.** For three-year debt, $`\sigma T`$ gives 25.08% where $`\sigma\sqrt{T}`$ gives 12.23%.
+> - **Trusting the bell curve far out.** A distance of 4 reads as 0.0032% on the bell curve; a fat tail with the same variance says 0.1747%. Far from default, the level comes from counted history, not from $`N`$.
+> - **Book value for $`V`$.** The distance uses the market value of assets, not the balance-sheet figure. Book values move slowly and hide exactly the fall the distance is meant to catch.
 
 ---
 
@@ -762,18 +774,18 @@ example : ((100 : ℝ) - 80) / (20 / 100 * 100) = 1 := by norm_num
 - **Sensitivities.** How equity, debt and the default put move as asset value and volatility change: [How the balance-sheet claims move](02-structural-model-sensitivities.md).
 
 > **Say it back**
-> Distance to default is the firm's log-cushion plus its expected log-growth, divided by one standard deviation of the asset move. For a firm with $100m of assets, $80m of debt, 20% volatility and 8% growth it is 1.416, and the bell-curve area beyond it is a 7.84% default forecast. Replacing the real growth by the riskless rate gives Merton's pricing chance, 10.28%, one shift of $\lambda\sqrt{T}$ away; at growth equal to the riskless rate the two coincide. The distance ranks firms well, but the bell curve's tail is too thin far from default, so KMV turns distance into probability with counted history.
+> Distance to default is the firm's log-cushion plus its expected log-growth, divided by one standard deviation of the asset move. For a firm with $100m of assets, $80m of debt, 20% volatility and 8% growth it is 1.416, and the bell-curve area beyond it is a 7.84% default forecast. Replacing the real growth by the riskless rate gives Merton's pricing chance, 10.28%, one shift of $`\lambda\sqrt{T}`$ away; at growth equal to the riskless rate the two coincide. The distance ranks firms well, but the bell curve's tail is too thin far from default, so KMV turns distance into probability with counted history.
 
 ---
 
 ## What this builds on
 
-- [Merton's model](01-merton-model-equity-as-a-call.md): the firm as assets against one debt, and the pricing default chance $N(-d_2)$ this card compares against.
-- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): why the log of asset value at the due date is a bell curve, and where the $-\tfrac12\sigma^2$ comes from.
+- [Merton's model](01-merton-model-equity-as-a-call.md): the firm as assets against one debt, and the pricing default chance $`N(-d_2)`$ this card compares against.
+- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): why the log of asset value at the due date is a bell curve, and where the $`-\tfrac12\sigma^2`$ comes from.
 
 ## Where this goes next
 
-- [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md): finding $V$ and $\sigma$, which this card took as given, from the share price and its volatility.
+- [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md): finding $`V`$ and $`\sigma`$, which this card took as given, from the share price and its volatility.
 - [Black-Cox](05-black-cox-first-passage-default.md): default the first time the assets touch a barrier, not only on the due date.
 - [Where structural models break](06-where-structural-models-fail.md): short-dated spreads the model cannot produce, and the other gaps between structural models and markets.
 

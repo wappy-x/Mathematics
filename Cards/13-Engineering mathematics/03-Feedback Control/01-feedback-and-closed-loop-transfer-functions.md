@@ -26,43 +26,47 @@ The thermostat compares the setting with the reading; the error opens the valve;
 
 ## The formula
 
-Notation first, in words. As on [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md), a transfer function is what a block does to each exponential e^(st), and a capital letter is the Laplace transform of the lower-case signal. New here: the **loop gain** $L(s)$, the product of every block met once round the loop, and the **closed-loop transfer function** $T(s) = L/(1+L)$, the title's "open loop over one plus the open loop". Time runs in minutes, the room's natural scale, so $s$ is in 1/min.
+Notation first, in words. As on [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md), a transfer function is what a block does to each exponential e^(st), and a capital letter is the Laplace transform of the lower-case signal. New here: the **loop gain** $`L(s)`$, the product of every block met once round the loop, and the **closed-loop transfer function** $`T(s) = L/(1+L)`$, the title's "open loop over one plus the open loop". Time runs in minutes, the room's natural scale, so $`s`$ is in 1/min.
 
 Every signal below is a change from the 20 °C, 5 °C, 1500 W operating point. The blocks are
 
-$$C = K_c,\quad P_r(s) = \frac{1}{\tau_r s + 1},\quad P_m(s) = \frac{1/UA}{\tau_m s + 1},\quad H(s) = \frac{1}{\tau_s s + 1},\qquad L(s) = C\,P_r\,P_m\,H$$
+```math
+C = K_c,\quad P_r(s) = \frac{1}{\tau_r s + 1},\quad P_m(s) = \frac{1/UA}{\tau_m s + 1},\quad H(s) = \frac{1}{\tau_s s + 1},\qquad L(s) = C\,P_r\,P_m\,H
+```
 
-and the loop closes with $e = r - m$. Then
+and the loop closes with $`e = r - m`$. Then
 
-$$Y(s) = \frac{C P_r P_m}{1 + L(s)}\,R(s) + \frac{UA\,P_m}{1 + L(s)}\,D(s), \qquad \frac{M(s)}{R(s)} = T(s) = \frac{L(s)}{1 + L(s)}$$
+```math
+Y(s) = \frac{C P_r P_m}{1 + L(s)}\,R(s) + \frac{UA\,P_m}{1 + L(s)}\,D(s), \qquad \frac{M(s)}{R(s)} = T(s) = \frac{L(s)}{1 + L(s)}
+```
 
 **Read it aloud:** the room's change is the forward path from the dial, over one plus the loop gain, times the dial's change, plus the outside air's path, over the same one plus the loop gain, times the outside change; seen at the sensor, the dial's path is the loop gain over one plus the loop gain.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r$, $R$ | change of the dial setting, and its transform | +1 °C | room rises in proportion |
-| $y$, $Y$ | change of the room temperature | settles at +0.8333 °C | — |
-| $d$, $D$ | change of the outside air temperature | −5 °C cold snap | room drops by d/(1+k) |
-| $u$, $q$ | valve command and radiator heat, change in W | peaks 500 W (dial), 618 W (cold snap) | — |
-| $m$, $e$ | thermostat reading, and the error $e = r - m$ | error settles at 0.1667 °C | — |
-| $K_c$, $C$ | thermostat gain, the controller block | 500 W/K | smaller error, until the room swings |
-| $\tau_r$, $\tau_m$, $\tau_s$, $UA$ | lags of radiator, room, sensor; heat lost per degree of inside-outside difference | 5, 20, 1 min; 100 W/K | lags: a slower, swingier loop |
-| $s$, $j$, $\omega$ | Laplace variable in 1/min; the square root of −1 as engineers write it (the rest of the library writes i); angular frequency in rad/min | s = jω, ω = 0.1047 rad/min | — |
-| $P_r$, $P_m$, $H$ | radiator, room and sensor transfer functions | 1/(5s+1), 0.01/(20s+1), 1/(s+1) | — |
-| $L$, $k$, $G$ | loop gain, its value at s = 0; the forward path from error to room, $C P_r P_m$ | k = L(0) = 5 | errors shrink by 1 + k |
-| $T$, $T_{yr}$, $T_{yd}$ | reading over dial; room over dial; room over outside air | 5/6, 5/6 and 1/6 at s = 0 | — |
-| $n$, $\delta$ | numerator and denominator polynomials of $L$: the products of the blocks' numerators and of their denominators, multiplied out with nothing cancelled | n = 5, δ = (5s+1)(20s+1)(s+1) | — |
-| $B_i$, $B_j$, $W$, $X$, $Z$, $F$, $n_F$, $\delta_F$ | in the folded proof: blocks of a general loop, an injected input, the signal where it enters, an output signal, the forward path to it, and that path's numerator and denominator | — | — |
+| $`r`$, $`R`$ | change of the dial setting, and its transform | +1 °C | room rises in proportion |
+| $`y`$, $`Y`$ | change of the room temperature | settles at +0.8333 °C | — |
+| $`d`$, $`D`$ | change of the outside air temperature | −5 °C cold snap | room drops by d/(1+k) |
+| $`u`$, $`q`$ | valve command and radiator heat, change in W | peaks 500 W (dial), 618 W (cold snap) | — |
+| $`m`$, $`e`$ | thermostat reading, and the error $`e = r - m`$ | error settles at 0.1667 °C | — |
+| $`K_c`$, $`C`$ | thermostat gain, the controller block | 500 W/K | smaller error, until the room swings |
+| $`\tau_r`$, $`\tau_m`$, $`\tau_s`$, $`UA`$ | lags of radiator, room, sensor; heat lost per degree of inside-outside difference | 5, 20, 1 min; 100 W/K | lags: a slower, swingier loop |
+| $`s`$, $`j`$, $`\omega`$ | Laplace variable in 1/min; the square root of −1 as engineers write it (the rest of the library writes i); angular frequency in rad/min | s = jω, ω = 0.1047 rad/min | — |
+| $`P_r`$, $`P_m`$, $`H`$ | radiator, room and sensor transfer functions | 1/(5s+1), 0.01/(20s+1), 1/(s+1) | — |
+| $`L`$, $`k`$, $`G`$ | loop gain, its value at s = 0; the forward path from error to room, $`C P_r P_m`$ | k = L(0) = 5 | errors shrink by 1 + k |
+| $`T`$, $`T_{yr}`$, $`T_{yd}`$ | reading over dial; room over dial; room over outside air | 5/6, 5/6 and 1/6 at s = 0 | — |
+| $`n`$, $`\delta`$ | numerator and denominator polynomials of $`L`$: the products of the blocks' numerators and of their denominators, multiplied out with nothing cancelled | n = 5, δ = (5s+1)(20s+1)(s+1) | — |
+| $`B_i`$, $`B_j`$, $`W`$, $`X`$, $`Z`$, $`F`$, $`n_F`$, $`\delta_F`$ | in the folded proof: blocks of a general loop, an injected input, the signal where it enters, an output signal, the forward path to it, and that path's numerator and denominator | — | — |
 
-The forward path from the dial to the room, $C P_r P_m$, at s = 0 is 500 × 1 × 0.01 = 5, the same as $k$ because the sensor reads true in the steady state. So $T_{yr}(0) = 5/6$ and $T_{yd}(0) = 1/6$.
+The forward path from the dial to the room, $`C P_r P_m`$, at s = 0 is 500 × 1 × 0.01 = 5, the same as $`k`$ because the sensor reads true in the steady state. So $`T_{yr}(0) = 5/6`$ and $`T_{yd}(0) = 1/6`$.
 
 ### When it holds
 
 - **Every block linear.** The radiator can give at most 2500 W, 1000 W above the operating point, and no less than nothing. Inside that range the formula is exact. A cold snap of 15 °C asks for more: the formula promises a 2.5000 °C drop, the room with a capped radiator falls 5.0000 °C.
-- **Every block time-invariant.** Lags and losses fixed. An open window changes $UA$ and so every transfer function in the loop.
+- **Every block time-invariant.** Lags and losses fixed. An open window changes $`UA`$ and so every transfer function in the loop.
 - **Blocks do not load each other.** The sensor reads the room without heating it, and the room does not slow the radiator. If one block draws on the next, the two must be modelled as one block first.
-- **The loop is wired as drawn, with a minus sign.** A thermostat wired backwards puts $1 - L$ in the denominator, and the room runs away.
-- **No time delay.** Each block here is a lag, which smears a change out. A pipe that holds the water back for a fixed time is a delay, $e^{-s\theta}$, which the loop handles far worse; that is [Time delays](10-smith-predictor-and-time-delays.md).
+- **The loop is wired as drawn, with a minus sign.** A thermostat wired backwards puts $`1 - L`$ in the denominator, and the room runs away.
+- **No time delay.** Each block here is a lag, which smears a change out. A pipe that holds the water back for a fixed time is a delay, $`e^{-s\theta}`$, which the loop handles far worse; that is [Time delays](10-smith-predictor-and-time-delays.md).
 
 ---
 
@@ -74,11 +78,11 @@ A loop looks circular: the reading depends on the room, which depends on the rad
 
 ### Step 1: blocks in series multiply, blocks in parallel add
 
-From [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md), a chain of blocks has the product of their transfer functions. Blocks fed the same signal, with their outputs summed, add instead: the proportional-plus-integral thermostat of [Steady-state error](03-steady-state-error-and-system-type.md) is a gain and a running-total block side by side, so its transfer function is a gain plus a gain over s. The forward path from error to room is $G = C P_r P_m$. The return path is $H$. Their product is the loop gain:
+From [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md), a chain of blocks has the product of their transfer functions. Blocks fed the same signal, with their outputs summed, add instead: the proportional-plus-integral thermostat of [Steady-state error](03-steady-state-error-and-system-type.md) is a gain and a running-total block side by side, so its transfer function is a gain plus a gain over s. The forward path from error to room is $`G = C P_r P_m`$. The return path is $`H`$. Their product is the loop gain:
 
 L(s) = 500 × 1/(5s+1) × 0.01/(20s+1) × 1/(s+1) = 5 / ((5s+1)(20s+1)(s+1)).
 
-The value $k = L(0) = 5$ says one degree of error, held steady, comes back round the loop as five degrees of correction.
+The value $`k = L(0) = 5`$ says one degree of error, held steady, comes back round the loop as five degrees of correction.
 
 ### Step 2: solve the loop
 
@@ -92,40 +96,40 @@ Put the first two into the third: Y = G (R − H Y) + UA P_m D. Collect Y on the
 
 Y (1 + G H) = G R + UA P_m D.
 
-Divide by $1 + GH = 1 + L$. That is the formula. Every input reaches the room through its own path, $G$ for the dial and $UA\,P_m$ for the outside air, and both are divided by the same $1 + L$.
+Divide by $`1 + GH = 1 + L`$. That is the formula. Every input reaches the room through its own path, $`G`$ for the dial and $`UA\,P_m`$ for the outside air, and both are divided by the same $`1 + L`$.
 
 ### Step 3: the reading over the dial is L over one plus L
 
-Multiply the dial's term by $H$: M/R = GH/(1 + GH) = L/(1 + L). This is the title's formula, $T(s)$. With a sensor that reads true, $H = 1$, the room and the reading coincide and the room's own transfer function is $T$. Here the sensor lags, so the room's is $G/(1+L)$: the same denominator, a numerator one block shorter.
+Multiply the dial's term by $`H`$: M/R = GH/(1 + GH) = L/(1 + L). This is the title's formula, $`T(s)`$. With a sensor that reads true, $`H = 1`$, the room and the reading coincide and the room's own transfer function is $`T`$. Here the sensor lags, so the room's is $`G/(1+L)`$: the same denominator, a numerator one block shorter.
 
 ### Step 4: why gain shrinks error and disturbance
 
-Hold the dial 1 °C up for good. At s = 0 the error is $E = R/(1 + L(0))$, so the reading ends 1/(1 + 5) = 0.1667 °C short. A 5 °C cold snap reaches the room as $UA\,P_m(0) = 1$ times 5 °C without the loop, and divided by 6 with it: 0.8333 °C. Each signal that enters the loop is answered by the loop pushing back, and the push is $L$ times what got through. What survives is one part in $1 + L$. [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md) names that factor $1/(1+L)$ and follows it across frequency.
+Hold the dial 1 °C up for good. At s = 0 the error is $`E = R/(1 + L(0))`$, so the reading ends 1/(1 + 5) = 0.1667 °C short. A 5 °C cold snap reaches the room as $`UA\,P_m(0) = 1`$ times 5 °C without the loop, and divided by 6 with it: 0.8333 °C. Each signal that enters the loop is answered by the loop pushing back, and the push is $`L`$ times what got through. What survives is one part in $`1 + L`$. [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md) names that factor $`1/(1+L)`$ and follows it across frequency.
 
 A proportional thermostat cannot reach a new setting exactly: beyond the preset 1500 W, the radiator's extra heat comes only from a standing error. Removing that error takes integral action, [Steady-state error](03-steady-state-error-and-system-type.md).
 
 ### Step 5: the closed-loop poles are the zeros of one plus L
 
-Write $L = n/\delta$ with numerator $n = 5$ and denominator $\delta = (5s+1)(20s+1)(s+1) = 100 s^3 + 125 s^2 + 26 s + 1$. Then
+Write $`L = n/\delta`$ with numerator $`n = 5`$ and denominator $`\delta = (5s+1)(20s+1)(s+1) = 100 s^3 + 125 s^2 + 26 s + 1`$. Then
 
 1 + L = (δ + n)/δ, so the closed-loop denominator is δ + n = 100 s^3 + 125 s^2 + 26 s + 6.
 
 Its roots are the closed-loop poles: −1.0578 and −0.0961 ± 0.2179j 1/min. The pair sets the room's behaviour. Its real part gives a decay time of 1/0.0961 = 10.41 min; its imaginary part a swing period of 2π/0.2179 = 28.83 min; the real part over the pair's distance from the origin, 0.0961/0.2381, is the damping ratio ζ (the fraction of critical damping, from [Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md)), 0.403. So the room overshoots: it peaks at 1.0426 °C after 14.35 min, above the 1 °C asked for, then settles at 0.8333 °C.
 
-Raise $K_c$ and only the constant term of δ + n moves, $1 + k$. A cubic with all coefficients positive has all its roots in the left half-plane exactly when the middle product beats the outer one, 125 × 26 > 100 × (1 + k) ([Routh-Hurwitz](04-routh-hurwitz-criterion.md)). That fails at k = 31.5, a thermostat gain of 3150 W/K. For a product of three lags the bound on k is the sum of the lags times the sum of their reciprocals, minus one; the code computes it that way and checks it against the root finder.
+Raise $`K_c`$ and only the constant term of δ + n moves, $`1 + k`$. A cubic with all coefficients positive has all its roots in the left half-plane exactly when the middle product beats the outer one, 125 × 26 > 100 × (1 + k) ([Routh-Hurwitz](04-routh-hurwitz-criterion.md)). That fails at k = 31.5, a thermostat gain of 3150 W/K. For a product of three lags the bound on k is the sum of the lags times the sum of their reciprocals, minus one; the code computes it that way and checks it against the root finder.
 
 ### Step 6: the same formula along the frequency axis
 
-Put s = jω. A setting that drifts in a 60-minute cycle (0.1047 rad/min) reaches the room with gain 0.9462 and a lag of 23.42°. A 20-minute cycle (0.3142 rad/min) reaches it with gain 0.6459 and a lag of 123.91°. The loop follows slow changes and lets fast ones go. How close $L(j\omega)$ comes to −1 decides how near the loop is to swinging, read off the plot in [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md).
+Put s = jω. A setting that drifts in a 60-minute cycle (0.1047 rad/min) reaches the room with gain 0.9462 and a lag of 23.42°. A 20-minute cycle (0.3142 rad/min) reaches it with gain 0.6459 and a lag of 123.91°. The loop follows slow changes and lets fast ones go. How close $`L(j\omega)`$ comes to −1 decides how near the loop is to swinging, read off the plot in [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md).
 
 <details>
 <summary>Detailed proof: any single loop, and the cancellation trap</summary>
 
-**Any single loop.** Let a loop carry blocks $B_1, B_2, \dots$ in order, with one minus sign at a summing junction, so that $L = B_1 B_2 \cdots$, the product of all of them. Inject an input $W$ just before block $B_i$ and look at the signal $Z$ just after block $B_j$. Going forward from the injection point to $Z$ meets the blocks $B_i \cdots B_j$ (wrapping round past the junction if needed, picking up its minus sign); call that product $F$. Going on from $Z$ round to the injection point meets the rest, and the whole trip round is $L$. Call $X$ the signal just before $B_i$. It is the injected $W$ plus what arrives after one trip round the loop, and one trip multiplies $X$ by every block and by the minus sign: $-L X$. So $X = W - L X$, which gives $X = W/(1+L)$ and $Z = F X = F W/(1+L)$. Every input to every output: forward path over one plus loop. Step 2 is the case $Z = Y$ with $W = R$ before $C$, or $W = UA\,D$ before $P_m$.
+**Any single loop.** Let a loop carry blocks $`B_1, B_2, \dots`$ in order, with one minus sign at a summing junction, so that $`L = B_1 B_2 \cdots`$, the product of all of them. Inject an input $`W`$ just before block $`B_i`$ and look at the signal $`Z`$ just after block $`B_j`$. Going forward from the injection point to $`Z`$ meets the blocks $`B_i \cdots B_j`$ (wrapping round past the junction if needed, picking up its minus sign); call that product $`F`$. Going on from $`Z`$ round to the injection point meets the rest, and the whole trip round is $`L`$. Call $`X`$ the signal just before $`B_i`$. It is the injected $`W`$ plus what arrives after one trip round the loop, and one trip multiplies $`X`$ by every block and by the minus sign: $`-L X`$. So $`X = W - L X`$, which gives $`X = W/(1+L)`$ and $`Z = F X = F W/(1+L)`$. Every input to every output: forward path over one plus loop. Step 2 is the case $`Z = Y`$ with $`W = R`$ before $`C`$, or $`W = UA\,D`$ before $`P_m`$.
 
-**Poles are zeros of 1 + L.** Take $L = n/\delta$ with $n$ and $\delta$ the products of the blocks' numerators and denominators, before any cancelling, and $F = n_F/\delta_F$ formed the same way. The ratio is $F/(1+L) = n_F\,\delta/(\delta_F(\delta + n))$. Every block of $F$ is also a block of $L$, so $\delta_F$ divides $\delta$ and the ratio reduces to a polynomial over $\delta + n$. Its poles are among the roots of $\delta + n$: the zeros of $1 + L$, plus any root that $n$ and $\delta$ share.
+**Poles are zeros of 1 + L.** Take $`L = n/\delta`$ with $`n`$ and $`\delta`$ the products of the blocks' numerators and denominators, before any cancelling, and $`F = n_F/\delta_F`$ formed the same way. The ratio is $`F/(1+L) = n_F\,\delta/(\delta_F(\delta + n))`$. Every block of $`F`$ is also a block of $`L`$, so $`\delta_F`$ divides $`\delta`$ and the ratio reduces to a polynomial over $`\delta + n`$. Its poles are among the roots of $`\delta + n`$: the zeros of $`1 + L`$, plus any root that $`n`$ and $`\delta`$ share.
 
-**The trap.** If the controller has a zero exactly on a pole of the plant, that factor sits in both $n$ and $\delta$, so it is a root of $\delta + n$, a closed-loop pole. Reducing $L$ to lowest terms cancels it before $1 + L$ is formed. The closed loop from dial to room can then look stable while the cancelled pole survives in another path: from a disturbance entering just ahead of that plant block, to the room. If that pole is unstable, the hardware runs away while the formula looks fine. Checking every input-output pair at once is internal stability, on [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md).
+**The trap.** If the controller has a zero exactly on a pole of the plant, that factor sits in both $`n`$ and $`\delta`$, so it is a root of $`\delta + n`$, a closed-loop pole. Reducing $`L`$ to lowest terms cancels it before $`1 + L`$ is formed. The closed loop from dial to room can then look stable while the cancelled pole survives in another path: from a disturbance entering just ahead of that plant block, to the room. If that pole is unstable, the hardware runs away while the formula looks fine. Checking every input-output pair at once is internal stability, on [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md).
 
 </details>
 
@@ -627,9 +631,9 @@ The two outputs match line for line.
 
 Lean proves the algebra of Steps 2, 3 and 5 and of the folded proof, for any blocks, and checks the worked numbers.
 
-- Take Step 2's loop: $E = R - M$, $M = H Y$ and $Y = G E + UA\,P_m D$, with $1 + L \neq 0$. Then $Y$ is as in the formula, and $M = L R/(1+L)$ plus the outside air's share.
-- Take a loop whose blocks multiply to $L$, with $X = W - L X$, $Z = F X$ and $1 + L \neq 0$. Then $X = W/(1+L)$ and $Z = F W/(1+L)$.
-- Take $L = n/\delta$ with $\delta \neq 0$, and a forward path $F = n_F/\delta_F$ with $\delta_F$ dividing $\delta$. Then $1 + L = (\delta + n)/\delta$, and $F/(1+L)$ is a polynomial over $\delta + n$.
+- Take Step 2's loop: $`E = R - M`$, $`M = H Y`$ and $`Y = G E + UA\,P_m D`$, with $`1 + L \neq 0`$. Then $`Y`$ is as in the formula, and $`M = L R/(1+L)`$ plus the outside air's share.
+- Take a loop whose blocks multiply to $`L`$, with $`X = W - L X`$, $`Z = F X`$ and $`1 + L \neq 0`$. Then $`X = W/(1+L)`$ and $`Z = F W/(1+L)`$.
+- Take $`L = n/\delta`$ with $`\delta \neq 0`$, and a forward path $`F = n_F/\delta_F`$ with $`\delta_F`$ dividing $`\delta`$. Then $`1 + L = (\delta + n)/\delta`$, and $`F/(1+L)`$ is a polynomial over $`\delta + n`$.
 - The open-loop denominator δ is 100 s^3 + 125 s^2 + 26 s + 1. The closed-loop denominator is 100 s^3 + 125 s^2 + 26 s + 6.
 - The loop gain at s = 0 is k = 5. The room then ends at 5/6 of a dial change, with 1/6 left as error.
 - A 5 °C cold snap costs 5/6 °C. Wired backwards, the reading at s = 0 is 5/(1 − 5) = −1.25.
@@ -775,12 +779,12 @@ example : (5 : ℚ) / (1 - 5) = -5 / 4 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating loop gain as free.** The factor $1/(1+L)$ makes high gain look like pure gain: at k = 20 the error is 0.0476 °C and the cold snap costs 0.2381 °C. But the same $L$ sits in the denominator whose roots are the poles. Each step up in gain pulls the pole pair closer to the imaginary axis, −0.0961 at k = 5, −0.0348 at k = 20, and past k = 31.5 the room swings ever wider. The gain that buys accuracy is spent from the same budget as stability.
+> **Treating loop gain as free.** The factor $`1/(1+L)`$ makes high gain look like pure gain: at k = 20 the error is 0.0476 °C and the cold snap costs 0.2381 °C. But the same $`L`$ sits in the denominator whose roots are the poles. Each step up in gain pulls the pole pair closer to the imaginary axis, −0.0961 at k = 5, −0.0348 at k = 20, and past k = 31.5 the room swings ever wider. The gain that buys accuracy is spent from the same budget as stability.
 >
-> - **Wiring the thermostat backwards.** A plus sign at the junction makes $1 - L$: the formula gives −1.25 for the steady room change, and the room runs off at the rate of the pole at +0.1009 1/min.
-> - **Using the open loop for the closed loop.** $L(0) = 5$ is the correction per degree of error, not the room's response; the room's response to the dial at s = 0 is 5/6.
+> - **Wiring the thermostat backwards.** A plus sign at the junction makes $`1 - L`$: the formula gives −1.25 for the steady room change, and the room runs off at the rate of the pole at +0.1009 1/min.
+> - **Using the open loop for the closed loop.** $`L(0) = 5`$ is the correction per degree of error, not the room's response; the room's response to the dial at s = 0 is 5/6.
 > - **Expecting the setting to be reached.** A proportional thermostat leaves a standing error of 1/(1 + k), here 0.1667 °C.
-> - **Putting the sensor in the forward path.** The sensor sits in the return path, so the room's transfer function has the sensor in $L$ but not in its numerator; the reading's transfer function has it in both.
+> - **Putting the sensor in the forward path.** The sensor sits in the return path, so the room's transfer function has the sensor in $`L`$ but not in its numerator; the reading's transfer function has it in both.
 
 ---
 

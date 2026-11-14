@@ -37,13 +37,17 @@ Orange: distance below rest, from the solved equation. The corner overshoots: at
 
 Notation first. A bold letter is a list of numbers handled as one object, a **vector**; a prime on it means every entry's rate. Name the velocity v:
 
-$$y'' = f(t, y, y') \quad\Longleftrightarrow\quad \begin{cases} y' = v \\ v' = f(t, y, v) \end{cases}$$
+```math
+y'' = f(t, y, y') \quad\Longleftrightarrow\quad \begin{cases} y' = v \\ v' = f(t, y, v) \end{cases}
+```
 
 **Read it aloud:** position changes at the velocity; velocity changes at the acceleration the equation gives.
 
 When f is linear (a sum of the unknowns, each times a fixed number), the right-hand sides are a matrix times the state ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)):
 
-$$\mathbf{x}' = A\,\mathbf{x}, \qquad \mathbf{x} = \begin{pmatrix} y \\ v \end{pmatrix}, \qquad A = \begin{pmatrix} 0 & 1 \\ -5 & -2 \end{pmatrix}$$
+```math
+\mathbf{x}' = A\,\mathbf{x}, \qquad \mathbf{x} = \begin{pmatrix} y \\ v \end{pmatrix}, \qquad A = \begin{pmatrix} 0 & 1 \\ -5 & -2 \end{pmatrix}
+```
 
 **Read it aloud:** the state's rate is the matrix A times the state.
 
@@ -51,14 +55,14 @@ Row one reads y' = 0 × y + 1 × v: the definition of velocity. Row two reads v'
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since release, in s | 0 to 3 s | nearer rest |
-| $y$ | distance below rest, in cm | 10, then 0.1416 at 1 s | bigger swing, same timing |
-| $v$ | velocity y', in cm/s | 0, then −8.3628 at 1 s | later first crossing |
-| $f$ | the acceleration, from t, y and v | −5y − 2v | — |
-| $\mathbf{x}$ | the state: the vector (y, v) | (10, 0) at release | — |
-| $A$ | the matrix giving the rates | `[[0, 1], [-5, -2]]` | −5 lower: faster swings |
-| $\lambda$ | a characteristic root, and an eigenvalue of A | −1 ± 2i | — |
-| $h$ | Euler's step length, in s | 0.01 to 0.0001 | proportionally bigger error |
+| $`t`$ | time since release, in s | 0 to 3 s | nearer rest |
+| $`y`$ | distance below rest, in cm | 10, then 0.1416 at 1 s | bigger swing, same timing |
+| $`v`$ | velocity y', in cm/s | 0, then −8.3628 at 1 s | later first crossing |
+| $`f`$ | the acceleration, from t, y and v | −5y − 2v | — |
+| $`\mathbf{x}`$ | the state: the vector (y, v) | (10, 0) at release | — |
+| $`A`$ | the matrix giving the rates | `[[0, 1], [-5, -2]]` | −5 lower: faster swings |
+| $`\lambda`$ | a characteristic root, and an eigenvalue of A | −1 ± 2i | — |
+| $`h`$ | Euler's step length, in s | 0.01 to 0.0001 | proportionally bigger error |
 
 ### When it holds
 
@@ -95,18 +99,20 @@ Those eigenvalues solve the system in [The eigenvalue method](02-the-eigenvalue-
 
 An equation in the nth rate needs n starting numbers: the unknown and its first n − 1 rates. They are the state. Each rate's rate is the next entry, a row with a single 1; the last row is the equation solved for the top rate. For y''' + 3y'' + 3y' + y = 0 the state is (y, y', y'') and
 
-$$A = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ -1 & -3 & -3 \end{pmatrix}$$
+```math
+A = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ -1 & -3 & -3 \end{pmatrix}
+```
 
 1s above the diagonal and the coefficients, sign-flipped, along the bottom: the **companion matrix**. From (1, 0, 0) the characteristic-equation answer is y = e^−t (1 + t + t^2/2), so y(1) = 0.9197; stepping the three-entry state gives 0.9197 too.
 
 <details>
 <summary>Detailed proof: the equivalence and the eigenvalues, at any order</summary>
 
-Write $y^{(k)}$ for the kth rate of y, and take $y^{(n)} = f(t, y, \dots, y^{(n-1)})$. The state's entries are $x_k = y^{(k-1)}$ for k from 1 to n; the rows are $x_k' = x_{k+1}$ below the last, and the last is the equation.
+Write $`y^{(k)}`$ for the kth rate of y, and take $`y^{(n)} = f(t, y, \dots, y^{(n-1)})`$. The state's entries are $`x_k = y^{(k-1)}`$ for k from 1 to n; the rows are $`x_k' = x_{k+1}`$ below the last, and the last is the equation.
 
-Equation to system: the definitions give the upper rows, the equation the last. System to equation: the upper rows force $x_k = y^{(k-1)}$ with y the first entry, so the last row is the equation. Starting values match entry by entry.
+Equation to system: the definitions give the upper rows, the equation the last. System to equation: the upper rows force $`x_k = y^{(k-1)}`$ with y the first entry, so the last row is the equation. Starting values match entry by entry.
 
-Eigenvalues, linear case $y^{(n)} + a_{n-1} y^{(n-1)} + \dots + a_0 y = 0$. If $A\mathbf{x} = \lambda \mathbf{x}$ with the vector not zero, the upper rows give $x_{k+1} = \lambda x_k$, so the vector is its first entry, not zero, times $(1, \lambda, \dots, \lambda^{n-1})$. The last row, divided by that entry, reads $\lambda^n + a_{n-1}\lambda^{n-1} + \dots + a_0 = 0$: the characteristic equation. Read backwards, each root gives an eigenvector.
+Eigenvalues, linear case $`y^{(n)} + a_{n-1} y^{(n-1)} + \dots + a_0 y = 0`$. If $`A\mathbf{x} = \lambda \mathbf{x}`$ with the vector not zero, the upper rows give $`x_{k+1} = \lambda x_k`$, so the vector is its first entry, not zero, times $`(1, \lambda, \dots, \lambda^{n-1})`$. The last row, divided by that entry, reads $`\lambda^n + a_{n-1}\lambda^{n-1} + \dots + a_0 = 0`$: the characteristic equation. Read backwards, each root gives an eigenvector.
 
 </details>
 

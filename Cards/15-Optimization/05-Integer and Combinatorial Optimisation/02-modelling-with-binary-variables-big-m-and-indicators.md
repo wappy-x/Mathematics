@@ -32,15 +32,19 @@ M = 100 adds the whole hatched triangle between the dashed line and the slanted 
 
 A rule written as "something ≤ 0" can be switched on and off. Call the something g(x): how far plan x breaks the rule, so g(x) ≤ 0 means the rule holds. Call the switch δ, a binary: 1 means the rule must hold, 0 means it is off.
 
-$$g(x) \le M\,(1 - \delta), \qquad M = \max\{\, g(x) : x \text{ obeys every other rule} \,\}$$
+```math
+g(x) \le M\,(1 - \delta), \qquad M = \max\{\, g(x) : x \text{ obeys every other rule} \,\}
+```
 
 **Read it aloud:** the rule's overshoot may be at most M times "switch off"; and M is the biggest overshoot any plan could reach if this rule were gone.
 
 With δ = 1 the right side is 0 and the rule holds. With δ = 0 the right side is M, which no plan exceeds, so the rule vanishes. That is all big-M is.
 
-For the festival, each act gets a binary $x_i$ (1: book act i), with value $v_i$ in £k. The rule "n ≤ 8" is switched on when stage 2 is shut, so δ = 1 − y and g = n − 8. The whole model:
+For the festival, each act gets a binary $`x_i`$ (1: book act i), with value $`v_i`$ in £k. The rule "n ≤ 8" is switched on when stage 2 is shut, so δ = 1 − y and g = n − 8. The whole model:
 
-$$z_{IP} = \max \; \sum_{i} v_i x_i - F y \quad\text{subject to}\quad \sum_i x_i - 8 \le M y, \qquad x_i,\, y \in \{0, 1\}$$
+```math
+z_{IP} = \max \; \sum_{i} v_i x_i - F y \quad\text{subject to}\quad \sum_i x_i - 8 \le M y, \qquad x_i,\, y \in \{0, 1\}
+```
 
 **Read it aloud:** choose acts and the stage switch to make takings minus the opening charge as large as possible, with the acts past 8 never exceeding M times the switch.
 
@@ -48,30 +52,32 @@ Stage 2 has 6 slots, but only 4 acts remain once 8 are on the main stage, so the
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$ | binary: 1 books act i, 0 passes | all twelve 1 in the best plan | — (the solver chooses it) |
-| $v_i$ | act i's takings minus fee, £k | 62 for A down to 6 for L | that act is booked sooner |
-| $n$ | acts booked, $\sum_i x_i$ | 12 | — |
-| $y$ | binary switch: 1 opens stage 2 | 1 | — (the solver chooses it) |
-| $F$ | fixed charge for opening stage 2, £k | 40 | at 50 the stage stays shut |
-| $g(x)$ | how far a plan breaks a rule; ≤ 0 means it holds | n − 8 | — |
-| $\delta$ | binary switch: 1 enforces the rule | 1 − y | — |
-| $M$, $M'$ | the big-M: most any plan can break the rule by; $M'$ a smaller one compared in Step 5 | 4 | still correct, but a looser bound |
-| $z_{IP}$, $z_{LP}(M)$ | best value with whole decisions; best with fractions allowed, for that M | £341k; £345k at M = 4 | — |
-| $\pi$ | price on the stage rule, £k per act past 8 (Step 4) | F/M = 10 | — |
-| $s_A$, $s_B$ | start times of two headliners, hours after 18:00 | between 0 and 3.5, and 0 and 4 | — |
-| $w$ | binary: 1 if A plays before B | either | — |
+| $`x_i`$ | binary: 1 books act i, 0 passes | all twelve 1 in the best plan | — (the solver chooses it) |
+| $`v_i`$ | act i's takings minus fee, £k | 62 for A down to 6 for L | that act is booked sooner |
+| $`n`$ | acts booked, $`\sum_i x_i`$ | 12 | — |
+| $`y`$ | binary switch: 1 opens stage 2 | 1 | — (the solver chooses it) |
+| $`F`$ | fixed charge for opening stage 2, £k | 40 | at 50 the stage stays shut |
+| $`g(x)`$ | how far a plan breaks a rule; ≤ 0 means it holds | n − 8 | — |
+| $`\delta`$ | binary switch: 1 enforces the rule | 1 − y | — |
+| $`M`$, $`M'`$ | the big-M: most any plan can break the rule by; $`M'`$ a smaller one compared in Step 5 | 4 | still correct, but a looser bound |
+| $`z_{IP}`$, $`z_{LP}(M)`$ | best value with whole decisions; best with fractions allowed, for that M | £341k; £345k at M = 4 | — |
+| $`\pi`$ | price on the stage rule, £k per act past 8 (Step 4) | F/M = 10 | — |
+| $`s_A`$, $`s_B`$ | start times of two headliners, hours after 18:00 | between 0 and 3.5, and 0 and 4 | — |
+| $`w`$ | binary: 1 if A plays before B | either | — |
 
 ### Three patterns, one inequality
 
-[Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md) already links binaries to binaries: "B only if C" is $x_B \le x_C$, and no M is needed. Here the switched quantity is a count or a time, which can be larger than 1, so the switch needs a multiplier.
+[Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md) already links binaries to binaries: "B only if C" is $`x_B \le x_C`$, and no M is needed. Here the switched quantity is a count or a time, which can be larger than 1, so the switch needs a multiplier.
 
-- **If-then.** "If more than 8 acts, then stage 2 is open" is the same statement as "if stage 2 is shut, then at most 8 acts". Written: $n - 8 \le 4y$. The other direction, stage 2 open only with more than 8 acts, needs no rule here: the £40k charge already makes an idle stage 2 a loss. If it had to be enforced, it would be $n \ge 9y$.
-- **Fixed charge** (a cost paid in full once anything is used, not per unit). The £40k enters the objective as $-40y$. On its own it does nothing: the solver would set y = 0 and still book 12 acts. The if-then link is what makes it payable. The general form is "quantity ≤ M·y, cost F·y", with M the quantity's largest possible value.
+- **If-then.** "If more than 8 acts, then stage 2 is open" is the same statement as "if stage 2 is shut, then at most 8 acts". Written: $`n - 8 \le 4y`$. The other direction, stage 2 open only with more than 8 acts, needs no rule here: the £40k charge already makes an idle stage 2 a loss. If it had to be enforced, it would be $`n \ge 9y`$.
+- **Fixed charge** (a cost paid in full once anything is used, not per unit). The £40k enters the objective as $`-40y`$. On its own it does nothing: the solver would set y = 0 and still book 12 acts. The if-then link is what makes it payable. The general form is "quantity ≤ M·y, cost F·y", with M the quantity's largest possible value.
 - **Either-or.** Headliner A plays 90 minutes and B plays 60, between 18:00 and 23:00. They share one sound crew, so A finishes before B starts, or B finishes before A starts. One binary w carries both cases:
 
-$$s_A + 1.5 - s_B \le 5\,(1 - w), \qquad s_B + 1 - s_A \le 5\,w$$
+```math
+s_A + 1.5 - s_B \le 5\,(1 - w), \qquad s_B + 1 - s_A \le 5\,w
+```
 
-With w = 1 the first rule holds (A first) and the second is off. The 5 is the formula's M: A can start no later than 21:30 and B no earlier than 18:00, so $s_A + 1.5 - s_B$ is at most 3.5 + 1.5 − 0 = 5 hours. The other side also tops out at 5. The window's length is M.
+With w = 1 the first rule holds (A first) and the second is off. The 5 is the formula's M: A can start no later than 21:30 and B no earlier than 18:00, so $`s_A + 1.5 - s_B`$ is at most 3.5 + 1.5 − 0 = 5 hours. The other side also tops out at 5. The window's length is M.
 
 Many solvers also accept an **indicator constraint**, "y = 0 implies n ≤ 8", typed in directly. The solver can then enforce it by branching on y instead of multiplying by an M. That is the tool when no honest bound exists.
 
@@ -113,9 +119,11 @@ With M = 100 the toll is £0.40k, every act goes in, y = 0.04, and the bound is 
 
 A price π ≥ 0 per act past 8 certifies a relaxed value without any search. For every fractional plan obeying the rule,
 
-$$\sum_i v_i x_i - F y = \sum_i (v_i - \pi)\, x_i + (\pi M - F)\, y + \pi\,(n - M y) \le \sum_i \max(0,\ v_i - \pi) + \max(0,\ \pi M - F) + 8\pi,$$
+```math
+\sum_i v_i x_i - F y = \sum_i (v_i - \pi)\, x_i + (\pi M - F)\, y + \pi\,(n - M y) \le \sum_i \max(0,\ v_i - \pi) + \max(0,\ \pi M - F) + 8\pi,
+```
 
-since each $x_i$ and y is at most 1 and $n - My \le 8$.
+since each $`x_i`$ and y is at most 1 and $`n - My \le 8`$.
 
 Set π = F/M, the toll. For M = 4: 8 × 10 plus the positive parts 52 + 45 + 38 + 31 + 27 + 23 + 20 + 16 + 8 + 4 + 1 gives 80 + 265 = 345. The greedy plan above reaches 345, and the price says nothing can beat it, so £345k is the relaxation's exact best.
 
@@ -123,14 +131,14 @@ This is weak duality from [LP duality](../04-Linear%20Programming/04-lp-duality-
 
 ### Step 5: the smallest valid M gives the tightest relaxation
 
-If M′ < M and y ≥ 0, then $n - 8 \le M'y$ implies $n - 8 \le My$. So every fractional plan allowed with M′ is allowed with M. A bigger region has a best value at least as high: $z_{LP}(M') \le z_{LP}(M)$. The code prints the chain: £345k at M = 4, £355k at M = 6 (stage 2's slot count, a tempting wrong choice), £367.67k at M = 12, £379.40k at M = 100.
+If M′ < M and y ≥ 0, then $`n - 8 \le M'y`$ implies $`n - 8 \le My`$. So every fractional plan allowed with M′ is allowed with M. A bigger region has a best value at least as high: $`z_{LP}(M') \le z_{LP}(M)`$. The code prints the chain: £345k at M = 4, £355k at M = 6 (stage 2's slot count, a tempting wrong choice), £367.67k at M = 12, £379.40k at M = 100.
 
 At M = 4 the region's corners are (0, 0), (8, 0), (12, 1) and (0, 1), all real plans. So in the (n, y) picture every fractional pair is an average of real ones. That region is the **convex hull** (the smallest region with no dents containing the dots), and no single inequality on n and y does better. The fractional best still has y = 0.75, because which acts are booked matters too; closing the last £4k gap is the job of [Branch and bound](03-branch-and-bound.md).
 
 <details>
 <summary>Either-or relaxations stay weak even with the best M</summary>
 
-For the headliners, list every pair of quarter-hour start times: 255 pairs, of which 132 have no clash. With M = 5 hours the model keeps exactly those 132. With M = 4 hours it keeps only 112: B at 18:00 with A at 21:30 is lost, because that order needs $s_A + 1.5 - s_B = 5$.
+For the headliners, list every pair of quarter-hour start times: 255 pairs, of which 132 have no clash. With M = 5 hours the model keeps exactly those 132. With M = 4 hours it keeps only 112: B at 18:00 with A at 21:30 is lost, because that order needs $`s_A + 1.5 - s_B = 5`$.
 
 Now relax w. At w = 1/2 both rules loosen by 2.5 hours, and all 123 clashing pairs pass. The fractional version has forgotten the rule entirely. This is why scheduling models full of either-or pairs are hard: the bound comes almost wholly from branching on w. Balas's disjunctive programming builds the convex hull of the "A first" and "B first" regions instead, at the cost of a copy of the variables for each case.
 

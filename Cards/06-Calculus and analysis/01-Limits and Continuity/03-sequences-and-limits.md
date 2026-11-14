@@ -34,17 +34,21 @@ The falling line is the share 1/n; the flat line is the tolerance, 0.1 kg. The s
 
 ## The formula
 
-Notation first, in words. A sequence is written $a_n$, read "a sub n": the term in place $n$, where $n$ ticks 1, 2, 3 and on like a clock. Here $a_n = 1/n$. The arrow to infinity reads "heads for $L$ as $n$ grows without end".
+Notation first, in words. A sequence is written $`a_n`$, read "a sub n": the term in place $`n`$, where $`n`$ ticks 1, 2, 3 and on like a clock. Here $`a_n = 1/n`$. The arrow to infinity reads "heads for $`L`$ as $`n`$ grows without end".
 
-$$\lim_{n\to\infty} a_n = L \quad\text{means}\quad \text{for every tolerance } t>0 \text{ there is a cutoff } N \text{ with } |a_n - L| < t \text{ for every } n > N.$$
+```math
+\lim_{n\to\infty} a_n = L \quad\text{means}\quad \text{for every tolerance } t>0 \text{ there is a cutoff } N \text{ with } |a_n - L| < t \text{ for every } n > N.
+```
 
 **Read it aloud:** name any positive tolerance, and past some place in the list every term is closer to L than that.
 
-The bars $|a_n - L|$ are the distance from term to limit. For the shares the cutoff is the whole part of 1/t: 10 for 0.1, 100 for 0.01, 333 for 0.003.
+The bars $`|a_n - L|`$ are the distance from term to limit. For the shares the cutoff is the whole part of 1/t: 10 for 0.1, 100 for 0.01, 333 for 0.003.
 
 The theorem:
 
-$$\text{if } a_1 \le a_2 \le a_3 \le \cdots \text{ and every } a_n \le B, \text{ then } \lim_{n\to\infty} a_n = \sup\{a_1, a_2, a_3, \ldots\}.$$
+```math
+\text{if } a_1 \le a_2 \le a_3 \le \cdots \text{ and every } a_n \le B, \text{ then } \lim_{n\to\infty} a_n = \sup\{a_1, a_2, a_3, \ldots\}.
+```
 
 **Read it aloud:** a list that never steps down and never passes a ceiling heads for its least upper bound.
 
@@ -52,14 +56,14 @@ The mirror image holds for a list that never steps up and never drops below a fl
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a_n$ | the term in place n | the share 1/n kg | — |
-| $n$ | the place in the list, a whole number | 11 | the share shrinks toward L |
-| $L$ | the limit: the number the terms head for | 0 kg | — |
-| $t$ | the tolerance, in the terms' units | 0.1 kg | a smaller cutoff will do |
-| $N$ | the cutoff, a count: past it every term is within t | 10 | — |
-| $B$ | a ceiling no term passes | 2 for the climb below | the limit is unchanged |
-| $c_n$ | the climb: each term the square root of 2 plus the last | 0, 1.414214, 1.847759… | — |
-| $\sup$ | least upper bound, the lowest ceiling ([No gaps](02-supremum-and-completeness.md)) | 2 for the climb | — |
+| $`a_n`$ | the term in place n | the share 1/n kg | — |
+| $`n`$ | the place in the list, a whole number | 11 | the share shrinks toward L |
+| $`L`$ | the limit: the number the terms head for | 0 kg | — |
+| $`t`$ | the tolerance, in the terms' units | 0.1 kg | a smaller cutoff will do |
+| $`N`$ | the cutoff, a count: past it every term is within t | 10 | — |
+| $`B`$ | a ceiling no term passes | 2 for the climb below | the limit is unchanged |
+| $`c_n`$ | the climb: each term the square root of 2 plus the last | 0, 1.414214, 1.847759… | — |
+| $`\sup`$ | least upper bound, the lowest ceiling ([No gaps](02-supremum-and-completeness.md)) | 2 for the climb | — |
 
 ### When it holds
 
@@ -93,7 +97,7 @@ Let a list never step down and never pass a ceiling. The real numbers have no ga
 
 Take tolerance 0.1. Since L − 0.1 is below the lowest ceiling, it is no ceiling: some term, the K-th say, lies above it. Every later term is at least that term and at most L, so within 0.1 of L. The same runs for any tolerance. That is the monotone convergence theorem.
 
-It proves a limit exists before its value is known. The **climb** $c_n$ starts at 0 and makes each next term the square root of 2 plus the last: 0, 1.414214, 1.847759, 1.961571, 1.990369, 1.997591.
+It proves a limit exists before its value is known. The **climb** $`c_n`$ starts at 0 and makes each next term the square root of 2 plus the last: 0, 1.414214, 1.847759, 1.961571, 1.990369, 1.997591.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%

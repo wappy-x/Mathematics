@@ -40,40 +40,46 @@ The map is to scale, 0.75 units per metre. Solid lines: the round two-opt stops 
 
 ## The formula
 
-Notation first, in words. Number the genres e = 1 to n. Act j covers the genres in its list $E_j$ and charges the fee $c_j$. A lineup books act j when $x_j = 1$. OPT is the cheapest lineup's bill, and $C_{\text{greedy}}$ is greedy's bill. The covering problem **minimises** $\sum_j c_j x_j$, subject to every genre being covered by at least one booked act.
+Notation first, in words. Number the genres e = 1 to n. Act j covers the genres in its list $`E_j`$ and charges the fee $`c_j`$. A lineup books act j when $`x_j = 1`$. OPT is the cheapest lineup's bill, and $`C_{\text{greedy}}`$ is greedy's bill. The covering problem **minimises** $`\sum_j c_j x_j`$, subject to every genre being covered by at least one booked act.
 
 The greedy promise:
 
-$$C_{\text{greedy}} \;\le\; H(s)\cdot \text{OPT} \;\le\; (1 + \ln n)\cdot\text{OPT}, \qquad H(s) = 1 + \tfrac12 + \tfrac13 + \dots + \tfrac1s$$
+```math
+C_{\text{greedy}} \;\le\; H(s)\cdot \text{OPT} \;\le\; (1 + \ln n)\cdot\text{OPT}, \qquad H(s) = 1 + \tfrac12 + \tfrac13 + \dots + \tfrac1s
+```
 
 **Read it aloud:** greedy's bill is at most the harmonic number of the biggest act's genre count times the cheapest bill, and that is at most one plus the natural log of the number of genres, times the cheapest bill.
 
-The floor behind it is the dual of the covering LP, the version where an act may be booked fractionally. In the formula below, LP is the cheapest bill of that fractional version. LP duality and the dual prices y come from [Integer programs](01-integer-programs-and-relaxations.md) and the linear-programming shelf. Give every genre a price $y_e \ge 0$ such that no act's genres are priced above its fee:
+The floor behind it is the dual of the covering LP, the version where an act may be booked fractionally. In the formula below, LP is the cheapest bill of that fractional version. LP duality and the dual prices y come from [Integer programs](01-integer-programs-and-relaxations.md) and the linear-programming shelf. Give every genre a price $`y_e \ge 0`$ such that no act's genres are priced above its fee:
 
-$$\sum_{e \in E_j} y_e \;\le\; c_j \ \text{ for every act } j \quad\Longrightarrow\quad \sum_e y_e \;\le\; \text{LP} \;\le\; \text{OPT}$$
+```math
+\sum_{e \in E_j} y_e \;\le\; c_j \ \text{ for every act } j \quad\Longrightarrow\quad \sum_e y_e \;\le\; \text{LP} \;\le\; \text{OPT}
+```
 
 **Read it aloud:** if no act's genres are priced above that act's fee, the total of the prices is a floor under every lineup's bill.
 
 For a round t of the site, ℓ(t) is its length and L the shortest. A two-opt move removes legs u–u′ and v–v′ and adds u–v and u′–v′. The stretch between them is driven backwards. The move changes the length by
 
-$$\Delta = d(u, v) + d(u', v') - d(u, u') - d(v, v')$$
+```math
+\Delta = d(u, v) + d(u', v') - d(u, u') - d(v, v')
+```
 
 **Read it aloud:** the change is the two new legs minus the two old ones; take the move only when that is negative.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $e$, $e_i$ | number of genres; one genre; in the fold, act j's i-th genre in the order greedy covers them | 10; jazz; for P, rock, pop and folk come first | 1 + ln n grows slowly |
-| $j$, $E_j$, $c_j$ | an act; its genres; its fee, £ thousand | R; six genres; 54 | a dear act drops out of greedy's picks |
-| $x_j$ | 1 if act j is booked, else 0 | P and Q booked in the cheapest | — |
-| OPT, $C_{\text{greedy}}$ | cheapest bill; greedy's bill | 100; 120 | — |
-| $p_e$, $j_k$, $N_k$ | price genre e paid in greedy's run: the act's fee shared among the genres it newly covered; in the fold, greedy's k-th act and the genres it newly covers | 9 for rock; 18 for metal; $j_1$ is R | prices add up to $C_{\text{greedy}}$ |
-| $y_e$ | a dual price per genre, no act overpriced | 9 or 11.5; sum 100 | a higher floor, until an act is overpriced |
-| $s$, $H(s)$ | most genres one act covers; the harmonic number | 6; 2.450 | a weaker promise |
-| $r$, $m$ | genres of one act still uncovered when greedy takes a step; in the fold, $m = \lvert E_j \rvert$, the number of act j's genres | 5, then 2, for act P; m = 5 for P | that act's allowance $c_j / r$ shrinks |
-| $d(u, v)$ | straight-line distance on the site, metres | eight legs make the 1,251.8 m round | — |
-| $t$, ℓ(t), $L$ | a round from the office; its length; the shortest | 1,251.8 m nearest-first; L = 1,090.5 m | — |
-| $u, u', v, v'$, X | the ends of the two legs a move removes; X, the point where two legs cross | M, D and S, O in move 1 | — |
-| $\Delta$ | the length change of one two-opt move | −122.8 m, then −38.5 m | a worse move, refused |
+| $`n`$, $`e`$, $`e_i`$ | number of genres; one genre; in the fold, act j's i-th genre in the order greedy covers them | 10; jazz; for P, rock, pop and folk come first | 1 + ln n grows slowly |
+| $`j`$, $`E_j`$, $`c_j`$ | an act; its genres; its fee, £ thousand | R; six genres; 54 | a dear act drops out of greedy's picks |
+| $`x_j`$ | 1 if act j is booked, else 0 | P and Q booked in the cheapest | — |
+| OPT, $`C_{\text{greedy}}`$ | cheapest bill; greedy's bill | 100; 120 | — |
+| $`p_e`$, $`j_k`$, $`N_k`$ | price genre e paid in greedy's run: the act's fee shared among the genres it newly covered; in the fold, greedy's k-th act and the genres it newly covers | 9 for rock; 18 for metal; $`j_1`$ is R | prices add up to $`C_{\text{greedy}}`$ |
+| $`y_e`$ | a dual price per genre, no act overpriced | 9 or 11.5; sum 100 | a higher floor, until an act is overpriced |
+| $`s`$, $`H(s)`$ | most genres one act covers; the harmonic number | 6; 2.450 | a weaker promise |
+| $`r`$, $`m`$ | genres of one act still uncovered when greedy takes a step; in the fold, $`m = \lvert E_j \rvert`$, the number of act j's genres | 5, then 2, for act P; m = 5 for P | that act's allowance $`c_j / r`$ shrinks |
+| $`d(u, v)`$ | straight-line distance on the site, metres | eight legs make the 1,251.8 m round | — |
+| $`t`$, ℓ(t), $`L`$ | a round from the office; its length; the shortest | 1,251.8 m nearest-first; L = 1,090.5 m | — |
+| $`u, u', v, v'`$, X | the ends of the two legs a move removes; X, the point where two legs cross | M, D and S, O in move 1 | — |
+| $`\Delta`$ | the length change of one two-opt move | −122.8 m, then −38.5 m | a worse move, refused |
 
 ### When it holds
 
@@ -97,7 +103,7 @@ On the festival, set rock, pop, folk, indie, techno and hip-hop at £9,000. R's 
 
 ### Step 1: greedy hands each genre a price
 
-When greedy books an act, it splits the fee equally among the genres that act newly covers. Rock, pop, folk, indie, techno and hip-hop each pay 54/6 = 9. Jazz and soul pay 30/2 = 15. Reggae and metal pay 36/2 = 18. Every pound of the bill is charged to exactly one genre, so the prices $p_e$ add to $C_{\text{greedy}}$ = 120.
+When greedy books an act, it splits the fee equally among the genres that act newly covers. Rock, pop, folk, indie, techno and hip-hop each pay 54/6 = 9. Jazz and soul pay 30/2 = 15. Reggae and metal pay 36/2 = 18. Every pound of the bill is charged to exactly one genre, so the prices $`p_e`$ add to $`C_{\text{greedy}}`$ = 120.
 
 These prices are not a floor yet. Act P covers rock, pop, folk, jazz and soul, and greedy charged those 9 + 9 + 9 + 15 + 15 = 57, above P's fee of 50. If they were a floor, no lineup could cost less than 120, and P with Q costs 100.
 
@@ -105,17 +111,21 @@ These prices are not a floor yet. Act P covers rock, pop, folk, jazz and soul, a
 
 Watch act P during greedy's run. At step 1, all five of P's genres are open. Booking P would cost 50/5 = 10 per genre. Greedy chose the cheapest rate available, 9, so each genre covered then paid at most 10. At step 2, two of P's genres are open. P's rate is 50/2 = 25, and greedy paid 15.
 
-The same holds for every act and every step. When r of act j's genres are still open, greedy's rate is at most $c_j / r$. Take act j's genres in the order they get covered. The first is covered while all |E_j| of them are open, the next while at least |E_j| − 1 are, and so on down to the last, which is covered while at least 1 is open. So the prices on act j's genres add to at most
+The same holds for every act and every step. When r of act j's genres are still open, greedy's rate is at most $`c_j / r`$. Take act j's genres in the order they get covered. The first is covered while all |E_j| of them are open, the next while at least |E_j| − 1 are, and so on down to the last, which is covered while at least 1 is open. So the prices on act j's genres add to at most
 
-$$c_j\left(\frac{1}{|E_j|} + \frac{1}{|E_j| - 1} + \dots + 1\right) = H(|E_j|)\, c_j \le H(s)\, c_j .$$
+```math
+c_j\left(\frac{1}{|E_j|} + \frac{1}{|E_j| - 1} + \dots + 1\right) = H(|E_j|)\, c_j \le H(s)\, c_j .
+```
 
 The run checks all 17 such allowances (act by act, step by step) and all hold. The worst overcharge on the festival is act Q, priced at 1.260 times its fee. The proof allows up to H(6) = 2.450.
 
 ### Step 3: shrink the prices and they become a floor
 
-Divide every $p_e$ by H(s). Step 2 says that no act is now overpriced, so by Step 0 the shrunk prices total at most OPT:
+Divide every $`p_e`$ by H(s). Step 2 says that no act is now overpriced, so by Step 0 the shrunk prices total at most OPT:
 
-$$\frac{C_{\text{greedy}}}{H(s)} = \sum_e \frac{p_e}{H(s)} \;\le\; \text{OPT}.$$
+```math
+\frac{C_{\text{greedy}}}{H(s)} = \sum_e \frac{p_e}{H(s)} \;\le\; \text{OPT}.
+```
 
 Multiply through by H(s) and the promise is proved. This is **dual fitting**: the algorithm's own bookkeeping, scaled to fit, is a dual solution. On the festival the fitted floor is 120/2.450 = 48.98. That is weak but certain, and it needs no enumeration. Dividing by the run's actual worst overcharge, 1.260, already fits and gives a floor of 95.24.
 
@@ -124,11 +134,11 @@ The last step compares sums. H(s) ≤ H(n), because no act covers more than all 
 <details>
 <summary>Detailed proof: greedy covering is within H(s) of the cheapest</summary>
 
-Let greedy book acts in the order $j_1, j_2, \dots$. At the step where it books $j_k$, let $N_k$ be the genres it newly covers, and set $p_e = c_{j_k} / |N_k|$ for each e in $N_k$. Each genre is covered once, so $\sum_e p_e = \sum_k c_{j_k} = C_{\text{greedy}}$.
+Let greedy book acts in the order $`j_1, j_2, \dots`$. At the step where it books $`j_k`$, let $`N_k`$ be the genres it newly covers, and set $`p_e = c_{j_k} / |N_k|`$ for each e in $`N_k`$. Each genre is covered once, so $`\sum_e p_e = \sum_k c_{j_k} = C_{\text{greedy}}`$.
 
-Fix any act j and list its genres $e_1, \dots, e_m$ in the order greedy covers them, breaking ties at random, with m = |E_j|. Just before $e_i$ is covered, the genres $e_i, \dots, e_m$ are all open, so act j would cover at least m − i + 1 new genres at rate at most $c_j/(m-i+1)$. Greedy books an act of least rate, so $p_{e_i} \le c_j/(m - i + 1)$. Summing over i, $\sum_{e \in E_j} p_e \le c_j H(m) \le c_j H(s)$.
+Fix any act j and list its genres $`e_1, \dots, e_m`$ in the order greedy covers them, breaking ties at random, with m = |E_j|. Just before $`e_i`$ is covered, the genres $`e_i, \dots, e_m`$ are all open, so act j would cover at least m − i + 1 new genres at rate at most $`c_j/(m-i+1)`$. Greedy books an act of least rate, so $`p_{e_i} \le c_j/(m - i + 1)`$. Summing over i, $`\sum_{e \in E_j} p_e \le c_j H(m) \le c_j H(s)`$.
 
-So $y_e = p_e / H(s)$ satisfies $\sum_{e\in E_j} y_e \le c_j$ for every j, with $y \ge 0$. For any covering lineup x, $\sum_j c_j x_j \ge \sum_j x_j \sum_{e \in E_j} y_e = \sum_e y_e \sum_{j : e \in E_j} x_j \ge \sum_e y_e$, since each genre's inner sum is at least 1. Taking x as the cheapest lineup, OPT ≥ $\sum_e y_e = C_{\text{greedy}}/H(s)$. ∎
+So $`y_e = p_e / H(s)`$ satisfies $`\sum_{e\in E_j} y_e \le c_j`$ for every j, with $`y \ge 0`$. For any covering lineup x, $`\sum_j c_j x_j \ge \sum_j x_j \sum_{e \in E_j} y_e = \sum_e y_e \sum_{j : e \in E_j} x_j \ge \sum_e y_e`$, since each genre's inner sum is at least 1. Taking x as the cheapest lineup, OPT ≥ $`\sum_e y_e = C_{\text{greedy}}/H(s)`$. ∎
 
 </details>
 

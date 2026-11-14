@@ -44,56 +44,66 @@ The gentle line (orange) is the option with twelve months left. The steep line (
 
 ## The formula
 
-Notation first, in words. The currency pair EURUSD is quoted as dollars per euro, so the euro is the **foreign** currency (the thing being priced) and the dollar is the **domestic** currency (the money doing the pricing). A partial derivative, written with a curly d as in $\partial C/\partial S$, is the slope of the price against one input with every other input frozen ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $N(x)$ is the area under the standard bell curve to the left of $x$, and $\varphi(x)$ is the curve's height at $x$.
+Notation first, in words. The currency pair EURUSD is quoted as dollars per euro, so the euro is the **foreign** currency (the thing being priced) and the dollar is the **domestic** currency (the money doing the pricing). A partial derivative, written with a curly d as in $`\partial C/\partial S`$, is the slope of the price against one input with every other input frozen ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $`N(x)`$ is the area under the standard bell curve to the left of $`x`$, and $`\varphi(x)`$ is the curve's height at $`x`$.
 
 The price being differentiated is the Garman-Kohlhagen call ([Garman-Kohlhagen](01-garman-kohlhagen.md)), in dollars per euro of notional:
 
-$$C = S\,e^{-r_f T}N(d_1) - K\,e^{-r_d T}N(d_2)$$
+```math
+C = S\,e^{-r_f T}N(d_1) - K\,e^{-r_d T}N(d_2)
+```
 
 Its six Greeks:
 
-$$\Delta = \frac{\partial C}{\partial S} = e^{-r_f T}N(d_1), \qquad \Gamma = \frac{\partial^2 C}{\partial S^2} = \frac{e^{-r_f T}\varphi(d_1)}{S\sigma\sqrt{T}}, \qquad \mathcal{V} = \frac{\partial C}{\partial \sigma} = S\,e^{-r_f T}\varphi(d_1)\sqrt{T}$$
+```math
+\Delta = \frac{\partial C}{\partial S} = e^{-r_f T}N(d_1), \qquad \Gamma = \frac{\partial^2 C}{\partial S^2} = \frac{e^{-r_f T}\varphi(d_1)}{S\sigma\sqrt{T}}, \qquad \mathcal{V} = \frac{\partial C}{\partial \sigma} = S\,e^{-r_f T}\varphi(d_1)\sqrt{T}
+```
 
-$$\Theta = -\frac{\partial C}{\partial T} = -\frac{S\,e^{-r_f T}\varphi(d_1)\,\sigma}{2\sqrt{T}} + r_f\,S\,e^{-r_f T}N(d_1) - r_d\,K\,e^{-r_d T}N(d_2)$$
+```math
+\Theta = -\frac{\partial C}{\partial T} = -\frac{S\,e^{-r_f T}\varphi(d_1)\,\sigma}{2\sqrt{T}} + r_f\,S\,e^{-r_f T}N(d_1) - r_d\,K\,e^{-r_d T}N(d_2)
+```
 
-$$\rho_d = \frac{\partial C}{\partial r_d} = K\,T\,e^{-r_d T}N(d_2), \qquad \rho_f = \frac{\partial C}{\partial r_f} = -\,S\,T\,e^{-r_f T}N(d_1)$$
+```math
+\rho_d = \frac{\partial C}{\partial r_d} = K\,T\,e^{-r_d T}N(d_2), \qquad \rho_f = \frac{\partial C}{\partial r_f} = -\,S\,T\,e^{-r_f T}N(d_1)
+```
 
 **Read it aloud:** delta is the discounted euros times their chance, gamma and vega are both the bell curve's height at the strike's distance, theta is decay plus euro carry minus dollar carry, and each rho is the years to expiry times the leg of the price that its own currency discounts.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | spot: dollars per euro today | 1.1000 | delta rises toward $e^{-r_f T}$; vega peaks near the strike |
-| $K$ | strike: dollars per euro the holder may pay | 1.1000 | delta falls |
-| $T$ | years to expiry | 1 | both rhos grow roughly in step with $T$ |
-| $r_d$, $r$ | the domestic rate: dollar interest, continuously compounded; it plays the part of the equity cards' $r$ | 5% | call price rises: $\rho_d$ is positive |
-| $r_f$, $q$ | the foreign rate: euro interest, continuously compounded; it plays the part of the equity cards' dividend yield $q$ | 3% | call price falls: $\rho_f$ is negative |
-| $\sigma$ | volatility: the yearly spread of the log exchange rate | 10% | price rises by vega per unit |
-| $C$ | call price, dollars per euro of notional | 0.053556 | — |
-| $N(x)$, $\varphi(x)$ | bell-curve area to the left of $x$; bell-curve height at $x$ | $N(d_1)$ = 0.598706, $\varphi(d_1)$ = 0.386668 | — |
-| $d_1$, $d_2$ | the strike's distance in units of $\sigma\sqrt{T}$, counted in euros and in dollars | 0.25 and 0.15 | — |
-| $e^{-r_f T}$, $e^{-r_d T}$ | what one euro, and one dollar, due at expiry are worth today | 0.970446 and 0.951229 | — |
-| $\Delta$, $\Gamma$, $\mathcal{V}$ | delta, gamma, vega | 0.581012, 3.411276, 0.412764 | — |
-| $\Theta$, $\rho_d$, $\rho_f$ | theta per year; dollar rho and euro rho per unit of rate | −0.030743, 0.585557, −0.639113 | — |
+| $`S`$ | spot: dollars per euro today | 1.1000 | delta rises toward $`e^{-r_f T}`$; vega peaks near the strike |
+| $`K`$ | strike: dollars per euro the holder may pay | 1.1000 | delta falls |
+| $`T`$ | years to expiry | 1 | both rhos grow roughly in step with $`T`$ |
+| $`r_d`$, $`r`$ | the domestic rate: dollar interest, continuously compounded; it plays the part of the equity cards' $`r`$ | 5% | call price rises: $`\rho_d`$ is positive |
+| $`r_f`$, $`q`$ | the foreign rate: euro interest, continuously compounded; it plays the part of the equity cards' dividend yield $`q`$ | 3% | call price falls: $`\rho_f`$ is negative |
+| $`\sigma`$ | volatility: the yearly spread of the log exchange rate | 10% | price rises by vega per unit |
+| $`C`$ | call price, dollars per euro of notional | 0.053556 | — |
+| $`N(x)`$, $`\varphi(x)`$ | bell-curve area to the left of $`x`$; bell-curve height at $`x`$ | $`N(d_1)`$ = 0.598706, $`\varphi(d_1)`$ = 0.386668 | — |
+| $`d_1`$, $`d_2`$ | the strike's distance in units of $`\sigma\sqrt{T}`$, counted in euros and in dollars | 0.25 and 0.15 | — |
+| $`e^{-r_f T}`$, $`e^{-r_d T}`$ | what one euro, and one dollar, due at expiry are worth today | 0.970446 and 0.951229 | — |
+| $`\Delta`$, $`\Gamma`$, $`\mathcal{V}`$ | delta, gamma, vega | 0.581012, 3.411276, 0.412764 | — |
+| $`\Theta`$, $`\rho_d`$, $`\rho_f`$ | theta per year; dollar rho and euro rho per unit of rate | −0.030743, 0.585557, −0.639113 | — |
 
 The helper distances, as on the pricing card:
 
-$$d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: $d_2$ is how many spreads of room the rate has to end above the strike, in the world where dollars are the unit of account; $d_1$ is one spread more.
+In words: $`d_2`$ is how many spreads of room the rate has to end above the strike, in the world where dollars are the unit of account; $`d_1`$ is one spread more.
 
 **Desk units, dated 2026-09-27.** Raw Greeks are per unit of each input, and a unit of volatility or of rate is 100 percentage points, which never happens. Desks rescale:
 
 - vega per vol point: divide by 100;
 - rho per basis point (bp): divide by 10,000; a basis point is a hundredth of a percentage point;
 - theta per calendar day: divide by 365;
-- gamma as the change in delta for a 1 percent move in spot: multiply by $S$ and by 0.01.
+- gamma as the change in delta for a 1 percent move in spot: multiply by $`S`$ and by 0.01.
 
 Then everything is multiplied by the notional. These are habits, not laws; a risk report states its own units, and the number means nothing without them.
 
 ### When it holds
 
-- **Constant volatility.** The model uses one $\sigma$ for every strike. Real currency markets price a smile (a different volatility for each strike), so vega here is the slope for a parallel lift of the whole smile, and it misses the risk that the smile tilts; that is [Vanna and volga](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md).
-- **Flat, constant interest rates.** One $r_d$ and one $r_f$ for the whole year. With a real yield curve, rho spreads across maturities; a single number per currency is the total of those buckets.
+- **Constant volatility.** The model uses one $`\sigma`$ for every strike. Real currency markets price a smile (a different volatility for each strike), so vega here is the slope for a parallel lift of the whole smile, and it misses the risk that the smile tilts; that is [Vanna and volga](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md).
+- **Flat, constant interest rates.** One $`r_d`$ and one $`r_f`$ for the whole year. With a real yield curve, rho spreads across maturities; a single number per currency is the total of those buckets.
 - **Small moves, one at a time.** Each Greek is a slope. A 1 percent move in spot is small; a 5 percent move needs gamma too, and a big move needs a full reprice.
 - **European exercise.** The option pays only at expiry. Barriers (options that switch on or off at a set rate) break the smooth shape: [Greeks at the wall](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md).
 
@@ -103,77 +113,79 @@ Then everything is multiplied by the notional. These are habits, not laws; a ris
 
 ### Step 0: every Greek is a slope of one formula
 
-The price is one formula in six inputs. Freeze five, move the sixth a little, and the ratio of the price change to the input change is that input's Greek. The tool is the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md). Holding euros earns $r_f$, just as holding a share earns its dividend yield $q$, so every equity result carries over with $r_f$ for $q$ and $r_d$ for $r$. What is new is what two rates and two currencies mean for a desk.
+The price is one formula in six inputs. Freeze five, move the sixth a little, and the ratio of the price change to the input change is that input's Greek. The tool is the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md). Holding euros earns $`r_f`$, just as holding a share earns its dividend yield $`q`$, so every equity result carries over with $`r_f`$ for $`q`$ and $`r_d`$ for $`r`$. What is new is what two rates and two currencies mean for a desk.
 
 ### Step 1: one identity that makes the messy terms vanish
 
-Every input except the strike sits inside $d_1$ and $d_2$, so every derivative produces terms like $S e^{-r_f T}\varphi(d_1)\,\partial d_1/\partial x$. They cancel because of one identity:
+Every input except the strike sits inside $`d_1`$ and $`d_2`$, so every derivative produces terms like $`S e^{-r_f T}\varphi(d_1)\,\partial d_1/\partial x`$. They cancel because of one identity:
 
-$$S\,e^{-r_f T}\varphi(d_1) = K\,e^{-r_d T}\varphi(d_2).$$
+```math
+S\,e^{-r_f T}\varphi(d_1) = K\,e^{-r_d T}\varphi(d_2).
+```
 
-On the example's numbers both sides are 1.1 × 0.970446 × 0.386668 and 1.1 × 0.951229 × $\varphi(0.15)$, and both equal 0.412764, which is also vega.
+On the example's numbers both sides are 1.1 × 0.970446 × 0.386668 and 1.1 × 0.951229 × $`\varphi(0.15)`$, and both equal 0.412764, which is also vega.
 
 <details>
 <summary>The algebra behind the identity</summary>
 
-$\varphi(d_2)/\varphi(d_1) = e^{(d_1^2 - d_2^2)/2} = e^{(d_1 - d_2)(d_1 + d_2)/2}$. Here $d_1 - d_2 = \sigma\sqrt{T}$ and $d_1 + d_2 = 2\ln(S/K)/(\sigma\sqrt{T}) + 2(r_d - r_f)T/(\sigma\sqrt{T})$. Multiply: the exponent is $\ln(S/K) + (r_d - r_f)T$. So $\varphi(d_2) = \varphi(d_1)\,(S/K)\,e^{(r_d - r_f)T}$, which rearranges to the identity.
+$`\varphi(d_2)/\varphi(d_1) = e^{(d_1^2 - d_2^2)/2} = e^{(d_1 - d_2)(d_1 + d_2)/2}`$. Here $`d_1 - d_2 = \sigma\sqrt{T}`$ and $`d_1 + d_2 = 2\ln(S/K)/(\sigma\sqrt{T}) + 2(r_d - r_f)T/(\sigma\sqrt{T})`$. Multiply: the exponent is $`\ln(S/K) + (r_d - r_f)T`$. So $`\varphi(d_2) = \varphi(d_1)\,(S/K)\,e^{(r_d - r_f)T}`$, which rearranges to the identity.
 
 </details>
 
 ### Step 2: delta and gamma
 
-Differentiate $C$ in $S$. The first term gives $e^{-r_f T}N(d_1)$ plus $S e^{-r_f T}\varphi(d_1)\,\partial d_1/\partial S$. The second term gives $-K e^{-r_d T}\varphi(d_2)\,\partial d_2/\partial S$. Since $d_1 - d_2$ does not depend on $S$, the two partial derivatives of $d$ are equal, and by Step 1 the two $\varphi$ terms cancel. What is left is $\Delta = e^{-r_f T}N(d_1)$ = 0.970446 × 0.598706 = 0.581012.
+Differentiate $`C`$ in $`S`$. The first term gives $`e^{-r_f T}N(d_1)`$ plus $`S e^{-r_f T}\varphi(d_1)\,\partial d_1/\partial S`$. The second term gives $`-K e^{-r_d T}\varphi(d_2)\,\partial d_2/\partial S`$. Since $`d_1 - d_2`$ does not depend on $`S`$, the two partial derivatives of $`d`$ are equal, and by Step 1 the two $`\varphi`$ terms cancel. What is left is $`\Delta = e^{-r_f T}N(d_1)`$ = 0.970446 × 0.598706 = 0.581012.
 
-Its unit: $C$ is dollars per euro of notional and $S$ is dollars per euro, so their ratio is euros per euro of notional. On EUR 10 million the desk that sold this call buys EUR 5,810,119 against it (the client, who holds the call, would sell that many). The discount $e^{-r_f T}$ is there because the hedge is done in spot euros, which earn euro interest until expiry: 0.97 of a euro today grows into one euro at 3 percent.
+Its unit: $`C`$ is dollars per euro of notional and $`S`$ is dollars per euro, so their ratio is euros per euro of notional. On EUR 10 million the desk that sold this call buys EUR 5,810,119 against it (the client, who holds the call, would sell that many). The discount $`e^{-r_f T}`$ is there because the hedge is done in spot euros, which earn euro interest until expiry: 0.97 of a euro today grows into one euro at 3 percent.
 
-Differentiate delta once more in $S$. Only $N(d_1)$ moves, and $\partial d_1/\partial S = 1/(S\sigma\sqrt{T})$. So $\Gamma = e^{-r_f T}\varphi(d_1)/(S\sigma\sqrt{T})$ = 3.411276. Its unit is euros of hedge per euro of notional, per one-dollar change in the price of a euro. A full dollar move in EURUSD is absurd, so desks quote the change in delta for a 1 percent spot move: 3.411276 × 1.10 × 0.01 = 0.037524, or EUR 375,240 of extra hedge on the 10 million.
+Differentiate delta once more in $`S`$. Only $`N(d_1)`$ moves, and $`\partial d_1/\partial S = 1/(S\sigma\sqrt{T})`$. So $`\Gamma = e^{-r_f T}\varphi(d_1)/(S\sigma\sqrt{T})`$ = 3.411276. Its unit is euros of hedge per euro of notional, per one-dollar change in the price of a euro. A full dollar move in EURUSD is absurd, so desks quote the change in delta for a 1 percent spot move: 3.411276 × 1.10 × 0.01 = 0.037524, or EUR 375,240 of extra hedge on the 10 million.
 
 ### Step 3: vega
 
-Differentiate in $\sigma$. Both $d$'s move, by different amounts this time, since $d_1 - d_2 = \sigma\sqrt{T}$ grows with $\sigma$. The identity turns the two $\varphi$ terms into $S e^{-r_f T}\varphi(d_1)$ times $\partial(d_1 - d_2)/\partial\sigma = \sqrt{T}$. So $\mathcal{V} = S e^{-r_f T}\varphi(d_1)\sqrt{T}$ = 0.412764 dollars per euro per unit of volatility. Per vol point, 0.004128; on the 10 million, USD 41,276.
+Differentiate in $`\sigma`$. Both $`d`$'s move, by different amounts this time, since $`d_1 - d_2 = \sigma\sqrt{T}`$ grows with $`\sigma`$. The identity turns the two $`\varphi`$ terms into $`S e^{-r_f T}\varphi(d_1)`$ times $`\partial(d_1 - d_2)/\partial\sigma = \sqrt{T}`$. So $`\mathcal{V} = S e^{-r_f T}\varphi(d_1)\sqrt{T}`$ = 0.412764 dollars per euro per unit of volatility. Per vol point, 0.004128; on the 10 million, USD 41,276.
 
 ### Step 4: the two rhos, and why their signs differ
 
-Differentiate in $r_d$. The dollar rate enters $d_1$ and $d_2$ equally, so by Step 1 those terms cancel, exactly as on [Rho and dividend rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md). Only the explicit $e^{-r_d T}$ on the strike is left: $\rho_d = K T e^{-r_d T}N(d_2)$ = 0.585557. The call holder may pay USD 1.10 a year from now. A higher dollar rate makes that future payment cheaper today, so the call gains.
+Differentiate in $`r_d`$. The dollar rate enters $`d_1`$ and $`d_2`$ equally, so by Step 1 those terms cancel, exactly as on [Rho and dividend rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md). Only the explicit $`e^{-r_d T}`$ on the strike is left: $`\rho_d = K T e^{-r_d T}N(d_2)`$ = 0.585557. The call holder may pay USD 1.10 a year from now. A higher dollar rate makes that future payment cheaper today, so the call gains.
 
-Differentiate in $r_f$. Again only the explicit discount survives, this time on the euros: $\rho_f = -S T e^{-r_f T}N(d_1)$ = −0.639113. The call holder may receive a euro a year from now. A higher euro rate makes that future euro worth less today, so the call loses.
+Differentiate in $`r_f`$. Again only the explicit discount survives, this time on the euros: $`\rho_f = -S T e^{-r_f T}N(d_1)`$ = −0.639113. The call holder may receive a euro a year from now. A higher euro rate makes that future euro worth less today, so the call loses.
 
 Each rho belongs to one leg of the formula. Per basis point on the 10 million: USD +585.56 and USD −639.11.
 
-Add them. $\rho_d + \rho_f = T\,(K e^{-r_d T}N(d_2) - S e^{-r_f T}N(d_1)) = -T C$ = −0.053556. When both rates rise together, the forward $S e^{(r_d - r_f)T}$ (the rate agreed today for exchange at expiry) does not move, and the only effect left is heavier dollar discounting of the whole premium. That is the number a desk sees when the two central banks move in step: USD −53.56 per basis point, not the +585.56 of the dollar rho alone.
+Add them. $`\rho_d + \rho_f = T\,(K e^{-r_d T}N(d_2) - S e^{-r_f T}N(d_1)) = -T C`$ = −0.053556. When both rates rise together, the forward $`S e^{(r_d - r_f)T}`$ (the rate agreed today for exchange at expiry) does not move, and the only effect left is heavier dollar discounting of the whole premium. That is the number a desk sees when the two central banks move in step: USD −53.56 per basis point, not the +585.56 of the dollar rho alone.
 
 ### Step 5: theta
 
-Differentiate in $T$ and flip the sign, since time passing shortens $T$. Three terms survive, each with a meaning:
+Differentiate in $`T`$ and flip the sign, since time passing shortens $`T`$. Three terms survive, each with a meaning:
 
-- $-S e^{-r_f T}\varphi(d_1)\sigma/(2\sqrt{T})$ = −0.020638 per year: the option's "maybe" melting, the same decay as on [Theta](../09-The%20Greeks%2C%20one%20each/04-theta.md).
-- $+r_f S e^{-r_f T}N(d_1)$: the euros the holder may receive are discounted for one day less, so they are worth a little more.
-- $-r_d K e^{-r_d T}N(d_2)$: the dollars the holder may pay are discounted for one day less, so they cost a little more.
+- $`-S e^{-r_f T}\varphi(d_1)\sigma/(2\sqrt{T})`$ = −0.020638 per year: the option's "maybe" melting, the same decay as on [Theta](../09-The%20Greeks%2C%20one%20each/04-theta.md).
+- $`+r_f S e^{-r_f T}N(d_1)`$: the euros the holder may receive are discounted for one day less, so they are worth a little more.
+- $`-r_d K e^{-r_d T}N(d_2)`$: the dollars the holder may pay are discounted for one day less, so they cost a little more.
 
 Together: −0.030743 per year. Per calendar day, −0.00008423 dollars per euro; on the 10 million, USD −842.
 
-The three terms are not independent of the others. The option price satisfies the pricing equation $\Theta + \tfrac12\sigma^2 S^2\Gamma + (r_d - r_f)S\Delta - r_d C = 0$ ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md), with $r_d$ for $r$ and $r_f$ for $q$). The checks rebuild theta from that equation using a delta and gamma found by an independent road, and land on −0.030743 again.
+The three terms are not independent of the others. The option price satisfies the pricing equation $`\Theta + \tfrac12\sigma^2 S^2\Gamma + (r_d - r_f)S\Delta - r_d C = 0`$ ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md), with $`r_d`$ for $`r`$ and $`r_f`$ for $`q`$). The checks rebuild theta from that equation using a delta and gamma found by an independent road, and land on −0.030743 again.
 
 <details>
 <summary>Detailed proof: the decay term (the only messy derivative)</summary>
 
-Write $C = e^{-r_d T}(F N(d_1) - K N(d_2))$ with the forward $F = S e^{(r_d - r_f)T}$. Then $\partial C/\partial T = -r_d C + e^{-r_d T}(\partial F/\partial T)N(d_1) + e^{-r_d T}(F\varphi(d_1)\partial d_1/\partial T - K\varphi(d_2)\partial d_2/\partial T)$. The identity of Step 1 in forward form, $F\varphi(d_1) = K\varphi(d_2)$, collapses the bracket to $F\varphi(d_1)\,\partial(d_1 - d_2)/\partial T = F\varphi(d_1)\,\sigma/(2\sqrt{T})$. With $\partial F/\partial T = (r_d - r_f)F$ and $e^{-r_d T}F = S e^{-r_f T}$, expand $-r_d C$ and collect: $\partial C/\partial T = S e^{-r_f T}\varphi(d_1)\sigma/(2\sqrt{T}) - r_f S e^{-r_f T}N(d_1) + r_d K e^{-r_d T}N(d_2)$. Theta is minus this.
+Write $`C = e^{-r_d T}(F N(d_1) - K N(d_2))`$ with the forward $`F = S e^{(r_d - r_f)T}`$. Then $`\partial C/\partial T = -r_d C + e^{-r_d T}(\partial F/\partial T)N(d_1) + e^{-r_d T}(F\varphi(d_1)\partial d_1/\partial T - K\varphi(d_2)\partial d_2/\partial T)`$. The identity of Step 1 in forward form, $`F\varphi(d_1) = K\varphi(d_2)`$, collapses the bracket to $`F\varphi(d_1)\,\partial(d_1 - d_2)/\partial T = F\varphi(d_1)\,\sigma/(2\sqrt{T})`$. With $`\partial F/\partial T = (r_d - r_f)F`$ and $`e^{-r_d T}F = S e^{-r_f T}`$, expand $`-r_d C`$ and collect: $`\partial C/\partial T = S e^{-r_f T}\varphi(d_1)\sigma/(2\sqrt{T}) - r_f S e^{-r_f T}N(d_1) + r_d K e^{-r_d T}N(d_2)`$. Theta is minus this.
 
 </details>
 
 ### Step 6: the same Greeks, counted in euros
 
-A bank in Frankfurt holds the same contract. For it, the contract is a put on dollars, paid for in euros: the right to hand over USD 1.10 and receive EUR 1. The symmetry card proves the price in euros is $C/S$ ([One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md)): that is the same Garman-Kohlhagen put formula with spot $1/S$, strike $1/K$, domestic rate $r_f$ and foreign rate $r_d$, on USD 1.10 per euro of notional. The checks price it both ways and get 0.048687 euros per euro.
+A bank in Frankfurt holds the same contract. For it, the contract is a put on dollars, paid for in euros: the right to hand over USD 1.10 and receive EUR 1. The symmetry card proves the price in euros is $`C/S`$ ([One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md)): that is the same Garman-Kohlhagen put formula with spot $`1/S`$, strike $`1/K`$, domestic rate $`r_f`$ and foreign rate $`r_d`$, on USD 1.10 per euro of notional. The checks price it both ways and get 0.048687 euros per euro.
 
 Now differentiate. Two different things happen.
 
-**Greeks that hold spot still convert at spot.** Vega, theta and both rhos move one input other than $S$, and $S$ is a fixed number while they are taken. So the euro figure is the dollar figure divided by 1.10: vega 0.375240, theta −0.027948, euro-rate rho −0.581012, dollar-rate rho 0.532325.
+**Greeks that hold spot still convert at spot.** Vega, theta and both rhos move one input other than $`S`$, and $`S`$ is a fixed number while they are taken. So the euro figure is the dollar figure divided by 1.10: vega 0.375240, theta −0.027948, euro-rate rho −0.581012, dollar-rate rho 0.532325.
 
 The labels swap (for Frankfurt the euro rate is domestic), but the directions do not: a higher dollar rate still helps the holder and a higher euro rate still hurts, in whichever currency the loss is counted.
 
-**Delta does not convert at spot.** Spot is the thing being moved, and the euro value $C/S$ contains spot twice: once inside $C$ and once in the division. By the quotient rule, $\partial(C/S)/\partial S = \Delta/S - C/S^2$. Setting the Frankfurt bank's total exposure to zero gives a hedge of $\Delta - C/S$ euros per euro of notional: 0.581012 − 0.048687 = 0.532325, or EUR 5,323,248 on the 10 million, against EUR 5,810,119 for the New York bank.
+**Delta does not convert at spot.** Spot is the thing being moved, and the euro value $`C/S`$ contains spot twice: once inside $`C`$ and once in the division. By the quotient rule, $`\partial(C/S)/\partial S = \Delta/S - C/S^2`$. Setting the Frankfurt bank's total exposure to zero gives a hedge of $`\Delta - C/S`$ euros per euro of notional: 0.581012 − 0.048687 = 0.532325, or EUR 5,323,248 on the 10 million, against EUR 5,810,119 for the New York bank.
 
-The gap is the premium itself, counted in euros: the option's value is a sum of dollars, and a bank counting in euros must hedge that sum too. The same number falls out of the put formula's own delta, $e^{-r_d T}N(d_2)$ scaled by $K/S$. This is the **premium-adjusted delta**, and when each convention is used is [Four deltas for one option](04-fx-delta-conventions.md).
+The gap is the premium itself, counted in euros: the option's value is a sum of dollars, and a bank counting in euros must hedge that sum too. The same number falls out of the put formula's own delta, $`e^{-r_d T}N(d_2)`$ scaled by $`K/S`$. This is the **premium-adjusted delta**, and when each convention is used is [Four deltas for one option](04-fx-delta-conventions.md).
 
 Gamma changes the same way, for the same reason; this card stops at delta.
 
@@ -185,20 +197,20 @@ House market: EURUSD spot 1.1000, strike 1.1000, USD rate 5%, EUR rate 3%, volat
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$ | $(0 + (0.05 - 0.03 + 0.005) \times 1)/0.10$ | 0.25 |
-| $d_2$ | $0.25 - 0.10$ | 0.15 |
-| $N(d_1)$, $N(d_2)$, $\varphi(d_1)$ | bell-curve table | 0.598706, 0.559618, 0.386668 |
-| $e^{-r_f T}$, $e^{-r_d T}$ | $e^{-0.03}$, $e^{-0.05}$ | 0.970446, 0.951229 |
-| premium | $1.1 \times 0.970446 \times 0.598706 - 1.1 \times 0.951229 \times 0.559618$ | 0.053556, USD 535,558 |
-| delta | $0.970446 \times 0.598706$ | 0.581012 → EUR 5,810,119 |
-| gamma | $0.970446 \times 0.386668 / (1.1 \times 0.10)$ | 3.411276 |
-| gamma, 1% spot move | $3.411276 \times 1.1 \times 0.01$ | 0.037524 → EUR 375,240 |
-| vega | $1.1 \times 0.970446 \times 0.386668$ | 0.412764 → USD 41,276 per vol point |
-| theta | $-0.020638 + 0.03 \times 1.1 \times 0.581012 - 0.05 \times 1.1 \times 0.951229 \times 0.559618$ | −0.030743 → USD −842 a day |
-| dollar rho | $1.1 \times 0.951229 \times 0.559618$ | 0.585557 → USD +585.56 per bp |
-| euro rho | $-1.1 \times 0.970446 \times 0.598706$ | −0.639113 → USD −639.11 per bp |
-| both rates up 1 bp | $-T \times 0.053556$ per unit | USD −53.56 |
-| **hedge counted in euros** | $0.581012 - 0.053556/1.1$ | **0.532325 → EUR 5,323,248** |
+| $`d_1`$ | $`(0 + (0.05 - 0.03 + 0.005) \times 1)/0.10`$ | 0.25 |
+| $`d_2`$ | $`0.25 - 0.10`$ | 0.15 |
+| $`N(d_1)`$, $`N(d_2)`$, $`\varphi(d_1)`$ | bell-curve table | 0.598706, 0.559618, 0.386668 |
+| $`e^{-r_f T}`$, $`e^{-r_d T}`$ | $`e^{-0.03}`$, $`e^{-0.05}`$ | 0.970446, 0.951229 |
+| premium | $`1.1 \times 0.970446 \times 0.598706 - 1.1 \times 0.951229 \times 0.559618`$ | 0.053556, USD 535,558 |
+| delta | $`0.970446 \times 0.598706`$ | 0.581012 → EUR 5,810,119 |
+| gamma | $`0.970446 \times 0.386668 / (1.1 \times 0.10)`$ | 3.411276 |
+| gamma, 1% spot move | $`3.411276 \times 1.1 \times 0.01`$ | 0.037524 → EUR 375,240 |
+| vega | $`1.1 \times 0.970446 \times 0.386668`$ | 0.412764 → USD 41,276 per vol point |
+| theta | $`-0.020638 + 0.03 \times 1.1 \times 0.581012 - 0.05 \times 1.1 \times 0.951229 \times 0.559618`$ | −0.030743 → USD −842 a day |
+| dollar rho | $`1.1 \times 0.951229 \times 0.559618`$ | 0.585557 → USD +585.56 per bp |
+| euro rho | $`-1.1 \times 0.970446 \times 0.598706`$ | −0.639113 → USD −639.11 per bp |
+| both rates up 1 bp | $`-T \times 0.053556`$ per unit | USD −53.56 |
+| **hedge counted in euros** | $`0.581012 - 0.053556/1.1`$ | **0.532325 → EUR 5,323,248** |
 
 In the world: a New York bank that sold this option buys EUR 5,810,119 today, loses USD 41,276 if implied volatility rises one point, earns USD 842 a day if nothing moves, and gains USD 53.56 per basis point if both central banks hike together.
 
@@ -206,10 +218,10 @@ In the world: a New York bank that sold this option buys EUR 5,810,119 today, lo
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Delta without $e^{-r_f T}$ | 0.598706, EUR 5,987,063 | That is the forward delta: the hedge in euros delivered at expiry, not in spot euros that earn 3 percent meanwhile |
+| Delta without $`e^{-r_f T}`$ | 0.598706, EUR 5,987,063 | That is the forward delta: the hedge in euros delivered at expiry, not in spot euros that earn 3 percent meanwhile |
 | Vega per unit of volatility read as per point | USD 4,127,644 | A hundred times too big: one unit of volatility is 100 points |
 | Report only the dollar rho for a move in both rates | USD +585.56 (true USD −53.56) | The euro rate moved too; the parallel move leaves the forward alone and only discounts the premium |
-| Gamma with $\varphi(d_2)$ | 3.480188 (true 3.411276) | Gamma is the slope of $N(d_1)$, so it carries the height at $d_1$ |
+| Gamma with $`\varphi(d_2)`$ | 3.480188 (true 3.411276) | Gamma is the slope of $`N(d_1)`$, so it carries the height at $`d_1`$ |
 | Theta without the euro carry term | −0.049916 (true −0.030743) | The equity habit with no dividend: it forgets that the euros discount too |
 
 ---
@@ -249,13 +261,13 @@ maturity, rate      rho per bp, USD, EUR 10m (one block = USD 100)
 5.00 yr, euro       ██████████████████████████████████ -3,370
 ```
 
-Each rho carries a factor $T$, so both grow with maturity. The euro rho grows faster here because the at-the-money call's delta (strike equal to spot) rises with maturity when the dollar rate is the higher one: more euros at stake, more euro rate risk. On a three-month option rates barely register; on a five-year option they are among the largest risks on the sheet.
+Each rho carries a factor $`T`$, so both grow with maturity. The euro rho grows faster here because the at-the-money call's delta (strike equal to spot) rises with maturity when the dollar rate is the higher one: more euros at stake, more euro rate risk. On a three-month option rates barely register; on a five-year option they are among the largest risks on the sheet.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs reach every Greek by three roads. Road 1 is the closed forms above. Road 2 bumps the closed-form price up and down and divides. Road 3 bumps a second price that never uses $d_1$ or $d_2$: an average of the payoff over the bell curve, added up by Simpson's rule (a way of adding thin slices). The normal area is a series written out in the file; nothing imported knows the answer. Then theta is rebuilt from the pricing equation, the parallel-rate identity is checked, and the whole contract is repriced from the euro side as a dollar put, where every euro-side Greek is found by its own formula and by its own bumps. Every number on the card is printed by both.
+Both programs reach every Greek by three roads. Road 1 is the closed forms above. Road 2 bumps the closed-form price up and down and divides. Road 3 bumps a second price that never uses $`d_1`$ or $`d_2`$: an average of the payoff over the bell curve, added up by Simpson's rule (a way of adding thin slices). The normal area is a series written out in the file; nothing imported knows the answer. Then theta is rebuilt from the pricing equation, the parallel-rate identity is checked, and the whole contract is repriced from the euro side as a dollar put, where every euro-side Greek is found by its own formula and by its own bumps. Every number on the card is printed by both.
 
 ### Python
 
@@ -635,21 +647,21 @@ ALL CHECKS PASS
 
 Lean proves every slope formula, the bell-curve identity and the euro hedge, for positive spot, strike, volatility and time, and any rates.
 
-- Take $S$, $K$, $\sigma$ and $T$ all positive, and any rates $r_d$ and $r_f$. Then delta, the slope of $C$ in spot, is $e^{-r_f T}N(d_1)$.
-- Take the same inputs. Then the dollar rho is $K\,T\,e^{-r_d T}N(d_2)$, and it is positive.
-- Take the same inputs. Then the euro rho is $-\,S\,T\,e^{-r_f T}N(d_1)$, and it is negative.
-- Take the same inputs. Then gamma, the slope of delta in spot, is $e^{-r_f T}\varphi(d_1)/(S\sigma\sqrt{T})$.
-- Take the same inputs. Then vega, the slope of $C$ in $\sigma$, is $S\,e^{-r_f T}\varphi(d_1)\sqrt{T}$.
-- Take the same inputs. Then the slope of $C$ in $T$ is minus $\Theta$, with $\Theta$ as in The formula.
-- Take the same inputs. Then $S\,e^{-r_f T}\varphi(d_1) = K\,e^{-r_d T}\varphi(d_2)$, the identity of Step 1.
-- Take the same inputs. Then the euro value $C/S$ has slope $\Delta/S - C/S^2$ in spot.
-- Take the same inputs. Then $\Delta - C/S$, the hedge counted in euros, equals $(K/S)\,e^{-r_d T}N(d_2)$.
-- Take the same inputs. Then the premium in euros, $C/S$, is positive, so that hedge is smaller than $\Delta$.
-- Take the same inputs. Then raising both rates by the same step moves $C$ at the slope $-T C$.
-- Take the house market. Then $d_1$ is exactly 0.25 and $d_2$ exactly 0.15.
+- Take $`S`$, $`K`$, $`\sigma`$ and $`T`$ all positive, and any rates $`r_d`$ and $`r_f`$. Then delta, the slope of $`C`$ in spot, is $`e^{-r_f T}N(d_1)`$.
+- Take the same inputs. Then the dollar rho is $`K\,T\,e^{-r_d T}N(d_2)`$, and it is positive.
+- Take the same inputs. Then the euro rho is $`-\,S\,T\,e^{-r_f T}N(d_1)`$, and it is negative.
+- Take the same inputs. Then gamma, the slope of delta in spot, is $`e^{-r_f T}\varphi(d_1)/(S\sigma\sqrt{T})`$.
+- Take the same inputs. Then vega, the slope of $`C`$ in $`\sigma`$, is $`S\,e^{-r_f T}\varphi(d_1)\sqrt{T}`$.
+- Take the same inputs. Then the slope of $`C`$ in $`T`$ is minus $`\Theta`$, with $`\Theta`$ as in The formula.
+- Take the same inputs. Then $`S\,e^{-r_f T}\varphi(d_1) = K\,e^{-r_d T}\varphi(d_2)`$, the identity of Step 1.
+- Take the same inputs. Then the euro value $`C/S`$ has slope $`\Delta/S - C/S^2`$ in spot.
+- Take the same inputs. Then $`\Delta - C/S`$, the hedge counted in euros, equals $`(K/S)\,e^{-r_d T}N(d_2)`$.
+- Take the same inputs. Then the premium in euros, $`C/S`$, is positive, so that hedge is smaller than $`\Delta`$.
+- Take the same inputs. Then raising both rates by the same step moves $`C`$ at the slope $`-T C`$.
+- Take the house market. Then $`d_1`$ is exactly 0.25 and $`d_2`$ exactly 0.15.
 - The printed sums are exact: 0.585557 − 0.639113 = −0.053556 and 0.581012 − 0.048687 = 0.532325.
 
-Decimal values of $N$ and $\varphi$, theta from the pricing equation, the euro-side Greeks and the charts are left to Python and Rust.
+Decimal values of $`N`$ and $`\varphi`$, theta from the pricing equation, the euro-side Greeks and the charts are left to Python and Rust.
 
 ```lean
 -- The Greeks of a currency option: in the Garman-Kohlhagen model the call's slopes in spot, the dollar rate and the euro rate are e^(-r_f T) N(d₁), +T K e^(-r_d T) N(d₂) and -T S e^(-r_f T) N(d₁), a bank counting in euros hedges with Δ - C/S euros, gamma and vega are the bell-curve height at d₁ scaled, and moving both rates together changes the price at -T C.
@@ -1032,7 +1044,7 @@ example : (581012 : ℕ) - 48687 = 532325 := by decide
 >
 > - **Delta in the wrong currency.** Delta is a count of euros. Hedging with 5,810,119 dollars instead of euros under-hedges, because at 1.10 a dollar buys less than a euro.
 > - **Converting delta at spot.** Vega, theta and rho convert between currencies by dividing by spot; delta does not. The euro-counting hedge is 0.532325, not 0.581012 / 1.10.
-> - **Forward delta for a spot hedge.** $N(d_1)$ = 0.598706 is the hedge in euros delivered at expiry; in spot euros it is 0.581012.
+> - **Forward delta for a spot hedge.** $`N(d_1)`$ = 0.598706 is the hedge in euros delivered at expiry; in spot euros it is 0.581012.
 > - **Vega units.** Per unit of volatility, 0.412764; per point, 0.004128. On the 10 million the difference is USD 4,127,644 against USD 41,276.
 
 ---
@@ -1053,7 +1065,7 @@ example : (581012 : ℕ) - 48687 = 532325 := by decide
 - [Garman-Kohlhagen](01-garman-kohlhagen.md): the price this card differentiates.
 - [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md): the symmetry used in Step 6 to restate the Greeks in euros.
 - [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes with every other input frozen.
-- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): how each input reaches the price through $d_1$ and $d_2$.
+- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): how each input reaches the price through $`d_1`$ and $`d_2`$.
 - [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the hedge ratio, derived for a share.
 - [Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the slope of delta.
 - [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): sensitivity to volatility.

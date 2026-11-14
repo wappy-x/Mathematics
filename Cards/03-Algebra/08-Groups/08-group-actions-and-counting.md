@@ -34,39 +34,45 @@ Six boxes holding 1, 4, 4, 2, 4 and 1 patterns, adding to 16; side-by-side and d
 
 ## The formula
 
-The group takes the letter $G$, the set it moves takes $X$, and combining two moves keeps the star used on the cosets card, $a * b$, the right-hand move going first. The move that changes nothing is $e$ ([Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md)).
+The group takes the letter $`G`$, the set it moves takes $`X`$, and combining two moves keeps the star used on the cosets card, $`a * b`$, the right-hand move going first. The move that changes nothing is $`e`$ ([Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md)).
 
-Moving gets its own mark: a raised dot, move on the left, member of the set on the right, so $a \cdot x$ is "the pattern x after the move a".
+Moving gets its own mark: a raised dot, move on the left, member of the set on the right, so $`a \cdot x`$ is "the pattern x after the move a".
 
 Patterns run B for black and W for white, corners 0 to 3 in order: BWWW is corner 0 black.
 
 An action is two promises: doing nothing leaves everything put, and combining two moves before moving is the same as moving twice.
 
-$$e \cdot x = x, \qquad (a * b) \cdot x = a \cdot (b \cdot x)$$
+```math
+e \cdot x = x, \qquad (a * b) \cdot x = a \cdot (b \cdot x)
+```
 
 Each member brings two collections: Orb(x), all it can be carried to, and Stab(x), the moves leaving it alone.
 
-$$\mathrm{Orb}(x) = \{\, a \cdot x \text{ for every } a \text{ in } G \,\}, \qquad \mathrm{Stab}(x) = \{\, a \text{ in } G \text{ with } a \cdot x = x \,\}$$
+```math
+\mathrm{Orb}(x) = \{\, a \cdot x \text{ for every } a \text{ in } G \,\}, \qquad \mathrm{Stab}(x) = \{\, a \text{ in } G \text{ with } a \cdot x = x \,\}
+```
 
 Bars count members, as on the cosets card:
 
-$$\lvert \mathrm{Orb}(x)\rvert \times \lvert \mathrm{Stab}(x)\rvert = \lvert G\rvert$$
+```math
+\lvert \mathrm{Orb}(x)\rvert \times \lvert \mathrm{Stab}(x)\rvert = \lvert G\rvert
+```
 
 **Read it aloud:** the places a member can be sent, times the moves that send it nowhere, is the size of the group.
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
-| $G$ | the group of moves | the tile's eight ways down | another group merges other patterns |
-| $X$ | the set it moves | the 16 painted tiles | — |
-| $a * b$ | two moves, the right one first | flip then quarter turn is r1f | r1 then the flip is r3f |
-| $a \cdot x$ | pattern $x$ after move $a$ | r1 · BWWW = WBWW | — |
-| $e$ | the move changing nothing | r0, set down unturned | — |
-| Orb(x), Stab(x) | all $x$ can become; moves leaving it put | BWWW: 4 patterns, and r0 with r0f | a smaller stabiliser, a wider orbit |
+| $`G`$ | the group of moves | the tile's eight ways down | another group merges other patterns |
+| $`X`$ | the set it moves | the 16 painted tiles | — |
+| $`a * b`$ | two moves, the right one first | flip then quarter turn is r1f | r1 then the flip is r3f |
+| $`a \cdot x`$ | pattern $`x`$ after move $`a`$ | r1 · BWWW = WBWW | — |
+| $`e`$ | the move changing nothing | r0, set down unturned | — |
+| Orb(x), Stab(x) | all $`x`$ can become; moves leaving it put | BWWW: 4 patterns, and r0 with r0f | a smaller stabiliser, a wider orbit |
 
 ### When it holds
 
 - **Both promises, in that order.** Reversed, the second gives a right action, matching right cosets instead.
-- **A finite group.** The claim is about counts, and an infinite group has nothing to multiply. The set may be endless; orbits stay no wider than $G$.
+- **A finite group.** The claim is about counts, and an infinite group has nothing to multiply. The set may be endless; orbits stay no wider than $`G`$.
 - **One member at a time.** Orbit sizes vary — 1 at all-black, 4 at one black corner — with the product 8 at each. And the set is not the group: 8 moves, 16 patterns, 6 orbits.
 
 ---
@@ -79,13 +85,13 @@ A move keeps each corner's number or negates it, then adds a fixed amount, wrapp
 
 ### Step 1: orbits cut the set into blocks that never overlap
 
-Call two patterns related when some move carries one to the other. That holds between a pattern and itself, by $e$; it runs both ways, every move having an undo; and it chains, two moves in a row being again one move.
+Call two patterns related when some move carries one to the other. That holds between a pattern and itself, by $`e`$; it runs both ways, every move having an undo; and it chains, two moves in a row being again one move.
 
 Such a relation cuts a set into non-overlapping blocks ([Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)) — the orbits. So "how many different tiles" becomes "how many orbits": six, holding 4, 4, 4, 2, 1 and 1 patterns, adding to 16.
 
 ### Step 2: the moves landing a pattern on one spot form one coset
 
-Fix a pattern x. Its stabiliser is a subgroup, since $e$ leaves x put and so do two such moves in a row and their undos ([Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md)).
+Fix a pattern x. Its stabiliser is a subgroup, since $`e`$ leaves x put and so do two such moves in a row and their undos ([Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md)).
 
 Pick a landing spot in the orbit and a move c reaching it. Anything in the stabiliser first, then c, reaches the same spot, and nothing else does, so the moves reaching that spot are the stabiliser slid by c — one coset ([Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md)).
 
@@ -94,11 +100,11 @@ At one black corner: 8 moves, 4 positions reached, 2 reaching each, and Lagrange
 <details>
 <summary>Detailed proof: landing spots and cosets, one for one</summary>
 
-Write H for Stab(x), a subgroup, so the group splits into equal cosets of H. Send each coset $c * H$ to the pattern $c \cdot x$. Fair naming: a member of that coset is $c * h$ with h in H, and $(c * h) \cdot x = c \cdot (h \cdot x) = c \cdot x$ by the second promise.
+Write H for Stab(x), a subgroup, so the group splits into equal cosets of H. Send each coset $`c * H`$ to the pattern $`c \cdot x`$. Fair naming: a member of that coset is $`c * h`$ with h in H, and $`(c * h) \cdot x = c \cdot (h \cdot x) = c \cdot x`$ by the second promise.
 
-No two cosets name one pattern: if $c \cdot x = d \cdot x$, undo d on both sides to get $(d^{-1} * c) \cdot x = x$, so $d^{-1} * c$ lies in H and the cosets are one.
+No two cosets name one pattern: if $`c \cdot x = d \cdot x`$, undo d on both sides to get $`(d^{-1} * c) \cdot x = x`$, so $`d^{-1} * c`$ lies in H and the cosets are one.
 
-Every orbit member is $c \cdot x$ for some c, so all are named. The orbit holds as many members as H has cosets, the index $[G:H]$, and Lagrange finishes: $\lvert G\rvert = [G:H] \times \lvert H\rvert$.
+Every orbit member is $`c \cdot x`$ for some c, so all are named. The orbit holds as many members as H has cosets, the index $`[G:H]`$, and Lagrange finishes: $`\lvert G\rvert = [G:H] \times \lvert H\rvert`$.
 
 </details>
 

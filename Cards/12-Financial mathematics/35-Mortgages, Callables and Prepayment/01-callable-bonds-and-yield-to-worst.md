@@ -40,60 +40,70 @@ Upper line: the plain bond, climbing as rates fall. Lower line: the callable bon
 
 Notation first, in words. The tree of [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md) is reused unchanged.
 
-A node (i, j) is rung j at step i; a double subscript such as $C_{i,j}$ means "at step i, rung j". $\Delta t$ is the step length, $r_{i,j}$ the node's short rate, and $p_u$, $p_m$, $p_d$ the branch weights to the rung above, the same rung and the rung below.
+A node (i, j) is rung j at step i; a double subscript such as $`C_{i,j}`$ means "at step i, rung j". $`\Delta t`$ is the step length, $`r_{i,j}`$ the node's short rate, and $`p_u`$, $`p_m`$, $`p_d`$ the branch weights to the rung above, the same rung and the rung below.
 
-$D(t)$ is today's price of $1 paid at year t. The contract: face $F$ = $100, coupon $c$ = $6 a year, call price $K$ = $100. The **keep value** of a contract V at a node is what its future payments are worth there if nothing happens now.
+$`D(t)`$ is today's price of $1 paid at year t. The contract: face $`F`$ = $100, coupon $`c`$ = $6 a year, call price $`K`$ = $100. The **keep value** of a contract V at a node is what its future payments are worth there if nothing happens now.
 
-$$R_{i,j}[V] = e^{-r_{i,j}\Delta t}\big(p_u V_{i+1,\,j+1} + p_m V_{i+1,\,j} + p_d V_{i+1,\,j-1}\big)$$
+```math
+R_{i,j}[V] = e^{-r_{i,j}\Delta t}\big(p_u V_{i+1,\,j+1} + p_m V_{i+1,\,j} + p_d V_{i+1,\,j-1}\big)
+```
 
 **Read it aloud:** the three next values, weighted by their branch weights, shrunk for one step at this node's rate. At the edge rungs the branches bend inwards, as on the tree card.
 
 The callable bond's value at a call date, year 5 to year 9:
 
-$$C_{i,j} \;=\; c \;+\; \min\big(K,\; R_{i,j}[C]\big)$$
+```math
+C_{i,j} \;=\; c \;+\; \min\big(K,\; R_{i,j}[C]\big)
+```
 
 **Read it aloud:** the holder gets this year's coupon for certain, and then either the call price or the rest of the bond, whichever costs the utility less.
 
-On other coupon dates the minimum is dropped: $C_{i,j} = c + R_{i,j}[C]$. Between coupon dates, $C_{i,j} = R_{i,j}[C]$. At maturity every node holds the last coupon plus the face, $106.
+On other coupon dates the minimum is dropped: $`C_{i,j} = c + R_{i,j}[C]`$. Between coupon dates, $`C_{i,j} = R_{i,j}[C]`$. At maturity every node holds the last coupon plus the face, $106.
 
 The option the holder has given away, and the identity that names the card:
 
-$$O_{i,j} = \max\big(R_{i,j}[S] - K,\; R_{i,j}[O]\big)\ \text{at call dates}, \qquad C_{i,j} = S_{i,j} - O_{i,j}\ \text{everywhere}.$$
+```math
+O_{i,j} = \max\big(R_{i,j}[S] - K,\; R_{i,j}[O]\big)\ \text{at call dates}, \qquad C_{i,j} = S_{i,j} - O_{i,j}\ \text{everywhere}.
+```
 
 **Read it aloud:** at each call date the utility's option is worth the larger of calling now and keeping the option alive. The callable bond is the plain bond minus that option, at every node, today included.
 
 The plain bond, called **straight**, needs no tree:
 
-$$S_{0,0} = c\sum_{t=1}^{10} D(t) + F\,D(10).$$
+```math
+S_{0,0} = c\sum_{t=1}^{10} D(t) + F\,D(10).
+```
 
-The yields. Given a price $P$, the **yield to endpoint e** is the one annual rate that prices the fixed schedule "coupons to year e, then $100 at year e":
+The yields. Given a price $`P`$, the **yield to endpoint e** is the one annual rate that prices the fixed schedule "coupons to year e, then $100 at year e":
 
-$$P = \sum_{t=1}^{e} \frac{c}{(1+y_e)^{t}} + \frac{K}{(1+y_e)^{e}}, \qquad y_{\text{worst}} = \min\{y_5, y_6, y_7, y_8, y_9, y_{10}\}.$$
+```math
+P = \sum_{t=1}^{e} \frac{c}{(1+y_e)^{t}} + \frac{K}{(1+y_e)^{e}}, \qquad y_{\text{worst}} = \min\{y_5, y_6, y_7, y_8, y_9, y_{10}\}.
+```
 
 **Read it aloud:** for each date the bond could end, find the one rate that makes that schedule cost the price paid; the yield to worst is the smallest of them.
 
-Here $y_{10}$ is the **yield to maturity** (the call price and face are both $100, so the same formula serves), $y_5$ the **yield to first call**, and the rest are yields to the later calls.
+Here $`y_{10}`$ is the **yield to maturity** (the call price and face are both $100, so the same formula serves), $`y_5`$ the **yield to first call**, and the rest are yields to the later calls.
 
 | Symbol | Plain meaning | In our example | Push it up and the callable price… |
 | --- | --- | --- | --- |
-| $F$, $c$ | face, and the coupon paid each year per $100 face | $100, $6 | rises |
-| $K$ | the call price the utility pays to retire the bond | $100, par | rises: calling costs the utility more |
-| $D(t)$ | today's price of $1 at year t, from the curve $e^{-0.03t - 0.002t^2}$ | $D(10)$ = 0.606531 | rises |
-| $a$, $\sigma$ | mean reversion: how hard the short rate is pulled back to its centre, per year; volatility of the short rate | 0.2; 1 percent | $a$: rises, rates wander less; $\sigma$: falls, the option is dearer |
-| $\Delta t$, $i$, $j$ | step length in years; step number; rung number | 0.025 year; 0 to 400; −37 to +37 | — |
-| $r_{i,j}$ | short rate at node (i, j) for the next step | 5.05 percent at year 5, rung 0 | falls |
-| $p_u$, $p_m$, $p_d$ | branch weights to the rung above, the same rung, the rung below | 1/6, 2/3, 1/6 at rung 0 | — |
-| $R_{i,j}[V]$ | keep value of contract V at node (i, j) | — | — |
-| $S_{i,j}$, $C_{i,j}$, $S$, $C$ | straight and callable bond values at a node | $108.28 and $106.96 today | — |
-| $O_{i,j}$ | the utility's call option on the straight bond | $1.32 today | — |
-| $P$, $e$, $y_e$, $y_5$, $y_{10}$, $a_e(y)$, $a_5$ | a price paid; an end year, 5 to 10; the yield to that end; the value of $1 a year for e years at yield y | $106.96; 5; 4.42 percent; $a_5$ = 4.400031 | a higher price lowers every $y_e$ |
-| $y_{\text{worst}}$ | the lowest of the six yields | 4.42 percent, at year 5 | — |
+| $`F`$, $`c`$ | face, and the coupon paid each year per $100 face | $100, $6 | rises |
+| $`K`$ | the call price the utility pays to retire the bond | $100, par | rises: calling costs the utility more |
+| $`D(t)`$ | today's price of $1 at year t, from the curve $`e^{-0.03t - 0.002t^2}`$ | $`D(10)`$ = 0.606531 | rises |
+| $`a`$, $`\sigma`$ | mean reversion: how hard the short rate is pulled back to its centre, per year; volatility of the short rate | 0.2; 1 percent | $`a`$: rises, rates wander less; $`\sigma`$: falls, the option is dearer |
+| $`\Delta t`$, $`i`$, $`j`$ | step length in years; step number; rung number | 0.025 year; 0 to 400; −37 to +37 | — |
+| $`r_{i,j}`$ | short rate at node (i, j) for the next step | 5.05 percent at year 5, rung 0 | falls |
+| $`p_u`$, $`p_m`$, $`p_d`$ | branch weights to the rung above, the same rung, the rung below | 1/6, 2/3, 1/6 at rung 0 | — |
+| $`R_{i,j}[V]`$ | keep value of contract V at node (i, j) | — | — |
+| $`S_{i,j}`$, $`C_{i,j}`$, $`S`$, $`C`$ | straight and callable bond values at a node | $108.28 and $106.96 today | — |
+| $`O_{i,j}`$ | the utility's call option on the straight bond | $1.32 today | — |
+| $`P`$, $`e`$, $`y_e`$, $`y_5`$, $`y_{10}`$, $`a_e(y)`$, $`a_5`$ | a price paid; an end year, 5 to 10; the yield to that end; the value of $1 a year for e years at yield y | $106.96; 5; 4.42 percent; $`a_5`$ = 4.400031 | a higher price lowers every $`y_e`$ |
+| $`y_{\text{worst}}`$ | the lowest of the six yields | 4.42 percent, at year 5 | — |
 
 The tree has 400 steps of 0.025 year, rung spacing 0.273178 percent and edge rung 37, set by the tree card's rules.
 
 ### When it holds
 
-- **Rates follow one-factor Hull-White with fixed $a$ and $\sigma$.** The option's value is volatility, so a wrong $\sigma$ misprices the bond: $107.76 at 0.5 percent, $105.28 at 2 percent.
+- **Rates follow one-factor Hull-White with fixed $`a`$ and $`\sigma`$.** The option's value is volatility, so a wrong $`\sigma`$ misprices the bond: $107.76 at 0.5 percent, $105.28 at 2 percent.
 - **The utility calls optimally, on the same model.** Real issuers call late, because refinancing costs fees and calls need notice. An issuer calling whenever rates are below the coupon leaves the holder $107.61.
 - **No default, one curve.** A riskier issuer's bond is discounted at a higher rate; the spread that reconciles model and market is [Option-adjusted spread](04-option-adjusted-spread.md).
 - **The contract as stated.** Whole bond, at par, on the anniversary, after the coupon. A call premium (a call price above par), a make-whole call (a call price that repays the lost coupons) or a partial call changes the recursion.
@@ -117,7 +127,7 @@ The holder owns the straight bond; the utility owns the right to buy the rest of
 
 ### Step 1: coupon first, then the choice
 
-At a call date the coupon is already owed; calling does not cancel it. So the $6 sits outside the choice. After it is paid, calling costs $100 and continuing costs the keep value $R_{i,j}[C]$. The utility takes the smaller, and the holder's value at the node is $c + \min(K, R_{i,j}[C])$.
+At a call date the coupon is already owed; calling does not cancel it. So the $6 sits outside the choice. After it is paid, calling costs $100 and continuing costs the keep value $`R_{i,j}[C]`$. The utility takes the smaller, and the holder's value at the node is $`c + \min(K, R_{i,j}[C])`$.
 
 ```mermaid
 flowchart LR
@@ -136,9 +146,9 @@ At year 10 every node pays $106. Step back a layer at a time: take the keep valu
 <details>
 <summary>Detailed proof: the minimum at each node gives the cheapest policy</summary>
 
-**Claim.** For any call policy that decides at each call node from the rates seen so far, the holder's value at the root is at least the rolled-back $C_{0,0}$. The policy "call where $R_{i,j}[C] > K$" attains it.
+**Claim.** For any call policy that decides at each call node from the rates seen so far, the holder's value at the root is at least the rolled-back $`C_{0,0}`$. The policy "call where $`R_{i,j}[C] > K`$" attains it.
 
-**Proof, by backward induction over layers.** At the last layer every policy pays $106. Suppose no policy started at layer i+1 costs less than $C_{i+1,k}$. From node (i, j), a policy that waits costs the discounted average of its costs at the three children, so at least $R_{i,j}[C]$, since the discount is positive and the weights non-negative. A policy that calls costs $K$. With the coupon owed, every policy costs at least $c + \min(K, R_{i,j}[C])$, and taking the smaller branch here, then the optimal policy below, achieves it. At non-call nodes only waiting is possible.
+**Proof, by backward induction over layers.** At the last layer every policy pays $106. Suppose no policy started at layer i+1 costs less than $`C_{i+1,k}`$. From node (i, j), a policy that waits costs the discounted average of its costs at the three children, so at least $`R_{i,j}[C]`$, since the discount is positive and the weights non-negative. A policy that calls costs $`K`$. With the coupon owed, every policy costs at least $`c + \min(K, R_{i,j}[C])`$, and taking the smaller branch here, then the optimal policy below, achieves it. At non-call nodes only waiting is possible.
 
 **The same number, forward.** The tree card proves that rolling a payment back equals summing it against the state prices, today's prices of $1 paid only at one node. The code's ledger pushes state prices forward, pays coupons on live nodes, pays $100 where the policy calls and stops those paths. It lands on $106.961036, the rollback's number.
 
@@ -146,22 +156,22 @@ At year 10 every node pays $106. Step back a layer at a time: take the keep valu
 
 ### Step 3: straight minus call, node by node
 
-The plain bond rolls back with no choices. The option rolls back with the rule for any call. At a call date the utility may exercise, gaining $R_{i,j}[S] - K$, the rest of the straight bond minus the $100 it pays, or keep the option.
+The plain bond rolls back with no choices. The option rolls back with the rule for any call. At a call date the utility may exercise, gaining $`R_{i,j}[S] - K`$, the rest of the straight bond minus the $100 it pays, or keep the option.
 
 The proof's shape: the keep value is an average, and averages subtract, so if the identity holds one step later it holds now. The coupon cancels because both bonds pay it.
 
 <details>
 <summary>Detailed proof: $C = S - O$ at every node</summary>
 
-**Base.** At year 10, $S = C = 106$ and $O = 0$.
+**Base.** At year 10, $`S = C = 106`$ and $`O = 0`$.
 
-**Step.** Assume $C_{i+1,k} = S_{i+1,k} - O_{i+1,k}$ for every k. The keep value is linear, a fixed positive combination of the three children, so $R_{i,j}[C] = R_{i,j}[S] - R_{i,j}[O]$.
+**Step.** Assume $`C_{i+1,k} = S_{i+1,k} - O_{i+1,k}`$ for every k. The keep value is linear, a fixed positive combination of the three children, so $`R_{i,j}[C] = R_{i,j}[S] - R_{i,j}[O]`$.
 
 At a call date, with coupon c:
-$S_{i,j} - C_{i,j} = \big(c + R[S]\big) - \big(c + \min(K, R[S] - R[O])\big) = R[S] - \min(K,\, R[S] - R[O]) = \max\big(R[S] - K,\; R[O]\big) = O_{i,j}.$
-The third equality uses $w - \min(u, w - v) = \max(w - u, v)$.
+$`S_{i,j} - C_{i,j} = \big(c + R[S]\big) - \big(c + \min(K, R[S] - R[O])\big) = R[S] - \min(K,\, R[S] - R[O]) = \max\big(R[S] - K,\; R[O]\big) = O_{i,j}.`$
+The third equality uses $`w - \min(u, w - v) = \max(w - u, v)`$.
 
-At other dates, $S - C = R[S] - R[C] = R[O] = O$, with or without a coupon.
+At other dates, $`S - C = R[S] - R[C] = R[O] = O`$, with or without a coupon.
 
 **What it needs.** One tree, one curve, one set of dates, the same coupon treatment and the same call price for all three recursions. An option priced on a different model, or with the coupon inside the strike, does not subtract to the callable price.
 
@@ -171,7 +181,7 @@ The code rolls the option back on its own, $1.320816, and subtracts it from the 
 
 ### Step 4: the option's value is volatility
 
-Set $\sigma$ to zero. Rates are then known today, and the utility can compare fixed schedules: call at year 5, 6, 7, 8, 9 or never. On this curve those cost $108.74, $109.26, $109.43, $109.31, $108.91 and $108.28. Never calling is cheapest.
+Set $`\sigma`$ to zero. Rates are then known today, and the utility can compare fixed schedules: call at year 5, 6, 7, 8, 9 or never. On this curve those cost $108.74, $109.26, $109.43, $109.31, $108.91 and $108.28. Never calling is cheapest.
 
 The forward rates this curve implies for years 5 to 10 (the rates today's curve fixes for borrowing in those years) average about 6.2 percent a year. So on that path the rest of a 6 percent loan is worth less than $100 and never worth refinancing. The zero-volatility tree agrees: $108.28, the straight price.
 
@@ -183,9 +193,9 @@ All $1.32 of the option comes from the chance that rates fall. The first call da
 
 **The boundary.** At a price of $100 every yield is the coupon rate, 6 percent: $6 a year on $100 is 6 percent however long it lasts.
 
-**Which end is worst.** Write $a_e(y)$ for the annuity factor, the value of $1 a year for e years. The schedule's value is $100 + (6 - 100y)\,a_e(y)$: the face, plus each year's excess of the $6 coupon over the $100y the yield asks for, discounted. Set it equal to P:
+**Which end is worst.** Write $`a_e(y)`$ for the annuity factor, the value of $1 a year for e years. The schedule's value is $`100 + (6 - 100y)\,a_e(y)`$: the face, plus each year's excess of the $6 coupon over the $100y the yield asks for, discounted. Set it equal to P:
 
-- **Price above $100.** Every yield is below 6 percent, where $6 - 100y$ is positive. At any such yield a later end year has a larger annuity factor, so a higher value; pulling it down to the same price takes a higher yield. The yields rise with e, and the **first call** is worst. At $106.96: 4.42, 4.64, 4.81, 4.93, 5.02 and 5.09 percent.
+- **Price above $100.** Every yield is below 6 percent, where $`6 - 100y`$ is positive. At any such yield a later end year has a larger annuity factor, so a higher value; pulling it down to the same price takes a higher yield. The yields rise with e, and the **first call** is worst. At $106.96: 4.42, 4.64, 4.81, 4.93, 5.02 and 5.09 percent.
 - **Price below $100.** Every yield is above 6 percent, and the same argument runs backwards: the yields fall with e, and **maturity** is worst. At $95.00: 7.23, 7.05, 6.93, 6.83, 6.76 and 6.70 percent.
 
 Hence the traders' rule: a premium callable is quoted to the first call, a discount callable to maturity.
@@ -198,7 +208,7 @@ The tree is one road. The same Bermudan call can be priced on a grid for the ter
 
 ## Worked numbers, by hand
 
-The contract: $100 face, 6 percent annual coupon, ten years, callable at $100 just after the coupon in years 5 to 9. The curve: $D(t) = e^{-0.03t - 0.002t^2}$, a zero rate of 3 percent rising by 0.2 percent a year. The tree: $a$ = 0.2, $\sigma$ = 1 percent, 400 steps.
+The contract: $100 face, 6 percent annual coupon, ten years, callable at $100 just after the coupon in years 5 to 9. The curve: $`D(t) = e^{-0.03t - 0.002t^2}`$, a zero rate of 3 percent rising by 0.2 percent a year. The tree: $`a`$ = 0.2, $`\sigma`$ = 1 percent, 400 steps.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -209,8 +219,8 @@ The contract: $100 face, 6 percent annual coupon, ten years, callable at $100 ju
 | callable bond | 108.28 − 1.32 | **$106.96** |
 | yield to maturity at $106.96 | solve with e = 10 | 5.09 percent |
 | yield to call at year 5 | solve with e = 5 | 4.42 percent |
-| check it: $(1 + y)^{-5}$ at 4.417958 percent | $1.04417958^{-5}$ | 0.805608 |
-| annuity factor $a_5$ | $(1 - 0.805608) / 0.04417958$ | 4.400031 |
+| check it: $`(1 + y)^{-5}`$ at 4.417958 percent | $`1.04417958^{-5}`$ | 0.805608 |
+| annuity factor $`a_5`$ | $`(1 - 0.805608) / 0.04417958`$ | 4.400031 |
 | schedule's value | 6 × 4.400031 + 100 × 0.805608 = 26.400188 + 80.560848 | 106.96 |
 | **yield to worst** | lowest of the six | **4.42 percent, year 5** |
 
@@ -669,9 +679,9 @@ The two outputs agree line for line.
 
 Lean proves the identity and the yield facts, for any tree and contract, and any coupon and call price above zero.
 
-- Take one tree with any short rates and branch weights, and one set of coupons, call price and call dates. Then $C_{i,j} = S_{i,j} - O_{i,j}$ at every node, today included.
-- Take a coupon $c$ and call price $K$ above zero, and an end year $e$ of at least 1. Then a price $P$ has exactly one yield $y_e$ above −1 when $P$ is above zero, and none otherwise.
-- Take the same $c$ and $K$, and end years $e < e'$ priced at the same $P$. Then the yield to $e'$ is higher when $P > K$, and lower when $P < K$.
+- Take one tree with any short rates and branch weights, and one set of coupons, call price and call dates. Then $`C_{i,j} = S_{i,j} - O_{i,j}`$ at every node, today included.
+- Take a coupon $`c`$ and call price $`K`$ above zero, and an end year $`e`$ of at least 1. Then a price $`P`$ has exactly one yield $`y_e`$ above −1 when $`P`$ is above zero, and none otherwise.
+- Take the same $`c`$ and $`K`$, and end years $`e < e'`$ priced at the same $`P`$. Then the yield to $`e'`$ is higher when $`P > K`$, and lower when $`P < K`$.
 - The 6 percent bond's schedules to year 5 and to year 10 are both worth exactly $100 at a 6 percent yield.
 
 The fitted Hull-White tree, the cheapest call policy, and every price and yield figure are left to the Python and Rust checks.

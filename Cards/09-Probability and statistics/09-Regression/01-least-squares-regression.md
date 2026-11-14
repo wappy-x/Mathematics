@@ -28,46 +28,52 @@ Dots: the six sales. Solid line: the least-squares fit. The square marks the ave
 
 ## The formula
 
-Notation first, in words. The sales are numbered 1 to $n$; sale number i has floor area $x_i$ and price $y_i$. A bar over a letter means its average: $\bar x$ is the mean area. A capital sigma, Σ, with i beneath it means "add up over every sale". A hat marks a value the fit produces rather than one observed, as on the estimation shelf: $\hat y_i$ is the line's price for sale i.
+Notation first, in words. The sales are numbered 1 to $`n`$; sale number i has floor area $`x_i`$ and price $`y_i`$. A bar over a letter means its average: $`\bar x`$ is the mean area. A capital sigma, Σ, with i beneath it means "add up over every sale". A hat marks a value the fit produces rather than one observed, as on the estimation shelf: $`\hat y_i`$ is the line's price for sale i.
 
 Three sums carry everything. Two measure spread about the average sale; the third measures how area and price move together:
 
-$$S_{xx} = \sum_i (x_i - \bar x)^2, \qquad S_{xy} = \sum_i (x_i - \bar x)(y_i - \bar y), \qquad S_{yy} = \sum_i (y_i - \bar y)^2$$
+```math
+S_{xx} = \sum_i (x_i - \bar x)^2, \qquad S_{xy} = \sum_i (x_i - \bar x)(y_i - \bar y), \qquad S_{yy} = \sum_i (y_i - \bar y)^2
+```
 
-The least-squares line $\hat y = a + b\,x$ has
+The least-squares line $`\hat y = a + b\,x`$ has
 
-$$b = \frac{S_{xy}}{S_{xx}}, \qquad a = \bar y - b\,\bar x$$
+```math
+b = \frac{S_{xy}}{S_{xx}}, \qquad a = \bar y - b\,\bar x
+```
 
 **Read it aloud:** the slope is how much area and price move together, divided by how much area moves on its own; the intercept is whatever puts the line through the average sale.
 
 How well the line does is one more ratio:
 
-$$R^2 = 1 - \frac{SSE}{S_{yy}}, \qquad SSE = \sum_i (y_i - a - b\,x_i)^2$$
+```math
+R^2 = 1 - \frac{SSE}{S_{yy}}, \qquad SSE = \sum_i (y_i - a - b\,x_i)^2
+```
 
 **Read it aloud:** R squared is one minus the share of the price spread the line leaves unexplained.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of sales | 6 | slope wobbles less between samples |
-| $x_i$, $y_i$ | floor area and price of sale i | 60 m^2, $165,000 for sale 1 | one point moves the line; squares make far points pull hardest |
-| $\bar x$, $\bar y$ | average area, average price | 100 m^2, $255,000 | the line slides so it still passes through them |
-| $S_{xx}$ | spread of the areas: squared distances from the mean area, added | 5,200 m^4 | slope shrinks, and is pinned down more firmly |
-| $S_{xy}$ | co-movement: area gap times price gap, added | 10,920,000 $·m^2 | slope rises |
-| $S_{yy}$ | spread of the prices, the total to be explained | 23,328,000,000 $^2 | R squared rises if the line's misses stay the same |
-| $b$ | slope: dollars per extra square metre | $2,100 per m^2 | steeper line |
-| $a$ | intercept: the line's price at zero area | $45,000 | line shifts up |
-| $\hat y_i$ | the line's price for sale i | $171,000 for sale 1 | — |
-| $e_i$ | residual: real price minus line price, $y_i - \hat y_i$ | −$6,000 for sale 1 | — |
-| $SSE$ | sum of squared residuals, the score least squares minimises | 396,000,000 $^2 | R squared falls |
-| $R^2$, $r$ | share of price spread explained; the correlation, whose square it is | 0.9830 and 0.9915 | — |
+| $`n`$ | number of sales | 6 | slope wobbles less between samples |
+| $`x_i`$, $`y_i`$ | floor area and price of sale i | 60 m^2, $165,000 for sale 1 | one point moves the line; squares make far points pull hardest |
+| $`\bar x`$, $`\bar y`$ | average area, average price | 100 m^2, $255,000 | the line slides so it still passes through them |
+| $`S_{xx}`$ | spread of the areas: squared distances from the mean area, added | 5,200 m^4 | slope shrinks, and is pinned down more firmly |
+| $`S_{xy}`$ | co-movement: area gap times price gap, added | 10,920,000 $·m^2 | slope rises |
+| $`S_{yy}`$ | spread of the prices, the total to be explained | 23,328,000,000 $^2 | R squared rises if the line's misses stay the same |
+| $`b`$ | slope: dollars per extra square metre | $2,100 per m^2 | steeper line |
+| $`a`$ | intercept: the line's price at zero area | $45,000 | line shifts up |
+| $`\hat y_i`$ | the line's price for sale i | $171,000 for sale 1 | — |
+| $`e_i`$ | residual: real price minus line price, $`y_i - \hat y_i`$ | −$6,000 for sale 1 | — |
+| $`SSE`$ | sum of squared residuals, the score least squares minimises | 396,000,000 $^2 | R squared falls |
+| $`R^2`$, $`r`$ | share of price spread explained; the correlation, whose square it is | 0.9830 and 0.9915 | — |
 
-Dividing $S_{xy}$ and $S_{xx}$ both by $n$ turns them into the covariance of area and price and the variance of area from [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md). The $n$ cancels, so the slope is Cov(area, price) / Var(area): 1,820,000 / 866.67 = 2,100.
+Dividing $`S_{xy}`$ and $`S_{xx}`$ both by $`n`$ turns them into the covariance of area and price and the variance of area from [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md). The $`n`$ cancels, so the slope is Cov(area, price) / Var(area): 1,820,000 / 866.67 = 2,100.
 
-The units check themselves. $S_{xy}$ is dollars times square metres; $S_{xx}$ is square metres times square metres; the ratio is dollars per square metre. R squared has no units: it is the same number whether prices are in dollars or thousands, areas in metres or feet.
+The units check themselves. $`S_{xy}`$ is dollars times square metres; $`S_{xx}`$ is square metres times square metres; the ratio is dollars per square metre. R squared has no units: it is the same number whether prices are in dollars or thousands, areas in metres or feet.
 
 ### When it holds
 
-- **The areas must differ.** If all six houses had 100 square metres, $S_{xx}$ would be 0 and the slope 0/0: no data can say what an extra metre is worth when no house has one.
+- **The areas must differ.** If all six houses had 100 square metres, $`S_{xx}`$ would be 0 and the slope 0/0: no data can say what an extra metre is worth when no house has one.
 - **The pattern must be roughly straight.** The method returns a line for any cloud, curved or not, and a high R squared does not prove straightness. Plot first; [Diagnostics](04-diagnostics-and-residuals.md) reads the residuals for curves.
 - **No single sale may dominate.** Squaring makes a big miss count heavily. Raise the last house from $337,000 to $437,000 and the slope jumps to $2,869.23 per square metre.
 - **For the slope to estimate a market-wide rate,** the misses must average zero at every area: the sales must be a fair sample of the street. The line itself is exact arithmetic on the data; calling $2,100 an estimate of something beyond these six houses is a statistical claim, and its uncertainty is the work of [Regression error bars](02-regression-inference.md).
@@ -79,52 +85,58 @@ The units check themselves. $S_{xy}$ is dollars times square metres; $S_{xx}$ is
 
 ### Step 0: turn "closest" into a score, then find the bottom of a bowl
 
-A line is two numbers, intercept $a$ and slope $b$. Each choice gives six residuals, and the score is the sum of their squares, $SSE$. Squares make every miss count as positive, so misses above and below cannot cancel, and they make the score a smooth bowl over all possible pairs of numbers. When the areas differ, the bowl has one lowest point. Completing the square, as for a quadratic equation, finds it without calculus and proves nothing lower exists.
+A line is two numbers, intercept $`a`$ and slope $`b`$. Each choice gives six residuals, and the score is the sum of their squares, $`SSE`$. Squares make every miss count as positive, so misses above and below cannot cancel, and they make the score a smooth bowl over all possible pairs of numbers. When the areas differ, the bowl has one lowest point. Completing the square, as for a quadratic equation, finds it without calculus and proves nothing lower exists.
 
 ### Step 1: whatever the slope, the best intercept runs the line through the average sale
 
-Fix a slope. Then each sale leaves a number $y_i - b\,x_i$: its price with the slope's share removed. The intercept must be one constant that sits as close as possible to all six of those numbers in the squared sense.
+Fix a slope. Then each sale leaves a number $`y_i - b\,x_i`$: its price with the slope's share removed. The intercept must be one constant that sits as close as possible to all six of those numbers in the squared sense.
 
-For any list of numbers, the constant with the smallest squared distance to them is their average: moving the constant away from the average by some amount adds $n$ times that amount squared to the total. So the best intercept is $a = \bar y - b\,\bar x$, which says exactly that the line passes through the point ($\bar x$, $\bar y$).
+For any list of numbers, the constant with the smallest squared distance to them is their average: moving the constant away from the average by some amount adds $`n`$ times that amount squared to the total. So the best intercept is $`a = \bar y - b\,\bar x`$, which says exactly that the line passes through the point ($`\bar x`$, $`\bar y`$).
 
 For the six houses: average area 100, average price $255,000. Every candidate slope worth considering pivots about that point.
 
 ### Step 2: with the line pinned there, the score is a parabola in the slope
 
-Measure every sale from the average sale: area gap $x_i - \bar x$, price gap $y_i - \bar y$. With the intercept chosen as in Step 1, each residual is price gap minus $b$ times area gap. Square, add, and group the terms:
+Measure every sale from the average sale: area gap $`x_i - \bar x`$, price gap $`y_i - \bar y`$. With the intercept chosen as in Step 1, each residual is price gap minus $`b`$ times area gap. Square, add, and group the terms:
 
-$$SSE(b) = S_{yy} - 2b\,S_{xy} + b^2 S_{xx} = S_{xx}\left(b - \frac{S_{xy}}{S_{xx}}\right)^2 + S_{yy} - \frac{S_{xy}^2}{S_{xx}}$$
+```math
+SSE(b) = S_{yy} - 2b\,S_{xy} + b^2 S_{xx} = S_{xx}\left(b - \frac{S_{xy}}{S_{xx}}\right)^2 + S_{yy} - \frac{S_{xy}^2}{S_{xx}}
+```
 
-The first term is a square times a positive number, so it is never below zero, and it is zero only at $b = S_{xy}/S_{xx}$. The second part does not depend on $b$ at all. So the lowest score is reached at that slope and nowhere else.
+The first term is a square times a positive number, so it is never below zero, and it is zero only at $`b = S_{xy}/S_{xx}`$. The second part does not depend on $`b`$ at all. So the lowest score is reached at that slope and nowhere else.
 
-On the six houses, in thousands of dollars: $S_{xy}$ = 10,920 and $S_{xx}$ = 5,200, so $b$ = 2.1 thousand dollars, $2,100, per square metre. The leftover score is 23,328 − 10,920^2 / 5,200 = 23,328 − 22,932 = 396, which is $SSE$ = 396,000,000 in dollars squared.
+On the six houses, in thousands of dollars: $`S_{xy}`$ = 10,920 and $`S_{xx}`$ = 5,200, so $`b`$ = 2.1 thousand dollars, $2,100, per square metre. The leftover score is 23,328 − 10,920^2 / 5,200 = 23,328 − 22,932 = 396, which is $`SSE`$ = 396,000,000 in dollars squared.
 
 <details>
 <summary>Detailed proof: the pair (a, b) is the unique minimiser</summary>
 
-Write $u_i = y_i - b\,x_i$ and let $\bar u = \bar y - b\,\bar x$ be their average. For any intercept $a$:
-$$\sum_i (u_i - a)^2 = \sum_i (u_i - \bar u)^2 + 2(\bar u - a)\sum_i (u_i - \bar u) + n(\bar u - a)^2.$$
-The middle sum is zero, because gaps from an average add to zero. So $SSE(a, b) = \sum_i (u_i - \bar u)^2 + n(\bar u - a)^2$, and for each $b$ the second term vanishes only at $a = \bar y - b\,\bar x$.
+Write $`u_i = y_i - b\,x_i`$ and let $`\bar u = \bar y - b\,\bar x`$ be their average. For any intercept $`a`$:
 
-Now $u_i - \bar u = (y_i - \bar y) - b(x_i - \bar x)$. Expanding the square and adding gives $S_{yy} - 2b S_{xy} + b^2 S_{xx}$. When $S_{xx} > 0$, completing the square gives the display in Step 2, whose only minimum is $b = S_{xy}/S_{xx}$. Every other pair $(a, b)$ loses on at least one of the two non-negative terms, so the minimiser is unique. When $S_{xx} = 0$, the score does not depend on $b$ and every slope ties: the first bullet of When it holds.
+$`\displaystyle \sum_i (u_i - a)^2 = \sum_i (u_i - \bar u)^2 + 2(\bar u - a)\sum_i (u_i - \bar u) + n(\bar u - a)^2.`$
+
+The middle sum is zero, because gaps from an average add to zero. So $`SSE(a, b) = \sum_i (u_i - \bar u)^2 + n(\bar u - a)^2`$, and for each $`b`$ the second term vanishes only at $`a = \bar y - b\,\bar x`$.
+
+Now $`u_i - \bar u = (y_i - \bar y) - b(x_i - \bar x)`$. Expanding the square and adding gives $`S_{yy} - 2b S_{xy} + b^2 S_{xx}`$. When $`S_{xx} > 0`$, completing the square gives the display in Step 2, whose only minimum is $`b = S_{xy}/S_{xx}`$. Every other pair $`(a, b)`$ loses on at least one of the two non-negative terms, so the minimiser is unique. When $`S_{xx} = 0`$, the score does not depend on $`b`$ and every slope ties: the first bullet of When it holds.
 
 </details>
 
 ### Step 3: the slope is covariance over variance
 
-Divide the top and bottom of $S_{xy}/S_{xx}$ by $n$. The top becomes the covariance of area and price, 1,820,000 dollar square metres; the bottom the variance of area, 866.67 square metres squared. The slope is their ratio.
+Divide the top and bottom of $`S_{xy}/S_{xx}`$ by $`n`$. The top becomes the covariance of area and price, 1,820,000 dollar square metres; the bottom the variance of area, 866.67 square metres squared. The slope is their ratio.
 
 Covariance says whether the two readings move together and how strongly; dividing by the variance of area converts that into dollars per square metre. A street where areas barely differ needs a steep slope to explain the same co-movement; a street with wide variation in area spreads it thin.
 
-Swap the roles and the answer changes. Fitting area on price uses $S_{xy}/S_{yy}$, the least-squares rule for predicting area from price. It is a different line, because it scores horizontal misses instead of vertical ones.
+Swap the roles and the answer changes. Fitting area on price uses $`S_{xy}/S_{yy}`$, the least-squares rule for predicting area from price. It is a different line, because it scores horizontal misses instead of vertical ones.
 
 ### Step 4: total spread = explained + left over, and R squared is the explained share
 
-Step 2 at its best slope reads $S_{yy} = S_{xy}^2/S_{xx} + SSE$. In words: the price spread splits into a part the line reproduces, 22,932 (thousand dollars, squared), and the part it misses, 396. That split is why R squared is a share:
+Step 2 at its best slope reads $`S_{yy} = S_{xy}^2/S_{xx} + SSE`$. In words: the price spread splits into a part the line reproduces, 22,932 (thousand dollars, squared), and the part it misses, 396. That split is why R squared is a share:
 
-$$R^2 = \frac{S_{xy}^2 / S_{xx}}{S_{yy}} = 1 - \frac{SSE}{S_{yy}} = \frac{22{,}932}{23{,}328} = 0.9830.$$
+```math
+R^2 = \frac{S_{xy}^2 / S_{xx}}{S_{yy}} = 1 - \frac{SSE}{S_{yy}} = \frac{22{,}932}{23{,}328} = 0.9830.
+```
 
-The first fraction is $S_{xy}^2/(S_{xx}\,S_{yy})$, the square of the correlation (ρ on the covariance card; $r$ when computed from a sample). For a straight line with an intercept, R squared is the correlation squared: the code prints r = 0.9915 and r^2 = 0.9830.
+The first fraction is $`S_{xy}^2/(S_{xx}\,S_{yy})`$, the square of the correlation (ρ on the covariance card; $`r`$ when computed from a sample). For a straight line with an intercept, R squared is the correlation squared: the code prints r = 0.9915 and r^2 = 0.9830.
 
 ### Step 5: the residuals are balanced against the data
 
@@ -142,20 +154,20 @@ Prices in thousands of dollars; areas in square metres. Gaps are measured from t
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average area $\bar x$ | (60 + 70 + 90 + 110 + 130 + 140) / 6 | 100 |
-| average price $\bar y$ | (165 + 205 + 229 + 267 + 327 + 337) / 6 | 255 |
+| average area $`\bar x`$ | (60 + 70 + 90 + 110 + 130 + 140) / 6 | 100 |
+| average price $`\bar y`$ | (165 + 205 + 229 + 267 + 327 + 337) / 6 | 255 |
 | area gaps | each area − 100 | −40, −30, −10, 10, 30, 40 |
 | price gaps | each price − 255 | −90, −50, −26, 12, 72, 82 |
-| $S_{xx}$ | 1,600 + 900 + 100 + 100 + 900 + 1,600 | 5,200 |
-| $S_{xy}$ | 3,600 + 1,500 + 260 + 120 + 2,160 + 3,280 | 10,920 |
-| slope $b$ | 10,920 / 5,200 | 2.1, so **$2,100 per m^2** |
-| intercept $a$ | 255 − 2.1 × 100 | 45, so $45,000 |
+| $`S_{xx}`$ | 1,600 + 900 + 100 + 100 + 900 + 1,600 | 5,200 |
+| $`S_{xy}`$ | 3,600 + 1,500 + 260 + 120 + 2,160 + 3,280 | 10,920 |
+| slope $`b`$ | 10,920 / 5,200 | 2.1, so **$2,100 per m^2** |
+| intercept $`a`$ | 255 − 2.1 × 100 | 45, so $45,000 |
 | fitted prices | 45 + 2.1 × area | 171, 192, 234, 276, 318, 339 |
 | residuals | price − fitted | −6, 13, −5, −9, 9, −2 |
-| $SSE$ | 36 + 169 + 25 + 81 + 81 + 4 | 396 |
-| $S_{yy}$ | 8,100 + 2,500 + 676 + 144 + 5,184 + 6,724 | 23,328 |
-| $R^2$ | 1 − 396 / 23,328 | **0.9830** |
-| standard error of $b$ | from [Regression error bars](02-regression-inference.md) | $138 per m^2 |
+| $`SSE`$ | 36 + 169 + 25 + 81 + 81 + 4 | 396 |
+| $`S_{yy}`$ | 8,100 + 2,500 + 676 + 144 + 5,184 + 6,724 | 23,328 |
+| $`R^2`$ | 1 − 396 / 23,328 | **0.9830** |
+| standard error of $`b`$ | from [Regression error bars](02-regression-inference.md) | $138 per m^2 |
 
 On this street, a house with 10 more square metres sold, on average, for about $21,000 more; the line accounts for 98.3% of the spread in prices. A standard error is the typical gap between a slope fitted from one sample of sales and the true rate. Six sales pin the slope only to $2,100 ± $138 per square metre (one standard error): a description of these six sales, and a rough estimate for the street.
 
@@ -597,11 +609,11 @@ The two outputs agree line for line, including the simulated markets: both progr
 
 Lean proves the card's three main facts for any sales whose areas are not all equal, and checks the six sales exactly.
 
-- Suppose the areas are not all equal, and take $b = S_{xy}/S_{xx}$ and $a = \bar y - b\,\bar x$. Then the line $a + b\,x$ passes through the average sale.
-- Every other intercept and slope give a strictly larger $SSE$. So that line is the one and only line with the smallest score.
+- Suppose the areas are not all equal, and take $`b = S_{xy}/S_{xx}`$ and $`a = \bar y - b\,\bar x`$. Then the line $`a + b\,x`$ passes through the average sale.
+- Every other intercept and slope give a strictly larger $`SSE`$. So that line is the one and only line with the smallest score.
 - Its residuals add to zero, and so do its residuals weighted by area: the normal equations.
-- Take that same line. Then $S_{yy} = S_{xy}^2/S_{xx} + SSE$: total spread equals explained plus left over.
-- In thousands of dollars, the six sales give exactly the worked numbers: slope 2.1, intercept 45, the residuals, $SSE$ 396 and the split 22,932 + 396.
+- Take that same line. Then $`S_{yy} = S_{xy}^2/S_{xx} + SSE`$: total spread equals explained plus left over.
+- In thousands of dollars, the six sales give exactly the worked numbers: slope 2.1, intercept 45, the residuals, $`SSE`$ 396 and the split 22,932 + 396.
 - Two mistake rows and two Try changing lines also check exactly: the inverted slope, the two end houses, the mansion and the $20,000 shift.
 
 Decimals, the correlation, the standard error, square feet, the no-intercept fit and the 2,000 markets are left to Python and Rust.

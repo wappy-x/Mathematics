@@ -45,49 +45,55 @@ Orange: forward, one price up. Green: central, one price each way. Dark: one-sid
 
 ## The formula
 
-Write $P(y)$ for the position's price in dollars at yield $y$, and $h$ for the step in yield. The slope $P'(y)$ is in dollars per unit of yield; multiplied by 0.0001 it is dollars per basis point. Two and three primes, $P''$ and $P'''$, are the second and third derivatives.
+Write $`P(y)`$ for the position's price in dollars at yield $`y`$, and $`h`$ for the step in yield. The slope $`P'(y)`$ is in dollars per unit of yield; multiplied by 0.0001 it is dollars per basis point. Two and three primes, $`P''`$ and $`P'''`$, are the second and third derivatives.
 
 The three two-price formulas:
 
-$$D_+ = \frac{P(y+h) - P(y)}{h}, \qquad D_- = \frac{P(y) - P(y-h)}{h}, \qquad D_0 = \frac{P(y+h) - P(y-h)}{2h}$$
+```math
+D_+ = \frac{P(y+h) - P(y)}{h}, \qquad D_- = \frac{P(y) - P(y-h)}{h}, \qquad D_0 = \frac{P(y+h) - P(y-h)}{2h}
+```
 
 **Read it aloud:** forward is the change over one step up, backward the change over one step down, central the change from one step down to one step up, each per unit of yield.
 
 The two three-price one-sided formulas, for when only one side exists:
 
-$$D_+^{(2)} = \frac{-3P(y) + 4P(y+h) - P(y+2h)}{2h}, \qquad D_-^{(2)} = \frac{3P(y) - 4P(y-h) + P(y-2h)}{2h}$$
+```math
+D_+^{(2)} = \frac{-3P(y) + 4P(y+h) - P(y+2h)}{2h}, \qquad D_-^{(2)} = \frac{3P(y) - 4P(y-h) + P(y-2h)}{2h}
+```
 
 **Read it aloud:** weigh the price here by minus three, the next one out by four and the one beyond by minus one, and divide by two steps; the downward formula is the mirror image.
 
 Their errors, each the formula minus the true slope, proved below:
 
-$$D_\pm - P' = \pm\tfrac{h}{2}P''(\xi), \qquad D_0 - P' = \tfrac{h^2}{6}P'''(\xi), \qquad D_\pm^{(2)} - P' = -\tfrac{h^2}{3}P'''(\xi)$$
+```math
+D_\pm - P' = \pm\tfrac{h}{2}P''(\xi), \qquad D_0 - P' = \tfrac{h^2}{6}P'''(\xi), \qquad D_\pm^{(2)} - P' = -\tfrac{h^2}{3}P'''(\xi)
+```
 
 **Read it aloud:** forward and backward are off by half the step times the second derivative, with opposite signs; central by a sixth of the step squared times the third; the one-sided three-point formulas by a third of the step squared times the third, with the opposite sign to central.
 
-Here $\xi$ (the Greek letter xi) is some unknown point among the yields the formula uses, a different one for each formula. A formula whose error shrinks like $h^p$ as $h \to 0$ has **order** $p$: forward and backward have order 1, the other three order 2. The set of points a formula uses is its **stencil**.
+Here $`\xi`$ (the Greek letter xi) is some unknown point among the yields the formula uses, a different one for each formula. A formula whose error shrinks like $`h^p`$ as $`h \to 0`$ has **order** $`p`$: forward and backward have order 1, the other three order 2. The set of points a formula uses is its **stencil**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P(y)$ | the position's price at yield $y$, in dollars | 9,185,555.572786 at 4.50% | — |
-| $y$ | the annual yield, as a decimal | 0.045 | the slope shrinks: −15,185.1010 $/bp at 4.54% |
-| $h$ | the step in yield; 1 bp is 0.0001 | 0.0001 | forward and backward errors grow in proportion, the rest with its square |
-| $P'(y)$ | the exact slope; times 0.0001, dollars per bp | −15,330.686730 $/bp | — |
-| $P''(y)$ | the second derivative: how fast the slope changes | 3,659,589,692 | forward and backward errors grow with it |
-| $P'''(y)$ | the third derivative | −100,119,349,137 | central and three-point errors grow with it |
-| $D_+$, $D_-$, $D_0$ | forward, backward and central differences | −15,312.405456, −15,349.001377 and −15,330.703417 $/bp | — |
-| $D_+^{(2)}$, $D_-^{(2)}$ | one-sided three-point differences, up and down | −15,330.653431 and −15,330.653283 $/bp | — |
-| $\xi$, $\xi_1$, $\xi_2$ | unknown points inside the stencil where a derivative is read | not needed | — |
-| $k$; $a$, $b$, $c$ | a number of steps from $y$; the weights on three prices in Step 3 | $k$ = 1, −1, 2; −3/2, 2, −1/2 | — |
-| $M_3$ | a ceiling on the size of $P'''$ across the stencil | not needed | a looser, still true, error bound |
-| $p$ | the order: halve $h$ and the error falls by $2^p$ | 1 or 2 | a faster fall as the step shrinks |
+| $`P(y)`$ | the position's price at yield $`y`$, in dollars | 9,185,555.572786 at 4.50% | — |
+| $`y`$ | the annual yield, as a decimal | 0.045 | the slope shrinks: −15,185.1010 $/bp at 4.54% |
+| $`h`$ | the step in yield; 1 bp is 0.0001 | 0.0001 | forward and backward errors grow in proportion, the rest with its square |
+| $`P'(y)`$ | the exact slope; times 0.0001, dollars per bp | −15,330.686730 $/bp | — |
+| $`P''(y)`$ | the second derivative: how fast the slope changes | 3,659,589,692 | forward and backward errors grow with it |
+| $`P'''(y)`$ | the third derivative | −100,119,349,137 | central and three-point errors grow with it |
+| $`D_+`$, $`D_-`$, $`D_0`$ | forward, backward and central differences | −15,312.405456, −15,349.001377 and −15,330.703417 $/bp | — |
+| $`D_+^{(2)}`$, $`D_-^{(2)}`$ | one-sided three-point differences, up and down | −15,330.653431 and −15,330.653283 $/bp | — |
+| $`\xi`$, $`\xi_1`$, $`\xi_2`$ | unknown points inside the stencil where a derivative is read | not needed | — |
+| $`k`$; $`a`$, $`b`$, $`c`$ | a number of steps from $`y`$; the weights on three prices in Step 3 | $`k`$ = 1, −1, 2; −3/2, 2, −1/2 | — |
+| $`M_3`$ | a ceiling on the size of $`P'''`$ across the stencil | not needed | a looser, still true, error bound |
+| $`p`$ | the order: halve $`h`$ and the error falls by $`2^p`$ | 1 or 2 | a faster fall as the step shrinks |
 
 ### When it holds
 
-- **The price is smooth across the whole stencil.** Forward and backward need a continuous $P''$, the others a continuous $P'''$. In a crude model of a bond callable at par, one that caps the price at par, the price stops rising at par: a corner. At that corner, at 4.00%, central reads −8,645.9117 $/bp at a 0.01 bp step, about half the uncapped −17,292.0333, and shrinking the step does not help.
+- **The price is smooth across the whole stencil.** Forward and backward need a continuous $`P''`$, the others a continuous $`P'''`$. In a crude model of a bond callable at par, one that caps the price at par, the price stops rising at par: a corner. At that corner, at 4.00%, central reads −8,645.9117 $/bp at a 0.01 bp step, about half the uncapped −17,292.0333, and shrinking the step does not help.
 - **The steps are equal.** Prices at +1 bp and −2 bp, differenced over 3 bp, look central but are only order 1: the error is −18.348070 $/bp. Unequal steps need their own weights, built on [Stencils to order](02-stencils-for-higher-and-mixed-derivatives.md).
-- **The step is small against the scale on which $P'''$ changes.** At 64 bp, central's error ratio on halving is 4.006 and the three-point one's 3.735, not yet 4.
-- **Each price is exact to many more digits than the price change.** Rounding in each price is divided by $h$, so a tiny step returns noise; [Choosing the step](04-choosing-the-step-truncation-against-rounding.md) sets $h$ against it. At 1 bp on this bond the error is almost all truncation: the error from a finite step.
+- **The step is small against the scale on which $`P'''`$ changes.** At 64 bp, central's error ratio on halving is 4.006 and the three-point one's 3.735, not yet 4.
+- **Each price is exact to many more digits than the price change.** Rounding in each price is divided by $`h`$, so a tiny step returns noise; [Choosing the step](04-choosing-the-step-truncation-against-rounding.md) sets $`h`$ against it. At 1 bp on this bond the error is almost all truncation: the error from a finite step.
 
 ---
 
@@ -95,55 +101,57 @@ Here $\xi$ (the Greek letter xi) is some unknown point among the yields the form
 
 ### Step 0: every neighbour is a Taylor expansion of the price here
 
-[Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) writes the price one step away in terms of the price, slope, bend and so on at $y$:
+[Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) writes the price one step away in terms of the price, slope, bend and so on at $`y`$:
 
-$$P(y + kh) = P + kh\,P' + \tfrac{(kh)^2}{2}P'' + \tfrac{(kh)^3}{6}P''' + \dots$$
+```math
+P(y + kh) = P + kh\,P' + \tfrac{(kh)^2}{2}P'' + \tfrac{(kh)^3}{6}P''' + \dots
+```
 
-with everything on the right read at $y$, and $k$ the number of steps (1, −1, 2, …). A difference formula adds a few of these with weights. Choose the weights so the $P$ terms cancel and the $P'$ term comes out with weight exactly 1. Whatever survives after that is the error. Each further term the weights cancel buys one more power of $h$.
+with everything on the right read at $`y`$, and $`k`$ the number of steps (1, −1, 2, …). A difference formula adds a few of these with weights. Choose the weights so the $`P`$ terms cancel and the $`P'`$ term comes out with weight exactly 1. Whatever survives after that is the error. Each further term the weights cancel buys one more power of $`h`$.
 
 ### Step 1: forward, and backward as its mirror
 
-[Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) proves the forward error $\tfrac{h}{2}P''(\xi)$ and the central error $\tfrac{h^2}{6}P'''(\xi)$.
+[Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) proves the forward error $`\tfrac{h}{2}P''(\xi)`$ and the central error $`\tfrac{h^2}{6}P'''(\xi)`$.
 
-Backward is forward with $h$ replaced by $-h$: $D_-(h)$ equals $\bigl(P(y-h) - P(y)\bigr)/(-h)$, which is the forward formula with a negative step. So its error is $\tfrac{-h}{2}P''(\xi)$. Same size, opposite sign.
+Backward is forward with $`h`$ replaced by $`-h`$: $`D_-(h)`$ equals $`\bigl(P(y-h) - P(y)\bigr)/(-h)`$, which is the forward formula with a negative step. So its error is $`\tfrac{-h}{2}P''(\xi)`$. Same size, opposite sign.
 
 On the bond the second derivative is positive (the price curve bends upward, which is what convexity means). So forward reads a slope too shallow and backward one too steep. The run: forward +18.281274 $/bp off, backward −18.314647, Taylor's term ±18.297948.
 
 ### Step 2: central is the average of forward and backward
 
-Add forward and backward and halve: the $P(y)$ terms cancel and what is left is $\bigl(P(y+h) - P(y-h)\bigr)/(2h)$, the central difference. The run prints it: the average is −15,330.703417 $/bp, central's value.
+Add forward and backward and halve: the $`P(y)`$ terms cancel and what is left is $`\bigl(P(y+h) - P(y-h)\bigr)/(2h)`$, the central difference. The run prints it: the average is −15,330.703417 $/bp, central's value.
 
-That explains the jump in accuracy. Forward's error is $+\tfrac{h}{2}P''$ plus smaller terms; backward's is $-\tfrac{h}{2}P''$ plus smaller terms. The average cancels the $P''$ term exactly. In $P(y+h) - P(y-h)$ the terms with even powers of $h$ have the same sign on both sides and cancel; the odd ones survive. What is left is $\tfrac{h^2}{6}P'''$: here −0.016687 $/bp, and the run's error is −0.016687.
+That explains the jump in accuracy. Forward's error is $`+\tfrac{h}{2}P''`$ plus smaller terms; backward's is $`-\tfrac{h}{2}P''`$ plus smaller terms. The average cancels the $`P''`$ term exactly. In $`P(y+h) - P(y-h)`$ the terms with even powers of $`h`$ have the same sign on both sides and cancel; the odd ones survive. What is left is $`\tfrac{h^2}{6}P'''`$: here −0.016687 $/bp, and the run's error is −0.016687.
 
-The price of that accuracy is one more reprice. With the price at $y$ already computed, forward needs one new price and central two.
+The price of that accuracy is one more reprice. With the price at $`y`$ already computed, forward needs one new price and central two.
 
 ### Step 3: one-sided, but second order
 
-With only $y$, $y+h$ and $y+2h$ available, ask for weights $a$, $b$, $c$ on the three prices that cancel the $P$ term and the $P''$ term and leave the slope term with weight 1. The Taylor rows give three equations:
+With only $`y`$, $`y+h`$ and $`y+2h`$ available, ask for weights $`a`$, $`b`$, $`c`$ on the three prices that cancel the $`P`$ term and the $`P''`$ term and leave the slope term with weight 1. The Taylor rows give three equations:
 
 | Term | Condition | Why |
 | --- | --- | --- |
-| $P$ | $a + b + c = 0$ | the price level must cancel |
-| $h\,P'$ | $b + 2c = 1$ | the slope must come out once |
-| $\tfrac{h^2}{2}P''$ | $b + 4c = 0$ | the bend must cancel |
+| $`P`$ | $`a + b + c = 0`$ | the price level must cancel |
+| $`h\,P'`$ | $`b + 2c = 1`$ | the slope must come out once |
+| $`\tfrac{h^2}{2}P''`$ | $`b + 4c = 0`$ | the bend must cancel |
 
-Subtract the second from the third: $2c = -1$, so $c = -\tfrac12$, then $b = 2$ and $a = -\tfrac32$. Times 2, those are the weights −3, 4, −1 over $2h$. The first term left over is the $P'''$ one: $\tfrac{h^3}{6}(b + 8c)P''' = -\tfrac{2h^3}{6}P'''$, and dividing by $h$ gives $-\tfrac{h^2}{3}P'''$.
+Subtract the second from the third: $`2c = -1`$, so $`c = -\tfrac12`$, then $`b = 2`$ and $`a = -\tfrac32`$. Times 2, those are the weights −3, 4, −1 over $`2h`$. The first term left over is the $`P'''`$ one: $`\tfrac{h^3}{6}(b + 8c)P''' = -\tfrac{2h^3}{6}P'''`$, and dividing by $`h`$ gives $`-\tfrac{h^2}{3}P'''`$.
 
 The run: predicted +0.033373 $/bp, observed +0.033299 upward and +0.033447 downward. That is twice central's error and of the opposite sign.
 
 <details>
 <summary>Detailed proof: the one-sided error, with its remainder</summary>
 
-Suppose $P'''$ is continuous between $y$ and $y + 2h$. Taylor's theorem with remainder gives
-$P(y+h) = P + hP' + \tfrac{h^2}{2}P'' + \tfrac{h^3}{6}P'''(\xi_1)$ and
-$P(y+2h) = P + 2hP' + 2h^2P'' + \tfrac{8h^3}{6}P'''(\xi_2)$,
-with $\xi_1$ between $y$ and $y + h$ and $\xi_2$ between $y$ and $y + 2h$. Then
+Suppose $`P'''`$ is continuous between $`y`$ and $`y + 2h`$. Taylor's theorem with remainder gives
+$`P(y+h) = P + hP' + \tfrac{h^2}{2}P'' + \tfrac{h^3}{6}P'''(\xi_1)`$ and
+$`P(y+2h) = P + 2hP' + 2h^2P'' + \tfrac{8h^3}{6}P'''(\xi_2)`$,
+with $`\xi_1`$ between $`y`$ and $`y + h`$ and $`\xi_2`$ between $`y`$ and $`y + 2h`$. Then
 
-$$-3P(y) + 4P(y+h) - P(y+2h) = 2hP' + \tfrac{h^3}{6}\bigl(4P'''(\xi_1) - 8P'''(\xi_2)\bigr).$$
+$`\displaystyle -3P(y) + 4P(y+h) - P(y+2h) = 2hP' + \tfrac{h^3}{6}\bigl(4P'''(\xi_1) - 8P'''(\xi_2)\bigr).`$
 
-Divide by $2h$: $D_+^{(2)} - P' = \tfrac{h^2}{12}\bigl(4P'''(\xi_1) - 8P'''(\xi_2)\bigr)$. If $\lvert P'''\rvert \le M_3$ on the stencil, this is at most $h^2 M_3$ in size, so the formula has order 2. As $h \to 0$ both $\xi$'s approach $y$, and the error divided by $h^2$ tends to $\tfrac{4 - 8}{12}P'''(y) = -\tfrac13 P'''(y)$.
+Divide by $`2h`$: $`D_+^{(2)} - P' = \tfrac{h^2}{12}\bigl(4P'''(\xi_1) - 8P'''(\xi_2)\bigr)`$. If $`\lvert P'''\rvert \le M_3`$ on the stencil, this is at most $`h^2 M_3`$ in size, so the formula has order 2. As $`h \to 0`$ both $`\xi`$'s approach $`y`$, and the error divided by $`h^2`$ tends to $`\tfrac{4 - 8}{12}P'''(y) = -\tfrac13 P'''(y)`$.
 
-The single-point form $-\tfrac{h^2}{3}P'''(\xi)$ needs one more fact, stated here without proof: the formula is the slope at $y$ of the parabola through the three prices, and the error of an interpolating polynomial's slope at one of its own nodes is the next derivative at one point times a fixed product of the node gaps, here $(0 - h)(0 - 2h)/6 = h^2/3$. The downward formula is the same with $h$ replaced by $-h$; $h^2$ does not change sign, so neither does the error. ∎
+The single-point form $`-\tfrac{h^2}{3}P'''(\xi)`$ needs one more fact, stated here without proof: the formula is the slope at $`y`$ of the parabola through the three prices, and the error of an interpolating polynomial's slope at one of its own nodes is the next derivative at one point times a fixed product of the node gaps, here $`(0 - h)(0 - 2h)/6 = h^2/3`$. The downward formula is the same with $`h`$ replaced by $`-h`$; $`h^2`$ does not change sign, so neither does the error. ∎
 
 </details>
 
@@ -153,15 +161,15 @@ Halve the step from 2 bp to 1 bp. Forward's error falls by 1.998, central's by 4
 
 ### Step 5: the data picks the formula
 
-Count prices you must compute beyond the one at $y$, which usually exists already. Then pick the best formula the available yields allow:
+Count prices you must compute beyond the one at $`y`$, which usually exists already. Then pick the best formula the available yields allow:
 
 | Prices you have | Formula | Order | Extra reprices | Error on the bond at 1 bp |
 | --- | --- | --- | --- | --- |
-| $y$, $y+h$ | forward | 1 | 1 | +18.281274 |
-| $y$, $y-h$ | backward | 1 | 1 | −18.314647 |
-| $y-h$, $y+h$ | central | 2 | 2 | −0.016687 |
-| $y$, $y+h$, $y+2h$ | one-sided three-point, up | 2 | 2 | +0.033299 |
-| $y$, $y-h$, $y-2h$ | one-sided three-point, down | 2 | 2 | +0.033447 |
+| $`y`$, $`y+h`$ | forward | 1 | 1 | +18.281274 |
+| $`y`$, $`y-h`$ | backward | 1 | 1 | −18.314647 |
+| $`y-h`$, $`y+h`$ | central | 2 | 2 | −0.016687 |
+| $`y`$, $`y+h`$, $`y+2h`$ | one-sided three-point, up | 2 | 2 | +0.033299 |
+| $`y`$, $`y-h`$, $`y-2h`$ | one-sided three-point, down | 2 | 2 | +0.033447 |
 
 Central and the three-point formulas cost the same: two reprices. Central is twice as accurate. So use central where both sides exist, and the three-point formula only where one side is missing. Forward or backward alone is right only when a second extra price is unaffordable.
 
@@ -199,8 +207,8 @@ With a 1 bp step, "per unit of yield times 0.0001" is just the price change itse
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Central divided by $h$, not $2h$ | −30,661.4068 $/bp | The span is two steps; the slope doubled |
-| Uneven pair: +1 bp and −2 bp, over 3 bp | −15,349.034800, error −18.348070 | Unequal steps leave the $P''$ term in: order 1 |
+| Central divided by $`h`$, not $`2h`$ | −30,661.4068 $/bp | The span is two steps; the slope doubled |
+| Uneven pair: +1 bp and −2 bp, over 3 bp | −15,349.034800, error −18.348070 | Unequal steps leave the $`P''`$ term in: order 1 |
 | Two-point backward at the top of the ladder | −15,203.2163, error −18.1154 | Order 1 where a third price gave order 2 |
 | Central at a corner: price capped at par, a crude callable, at 4.00% (illustrative) | −8,645.9117 at 0.01 bp, against −17,292.0333 | No slope to find: up reads −17,291.8233, down 0.0000 |
 
@@ -210,7 +218,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The code prices the bond by summing its 30 discounted payments, with the discount factor built by repeated multiplication so that Python and Rust agree to the bit. The same loop gives the exact first, second and third derivatives. It takes three independent roads to each slope: the difference formulas from repriced values, the exact slope from the derivative formula, and the error Taylor's theorem predicts from the exact $P''$ and $P'''$. The asserts check that each observed error matches its Taylor term, that halving the step halves forward's error and quarters central's, that the uneven pair is first order, and that at the corner the central difference stays far from the smooth slope.
+The code prices the bond by summing its 30 discounted payments, with the discount factor built by repeated multiplication so that Python and Rust agree to the bit. The same loop gives the exact first, second and third derivatives. It takes three independent roads to each slope: the difference formulas from repriced values, the exact slope from the derivative formula, and the error Taylor's theorem predicts from the exact $`P''`$ and $`P'''`$. The asserts check that each observed error matches its Taylor term, that halving the step halves forward's error and quarters central's, that the uneven pair is first order, and that at the corner the central difference stays far from the smooth slope.
 
 ### Python
 
@@ -467,12 +475,12 @@ ALL CHECKS PASS
 
 Lean proves every error term on the card, Step 2's average and Step 3's weights, for any smooth enough function and any positive step.
 
-- If $P''$ is continuous across the stencil, forward misses the slope by $\tfrac{h}{2}P''(\xi)$ and backward by $-\tfrac{h}{2}P''(\xi)$, with $\xi$ inside the stencil.
-- If $P'''$ is continuous across the stencil, central misses by $\tfrac{h^2}{6}P'''(\xi)$ and each one-sided three-point formula by $-\tfrac{h^2}{3}P'''(\xi)$.
+- If $`P''`$ is continuous across the stencil, forward misses the slope by $`\tfrac{h}{2}P''(\xi)`$ and backward by $`-\tfrac{h}{2}P''(\xi)`$, with $`\xi`$ inside the stencil.
+- If $`P'''`$ is continuous across the stencil, central misses by $`\tfrac{h^2}{6}P'''(\xi)`$ and each one-sided three-point formula by $`-\tfrac{h^2}{3}P'''(\xi)`$.
 - That one-sided form is the single-point one the Detailed proof states without proof.
 - The central difference is the average of the forward and backward differences, for any step other than 0.
-- Weights $a$, $b$, $c$ meet Step 3's three conditions exactly when they are $-\tfrac32$, $2$ and $-\tfrac12$.
-- The card's fractions check out: the leftover $\tfrac16(b + 8c) = -\tfrac13$, and the uneven pair's $P''$ coefficient $(1^2 - 2^2)/(2 \cdot 3) = -\tfrac12$.
+- Weights $`a`$, $`b`$, $`c`$ meet Step 3's three conditions exactly when they are $`-\tfrac32`$, $`2`$ and $`-\tfrac12`$.
+- The card's fractions check out: the leftover $`\tfrac16(b + 8c) = -\tfrac13`$, and the uneven pair's $`P''`$ coefficient $`(1^2 - 2^2)/(2 \cdot 3) = -\tfrac12`$.
 
 The bond's numbers, the observed orders, the ladder and every row of What breaks are left to Python and Rust.
 
@@ -830,7 +838,7 @@ end DifferenceFormulas
 
 > [!TIP]
 > **Try changing**
-> - **Guess first:** move the base yield `Y0` to 0.040. Does central's error grow or shrink? It grows: at a lower yield the distant payments are discounted less and weigh more, so $P'''$ is larger.
+> - **Guess first:** move the base yield `Y0` to 0.040. Does central's error grow or shrink? It grows: at a lower yield the distant payments are discounted less and weigh more, so $`P'''`$ is larger.
 > - **Guess first:** what does a 2 bp step do to each error? The halving ratios already answer it: forward's error roughly doubles (1.998), central's and the three-point one's roughly quadruple (4.000 and 3.991).
 > - **Guess first:** set `CPN` to 0, a zero-coupon bond. Do the orders change? No: the errors change size, but forward still halves and central still quarters, because the orders come from Taylor's theorem, not from the bond.
 > - **Guess first:** in `fwd3`, change the weights to −1, 1, 0 over `h`. What happens? It becomes the forward difference, order 1, and the ratio assert fails.
@@ -842,7 +850,7 @@ end DifferenceFormulas
 > [!warning]
 > **Two-point formulas at the end of a grid.** Code that uses central differences in the middle of a ladder often falls back to forward or backward at the ends. The middle rungs are right to 1.7 cents; the end rungs are off by $18.2813 and −$18.1154. The fix costs nothing: the next price inward is already on the ladder, and the three-point formula uses it to reach errors of 3.3 cents.
 >
-> - **Forgetting the 2 in $2h$.** Central over one step reads −30,661.4068 $/bp, double the truth.
+> - **Forgetting the 2 in $`2h`$.** Central over one step reads −30,661.4068 $/bp, double the truth.
 > - **Pairing unequal steps.** +1 bp and −2 bp over 3 bp reads −15,349.034800, off by −18.348070: as bad as forward, though it looks central.
 > - **Assuming backward is worse than forward.** They have the same size of error with opposite signs: +18.281274 and −18.314647 at 1 bp. Neither is preferred; the data decides.
 > - **Differencing across a corner.** In a crude model that caps a callable bond's price at par, the central difference at the par point returns −8,645.9117, half the smooth slope, at every step size.
@@ -869,7 +877,7 @@ end DifferenceFormulas
 ## Where this goes next
 
 - [Stencils to order](02-stencils-for-higher-and-mixed-derivatives.md): the weight-matching of Step 3 in general, for higher orders, second derivatives, mixed derivatives and unequal steps.
-- [Richardson extrapolation](03-richardson-extrapolation.md): two central differences at 1 bp and 2 bp, combined to cancel the $h^2$ term.
+- [Richardson extrapolation](03-richardson-extrapolation.md): two central differences at 1 bp and 2 bp, combined to cancel the $`h^2`$ term.
 
 The open question: every formula here still has an error that depends on a step, so can a slope be computed with no step at all?
 

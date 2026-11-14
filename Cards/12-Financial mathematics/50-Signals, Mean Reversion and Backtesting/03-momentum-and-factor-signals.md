@@ -35,46 +35,52 @@ The single line is the running total of the monthly spreads, in percentage point
 
 ## The formula
 
-Notation first, in words. A subscript $i$ names the stock and a subscript $t$ the month. $P_{i,t}$ is stock $i$'s price at the end of month $t$. The signal is formed at the end of month $t$ and the stocks are held through month $t+1$.
+Notation first, in words. A subscript $`i`$ names the stock and a subscript $`t`$ the month. $`P_{i,t}`$ is stock $`i`$'s price at the end of month $`t`$. The signal is formed at the end of month $`t`$ and the stocks are held through month $`t+1`$.
 
-$$s_{i,t} = \frac{P_{i,t-1}}{P_{i,t-12}} - 1$$
+```math
+s_{i,t} = \frac{P_{i,t-1}}{P_{i,t-12}} - 1
+```
 
-**Read it aloud:** the signal is the stock's return from the end of month $t-12$ to the end of month $t-1$: a year back, stopping one month short of today.
+**Read it aloud:** the signal is the stock's return from the end of month $`t-12`$ to the end of month $`t-1`$: a year back, stopping one month short of today.
 
-That window covers eleven monthly returns. Finance calls it "12-1": look back twelve months, skip the most recent one. Sort the $N$ stocks by $s_{i,t}$ and cut them into ten equal groups called **deciles**, each holding $n = N/10$ stocks. Decile 1 holds the losers, decile 10 the winners. With $r_{i,t+1}$ the stock's return in the holding month, the spread is
+That window covers eleven monthly returns. Finance calls it "12-1": look back twelve months, skip the most recent one. Sort the $`N`$ stocks by $`s_{i,t}`$ and cut them into ten equal groups called **deciles**, each holding $`n = N/10`$ stocks. Decile 1 holds the losers, decile 10 the winners. With $`r_{i,t+1}`$ the stock's return in the holding month, the spread is
 
-$$x_{t+1} = \frac{1}{n}\sum_{i \in \text{top}} r_{i,t+1} \;-\; \frac{1}{n}\sum_{i \in \text{bottom}} r_{i,t+1}$$
+```math
+x_{t+1} = \frac{1}{n}\sum_{i \in \text{top}} r_{i,t+1} \;-\; \frac{1}{n}\sum_{i \in \text{bottom}} r_{i,t+1}
+```
 
 **Read it aloud:** next month's spread is the average return of the winners minus the average return of the losers.
 
-Over $T$ holding months the spread averages $\bar x$. The **autocovariance** $\hat\gamma_j$ measures how a month's spread moves with the spread $j$ months earlier: $\hat\gamma_j = \frac{1}{T}\sum_{k=j+1}^{T}(x_k - \bar x)(x_{k-j} - \bar x)$. At $j = 0$ it is the variance. Divided by $\hat\gamma_0$ it becomes the **autocorrelation**, a number between −1 and 1. The standard error of $\bar x$, allowing for runs, is
+Over $`T`$ holding months the spread averages $`\bar x`$. The **autocovariance** $`\hat\gamma_j`$ measures how a month's spread moves with the spread $`j`$ months earlier: $`\hat\gamma_j = \frac{1}{T}\sum_{k=j+1}^{T}(x_k - \bar x)(x_{k-j} - \bar x)`$. At $`j = 0`$ it is the variance. Divided by $`\hat\gamma_0`$ it becomes the **autocorrelation**, a number between −1 and 1. The standard error of $`\bar x`$, allowing for runs, is
 
-$$\hat\sigma^2 = \hat\gamma_0 + 2\sum_{j=1}^{L}\Big(1 - \frac{j}{L+1}\Big)\hat\gamma_j, \qquad \text{SE} = \sqrt{\hat\sigma^2 / T}, \qquad t\text{-stat} = \bar x / \text{SE}$$
+```math
+\hat\sigma^2 = \hat\gamma_0 + 2\sum_{j=1}^{L}\Big(1 - \frac{j}{L+1}\Big)\hat\gamma_j, \qquad \text{SE} = \sqrt{\hat\sigma^2 / T}, \qquad t\text{-stat} = \bar x / \text{SE}
+```
 
-**Read it aloud:** take the spread's variance, add twice each of its first $L$ autocovariances with weights that fade to zero, divide by the number of months, take the square root; the t-statistic is the average spread in units of that error.
+**Read it aloud:** take the spread's variance, add twice each of its first $`L`$ autocovariances with weights that fade to zero, divide by the number of months, take the square root; the t-statistic is the average spread in units of that error.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$, $t$, $j$, $k$, $s$ | stock, month, lag in months, a running month, a window's first month | the example stock; any of the 240 holding months | — |
-| $P_{i,t}$ | price at the end of month $t$ | $50.00 a year back, $61.00 a month back | — |
-| $s_{i,t}$ | the 12-1 signal: past-year return, latest month skipped | 0.22 for the example stock | the stock moves toward decile 10 |
-| $r_{i,t+1}$, $m_t$ | the stock's return in the holding month; the whole market's return in a month | — | — |
-| $N$, $n$ | stocks in the market; stocks per decile | 300; 30 | more stocks per decile, less noise |
-| $x_t$ | the spread in one month: winners minus losers | 0.67 percent a month on average | — |
-| $\bar x$ | the average monthly spread | 0.6746 percent a month, 8.10 a year | t-stat rises |
-| $T$ | holding months in the sample | 240 | SE falls like one over root $T$ |
-| $\hat\gamma_j$ | autocovariance at lag $j$; $\hat\gamma_0$ is the variance | lag 1 autocorrelation 0.3709 | positive values raise the SE |
-| $L$ | how many lags the error counts | 4 | the error counts slower runs |
-| $\hat\sigma^2$ | the **long-run variance**: variance plus weighted autocovariances | 1.8610 times the variance | SE rises |
-| SE, $t$-stat | standard error of $\bar x$, and $\bar x$ divided by it | 0.2517 percent a month; 2.68 | — |
+| $`i`$, $`t`$, $`j`$, $`k`$, $`s`$ | stock, month, lag in months, a running month, a window's first month | the example stock; any of the 240 holding months | — |
+| $`P_{i,t}`$ | price at the end of month $`t`$ | $50.00 a year back, $61.00 a month back | — |
+| $`s_{i,t}`$ | the 12-1 signal: past-year return, latest month skipped | 0.22 for the example stock | the stock moves toward decile 10 |
+| $`r_{i,t+1}`$, $`m_t`$ | the stock's return in the holding month; the whole market's return in a month | — | — |
+| $`N`$, $`n`$ | stocks in the market; stocks per decile | 300; 30 | more stocks per decile, less noise |
+| $`x_t`$ | the spread in one month: winners minus losers | 0.67 percent a month on average | — |
+| $`\bar x`$ | the average monthly spread | 0.6746 percent a month, 8.10 a year | t-stat rises |
+| $`T`$ | holding months in the sample | 240 | SE falls like one over root $`T`$ |
+| $`\hat\gamma_j`$ | autocovariance at lag $`j`$; $`\hat\gamma_0`$ is the variance | lag 1 autocorrelation 0.3709 | positive values raise the SE |
+| $`L`$ | how many lags the error counts | 4 | the error counts slower runs |
+| $`\hat\sigma^2`$ | the **long-run variance**: variance plus weighted autocovariances | 1.8610 times the variance | SE rises |
+| SE, $`t`$-stat | standard error of $`\bar x`$, and $`\bar x`$ divided by it | 0.2517 percent a month; 2.68 | — |
 
-Annual figures on this card are twelve times the monthly average, not compounded, the usual convention for spreads. The lag rule used is Newey and West's 1994 suggestion, $L = \lfloor 4\,(T/100)^{2/9} \rfloor$, where the floor brackets mean "round down". For $T = 240$ it gives 4.
+Annual figures on this card are twelve times the monthly average, not compounded, the usual convention for spreads. The lag rule used is Newey and West's 1994 suggestion, $`L = \lfloor 4\,(T/100)^{2/9} \rfloor`$, where the floor brackets mean "round down". For $`T = 240`$ it gives 4.
 
 ### When it holds
 
 - **The signal uses only prices known at formation.** Let the window include the holding month and the spread becomes 99.79 percent a year: the sort is reading the answer.
-- **Enough stocks in each decile.** Each decile's average carries the noise of its members divided by the square root of $n$. With a handful of stocks a decile the spread is mostly noise.
-- **Runs die out within $L$ months.** If the spread's months lean on each other for longer than $L$, the error still undercounts. Here $L = 12$ gives t = 2.58 against 2.68 at $L = 4$: the runs are mostly over by month four.
+- **Enough stocks in each decile.** Each decile's average carries the noise of its members divided by the square root of $`n`$. With a handful of stocks a decile the spread is mostly noise.
+- **Runs die out within $`L`$ months.** If the spread's months lean on each other for longer than $`L`$, the error still undercounts. Here $`L = 12`$ gives t = 2.58 against 2.68 at $`L = 4`$: the runs are mostly over by month four.
 - **The premium is stable across the sample.** The standard error treats the 240 months as draws from one unchanging process. Real momentum has crashed hard, as in the rebound of spring 2009, and twenty years holds few such episodes.
 - **Costs are ignored.** The spread is before trading costs and the cost of borrowing shares to short. Momentum replaces much of each decile every few months, so costs take a real bite.
 
@@ -88,15 +94,17 @@ The claim to test is loose: stocks that went up tend to keep going up. No formul
 
 ### Step 1: the long-short spread removes the market
 
-Every stock's return contains the whole market's return for that month, a shared tide. Write $r_{i,t} = m_t + u_{i,t}$, with $m_t$ the market's return and $u_{i,t}$ the stock's own part. Averaging over the top $n$ stocks gives $m_t$ plus the average of their own parts; the same for the bottom. Subtracting cancels the market's return exactly:
+Every stock's return contains the whole market's return for that month, a shared tide. Write $`r_{i,t} = m_t + u_{i,t}`$, with $`m_t`$ the market's return and $`u_{i,t}`$ the stock's own part. Averaging over the top $`n`$ stocks gives $`m_t`$ plus the average of their own parts; the same for the bottom. Subtracting cancels the market's return exactly:
 
-$$x_t = \frac{1}{n}\sum_{\text{top}} u_{i,t} - \frac{1}{n}\sum_{\text{bottom}} u_{i,t}.$$
+```math
+x_t = \frac{1}{n}\sum_{\text{top}} u_{i,t} - \frac{1}{n}\sum_{\text{bottom}} u_{i,t}.
+```
 
 Ignoring margin and borrowing fees, money from shorting the losers pays for the winners, so the position costs nothing net to set up. The spread is a return per dollar held on each side, driven only by differences between stocks. Both deciles carry the market's return; the spread carries none of it.
 
 ### Step 2: why skip the latest month
 
-Individual stocks partly reverse over one month. A stock that jumped last month on a burst of buying tends to give some back, because prices overshoot and bid-ask bounce (trades landing alternately at the buying and selling price) adds noise that undoes itself. In the invented market each stock gives back 5 percent of last month's own shock: $u$ contains $-0.05\,e_{i,t-1}$, where $e_{i,t-1}$ is the stock's own surprise last month.
+Individual stocks partly reverse over one month. A stock that jumped last month on a burst of buying tends to give some back, because prices overshoot and bid-ask bounce (trades landing alternately at the buying and selling price) adds noise that undoes itself. In the invented market each stock gives back 5 percent of last month's own shock: $`u`$ contains $`-0.05\,e_{i,t-1}`$, where $`e_{i,t-1}`$ is the stock's own surprise last month.
 
 A signal that includes the latest month ranks on that surprise. Stocks with a big positive surprise land in decile 10 and hand 5 percent of it back; the losers claw some back. That reversal works against the winners, and it is why the 12-0 window, which includes the latest month, earns 5.88 percent a year where 12-1 earns 8.10. Ranked on the latest month alone, the spread turns negative: −6.88 percent a year. Skipping one month keeps the slow drift and drops the fast reversal.
 
@@ -106,32 +114,34 @@ Each month's spread is the hidden drift gap between the two deciles plus fresh n
 
 ### Step 4: the variance of an average when months lean on each other
 
-For independent months, the variance of an average of $T$ numbers is their variance over $T$. That gives the **plain** standard error, $\sqrt{\hat\gamma_0/T}$, which here is 0.1845 percent a month and a t-statistic of 3.66.
+For independent months, the variance of an average of $`T`$ numbers is their variance over $`T`$. That gives the **plain** standard error, $`\sqrt{\hat\gamma_0/T}`$, which here is 0.1845 percent a month and a t-statistic of 3.66.
 
 Months are not independent here. A momentum spread depends on which kind of stock is in fashion, and fashions last: in the invented market each stock carries a fixed loading on a style tide that persists from month to month, so the winners of a good run hold the stocks that keep riding it. The spread's lag-1 autocorrelation is 0.3709.
 
-Expand the variance of the average. It is the sum of every pair's covariance, over $T^2$:
+Expand the variance of the average. It is the sum of every pair's covariance, over $`T^2`$:
 
-$$\operatorname{Var}(\bar x) = \frac{1}{T^2}\sum_{s=1}^{T}\sum_{k=1}^{T}\operatorname{Cov}(x_s, x_k) = \frac{1}{T}\Big[\gamma_0 + 2\sum_{j=1}^{T-1}\Big(1 - \frac{j}{T}\Big)\gamma_j\Big].$$
+```math
+\mathrm{Var}(\bar x) = \frac{1}{T^2}\sum_{s=1}^{T}\sum_{k=1}^{T}\mathrm{Cov}(x_s, x_k) = \frac{1}{T}\Big[\gamma_0 + 2\sum_{j=1}^{T-1}\Big(1 - \frac{j}{T}\Big)\gamma_j\Big].
+```
 
-Pairs $j$ months apart occur $T - j$ times, which gives the weight $1 - j/T$. The plain error keeps only the first term. With positive autocovariances it is too small, and the t-statistic too large.
+Pairs $`j`$ months apart occur $`T - j`$ times, which gives the weight $`1 - j/T`$. The plain error keeps only the first term. With positive autocovariances it is too small, and the t-statistic too large.
 
 ### Step 5: why Newey-West truncates and tapers
 
-The exact formula needs every autocovariance up to lag $T - 1$, and the far ones are estimated from few pairs, mostly noise. Newey-West keeps the first $L$ and tapers their weights from $1 - 1/(L+1)$ down toward zero: 0.8, 0.6, 0.4, 0.2 when $L = 4$. These are **Bartlett weights**, named for the statistician Maurice Bartlett.
+The exact formula needs every autocovariance up to lag $`T - 1`$, and the far ones are estimated from few pairs, mostly noise. Newey-West keeps the first $`L`$ and tapers their weights from $`1 - 1/(L+1)`$ down toward zero: 0.8, 0.6, 0.4, 0.2 when $`L = 4`$. These are **Bartlett weights**, named for the statistician Maurice Bartlett.
 
-The taper is not cosmetic. Cut the autocovariances off without it and the estimated variance can come out negative, which is meaningless. With it, the long-run variance equals an average of squared sums over windows $L + 1$ months long, and a square cannot be negative. The folded proof below shows the identity; the code computes the error both ways and they agree to the last digit printed.
+The taper is not cosmetic. Cut the autocovariances off without it and the estimated variance can come out negative, which is meaningless. With it, the long-run variance equals an average of squared sums over windows $`L + 1`$ months long, and a square cannot be negative. The folded proof below shows the identity; the code computes the error both ways and they agree to the last digit printed.
 
 <details>
 <summary>Detailed proof: the Bartlett-weighted variance is an average of squared window sums</summary>
 
-Let $d_k = x_k - \bar x$ for $k = 1, \dots, T$, and $d_k = 0$ outside that range. For each start $s$ from $1 - L$ to $T$, form the window sum $W_s = d_s + d_{s+1} + \dots + d_{s+L}$.
+Let $`d_k = x_k - \bar x`$ for $`k = 1, \dots, T`$, and $`d_k = 0`$ outside that range. For each start $`s`$ from $`1 - L`$ to $`T`$, form the window sum $`W_s = d_s + d_{s+1} + \dots + d_{s+L}`$.
 
-Square and add over all starts: $\sum_s W_s^2 = \sum_s \sum_{a=0}^{L}\sum_{b=0}^{L} d_{s+a} d_{s+b}$. Group the terms by the gap $j = |a - b|$. For a fixed gap, the pair $(a, b)$ can sit in $L + 1 - j$ positions inside a window, and each product $d_k d_{k+j}$ is met once per position as $s$ runs over every start. So
+Square and add over all starts: $`\sum_s W_s^2 = \sum_s \sum_{a=0}^{L}\sum_{b=0}^{L} d_{s+a} d_{s+b}`$. Group the terms by the gap $`j = |a - b|`$. For a fixed gap, the pair $`(a, b)`$ can sit in $`L + 1 - j`$ positions inside a window, and each product $`d_k d_{k+j}`$ is met once per position as $`s`$ runs over every start. So
 
-$\sum_s W_s^2 = (L+1)\sum_k d_k^2 + 2\sum_{j=1}^{L}(L + 1 - j)\sum_k d_k d_{k+j} = (L+1)\,T\Big[\hat\gamma_0 + 2\sum_{j=1}^{L}\Big(1 - \frac{j}{L+1}\Big)\hat\gamma_j\Big].$
+$`\sum_s W_s^2 = (L+1)\sum_k d_k^2 + 2\sum_{j=1}^{L}(L + 1 - j)\sum_k d_k d_{k+j} = (L+1)\,T\Big[\hat\gamma_0 + 2\sum_{j=1}^{L}\Big(1 - \frac{j}{L+1}\Big)\hat\gamma_j\Big].`$
 
-Divide by $(L+1)T$: the Newey-West long-run variance is the average squared window sum, scaled by the window length. Every term is a square, so the estimate is never negative. Newey and West proved that it converges to the true long-run variance when $L$ grows with $T$, but more slowly; that part is stated here, not proved.
+Divide by $`(L+1)T`$: the Newey-West long-run variance is the average squared window sum, scaled by the window length. Every term is a square, so the estimate is never negative. Newey and West proved that it converges to the true long-run variance when $`L`$ grows with $`T`$, but more slowly; that part is stated here, not proved.
 
 </details>
 
@@ -570,12 +580,12 @@ The two outputs agree line for line. The block bootstrap gives 0.2628 against th
 
 ### Lean
 
-Lean proves the algebra behind Steps 1, 4 and 5, for any monthly spreads and any number of lags $L$.
+Lean proves the algebra behind Steps 1, 4 and 5, for any monthly spreads and any number of lags $`L`$.
 
-- Take any monthly spreads and any $L$, with window sums $W_s$ for every start $s$ from $1 - L$ to $T$. Then $\sum_s W_s^2 = (L+1)\,T\,\hat\sigma^2$, so the long-run variance is never negative.
-- Suppose every stock's return is $r_{i,t} = m_t + u_{i,t}$, and each decile holds $n$ stocks. Then the spread $x_t$ is the top decile's average $u_{i,t}$ minus the bottom decile's average $u_{i,t}$.
-- Suppose the covariance of months $s$ and $k$ depends only on their gap: $\operatorname{Cov}(x_s, x_k) = \gamma_{|s-k|}$. Then $\frac{1}{T^2}$ times the sum of every pair's covariance equals Step 4's formula, with weights $1 - j/T$.
-- The worked numbers are exact: signal 0.22, 30 stocks per decile, $L = 4$ for $T = 240$, and weights 0.8, 0.6, 0.4, 0.2.
+- Take any monthly spreads and any $`L`$, with window sums $`W_s`$ for every start $`s`$ from $`1 - L`$ to $`T`$. Then $`\sum_s W_s^2 = (L+1)\,T\,\hat\sigma^2`$, so the long-run variance is never negative.
+- Suppose every stock's return is $`r_{i,t} = m_t + u_{i,t}`$, and each decile holds $`n`$ stocks. Then the spread $`x_t`$ is the top decile's average $`u_{i,t}`$ minus the bottom decile's average $`u_{i,t}`$.
+- Suppose the covariance of months $`s`$ and $`k`$ depends only on their gap: $`\mathrm{Cov}(x_s, x_k) = \gamma_{|s-k|}`$. Then $`\frac{1}{T^2}`$ times the sum of every pair's covariance equals Step 4's formula, with weights $`1 - j/T`$.
+- The worked numbers are exact: signal 0.22, 30 stocks per decile, $`L = 4`$ for $`T = 240`$, and weights 0.8, 0.6, 0.4, 0.2.
 
 The invented market, its spread of 8.10 percent, and every standard error and t-statistic are left to the Python and Rust checks.
 
@@ -911,6 +921,6 @@ Verified 2026-11-14: every link below resolves to the publisher's page.
 
 - Jegadeesh, Narasimhan, and Sheridan Titman. "Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency." *Journal of Finance* 48, no. 1 (1993): 65–91. [doi:10.1111/j.1540-6261.1993.tb04702.x](https://doi.org/10.1111/j.1540-6261.1993.tb04702.x). The original decile sort on past returns, including versions with a gap between ranking and holding.
 - Newey, Whitney K., and Kenneth D. West. "A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix." *Econometrica* 55, no. 3 (1987): 703–708. [doi:10.2307/1913610](https://doi.org/10.2307/1913610). The Bartlett-weighted error and its never-negative property.
-- Newey, Whitney K., and Kenneth D. West. "Automatic Lag Selection in Covariance Matrix Estimation." *Review of Economic Studies* 61, no. 4 (1994): 631–653. [doi:10.2307/2297912](https://doi.org/10.2307/2297912). The rule for choosing the lag $L$.
+- Newey, Whitney K., and Kenneth D. West. "Automatic Lag Selection in Covariance Matrix Estimation." *Review of Economic Studies* 61, no. 4 (1994): 631–653. [doi:10.2307/2297912](https://doi.org/10.2307/2297912). The rule for choosing the lag $`L`$.
 - Carhart, Mark M. "On Persistence in Mutual Fund Performance." *Journal of Finance* 52, no. 1 (1997): 57–82. [doi:10.1111/j.1540-6261.1997.tb03808.x](https://doi.org/10.1111/j.1540-6261.1997.tb03808.x). Momentum as a fourth factor in fund attribution, built from eleven-month returns lagged one month: the 12-1 signal.
 - Moskowitz, Tobias J., Yao Hua Ooi, and Lasse Heje Pedersen. "Time Series Momentum." *Journal of Financial Economics* 104, no. 2 (2012): 228–250. [doi:10.1016/j.jfineco.2011.11.003](https://doi.org/10.1016/j.jfineco.2011.11.003). The own-past version across futures markets.

@@ -10,9 +10,9 @@ The parcel-depot conveyor from the rest of this shelf has a new problem. A chute
 
 The speed controller must also keep everything the earlier cards asked for. It must stay stable when the belt's inertia doubles from 0.20 kg·m² empty to 0.40 kg·m² full. It must cut slow speed errors. It must not ask the drive for more torque than it has. Four wishes, one controller, and they pull against each other.
 
-H-infinity design turns every wish into a curve over frequency, called a **weight**. Each closed-loop gain is divided by its weight. The design then picks the controller that makes the worst of these ratios, at the worst frequency, as small as possible. The worst case for one controller is one number, written $\gamma$ (gamma). If $\gamma$ is below 1, every wish is met at every frequency at once, with one catch this card returns to: the error wish is checked on the empty-belt model only.
+H-infinity design turns every wish into a curve over frequency, called a **weight**. Each closed-loop gain is divided by its weight. The design then picks the controller that makes the worst of these ratios, at the worst frequency, as small as possible. The worst case for one controller is one number, written $`\gamma`$ (gamma). If $`\gamma`$ is below 1, every wish is met at every frequency at once, with one catch this card returns to: the error wish is checked on the empty-belt model only.
 
-For the conveyor the weight that matters gets a peak at 2 Hz: a demand for five times more rejection there. The search answers by switching on a part of the controller it had left off: a resonator, a term whose gain is unlimited at exactly 2 Hz. The worst case comes out at $\gamma$ = 0.9696. In a simulation the 2 Hz wobble dies away to 0.0000 rad/s on the empty belt and on the full one. A plain design from the same search, with no peak in the weight, leaves 0.1728 rad/s.
+For the conveyor the weight that matters gets a peak at 2 Hz: a demand for five times more rejection there. The search answers by switching on a part of the controller it had left off: a resonator, a term whose gain is unlimited at exactly 2 Hz. The worst case comes out at $`\gamma`$ = 0.9696. In a simulation the 2 Hz wobble dies away to 0.0000 rad/s on the empty belt and on the full one. A plain design from the same search, with no peak in the weight, leaves 0.1728 rad/s.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -25,11 +25,11 @@ xychart-beta
     line [0.060, 0.077, 0.121, 0.169, 0.211, 0.228, 0.203, 0.000, 0.340, 0.530, 0.698, 1.330, 1.161]
 ```
 
-Orange: the allowance $1/\lvert W_P\rvert$ from the peaked weight, the most $\lvert S\rvert$ may be when $\gamma$ = 1; its dip at 12.57 rad/s is the 2 Hz demand. Green: design A, tuned with a flat weight; at 2 Hz it lets 0.880 of the disturbance through. Dark: design B, tuned with the peaked weight; it digs a notch to 0.000 at 2 Hz and stays under the allowance everywhere.
+Orange: the allowance $`1/\lvert W_P\rvert`$ from the peaked weight, the most $`\lvert S\rvert`$ may be when $`\gamma`$ = 1; its dip at 12.57 rad/s is the 2 Hz demand. Green: design A, tuned with a flat weight; at 2 Hz it lets 0.880 of the disturbance through. Dark: design B, tuned with the peaked weight; it digs a notch to 0.000 at 2 Hz and stays under the allowance everywhere.
 
 **H-infinity design writes each requirement as a weight over frequency, stacks the weighted closed-loop gains, and chooses the controller that makes the peak of the stack, the worst-case gain from disturbance to weighted error, as small as possible; a peak below 1 meets every requirement at every frequency at once.**
 
-**What kind of fact this is:** a design method. Its guarantee, that $\gamma < 1$ meets every weighted requirement and keeps every belt in the envelope stable, is a theorem proved on this card in Why it works. That the truly best controller can be computed from two Riccati equations (quadratic matrix equations, described in Step 5) is a theorem stated here, not proved; this card finds a good controller by a search instead, and says how far from the best it can be.
+**What kind of fact this is:** a design method. Its guarantee, that $`\gamma < 1`$ meets every weighted requirement and keeps every belt in the envelope stable, is a theorem proved on this card in Why it works. That the truly best controller can be computed from two Riccati equations (quadratic matrix equations, described in Step 5) is a theorem stated here, not proved; this card finds a good controller by a search instead, and says how far from the best it can be.
 
 ---
 
@@ -37,23 +37,29 @@ Orange: the allowance $1/\lvert W_P\rvert$ from the peaked weight, the most $\lv
 
 Notation from earlier cards, one line each:
 
-- The controller is written $K$ here, as is usual in H-infinity work; the earlier cards call it $C$.
-- The loop gain $L = PK$ is one trip round plant and controller; the sensitivity $S = 1/(1+L)$ is the fraction of a disturbance that survives the loop, and $T = L/(1+L)$ is the fraction of a signal that goes round it ([Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md)).
-- Engineers write $j$ for the square root of −1; the rest of the library writes i.
-- The **H-infinity norm** $\lVert G\rVert_\infty$ is the peak gain of a stable system $G$ over all frequencies ([Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md)).
-- The weights $W$ and $W_P$ and the test $\lvert W_P S\rvert + \lvert WT\rvert < 1$ come from [Robust tests](02-robust-stability-and-robust-performance.md).
+- The controller is written $`K`$ here, as is usual in H-infinity work; the earlier cards call it $`C`$.
+- The loop gain $`L = PK`$ is one trip round plant and controller; the sensitivity $`S = 1/(1+L)`$ is the fraction of a disturbance that survives the loop, and $`T = L/(1+L)`$ is the fraction of a signal that goes round it ([Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md)).
+- Engineers write $`j`$ for the square root of −1; the rest of the library writes i.
+- The **H-infinity norm** $`\lVert G\rVert_\infty`$ is the peak gain of a stable system $`G`$ over all frequencies ([Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md)).
+- The weights $`W`$ and $`W_P`$ and the test $`\lvert W_P S\rvert + \lvert WT\rvert < 1`$ come from [Robust tests](02-robust-stability-and-robust-performance.md).
 
 The plant, from drive torque in N·m to roller speed in rad/s, and the controller family searched on this card:
 
-$$P(s) = \frac{1}{(Js + b)(\tau s + 1)}, \qquad K(s) = K_p + \frac{K_i}{s} + K_r\,\frac{s}{s^2 + \omega_0^2}.$$
+```math
+P(s) = \frac{1}{(Js + b)(\tau s + 1)}, \qquad K(s) = K_p + \frac{K_i}{s} + K_r\,\frac{s}{s^2 + \omega_0^2}.
+```
 
-The load bump enters at the belt, after the drive, so it reaches the speed through $S/(Js+b)$. The **mixed-sensitivity problem**, mixed because it weights $S$, $KS$ and $T$ together:
+The load bump enters at the belt, after the drive, so it reaches the speed through $`S/(Js+b)`$. The **mixed-sensitivity problem**, mixed because it weights $`S`$, $`KS`$ and $`T`$ together:
 
-$$\gamma_{\text{opt}} = \min_{K\ \text{stabilising}}\ \gamma(K), \qquad \gamma(K) = \left\lVert \begin{matrix} W_P\,S \\ W_U\,K S \\ W\,T \end{matrix} \right\rVert_\infty, \qquad \text{where at each } \omega\text{ the size of the stack is } \sqrt{\lvert W_P S\rvert^2 + \lvert W_U K S\rvert^2 + \lvert W T\rvert^2}.$$
+```math
+\gamma_{\text{opt}} = \min_{K\ \text{stabilising}}\ \gamma(K), \qquad \gamma(K) = \left\lVert \begin{matrix} W_P\,S \\ W_U\,K S \\ W\,T \end{matrix} \right\rVert_\infty, \qquad \text{where at each } \omega\text{ the size of the stack is } \sqrt{\lvert W_P S\rvert^2 + \lvert W_U K S\rvert^2 + \lvert W T\rvert^2}.
+```
 
 The three weights:
 
-$$W_P(s) = \frac{s/M + \omega_B}{s + \omega_B A}\cdot\frac{s^2 + 2\zeta_n\omega_0 s + \omega_0^2}{s^2 + 2\zeta_d\omega_0 s + \omega_0^2}, \qquad W_U = 0.05, \qquad W(s) = \frac{0.5\,s}{s+1}.$$
+```math
+W_P(s) = \frac{s/M + \omega_B}{s + \omega_B A}\cdot\frac{s^2 + 2\zeta_n\omega_0 s + \omega_0^2}{s^2 + 2\zeta_d\omega_0 s + \omega_0^2}, \qquad W_U = 0.05, \qquad W(s) = \frac{0.5\,s}{s+1}.
+```
 
 **Read it aloud:** gamma of a controller is the peak across frequency of the combined size of three things: the speed error the specification forbids, the torque the drive cannot give, and the model error passed round the loop; gamma-opt is the smallest gamma any stabilising controller can reach.
 
@@ -65,30 +71,30 @@ flowchart LR
     G -->|"signal into model error, × W"| Z3["model error passed round"]
 ```
 
-Schematic. One disturbance in, added to the roller speed, three weighted errors out. $\gamma$ is the worst-case gain of this map. The 0.5 N·m load bump reaches this input only after the belt, $1/(Js+b)$, has filtered it; the 2 Hz demand on it is written into $W_P$.
+Schematic. One disturbance in, added to the roller speed, three weighted errors out. $`\gamma`$ is the worst-case gain of this map. The 0.5 N·m load bump reaches this input only after the belt, $`1/(Js+b)`$, has filtered it; the 2 Hz demand on it is written into $`W_P`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P$, $J$, $J_0$, $b$, $\tau$ | the plant; inertia of motor, belt and load, kg·m², with $J_0$ the empty belt used as the model; belt friction, N·m·s/rad; the drive's torque lag, s | $J$ from 0.20 to 0.40, $J_0$ = 0.20; $b$ = 0.40; $\tau$ = 0.02 | more inertia: less loop gain at 2 Hz |
-| $d$, $\omega_0$ | the load bump's size in N·m; its frequency in rad/s | 0.5 N·m; 2 Hz = 12.5664 rad/s | the speed wobble grows in proportion to $d$ |
-| $s$, $j$, $\omega$ | the Laplace variable; the square root of −1; angular frequency, with $s = j\omega$ for a steady sine | scanned from 0.01 to 1000 rad/s | — |
-| $K$, $K_p$, $K_i$ | the controller; N·m per rad/s of speed error; N·m per rad of built-up error | design B: 7.000 and 1.643 | faster loop, more torque, less robust |
-| $K_r$ | gain of the resonator, N·m per rad, like $K_i$; the resonator is a part of $K$ with infinite gain at $\omega_0$ | design B: 22.750; design A: 0.000 | the notch in $\lvert S\rvert$ widens, and its sides rise |
-| $L$, $S$, $T$, $S_J$ | loop gain $PK$; sensitivity $1/(1+L)$; complementary sensitivity $L/(1+L)$; $S_J$ the sensitivity with the real belt $J$ in place of the model | design A at 2 Hz: $\lvert S\rvert$ = 0.8796, $\lvert T\rvert$ = 0.6742; design B, full belt: $\lvert S_J\rvert$ = 0.903 at 14 rad/s | — |
-| $W_P$, $M$, $\omega_B$, $A$ | the performance weight: $\lvert S\rvert$ must stay under $\gamma/\lvert W_P\rvert$; the largest $\lvert S\rvert$ allowed; the frequency below which errors must be cut; the steady error allowed | $M$ = 2, $\omega_B$ = 4 rad/s, $A$ = 0.01, as on Robust tests | a harder specification, a larger $\gamma$ |
-| $\zeta_n$, $\zeta_d$ | damping ratios of the weight's 2 Hz zeros and poles; the peak is $\zeta_n/\zeta_d$ times the flat weight | 0.5 and 0.1: a peak of 5 | smaller $\zeta_d$: a taller, narrower demand |
-| $W_U$ | the torque weight: one over the torque, in N·m, allowed per rad/s of speed wobble | 0.05, so 20 N·m per rad/s | less torque allowed: $\gamma$ = 1.1467 at 0.1 |
-| $W$ | the envelope of relative model error, from the full belt | 0.4984 at 2 Hz, up to 0.5 | harder to keep every belt stable |
-| $\lVert\cdot\rVert_\infty$, $G$, $\gamma$, $\gamma_{\text{opt}}$ | the H-infinity norm, peak gain over frequency, of any stable system $G$; the value it reaches for the chosen controller; the best value any controller reaches | design A 0.6288, design B 0.9696; $\gamma_{\text{opt}}$ between 0.5081 and 0.9696 | at 1 a requirement is just met |
-| $a$, $c$ | in Step 3: the size of $W_P$; the combined size of $W_U/P$ and $W$ | at high frequency $a$ tends to 0.5 | — |
+| $`P`$, $`J`$, $`J_0`$, $`b`$, $`\tau`$ | the plant; inertia of motor, belt and load, kg·m², with $`J_0`$ the empty belt used as the model; belt friction, N·m·s/rad; the drive's torque lag, s | $`J`$ from 0.20 to 0.40, $`J_0`$ = 0.20; $`b`$ = 0.40; $`\tau`$ = 0.02 | more inertia: less loop gain at 2 Hz |
+| $`d`$, $`\omega_0`$ | the load bump's size in N·m; its frequency in rad/s | 0.5 N·m; 2 Hz = 12.5664 rad/s | the speed wobble grows in proportion to $`d`$ |
+| $`s`$, $`j`$, $`\omega`$ | the Laplace variable; the square root of −1; angular frequency, with $`s = j\omega`$ for a steady sine | scanned from 0.01 to 1000 rad/s | — |
+| $`K`$, $`K_p`$, $`K_i`$ | the controller; N·m per rad/s of speed error; N·m per rad of built-up error | design B: 7.000 and 1.643 | faster loop, more torque, less robust |
+| $`K_r`$ | gain of the resonator, N·m per rad, like $`K_i`$; the resonator is a part of $`K`$ with infinite gain at $`\omega_0`$ | design B: 22.750; design A: 0.000 | the notch in $`\lvert S\rvert`$ widens, and its sides rise |
+| $`L`$, $`S`$, $`T`$, $`S_J`$ | loop gain $`PK`$; sensitivity $`1/(1+L)`$; complementary sensitivity $`L/(1+L)`$; $`S_J`$ the sensitivity with the real belt $`J`$ in place of the model | design A at 2 Hz: $`\lvert S\rvert`$ = 0.8796, $`\lvert T\rvert`$ = 0.6742; design B, full belt: $`\lvert S_J\rvert`$ = 0.903 at 14 rad/s | — |
+| $`W_P`$, $`M`$, $`\omega_B`$, $`A`$ | the performance weight: $`\lvert S\rvert`$ must stay under $`\gamma/\lvert W_P\rvert`$; the largest $`\lvert S\rvert`$ allowed; the frequency below which errors must be cut; the steady error allowed | $`M`$ = 2, $`\omega_B`$ = 4 rad/s, $`A`$ = 0.01, as on Robust tests | a harder specification, a larger $`\gamma`$ |
+| $`\zeta_n`$, $`\zeta_d`$ | damping ratios of the weight's 2 Hz zeros and poles; the peak is $`\zeta_n/\zeta_d`$ times the flat weight | 0.5 and 0.1: a peak of 5 | smaller $`\zeta_d`$: a taller, narrower demand |
+| $`W_U`$ | the torque weight: one over the torque, in N·m, allowed per rad/s of speed wobble | 0.05, so 20 N·m per rad/s | less torque allowed: $`\gamma`$ = 1.1467 at 0.1 |
+| $`W`$ | the envelope of relative model error, from the full belt | 0.4984 at 2 Hz, up to 0.5 | harder to keep every belt stable |
+| $`\lVert\cdot\rVert_\infty`$, $`G`$, $`\gamma`$, $`\gamma_{\text{opt}}`$ | the H-infinity norm, peak gain over frequency, of any stable system $`G`$; the value it reaches for the chosen controller; the best value any controller reaches | design A 0.6288, design B 0.9696; $`\gamma_{\text{opt}}`$ between 0.5081 and 0.9696 | at 1 a requirement is just met |
+| $`a`$, $`c`$ | in Step 3: the size of $`W_P`$; the combined size of $`W_U/P`$ and $`W`$ | at high frequency $`a`$ tends to 0.5 | — |
 
 ### When it holds
 
-- **Linear and unsaturated.** Everything here assumes the drive gives whatever torque is asked. The weight $W_U$ limits the torque per rad/s of wobble, not the torque for a big command change. Design B has $K_p$ = 7.000, so a 3 rad/s step in the speed command asks for 21.0 N·m at once, over a 20 N·m drive: outside the range this card describes.
+- **Linear and unsaturated.** Everything here assumes the drive gives whatever torque is asked. The weight $`W_U`$ limits the torque per rad/s of wobble, not the torque for a big command change. Design B has $`K_p`$ = 7.000, so a 3 rad/s step in the speed command asks for 21.0 N·m at once, over a 20 N·m drive: outside the range this card describes.
 - **The bump is at the frequency the weight names.** The resonator kills 2 Hz exactly. If the chute speeds up so parcels land at 2.4 Hz, design B leaves 0.0918 rad/s on the full belt, worse than the plain design's 0.0870.
-- **The model errors sit inside the envelope.** Robust stability covers inertias from 0.20 to 0.40 kg·m², the family $W$ was drawn from. A delay or a slipping belt is a different error and needs its own weight.
+- **The model errors sit inside the envelope.** Robust stability covers inertias from 0.20 to 0.40 kg·m², the family $`W`$ was drawn from. A delay or a slipping belt is a different error and needs its own weight.
 - **One input, one output.** With one drive and one speed the stack's size is a square root of a sum of squares. With several drives on one belt it becomes the largest singular value of a matrix (the most the matrix can stretch a vector), the same idea with more algebra.
-- **A search, not the optimum.** The controller here comes from a search over three gains. Its $\gamma$ is an upper bound on $\gamma_{\text{opt}}$, what the best controller of any form could reach.
+- **A search, not the optimum.** The controller here comes from a search over three gains. Its $`\gamma`$ is an upper bound on $`\gamma_{\text{opt}}`$, what the best controller of any form could reach.
 
 ---
 
@@ -96,27 +102,27 @@ Schematic. One disturbance in, added to the roller speed, three weighted errors 
 
 ### Step 0: one number can hold many requirements
 
-Each requirement on a loop says that some closed-loop gain must stay under a curve: $\lvert S\rvert$ under the error allowance, $\lvert KS\rvert$ under the torque budget, $\lvert T\rvert$ under the room the model error leaves. Divide each gain by its curve and every requirement becomes "this ratio stays under 1". Stack the ratios and take the largest value of the stack over all frequencies. If that one peak is below 1, every ratio is below 1 everywhere. The design question shrinks to one number, and the controller is chosen to shrink it.
+Each requirement on a loop says that some closed-loop gain must stay under a curve: $`\lvert S\rvert`$ under the error allowance, $`\lvert KS\rvert`$ under the torque budget, $`\lvert T\rvert`$ under the room the model error leaves. Divide each gain by its curve and every requirement becomes "this ratio stays under 1". Stack the ratios and take the largest value of the stack over all frequencies. If that one peak is below 1, every ratio is below 1 everywhere. The design question shrinks to one number, and the controller is chosen to shrink it.
 
 ### Step 1: what the peak measures
 
-Add a sine disturbance of frequency $\omega$ and size 1 rad/s to the roller speed. The three weighted errors come out as sines of sizes $\lvert W_P S\rvert$, $\lvert W_U KS\rvert$ and $\lvert WT\rvert$. Their combined size, the square root of the sum of squares, is the stack at $\omega$. The peak over $\omega$ is therefore the worst gain any sine can see.
+Add a sine disturbance of frequency $`\omega`$ and size 1 rad/s to the roller speed. The three weighted errors come out as sines of sizes $`\lvert W_P S\rvert`$, $`\lvert W_U KS\rvert`$ and $`\lvert WT\rvert`$. Their combined size, the square root of the sum of squares, is the stack at $`\omega`$. The peak over $`\omega`$ is therefore the worst gain any sine can see.
 
-It is also the worst gain for any disturbance at all, not only sines. A disturbance of finite energy is a mixture of frequencies, and by Parseval's theorem its energy is the sum of the energies at each frequency. Each frequency is amplified by at most the peak, so the output energy is at most $\gamma^2$ times the input energy. A long burst of sine at the peak frequency gets arbitrarily close to that. So $\gamma$ is exactly the worst-case gain from disturbance to weighted error.
+It is also the worst gain for any disturbance at all, not only sines. A disturbance of finite energy is a mixture of frequencies, and by Parseval's theorem its energy is the sum of the energies at each frequency. Each frequency is amplified by at most the peak, so the output energy is at most $`\gamma^2`$ times the input energy. A long burst of sine at the peak frequency gets arbitrarily close to that. So $`\gamma`$ is exactly the worst-case gain from disturbance to weighted error.
 
 For design B the peak is 0.9696 at 14.45 rad/s, just above the bump's 12.5664 rad/s. The code checks the peak on a grid four times finer and gets the same value to 0.001.
 
 ### Step 2: a peak under 1 gives three guarantees
 
-Each squared term is at most the squared stack. So $\gamma < 1$ gives, at every frequency:
+Each squared term is at most the squared stack. So $`\gamma < 1`$ gives, at every frequency:
 
-- $\lvert W_P S\rvert < 1$: the model loop meets the error specification;
-- $\lvert W_U KS\rvert < 1$: a speed wobble of 1 rad/s never asks for more than 20 N·m of torque wobble;
-- $\lvert WT\rvert < 1$: by the small gain rule of [Robust tests](02-robust-stability-and-robust-performance.md), every belt from empty to full stays stable.
+- $`\lvert W_P S\rvert < 1`$: the model loop meets the error specification;
+- $`\lvert W_U KS\rvert < 1`$: a speed wobble of 1 rad/s never asks for more than 20 N·m of torque wobble;
+- $`\lvert WT\rvert < 1`$: by the small gain rule of [Robust tests](02-robust-stability-and-robust-performance.md), every belt from empty to full stays stable.
 
-For design B, $\lvert WT\rvert$ peaks at 0.6411. The Routh test ([Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md)) on the closed-loop polynomial, which uses no frequencies at all, agrees: every first-column entry is positive for the empty, half and full belts.
+For design B, $`\lvert WT\rvert`$ peaks at 0.6411. The Routh test ([Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md)) on the closed-loop polynomial, which uses no frequencies at all, agrees: every first-column entry is positive for the empty, half and full belts.
 
-What $\gamma < 1$ does **not** give is robust performance. That needs $\lvert W_P S\rvert + \lvert WT\rvert < 1$, and a sum can be up to $\sqrt 2$ times the square root of the sum of squares. For design B the sum peaks at 1.3418, under the most it could be, 1.3712, but over 1. Checked directly, the full belt's $\lvert W_P S_J\rvert$ reaches 1.8324 at 14.21 rad/s. The full belt still kills the 2 Hz bump exactly, but near it, at 14 rad/s, it lets 0.903 of a disturbance through where the specification allowed 0.500.
+What $`\gamma < 1`$ does **not** give is robust performance. That needs $`\lvert W_P S\rvert + \lvert WT\rvert < 1`$, and a sum can be up to $`\sqrt 2`$ times the square root of the sum of squares. For design B the sum peaks at 1.3418, under the most it could be, 1.3712, but over 1. Checked directly, the full belt's $`\lvert W_P S_J\rvert`$ reaches 1.8324 at 14.21 rad/s. The full belt still kills the 2 Hz bump exactly, but near it, at 14 rad/s, it lets 0.903 of a disturbance through where the specification allowed 0.500.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -129,36 +135,36 @@ xychart-beta
     line [0.076, 0.121, 0.220, 0.313, 0.384, 0.400, 0.352, 0.000, 0.903, 1.122, 1.152, 1.238, 1.076]
 ```
 
-Orange: the allowance $1/\lvert W_P\rvert$. Green: design B on the empty-belt model, under the allowance everywhere. Dark: design B on the full belt. Both notches reach 0.000 at 12.57 rad/s, but the full belt's right shoulder pokes far over the allowance at 14 and 16 rad/s.
+Orange: the allowance $`1/\lvert W_P\rvert`$. Green: design B on the empty-belt model, under the allowance everywhere. Dark: design B on the full belt. Both notches reach 0.000 at 12.57 rad/s, but the full belt's right shoulder pokes far over the allowance at 14 and 16 rad/s.
 
 ### Step 3: a floor no controller can go below
 
-At every frequency two facts tie the three terms together, whatever the controller: $S + T = 1$, and $KS = T/P$. So at one frequency the stack is $\sqrt{a^2\lvert S\rvert^2 + c^2\lvert 1 - S\rvert^2}$, with $a = \lvert W_P\rvert$ and $c^2 = \lvert W_U/P\rvert^2 + \lvert W\rvert^2$. The smallest that can be, over every complex number $S$, is $ac/\sqrt{a^2 + c^2}$. The peak of that over frequency is a floor under $\gamma$ for every controller there is.
+At every frequency two facts tie the three terms together, whatever the controller: $`S + T = 1`$, and $`KS = T/P`$. So at one frequency the stack is $`\sqrt{a^2\lvert S\rvert^2 + c^2\lvert 1 - S\rvert^2}`$, with $`a = \lvert W_P\rvert`$ and $`c^2 = \lvert W_U/P\rvert^2 + \lvert W\rvert^2`$. The smallest that can be, over every complex number $`S`$, is $`ac/\sqrt{a^2 + c^2}`$. The peak of that over frequency is a floor under $`\gamma`$ for every controller there is.
 
-For the conveyor the floor is 0.5000 with the flat weight, reached at high frequency (436.52 rad/s on the scan). There the plant barely responds, so any $T$ costs a lot of torque ($KS = T/P$); the cheapest choice is $S$ near 1, and the weight allows $\lvert S\rvert$ up to $M$ = 2, so $\gamma$ can never drop below $1/M$. The 2 Hz demand lifts the floor to 0.5081, at 12.88 rad/s, right beside the demand. The best possible, $\gamma_{\text{opt}}$ for design B's weights, therefore lies between 0.5081 and 0.9696. The floor picks $S$ separately at each frequency. A real controller that stabilises the loop ties those values together, Bode's integral being one such tie, so the floor is not the answer itself.
+For the conveyor the floor is 0.5000 with the flat weight, reached at high frequency (436.52 rad/s on the scan). There the plant barely responds, so any $`T`$ costs a lot of torque ($`KS = T/P`$); the cheapest choice is $`S`$ near 1, and the weight allows $`\lvert S\rvert`$ up to $`M`$ = 2, so $`\gamma`$ can never drop below $`1/M`$. The 2 Hz demand lifts the floor to 0.5081, at 12.88 rad/s, right beside the demand. The best possible, $`\gamma_{\text{opt}}`$ for design B's weights, therefore lies between 0.5081 and 0.9696. The floor picks $`S`$ separately at each frequency. A real controller that stabilises the loop ties those values together, Bode's integral being one such tie, so the floor is not the answer itself.
 
 ### Step 4: the weight's shape becomes the loop's shape
 
-With the flat weight the search returns $K_r$ = 0.000: design A is a plain PI controller (proportional plus integral), $\gamma$ = 0.6288. That it matches the certificate on [Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md) to four digits is a coincidence: a different controller and a different quantity.
+With the flat weight the search returns $`K_r`$ = 0.000: design A is a plain PI controller (proportional plus integral), $`\gamma`$ = 0.6288. That it matches the certificate on [Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md) to four digits is a coincidence: a different controller and a different quantity.
 
-The peaked weight multiplies $\lvert W_P\rvert$ at 2 Hz by 5, from 0.5927 to 2.9636, so at 12.57 rad/s $\lvert S\rvert$ may be at most 0.337 when $\gamma$ = 1. A PI controller can get there only by raising its gain at every frequency. The best PI found, $K_p$ = 8.725, cuts $\lvert S\rvert$ at 2 Hz to 0.2962, yet its stack still reaches 1.0169 twice. The first peak is beside 2 Hz, at 12.66 rad/s (1.0141 at 2 Hz itself), where the model-error term, unavoidable once $\lvert S\rvert$ is small, adds to the performance term. The second is at 50.99 rad/s, where the high gain lifts $\lvert S\rvert$, $\lvert KS\rvert$ and $\lvert T\rvert$ together. More gain would lower the first peak and raise the second, so the search finds no PI under 1.
+The peaked weight multiplies $`\lvert W_P\rvert`$ at 2 Hz by 5, from 0.5927 to 2.9636, so at 12.57 rad/s $`\lvert S\rvert`$ may be at most 0.337 when $`\gamma`$ = 1. A PI controller can get there only by raising its gain at every frequency. The best PI found, $`K_p`$ = 8.725, cuts $`\lvert S\rvert`$ at 2 Hz to 0.2962, yet its stack still reaches 1.0169 twice. The first peak is beside 2 Hz, at 12.66 rad/s (1.0141 at 2 Hz itself), where the model-error term, unavoidable once $`\lvert S\rvert`$ is small, adds to the performance term. The second is at 50.99 rad/s, where the high gain lifts $`\lvert S\rvert`$, $`\lvert KS\rvert`$ and $`\lvert T\rvert`$ together. More gain would lower the first peak and raise the second, so the search finds no PI under 1.
 
-The resonator escapes this trade. Its gain $K_r s/(s^2 + \omega_0^2)$ is infinite at $\omega_0$ and falls away on either side, so $L$ is infinite and $S(j\omega_0)$ = 0 exactly, for every belt that stays stable. This is the internal model idea: a controller that contains a model of the disturbance, here an undamped 2 Hz oscillator, can cancel it completely.
+The resonator escapes this trade. Its gain $`K_r s/(s^2 + \omega_0^2)`$ is infinite at $`\omega_0`$ and falls away on either side, so $`L`$ is infinite and $`S(j\omega_0)`$ = 0 exactly, for every belt that stays stable. This is the internal model idea: a controller that contains a model of the disturbance, here an undamped 2 Hz oscillator, can cancel it completely.
 
-The cancellation has a price, and Bode's sensitivity integral from [Loop shaping](../03-Feedback%20Control/09-lead-lag-compensation-and-loop-shaping.md) names it: pushing $\lvert S\rvert$ down at one frequency pushes it up nearby. The notch's shoulders at 14 and 16 rad/s are that price, and the search picks the $K_r$ that keeps them furthest under the allowance on the model.
+The cancellation has a price, and Bode's sensitivity integral from [Loop shaping](../03-Feedback%20Control/09-lead-lag-compensation-and-loop-shaping.md) names it: pushing $`\lvert S\rvert`$ down at one frequency pushes it up nearby. The notch's shoulders at 14 and 16 rad/s are that price, and the search picks the $`K_r`$ that keeps them furthest under the allowance on the model.
 
 ### Step 5: how the best controller is really found
 
-Exact H-infinity synthesis does not search. For a given $\gamma$ it solves two Riccati equations (quadratic matrix equations, like the one behind the feedback gain of [The LQR](../04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md), the linear quadratic regulator); a solution of a certain kind exists exactly when some controller reaches $\gamma$. Bisecting on $\gamma$ finds the optimum, and the answer is a controller whose order equals the plant's plus the weights'. That theorem is stated here, not proved. Reliable Riccati solvers belong to [Numerical analysis](../../16-Numerical%20analysis/README.md); the same synthesis written as linear matrix inequalities (matrix conditions solved by convex optimisation) belongs to [Optimization](../../15-Optimization/README.md).
+Exact H-infinity synthesis does not search. For a given $`\gamma`$ it solves two Riccati equations (quadratic matrix equations, like the one behind the feedback gain of [The LQR](../04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md), the linear quadratic regulator); a solution of a certain kind exists exactly when some controller reaches $`\gamma`$. Bisecting on $`\gamma`$ finds the optimum, and the answer is a controller whose order equals the plant's plus the weights'. That theorem is stated here, not proved. Reliable Riccati solvers belong to [Numerical analysis](../../16-Numerical%20analysis/README.md); the same synthesis written as linear matrix inequalities (matrix conditions solved by convex optimisation) belongs to [Optimization](../../15-Optimization/README.md).
 
 This card instead fixes the controller's form and searches its three gains: a grid of 13 × 13 × 11 controllers, then a pattern search (try a step up and down in each gain, halve the step when nothing improves). The peak of a stack is not smooth in the gains, so this finds a good controller, not a certified best. Searching a fixed form is a real method used in industry, because a three-gain controller is easy to install and explain.
 
 <details>
 <summary>Why the floor in Step 3 is the smallest value of the stack at one frequency</summary>
 
-Treat the squared stack at one frequency as a function of the complex number $S$: $f(S) = a^2\lvert S\rvert^2 + c^2\lvert 1 - S\rvert^2$. Both terms are squared distances, from $S$ to 0 and from $S$ to 1, weighted by $a^2$ and $c^2$. Moving $S$ off the real line only adds to both, so the minimum has $S$ real, between 0 and 1. On that segment $f(S) = a^2S^2 + c^2(1 - S)^2$, whose derivative $2a^2S - 2c^2(1 - S)$ is zero at $S = c^2/(a^2 + c^2)$. Substituting, $f = a^2c^4/(a^2+c^2)^2 + c^2a^4/(a^2+c^2)^2 = a^2c^2/(a^2 + c^2)$. The square root is $ac/\sqrt{a^2 + c^2}$.
+Treat the squared stack at one frequency as a function of the complex number $`S`$: $`f(S) = a^2\lvert S\rvert^2 + c^2\lvert 1 - S\rvert^2`$. Both terms are squared distances, from $`S`$ to 0 and from $`S`$ to 1, weighted by $`a^2`$ and $`c^2`$. Moving $`S`$ off the real line only adds to both, so the minimum has $`S`$ real, between 0 and 1. On that segment $`f(S) = a^2S^2 + c^2(1 - S)^2`$, whose derivative $`2a^2S - 2c^2(1 - S)`$ is zero at $`S = c^2/(a^2 + c^2)`$. Substituting, $`f = a^2c^4/(a^2+c^2)^2 + c^2a^4/(a^2+c^2)^2 = a^2c^2/(a^2 + c^2)`$. The square root is $`ac/\sqrt{a^2 + c^2}`$.
 
-The identities used: $S + T = (1 + L)/(1 + L) = 1$, and $KS = K/(1 + PK) = (PK/(1+PK))/P = T/P$.
+The identities used: $`S + T = (1 + L)/(1 + L) = 1`$, and $`KS = K/(1 + PK) = (PK/(1+PK))/P = T/P`$.
 
 </details>
 
@@ -166,31 +172,31 @@ The identities used: $S + T = (1 + L)/(1 + L) = 1$, and $KS = K/(1 + PK) = (PK/(
 
 ## Worked numbers, by hand
 
-Design A at the bump's frequency, $\omega_0$ = 12.5664 rad/s, on the empty belt, with $K_p$ = 2.000 and $K_i$ = 2.656.
+Design A at the bump's frequency, $`\omega_0`$ = 12.5664 rad/s, on the empty belt, with $`K_p`$ = 2.000 and $`K_i`$ = 2.656.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| belt's response to load torque, $\lvert J_0 j\omega_0 + b\rvert$ | $\lvert 0.40 + 2.5133j\rvert$ | 2.5449 |
-| wobble with no control | $0.5/2.5449$ | 0.1965 rad/s |
-| controller, $K = K_p + K_i/(j\omega_0)$ | $2.000 - (2.656/12.5664)j$ | $2.0000 - 0.2114j$ |
-| plant's bottom, $(J_0 j\omega_0 + b)(\tau j\omega_0 + 1)$ | $(0.40 + 2.5133j)(1 + 0.02 \times 12.5664j)$ | $-0.2317 + 2.6138j$ |
-| loop gain $L = PK$, the controller over the bottom | $(2.0000 - 0.2114j)/(-0.2317 + 2.6138j)$ | $-0.14753 - 0.75209j$ |
-| $\lvert 1 + L\rvert$ | $\sqrt{(1 - 0.14753)^2 + 0.75209^2}$ | 1.13682 |
-| fraction surviving the loop, $\lvert S\rvert$ | $1/1.13682$ | 0.8796 |
-| fraction going round, $\lvert T\rvert = \lvert L\rvert/\lvert 1 + L\rvert$ | $0.7664/1.13682$ | 0.6742 |
-| torque per unit wobble, $\lvert KS\rvert = \lvert K\rvert/\lvert 1 + L\rvert$ | $2.0111/1.13682$ | 1.7691 |
-| wobble with design A | $0.5 \times 0.8796/2.5449$ | 0.1728 rad/s |
-| performance term squared | $(0.5927 \times 0.8796)^2$ | 0.2718 |
-| torque term squared | $(0.05 \times 1.7691)^2$ | 0.0078 |
-| model-error term squared | $(0.4984 \times 0.6742)^2$ | 0.1129 |
-| stack at 2 Hz | $\sqrt{0.2718 + 0.0078 + 0.1129}$ | 0.6266 |
-| **design A's peak, over all frequencies** | the scan's maximum | **$\gamma$ = 0.6288 at 16.31 rad/s** |
+| belt's response to load torque, $`\lvert J_0 j\omega_0 + b\rvert`$ | $`\lvert 0.40 + 2.5133j\rvert`$ | 2.5449 |
+| wobble with no control | $`0.5/2.5449`$ | 0.1965 rad/s |
+| controller, $`K = K_p + K_i/(j\omega_0)`$ | $`2.000 - (2.656/12.5664)j`$ | $`2.0000 - 0.2114j`$ |
+| plant's bottom, $`(J_0 j\omega_0 + b)(\tau j\omega_0 + 1)`$ | $`(0.40 + 2.5133j)(1 + 0.02 \times 12.5664j)`$ | $`-0.2317 + 2.6138j`$ |
+| loop gain $`L = PK`$, the controller over the bottom | $`(2.0000 - 0.2114j)/(-0.2317 + 2.6138j)`$ | $`-0.14753 - 0.75209j`$ |
+| $`\lvert 1 + L\rvert`$ | $`\sqrt{(1 - 0.14753)^2 + 0.75209^2}`$ | 1.13682 |
+| fraction surviving the loop, $`\lvert S\rvert`$ | $`1/1.13682`$ | 0.8796 |
+| fraction going round, $`\lvert T\rvert = \lvert L\rvert/\lvert 1 + L\rvert`$ | $`0.7664/1.13682`$ | 0.6742 |
+| torque per unit wobble, $`\lvert KS\rvert = \lvert K\rvert/\lvert 1 + L\rvert`$ | $`2.0111/1.13682`$ | 1.7691 |
+| wobble with design A | $`0.5 \times 0.8796/2.5449`$ | 0.1728 rad/s |
+| performance term squared | $`(0.5927 \times 0.8796)^2`$ | 0.2718 |
+| torque term squared | $`(0.05 \times 1.7691)^2`$ | 0.0078 |
+| model-error term squared | $`(0.4984 \times 0.6742)^2`$ | 0.1129 |
+| stack at 2 Hz | $`\sqrt{0.2718 + 0.0078 + 0.1129}`$ | 0.6266 |
+| **design A's peak, over all frequencies** | the scan's maximum | **$`\gamma`$ = 0.6288 at 16.31 rad/s** |
 
 Design A passes its own flat specification with room to spare, and still leaves 0.1728 rad/s of the 0.1965 rad/s wobble: the flat weight never asked about 2 Hz.
 
-Design B at the same frequency: $\lvert S\rvert$ = 0.0000 and $\lvert T\rvert$ = 1.0000, because the resonator's gain is infinite there. The stack is $\sqrt{0 + (0.05 \times 2.6241)^2 + (0.4984 \times 1)^2}$ = 0.5154. The wobble is 0.0000 rad/s, and an RK4 simulation (the fourth-order Runge–Kutta method) of 30 s agrees on the empty and the full belt.
+Design B at the same frequency: $`\lvert S\rvert`$ = 0.0000 and $`\lvert T\rvert`$ = 1.0000, because the resonator's gain is infinite there. The stack is $`\sqrt{0 + (0.05 \times 2.6241)^2 + (0.4984 \times 1)^2}`$ = 0.5154. The wobble is 0.0000 rad/s, and an RK4 simulation (the fourth-order Runge–Kutta method) of 30 s agrees on the empty and the full belt.
 
-| Belt | Design A wobble, formula and RK4 | Design B wobble, formula and RK4 | Design B peak $\lvert W_P S_J\rvert$ |
+| Belt | Design A wobble, formula and RK4 | Design B wobble, formula and RK4 | Design B peak $`\lvert W_P S_J\rvert`$ |
 | --- | --- | --- | --- |
 | empty, 0.20 kg·m² | 0.1728 and 0.1728 rad/s | 0.0000 and 0.0000 rad/s | 0.8277 at 0.09 rad/s |
 | half, 0.30 kg·m² | — | — | 1.2032 at 14.37 rad/s |
@@ -200,16 +206,16 @@ Design B at the same frequency: $\lvert S\rvert$ = 0.0000 and $\lvert T\rvert$ =
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Find the peak on 11 frequencies, one per half decade | $\gamma$ = 0.9270 instead of 0.9696 | The peak is a narrow shoulder beside the notch; a coarse grid steps over it and flatters the design |
-| Peak the weight but keep a plain PI | best $\gamma$ = 1.0169, with $K_p$ = 8.725, $K_i$ = 1.213 | The PI cuts $\lvert S\rvert$ at 2 Hz to 0.2962, under the 0.337 allowed, but only by high gain everywhere, and its stack reaches 1.0169 beside 2 Hz and again at 50.99 rad/s; the controller's form must be able to follow the weight |
-| Leave out the model-error weight $W$ | $\gamma$ = 0.8286, but 1.0680 once $W$ is put back | The design looks better because it was never asked to keep the full belt stable; the guarantee is gone |
+| Find the peak on 11 frequencies, one per half decade | $`\gamma`$ = 0.9270 instead of 0.9696 | The peak is a narrow shoulder beside the notch; a coarse grid steps over it and flatters the design |
+| Peak the weight but keep a plain PI | best $`\gamma`$ = 1.0169, with $`K_p`$ = 8.725, $`K_i`$ = 1.213 | The PI cuts $`\lvert S\rvert`$ at 2 Hz to 0.2962, under the 0.337 allowed, but only by high gain everywhere, and its stack reaches 1.0169 beside 2 Hz and again at 50.99 rad/s; the controller's form must be able to follow the weight |
+| Leave out the model-error weight $`W`$ | $`\gamma`$ = 0.8286, but 1.0680 once $`W`$ is put back | The design looks better because it was never asked to keep the full belt stable; the guarantee is gone |
 | Assume the bump stays at 2 Hz | at 2.4 Hz the full belt wobbles 0.0918 rad/s with B, 0.0870 with A | The notch is narrow; on the full belt, off its centre the shoulder makes things worse than a plain loop |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts write the loop's frequency response with products of complex numbers only, define the three weights, and search for the controller: a 13 × 13 × 11 grid of gains, then a pattern search, scoring each controller by the peak of the stack over 2,001 frequencies. They reach the answers by **four independent roads**: the frequency-domain formula for the speed wobble; an RK4 time simulation of the conveyor hit by the bump, which must settle to the same wobble; the Routh test on the closed-loop polynomial for three belts, which uses no frequencies; and the controller-free floor of Step 3, which every $\gamma$ must sit above. A brute-force search over complex values of $S$ confirms the floor's formula at its peak frequency, and the flat weight's floor must equal $1/M$. A four-times-finer grid confirms each peak.
+The scripts write the loop's frequency response with products of complex numbers only, define the three weights, and search for the controller: a 13 × 13 × 11 grid of gains, then a pattern search, scoring each controller by the peak of the stack over 2,001 frequencies. They reach the answers by **four independent roads**: the frequency-domain formula for the speed wobble; an RK4 time simulation of the conveyor hit by the bump, which must settle to the same wobble; the Routh test on the closed-loop polynomial for three belts, which uses no frequencies; and the controller-free floor of Step 3, which every $`\gamma`$ must sit above. A brute-force search over complex values of $`S`$ confirms the floor's formula at its peak frequency, and the flat weight's floor must equal $`1/M`$. A four-times-finer grid confirms each peak.
 
 ### Python
 
@@ -627,10 +633,10 @@ ALL CHECKS PASS
 Lean proves the guarantee of Step 2, the floor of Step 3 and the two loop identities, for all values meeting each bullet's conditions.
 
 - Suppose the peak of the stack over all frequencies is a finite number below 1. Then each of the three weighted terms is below 1 at every frequency. Lean does not prove the step from there to every belt staying stable.
-- Take sizes $a \ge 0$ and $c \ge 0$, as in Step 3. Then the smallest stack at one frequency, over every complex number $S$, is exactly $ac/\sqrt{a^2 + c^2}$.
-- Take values of $P$ and $K$ at one frequency, with $P \ne 0$ and $1 + PK \ne 0$. Then $S + T = 1$ and $KS = T/P$.
+- Take sizes $`a \ge 0`$ and $`c \ge 0`$, as in Step 3. Then the smallest stack at one frequency, over every complex number $`S`$, is exactly $`ac/\sqrt{a^2 + c^2}`$.
+- Take values of $`P`$ and $`K`$ at one frequency, with $`P \ne 0`$ and $`1 + PK \ne 0`$. Then $`S + T = 1`$ and $`KS = T/P`$.
 
-The search for designs A and B, every $\gamma$, the wobbles and the Routh test are left to the Python and Rust checks.
+The search for designs A and B, every $`\gamma`$, the wobbles and the Routh test are left to the Python and Rust checks.
 
 ```lean
 -- H-infinity design: if the peak over frequency of the stacked weighted gains is below 1, each weighted requirement holds at every frequency, and no choice of S can push the stack below the floor a c / sqrt (a^2 + c^2).
@@ -751,22 +757,22 @@ example : (7 : ℕ) * 3 = 21 ∧ 20 < (7 : ℕ) * 3 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - Guess first: halve the 2 Hz demand, a peak of 2.5 ($\zeta_d$ = 0.2) instead of 5. Does the resonator survive? No: the search sets $K_r$ = 0.000 and settles on $K_p$ = 5.654, $K_i$ = 1.713, $\gamma$ = 0.8233. A PI controller now meets the milder demand.
-> - Guess first: double the peak to 10 ($\zeta_d$ = 0.05). $K_r$ rises to 28.000 and $\gamma$ to 0.9915: met, with almost nothing to spare.
-> - Guess first: halve the torque budget, $W_U$ = 0.1. $\gamma$ = 1.1467: no controller in the family meets every wish, so one of them has to give.
+> - Guess first: halve the 2 Hz demand, a peak of 2.5 ($`\zeta_d`$ = 0.2) instead of 5. Does the resonator survive? No: the search sets $`K_r`$ = 0.000 and settles on $`K_p`$ = 5.654, $`K_i`$ = 1.713, $`\gamma`$ = 0.8233. A PI controller now meets the milder demand.
+> - Guess first: double the peak to 10 ($`\zeta_d`$ = 0.05). $`K_r`$ rises to 28.000 and $`\gamma`$ to 0.9915: met, with almost nothing to spare.
+> - Guess first: halve the torque budget, $`W_U`$ = 0.1. $`\gamma`$ = 1.1467: no controller in the family meets every wish, so one of them has to give.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Reading $\gamma < 1$ as "every belt meets the specification".** The stacked norm checks performance on the model and stability on every belt, and nothing more. Design B has $\gamma$ = 0.9696, yet its robust performance sum is 1.3418, and the full belt's $\lvert W_P S_J\rvert$ reaches 1.8324 at 14.21 rad/s. Robust performance needs the sum test of [Robust tests](02-robust-stability-and-robust-performance.md), or a direct check of each belt.
+> **Reading $`\gamma < 1`$ as "every belt meets the specification".** The stacked norm checks performance on the model and stability on every belt, and nothing more. Design B has $`\gamma`$ = 0.9696, yet its robust performance sum is 1.3418, and the full belt's $`\lvert W_P S_J\rvert`$ reaches 1.8324 at 14.21 rad/s. Robust performance needs the sum test of [Robust tests](02-robust-stability-and-robust-performance.md), or a direct check of each belt.
 >
 > Smaller traps:
-> - **Reading $\gamma$ as the wobble.** $\gamma$ is a weighted, dimensionless peak. Design B's 0.9696 sits beside a 2 Hz wobble of 0.0000 rad/s; the engineering number comes from $\lvert S\rvert/\lvert Js + b\rvert$ times the bump.
+> - **Reading $`\gamma`$ as the wobble.** $`\gamma`$ is a weighted, dimensionless peak. Design B's 0.9696 sits beside a 2 Hz wobble of 0.0000 rad/s; the engineering number comes from $`\lvert S\rvert/\lvert Js + b\rvert`$ times the bump.
 > - **A coarse frequency grid.** Eleven frequencies give 0.9270 and miss the shoulder that sets the real 0.9696.
-> - **Dropping a weight to make $\gamma$ look good.** Without $W$ the design scores 0.8286; with it restored, 1.0680.
-> - **Expecting a weight to work in a controller that cannot follow it.** With the peaked weight the best plain PI meets the 2 Hz demand on $\lvert S\rvert$ only by raising its gain everywhere, and scores 1.0169.
+> - **Dropping a weight to make $`\gamma`$ look good.** Without $`W`$ the design scores 0.8286; with it restored, 1.0680.
+> - **Expecting a weight to work in a controller that cannot follow it.** With the peaked weight the best plain PI meets the 2 Hz demand on $`\lvert S\rvert`$ only by raising its gain everywhere, and scores 1.0169.
 
 ---
 
@@ -779,13 +785,13 @@ example : (7 : ℕ) * 3 = 21 ∧ 20 < (7 : ℕ) * 3 := by norm_num
 - **Conveyors, rolling mills and paper machines.** Periodic loads from rollers and drops are rejected by shaping the speed loop at their frequency, then checked across the load range.
 
 > **Say it back**
-> H-infinity design writes each requirement on a loop as a weight over frequency, stacks the weighted gains $W_P S$, $W_U KS$ and $WT$, and chooses the controller that makes the stack's peak, $\gamma$, as small as it can. The peak is the worst-case gain from disturbance to weighted error, for sines and for any finite-energy disturbance. Below 1, the model meets its specification, the torque stays in budget and every belt in the envelope stays stable, but robust performance still needs its own check. Peaking the weight at 2 Hz made the search add a resonator, and the conveyor's 2 Hz wobble went from 0.1965 rad/s to 0.0000 rad/s on every belt. No controller can push $\gamma$ below the floor set by $S + T = 1$, here 0.5081.
+> H-infinity design writes each requirement on a loop as a weight over frequency, stacks the weighted gains $`W_P S`$, $`W_U KS`$ and $`WT`$, and chooses the controller that makes the stack's peak, $`\gamma`$, as small as it can. The peak is the worst-case gain from disturbance to weighted error, for sines and for any finite-energy disturbance. Below 1, the model meets its specification, the torque stays in budget and every belt in the envelope stays stable, but robust performance still needs its own check. Peaking the weight at 2 Hz made the search add a resonator, and the conveyor's 2 Hz wobble went from 0.1965 rad/s to 0.0000 rad/s on every belt. No controller can push $`\gamma`$ below the floor set by $`S + T = 1`$, here 0.5081.
 
 ---
 
 ## What this builds on
 
-- [Robust tests](02-robust-stability-and-robust-performance.md): the weights $W$ and $W_P$, the robust stability test $\lvert WT\rvert < 1$ and the robust performance sum, which this card turns from a test into a design goal.
+- [Robust tests](02-robust-stability-and-robust-performance.md): the weights $`W`$ and $`W_P`$, the robust stability test $`\lvert WT\rvert < 1`$ and the robust performance sum, which this card turns from a test into a design goal.
 - [Loop shaping](../03-Feedback%20Control/09-lead-lag-compensation-and-loop-shaping.md): choosing a loop's frequency response by hand, and Bode's sensitivity integral, which explains the shoulders beside the notch.
 
 ## Where this goes next
@@ -794,7 +800,7 @@ example : (7 : ℕ) * 3 = 21 ∧ 20 < (7 : ℕ) * 3 := by norm_num
 - [Passivity](05-passivity-and-absolute-stability.md): a different worst-case guarantee, built from energy instead of gain, that also covers nonlinear parts such as a saturating drive.
 - [Numerical analysis](../../16-Numerical%20analysis/README.md) and [Optimization](../../15-Optimization/README.md): the Riccati solvers and the linear-matrix-inequality form of the synthesis, which give the true optimum this card only brackets.
 
-The question this card leaves open: $\gamma_{\text{opt}}$ for design B's weights lies between 0.5081 and 0.9696; how much of that gap does a controller of unrestricted form close?
+The question this card leaves open: $`\gamma_{\text{opt}}`$ for design B's weights lies between 0.5081 and 0.9696; how much of that gap does a controller of unrestricted form close?
 
 ---
 
@@ -803,7 +809,7 @@ The question this card leaves open: $\gamma_{\text{opt}}$ for design B's weights
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Zames, George. "Feedback and Optimal Sensitivity: Model Reference Transformations, Multiplicative Seminorms, and Approximate Inverses." *IEEE Transactions on Automatic Control* 26, no. 2 (1981): 301–320. [doi:10.1109/TAC.1981.1102603](https://doi.org/10.1109/TAC.1981.1102603). The founding paper: minimise the worst-case weighted sensitivity over frequency.
-- Doyle, John C., Keith Glover, Pramod P. Khargonekar, and Bruce A. Francis. "State-Space Solutions to Standard H2 and H∞ Control Problems." *IEEE Transactions on Automatic Control* 34, no. 8 (1989): 831–847. [doi:10.1109/9.29425](https://doi.org/10.1109/9.29425). The two-Riccati-equation synthesis and the bisection on $\gamma$ outlined in Step 5.
+- Doyle, John C., Keith Glover, Pramod P. Khargonekar, and Bruce A. Francis. "State-Space Solutions to Standard H2 and H∞ Control Problems." *IEEE Transactions on Automatic Control* 34, no. 8 (1989): 831–847. [doi:10.1109/9.29425](https://doi.org/10.1109/9.29425). The two-Riccati-equation synthesis and the bisection on $`\gamma`$ outlined in Step 5.
 - Kwakernaak, Huibert. "Robust Control and H∞-Optimization: Tutorial Paper." *Automatica* 29, no. 2 (1993): 255–273. [doi:10.1016/0005-1098(93)90122-A](https://doi.org/10.1016/0005-1098%2893%2990122-A). The mixed-sensitivity problem and how weights shape the loop.
 - Apkarian, Pierre, and Dominikus Noll. "Nonsmooth H∞ Synthesis." *IEEE Transactions on Automatic Control* 51, no. 1 (2006): 71–86. [doi:10.1109/TAC.2005.860290](https://doi.org/10.1109/TAC.2005.860290). Minimising the peak over a controller of fixed form, the approach of this card's search.
-- Skogestad, Sigurd, and Ian Postlethwaite. *Multivariable Feedback Control: Analysis and Design*, 2nd ed. Wiley, 2005. [Publisher page](https://www.wiley.com/en-us/Multivariable+Feedback+Control%3A+Analysis+and+Design%2C+2nd+Edition-p-9780470011683). The $S/KS/T$ stack, the weight forms used here, and the $\sqrt 2$ link between the stacked norm and robust performance.
+- Skogestad, Sigurd, and Ian Postlethwaite. *Multivariable Feedback Control: Analysis and Design*, 2nd ed. Wiley, 2005. [Publisher page](https://www.wiley.com/en-us/Multivariable+Feedback+Control%3A+Analysis+and+Design%2C+2nd+Edition-p-9780470011683). The $`S/KS/T`$ stack, the weight forms used here, and the $`\sqrt 2`$ link between the stacked norm and robust performance.

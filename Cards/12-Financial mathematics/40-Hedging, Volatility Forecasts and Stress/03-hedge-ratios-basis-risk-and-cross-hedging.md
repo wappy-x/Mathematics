@@ -39,42 +39,48 @@ The one line is the leftover spread. At ratio 0 there is no hedge: 18 cents. It 
 
 ## The formula
 
-Notation first. Write $\Delta S$ ("delta S") for the change in the jet fuel price over the three months, and $\Delta F$ for the change in the heating oil futures price over the same months, both in dollars a gallon. $\sigma$ ("sigma") names a spread, and $\rho$ ("rho") names a correlation: a number from −1 to 1 saying how tightly two quantities move together, 1 meaning in perfect lockstep.
+Notation first. Write $`\Delta S`$ ("delta S") for the change in the jet fuel price over the three months, and $`\Delta F`$ for the change in the heating oil futures price over the same months, both in dollars a gallon. $`\sigma`$ ("sigma") names a spread, and $`\rho`$ ("rho") names a correlation: a number from −1 to 1 saying how tightly two quantities move together, 1 meaning in perfect lockstep.
 
-The airline buys futures on $h$ gallons for each gallon of fuel. Its fuel cost rises by $\Delta S$ and its futures pay it $h\,\Delta F$, so the net change it bears is $\Delta S - h\,\Delta F$. The best $h$ is
+The airline buys futures on $`h`$ gallons for each gallon of fuel. Its fuel cost rises by $`\Delta S`$ and its futures pay it $`h\,\Delta F`$, so the net change it bears is $`\Delta S - h\,\Delta F`$. The best $`h`$ is
 
-$$h^* = \rho\,\frac{\sigma_S}{\sigma_F} = \frac{\operatorname{Cov}(\Delta S, \Delta F)}{\sigma_F^{\,2}}$$
+```math
+h^* = \rho\,\frac{\sigma_S}{\sigma_F} = \frac{\mathrm{Cov}(\Delta S, \Delta F)}{\sigma_F^{\,2}}
+```
 
 **Read it aloud:** the best hedge ratio is the correlation times the ratio of the two spreads; equivalently, how much the fuel moves with the futures, divided by how much the futures move on their own.
 
 The risk it leaves:
 
-$$\sigma_{\text{left}} = \sigma_S\sqrt{1 - \rho^2}$$
+```math
+\sigma_{\text{left}} = \sigma_S\sqrt{1 - \rho^2}
+```
 
 **Read it aloud:** the leftover spread is the fuel's own spread, shrunk by the square root of one minus the correlation squared.
 
 And the number of contracts:
 
-$$N^* = h^*\,\frac{Q}{L}$$
+```math
+N^* = h^*\,\frac{Q}{L}
+```
 
 **Read it aloud:** contracts to buy equal the hedge ratio times the gallons needed, divided by the gallons in one contract.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Delta S$, $\Delta F$ | changes over the hedge in the jet fuel price and the heating oil futures price | unknown today | — |
-| $\sigma_S$ | spread of $\Delta S$ | $0.18 a gallon | $h^*$ rises in step; so does the leftover risk |
-| $\sigma_F$ | spread of $\Delta F$ | $0.20 a gallon | $h^*$ falls: a jumpier hedge needs fewer gallons |
-| $\rho$ | correlation of the two changes | 0.943 | $h^*$ rises; leftover risk falls fast near 1 |
-| $\operatorname{Cov}$ | covariance: $\rho\,\sigma_S\,\sigma_F$, how much the two move together, in squared dollars | 0.033948 | $h^*$ rises |
-| $h$ | the hedge ratio chosen: futures gallons per fuel gallon | anything | leftover risk falls, then rises |
-| $h^*$ | the minimum-variance hedge ratio | 0.8487 | — |
-| $\sigma_{\text{left}}$ | spread of the hedged cost, $\Delta S - h^*\Delta F$ | $0.0599 a gallon | — |
-| $Q$ | gallons of fuel to be bought | 2,000,000 | more contracts |
-| $L$ | gallons covered by one futures contract | 42,000 (1,000 barrels) | fewer contracts |
-| $N^*$ | contracts to buy | 40.41, so 40 | — |
-| $a$, $b$ | intercept and slope of a line fitted through past quarters | from the data; $b$ is the estimated $h^*$ | — |
+| $`\Delta S`$, $`\Delta F`$ | changes over the hedge in the jet fuel price and the heating oil futures price | unknown today | — |
+| $`\sigma_S`$ | spread of $`\Delta S`$ | $0.18 a gallon | $`h^*`$ rises in step; so does the leftover risk |
+| $`\sigma_F`$ | spread of $`\Delta F`$ | $0.20 a gallon | $`h^*`$ falls: a jumpier hedge needs fewer gallons |
+| $`\rho`$ | correlation of the two changes | 0.943 | $`h^*`$ rises; leftover risk falls fast near 1 |
+| $`\mathrm{Cov}`$ | covariance: $`\rho\,\sigma_S\,\sigma_F`$, how much the two move together, in squared dollars | 0.033948 | $`h^*`$ rises |
+| $`h`$ | the hedge ratio chosen: futures gallons per fuel gallon | anything | leftover risk falls, then rises |
+| $`h^*`$ | the minimum-variance hedge ratio | 0.8487 | — |
+| $`\sigma_{\text{left}}`$ | spread of the hedged cost, $`\Delta S - h^*\Delta F`$ | $0.0599 a gallon | — |
+| $`Q`$ | gallons of fuel to be bought | 2,000,000 | more contracts |
+| $`L`$ | gallons covered by one futures contract | 42,000 (1,000 barrels) | fewer contracts |
+| $`N^*`$ | contracts to buy | 40.41, so 40 | — |
+| $`a`$, $`b`$ | intercept and slope of a line fitted through past quarters | from the data; $`b`$ is the estimated $`h^*`$ | — |
 
-A **variance** is a spread squared, $\sigma^2$. Variances of independent pieces add, which spreads do not; that is why the algebra below works on variances and only takes a square root at the end. The fraction of variance removed, $\rho^2$, is written $R^2$ in regression output ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)); here it is 0.889.
+A **variance** is a spread squared, $`\sigma^2`$. Variances of independent pieces add, which spreads do not; that is why the algebra below works on variances and only takes a square root at the end. The fraction of variance removed, $`\rho^2`$, is written $`R^2`$ in regression output ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)); here it is 0.889.
 
 Conventions verified 2026-09-28: the exchange heating oil contract is NYMEX (New York Mercantile Exchange) NY Harbor ULSD (ultra-low-sulfur diesel) futures (code HO, the old heating oil contract, renamed 2013), 42,000 gallons a lot, quoted in dollars a gallon.
 
@@ -92,35 +98,39 @@ Conventions verified 2026-09-28: the exchange heating oil contract is NYMEX (New
 
 ### Step 0: the idea
 
-A hedge is a second position chosen so that its gains offset the first position's losses. When the two move in perfect lockstep, one gallon of futures per gallon of fuel cancels everything. When they do not, some risk survives every ratio. The best that can be done is to pick the ratio that leaves the least. Leftover variance is a quadratic in $h$, and a quadratic's lowest point can be found exactly.
+A hedge is a second position chosen so that its gains offset the first position's losses. When the two move in perfect lockstep, one gallon of futures per gallon of fuel cancels everything. When they do not, some risk survives every ratio. The best that can be done is to pick the ratio that leaves the least. Leftover variance is a quadratic in $`h`$, and a quadratic's lowest point can be found exactly.
 
 ### Step 1: write the leftover variance
 
-The airline bears $\Delta S - h\,\Delta F$. The variance of a difference follows a rule like squaring a bracket:
+The airline bears $`\Delta S - h\,\Delta F`$. The variance of a difference follows a rule like squaring a bracket:
 
-$$\operatorname{Var}(\Delta S - h\,\Delta F) = \sigma_S^{\,2} - 2h\,\rho\,\sigma_S\,\sigma_F + h^2\sigma_F^{\,2}.$$
+```math
+\mathrm{Var}(\Delta S - h\,\Delta F) = \sigma_S^{\,2} - 2h\,\rho\,\sigma_S\,\sigma_F + h^2\sigma_F^{\,2}.
+```
 
 The first term is the fuel's own risk. The last is the risk the futures add. The middle term is the only one that helps: because the two prices tend to move together, the futures gain tends to arrive exactly when the fuel costs more.
 
 ### Step 2: complete the square
 
-Group the terms holding $h$:
+Group the terms holding $`h`$:
 
-$$\operatorname{Var}(\Delta S - h\,\Delta F) = \sigma_F^{\,2}\,(h - h^*)^2 + \sigma_S^{\,2}\,(1 - \rho^2), \qquad h^* = \rho\,\frac{\sigma_S}{\sigma_F}.$$
+```math
+\mathrm{Var}(\Delta S - h\,\Delta F) = \sigma_F^{\,2}\,(h - h^*)^2 + \sigma_S^{\,2}\,(1 - \rho^2), \qquad h^* = \rho\,\frac{\sigma_S}{\sigma_F}.
+```
 
-Expand the right side and the $h^{*2}\sigma_F^2$ term cancels the $\rho^2\sigma_S^2$ term, giving back Step 1.
+Expand the right side and the $`h^{*2}\sigma_F^2`$ term cancels the $`\rho^2\sigma_S^2`$ term, giving back Step 1.
 
-The first piece is a square, never negative, and zero only at $h = h^*$. The second piece does not depend on $h$ at all. So, provided $\sigma_F > 0$, $h^*$ is the minimum, it is the only one, and the variance at the minimum is $\sigma_S^2(1-\rho^2)$. Its square root is the leftover spread. No calculus was needed.
+The first piece is a square, never negative, and zero only at $`h = h^*`$. The second piece does not depend on $`h`$ at all. So, provided $`\sigma_F > 0`$, $`h^*`$ is the minimum, it is the only one, and the variance at the minimum is $`\sigma_S^2(1-\rho^2)`$. Its square root is the leftover spread. No calculus was needed.
 
-If $\sigma_F = 0$ the futures never move, every ratio leaves $\sigma_S^2$, and the formula's division fails. If $\rho = 0$, $h^* = 0$: an unrelated hedge only adds risk.
+If $`\sigma_F = 0`$ the futures never move, every ratio leaves $`\sigma_S^2`$, and the formula's division fails. If $`\rho = 0`$, $`h^* = 0`$: an unrelated hedge only adds risk.
 
-The same line reads off the cost of a wrong ratio: the penalty is $\sigma_F^2(h - h^*)^2$, growing with the square of the miss. The chart's floor is flat, so small errors cost little; large ones cost a lot.
+The same line reads off the cost of a wrong ratio: the penalty is $`\sigma_F^2(h - h^*)^2`$, growing with the square of the miss. The chart's floor is flat, so small errors cost little; large ones cost a lot.
 
 ### Step 3: the best ratio is a regression slope
 
-Fit a straight line $\Delta S = a + b\,\Delta F$ through past quarters by least squares: choose $a$ and $b$ to make the sum of squared misses as small as possible. The misses are $\Delta S - b\,\Delta F - a$. Choosing $a$ to make their average zero, the sum of squared misses is the sample variance of $\Delta S - b\,\Delta F$, times a count.
+Fit a straight line $`\Delta S = a + b\,\Delta F`$ through past quarters by least squares: choose $`a`$ and $`b`$ to make the sum of squared misses as small as possible. The misses are $`\Delta S - b\,\Delta F - a`$. Choosing $`a`$ to make their average zero, the sum of squared misses is the sample variance of $`\Delta S - b\,\Delta F`$, times a count.
 
-So least squares is minimising exactly the hedged variance of Step 1, measured on the data instead of assumed. The winning slope is the sample covariance over the sample variance of $\Delta F$: the second form of the formula. The fraction of scatter the line explains, $R^2$, is the fraction of variance the hedge removes, $\rho^2$.
+So least squares is minimising exactly the hedged variance of Step 1, measured on the data instead of assumed. The winning slope is the sample covariance over the sample variance of $`\Delta F`$: the second form of the formula. The fraction of scatter the line explains, $`R^2`$, is the fraction of variance the hedge removes, $`\rho^2`$.
 
 That is why desks estimate hedge ratios by regression. It is not a statistical habit; it is the same minimisation.
 
@@ -128,7 +138,7 @@ That is why desks estimate hedge ratios by regression. It is not a statistical h
 
 The **basis** is the fuel price minus the futures price. At the hedge's end the airline pays the fuel price and collects the futures gain. With a ratio of 1, its net cost per gallon is the futures price agreed today plus the basis at the end. Everything about the fuel price is locked except the basis. Its three-month spread here is 6.71 cents: the leftover risk of the one-for-one hedge.
 
-The minimum-variance ratio does slightly better, 5.99 cents, by leaning less on a hedge that only partly tracks the fuel. But $\sigma_S\sqrt{1-\rho^2}$ is a floor. Only a hedge that tracks jet fuel more closely, a higher $\rho$, can lower it. The picture below shows how steeply the floor depends on correlation.
+The minimum-variance ratio does slightly better, 5.99 cents, by leaning less on a hedge that only partly tracks the fuel. But $`\sigma_S\sqrt{1-\rho^2}`$ is a floor. Only a hedge that tracks jet fuel more closely, a higher $`\rho`$, can lower it. The picture below shows how steeply the floor depends on correlation.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -139,7 +149,7 @@ xychart-beta
     line [13.40, 28.59, 40.00, 56.41, 66.72, 75.69, 85.89]
 ```
 
-The one line is the share of the spread removed, $1 - \sqrt{1-\rho^2}$, in percent. A correlation of 0.8, which sounds strong, removes only 40 percent. Two thirds needs 0.943. Removing 86 percent needs 0.99.
+The one line is the share of the spread removed, $`1 - \sqrt{1-\rho^2}`$, in percent. A correlation of 0.8, which sounds strong, removes only 40 percent. Two thirds needs 0.943. Removing 86 percent needs 0.99.
 
 <details>
 <summary>The same idea with shares: beta hedging</summary>
@@ -148,19 +158,19 @@ A fund holding shares hedges with stock-index futures. Apply Steps 1 to 3 to ret
 
 </details>
 
-A second route to the same ratio treats the hedge as a two-asset portfolio and minimises its variance with calculus, setting the derivative in $h$ to zero. It gives the same $h^*$; completing the square adds the proof that it is a minimum and the size of the penalty for missing it.
+A second route to the same ratio treats the hedge as a two-asset portfolio and minimises its variance with calculus, setting the derivative in $`h`$ to zero. It gives the same $`h^*`$; completing the square adds the proof that it is a minimum and the size of the penalty for missing it.
 
 ---
 
 ## Worked numbers, by hand
 
-Inputs: $\sigma_S$ = $0.18, $\sigma_F$ = $0.20, $\rho$ = 0.943, $Q$ = 2,000,000 gallons, $L$ = 42,000 gallons.
+Inputs: $`\sigma_S`$ = $0.18, $`\sigma_F`$ = $0.20, $`\rho`$ = 0.943, $`Q`$ = 2,000,000 gallons, $`L`$ = 42,000 gallons.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | covariance | 0.943 × 0.18 × 0.20 | 0.033948 |
 | hedge ratio | 0.033948 / 0.04 | **0.8487** |
-| $1 - \rho^2$ | 1 − 0.889249 | 0.110751 |
+| $`1 - \rho^2`$ | 1 − 0.889249 | 0.110751 |
 | its square root | | 0.332793 |
 | leftover spread | 0.18 × 0.332793 | $0.059903 a gallon |
 | spread removed | 1 − 0.332793 | 66.7 percent: **two thirds** |
@@ -181,11 +191,11 @@ Correct leftover spread: 5.99 cents a gallon.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Hedge one for one, $h$ = 1 | 6.71 cents | Treats heating oil as if it were jet fuel. The leftover is the full basis risk. |
-| Use the correlation alone, $h$ = 0.943 | 6.28 cents | Forgets that futures and fuel have different spreads. |
-| Use the spread ratio alone, $h$ = 0.9 | 6.08 cents | Forgets that the two do not move in lockstep. |
-| Regress futures on fuel, $h$ = 1.0478 | 7.19 cents | The wrong way round: that slope answers how to hedge heating oil with jet fuel. |
-| Sell futures instead of buying, $h$ = −0.8487 | 34.47 cents | The hedge doubles the bet: nearly twice the unhedged 18 cents. |
+| Hedge one for one, $`h`$ = 1 | 6.71 cents | Treats heating oil as if it were jet fuel. The leftover is the full basis risk. |
+| Use the correlation alone, $`h`$ = 0.943 | 6.28 cents | Forgets that futures and fuel have different spreads. |
+| Use the spread ratio alone, $`h`$ = 0.9 | 6.08 cents | Forgets that the two do not move in lockstep. |
+| Regress futures on fuel, $`h`$ = 1.0478 | 7.19 cents | The wrong way round: that slope answers how to hedge heating oil with jet fuel. |
+| Sell futures instead of buying, $`h`$ = −0.8487 | 34.47 cents | The hedge doubles the bet: nearly twice the unhedged 18 cents. |
 
 The first three cost under a cent, the reversed regression 1.2 cents: near its floor the curve is flat. Direction and correlation are what matter.
 
@@ -557,21 +567,21 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. Both use the same generator, so the simulated numbers match too.
 
-Road 3 lands at 0.8478 against the formula's 0.8487: 0.000859 below, the size of gap expected from 200,000 random quarters. The 40-quarter history gives 0.7821 with a standard error (the typical size of an estimate's own error) of 0.0442, and an $R^2$ of 0.8916. Forty quarters is ten years of data, and it pins the ratio only to about 0.09 either way (two standard errors, 0.0885).
+Road 3 lands at 0.8478 against the formula's 0.8487: 0.000859 below, the size of gap expected from 200,000 random quarters. The 40-quarter history gives 0.7821 with a standard error (the typical size of an estimate's own error) of 0.0442, and an $`R^2`$ of 0.8916. Forty quarters is ten years of data, and it pins the ratio only to about 0.09 either way (two standard errors, 0.0885).
 
 ### Lean
 
 Lean proves the hedge ratio, its leftover spread and the regression slope for any price changes with finite variance, when the futures move.
 
-- Suppose $\Delta S$ and $\Delta F$ have finite variance and $\sigma_F > 0$. Then $\rho\,\sigma_S/\sigma_F$ equals the covariance over $\sigma_F^{\,2}$: the two forms of $h^*$ agree.
-- Take the same conditions and any other ratio $h$. Then $h^*$ leaves strictly less variance in $\Delta S - h\,\Delta F$ than $h$ does.
-- Take the same conditions. Then the leftover spread at $h^*$ is $\sigma_S\sqrt{1 - \rho^2}$.
-- Take the same conditions and any ratio $h$. Then the leftover variance equals Step 1's quadratic, and also Step 2's completed square.
+- Suppose $`\Delta S`$ and $`\Delta F`$ have finite variance and $`\sigma_F > 0`$. Then $`\rho\,\sigma_S/\sigma_F`$ equals the covariance over $`\sigma_F^{\,2}`$: the two forms of $`h^*`$ agree.
+- Take the same conditions and any other ratio $`h`$. Then $`h^*`$ leaves strictly less variance in $`\Delta S - h\,\Delta F`$ than $`h`$ does.
+- Take the same conditions. Then the leftover spread at $`h^*`$ is $`\sigma_S\sqrt{1 - \rho^2}`$.
+- Take the same conditions and any ratio $`h`$. Then the leftover variance equals Step 1's quadratic, and also Step 2's completed square.
 - Take past quarters of fuel and futures changes, with the futures changes not all equal. Then for any line, the sum of squared misses is never below the hedged variance on the data, times a count.
-- On the same data, the slope equal to the sample covariance over the sample variance of $\Delta F$ leaves strictly less hedged variance than any other slope.
-- The worked numbers check exactly: the covariance, the 0.8487 ratio, $1 - \rho^2$, 40 contracts and the 0.84 ratio held. So do the one-for-one variance 0.004504, the traced quarter, the beta hedge and the Try changing ratios.
+- On the same data, the slope equal to the sample covariance over the sample variance of $`\Delta F`$ leaves strictly less hedged variance than any other slope.
+- The worked numbers check exactly: the covariance, the 0.8487 ratio, $`1 - \rho^2`$, 40 contracts and the 0.84 ratio held. So do the one-for-one variance 0.004504, the traced quarter, the beta hedge and the Try changing ratios.
 
-The decimal square roots, the dollar spreads, $R^2$, the simulations and the 40-quarter history are left to the Python and Rust checks.
+The decimal square roots, the dollar spreads, $`R^2`$, the simulations and the 40-quarter history are left to the Python and Rust checks.
 
 ```lean
 -- Imperfect hedges: the hedge ratio rho * sigma_S / sigma_F (covariance over the futures' variance) is the one and only ratio that leaves the least variance, the variance it leaves is sigma_S^2 (1 - rho^2), and on data the least-squares slope is that same ratio.
@@ -848,7 +858,7 @@ example : (8 / 10 : ℚ) * (18 / 100) / (20 / 100) = 72 / 100 ∧
 > **Try changing**
 > Guess the direction first. Then run it.
 > - **Lower the correlation.** Set `rho = 0.8`. The ratio falls to 0.72 and only 40 percent of the spread goes: see the second chart.
-> - **Make the futures twice as jumpy.** Set `sF = 0.40`. The ratio halves to 0.4243; the leftover spread does not change, since it depends only on $\sigma_S$ and $\rho$.
+> - **Make the futures twice as jumpy.** Set `sF = 0.40`. The ratio halves to 0.4243; the leftover spread does not change, since it depends only on $`\sigma_S`$ and $`\rho`$.
 > - **Give the history more quarters.** Change `draws(7, 40)` to `draws(7, 400)`. The standard error of the slope shrinks by about the square root of ten, to 0.0144.
 > - **Hedge one for one.** Set `N = 48`. The held ratio becomes 1.008 and the leftover spread rises to 6.78 cents.
 
@@ -860,8 +870,8 @@ example : (8 / 10 : ℚ) * (18 / 100) / (20 / 100) = 72 / 100 ∧
 > **Assuming a hedge in a related market removes the risk.** It removes the part the two prices share. What they do not share, the basis, stays at every hedge ratio. Here that is 5.99 cents a gallon, $119,855.91 on the order, after a hedge most people would call tight.
 >
 > Smaller traps:
-> - **Reading $R^2$ as the cut in spread.** An $R^2$ of 0.889 removes 88.9 percent of the variance but only 66.7 percent of the spread. Budgets are in dollars, which follow the spread.
-> - **Hedging one for one out of habit.** Leftover spread 6.71 cents instead of 5.99. Cheap here; the added variance grows as the square of the miss, $\sigma_F^2(1 - h^*)^2$.
+> - **Reading $`R^2`$ as the cut in spread.** An $`R^2`$ of 0.889 removes 88.9 percent of the variance but only 66.7 percent of the spread. Budgets are in dollars, which follow the spread.
+> - **Hedging one for one out of habit.** Leftover spread 6.71 cents instead of 5.99. Cheap here; the added variance grows as the square of the miss, $`\sigma_F^2(1 - h^*)^2`$.
 > - **Regressing the wrong way round.** Futures on fuel gives a slope of 1.0478, a leftover spread of 7.19 cents.
 > - **Trusting a short history.** Forty quarters gave 0.7821 when the truth was 0.8487. Report the standard error beside the ratio.
 
@@ -869,7 +879,7 @@ example : (8 / 10 : ℚ) * (18 / 100) / (20 / 100) = 72 / 100 ∧
 
 ## Where you meet it in real life
 
-- **Airlines.** Jet fuel futures trade thinly, so fuel is commonly hedged with crude oil or heating oil futures, with ratios set by regression and hedge effectiveness reported as $R^2$.
+- **Airlines.** Jet fuel futures trade thinly, so fuel is commonly hedged with crude oil or heating oil futures, with ratios set by regression and hedge effectiveness reported as $`R^2`$.
 - **Hedge accounting.** Accounting standards ask a company to show that a hedge is effective before it can report hedge and hedged item together; a regression of the kind on this card is common evidence.
 - **Equity funds.** Beta hedging with index futures is the same regression on returns: 48 contracts for $10,000,000 at beta 1.2 in the folded tip above.
 - **Farmers and grain merchants.** A crop grown in one region is hedged with futures delivered in another. The local basis is quoted daily and watched as closely as the futures price.
@@ -884,14 +894,14 @@ example : (8 / 10 : ℚ) * (18 / 100) / (20 / 100) = 72 / 100 ∧
 ## What this builds on
 
 - [Hedging three Greeks at once](02-delta-gamma-vega-hedging.md): hedging when the hedge is written on the exact thing being hedged. This card relaxes that one assumption.
-- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): fitting a line by least squares, the slope as covariance over variance, and $R^2$. Step 3 shows this is the hedge.
+- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): fitting a line by least squares, the slope as covariance over variance, and $`R^2`$. Step 3 shows this is the hedge.
 
 ## Where this goes next
 
 - [Tomorrow's volatility](04-volatility-forecasting-ewma-garch-and-realised.md): the spreads and the correlation on this card were taken as known. That card estimates them, and shows they change over time, which moves the hedge ratio with them.
 - [Stress tests](05-scenario-grids-and-stress-tests.md): what the basis does in a bad quarter, rather than a typical one.
 
-This card treated $\sigma_S$, $\sigma_F$ and $\rho$ as fixed; the question it leaves open is how to estimate them when they drift, which is what the volatility-forecasting card answers.
+This card treated $`\sigma_S`$, $`\sigma_F`$ and $`\rho`$ as fixed; the question it leaves open is how to estimate them when they drift, which is what the volatility-forecasting card answers.
 
 ---
 
@@ -900,5 +910,5 @@ This card treated $\sigma_S$, $\sigma_F$ and $\rho$ as fixed; the question it le
 Verified 2026-09-28: every link below resolves to the publisher's page.
 
 - Johnson, Leland L. "The Theory of Hedging and Speculation in Commodity Futures." *The Review of Economic Studies* 27, no. 3 (1960): 139–151. [doi:10.2307/2296076](https://doi.org/10.2307/2296076). The first treatment of the hedge as a variance-minimising portfolio.
-- Ederington, Louis H. "The Hedging Performance of the New Futures Markets." *The Journal of Finance* 34, no. 1 (1979): 157–170. [doi:10.1111/j.1540-6261.1979.tb02077.x](https://doi.org/10.1111/j.1540-6261.1979.tb02077.x). The minimum-variance ratio as a regression slope and $R^2$ as hedge effectiveness.
+- Ederington, Louis H. "The Hedging Performance of the New Futures Markets." *The Journal of Finance* 34, no. 1 (1979): 157–170. [doi:10.1111/j.1540-6261.1979.tb02077.x](https://doi.org/10.1111/j.1540-6261.1979.tb02077.x). The minimum-variance ratio as a regression slope and $`R^2`$ as hedge effectiveness.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The textbook chapter on hedging strategies with futures: basis risk, cross-hedging, tailing and beta hedging.

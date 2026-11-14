@@ -38,19 +38,25 @@ The curved line is the planner's best bill once the price is known: the price-se
 
 ## The formula
 
-Notation first, in words. The plan is $x = (x_1, x_2)$, the two flows in L/s. The cost is $f_0(x) = 0.02x_1^2 + 0.03x_2^2$ kW. The rule is written in the wing's standard form, $f_1(x) \le 0$, with $f_1(x) = 100 - x_1 - x_2$: the shortfall, which must not be positive. The multiplier $\lambda \ge 0$ is the price on that rule. The **Lagrangian** ("la-GRAHN-jee-an") is the bill:
+Notation first, in words. The plan is $`x = (x_1, x_2)`$, the two flows in L/s. The cost is $`f_0(x) = 0.02x_1^2 + 0.03x_2^2`$ kW. The rule is written in the wing's standard form, $`f_1(x) \le 0`$, with $`f_1(x) = 100 - x_1 - x_2`$: the shortfall, which must not be positive. The multiplier $`\lambda \ge 0`$ is the price on that rule. The **Lagrangian** ("la-GRAHN-jee-an") is the bill:
 
-$$\mathcal{L}(x, \lambda) = f_0(x) + \lambda f_1(x).$$
+```math
+\mathcal{L}(x, \lambda) = f_0(x) + \lambda f_1(x).
+```
 
-A **saddle point** is a pair $(x^*, \lambda^*)$, with $\lambda^* \ge 0$, such that for every plan $x$ and every price $\lambda \ge 0$
+A **saddle point** is a pair $`(x^*, \lambda^*)`$, with $`\lambda^* \ge 0`$, such that for every plan $`x`$ and every price $`\lambda \ge 0`$
 
-$$\mathcal{L}(x^*, \lambda) \;\le\; \mathcal{L}(x^*, \lambda^*) \;\le\; \mathcal{L}(x, \lambda^*).$$
+```math
+\mathcal{L}(x^*, \lambda) \;\le\; \mathcal{L}(x^*, \lambda^*) \;\le\; \mathcal{L}(x, \lambda^*).
+```
 
-**Read it aloud:** with the planner holding $x^*$, no price raises the bill; with the price held at $\lambda^*$, no plan lowers it.
+**Read it aloud:** with the planner holding $`x^*`$, no price raises the bill; with the price held at $`\lambda^*`$, no plan lowers it.
 
-The two orders of play have their own names. Planner first gives $p^*$, the optimal value of the original problem. Price setter first gives $d^*$, the best value of the **dual function** $q(\lambda) = \min_x \mathcal{L}(x, \lambda)$, the planner's best bill at price $\lambda$ ([Lagrangian duality](04-lagrangian-duality-weak-and-strong.md)):
+The two orders of play have their own names. Planner first gives $`p^*`$, the optimal value of the original problem. Price setter first gives $`d^*`$, the best value of the **dual function** $`q(\lambda) = \min_x \mathcal{L}(x, \lambda)`$, the planner's best bill at price $`\lambda`$ ([Lagrangian duality](04-lagrangian-duality-weak-and-strong.md)):
 
-$$d^* \;=\; \max_{\lambda \ge 0}\, \min_{x}\, \mathcal{L}(x, \lambda) \;\;\le\;\; \min_{x}\, \max_{\lambda \ge 0}\, \mathcal{L}(x, \lambda) \;=\; p^*.$$
+```math
+d^* \;=\; \max_{\lambda \ge 0}\, \min_{x}\, \mathcal{L}(x, \lambda) \;\;\le\;\; \min_{x}\, \max_{\lambda \ge 0}\, \mathcal{L}(x, \lambda) \;=\; p^*.
+```
 
 **Read it aloud:** whoever moves second can only gain, so the price-setter-first value is never above the planner-first value; a saddle point is exactly where they are equal.
 
@@ -58,21 +64,21 @@ The **minimax theorem**, the result that lets the order be swapped, is stated in
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (x_1, x_2)$, $x^*$, $\hat x$, $x(\lambda)$ | the flows of pumps A and B; $x^*$ the saddle plan; $\hat x$ any one plan; $x(\lambda)$ the planner's best reply to price $\lambda$ | (60, 40) L/s; $x(1) = (25, 16.6667)$ | — |
-| $f_0$ | the cost being minimised: power drawn | 0.02x₁² + 0.03x₂², 120 kW at $x^*$ | a dearer pump gets less flow, and $\lambda^*$ rises |
-| $f_1$ | the rule, written $f_1 \le 0$: litres short of demand | $100 - x_1 - x_2$, zero at $x^*$ | more demand: $\lambda^*$ and $p^*$ rise |
-| $\lambda$, $\lambda^*$, $\hat\lambda$, $\mu$ | the price on the rule; its saddle value; $\hat\lambda$ and $\mu$ any one other price | 2.4 kW per L/s | — |
-| $\mathcal{L}(x, \lambda)$, $P(x)$ | the bill: cost plus price times shortfall; $P(x)$ its worst case over prices | 120 kW at the saddle | — |
-| $q(\lambda)$ | the planner's best bill once the price is known | $100\lambda - 20.8333\lambda^2$ kW | rises while there is a shortfall, falls after |
-| $p^*$, $d^*$ | planner-first and price-setter-first values | both 120 kW | — |
-| $T$ | total flow, $x_1 + x_2$, in the figure | 100 L/s at the saddle | — |
-| $\alpha$, $k$ | price step and step count in the price adjustment | 0.01; $k = 0, 1, 2, \dots$ | a step above 0.0480 never settles |
-| $X$, $Y$, $F$, $y$ | in the minimax theorem: the two players' choice sets, the payoff, and the maximiser's choice | plans, prices $\ge 0$, $\mathcal{L}$, $\lambda$ | — |
+| $`x = (x_1, x_2)`$, $`x^*`$, $`\hat x`$, $`x(\lambda)`$ | the flows of pumps A and B; $`x^*`$ the saddle plan; $`\hat x`$ any one plan; $`x(\lambda)`$ the planner's best reply to price $`\lambda`$ | (60, 40) L/s; $`x(1) = (25, 16.6667)`$ | — |
+| $`f_0`$ | the cost being minimised: power drawn | 0.02x₁² + 0.03x₂², 120 kW at $`x^*`$ | a dearer pump gets less flow, and $`\lambda^*`$ rises |
+| $`f_1`$ | the rule, written $`f_1 \le 0`$: litres short of demand | $`100 - x_1 - x_2`$, zero at $`x^*`$ | more demand: $`\lambda^*`$ and $`p^*`$ rise |
+| $`\lambda`$, $`\lambda^*`$, $`\hat\lambda`$, $`\mu`$ | the price on the rule; its saddle value; $`\hat\lambda`$ and $`\mu`$ any one other price | 2.4 kW per L/s | — |
+| $`\mathcal{L}(x, \lambda)`$, $`P(x)`$ | the bill: cost plus price times shortfall; $`P(x)`$ its worst case over prices | 120 kW at the saddle | — |
+| $`q(\lambda)`$ | the planner's best bill once the price is known | $`100\lambda - 20.8333\lambda^2`$ kW | rises while there is a shortfall, falls after |
+| $`p^*`$, $`d^*`$ | planner-first and price-setter-first values | both 120 kW | — |
+| $`T`$ | total flow, $`x_1 + x_2`$, in the figure | 100 L/s at the saddle | — |
+| $`\alpha`$, $`k`$ | price step and step count in the price adjustment | 0.01; $`k = 0, 1, 2, \dots`$ | a step above 0.0480 never settles |
+| $`X`$, $`Y`$, $`F`$, $`y`$ | in the minimax theorem: the two players' choice sets, the payoff, and the maximiser's choice | plans, prices $`\ge 0`$, $`\mathcal{L}`$, $`\lambda`$ | — |
 
 ### When it holds
 
-- **Convex cost and rules.** The planner's side must be convex: $f_0$ curves up and the shortfall is straight. With a nonconvex choice, such as a pump that is either off or at full power, the two orders can give different values, and then no saddle exists. The penalty kick below shows the same gap in a game played with plain choices.
-- **Concave in the price.** The bill must be concave (curving down, or straight) in the price setter's choice. A Lagrangian is straight in $\lambda$, so this always holds; in a general game it can fail, and a game convex for both players can have a gap (What breaks).
+- **Convex cost and rules.** The planner's side must be convex: $`f_0`$ curves up and the shortfall is straight. With a nonconvex choice, such as a pump that is either off or at full power, the two orders can give different values, and then no saddle exists. The penalty kick below shows the same gap in a game played with plain choices.
+- **Concave in the price.** The bill must be concave (curving down, or straight) in the price setter's choice. A Lagrangian is straight in $`\lambda`$, so this always holds; in a general game it can fail, and a game convex for both players can have a gap (What breaks).
 - **One side's choices closed and bounded.** The minimax theorem needs one player's set to be closed (its edge values are allowed) and bounded (no choice is infinitely large). Real pumps have a top flow, so the planner's set qualifies.
 - **The best price must exist.** Equal values are not enough for a saddle: the price setter's best price must be reached. Slater's condition (a plan that meets every inequality rule strictly) makes sure of it ([Slater's condition](05-slaters-condition-and-duality-gaps.md)). Without it, a problem can have equal values and no saddle (What breaks).
 - **No caps on the price.** If the price setter may charge at most 2 kW per L/s, the planner rationally leaves 16.6667 L/s unmet. The game still has a saddle, but it is a saddle of a different problem.
@@ -87,46 +93,52 @@ When one side's gain is the other's loss, moving second is an advantage: you see
 
 ### Step 1: planner first is the original problem
 
-Fix a plan $x$ and let the price setter reply. If $x$ is short, $f_1(x) > 0$, and the bill $f_0(x) + \lambda f_1(x)$ grows without limit as $\lambda$ grows. If $x$ meets demand, $f_1(x) \le 0$, and the best reply is $\lambda = 0$, leaving the bill at $f_0(x)$. So
+Fix a plan $`x`$ and let the price setter reply. If $`x`$ is short, $`f_1(x) > 0`$, and the bill $`f_0(x) + \lambda f_1(x)`$ grows without limit as $`\lambda`$ grows. If $`x`$ meets demand, $`f_1(x) \le 0`$, and the best reply is $`\lambda = 0`$, leaving the bill at $`f_0(x)`$. So
 
-$$\max_{\lambda \ge 0} \mathcal{L}(x, \lambda) = \begin{cases} f_0(x) & \text{if } x \text{ meets demand,} \\ +\infty & \text{if not.} \end{cases}$$
+```math
+\max_{\lambda \ge 0} \mathcal{L}(x, \lambda) = \begin{cases} f_0(x) & \text{if } x \text{ meets demand,} \\ +\infty & \text{if not.} \end{cases}
+```
 
-The planner, moving first, minimises this. Any short plan scores $+\infty$, so the planner chooses among plans that meet demand: the original problem. Its value is $p^* = 120$ kW. The price setter has turned a hard rule into a bill that punishes any breach.
+The planner, moving first, minimises this. Any short plan scores $`+\infty`$, so the planner chooses among plans that meet demand: the original problem. Its value is $`p^* = 120`$ kW. The price setter has turned a hard rule into a bill that punishes any breach.
 
 ### Step 2: price setter first is the dual
 
-Fix a price $\lambda$ and let the planner reply. The bill is $0.02x_1^2 + 0.03x_2^2 + \lambda(100 - x_1 - x_2)$, with no rule left. Set each partial rate to zero: $0.04x_1 = \lambda$ and $0.06x_2 = \lambda$. Each pump's marginal cost equals the price. So the planner runs $x_1 = 25\lambda$ and $x_2 = 16.6667\lambda$, a total of $41.6667\lambda$ L/s. Put these back and the planner's best bill is
+Fix a price $`\lambda`$ and let the planner reply. The bill is $`0.02x_1^2 + 0.03x_2^2 + \lambda(100 - x_1 - x_2)`$, with no rule left. Set each partial rate to zero: $`0.04x_1 = \lambda`$ and $`0.06x_2 = \lambda`$. Each pump's marginal cost equals the price. So the planner runs $`x_1 = 25\lambda`$ and $`x_2 = 16.6667\lambda`$, a total of $`41.6667\lambda`$ L/s. Put these back and the planner's best bill is
 
-$$q(\lambda) = 100\lambda - 20.8333\lambda^2.$$
+```math
+q(\lambda) = 100\lambda - 20.8333\lambda^2.
+```
 
-The price setter, moving first, picks the $\lambda$ that maximises $q$. The slope $100 - 41.6667\lambda$ is zero at $\lambda^* = 2.4$, where $q = 240 - 120 = 120$ kW. So $d^* = 120 = p^*$, and the planner's reply to $\lambda^*$ is $(60, 40)$, the plan from Step 1.
+The price setter, moving first, picks the $`\lambda`$ that maximises $`q`$. The slope $`100 - 41.6667\lambda`$ is zero at $`\lambda^* = 2.4`$, where $`q = 240 - 120 = 120`$ kW. So $`d^* = 120 = p^*`$, and the planner's reply to $`\lambda^*`$ is $`(60, 40)`$, the plan from Step 1.
 
 ### Step 3: whoever moves second can only gain
 
-The inequality $d^* \le p^*$ holds in every game, convex or not. Take any plan $\hat x$ and any price $\hat\lambda$. A minimum is at most any particular value, and a maximum is at least any particular value:
+The inequality $`d^* \le p^*`$ holds in every game, convex or not. Take any plan $`\hat x`$ and any price $`\hat\lambda`$. A minimum is at most any particular value, and a maximum is at least any particular value:
 
-$$\min_x \mathcal{L}(x, \hat\lambda) \;\le\; \mathcal{L}(\hat x, \hat\lambda) \;\le\; \max_{\lambda \ge 0} \mathcal{L}(\hat x, \lambda).$$
+```math
+\min_x \mathcal{L}(x, \hat\lambda) \;\le\; \mathcal{L}(\hat x, \hat\lambda) \;\le\; \max_{\lambda \ge 0} \mathcal{L}(\hat x, \lambda).
+```
 
-The left end does not depend on $\hat x$ and the right end does not depend on $\hat\lambda$. So the largest left end is at most the smallest right end: $d^* \le p^*$. This is weak duality, read as a game. The gap $p^* - d^*$ is exactly the second mover's advantage.
+The left end does not depend on $`\hat x`$ and the right end does not depend on $`\hat\lambda`$. So the largest left end is at most the smallest right end: $`d^* \le p^*`$. This is weak duality, read as a game. The gap $`p^* - d^*`$ is exactly the second mover's advantage.
 
 ### Step 4: a saddle point and equal values are the same thing
 
-Suppose $(x^*, \lambda^*)$ is a saddle point. The left half of its definition says $\max_\lambda \mathcal{L}(x^*, \lambda) = \mathcal{L}(x^*, \lambda^*)$, so $p^* \le \mathcal{L}(x^*, \lambda^*)$. The right half says $\min_x \mathcal{L}(x, \lambda^*) = \mathcal{L}(x^*, \lambda^*)$, so $d^* \ge \mathcal{L}(x^*, \lambda^*)$. With Step 3, $p^* \le \mathcal{L}(x^*, \lambda^*) \le d^* \le p^*$: all equal. The converse holds too, and it is what makes the price a certificate: an $x^*$ and a $\lambda^*$ whose values meet are a saddle, and $x^*$ is optimal, proved by $\lambda^*$ alone.
+Suppose $`(x^*, \lambda^*)`$ is a saddle point. The left half of its definition says $`\max_\lambda \mathcal{L}(x^*, \lambda) = \mathcal{L}(x^*, \lambda^*)`$, so $`p^* \le \mathcal{L}(x^*, \lambda^*)`$. The right half says $`\min_x \mathcal{L}(x, \lambda^*) = \mathcal{L}(x^*, \lambda^*)`$, so $`d^* \ge \mathcal{L}(x^*, \lambda^*)`$. With Step 3, $`p^* \le \mathcal{L}(x^*, \lambda^*) \le d^* \le p^*`$: all equal. The converse holds too, and it is what makes the price a certificate: an $`x^*`$ and a $`\lambda^*`$ whose values meet are a saddle, and $`x^*`$ is optimal, proved by $`\lambda^*`$ alone.
 
 <details>
 <summary>Detailed proof: saddle point if and only if equal values, both reached</summary>
 
-Write $P(x) = \max_{\lambda \ge 0} \mathcal{L}(x, \lambda)$ and $q(\lambda) = \min_x \mathcal{L}(x, \lambda)$, allowing the values $+\infty$ and $-\infty$. Then $p^* = \min_x P(x)$ and $d^* = \max_\lambda q(\lambda)$, where "reached" means some $x^*$ has $P(x^*) = p^*$ and some $\lambda^*$ has $q(\lambda^*) = d^*$.
+Write $`P(x) = \max_{\lambda \ge 0} \mathcal{L}(x, \lambda)`$ and $`q(\lambda) = \min_x \mathcal{L}(x, \lambda)`$, allowing the values $`+\infty`$ and $`-\infty`$. Then $`p^* = \min_x P(x)`$ and $`d^* = \max_\lambda q(\lambda)`$, where "reached" means some $`x^*`$ has $`P(x^*) = p^*`$ and some $`\lambda^*`$ has $`q(\lambda^*) = d^*`$.
 
-**Saddle gives equal values, both reached.** If $(x^*, \lambda^*)$ is a saddle point, then $P(x^*) = \mathcal{L}(x^*, \lambda^*) = q(\lambda^*)$ by the two halves of the definition. So $p^* \le P(x^*) = q(\lambda^*) \le d^*$. Step 3 gives $d^* \le p^*$, so every term is equal, $p^* = P(x^*)$ and $d^* = q(\lambda^*)$: both are reached.
+**Saddle gives equal values, both reached.** If $`(x^*, \lambda^*)`$ is a saddle point, then $`P(x^*) = \mathcal{L}(x^*, \lambda^*) = q(\lambda^*)`$ by the two halves of the definition. So $`p^* \le P(x^*) = q(\lambda^*) \le d^*`$. Step 3 gives $`d^* \le p^*`$, so every term is equal, $`p^* = P(x^*)`$ and $`d^* = q(\lambda^*)`$: both are reached.
 
-**Equal values, both reached, give a saddle.** Suppose $P(x^*) = p^* = d^* = q(\lambda^*)$, a finite number. Then
+**Equal values, both reached, give a saddle.** Suppose $`P(x^*) = p^* = d^* = q(\lambda^*)`$, a finite number. Then
 
-$$q(\lambda^*) \le \mathcal{L}(x^*, \lambda^*) \le P(x^*)$$
+$`\displaystyle q(\lambda^*) \le \mathcal{L}(x^*, \lambda^*) \le P(x^*)`$
 
-by the definitions of a minimum and a maximum, and the two ends are equal, so $\mathcal{L}(x^*, \lambda^*)$ equals both. For any $\lambda$: $\mathcal{L}(x^*, \lambda) \le P(x^*) = \mathcal{L}(x^*, \lambda^*)$. For any $x$: $\mathcal{L}(x, \lambda^*) \ge q(\lambda^*) = \mathcal{L}(x^*, \lambda^*)$. That is the saddle inequality.
+by the definitions of a minimum and a maximum, and the two ends are equal, so $`\mathcal{L}(x^*, \lambda^*)`$ equals both. For any $`\lambda`$: $`\mathcal{L}(x^*, \lambda) \le P(x^*) = \mathcal{L}(x^*, \lambda^*)`$. For any $`x`$: $`\mathcal{L}(x, \lambda^*) \ge q(\lambda^*) = \mathcal{L}(x^*, \lambda^*)`$. That is the saddle inequality.
 
-**Optimality.** By Step 1, $P(x^*)$ finite means $x^*$ meets the rule, and $f_0(x^*) = P(x^*) = p^*$: no plan meeting the rule costs less. The left half at $\lambda = 0$ gives $\lambda^* f_1(x^*) \ge 0$, and $\lambda^* \ge 0$ with $f_1(x^*) \le 0$ gives $\lambda^* f_1(x^*) \le 0$, so $\lambda^* f_1(x^*) = 0$: the price is zero unless the rule binds. Together with the right half, which says $x^*$ minimises $\mathcal{L}(\cdot, \lambda^*)$, these are the [KKT conditions](02-kkt-conditions.md) (Karush–Kuhn–Tucker); for a convex problem the two descriptions coincide.
+**Optimality.** By Step 1, $`P(x^*)`$ finite means $`x^*`$ meets the rule, and $`f_0(x^*) = P(x^*) = p^*`$: no plan meeting the rule costs less. The left half at $`\lambda = 0`$ gives $`\lambda^* f_1(x^*) \ge 0`$, and $`\lambda^* \ge 0`$ with $`f_1(x^*) \le 0`$ gives $`\lambda^* f_1(x^*) \le 0`$, so $`\lambda^* f_1(x^*) = 0`$: the price is zero unless the rule binds. Together with the right half, which says $`x^*`$ minimises $`\mathcal{L}(\cdot, \lambda^*)`$, these are the [KKT conditions](02-kkt-conditions.md) (Karush–Kuhn–Tucker); for a convex problem the two descriptions coincide.
 
 </details>
 
@@ -134,30 +146,34 @@ by the definitions of a minimum and a maximum, and the two ends are equal, so $\
 
 Step 3 holds always; equality needs conditions. The minimax theorem gives them. It is stated here and not proved. In it, "sup" ("supremum") is the least upper bound: the top value, whether or not some choice reaches it.
 
-> **Minimax theorem.** Let $X$ be a closed, bounded, convex set of choices for the minimising player and $Y$ a convex set of choices for the maximising player. Let the payoff $F(x, y)$ be continuous, convex in $x$ for each fixed $y$, and concave in $y$ for each fixed $x$. Then
-> $$\min_{x \in X}\, \sup_{y \in Y} F(x, y) \;=\; \sup_{y \in Y}\, \min_{x \in X} F(x, y).$$
+> **Minimax theorem.** Let $`X`$ be a closed, bounded, convex set of choices for the minimising player and $`Y`$ a convex set of choices for the maximising player. Let the payoff $`F(x, y)`$ be continuous, convex in $`x`$ for each fixed $`y`$, and concave in $`y`$ for each fixed $`x`$. Then
+> ```math
+> \min_{x \in X}\, \sup_{y \in Y} F(x, y) \;=\; \sup_{y \in Y}\, \min_{x \in X} F(x, y).
+> ```
 
-Von Neumann proved it in 1928 for games with finite payoff tables, where $X$ and $Y$ are the players' mixing rates and $F$ is the expected payoff. The statement above is a special case of Sion's 1958 theorem, which allows general convex sets and asks for less than continuity and convexity; Komiya gives a three-page proof.
+Von Neumann proved it in 1928 for games with finite payoff tables, where $`X`$ and $`Y`$ are the players' mixing rates and $`F`$ is the expected payoff. The statement above is a special case of Sion's 1958 theorem, which allows general convex sets and asks for less than continuity and convexity; Komiya gives a three-page proof.
 
-A Lagrangian of a convex problem fits: $f_0 + \lambda f_1$ is convex in $x$ when $f_0$ and $f_1$ are convex, and straight in $\lambda$, which is concave. The pumps have a top flow, say 150 L/s each, so the planner's set is closed and bounded; every best reply on this card stays below that cap, so no number changes. The theorem gives $p^* = d^*$. It does not promise that the best price is reached; that is Slater's job (When it holds).
+A Lagrangian of a convex problem fits: $`f_0 + \lambda f_1`$ is convex in $`x`$ when $`f_0`$ and $`f_1`$ are convex, and straight in $`\lambda`$, which is concave. The pumps have a top flow, say 150 L/s each, so the planner's set is closed and bounded; every best reply on this card stays below that cap, so no number changes. The theorem gives $`p^* = d^*`$. It does not promise that the best price is reached; that is Slater's job (When it holds).
 
 Why convexity? Convexity means averages are allowed and never hurt. In the penalty kick on the [Nash equilibrium](../../14-Applied%20and%20computational/05-Operations%20Research/09-game-theory-and-nash-equilibrium.md) card, plain choices leave a gap between the two orders of play: 70% with the kicker choosing first, 93% with the keeper choosing first. Allowing mixes, which are averages of plain choices, makes both sets convex, and the gap closes at 79.5833%.
 
 ### Step 6: the price setter's slope is the shortfall
 
-How should the price setter search for $\lambda^*$? Danskin's theorem (stated for a maximum in his paper; here for the planner's minimum) gives the slope of $q$: when the planner's best reply $x(\lambda)$ is unique and moves continuously,
+How should the price setter search for $`\lambda^*`$? Danskin's theorem (stated for a maximum in his paper; here for the planner's minimum) gives the slope of $`q`$: when the planner's best reply $`x(\lambda)`$ is unique and moves continuously,
 
-$$q'(\lambda) = f_1(x(\lambda)),$$
+```math
+q'(\lambda) = f_1(x(\lambda)),
+```
 
-the shortfall at the planner's reply. The planner's own adjustment adds nothing to first order, for this reason. For any two prices $\lambda$ and $\mu$, the plan $x(\mu)$ is one plan the planner could have used at $\lambda$, so $q(\lambda) \le \mathcal{L}(x(\mu), \lambda)$, with equality at $\lambda = \mu$. Hence $q(\lambda) - q(\mu) \le (\lambda - \mu) f_1(x(\mu))$ and, swapping roles, $q(\lambda) - q(\mu) \ge (\lambda - \mu) f_1(x(\lambda))$. Divide by $\lambda - \mu$ and let $\lambda \to \mu$: both bounds tend to $f_1(x(\mu))$.
+the shortfall at the planner's reply. The planner's own adjustment adds nothing to first order, for this reason. For any two prices $`\lambda`$ and $`\mu`$, the plan $`x(\mu)`$ is one plan the planner could have used at $`\lambda`$, so $`q(\lambda) \le \mathcal{L}(x(\mu), \lambda)`$, with equality at $`\lambda = \mu`$. Hence $`q(\lambda) - q(\mu) \le (\lambda - \mu) f_1(x(\mu))`$ and, swapping roles, $`q(\lambda) - q(\mu) \ge (\lambda - \mu) f_1(x(\lambda))`$. Divide by $`\lambda - \mu`$ and let $`\lambda \to \mu`$: both bounds tend to $`f_1(x(\mu))`$.
 
-At $\lambda = 1$ the planner delivers 41.6667 L/s, 58.3333 short, and $q'(1) = 100 - 41.6667 = 58.3333$. The rule for the price setter is then plain: **raise the price while demand is short, lower it while there is surplus.** That is the price adjustment in the code, and the starting point for the dual methods on the [Penalties and augmented Lagrangians](07-penalty-and-augmented-lagrangian-methods.md) card.
+At $`\lambda = 1`$ the planner delivers 41.6667 L/s, 58.3333 short, and $`q'(1) = 100 - 41.6667 = 58.3333`$. The rule for the price setter is then plain: **raise the price while demand is short, lower it while there is surplus.** That is the price adjustment in the code, and the starting point for the dual methods on the [Penalties and augmented Lagrangians](07-penalty-and-augmented-lagrangian-methods.md) card.
 
 <p align="center"><img src="../figures/saddle-points-and-minimax.svg" alt="The pump Lagrangian over total flow T and price lambda: the level line L = 120 kW is a vertical line at 100 L/s and a sloping line, crossing at the saddle (100, 2.4); the dashed best-reply line of the planner passes through the same point, as does the dotted line lambda = 2.4" width="420"></p>
 
-The figure is to scale. The planner always splits a total $T$ the cheap way, which costs $0.012T^2$ kW, so the bill becomes $0.012T^2 + \lambda(100 - T)$. Shaded regions have a bill above 120 kW.
+The figure is to scale. The planner always splits a total $`T`$ the cheap way, which costs $`0.012T^2`$ kW, so the bill becomes $`0.012T^2 + \lambda(100 - T)`$. Shaded regions have a bill above 120 kW.
 
-Along the dotted horizontal line $\lambda = 2.4$ the bill rises on both sides of the saddle: the planner's minimum. Along the dashed best-reply line, from (70, 1.68) to (130, 3.12), it falls on both sides: the price setter's maximum. The bill is exactly 120 kW on the vertical line $T = 100$ and on the line from (70, 2.04) to (130, 2.76).
+Along the dotted horizontal line $`\lambda = 2.4`$ the bill rises on both sides of the saddle: the planner's minimum. Along the dashed best-reply line, from (70, 1.68) to (130, 3.12), it falls on both sides: the price setter's maximum. The bill is exactly 120 kW on the vertical line $`T = 100`$ and on the line from (70, 2.04) to (130, 2.76).
 
 ---
 
@@ -167,15 +183,15 @@ Two pumps, at least 100 L/s, the price setter moving first.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| planner's reply to price $\lambda$ | $0.04x_1 = \lambda$, $0.06x_2 = \lambda$ | $x_1 = 25\lambda$, $x_2 = 16.6667\lambda$ |
-| total delivered | $25\lambda + 16.6667\lambda$ | $41.6667\lambda$ L/s |
-| planner's best bill | $0.02(25\lambda)^2 + 0.03(16.6667\lambda)^2 + \lambda(100 - 41.6667\lambda)$ | $q(\lambda) = 100\lambda - 20.8333\lambda^2$ |
-| price setter's slope | $q'(\lambda) = 100 - 41.6667\lambda$, the shortfall | zero at $\lambda^* = 100/41.6667$ |
-| best price | | **$\lambda^* = 2.4$ kW per L/s** |
-| plan at that price | $25 \times 2.4$, $16.6667 \times 2.4$ | **$x^* = (60, 40)$ L/s** |
-| power | $0.02 \times 3600 + 0.03 \times 1600 = 72 + 48$ | $p^* = 120$ kW, £24 an hour |
-| dual value | $100 \times 2.4 - 20.8333 \times 2.4^2 = 240 - 120$ | $d^* = 120$ kW |
-| gap | $120 - 120$ | **0 kW** |
+| planner's reply to price $`\lambda`$ | $`0.04x_1 = \lambda`$, $`0.06x_2 = \lambda`$ | $`x_1 = 25\lambda`$, $`x_2 = 16.6667\lambda`$ |
+| total delivered | $`25\lambda + 16.6667\lambda`$ | $`41.6667\lambda`$ L/s |
+| planner's best bill | $`0.02(25\lambda)^2 + 0.03(16.6667\lambda)^2 + \lambda(100 - 41.6667\lambda)`$ | $`q(\lambda) = 100\lambda - 20.8333\lambda^2`$ |
+| price setter's slope | $`q'(\lambda) = 100 - 41.6667\lambda`$, the shortfall | zero at $`\lambda^* = 100/41.6667`$ |
+| best price | | **$`\lambda^* = 2.4`$ kW per L/s** |
+| plan at that price | $`25 \times 2.4`$, $`16.6667 \times 2.4`$ | **$`x^* = (60, 40)`$ L/s** |
+| power | $`0.02 \times 3600 + 0.03 \times 1600 = 72 + 48`$ | $`p^* = 120`$ kW, £24 an hour |
+| dual value | $`100 \times 2.4 - 20.8333 \times 2.4^2 = 240 - 120`$ | $`d^* = 120`$ kW |
+| gap | $`120 - 120`$ | **0 kW** |
 
 Run pump A at 60 L/s and pump B at 40: 120 kW. The price of 2.4 kW per L/s proves nothing does better, since at that price no plan, short or not, has a bill below 120 kW.
 
@@ -184,11 +200,11 @@ Run pump A at 60 L/s and pump B at 40: 120 kW. The price of 2.4 kW per L/s prove
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Plain choices only, in the penalty kick `[[58, 95], [93, 70]]` | kicker can guarantee 70%, keeper can hold the kicker to 93%; with mixing both are 79.5833% | No convexity: without mixes the choice sets are two points, and the order of play matters |
-| Payoff $(x - y)^2$ on $[0, 1]$, with $y$ maximising | min over $x$ of max over $y$: 0.25; max over $y$ of min over $x$: 0 | The maximiser's payoff is convex, not concave, in $y$; the second mover always wins |
+| Payoff $`(x - y)^2`$ on $`[0, 1]`$, with $`y`$ maximising | min over $`x`$ of max over $`y`$: 0.25; max over $`y`$ of min over $`x`$: 0 | The maximiser's payoff is convex, not concave, in $`y`$; the second mover always wins |
 | Cap the price at 2 kW per L/s | plan (50, 33.3333) L/s, 83.3333 delivered, 16.6667 short; value 116.6667 kW | A capped price is a fine, not a rule; the planner pays it rather than pump the last 16.6667 L/s |
-| Minimise $x$ on $[-1, 1]$ subject to $x^2 \le 0$ | $p^* = 0$; $q(\lambda) = -0.25, -0.025, -0.0025, -0.00025$ at $\lambda = 1, 10, 100, 1000$ | Slater fails: no $x$ has $x^2 < 0$; the values meet only in the limit, so no best price and no saddle |
+| Minimise $`x`$ on $`[-1, 1]`$ subject to $`x^2 \le 0`$ | $`p^* = 0`$; $`q(\lambda) = -0.25, -0.025, -0.0025, -0.00025`$ at $`\lambda = 1, 10, 100, 1000`$ | Slater fails: no $`x`$ has $`x^2 < 0`$; the values meet only in the limit, so no best price and no saddle |
 
-The capped game still has a saddle: the planner's worst bill over capped prices, 116.6667 kW, equals $q(2)$. The theorem holds; the model changed.
+The capped game still has a saddle: the planner's worst bill over capped prices, 116.6667 kW, equals $`q(2)`$. The theorem holds; the model changed.
 
 ---
 
@@ -198,7 +214,7 @@ The code reaches the saddle by three independent roads.
 
 - Road 1 is the hand calculation.
 - Road 2 uses no formula: it lays a grid over plans (each flow 0 to 100 L/s in half litres) and prices (0 to 5 kW per L/s in steps of 0.1), plays the game in both orders by brute force, and tests the saddle inequality at every grid point.
-- Road 3 is the price adjustment from Step 6: start at $\lambda_0 = 0$, move the price by $\alpha = 0.01$ times the shortfall, and stop when the shortfall is below $10^{-9}$ L/s. It also checks Danskin's slope against a central difference (the change in $q$ across a small step either side, divided by the step).
+- Road 3 is the price adjustment from Step 6: start at $`\lambda_0 = 0`$, move the price by $`\alpha = 0.01`$ times the shortfall, and stop when the shortfall is below $`10^{-9}`$ L/s. It also checks Danskin's slope against a central difference (the change in $`q`$ across a small step either side, divided by the step).
 
 The script ends with the four failures from the table, the spiral from The usual mistake, and the "try changing" numbers.
 
@@ -524,7 +540,7 @@ try, eta = 0.01: distance from the saddle at k = 0, 25, 50, 75, 100: 1.4142, 1.4
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line. The price adjustment shrinks the error by the factor $1 - 0.01 \times 41.6667 = 0.5833$ each step, as printed, and meets the stopping test after 47 steps. That rate needs a step below $2/41.6667 = 0.0480$, where 41.6667 is how fast the shortfall falls per unit of price.
+The two outputs match line for line. The price adjustment shrinks the error by the factor $`1 - 0.01 \times 41.6667 = 0.5833`$ each step, as printed, and meets the stopping test after 47 steps. That rate needs a step below $`2/41.6667 = 0.0480`$, where 41.6667 is how fast the shortfall falls per unit of price.
 
 ### Lean
 
@@ -721,9 +737,9 @@ example : (1 : ℚ) - 1 / 100 * (125 / 3) = 7 / 12 ∧ (2 : ℚ) / (125 / 3) = 6
 > [!warning]
 > **Assuming the order of min and max never matters.** The minimax theorem lets it be swapped only in a convex–concave game in which one side's choices are closed and bounded; outside that, the order can matter. In the penalty kick with plain choices, the kicker moving first can guarantee 70%, while the keeper moving first can hold the kicker to 93%. Swapping min and max without checking convexity can turn a lower bound into a claimed optimum, so check the hypotheses or print both values.
 >
-> - **Treating every point where the gradient of $\mathcal{L}$ is zero as a solution.** A flat point of the bill is sure to be a saddle when the planner's side is convex and the price side concave; without that, check the saddle inequality itself. For $(x - y)^2$ every point with $x = y$ is flat, but none is a saddle: the gap is 0.25.
-> - **Taking equal values as proof of a saddle.** Minimising $x$ subject to $x^2 \le 0$ gives $p^* = 0$ and dual values creeping up to 0 (−0.00025 at a price of 1000), but no price reaches it.
-> - **Letting both players step at once.** On the bill $F = xy$, which has a saddle at $(0, 0)$, the planner stepping down and the price setter stepping up at the same time, by 0.1 each, spiral outwards: the distance from the saddle grows from 1.4142 to 2.3259 in 100 steps. The price adjustment in the code converges because the planner replies fully to each price before the price moves.
+> - **Treating every point where the gradient of $`\mathcal{L}`$ is zero as a solution.** A flat point of the bill is sure to be a saddle when the planner's side is convex and the price side concave; without that, check the saddle inequality itself. For $`(x - y)^2`$ every point with $`x = y`$ is flat, but none is a saddle: the gap is 0.25.
+> - **Taking equal values as proof of a saddle.** Minimising $`x`$ subject to $`x^2 \le 0`$ gives $`p^* = 0`$ and dual values creeping up to 0 (−0.00025 at a price of 1000), but no price reaches it.
+> - **Letting both players step at once.** On the bill $`F = xy`$, which has a saddle at $`(0, 0)`$, the planner stepping down and the price setter stepping up at the same time, by 0.1 each, spiral outwards: the distance from the saddle grows from 1.4142 to 2.3259 in 100 steps. The price adjustment in the code converges because the planner replies fully to each price before the price moves.
 
 ---
 
@@ -741,7 +757,7 @@ example : (1 : ℚ) - 1 / 100 * (125 / 3) = 7 / 12 ∧ (2 : ℚ) / (125 / 3) = 6
 
 ## What this builds on
 
-- [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md): the dual function $q(\lambda)$, weak duality and the conditions for strong duality. This card reads the same objects as two orders of play.
+- [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md): the dual function $`q(\lambda)`$, weak duality and the conditions for strong duality. This card reads the same objects as two orders of play.
 - [Nash equilibrium](../../14-Applied%20and%20computational/05-Operations%20Research/09-game-theory-and-nash-equilibrium.md): payoff tables, mixed strategies and the two-by-two mixed equilibrium. A saddle point is a Nash equilibrium of a zero-sum game.
 
 ## Where this goes next

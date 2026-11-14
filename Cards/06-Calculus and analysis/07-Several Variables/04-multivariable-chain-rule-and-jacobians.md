@@ -35,34 +35,40 @@ Each arrow carries its link's table. Their product, outer first, is −12 °C pe
 
 A reminder: a partial derivative, written with a curly d, is an output's rate when one input moves alone ([Partial derivatives](01-partial-derivatives.md)).
 
-One new notation, in words first: the **Jacobian matrix** of a map g, written $J_g$, is the table of its partial derivatives, one row per output and one column per input, in a declared order.
+One new notation, in words first: the **Jacobian matrix** of a map g, written $`J_g`$, is the table of its partial derivatives, one row per output and one column per input, in a declared order.
 
 Row i, column j holds the rate of output i per unit of input j, in output units per input unit. A one-output map's Jacobian is its gradient (the list of its partial derivatives, [Gradient](03-gradient-and-directional-derivatives.md)) as a row; a path's is its velocity as a column.
 
-For $g$ after $f$, the chain rule reads
+For $`g`$ after $`f`$, the chain rule reads
 
-$$J_{g \circ f}(a) = J_g\big(f(a)\big)\,J_f(a)$$
+```math
+J_{g \circ f}(a) = J_g\big(f(a)\big)\,J_f(a)
+```
 
 **Read it aloud:** the rate table of g after f is g's table, read at the point f delivers, times f's table, read at the start.
 
-The hike has three links: the path $p$, the weather map $G$ and the felt temperature $F$.
+The hike has three links: the path $`p`$, the weather map $`G`$ and the felt temperature $`F`$.
 
-$$p(t) = (2t,\ t^2), \quad G(x, y) = (13 - x - y^2,\ 5 + xy + 3y), \quad F(A, w) = A - 0.02\,w\,(30 - A)$$
+```math
+p(t) = (2t,\ t^2), \quad G(x, y) = (13 - x - y^2,\ 5 + xy + 3y), \quad F(A, w) = A - 0.02\,w\,(30 - A)
+```
 
-$$\frac{d}{dt}F\big(G(p(t))\big) = J_F\big(G(p(t))\big)\; J_G\big(p(t)\big)\; J_p(t)$$
+```math
+\frac{d}{dt}F\big(G(p(t))\big) = J_F\big(G(p(t))\big)\; J_G\big(p(t)\big)\; J_p(t)
+```
 
 Shapes 1 × 2, 2 × 2 and 2 × 1 multiply to 1 × 1: one rate, in °C per hour.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $h$ | hours walked; a small time step | 1 h; 0.01 h | tables read later in the walk |
-| $x$, $y$ | km east, km north of the car park | 2, 1 | colder, windier air |
-| $p$ | the path: time to position | (2t, t^2) | faster walk, faster change |
-| $A$, $w$ | air temperature, °C; wind speed, km/h | 10; 10 | felt up with A, down with w |
-| $G$ | the weather map: position to (A, w) | as above | — |
-| $F$ | felt temperature from air and wind | 6 °C | — |
-| $J_p$, $J_G$, $J_F$, $J_g$ | Jacobians of the three links; of any map g | 2 × 1, 2 × 2, 1 × 2 | answer moves in proportion |
-| $f$, $g$, $a$ | any inner map, outer map, starting point | p and G; t = 1 | — |
+| $`t`$, $`h`$ | hours walked; a small time step | 1 h; 0.01 h | tables read later in the walk |
+| $`x`$, $`y`$ | km east, km north of the car park | 2, 1 | colder, windier air |
+| $`p`$ | the path: time to position | (2t, t^2) | faster walk, faster change |
+| $`A`$, $`w`$ | air temperature, °C; wind speed, km/h | 10; 10 | felt up with A, down with w |
+| $`G`$ | the weather map: position to (A, w) | as above | — |
+| $`F`$ | felt temperature from air and wind | 6 °C | — |
+| $`J_p`$, $`J_G`$, $`J_F`$, $`J_g`$ | Jacobians of the three links; of any map g | 2 × 1, 2 × 2, 1 × 2 | answer moves in proportion |
+| $`f`$, $`g`$, $`a`$ | any inner map, outer map, starting point | p and G; t = 1 | — |
 
 ### When it holds
 
@@ -77,7 +83,7 @@ Shapes 1 × 2, 2 × 2 and 2 × 1 multiply to 1 × 1: one rate, in °C per hour.
 
 ### Step 0: near a point, every map acts like its table
 
-Nudge the clock by a small step h. The hiker moves about $J_p$ times h; the weather changes by about $J_G$ times that move; the felt temperature by about $J_F$ times that change. One table after another is a matrix product ([Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)). The work is making "about" exact.
+Nudge the clock by a small step h. The hiker moves about $`J_p`$ times h; the weather changes by about $`J_G`$ times that move; the felt temperature by about $`J_F`$ times that change. One table after another is a matrix product ([Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)). The work is making "about" exact.
 
 ### Step 1: build each table one column at a time
 

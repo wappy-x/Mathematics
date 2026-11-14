@@ -35,52 +35,56 @@ Schematic. Top: the exchange. Bottom: ElGamal, where laptop 2's public key plays
 
 ## The formula
 
-Everything is on a clock of size $p$, a prime. "On the clock" means: multiply, then keep the remainder after dividing by $p$. The base $g$ is chosen so its powers form a group of prime size $q$; here $p = 2q + 1$, and $g = 4$ reaches exactly the $q$ slots that are **squares** on the clock (numbers you can reach as some number times itself).
+Everything is on a clock of size $`p`$, a prime. "On the clock" means: multiply, then keep the remainder after dividing by $`p`$. The base $`g`$ is chosen so its powers form a group of prime size $`q`$; here $`p = 2q + 1`$, and $`g = 4`$ reaches exactly the $`q`$ slots that are **squares** on the clock (numbers you can reach as some number times itself).
 
 The exchange:
 
-$$A = g^{a}, \qquad B = g^{b}, \qquad K = B^{a} = A^{b} = g^{ab}.$$
+```math
+A = g^{a}, \qquad B = g^{b}, \qquad K = B^{a} = A^{b} = g^{ab}.
+```
 
-ElGamal, with laptop 2's long-term secret $x$ and public key $h$:
+ElGamal, with laptop 2's long-term secret $`x`$ and public key $`h`$:
 
-$$h = g^{x}, \qquad (c_1,\; c_2) = \bigl(g^{r},\; m \cdot h^{r}\bigr), \qquad m = c_2 \,/\, c_1^{\,x}.$$
+```math
+h = g^{x}, \qquad (c_1,\; c_2) = \bigl(g^{r},\; m \cdot h^{r}\bigr), \qquad m = c_2 \,/\, c_1^{\,x}.
+```
 
-**Read it aloud:** each side raises the other's post to its own secret count and both reach $g^{ab}$; to encrypt, pick a fresh count $r$, send $g^r$ as a hint, and multiply the message by $h^r$; to decrypt, rebuild $h^r$ from the hint as $c_1^{\,x}$ and divide it back out.
+**Read it aloud:** each side raises the other's post to its own secret count and both reach $`g^{ab}`$; to encrypt, pick a fresh count $`r`$, send $`g^r`$ as a hint, and multiply the message by $`h^r`$; to decrypt, rebuild $`h^r`$ from the hint as $`c_1^{\,x}`$ and divide it back out.
 
 "Divide" on a clock means multiply by the **undo**: the number that multiplies back to 1, found by the extended Euclidean algorithm. On the 20123 clock the undo of 4073 is 15217.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the clock size, a prime | 20123 (15 bits; real: 3072 bits) | a bigger clock defeats the fastest attacks, which work on the clock itself |
-| $q$ | the group size: how many distinct powers $g$ has; prime, $q = (p-1)/2$ | 10061 | baby-step giant-step costs about $2\sqrt{q}$ steps |
-| $g$ | the generator: the public base whose powers make the group | 4 | a different generator of the same group changes nothing |
-| $a$, $b$ | the laptops' secret counts, from 1 to $q-1$ | 6432, 1602 | more bits of count, more work to guess it |
-| $A$, $B$ | the posts, $g^a$ and $g^b$ | 4781, 14957 | – |
-| $K$ | the shared key, $g^{ab}$ | 12254 | – |
-| $x$ | laptop 2's long-term secret count | 1587 | – |
-| $h$ | laptop 2's public key, $g^x$ | 7884 | – |
-| $m$ | the message, placed inside the group | 16052, standing for PIN 4071 | – |
-| $r$ | a fresh secret count for one message only | 3778 | – |
-| $(c_1, c_2)$ | the ciphertext: the hint $g^r$ and the masked message | (14496, 169) | – |
-| $Z$ | a candidate key a listener is shown: either $g^{ab}$ or a random member | – | – |
+| $`p`$ | the clock size, a prime | 20123 (15 bits; real: 3072 bits) | a bigger clock defeats the fastest attacks, which work on the clock itself |
+| $`q`$ | the group size: how many distinct powers $`g`$ has; prime, $`q = (p-1)/2`$ | 10061 | baby-step giant-step costs about $`2\sqrt{q}`$ steps |
+| $`g`$ | the generator: the public base whose powers make the group | 4 | a different generator of the same group changes nothing |
+| $`a`$, $`b`$ | the laptops' secret counts, from 1 to $`q-1`$ | 6432, 1602 | more bits of count, more work to guess it |
+| $`A`$, $`B`$ | the posts, $`g^a`$ and $`g^b`$ | 4781, 14957 | – |
+| $`K`$ | the shared key, $`g^{ab}`$ | 12254 | – |
+| $`x`$ | laptop 2's long-term secret count | 1587 | – |
+| $`h`$ | laptop 2's public key, $`g^x`$ | 7884 | – |
+| $`m`$ | the message, placed inside the group | 16052, standing for PIN 4071 | – |
+| $`r`$ | a fresh secret count for one message only | 3778 | – |
+| $`(c_1, c_2)`$ | the ciphertext: the hint $`g^r`$ and the masked message | (14496, 169) | – |
+| $`Z`$ | a candidate key a listener is shown: either $`g^{ab}`$ or a random member | – | – |
 
-The three assumptions, for a group of prime size $q$ with generator $g$:
+The three assumptions, for a group of prime size $`q`$ with generator $`g`$:
 
-- **Discrete log (DL).** Given $A = g^a$, finding $a$ is infeasible.
-- **Computational Diffie-Hellman (CDH).** Given $g^a$ and $g^b$, computing $g^{ab}$ is infeasible.
-- **Decisional Diffie-Hellman (DDH).** Given $g^a$, $g^b$ and $Z$, no feasible method tells whether $Z = g^{ab}$ or a random member of the group noticeably better than a coin toss.
+- **Discrete log (DL).** Given $`A = g^a`$, finding $`a`$ is infeasible.
+- **Computational Diffie-Hellman (CDH).** Given $`g^a`$ and $`g^b`$, computing $`g^{ab}`$ is infeasible.
+- **Decisional Diffie-Hellman (DDH).** Given $`g^a`$, $`g^b`$ and $`Z`$, no feasible method tells whether $`Z = g^{ab}`$ or a random member of the group noticeably better than a coin toss.
 
-"Infeasible" is a cost, counted in bits: **128-bit security** means about $2^{128}$ operations to break, if the assumption holds. A group whose secret counts are 256 bits long costs baby-step giant-step about $2^{128}$ steps.
+"Infeasible" is a cost, counted in bits: **128-bit security** means about $`2^{128}`$ operations to break, if the assumption holds. A group whose secret counts are 256 bits long costs baby-step giant-step about $`2^{128}`$ steps.
 
 **IND-CPA** (indistinguishable under chosen-plaintext attack) is what "ElGamal is secure" means here: a listener picks two messages, is handed the encryption of one of them at random, and must say which. The scheme is IND-CPA secure when no feasible listener does noticeably better than a coin toss.
 
 ### When it holds
 
-- **The group has prime size.** With generator 2, which reaches all 20122 slots, $A$ reveals whether $a$ is even, and a listener spots the real key 75% of the time instead of 50%.
-- **Every received post is checked.** A forged $B = 20122$ has only two powers, so the key is one of 2 values; here, 1. The rule in TLS (Transport Layer Security, the protocol behind secure web connections): reject a post equal to 1 or $p - 1$.
-- **The count $r$ is fresh for every message.** Reuse it, and knowing one PIN reveals the other.
-- **The message is placed inside the group.** Otherwise $c_2$ shows whether the PIN is a square: one bit leaks.
-- **Someone vouches for the posts.** Nothing says who sent $B$; a hotspot in the middle can run one exchange with each laptop (see The usual mistake).
+- **The group has prime size.** With generator 2, which reaches all 20122 slots, $`A`$ reveals whether $`a`$ is even, and a listener spots the real key 75% of the time instead of 50%.
+- **Every received post is checked.** A forged $`B = 20122`$ has only two powers, so the key is one of 2 values; here, 1. The rule in TLS (Transport Layer Security, the protocol behind secure web connections): reject a post equal to 1 or $`p - 1`$.
+- **The count $`r`$ is fresh for every message.** Reuse it, and knowing one PIN reveals the other.
+- **The message is placed inside the group.** Otherwise $`c_2`$ shows whether the PIN is a square: one bit leaks.
+- **Someone vouches for the posts.** Nothing says who sent $`B`$; a hotspot in the middle can run one exchange with each laptop (see The usual mistake).
 
 ---
 
@@ -88,105 +92,107 @@ The three assumptions, for a group of prime size $q$ with generator $g$:
 
 ### Step 0: powers commute, and that is the whole trick
 
-$(g^b)^a$ and $(g^a)^b$ are both $g$ multiplied by itself $ab$ times. Dropping whole multiples of $p$ along the way does not change which slot you land on, so both laptops land on the same slot. The rest of the card is about choosing a group where that shared slot stays hidden, and about reusing the trick to encrypt.
+$`(g^b)^a`$ and $`(g^a)^b`$ are both $`g`$ multiplied by itself $`ab`$ times. Dropping whole multiples of $`p`$ along the way does not change which slot you land on, so both laptops land on the same slot. The rest of the card is about choosing a group where that shared slot stays hidden, and about reusing the trick to encrypt.
 
-### Step 1: exponents wrap at the group size $q$, not at $p$
+### Step 1: exponents wrap at the group size $`q`$, not at $`p`$
 
-Since $g^q = 1$ ($4^{10061}$ lands on 1), any count can be cut down by whole multiples of $q$ without changing the power. So $K = g^{ab \bmod q}$, and the check computes it that way as a third road: $4^{(6432 \cdot 1602 \bmod 10061)} = 12254$. Cutting by $p$ instead gives 1103, a wrong key.
+Since $`g^q = 1`$ ($`4^{10061}`$ lands on 1), any count can be cut down by whole multiples of $`q`$ without changing the power. So $`K = g^{ab \bmod q}`$, and the check computes it that way as a third road: $`4^{(6432 \cdot 1602 \bmod 10061)} = 12254`$. Cutting by $`p`$ instead gives 1103, a wrong key.
 
 ### Step 2: why the group must have prime size
 
-The full clock has $p - 1 = 20122 = 2 \times 10061$ non-zero slots, and 2 is a primitive root: its powers visit all of them ([The order of a number and primitive roots](../../02-Number%20theory/04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)).
+The full clock has $`p - 1 = 20122 = 2 \times 10061`$ non-zero slots, and 2 is a primitive root: its powers visit all of them ([The order of a number and primitive roots](../../02-Number%20theory/04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)).
 
-Raise any slot to the power $q$. A square, some number times itself, becomes that number raised to $p - 1$, which is 1, because every order (the number of steps until a slot's powers return to 1) divides $p - 1$. A non-square gives $p - 1$, which acts as $-1$.
+Raise any slot to the power $`q`$. A square, some number times itself, becomes that number raised to $`p - 1`$, which is 1, because every order (the number of steps until a slot's powers return to 1) divides $`p - 1`$. A non-square gives $`p - 1`$, which acts as $`-1`$.
 
-The reason: raised to the power $q$ and then squared, any slot reaches the power $p - 1$, which is 1, and on a prime clock only 1 and $-1$ square to 1. An equation of degree $q$ has at most $q$ answers on a prime clock, and the $q$ squares already give 1, so every non-square gives $-1$. This is Euler's test, and it is cheap.
+The reason: raised to the power $`q`$ and then squared, any slot reaches the power $`p - 1`$, which is 1, and on a prime clock only 1 and $`-1`$ square to 1. An equation of degree $`q`$ has at most $`q`$ answers on a prime clock, and the $`q`$ squares already give 1, so every non-square gives $`-1`$. This is Euler's test, and it is cheap.
 
-Now $2^a$ is a square exactly when $a$ is even. So the post $A$ leaks the last bit of $a$, and $B$ the last bit of $b$. From those a listener knows whether $ab$ is even, and so whether the real key is a square.
+Now $`2^a`$ is a square exactly when $`a`$ is even. So the post $`A`$ leaks the last bit of $`a`$, and $`B`$ the last bit of $`b`$. From those a listener knows whether $`ab`$ is even, and so whether the real key is a square.
 
-Shown a candidate $Z$, the listener says "real" when $Z$'s squareness matches. A real key always matches; a random member matches half the time. Its win rate is $\tfrac12 \cdot 1 + \tfrac12 \cdot \tfrac12 = \tfrac34$, or 75%, and the check's 4000-round game measures 75.78%. DDH is false on the full clock.
+Shown a candidate $`Z`$, the listener says "real" when $`Z`$'s squareness matches. A real key always matches; a random member matches half the time. Its win rate is $`\tfrac12 \cdot 1 + \tfrac12 \cdot \tfrac12 = \tfrac34`$, or 75%, and the check's 4000-round game measures 75.78%. DDH is false on the full clock.
 
 The leak came from the factor 2 in 20122. Every small factor of the group size leaks a piece of the secret this way, and the pieces combine into the whole count (the Pohlig–Hellman method). A group of prime size has no factors to split.
 
-Using $g = 4 = 2^2$ keeps every value inside the 10061 squares, a group of prime size. By [Cosets and Lagrange's theorem](../../03-Algebra/08-Groups/04-cosets-and-lagranges-theorem.md), each member's order divides 10061, so it is 1 or 10061: every member except 1 generates the whole group. Every value is a square, Euler's test says "square" every time, and the same guesser wins 50.05% of the time, a coin toss.
+Using $`g = 4 = 2^2`$ keeps every value inside the 10061 squares, a group of prime size. By [Cosets and Lagrange's theorem](../../03-Algebra/08-Groups/04-cosets-and-lagranges-theorem.md), each member's order divides 10061, so it is 1 or 10061: every member except 1 generates the whole group. Every value is a square, Euler's test says "square" every time, and the same guesser wins 50.05% of the time, a coin toss.
 
 ### Step 3: the three assumptions are nested
 
-If you can solve DL, you can solve CDH: find $a$ from $A$, then compute $B^a$. If you can solve CDH, you can solve DDH: compute $g^{ab}$ and compare it with $Z$. So DDH is the strongest assumption, the most to believe, and it is the one ElGamal needs. Whether the reverse steps hold in general is not known.
+If you can solve DL, you can solve CDH: find $`a`$ from $`A`$, then compute $`B^a`$. If you can solve CDH, you can solve DDH: compute $`g^{ab}`$ and compare it with $`Z`$. So DDH is the strongest assumption, the most to believe, and it is the one ElGamal needs. Whether the reverse steps hold in general is not known.
 
-DL is the one an attacker attacks. Trying every count costs up to $q - 1$ multiplications: 6432 to find $a = 6432$.
+DL is the one an attacker attacks. Trying every count costs up to $`q - 1`$ multiplications: 6432 to find $`a = 6432`$.
 
-**Baby-step giant-step** costs about $2\sqrt q$. Write the secret count as some number of 101s plus a remainder from 0 to 100. Store the 101 "baby" powers $g^0, \dots, g^{100}$. Then take "giant" steps: multiply $A$ by the undo of $g^{101}$ again and again. Each giant step strips one 101 off the count, so once they are all gone what is left is a baby power, and the table finds it.
+**Baby-step giant-step** costs about $`2\sqrt q`$. Write the secret count as some number of 101s plus a remainder from 0 to 100. Store the 101 "baby" powers $`g^0, \dots, g^{100}`$. Then take "giant" steps: multiply $`A`$ by the undo of $`g^{101}`$ again and again. Each giant step strips one 101 off the count, so once they are all gone what is left is a baby power, and the table finds it.
 
-For $a = 6432 = 63 \times 101 + 69$ that took 101 baby steps and 64 giant steps: 165 in all. On a 24-bit clock it took 3389 steps where trying every count took 2,744,220.
+For $`a = 6432 = 63 \times 101 + 69`$ that took 101 baby steps and 64 giant steps: 165 in all. On a 24-bit clock it took 3389 steps where trying every count took 2,744,220.
 
 That square root is why real secret counts are at least 256 bits long. The clock itself has to be far longer, 3072 bits, because faster attacks (index calculus and the number field sieve) work on the clock's own arithmetic rather than on the group. The [Elliptic curves](06-elliptic-curve-cryptography.md) card swaps the clock for a curve where no such shortcut is known.
 
 ### Step 4: ElGamal is Diffie-Hellman with the receiver's half done in advance
 
-Laptop 2 runs its half once: it picks $x$ and publishes $h = g^x$, like a post left on a noticeboard. To send a message, laptop 1 runs its half on the spot with a fresh count $r$: its post is $c_1 = g^r$, and the shared number is $h^r = g^{xr}$. It sends $c_2 = m \cdot h^r$. Laptop 2 rebuilds the same shared number as $c_1^{\,x} = g^{rx}$ (Step 0 again) and divides it out:
+Laptop 2 runs its half once: it picks $`x`$ and publishes $`h = g^x`$, like a post left on a noticeboard. To send a message, laptop 1 runs its half on the spot with a fresh count $`r`$: its post is $`c_1 = g^r`$, and the shared number is $`h^r = g^{xr}`$. It sends $`c_2 = m \cdot h^r`$. Laptop 2 rebuilds the same shared number as $`c_1^{\,x} = g^{rx}`$ (Step 0 again) and divides it out:
 
-$$c_2 \,/\, c_1^{\,x} = m \cdot g^{xr} \,/\, g^{rx} = m.$$
+```math
+c_2 \,/\, c_1^{\,x} = m \cdot g^{xr} \,/\, g^{rx} = m.
+```
 
 That proves decryption always works. Security is the sketch below.
 
 <details>
 <summary>Sketch: ElGamal is IND-CPA secure if DDH holds</summary>
 
-The listener sees $h = g^x$, $c_1 = g^r$ and $c_2 = m \cdot g^{xr}$.
+The listener sees $`h = g^x`$, $`c_1 = g^r`$ and $`c_2 = m \cdot g^{xr}`$.
 
-Suppose the mask $g^{xr}$ were replaced by a truly random member $Z$ of the group. Multiplying any fixed $m$ by a uniformly random member gives a uniformly random member, whatever $m$ was. That is a one-time pad written with multiplication instead of XOR, the bit-by-bit addition the pad usually uses ([The one-time pad](01-one-time-pad-and-perfect-secrecy.md)), and in the IND-CPA game the listener's chance is exactly one half.
+Suppose the mask $`g^{xr}`$ were replaced by a truly random member $`Z`$ of the group. Multiplying any fixed $`m`$ by a uniformly random member gives a uniformly random member, whatever $`m`$ was. That is a one-time pad written with multiplication instead of XOR, the bit-by-bit addition the pad usually uses ([The one-time pad](01-one-time-pad-and-perfect-secrecy.md)), and in the IND-CPA game the listener's chance is exactly one half.
 
-So any listener that wins the real game noticeably more than half the time is noticing the difference between $(g^x, g^r, g^{xr})$ and $(g^x, g^r, Z)$. That listener is a DDH distinguisher. If DDH holds, no feasible one exists, so no feasible listener wins. The full argument, with the margins counted, is in the Tsiounis–Yung paper.
+So any listener that wins the real game noticeably more than half the time is noticing the difference between $`(g^x, g^r, g^{xr})`$ and $`(g^x, g^r, Z)`$. That listener is a DDH distinguisher. If DDH holds, no feasible one exists, so no feasible listener wins. The full argument, with the margins counted, is in the Tsiounis–Yung paper.
 
 </details>
 
-One consequence is visible in the run. IND-CPA forces encryption to be random: if the same PIN always gave the same ciphertext, a listener could encrypt both candidate messages itself and compare. With a fresh $r$, the PIN 4071 encrypts once as (14496, 169) and once as (4442, 3384).
+One consequence is visible in the run. IND-CPA forces encryption to be random: if the same PIN always gave the same ciphertext, a listener could encrypt both candidate messages itself and compare. With a fresh $`r`$, the PIN 4071 encrypts once as (14496, 169) and once as (4442, 3384).
 
 ---
 
 ## Worked numbers, by hand
 
-Clock $p = 20123$, group size $q = 10061$, generator $g = 4$. Each power is square-and-multiply: for $a = 6432$, a 13-bit number with 4 one-bits, that is 12 squarings and 3 multiplications: one squaring for each bit after the first, and one multiplication for each 1-bit after the first.
+Clock $`p = 20123`$, group size $`q = 10061`$, generator $`g = 4`$. Each power is square-and-multiply: for $`a = 6432`$, a 13-bit number with 4 one-bits, that is 12 squarings and 3 multiplications: one squaring for each bit after the first, and one multiplication for each 1-bit after the first.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $g$ has prime order | $4^{10061}$ on the 20123 clock | 1 |
-| laptop 1's post $A$ | $4^{6432}$ | 4781 |
-| laptop 2's post $B$ | $4^{1602}$ | 14957 |
-| laptop 1's key | $14957^{6432}$ | 12254 |
-| laptop 2's key | $4781^{1602}$ | 12254 |
-| third road | $4^{(6432 \times 1602 \bmod 10061)}$ | 12254 |
-| listener, baby-step giant-step | $63 \times 101 + 69$, in 165 steps | 6432 |
-| laptop 2's public key $h$ | $4^{1587}$ | 7884 |
-| put PIN 4071 in the group | 4071 is not a square, so use $20123 - 4071$ | 16052 |
-| hint $c_1$ | $4^{3778}$ | 14496 |
-| mask $h^r$ | $7884^{3778}$ | 4073 |
-| masked message $c_2$ | $16052 \times 4073$ on the clock | 169 |
-| laptop 2 rebuilds the mask | $14496^{1587}$ | 4073 |
+| $`g`$ has prime order | $`4^{10061}`$ on the 20123 clock | 1 |
+| laptop 1's post $`A`$ | $`4^{6432}`$ | 4781 |
+| laptop 2's post $`B`$ | $`4^{1602}`$ | 14957 |
+| laptop 1's key | $`14957^{6432}`$ | 12254 |
+| laptop 2's key | $`4781^{1602}`$ | 12254 |
+| third road | $`4^{(6432 \times 1602 \bmod 10061)}`$ | 12254 |
+| listener, baby-step giant-step | $`63 \times 101 + 69`$, in 165 steps | 6432 |
+| laptop 2's public key $`h`$ | $`4^{1587}`$ | 7884 |
+| put PIN 4071 in the group | 4071 is not a square, so use $`20123 - 4071`$ | 16052 |
+| hint $`c_1`$ | $`4^{3778}`$ | 14496 |
+| mask $`h^r`$ | $`7884^{3778}`$ | 4073 |
+| masked message $`c_2`$ | $`16052 \times 4073`$ on the clock | 169 |
+| laptop 2 rebuilds the mask | $`14496^{1587}`$ | 4073 |
 | undo of the mask | extended Euclid on 4073 | 15217 |
-| unmask | $169 \times 15217$ on the clock | 16052 |
-| **read the PIN** | $20123 - 16052$ | **4071** |
+| unmask | $`169 \times 15217`$ on the clock | 16052 |
+| **read the PIN** | $`20123 - 16052`$ | **4071** |
 
 Laptop 2 has the PIN, and the air carried only 7884, 14496 and 169.
 
-Placing the PIN works because on this clock exactly one of a number and $p$ minus it is a square: $p$ minus a number is $-1$ times it, and Euler's test gives $(-1)^{10061} = -1$, so $-1$ is not a square and multiplying by it flips the test's answer. A PIN is at most 9999, below half the clock, so decoding takes the smaller of the two.
+Placing the PIN works because on this clock exactly one of a number and $`p`$ minus it is a square: $`p`$ minus a number is $`-1`$ times it, and Euler's test gives $`(-1)^{10061} = -1`$, so $`-1`$ is not a square and multiplying by it flips the test's answer. A PIN is at most 9999, below half the clock, so decoding takes the smaller of the two.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Generator 2, the whole clock, instead of 4 | a listener tells the real key from random 75.78% of the time (theory 75%) | the group size 20122 has the factor 2, so $A$ leaks $a$'s last bit |
-| Accept the post $B = 20122$ without checking | shared key 1, one of only 2 values | the forged post sits in a group of size 2 |
-| Cut the exponent down by $p$ instead of $q$ | 1103 instead of 12254 | powers of $g$ repeat every $q$ steps, not every $p$ |
-| Encrypt a second PIN, 9306, with the same $r$ | $c_2 / c_2' = 13552$, and the first PIN turns it into 9306 | the mask cancels in the ratio |
-| Send the raw PIN 9306 without placing it in the group | $c_2$ is not a square, so neither is the PIN | the mask is always a square; it cannot hide squareness |
+| Generator 2, the whole clock, instead of 4 | a listener tells the real key from random 75.78% of the time (theory 75%) | the group size 20122 has the factor 2, so $`A`$ leaks $`a`$'s last bit |
+| Accept the post $`B = 20122`$ without checking | shared key 1, one of only 2 values | the forged post sits in a group of size 2 |
+| Cut the exponent down by $`p`$ instead of $`q`$ | 1103 instead of 12254 | powers of $`g`$ repeat every $`q`$ steps, not every $`p`$ |
+| Encrypt a second PIN, 9306, with the same $`r`$ | $`c_2 / c_2' = 13552`$, and the first PIN turns it into 9306 | the mask cancels in the ratio |
+| Send the raw PIN 9306 without placing it in the group | $`c_2`$ is not a square, so neither is the PIN | the mask is always a square; it cannot hide squareness |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts check the group has prime size, then run the exchange, ElGamal and every mistake above. Nothing imported knows the answer: powers are square-and-multiply, undos are extended Euclid, and the laptops' coins are SplitMix64, seed 2026, written out. Independent roads: the shared key three ways ($B^a$, $A^b$, $g^{ab \bmod q}$); the discrete log two ways, every count against baby-step giant-step, on four clocks with the steps counted; decryption two ways (extended Euclid, and $c_1^{\,q-x}$, which undoes $c_1^{\,x}$ because $c_1^{\,q} = 1$); and the DDH guessing game simulated against its formula, 75% and 50%. TOY SIZES, INSECURE: the real group named in the output is RFC 7919's ffdhe3072 (an RFC is a numbered internet standard).
+The scripts check the group has prime size, then run the exchange, ElGamal and every mistake above. Nothing imported knows the answer: powers are square-and-multiply, undos are extended Euclid, and the laptops' coins are SplitMix64, seed 2026, written out. Independent roads: the shared key three ways ($`B^a`$, $`A^b`$, $`g^{ab \bmod q}`$); the discrete log two ways, every count against baby-step giant-step, on four clocks with the steps counted; decryption two ways (extended Euclid, and $`c_1^{\,q-x}`$, which undoes $`c_1^{\,x}`$ because $`c_1^{\,q} = 1`$); and the DDH guessing game simulated against its formula, 75% and 50%. TOY SIZES, INSECURE: the real group named in the output is RFC 7919's ffdhe3072 (an RFC is a numbered internet standard).
 
 ### Python
 
@@ -536,13 +542,13 @@ ALL CHECKS PASS
 
 Lean proves the three theorems of Why it works for any group and any counts, and checks the worked numbers.
 
-- Take posts $A = g^a$ and $B = g^b$. Then $B^a = A^b = g^{ab}$: both laptops reach the same key.
-- Take the same posts. Then the key also equals $g^{ab \bmod q}$, with $q$ the number of distinct powers of $g$.
-- Take $h = g^x$, $c_1 = g^r$ and $c_2 = m \cdot h^r$. Then $c_2 / c_1^{\,x} = m$: decryption always returns the message.
+- Take posts $`A = g^a`$ and $`B = g^b`$. Then $`B^a = A^b = g^{ab}`$: both laptops reach the same key.
+- Take the same posts. Then the key also equals $`g^{ab \bmod q}`$, with $`q`$ the number of distinct powers of $`g`$.
+- Take $`h = g^x`$, $`c_1 = g^r`$ and $`c_2 = m \cdot h^r`$. Then $`c_2 / c_1^{\,x} = m`$: decryption always returns the message.
 - Take a group whose size is prime. Then every member except 1 generates the whole group.
-- Take the toy clock. Then 20123 and 10061 are prime, $4^{10061}$ lands on 1, and $2^{10061}$ lands on 20122.
+- Take the toy clock. Then 20123 and 10061 are prime, $`4^{10061}`$ lands on 1, and $`2^{10061}`$ lands on 20122.
 - The posts, the key 12254 three ways, the wrong key 1103 and every ElGamal row in Worked numbers also check.
-- So do the second encryption (4442, 3384), the reused-$r$ break, and the forged post 20122 giving key 1.
+- So do the second encryption (4442, 3384), the reused-$`r`$ break, and the forged post 20122 giving key 1.
 
 Both discrete-log searches, the cost table, the raw-PIN break and the DDH guessing games are left to the Python and Rust checks.
 
@@ -635,7 +641,7 @@ example : 20122 ^ 2 % 20123 = 1 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - Guess first: what happens if `G = 4` becomes `G = 2`? The first assert fires before any key is made, because $2^{10061}$ lands on 20122, not 1: the group no longer has prime size, and the DDH game above shows what that costs.
+> - Guess first: what happens if `G = 4` becomes `G = 2`? The first assert fires before any key is made, because $`2^{10061}`$ lands on 20122, not 1: the group no longer has prime size, and the DDH game above shows what that costs.
 > - Guess first: in `key_direct`, change `a * b % Q` to `a * b % P`. The third road gives 1103, not 12254, and the assert on the three keys fires.
 > - Guess first: encrypt the PIN a second time with `r1` instead of `r2`. Both ciphertexts come out (14496, 169), so a listener sees the same PIN was sent twice, and the assert `c != c_again` fires.
 
@@ -647,22 +653,22 @@ example : 20122 ^ 2 % 20123 = 1 := by norm_num
 > **Believing the exchange alone makes the cafe wifi safe.** It does not. The arithmetic proves that whoever is on the other end shares the key, not who that is. A hotspot in the middle can run one exchange with laptop 1 and another with laptop 2, then pass every message along after reading it. The fix is to sign the posts ([Digital signatures](07-digital-signatures.md)), which is what [The TLS handshake](08-key-exchange-in-practice-the-tls-handshake.md) does.
 >
 > Three smaller traps, each with the wrong number it produces:
-> - **Reusing the fresh count $r$.** Two PINs under one $r$ give $c_2 / c_2' = 13552$, and knowing the first PIN, 4071, hands over the second, 9306.
-> - **Not checking a received post.** A forged $B = 20122$ forces the key to 1, one of only 2 values. Reject a post equal to 1 or $p - 1$.
+> - **Reusing the fresh count $`r`$.** Two PINs under one $`r`$ give $`c_2 / c_2' = 13552`$, and knowing the first PIN, 4071, hands over the second, 9306.
+> - **Not checking a received post.** A forged $`B = 20122`$ forces the key to 1, one of only 2 values. Reject a post equal to 1 or $`p - 1`$.
 > - **Using the shared number raw as a key.** 12254 is a member of a structured group, not a string of random bits. Real protocols pass it through a hash first, a function that turns it into a fixed-length string of random-looking bits ([Hashes and MACs](03-hash-functions-and-macs.md)).
 
 ---
 
 ## Where you meet it in real life
 
-- **Secure web connections.** A TLS 1.3 connection normally opens with a Diffie-Hellman exchange. The clock-based groups it may use are the ones RFC 7919 fixes, all of the safe-prime kind used here, $p = 2q + 1$. Most connections today run the same exchange on an elliptic curve instead ([Elliptic curves](06-elliptic-curve-cryptography.md)).
+- **Secure web connections.** A TLS 1.3 connection normally opens with a Diffie-Hellman exchange. The clock-based groups it may use are the ones RFC 7919 fixes, all of the safe-prime kind used here, $`p = 2q + 1`$. Most connections today run the same exchange on an elliptic curve instead ([Elliptic curves](06-elliptic-curve-cryptography.md)).
 - **Forward secrecy.** Fresh counts for every connection, thrown away afterwards, mean a server key stolen later cannot unlock traffic recorded earlier.
 - **Encrypted email and files.** OpenPGP's 2007 standard, RFC 4880, used ElGamal to wrap a short symmetric key (one secret key that both sides use to lock and unlock) rather than the whole message ([AES](02-symmetric-ciphers-and-aes.md)). Its 2024 revision, RFC 9580, forbids encrypting with ElGamal and requires X25519, the same exchange on a curve ([Elliptic curves](06-elliptic-curve-cryptography.md)).
-- **Signatures in the same groups.** DSA (the Digital Signature Algorithm) and Schnorr signatures reuse the prime-order group, generator and public key $h = g^x$ from this card ([Digital signatures](07-digital-signatures.md)).
+- **Signatures in the same groups.** DSA (the Digital Signature Algorithm) and Schnorr signatures reuse the prime-order group, generator and public key $`h = g^x`$ from this card ([Digital signatures](07-digital-signatures.md)).
 - **Weak groups in the wild.** In 2015 the Logjam attack forced connections down to small "export-grade" clocks and broke them with precomputed discrete logs.
 
 > **Say it back**
-> Two laptops agree a key in public because $(g^b)^a$ and $(g^a)^b$ are both $g^{ab}$. The group must have prime size, or the posts leak pieces of the secret counts. Security rests on three nested assumptions, DL, CDH and DDH, none proved, and baby-step giant-step means a count of 256 bits gives about $2^{128}$ steps of work. ElGamal is the same exchange with the receiver's half published in advance: send $g^r$ and $m \cdot h^r$, and the receiver divides out $c_1^{\,x}$. A fresh $r$ for every message makes encryption random, which IND-CPA security needs.
+> Two laptops agree a key in public because $`(g^b)^a`$ and $`(g^a)^b`$ are both $`g^{ab}`$. The group must have prime size, or the posts leak pieces of the secret counts. Security rests on three nested assumptions, DL, CDH and DDH, none proved, and baby-step giant-step means a count of 256 bits gives about $`2^{128}`$ steps of work. ElGamal is the same exchange with the receiver's half published in advance: send $`g^r`$ and $`m \cdot h^r`$, and the receiver divides out $`c_1^{\,x}`$. A fresh $`r`$ for every message makes encryption random, which IND-CPA security needs.
 
 ---
 

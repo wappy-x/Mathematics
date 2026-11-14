@@ -28,32 +28,38 @@ Drawn at 1 m = 0.6 units. C is the surveyor, B the marker, A the pylon. The dash
 
 ## The formula
 
-Each side takes the small letter of the corner it faces: $c$, the distance across, faces the surveyor's corner $C$, where the sightings $a$ and $b$ meet. Cosine and sine are the ratios of [Sine, cosine and tangent](01-right-triangle-trigonometry.md), extended past 90° by [The unit circle](02-radians-and-the-unit-circle.md), where the cosine turns negative.
+Each side takes the small letter of the corner it faces: $`c`$, the distance across, faces the surveyor's corner $`C`$, where the sightings $`a`$ and $`b`$ meet. Cosine and sine are the ratios of [Sine, cosine and tangent](01-right-triangle-trigonometry.md), extended past 90° by [The unit circle](02-radians-and-the-unit-circle.md), where the cosine turns negative.
 
-$$c^2 = a^2 + b^2 - 2ab\cos C$$
+```math
+c^2 = a^2 + b^2 - 2ab\cos C
+```
 
 **Read it aloud:** square the two sightings and add; take away twice their product times the cosine of the angle between them; what is left is the distance across, squared.
 
 Rearranged, it gives angle C from three sides; relabelling the corners gives the other two:
 
-$$\cos C = \frac{a^2 + b^2 - c^2}{2ab}$$
+```math
+\cos C = \frac{a^2 + b^2 - c^2}{2ab}
+```
 
-The area $K$ uses the same two sides and angle:
+The area $`K`$ uses the same two sides and angle:
 
-$$K = \tfrac12\,ab\sin C$$
+```math
+K = \tfrac12\,ab\sin C
+```
 
 **Read it aloud:** half the product of two sides, times the sine of the angle between them.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$, $b$ | the two sides meeting at C: the sightings | 300 m and 450 m | here, c grows |
-| $C$ | the angle between them | 52° | c grows all the way to 180°; the area peaks at 90° |
-| $c$ | the side facing C: the distance across | 355.35 m | the angle it faces opens |
-| $A$, $B$ | the angles at the pylon and the marker | 41.70° and 86.30° | — |
-| $\cos C$, $\sin C$ | cosine and sine of the angle at C | 0.61566148 and 0.78801075 | a bigger cosine takes more away |
-| $h$, $D$ | the height from B, at a right angle to line CA; D, its foot | 236.40 m; D is 184.70 m from C | the area grows with h |
-| $K$ | the area enclosed | 53190.73 square metres | — |
-| $u$, $v$ | arrows from C to A and to B | 450 m and 300 m long | — |
+| $`a`$, $`b`$ | the two sides meeting at C: the sightings | 300 m and 450 m | here, c grows |
+| $`C`$ | the angle between them | 52° | c grows all the way to 180°; the area peaks at 90° |
+| $`c`$ | the side facing C: the distance across | 355.35 m | the angle it faces opens |
+| $`A`$, $`B`$ | the angles at the pylon and the marker | 41.70° and 86.30° | — |
+| $`\cos C`$, $`\sin C`$ | cosine and sine of the angle at C | 0.61566148 and 0.78801075 | a bigger cosine takes more away |
+| $`h`$, $`D`$ | the height from B, at a right angle to line CA; D, its foot | 236.40 m; D is 184.70 m from C | the area grows with h |
+| $`K`$ | the area enclosed | 53190.73 square metres | — |
+| $`u`$, $`v`$ | arrows from C to A and to B | 450 m and 300 m long | — |
 
 ### When it holds
 
@@ -67,23 +73,25 @@ $$K = \tfrac12\,ab\sin C$$
 
 ### Step 0: cut the triangle into two right triangles
 
-Pythagoras needs a right angle, and this triangle has none. So make two. From B, drop the height $h$ to the base line, meeting it at a right angle at $D$. The triangle becomes two right triangles sharing the height.
+Pythagoras needs a right angle, and this triangle has none. So make two. From B, drop the height $`h`$ to the base line, meeting it at a right angle at $`D`$. The triangle becomes two right triangles sharing the height.
 
 ### Step 1: sine and cosine name the pieces
 
-In the right triangle C, D, B, the 300 m sighting is the long side facing the right angle. So the height is $a\sin C$, 236.40 m, and the near piece of the base is $a\cos C$, 184.70 m. The far piece, from D to A, is $b - a\cos C$, 265.30 m.
+In the right triangle C, D, B, the 300 m sighting is the long side facing the right angle. So the height is $`a\sin C`$, 236.40 m, and the near piece of the base is $`a\cos C`$, 184.70 m. The far piece, from D to A, is $`b - a\cos C`$, 265.30 m.
 
 ### Step 2: Pythagoras on the far triangle
 
 Triangle D, A, B has its right angle at D, short sides the far piece and the height, and long side c:
 
-$$c^2 = (b - a\cos C)^2 + (a\sin C)^2$$
+```math
+c^2 = (b - a\cos C)^2 + (a\sin C)^2
+```
 
 ### Step 3: expand, and the identity collapses it
 
-The first bracket expands to $b^2 - 2ab\cos C + a^2\cos^2 C$, where $\cos^2 C$ means the cosine squared; the second is $a^2\sin^2 C$. The terms carrying $a^2$ add to $a^2(\cos^2 C + \sin^2 C)$, and that bracket is 1 ([Trig identities](03-trig-identities.md)). What is left is the law.
+The first bracket expands to $`b^2 - 2ab\cos C + a^2\cos^2 C`$, where $`\cos^2 C`$ means the cosine squared; the second is $`a^2\sin^2 C`$. The terms carrying $`a^2`$ add to $`a^2(\cos^2 C + \sin^2 C)`$, and that bracket is 1 ([Trig identities](03-trig-identities.md)). What is left is the law.
 
-The correction is two rectangles, each the base $b$ by the near piece $a\cos C$, as Euclid drew it.
+The correction is two rectangles, each the base $`b`$ by the near piece $`a\cos C`$, as Euclid drew it.
 
 ### Step 4: a wide angle pushes the foot outside
 
@@ -93,7 +101,7 @@ Past 90° the cosine is negative, and the sign carries the geometry: the near pi
 
 Steps 2 and 3 go through unchanged. Subtracting a negative correction adds, giving 677.30 m against Pythagoras's 540.83 m.
 
-The foot can also land beyond A, when $a\cos C$ exceeds $b$: the far piece turns negative, and its square is unchanged.
+The foot can also land beyond A, when $`a\cos C`$ exceeds $`b`$: the far piece turns negative, and its square is unchanged.
 
 ### The picture: the same sightings opened to 128°
 
@@ -104,19 +112,19 @@ Drawn at 1 m = 0.5 units. The dashed base line runs 184.70 m back past C to the 
 <details>
 <summary>Detailed proof</summary>
 
-Euclid (Book II, Propositions 12 and 13) used positive lengths only, so he split the cases that the signed near piece covers at once. Write CD for the length from C to the foot; Pythagoras in triangle B, D, C gives $a^2 = \text{CD}^2 + h^2$.
+Euclid (Book II, Propositions 12 and 13) used positive lengths only, so he split the cases that the signed near piece covers at once. Write CD for the length from C to the foot; Pythagoras in triangle B, D, C gives $`a^2 = \text{CD}^2 + h^2`$.
 
-- **C obtuse, D behind C.** DA is $b + \text{CD}$, so $c^2 = a^2 + b^2 + 2b\,\text{CD}$. Angle B, C, D is 180° − C, with cosine $\text{CD}/a$; an angle and 180° minus it have cosines of equal size and opposite sign, so $2b\,\text{CD} = -2ab\cos C$.
-- **C right, D at C.** CD and $\cos C$ are both 0, and Pythagoras stands.
-- **C acute, D on A's side.** DA is $b - \text{CD}$ or $\text{CD} - b$, with the same square, so $c^2 = a^2 + b^2 - 2b\,\text{CD}$, where $\text{CD} = a\cos C$.
+- **C obtuse, D behind C.** DA is $`b + \text{CD}`$, so $`c^2 = a^2 + b^2 + 2b\,\text{CD}`$. Angle B, C, D is 180° − C, with cosine $`\text{CD}/a`$; an angle and 180° minus it have cosines of equal size and opposite sign, so $`2b\,\text{CD} = -2ab\cos C`$.
+- **C right, D at C.** CD and $`\cos C`$ are both 0, and Pythagoras stands.
+- **C acute, D on A's side.** DA is $`b - \text{CD}`$ or $`\text{CD} - b`$, with the same square, so $`c^2 = a^2 + b^2 - 2b\,\text{CD}`$, where $`\text{CD} = a\cos C`$.
 
-**The SSS range.** The fraction $(a^2 + b^2 - c^2)/(2ab)$ is below 1 exactly when $(a - b)^2 < c^2$, and above −1 exactly when $c^2 < (a + b)^2$: exactly when the three lengths close into a triangle.
+**The SSS range.** The fraction $`(a^2 + b^2 - c^2)/(2ab)`$ is below 1 exactly when $`(a - b)^2 < c^2`$, and above −1 exactly when $`c^2 < (a + b)^2`$: exactly when the three lengths close into a triangle.
 
 </details>
 
 ### Step 5: the same height gives the area
 
-Half the base times the height ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)) is $\tfrac12 \times b \times a\sin C$: 53190.73 square metres. At 128° the height and so the area are unchanged, because an angle and 180° minus it share a sine.
+Half the base times the height ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)) is $`\tfrac12 \times b \times a\sin C`$: 53190.73 square metres. At 128° the height and so the area are unchanged, because an angle and 180° minus it share a sine.
 
 ### Step 6: run it backwards
 
@@ -124,11 +132,13 @@ From 0° to 180° the cosine falls steadily from 1 to −1, so each cosine names
 
 From 300, 450 and 355.35 m the rearranged law gives A = 41.70°, B = 86.30° and C = 52.00°, each found on its own. They add to 180.00°, as the angle sum requires ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). A sine could not do this: 52° and 128° share one.
 
-A second route uses arrows. With $u$ the arrow from C to A and $v$ from C to B, the arrow across, from B to A, is $u - v$. The dot product $u \cdot v$ multiplies the matching east and north parts of two arrows and adds the results. It expands the squared length of $u - v$, with bars meaning length:
+A second route uses arrows. With $`u`$ the arrow from C to A and $`v`$ from C to B, the arrow across, from B to A, is $`u - v`$. The dot product $`u \cdot v`$ multiplies the matching east and north parts of two arrows and adds the results. It expands the squared length of $`u - v`$, with bars meaning length:
 
-$$\lvert u - v\rvert^2 = \lvert u\rvert^2 + \lvert v\rvert^2 - 2\,u \cdot v$$
+```math
+\lvert u - v\rvert^2 = \lvert u\rvert^2 + \lvert v\rvert^2 - 2\,u \cdot v
+```
 
-Since $\lvert u\rvert = b$ and $\lvert v\rvert = a$, comparing with the law gives $u \cdot v = ab\cos C$: the fact [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md) left for this wing.
+Since $`\lvert u\rvert = b`$ and $`\lvert v\rvert = a`$, comparing with the law gives $`u \cdot v = ab\cos C`$: the fact [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md) left for this wing.
 
 ---
 
@@ -136,13 +146,13 @@ Since $\lvert u\rvert = b$ and $\lvert v\rvert = a$, comparing with the law give
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| square the sightings, add | $300^2 + 450^2$ | 292500.00 |
-| the correction | $2 \times 300 \times 450 \times 0.61566148$ | 166228.60 |
+| square the sightings, add | $`300^2 + 450^2`$ | 292500.00 |
+| the correction | $`2 \times 300 \times 450 \times 0.61566148`$ | 166228.60 |
 | take it away | 292500.00 − 166228.60 | 126271.40 |
-| square root | $\sqrt{126271.40}$ | **355.35 m** |
-| the area | $\tfrac12 \times 300 \times 450 \times 0.78801075$ | **53190.73 square metres** |
-| angle at the pylon | $\cos A = (450^2 + 355.35^2 - 300^2) \div (2 \times 450 \times 355.35) = 0.7466$ | **41.70°** |
-| angle at the marker | $\cos B = (300^2 + 355.35^2 - 450^2) \div (2 \times 300 \times 355.35) = 0.0646$ | **86.30°** |
+| square root | $`\sqrt{126271.40}`$ | **355.35 m** |
+| the area | $`\tfrac12 \times 300 \times 450 \times 0.78801075`$ | **53190.73 square metres** |
+| angle at the pylon | $`\cos A = (450^2 + 355.35^2 - 300^2) \div (2 \times 450 \times 355.35) = 0.7466`$ | **41.70°** |
+| angle at the marker | $`\cos B = (300^2 + 355.35^2 - 450^2) \div (2 \times 300 \times 355.35) = 0.0646`$ | **86.30°** |
 | check | 41.70 + 86.30 + 52.00 | 180.00 |
 
 Marker and pylon stand 355.35 m apart across the pond, and the survey triangle encloses 5.32 hectares.
@@ -154,7 +164,7 @@ Marker and pylon stand 355.35 m apart across the pond, and the survey triangle e
 | Drop the correction | 540.83 m | Pythagoras assumes a right angle at C |
 | Forget the 2 | 457.59 m | Only one of the two rectangles is taken away |
 | Calculator in radians | 580.09 m | 52 radians is another angle, with a negative cosine |
-| Area with cosine for sine | 41557.15 square metres | $a\cos C$ is the near piece, not the height |
+| Area with cosine for sine | 41557.15 square metres | $`a\cos C`$ is the near piece, not the height |
 
 The code prints all four.
 
@@ -364,7 +374,7 @@ Lean proves the law for any three points on a flat plane, at any angle, plus two
 
 - The law: the side facing an angle, squared, is the other two squared and added, minus twice their product times the angle's cosine.
 - Three sides that close: the rearranged law's cosine is above −1 and below 1 exactly when each side is shorter than the other two together.
-- The arrow route: the dot product $u \cdot v$ is the two arrows' lengths times the cosine of the angle at C.
+- The arrow route: the dot product $`u \cdot v`$ is the two arrows' lengths times the cosine of the angle at C.
 - The numbers: at 90° the correction is 0, and sides of 300, 450 and 800 m ask for a cosine below −1.
 
 The decimals, the area, Heron's rule and the angles found by halving are left to the Python and Rust checks.

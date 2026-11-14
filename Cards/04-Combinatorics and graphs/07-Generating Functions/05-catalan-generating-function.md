@@ -32,29 +32,33 @@ The single stack is the 1, the last merge the x, the blocks the two copies of C.
 
 ## The formula
 
-Notation first, in words. This shelf holds a sequence of counts as one series: the count for size $n$ hangs on $x$ to the power $n$, and "the coefficient of x^n" names it ([Generating functions](01-ordinary-generating-functions.md)). Here $C_n$ counts plans using $n$ merges, a row of $n$ + 1 stacks; $x$ is a place-marker, not a quantity, carrying one factor per merge.
+Notation first, in words. This shelf holds a sequence of counts as one series: the count for size $`n`$ hangs on $`x`$ to the power $`n`$, and "the coefficient of x^n" names it ([Generating functions](01-ordinary-generating-functions.md)). Here $`C_n`$ counts plans using $`n`$ merges, a row of $`n`$ + 1 stacks; $`x`$ is a place-marker, not a quantity, carrying one factor per merge.
 
-$$C(x) = 1 + x\,C(x)^2$$
+```math
+C(x) = 1 + x\,C(x)^2
+```
 
 **Read it aloud:** a plan is either the do-nothing plan for one stack, or a last merge — one x — with a plan for the left block and a plan for the right.
 
-Coefficient by coefficient, that line is the convolution recurrence proved on [Catalan numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md): a sum of products of two earlier counts, one product per split of the merges. Treated instead as a quadratic in $C$ and solved, it names the list in one expression:
+Coefficient by coefficient, that line is the convolution recurrence proved on [Catalan numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md): a sum of products of two earlier counts, one product per split of the merges. Treated instead as a quadratic in $`C`$ and solved, it names the list in one expression:
 
-$$C(x) = \frac{1 - \sqrt{1 - 4x}}{2x}$$
+```math
+C(x) = \frac{1 - \sqrt{1 - 4x}}{2x}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the marker, one factor per merge | x^5 carries the six-stack count | — |
-| $C(x)$ | the counts as one series | 1 + x + 2x^2 + 5x^3 + 14x^4 + 42x^5 + … | — |
-| $C_n$ | the coefficient of x^n: plans using n merges | 42 at n = 5 | — |
-| $C_0$ | the do-nothing plan | 1 | later counts scale with it |
-| $n$ | merges in a plan | 5 for six stacks | far larger counts |
-| $\sqrt{1 - 4x}$ | the root in the closed form | 0.774596669241 at x = 0.1 | — |
+| $`x`$ | the marker, one factor per merge | x^5 carries the six-stack count | — |
+| $`C(x)`$ | the counts as one series | 1 + x + 2x^2 + 5x^3 + 14x^4 + 42x^5 + … | — |
+| $`C_n`$ | the coefficient of x^n: plans using n merges | 42 at n = 5 | — |
+| $`C_0`$ | the do-nothing plan | 1 | later counts scale with it |
+| $`n`$ | merges in a plan | 5 for six stacks | far larger counts |
+| $`\sqrt{1 - 4x}`$ | the root in the closed form | 0.774596669241 at x = 0.1 | — |
 
 ### When it holds
 
 - **Exactly one last merge.** Removing it leaves one plan each side; a plan coming apart two ways would be counted twice.
-- **The one-stack plan counts.** $C_0 = 1$ is what the rounds grow from; drop it and every coefficient comes out 0.
+- **The one-stack plan counts.** $`C_0 = 1`$ is what the rounds grow from; drop it and every coefficient comes out 0.
 - **The marker sits in front of the square.** That is why a round settles one more coefficient; without it nothing does.
 - **A number in place of x is a spot-check only.** The square root needs 1 - 4x at zero or above, so x at most one quarter: 1 - 4x is 0.6 at x = 0.1. At x = 0 the fraction reads 0 over 0, while the equal form 2/(1 + sqrt(1 - 4x)) below reads 1.
 
@@ -64,38 +68,40 @@ $$C(x) = \frac{1 - \sqrt{1 - 4x}}{2x}$$
 
 ### Step 0: one series carries the whole list
 
-Six counts are six separate facts. Hung on powers of x they become one object, $C(x)$, about which a single statement can be made, the powers keeping each count in its own column.
+Six counts are six separate facts. Hung on powers of x they become one object, $`C(x)`$, about which a single statement can be made, the powers keeping each count in its own column.
 
 ### Step 1: the split reads off as an equation
 
 Take a row whose plan has at least one merge. One of those merges is last, and it joins two blocks: everything left of it, by then one stack, and everything right. Each block is a shorter row with its own plan, and the plan comes apart this way exactly once.
 
-Two rules make that algebra ([Counting by multiplying series](02-counting-with-generating-functions.md)): cases add their series, and two independent pieces multiply theirs, the coefficient of x^n in a product summing over every split of n. So the single stack gives 1, the other case one x times $C(x)$ twice, once per block.
+Two rules make that algebra ([Counting by multiplying series](02-counting-with-generating-functions.md)): cases add their series, and two independent pieces multiply theirs, the coefficient of x^n in a product summing over every split of n. So the single stack gives 1, the other case one x times $`C(x)`$ twice, once per block.
 
 ### Step 2: iterate, and each round settles one more count
 
-One count is given outright: $C_0 = 1$. Put C = 1 into the right-hand side and keep putting the result back; the table below has the first rounds' arithmetic. The code prints six rounds, and each column stops moving: x^3 settles at 5 in round 3, x^4 at 14 in round 4, x^5 at 42 in round 5; round 6 repeats round 5.
+One count is given outright: $`C_0 = 1`$. Put C = 1 into the right-hand side and keep putting the result back; the table below has the first rounds' arithmetic. The code prints six rounds, and each column stops moving: x^3 settles at 5 in round 3, x^4 at 14 in round 4, x^5 at 42 in round 5; round 6 repeats round 5.
 
 The x in front of the square is the reason: the coefficient of x^n on the right is built only from coefficients below x^n on the left, so a round correct up to some power hands back one more, and the settled part never moves. Entries above that line — the 6s in round 3, the 26 in round 4 — are working residue.
 
 ### Step 3: the quadratic formula names the whole series
 
-Rearranged, the equation is $x\,C(x)^2 - C(x) + 1 = 0$. Treat $C(x)$ as the unknown and x as a constant, and the quadratic formula applies ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)):
+Rearranged, the equation is $`x\,C(x)^2 - C(x) + 1 = 0`$. Treat $`C(x)`$ as the unknown and x as a constant, and the quadratic formula applies ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)):
 
-$$C(x) = \frac{1 \pm \sqrt{1 - 4x}}{2x}$$
+```math
+C(x) = \frac{1 \pm \sqrt{1 - 4x}}{2x}
+```
 
 Two roots, one counting series, so the sign has to be chosen: minus. With the plus sign the top heads for 2 while the bottom shrinks to nothing as x shrinks, so the value runs away; a list of counts reads 1 there. At x = 0.1 the minus root is 1.127016653793, the plus root 8.872983346207.
 
 <details>
 <summary>Detailed proof: the two roots, the choice of sign, and the numerical check</summary>
 
-Write C for $C(x)$. In $x\,C^2 - C + 1 = 0$ the coefficients are a = x, b = -1 and c = 1, so b^2 - 4ac = 1 - 4x and -b = 1, giving the two roots above.
+Write C for $`C(x)`$. In $`x\,C^2 - C + 1 = 0`$ the coefficients are a = x, b = -1 and c = 1, so b^2 - 4ac = 1 - 4x and -b = 1, giving the two roots above.
 
 Multiply the minus root above and below by 1 + sqrt(1 - 4x): the top becomes 1 - (1 - 4x) = 4x, which cancels the 2x.
 
-$$\frac{1 - \sqrt{1 - 4x}}{2x} = \frac{2}{1 + \sqrt{1 - 4x}}$$
+$`\displaystyle \frac{1 - \sqrt{1 - 4x}}{2x} = \frac{2}{1 + \sqrt{1 - 4x}}`$
 
-At x = 0 that reads 2 over 1 + 1, which is 1: the do-nothing plan, $C_0$. The plus root is 2 over a vanishing 2x, past every bound. Both roots return themselves through 1 + x C^2, so that test cannot separate them; the code separates them by adding up the counts at x = 0.1, landing on the minus root, 1.127016653793.
+At x = 0 that reads 2 over 1 + 1, which is 1: the do-nothing plan, $`C_0`$. The plus root is 2 over a vanishing 2x, past every bound. Both roots return themselves through 1 + x C^2, so that test cannot separate them; the code separates them by adding up the counts at x = 0.1, landing on the minus root, 1.127016653793.
 
 </details>
 

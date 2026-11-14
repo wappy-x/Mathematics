@@ -35,46 +35,52 @@ The one line is the exact chance, rounded to two places. It crosses one half bet
 
 ## The formula
 
-Two pieces of notation first, in words. A capital pi, $\prod$, means "multiply all of these together", the way a capital sigma, $\sum$, means "add all of these". And $P(A)$ is the chance of an event A, as elsewhere in this wing.
+Two pieces of notation first, in words. A capital pi, $`\prod`$, means "multiply all of these together", the way a capital sigma, $`\sum`$, means "add all of these". And $`P(A)`$ is the chance of an event A, as elsewhere in this wing.
 
-The birthday chance, for $n$ people and $d$ equally likely days:
+The birthday chance, for $`n`$ people and $`d`$ equally likely days:
 
-$$P(\text{no shared day}) = \frac{d}{d}\cdot\frac{d-1}{d}\cdot\frac{d-2}{d}\cdots\frac{d-n+1}{d} = \prod_{i=0}^{n-1}\left(1-\frac{i}{d}\right), \qquad P(\text{shared}) = 1 - P(\text{no shared day})$$
+```math
+P(\text{no shared day}) = \frac{d}{d}\cdot\frac{d-1}{d}\cdot\frac{d-2}{d}\cdots\frac{d-n+1}{d} = \prod_{i=0}^{n-1}\left(1-\frac{i}{d}\right), \qquad P(\text{shared}) = 1 - P(\text{no shared day})
+```
 
 **Read it aloud:** the first person may land anywhere; each later person must miss every day already taken; multiply those chances, and one minus the product is the chance of a match.
 
-The collector's wait. Let $T$ be the number of people who arrive until every day is taken. Its average, $E[T]$ (read "the average value of T in the long run"), is
+The collector's wait. Let $`T`$ be the number of people who arrive until every day is taken. Its average, $`E[T]`$ (read "the average value of T in the long run"), is
 
-$$E[T] = \frac{d}{d} + \frac{d}{d-1} + \frac{d}{d-2} + \cdots + \frac{d}{1} = d\,H_d, \qquad H_d = 1 + \frac12 + \frac13 + \cdots + \frac1d$$
+```math
+E[T] = \frac{d}{d} + \frac{d}{d-1} + \frac{d}{d-2} + \cdots + \frac{d}{1} = d\,H_d, \qquad H_d = 1 + \frac12 + \frac13 + \cdots + \frac1d
+```
 
-**Read it aloud:** when $i$ days are already taken, the next new day arrives with chance $(d-i)/d$, so it takes $d/(d-i)$ people on average; add those waits over all 365 stages.
+**Read it aloud:** when $`i`$ days are already taken, the next new day arrives with chance $`(d-i)/d`$, so it takes $`d/(d-i)`$ people on average; add those waits over all 365 stages.
 
-The sum $H_d$ is called the $d$-th **harmonic number**. Two approximations make both results easy to carry around:
+The sum $`H_d`$ is called the $`d`$-th **harmonic number**. Two approximations make both results easy to carry around:
 
-$$P(\text{shared}) \approx 1 - e^{-n(n-1)/(2d)}, \qquad E[T] \approx d\,(\ln d + \gamma) + \tfrac12$$
+```math
+P(\text{shared}) \approx 1 - e^{-n(n-1)/(2d)}, \qquad E[T] \approx d\,(\ln d + \gamma) + \tfrac12
+```
 
-In words: the birthday chance is set by the number of pairs, $n(n-1)/2$, measured against $d$; the full set costs about $d \ln d$ people plus a correction.
+In words: the birthday chance is set by the number of pairs, $`n(n-1)/2`$, measured against $`d`$; the full set costs about $`d \ln d`$ people plus a correction.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | people in the room | 23 | the match chance climbs, fast |
-| $d$ | equally likely days (or coupons, or hash values) | 365 | matches get rarer; the full set takes longer |
-| $i$ | days already taken when the next person arrives | 0 to 22 (birthdays), 0 to 364 (collector) | the next person is more likely to repeat |
-| $p_i$ | chance the next person brings a new day, $(d-i)/d$ | 1 at the start, 1/365 at the end | the stage ends sooner |
-| $W_i$ | people needed to get from $i$ taken days to $i+1$ | average $d/(d-i)$ | — |
-| $T$ | people needed until all $d$ days are taken | average 2364.6460 | — |
-| $H_d$ | the harmonic number $1 + 1/2 + \cdots + 1/d$ | 6.478482 | grows like $\ln d$ |
-| $\gamma$ | Euler's constant, the gap $H_d - \ln d$ settles to | 0.5772156649 | — |
-| $e$ | the base of natural logarithms, 2.718… | in $e^{-253/365}$ | — |
-| $\prod$ | multiply every factor that follows | 23 factors | — |
-| $\sum$ | add every term that follows | 365 terms | — |
-| $b$ | length of a hash fingerprint, in bits | not used here | collisions start later, at about $2^{b/2}$ tries |
+| $`n`$ | people in the room | 23 | the match chance climbs, fast |
+| $`d`$ | equally likely days (or coupons, or hash values) | 365 | matches get rarer; the full set takes longer |
+| $`i`$ | days already taken when the next person arrives | 0 to 22 (birthdays), 0 to 364 (collector) | the next person is more likely to repeat |
+| $`p_i`$ | chance the next person brings a new day, $`(d-i)/d`$ | 1 at the start, 1/365 at the end | the stage ends sooner |
+| $`W_i`$ | people needed to get from $`i`$ taken days to $`i+1`$ | average $`d/(d-i)`$ | — |
+| $`T`$ | people needed until all $`d`$ days are taken | average 2364.6460 | — |
+| $`H_d`$ | the harmonic number $`1 + 1/2 + \cdots + 1/d`$ | 6.478482 | grows like $`\ln d`$ |
+| $`\gamma`$ | Euler's constant, the gap $`H_d - \ln d`$ settles to | 0.5772156649 | — |
+| $`e`$ | the base of natural logarithms, 2.718… | in $`e^{-253/365}`$ | — |
+| $`\prod`$ | multiply every factor that follows | 23 factors | — |
+| $`\sum`$ | add every term that follows | 365 terms | — |
+| $`b`$ | length of a hash fingerprint, in bits | not used here | collisions start later, at about $`2^{b/2}`$ tries |
 
 ### When it holds
 
 - **Every day equally likely.** Real births bunch in some months. Any unevenness raises the match chance: a calendar where half the year is 1.5 times as likely as the other half gives 0.520852 at 23 people, not 0.507297. The formula is then a floor, not the answer.
 - **People independent.** A room with twins breaks it: one pair is a match by construction.
-- **A fixed, known number of days.** Counting 29 February as a full day makes $d = 366$ and moves the numbers a little. A hash with $2^{b}$ values is the same problem with $d = 2^{b}$.
+- **A fixed, known number of days.** Counting 29 February as a full day makes $`d = 366`$ and moves the numbers a little. A hash with $`2^{b}`$ values is the same problem with $`d = 2^{b}`$.
 - **Draws with replacement.** Each person's day is drawn fresh; a day already taken is still available to the next person. Dealing from a deck without replacement is a different problem ([Hypergeometric](03-hypergeometric.md)).
 
 ---
@@ -85,63 +91,71 @@ In words: the birthday chance is set by the number of pairs, $n(n-1)/2$, measure
 
 "At least one shared birthday" can happen in a huge number of ways: one pair, two pairs, three people on one day. "Nobody shares" happens in one way only: every person on a different day. So count that, and subtract from 1 ([Counting the complement](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/06-complementary-counting.md)).
 
-For the full set, the long wait $T$ is a string of short waits: the wait for the first day, then for a second, different day, and so on. Each short wait is simple. Averages add. That is the whole proof.
+For the full set, the long wait $`T`$ is a string of short waits: the wait for the first day, then for a second, different day, and so on. Each short wait is simple. Averages add. That is the whole proof.
 
 ### Step 1: the birthday product, by counting
 
-Write down each person's birthday in order. With $d$ days and $n$ people there are $d^n$ possible lists, all equally likely. Lists with no repeat: the first person has $d$ choices, the second $d-1$, the third $d-2$, down to $d-n+1$ for the last. So
+Write down each person's birthday in order. With $`d`$ days and $`n`$ people there are $`d^n`$ possible lists, all equally likely. Lists with no repeat: the first person has $`d`$ choices, the second $`d-1`$, the third $`d-2`$, down to $`d-n+1`$ for the last. So
 
-$$P(\text{no shared day}) = \frac{d(d-1)\cdots(d-n+1)}{d^n}.$$
+```math
+P(\text{no shared day}) = \frac{d(d-1)\cdots(d-n+1)}{d^n}.
+```
 
 Split the fraction into one factor per person and it is the product above. On a small calendar this can be checked by listing every case: with 12 equally likely birth months and 4 people there are 20736 lists, and counting them gives a match chance of 0.427083, the same as the formula. The code does exactly that count.
 
 ### Step 2: why 23, and not half of 365
 
-Each factor $1 - i/d$ is close to $e^{-i/d}$ when $i/d$ is small: the curve $e^{-x}$ touches the line $1 - x$ at $x = 0$ and stays just above it. Multiply the factors and the exponents add:
+Each factor $`1 - i/d`$ is close to $`e^{-i/d}`$ when $`i/d`$ is small: the curve $`e^{-x}`$ touches the line $`1 - x`$ at $`x = 0`$ and stays just above it. Multiply the factors and the exponents add:
 
-$$P(\text{no shared day}) \approx e^{-(0 + 1 + \cdots + (n-1))/d} = e^{-n(n-1)/(2d)}.$$
+```math
+P(\text{no shared day}) \approx e^{-(0 + 1 + \cdots + (n-1))/d} = e^{-n(n-1)/(2d)}.
+```
 
-The top of the exponent, $n(n-1)/2$, is the number of pairs. At 23 people it is 253, and 253/365 = 0.693151, which is almost exactly $\ln 2$. So the chance of no match is about one half, and the approximation gives a shared-birthday chance of 0.500002 against the exact 0.507297.
+The top of the exponent, $`n(n-1)/2`$, is the number of pairs. At 23 people it is 253, and 253/365 = 0.693151, which is almost exactly $`\ln 2`$. So the chance of no match is about one half, and the approximation gives a shared-birthday chance of 0.500002 against the exact 0.507297.
 
-Setting the exponent equal to $\ln 2$ and solving gives the threshold $n \approx \sqrt{2d\ln 2}$, here 22.4944, so 23 people. The threshold grows with the square root of $d$. That square root is the surprise: pairs grow like $n^2$, so a room needs only about $\sqrt{d}$ people, not $d/2$.
+Setting the exponent equal to $`\ln 2`$ and solving gives the threshold $`n \approx \sqrt{2d\ln 2}`$, here 22.4944, so 23 people. The threshold grows with the square root of $`d`$. That square root is the surprise: pairs grow like $`n^2`$, so a room needs only about $`\sqrt{d}`$ people, not $`d/2`$.
 
 <details>
 <summary>The algebra behind the approximation</summary>
 
-For $0 \le x < 1$, $\ln(1-x) = -x - x^2/2 - x^3/3 - \cdots$, so $1 - x \le e^{-x}$ and the error in the exponent is about $x^2/2$ per factor. Summing $i^2/(2d^2)$ over $i < n$ gives about $n^3/(6d^2)$, small when $n$ is near $\sqrt{d}$; it is why the exact no-match chance sits a little below the approximate one. Since every factor satisfies $1 - i/d \le e^{-i/d}$, the approximation always slightly understates the match chance.
+For $`0 \le x < 1`$, $`\ln(1-x) = -x - x^2/2 - x^3/3 - \cdots`$, so $`1 - x \le e^{-x}`$ and the error in the exponent is about $`x^2/2`$ per factor. Summing $`i^2/(2d^2)`$ over $`i < n`$ gives about $`n^3/(6d^2)`$, small when $`n`$ is near $`\sqrt{d}`$; it is why the exact no-match chance sits a little below the approximate one. Since every factor satisfies $`1 - i/d \le e^{-i/d}`$, the approximation always slightly understates the match chance.
 
 </details>
 
 ### Step 3: one stage of the collection is a geometric wait
 
-Suppose $i$ days are already taken. Each new person brings a new day with chance $p_i = (d-i)/d$, independently of everyone before. The number of people until the first success is a geometric wait, and its average is $1/p_i$ ([Waiting for a success](02-geometric-and-negative-binomial.md)). So
+Suppose $`i`$ days are already taken. Each new person brings a new day with chance $`p_i = (d-i)/d`$, independently of everyone before. The number of people until the first success is a geometric wait, and its average is $`1/p_i`$ ([Waiting for a success](02-geometric-and-negative-binomial.md)). So
 
-$$E[W_i] = \frac{d}{d-i}.$$
+```math
+E[W_i] = \frac{d}{d-i}.
+```
 
 The first stage takes exactly 1 person. The 183rd new day, with half the year taken, takes 1.9945 people on average. The 365th takes 365.0000.
 
 ### Step 4: add the stages
 
-$T = W_0 + W_1 + \cdots + W_{d-1}$. The average of a sum is the sum of the averages; this needs no independence at all. So
+$`T = W_0 + W_1 + \cdots + W_{d-1}`$. The average of a sum is the sum of the averages; this needs no independence at all. So
 
-$$E[T] = \sum_{i=0}^{d-1}\frac{d}{d-i} = d\left(\frac1d + \frac1{d-1} + \cdots + \frac11\right) = d\,H_d.$$
+```math
+E[T] = \sum_{i=0}^{d-1}\frac{d}{d-i} = d\left(\frac1d + \frac1{d-1} + \cdots + \frac11\right) = d\,H_d.
+```
 
-For $d = 365$, $H_{365} = 6.478482$ and $E[T] = 2364.6460$.
+For $`d = 365`$, $`H_{365} = 6.478482`$ and $`E[T] = 2364.6460`$.
 
 ### Step 5: why the answer is near d ln d
 
-The harmonic sum $1 + 1/2 + \cdots + 1/d$ is a staircase under and over the curve $1/x$. The area under $1/x$ from 1 to $d$ is $\ln d$, so $H_d$ sits between $\ln d$ and $\ln d + 1$. The gap $H_d - \ln d$ shrinks towards a fixed number, Euler's constant $\gamma = 0.5772156649$. Adding the next correction, $1/(2d)$, gives $E[T] \approx d(\ln d + \gamma) + 1/2 = 2364.6463$, against the exact 2364.6460.
+The harmonic sum $`1 + 1/2 + \cdots + 1/d`$ is a staircase under and over the curve $`1/x`$. The area under $`1/x`$ from 1 to $`d`$ is $`\ln d`$, so $`H_d`$ sits between $`\ln d`$ and $`\ln d + 1`$. The gap $`H_d - \ln d`$ shrinks towards a fixed number, Euler's constant $`\gamma = 0.5772156649`$. Adding the next correction, $`1/(2d)`$, gives $`E[T] \approx d(\ln d + \gamma) + 1/2 = 2364.6463`$, against the exact 2364.6460.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Birthday.** The sample space is the $d^n$ lists of days, each with chance $d^{-n}$ by the two assumptions (equal days, independent people). The event "all different" is the set of lists with distinct entries. Choosing entries left to right gives $d(d-1)\cdots(d-n+1)$ such lists by the multiplication rule. Dividing gives the product. The complement rule gives $P(\text{shared})$.
+**Birthday.** The sample space is the $`d^n`$ lists of days, each with chance $`d^{-n}`$ by the two assumptions (equal days, independent people). The event "all different" is the set of lists with distinct entries. Choosing entries left to right gives $`d(d-1)\cdots(d-n+1)`$ such lists by the multiplication rule. Dividing gives the product. The complement rule gives $`P(\text{shared})`$.
 
-**Collector, average.** For $i = 0, \ldots, d-1$, let $W_i$ count the arrivals after the moment $i$ distinct days have been seen, up to and including the arrival that brings the next new day. Given the whole history up to that moment, each later arrival is new with chance $(d-i)/d$, independently, so $W_i$ is geometric on $1, 2, \ldots$ with success chance $p_i = (d-i)/d$, whatever the history. Then $T = \sum W_i$, and linearity of expectation gives $E[T] = \sum 1/p_i = d H_d$.
+**Collector, average.** For $`i = 0, \ldots, d-1`$, let $`W_i`$ count the arrivals after the moment $`i`$ distinct days have been seen, up to and including the arrival that brings the next new day. Given the whole history up to that moment, each later arrival is new with chance $`(d-i)/d`$, independently, so $`W_i`$ is geometric on $`1, 2, \ldots`$ with success chance $`p_i = (d-i)/d`$, whatever the history. Then $`T = \sum W_i`$, and linearity of expectation gives $`E[T] = \sum 1/p_i = d H_d`$.
 
-**Collector, spread.** Because each $W_i$ has the same law whatever happened before, the $W_i$ are independent. A geometric wait has variance $(1-p)/p^2$, so $\mathrm{Var}(T) = \sum_{i}(1-p_i)/p_i^2$. For $d = 365$ this gives a standard deviation of 465.2066 people. The last few stages dominate it: their $p_i$ are tiny.
+**Collector, spread.** Because each $`W_i`$ has the same law whatever happened before, the $`W_i`$ are independent. A geometric wait has variance $`(1-p)/p^2`$, so $`\mathrm{Var}(T) = \sum_{i}(1-p_i)/p_i^2`$. For $`d = 365`$ this gives a standard deviation of 465.2066 people. The last few stages dominate it: their $`p_i`$ are tiny.
 
-**Harmonic bounds.** For $k \ge 1$, $\int_k^{k+1} dx/x \le 1/k$, and for $k \ge 2$, $1/k \le \int_{k-1}^{k} dx/x$. Summing gives $\ln(d+1) \le H_d \le 1 + \ln d$. The differences $H_d - \ln d$ decrease and stay above 0, so they settle to a limit, which is $\gamma$ by definition.
+**Harmonic bounds.** For $`k \ge 1`$, $`\int_k^{k+1} dx/x \le 1/k`$, and for $`k \ge 2`$, $`1/k \le \int_{k-1}^{k} dx/x`$. Summing gives $`\ln(d+1) \le H_d \le 1 + \ln d`$. The differences $`H_d - \ln d`$ decrease and stay above 0, so they settle to a limit, which is $`\gamma`$ by definition.
 
 </details>
 
@@ -195,9 +209,9 @@ Each bar is the average number of arrivals spent filling 73 more days. The first
 | Ask whether someone matches one fixed person | 0.058571 | only 22 of the 253 pairs are counted |
 | Add the 253 pair chances of 1/365 | 0.693151 | pairs overlap; adding double-counts rooms with several matches, and past 365 pairs it would exceed 1 |
 | Drop "every day equally likely" | 0.520852 | births bunched into half the year raise the match chance; the formula becomes a floor |
-| Treat each stage as waiting for one named day | 133225 | a new day can be any of the $d-i$ untaken ones, not a single one |
+| Treat each stage as waiting for one named day | 133225 | a new day can be any of the $`d-i`$ untaken ones, not a single one |
 | Expect 365 people to cover 365 days | chance 1.455e-157 | that needs every person on a different day, the birthday problem at its extreme |
-| Keep only $d \ln d$ | 2153.4625 | drops the $\gamma d$ term, which is not small: it grows with $d$ |
+| Keep only $`d \ln d`$ | 2153.4625 | drops the $`\gamma d`$ term, which is not small: it grows with $`d`$ |
 
 ---
 
@@ -557,18 +571,18 @@ The simulated rooms give 0.5042 with standard error 0.0035, against the exact 0.
 
 ### Lean
 
-Lean proves both exact formulas and the approximation for every $n$ and $d$, and checks the card's small examples.
+Lean proves both exact formulas and the approximation for every $`n`$ and $`d`$, and checks the card's small examples.
 
-- Suppose $n$ people each get one of $d$ equally likely days, independently. Then $P(\text{no shared day})$ is the product of $1 - i/d$ for $i < n$.
-- Suppose people arrive one by one, with days drawn the same way. Then the average wait $E[T]$ until every day is taken is $d\,H_d$.
-- Take any $n$ and $d$. Then $1 - e^{-n(n-1)/(2d)}$ is at most $P(\text{shared})$, so the approximation never overstates the match chance.
+- Suppose $`n`$ people each get one of $`d`$ equally likely days, independently. Then $`P(\text{no shared day})`$ is the product of $`1 - i/d`$ for $`i < n`$.
+- Suppose people arrive one by one, with days drawn the same way. Then the average wait $`E[T]`$ until every day is taken is $`d\,H_d`$.
+- Take any $`n`$ and $`d`$. Then $`1 - e^{-n(n-1)/(2d)}`$ is at most $`P(\text{shared})`$, so the approximation never overstates the match chance.
 - Twenty-three people make 253 pairs.
 - With 365 days, 22 people give a match chance below one half, and 23 people give one above it.
 - With 12 months, 4 people give a match chance of 41/96, which is 0.427083. Five is the first number of people past one half.
 - The naive wait of 365 people for each day gives 133225.
-- A die needs $6\,H_6 = 14.7$ rolls on average to show all six faces.
+- A die needs $`6\,H_6 = 14.7`$ rolls on average to show all six faces.
 
-The decimals, the $d(\ln d + \gamma)$ shortcut, the spread, the median and the square-root rule are left to the Python and Rust checks.
+The decimals, the $`d(\ln d + \gamma)`$ shortcut, the spread, the median and the square-root rule are left to the Python and Rust checks.
 
 ```lean
 -- Two classics: with d equally likely days drawn independently, the chance that n people all have different days is the product of (1 - i/d) for i < n, and the average number of people needed until every day is taken is d times the harmonic number H_d.
@@ -1062,10 +1076,10 @@ example : (6 : ℚ) * harmonic 6 = 147 / 10 := by
 
 ## Where you meet it in real life
 
-- **Hash tables and checksums.** A hash assigns each item one of $d$ labels; two items with the same label collide. Collisions start near $\sqrt{d}$ items, not $d$, which is why hash tables resize early and why [Hashing for size](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/04-hashing-bloom-filters-and-sketches.md) budgets for them.
-- **Cryptographic hashes.** A "birthday attack" finds two messages with the same fingerprint of $b$ bits after about $2^{b/2}$ tries, not $2^{b}$. That halving of the exponent sets fingerprint lengths in [Hashes and MACs](../../14-Applied%20and%20computational/04-Cryptography/03-hash-functions-and-macs.md).
-- **Sticker albums and collectible toys.** Completing a set of $d$ random stickers costs about $d \ln d$ packets; the last few are the expensive ones, which is why swaps and direct orders exist.
-- **Testing by random inputs.** Random tests hit each of $d$ equally likely cases after about $d H_d$ tries; the last cases take most of the budget.
+- **Hash tables and checksums.** A hash assigns each item one of $`d`$ labels; two items with the same label collide. Collisions start near $`\sqrt{d}`$ items, not $`d`$, which is why hash tables resize early and why [Hashing for size](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/04-hashing-bloom-filters-and-sketches.md) budgets for them.
+- **Cryptographic hashes.** A "birthday attack" finds two messages with the same fingerprint of $`b`$ bits after about $`2^{b/2}`$ tries, not $`2^{b}`$. That halving of the exponent sets fingerprint lengths in [Hashes and MACs](../../14-Applied%20and%20computational/04-Cryptography/03-hash-functions-and-macs.md).
+- **Sticker albums and collectible toys.** Completing a set of $`d`$ random stickers costs about $`d \ln d`$ packets; the last few are the expensive ones, which is why swaps and direct orders exist.
+- **Testing by random inputs.** Random tests hit each of $`d`$ equally likely cases after about $`d H_d`$ tries; the last cases take most of the budget.
 - **Counts per day.** How many birthdays land on each day of the year is a [Multinomial](05-multinomial.md) count; the birthday problem asks whether any count reaches 2, the collector whether none stays at 0.
 
 > **Say it back**
@@ -1075,7 +1089,7 @@ example : (6 : ℚ) * harmonic 6 = 147 / 10 := by
 
 ## What this builds on
 
-- [Waiting for a success](02-geometric-and-negative-binomial.md): the average wait $1/p$ and variance $(1-p)/p^2$ of each collection stage.
+- [Waiting for a success](02-geometric-and-negative-binomial.md): the average wait $`1/p`$ and variance $`(1-p)/p^2`$ of each collection stage.
 - [Counting the complement](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/06-complementary-counting.md): count "nobody shares" and subtract from the total.
 
 ## Where this goes next
@@ -1094,4 +1108,4 @@ Verified 2026-11-12: every link below resolves to the publisher's page.
 - Feller, William. *An Introduction to Probability Theory and Its Applications*, Volume 1, 3rd ed. Wiley, 1968. [Publisher page](https://www.wiley.com/en-us/An+Introduction+to+Probability+Theory+and+Its+Applications%2C+Volume+1%2C+3rd+Edition-p-9780471257080). The classic treatment of both problems as occupancy questions: balls dropped into cells.
 - Blitzstein, Joseph K., and Jessica Hwang. *Introduction to Probability*, 2nd ed. Chapman and Hall/CRC, 2019. [Publisher page](https://www.routledge.com/Introduction-to-Probability-Second-Edition/Blitzstein-Hwang/p/book/9781138369917). The birthday product by counting, and the collector's average by adding geometric waits.
 - Grinstead, Charles M., and J. Laurie Snell. *Introduction to Probability*, 2nd revised ed. American Mathematical Society, 1997. [Full text from Dartmouth](https://math.dartmouth.edu/~prob/prob/prob.pdf). Free and complete; the birthday problem among its counting examples.
-- Graham, Ronald L., Donald E. Knuth, and Oren Patashnik. *Concrete Mathematics*, 2nd ed. Addison-Wesley, 1994. [Publisher page](https://www.informit.com/store/concrete-mathematics-a-foundation-for-computer-science-9780201558029). Harmonic numbers, their bounds and the constant $\gamma$.
+- Graham, Ronald L., Donald E. Knuth, and Oren Patashnik. *Concrete Mathematics*, 2nd ed. Addison-Wesley, 1994. [Publisher page](https://www.informit.com/store/concrete-mathematics-a-foundation-for-computer-science-9780201558029). Harmonic numbers, their bounds and the constant $`\gamma`$.

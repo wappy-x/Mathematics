@@ -34,43 +34,49 @@ The lower, nearly flat line is halving: it climbs 0.301 digits a step, a straigh
 
 ## The formula
 
-Notation first, in words. The iterate $x_k$ is the method's guess after $k$ steps, counting from $k = 0$ at the start, and $x^*$ is the minimiser, the point being hunted (as in [Gradient descent](02-gradient-descent-and-its-rate.md)). The **error** $e_k = \|x_k - x^*\|$ is the straight-line distance from the guess to the answer.
+Notation first, in words. The iterate $`x_k`$ is the method's guess after $`k`$ steps, counting from $`k = 0`$ at the start, and $`x^*`$ is the minimiser, the point being hunted (as in [Gradient descent](02-gradient-descent-and-its-rate.md)). The **error** $`e_k = \|x_k - x^*\|`$ is the straight-line distance from the guess to the answer.
 
-$$\lim_{k\to\infty}\frac{e_{k+1}}{e_k} = c \;\text{ with } 0 < c < 1 \;\text{(linear)}, \qquad \frac{e_{k+1}}{e_k} \to 0 \;\text{(superlinear)}, \qquad \frac{e_{k+1}}{e_k^{\,2}} \to M \;\text{(quadratic)}$$
+```math
+\lim_{k\to\infty}\frac{e_{k+1}}{e_k} = c \;\text{ with } 0 < c < 1 \;\text{(linear)}, \qquad \frac{e_{k+1}}{e_k} \to 0 \;\text{(superlinear)}, \qquad \frac{e_{k+1}}{e_k^{\,2}} \to M \;\text{(quadratic)}
+```
 
-**Read it aloud:** linear means each error is eventually the same fraction $c$ of the last; superlinear means that fraction shrinks to nothing; quadratic means each error is a fixed multiple $M$ of the last one squared.
+**Read it aloud:** linear means each error is eventually the same fraction $`c`$ of the last; superlinear means that fraction shrinks to nothing; quadratic means each error is a fixed multiple $`M`$ of the last one squared.
 
-More generally a method has **order** $p$ when $e_{k+1} \approx M\,e_k^{\,p}$: order 1 with $M = c$ is linear, order 2 is quadratic, and anything above 1 is superlinear. The order can be read off any three errors in a row:
+More generally a method has **order** $`p`$ when $`e_{k+1} \approx M\,e_k^{\,p}`$: order 1 with $`M = c`$ is linear, order 2 is quadratic, and anything above 1 is superlinear. The order can be read off any three errors in a row:
 
-$$p_k = \frac{\ln(e_{k+1}/e_k)}{\ln(e_k/e_{k-1})}$$
+```math
+p_k = \frac{\ln(e_{k+1}/e_k)}{\ln(e_k/e_{k-1})}
+```
 
-The second formula is the job of the card. Near the minimiser the height is a bowl. Call its sharpest curvature $L$ and its gentlest $\mu$ (the largest and smallest eigenvalues of the Hessian $\nabla^2 f$, the matrix of second derivatives). The **condition number** is introduced here as their ratio, the bowl's stretch (this κ is not the κ used in the differential-equations and finance wings):
+The second formula is the job of the card. Near the minimiser the height is a bowl. Call its sharpest curvature $`L`$ and its gentlest $`\mu`$ (the largest and smallest eigenvalues of the Hessian $`\nabla^2 f`$, the matrix of second derivatives). The **condition number** is introduced here as their ratio, the bowl's stretch (this κ is not the κ used in the differential-equations and finance wings):
 
-$$\kappa = \frac{L}{\mu}, \qquad c_{\text{GD}} = 1 - \frac{1}{\kappa}, \qquad \text{steps per decimal digit} = \frac{\ln 10}{-\ln(1 - 1/\kappa)} \approx 2.303\,\kappa$$
+```math
+\kappa = \frac{L}{\mu}, \qquad c_{\text{GD}} = 1 - \frac{1}{\kappa}, \qquad \text{steps per decimal digit} = \frac{\ln 10}{-\ln(1 - 1/\kappa)} \approx 2.303\,\kappa
+```
 
-**Read it aloud:** with step $1/L$, gradient descent keeps the fraction $1 - 1/\kappa$ of its error each step, so every extra correct digit costs about 2.3 times the stretch in steps.
+**Read it aloud:** with step $`1/L`$, gradient descent keeps the fraction $`1 - 1/\kappa`$ of its error each step, so every extra correct digit costs about 2.3 times the stretch in steps.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $x_1$, $x_2$, $b$ | the valley's height $(1 - x_1)^2 + b\,(x_2 - x_1^2)^2$ over the point $(x_1, x_2)$; $b$ sets how steep the walls are | $b = 100$ | steeper walls, larger $\kappa$, slower descent |
-| $x_k$, $k$ | the guess after $k$ steps; $k$ counts from 0 | $x_0 = (-1.2, 1)$ | — |
-| $x^*$ | the minimiser, the lowest point | $(1, 1)$, height 0 | — |
-| $e_k$, $\epsilon_k$, $v_k$ | the error: distance from $x_k$ to $x^*$; in the proofs, its signed value on a line and its vector $x_k - x^*$ | $e_0 = 2.20$ | — |
-| $c$ | the linear rate: the fraction of the error kept each step | 0.5 for halving, 0.999601 for gradient descent | closer to 1, more steps per digit |
-| $M$ | the quadratic constant | 1.4963 for Newton on the slice $x_2 = 1$ | larger errors next step, same doubling of digits |
-| $p$, $p_k$ | the order, and its estimate from three errors in a row | 1, 1.618, 2 | higher order, digits multiply faster |
-| $\nabla^2 f$, $A$, $I$ | the Hessian, the matrix of second derivatives; $A$ the bowl's matrix in the proof; $I$ the identity matrix | `[[802, -400], [-400, 200]]` at $(1, 1)$ | — |
-| $\lambda_i$, $u_i$, $a_i$, $n$, $L$, $\mu$ | curvatures (eigenvalues) along the eigen-directions $u_i$, with $a_i$ the start's share along each and $n$ the number of variables; $L$ the largest curvature, $\mu$ the smallest | $L = 1001.6006$, $\mu = 0.399361$ | — |
-| $\kappa$ | the condition number $L/\mu$: how stretched the bowl is | 2508.01 | linear rate creeps toward 1 |
-| $\alpha$ | the step size in gradient descent | $1/L = 0.000998$ | above $2/L$ the descent blows up |
-| $h$, $\xi$, $\varphi$ | the height along the slice $x_2 = 1$; a point between guess and answer in Taylor's theorem; the golden ratio, the secant method's order | $h(x_1) = f(x_1, 1)$; $\varphi = 1.618$ | — |
+| $`f`$, $`x_1`$, $`x_2`$, $`b`$ | the valley's height $`(1 - x_1)^2 + b\,(x_2 - x_1^2)^2`$ over the point $`(x_1, x_2)`$; $`b`$ sets how steep the walls are | $`b = 100`$ | steeper walls, larger $`\kappa`$, slower descent |
+| $`x_k`$, $`k`$ | the guess after $`k`$ steps; $`k`$ counts from 0 | $`x_0 = (-1.2, 1)`$ | — |
+| $`x^*`$ | the minimiser, the lowest point | $`(1, 1)`$, height 0 | — |
+| $`e_k`$, $`\epsilon_k`$, $`v_k`$ | the error: distance from $`x_k`$ to $`x^*`$; in the proofs, its signed value on a line and its vector $`x_k - x^*`$ | $`e_0 = 2.20`$ | — |
+| $`c`$ | the linear rate: the fraction of the error kept each step | 0.5 for halving, 0.999601 for gradient descent | closer to 1, more steps per digit |
+| $`M`$ | the quadratic constant | 1.4963 for Newton on the slice $`x_2 = 1`$ | larger errors next step, same doubling of digits |
+| $`p`$, $`p_k`$ | the order, and its estimate from three errors in a row | 1, 1.618, 2 | higher order, digits multiply faster |
+| $`\nabla^2 f`$, $`A`$, $`I`$ | the Hessian, the matrix of second derivatives; $`A`$ the bowl's matrix in the proof; $`I`$ the identity matrix | `[[802, -400], [-400, 200]]` at $`(1, 1)`$ | — |
+| $`\lambda_i`$, $`u_i`$, $`a_i`$, $`n`$, $`L`$, $`\mu`$ | curvatures (eigenvalues) along the eigen-directions $`u_i`$, with $`a_i`$ the start's share along each and $`n`$ the number of variables; $`L`$ the largest curvature, $`\mu`$ the smallest | $`L = 1001.6006`$, $`\mu = 0.399361`$ | — |
+| $`\kappa`$ | the condition number $`L/\mu`$: how stretched the bowl is | 2508.01 | linear rate creeps toward 1 |
+| $`\alpha`$ | the step size in gradient descent | $`1/L = 0.000998`$ | above $`2/L`$ the descent blows up |
+| $`h`$, $`\xi`$, $`\varphi`$ | the height along the slice $`x_2 = 1`$; a point between guess and answer in Taylor's theorem; the golden ratio, the secant method's order | $`h(x_1) = f(x_1, 1)`$; $`\varphi = 1.618`$ | — |
 
 ### When it holds
 
 - **The rate is a statement about the end of the run.** Early errors follow no pattern. Gradient descent's error goes from 2.20 only to 1.12 in its first 1000 steps while it slides into the trough, and Newton's error rises from 2.20 to 4.18 before it falls. Rates measured there mean nothing (What breaks shows one: an order of 168.8).
-- **For $c = 1 - 1/\kappa$: the bottom is a genuine bowl, $\mu > 0$, and the step is $1/L$.** With $\mu = 0$ the bottom is flat in some direction, $\kappa$ is infinite and the linear rate is lost. With a step above $2/L$ the across-valley error grows and the run diverges ([Gradient descent](02-gradient-descent-and-its-rate.md) shows it).
-- **$L$ and $\mu$ are taken at the minimiser.** The valley's curvature changes along the path, so $\kappa$ predicts only the final phase. There it is sharp: 17,320 steps measured from error 10^−3 to 10^−6, against 17,321 predicted.
-- **For Newton's quadratic rate: the Hessian at $x^*$ is invertible.** On the flat-bottomed $f(x) = x^4$ it is zero, and Newton keeps exactly 0.666667 of its error each step: linear, 35 steps to 10^−6.
+- **For $`c = 1 - 1/\kappa`$: the bottom is a genuine bowl, $`\mu > 0`$, and the step is $`1/L`$.** With $`\mu = 0`$ the bottom is flat in some direction, $`\kappa`$ is infinite and the linear rate is lost. With a step above $`2/L`$ the across-valley error grows and the run diverges ([Gradient descent](02-gradient-descent-and-its-rate.md) shows it).
+- **$`L`$ and $`\mu`$ are taken at the minimiser.** The valley's curvature changes along the path, so $`\kappa`$ predicts only the final phase. There it is sharp: 17,320 steps measured from error 10^−3 to 10^−6, against 17,321 predicted.
+- **For Newton's quadratic rate: the Hessian at $`x^*`$ is invertible.** On the flat-bottomed $`f(x) = x^4`$ it is zero, and Newton keeps exactly 0.666667 of its error each step: linear, 35 steps to 10^−6.
 - **The errors stay well above rounding.** Computer arithmetic keeps a limited number of digits. Once the errors approach that floor, ratios of errors are noise, so the code stops the order estimates at 10^−9.
 
 ---
@@ -79,31 +85,31 @@ $$\kappa = \frac{L}{\mu}, \qquad c_{\text{GD}} = 1 - \frac{1}{\kappa}, \qquad \t
 
 ### Step 0: near the answer, every method multiplies its error
 
-Any method is a rule that turns one guess into the next, a map with the minimiser as its fixed point. [Fixed points of a map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md) shows that near a fixed point the gap is multiplied by the map's slope there, and that Newton's map has slope zero at its root. Everything on this card follows from that one fact. A slope of size $c$ between 0 and 1 gives a linear rate with that $c$. A slope of zero lets the next term of the Taylor expansion, the square, take over: a quadratic rate.
+Any method is a rule that turns one guess into the next, a map with the minimiser as its fixed point. [Fixed points of a map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md) shows that near a fixed point the gap is multiplied by the map's slope there, and that Newton's map has slope zero at its root. Everything on this card follows from that one fact. A slope of size $`c`$ between 0 and 1 gives a linear rate with that $`c`$. A slope of zero lets the next term of the Taylor expansion, the square, take over: a quadratic rate.
 
 ### Step 1: what each rate does to the digits
 
-The number of correct decimal digits is $-\log_{10} e_k$. Take logs of each definition.
+The number of correct decimal digits is $`-\log_{10} e_k`$. Take logs of each definition.
 
-Linear, $e_{k+1} = c\,e_k$: the digits go up by $-\log_{10} c$ each step, a fixed amount. Halving gains $-\log_{10} 0.5 = 0.301$ digits a step, so it needs about 3.3 steps per digit. From 0.1 to below 10^−12 is 11 more digits, and 11 / 0.301 rounded up is 37 steps.
+Linear, $`e_{k+1} = c\,e_k`$: the digits go up by $`-\log_{10} c`$ each step, a fixed amount. Halving gains $`-\log_{10} 0.5 = 0.301`$ digits a step, so it needs about 3.3 steps per digit. From 0.1 to below 10^−12 is 11 more digits, and 11 / 0.301 rounded up is 37 steps.
 
-Quadratic, $e_{k+1} = e_k^2$: the digits double, $-\log_{10} e_{k+1} = 2\,(-\log_{10} e_k)$. From 1 digit, four doublings reach 16 digits, past the 12 needed: 4 steps. A constant $M$ only shifts each step's digit count by $\log_{10} M$; once $M e_k < 1$ the doubling wins.
+Quadratic, $`e_{k+1} = e_k^2`$: the digits double, $`-\log_{10} e_{k+1} = 2\,(-\log_{10} e_k)`$. From 1 digit, four doublings reach 16 digits, past the 12 needed: 4 steps. A constant $`M`$ only shifts each step's digit count by $`\log_{10} M`$; once $`M e_k < 1`$ the doubling wins.
 
 Superlinear sits between. The digits gained per step keep growing, but they need not double.
 
 ### Step 2: reading the order from the errors
 
-Suppose $e_{k+1} = M\,e_k^{\,p}$. Divide this by the same equation one step earlier, $e_k = M\,e_{k-1}^{\,p}$. The unknown $M$ cancels and $e_{k+1}/e_k = (e_k/e_{k-1})^{p}$. Take logs and divide: that is $p_k$ in The formula. It needs no knowledge of the answer's constants, only three errors in a row.
+Suppose $`e_{k+1} = M\,e_k^{\,p}`$. Divide this by the same equation one step earlier, $`e_k = M\,e_{k-1}^{\,p}`$. The unknown $`M`$ cancels and $`e_{k+1}/e_k = (e_k/e_{k-1})^{p}`$. Take logs and divide: that is $`p_k`$ in The formula. It needs no knowledge of the answer's constants, only three errors in a row.
 
-For halving every $p_k$ is exactly 1.000. For squaring every $p_k$ is exactly 2.000. For a real method the estimates settle as the run goes on. On the slice $x_2 = 1$ of the valley, Newton's method gives 1.817, 1.970, 1.999, and the secant method (Newton with the second derivative replaced by the slope through the last two guesses) gives 2.172, 1.350, 1.689, 1.585, 1.630, swinging in toward $\varphi = 1.618$.
+For halving every $`p_k`$ is exactly 1.000. For squaring every $`p_k`$ is exactly 2.000. For a real method the estimates settle as the run goes on. On the slice $`x_2 = 1`$ of the valley, Newton's method gives 1.817, 1.970, 1.999, and the secant method (Newton with the second derivative replaced by the slope through the last two guesses) gives 2.172, 1.350, 1.689, 1.585, 1.630, swinging in toward $`\varphi = 1.618`$.
 
 ### Step 3: gradient descent pays for the stretch
 
-[Gradient descent](02-gradient-descent-and-its-rate.md) shows that in a bowl one step of size $\alpha$ multiplies the error along each eigen-direction of the Hessian by $1 - \alpha\lambda_i$. Read that with the condition number in mind.
+[Gradient descent](02-gradient-descent-and-its-rate.md) shows that in a bowl one step of size $`\alpha`$ multiplies the error along each eigen-direction of the Hessian by $`1 - \alpha\lambda_i`$. Read that with the condition number in mind.
 
-The step has to suit the sharpest direction: past $2/L$ the across-valley factor exceeds 1 in size and the run blows up. The natural choice is $\alpha = 1/L$. Then the sharp direction's factor is $1 - L/L = 0$: that error dies in one step. The gentle direction's factor is $1 - \mu/L = 1 - 1/\kappa$, and it is the worst of all. After the fast errors are gone, only that one is left, so the error ratio settles on $1 - 1/\kappa$.
+The step has to suit the sharpest direction: past $`2/L`$ the across-valley factor exceeds 1 in size and the run blows up. The natural choice is $`\alpha = 1/L`$. Then the sharp direction's factor is $`1 - L/L = 0`$: that error dies in one step. The gentle direction's factor is $`1 - \mu/L = 1 - 1/\kappa`$, and it is the worst of all. After the fast errors are gone, only that one is left, so the error ratio settles on $`1 - 1/\kappa`$.
 
-Each digit takes $\ln 10 / (-\ln(1 - 1/\kappa))$ steps. For a large $\kappa$, $-\ln(1 - 1/\kappa)$ is very close to $1/\kappa$, so the cost is about $\ln 10 \times \kappa = 2.303\,\kappa$ steps per digit. It grows in step with the stretch:
+Each digit takes $`\ln 10 / (-\ln(1 - 1/\kappa))`$ steps. For a large $`\kappa`$, $`-\ln(1 - 1/\kappa)`$ is very close to $`1/\kappa`$, so the cost is about $`\ln 10 \times \kappa = 2.303\,\kappa`$ steps per digit. It grows in step with the stretch:
 
 ```text
 steps per decimal digit, step 1/L
@@ -114,76 +120,80 @@ kappa 1000   ################                          2301.4
 kappa 2508   ########################################  5773.8
 ```
 
-No fixed step does much better. The best one makes the two extreme factors equal in size, $1 - \alpha\mu = -(1 - \alpha L)$, which gives $\alpha = 2/(L + \mu)$ and the rate $(\kappa - 1)/(\kappa + 1)$. For our valley that is 0.999203, or 2887 steps per digit: half the cost, still proportional to $\kappa$.
+No fixed step does much better. The best one makes the two extreme factors equal in size, $`1 - \alpha\mu = -(1 - \alpha L)`$, which gives $`\alpha = 2/(L + \mu)`$ and the rate $`(\kappa - 1)/(\kappa + 1)`$. For our valley that is 0.999203, or 2887 steps per digit: half the cost, still proportional to $`\kappa`$.
 
 <details>
 <summary>Detailed proof: the error ratio of gradient descent on a bowl tends to 1 − 1/κ</summary>
 
-Take the bowl $f(x) = f(x^*) + \tfrac12 (x - x^*)^{T} A\,(x - x^*)$ with $A$ symmetric and positive definite ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). Its gradient is $A(x - x^*)$, so with $v_k = x_k - x^*$ one step gives $v_{k+1} = (I - \alpha A)\,v_k$.
+Take the bowl $`f(x) = f(x^*) + \tfrac12 (x - x^*)^{T} A\,(x - x^*)`$ with $`A`$ symmetric and positive definite ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). Its gradient is $`A(x - x^*)`$, so with $`v_k = x_k - x^*`$ one step gives $`v_{k+1} = (I - \alpha A)\,v_k`$.
 
-Write $v_0 = \sum_i a_i u_i$ in the orthonormal eigenvectors $u_i$ of $A$, with eigenvalues $\mu = \lambda_1 \le \dots \le \lambda_n = L$. Then $v_k = \sum_i a_i (1 - \alpha\lambda_i)^k u_i$ and, by Pythagoras, $e_k^2 = \sum_i a_i^2 (1 - \alpha\lambda_i)^{2k}$.
+Write $`v_0 = \sum_i a_i u_i`$ in the orthonormal eigenvectors $`u_i`$ of $`A`$, with eigenvalues $`\mu = \lambda_1 \le \dots \le \lambda_n = L`$. Then $`v_k = \sum_i a_i (1 - \alpha\lambda_i)^k u_i`$ and, by Pythagoras, $`e_k^2 = \sum_i a_i^2 (1 - \alpha\lambda_i)^{2k}`$.
 
-With $\alpha = 1/L$ every factor $1 - \lambda_i/L$ lies in $[0, 1 - 1/\kappa]$. So $e_{k+1} \le (1 - 1/\kappa)\,e_k$ at every step, from any start: the bound is a theorem, not just a limit. If $a_1 \ne 0$ and $\mu$ is a simple eigenvalue, the term with the largest factor dominates as $k$ grows and $e_{k+1}/e_k \to 1 - 1/\kappa$ exactly.
+With $`\alpha = 1/L`$ every factor $`1 - \lambda_i/L`$ lies in $`[0, 1 - 1/\kappa]`$. So $`e_{k+1} \le (1 - 1/\kappa)\,e_k`$ at every step, from any start: the bound is a theorem, not just a limit. If $`a_1 \ne 0`$ and $`\mu`$ is a simple eigenvalue, the term with the largest factor dominates as $`k`$ grows and $`e_{k+1}/e_k \to 1 - 1/\kappa`$ exactly.
 
-**Sketch, not a full proof, for a general f.** For a general smooth $f$ with an invertible Hessian at $x^*$, Taylor's theorem gives $\nabla f(x) = \nabla^2 f(x^*)(x - x^*) + O(\|x - x^*\|^2)$, where $O(\|x - x^*\|^2)$ is a remainder no bigger than a fixed multiple of the squared distance. Near the end the step is the bowl's step plus an error of smaller size, and the same limit holds with $A = \nabla^2 f(x^*)$. This is why the Rosenbrock run's last ratio is the bowl's 0.999601.
+**Sketch, not a full proof, for a general f.** For a general smooth $`f`$ with an invertible Hessian at $`x^*`$, Taylor's theorem gives $`\nabla f(x) = \nabla^2 f(x^*)(x - x^*) + O(\|x - x^*\|^2)`$, where $`O(\|x - x^*\|^2)`$ is a remainder no bigger than a fixed multiple of the squared distance. Near the end the step is the bowl's step plus an error of smaller size, and the same limit holds with $`A = \nabla^2 f(x^*)`$. This is why the Rosenbrock run's last ratio is the bowl's 0.999601.
 
 </details>
 
 ### Step 4: Newton squares its error
 
-On one variable, Newton's step to a minimum is $x_{k+1} = x_k - h'(x_k)/h''(x_k)$: it fits a parabola with the right slope and curvature and jumps to its lowest point. Expand the slope around the answer, where $h'(x^*) = 0$. Writing $\epsilon_k = x_k - x^*$, the signed error,
+On one variable, Newton's step to a minimum is $`x_{k+1} = x_k - h'(x_k)/h''(x_k)`$: it fits a parabola with the right slope and curvature and jumps to its lowest point. Expand the slope around the answer, where $`h'(x^*) = 0`$. Writing $`\epsilon_k = x_k - x^*`$, the signed error,
 
-$$0 = h'(x^*) = h'(x_k) - h''(x_k)\,\epsilon_k + \tfrac12 h'''(\xi)\,\epsilon_k^2$$
+```math
+0 = h'(x^*) = h'(x_k) - h''(x_k)\,\epsilon_k + \tfrac12 h'''(\xi)\,\epsilon_k^2
+```
 
-for some $\xi$ between $x_k$ and $x^*$. Divide by $h''(x_k)$ and rearrange:
+for some $`\xi`$ between $`x_k`$ and $`x^*`$. Divide by $`h''(x_k)`$ and rearrange:
 
-$$\epsilon_{k+1} = \epsilon_k - \frac{h'(x_k)}{h''(x_k)} = \frac{h'''(\xi)}{2\,h''(x_k)}\,\epsilon_k^2 \quad\Rightarrow\quad \frac{e_{k+1}}{e_k^2} \to M = \left|\frac{h'''(x^*)}{2\,h''(x^*)}\right|$$
+```math
+\epsilon_{k+1} = \epsilon_k - \frac{h'(x_k)}{h''(x_k)} = \frac{h'''(\xi)}{2\,h''(x_k)}\,\epsilon_k^2 \quad\Rightarrow\quad \frac{e_{k+1}}{e_k^2} \to M = \left|\frac{h'''(x^*)}{2\,h''(x^*)}\right|
+```
 
-On the valley's slice $x_2 = 1$, $h'(x_1) = 400x_1^3 - 398x_1 - 2$, with second derivative 802 and third derivative 2400 at $x_1 = 1$. So $M = 2400/(2 \times 802) = 1.4963$. Newton from 1.2 measures 1.0226, 1.3664, 1.4883, 1.4962: the prediction, arrived at from below.
+On the valley's slice $`x_2 = 1`$, $`h'(x_1) = 400x_1^3 - 398x_1 - 2`$, with second derivative 802 and third derivative 2400 at $`x_1 = 1`$. So $`M = 2400/(2 \times 802) = 1.4963`$. Newton from 1.2 measures 1.0226, 1.3664, 1.4883, 1.4962: the prediction, arrived at from below.
 
-The proof divides by $h''$. When $h''(x^*) = 0$, as for $x^4$, Newton's step is $x - 4x^3/(12x^2) = \tfrac23 x$: the slope of the map is $\tfrac23$, not 0, and Step 0 says linear. In several variables the same argument runs with the Hessian in place of $h''$; it needs the Hessian invertible at $x^*$ (Nocedal and Wright, chapter 3, in Sources).
+The proof divides by $`h''`$. When $`h''(x^*) = 0`$, as for $`x^4`$, Newton's step is $`x - 4x^3/(12x^2) = \tfrac23 x`$: the slope of the map is $`\tfrac23`$, not 0, and Step 0 says linear. In several variables the same argument runs with the Hessian in place of $`h''`$; it needs the Hessian invertible at $`x^*`$ (Nocedal and Wright, chapter 3, in Sources).
 
 ### Step 5: between the two
 
-The secant method uses a slope through the last two guesses instead of the true second derivative. Its error obeys $e_{k+1} \approx M\,e_k\,e_{k-1}$. Trying $e_{k+1} = M e_k^{\,p}$ in that gives $p^2 = p + 1$, so $p = \varphi = 1.618$: superlinear, not quadratic. This is stated here, not proved; Ortega and Rheinboldt prove it (Sources). Quasi-Newton methods such as BFGS are superlinear in the same sense ([Newton and BFGS](05-newton-and-quasi-newton-bfgs.md)): they get the curvature right in the limit, not on the first step.
+The secant method uses a slope through the last two guesses instead of the true second derivative. Its error obeys $`e_{k+1} \approx M\,e_k\,e_{k-1}`$. Trying $`e_{k+1} = M e_k^{\,p}`$ in that gives $`p^2 = p + 1`$, so $`p = \varphi = 1.618`$: superlinear, not quadratic. This is stated here, not proved; Ortega and Rheinboldt prove it (Sources). Quasi-Newton methods such as BFGS are superlinear in the same sense ([Newton and BFGS](05-newton-and-quasi-newton-bfgs.md)): they get the curvature right in the limit, not on the first step.
 
 ---
 
 ## Worked numbers, by hand
 
-The prediction for gradient descent at the bottom of the Rosenbrock valley, $b = 100$, step $1/L$.
+The prediction for gradient descent at the bottom of the Rosenbrock valley, $`b = 100`$, step $`1/L`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Hessian at $(1, 1)$ | second derivatives: $2 - 400 \times 0 + 800$, then $-400 \times 1$, then $2 \times 100$ | 802, −400, 200 |
-| mean of the diagonal | $(802 + 200)/2$ | 501 |
-| half the gap | $(802 - 200)/2$ | 301 |
-| radius | $\sqrt{301^2 + 400^2}$ | 500.6006 |
-| sharpest curvature $L$ | $501 + 500.6006$ | 1001.6006 |
-| gentlest curvature $\mu$ | $501 - 500.6006$ | 0.399361 |
-| condition number $\kappa$ | $1001.6006 / 0.399361$ | 2508.01 |
-| linear rate $c$ | $1 - 1/2508.01$ | 0.999601 |
-| steps per digit | $\ln 10 \div (-\ln(1 - 1/2508.01))$ | 5774 |
-| steps from $10^{-3}$ to $10^{-6}$ | $3 \times 5773.8$ | **17,321 predicted; 17,320 measured** |
+| Hessian at $`(1, 1)`$ | second derivatives: $`2 - 400 \times 0 + 800`$, then $`-400 \times 1`$, then $`2 \times 100`$ | 802, −400, 200 |
+| mean of the diagonal | $`(802 + 200)/2`$ | 501 |
+| half the gap | $`(802 - 200)/2`$ | 301 |
+| radius | $`\sqrt{301^2 + 400^2}`$ | 500.6006 |
+| sharpest curvature $`L`$ | $`501 + 500.6006`$ | 1001.6006 |
+| gentlest curvature $`\mu`$ | $`501 - 500.6006`$ | 0.399361 |
+| condition number $`\kappa`$ | $`1001.6006 / 0.399361`$ | 2508.01 |
+| linear rate $`c`$ | $`1 - 1/2508.01`$ | 0.999601 |
+| steps per digit | $`\ln 10 \div (-\ln(1 - 1/2508.01))`$ | 5774 |
+| steps from $`10^{-3}`$ to $`10^{-6}`$ | $`3 \times 5773.8`$ | **17,321 predicted; 17,320 measured** |
 
 At the bottom of this valley every extra correct digit costs gradient descent about 5774 steps, and the run confirms it to within one step; Newton needs 6 steps for the whole trip. [Gradient descent](02-gradient-descent-and-its-rate.md) quotes about half as many steps per digit because it counts digits of height, and height near the bottom is about the error squared; this card counts digits of distance.
 
-The eigenvalues come from the 2-by-2 rule: for a symmetric 2-by-2 matrix they are the mean of the two diagonal entries plus or minus $\sqrt{(\text{half the gap})^2 + (\text{off-diagonal entry})^2}$.
+The eigenvalues come from the 2-by-2 rule: for a symmetric 2-by-2 matrix they are the mean of the two diagonal entries plus or minus $`\sqrt{(\text{half the gap})^2 + (\text{off-diagonal entry})^2}`$.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Treat the valley as round, $\kappa = 1$ | 1 step | Real run: 34,429 steps. A step of $1/L$ finishes a round bowl at once; the stretch is the whole cost. |
-| Use $L$ alone as the stretch, forgetting to divide by $\mu$ | 2305 steps per digit | True cost 5774. $\mu = 0.399361$ is below 1, so dividing by it raises $\kappa$ to 2508.01. |
-| Expect Newton to be quadratic at a flat bottom, $f(x) = x^4$ | ratio 0.666667, 35 steps to $10^{-6}$ | The Hessian is zero at the minimum. Newton's map has slope $\tfrac23$ there, not 0, so the rate is linear. |
-| Read the order from Newton's first steps on the valley | $p_1 = 168.8$ | The errors 2.20, 2.21, 4.18 are far from the answer, where no rate applies. |
+| Treat the valley as round, $`\kappa = 1`$ | 1 step | Real run: 34,429 steps. A step of $`1/L`$ finishes a round bowl at once; the stretch is the whole cost. |
+| Use $`L`$ alone as the stretch, forgetting to divide by $`\mu`$ | 2305 steps per digit | True cost 5774. $`\mu = 0.399361`$ is below 1, so dividing by it raises $`\kappa`$ to 2508.01. |
+| Expect Newton to be quadratic at a flat bottom, $`f(x) = x^4`$ | ratio 0.666667, 35 steps to $`10^{-6}`$ | The Hessian is zero at the minimum. Newton's map has slope $`\tfrac23`$ there, not 0, so the rate is linear. |
+| Read the order from Newton's first steps on the valley | $`p_1 = 168.8`$ | The errors 2.20, 2.21, 4.18 are far from the answer, where no rate applies. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code runs the two model errors, then gradient descent and Newton on the Rosenbrock valley, then Newton and the secant method on its slice $x_2 = 1$. It takes three independent roads. The rate predicted from $\kappa$, with the eigenvalues found both by the closed form and by power iteration (repeatedly multiplying a vector by the Hessian), is checked against the ratio gradient descent actually measures. Newton's constant $M$ predicted from derivatives is checked against the measured $e_{k+1}/e_k^2$. And orders read from error sequences are checked against the known 1, $\varphi$ and 2. Speed is counted in steps, never in clock time.
+The code runs the two model errors, then gradient descent and Newton on the Rosenbrock valley, then Newton and the secant method on its slice $`x_2 = 1`$. It takes three independent roads. The rate predicted from $`\kappa`$, with the eigenvalues found both by the closed form and by power iteration (repeatedly multiplying a vector by the Hessian), is checked against the ratio gradient descent actually measures. Newton's constant $`M`$ predicted from derivatives is checked against the measured $`e_{k+1}/e_k^2`$. And orders read from error sequences are checked against the known 1, $`\varphi`$ and 2. Speed is counted in steps, never in clock time.
 
 ### Python
 
@@ -506,16 +516,16 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the gradient-descent rate on every bowl with $\mu > 0$, Newton's quadratic rate in one variable, and the card's exact hand numbers.
+Lean proves the gradient-descent rate on every bowl with $`\mu > 0`$, Newton's quadratic rate in one variable, and the card's exact hand numbers.
 
-- On a bowl with $\mu > 0$ and step $1/L$, every step keeps at most the fraction $1 - 1/\kappa$ of the error, from any start.
-- If the start's share $a_i$ along the gentlest eigen-direction is not zero, and no other curvature equals $\mu$, the error ratio tends to exactly $1 - 1/\kappa$.
-- In one variable, let $h$ have three continuous derivatives near $x^*$, with $h'(x^*) = 0$ and $h''(x^*) \ne 0$.
-- If Newton's guesses then tend to $x^*$ without landing on it, $e_{k+1}/e_k^2$ tends to $M = |h'''(x^*)/(2\,h''(x^*))|$.
-- For every $\kappa > 1$, the steps per decimal digit lie between $(\kappa - 1) \ln 10$ and $\kappa \ln 10$.
-- Halving and squaring hold exactly: 0.05 and 0.01 after one step, 0.00625 and $10^{-16}$ after four, and 37 and 4 steps.
+- On a bowl with $`\mu > 0`$ and step $`1/L`$, every step keeps at most the fraction $`1 - 1/\kappa`$ of the error, from any start.
+- If the start's share $`a_i`$ along the gentlest eigen-direction is not zero, and no other curvature equals $`\mu`$, the error ratio tends to exactly $`1 - 1/\kappa`$.
+- In one variable, let $`h`$ have three continuous derivatives near $`x^*`$, with $`h'(x^*) = 0`$ and $`h''(x^*) \ne 0`$.
+- If Newton's guesses then tend to $`x^*`$ without landing on it, $`e_{k+1}/e_k^2`$ tends to $`M = |h'''(x^*)/(2\,h''(x^*))|`$.
+- For every $`\kappa > 1`$, the steps per decimal digit lie between $`(\kappa - 1) \ln 10`$ and $`\kappa \ln 10`$.
+- Halving and squaring hold exactly: 0.05 and 0.01 after one step, 0.00625 and $`10^{-16}`$ after four, and 37 and 4 steps.
 - The valley's numbers hold exactly: the Hessian 802, −400, 200, its mean 501 and half gap 301, and the slice's 802 and 2400.
-- So do $M = 2400/(2 \times 802) = 600/401$, the round bowl's one step, and Newton's $\tfrac23$ on $x^4$ with 35 steps.
+- So do $`M = 2400/(2 \times 802) = 600/401`$, the round bowl's one step, and Newton's $`\tfrac23`$ on $`x^4`$ with 35 steps.
 
 The decimals, the Rosenbrock runs, the best fixed step, the order estimates and the secant method are left to the Python and Rust checks.
 
@@ -893,9 +903,9 @@ example : (2 / 3 : ℚ) ^ 35 < 1 / 10 ^ 6 ∧ 1 / 10 ^ 6 ≤ (2 / 3 : ℚ) ^ 34 
 
 > [!TIP]
 > **Try changing**
-> - Guess first: soften the walls to `b = 1`. Does gradient descent get a little faster, or a lot? $\kappa$ falls to 33.97, and the run takes 453 steps instead of 34,429.
-> - Guess first: tighten the stopping test from $10^{-6}$ to $10^{-9}$. Gradient descent needs 51,750 steps, about 3 × 5774 more. Newton still needs 6, because its sixth error is already 1.85e-11.
-> - Guess first: switch to the best fixed step $2/(L + \mu)$, with `best=True`. Gradient descent takes 17,179 steps, about half, just as the rate 0.999203 predicts.
+> - Guess first: soften the walls to `b = 1`. Does gradient descent get a little faster, or a lot? $`\kappa`$ falls to 33.97, and the run takes 453 steps instead of 34,429.
+> - Guess first: tighten the stopping test from $`10^{-6}`$ to $`10^{-9}`$. Gradient descent needs 51,750 steps, about 3 × 5774 more. Newton still needs 6, because its sixth error is already 1.85e-11.
+> - Guess first: switch to the best fixed step $`2/(L + \mu)`$, with `best=True`. Gradient descent takes 17,179 steps, about half, just as the rate 0.999203 predicts.
 > - Guess first: start the order estimate earlier, at `order(ne, 1)`. It reads 168.8, a meaningless number, because the run is nowhere near the answer yet.
 
 ---
@@ -903,40 +913,40 @@ example : (2 / 3 : ℚ) ^ 35 < 1 / 10 ^ 6 ∧ 1 / 10 ^ 6 ≤ (2 / 3 : ℚ) ^ 34 
 ## The usual mistake
 
 > [!warning]
-> **Hearing "converges linearly" as "converges fast".** Linear says nothing about speed until you know $c$. Halving, $c = 0.5$, costs 3.3 steps per digit. Gradient descent in the Rosenbrock valley, $c = 0.999601$, costs 5774 steps per digit. Both are linear. The constant is $1 - 1/\kappa$, so the question to ask of any linearly convergent method is "what is $\kappa$?"
+> **Hearing "converges linearly" as "converges fast".** Linear says nothing about speed until you know $`c`$. Halving, $`c = 0.5`$, costs 3.3 steps per digit. Gradient descent in the Rosenbrock valley, $`c = 0.999601`$, costs 5774 steps per digit. Both are linear. The constant is $`1 - 1/\kappa`$, so the question to ask of any linearly convergent method is "what is $`\kappa`$?"
 >
 > Smaller traps:
 > - **Measuring a rate too early.** Newton's error rises from 2.20 to 4.18 before it falls; the first order estimate is 168.8. Use the last few errors, not the first.
-> - **Assuming Newton is always quadratic.** At a flat-bottomed minimum such as $x^4$ it keeps 0.666667 of its error each step and needs 35 steps to $10^{-6}$.
-> - **Taking $\kappa$ as $L$ alone.** A gentlest curvature of 0.399361 is below 1, and dropping it predicts 2305 steps per digit instead of 5774.
-> - **Measuring the error against the answer you just computed.** The ratio $e_{k+1}/e_k$ needs the true $x^*$. If it is unknown, use the step lengths $\|x_{k+1} - x_k\|$ instead, which shrink at the same rate.
+> - **Assuming Newton is always quadratic.** At a flat-bottomed minimum such as $`x^4`$ it keeps 0.666667 of its error each step and needs 35 steps to $`10^{-6}`$.
+> - **Taking $`\kappa`$ as $`L`$ alone.** A gentlest curvature of 0.399361 is below 1, and dropping it predicts 2305 steps per digit instead of 5774.
+> - **Measuring the error against the answer you just computed.** The ratio $`e_{k+1}/e_k`$ needs the true $`x^*`$. If it is unknown, use the step lengths $`\|x_{k+1} - x_k\|`$ instead, which shrink at the same rate.
 
 ---
 
 ## Where you meet it in real life
 
-- **Training machine-learning models.** When one input is measured in thousands and another in fractions, the loss surface is a stretched valley and gradient methods crawl. Rescaling each input to a similar spread lowers $\kappa$, which is why it is a standard first step.
+- **Training machine-learning models.** When one input is measured in thousands and another in fractions, the loss surface is a stretched valley and gradient methods crawl. Rescaling each input to a similar spread lowers $`\kappa`$, which is why it is a standard first step.
 - **Square roots and division in hardware.** Some processors compute reciprocals and square roots by Newton's method from a rough table value, because doubling the correct digits reaches full precision in a handful of steps.
 - **Structural and fluid simulations.** Engineering solvers spend most of their time on huge linear systems. Their iteration counts are governed by a condition number, and preconditioning (changing variables to make the bowl rounder) is how they are kept practical.
 - **Pricing options.** A trading desk backs out the volatility implied by a market price with Newton's method, since a few steps give full accuracy ([Solving for implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)).
 - **Ranking web pages.** The PageRank vector is found by power iteration, a linearly convergent method whose rate is set by the ratio of the two largest eigenvalues.
 
 > **Say it back**
-> A rate of convergence compares each error with the one before. Linear keeps a fixed fraction, adding the same number of digits each step; quadratic squares the error, doubling the digits; superlinear sits between. The order can be read off any three errors in a row near the end of a run. For gradient descent with step $1/L$ the fraction is $1 - 1/\kappa$, where $\kappa = L/\mu$ is the bowl's stretch, so each digit costs about 2.3 κ steps: 5774 in the Rosenbrock valley. Newton is quadratic because its map is flat at the answer, provided the Hessian there is invertible.
+> A rate of convergence compares each error with the one before. Linear keeps a fixed fraction, adding the same number of digits each step; quadratic squares the error, doubling the digits; superlinear sits between. The order can be read off any three errors in a row near the end of a run. For gradient descent with step $`1/L`$ the fraction is $`1 - 1/\kappa`$, where $`\kappa = L/\mu`$ is the bowl's stretch, so each digit costs about 2.3 κ steps: 5774 in the Rosenbrock valley. Newton is quadratic because its map is flat at the answer, provided the Hessian there is invertible.
 
 ---
 
 ## What this builds on
 
-- [Gradient descent](02-gradient-descent-and-its-rate.md): the method itself, the step limit $2/L$, and the factor $1 - \alpha\lambda$ per eigen-direction that this card turns into a cost in steps.
-- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): the bowl $x^{T} A x$, its eigen-directions, and positive definite meaning every direction curves up, so $\mu > 0$.
+- [Gradient descent](02-gradient-descent-and-its-rate.md): the method itself, the step limit $`2/L`$, and the factor $`1 - \alpha\lambda`$ per eigen-direction that this card turns into a cost in steps.
+- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): the bowl $`x^{T} A x`$, its eigen-directions, and positive definite meaning every direction curves up, so $`\mu > 0`$.
 - [Fixed points of a map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md): a slope below 1 in size pulls points into a fixed point geometrically, and Newton is a map with slope zero at its root.
 
 ## Where this goes next
 
-- [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md): uses the curvature, measured or remembered, to escape the $\kappa$ penalty, quadratically or superlinearly.
-- [Conjugate gradient](07-conjugate-gradient-method.md): on a bowl its cost per digit grows like $\sqrt{\kappa}$ instead of $\kappa$.
-- [Momentum and Adam](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/09-momentum-adam-and-step-size-schedules.md): adds memory of past steps to gradient descent. Heavy-ball momentum on a bowl, and Nesterov's method in general, bring the cost down to the square root of $\kappa$; Adam carries no such guarantee.
+- [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md): uses the curvature, measured or remembered, to escape the $`\kappa`$ penalty, quadratically or superlinearly.
+- [Conjugate gradient](07-conjugate-gradient-method.md): on a bowl its cost per digit grows like $`\sqrt{\kappa}`$ instead of $`\kappa`$.
+- [Momentum and Adam](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/09-momentum-adam-and-step-size-schedules.md): adds memory of past steps to gradient descent. Heavy-ball momentum on a bowl, and Nesterov's method in general, bring the cost down to the square root of $`\kappa`$; Adam carries no such guarantee.
 - [Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md): the same rates for solving equations rather than minimising.
 - [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): the condition number in general, as the amplifier of errors in a linear system.
 
@@ -951,5 +961,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Nocedal, J., and S. J. Wright. *Numerical Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5). Defines Q-linear, Q-superlinear and Q-quadratic rates; chapter 3 gives the steepest-descent rate in terms of the Hessian's eigenvalues and proves Newton's quadratic rate.
 - Boyd, S., and L. Vandenberghe. *Convex Optimization*. Cambridge University Press, 2004. [doi:10.1017/CBO9780511804441](https://doi.org/10.1017/CBO9780511804441). Section 9.3: gradient descent's linear rate bounded through the condition number, with worked examples of slow progress in stretched bowls.
 - Ortega, J. M., and W. C. Rheinboldt. *Iterative Solution of Nonlinear Equations in Several Variables*. SIAM, 2000. [doi:10.1137/1.9780898719468](https://doi.org/10.1137/1.9780898719468). The precise definitions of the order of convergence, and the analysis of secant-type methods, whose order is the golden ratio.
-- Nesterov, Y. *Introductory Lectures on Convex Optimization*. Springer, 2004. [doi:10.1007/978-1-4419-8853-9](https://doi.org/10.1007/978-1-4419-8853-9). Chapter 2: rates for smooth strongly convex functions in terms of $L$ and $\mu$, and the lower bound showing that first-order methods cannot beat a cost of order $\sqrt{\kappa}$ per digit.
+- Nesterov, Y. *Introductory Lectures on Convex Optimization*. Springer, 2004. [doi:10.1007/978-1-4419-8853-9](https://doi.org/10.1007/978-1-4419-8853-9). Chapter 2: rates for smooth strongly convex functions in terms of $`L`$ and $`\mu`$, and the lower bound showing that first-order methods cannot beat a cost of order $`\sqrt{\kappa}`$ per digit.
 - Rosenbrock, H. H. "An Automatic Method for Finding the Greatest or Least Value of a Function." *The Computer Journal* 3, no. 3 (1960). [doi:10.1093/comjnl/3.3.175](https://doi.org/10.1093/comjnl/3.3.175). The curved valley used on this card as a hard test for search methods.

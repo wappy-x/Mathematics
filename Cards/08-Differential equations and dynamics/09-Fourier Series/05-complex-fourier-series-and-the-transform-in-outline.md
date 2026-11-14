@@ -35,44 +35,56 @@ The line is F(ω) = 2 sin ω/ω; most of the pulse lives below its first zero, �
 
 Notation first. The arrow e^(inx), a complex exponential, is the point at angle nx on the unit circle ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), turning n times per cycle, backwards for negative n. A hat, as in û, names a transform. The complex series, from [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md):
 
-$$f(x)=\sum_{n=-\infty}^{\infty} c_n\,e^{inx},\qquad c_n=\frac{1}{2\pi}\int_{-\pi}^{\pi} f(x)\,e^{-inx}\,dx$$
+```math
+f(x)=\sum_{n=-\infty}^{\infty} c_n\,e^{inx},\qquad c_n=\frac{1}{2\pi}\int_{-\pi}^{\pi} f(x)\,e^{-inx}\,dx
+```
 
 The bridge from this shelf's real series a_0/2 + Σ (a_n cos nx + b_n sin nx):
 
-$$c_0=\frac{a_0}{2},\qquad c_n=\frac{a_n-i\,b_n}{2},\qquad c_{-n}=\frac{a_n+i\,b_n}{2}\qquad(n\ge 1)$$
+```math
+c_0=\frac{a_0}{2},\qquad c_n=\frac{a_n-i\,b_n}{2},\qquad c_{-n}=\frac{a_n+i\,b_n}{2}\qquad(n\ge 1)
+```
 
 **Read it aloud:** each real tone splits into two half-size arrows turning opposite ways.
 
 For the square wave, a_n = 0 and b_n = 4/(nπ) on odd n, so
 
-$$c_n=\frac{2}{i\pi n}=-\frac{2i}{\pi n}\quad(n\text{ odd}),\qquad c_n=0\quad(n\text{ even})$$
+```math
+c_n=\frac{2}{i\pi n}=-\frac{2i}{\pi n}\quad(n\text{ odd}),\qquad c_n=0\quad(n\text{ even})
+```
 
 The transform and its inverse, from [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md):
 
-$$F(\omega)=\int_{-\infty}^{\infty} f(t)\,e^{-i\omega t}\,dt,\qquad f(t)=\frac{1}{2\pi}\int_{-\infty}^{\infty} F(\omega)\,e^{i\omega t}\,d\omega$$
+```math
+F(\omega)=\int_{-\infty}^{\infty} f(t)\,e^{-i\omega t}\,dt,\qquad f(t)=\frac{1}{2\pi}\int_{-\infty}^{\infty} F(\omega)\,e^{i\omega t}\,d\omega
+```
 
 **Read it aloud:** the amount of frequency ω is the signal times a backward-spinning probe, added over all time; the inverse adds every amount spun forward, over 2π.
 
 The radar pulse, 1 for −1 < t < 1 and 0 otherwise, has
 
-$$F(\omega)=\frac{2\sin\omega}{\omega},\qquad F(0)=2$$
+```math
+F(\omega)=\frac{2\sin\omega}{\omega},\qquad F(0)=2
+```
 
 On a rod, u(x, t) is the temperature at place x and time t; u_t is its rate in time and u_xx the profile's bend (second derivative in x). The heat equation, and what the transform makes of it:
 
-$$u_t=\kappa\,u_{xx}\quad\Longrightarrow\quad \hat u(\omega,t)=\hat u(\omega,0)\,e^{-\kappa\omega^2 t}$$
+```math
+u_t=\kappa\,u_{xx}\quad\Longrightarrow\quad \hat u(\omega,t)=\hat u(\omega,0)\,e^{-\kappa\omega^2 t}
+```
 
 **Read it aloud:** temperature rises where the profile bends up; in frequency, each wiggle fades at its own rate, κ times ω squared.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | angle in the cycle; on the rod, place in cm | −π to π; 0 to 4 cm | — |
-| $n$, $k$ | tone numbers, negatives included | ±1, ±3, ±5 | c_n shrinks like 1/n |
-| $c_n$ | arrow n: length and starting angle | c_1 = −0.636620i | — |
-| $a_n$, $b_n$ | cosine and sine amounts | b_1 = 1.273240 | c_n grows half as much |
-| $t$, $\omega$ | time in µs; radians per µs (per cm on the rod) | pulse on −1 < t < 1 | F ripples down like 1/ω |
-| $F$, $\hat u$ | transforms: amount of each frequency | F(1) = 1.682942 | — |
-| $T$ | repeat spacing of the pulse | 4 µs, 8 µs | samples crowd together |
-| $u$, $u_t$, $u_{xx}$, $\kappa$ | °C above room; its time rate; its bend; diffusivity, cm^2/s | 100 on −1 < x < 1; κ = 0.1 | κ up: evens out faster |
+| $`x`$ | angle in the cycle; on the rod, place in cm | −π to π; 0 to 4 cm | — |
+| $`n`$, $`k`$ | tone numbers, negatives included | ±1, ±3, ±5 | c_n shrinks like 1/n |
+| $`c_n`$ | arrow n: length and starting angle | c_1 = −0.636620i | — |
+| $`a_n`$, $`b_n`$ | cosine and sine amounts | b_1 = 1.273240 | c_n grows half as much |
+| $`t`$, $`\omega`$ | time in µs; radians per µs (per cm on the rod) | pulse on −1 < t < 1 | F ripples down like 1/ω |
+| $`F`$, $`\hat u`$ | transforms: amount of each frequency | F(1) = 1.682942 | — |
+| $`T`$ | repeat spacing of the pulse | 4 µs, 8 µs | samples crowd together |
+| $`u`$, $`u_t`$, $`u_{xx}`$, $`\kappa`$ | °C above room; its time rate; its bend; diffusivity, cm^2/s | 100 on −1 < x < 1; κ = 0.1 | κ up: evens out faster |
 
 ### When it holds
 
@@ -93,13 +105,17 @@ An arrow turning forwards and its mirror image turning backwards always add to a
 
 Euler's formula gives cos nx = (e^(inx) + e^(−inx))/2 and sin nx = (e^(inx) − e^(−inx))/(2i). Multiply by a_n and b_n, add, and collect arrows (1/i = −i):
 
-$$a_n\cos nx+b_n\sin nx=\frac{a_n-i\,b_n}{2}\,e^{inx}+\frac{a_n+i\,b_n}{2}\,e^{-inx}.$$
+```math
+a_n\cos nx+b_n\sin nx=\frac{a_n-i\,b_n}{2}\,e^{inx}+\frac{a_n+i\,b_n}{2}\,e^{-inx}.
+```
 
 The two coefficients are c_n and c_(−n). The constant a_0/2 is the arrow that does not turn, c_0.
 
 On the square wave, b_1 = 4/π = 1.273240, so c_1 = −0.636620i and c_(−1) = +0.636620i: one starts straight down, the other straight up. The direct average of f e^(−inx), split at x = 0, agrees:
 
-$$c_n=\frac{1}{2\pi}\Big(\int_0^{\pi}e^{-inx}\,dx-\int_{-\pi}^{0}e^{-inx}\,dx\Big)=\frac{1-(-1)^n}{i\pi n},$$
+```math
+c_n=\frac{1}{2\pi}\Big(\int_0^{\pi}e^{-inx}\,dx-\int_{-\pi}^{0}e^{-inx}\,dx\Big)=\frac{1-(-1)^n}{i\pi n},
+```
 
 which is 2/(iπn) on odd n and 0 on even n.
 
@@ -109,11 +125,15 @@ In arrows, Parseval's identity ([Parseval's identity](03-parsevals-identity.md))
 
 Repeat the radar pulse every T µs, T > 2. Now it has a series, with arrows at ω_k = 2πk/T and coefficients averaged over one period:
 
-$$c_k=\frac1T\int_{-T/2}^{T/2} f(t)\,e^{-i\omega_k t}\,dt=\frac{F(\omega_k)}{T}.$$
+```math
+c_k=\frac1T\int_{-T/2}^{T/2} f(t)\,e^{-i\omega_k t}\,dt=\frac{F(\omega_k)}{T}.
+```
 
 The last step holds because f is zero outside the pulse. At T = 4, 4 c_1 = 1.273240 = F(π/2); at T = 8, 8 c_2 sits at the same frequency and matches. Doubling T halves the spacing Δω = 2π/T, so samples of one curve crowd together:
 
-$$f(t)=\sum_k \frac{F(\omega_k)}{T}\,e^{i\omega_k t}=\frac{1}{2\pi}\sum_k F(\omega_k)\,e^{i\omega_k t}\,\Delta\omega.$$
+```math
+f(t)=\sum_k \frac{F(\omega_k)}{T}\,e^{i\omega_k t}=\frac{1}{2\pi}\sum_k F(\omega_k)\,e^{i\omega_k t}\,\Delta\omega.
+```
 
 The right side is a Riemann sum (strips of width Δω). As T grows it becomes the inverse integral; the inverse's 1/(2π) is the series' 1/T, carried through.
 
@@ -128,7 +148,9 @@ The sketch moves a limit through an infinite sum. The clean proof, in [The Fouri
 
 The integral runs over the pulse's 2 µs only. The antiderivative of e^(−iωt) is e^(−iωt)/(−iω):
 
-$$F(\omega)=\int_{-1}^{1}e^{-i\omega t}\,dt=\frac{e^{i\omega}-e^{-i\omega}}{i\omega}=\frac{2\sin\omega}{\omega}.$$
+```math
+F(\omega)=\int_{-1}^{1}e^{-i\omega t}\,dt=\frac{e^{i\omega}-e^{-i\omega}}{i\omega}=\frac{2\sin\omega}{\omega}.
+```
 
 At ω = 0 it is the pulse's area, 2; at ω = 1, 1.682942; at ω = π the probe turns once across the pulse and cancels to 0. The pulse is symmetric, so the imaginary part is 0.
 
@@ -138,11 +160,15 @@ A long metal rod, diffusivity κ = 0.1 cm^2/s, has its stretch −1 < x < 1 rais
 
 Transform in x. Two integrations by parts turn u_xx into −ω^2 û, so for each ω separately
 
-$$\frac{d\hat u}{dt}=-\kappa\,\omega^2\,\hat u,$$
+```math
+\frac{d\hat u}{dt}=-\kappa\,\omega^2\,\hat u,
+```
 
 the decay law of [Growth, decay and cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md) at rate κω^2, solved by û(ω, 0) e^(−κω^2 t). A wiggle twice as fine fades four times as fast, so edges round off first; at ω = 0 nothing fades, so total heat is kept. Invert, the integrand being even in ω:
 
-$$u(x,t)=\frac{1}{\pi}\int_0^{\infty}100\,\frac{2\sin\omega}{\omega}\,e^{-\kappa\omega^2 t}\cos\omega x\,d\omega.$$
+```math
+u(x,t)=\frac{1}{\pi}\int_0^{\infty}100\,\frac{2\sin\omega}{\omega}\,e^{-\kappa\omega^2 t}\cos\omega x\,d\omega.
+```
 
 At the centre this gives 84.27 °C after 2.5 s, 52.05 °C after 10 s and 27.63 °C after 40 s.
 

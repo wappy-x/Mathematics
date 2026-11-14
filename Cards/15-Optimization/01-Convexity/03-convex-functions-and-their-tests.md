@@ -39,21 +39,27 @@ The middle line is the true bitterness. The top line is the chord joining A to C
 
 The roaster's model, with t the roast time in minutes past first crack and w the robusta share:
 
-$$B(t, w) = 1 + e^{t/2} + k\,t\,w + 4w^2, \qquad k = 1.$$
+```math
+B(t, w) = 1 + e^{t/2} + k\,t\,w + 4w^2, \qquad k = 1.
+```
 
-The term $e^{t/2}$ is bitterness that compounds with roast time, multiplying by $e^{1/2} = 1.6487$ each minute. The term $k\,t\,w$ says robusta's bitter notes grow as the roast goes on, at rate k. The term $4w^2$ is robusta's own bite.
+The term $`e^{t/2}`$ is bitterness that compounds with roast time, multiplying by $`e^{1/2} = 1.6487`$ each minute. The term $`k\,t\,w`$ says robusta's bitter notes grow as the roast goes on, at rate k. The term $`4w^2`$ is robusta's own bite.
 
-Write a recipe as a point, x = (t, w). [Convex sets](02-convex-sets.md) wrote the mix of two points as $\theta x + (1-\theta)y$, with θ (theta) a weight from 0 to 1. The calculus wing's [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md) already defined convexity by chords and proved the curvature test. Here they are side by side with the new one, the tangent test, for a function f with two continuous derivatives on an open convex set:
+Write a recipe as a point, x = (t, w). [Convex sets](02-convex-sets.md) wrote the mix of two points as $`\theta x + (1-\theta)y`$, with θ (theta) a weight from 0 to 1. The calculus wing's [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md) already defined convexity by chords and proved the curvature test. Here they are side by side with the new one, the tangent test, for a function f with two continuous derivatives on an open convex set:
 
-$$\underbrace{f(\theta x + (1-\theta)y) \le \theta f(x) + (1-\theta) f(y)}_{\text{chord}} \iff \underbrace{f(y) \ge f(x) + \nabla f(x)^{\top}(y - x)}_{\text{tangent}} \iff \underbrace{\nabla^2 f(x) \succeq 0}_{\text{curvature}}$$
+```math
+\underbrace{f(\theta x + (1-\theta)y) \le \theta f(x) + (1-\theta) f(y)}_{\text{chord}} \iff \underbrace{f(y) \ge f(x) + \nabla f(x)^{\top}(y - x)}_{\text{tangent}} \iff \underbrace{\nabla^2 f(x) \succeq 0}_{\text{curvature}}
+```
 
 **Read it aloud:** the graph sits under every chord, if and only if it sits over every tangent plane, if and only if its curvature is never negative in any direction.
 
-Two pieces of notation are new to this wing. The Hessian H, the table of second derivatives, is written $\nabla^2 f(x)$ from here on. And $M \succeq 0$, read "M is positive semidefinite", means $v^{\top} M v \ge 0$ for every direction v ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)).
+Two pieces of notation are new to this wing. The Hessian H, the table of second derivatives, is written $`\nabla^2 f(x)`$ from here on. And $`M \succeq 0`$, read "M is positive semidefinite", means $`v^{\top} M v \ge 0`$ for every direction v ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)).
 
 When the curvature is boxed in, between a least value μ (mu) and a greatest value L, the tangent test sharpens into a sandwich:
 
-$$f(x) + \nabla f(x)^{\top}(y-x) + \tfrac{\mu}{2}\lVert y-x\rVert^2 \;\le\; f(y) \;\le\; f(x) + \nabla f(x)^{\top}(y-x) + \tfrac{L}{2}\lVert y-x\rVert^2.$$
+```math
+f(x) + \nabla f(x)^{\top}(y-x) + \tfrac{\mu}{2}\lVert y-x\rVert^2 \;\le\; f(y) \;\le\; f(x) + \nabla f(x)^{\top}(y-x) + \tfrac{L}{2}\lVert y-x\rVert^2.
+```
 
 **Read it aloud:** the true value sits above the tangent plus a bowl of curvature μ, and below the tangent plus a bowl of curvature L.
 
@@ -61,23 +67,23 @@ A function with μ > 0 is **strongly convex**: it curves up by at least μ in ev
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $B(t, w)$ | bitterness, panel points from 0 to 10 | 3.6887 at A, 5.8217 at C | the spec of 6 rules more recipes out |
-| $t$ | roast time past first crack, minutes | 0 to 3; A has 1, C has 3 | bitterness climbs, faster and faster |
-| $w$ | robusta share of the beans | 0 to 0.5; A has 0.4, C has 0.1 | cheaper, and more bitter |
-| $k$ | how fast robusta's bitterness grows with roast time | 1 | above √2 = 1.4142, B stops being convex |
-| $f$, $x$, $y$ | any function under test, and two points (recipes) | B, A = (1, 0.4), C = (3, 0.1) | — |
-| $\theta$, $z$ | mixing weight, from 0 to 1; the mix itself | ½ gives the halfway recipe (2, 0.25) | the mix moves toward x |
-| $\nabla f(x)$ | gradient: the slopes in t and in w | (1.2244, 4.2000) at A | a steeper tangent plane |
-| $\nabla f(x)^{\top}(y-x)$ | ⊤ is "transposed": a dot product, each slope times the step in its setting, added up | from A toward C: 1.2244 × 2 + 4.2 × (−0.3) = 1.1887 | — |
-| $\nabla^2 f(x)$, $H$ | Hessian: the table of second derivatives | `[[0.4122, 1], [1, 8]]` at A | more curvature |
-| $v$, $M$, $\succeq 0$ | a direction; a symmetric matrix; "never negative along any direction" | determinant 2.2974, trace 8.4122 at A | — |
-| $\mu$, $L$, $\lVert\cdot\rVert$ | least and greatest curvature over the recipes; length | 0.1230 and 8.1424 | a tighter sandwich, or a looser one |
-| $S(t)$ | a bitterness curve that levels off, for What breaks | $8/(1 + e^{2-t})$ | — |
-| $g$, $s$, $\xi$, $\sigma$ | the function along one segment; how far along it (0 to 1); a point on it and its position (xi, sigma), from Taylor's theorem | s = 0.5 down to 0.001 in Step 1 | — |
+| $`B(t, w)`$ | bitterness, panel points from 0 to 10 | 3.6887 at A, 5.8217 at C | the spec of 6 rules more recipes out |
+| $`t`$ | roast time past first crack, minutes | 0 to 3; A has 1, C has 3 | bitterness climbs, faster and faster |
+| $`w`$ | robusta share of the beans | 0 to 0.5; A has 0.4, C has 0.1 | cheaper, and more bitter |
+| $`k`$ | how fast robusta's bitterness grows with roast time | 1 | above √2 = 1.4142, B stops being convex |
+| $`f`$, $`x`$, $`y`$ | any function under test, and two points (recipes) | B, A = (1, 0.4), C = (3, 0.1) | — |
+| $`\theta`$, $`z`$ | mixing weight, from 0 to 1; the mix itself | ½ gives the halfway recipe (2, 0.25) | the mix moves toward x |
+| $`\nabla f(x)`$ | gradient: the slopes in t and in w | (1.2244, 4.2000) at A | a steeper tangent plane |
+| $`\nabla f(x)^{\top}(y-x)`$ | ⊤ is "transposed": a dot product, each slope times the step in its setting, added up | from A toward C: 1.2244 × 2 + 4.2 × (−0.3) = 1.1887 | — |
+| $`\nabla^2 f(x)`$, $`H`$ | Hessian: the table of second derivatives | `[[0.4122, 1], [1, 8]]` at A | more curvature |
+| $`v`$, $`M`$, $`\succeq 0`$ | a direction; a symmetric matrix; "never negative along any direction" | determinant 2.2974, trace 8.4122 at A | — |
+| $`\mu`$, $`L`$, $`\lVert\cdot\rVert`$ | least and greatest curvature over the recipes; length | 0.1230 and 8.1424 | a tighter sandwich, or a looser one |
+| $`S(t)`$ | a bitterness curve that levels off, for What breaks | $`8/(1 + e^{2-t})`$ | — |
+| $`g`$, $`s`$, $`\xi`$, $`\sigma`$ | the function along one segment; how far along it (0 to 1); a point on it and its position (xi, sigma), from Taylor's theorem | s = 0.5 down to 0.001 in Step 1 | — |
 
 ### When it holds
 
-- **Two continuous derivatives.** The Hessian must exist. A kink, such as $\lvert t - 2\rvert$, can be convex with no Hessian at the kink; [Subgradients](07-subgradients.md) handles it.
+- **Two continuous derivatives.** The Hessian must exist. A kink, such as $`\lvert t - 2\rvert`$, can be convex with no Hessian at the kink; [Subgradients](07-subgradients.md) handles it.
 - **An open convex domain.** Every segment between recipes must stay inside, or chords leave the domain. The converse (Step 4) also needs room to step a little in every direction. B's formula is convex on the whole strip t > −1.3863, which holds every real recipe; below it the determinant turns negative.
 - **Every direction, not just the axes.** With k = 4, each setting alone curves upward, yet the blend fails along a diagonal (What breaks, row 1).
 - **Every point, not one.** The curve S passes the curvature test at 1 minute and fails at 3 (row 3).
@@ -89,9 +95,11 @@ A function with μ > 0 is **strongly convex**: it curves up by at least μ in ev
 
 ### Step 0: every test is a test on straight lines
 
-Pick two recipes x and y and walk the segment between them: $g(s) = f(x + s(y-x))$, for s from 0 to 1. Along that walk the chain rule gives
+Pick two recipes x and y and walk the segment between them: $`g(s) = f(x + s(y-x))`$, for s from 0 to 1. Along that walk the chain rule gives
 
-$$g'(s) = \nabla f(x + s(y-x))^{\top}(y-x), \qquad g''(s) = (y-x)^{\top}\,\nabla^2 f(x + s(y-x))\,(y-x).$$
+```math
+g'(s) = \nabla f(x + s(y-x))^{\top}(y-x), \qquad g''(s) = (y-x)^{\top}\,\nabla^2 f(x + s(y-x))\,(y-x).
+```
 
 So the chord test for f is the chord test for every slice g. The tangent test for f is "g lies above its tangent at 0". The curvature test is "g'' ≥ 0 on every slice". Each claim in several variables is a one-variable claim on every line.
 
@@ -99,9 +107,11 @@ So the chord test for f is the chord test for every slice g. The tangent test fo
 
 Start from the chord inequality with the mix close to x. Write the weight on y as s. Then
 
-$$f(x + s(y-x)) \le f(x) + s\,\big(f(y) - f(x)\big), \quad\text{so}\quad \frac{f(x + s(y-x)) - f(x)}{s} \le f(y) - f(x).$$
+```math
+f(x + s(y-x)) \le f(x) + s\,\big(f(y) - f(x)\big), \quad\text{so}\quad \frac{f(x + s(y-x)) - f(x)}{s} \le f(y) - f(x).
+```
 
-The left side is the average slope from x over a step of size s. As s shrinks it becomes the slope at x in direction y − x, which is $\nabla f(x)^{\top}(y-x)$. The inequality survives the limit: that is the tangent test.
+The left side is the average slope from x over a step of size s. As s shrinks it becomes the slope at x in direction y − x, which is $`\nabla f(x)^{\top}(y-x)`$. The inequality survives the limit: that is the tangent test.
 
 On the roaster's segment from A to C, the quotients for s = 0.5, 0.1, 0.01, 0.001 are 1.5591, 1.2500, 1.1946 and 1.1893. They fall toward the slope 1.1887. Every one stays below the ceiling, B(C) − B(A) = 2.1330.
 
@@ -109,7 +119,9 @@ On the roaster's segment from A to C, the quotients for s = 0.5, 0.1, 0.01, 0.00
 
 Take the mix z = θx + (1 − θ)y. Write the tangent test at z twice, once toward x and once toward y:
 
-$$f(x) \ge f(z) + \nabla f(z)^{\top}(x - z), \qquad f(y) \ge f(z) + \nabla f(z)^{\top}(y - z).$$
+```math
+f(x) \ge f(z) + \nabla f(z)^{\top}(x - z), \qquad f(y) \ge f(z) + \nabla f(z)^{\top}(y - z).
+```
 
 Multiply the first by θ and the second by 1 − θ, then add. The slope terms cancel, because θ(x − z) + (1 − θ)(y − z) = θx + (1 − θ)y − z = 0. What is left is θf(x) + (1 − θ)f(y) ≥ f(z): the chord test.
 
@@ -117,21 +129,25 @@ Multiply the first by θ and the second by 1 − θ, then add. The slope terms c
 
 [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) on the slice g, with the remainder in its mean-value form, says that for some point ξ (xi) on the segment,
 
-$$f(y) = f(x) + \nabla f(x)^{\top}(y-x) + \tfrac12 (y-x)^{\top}\,\nabla^2 f(\xi)\,(y-x).$$
+```math
+f(y) = f(x) + \nabla f(x)^{\top}(y-x) + \tfrac12 (y-x)^{\top}\,\nabla^2 f(\xi)\,(y-x).
+```
 
-If $\nabla^2 f \succeq 0$, the last term is never negative, so f(y) is at least the tangent. That is the tangent test.
+If $`\nabla^2 f \succeq 0`$, the last term is never negative, so f(y) is at least the tangent. That is the tangent test.
 
-If also $\mu\lVert v\rVert^2 \le v^{\top}\nabla^2 f\,v \le L\lVert v\rVert^2$ everywhere, the last term lies between $\frac{\mu}{2}\lVert y-x\rVert^2$ and $\frac{L}{2}\lVert y-x\rVert^2$. That is the sandwich. For recipe C seen from A: the tangent gives 4.8774, the μ-bowl adds 0.2516, so the floor is 5.1291. The true value is 5.8217. The ceiling is 21.5287, loose, because L comes from the steep robusta direction while the step from A to C is mostly roast time.
+If also $`\mu\lVert v\rVert^2 \le v^{\top}\nabla^2 f\,v \le L\lVert v\rVert^2`$ everywhere, the last term lies between $`\frac{\mu}{2}\lVert y-x\rVert^2`$ and $`\frac{L}{2}\lVert y-x\rVert^2`$. That is the sandwich. For recipe C seen from A: the tangent gives 4.8774, the μ-bowl adds 0.2516, so the floor is 5.1291. The true value is 5.8217. The ceiling is 21.5287, loose, because L comes from the steep robusta direction while the step from A to C is mostly roast time.
 
 ### Step 4: tangent implies curvature, the converse
 
 Write the tangent test from x toward y, and from y back toward x, then add the two. The function values cancel and leave
 
-$$\big(\nabla f(y) - \nabla f(x)\big)^{\top}(y - x) \ge 0.$$
+```math
+\big(\nabla f(y) - \nabla f(x)\big)^{\top}(y - x) \ge 0.
+```
 
 In words: the slope never decreases as you walk along any line. For A and C, the slopes are (1.2244, 4.2000) at A and (2.3408, 3.8000) at C; the change, measured along C − A, is 2.3530, positive.
 
-Now put y = x + s v for a small step s in direction v, and divide by s². The left side becomes $v^{\top}\nabla^2 f(x)\,v$ as s shrinks, and it stays at least 0. That holds for every direction v, so $\nabla^2 f(x) \succeq 0$. The open domain matters here: x needs room for a small step in every direction.
+Now put y = x + s v for a small step s in direction v, and divide by s². The left side becomes $`v^{\top}\nabla^2 f(x)\,v`$ as s shrinks, and it stays at least 0. That holds for every direction v, so $`\nabla^2 f(x) \succeq 0`$. The open domain matters here: x needs room for a small step in every direction.
 
 Steps 1 and 2 tie the chord test to the tangent test both ways; Steps 3 and 4 tie the tangent test to the curvature test both ways. The three are one fact.
 
@@ -156,13 +172,13 @@ Let f have continuous second derivatives on an open convex set, and let x and y 
 
 The code runs the chord test on 861 pairs of recipes at three weights, and the tangent test on 1,722 ordered pairs. All pass for B. That is evidence, not proof: something could go wrong between grid points.
 
-The determinant $2e^{t/2} - 1$ is different: a formula, positive for every t > −1.3863, not just at 42 grid points. So the curvature formula proves convexity, while one failing chord disproves it.
+The determinant $`2e^{t/2} - 1`$ is different: a formula, positive for every t > −1.3863, not just at 42 grid points. So the curvature formula proves convexity, while one failing chord disproves it.
 
 ---
 
 ## Worked numbers, by hand
 
-Recipes A = (1 min, 40% robusta) and C = (3 min, 10% robusta). The number e is about 2.7183, so $e^{0.5} = 1.6487$, $e^{1} = 2.7183$ and $e^{1.5} = 4.4817$.
+Recipes A = (1 min, 40% robusta) and C = (3 min, 10% robusta). The number e is about 2.7183, so $`e^{0.5} = 1.6487`$, $`e^{1} = 2.7183`$ and $`e^{1.5} = 4.4817`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -173,7 +189,7 @@ Recipes A = (1 min, 40% robusta) and C = (3 min, 10% robusta). The number e is a
 | tangent test at C | 3.6887 + 1.2244 × 2 + 4.2 × (−0.3) = 4.8774, under 5.8217 | gap 0.9442 |
 | Hessian at A | `[[e^0.5 / 4, 1], [1, 8]]` | `[[0.4122, 1], [1, 8]]` |
 | curvature test at A | determinant 0.4122 × 8 − 1 = 2.2974; trace 8.4122; both positive | eigenvalues 0.2826 and 8.1296 |
-| curvature test everywhere | determinant $2e^{t/2} - 1$, and $e^{t/2} \ge 1$ for t ≥ 0 | **at least 1.0000** |
+| curvature test everywhere | determinant $`2e^{t/2} - 1`$, and $`e^{t/2} \ge 1`$ for t ≥ 0 | **at least 1.0000** |
 | tangent floor at (3 min, 40%) | 3.6887 + 1.2244 × 2 + 4.2 × 0 | **6.1374, over the spec of 6** |
 
 All three tests pass at the recipes checked, and the curvature formula passes at every recipe the roaster can make. So B is convex. Every recipe between two in-spec recipes is in spec. And one tasting at A, with its slopes, rules out the 3-minute, 40% robusta recipe without roasting it: its floor is already 6.1374, and its true score is 7.3217.
@@ -871,7 +887,7 @@ example (θ x y : ℝ) : θ * (x - (θ * x + (1 - θ) * y)) + (1 - θ) * (y - (�
 - **Convergence speeds.** μ and L set how fast gradient methods close in, a story for [Gradient descent](../02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md). For the roaster they are 0.1230 and 8.1424.
 
 > **Say it back**
-> A smooth function is convex exactly when its graph sits under every chord, over every tangent plane, and curves up in every direction, everywhere. The tangent test follows from the chord test by shrinking the chord; the chord test follows from two tangents at the mix; the curvature test gives the tangent test through Taylor's theorem, and adding two tangents gives it back. For the roaster, the determinant $2e^{t/2} - 1$ stays positive, so every recipe between two in-spec recipes is in spec. Sampled chords can only disprove convexity; the curvature formula proves it.
+> A smooth function is convex exactly when its graph sits under every chord, over every tangent plane, and curves up in every direction, everywhere. The tangent test follows from the chord test by shrinking the chord; the chord test follows from two tangents at the mix; the curvature test gives the tangent test through Taylor's theorem, and adding two tangents gives it back. For the roaster, the determinant $`2e^{t/2} - 1`$ stays positive, so every recipe between two in-spec recipes is in spec. Sampled chords can only disprove convexity; the curvature formula proves it.
 
 ---
 

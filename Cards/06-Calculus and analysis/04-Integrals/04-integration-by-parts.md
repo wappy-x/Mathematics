@@ -26,30 +26,36 @@ Drawn to scale: 1 unit across is 200 px, 1 unit up is 70 px; the curve's points 
 
 ## The formula
 
-Notation first. A dash marks a rate: u'(x) is the rate of u per unit of x. Square brackets with two limits mean "at the top end minus at the bottom end": $[uv]_a^b$ is u(b)v(b) − u(a)v(a). And $du$ is shorthand for u'(x) dx.
+Notation first. A dash marks a rate: u'(x) is the rate of u per unit of x. Square brackets with two limits mean "at the top end minus at the bottom end": $`[uv]_a^b`$ is u(b)v(b) − u(a)v(a). And $`du`$ is shorthand for u'(x) dx.
 
-$$\int_a^b u(x)\,v'(x)\,dx \;=\; \Big[\,u(x)\,v(x)\,\Big]_a^b \;-\; \int_a^b v(x)\,u'(x)\,dx$$
+```math
+\int_a^b u(x)\,v'(x)\,dx \;=\; \Big[\,u(x)\,v(x)\,\Big]_a^b \;-\; \int_a^b v(x)\,u'(x)\,dx
+```
 
 **Read it aloud:** the integral of one factor times the rate of the other equals their product's change across the interval, minus the integral with the roles swapped.
 
 Most books print it in shorthand:
 
-$$\int u\,dv = uv - \int v\,du$$
+```math
+\int u\,dv = uv - \int v\,du
+```
 
-Write $J_n$ for the area under x^n e^x from 0 to 1. For every whole number n from 1 up:
+Write $`J_n`$ for the area under x^n e^x from 0 to 1. For every whole number n from 1 up:
 
-$$J_n = e - n\,J_{n-1}, \qquad J_0 = e - 1$$
+```math
+J_n = e - n\,J_{n-1}, \qquad J_0 = e - 1
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $u'$ | the factor to differentiate, and its rate | x and 1; for the log, ln x and 1/x | simpler rate, easier leftover |
-| $v$, $v'$ | the factor to integrate, and the factor as written | e^x and e^x; for the log, x and 1 | a constant added to v cancels |
-| $a$, $b$ | the lower and upper limits | 0 and 1; for the log, 1 and e | both terms change |
-| $du$, $dv$ | shorthand for u'(x) dx and v'(x) dx | dx and e^x dx | — |
-| $[uv]_a^b$ | the boundary term: product at b minus product at a | e | rises one for one |
-| $e$, $x$ | Euler's number, 2.718282; the variable | x from 0 to 1 | — |
-| $J_n$, $n$, $J_0$ | area under x^n e^x from 0 to 1; a whole number; the start | J_0 = 1.718282, J_1 = 1 | the area falls: 1, 0.718282, 0.563436, 0.464536 |
-| $C$ | the constant any antiderivative may carry | e^x (x − 1) + C | cancels from any area |
+| $`u`$, $`u'`$ | the factor to differentiate, and its rate | x and 1; for the log, ln x and 1/x | simpler rate, easier leftover |
+| $`v`$, $`v'`$ | the factor to integrate, and the factor as written | e^x and e^x; for the log, x and 1 | a constant added to v cancels |
+| $`a`$, $`b`$ | the lower and upper limits | 0 and 1; for the log, 1 and e | both terms change |
+| $`du`$, $`dv`$ | shorthand for u'(x) dx and v'(x) dx | dx and e^x dx | — |
+| $`[uv]_a^b`$ | the boundary term: product at b minus product at a | e | rises one for one |
+| $`e`$, $`x`$ | Euler's number, 2.718282; the variable | x from 0 to 1 | — |
+| $`J_n`$, $`n`$, $`J_0`$ | area under x^n e^x from 0 to 1; a whole number; the start | J_0 = 1.718282, J_1 = 1 | the area falls: 1, 0.718282, 0.563436, 0.464536 |
+| $`C`$ | the constant any antiderivative may carry | e^x (x − 1) + C | cancels from any area |
 
 ### When it holds
 
@@ -70,16 +76,18 @@ When x moves a little, uv changes because u moved and because v moved. Integrate
 
 The product rule holds at every point:
 
-$$\big(u v\big)' = u'\,v + u\,v'$$
+```math
+\big(u v\big)' = u'\,v + u\,v'
+```
 
 Integrate both sides from a to b. The fundamental theorem of calculus ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)) turns the left side into u(b)v(b) − u(a)v(a). The right side splits into two integrals. Move one across the equals sign: the formula appears, minus sign included.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let u and v have continuous derivatives on [a, b]. Then u'v and uv' are continuous, hence Riemann integrable (their strip sums close in on one area). The product uv has the continuous derivative $u'v + uv'$, so the fundamental theorem gives $\int_a^b (uv)'\,dx = u(b)v(b) - u(a)v(a)$. The integral is linear, so this equals $\int_a^b u'v\,dx + \int_a^b uv'\,dx$. Subtract the first integral from both sides.
+Let u and v have continuous derivatives on [a, b]. Then u'v and uv' are continuous, hence Riemann integrable (their strip sums close in on one area). The product uv has the continuous derivative $`u'v + uv'`$, so the fundamental theorem gives $`\int_a^b (uv)'\,dx = u(b)v(b) - u(a)v(a)`$. The integral is linear, so this equals $`\int_a^b u'v\,dx + \int_a^b uv'\,dx`$. Subtract the first integral from both sides.
 
-**The reduction, by induction on n.** For n ≥ 1 take u = x^n and v = e^x on [0, 1]: $J_n = [x^n e^x]_0^1 - n\int_0^1 x^{n-1}e^x\,dx = e - nJ_{n-1}$. The lower boundary value is 0 because 0^n = 0 when n ≥ 1. At n = 0 it would be 1, which is why $J_0 = e - 1$ comes straight from the antiderivative e^x. After n steps only $J_0$ remains.
+**The reduction, by induction on n.** For n ≥ 1 take u = x^n and v = e^x on [0, 1]: $`J_n = [x^n e^x]_0^1 - n\int_0^1 x^{n-1}e^x\,dx = e - nJ_{n-1}`$. The lower boundary value is 0 because 0^n = 0 when n ≥ 1. At n = 0 it would be 1, which is why $`J_0 = e - 1`$ comes straight from the antiderivative e^x. After n steps only $`J_0`$ remains.
 
 </details>
 
@@ -87,7 +95,7 @@ Let u and v have continuous derivatives on [a, b]. Then u'v and uv' are continuo
 
 Choose u = x, since its rate is 1. Choose dv = e^x dx, so v = e^x. Then du = dx.
 
-The boundary term is $[x e^x]_0^1$ = 1 × e − 0 × 1 = e. The leftover is the integral of e^x from 0 to 1, e − 1. Subtract: 1.
+The boundary term is $`[x e^x]_0^1`$ = 1 × e − 0 × 1 = e. The leftover is the integral of e^x from 0 to 1, e − 1. Subtract: 1.
 
 Without limits, the antiderivative is e^x (x − 1) + C; its rate is e^x (x − 1) + e^x = x e^x. The checks' difference quotient agrees: 0.824361 at x = 0.5.
 
@@ -95,7 +103,7 @@ Without limits, the antiderivative is e^x (x − 1) + C; its rate is e^x (x − 
 
 Supply the second factor: ln x = ln x × 1. Choose u = ln x, whose rate is 1/x. Choose dv = dx, so v = x.
 
-The boundary term is $[x \ln x]_1^e$ = e × 1 − 1 × 0 = e. The leftover is the integral of x × (1/x) = 1 from 1 to e, which is e − 1. Subtract: again 1.
+The boundary term is $`[x \ln x]_1^e`$ = e × 1 − 1 × 0 = e. The leftover is the integral of x × (1/x) = 1 from 1 to e, which is e − 1. Subtract: again 1.
 
 The antiderivative is x ln x − x + C, whose rate is ln x + 1 − 1 = ln x. At x = 2 the checks give 0.693147, ln 2.
 
@@ -105,7 +113,7 @@ Make u the factor whose rate is simpler than itself, and dv one that integrates 
 
 ### Step 5: the reduction formula
 
-Apply Step 2 to x^n e^x with u = x^n. The rate of u is n x^(n−1), so the leftover is n times the same integral one power lower: $J_n = e - n J_{n-1}$. A **reduction formula** is exactly this: parts once, landing one step down the same family, repeated until the first member.
+Apply Step 2 to x^n e^x with u = x^n. The rate of u is n x^(n−1), so the leftover is n times the same integral one power lower: $`J_n = e - n J_{n-1}`$. A **reduction formula** is exactly this: parts once, landing one step down the same family, repeated until the first member.
 
 Step 3 applied to (ln x)^n on 1 to e gives boundary e and leftover n times the integral of (ln x)^(n−1). The start is again e − 1. So the same recurrence holds, confirmed by the checks for n from 0 to 4. The reason is that x = e^t turns one integral into the other ([Substitution](03-substitution.md)).
 
@@ -326,8 +334,8 @@ The two outputs match line for line.
 Lean proves integration by parts for every u, v, a and b that meet its conditions, plus the card's reduction formula and both areas.
 
 - Let u and v have continuous rates on the closed interval from a to b, with a no larger than b. At the two ends, only the side inside the interval counts. Then the integral of u times v' from a to b equals the boundary term, u(b)v(b) − u(a)v(a), minus the integral of v times u'.
-- The start of the reduction is $J_0 = e - 1$.
-- For every whole number n from 1 up, $J_n = e - n\,J_{n-1}$.
+- The start of the reduction is $`J_0 = e - 1`$.
+- For every whole number n from 1 up, $`J_n = e - n\,J_{n-1}`$.
 - The area under x e^x from 0 to 1 is exactly 1.
 - The area under ln x from 1 to e is exactly 1.
 
@@ -428,7 +436,7 @@ theorem area_x_mul_exp_and_area_log_eq_one :
 >
 > - **The wrong sign.** Adding the leftover gives 4.436564.
 > - **A constant carried into an area.** An indefinite answer needs one + C; an area needs none.
-> - **A long reduction trusted in floating point.** Run $J_{n-1} = (e - J_n)/n$ downward from a high n instead, and errors shrink.
+> - **A long reduction trusted in floating point.** Run $`J_{n-1} = (e - J_n)/n`$ downward from a high n instead, and errors shrink.
 
 ---
 

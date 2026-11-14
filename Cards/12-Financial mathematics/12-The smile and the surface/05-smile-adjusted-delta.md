@@ -41,44 +41,48 @@ Orange, flat: sticky strike, where each strike keeps its volatility. Green, risi
 
 ## The formula
 
-Notation first, in words. The ordinary derivative $d\sigma/dS$ is the change in the call's own implied volatility per dollar of Acme's move, with the strike held at $100 and the smile moving by whatever rule is assumed. Vega, written $\mathcal{V}$, is the call's price change per 1.00 of volatility ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)).
+Notation first, in words. The ordinary derivative $`d\sigma/dS`$ is the change in the call's own implied volatility per dollar of Acme's move, with the strike held at $100 and the smile moving by whatever rule is assumed. Vega, written $`\mathcal{V}`$, is the call's price change per 1.00 of volatility ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)).
 
-$$\Delta_{\text{smile}} \;=\; \Delta_{BS} \;+\; \mathcal{V}\,\frac{d\sigma}{dS}$$
+```math
+\Delta_{\text{smile}} \;=\; \Delta_{BS} \;+\; \mathcal{V}\,\frac{d\sigma}{dS}
+```
 
 **Read it aloud:** the shares to hold are the Black-Scholes shares, plus the price change that the volatility move brings, per dollar of the share.
 
-The **minimum-variance delta** replaces the assumed slope with a measured one. Below, a $\delta$ in front of a symbol means its change over one day, and $V$ is the call's price. Cov is covariance, how two changes move together; Var is variance, the average squared spread of one change.
+The **minimum-variance delta** replaces the assumed slope with a measured one. Below, a $`\delta`$ in front of a symbol means its change over one day, and $`V`$ is the call's price. Cov is covariance, how two changes move together; Var is variance, the average squared spread of one change.
 
-$$h^{*} \;=\; \frac{\operatorname{Cov}(\delta V,\ \delta S)}{\operatorname{Var}(\delta S)} \;\approx\; \Delta_{BS} + \mathcal{V}\,b, \qquad b = \frac{\operatorname{Cov}(\delta\sigma,\ \delta S)}{\operatorname{Var}(\delta S)}$$
+```math
+h^{*} \;=\; \frac{\mathrm{Cov}(\delta V,\ \delta S)}{\mathrm{Var}(\delta S)} \;\approx\; \Delta_{BS} + \mathcal{V}\,b, \qquad b = \frac{\mathrm{Cov}(\delta\sigma,\ \delta S)}{\mathrm{Var}(\delta S)}
+```
 
 **Read it aloud:** hold the share count that best explains the day's option move by the day's share move; that is the Black-Scholes delta plus vega times the typical volatility move per dollar.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $V$ | Acme's price today, called the spot; the call's marked price | $100 | Black-Scholes delta rises toward 1 |
-| $K$ | the strike | $100 | Black-Scholes delta falls |
-| $\sigma$ | the call's implied volatility | 20% | here delta falls slightly (vanna, delta's change per 1.00 of volatility, is −0.094753) |
-| $\beta$ | how fast the skew falls per dollar of strike, as a decimal | 0.0004 (0.04 points) | the correction grows in proportion |
-| $\Delta_{BS}$, $\Gamma$ | Black-Scholes delta, $e^{-qT}N(d_1)$; gamma, its change per dollar of Acme | 0.586851; 0.018951 | — |
-| $\mathcal{V}$, $\partial$ | vega, $\partial V/\partial\sigma$, dollars per 1.00 of volatility; $\partial$ marks a slope taken with the other input frozen | 37.901158 | the correction grows in proportion |
-| $d\sigma/dS$, $\Delta_{\text{smile}}$ | the option's volatility change per dollar of Acme, set by the rule; and the hedge it gives | 0, +0.0004, −0.0004; hedges 0.586851, 0.602012, 0.571691 | the hedge rises |
-| $g$, $G$, $H$ | volatility as a function of $K/S$ (sticky moneyness) or of the option's own delta (literal sticky delta), and the equation $H = 0$ that pins the latter | $G'$ = 0.021108 | — |
-| $h$, $h^{*}$ | shares held per call; the minimum-variance choice | $h^{*}$ = 0.571595 from 40,000 simulated days | — |
-| $b$, $\delta$ | fitted volatility move per dollar of Acme; $\delta$ in front of a symbol means its change over one day | −0.000396 | the hedge rises |
-| $N$, $\varphi$ | bell-curve area to the left, and bell-curve height | $N(0.25) = 0.598706$, $\varphi(0.25) = 0.386668$ | — |
-| $d_1$, $r$, $q$, $T$ | distance to strike in standard deviations; bank rate; dividend yield; time to expiry in years | 0.25, 5%, 2%, 1 | — |
+| $`S`$, $`V`$ | Acme's price today, called the spot; the call's marked price | $100 | Black-Scholes delta rises toward 1 |
+| $`K`$ | the strike | $100 | Black-Scholes delta falls |
+| $`\sigma`$ | the call's implied volatility | 20% | here delta falls slightly (vanna, delta's change per 1.00 of volatility, is −0.094753) |
+| $`\beta`$ | how fast the skew falls per dollar of strike, as a decimal | 0.0004 (0.04 points) | the correction grows in proportion |
+| $`\Delta_{BS}`$, $`\Gamma`$ | Black-Scholes delta, $`e^{-qT}N(d_1)`$; gamma, its change per dollar of Acme | 0.586851; 0.018951 | — |
+| $`\mathcal{V}`$, $`\partial`$ | vega, $`\partial V/\partial\sigma`$, dollars per 1.00 of volatility; $`\partial`$ marks a slope taken with the other input frozen | 37.901158 | the correction grows in proportion |
+| $`d\sigma/dS`$, $`\Delta_{\text{smile}}`$ | the option's volatility change per dollar of Acme, set by the rule; and the hedge it gives | 0, +0.0004, −0.0004; hedges 0.586851, 0.602012, 0.571691 | the hedge rises |
+| $`g`$, $`G`$, $`H`$ | volatility as a function of $`K/S`$ (sticky moneyness) or of the option's own delta (literal sticky delta), and the equation $`H = 0`$ that pins the latter | $`G'`$ = 0.021108 | — |
+| $`h`$, $`h^{*}`$ | shares held per call; the minimum-variance choice | $`h^{*}`$ = 0.571595 from 40,000 simulated days | — |
+| $`b`$, $`\delta`$ | fitted volatility move per dollar of Acme; $`\delta`$ in front of a symbol means its change over one day | −0.000396 | the hedge rises |
+| $`N`$, $`\varphi`$ | bell-curve area to the left, and bell-curve height | $`N(0.25) = 0.598706`$, $`\varphi(0.25) = 0.386668`$ | — |
+| $`d_1`$, $`r`$, $`q`$, $`T`$ | distance to strike in standard deviations; bank rate; dividend yield; time to expiry in years | 0.25, 5%, 2%, 1 | — |
 
-Helper formulas, from the Black-Scholes cards ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)): $d_1 = [\ln(S/K) + (r - q + \tfrac12\sigma^2)T]/(\sigma\sqrt{T})$ with the bank rate $r$ = 5%, and $\mathcal{V} = S e^{-qT}\varphi(d_1)\sqrt{T}$. Both describe the call at a single volatility; the smile enters only through $d\sigma/dS$.
+Helper formulas, from the Black-Scholes cards ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)): $`d_1 = [\ln(S/K) + (r - q + \tfrac12\sigma^2)T]/(\sigma\sqrt{T})`$ with the bank rate $`r`$ = 5%, and $`\mathcal{V} = S e^{-qT}\varphi(d_1)\sqrt{T}`$. Both describe the call at a single volatility; the smile enters only through $`d\sigma/dS`$.
 
-The three rules for how the smile moves, each written as the volatility the $100 strike carries when Acme sits at $S$:
+The three rules for how the smile moves, each written as the volatility the $100 strike carries when Acme sits at $`S`$:
 
-| Rule | What stays fixed when Acme moves | Volatility at strike $K$ | $d\sigma/dS$ at $100 | Hedge |
+| Rule | What stays fixed when Acme moves | Volatility at strike $`K`$ | $`d\sigma/dS`$ at $100 | Hedge |
 | --- | --- | --- | --- | --- |
-| Sticky strike | each strike's volatility | $0.20 - \beta(K - 100)$ | 0 | 0.586851 |
-| Sticky moneyness | each ratio $K/S$'s volatility | $0.20 - 100\beta(K/S - 1)$ | +0.0004 | 0.602012 |
-| Local-volatility rule | the volatility at each share price | $0.20 - \beta(K + S - 200)$ | −0.0004 | 0.571691 |
+| Sticky strike | each strike's volatility | $`0.20 - \beta(K - 100)`$ | 0 | 0.586851 |
+| Sticky moneyness | each ratio $`K/S`$'s volatility | $`0.20 - 100\beta(K/S - 1)`$ | +0.0004 | 0.602012 |
+| Local-volatility rule | the volatility at each share price | $`0.20 - \beta(K + S - 200)`$ | −0.0004 | 0.571691 |
 
-Traders call sticky moneyness **sticky delta**: when volatility depends only on $K/S$, so does the option's Black-Scholes delta, so each delta keeps its volatility. Derman (1999) names the third rule the **sticky implied tree**.
+Traders call sticky moneyness **sticky delta**: when volatility depends only on $`K/S`$, so does the option's Black-Scholes delta, so each delta keeps its volatility. Derman (1999) names the third rule the **sticky implied tree**.
 
 Conventions verified 24 Sep 2026 against Derman (1999), where sticky delta and sticky moneyness are treated as equivalent. Skew on this card is quoted in volatility points per dollar of strike and used as a decimal in the formulas.
 
@@ -86,7 +90,7 @@ Conventions verified 24 Sep 2026 against Derman (1999), where sticky delta and s
 
 - **Small moves.** The formula is a first slope. For a move of several dollars, gamma (how delta itself changes with the share) and vanna (how delta changes with volatility) add terms the formula leaves out.
 - **The right rule.** The correction is only as good as the assumed smile motion. Choose sticky moneyness in a market that behaves like the local-volatility rule and the hedge is off by twice vega times the slope: the whole gap from 0.571691 to 0.602012.
-- **A stable relationship, for the minimum-variance delta.** $b$ is fitted from past moves. If the link between Acme and its volatility changes, the fitted hedge lags.
+- **A stable relationship, for the minimum-variance delta.** $`b`$ is fitted from past moves. If the link between Acme and its volatility changes, the fitted hedge lags.
 - **A frozen clock.** The card measures one day's moves at the same time to expiry. The day's time decay shifts every outcome by the same amount, so it changes neither variance nor hedge.
 
 ---
@@ -95,65 +99,71 @@ Conventions verified 24 Sep 2026 against Derman (1999), where sticky delta and s
 
 ### Step 0: the price depends on the share twice
 
-The dealer marks the call at Black-Scholes with the smile's volatility for its strike. So the mark is $V(S, \sigma(S))$: the share price enters once directly and once through the volatility the smile assigns. A hedge must answer to both.
+The dealer marks the call at Black-Scholes with the smile's volatility for its strike. So the mark is $`V(S, \sigma(S))`$: the share price enters once directly and once through the volatility the smile assigns. A hedge must answer to both.
 
 ### Step 1: the chain rule adds the two routes
 
-Nudge Acme by a small $\delta S$. The direct route moves the price by $\Delta_{BS}\,\delta S$. The volatility moves by $(d\sigma/dS)\,\delta S$, and each unit of volatility is worth $\mathcal{V}$, so that route adds $\mathcal{V}\,(d\sigma/dS)\,\delta S$. Divide by $\delta S$:
+Nudge Acme by a small $`\delta S`$. The direct route moves the price by $`\Delta_{BS}\,\delta S`$. The volatility moves by $`(d\sigma/dS)\,\delta S`$, and each unit of volatility is worth $`\mathcal{V}`$, so that route adds $`\mathcal{V}\,(d\sigma/dS)\,\delta S`$. Divide by $`\delta S`$:
 
-$$\frac{dV}{dS} = \frac{\partial V}{\partial S} + \frac{\partial V}{\partial \sigma}\,\frac{d\sigma}{dS} = \Delta_{BS} + \mathcal{V}\,\frac{d\sigma}{dS}.$$
+```math
+\frac{dV}{dS} = \frac{\partial V}{\partial S} + \frac{\partial V}{\partial \sigma}\,\frac{d\sigma}{dS} = \Delta_{BS} + \mathcal{V}\,\frac{d\sigma}{dS}.
+```
 
-This is the chain rule for a function of two inputs ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The curly $\partial$ means "with the other input frozen". Nothing here is special to options; everything that follows is about $d\sigma/dS$.
+This is the chain rule for a function of two inputs ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The curly $`\partial`$ means "with the other input frozen". Nothing here is special to options; everything that follows is about $`d\sigma/dS`$.
 
 ### Step 2: today's skew gives the size, the rule gives the sign
 
-Today's smile is a curve in strike, with slope $\partial\sigma/\partial K = -\beta$. The hedge needs a slope in the share price. The two are different questions, and each rule links them differently.
+Today's smile is a curve in strike, with slope $`\partial\sigma/\partial K = -\beta`$. The hedge needs a slope in the share price. The two are different questions, and each rule links them differently.
 
-- **Sticky strike.** The volatility at $K = 100$ does not depend on $S$ at all, so $d\sigma/dS = 0$ and the hedge is the Black-Scholes delta, 0.586851.
-- **Sticky moneyness.** Volatility is a fixed function $g$ of $x = K/S$ alone. Raising $S$ lowers $x$, and the chain rule gives $d\sigma/dS = g'(x)\cdot(-K/S^2) = -(K/S)\,\partial\sigma/\partial K$. At the money ($K = S$) that is $+\beta$. A falling skew makes the call's volatility **rise** as Acme rises, because the $100 strike becomes a relatively lower strike. The hedge grows to 0.602012.
-- **Local-volatility rule.** A local-volatility model gives the share its own volatility at each price level. Derman's rule of thumb: an option's implied volatility is roughly the average local volatility between today's price and the strike. A skew falling at $\beta$ per dollar of strike needs local volatility falling at $2\beta$ per dollar of share price, since averaging over the stretch from $S$ to $K$ halves the slope. Averaging $0.20 - 2\beta(x - 100)$ from $x = S$ to $x = K$ gives $0.20 - \beta(K + S - 200)$, so $d\sigma/dS = -\beta$. The hedge shrinks to 0.571691.
+- **Sticky strike.** The volatility at $`K = 100`$ does not depend on $`S`$ at all, so $`d\sigma/dS = 0`$ and the hedge is the Black-Scholes delta, 0.586851.
+- **Sticky moneyness.** Volatility is a fixed function $`g`$ of $`x = K/S`$ alone. Raising $`S`$ lowers $`x`$, and the chain rule gives $`d\sigma/dS = g'(x)\cdot(-K/S^2) = -(K/S)\,\partial\sigma/\partial K`$. At the money ($`K = S`$) that is $`+\beta`$. A falling skew makes the call's volatility **rise** as Acme rises, because the $100 strike becomes a relatively lower strike. The hedge grows to 0.602012.
+- **Local-volatility rule.** A local-volatility model gives the share its own volatility at each price level. Derman's rule of thumb: an option's implied volatility is roughly the average local volatility between today's price and the strike. A skew falling at $`\beta`$ per dollar of strike needs local volatility falling at $`2\beta`$ per dollar of share price, since averaging over the stretch from $`S`$ to $`K`$ halves the slope. Averaging $`0.20 - 2\beta(x - 100)`$ from $`x = S`$ to $`x = K`$ gives $`0.20 - \beta(K + S - 200)`$, so $`d\sigma/dS = -\beta`$. The hedge shrinks to 0.571691.
 
 Same skew, three signs. The skew cannot pick between them; only the market's behaviour can.
 
 ### Step 3: sticky delta taken literally needs an implicit equation
 
-Taking "sticky delta" literally, the volatility is a fixed function $G$ of the option's own Black-Scholes delta. But that delta depends on the volatility. The volatility is defined by an equation that contains itself, $\sigma = G(\Delta_{BS}(S, \sigma))$. Differentiating both sides and solving for $d\sigma/dS$ gives
+Taking "sticky delta" literally, the volatility is a fixed function $`G`$ of the option's own Black-Scholes delta. But that delta depends on the volatility. The volatility is defined by an equation that contains itself, $`\sigma = G(\Delta_{BS}(S, \sigma))`$. Differentiating both sides and solving for $`d\sigma/dS`$ gives
 
-$$\frac{d\sigma}{dS} = \frac{G'\,\Gamma}{1 - G'\,\text{vanna}},$$
+```math
+\frac{d\sigma}{dS} = \frac{G'\,\Gamma}{1 - G'\,\text{vanna}},
+```
 
-with $\Gamma$ = 0.018951 the call's gamma, vanna = −0.094753 ([Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md)), and $G'$ = 0.021108 the skew's slope per unit of delta. The denominator is 1.002000, so the hedge is 0.601981, against 0.602012 for sticky moneyness. The two readings of "sticky delta" agree to four decimals here.
+with $`\Gamma`$ = 0.018951 the call's gamma, vanna = −0.094753 ([Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md)), and $`G'`$ = 0.021108 the skew's slope per unit of delta. The denominator is 1.002000, so the hedge is 0.601981, against 0.602012 for sticky moneyness. The two readings of "sticky delta" agree to four decimals here.
 
 <details>
 <summary>Detailed proof: the implicit slope</summary>
 
-Write $H(S, \sigma) = \sigma - G(\Delta_{BS}(S, \sigma))$. The marked volatility makes $H = 0$. Along the curve where $H$ stays zero, $H_S + H_\sigma\,(d\sigma/dS) = 0$. Here $H_S = -G'\,\partial\Delta_{BS}/\partial S = -G'\Gamma$ and $H_\sigma = 1 - G'\,\partial\Delta_{BS}/\partial\sigma = 1 - G'\,\text{vanna}$. Solving gives the displayed slope.
+Write $`H(S, \sigma) = \sigma - G(\Delta_{BS}(S, \sigma))`$. The marked volatility makes $`H = 0`$. Along the curve where $`H`$ stays zero, $`H_S + H_\sigma\,(d\sigma/dS) = 0`$. Here $`H_S = -G'\,\partial\Delta_{BS}/\partial S = -G'\Gamma`$ and $`H_\sigma = 1 - G'\,\partial\Delta_{BS}/\partial\sigma = 1 - G'\,\text{vanna}`$. Solving gives the displayed slope.
 
-It needs $1 - G'\,\text{vanna} \neq 0$; if that fails, the implicit-function step fails and the rule need not define a single hedge. Here $\lvert G'\,\text{vanna}\rvert \approx 0.002 < 1$, so repeated substitution shrinks each error about 500-fold: a solution near today's volatility exists and is unique.
+It needs $`1 - G'\,\text{vanna} \neq 0`$; if that fails, the implicit-function step fails and the rule need not define a single hedge. Here $`\lvert G'\,\text{vanna}\rvert \approx 0.002 < 1`$, so repeated substitution shrinks each error about 500-fold: a solution near today's volatility exists and is unique.
 
-The slope $G'$ comes from today's skew: $\partial\Delta_{BS}/\partial K = -e^{-qT}\varphi(d_1)/(K\sigma\sqrt{T})$, so $G' = -\beta\,/\,(\partial\Delta_{BS}/\partial K)$ = 0.021108. The check solves the equation by repeated substitution at $S \pm 0.01$ and reprices; the bumped slope matches the formula to six decimals.
+The slope $`G'`$ comes from today's skew: $`\partial\Delta_{BS}/\partial K = -e^{-qT}\varphi(d_1)/(K\sigma\sqrt{T})`$, so $`G' = -\beta\,/\,(\partial\Delta_{BS}/\partial K)`$ = 0.021108. The check solves the equation by repeated substitution at $`S \pm 0.01`$ and reprices; the bumped slope matches the formula to six decimals.
 
 </details>
 
 ### Step 4: the minimum-variance delta asks the market instead
 
-A dealer short one call and long $h$ shares gains $h\,\delta S - \delta V$ over a day. That gain has the same spread as $\delta V - h\,\delta S$, whose variance is a parabola in $h$:
+A dealer short one call and long $`h`$ shares gains $`h\,\delta S - \delta V`$ over a day. That gain has the same spread as $`\delta V - h\,\delta S`$, whose variance is a parabola in $`h`$:
 
-$$\operatorname{Var}(\delta V - h\,\delta S) = \operatorname{Var}(\delta V) - 2h\operatorname{Cov}(\delta V, \delta S) + h^2\operatorname{Var}(\delta S).$$
+```math
+\mathrm{Var}(\delta V - h\,\delta S) = \mathrm{Var}(\delta V) - 2h\mathrm{Cov}(\delta V, \delta S) + h^2\mathrm{Var}(\delta S).
+```
 
-The lowest point is at $h^{*} = \operatorname{Cov}(\delta V, \delta S)/\operatorname{Var}(\delta S)$, the slope of a least-squares line of $\delta V$ on $\delta S$. For small moves $\delta V \approx \Delta_{BS}\,\delta S + \mathcal{V}\,\delta\sigma$. Put that in the covariance and $h^{*} \approx \Delta_{BS} + \mathcal{V}\,b$, where $b$ is the least-squares slope of volatility moves on share moves.
+The lowest point is at $`h^{*} = \mathrm{Cov}(\delta V, \delta S)/\mathrm{Var}(\delta S)`$, the slope of a least-squares line of $`\delta V`$ on $`\delta S`$. For small moves $`\delta V \approx \Delta_{BS}\,\delta S + \mathcal{V}\,\delta\sigma`$. Put that in the covariance and $`h^{*} \approx \Delta_{BS} + \mathcal{V}\,b`$, where $`b`$ is the least-squares slope of volatility moves on share moves.
 
-So the minimum-variance delta is the smile-adjusted delta with $d\sigma/dS$ replaced by what volatility **tends** to do per dollar of share. Hull and White (2017) state it this way, citing earlier studies that set $b$ equal to the skew's slope, as the local-volatility model suggests. With $b = -\beta$ the minimum-variance delta is 0.571691. That is the "from the skew slope" answer: 0.015160 shares below the textbook 0.586851.
+So the minimum-variance delta is the smile-adjusted delta with $`d\sigma/dS`$ replaced by what volatility **tends** to do per dollar of share. Hull and White (2017) state it this way, citing earlier studies that set $`b`$ equal to the skew's slope, as the local-volatility model suggests. With $`b = -\beta`$ the minimum-variance delta is 0.571691. That is the "from the skew slope" answer: 0.015160 shares below the textbook 0.586851.
 
 <details>
 <summary>Detailed proof: the minimum and what it leaves behind</summary>
 
-Complete the square: $\operatorname{Var}(\delta V - h\,\delta S) = \operatorname{Var}(\delta V) - c^2/v + v\,(h - c/v)^2$, where $c = \operatorname{Cov}(\delta V, \delta S)$ and $v = \operatorname{Var}(\delta S) > 0$. The last term is zero only at $h = c/v$, so the minimum is unique.
+Complete the square: $`\mathrm{Var}(\delta V - h\,\delta S) = \mathrm{Var}(\delta V) - c^2/v + v\,(h - c/v)^2`$, where $`c = \mathrm{Cov}(\delta V, \delta S)`$ and $`v = \mathrm{Var}(\delta S) > 0`$. The last term is zero only at $`h = c/v`$, so the minimum is unique.
 
-The saving over any other hedge $h$ is $v\,(h - h^{*})^2$. At the Black-Scholes hedge that saving is $v\,(\mathcal{V}b)^2$, a spread of $\mathcal{V}\,\lvert b\rvert\,\sqrt{v}$. In the simulation: vega 37.901158 × 0.0004 × a daily spot spread of $1.258324 is $190.77 per 10,000 calls, against $191.97 measured by full repricing. If $v = 0$ the share never moves, and every $h$ leaves the same variance.
+The saving over any other hedge $`h`$ is $`v\,(h - h^{*})^2`$. At the Black-Scholes hedge that saving is $`v\,(\mathcal{V}b)^2`$, a spread of $`\mathcal{V}\,\lvert b\rvert\,\sqrt{v}`$. In the simulation: vega 37.901158 × 0.0004 × a daily spot spread of $1.258324 is $190.77 per 10,000 calls, against $191.97 measured by full repricing. If $`v = 0`$ the share never moves, and every $`h`$ leaves the same variance.
 
 </details>
 
-The simulation behind those numbers draws 40,000 days in which Acme's move has a spread of $1.258324 and the $100-strike volatility moves by $-0.0004$ per dollar plus an independent wobble of 0.05 points. That gives a spot-volatility correlation of −0.703965. Every day is repriced in full, and a least-squares line through the outcomes gives $h^{*}$ = 0.571595, next to $\Delta_{BS} + \mathcal{V}\hat{b}$ = 0.571844 with the fitted slope.
+The simulation behind those numbers draws 40,000 days in which Acme's move has a spread of $1.258324 and the $100-strike volatility moves by $`-0.0004`$ per dollar plus an independent wobble of 0.05 points. That gives a spot-volatility correlation of −0.703965. Every day is repriced in full, and a least-squares line through the outcomes gives $`h^{*}`$ = 0.571595, next to $`\Delta_{BS} + \mathcal{V}\hat{b}`$ = 0.571844 with the fitted slope.
 
 The hedge ratio also depends on how the full surface moves across expiries, not just this one-year strike. For a smile quoted in delta, as in currency markets, the same correction reappears with its own conventions, on [Hedging with the smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md).
 
@@ -161,20 +171,20 @@ The hedge ratio also depends on how the full surface moves across expiries, not 
 
 ## Worked numbers, by hand
 
-Acme: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$; skew slope $\beta = 0.0004$ per dollar of strike.
+Acme: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$; skew slope $`\beta = 0.0004`$ per dollar of strike.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$ | $(0 + 0.05 - 0.02 + 0.02)/0.20$ | 0.250000 |
-| $N(d_1)$ | bell-curve area | 0.598706 |
-| $\Delta_{BS}$ | $e^{-0.02} \times 0.598706$ | 0.586851 |
-| $\varphi(d_1)$ | bell-curve height at 0.25 | 0.386668 |
-| $\mathcal{V}$ | $100 \times e^{-0.02} \times 0.386668 \times 1$ | 37.901158 |
-| vega times skew | $37.901158 \times 0.0004$ | 0.015160 |
-| sticky strike | $0.586851 + 0$ | **0.586851** |
-| sticky moneyness | $0.586851 + 0.015160$ | **0.602012** |
-| local-volatility rule, and minimum variance with $b = -\beta$ | $0.586851 - 0.015160$ | **0.571691** |
-| gap for 10,000 calls | $10{,}000 \times 0.015160$ | 151.60 shares |
+| $`d_1`$ | $`(0 + 0.05 - 0.02 + 0.02)/0.20`$ | 0.250000 |
+| $`N(d_1)`$ | bell-curve area | 0.598706 |
+| $`\Delta_{BS}`$ | $`e^{-0.02} \times 0.598706`$ | 0.586851 |
+| $`\varphi(d_1)`$ | bell-curve height at 0.25 | 0.386668 |
+| $`\mathcal{V}`$ | $`100 \times e^{-0.02} \times 0.386668 \times 1`$ | 37.901158 |
+| vega times skew | $`37.901158 \times 0.0004`$ | 0.015160 |
+| sticky strike | $`0.586851 + 0`$ | **0.586851** |
+| sticky moneyness | $`0.586851 + 0.015160`$ | **0.602012** |
+| local-volatility rule, and minimum variance with $`b = -\beta`$ | $`0.586851 - 0.015160`$ | **0.571691** |
+| gap for 10,000 calls | $`10{,}000 \times 0.015160`$ | 151.60 shares |
 
 A dealer short 10,000 of these calls who hedges at the textbook delta, while Acme's volatility behaves like the local-volatility rule, holds 151.60 surplus shares: each day they turn the hedge into a small bet that Acme will rise.
 
@@ -594,12 +604,12 @@ The two outputs match line for line.
 
 Lean proves the chain-rule formula, the three rules' slopes and the minimum-variance hedge, for any inputs that meet the conditions below.
 
-- Suppose the mark $V(S, \sigma)$ has a slope in both inputs together, and the call's volatility has a slope $d\sigma/dS$. Then $\Delta_{\text{smile}} = \Delta_{BS} + \mathcal{V}\,d\sigma/dS$.
-- Take any share price $S \neq 0$, the strike at the money, $K = S$, and any skew $\beta$. Then $d\sigma/dS$ is $0$ under sticky strike, $+\beta$ under sticky moneyness and $-\beta$ under the local-volatility rule.
-- Take a day's moves $\delta V$ and $\delta S$ with finite variances, and $\operatorname{Var}(\delta S) > 0$. Then each hedge $h$ leaves $\operatorname{Var}(\delta S)\,(h - h^{*})^2$ more variance than $h^{*}$ does.
-- Under the same conditions, $h^{*}$ is the only hedge that leaves the least variance.
+- Suppose the mark $`V(S, \sigma)`$ has a slope in both inputs together, and the call's volatility has a slope $`d\sigma/dS`$. Then $`\Delta_{\text{smile}} = \Delta_{BS} + \mathcal{V}\,d\sigma/dS`$.
+- Take any share price $`S \neq 0`$, the strike at the money, $`K = S`$, and any skew $`\beta`$. Then $`d\sigma/dS`$ is $`0`$ under sticky strike, $`+\beta`$ under sticky moneyness and $`-\beta`$ under the local-volatility rule.
+- Take a day's moves $`\delta V`$ and $`\delta S`$ with finite variances, and $`\mathrm{Var}(\delta S) > 0`$. Then each hedge $`h`$ leaves $`\mathrm{Var}(\delta S)\,(h - h^{*})^2`$ more variance than $`h^{*}`$ does.
+- Under the same conditions, $`h^{*}`$ is the only hedge that leaves the least variance.
 
-The Black-Scholes formulas, Step 3's implicit slope, Step 4's link to $b$ and every number are left to the Python and Rust checks.
+The Black-Scholes formulas, Step 3's implicit slope, Step 4's link to $`b`$ and every number are left to the Python and Rust checks.
 
 ```lean
 -- Smile-adjusted delta: the hedge ratio is the Black-Scholes delta plus vega times the option's volatility slope, the three smile rules give that slope as 0, +β and -β, and the minimum-variance hedge is Cov/Var.
@@ -746,7 +756,7 @@ One line: the daily spread in dollars. It bottoms out near 0.57 shares, at $285.
 >
 > - **Reading the at-the-money quote as the option's volatility.** Under sticky strike the at-the-money volatility moves as Acme moves, because "at the money" becomes a different strike. The $100 option's volatility stays put, and so does its hedge.
 > - **Units.** Vega per 1.00 of volatility times a slope quoted in points gives −0.929195 shares per call. Keep both in decimals, or both in points.
-> - **Treating the minimum-variance delta as model-free.** It is a regression on past days. If the spot-volatility link weakens, the fitted $b$ is stale and the hedge carries a bet.
+> - **Treating the minimum-variance delta as model-free.** It is a regression on past days. If the spot-volatility link weakens, the fitted $`b`$ is stale and the hedge carries a bet.
 > - **Opposite shifts for calls and puts.** Both have the same vega, so both shift by the same 0.015160 shares in the same direction.
 
 ---
@@ -756,7 +766,7 @@ One line: the daily spread in dollars. It bottoms out near 0.57 shares, at $285.
 - **Equity index desks.** Index volatility tends to rise when the index falls. Hull and White (2017) fit a model for the minimum-variance delta to S&P 500 options; out of sample it hedged better than the Black-Scholes delta, and better than stochastic- or local-volatility models.
 - **Risk systems.** Pricing libraries ask which rule to use when spot is bumped. The choice changes every reported delta on the book, as the 151.60-share gap shows.
 - **Currency options.** Currency smiles are quoted by delta, so sticky delta is the natural rule and the literal implicit equation of Step 3 is in daily use: [Hedging with the smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md).
-- **Reading the smile first.** The slope $\beta$ comes from the skew on [The volatility smile and skew](01-volatility-smile-and-skew.md), ideally from a fitted curve on [The SVI smile](04-svi-smile-fit.md). A rule that moves the whole surface must keep it free of arbitrage across strikes and dates: [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md), and across expiries [Term structure and forward volatility](02-term-structure-and-forward-volatility.md).
+- **Reading the smile first.** The slope $`\beta`$ comes from the skew on [The volatility smile and skew](01-volatility-smile-and-skew.md), ideally from a fitted curve on [The SVI smile](04-svi-smile-fit.md). A rule that moves the whole surface must keep it free of arbitrage across strikes and dates: [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md), and across expiries [Term structure and forward volatility](02-term-structure-and-forward-volatility.md).
 
 > **Say it back**
 > A call's mark depends on the share price directly and through the volatility the smile assigns it. The chain rule adds the two: Black-Scholes delta plus vega times the option's volatility change per dollar of share. Today's skew sets the size of that change, but the rule for how the smile moves sets its sign: zero under sticky strike, up under sticky moneyness, down under the local-volatility rule. The minimum-variance delta measures the change instead of assuming it. For the Acme call the hedge is 0.587, 0.602 or 0.572 shares.
@@ -765,7 +775,7 @@ One line: the daily spread in dollars. It bottoms out near 0.57 shares, at $285.
 
 ## What this builds on
 
-- [The SVI smile](04-svi-smile-fit.md): a smooth smile across strikes, whose slope at any strike is the $\beta$ this card needs.
+- [The SVI smile](04-svi-smile-fit.md): a smooth smile across strikes, whose slope at any strike is the $`\beta`$ this card needs.
 - [Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md): how delta changes with volatility; it sets the denominator of the literal sticky-delta rule and the size of the terms the first-order formula drops.
 
 ## Where this goes next
@@ -784,4 +794,4 @@ Verified 24 Sep 2026: every link below resolves to the publisher's or author's p
 - Derman, Emanuel. "Regimes of Volatility." *Risk*, April 1999. [Author's page](https://emanuelderman.com/regimes-of-volatility-risk-april-1999/). The sticky-strike, sticky-delta and sticky-implied-tree rules, their formulas, and which way each moves delta.
 - Hull, John, and Alan White. "Optimal Delta Hedging for Options." *Journal of Banking & Finance* 82 (2017): 180–190. [doi:10.1016/j.jbankfin.2017.05.006](https://doi.org/10.1016/j.jbankfin.2017.05.006). The minimum-variance delta as Black-Scholes delta plus vega times the expected volatility move, fitted to index options.
 - Gatheral, Jim. *The Volatility Surface: A Practitioner's Guide*. Wiley, 2006. [Publisher page](https://www.wiley.com/en-us/The+Volatility+Surface%3A+A+Practitioner%27s+Guide-p-9780471792512). The practitioner's account of implied, local and stochastic volatility, and of the smile they produce.
-- Bergomi, Lorenzo. *Stochastic Volatility Modeling*. Chapman & Hall, 2016. [Publisher page](https://www.routledge.com/Stochastic-Volatility-Modeling/Bergomi/p/book/9781482244069). Smile dynamics: how implied volatility moves with the underlying, the link that sets $b$.
+- Bergomi, Lorenzo. *Stochastic Volatility Modeling*. Chapman & Hall, 2016. [Publisher page](https://www.routledge.com/Stochastic-Volatility-Modeling/Bergomi/p/book/9781482244069). Smile dynamics: how implied volatility moves with the underlying, the link that sets $`b`$.

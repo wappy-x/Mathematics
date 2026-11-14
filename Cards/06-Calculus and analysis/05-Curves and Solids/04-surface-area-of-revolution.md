@@ -28,30 +28,34 @@ Drawn to scale, 1 cm = 25 units. Dotted: the axis. Dashed arc: the ball above th
 
 ## The formula
 
-Let $x$ be the height above the bowl's bottom, in cm, and $f(x)$ the profile's radius there. The slope $f'(x)$ is the rate of radius per unit of height, as on [Arc length](02-arc-length.md). Spin the profile from height $a$ to height $b$ once round the axis. The area swept is
+Let $`x`$ be the height above the bowl's bottom, in cm, and $`f(x)`$ the profile's radius there. The slope $`f'(x)`$ is the rate of radius per unit of height, as on [Arc length](02-arc-length.md). Spin the profile from height $`a`$ to height $`b`$ once round the axis. The area swept is
 
-$$S = \int_a^b 2\pi f(x)\sqrt{1 + f'(x)^2}\,dx$$
+```math
+S = \int_a^b 2\pi f(x)\sqrt{1 + f'(x)^2}\,dx
+```
 
 **Read it aloud:** add up, along the axis, each height's circumference times the wall's slant length there.
 
-The factor $\sqrt{1 + f'(x)^2}\,dx$ is the arc-length element: the length of wall over an axial step $dx$. For the bowl, $f(x) = \sqrt{8x - x^2}$, the circle of radius 4 cm with its lowest point at height 0.
+The factor $`\sqrt{1 + f'(x)^2}\,dx`$ is the arc-length element: the length of wall over an axial step $`dx`$. For the bowl, $`f(x) = \sqrt{8x - x^2}`$, the circle of radius 4 cm with its lowest point at height 0.
 
-For a ball of radius $R$ cut to a height $h$, it comes out as
+For a ball of radius $`R`$ cut to a height $`h`$, it comes out as
 
-$$S = 2\pi R h, \qquad \text{and for the whole ball, } h = 2R: \quad S = 4\pi R^2.$$
+```math
+S = 2\pi R h, \qquad \text{and for the whole ball, } h = 2R: \quad S = 4\pi R^2.
+```
 
 **Read it aloud:** a slice of a ball has the area of a straight tube of the ball's radius and the slice's height.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $dx$ | height above the bowl's bottom, and a small step in it | 0 to 6 cm | — |
-| $f$ | the radius of the profile at height $x$ | $\sqrt{8x - x^2}$ cm; 3.872983 cm at $x = 3$ | wider rings, more area |
-| $f'$ | slope: cm of radius per cm of height | 0.258199 at $x = 3$ | a longer slant, more area |
-| $a$, $b$ | heights where the spun piece starts and stops | 0 and 6 cm | a taller piece, more area |
-| $S$ | area of the spun surface, cm^2 | 150.796447 cm^2 | more silver |
-| $R$, $h$ | the ball's radius, and the height of the slice | 4 cm, 6 cm | area grows in step with each |
-| $r_1$, $r_2$, $\ell$, $L$ | a band's edge radii and slant width; $L$ a full cone's slant | 2.6458, 3.4641, 1.2922 cm | a bigger band |
-| $n$, $i$, $c_i$, $w$, $K$ | band count, one band, a point in it, widest band, steepest slope | 6 to 6000 bands | a closer total |
+| $`x`$, $`dx`$ | height above the bowl's bottom, and a small step in it | 0 to 6 cm | — |
+| $`f`$ | the radius of the profile at height $`x`$ | $`\sqrt{8x - x^2}`$ cm; 3.872983 cm at $`x = 3`$ | wider rings, more area |
+| $`f'`$ | slope: cm of radius per cm of height | 0.258199 at $`x = 3`$ | a longer slant, more area |
+| $`a`$, $`b`$ | heights where the spun piece starts and stops | 0 and 6 cm | a taller piece, more area |
+| $`S`$ | area of the spun surface, cm^2 | 150.796447 cm^2 | more silver |
+| $`R`$, $`h`$ | the ball's radius, and the height of the slice | 4 cm, 6 cm | area grows in step with each |
+| $`r_1`$, $`r_2`$, $`\ell`$, $`L`$ | a band's edge radii and slant width; $`L`$ a full cone's slant | 2.6458, 3.4641, 1.2922 cm | a bigger band |
+| $`n`$, $`i`$, $`c_i`$, $`w`$, $`K`$ | band count, one band, a point in it, widest band, steepest slope | 6 to 6000 bands | a closer total |
 
 ### When it holds
 
@@ -70,57 +74,65 @@ A thin ring of the bowl is nearly a strip of a cone. Its width is the wall it sp
 
 ### Step 1: one straight segment, spun, sweeps a band of area pi (r1 + r2) times slant
 
-Join two points of the profile with a straight chord. Spun, it sweeps a **frustum**: a cone with its tip cut off, a lampshade. With edge radii $r_1$ and $r_2$ and slant width $\ell$, its area is
+Join two points of the profile with a straight chord. Spun, it sweeps a **frustum**: a cone with its tip cut off, a lampshade. With edge radii $`r_1`$ and $`r_2`$ and slant width $`\ell`$, its area is
 
-$$\pi\,(r_1 + r_2)\,\ell,$$
+```math
+\pi\,(r_1 + r_2)\,\ell,
+```
 
 the average edge circumference times the slant.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-A cone of base radius $r_2$ and slant $L$ unrolls to a sector of radius $L$ and arc $2\pi r_2$, area $\pi r_2 L$. Extend the frustum to such a cone; the removed tip has slant $L - \ell$. Similar triangles give $r_1 / (L - \ell) = r_2 / L$ (taking $r_2 > r_1$), so $r_2 (L - \ell) = r_1 L$. The frustum's area is $\pi r_2 L - \pi r_1 (L - \ell) = \pi (r_2 - r_1) L + \pi r_1 \ell$, and $(r_2 - r_1) L = r_2 \ell$ from the similar triangles, which gives $\pi (r_1 + r_2)\ell$. Equal radii give a cylinder, $2\pi r_1 \ell$: the same formula.
+A cone of base radius $`r_2`$ and slant $`L`$ unrolls to a sector of radius $`L`$ and arc $`2\pi r_2`$, area $`\pi r_2 L`$. Extend the frustum to such a cone; the removed tip has slant $`L - \ell`$. Similar triangles give $`r_1 / (L - \ell) = r_2 / L`$ (taking $`r_2 > r_1`$), so $`r_2 (L - \ell) = r_1 L`$. The frustum's area is $`\pi r_2 L - \pi r_1 (L - \ell) = \pi (r_2 - r_1) L + \pi r_1 \ell`$, and $`(r_2 - r_1) L = r_2 \ell`$ from the similar triangles, which gives $`\pi (r_1 + r_2)\ell`$. Equal radii give a cylinder, $`2\pi r_1 \ell`$: the same formula.
 
 </details>
 
 ### Step 2: the slant is the height step times the arc-length factor
 
-The chord rises $\Delta x$ along the axis while the radius changes by $r_2 - r_1$. Pythagoras gives
+The chord rises $`\Delta x`$ along the axis while the radius changes by $`r_2 - r_1`$. Pythagoras gives
 
-$$\ell = \sqrt{\Delta x^2 + (r_2 - r_1)^2} = \Delta x\,\sqrt{1 + \left(\frac{r_2 - r_1}{\Delta x}\right)^2}.$$
+```math
+\ell = \sqrt{\Delta x^2 + (r_2 - r_1)^2} = \Delta x\,\sqrt{1 + \left(\frac{r_2 - r_1}{\Delta x}\right)^2}.
+```
 
-The ratio inside is the chord's slope. The bowl's band from $x = 1$ to $x = 2$ has radii 2.6458 and 3.4641 cm and slant 1.2922 cm, not 1 cm; its area is 24.8027 cm^2. That centimetre of bowl truly has 25.1327 cm^2 (Step 4): the chord cuts inside the curve.
+The ratio inside is the chord's slope. The bowl's band from $`x = 1`$ to $`x = 2`$ has radii 2.6458 and 3.4641 cm and slant 1.2922 cm, not 1 cm; its area is 24.8027 cm^2. That centimetre of bowl truly has 25.1327 cm^2 (Step 4): the chord cuts inside the curve.
 
 ### Step 3: many thin bands, and the limit is the integral
 
 Cut the profile into equal height steps and add the bands. Six bands fall short of 150.796447 cm^2 by 2.814318; 6000 bands by 0.000006.
 
-As the steps thin, the chord's slope equals the profile's slope $f'(x)$ at some height inside the step (the mean value theorem: a point where the curve's slope equals the chord's), and the average radius approaches $f(x)$ at that height.
+As the steps thin, the chord's slope equals the profile's slope $`f'(x)`$ at some height inside the step (the mean value theorem: a point where the curve's slope equals the chord's), and the average radius approaches $`f(x)`$ at that height.
 
-So each band tends to $2\pi f(x)\sqrt{1 + f'(x)^2}\,\Delta x$, and the sum of those is a Riemann sum whose limit is the integral. A Riemann sum is a total of function values times step widths: [The integral](../04-Integrals/01-riemann-integral.md).
+So each band tends to $`2\pi f(x)\sqrt{1 + f'(x)^2}\,\Delta x`$, and the sum of those is a Riemann sum whose limit is the integral. A Riemann sum is a total of function values times step widths: [The integral](../04-Integrals/01-riemann-integral.md).
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $f \ge 0$ with $f'$ continuous on $[a, b]$, split into steps of width at most $w$. On step $i$ the mean value theorem gives $c_i$ with chord slope $f'(c_i)$, so the band's slant is $\sqrt{1 + f'(c_i)^2}\,\Delta x_i$. On a closed interval, $|f'| \le K$ for some $K$, and $f$ is uniformly continuous: for every $\varepsilon > 0$ some $\delta > 0$ makes $w < \delta$ put both edge radii within $\varepsilon$ of $f(c_i)$. The band sum then differs from $\sum_i 2\pi f(c_i)\sqrt{1 + f'(c_i)^2}\,\Delta x_i$ by at most $2\pi\varepsilon\sqrt{1 + K^2}\,(b - a)$, and that sum is a Riemann sum of a continuous function, tending to the integral as $w \to 0$.
+Let $`f \ge 0`$ with $`f'`$ continuous on $`[a, b]`$, split into steps of width at most $`w`$. On step $`i`$ the mean value theorem gives $`c_i`$ with chord slope $`f'(c_i)`$, so the band's slant is $`\sqrt{1 + f'(c_i)^2}\,\Delta x_i`$. On a closed interval, $`|f'| \le K`$ for some $`K`$, and $`f`$ is uniformly continuous: for every $`\varepsilon > 0`$ some $`\delta > 0`$ makes $`w < \delta`$ put both edge radii within $`\varepsilon`$ of $`f(c_i)`$. The band sum then differs from $`\sum_i 2\pi f(c_i)\sqrt{1 + f'(c_i)^2}\,\Delta x_i`$ by at most $`2\pi\varepsilon\sqrt{1 + K^2}\,(b - a)`$, and that sum is a Riemann sum of a continuous function, tending to the integral as $`w \to 0`$.
 
 </details>
 
 ### Step 4: on a ball, radius times slant factor is the ball's radius
 
-For the bowl, $f(x) = \sqrt{8x - x^2}$ and the slope is $f'(x) = (4 - x)/f(x)$. Multiply the radius by the slant factor:
+For the bowl, $`f(x) = \sqrt{8x - x^2}`$ and the slope is $`f'(x) = (4 - x)/f(x)`$. Multiply the radius by the slant factor:
 
-$$f\sqrt{1 + f'^2} = \sqrt{f^2 + (4 - x)^2} = \sqrt{8x - x^2 + 16 - 8x + x^2} = 4.$$
+```math
+f\sqrt{1 + f'^2} = \sqrt{f^2 + (4 - x)^2} = \sqrt{8x - x^2 + 16 - 8x + x^2} = 4.
+```
 
 The product is 4, the ball's radius, at every height. Low down the ring is small but the wall nearly flat, so a height step spans a long stretch of wall; higher up the ring is wide and the wall nearly upright. The two cancel exactly, so
 
-$$S = \int_0^6 2\pi \cdot 4\,dx = 2\pi \cdot 4 \cdot 6 = 48\pi = 150.796447 \text{ cm}^2.$$
+```math
+S = \int_0^6 2\pi \cdot 4\,dx = 2\pi \cdot 4 \cdot 6 = 48\pi = 150.796447 \text{ cm}^2.
+```
 
-For any radius $R$ the product is $R$. A slice of height $h$ has area $2\pi R h$; the whole ball, $h = 2R$, has $4\pi R^2$, 201.061930 cm^2 here. This is Archimedes' result: a ball has the area of the tube that fits round it, ends excluded.
+For any radius $`R`$ the product is $`R`$. A slice of height $`h`$ has area $`2\pi R h`$; the whole ball, $`h = 2R`$, has $`4\pi R^2`$, 201.061930 cm^2 here. This is Archimedes' result: a ball has the area of the tube that fits round it, ends excluded.
 
 ### Step 5: the steep bottom is a limit, played with numbers
 
-At $x = 0$ the slope is infinite, so the hypothesis fails at that end. Start a little way up and slide the start down. Starting 0.01 cm up loses 0.251327 cm^2. To lose less than 0.01 cm^2, start below 0.000398 cm. Any tolerance can be met this way, so the limit is 150.796447 cm^2.
+At $`x = 0`$ the slope is infinite, so the hypothesis fails at that end. Start a little way up and slide the start down. Starting 0.01 cm up loses 0.251327 cm^2. To lose less than 0.01 cm^2, start below 0.000398 cm. Any tolerance can be met this way, so the limit is 150.796447 cm^2.
 
 A second road measures tiny patches of the surface, located by height and angle round the axis: [Surface integrals](../09-Vector%20Calculus/05-surface-integrals-and-flux.md).
 
@@ -130,14 +142,14 @@ A second road measures tiny patches of the surface, located by height and angle 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| radius at $x = 3$ | $\sqrt{8 \cdot 3 - 3^2} = \sqrt{15}$ | 3.872983 cm |
-| slope at $x = 3$ | $(4 - 3) / 3.872983$ | 0.258199 |
-| slant factor | $\sqrt{1 + 0.258199^2} = \sqrt{16/15}$ | 1.032796 |
-| radius times slant factor | $3.872983 \times 1.032796$ | 4.000000 cm |
-| area per cm of height | $2\pi \times 4$ | 25.1327 cm^2 |
-| bowl, 6 cm tall | $25.1327 \times 6 = 48\pi$ | **150.796447 cm^2** |
-| silver, 0.002 cm thick | $150.796447 \times 0.002$ | 0.301593 cm^3 |
-| its weight | $0.301593 \times 10.49$ | **3.1637 g** |
+| radius at $`x = 3`$ | $`\sqrt{8 \cdot 3 - 3^2} = \sqrt{15}`$ | 3.872983 cm |
+| slope at $`x = 3`$ | $`(4 - 3) / 3.872983`$ | 0.258199 |
+| slant factor | $`\sqrt{1 + 0.258199^2} = \sqrt{16/15}`$ | 1.032796 |
+| radius times slant factor | $`3.872983 \times 1.032796`$ | 4.000000 cm |
+| area per cm of height | $`2\pi \times 4`$ | 25.1327 cm^2 |
+| bowl, 6 cm tall | $`25.1327 \times 6 = 48\pi`$ | **150.796447 cm^2** |
+| silver, 0.002 cm thick | $`150.796447 \times 0.002`$ | 0.301593 cm^3 |
+| its weight | $`0.301593 \times 10.49`$ | **3.1637 g** |
 
 Each glass takes just over 3 g of silver on its bowl, stem and foot aside.
 
@@ -149,15 +161,15 @@ Each glass takes just over 3 g of silver on its bowl, stem and foot aside.
 | Disc formula, pi times radius squared | 226.19, in cm^3 | Sums volume, not skin |
 | The whole ball's 4 pi R^2 | 201.061930 cm^2 | Counts the ball above the rim |
 | Profile crinkled by 0.01 cm | 172.94 cm^2 | Close radii, far slopes |
-| Signed radius $x - 3$ from 0 to 6, crossing the axis | 0.00, not 79.97 cm^2 | Negative radius cancels real area |
+| Signed radius $`x - 3`$ from 0 to 6, crossing the axis | 0.00, not 79.97 cm^2 | Negative radius cancels real area |
 
-The crinkled profile is $f(x) + 0.01\sin(100x)$: never more than 0.01 cm from the bowl, yet its steep ripples add area. The line $x - 3$ drops the hypothesis that the radius is never negative: its two cones cancel instead of adding. The code prints all five.
+The crinkled profile is $`f(x) + 0.01\sin(100x)`$: never more than 0.01 cm from the bowl, yet its steep ripples add area. The line $`x - 3`$ drops the hypothesis that the radius is never negative: its two cones cancel instead of adding. The code prints all five.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Pi is built from a polygon. Road one: a difference quotient confirms radius times slant factor is 4, then $2\pi R h$. Road two uses no slope: chord bands, 6 to 6000, with the shortfall closing. A second case runs the whole ball.
+Pi is built from a polygon. Road one: a difference quotient confirms radius times slant factor is 4, then $`2\pi R h`$. Road two uses no slope: chord bands, 6 to 6000, with the shortfall closing. A second case runs the whole ball.
 
 ### Python
 
@@ -360,10 +372,10 @@ The two outputs are identical.
 
 Lean proves the band limit for every profile that meets When it holds, and the slice area for a ball of every radius.
 
-- Take a radius that is never negative, with a slope that is continuous and finite at the ends. Cut $[a, b]$ into $n$ equal height steps and add the chord bands. As $n$ grows, the total tends to $\int_a^b 2\pi f(x)\sqrt{1 + f'(x)^2}\,dx$.
-- On a ball of any radius $R$, at every height strictly between bottom and top, the radius times the slant factor is exactly $R$.
-- A slice of the ball from height $a$ to height $b$ has area $2\pi R(b - a)$. The whole ball has $4\pi R^2$.
-- The hand arithmetic holds exactly: the radius and slope at $x = 3$, the bowl's $48\pi$, the band's radii, the frustum algebra, the signed radius and the silver.
+- Take a radius that is never negative, with a slope that is continuous and finite at the ends. Cut $`[a, b]`$ into $`n`$ equal height steps and add the chord bands. As $`n`$ grows, the total tends to $`\int_a^b 2\pi f(x)\sqrt{1 + f'(x)^2}\,dx`$.
+- On a ball of any radius $`R`$, at every height strictly between bottom and top, the radius times the slant factor is exactly $`R`$.
+- A slice of the ball from height $`a`$ to height $`b`$ has area $`2\pi R(b - a)`$. The whole ball has $`4\pi R^2`$.
+- The hand arithmetic holds exactly: the radius and slope at $`x = 3`$, the bowl's $`48\pi`$, the band's radii, the frustum algebra, the signed radius and the silver.
 
 The band totals from 6 to 6000, Step 5's numbers, the mistakes table and the figure are left to the Python and Rust checks.
 
@@ -701,7 +713,7 @@ example : 48 * π * (1 / 500) = 12 * π / 125 := by ring
 
 > [!TIP]
 > **Try changing**
-> - **Guess first:** raise the bowl height `H` from 6 to 8, the whole ball. The area becomes 201.061930 cm^2, since $2\pi R h$ grows in step with $h$.
+> - **Guess first:** raise the bowl height `H` from 6 to 8, the whole ball. The area becomes 201.061930 cm^2, since $`2\pi R h`$ grows in step with $`h`$.
 > - **Guess first:** change 6000 to 6 in the first assert. The chords sit inside the curve, so the total is 147.982130 cm^2, short by 2.81, and the assert fails.
 > - **Guess first:** add `slant=False` to the band call in the first assert. It then meets 127.04 cm^2 and fails.
 
@@ -712,7 +724,7 @@ example : 48 * π * (1 / 500) = 12 * π / 125 := by ring
 > [!warning]
 > **Multiplying circumference by the height step.** The volume formula does that with a disc, so it feels natural. But a disc's thickness lies along the axis; a wall's width lies along the wall. On the bowl this gives 127.04 cm^2, well short, and the error grows with the slope.
 >
-> - **Squaring the radius out of habit.** $\pi f(x)^2$ sums slices of volume: 226.19 cm^3 for this bowl, a quantity in different units.
+> - **Squaring the radius out of habit.** $`\pi f(x)^2`$ sums slices of volume: 226.19 cm^3 for this bowl, a quantity in different units.
 > - **Adding lids.** The formula measures the spun wall only; a closed container adds its end discs separately.
 
 ---
@@ -730,7 +742,7 @@ example : 48 * π * (1 / 500) = 12 * π / 125 := by ring
 
 ## What this builds on
 
-- [Arc length](02-arc-length.md): the slant factor $\sqrt{1 + f'(x)^2}$ and the chord-to-limit argument used here for the wall's width.
+- [Arc length](02-arc-length.md): the slant factor $`\sqrt{1 + f'(x)^2}`$ and the chord-to-limit argument used here for the wall's width.
 
 ## Where this goes next
 

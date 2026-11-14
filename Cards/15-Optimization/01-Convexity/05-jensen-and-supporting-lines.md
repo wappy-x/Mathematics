@@ -35,50 +35,56 @@ Orange is the true cost of each mix, from all Bright on the left to all Bold on 
 
 ## The formula
 
-Notation first, in words. A blend is written $z = (x, y)$: $x$ is the Brazil share, $y$ the Colombia share, and Ethiopia makes up the rest, $1 - x - y$. Weights $\theta_i$ (theta) are shares of a mix: each at least 0, all adding to 1. Mixing blends $z_1, z_2, \dots$ with those weights gives the average blend $m = \sum_i \theta_i z_i$, as on [Convex sets](02-convex-sets.md).
+Notation first, in words. A blend is written $`z = (x, y)`$: $`x`$ is the Brazil share, $`y`$ the Colombia share, and Ethiopia makes up the rest, $`1 - x - y`$. Weights $`\theta_i`$ (theta) are shares of a mix: each at least 0, all adding to 1. Mixing blends $`z_1, z_2, \dots`$ with those weights gives the average blend $`m = \sum_i \theta_i z_i`$, as on [Convex sets](02-convex-sets.md).
 
 The roaster's cost, in pounds a kilo:
 
-$$f(x, y) = \underbrace{7x + 9y + 12(1 - x - y)}_{\text{beans}} + (S - 6)^2 + (A - 5)^2$$
+```math
+f(x, y) = \underbrace{7x + 9y + 12(1 - x - y)}_{\text{beans}} + (S - 6)^2 + (A - 5)^2
+```
 
-with strength $S = 8x + 6y + 4(1 - x - y)$ and acidity $A = 2x + 6y + 8(1 - x - y)$, each bean's score weighted by its share.
+with strength $`S = 8x + 6y + 4(1 - x - y)`$ and acidity $`A = 2x + 6y + 8(1 - x - y)`$, each bean's score weighted by its share.
 
 **Read it aloud:** what the beans cost, plus the square of the miss on strength, plus the square of the miss on acidity.
 
-The theorem has two halves. A **supporting plane** at $m$ is a flat function $\ell(z) = f(m) + s \cdot (z - m)$ that touches the cost at $m$ and never rises above it:
+The theorem has two halves. A **supporting plane** at $`m`$ is a flat function $`\ell(z) = f(m) + s \cdot (z - m)`$ that touches the cost at $`m`$ and never rises above it:
 
-$$f(z) \;\ge\; f(m) + s \cdot (z - m) \quad \text{for every blend } z$$
+```math
+f(z) \;\ge\; f(m) + s \cdot (z - m) \quad \text{for every blend } z
+```
 
-**Read it aloud:** the cost anywhere is at least the cost at $m$ plus the slopes times the step away from $m$.
+**Read it aloud:** the cost anywhere is at least the cost at $`m`$ plus the slopes times the step away from $`m`$.
 
-The vector $s$ holds one slope per share; $s \cdot (z - m)$ multiplies each slope by the step in its share and adds. Where $f$ is smooth, $s$ is the gradient $\nabla f(m)$, and the inequality is the gradient test of [Convex functions](03-convex-functions-and-their-tests.md). The new claim is that a plane exists at every inside point, creases included. Jensen's inequality then follows:
+The vector $`s`$ holds one slope per share; $`s \cdot (z - m)`$ multiplies each slope by the step in its share and adds. Where $`f`$ is smooth, $`s`$ is the gradient $`\nabla f(m)`$, and the inequality is the gradient test of [Convex functions](03-convex-functions-and-their-tests.md). The new claim is that a plane exists at every inside point, creases included. Jensen's inequality then follows:
 
-$$f\Big(\sum_i \theta_i z_i\Big) \;\le\; \sum_i \theta_i f(z_i)$$
+```math
+f\Big(\sum_i \theta_i z_i\Big) \;\le\; \sum_i \theta_i f(z_i)
+```
 
 **Read it aloud:** the cost of the average blend is at most the average of the blends' costs.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | Brazil and Colombia shares; Ethiopia is $1 - x - y$ | 0.5 and 0.25 in the mix | — |
-| $z$, $z_i$ | a blend as the pair $(x, y)$; the $i$-th blend being mixed | Bold (0.7, 0.1), Bright (0.3, 0.4) | — |
-| $\theta_i$ | weight of blend $i$ in the mix, at least 0, all adding to 1 | ½ and ½; ⅕ per batch in the week | the mix moves toward that blend |
-| $m$ | the average blend, $\sum_i \theta_i z_i$ | (0.5, 0.25) | — |
-| $f$ | cost per kilo: beans plus taste penalty, in pounds | £9.25 at $m$ | — |
-| $S$, $A$ | strength and acidity scores of a blend | 6.5 and 4.5 at $m$; targets 6 and 5 | a bigger miss, a squared penalty |
-| $\ell$, $s$ | a supporting plane at $m$, and its slope vector | $\ell(z) = 9.25 + 5(x - 0.5) + 1(y - 0.25)$ | a crease allows a range of $s$ |
-| $\nabla f$ | gradient: the slope in each share at a point | (5, 1) at $m$ | — |
-| $\nabla^2 f$ | Hessian: the table of second slopes | `[[104, 40], [40, 16]]` everywhere | a deeper bowl, a bigger gap |
-| $d$, $d_i$ | a step between blends, or from $m$ to blend $i$ | Bold minus Bright: (0.4, −0.3) | the gap grows with its square |
-| $\lambda$ | in Step 3, where a plane sits in the range at a crease | 0 to 1 | — |
-| $C$, $n$, $v$, $t$, $p(v)$, $\varphi$, $r$, $c$, $u$, $w$ | in the Detailed proof only: an open convex set of points and their number of coordinates; a direction, a step length, the slope along $v$, a slope rule built one direction at a time, a new direction, its chosen slope, two points of the directions done so far | — | — |
+| $`x`$, $`y`$ | Brazil and Colombia shares; Ethiopia is $`1 - x - y`$ | 0.5 and 0.25 in the mix | — |
+| $`z`$, $`z_i`$ | a blend as the pair $`(x, y)`$; the $`i`$-th blend being mixed | Bold (0.7, 0.1), Bright (0.3, 0.4) | — |
+| $`\theta_i`$ | weight of blend $`i`$ in the mix, at least 0, all adding to 1 | ½ and ½; ⅕ per batch in the week | the mix moves toward that blend |
+| $`m`$ | the average blend, $`\sum_i \theta_i z_i`$ | (0.5, 0.25) | — |
+| $`f`$ | cost per kilo: beans plus taste penalty, in pounds | £9.25 at $`m`$ | — |
+| $`S`$, $`A`$ | strength and acidity scores of a blend | 6.5 and 4.5 at $`m`$; targets 6 and 5 | a bigger miss, a squared penalty |
+| $`\ell`$, $`s`$ | a supporting plane at $`m`$, and its slope vector | $`\ell(z) = 9.25 + 5(x - 0.5) + 1(y - 0.25)`$ | a crease allows a range of $`s`$ |
+| $`\nabla f`$ | gradient: the slope in each share at a point | (5, 1) at $`m`$ | — |
+| $`\nabla^2 f`$ | Hessian: the table of second slopes | `[[104, 40], [40, 16]]` everywhere | a deeper bowl, a bigger gap |
+| $`d`$, $`d_i`$ | a step between blends, or from $`m`$ to blend $`i`$ | Bold minus Bright: (0.4, −0.3) | the gap grows with its square |
+| $`\lambda`$ | in Step 3, where a plane sits in the range at a crease | 0 to 1 | — |
+| $`C`$, $`n`$, $`v`$, $`t`$, $`p(v)`$, $`\varphi`$, $`r`$, $`c`$, $`u`$, $`w`$ | in the Detailed proof only: an open convex set of points and their number of coordinates; a direction, a step length, the slope along $`v`$, a slope rule built one direction at a time, a new direction, its chosen slope, two points of the directions done so far | — | — |
 
 The gradient (5, 1) says that at the mix, swapping one percentage point of Ethiopia for Brazil adds 5p a kilo, and one point for Colombia adds 1p.
 
 ### When it holds
 
 - **The cost is convex on a convex set of blends.** A market that pays for two styles, strength 6 or strength 7, and charges no acidity penalty, makes the cost dip twice; then the mix of Bold and Bright costs £9.75, above the average £8.75 (What breaks, row 1).
-- **The average is an inside point.** The plane argument needs room on every side of $m$. At the edge of a domain a plane can fail: minus the square root of $x$, at $x = 0$, falls with infinite slope, so no plane fits. Jensen still holds there, by the endpoint argument in part 1 of the proof on the measure wing's [Jensen's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md).
-- **The weights are true shares.** They must be at least 0 and add to 1, or the plane's average no longer equals $f(m)$ (Step 0). Weights 0.4 and 0.4 give a real blend, (0.40, 0.20), at £9.44, above 0.4 × £11.16 + 0.4 × £9.46 = £8.25. A negative weight flips its term of the inequality.
+- **The average is an inside point.** The plane argument needs room on every side of $`m`$. At the edge of a domain a plane can fail: minus the square root of $`x`$, at $`x = 0`$, falls with infinite slope, so no plane fits. Jensen still holds there, by the endpoint argument in part 1 of the proof on the measure wing's [Jensen's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md).
+- **The weights are true shares.** They must be at least 0 and add to 1, or the plane's average no longer equals $`f(m)`$ (Step 0). Weights 0.4 and 0.4 give a real blend, (0.40, 0.20), at £9.44, above 0.4 × £11.16 + 0.4 × £9.46 = £8.25. A negative weight flips its term of the inequality.
 - **It bounds; it does not measure.** Jensen says which side is larger. The size of the gap needs more: here, the Hessian and the spread of the blends (Step 4).
 
 ---
@@ -87,13 +93,13 @@ The gradient (5, 1) says that at the mix, swapping one percentage point of Ethio
 
 ### Step 0: a flat plane passes through averages unchanged
 
-For a flat function, the average of its values is its value at the average: $\sum_i \theta_i\,\ell(z_i) = \ell(m)$, because the weights add to 1 and the steps $z_i - m$ average to zero. Only a bend breaks that swap. So slide a plane under the bowl, touching at $m$, and let the plane do the averaging. In one variable this is already proved with a supporting line ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)), on any space of total size 1 ([Jensen's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md)), and for finite lists by induction from the chord rule ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). New here is the plane in several variables.
+For a flat function, the average of its values is its value at the average: $`\sum_i \theta_i\,\ell(z_i) = \ell(m)`$, because the weights add to 1 and the steps $`z_i - m`$ average to zero. Only a bend breaks that swap. So slide a plane under the bowl, touching at $`m`$, and let the plane do the averaging. In one variable this is already proved with a supporting line ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)), on any space of total size 1 ([Jensen's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md)), and for finite lists by induction from the chord rule ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). New here is the plane in several variables.
 
 ### Step 1: where the cost is smooth, the tangent plane supports it
 
-At the mix, strength misses by +0.5 and acidity by −0.5. The chain rule gives the gradient: the beans contribute (−5, −3), the strength penalty $2(S - 6)(4, 2) = (4, 2)$, the acidity penalty $2(A - 5)(-6, -2) = (6, 2)$. Total: (5, 1).
+At the mix, strength misses by +0.5 and acidity by −0.5. The chain rule gives the gradient: the beans contribute (−5, −3), the strength penalty $`2(S - 6)(4, 2) = (4, 2)`$, the acidity penalty $`2(A - 5)(-6, -2) = (6, 2)`$. Total: (5, 1).
 
-The tangent plane is $\ell(z) = 9.25 + 5(x - 0.5) + 1(y - 0.25)$. For this cost, the cost minus the plane is exactly the bowl's curvature term, half of $d^{\top}\,\nabla^2 f\,d$ with $d = z - m$. Here $d^{\top}\,\nabla^2 f\,d$ (written d'Hd in the code) multiplies the Hessian by the step on both sides: each entry of the Hessian times the two parts of $d$ it pairs, all added. The Hessian `[[104, 40], [40, 16]]` has determinant 64 and trace 120, both positive, so that term is positive for every step $d \ne 0$. That is the gradient test of [Convex functions](03-convex-functions-and-their-tests.md).
+The tangent plane is $`\ell(z) = 9.25 + 5(x - 0.5) + 1(y - 0.25)`$. For this cost, the cost minus the plane is exactly the bowl's curvature term, half of $`d^{\top}\,\nabla^2 f\,d`$ with $`d = z - m`$. Here $`d^{\top}\,\nabla^2 f\,d`$ (written d'Hd in the code) multiplies the Hessian by the step on both sides: each entry of the Hessian times the two parts of $`d`$ it pairs, all added. The Hessian `[[104, 40], [40, 16]]` has determinant 64 and trace 120, both positive, so that term is positive for every step $`d \ne 0`$. That is the gradient test of [Convex functions](03-convex-functions-and-their-tests.md).
 
 The code checks it two ways. Against this plane on 5,151 blends, the smallest gap is 0, at the mix itself. With the tangent plane at each of 231 blends, in steps of 5 percentage points, against the other 230, none rises above the cost.
 
@@ -101,40 +107,44 @@ The code checks it two ways. Against this plane on 5,151 blends, the smallest ga
 
 The cost lies on or above the plane at each blend, so the average cost lies on or above the average of the plane. By Step 0, the plane averages to its value at the mix:
 
-$$\sum_i \theta_i f(z_i) \;\ge\; \sum_i \theta_i\,\ell(z_i) \;=\; f(m) + s \cdot \Big(\sum_i \theta_i z_i - m\Big) \;=\; f(m).$$
+```math
+\sum_i \theta_i f(z_i) \;\ge\; \sum_i \theta_i\,\ell(z_i) \;=\; f(m) + s \cdot \Big(\sum_i \theta_i z_i - m\Big) \;=\; f(m).
+```
 
-The slope term vanishes because the blends average to $m$. That is Jensen's inequality, in any number of shares. For Bold and Bright the plane reads £10.10 and £8.40, the costs £11.16 and £9.46, and the plane's average is £9.25, the cost of the mix.
+The slope term vanishes because the blends average to $`m`$. That is Jensen's inequality, in any number of shares. For Bold and Bright the plane reads £10.10 and £8.40, the costs £11.16 and £9.46, and the plane's average is £9.25, the cost of the mix.
 
 ### Step 3: a crease still has a supporting plane
 
 Suppose the Ethiopian supplier adds a surcharge: £4 a kilo for each whole share of Ethiopia above 25%, so 4p for each percentage point. The mix holds exactly 25% Ethiopia, so the cost now has a crease (a fold with no single tangent) running through the mix. Bold, at 20% Ethiopia, still costs £11.16; Bright, at 30%, now costs £9.66; the mix still costs £9.25, against an average of £10.41.
 
-At a crease the plane is not unique. The surcharge is flat on one side of the fold and slopes by −4 per share in both $x$ and $y$ on the other, so any slope vector $s = (5 - 4\lambda,\ 1 - 4\lambda)$ with $\lambda$ between 0 and 1 gives a supporting plane. The code tries (5, 1), (3, −1) and (1, −3): each stays under the creased cost on all 5,151 blends. A slope just outside the range, (0, −4), rises 0.1388 above it somewhere. The set of all such slopes is the subject of [Subgradients](07-subgradients.md).
+At a crease the plane is not unique. The surcharge is flat on one side of the fold and slopes by −4 per share in both $`x`$ and $`y`$ on the other, so any slope vector $`s = (5 - 4\lambda,\ 1 - 4\lambda)`$ with $`\lambda`$ between 0 and 1 gives a supporting plane. The code tries (5, 1), (3, −1) and (1, −3): each stays under the creased cost on all 5,151 blends. A slope just outside the range, (0, −4), rises 0.1388 above it somewhere. The set of all such slopes is the subject of [Subgradients](07-subgradients.md).
 
-Why must some plane exist at every inside point, smooth or not? Along any direction from $m$ the cost is a one-variable convex curve, so it has a slope to the right of $m$ and a slope to the left, and the left slope never exceeds the right ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) proves this for one variable). The proof then picks the plane's slopes one direction at a time, each squeezed between what the earlier choices allow. Two shares need two choices.
+Why must some plane exist at every inside point, smooth or not? Along any direction from $`m`$ the cost is a one-variable convex curve, so it has a slope to the right of $`m`$ and a slope to the left, and the left slope never exceeds the right ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) proves this for one variable). The proof then picks the plane's slopes one direction at a time, each squeezed between what the earlier choices allow. Two shares need two choices.
 
 <details>
 <summary>Detailed proof: a supporting plane at every inside point</summary>
 
-**Setting.** $C$ is an open convex set of points with $n$ coordinates, $f$ is convex on $C$, and $m$ is in $C$. Claim: some vector $s$ gives $f(z) \ge f(m) + s \cdot (z - m)$ for every $z$ in $C$.
+**Setting.** $`C`$ is an open convex set of points with $`n`$ coordinates, $`f`$ is convex on $`C`$, and $`m`$ is in $`C`$. Claim: some vector $`s`$ gives $`f(z) \ge f(m) + s \cdot (z - m)`$ for every $`z`$ in $`C`$.
 
-**1. Slopes along a direction.** Fix a direction $v$. The ratio $(f(m + tv) - f(m))/t$ never increases as $t > 0$ shrinks, by the chord rule on the line through $m$ (a convex curve's chord slopes rise from left to right). It is bounded below by minus the same ratio for $-v$, since left slopes never exceed right slopes. So it has a limit as $t$ shrinks to 0, the slope along $v$, written $p(v)$. And because the ratio only falls as $t$ shrinks, its value at $t = 1$ is at least the limit: $f(m + v) - f(m) \ge p(v)$ whenever $m + v$ is in $C$.
+**1. Slopes along a direction.** Fix a direction $`v`$. The ratio $`(f(m + tv) - f(m))/t`$ never increases as $`t > 0`$ shrinks, by the chord rule on the line through $`m`$ (a convex curve's chord slopes rise from left to right). It is bounded below by minus the same ratio for $`-v`$, since left slopes never exceed right slopes. So it has a limit as $`t`$ shrinks to 0, the slope along $`v`$, written $`p(v)`$. And because the ratio only falls as $`t`$ shrinks, its value at $`t = 1`$ is at least the limit: $`f(m + v) - f(m) \ge p(v)`$ whenever $`m + v`$ is in $`C`$.
 
-**2. Two rules for $p$.** Scaling: $p(cv) = c\,p(v)$ for $c > 0$, by substituting $ct$ for $t$. Splitting: $p(u + w) \le p(u) + p(w)$, because $m + t(u + w)$ is the midpoint of $m + 2tu$ and $m + 2tw$, so the chord rule gives $f(m + t(u + w)) \le \tfrac12 f(m + 2tu) + \tfrac12 f(m + 2tw)$; subtract $f(m)$, divide by $t$ and let $t$ shrink. Also $p(0) = 0$.
+**2. Two rules for $`p`$.** Scaling: $`p(cv) = c\,p(v)`$ for $`c > 0`$, by substituting $`ct`$ for $`t`$. Splitting: $`p(u + w) \le p(u) + p(w)`$, because $`m + t(u + w)`$ is the midpoint of $`m + 2tu`$ and $`m + 2tw`$, so the chord rule gives $`f(m + t(u + w)) \le \tfrac12 f(m + 2tu) + \tfrac12 f(m + 2tw)`$; subtract $`f(m)`$, divide by $`t`$ and let $`t`$ shrink. Also $`p(0) = 0`$.
 
-**3. Choose slopes one direction at a time.** We build a slope rule $\varphi$ (phi), adding up slopes times steps, with $\varphi(v) \le p(v)$ for every $v$. Start with no directions: $\varphi(0) = 0 \le p(0)$. Suppose $\varphi$ is defined on every combination of the first few coordinate directions, with $\varphi \le p$ there, and add a new direction $r$. For any two such combinations $u$ and $w$, the splitting rule gives $\varphi(u) + \varphi(w) = \varphi(u + w) \le p(u + w) \le p(u - r) + p(w + r)$, so
-$$\varphi(u) - p(u - r) \;\le\; p(w + r) - \varphi(w).$$
-Every left side is at most every right side, so some number $c$ lies between them all. Set the slope along $r$ to $c$. Then for $t > 0$, scaling and the right-hand inequality with $w = u/t$ give $\varphi(u) + tc \le p(u + t\,r)$; for $t < 0$ the left-hand inequality with $u/\lvert t \rvert$ gives the same. So $\varphi \le p$ still holds with $r$ added. After $n$ directions, $\varphi(v) = s \cdot v$ for one vector $s$.
+**3. Choose slopes one direction at a time.** We build a slope rule $`\varphi`$ (phi), adding up slopes times steps, with $`\varphi(v) \le p(v)`$ for every $`v`$. Start with no directions: $`\varphi(0) = 0 \le p(0)`$. Suppose $`\varphi`$ is defined on every combination of the first few coordinate directions, with $`\varphi \le p`$ there, and add a new direction $`r`$. For any two such combinations $`u`$ and $`w`$, the splitting rule gives $`\varphi(u) + \varphi(w) = \varphi(u + w) \le p(u + w) \le p(u - r) + p(w + r)`$, so
 
-**4. The plane.** For $z$ in $C$, put $v = z - m$. By parts 1 and 3, $f(z) - f(m) \ge p(v) \ge s \cdot (z - m)$.
+$`\displaystyle \varphi(u) - p(u - r) \;\le\; p(w + r) - \varphi(w).`$
 
-**5. Jensen.** For blends $z_i$ in $C$ with weights $\theta_i$, the average $m$ is in $C$ because $C$ is convex. Write part 4 at each $z_i$, multiply by $\theta_i$, add, and use $\sum_i \theta_i (z_i - m) = 0$.
+Every left side is at most every right side, so some number $`c`$ lies between them all. Set the slope along $`r`$ to $`c`$. Then for $`t > 0`$, scaling and the right-hand inequality with $`w = u/t`$ give $`\varphi(u) + tc \le p(u + t\,r)`$; for $`t < 0`$ the left-hand inequality with $`u/\lvert t \rvert`$ gives the same. So $`\varphi \le p`$ still holds with $`r`$ added. After $`n`$ directions, $`\varphi(v) = s \cdot v`$ for one vector $`s`$.
+
+**4. The plane.** For $`z`$ in $`C`$, put $`v = z - m`$. By parts 1 and 3, $`f(z) - f(m) \ge p(v) \ge s \cdot (z - m)`$.
+
+**5. Jensen.** For blends $`z_i`$ in $`C`$ with weights $`\theta_i`$, the average $`m`$ is in $`C`$ because $`C`$ is convex. Write part 4 at each $`z_i`$, multiply by $`\theta_i`$, add, and use $`\sum_i \theta_i (z_i - m) = 0`$.
 
 </details>
 
 ### Step 4: the size of the gap, for a quadratic bowl
 
-For this cost the gap has an exact size. The cost minus its tangent plane is half of $d^{\top}\,\nabla^2 f\,d$, so the Jensen gap is half the weighted average of that curvature term over the steps from $m$. Two blends at weight ½ sit half a step $d$ either side of the mix, so the gap is $d^{\top}\,\nabla^2 f\,d / 8$. With $d$ = Bold minus Bright = (0.4, −0.3), that is 8.48 / 8 = 1.06: the £10.31 average minus the £9.25 mix.
+For this cost the gap has an exact size. The cost minus its tangent plane is half of $`d^{\top}\,\nabla^2 f\,d`$, so the Jensen gap is half the weighted average of that curvature term over the steps from $`m`$. Two blends at weight ½ sit half a step $`d`$ either side of the mix, so the gap is $`d^{\top}\,\nabla^2 f\,d / 8`$. With $`d`$ = Bold minus Bright = (0.4, −0.3), that is 8.48 / 8 = 1.06: the £10.31 average minus the £9.25 mix.
 
 The bean cost is flat, so it contributes nothing to the gap. All of the £1.06 comes from the curved taste penalty.
 
@@ -173,7 +183,7 @@ The roaster makes the mix by hand once a day. Each batch misses the recipe by up
 | 5 | (−5, −5) | 9.20 |
 | **average** | the blends average to the recipe | **9.39** |
 
-Jensen gives the floor before the week starts, from the recipe alone: the average cost is at least £9.25. The true average is £9.39. The £0.14 difference is what the wandering costs, and Step 4 predicts it exactly: half the average of $d^{\top}\,\nabla^2 f\,d$ over the five misses is 0.14. The floor needs only the recipe; the gap needs the spread as well.
+Jensen gives the floor before the week starts, from the recipe alone: the average cost is at least £9.25. The true average is £9.39. The £0.14 difference is what the wandering costs, and Step 4 predicts it exactly: half the average of $`d^{\top}\,\nabla^2 f\,d`$ over the five misses is 0.14. The floor needs only the recipe; the gap needs the spread as well.
 
 ### What breaks if you drop a piece
 
@@ -507,8 +517,8 @@ The two outputs match line for line.
 Lean proves both halves of the theorem for any convex function in any number of coordinates, and the exact gap for the roaster's bowl.
 
 - Jensen's inequality: take a cost that is convex on a convex set, and points of that set. Mix them with weights at least 0 that add to 1. The cost of the average point is at most the same average of the costs.
-- A supporting plane exists at every inside point $m$ of the set, crease or not. Some slope vector $s$ gives $f(z) \ge f(m) + s \cdot (z - m)$ for every point $z$ of the set.
-- For the roaster's cost, mix any two blends half and half. The average of their costs minus the cost of the mix is exactly $d^{\top}\,\nabla^2 f\,d / 8$, where $d$ is the step between them.
+- A supporting plane exists at every inside point $`m`$ of the set, crease or not. Some slope vector $`s`$ gives $`f(z) \ge f(m) + s \cdot (z - m)`$ for every point $`z`$ of the set.
+- For the roaster's cost, mix any two blends half and half. The average of their costs minus the cost of the mix is exactly $`d^{\top}\,\nabla^2 f\,d / 8`$, where $`d`$ is the step between them.
 - The hand arithmetic holds exactly: Bold £11.16, Bright £9.46, the mix £9.25, and the gap £1.06, also as 8.48 / 8 by the Hessian.
 - The Hessian `[[104, 40], [40, 16]]` has determinant 64 and trace 120, and the chain rule gives the gradient (5, 1) at the mix.
 - The plane at the mix reads £10.10 at Bold and £8.40 at Bright, and their average is £9.25.

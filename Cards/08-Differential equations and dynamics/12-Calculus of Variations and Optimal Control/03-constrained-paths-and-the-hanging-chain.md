@@ -26,32 +26,38 @@ Drawn to scale at 60 px to the metre on both axes. The nine points on the curve 
 
 ## The formula
 
-Reminder: a functional takes a whole path y(x) and returns one number ([The Euler-Lagrange equation](01-functionals-and-the-euler-lagrange-equation.md)). Here there are two: the cost $J$, the integral of $F$, and the budget $K$, the integral of $G$, which must equal a fixed amount $L$. Both integrands depend on the height y and the slope y'. The multiplier rule: a path that makes $J$ stationary among all paths with $K = L$ satisfies the Euler-Lagrange equation for $F - \lambda G$, for some constant $\lambda$.
+Reminder: a functional takes a whole path y(x) and returns one number ([The Euler-Lagrange equation](01-functionals-and-the-euler-lagrange-equation.md)). Here there are two: the cost $`J`$, the integral of $`F`$, and the budget $`K`$, the integral of $`G`$, which must equal a fixed amount $`L`$. Both integrands depend on the height y and the slope y'. The multiplier rule: a path that makes $`J`$ stationary among all paths with $`K = L`$ satisfies the Euler-Lagrange equation for $`F - \lambda G`$, for some constant $`\lambda`$.
 
-$$\frac{\partial (F - \lambda G)}{\partial y} - \frac{d}{dx}\,\frac{\partial (F - \lambda G)}{\partial y'} = 0, \qquad K[y] = L$$
+```math
+\frac{\partial (F - \lambda G)}{\partial y} - \frac{d}{dx}\,\frac{\partial (F - \lambda G)}{\partial y'} = 0, \qquad K[y] = L
+```
 
 **Read it aloud:** subtract the multiplier times the budget from the cost, make the combination stationary, then pick the multiplier that spends the budget exactly.
 
 For the chain, the cost is height summed along its length, its potential energy per unit weight; hooks sit at x = ±2 m, height 0:
 
-$$J[y] = \int_{-2}^{2} y\sqrt{1+y'^2}\,dx, \qquad K[y] = \int_{-2}^{2} \sqrt{1+y'^2}\,dx = 6$$
+```math
+J[y] = \int_{-2}^{2} y\sqrt{1+y'^2}\,dx, \qquad K[y] = \int_{-2}^{2} \sqrt{1+y'^2}\,dx = 6
+```
 
 The answer is a shifted hyperbolic cosine, the **catenary**:
 
-$$y = a\cosh\frac{x}{a} + c, \qquad 2a\sinh\frac{2}{a} = 6, \qquad \text{sag} = a\left(\cosh\frac{2}{a} - 1\right)$$
+```math
+y = a\cosh\frac{x}{a} + c, \qquad 2a\sinh\frac{2}{a} = 6, \qquad \text{sag} = a\left(\cosh\frac{2}{a} - 1\right)
+```
 
-For the fence the cost is the enclosed area $A$; the answer is a circle of radius $\lambda$.
+For the fence the cost is the enclosed area $`A`$; the answer is a circle of radius $`\lambda`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | horizontal position and height, in m; y' is the slope | hooks at x = ±2 m, y = 0 | — |
-| $J$, $E$ | the cost; $E$ is its least value for a given length | height summed along the chain | — |
-| $K$, $L$ | the budget, and the amount it must equal | 6 m of chain, 100 m of fence | the chain sags lower; the fence holds more |
-| $F$, $G$ | the integrands of $J$ and $K$ | y√(1+y'^2) and √(1+y'^2) | — |
-| $\lambda$ | the multiplier: change in the best cost per unit of budget | −3.2435 m (chain), 15.9155 m (fence) | — |
-| $a$ | the catenary's scale: sideways pull, as a length of chain | 1.2329 m | a flatter, tauter chain |
-| $c$ | the catenary's vertical shift, equal to $\lambda$ | −3.2435 m | the curve moves up |
-| $A$, $r$ | enclosed area, and the circle's radius | 795.7747 m^2, 15.9155 m | — |
+| $`x`$, $`y`$ | horizontal position and height, in m; y' is the slope | hooks at x = ±2 m, y = 0 | — |
+| $`J`$, $`E`$ | the cost; $`E`$ is its least value for a given length | height summed along the chain | — |
+| $`K`$, $`L`$ | the budget, and the amount it must equal | 6 m of chain, 100 m of fence | the chain sags lower; the fence holds more |
+| $`F`$, $`G`$ | the integrands of $`J`$ and $`K`$ | y√(1+y'^2) and √(1+y'^2) | — |
+| $`\lambda`$ | the multiplier: change in the best cost per unit of budget | −3.2435 m (chain), 15.9155 m (fence) | — |
+| $`a`$ | the catenary's scale: sideways pull, as a length of chain | 1.2329 m | a flatter, tauter chain |
+| $`c`$ | the catenary's vertical shift, equal to $`\lambda`$ | −3.2435 m | the curve moves up |
+| $`A`$, $`r`$ | enclosed area, and the circle's radius | 795.7747 m^2, 15.9155 m | — |
 
 ### When it holds
 
@@ -71,13 +77,15 @@ With a few numbers and one constraint, the best point has the cost's gradient a 
 
 ### Step 1: two wiggles reduce it to two numbers
 
-Add to the best path two small bumps that vanish at the hooks, scaled by two small numbers. Cost and budget become functions of two numbers, and the two-variable rule gives one constant $\lambda$, the same for every bump, with the cost's first change $\lambda$ times the budget's. So $J - \lambda K$ has zero first change, and the argument of [The Euler-Lagrange equation](01-functionals-and-the-euler-lagrange-equation.md) turns that into the Euler-Lagrange equation for $F - \lambda G$.
+Add to the best path two small bumps that vanish at the hooks, scaled by two small numbers. Cost and budget become functions of two numbers, and the two-variable rule gives one constant $`\lambda`$, the same for every bump, with the cost's first change $`\lambda`$ times the budget's. So $`J - \lambda K`$ has zero first change, and the argument of [The Euler-Lagrange equation](01-functionals-and-the-euler-lagrange-equation.md) turns that into the Euler-Lagrange equation for $`F - \lambda G`$.
 
 <details>
 <summary>Detailed proof</summary>
 
 Write δJ[η] for the first change of J along a bump η vanishing at both ends:
-$$\delta J[\eta] = \int \left( F_y\,\eta + F_{y'}\,\eta' \right) dx,$$
+
+$`\displaystyle \delta J[\eta] = \int \left( F_y\,\eta + F_{y'}\,\eta' \right) dx,`$
+
 and δK[η] likewise with G. Since y is not stationary for K alone, some bump η₂ has δK[η₂] ≠ 0. Set λ = δJ[η₂] / δK[η₂].
 
 Take any bump η₁ and the family y + ε₁η₁ + ε₂η₂, making J and K functions j and k of (ε₁, ε₂). As δK[η₂] ≠ 0, the implicit function theorem (an equation in two numbers can be solved for one of them near a point where its rate of change in that one is not zero) makes k = L near the origin a curve. Along it j is stationary, and the two-variable rule gives a constant μ with δJ[η₁] = μ δK[η₁] and δJ[η₂] = μ δK[η₂]. The second forces μ = λ, whatever η₁ was.
@@ -90,15 +98,17 @@ So δ(J − λK)[η₁] = 0 for every bump. Integrating the η₁' term by parts
 
 The chain's combined integrand is (y − λ)√(1+y'^2), with no x on its own. The Beltrami identity ([The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md)) says the integrand minus y' times its slope-derivative is constant. Working it out:
 
-$$\frac{y - \lambda}{\sqrt{1+y'^2}} = a$$
+```math
+\frac{y - \lambda}{\sqrt{1+y'^2}} = a
+```
 
 ### Step 3: solve it, and a cosh appears
 
-Put u = y − λ, so u = a√(1+u'^2). The function a cosh(x/a) satisfies it, since 1 + sinh^2 = cosh^2 ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)). Level hooks put the lowest point at x = 0, so y = a cosh(x/a) + λ. The shift $c$ is the multiplier. Hooks at height 0 fix c = −a cosh(2/a). The length, the integral of cosh(x/a) from −2 to 2, gives 2a sinh(2/a) = 6, which fixes $a$.
+Put u = y − λ, so u = a√(1+u'^2). The function a cosh(x/a) satisfies it, since 1 + sinh^2 = cosh^2 ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)). Level hooks put the lowest point at x = 0, so y = a cosh(x/a) + λ. The shift $`c`$ is the multiplier. Hooks at height 0 fix c = −a cosh(2/a). The length, the integral of cosh(x/a) from −2 to 2, gives 2a sinh(2/a) = 6, which fixes $`a`$.
 
 ### Step 4: what the multiplier means
 
-The sideways pull is the same all along the chain: the weight of $a$ metres of it. Full tension is that pull times the stretch factor √(1+y'^2), which Step 2 says is (y − λ)/a. So tension is the weight of a length of chain equal to the height above the level λ: $a$ at the bottom, a cosh(2/a) at the hooks. It is also a price: the least energy $E$ changes with length at rate λ = −3.2435 m, which the code checks by differencing.
+The sideways pull is the same all along the chain: the weight of $`a`$ metres of it. Full tension is that pull times the stretch factor √(1+y'^2), which Step 2 says is (y − λ)/a. So tension is the weight of a length of chain equal to the height above the level λ: $`a`$ at the bottom, a cosh(2/a) at the hooks. It is also a price: the least energy $`E`$ changes with length at rate λ = −3.2435 m, which the code checks by differencing.
 
 ### Step 5: the fence gives a circle
 
@@ -141,7 +151,7 @@ The orange line is the regular polygon's area; the green line is the circle's 79
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | A parabola 6 m long through the hooks | sag 2.0554 m | A parabola suits weight spread evenly across the span, not along the chain |
-| Sag read as a cosh(2/a) | 3.2435 m | Measured from the level λ, not from the bottom, which sits $a$ above it |
+| Sag read as a cosh(2/a) | 3.2435 m | Measured from the level λ, not from the bottom, which sits $`a`$ above it |
 | A square fence of 100 m | 625.00 m^2 | Budget spent, but not on the stationary shape |
 | No slack: a chain just over 4 m | 4.01 m gives a = 16.3 m; 4.001 m gives 51.6 m | The straight path is stationary for length alone |
 
@@ -345,10 +355,10 @@ ALL CHECKS PASS
 
 Lean proves Euler's multiplier rule for all smooth integrands, and the catenary's equation and length for every chain longer than its span.
 
-- Suppose a smooth path with fixed ends makes $J$ stationary among paths with $K = L$, but is not stationary for $K$ alone. Then for some constant $\lambda$, the path satisfies the Euler-Lagrange equation for $F - \lambda G$ at every point.
-- Take the catenary $y = a\cosh(x/a) + \lambda$ with $a > 0$. Then it solves the Euler-Lagrange equation for the chain's $F - \lambda G$ at every $x$. It also satisfies Step 2's equation, $(y - \lambda)/\sqrt{1+y'^2} = a$.
-- Take $a > 0$ and hooks at $x = -d$ and $x = d$, both at height 0. Then the catenary through both hooks has length $2a\sinh(d/a)$.
-- Take a chain of length $L$ longer than the span $2d$. Then exactly one $a > 0$ gives $2a\sinh(d/a) = L$, so the length fixes the scale.
+- Suppose a smooth path with fixed ends makes $`J`$ stationary among paths with $`K = L`$, but is not stationary for $`K`$ alone. Then for some constant $`\lambda`$, the path satisfies the Euler-Lagrange equation for $`F - \lambda G`$ at every point.
+- Take the catenary $`y = a\cosh(x/a) + \lambda`$ with $`a > 0`$. Then it solves the Euler-Lagrange equation for the chain's $`F - \lambda G`$ at every $`x`$. It also satisfies Step 2's equation, $`(y - \lambda)/\sqrt{1+y'^2} = a`$.
+- Take $`a > 0`$ and hooks at $`x = -d`$ and $`x = d`$, both at height 0. Then the catenary through both hooks has length $`2a\sinh(d/a)`$.
+- Take a chain of length $`L`$ longer than the span $`2d`$. Then exactly one $`a > 0`$ gives $`2a\sinh(d/a) = L`$, so the length fixes the scale.
 - The square fence of 100 m holds 625 m^2. A circle of 100 m has radius 100/(2π) and area 100^2/(4π).
 - The 6 m chain is longer than the 4 m span, and half of it, 3 m, is the vertical pull at each hook.
 
@@ -1169,7 +1179,7 @@ example : 2 * (2 : ℝ) < 6 ∧ (6 : ℝ) / 2 = 3 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating the multiplier as a throwaway.** It is the catenary's shift, the zero-tension level and the price of chain. Measuring the sag from that level, a cosh(2/a), gives 3.2435 m; the bottom sits $a$ above it, so the sag is 2.0105 m.
+> **Treating the multiplier as a throwaway.** It is the catenary's shift, the zero-tension level and the price of chain. Measuring the sag from that level, a cosh(2/a), gives 3.2435 m; the bottom sits $`a`$ above it, so the sag is 2.0105 m.
 >
 > - **Calling the curve a parabola.** A parabola of the same 6 m sags 2.0554 m; the two part near the hooks.
 > - **Taking the rule as proof the circle is best.** It finds the only candidate; existence is a separate fact.

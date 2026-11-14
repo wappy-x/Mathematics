@@ -48,61 +48,71 @@ The upper line is the option's worth today; the lower one is what exercising pay
 
 ## The formula
 
-Notation first, in words. Write $S$ for Acme's price and $t$ for the date. Write $V$ for the option's worth at a given price and date, and $g$ for what exercising pays right now, so $g$ is the floor: the strike minus the price, or zero. The operator $\mathcal{L}$ below is the Black-Scholes equation's left side with the time derivative stripped off — "what holding the option earns, over and above the bank rate".
+Notation first, in words. Write $`S`$ for Acme's price and $`t`$ for the date. Write $`V`$ for the option's worth at a given price and date, and $`g`$ for what exercising pays right now, so $`g`$ is the floor: the strike minus the price, or zero. The operator $`\mathcal{L}`$ below is the Black-Scholes equation's left side with the time derivative stripped off — "what holding the option earns, over and above the bank rate".
 
-$$\mathcal{L}V \;=\; \tfrac12\sigma^2 S^2\frac{\partial^2 V}{\partial S^2} \;+\; (r-q)\,S\frac{\partial V}{\partial S} \;-\; rV$$
+```math
+\mathcal{L}V \;=\; \tfrac12\sigma^2 S^2\frac{\partial^2 V}{\partial S^2} \;+\; (r-q)\,S\frac{\partial V}{\partial S} \;-\; rV
+```
 
 The American option obeys all three of these, at every price and date at once:
 
-$$V - g \;\ge\; 0, \qquad \frac{\partial V}{\partial t} + \mathcal{L}V \;\le\; 0, \qquad (V - g)\left(\frac{\partial V}{\partial t} + \mathcal{L}V\right) = 0$$
+```math
+V - g \;\ge\; 0, \qquad \frac{\partial V}{\partial t} + \mathcal{L}V \;\le\; 0, \qquad (V - g)\left(\frac{\partial V}{\partial t} + \mathcal{L}V\right) = 0
+```
 
 **Read it aloud:** the option is never worth less than exercising it; holding it never earns more than the bank rate; and at every point one of those two is exactly tight.
 
-Now the same thing once the mesh has chopped prices and dates into steps. One date's values are a list $x$, and inequalities between lists hold node by node.
+Now the same thing once the mesh has chopped prices and dates into steps. One date's values are a list $`x`$, and inequalities between lists hold node by node.
 
-The earlier card turns the equation into a band of three numbers per row: a lower weight $\ell$, a diagonal $d$ and an upper weight $u$. It also builds a right-hand side $b$, holding the previous date's values and the mesh's known ends. Write $A$ for that band. Where the European card asks for $Ax = b$, this one asks three things:
+The earlier card turns the equation into a band of three numbers per row: a lower weight $`\ell`$, a diagonal $`d`$ and an upper weight $`u`$. It also builds a right-hand side $`b`$, holding the previous date's values and the mesh's known ends. Write $`A`$ for that band. Where the European card asks for $`Ax = b`$, this one asks three things:
 
-$$x \;\ge\; g, \qquad w \;=\; Ax - b \;\ge\; 0, \qquad (x_i - g_i)\,w_i = 0 \ \text{ at every node}$$
+```math
+x \;\ge\; g, \qquad w \;=\; Ax - b \;\ge\; 0, \qquad (x_i - g_i)\,w_i = 0 \ \text{ at every node}
+```
 
 **Read it aloud:** every value clears its floor; no row falls short of its right-hand side; and a value strictly above its floor solves its own row exactly.
 
-Here $w$ is the **slack**: how far a row is from tight. A node with no slack is waiting; a node with slack is pinned to its floor, exercising. Nothing is decided in advance.
+Here $`w`$ is the **slack**: how far a row is from tight. A node with no slack is waiting; a node with slack is pinned to its floor, exercising. Nothing is decided in advance.
 
 PSOR is one line. Sweep upwards through the nodes; at each one form the ordinary relaxed value, then lift it onto the floor:
 
-$$x_i^{+} \;=\; \max\!\left(g_i,\ (1-\omega)\,x_i + \frac{\omega}{d}\Big(b_i + \ell\,x_{i-1}^{+} + u\,x_{i+1}\Big)\right)$$
+```math
+x_i^{+} \;=\; \max\!\left(g_i,\ (1-\omega)\,x_i + \frac{\omega}{d}\Big(b_i + \ell\,x_{i-1}^{+} + u\,x_{i+1}\Big)\right)
+```
 
-Here $i$ numbers the nodes from the bottom, $x_i$ is node $i$'s value before this sweep, and $x_i^{+}$ is its value after.
+Here $`i`$ numbers the nodes from the bottom, $`x_i`$ is node $`i`$'s value before this sweep, and $`x_i^{+}`$ is its value after.
 
-Two details carry the method. The lower neighbour is the value this sweep has *already* updated, which makes it a sweep and not a simultaneous refresh. And the maximum comes **after** the relaxation, never inside it. At $\omega = 1$ this is projected Gauss-Seidel: solve the row, then lift. Above 1, overshoot on purpose, then lift.
+Two details carry the method. The lower neighbour is the value this sweep has *already* updated, which makes it a sweep and not a simultaneous refresh. And the maximum comes **after** the relaxation, never inside it. At $`\omega = 1`$ this is projected Gauss-Seidel: solve the row, then lift. Above 1, overshoot on purpose, then lift.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price | $100 today | put cheaper, line unmoved |
-| $K$ | the **strike**, the price the holder may sell at | $100 | put dearer, line higher |
-| $T$ | years until the option expires | 1 | put dearer, line lower |
-| $r$, $q$ | the bank rate, and the **dividend yield** the shares pay | 5% and 2% | a bigger $r$ lifts the line, a bigger $q$ lowers it |
-| $\sigma$ | **volatility**, how jumpy Acme is. Say "sigma". | 20% | put dearer, line lower: waiting is worth more |
-| $g$ | what exercising pays now, the **floor**: $\max(K-S,0)$ | $22.12 at $77.88 | — |
-| $V$ | the option's worth at a price and a date | $6.64 at $100 | — |
-| $\mathcal{L}$ | what holding earns, over and above the bank rate | $\partial V/\partial t + \mathcal{L}V = 0$ where waiting wins | — |
-| $A$, $x$, $b$ | the band as one object, one date's values, its right-hand side | one row per node | — |
-| $w$ | the **slack** $Ax-b$: how far a row is from tight | zero where waiting wins | — |
-| $d$, $\ell$, $u$ | one row's band: diagonal, lower, upper | $d$ beats $\ell+u$ by $1+r\Delta t$ | — |
-| $\Delta t$, $h$, $\nu$, $\eta$ | date step, price step in the logarithm, and the two ratios from them | 120 dates, 240 prices | finer mesh, more sweeps |
-| $\omega$ | the **relaxation weight**, read "omega": how far each step overshoots | 1.1 | fewer sweeps, then none settle |
-| $\kappa_0$, $\kappa$ | proved shrinkage, read "kappa", of one all-at-once refresh and of one sweep | 0.680761 and 0.758815 | more sweeps per date |
+| $`S`$ | Acme's price | $100 today | put cheaper, line unmoved |
+| $`K`$ | the **strike**, the price the holder may sell at | $100 | put dearer, line higher |
+| $`T`$ | years until the option expires | 1 | put dearer, line lower |
+| $`r`$, $`q`$ | the bank rate, and the **dividend yield** the shares pay | 5% and 2% | a bigger $`r`$ lifts the line, a bigger $`q`$ lowers it |
+| $`\sigma`$ | **volatility**, how jumpy Acme is. Say "sigma". | 20% | put dearer, line lower: waiting is worth more |
+| $`g`$ | what exercising pays now, the **floor**: $`\max(K-S,0)`$ | $22.12 at $77.88 | — |
+| $`V`$ | the option's worth at a price and a date | $6.64 at $100 | — |
+| $`\mathcal{L}`$ | what holding earns, over and above the bank rate | $`\partial V/\partial t + \mathcal{L}V = 0`$ where waiting wins | — |
+| $`A`$, $`x`$, $`b`$ | the band as one object, one date's values, its right-hand side | one row per node | — |
+| $`w`$ | the **slack** $`Ax-b`$: how far a row is from tight | zero where waiting wins | — |
+| $`d`$, $`\ell`$, $`u`$ | one row's band: diagonal, lower, upper | $`d`$ beats $`\ell+u`$ by $`1+r\Delta t`$ | — |
+| $`\Delta t`$, $`h`$, $`\nu`$, $`\eta`$ | date step, price step in the logarithm, and the two ratios from them | 120 dates, 240 prices | finer mesh, more sweeps |
+| $`\omega`$ | the **relaxation weight**, read "omega": how far each step overshoots | 1.1 | fewer sweeps, then none settle |
+| $`\kappa_0`$, $`\kappa`$ | proved shrinkage, read "kappa", of one all-at-once refresh and of one sweep | 0.680761 and 0.758815 | more sweeps per date |
 
 The band comes from the earlier card, on a mesh equally spaced in the logarithm of the price:
 
-$$\ell = \nu - \eta, \quad u = \nu + \eta, \quad d = 1 + 2\nu + r\,\Delta t, \qquad \nu = \frac{\sigma^2 \Delta t}{2h^2}, \quad \eta = \frac{(r - q - \tfrac12\sigma^2)\,\Delta t}{2h}$$
+```math
+\ell = \nu - \eta, \quad u = \nu + \eta, \quad d = 1 + 2\nu + r\,\Delta t, \qquad \nu = \frac{\sigma^2 \Delta t}{2h^2}, \quad \eta = \frac{(r - q - \tfrac12\sigma^2)\,\Delta t}{2h}
+```
 
-Here $\Delta t$ is one date step and $h$ one price step in the logarithm. The ratios $\nu$ and $\eta$ are the earlier card's spreading ratio and sliding ratio: how far one date step spreads value across neighbouring prices, and how far it slides it sideways.
+Here $`\Delta t`$ is one date step and $`h`$ one price step in the logarithm. The ratios $`\nu`$ and $`\eta`$ are the earlier card's spreading ratio and sliding ratio: how far one date step spreads value across neighbouring prices, and how far it slides it sideways.
 
 ### When it holds
 
-- **A well-behaved band**: both side weights non-negative, which needs the price step small enough that the spreading ratio covers the sliding ratio, and $d > \ell + u$, which holds for any rate at or above zero. Fail the first and a neighbour enters with the wrong sign, so the answer ripples where it should be smooth; fail the second and the proof below goes.
-- **$\omega$ strictly inside its range**, $0 < \omega < 2/(1+\kappa_0)$, which narrows as the mesh is refined. At the weight 2 a sweep can cycle for ever; at 0 it never moves.
+- **A well-behaved band**: both side weights non-negative, which needs the price step small enough that the spreading ratio covers the sliding ratio, and $`d > \ell + u`$, which holds for any rate at or above zero. Fail the first and a neighbour enters with the wrong sign, so the answer ripples where it should be smooth; fail the second and the proof below goes.
+- **$`\omega`$ strictly inside its range**, $`0 < \omega < 2/(1+\kappa_0)`$, which narrows as the mesh is refined. At the weight 2 a sweep can cycle for ever; at 0 it never moves.
 - **The mesh reaches far enough out.** The value at the strike must not feel either edge of the price range. Pull the edges in and the answer inherits whatever they were told.
 - **The Black-Scholes world**, volatility and both rates constant. If volatility moves, the line moves with it, and no refinement recovers the difference.
 
@@ -112,7 +122,7 @@ Here $\Delta t$ is one date step and $h$ one price step in the logarithm. The ra
 
 ### Step 0: a choice is a floor, and a floor is not an extra equation
 
-The holder may act at any instant, so the option can never be worth less than acting pays: $V \ge g$, everywhere, always. That is the whole content of the extra freedom.
+The holder may act at any instant, so the option can never be worth less than acting pays: $`V \ge g`$, everywhere, always. That is the whole content of the extra freedom.
 
 Now the other side. If holding the option earned more than the bank rate somewhere, a hedged position in it would print money, which cannot last. So holding never earns more. Where the holder strictly prefers to wait, that inequality is tight — an equation. Where the holder takes the money, the value is pinned to the floor and the inequality may go slack, downwards only.
 
@@ -130,11 +140,13 @@ The true answer is `1.000000` and `1.333333`, with slacks `1.666667` and `0.0000
 
 ### Step 2: the maximum turns three conditions into one fixed point
 
-Write the row value for what a node's own equation would give if its neighbours were held still: $(b_i + \ell x_{i-1} + u x_{i+1})/d$. Since the diagonal is positive, the slack is the diagonal times the amount by which the value sits above that row value.
+Write the row value for what a node's own equation would give if its neighbours were held still: $`(b_i + \ell x_{i-1} + u x_{i+1})/d`$. Since the diagonal is positive, the slack is the diagonal times the amount by which the value sits above that row value.
 
 Now read this one statement, node by node:
 
-$$x_i = \max\!\big(g_i,\ (b_i + \ell x_{i-1} + u x_{i+1})/d\big)$$
+```math
+x_i = \max\!\big(g_i,\ (b_i + \ell x_{i-1} + u x_{i+1})/d\big)
+```
 
 It says exactly the three conditions and nothing more. If the row value is larger, the value equals it: the slack is zero and the floor is cleared. If the floor is larger, the value sits on it and the row value is below, so the slack is non-negative. Either way all three hold. Run it backwards and any solution of the three conditions satisfies the maximum, so the LCP and this map's fixed point are the same object.
 
@@ -144,36 +156,40 @@ A **fixed point** of a map is an input the map hands back unchanged. Here the in
 
 Two facts do the work. Taking a maximum against a fixed number never spreads two numbers apart. And the neighbour weights, divided by the diagonal, add to less than one, since the diagonal exceeds their sum.
 
-So if two starting lists differ by some amount at worst, one all-at-once refresh leaves them differing by at most $\kappa_0$ times that, where $\kappa_0 = (\ell+u)/d$ — `0.680761` on the Acme mesh. A map that shrinks distances like that has exactly one fixed point. Applying it again and again walks to that point from any start that clears the floors. This is the contraction theorem ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)), used here on lists instead of single numbers. It needs two things, and both hold. The map never leaves the lists that clear the floors. And that set is complete: a run of lists that close in on each other always closes in on a list inside the set.
+So if two starting lists differ by some amount at worst, one all-at-once refresh leaves them differing by at most $`\kappa_0`$ times that, where $`\kappa_0 = (\ell+u)/d`$ — `0.680761` on the Acme mesh. A map that shrinks distances like that has exactly one fixed point. Applying it again and again walks to that point from any start that clears the floors. This is the contraction theorem ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)), used here on lists instead of single numbers. It needs two things, and both hold. The map never leaves the lists that clear the floors. And that set is complete: a run of lists that close in on each other always closes in on a list inside the set.
 
 A sweep is not that refresh, since it uses each lower neighbour's new value at once. It contracts too, with constant
 
-$$\kappa \;=\; \frac{|1-\omega| + \omega u/d}{1 - \omega \ell/d},$$
+```math
+\kappa \;=\; \frac{|1-\omega| + \omega u/d}{1 - \omega \ell/d},
+```
 
-which is below 1 exactly on the range $0 < \omega < 2/(1+\kappa_0)$. At $\omega = 1.1$ on the Acme mesh, $\kappa$ is `0.758815`. That is a guarantee, not a measurement: the mesh settles much faster.
+which is below 1 exactly on the range $`0 < \omega < 2/(1+\kappa_0)`$. At $`\omega = 1.1`$ on the Acme mesh, $`\kappa`$ is `0.758815`. That is a guarantee, not a measurement: the mesh settles much faster.
 
 <details>
 <summary>Detailed proof: one sweep is a contraction</summary>
 
-Take two lists that clear the floors and differ nowhere by more than some distance. Write $e_1, e_2, \dots$ for how far apart the sweep's two outputs end up, node by node, and abbreviate $a_\omega = \omega\ell/d$ and $b_\omega = |1-\omega| + \omega u/d$.
+Take two lists that clear the floors and differ nowhere by more than some distance. Write $`e_1, e_2, \dots`$ for how far apart the sweep's two outputs end up, node by node, and abbreviate $`a_\omega = \omega\ell/d`$ and $`b_\omega = |1-\omega| + \omega u/d`$.
 
-A node's relaxed value is built from its own old value, the already-updated lower neighbour and the old upper neighbour. The maximum comes afterwards and cannot increase a distance. The old values and old upper neighbour are within the starting distance, the new lower neighbour within $e_{i-1}$. So
-$$e_i \;\le\; a_\omega\,e_{i-1} + b_\omega \cdot (\text{starting distance}), \qquad e_0 = 0.$$
-Unrolling that finite chain and summing the geometric series bounds every one of them by $\kappa$ times the starting distance.
+A node's relaxed value is built from its own old value, the already-updated lower neighbour and the old upper neighbour. The maximum comes afterwards and cannot increase a distance. The old values and old upper neighbour are within the starting distance, the new lower neighbour within $`e_{i-1}`$. So
 
-The allowed range for $\omega$ is exactly what makes $a_\omega + b_\omega < 1$, hence $\kappa < 1$. For $0 < \omega \le 1$ that sum is $1 - \omega + \omega\kappa_0$; for $\omega > 1$ it is $\omega(1+\kappa_0) - 1$, below 1 precisely when $\omega < 2/(1+\kappa_0)$. Either way $a_\omega < 1$, so the denominator above is positive.
+$`\displaystyle e_i \;\le\; a_\omega\,e_{i-1} + b_\omega \cdot (\text{starting distance}), \qquad e_0 = 0.`$
 
-A list left unchanged by a whole sweep satisfies the sweep's formula with new values equal to old. For positive $\omega$ that forces the row value above the floor and permits it below on the floor — Step 2 again. So the sweep's fixed points are the LCP's solutions and no others, and the contraction theorem supplies one and the walk to it. A convenience falls out: any list clearing the floors sits within the change one more sweep would make, divided by $1 - \kappa$, of the true answer.
+Unrolling that finite chain and summing the geometric series bounds every one of them by $`\kappa`$ times the starting distance.
+
+The allowed range for $`\omega`$ is exactly what makes $`a_\omega + b_\omega < 1`$, hence $`\kappa < 1`$. For $`0 < \omega \le 1`$ that sum is $`1 - \omega + \omega\kappa_0`$; for $`\omega > 1`$ it is $`\omega(1+\kappa_0) - 1`$, below 1 precisely when $`\omega < 2/(1+\kappa_0)`$. Either way $`a_\omega < 1`$, so the denominator above is positive.
+
+A list left unchanged by a whole sweep satisfies the sweep's formula with new values equal to old. For positive $`\omega`$ that forces the row value above the floor and permits it below on the floor — Step 2 again. So the sweep's fixed points are the LCP's solutions and no others, and the contraction theorem supplies one and the walk to it. A convenience falls out: any list clearing the floors sits within the change one more sweep would make, divided by $`1 - \kappa`$, of the true answer.
 
 </details>
 
 ### Step 4: project after relaxing, never before
 
-The order looks like a detail. It is not. Move the maximum inside the relaxation, using $(1-\omega)x_i + \omega\max(g_i, \cdot)$, and the first condition itself can fail.
+The order looks like a detail. It is not. Move the maximum inside the relaxation, using $`(1-\omega)x_i + \omega\max(g_i, \cdot)`$, and the first condition itself can fail.
 
-One node shows it. Take a row with diagonal 1, right-hand side 0, floor 1, current value 2, and $\omega = 1.5$, inside the allowed range there. The rule gives `1.000000`, on the floor. The altered version gives `0.500000` — *below* the floor it was meant to enforce. A value under its floor prices an option at less than it pays.
+One node shows it. Take a row with diagonal 1, right-hand side 0, floor 1, current value 2, and $`\omega = 1.5`$, inside the allowed range there. The rule gives `1.000000`, on the floor. The altered version gives `0.500000` — *below* the floor it was meant to enforce. A value under its floor prices an option at less than it pays.
 
-The ends of the $\omega$ range matter as much. With diagonal 1, right-hand side 1 and floor 0, the excluded weight 2 sends the value round `2.000`, `0.000`, `2.000`, `0.000` for ever instead of settling on 1.
+The ends of the $`\omega`$ range matter as much. With diagonal 1, right-hand side 1 and floor 0, the excluded weight 2 sends the value round `2.000`, `0.000`, `2.000`, `0.000` for ever instead of settling on 1.
 
 ### Step 5: reading the line off the answer
 
@@ -183,7 +199,7 @@ The smooth line underneath can be read more finely, and smooth pasting says how 
 
 The two readings need not nest. The exercise region is settled in whole date steps, so it over-reaches the smooth line by up to a node, and the square-root reading can land below the last node on its floor. The refinement ladder below says which to trust.
 
-Two independent bounds keep it honest. A put that never expires has a line in closed form ([The perpetual American put](../15-American%20and%20Bermudan%20exercise/05-perpetual-american-put.md)): the strike times the negative root of the quadratic that $\mathcal{L}V = 0$ becomes when $V$ is a power of the price, divided by that root minus one. That is `64.921894` here. Less time to run means less waiting to give up, so a line with an expiry date sits above it. And no line exceeds the strike. Both hold.
+Two independent bounds keep it honest. A put that never expires has a line in closed form ([The perpetual American put](../15-American%20and%20Bermudan%20exercise/05-perpetual-american-put.md)): the strike times the negative root of the quadratic that $`\mathcal{L}V = 0`$ becomes when $`V`$ is a power of the price, divided by that root minus one. That is `64.921894` here. Less time to run means less waiting to give up, so a line with an expiry date sits above it. And no line exceeds the strike. Both hold.
 
 The other road skips solvers entirely. A binomial tree takes the better of exercising and holding at each node, which is Step 0 one node at a time ([Early exercise](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md) builds it; [Longstaff-Schwartz](06-longstaff-schwartz-least-squares-monte-carlo.md) does it by simulation, which is what survives many underlyings). The tree prices beautifully and reads the line badly: its nodes fan out from today's price, so at first it has none anywhere near $78 to test. A mesh puts a node wherever it likes.
 
@@ -191,12 +207,12 @@ The other road skips solvers entirely. A binomial tree takes the better of exerc
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year. The mesh takes 240 price steps and 120 date steps, with $\omega = 1.1$, each date swept until no value moves by more than a hundred-billionth — which, divided by $1-\kappa$, bounds the distance still to go.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year. The mesh takes 240 price steps and 120 date steps, with $`\omega = 1.1`$, each date swept until no value moves by more than a hundred-billionth — which, divided by $`1-\kappa`$, bounds the distance still to go.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| shrinkage of one all-at-once refresh | $(\ell+u)/d$ | 0.680761 |
-| proved shrinkage of one projected sweep | $\kappa$ at $\omega = 1.1$ | 0.758815 |
+| shrinkage of one all-at-once refresh | $`(\ell+u)/d`$ | 0.680761 |
+| proved shrinkage of one projected sweep | $`\kappa`$ at $`\omega = 1.1`$ | 0.758815 |
 | sweeps for all 120 dates | until nothing moves | 3204 |
 | the American put at Acme = 100 | PSOR on the mesh | **$6.644541** |
 | the same mesh, floor removed | plain sweeps, no lifting | $6.317933 |
@@ -215,7 +231,7 @@ The right to act early is worth about 33 cents on a put worth $6.64, for a decis
 | Solve each date's equations, then lift onto the floor once | $6.639239 | Lifting a value changes what its neighbours need, and they are never asked again |
 | Drop the floor and solve the equations only | $6.317933 | That is the European put; the right to act early has gone |
 | Project before relaxing, one node, floor 1 | 0.500000 | Under its own floor, the one condition never up for negotiation |
-| Take $\omega = 2$, the excluded end of the range | cycles 2.000, 0.000, 2.000, 0.000 | The sweep stops being a contraction, so it never settles |
+| Take $`\omega = 2`$, the excluded end of the range | cycles 2.000, 0.000, 2.000, 0.000 | The sweep stops being a contraction, so it never settles |
 
 ---
 
@@ -239,7 +255,7 @@ xychart-beta
 
 The rising line is where exercising takes over; the flat one is the strike. Note the pace: most of the year it crawls, then in the final weeks it sprints — which is why a hedge built from European sensitivities misbehaves near expiry.
 
-Nothing stops the line reaching the strike here. Exercising can only pay while the interest earned on the strike covers the dividends given up on the share, so any line stays below $rK/q$, far above the strike in this market. Where dividends are large against rates, that ceiling bites and the line stops short.
+Nothing stops the line reaching the strike here. Exercising can only pay while the interest earned on the strike covers the dividends given up on the share, so any line stays below $`rK/q`$, far above the strike in this market. Where dividends are large against rates, that ceiling bites and the line stops short.
 
 Turn the interest off and the story vanishes. At a rate of zero there is nothing to collect early, the floor never binds, and the same mesh returns `8.903437` whether the lifting is on or off. Early exercise of a put is an interest-rate story from beginning to end.
 
@@ -671,15 +687,15 @@ The two outputs agree line for line, from different code, with the bell-curve ar
 
 Lean proves Steps 2 and 3 for every number of nodes, every right-hand side and every floor, plus the small hand-worked cases.
 
-- Suppose both side weights are non-negative and the diagonal $d$ exceeds $\ell + u$. Then the LCP has exactly one solution.
+- Suppose both side weights are non-negative and the diagonal $`d`$ exceeds $`\ell + u`$. Then the LCP has exactly one solution.
 - Suppose the diagonal is positive. Then a list solves the LCP exactly when every node equals the larger of its floor and its row value.
-- Take that same band, and any $\omega$ with $0 < \omega < 2/(1+\kappa_0)$. Then repeated PSOR sweeps, from any start that clears the floors, close in on that one solution.
+- Take that same band, and any $`\omega`$ with $`0 < \omega < 2/(1+\kappa_0)`$. Then repeated PSOR sweeps, from any start that clears the floors, close in on that one solution.
 - In the two-node case of Step 1, the values 1 and 4/3 solve the LCP, with slacks 5/3 and 0.
-- There, solving with no floor gives 3/8 and 9/8. Lifting that pair leaves the second slack at $-5/8$, so it is no solution.
+- There, solving with no floor gives 3/8 and 9/8. Lifting that pair leaves the second slack at $`-5/8`$, so it is no solution.
 - In Step 4's one-node case, the rule gives 1, while projecting before relaxing gives 1/2, under the floor.
 - At the excluded weight 2, one sweep sends 0 to 2, and the next sends 2 back to 0.
 
-The Acme prices, the exercise line, the sweep counts and the sweep's constant $\kappa$ are left to the Python and Rust checks.
+The Acme prices, the exercise line, the sweep counts and the sweep's constant $`\kappa`$ are left to the Python and Rust checks.
 
 ```lean
 -- American options on a grid: on a mesh whose band has non-negative side weights and a diagonal larger than their sum, the floor-and-slack complementarity problem has exactly one solution, it is the fixed point of "row value, then lift onto the floor", and projected over-relaxation sweeps converge to it for every weight 0 < ω < 2/(1 + κ₀).
@@ -1039,7 +1055,7 @@ open AmericanLCP
 > **Solving each date's equations and then clamping the answer onto the floor.** It is the natural thing to write, and it is a different problem. Lifting one value changes what its neighbours' equations demand, and nobody asks them again; the two-node case above leaves a slack of `-0.625000` where the conditions require it to be non-negative. On the Acme mesh the shortcut prices the put at $6.639239 against $6.644541 — a bug no test of the solver itself would catch.
 >
 > - **Projecting inside the relaxation.** One node with floor 1 comes out at `0.500000`, under its floor.
-> - **Choosing $\omega$ from a half-remembered rule.** The proved interval is $0 < \omega < 2/(1+\kappa_0)$, and $\kappa_0$ climbs toward 1 as the mesh is refined, so the safe interval *shrinks*. A weight that swept a coarse mesh happily can stop settling on a fine one.
+> - **Choosing $`\omega`$ from a half-remembered rule.** The proved interval is $`0 < \omega < 2/(1+\kappa_0)`$, and $`\kappa_0`$ climbs toward 1 as the mesh is refined, so the safe interval *shrinks*. A weight that swept a coarse mesh happily can stop settling on a fine one.
 > - **Quoting the contact node as the boundary.** It is the top of the exercise region, not the line: today's node is $77.880078 with the next at $78.859689. More decimals than the mesh can carry is a fiction.
 > - **Measuring the premium against a closed form.** Difference the two prices off the same mesh, where the mesh's error mostly cancels; difference across methods on a coarse mesh and the error is the size of the thing being measured.
 > - **Refining space and forgetting time.** These dates are stepped fully implicitly, so their error falls only in proportion to the date step.

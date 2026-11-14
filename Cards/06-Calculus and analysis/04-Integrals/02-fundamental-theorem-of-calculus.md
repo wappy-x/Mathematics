@@ -28,31 +28,35 @@ Scale: 28 units across per minute, 7 up per litre a minute. The sloping line is 
 
 ## The formula
 
-Notation first, in words. A function's derivative is its rate: $A'(x)$, read "A prime of x", is how fast A grows at x ([The derivative](../02-Derivatives/01-the-derivative.md)).
+Notation first, in words. A function's derivative is its rate: $`A'(x)`$, read "A prime of x", is how fast A grows at x ([The derivative](../02-Derivatives/01-the-derivative.md)).
 
 A function whose derivative is f is an **antiderivative** of f: it runs the derivative backwards. An integral with a letter x as its upper end is a **running total**, a function of where the interval stops; the t inside only counts time along the way.
 
 The first half says the running total grows at the rate:
 
-$$A(x) = \int_a^x f(t)\,dt \quad\text{has}\quad A'(x) = f(x)$$
+```math
+A(x) = \int_a^x f(t)\,dt \quad\text{has}\quad A'(x) = f(x)
+```
 
 **Read it aloud:** the litres in by minute x grow at the flow rate at minute x.
 
 The second half turns an antiderivative into a total:
 
-$$\int_a^b f(t)\,dt = G(b) - G(a) \quad\text{whenever}\quad G'(t) = f(t)$$
+```math
+\int_a^b f(t)\,dt = G(b) - G(a) \quad\text{whenever}\quad G'(t) = f(t)
+```
 
 **Read it aloud:** the water from minute a to minute b is the antiderivative at the end minus the antiderivative at the start.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the rate, a function of time | 3 + 2t litres a minute | more water |
-| $t$ | time inside the integral; its name is free | minutes, 0 to 10 | — |
-| $a$, $b$ | start and end of the interval | minute 0 and minute 10 | a later end collects more water |
-| $x$ | a movable end point | minute 4 | the running total grows |
-| $A$ | the running total, built from sums alone | 28 litres at minute 4 | — |
-| $G$, $C$ | an antiderivative, and the constant any antiderivative may carry | 3t + t^2, with no constant added | the constant cancels in the subtraction |
-| $h$ | a small step past x | 1, 0.1, 0.01 minutes | the step's average drifts from the rate |
+| $`f`$ | the rate, a function of time | 3 + 2t litres a minute | more water |
+| $`t`$ | time inside the integral; its name is free | minutes, 0 to 10 | — |
+| $`a`$, $`b`$ | start and end of the interval | minute 0 and minute 10 | a later end collects more water |
+| $`x`$ | a movable end point | minute 4 | the running total grows |
+| $`A`$ | the running total, built from sums alone | 28 litres at minute 4 | — |
+| $`G`$, $`C`$ | an antiderivative, and the constant any antiderivative may carry | 3t + t^2, with no constant added | the constant cancels in the subtraction |
+| $`h`$ | a small step past x | 1, 0.1, 0.01 minutes | the step's average drifts from the rate |
 
 Units: the running total is in litres, so its rate is litres per minute, the same unit as the flow.
 
@@ -73,13 +77,13 @@ In a short slice of time the flow barely changes, so the water arriving is close
 
 ### Step 1: the running total grows at the rate
 
-Step h minutes past minute 4. The water arriving is $A(4 + h) - A(4)$. Meanwhile the flow stays between f(4) = 11 and f(4 + h) = 11 + 2h, so the slice's one-strip lower and upper sums are 11h and (11 + 2h)h, and the water lies between them.
+Step h minutes past minute 4. The water arriving is $`A(4 + h) - A(4)`$. Meanwhile the flow stays between f(4) = 11 and f(4 + h) = 11 + 2h, so the slice's one-strip lower and upper sums are 11h and (11 + 2h)h, and the water lies between them.
 
 Divide by h: the slice's average rate lies between 11 and 11 + 2h. Computed from sums alone, the average reads 12 for a step of 1 minute, 11.1 for 0.1, 11.01 for 0.01.
 
 The limit, played with numbers: to land within 0.001 of 11, keep the step below 0.0005 minutes, so 11 + 2h stays below 11.001. At h = 0.0005 the average reads 11.0005.
 
-For any continuous rate, the slice's lowest and highest rates both head for f(x) as h heads for 0; that is what continuity means. The average is trapped between them, so $A'(x) = f(x)$. A negative step uses the slice on the left and ends the same way.
+For any continuous rate, the slice's lowest and highest rates both head for f(x) as h heads for 0; that is what continuity means. The average is trapped between them, so $`A'(x) = f(x)`$. A negative step uses the slice on the left and ends the same way.
 
 ### Step 2: an antiderivative's changes add up to the total
 
@@ -87,18 +91,18 @@ Cut the ten minutes at each whole minute. G's change over the run is the sum of 
 
 The [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) says each one-minute change equals G's rate at some inside point, times one minute. G's rate is f, so each change is one rectangle. For the tank that point is the half minute: over minute k, G changes by 2k + 2, and f(k − 0.5) = 2k + 2. The ten changes, 4, 6, up to 22, add to 130.
 
-So $G(b) - G(a)$ is a rectangle sum for every cut of the interval. It therefore sits between the lower and upper sums for every cut, and the integral is the only number that does.
+So $`G(b) - G(a)`$ is a rectangle sum for every cut of the interval. It therefore sits between the lower and upper sums for every cut, and the integral is the only number that does.
 
 <details>
 <summary>Detailed proof</summary>
 
-**First half.** Let f be continuous on the closed interval from a to b, x in it, and $\varepsilon > 0$ a target closeness. Continuity gives $\delta > 0$ with $\lvert f(t) - f(x)\rvert < \varepsilon$ whenever $\lvert t - x\rvert < \delta$. For $0 < h < \delta$,
+**First half.** Let f be continuous on the closed interval from a to b, x in it, and $`\varepsilon > 0`$ a target closeness. Continuity gives $`\delta > 0`$ with $`\lvert f(t) - f(x)\rvert < \varepsilon`$ whenever $`\lvert t - x\rvert < \delta`$. For $`0 < h < \delta`$,
 
-$$\frac{A(x+h) - A(x)}{h} - f(x) = \frac{1}{h}\int_x^{x+h} \bigl(f(t) - f(x)\bigr)\,dt.$$
+$`\displaystyle \frac{A(x+h) - A(x)}{h} - f(x) = \frac{1}{h}\int_x^{x+h} \bigl(f(t) - f(x)\bigr)\,dt.`$
 
-The inner rate stays within $\varepsilon$ of 0 across the slice, so the slice's lower and upper sums bound the right side by $\varepsilon$ in size. For $-\delta < h < 0$ the slice runs from x + h to x, with the same bound. At a or b only the inward step exists: a one-sided derivative.
+The inner rate stays within $`\varepsilon`$ of 0 across the slice, so the slice's lower and upper sums bound the right side by $`\varepsilon`$ in size. For $`-\delta < h < 0`$ the slice runs from x + h to x, with the same bound. At a or b only the inward step exists: a one-sided derivative.
 
-**Second half.** Let G be continuous on the closed interval, with G' = f at every inside point, and let f have an integral. Cut at points a = p0 < p1 < … < pn = b. The mean value theorem gives, in piece k, a point ck with G(pk) − G(pk−1) = f(ck)(pk − pk−1). Adding, the left side telescopes to G(b) − G(a); the right is a rectangle sum, between this cut's lower and upper sums, as is the integral. Some cut makes upper minus lower smaller than any $\varepsilon > 0$, so the two numbers are equal. Continuity of f was never used.
+**Second half.** Let G be continuous on the closed interval, with G' = f at every inside point, and let f have an integral. Cut at points a = p0 < p1 < … < pn = b. The mean value theorem gives, in piece k, a point ck with G(pk) − G(pk−1) = f(ck)(pk − pk−1). Adding, the left side telescopes to G(b) − G(a); the right is a rectangle sum, between this cut's lower and upper sums, as is the integral. Some cut makes upper minus lower smaller than any $`\varepsilon > 0`$, so the two numbers are equal. Continuity of f was never used.
 
 </details>
 

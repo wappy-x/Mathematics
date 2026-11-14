@@ -32,7 +32,9 @@ To scale: 20 px per mm across the pipe, 2000 px per m/s along it. This is the sa
 
 Notation first, in words. Measure distance out from the pipe's axis as r. Call the water's speed at that distance u(r). Call the pressure drop per metre of pipe G.
 
-$$u(r) = \frac{G}{4\mu}\left(R^2 - r^2\right), \qquad \Delta p = G\,L = \frac{8\,\mu\,L\,Q}{\pi R^4} = \frac{128\,\mu\,L\,Q}{\pi D^4}$$
+```math
+u(r) = \frac{G}{4\mu}\left(R^2 - r^2\right), \qquad \Delta p = G\,L = \frac{8\,\mu\,L\,Q}{\pi R^4} = \frac{128\,\mu\,L\,Q}{\pi D^4}
+```
 
 **Read it aloud:** the speed falls off as a parabola from the axis to the wall, and the pressure the pump must supply grows with the stickiness, the length and the flow, and falls with the fourth power of the bore.
 
@@ -40,18 +42,18 @@ The pressure formula is Poiseuille's law, also called the Hagen–Poiseuille law
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mu$ | dynamic viscosity: how hard the fluid resists layers sliding, in pascal-seconds (Pa s) | 70 °C water, 0.000403561 Pa s | pressure rises in proportion, while laminar |
-| $\rho$ | density, in kg/m³ | 977.786 kg/m³ | Re rises; no effect on the laminar law |
-| $r$ | distance out from the axis, in m | 0 to 6.8 mm | speed falls, to zero at the wall |
-| $R$, $D$ | the bore's radius and diameter (inside, not outside) | 6.8 mm and 13.6 mm | pressure falls as $1/R^4$: the biggest lever |
-| $u(r)$, $u_\text{max}$ | the speed at distance r; the speed on the axis | 2.7535 m/s on the axis if laminar | — |
-| $\tau$, $\tau_w$ | shear stress: the drag force per square metre between layers; its value at the wall | 0.3268 Pa at the wall if laminar | — |
-| $G$ | pressure drop per metre of pipe, Δp/L, in Pa/m | 96.13 Pa/m laminar, 1,477.24 Pa/m real | everything scales with it |
-| $L$, $\Delta p$ | pipe length; the pressure the pump must make up over it | 20 m; 29.54 kPa real | Δp grows with L |
-| $Q$ | volume flow rate, in m³/s | 12 L/min = 200 cm³/s | pressure rises: in proportion while laminar, faster after |
-| $V$ | mean speed, Q divided by the bore's area | 1.3768 m/s | — |
-| $\mathrm{Re}$ | Reynolds number, $\rho V D/\mu$: momentum over stickiness, no units | 45,367 | above about 2,300 the laminar law fails |
-| $f$ | Darcy friction factor: pressure per metre in units of $\rho V^2/(2D)$ | 64/Re laminar; 0.3164 Re^(−1/4) turbulent | — |
+| $`\mu`$ | dynamic viscosity: how hard the fluid resists layers sliding, in pascal-seconds (Pa s) | 70 °C water, 0.000403561 Pa s | pressure rises in proportion, while laminar |
+| $`\rho`$ | density, in kg/m³ | 977.786 kg/m³ | Re rises; no effect on the laminar law |
+| $`r`$ | distance out from the axis, in m | 0 to 6.8 mm | speed falls, to zero at the wall |
+| $`R`$, $`D`$ | the bore's radius and diameter (inside, not outside) | 6.8 mm and 13.6 mm | pressure falls as $`1/R^4`$: the biggest lever |
+| $`u(r)`$, $`u_\text{max}`$ | the speed at distance r; the speed on the axis | 2.7535 m/s on the axis if laminar | — |
+| $`\tau`$, $`\tau_w`$ | shear stress: the drag force per square metre between layers; its value at the wall | 0.3268 Pa at the wall if laminar | — |
+| $`G`$ | pressure drop per metre of pipe, Δp/L, in Pa/m | 96.13 Pa/m laminar, 1,477.24 Pa/m real | everything scales with it |
+| $`L`$, $`\Delta p`$ | pipe length; the pressure the pump must make up over it | 20 m; 29.54 kPa real | Δp grows with L |
+| $`Q`$ | volume flow rate, in m³/s | 12 L/min = 200 cm³/s | pressure rises: in proportion while laminar, faster after |
+| $`V`$ | mean speed, Q divided by the bore's area | 1.3768 m/s | — |
+| $`\mathrm{Re}`$ | Reynolds number, $`\rho V D/\mu`$: momentum over stickiness, no units | 45,367 | above about 2,300 the laminar law fails |
+| $`f`$ | Darcy friction factor: pressure per metre in units of $`\rho V^2/(2D)`$ | 64/Re laminar; 0.3164 Re^(−1/4) turbulent | — |
 
 The Reynolds number was built from these quantities in [Buckingham Pi](../01-Units%20and%20Modelling/02-dimensional-analysis-and-buckingham-pi.md); here it is used only as the switch between the two regimes.
 
@@ -75,7 +77,9 @@ The water touching the copper does not move. Each layer drags on the next, and t
 
 Two layers sliding past each other drag on each other with a force per square metre proportional to how fast the speed changes as you cross from one layer to the next. In the pipe, the layers are thin rings and the speed falls going outward, so
 
-$$\tau = -\mu\,\frac{du}{dr}.$$
+```math
+\tau = -\mu\,\frac{du}{dr}.
+```
 
 This is a model: double the rate of sliding and the drag doubles. μ is a property of the fluid and its temperature. Water at 70 °C has μ = 0.000403561 Pa s; at 20 °C, 0.00100158 Pa s (NIST, the US National Institute of Standards and Technology, at 0.15 MPa). [Continuity and Bernoulli](01-continuity-and-bernoulli.md) and [Navier-Stokes](03-navier-stokes-and-the-reynolds-number.md) take water at a slightly lower pressure, so their values differ from these in the fifth significant figure.
 
@@ -83,40 +87,48 @@ This is a model: double the rate of sliding and the drag doubles. μ is a proper
 
 Take a plug of water of radius r and length L, on the axis. The pressure on its upstream end is higher than on its downstream end by Δp, so the net forward push is Δp π r². The slower water outside drags on its curved skin, area 2π r L, with stress τ(r). Balance them:
 
-$$\Delta p\,\pi r^2 = \tau(r)\,2\pi r L \quad\Longrightarrow\quad \tau(r) = \frac{G\,r}{2}.$$
+```math
+\Delta p\,\pi r^2 = \tau(r)\,2\pi r L \quad\Longrightarrow\quad \tau(r) = \frac{G\,r}{2}.
+```
 
-The drag between layers grows in a straight line from zero on the axis to $\tau_w = G R/2$ at the wall. No viscosity entered yet: this holds for any fluid in steady flow.
+The drag between layers grows in a straight line from zero on the axis to $`\tau_w = G R/2`$ at the wall. No viscosity entered yet: this holds for any fluid in steady flow.
 
 ### Step 3: the parabola, as a boundary value problem
 
-Step 1 and Step 2 together give $du/dr = -G r/(2\mu)$. Written as one equation for u, it is
+Step 1 and Step 2 together give $`du/dr = -G r/(2\mu)`$. Written as one equation for u, it is
 
-$$\frac{1}{r}\frac{d}{dr}\left(r\,\frac{du}{dr}\right) = -\frac{G}{\mu}, \qquad u'(0) = 0, \qquad u(R) = 0.$$
+```math
+\frac{1}{r}\frac{d}{dr}\left(r\,\frac{du}{dr}\right) = -\frac{G}{\mu}, \qquad u'(0) = 0, \qquad u(R) = 0.
+```
 
 The two conditions sit at opposite ends: the profile is flat on the axis (by symmetry), and it is zero at the wall (no-slip). This is a two-point boundary value problem, with a slope condition at one end and a value condition at the other ([Boundary value problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)).
 
-Every solution of the equation is $-G r^2/(4\mu)$ plus a constant plus a multiple of $\ln r$. Flatness on the axis rules out the logarithm, whose slope blows up there. The wall fixes the constant at G R²/(4μ). One answer:
+Every solution of the equation is $`-G r^2/(4\mu)`$ plus a constant plus a multiple of $`\ln r`$. Flatness on the axis rules out the logarithm, whose slope blows up there. The wall fixes the constant at G R²/(4μ). One answer:
 
-$$u(r) = \frac{G}{4\mu}\left(R^2 - r^2\right), \qquad u_\text{max} = \frac{G R^2}{4\mu}.$$
+```math
+u(r) = \frac{G}{4\mu}\left(R^2 - r^2\right), \qquad u_\text{max} = \frac{G R^2}{4\mu}.
+```
 
 ### Step 4: add up the flow
 
 Cut the bore into thin rings. The ring at radius r, width dr, has area 2π r dr and carries u(r) times that each second. Summing the rings:
 
-$$Q = \int_0^R u(r)\,2\pi r\,dr = \frac{\pi G R^4}{8\mu}.$$
+```math
+Q = \int_0^R u(r)\,2\pi r\,dr = \frac{\pi G R^4}{8\mu}.
+```
 
-Turn it round for the pump: $G = 8\mu Q/(\pi R^4)$, and over length L, $\Delta p = 8\mu L Q/(\pi R^4)$.
+Turn it round for the pump: $`G = 8\mu Q/(\pi R^4)`$, and over length L, $`\Delta p = 8\mu L Q/(\pi R^4)`$.
 
 <details>
 <summary>The integral, written out</summary>
 
-$$Q = \frac{2\pi G}{4\mu}\int_0^R (R^2 r - r^3)\,dr = \frac{\pi G}{2\mu}\left(\frac{R^4}{2} - \frac{R^4}{4}\right) = \frac{\pi G R^4}{8\mu}.$$
+$`\displaystyle Q = \frac{2\pi G}{4\mu}\int_0^R (R^2 r - r^3)\,dr = \frac{\pi G}{2\mu}\left(\frac{R^4}{2} - \frac{R^4}{4}\right) = \frac{\pi G R^4}{8\mu}.`$
 
-Dividing by the area π R² gives the mean speed V = G R²/(8μ), exactly half of $u_\text{max}$. Putting V into $f = G \cdot 2D/(\rho V^2)$ gives $f = 64\mu/(\rho V D) = 64/\mathrm{Re}$: the laminar law in the friction-factor form engineers tabulate.
+Dividing by the area π R² gives the mean speed V = G R²/(8μ), exactly half of $`u_\text{max}`$. Putting V into $`f = G \cdot 2D/(\rho V^2)`$ gives $`f = 64\mu/(\rho V D) = 64/\mathrm{Re}`$: the laminar law in the friction-factor form engineers tabulate.
 
 </details>
 
-Why $R^4$? Two powers come from the parabola: a wider pipe lets the middle run faster for the same pressure per metre. Two more come from area: a wider pipe has more of that fast water.
+Why $`R^4`$? Two powers come from the parabola: a wider pipe lets the middle run faster for the same pressure per metre. Two more come from area: a wider pipe has more of that fast water.
 
 ### Step 5: a check by energy
 
@@ -126,7 +138,7 @@ The pump puts in power Δp Q. In steady flow none of it becomes speed, so all of
 
 The profile is a solution at every flow. It stops being the flow the pipe chooses when Re passes a critical value. Osborne Reynolds found the switch in 1883 by injecting dye into water in glass tubes; the working threshold engineers use is about 2,300.
 
-Above it, eddies carry fast water from the core to the wall, the profile flattens, the slope at the wall steepens, and the wall drag jumps. No formula of this kind exists for turbulent flow. Engineers use measured fits; for smooth pipes with Re between about 4,000 and 100,000, the Blasius fit $f = 0.3164\,\mathrm{Re}^{-1/4}$. Between 2,300 and 4,000 the flow flickers between the two, and no single number is honest. Why turbulence starts is the question of [Navier-Stokes](03-navier-stokes-and-the-reynolds-number.md).
+Above it, eddies carry fast water from the core to the wall, the profile flattens, the slope at the wall steepens, and the wall drag jumps. No formula of this kind exists for turbulent flow. Engineers use measured fits; for smooth pipes with Re between about 4,000 and 100,000, the Blasius fit $`f = 0.3164\,\mathrm{Re}^{-1/4}`$. Between 2,300 and 4,000 the flow flickers between the two, and no single number is honest. Why turbulence starts is the question of [Navier-Stokes](03-navier-stokes-and-the-reynolds-number.md).
 
 ---
 
@@ -549,10 +561,10 @@ The two outputs match line for line.
 
 Lean proves the laminar laws of Why it works for any positive viscosity, radius and length, not only our heating loop.
 
-- Suppose Newton's law of viscosity holds, each plug's push balances the drag on its skin, and the water at the wall does not move. Then the speed is $u(r) = \frac{G}{4\mu}(R^2 - r^2)$ at every distance r from the axis.
-- Take the same three conditions. Then the pressure drop is $\Delta p = 8\mu L Q/(\pi R^4)$, with Q the flow added up ring by ring.
+- Suppose Newton's law of viscosity holds, each plug's push balances the drag on its skin, and the water at the wall does not move. Then the speed is $`u(r) = \frac{G}{4\mu}(R^2 - r^2)`$ at every distance r from the axis.
+- Take the same three conditions. Then the pressure drop is $`\Delta p = 8\mu L Q/(\pi R^4)`$, with Q the flow added up ring by ring.
 - Take the parabola above. Then the heat made by viscosity, added up over the bore, equals the pump power per metre, G Q.
-- Take the mean speed $V = G R^2/(8\mu)$ and the bore $D = 2R$. Then the friction factor is $f = 64/\mathrm{Re}$.
+- Take the mean speed $`V = G R^2/(8\mu)`$ and the bore $`D = 2R`$. Then the friction factor is $`f = 64/\mathrm{Re}`$.
 
 The numbers for our pipe, the turbulent Blasius figure and the switch near Re 2,300 are left to the Python and Rust checks.
 

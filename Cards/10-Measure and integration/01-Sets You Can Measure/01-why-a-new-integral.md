@@ -34,47 +34,53 @@ To scale: each coin is a bar 8 units wide and 0.6 units tall per cent. The top r
 
 ## The formula
 
-Notation first, in words. $c_i$ is the value of coin number $i$ in the order received. $\sum$ means "add up"; $\#\{\dots\}$ counts a set's members. $\{t : f(t) = v\}$ is read "the set of times $t$ at which $f$ reads $v$". $\lambda(A)$, read "the length of A", is the size of a set $A$ of times: an interval's ordinary length, and for other sets the size this wing builds.
+Notation first, in words. $`c_i`$ is the value of coin number $`i`$ in the order received. $`\sum`$ means "add up"; $`\#\{\dots\}`$ counts a set's members. $`\{t : f(t) = v\}`$ is read "the set of times $`t`$ at which $`f`$ reads $`v`$". $`\lambda(A)`$, read "the length of A", is the size of a set $`A`$ of times: an interval's ordinary length, and for other sets the size this wing builds.
 
 For the till:
 
-$$\sum_{i=1}^{37} c_i \;=\; \sum_{v} v \times \#\{\,i : c_i = v\,\}$$
+```math
+\sum_{i=1}^{37} c_i \;=\; \sum_{v} v \times \#\{\,i : c_i = v\,\}
+```
 
 **Read it aloud:** adding the coins one by one in the order received gives the same as adding, over each denomination, the denomination times the number of coins of that denomination.
 
-For a function $f$ of time that takes only finitely many values:
+For a function $`f`$ of time that takes only finitely many values:
 
-$$\int f \;=\; \sum_{v} v \times \lambda(\{\,t : f(t) = v\,\})$$
+```math
+\int f \;=\; \sum_{v} v \times \lambda(\{\,t : f(t) = v\,\})
+```
 
 **Read it aloud:** the integral is each value times the length of the set of times that take it, added over the values.
 
-For the rational-minute reading $r$ on the hour, with $R$ the set of rational times between 0 and 60:
+For the rational-minute reading $`r`$ on the hour, with $`R`$ the set of rational times between 0 and 60:
 
-$$\int_0^{60} r \;=\; 1 \times \lambda(R) \;+\; 0 \times \lambda([0,60] \setminus R) \;=\; 0, \qquad \text{because } \lambda(R) \le \varepsilon \text{ for every } \varepsilon > 0.$$
+```math
+\int_0^{60} r \;=\; 1 \times \lambda(R) \;+\; 0 \times \lambda([0,60] \setminus R) \;=\; 0, \qquad \text{because } \lambda(R) \le \varepsilon \text{ for every } \varepsilon > 0.
+```
 
-The backslash in $[0,60] \setminus R$ means "take away": the times in the hour that are not rational.
+The backslash in $`[0,60] \setminus R`$ means "take away": the times in the hour that are not rational.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $c_i$, $i$ | the value of coin number $i$, in order received | coin 1 is $1, coin 3 is 10c | a bigger coin, a bigger total |
-| $v$ | one value the coin or function takes | $1, 50c, …, 1c; or 1 and 0 | a heap of higher value weighs more |
-| $\sum$, $\#\{\dots\}$ | add up; how many members a set has | 20 coins of $1 | — |
-| $f$, $t$ | a function of time, and the time in minutes | the meter's reading at minute $t$ | — |
-| $\lambda(A)$, $A$ | the length of a set $A$ of times | 60 for the whole hour | — |
-| $\{t : f(t) = v\}$ | the times at which $f$ reads $v$ | the rational times, for $v$ = 1 | — |
-| $r$, $R$ | the rational-minute reading, and the set of rational times | $r$ is 1 on $R$, 0 off it | — |
-| $\varepsilon$ | any positive length, however small | 1 minute, 0.01, 0.0001 | a looser cover |
-| $q_j$, $j$, $I_j$ | the rational time in place $j$ of a queue of them, and the interval round it | place 62 holds 1/2 | — |
-| $r_N$, $N$ | the reading switched on at the first $N$ rational times only | $N$ = 100 | more switched on, closer to $r$ |
-| $n$ | the number of equal slices of the hour | 600 up to 600,000 | thinner slices |
-| $\int f$ | the integral of $f$ over the hour | 0 for $r$ | — |
+| $`c_i`$, $`i`$ | the value of coin number $`i`$, in order received | coin 1 is $1, coin 3 is 10c | a bigger coin, a bigger total |
+| $`v`$ | one value the coin or function takes | $1, 50c, …, 1c; or 1 and 0 | a heap of higher value weighs more |
+| $`\sum`$, $`\#\{\dots\}`$ | add up; how many members a set has | 20 coins of $1 | — |
+| $`f`$, $`t`$ | a function of time, and the time in minutes | the meter's reading at minute $`t`$ | — |
+| $`\lambda(A)`$, $`A`$ | the length of a set $`A`$ of times | 60 for the whole hour | — |
+| $`\{t : f(t) = v\}`$ | the times at which $`f`$ reads $`v`$ | the rational times, for $`v`$ = 1 | — |
+| $`r`$, $`R`$ | the rational-minute reading, and the set of rational times | $`r`$ is 1 on $`R`$, 0 off it | — |
+| $`\varepsilon`$ | any positive length, however small | 1 minute, 0.01, 0.0001 | a looser cover |
+| $`q_j`$, $`j`$, $`I_j`$ | the rational time in place $`j`$ of a queue of them, and the interval round it | place 62 holds 1/2 | — |
+| $`r_N`$, $`N`$ | the reading switched on at the first $`N`$ rational times only | $`N`$ = 100 | more switched on, closer to $`r`$ |
+| $`n`$ | the number of equal slices of the hour | 600 up to 600,000 | thinner slices |
+| $`\int f`$ | the integral of $`f`$ over the hour | 0 for $`r`$ | — |
 
 ### When it holds
 
 This is a method, and it is as good as the sizes it is fed.
 
-- **Every value-set needs a size.** Sorting by value asks for the length of sets like $R$, which are not intervals. Not every set of times can be given a length that behaves: Giuseppe Vitali described one in 1905 that cannot ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)). So the method needs a declared collection of sets that do have sizes.
-- **Sizes must add up over a queue of pieces.** The argument for $R$ covers it with a queue of intervals and adds their lengths. A size that only adds up over finitely many pieces cannot see that $R$ is negligible.
+- **Every value-set needs a size.** Sorting by value asks for the length of sets like $`R`$, which are not intervals. Not every set of times can be given a length that behaves: Giuseppe Vitali described one in 1905 that cannot ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)). So the method needs a declared collection of sets that do have sizes.
+- **Sizes must add up over a queue of pieces.** The argument for $`R`$ covers it with a queue of intervals and adds their lengths. A size that only adds up over finitely many pieces cannot see that $`R`$ is negligible.
 - **No mixed signs, or absolute convergence.** Absolute convergence means the terms still add to a finite total with their signs dropped. For finitely many terms, or terms that are never negative, order never matters. With infinitely many terms of both signs it can: 1 − 1/2 + 1/3 − … is 0.6931 in order and 1.0397 with two positive terms taken per negative one.
 - **Finitely many values here.** A function with infinitely many values is handled by narrow value bands, approximated from below ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
 
@@ -94,7 +100,7 @@ The running totals of $5.01, $10.58 and $17.20 at coins 10, 20 and 30 depend on 
 
 ### Step 2: a till is a step function
 
-Lay the coins on a line in the order received, coin $i$ occupying the stretch from $i - 1$ to $i$, and let the height there be its value. That is a function taking six values, and its Riemann integral, slice by slice, is the running total.
+Lay the coins on a line in the order received, coin $`i`$ occupying the stretch from $`i - 1`$ to $`i`$, and let the height there be its value. That is a function taking six values, and its Riemann integral, slice by slice, is the running total.
 
 Sorting by value asks for the length of the stretch at each value: 20 units at 100c, 5 at 50c, and so on. Value times length, added, is the heap total. The picture above is this identity drawn: the bottom row is the top row with its bars rearranged.
 
@@ -102,32 +108,32 @@ So for step functions the two integrals agree.
 
 ### Step 3: position fails the rational-minute reading
 
-Cut the hour into $n$ equal slices. Every slice holds a rational time, its midpoint for one, and an irrational time (one that is not a fraction) as well: [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md) proves this for its fraction rule, and the argument is the same here. So the highest reading on every slice is 1 and the lowest is 0. The upper sum, each slice's highest reading times its width, added, is 60 and the lower sum, the same with each slice's lowest reading, is 0, at every $n$. The gap never closes, and $r$ has no Riemann integral.
+Cut the hour into $`n`$ equal slices. Every slice holds a rational time, its midpoint for one, and an irrational time (one that is not a fraction) as well: [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md) proves this for its fraction rule, and the argument is the same here. So the highest reading on every slice is 1 and the lowest is 0. The upper sum, each slice's highest reading times its width, added, is 60 and the lower sum, the same with each slice's lowest reading, is 0, at every $`n`$. The gap never closes, and $`r`$ has no Riemann integral.
 
 Sampling hides the failure. A Riemann sum tagged at each slice's midpoint (each slice's reading taken at its midpoint, times its width, added) gives 60.0000 at 6, 60 and 600 slices, because every midpoint is a fraction.
 
 ### Step 4: the reading-1 heap has size zero
 
-The rational times can be queued ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). Take the whole minutes first, then the halves, then thirds, skipping repeats: the whole minutes fill places 1 to 61, and place 62 is 1/2. Call the time in place $j$ by the name $q_j$.
+The rational times can be queued ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). Take the whole minutes first, then the halves, then thirds, skipping repeats: the whole minutes fill places 1 to 61, and place 62 is 1/2. Call the time in place $`j`$ by the name $`q_j`$.
 
-Fix any positive length $\varepsilon$. Put an interval of length $\varepsilon/2$ round the first time in the queue, $\varepsilon/4$ round the second, $\varepsilon/8$ round the third, halving each time. Every rational time is covered, and the lengths add to less than $\varepsilon$: the first $N$ add to $\varepsilon$ times $1 - 1/2^N$.
+Fix any positive length $`\varepsilon`$. Put an interval of length $`\varepsilon/2`$ round the first time in the queue, $`\varepsilon/4`$ round the second, $`\varepsilon/8`$ round the third, halving each time. Every rational time is covered, and the lengths add to less than $`\varepsilon`$: the first $`N`$ add to $`\varepsilon`$ times $`1 - 1/2^N`$.
 
-With $\varepsilon$ one minute, the first 10,000 widths add to 1.0000 minute at most, and because the first interval sticks out past minute 0, the part inside the hour is only 0.7500. With $\varepsilon$ at 0.01 the widths add to 0.01000000; at 0.0001, to 0.00010000.
+With $`\varepsilon`$ one minute, the first 10,000 widths add to 1.0000 minute at most, and because the first interval sticks out past minute 0, the part inside the hour is only 0.7500. With $`\varepsilon`$ at 0.01 the widths add to 0.01000000; at 0.0001, to 0.00010000.
 
-A length that deserves the name should give the rational times no more than the intervals covering them. So $\lambda(R)$ is at most $\varepsilon$ for every positive $\varepsilon$, and a non-negative number below every positive number is 0. The integral by value is then 1 × 0 + 0 × 60 = 0.
+A length that deserves the name should give the rational times no more than the intervals covering them. So $`\lambda(R)`$ is at most $`\varepsilon`$ for every positive $`\varepsilon`$, and a non-negative number below every positive number is 0. The integral by value is then 1 × 0 + 0 × 60 = 0.
 
 <details>
 <summary>Detailed proof</summary>
 
-Assume only three things about the length $\lambda$: (a) an interval's length is its right end minus its left end; (b) a set inside another is no longer than it; (c) the length of a union of a queue of sets (all their points pooled into one set) is at most the sum of their lengths. The card [Measures](04-measures.md) on this shelf makes these precise.
+Assume only three things about the length $`\lambda`$: (a) an interval's length is its right end minus its left end; (b) a set inside another is no longer than it; (c) the length of a union of a queue of sets (all their points pooled into one set) is at most the sum of their lengths. The card [Measures](04-measures.md) on this shelf makes these precise.
 
-1. $R$ is countable ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), so its members can be listed $q_1, q_2, q_3, \dots$ with each rational time appearing at some place $j$.
-2. Fix $\varepsilon > 0$. Let $I_j$ be the interval centred on $q_j$ of length $\varepsilon/2^j$. By (a), $\lambda(I_j) = \varepsilon/2^j$.
-3. Each point of $R$ is some $q_j$, which lies in $I_j$. So $R$ sits inside the union of all the $I_j$, and by (b) and (c), $\lambda(R) \le \sum_j \varepsilon/2^j$.
-4. The partial sums of that series are $\varepsilon(1 - 2^{-N})$, by the geometric-series formula; they rise to $\varepsilon$ and never pass it. So $\lambda(R) \le \varepsilon$.
-5. Lengths are not negative, so $0 \le \lambda(R) \le \varepsilon$ for every $\varepsilon > 0$. If $\lambda(R)$ were positive, choosing $\varepsilon$ as half of it would contradict step 4. So $\lambda(R) = 0$.
-6. The hour splits into $R$ and the rest, with nothing shared. If lengths add over two such pieces, $60 = \lambda(R) + \lambda([0,60] \setminus R) = 0 + \lambda([0,60] \setminus R)$, so the rest has length 60.
-7. By the value-sorted formula, $\int_0^{60} r = 1 \times 0 + 0 \times 60 = 0$.
+1. $`R`$ is countable ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), so its members can be listed $`q_1, q_2, q_3, \dots`$ with each rational time appearing at some place $`j`$.
+2. Fix $`\varepsilon > 0`$. Let $`I_j`$ be the interval centred on $`q_j`$ of length $`\varepsilon/2^j`$. By (a), $`\lambda(I_j) = \varepsilon/2^j`$.
+3. Each point of $`R`$ is some $`q_j`$, which lies in $`I_j`$. So $`R`$ sits inside the union of all the $`I_j`$, and by (b) and (c), $`\lambda(R) \le \sum_j \varepsilon/2^j`$.
+4. The partial sums of that series are $`\varepsilon(1 - 2^{-N})`$, by the geometric-series formula; they rise to $`\varepsilon`$ and never pass it. So $`\lambda(R) \le \varepsilon`$.
+5. Lengths are not negative, so $`0 \le \lambda(R) \le \varepsilon`$ for every $`\varepsilon > 0`$. If $`\lambda(R)`$ were positive, choosing $`\varepsilon`$ as half of it would contradict step 4. So $`\lambda(R) = 0`$.
+6. The hour splits into $`R`$ and the rest, with nothing shared. If lengths add over two such pieces, $`60 = \lambda(R) + \lambda([0,60] \setminus R) = 0 + \lambda([0,60] \setminus R)`$, so the rest has length 60.
+7. By the value-sorted formula, $`\int_0^{60} r = 1 \times 0 + 0 \times 60 = 0`$.
 
 Steps 1 to 5 use nothing about the rational times except that they can be queued: every countable set of times has length zero.
 
@@ -135,18 +141,18 @@ Steps 1 to 5 use nothing about the rational times except that they can be queued
 
 ### Step 5: limits stop breaking
 
-Let $r_N$ read 1 at the first $N$ rational times in the queue and 0 elsewhere. Finitely many points are harmless to Riemann: each one touches at most two slices, so the upper sum on $n$ slices is at most $2 \times N \times 60/n$. For $N$ = 100 the upper sums at 600, 6,000, 60,000 and 600,000 slices are 19.8000, 1.9800, 0.1980 and 0.0198, under the bounds 20.0000, 2.0000, 0.2000 and 0.0200. So every $r_N$ has Riemann integral 0.
+Let $`r_N`$ read 1 at the first $`N`$ rational times in the queue and 0 elsewhere. Finitely many points are harmless to Riemann: each one touches at most two slices, so the upper sum on $`n`$ slices is at most $`2 \times N \times 60/n`$. For $`N`$ = 100 the upper sums at 600, 6,000, 60,000 and 600,000 slices are 19.8000, 1.9800, 0.1980 and 0.0198, under the bounds 20.0000, 2.0000, 0.2000 and 0.0200. So every $`r_N`$ has Riemann integral 0.
 
-As $N$ grows, each time's reading only ever rises, and every rational time is switched on eventually, so the readings $r_N$ climb to $r$. The integrals are 0, 0, 0, …, and their limit is 0.
+As $`N`$ grows, each time's reading only ever rises, and every rational time is switched on eventually, so the readings $`r_N`$ climb to $`r`$. The integrals are 0, 0, 0, …, and their limit is 0.
 
-Riemann has no integral for $r$ to compare. Lebesgue's gives 0, the limit of the integrals. That is the monotone convergence theorem in miniature ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)): for readings that only rise, the integral of the limit is the limit of the integrals. Riemann's integral cannot promise this, because its limit may not be integrable at all.
+Riemann has no integral for $`r`$ to compare. Lebesgue's gives 0, the limit of the integrals. That is the monotone convergence theorem in miniature ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)): for readings that only rise, the integral of the limit is the limit of the integrals. Riemann's integral cannot promise this, because its limit may not be integrable at all.
 
 ### Step 6: what the wing has to build
 
 Steps 4 and 5 leaned on three things the wing builds.
 
 1. **Which sets have a size.** Vitali's set shows that no length can be given to every set of times while matching (a), adding up exactly over a queue of disjoint pieces (pieces that share no point), and staying the same when a set slides along the line. So a size is promised only to a declared collection of sets, closed under the operations the arguments use: complements (everything outside a set) and unions of a queue of sets. That collection is a sigma-algebra: [Sigma-algebras](02-sigma-algebras.md), with the everyday one, the Borel sets, in [Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md).
-2. **What the size is.** A rule giving each allowed set a size, never negative, adding up over a queue of disjoint pieces: a measure ([Measures](04-measures.md)). Property (c) above follows from it ([Continuity and subadditivity](05-continuity-of-measure.md)). Sets of size zero, such as $R$, get their own card ([Null sets and almost everywhere](07-null-sets-and-almost-everywhere.md)).
+2. **What the size is.** A rule giving each allowed set a size, never negative, adding up over a queue of disjoint pieces: a measure ([Measures](04-measures.md)). Property (c) above follows from it ([Continuity and subadditivity](05-continuity-of-measure.md)). Sets of size zero, such as $`R`$, get their own card ([Null sets and almost everywhere](07-null-sets-and-almost-everywhere.md)).
 3. **How to add a function up against it.** Value times size for functions with finitely many values ([The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)), then limits from below for the rest ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
 
 The other road to Lebesgue's integral runs the other way: prove that it gives Riemann's answer whenever Riemann's exists, so nothing is lost. That is [Riemann meets Lebesgue](../04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md).
@@ -162,9 +168,9 @@ The other road to Lebesgue's integral runs the other way: prove that it gives Ri
 | small change | 2 × 25c + 3 × 10c + 2 × 5c + 5 × 1c | $0.95 in 12 coins |
 | till by denomination | 20.00 + 2.50 + 0.95 | **$23.45** |
 | till in the order received | running total, coin by coin | **$23.45** |
-| rational reading, by position | upper sum 60, lower sum 0, at every $n$ | no integral |
-| cover of the rational times | $\varepsilon$/2 + $\varepsilon$/4 + $\varepsilon$/8 + … | below $\varepsilon$ |
-| length of the rational times | at most every positive $\varepsilon$ | 0 |
+| rational reading, by position | upper sum 60, lower sum 0, at every $`n`$ | no integral |
+| cover of the rational times | $`\varepsilon`$/2 + $`\varepsilon`$/4 + $`\varepsilon`$/8 + … | below $`\varepsilon`$ |
+| length of the rational times | at most every positive $`\varepsilon`$ | 0 |
 | rational reading, by value | 1 × 0 + 0 × 60 | **0** |
 
 The till holds $23.45 however it is counted, and a meter that reads 1 at every rational minute adds up, over the hour, to nothing.
@@ -185,9 +191,9 @@ The code prints all five.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. A SplitMix64 generator (a short recipe that turns a starting number, the seed, into random-looking numbers), written out in both languages with seed 2026, shuffles the till into its arrival order; the till is then totalled coin by coin and heap by heap. The rational times are queued by denominator. Upper sums for $r_N$ use exact whole-number arithmetic and are counted two ways: point by point, and slice by slice. The cover of the first 10,000 rational times is measured two ways: widths added, and intervals merged. The mixed-sign series is summed in two orders and checked against ln 2 (the natural logarithm of 2, 0.6931) from a different series.
+Nothing is imported. A SplitMix64 generator (a short recipe that turns a starting number, the seed, into random-looking numbers), written out in both languages with seed 2026, shuffles the till into its arrival order; the till is then totalled coin by coin and heap by heap. The rational times are queued by denominator. Upper sums for $`r_N`$ use exact whole-number arithmetic and are counted two ways: point by point, and slice by slice. The cover of the first 10,000 rational times is measured two ways: widths added, and intervals merged. The mixed-sign series is summed in two orders and checked against ln 2 (the natural logarithm of 2, 0.6931) from a different series.
 
-What the code shows: the till exactly, and finite covers and finite approximations. What only the proof shows: that all of $R$ has length zero, since the code never holds an irrational time and never reaches the end of the queue.
+What the code shows: the till exactly, and finite covers and finite approximations. What only the proof shows: that all of $`R`$ has length zero, since the code never holds an irrational time and never reaches the end of the queue.
 
 ### Python
 
@@ -546,11 +552,11 @@ Lean proves adding by value for every finite sum, and the rational-minute readin
 
 - Add finitely many values in any order. The total equals each value times how many times it occurs, added over the values.
 - The rational-minute reading, sorted by value with length as the size of a set of times, adds up over the hour to 0.
-- Suppose a queue lists every rational time in the hour. Then at every time of the hour, the readings $r_N$ have limit $r$.
-- Take the same queue. Then the integrals of the $r_N$ over the hour have the integral of $r$ as their limit.
+- Suppose a queue lists every rational time in the hour. Then at every time of the hour, the readings $`r_N`$ have limit $`r`$.
+- Take the same queue. Then the integrals of the $`r_N`$ over the hour have the integral of $`r`$ as their limit.
 - The till's hand arithmetic holds exactly: 37 coins, $23.45 by heap and coin by coin, 12 small coins making $0.95, and the $1.91 mistake.
-- Take $n$ as 600, 6,000, 60,000 and 600,000 slices. Then $2 \times 100 \times 60/n$ is 20, 2, 0.2 and 0.02.
-- With $\varepsilon$ one minute, the first 10 cover widths add to exactly $1 - 1/2^{10}$, and 1 × 0 + 0 × 60 is 0.
+- Take $`n`$ as 600, 6,000, 60,000 and 600,000 slices. Then $`2 \times 100 \times 60/n`$ is 20, 2, 0.2 and 0.02.
+- With $`\varepsilon`$ one minute, the first 10 cover widths add to exactly $`1 - 1/2^{10}`$, and 1 × 0 + 0 × 60 is 0.
 
 The arrival order, the midpoint and upper sums, the 10,000-place covers and the mixed-sign series are left to the Python and Rust checks.
 
@@ -665,7 +671,7 @@ example : ∑ j ∈ Finset.range 10, (1 : ℚ) / 2 ^ (j + 1) = 1 - 1 / 2 ^ 10 :=
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the till and to halving widths, so some changes stop the program.
 > - **Another arrival order.** Change the seed `2026` to any other number. The running totals after 10, 20 and 30 coins change; the final total and every heap do not.
-> - **Widths that shrink too slowly.** Replace `width / 2` with `width / 1.9`. The widths now add to more than 1 minute and the third assert stops it: with the first width a fixed fraction of $\varepsilon$ and each later width that same fraction of the one before, the total stays at most $\varepsilon$ only if the fraction is at most a half.
+> - **Widths that shrink too slowly.** Replace `width / 2` with `width / 1.9`. The widths now add to more than 1 minute and the third assert stops it: with the first width a fixed fraction of $`\varepsilon`$ and each later width that same fraction of the one before, the total stays at most $`\varepsilon`$ only if the fraction is at most a half.
 > - **More points switched on.** Change `fr[:100]` to `fr[:1000]`. The upper sums rise, since each point can touch two slices, and pass the bound pinned to 100 points, so the fourth assert stops it.
 > - **A different till.** Change a coin count in `COUNTS`: both roads move together, and only the pinned $23.45 assert stops it.
 

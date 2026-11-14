@@ -35,26 +35,30 @@ The line is the close. Nothing in it marks out days 1, 3, 6 and 9; the theorem p
 
 ## The formula
 
-A subscript, a small marker written low and to the right of a letter, picks out one place in the list: $x_i$ is the number in position i. Write $n$ for how many numbers the list holds, $A$ for the length of its longest rising run and $B$ for its longest falling run.
+A subscript, a small marker written low and to the right of a letter, picks out one place in the list: $`x_i`$ is the number in position i. Write $`n`$ for how many numbers the list holds, $`A`$ for the length of its longest rising run and $`B`$ for its longest falling run.
 
-$$A \times B \ \ge\ n$$
+```math
+A \times B \ \ge\ n
+```
 
 **Read it aloud:** the longest climb times the longest slide is at least the length of the list.
 
-For Harlow Cement, 4 × 3 = 12, at least 10. Ask for a rising run of $r$ terms or a falling run of $s$ terms. A list with neither has length at most (r − 1)(s − 1), by the inequality, so
+For Harlow Cement, 4 × 3 = 12, at least 10. Ask for a rising run of $`r`$ terms or a falling run of $`s`$ terms. A list with neither has length at most (r − 1)(s − 1), by the inequality, so
 
-$$n = (r-1)(s-1) + 1$$
+```math
+n = (r-1)(s-1) + 1
+```
 
 is the shortest length that forces a run. With r = s = 4 that is 3 × 3 + 1 = 10.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many numbers the list holds | 10 closes | longer runs are forced |
-| $x_i$, $x_j$ | the number in position i, or j | 43.20 on day 1 | — |
-| $r$, $s$ | the rising and falling run lengths asked for | 4 and 4 | a longer list is needed |
-| $a_i$, $a_j$ | longest rising run ending at a position | 4 on day 9 | — |
-| $b_i$, $b_j$ | longest falling run ending at a position | 3 on day 4 | — |
-| $A$, $B$ | longest rising and falling run anywhere | 4 and 3 | the product bound loosens |
+| $`n`$ | how many numbers the list holds | 10 closes | longer runs are forced |
+| $`x_i`$, $`x_j`$ | the number in position i, or j | 43.20 on day 1 | — |
+| $`r`$, $`s`$ | the rising and falling run lengths asked for | 4 and 4 | a longer list is needed |
+| $`a_i`$, $`a_j`$ | longest rising run ending at a position | 4 on day 9 | — |
+| $`b_i`$, $`b_j`$ | longest falling run ending at a position | 3 on day 4 | — |
+| $`A`$, $`B`$ | longest rising and falling run anywhere | 4 and 3 | the product bound loosens |
 
 ### When it holds
 
@@ -69,13 +73,13 @@ is the shortest length that forces a run. With r = s = 4 that is 3 × 3 + 1 = 10
 
 ### Step 0: label every position with two run lengths
 
-Give position i two labels: $a_i$, the longest rising run that **ends** at position i, and $b_i$, the longest falling run ending there. Both look only backwards.
+Give position i two labels: $`a_i`$, the longest rising run that **ends** at position i, and $`b_i`$, the longest falling run ending there. Both look only backwards.
 
 Day 1 has nothing before it: labels 1 and 1. Day 2, at 42.10, is below 43.20, so it ends a fall of two: labels 1 and 2. Day 3, at 44.60, is above both: labels 2 and 1.
 
 ### Step 1: no two positions share a pair of labels
 
-Take an earlier position i and a later position j. Their numbers differ, so one of two things holds. If $x_j$ is larger, any rising run ending at i extends to j, so $a_j$ is at least $a_i$ + 1. If $x_j$ is smaller, the same argument gives $b_j$ at least $b_i$ + 1. One label strictly grows, so the pairs differ. Ten days, ten different pairs.
+Take an earlier position i and a later position j. Their numbers differ, so one of two things holds. If $`x_j`$ is larger, any rising run ending at i extends to j, so $`a_j`$ is at least $`a_i`$ + 1. If $`x_j`$ is smaller, the same argument gives $`b_j`$ at least $`b_i`$ + 1. One label strictly grows, so the pairs differ. Ten days, ten different pairs.
 
 ### Step 2: count the pairs a list without a run of four may use
 
@@ -106,7 +110,7 @@ A rising run takes at most one number per block, so it stops at 3. A falling run
 <details>
 <summary>Detailed proof: any two lengths</summary>
 
-Take $n$ different numbers, labelled as in Step 0. By Step 1 the $n$ label pairs are all different. Each $a_i$ lies in 1 up to $A$ and each $b_i$ in 1 up to $B$, so there are at most $A \times B$ pairs, and $n$ is at most $A \times B$. With no rising run of $r$ and no falling run of $s$, $A \times B$ is at most (r − 1)(s − 1), so a list one longer holds a run. Step 4, with r − 1 falling blocks of s − 1 numbers, shows no shorter list is forced.
+Take $`n`$ different numbers, labelled as in Step 0. By Step 1 the $`n`$ label pairs are all different. Each $`a_i`$ lies in 1 up to $`A`$ and each $`b_i`$ in 1 up to $`B`$, so there are at most $`A \times B`$ pairs, and $`n`$ is at most $`A \times B`$. With no rising run of $`r`$ and no falling run of $`s`$, $`A \times B`$ is at most (r − 1)(s − 1), so a list one longer holds a run. Step 4, with r − 1 falling blocks of s − 1 numbers, shows no shorter list is forced.
 
 </details>
 
@@ -115,7 +119,7 @@ Take $n$ different numbers, labelled as in Step 0. By Step 1 the $n$ label pairs
 
 Day i sits below day j when i is earlier **and** its price is lower ([Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)). A **chain**, a set whose members all compare, is a rising run. An **antichain**, a set in which no two compare, is a falling run: later days are lower.
 
-Days sharing a rising label never compare, by Step 1, so the labels cut the days into $A$ antichains of at most $B$ days each. So $n$ is at most $A \times B$ (Mirsky's theorem). Dilworth's theorem (1950) is the mirror: $B$ chains of at most $A$ days each.
+Days sharing a rising label never compare, by Step 1, so the labels cut the days into $`A`$ antichains of at most $`B`$ days each. So $`n`$ is at most $`A \times B`$ (Mirsky's theorem). Dilworth's theorem (1950) is the mirror: $`B`$ chains of at most $`A`$ days each.
 
 </details>
 
@@ -125,7 +129,7 @@ The Dilworth section above is a second route: count antichains instead of boxes.
 
 ## Worked numbers, by hand
 
-| Day | Close | Rising label $a_i$ | Falling label $b_i$ |
+| Day | Close | Rising label $`a_i`$ | Falling label $`b_i`$ |
 | --- | --- | --- | --- |
 | 1 | 43.20 | 1 | 1 |
 | 2 | 42.10 | 1 | 2 |
@@ -144,8 +148,8 @@ Eight pairs sit inside the 3 × 3 grid. Days 9 and 10 break out.
 | --- | --- | --- |
 | pairs allowed without a run of four | 3 × 3 | 9 |
 | pairs needed, all different | one per day | 10 |
-| longest rising run | largest $a_i$ | **4** |
-| longest falling run | largest $b_i$ | **3** |
+| longest rising run | largest $`a_i`$ | **4** |
+| longest falling run | largest $`b_i`$ | **3** |
 | product bound | 4 × 3 | **12**, at least 10 |
 
 The four days are 1, 3, 6 and 9. Calling them a four-day uptrend describes arithmetic, not the market.
@@ -708,7 +712,7 @@ example : ∀ t : Finset (Fin 9), (∀ i ∈ t, ∀ j ∈ t, i < j → nineDays 
 ## Where you meet it in real life
 
 - **Reading a trend off a price chart.** Any ten different closes contain a four-day climb or a four-day slide, so four rising days prove nothing.
-- **Patience sorting.** Deal the numbers in order onto piles, each on the leftmost pile whose top is larger, starting a new pile when none is. The number of piles equals $A$, the longest rising run.
+- **Patience sorting.** Deal the numbers in order onto piles, each on the leftmost pile whose top is larger, starting a new pile when none is. The number of piles equals $`A`$, the longest rising run.
 - **The shelf's other forced structures.** Colour every pair among enough people red or blue and a one-colour group appears ([Friends and strangers](01-friends-and-strangers.md)), with most thresholds unknown ([Ramsey numbers](02-ramsey-numbers.md)). Erdos-Szekeres is a rare member whose threshold is exact. Too many edges forcing a triangle is [Mantel and Turan](05-mantel-and-turan.md).
 
 > **Say it back**

@@ -33,37 +33,41 @@ A schematic, not to scale. Each rounded box is a **node**: a stretch of wire at 
 
 ## The formula
 
-$$\sum_{\text{wires at a node}} I = 0, \qquad \sum_{\text{parts round a loop}} V = 0$$
+```math
+\sum_{\text{wires at a node}} I = 0, \qquad \sum_{\text{parts round a loop}} V = 0
+```
 
 **Read it aloud:** the currents into any junction add to zero, counting a current out as negative, and the voltage changes round any closed loop add to zero, counting a rise as positive and a drop as negative.
 
-Each resistor adds Ohm's law, $I = V/R$: current is the voltage across the part divided by its resistance. Put together, the unknown node voltages obey one matrix equation, and the network seen by the lamp shrinks to two numbers:
+Each resistor adds Ohm's law, $`I = V/R`$: current is the voltage across the part divided by its resistance. Put together, the unknown node voltages obey one matrix equation, and the network seen by the lamp shrinks to two numbers:
 
-$$\mathbf{G}\,\mathbf{v} = \mathbf{s}, \qquad I_\text{lamp} = \frac{V_{th}}{R_{th} + R_L}, \qquad I_N = \frac{V_{th}}{R_{th}}$$
+```math
+\mathbf{G}\,\mathbf{v} = \mathbf{s}, \qquad I_\text{lamp} = \frac{V_{th}}{R_{th} + R_L}, \qquad I_N = \frac{V_{th}}{R_{th}}
+```
 
 **Read it aloud:** conductances times node voltages equal the currents the sources would push into nodes held at 0 V; the lamp's current is the stand-in battery's voltage over the stand-in resistor plus the lamp; and the stand-in current source is that voltage over that resistor.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V_s$ | the battery's voltage, in volts (V) | 12 V | every current and voltage scales with it |
-| $R_1, R_2, R_3$ | the three resistors, in ohms (Ω): supply wire, leak to ground, lamp's wire | 2, 6, 1.5 Ω | $R_1$ or $R_3$ up: the lamp dims; $R_2$ up: less leaks away, the lamp brightens |
-| $R_L$ | the lamp's resistance while lit (the "load") | 6 Ω | less current, more voltage across the lamp |
-| $V_A, V_B$ | voltage at node A and node B, measured from ground | 7.5 V, 6 V | the unknowns |
-| $V, I$ | the voltage across one part, in volts, and the current through it, in amps (A); $I_\text{lamp}$ is the lamp's current | lamp 6 V and 1 A; currents 2.25, 1.25, 1, 1 A | the unknowns, from Ohm's law |
-| $g$ | a conductance, $1/R$, in siemens (S): how easily a part passes current; $g_1, g_2, g_3, g_L$ for the four parts | 6 times them: 3, 1, 4, 1 | more current for the same voltage |
-| $\mathbf{G}, \mathbf{v}, \mathbf{s}$ | the node matrix of conductances ($\mathbf{G}'$: the same with the lamp out); the list $(V_A, V_B)$; the source currents, what each source would push into a node held at 0 V | 6 times $\mathbf{G}$ is `[[8, -4], [-4, 5]]`, 6 times $\mathbf{s}$ is $(36, 0)$ | — |
-| $J_1, J_2$ | loop currents: one current imagined circling each loop | 2.25 A, 1 A | the second road's unknowns |
-| $V_{th}$ | the Thevenin voltage: what a meter reads across the lamp's wires with the lamp out | 9 V | the lamp brightens |
-| $R_{th}$ | the Thevenin resistance: how far that voltage sags per amp drawn; $R_1 \parallel R_2$ means two in parallel, $R_1 R_2/(R_1 + R_2)$ | 3 Ω | the lamp dims |
-| $I_N$ | the Norton current: what flows through a plain wire put in the lamp's place | 3 A | the lamp brightens |
-| $P$ | power, in watts (W): voltage times current, or $I^2 R$ in a resistor | lamp 6 W, battery 27 W | — |
+| $`V_s`$ | the battery's voltage, in volts (V) | 12 V | every current and voltage scales with it |
+| $`R_1, R_2, R_3`$ | the three resistors, in ohms (Ω): supply wire, leak to ground, lamp's wire | 2, 6, 1.5 Ω | $`R_1`$ or $`R_3`$ up: the lamp dims; $`R_2`$ up: less leaks away, the lamp brightens |
+| $`R_L`$ | the lamp's resistance while lit (the "load") | 6 Ω | less current, more voltage across the lamp |
+| $`V_A, V_B`$ | voltage at node A and node B, measured from ground | 7.5 V, 6 V | the unknowns |
+| $`V, I`$ | the voltage across one part, in volts, and the current through it, in amps (A); $`I_\text{lamp}`$ is the lamp's current | lamp 6 V and 1 A; currents 2.25, 1.25, 1, 1 A | the unknowns, from Ohm's law |
+| $`g`$ | a conductance, $`1/R`$, in siemens (S): how easily a part passes current; $`g_1, g_2, g_3, g_L`$ for the four parts | 6 times them: 3, 1, 4, 1 | more current for the same voltage |
+| $`\mathbf{G}, \mathbf{v}, \mathbf{s}`$ | the node matrix of conductances ($`\mathbf{G}'`$: the same with the lamp out); the list $`(V_A, V_B)`$; the source currents, what each source would push into a node held at 0 V | 6 times $`\mathbf{G}`$ is `[[8, -4], [-4, 5]]`, 6 times $`\mathbf{s}`$ is $`(36, 0)`$ | — |
+| $`J_1, J_2`$ | loop currents: one current imagined circling each loop | 2.25 A, 1 A | the second road's unknowns |
+| $`V_{th}`$ | the Thevenin voltage: what a meter reads across the lamp's wires with the lamp out | 9 V | the lamp brightens |
+| $`R_{th}`$ | the Thevenin resistance: how far that voltage sags per amp drawn; $`R_1 \parallel R_2`$ means two in parallel, $`R_1 R_2/(R_1 + R_2)`$ | 3 Ω | the lamp dims |
+| $`I_N`$ | the Norton current: what flows through a plain wire put in the lamp's place | 3 A | the lamp brightens |
+| $`P`$ | power, in watts (W): voltage times current, or $`I^2 R`$ in a resistor | lamp 6 W, battery 27 W | — |
 
 ### When it holds
 
 - **The circuit is small beside the wavelength of its signals.** A battery circuit qualifies easily. At radio frequencies a long wire carries a wave, and charge bunches up along it; the current law then fails and the field equations take over ([Maxwell's equations](07-maxwells-equations.md)).
 - **No changing magnetic flux threads a loop.** A changing field drives a voltage round the loop that belongs to no single part, and the voltage law fails ([Magnetic fields](05-magnetism-and-faradays-law.md)).
-- **The battery holds 12 V whatever it supplies.** A real battery sags under load. Model that as a small resistor inside it, added to $R_1$, and every law still holds.
-- **The network's parts obey straight-line laws.** The equivalent needs this. The lamp itself need not: a cold filament has far lower resistance than a hot one, so 6 Ω is true only once it glows. Cold, it is nearer 0.6 Ω, and at switch-on it draws 9 ÷ (3 + 0.6) = 2.5 A, two and a half times its rating. The stand-in still describes the network; the lamp then settles where its own curve crosses the line $V = 9 - 3I$.
+- **The battery holds 12 V whatever it supplies.** A real battery sags under load. Model that as a small resistor inside it, added to $`R_1`$, and every law still holds.
+- **The network's parts obey straight-line laws.** The equivalent needs this. The lamp itself need not: a cold filament has far lower resistance than a hot one, so 6 Ω is true only once it glows. Cold, it is nearer 0.6 Ω, and at switch-on it draws 9 ÷ (3 + 0.6) = 2.5 A, two and a half times its rating. The stand-in still describes the network; the lamp then settles where its own curve crosses the line $`V = 9 - 3I`$.
 - **The equivalent is true from outside only.** It reproduces every voltage and current at the lamp's two wires, and nothing inside the box.
 
 ---
@@ -76,55 +80,65 @@ Charge is neither made nor stored at a junction of wires, so what flows in flows
 
 ### Step 1: name the node voltages, and the voltage law comes free
 
-Call ground 0 V. The battery fixes its top at 12 V. Two voltages are unknown: $V_A$ and $V_B$.
+Call ground 0 V. The battery fixes its top at 12 V. Two voltages are unknown: $`V_A`$ and $`V_B`$.
 
-Every current can now be written from its two end voltages. The current through $R_3$ is $(V_A - V_B)/R_3$; through $R_1$ it is $(12 - V_A)/R_1$. Because each part's voltage is a difference of two heights, every loop sums to zero automatically. Only the current law is left to write: one equation per unknown node.
+Every current can now be written from its two end voltages. The current through $`R_3`$ is $`(V_A - V_B)/R_3`$; through $`R_1`$ it is $`(12 - V_A)/R_1`$. Because each part's voltage is a difference of two heights, every loop sums to zero automatically. Only the current law is left to write: one equation per unknown node.
 
 ### Step 2: the current law at A and at B gives the node matrix
 
-Write each current leaving a node as (this node's voltage minus the other end's) times the part's conductance $g = 1/R$. At node A, three parts leave: towards the battery top, towards ground, towards B. At node B, two: towards A, towards ground through the lamp.
+Write each current leaving a node as (this node's voltage minus the other end's) times the part's conductance $`g = 1/R`$. At node A, three parts leave: towards the battery top, towards ground, towards B. At node B, two: towards A, towards ground through the lamp.
 
-$$g_1 (V_A - 12) + g_2 V_A + g_3 (V_A - V_B) = 0$$
-$$g_3 (V_B - V_A) + g_L V_B = 0$$
+```math
+g_1 (V_A - 12) + g_2 V_A + g_3 (V_A - V_B) = 0
+```
+```math
+g_3 (V_B - V_A) + g_L V_B = 0
+```
 
 The four conductances are 3, 1, 4 and 1 sixths of a siemens. Fractions are a nuisance, so multiply through by 6, and the system is
 
-$$\begin{pmatrix} 8 & -4 \\ -4 & 5 \end{pmatrix}\begin{pmatrix} V_A \\ V_B \end{pmatrix} = \begin{pmatrix} 36 \\ 0 \end{pmatrix}$$
+```math
+\begin{pmatrix} 8 & -4 \\ -4 & 5 \end{pmatrix}\begin{pmatrix} V_A \\ V_B \end{pmatrix} = \begin{pmatrix} 36 \\ 0 \end{pmatrix}
+```
 
-The pattern is general. Each diagonal entry is the total conductance touching that node: 3 + 1 + 4 = 8. Each off-diagonal entry is minus the conductance joining the two nodes: −4. The right side is the current $R_1$ would carry into A if A sat at ground, 12 V times $g_1$; scaled the same way, 12 times 3 is 36. The matrix is symmetric because a resistor treats its two ends alike.
+The pattern is general. Each diagonal entry is the total conductance touching that node: 3 + 1 + 4 = 8. Each off-diagonal entry is minus the conductance joining the two nodes: −4. The right side is the current $`R_1`$ would carry into A if A sat at ground, 12 V times $`g_1`$; scaled the same way, 12 times 3 is 36. The matrix is symmetric because a resistor treats its two ends alike.
 
-[Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md) finishes it. Row B minus −0.5 times row A is `[0, 3 | 18]`, so $V_B = 6$ V; back up, $8 V_A = 36 + 4 \times 6$ gives $V_A = 7.5$ V.
+[Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md) finishes it. Row B minus −0.5 times row A is `[0, 3 | 18]`, so $`V_B = 6`$ V; back up, $`8 V_A = 36 + 4 \times 6`$ gives $`V_A = 7.5`$ V.
 
 ### Step 3: the other road, loop currents
 
-Turn the bookkeeping round. Imagine one current $J_1$ circling the left loop and $J_2$ circling the right. Each wire then carries in exactly what it carries out, so now the current law comes free, and the voltage law gives one equation per loop. $R_2$ sits in both loops and carries $J_1 - J_2$:
+Turn the bookkeeping round. Imagine one current $`J_1`$ circling the left loop and $`J_2`$ circling the right. Each wire then carries in exactly what it carries out, so now the current law comes free, and the voltage law gives one equation per loop. $`R_2`$ sits in both loops and carries $`J_1 - J_2`$:
 
-$$\begin{pmatrix} 8 & -6 \\ -6 & 13.5 \end{pmatrix}\begin{pmatrix} J_1 \\ J_2 \end{pmatrix} = \begin{pmatrix} 12 \\ 0 \end{pmatrix}$$
+```math
+\begin{pmatrix} 8 & -6 \\ -6 & 13.5 \end{pmatrix}\begin{pmatrix} J_1 \\ J_2 \end{pmatrix} = \begin{pmatrix} 12 \\ 0 \end{pmatrix}
+```
 
-It gives $J_1 = 2.25$ A and $J_2 = 1$ A: the battery's current and the lamp's, the same answers by a different matrix. Which road is shorter depends on the drawing: the node road needs one equation per node whose voltage is not already fixed by ground or a battery, the loop road one per independent loop. Here both need two.
+It gives $`J_1 = 2.25`$ A and $`J_2 = 1`$ A: the battery's current and the lamp's, the same answers by a different matrix. Which road is shorter depends on the drawing: the node road needs one equation per node whose voltage is not already fixed by ground or a battery, the loop road one per independent loop. Here both need two.
 
 ### Step 4: why one source and one resistor can stand in for the rest
 
-Unclip the lamp and draw a current $I$ out of node B by any means. The equations stay linear, with $I$ now one of the inputs. Each input of a linear system moves the answer along a straight line, so
+Unclip the lamp and draw a current $`I`$ out of node B by any means. The equations stay linear, with $`I`$ now one of the inputs. Each input of a linear system moves the answer along a straight line, so
 
-$$V_B = V_{th} - R_{th}\, I$$
+```math
+V_B = V_{th} - R_{th}\, I
+```
 
-for two fixed numbers. A single battery $V_{th}$ behind a single resistor $R_{th}$ obeys exactly the same line. Anything clipped to the two wires sees only that line, so it cannot tell the network from the stand-in. That is Thevenin's theorem.
+for two fixed numbers. A single battery $`V_{th}`$ behind a single resistor $`R_{th}`$ obeys exactly the same line. Anything clipped to the two wires sees only that line, so it cannot tell the network from the stand-in. That is Thevenin's theorem.
 
 <details>
 <summary>Detailed proof: the line comes out of the node matrix</summary>
 
-With the lamp out, call the node matrix $\mathbf{G}'$. Every node still has a path to ground, and that makes the answer unique. Set every source to zero and suppose some node sat above 0 V. Take the highest: no current can flow into it, so by the current law none flows out, and each of its neighbours sits just as high. Stepping from neighbour to neighbour reaches ground at 0 V, a contradiction, and the same argument rules out a node below 0 V. So only $\mathbf{v} = 0$ solves $\mathbf{G}'\mathbf{v} = 0$. The columns of $\mathbf{G}'$ are therefore independent, and $\mathbf{G}'\mathbf{v} = \mathbf{s}$ has exactly one answer for any right side ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)). Drawing $I$ out of B takes $I$ off B's entry of $\mathbf{s}$.
+With the lamp out, call the node matrix $`\mathbf{G}'`$. Every node still has a path to ground, and that makes the answer unique. Set every source to zero and suppose some node sat above 0 V. Take the highest: no current can flow into it, so by the current law none flows out, and each of its neighbours sits just as high. Stepping from neighbour to neighbour reaches ground at 0 V, a contradiction, and the same argument rules out a node below 0 V. So only $`\mathbf{v} = 0`$ solves $`\mathbf{G}'\mathbf{v} = 0`$. The columns of $`\mathbf{G}'`$ are therefore independent, and $`\mathbf{G}'\mathbf{v} = \mathbf{s}`$ has exactly one answer for any right side ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)). Drawing $`I`$ out of B takes $`I`$ off B's entry of $`\mathbf{s}`$.
 
-Split that right side into two pieces: $\mathbf{s}$ itself, and a right side that is zero except for $-I$ in B's place. Each piece has its own answer, and because the left side is a matrix times $\mathbf{v}$, the two answers add to the answer for the whole. The first answer puts B at the open-circuit voltage, $V_{th}$. The second is $-I$ times the answer for 1 A pushed into B with every source at zero, and B's entry of that is $R_{th}$. So $V_B = V_{th} - R_{th} I$ for every $I$, whatever is attached. The argument never used the number of nodes, so it holds for any linear network.
+Split that right side into two pieces: $`\mathbf{s}`$ itself, and a right side that is zero except for $`-I`$ in B's place. Each piece has its own answer, and because the left side is a matrix times $`\mathbf{v}`$, the two answers add to the answer for the whole. The first answer puts B at the open-circuit voltage, $`V_{th}`$. The second is $`-I`$ times the answer for 1 A pushed into B with every source at zero, and B's entry of that is $`R_{th}`$. So $`V_B = V_{th} - R_{th} I`$ for every $`I`$, whatever is attached. The argument never used the number of nodes, so it holds for any linear network.
 
 </details>
 
 ### Step 5: finding the two numbers, three ways
 
-- **Open and short.** With the lamp out, no current flows in $R_3$, so B reads the same as A: $V_{th} = 9$ V. With a plain wire in the lamp's place, the wire carries $I_N = 3$ A. The line's two ends give the slope: $R_{th} = 9/3 = 3$ Ω.
-- **Kill the source and push 1 A.** An ideal battery keeps zero volts between its own ends when set to 0 V, so it becomes a plain wire. Push 1 A into B; B rises to 3 V, so $R_{th} = 3$ Ω.
-- **By the rules for series and parallel.** With the battery a wire, $R_1$ and $R_2$ sit side by side: $R_1 \parallel R_2 = 2 \times 6/(2 + 6) = 1.5$ Ω, then $R_3$ adds in series to make 3 Ω. With the lamp out, $R_1$ and $R_2$ split the 12 V in proportion: $12 \times 6/(2 + 6) = 9$ V.
+- **Open and short.** With the lamp out, no current flows in $`R_3`$, so B reads the same as A: $`V_{th} = 9`$ V. With a plain wire in the lamp's place, the wire carries $`I_N = 3`$ A. The line's two ends give the slope: $`R_{th} = 9/3 = 3`$ Ω.
+- **Kill the source and push 1 A.** An ideal battery keeps zero volts between its own ends when set to 0 V, so it becomes a plain wire. Push 1 A into B; B rises to 3 V, so $`R_{th} = 3`$ Ω.
+- **By the rules for series and parallel.** With the battery a wire, $`R_1`$ and $`R_2`$ sit side by side: $`R_1 \parallel R_2 = 2 \times 6/(2 + 6) = 1.5`$ Ω, then $`R_3`$ adds in series to make 3 Ω. With the lamp out, $`R_1`$ and $`R_2`$ split the 12 V in proportion: $`12 \times 6/(2 + 6) = 9`$ V.
 
 ```mermaid
 flowchart LR
@@ -135,11 +149,11 @@ flowchart LR
 
 The stand-in the lamp sees, as a schematic, not to scale.
 
-Solve the same line for the current instead: $I = I_N - V_B/R_{th}$. That is a current source of $I_N = 3$ A with $R_{th}$ connected across it: Norton's form. The two stand-ins are one line written two ways, linked by $I_N = V_{th}/R_{th}$.
+Solve the same line for the current instead: $`I = I_N - V_B/R_{th}`$. That is a current source of $`I_N = 3`$ A with $`R_{th}`$ connected across it: Norton's form. The two stand-ins are one line written two ways, linked by $`I_N = V_{th}/R_{th}`$.
 
 ### Step 6: the payoff, any lamp in one division
 
-Once $V_{th}$ and $R_{th}$ are known, each new lamp costs one division: $I = 9/(3 + R_L)$. The checks also re-solve the full network for seven lamps and agree with the stand-in to within a trillionth of an amp.
+Once $`V_{th}`$ and $`R_{th}`$ are known, each new lamp costs one division: $`I = 9/(3 + R_L)`$. The checks also re-solve the full network for seven lamps and agree with the stand-in to within a trillionth of an amp.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -150,7 +164,7 @@ xychart-beta
     line [5.0625, 6.48, 6.75, 6.612245, 6.0, 5.355372, 4.32]
 ```
 
-The single line is the lamp's power, $I^2 R_L$. It peaks at 6.75 W for a 3 Ω lamp, the one that matches $R_{th}$. A low-resistance lamp draws more current (2.25 A at 1 Ω) but loses most of the voltage across $R_{th}$; a high-resistance one keeps the voltage but draws little.
+The single line is the lamp's power, $`I^2 R_L`$. It peaks at 6.75 W for a 3 Ω lamp, the one that matches $`R_{th}`$. A low-resistance lamp draws more current (2.25 A at 1 Ω) but loses most of the voltage across $`R_{th}`$; a high-resistance one keeps the voltage but draws little.
 
 ---
 
@@ -159,15 +173,15 @@ The single line is the lamp's power, $I^2 R_L$. It peaks at 6.75 W for a 3 Ω la
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | node equations, times 6 | conductances 3, 1, 4, 1 | `[8, -4 \| 36]`, `[-4, 5 \| 0]` |
-| clear $V_A$ from row B | row B − (−0.5) × row A | `[0, 3 \| 18]` |
-| $V_B$, the lamp's voltage | 18 ÷ 3 | 6 V |
-| $V_A$ | (36 + 4 × 6) ÷ 8 | 7.5 V |
-| battery current, through $R_1$ | (12 − 7.5) ÷ 2 | 2.25 A |
-| leak through $R_2$ | 7.5 ÷ 6 | 1.25 A |
+| clear $`V_A`$ from row B | row B − (−0.5) × row A | `[0, 3 \| 18]` |
+| $`V_B`$, the lamp's voltage | 18 ÷ 3 | 6 V |
+| $`V_A`$ | (36 + 4 × 6) ÷ 8 | 7.5 V |
+| battery current, through $`R_1`$ | (12 − 7.5) ÷ 2 | 2.25 A |
+| leak through $`R_2`$ | 7.5 ÷ 6 | 1.25 A |
 | current law at A | 1.25 + 1 | 2.25 A, matching what comes in |
 | lamp current | 6 ÷ 6 | 1 A |
-| power: battery out, parts in | 12 × 2.25; four $I^2 R$ terms | 27 W, 27 W |
-| stand-in: $V_{th}$ and $R_{th}$ | 12 × 6/8; 2 × 6/8 + 1.5 | 9 V, 3 Ω |
+| power: battery out, parts in | 12 × 2.25; four $`I^2 R`$ terms | 27 W, 27 W |
+| stand-in: $`V_{th}`$ and $`R_{th}`$ | 12 × 6/8; 2 × 6/8 + 1.5 | 9 V, 3 Ω |
 | lamp, from the stand-in | 9 ÷ (3 + 6) | **1 A, so 6 V and 6 W** |
 
 The lamp gets exactly its rating: 6 volts, 1 amp, 6 watts. The battery supplies 27 W; the resistors burn the other 21 W.
@@ -176,10 +190,10 @@ The lamp gets exactly its rating: 6 volts, 1 amp, 6 watts. The battery supplies 
 
 | Mistake | Lamp current comes out at | What went wrong |
 | --- | --- | --- |
-| $R_3$'s term in A's equation written $g_3 (V_B - V_A)$, B's equation left right | 1.5 A | The current is counted as leaving both ends of $R_3$ at once, so charge appears from nowhere |
-| $R_{th}$ as all three in series, 2 + 6 + 1.5 | 0.580645 A | With the battery a wire, $R_1$ and $R_2$ are side by side, not end to end |
-| Battery set to zero as a gap, not a wire: $R_{th}$ = 6 + 1.5 | 0.666667 A | A 0 V source keeps its ends at one voltage, which is what a wire does |
-| $V_{th}$ taken as the battery's 12 V | 1.333333 A | With the lamp out, $R_1$ and $R_2$ still divide the 12 V; B sits at 9 V |
+| $`R_3`$'s term in A's equation written $`g_3 (V_B - V_A)`$, B's equation left right | 1.5 A | The current is counted as leaving both ends of $`R_3`$ at once, so charge appears from nowhere |
+| $`R_{th}`$ as all three in series, 2 + 6 + 1.5 | 0.580645 A | With the battery a wire, $`R_1`$ and $`R_2`$ are side by side, not end to end |
+| Battery set to zero as a gap, not a wire: $`R_{th}`$ = 6 + 1.5 | 0.666667 A | A 0 V source keeps its ends at one voltage, which is what a wire does |
+| $`V_{th}`$ taken as the battery's 12 V | 1.333333 A | With the lamp out, $`R_1`$ and $`R_2`$ still divide the 12 V; B sits at 9 V |
 | The lamp's hot 6 Ω used at switch-on, while the filament is cold, about 0.6 Ω | 1 A predicted; 2.5 A flows | A filament's resistance climbs as it heats, so the lamp breaks the straight-line law. The stand-in still holds: 9 ÷ (3 + 0.6) |
 
 ---
@@ -643,10 +657,10 @@ The two outputs are identical, line for line.
 
 Lean proves the stand-ins for any resistor network with a path to ground, the voltage law round any loop, and the worked numbers.
 
-- Take any resistor network where every node has a path of resistors to ground or to a battery. Then for every current $I$ drawn out of B, the node equations have exactly one answer.
-- Take the same network, and draw any current $I$ out of B. Then $V_B = V_{th} - R_{th} I$ for two fixed numbers, with $R_{th} > 0$.
-- Take the same network with a lamp of any resistance $R_L > 0$ from B to ground. Then the lamp carries $V_{th}/(R_{th} + R_L)$, with the same two numbers.
-- Take the same network with a plain wire in the lamp's place. Then the wire carries the Norton current $I_N = V_{th}/R_{th}$.
+- Take any resistor network where every node has a path of resistors to ground or to a battery. Then for every current $`I`$ drawn out of B, the node equations have exactly one answer.
+- Take the same network, and draw any current $`I`$ out of B. Then $`V_B = V_{th} - R_{th} I`$ for two fixed numbers, with $`R_{th} > 0`$.
+- Take the same network with a lamp of any resistance $`R_L > 0`$ from B to ground. Then the lamp carries $`V_{th}/(R_{th} + R_L)`$, with the same two numbers.
+- Take the same network with a plain wire in the lamp's place. Then the wire carries the Norton current $`I_N = V_{th}/R_{th}`$.
 - Suppose each part's voltage is the difference of the voltages at its two ends. Then round any closed loop, the part voltages add to zero.
 - The node equations hold at 7.5 V and 6 V, the loop equations at 2.25 A and 1 A, and the power balances at 27 W.
 - The stand-in is 9 V behind 3 Ω, and pushing 1 A into B with the battery a wire raises B to 3 V.
@@ -954,7 +968,7 @@ example : (24 : ℝ) * 6 / (2 + 6) / (3 + 6) = 2 ∧
 > Guess first, then run it. The asserts are pinned to the 12 V network, so the first one stops each edited run; the printed `try:` lines and the lamp sweep give the answers without editing anything.
 > - **Double the battery.** Guess first: with every equation linear, what happens to the lamp? Set `VS = 24.0`. The lamp draws 2 A: everything doubles, and the lamp is over-driven.
 > - **Halve the leak resistor.** Guess first: brighter or dimmer? Set `R2 = 3.0`. More current leaks away and the lamp drops to 0.827586 A.
-> - **Remove the leak.** Guess first: how much brighter? Call `circuit(r2=0)`, where 0 means "not fitted", as the last `try:` line does. Nothing leaks, $V_{th}$ rises to the full 12 V, $R_{th}$ to 3.5 Ω, and the lamp draws 1.263158 A.
+> - **Remove the leak.** Guess first: how much brighter? Call `circuit(r2=0)`, where 0 means "not fitted", as the last `try:` line does. Nothing leaks, $`V_{th}`$ rises to the full 12 V, $`R_{th}`$ to 3.5 Ω, and the lamp draws 1.263158 A.
 > - **Match the lamp to the network.** Guess first: which lamp takes the most power? Set `RL = 3.0`. It draws 1.5 A and takes 6.75 W, the top of the sweep.
 
 ---
@@ -964,10 +978,10 @@ example : (24 : ℝ) * 6 / (2 + 6) / (3 + 6) = 2 ∧
 > [!warning]
 > **Treating the stand-in as the real thing inside.** The 3 Ω stand-in resistor burns 3 W when the lamp draws 1 A. The real network burns 21 W at the same moment. The equivalent copies every voltage and current at the lamp's two wires and promises nothing about the inside: not the heat in the resistors, not the battery's current, not which part fails first.
 >
-> - **Killing the battery as a gap.** To find $R_{th}$, a battery set to zero becomes a wire. Treated as a gap, $R_{th}$ comes out at 7.5 Ω and the lamp at 0.666667 A instead of 1 A.
-> - **Adding resistors that are not in series.** With the battery a wire, $R_1$ and $R_2$ both join node A to ground, so they are in parallel: 1.5 Ω, not 8 Ω. All three in series predicts 0.580645 A.
+> - **Killing the battery as a gap.** To find $`R_{th}`$, a battery set to zero becomes a wire. Treated as a gap, $`R_{th}`$ comes out at 7.5 Ω and the lamp at 0.666667 A instead of 1 A.
+> - **Adding resistors that are not in series.** With the battery a wire, $`R_1`$ and $`R_2`$ both join node A to ground, so they are in parallel: 1.5 Ω, not 8 Ω. All three in series predicts 0.580645 A.
 > - **Mixing up signs.** Pick "current leaving the node is positive" and use it for every part at every node. Flip one term and the lamp comes out at 1.5 A.
-> - **Reading $V_{th}$ as the battery's voltage.** The open-circuit voltage is measured at the lamp's wires: 9 V, not 12 V. Using 12 V gives 1.333333 A.
+> - **Reading $`V_{th}`$ as the battery's voltage.** The open-circuit voltage is measured at the lamp's wires: 9 V, not 12 V. Using 12 V gives 1.333333 A.
 
 ---
 
@@ -976,7 +990,7 @@ example : (24 : ℝ) * 6 / (2 + 6) / (3 + 6) = 2 ∧
 - **Circuit simulators.** Programs that design chips and boards build the node matrix of this card from the drawing, with extra rows for sources, and solve it by elimination, again at every step of a simulation.
 - **A car's electrics.** A battery with its internal resistance is a Thevenin stand-in. The starter motor draws so much current that the voltage sags across that resistance, and the headlamps dim while the engine turns over.
 - **Sensors and measuring bridges.** A strain gauge or thermometer inside a resistor network is read through its Thevenin voltage; the stand-in resistance says how much the meter's own current disturbs the reading.
-- **Audio and radio.** A radio's antenna acts as a Thevenin stand-in, and the receiver's input is matched to its resistance, so it takes the most power from a faint signal, as the 3 Ω lamp does here. An audio amplifier is deliberately not matched: its output resistance, its $R_{th}$, is kept far below the speaker's, so the speaker's voltage barely sags.
+- **Audio and radio.** A radio's antenna acts as a Thevenin stand-in, and the receiver's input is matched to its resistance, so it takes the most power from a faint signal, as the 3 Ω lamp does here. An audio amplifier is deliberately not matched: its output resistance, its $`R_{th}`$, is kept far below the speaker's, so the speaker's voltage barely sags.
 - **Power grids.** Engineers judge a fault at a substation from the grid's Thevenin equivalent at that point, which sets how much current a short circuit would draw.
 
 > **Say it back**

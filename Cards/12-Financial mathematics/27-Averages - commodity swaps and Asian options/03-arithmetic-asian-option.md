@@ -36,66 +36,78 @@ First line: profit per barrel, flat at −\$5.85 until the average passes the \$
 
 ## The formula
 
-Notation first, in words. The fixings fall on dates $t_i = iT/n$ for $i$ = 1 to $n$, counted in years from today, the last one on the expiry date $T$. The futures price quoted today for delivery at date $t$ is $F(0,t)$; the list of them, date by date, is the **futures curve**. The fixing on date $t_i$ is $P_i$.
+Notation first, in words. The fixings fall on dates $`t_i = iT/n`$ for $`i`$ = 1 to $`n`$, counted in years from today, the last one on the expiry date $`T`$. The futures price quoted today for delivery at date $`t`$ is $`F(0,t)`$; the list of them, date by date, is the **futures curve**. The fixing on date $`t_i`$ is $`P_i`$.
 
-A capital sigma adds up a list. $E[\;]$ is an average over all possible price paths in the risk-neutral world, the pricing world in which a futures price has no expected drift ([Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)). $N(x)$ is the bell-curve area left of $x$.
+A capital sigma adds up a list. $`E[\;]`$ is an average over all possible price paths in the risk-neutral world, the pricing world in which a futures price has no expected drift ([Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)). $`N(x)`$ is the bell-curve area left of $`x`$.
 
 The contract and its price:
 
-$$A = \frac1n\sum_{i=1}^{n} P_i, \qquad C_A = e^{-rT}\,E\big[\max(A - K,\,0)\big]$$
+```math
+A = \frac1n\sum_{i=1}^{n} P_i, \qquad C_A = e^{-rT}\,E\big[\max(A - K,\,0)\big]
+```
 
 **Read it aloud:** average the fixings; the call is worth today's value of the average's excess over the strike, averaged over every possible path.
 
 The quick price, **Turnbull-Wakeman**: Black-76 (the call formula for a futures price) fed the average's own forward and its own spread.
 
-$$C_A \approx e^{-rT}\big(M_1\,N(e_1) - K\,N(e_2)\big)$$
+```math
+C_A \approx e^{-rT}\big(M_1\,N(e_1) - K\,N(e_2)\big)
+```
 
 **Read it aloud:** the average's expected value you might receive, minus the strike you might pay, each weighted by its own chance.
 
 The careful price, simulation corrected by the geometric twin:
 
-$$\widehat C_A = \bar X - \beta\,\big(\bar Y - C_G\big)$$
+```math
+\widehat C_A = \bar X - \beta\,\big(\bar Y - C_G\big)
+```
 
 **Read it aloud:** the plain simulated price, minus a slope times however far the simulated twin missed its exact price.
 
-Here $X$ is one simulated year's discounted arithmetic payoff, $Y$ the geometric one on the same year, and a bar over a letter is its average across the simulated years.
+Here $`X`$ is one simulated year's discounted arithmetic payoff, $`Y`$ the geometric one on the same year, and a bar over a letter is its average across the simulated years.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C_A$, $C_G$ | price of the arithmetic call; exact price of the geometric twin | \$5.85; \$5.64 | is the answer |
-| $A$, $G$ | arithmetic and geometric averages of the fixings | $G$ never exceeds $A$ | the payoff reads $A$ |
-| $n$, $t_i$, $i$, $P_i$, $t$, $a$ | number of fixings; date of fixing $i$; its number; its price; $t$ or $a$, any date | 52 weekly: $t_i = i/52$ | $n$ up: cheaper, the average smooths harder |
-| $F(0,t)$ | today's futures price for delivery at $t$: the curve | $100e^{0.05t}$: \$100.10 at the first fixing, \$105.13 at the last | whole curve up: dearer |
-| $K$, $K^*$ | the strike; the strike left for the unfixed part once some fixings are banked | \$100 | falls |
-| $r$, $e^{-rT}$ | the bank rate, continuously compounded; the discount on a dollar paid at $T$ | 5%; 0.9512 | curve held fixed: slightly cheaper |
-| $\sigma$, $T$ | volatility of the futures prices (yearly spread of log changes); expiry in years | 20%; 1 | both: dearer |
-| $W$ | the one random path (Brownian motion) that moves the whole curve | one path per simulated year | — |
-| $M_1$, $M_2$ | exact mean and exact mean square of $A$ | \$102.59; 10,672.68 | $M_1$ up: dearer |
-| $v_A$, $v$, $e_1$, $e_2$, $d_1$, $d_2$, $N$ | fitted log-spread of $A$ over the whole life ($v$ any log-spread); the cut-offs, like the plain call's $d_1$, $d_2$; bell-curve area | 0.1180; 0.2758, 0.1577 | $v_A$ up: dearer |
-| $F_G$ | forward of the geometric average | \$102.24 | dearer |
-| $X$, $Y$, $\beta$, $\rho$ | discounted arithmetic and geometric payoffs on one path; the slope; their correlation | $\rho$ = 0.9996 | $\rho$ nearer one: tighter error bar |
+| $`C_A`$, $`C_G`$ | price of the arithmetic call; exact price of the geometric twin | \$5.85; \$5.64 | is the answer |
+| $`A`$, $`G`$ | arithmetic and geometric averages of the fixings | $`G`$ never exceeds $`A`$ | the payoff reads $`A`$ |
+| $`n`$, $`t_i`$, $`i`$, $`P_i`$, $`t`$, $`a`$ | number of fixings; date of fixing $`i`$; its number; its price; $`t`$ or $`a`$, any date | 52 weekly: $`t_i = i/52`$ | $`n`$ up: cheaper, the average smooths harder |
+| $`F(0,t)`$ | today's futures price for delivery at $`t`$: the curve | $`100e^{0.05t}`$: \$100.10 at the first fixing, \$105.13 at the last | whole curve up: dearer |
+| $`K`$, $`K^*`$ | the strike; the strike left for the unfixed part once some fixings are banked | \$100 | falls |
+| $`r`$, $`e^{-rT}`$ | the bank rate, continuously compounded; the discount on a dollar paid at $`T`$ | 5%; 0.9512 | curve held fixed: slightly cheaper |
+| $`\sigma`$, $`T`$ | volatility of the futures prices (yearly spread of log changes); expiry in years | 20%; 1 | both: dearer |
+| $`W`$ | the one random path (Brownian motion) that moves the whole curve | one path per simulated year | — |
+| $`M_1`$, $`M_2`$ | exact mean and exact mean square of $`A`$ | \$102.59; 10,672.68 | $`M_1`$ up: dearer |
+| $`v_A`$, $`v`$, $`e_1`$, $`e_2`$, $`d_1`$, $`d_2`$, $`N`$ | fitted log-spread of $`A`$ over the whole life ($`v`$ any log-spread); the cut-offs, like the plain call's $`d_1`$, $`d_2`$; bell-curve area | 0.1180; 0.2758, 0.1577 | $`v_A`$ up: dearer |
+| $`F_G`$ | forward of the geometric average | \$102.24 | dearer |
+| $`X`$, $`Y`$, $`\beta`$, $`\rho`$ | discounted arithmetic and geometric payoffs on one path; the slope; their correlation | $`\rho`$ = 0.9996 | $`\rho`$ nearer one: tighter error bar |
 
 The helpers, each exact:
 
-$$P_i = F(0,t_i)\,e^{\sigma W_{t_i} - \frac12\sigma^2 t_i}$$
+```math
+P_i = F(0,t_i)\,e^{\sigma W_{t_i} - \frac12\sigma^2 t_i}
+```
 
 In words: each fixing is lognormal (its log follows a bell curve) around its own point on today's curve, and one random path drives them all.
 
-$$M_1 = \frac1n\sum_{i=1}^{n} F(0,t_i), \qquad M_2 = \frac{1}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} F(0,t_i)\,F(0,t_j)\,e^{\sigma^2\min(t_i,\,t_j)}$$
+```math
+M_1 = \frac1n\sum_{i=1}^{n} F(0,t_i), \qquad M_2 = \frac{1}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} F(0,t_i)\,F(0,t_j)\,e^{\sigma^2\min(t_i,\,t_j)}
+```
 
-In words: $M_1$ is the plain average of the curve at the fixing dates, which is the price of the matching average-price swap; $M_2$ adds up how each pair of fixings moves together.
+In words: $`M_1`$ is the plain average of the curve at the fixing dates, which is the price of the matching average-price swap; $`M_2`$ adds up how each pair of fixings moves together.
 
-$$v_A = \sqrt{\ln\!\big(M_2/M_1^2\big)}, \qquad e_1 = \frac{\ln(M_1/K) + \tfrac12 v_A^2}{v_A}, \qquad e_2 = e_1 - v_A$$
+```math
+v_A = \sqrt{\ln\!\big(M_2/M_1^2\big)}, \qquad e_1 = \frac{\ln(M_1/K) + \tfrac12 v_A^2}{v_A}, \qquad e_2 = e_1 - v_A
+```
 
-In words: $v_A$ is the log-spread a lognormal would need to have both moments; $e_1$ and $e_2$ are the plain call's $d_1$ and $d_2$ with the average in place of the futures price.
+In words: $`v_A`$ is the log-spread a lognormal would need to have both moments; $`e_1`$ and $`e_2`$ are the plain call's $`d_1`$ and $`d_2`$ with the average in place of the futures price.
 
 ### When it holds
 
-- **One volatility for every fixing.** Near-dated energy futures usually move more than far-dated ones. If each fixing has its own volatility, every pair in $M_2$ and every simulated step carries its own; a single 20% misprices by roughly vega (price change per volatility point) times the error: 22 cents a point here.
-- **One random path moves the whole curve.** When the fixings read different delivery months that are not perfectly correlated, the true $M_2$ is smaller and both prices on this card are too high.
+- **One volatility for every fixing.** Near-dated energy futures usually move more than far-dated ones. If each fixing has its own volatility, every pair in $`M_2`$ and every simulated step carries its own; a single 20% misprices by roughly vega (price change per volatility point) times the error: 22 cents a point here.
+- **One random path moves the whole curve.** When the fixings read different delivery months that are not perfectly correlated, the true $`M_2`$ is smaller and both prices on this card are too high.
 - **Lognormal fixings.** Fuel prices jump in supply shocks, and markets price a skew (a volatility that depends on the strike). Neither is in the model, and the simulation inherits that error too.
-- **Moderate $\sigma^2 T$, for Turnbull-Wakeman.** Its error grows with volatility and time (Step 7).
-- **No fixings banked yet.** Once some fixings are known, part of the average is cash and the option on the rest has a shifted strike $K^*$. Far out of the money, the quick price is then too cheap, not too dear (Step 7).
+- **Moderate $`\sigma^2 T`$, for Turnbull-Wakeman.** Its error grows with volatility and time (Step 7).
+- **No fixings banked yet.** Once some fixings are known, part of the average is cash and the option on the rest has a shifted strike $`K^*`$. Far out of the money, the quick price is then too cheap, not too dear (Step 7).
 
 ---
 
@@ -109,32 +121,34 @@ Each fixing is lognormal (its log follows a bell curve). The log of a product is
 
 ### Step 1: a commodity desk reads the curve, not a spot price
 
-An equity desk feeds a share price and lets it grow at the bank rate less the dividend yield. A fuel desk has a futures curve instead, and each fixing belongs to a different point on it. A futures contract costs nothing to enter, so in the pricing world its price has no expected gain: the fixing on date $t_i$ is expected to equal today's quote $F(0,t_i)$. That is the helper formula for $P_i$, the sibling card's starting point too ([Kemna-Vorst](02-kemna-vorst-geometric-asian.md)).
+An equity desk feeds a share price and lets it grow at the bank rate less the dividend yield. A fuel desk has a futures curve instead, and each fixing belongs to a different point on it. A futures contract costs nothing to enter, so in the pricing world its price has no expected gain: the fixing on date $`t_i`$ is expected to equal today's quote $`F(0,t_i)`$. That is the helper formula for $`P_i`$, the sibling card's starting point too ([Kemna-Vorst](02-kemna-vorst-geometric-asian.md)).
 
-In this example the curve rises 5 percent a year, the interest cost of holding fuel, with storage left out: $F(0,t) = 100e^{0.05t}$. The first fixing's forward is \$100.10, the last one's \$105.13. Their plain average is $M_1$ = \$102.59. That number is the price of the average-price swap on the same dates ([Commodity swap](01-commodity-swap-and-average-price-forward.md)): the Asian call is an option on that swap's floating leg.
+In this example the curve rises 5 percent a year, the interest cost of holding fuel, with storage left out: $`F(0,t) = 100e^{0.05t}`$. The first fixing's forward is \$100.10, the last one's \$105.13. Their plain average is $`M_1`$ = \$102.59. That number is the price of the average-price swap on the same dates ([Commodity swap](01-commodity-swap-and-average-price-forward.md)): the Asian call is an option on that swap's floating leg.
 
-The equity formula is the special curve $F(0,t) = Se^{(r-q)t}$, where S is the share price and q its dividend yield. A \$100 share with the bank rate less the yield at 3% gives a flatter curve, and Turnbull-Wakeman on it gives \$5.27, the equity card's figure; jet fuel's 5% curve gives \$5.87. A currency's forward curve slopes at the home rate minus the foreign rate, so an average-rate currency option is this card with the foreign rate in the yield's place.
+The equity formula is the special curve $`F(0,t) = Se^{(r-q)t}`$, where S is the share price and q its dividend yield. A \$100 share with the bank rate less the yield at 3% gives a flatter curve, and Turnbull-Wakeman on it gives \$5.27, the equity card's figure; jet fuel's 5% curve gives \$5.87. A currency's forward curve slopes at the home rate minus the foreign rate, so an average-rate currency option is this card with the foreign rate in the yield's place.
 
 ### Step 2: the average's first two moments are exact
 
-The average has no formula, but its mean and mean square do. The mean is $M_1$, because each fixing's mean is its forward. For the mean square, two fixings share every random shove up to the earlier date. A lognormal pair's product then has mean $F(0,t_i)F(0,t_j)e^{\sigma^2\min(t_i,t_j)}$. Summed over all 52 × 52 pairs and divided by 52^2, that is $M_2$ = 10,672.68.
+The average has no formula, but its mean and mean square do. The mean is $`M_1`$, because each fixing's mean is its forward. For the mean square, two fixings share every random shove up to the earlier date. A lognormal pair's product then has mean $`F(0,t_i)F(0,t_j)e^{\sigma^2\min(t_i,t_j)}`$. Summed over all 52 × 52 pairs and divided by 52^2, that is $`M_2`$ = 10,672.68.
 
 <details>
 <summary>Detailed proof: the two moments</summary>
 
-Write $P_a = F(0,a)\,e^{\sigma W_a - \frac12\sigma^2 a}$, with $W$ Brownian motion: its reading at time $a$ is normal with mean 0 and variance $a$, and readings at two dates $a \le b$ share the variance up to $a$. A normal variable $Z$ with mean 0 and variance $v^2$ has $E[e^Z] = e^{v^2/2}$ ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)). Taking $Z = \sigma W_a$ gives $E[P_a] = F(0,a)$; average over the fixings to get $M_1$.
+Write $`P_a = F(0,a)\,e^{\sigma W_a - \frac12\sigma^2 a}`$, with $`W`$ Brownian motion: its reading at time $`a`$ is normal with mean 0 and variance $`a`$, and readings at two dates $`a \le b`$ share the variance up to $`a`$. A normal variable $`Z`$ with mean 0 and variance $`v^2`$ has $`E[e^Z] = e^{v^2/2}`$ ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)). Taking $`Z = \sigma W_a`$ gives $`E[P_a] = F(0,a)`$; average over the fixings to get $`M_1`$.
 
-For a pair, $W_a + W_b$ has variance $a + b + 2\min(a,b)$. So
-$$E[P_a P_b] = F(0,a)F(0,b)\,e^{-\frac12\sigma^2(a+b)}\,e^{\frac12\sigma^2(a+b) + \sigma^2\min(a,b)} = F(0,a)F(0,b)\,e^{\sigma^2\min(a,b)}.$$
-The square of the average is $\frac{1}{n^2}$ times the sum of $P_a P_b$ over all ordered pairs. Take the expectation term by term: that is $M_2$. The code checks both moments against 50,000 simulated years.
+For a pair, $`W_a + W_b`$ has variance $`a + b + 2\min(a,b)`$. So
+
+$`\displaystyle E[P_a P_b] = F(0,a)F(0,b)\,e^{-\frac12\sigma^2(a+b)}\,e^{\frac12\sigma^2(a+b) + \sigma^2\min(a,b)} = F(0,a)F(0,b)\,e^{\sigma^2\min(a,b)}.`$
+
+The square of the average is $`\frac{1}{n^2}`$ times the sum of $`P_a P_b`$ over all ordered pairs. Take the expectation term by term: that is $`M_2`$. The code checks both moments against 50,000 simulated years.
 
 </details>
 
 ### Step 3: Turnbull-Wakeman fits a lognormal to those two moments
 
-Suppose $A$ were lognormal with log-spread $v$. Then its mean square over its squared mean would be exactly $e^{v^2}$. Run that backwards on the true moments: $M_2/M_1^2$ = 1.014030, so $v_A$ = 0.1180. One fixing on its own has log-spread $\sigma\sqrt T$ = 0.20. The average's is well under that, because the early fixings have barely had time to move.
+Suppose $`A`$ were lognormal with log-spread $`v`$. Then its mean square over its squared mean would be exactly $`e^{v^2}`$. Run that backwards on the true moments: $`M_2/M_1^2`$ = 1.014030, so $`v_A`$ = 0.1180. One fixing on its own has log-spread $`\sigma\sqrt T`$ = 0.20. The average's is well under that, because the early fixings have barely had time to move.
 
-Now treat $A$ as a futures price with forward $M_1$ and whole-life log-spread $v_A$, and apply Black-76. The moments are exact; the lognormal shape is the only guess. The answer is \$5.87. This two-moment fit is Levy's form (1992); software labelled Turnbull-Wakeman usually means it.
+Now treat $`A`$ as a futures price with forward $`M_1`$ and whole-life log-spread $`v_A`$, and apply Black-76. The moments are exact; the lognormal shape is the only guess. The answer is \$5.87. This two-moment fit is Levy's form (1992); software labelled Turnbull-Wakeman usually means it.
 
 Changing one input at a time shows the spread does most of the work: the average's spread alone takes \$10.45 to \$7.44, its forward alone only to \$8.97.
 
@@ -146,28 +160,28 @@ With 50,000 years the plain answer is \$5.91. Its error bar is the spread of the
 
 ### Step 5: the geometric twin as a control variate
 
-A **control variate** is a companion quantity with a known price, simulated on the same paths so that its error reveals theirs. On every simulated year, compute the geometric payoff $Y$ too. The twin's exact price is \$5.64; this batch priced it at \$5.69. The arithmetic payoff rides the same paths, so it ran rich by nearly the same amount. Subtract a multiple $\beta$ of the twin's miss.
+A **control variate** is a companion quantity with a known price, simulated on the same paths so that its error reveals theirs. On every simulated year, compute the geometric payoff $`Y`$ too. The twin's exact price is \$5.64; this batch priced it at \$5.69. The arithmetic payoff rides the same paths, so it ran rich by nearly the same amount. Subtract a multiple $`\beta`$ of the twin's miss.
 
-The correction adds nothing on average, for any $\beta$, because the twin's miss averages to zero; it cannot bias the price. The best $\beta$ is the slope of $X$ against $Y$ across the paths. With it, the variance left over is $1 - \rho^2$ of the plain variance, where $\rho$ is their correlation ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)).
+The correction adds nothing on average, for any $`\beta`$, because the twin's miss averages to zero; it cannot bias the price. The best $`\beta`$ is the slope of $`X`$ against $`Y`$ across the paths. With it, the variance left over is $`1 - \rho^2`$ of the plain variance, where $`\rho`$ is their correlation ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)).
 
-Here $\rho$ = 0.9996: the two averages differ by little on any path, and their payoffs switch on together. The controlled price is \$5.8544 with an error bar of 0.10 cents, 36 times tighter than the plain one from the same paths. Brute force would need about 1,300 times as many paths.
+Here $`\rho`$ = 0.9996: the two averages differ by little on any path, and their payoffs switch on together. The controlled price is \$5.8544 with an error bar of 0.10 cents, 36 times tighter than the plain one from the same paths. Brute force would need about 1,300 times as many paths.
 
 <details>
 <summary>Detailed proof: why the correction cannot bias the price</summary>
 
-For a fixed $\beta$, the estimator's expectation is $E[X] - \beta(E[Y] - C_G)$. The twin's exact price is its expected discounted payoff, $C_G = E[Y]$, so the bracket is zero and the expectation is $C_A$. Per path, the variance is $\operatorname{var}(X) - 2\beta\operatorname{cov}(X,Y) + \beta^2\operatorname{var}(Y)$, a parabola in $\beta$ lowest at $\beta = \operatorname{cov}(X,Y)/\operatorname{var}(Y)$, where it equals $(1-\rho^2)\operatorname{var}(X)$. Estimating $\beta$ from the same paths adds a bias of order one over the number of paths, far below the error bar.
+For a fixed $`\beta`$, the estimator's expectation is $`E[X] - \beta(E[Y] - C_G)`$. The twin's exact price is its expected discounted payoff, $`C_G = E[Y]`$, so the bracket is zero and the expectation is $`C_A`$. Per path, the variance is $`\mathrm{var}(X) - 2\beta\mathrm{cov}(X,Y) + \beta^2\mathrm{var}(Y)`$, a parabola in $`\beta`$ lowest at $`\beta = \mathrm{cov}(X,Y)/\mathrm{var}(Y)`$, where it equals $`(1-\rho^2)\mathrm{var}(X)`$. Estimating $`\beta`$ from the same paths adds a bias of order one over the number of paths, far below the error bar.
 
 </details>
 
 ### Step 6: a floor and a ceiling with no simulation
 
-On every path, adding and dividing never gives less than multiplying and rooting: $A \ge G$, the arithmetic-geometric mean inequality. So the arithmetic payoff is never below the geometric one, and $C_A \ge C_G$ = \$5.64.
+On every path, adding and dividing never gives less than multiplying and rooting: $`A \ge G`$, the arithmetic-geometric mean inequality. So the arithmetic payoff is never below the geometric one, and $`C_A \ge C_G`$ = \$5.64.
 
-The gap between the two payoffs is never more than the gap between the averages. Take the discounted average over paths: $C_A \le C_G + e^{-rT}(M_1 - F_G)$ = \$5.97. Both roads land inside \$5.64 to \$5.97, a window built from two exact numbers and one inequality.
+The gap between the two payoffs is never more than the gap between the averages. Take the discounted average over paths: $`C_A \le C_G + e^{-rT}(M_1 - F_G)`$ = \$5.97. Both roads land inside \$5.64 to \$5.97, a window built from two exact numbers and one inequality.
 
 ### Step 7: where the quick price drifts
 
-The fitted lognormal matches the true average's mean and spread, not its shape. Near the money the mismatch makes Turnbull-Wakeman too dear, and the gap grows with the total variance $\sigma^2 T$. Far out of the money it can err the other way.
+The fitted lognormal matches the true average's mean and spread, not its shape. Near the money the mismatch makes Turnbull-Wakeman too dear, and the gap grows with the total variance $`\sigma^2 T`$. Far out of the money it can err the other way.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -183,9 +197,9 @@ The one line is the quick price's overpricing in cents, each point measured agai
 Two more places it drifts:
 
 - **Long dates.** Stretch the same 52 fixings over five years at 20% volatility: \$15.42 quick against \$15.24 simulated, 18 cents dear.
-- **Averages already in progress.** Halfway through the year, 26 fixings are banked at an average of \$80, and the curve for the next half-year again reads $100e^{0.05t}$. The payoff is half of the remaining average's excess over $K^*$ = 2 × 100 − 80 = \$120. That option is far out of the money. The quick price is 3.76 cents against the simulated 4.11 cents: 91.7 percent of the true price, too cheap.
+- **Averages already in progress.** Halfway through the year, 26 fixings are banked at an average of \$80, and the curve for the next half-year again reads $`100e^{0.05t}`$. The payoff is half of the remaining average's excess over $`K^*`$ = 2 × 100 − 80 = \$120. That option is far out of the money. The quick price is 3.76 cents against the simulated 4.11 cents: 91.7 percent of the true price, too cheap.
 
-  If the banked fixings alone guarantee the average clears the strike, $K^*$ is zero or negative, the log in $e_1$ is undefined, and the option is sure to pay: it is worth half the discounted gap between the remaining average's forward and $K^*$. How price and hedge change as fixings bank is the subject of [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md).
+  If the banked fixings alone guarantee the average clears the strike, $`K^*`$ is zero or negative, the log in $`e_1`$ is undefined, and the option is sure to pay: it is worth half the discounted gap between the remaining average's forward and $`K^*`$. How price and hedge change as fixings bank is the subject of [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md).
 
 Other routes exist: a lattice or a partial differential equation in two variables, the price and the running average; and quasi-random points, spread evenly on purpose, which cut the error bar further than the control alone ([Quasi-Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
 
@@ -193,20 +207,20 @@ Other routes exist: a lattice or a partial differential equation in two variable
 
 ## Worked numbers, by hand
 
-Jet fuel: curve $100e^{0.05t}$, $K$ = \$100, $r$ = 5%, $\sigma$ = 20%, $T$ = 1 year, 52 weekly fixings.
+Jet fuel: curve $`100e^{0.05t}`$, $`K`$ = \$100, $`r`$ = 5%, $`\sigma`$ = 20%, $`T`$ = 1 year, 52 weekly fixings.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| mean of the average | $M_1 = \frac{1}{52}\sum 100e^{0.05\,i/52}$ | 102.591500 |
-| mean square of the average | $M_2$, the double sum over 52 × 52 pairs | 10,672.682136 |
-| ratio | $M_2/M_1^2$ | 1.014030 |
-| fitted log-spread | $v_A = \sqrt{\ln 1.014030}$ | 0.118036 |
-| first cut-off | $e_1 = (\ln 1.025915 + \tfrac12 v_A^2)/v_A$ | 0.275773 |
-| second cut-off | $e_2 = 0.275773 - 0.118036$ | 0.157737 |
-| chances | $N(e_1)$, $N(e_2)$ | 0.608639, 0.562668 |
-| discount | $e^{-0.05}$ | 0.951229 |
+| mean of the average | $`M_1 = \frac{1}{52}\sum 100e^{0.05\,i/52}`$ | 102.591500 |
+| mean square of the average | $`M_2`$, the double sum over 52 × 52 pairs | 10,672.682136 |
+| ratio | $`M_2/M_1^2`$ | 1.014030 |
+| fitted log-spread | $`v_A = \sqrt{\ln 1.014030}`$ | 0.118036 |
+| first cut-off | $`e_1 = (\ln 1.025915 + \tfrac12 v_A^2)/v_A`$ | 0.275773 |
+| second cut-off | $`e_2 = 0.275773 - 0.118036`$ | 0.157737 |
+| chances | $`N(e_1)`$, $`N(e_2)`$ | 0.608639, 0.562668 |
+| discount | $`e^{-0.05}`$ | 0.951229 |
 | Turnbull-Wakeman | 0.951229 × (102.5915 × 0.608639 − 100 × 0.562668) | 5.873245 |
-| geometric twin, exact | the sibling card's formula, $F_G$ = 102.239577 | 5.637432 |
+| geometric twin, exact | the sibling card's formula, $`F_G`$ = 102.239577 | 5.637432 |
 | **controlled simulation** | 50,000 paths, the twin as control | **\$5.8544 ± 0.0010** |
 
 A year of protection on the airline's weekly average costs \$5.85 a barrel, 56 percent of the \$10.45 plain call on the last week.
@@ -225,11 +239,11 @@ Bump the whole curve by 1 percent (a dollar at the front) and the volatility by 
 
 Same fixings, strike and volatility; only the curve's shape changes. Each price is by Turnbull-Wakeman and by controlled simulation.
 
-| Curve $F(0,t)$ | What it means | Quick | Simulated |
+| Curve $`F(0,t)`$ | What it means | Quick | Simulated |
 | --- | --- | --- | --- |
-| $100e^{0.05t}$, contango | later fuel costs more: full cost of carry | \$5.87 | \$5.85 |
+| $`100e^{0.05t}`$, contango | later fuel costs more: full cost of carry | \$5.87 | \$5.85 |
 | flat at \$100 | every fixing reads one futures contract, or storage and yield cancel the rate | \$4.45 | \$4.44 |
-| $100e^{-0.05t}$, backwardation | prompt barrels are scarce, later fuel costs less | \$3.28 | \$3.28 |
+| $`100e^{-0.05t}`$, backwardation | prompt barrels are scarce, later fuel costs less | \$3.28 | \$3.28 |
 
 The same \$100 spot price gives \$5.85 or \$3.28 depending on the curve, and the quick price's error shrinks as the average's forward falls below the strike.
 
@@ -243,7 +257,7 @@ The fixing schedule matters too. A common alternative to one annual Asian is a s
 | Keep the full spread 0.20 on the average's forward | \$8.97 | an average of partly known prices spreads less than one price |
 | Use the one-year futures price as the average's forward | \$7.44 | the fixings sit along the curve, centred on \$102.59, not at its end |
 | Treat the 52 fixings as independent draws | \$2.72 | neighbouring weeks share almost all their shocks; the spread is not 0.20 over √52 |
-| Quote the geometric twin as the price | \$5.64 | $G$ never exceeds $A$: the twin is the floor |
+| Quote the geometric twin as the price | \$5.64 | $`G`$ never exceeds $`A`$: the twin is the floor |
 | Price a contango strip as a flat spot of \$100 | \$4.44 | the fixings' forwards are on the curve, up to \$105.13 |
 
 The code prints all six.
@@ -682,13 +696,13 @@ The two outputs match line for line: the same generator, the same arithmetic in 
 
 Lean proves the floor and ceiling and the control variate's promises, for any positive fixings, not only lognormal ones.
 
-- Suppose every fixing is positive and has a finite mean. Then $C_G \le C_A \le C_G + e^{-rT}(M_1 - F_G)$.
-- Take one path with positive fixings. Then the arithmetic payoff is at least the geometric one, and exceeds it by at most $A - G$.
-- Suppose $X$ and $Y$ have finite variances, $Y$ is not constant, and $C_G = E[Y]$. Then the corrected payoff $X - \beta(Y - C_G)$ has the same mean as $X$, for every $\beta$.
-- Take the same $X$ and $Y$, and any slope $\beta$. Then the corrected payoff's variance is at least $(1-\rho^2)$ times the variance of $X$.
-- Take the slope $\beta = \operatorname{cov}(X,Y)/\operatorname{var}(Y)$. Then that variance is exactly $(1-\rho^2)$ times the variance of $X$.
-- Take 26 fixings banked at \$80 against the \$100 strike. Then $K^*$ = 120, and the payoff is half the remaining average's excess over $K^*$.
-- The mean square $M_2$ sums over 52 × 52 = 2,704 ordered pairs of fixings.
+- Suppose every fixing is positive and has a finite mean. Then $`C_G \le C_A \le C_G + e^{-rT}(M_1 - F_G)`$.
+- Take one path with positive fixings. Then the arithmetic payoff is at least the geometric one, and exceeds it by at most $`A - G`$.
+- Suppose $`X`$ and $`Y`$ have finite variances, $`Y`$ is not constant, and $`C_G = E[Y]`$. Then the corrected payoff $`X - \beta(Y - C_G)`$ has the same mean as $`X`$, for every $`\beta`$.
+- Take the same $`X`$ and $`Y`$, and any slope $`\beta`$. Then the corrected payoff's variance is at least $`(1-\rho^2)`$ times the variance of $`X`$.
+- Take the slope $`\beta = \mathrm{cov}(X,Y)/\mathrm{var}(Y)`$. Then that variance is exactly $`(1-\rho^2)`$ times the variance of $`X`$.
+- Take 26 fixings banked at \$80 against the \$100 strike. Then $`K^*`$ = 120, and the payoff is half the remaining average's excess over $`K^*`$.
+- The mean square $`M_2`$ sums over 52 × 52 = 2,704 ordered pairs of fixings.
 - Take an average of \$120 against the \$100 strike. Then the call pays \$20 a barrel, and an average of \$80 pays nothing.
 
 The Turnbull-Wakeman price, the exact moments, the twin's exact price and every simulated number are left to the Python and Rust checks.
@@ -890,7 +904,7 @@ example : max ((120 : ℤ) - 100) 0 = 20 ∧ max ((80 : ℤ) - 100) 0 = 0 := by 
 > Guess first, then run it.
 > - **Raise the volatility.** Change `sig` from 0.20 to 0.40. Guess: the quick price's lead grows to about the drift chart's 40% point. It does, and the first assert stops the run: one fixing no longer gives the \$10.45 plain call.
 > - **Flip the correction.** Change `mx - beta * (my - kv` to `mx + beta * (my - kv`. The twin's miss is now added, doubling the error; the three-cent assert stops the run.
-> - **Share every shock.** Change `min(ts[i], ts[j])` to `max(ts[i], ts[j])`. The exact $M_2$ grows, the simulated one does not, and the moments assert fails.
+> - **Share every shock.** Change `min(ts[i], ts[j])` to `max(ts[i], ts[j])`. The exact $`M_2`$ grows, the simulated one does not, and the moments assert fails.
 > - **A new seed.** Change `state` to any other number. The controlled price moves by about its 0.10-cent bar; the plain one by about its 3.6-cent bar.
 
 ---
@@ -923,7 +937,7 @@ example : max ((120 : ℤ) - 100) 0 = 20 ∧ max ((80 : ℤ) - 100) 0 = 0 := by 
 
 - [Kemna-Vorst](02-kemna-vorst-geometric-asian.md): the exact price of the geometric twin on the same futures curve, which is the control variate and the floor.
 - [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing by simulating the risk-neutral world and averaging discounted payoffs.
-- [Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): why a control variate stays unbiased and leaves $1 - \rho^2$ of the variance.
+- [Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): why a control variate stays unbiased and leaves $`1 - \rho^2`$ of the variance.
 - [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): the error bar of a simulated average, and why it shrinks only with the square root of the paths.
 - [Arithmetic Asian options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/02-arithmetic-asian-options.md): the same two roads for a share with a dividend yield, \$5.26 on the house market; this card is that result with the futures curve in place of spot and yield.
 

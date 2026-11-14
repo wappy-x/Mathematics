@@ -28,52 +28,58 @@ The shaded area is 13.25 kWh; the area under the dashed curve is 24.8 kWh. Later
 
 ## The formula
 
-Notation first, in words. The **indicator** $\mathbf{1}_A$, read "one on A, zero off it", equals 1 at every point of the set A and 0 elsewhere. As a reminder, a measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the collection of its subsets we allow ourselves to measure, and a size for each ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Here $\Omega$ is the day, hours 0 to 24, $\mathcal{F}$ its Borel sets (every set built from intervals by complements and countable unions; [Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), and the measure is length, Lebesgue measure $\lambda$.
+Notation first, in words. The **indicator** $`\mathbf{1}_A`$, read "one on A, zero off it", equals 1 at every point of the set A and 0 elsewhere. As a reminder, a measure space $`(\Omega, \mathcal{F}, \mu)`$ is a set of points, the collection of its subsets we allow ourselves to measure, and a size for each ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Here $`\Omega`$ is the day, hours 0 to 24, $`\mathcal{F}`$ its Borel sets (every set built from intervals by complements and countable unions; [Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), and the measure is length, Lebesgue measure $`\lambda`$.
 
-A **simple function** is a function $s$ on $\Omega$, measurable with respect to $\mathcal{F}$, that takes only finitely many values. Its **standard form** lists each value once, with the set where it is taken:
+A **simple function** is a function $`s`$ on $`\Omega`$, measurable with respect to $`\mathcal{F}`$, that takes only finitely many values. Its **standard form** lists each value once, with the set where it is taken:
 
-$$s \;=\; \sum_{i=1}^{m} a_i\, \mathbf{1}_{A_i}, \qquad a_1, \dots, a_m \text{ distinct}, \qquad A_i = \{\omega \in \Omega : s(\omega) = a_i\} \in \mathcal{F}.$$
+```math
+s \;=\; \sum_{i=1}^{m} a_i\, \mathbf{1}_{A_i}, \qquad a_1, \dots, a_m \text{ distinct}, \qquad A_i = \{\omega \in \Omega : s(\omega) = a_i\} \in \mathcal{F}.
+```
 
 **Read it aloud:** s is a-one on the piece A-one, a-two on A-two, and so on; the pieces do not overlap, fill the space, and can each be measured.
 
-The staircase that approximates a non-negative measurable function $f$ at stage $n$ is
+The staircase that approximates a non-negative measurable function $`f`$ at stage $`n`$ is
 
-$$s_n(\omega) \;=\; \min\!\Big(n,\ 2^{-n}\big\lfloor 2^n f(\omega) \big\rfloor\Big), \qquad s_n(\omega) = n \ \text{ where } f(\omega) = \infty.$$
+```math
+s_n(\omega) \;=\; \min\!\Big(n,\ 2^{-n}\big\lfloor 2^n f(\omega) \big\rfloor\Big), \qquad s_n(\omega) = n \ \text{ where } f(\omega) = \infty.
+```
 
 **Read it aloud:** multiply the value by 2 to the n, round down to a whole number, divide back, and never go above n.
 
-**The theorem.** For every $f$ from $\Omega$ to $[0, \infty]$ that is measurable with respect to $\mathcal{F}$:
+**The theorem.** For every $`f`$ from $`\Omega`$ to $`[0, \infty]`$ that is measurable with respect to $`\mathcal{F}`$:
 
-$$0 \le s_1 \le s_2 \le s_3 \le \cdots \le f, \qquad s_n(\omega) \to f(\omega) \text{ at every } \omega, \qquad 0 \le f(\omega) - s_n(\omega) < 2^{-n} \text{ wherever } f(\omega) \le n.$$
+```math
+0 \le s_1 \le s_2 \le s_3 \le \cdots \le f, \qquad s_n(\omega) \to f(\omega) \text{ at every } \omega, \qquad 0 \le f(\omega) - s_n(\omega) < 2^{-n} \text{ wherever } f(\omega) \le n.
+```
 
 **Read it aloud:** the staircases never fall, never pass f, reach f at every point, and wherever f is at most n the stage-n staircase is less than one step below it.
 
-If $f$ never exceeds $M$, every stage $n \ge M$ keeps every gap below $2^{-n}$: the convergence is uniform. Since a pointwise limit of measurable functions is measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)), a non-negative function is measurable exactly when it is a rising limit of simple functions.
+If $`f`$ never exceeds $`M`$, every stage $`n \ge M`$ keeps every gap below $`2^{-n}`$: the convergence is uniform. Since a pointwise limit of measurable functions is measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)), a non-negative function is measurable exactly when it is a rising limit of simple functions.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the house's power draw, in kW | 0.80 kW at 06:00, 3.10 kW at 19:00 | every staircase under it rises or stays put |
-| $t$, $\omega$ | a point of the space; on the day, a time in hours | $t = 19$ is 19:00 | — |
-| $\Omega$, $\mathcal{F}$ | the space, and the sets of it we allow ourselves to measure | the hours 0 to 24; the Borel sets | a bigger $\mathcal{F}$ admits more simple functions |
-| $\lambda$, $\mu$ | a measure; $\lambda$ is Lebesgue measure, length | the piece where stage 1 reads 1 kW: 8.339610 h | longer pieces, more area under the staircase |
-| $f$, $M$, $B$ | a non-negative measurable function, values in $[0, \infty]$; $M$ a bound on it on a set $B$ | $f = p$, $M = 3.1$ kW | a larger $M$ needs more stages before the cap stops mattering |
-| $s$, $a_i$, $A_i$, $m$ | a simple function; its $m$ distinct values and the pieces where each is taken | stage 1: $m = 3$, values 0, 0.5, 1 kW | — |
-| $\mathbf{1}_A$, $A$ | the indicator of a set $A$: 1 on $A$, 0 off it | $\mathbf{1}$ of "draw at least 0.5 kW" | — |
-| $n$ | the stage: steps of $2^{-n}$, ceiling $n$ | stage 2: steps of 0.25 kW, ceiling 2 kW | finer steps, higher ceiling, smaller gap |
-| $\lfloor y \rfloor$, $y$ | the floor: the largest whole number not above $y$ | $\lfloor 12.4 \rfloor = 12$ | — |
-| $s_n$, $r_n$, $g_n$ | the stage-$n$ staircase; $r_n$ and $g_n$ are staircases built from it in the proof | $s_4 = 3.0625$ kW at 19:00 | — |
-| $j$, $k$, $N$ | counters for the levels $j\,2^{-n}$; $N$ a whole-number stage | level $j = 49$ at stage 4 is 3.0625 kW | — |
-| $f^+$, $f^-$ | the positive part $\max(f, 0)$ and the negative part $\max(-f, 0)$ | net draw with solar at 12:00: $f^+ = 0$, $f^- = 0.6$ kW | — |
+| $`p`$ | the house's power draw, in kW | 0.80 kW at 06:00, 3.10 kW at 19:00 | every staircase under it rises or stays put |
+| $`t`$, $`\omega`$ | a point of the space; on the day, a time in hours | $`t = 19`$ is 19:00 | — |
+| $`\Omega`$, $`\mathcal{F}`$ | the space, and the sets of it we allow ourselves to measure | the hours 0 to 24; the Borel sets | a bigger $`\mathcal{F}`$ admits more simple functions |
+| $`\lambda`$, $`\mu`$ | a measure; $`\lambda`$ is Lebesgue measure, length | the piece where stage 1 reads 1 kW: 8.339610 h | longer pieces, more area under the staircase |
+| $`f`$, $`M`$, $`B`$ | a non-negative measurable function, values in $`[0, \infty]`$; $`M`$ a bound on it on a set $`B`$ | $`f = p`$, $`M = 3.1`$ kW | a larger $`M`$ needs more stages before the cap stops mattering |
+| $`s`$, $`a_i`$, $`A_i`$, $`m`$ | a simple function; its $`m`$ distinct values and the pieces where each is taken | stage 1: $`m = 3`$, values 0, 0.5, 1 kW | — |
+| $`\mathbf{1}_A`$, $`A`$ | the indicator of a set $`A`$: 1 on $`A`$, 0 off it | $`\mathbf{1}`$ of "draw at least 0.5 kW" | — |
+| $`n`$ | the stage: steps of $`2^{-n}`$, ceiling $`n`$ | stage 2: steps of 0.25 kW, ceiling 2 kW | finer steps, higher ceiling, smaller gap |
+| $`\lfloor y \rfloor`$, $`y`$ | the floor: the largest whole number not above $`y`$ | $`\lfloor 12.4 \rfloor = 12`$ | — |
+| $`s_n`$, $`r_n`$, $`g_n`$ | the stage-$`n`$ staircase; $`r_n`$ and $`g_n`$ are staircases built from it in the proof | $`s_4 = 3.0625`$ kW at 19:00 | — |
+| $`j`$, $`k`$, $`N`$ | counters for the levels $`j\,2^{-n}`$; $`N`$ a whole-number stage | level $`j = 49`$ at stage 4 is 3.0625 kW | — |
+| $`f^+`$, $`f^-`$ | the positive part $`\max(f, 0)`$ and the negative part $`\max(-f, 0)`$ | net draw with solar at 12:00: $`f^+ = 0`$, $`f^- = 0.6`$ kW | — |
 
 - **Simple.** Stage 1 of the day. Also the indicator of the rational numbers in `[0, 1]`: its pieces are Borel sets but not intervals, so it is no step function and has no Riemann integral ([Why a new integral](../01-Sets%20You%20Can%20Measure/01-why-a-new-integral.md)), yet it is simple.
-- **Not simple.** The curve $p$: it takes every value from 0.30 to 3.10 kW. And the indicator of the Vitali set ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)): two values, but one piece cannot be measured.
+- **Not simple.** The curve $`p`$: it takes every value from 0.30 to 3.10 kW. And the indicator of the Vitali set ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)): two values, but one piece cannot be measured.
 
 ### When it holds
 
-- **Measurable.** The pieces of $s_n$ are where $f$ lies in an interval; if $f$ is not measurable they may have no size, and $s_n$ is not simple.
-- **Non-negative, or split first.** A function that goes negative is split into $f^+$ and $f^-$; the difference of their staircases converges but no longer rises.
-- **The gap bound needs $f \le n$.** Above the cap the gap can be anything: 1.1 kW at 19:00 on stage 2, against a step of 0.25.
-- **Any sigma-algebra.** A sigma-algebra is any family $\mathcal{F}$ of sets allowed to be measured, closed under complements and countable unions ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). No length is used; the theorem holds on a die, two coins, or infinitely many tosses. Infinite values are allowed: where $f = \infty$, $s_n = n$.
+- **Measurable.** The pieces of $`s_n`$ are where $`f`$ lies in an interval; if $`f`$ is not measurable they may have no size, and $`s_n`$ is not simple.
+- **Non-negative, or split first.** A function that goes negative is split into $`f^+`$ and $`f^-`$; the difference of their staircases converges but no longer rises.
+- **The gap bound needs $`f \le n`$.** Above the cap the gap can be anything: 1.1 kW at 19:00 on stage 2, against a step of 0.25.
+- **Any sigma-algebra.** A sigma-algebra is any family $`\mathcal{F}`$ of sets allowed to be measured, closed under complements and countable unions ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). No length is used; the theorem holds on a die, two coins, or infinitely many tosses. Infinite values are allowed: where $`f = \infty`$, $`s_n = n`$.
 
 ---
 
@@ -81,27 +87,27 @@ If $f$ never exceeds $M$, every stage $n \ge M$ keeps every gap below $2^{-n}$: 
 
 ### Step 0: slice the values, not the time, on grids that nest
 
-A Riemann sum chops the time axis and needs the curve's height on each piece, which fails when the function jumps wildly. The staircase chops the power axis instead: for each level it asks at which times the power reaches it. Because $f$ is measurable, those times form a measurable set, however wild $f$ is. The grids are halves, quarters, eighths, and each contains the one before: every quarter-kilowatt mark is also an eighth-kilowatt mark. Rounding down onto a finer grid that contains the coarser one never lands lower. That one fact makes the staircases rise.
+A Riemann sum chops the time axis and needs the curve's height on each piece, which fails when the function jumps wildly. The staircase chops the power axis instead: for each level it asks at which times the power reaches it. Because $`f`$ is measurable, those times form a measurable set, however wild $`f`$ is. The grids are halves, quarters, eighths, and each contains the one before: every quarter-kilowatt mark is also an eighth-kilowatt mark. Rounding down onto a finer grid that contains the coarser one never lands lower. That one fact makes the staircases rise.
 
 ### Step 1: each staircase is a simple function
 
-At stage $n$ the value is a multiple of $2^{-n}$ between 0 and $n$, so there are at most $n\,2^n + 1$ values: 3 at stage 1, 9 at stage 2, 2049 at stage 8. The piece carrying the value $j\,2^{-n}$ is where $f$ lies between $j\,2^{-n}$ and the next grid mark; the top piece is where $f \ge n$. A measurable function pulls every interval back to a set in $\mathcal{F}$ ([Measurable functions](01-measurable-functions.md)), so every piece is measurable and $s_n$ is simple, already in standard form.
+At stage $`n`$ the value is a multiple of $`2^{-n}`$ between 0 and $`n`$, so there are at most $`n\,2^n + 1`$ values: 3 at stage 1, 9 at stage 2, 2049 at stage 8. The piece carrying the value $`j\,2^{-n}`$ is where $`f`$ lies between $`j\,2^{-n}`$ and the next grid mark; the top piece is where $`f \ge n`$. A measurable function pulls every interval back to a set in $`\mathcal{F}`$ ([Measurable functions](01-measurable-functions.md)), so every piece is measurable and $`s_n`$ is simple, already in standard form.
 
 On the day, the curve crosses 0.5 kW at hours 5.3333 and 23.5000, and 1 kW at 6.1818, 8.5714, 16.2500 and 22.2000. Stage 1 reads 0 for 5.833333 hours, 0.5 kW for 9.827056 hours and 1 kW for 8.339610 hours; the three add to 24.
 
-The same function can be written other ways. Stage 1 is also $0.5 \cdot \mathbf{1}_{\{p \ge 0.5\}} + 0.5 \cdot \mathbf{1}_{\{p \ge 1\}}$: two overlapping pieces, each adding half a kilowatt, and the code checks both forms agree at all 86400 seconds. The standard form is unique: its values are the values taken, and its pieces are where each is taken.
+The same function can be written other ways. Stage 1 is also $`0.5 \cdot \mathbf{1}_{\{p \ge 0.5\}} + 0.5 \cdot \mathbf{1}_{\{p \ge 1\}}`$: two overlapping pieces, each adding half a kilowatt, and the code checks both forms agree at all 86400 seconds. The standard form is unique: its values are the values taken, and its pieces are where each is taken.
 
 ### Step 2: the staircase stays below the curve and never falls
 
-Rounding down never increases a number, and the cap only lowers it further, so $s_n \le f$. For the rise, double any number: the double of its floor is a whole number not above the double, so the floor of the double is at least that large. That is the nested-grid fact of Step 0 in one line, and the ceiling rises from $n$ to $n+1$ as well, so $s_{n+1} \ge s_n$.
+Rounding down never increases a number, and the cap only lowers it further, so $`s_n \le f`$. For the rise, double any number: the double of its floor is a whole number not above the double, so the floor of the double is at least that large. That is the nested-grid fact of Step 0 in one line, and the ceiling rises from $`n`$ to $`n+1`$ as well, so $`s_{n+1} \ge s_n`$.
 
 At 19:00 the draw is 3.1 kW. Stages 1 to 3 give 1, 2 and 3, each the ceiling; at stage 3 the rounding also gives 3. Stages 4 to 8 give 3.0625, 3.09375, 3.09375, 3.09375 and 3.09765625. The value never falls, and often stays put: "rising" here means "never falling".
 
 ### Step 3: below the cap, the gap is under one step
 
-Where $f(\omega) < n$, the rounded value is below $n$ and the cap does nothing. A number exceeds its floor by less than 1, so dividing by $2^n$ gives $0 \le f - s_n < 2^{-n}$. Where $f$ is finite, every stage past $f(\omega)$ has a gap below $2^{-n}$, which shrinks to 0. Where $f = \infty$, $s_n = n$ grows without end.
+Where $`f(\omega) < n`$, the rounded value is below $`n`$ and the cap does nothing. A number exceeds its floor by less than 1, so dividing by $`2^n`$ gives $`0 \le f - s_n < 2^{-n}`$. Where $`f`$ is finite, every stage past $`f(\omega)`$ has a gap below $`2^{-n}`$, which shrinks to 0. Where $`f = \infty`$, $`s_n = n`$ grows without end.
 
-The day's peak is 3.1 kW, above the ceiling on stages 1 to 3, though at stage 3 rounding down never passes 3, so the cap changes nothing there. The largest sampled gap is 2.099944 kW at stage 1 and 1.099944 at stage 2. From stage 3 on it sits just under a step: 0.124993 against 0.125, down to 0.003903 against 0.00390625 at stage 8. From stage 4, with the ceiling above the peak, a gap below $2^{-n}$ at every time puts the area under the staircase within $24 \times 2^{-n}$ kWh of the area under the curve.
+The day's peak is 3.1 kW, above the ceiling on stages 1 to 3, though at stage 3 rounding down never passes 3, so the cap changes nothing there. The largest sampled gap is 2.099944 kW at stage 1 and 1.099944 at stage 2. From stage 3 on it sits just under a step: 0.124993 against 0.125, down to 0.003903 against 0.00390625 at stage 8. From stage 4, with the ceiling above the peak, a gap below $`2^{-n}`$ at every time puts the area under the staircase within $`24 \times 2^{-n}`$ kWh of the area under the curve.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -113,40 +119,40 @@ xychart-beta
     line [24.8, 24.8, 24.8, 24.8, 24.8, 24.8, 24.8, 24.8]
 ```
 
-Orange: the area under the stage-$n$ staircase. Green: the area under the curve. The orange line rises at every stage, never crosses the green, and its gap roughly halves per stage once the ceiling clears the peak.
+Orange: the area under the stage-$`n`$ staircase. Green: the area under the curve. The orange line rises at every stage, never crosses the green, and its gap roughly halves per stage once the ceiling clears the peak.
 
 ### Step 4: functions that go negative
 
-A rooftop panel producing 1.5 kW at noon, against a draw of 0.9 kW, makes the net draw from the grid −0.6 kW. Split the net draw $f$ into its positive part $f^+ = \max(f, 0)$ and negative part $f^- = \max(-f, 0)$. Both are non-negative and measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)), and $f = f^+ - f^-$. At 12:00 they are 0 and 0.6; their stage-4 staircases give 0 and 0.5625, so the approximation is −0.5625 kW. The difference of staircases converges at every point and never exceeds $\lvert f \rvert$ in size, but on the negative side it falls towards $f$ rather than rising.
+A rooftop panel producing 1.5 kW at noon, against a draw of 0.9 kW, makes the net draw from the grid −0.6 kW. Split the net draw $`f`$ into its positive part $`f^+ = \max(f, 0)`$ and negative part $`f^- = \max(-f, 0)`$. Both are non-negative and measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)), and $`f = f^+ - f^-`$. At 12:00 they are 0 and 0.6; their stage-4 staircases give 0 and 0.5625, so the approximation is −0.5625 kW. The difference of staircases converges at every point and never exceeds $`\lvert f \rvert`$ in size, but on the negative side it falls towards $`f`$ rather than rising.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F})$ is a set with a sigma-algebra; no measure is needed. $f : \Omega \to [0, \infty]$ is measurable with respect to $\mathcal{F}$: the set where $f$ lies in any interval of $[0, \infty]$ belongs to $\mathcal{F}$ ([Measurable functions](01-measurable-functions.md)). Define $s_n$ as in The formula.
+**Setting.** $`(\Omega, \mathcal{F})`$ is a set with a sigma-algebra; no measure is needed. $`f : \Omega \to [0, \infty]`$ is measurable with respect to $`\mathcal{F}`$: the set where $`f`$ lies in any interval of $`[0, \infty]`$ belongs to $`\mathcal{F}`$ ([Measurable functions](01-measurable-functions.md)). Define $`s_n`$ as in The formula.
 
-**Lemma 1 (standard form).** A function with finitely many values $a_i$ is simple exactly when each level set $A_i = \{s = a_i\}$ is in $\mathcal{F}$, and then $s = \sum_i a_i \mathbf{1}_{A_i}$, uniquely. *Proof.* A level set is the preimage of one value; conversely the preimage of any set of values is a finite union of level sets. The level sets do not overlap and cover $\Omega$, so at a point of $A_i$ the sum is $a_i$. In any such sum with distinct values on non-overlapping covering pieces, the piece carrying $a_i$ is exactly where $s = a_i$.
+**Lemma 1 (standard form).** A function with finitely many values $`a_i`$ is simple exactly when each level set $`A_i = \{s = a_i\}`$ is in $`\mathcal{F}`$, and then $`s = \sum_i a_i \mathbf{1}_{A_i}`$, uniquely. *Proof.* A level set is the preimage of one value; conversely the preimage of any set of values is a finite union of level sets. The level sets do not overlap and cover $`\Omega`$, so at a point of $`A_i`$ the sum is $`a_i`$. In any such sum with distinct values on non-overlapping covering pieces, the piece carrying $`a_i`$ is exactly where $`s = a_i`$.
 
-**Lemma 2 (floors on nested grids).** For every real $y \ge 0$: $0 \le \lfloor y \rfloor \le y < \lfloor y \rfloor + 1$ and $\lfloor 2y \rfloor \ge 2 \lfloor y \rfloor$. *Proof.* The first line is the definition of the floor. For the second, $2\lfloor y \rfloor$ is a whole number and $2 \lfloor y \rfloor \le 2y$; the floor of $2y$ is the largest such whole number.
+**Lemma 2 (floors on nested grids).** For every real $`y \ge 0`$: $`0 \le \lfloor y \rfloor \le y < \lfloor y \rfloor + 1`$ and $`\lfloor 2y \rfloor \ge 2 \lfloor y \rfloor`$. *Proof.* The first line is the definition of the floor. For the second, $`2\lfloor y \rfloor`$ is a whole number and $`2 \lfloor y \rfloor \le 2y`$; the floor of $`2y`$ is the largest such whole number.
 
-**Theorem.** (a) Each $s_n$ is simple. (b) $0 \le s_n \le s_{n+1} \le f$. (c) If $f(\omega) \le n$ then $0 \le f(\omega) - s_n(\omega) < 2^{-n}$. (d) $s_n(\omega) \to f(\omega)$ for every $\omega$. (e) If $f \le M$ on a set $B$, then $s_n \to f$ uniformly on $B$.
+**Theorem.** (a) Each $`s_n`$ is simple. (b) $`0 \le s_n \le s_{n+1} \le f`$. (c) If $`f(\omega) \le n`$ then $`0 \le f(\omega) - s_n(\omega) < 2^{-n}`$. (d) $`s_n(\omega) \to f(\omega)`$ for every $`\omega`$. (e) If $`f \le M`$ on a set $`B`$, then $`s_n \to f`$ uniformly on $`B`$.
 
-(a) The values of $s_n$ lie in the finite set $\{j\,2^{-n} : 0 \le j \le n\,2^n\}$. For $j < n\,2^n$, $\{s_n = j\,2^{-n}\} = \{\omega : j\,2^{-n} \le f(\omega) < (j+1)\,2^{-n}\}$: on that set $f$ is below $n$, the floor of $2^n f$ is $j$ and the cap does nothing, while a value of $f$ at or above $n$ gives $s_n = n$. Also $\{s_n = n\} = \{\omega : f(\omega) \ge n\}$, which includes the points where $f = \infty$. Each is the preimage of an interval, so in $\mathcal{F}$. By Lemma 1, $s_n$ is simple.
+(a) The values of $`s_n`$ lie in the finite set $`\{j\,2^{-n} : 0 \le j \le n\,2^n\}`$. For $`j < n\,2^n`$, $`\{s_n = j\,2^{-n}\} = \{\omega : j\,2^{-n} \le f(\omega) < (j+1)\,2^{-n}\}`$: on that set $`f`$ is below $`n`$, the floor of $`2^n f`$ is $`j`$ and the cap does nothing, while a value of $`f`$ at or above $`n`$ gives $`s_n = n`$. Also $`\{s_n = n\} = \{\omega : f(\omega) \ge n\}`$, which includes the points where $`f = \infty`$. Each is the preimage of an interval, so in $`\mathcal{F}`$. By Lemma 1, $`s_n`$ is simple.
 
-(b) Where $f(\omega) = \infty$: $s_n = n < n + 1 = s_{n+1} \le \infty$. Where $f(\omega)$ is finite, put $y = 2^n f(\omega)$. Lemma 2 gives $2^{-(n+1)} \lfloor 2y \rfloor \ge 2^{-n} \lfloor y \rfloor$, and the smaller of two numbers never decreases when both increase, so $s_{n+1} = \min(n+1, 2^{-(n+1)} \lfloor 2y \rfloor) \ge \min(n, 2^{-n}\lfloor y \rfloor) = s_n$. Lemma 2 also gives $0 \le 2^{-n} \lfloor y \rfloor \le f(\omega)$, and the minimum with $n$ keeps it in that range.
+(b) Where $`f(\omega) = \infty`$: $`s_n = n < n + 1 = s_{n+1} \le \infty`$. Where $`f(\omega)`$ is finite, put $`y = 2^n f(\omega)`$. Lemma 2 gives $`2^{-(n+1)} \lfloor 2y \rfloor \ge 2^{-n} \lfloor y \rfloor`$, and the smaller of two numbers never decreases when both increase, so $`s_{n+1} = \min(n+1, 2^{-(n+1)} \lfloor 2y \rfloor) \ge \min(n, 2^{-n}\lfloor y \rfloor) = s_n`$. Lemma 2 also gives $`0 \le 2^{-n} \lfloor y \rfloor \le f(\omega)`$, and the minimum with $`n`$ keeps it in that range.
 
-(c) If $f(\omega) < n$, then $y < n\,2^n$, so $\lfloor y \rfloor \le n\,2^n - 1$ and $2^{-n}\lfloor y \rfloor < n$: $s_n(\omega) = 2^{-n}\lfloor y \rfloor$. By Lemma 2, $0 \le y - \lfloor y \rfloor < 1$; dividing by $2^n$ gives $0 \le f(\omega) - s_n(\omega) < 2^{-n}$. If $f(\omega) = n$, then $y = n\,2^n$ is whole and $s_n(\omega) = n = f(\omega)$.
+(c) If $`f(\omega) < n`$, then $`y < n\,2^n`$, so $`\lfloor y \rfloor \le n\,2^n - 1`$ and $`2^{-n}\lfloor y \rfloor < n`$: $`s_n(\omega) = 2^{-n}\lfloor y \rfloor`$. By Lemma 2, $`0 \le y - \lfloor y \rfloor < 1`$; dividing by $`2^n`$ gives $`0 \le f(\omega) - s_n(\omega) < 2^{-n}`$. If $`f(\omega) = n`$, then $`y = n\,2^n`$ is whole and $`s_n(\omega) = n = f(\omega)`$.
 
-(d) If $f(\omega)$ is finite, choose a whole number $N \ge f(\omega)$. For $n \ge N$, (c) gives $\lvert f(\omega) - s_n(\omega) \rvert < 2^{-n}$, which tends to 0. If $f(\omega) = \infty$, $s_n(\omega) = n$ exceeds every number from some stage on.
+(d) If $`f(\omega)`$ is finite, choose a whole number $`N \ge f(\omega)`$. For $`n \ge N`$, (c) gives $`\lvert f(\omega) - s_n(\omega) \rvert < 2^{-n}`$, which tends to 0. If $`f(\omega) = \infty`$, $`s_n(\omega) = n`$ exceeds every number from some stage on.
 
-(e) For $n \ge M$, (c) applies at every point of $B$ at once: $\sup_B (f - s_n) \le 2^{-n}$, which tends to 0.
+(e) For $`n \ge M`$, (c) applies at every point of $`B`$ at once: $`\sup_B (f - s_n) \le 2^{-n}`$, which tends to 0.
 
-**Corollary 1 (signed functions).** If $f : \Omega \to \mathbb{R}$ is measurable, then $f^+ = \max(f, 0)$ and $f^- = \max(-f, 0)$ are non-negative and measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)), and $f = f^+ - f^-$. With $s_n$ and $r_n$ the staircases of $f^+$ and $f^-$, the difference $g_n = s_n - r_n$ is simple (finitely many values, level sets built from finitely many level sets), converges to $f$ at every point by (d), and satisfies $\lvert g_n \rvert \le \lvert f \rvert$, since at each point one of $f^+$, $f^-$ is 0 and so is its staircase.
+**Corollary 1 (signed functions).** If $`f : \Omega \to \mathbb{R}`$ is measurable, then $`f^+ = \max(f, 0)`$ and $`f^- = \max(-f, 0)`$ are non-negative and measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)), and $`f = f^+ - f^-`$. With $`s_n`$ and $`r_n`$ the staircases of $`f^+`$ and $`f^-`$, the difference $`g_n = s_n - r_n`$ is simple (finitely many values, level sets built from finitely many level sets), converges to $`f`$ at every point by (d), and satisfies $`\lvert g_n \rvert \le \lvert f \rvert`$, since at each point one of $`f^+`$, $`f^-`$ is 0 and so is its staircase.
 
-**Corollary 2 (the converse).** Every simple function is measurable, and a pointwise limit of measurable functions is measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)). With the theorem: $f : \Omega \to [0, \infty]$ is measurable exactly when it is the pointwise limit of a rising sequence of simple functions.
+**Corollary 2 (the converse).** Every simple function is measurable, and a pointwise limit of measurable functions is measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)). With the theorem: $`f : \Omega \to [0, \infty]`$ is measurable exactly when it is the pointwise limit of a rising sequence of simple functions.
 
 </details>
 
-A second road to the same staircase counts layers instead of pieces. At every point, $s_n = 2^{-n} \sum_{k=1}^{n 2^n} \mathbf{1}_{\{f \ge k\,2^{-n}\}}$: stack one thin slab of height $2^{-n}$ for every grid level the function reaches. The code computes the energies both ways and they agree exactly at all eight stages. Turning that stacking into a formula for integrals is [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
+A second road to the same staircase counts layers instead of pieces. At every point, $`s_n = 2^{-n} \sum_{k=1}^{n 2^n} \mathbf{1}_{\{f \ge k\,2^{-n}\}}`$: stack one thin slab of height $`2^{-n}`$ for every grid level the function reaches. The code computes the energies both ways and they agree exactly at all eight stages. Turning that stacking into a formula for integrals is [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
 
 ---
 
@@ -167,16 +173,16 @@ Stage 1 of the day, and one moment traced through the stages.
 | stage 8 at 19:00 | ⌊256 × 3.1⌋ / 256 = 793 / 256 | 3.09765625, gap 0.00234375 < 0.00390625 |
 | area under stage 8 | exact sum over its pieces | **24.750014 kWh, within 0.049986 of 24.8** |
 
-By stage 8 the staircase shows the day's energy to within 0.05 kWh from finitely many power levels, and it never overstates it. The guaranteed margin, $24 \times 2^{-8}$ = 0.09375 kWh, is about twice the real gap, because on average the curve sits half a step above its staircase.
+By stage 8 the staircase shows the day's energy to within 0.05 kWh from finitely many power levels, and it never overstates it. The guaranteed margin, $`24 \times 2^{-8}`$ = 0.09375 kWh, is about twice the real gap, because on average the curve sits half a step above its staircase.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Round to the nearest quarter instead of down (stage 2) | above the curve for 33958 of 86400 seconds; below its own stage-1 version (nearest half kW) for 31118 seconds | rounding to nearest is neither below $f$ nor rising |
+| Round to the nearest quarter instead of down (stage 2) | above the curve for 33958 of 86400 seconds; below its own stage-1 version (nearest half kW) for 31118 seconds | rounding to nearest is neither below $`f`$ nor rising |
 | Steps of 1/2 kW, then 1/3 kW | the 1/3 staircase lower than the 1/2 one for 22429 seconds | thirds do not contain halves; the grids must nest |
-| Drop the cap, for $1/x$ on `(0, 1]` | stage 2 takes 396 values at 10000 sample points, and infinitely many on the whole interval; capped, at most 9 | an unbounded function needs the ceiling to stay simple |
-| Read the gap bound where the cap binds | 1.1 kW at 19:00 on stage 2, against a step of 0.25 | the bound holds only where $f \le n$ |
+| Drop the cap, for $`1/x`$ on `(0, 1]` | stage 2 takes 396 values at 10000 sample points, and infinitely many on the whole interval; capped, at most 9 | an unbounded function needs the ceiling to stay simple |
+| Read the gap bound where the cap binds | 1.1 kW at 19:00 on stage 2, against a step of 0.25 | the bound holds only where $`f \le n`$ |
 
 ---
 
@@ -510,16 +516,16 @@ The two outputs are identical line for line.
 
 Lean proves the staircase theorem, the standard form and the converse on any sigma-algebra, and checks the 19:00 numbers.
 
-- Take any sigma-algebra and a measurable $f$ from $\Omega$ to $[0, \infty]$. Then each stage-$n$ staircase $s_n$ is a simple function.
-- The staircases never fall as $n$ grows, and never pass $f$.
-- Suppose $f(\omega) \le n$. Then $f(\omega) - s_n(\omega) < 2^{-n}$, less than one step.
-- At every point, even where $f$ is infinite, $s_n(\omega)$ tends to $f(\omega)$.
-- Take a real function $s$ with finitely many values. Then $s$ is simple exactly when each piece $\{s = a\}$ is measurable.
+- Take any sigma-algebra and a measurable $`f`$ from $`\Omega`$ to $`[0, \infty]`$. Then each stage-$`n`$ staircase $`s_n`$ is a simple function.
+- The staircases never fall as $`n`$ grows, and never pass $`f`$.
+- Suppose $`f(\omega) \le n`$. Then $`f(\omega) - s_n(\omega) < 2^{-n}`$, less than one step.
+- At every point, even where $`f`$ is infinite, $`s_n(\omega)`$ tends to $`f(\omega)`$.
+- Take a real function $`s`$ with finitely many values. Then $`s`$ is simple exactly when each piece $`\{s = a\}`$ is measurable.
 - Such a function equals its standard form: each value times the indicator of its piece, summed.
-- A function from $\Omega$ to $[0, \infty]$ is measurable exactly when it is the limit, at every point, of rising simple functions.
+- A function from $`\Omega`$ to $`[0, \infty]`$ is measurable exactly when it is the limit, at every point, of rising simple functions.
 - At 19:00, with 3.1 kW, stages 2, 4 and 8 read 2, 3.0625 and 3.09765625 kW.
 - The gaps at stages 4 and 8 are under one step: 0.0375 against 0.0625, and 0.00234375 against 0.00390625.
-- The value counts $n\,2^n + 1$ come to 3, 9 and 2049 at stages 1, 2 and 8.
+- The value counts $`n\,2^n + 1`$ come to 3, 9 and 2049 at stages 1, 2 and 8.
 
 The day's crossings, piece lengths, areas, sampled gaps, the solar example and the mistake table are left to the Python and Rust checks.
 
@@ -747,7 +753,7 @@ example : 1 * 2 ^ 1 + 1 = 3 ∧ 2 * 2 ^ 2 + 1 = 9 ∧ 8 * 2 ^ 8 + 1 = 2049 := by
 > - **Counting values without checking pieces.** The Vitali set's indicator has two values and is not simple.
 > - **Rounding to nearest.** It overshoots for 33958 of 86400 seconds at stage 2.
 > - **Any refinement will do.** Steps of 1/2 then 1/3 kW drop for 22429 seconds; the grids must nest.
-> - **The gap bound everywhere.** At 19:00 stage 2 is 1.1 kW short; the bound needs $f \le n$.
+> - **The gap bound everywhere.** At 19:00 stage 2 is 1.1 kW short; the bound needs $`f \le n`$.
 
 ---
 

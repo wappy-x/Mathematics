@@ -28,31 +28,35 @@ To scale: 1.1 px per mm across, 10 px per degree up; the dashed lines mark 20 °
 
 Notation first, in words. Measure distance into the wall from the room side as x. T is temperature. The **heat flux** q is the heat crossing one square metre each second, counted positive outward. The **temperature gradient** dT/dx is how fast temperature changes with distance.
 
-$$q = -k\,\frac{dT}{dx}, \qquad R_i = \frac{d_i}{k_i}, \qquad q = \frac{T_\text{in} - T_\text{out}}{R_{si} + \sum_i R_i + R_{se}} = U\,(T_\text{in} - T_\text{out})$$
+```math
+q = -k\,\frac{dT}{dx}, \qquad R_i = \frac{d_i}{k_i}, \qquad q = \frac{T_\text{in} - T_\text{out}}{R_{si} + \sum_i R_i + R_{se}} = U\,(T_\text{in} - T_\text{out})
+```
 
 **Read it aloud:** heat flows down the slope, faster in a better conductor; each layer resists in proportion to its thickness over its conductivity; and through layers in series the loss is the temperature difference over the total resistance.
 
 When temperatures change in time, the same law plus conservation of heat gives the transient problem the wall actually solves:
 
-$$\rho c\,\frac{\partial T}{\partial t} = \frac{\partial}{\partial x}\!\left(k\,\frac{\partial T}{\partial x}\right),\quad q(0,t) = \frac{T_\text{in} - T(0,t)}{R_{si}},\quad q(L,t) = \frac{T(L,t) - T_\text{out}}{R_{se}},\quad T(x,0)\ \text{given}.$$
+```math
+\rho c\,\frac{\partial T}{\partial t} = \frac{\partial}{\partial x}\!\left(k\,\frac{\partial T}{\partial x}\right),\quad q(0,t) = \frac{T_\text{in} - T(0,t)}{R_{si}},\quad q(L,t) = \frac{T(L,t) - T_\text{out}}{R_{se}},\quad T(x,0)\ \text{given}.
+```
 
-At each joint between layers, temperature and the flux $-k\,\partial T/\partial x$ are both continuous.
+At each joint between layers, temperature and the flux $`-k\,\partial T/\partial x`$ are both continuous.
 
 **Read it aloud:** each slice warms at the rate heat flows into it minus out of it, divided by its heat capacity; at the faces, the heat crossing the surface air film is the film's temperature difference over its resistance; and the starting temperature is known.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$, $T_\text{in}$, $T_\text{out}$ | temperature, in °C; room air and outside air | 20 °C and 0 °C | loss grows with the difference |
-| $x$, $L$ | distance into the wall from the room side; total thickness, in m | 0 to 0.3 m | — |
-| $t$ | time, in s (hours in the cold-snap story) | 0 to 24 h | — |
-| $q$ | heat flux: watts crossing each m², outward | 5.3175 W/m² | — |
-| $k$ | thermal conductivity, W/(m K): watts per m² for a slope of 1 K per m | 0.035 wool to 0.77 brick | that layer's resistance falls |
-| $d_i$, $\Delta x$ | thickness of layer i, in m; $\Delta x$ is a thin slice (a 5 mm cell in the code) | 0.015, 0.085, 0.100, 0.100 | that layer's resistance rises |
-| $R_i$, $\Delta T_i$ | thermal resistance of layer i, $d_i/k_i$, in m² K/W; the temperature drop across it, $q R_i$, in K | wool 2.8571 and 15.193 K | loss falls |
-| $R_{si}$, $R_{se}$ | resistance of the still air film on the inside and outside face | 0.13 and 0.04 m² K/W | loss falls a little |
-| $U$ | thermal transmittance, $1/\sum R$: watts per m² per kelvin | 0.2659 W/(m² K) | loss rises in proportion |
-| $\rho$, $c$ | density, kg/m³; specific heat, the joules to warm 1 kg by 1 K | brick 1700 and 800 | the wall responds more slowly |
-| $\kappa$ | diffusivity, $k/(\rho c)$, in m²/s: how fast a temperature change spreads | brick 5.662e-7 | changes spread faster |
+| $`T`$, $`T_\text{in}`$, $`T_\text{out}`$ | temperature, in °C; room air and outside air | 20 °C and 0 °C | loss grows with the difference |
+| $`x`$, $`L`$ | distance into the wall from the room side; total thickness, in m | 0 to 0.3 m | — |
+| $`t`$ | time, in s (hours in the cold-snap story) | 0 to 24 h | — |
+| $`q`$ | heat flux: watts crossing each m², outward | 5.3175 W/m² | — |
+| $`k`$ | thermal conductivity, W/(m K): watts per m² for a slope of 1 K per m | 0.035 wool to 0.77 brick | that layer's resistance falls |
+| $`d_i`$, $`\Delta x`$ | thickness of layer i, in m; $`\Delta x`$ is a thin slice (a 5 mm cell in the code) | 0.015, 0.085, 0.100, 0.100 | that layer's resistance rises |
+| $`R_i`$, $`\Delta T_i`$ | thermal resistance of layer i, $`d_i/k_i`$, in m² K/W; the temperature drop across it, $`q R_i`$, in K | wool 2.8571 and 15.193 K | loss falls |
+| $`R_{si}`$, $`R_{se}`$ | resistance of the still air film on the inside and outside face | 0.13 and 0.04 m² K/W | loss falls a little |
+| $`U`$ | thermal transmittance, $`1/\sum R`$: watts per m² per kelvin | 0.2659 W/(m² K) | loss rises in proportion |
+| $`\rho`$, $`c`$ | density, kg/m³; specific heat, the joules to warm 1 kg by 1 K | brick 1700 and 800 | the wall responds more slowly |
+| $`\kappa`$ | diffusivity, $`k/(\rho c)`$, in m²/s: how fast a temperature change spreads | brick 5.662e-7 | changes spread faster |
 
 The heat equation itself, and its solution for a uniform rod by separating variables, are on the differential-equations wing: [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md). This card is the physics that feeds it: conductivity, resistance and walls in series.
 
@@ -74,44 +78,52 @@ Heat is conserved. If a slice of wall is not warming or cooling, whatever enters
 
 ### Step 1: Fourier's law, the measured rule
 
-Joseph Fourier set out the law in 1822: the flux is the conductivity times the temperature fall per metre, $q = -k\,dT/dx$. The minus sign sends heat from warm to cool. It was already used to close the heat equation on [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md). It is a model: double the slope and the flux doubles. Experiments confirm it in solids over a huge range; the conductivity k is what the experiment measures. The units say what k means: W/(m K) is watts through a square metre when the temperature falls 1 K per metre of thickness.
+Joseph Fourier set out the law in 1822: the flux is the conductivity times the temperature fall per metre, $`q = -k\,dT/dx`$. The minus sign sends heat from warm to cool. It was already used to close the heat equation on [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md). It is a model: double the slope and the flux doubles. Experiments confirm it in solids over a huge range; the conductivity k is what the experiment measures. The units say what k means: W/(m K) is watts through a square metre when the temperature falls 1 K per metre of thickness.
 
 ### Step 2: conservation turns into "flux is constant"
 
 The heat account for a thin slice is the one set up on [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md): a slice warms only by the flux in minus the flux out, so
 
-$$\rho c\,\frac{\partial T}{\partial t} = -\frac{\partial q}{\partial x}.$$
+```math
+\rho c\,\frac{\partial T}{\partial t} = -\frac{\partial q}{\partial x}.
+```
 
-In steady state the left side is zero, so $\partial q / \partial x = 0$: the flux is the same everywhere in the wall.
+In steady state the left side is zero, so $`\partial q / \partial x = 0`$: the flux is the same everywhere in the wall.
 
 ### Step 3: inside one layer the temperature is a straight line
 
-Inside layer i, k is constant and q is constant, so $dT/dx = -q/k_i$, a constant slope. The temperature falls along a straight line, and across thickness $d_i$ it falls by
+Inside layer i, k is constant and q is constant, so $`dT/dx = -q/k_i`$, a constant slope. The temperature falls along a straight line, and across thickness $`d_i`$ it falls by
 
-$$\Delta T_i = q\,\frac{d_i}{k_i} = q\,R_i.$$
+```math
+\Delta T_i = q\,\frac{d_i}{k_i} = q\,R_i.
+```
 
-This is Ohm's law for heat: temperature difference plays voltage, flux plays current, $R_i$ plays resistance.
+This is Ohm's law for heat: temperature difference plays voltage, flux plays current, $`R_i`$ plays resistance.
 
 ### Step 4: the drops add, so the resistances add
 
 From room air to outside air the drops must add to the whole difference:
 
-$$T_\text{in} - T_\text{out} = q R_{si} + q R_1 + q R_2 + q R_3 + q R_4 + q R_{se} = q \sum R .$$
+```math
+T_\text{in} - T_\text{out} = q R_{si} + q R_1 + q R_2 + q R_3 + q R_4 + q R_{se} = q \sum R .
+```
 
 Divide by the sum and the formula drops out. Two things follow. The layer with the biggest resistance takes the biggest share of the drop: here the wool, 15.193 K of 20. And adding conductivities, or averaging them, is wrong; only resistances add in series.
 
-The surface films $R_{si}$ and $R_{se}$ are not conduction. They lump the convection and radiation that carry heat between the air and the face into one resistance, using standard design values. Where those values come from is the job of [Convection and radiation](06-convection-and-radiation.md).
+The surface films $`R_{si}`$ and $`R_{se}`$ are not conduction. They lump the convection and radiation that carry heat between the air and the face into one resistance, using standard design values. Where those values come from is the job of [Convection and radiation](06-convection-and-radiation.md).
 
 ### Step 5: when nothing has settled, the heat equation with its conditions
 
 Drop the steady assumption in Step 2 and put Fourier's law in for q:
 
-$$\rho c\,\frac{\partial T}{\partial t} = \frac{\partial}{\partial x}\!\left(k\,\frac{\partial T}{\partial x}\right).$$
+```math
+\rho c\,\frac{\partial T}{\partial t} = \frac{\partial}{\partial x}\!\left(k\,\frac{\partial T}{\partial x}\right).
+```
 
-Inside one uniform layer this is the familiar $T_t = \kappa\,T_{xx}$ (a subscript means a partial derivative in that variable) with $\kappa = k/(\rho c)$. A layered wall needs three more pieces before it has one answer:
+Inside one uniform layer this is the familiar $`T_t = \kappa\,T_{xx}`$ (a subscript means a partial derivative in that variable) with $`\kappa = k/(\rho c)`$. A layered wall needs three more pieces before it has one answer:
 
-- **At each joint between layers**, the temperature is continuous (two touching faces share a temperature) and the flux is continuous (a slice of zero thickness across the joint holds no heat, so what enters equals what leaves). The slope $\partial T/\partial x$ jumps: steep in the wool, shallow in the brick.
-- **At the two faces**, the heat arriving through the air film equals the heat conducted in: $-k\,T_x = (T_\text{in} - T)/R_{si}$ on the room side, and $-k\,T_x = (T - T_\text{out})/R_{se}$ outside. A condition that ties the value to the slope like this is called a Robin condition.
+- **At each joint between layers**, the temperature is continuous (two touching faces share a temperature) and the flux is continuous (a slice of zero thickness across the joint holds no heat, so what enters equals what leaves). The slope $`\partial T/\partial x`$ jumps: steep in the wool, shallow in the brick.
+- **At the two faces**, the heat arriving through the air film equals the heat conducted in: $`-k\,T_x = (T_\text{in} - T)/R_{si}`$ on the room side, and $`-k\,T_x = (T - T_\text{out})/R_{se}`$ outside. A condition that ties the value to the slope like this is called a Robin condition.
 - **At the start**, the temperature everywhere in the wall is given.
 
 For one uniform layer with fixed face temperatures, [Separation of variables](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md) solves this exactly as a sum of decaying sine modes. A layered wall with films has no tidy closed form, so the code steps it forward in time instead, cell by cell, as on [Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md).
@@ -119,7 +131,7 @@ For one uniform layer with fixed face temperatures, [Separation of variables](..
 <details>
 <summary>Why the stepped wall settles on exactly the series answer</summary>
 
-The code cuts the wall into 5 mm cells and keeps a heat account for each. Between the centres of two neighbouring cells the heat crosses half of one cell and half of the other, in series, so the link between them has resistance $\Delta x/(2k_a) + \Delta x/(2k_b)$. That is Step 4 again on a small scale, and it is how flux continuity at the joints is built in. Between the first cell and the room the link is $R_{si} + \Delta x/(2k)$; likewise outside. Every layer is a whole number of cells, so the joints sit on cell faces. When the cells stop changing, each one passes on what it receives, every link carries the same flux, and the resistances along the chain add to exactly $\sum R$. Nothing in the stepping uses the formula, so agreement is a real check.
+The code cuts the wall into 5 mm cells and keeps a heat account for each. Between the centres of two neighbouring cells the heat crosses half of one cell and half of the other, in series, so the link between them has resistance $`\Delta x/(2k_a) + \Delta x/(2k_b)`$. That is Step 4 again on a small scale, and it is how flux continuity at the joints is built in. Between the first cell and the room the link is $`R_{si} + \Delta x/(2k)`$; likewise outside. Every layer is a whole number of cells, so the joints sit on cell faces. When the cells stop changing, each one passes on what it receives, every link carries the same flux, and the resistances along the chain add to exactly $`\sum R`$. Nothing in the stepping uses the formula, so agreement is a real check.
 
 </details>
 
@@ -549,9 +561,9 @@ ALL CHECKS PASS
 
 Lean proves the settled-wall steps of Why it works for any layers and films, and checks the card's wall numbers exactly.
 
-- Suppose the wall has settled, so one flux q crosses every layer, and each layer of conductivity $k > 0$ obeys Fourier's law. Then the temperature inside that layer is a straight line, falling $q/k$ per metre.
-- Take the same wall, continuous at each joint, where the heat crossing each air film is its temperature difference over its resistance. Then $q = (T_\text{in} - T_\text{out})/(R_{si} + \sum R_i + R_{se})$.
-- Take the same wall and films. Then layer i takes the fraction $R_i/\sum R$ of the whole drop $T_\text{in} - T_\text{out}$.
+- Suppose the wall has settled, so one flux q crosses every layer, and each layer of conductivity $`k > 0`$ obeys Fourier's law. Then the temperature inside that layer is a straight line, falling $`q/k`$ per metre.
+- Take the same wall, continuous at each joint, where the heat crossing each air film is its temperature difference over its resistance. Then $`q = (T_\text{in} - T_\text{out})/(R_{si} + \sum R_i + R_{se})`$.
+- Take the same wall and films. Then layer i takes the fraction $`R_i/\sum R`$ of the whole drop $`T_\text{in} - T_\text{out}`$.
 - Take the card's wall, in exact fractions. Then the total resistance rounds to 3.7612 m² K/W and the flux to 5.3175 W/m². The loss through 10 m² rounds to 53.17 W, and the wool's drop to 15.193 K.
 
 The heat equation for a wall that has not settled, the cold snap and the other numbers are left to the Python and Rust checks.
@@ -755,7 +767,7 @@ example : (30385 : ℚ) / 2000 ≤ 20 / (347533 / 92400) * (100 / 35) ∧
 > - **Treating an air gap as a solid.** Still air conducts poorly, but air in a cavity moves and radiates across. Using k = 0.026 gives 4.2104 W/m² for the empty-cavity wall; the real design figure gives 18.4496.
 > - **Forgetting the surface films.** The air layers on the two faces add 0.13 and 0.04 m² K/W. Without them the filled wall reads 5.5692 W/m²; on a single sheet of glass the error would be most of the answer.
 > - **Using diffusivity for a steady loss.** The steady loss depends only on k. Density and specific heat set how fast the wall responds, not how much it leaks once settled. Rank the layers by diffusivity and the wool comes first, at 13.592 × 10⁻⁷ m²/s against the brick's 5.662, though it is by far the best insulator.
-> - **Losing the minus sign.** $q = -k\,dT/dx$: heat flows toward the cold. Drop the sign and the same slopes send 5.3175 W/m² from the 0 °C street into the 20 °C room, and the transient equation blows up instead of settling.
+> - **Losing the minus sign.** $`q = -k\,dT/dx`$: heat flows toward the cold. Drop the sign and the same slopes send 5.3175 W/m² from the 0 °C street into the 20 °C room, and the transient equation blows up instead of settling.
 
 ---
 
@@ -774,7 +786,7 @@ example : (30385 : ℚ) / 2000 ≤ 20 / (347533 / 92400) * (100 / 35) ∧
 
 ## What this builds on
 
-- [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md): conservation plus Fourier's law gives $T_t = \kappa T_{xx}$ (that card writes u for the temperature), and bumps in temperature only flatten; this card adds layers, films and joints.
+- [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md): conservation plus Fourier's law gives $`T_t = \kappa T_{xx}`$ (that card writes u for the temperature), and bumps in temperature only flatten; this card adds layers, films and joints.
 - [Separation of variables](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md): the exact sine-mode series for one uniform slab, used here as road three to test the time-stepper.
 - [Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the cell-by-cell time-stepping that the code uses for the layered wall and the cold snap.
 
@@ -782,7 +794,7 @@ example : (30385 : ℚ) / 2000 ≤ 20 / (347533 / 92400) * (100 / 35) ∧
 
 - [Convection and radiation](06-convection-and-radiation.md): where the surface film resistances come from, and why an air gap loses far more than its conductivity suggests.
 
-This card leaves open how big $R_{si}$ and $R_{se}$ really are on a windy night, when the moving air outside strips heat off the brick faster than any fixed design value says.
+This card leaves open how big $`R_{si}`$ and $`R_{se}`$ really are on a windy night, when the moving air outside strips heat off the brick faster than any fixed design value says.
 
 ---
 

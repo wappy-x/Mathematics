@@ -47,38 +47,48 @@ The liquid stock is longer than the run: the LCR passes. The other two ratios as
 
 Three fractions. The sign Σ means "add up over every row of the balance sheet". A **run-off rate** is the share of a funding source assumed to leave during the stress. A **haircut** is the share of an asset's price assumed lost when it is sold in a hurry.
 
-$$\text{LCR} = \frac{H}{O - \min(I,\ 0.75\,O)} \ \ge\ 100\%, \qquad O = \sum_i r_i D_i, \qquad I = \sum_j n_j C_j$$
+```math
+\text{LCR} = \frac{H}{O - \min(I,\ 0.75\,O)} \ \ge\ 100\%, \qquad O = \sum_i r_i D_i, \qquad I = \sum_j n_j C_j
+```
 
 **Read it aloud:** the liquid stock, divided by 30 days of stressed outflows net of the inflows the bank may count, must be at least one.
 
-$$\text{NSFR} = \frac{\text{available stable funding}}{\text{required stable funding}} = \frac{\sum_i a_i F_i}{\sum_j s_j A_j} \ \ge\ 100\%$$
+```math
+\text{NSFR} = \frac{\text{available stable funding}}{\text{required stable funding}} = \frac{\sum_i a_i F_i}{\sum_j s_j A_j} \ \ge\ 100\%
+```
 
 **Read it aloud:** the funding that will still be there in a year must cover the part of the assets that cannot be turned into cash within a year.
 
-$$\text{Leverage ratio} = \frac{T_1}{E} \ \ge\ 3\%, \qquad E = \text{on-balance-sheet assets} + \sum_k c_k U_k$$
+```math
+\text{Leverage ratio} = \frac{T_1}{E} \ \ge\ 3\%, \qquad E = \text{on-balance-sheet assets} + \sum_k c_k U_k
+```
 
 **Read it aloud:** the bank's best capital, divided by everything it has lent or promised to lend with no allowance for risk, must be at least 3%.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $H$ | stock of **high-quality liquid assets** (HQLA): cash and bonds sellable in a day, after haircuts and caps | $302.50m | LCR rises |
-| $L_1$, $L_{2A}$, $L_{2B}$, $L_2$ | the three grades of liquid asset, after haircuts of 0%, 15% and 50%; $L_2$ is the two level-2 grades together | $250.00m, $42.50m, $10.00m | $H$ rises, until the caps bite |
-| $D_i$, $r_i$ | one source of funding (or an undrawn credit line) and its 30-day run-off rate | interbank $100m at 100% | LCR falls |
-| $O$ | total stressed outflows over 30 days | $255.00m | LCR falls |
-| $C_j$, $n_j$, $I$ | cash contractually due in, the share the rule lets the bank count, and the counted total | $40m at 50%: $20.00m | LCR rises, up to the 75% cap |
-| $F_i$, $a_i$ | one source of funding and its **available stable funding** (ASF) factor: the share assumed to stay a year | stable retail $500m at 95% | NSFR rises |
-| $A_j$, $s_j$ | one asset (or undrawn line) and its **required stable funding** (RSF) factor: the share that cannot be turned into cash within a year | mortgages $600m at 65% | NSFR falls |
-| $T_1$ | **Tier 1 capital**: shareholders' equity and the instruments that absorb losses as well as equity does | $60m | leverage ratio rises |
-| $E$ | the **exposure measure**: every asset at face value plus converted promises | $1,530.00m | leverage ratio falls |
-| $U_k$, $c_k$ | an undrawn commitment and its **credit conversion factor** (CCF): the share treated as already lent | $200m at 40% | $E$ rises |
-| $\lambda$, $x$ | two stress dials: $\lambda$ scales the whole run (1 is the rulebook's run); $x$ is a loss, taken from equity and assets alike | 1; none | either one pushes the bank toward its floor |
-| $a$, $b$ | in the proof of Step 2: how much level 2A and level 2B the bank chooses to count | $42.50m, $10.00m | $H$ rises, until a cap binds |
+| $`H`$ | stock of **high-quality liquid assets** (HQLA): cash and bonds sellable in a day, after haircuts and caps | $302.50m | LCR rises |
+| $`L_1`$, $`L_{2A}`$, $`L_{2B}`$, $`L_2`$ | the three grades of liquid asset, after haircuts of 0%, 15% and 50%; $`L_2`$ is the two level-2 grades together | $250.00m, $42.50m, $10.00m | $`H`$ rises, until the caps bite |
+| $`D_i`$, $`r_i`$ | one source of funding (or an undrawn credit line) and its 30-day run-off rate | interbank $100m at 100% | LCR falls |
+| $`O`$ | total stressed outflows over 30 days | $255.00m | LCR falls |
+| $`C_j`$, $`n_j`$, $`I`$ | cash contractually due in, the share the rule lets the bank count, and the counted total | $40m at 50%: $20.00m | LCR rises, up to the 75% cap |
+| $`F_i`$, $`a_i`$ | one source of funding and its **available stable funding** (ASF) factor: the share assumed to stay a year | stable retail $500m at 95% | NSFR rises |
+| $`A_j`$, $`s_j`$ | one asset (or undrawn line) and its **required stable funding** (RSF) factor: the share that cannot be turned into cash within a year | mortgages $600m at 65% | NSFR falls |
+| $`T_1`$ | **Tier 1 capital**: shareholders' equity and the instruments that absorb losses as well as equity does | $60m | leverage ratio rises |
+| $`E`$ | the **exposure measure**: every asset at face value plus converted promises | $1,530.00m | leverage ratio falls |
+| $`U_k`$, $`c_k`$ | an undrawn commitment and its **credit conversion factor** (CCF): the share treated as already lent | $200m at 40% | $`E`$ rises |
+| $`\lambda`$, $`x`$ | two stress dials: $`\lambda`$ scales the whole run (1 is the rulebook's run); $`x`$ is a loss, taken from equity and assets alike | 1; none | either one pushes the bank toward its floor |
+| $`a`$, $`b`$ | in the proof of Step 2: how much level 2A and level 2B the bank chooses to count | $42.50m, $10.00m | $`H`$ rises, until a cap binds |
 
 The liquid stock has a helper formula. Level 2 assets may be at most 40% of the stock, and level 2B at most 15%. When a bank holds too much of them, the excess is cut:
 
-$$H = L_1 + L_{2A} + L_{2B} - \text{cut}_{15} - \text{cut}_{40}$$
+```math
+H = L_1 + L_{2A} + L_{2B} - \text{cut}_{15} - \text{cut}_{40}
+```
 
-$$\text{cut}_{15} = \max\!\Big(L_{2B} - \tfrac{15}{85}(L_1 + L_{2A}),\ L_{2B} - \tfrac{15}{60}L_1,\ 0\Big), \qquad \text{cut}_{40} = \max\!\Big(L_{2A} + L_{2B} - \text{cut}_{15} - \tfrac{2}{3}L_1,\ 0\Big)$$
+```math
+\text{cut}_{15} = \max\!\Big(L_{2B} - \tfrac{15}{85}(L_1 + L_{2A}),\ L_{2B} - \tfrac{15}{60}L_1,\ 0\Big), \qquad \text{cut}_{40} = \max\!\Big(L_{2A} + L_{2B} - \text{cut}_{15} - \tfrac{2}{3}L_1,\ 0\Big)
+```
 
 In words: count level 2 only up to two-thirds of level 1, and level 2B only up to fifteen eighty-fifths of the rest. Step 2 below derives those fractions from the 40% and 15% caps.
 
@@ -87,7 +97,7 @@ In words: count level 2 only up to two-thirds of level 1, and level 2B only up t
 These are definitions, so they hold by construction; what can fail is the fit between the rulebook's stress and a real one.
 
 - **The run-off rates match the run.** In March 2023 one US bank lost about a quarter of its deposits in a day, far faster than a 10% or 40% rate over a month. When a run is faster than the table, a passing LCR can still run dry; this bank at 1.5 times the rulebook's run is dry by day 10.
-- **Liquid assets sell at the haircut.** A 0% haircut assumes government bonds hold their price. If rates have risen, selling them realises a loss the stock $H$ did not show.
+- **Liquid assets sell at the haircut.** A 0% haircut assumes government bonds hold their price. If rates have risen, selling them realises a loss the stock $`H`$ did not show.
 - **Timing within the month does not matter.** The LCR adds up 30 days. If the outflows come early and the inflows late, the stock dips lower before day 30 than on it.
 - **Risk weights may be too low.** The leverage ratio exists for that case; when the weights are right it rarely binds.
 
@@ -101,15 +111,19 @@ Each rule picks one danger and states its size: a 30-day run, a year of doubt th
 
 ### Step 1: the LCR is the 30-day run, added up
 
-Start the stress with liquid stock $H$. Each day some funding leaves and some loan repayments arrive. The stock on any day is $H$ minus the outflows so far plus the inflows so far. On day 30 every outflow in the rulebook has happened:
+Start the stress with liquid stock $`H`$. Each day some funding leaves and some loan repayments arrive. The stock on any day is $`H`$ minus the outflows so far plus the inflows so far. On day 30 every outflow in the rulebook has happened:
 
-$$\text{stock on day 30} = H - O + I.$$
+```math
+\text{stock on day 30} = H - O + I.
+```
 
-The bank survives the month when that is at least zero. Rearranged, $H \ge O - I$, which is the LCR at least 100% (here $I$ is under its cap and counts in full; Step 3 covers the cap). The fraction is the survival test in a different shape.
+The bank survives the month when that is at least zero. Rearranged, $`H \ge O - I`$, which is the LCR at least 100% (here $`I`$ is under its cap and counts in full; Step 3 covers the cap). The fraction is the survival test in a different shape.
 
-The same line answers a sharper question: how much worse could the run be? Scale every outflow by $\lambda$ and keep the inflows fixed. The day-30 stock stays at or above zero while $\lambda O - I \le H$, so the largest run the test passes is
+The same line answers a sharper question: how much worse could the run be? Scale every outflow by $`\lambda`$ and keep the inflows fixed. The day-30 stock stays at or above zero while $`\lambda O - I \le H`$, so the largest run the test passes is
 
-$$\lambda^{*} = \frac{H + I}{O} = \frac{302.50 + 20.00}{255.00} = 1.2647.$$
+```math
+\lambda^{*} = \frac{H + I}{O} = \frac{302.50 + 20.00}{255.00} = 1.2647.
+```
 
 That is the largest run the ratio passes, not the largest the bank lives through. The repayments arrive on day 30, so the stock is lowest on day 29, and the bank stays above zero every day only up to 1.1949 times the rulebook's run (derived in the 30-day section below).
 
@@ -117,48 +131,54 @@ The checks find both numbers twice: by formula, and by running the month day by 
 
 ### Step 2: haircuts price the fire sale; the caps stop the stock being built from second-grade assets
 
-A covered bond (a bond backed by a pool of mortgages) sells easily in calm markets and less easily in a panic. The haircuts count only the cash a hurried sale would raise. The caps stop a bank building its whole stock from level 2. Write the level-2 total as $L_2 = L_{2A} + L_{2B}$. The 40% cap says $L_2 \le 0.4\,(L_1 + L_2)$. Move the $L_2$ terms to one side: $0.6\,L_2 \le 0.4\,L_1$, so
+A covered bond (a bond backed by a pool of mortgages) sells easily in calm markets and less easily in a panic. The haircuts count only the cash a hurried sale would raise. The caps stop a bank building its whole stock from level 2. Write the level-2 total as $`L_2 = L_{2A} + L_{2B}`$. The 40% cap says $`L_2 \le 0.4\,(L_1 + L_2)`$. Move the $`L_2`$ terms to one side: $`0.6\,L_2 \le 0.4\,L_1`$, so
 
-$$L_2 \le \tfrac{2}{3}\,L_1.$$
+```math
+L_2 \le \tfrac{2}{3}\,L_1.
+```
 
-The 15% cap says $L_{2B} \le 0.15\,(L_1 + L_{2A} + L_{2B})$. The same move gives $0.85\,L_{2B} \le 0.15\,(L_1 + L_{2A})$, so
+The 15% cap says $`L_{2B} \le 0.15\,(L_1 + L_{2A} + L_{2B})`$. The same move gives $`0.85\,L_{2B} \le 0.15\,(L_1 + L_{2A})`$, so
 
-$$L_{2B} \le \tfrac{15}{85}\,(L_1 + L_{2A}).$$
+```math
+L_{2B} \le \tfrac{15}{85}\,(L_1 + L_{2A}).
+```
 
-Those are the two fractions in the helper formula. When the 40% cap also binds, the whole stock is $\tfrac{5}{3}L_1$, and 15% of that is $\tfrac{15}{60}L_1$: the third fraction. This bank's level 2 is well under both limits, so no cut applies and $H = 302.50$.
+Those are the two fractions in the helper formula. When the 40% cap also binds, the whole stock is $`\tfrac{5}{3}L_1`$, and 15% of that is $`\tfrac{15}{60}L_1`$: the third fraction. This bank's level 2 is well under both limits, so no cut applies and $`H = 302.50`$.
 
 <details>
 <summary>Detailed proof: the cut formula counts the largest stock the caps allow</summary>
 
-Fix $L_1$, $L_{2A}$, $L_{2B}$ after haircuts. The bank may count any $a \le L_{2A}$ of level 2A and $b \le L_{2B}$ of level 2B, provided $a + b \le \tfrac23 L_1$ and $b \le \tfrac{15}{85}(L_1 + a)$. It wants the largest $L_1 + a + b$.
+Fix $`L_1`$, $`L_{2A}`$, $`L_{2B}`$ after haircuts. The bank may count any $`a \le L_{2A}`$ of level 2A and $`b \le L_{2B}`$ of level 2B, provided $`a + b \le \tfrac23 L_1`$ and $`b \le \tfrac{15}{85}(L_1 + a)`$. It wants the largest $`L_1 + a + b`$.
 
-**Case 1: the 40% limit does not bind.** Take $a = L_{2A}$. Then $b$ is limited by $L_{2B}$ and by $\tfrac{15}{85}(L_1 + L_{2A})$. The amount of $L_{2B}$ left out is $\max(L_{2B} - \tfrac{15}{85}(L_1 + L_{2A}), 0)$, the first term of $\text{cut}_{15}$.
+**Case 1: the 40% limit does not bind.** Take $`a = L_{2A}`$. Then $`b`$ is limited by $`L_{2B}`$ and by $`\tfrac{15}{85}(L_1 + L_{2A})`$. The amount of $`L_{2B}`$ left out is $`\max(L_{2B} - \tfrac{15}{85}(L_1 + L_{2A}), 0)`$, the first term of $`\text{cut}_{15}`$.
 
-**Case 2: the 40% limit binds**, so $a + b = \tfrac23 L_1$ and the stock is $\tfrac53 L_1$. The 15% limit becomes $b \le 0.15 \times \tfrac53 L_1 = \tfrac{15}{60} L_1$. Any level 2B above that is cut: the second term of $\text{cut}_{15}$. Level 2A fills the rest of the two-thirds.
+**Case 2: the 40% limit binds**, so $`a + b = \tfrac23 L_1`$ and the stock is $`\tfrac53 L_1`$. The 15% limit becomes $`b \le 0.15 \times \tfrac53 L_1 = \tfrac{15}{60} L_1`$. Any level 2B above that is cut: the second term of $`\text{cut}_{15}`$. Level 2A fills the rest of the two-thirds.
 
-Each term is the excess of $L_{2B}$ over one legal bound on $b$; the larger excess is the one that must go. After that, $\text{cut}_{40}$ removes whatever level 2 still exceeds $\tfrac23 L_1$, and what remains is the maximum.
+Each term is the excess of $`L_{2B}`$ over one legal bound on $`b`$; the larger excess is the one that must go. After that, $`\text{cut}_{40}`$ removes whatever level 2 still exceeds $`\tfrac23 L_1`$, and what remains is the maximum.
 
-**The checks' test case.** $L_1 = 100$, $L_{2A} = 100$, $L_{2B} = 60$. $\text{cut}_{15} = \max(60 - \tfrac{15}{85} \times 200,\ 60 - \tfrac{15}{60} \times 100,\ 0) = 35.00$. $\text{cut}_{40} = 100 + 60 - 35 - \tfrac23 \times 100 = 58.33$. $H = 166.67$. A search over every countable pair $(a, b)$ in 5-cent steps finds 166.65, a grid step short of the exact value.
+**The checks' test case.** $`L_1 = 100`$, $`L_{2A} = 100`$, $`L_{2B} = 60`$. $`\text{cut}_{15} = \max(60 - \tfrac{15}{85} \times 200,\ 60 - \tfrac{15}{60} \times 100,\ 0) = 35.00`$. $`\text{cut}_{40} = 100 + 60 - 35 - \tfrac23 \times 100 = 58.33`$. $`H = 166.67`$. A search over every countable pair $`(a, b)`$ in 5-cent steps finds 166.65, a grid step short of the exact value.
 
 </details>
 
 ### Step 3: the 75% inflow cap forces a real liquid stock
 
-Without a cap, a bank could count next week's loan repayments against next week's withdrawals and hold nothing. Inflows count only up to 75% of outflows, so the net outflow is at least $O - 0.75\,O = 0.25\,O$. With the LCR at 100% or more, $H \ge 0.25\,O$: at least a quarter of the run must be met from the stock, whatever the inflows. This bank's counted inflows of $20.00m are far below the cap of 75% of $255.00m, so the cap does not bite.
+Without a cap, a bank could count next week's loan repayments against next week's withdrawals and hold nothing. Inflows count only up to 75% of outflows, so the net outflow is at least $`O - 0.75\,O = 0.25\,O`$. With the LCR at 100% or more, $`H \ge 0.25\,O`$: at least a quarter of the run must be met from the stock, whatever the inflows. This bank's counted inflows of $20.00m are far below the cap of 75% of $255.00m, so the cap does not bite.
 
-The inflow rate $n_j$ is 50% for loans to companies and households: a bank that wants to stay in business keeps lending to good borrowers, so half of what they repay goes back out.
+The inflow rate $`n_j`$ is 50% for loans to companies and households: a bank that wants to stay in business keeps lending to good borrowers, so half of what they repay goes back out.
 
 ### Step 4: the NSFR matches the life of the funding to the life of the assets
 
 The LCR covers a month. A bank can pass it and still fund 25-year mortgages with 3-month borrowing, rolled over four times a year. The NSFR looks a year ahead.
 
-Each funding source gets a factor $a_i$, the share assumed to stay through a year of stress: 100% for capital and bonds with over a year to run, 95% for insured household deposits, 50% for company deposits, 0% for money from other banks due within six months.
+Each funding source gets a factor $`a_i`$, the share assumed to stay through a year of stress: 100% for capital and bonds with over a year to run, 95% for insured household deposits, 50% for company deposits, 0% for money from other banks due within six months.
 
-Each asset gets a factor $s_j$, the share that cannot be turned into cash within a year without a large loss: 0% for cash, 5% for government bonds, 65% for low-risk mortgages, 85% for other loans over a year. Undrawn credit lines take 5%, since some will be drawn.
+Each asset gets a factor $`s_j`$, the share that cannot be turned into cash within a year without a large loss: 0% for cash, 5% for government bonds, 65% for low-risk mortgages, 85% for other loans over a year. Undrawn credit lines take 5%, since some will be drawn.
 
-A second road through the same numbers uses the balance sheet identity: total assets equal total funding. Write $\text{Total}$ for either. The funding that is not stable is $\sum_i (1 - a_i) F_i$, and the part of the assets that is liquid within a year is $\sum_j (1 - s_j) A_j$. Then
+A second road through the same numbers uses the balance sheet identity: total assets equal total funding. Write $`\text{Total}`$ for either. The funding that is not stable is $`\sum_i (1 - a_i) F_i`$, and the part of the assets that is liquid within a year is $`\sum_j (1 - s_j) A_j`$. Then
 
-$$\text{NSFR} = \frac{\text{Total} - \sum_i (1 - a_i) F_i}{\text{Total} - \sum_j (1 - s_j) A_j + 0.05 \times \text{undrawn lines}}.$$
+```math
+\text{NSFR} = \frac{\text{Total} - \sum_i (1 - a_i) F_i}{\text{Total} - \sum_j (1 - s_j) A_j + 0.05 \times \text{undrawn lines}}.
+```
 
 Funding that may leave comes off the top; assets that could be sold come off the bottom. The checks compute both forms. They agree at 130.61%.
 
@@ -168,11 +188,13 @@ Risk weights (from [Basel capital](02-basel-capital-and-risk-weighted-assets.md)
 
 The leverage ratio counts every dollar the same. An undrawn credit line is not yet a loan, but a company in trouble draws it, so the 40% conversion factor counts part of it as lent already.
 
-What 3% means as a loss: a loss $x$ comes off capital and off assets together. The ratio stays at or above 3% while
+What 3% means as a loss: a loss $`x`$ comes off capital and off assets together. The ratio stays at or above 3% while
 
-$$\frac{T_1 - x}{E - x} \ge 0.03 \quad\Longleftrightarrow\quad x \le \frac{T_1 - 0.03\,E}{0.97}.$$
+```math
+\frac{T_1 - x}{E - x} \ge 0.03 \quad\Longleftrightarrow\quad x \le \frac{T_1 - 0.03\,E}{0.97}.
+```
 
-For this bank that is $(60 - 0.03 \times 1{,}530)/0.97 = 14.54$ million. A loss of about 1% of the balance sheet takes the bank to the floor. The leverage ratio is also a multiple: $1{,}530/60 = 25.50$ dollars of assets per dollar of Tier 1 capital. The 3% floor caps that multiple at about 33.
+For this bank that is $`(60 - 0.03 \times 1{,}530)/0.97 = 14.54`$ million. A loss of about 1% of the balance sheet takes the bank to the floor. The leverage ratio is also a multiple: $`1{,}530/60 = 25.50`$ dollars of assets per dollar of Tier 1 capital. The 3% floor caps that multiple at about 33.
 
 ### Step 6: three ratios, because each catches a failure the others pass
 
@@ -211,26 +233,26 @@ Risk-weighted assets are $500m, set by the bank's own risk models, which gives t
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| level 1 | $80 + 170$ | $250.00 |
-| level 2A after 15% haircut | $0.85 \times 50$ | $42.50 |
-| level 2B after 50% haircut | $0.50 \times 20$ | $10.00 |
-| liquid stock $H$ (no cap binds) | $250 + 42.50 + 10$ | $302.50 |
-| outflows $O$ | $100\% \times 100 + 40\% \times 200 + 10\% \times 300 + 5\% \times 500 + 10\% \times 200$ | $255.00 |
-| counted inflows $I$ | $50\% \times 40$ | $20.00 |
-| net outflows | $255 - 20$ | $235.00 |
-| **LCR** | $302.50 / 235$ | **128.72%** |
-| stable funding: capital and long bonds | $100\% \times (60 + 200)$ | $260.00 |
-| stable funding: deposits | $95\% \times 500 + 90\% \times 300 + 50\% \times 200$ | $475.00 + 270.00 + 100.00 |
+| level 1 | $`80 + 170`$ | $250.00 |
+| level 2A after 15% haircut | $`0.85 \times 50`$ | $42.50 |
+| level 2B after 50% haircut | $`0.50 \times 20`$ | $10.00 |
+| liquid stock $`H`$ (no cap binds) | $`250 + 42.50 + 10`$ | $302.50 |
+| outflows $`O`$ | $`100\% \times 100 + 40\% \times 200 + 10\% \times 300 + 5\% \times 500 + 10\% \times 200`$ | $255.00 |
+| counted inflows $`I`$ | $`50\% \times 40`$ | $20.00 |
+| net outflows | $`255 - 20`$ | $235.00 |
+| **LCR** | $`302.50 / 235`$ | **128.72%** |
+| stable funding: capital and long bonds | $`100\% \times (60 + 200)`$ | $260.00 |
+| stable funding: deposits | $`95\% \times 500 + 90\% \times 300 + 50\% \times 200`$ | $475.00 + 270.00 + 100.00 |
 | available stable funding | sum | $1,105.00 |
-| required: liquid assets | $0\% \times 80 + 5\% \times 170 + 15\% \times 50 + 50\% \times 20$ | $26.00 |
-| required: mortgages | $65\% \times 600$ | $390.00 |
-| required: company loans | $50\% \times 100 + 85\% \times 300$ | $305.00 |
-| required: trading book and other | $85\% \times 100 + 100\% \times 30$ | $115.00 |
-| required: credit lines | $5\% \times 200$ | $10.00 |
+| required: liquid assets | $`0\% \times 80 + 5\% \times 170 + 15\% \times 50 + 50\% \times 20`$ | $26.00 |
+| required: mortgages | $`65\% \times 600`$ | $390.00 |
+| required: company loans | $`50\% \times 100 + 85\% \times 300`$ | $305.00 |
+| required: trading book and other | $`85\% \times 100 + 100\% \times 30`$ | $115.00 |
+| required: credit lines | $`5\% \times 200`$ | $10.00 |
 | required stable funding | sum | $846.00 |
-| **NSFR** | $1{,}105 / 846$ | **130.61%** |
-| exposure $E$ | $1{,}450 + 40\% \times 200$ | $1,530.00 |
-| **leverage ratio** | $60 / 1{,}530$ | **3.92%** |
+| **NSFR** | $`1{,}105 / 846`$ | **130.61%** |
+| exposure $`E`$ | $`1{,}450 + 40\% \times 200`$ | $1,530.00 |
+| **leverage ratio** | $`60 / 1{,}530`$ | **3.92%** |
 
 The bank passes all three. It would end the rulebook's month-long run with $67.50m of liquid stock to spare. Its stable funding exceeds what its assets need by about 31%. Its leverage ratio is the tightest: a $14.54m loss would take it to the floor.
 
@@ -261,7 +283,7 @@ The LCR is a single number computed on day 0. The stress it describes happens ov
 
 Half the stock is gone within 5 days, because the fastest money is also the largest outflow. And the stock is lowest on day 29, at $49.33m, not on day 30, because the loan repayments arrive last.
 
-The ratio measures day 30: 302.50 − 235.00 = 67.50. Everything that leaves by day 29 totals $253.17m, so a run $\lambda$ times the rulebook's keeps the stock above zero every day only while $253.17\,\lambda \le 302.50$, that is $\lambda \le 1.1949$. The Basel text itself asks banks to watch for mismatches inside the 30 days.
+The ratio measures day 30: 302.50 − 235.00 = 67.50. Everything that leaves by day 29 totals $253.17m, so a run $`\lambda`$ times the rulebook's keeps the stock above zero every day only while $`253.17\,\lambda \le 302.50`$, that is $`\lambda \le 1.1949`$. The Basel text itself asks banks to watch for mismatches inside the 30 days.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -696,13 +718,13 @@ The two outputs agree line for line.
 
 Lean proves the algebra of Steps 1, 2, 3 and 5 for all real numbers, and checks the worked numbers as exact fractions.
 
-- Suppose the outflows $O$ are positive. Then the LCR is at least 100% exactly when the day-30 stock, with inflows capped at 75%, is not negative.
-- Suppose $O$ is positive and the LCR is at least 100%. Then $H \ge O/4$, whatever the inflows.
-- The 40% cap on level 2 is the same as $L_2 \le \tfrac{2}{3}L_1$.
-- The 15% cap on level 2B is the same as $L_{2B} \le \tfrac{15}{85}(L_1 + L_{2A})$.
-- Suppose the 40% cap binds, so $L_2 = \tfrac{2}{3}L_1$. Then 15% of the whole stock is $\tfrac{15}{60}L_1$.
-- Take a loss $x$ smaller than the exposure $E$, off capital and exposure together. Then the leverage ratio stays at or above 3% exactly when $x \le (T_1 - 0.03\,E)/0.97$.
-- The by-hand table checks: the LCR is $302.50/235$, the NSFR $1{,}105/846$, and the leverage ratio $60/1{,}530$.
+- Suppose the outflows $`O`$ are positive. Then the LCR is at least 100% exactly when the day-30 stock, with inflows capped at 75%, is not negative.
+- Suppose $`O`$ is positive and the LCR is at least 100%. Then $`H \ge O/4`$, whatever the inflows.
+- The 40% cap on level 2 is the same as $`L_2 \le \tfrac{2}{3}L_1`$.
+- The 15% cap on level 2B is the same as $`L_{2B} \le \tfrac{15}{85}(L_1 + L_{2A})`$.
+- Suppose the 40% cap binds, so $`L_2 = \tfrac{2}{3}L_1`$. Then 15% of the whole stock is $`\tfrac{15}{60}L_1`$.
+- Take a loss $`x`$ smaller than the exposure $`E`$, off capital and exposure together. Then the leverage ratio stays at or above 3% exactly when $`x \le (T_1 - 0.03\,E)/0.97`$.
+- The by-hand table checks: the LCR is $`302.50/235`$, the NSFR $`1{,}105/846`$, and the leverage ratio $`60/1{,}530`$.
 - The 67.50 left on day 30, the 1.2647 largest run, the 14.54 breach loss and the cap test case check too.
 
 The day-by-day run, the 1.1949 every-day limit, the NSFR's second road and the scenarios are left to the Python and Rust checks.

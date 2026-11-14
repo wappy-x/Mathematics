@@ -26,40 +26,46 @@ Scale: 45 units per radian across, 30 per unit of angular speed up. The loop is 
 
 ## The formula
 
-The angle $\theta$ is measured from straight down, in radians; its rate $\theta'$ is the angular speed, written $\omega$. With gravity $g$ = 9.81 m/s^2 and rod length $l$ = 1 m the law is $\theta'' = -(g/l)\sin\theta$: the rate of the angular speed is minus g over l times the sine of the angle. Counting time $t$ in units of $\sqrt{l/g}$, 0.3193 s here, removes the constant:
+The angle $`\theta`$ is measured from straight down, in radians; its rate $`\theta'`$ is the angular speed, written $`\omega`$. With gravity $`g`$ = 9.81 m/s^2 and rod length $`l`$ = 1 m the law is $`\theta'' = -(g/l)\sin\theta`$: the rate of the angular speed is minus g over l times the sine of the angle. Counting time $`t`$ in units of $`\sqrt{l/g}`$, 0.3193 s here, removes the constant:
 
-$$\theta' = \omega, \qquad \omega' = -\sin\theta$$
+```math
+\theta' = \omega, \qquad \omega' = -\sin\theta
+```
 
 **Read it aloud:** the angle changes at the angular speed, and the angular speed changes at minus the sine of the angle.
 
-The energy, counted in units of $m g l$ (bob mass times gravity times rod length):
+The energy, counted in units of $`m g l`$ (bob mass times gravity times rod length):
 
-$$E(\theta, \omega) = \tfrac12\,\omega^2 + 1 - \cos\theta$$
+```math
+E(\theta, \omega) = \tfrac12\,\omega^2 + 1 - \cos\theta
+```
 
 **Read it aloud:** half the square of the speed, for motion, plus one minus the cosine of the angle, for height.
 
-The height term is the bob's height in rod lengths: 0 hanging, 1 horizontal, 2 upside down ([Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). A swing below energy 2 turns back at $\theta_{\max}$, where $\cos\theta_{\max} = 1 - E$. Its period, one full swing there and back, is:
+The height term is the bob's height in rod lengths: 0 hanging, 1 horizontal, 2 upside down ([Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). A swing below energy 2 turns back at $`\theta_{\max}`$, where $`\cos\theta_{\max} = 1 - E`$. Its period, one full swing there and back, is:
 
-$$T = 4\int_0^{\pi/2}\frac{d\varphi}{\sqrt{1 - k^2\sin^2\varphi}}, \qquad k = \sin\tfrac{\theta_{\max}}{2}, \quad k^2 = \tfrac{E}{2}$$
+```math
+T = 4\int_0^{\pi/2}\frac{d\varphi}{\sqrt{1 - k^2\sin^2\varphi}}, \qquad k = \sin\tfrac{\theta_{\max}}{2}, \quad k^2 = \tfrac{E}{2}
+```
 
 **Read it aloud:** the period is four quarter swings, each an integral whose only input is k, the sine of half the amplitude.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | angle of the rod from straight down, rad | π/3, 60 degrees | bob higher: 2 rod lengths up at π |
-| $\omega$ | angular speed, rad per time unit | 0 at release; 2.5 pushed | more motion energy |
-| $t$ | time, in units of $\sqrt{l/g}$ | one unit is 0.3193 s | — |
-| $g$, $l$ | gravity 9.81 m/s^2, rod length | $l$ = 1 m | longer rod: slower, by $\sqrt{l}$ |
-| $E$ | energy, in units of $m g l$ | 0.5 for the swing, 3.125 for the push | past 2: rotation |
-| $\theta_{\max}$, $k$ | turning angle; $k$ is the sine of half of it | 60 degrees; 0.5 | period grows without bound |
-| $T$, $\varphi$ | period; $\varphi$ is the integral's variable | 6.743 units, 2.153 s | — |
-| $\lambda$ | growth rate near a rest (an eigenvalue) | ±i hanging, ±1 upside down | — |
+| $`\theta`$ | angle of the rod from straight down, rad | π/3, 60 degrees | bob higher: 2 rod lengths up at π |
+| $`\omega`$ | angular speed, rad per time unit | 0 at release; 2.5 pushed | more motion energy |
+| $`t`$ | time, in units of $`\sqrt{l/g}`$ | one unit is 0.3193 s | — |
+| $`g`$, $`l`$ | gravity 9.81 m/s^2, rod length | $`l`$ = 1 m | longer rod: slower, by $`\sqrt{l}`$ |
+| $`E`$ | energy, in units of $`m g l`$ | 0.5 for the swing, 3.125 for the push | past 2: rotation |
+| $`\theta_{\max}`$, $`k`$ | turning angle; $`k`$ is the sine of half of it | 60 degrees; 0.5 | period grows without bound |
+| $`T`$, $`\varphi`$ | period; $`\varphi`$ is the integral's variable | 6.743 units, 2.153 s | — |
+| $`\lambda`$ | growth rate near a rest (an eigenvalue) | ±i hanging, ±1 upside down | — |
 
 ### When it holds
 
-- **No friction.** With friction, $\theta'' + 0.5\,\theta' + \sin\theta = 0$ (the shelf's house swing), the energy falls from 0.5 to 0.0186 in 6.74 time units: loops become spirals.
+- **No friction.** With friction, $`\theta'' + 0.5\,\theta' + \sin\theta = 0`$ (the shelf's house swing), the energy falls from 0.5 to 0.0186 in 6.74 time units: loops become spirals.
 - **A rigid, light rod.** A chain goes slack above the horizontal when the seat moves slowly, so rotation needs rods.
-- **A fixed length.** A rider who stands and squats changes $l$ each swing and pumps energy in.
+- **A fixed length.** A rider who stands and squats changes $`l`$ each swing and pumps energy in.
 - **A smooth law.** The sine has a bounded slope, so solutions are unique and never cross.
 
 ---
@@ -72,39 +78,41 @@ A law with two unknowns fills a plane, the phase plane of [Phase portraits and n
 
 ### Step 1: the energy is conserved
 
-Differentiate $E$ along a solution with the chain rule. The speed term changes at $\omega\,\omega'$ and the height term at $\sin\theta\,\theta'$:
+Differentiate $`E`$ along a solution with the chain rule. The speed term changes at $`\omega\,\omega'`$ and the height term at $`\sin\theta\,\theta'`$:
 
-$$E' = \omega\,(-\sin\theta) + \sin\theta\,\omega = 0.$$
+```math
+E' = \omega\,(-\sin\theta) + \sin\theta\,\omega = 0.
+```
 
-Speed lost pays exactly for height gained, so $E$ keeps its starting value: 0.5 for the swing. Each motion runs along the curve $\omega = \pm\sqrt{2(E - 1 + \cos\theta)}$.
+Speed lost pays exactly for height gained, so $`E`$ keeps its starting value: 0.5 for the swing. Each motion runs along the curve $`\omega = \pm\sqrt{2(E - 1 + \cos\theta)}`$.
 
 ### Step 2: below energy 2, a closed loop and a swing
 
-The square root needs $\cos\theta \ge 1 - E$. Below energy 2 that caps the angle: at 0.5, $\cos\theta_{\max} = 0.5$, so 60 degrees. On the upper half $\omega > 0$ and the angle rises; on the lower half it falls. At the ends the speed is zero but $\omega' = -\sin\theta_{\max}$ is not, so the swing turns back rather than stalling. The motion circles the loop and repeats.
+The square root needs $`\cos\theta \ge 1 - E`$. Below energy 2 that caps the angle: at 0.5, $`\cos\theta_{\max} = 0.5`$, so 60 degrees. On the upper half $`\omega > 0`$ and the angle rises; on the lower half it falls. At the ends the speed is zero but $`\omega' = -\sin\theta_{\max}`$ is not, so the swing turns back rather than stalling. The motion circles the loop and repeats.
 
 <details>
 <summary>Detailed proof: the loop is travelled in finite time and repeats</summary>
 
-Take $0 < E < 2$. On the upper arc $dt = d\theta/\omega$. Near $\theta_{\max}$ the mean value theorem gives $\cos\theta - \cos\theta_{\max} \ge c\,(\theta_{\max} - \theta)$ for some constant $c > 0$, since the slope of cosine there is $-\sin\theta_{\max} < 0$. So the integrand is at most a constant times $(\theta_{\max} - \theta)^{-1/2}$, whose integral is finite. At $(\theta_{\max}, 0)$, $\omega' < 0$, so the lower arc begins. The law is unchanged by $(\theta, \omega, t) \to (-\theta, -\omega, t)$ and by $(\theta, \omega, t) \to (\theta, -\omega, -t)$, so the four quarter-arcs take equal times. After four the state is back at its start, and uniqueness makes the motion repeat with period four quarter-arcs.
+Take $`0 < E < 2`$. On the upper arc $`dt = d\theta/\omega`$. Near $`\theta_{\max}`$ the mean value theorem gives $`\cos\theta - \cos\theta_{\max} \ge c\,(\theta_{\max} - \theta)`$ for some constant $`c > 0`$, since the slope of cosine there is $`-\sin\theta_{\max} < 0`$. So the integrand is at most a constant times $`(\theta_{\max} - \theta)^{-1/2}`$, whose integral is finite. At $`(\theta_{\max}, 0)`$, $`\omega' < 0`$, so the lower arc begins. The law is unchanged by $`(\theta, \omega, t) \to (-\theta, -\omega, t)`$ and by $`(\theta, \omega, t) \to (\theta, -\omega, -t)`$, so the four quarter-arcs take equal times. After four the state is back at its start, and uniqueness makes the motion repeat with period four quarter-arcs.
 
 </details>
 
 ### Step 3: above energy 2, a wavy line and a rotation
 
-If $E > 2$, then $E - 1 + \cos\theta \ge E - 2 > 0$ at every angle. The speed never reaches zero, keeps one sign, and the angle grows forever. It dips at the top and peaks at the bottom, so the curve waves. The push of 2.5 has energy 3.125, speed $\sqrt{2(3.125 - 2)} = 1.5$ at the top, and turns once every 3.1925 time units.
+If $`E > 2`$, then $`E - 1 + \cos\theta \ge E - 2 > 0`$ at every angle. The speed never reaches zero, keeps one sign, and the angle grows forever. It dips at the top and peaks at the bottom, so the curve waves. The push of 2.5 has energy 3.125, speed $`\sqrt{2(3.125 - 2)} = 1.5`$ at the top, and turns once every 3.1925 time units.
 
 ### Step 4: at energy 2, the separatrix
 
-At $E = 2$ the curve is $\omega = \pm 2\cos(\theta/2)$, reaching zero speed exactly upside down. This is the separatrix: it separates the loops inside from the wavy lines outside. The Jacobian, the table of slopes of each rate against each unknown ([Linearisation](02-linearisation-and-the-jacobian.md)), is `[[0, 1], [-cos θ, 0]]`, so its eigenvalues satisfy $\lambda^2 = -\cos\theta$. Hanging, $\lambda = \pm i$: a centre, which linearisation alone cannot trust; the energy settles it, since its level curves around its minimum are closed. Upside down, $\lambda = \pm 1$: a saddle, with one direction in and one out, of slopes ±1, exactly the separatrix's slopes there. Near the top the gap shrinks like $e^{-t}$, so a swing on the separatrix creeps toward standing on end and never arrives.
+At $`E = 2`$ the curve is $`\omega = \pm 2\cos(\theta/2)`$, reaching zero speed exactly upside down. This is the separatrix: it separates the loops inside from the wavy lines outside. The Jacobian, the table of slopes of each rate against each unknown ([Linearisation](02-linearisation-and-the-jacobian.md)), is `[[0, 1], [-cos θ, 0]]`, so its eigenvalues satisfy $`\lambda^2 = -\cos\theta`$. Hanging, $`\lambda = \pm i`$: a centre, which linearisation alone cannot trust; the energy settles it, since its level curves around its minimum are closed. Upside down, $`\lambda = \pm 1`$: a saddle, with one direction in and one out, of slopes ±1, exactly the separatrix's slopes there. Near the top the gap shrinks like $`e^{-t}`$, so a swing on the separatrix creeps toward standing on end and never arrives.
 
 ### Step 5: the period, and why it grows
 
-A quarter swing takes $\int_0^{\theta_{\max}} d\theta/\omega$, which half-angles turn into the integral in The formula. At $k = 0$ the integrand is 1 and $T = 2\pi$, the small-angle period. Any $k > 0$ enlarges the integrand, so every real swing is slower. As $E$ nears 2, $k$ nears 1, the integrand nears $1/\cos\varphi$, and the period grows without bound, close to $2\ln(32/(2 - E))$.
+A quarter swing takes $`\int_0^{\theta_{\max}} d\theta/\omega`$, which half-angles turn into the integral in The formula. At $`k = 0`$ the integrand is 1 and $`T = 2\pi`$, the small-angle period. Any $`k > 0`$ enlarges the integrand, so every real swing is slower. As $`E`$ nears 2, $`k`$ nears 1, the integrand nears $`1/\cos\varphi`$, and the period grows without bound, close to $`2\ln(32/(2 - E))`$.
 
 <details>
 <summary>The algebra behind the integral</summary>
 
-With $1 - \cos\theta = 2\sin^2(\theta/2)$, the speed is $\omega = 2\sqrt{k^2 - \sin^2(\theta/2)}$. Substitute $\sin(\theta/2) = k\sin\varphi$. Then $\omega = 2k\cos\varphi$ and $d\theta = 2k\cos\varphi\,d\varphi/\sqrt{1 - k^2\sin^2\varphi}$, so $d\theta/\omega = d\varphi/\sqrt{1 - k^2\sin^2\varphi}$, with $\varphi$ running from 0 to $\pi/2$. For a rotation, $\varphi = \theta/2$ gives one turn as $2k$ times the same integral, with $k^2 = 2/E$.
+With $`1 - \cos\theta = 2\sin^2(\theta/2)`$, the speed is $`\omega = 2\sqrt{k^2 - \sin^2(\theta/2)}`$. Substitute $`\sin(\theta/2) = k\sin\varphi`$. Then $`\omega = 2k\cos\varphi`$ and $`d\theta = 2k\cos\varphi\,d\varphi/\sqrt{1 - k^2\sin^2\varphi}`$, so $`d\theta/\omega = d\varphi/\sqrt{1 - k^2\sin^2\varphi}`$, with $`\varphi`$ running from 0 to $`\pi/2`$. For a rotation, $`\varphi = \theta/2`$ gives one turn as $`2k`$ times the same integral, with $`k^2 = 2/E`$.
 
 </details>
 
@@ -128,11 +136,11 @@ The orange line is the true period; the green line is the small-angle period, 6.
 | --- | --- | --- |
 | energy at release | 1 − cos 60° = 1 − 0.5 | 0.5 |
 | energy upside down | 1 − cos 180° = 2; 0.5 < 2 | a swing |
-| $k$ | sin 30°; $k^2$ = E ÷ 2 = 0.25 | 0.5 |
-| period, true | 4 × the integral at $k^2$ = 0.25 | **6.743 units** |
+| $`k`$ | sin 30°; $`k^2`$ = E ÷ 2 = 0.25 | 0.5 |
+| period, true | 4 × the integral at $`k^2`$ = 0.25 | **6.743 units** |
 | period, small-angle | 2π | 6.283 units |
 | in seconds | 6.743 × 0.3193 and 6.283 × 0.3193 | **2.153 s** against 2.006 s |
-| push needed for the top | ½ ω^2 = 2, so ω = 2 units; times $\sqrt{g l}$ for m/s | **6.264 m/s** |
+| push needed for the top | ½ ω^2 = 2, so ω = 2 units; times $`\sqrt{g l}`$ for m/s | **6.264 m/s** |
 
 The swing from 60 degrees takes 2.153 s, not 2.006 s; a push faster than 6.264 m/s carries it over the top.
 
@@ -362,9 +370,9 @@ Lean proves the card's main fact for every frictionless motion at every energy, 
 - Without friction, the energy along any motion stays at its starting value.
 - Below energy 2, the angle stays less than half a turn from hanging straight down, so it never reaches upside down. The motion repeats after some fixed time: a swing.
 - Above energy 2, the angular speed never reaches zero and keeps one sign. After some fixed time the angle has gained or lost one full turn, at the same speed: a rotation.
-- At energy exactly 2, every motion lies on the separatrix, $\omega = \pm 2\cos(\theta/2)$. A motion on it that starts moving never stops, so it never reaches standing on end.
-- For every $k$ between 0 and 1, the period integral is more than 2π, the small-angle period. As $k$ nears 1 it grows without bound.
-- The hand arithmetic holds exactly: energy 0.5 at 60 degrees, energy 2 upside down, and $k$ = 0.5. So do the pushes of 2 and 2.5 units, and the mistake's energy of 1.
+- At energy exactly 2, every motion lies on the separatrix, $`\omega = \pm 2\cos(\theta/2)`$. A motion on it that starts moving never stops, so it never reaches standing on end.
+- For every $`k`$ between 0 and 1, the period integral is more than 2π, the small-angle period. As $`k`$ nears 1 it grows without bound.
+- The hand arithmetic holds exactly: energy 0.5 at 60 degrees, energy 2 upside down, and $`k`$ = 0.5. So do the pushes of 2 and 2.5 units, and the mistake's energy of 1.
 
 Numbers like 6.743 units, the creep toward the top, friction, Euler's rule and the figure are left to the Python and Rust checks.
 
@@ -927,7 +935,7 @@ example : pendulumEnergy 0 (Real.sqrt 2) = 1 ∧ Real.cos (π / 2) = 1 - 1 := by
 
 - **Looping swing rides.** A fairground swing that goes over the top rides a wavy line on a rigid arm.
 - **Pendulum clocks.** A clock that swings wider runs slow, so clockmakers keep the swing small and steady.
-- **Balancing upright.** Standing on end is a saddle: a small error grows like $e^{t}$, which a Segway steers against.
+- **Balancing upright.** Standing on end is a saddle: a small error grows like $`e^{t}`$, which a Segway steers against.
 - **Other closed loops.** Predator and prey counts circle for the same reason: [Predator and prey](06-predator-prey.md). A lone loop with none is a limit cycle: [Limit cycles](08-limit-cycles-and-van-der-pol.md).
 
 > **Say it back**
@@ -938,7 +946,7 @@ example : pendulumEnergy 0 (Real.sqrt 2) = 1 ∧ Real.cos (π / 2) = 1 - 1 := by
 ## What this builds on
 
 - [Linearisation](02-linearisation-and-the-jacobian.md): the Jacobian's eigenvalues, a centre that linearisation cannot trust, and a saddle it can.
-- [Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md): the bob's height, $l(1 - \cos\theta)$, read off the right triangle under the rod.
+- [Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md): the bob's height, $`l(1 - \cos\theta)`$, read off the right triangle under the rod.
 
 ## Where this goes next
 

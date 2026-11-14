@@ -36,56 +36,64 @@ Orange: the ceiling for each p. Green: the true revenue, \$1,515. The lowest cei
 
 ## The formula
 
-Notation, as a reminder. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure, and a measure giving each a size; $\int f \, d\mu$ is read "the integral of f against mu". For p from 1 up, the **p-size** of a measurable function f, called its p-norm on lp-spaces, is $\lVert f \rVert_p = \left(\int \lvert f \rvert^p \, d\mu\right)^{1/p}$, and $\lVert f \rVert_\infty$, its essential supremum, is the smallest M with $\lvert f \rvert \le M$ almost everywhere, meaning except on a set of measure zero ([Lp spaces](01-lp-spaces.md)).
+Notation, as a reminder. A measure space $`(\Omega, \mathcal{F}, \mu)`$ is a set of points, the sets we allow ourselves to measure, and a measure giving each a size; $`\int f \, d\mu`$ is read "the integral of f against mu". For p from 1 up, the **p-size** of a measurable function f, called its p-norm on lp-spaces, is $`\lVert f \rVert_p = \left(\int \lvert f \rvert^p \, d\mu\right)^{1/p}`$, and $`\lVert f \rVert_\infty`$, its essential supremum, is the smallest M with $`\lvert f \rvert \le M`$ almost everywhere, meaning except on a set of measure zero ([Lp spaces](01-lp-spaces.md)).
 
-On the turbine, $\Omega$ is the seven days, $\mathcal{F}$ is every set of days, and $\mu$ is counting measure: each day has size 1, so an integral is a sum. The wind $w$ and price $c$ are functions on $\Omega$, with values $w_i$ and $c_i$ on day $i$. Under the uniform probability $P$, each day has size 1/7 and an integral is an average.
+On the turbine, $`\Omega`$ is the seven days, $`\mathcal{F}`$ is every set of days, and $`\mu`$ is counting measure: each day has size 1, so an integral is a sum. The wind $`w`$ and price $`c`$ are functions on $`\Omega`$, with values $`w_i`$ and $`c_i`$ on day $`i`$. Under the uniform probability $`P`$, each day has size 1/7 and an integral is an average.
 
-Two exponents $p$ and $q$ are **conjugate**, or matched, when
+Two exponents $`p`$ and $`q`$ are **conjugate**, or matched, when
 
-$$\frac{1}{p} + \frac{1}{q} = 1, \qquad 1 \le p, q \le \infty,$$
+```math
+\frac{1}{p} + \frac{1}{q} = 1, \qquad 1 \le p, q \le \infty,
+```
 
-with $1/\infty$ read as 0. So $q = p/(p - 1)$: 2 goes with 2, 3 with 3/2, and 1 with infinity.
+with $`1/\infty`$ read as 0. So $`q = p/(p - 1)`$: 2 goes with 2, 3 with 3/2, and 1 with infinity.
 
-**Young's inequality.** For numbers $a, b \ge 0$ and conjugate $p, q$ strictly between 1 and infinity,
+**Young's inequality.** For numbers $`a, b \ge 0`$ and conjugate $`p, q`$ strictly between 1 and infinity,
 
-$$ab \;\le\; \frac{a^p}{p} + \frac{b^q}{q},$$
+```math
+ab \;\le\; \frac{a^p}{p} + \frac{b^q}{q},
+```
 
-with equality exactly when $a^p = b^q$.
+with equality exactly when $`a^p = b^q`$.
 
 **Read it aloud:** a product of two non-negative numbers is at most the first to the p over p plus the second to the q over q.
 
-**Holder's inequality.** For a measure space $(\Omega, \mathcal{F}, \mu)$, functions $f$ and $g$ measurable with respect to $\mathcal{F}$, and conjugate $p, q$,
+**Holder's inequality.** For a measure space $`(\Omega, \mathcal{F}, \mu)`$, functions $`f`$ and $`g`$ measurable with respect to $`\mathcal{F}`$, and conjugate $`p, q`$,
 
-$$\int \lvert fg \rvert \, d\mu \;\le\; \lVert f \rVert_p \, \lVert g \rVert_q .$$
+```math
+\int \lvert fg \rvert \, d\mu \;\le\; \lVert f \rVert_p \, \lVert g \rVert_q .
+```
 
 **Read it aloud:** the integral of the size of a product is at most the p-size of the first times the q-size of the second.
 
-The signed integral $\lvert \int fg \, d\mu \rvert$ is no larger, so it obeys the same ceiling. At $p = q = 2$ it is the **Cauchy-Schwarz inequality**, $\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_2 \lVert g \rVert_2$. On the turbine, with sums:
+The signed integral $`\lvert \int fg \, d\mu \rvert`$ is no larger, so it obeys the same ceiling. At $`p = q = 2`$ it is the **Cauchy-Schwarz inequality**, $`\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_2 \lVert g \rVert_2`$. On the turbine, with sums:
 
-$$\sum_{i=1}^{7} w_i c_i = 1515 \;\le\; \Big(\sum_i w_i^2\Big)^{1/2} \Big(\sum_i c_i^2\Big)^{1/2} = \sqrt{203}\,\sqrt{17750} = 1898.22.$$
+```math
+\sum_{i=1}^{7} w_i c_i = 1515 \;\le\; \Big(\sum_i w_i^2\Big)^{1/2} \Big(\sum_i c_i^2\Big)^{1/2} = \sqrt{203}\,\sqrt{17750} = 1898.22.
+```
 
-**Equality.** For $1 < p < \infty$ and finite sizes, equality holds exactly when $\alpha \lvert f \rvert^p = \beta \lvert g \rvert^q$ almost everywhere for constants $\alpha, \beta \ge 0$, not both 0.
+**Equality.** For $`1 < p < \infty`$ and finite sizes, equality holds exactly when $`\alpha \lvert f \rvert^p = \beta \lvert g \rvert^q`$ almost everywhere for constants $`\alpha, \beta \ge 0`$, not both 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$ | the points, and the sets allowed a size | the seven days; every set of days | — |
-| $\mu$, $P$ | a measure; a measure of total size 1 | counting measure; each day 1/7 | $P$ divides every ceiling by 7 |
-| $w$, $c$, $w_i$, $c_i$, $i$, $j$ | wind in m/s (= MWh sold) and price in \$/MWh, on days $i$ and $j$ | 3, 5, 8, 2, 6, 4, 7; 60, 50, 30, 70, 40, 55, 35 | a larger value raises both sides |
-| $f$, $g$, $fg$ | measurable functions on $\Omega$, and their product | $f = w$, $g = c$ | — |
-| $p$, $q$ | conjugate exponents, $1/p + 1/q = 1$ | 2 and 2; 3 and 1.5; 1 and infinity | the ceiling moves; lowest near p = 1.68 here |
-| $\lVert f \rVert_p$, $\lVert f \rVert_\infty$ | the p-size (p-norm) of f, and its essential supremum | 14.247807 and 8 for the wind | a larger size raises the ceiling |
-| $a$, $b$, $ab$, $A$, $B$ | two non-negative numbers, their product, and the two areas of the figure | 2, 3, 6; 2.667 and 3.464 | — |
-| $F$, $G$ | $\lvert f \rvert$ and $\lvert g \rvert$ divided by their sizes | day 3: 0.5615 and 0.2252 at p = 2 | — |
-| $\alpha$, $\beta$ | constants in the equality case | price 10 times wind: 100 and 1 | — |
-| $X$, $Y$, $m_X$, $\rho$, $k$ | random variables, a mean, their correlation, a constant | wind and price on a random day; $m_X$ = 5; $\rho$ = −0.994566 | $\lvert \rho \rvert$ never passes 1 |
-| $t$, $n$, $x$, $y$, $\ln$, $\exp$ | a weight between 0 and 1; a whole number in the proof; two positive numbers in Step 1, the axes of the figure, and in Step 5 x is any number; the natural logarithm and its inverse, the exponential | $t = 1/p$; $x = a^p$, $y = b^q$ | — |
-| $\infty$, $M$, $N$ | infinity; the essential top (essential supremum) of a function; the null set above it | $\lVert w \rVert_\infty$ = 8 | — |
+| $`\Omega`$, $`\mathcal{F}`$ | the points, and the sets allowed a size | the seven days; every set of days | — |
+| $`\mu`$, $`P`$ | a measure; a measure of total size 1 | counting measure; each day 1/7 | $`P`$ divides every ceiling by 7 |
+| $`w`$, $`c`$, $`w_i`$, $`c_i`$, $`i`$, $`j`$ | wind in m/s (= MWh sold) and price in \$/MWh, on days $`i`$ and $`j`$ | 3, 5, 8, 2, 6, 4, 7; 60, 50, 30, 70, 40, 55, 35 | a larger value raises both sides |
+| $`f`$, $`g`$, $`fg`$ | measurable functions on $`\Omega`$, and their product | $`f = w`$, $`g = c`$ | — |
+| $`p`$, $`q`$ | conjugate exponents, $`1/p + 1/q = 1`$ | 2 and 2; 3 and 1.5; 1 and infinity | the ceiling moves; lowest near p = 1.68 here |
+| $`\lVert f \rVert_p`$, $`\lVert f \rVert_\infty`$ | the p-size (p-norm) of f, and its essential supremum | 14.247807 and 8 for the wind | a larger size raises the ceiling |
+| $`a`$, $`b`$, $`ab`$, $`A`$, $`B`$ | two non-negative numbers, their product, and the two areas of the figure | 2, 3, 6; 2.667 and 3.464 | — |
+| $`F`$, $`G`$ | $`\lvert f \rvert`$ and $`\lvert g \rvert`$ divided by their sizes | day 3: 0.5615 and 0.2252 at p = 2 | — |
+| $`\alpha`$, $`\beta`$ | constants in the equality case | price 10 times wind: 100 and 1 | — |
+| $`X`$, $`Y`$, $`m_X`$, $`\rho`$, $`k`$ | random variables, a mean, their correlation, a constant | wind and price on a random day; $`m_X`$ = 5; $`\rho`$ = −0.994566 | $`\lvert \rho \rvert`$ never passes 1 |
+| $`t`$, $`n`$, $`x`$, $`y`$, $`\ln`$, $`\exp`$ | a weight between 0 and 1; a whole number in the proof; two positive numbers in Step 1, the axes of the figure, and in Step 5 x is any number; the natural logarithm and its inverse, the exponential | $`t = 1/p`$; $`x = a^p`$, $`y = b^q`$ | — |
+| $`\infty`$, $`M`$, $`N`$ | infinity; the essential top (essential supremum) of a function; the null set above it | $`\lVert w \rVert_\infty`$ = 8 | — |
 
 ### When it holds
 
-- **Matched exponents.** Otherwise the sizes scale wrongly. On the turbine, $p = q = 3$ gives a "ceiling" of \$1,084.24, below the true \$1,515.
-- **Exponents at least 1.** Below 1 the inequality turns round: $p = 1/2$, $q = -1$ gives \$1,501.38, again below the truth.
-- **Measurable functions, any measure.** Measurability gives $\lvert f \rvert^p$ an integral. The measure need not be finite: counting measure and length on the line both work.
+- **Matched exponents.** Otherwise the sizes scale wrongly. On the turbine, $`p = q = 3`$ gives a "ceiling" of \$1,084.24, below the true \$1,515.
+- **Exponents at least 1.** Below 1 the inequality turns round: $`p = 1/2`$, $`q = -1`$ gives \$1,501.38, again below the truth.
+- **Measurable functions, any measure.** Measurability gives $`\lvert f \rvert^p`$ an integral. The measure need not be finite: counting measure and length on the line both work.
 - **Infinite or zero sizes.** An infinite size on the right makes the inequality empty but true; a size of 0 means that function is 0 almost everywhere, and both sides are 0.
 
 ---
@@ -94,87 +102,93 @@ $$\sum_{i=1}^{7} w_i c_i = 1515 \;\le\; \Big(\sum_i w_i^2\Big)^{1/2} \Big(\sum_i
 
 ### Step 0: rescale, then compare day by day
 
-Both sides of Holder's inequality double when $f$ doubles. So divide $f$ and $g$ by their sizes first, making both sizes 1; the claim becomes that the product integrates to at most 1. At every point, the product of the two rescaled values is at most a weighted sum of their powers: Young's inequality. Integrate, and the weights add up to $1/p + 1/q = 1$.
+Both sides of Holder's inequality double when $`f`$ doubles. So divide $`f`$ and $`g`$ by their sizes first, making both sizes 1; the claim becomes that the product integrates to at most 1. At every point, the product of the two rescaled values is at most a weighted sum of their powers: Young's inequality. Integrate, and the weights add up to $`1/p + 1/q = 1`$.
 
 ### Step 1: Young's inequality, from the shape of the logarithm
 
-Take $a, b > 0$ (if either is 0 the left side is 0 and there is nothing to prove). Put $t = 1/p$, so $1 - t = 1/q$. The logarithm is concave: its graph lies above every chord, so $\ln(t x + (1 - t) y) \ge t \ln x + (1 - t) \ln y$ for $x, y > 0$, with equality only when $x = y$ ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). Choose $x = a^p$ and $y = b^q$:
+Take $`a, b > 0`$ (if either is 0 the left side is 0 and there is nothing to prove). Put $`t = 1/p`$, so $`1 - t = 1/q`$. The logarithm is concave: its graph lies above every chord, so $`\ln(t x + (1 - t) y) \ge t \ln x + (1 - t) \ln y`$ for $`x, y > 0`$, with equality only when $`x = y`$ ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). Choose $`x = a^p`$ and $`y = b^q`$:
 
-$$\ln\!\Big(\frac{a^p}{p} + \frac{b^q}{q}\Big) \;\ge\; \frac{1}{p}\ln a^p + \frac{1}{q}\ln b^q \;=\; \ln a + \ln b \;=\; \ln(ab).$$
+```math
+\ln\!\Big(\frac{a^p}{p} + \frac{b^q}{q}\Big) \;\ge\; \frac{1}{p}\ln a^p + \frac{1}{q}\ln b^q \;=\; \ln a + \ln b \;=\; \ln(ab).
+```
 
-The exponential keeps order, so $ab \le a^p/p + b^q/q$. Equality needs $x = y$, that is $a^p = b^q$.
+The exponential keeps order, so $`ab \le a^p/p + b^q/q`$. Equality needs $`x = y`$, that is $`a^p = b^q`$.
 
-At $p = q = 2$ it is $ab \le (a^2 + b^2)/2$, which is $(a - b)^2 \ge 0$ rearranged.
+At $`p = q = 2`$ it is $`ab \le (a^2 + b^2)/2`$, which is $`(a - b)^2 \ge 0`$ rearranged.
 
 ### The picture: Young's inequality as two areas
 
-Draw the curve $y = x^{p-1}$. Its inverse is $x = y^{q-1}$, because $(p - 1)(q - 1) = 1$ when $1/p + 1/q = 1$. The area under the curve from 0 to $a$ is $a^p/p$. The area to the left of the curve from height 0 to $b$ is $b^q/q$. Together they cover the rectangle of area $ab$, and whatever lies outside the rectangle is the gap in Young's inequality. It vanishes exactly when the corner $(a, b)$ sits on the curve, $b = a^{p-1}$, which is $a^p = b^q$.
+Draw the curve $`y = x^{p-1}`$. Its inverse is $`x = y^{q-1}`$, because $`(p - 1)(q - 1) = 1`$ when $`1/p + 1/q = 1`$. The area under the curve from 0 to $`a`$ is $`a^p/p`$. The area to the left of the curve from height 0 to $`b`$ is $`b^q/q`$. Together they cover the rectangle of area $`ab`$, and whatever lies outside the rectangle is the gap in Young's inequality. It vanishes exactly when the corner $`(a, b)`$ sits on the curve, $`b = a^{p-1}`$, which is $`a^p = b^q`$.
 
-Drawn to scale for $p = 3$, $a = 2$, $b = 3$, 45 drawing units to one unit on both axes, with the curve $y = x^2$. Shaded, $A = a^3/3$ = 2.667; dashed, $B = b^{1.5}/1.5$ = 3.464; the rectangle, 6. The sliver of $A$ above the rectangle, between $x = \sqrt{3}$ and 2, is 0.131 = 2.667 + 3.464 − 6. The checks compute all three areas by Simpson's rule (thin slices with parabola-shaped tops).
+Drawn to scale for $`p = 3`$, $`a = 2`$, $`b = 3`$, 45 drawing units to one unit on both axes, with the curve $`y = x^2`$. Shaded, $`A = a^3/3`$ = 2.667; dashed, $`B = b^{1.5}/1.5`$ = 3.464; the rectangle, 6. The sliver of $`A`$ above the rectangle, between $`x = \sqrt{3}`$ and 2, is 0.131 = 2.667 + 3.464 − 6. The checks compute all three areas by Simpson's rule (thin slices with parabola-shaped tops).
 
 <p align="center"><img src="../figures/holders-inequality.svg" alt="Young&#x27;s inequality at p = 3 for a = 2 and b = 3, drawn to scale: the curve y = x squared, the shaded area A under it from 0 to 2, the dashed area B to its left from height 0 to 3, and the rectangle of area 6 that the two cover, with a sliver of A left over above the rectangle" width="420"></p>
 
 ### Step 2: Holder for p and q strictly between 1 and infinity
 
-Take both sizes finite and not 0; the other cases are in the detailed proof. Put $F = \lvert f \rvert / \lVert f \rVert_p$ and $G = \lvert g \rvert / \lVert g \rVert_q$. Then $\int F^p \, d\mu = 1$ and $\int G^q \, d\mu = 1$. Young's inequality at each point gives $FG \le F^p/p + G^q/q$. The integral keeps order and adds ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so
+Take both sizes finite and not 0; the other cases are in the detailed proof. Put $`F = \lvert f \rvert / \lVert f \rVert_p`$ and $`G = \lvert g \rvert / \lVert g \rVert_q`$. Then $`\int F^p \, d\mu = 1`$ and $`\int G^q \, d\mu = 1`$. Young's inequality at each point gives $`FG \le F^p/p + G^q/q`$. The integral keeps order and adds ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so
 
-$$\int FG \, d\mu \;\le\; \frac{1}{p}\int F^p \, d\mu + \frac{1}{q}\int G^q \, d\mu \;=\; \frac{1}{p} + \frac{1}{q} \;=\; 1.$$
+```math
+\int FG \, d\mu \;\le\; \frac{1}{p}\int F^p \, d\mu + \frac{1}{q}\int G^q \, d\mu \;=\; \frac{1}{p} + \frac{1}{q} \;=\; 1.
+```
 
-Multiply through by $\lVert f \rVert_p \lVert g \rVert_q$. On the turbine at $p = 2$, the seven rescaled products add to 0.798115 and the seven Young gaps to the missing 0.201885; the worked numbers list them by day.
+Multiply through by $`\lVert f \rVert_p \lVert g \rVert_q`$. On the turbine at $`p = 2`$, the seven rescaled products add to 0.798115 and the seven Young gaps to the missing 0.201885; the worked numbers list them by day.
 
 ### Step 3: the ends, p = 1 and q = infinity
 
-No Young is needed. Except on a null set (a set of measure 0), $\lvert g \rvert \le \lVert g \rVert_\infty$, and a null set carries no integral. Multiply by $\lvert f \rvert$ and integrate: $\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_1 \lVert g \rVert_\infty$. On the turbine: the price's top, \$70, times the total wind, 35, is \$2,450; the wind's top, 8, times the total price, \$340, is \$2,720.
+No Young is needed. Except on a null set (a set of measure 0), $`\lvert g \rvert \le \lVert g \rVert_\infty`$, and a null set carries no integral. Multiply by $`\lvert f \rvert`$ and integrate: $`\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_1 \lVert g \rVert_\infty`$. On the turbine: the price's top, \$70, times the total wind, 35, is \$2,450; the wind's top, 8, times the total price, \$340, is \$2,720.
 
 ### Step 4: the equality cases
 
-Equality in Step 2 means the gap $F^p/p + G^q/q - FG$ integrates to 0. The gap is never negative, so it is 0 almost everywhere (proved on [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Young's equality case then gives $F^p = G^q$ almost everywhere: $\lvert f \rvert^p$ is a constant multiple of $\lvert g \rvert^q$. For the signed integral, $fg$ must also keep one sign.
+Equality in Step 2 means the gap $`F^p/p + G^q/q - FG`$ integrates to 0. The gap is never negative, so it is 0 almost everywhere (proved on [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Young's equality case then gives $`F^p = G^q`$ almost everywhere: $`\lvert f \rvert^p`$ is a constant multiple of $`\lvert g \rvert^q`$. For the signed integral, $`fg`$ must also keep one sign.
 
-On the turbine, a price of 10 times the wind meets the Cauchy-Schwarz ceiling: revenue \$2,030, ceiling 2030.000000. At $p = 3$ the rule asks for $w^3$ in proportion to $c^{3/2}$, so a price in proportion to $w^2$: 9, 25, 64, 4, 36, 16, 49 gives revenue \$1,295 and ceiling 1295.000000. At $p = 1$, equality needs $\lvert g \rvert = \lVert g \rVert_\infty$ almost everywhere where $f \ne 0$.
+On the turbine, a price of 10 times the wind meets the Cauchy-Schwarz ceiling: revenue \$2,030, ceiling 2030.000000. At $`p = 3`$ the rule asks for $`w^3`$ in proportion to $`c^{3/2}`$, so a price in proportion to $`w^2`$: 9, 25, 64, 4, 36, 16, 49 gives revenue \$1,295 and ceiling 1295.000000. At $`p = 1`$, equality needs $`\lvert g \rvert = \lVert g \rVert_\infty`$ almost everywhere where $`f \ne 0`$.
 
 ### Step 5: Cauchy-Schwarz and correlation
 
-At $p = q = 2$ there is a second proof with no Young: $(f - xg)^2$ integrates to something non-negative for every number $x$, and the smallest value over $x$ gives $(\int fg)^2 \le \int f^2 \int g^2$. That is the argument of [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md) with integrals for sums. On finitely many points the slack has an exact form, Lagrange's identity (expand the right side and the cross terms cancel):
+At $`p = q = 2`$ there is a second proof with no Young: $`(f - xg)^2`$ integrates to something non-negative for every number $`x`$, and the smallest value over $`x`$ gives $`(\int fg)^2 \le \int f^2 \int g^2`$. That is the argument of [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md) with integrals for sums. On finitely many points the slack has an exact form, Lagrange's identity (expand the right side and the cross terms cancel):
 
-$$\Big(\sum_i w_i^2\Big)\Big(\sum_i c_i^2\Big) - \Big(\sum_i w_i c_i\Big)^2 \;=\; \sum_{i<j} (w_i c_j - w_j c_i)^2 .$$
+```math
+\Big(\sum_i w_i^2\Big)\Big(\sum_i c_i^2\Big) - \Big(\sum_i w_i c_i\Big)^2 \;=\; \sum_{i<j} (w_i c_j - w_j c_i)^2 .
+```
 
-On the turbine both sides are 203 × 17750 − 1515^2 = 1308025, a sum of 21 squares. So the ceiling is $\sqrt{1515^2 + 1308025}$ = 1898.222853, reached only if every pair of days has $w_i c_j = w_j c_i$.
+On the turbine both sides are 203 × 17750 − 1515^2 = 1308025, a sum of 21 squares. So the ceiling is $`\sqrt{1515^2 + 1308025}`$ = 1898.222853, reached only if every pair of days has $`w_i c_j = w_j c_i`$.
 
-For random variables $X$ and $Y$ with finite $\int X^2 \, dP$ and $\int Y^2 \, dP$, Cauchy-Schwarz on $X$ and $Y$ minus their means says the covariance (the average product of the centred values) is at most the product of the standard deviations in size. So the correlation $\rho$, their ratio, lies between −1 and 1, reaching ±1 exactly when one centred variable is a constant multiple of the other almost surely. On a random day the wind averages 5 m/s and the price \$48.571429; the centred products add to −185 and the centred squares to 28 and 1235.714286, so $\rho = -185/\sqrt{28 \times 1235.714286} = -0.994566$. Windy days are cheap days, almost on a straight line.
+For random variables $`X`$ and $`Y`$ with finite $`\int X^2 \, dP`$ and $`\int Y^2 \, dP`$, Cauchy-Schwarz on $`X`$ and $`Y`$ minus their means says the covariance (the average product of the centred values) is at most the product of the standard deviations in size. So the correlation $`\rho`$, their ratio, lies between −1 and 1, reaching ±1 exactly when one centred variable is a constant multiple of the other almost surely. On a random day the wind averages 5 m/s and the price \$48.571429; the centred products add to −185 and the centred squares to 28 and 1235.714286, so $`\rho = -185/\sqrt{28 \times 1235.714286} = -0.994566`$. Windy days are cheap days, almost on a straight line.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space; $f, g$ are measurable with respect to $\mathcal{F}$, real or complex. For non-negative measurable functions the integral is monotone, additive and pulls out constants; a non-negative function with integral 0 is 0 almost everywhere ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md), [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Conventions: $1/\infty = 0$, $0 \cdot \infty = 0$.
+**Setting.** $`(\Omega, \mathcal{F}, \mu)`$ is a measure space; $`f, g`$ are measurable with respect to $`\mathcal{F}`$, real or complex. For non-negative measurable functions the integral is monotone, additive and pulls out constants; a non-negative function with integral 0 is 0 almost everywhere ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md), [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Conventions: $`1/\infty = 0`$, $`0 \cdot \infty = 0`$.
 
-**Lemma 1 (Young).** Let $1 < p < \infty$, $q = p/(p - 1)$, $a, b \ge 0$. Then $ab \le a^p/p + b^q/q$, with equality if and only if $a^p = b^q$. *Proof.* If $a$ or $b$ is 0, the left side is 0 and the right side is at least 0, with equality exactly when both are 0. Otherwise put $x = a^p$, $y = b^q$, $t = 1/p \in (0, 1)$. The second derivative of $\ln$ is $-1/x^2 < 0$, so $\ln$ is strictly concave: $\ln(tx + (1 - t)y) \ge t \ln x + (1 - t)\ln y = \ln(ab)$, with equality if and only if $x = y$. Apply the increasing function $\exp$.
+**Lemma 1 (Young).** Let $`1 < p < \infty`$, $`q = p/(p - 1)`$, $`a, b \ge 0`$. Then $`ab \le a^p/p + b^q/q`$, with equality if and only if $`a^p = b^q`$. *Proof.* If $`a`$ or $`b`$ is 0, the left side is 0 and the right side is at least 0, with equality exactly when both are 0. Otherwise put $`x = a^p`$, $`y = b^q`$, $`t = 1/p \in (0, 1)`$. The second derivative of $`\ln`$ is $`-1/x^2 < 0`$, so $`\ln`$ is strictly concave: $`\ln(tx + (1 - t)y) \ge t \ln x + (1 - t)\ln y = \ln(ab)`$, with equality if and only if $`x = y`$. Apply the increasing function $`\exp`$.
 
-**Theorem 1 (Holder, $1 < p < \infty$).** $\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_p \lVert g \rVert_q$. *Proof.* If $\lVert f \rVert_p = 0$, then $\lvert f \rvert^p$ has integral 0, so $f = 0$ almost everywhere, so $fg = 0$ almost everywhere and the left side is 0; likewise for $g$. If neither size is 0 and one is infinite, the right side is $\infty$. Otherwise set $F = \lvert f \rvert/\lVert f \rVert_p$ and $G = \lvert g \rvert/\lVert g \rVert_q$, so $\int F^p \, d\mu = \int G^q \, d\mu = 1$. Lemma 1 at each point gives $FG \le F^p/p + G^q/q$; monotonicity and additivity give $\int FG \, d\mu \le 1/p + 1/q = 1$. Multiply by $\lVert f \rVert_p \lVert g \rVert_q$.
+**Theorem 1 (Holder, $`1 < p < \infty`$).** $`\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_p \lVert g \rVert_q`$. *Proof.* If $`\lVert f \rVert_p = 0`$, then $`\lvert f \rvert^p`$ has integral 0, so $`f = 0`$ almost everywhere, so $`fg = 0`$ almost everywhere and the left side is 0; likewise for $`g`$. If neither size is 0 and one is infinite, the right side is $`\infty`$. Otherwise set $`F = \lvert f \rvert/\lVert f \rVert_p`$ and $`G = \lvert g \rvert/\lVert g \rVert_q`$, so $`\int F^p \, d\mu = \int G^q \, d\mu = 1`$. Lemma 1 at each point gives $`FG \le F^p/p + G^q/q`$; monotonicity and additivity give $`\int FG \, d\mu \le 1/p + 1/q = 1`$. Multiply by $`\lVert f \rVert_p \lVert g \rVert_q`$.
 
-**Theorem 2 (the ends).** $\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_1 \lVert g \rVert_\infty$. *Proof.* The cases with a size 0 or infinite go as in Theorem 1. Let $M = \lVert g \rVert_\infty$. Each set $\{\lvert g \rvert > M + 1/n\}$, for $n$ a whole number, has measure 0 because $M$ is the least bound that holds almost everywhere; their countable union $N = \{\lvert g \rvert > M\}$ has measure 0. Off $N$, $\lvert fg \rvert \le M\lvert f \rvert$, and a null set carries no integral.
+**Theorem 2 (the ends).** $`\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_1 \lVert g \rVert_\infty`$. *Proof.* The cases with a size 0 or infinite go as in Theorem 1. Let $`M = \lVert g \rVert_\infty`$. Each set $`\{\lvert g \rvert > M + 1/n\}`$, for $`n`$ a whole number, has measure 0 because $`M`$ is the least bound that holds almost everywhere; their countable union $`N = \{\lvert g \rvert > M\}`$ has measure 0. Off $`N`$, $`\lvert fg \rvert \le M\lvert f \rvert`$, and a null set carries no integral.
 
-**Corollary 1.** If $fg$ is integrable, $\lvert \int fg \, d\mu \rvert \le \int \lvert fg \rvert \, d\mu$ ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)); Theorems 1 and 2 show that $f$ in $L^p$ and $g$ in $L^q$ make $fg$ integrable.
+**Corollary 1.** If $`fg`$ is integrable, $`\lvert \int fg \, d\mu \rvert \le \int \lvert fg \rvert \, d\mu`$ ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)); Theorems 1 and 2 show that $`f`$ in $`L^p`$ and $`g`$ in $`L^q`$ make $`fg`$ integrable.
 
-**Theorem 3 (equality, $1 < p < \infty$, finite positive sizes).** Equality holds if and only if $\alpha \lvert f \rvert^p = \beta \lvert g \rvert^q$ almost everywhere, with $\alpha, \beta \ge 0$ not both 0. *Proof.* Equality means $\int (F^p/p + G^q/q - FG) \, d\mu = 0$, all three integrals finite. The integrand is non-negative by Lemma 1, so it is 0 almost everywhere, so $F^p = G^q$ almost everywhere by Lemma 1's equality case: $\lVert g \rVert_q^q \lvert f \rvert^p = \lVert f \rVert_p^p \lvert g \rvert^q$. Conversely, integrating $\alpha \lvert f \rvert^p = \beta \lvert g \rvert^q$ gives $\alpha \lVert f \rVert_p^p = \beta \lVert g \rVert_q^q$; both sizes are positive, so $\alpha, \beta > 0$, and $F^p = G^q$, the integrand is 0 and $\int FG \, d\mu = 1$.
+**Theorem 3 (equality, $`1 < p < \infty`$, finite positive sizes).** Equality holds if and only if $`\alpha \lvert f \rvert^p = \beta \lvert g \rvert^q`$ almost everywhere, with $`\alpha, \beta \ge 0`$ not both 0. *Proof.* Equality means $`\int (F^p/p + G^q/q - FG) \, d\mu = 0`$, all three integrals finite. The integrand is non-negative by Lemma 1, so it is 0 almost everywhere, so $`F^p = G^q`$ almost everywhere by Lemma 1's equality case: $`\lVert g \rVert_q^q \lvert f \rvert^p = \lVert f \rVert_p^p \lvert g \rvert^q`$. Conversely, integrating $`\alpha \lvert f \rvert^p = \beta \lvert g \rvert^q`$ gives $`\alpha \lVert f \rVert_p^p = \beta \lVert g \rVert_q^q`$; both sizes are positive, so $`\alpha, \beta > 0`$, and $`F^p = G^q`$, the integrand is 0 and $`\int FG \, d\mu = 1`$.
 
-**Theorem 4 (correlation).** For a probability measure $P$ with $\int X^2 \, dP$ and $\int Y^2 \, dP$ finite and both variances positive (so $\rho$ is defined), $\lvert X \rvert \le (1 + X^2)/2$ makes the mean $m_X$ finite, and likewise for $Y$. Theorem 1 at $p = q = 2$ with Corollary 1, applied to $X - m_X$ and $Y - m_Y$, bounds the covariance by the product of the standard deviations, so $\rho$ lies in `[-1, 1]`; Theorem 3 with the sign condition gives $\rho = \pm 1$ exactly when $Y - m_Y = k(X - m_X)$ almost surely for a constant $k$.
+**Theorem 4 (correlation).** For a probability measure $`P`$ with $`\int X^2 \, dP`$ and $`\int Y^2 \, dP`$ finite and both variances positive (so $`\rho`$ is defined), $`\lvert X \rvert \le (1 + X^2)/2`$ makes the mean $`m_X`$ finite, and likewise for $`Y`$. Theorem 1 at $`p = q = 2`$ with Corollary 1, applied to $`X - m_X`$ and $`Y - m_Y`$, bounds the covariance by the product of the standard deviations, so $`\rho`$ lies in `[-1, 1]`; Theorem 3 with the sign condition gives $`\rho = \pm 1`$ exactly when $`Y - m_Y = k(X - m_X)`$ almost surely for a constant $`k`$.
 
 </details>
 
-Another road runs through Jensen's inequality, of which Young's is the two-point case with weights $1/p$ and $1/q$: [Jensen's inequality](04-jensens-inequality.md).
+Another road runs through Jensen's inequality, of which Young's is the two-point case with weights $`1/p`$ and $`1/q`$: [Jensen's inequality](04-jensens-inequality.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The proof of Step 2 at $p = 2$, run on the seven days. Each wind is divided by $\sqrt{203}$ = 14.247807 and each price by $\sqrt{17750}$ = 133.229126. The gap is $F^2/2 + G^2/2 - FG$, never negative.
+The proof of Step 2 at $`p = 2`$, run on the seven days. Each wind is divided by $`\sqrt{203}`$ = 14.247807 and each price by $`\sqrt{17750}`$ = 133.229126. The gap is $`F^2/2 + G^2/2 - FG`$, never negative.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | revenue, day by day | 3 × 60, 5 × 50, 8 × 30, 2 × 70, 6 × 40, 4 × 55, 7 × 35 | 180, 250, 240, 140, 240, 220, 245 |
 | revenue | sum of the seven | \$1,515 |
-| wind 2-size | $\sqrt{9 + 25 + 64 + 4 + 36 + 16 + 49} = \sqrt{203}$ | 14.247807 |
-| price 2-size | $\sqrt{3600 + 2500 + 900 + 4900 + 1600 + 3025 + 1225} = \sqrt{17750}$ | 133.229126 |
+| wind 2-size | $`\sqrt{9 + 25 + 64 + 4 + 36 + 16 + 49} = \sqrt{203}`$ | 14.247807 |
+| price 2-size | $`\sqrt{3600 + 2500 + 900 + 4900 + 1600 + 3025 + 1225} = \sqrt{17750}`$ | 133.229126 |
 | day 3, rescaled | F = 8/14.247807, G = 30/133.229126 | 0.5615, 0.2252 |
 | day 3, product and gap | 0.5615 × 0.2252; (0.5615^2 + 0.2252^2)/2 − 0.1264 | 0.1264; 0.0566 |
 | day 2, product and gap | F = 0.3509, G = 0.3753: nearly equal, so almost no gap | 0.1317; 0.0003 |
@@ -183,17 +197,17 @@ The proof of Step 2 at $p = 2$, run on the seven days. Each wind is divided by $
 | all seven gaps | 0.0288 + 0.0003 + 0.0566 + 0.0741 + 0.0073 + 0.0087 + 0.0261 | 0.201885 = 1 − 0.798115 |
 | **Cauchy-Schwarz ceiling** | 14.247807 × 133.229126 | **\$1,898.22** |
 | ends | 8 × 340; 35 × 70 | \$2,720; \$2,450 |
-| p = 3, q = 3/2 | $1295^{1/3}$ × $(\sum_i c_i^{1.5})^{2/3}$ = 10.899919 × 181.055502 | \$1,973.49 |
+| p = 3, q = 3/2 | $`1295^{1/3}`$ × $`(\sum_i c_i^{1.5})^{2/3}`$ = 10.899919 × 181.055502 | \$1,973.49 |
 
-Given only the two sizes, no pairing of these winds with these prices earns more than \$1,898.22; the actual week earns 79.8% of that, because windy days carry low prices. Under the uniform probability the average daily revenue is \$216.428571 against a ceiling of \$271.174693, one seventh of each: with matched exponents, $(1/7)^{1/p}(1/7)^{1/q} = 1/7$.
+Given only the two sizes, no pairing of these winds with these prices earns more than \$1,898.22; the actual week earns 79.8% of that, because windy days carry low prices. Under the uniform probability the average daily revenue is \$216.428571 against a ceiling of \$271.174693, one seventh of each: with matched exponents, $`(1/7)^{1/p}(1/7)^{1/q} = 1/7`$.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| unmatched exponents $p = q = 3$ | a "ceiling" of \$1,084.24, below the true \$1,515 | 1/3 + 1/3 is not 1; no theorem stands behind this product |
-| $p = 1/2$ with $q = -1$ (matched, but below 1) | \$1,501.38 = 234.273652 / 0.156039, below \$1,515 | below 1 the weights leave (0, 1) and the inequality turns round |
-| $g = 1$ under counting measure, its size forgotten | "total wind ≤ its 2-size": 35 ≤ 14.247807, false | here $\lVert 1 \rVert_2 = \sqrt{7}$; only under a probability is $\lVert w \rVert_1 \le \lVert w \rVert_2$: 5 ≤ 5.385165 |
+| unmatched exponents $`p = q = 3`$ | a "ceiling" of \$1,084.24, below the true \$1,515 | 1/3 + 1/3 is not 1; no theorem stands behind this product |
+| $`p = 1/2`$ with $`q = -1`$ (matched, but below 1) | \$1,501.38 = 234.273652 / 0.156039, below \$1,515 | below 1 the weights leave (0, 1) and the inequality turns round |
+| $`g = 1`$ under counting measure, its size forgotten | "total wind ≤ its 2-size": 35 ≤ 14.247807, false | here $`\lVert 1 \rVert_2 = \sqrt{7}`$; only under a probability is $`\lVert w \rVert_1 \le \lVert w \rVert_2`$: 5 ≤ 5.385165 |
 | Cauchy-Schwarz on the raw lists read as a correlation | 0.798115, a strong "positive" link | the lists were not centred; the correlation is −0.994566 |
 
 ---
@@ -623,12 +637,12 @@ The two outputs are identical line for line.
 
 Lean proves Holder's inequality for all conjugate exponents, its equality case, and Young's inequality.
 
-- Take any measure space, measurable real or complex $f$ and $g$, and conjugate $p, q$, ends included. Then $\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_p \lVert g \rVert_q$, even when a size is infinite.
-- Take conjugate $p, q$ with $1 < p < \infty$, and both sizes finite and not 0. Then equality holds exactly when $\alpha \lvert f \rvert^p = \beta \lvert g \rvert^q$ almost everywhere, with $\alpha, \beta \ge 0$ not both 0.
-- Take numbers $a, b \ge 0$ and conjugate $p, q$ with $1 < p < \infty$. Then $ab \le a^p/p + b^q/q$, with equality exactly when $a^p = b^q$.
+- Take any measure space, measurable real or complex $`f`$ and $`g`$, and conjugate $`p, q`$, ends included. Then $`\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_p \lVert g \rVert_q`$, even when a size is infinite.
+- Take conjugate $`p, q`$ with $`1 < p < \infty`$, and both sizes finite and not 0. Then equality holds exactly when $`\alpha \lvert f \rvert^p = \beta \lvert g \rvert^q`$ almost everywhere, with $`\alpha, \beta \ge 0`$ not both 0.
+- Take numbers $`a, b \ge 0`$ and conjugate $`p, q`$ with $`1 < p < \infty`$. Then $`ab \le a^p/p + b^q/q`$, with equality exactly when $`a^p = b^q`$.
 - The turbine's whole-number facts hold exactly: revenue \$1,515, sums of squares 203 and 17750, and Lagrange's slack 1308025 as 21 squares.
 - So do the ends, \$2,720 and \$2,450, the equality revenues \$2,030 and \$1,295, and \$1,885 for the windiest day with the highest price.
-- The centred products add to −185 and the centred squares to 28 and 8650/7, so $\rho^2 < 1$.
+- The centred products add to −185 and the centred squares to 28 and 8650/7, so $`\rho^2 < 1`$.
 
 The decimals, the ceiling for each p, the best p, the areas and the random pairs are left to the Python and Rust checks.
 
@@ -869,26 +883,26 @@ example : (1 / 3 + 1 / 3 : ℚ) ≠ 1 := by norm_num
 > **Try changing**
 > - **Line the days up.** Guess first: sort both lists from smallest to largest, so the windiest day gets the highest price. The revenue becomes 2 × 30 + 3 × 35 + 4 × 40 + 5 × 50 + 6 × 55 + 7 × 60 + 8 × 70 = \$1,885, just under the Cauchy-Schwarz ceiling of \$1,898.22, which does not move: sizes ignore the order of the days. The checks print this pairing.
 > - **Unmatched exponents in the sweep.** Guess first: replace `conj(p)` in `bound` by `p`. The sweep's assert stops the run at p = 3, the first p in the list where the product of the two p-sizes, 1084.239098, falls below the revenue.
-> - **A price in proportion to the cube of the wind.** Guess first: which p makes the ceiling exact? The equality rule $\lvert w \rvert^p \propto \lvert c \rvert^q$ with $c \propto w^3$ needs $p = 3q$, so $p = 4$, $q = 4/3$. The checks print it: revenue 8771, ceiling 8771.000000.
+> - **A price in proportion to the cube of the wind.** Guess first: which p makes the ceiling exact? The equality rule $`\lvert w \rvert^p \propto \lvert c \rvert^q`$ with $`c \propto w^3`$ needs $`p = 3q`$, so $`p = 4`$, $`q = 4/3`$. The checks print it: revenue 8771, ceiling 8771.000000.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Using exponents that do not match.** Holder is not "a product is at most any product of sizes". The powers must satisfy $1/p + 1/q = 1$, or the sizes scale wrongly: stretch the measure by a factor k and the left side grows by k while the right grows by $k^{1/p + 1/q}$. On the turbine, $p = q = 3$ gives \$1,084.24 against a revenue of \$1,515.
+> **Using exponents that do not match.** Holder is not "a product is at most any product of sizes". The powers must satisfy $`1/p + 1/q = 1`$, or the sizes scale wrongly: stretch the measure by a factor k and the left side grows by k while the right grows by $`k^{1/p + 1/q}`$. On the turbine, $`p = q = 3`$ gives \$1,084.24 against a revenue of \$1,515.
 >
 > - **Believing p = 2 is always best.** Cauchy-Schwarz gives \$1,898.22 here; p = 1.675270 gives \$1,886.91. Which p is lowest depends on the data.
-> - **Dropping the absolute values in the equality rule.** A price of −10 times the wind still meets the ceiling for $\int \lvert fg \rvert \, d\mu$; the signed revenue is then −2030, which meets the ceiling in size only.
-> - **Nesting sizes on the wrong measure.** $\lVert w \rVert_1 \le \lVert w \rVert_2$ holds under a probability (5 ≤ 5.385165) and fails under counting measure (35 against 14.247807).
+> - **Dropping the absolute values in the equality rule.** A price of −10 times the wind still meets the ceiling for $`\int \lvert fg \rvert \, d\mu`$; the signed revenue is then −2030, which meets the ceiling in size only.
+> - **Nesting sizes on the wrong measure.** $`\lVert w \rVert_1 \le \lVert w \rVert_2`$ holds under a probability (5 ≤ 5.385165) and fails under counting measure (35 against 14.247807).
 
 ---
 
 ## Where you meet it in real life
 
 - **Correlation and portfolio risk.** Every correlation lies between −1 and 1 because of Step 5 (covariances from tables are on [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)), so a portfolio's standard deviation never exceeds the sum of its parts' standard deviations.
-- **The triangle inequality for sizes.** Holder is the key step in proving $\lVert f + g \rVert_p \le \lVert f \rVert_p + \lVert g \rVert_p$ ([Minkowski's inequality](03-minkowskis-inequality.md)), which makes the p-size a distance.
-- **Moments of random variables.** With $g = 1$ on a probability space, Holder gives $\lVert X \rVert_1 \le \lVert X \rVert_p$: a finite p-th moment forces a finite mean ([Jensen's inequality](04-jensens-inequality.md) orders all the moments).
+- **The triangle inequality for sizes.** Holder is the key step in proving $`\lVert f + g \rVert_p \le \lVert f \rVert_p + \lVert g \rVert_p`$ ([Minkowski's inequality](03-minkowskis-inequality.md)), which makes the p-size a distance.
+- **Moments of random variables.** With $`g = 1`$ on a probability space, Holder gives $`\lVert X \rVert_1 \le \lVert X \rVert_p`$: a finite p-th moment forces a finite mean ([Jensen's inequality](04-jensens-inequality.md) orders all the moments).
 - **Signal processing and physics.** The uncertainty principle, that a signal cannot be sharply located in both time and frequency, starts from Cauchy-Schwarz (The uncertainty principle).
 
 > **Say it back**
@@ -898,15 +912,15 @@ example : (1 / 3 + 1 / 3 : ℚ) ≠ 1 := by norm_num
 
 ## What this builds on
 
-- [Lp spaces](01-lp-spaces.md): the p-size of a function and the essential top $\lVert g \rVert_\infty$, which are the two sides of the inequality.
+- [Lp spaces](01-lp-spaces.md): the p-size of a function and the essential top $`\lVert g \rVert_\infty`$, which are the two sides of the inequality.
 - [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): Cauchy-Schwarz for lists of numbers by the smallest squared length, the road Step 5 reuses with integrals.
 - [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): chords below a concave graph, which is all Young's inequality needs.
 
 ## Where this goes next
 
-- [Minkowski's inequality](03-minkowskis-inequality.md): Holder on $\lvert f + g \rvert^{p-1}$ proves the triangle inequality for p-sizes.
-- [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md): Cauchy-Schwarz makes $\int fg \, d\mu$ an inner product, with angles and projections.
-- Dual spaces: the equality case makes $L^q$ the dual of $L^p$.
+- [Minkowski's inequality](03-minkowskis-inequality.md): Holder on $`\lvert f + g \rvert^{p-1}`$ proves the triangle inequality for p-sizes.
+- [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md): Cauchy-Schwarz makes $`\int fg \, d\mu`$ an inner product, with angles and projections.
+- Dual spaces: the equality case makes $`L^q`$ the dual of $`L^p`$.
 - Sobolev and Poincare: Holder turns bounds on a derivative into bounds on the function.
 - The uncertainty principle: Cauchy-Schwarz caps how concentrated a signal and its spectrum can be together.
 - Interpolation: Holder's convexity in 1/p grows into operator bounds between the ends.

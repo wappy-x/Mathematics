@@ -30,26 +30,30 @@ The same four numbers act at every foot, which is why steps collect into a power
 
 ## The formula
 
-Write $T(n)$ for the tilings of an n-foot hallway. A **stack** is a column of two numbers, newer on top; $v_n$ holds $T(n)$ over $T(n-1)$. A matrix in prose is written by rows in brackets: `[[1, 1], [1, 0]]` has top row 1, 1 and bottom row 1, 0 ([Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)).
+Write $`T(n)`$ for the tilings of an n-foot hallway. A **stack** is a column of two numbers, newer on top; $`v_n`$ holds $`T(n)`$ over $`T(n-1)`$. A matrix in prose is written by rows in brackets: `[[1, 1], [1, 0]]` has top row 1, 1 and bottom row 1, 0 ([Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)).
 
-$$v_{n+1} = M v_n, \qquad M = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}$$
+```math
+v_{n+1} = M v_n, \qquad M = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}
+```
 
 **Read it aloud:** the new top is the old top plus the old bottom; the new bottom is the old top slid down.
 
 That matrix is the **companion matrix** of the rule, the term used from here on: top row the coefficients, bottom row nothing but memory. One power spells out three counts.
 
-$$M^n = \begin{pmatrix} T(n) & T(n-1) \\ T(n-1) & T(n-2) \end{pmatrix} \qquad (n \ge 2)$$
+```math
+M^n = \begin{pmatrix} T(n) & T(n-1) \\ T(n-1) & T(n-2) \end{pmatrix} \qquad (n \ge 2)
+```
 
-At $n = 10$: 89, 55, 55 and 34, the ten-, nine- and eight-foot counts.
+At $`n = 10`$: 89, 55, 55 and 34, the ten-, nine- and eight-foot counts.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T(n)$ | tilings of an n-foot hallway | $T(10) = 89$ | a foot more, about 1.618 times as many |
-| $v_n$ | the stack, $T(n)$ over $T(n-1)$ | (89, 55) | — |
-| $M$ | the companion matrix | `[[1, 1], [1, 0]]` | another entry, another rule |
-| $M^n$ | n copies of $M$ multiplied | `[[89, 55], [55, 34]]` | entries grow by the same 1.618 |
-| $n$ | the length in feet, a whole number | 10 | more steps, bigger entries |
-| $\lambda$ | an eigenvalue: a stretch along a direction $M$ does not turn | 1.618033988750 and −0.618033988750 | — |
+| $`T(n)`$ | tilings of an n-foot hallway | $`T(10) = 89`$ | a foot more, about 1.618 times as many |
+| $`v_n`$ | the stack, $`T(n)`$ over $`T(n-1)`$ | (89, 55) | — |
+| $`M`$ | the companion matrix | `[[1, 1], [1, 0]]` | another entry, another rule |
+| $`M^n`$ | n copies of $`M`$ multiplied | `[[89, 55], [55, 34]]` | entries grow by the same 1.618 |
+| $`n`$ | the length in feet, a whole number | 10 | more steps, bigger entries |
+| $`\lambda`$ | an eigenvalue: a stretch along a direction $`M`$ does not turn | 1.618033988750 and −0.618033988750 | — |
 
 ### When it holds
 
@@ -68,25 +72,25 @@ A rule looking back two terms cannot be driven by one number: 89 alone does not 
 
 ### Step 1: read the matrix off the rule
 
-The new top is $T(n) + T(n-1)$: one old top, one old bottom, so the top row is 1, 1. The new bottom is $T(n)$: one old top, none of the bottom, so the bottom row is 1, 0. That row adds nothing — it slides the old top down so the pair still holds the last two counts. On the stack (55, 34): top 89, bottom 55.
+The new top is $`T(n) + T(n-1)`$: one old top, one old bottom, so the top row is 1, 1. The new bottom is $`T(n)`$: one old top, none of the bottom, so the bottom row is 1, 0. That row adds nothing — it slides the old top down so the pair still holds the last two counts. On the stack (55, 34): top 89, bottom 55.
 
 ### Step 2: n steps is the n-th power
 
-One step is $v_{n+1} = M v_n$. Two steps is $M(M v_n)$, which regroups to $(MM) v_n = M^2 v_n$, since matrix multiplication rebrackets freely. Repeating that collects any number of steps into one power.
+One step is $`v_{n+1} = M v_n`$. Two steps is $`M(M v_n)`$, which regroups to $`(MM) v_n = M^2 v_n`$, since matrix multiplication rebrackets freely. Repeating that collects any number of steps into one power.
 
 <details>
 <summary>Detailed proof: why the entries of $M^n$ are tiling counts</summary>
 
-**Base.** $M^2 = MM$ has top-left 1×1 + 1×1 = 2, top-right 1×1 + 1×0 = 1, bottom-left 1, bottom-right 1 — that is $T(2)$, $T(1)$, $T(1)$, $T(0)$, the zero-foot count being 1: laying no tile.
+**Base.** $`M^2 = MM`$ has top-left 1×1 + 1×1 = 2, top-right 1×1 + 1×0 = 1, bottom-left 1, bottom-right 1 — that is $`T(2)`$, $`T(1)`$, $`T(1)`$, $`T(0)`$, the zero-foot count being 1: laying no tile.
 
-**Step.** Suppose $M^k$ = `[[T(k), T(k−1)], [T(k−1), T(k−2)]]`. The top row of $M$ is 1, 1, so in $M M^k$ it adds the rows below: T(k) + T(k−1) = T(k+1), then T(k−1) + T(k−2) = T(k). The bottom row, 1, 0, copies $M^k$'s top row. The product is `[[T(k+1), T(k)], [T(k), T(k−1)]]` — the claim one foot on, so it holds at every length, and it is symmetric, which is why one power reports three counts, not four.
+**Step.** Suppose $`M^k`$ = `[[T(k), T(k−1)], [T(k−1), T(k−2)]]`. The top row of $`M`$ is 1, 1, so in $`M M^k`$ it adds the rows below: T(k) + T(k−1) = T(k+1), then T(k−1) + T(k−2) = T(k). The bottom row, 1, 0, copies $`M^k`$'s top row. The product is `[[T(k+1), T(k)], [T(k), T(k−1)]]` — the claim one foot on, so it holds at every length, and it is symmetric, which is why one power reports three counts, not four.
 
 </details>
 
 
 ### Step 3: doubling instead of stepping
 
-Ten copies of $M$ need not go in one at a time. Square $M$ for $M^2$, square that for $M^4$, square again for $M^8$, then multiply $M^8$ by $M^2$, since ten is eight plus two. Four multiplications against nine additions is no gain. At a million it is the whole point: 25 multiplications against 999,999 additions.
+Ten copies of $`M`$ need not go in one at a time. Square $`M`$ for $`M^2`$, square that for $`M^4`$, square again for $`M^8`$, then multiply $`M^8`$ by $`M^2`$, since ten is eight plus two. Four multiplications against nine additions is no gain. At a million it is the whole point: 25 multiplications against 999,999 additions.
 
 ```mermaid
 flowchart LR
@@ -97,20 +101,20 @@ flowchart LR
     M2 --> P
 ```
 
-Every entry from $M^2$ on is itself a tiling count.
+Every entry from $`M^2`$ on is itself a tiling count.
 
 ### Step 4: the eigenvalues are the characteristic roots
 
-An **eigenvalue** is the stretch along a direction a matrix does not turn ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). For $M$ they solve $\lambda^2 - \lambda - 1 = 0$: the rule's own characteristic equation, with $T(n)$ replaced by $\lambda^n$ ([The characteristic equation](04-characteristic-equation-and-binet.md)). The roots are 1.618033988750 and −0.618033988750; squaring either and subtracting itself returns 1.000000000000, as that equation demands.
+An **eigenvalue** is the stretch along a direction a matrix does not turn ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). For $`M`$ they solve $`\lambda^2 - \lambda - 1 = 0`$: the rule's own characteristic equation, with $`T(n)`$ replaced by $`\lambda^n`$ ([The characteristic equation](04-characteristic-equation-and-binet.md)). The roots are 1.618033988750 and −0.618033988750; squaring either and subtracting itself returns 1.000000000000, as that equation demands.
 
 Two cross-checks come free. The diagonal entries add to 1 — that sum is the **trace** — and so do the roots. The **determinant**, top-left times bottom-right minus top-right times bottom-left, is 1×0 − 1×1 = −1, which is also the two roots multiplied.
 
-Closed form and matrix are one object seen twice: split a stack along the two unturned directions and $M^n$ becomes n-th powers of the roots — Binet's formula, by diagonalisation ([Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)). The hallway counts run one ahead of the Fibonacci numbers, so ten feet is the eleventh of those. Both roots to the eleventh, the second subtracted from the first, over the square root of 5: 89.000000000.
+Closed form and matrix are one object seen twice: split a stack along the two unturned directions and $`M^n`$ becomes n-th powers of the roots — Binet's formula, by diagonalisation ([Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)). The hallway counts run one ahead of the Fibonacci numbers, so ten feet is the eleventh of those. Both roots to the eleventh, the second subtracted from the first, over the square root of 5: 89.000000000.
 
 <details>
 <summary>A free identity from the determinant</summary>
 
-Determinants multiply, so the determinant of $M^n$ is (−1) taken n times. Read it off the ten-foot entries: 89 × 34 − 55 × 55 = 1, and (−1) ten times over is 1 — Cassini's identity, in one line, because the matrix carried it.
+Determinants multiply, so the determinant of $`M^n`$ is (−1) taken n times. Read it off the ten-foot entries: 89 × 34 − 55 × 55 = 1, and (−1) ten times over is 1 — Cassini's identity, in one line, because the matrix carried it.
 
 </details>
 
@@ -121,9 +125,9 @@ Determinants multiply, so the determinant of $M^n$ is (−1) taken n times. Read
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | the stack at nine feet | 55 on top, 34 below | (55, 34) |
-| one multiply by $M$ | top 55 + 34, bottom 55 | **(89, 55)** |
-| square $M$, then again, then again | $M$, $M^2$, $M^4$ each against itself | `[[2, 1], [1, 1]]`, `[[5, 3], [3, 2]]`, `[[34, 21], [21, 13]]` |
-| finish the exponent | $M^8$ against $M^2$ | **`[[89, 55], [55, 34]]`** |
+| one multiply by $`M`$ | top 55 + 34, bottom 55 | **(89, 55)** |
+| square $`M`$, then again, then again | $`M`$, $`M^2`$, $`M^4`$ each against itself | `[[2, 1], [1, 1]]`, `[[5, 3], [3, 2]]`, `[[34, 21], [21, 13]]` |
+| finish the exponent | $`M^8`$ against $`M^2`$ | **`[[89, 55], [55, 34]]`** |
 | what it cost | three squarings, one multiply | **4 matrix multiplications** |
 | the same by stepping | 1, 1 added up to ten feet | 89, in 9 additions |
 
@@ -135,7 +139,7 @@ One power gives 89 floors for ten feet, 55 for nine and 34 for eight, without vi
 | --- | --- | --- |
 | The matrix written `[[1, 1], [0, 1]]` | `[[1, 10], [0, 1]]`, top-left 1 | The bottom row must slide the top down |
 | Each entry raised to the tenth alone | `[[1, 1], [1, 0]]`, top-left 1 | Entrywise powers are not matrix powers |
-| The stack (1, 1) carried through $M^{10}$ | 144 | It stands at one foot, so ten steps land at eleven |
+| The stack (1, 1) carried through $`M^{10}`$ | 144 | It stands at one foot, so ten steps land at eleven |
 
 The code prints all three.
 
@@ -342,9 +346,9 @@ The two outputs match line for line.
 Lean proves the three general claims for every length, not just the ten-foot hallway.
 
 - Take any two-step rule with fixed whole-number coefficients and nothing added on the side. The n-th power of its companion matrix moves the stack n steps at once.
-- With $T(0) = T(1) = 1$, the power $M^n$ is `[[T(n), T(n−1)], [T(n−1), T(n−2)]]` for every n of 2 or more.
-- A real number is an eigenvalue of $M$ exactly when it solves $\lambda^2 - \lambda - 1 = 0$, the characteristic equation.
-- The worked numbers come out as stated: the stacks, the ladder of squares, $M^{10}$, the trace and determinant, Cassini at ten feet, and the three mistakes.
+- With $`T(0) = T(1) = 1`$, the power $`M^n`$ is `[[T(n), T(n−1)], [T(n−1), T(n−2)]]` for every n of 2 or more.
+- A real number is an eigenvalue of $`M`$ exactly when it solves $`\lambda^2 - \lambda - 1 = 0`$, the characteristic equation.
+- The worked numbers come out as stated: the stacks, the ladder of squares, $`M^{10}`$, the trace and determinant, Cassini at ten feet, and the three mistakes.
 
 Laying real tiles, the eigenvalue decimals, Binet's formula and the millionth term wrapped at 1,000,000,007 are left to the Python and Rust checks.
 
@@ -519,7 +523,7 @@ example : (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℕ) ^ 10 *ᵥ ![1, 1] = ![14
 
 ## What this builds on
 
-- [The characteristic equation](04-characteristic-equation-and-binet.md): the equation $\lambda^2 - \lambda - 1 = 0$, whose roots return here as eigenvalues.
+- [The characteristic equation](04-characteristic-equation-and-binet.md): the equation $`\lambda^2 - \lambda - 1 = 0`$, whose roots return here as eigenvalues.
 - [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): rows against columns, and the rebracketing behind the power.
 - [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): what a stretch factor is, and how trace and determinant pin it down.
 - [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): from a matrix power to powers of eigenvalues.

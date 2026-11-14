@@ -26,46 +26,54 @@ Each row is one simulated hour with exactly 4 calls: the first five such hours f
 
 ## The formula
 
-Notation first, in words. The wing writes $N(t)$ for the number of calls by time $t$, and $\lambda$ for the rate, the average number of calls per unit of time ([Poisson process](01-poisson-process.md)). Time here is in hours, measured from the start of the hour, so the window is $t$ = 1 hour.
+Notation first, in words. The wing writes $`N(t)`$ for the number of calls by time $`t`$, and $`\lambda`$ for the rate, the average number of calls per unit of time ([Poisson process](01-poisson-process.md)). Time here is in hours, measured from the start of the hour, so the window is $`t`$ = 1 hour.
 
-Write $T_1 < T_2 < \cdots < T_n$ for the times of the first, second, up to the n-th call. Given the event $N(t) = n$, exactly n calls in the window, their joint density at times $s_1 < \cdots < s_n$ is
+Write $`T_1 < T_2 < \cdots < T_n`$ for the times of the first, second, up to the n-th call. Given the event $`N(t) = n`$, exactly n calls in the window, their joint density at times $`s_1 < \cdots < s_n`$ is
 
-$$f(s_1, \ldots, s_n \mid N(t) = n) = \frac{n!}{t^n} \quad \text{for } 0 < s_1 < s_2 < \cdots < s_n < t, \text{ and } 0 \text{ otherwise.}$$
+```math
+f(s_1, \ldots, s_n \mid N(t) = n) = \frac{n!}{t^n} \quad \text{for } 0 < s_1 < s_2 < \cdots < s_n < t, \text{ and } 0 \text{ otherwise.}
+```
 
 **Read it aloud:** every ordered set of n call times inside the window is equally likely, and n! over t to the n is the height that makes the total chance 1. For n = 0 there are no times to place.
 
-Now sort independent uniform draws. Take $U_1, \ldots, U_n$, each uniform on the window, and write $U_{(k)}$ for the k-th smallest, as on [Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md). The theorem says the two lists have the same joint law:
+Now sort independent uniform draws. Take $`U_1, \ldots, U_n`$, each uniform on the window, and write $`U_{(k)}`$ for the k-th smallest, as on [Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md). The theorem says the two lists have the same joint law:
 
-$$\bigl(T_1, \ldots, T_n\bigr) \text{ given } N(t) = n \;\;\overset{d}{=}\;\; \bigl(U_{(1)}, \ldots, U_{(n)}\bigr)$$
+```math
+\bigl(T_1, \ldots, T_n\bigr) \text{ given } N(t) = n \;\;\overset{d}{=}\;\; \bigl(U_{(1)}, \ldots, U_{(n)}\bigr)
+```
 
 **Read it aloud:** given n calls, the call times behave like n uniform draws sorted; the little d over the equals sign means "has the same law as".
 
-Three consequences carry the worked numbers. For $k$ from 1 to n, and a time $s$ inside the window:
+Three consequences carry the worked numbers. For $`k`$ from 1 to n, and a time $`s`$ inside the window:
 
-$$E\bigl[T_k \mid N(t) = n\bigr] = \frac{k\,t}{n+1}, \qquad P\bigl(T_1 > s \mid N(t) = n\bigr) = \Bigl(1 - \frac{s}{t}\Bigr)^n$$
+```math
+E\bigl[T_k \mid N(t) = n\bigr] = \frac{k\,t}{n+1}, \qquad P\bigl(T_1 > s \mid N(t) = n\bigr) = \Bigl(1 - \frac{s}{t}\Bigr)^n
+```
 
 **Read it aloud:** the n calls split the window into n + 1 gaps that are the same size on average, and the first call comes after s only if all n draws land after s.
 
-For a window from 0 to $a$, a fraction $p$ = a/t of the whole, the number of the n calls that fall in it is binomial:
+For a window from 0 to $`a`$, a fraction $`p`$ = a/t of the whole, the number of the n calls that fall in it is binomial:
 
-$$P\bigl(j \text{ of the } n \text{ calls fall before } a \mid N(t) = n\bigr) = \binom{n}{j}\, p^j (1 - p)^{n-j}$$
+```math
+P\bigl(j \text{ of the } n \text{ calls fall before } a \mid N(t) = n\bigr) = \binom{n}{j}\, p^j (1 - p)^{n-j}
+```
 
-**Read it aloud:** each of the n uniform draws lands in the window with chance p, independently, and $j$ counts how many do.
+**Read it aloud:** each of the n uniform draws lands in the window with chance p, independently, and $`j`$ counts how many do.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\lambda$ | the rate: average calls per hour | 4 calls an hour | no change, once the count is known |
-| $t$ | the length of the window | 1 hour, 60 minutes | every call time stretches with it |
-| $N(t)$ | the number of calls by time t | 4 in the hour | more calls, packed closer |
-| $n$ | the count we condition on | 4 | the first call comes sooner: 60/(n + 1) minutes on average |
-| $k$ | which call, counted from the earliest | 1 to 4 | a later call |
-| $T_k$, $T_1$ | the time of the k-th call; $T_1$ is the first | $T_1$ averages 12 minutes | — |
-| $s$, $s_1$ to $s_n$ | possible call times in the window | 15 minutes | — |
-| $U_{(k)}$ | the k-th smallest of n uniform draws | $U_{(1)}$ averages 12 minutes | — |
-| $a$, $p$ | the end of a sub-window starting at 0, and its share a/t of the window | 30 minutes, 0.5 | more calls fall before a |
-| $j$ | the number of the n calls before a | 2 | — |
-| $K_1$, $K_2$ | in Step 5: calls before a and after a, count not fixed | Poisson, means 2 and 2 at a = 30 minutes | — |
-| $E_i$ | the i-th waiting time between calls, in the proof | averages 15 minutes | — |
+| $`\lambda`$ | the rate: average calls per hour | 4 calls an hour | no change, once the count is known |
+| $`t`$ | the length of the window | 1 hour, 60 minutes | every call time stretches with it |
+| $`N(t)`$ | the number of calls by time t | 4 in the hour | more calls, packed closer |
+| $`n`$ | the count we condition on | 4 | the first call comes sooner: 60/(n + 1) minutes on average |
+| $`k`$ | which call, counted from the earliest | 1 to 4 | a later call |
+| $`T_k`$, $`T_1`$ | the time of the k-th call; $`T_1`$ is the first | $`T_1`$ averages 12 minutes | — |
+| $`s`$, $`s_1`$ to $`s_n`$ | possible call times in the window | 15 minutes | — |
+| $`U_{(k)}`$ | the k-th smallest of n uniform draws | $`U_{(1)}`$ averages 12 minutes | — |
+| $`a`$, $`p`$ | the end of a sub-window starting at 0, and its share a/t of the window | 30 minutes, 0.5 | more calls fall before a |
+| $`j`$ | the number of the n calls before a | 2 | — |
+| $`K_1`$, $`K_2`$ | in Step 5: calls before a and after a, count not fixed | Poisson, means 2 and 2 at a = 30 minutes | — |
+| $`E_i`$ | the i-th waiting time between calls, in the proof | averages 15 minutes | — |
 
 ### When it holds
 
@@ -90,21 +98,25 @@ The code counts this exactly for m = 60, 600 and 6000 slots. The mean first-call
 
 ### Step 1: write down the chance of one precise history
 
-The Poisson process of [Poisson process](01-poisson-process.md) is built from waiting times $E_1, E_2, \ldots$ between calls, independent, each exponential with rate $\lambda$: density $\lambda e^{-\lambda x}$ at a wait of x hours. The k-th call comes at $T_k = E_1 + \cdots + E_k$.
+The Poisson process of [Poisson process](01-poisson-process.md) is built from waiting times $`E_1, E_2, \ldots`$ between calls, independent, each exponential with rate $`\lambda`$: density $`\lambda e^{-\lambda x}`$ at a wait of x hours. The k-th call comes at $`T_k = E_1 + \cdots + E_k`$.
 
-"Calls near $s_1 < s_2 < \cdots < s_n$, and nothing more before t" means: the first wait is near $s_1$, the second near $s_2 - s_1$, and so on, and the wait after the n-th call is longer than $t - s_n$. Multiply the pieces:
+"Calls near $`s_1 < s_2 < \cdots < s_n`$, and nothing more before t" means: the first wait is near $`s_1`$, the second near $`s_2 - s_1`$, and so on, and the wait after the n-th call is longer than $`t - s_n`$. Multiply the pieces:
 
-$$\lambda e^{-\lambda s_1} \cdot \lambda e^{-\lambda (s_2 - s_1)} \cdots \lambda e^{-\lambda (s_n - s_{n-1})} \cdot e^{-\lambda (t - s_n)} = \lambda^n e^{-\lambda t}$$
+```math
+\lambda e^{-\lambda s_1} \cdot \lambda e^{-\lambda (s_2 - s_1)} \cdots \lambda e^{-\lambda (s_n - s_{n-1})} \cdot e^{-\lambda (t - s_n)} = \lambda^n e^{-\lambda t}
+```
 
-The exponents add up to $-\lambda t$ whatever the times were. The density of this history is flat across all ordered times in the window. That flatness is the whole theorem; the rest is bookkeeping.
+The exponents add up to $`-\lambda t`$ whatever the times were. The density of this history is flat across all ordered times in the window. That flatness is the whole theorem; the rest is bookkeeping.
 
 ### Step 2: divide by the chance of the count
 
-Integrating a flat density over the ordered region gives its height times the region's volume. The region $0 < s_1 < \cdots < s_n < t$ has volume $t^n / n!$: the cube of side t splits into n! equal pieces, one for each order of n coordinates. So
+Integrating a flat density over the ordered region gives its height times the region's volume. The region $`0 < s_1 < \cdots < s_n < t`$ has volume $`t^n / n!`$: the cube of side t splits into n! equal pieces, one for each order of n coordinates. So
 
-$$P\bigl(N(t) = n\bigr) = \lambda^n e^{-\lambda t} \cdot \frac{t^n}{n!} = e^{-\lambda t} \frac{(\lambda t)^n}{n!},$$
+```math
+P\bigl(N(t) = n\bigr) = \lambda^n e^{-\lambda t} \cdot \frac{t^n}{n!} = e^{-\lambda t} \frac{(\lambda t)^n}{n!},
+```
 
-the Poisson law, recovered on the way. Conditioning divides the density by this: $\lambda^n e^{-\lambda t}$ over $e^{-\lambda t} (\lambda t)^n / n!$ leaves $n!/t^n$. The rate has cancelled. For the switchboard, n! over t to the n is 24 per hour to the 4th, and the chance of exactly 4 calls was 0.195367, about 1 hour in 5.
+the Poisson law, recovered on the way. Conditioning divides the density by this: $`\lambda^n e^{-\lambda t}`$ over $`e^{-\lambda t} (\lambda t)^n / n!`$ leaves $`n!/t^n`$. The rate has cancelled. For the switchboard, n! over t to the n is 24 per hour to the 4th, and the chance of exactly 4 calls was 0.195367, about 1 hour in 5.
 
 ### Step 3: sorted uniform draws have the same density
 
@@ -115,19 +127,23 @@ The code watches the folding directly. Of the scattered hours that drew 4 times,
 <details>
 <summary>Detailed proof</summary>
 
-Fix $\lambda > 0$, $t > 0$ and $n \ge 1$. Let $E_1, \ldots, E_{n+1}$ be independent exponential waits with rate $\lambda$, and $T_k = E_1 + \cdots + E_k$. The map from $(E_1, \ldots, E_{n+1})$ to $(T_1, \ldots, T_{n+1})$ is linear and triangular with ones on the diagonal, so its Jacobian is 1 and, by the change-of-variables rule for joint densities, $(T_1, \ldots, T_{n+1})$ has density $\lambda^{n+1} e^{-\lambda s_{n+1}}$ on $0 < s_1 < \cdots < s_{n+1}$ and 0 elsewhere.
+Fix $`\lambda > 0`$, $`t > 0`$ and $`n \ge 1`$. Let $`E_1, \ldots, E_{n+1}`$ be independent exponential waits with rate $`\lambda`$, and $`T_k = E_1 + \cdots + E_k`$. The map from $`(E_1, \ldots, E_{n+1})`$ to $`(T_1, \ldots, T_{n+1})`$ is linear and triangular with ones on the diagonal, so its Jacobian is 1 and, by the change-of-variables rule for joint densities, $`(T_1, \ldots, T_{n+1})`$ has density $`\lambda^{n+1} e^{-\lambda s_{n+1}}`$ on $`0 < s_1 < \cdots < s_{n+1}`$ and 0 elsewhere.
 
-**The count as an event about the times.** Exactly n calls by time t means the n-th call came by t and the next did not: $\{N(t) = n\} = \{T_n \le t < T_{n+1}\}$.
+**The count as an event about the times.** Exactly n calls by time t means the n-th call came by t and the next did not: $`\{N(t) = n\} = \{T_n \le t < T_{n+1}\}`$.
 
-**The joint chance.** Let S be the ordered region $0 < s_1 < \cdots < s_n < t$ and C any Borel subset of it. Integrating out the last coordinate over $(t, \infty)$,
-$$P\bigl((T_1, \ldots, T_n) \in C,\; N(t) = n\bigr) = \int_C \int_t^\infty \lambda^{n+1} e^{-\lambda u}\, du\, ds = \lambda^n e^{-\lambda t}\, \mathrm{Vol}(C).$$
-With C = S and $\mathrm{Vol}(S) = t^n/n!$ this is $e^{-\lambda t}(\lambda t)^n/n!$, which is positive, so ordinary conditioning applies, and
-$$P\bigl((T_1, \ldots, T_n) \in C \mid N(t) = n\bigr) = \frac{n!}{t^n}\,\mathrm{Vol}(C).$$
-For a Borel set D not inside S, intersect with S: under the conditioning the times lie in S almost surely, because $T_n = t$ has chance 0.
+**The joint chance.** Let S be the ordered region $`0 < s_1 < \cdots < s_n < t`$ and C any Borel subset of it. Integrating out the last coordinate over $`(t, \infty)`$,
 
-**The sorted uniforms.** Let $U_1, \ldots, U_n$ be independent, uniform on $(0, t)$, with density $t^{-n}$ on the cube. Ties have chance 0. The sorted vector lands in C exactly when the unsorted vector lands in one of the n! copies of C obtained by permuting coordinates. These copies are disjoint up to ties, and each permutation preserves volume. So $P\bigl((U_{(1)}, \ldots, U_{(n)}) \in C\bigr) = n!\, t^{-n}\, \mathrm{Vol}(C)$.
+$`\displaystyle P\bigl((T_1, \ldots, T_n) \in C,\; N(t) = n\bigr) = \int_C \int_t^\infty \lambda^{n+1} e^{-\lambda u}\, du\, ds = \lambda^n e^{-\lambda t}\, \mathrm{Vol}(C).`$
 
-**Conclusion.** The two laws agree on every Borel subset of S, and both put all their mass on S, so they are equal. The volume $t^n/n!$ used above follows from the same count: the n! permuted copies of S tile the cube of volume $t^n$ up to a null set.
+With C = S and $`\mathrm{Vol}(S) = t^n/n!`$ this is $`e^{-\lambda t}(\lambda t)^n/n!`$, which is positive, so ordinary conditioning applies, and
+
+$`\displaystyle P\bigl((T_1, \ldots, T_n) \in C \mid N(t) = n\bigr) = \frac{n!}{t^n}\,\mathrm{Vol}(C).`$
+
+For a Borel set D not inside S, intersect with S: under the conditioning the times lie in S almost surely, because $`T_n = t`$ has chance 0.
+
+**The sorted uniforms.** Let $`U_1, \ldots, U_n`$ be independent, uniform on $`(0, t)`$, with density $`t^{-n}`$ on the cube. Ties have chance 0. The sorted vector lands in C exactly when the unsorted vector lands in one of the n! copies of C obtained by permuting coordinates. These copies are disjoint up to ties, and each permutation preserves volume. So $`P\bigl((U_{(1)}, \ldots, U_{(n)}) \in C\bigr) = n!\, t^{-n}\, \mathrm{Vol}(C)`$.
+
+**Conclusion.** The two laws agree on every Borel subset of S, and both put all their mass on S, so they are equal. The volume $`t^n/n!`$ used above follows from the same count: the n! permuted copies of S tile the cube of volume $`t^n`$ up to a null set.
 
 </details>
 
@@ -135,12 +151,12 @@ For a Borel set D not inside S, intersect with S: under the conditioning the tim
 
 Everything the switchboard asks now reduces to uniform draws.
 
-- **The k-th call.** The k-th smallest of n uniforms averages $k\,t/(n+1)$ ([Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)). With n = 4 and 60 minutes: 12, 24, 36 and 48 minutes. The last call averages 48 minutes, not 60: the hour does not end on a call.
-- **The first call.** It comes after s only if all four draws do: $(1 - s/t)^4$. After 15 minutes that is $(3/4)^4$ = 0.316406.
+- **The k-th call.** The k-th smallest of n uniforms averages $`k\,t/(n+1)`$ ([Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)). With n = 4 and 60 minutes: 12, 24, 36 and 48 minutes. The last call averages 48 minutes, not 60: the hour does not end on a call.
+- **The first call.** It comes after s only if all four draws do: $`(1 - s/t)^4`$. After 15 minutes that is $`(3/4)^4`$ = 0.316406.
 - **Windows.** Each draw lands in the first half-hour with chance 0.5, so the count there is binomial: 0.062500, 0.250000, 0.375000, 0.250000, 0.062500 for 0 to 4 calls. The two halves' counts are no longer independent: they must add to 4.
-- **Gaps.** The 4 calls cut the hour into 5 gaps, counting the one before the first call and the one after the last. All five have the same law, because swapping two gaps moves the ordered times without changing volume, and the density is flat. So the gap from the 2nd call to the 3rd exceeds 20 minutes with chance $(2/3)^4$ = 0.197531, as the first call's wait does.
+- **Gaps.** The 4 calls cut the hour into 5 gaps, counting the one before the first call and the one after the last. All five have the same law, because swapping two gaps moves the ordered times without changing volume, and the density is flat. So the gap from the 2nd call to the 3rd exceeds 20 minutes with chance $`(2/3)^4`$ = 0.197531, as the first call's wait does.
 
-The code also reaches the averages without uniform draws. $T_k$ is later than s exactly when fewer than k calls came by s, and the counts before and after s are independent Poisson. Integrating that chance over the hour by Simpson's rule gives 12.000000, 24.000000, 36.000000 and 48.000000 minutes. The same counts give the binomial window law, at rate 4 and again at rate 10: identical to six decimals, because the rate cancels.
+The code also reaches the averages without uniform draws. $`T_k`$ is later than s exactly when fewer than k calls came by s, and the counts before and after s are independent Poisson. Integrating that chance over the hour by Simpson's rule gives 12.000000, 24.000000, 36.000000 and 48.000000 minutes. The same counts give the binomial window law, at rate 4 and again at rate 10: identical to six decimals, because the rate cancels.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -162,9 +178,11 @@ The theorem gives a second recipe for the same process.
 - **Recipe A, gap by gap.** Draw an exponential wait, place a call, draw the next wait, and stop when the hour is over.
 - **Recipe B, count then scatter.** Draw the number of calls from the Poisson law with mean 4. Then draw that many uniform times in the hour and sort them.
 
-Recipe B produces a Poisson process, not only the right conditional law. Split the hour at a, a fraction p of the way through, and write $K_1$, $K_2$ for the calls before and after. Given n calls in all, $K_1$ is binomial. Averaging over the Poisson count,
+Recipe B produces a Poisson process, not only the right conditional law. Split the hour at a, a fraction p of the way through, and write $`K_1`$, $`K_2`$ for the calls before and after. Given n calls in all, $`K_1`$ is binomial. Averaging over the Poisson count,
 
-$$P(K_1 = k_1, K_2 = k_2) = e^{-\lambda t}\frac{(\lambda t)^{k_1 + k_2}}{(k_1 + k_2)!}\binom{k_1 + k_2}{k_1} p^{k_1}(1-p)^{k_2} = e^{-\lambda t p}\frac{(\lambda t p)^{k_1}}{k_1!}\cdot e^{-\lambda t (1-p)}\frac{(\lambda t (1-p))^{k_2}}{k_2!}$$
+```math
+P(K_1 = k_1, K_2 = k_2) = e^{-\lambda t}\frac{(\lambda t)^{k_1 + k_2}}{(k_1 + k_2)!}\binom{k_1 + k_2}{k_1} p^{k_1}(1-p)^{k_2} = e^{-\lambda t p}\frac{(\lambda t p)^{k_1}}{k_1!}\cdot e^{-\lambda t (1-p)}\frac{(\lambda t (1-p))^{k_2}}{k_2!}
+```
 
 The right side factors: the two counts are independent Poisson, with means proportional to the lengths. With more split points the binomial becomes a multinomial, the chance of a given share-out of the calls among several windows, and the same algebra factorises into one independent Poisson count per window. That is the defining property, and the same algebra drives [Splitting and merging](03-splitting-and-superposition.md).
 
@@ -597,9 +615,9 @@ The two outputs agree line for line, the simulations included: both languages ru
 
 Lean proves the theorem, the average call times and the binomial window law, for any constant rate, window length and count.
 
-- Suppose the waits $E_i$ are independent and exponential with one constant rate, and exactly $n$ calls come by time $t$. Then the call times $T_1$ to $T_n$ have the same law as $n$ uniform draws on the window, sorted.
-- Take the same calls and any $k$ from 1 to $n$. Then call $k$ averages $k\,t/(n+1)$.
-- Take the same calls, a time $a$ from 0 to $t$, and $p = a/t$. Then the chance that exactly $j$ of the $n$ calls come by time $a$ is $\binom{n}{j} p^j (1-p)^{n-j}$.
+- Suppose the waits $`E_i`$ are independent and exponential with one constant rate, and exactly $`n`$ calls come by time $`t`$. Then the call times $`T_1`$ to $`T_n`$ have the same law as $`n`$ uniform draws on the window, sorted.
+- Take the same calls and any $`k`$ from 1 to $`n`$. Then call $`k`$ averages $`k\,t/(n+1)`$.
+- Take the same calls, a time $`a`$ from 0 to $`t`$, and $`p = a/t`$. Then the chance that exactly $`j`$ of the $`n`$ calls come by time $`a`$ is $`\binom{n}{j} p^j (1-p)^{n-j}`$.
 - The hand-worked table and the mistake table check exactly, from the height 24 to the rising-rate mean 20.203125 minutes.
 
 The first-call chance, the equal gaps, the slot counts and both simulations rest on the Python and Rust checks.

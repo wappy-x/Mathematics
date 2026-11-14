@@ -28,40 +28,44 @@ Dashed: at release. Solid: 0.2 s later. To scale: 300 px per metre across, 150 p
 
 ## The formula
 
-Notation, as in [A partial differential equation](01-what-a-pde-says.md): a subscript names the rate. $u_t$ is the rate of change of height with time at a fixed place, $u_x$ the slope at a fixed time; a doubled letter takes the rate twice.
+Notation, as in [A partial differential equation](01-what-a-pde-says.md): a subscript names the rate. $`u_t`$ is the rate of change of height with time at a fixed place, $`u_x`$ the slope at a fixed time; a doubled letter takes the rate twice.
 
-$$u_{tt} = c^2\, u_{xx}, \qquad c = \sqrt{T/\rho}$$
+```math
+u_{tt} = c^2\, u_{xx}, \qquad c = \sqrt{T/\rho}
+```
 
-Here $u(x,t)$ is the string's height at position $x$ and time $t$, $T$ the tension and $\rho$ the mass per metre.
+Here $`u(x,t)`$ is the string's height at position $`x`$ and time $`t`$, $`T`$ the tension and $`\rho`$ the mass per metre.
 
 **Read it aloud:** the acceleration of each bit of string equals the wave speed squared times how sharply the string bends there.
 
-On the whole line, starting from shape $f$ and velocity $g$, the solution is d'Alembert's formula:
+On the whole line, starting from shape $`f`$ and velocity $`g`$, the solution is d'Alembert's formula:
 
-$$u(x,t) = \frac{f(x-ct) + f(x+ct)}{2} + \frac{1}{2c}\int_{x-ct}^{x+ct} g(s)\,ds$$
+```math
+u(x,t) = \frac{f(x-ct) + f(x+ct)}{2} + \frac{1}{2c}\int_{x-ct}^{x+ct} g(s)\,ds
+```
 
 **Read it aloud:** average the starting shape at the two points distance ct either side, then add the starting velocity summed between them, divided by twice the speed.
 
-Behind it sits the general solution $u=F(x-ct)+G(x+ct)$: a profile $F$ sliding right plus a profile $G$ sliding left.
+Behind it sits the general solution $`u=F(x-ct)+G(x+ct)`$: a profile $`F`$ sliding right plus a profile $`G`$ sliding left.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $x$, $t$ | height, position, time | cm, m from 0 to 1, s | — |
-| $u_t$, $u_x$, $u_{tt}$, $u_{xx}$ | velocity, slope, acceleration, bending (rate of change of slope) | bending peaks atop the pinch | more bending, more acceleration |
-| $c$ | wave speed | 1 m/s string, 0.5 m/s rope | bumps travel farther |
-| $T$, $\rho$ | tension, N; mass per metre, kg/m | rope: 0.05 and 0.2 | tension speeds waves, mass slows them |
-| $f$, $g$ (with $H$, $w$) | starting shape and velocity; the pinch's height and width | $f(x)=H e^{-((x-0.5)/w)^2}$, 1 cm, 0.05 m; $g$ = 0 | copies scale with $f$; $g$ tips the balance between them |
-| $F$, $G$ | right- and left-moving profiles | both $f/2$ for the pinch | — |
-| $\xi$, $\eta$ | riding coordinates $x-ct$, $x+ct$ | 0.5 and 0.9 at 0.7 m, 0.2 s | — |
-| $s$, $p$, $\Gamma$ | position summed over; rope pulse shape; antiderivative (running sum) of $g$ | $p$: 4 cm high, 0.2 m long, front at 0 | longer pulse, longer to pass |
+| $`u`$, $`x`$, $`t`$ | height, position, time | cm, m from 0 to 1, s | — |
+| $`u_t`$, $`u_x`$, $`u_{tt}`$, $`u_{xx}`$ | velocity, slope, acceleration, bending (rate of change of slope) | bending peaks atop the pinch | more bending, more acceleration |
+| $`c`$ | wave speed | 1 m/s string, 0.5 m/s rope | bumps travel farther |
+| $`T`$, $`\rho`$ | tension, N; mass per metre, kg/m | rope: 0.05 and 0.2 | tension speeds waves, mass slows them |
+| $`f`$, $`g`$ (with $`H`$, $`w`$) | starting shape and velocity; the pinch's height and width | $`f(x)=H e^{-((x-0.5)/w)^2}`$, 1 cm, 0.05 m; $`g`$ = 0 | copies scale with $`f`$; $`g`$ tips the balance between them |
+| $`F`$, $`G`$ | right- and left-moving profiles | both $`f/2`$ for the pinch | — |
+| $`\xi`$, $`\eta`$ | riding coordinates $`x-ct`$, $`x+ct`$ | 0.5 and 0.9 at 0.7 m, 0.2 s | — |
+| $`s`$, $`p`$, $`\Gamma`$ | position summed over; rope pulse shape; antiderivative (running sum) of $`g`$ | $`p`$: 4 cm high, 0.2 m long, front at 0 | longer pulse, longer to pass |
 
 ### When it holds
 
 - **Small slopes.** The upward pull is taken as tension times slope; steep bends break that.
-- **Uniform string, constant tension.** Where $\rho$ changes, $c$ changes and part of a pulse reflects.
+- **Uniform string, constant tension.** Where $`\rho`$ changes, $`c`$ changes and part of a pulse reflects.
 - **No friction or stiffness.** Drag or a stiff wire adds terms, and pulses shrink or change shape.
 - **A whole line, or a time before anything reaches an end.** On the 1 m string the bumps' peaks reach the held ends at 0.50 s.
-- **Smooth data.** $f$ twice differentiable, $g$ once; a kink travels by the formula but is not a solution in the plain sense.
+- **Smooth data.** $`f`$ twice differentiable, $`g`$ once; a kink travels by the formula but is not a solution in the plain sense.
 
 ---
 
@@ -73,52 +77,58 @@ A shape sliding right at speed c looks frozen to someone walking with it; [The t
 
 ### Step 1: Newton on one short piece of string gives the equation
 
-Take the piece from $x$ to $x+dx$, of mass $\rho\,dx$. With small slopes, the upward part of the tension at each end is tension times slope, so the net upward force is $T$ times the change in slope across the piece, $T\,u_{xx}\,dx$. Mass times acceleration equals force:
+Take the piece from $`x`$ to $`x+dx`$, of mass $`\rho\,dx`$. With small slopes, the upward part of the tension at each end is tension times slope, so the net upward force is $`T`$ times the change in slope across the piece, $`T\,u_{xx}\,dx`$. Mass times acceleration equals force:
 
-$$\rho\,dx\,u_{tt} = T\,u_{xx}\,dx \quad\Longrightarrow\quad u_{tt} = \frac{T}{\rho}\,u_{xx}.$$
+```math
+\rho\,dx\,u_{tt} = T\,u_{xx}\,dx \quad\Longrightarrow\quad u_{tt} = \frac{T}{\rho}\,u_{xx}.
+```
 
-Call $T/\rho$ by the name $c^2$. For the rope, $c=\sqrt{0.05/0.2}$ = 0.50 m/s.
+Call $`T/\rho`$ by the name $`c^2`$. For the rope, $`c=\sqrt{0.05/0.2}`$ = 0.50 m/s.
 
 ### Step 2: any sliding shape solves it
 
-Take $u=F(x-ct)$. By the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md), each rate in $x$ brings out a factor 1 and each rate in $t$ a factor $-c$. So $u_{xx}=F''$ and $u_{tt}=c^2 F''$: the equation holds for any twice-differentiable $F$, and likewise for $G(x+ct)$. A sum of solutions is a solution, so $F(x-ct)+G(x+ct)$ solves it.
+Take $`u=F(x-ct)`$. By the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md), each rate in $`x`$ brings out a factor 1 and each rate in $`t`$ a factor $`-c`$. So $`u_{xx}=F''`$ and $`u_{tt}=c^2 F''`$: the equation holds for any twice-differentiable $`F`$, and likewise for $`G(x+ct)`$. A sum of solutions is a solution, so $`F(x-ct)+G(x+ct)`$ solves it.
 
 ### Step 3: every solution is of that form
 
-Change to the riding coordinates $\xi=x-ct$ and $\eta=x+ct$. The chain rule turns the equation into
+Change to the riding coordinates $`\xi=x-ct`$ and $`\eta=x+ct`$. The chain rule turns the equation into
 
-$$u_{\xi\eta} = 0,$$
+```math
+u_{\xi\eta} = 0,
+```
 
-so the $\eta$-rate of $u$ does not change with $\xi$: it is a function of $\eta$ alone. Summing it up in $\eta$ gives a function of $\eta$ plus a function of $\xi$. So $u=F(\xi)+G(\eta)$ and nothing else.
+so the $`\eta`$-rate of $`u`$ does not change with $`\xi`$: it is a function of $`\eta`$ alone. Summing it up in $`\eta`$ gives a function of $`\eta`$ plus a function of $`\xi`$. So $`u=F(\xi)+G(\eta)`$ and nothing else.
 
 <details>
 <summary>The algebra behind Step 3</summary>
 
-With $u(x,t)=U(\xi,\eta)$: $u_x=U_\xi+U_\eta$ and $u_t=-c\,U_\xi+c\,U_\eta$. Taking each rate again, $u_{xx}=U_{\xi\xi}+2U_{\xi\eta}+U_{\eta\eta}$ and $u_{tt}=c^2(U_{\xi\xi}-2U_{\xi\eta}+U_{\eta\eta})$. Subtract: $u_{tt}-c^2 u_{xx}=-4c^2\,U_{\xi\eta}$. Since $c$ is not zero, the wave equation holds exactly when $U_{\xi\eta}=0$.
+With $`u(x,t)=U(\xi,\eta)`$: $`u_x=U_\xi+U_\eta`$ and $`u_t=-c\,U_\xi+c\,U_\eta`$. Taking each rate again, $`u_{xx}=U_{\xi\xi}+2U_{\xi\eta}+U_{\eta\eta}`$ and $`u_{tt}=c^2(U_{\xi\xi}-2U_{\xi\eta}+U_{\eta\eta})`$. Subtract: $`u_{tt}-c^2 u_{xx}=-4c^2\,U_{\xi\eta}`$. Since $`c`$ is not zero, the wave equation holds exactly when $`U_{\xi\eta}=0`$.
 
 </details>
 
 ### Step 4: the starting data fix the two profiles
 
-At $t=0$ the shape and the velocity are given:
+At $`t=0`$ the shape and the velocity are given:
 
-$$F(x) + G(x) = f(x), \qquad -c\,F'(x) + c\,G'(x) = g(x).$$
+```math
+F(x) + G(x) = f(x), \qquad -c\,F'(x) + c\,G'(x) = g(x).
+```
 
-Summing the second from 0 to $x$ gives $G(x)-F(x)=\frac{1}{c}\int_0^x g(s)\,ds$ plus a constant. Add and subtract: $F$ and $G$ are each half of $f$, minus or plus half the summed velocity. Put them back with $x-ct$ and $x+ct$; the constants cancel and the two sums of $g$ join into one from $x-ct$ to $x+ct$. That is d'Alembert's formula.
+Summing the second from 0 to $`x`$ gives $`G(x)-F(x)=\frac{1}{c}\int_0^x g(s)\,ds`$ plus a constant. Add and subtract: $`F`$ and $`G`$ are each half of $`f`$, minus or plus half the summed velocity. Put them back with $`x-ct`$ and $`x+ct`$; the constants cancel and the two sums of $`g`$ join into one from $`x-ct`$ to $`x+ct`$. That is d'Alembert's formula.
 
-Released from rest, $g=0$ and $F=G=f/2$: the pinch splits. The flick gives $g=-c\,p'$, the velocity of a right-moving pulse; then $G=0$ and $F=p$, and the whole pulse goes right.
+Released from rest, $`g=0`$ and $`F=G=f/2`$: the pinch splits. The flick gives $`g=-c\,p'`$, the velocity of a right-moving pulse; then $`G=0`$ and $`F=p`$, and the whole pulse goes right.
 
 ### Step 5: finite speed and the domain of dependence
 
-The formula uses $f$ only at $x \pm ct$ and $g$ only between. So the height at $x$ and time $t$ depends on the starting data from $x-ct$ to $x+ct$ and nowhere else: the **domain of dependence**.
+The formula uses $`f`$ only at $`x \pm ct`$ and $`g`$ only between. So the height at $`x`$ and time $`t`$ depends on the starting data from $`x-ct`$ to $`x+ct`$ and nowhere else: the **domain of dependence**.
 
 <details>
 <summary>Detailed proof</summary>
 
-Claim: with $f$ twice and $g$ once continuously differentiable, d'Alembert's formula solves the equation on the whole line for $t \ge 0$, takes the given data, and is the only such solution.
-Existence: the average of $f$ has the form $F(x-ct)+G(x+ct)$, so it solves by Step 2. The integral term is $\frac{1}{2c}(\Gamma(x+ct)-\Gamma(x-ct))$ with $\Gamma$ an antiderivative of $g$, the same form. At $t=0$ the first term is $f(x)$ and the integral is zero. The time rate at $t=0$ is $\frac{-c f'(x)+c f'(x)}{2}+\frac{c\,g(x)+c\,g(x)}{2c}=g(x)$.
-Uniqueness: the difference of two solutions with the same data solves the equation with zero shape and zero velocity. It has continuous second rates, so Step 3 writes it as $F(\xi)+G(\eta)$. Step 4 with $f=g=0$ makes $F=-G$ a constant, so the difference is zero everywhere.
-The whole line matters: Step 3 needs, for each $\eta$, every $\xi \le \eta$ (the half-plane $t \ge 0$). On a finite string the ends constrain the profiles.
+Claim: with $`f`$ twice and $`g`$ once continuously differentiable, d'Alembert's formula solves the equation on the whole line for $`t \ge 0`$, takes the given data, and is the only such solution.
+Existence: the average of $`f`$ has the form $`F(x-ct)+G(x+ct)`$, so it solves by Step 2. The integral term is $`\frac{1}{2c}(\Gamma(x+ct)-\Gamma(x-ct))`$ with $`\Gamma`$ an antiderivative of $`g`$, the same form. At $`t=0`$ the first term is $`f(x)`$ and the integral is zero. The time rate at $`t=0`$ is $`\frac{-c f'(x)+c f'(x)}{2}+\frac{c\,g(x)+c\,g(x)}{2c}=g(x)`$.
+Uniqueness: the difference of two solutions with the same data solves the equation with zero shape and zero velocity. It has continuous second rates, so Step 3 writes it as $`F(\xi)+G(\eta)`$. Step 4 with $`f=g=0`$ makes $`F=-G`$ a constant, so the difference is zero everywhere.
+The whole line matters: Step 3 needs, for each $`\eta`$, every $`\xi \le \eta`$ (the half-plane $`t \ge 0`$). On a finite string the ends constrain the profiles.
 
 </details>
 
@@ -128,15 +138,15 @@ Another route factors the equation into two transport equations, one per directi
 
 ## Worked numbers, by hand
 
-The pinch: $f(x)=e^{-((x-0.5)/0.05)^2}$ cm, $c$ = 1 m/s, released from rest, so $u=\tfrac12\big(f(x-t)+f(x+t)\big)$.
+The pinch: $`f(x)=e^{-((x-0.5)/0.05)^2}`$ cm, $`c`$ = 1 m/s, released from rest, so $`u=\tfrac12\big(f(x-t)+f(x+t)\big)`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Midpoint at release | $f(0.5)=e^0$ | 1.000000 cm |
-| Midpoint at 0.05 s | $\tfrac12(f(0.45)+f(0.55))=\tfrac12(e^{-1}+e^{-1})$ | 0.367879 cm |
-| Right bump at 0.2 s | $\tfrac12(f(0.5)+f(0.9))=\tfrac12(1+e^{-64})$ | 0.500000 cm |
-| Midpoint at 0.2 s | $\tfrac12(f(0.3)+f(0.7))=e^{-16}$ | 0.000000 cm |
-| Rope speed | $\sqrt{0.05 / 0.2}$ | 0.50 m/s |
+| Midpoint at release | $`f(0.5)=e^0`$ | 1.000000 cm |
+| Midpoint at 0.05 s | $`\tfrac12(f(0.45)+f(0.55))=\tfrac12(e^{-1}+e^{-1})`$ | 0.367879 cm |
+| Right bump at 0.2 s | $`\tfrac12(f(0.5)+f(0.9))=\tfrac12(1+e^{-64})`$ | 0.500000 cm |
+| Midpoint at 0.2 s | $`\tfrac12(f(0.3)+f(0.7))=e^{-16}`$ | 0.000000 cm |
+| Rope speed | $`\sqrt{0.05 / 0.2}`$ | 0.50 m/s |
 | Rope arrival at 1 m | 1 m ÷ 0.50 m/s | **2.00 s** |
 
 At 0.05 s each half-copy is one pinch-width off the midpoint. The rope's 4 cm peak passes 1 m at 2.2 s.
@@ -154,7 +164,7 @@ At 0.05 s each half-copy is one pinch-width off the midpoint. The rope's 4 cm pe
 
 ## Code, from first principles, and it actually runs
 
-Road one is d'Alembert's formula. Road two never uses it: it steps the string on a grid, bending measured by neighbouring heights, ends held at zero (the leapfrog scheme). Their gap at 0.2 s shrinks about fourfold each time the spacing halves: a second-order method. The second case is the rope: the formula, velocity term summed by Simpson's rule (a weighted sum of samples), against the sliding pulse $p(x-ct)$, plus a scan for first motion at 1 m.
+Road one is d'Alembert's formula. Road two never uses it: it steps the string on a grid, bending measured by neighbouring heights, ends held at zero (the leapfrog scheme). Their gap at 0.2 s shrinks about fourfold each time the spacing halves: a second-order method. The second case is the rope: the formula, velocity term summed by Simpson's rule (a weighted sum of samples), against the sliding pulse $`p(x-ct)`$, plus a scan for first motion at 1 m.
 
 ### Python
 
@@ -333,14 +343,14 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves d'Alembert's formula, the general solution and the domain of dependence for every speed $c$ above zero, plus the card's exact arithmetic.
+Lean proves d'Alembert's formula, the general solution and the domain of dependence for every speed $`c`$ above zero, plus the card's exact arithmetic.
 
-- Take $c$ above zero, $f$ with continuous second rates and $g$ with a continuous first rate. Then d'Alembert's formula solves the wave equation on the whole line, starting with shape $f$ and velocity $g$.
-- It is the only solution. Suppose $v$ has continuous second rates, solves the wave equation for $t \ge 0$, and starts with $f$ and $g$. Then $v$ equals d'Alembert's formula at every $x$ and every $t \ge 0$.
-- Suppose $u$ has continuous second rates and solves the wave equation at every $x$ and $t$. Then $u = F(x-ct) + G(x+ct)$ for some profiles $F$ and $G$ with continuous second rates.
-- Take two solutions for $t \ge 0$ with continuous second rates, and suppose their starting data agree within $c t_0$ of $x_0$. Then their heights at $x_0$ and time $t_0$ are equal, for any $t_0 \ge 0$.
+- Take $`c`$ above zero, $`f`$ with continuous second rates and $`g`$ with a continuous first rate. Then d'Alembert's formula solves the wave equation on the whole line, starting with shape $`f`$ and velocity $`g`$.
+- It is the only solution. Suppose $`v`$ has continuous second rates, solves the wave equation for $`t \ge 0`$, and starts with $`f`$ and $`g`$. Then $`v`$ equals d'Alembert's formula at every $`x`$ and every $`t \ge 0`$.
+- Suppose $`u`$ has continuous second rates and solves the wave equation at every $`x`$ and $`t`$. Then $`u = F(x-ct) + G(x+ct)`$ for some profiles $`F`$ and $`G`$ with continuous second rates.
+- Take two solutions for $`t \ge 0`$ with continuous second rates, and suppose their starting data agree within $`c t_0`$ of $`x_0`$. Then their heights at $`x_0`$ and time $`t_0`$ are equal, for any $`t_0 \ge 0`$.
 - The rope arithmetic holds exactly: speed 0.50 m/s, arrival at 1 m after 2 s, and 4 s with the square root dropped.
-- The pinch table's powers of $e$ hold exactly. They are $-1$ at 0.45 m and 0.55 m, $-64$ at 0.9 m, and $-16$ at 0.3 m and 0.7 m.
+- The pinch table's powers of $`e`$ hold exactly. They are $`-1`$ at 0.45 m and 0.55 m, $`-64`$ at 0.9 m, and $`-16`$ at 0.3 m and 0.7 m.
 - The bumps' peaks start 0.5 m from each held end, so at 1 m/s they reach the ends at 0.50 s.
 
 Decimals, the grid's fourfold shrink and the rope's Simpson sum are left to the Python and Rust checks.
@@ -877,7 +887,7 @@ The line: the formula with its velocity term.
 ## The usual mistake
 
 > [!warning]
-> **Giving only the starting shape.** Two time rates need two pieces of starting data, shape and velocity. Leave out $g$ and the rope's 4 cm pulse arrives as 2.000000 cm.
+> **Giving only the starting shape.** Two time rates need two pieces of starting data, shape and velocity. Leave out $`g`$ and the rope's 4 cm pulse arrives as 2.000000 cm.
 >
 > - **Reading the halves as decay.** Two half-height copies carry the whole disturbance; nothing is lost.
 > - **Speed as T over ρ.** The square root gives 0.50 m/s; without it the pulse is timed at 4.00 s.
@@ -887,7 +897,7 @@ The line: the formula with its velocity term.
 
 ## Where you meet it in real life
 
-- **Musical strings.** A plucked string splits into two copies that reflect off the nut and bridge. Tuning pegs change $T$, so $c$ and the pitch.
+- **Musical strings.** A plucked string splits into two copies that reflect off the nut and bridge. Tuning pegs change $`T`$, so $`c`$ and the pitch.
 - **Sound and light.** Pressure in a pipe, voltage on a cable and light obey the same equation ([Electromagnetic waves](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/08-electromagnetic-waves.md)).
 - **Earthquake timing.** A distant seismometer feels nothing until the fastest wave arrives: distance over speed.
 - **Simulation.** A grid solver's time step must keep its domain of dependence covering the true one.
@@ -900,7 +910,7 @@ The line: the formula with its velocity term.
 ## What this builds on
 
 - [The transport equation](02-the-transport-equation-and-characteristics.md): one shape sliding one way, carried along a line.
-- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the factors $-c$ and $+c$ in Steps 2 and 3.
+- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the factors $`-c`$ and $`+c`$ in Steps 2 and 3.
 
 ## Where this goes next
 

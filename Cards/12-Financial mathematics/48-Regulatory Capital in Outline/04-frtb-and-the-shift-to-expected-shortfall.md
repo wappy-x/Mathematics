@@ -36,33 +36,37 @@ On the bell curve the two columns agree. With fat tails the right column is long
 
 ## The formula
 
-Notation first, in words. $L$ is the book's loss over ten trading days, in dollars, with a gain counted as a negative loss. $\alpha$ is a confidence level, such as 0.99. $\mathrm{VaR}_\alpha$ is the loss line that $L$ stays at or below with chance $\alpha$. $\mathrm{ES}_\alpha$ is the average of $L$ over the worst fraction $1-\alpha$ of outcomes. The prerequisite card defines both in full; this card compares them.
+Notation first, in words. $`L`$ is the book's loss over ten trading days, in dollars, with a gain counted as a negative loss. $`\alpha`$ is a confidence level, such as 0.99. $`\mathrm{VaR}_\alpha`$ is the loss line that $`L`$ stays at or below with chance $`\alpha`$. $`\mathrm{ES}_\alpha`$ is the average of $`L`$ over the worst fraction $`1-\alpha`$ of outcomes. The prerequisite card defines both in full; this card compares them.
 
-For a bell-curve (normal) loss with zero average and standard deviation $\sigma$, both measures are a multiple of $\sigma$. Write $z_\alpha$ for the point of the standard bell curve with chance $\alpha$ below it, and $\varphi$ for the bell curve's height, $\varphi(x)=e^{-x^2/2}/\sqrt{2\pi}$:
+For a bell-curve (normal) loss with zero average and standard deviation $`\sigma`$, both measures are a multiple of $`\sigma`$. Write $`z_\alpha`$ for the point of the standard bell curve with chance $`\alpha`$ below it, and $`\varphi`$ for the bell curve's height, $`\varphi(x)=e^{-x^2/2}/\sqrt{2\pi}`$:
 
-$$\mathrm{VaR}_{0.99}=z_{0.99}\,\sigma=2.326\,\sigma,\qquad \mathrm{ES}_{0.975}=\frac{\varphi(z_{0.975})}{0.025}\,\sigma=2.338\,\sigma$$
+```math
+\mathrm{VaR}_{0.99}=z_{0.99}\,\sigma=2.326\,\sigma,\qquad \mathrm{ES}_{0.975}=\frac{\varphi(z_{0.975})}{0.025}\,\sigma=2.338\,\sigma
+```
 
 **Read it aloud:** the old line sits 2.326 standard deviations out; the new average sits 2.338 standard deviations out; the two differ by half a percent.
 
 The second formula is the liquidity rule, Basel paragraph MAR33.4 (MAR is the market-risk chapter of the Basel standards):
 
-$$\mathrm{ES}_{LH}=\sqrt{\mathrm{ES}_T(P)^2+\sum_{j=2}^{5}\Big(\mathrm{ES}_T(P,j)\sqrt{\tfrac{LH_j-LH_{j-1}}{T}}\Big)^2}$$
+```math
+\mathrm{ES}_{LH}=\sqrt{\mathrm{ES}_T(P)^2+\sum_{j=2}^{5}\Big(\mathrm{ES}_T(P,j)\sqrt{\tfrac{LH_j-LH_{j-1}}{T}}\Big)^2}
+```
 
 **Read it aloud:** take the ten-day ES of the whole book, squared; add, for each longer horizon, the squared ten-day ES of the risks that take at least that long to exit, times that step's extra days divided by 10; take the square root.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$ | loss on the book over 10 trading days; a gain is negative | typical swing $3 million | both measures rise |
-| $\alpha$ | confidence level | 0.99 old, 0.975 new | the line moves further out |
-| $\mathrm{VaR}_\alpha$ | value at risk: the loss line exceeded with chance $1-\alpha$ | $6.98 million, normal book | — |
-| $\mathrm{ES}_\alpha$ | expected shortfall: average loss over the worst $1-\alpha$ | $7.01 million, normal book | — |
-| $\sigma$, $s_i$ | standard deviation of the 10-day loss; the same for risk factor number i alone | $3 million; $2, $2 and $1 million | both measures rise in proportion |
-| $z_\alpha$, $\varphi$, $q$ | the standard bell curve's $\alpha$ point; its height; the standard t curve's $\alpha$ point | $z_{0.99}=2.326$; $\varphi(1.960)=0.05845$; $q=4.541$ at 99% | — |
-| $\nu$ | degrees of freedom of a fat-tailed (Student t) loss; smaller means fatter tails | 3 | ES and VaR draw together |
-| $T$, $LH_j$, $h_i$ | base horizon of 10 days; the ladder 10, 20, 40, 60, 120 days, $j=1$ to 5; factor i's own horizon | $T=10$; $h_i$ = 10, 40, 60 | longer horizons raise the charge |
-| $P$, $Q(P,j)$ | the book's positions; the risk factors whose horizon is at least $LH_j$ days | $Q(P,3)$ = both credit factors | — |
-| $\mathrm{ES}_T(P,j)$ | 10-day ES when only the factors in $Q(P,j)$ move | $5.23 million for $j=2$ | raises the charge |
-| $\mathrm{ES}_{LH}$ | liquidity-adjusted ES | $11.92 million | — |
+| $`L`$ | loss on the book over 10 trading days; a gain is negative | typical swing $3 million | both measures rise |
+| $`\alpha`$ | confidence level | 0.99 old, 0.975 new | the line moves further out |
+| $`\mathrm{VaR}_\alpha`$ | value at risk: the loss line exceeded with chance $`1-\alpha`$ | $6.98 million, normal book | — |
+| $`\mathrm{ES}_\alpha`$ | expected shortfall: average loss over the worst $`1-\alpha`$ | $7.01 million, normal book | — |
+| $`\sigma`$, $`s_i`$ | standard deviation of the 10-day loss; the same for risk factor number i alone | $3 million; $2, $2 and $1 million | both measures rise in proportion |
+| $`z_\alpha`$, $`\varphi`$, $`q`$ | the standard bell curve's $`\alpha`$ point; its height; the standard t curve's $`\alpha`$ point | $`z_{0.99}=2.326`$; $`\varphi(1.960)=0.05845`$; $`q=4.541`$ at 99% | — |
+| $`\nu`$ | degrees of freedom of a fat-tailed (Student t) loss; smaller means fatter tails | 3 | ES and VaR draw together |
+| $`T`$, $`LH_j`$, $`h_i`$ | base horizon of 10 days; the ladder 10, 20, 40, 60, 120 days, $`j=1`$ to 5; factor i's own horizon | $`T=10`$; $`h_i`$ = 10, 40, 60 | longer horizons raise the charge |
+| $`P`$, $`Q(P,j)`$ | the book's positions; the risk factors whose horizon is at least $`LH_j`$ days | $`Q(P,3)`$ = both credit factors | — |
+| $`\mathrm{ES}_T(P,j)`$ | 10-day ES when only the factors in $`Q(P,j)`$ move | $5.23 million for $`j=2`$ | raises the charge |
+| $`\mathrm{ES}_{LH}`$ | liquidity-adjusted ES | $11.92 million | — |
 
 ### When it holds
 
@@ -91,19 +95,21 @@ ES has a second advantage, proved on the prerequisite card: it never charges a m
 
 ### Step 2: on a bell curve, 97.5 percent ES lands on 99 percent VaR
 
-Write the loss as $L=\sigma Z$, with $Z$ a standard bell-curve draw. ES at level $\alpha$ is the average of $Z$ over the region past $z_\alpha$, times $\sigma$:
+Write the loss as $`L=\sigma Z`$, with $`Z`$ a standard bell-curve draw. ES at level $`\alpha`$ is the average of $`Z`$ over the region past $`z_\alpha`$, times $`\sigma`$:
 
-$$\mathrm{ES}_\alpha=\frac{\sigma}{1-\alpha}\int_{z_\alpha}^{\infty}x\,\varphi(x)\,dx$$
+```math
+\mathrm{ES}_\alpha=\frac{\sigma}{1-\alpha}\int_{z_\alpha}^{\infty}x\,\varphi(x)\,dx
+```
 
-The bell curve has a special property: its slope is $-x\,\varphi(x)$. So $x\,\varphi(x)$ is minus the derivative of $\varphi$, and the integral is $\varphi(z_\alpha)$. That gives $\mathrm{ES}_\alpha=\sigma\,\varphi(z_\alpha)/(1-\alpha)$.
+The bell curve has a special property: its slope is $`-x\,\varphi(x)`$. So $`x\,\varphi(x)`$ is minus the derivative of $`\varphi`$, and the integral is $`\varphi(z_\alpha)`$. That gives $`\mathrm{ES}_\alpha=\sigma\,\varphi(z_\alpha)/(1-\alpha)`$.
 
-At 97.5 percent, $z_{0.975}=1.960$ and $\varphi(1.960)=0.05845$. Divided by 0.025 that is 2.338. The 99 percent line is 2.326. The two differ by 0.49 percent. Solving for the exact confidence at which bell-curve ES equals 99 percent VaR gives 97.42 percent. Basel rounded to 97.5, a hair on the conservative side.
+At 97.5 percent, $`z_{0.975}=1.960`$ and $`\varphi(1.960)=0.05845`$. Divided by 0.025 that is 2.338. The 99 percent line is 2.326. The two differ by 0.49 percent. Solving for the exact confidence at which bell-curve ES equals 99 percent VaR gives 97.42 percent. Basel rounded to 97.5, a hair on the conservative side.
 
 ### Step 3: fat tails pull the average away from the line
 
-A Student t loss with $\nu$ degrees of freedom has tails that thin like a power of the loss rather than like $e^{-x^2/2}$. With $\nu=3$ it is a common textbook model for daily market returns. Scaled to the same $3 million standard deviation, its 99 percent line is $7.87 million and its 97.5 percent ES $8.73 million: 10.99 percent apart. The integral that gave $\varphi(z_\alpha)$ on the bell curve has a closed form here too (proof below).
+A Student t loss with $`\nu`$ degrees of freedom has tails that thin like a power of the loss rather than like $`e^{-x^2/2}`$. With $`\nu=3`$ it is a common textbook model for daily market returns. Scaled to the same $3 million standard deviation, its 99 percent line is $7.87 million and its 97.5 percent ES $8.73 million: 10.99 percent apart. The integral that gave $`\varphi(z_\alpha)`$ on the bell curve has a closed form here too (proof below).
 
-As $\nu$ grows the t loss approaches the bell curve and the gap closes: 6.58 percent at $\nu=4$, 2.00 at $\nu=10$, 0.89 at $\nu=30$, down to the bell curve's 0.49.
+As $`\nu`$ grows the t loss approaches the bell curve and the gap closes: 6.58 percent at $`\nu=4`$, 2.00 at $`\nu=10`$, 0.89 at $`\nu=30`$, down to the bell curve's 0.49.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -119,34 +125,36 @@ The single line is the percentage by which 97.5 percent ES exceeds 99 percent Va
 <details>
 <summary>Detailed proof: expected shortfall of a Student t loss</summary>
 
-The standard t density with $\nu$ degrees of freedom is $f(x)=c_\nu\,(1+x^2/\nu)^{-(\nu+1)/2}$, where $c_\nu$ is the constant that makes its area 1. Its logarithm has slope $-(\nu+1)x/(\nu+x^2)$, so $(\nu+x^2)f'(x)=-(\nu+1)\,x\,f(x)$.
+The standard t density with $`\nu`$ degrees of freedom is $`f(x)=c_\nu\,(1+x^2/\nu)^{-(\nu+1)/2}`$, where $`c_\nu`$ is the constant that makes its area 1. Its logarithm has slope $`-(\nu+1)x/(\nu+x^2)`$, so $`(\nu+x^2)f'(x)=-(\nu+1)\,x\,f(x)`$.
 
-Let $g(x)=\dfrac{\nu+x^2}{\nu-1}\,f(x)$. Then $g'(x)=\dfrac{2x\,f(x)+(\nu+x^2)f'(x)}{\nu-1}=\dfrac{2x-(\nu+1)x}{\nu-1}f(x)=-x\,f(x)$.
+Let $`g(x)=\dfrac{\nu+x^2}{\nu-1}\,f(x)`$. Then $`g'(x)=\dfrac{2x\,f(x)+(\nu+x^2)f'(x)}{\nu-1}=\dfrac{2x-(\nu+1)x}{\nu-1}f(x)=-x\,f(x)`$.
 
-So $\int_q^\infty x\,f(x)\,dx=g(q)-0=\dfrac{(\nu+q^2)f(q)}{\nu-1}$ for $\nu>1$, and the standard t's ES at level $\alpha$ is that divided by $1-\alpha$, with $q$ the t's $\alpha$ point. For $\nu=3$ the 97.5 percent point is 3.182 and the 99 percent point 4.541.
+So $`\int_q^\infty x\,f(x)\,dx=g(q)-0=\dfrac{(\nu+q^2)f(q)}{\nu-1}`$ for $`\nu>1`$, and the standard t's ES at level $`\alpha`$ is that divided by $`1-\alpha`$, with $`q`$ the t's $`\alpha`$ point. For $`\nu=3`$ the 97.5 percent point is 3.182 and the 99 percent point 4.541.
 
-The standard t has variance $\nu/(\nu-2)$. To give the loss a standard deviation $\sigma$, multiply by $\sigma\sqrt{(\nu-2)/\nu}$; both measures scale by the same factor, so their ratio does not depend on $\sigma$. With $\sigma = 3$ and $\nu=3$ the factor is $3/\sqrt3$, giving the $7.87 million and $8.73 million above.
+The standard t has variance $`\nu/(\nu-2)`$. To give the loss a standard deviation $`\sigma`$, multiply by $`\sigma\sqrt{(\nu-2)/\nu}`$; both measures scale by the same factor, so their ratio does not depend on $`\sigma`$. With $`\sigma = 3`$ and $`\nu=3`$ the factor is $`3/\sqrt3`$, giving the $7.87 million and $8.73 million above.
 
-Doubling the losses past the 99 percent line adds to the 97.5 percent tail the integral of $L$ over that 1 percent once more. That is the same integral started at the 99 percent point: $\sigma\sqrt{(\nu-2)/\nu}\,(\nu+q^2)f(q)/(\nu-1)$ with $q=4.541$, divided by 0.025. The ES becomes $13.58 million.
+Doubling the losses past the 99 percent line adds to the 97.5 percent tail the integral of $`L`$ over that 1 percent once more. That is the same integral started at the 99 percent point: $`\sigma\sqrt{(\nu-2)/\nu}\,(\nu+q^2)f(q)/(\nu-1)`$ with $`q=4.541`$, divided by 0.025. The ES becomes $13.58 million.
 
 </details>
 
 ### Step 4: the liquidity horizon stretches each risk to its exit time
 
-Ten days is short for a high-yield bond in a crisis. The rule sorts each risk factor into a horizon bucket and stretches its ten-day ES accordingly. The stretch uses the square root of time: over $h_i$ days, independent daily moves add their variances, so a ten-day standard deviation grows by $\sqrt{h_i/10}$.
+Ten days is short for a high-yield bond in a crisis. The rule sorts each risk factor into a horizon bucket and stretches its ten-day ES accordingly. The stretch uses the square root of time: over $`h_i`$ days, independent daily moves add their variances, so a ten-day standard deviation grows by $`\sqrt{h_i/10}`$.
 
-The book here has three independent risk factors, with ten-day standard deviations in dollars: large-cap equity $2 million (horizon 10 days), investment-grade (IG) corporate credit $2 million (40 days), high-yield (HY) corporate credit $1 million (60 days). Together the ten-day standard deviation is $\sqrt{4+4+1}=3$ million, the book above.
+The book here has three independent risk factors, with ten-day standard deviations in dollars: large-cap equity $2 million (horizon 10 days), investment-grade (IG) corporate credit $2 million (40 days), high-yield (HY) corporate credit $1 million (60 days). Together the ten-day standard deviation is $`\sqrt{4+4+1}=3`$ million, the book above.
 
-The rule's nested subsets are: all three factors for $j=1$; the two credit factors for $j=2$ (horizon at least 20) and $j=3$ (at least 40); high-yield only for $j=4$ (at least 60); nothing for $j=5$ (120). Each subset's ten-day ES, squared and weighted by its extra days, goes under the square root. The result is $11.92 million.
+The rule's nested subsets are: all three factors for $`j=1`$; the two credit factors for $`j=2`$ (horizon at least 20) and $`j=3`$ (at least 40); high-yield only for $`j=4`$ (at least 60); nothing for $`j=5`$ (120). Each subset's ten-day ES, squared and weighted by its extra days, goes under the square root. The result is $11.92 million.
 
 A second road reaches the same number: scale each factor by the square root of its own horizon over ten, then take ES of the sum. For independent normal factors the two agree exactly, because the extra-day weights telescope (proof below). For correlated or fat-tailed factors they differ, and the rule, not the second road, is what the regulator asks for.
 
 <details>
 <summary>Detailed proof: the cascade equals factor-by-factor stretching</summary>
 
-For independent normal factors with ten-day standard deviations $s_i$ and horizons $h_i$, the ten-day ES of any subset is $k\sqrt{\sum s_i^2}$ over that subset, with $k=2.338$. So the rule's squared total is $k^2$ times
-$$\sum_i s_i^2\Big(1+\sum_{j\ge2,\;LH_j\le h_i}\frac{LH_j-LH_{j-1}}{T}\Big).$$
-The inner sum telescopes: it adds the day gaps from $LH_1=10$ up to $h_i$, which total $h_i-10$. So the bracket is $1+(h_i-10)/10=h_i/10$, and the squared total is $k^2\sum_i s_i^2 h_i/T$: each factor's variance stretched to its own horizon. On the book, $4\cdot1+4\cdot4+1\cdot6=26$, and $k\sqrt{26}=11.92$.
+For independent normal factors with ten-day standard deviations $`s_i`$ and horizons $`h_i`$, the ten-day ES of any subset is $`k\sqrt{\sum s_i^2}`$ over that subset, with $`k=2.338`$. So the rule's squared total is $`k^2`$ times
+
+$`\displaystyle \sum_i s_i^2\Big(1+\sum_{j\ge2,\;LH_j\le h_i}\frac{LH_j-LH_{j-1}}{T}\Big).`$
+
+The inner sum telescopes: it adds the day gaps from $`LH_1=10`$ up to $`h_i`$, which total $`h_i-10`$. So the bracket is $`1+(h_i-10)/10=h_i/10`$, and the squared total is $`k^2\sum_i s_i^2 h_i/T`$: each factor's variance stretched to its own horizon. On the book, $`4\cdot1+4\cdot4+1\cdot6=26`$, and $`k\sqrt{26}=11.92`$.
 
 </details>
 
@@ -162,15 +170,15 @@ The $100 million trading book, ten-day loss standard deviation $3 million, first
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| old line, $z_{0.99}$ | bell-curve table | 2.326 |
-| 99% VaR | $2.326 \times 3$ million | $6.98 million |
-| new level's point, $z_{0.975}$ | bell-curve table | 1.960 |
-| bell height there, $\varphi(1.960)$ | $e^{-1.960^2/2}/\sqrt{2\pi}$ | 0.05845 |
-| ES per $1 of standard deviation | $0.05845 / 0.025$ | 2.338 |
-| 97.5% ES | $2.338 \times 3$ million | $7.01 million |
+| old line, $`z_{0.99}`$ | bell-curve table | 2.326 |
+| 99% VaR | $`2.326 \times 3`$ million | $6.98 million |
+| new level's point, $`z_{0.975}`$ | bell-curve table | 1.960 |
+| bell height there, $`\varphi(1.960)`$ | $`e^{-1.960^2/2}/\sqrt{2\pi}`$ | 0.05845 |
+| ES per $1 of standard deviation | $`0.05845 / 0.025`$ | 2.338 |
+| 97.5% ES | $`2.338 \times 3`$ million | $7.01 million |
 | variances by horizon bucket | equity 4, IG credit 4, HY credit 1 ($ million squared) | total 9 |
-| stretched variances | $4\cdot\tfrac{10}{10}+4\cdot\tfrac{40}{10}+1\cdot\tfrac{60}{10}$ | 26 |
-| **liquidity-adjusted ES** | $2.338\times\sqrt{26}$ million | **$11.92 million** |
+| stretched variances | $`4\cdot\tfrac{10}{10}+4\cdot\tfrac{40}{10}+1\cdot\tfrac{60}{10}`$ | 26 |
+| **liquidity-adjusted ES** | $`2.338\times\sqrt{26}`$ million | **$11.92 million** |
 
 The rule sizes the book's modelled tail loss at $11.92 million, against a ten-day ES of $7.01 million, because two of its three risk factors are credit positions that take 40 and 60 days to exit.
 
@@ -203,7 +211,7 @@ Every number in the table is printed by both programs below.
 
 ## Code, from first principles, and it actually runs
 
-The programs compute both measures on the normal and fat-tailed books by three independent roads: the closed forms of Steps 2 and 3; a direct integral of the loss beyond the line, by Simpson's rule after the change of variable $x=q/u$ that turns the infinite tail into a finite interval; and a Monte Carlo simulation of 200,000 ten-day losses from a generator written in the file. They build their own normal CDF (a series due to Marsaglia), the t density with its constant from a Gamma recurrence, and quantiles by bisection; the t quantile is checked against the closed-form t CDF for three degrees of freedom. The liquidity rule is computed three ways: the Basel cascade, the factor-by-factor stretch, and a simulation. Six asserts compare roads that share no arithmetic; a seventh integrates $x^2$ against the t density to confirm the fat-tailed book really has a $3 million standard deviation.
+The programs compute both measures on the normal and fat-tailed books by three independent roads: the closed forms of Steps 2 and 3; a direct integral of the loss beyond the line, by Simpson's rule after the change of variable $`x=q/u`$ that turns the infinite tail into a finite interval; and a Monte Carlo simulation of 200,000 ten-day losses from a generator written in the file. They build their own normal CDF (a series due to Marsaglia), the t density with its constant from a Gamma recurrence, and quantiles by bisection; the t quantile is checked against the closed-form t CDF for three degrees of freedom. The liquidity rule is computed three ways: the Basel cascade, the factor-by-factor stretch, and a simulation. Six asserts compare roads that share no arithmetic; a seventh integrates $`x^2`$ against the t density to confirm the fat-tailed book really has a $3 million standard deviation.
 
 ### Python
 
@@ -639,9 +647,9 @@ The two outputs match line for line; the Monte Carlo rows agree too, because bot
 
 Lean proves the bell-curve and Student t tail integrals, and that the liquidity rule equals factor-by-factor stretching for independent normal factors.
 
-- Take a bell-curve loss $L=\sigma Z$ and any line $z$. Then $\frac{\sigma}{1-\alpha}\int_z^\infty x\,\varphi(x)\,dx=\sigma\,\varphi(z)/(1-\alpha)$.
-- Take $\nu>1$ and $f(x)=c\,(1+x^2/\nu)^{-(\nu+1)/2}$, the t density with any constant $c$. Then $\int_q^\infty x\,f(x)\,dx=(\nu+q^2)\,f(q)/(\nu-1)$ for every line $q$.
-- Suppose every $h_i$ is on the ladder, $k\ge0$, and any subset of factors has ten-day ES $k\sqrt{\sum s_i^2}$. Then $\mathrm{ES}_{LH}=k\sqrt{\sum_i s_i^2 h_i/T}$, with $T=10$.
+- Take a bell-curve loss $`L=\sigma Z`$ and any line $`z`$. Then $`\frac{\sigma}{1-\alpha}\int_z^\infty x\,\varphi(x)\,dx=\sigma\,\varphi(z)/(1-\alpha)`$.
+- Take $`\nu>1`$ and $`f(x)=c\,(1+x^2/\nu)^{-(\nu+1)/2}`$, the t density with any constant $`c`$. Then $`\int_q^\infty x\,f(x)\,dx=(\nu+q^2)\,f(q)/(\nu-1)`$ for every line $`q`$.
+- Suppose every $`h_i`$ is on the ladder, $`k\ge0`$, and any subset of factors has ten-day ES $`k\sqrt{\sum s_i^2}`$. Then $`\mathrm{ES}_{LH}=k\sqrt{\sum_i s_i^2 h_i/T}`$, with $`T=10`$.
 - Take the book's variances 4, 4 and 1. Then they total 9, and both the stretched sum and the rule's weighted sum give 26.
 
 The numbers 2.326 and 2.338, the t book's dollar figures and the simulation are left to the Python and Rust checks.
@@ -836,7 +844,7 @@ example : 4 * 1 + 4 * 4 + 1 * 6 = 26 := by decide
 > [!warning]
 > **Reading 97.5 as a lower bar than 99.** The number is smaller, so the new rule looks looser. It is not. The two numbers measure different things: 99 percent VaR is a line, 97.5 percent ES an average past a nearer line. On a bell curve they land within half a percent ($6.98 million against $7.01 million); on a fat-tailed book the new measure is higher ($8.73 million against $7.87 million).
 >
-> - **Bell-curve formulas on a fat-tailed book.** $2.338 \times 3$ gives $7.01 million; the t book's true ES is $8.73 million. The formula is only as good as the loss shape behind it.
+> - **Bell-curve formulas on a fat-tailed book.** $`2.338 \times 3`$ gives $7.01 million; the t book's true ES is $8.73 million. The formula is only as good as the loss shape behind it.
 > - **Forgetting the horizons.** The ten-day ES of $7.01 million stands where the rule asks for $11.92 million.
 > - **Stretching everything to the longest horizon.** 120 days for the whole book gives $24.30 million, about twice the rule's answer.
 > - **Thinking VaR has left the rulebook.** Backtesting still counts days when the one-day loss beats the 97.5 and 99 percent VaR lines, and the separate default-risk charge is a one-year 99.9 percent VaR.

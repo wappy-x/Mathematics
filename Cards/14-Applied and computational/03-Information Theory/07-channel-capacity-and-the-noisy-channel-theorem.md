@@ -41,36 +41,42 @@ Notation first, in words. One use of the link sends one bit X and delivers one b
 
 A link like this, the same flip chance for 0 and 1 and no memory between uses, is a **binary symmetric channel**.
 
-$$C = \max_{q}\; I(X;Y) = 1 - h(p)$$
+```math
+C = \max_{q}\; I(X;Y) = 1 - h(p)
+```
 
 **Read it aloud:** capacity is the most a single use can tell the receiver, over every way of choosing the sent bits; for a link that flips with chance p, it is one bit minus the bits of noise.
 
 A **code** turns a block of message bits into a longer block of n sent bits. Its **rate** R is message bits per sent bit: three copies have R = 1/3. P_e is the chance the receiver decodes a block wrongly. The **noisy-channel coding theorem** has two halves:
 
-$$R < C:\ \text{for long enough } n \text{ some code of rate } R \text{ has } P_e \text{ as small as wanted;}\qquad R > C:\ P_e \ge 1 - \frac{C}{R} - \frac{1}{nR}$$
+```math
+R < C:\ \text{for long enough } n \text{ some code of rate } R \text{ has } P_e \text{ as small as wanted;}\qquad R > C:\ P_e \ge 1 - \frac{C}{R} - \frac{1}{nR}
+```
 
 **Read it aloud:** under capacity, errors can be driven down without slowing down; over capacity, every code fails on at least a fixed share of its blocks.
 
 Take a radio channel B hertz wide (hertz: cycles a second), with signal power S and noise power N inside the band. N is the noise per hertz times B, so a wider band lets in more noise. The **Shannon–Hartley theorem** gives the capacity in bits a second:
 
-$$C = B \log_2\!\left(1 + \frac{S}{N}\right)$$
+```math
+C = B \log_2\!\left(1 + \frac{S}{N}\right)
+```
 
 **Read it aloud:** the width of the channel times the bits each slice of time can carry, which grow only as the log of how much louder the signal is than the noise.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the crossover probability: chance one bit flips | 0.01 | C falls, to 0 at p = 0.5 |
-| $X$, $Y$ | the bit sent and the bit received | 0 or 1 | — |
-| $q$ | chance the sender's bit is a 1 | best at 0.5 | I(X; Y) rises until q = 0.5, then falls |
-| $h(p)$, $H(Y)$, $H(Y \mid X)$ | entropies in bits: of one flip; of the received bit; of the received bit once the sent bit is known | 0.0808; 1; 0.0808 | more noise, less gets through |
-| $I(X;Y)$ | mutual information: bits Y tells about X | 0.9192 at q = 0.5 | — |
-| $C$ | capacity: the most bits per use that can get through error-free | 0.9192 per bit, 919.2 a second | faster reliable upload |
-| $R$ | rate: message bits per bit sent | 1/3 for three copies; 1/2 for the random codes below | harder to protect; impossible above C |
-| $n$ | block length: bits sent per block | 8, 16, 24; 1,000 in the counting | below C, block errors fall |
-| $P_e$ | chance a block is decoded wrongly | 0.000742 at n = 24 | — |
-| $B$ | channel width, in hertz | 500 Hz, so 1,000 pulses a second | C rises, but less than in proportion at the same power: the wider band lets in more noise |
-| $S/N$ | signal-to-noise ratio: signal power over the noise power inside the band | 5.412, or 7.33 dB | C rises, but only as a log |
-| $a$, $\Phi$ | pulse height in noise spreads; Φ is the standard bell's area to the left ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)) | a = 2.326, Φ(−a) = 0.01 | fewer flips |
+| $`p`$ | the crossover probability: chance one bit flips | 0.01 | C falls, to 0 at p = 0.5 |
+| $`X`$, $`Y`$ | the bit sent and the bit received | 0 or 1 | — |
+| $`q`$ | chance the sender's bit is a 1 | best at 0.5 | I(X; Y) rises until q = 0.5, then falls |
+| $`h(p)`$, $`H(Y)`$, $`H(Y \mid X)`$ | entropies in bits: of one flip; of the received bit; of the received bit once the sent bit is known | 0.0808; 1; 0.0808 | more noise, less gets through |
+| $`I(X;Y)`$ | mutual information: bits Y tells about X | 0.9192 at q = 0.5 | — |
+| $`C`$ | capacity: the most bits per use that can get through error-free | 0.9192 per bit, 919.2 a second | faster reliable upload |
+| $`R`$ | rate: message bits per bit sent | 1/3 for three copies; 1/2 for the random codes below | harder to protect; impossible above C |
+| $`n`$ | block length: bits sent per block | 8, 16, 24; 1,000 in the counting | below C, block errors fall |
+| $`P_e`$ | chance a block is decoded wrongly | 0.000742 at n = 24 | — |
+| $`B`$ | channel width, in hertz | 500 Hz, so 1,000 pulses a second | C rises, but less than in proportion at the same power: the wider band lets in more noise |
+| $`S/N`$ | signal-to-noise ratio: signal power over the noise power inside the band | 5.412, or 7.33 dB | C rises, but only as a log |
+| $`a`$, $`\Phi`$ | pulse height in noise spreads; Φ is the standard bell's area to the left ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)) | a = 2.326, Φ(−a) = 0.01 | fewer flips |
 
 The decibel (dB) is wing 13's log scale for ratios: 10 log10(S/N).
 
@@ -153,7 +159,9 @@ nR = (bits the received block told) + (bits still unknown after decoding).
 
 So nR ≤ nC + 1 + P_e nR. Divide by nR and rearrange:
 
-$$P_e \ge 1 - \frac{C}{R} - \frac{1}{nR}.$$
+```math
+P_e \ge 1 - \frac{C}{R} - \frac{1}{nR}.
+```
 
 At R = 0.95 and n = 1,000 the floor is 0.0314; as n grows it climbs to 1 − 0.9192 ÷ 0.95 = 0.0324. Every code at that rate with blocks of 1,000 bits or more gets more than 3% of its blocks wrong. A sharper theorem, the strong converse, proved by Wolfowitz in 1957 (Sources) and not on this card, shows the share in fact tends to 1.
 

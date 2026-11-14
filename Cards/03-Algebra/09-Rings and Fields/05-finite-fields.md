@@ -32,30 +32,34 @@ Same four symbols on both branches; only the arithmetic differs.
 
 A field of a given size is written GF of that size, for Galois field, after Évariste Galois; GF(2) is the two-hour clock, 0 and 1 with 1 + 1 = 0.
 
-A polynomial over GF(2) has coefficients 0 and 1 only, its letter $x$ a placeholder, never a number ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)), and is **irreducible** when it is not two smaller polynomials multiplied.
+A polynomial over GF(2) has coefficients 0 and 1 only, its letter $`x`$ a placeholder, never a number ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)), and is **irreducible** when it is not two smaller polynomials multiplied.
 
-Discarding every multiple of one chosen polynomial and keeping remainders is written as a division ([Ideals and quotient rings](04-ideals-and-quotient-rings.md)), and GF($p$)[$x$] means polynomials in $x$ over GF($p$):
+Discarding every multiple of one chosen polynomial and keeping remainders is written as a division ([Ideals and quotient rings](04-ideals-and-quotient-rings.md)), and GF($`p`$)[$`x`$] means polynomials in $`x`$ over GF($`p`$):
 
-$$\mathrm{GF}(p^k) = \mathrm{GF}(p)[x] \,/\, (f), \qquad f \text{ irreducible of degree } k$$
+```math
+\mathrm{GF}(p^k) = \mathrm{GF}(p)[x] \,/\, (f), \qquad f \text{ irreducible of degree } k
+```
 
-$$\mathrm{GF}(4) = \mathrm{GF}(2)[x] \,/\, (x^2 + x + 1), \qquad a = x, \qquad a^2 = a + 1$$
+```math
+\mathrm{GF}(4) = \mathrm{GF}(2)[x] \,/\, (x^2 + x + 1), \qquad a = x, \qquad a^2 = a + 1
+```
 
 **Read it aloud:** polynomials with coefficients on a prime clock, the multiples of one that does not factor discarded, leave a field of the prime raised to that polynomial's degree.
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
-| $p$ | a prime: how many values one coefficient has | 2 | a bigger coefficient clock |
-| $k$ | coefficients per element, the degree of $f$ | 2 | more elements |
-| $p^k$ | the element count, the only sizes possible | 4, called GF(4) | no prime power, no field |
-| $x$ | the placeholder letter, never a number | $x^2 + x + 1$ | — |
-| $f$ | what is wrapped by: irreducible, degree $k$ | $x^2 + x + 1$ | one that factors, and dividing breaks |
-| $a$ | what $x$ becomes once $f$ is 0 | $a^2 = a + 1$ | another rule |
+| $`p`$ | a prime: how many values one coefficient has | 2 | a bigger coefficient clock |
+| $`k`$ | coefficients per element, the degree of $`f`$ | 2 | more elements |
+| $`p^k`$ | the element count, the only sizes possible | 4, called GF(4) | no prime power, no field |
+| $`x`$ | the placeholder letter, never a number | $`x^2 + x + 1`$ | — |
+| $`f`$ | what is wrapped by: irreducible, degree $`k`$ | $`x^2 + x + 1`$ | one that factors, and dividing breaks |
+| $`a`$ | what $`x`$ becomes once $`f`$ is 0 | $`a^2 = a + 1`$ | another rule |
 
-Multiplying two elements means multiplying out and then trading every $a^2$ for $a + 1$, with the coefficients wrapped at 2.
+Multiplying two elements means multiplying out and then trading every $`a^2`$ for $`a + 1`$, with the coefficients wrapped at 2.
 
 ### When it holds
 
-- **What is wrapped by must not factor.** Wrap at a composite number of hours, or by $x^2 + x$, and two nonzero elements multiply to 0.
+- **What is wrapped by must not factor.** Wrap at a composite number of hours, or by $`x^2 + x`$, and two nonzero elements multiply to 0.
 - **Having no root proves irreducibility only up to degree three.** Degree four can miss every root and still be two quadratics.
 - **One field per size means one after renaming.** Two fields of a size behave alike once matched up.
 
@@ -69,29 +73,31 @@ Both halves of this card are one move: divide by a fixed thing, keep the remaind
 
 Division survives only when that thing has no factors, and Euclid's algorithm is the reason — run on two things sharing no factor it ends with one multiple of each adding to 1, and after the wrap the fixed thing's multiple is 0, leaving the other's multiplier as its reciprocal. Should the fixed thing factor, its factors survive as nonzero elements with product 0, and nothing in a zero product divides.
 
-So a prime clock divides — the previous card's theorem ([Fields](02-fields.md)) — and that clock, GF($p$), is where the coefficients will live. The check confirms the seven-day week by both roads, 1, 4, 5, 2, 3, 6 each time, and at twelve hours 3 times 4 wraps to 0.
+So a prime clock divides — the previous card's theorem ([Fields](02-fields.md)) — and that clock, GF($`p`$), is where the coefficients will live. The check confirms the seven-day week by both roads, 1, 4, 5, 2, 3, 6 each time, and at twelve hours 3 times 4 wraps to 0.
 
 ### Step 1: four symbols no clock can supply
 
 The four-hour clock is finished before it starts: if 2 had a reciprocal r there, then 2 = 2 times 2 times r = 0 times r = 0.
 
-Over GF(2) only two values can be tried in $x^2 + x + 1$: at $x = 0$ it is 1, at $x = 1$ it is 1 + 1 + 1, wrapping to 1. No root, so no factor of degree one — and at degree two that is the whole of it, since any factorisation is two degree-one pieces, each with a root. Irreducible.
+Over GF(2) only two values can be tried in $`x^2 + x + 1`$: at $`x = 0`$ it is 1, at $`x = 1`$ it is 1 + 1 + 1, wrapping to 1. No root, so no factor of degree one — and at degree two that is the whole of it, since any factorisation is two degree-one pieces, each with a root. Irreducible.
 
-Dividing by it leaves a remainder of degree at most one: 0, 1, $x$ or $x + 1$, four in all. The wrap sets $x^2 + x + 1$ to 0, so with $a$ for what $x$ becomes, and with adding and subtracting one operation here:
+Dividing by it leaves a remainder of degree at most one: 0, 1, $`x`$ or $`x + 1`$, four in all. The wrap sets $`x^2 + x + 1`$ to 0, so with $`a`$ for what $`x`$ becomes, and with adding and subtracting one operation here:
 
-$$a^2 + a + 1 = 0, \qquad a^2 = a + 1, \qquad a(a+1) = a^2 + a = (a + 1) + a = 1.$$
+```math
+a^2 + a + 1 = 0, \qquad a^2 = a + 1, \qquad a(a+1) = a^2 + a = (a + 1) + a = 1.
+```
 
-Two lots of $a$ add to 0 and the 1 stands: a and a + 1 are each other's reciprocals, and a + 1 squared comes to a the same way.
+Two lots of $`a`$ add to 0 and the 1 stands: a and a + 1 are each other's reciprocals, and a + 1 squared comes to a the same way.
 
-None of that was special to this modulus. Any irreducible $f$ shares no factor with any nonzero remainder below its degree, so Step 0 gives each of those a reciprocal.
+None of that was special to this modulus. Any irreducible $`f`$ shares no factor with any nonzero remainder below its degree, so Step 0 gives each of those a reciprocal.
 
 ### Step 2: why the count is a prime power
 
 Add 1 to itself over and over. A finite field runs out of new elements, so the total returns to one already seen, and the first return is to 0. That count is the **characteristic**.
 
-It cannot be composite: splitting it in two gives two nonzero elements multiplying to 0. So it is a prime, $p$, and the $p$ multiples of 1 are a copy of the $p$-hour clock inside the field.
+It cannot be composite: splitting it in two gives two nonzero elements multiplying to 0. So it is a prime, $`p`$, and the $`p`$ multiples of 1 are a copy of the $`p`$-hour clock inside the field.
 
-Take the fewest elements from which every element is built by multiplying with clock numbers and adding: call that many $k$. Every element is then one list of $k$ coefficients from that clock, different lists naming different elements, each coefficient chosen $p$ ways: the count is $p^k$.
+Take the fewest elements from which every element is built by multiplying with clock numbers and adding: call that many $`k`$. Every element is then one list of $`k`$ coefficients from that clock, different lists naming different elements, each coefficient chosen $`p`$ ways: the count is $`p^k`$.
 
 <details>
 <summary>Detailed proof: why the characteristic cannot be composite</summary>
@@ -111,7 +117,7 @@ flowchart LR
     P2 --> P3["a^3 = 1, back to the start"]
 ```
 
-In GF(4) it is a: one loop over the three nonzero elements, which is how hardware multiplies by look-up. The other road skips the wrap: wherever $x^4 + x$ has all four of its roots, those roots are GF(4) already.
+In GF(4) it is a: one loop over the three nonzero elements, which is how hardware multiplies by look-up. The other road skips the wrap: wherever $`x^4 + x`$ has all four of its roots, those roots are GF(4) already.
 
 ---
 
@@ -121,10 +127,10 @@ Coefficients wrap at 2, so 1 + 1 = 0.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $x^2 + x + 1$ at $x = 0$, then $x = 1$ | 1; 1 + 1 + 1 wrapped | 1; 1: no root |
-| a times a + 1, multiplied out and wrapped | $a^2 + a$, then $(a + 1) + a$ | **1** |
-| a + 1, squared | $a^2 + a + a + 1$, wrapped | **a** |
-| the powers of a | $a^0$ to $a^3$ | **1, a, a + 1, 1** |
+| $`x^2 + x + 1`$ at $`x = 0`$, then $`x = 1`$ | 1; 1 + 1 + 1 wrapped | 1; 1: no root |
+| a times a + 1, multiplied out and wrapped | $`a^2 + a`$, then $`(a + 1) + a`$ | **1** |
+| a + 1, squared | $`a^2 + a + a + 1`$, wrapped | **a** |
+| the powers of a | $`a^0`$ to $`a^3`$ | **1, a, a + 1, 1** |
 
 So 1 pairs with 1, and a with a + 1. Adding is coefficient by coefficient, making every element its own negative; the code prints that table too. Here each cell combines row with column:
 
@@ -142,7 +148,7 @@ Every nonzero row holds a 1, which is division working.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | GF(4) read as the four-hour clock | 2 times 2 = 0, 1 + 1 = 2 | Four is not prime; the field has 1 + 1 = 0 |
-| Wrapping by $x^2 + 1$ | a + 1 squared = 0 | That is $x + 1$ twice over GF(2): reducible |
+| Wrapping by $`x^2 + 1`$ | a + 1 squared = 0 | That is $`x + 1`$ twice over GF(2): reducible |
 
 The code prints both.
 
@@ -150,7 +156,7 @@ The code prints both.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Two roads reach all sixteen products, sharing no arithmetic and compared on every pair: one shifts and XORs the packed polynomials, folding the top power away with $x^2 + x + 1$; the other multiplies coefficients by a rule taken from $a^2 = a + 1$. The clock side is done twice too, by search and by Euclid. XOR, short for exclusive or, adds two bit patterns place by place with 1 + 1 = 0, which is adding coefficients wrapped at 2.
+Nothing is imported. Two roads reach all sixteen products, sharing no arithmetic and compared on every pair: one shifts and XORs the packed polynomials, folding the top power away with $`x^2 + x + 1`$; the other multiplies coefficients by a rule taken from $`a^2 = a + 1`$. The clock side is done twice too, by search and by Euclid. XOR, short for exclusive or, adds two bit patterns place by place with 1 + 1 = 0, which is adding coefficients wrapped at 2.
 
 ### Python
 
@@ -354,7 +360,7 @@ Lean proves the card's three main facts in general: for every finite field, ever
 
 - A finite field's size is always a prime raised to a positive whole power.
 - A clock is a field exactly when its number of hours is prime.
-- Wrap polynomials over the prime clock GF($p$) by a nonzero one of degree $k$. Exactly $p^k$ elements are left.
+- Wrap polynomials over the prime clock GF($`p`$) by a nonzero one of degree $`k`$. Exactly $`p^k`$ elements are left.
 - That wrap gives a field exactly when the polynomial does not factor.
 - It also re-checks the card's numbers: the four-, seven- and twelve-hour clocks, the GF(4) table, and the missing sizes 6 and 10.
 
@@ -453,8 +459,8 @@ example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Each change stops the script.
-> - **Wrap by something that factors.** Set the default `modulus` to `0b101`, which is $x^2 + 1$. The hunt for a reciprocal of a + 1 then finds nothing.
-> - **Drop the 1 that $a^2$ carries.** In `coord_times`, change `(c * e + d * h) % 2` to `(c * e) % 2`. The line reads 12 of 16 products agree, and the first assert stops it.
+> - **Wrap by something that factors.** Set the default `modulus` to `0b101`, which is $`x^2 + 1`$. The hunt for a reciprocal of a + 1 then finds nothing.
+> - **Drop the 1 that $`a^2`$ carries.** In `coord_times`, change `(c * e + d * h) % 2` to `(c * e) % 2`. The line reads 12 of 16 products agree, and the first assert stops it.
 > - **Leave Euclid's answer unwrapped.** Drop the `% n` ending `bezout_recip`: that road prints 1 -3 -2 2 3 -1 against search's 1 4 5 2 3 6, and the third assert stops it.
 
 ---
@@ -465,17 +471,17 @@ example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
 > **Taking GF(4) to be the whole numbers wrapped at 4.** The size is right, the arithmetic wrong. In GF(4) every element added to itself gives 0, so 1 + 1 = 0, and no two nonzero elements multiply to 0; the clock has 1 + 1 = 2 and 2 times 2 = 0. No relabelling turns one into the other.
 >
 > - **Expecting a field of every size.** Prime powers only: none with 6 elements, none with 10.
-> - **Reading $a$ as a number.** It is $x$ after the wrap, obeying one rule: a squared is a + 1.
+> - **Reading $`a`$ as a number.** It is $`x`$ after the wrap, obeying one rule: a squared is a + 1.
 
 ---
 
 ## Where you meet it in real life
 
 - **QR symbols and CDs.** Reed–Solomon repair reads a block as a polynomial over a finite field and solves for the lost pieces — exact division, no rounding ([Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md)).
-- **AES (the Advanced Encryption Standard), in every secure web session.** A byte is an element of the 256-element field: eight coefficients wrapping at 2, folded by a degree-eight polynomial, this build at $k$ = 8 ([AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md)).
+- **AES (the Advanced Encryption Standard), in every secure web session.** A byte is an element of the 256-element field: eight coefficients wrapping at 2, folded by a degree-eight polynomial, this build at $`k`$ = 8 ([AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md)).
 
 > **Say it back**
-> A finite field has finitely many elements and lets you divide by anything nonzero. At a prime size it is the clock with that many hours; every other size is polynomials over a prime clock, the multiples of one that does not factor discarded. GF(2) and $x^2 + x + 1$ give 0, 1, a and a + 1, with a squared = a + 1, so a times a + 1 = 1. No four-hour clock copies that, and sizes are prime powers only.
+> A finite field has finitely many elements and lets you divide by anything nonzero. At a prime size it is the clock with that many hours; every other size is polynomials over a prime clock, the multiples of one that does not factor discarded. GF(2) and $`x^2 + x + 1`$ give 0, 1, a and a + 1, with a squared = a + 1, so a times a + 1 = 1. No four-hour clock copies that, and sizes are prime powers only.
 
 ---
 

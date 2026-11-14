@@ -30,40 +30,46 @@ Notation first, in words. AC (alternating current) is a current that swings back
 
 A **phasor** is a complex number standing for a sine wave: its length is the wave's size, its angle is the wave's timing. Here the length is the **rms** (root-mean-square) value, the size a meter shows, which for a sine is the peak divided by √2. Mains "230 V" is rms; its peak is 325.27 V.
 
-$$v(t) = \sqrt{2}\,|V|\cos(\omega t + \theta) \quad\longleftrightarrow\quad V = |V|\,e^{j\theta}$$
+```math
+v(t) = \sqrt{2}\,|V|\cos(\omega t + \theta) \quad\longleftrightarrow\quad V = |V|\,e^{j\theta}
+```
 
 **Read it aloud:** a sine wave of rms size |V| that starts θ ahead is stored as the complex number of length |V| at angle θ.
 
-$$Z_R = R, \qquad Z_L = j\omega L, \qquad Z_C = \frac{1}{j\omega C}, \qquad I = \frac{V}{Z}$$
+```math
+Z_R = R, \qquad Z_L = j\omega L, \qquad Z_C = \frac{1}{j\omega C}, \qquad I = \frac{V}{Z}
+```
 
 **Read it aloud:** a resistor's impedance is its resistance, a coil's is jω times its inductance, a capacitor's is one over jω times its capacitance, and the current is the voltage divided by the impedance.
 
-For the bench, the parts are in series, so their impedances add: $Z = 40 + j30$ Ω. The current is
+For the bench, the parts are in series, so their impedances add: $`Z = 40 + j30`$ Ω. The current is
 
-$$I = \frac{230}{40 + j30} = 3.68 - j2.76 \text{ A}, \qquad |I| = 4.6 \text{ A}, \qquad \varphi = 36.87^\circ.$$
+```math
+I = \frac{230}{40 + j30} = 3.68 - j2.76 \text{ A}, \qquad |I| = 4.6 \text{ A}, \qquad \varphi = 36.87^\circ.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $f$, $\omega$ | time in seconds; frequency in hertz (cycles a second); angular frequency $\omega = 2\pi f$, in rad/s | 50 Hz, 314.16 rad/s | coil's share grows: less current, more lag |
-| $v(t)$, $i(t)$, $v_R$, $v_L$ | the voltage and current at instant $t$, the waves themselves; the resistor's and coil's voltages | peaks 325.27 V and 6.505 A | — |
-| $a$, $b$ | the current's cosine part and sine part, peak amps | 5.2043 A, 3.9032 A | — |
-| $V$, $I$, $V_R$, $V_L$, $V_k$ | phasors: rms size and timing as one complex number; the supply, the current, the parts, any one in a sum | $230$ V; $3.68 - j2.76$ A; 184 V, 138 V | — |
-| $\lvert\cdot\rvert$, $\theta$, $\alpha$ | the length of a complex number; its angle, the wave's lead; any angle | $\lvert I\rvert$ = 4.6 A | — |
-| $R$ | resistance, ohms (Ω) | 40 Ω | less current, less lag |
-| $L$, $C$ | inductance of the coil, henries (H); capacitance, farads (F) | 95.49 mH; no capacitor | $L$ up: less current, more lag |
-| $X$ | reactance, $\omega L$: the coil's opposition, in ohms, a quarter turn out of step | 30 Ω | less current, more lag |
-| $Z$, $Z_R$, $Z_L$, $Z_C$ | impedance: voltage phasor over current phasor; for a resistor, coil, capacitor | $40 + j30$ Ω, length 50 Ω | less current |
-| $j$, $e$, $\operatorname{Re}$ | the square root of −1, a quarter turn anticlockwise; the base of natural growth; "the real part of", the shadow on the real axis | — | — |
-| $\varphi$ | the lag: how far the current's peak trails the voltage's, the angle of $Z$ | 36.87°, 0.6435 rad, 2.048 ms | — |
-| $\tau$, $A$ | the switch-on time constant $L/R$; the size of the start-up surge, $A\,e^{-t/\tau}$ | 2.387 ms; −5.20 A | $\tau$ up: the phasor answer comes true later |
+| $`t`$, $`f`$, $`\omega`$ | time in seconds; frequency in hertz (cycles a second); angular frequency $`\omega = 2\pi f`$, in rad/s | 50 Hz, 314.16 rad/s | coil's share grows: less current, more lag |
+| $`v(t)`$, $`i(t)`$, $`v_R`$, $`v_L`$ | the voltage and current at instant $`t`$, the waves themselves; the resistor's and coil's voltages | peaks 325.27 V and 6.505 A | — |
+| $`a`$, $`b`$ | the current's cosine part and sine part, peak amps | 5.2043 A, 3.9032 A | — |
+| $`V`$, $`I`$, $`V_R`$, $`V_L`$, $`V_k`$ | phasors: rms size and timing as one complex number; the supply, the current, the parts, any one in a sum | $`230`$ V; $`3.68 - j2.76`$ A; 184 V, 138 V | — |
+| $`\lvert\cdot\rvert`$, $`\theta`$, $`\alpha`$ | the length of a complex number; its angle, the wave's lead; any angle | $`\lvert I\rvert`$ = 4.6 A | — |
+| $`R`$ | resistance, ohms (Ω) | 40 Ω | less current, less lag |
+| $`L`$, $`C`$ | inductance of the coil, henries (H); capacitance, farads (F) | 95.49 mH; no capacitor | $`L`$ up: less current, more lag |
+| $`X`$ | reactance, $`\omega L`$: the coil's opposition, in ohms, a quarter turn out of step | 30 Ω | less current, more lag |
+| $`Z`$, $`Z_R`$, $`Z_L`$, $`Z_C`$ | impedance: voltage phasor over current phasor; for a resistor, coil, capacitor | $`40 + j30`$ Ω, length 50 Ω | less current |
+| $`j`$, $`e`$, $`\mathrm{Re}`$ | the square root of −1, a quarter turn anticlockwise; the base of natural growth; "the real part of", the shadow on the real axis | — | — |
+| $`\varphi`$ | the lag: how far the current's peak trails the voltage's, the angle of $`Z`$ | 36.87°, 0.6435 rad, 2.048 ms | — |
+| $`\tau`$, $`A`$ | the switch-on time constant $`L/R`$; the size of the start-up surge, $`A\,e^{-t/\tau}`$ | 2.387 ms; −5.20 A | $`\tau`$ up: the phasor answer comes true later |
 
 ### When it holds
 
-- **One frequency, steady.** Every source must be a sine at the same $f$. A second frequency needs its own phasor calculation, and the two answers add afterwards.
-- **Long after switch-on.** At the instant of switching, the phasor answer says 5.20 A while the real current is 0. The gap dies as $e^{-t/\tau}$, with $\tau$ = 2.387 ms; at 10 ms it is down to 0.0789 A. Step 5 shows it.
+- **One frequency, steady.** Every source must be a sine at the same $`f`$. A second frequency needs its own phasor calculation, and the two answers add afterwards.
+- **Long after switch-on.** At the instant of switching, the phasor answer says 5.20 A while the real current is 0. The gap dies as $`e^{-t/\tau}`$, with $`\tau`$ = 2.387 ms; at 10 ms it is down to 0.0789 A. Step 5 shows it.
 - **Linear parts.** An iron-cored coil saturates: past some current its inductance falls, the current stops being a sine and no single phasor describes it. The 95.49 mH here is an air-cored figure.
 - **Lumped parts.** The circuit is small beside the wavelength, thousands of kilometres at 50 Hz, the same condition as [Kirchhoff's laws](01-kirchhoffs-laws-and-equivalent-circuits.md). At radio frequencies a long lead is a transmission line, not a wire.
-- **Ideal coil.** A real coil has its own winding resistance. Lump it into $R$; the method is unchanged.
+- **Ideal coil.** A real coil has its own winding resistance. Lump it into $`R`$; the method is unchanged.
 
 ---
 
@@ -71,54 +77,58 @@ $$I = \frac{230}{40 + j30} = 3.68 - j2.76 \text{ A}, \qquad |I| = 4.6 \text{ A},
 
 ### Step 0: one frequency in, the same frequency everywhere
 
-The coil obeys $v_L = L\,di/dt$: its voltage is its inductance times how fast the current changes. The resistor obeys $v_R = R\,i$. Kirchhoff's voltage law adds them: $L\,di/dt + R\,i = v(t)$. Differentiating a sine gives a sine of the same frequency, shifted a quarter cycle. So if the current is a 50 Hz sine, every term is a 50 Hz sine. In steady state the current *is* one: the only thing left to find is its size and its timing. Two numbers per wave is the whole problem.
+The coil obeys $`v_L = L\,di/dt`$: its voltage is its inductance times how fast the current changes. The resistor obeys $`v_R = R\,i`$. Kirchhoff's voltage law adds them: $`L\,di/dt + R\,i = v(t)`$. Differentiating a sine gives a sine of the same frequency, shifted a quarter cycle. So if the current is a 50 Hz sine, every term is a 50 Hz sine. In steady state the current *is* one: the only thing left to find is its size and its timing. Two numbers per wave is the whole problem.
 
 ### Step 1: a sine is the shadow of a spinning arrow
 
-By [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md), $e^{j\alpha} = \cos\alpha + j\sin\alpha$. So
+By [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md), $`e^{j\alpha} = \cos\alpha + j\sin\alpha`$. So
 
-$$\sqrt{2}\,|V|\cos(\omega t + \theta) = \operatorname{Re}\big(\sqrt{2}\,V\,e^{j\omega t}\big), \qquad V = |V|e^{j\theta}.$$
+```math
+\sqrt{2}\,|V|\cos(\omega t + \theta) = \mathrm{Re}\big(\sqrt{2}\,V\,e^{j\omega t}\big), \qquad V = |V|e^{j\theta}.
+```
 
-The arrow $V e^{j\omega t}$ spins at $\omega$; its shadow on the real axis is the wave. Every wave in the circuit spins at the same $\omega$, so the factor $e^{j\omega t}$ is shared. Freeze the picture at $t = 0$ and each wave is a fixed arrow: its phasor. The size is the arrow's length, the timing its angle, read as in [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md).
+The arrow $`V e^{j\omega t}`$ spins at $`\omega`$; its shadow on the real axis is the wave. Every wave in the circuit spins at the same $`\omega`$, so the factor $`e^{j\omega t}`$ is shared. Freeze the picture at $`t = 0`$ and each wave is a fixed arrow: its phasor. The size is the arrow's length, the timing its angle, read as in [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md).
 
 ### Step 2: differentiating becomes multiplying by jω
 
-Differentiate the spinning arrow: $\frac{d}{dt}e^{j\omega t} = j\omega\,e^{j\omega t}$. Taking the real part and differentiating can be done in either order, so the phasor of $di/dt$ is $j\omega I$. Multiplying by $j$ turns an arrow a quarter turn anticlockwise, so a derivative runs a quarter cycle ahead. That is why the coil's voltage, $j\omega L\,I$, sits at right angles to the resistor's.
+Differentiate the spinning arrow: $`\frac{d}{dt}e^{j\omega t} = j\omega\,e^{j\omega t}`$. Taking the real part and differentiating can be done in either order, so the phasor of $`di/dt`$ is $`j\omega I`$. Multiplying by $`j`$ turns an arrow a quarter turn anticlockwise, so a derivative runs a quarter cycle ahead. That is why the coil's voltage, $`j\omega L\,I`$, sits at right angles to the resistor's.
 
 So each part is "voltage = something times current", in phasors:
 
-- resistor: $V_R = R\,I$;
-- coil: $V_L = j\omega L\,I$;
-- capacitor: $i = C\,dv/dt$ gives $I = j\omega C\,V$, so $V = I/(j\omega C)$.
+- resistor: $`V_R = R\,I`$;
+- coil: $`V_L = j\omega L\,I`$;
+- capacitor: $`i = C\,dv/dt`$ gives $`I = j\omega C\,V`$, so $`V = I/(j\omega C)`$.
 
-That "something" is the impedance $Z$. It plays exactly the part a resistance plays in Ohm's law.
+That "something" is the impedance $`Z`$. It plays exactly the part a resistance plays in Ohm's law.
 
 ### Step 3: Kirchhoff's laws carry over
 
-Kirchhoff's laws are sums: currents into a node (a junction where wires meet), voltages round a loop. A sum of shadows is the shadow of the sum. If $\operatorname{Re}\big(\sum V_k e^{j\omega t}\big) = 0$ at every instant, then $\sum V_k = 0$: at $t = 0$ the real part vanishes, a quarter cycle later the imaginary part does. So the laws hold for phasors, and every DC method carries over with $Z$ in place of $R$: series impedances add, parallel ones combine, node matrices fill with complex entries.
+Kirchhoff's laws are sums: currents into a node (a junction where wires meet), voltages round a loop. A sum of shadows is the shadow of the sum. If $`\mathrm{Re}\big(\sum V_k e^{j\omega t}\big) = 0`$ at every instant, then $`\sum V_k = 0`$: at $`t = 0`$ the real part vanishes, a quarter cycle later the imaginary part does. So the laws hold for phasors, and every DC method carries over with $`Z`$ in place of $`R`$: series impedances add, parallel ones combine, node matrices fill with complex entries.
 
-For the bench: $Z = R + j\omega L = 40 + j30$ Ω, and $I = V/Z$.
+For the bench: $`Z = R + j\omega L = 40 + j30`$ Ω, and $`I = V/Z`$.
 
 ### Step 4: one complex division, read off as size and timing
 
-Divide by multiplying top and bottom by the conjugate (flip the sign of $j$):
+Divide by multiplying top and bottom by the conjugate (flip the sign of $`j`$):
 
-$$I = \frac{230\,(40 - j30)}{(40 + j30)(40 - j30)} = \frac{230\,(40 - j30)}{40^2 + 30^2} = 3.68 - j2.76 \text{ A}.$$
+```math
+I = \frac{230\,(40 - j30)}{(40 + j30)(40 - j30)} = \frac{230\,(40 - j30)}{40^2 + 30^2} = 3.68 - j2.76 \text{ A}.
+```
 
-Read it in polar form. Length: $230/50 = 4.6$ A rms. Angle: $-\arctan(30/40) = -36.87°$, so the current lags. Dividing by $Z$ divides the lengths and subtracts the angles: the current is the voltage shrunk by 50 Ω and turned back by $Z$'s angle.
+Read it in polar form. Length: $`230/50 = 4.6`$ A rms. Angle: $`-\arctan(30/40) = -36.87°`$, so the current lags. Dividing by $`Z`$ divides the lengths and subtracts the angles: the current is the voltage shrunk by 50 Ω and turned back by $`Z`$'s angle.
 
 <details>
 <summary>The same answer with no complex numbers at all</summary>
 
-Guess $i(t) = a\cos\omega t + b\sin\omega t$, with supply $v = 325.27\cos\omega t$. Then $di/dt = -a\omega\sin\omega t + b\omega\cos\omega t$. Put both into $L\,di/dt + R\,i = v$ and collect terms. The cosine terms give $R a + X b = 325.27$; the sine terms give $-X a + R b = 0$, with $X = \omega L$ = 30 Ω. The second says $b = (X/R)\,a$. Then $a = 325.27 \times 40/50^2 = 5.2043$ A and $b = 325.27 \times 30/50^2 = 3.9032$ A. The peak is $\sqrt{a^2 + b^2}$ = 6.5054 A, which is 4.6 A rms, and the lag is $\arctan(b/a)$ = 36.87°.
+Guess $`i(t) = a\cos\omega t + b\sin\omega t`$, with supply $`v = 325.27\cos\omega t`$. Then $`di/dt = -a\omega\sin\omega t + b\omega\cos\omega t`$. Put both into $`L\,di/dt + R\,i = v`$ and collect terms. The cosine terms give $`R a + X b = 325.27`$; the sine terms give $`-X a + R b = 0`$, with $`X = \omega L`$ = 30 Ω. The second says $`b = (X/R)\,a`$. Then $`a = 325.27 \times 40/50^2 = 5.2043`$ A and $`b = 325.27 \times 30/50^2 = 3.9032`$ A. The peak is $`\sqrt{a^2 + b^2}`$ = 6.5054 A, which is 4.6 A rms, and the lag is $`\arctan(b/a)`$ = 36.87°.
 
-Those two real equations are the real and imaginary parts of $(R + jX)(a - jb) = 325.27$. The complex division does this pair of equations in one line. For a circuit with ten unknown currents, the real route needs twenty equations; phasors need ten.
+Those two real equations are the real and imaginary parts of $`(R + jX)(a - jb) = 325.27`$. The complex division does this pair of equations in one line. For a circuit with ten unknown currents, the real route needs twenty equations; phasors need ten.
 
 </details>
 
 ### Step 5: what steady state leaves out
 
-The full solution of $L\,di/dt + R\,i = v$ is the phasor answer plus a free part, $A\,e^{-t/\tau}$ with $\tau = L/R$ = 2.387 ms. The free part is fixed by the current at switch-on, which must be 0: a coil cannot change its current in an instant. Switching at a voltage peak, the phasor answer is 5.20 A at that moment, so $A = -5.20$ A. Seen from 10 ms on, the gap is $-5.20\,e^{-10/2.387}$ = −0.0789 A, and the simulation agrees to six decimal places.
+The full solution of $`L\,di/dt + R\,i = v`$ is the phasor answer plus a free part, $`A\,e^{-t/\tau}`$ with $`\tau = L/R`$ = 2.387 ms. The free part is fixed by the current at switch-on, which must be 0: a coil cannot change its current in an instant. Switching at a voltage peak, the phasor answer is 5.20 A at that moment, so $`A = -5.20`$ A. Seen from 10 ms on, the gap is $`-5.20\,e^{-10/2.387}`$ = −0.0789 A, and the simulation agrees to six decimal places.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -130,7 +140,7 @@ xychart-beta
     line [5.20, 6.50, 5.32, 2.10, -1.92, -5.20, -6.50, -5.32, -2.10, 1.92, 5.20]
 ```
 
-Orange: the simulated current, starting from 0. Teal: the phasor answer, $6.505\cos(\omega t - 36.87°)$ A. At switch-on the phasor says 5.20 A against a true 0; at 2 ms it says 6.50 A against 4.25 A. By 10 ms they are within a tenth of an amp, and by the end of the first cycle they match to the plotted two decimals. The largest current in that first cycle is 6.539 A, a hair above the steady 6.505 A peak, so the fuse sees no real surge here.
+Orange: the simulated current, starting from 0. Teal: the phasor answer, $`6.505\cos(\omega t - 36.87°)`$ A. At switch-on the phasor says 5.20 A against a true 0; at 2 ms it says 6.50 A against 4.25 A. By 10 ms they are within a tenth of an amp, and by the end of the first cycle they match to the plotted two decimals. The largest current in that first cycle is 6.539 A, a hair above the steady 6.505 A peak, so the fuse sees no real surge here.
 
 ---
 
@@ -138,16 +148,16 @@ Orange: the simulated current, starting from 0. Teal: the phasor answer, $6.505\
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| angular frequency $\omega$ | 2 × π × 50 | 314.16 rad/s |
-| coil's reactance $X = \omega L$ | 314.16 × 0.09549 | 30 Ω |
-| impedance $Z$ | 40 + j30 | length 50 Ω, angle 36.87° |
-| current $I = V/Z$ | 230 × (40 − j30) ÷ 50² | 3.68 − j2.76 A |
-| size $\lvert I\rvert$ | 230 ÷ 50 | **4.6 A rms** |
-| lag $\varphi$ | arctan(30/40); ÷ ω for time | **36.87°**, 0.6435 rad, 2.048 ms |
+| angular frequency $`\omega`$ | 2 × π × 50 | 314.16 rad/s |
+| coil's reactance $`X = \omega L`$ | 314.16 × 0.09549 | 30 Ω |
+| impedance $`Z`$ | 40 + j30 | length 50 Ω, angle 36.87° |
+| current $`I = V/Z`$ | 230 × (40 − j30) ÷ 50² | 3.68 − j2.76 A |
+| size $`\lvert I\rvert`$ | 230 ÷ 50 | **4.6 A rms** |
+| lag $`\varphi`$ | arctan(30/40); ÷ ω for time | **36.87°**, 0.6435 rad, 2.048 ms |
 | peak current | 4.6 × √2 | 6.505 A |
-| resistor's voltage $\lvert V_R\rvert$ | 4.6 × 40 | 184 V |
-| coil's voltage $\lvert V_L\rvert$ | 4.6 × 30 | 138 V |
-| check: arrows add to the supply | 184 in step with $I$, plus 138 a quarter turn ahead | 230 + j0 V |
+| resistor's voltage $`\lvert V_R\rvert`$ | 4.6 × 40 | 184 V |
+| coil's voltage $`\lvert V_L\rvert`$ | 4.6 × 30 | 138 V |
+| check: arrows add to the supply | 184 in step with $`I`$, plus 138 a quarter turn ahead | 230 + j0 V |
 | heat in the resistor | 4.6² × 40 | 846.4 W |
 
 The fuse carries 4.6 A, under its 5 A rating, so it holds. The current peaks 2.048 ms after each voltage peak. Only the resistor turns power into heat; why the coil takes none is the subject of [AC power](09-power-and-three-phase.md).
@@ -158,14 +168,14 @@ The fuse carries 4.6 A, under its 5 A rating, so it holds. The current peaks 2.0
 | --- | --- | --- |
 | Add the coil's 30 Ω to the 40 Ω as plain ohms | 3.2857 A | The two oppositions are a quarter cycle apart. They add at right angles: 50 Ω, not 70 Ω |
 | Ignore the coil: resistance only | 5.75 A | Over the fuse's 5 A rating, so the fuse looks too small. Correct only at 0 Hz, direct current |
-| Reactance as $fL$, forgetting the 2π | 5.7095 A | The coil shrinks to a sixth of its size. The derivative brings $\omega$, in rad/s |
+| Reactance as $`fL`$, forgetting the 2π | 5.7095 A | The coil shrinks to a sixth of its size. The derivative brings $`\omega`$, in rad/s |
 | Add the two meter readings to check Kirchhoff | 322 V | Meters show lengths, not arrows. The law holds for the phasors: 184 and 138 at right angles make 230 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script reaches the 4.6 A and the 36.87° lag by three independent roads. Road 1 is the phasor division. Road 2 solves the two real equations for the cosine and sine parts, with no complex numbers. Road 3 integrates $L\,di/dt + R\,i = v(t)$ from switch-on with RK4 (a standard step-by-step method for differential equations: [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)), runs ten cycles, and measures the last one as a meter would: rms current, rms voltage on each part, and the cosine and sine parts by averaging. It then reproduces every wrong answer above, the "Try changing" numbers, the switch-on gap against its closed form, the chart and the figure. Rust writes its own complex type; Python uses the built-in one.
+The script reaches the 4.6 A and the 36.87° lag by three independent roads. Road 1 is the phasor division. Road 2 solves the two real equations for the cosine and sine parts, with no complex numbers. Road 3 integrates $`L\,di/dt + R\,i = v(t)`$ from switch-on with RK4 (a standard step-by-step method for differential equations: [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)), runs ten cycles, and measures the last one as a meter would: rms current, rms voltage on each part, and the cosine and sine parts by averaging. It then reproduces every wrong answer above, the "Try changing" numbers, the switch-on gap against its closed form, the chart and the figure. Rust writes its own complex type; Python uses the built-in one.
 
 ### Python
 
@@ -525,11 +535,11 @@ Three roads, one answer. The complex division and the real pair agree to the las
 
 Lean proves Steps 2 to 4 of Why it works for any resistor, coil and nonzero frequency, and checks the bench's numbers.
 
-- Take any wave with phasor $V$ at angular frequency $\omega$. Then its derivative is the wave with phasor $j\omega V$.
-- Suppose waves of one nonzero frequency, with phasors $V_k$, add to zero at every instant. Then the phasors add to zero: $\sum V_k = 0$.
-- Suppose a supply with phasor $V$ drives $R$ and $L$ in series, and a sine current with phasor $I$ flows at the same frequency. Then $L di/dt + R i = v(t)$ holds at every instant exactly when $V = (R + j\omega L) I$.
-- Take the bench, with $Z = 40 + j30$ Ω. Then $\lvert Z\rvert = 50$ Ω, and $I = 230/Z = 3.68 - j2.76$ A, of size 4.6 A.
-- Take that current $I$. Then the arrows $40 I$ and $j30 I$ add to exactly 230 V, and 184² + 138² = 230².
+- Take any wave with phasor $`V`$ at angular frequency $`\omega`$. Then its derivative is the wave with phasor $`j\omega V`$.
+- Suppose waves of one nonzero frequency, with phasors $`V_k`$, add to zero at every instant. Then the phasors add to zero: $`\sum V_k = 0`$.
+- Suppose a supply with phasor $`V`$ drives $`R`$ and $`L`$ in series, and a sine current with phasor $`I`$ flows at the same frequency. Then $`L di/dt + R i = v(t)`$ holds at every instant exactly when $`V = (R + j\omega L) I`$.
+- Take the bench, with $`Z = 40 + j30`$ Ω. Then $`\lvert Z\rvert = 50`$ Ω, and $`I = 230/Z = 3.68 - j2.76`$ A, of size 4.6 A.
+- Take that current $`I`$. Then the arrows $`40 I`$ and $`j30 I`$ add to exactly 230 V, and 184² + 138² = 230².
 - Adding the two meter readings gives 322 V, not 230 V. Ignoring the coil gives 5.75 A, over the fuse's 5 A rating.
 
 The lag of 36.87°, the capacitor, the switch-on surge and the simulation are left to the Python and Rust checks.
@@ -685,9 +695,9 @@ example : (184 : ℕ) + 138 = 322 := by norm_num
 > **Try changing**
 > The asserts are pinned to the 50 Hz bench, so the first one stops any edited run; the printed `try:` lines give the answers without editing anything.
 > - Guess first: the same bench on 60 Hz mains, as in North America. Set `F = 60.0`. The coil's reactance rises with frequency, so the current falls to 4.2739 A and the lag grows to 41.99°.
-> - Guess first: double the coil. Set `L = 0.6 / pi`. The current falls to 3.1895 A, lagging by 56.31°. Doubling $X$ did not halve the current, because $R$ is still there.
-> - Guess first: add a capacitor in series that cancels the coil. Its impedance must be −j30 Ω, so $C = 1/(\omega X)$ = 106.10 µF. The current rises to 5.75 A with no lag at all, exactly as if the coil were gone: the 50 Hz case of [RLC resonance](03-rlc-circuits-and-resonance.md). That is over the fuse's 5 A rating.
-> - Guess first: switch on at a voltage peak, what is the largest current in the first cycle? 6.539 A, just above the steady 6.505 A. The switch-on surge is small because $\tau$ is short beside the 20 ms cycle.
+> - Guess first: double the coil. Set `L = 0.6 / pi`. The current falls to 3.1895 A, lagging by 56.31°. Doubling $`X`$ did not halve the current, because $`R`$ is still there.
+> - Guess first: add a capacitor in series that cancels the coil. Its impedance must be −j30 Ω, so $`C = 1/(\omega X)`$ = 106.10 µF. The current rises to 5.75 A with no lag at all, exactly as if the coil were gone: the 50 Hz case of [RLC resonance](03-rlc-circuits-and-resonance.md). That is over the fuse's 5 A rating.
+> - Guess first: switch on at a voltage peak, what is the largest current in the first cycle? 6.539 A, just above the steady 6.505 A. The switch-on surge is small because $`\tau`$ is short beside the 20 ms cycle.
 
 ---
 
@@ -697,20 +707,20 @@ example : (184 : ℕ) + 138 = 322 := by norm_num
 > **Adding sizes instead of arrows.** Every quantity in an AC circuit has a size and a timing, and only the phasors add. So 40 Ω and 30 Ω make 50 Ω, not 70 Ω (which gives 3.2857 A), and 184 V and 138 V make 230 V, not 322 V. Adding sizes works only when everything peaks together, which is a circuit of resistors alone.
 >
 > Smaller traps:
-> - **Forgetting the 2π.** The reactance is $\omega L = 2\pi f L$. Using $fL$ shrinks the coil to a sixth of its size and gives 5.7095 A.
+> - **Forgetting the 2π.** The reactance is $`\omega L = 2\pi f L`$. Using $`fL`$ shrinks the coil to a sixth of its size and gives 5.7095 A.
 > - **Mixing peak and rms.** Mains 230 V is rms. Treat it as the peak and the current comes out 3.2527 A, wrong by √2. Pick one convention for every phasor and keep it.
-> - **Getting the lag backwards.** The current lags the supply by 36.87° here; put a −j30 Ω capacitor in the coil's place and the current leads by the same 36.87°. The sign of $X$ says which.
-> - **Using phasors at switch-on.** The phasor answer is 5.20 A at the instant of switching, when the true current is 0. It describes the circuit only once the free part, $e^{-t/\tau}$, has died.
+> - **Getting the lag backwards.** The current lags the supply by 36.87° here; put a −j30 Ω capacitor in the coil's place and the current leads by the same 36.87°. The sign of $`X`$ says which.
+> - **Using phasors at switch-on.** The phasor answer is 5.20 A at the instant of switching, when the true current is 0. It describes the circuit only once the free part, $`e^{-t/\tau}`$, has died.
 
 ---
 
 ## Where you meet it in real life
 
-- **Fuse and cable sizing.** Every motor, fan and ballast on the mains is rated by the current $V/\lvert Z\rvert$, not by its resistance alone.
-- **Power-factor correction.** Factories hang capacitors across their motor loads to cancel the coil's $+jX$ with a $-jX$, cutting the current the cable must carry; [AC power](09-power-and-three-phase.md) puts numbers on it.
-- **Audio crossovers.** A coil passes the low notes to the woofer and a capacitor passes the high notes to the tweeter, because $\omega L$ grows with frequency and $1/(\omega C)$ shrinks.
+- **Fuse and cable sizing.** Every motor, fan and ballast on the mains is rated by the current $`V/\lvert Z\rvert`$, not by its resistance alone.
+- **Power-factor correction.** Factories hang capacitors across their motor loads to cancel the coil's $`+jX`$ with a $`-jX`$, cutting the current the cable must carry; [AC power](09-power-and-three-phase.md) puts numbers on it.
+- **Audio crossovers.** A coil passes the low notes to the woofer and a capacitor passes the high notes to the tweeter, because $`\omega L`$ grows with frequency and $`1/(\omega C)`$ shrinks.
 - **Radio tuning.** The tuner in a radio set is a coil and a capacitor whose reactances cancel at one frequency: [RLC resonance](03-rlc-circuits-and-resonance.md).
-- **Impedance meters.** An LCR meter applies a small sine wave, measures the current's size and lag, and divides: the phasor $V/I$ is what it reports.
+- **Impedance meters.** An LCR meter applies a small sine wave, measures the current's size and lag, and divides: the phasor $`V/I`$ is what it reports.
 - **Transformers and grids.** Grid engineers write every line, cable and transformer as an impedance and solve whole networks with complex node matrices; [Transformers](06-transformers-and-mutual-inductance.md) shows how a coupled pair fits in.
 
 > **Say it back**
@@ -721,7 +731,7 @@ example : (184 : ℕ) + 138 = 322 := by norm_num
 ## What this builds on
 
 - [Kirchhoff's laws](01-kirchhoffs-laws-and-equivalent-circuits.md): the two conservation laws and the DC solving methods. This card keeps them all and swaps resistances for impedances.
-- [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): $e^{j\alpha} = \cos\alpha + j\sin\alpha$, which makes a sine wave the shadow of a spinning arrow.
+- [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): $`e^{j\alpha} = \cos\alpha + j\sin\alpha`$, which makes a sine wave the shadow of a spinning arrow.
 - [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): length and angle, and why dividing complex numbers divides lengths and subtracts angles.
 - [Trig graphs](../../05-Geometry%20and%20trig/03-Trigonometry/04-trig-graphs-amplitude-period-and-phase.md): amplitude, period and phase, the three things a phasor packs into two numbers and a shared frequency.
 

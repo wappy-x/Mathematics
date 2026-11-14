@@ -40,38 +40,44 @@ Orange: the one-touch, nothing until the year's high reaches $120, then $1. Gree
 
 ## The formula
 
-Notation first, in words. $S$ is Acme's price today, $H$ the barrier, $T$ the years to expiry, $r$ the riskless rate, $q$ the dividend yield and $\sigma$ the volatility. $N(x)$ is the area under the standard bell curve left of $x$. $M_T$ is Acme's **running maximum**: the highest price it reaches between today and the expiry date. The one-touch pays when $M_T \ge H$. The chance of that event in the pretend world is written $Q$. The formulas below are for a line above today's price, $H > S$; for a line below, swap the signs of $b$ and $\nu$ in the $N$ terms, which counts touches from above.
+Notation first, in words. $`S`$ is Acme's price today, $`H`$ the barrier, $`T`$ the years to expiry, $`r`$ the riskless rate, $`q`$ the dividend yield and $`\sigma`$ the volatility. $`N(x)`$ is the area under the standard bell curve left of $`x`$. $`M_T`$ is Acme's **running maximum**: the highest price it reaches between today and the expiry date. The one-touch pays when $`M_T \ge H`$. The chance of that event in the pretend world is written $`Q`$. The formulas below are for a line above today's price, $`H > S`$; for a line below, swap the signs of $`b`$ and $`\nu`$ in the $`N`$ terms, which counts touches from above.
 
-$$Q \;=\; N\!\left(\frac{\nu T - b}{\sigma\sqrt{T}}\right) \;+\; \left(\frac{H}{S}\right)^{2\nu/\sigma^2} N\!\left(\frac{-b - \nu T}{\sigma\sqrt{T}}\right), \qquad b = \ln\frac{H}{S}, \quad \nu = r - q - \tfrac12\sigma^2$$
+```math
+Q \;=\; N\!\left(\frac{\nu T - b}{\sigma\sqrt{T}}\right) \;+\; \left(\frac{H}{S}\right)^{2\nu/\sigma^2} N\!\left(\frac{-b - \nu T}{\sigma\sqrt{T}}\right), \qquad b = \ln\frac{H}{S}, \quad \nu = r - q - \tfrac12\sigma^2
+```
 
 **Read it aloud:** the chance of touching is the chance of finishing past the line, plus a weighted chance of finishing past the line's mirror image.
 
 Then the three prices:
 
-$$\text{one-touch at expiry} = e^{-rT}\,Q, \qquad \text{no-touch} = e^{-rT}\,(1 - Q)$$
+```math
+\text{one-touch at expiry} = e^{-rT}\,Q, \qquad \text{no-touch} = e^{-rT}\,(1 - Q)
+```
 
-$$\text{one-touch at hit} \;=\; \left(\frac{H}{S}\right)^{(\nu - \tilde\nu)/\sigma^2} Q_{\tilde\nu}, \qquad \tilde\nu = \sqrt{\nu^2 + 2r\sigma^2}$$
+```math
+\text{one-touch at hit} \;=\; \left(\frac{H}{S}\right)^{(\nu - \tilde\nu)/\sigma^2} Q_{\tilde\nu}, \qquad \tilde\nu = \sqrt{\nu^2 + 2r\sigma^2}
+```
 
 **Read it aloud:** paid at expiry, the one-touch is the touch chance discounted for a year; the no-touch is the rest of that discounted dollar; paid at the hit, it is the same touch formula run with a steeper drift, times a weight.
 
-$Q_{\tilde\nu}$ means the formula for $Q$ with the drift $\nu$ replaced by $\tilde\nu$ everywhere, including in the weight.
+$`Q_{\tilde\nu}`$ means the formula for $`Q`$ with the drift $`\nu`$ replaced by $`\tilde\nu`$ everywhere, including in the weight.
 
 | Symbol | Plain meaning | In our example | Push it up and the one-touch… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100 | rises: closer to the line |
-| $H$ | the barrier: the line that must be touched | $120 | falls: further to climb |
-| $T$, $t$ | time to expiry, in years; a moment along the way | 1 | rises: more time to wander up |
-| $r$ | the riskless rate, continuously compounded | 5% | rises: the extra drift outweighs the extra discount |
-| $q$ | Acme's dividend yield | 2% | falls: dividends leak out and slow the climb |
-| $\sigma$ | volatility: how jumpy Acme is, per year | 20% | rises: a jumpier share reaches further |
-| $b$ | the barrier's distance in log terms, $\ln(H/S)$ | 0.182322 | — |
-| $\nu$, $\tilde\nu$ | the pretend-world drift of Acme's log price; the steeper drift used for payment at the hit | 0.010000 and 0.064031 | — |
-| $M_T$, $\tau$, $X_t$, $X_T$ | the running maximum over the year; the first moment Acme reaches $H$; the log of Acme's price over today's, at time $t$ and at expiry | — | — |
-| $Q$ | the pretend-world chance that $M_T \ge H$ | 0.378622 | — |
-| $N(x)$, $\varphi(x)$ | the area under the standard bell curve left of $x$; the curve's height at $x$ | — | — |
-| $e^{-rT}$, $D(T)$ | the discount factor: today's worth of $1 due at $T$ | 0.951229 | — |
+| $`S`$ | Acme's price today | $100 | rises: closer to the line |
+| $`H`$ | the barrier: the line that must be touched | $120 | falls: further to climb |
+| $`T`$, $`t`$ | time to expiry, in years; a moment along the way | 1 | rises: more time to wander up |
+| $`r`$ | the riskless rate, continuously compounded | 5% | rises: the extra drift outweighs the extra discount |
+| $`q`$ | Acme's dividend yield | 2% | falls: dividends leak out and slow the climb |
+| $`\sigma`$ | volatility: how jumpy Acme is, per year | 20% | rises: a jumpier share reaches further |
+| $`b`$ | the barrier's distance in log terms, $`\ln(H/S)`$ | 0.182322 | — |
+| $`\nu`$, $`\tilde\nu`$ | the pretend-world drift of Acme's log price; the steeper drift used for payment at the hit | 0.010000 and 0.064031 | — |
+| $`M_T`$, $`\tau`$, $`X_t`$, $`X_T`$ | the running maximum over the year; the first moment Acme reaches $`H`$; the log of Acme's price over today's, at time $`t`$ and at expiry | — | — |
+| $`Q`$ | the pretend-world chance that $`M_T \ge H`$ | 0.378622 | — |
+| $`N(x)`$, $`\varphi(x)`$ | the area under the standard bell curve left of $`x`$; the curve's height at $`x`$ | — | — |
+| $`e^{-rT}`$, $`D(T)`$ | the discount factor: today's worth of $1 due at $`T`$ | 0.951229 | — |
 
-The weight $(H/S)^{2\nu/\sigma^2}$ equals $e^{2\nu b/\sigma^2}$, and here it is 1.095445. It is 1 exactly when the drift $\nu$ is zero. The first bell-curve area is the cash-or-nothing digital's, with the strike moved to $H$.
+The weight $`(H/S)^{2\nu/\sigma^2}`$ equals $`e^{2\nu b/\sigma^2}`$, and here it is 1.095445. It is 1 exactly when the drift $`\nu`$ is zero. The first bell-curve area is the cash-or-nothing digital's, with the strike moved to $`H`$.
 
 **The Greeks** (how the price moves when one input is nudged; each is found by nudging the price in the code):
 
@@ -89,7 +95,7 @@ Delta, gamma and vega are equal and opposite because the two contracts sum to a 
 - **The barrier is watched every instant.** The formula counts a touch that lasts a millisecond. A contract that checks only the daily close misses touches between closes, so its one-touch is worth less; the correction is on [Daily monitoring](03-discrete-monitoring-correction.md).
 - **Acme moves without jumps.** A share that gaps overnight from $118 to $125 still counts as touching, but the formula's paths are continuous. With jumps the touch chance changes and the at-hit version pays at a price past the line.
 - **One fixed volatility.** Touch contracts depend on how jumpy Acme is near the barrier, not at the money. In a market that quotes different volatilities at different strikes, one number for the whole path misprices them; the market's adjustments are beyond this card.
-- **A single riskless rate and a steady dividend yield.** The at-hit formula also needs $r \ge 0$ (Step 5). With a curve of rates, $e^{-rT}$ becomes the discount factor $D(T)$ for the payment date, and the at-hit version needs the curve at every possible hit date.
+- **A single riskless rate and a steady dividend yield.** The at-hit formula also needs $`r \ge 0`$ (Step 5). With a curve of rates, $`e^{-rT}`$ becomes the discount factor $`D(T)`$ for the payment date, and the at-hit version needs the curve at every possible hit date.
 
 ---
 
@@ -99,81 +105,101 @@ Delta, gamma and vega are equal and opposite because the two contracts sum to a 
 
 The pilot card [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) gives the recipe for any payoff. Pretend every asset grows at the bank rate. Average the payoff over what Acme could do in that pretend world, called the **risk-neutral** world. Discount the average to today.
 
-A payoff of $1 on an event and $0 otherwise averages to the chance of the event. That is how [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md) is priced, with the event "Acme finishes above the strike". Here the event is "Acme's running maximum reaches $120". So a one-touch paid at expiry is worth $e^{-rT} Q$. Everything hard is in $Q$, which is a question about whole paths, not end points.
+A payoff of $1 on an event and $0 otherwise averages to the chance of the event. That is how [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md) is priced, with the event "Acme finishes above the strike". Here the event is "Acme's running maximum reaches $120". So a one-touch paid at expiry is worth $`e^{-rT} Q`$. Everything hard is in $`Q`$, which is a question about whole paths, not end points.
 
 ### Step 1: move to log prices, where the barrier is a flat wall
 
-Write Acme's price as $S$ times $e^{X_t}$. In the pretend world $X_t$, the log of the price ratio, is a Brownian motion with drift (the reminder is on [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). It starts at 0, drifts at $\nu$ per year and spreads with $\sigma$ per root year.
+Write Acme's price as $`S`$ times $`e^{X_t}`$. In the pretend world $`X_t`$, the log of the price ratio, is a Brownian motion with drift (the reminder is on [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). It starts at 0, drifts at $`\nu`$ per year and spreads with $`\sigma`$ per root year.
 
-$$\nu = r - q - \tfrac12\sigma^2 = 0.05 - 0.02 - 0.02 = 0.010000$$
+```math
+\nu = r - q - \tfrac12\sigma^2 = 0.05 - 0.02 - 0.02 = 0.010000
+```
 
-The $-\tfrac12\sigma^2$ is the drag that wiggling puts on a log price; the pilot's "Why logarithms?" callout explains it. Acme reaches $120 exactly when $X_t$ reaches $b = \ln(120/100) = 0.182322$. Touching is now a question about a drifting random walk and a flat wall at height $b$.
+The $`-\tfrac12\sigma^2`$ is the drag that wiggling puts on a log price; the pilot's "Why logarithms?" callout explains it. Acme reaches $120 exactly when $`X_t`$ reaches $`b = \ln(120/100) = 0.182322`$. Touching is now a question about a drifting random walk and a flat wall at height $`b`$.
 
 ### Step 2: paths that finish past the wall certainly touched
 
-Acme's path is continuous. A path that ends at or above $b$ must have crossed $b$ on the way. The chance of that ending is a single bell-curve area, the same one as the digital's:
+Acme's path is continuous. A path that ends at or above $`b`$ must have crossed $`b`$ on the way. The chance of that ending is a single bell-curve area, the same one as the digital's:
 
-$$P(X_T \ge b) = N\!\left(\frac{\nu T - b}{\sigma\sqrt{T}}\right) = N(-0.861608) = 0.194452$$
+```math
+P(X_T \ge b) = N\!\left(\frac{\nu T - b}{\sigma\sqrt{T}}\right) = N(-0.861608) = 0.194452
+```
 
 Stopping here prices a one-touch as a plain digital at $120. That misses every path that touched and fell back.
 
 ### Step 3: paths that touched and came back, counted by a mirror
 
-Take a path that touches the wall and then ends at some point $x$ below it. Flip everything after the first touch, up for down, about the wall. The flipped path ends at $2b - x$, above the wall. Flipping twice gives back the original, so touched paths ending at $x$ pair off one for one with paths ending at $2b - x$. This is the **reflection principle**, proved for driftless Brownian motion on [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md).
+Take a path that touches the wall and then ends at some point $`x`$ below it. Flip everything after the first touch, up for down, about the wall. The flipped path ends at $`2b - x`$, above the wall. Flipping twice gives back the original, so touched paths ending at $`x`$ pair off one for one with paths ending at $`2b - x`$. This is the **reflection principle**, proved for driftless Brownian motion on [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md).
 
-Without drift, both members of each pair are equally likely. So the touched-and-returned paths have the same total chance as the paths ending above the wall: $Q$ is exactly twice the chance of finishing past the line.
+Without drift, both members of each pair are equally likely. So the touched-and-returned paths have the same total chance as the paths ending above the wall: $`Q`$ is exactly twice the chance of finishing past the line.
 
-With drift, the pair is not fair. Flipping turns an upward stretch into a downward one, and the pretend-world drift favours one direction. The correction turns out to be one constant weight for every path: touched paths ending at $x$ are as likely as free paths ending at $x - 2b$, times $e^{2\nu b/\sigma^2}$. A free path ending at $x - 2b$ is the same as a path launched from the mirror image of today's price, $H^2/S = 144$, and ending at $x$. Adding over all endings below the wall:
+With drift, the pair is not fair. Flipping turns an upward stretch into a downward one, and the pretend-world drift favours one direction. The correction turns out to be one constant weight for every path: touched paths ending at $`x`$ are as likely as free paths ending at $`x - 2b`$, times $`e^{2\nu b/\sigma^2}`$. A free path ending at $`x - 2b`$ is the same as a path launched from the mirror image of today's price, $`H^2/S = 144`$, and ending at $`x`$. Adding over all endings below the wall:
 
-$$P(\text{touched and } X_T < b) = e^{2\nu b/\sigma^2}\, N\!\left(\frac{-b - \nu T}{\sigma\sqrt{T}}\right) = 1.095445 \times N(-0.961608) = 0.184170$$
+```math
+P(\text{touched and } X_T < b) = e^{2\nu b/\sigma^2}\, N\!\left(\frac{-b - \nu T}{\sigma\sqrt{T}}\right) = 1.095445 \times N(-0.961608) = 0.184170
+```
 
 <details>
 <summary>Detailed proof: the weighted mirror</summary>
 
-Write $p(x)$ for the density of $X_T$, a bell curve with centre $\nu T$ and spread $\sigma\sqrt{T}$, and $p_0(x)$ for the same with no drift. Adding a drift $\nu$ reweights each path by a factor that depends only on its end point $x$ (Girsanov's change of measure): $G(x) = e^{\nu x/\sigma^2 - \nu^2 T/(2\sigma^2)}$.
+Write $`p(x)`$ for the density of $`X_T`$, a bell curve with centre $`\nu T`$ and spread $`\sigma\sqrt{T}`$, and $`p_0(x)`$ for the same with no drift. Adding a drift $`\nu`$ reweights each path by a factor that depends only on its end point $`x`$ (Girsanov's change of measure): $`G(x) = e^{\nu x/\sigma^2 - \nu^2 T/(2\sigma^2)}`$.
 
-Without drift, the reflection principle gives the density of "touched, ended at $x$" for $x < b$ as $p_0(2b - x)$. With drift, multiply by $G(x)$. Write out the exponent:
-$$-\frac{(2b - x)^2}{2\sigma^2 T} + \frac{\nu x}{\sigma^2} - \frac{\nu^2 T}{2\sigma^2} = -\frac{(2b - x)^2 - 2\nu T x + \nu^2 T^2}{2\sigma^2 T}.$$
-Now write out the exponent of $e^{2\nu b/\sigma^2}\,p(x - 2b)$:
-$$\frac{2\nu b}{\sigma^2} - \frac{(x - 2b - \nu T)^2}{2\sigma^2 T} = -\frac{(x - 2b)^2 - 2\nu T x + 4\nu b T + \nu^2 T^2 - 4\nu b T}{2\sigma^2 T}.$$
-The $4\nu bT$ terms cancel and $(x - 2b)^2 = (2b - x)^2$, so the two exponents agree, and the constants in front are the same $1/(\sigma\sqrt{2\pi T})$. So the touched density is $e^{2\nu b/\sigma^2}\,p(x - 2b)$: a free bell curve shifted by $2b$, times one constant.
+Without drift, the reflection principle gives the density of "touched, ended at $`x`$" for $`x < b`$ as $`p_0(2b - x)`$. With drift, multiply by $`G(x)`$. Write out the exponent:
 
-Integrate over $x < b$. The shifted curve puts mass $N\big((b - 2b - \nu T)/(\sigma\sqrt{T})\big) = N\big((-b - \nu T)/(\sigma\sqrt{T})\big)$ below $b$. Add Step 2's term for $x \ge b$, and the formula for $Q$ follows. The same argument gives the surviving-path density $p(x) - e^{2\nu b/\sigma^2}\,p(x - 2b)$ for $x < b$, which the code integrates as its second road to the no-touch.
+$`\displaystyle -\frac{(2b - x)^2}{2\sigma^2 T} + \frac{\nu x}{\sigma^2} - \frac{\nu^2 T}{2\sigma^2} = -\frac{(2b - x)^2 - 2\nu T x + \nu^2 T^2}{2\sigma^2 T}.`$
+
+Now write out the exponent of $`e^{2\nu b/\sigma^2}\,p(x - 2b)`$:
+
+$`\displaystyle \frac{2\nu b}{\sigma^2} - \frac{(x - 2b - \nu T)^2}{2\sigma^2 T} = -\frac{(x - 2b)^2 - 2\nu T x + 4\nu b T + \nu^2 T^2 - 4\nu b T}{2\sigma^2 T}.`$
+
+The $`4\nu bT`$ terms cancel and $`(x - 2b)^2 = (2b - x)^2`$, so the two exponents agree, and the constants in front are the same $`1/(\sigma\sqrt{2\pi T})`$. So the touched density is $`e^{2\nu b/\sigma^2}\,p(x - 2b)`$: a free bell curve shifted by $`2b`$, times one constant.
+
+Integrate over $`x < b`$. The shifted curve puts mass $`N\big((b - 2b - \nu T)/(\sigma\sqrt{T})\big) = N\big((-b - \nu T)/(\sigma\sqrt{T})\big)`$ below $`b`$. Add Step 2's term for $`x \ge b`$, and the formula for $`Q`$ follows. The same argument gives the surviving-path density $`p(x) - e^{2\nu b/\sigma^2}\,p(x - 2b)`$ for $`x < b`$, which the code integrates as its second road to the no-touch.
 
 </details>
 
 ### Step 4: add, then discount
 
-$$Q = 0.194452 + 0.184170 = 0.378622$$
+```math
+Q = 0.194452 + 0.184170 = 0.378622
+```
 
 The mirror term is almost as big as the direct term: the log drift is small against the spread, so the pairing is nearly fair.
 
-Paid at expiry, the one-touch is $e^{-rT}Q = 0.951229 \times 0.378622 = 0.360156$.
+Paid at expiry, the one-touch is $`e^{-rT}Q = 0.951229 \times 0.378622 = 0.360156`$.
 
-The no-touch pays on the complementary event. Every path either touches or does not, so the one-touch plus the no-touch pays $1 at expiry in every future. Two things that always pay the same must cost the same. So the no-touch is $e^{-rT}(1 - Q) = 0.591073$, and the pair costs 0.951229. That step used no model at all: it is the same argument as in-out parity on [Knock-out and knock-in options](01-knock-out-and-knock-in-options.md), with $1 in place of a call.
+The no-touch pays on the complementary event. Every path either touches or does not, so the one-touch plus the no-touch pays $1 at expiry in every future. Two things that always pay the same must cost the same. So the no-touch is $`e^{-rT}(1 - Q) = 0.591073`$, and the pair costs 0.951229. That step used no model at all: it is the same argument as in-out parity on [Knock-out and knock-in options](01-knock-out-and-knock-in-options.md), with $1 in place of a call.
 
 ### Step 5: paid at the hit, the discount rides along the path
 
-Paid at the first touch time $\tau$, the dollar is discounted by $e^{-r\tau}$, not by $e^{-rT}$. Averaging that over paths that touch needs the chance of touching at each moment, the **first-passage density**:
+Paid at the first touch time $`\tau`$, the dollar is discounted by $`e^{-r\tau}`$, not by $`e^{-rT}`$. Averaging that over paths that touch needs the chance of touching at each moment, the **first-passage density**:
 
-$$f(t) = \frac{b}{\sigma\sqrt{2\pi t^3}}\; e^{-(b - \nu t)^2/(2\sigma^2 t)}$$
+```math
+f(t) = \frac{b}{\sigma\sqrt{2\pi t^3}}\; e^{-(b - \nu t)^2/(2\sigma^2 t)}
+```
 
-It is the rate at which $Q$ builds up as the year runs: adding $f(t)$ from 0 to $T$ gives $Q$ again, which is the code's second road.
+It is the rate at which $`Q`$ builds up as the year runs: adding $`f(t)`$ from 0 to $`T`$ gives $`Q`$ again, which is the code's second road.
 
-Multiply $f(t)$ by $e^{-rt}$. The two exponents combine by completing the square. What comes out is the same density with a steeper drift $\tilde\nu = \sqrt{\nu^2 + 2r\sigma^2} = 0.064031$, times a constant $e^{b(\nu - \tilde\nu)/\sigma^2} = 0.781706$. So the at-hit price is that constant times the touch chance at the steeper drift, 0.472545:
+Multiply $`f(t)`$ by $`e^{-rt}`$. The two exponents combine by completing the square. What comes out is the same density with a steeper drift $`\tilde\nu = \sqrt{\nu^2 + 2r\sigma^2} = 0.064031`$, times a constant $`e^{b(\nu - \tilde\nu)/\sigma^2} = 0.781706`$. So the at-hit price is that constant times the touch chance at the steeper drift, 0.472545:
 
-$$0.781706 \times 0.472545 = 0.369391$$
+```math
+0.781706 \times 0.472545 = 0.369391
+```
 
-That exceeds the at-expiry price, 0.360156, because every touch before the end date pays earlier and is discounted less. Both claims need $r \ge 0$. With a negative rate an early dollar is worth less, and $\nu^2 + 2r\sigma^2$ can turn negative, so $\tilde\nu$ does not exist; the discounted-density integral still prices it.
+That exceeds the at-expiry price, 0.360156, because every touch before the end date pays earlier and is discounted less. Both claims need $`r \ge 0`$. With a negative rate an early dollar is worth less, and $`\nu^2 + 2r\sigma^2`$ can turn negative, so $`\tilde\nu`$ does not exist; the discounted-density integral still prices it.
 
 <details>
 <summary>The algebra behind the steeper drift</summary>
 
-The exponent of $e^{-rt} f(t)$ is
-$$-\frac{(b - \nu t)^2}{2\sigma^2 t} - rt = -\frac{b^2 - 2b\nu t + (\nu^2 + 2r\sigma^2)t^2}{2\sigma^2 t} = \frac{b\nu}{\sigma^2} - \frac{b^2 + \tilde\nu^2 t^2}{2\sigma^2 t}.$$
-Add and subtract $b\tilde\nu/\sigma^2$: the last fraction becomes $-\frac{b\tilde\nu}{\sigma^2} - \frac{(b - \tilde\nu t)^2}{2\sigma^2 t}$. So
-$$e^{-rt} f(t) = e^{b(\nu - \tilde\nu)/\sigma^2} \times \frac{b}{\sigma\sqrt{2\pi t^3}}\, e^{-(b - \tilde\nu t)^2/(2\sigma^2 t)},$$
-and the second factor is the first-passage density with drift $\tilde\nu$. Adding it from 0 to $T$ gives $Q_{\tilde\nu}$. Since $e^{b(\nu - \tilde\nu)/\sigma^2} = (H/S)^{(\nu - \tilde\nu)/\sigma^2}$, the formula on this card follows.
+The exponent of $`e^{-rt} f(t)`$ is
+
+$`\displaystyle -\frac{(b - \nu t)^2}{2\sigma^2 t} - rt = -\frac{b^2 - 2b\nu t + (\nu^2 + 2r\sigma^2)t^2}{2\sigma^2 t} = \frac{b\nu}{\sigma^2} - \frac{b^2 + \tilde\nu^2 t^2}{2\sigma^2 t}.`$
+
+Add and subtract $`b\tilde\nu/\sigma^2`$: the last fraction becomes $`-\frac{b\tilde\nu}{\sigma^2} - \frac{(b - \tilde\nu t)^2}{2\sigma^2 t}`$. So
+
+$`\displaystyle e^{-rt} f(t) = e^{b(\nu - \tilde\nu)/\sigma^2} \times \frac{b}{\sigma\sqrt{2\pi t^3}}\, e^{-(b - \tilde\nu t)^2/(2\sigma^2 t)},`$
+
+and the second factor is the first-passage density with drift $`\tilde\nu`$. Adding it from 0 to $`T`$ gives $`Q_{\tilde\nu}`$. Since $`e^{b(\nu - \tilde\nu)/\sigma^2} = (H/S)^{(\nu - \tilde\nu)/\sigma^2}`$, the formula on this card follows.
 
 </details>
 
@@ -183,25 +209,25 @@ A different road reaches the same prices: write the price as a function of Acme'
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $H = 120$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, $1 paid.
+Acme: $`S = 100`$, $`H = 120`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year, $1 paid.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| log distance $b$ | $\ln(120/100)$ | 0.182322 |
-| log drift $\nu$ | $0.05 - 0.02 - 0.02$ | 0.010000 |
-| direct z-score | $(0.01 - 0.182322)/0.20$ | −0.861608 |
-| direct term, finish past $120 | $N(-0.861608)$ | 0.194452 |
-| mirror weight | $1.2^{2 \times 0.01/0.04} = 1.2^{0.5}$ | 1.095445 |
-| mirror z-score | $(-0.182322 - 0.01)/0.20$ | −0.961608 |
-| mirror term | $1.095445 \times N(-0.961608)$ | 0.184170 |
-| touch chance $Q$ | $0.194452 + 0.184170$ | **0.378622** |
-| discount $e^{-0.05}$ | | 0.951229 |
-| one-touch at expiry | $0.951229 \times 0.378622$ | **$0.360156** |
-| no-touch | $0.951229 \times (1 - 0.378622)$ | **$0.591073** |
-| steeper drift $\tilde\nu$ | $\sqrt{0.0001 + 2 \times 0.05 \times 0.04}$ | 0.064031 |
-| at-hit weight | $e^{0.182322 \times (0.01 - 0.064031)/0.04}$ | 0.781706 |
-| touch chance at $\tilde\nu$ | the $Q$ formula with 0.064031 | 0.472545 |
-| one-touch at hit | $0.781706 \times 0.472545$ | **$0.369391** |
+| log distance $`b`$ | $`\ln(120/100)`$ | 0.182322 |
+| log drift $`\nu`$ | $`0.05 - 0.02 - 0.02`$ | 0.010000 |
+| direct z-score | $`(0.01 - 0.182322)/0.20`$ | −0.861608 |
+| direct term, finish past $120 | $`N(-0.861608)`$ | 0.194452 |
+| mirror weight | $`1.2^{2 \times 0.01/0.04} = 1.2^{0.5}`$ | 1.095445 |
+| mirror z-score | $`(-0.182322 - 0.01)/0.20`$ | −0.961608 |
+| mirror term | $`1.095445 \times N(-0.961608)`$ | 0.184170 |
+| touch chance $`Q`$ | $`0.194452 + 0.184170`$ | **0.378622** |
+| discount $`e^{-0.05}`$ | | 0.951229 |
+| one-touch at expiry | $`0.951229 \times 0.378622`$ | **$0.360156** |
+| no-touch | $`0.951229 \times (1 - 0.378622)`$ | **$0.591073** |
+| steeper drift $`\tilde\nu`$ | $`\sqrt{0.0001 + 2 \times 0.05 \times 0.04}`$ | 0.064031 |
+| at-hit weight | $`e^{0.182322 \times (0.01 - 0.064031)/0.04}`$ | 0.781706 |
+| touch chance at $`\tilde\nu`$ | the $`Q`$ formula with 0.064031 | 0.472545 |
+| one-touch at hit | $`0.781706 \times 0.472545`$ | **$0.369391** |
 
 A promise that Acme stays below $120 all year costs $0.591073. The market treats a 20 percent rise at some point in the year as a bit better than a one-in-three chance, while a finish above $120 is below one in five.
 
@@ -213,7 +239,7 @@ Same contract, correct one-touch at expiry $0.360156:
 | --- | --- | --- |
 | Price it as a digital: no mirror term | $0.184968 | Counts only paths that finish past $120 and misses every path that touched and fell back. Half the price is gone. |
 | Mirror weight set to 1 | $0.344892 | Treats the flipped paths as equally likely with the drift present. Here the weight is above 1, so this undercounts. |
-| Drift $r - q$, forgetting the $-\tfrac12\sigma^2$ | $0.392584 | Uses the price's drift where the log price's drift belongs, overstating the climb. |
+| Drift $`r - q`$, forgetting the $`-\tfrac12\sigma^2`$ | $0.392584 | Uses the price's drift where the log price's drift belongs, overstating the climb. |
 | Rule of thumb: two digitals at $120 | $0.369936 | Exact only when the log drift is zero; a quick estimate, not a price. |
 
 Every number in the table is printed by the code below.
@@ -249,7 +275,7 @@ Orange: 12 months left, a gentle curve. Green: 6 months left. Dark blue: 1 month
 
 ## Code, from first principles, and it actually runs
 
-Both programs take three independent roads to the touch chance and the prices. Road 1 is the reflection formula. Road 2 adds up the first-passage density over the year by Simpson's rule (thin slices, each topped by a parabola), and separately adds up the density of paths that survive below the wall, which prices the no-touch without using the formula. Road 3 simulates 20,000 years of Acme in 250 daily steps with a home-made random number generator; between steps it asks, by the Brownian-bridge formula, whether the path could have touched $120 and come back unseen, so the simulation watches continuously, as the contract does. The bell-curve area $N(x)$ is built from thin slices, since nothing imported may know the answer. The asserts compare roads against each other, and the simulation against the formula within four standard errors.
+Both programs take three independent roads to the touch chance and the prices. Road 1 is the reflection formula. Road 2 adds up the first-passage density over the year by Simpson's rule (thin slices, each topped by a parabola), and separately adds up the density of paths that survive below the wall, which prices the no-touch without using the formula. Road 3 simulates 20,000 years of Acme in 250 daily steps with a home-made random number generator; between steps it asks, by the Brownian-bridge formula, whether the path could have touched $120 and come back unseen, so the simulation watches continuously, as the contract does. The bell-curve area $`N(x)`$ is built from thin slices, since nothing imported may know the answer. The asserts compare roads against each other, and the simulation against the formula within four standard errors.
 
 ### Python
 
@@ -614,10 +640,10 @@ The two outputs agree line for line, the simulation included, because both progr
 
 Lean proves the touch chance for a line above today's price, the parity, the steeper-drift algebra, and the house numbers.
 
-- Suppose $X_t$ is Brownian motion with drift $\nu$ and spread $\sigma > 0$, the barrier $H$ is above $S$, and $T > 0$. Then the pretend-world chance of touching $H$ by $T$ is exactly the formula for $Q$.
-- Take any price paths and any pretend-world chances. Then the one-touch at expiry plus the no-touch costs $e^{-rT}$, a discounted dollar.
-- Suppose $r \ge 0$, $\sigma > 0$ and $t > 0$. Then $e^{-rt} f(t)$ equals $e^{b(\nu - \tilde\nu)/\sigma^2}$ times $f(t)$ with drift $\tilde\nu$.
-- Take the house market. Then $\nu = 1/100$, the weight's exponent $2\nu/\sigma^2$ is $1/2$, and $\nu^2 + 2r\sigma^2 = 41/10000$.
+- Suppose $`X_t`$ is Brownian motion with drift $`\nu`$ and spread $`\sigma > 0`$, the barrier $`H`$ is above $`S`$, and $`T > 0`$. Then the pretend-world chance of touching $`H`$ by $`T`$ is exactly the formula for $`Q`$.
+- Take any price paths and any pretend-world chances. Then the one-touch at expiry plus the no-touch costs $`e^{-rT}`$, a discounted dollar.
+- Suppose $`r \ge 0`$, $`\sigma > 0`$ and $`t > 0`$. Then $`e^{-rt} f(t)`$ equals $`e^{b(\nu - \tilde\nu)/\sigma^2}`$ times $`f(t)`$ with drift $`\tilde\nu`$.
+- Take the house market. Then $`\nu = 1/100`$, the weight's exponent $`2\nu/\sigma^2`$ is $`1/2`$, and $`\nu^2 + 2r\sigma^2 = 41/10000`$.
 - Take each year's high on the payoff chart. Then the one-touch and the no-touch pay exactly $1 between them.
 
 The prices, the Greeks, adding up the first-passage density, and the simulation are left to the Python and Rust checks.
@@ -1761,7 +1787,7 @@ example : ∀ h ∈ [100, 105, 110, 115, 119, 120, 125, 130],
 > - **Raise the volatility.** Set `sig = 0.30` in the one-touch. The price goes from 0.360156 to **0.501158**. A jumpier share reaches further, and the one-touch has no downside to mind.
 > - **Move the line closer.** Set `H = 110`. The price rises to **0.617074**. A 10 percent rise at some point in the year is more likely than not.
 > - **Give it two years.** Set `T = 2`. The price is **0.491207**. More time to touch, partly eaten by a second year of discounting.
-> - **Kill the drift.** Set `r = 0.04` with `q = 0.02`, so $\nu = 0$. The touch chance is **0.361975**, and twice the chance of finishing past $120 is also **0.361975**. With no drift the mirror is fair and the doubling is exact.
+> - **Kill the drift.** Set `r = 0.04` with `q = 0.02`, so $`\nu = 0`$. The touch chance is **0.361975**, and twice the chance of finishing past $120 is also **0.361975**. With no drift the mirror is fair and the doubling is exact.
 
 ---
 
@@ -1772,7 +1798,7 @@ example : ∀ h ∈ [100, 105, 110, 115, 119, 120, 125, 130],
 >
 > Smaller traps:
 > - **Mixing up the payment dates.** Paid at the hit it is $0.369391; paid at expiry, $0.360156. The contract says which. Quoting one for the other misprices it by the gap.
-> - **Dropping the mirror weight, or using the price's drift $r - q$ for the log drift.** $0.344892 and $0.392584; see the table above.
+> - **Dropping the mirror weight, or using the price's drift $`r - q`$ for the log drift.** $0.344892 and $0.392584; see the table above.
 > - **Forgetting how the barrier is watched.** The formula assumes every instant. A contract that looks only at daily closes touches less often, and paying the continuous price for it overpays.
 
 ---

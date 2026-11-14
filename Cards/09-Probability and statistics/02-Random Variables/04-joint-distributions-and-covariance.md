@@ -30,23 +30,29 @@ The weight runs from top left to bottom right: dry days pile up at few sales, we
 
 ## The formula
 
-Notation first, in words. Two capital letters name the two readings of one day: $X$ is 1 on a wet day and 0 on a dry one, and $Y$ is the number of umbrellas sold. A lower-case letter is a value one of them can take. The chance that both happen together, written P(X = x, Y = y), is read "the chance that X is x and Y is y": one cell of the table.
+Notation first, in words. Two capital letters name the two readings of one day: $`X`$ is 1 on a wet day and 0 on a dry one, and $`Y`$ is the number of umbrellas sold. A lower-case letter is a value one of them can take. The chance that both happen together, written P(X = x, Y = y), is read "the chance that X is x and Y is y": one cell of the table.
 
-As on the earlier cards of this shelf, $E$ in E[X] means the long-run average and Var(X) the variance, the average squared distance from that average.
+As on the earlier cards of this shelf, $`E`$ in E[X] means the long-run average and Var(X) the variance, the average squared distance from that average.
 
-Three new symbols. Cov(X, Y), read "the covariance of X and Y", is the average product of the two readings' distances from their own averages. $\sigma_X$ and $\sigma_Y$ (sigma) are the two standard deviations. The Greek letter rho, $\rho$, is the correlation: covariance divided by both standard deviations.
+Three new symbols. Cov(X, Y), read "the covariance of X and Y", is the average product of the two readings' distances from their own averages. $`\sigma_X`$ and $`\sigma_Y`$ (sigma) are the two standard deviations. The Greek letter rho, $`\rho`$, is the correlation: covariance divided by both standard deviations.
 
-$$\mathrm{Cov}(X,Y) = E\big[(X - E[X])\,(Y - E[Y])\big] = E[XY] - E[X]\,E[Y]$$
+```math
+\mathrm{Cov}(X,Y) = E\big[(X - E[X])\,(Y - E[Y])\big] = E[XY] - E[X]\,E[Y]
+```
 
 **Read it aloud:** on each day, multiply how far rain sat above its average by how far sales sat above theirs, and average those products. Equivalently, it is the average of the product minus the product of the averages.
 
-$$\rho = \frac{\mathrm{Cov}(X,Y)}{\sigma_X\,\sigma_Y}, \qquad -1 \le \rho \le 1$$
+```math
+\rho = \frac{\mathrm{Cov}(X,Y)}{\sigma_X\,\sigma_Y}, \qquad -1 \le \rho \le 1
+```
 
 **Read it aloud:** correlation is covariance with the units divided out, so it always lands between −1 and +1.
 
 The theorem this card proves, for any fixed numbers a and b:
 
-$$\mathrm{Var}(aX + bY) = a^2\,\mathrm{Var}(X) + b^2\,\mathrm{Var}(Y) + 2ab\,\mathrm{Cov}(X,Y)$$
+```math
+\mathrm{Var}(aX + bY) = a^2\,\mathrm{Var}(X) + b^2\,\mathrm{Var}(Y) + 2ab\,\mathrm{Cov}(X,Y)
+```
 
 **Read it aloud:** the spread of a weighted sum is each spread scaled by its weight squared, plus twice the two weights times the covariance.
 
@@ -54,17 +60,17 @@ With a = b = 1 this is the plain sum: Var(X + Y) = Var(X) + Var(Y) + 2 Cov(X, Y)
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the rain reading: 1 on a wet day, 0 on a dry one | average 0.4000 | more wet days: more umbrella days |
-| $Y$ | umbrellas sold that day | average 1.2200 | more sales: larger profit |
-| $x$, $y$ | one particular value of each | x = 1, y = 3 | picks a different cell |
+| $`X`$ | the rain reading: 1 on a wet day, 0 on a dry one | average 0.4000 | more wet days: more umbrella days |
+| $`Y`$ | umbrellas sold that day | average 1.2200 | more sales: larger profit |
+| $`x`$, $`y`$ | one particular value of each | x = 1, y = 3 | picks a different cell |
 | P(X = x, Y = y) | the joint probability: one cell of the table, as a share of all days | wet and 3 sold: 16 of 100 days | a heavier cell pulls the lean its way |
-| $E$ | long-run average, E[X], E[Y], E[XY] | E[XY] = 0.8000 | — |
+| $`E`$ | long-run average, E[X], E[Y], E[XY] | E[XY] = 0.8000 | — |
 | Var | variance: average squared distance from the average | Var(X) = 0.2400, Var(Y) = 1.2116 | a wider spread |
 | Cov | covariance: average product of the two distances | 0.3120 | stronger joint movement, in umbrella units |
-| $\sigma_X$, $\sigma_Y$ | standard deviations, the square roots of the variances | 0.4899, 1.1007 | shrinks the correlation for a given covariance |
-| $\rho$ | correlation, covariance with units removed | 0.5786 | nearer +1: closer to a straight rising line |
-| $a$, $b$ | fixed multipliers in a weighted sum | a = −5 (canopy), b = 8 (price) | scales that reading's share of the spread |
-| $G$ | the day's profit in dollars, G = 8Y − 5X | average $7.76 | — |
+| $`\sigma_X`$, $`\sigma_Y`$ | standard deviations, the square roots of the variances | 0.4899, 1.1007 | shrinks the correlation for a given covariance |
+| $`\rho`$ | correlation, covariance with units removed | 0.5786 | nearer +1: closer to a straight rising line |
+| $`a`$, $`b`$ | fixed multipliers in a weighted sum | a = −5 (canopy), b = 8 (price) | scales that reading's share of the spread |
+| $`G`$ | the day's profit in dollars, G = 8Y − 5X | average $7.76 | — |
 
 Two helper facts, each one line. The **marginal** of X is a row total: add across a row and the sales reading is forgotten, leaving 0.60 dry and 0.40 wet. The marginal of Y is a column total: 0.34, 0.28, 0.20, 0.18 for 0, 1, 2, 3 sold.
 
@@ -536,7 +542,7 @@ Lean proves the three facts in Why it works for any two readings of the same day
 
 - **The variance of a sum.** Take fixed numbers a and b. Then Var(aX + bY) = a^2 Var(X) + b^2 Var(Y) + 2ab Cov(X, Y).
 - **The covariance shortcut.** Take the same two readings. Then E[(X − E[X])(Y − E[Y])] = E[XY] − E[X]E[Y].
-- **Correlation cannot pass ±1.** Suppose both standard deviations are above zero. Then $-1 \le \rho \le 1$.
+- **Correlation cannot pass ±1.** Suppose both standard deviations are above zero. Then $`-1 \le \rho \le 1`$.
 - **The worked numbers.** The margins, the covariance 0.3120 and the profit variance 58.5824 come out exactly. So do the wind and dozens mistakes.
 
 The square roots, the correlation 0.5786, the simulation and the printed decimals are left to the Python and Rust checks.

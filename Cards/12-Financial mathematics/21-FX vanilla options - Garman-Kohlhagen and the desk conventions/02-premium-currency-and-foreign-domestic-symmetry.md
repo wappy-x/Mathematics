@@ -36,47 +36,53 @@ The top-left box is the Chicago price. The bottom-right box is the Frankfurt pri
 
 ## The formula
 
-A reminder of the pricing formula from [Garman-Kohlhagen](01-garman-kohlhagen.md): $C(S, K, r_d, r_f)$ is the price of the right to buy one unit of the **foreign** currency (the one with the price tag, here the euro) for $K$ units of the **domestic** currency (the one the price is counted in, here the dollar). $P$ is the matching right to sell. The symmetry says:
+A reminder of the pricing formula from [Garman-Kohlhagen](01-garman-kohlhagen.md): $`C(S, K, r_d, r_f)`$ is the price of the right to buy one unit of the **foreign** currency (the one with the price tag, here the euro) for $`K`$ units of the **domestic** currency (the one the price is counted in, here the dollar). $`P`$ is the matching right to sell. The symmetry says:
 
-$$C(S, K, r_d, r_f) \;=\; S \cdot K \cdot P\!\left(\tfrac{1}{S},\ \tfrac{1}{K},\ r_f,\ r_d\right)$$
+```math
+C(S, K, r_d, r_f) \;=\; S \cdot K \cdot P\!\left(\tfrac{1}{S},\ \tfrac{1}{K},\ r_f,\ r_d\right)
+```
 
 **Read it aloud:** the dollar price of the right to buy one euro at K dollars equals S times K times the euro price of the right to sell one dollar at 1/K euros, with the two interest rates trading places.
 
 The mirror line, proved the same way, says a EUR put is a USD call:
 
-$$P(S, K, r_d, r_f) \;=\; S \cdot K \cdot C\!\left(\tfrac{1}{S},\ \tfrac{1}{K},\ r_f,\ r_d\right)$$
+```math
+P(S, K, r_d, r_f) \;=\; S \cdot K \cdot C\!\left(\tfrac{1}{S},\ \tfrac{1}{K},\ r_f,\ r_d\right)
+```
 
-The four quotes, from the dollar price $C$ per one euro of notional:
+The four quotes, from the dollar price $`C`$ per one euro of notional:
 
-$$\text{USD pips} = 10^4\,C, \qquad \%\,\text{EUR} = \frac{C}{S}, \qquad \%\,\text{USD} = \frac{C}{K}, \qquad \text{EUR pips} = 10^4\,\frac{C}{S\,K}$$
+```math
+\text{USD pips} = 10^4\,C, \qquad \%\,\text{EUR} = \frac{C}{S}, \qquad \%\,\text{USD} = \frac{C}{K}, \qquad \text{EUR pips} = 10^4\,\frac{C}{S\,K}
+```
 
 A **pip** is 0.0001 of the quoting currency, so 0.0166 dollars per euro is 166 USD pips. The percentages are written as percents: 0.015067 is 1.5067%.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | spot: dollars per euro today | 1.10 | USD pips rise; EUR pips rise by less, since they divide by $S$ |
-| $K$ | strike: dollars per euro fixed in the contract | 1.20 | every quote falls; % USD and EUR pips fastest, since they also divide by $K$ |
-| $\tfrac{1}{S}$, $\tfrac{1}{K}$ | the same two rates quoted the other way: euros per dollar | 0.9091 and 0.8333 | — |
-| $S_T$ | the exchange rate on expiry day, unknown today | — | — |
-| $r_d$, $r_f$ | domestic and foreign interest rates, continuously compounded | USD 5%, EUR 3% | on the EUR side they swap: $r_f$ becomes domestic |
-| $\sigma$ | volatility: the yearly wobble of the log of the rate | 10% | every quote rises |
-| $T$, $t$ | time to expiry, and time elapsed so far, in years | 1, and 0 today | every quote rises |
-| $C$ | call price, domestic per 1 unit of foreign | 0.01657412 USD per EUR | — |
-| $P$ | put price, same units | EUR side: 0.01255615 EUR per USD | — |
-| $N(x)$ | bell-curve area left of $x$: a probability | — | — |
-| $d_1$, $d_2$ | distance from strike in wobble units, as on the garman-kohlhagen card | −0.6201, −0.7201 | — |
-| $e^{-r_d T}$, $e^{-r_f T}$ | discount factors: today's value of one unit due at $T$ | 0.9512, 0.9704 | — |
+| $`S`$ | spot: dollars per euro today | 1.10 | USD pips rise; EUR pips rise by less, since they divide by $`S`$ |
+| $`K`$ | strike: dollars per euro fixed in the contract | 1.20 | every quote falls; % USD and EUR pips fastest, since they also divide by $`K`$ |
+| $`\tfrac{1}{S}`$, $`\tfrac{1}{K}`$ | the same two rates quoted the other way: euros per dollar | 0.9091 and 0.8333 | — |
+| $`S_T`$ | the exchange rate on expiry day, unknown today | — | — |
+| $`r_d`$, $`r_f`$ | domestic and foreign interest rates, continuously compounded | USD 5%, EUR 3% | on the EUR side they swap: $`r_f`$ becomes domestic |
+| $`\sigma`$ | volatility: the yearly wobble of the log of the rate | 10% | every quote rises |
+| $`T`$, $`t`$ | time to expiry, and time elapsed so far, in years | 1, and 0 today | every quote rises |
+| $`C`$ | call price, domestic per 1 unit of foreign | 0.01657412 USD per EUR | — |
+| $`P`$ | put price, same units | EUR side: 0.01255615 EUR per USD | — |
+| $`N(x)`$ | bell-curve area left of $`x`$: a probability | — | — |
+| $`d_1`$, $`d_2`$ | distance from strike in wobble units, as on the garman-kohlhagen card | −0.6201, −0.7201 | — |
+| $`e^{-r_d T}`$, $`e^{-r_f T}`$ | discount factors: today's value of one unit due at $`T`$ | 0.9512, 0.9704 | — |
 
-The helpers, unchanged from the garman-kohlhagen card: $d_1 = \big(\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T\big)/(\sigma\sqrt{T})$, the distance to the strike plus half a wobble unit's drift; $d_2 = d_1 - \sigma\sqrt{T}$, one wobble unit less.
+The helpers, unchanged from the garman-kohlhagen card: $`d_1 = \big(\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T\big)/(\sigma\sqrt{T})`$, the distance to the strike plus half a wobble unit's drift; $`d_2 = d_1 - \sigma\sqrt{T}`$, one wobble unit less.
 
 Conventions checked 27 Sep 2026: the four definitions above are changes of units and cannot drift. Which one a desk uses by default for a given currency pair is market practice, surveyed by Reiswich and Wystup (Sources), and belongs on the trade ticket.
 
 ### When it holds
 
 - **The payoff identity needs no model.** Step 1 below is arithmetic on the contract. It holds whatever the exchange rate does.
-- **Both sides use the same volatility, read at matching strikes.** The log of $1/S$ is minus the log of $S$, so both wobble by the same $\sigma$. With a volatility smile (a different $\sigma$ at each strike), the vol for strike $K$ in EURUSD is the vol for strike $1/K$ in USDEUR. Read it at the wrong strike and the two prices differ by about vega (price change per unit of vol) times the vol gap.
+- **Both sides use the same volatility, read at matching strikes.** The log of $`1/S`$ is minus the log of $`S`$, so both wobble by the same $`\sigma`$. With a volatility smile (a different $`\sigma`$ at each strike), the vol for strike $`K`$ in EURUSD is the vol for strike $`1/K`$ in USDEUR. Read it at the wrong strike and the two prices differ by about vega (price change per unit of vol) times the vol gap.
 - **Rates are fixed for the life of the option.** The two rates only trade places; nothing else about them changes.
-- **The premium converts at the rate on the day it is paid.** This card takes that as today's spot, $S$.
+- **The premium converts at the rate on the day it is paid.** This card takes that as today's spot, $`S`$.
 - **European exercise, on the expiry date only.** The card makes no claim about options that can be exercised early.
 
 ---
@@ -89,61 +95,67 @@ On expiry day the option, if used, swaps 10 million euros for 12 million dollars
 
 ### Step 1: the payoffs agree on every path
 
-Per euro of notional, the Chicago payoff is $(S_T - K)^+$ dollars, writing $(x)^+$ for $\max(x, 0)$: the gain if positive, zero otherwise.
+Per euro of notional, the Chicago payoff is $`(S_T - K)^+`$ dollars, writing $`(x)^+`$ for $`\max(x, 0)`$: the gain if positive, zero otherwise.
 
-From Frankfurt the euro is the money. The dollar is the thing with a price tag, worth $1/S_T$ euros on expiry day. The contract is the right to sell $K$ dollars at $1/K$ euros each. A put on $K$ dollars pays
+From Frankfurt the euro is the money. The dollar is the thing with a price tag, worth $`1/S_T`$ euros on expiry day. The contract is the right to sell $`K`$ dollars at $`1/K`$ euros each. A put on $`K`$ dollars pays
 
-$$K\left(\tfrac{1}{K} - \tfrac{1}{S_T}\right)^+ = \left(1 - \tfrac{K}{S_T}\right)^+ = \frac{(S_T - K)^+}{S_T}\ \text{euros}.$$
+```math
+K\left(\tfrac{1}{K} - \tfrac{1}{S_T}\right)^+ = \left(1 - \tfrac{K}{S_T}\right)^+ = \frac{(S_T - K)^+}{S_T}\ \text{euros}.
+```
 
-Turn those euros into dollars at the expiry rate $S_T$ and the $S_T$ cancels: $(S_T - K)^+$ dollars. Same payoff, every path. The check tests this at 81 expiry rates from 0.80 to 1.60 and all 81 agree.
+Turn those euros into dollars at the expiry rate $`S_T`$ and the $`S_T`$ cancels: $`(S_T - K)^+`$ dollars. Same payoff, every path. The check tests this at 81 expiry rates from 0.80 to 1.60 and all 81 agree.
 
 ### Step 2: price the Frankfurt reading with Frankfurt's rates
 
-Frankfurt runs the same formula with the roles swapped. Spot is $1/S$ = 0.90909091 euros per dollar. Strike is $1/K$ = 0.83333333. The domestic rate is now the euro rate, 3 percent. The foreign rate is the dollar rate, 5 percent: a dollar in a US bank earns 5 percent, which is its "dividend" seen from Frankfurt. The wobble is the same $\sigma$, since flipping a rate upside down only flips the sign of its log.
+Frankfurt runs the same formula with the roles swapped. Spot is $`1/S`$ = 0.90909091 euros per dollar. Strike is $`1/K`$ = 0.83333333. The domestic rate is now the euro rate, 3 percent. The foreign rate is the dollar rate, 5 percent: a dollar in a US bank earns 5 percent, which is its "dividend" seen from Frankfurt. The wobble is the same $`\sigma`$, since flipping a rate upside down only flips the sign of its log.
 
-That gives $P(1/S, 1/K, r_f, r_d)$ = 0.01255615 euros per dollar of notional. Three conversions finish the job:
+That gives $`P(1/S, 1/K, r_f, r_d)`$ = 0.01255615 euros per dollar of notional. Three conversions finish the job:
 
-- The notional is $K$ dollars per euro, so multiply by $K$: euros per euro of notional.
-- The premium is paid today, so multiply by $S$: dollars per euro of notional.
-- $1.10 \times 1.20 \times 0.01255615$ = 0.01657412, the Chicago price to eight decimals.
+- The notional is $`K`$ dollars per euro, so multiply by $`K`$: euros per euro of notional.
+- The premium is paid today, so multiply by $`S`$: dollars per euro of notional.
+- $`1.10 \times 1.20 \times 0.01255615`$ = 0.01657412, the Chicago price to eight decimals.
 
 ### Step 3: the algebra, in one line
 
-On the Frankfurt side the top line of $d_1$ is $\ln(K/S) + (r_f - r_d + \tfrac12\sigma^2)T$. That is minus the top line of Chicago's $d_2$, $\ln(S/K) + (r_d - r_f - \tfrac12\sigma^2)T$. So Frankfurt's $d_1$ is Chicago's $-d_2$, and Frankfurt's $d_2$ is Chicago's $-d_1$: −0.6201 and −0.7201 become 0.7201 and 0.6201.
+On the Frankfurt side the top line of $`d_1`$ is $`\ln(K/S) + (r_f - r_d + \tfrac12\sigma^2)T`$. That is minus the top line of Chicago's $`d_2`$, $`\ln(S/K) + (r_d - r_f - \tfrac12\sigma^2)T`$. So Frankfurt's $`d_1`$ is Chicago's $`-d_2`$, and Frankfurt's $`d_2`$ is Chicago's $`-d_1`$: −0.6201 and −0.7201 become 0.7201 and 0.6201.
 
-Put those into the put formula, $P = k\,e^{-r_d' T} N(-d_2') - x\,e^{-r_f' T} N(-d_1')$, where the primes mark Frankfurt's inputs: $x = 1/S$, $k = 1/K$, $r_d' = r_f$, $r_f' = r_d$. Then $-d_2' = d_1$ and $-d_1' = d_2$:
+Put those into the put formula, $`P = k\,e^{-r_d' T} N(-d_2') - x\,e^{-r_f' T} N(-d_1')`$, where the primes mark Frankfurt's inputs: $`x = 1/S`$, $`k = 1/K`$, $`r_d' = r_f`$, $`r_f' = r_d`$. Then $`-d_2' = d_1`$ and $`-d_1' = d_2`$:
 
-$$P' = \tfrac{1}{K}\,e^{-r_f T} N(d_1) - \tfrac{1}{S}\,e^{-r_d T} N(d_2).$$
+```math
+P' = \tfrac{1}{K}\,e^{-r_f T} N(d_1) - \tfrac{1}{S}\,e^{-r_d T} N(d_2).
+```
 
-Multiply by $S K$ and the fractions clear: $S\,e^{-r_f T} N(d_1) - K\,e^{-r_d T} N(d_2)$, which is $C$. The mirror line follows the same way, starting from Frankfurt's call.
+Multiply by $`S K`$ and the fractions clear: $`S\,e^{-r_f T} N(d_1) - K\,e^{-r_d T} N(d_2)`$, which is $`C`$. The mirror line follows the same way, starting from Frankfurt's call.
 
 <details>
 <summary>Detailed proof: the Frankfurt side has its own pricing world</summary>
 
-The garman-kohlhagen card prices by averaging the payoff in a pricing world where every dollar-valued holding grows at $r_d$ once its income is reinvested. A euro deposit is worth $S_t e^{r_f t}$ dollars once $t$ years have passed, so $S$ must drift at $r_d - r_f$ there.
+The garman-kohlhagen card prices by averaging the payoff in a pricing world where every dollar-valued holding grows at $`r_d`$ once its income is reinvested. A euro deposit is worth $`S_t e^{r_f t}`$ dollars once $`t`$ years have passed, so $`S`$ must drift at $`r_d - r_f`$ there.
 
-Frankfurt needs its own world, where every euro-valued holding grows at $r_f$. A dollar deposit is worth $e^{r_d t}/S_t$ euros, so the euro price of a dollar, $1/S$, must drift at $r_f - r_d$. Its log is $-\ln S$, so its random part is the same bell-curve draw with the sign flipped. A bell curve is symmetric, so the wobble is $\sigma$ again. In that world
-$$\frac{1}{S_T} = \frac{1}{S}\exp\!\big((r_f - r_d - \tfrac12\sigma^2)T + \sigma\sqrt{T}\,Z\big),$$
-with $Z$ a standard bell-curve draw. Frankfurt's put price is $e^{-r_f T}$ times the average of $K(1/K - 1/S_T)^+$, which is the Garman-Kohlhagen put with $r_f$ as domestic rate. Road 5 in the code does this average directly, by Simpson's rule, with no $d_1$, $d_2$ or $N$, and lands on 0.01657412 after multiplying by $S K$.
+Frankfurt needs its own world, where every euro-valued holding grows at $`r_f`$. A dollar deposit is worth $`e^{r_d t}/S_t`$ euros, so the euro price of a dollar, $`1/S`$, must drift at $`r_f - r_d`$. Its log is $`-\ln S`$, so its random part is the same bell-curve draw with the sign flipped. A bell curve is symmetric, so the wobble is $`\sigma`$ again. In that world
 
-The two worlds weight the same futures differently: one counts in dollars, the other in euros. Step 1 shows the payoff is the same cash in either count, and today's conversion at $S$ is the only link the two prices need. That the two averages agree is a change of counting unit, known as a change of numeraire; here it is checked by computation. $\blacksquare$
+$`\displaystyle \frac{1}{S_T} = \frac{1}{S}\exp\!\big((r_f - r_d - \tfrac12\sigma^2)T + \sigma\sqrt{T}\,Z\big),`$
+
+with $`Z`$ a standard bell-curve draw. Frankfurt's put price is $`e^{-r_f T}`$ times the average of $`K(1/K - 1/S_T)^+`$, which is the Garman-Kohlhagen put with $`r_f`$ as domestic rate. Road 5 in the code does this average directly, by Simpson's rule, with no $`d_1`$, $`d_2`$ or $`N`$, and lands on 0.01657412 after multiplying by $`S K`$.
+
+The two worlds weight the same futures differently: one counts in dollars, the other in euros. Step 1 shows the payoff is the same cash in either count, and today's conversion at $`S`$ is the only link the two prices need. That the two averages agree is a change of counting unit, known as a change of numeraire; here it is checked by computation. $`\blacksquare`$
 
 </details>
 
 ### Step 4: a EUR put is a USD call
 
-Run Steps 1 to 3 on the put. The right to sell one euro for $K$ dollars is the right to buy $K$ dollars for one euro: a call on dollars from Frankfurt. At strike 1.10 the house EUR put is 0.03241805 dollars per euro; $S K$ times Frankfurt's USD call gives 0.03241805; averaging the put payoff directly gives 0.03241805. So any call formula gives every put: invert the inputs, swap the rates, multiply by $S K$.
+Run Steps 1 to 3 on the put. The right to sell one euro for $`K`$ dollars is the right to buy $`K`$ dollars for one euro: a call on dollars from Frankfurt. At strike 1.10 the house EUR put is 0.03241805 dollars per euro; $`S K`$ times Frankfurt's USD call gives 0.03241805; averaging the put payoff directly gives 0.03241805. So any call formula gives every put: invert the inputs, swap the rates, multiply by $`S K`$.
 
 ### Step 5: the four quotes are two prices in two units
 
 The quotes form a two-by-two grid. One axis is the currency the premium is paid in. The other is the currency the notional is counted in.
 
-- Changing the **currency paid** uses today's spot $S$, because the premium changes hands today.
-- Changing the **notional** uses the strike $K$, because the contract ties the two notionals at the strike: 10 million euros against 12 million dollars, fixed.
+- Changing the **currency paid** uses today's spot $`S`$, because the premium changes hands today.
+- Changing the **notional** uses the strike $`K`$, because the contract ties the two notionals at the strike: 10 million euros against 12 million dollars, fixed.
 
-So % EUR is $C/S$ and % USD is $C/K$. EUR pips are $C/(SK)$, which Step 2 showed is Frankfurt's own price per dollar of notional. The grid holds exactly two prices, Chicago's and Frankfurt's, each also written as a percentage of its own notional.
+So % EUR is $`C/S`$ and % USD is $`C/K`$. EUR pips are $`C/(SK)`$, which Step 2 showed is Frankfurt's own price per dollar of notional. The grid holds exactly two prices, Chicago's and Frankfurt's, each also written as a percentage of its own notional.
 
-When $K = S$ the two percentages coincide, since dividing by $S$ and by $K$ is the same division. When $K$ is above $S$, as at 1.20, % EUR is the larger. Below, % USD is.
+When $`K = S`$ the two percentages coincide, since dividing by $`S`$ and by $`K`$ is the same division. When $`K`$ is above $`S`$, as at 1.20, % EUR is the larger. Below, % USD is.
 
 A second road to the whole result prices both readings by averaging, with no formula at all: roads 4 and 5 in the code. The averaging method itself is set out on [Garman-Kohlhagen](01-garman-kohlhagen.md).
 
@@ -155,30 +167,30 @@ The house market: EURUSD 1.10, USD 5%, EUR 3%, vol 10%, one year, strike 1.20. C
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\ln(S/K)$ | $\ln(1.10/1.20)$ | −0.08701138 |
-| $d_1$ | $(-0.08701138 + 0.05 - 0.03 + 0.005)/0.10$ | −0.62011377 |
-| $d_2$ | $-0.62011377 - 0.10$ | −0.72011377 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.26759144, 0.23572748 |
-| share half | $1.10 \times 0.97044553 \times 0.26759144$ | 0.28565121 |
-| cash half | $1.20 \times 0.95122942 \times 0.23572748$ | 0.26907709 |
-| **Chicago's price, $C$** | $0.28565121 - 0.26907709$ | **0.01657412 USD per EUR** |
+| $`\ln(S/K)`$ | $`\ln(1.10/1.20)`$ | −0.08701138 |
+| $`d_1`$ | $`(-0.08701138 + 0.05 - 0.03 + 0.005)/0.10`$ | −0.62011377 |
+| $`d_2`$ | $`-0.62011377 - 0.10`$ | −0.72011377 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.26759144, 0.23572748 |
+| share half | $`1.10 \times 0.97044553 \times 0.26759144`$ | 0.28565121 |
+| cash half | $`1.20 \times 0.95122942 \times 0.23572748`$ | 0.26907709 |
+| **Chicago's price, $`C`$** | $`0.28565121 - 0.26907709`$ | **0.01657412 USD per EUR** |
 
 Now Frankfurt, with spot 0.90909091, strike 0.83333333 and the rates swapped.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Frankfurt's $d_1$, $d_2$ | Chicago's $-d_2$ and $-d_1$ | 0.72011377, 0.62011377 |
-| **Frankfurt's price, $P'$** | Garman-Kohlhagen put | **0.01255615 EUR per USD** |
-| back to Chicago | $1.10 \times 1.20 \times 0.01255615$ | 0.01657412 |
+| Frankfurt's $`d_1`$, $`d_2`$ | Chicago's $`-d_2`$ and $`-d_1`$ | 0.72011377, 0.62011377 |
+| **Frankfurt's price, $`P'`$** | Garman-Kohlhagen put | **0.01255615 EUR per USD** |
+| back to Chicago | $`1.10 \times 1.20 \times 0.01255615`$ | 0.01657412 |
 
 And the four quotes, each reached from both sides in the check:
 
 | Quote | From Chicago's price | Value |
 | --- | --- | --- |
-| USD pips | $10^4 \times 0.01657412$ | 165.74 |
-| % of EUR notional | $0.01657412 / 1.10$ | 1.5067% |
-| % of USD notional | $0.01657412 / 1.20$ | 1.3812% |
-| EUR pips | $10^4 \times 0.01657412 / 1.32$ | 125.56 |
+| USD pips | $`10^4 \times 0.01657412`$ | 165.74 |
+| % of EUR notional | $`0.01657412 / 1.10`$ | 1.5067% |
+| % of USD notional | $`0.01657412 / 1.20`$ | 1.3812% |
+| EUR pips | $`10^4 \times 0.01657412 / 1.32`$ | 125.56 |
 
 On the 10-million-euro ticket that is 165,741.21 dollars, or 150,673.83 euros, for protection on 12,000,000.00 dollars of notional. At strike 1.10 the same grid reads 535.56 USD pips, 4.8687% and 4.8687%, and 442.61 EUR pips: the two percentages coincide.
 
@@ -204,14 +216,14 @@ Same option, strike 1.20, right answer 0.01657412 dollars per euro, or 1.3812% o
 | --- | --- | --- |
 | USD notional converted at spot, not strike | 1.5067% "of USD" | The notionals are tied at the strike; dividing by 1.10 gives the EUR percentage under the wrong label |
 | Frankfurt's inputs inverted, rates not swapped | 0.00802656 USD per EUR | Frankfurt discounted its euro strike at the dollar rate; less than half the right price |
-| 1.51% read as a percentage of USD notional | 0.01808086 USD per EUR | Too much by the factor $K/S$ |
-| 166 USD pips read as EUR pips | 0.02187784 USD per EUR | Too much by the factor $S K$ = 1.32 |
+| 1.51% read as a percentage of USD notional | 0.01808086 USD per EUR | Too much by the factor $`K/S`$ |
+| 166 USD pips read as EUR pips | 0.02187784 USD per EUR | Too much by the factor $`S K`$ = 1.32 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts price the 1.20 option five ways. Road 1 is the formula from Chicago. Roads 2 and 3 price it from Frankfurt and convert. Road 4 averages the dollar payoff over the bell curve by Simpson's rule, with no $d_1$, $d_2$ or $N$. Road 5 averages Frankfurt's euro payoff in Frankfurt's own pricing world and converts. Each quote is then computed from both sides, the mirror put is priced three ways, the payoff identity is tested at 81 expiry rates, and every number on the card is printed. Python builds its bell-curve area from a series; Rust builds it by Simpson's rule. Ten asserts, each comparing two roads.
+The scripts price the 1.20 option five ways. Road 1 is the formula from Chicago. Roads 2 and 3 price it from Frankfurt and convert. Road 4 averages the dollar payoff over the bell curve by Simpson's rule, with no $`d_1`$, $`d_2`$ or $`N`$. Road 5 averages Frankfurt's euro payoff in Frankfurt's own pricing world and converts. Each quote is then computed from both sides, the mirror put is priced three ways, the payoff identity is tested at 81 expiry rates, and every number on the card is printed. Python builds its bell-curve area from a series; Rust builds it by Simpson's rule. Ten asserts, each comparing two roads.
 
 ### Python
 
@@ -611,10 +623,10 @@ The two outputs agree line for line, from different bell-curve areas and differe
 
 Lean proves the symmetry and the mirror line in general, and the payoff identity at every positive expiry rate.
 
-- Suppose $S$, $K$, $\sigma$ and $T$ are all positive, and $r_d$, $r_f$ are any fixed rates. Then $C(S, K, r_d, r_f) = S K P(1/S, 1/K, r_f, r_d)$.
-- Take the same conditions, for the mirror line. Then $P(S, K, r_d, r_f) = S K C(1/S, 1/K, r_f, r_d)$.
-- Take any strike $K$ and expiry rate $S_T$, both positive. Then $K(1/K - 1/S_T)^+ = (S_T - K)^+/S_T$, the put's payoff in euros. Times $S_T$, that is exactly the call's payoff, $(S_T - K)^+$.
-- Exact fractions confirm the house inputs: $1/S$ = 10/11, $1/K$ = 5/6, $S K$ = 1.32, and the 12,000,000-dollar notional.
+- Suppose $`S`$, $`K`$, $`\sigma`$ and $`T`$ are all positive, and $`r_d`$, $`r_f`$ are any fixed rates. Then $`C(S, K, r_d, r_f) = S K P(1/S, 1/K, r_f, r_d)`$.
+- Take the same conditions, for the mirror line. Then $`P(S, K, r_d, r_f) = S K C(1/S, 1/K, r_f, r_d)`$.
+- Take any strike $`K`$ and expiry rate $`S_T`$, both positive. Then $`K(1/K - 1/S_T)^+ = (S_T - K)^+/S_T`$, the put's payoff in euros. Times $`S_T`$, that is exactly the call's payoff, $`(S_T - K)^+`$.
+- Exact fractions confirm the house inputs: $`1/S`$ = 10/11, $`1/K`$ = 5/6, $`S K`$ = 1.32, and the 12,000,000-dollar notional.
 - At the house rates, the rate terms in Step 3 flip sign exactly, as the general proof needs.
 - Step 1 checks out at expiry rates 1.40 and 1.00: 0.20 dollars against 1/7 euro, then zero against zero.
 
@@ -753,7 +765,7 @@ example : max ((1 : ℚ) - 6 / 5) 0 = 0 ∧ (6 / 5 : ℚ) * max (5 / 6 - 1) 0 = 
 > **Try changing**
 > Guess first, then read the answer off the output.
 > - **Strike below spot.** At strike 1.00, which percentage is bigger? The USD one: 12.2475% against 11.1341%, since dividing by 1.00 leaves more than dividing by 1.10.
-> - **Double the volatility to 20% at strike 1.20.** The option costs 558.60 USD pips and 423.18 EUR pips. The price more than triples, but the ratio of the two pip quotes stays $S K$ = 1.32: the conversion knows nothing about volatility.
+> - **Double the volatility to 20% at strike 1.20.** The option costs 558.60 USD pips and 423.18 EUR pips. The price more than triples, but the ratio of the two pip quotes stays $`S K`$ = 1.32: the conversion knows nothing about volatility.
 > - **Move spot and strike together to 1.20.** Both percentages read 4.8687%, the same as at 1.10. Scaling both rates by the same factor scales the premium with them, so a percentage of notional does not change.
 > - **Forget to swap the rates on the Frankfurt side.** In `four_quotes`, change `rf, rd` to `rd, rf` in road 2. The symmetry assert fails; the converted price is 0.00802656.
 
@@ -765,7 +777,7 @@ example : max ((1 : ℚ) - 6 / 5) 0 = 0 ∧ (6 / 5 : ℚ) * max (5 / 6 - 1) 0 = 
 > **Agreeing a number without its unit.** "1.51" and "1.38" are both correct quotes for the 1.20 call, and so are 166 and 126. A counterparty who means 1.51% of EUR notional and hears it applied to USD notional charges 0.01808086 dollars per euro instead of 0.01657412. Every premium needs two words attached: the currency paid, and the currency of the notional.
 >
 > Smaller traps:
-> - **Converting the notional at spot.** Premium currency changes at $S$; notional currency changes at $K$. Using $S$ for both makes % USD equal % EUR at every strike, and gives 1.5067% where 1.3812% is right.
+> - **Converting the notional at spot.** Premium currency changes at $`S`$; notional currency changes at $`K`$. Using $`S`$ for both makes % USD equal % EUR at every strike, and gives 1.5067% where 1.3812% is right.
 > - **Inverting the rates but not swapping the interest rates.** From Frankfurt the euro rate is domestic. Keeping the dollar rate there gives 0.00802656, under half the price.
 > - **Reading "domestic" as home.** Domestic is the currency the price is counted in. From Chicago that is the dollar; from Frankfurt, the euro. Neither is about where the trader sits.
 > - **Assuming one pip size.** A pip is 0.0001 in EURUSD. In pairs quoted in yen it is 0.01. Pips count the quote's last conventional digit, so check the pair.
@@ -781,14 +793,14 @@ example : max ((1 : ℚ) - 6 / 5) 0 = 0 ∧ (6 / 5 : ℚ) * max (5 / 6 - 1) 0 = 
 - **Backing out volatility.** Solving for the vol behind a quoted premium needs the premium in the formula's own units first: [Implied vol for a currency option](07-fx-implied-volatility.md).
 
 > **Say it back**
-> A currency option exchanges one currency for another, so it is a call on one and a put on the other. Priced from either side, with the spot and strike inverted and the two interest rates swapped, it has the same value once converted at today's rate. That is $C(S, K, r_d, r_f) = S K P(1/S, 1/K, r_f, r_d)$. The premium can be quoted in either currency, per unit of either notional: premium currency converts at spot, notional converts at strike. Four numbers, one price, and the two percentages agree only when the strike equals spot.
+> A currency option exchanges one currency for another, so it is a call on one and a put on the other. Priced from either side, with the spot and strike inverted and the two interest rates swapped, it has the same value once converted at today's rate. That is $`C(S, K, r_d, r_f) = S K P(1/S, 1/K, r_f, r_d)`$. The premium can be quoted in either currency, per unit of either notional: premium currency converts at spot, notional converts at strike. Four numbers, one price, and the two percentages agree only when the strike equals spot.
 
 ---
 
 ## What this builds on
 
 - [Garman-Kohlhagen](01-garman-kohlhagen.md): the call and put formulas, domestic and foreign, and the house EURUSD market that this card reads from both sides.
-- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): turning a rate upside down, and why $K(1/K - 1/S_T)$ clears to $1 - K/S_T$.
+- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): turning a rate upside down, and why $`K(1/K - 1/S_T)`$ clears to $`1 - K/S_T`$.
 - [Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): a rate carries two units, and converting means multiplying or dividing by the right one.
 
 ## Where this goes next

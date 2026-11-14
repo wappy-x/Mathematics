@@ -34,42 +34,48 @@ Orange: Euler. Green: Step 2's prediction, 1.3263. Both stay nearly level as the
 
 ## The formula
 
-Notation first, in words. The step size is $h$, in seconds. The rate law is $v' = f(t, v)$, read "the rate of the speed at time t is f"; here $f(t, v) = 9.8 - 0.2v$. Two primes, $v''$, mean the rate of the rate: how fast the acceleration changes.
+Notation first, in words. The step size is $`h`$, in seconds. The rate law is $`v' = f(t, v)`$, read "the rate of the speed at time t is f"; here $`f(t, v) = 9.8 - 0.2v`$. Two primes, $`v''`$, mean the rate of the rate: how fast the acceleration changes.
 
-The **local error** $\ell$ is what one step misses when it starts from the exact value. Taylor's theorem with its remainder ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)) sizes it:
+The **local error** $`\ell`$ is what one step misses when it starts from the exact value. Taylor's theorem with its remainder ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)) sizes it:
 
-$$\ell = \frac{h^2}{2}\,\lvert v''(\xi)\rvert \quad\text{for some time } \xi \text{ inside the step.}$$
+```math
+\ell = \frac{h^2}{2}\,\lvert v''(\xi)\rvert \quad\text{for some time } \xi \text{ inside the step.}
+```
 
 **Read it aloud:** one Euler step misses by half the step squared, times how fast the acceleration changes somewhere in that step.
 
-The **global error** $E$ is what the whole run misses at the end, $E(h) = \lvert v_N - v(T)\rvert$. A method has **order** $p$ when, for all small enough steps,
+The **global error** $`E`$ is what the whole run misses at the end, $`E(h) = \lvert v_N - v(T)\rvert`$. A method has **order** $`p`$ when, for all small enough steps,
 
-$$E(h) \le C\,h^{p}.$$
+```math
+E(h) \le C\,h^{p}.
+```
 
 **Read it aloud:** the error at the finish is at most a fixed number times the step to the power p.
 
-Two runs, the second with half the step, estimate $p$ without knowing $C$:
+Two runs, the second with half the step, estimate $`p`$ without knowing $`C`$:
 
-$$p \approx \log_2 \frac{E(h)}{E(h/2)}.$$
+```math
+p \approx \log_2 \frac{E(h)}{E(h/2)}.
+```
 
 **Read it aloud:** the order is how many factors of 2 the error fell by.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $h$ | step size | 2, 1 and 0.5 s | error grows like $h^p$ |
-| $t$, $T$, $N$ | time; end time; number of steps | 10 s; $10/h$ steps | more steps carry more misses |
-| $f$, $v$ | the rate law; the exact speed | $v(10) = 42.3686$ m/s | — |
-| $v_n$, $t_n$, $n$ | Euler's speed after $n$ steps, and its time | 45.1898 m/s after five 2 s steps | — |
-| $\ell$, $\xi$ | one step's miss; a time inside the step | 0.9178 m/s for $h = 1$ | grows like $h^2$ |
-| $E$ | global error at the end time | 1.3701 m/s for $h = 1$ | — |
-| $p$, $C$ | order; the fixed number in front | 1 and about 1.3263 for Euler | $p$ up: error falls faster |
-| $M$, $L$ | largest size of $v''$; how strongly $f$ reacts to a change in $v$ | 1.96 m/s per s per s; 0.2 per s | bound loosens |
+| $`h`$ | step size | 2, 1 and 0.5 s | error grows like $`h^p`$ |
+| $`t`$, $`T`$, $`N`$ | time; end time; number of steps | 10 s; $`10/h`$ steps | more steps carry more misses |
+| $`f`$, $`v`$ | the rate law; the exact speed | $`v(10) = 42.3686`$ m/s | — |
+| $`v_n`$, $`t_n`$, $`n`$ | Euler's speed after $`n`$ steps, and its time | 45.1898 m/s after five 2 s steps | — |
+| $`\ell`$, $`\xi`$ | one step's miss; a time inside the step | 0.9178 m/s for $`h = 1`$ | grows like $`h^2`$ |
+| $`E`$ | global error at the end time | 1.3701 m/s for $`h = 1`$ | — |
+| $`p`$, $`C`$ | order; the fixed number in front | 1 and about 1.3263 for Euler | $`p`$ up: error falls faster |
+| $`M`$, $`L`$ | largest size of $`v''`$; how strongly $`f`$ reacts to a change in $`v`$ | 1.96 m/s per s per s; 0.2 per s | bound loosens |
 
 ### When it holds
 
-- **A smooth solution.** $v''$ must stay below some bound $M$. A parachute opening mid-run makes the rate jump, and order estimates fail.
-- **Differences not magnified without limit.** Two nearby speeds must have rates differing by at most $L$ times their gap, or carried errors can grow without bound.
-- **Small steps.** Order describes $h$ shrinking towards zero; huge steps give a false estimate.
+- **A smooth solution.** $`v''`$ must stay below some bound $`M`$. A parachute opening mid-run makes the rate jump, and order estimates fail.
+- **Differences not magnified without limit.** Two nearby speeds must have rates differing by at most $`L`$ times their gap, or carried errors can grow without bound.
+- **Small steps.** Order describes $`h`$ shrinking towards zero; huge steps give a false estimate.
 - **Exact arithmetic.** Rounding adds a little error per step, so below some very small step the total error rises again.
 
 ---
@@ -78,62 +84,70 @@ $$p \approx \log_2 \frac{E(h)}{E(h/2)}.$$
 
 ### Step 0: one small error per step, and many steps
 
-A step misses by about $h^2$. Reaching 10 s takes $10/h$ steps, whose misses add up to about $10/h$ times $h^2$: a multiple of $h$.
+A step misses by about $`h^2`$. Reaching 10 s takes $`10/h`$ steps, whose misses add up to about $`10/h`$ times $`h^2`$: a multiple of $`h`$.
 
 ### Step 1: one step's error, from Taylor's theorem
 
 For a solution with two derivatives, Taylor's theorem with the remainder says
 
-$$v(t+h) = v(t) + h\,v'(t) + \frac{h^2}{2}\,v''(\xi).$$
+```math
+v(t+h) = v(t) + h\,v'(t) + \frac{h^2}{2}\,v''(\xi).
+```
 
-Euler keeps the first two terms and drops the last, so $\ell$ is that term's size.
+Euler keeps the first two terms and drops the last, so $`\ell`$ is that term's size.
 
-For the skydiver $v(t) = 49(1 - e^{-0.2t})$, so $v'(t) = 9.8\,e^{-0.2t}$ and $v''(t) = -1.96\,e^{-0.2t}$. The acceleration falls as drag builds, so Euler overshoots. The largest size of $v''$ is $M = 1.96$, at $t = 0$.
+For the skydiver $`v(t) = 49(1 - e^{-0.2t})`$, so $`v'(t) = 9.8\,e^{-0.2t}`$ and $`v''(t) = -1.96\,e^{-0.2t}`$. The acceleration falls as drag builds, so Euler overshoots. The largest size of $`v''`$ is $`M = 1.96`$, at $`t = 0`$.
 
-First step from rest with $h = 1$: the local error is 0.9178. Taylor puts it between $\tfrac{1}{2}\cdot 1.96\,e^{-0.2}$ and $\tfrac{1}{2}\cdot 1.96 = 0.9800$. At $h = 0.5$ the local error is 0.2370, against 0.2450. The ratio is 3.87, near 4: one step's error has order 2.
+First step from rest with $`h = 1`$: the local error is 0.9178. Taylor puts it between $`\tfrac{1}{2}\cdot 1.96\,e^{-0.2}`$ and $`\tfrac{1}{2}\cdot 1.96 = 0.9800`$. At $`h = 0.5`$ the local error is 0.2370, against 0.2450. The ratio is 3.87, near 4: one step's error has order 2.
 
 ### Step 2: carrying each step's error to the finish
 
-The gap between two speeds obeying the drag law has rate $-0.2$ times itself, so it shrinks by the factor $e^{-0.2u}$ over u seconds.
+The gap between two speeds obeying the drag law has rate $`-0.2`$ times itself, so it shrinks by the factor $`e^{-0.2u}`$ over u seconds.
 
-The step at time $t$ misses by about $\tfrac{h^2}{2}\cdot 1.96\,e^{-0.2t}$. By 10 s that miss has shrunk by $e^{-0.2(10 - t)}$. Multiply:
+The step at time $`t`$ misses by about $`\tfrac{h^2}{2}\cdot 1.96\,e^{-0.2t}`$. By 10 s that miss has shrunk by $`e^{-0.2(10 - t)}`$. Multiply:
 
-$$\frac{h^2}{2}\cdot 1.96\,e^{-0.2t}\cdot e^{-0.2(10-t)} = \frac{h^2}{2}\cdot 1.96\,e^{-2}.$$
+```math
+\frac{h^2}{2}\cdot 1.96\,e^{-0.2t}\cdot e^{-0.2(10-t)} = \frac{h^2}{2}\cdot 1.96\,e^{-2}.
+```
 
-The time $t$ cancels: every step delivers the same share to the finish. With $10/h$ steps,
+The time $`t`$ cancels: every step delivers the same share to the finish. With $`10/h`$ steps,
 
-$$E(h) \approx \frac{10}{h}\cdot\frac{h^2}{2}\cdot 1.96\,e^{-2} = 1.3263\,h.$$
+```math
+E(h) \approx \frac{10}{h}\cdot\frac{h^2}{2}\cdot 1.96\,e^{-2} = 1.3263\,h.
+```
 
-Predicted: 2.6526, 1.3263 and 0.6631 for steps of 2, 1 and 0.5 s. Actual: 2.8212, 1.3701 and 0.6742. The prediction drops the smaller $h^3$ terms, so it improves as $h$ shrinks.
+Predicted: 2.6526, 1.3263 and 0.6631 for steps of 2, 1 and 0.5 s. Actual: 2.8212, 1.3701 and 0.6742. The prediction drops the smaller $`h^3`$ terms, so it improves as $`h`$ shrinks.
 
 ### Step 3: the general bound, when errors are not forgotten
 
-Most rate laws damp nothing. In general a gap grows by at most the factor $1 + Lh$ per step, and each step adds at most $\tfrac{h^2}{2}M$. Summing the resulting geometric series gives
+Most rate laws damp nothing. In general a gap grows by at most the factor $`1 + Lh`$ per step, and each step adds at most $`\tfrac{h^2}{2}M`$. Summing the resulting geometric series gives
 
-$$E(h) \le \frac{M}{2L}\left(e^{LT} - 1\right) h.$$
+```math
+E(h) \le \frac{M}{2L}\left(e^{LT} - 1\right) h.
+```
 
-A fixed number times $h$: Euler has order 1 whenever the conditions hold. For the skydiver that number is 31.31, against the true 1.3263: the bound assumes errors grow, while drag shrinks them.
+A fixed number times $`h`$: Euler has order 1 whenever the conditions hold. For the skydiver that number is 31.31, against the true 1.3263: the bound assumes errors grow, while drag shrinks them.
 
 <details>
 <summary>Detailed proof: Euler's global error is at most a constant times h</summary>
 
-Let $e_n = \lvert v_n - v(t_n)\rvert$, with $e_0 = 0$. The exact step is Euler's step from $v(t_n)$ plus a miss of size at most $\tfrac{h^2}{2}M$ (Step 1). Subtract it from Euler's actual step and bound the rate difference by $L e_n$:
+Let $`e_n = \lvert v_n - v(t_n)\rvert`$, with $`e_0 = 0`$. The exact step is Euler's step from $`v(t_n)`$ plus a miss of size at most $`\tfrac{h^2}{2}M`$ (Step 1). Subtract it from Euler's actual step and bound the rate difference by $`L e_n`$:
 
-$$e_{n+1} \le (1 + Lh)\,e_n + \tfrac{h^2}{2}M.$$
+$`\displaystyle e_{n+1} \le (1 + Lh)\,e_n + \tfrac{h^2}{2}M.`$
 
-Unrolling from $e_0 = 0$ gives $e_n \le \tfrac{h^2}{2}M\,\sum_{j=0}^{n-1}(1+Lh)^j = \tfrac{hM}{2L}\big((1+Lh)^n - 1\big)$, a geometric sum. Since $1 + x \le e^x$, $(1+Lh)^n \le e^{LT}$, which gives Step 3's bound for every $e_n$. The general version is on [From local error to global error](../../16-Numerical%20analysis/06-ODE%20Solvers/02-convergence-of-one-step-methods.md).
+Unrolling from $`e_0 = 0`$ gives $`e_n \le \tfrac{h^2}{2}M\,\sum_{j=0}^{n-1}(1+Lh)^j = \tfrac{hM}{2L}\big((1+Lh)^n - 1\big)`$, a geometric sum. Since $`1 + x \le e^x`$, $`(1+Lh)^n \le e^{LT}`$, which gives Step 3's bound for every $`e_n`$. The general version is on [From local error to global error](../../16-Numerical%20analysis/06-ODE%20Solvers/02-convergence-of-one-step-methods.md).
 
 </details>
 
 ### Step 4: the rule of one power
 
-Steps 2 and 3 give the rule for any one-step method: a local miss of a constant times $h^{p+1}$, with gaps growing by at most $1 + Lh$ per step, makes a global miss of a constant times $h^p$. RK4's four readings cancel the Taylor terms through $h^4$, so it misses by about $h^5$ per step and $h^4$ per run ([Runge-Kutta four](04-runge-kutta-four.md)).
+Steps 2 and 3 give the rule for any one-step method: a local miss of a constant times $`h^{p+1}`$, with gaps growing by at most $`1 + Lh`$ per step, makes a global miss of a constant times $`h^p`$. RK4's four readings cancel the Taylor terms through $`h^4`$, so it misses by about $`h^5`$ per step and $`h^4`$ per run ([Runge-Kutta four](04-runge-kutta-four.md)).
 
 ### Step 5: reading the order off two runs
 
-If $E(h) \approx C h^p$, then $E(h/2) \approx C h^p / 2^p$. The ratio is $2^p$, and $C$ cancels; its base-2 logarithm is $p$.
+If $`E(h) \approx C h^p`$, then $`E(h/2) \approx C h^p / 2^p`$. The ratio is $`2^p`$, and $`C`$ cancels; its base-2 logarithm is $`p`$.
 
-For Euler, steps 2 and 1 give 1.04; steps 1 and 0.5 give 1.02. For RK4 the same pairs give 4.24 and 4.12. With no exact answer, three runs at $h$, $h/2$ and $h/4$ serve instead: the two differences between successive answers also shrink by about $2^p$.
+For Euler, steps 2 and 1 give 1.04; steps 1 and 0.5 give 1.02. For RK4 the same pairs give 4.24 and 4.12. With no exact answer, three runs at $`h`$, $`h/2`$ and $`h/4`$ serve instead: the two differences between successive answers also shrink by about $`2^p`$.
 
 ---
 
@@ -141,13 +155,13 @@ For Euler, steps 2 and 1 give 1.04; steps 1 and 0.5 give 1.02. For RK4 the same 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| one Euler step from rest, $h = 1$ | $0 + 1 \times 9.8$ | 9.8000 m/s |
-| its local error | $9.8000 - 8.8822$ | 0.9178 m/s |
-| local error at $h = 0.5$, and the ratio | $0.9178 / 0.2370$ | 3.87, near $2^2$ |
-| Euler at 10 s, $h = 1$ | ten steps | 43.7387 m/s, error 1.3701 |
-| predicted global error | $\tfrac{10}{1}\cdot\tfrac{1}{2}\cdot 1.96\,e^{-2}$ | 1.3263 m/s |
-| Euler at 10 s, $h = 0.5$ | twenty steps | error 0.6742 |
-| order estimate | $\log_2(1.3701 / 0.6742)$ | **1.02** |
+| one Euler step from rest, $`h = 1`$ | $`0 + 1 \times 9.8`$ | 9.8000 m/s |
+| its local error | $`9.8000 - 8.8822`$ | 0.9178 m/s |
+| local error at $`h = 0.5`$, and the ratio | $`0.9178 / 0.2370`$ | 3.87, near $`2^2`$ |
+| Euler at 10 s, $`h = 1`$ | ten steps | 43.7387 m/s, error 1.3701 |
+| predicted global error | $`\tfrac{10}{1}\cdot\tfrac{1}{2}\cdot 1.96\,e^{-2}`$ | 1.3263 m/s |
+| Euler at 10 s, $`h = 0.5`$ | twenty steps | error 0.6742 |
+| order estimate | $`\log_2(1.3701 / 0.6742)`$ | **1.02** |
 
 With half-second steps the skydiver's computed speed at 10 s is 0.6742 m/s too fast; halving the step again roughly halves that.
 
@@ -155,15 +169,15 @@ With half-second steps the skydiver's computed speed at 10 s is 0.6742 m/s too f
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Local order 2 taken as global | guesses 0.7053 at $h = 1$; actual 1.3701 | one step's miss times $10/h$ steps |
-| Order from steps of 10 s and 5 s | errors 55.6314 and 6.6314; order 3.07 | steps too large for $C h^p$ to apply |
+| Local order 2 taken as global | guesses 0.7053 at $`h = 1`$; actual 1.3701 | one step's miss times $`10/h`$ steps |
+| Order from steps of 10 s and 5 s | errors 55.6314 and 6.6314; order 3.07 | steps too large for $`C h^p`$ to apply |
 | Parachute at 4.3 s: drag 0.2 jumps to 0.98 per s | RK4 errors 0.1732, 0.0084, 0.0102; estimates 4.37, −0.29 | the rate jumps, so smoothness fails |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Road one steps Euler and RK4 in a loop that calls the rate law. Road two never calls it: here each method multiplies the gap to 49 m/s by a fixed factor per step, $1 - 0.2h$ for Euler and $1 + z + z^2/2 + z^3/6 + z^4/24$ with $z = -0.2h$ for RK4, raised to the power $N$. Asserts check that the roads agree, that one-step errors sit inside Taylor's bracket, that the orders are near 1 and 4, and that Step 2's prediction is within 7%.
+Road one steps Euler and RK4 in a loop that calls the rate law. Road two never calls it: here each method multiplies the gap to 49 m/s by a fixed factor per step, $`1 - 0.2h`$ for Euler and $`1 + z + z^2/2 + z^3/6 + z^4/24`$ with $`z = -0.2h`$ for RK4, raised to the power $`N`$. Asserts check that the roads agree, that one-step errors sit inside Taylor's bracket, that the orders are near 1 and 4, and that Step 2's prediction is within 7%.
 
 ### Python
 
@@ -357,9 +371,9 @@ ALL CHECKS PASS
 
 Lean proves Euler's error rules for every rate law, step and end time that meet the card's conditions.
 
-- Start one Euler step of length $h$ from the exact value. It misses by exactly $\tfrac{h^2}{2}v''(\xi)$, for some time $\xi$ inside the step.
-- Take a solution whose $v''$ exists at every time and stays at most $M$ in size on $[0, T]$. Let $f$ react to a change in $v$ by at most $L$ times that change. Run $N$ Euler steps with $Nh = T$. After every one of them, Euler's error is at most $\tfrac{M}{2L}(e^{LT} - 1)h$.
-- If the error is $C h^p$ at step $h$ and $C (h/2)^p$ at half the step, the base-2 logarithm of their ratio is exactly $p$.
+- Start one Euler step of length $`h`$ from the exact value. It misses by exactly $`\tfrac{h^2}{2}v''(\xi)`$, for some time $`\xi`$ inside the step.
+- Take a solution whose $`v''`$ exists at every time and stays at most $`M`$ in size on $`[0, T]`$. Let $`f`$ react to a change in $`v`$ by at most $`L`$ times that change. Run $`N`$ Euler steps with $`Nh = T`$. After every one of them, Euler's error is at most $`\tfrac{M}{2L}(e^{LT} - 1)h`$.
+- If the error is $`C h^p`$ at step $`h`$ and $`C (h/2)^p`$ at half the step, the base-2 logarithm of their ratio is exactly $`p`$.
 - Reaching 10 s takes five 2 s steps, ten 1 s steps or twenty 0.5 s steps.
 - Halving the step cuts an order-1 error twofold, an order-2 error fourfold and an order-4 error sixteenfold.
 
@@ -555,7 +569,7 @@ example : 2 ^ 1 = 2 ∧ 2 ^ 2 = 4 ∧ 2 ^ 4 = 16 := by decide
 > [!TIP]
 > **Try changing**
 > - **Guess first:** use step sizes 1, 0.5 and 0.25. Do Euler's estimates move towards 1? Yes: the second lands closer to 1 than 1.02.
-> - **Guess first:** make Euler's step the midpoint step, `v + h * f(t + h / 2, v + h / 2 * f(t, v))`. Euler's estimates read 2.25 and 2.12, and the two-roads assert fails, since road two still multiplies by $1 - 0.2h$ ([Midpoint and Heun](03-midpoint-and-heun-methods.md)).
+> - **Guess first:** make Euler's step the midpoint step, `v + h * f(t + h / 2, v + h / 2 * f(t, v))`. Euler's estimates read 2.25 and 2.12, and the two-roads assert fails, since road two still multiplies by $`1 - 0.2h`$ ([Midpoint and Heun](03-midpoint-and-heun-methods.md)).
 > - **Guess first:** set `K2 = 0.2`, so the parachute changes nothing. The jump vanishes and RK4's estimates return to 4.24 and 4.12.
 
 ---
@@ -563,7 +577,7 @@ example : 2 ^ 1 = 2 ∧ 2 ^ 2 = 4 ∧ 2 ^ 4 = 16 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Reading the order off one step.** One Euler step misses by about $h^2$, so Euler looks second order. But a fixed time takes $T/h$ steps, and their misses add. Were it second order, halving the step from 2 s to 1 s would cut the error 2.8212 to 0.7053; the actual error is 1.3701, half, not a quarter.
+> **Reading the order off one step.** One Euler step misses by about $`h^2`$, so Euler looks second order. But a fixed time takes $`T/h`$ steps, and their misses add. Were it second order, halving the step from 2 s to 1 s would cut the error 2.8212 to 0.7053; the actual error is 1.3701, half, not a quarter.
 >
 > - **Trusting an estimate from huge steps.** Steps of 10 s and 5 s give Euler an "order" of 3.07. Believe an estimate only when successive ones agree.
 > - **Assuming higher order always wins.** Order says how fast the error falls, not how big it is. Across the parachute's jump RK4 at 0.5 s is worse than at 1 s: 0.0102 against 0.0084.
@@ -588,7 +602,7 @@ example : 2 ^ 1 = 2 ∧ 2 ^ 2 = 4 ∧ 2 ^ 4 = 16 := by decide
 
 ## Where this goes next
 
-- [Midpoint and Heun](03-midpoint-and-heun-methods.md): two slope samples per step, cancelling the $h^2$ term to reach order 2.
+- [Midpoint and Heun](03-midpoint-and-heun-methods.md): two slope samples per step, cancelling the $`h^2`$ term to reach order 2.
 - [From local error to global error](../../16-Numerical%20analysis/06-ODE%20Solvers/02-convergence-of-one-step-methods.md): small local error plus controlled growth gives convergence, for every one-step method.
 
 Left open: can a solver measure its own error mid-run, and pick its step from that?

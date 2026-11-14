@@ -33,17 +33,19 @@ Those two arrows are the projector's own axes. Not every direction is so tidy: (
 
 ## The formula
 
-$$\text{rank}(A) + \text{nullity}(A) = n$$
+```math
+\text{rank}(A) + \text{nullity}(A) = n
+```
 
 **Read it aloud:** the directions the matrix keeps, plus the directions it kills, is the number of numbers you feed in.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the matrix, read as a machine: numbers in, numbers out | `[[1, 0, 0], [0, 1, 0]]` | — |
-| $n$ | the number of columns: how many numbers go in | 3 | more to share between kept and killed |
-| $m$ | the number of rows: how many numbers come out | 2 | more room to land in, the sum unchanged |
-| $x$ | one input, a list of $n$ numbers | (3, 4, 5) | — |
-| rank(A) | independent directions that survive: the size of the **column space**, or image — what the matrix hits | 2 | fewer get killed; the sum stays at $n$ |
+| $`A`$ | the matrix, read as a machine: numbers in, numbers out | `[[1, 0, 0], [0, 1, 0]]` | — |
+| $`n`$ | the number of columns: how many numbers go in | 3 | more to share between kept and killed |
+| $`m`$ | the number of rows: how many numbers come out | 2 | more room to land in, the sum unchanged |
+| $`x`$ | one input, a list of $`n`$ numbers | (3, 4, 5) | — |
+| rank(A) | independent directions that survive: the size of the **column space**, or image — what the matrix hits | 2 | fewer get killed; the sum stays at $`n`$ |
 | nullity(A) | independent directions sent to nothing: the size of the **null space**, or kernel — what it kills | 1 | fewer survive, same trade |
 
 "Independent" means directions that are not copies or mixtures of each other ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)).
@@ -95,12 +97,12 @@ Take the staircase in reduced form: every pivot is 1, its column 0 elsewhere. Ro
 
 ### Step 4: add the piles back together
 
-Every column sits in exactly one pile, so the two counts are all $n$ columns: rank plus nullity is $n$. Keep one more direction and you kill one fewer — a stock-take, not a discovery.
+Every column sits in exactly one pile, so the two counts are all $`n`$ columns: rank plus nullity is $`n`$. Keep one more direction and you kill one fewer — a stock-take, not a discovery.
 
 <details>
 <summary>What about the rows?</summary>
 
-The **row space** is everything you can build out of the rows, and its size is also the rank — which is why nobody says "column rank" out loud. Its leftover is the **left null space**: mixtures of rows cancelling to nothing, $m$ minus the rank of them. With this card's two, these are the four fundamental subspaces.
+The **row space** is everything you can build out of the rows, and its size is also the rank — which is why nobody says "column rank" out loud. Its leftover is the **left null space**: mixtures of rows cancelling to nothing, $`m`$ minus the rank of them. With this card's two, these are the four fundamental subspaces.
 
 </details>
 
@@ -487,7 +489,7 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 - [Gaussian elimination](02-gaussian-elimination.md): the row moves that build the staircase, and the pivots counted here.
 - [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md): a matrix read as a machine — what makes Step 0's rule true.
 - [Basis and dimension](../03-Vectors/05-basis-and-dimension.md): what counting independent directions means, so both counts are numbers.
-- [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one and onto in words. Nullity 0 is one-to-one; rank equal to $m$ is onto.
+- [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one and onto in words. Nullity 0 is one-to-one; rank equal to $`m`$ is onto.
 
 ## Where this goes next
 

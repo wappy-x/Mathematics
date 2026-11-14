@@ -37,32 +37,38 @@ Orange: t = 0.01. Teal: t = 0.05. Dark blue: t = 0.20, in the bar's own time uni
 
 ## The formula
 
-Notation first, in words. $u(x, t)$ is the temperature in C at $x$ metres from the left end at time $t$. A subscript is a rate ([A partial differential equation](01-what-a-pde-says.md)): $u_t$ the change in time, $u_{xx}$ the curvature along the bar. $\kappa$, the thermal diffusivity in m^2/s, sets how fast heat spreads. With cold ends:
+Notation first, in words. $`u(x, t)`$ is the temperature in C at $`x`$ metres from the left end at time $`t`$. A subscript is a rate ([A partial differential equation](01-what-a-pde-says.md)): $`u_t`$ the change in time, $`u_{xx}`$ the curvature along the bar. $`\kappa`$, the thermal diffusivity in m^2/s, sets how fast heat spreads. With cold ends:
 
-$$u_t = \kappa\, u_{xx}, \qquad u(0, t) = u(1, t) = 0, \qquad u(x, 0) = f(x).$$
+```math
+u_t = \kappa\, u_{xx}, \qquad u(0, t) = u(1, t) = 0, \qquad u(x, 0) = f(x).
+```
 
-Trying a space shape $X(x)$ times a time factor $T(t)$, $u = X(x)\,T(t)$, leads to
+Trying a space shape $`X(x)`$ times a time factor $`T(t)`$, $`u = X(x)\,T(t)`$, leads to
 
-$$u(x, t) = \sum_{n=1}^{\infty} b_n\, e^{-\kappa n^2 \pi^2 t} \sin(n\pi x), \qquad b_n = 2\int_0^1 f(x)\sin(n\pi x)\,dx .$$
+```math
+u(x, t) = \sum_{n=1}^{\infty} b_n\, e^{-\kappa n^2 \pi^2 t} \sin(n\pi x), \qquad b_n = 2\int_0^1 f(x)\sin(n\pi x)\,dx .
+```
 
 **Read it aloud:** the temperature is a sum of sine humps; the n-th starts at size b_n, the start's share of that shape, and fades like e to the minus n squared pi squared kappa t.
 
-For the bar, $f = 100$, so $b_n = 400/(n\pi)$ for odd n and 0 for even n.
+For the bar, $`f = 100`$, so $`b_n = 400/(n\pi)`$ for odd n and 0 for even n.
 
-Insulated ends pass no heat, so the slope $u_x$ is zero there, and cosines replace sines:
+Insulated ends pass no heat, so the slope $`u_x`$ is zero there, and cosines replace sines:
 
-$$u(x, t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n\, e^{-\kappa n^2 \pi^2 t} \cos(n\pi x), \qquad a_n = 2\int_0^1 f(x)\cos(n\pi x)\,dx .$$
+```math
+u(x, t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n\, e^{-\kappa n^2 \pi^2 t} \cos(n\pi x), \qquad a_n = 2\int_0^1 f(x)\cos(n\pi x)\,dx .
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $f$, $u_t$, $u_x$, $u_{xx}$ | temperature, in C; $f$ is the start; subscripts are rates | $f = 100$ | — |
-| $x$ | distance from the left end, in m | 0 to 1 | — |
-| $t$ | time, in units of L^2/κ (L the length): 9009 s for copper | 0.05 = 450 s for copper | the bar cools |
-| $\kappa$ | thermal diffusivity: heat's spreading speed, in m^2/s | 1 in scaled units; copper 1.11e-4 | faster cooling |
-| $X$, $T$ | one product's space shape and time factor | sin(πx) and e^(−π^2 t) | — |
-| $\lambda$ | the separation constant; on this bar $\lambda = n^2\pi^2$ | π^2 for n = 1 | that mode fades faster |
-| $n$ | mode number: the count of humps | 1, 3, 5, … | faster fading |
-| $b_n$, $a_n$ | sine and cosine coefficients: each mode's starting size, in C | 127.324, 0, 42.441 | a larger share of that mode |
+| $`u`$, $`f`$, $`u_t`$, $`u_x`$, $`u_{xx}`$ | temperature, in C; $`f`$ is the start; subscripts are rates | $`f = 100`$ | — |
+| $`x`$ | distance from the left end, in m | 0 to 1 | — |
+| $`t`$ | time, in units of L^2/κ (L the length): 9009 s for copper | 0.05 = 450 s for copper | the bar cools |
+| $`\kappa`$ | thermal diffusivity: heat's spreading speed, in m^2/s | 1 in scaled units; copper 1.11e-4 | faster cooling |
+| $`X`$, $`T`$ | one product's space shape and time factor | sin(πx) and e^(−π^2 t) | — |
+| $`\lambda`$ | the separation constant; on this bar $`\lambda = n^2\pi^2`$ | π^2 for n = 1 | that mode fades faster |
+| $`n`$ | mode number: the count of humps | 1, 3, 5, … | faster fading |
+| $`b_n`$, $`a_n`$ | sine and cosine coefficients: each mode's starting size, in C | 127.324, 0, 42.441 | a larger share of that mode |
 
 ### When it holds
 
@@ -81,7 +87,7 @@ A solution X(x)T(t) has one fixed shape X, scaled by T as time passes. The guess
 
 ### Step 1: the equation splits
 
-Put u = XT into $u_t = \kappa u_{xx}$: X T' = κ X'' T. Divide by κXT:
+Put u = XT into $`u_t = \kappa u_{xx}`$: X T' = κ X'' T. Divide by κXT:
 
 T'(t) / (κ T(t)) = X''(x) / X(x).
 

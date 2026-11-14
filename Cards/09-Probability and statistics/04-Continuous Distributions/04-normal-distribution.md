@@ -35,42 +35,48 @@ The one line is the bell's height, to two decimals, at every half spread from �
 
 ## The formula
 
-Notation first, in words. The capital letter $X$ is the day's return, a random variable, and a lower-case $x$ is one value it could take. The Greek letter $\mu$ (mu) is the centre and $\sigma$ (sigma) is the spread; $\sigma^2$, the spread squared, is the variance.
+Notation first, in words. The capital letter $`X`$ is the day's return, a random variable, and a lower-case $`x`$ is one value it could take. The Greek letter $`\mu`$ (mu) is the centre and $`\sigma`$ (sigma) is the spread; $`\sigma^2`$, the spread squared, is the variance.
 
 Writing X ~ N(μ, σ^2) means "X follows the normal law with centre μ and variance σ^2"; the second slot holds the variance, not the spread.
 
-A reminder from [Densities](01-densities-and-cdfs.md): a density $f$ gives chance per unit as a height, and the cumulative distribution $F$ gives the total chance at or below a value.
+A reminder from [Densities](01-densities-and-cdfs.md): a density $`f`$ gives chance per unit as a height, and the cumulative distribution $`F`$ gives the total chance at or below a value.
 
-$$f(x) = \frac{1}{\sigma\sqrt{2\pi}}\; e^{-(x-\mu)^2/(2\sigma^2)}$$
+```math
+f(x) = \frac{1}{\sigma\sqrt{2\pi}}\; e^{-(x-\mu)^2/(2\sigma^2)}
+```
 
 **Read it aloud:** the height of the bell at a return x falls off with the square of its distance from the centre, measured in spreads. The constant in front makes the total area exactly 1.
 
-The standard normal is the case μ = 0, σ = 1. Its variable is written $Z$, its values $z$. Its density is written $\varphi$ (lower-case phi) and its cumulative area $\Phi$ (capital phi):
+The standard normal is the case μ = 0, σ = 1. Its variable is written $`Z`$, its values $`z`$. Its density is written $`\varphi`$ (lower-case phi) and its cumulative area $`\Phi`$ (capital phi):
 
-$$\varphi(z) = \frac{1}{\sqrt{2\pi}}\,e^{-z^2/2}, \qquad \Phi(z) = P(Z \le z) = \int_{-\infty}^{z} \varphi(t)\,dt$$
+```math
+\varphi(z) = \frac{1}{\sqrt{2\pi}}\,e^{-z^2/2}, \qquad \Phi(z) = P(Z \le z) = \int_{-\infty}^{z} \varphi(t)\,dt
+```
 
 The finance wing writes the same area N(z); it is the same function. The working rule of the card is standardising:
 
-$$P(X \le x) = \Phi\!\left(\frac{x-\mu}{\sigma}\right), \qquad \Phi(-z) = 1 - \Phi(z)$$
+```math
+P(X \le x) = \Phi\!\left(\frac{x-\mu}{\sigma}\right), \qquad \Phi(-z) = 1 - \Phi(z)
+```
 
 **Read it aloud:** to find the chance of a day at or below x, count how many spreads x sits from the centre. Then read the standard bell's area to the left of that count.
 
-The 68-95-99.7 rule is the case of a band $k$ spreads wide on each side: the chance of landing inside is 2Φ(k) − 1.
+The 68-95-99.7 rule is the case of a band $`k`$ spreads wide on each side: the chance of landing inside is 2Φ(k) − 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $x$ | the day's return, and one value of it | a loss of 2%, x = −2 | larger x: more area to its left |
-| $\mu$ | the centre: the average day, E[X] | 0.05% | the whole bell slides right |
-| $\sigma$ | the spread: the standard deviation | 1.2% | the bell widens and flattens |
-| $\sigma^2$ | the variance, Var(X), the spread squared | 1.44 (percent squared) | as for σ |
-| $Z$, $z$ | the standard normal, and a count of spreads | z = −1.7083 for a 2% loss | larger z: more area to its left |
-| $f$, $F$ | the return's density and cumulative chance | peak f = 0.332452 per percent | — |
-| $\varphi$ | the standard bell's height | peak 0.398942 | — |
-| $\Phi$ | the standard bell's area to the left of z | Φ(1.7083) = 0.956210 | rises from 0 to 1 |
-| $k$ | a band's half-width, in spreads | 1, 2, 3 | wider band, more inside |
-| $t$ | a dummy position under the integral sign | — | — |
-| $n$ | the counter of terms in the series for Φ | 1 to 199 in the code | more terms, closer answer |
-| $e$, $\pi$ | the constants 2.71828… and 3.14159… | — | — |
+| $`X`$, $`x`$ | the day's return, and one value of it | a loss of 2%, x = −2 | larger x: more area to its left |
+| $`\mu`$ | the centre: the average day, E[X] | 0.05% | the whole bell slides right |
+| $`\sigma`$ | the spread: the standard deviation | 1.2% | the bell widens and flattens |
+| $`\sigma^2`$ | the variance, Var(X), the spread squared | 1.44 (percent squared) | as for σ |
+| $`Z`$, $`z`$ | the standard normal, and a count of spreads | z = −1.7083 for a 2% loss | larger z: more area to its left |
+| $`f`$, $`F`$ | the return's density and cumulative chance | peak f = 0.332452 per percent | — |
+| $`\varphi`$ | the standard bell's height | peak 0.398942 | — |
+| $`\Phi`$ | the standard bell's area to the left of z | Φ(1.7083) = 0.956210 | rises from 0 to 1 |
+| $`k`$ | a band's half-width, in spreads | 1, 2, 3 | wider band, more inside |
+| $`t`$ | a dummy position under the integral sign | — | — |
+| $`n`$ | the counter of terms in the series for Φ | 1 to 199 in the code | more terms, closer answer |
+| $`e`$, $`\pi`$ | the constants 2.71828… and 3.14159… | — | — |
 
 ### When it holds
 
@@ -91,11 +97,13 @@ Every normal is the standard bell moved to a new centre and stretched to a new w
 
 ### Step 1: the constant makes the area exactly 1
 
-The bell e^(−z^2/2) has area √(2π) over the whole line. That is the Gaussian integral ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)), rescaled by z = √2·u. Dividing by √(2π) leaves area 1, so $\varphi$ is a density.
+The bell e^(−z^2/2) has area √(2π) over the whole line. That is the Gaussian integral ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)), rescaled by z = √2·u. Dividing by √(2π) leaves area 1, so $`\varphi`$ is a density.
 
 For the return's density, put x = μ + σz. Then dx = σ dz, and the σ in front of f cancels it:
 
-$$\int_{-\infty}^{\infty} f(x)\,dx = \int_{-\infty}^{\infty} \frac{1}{\sigma}\,\varphi(z)\,\sigma\,dz = 1$$
+```math
+\int_{-\infty}^{\infty} f(x)\,dx = \int_{-\infty}^{\infty} \frac{1}{\sigma}\,\varphi(z)\,\sigma\,dz = 1
+```
 
 The check integrates f numerically across ±12 spreads and gets 1.000000000.
 
@@ -120,7 +128,9 @@ Over the whole line the bracket vanishes, since z e^(−z^2/2) tends to 0 at bot
 
 The event "X at or below x" is the event "μ + σZ at or below x". Subtract μ and divide by σ, which is positive, so the inequality keeps its direction:
 
-$$P(X \le x) = P\!\left(Z \le \frac{x-\mu}{\sigma}\right) = \Phi\!\left(\frac{x-\mu}{\sigma}\right)$$
+```math
+P(X \le x) = P\!\left(Z \le \frac{x-\mu}{\sigma}\right) = \Phi\!\left(\frac{x-\mu}{\sigma}\right)
+```
 
 For the 2% loss, z = (−2 − 0.05)/1.2 = −1.7083. The check computes the chance twice: once through Φ, once by integrating the return's own density f up to −2 with no standardising at all. Both give 0.0438.
 
@@ -135,7 +145,9 @@ The standard bell is a mirror image about 0. So the area left of −z equals the
 
 No finite combination of powers, roots, exponentials and logarithms has φ as its rate of change, so Φ has no closed formula. It has a series instead. A Taylor series writes a function as an endless sum of powers: [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md). Write the exponential as its Taylor series and integrate each term from 0 to z:
 
-$$\Phi(z) = \frac12 + \frac{1}{\sqrt{2\pi}} \sum_{n=0}^{\infty} \frac{(-1)^n\, z^{2n+1}}{2^n\, n!\,(2n+1)}$$
+```math
+\Phi(z) = \frac12 + \frac{1}{\sqrt{2\pi}} \sum_{n=0}^{\infty} \frac{(-1)^n\, z^{2n+1}}{2^n\, n!\,(2n+1)}
+```
 
 The terms shrink fast once n passes z^2/2, so a few dozen terms give Φ to ten or more decimal places for |z| up to about 5. At k = 1, 2, 3 the series gives 0.682689, 0.954500 and 0.997300. Those are the 68, 95 and 99.7 of the rule, rounded.
 

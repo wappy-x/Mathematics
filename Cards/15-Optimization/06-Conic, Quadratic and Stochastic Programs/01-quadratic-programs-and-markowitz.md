@@ -32,49 +32,57 @@ On £1,000,000 that is £132,634 in UK shares, £64,782 in world shares, £690,1
 
 ## The formula
 
-Notation first, in words. A **quadratic program** (QP; "program" here means a planning problem, not computer code) chooses a list of numbers $x$ to make a cost of the form $\tfrac12 x^\top Q x + c^\top x$ as small as possible. The quadratic part makes a bowl, and the straight-line part tilts it.
+Notation first, in words. A **quadratic program** (QP; "program" here means a planning problem, not computer code) chooses a list of numbers $`x`$ to make a cost of the form $`\tfrac12 x^\top Q x + c^\top x`$ as small as possible. The quadratic part makes a bowl, and the straight-line part tilts it.
 
-The limits are straight-line equations $Ax = b$ and the bounds $x \ge 0$, held entry by entry. The raised $\top$ turns a column into a row, so $c^\top x$ means "multiply the two lists entry by entry and add".
+The limits are straight-line equations $`Ax = b`$ and the bounds $`x \ge 0`$, held entry by entry. The raised $`\top`$ turns a column into a row, so $`c^\top x`$ means "multiply the two lists entry by entry and add".
 
-$Q \succeq 0$ says $Q$ is positive semidefinite: $x^\top Q x \ge 0$ for every $x$, which is what makes the cost a bowl ([Convex functions](../01-Convexity/03-convex-functions-and-their-tests.md) gives the test).
+$`Q \succeq 0`$ says $`Q`$ is positive semidefinite: $`x^\top Q x \ge 0`$ for every $`x`$, which is what makes the cost a bowl ([Convex functions](../01-Convexity/03-convex-functions-and-their-tests.md) gives the test).
 
-$$\text{minimise } \tfrac12 x^\top Q x + c^\top x \quad \text{subject to} \quad Ax = b,\ \ x \ge 0.$$
+```math
+\text{minimise } \tfrac12 x^\top Q x + c^\top x \quad \text{subject to} \quad Ax = b,\ \ x \ge 0.
+```
 
-With only the equations, the minimiser $x^*$ and the multipliers $\nu$ solve one linear system, the **KKT system** (after Karush, Kuhn and Tucker):
+With only the equations, the minimiser $`x^*`$ and the multipliers $`\nu`$ solve one linear system, the **KKT system** (after Karush, Kuhn and Tucker):
 
-$$\begin{bmatrix} Q & A^\top \\ A & 0 \end{bmatrix} \begin{bmatrix} x \\ \nu \end{bmatrix} = \begin{bmatrix} -c \\ b \end{bmatrix}.$$
+```math
+\begin{bmatrix} Q & A^\top \\ A & 0 \end{bmatrix} \begin{bmatrix} x \\ \nu \end{bmatrix} = \begin{bmatrix} -c \\ b \end{bmatrix}.
+```
 
-With the bounds too, $x^*$ is the minimiser exactly when some $\nu$ and some $\lambda$ satisfy
+With the bounds too, $`x^*`$ is the minimiser exactly when some $`\nu`$ and some $`\lambda`$ satisfy
 
-$$Qx + c + A^\top \nu - \lambda = 0, \qquad Ax = b, \qquad x \ge 0, \qquad \lambda \ge 0, \qquad \lambda_i x_i = 0 \text{ for every } i.$$
+```math
+Qx + c + A^\top \nu - \lambda = 0, \qquad Ax = b, \qquad x \ge 0, \qquad \lambda \ge 0, \qquad \lambda_i x_i = 0 \text{ for every } i.
+```
 
 **Read it aloud:** at the bottom, the cost's slope is balanced by the equation limits plus a non-negative push from each bound, and a bound pushes only where its variable sits at zero.
 
-For the fund, $x$ is the weights $w$, $Q$ is the covariance matrix $\Sigma$, $c = 0$, and the only equation is $\mathbf{1}^\top w = 1$. The cost $\tfrac12 w^\top \Sigma w$ is half the variance $V$; halving moves no minimiser and tidies the slope to $\Sigma w$. Multiplying the first condition by $w^\top$ shows $\nu = -V$, so the conditions read, asset by asset:
+For the fund, $`x`$ is the weights $`w`$, $`Q`$ is the covariance matrix $`\Sigma`$, $`c = 0`$, and the only equation is $`\mathbf{1}^\top w = 1`$. The cost $`\tfrac12 w^\top \Sigma w`$ is half the variance $`V`$; halving moves no minimiser and tidies the slope to $`\Sigma w`$. Multiplying the first condition by $`w^\top`$ shows $`\nu = -V`$, so the conditions read, asset by asset:
 
-$$(\Sigma w)_i = V + \lambda_i, \qquad \lambda_i \ge 0, \qquad \lambda_i = 0 \text{ wherever } w_i > 0.$$
+```math
+(\Sigma w)_i = V + \lambda_i, \qquad \lambda_i \ge 0, \qquad \lambda_i = 0 \text{ wherever } w_i > 0.
+```
 
 **Read it aloud:** every asset held has the same covariance with the portfolio, equal to the portfolio's variance; every asset left out has a covariance at least that large.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $w$ | the list being chosen; for the fund, the weights, the fraction of the money in each asset | answer: 13.26%, 6.48%, 0, 69.01%, 11.24% | — |
-| $Q$, $\Sigma$ | the bowl's matrix; for the fund, the covariance matrix, each entry a correlation times two standard deviations; $Q \succeq 0$ means no direction curves downward | diagonal 256, 225, 324, 64, 196 (percent squared) | a larger variance on one asset pushes money out of it |
-| $c$ | the straight-line part of the cost, tilting the bowl | 0: the fund cares only about risk | — |
-| $A$, $b$ | the equation limits, one row each, and their right-hand sides | one row, $\mathbf{1}^\top w = 1$ | — |
-| $\mathbf{1}$, $\top$ | a list of ones, so $\mathbf{1}^\top w$ adds the weights; the raised $\top$ turns a column into a row | 1, 1, 1, 1, 1 | — |
-| $V$ | the portfolio's variance, $w^\top \Sigma w$; its square root is the standard deviation | 47.9473, so 6.9244% | — |
-| $\nu$ | the multiplier on the equation limit; here it equals $-V$ | −42.0658 with shorts allowed | — |
-| $\lambda_i$ | the multiplier on the bound $w_i \ge 0$: how much half the variance would rise per unit of asset $i$ forced in | Property: 23.0185; the held assets: 0 | larger: the asset is further from being worth holding |
-| $(\Sigma w)_i$ | asset $i$'s covariance with the whole portfolio: how much risk one more unit of it adds | 47.9473 for each held asset, 70.9658 for property | — |
-| $\mathcal{W}_k$ | the working set at pass $k$: the bounds currently treated as equations $w_i = 0$ | finally {Property} | — |
-| $k$, $d_k$, $\alpha_k$ | the pass number from $k = 0$, the direction to the working set's best point, and the fraction of that step taken | $\alpha_0$ = 0.4284 | — |
-| $x^*$, $w^*$ | the minimiser | the answer above | — |
+| $`x`$, $`w`$ | the list being chosen; for the fund, the weights, the fraction of the money in each asset | answer: 13.26%, 6.48%, 0, 69.01%, 11.24% | — |
+| $`Q`$, $`\Sigma`$ | the bowl's matrix; for the fund, the covariance matrix, each entry a correlation times two standard deviations; $`Q \succeq 0`$ means no direction curves downward | diagonal 256, 225, 324, 64, 196 (percent squared) | a larger variance on one asset pushes money out of it |
+| $`c`$ | the straight-line part of the cost, tilting the bowl | 0: the fund cares only about risk | — |
+| $`A`$, $`b`$ | the equation limits, one row each, and their right-hand sides | one row, $`\mathbf{1}^\top w = 1`$ | — |
+| $`\mathbf{1}`$, $`\top`$ | a list of ones, so $`\mathbf{1}^\top w`$ adds the weights; the raised $`\top`$ turns a column into a row | 1, 1, 1, 1, 1 | — |
+| $`V`$ | the portfolio's variance, $`w^\top \Sigma w`$; its square root is the standard deviation | 47.9473, so 6.9244% | — |
+| $`\nu`$ | the multiplier on the equation limit; here it equals $`-V`$ | −42.0658 with shorts allowed | — |
+| $`\lambda_i`$ | the multiplier on the bound $`w_i \ge 0`$: how much half the variance would rise per unit of asset $`i`$ forced in | Property: 23.0185; the held assets: 0 | larger: the asset is further from being worth holding |
+| $`(\Sigma w)_i`$ | asset $`i`$'s covariance with the whole portfolio: how much risk one more unit of it adds | 47.9473 for each held asset, 70.9658 for property | — |
+| $`\mathcal{W}_k`$ | the working set at pass $`k`$: the bounds currently treated as equations $`w_i = 0`$ | finally {Property} | — |
+| $`k`$, $`d_k`$, $`\alpha_k`$ | the pass number from $`k = 0`$, the direction to the working set's best point, and the fraction of that step taken | $`\alpha_0`$ = 0.4284 | — |
+| $`x^*`$, $`w^*`$ | the minimiser | the answer above | — |
 
 ### When it holds
 
-- **The bowl is convex: $Q \succeq 0$.** A covariance matrix built from one data set always is. Patch one correlation from a different data set and it may not be; then the conditions above hold at a saddle (a point that is lowest along some moves and highest along others) as well as at the bottom. On this card, a patched World–Property correlation of −0.2 makes the method stop at variance 48.0255 while a better allowed split has 46.5657.
-- **The equation rows are independent and $Q$ is positive definite on the moves they allow.** Positive definite means $z^\top Q z > 0$ for every nonzero move $z$ that keeps the equations true. Then the KKT matrix has an inverse and each linear system has one answer. If two assets were exact copies, many weight lists would tie and the elimination would hit a zero pivot (a zero where it must divide).
+- **The bowl is convex: $`Q \succeq 0`$.** A covariance matrix built from one data set always is. Patch one correlation from a different data set and it may not be; then the conditions above hold at a saddle (a point that is lowest along some moves and highest along others) as well as at the bottom. On this card, a patched World–Property correlation of −0.2 makes the method stop at variance 48.0255 while a better allowed split has 46.5657.
+- **The equation rows are independent and $`Q`$ is positive definite on the moves they allow.** Positive definite means $`z^\top Q z > 0`$ for every nonzero move $`z`$ that keeps the equations true. Then the KKT matrix has an inverse and each linear system has one answer. If two assets were exact copies, many weight lists would tie and the elimination would hit a zero pivot (a zero where it must divide).
 - **Some point meets every limit.** If the limits contradict each other (say "invest everything" and "at most 10 percent in each of five assets"), there is nothing to minimise, and the first feasible point the method needs does not exist.
 - **The limits are straight lines.** A limit such as "standard deviation at most 7 percent" is curved; it makes a cone program instead: [Second-order cone programs](04-second-order-cone-programs.md).
 
@@ -92,38 +100,38 @@ The active-set method guesses that list of touching walls, solves, and then read
 
 ### Step 1: equations only, one linear system
 
-Attach a multiplier $\nu_j$ to each equation and form $\tfrac12 x^\top Q x + c^\top x + \nu^\top(Ax - b)$, the Lagrangian of [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md). Its slope in $x$ is $Qx + c + A^\top \nu$. Setting that to zero, and keeping $Ax = b$, gives the KKT system: square, linear, solved by elimination.
+Attach a multiplier $`\nu_j`$ to each equation and form $`\tfrac12 x^\top Q x + c^\top x + \nu^\top(Ax - b)`$, the Lagrangian of [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md). Its slope in $`x`$ is $`Qx + c + A^\top \nu`$. Setting that to zero, and keeping $`Ax = b`$, gives the KKT system: square, linear, solved by elimination.
 
-For the fund it is six equations in six unknowns: five rows $\Sigma w + \nu\mathbf{1} = 0$ and the row $\mathbf{1}^\top w = 1$. The finance card solves the same problem with the inverse matrix; here elimination returns 59.07%, −26.68%, −25.55%, 71.71%, 21.46% and $\nu$ = −42.0658, so $V$ = 42.0658 and the standard deviation is 6.4858%.
+For the fund it is six equations in six unknowns: five rows $`\Sigma w + \nu\mathbf{1} = 0`$ and the row $`\mathbf{1}^\top w = 1`$. The finance card solves the same problem with the inverse matrix; here elimination returns 59.07%, −26.68%, −25.55%, 71.71%, 21.46% and $`\nu`$ = −42.0658, so $`V`$ = 42.0658 and the standard deviation is 6.4858%.
 
-Why this is the minimum: any other split meeting the equation differs by a move $z$ with $\mathbf{1}^\top z = 0$. Its cost is the old cost plus $z^\top(Qx + c)$ plus $\tfrac12 z^\top Q z$. The middle term is $-z^\top A^\top \nu = 0$, and the last is never negative when $Q \succeq 0$. So nothing meeting the equation is lower.
+Why this is the minimum: any other split meeting the equation differs by a move $`z`$ with $`\mathbf{1}^\top z = 0`$. Its cost is the old cost plus $`z^\top(Qx + c)`$ plus $`\tfrac12 z^\top Q z`$. The middle term is $`-z^\top A^\top \nu = 0`$, and the last is never negative when $`Q \succeq 0`$. So nothing meeting the equation is lower.
 
 ### Step 2: bounds, and what the multipliers mean
 
-With the bounds, the last condition of The formula, $(\Sigma w)_i = V + \lambda_i$, has a plain reading. $(\Sigma w)_i$ is the risk added by moving a sliver of money into asset $i$; $V$ is the risk removed by taking that sliver evenly out of the whole portfolio.
+With the bounds, the last condition of The formula, $`(\Sigma w)_i = V + \lambda_i`$, has a plain reading. $`(\Sigma w)_i`$ is the risk added by moving a sliver of money into asset $`i`$; $`V`$ is the risk removed by taking that sliver evenly out of the whole portfolio.
 
-If two held assets had different $(\Sigma w)_i$, shifting money from the higher to the lower would cut the variance, so at the bottom they are all equal. An asset left out may have a larger $(\Sigma w)_i$, which is why it is out, but not a smaller one: then a sliver of it would lower the variance. Its excess, $\lambda_i$, must be $\ge 0$.
+If two held assets had different $`(\Sigma w)_i`$, shifting money from the higher to the lower would cut the variance, so at the bottom they are all equal. An asset left out may have a larger $`(\Sigma w)_i`$, which is why it is out, but not a smaller one: then a sliver of it would lower the variance. Its excess, $`\lambda_i`$, must be $`\ge 0`$.
 
-These conditions are not only necessary but sufficient when $Q \succeq 0$, which is what makes them a certificate.
+These conditions are not only necessary but sufficient when $`Q \succeq 0`$, which is what makes them a certificate.
 
 <details>
 <summary>Detailed proof: the conditions certify a global minimum</summary>
 
-Let $x$, $\nu$, $\lambda$ satisfy the conditions, and let $y$ be any point with $Ay = b$ and $y \ge 0$. Write $f(x) = \tfrac12 x^\top Q x + c^\top x$ and $z = y - x$. Expanding,
+Let $`x`$, $`\nu`$, $`\lambda`$ satisfy the conditions, and let $`y`$ be any point with $`Ay = b`$ and $`y \ge 0`$. Write $`f(x) = \tfrac12 x^\top Q x + c^\top x`$ and $`z = y - x`$. Expanding,
 
-$$f(y) = f(x) + z^\top (Qx + c) + \tfrac12 z^\top Q z.$$
+$`\displaystyle f(y) = f(x) + z^\top (Qx + c) + \tfrac12 z^\top Q z.`$
 
-By stationarity, $Qx + c = \lambda - A^\top \nu$. Since $Az = Ay - Ax = 0$, the term $z^\top A^\top \nu$ is zero, so $z^\top(Qx + c) = \lambda^\top z = \lambda^\top y - \lambda^\top x$. Complementarity makes $\lambda^\top x = 0$, and $\lambda \ge 0$ with $y \ge 0$ makes $\lambda^\top y \ge 0$. Finally $z^\top Q z \ge 0$ because $Q \succeq 0$. So $f(y) \ge f(x)$.
+By stationarity, $`Qx + c = \lambda - A^\top \nu`$. Since $`Az = Ay - Ax = 0`$, the term $`z^\top A^\top \nu`$ is zero, so $`z^\top(Qx + c) = \lambda^\top z = \lambda^\top y - \lambda^\top x`$. Complementarity makes $`\lambda^\top x = 0`$, and $`\lambda \ge 0`$ with $`y \ge 0`$ makes $`\lambda^\top y \ge 0`$. Finally $`z^\top Q z \ge 0`$ because $`Q \succeq 0`$. So $`f(y) \ge f(x)`$.
 
-If $Q$ is not positive semidefinite, the last step fails: $z^\top Q z$ can be negative and $y$ can beat $x$. That is the patched-correlation case in the checks.
+If $`Q`$ is not positive semidefinite, the last step fails: $`z^\top Q z`$ can be negative and $`y`$ can beat $`x`$. That is the patched-correlation case in the checks.
 
-That a minimiser always has such multipliers (necessity) is proved in [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md) under LICQ: the gradients of the binding limits are linearly independent. The fund's limits always pass. At most four weights can be zero, and the budget row of ones is never a combination of four or fewer of the unit rows $w_i = 0$.
+That a minimiser always has such multipliers (necessity) is proved in [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md) under LICQ: the gradients of the binding limits are linearly independent. The fund's limits always pass. At most four weights can be zero, and the budget row of ones is never a combination of four or fewer of the unit rows $`w_i = 0`$.
 
 </details>
 
 ### Step 3: the active-set pass
 
-The method keeps a working set $\mathcal{W}_k$ of bounds held as equations $w_i = 0$. Each pass solves the KKT system with those extra rows and compares its answer with the current point.
+The method keeps a working set $`\mathcal{W}_k`$ of bounds held as equations $`w_i = 0`$. Each pass solves the KKT system with those extra rows and compares its answer with the current point.
 
 ```mermaid
 flowchart TB
@@ -140,12 +148,12 @@ flowchart TB
     I --> A
 ```
 
-From equal weights at $k = 0$, with an empty working set, the fund's run is:
+From equal weights at $`k = 0`$, with an empty working set, the fund's run is:
 
-| Pass $k$ | Variance at the start | What happens |
+| Pass $`k`$ | Variance at the start | What happens |
 | --- | --- | --- |
-| 0 | 100.3440 | heads for the shorts-allowed answer; world shares hit zero at $\alpha_0$ = 0.4284, reaching 36.74%, 0, 0.49%, 42.15%, 20.62% |
-| 1 | 61.1066 | heads for the best with world shares at 0; property hits zero at $\alpha_1$ = 0.0267 |
+| 0 | 100.3440 | heads for the shorts-allowed answer; world shares hit zero at $`\alpha_0`$ = 0.4284, reaching 36.74%, 0, 0.49%, 42.15%, 20.62% |
+| 1 | 61.1066 | heads for the best with world shares at 0; property hits zero at $`\alpha_1`$ = 0.0267 |
 | 2 | 60.1801 | heads for the best with both at 0; full step to 18.78%, 0, 0, 68.41%, 12.81% |
 | 3 | 48.0856 | at the target; multipliers: world shares −2.1349, property 25.7894; release world shares |
 | 4 | 48.0856 | heads for the best with only property at 0; full step to 13.26%, 6.48%, 0, 69.01%, 11.24% |
@@ -166,7 +174,7 @@ One line: the portfolio's variance as the passes run. It never rises. Pass 3 mov
 
 Each pass either moves the point downhill, adds a bound, or releases one. When a release happens, the next direction lowers the variance strictly, because the released asset's negative multiplier says a sliver of it helps.
 
-Each working set's best point is unique when $Q$ is positive definite on its moves, and the variance strictly falls between visits, so no working set is solved to its best point twice. Five bounds give at most $2^5$ working sets, so the method stops.
+Each working set's best point is unique when $`Q`$ is positive definite on its moves, and the variance strictly falls between visits, so no working set is solved to its best point twice. Five bounds give at most $`2^5`$ working sets, so the method stops.
 
 The one catch is a step of length zero, possible when several bounds touch at once; Nocedal and Wright give the full argument and its guard.
 
@@ -176,30 +184,30 @@ Here every step had positive length, and the run took six passes: four moves and
 
 ## Worked numbers, by hand
 
-Pass 2 can be done by hand, because UK shares have zero covariance with gilts and gold. With world shares and property held at zero, the KKT rows are $256\,w_{UK} + \nu = 0$, $64\,w_G + 33.6\,w_{Au} + \nu = 0$, $33.6\,w_G + 196\,w_{Au} + \nu = 0$ and $w_{UK} + w_G + w_{Au} = 1$ ($G$ for gilts, $Au$ for gold). In both tables the Arithmetic column shows weights rounded to four decimals, while each Value comes from the unrounded weights; redone with the rounded ones, a row lands within 0.01 of it.
+Pass 2 can be done by hand, because UK shares have zero covariance with gilts and gold. With world shares and property held at zero, the KKT rows are $`256\,w_{UK} + \nu = 0`$, $`64\,w_G + 33.6\,w_{Au} + \nu = 0`$, $`33.6\,w_G + 196\,w_{Au} + \nu = 0`$ and $`w_{UK} + w_G + w_{Au} = 1`$ ($`G`$ for gilts, $`Au`$ for gold). In both tables the Arithmetic column shows weights rounded to four decimals, while each Value comes from the unrounded weights; redone with the rounded ones, a row lands within 0.01 of it.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| determinant of the gilts–gold block | $64 \times 196 - 33.6^2$ | 11415.04 |
-| gilts' row of its inverse, times the determinant | $196 - 33.6$ | 162.4 |
-| gold's row, the same | $64 - 33.6$ | 30.4 |
-| UK shares per unit of $-\nu$ | $1/256$ | 0.00390625 |
-| gilts and gold per unit of $-\nu$ | $(162.4 + 30.4)/11415.04$ | 0.01689000 |
-| $V = -\nu$, from "weights add to 1" | $1/(0.00390625 + 0.01689000)$ | 48.0856 |
-| weights | $48.0856/256$; $48.0856 \times 162.4/11415.04$; $48.0856 \times 30.4/11415.04$ | 18.78%, 68.41%, 12.81% |
-| world shares' covariance with this portfolio | $216 \times 0.1878 + 42 \times 0.1281$ | 45.9507 |
-| world shares' multiplier | $45.9507 - 48.0856$ | **−2.1349** |
+| determinant of the gilts–gold block | $`64 \times 196 - 33.6^2`$ | 11415.04 |
+| gilts' row of its inverse, times the determinant | $`196 - 33.6`$ | 162.4 |
+| gold's row, the same | $`64 - 33.6`$ | 30.4 |
+| UK shares per unit of $`-\nu`$ | $`1/256`$ | 0.00390625 |
+| gilts and gold per unit of $`-\nu`$ | $`(162.4 + 30.4)/11415.04`$ | 0.01689000 |
+| $`V = -\nu`$, from "weights add to 1" | $`1/(0.00390625 + 0.01689000)`$ | 48.0856 |
+| weights | $`48.0856/256`$; $`48.0856 \times 162.4/11415.04`$; $`48.0856 \times 30.4/11415.04`$ | 18.78%, 68.41%, 12.81% |
+| world shares' covariance with this portfolio | $`216 \times 0.1878 + 42 \times 0.1281`$ | 45.9507 |
+| world shares' multiplier | $`45.9507 - 48.0856`$ | **−2.1349** |
 
 Negative: world shares add less risk than the portfolio carries, so a sliver of them lowers the variance. The bound on world shares comes off, and pass 4 lands on the answer. Check it the same way:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| UK shares' covariance with the portfolio | $256 \times 0.1326 + 216 \times 0.0648$ | 47.9473 |
-| gilts' covariance with the portfolio | $64 \times 0.6901 + 33.6 \times 0.1124$ | 47.9473 |
-| property's covariance with the portfolio | $201.6 \times 0.1326 + 135 \times 0.0648 + 43.2 \times 0.6901 + 50.4 \times 0.1124$ | 70.9658 |
-| property's multiplier | $70.9658 - 47.9473$ | **23.0185** |
+| UK shares' covariance with the portfolio | $`256 \times 0.1326 + 216 \times 0.0648`$ | 47.9473 |
+| gilts' covariance with the portfolio | $`64 \times 0.6901 + 33.6 \times 0.1124`$ | 47.9473 |
+| property's covariance with the portfolio | $`201.6 \times 0.1326 + 135 \times 0.0648 + 43.2 \times 0.6901 + 50.4 \times 0.1124`$ | 70.9658 |
+| property's multiplier | $`70.9658 - 47.9473`$ | **23.0185** |
 
-World shares and gold also give 47.9473 (printed by the checks). Every held asset adds the same risk, and property would add more, so the fund holds no property. The least variance the rules allow is 47.9473, a standard deviation of 6.9244 percent. Forcing 1 percent into property shows the multiplier's meaning: the variance rises by 0.4694, against the first-order prediction $2 \times 23.0185 \times 0.01$ = 0.4604 (the 2 because $\lambda$ prices half the variance).
+World shares and gold also give 47.9473 (printed by the checks). Every held asset adds the same risk, and property would add more, so the fund holds no property. The least variance the rules allow is 47.9473, a standard deviation of 6.9244 percent. Forcing 1 percent into property shows the multiplier's meaning: the variance rises by 0.4694, against the first-order prediction $`2 \times 23.0185 \times 0.01`$ = 0.4604 (the 2 because $`\lambda`$ prices half the variance).
 
 ### What breaks if you drop a piece
 
@@ -222,7 +230,7 @@ Both programs build the covariance matrix from the standard deviations and corre
 - enumeration of all 31 possible sets of held assets, solving each and keeping the lowest long-only one;
 - a grid of all 135,751 splits in steps of 2.5 percent, which never beats the answer and lands just above it.
 
-On top of that, the KKT conditions are checked directly from $\Sigma w$, the by-hand algebra is checked against elimination, and the patched matrix is shown failing. An iteration cap of 20 passes turns a broken method into a failed assert instead of an endless loop.
+On top of that, the KKT conditions are checked directly from $`\Sigma w`$, the by-hand algebra is checked against elimination, and the patched matrix is shown failing. An iteration cap of 20 passes turns a broken method into a failed assert instead of an endless loop.
 
 ### Python
 
@@ -609,11 +617,11 @@ ALL CHECKS PASS
 
 Lean proves the card's certificate for every convex bowl of any size, and checks the by-hand numbers in exact fractions.
 
-- If $Q \succeq 0$ and a point meets every condition of The formula, no allowed point has a lower cost.
-- With equations only, a solution of the KKT system has the lowest cost among all points with $Ax = b$.
-- For the fund, say every held asset has covariance $V$ with the portfolio, and every asset left out has at least $V$. Then $V$ is the portfolio's variance, and no split that invests every penny without shorting has less.
+- If $`Q \succeq 0`$ and a point meets every condition of The formula, no allowed point has a lower cost.
+- With equations only, a solution of the KKT system has the lowest cost among all points with $`Ax = b`$.
+- For the fund, say every held asset has covariance $`V`$ with the portfolio, and every asset left out has at least $`V`$. Then $`V`$ is the portfolio's variance, and no split that invests every penny without shorting has less.
 - Equal weights give variance 100.344 exactly.
-- In pass 2, the gilts–gold determinant is 11415.04, the rows give 162.4 and 30.4, and $V$ is about 48.0856.
+- In pass 2, the gilts–gold determinant is 11415.04, the rows give 162.4 and 30.4, and $`V`$ is about 48.0856.
 - World shares' multiplier at pass 2 is about −2.1349, which is negative, so their bound comes off.
 
 Finding the answer itself, variance 47.9473, and running the active-set pass are left to the Python and Rust checks.
@@ -799,9 +807,9 @@ example :
 >
 > Smaller traps:
 > - **Clipping instead of solving.** Clipping the shorted weights and rescaling gives variance 61.0968, against 47.9473 for the honest answer.
-> - **Calling a KKT point a minimum without convexity.** With the patched correlation of −0.2, the method stops at variance 48.0255 with every condition met, yet a long-only split with 46.5657 exists. Check $Q \succeq 0$ before trusting the certificate.
-> - **Losing the factor of 2.** The multiplier prices half the variance, because the cost is $\tfrac12 w^\top\Sigma w$. Forcing 1 percent into property raises the variance by about $2 \times 23.0185 \times 0.01$ = 0.4604 (actually 0.4694), not half that.
-> - **Reading $\nu$ as a price of money.** Here $\nu = -V$: it is −42.0658 with shorts allowed, the variance with its sign flipped, not a cost of the budget in pounds.
+> - **Calling a KKT point a minimum without convexity.** With the patched correlation of −0.2, the method stops at variance 48.0255 with every condition met, yet a long-only split with 46.5657 exists. Check $`Q \succeq 0`$ before trusting the certificate.
+> - **Losing the factor of 2.** The multiplier prices half the variance, because the cost is $`\tfrac12 w^\top\Sigma w`$. Forcing 1 percent into property raises the variance by about $`2 \times 23.0185 \times 0.01`$ = 0.4604 (actually 0.4694), not half that.
+> - **Reading $`\nu`$ as a price of money.** Here $`\nu = -V`$: it is −42.0658 with shorts allowed, the variance with its sign flipped, not a cost of the budget in pounds.
 
 ---
 
@@ -821,8 +829,8 @@ example :
 ## What this builds on
 
 - [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md): the multiplier conditions for a minimum under inequality limits, and the proof that a minimiser has them when the binding limits are independent (LICQ), as the fund's always are. This card applies them; that card proves them.
-- [Convex functions](../01-Convexity/03-convex-functions-and-their-tests.md): the curvature test $Q \succeq 0$ that makes the cost a bowl and the conditions sufficient.
-- [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): the covariance matrix, the variance $w^\top\Sigma w$, and the shorts-allowed minimum-variance portfolio by Lagrange multipliers, which is the KKT system of Step 1.
+- [Convex functions](../01-Convexity/03-convex-functions-and-their-tests.md): the curvature test $`Q \succeq 0`$ that makes the cost a bowl and the conditions sufficient.
+- [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): the covariance matrix, the variance $`w^\top\Sigma w`$, and the shorts-allowed minimum-variance portfolio by Lagrange multipliers, which is the KKT system of Step 1.
 
 ## Where this goes next
 

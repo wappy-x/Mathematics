@@ -37,42 +37,50 @@ The one line is the certainty-equivalent wealth for each fraction, held constant
 
 ## The formula
 
-Notation first. The Greek letter $\pi$ ("pi") stands here for a fraction of wealth, not for 3.14159. Wealth at time $t$ is $W_t$. The fund is modelled by geometric Brownian motion ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): over a short time $dt$ its price changes by a steady drift $\mu\,dt$ plus a random kick $\sigma\,dZ_t$, where $Z_t$ is Brownian motion, a random walk in continuous time.
+Notation first. The Greek letter $`\pi`$ ("pi") stands here for a fraction of wealth, not for 3.14159. Wealth at time $`t`$ is $`W_t`$. The fund is modelled by geometric Brownian motion ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): over a short time $`dt`$ its price changes by a steady drift $`\mu\,dt`$ plus a random kick $`\sigma\,dZ_t`$, where $`Z_t`$ is Brownian motion, a random walk in continuous time.
 
-$$\pi^* = \frac{\mu - r}{\gamma\,\sigma^2}$$
+```math
+\pi^* = \frac{\mu - r}{\gamma\,\sigma^2}
+```
 
 **Read it aloud:** the best share of wealth in the risky fund is its expected return above the bank rate, divided by risk aversion times the fund's variance.
 
-The saver's tastes are power utility: an amount of money $x$ is worth
+The saver's tastes are power utility: an amount of money $`x`$ is worth
 
-$$U(x) = \frac{x^{1-\gamma}}{1-\gamma},$$
+```math
+U(x) = \frac{x^{1-\gamma}}{1-\gamma},
+```
 
-which for $\gamma = 2$ is $-1/x$. The utility is negative, but only comparisons matter: more money always gives a higher (less negative) number. Its key property is that the saver's dislike of a 10 percent swing is the same at $50,000 as at $5 million ([Expected utility](../36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md)).
+which for $`\gamma = 2`$ is $`-1/x`$. The utility is negative, but only comparisons matter: more money always gives a higher (less negative) number. Its key property is that the saver's dislike of a 10 percent swing is the same at $50,000 as at $5 million ([Expected utility](../36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\pi$, $\pi_t$, $\pi^*$ | fraction of current wealth in the fund; its value at time $t$ under a rule that may change it; the best fraction | 50% | — |
-| $\mu$ | the fund's expected return per year (its drift) | 6% | rises: more reward per unit of risk |
-| $r$ | the bank rate, continuously compounded, per year | 2% | falls: the bank looks better |
-| $\mu - r$ | the excess return: what the fund pays above the bank, on average | 4% | rises in proportion |
-| $\sigma$, $\sigma^2$ | the fund's volatility; its square, the variance, per year | 20%; 0.04 | falls with the square: double volatility, quarter the share |
-| $\gamma$ | relative risk aversion: how much the saver dislikes swings, measured against wealth | 2 | falls in proportion |
-| $W_t$, $w$ | wealth at time $t$; a particular value of it | $100,000 at the start | no effect on the fraction |
-| $U(x)$ | utility of an amount of money $x$ | $-1/x$ | — |
-| $t$, $T$ | time now; the horizon, in years | 0; 3 | no effect on the fraction |
-| $Z_t$, $dZ$, $dt$ | Brownian motion, the fund's accumulated random kicks; one small kick; one short step of time | — | — |
-| $g(\pi)$, CE | certainty-equivalent growth rate of a constant fraction $\pi$; the certainty-equivalent wealth, $W_0 e^{g(\pi)T}$ | 3% at the best fraction; $109,417.43 | — |
-| $V(t,w)$, $V_t$, $V_w$, $V_{ww}$ | the value function, the best expected utility still reachable from wealth $w$ at time $t$; its rates of change in time, in wealth, and of $V_w$ in wealth | — | — |
+| $`\pi`$, $`\pi_t`$, $`\pi^*`$ | fraction of current wealth in the fund; its value at time $`t`$ under a rule that may change it; the best fraction | 50% | — |
+| $`\mu`$ | the fund's expected return per year (its drift) | 6% | rises: more reward per unit of risk |
+| $`r`$ | the bank rate, continuously compounded, per year | 2% | falls: the bank looks better |
+| $`\mu - r`$ | the excess return: what the fund pays above the bank, on average | 4% | rises in proportion |
+| $`\sigma`$, $`\sigma^2`$ | the fund's volatility; its square, the variance, per year | 20%; 0.04 | falls with the square: double volatility, quarter the share |
+| $`\gamma`$ | relative risk aversion: how much the saver dislikes swings, measured against wealth | 2 | falls in proportion |
+| $`W_t`$, $`w`$ | wealth at time $`t`$; a particular value of it | $100,000 at the start | no effect on the fraction |
+| $`U(x)`$ | utility of an amount of money $`x`$ | $`-1/x`$ | — |
+| $`t`$, $`T`$ | time now; the horizon, in years | 0; 3 | no effect on the fraction |
+| $`Z_t`$, $`dZ`$, $`dt`$ | Brownian motion, the fund's accumulated random kicks; one small kick; one short step of time | — | — |
+| $`g(\pi)`$, CE | certainty-equivalent growth rate of a constant fraction $`\pi`$; the certainty-equivalent wealth, $`W_0 e^{g(\pi)T}`$ | 3% at the best fraction; $109,417.43 | — |
+| $`V(t,w)`$, $`V_t`$, $`V_w`$, $`V_{ww}`$ | the value function, the best expected utility still reachable from wealth $`w`$ at time $`t`$; its rates of change in time, in wealth, and of $`V_w`$ in wealth | — | — |
 
-Two helper formulas. The certainty-equivalent growth rate of holding a constant fraction $\pi$ is
+Two helper formulas. The certainty-equivalent growth rate of holding a constant fraction $`\pi`$ is
 
-$$g(\pi) = r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2,$$
+```math
+g(\pi) = r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2,
+```
 
 the bank rate, plus the extra return the fund share earns, minus a penalty for risk that grows with the square of the share. At the best fraction it reaches
 
-$$g^* = r + \frac{(\mu - r)^2}{2\gamma\sigma^2},$$
+```math
+g^* = r + \frac{(\mu - r)^2}{2\gamma\sigma^2},
+```
 
-and the value function is $V(t,w) = U(w)\,e^{(1-\gamma)g^*(T-t)}$.
+and the value function is $`V(t,w) = U(w)\,e^{(1-\gamma)g^*(T-t)}`$.
 
 ### When it holds
 
@@ -94,68 +102,82 @@ That is why the answer is a constant. What remains is to find the constant, and 
 
 ### Step 1: write down how wealth moves
 
-Hold fraction $\pi$ in the fund and $1-\pi$ in the bank. Over a short time $dt$, the bank part earns $r\,dt$ and the fund part earns $\mu\,dt + \sigma\,dZ_t$. Adding the two:
+Hold fraction $`\pi`$ in the fund and $`1-\pi`$ in the bank. Over a short time $`dt`$, the bank part earns $`r\,dt`$ and the fund part earns $`\mu\,dt + \sigma\,dZ_t`$. Adding the two:
 
-$$dW_t = W_t\big[(r + \pi(\mu - r))\,dt + \pi\sigma\,dZ_t\big].$$
+```math
+dW_t = W_t\big[(r + \pi(\mu - r))\,dt + \pi\sigma\,dZ_t\big].
+```
 
 The account drifts at the bank rate plus the share's excess return, and it carries the share's slice of the fund's randomness. At one half, that is an expected 4 percent a year with a volatility of 10 percent.
 
 ### Step 2: over one short step, the choice is a hill
 
-The saver cares about expected utility. Over a short step, how does expected utility change with the choice of $\pi$? Apply Itô's lemma (the chain rule for random paths, where the square of a random kick contributes a term of size $dt$) to the utility of wealth. Its expected rate of change is a positive scale factor, $W_t^{1-\gamma}$, times
+The saver cares about expected utility. Over a short step, how does expected utility change with the choice of $`\pi`$? Apply Itô's lemma (the chain rule for random paths, where the square of a random kick contributes a term of size $`dt`$) to the utility of wealth. Its expected rate of change is a positive scale factor, $`W_t^{1-\gamma}`$, times
 
-$$r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2.$$
+```math
+r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2.
+```
 
-That is $g(\pi)$. The first two terms reward holding the fund, in a straight line. The last term charges for its swings, and the charge grows with the square of the share. A straight line minus a square is a hill. Its top is where the slope is zero:
+That is $`g(\pi)`$. The first two terms reward holding the fund, in a straight line. The last term charges for its swings, and the charge grows with the square of the share. A straight line minus a square is a hill. Its top is where the slope is zero:
 
-$$(\mu - r) - \gamma\sigma^2\pi = 0 \quad\Longrightarrow\quad \pi^* = \frac{\mu - r}{\gamma\sigma^2}.$$
+```math
+(\mu - r) - \gamma\sigma^2\pi = 0 \quad\Longrightarrow\quad \pi^* = \frac{\mu - r}{\gamma\sigma^2}.
+```
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-Itô's lemma for $f(W) = W^{1-\gamma}$ gives $df = f'(W)\,dW + \tfrac12 f''(W)\,(dW)^2$, with $(dW)^2 = W^2\pi^2\sigma^2\,dt$. Here $f' = (1-\gamma)W^{-\gamma}$ and $f'' = -\gamma(1-\gamma)W^{-\gamma-1}$. Substituting:
-$$d\big(W^{1-\gamma}\big) = (1-\gamma)W^{1-\gamma}\Big[r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2\Big]dt + (1-\gamma)W^{1-\gamma}\pi\sigma\,dZ_t.$$
-The $dZ$ term has mean zero. Divide by $1-\gamma$ to get $d\,U(W)$: its expected rate is $W^{1-\gamma}g(\pi)$, and $W^{1-\gamma} > 0$, so the saver wants $g(\pi)$ as large as possible, whatever the sign of $1-\gamma$. The derivative of $g$ is $(\mu - r) - \gamma\sigma^2\pi$, zero at $\pi^*$; the second derivative is $-\gamma\sigma^2 < 0$, so it is a maximum, and the only one.
+Itô's lemma for $`f(W) = W^{1-\gamma}`$ gives $`df = f'(W)\,dW + \tfrac12 f''(W)\,(dW)^2`$, with $`(dW)^2 = W^2\pi^2\sigma^2\,dt`$. Here $`f' = (1-\gamma)W^{-\gamma}`$ and $`f'' = -\gamma(1-\gamma)W^{-\gamma-1}`$. Substituting:
+
+$`\displaystyle d\big(W^{1-\gamma}\big) = (1-\gamma)W^{1-\gamma}\Big[r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2\Big]dt + (1-\gamma)W^{1-\gamma}\pi\sigma\,dZ_t.`$
+
+The $`dZ`$ term has mean zero. Divide by $`1-\gamma`$ to get $`d\,U(W)`$: its expected rate is $`W^{1-\gamma}g(\pi)`$, and $`W^{1-\gamma} > 0`$, so the saver wants $`g(\pi)`$ as large as possible, whatever the sign of $`1-\gamma`$. The derivative of $`g`$ is $`(\mu - r) - \gamma\sigma^2\pi`$, zero at $`\pi^*`$; the second derivative is $`-\gamma\sigma^2 < 0`$, so it is a maximum, and the only one.
 
 </details>
 
 ### Step 3: the HJB equation says the same at every date
 
-Step 2 looks one instant ahead. The full problem looks three years ahead. The tool for that is the Hamilton-Jacobi-Bellman (HJB) equation ([Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md)): the value function $V(t,w)$, the best expected utility reachable from wealth $w$ at time $t$, must satisfy
+Step 2 looks one instant ahead. The full problem looks three years ahead. The tool for that is the Hamilton-Jacobi-Bellman (HJB) equation ([Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md)): the value function $`V(t,w)`$, the best expected utility reachable from wealth $`w`$ at time $`t`$, must satisfy
 
-$$0 = V_t + \max_{\pi}\Big[(r + \pi(\mu - r))\,w\,V_w + \tfrac12\pi^2\sigma^2 w^2\,V_{ww}\Big], \qquad V(T,w) = U(w).$$
+```math
+0 = V_t + \max_{\pi}\Big[(r + \pi(\mu - r))\,w\,V_w + \tfrac12\pi^2\sigma^2 w^2\,V_{ww}\Big], \qquad V(T,w) = U(w).
+```
 
 The subscripts are rates of change, as in the symbol table. In words: act best over the next instant, then carry on acting best.
 
-Step 0 suggests a guess: the value is today's utility of wealth, scaled by a factor that depends only on time. Try $V(t,w) = A(t)\,U(w)$. The maximisation inside the brackets is then the same hill as Step 2, with the same top $\pi^*$, at every $t$ and $w$. What is left fixes $A(t) = e^{(1-\gamma)g^*(T-t)}$.
+Step 0 suggests a guess: the value is today's utility of wealth, scaled by a factor that depends only on time. Try $`V(t,w) = A(t)\,U(w)`$. The maximisation inside the brackets is then the same hill as Step 2, with the same top $`\pi^*`$, at every $`t`$ and $`w`$. What is left fixes $`A(t) = e^{(1-\gamma)g^*(T-t)}`$.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-With $V = A(t)\,w^{1-\gamma}/(1-\gamma)$: $V_w = A w^{-\gamma}$, $V_{ww} = -\gamma A w^{-\gamma-1}$. The bracket becomes $A w^{1-\gamma}\big[r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2\big] = A w^{1-\gamma} g(\pi)$. Its maximum over $\pi$ is $A w^{1-\gamma} g^*$, reached at $\pi^*$. The HJB equation becomes $A'(t)\,w^{1-\gamma}/(1-\gamma) + A\,w^{1-\gamma}g^* = 0$, so $A' = -(1-\gamma)g^* A$, and with $A(T) = 1$, $A(t) = e^{(1-\gamma)g^*(T-t)}$. The wealth cancels throughout: that is Step 0's scaling, now in symbols.
+With $`V = A(t)\,w^{1-\gamma}/(1-\gamma)`$: $`V_w = A w^{-\gamma}`$, $`V_{ww} = -\gamma A w^{-\gamma-1}`$. The bracket becomes $`A w^{1-\gamma}\big[r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2\big] = A w^{1-\gamma} g(\pi)`$. Its maximum over $`\pi`$ is $`A w^{1-\gamma} g^*`$, reached at $`\pi^*`$. The HJB equation becomes $`A'(t)\,w^{1-\gamma}/(1-\gamma) + A\,w^{1-\gamma}g^* = 0`$, so $`A' = -(1-\gamma)g^* A`$, and with $`A(T) = 1`$, $`A(t) = e^{(1-\gamma)g^*(T-t)}`$. The wealth cancels throughout: that is Step 0's scaling, now in symbols.
 
 </details>
 
 ### Step 4: no rule that reacts to luck does better
 
-The HJB equation produces a candidate. A proof must show that every other trading rule, including rules that buy after gains or sell after losses, ends with lower expected utility. The shape of the argument: follow any rule, and track the value function along its path. Under the Merton rule its expected change is exactly zero. Under any other rule it drifts down, at a rate proportional to the square of the gap between that rule's fraction and $\pi^*$. So expected utility at the end is the value at the start minus the accumulated squared gaps.
+The HJB equation produces a candidate. A proof must show that every other trading rule, including rules that buy after gains or sell after losses, ends with lower expected utility. The shape of the argument: follow any rule, and track the value function along its path. Under the Merton rule its expected change is exactly zero. Under any other rule it drifts down, at a rate proportional to the square of the gap between that rule's fraction and $`\pi^*`$. So expected utility at the end is the value at the start minus the accumulated squared gaps.
 
 <details>
 <summary>Detailed proof</summary>
 
-Fix any trading rule $\pi_t$ that uses only past information and stays within fixed bounds. Wealth is then $W_t = w\exp\{\int_0^t (r + \pi_s(\mu - r) - \tfrac12\sigma^2\pi_s^2)\,ds + \int_0^t \sigma\pi_s\,dZ_s\}$, positive, with finite moments of every power, because the rule is bounded.
+Fix any trading rule $`\pi_t`$ that uses only past information and stays within fixed bounds. Wealth is then $`W_t = w\exp\{\int_0^t (r + \pi_s(\mu - r) - \tfrac12\sigma^2\pi_s^2)\,ds + \int_0^t \sigma\pi_s\,dZ_s\}`$, positive, with finite moments of every power, because the rule is bounded.
 
-Let $Y_t = V(t, W_t)$ with $V(t,w) = e^{(1-\gamma)g^*(T-t)}\,w^{1-\gamma}/(1-\gamma)$. By Itô's lemma, using the derivatives in the callout above and $V_t = -(1-\gamma)g^* V$,
-$$dY_t = A(t)W_t^{1-\gamma}\big[g(\pi_t) - g^*\big]dt + A(t)W_t^{1-\gamma}\pi_t\sigma\,dZ_t.$$
-Completing the square, $g(\pi) - g^* = -\tfrac12\gamma\sigma^2(\pi - \pi^*)^2$. The $dZ$ term is a true martingale, zero on average, since its integrand has a finite second moment. Integrate from $0$ to $T$ and take expectations; $V(T, w) = U(w)$ gives
-$$\mathbb{E}\big[U(W_T)\big] = V(0, w) - \tfrac12\gamma\sigma^2\,\mathbb{E}\int_0^T A(t)W_t^{1-\gamma}(\pi_t - \pi^*)^2\,dt \le V(0, w).$$
-The constant rule $\pi_t = \pi^*$ makes the integral zero and reaches the bound. Every factor in the integrand other than the squared gap is strictly positive, so equality forces $\pi_t = \pi^*$ at almost every time on almost every path: the optimum is unique. Nothing divides by $1-\gamma$, so the argument holds for $\gamma$ above or below 1. At $\gamma = 1$ the same steps with $\log W$ give the log rule $\pi^* = (\mu - r)/\sigma^2$.
+Let $`Y_t = V(t, W_t)`$ with $`V(t,w) = e^{(1-\gamma)g^*(T-t)}\,w^{1-\gamma}/(1-\gamma)`$. By Itô's lemma, using the derivatives in the callout above and $`V_t = -(1-\gamma)g^* V`$,
+
+$`\displaystyle dY_t = A(t)W_t^{1-\gamma}\big[g(\pi_t) - g^*\big]dt + A(t)W_t^{1-\gamma}\pi_t\sigma\,dZ_t.`$
+
+Completing the square, $`g(\pi) - g^* = -\tfrac12\gamma\sigma^2(\pi - \pi^*)^2`$. The $`dZ`$ term is a true martingale, zero on average, since its integrand has a finite second moment. Integrate from $`0`$ to $`T`$ and take expectations; $`V(T, w) = U(w)`$ gives
+
+$`\displaystyle \mathbb{E}\big[U(W_T)\big] = V(0, w) - \tfrac12\gamma\sigma^2\,\mathbb{E}\int_0^T A(t)W_t^{1-\gamma}(\pi_t - \pi^*)^2\,dt \le V(0, w).`$
+
+The constant rule $`\pi_t = \pi^*`$ makes the integral zero and reaches the bound. Every factor in the integrand other than the squared gap is strictly positive, so equality forces $`\pi_t = \pi^*`$ at almost every time on almost every path: the optimum is unique. Nothing divides by $`1-\gamma`$, so the argument holds for $`\gamma`$ above or below 1. At $`\gamma = 1`$ the same steps with $`\log W`$ give the log rule $`\pi^* = (\mu - r)/\sigma^2`$.
 
 </details>
 
 ### Step 5: what the best plan is worth
 
-For any constant fraction, the account follows geometric Brownian motion itself, so its value after $T$ years is a lognormal amount (its logarithm follows a bell curve) with a known formula. Averaging its utility gives the certainty equivalent $W_0\,e^{g(\pi)T}$: the hill in the overview picture is this expression. At $\pi^*$, $g^* = 2\% + 1\% = 3\%$ a year. The extra 1 percent is what the fund half contributes after its charge for risk: the premium the saver actually collects, measured in sure money.
+For any constant fraction, the account follows geometric Brownian motion itself, so its value after $`T`$ years is a lognormal amount (its logarithm follows a bell curve) with a known formula. Averaging its utility gives the certainty equivalent $`W_0\,e^{g(\pi)T}`$: the hill in the overview picture is this expression. At $`\pi^*`$, $`g^* = 2\% + 1\% = 3\%`$ a year. The extra 1 percent is what the fund half contributes after its charge for risk: the premium the saver actually collects, measured in sure money.
 
 The other door is the martingale method of Cox and Huang (1989): choose the best final wealth directly, as a function of the fund's final price, then find the trades that deliver it. It reaches the same fraction without the HJB equation and extends to settings where the equation is hard to solve.
 
@@ -167,15 +189,15 @@ Bank 2 percent, fund 6 percent with volatility 20 percent, risk aversion 2, $100
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| excess return, $\mu - r$ | $0.06 - 0.02$ | $0.04$ |
-| variance, $\sigma^2$ | $0.20 \times 0.20$ | $0.04$ |
-| risk aversion times variance | $2 \times 0.04$ | $0.08$ |
-| **Merton fraction**, $\pi^*$ | $0.04 / 0.08$ | **$0.5$** |
-| dollars in the fund today | $0.5 \times 100{,}000$ | $50,000 |
-| premium kept after the risk charge | $0.04^2 / (2 \times 0.08)$ | $0.01$ |
-| best certainty-equivalent rate, $g^*$ | $0.02 + 0.01$ | $0.03$ |
-| growth factor over 3 years | $e^{0.03 \times 3}$ | $1.094174$ |
-| **certainty-equivalent wealth** | $100{,}000 \times 1.094174$ | **$109,417.43** |
+| excess return, $`\mu - r`$ | $`0.06 - 0.02`$ | $`0.04`$ |
+| variance, $`\sigma^2`$ | $`0.20 \times 0.20`$ | $`0.04`$ |
+| risk aversion times variance | $`2 \times 0.04`$ | $`0.08`$ |
+| **Merton fraction**, $`\pi^*`$ | $`0.04 / 0.08`$ | **$`0.5`$** |
+| dollars in the fund today | $`0.5 \times 100{,}000`$ | $50,000 |
+| premium kept after the risk charge | $`0.04^2 / (2 \times 0.08)`$ | $`0.01`$ |
+| best certainty-equivalent rate, $`g^*`$ | $`0.02 + 0.01`$ | $`0.03`$ |
+| growth factor over 3 years | $`e^{0.03 \times 3}`$ | $`1.094174`$ |
+| **certainty-equivalent wealth** | $`100{,}000 \times 1.094174`$ | **$109,417.43** |
 
 The saver would trade the uncertain account, run by the Merton rule, for a sure $109,417.43 in three years. Keeping all $100,000 in the bank gives a sure $106,183.65. The rule is worth $3,233.77 of sure money to this saver, compared with the bank alone.
 
@@ -183,9 +205,9 @@ The saver would trade the uncertain account, run by the Merton rule, for a sure 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Volatility where variance belongs, $0.04/(2 \times 0.20)$ | 10% in the fund | Risk grows with the square of the swing. 20 percent squared is 0.04, not 0.20. |
-| Total return where excess return belongs, $0.06/0.08$ | 75% in the fund | The bank's 2 percent is free. Only the return above it pays for the risk. |
-| Risk aversion dropped, $0.04/0.04$ | 100% in the fund | That is the log saver's answer ([Kelly](../36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md)), right only when risk aversion is 1. |
+| Volatility where variance belongs, $`0.04/(2 \times 0.20)`$ | 10% in the fund | Risk grows with the square of the swing. 20 percent squared is 0.04, not 0.20. |
+| Total return where excess return belongs, $`0.06/0.08`$ | 75% in the fund | The bank's 2 percent is free. Only the return above it pays for the risk. |
+| Risk aversion dropped, $`0.04/0.04`$ | 100% in the fund | That is the log saver's answer ([Kelly](../36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md)), right only when risk aversion is 1. |
 | 50/50 at the start, then never traded | certainty equivalent $109,370.92, short by $46.51 | The mix drifts toward the fund in good years and away from it in bad years, so it is rarely at the top of the hill. |
 
 ---
@@ -644,10 +666,10 @@ The two outputs match line for line, simulations included, because both run the 
 Lean proves the algebra behind the hill, for any bank rate and drift, positive volatility and positive risk aversion, and checks the worked numbers.
 
 - The Merton fraction gives the highest certainty-equivalent growth rate of any share, with borrowing and short selling allowed. No other share reaches it.
-- Take the Merton fraction $\pi^*$. Then $g(\pi^*) = r + (\mu - r)^2/(2\gamma\sigma^2)$, which is $g^*$.
-- Take any share $\pi$. Then $g(\pi) = g^* - \tfrac12\gamma\sigma^2(\pi - \pi^*)^2$.
+- Take the Merton fraction $`\pi^*`$. Then $`g(\pi^*) = r + (\mu - r)^2/(2\gamma\sigma^2)`$, which is $`g^*`$.
+- Take any share $`\pi`$. Then $`g(\pi) = g^* - \tfrac12\gamma\sigma^2(\pi - \pi^*)^2`$.
 - Suppose borrowing and short selling are both forbidden, so the share lies between 0 and 100 percent. Then the best share is the Merton fraction clipped to that range, and no other share ties.
-- Take the example. Then the Merton fraction is one half and $g^*$ is 3 percent.
+- Take the example. Then the Merton fraction is one half and $`g^*`$ is 3 percent.
 - All in the bank and all in the fund both give a rate of 2 percent.
 - The shares in One input at a time, the two Try changing shares and the first two mistakes in What breaks also check.
 

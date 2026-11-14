@@ -38,60 +38,70 @@ An up move then a down lands where a down then an up lands, so the middle node a
 
 ## The formula
 
-Trading happens on dates $0, 1, \dots, N$, one step apart. On each date two numbers are chosen and held until the next: how many Acme shares to hold, and how many dollars to leave in the bank. Both may be fractions and both may be negative — a negative share count is a borrowed share sold, a negative balance is a loan.
+Trading happens on dates $`0, 1, \dots, N`$, one step apart. On each date two numbers are chosen and held until the next: how many Acme shares to hold, and how many dollars to leave in the bank. Both may be fractions and both may be negative — a negative share count is a borrowed share sold, a negative balance is a loan.
 
 Write:
 
-- $h_i$ for the share count and $b_i$ for the bank balance, both fixed just after trading on date $i$;
-- $S_i$ for Acme's price then;
-- $g = e^{r\Delta t}$ for the factor the balance is multiplied by over one step, where $r$ is the riskless rate and $\Delta t$ the step's length in years.
+- $`h_i`$ for the share count and $`b_i`$ for the bank balance, both fixed just after trading on date $`i`$;
+- $`S_i`$ for Acme's price then;
+- $`g = e^{r\Delta t}`$ for the factor the balance is multiplied by over one step, where $`r`$ is the riskless rate and $`\Delta t`$ the step's length in years.
 
 Wealth just after trading, and on arrival at the next date before anything is traded, are
 
-$$V_i = h_i S_i + b_i, \qquad V_{i+1}^- = h_i S_{i+1} + b_i\,g$$
+```math
+V_i = h_i S_i + b_i, \qquad V_{i+1}^- = h_i S_{i+1} + b_i\,g
+```
 
 **Read it aloud:** the portfolio is worth its shares at today's price plus the bank balance; one step on, the same shares at the new price plus that balance with its interest.
 
 The strategy is **self-financing** when trading changes the mixture and nothing else, at every date and on every path:
 
-$$h_{i+1} S_{i+1} + b_{i+1} = h_i S_{i+1} + b_i\,g \qquad\text{that is}\qquad V_{i+1} = V_{i+1}^-$$
+```math
+h_{i+1} S_{i+1} + b_{i+1} = h_i S_{i+1} + b_i\,g \qquad\text{that is}\qquad V_{i+1} = V_{i+1}^-
+```
 
 **Read it aloud:** the new holdings cost exactly what the old ones are worth, so the money from outside is zero.
 
-Subtracting $V_i$ gives the **gains identity**:
+Subtracting $`V_i`$ gives the **gains identity**:
 
-$$V_{i+1} - V_i = h_i\,(S_{i+1} - S_i) + b_i\,(g - 1)$$
+```math
+V_{i+1} - V_i = h_i\,(S_{i+1} - S_i) + b_i\,(g - 1)
+```
 
 **Read it aloud:** wealth moves for two reasons only — the shares held changed in price, and the bank paid interest.
 
-One step of a two-way tree is matched by two equations. If the contract is worth $V_u$ where the share reaches $S_u$ and $V_d$ where it reaches $S_d$, the holdings paying both are
+One step of a two-way tree is matched by two equations. If the contract is worth $`V_u`$ where the share reaches $`S_u`$ and $`V_d`$ where it reaches $`S_d`$, the holdings paying both are
 
-$$h = \frac{V_u - V_d}{S_u - S_d}, \qquad b = \frac{V_u - h\,S_u}{g}, \qquad V = h\,S + b$$
+```math
+h = \frac{V_u - V_d}{S_u - S_d}, \qquad b = \frac{V_u - h\,S_u}{g}, \qquad V = h\,S + b
+```
 
 **Read it aloud:** hold as many shares as the contract gains per dollar the share gains, bank whatever makes the up state come out right, and the pair's cost is the contract's value at that node.
 
-Write $X$ for the payoff owed at the final date, a number that depends on the path. The card's conclusion:
+Write $`X`$ for the payoff owed at the final date, a number that depends on the path. The card's conclusion:
 
-$$V_N = X \text{ on every path, and the strategy self-financing} \implies \text{price of } X = V_0$$
+```math
+V_N = X \text{ on every path, and the strategy self-financing} \implies \text{price of } X = V_0
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_i$, $S_u$, $S_d$ | Acme's price on date $i$, and one step on | 100.00; 115.19 and 86.81 | the copy costs more |
-| $K$ | the strike: the price the call may buy at | 100.00 | the call pays less, so the copy costs less |
-| $h_i$, $h$ | shares held from date $i$ to the next | 0.6223 today, 1.0000 after a rise | more of the cost sits in shares |
-| $b_i$, $b$ | dollars in the bank; negative is a loan | −52.69 today, −97.53 after a rise | less borrowed, so more capital needed |
-| $V$, $V_i$, $V_0$, $V_N$, $V_u$, $V_d$, $V_{i+1}^-$ | the holdings' worth just after trading; the one with the minus sign, on arrival before trading | 9.54 today; 17.66 and 0.00 one step on | — |
-| $X$ | the payoff owed at expiry, path by path | 32.69, 0.00, 0.00 | the copy costs more |
-| $g$, $r$, $\Delta t$ | the bank's growth over a step, $e^{r\Delta t}$; the riskless rate a year; a step, in years | 1.025315; 5 percent; 0.5 | borrowing costs more |
-| $u$, $d$ | the factors one step multiplies the price by | 1.151910 and 0.868123 | a wider tree, a dearer call |
-| $N$, $i$ | steps in the year; which date | 2 by hand, 1024 in the checks | the tree fits a real share better |
-| $D_i$, $t_i$ | the discount factor back to today, $e^{-r t_i}$; date $i$'s time from today, in years | 0.975310 after one step; 0.5 | — |
+| $`S_i`$, $`S_u`$, $`S_d`$ | Acme's price on date $`i`$, and one step on | 100.00; 115.19 and 86.81 | the copy costs more |
+| $`K`$ | the strike: the price the call may buy at | 100.00 | the call pays less, so the copy costs less |
+| $`h_i`$, $`h`$ | shares held from date $`i`$ to the next | 0.6223 today, 1.0000 after a rise | more of the cost sits in shares |
+| $`b_i`$, $`b`$ | dollars in the bank; negative is a loan | −52.69 today, −97.53 after a rise | less borrowed, so more capital needed |
+| $`V`$, $`V_i`$, $`V_0`$, $`V_N`$, $`V_u`$, $`V_d`$, $`V_{i+1}^-`$ | the holdings' worth just after trading; the one with the minus sign, on arrival before trading | 9.54 today; 17.66 and 0.00 one step on | — |
+| $`X`$ | the payoff owed at expiry, path by path | 32.69, 0.00, 0.00 | the copy costs more |
+| $`g`$, $`r`$, $`\Delta t`$ | the bank's growth over a step, $`e^{r\Delta t}`$; the riskless rate a year; a step, in years | 1.025315; 5 percent; 0.5 | borrowing costs more |
+| $`u`$, $`d`$ | the factors one step multiplies the price by | 1.151910 and 0.868123 | a wider tree, a dearer call |
+| $`N`$, $`i`$ | steps in the year; which date | 2 by hand, 1024 in the checks | the tree fits a real share better |
+| $`D_i`$, $`t_i`$ | the discount factor back to today, $`e^{-r t_i}`$; date $`i`$'s time from today, in years | 0.975310 after one step; 0.5 | — |
 
 ### When it holds
 
 - **Two ways out of each node, two things to hold.** Two unknowns meet two demands. A node with three possible next prices cannot be matched by shares and cash: the copy fails and the price becomes a range — an incomplete market, on a later shelf.
-- **The two next prices differ.** The share count divides by $S_u - S_d$, and a share doing the same thing in both states hedges nothing.
-- **No frictions.** A spread paid at each rebalance is money leaving the account, so a real copy costs more than $V_0$, and more again the more often it trades. Pay more to borrow than the account earns, or fail to get shares in any fraction, long or short, and the one price spreads into a band.
+- **The two next prices differ.** The share count divides by $`S_u - S_d`$, and a share doing the same thing in both states hedges nothing.
+- **No frictions.** A spread paid at each rebalance is money leaving the account, so a real copy costs more than $`V_0`$, and more again the more often it trades. Pay more to borrow than the account earns, or fail to get shares in any fraction, long or short, and the one price spreads into a band.
 - **Holdings use only what is known at the node.** A rule reading the next price can be written down but not traded — and it matches any payoff at all, which is why it proves nothing.
 - **No dividends here.** The wing's Acme pays 2 percent a year; the checks price that variant too.
 
@@ -105,38 +115,42 @@ Suppose a portfolio ends holding exactly what the call pays on every path, and s
 
 ### Step 1: the clause that makes a cost meaningful
 
-A cost today is the copy's cost only if nothing else is ever spent on it: deposit $50 halfway through and the thing matching the call cost $9.54 today and $50 six months on — two numbers, not one. The clause keeps a single number, $V_0$, in charge of a whole strategy. It is a funding rule, not a promise of profit.
+A cost today is the copy's cost only if nothing else is ever spent on it: deposit $50 halfway through and the thing matching the call cost $9.54 today and $50 six months on — two numbers, not one. The clause keeps a single number, $`V_0`$, in charge of a whole strategy. It is a funding rule, not a promise of profit.
 
 ### Step 2: wealth can only move through prices
 
-Take the wealth just after trading on date $i$, and the wealth on arrival at date $i+1$, and subtract. The share count and the balance are the same at both ends of the step, since nothing was traded in between, so they factor out and the gains identity is left.
+Take the wealth just after trading on date $`i`$, and the wealth on arrival at date $`i+1`$, and subtract. The share count and the balance are the same at both ends of the step, since nothing was traded in between, so they factor out and the gains identity is left.
 
 Wealth moved because the shares moved and because the bank paid interest. That is the whole list. Summed over the steps, final wealth is the starting capital plus the gains, with no other term to hide a deposit in.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-By definition $V_i = h_i S_i + b_i$, and on arrival $V_{i+1}^- = h_i S_{i+1} + b_i g$. Subtract: $V_{i+1}^- - V_i = h_i(S_{i+1} - S_i) + b_i(g - 1)$, on every path, assuming nothing. Self-financing is the statement $V_{i+1} = V_{i+1}^-$, which puts $V_{i+1}$ on the left. Without it the identity carries one more term, the money added or taken at that date — and a deposit can be cancelled by a later withdrawal, so the clause has to hold date by date, not only at the end.
+By definition $`V_i = h_i S_i + b_i`$, and on arrival $`V_{i+1}^- = h_i S_{i+1} + b_i g`$. Subtract: $`V_{i+1}^- - V_i = h_i(S_{i+1} - S_i) + b_i(g - 1)`$, on every path, assuming nothing. Self-financing is the statement $`V_{i+1} = V_{i+1}^-`$, which puts $`V_{i+1}`$ on the left. Without it the identity carries one more term, the money added or taken at that date — and a deposit can be cancelled by a later withdrawal, so the clause has to hold date by date, not only at the end.
 
-Rearranged, the same equation is the trading rule in its plainest form: $(h_{i+1} - h_i)\,S_{i+1} = -\,(b_{i+1} - b_i g)$. Shares bought are paid for out of the balance, to the cent.
+Rearranged, the same equation is the trading rule in its plainest form: $`(h_{i+1} - h_i)\,S_{i+1} = -\,(b_{i+1} - b_i g)`$. Shares bought are paid for out of the balance, to the cent.
 
 </details>
 
 ### Step 3: discount, and the bank disappears
 
-Measure each date's figures in today's dollars by multiplying by $D_i = e^{-r t_i}$, where $t_i$ is date $i$'s time from today in years. One step of interest and one of discounting cancel, $D_{i+1}\,g = D_i$, so the identity loses its second term:
+Measure each date's figures in today's dollars by multiplying by $`D_i = e^{-r t_i}`$, where $`t_i`$ is date $`i`$'s time from today in years. One step of interest and one of discounting cancel, $`D_{i+1}\,g = D_i`$, so the identity loses its second term:
 
-$$D_{i+1} V_{i+1} - D_i V_i = h_i\,\bigl(D_{i+1} S_{i+1} - D_i S_i\bigr)$$
+```math
+D_{i+1} V_{i+1} - D_i V_i = h_i\,\bigl(D_{i+1} S_{i+1} - D_i S_i\bigr)
+```
 
 Discounted wealth changes only through the discounted share price, times a share count chosen before the move was known: the shape of a bet placed before a toss and settled after it ([Betting on a martingale](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform.md)). Much of pricing theory lives in that line: find weights making the discounted share price a fair game, and discounted wealth is a fair game for every self-financing strategy at once.
 
 ### Step 4: one step, two states, two equations
 
-At the up node Acme is at $115.19 with six months to run. From there it reaches $132.69 or $100.00, where the call pays $32.69 or nothing. Holding $h$ shares and $b$ dollars must produce both numbers:
+At the up node Acme is at $115.19 with six months to run. From there it reaches $132.69 or $100.00, where the call pays $32.69 or nothing. Holding $`h`$ shares and $`b`$ dollars must produce both numbers:
 
-$$h \times 132.69 + b\,g = 32.69, \qquad h \times 100.00 + b\,g = 0$$
+```math
+h \times 132.69 + b\,g = 32.69, \qquad h \times 100.00 + b\,g = 0
+```
 
-Subtract: $h \times 32.69 = 32.69$, so $h = 1$. One whole share. Put that back and $b\,g = -100.00$, so $b = -97.53$: borrow the strike, discounted. The copy there is one share against a debt that grows into exactly $100.00, which is a forward, a deal to buy the share at a fixed price on a fixed date ([Forward price](03-forward-price-by-cash-and-carry.md)). It costs $115.19 − $97.53 = **$17.66**.
+Subtract: $`h \times 32.69 = 32.69`$, so $`h = 1`$. One whole share. Put that back and $`b\,g = -100.00`$, so $`b = -97.53`$: borrow the strike, discounted. The copy there is one share against a debt that grows into exactly $100.00, which is a forward, a deal to buy the share at a fixed price on a fixed date ([Forward price](03-forward-price-by-cash-and-carry.md)). It costs $115.19 − $97.53 = **$17.66**.
 
 The down node is quicker. From $86.81 Acme reaches $100.00 or $75.36, and the call pays nothing at either: no shares, nothing in the bank, worth zero.
 
@@ -155,9 +169,9 @@ The copy ends holding $32.69 after two up moves and nothing on the other three p
 <details>
 <summary>Detailed proof: existence, self-financing, and uniqueness</summary>
 
-**Existence.** Work backwards. Set $V_N = X$ at every final node. At a node one step earlier with children $V_u$, $V_d$ and prices $S_u \ne S_d$, the three formulas in The formula define $h$, $b$ and $V$. Both demands hold by construction: $h S_u + b g = V_u$ by the choice of $b$, and $h S_d + b g = V_u - h(S_u - S_d) = V_d$. Induction downwards defines $h$ and $b$ everywhere, each using only what is known when it is chosen.
-**Self-financing.** Write $h'$ and $b'$ for the holdings chosen at the parent. Arriving here they are worth $h' S + b' g$, one of the two equations the parent solved, so they equal this node's $V$; the new holdings cost $h S + b = V$ by definition. The two agree, so nothing enters or leaves, at every node, and the strategy ends at $X$ everywhere.
-**Uniqueness.** Subtract two such strategies holding by holding. The difference is self-financing, since the self-financing equation is linear in the holdings, and it ends at zero everywhere. One step from the end its holdings satisfy $h S_u + b g = 0$ and $h S_d + b g = 0$; subtracting gives $h(S_u - S_d) = 0$, so $h = 0$, then $b = 0$, so it is worth zero there. Repeating up the tree gives zero at the root, so $V_0$ is a single number, not a range.
+**Existence.** Work backwards. Set $`V_N = X`$ at every final node. At a node one step earlier with children $`V_u`$, $`V_d`$ and prices $`S_u \ne S_d`$, the three formulas in The formula define $`h`$, $`b`$ and $`V`$. Both demands hold by construction: $`h S_u + b g = V_u`$ by the choice of $`b`$, and $`h S_d + b g = V_u - h(S_u - S_d) = V_d`$. Induction downwards defines $`h`$ and $`b`$ everywhere, each using only what is known when it is chosen.
+**Self-financing.** Write $`h'`$ and $`b'`$ for the holdings chosen at the parent. Arriving here they are worth $`h' S + b' g`$, one of the two equations the parent solved, so they equal this node's $`V`$; the new holdings cost $`h S + b = V`$ by definition. The two agree, so nothing enters or leaves, at every node, and the strategy ends at $`X`$ everywhere.
+**Uniqueness.** Subtract two such strategies holding by holding. The difference is self-financing, since the self-financing equation is linear in the holdings, and it ends at zero everywhere. One step from the end its holdings satisfy $`h S_u + b g = 0`$ and $`h S_d + b g = 0`$; subtracting gives $`h(S_u - S_d) = 0`$, so $`h = 0`$, then $`b = 0`$, so it is worth zero there. Repeating up the tree gives zero at the root, so $`V_0`$ is a single number, not a range.
 
 </details>
 
@@ -171,19 +185,19 @@ Acme at $100.00, a call struck at $100.00, one year, the bank at 5 percent, jump
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| up factor over a step | $e^{0.20\sqrt{0.5}}$ | 1.151910 |
-| down factor | $1 \div 1.151910$ | 0.868123 |
-| the bank over a step | $e^{0.05 \times 0.5}$ | 1.025315 |
-| Acme after six months | $100 \times 1.151910$, $100 \times 0.868123$ | 115.19, 86.81 |
+| up factor over a step | $`e^{0.20\sqrt{0.5}}`$ | 1.151910 |
+| down factor | $`1 \div 1.151910`$ | 0.868123 |
+| the bank over a step | $`e^{0.05 \times 0.5}`$ | 1.025315 |
+| Acme after six months | $`100 \times 1.151910`$, $`100 \times 0.868123`$ | 115.19, 86.81 |
 | Acme at expiry | up-up, up-down, down-down | 132.69, 100.00, 75.36 |
 | the call pays | the gap above 100.00, or nothing | 32.69, 0.00, 0.00 |
-| shares at the up node | $(32.69 - 0.00) \div (132.69 - 100.00)$ | 1.000000 |
-| bank at the up node | $(32.69 - 1.0000 \times 132.69) \div 1.025315$ | −97.53 |
-| the copy at the up node | $1.0000 \times 115.19 - 97.53$ | **17.66** |
+| shares at the up node | $`(32.69 - 0.00) \div (132.69 - 100.00)`$ | 1.000000 |
+| bank at the up node | $`(32.69 - 1.0000 \times 132.69) \div 1.025315`$ | −97.53 |
+| the copy at the up node | $`1.0000 \times 115.19 - 97.53`$ | **17.66** |
 | the copy at the down node | nothing is paid either way | **0.00** |
-| shares today | $(17.66 - 0.00) \div (115.19 - 86.81)$ | 0.622299 |
-| bank today | $(17.66 - 0.6223 \times 115.19) \div 1.025315$ | −52.69 |
-| **the copy's cost today** | $0.6223 \times 100.00 - 52.69$ | **9.54** |
+| shares today | $`(17.66 - 0.00) \div (115.19 - 86.81)`$ | 0.622299 |
+| bank today | $`(17.66 - 0.6223 \times 115.19) \div 1.025315`$ | −52.69 |
+| **the copy's cost today** | $`0.6223 \times 100.00 - 52.69`$ | **9.54** |
 
 The call is worth $9.54 on this tree because that is the cheque a desk writes today to own something paying whatever the call pays. Two steps is a caricature of a year, allowing Acme three closing prices; cutting finer changes the fit, not the method.
 
@@ -196,7 +210,7 @@ The wing's Acme also pays a 2 percent dividend, handled by letting a holding gro
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Buy 0.6223 shares and never trade again | 27.18 after two up moves against the 32.69 owed; −8.49 after two down moves | A fixed mixture draws a straight line, and the payoff has a bend in it |
-| Set the up node's share count by value over price, $17.66 \div 115.19 = 0.1533$, with no loan | 20.34 at up-up where 32.69 is owed; 15.33 at up-down where nothing is owed | The count is a difference of values over a difference of prices, not a ratio of levels |
+| Set the up node's share count by value over price, $`17.66 \div 115.19 = 0.1533`$, with no loan | 20.34 at up-up where 32.69 is owed; 15.33 at up-down where nothing is owed | The count is a difference of values over a difference of prices, not a ratio of levels |
 | Pay for the extra shares with new money: 43.51 deposited at the up node | 77.30 after two up moves | 44.61 of that is the deposit with its interest; the strategy no longer has one cost |
 
 The code prints all three.
@@ -662,10 +676,10 @@ The two outputs match line for line, including the limit reached by two differen
 
 Lean proves the replication theorem and both gains identities on every two-way tree, with any number of steps.
 
-- Take any two-way tree whose two next prices differ at every node before expiry. Then every payoff $X$ has a self-financing copy, and all such copies cost the same today.
+- Take any two-way tree whose two next prices differ at every node before expiry. Then every payoff $`X`$ has a self-financing copy, and all such copies cost the same today.
 - The gains identity holds for every self-financing strategy, on every step and every path.
-- Take $D_i = e^{-r t_i}$, and a bank growing by $g = e^{r\Delta t}$ each step. Then a self-financing strategy's discounted wealth moves only by $h_i$ times the discounted share price's change.
-- At the up node, suppose $h$ shares and $b\,g$ dollars pay 32.69 at 132.69 and nothing at 100.00. Then $h = 1$ and $b\,g = -100.00$.
+- Take $`D_i = e^{-r t_i}`$, and a bank growing by $`g = e^{r\Delta t}`$ each step. Then a self-financing strategy's discounted wealth moves only by $`h_i`$ times the discounted share price's change.
+- At the up node, suppose $`h`$ shares and $`b\,g`$ dollars pay 32.69 at 132.69 and nothing at 100.00. Then $`h = 1`$ and $`b\,g = -100.00`$.
 - The copy at the up node is worth 115.19 − 97.53 = 17.66.
 - The call pays the gap above 100.00 or nothing: 32.69, 0.00 and 0.00 at expiry.
 

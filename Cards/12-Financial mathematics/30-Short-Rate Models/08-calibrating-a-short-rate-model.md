@@ -38,36 +38,42 @@ Longer swaps cost more: more years of fixed payments ride on the right. Later ex
 
 ## The formula
 
-A **basis point** (bp) is one hundredth of a percent; here it measures a premium as a fraction of notional, so 46.178 bp on $1 million is $4,617.79. Quote number i is written $q_i$ and the model's premium for it $V_i$.
+A **basis point** (bp) is one hundredth of a percent; here it measures a premium as a fraction of notional, so 46.178 bp on $1 million is $4,617.79. Quote number i is written $`q_i`$ and the model's premium for it $`V_i`$.
 
-$$L(\kappa,\sigma)=\tfrac12\sum_{i=1}^{6}\Big(10^4\,\big[V_i(\kappa,\sigma)-q_i\big]\Big)^2$$
+```math
+L(\kappa,\sigma)=\tfrac12\sum_{i=1}^{6}\Big(10^4\,\big[V_i(\kappa,\sigma)-q_i\big]\Big)^2
+```
 
 **Read it aloud:** for a trial reversion and volatility, price all six swaptions, measure each miss in basis points, square it, add them up and halve the total; calibration is the pair that makes this as small as possible.
 
 Each model premium is a sum of options on zero-coupon bonds, one per payment of the swap, and the two parameters reach it only through each option's **width**, the standard deviation of that bond's log price at expiry:
 
-$$w_j=\sigma\,b_\kappa(T_j-E)\,\sqrt{v_\kappa(E)},\qquad b_\kappa(u)=\frac{1-e^{-\kappa u}}{\kappa},\qquad v_\kappa(E)=\frac{1-e^{-2\kappa E}}{2\kappa}.$$
+```math
+w_j=\sigma\,b_\kappa(T_j-E)\,\sqrt{v_\kappa(E)},\qquad b_\kappa(u)=\frac{1-e^{-\kappa u}}{\kappa},\qquad v_\kappa(E)=\frac{1-e^{-2\kappa E}}{2\kappa}.
+```
 
 **Read it aloud:** a bond's width is the rate's shock size, times how strongly that bond feels a rate move, times the rate's spread at expiry measured on a clock that the pull slows down.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\kappa$ | **reversion speed**, kappa: the strength of the pull toward the target, per year | 0.05; half-life 13.86 years | long and late premiums fall more than short and early ones |
-| $\sigma$ | **volatility**, sigma: the size of the short rate's shocks, in rate per root-year | 0.9% | every premium rises almost in proportion |
-| $D_0(T)$, $f_0(T)$ | today's discount curve, the value today of one dollar due at T, and its instantaneous forward rate, the rate it locks in for an instant at T | $e^{-0.03T-0.002T^2}$ and $0.03+0.004T$ | fixed input; the fit never moves it |
-| $E$, $n$, $T_j$ | expiry, swap length, and payment dates $T_j=E+j$ for j = 1 to n | 0.5, 1 or 2; 2 or 5; yearly | premium rises with each |
-| $K$, $c_j$ | the strike, a fixed rate chosen at par; the fixed leg's cash, K each year plus the $1 principal on the last date | 3.6619% to 4.8769% | a higher strike makes a receiver dearer |
-| $r_E$ | the short rate on the expiry date | normal, centred on $f_0(E)$ | — |
-| $b_\kappa(u)$ | **load**: how much a u-year zero's log price moves per unit move of the short rate | 4.4240 for u = 5 (no pull: 5) | — |
-| $v_\kappa(E)$ | **variance clock**: the rate's spread at E is $\sigma^2 v_\kappa(E)$ | 1.8127 for E = 2 (no pull: 2) | — |
-| $w_j$ | **width** of payment j's bond at expiry | 0.053607 for the last payment of 2.0y into 5y | its option rises almost in proportion |
-| $V_i$ | model premium for quote i | 182.751 bp for 2.0y into 5y at the fit | — |
-| $q_i$ | quoted premium for quote i | 46.178 bp to 182.751 bp | the fitted pair moves; see Why it works |
-| $L$ | the **loss**: half the sum of squared misses in bp squared | 14807.2462 at the start, 0 at the fit | — |
+| $`\kappa`$ | **reversion speed**, kappa: the strength of the pull toward the target, per year | 0.05; half-life 13.86 years | long and late premiums fall more than short and early ones |
+| $`\sigma`$ | **volatility**, sigma: the size of the short rate's shocks, in rate per root-year | 0.9% | every premium rises almost in proportion |
+| $`D_0(T)`$, $`f_0(T)`$ | today's discount curve, the value today of one dollar due at T, and its instantaneous forward rate, the rate it locks in for an instant at T | $`e^{-0.03T-0.002T^2}`$ and $`0.03+0.004T`$ | fixed input; the fit never moves it |
+| $`E`$, $`n`$, $`T_j`$ | expiry, swap length, and payment dates $`T_j=E+j`$ for j = 1 to n | 0.5, 1 or 2; 2 or 5; yearly | premium rises with each |
+| $`K`$, $`c_j`$ | the strike, a fixed rate chosen at par; the fixed leg's cash, K each year plus the $1 principal on the last date | 3.6619% to 4.8769% | a higher strike makes a receiver dearer |
+| $`r_E`$ | the short rate on the expiry date | normal, centred on $`f_0(E)`$ | — |
+| $`b_\kappa(u)`$ | **load**: how much a u-year zero's log price moves per unit move of the short rate | 4.4240 for u = 5 (no pull: 5) | — |
+| $`v_\kappa(E)`$ | **variance clock**: the rate's spread at E is $`\sigma^2 v_\kappa(E)`$ | 1.8127 for E = 2 (no pull: 2) | — |
+| $`w_j`$ | **width** of payment j's bond at expiry | 0.053607 for the last payment of 2.0y into 5y | its option rises almost in proportion |
+| $`V_i`$ | model premium for quote i | 182.751 bp for 2.0y into 5y at the fit | — |
+| $`q_i`$ | quoted premium for quote i | 46.178 bp to 182.751 bp | the fitted pair moves; see Why it works |
+| $`L`$ | the **loss**: half the sum of squared misses in bp squared | 14807.2462 at the start, 0 at the fit | — |
 
 The **strike** of each swaption is the par forward swap rate, the fixed rate that makes the swap worth nothing today ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)):
 
-$$K=\frac{D_0(E)-D_0(E+n)}{\sum_{j=1}^{n}D_0(E+j)}.$$
+```math
+K=\frac{D_0(E)-D_0(E+n)}{\sum_{j=1}^{n}D_0(E+j)}.
+```
 
 In words: the value of the floating leg divided by the value of one unit of fixed payments. Such a swaption is called **at the money**.
 
@@ -77,7 +83,7 @@ In words: the value of the floating leg divided by the value of one unit of fixe
 - **Constant parameters.** If the market's volatility changes with expiry, a constant σ spreads the error over all six quotes; a σ per date absorbs it, at the cost of more knobs.
 - **Premiums, not volatilities.** Markets quote swaptions as normal or shifted volatilities ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)); turn them into premiums on the same curve first.
 - **European exercise, positive coupons.** The split into bond options needs one exercise date and a fixed leg of positive cash flows. A Bermudan, which can be exercised on any of several dates, needs the tree.
-- **Quotes inside their bounds.** An at-the-money receiver premium must lie strictly between 0 and $D_0(E)$, the cost today of $1 paid at expiry; outside that range no volatility reprices it.
+- **Quotes inside their bounds.** An at-the-money receiver premium must lie strictly between 0 and $`D_0(E)`$, the cost today of $1 paid at expiry; outside that range no volatility reprices it.
 
 Conventions verified 2026-09-28: swaptions are quoted as normal volatilities in basis points a year, and USD swaps on SOFR (the Secured Overnight Financing Rate) and EUR swaps pay fixed annually. This card pays fixed yearly and ignores day counts.
 
@@ -95,13 +101,13 @@ An option does: its value depends on how widely the underlying can spread by exp
 
 At expiry, receiving fixed K and paying floating on $1 is worth the same as holding a bond that pays K each year and $1 at the end, minus the $1 that the floating leg is worth on its reset date. So the receiver swaption is a call on that coupon bond, struck at $1.
 
-In Hull-White every zero-coupon bond at expiry falls as the short rate then rises. So one threshold rate makes the coupon bond worth exactly $1, and the call is exercised when the rate lands below it. Jamshidian's trick splits the coupon-bond call into one call per payment, each struck at that payment's bond price at the threshold, and adds them; each piece is a Black-Scholes-like call with width $w_j$ ([Bond options](05-bond-options-and-jamshidians-trick.md) proves the split).
+In Hull-White every zero-coupon bond at expiry falls as the short rate then rises. So one threshold rate makes the coupon bond worth exactly $1, and the call is exercised when the rate lands below it. Jamshidian's trick splits the coupon-bond call into one call per payment, each struck at that payment's bond price at the threshold, and adds them; each piece is a Black-Scholes-like call with width $`w_j`$ ([Bond options](05-bond-options-and-jamshidians-trick.md) proves the split).
 
 ### Step 2: volatility scales every width, and so every premium, alike
 
-In the width formula σ is a plain multiplier. Double it and every $w_j$ doubles.
+In the width formula σ is a plain multiplier. Double it and every $`w_j`$ doubles.
 
-An at-the-money option is worth nearly its width times a constant. The call on a bond whose forward price (its price agreed today for delivery at expiry) equals its strike is $D_0(T)\,[N(w/2)-N(-w/2)]$, where $N$ is the area under the standard normal curve to the left of a point, and for a small width that is $D_0(T)\,w/\sqrt{2\pi}$: a straight line through zero. So a 1% rise in σ raises each premium by very nearly 1% of itself.
+An at-the-money option is worth nearly its width times a constant. The call on a bond whose forward price (its price agreed today for delivery at expiry) equals its strike is $`D_0(T)\,[N(w/2)-N(-w/2)]`$, where $`N`$ is the area under the standard normal curve to the left of a point, and for a small width that is $`D_0(T)\,w/\sqrt{2\pi}`$: a straight line through zero. So a 1% rise in σ raises each premium by very nearly 1% of itself.
 
 The sensitivity table in the code shows it. The 0.5y into 2y premium is 46.178 bp and gains 0.4618 bp per 1% of σ. The 2.0y into 5y premium is 182.751 bp and gains 1.8271 bp. In the language of economics, the **elasticity**, the percentage change of the output per percentage change of the input, is almost exactly 1 for every quote. Volatility cannot tell the six apart. It sets their level.
 
@@ -109,11 +115,11 @@ The sensitivity table in the code shows it. The 0.5y into 2y premium is 46.178 b
 
 Reversion enters twice, and both times as a shrink.
 
-The **load** $b_\kappa(u)$ is how much a u-year zero feels a rate move. With no pull a 5-year zero's log price moves 5 times the rate move. With the pull, a shock today is expected to fade before the later years, so the load is less: 4.4240. For a 2-year zero it is 1.9033 against 2. The longer the bond, the bigger the shrink.
+The **load** $`b_\kappa(u)`$ is how much a u-year zero feels a rate move. With no pull a 5-year zero's log price moves 5 times the rate move. With the pull, a shock today is expected to fade before the later years, so the load is less: 4.4240. For a 2-year zero it is 1.9033 against 2. The longer the bond, the bigger the shrink.
 
-The **variance clock** $v_\kappa(E)$ measures how far the rate spreads by expiry. With no pull, spread grows like elapsed time: 2 at two years. With the pull, early shocks partly fade before expiry: 1.8127. At half a year it is 0.4877 against 0.5. The later the expiry, the bigger the shrink.
+The **variance clock** $`v_\kappa(E)`$ measures how far the rate spreads by expiry. With no pull, spread grows like elapsed time: 2 at two years. With the pull, early shocks partly fade before expiry: 1.8127. At half a year it is 0.4877 against 0.5. The later the expiry, the bigger the shrink.
 
-For small κu, $b_\kappa(u)\approx u\,(1-\kappa u/2)$ and $v_\kappa(E)\approx E\,(1-\kappa E)$. Take logs, and the width's elasticity to κ is about $-\kappa(u+E)/2$. The last payment carries the principal and dominates the premium, so a rough rule for the whole swaption is $-\kappa(n+E)/2$.
+For small κu, $`b_\kappa(u)\approx u\,(1-\kappa u/2)`$ and $`v_\kappa(E)\approx E\,(1-\kappa E)`$. Take logs, and the width's elasticity to κ is about $`-\kappa(u+E)/2`$. The last payment carries the principal and dominates the premium, so a rough rule for the whole swaption is $`-\kappa(n+E)/2`$.
 
 | Quote | Rule −κ(n+E)/2 | Measured: bp per 1% of κ ÷ bp per 1% of σ |
 | --- | --- | --- |
@@ -168,22 +174,24 @@ The single line is the smallest average miss for each fixed reversion speed, wit
 
 ### Existence, uniqueness and the edges
 
-- **Each quote has one implied σ at a given κ** when it lies strictly between 0 and $D_0(E)$. At σ → 0 the at-the-money premium falls to zero. As σ grows it climbs toward $D_0(E)$, since at par the fixed leg's value is $D_0(E)$. Each bond call rises strictly with its width, so the answer is unique.
+- **Each quote has one implied σ at a given κ** when it lies strictly between 0 and $`D_0(E)`$. At σ → 0 the at-the-money premium falls to zero. As σ grows it climbs toward $`D_0(E)`$, since at par the fixed leg's value is $`D_0(E)`$. Each bond call rises strictly with its width, so the answer is unique.
 - **The pair needs at least two quotes with different n + E.** With one quote there is a whole curve of exact fits: the 1.0y into 5y quote alone is repriced by σ of 80.32 bp at κ = 0.01 and by 103.24 bp at κ = 0.10. Two quotes with different shapes, 0.5y into 2y and 2.0y into 5y, recover both exactly. That the least-squares minimum is the only one is not proved in general; here the 441-pair grid, the solver from a far start and the equal-implied-σ road (road C in the code) all land on the same pair.
 - **κ near 0** is safe: the load tends to u and the clock to E, which is the model without reversion (Ho-Lee). **κ below 0** makes shocks grow instead of fading; the formulas still compute, but the fit here works in logs and never goes there.
 
 <details>
 <summary>Detailed proof: the rate's law at expiry, and the second road</summary>
 
-Write the short rate as $r_t=x_t+\alpha(t)$, where $x$ starts at 0 and follows $dx=-\kappa x\,dt+\sigma\,dW$, with $W$ a Brownian motion (the running total of the normal shocks), and $\alpha(t)=f_0(t)+\tfrac12\sigma^2 b_\kappa(t)^2$ is the part that fits today's curve ([Hull-White](04-hull-white-model.md)).
+Write the short rate as $`r_t=x_t+\alpha(t)`$, where $`x`$ starts at 0 and follows $`dx=-\kappa x\,dt+\sigma\,dW`$, with $`W`$ a Brownian motion (the running total of the normal shocks), and $`\alpha(t)=f_0(t)+\tfrac12\sigma^2 b_\kappa(t)^2`$ is the part that fits today's curve ([Hull-White](04-hull-white-model.md)).
 
-Price in units of the zero-coupon bond maturing at E, the **E-forward measure** ([Forward measures](../31-Forward-Rate%20Models/02-forward-measures-for-rates.md)). The change of unit adds a drift $-\sigma^2 b_\kappa(E-t)$ to $x$. Solving the linear equation, $x$ at time E is normal with variance $\sigma^2\int_0^E e^{-2\kappa(E-s)}ds=\sigma^2 v_\kappa(E)$ and mean
-$$-\sigma^2\int_0^E e^{-\kappa(E-s)}\,b_\kappa(E-s)\,ds=-\frac{\sigma^2}{\kappa^2}\Big[(1-e^{-\kappa E})-\tfrac12(1-e^{-2\kappa E})\Big]=-\tfrac12\sigma^2 b_\kappa(E)^2.$$
-That cancels the $\tfrac12\sigma^2 b_\kappa(E)^2$ inside $\alpha(E)$. So under the E-forward measure $r_E$ is normal, centred on $f_0(E)$, with variance $\sigma^2 v_\kappa(E)$.
+Price in units of the zero-coupon bond maturing at E, the **E-forward measure** ([Forward measures](../31-Forward-Rate%20Models/02-forward-measures-for-rates.md)). The change of unit adds a drift $`-\sigma^2 b_\kappa(E-t)`$ to $`x`$. Solving the linear equation, $`x`$ at time E is normal with variance $`\sigma^2\int_0^E e^{-2\kappa(E-s)}ds=\sigma^2 v_\kappa(E)`$ and mean
 
-The receiver's value at expiry is $\big(\sum_j c_j P(E,T_j;r_E)-1\big)^+$, where $P(E,T;r)=\frac{D_0(T)}{D_0(E)}\exp\!\big(-b_\kappa(T-E)(r-f_0(E))-\tfrac12\sigma^2 v_\kappa(E)\,b_\kappa(T-E)^2\big)$ is the Hull-White zero at expiry. Its price today is $D_0(E)$ times the average of that payoff over the normal law above. The second road in the code computes this average directly with Simpson's rule, with no threshold split and no bond-option formula. It agrees with the Jamshidian sum to 0.00000 bp on all six quotes.
+$`\displaystyle -\sigma^2\int_0^E e^{-\kappa(E-s)}\,b_\kappa(E-s)\,ds=-\frac{\sigma^2}{\kappa^2}\Big[(1-e^{-\kappa E})-\tfrac12(1-e^{-2\kappa E})\Big]=-\tfrac12\sigma^2 b_\kappa(E)^2.`$
 
-**Elasticities.** $\ln b_\kappa(u)=\ln u+\ln\frac{1-e^{-\kappa u}}{\kappa u}$, and $\ln\frac{1-e^{-y}}{y}=-\tfrac{y}{2}+\tfrac{y^2}{24}-\dots$. So $\kappa\,\partial_\kappa \ln b_\kappa(u)=-\tfrac12\kappa u+O(\kappa^2u^2)$. The same series with $y=2\kappa E$ gives $\kappa\,\partial_\kappa\tfrac12\ln v_\kappa(E)=-\tfrac12\kappa E+O(\kappa^2E^2)$. Adding, $\kappa\,\partial_\kappa\ln w_j\approx-\tfrac12\kappa\,(T_j-E+E)$, and σ's elasticity of $w_j$ is exactly 1. Near the money each bond call is close to proportional to its width, which carries both statements from widths to premiums.
+That cancels the $`\tfrac12\sigma^2 b_\kappa(E)^2`$ inside $`\alpha(E)`$. So under the E-forward measure $`r_E`$ is normal, centred on $`f_0(E)`$, with variance $`\sigma^2 v_\kappa(E)`$.
+
+The receiver's value at expiry is $`\big(\sum_j c_j P(E,T_j;r_E)-1\big)^+`$, where $`P(E,T;r)=\frac{D_0(T)}{D_0(E)}\exp\!\big(-b_\kappa(T-E)(r-f_0(E))-\tfrac12\sigma^2 v_\kappa(E)\,b_\kappa(T-E)^2\big)`$ is the Hull-White zero at expiry. Its price today is $`D_0(E)`$ times the average of that payoff over the normal law above. The second road in the code computes this average directly with Simpson's rule, with no threshold split and no bond-option formula. It agrees with the Jamshidian sum to 0.00000 bp on all six quotes.
+
+**Elasticities.** $`\ln b_\kappa(u)=\ln u+\ln\frac{1-e^{-\kappa u}}{\kappa u}`$, and $`\ln\frac{1-e^{-y}}{y}=-\tfrac{y}{2}+\tfrac{y^2}{24}-\dots`$. So $`\kappa\,\partial_\kappa \ln b_\kappa(u)=-\tfrac12\kappa u+O(\kappa^2u^2)`$. The same series with $`y=2\kappa E`$ gives $`\kappa\,\partial_\kappa\tfrac12\ln v_\kappa(E)=-\tfrac12\kappa E+O(\kappa^2E^2)`$. Adding, $`\kappa\,\partial_\kappa\ln w_j\approx-\tfrac12\kappa\,(T_j-E+E)`$, and σ's elasticity of $`w_j`$ is exactly 1. Near the money each bond call is close to proportional to its width, which carries both statements from widths to premiums.
 
 </details>
 
@@ -197,14 +205,14 @@ The fingerprint of κ is in two widths: the last payment of the shortest quote a
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| load, 2-year payment | $(1-e^{-0.05\times2})/0.05$ | 1.9033 |
-| clock, half-year expiry | $(1-e^{-2\times0.05\times0.5})/(2\times0.05)$ | 0.4877 |
-| width, 0.5y into 2y | $0.009\times1.9033\times\sqrt{0.4877}$ | 0.011962 |
-| same with no pull | $0.009\times2\times\sqrt{0.5}$ | 0.012728 |
-| load, 5-year payment | $(1-e^{-0.05\times5})/0.05$ | 4.4240 |
-| clock, two-year expiry | $(1-e^{-2\times0.05\times2})/(2\times0.05)$ | 1.8127 |
-| width, 2.0y into 5y | $0.009\times4.4240\times\sqrt{1.8127}$ | 0.053607 |
-| same with no pull | $0.009\times5\times\sqrt{2}$ | 0.063640 |
+| load, 2-year payment | $`(1-e^{-0.05\times2})/0.05`$ | 1.9033 |
+| clock, half-year expiry | $`(1-e^{-2\times0.05\times0.5})/(2\times0.05)`$ | 0.4877 |
+| width, 0.5y into 2y | $`0.009\times1.9033\times\sqrt{0.4877}`$ | 0.011962 |
+| same with no pull | $`0.009\times2\times\sqrt{0.5}`$ | 0.012728 |
+| load, 5-year payment | $`(1-e^{-0.05\times5})/0.05`$ | 4.4240 |
+| clock, two-year expiry | $`(1-e^{-2\times0.05\times2})/(2\times0.05)`$ | 1.8127 |
+| width, 2.0y into 5y | $`0.009\times4.4240\times\sqrt{1.8127}`$ | 0.053607 |
+| same with no pull | $`0.009\times5\times\sqrt{2}`$ | 0.063640 |
 | **what κ does** | shrinks the long, late width far more than the short, early one | **0.053607 vs 0.063640, against 0.011962 vs 0.012728** |
 
 The ratios are 0.842 for the long, late quote and 0.940 for the short, early one. Those two ratios are what the fit reads. σ multiplies both widths alike and cannot change their ratio; only κ can. A reversion of 0.05 a year means a rate shock is expected to lose half its size in 13.86 years: slow, and still enough to take a visible bite out of a 5-year swap starting in 2 years.
@@ -216,7 +224,7 @@ The right fit is κ = 0.05, σ = 0.900%, missing by nothing.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Freeze κ at 0.01 and fit σ alone | σ = 0.803%, misses 2.64 bp rms | With too little pull the model's long quotes are too dear relative to its short ones; no single σ fixes a tilt |
-| Take the rate's spread at expiry as $\sigma\sqrt{E}$ | κ = 0.0497, σ = 0.8675%, misses 1.67 bp rms | Forgets that the pull also damps shocks before expiry; every width is too big, so σ comes out too low |
+| Take the rate's spread at expiry as $`\sigma\sqrt{E}`$ | κ = 0.0497, σ = 0.8675%, misses 1.67 bp rms | Forgets that the pull also damps shocks before expiry; every width is too big, so σ comes out too low |
 | Fit one quote only, 1.0y into 5y | any κ: σ of 80.32 bp at κ = 0.01, 103.24 bp at κ = 0.10 | One number cannot pin two; the tilt needs quotes of different n + E |
 | Read a 0.5 bp tilt in the quotes as signal | κ = 0.0558, σ = 0.9133% | The soft direction: half a basis point up on the 2-year swaps and down on the 5-year ones moves κ from 0.0500 to 0.0558, σ only to 0.9133% |
 
@@ -665,11 +673,11 @@ The two outputs agree line for line. Levenberg-Marquardt settles σ first and κ
 
 Lean proves the width facts of Steps 2 and 3, and three integrals, for every positive reversion speed, volatility, payment time and expiry.
 
-- Multiply σ by any number c. Then every width $w_j$ is multiplied by c.
-- Take κ > 0, σ > 0, and a bond paid u > 0 years after expiry E > 0. Then its width is strictly below its no-pull width $\sigma u\sqrt{E}$.
+- Multiply σ by any number c. Then every width $`w_j`$ is multiplied by c.
+- Take κ > 0, σ > 0, and a bond paid u > 0 years after expiry E > 0. Then its width is strictly below its no-pull width $`\sigma u\sqrt{E}`$.
 - Take a second bond paid u′ years after expiry E′, with u′ ≥ u and E′ ≥ E, one strictly larger. Then its ratio of width to no-pull width is strictly smaller.
-- Take κ > 0. Then the load $b_\kappa(u)$ equals $\int_0^u e^{-\kappa s}\,ds$. The variance clock $v_\kappa(E)$ equals $\int_0^E e^{-2\kappa s}\,ds$.
-- Take κ > 0. Then the forward-measure mean integral in the detailed proof equals $-\tfrac12\sigma^2 b_\kappa(E)^2$.
+- Take κ > 0. Then the load $`b_\kappa(u)`$ equals $`\int_0^u e^{-\kappa s}\,ds`$. The variance clock $`v_\kappa(E)`$ equals $`\int_0^E e^{-2\kappa s}\,ds`$.
+- Take κ > 0. Then the forward-measure mean integral in the detailed proof equals $`-\tfrac12\sigma^2 b_\kappa(E)^2`$.
 - Road A's grid has 21 × 21 = 441 pairs, and the strip has 3 × 2 = 6 quotes.
 
 Premiums, the fitted pair and how firmly each parameter is pinned are left to the Python and Rust checks.

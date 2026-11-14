@@ -35,13 +35,17 @@ Four of the ten are few enough to list every pair by hand, and the run below doe
 
 C(n, k) counts the ways to choose k items from n, order ignored, read "n choose k" ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). A count of something impossible is zero, so C(n, k) = 0 when k is below 0 or above n.
 
-$$k \cdot C(n, k) = n \cdot C(n-1, k-1)$$
+```math
+k \cdot C(n, k) = n \cdot C(n-1, k-1)
+```
 
 **Read it aloud:** committees of that size times the members each may promote is the same number as chairs times the ways to fill the seats left over.
 
 Add that across every size and the left becomes every pair in the office. The capital Greek sigma is shorthand for "add these up as k runs through the listed values" ([The binomial theorem](02-binomial-theorem.md)):
 
-$$\sum_{k=0}^{n} k \cdot C(n, k) \;=\; n \cdot 2^{\,n-1}$$
+```math
+\sum_{k=0}^{n} k \cdot C(n, k) \;=\; n \cdot 2^{\,n-1}
+```
 
 **Read it aloud:** add the pair count for every size and the total is the number of people times 2 multiplied in n − 1 times.
 
@@ -49,13 +53,13 @@ The numbers C(n, 0), C(n, 1), …, C(n, n) form row n of Pascal's triangle. Mult
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | people to choose from | 10 in the office | doubles, and more, per extra person |
-| $k$ | how many sit on the committee | any size, 0 to 10 | peaks near mid-row, then falls |
-| $C(n,k)$ | committees of $k$ from $n$, order ignored | C(10,3) = 120 | — |
-| $k\,C(n,k)$ | committee-and-chair pairs of that size | 3 × 120 = 360 | — |
-| $C(n-1,k-1)$ | ways to fill the seats a chair leaves | C(9,2) = 36 | — |
-| $2^{\,n-1}$ | committees behind one chair: 2 multiplied in $n-1$ times | 512 | doubles per colleague |
-| $n\,2^{\,n-1}$ | every committee-and-chair pair, all sizes | 5,120 | — |
+| $`n`$ | people to choose from | 10 in the office | doubles, and more, per extra person |
+| $`k`$ | how many sit on the committee | any size, 0 to 10 | peaks near mid-row, then falls |
+| $`C(n,k)`$ | committees of $`k`$ from $`n`$, order ignored | C(10,3) = 120 | — |
+| $`k\,C(n,k)`$ | committee-and-chair pairs of that size | 3 × 120 = 360 | — |
+| $`C(n-1,k-1)`$ | ways to fill the seats a chair leaves | C(9,2) = 36 | — |
+| $`2^{\,n-1}`$ | committees behind one chair: 2 multiplied in $`n-1`$ times | 512 | doubles per colleague |
+| $`n\,2^{\,n-1}`$ | every committee-and-chair pair, all sizes | 5,120 | — |
 
 ### When it holds
 

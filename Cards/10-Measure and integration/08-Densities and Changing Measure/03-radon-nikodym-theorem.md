@@ -36,15 +36,19 @@ Bars: the loaded die. Line: the fair die at 1/6, drawn as 0.17. The density is b
 
 ## The formula
 
-Notation first. A measure space $(\Omega, \mathcal{F}, \mu)$ is a whole space $\Omega$, a sigma-algebra $\mathcal{F}$ (the collection of sets we allow ourselves to measure) and a measure $\mu$. A second measure $\nu$ on $\mathcal{F}$ is **absolutely continuous** with respect to $\mu$, written $\nu \ll \mu$, when $\mu(A) = 0$ forces $\nu(A) = 0$ ([Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md)). A measure is **sigma-finite** when $\Omega$ is a countable union of sets $E_1, E_2, \dots$ of finite size; length on the line is, with pieces $[k, k+1)$.
+Notation first. A measure space $`(\Omega, \mathcal{F}, \mu)`$ is a whole space $`\Omega`$, a sigma-algebra $`\mathcal{F}`$ (the collection of sets we allow ourselves to measure) and a measure $`\mu`$. A second measure $`\nu`$ on $`\mathcal{F}`$ is **absolutely continuous** with respect to $`\mu`$, written $`\nu \ll \mu`$, when $`\mu(A) = 0`$ forces $`\nu(A) = 0`$ ([Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md)). A measure is **sigma-finite** when $`\Omega`$ is a countable union of sets $`E_1, E_2, \dots`$ of finite size; length on the line is, with pieces $`[k, k+1)`$.
 
-$$\nu \ll \mu \quad\Longleftrightarrow\quad \text{there is a measurable } f \ge 0 \text{ with } \nu(A) = \int_A f\,d\mu \text{ for every } A \in \mathcal{F} \qquad (\mu,\ \nu \text{ sigma-finite})$$
+```math
+\nu \ll \mu \quad\Longleftrightarrow\quad \text{there is a measurable } f \ge 0 \text{ with } \nu(A) = \int_A f\,d\mu \text{ for every } A \in \mathcal{F} \qquad (\mu,\ \nu \text{ sigma-finite})
+```
 
 **Read it aloud:** when both measures are sigma-finite, ν ignores every set μ ignores exactly when ν is μ reweighted by a non-negative function.
 
-The function is unique up to a μ-null set (a set of μ-size zero). It is written $\frac{d\nu}{d\mu}$, read "the density of ν against μ". On the die, $\mu$ is the fair die $P$, $\nu$ the loaded die $Q$, and the integral is a sum:
+The function is unique up to a μ-null set (a set of μ-size zero). It is written $`\frac{d\nu}{d\mu}`$, read "the density of ν against μ". On the die, $`\mu`$ is the fair die $`P`$, $`\nu`$ the loaded die $`Q`$, and the integral is a sum:
 
-$$Q(A) = \sum_{i \in A} f(i)\,P(\{i\}) = \frac{1}{6}\sum_{i \in A} f(i), \qquad f = (0.6,\ 0.6,\ 0.6,\ 0.6,\ 1.2,\ 2.4)$$
+```math
+Q(A) = \sum_{i \in A} f(i)\,P(\{i\}) = \frac{1}{6}\sum_{i \in A} f(i), \qquad f = (0.6,\ 0.6,\ 0.6,\ 0.6,\ 1.2,\ 2.4)
+```
 
 **Read it aloud:** the loaded chance of an event is the fair chance of each of its faces, scaled by that face's factor, added up.
 
@@ -52,25 +56,25 @@ Right to left is easy: an integral over a μ-null set is zero. The theorem is le
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$, $A$, $B$ | the whole space; the sets allowed a size; events in it | six faces; all 64 events; "even" = faces 2, 4, 6 | — |
-| $\mu$ | the reference measure, the one reweighted | the fair die $P$, 1/6 per face | larger μ-size, smaller factor needed |
-| $\nu$ | the measure to be written with a density | the loaded die $Q$ | larger ν-size, larger factor |
-| $P$, $Q$, $M$, $V$ | fair and loaded die (or rate-1 and rate-2 bus waits); a die that never shows 6; a measure absolutely continuous with respect to $M$ | 0.1667 each; 0.1, 0.1, 0.1, 0.1, 0.2, 0.4; 0.2 on faces 1 to 5 | — |
-| $f$, $f_k$, $f_n$ | the density $d\nu/d\mu$: the reweighting factor; its version on piece k; the proof's rising functions | 0.6, 0.6, 0.6, 0.6, 1.2, 2.4; for the buses 2e^(-x) | a face's factor up, its ν-size up |
-| $\mathcal{G}$, $g$, $g_1$, $g_2$, $g_n$, $m$ | the proof's class of functions that never overshoot ν; members of it; their best total | $g$ rises round by round; $m = 1$ | — |
-| $\nu_0$ | what ν has left after the best function is taken out | 0 at the end | — |
-| $t$, $\varepsilon$, $H$, $N$ | a level; the proof's small step; positive and negative Hahn sets | t = 0.9 gives faces 5, 6; step 0.3 | higher t, smaller positive set |
-| $\lambda$, $c$, $\ll$ | length; counting measure (number of points); "is absolutely continuous with respect to" | [0, 1] as the failure case | — |
-| $\rho$, $h$, $Z$ | the L2 route: $\mu + \nu$; the density of ν against it; where $h = 1$ | 0.375 on faces 1 to 4 | — |
-| $E_k$, $F_i$, $G_j$, $A_n$ | pieces of finite size; the sets where one density beats another by $1/n$ | $[k, k+1)$ on the bus waits | — |
-| $i$, $j$, $k$, $n$ | whole-number counters | faces, pieces, rounds | — |
+| $`\Omega`$, $`\mathcal{F}`$, $`A`$, $`B`$ | the whole space; the sets allowed a size; events in it | six faces; all 64 events; "even" = faces 2, 4, 6 | — |
+| $`\mu`$ | the reference measure, the one reweighted | the fair die $`P`$, 1/6 per face | larger μ-size, smaller factor needed |
+| $`\nu`$ | the measure to be written with a density | the loaded die $`Q`$ | larger ν-size, larger factor |
+| $`P`$, $`Q`$, $`M`$, $`V`$ | fair and loaded die (or rate-1 and rate-2 bus waits); a die that never shows 6; a measure absolutely continuous with respect to $`M`$ | 0.1667 each; 0.1, 0.1, 0.1, 0.1, 0.2, 0.4; 0.2 on faces 1 to 5 | — |
+| $`f`$, $`f_k`$, $`f_n`$ | the density $`d\nu/d\mu`$: the reweighting factor; its version on piece k; the proof's rising functions | 0.6, 0.6, 0.6, 0.6, 1.2, 2.4; for the buses 2e^(-x) | a face's factor up, its ν-size up |
+| $`\mathcal{G}`$, $`g`$, $`g_1`$, $`g_2`$, $`g_n`$, $`m`$ | the proof's class of functions that never overshoot ν; members of it; their best total | $`g`$ rises round by round; $`m = 1`$ | — |
+| $`\nu_0`$ | what ν has left after the best function is taken out | 0 at the end | — |
+| $`t`$, $`\varepsilon`$, $`H`$, $`N`$ | a level; the proof's small step; positive and negative Hahn sets | t = 0.9 gives faces 5, 6; step 0.3 | higher t, smaller positive set |
+| $`\lambda`$, $`c`$, $`\ll`$ | length; counting measure (number of points); "is absolutely continuous with respect to" | [0, 1] as the failure case | — |
+| $`\rho`$, $`h`$, $`Z`$ | the L2 route: $`\mu + \nu`$; the density of ν against it; where $`h = 1`$ | 0.375 on faces 1 to 4 | — |
+| $`E_k`$, $`F_i`$, $`G_j`$, $`A_n`$ | pieces of finite size; the sets where one density beats another by $`1/n`$ | $`[k, k+1)`$ on the bus waits | — |
+| $`i`$, $`j`$, $`k`$, $`n`$ | whole-number counters | faces, pieces, rounds | — |
 
 ### When it holds
 
-- **Absolute continuity, $\nu \ll \mu$.** A die $M$ that never shows 6 gives face 6 the chance 0, $Q$ gives it 0.4, and no factor times 0 makes 0.4. The best function that never overshoots collects 0.6 and strands 0.4; splitting off that part is [Lebesgue decomposition](05-lebesgue-decomposition.md).
-- **The reference μ is sigma-finite.** Counting measure $c$ on [0, 1] against length $\lambda$: only the empty set has count 0, so $\lambda \ll c$. But every point has length 0, forcing the factor to 0 everywhere, and the integral of 0 is 0, not 1.
+- **Absolute continuity, $`\nu \ll \mu`$.** A die $`M`$ that never shows 6 gives face 6 the chance 0, $`Q`$ gives it 0.4, and no factor times 0 makes 0.4. The best function that never overshoots collects 0.6 and strands 0.4; splitting off that part is [Lebesgue decomposition](05-lebesgue-decomposition.md).
+- **The reference μ is sigma-finite.** Counting measure $`c`$ on [0, 1] against length $`\lambda`$: only the empty set has count 0, so $`\lambda \ll c`$. But every point has length 0, forcing the factor to 0 everywhere, and the integral of 0 is 0, not 1.
 - **ν is sigma-finite.** This makes the density finite. On [0, 1], the measure giving every set of positive length the size infinity is absolutely continuous with respect to length, but its densities are infinite except on a null set.
-- **One sigma-algebra.** Both measures live on $\mathcal{F}$, and the density is measurable with respect to it; changing it on a μ-null set gives another version.
+- **One sigma-algebra.** Both measures live on $`\mathcal{F}`$, and the density is measurable with respect to it; changing it on a μ-null set gives another version.
 
 ---
 
@@ -82,23 +86,23 @@ Collect every non-negative function whose integral against μ never exceeds ν o
 
 ### Step 1: the class of functions that never overshoot has a best member
 
-Let $\mathcal{G}$ be the measurable $g \ge 0$ with $\int_A g\,d\mu \le \nu(A)$ for every $A$ in $\mathcal{F}$; zero is one. The larger of two members at each point is a member: where $g_1$ is larger it stays under ν, and on the rest $g_2$ does. Let $m$ be the supremum (least upper bound) of $\int g\,d\mu$ over $\mathcal{G}$, at most $\nu(\Omega)$. Running maxima of members whose totals approach $m$ rise, and the monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) carries the inequality on every set to the limit $f$. So $f$ is in $\mathcal{G}$ and its total is exactly $m$.
+Let $`\mathcal{G}`$ be the measurable $`g \ge 0`$ with $`\int_A g\,d\mu \le \nu(A)`$ for every $`A`$ in $`\mathcal{F}`$; zero is one. The larger of two members at each point is a member: where $`g_1`$ is larger it stays under ν, and on the rest $`g_2`$ does. Let $`m`$ be the supremum (least upper bound) of $`\int g\,d\mu`$ over $`\mathcal{G}`$, at most $`\nu(\Omega)`$. Running maxima of members whose totals approach $`m`$ rise, and the monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) carries the inequality on every set to the limit $`f`$. So $`f`$ is in $`\mathcal{G}`$ and its total is exactly $`m`$.
 
-On the die, $m = 1$: the best member takes all of the loaded die's probability.
+On the die, $`m = 1`$: the best member takes all of the loaded die's probability.
 
 ### Step 2: nothing is left over
 
-The leftover $\nu_0(A) = \nu(A) - \int_A f\,d\mu$ is a measure, never negative. Suppose $\nu_0(\Omega) > 0$. With μ finite, pick $\varepsilon > 0$ with $\nu_0(\Omega) > \varepsilon\,\mu(\Omega)$.
+The leftover $`\nu_0(A) = \nu(A) - \int_A f\,d\mu`$ is a measure, never negative. Suppose $`\nu_0(\Omega) > 0`$. With μ finite, pick $`\varepsilon > 0`$ with $`\nu_0(\Omega) > \varepsilon\,\mu(\Omega)`$.
 
-The difference $\nu_0 - \varepsilon\mu$ is a signed measure (it can be negative). The Hahn decomposition ([Signed measures](02-signed-measures-and-hahn-jordan.md)) splits $\Omega$ into a positive set $H$, where every subset has signed size at least 0, and a negative set $N$, where every subset has signed size at most 0. The whole space has positive signed size, so $H$ does too. Hence $\nu_0(H) > 0$, so $\nu(H) > 0$, so $\mu(H) > 0$: this is where absolute continuity enters.
+The difference $`\nu_0 - \varepsilon\mu`$ is a signed measure (it can be negative). The Hahn decomposition ([Signed measures](02-signed-measures-and-hahn-jordan.md)) splits $`\Omega`$ into a positive set $`H`$, where every subset has signed size at least 0, and a negative set $`N`$, where every subset has signed size at most 0. The whole space has positive signed size, so $`H`$ does too. Hence $`\nu_0(H) > 0`$, so $`\nu(H) > 0`$, so $`\mu(H) > 0`$: this is where absolute continuity enters.
 
-Raise $f$ by $\varepsilon$ on $H$. On any set $A$ the extra integral is $\varepsilon\,\mu(A \cap H)$, at most $\nu_0(A \cap H)$ since $A \cap H$ lies in the positive set. The raised function still never overshoots ν, and its total $m + \varepsilon\,\mu(H)$ beats $m$: a contradiction. So $\nu_0 = 0$ and $\nu(A) = \int_A f\,d\mu$ for every $A$.
+Raise $`f`$ by $`\varepsilon`$ on $`H`$. On any set $`A`$ the extra integral is $`\varepsilon\,\mu(A \cap H)`$, at most $`\nu_0(A \cap H)`$ since $`A \cap H`$ lies in the positive set. The raised function still never overshoots ν, and its total $`m + \varepsilon\,\mu(H)`$ beats $`m`$: a contradiction. So $`\nu_0 = 0`$ and $`\nu(A) = \int_A f\,d\mu`$ for every $`A`$.
 
 ### Step 3: the contradiction, run forwards on the die
 
-Start from $g = 0$. Each round, find the positive set of $\nu_0 - 0.3P$, where $\nu_0 = Q - \int g\,dP$ is the leftover, and raise $g$ by 0.3 there. A face joins when its leftover is at least 0.3 times 1/6, which is 0.05.
+Start from $`g = 0`$. Each round, find the positive set of $`\nu_0 - 0.3P`$, where $`\nu_0 = Q - \int g\,dP`$ is the leftover, and raise $`g`$ by 0.3 there. A face joins when its leftover is at least 0.3 times 1/6, which is 0.05.
 
-| Round | Positive set | $g$ afterwards | $\int g\,dP$ |
+| Round | Positive set | $`g`$ afterwards | $`\int g\,dP`$ |
 | --- | --- | --- | --- |
 | 1 | faces 1 to 6 | 0.3 on every face | 0.3000 |
 | 2 | faces 1 to 6 | 0.6 on every face | 0.6000 |
@@ -107,7 +111,7 @@ Start from $g = 0$. Each round, find the positive set of $\nu_0 - 0.3P$, where $
 | 5 to 8 | face 6 | face 6 climbs 1.5, 1.8, 2.1, 2.4 | 0.8500, 0.9000, 0.9500, 1.0000 |
 | 9 | empty | unchanged | leftover 0.0000 |
 
-The code checks all 64 events after each round: $g$ never leaves $\mathcal{G}$.
+The code checks all 64 events after each round: $`g`$ never leaves $`\mathcal{G}`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -119,13 +123,13 @@ xychart-beta
     line [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]
 ```
 
-Rising line: the total collected, $\int g\,dP$. Flat line: $Q(\Omega) = 1$, the ceiling for every member of $\mathcal{G}$.
+Rising line: the total collected, $`\int g\,dP`$. Flat line: $`Q(\Omega) = 1`$, the ceiling for every member of $`\mathcal{G}`$.
 
 ### Step 4: the density's level sets are Hahn sets
 
-The positive set of $Q - tP$ is where the density is at least $t$. So the density at a face is the highest level whose positive set contains it:
+The positive set of $`Q - tP`$ is where the density is at least $`t`$. So the density at a face is the highest level whose positive set contains it:
 
-| Level $t$ | Positive set of $Q - tP$ | Its signed size |
+| Level $`t`$ | Positive set of $`Q - tP`$ | Its signed size |
 | --- | --- | --- |
 | 0.3 | faces 1 to 6 | 0.7000 |
 | 0.6 | faces 1 to 6 | 0.4000 |
@@ -133,57 +137,57 @@ The positive set of $Q - tP$ is where the density is at least $t$. So the densit
 | 1.8, 2.4 | face 6 | 0.1000, 0.0000 |
 | 2.7 | none | 0.0000 |
 
-No division is needed, so this works for the bus waits. Searched over the intervals $[0, b]$, the positive set of $Q - tP$ is $[0, \ln(2/t))$: it ends at 0.693147 minutes for level 1 and 1.386294 for level 0.5. The highest level, on a grid 0.01 apart, whose interval contains the wait x is 0.73 at x = 1, against 2e^(-1) = 0.7358.
+No division is needed, so this works for the bus waits. Searched over the intervals $`[0, b]`$, the positive set of $`Q - tP`$ is $`[0, \ln(2/t))`$: it ends at 0.693147 minutes for level 1 and 1.386294 for level 0.5. The highest level, on a grid 0.01 apart, whose interval contains the wait x is 0.73 at x = 1, against 2e^(-1) = 0.7358.
 
 ### Step 5: from finite to sigma-finite
 
-Cut $\Omega$ into disjoint pieces $E_1, E_2, \dots$ of finite μ-size and finite ν-size, by intersecting μ's pieces with ν's. The finite theorem gives a density $f_k$ on each piece; set $f = f_k$ on $E_k$. The monotone convergence theorem, in its term-by-term form, adds the pieces' integrals into one: $\nu(A) = \int_A f\,d\mu$.
+Cut $`\Omega`$ into disjoint pieces $`E_1, E_2, \dots`$ of finite μ-size and finite ν-size, by intersecting μ's pieces with ν's. The finite theorem gives a density $`f_k`$ on each piece; set $`f = f_k`$ on $`E_k`$. The monotone convergence theorem, in its term-by-term form, adds the pieces' integrals into one: $`\nu(A) = \int_A f\,d\mu`$.
 
-The rate-2 bus wait against length on $[0, \infty)$ is an example. Length is infinite there, but the pieces $[k, k+1)$ have length 1. The density on each is $2e^{-2x}$, the pieces carry 0.8647, 0.1170, 0.0158, 0.0021, and twenty pieces glued give 1.000000.
+The rate-2 bus wait against length on $`[0, \infty)`$ is an example. Length is infinite there, but the pieces $`[k, k+1)`$ have length 1. The density on each is $`2e^{-2x}`$, the pieces carry 0.8647, 0.1170, 0.0158, 0.0021, and twenty pieces glued give 1.000000.
 
 ### Step 6: unique, except on a null set
 
-Let $f$ and $g$ both be densities of a finite ν. On $A_n$, where $f \ge g + 1/n$, the two integrals agree and are finite, so $0 = \int_{A_n}(f - g)\,d\mu \ge \mu(A_n)/n$. Every $A_n$ is null, so their union, where $f > g$, is null. Swap the roles, and run this piece by piece in the sigma-finite case.
+Let $`f`$ and $`g`$ both be densities of a finite ν. On $`A_n`$, where $`f \ge g + 1/n`$, the two integrals agree and are finite, so $`0 = \int_{A_n}(f - g)\,d\mu \ge \mu(A_n)/n`$. Every $`A_n`$ is null, so their union, where $`f > g`$, is null. Swap the roles, and run this piece by piece in the sigma-finite case.
 
-On the fair die no face is null: raising face 6's factor by 0.1 breaks 32 of the 64 events. Against the five-face die $M$, face 6 is null. The measure $V = (0.1, 0.1, 0.2, 0.2, 0.4, 0)$ has density $(0.5, 0.5, 1, 1, 2)$ on faces 1 to 5, and face-6 values 0 and 7 both reproduce $V$ on all 64 events.
+On the fair die no face is null: raising face 6's factor by 0.1 breaks 32 of the 64 events. Against the five-face die $`M`$, face 6 is null. The measure $`V = (0.1, 0.1, 0.2, 0.2, 0.4, 0)`$ has density $`(0.5, 0.5, 1, 1, 2)`$ on faces 1 to 5, and face-6 values 0 and 7 both reproduce $`V`$ on all 64 events.
 
 ### Step 7: where sigma-finiteness is used, and what fails without it
 
-Step 2 needed $\varepsilon\,\mu(\Omega)$ finite. With counting measure $c$ on [0, 1] as the reference, $c(\Omega)$ is infinite, and [0, 1] is uncountable, so no countable split into finite-count pieces exists. A density for length would need $0 = \lambda(\{x\}) = f(x)$ at every point, so $f = 0$ and $\lambda([0, 1]) = 0$, which is false.
+Step 2 needed $`\varepsilon\,\mu(\Omega)`$ finite. With counting measure $`c`$ on [0, 1] as the reference, $`c(\Omega)`$ is infinite, and [0, 1] is uncountable, so no countable split into finite-count pieces exists. A density for length would need $`0 = \lambda(\{x\}) = f(x)`$ at every point, so $`f = 0`$ and $`\lambda([0, 1]) = 0`$, which is false.
 
-Finite grids show the squeeze. Give each of $k$ equally spaced points the length $1/k$. Against counting, the density is $1/k$: 0.1 for 10 points, 0.000001 for a million, total 1 each time. As the grid fills the interval the density shrinks towards 0, which keeps nothing.
+Finite grids show the squeeze. Give each of $`k`$ equally spaced points the length $`1/k`$. Against counting, the density is $`1/k`$: 0.1 for 10 points, 0.000001 for a million, total 1 each time. As the grid fills the interval the density shrinks towards 0, which keeps nothing.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F})$ carries measures μ and ν with $\nu \ll \mu$. Integrals of non-negative functions allow the value infinity, with $0 \cdot \infty = 0$.
+**Setting.** $`(\Omega, \mathcal{F})`$ carries measures μ and ν with $`\nu \ll \mu`$. Integrals of non-negative functions allow the value infinity, with $`0 \cdot \infty = 0`$.
 
-**1. The easy direction.** If $\nu(A) = \int_A f\,d\mu$ and $\mu(A) = 0$, every simple function under $f 1_A$ has its positive levels on subsets of A, of μ-size 0, so $\nu(A) = 0$.
+**1. The easy direction.** If $`\nu(A) = \int_A f\,d\mu`$ and $`\mu(A) = 0`$, every simple function under $`f 1_A`$ has its positive levels on subsets of A, of μ-size 0, so $`\nu(A) = 0`$.
 
-**2. Finite case: the class is closed under maxima.** Assume μ and ν finite. Let $\mathcal{G}$ be the measurable $g: \Omega \to [0, \infty]$ with $\int_A g\,d\mu \le \nu(A)$ for all $A \in \mathcal{F}$. For $g_1, g_2 \in \mathcal{G}$ put $B = \{g_1 \ge g_2\}$, a set in $\mathcal{F}$. Then $\int_A \max(g_1, g_2)\,d\mu = \int_{A \cap B} g_1\,d\mu + \int_{A \setminus B} g_2\,d\mu \le \nu(A \cap B) + \nu(A \setminus B) = \nu(A)$, by additivity of the integral over disjoint sets and of ν.
+**2. Finite case: the class is closed under maxima.** Assume μ and ν finite. Let $`\mathcal{G}`$ be the measurable $`g: \Omega \to [0, \infty]`$ with $`\int_A g\,d\mu \le \nu(A)`$ for all $`A \in \mathcal{F}`$. For $`g_1, g_2 \in \mathcal{G}`$ put $`B = \{g_1 \ge g_2\}`$, a set in $`\mathcal{F}`$. Then $`\int_A \max(g_1, g_2)\,d\mu = \int_{A \cap B} g_1\,d\mu + \int_{A \setminus B} g_2\,d\mu \le \nu(A \cap B) + \nu(A \setminus B) = \nu(A)`$, by additivity of the integral over disjoint sets and of ν.
 
-**3. A best member.** Put $m = \sup\{\int g\,d\mu : g \in \mathcal{G}\} \le \nu(\Omega) < \infty$. Choose $g_n \in \mathcal{G}$ with $\int g_n\,d\mu \to m$, and $f_n = \max(g_1, \dots, g_n)$, in $\mathcal{G}$ by step 2. The $f_n$ rise to a measurable $f$. For each A, $f_n 1_A$ rises to $f 1_A$, so the monotone convergence theorem gives $\int_A f\,d\mu = \lim_n \int_A f_n\,d\mu \le \nu(A)$. So $f \in \mathcal{G}$, and $m \ge \int f\,d\mu \ge \int f_n\,d\mu \ge \int g_n\,d\mu \to m$ gives $\int f\,d\mu = m$.
+**3. A best member.** Put $`m = \sup\{\int g\,d\mu : g \in \mathcal{G}\} \le \nu(\Omega) < \infty`$. Choose $`g_n \in \mathcal{G}`$ with $`\int g_n\,d\mu \to m`$, and $`f_n = \max(g_1, \dots, g_n)`$, in $`\mathcal{G}`$ by step 2. The $`f_n`$ rise to a measurable $`f`$. For each A, $`f_n 1_A`$ rises to $`f 1_A`$, so the monotone convergence theorem gives $`\int_A f\,d\mu = \lim_n \int_A f_n\,d\mu \le \nu(A)`$. So $`f \in \mathcal{G}`$, and $`m \ge \int f\,d\mu \ge \int f_n\,d\mu \ge \int g_n\,d\mu \to m`$ gives $`\int f\,d\mu = m`$.
 
-**4. The leftover is a measure.** Put $\nu_0(A) = \nu(A) - \int_A f\,d\mu$, a difference of finite numbers, non-negative by step 3. It is countably additive because ν is and because $A \mapsto \int_A f\,d\mu$ is, by the term-by-term form of monotone convergence. And $\nu_0 \le \nu$, so $\nu_0 \ll \mu$.
+**4. The leftover is a measure.** Put $`\nu_0(A) = \nu(A) - \int_A f\,d\mu`$, a difference of finite numbers, non-negative by step 3. It is countably additive because ν is and because $`A \mapsto \int_A f\,d\mu`$ is, by the term-by-term form of monotone convergence. And $`\nu_0 \le \nu`$, so $`\nu_0 \ll \mu`$.
 
-**5. The leftover is zero.** Suppose $\nu_0(\Omega) > 0$ and fix $\varepsilon > 0$ with $\varepsilon\,\mu(\Omega) < \nu_0(\Omega)$. The set function $\nu_0 - \varepsilon\mu$ is a finite signed measure, so it has a Hahn decomposition $\Omega = H \cup N$, disjoint, with $(\nu_0 - \varepsilon\mu)(A) \ge 0$ for $A \subseteq H$ and $\le 0$ for $A \subseteq N$ ([Signed measures](02-signed-measures-and-hahn-jordan.md)). Then $(\nu_0 - \varepsilon\mu)(H) = (\nu_0 - \varepsilon\mu)(\Omega) - (\nu_0 - \varepsilon\mu)(N) > 0$, so $\nu_0(H) > \varepsilon\,\mu(H) \ge 0$. By $\nu_0 \ll \mu$, $\mu(H) > 0$. Put $g = f + \varepsilon 1_H$. For any A, $\int_A g\,d\mu = \int_A f\,d\mu + \varepsilon\,\mu(A \cap H) \le \int_A f\,d\mu + \nu_0(A \cap H) \le \int_A f\,d\mu + \nu_0(A) = \nu(A)$, using that $A \cap H \subseteq H$ and that $\nu_0$ is a measure. So $g \in \mathcal{G}$ with $\int g\,d\mu = m + \varepsilon\,\mu(H) > m$, contradicting step 3. Hence $\nu_0 = 0$.
+**5. The leftover is zero.** Suppose $`\nu_0(\Omega) > 0`$ and fix $`\varepsilon > 0`$ with $`\varepsilon\,\mu(\Omega) < \nu_0(\Omega)`$. The set function $`\nu_0 - \varepsilon\mu`$ is a finite signed measure, so it has a Hahn decomposition $`\Omega = H \cup N`$, disjoint, with $`(\nu_0 - \varepsilon\mu)(A) \ge 0`$ for $`A \subseteq H`$ and $`\le 0`$ for $`A \subseteq N`$ ([Signed measures](02-signed-measures-and-hahn-jordan.md)). Then $`(\nu_0 - \varepsilon\mu)(H) = (\nu_0 - \varepsilon\mu)(\Omega) - (\nu_0 - \varepsilon\mu)(N) > 0`$, so $`\nu_0(H) > \varepsilon\,\mu(H) \ge 0`$. By $`\nu_0 \ll \mu`$, $`\mu(H) > 0`$. Put $`g = f + \varepsilon 1_H`$. For any A, $`\int_A g\,d\mu = \int_A f\,d\mu + \varepsilon\,\mu(A \cap H) \le \int_A f\,d\mu + \nu_0(A \cap H) \le \int_A f\,d\mu + \nu_0(A) = \nu(A)`$, using that $`A \cap H \subseteq H`$ and that $`\nu_0`$ is a measure. So $`g \in \mathcal{G}`$ with $`\int g\,d\mu = m + \varepsilon\,\mu(H) > m`$, contradicting step 3. Hence $`\nu_0 = 0`$.
 
-**6. A finite version.** $\{f = \infty\}$ lies inside $\{f \ge j\}$, of μ-size at most $\nu(\Omega)/j$ for every whole number j, so it is null; set $f = 0$ there.
+**6. A finite version.** $`\{f = \infty\}`$ lies inside $`\{f \ge j\}`$, of μ-size at most $`\nu(\Omega)/j`$ for every whole number j, so it is null; set $`f = 0`$ there.
 
-**7. Sigma-finite case.** Let $\Omega = \bigcup_i F_i = \bigcup_j G_j$ with $\mu(F_i) < \infty$ and $\nu(G_j) < \infty$. The sets $F_i \cap G_j$, made disjoint, form a countable list $E_1, E_2, \dots$ with both sizes finite. On $E_k$, the measures $\mu(\cdot \cap E_k)$ and $\nu(\cdot \cap E_k)$ are finite and absolute continuity still holds between them, so steps 2 to 6 give a finite $f_k \ge 0$ with $\nu(A \cap E_k) = \int_{A \cap E_k} f_k\,d\mu$. Put $f = \sum_k f_k 1_{E_k}$, measurable as a limit of partial sums. Countable additivity of ν and the term-by-term form of the monotone convergence theorem give $\nu(A) = \sum_k \nu(A \cap E_k) = \sum_k \int_A f_k 1_{E_k}\,d\mu = \int_A f\,d\mu$.
+**7. Sigma-finite case.** Let $`\Omega = \bigcup_i F_i = \bigcup_j G_j`$ with $`\mu(F_i) < \infty`$ and $`\nu(G_j) < \infty`$. The sets $`F_i \cap G_j`$, made disjoint, form a countable list $`E_1, E_2, \dots`$ with both sizes finite. On $`E_k`$, the measures $`\mu(\cdot \cap E_k)`$ and $`\nu(\cdot \cap E_k)`$ are finite and absolute continuity still holds between them, so steps 2 to 6 give a finite $`f_k \ge 0`$ with $`\nu(A \cap E_k) = \int_{A \cap E_k} f_k\,d\mu`$. Put $`f = \sum_k f_k 1_{E_k}`$, measurable as a limit of partial sums. Countable additivity of ν and the term-by-term form of the monotone convergence theorem give $`\nu(A) = \sum_k \nu(A \cap E_k) = \sum_k \int_A f_k 1_{E_k}\,d\mu = \int_A f\,d\mu`$.
 
-**8. Uniqueness.** Let $f$, $g$ be densities of ν. On a piece $E_k$ as in step 7, for $A \subseteq E_k$ both integrals equal $\nu(A) < \infty$. Put $A_n = E_k \cap \{f \ge g + 1/n\}$. Then $\int_{A_n} f\,d\mu = \int_{A_n} g\,d\mu$ and both are finite, so $0 = \int_{A_n}(f - g)\,d\mu \ge \mu(A_n)/n$ and $\mu(A_n) = 0$. The set $\{f > g\}$, the union over n and k of the $A_n$, is μ-null. Exchanging f and g finishes.
+**8. Uniqueness.** Let $`f`$, $`g`$ be densities of ν. On a piece $`E_k`$ as in step 7, for $`A \subseteq E_k`$ both integrals equal $`\nu(A) < \infty`$. Put $`A_n = E_k \cap \{f \ge g + 1/n\}`$. Then $`\int_{A_n} f\,d\mu = \int_{A_n} g\,d\mu`$ and both are finite, so $`0 = \int_{A_n}(f - g)\,d\mu \ge \mu(A_n)/n`$ and $`\mu(A_n) = 0`$. The set $`\{f > g\}`$, the union over n and k of the $`A_n`$, is μ-null. Exchanging f and g finishes.
 
-**9. Counting measure.** On $([0, 1], \mathcal{B})$, with $\mathcal{B}$ the Borel sets, let $c$ count points and $\lambda$ be length. $c(A) = 0$ only for $A$ empty, so $\lambda \ll c$. If $\lambda(A) = \int_A f\,dc$ for all Borel A, then A = {x} gives $0 = f(x)$ for every x, so $\lambda([0, 1]) = \int 0\,dc = 0$, false. And $c$ is not sigma-finite: a countable union of finite sets is countable, and [0, 1] is not.
+**9. Counting measure.** On $`([0, 1], \mathcal{B})`$, with $`\mathcal{B}`$ the Borel sets, let $`c`$ count points and $`\lambda`$ be length. $`c(A) = 0`$ only for $`A`$ empty, so $`\lambda \ll c`$. If $`\lambda(A) = \int_A f\,dc`$ for all Borel A, then A = {x} gives $`0 = f(x)`$ for every x, so $`\lambda([0, 1]) = \int 0\,dc = 0`$, false. And $`c`$ is not sigma-finite: a countable union of finite sets is countable, and [0, 1] is not.
 
 </details>
 
 <details>
 <summary>Another proof: von Neumann's L2 argument</summary>
 
-Put $\rho = \mu + \nu$, finite. The map $g \mapsto \int g\,d\nu$ on $L^2(\rho)$ is linear and, by Cauchy-Schwarz, bounded: $|\int g\,d\nu| \le \int |g|\,d\rho \le \rho(\Omega)^{1/2} \|g\|_{L^2(\rho)}$. Every bounded linear map on this complete inner-product space is an inner product with a fixed function ([L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md)), so there is $h$ with $\int g\,d\nu = \int g h\,d\rho$ for all $g$ in $L^2(\rho)$. Testing on $g = 1_A$ gives $0 \le \nu(A) \le \rho(A)$, which forces $0 \le h \le 1$ except on a ρ-null set. Rearranged, $\int g(1 - h)\,d\nu = \int g h\,d\mu$. On $Z = \{h = 1\}$, taking $g = 1_Z$ gives $\mu(Z) = 0$, so $\nu(Z) = 0$ by absolute continuity. Off Z, take $g = 1_A(1 + h + \dots + h^n)$: the left side is $\int_A (1 - h^{n+1})\,d\nu$, which rises to $\nu(A \setminus Z)$, and the right side rises to $\int_{A \setminus Z} h/(1 - h)\,d\mu$, both by monotone convergence. So $f = h/(1 - h)$ off Z, and 0 on Z, is the density.
+Put $`\rho = \mu + \nu`$, finite. The map $`g \mapsto \int g\,d\nu`$ on $`L^2(\rho)`$ is linear and, by Cauchy-Schwarz, bounded: $`|\int g\,d\nu| \le \int |g|\,d\rho \le \rho(\Omega)^{1/2} \|g\|_{L^2(\rho)}`$. Every bounded linear map on this complete inner-product space is an inner product with a fixed function ([L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md)), so there is $`h`$ with $`\int g\,d\nu = \int g h\,d\rho`$ for all $`g`$ in $`L^2(\rho)`$. Testing on $`g = 1_A`$ gives $`0 \le \nu(A) \le \rho(A)`$, which forces $`0 \le h \le 1`$ except on a ρ-null set. Rearranged, $`\int g(1 - h)\,d\nu = \int g h\,d\mu`$. On $`Z = \{h = 1\}`$, taking $`g = 1_Z`$ gives $`\mu(Z) = 0`$, so $`\nu(Z) = 0`$ by absolute continuity. Off Z, take $`g = 1_A(1 + h + \dots + h^n)`$: the left side is $`\int_A (1 - h^{n+1})\,d\nu`$, which rises to $`\nu(A \setminus Z)`$, and the right side rises to $`\int_{A \setminus Z} h/(1 - h)\,d\mu`$, both by monotone convergence. So $`f = h/(1 - h)`$ off Z, and 0 on Z, is the density.
 
-On the die, $h$ is the density of $Q$ against $P + Q$: 0.3750 on faces 1 to 4, 0.5455 on face 5 and 0.7059 on face 6. Then $h/(1 - h)$ is 0.6, 1.2, 2.4 again.
+On the die, $`h`$ is the density of $`Q`$ against $`P + Q`$: 0.3750 on faces 1 to 4, 0.5455 on face 5 and 0.7059 on face 6. Then $`h/(1 - h)`$ is 0.6, 1.2, 2.4 again.
 
 </details>
 
@@ -210,16 +214,16 @@ Working with the density once it exists is [The Radon-Nikodym derivative](04-rad
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Reference die $M$ never shows 6 (no absolute continuity) | the staircase collects 0.6000; 0.4000 of $Q$ is left on face 6, where M is 0; face 6 hits the level cap 3.0 | no factor turns size 0 into 0.4 |
-| Counting measure on [0, 1] as the reference (not sigma-finite) | the only candidate is 0, integral 0 against length 1; grid densities 0.1, 0.01, 0.001, 0.000001 | $\varepsilon\,c(\Omega)$ is infinite, and no countable finite pieces exist |
-| Density taken the wrong way round, $dP/dQ$ | 1.6667 on faces 1 to 4, 0.8333, 0.4167; its integral against $P$ is 1.3194, not 1 | $dP/dQ$ reweights $Q$ into $P$, not $P$ into $Q$ |
-| Treating the density as unique at every point | against $M$, face-6 values 0 and 7 agree on 64 of 64 events | on a null set any value works |
+| Reference die $`M`$ never shows 6 (no absolute continuity) | the staircase collects 0.6000; 0.4000 of $`Q`$ is left on face 6, where M is 0; face 6 hits the level cap 3.0 | no factor turns size 0 into 0.4 |
+| Counting measure on [0, 1] as the reference (not sigma-finite) | the only candidate is 0, integral 0 against length 1; grid densities 0.1, 0.01, 0.001, 0.000001 | $`\varepsilon\,c(\Omega)`$ is infinite, and no countable finite pieces exist |
+| Density taken the wrong way round, $`dP/dQ`$ | 1.6667 on faces 1 to 4, 0.8333, 0.4167; its integral against $`P`$ is 1.3194, not 1 | $`dP/dQ`$ reweights $`Q`$ into $`P`$, not $`P`$ into $`Q`$ |
+| Treating the density as unique at every point | against $`M`$, face-6 values 0 and 7 agree on 64 of 64 events | on a null set any value works |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads lead to the die's density: division face by face; the Hahn staircase, each positive set found by searching all 64 events; and the proof's recipe, checked after every round never to overshoot. All three must agree exactly and reproduce $Q$ on all 64 events. The L2 route through $h = dQ/d(P + Q)$ is not a fourth road, since $h/(1 - h)$ is $Q/P$ by algebra; the code checks that it recovers the ratio. The bus waits use a golden-section search (a shrinking-bracket search for a maximum) for each positive set and Simpson's rule for integrals. The failures are printed beside the working case. Python keeps the die in exact fractions; Rust uses a small fraction type written by hand. The code checks finite cases and grids; that every sigma-finite pair has a density is the proof's work.
+Three independent roads lead to the die's density: division face by face; the Hahn staircase, each positive set found by searching all 64 events; and the proof's recipe, checked after every round never to overshoot. All three must agree exactly and reproduce $`Q`$ on all 64 events. The L2 route through $`h = dQ/d(P + Q)`$ is not a fourth road, since $`h/(1 - h)`$ is $`Q/P`$ by algebra; the code checks that it recovers the ratio. The bus waits use a golden-section search (a shrinking-bracket search for a maximum) for each positive set and Simpson's rule for integrals. The failures are printed beside the working case. Python keeps the die in exact fractions; Rust uses a small fraction type written by hand. The code checks finite cases and grids; that every sigma-finite pair has a density is the proof's work.
 
 ### Python
 
@@ -600,7 +604,7 @@ The two outputs match line for line.
 
 Lean proves the theorem for every pair of sigma-finite measures, the counting-measure failure case, and the die arithmetic.
 
-- Take sigma-finite measures $\mu$ and $\nu$ on one sigma-algebra. Then $\nu \ll \mu$ exactly when ν has a measurable density against μ, never negative and never infinite.
+- Take sigma-finite measures $`\mu`$ and $`\nu`$ on one sigma-algebra. Then $`\nu \ll \mu`$ exactly when ν has a measurable density against μ, never negative and never infinite.
 - Take two such densities of ν against μ. Then they agree except on a μ-null set.
 - Counting measure on [0, 1] is not sigma-finite. Length on [0, 1] is absolutely continuous with respect to it.
 - Yet length has no density against counting measure, not even one allowed the value infinity.
@@ -754,10 +758,10 @@ example : ∀ A : Finset (Fin 6), ∑ i ∈ A, dieDensity i * (1/6) = ∑ i ∈ 
 > [!warning]
 > **Believing the density is a ratio of point probabilities.** On a die it is. For the bus waits every single wait has probability 0 under both timetables, and 0/0 says nothing. The theorem produces the factor 2e^(-x) from null sets alone.
 >
-> - **Reading absolute continuity backwards.** $\nu \ll \mu$ means ν is zero wherever μ is. $Q$ against the five-face die $M$ fails; 0.4 of $Q$ is stranded on face 6.
-> - **Taking the density the wrong way round.** $dP/dQ$ integrated against $P$ gives 1.3194, not 1.
+> - **Reading absolute continuity backwards.** $`\nu \ll \mu`$ means ν is zero wherever μ is. $`Q`$ against the five-face die $`M`$ fails; 0.4 of $`Q`$ is stranded on face 6.
+> - **Taking the density the wrong way round.** $`dP/dQ`$ integrated against $`P`$ gives 1.3194, not 1.
 > - **Forgetting sigma-finiteness.** Counting measure on [0, 1] passes the null-set test against length, yet no density exists.
-> - **Speaking of "the" density at a point.** Against $M$, face 6's factor can be 0 or 7.
+> - **Speaking of "the" density at a point.** Against $`M`$, face 6's factor can be 0 or 7.
 
 ---
 

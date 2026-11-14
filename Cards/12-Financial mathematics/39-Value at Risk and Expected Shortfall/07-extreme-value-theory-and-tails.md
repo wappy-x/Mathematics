@@ -41,51 +41,57 @@ Top line (orange): the true law. Middle line (green): the EVT estimate from one 
 
 ## The formula
 
-Two words first. A **threshold**, written $u$, is a fixed loss level chosen by the analyst. An **exceedance** is a day whose loss $L$ passes it, and its **excess** is how far past: $y = L - u$.
+Two words first. A **threshold**, written $`u`$, is a fixed loss level chosen by the analyst. An **exceedance** is a day whose loss $`L`$ passes it, and its **excess** is how far past: $`y = L - u`$.
 
 The generalised Pareto law says how far past the threshold the excess runs:
 
-$$P(L - u > y \mid L > u) \approx \left(1 + \frac{\xi\, y}{\beta}\right)^{-1/\xi}$$
+```math
+P(L - u > y \mid L > u) \approx \left(1 + \frac{\xi\, y}{\beta}\right)^{-1/\xi}
+```
 
-Two numbers fix the law. The **shape** $\xi$ (the Greek letter xi) says how slowly the tail thins. The **scale** $\beta$ (beta), in dollars, sets the typical size of an excess.
+Two numbers fix the law. The **shape** $`\xi`$ (the Greek letter xi) says how slowly the tail thins. The **scale** $`\beta`$ (beta), in dollars, sets the typical size of an excess.
 
-**Read it aloud:** among the days that cross the threshold, the share that cross it by more than $y$ dollars falls off as one plus shape times excess over scale, raised to minus one over the shape.
+**Read it aloud:** among the days that cross the threshold, the share that cross it by more than $`y`$ dollars falls off as one plus shape times excess over scale, raised to minus one over the shape.
 
-Multiply by the chance of crossing at all, $k/n$, set the result equal to the one-day-in-a-thousand chance $1 - p$, and solve for the loss:
+Multiply by the chance of crossing at all, $`k/n`$, set the result equal to the one-day-in-a-thousand chance $`1 - p`$, and solve for the loss:
 
-$$\mathrm{VaR}_p = u + \frac{\beta}{\xi}\left[\left(\frac{1-p}{k/n}\right)^{-\xi} - 1\right]$$
+```math
+\mathrm{VaR}_p = u + \frac{\beta}{\xi}\left[\left(\frac{1-p}{k/n}\right)^{-\xi} - 1\right]
+```
 
 **Read it aloud:** the value at risk is the threshold, plus the scale over the shape times the amount by which a power of the rarity ratio exceeds one.
 
-The expected shortfall, the average loss on the days worse than VaR ([Expected shortfall](05-expected-shortfall-and-coherence.md)), follows for $\xi$ below 1:
+The expected shortfall, the average loss on the days worse than VaR ([Expected shortfall](05-expected-shortfall-and-coherence.md)), follows for $`\xi`$ below 1:
 
-$$\mathrm{ES}_p = \frac{\mathrm{VaR}_p + \beta - \xi u}{1 - \xi}$$
+```math
+\mathrm{ES}_p = \frac{\mathrm{VaR}_p + \beta - \xi u}{1 - \xi}
+```
 
 **Read it aloud:** expected shortfall is VaR plus scale minus shape times threshold, all divided by one minus the shape.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$ | one day's loss in dollars; a gain is a negative loss | largest in the decade $954,722.80 | — |
-| $n$ | days of history | 2,520 | the historical answer steadies; the formula is unchanged |
-| $u$ | the threshold: a high loss level fixed in advance | $193,128.79, the 127th-worst day | fewer, more extreme points: less bias, more noise |
-| $k$ | days whose loss passed $u$ | 126, so $k/n$ is 0.05 | the threshold drops: more points, more bias |
-| $y$ | the excess: loss minus threshold, on an exceedance day | from 0 up to the worst loss minus $u$ | — |
-| $\xi$ | shape: how slowly the tail thins; above 0 means a power law | 0.162034 fitted, 0.25 true | VaR and ES climb steeply |
-| $\beta$ | scale: the typical size of an excess, in dollars | $76,893.74 | VaR and ES rise in step |
-| $p$ | confidence level | 0.999 | VaR rises, faster the larger $\xi$ |
-| $\mathrm{VaR}_p$ | the loss passed on a share $1-p$ of days | $613,066.11 by EVT | — |
-| $\mathrm{ES}_p$ | the average loss on the days past VaR | $786,029.95 by EVT | — |
-| $\alpha$ | tail index: the power in a tail that falls like one over loss to the $\alpha$ | 4, so $\xi = 1/\alpha$ = 0.25 | thinner tail, smaller $\xi$ |
-| $\nu$ | degrees of freedom of the Student t law behind the data | 4 | thinner tails; the t law nears the normal |
+| $`L`$ | one day's loss in dollars; a gain is a negative loss | largest in the decade $954,722.80 | — |
+| $`n`$ | days of history | 2,520 | the historical answer steadies; the formula is unchanged |
+| $`u`$ | the threshold: a high loss level fixed in advance | $193,128.79, the 127th-worst day | fewer, more extreme points: less bias, more noise |
+| $`k`$ | days whose loss passed $`u`$ | 126, so $`k/n`$ is 0.05 | the threshold drops: more points, more bias |
+| $`y`$ | the excess: loss minus threshold, on an exceedance day | from 0 up to the worst loss minus $`u`$ | — |
+| $`\xi`$ | shape: how slowly the tail thins; above 0 means a power law | 0.162034 fitted, 0.25 true | VaR and ES climb steeply |
+| $`\beta`$ | scale: the typical size of an excess, in dollars | $76,893.74 | VaR and ES rise in step |
+| $`p`$ | confidence level | 0.999 | VaR rises, faster the larger $`\xi`$ |
+| $`\mathrm{VaR}_p`$ | the loss passed on a share $`1-p`$ of days | $613,066.11 by EVT | — |
+| $`\mathrm{ES}_p`$ | the average loss on the days past VaR | $786,029.95 by EVT | — |
+| $`\alpha`$ | tail index: the power in a tail that falls like one over loss to the $`\alpha`$ | 4, so $`\xi = 1/\alpha`$ = 0.25 | thinner tail, smaller $`\xi`$ |
+| $`\nu`$ | degrees of freedom of the Student t law behind the data | 4 | thinner tails; the t law nears the normal |
 
-The ratio $(1-p)/(k/n)$ is the **rarity ratio**: 0.001 over 0.05, which is 0.02. The one-in-a-thousand day is a one-in-fifty day among the exceedances. The formula only has to extrapolate from one in fifty, not from one in a thousand.
+The ratio $`(1-p)/(k/n)`$ is the **rarity ratio**: 0.001 over 0.05, which is 0.02. The one-in-a-thousand day is a one-in-fifty day among the exceedances. The formula only has to extrapolate from one in fifty, not from one in a thousand.
 
 ### When it holds
 
 - **Losses from day to day are independent and alike.** Real markets cluster: calm months, then violent ones. Fit to raw returns and the answer is an average over both regimes. The standard repair (McNeil and Frey 2000) fits the day-to-day volatility first and applies EVT to what is left.
 - **The tail thins regularly.** The theorem needs the tail to look like a power law, an exponential, or a hard cap, from some point on. A book with a cliff in its payoff, such as a short digital option, breaks this.
 - **The threshold is high enough, and not too high.** Too low and the fit includes days from the ordinary body of the law: with 252 exceedances the shape falls to 0.108961. Too high and the fit rests on a handful of days.
-- **$\xi$ below 1 for expected shortfall, and $1-p$ below $k/n$ for the VaR formula.** At $\xi$ of 1 or more the average loss past VaR is infinite. At $1-p$ above $k/n$ the answer sits below the threshold, where the ordinary historical quantile applies.
+- **$`\xi`$ below 1 for expected shortfall, and $`1-p`$ below $`k/n`$ for the VaR formula.** At $`\xi`$ of 1 or more the average loss past VaR is infinite. At $`1-p`$ above $`k/n`$ the answer sits below the threshold, where the ordinary historical quantile applies.
 
 ---
 
@@ -93,84 +99,90 @@ The ratio $(1-p)/(k/n)$ is the **rarity ratio**: 0.001 over 0.05, which is 0.02.
 
 ### Step 0: past a high line, only the rate of thinning matters
 
-A tail is the part of a law far from the middle. How often mild losses happen, whether the body is skewed, whether there are two humps: none of it matters once the loss is past a high enough line. What remains is one fact: how fast the chance of a bigger loss falls away. That one fact is one number, the shape $\xi$, plus a scale that says where the tail sits.
+A tail is the part of a law far from the middle. How often mild losses happen, whether the body is skewed, whether there are two humps: none of it matters once the loss is past a high enough line. What remains is one fact: how fast the chance of a bigger loss falls away. That one fact is one number, the shape $`\xi`$, plus a scale that says where the tail sits.
 
 ### Step 1: an exact power law gives a generalised Pareto exactly
 
-Take a tail that is a pure power law: the chance of a loss above $x$ is $C x^{-\alpha}$, for some constant $C > 0$ and every $x$ above some floor. Divide the chance of passing $u + y$ by the chance of passing $u$:
+Take a tail that is a pure power law: the chance of a loss above $`x`$ is $`C x^{-\alpha}`$, for some constant $`C > 0`$ and every $`x`$ above some floor. Divide the chance of passing $`u + y`$ by the chance of passing $`u`$:
 
-$$P(L > u + y \mid L > u) = \frac{C (u+y)^{-\alpha}}{C u^{-\alpha}} = \left(1 + \frac{y}{u}\right)^{-\alpha}$$
+```math
+P(L > u + y \mid L > u) = \frac{C (u+y)^{-\alpha}}{C u^{-\alpha}} = \left(1 + \frac{y}{u}\right)^{-\alpha}
+```
 
-The constant cancels. Write $\xi = 1/\alpha$ and $\beta = \xi u$. Then $y/u = \xi y / \beta$ and the power $-\alpha$ is $-1/\xi$. The result is the generalised Pareto law with shape $1/\alpha$ and scale $u/\alpha$. The scale grows with the threshold: the further out, the bigger the typical excess. That is what "heavy tail" means in numbers ([Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
+The constant cancels. Write $`\xi = 1/\alpha`$ and $`\beta = \xi u`$. Then $`y/u = \xi y / \beta`$ and the power $`-\alpha`$ is $`-1/\xi`$. The result is the generalised Pareto law with shape $`1/\alpha`$ and scale $`u/\alpha`$. The scale grows with the threshold: the further out, the bigger the typical excess. That is what "heavy tail" means in numbers ([Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
 
 ### Step 2: a tail that is a power law only roughly gives it in the limit
 
-Real tails are not pure power laws. The Student t law with $\nu$ = 4 degrees of freedom has a tail that falls like one over loss to the fourth only for large losses.
+Real tails are not pure power laws. The Student t law with $`\nu`$ = 4 degrees of freedom has a tail that falls like one over loss to the fourth only for large losses.
 
-Write such a tail as $x^{-\alpha}$ times a correction factor that varies slowly: a factor whose value at twice, or at any fixed multiple of, a large loss is almost its value at that loss. Divide as in Step 1. The power part gives the same generalised Pareto. The correction factor appears as a ratio of its values at two nearby large losses, and that ratio tends to 1 as the threshold rises.
+Write such a tail as $`x^{-\alpha}`$ times a correction factor that varies slowly: a factor whose value at twice, or at any fixed multiple of, a large loss is almost its value at that loss. Divide as in Step 1. The power part gives the same generalised Pareto. The correction factor appears as a ratio of its values at two nearby large losses, and that ratio tends to 1 as the threshold rises.
 
-So the excess law tends to the generalised Pareto, with shape $1/\alpha$. For the data here that is $1/\nu$ = 0.25.
+So the excess law tends to the generalised Pareto, with shape $`1/\alpha`$. For the data here that is $`1/\nu`$ = 0.25.
 
 <details>
 <summary>Detailed proof: slowly varying corrections vanish</summary>
 
-Suppose $P(L > x) = x^{-\alpha} \ell(x)$ where the factor $\ell(x)$ is **slowly varying**: for every fixed $t > 0$, $\ell(tx)/\ell(x) \to 1$ as $x \to \infty$. Measure excesses in units of the threshold: fix $s \ge 0$ and put $y = s u$. Then
+Suppose $`P(L > x) = x^{-\alpha} \ell(x)`$ where the factor $`\ell(x)`$ is **slowly varying**: for every fixed $`t > 0`$, $`\ell(tx)/\ell(x) \to 1`$ as $`x \to \infty`$. Measure excesses in units of the threshold: fix $`s \ge 0`$ and put $`y = s u`$. Then
 
-$$P(L - u > s u \mid L > u) = \frac{(u(1+s))^{-\alpha}\, \ell(u(1+s))}{u^{-\alpha}\, \ell(u)} = (1+s)^{-\alpha} \cdot \frac{\ell((1+s)u)}{\ell(u)}$$
+$`\displaystyle P(L - u > s u \mid L > u) = \frac{(u(1+s))^{-\alpha}\, \ell(u(1+s))}{u^{-\alpha}\, \ell(u)} = (1+s)^{-\alpha} \cdot \frac{\ell((1+s)u)}{\ell(u)}`$
 
-The last fraction tends to 1 as $u \to \infty$, by the definition with $t = 1 + s$. So for every $s \ge 0$ the scaled excess $(L-u)/u$ has survival chance (the chance of passing $s$) tending to $(1+s)^{-\alpha}$. That limit is continuous, so the laws converge. With $\xi = 1/\alpha$ and $\beta = \xi u$ the limit is the generalised Pareto of Step 1. Every Student t, every Pareto, and the tails usually measured in daily stock returns are of this kind.
+The last fraction tends to 1 as $`u \to \infty`$, by the definition with $`t = 1 + s`$. So for every $`s \ge 0`$ the scaled excess $`(L-u)/u`$ has survival chance (the chance of passing $`s`$) tending to $`(1+s)^{-\alpha}`$. That limit is continuous, so the laws converge. With $`\xi = 1/\alpha`$ and $`\beta = \xi u`$ the limit is the generalised Pareto of Step 1. Every Student t, every Pareto, and the tails usually measured in daily stock returns are of this kind.
 
 </details>
 
 ### Step 3: the generalised Pareto is the only possible limit
 
-The theorem of Balkema and de Haan (1974) and Pickands (1975) says more. For any law, if the excesses over a rising threshold, rescaled by some $\beta$ that depends on the threshold, settle to a limit that is not stuck at one point, that limit is a generalised Pareto. There are three cases.
+The theorem of Balkema and de Haan (1974) and Pickands (1975) says more. For any law, if the excesses over a rising threshold, rescaled by some $`\beta`$ that depends on the threshold, settle to a limit that is not stuck at one point, that limit is a generalised Pareto. There are three cases.
 
-- **$\xi$ above 0: power tails.** Steps 1 and 2. Student t, Pareto, stock returns.
-- **$\xi$ equal to 0: exponential tails.** The formula becomes $e^{-y/\beta}$. The normal law is in this class, though its excesses reach the limit slowly.
-- **$\xi$ below 0: a hard ceiling.** The excess cannot pass $-\beta/\xi$. A loss capped by the book's size is of this kind.
+- **$`\xi`$ above 0: power tails.** Steps 1 and 2. Student t, Pareto, stock returns.
+- **$`\xi`$ equal to 0: exponential tails.** The formula becomes $`e^{-y/\beta}`$. The normal law is in this class, though its excesses reach the limit slowly.
+- **$`\xi`$ below 0: a hard ceiling.** The excess cannot pass $`-\beta/\xi`$. A loss capped by the book's size is of this kind.
 
-The card uses the theorem and proves only the power-tail case above. The same three shapes appear for the largest of $n$ losses, where the matching result is the Fisher–Tippett theorem ([Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)).
+The card uses the theorem and proves only the power-tail case above. The same three shapes appear for the largest of $`n`$ losses, where the matching result is the Fisher–Tippett theorem ([Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)).
 
 ### Step 4: stitch the counted part to the fitted part
 
-The chance of a loss above some $x$ past the threshold splits in two:
+The chance of a loss above some $`x`$ past the threshold splits in two:
 
-$$P(L > x) = P(L > u) \cdot P(L - u > x - u \mid L > u) \approx \frac{k}{n}\left(1 + \frac{\xi (x - u)}{\beta}\right)^{-1/\xi}$$
+```math
+P(L > x) = P(L > u) \cdot P(L - u > x - u \mid L > u) \approx \frac{k}{n}\left(1 + \frac{\xi (x - u)}{\beta}\right)^{-1/\xi}
+```
 
 The first factor is counted from the data: 126 of 2,520 days, 0.05. A count of 126 is steady. The second factor is the fitted law. Neither piece needs a day beyond the data.
 
 ### Step 5: solve for the loss, once the answer is known to exist
 
-Set the right side of Step 4 equal to $1 - p$ and solve for $x$.
+Set the right side of Step 4 equal to $`1 - p`$ and solve for $`x`$.
 
-- **Existence and uniqueness.** At $x = u$ the right side is $k/n$. As $x$ grows it falls without a break, steadily, to 0: as $x$ runs to infinity when $\xi \ge 0$, at the ceiling $u - \beta/\xi$ when $\xi < 0$. A strictly falling curve crosses each level once. So one answer exists exactly when $1 - p$ is between 0 and $k/n$.
-- **The solve.** Divide by $k/n$, raise both sides to the power $-\xi$, subtract 1, multiply by $\beta/\xi$, add $u$. That is the VaR formula.
-- **Boundary cases.** If $1 - p$ is at least $k/n$, the answer lies at or below the threshold and the historical quantile is the right tool. As $\xi$ tends to 0 the formula tends to $u + \beta \ln\big((k/n)/(1-p)\big)$, the exponential-tail answer. For $\xi < 0$ the answer always lies below the ceiling.
+- **Existence and uniqueness.** At $`x = u`$ the right side is $`k/n`$. As $`x`$ grows it falls without a break, steadily, to 0: as $`x`$ runs to infinity when $`\xi \ge 0`$, at the ceiling $`u - \beta/\xi`$ when $`\xi < 0`$. A strictly falling curve crosses each level once. So one answer exists exactly when $`1 - p`$ is between 0 and $`k/n`$.
+- **The solve.** Divide by $`k/n`$, raise both sides to the power $`-\xi`$, subtract 1, multiply by $`\beta/\xi`$, add $`u`$. That is the VaR formula.
+- **Boundary cases.** If $`1 - p`$ is at least $`k/n`$, the answer lies at or below the threshold and the historical quantile is the right tool. As $`\xi`$ tends to 0 the formula tends to $`u + \beta \ln\big((k/n)/(1-p)\big)`$, the exponential-tail answer. For $`\xi < 0`$ the answer always lies below the ceiling.
 
 ### Step 6: expected shortfall from the mean of the excess
 
-A generalised Pareto has a property called **threshold stability**: the excess over any higher level $v > u$ is again a generalised Pareto, with the same shape and a scale that grows to $\beta + \xi (v - u)$. Check it by dividing the survival chance (the chance of passing a level) at $v + w$ by the one at $v > u$; the ratio has the same form.
+A generalised Pareto has a property called **threshold stability**: the excess over any higher level $`v > u`$ is again a generalised Pareto, with the same shape and a scale that grows to $`\beta + \xi (v - u)`$. Check it by dividing the survival chance (the chance of passing a level) at $`v + w`$ by the one at $`v > u`$; the ratio has the same form.
 
-The mean of a generalised Pareto with scale $b > 0$ is $b/(1 - \xi)$ when $\xi$ is below 1. So the average loss past VaR is VaR plus the mean excess past VaR:
+The mean of a generalised Pareto with scale $`b > 0`$ is $`b/(1 - \xi)`$ when $`\xi`$ is below 1. So the average loss past VaR is VaR plus the mean excess past VaR:
 
-$$\mathrm{ES}_p = \mathrm{VaR}_p + \frac{\beta + \xi(\mathrm{VaR}_p - u)}{1 - \xi} = \frac{\mathrm{VaR}_p + \beta - \xi u}{1 - \xi}$$
+```math
+\mathrm{ES}_p = \mathrm{VaR}_p + \frac{\beta + \xi(\mathrm{VaR}_p - u)}{1 - \xi} = \frac{\mathrm{VaR}_p + \beta - \xi u}{1 - \xi}
+```
 
-The mean excess grows in a straight line with the level, with slope $\xi/(1-\xi)$. Plotting the average excess against the threshold, and looking for where it turns straight, is the usual way to pick $u$.
+The mean excess grows in a straight line with the level, with slope $`\xi/(1-\xi)`$. Plotting the average excess against the threshold, and looking for where it turns straight, is the usual way to pick $`u`$.
 
 ### Step 7: fitting the shape and scale
 
 Two fits, each a separate road.
 
-- **Maximum likelihood** chooses the $\xi$ and $\beta$ under which the 126 observed excesses were most probable. There is no closed form, so the code searches.
-- **Probability-weighted moments** (Hosking and Wallis 1987) match two averages: the mean excess, and the mean excess weighted by the chance of being exceeded. Both have closed forms in $\xi$ and $\beta$, so solving is algebra.
+- **Maximum likelihood** chooses the $`\xi`$ and $`\beta`$ under which the 126 observed excesses were most probable. There is no closed form, so the code searches.
+- **Probability-weighted moments** (Hosking and Wallis 1987) match two averages: the mean excess, and the mean excess weighted by the chance of being exceeded. Both have closed forms in $`\xi`$ and $`\beta`$, so solving is algebra.
 
 <details>
 <summary>The algebra behind the two fits</summary>
 
-**Likelihood.** The density of an excess is $\frac{1}{\beta}(1 + \xi y/\beta)^{-1/\xi - 1}$. The log-likelihood of $k$ excesses is $-k \ln \beta - (1 + 1/\xi)\sum \ln(1 + \xi y/\beta)$. Write the ratio $\xi/\beta$ as a single number. For a fixed ratio, setting the derivative in $\xi$ to zero gives $\xi$ as the average of $\ln(1 + (\xi/\beta)\, y)$. Substituting back leaves a function of the ratio alone, which a golden-section search (shrink the bracket by the golden ratio each round) maximises. The code confirms the answer by a separate route: both slopes of the full log-likelihood, taken by finite differences, print as zero.
+**Likelihood.** The density of an excess is $`\frac{1}{\beta}(1 + \xi y/\beta)^{-1/\xi - 1}`$. The log-likelihood of $`k`$ excesses is $`-k \ln \beta - (1 + 1/\xi)\sum \ln(1 + \xi y/\beta)`$. Write the ratio $`\xi/\beta`$ as a single number. For a fixed ratio, setting the derivative in $`\xi`$ to zero gives $`\xi`$ as the average of $`\ln(1 + (\xi/\beta)\, y)`$. Substituting back leaves a function of the ratio alone, which a golden-section search (shrink the bracket by the golden ratio each round) maximises. The code confirms the answer by a separate route: both slopes of the full log-likelihood, taken by finite differences, print as zero.
 
-**Moments.** For a generalised Pareto the average excess is $a_0 = \beta/(1-\xi)$, and the average of each excess times the share of excesses above it is $a_1 = \beta/(2(2-\xi))$. Then $a_0/(a_0 - 2a_1) = 2 - \xi$, so $\xi = 2 - a_0/(a_0 - 2a_1)$ and $\beta = 2 a_0 a_1/(a_0 - 2a_1)$.
+**Moments.** For a generalised Pareto the average excess is $`a_0 = \beta/(1-\xi)`$, and the average of each excess times the share of excesses above it is $`a_1 = \beta/(2(2-\xi))`$. Then $`a_0/(a_0 - 2a_1) = 2 - \xi`$, so $`\xi = 2 - a_0/(a_0 - 2a_1)`$ and $`\beta = 2 a_0 a_1/(a_0 - 2a_1)`$.
 
 </details>
 
@@ -184,7 +196,7 @@ The decade's 2,520 losses, sorted. The threshold is the 127th-worst, $193,128.79
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| crossing rate | $k/n$ = 126 / 2,520 | 0.05 |
+| crossing rate | $`k/n`$ = 126 / 2,520 | 0.05 |
 | rarity ratio | 0.001 / 0.05 | 0.02 |
 | power of it | 0.02 to the power −0.162034 | 1.884911 |
 | scale over shape | 76,893.74 / 0.162034 | 474,553.27 |
@@ -211,7 +223,7 @@ In this decade the third-worst day happens to land near the truth. Across 400 de
 | --- | --- | --- |
 | Normal law with the decade's own spread | $382,390.74 | a bell curve's tail thins faster than any power; 15 days of the decade passed it, against 2.52 expected |
 | Exponential tail: shape forced to 0 | $552,348.09 | the right family, wrong member; it drops the power law that Step 2 proved |
-| 0.001 used as the chance inside the tail | $1,171,980.99 | the crossing rate $k/n$ left out; the rarity ratio must be 0.02, not 0.001 |
+| 0.001 used as the chance inside the tail | $1,171,980.99 | the crossing rate $`k/n`$ left out; the rarity ratio must be 0.02, not 0.001 |
 | 99 percent historical VaR scaled by 3.09 / 2.33 | $453,190.17 | the normal ratio of the two quantiles imposed on a tail that is not normal |
 
 ---
@@ -649,15 +661,15 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. Both generators produce the same stream, and both languages call the same system maths library.
 
-Four deliberate breaks were tried: flipping the sign of the power in the VaR formula, inflating the fitted $\beta$, flipping a sign in the ES formula, and nudging the closed-form t quantile. Each made an assert fail.
+Four deliberate breaks were tried: flipping the sign of the power in the VaR formula, inflating the fitted $`\beta`$, flipping a sign in the ES formula, and nudging the closed-form t quantile. Each made an assert fail.
 
 ### Lean
 
 Lean proves Steps 1, 2 and 5 of Why it works, and the card's whole-number arithmetic.
 
-- **Step 1.** Take $C > 0$, $\alpha > 0$, and a loss whose chance of passing $x$ is $C x^{-\alpha}$ above a floor. Then for any threshold $u > 0$ above the floor, the excess is generalised Pareto, shape $1/\alpha$, scale $u/\alpha$.
-- **Step 2.** Take $\alpha > 0$, $\ell$ slowly varying, and a loss whose chance of passing $x$ is $x^{-\alpha} \ell(x)$ above a floor. Then for every $s \ge 0$, the share of crossings past $u + s u$ tends to $(1+s)^{-\alpha}$ as $u$ rises.
-- **Step 5.** Take a fitted scale $\beta > 0$, a shape $\xi$ other than 0, and $1-p$ between 0 and $k/n$. Then the VaR formula lands past $u$, and it is the only loss past $u$ where Step 4's tail equals $1-p$.
+- **Step 1.** Take $`C > 0`$, $`\alpha > 0`$, and a loss whose chance of passing $`x`$ is $`C x^{-\alpha}`$ above a floor. Then for any threshold $`u > 0`$ above the floor, the excess is generalised Pareto, shape $`1/\alpha`$, scale $`u/\alpha`$.
+- **Step 2.** Take $`\alpha > 0`$, $`\ell`$ slowly varying, and a loss whose chance of passing $`x`$ is $`x^{-\alpha} \ell(x)`$ above a floor. Then for every $`s \ge 0`$, the share of crossings past $`u + s u`$ tends to $`(1+s)^{-\alpha}`$ as $`u`$ rises.
+- **Step 5.** Take a fitted scale $`\beta > 0`$, a shape $`\xi`$ other than 0, and $`1-p`$ between 0 and $`k/n`$. Then the VaR formula lands past $`u`$, and it is the only loss past $`u`$ where Step 4's tail equals $`1-p`$.
 - The card's exact arithmetic checks out: crossing rate 0.05, rarity ratio 0.02, 2.52 expected days past VaR, true shape 0.25.
 - So do the ranks: the 99.9 percent historical VaR is the third-worst day, and the threshold is the 127th-worst.
 
@@ -824,7 +836,7 @@ example : 2520 - 126 - 1 = 2393 ∧ 2520 - 2393 = 127 := by decide
 > [!warning]
 > **EVT does not create information about days that never happened.** It replaces one assumption, that the next decade's worst days will look like this decade's, with another: that the tail keeps the same shape past the data. With 126 exceedances the fitted shape here is 0.162034 against a true 0.25, and the 99.9 percent VaR comes out at $613,066.11 against a true $639,037.86; at 99.99 percent it is $1,017,577.20 against $1,161,131.76. The method narrows the error, from $112,769.79 to $82,769.01 across 400 decades. It does not remove it, and the error grows the further past the data it reaches.
 >
-> - **Forgetting the crossing rate.** The chance $1-p$ is a chance across all days. Used as a chance among the exceedances, it gives $1,171,980.99.
+> - **Forgetting the crossing rate.** The chance $`1-p`$ is a chance across all days. Used as a chance among the exceedances, it gives $1,171,980.99.
 > - **Fitting the whole distribution instead of the tail.** A t law fitted to all 2,520 days is steered by the ordinary days. EVT fits only where the question lives.
 > - **Ignoring volatility clustering.** Losses on raw returns mix calm and stormy months; the fitted tail answers for neither. Filter the volatility first.
 > - **Reading a negative shape as safety.** A negative fitted shape from a short sample usually means too few extreme days, not a real ceiling on losses.

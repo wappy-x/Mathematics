@@ -12,15 +12,15 @@ The usual way is to bump. Reprice at 5.01% and subtract: the price moves by −0
 
 The complex step does something else. Price the bond at the complex yield 0.05 + 1e-20 i, where i is the square root of −1, using the same pricing code. The imaginary part of the answer, divided by 1e-20, is the slope. Nothing is subtracted, so the step can be as tiny as 1e-20 or even 1e-300. The result is −1537.245102688 per unit of yield, relative error 1.33e-15: about a dozen roundings' worth, built up inside the pricing loop, none of it from the step.
 
-A dual number is the same trick with the step taken to its limit. It is a pair $a + b\varepsilon$, where $\varepsilon$ is a new symbol whose square is exactly zero. Price at 0.05 + ε and the code returns 100.000000000000 − 1537.2451026883ε: the price and its slope together, with no step at all.
+A dual number is the same trick with the step taken to its limit. It is a pair $`a + b\varepsilon`$, where $`\varepsilon`$ is a new symbol whose square is exactly zero. Price at 0.05 + ε and the code returns 100.000000000000 − 1537.2451026883ε: the price and its slope together, with no step at all.
 
-**A complex step reads a first derivative off the imaginary part of one complex evaluation, with error $h^2 P'''/6$ and no cancellation, so a tiny step gives full accuracy; a dual number, with $\varepsilon^2 = 0$, removes even that $h^2$ term and carries the exact slope through the same code.**
+**A complex step reads a first derivative off the imaginary part of one complex evaluation, with error $`h^2 P'''/6`$ and no cancellation, so a tiny step gives full accuracy; a dual number, with $`\varepsilon^2 = 0`$, removes even that $`h^2`$ term and carries the exact slope through the same code.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works: the complex step's error bound for a function given by a power series with real coefficients. The dual-number result is an algebraic identity, exact up to rounding.
 
 ### The picture: two ways to the bond's slope, error against step
 
-The vertical axis is the base-10 logarithm of the relative error: −10 means the answer is right to one part in 10 billion. The step $h$ is in units of yield, so 1e-4 is one basis point.
+The vertical axis is the base-10 logarithm of the relative error: −10 means the answer is right to one part in 10 billion. The step $`h`$ is in units of yield, so 1e-4 is one basis point.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -32,40 +32,44 @@ xychart-beta
     line [0.20, -1.99, -4.00, -6.00, -8.00, -9.97, -9.10, -8.28, -7.76, -7.15, -6.07, -4.56, -3.99, -2.59, -1.70, -0.41]
 ```
 
-Orange: the complex step. It falls two decades per decade of step, then sits flat near −15, the floor set by rounding inside the pricing loop. Green: the central difference. It falls at the same rate until a step of 1e-6, then climbs as cancellation takes over. The two lines agree above 1e-6 because both errors are $h^2 P'''/6$ in size, with opposite signs.
+Orange: the complex step. It falls two decades per decade of step, then sits flat near −15, the floor set by rounding inside the pricing loop. Green: the central difference. It falls at the same rate until a step of 1e-6, then climbs as cancellation takes over. The two lines agree above 1e-6 because both errors are $`h^2 P'''/6`$ in size, with opposite signs.
 
 ---
 
 ## The formula
 
-$$P'(y) \;=\; \frac{\operatorname{Im} P(y + ih)}{h} \;+\; \frac{h^2}{6}P'''(y) \;+\; O(h^4) \quad (h \to 0), \qquad P(y + \varepsilon) \;=\; P(y) + P'(y)\,\varepsilon$$
+```math
+P'(y) \;=\; \frac{\mathrm{Im}\, P(y + ih)}{h} \;+\; \frac{h^2}{6}P'''(y) \;+\; O(h^4) \quad (h \to 0), \qquad P(y + \varepsilon) \;=\; P(y) + P'(y)\,\varepsilon
+```
 
 **Read it aloud:** the slope is the imaginary part of the price at a complex yield, divided by the step, plus a small error that shrinks like the step squared; and the price at a dual yield is the price plus the slope times ε, exactly.
 
-Here $O(h^4)$ means "a term no bigger than a constant times $h^4$ as $h$ shrinks to 0". The price of the bond is
+Here $`O(h^4)`$ means "a term no bigger than a constant times $`h^4`$ as $`h`$ shrinks to 0". The price of the bond is
 
-$$P(y) = \sum_{t=1}^{N} C\,v^{t} + F\,v^{N}, \qquad v = \frac{1}{1+y}.$$
+```math
+P(y) = \sum_{t=1}^{N} C\,v^{t} + F\,v^{N}, \qquad v = \frac{1}{1+y}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P(y)$ | the bond's price, in dollars per $100 face, at yield $y$ | 100.000000000000 at 5% | — |
-| $y$ | the yield: the discount rate per year, as a decimal | 0.05 | the price falls |
-| $C$, $F$, $N$ | coupon per year, face value repaid at the end, number of years | $5, $100, 30 | slope grows in size with $N$ |
-| $v$, $t$ | one year's discount factor $1/(1+y)$; the year of a payment | 0.952380952381; 1 to 30 | — |
-| $h$ | the step: a change in yield for a difference, the size of the imaginary part for a complex step | 1e-20 | complex-step error grows like $h^2$ |
-| $i$, $\operatorname{Re}$, $\operatorname{Im}$ | the square root of −1; the real part and imaginary part of a complex number | $\operatorname{Im} P(0.05 + 10^{-20} i)$ = −1.537245103e-17 | — |
-| $P'$, $P''$, $P'''$ | slope, curvature and third derivative of price against yield ($P''''$, $P^{(k)}$: fourth and $k$-th) | −1537.2451026883, 35046.667118, −931746.817574 | — |
-| $\varepsilon$, $a + b\varepsilon$ | the dual unit, a symbol with $\varepsilon^2 = 0$; a dual number, a value $a$ carrying a slope part $b$ (in Step 2, $a + bi$ and $c + di$ are two complex numbers being multiplied) | $P(0.05 + \varepsilon)$ = 100 − 1537.2451026883ε | — |
-| $u$ | the unit roundoff $2^{-53}$: the largest relative error of one rounding in a double | 1.11e-16 | — |
-| DV01 | the dollar value of one basis point: $-P'(y) \times 10^{-4}$ | 0.153724510269 | — |
-| $a_k$, $M$, $\rho$, $z$, $j$ | used in the proof only: the $k$-th power-series coefficient of $P$ about $y$; a bound on $\lvert P \rvert$; the radius of a disc where that bound holds; a complex offset from $y$; a counter over odd powers | $\rho$ < 1.05 here | — |
+| $`P(y)`$ | the bond's price, in dollars per $100 face, at yield $`y`$ | 100.000000000000 at 5% | — |
+| $`y`$ | the yield: the discount rate per year, as a decimal | 0.05 | the price falls |
+| $`C`$, $`F`$, $`N`$ | coupon per year, face value repaid at the end, number of years | $5, $100, 30 | slope grows in size with $`N`$ |
+| $`v`$, $`t`$ | one year's discount factor $`1/(1+y)`$; the year of a payment | 0.952380952381; 1 to 30 | — |
+| $`h`$ | the step: a change in yield for a difference, the size of the imaginary part for a complex step | 1e-20 | complex-step error grows like $`h^2`$ |
+| $`i`$, $`\mathrm{Re}`$, $`\mathrm{Im}`$ | the square root of −1; the real part and imaginary part of a complex number | $`\mathrm{Im}\, P(0.05 + 10^{-20} i)`$ = −1.537245103e-17 | — |
+| $`P'`$, $`P''`$, $`P'''`$ | slope, curvature and third derivative of price against yield ($`P''''`$, $`P^{(k)}`$: fourth and $`k`$-th) | −1537.2451026883, 35046.667118, −931746.817574 | — |
+| $`\varepsilon`$, $`a + b\varepsilon`$ | the dual unit, a symbol with $`\varepsilon^2 = 0`$; a dual number, a value $`a`$ carrying a slope part $`b`$ (in Step 2, $`a + bi`$ and $`c + di`$ are two complex numbers being multiplied) | $`P(0.05 + \varepsilon)`$ = 100 − 1537.2451026883ε | — |
+| $`u`$ | the unit roundoff $`2^{-53}`$: the largest relative error of one rounding in a double | 1.11e-16 | — |
+| DV01 | the dollar value of one basis point: $`-P'(y) \times 10^{-4}`$ | 0.153724510269 | — |
+| $`a_k`$, $`M`$, $`\rho`$, $`z`$, $`j`$ | used in the proof only: the $`k`$-th power-series coefficient of $`P`$ about $`y`$; a bound on $`\lvert P \rvert`$; the radius of a disc where that bound holds; a complex offset from $`y`$; a counter over odd powers | $`\rho`$ < 1.05 here | — |
 
 ### When it holds
 
 - **The code is analytic all the way through.** Every step must be a power series in its input, such as +, ×, ÷, exp or log. A call to abs() on a complex number returns its length and drops the imaginary part: with an abs() guard left in the pricing code, the complex step returns 0.000000000. The dual number, which takes the sign of its real part, still returns −1537.245102688.
-- **The function is real on the real line.** The power-series coefficients must be real, so that the imaginary part holds only odd powers of $h$. Code that already works with complex inputs, such as a transform, needs dual numbers instead.
-- **The step is small but not subnormal.** Below about 1e-308 a double loses precision (a subnormal number). At $h$ = 1e-320 the slope comes out at −1537.354249012, relative error 7.10e-5.
-- **Only the first derivative.** The real part gives $P - h^2P''/2$, so a second derivative needs a subtraction again. At $h$ = 1e-20 that formula returns −4.55e27.
+- **The function is real on the real line.** The power-series coefficients must be real, so that the imaginary part holds only odd powers of $`h`$. Code that already works with complex inputs, such as a transform, needs dual numbers instead.
+- **The step is small but not subnormal.** Below about 1e-308 a double loses precision (a subnormal number). At $`h`$ = 1e-320 the slope comes out at −1537.354249012, relative error 7.10e-5.
+- **Only the first derivative.** The real part gives $`P - h^2P''/2`$, so a second derivative needs a subtraction again. At $`h`$ = 1e-20 that formula returns −4.55e27.
 
 ---
 
@@ -73,74 +77,80 @@ $$P(y) = \sum_{t=1}^{N} C\,v^{t} + F\,v^{N}, \qquad v = \frac{1}{1+y}.$$
 
 ### Step 0: put the step where the answer cannot cancel it
 
-A difference quotient subtracts two prices that agree in almost every digit. Rounding in each price, about $u$ times $100, survives the subtraction and is then divided by a small step. That is cancellation, as [Choosing the step](04-choosing-the-step-truncation-against-rounding.md) shows.
+A difference quotient subtracts two prices that agree in almost every digit. Rounding in each price, about $`u`$ times $100, survives the subtraction and is then divided by a small step. That is cancellation, as [Choosing the step](04-choosing-the-step-truncation-against-rounding.md) shows.
 
 The complex step moves the yield sideways instead, into the imaginary direction. The price's response to that sideways move lands in its own slot, the imaginary part, which starts at exactly 0. No large number is ever subtracted from it.
 
 ### Step 1: the Taylor series, with an imaginary step
 
-A function with a complex derivative ([The complex derivative](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md)) equals its power series out to the nearest singularity, the nearest point where that derivative fails ([Taylor series in the plane](../../07-Complex%20analysis/04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)). The bond's price is one: it is built from $1/(1+y)$ by multiplying and adding, and its only trouble spot is $y = -1$.
+A function with a complex derivative ([The complex derivative](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md)) equals its power series out to the nearest singularity, the nearest point where that derivative fails ([Taylor series in the plane](../../07-Complex%20analysis/04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)). The bond's price is one: it is built from $`1/(1+y)`$ by multiplying and adding, and its only trouble spot is $`y = -1`$.
 
 Expand at a complex yield:
 
-$$P(y + ih) = P(y) + ih\,P'(y) - \frac{h^2}{2}P''(y) - i\frac{h^3}{6}P'''(y) + \frac{h^4}{24}P''''(y) + \dots$$
+```math
+P(y + ih) = P(y) + ih\,P'(y) - \frac{h^2}{2}P''(y) - i\frac{h^3}{6}P'''(y) + \frac{h^4}{24}P''''(y) + \dots
+```
 
-The powers of $i$ cycle: $i^2 = -1$, $i^3 = -i$, $i^4 = 1$. Every derivative of $P$ at a real yield is real. So the odd powers of $h$ land in the imaginary part and the even powers in the real part:
+The powers of $`i`$ cycle: $`i^2 = -1`$, $`i^3 = -i`$, $`i^4 = 1`$. Every derivative of $`P`$ at a real yield is real. So the odd powers of $`h`$ land in the imaginary part and the even powers in the real part:
 
-$$\operatorname{Im} P(y + ih) = hP'(y) - \frac{h^3}{6}P'''(y) + \dots, \qquad \operatorname{Re} P(y + ih) = P(y) - \frac{h^2}{2}P''(y) + \dots$$
+```math
+\mathrm{Im}\, P(y + ih) = hP'(y) - \frac{h^3}{6}P'''(y) + \dots, \qquad \mathrm{Re}\, P(y + ih) = P(y) - \frac{h^2}{2}P''(y) + \dots
+```
 
-Divide the first by $h$. The slope appears with error $-h^2P'''/6$, from one evaluation and no subtraction.
+Divide the first by $`h`$. The slope appears with error $`-h^2P'''/6`$, from one evaluation and no subtraction.
 
 <details>
 <summary>Detailed proof: the error is at most a constant times h², for every h smaller than the radius</summary>
 
-Suppose $P$ has a power series about $y$, $P(y + z) = \sum_k a_k z^k$, valid for $\lvert z\rvert \le \rho$, and $\lvert P\rvert \le M$ on that circle. Each $a_k = P^{(k)}(y)/k!$ is real, since $P$ is real for real yields.
+Suppose $`P`$ has a power series about $`y`$, $`P(y + z) = \sum_k a_k z^k`$, valid for $`\lvert z\rvert \le \rho`$, and $`\lvert P\rvert \le M`$ on that circle. Each $`a_k = P^{(k)}(y)/k!`$ is real, since $`P`$ is real for real yields.
 
-Cauchy's estimate ([Derivatives from the boundary](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)) gives $\lvert a_k\rvert \le M/\rho^k$.
+Cauchy's estimate ([Derivatives from the boundary](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)) gives $`\lvert a_k\rvert \le M/\rho^k`$.
 
-Put $z = ih$ with $0 < h < \rho$. Since $i^{2j+1} = (-1)^j i$, the imaginary part is
+Put $`z = ih`$ with $`0 < h < \rho`$. Since $`i^{2j+1} = (-1)^j i`$, the imaginary part is
 
-$$\operatorname{Im} P(y + ih) = \sum_{j \ge 0} (-1)^j a_{2j+1} h^{2j+1}.$$
+$`\displaystyle \mathrm{Im}\, P(y + ih) = \sum_{j \ge 0} (-1)^j a_{2j+1} h^{2j+1}.`$
 
-The $j = 0$ term is $a_1 h = hP'(y)$. Divide by $h$ and bound the rest:
+The $`j = 0`$ term is $`a_1 h = hP'(y)`$. Divide by $`h`$ and bound the rest:
 
-$$\Big\lvert \frac{\operatorname{Im} P(y+ih)}{h} - P'(y)\Big\rvert \le \sum_{j\ge1} \frac{M}{\rho^{2j+1}} h^{2j} = \frac{M}{\rho}\cdot\frac{(h/\rho)^2}{1-(h/\rho)^2}.$$
+$`\displaystyle \Big\lvert \frac{\mathrm{Im}\, P(y+ih)}{h} - P'(y)\Big\rvert \le \sum_{j\ge1} \frac{M}{\rho^{2j+1}} h^{2j} = \frac{M}{\rho}\cdot\frac{(h/\rho)^2}{1-(h/\rho)^2}.`$
 
-For $h \le \rho/2$ this is at most $\tfrac{4}{3}Mh^2/\rho^3$: order 2, with the leading term $-a_3h^2 = -h^2P'''/6$.
+For $`h \le \rho/2`$ this is at most $`\tfrac{4}{3}Mh^2/\rho^3`$: order 2, with the leading term $`-a_3h^2 = -h^2P'''/6`$.
 
-For the bond, the price has a pole at $y = -1$, so any $\rho$ below 1.05 works. That is why the series still converges at $h$ = 1e-1, though the answer there is 66% off (−524.078489222, relative error −6.59e-1).
+For the bond, the price has a pole at $`y = -1`$, so any $`\rho`$ below 1.05 works. That is why the series still converges at $`h`$ = 1e-1, though the answer there is 66% off (−524.078489222, relative error −6.59e-1).
 
 </details>
 
 ### Step 2: why rounding stays small
 
-Follow the imaginary parts through the pricing loop. Each payment's discount $v^t$ has a negative imaginary part. Each multiplication $(a + bi)(c + di)$ forms its imaginary part as $a\,d + b\,c$, a sum of two negative numbers. No two nearly equal numbers are subtracted anywhere in the imaginary parts. So each operation adds a relative error of a few $u$ at most: about $2u$ for a product, whose imaginary part takes three roundings (two multiplications and an addition).
+Follow the imaginary parts through the pricing loop. Each payment's discount $`v^t`$ has a negative imaginary part. Each multiplication $`(a + bi)(c + di)`$ forms its imaginary part as $`a\,d + b\,c`$, a sum of two negative numbers. No two nearly equal numbers are subtracted anywhere in the imaginary parts. So each operation adds a relative error of a few $`u`$ at most: about $`2u`$ for a product, whose imaginary part takes three roundings (two multiplications and an addition).
 
-The real part's formula $a\,c - b\,d$ does subtract, but $b\,d$ is of size $h^2$: at 1e-20 it is far below one rounding of $a\,c$. The step $h$ also never meets a large number in an addition, so it is never rounded away. At 1e-300 the imaginary parts are still ordinary doubles, above the subnormal range that starts near 1e-308.
+The real part's formula $`a\,c - b\,d`$ does subtract, but $`b\,d`$ is of size $`h^2`$: at 1e-20 it is far below one rounding of $`a\,c`$. The step $`h`$ also never meets a large number in an addition, so it is never rounded away. At 1e-300 the imaginary parts are still ordinary doubles, above the subnormal range that starts near 1e-308.
 
-The result: from $h$ = 1e-9 down to 1e-300 the relative error stays between 1.18e-15 and 1.63e-15, about a dozen times $u$. That is rounding built up along the slope's own chain of about 30 products, the same size as the dual number's error (−1.18e-15, below). None of it comes from the step.
+The result: from $`h`$ = 1e-9 down to 1e-300 the relative error stays between 1.18e-15 and 1.63e-15, about a dozen times $`u`$. That is rounding built up along the slope's own chain of about 30 products, the same size as the dual number's error (−1.18e-15, below). None of it comes from the step.
 
 ### Step 3: the order is 2, and the observed errors say so
 
-The error's law is $-h^2P'''/(6P')$, relative, which is $-101.019113\,h^2$ here. At $h$ = 1e-3 it predicts −1.01e-4, and the run gives −1.01e-4. Dividing each error by the next one down, decade by decade, gives observed orders 1.9981, 2.0000, 2.0000, 2.0000.
+The error's law is $`-h^2P'''/(6P')`$, relative, which is $`-101.019113\,h^2`$ here. At $`h`$ = 1e-3 it predicts −1.01e-4, and the run gives −1.01e-4. Dividing each error by the next one down, decade by decade, gives observed orders 1.9981, 2.0000, 2.0000, 2.0000.
 
-The central difference $\big(P(y+h) - P(y-h)\big)/(2h)$ has the same leading error with the opposite sign, $+h^2P'''/6$ ([Forward, backward and central differences](01-forward-backward-and-central-differences.md)). At $h$ = 1e-2 the two errors are −1.01e-2 and 1.01e-2. The difference is that the central difference cannot go below about 1e-6 before rounding wins.
+The central difference $`\big(P(y+h) - P(y-h)\big)/(2h)`$ has the same leading error with the opposite sign, $`+h^2P'''/6`$ ([Forward, backward and central differences](01-forward-backward-and-central-differences.md)). At $`h`$ = 1e-2 the two errors are −1.01e-2 and 1.01e-2. The difference is that the central difference cannot go below about 1e-6 before rounding wins.
 
 ### Step 4: let the step shrink to nothing, and you get a dual number
 
-The $h^2$ error comes from one fact: $(ih)^2 = -h^2$ is not zero. A **dual number** replaces $ih$ by a symbol $\varepsilon$ whose square is exactly 0. A dual number $a + b\varepsilon$ carries a value $a$ and a slope part $b$.
+The $`h^2`$ error comes from one fact: $`(ih)^2 = -h^2`$ is not zero. A **dual number** replaces $`ih`$ by a symbol $`\varepsilon`$ whose square is exactly 0. A dual number $`a + b\varepsilon`$ carries a value $`a`$ and a slope part $`b`$.
 
-With $\varepsilon^2 = 0$ the Taylor series stops after one term:
+With $`\varepsilon^2 = 0`$ the Taylor series stops after one term:
 
-$$P(y + \varepsilon) = P(y) + P'(y)\,\varepsilon + \tfrac12 P''(y)\,\varepsilon^2 + \dots = P(y) + P'(y)\,\varepsilon.$$
+```math
+P(y + \varepsilon) = P(y) + P'(y)\,\varepsilon + \tfrac12 P''(y)\,\varepsilon^2 + \dots = P(y) + P'(y)\,\varepsilon.
+```
 
-The arithmetic follows from $\varepsilon^2 = 0$:
+The arithmetic follows from $`\varepsilon^2 = 0`$:
 
-- sum: $(a + b\varepsilon) + (c + d\varepsilon) = (a + c) + (b + d)\varepsilon$;
-- product: $(a + b\varepsilon)(c + d\varepsilon) = ac + (ad + bc)\varepsilon$, the product rule;
-- reciprocal: $1/(a + b\varepsilon) = 1/a - (b/a^2)\varepsilon$, since multiplying back gives $1 + 0\varepsilon$.
+- sum: $`(a + b\varepsilon) + (c + d\varepsilon) = (a + c) + (b + d)\varepsilon`$;
+- product: $`(a + b\varepsilon)(c + d\varepsilon) = ac + (ad + bc)\varepsilon`$, the product rule;
+- reciprocal: $`1/(a + b\varepsilon) = 1/a - (b/a^2)\varepsilon`$, since multiplying back gives $`1 + 0\varepsilon`$.
 
-Each rule is the derivative rule for that operation, applied to the slope part. Chained through a program, they apply the chain rule line by line. This is forward-mode differentiation, which [Automatic differentiation](../../15-Optimization/02-Unconstrained%20Methods/10-automatic-differentiation-and-backpropagation.md) already runs on the Rosenbrock valley. It is the complex step with $h \to 0$ taken in the algebra, not in the arithmetic.
+Each rule is the derivative rule for that operation, applied to the slope part. Chained through a program, they apply the chain rule line by line. This is forward-mode differentiation, which [Automatic differentiation](../../15-Optimization/02-Unconstrained%20Methods/10-automatic-differentiation-and-backpropagation.md) already runs on the Rosenbrock valley. It is the complex step with $`h \to 0`$ taken in the algebra, not in the arithmetic.
 
 ### Step 5: what each costs
 
@@ -151,26 +161,26 @@ Counted in real operations on the 30-year bond:
 | One price, plain doubles | 92 | — |
 | Central difference, best step 1e-6 | 186 | 1.07e-10 |
 | Dual number | 242 | −1.18e-15 |
-| Complex step, $h$ = 1e-20 | 303 | 1.33e-15 |
+| Complex step, $`h`$ = 1e-20 | 303 | 1.33e-15 |
 
-A complex multiplication costs six real operations and a dual one four, because the dual product drops the $b\,d$ term. So the dual number is cheaper and exact in its algebra. The complex step's advantage is that many languages, Fortran, C and Python among them, already have a complex type and complex exp, log and power. A program written for real numbers often runs on complex ones with only its declarations changed.
+A complex multiplication costs six real operations and a dual one four, because the dual product drops the $`b\,d`$ term. So the dual number is cheaper and exact in its algebra. The complex step's advantage is that many languages, Fortran, C and Python among them, already have a complex type and complex exp, log and power. A program written for real numbers often runs on complex ones with only its declarations changed.
 
 ---
 
 ## Worked numbers, by hand
 
-Carry the dual yield $0.05 + \varepsilon$ through the price. The complex step at $h$ = 1e-20 gives imaginary parts equal to these slope parts times $10^{-20}$, up to rounding: its final imaginary part is −1.537245103e-17.
+Carry the dual yield $`0.05 + \varepsilon`$ through the price. The complex step at $`h`$ = 1e-20 gives imaginary parts equal to these slope parts times $`10^{-20}`$, up to rounding: its final imaginary part is −1.537245103e-17.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| one year's discount | $1/(1.05 + \varepsilon) = 1/1.05 - (1/1.05^2)\,\varepsilon$ | 0.952380952381 − 0.907029478458ε |
-| 30 years' discount | $v^{30}$, slope part $-30\,v^{31}$ | 0.231377448656 − 6.610784247ε |
-| check | $1.05^{30}$ by 30 multiplications | 4.321942375151 |
-| the 30 coupons | $5(v + v^2 + \dots + v^{30})$ | 76.862255134 − 876.166677957ε |
-| the face value | $100\,v^{30}$ | 23.137744866 − 661.078424731ε |
+| one year's discount | $`1/(1.05 + \varepsilon) = 1/1.05 - (1/1.05^2)\,\varepsilon`$ | 0.952380952381 − 0.907029478458ε |
+| 30 years' discount | $`v^{30}`$, slope part $`-30\,v^{31}`$ | 0.231377448656 − 6.610784247ε |
+| check | $`1.05^{30}`$ by 30 multiplications | 4.321942375151 |
+| the 30 coupons | $`5(v + v^2 + \dots + v^{30})`$ | 76.862255134 − 876.166677957ε |
+| the face value | $`100\,v^{30}`$ | 23.137744866 − 661.078424731ε |
 | price | coupons + face | 100.000000000000 − 1537.2451026883ε |
-| exact slope | $-(F/y)(1 - 1.05^{-30})$, true at par | **−1537.2451026883** |
-| DV01 | $1537.2451026883 \times 10^{-4}$ | **0.153724510269** |
+| exact slope | $`-(F/y)(1 - 1.05^{-30})`$, true at par | **−1537.2451026883** |
+| DV01 | $`1537.2451026883 \times 10^{-4}`$ | **0.153724510269** |
 
 A one-basis-point rise in yield costs 15.37 cents per $100 of face value, to first order. The bumped estimate, 0.153549432112, is short by the bond's curvature over one basis point, not by a pricing error.
 
@@ -178,17 +188,17 @@ A one-basis-point rise in yield costs 15.37 cents per $100 of face value, to fir
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| A large complex step, $h$ = 1e-1 | −524.078489222, relative error −6.59e-1 | The $h^2$ and higher terms are not small; use 1e-20 |
+| A large complex step, $`h`$ = 1e-1 | −524.078489222, relative error −6.59e-1 | The $`h^2`$ and higher terms are not small; use 1e-20 |
 | An abs() guard left in the pricing code | complex step 0.000000000; dual −1537.245102688 | abs() on a complex number is its length, which has no imaginary part |
-| Second derivative from the real part, $2(P - \operatorname{Re}P(y+ih))/h^2$ | −4.55e27 at $h$ = 1e-20; 35046.644615 at 1e-4 (exact 35046.667118) | The real part brings back the subtraction the trick avoided |
-| A central difference at $h$ = 1e-12 | −1537.287630526, relative error 2.77e-5 | Cancellation: two equal-looking prices divided by a tiny step |
-| A subnormal step, $h$ = 1e-320 | −1537.354249012, relative error 7.10e-5 | Every imaginary part is subnormal and keeps far fewer than a double's 53 bits, so each rounding is coarse; dividing by the same stored step cancels the step's own error |
+| Second derivative from the real part, $`2(P - \mathrm{Re}\,P(y+ih))/h^2`$ | −4.55e27 at $`h`$ = 1e-20; 35046.644615 at 1e-4 (exact 35046.667118) | The real part brings back the subtraction the trick avoided |
+| A central difference at $`h`$ = 1e-12 | −1537.287630526, relative error 2.77e-5 | Cancellation: two equal-looking prices divided by a tiny step |
+| A subnormal step, $`h`$ = 1e-320 | −1537.354249012, relative error 7.10e-5 | Every imaginary part is subnormal and keeps far fewer than a double's 53 bits, so each rounding is coarse; dividing by the same stored step cancels the step's own error |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script writes one pricing routine and runs it on three number types: a plain real, a complex number written out as a pair, and a dual number. Each type counts its real operations. There are three independent roads to the slope: the exact closed form $-(F/y)(1 - 1.05^{-30})$ with a term-by-term sum beside it; the complex step at 19 step sizes; and the dual number. The closed form comes from writing the price as $(C/y)(1 - v^N) + F\,v^N$ and differentiating: at par, where $C/y = F$, the terms in $v^{N+1}$ cancel. The central difference runs alongside for contrast. The Python version also checks the stored exact slope against rational arithmetic, and the complex step against the language's own complex type.
+The script writes one pricing routine and runs it on three number types: a plain real, a complex number written out as a pair, and a dual number. Each type counts its real operations. There are three independent roads to the slope: the exact closed form $`-(F/y)(1 - 1.05^{-30})`$ with a term-by-term sum beside it; the complex step at 19 step sizes; and the dual number. The closed form comes from writing the price as $`(C/y)(1 - v^N) + F\,v^N`$ and differentiating: at par, where $`C/y = F`$, the terms in $`v^{N+1}`$ cancel. The central difference runs alongside for contrast. The Python version also checks the stored exact slope against rational arithmetic, and the complex step against the language's own complex type.
 
 ### Python
 
@@ -519,13 +529,13 @@ ALL CHECKS PASS
 
 Lean proves the complex step's error bound from the Detailed proof and the dual-number rules, for any function meeting their hypotheses.
 
-- Say $P$ has a complex derivative on the disc of radius $\rho$ about $y$, is real for real yields, and $\lvert P\rvert \le M$ on its edge. Then for $0 < h < \rho$, the complex step misses $P'(y)$ by at most $\frac{M}{\rho}\cdot\frac{(h/\rho)^2}{1-(h/\rho)^2}$.
-- Under the same hypotheses, for $h \le \rho/2$ that error is at most $\tfrac{4}{3}Mh^2/\rho^3$: order 2.
-- For any polynomial $p$ with real coefficients, $p(y + \varepsilon) = p(y) + p'(y)\,\varepsilon$ exactly.
-- When $a \ne 0$, $1/(a + b\varepsilon) = 1/a - (b/a^2)\,\varepsilon$, the reciprocal rule used for $v$.
-- In exact fractions, the bond's price at 5% is exactly 100 dollars, and the slope $-2000(1 - 1.05^{-30})$ equals the term-by-term sum.
+- Say $`P`$ has a complex derivative on the disc of radius $`\rho`$ about $`y`$, is real for real yields, and $`\lvert P\rvert \le M`$ on its edge. Then for $`0 < h < \rho`$, the complex step misses $`P'(y)`$ by at most $`\frac{M}{\rho}\cdot\frac{(h/\rho)^2}{1-(h/\rho)^2}`$.
+- Under the same hypotheses, for $`h \le \rho/2`$ that error is at most $`\tfrac{4}{3}Mh^2/\rho^3`$: order 2.
+- For any polynomial $`p`$ with real coefficients, $`p(y + \varepsilon) = p(y) + p'(y)\,\varepsilon`$ exactly.
+- When $`a \ne 0`$, $`1/(a + b\varepsilon) = 1/a - (b/a^2)\,\varepsilon`$, the reciprocal rule used for $`v`$.
+- In exact fractions, the bond's price at 5% is exactly 100 dollars, and the slope $`-2000(1 - 1.05^{-30})`$ equals the term-by-term sum.
 
-The $-h^2P'''/6$ error law, the rounding floor, the observed orders, the operation counts and every row of What breaks are left to Python and Rust.
+The $`-h^2P'''/6`$ error law, the rounding floor, the observed orders, the operation counts and every row of What breaks are left to Python and Rust.
 
 ```lean
 -- Complex steps and dual numbers: the complex step Im f(y + ih)/h misses the slope by at most a constant times h², and a dual number carries the exact slope.
@@ -739,7 +749,7 @@ example :
 
 > [!TIP]
 > **Try changing**
-> - **Average the complex step and the central difference at $h$ = 1e-2.** Guess first: their errors are −1.01e-2 and 1.01e-2, so does the mean land on the slope? Nearly: −1537.313934044, relative error 4.48e-5. The $h^2$ terms cancel; the $h^4$ terms do not.
+> - **Average the complex step and the central difference at $`h`$ = 1e-2.** Guess first: their errors are −1.01e-2 and 1.01e-2, so does the mean land on the slope? Nearly: −1537.313934044, relative error 4.48e-5. The $`h^2`$ terms cancel; the $`h^4`$ terms do not.
 > - **Seed the dual number with 1e-4 instead of 1** (`Dual(Y, 1e-4)`). Guess first: what comes out? The slope part scales with the seed: −0.153724510269, minus the DV01 itself.
 > - **Take the complex step at 1e-320.** Guess first: smaller was always fine before, so is it now? No: the step is subnormal, and the slope comes out at −1537.354249012, relative error 7.10e-5.
 
@@ -751,7 +761,7 @@ example :
 > **Running the complex step through code that is not analytic.** The trick needs every operation on the path to be a power series in its input. abs(), a complex conjugate, a square root of a sum of squares, or a step that keeps only the real part all destroy the imaginary part without an error message. With one abs() guard in the bond's code, the complex step reports a slope of 0.000000000 while the dual number still reports −1537.245102688.
 >
 > - **Taking the step too large out of habit.** A difference-sized step of 1e-1 gives −524.078489222, a relative error of −6.59e-1. There is no rounding penalty for small steps here, so use 1e-20.
-> - **Reading a second derivative off the real part.** The real part is $P - h^2P''/2$, so the curvature needs a subtraction: at 1e-20 it returns −4.55e27.
+> - **Reading a second derivative off the real part.** The real part is $`P - h^2P''/2`$, so the curvature needs a subtraction: at 1e-20 it returns −4.55e27.
 > - **Going below the smallest normal double.** At 1e-320 the relative error rises to 7.10e-5.
 > - **Calling a one-basis-point bump the DV01.** The bump gives 0.153549432112 against 0.153724510269; the gap is curvature.
 
@@ -765,7 +775,7 @@ example :
 - **Automatic differentiation tools.** Forward mode in many tools is a dual-number type with the same rules as the code here, usually behind overloaded operators (+, × and ÷ redefined for the new type) instead of the named methods used here.
 
 > **Say it back**
-> A difference quotient subtracts two nearly equal prices, so a small step loses digits to rounding. The complex step moves the yield in the imaginary direction instead, and reads the slope off the imaginary part, with no subtraction. Its error is $-h^2P'''/6$, so a step of 1e-20 gives the bond's slope to a relative error of 1.33e-15. A dual number, with $\varepsilon^2 = 0$, drops even that term and carries the exact slope through the same code. Both fail if the code calls abs() or anything else that is not a power series, and neither gives a second derivative for free.
+> A difference quotient subtracts two nearly equal prices, so a small step loses digits to rounding. The complex step moves the yield in the imaginary direction instead, and reads the slope off the imaginary part, with no subtraction. Its error is $`-h^2P'''/6`$, so a step of 1e-20 gives the bond's slope to a relative error of 1.33e-15. A dual number, with $`\varepsilon^2 = 0`$, drops even that term and carries the exact slope through the same code. Both fail if the code calls abs() or anything else that is not a power series, and neither gives a second derivative for free.
 
 ---
 
@@ -779,7 +789,7 @@ example :
 
 - [Forward-mode automatic differentiation](06-forward-mode-automatic-differentiation.md): the next card. It carries dual numbers through a longer pricing function by operator overloading, and compares the result with symbolic algebra.
 - [Reverse mode](07-reverse-mode-automatic-differentiation.md): every sensitivity of one output in one backward sweep.
-- [Bumping a simulated price](08-bumped-sensitivities-and-monte-carlo-noise.md): the shelf's rescue for a difference quotient whose price is itself noisy. [Richardson extrapolation](03-richardson-extrapolation.md), earlier on the shelf, is the other rescue: it cancels the $h^2$ term instead of avoiding the subtraction.
+- [Bumping a simulated price](08-bumped-sensitivities-and-monte-carlo-noise.md): the shelf's rescue for a difference quotient whose price is itself noisy. [Richardson extrapolation](03-richardson-extrapolation.md), earlier on the shelf, is the other rescue: it cancels the $`h^2`$ term instead of avoiding the subtraction.
 
 Both tricks here give one slope per run; this card leaves open how to get fifty curve sensitivities without fifty runs.
 
@@ -790,7 +800,7 @@ Both tricks here give one slope per run; this card leaves open how to get fifty 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Lyness, J. N., and C. B. Moler. "Numerical differentiation of analytic functions." *SIAM Journal on Numerical Analysis* 4(2), 1967, 202–210. [doi:10.1137/0704019](https://doi.org/10.1137/0704019). The first use of complex arguments to compute derivatives.
-- Squire, William, and George Trapp. "Using complex variables to estimate derivatives of real functions." *SIAM Review* 40(1), 1998, 110–112. [doi:10.1137/S003614459631241X](https://doi.org/10.1137/S003614459631241X). The one-evaluation formula $\operatorname{Im}f(x+ih)/h$ and its freedom from cancellation.
+- Squire, William, and George Trapp. "Using complex variables to estimate derivatives of real functions." *SIAM Review* 40(1), 1998, 110–112. [doi:10.1137/S003614459631241X](https://doi.org/10.1137/S003614459631241X). The one-evaluation formula $`\mathrm{Im}\,f(x+ih)/h`$ and its freedom from cancellation.
 - Martins, Joaquim R. R. A., Peter Sturdza, and Juan J. Alonso. "The complex-step derivative approximation." *ACM Transactions on Mathematical Software* 29(3), 2003, 245–262. [doi:10.1145/838250.838251](https://doi.org/10.1145/838250.838251). Practice: which functions need redefining (abs among them) and the link to forward-mode differentiation.
 - Griewank, Andreas, and Andrea Walther. *Evaluating Derivatives*, 2nd ed. SIAM, 2008. [doi:10.1137/1.9780898717761](https://doi.org/10.1137/1.9780898717761). Forward mode, dual-number arithmetic and operation counts.
 - Clifford, W. K. "Preliminary sketch of biquaternions." *Proceedings of the London Mathematical Society* s1-4(1), 1871, 381–395. [doi:10.1112/plms/s1-4.1.381](https://doi.org/10.1112/plms/s1-4.1.381). The algebra of a unit whose square is zero, the origin of dual numbers.

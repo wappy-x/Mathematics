@@ -42,34 +42,38 @@ The orange line is the square-root law with 1 percent daily volatility: 0.100 pe
 
 Notation first, in words. A random quantity's **standard deviation**, written with the Greek letter sigma, σ, is the typical size of its move either way. Orders are **signed**: a buy is a positive number of shares, a sale a negative one. The dealer's price is a **conditional expectation**: the average value of the stock given what the dealer has seen ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)).
 
-Kyle's market has one auction. The insider sees the value $v$ and sends an order $x$. Unrelated traders send $u$. The dealer sees only the total $y = x + u$ and sets the price $P$. In the only straight-line equilibrium:
+Kyle's market has one auction. The insider sees the value $`v`$ and sends an order $`x`$. Unrelated traders send $`u`$. The dealer sees only the total $`y = x + u`$ and sets the price $`P`$. In the only straight-line equilibrium:
 
-$$x = \beta\,(v - p_0), \qquad P = p_0 + \lambda\, y, \qquad \lambda = \frac{\sigma_v}{2\,\sigma_u}, \qquad \beta = \frac{\sigma_u}{\sigma_v}.$$
+```math
+x = \beta\,(v - p_0), \qquad P = p_0 + \lambda\, y, \qquad \lambda = \frac{\sigma_v}{2\,\sigma_u}, \qquad \beta = \frac{\sigma_u}{\sigma_v}.
+```
 
 **Read it aloud:** the insider trades in proportion to how wrong the price is; the dealer moves the price in proportion to the net order; the price moves, per share, by the standard deviation of value divided by twice that of unrelated flow.
 
-The square-root law, for a large order $Q$ worked through a day:
+The square-root law, for a large order $`Q`$ worked through a day:
 
-$$I = Y\,\sigma_d\,\sqrt{\frac{\lvert Q\rvert}{V_d}}$$
+```math
+I = Y\,\sigma_d\,\sqrt{\frac{\lvert Q\rvert}{V_d}}
+```
 
 **Read it aloud:** the price move, as a fraction of the price, is a constant near one, times the daily volatility, times the square root of the order's share of daily volume.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p_0$ | the price before the auction: everyone's average guess of value | $100.00 | — |
-| $v$, $w$ | the stock's true value, known to the insider only; $w = v - p_0$, its gap from the price | $99.40 in the story | insider buys more |
-| $\sigma_v$ | standard deviation of $v$ around $p_0$: how much there is to know | $1.20 | $\lambda$ rises in step |
-| $u$, $\sigma_u$ | unrelated traders' net order, and its standard deviation | $\sigma_u$ = 200,000 shares | $\lambda$ falls: more cover for the insider |
-| $x$, $y$ | the insider's order; the total the dealer sees | −100,000; −100,000 if $u = 0$ | price rises |
-| $\beta$ | shares the insider trades per dollar of mispricing | 166,667 | — |
-| $P$ | the dealer's price after the auction | $99.70 | — |
-| $\lambda$ | Kyle's lambda: dollars of price move per share of net flow | $3.00 per million shares | bigger move per share |
-| $Q$, $V_d$ | the large order, and the day's volume, in shares | 100,000 and 1,000,000 | impact rises as a square root |
-| $\sigma_d$, $Y$ | daily volatility as a fraction; a fitted constant near 1 | 0.01 and 1 | impact rises in step |
-| $I$, $\delta$ | square-root impact, as a fraction of price; $\delta$, the power of size it grows with | 0.3162 percent; one half | — |
-| $L$, $\Delta$ | how fast depth grows away from the price; the price fall | 2,000,000 shares per $ per $; $0.32 | — |
+| $`p_0`$ | the price before the auction: everyone's average guess of value | $100.00 | — |
+| $`v`$, $`w`$ | the stock's true value, known to the insider only; $`w = v - p_0`$, its gap from the price | $99.40 in the story | insider buys more |
+| $`\sigma_v`$ | standard deviation of $`v`$ around $`p_0`$: how much there is to know | $1.20 | $`\lambda`$ rises in step |
+| $`u`$, $`\sigma_u`$ | unrelated traders' net order, and its standard deviation | $`\sigma_u`$ = 200,000 shares | $`\lambda`$ falls: more cover for the insider |
+| $`x`$, $`y`$ | the insider's order; the total the dealer sees | −100,000; −100,000 if $`u = 0`$ | price rises |
+| $`\beta`$ | shares the insider trades per dollar of mispricing | 166,667 | — |
+| $`P`$ | the dealer's price after the auction | $99.70 | — |
+| $`\lambda`$ | Kyle's lambda: dollars of price move per share of net flow | $3.00 per million shares | bigger move per share |
+| $`Q`$, $`V_d`$ | the large order, and the day's volume, in shares | 100,000 and 1,000,000 | impact rises as a square root |
+| $`\sigma_d`$, $`Y`$ | daily volatility as a fraction; a fitted constant near 1 | 0.01 and 1 | impact rises in step |
+| $`I`$, $`\delta`$ | square-root impact, as a fraction of price; $`\delta`$, the power of size it grows with | 0.3162 percent; one half | — |
+| $`L`$, $`\Delta`$ | how fast depth grows away from the price; the price fall | 2,000,000 shares per $ per $; $0.32 | — |
 
-The reciprocal $1/\lambda$ is the market's **depth**: shares needed to move the price one dollar, here 333,333.
+The reciprocal $`1/\lambda`$ is the market's **depth**: shares needed to move the price one dollar, here 333,333.
 
 ### When it holds
 
@@ -101,42 +105,48 @@ The unrelated traders are the cover: without them, any order would reveal the in
 
 ### Step 1: the dealer prices at the average value given the flow
 
-Suppose the insider uses a straight-line rule $x = \beta(v - p_0)$. Then total flow is $y = \beta(v - p_0) + u$, a mix of the value and noise. For bell-curve quantities, the average of one given the other is a straight line whose slope is how much they move together (their **covariance**) divided by how much the observed one varies (its **variance**, the square of its standard deviation):
+Suppose the insider uses a straight-line rule $`x = \beta(v - p_0)`$. Then total flow is $`y = \beta(v - p_0) + u`$, a mix of the value and noise. For bell-curve quantities, the average of one given the other is a straight line whose slope is how much they move together (their **covariance**) divided by how much the observed one varies (its **variance**, the square of its standard deviation):
 
-$$\lambda = \frac{\text{covariance of } v \text{ and } y}{\text{variance of } y} = \frac{\beta\,\sigma_v^2}{\beta^2\sigma_v^2 + \sigma_u^2}.$$
+```math
+\lambda = \frac{\text{covariance of } v \text{ and } y}{\text{variance of } y} = \frac{\beta\,\sigma_v^2}{\beta^2\sigma_v^2 + \sigma_u^2}.
+```
 
 This is the conditioning rule of the bivariate normal, and it is also what a line fitted through many past auctions would find. The dealer, competing with other dealers, sets exactly this price, so on average makes nothing.
 
 ### Step 2: the insider's best order, given lambda
 
-Take the price rule $P = p_0 + \lambda(x + u)$ as fixed. The insider buys $x$ shares worth $v$ each at price $P$. Averaged over the noise $u$, which is zero on average and unseen, the profit is
+Take the price rule $`P = p_0 + \lambda(x + u)`$ as fixed. The insider buys $`x`$ shares worth $`v`$ each at price $`P`$. Averaged over the noise $`u`$, which is zero on average and unseen, the profit is
 
-$$x\,(v - p_0 - \lambda x).$$
+```math
+x\,(v - p_0 - \lambda x).
+```
 
-This is a hill in $x$. The first term rewards trading on the mispricing. The second is the insider's own impact: each extra share pushes the price against every share already bought. The top of the hill is where the slope is zero, $x = (v - p_0)/(2\lambda)$. So the insider's rule is a straight line with $\beta = 1/(2\lambda)$. The 2 is there because the insider's own order moves the price paid on the whole order.
+This is a hill in $`x`$. The first term rewards trading on the mispricing. The second is the insider's own impact: each extra share pushes the price against every share already bought. The top of the hill is where the slope is zero, $`x = (v - p_0)/(2\lambda)`$. So the insider's rule is a straight line with $`\beta = 1/(2\lambda)`$. The 2 is there because the insider's own order moves the price paid on the whole order.
 
 ### Step 3: make the two rules agree
 
-Put $\beta = 1/(2\lambda)$ into the dealer's slope from Step 1 and ask that the dealer's slope be $\lambda$ again. The equation collapses to $4\lambda^2\sigma_u^2 = \sigma_v^2$. Keeping the positive root:
+Put $`\beta = 1/(2\lambda)`$ into the dealer's slope from Step 1 and ask that the dealer's slope be $`\lambda`$ again. The equation collapses to $`4\lambda^2\sigma_u^2 = \sigma_v^2`$. Keeping the positive root:
 
-$$\lambda = \frac{\sigma_v}{2\sigma_u}, \qquad \beta = \frac{1}{2\lambda} = \frac{\sigma_u}{\sigma_v}.$$
+```math
+\lambda = \frac{\sigma_v}{2\sigma_u}, \qquad \beta = \frac{1}{2\lambda} = \frac{\sigma_u}{\sigma_v}.
+```
 
-Lambda is proportional to how much there is to know, $\sigma_v$, and inversely proportional to how much unrelated flow hides it, $\sigma_u$. A stock with a busy crowd of unrelated traders is deep; a stock where most orders are informed is shallow.
+Lambda is proportional to how much there is to know, $`\sigma_v`$, and inversely proportional to how much unrelated flow hides it, $`\sigma_u`$. A stock with a busy crowd of unrelated traders is deep; a stock where most orders are informed is shallow.
 
 <details>
 <summary>Detailed proof: the equilibrium, and why it is the only straight-line one</summary>
 
-Write $w = v - p_0$, with average 0 and variance $\sigma_v^2$; $u$ has average 0 and variance $\sigma_u^2$, independent of $w$.
+Write $`w = v - p_0`$, with average 0 and variance $`\sigma_v^2`$; $`u`$ has average 0 and variance $`\sigma_u^2`$, independent of $`w`$.
 
-**Dealer.** If $x = \beta w$, then $y = \beta w + u$ is a combination of independent normals, so $(w, y)$ is bivariate normal with covariance $\beta\sigma_v^2$ and $\operatorname{Var}(y) = \beta^2\sigma_v^2 + \sigma_u^2$. The bivariate-normal conditioning rule gives the conditional expectation $E[v \mid y] = p_0 + a\,y$ with $a = \beta\sigma_v^2/(\beta^2\sigma_v^2 + \sigma_u^2)$. Competition forces the dealer to price at $E[v \mid y]$, so $\lambda = a$.
+**Dealer.** If $`x = \beta w`$, then $`y = \beta w + u`$ is a combination of independent normals, so $`(w, y)`$ is bivariate normal with covariance $`\beta\sigma_v^2`$ and $`\mathrm{Var}(y) = \beta^2\sigma_v^2 + \sigma_u^2`$. The bivariate-normal conditioning rule gives the conditional expectation $`E[v \mid y] = p_0 + a\,y`$ with $`a = \beta\sigma_v^2/(\beta^2\sigma_v^2 + \sigma_u^2)`$. Competition forces the dealer to price at $`E[v \mid y]`$, so $`\lambda = a`$.
 
-**Insider.** Given $v$ and a fixed rule with $\lambda > 0$, an order $x$ earns on average $E[x(v - p_0 - \lambda x - \lambda u)] = x(w - \lambda x)$, because $u$ averages to zero and the insider cannot see it. This equals $w^2/(4\lambda) - \lambda(x - w/(2\lambda))^2$: a constant minus a square. It is largest, uniquely, at $x = w/(2\lambda)$. So $\beta = 1/(2\lambda)$.
+**Insider.** Given $`v`$ and a fixed rule with $`\lambda > 0`$, an order $`x`$ earns on average $`E[x(v - p_0 - \lambda x - \lambda u)] = x(w - \lambda x)`$, because $`u`$ averages to zero and the insider cannot see it. This equals $`w^2/(4\lambda) - \lambda(x - w/(2\lambda))^2`$: a constant minus a square. It is largest, uniquely, at $`x = w/(2\lambda)`$. So $`\beta = 1/(2\lambda)`$.
 
-**Fixed point.** Substitute: $\lambda\,(\sigma_v^2/(4\lambda^2) + \sigma_u^2) = \sigma_v^2/(2\lambda)$. Multiply by $4\lambda$: $\sigma_v^2 + 4\lambda^2\sigma_u^2 = 2\sigma_v^2$, so $\lambda^2 = \sigma_v^2/(4\sigma_u^2)$. A negative $\lambda$ would make the insider's hill a valley with no best order, so $\lambda = \sigma_v/(2\sigma_u)$ and $\beta = \sigma_u/\sigma_v$ is the only straight-line equilibrium. Kyle restricts attention to straight-line rules; whether other, curved equilibria exist is a separate question.
+**Fixed point.** Substitute: $`\lambda\,(\sigma_v^2/(4\lambda^2) + \sigma_u^2) = \sigma_v^2/(2\lambda)`$. Multiply by $`4\lambda`$: $`\sigma_v^2 + 4\lambda^2\sigma_u^2 = 2\sigma_v^2`$, so $`\lambda^2 = \sigma_v^2/(4\sigma_u^2)`$. A negative $`\lambda`$ would make the insider's hill a valley with no best order, so $`\lambda = \sigma_v/(2\sigma_u)`$ and $`\beta = \sigma_u/\sigma_v`$ is the only straight-line equilibrium. Kyle restricts attention to straight-line rules; whether other, curved equilibria exist is a separate question.
 
-**What is learned.** $\operatorname{Var}(v \mid y) = \sigma_v^2 - (\beta\sigma_v^2)^2/\operatorname{Var}(y)$. With $\beta^2\sigma_v^2 = \sigma_u^2$, $\operatorname{Var}(y) = 2\sigma_u^2$ and the leftover variance is $\sigma_v^2/2$.
+**What is learned.** $`\mathrm{Var}(v \mid y) = \sigma_v^2 - (\beta\sigma_v^2)^2/\mathrm{Var}(y)`$. With $`\beta^2\sigma_v^2 = \sigma_u^2`$, $`\mathrm{Var}(y) = 2\sigma_u^2`$ and the leftover variance is $`\sigma_v^2/2`$.
 
-**Who pays.** The insider's average profit is $E[w^2]/(4\lambda) = \sigma_v\sigma_u/2$. The unrelated traders' average result is $E[u(v - P)] = -\lambda\sigma_u^2 = -\sigma_v\sigma_u/2$. The dealer's is zero. The insider's gain is exactly the crowd's loss.
+**Who pays.** The insider's average profit is $`E[w^2]/(4\lambda) = \sigma_v\sigma_u/2`$. The unrelated traders' average result is $`E[u(v - P)] = -\lambda\sigma_u^2 = -\sigma_v\sigma_u/2`$. The dealer's is zero. The insider's gain is exactly the crowd's loss.
 
 </details>
 
@@ -144,21 +154,23 @@ Write $w = v - p_0$, with average 0 and variance $\sigma_v^2$; $u$ has average 0
 
 Three consequences fall out, each checked in the code.
 
-**The price moves halfway.** The insider's own order moves the average price by $\lambda x = \lambda\beta(v - p_0) = (v - p_0)/2$. Whatever the numbers, the auction closes half the gap between the old price and the truth. In variance terms, half of $\sigma_v^2$ is revealed and half remains.
+**The price moves halfway.** The insider's own order moves the average price by $`\lambda x = \lambda\beta(v - p_0) = (v - p_0)/2`$. Whatever the numbers, the auction closes half the gap between the old price and the truth. In variance terms, half of $`\sigma_v^2`$ is revealed and half remains.
 
-**The crowd pays the insider.** Unrelated traders' orders push the price against themselves: a crowd buy raises the price the crowd pays. Their expected loss, $\lambda\sigma_u^2$, equals the insider's expected gain, $\sigma_v\sigma_u/2$. The dealer breaks even. Lambda is the toll the uninformed pay for trading next to the informed.
+**The crowd pays the insider.** Unrelated traders' orders push the price against themselves: a crowd buy raises the price the crowd pays. Their expected loss, $`\lambda\sigma_u^2`$, equals the insider's expected gain, $`\sigma_v\sigma_u/2`$. The dealer breaks even. Lambda is the toll the uninformed pay for trading next to the informed.
 
-**More noise does not reveal less.** Doubling $\sigma_u$ halves lambda, but the insider doubles the order size, so the price still closes half the gap. The insider's profit doubles instead.
+**More noise does not reveal less.** Doubling $`\sigma_u`$ halves lambda, but the insider doubles the order size, so the price still closes half the gap. The insider's profit doubles instead.
 
 ### Step 5: from a straight line to a square root
 
-Kyle's dealer stands ready to absorb $1/\lambda$ shares for each dollar the price moves, the same at every price. Picture that as an order book: a list of resting orders at each price level ([The order book](01-the-limit-order-book.md)). A flat book, the same depth at every cent, makes a sale of $Q$ shares move the price by $\lambda Q$. A straight line.
+Kyle's dealer stands ready to absorb $`1/\lambda`$ shares for each dollar the price moves, the same at every price. Picture that as an order book: a list of resting orders at each price level ([The order book](01-the-limit-order-book.md)). A flat book, the same depth at every cent, makes a sale of $`Q`$ shares move the price by $`\lambda Q`$. A straight line.
 
-Now let the depth grow with distance from the price: at $d$ dollars away, $L\,d$ shares per dollar. Selling $Q$ shares eats the book down to a fall $\Delta$ where the shares consumed add up to $Q$. That total is the area of a triangle with base $\Delta$ and height $L\Delta$:
+Now let the depth grow with distance from the price: at $`d`$ dollars away, $`L\,d`$ shares per dollar. Selling $`Q`$ shares eats the book down to a fall $`\Delta`$ where the shares consumed add up to $`Q`$. That total is the area of a triangle with base $`\Delta`$ and height $`L\Delta`$:
 
-$$Q = \tfrac{1}{2}\,L\,\Delta^2 \quad\Longrightarrow\quad \Delta = \sqrt{2Q/L}.$$
+```math
+Q = \tfrac{1}{2}\,L\,\Delta^2 \quad\Longrightarrow\quad \Delta = \sqrt{2Q/L}.
+```
 
-The impact curve is the depth profile turned inside out. Flat depth gives a line. Depth rising linearly gives a square root. The general rule: whatever shape the resting shares take, the impact is the price at which their running total reaches $Q$.
+The impact curve is the depth profile turned inside out. Flat depth gives a line. Depth rising linearly gives a square root. The general rule: whatever shape the resting shares take, the impact is the price at which their running total reaches $`Q`$.
 
 Why would depth rise with distance? Tóth and coauthors argued in 2011 that most of the liquidity in a real market is **latent**: buyers and sellers who would trade at some price but do not show orders until the price comes near.
 
@@ -166,9 +178,9 @@ Prices diffuse (wander randomly), and a random wanderer leaves the density of th
 
 ### Step 6: seeing the square root in data
 
-The exponent is measured the same way the code measures it. Collect many large orders. For each, record its share of daily volume and the price move from first fill to last, divided by daily volatility. Plot the logarithm of impact against the logarithm of size. A power law $I \propto Q^{\delta}$ becomes a straight line with slope $\delta$.
+The exponent is measured the same way the code measures it. Collect many large orders. For each, record its share of daily volume and the price move from first fill to last, divided by daily volatility. Plot the logarithm of impact against the logarithm of size. A power law $`I \propto Q^{\delta}`$ becomes a straight line with slope $`\delta`$.
 
-Studies of equities, futures, options and other markets find $\delta$ close to one half, with most estimates between about 0.4 and 0.7, and $Y$ of order one.
+Studies of equities, futures, options and other markets find $`\delta`$ close to one half, with most estimates between about 0.4 and 0.7, and $`Y`$ of order one.
 
 The code does this on the two model books. Walking the V-shaped book at six sizes and fitting the log-log slope gives 0.5022; the flat book gives 1.0000. The fit recovers the shape of the book from its impact curve, which is exactly what empirical studies claim to do for real markets.
 
@@ -178,7 +190,7 @@ An alternative road to Kyle's lambda is the **many-auction** version of the same
 
 ## Worked numbers, by hand
 
-Kyle's market, one auction standing for one trading day. Prior price $p_0 = \$100$. Value standard deviation $\sigma_v = \$1.20$. Unrelated-flow standard deviation $\sigma_u = 200{,}000$ shares, a fifth of a day's volume.
+Kyle's market, one auction standing for one trading day. Prior price $`p_0 = \$100`$. Value standard deviation $`\sigma_v = \$1.20`$. Unrelated-flow standard deviation $`\sigma_u = 200{,}000`$ shares, a fifth of a day's volume.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -194,13 +206,13 @@ Kyle's market, one auction standing for one trading day. Prior price $p_0 = \$10
 | square-root law, 10 percent of volume | 1 × 0.01 × √0.1 | **0.3162 percent** |
 | in dollars | 0.003162 × $100 | $0.3162 a share |
 
-The two roads agree near the example: Kyle says 0.30 percent, the square-root law says 0.32. They agree by construction here, because $\sigma_v$ and $\sigma_u$ were chosen to make them meet at 10 percent. Their disagreement at 1 and 40 percent is the finding.
+The two roads agree near the example: Kyle says 0.30 percent, the square-root law says 0.32. They agree by construction here, because $`\sigma_v`$ and $`\sigma_u`$ were chosen to make them meet at 10 percent. Their disagreement at 1 and 40 percent is the finding.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the 2: lambda = $\sigma_v/\sigma_u$ | −0.60 percent | treats all flow as if the insider traded without restraint |
+| Drop the 2: lambda = $`\sigma_v/\sigma_u`$ | −0.60 percent | treats all flow as if the insider traded without restraint |
 | Scale Kyle's line from 10 to 40 percent of volume | 1.20 percent | the square-root law says 0.6325; a line overstates big orders |
 | Participation in percent: √10 instead of √0.1 | 3.1623 percent | ten times too big |
 | Annual volatility 16 percent where daily belongs | 5.0596 percent | sixteen times too big |
@@ -593,11 +605,11 @@ The two outputs agree line for line: the same generator gives the same random nu
 
 Lean proves the algebra of Kyle's straight-line equilibrium, what it reveals, and the square-root fall for a V-shaped book.
 
-- Suppose $\sigma_v$ and $\sigma_u$ are positive, the dealer uses the Step 1 slope, and the insider maximizes the Step 2 profit. Then this holds exactly when $\lambda = \sigma_v/(2\sigma_u)$ and $\beta = \sigma_u/\sigma_v$. So the straight-line equilibrium exists, and it is the only one.
-- Take that equilibrium. Then the insider's order closes half the gap: $\lambda\beta w = w/2$.
-- Take that equilibrium. Then the value variance left after the auction is $\sigma_v^2/2$, half of what it was.
-- Take that equilibrium. Then the insider's average profit and the crowd's average loss both equal $\sigma_v\sigma_u/2$.
-- Suppose the book holds $L\,d$ shares per dollar at $d$ dollars from the price, with $L$ positive. Then selling $Q$ shares moves the price down by exactly $\Delta = \sqrt{2Q/L}$.
+- Suppose $`\sigma_v`$ and $`\sigma_u`$ are positive, the dealer uses the Step 1 slope, and the insider maximizes the Step 2 profit. Then this holds exactly when $`\lambda = \sigma_v/(2\sigma_u)`$ and $`\beta = \sigma_u/\sigma_v`$. So the straight-line equilibrium exists, and it is the only one.
+- Take that equilibrium. Then the insider's order closes half the gap: $`\lambda\beta w = w/2`$.
+- Take that equilibrium. Then the value variance left after the auction is $`\sigma_v^2/2`$, half of what it was.
+- Take that equilibrium. Then the insider's average profit and the crowd's average loss both equal $`\sigma_v\sigma_u/2`$.
+- Suppose the book holds $`L\,d`$ shares per dollar at $`d`$ dollars from the price, with $`L`$ positive. Then selling $`Q`$ shares moves the price down by exactly $`\Delta = \sqrt{2Q/L}`$.
 - Take the card's numbers. Then lambda is 3 dollars per million shares, and the sale leaves the price at 99.70 dollars.
 - Take the same sale. Then the insider's profit on it is 30,000 dollars, and dropping the 2 doubles the move to −0.60 percent.
 - Take 40 percent of volume instead of 10. Then the square-root law moves the price twice as far, not four times.
@@ -744,29 +756,29 @@ example : Real.sqrt (4 / 10) = 2 * Real.sqrt (1 / 10) := by
 
 > [!TIP]
 > **Try changing**
-> - **Double the unrelated flow**, $\sigma_u = 400{,}000$. Guess first: does the price move more or less? For the same 100,000-share sale the move halves to −0.15 percent. An insider with the same news would now sell twice as much, and the price would still close half the gap.
-> - **Double the value standard deviation**, $\sigma_v = 2.40$, keeping the order at 100,000 shares. Guess first. The move doubles to −0.60 percent: the same flow now signals more.
+> - **Double the unrelated flow**, $`\sigma_u = 400{,}000`$. Guess first: does the price move more or less? For the same 100,000-share sale the move halves to −0.15 percent. An insider with the same news would now sell twice as much, and the price would still close half the gap.
+> - **Double the value standard deviation**, $`\sigma_v = 2.40`$, keeping the order at 100,000 shares. Guess first. The move doubles to −0.60 percent: the same flow now signals more.
 > - **Sell 40 percent of volume.** Guess first: four times 0.3 percent? The square-root law says 0.6325 percent, twice, not four times.
-> - **Set $Y = 0.5$**, a more liquid market than the fit assumed. The square-root impact halves to 0.1581 percent.
+> - **Set $`Y = 0.5`$**, a more liquid market than the fit assumed. The square-root impact halves to 0.1581 percent.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Treating Kyle's lambda and the square-root law as the same object.** They measure different things. Lambda is the price response to one auction's net flow, from everyone, informed and not. The square-root law is the average price move over the life of one large order, cut into pieces and worked through hours. Feeding a **metaorder** (one large order cut into many pieces) into lambda as if it were one auction's flow gives a straight line that is far too small for modest orders and far too large for big ones, as the chart shows. Turning a fitted lambda into $Y$ needs extra assumptions about how the order was worked.
+> **Treating Kyle's lambda and the square-root law as the same object.** They measure different things. Lambda is the price response to one auction's net flow, from everyone, informed and not. The square-root law is the average price move over the life of one large order, cut into pieces and worked through hours. Feeding a **metaorder** (one large order cut into many pieces) into lambda as if it were one auction's flow gives a straight line that is far too small for modest orders and far too large for big ones, as the chart shows. Turning a fitted lambda into $`Y`$ needs extra assumptions about how the order was worked.
 >
 > Smaller traps:
-> - **Dropping the 2.** Lambda is $\sigma_v/(2\sigma_u)$. Without the 2 the example's move doubles to −0.60 percent. The 2 is the insider holding back because of the insider's own impact.
-> - **Units in the square root.** Participation is a fraction: $\sqrt{0.1}$, not $\sqrt{10}$. The wrong one gives 3.1623 percent.
-> - **Annual volatility.** $\sigma_d$ is daily. Using 16 percent a year gives 5.0596 percent, sixteen times too big.
+> - **Dropping the 2.** Lambda is $`\sigma_v/(2\sigma_u)`$. Without the 2 the example's move doubles to −0.60 percent. The 2 is the insider holding back because of the insider's own impact.
+> - **Units in the square root.** Participation is a fraction: $`\sqrt{0.1}`$, not $`\sqrt{10}`$. The wrong one gives 3.1623 percent.
+> - **Annual volatility.** $`\sigma_d`$ is daily. Using 16 percent a year gives 5.0596 percent, sixteen times too big.
 > - **Impact is not all permanent.** Part of the move fades after the order finishes. Kyle's move is permanent because it is all information; a square-root estimate measured at the last fill includes a temporary part.
 
 ---
 
 ## Where you meet it in real life
 
-- **Pre-trade cost estimates.** Before a fund sends a large order, its broker quotes an expected cost, usually a square-root formula with $Y$ and the exponent fitted to the broker's own history. The fund decides whether to trade and how fast.
+- **Pre-trade cost estimates.** Before a fund sends a large order, its broker quotes an expected cost, usually a square-root formula with $`Y`$ and the exponent fitted to the broker's own history. The fund decides whether to trade and how fast.
 - **Measuring execution afterwards.** The price moves recorded against the square-root prediction are the raw material of [Measuring execution](06-transaction-cost-analysis.md).
 - **Splitting an order over time.** Impact that grows with speed is one half of the trade-off in [Almgren-Chriss](04-optimal-execution-almgren-chriss.md); the risk of waiting is the other.
 - **Market makers.** A dealer who quotes both sides must shade prices after one-sided flow, the same learning as in Kyle, alongside managing inventory: [Market making](05-market-making-avellaneda-stoikov.md).

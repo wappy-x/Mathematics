@@ -34,37 +34,41 @@ Schematic. Each arrow is one of the two curl equations. Neither field needs a ch
 
 ## The formula
 
-Start from the two curl equations of [Maxwell's equations](07-maxwells-equations.md), in empty space with no charges and no currents. This card writes the curl as $\nabla\times$ and the divergence as $\nabla\cdot$, as many books do: the same spin and outflow as on that card. Take the curl of the first, use the second, and out comes a wave equation:
+Start from the two curl equations of [Maxwell's equations](07-maxwells-equations.md), in empty space with no charges and no currents. This card writes the curl as $`\nabla\times`$ and the divergence as $`\nabla\cdot`$, as many books do: the same spin and outflow as on that card. Take the curl of the first, use the second, and out comes a wave equation:
 
-$$\nabla\times\mathbf E = -\frac{\partial \mathbf B}{\partial t},\qquad \nabla\times\mathbf B = \mu_0\varepsilon_0\,\frac{\partial \mathbf E}{\partial t}\qquad\Longrightarrow\qquad \frac{\partial^2 \mathbf E}{\partial t^2} = c^2\,\nabla^2\mathbf E,\qquad c=\frac{1}{\sqrt{\mu_0\varepsilon_0}}$$
+```math
+\nabla\times\mathbf E = -\frac{\partial \mathbf B}{\partial t},\qquad \nabla\times\mathbf B = \mu_0\varepsilon_0\,\frac{\partial \mathbf E}{\partial t}\qquad\Longrightarrow\qquad \frac{\partial^2 \mathbf E}{\partial t^2} = c^2\,\nabla^2\mathbf E,\qquad c=\frac{1}{\sqrt{\mu_0\varepsilon_0}}
+```
 
 **Read it aloud:** the electric field's acceleration at each point equals the speed of light squared times how sharply the field bends round that point, and that speed is one over the square root of the two electrical constants.
 
-One solution is the wave from the station, travelling along $x$:
+One solution is the wave from the station, travelling along $`x`$:
 
-$$\mathbf E = E_0\,\hat{\mathbf y}\,\cos(kx-\omega t),\qquad \mathbf B = \frac{E_0}{c}\,\hat{\mathbf z}\,\cos(kx-\omega t),\qquad \omega = 2\pi f,\quad k=\frac{2\pi}{\lambda},\quad \lambda=\frac{c}{f}$$
+```math
+\mathbf E = E_0\,\hat{\mathbf y}\,\cos(kx-\omega t),\qquad \mathbf B = \frac{E_0}{c}\,\hat{\mathbf z}\,\cos(kx-\omega t),\qquad \omega = 2\pi f,\quad k=\frac{2\pi}{\lambda},\quad \lambda=\frac{c}{f}
+```
 
-**Read it aloud:** the electric field points up and down, the magnetic field points sideways, both rise and fall in step as the wave slides along $x$, and one wavelength is the speed divided by the frequency.
+**Read it aloud:** the electric field points up and down, the magnetic field points sideways, both rise and fall in step as the wave slides along $`x`$, and one wavelength is the speed divided by the frequency.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mathbf E$, $E_0$ | electric field, in volts per metre; its peak value | peak 1.000 mV/m, a clearly heard station (an illustrative input) | the antenna's voltage rises in proportion |
-| $\mathbf B$, $B_0$ | magnetic field, in tesla (T); its peak value | 3.336 pT (picotesla, $10^{-12}$ T) | locked to $E$: always $B_0 = E_0/c$ |
-| $\varepsilon_0$ | vacuum permittivity: how much electric field a charge makes; since 2019 fixed as $1/(\mu_0 c^2)$ | $8.8541878188\times10^{-12}$ F/m | the wave slows |
-| $\mu_0$ | vacuum permeability: how much magnetic field a current makes; a measured constant (CODATA 2022, the international table of recommended values of the physical constants) | $1.25663706127\times10^{-6}$ N/A² | the wave slows |
-| $c$ | the wave's speed | 299,792,458 m/s | each wave is longer |
-| $f$, $\omega$ | frequency in hertz (swings per second); angular frequency $2\pi f$ in rad/s | 100 MHz; $628.3\times10^6$ rad/s | each wave is shorter |
-| $\lambda$, $k$ | wavelength, in metres; wavenumber $2\pi/\lambda$, in rad/m | 2.9979 m; 2.0958 rad/m | — |
-| $x$, $t$ | distance along the direction of travel, in metres; time, in seconds | crest at 0.749 m after 2.5 ns | — |
-| $\hat{\mathbf y}$, $\hat{\mathbf z}$ | arrows of length one across the travel: $\hat{\mathbf y}$ the polarisation (the way $\mathbf E$ points), $\hat{\mathbf z}$ the way $\mathbf B$ points | $\hat{\mathbf y}$ along the antenna | — |
-| $\nabla\cdot$, $\nabla\times$, $\nabla^2$ | divergence (net outflow), curl (spin, or twist), Laplacian (bending: how far the average round a point sits above the value there) | all three act on $\mathbf E$ and $\mathbf B$ | — |
-| $\partial/\partial t$ | rate of change in time at one fixed point | — | — |
-| $\theta$ | angle between the antenna and $\mathbf E$ | 60° | the voltage falls as $\cos\theta$ |
+| $`\mathbf E`$, $`E_0`$ | electric field, in volts per metre; its peak value | peak 1.000 mV/m, a clearly heard station (an illustrative input) | the antenna's voltage rises in proportion |
+| $`\mathbf B`$, $`B_0`$ | magnetic field, in tesla (T); its peak value | 3.336 pT (picotesla, $`10^{-12}`$ T) | locked to $`E`$: always $`B_0 = E_0/c`$ |
+| $`\varepsilon_0`$ | vacuum permittivity: how much electric field a charge makes; since 2019 fixed as $`1/(\mu_0 c^2)`$ | $`8.8541878188\times10^{-12}`$ F/m | the wave slows |
+| $`\mu_0`$ | vacuum permeability: how much magnetic field a current makes; a measured constant (CODATA 2022, the international table of recommended values of the physical constants) | $`1.25663706127\times10^{-6}`$ N/A² | the wave slows |
+| $`c`$ | the wave's speed | 299,792,458 m/s | each wave is longer |
+| $`f`$, $`\omega`$ | frequency in hertz (swings per second); angular frequency $`2\pi f`$ in rad/s | 100 MHz; $`628.3\times10^6`$ rad/s | each wave is shorter |
+| $`\lambda`$, $`k`$ | wavelength, in metres; wavenumber $`2\pi/\lambda`$, in rad/m | 2.9979 m; 2.0958 rad/m | — |
+| $`x`$, $`t`$ | distance along the direction of travel, in metres; time, in seconds | crest at 0.749 m after 2.5 ns | — |
+| $`\hat{\mathbf y}`$, $`\hat{\mathbf z}`$ | arrows of length one across the travel: $`\hat{\mathbf y}`$ the polarisation (the way $`\mathbf E`$ points), $`\hat{\mathbf z}`$ the way $`\mathbf B`$ points | $`\hat{\mathbf y}`$ along the antenna | — |
+| $`\nabla\cdot`$, $`\nabla\times`$, $`\nabla^2`$ | divergence (net outflow), curl (spin, or twist), Laplacian (bending: how far the average round a point sits above the value there) | all three act on $`\mathbf E`$ and $`\mathbf B`$ | — |
+| $`\partial/\partial t`$ | rate of change in time at one fixed point | — | — |
+| $`\theta`$ | angle between the antenna and $`\mathbf E`$ | 60° | the voltage falls as $`\cos\theta`$ |
 
 ### When it holds
 
-- **Empty space, or close to it.** The derivation sets charge and current to zero and uses the vacuum constants. Air is close enough for radio. Inside a material the wave slows: in the polyethylene that fills most coaxial cable, with permittivity about 2.25 times $\varepsilon_0$, the 100 MHz wave is only 1.9986 m long.
-- **Far from the antenna.** The plane wave above is the picture many wavelengths out. Within about a wavelength of the mast the fields are tangled with the mast's own charges and currents, and $E/B$ is not $c$.
+- **Empty space, or close to it.** The derivation sets charge and current to zero and uses the vacuum constants. Air is close enough for radio. Inside a material the wave slows: in the polyethylene that fills most coaxial cable, with permittivity about 2.25 times $`\varepsilon_0`$, the 100 MHz wave is only 1.9986 m long.
+- **Far from the antenna.** The plane wave above is the picture many wavelengths out. Within about a wavelength of the mast the fields are tangled with the mast's own charges and currents, and $`E/B`$ is not $`c`$.
 - **A small patch of a spreading wave.** A real wave spreads out from the mast and thins with distance. Over the few metres round one radio set, its fronts are flat enough to treat as planes.
 - **Linear fields.** Vacuum adds fields without changing them, so two stations pass through each other untouched. Very strong fields inside some crystals break this.
 - **Classical fields.** At 100 MHz each photon (the smallest packet of light) carries so little energy that the field is smooth. For single photons the model gives way to the quantum shelf.
@@ -81,80 +85,88 @@ Each curl equation links a change in time of one field to a twist in space of th
 
 In empty space the charge density and current density are zero. The four equations of [Maxwell's equations](07-maxwells-equations.md) become:
 
-$$\nabla\cdot\mathbf E = 0,\qquad \nabla\cdot\mathbf B = 0,\qquad \nabla\times\mathbf E = -\frac{\partial \mathbf B}{\partial t},\qquad \nabla\times\mathbf B = \mu_0\varepsilon_0\frac{\partial \mathbf E}{\partial t}.$$
+```math
+\nabla\cdot\mathbf E = 0,\qquad \nabla\cdot\mathbf B = 0,\qquad \nabla\times\mathbf E = -\frac{\partial \mathbf B}{\partial t},\qquad \nabla\times\mathbf B = \mu_0\varepsilon_0\frac{\partial \mathbf E}{\partial t}.
+```
 
 The first two say neither field has a source or a sink here. The third is Faraday's law ([Magnetic fields](05-magnetism-and-faradays-law.md)). The fourth is Ampère's law with the current set to zero, leaving only Maxwell's term: a changing electric field acts like a current.
 
 ### Step 2: take the curl of Faraday's law
 
-Apply $\nabla\times$ to both sides of the third equation. On the right, the curl acts on space and $\partial/\partial t$ on time, so they can swap order:
+Apply $`\nabla\times`$ to both sides of the third equation. On the right, the curl acts on space and $`\partial/\partial t`$ on time, so they can swap order:
 
-$$\nabla\times(\nabla\times\mathbf E) = -\frac{\partial}{\partial t}\left(\nabla\times\mathbf B\right) = -\mu_0\varepsilon_0\,\frac{\partial^2 \mathbf E}{\partial t^2}.$$
+```math
+\nabla\times(\nabla\times\mathbf E) = -\frac{\partial}{\partial t}\left(\nabla\times\mathbf B\right) = -\mu_0\varepsilon_0\,\frac{\partial^2 \mathbf E}{\partial t^2}.
+```
 
-The second step used the fourth equation. This is the moment the two curl equations feed each other: Faraday's law turns $\mathbf E$ into a changing $\mathbf B$, and Maxwell's term turns that back into a changing $\mathbf E$.
+The second step used the fourth equation. This is the moment the two curl equations feed each other: Faraday's law turns $`\mathbf E`$ into a changing $`\mathbf B`$, and Maxwell's term turns that back into a changing $`\mathbf E`$.
 
 ### Step 3: a twist of a twist is a bend
 
-For any smooth vector field, the curl of the curl equals the gradient of the divergence minus the Laplacian. The gradient, $\nabla$ on its own, is the direction and rate of steepest rise of a quantity:
+For any smooth vector field, the curl of the curl equals the gradient of the divergence minus the Laplacian. The gradient, $`\nabla`$ on its own, is the direction and rate of steepest rise of a quantity:
 
-$$\nabla\times(\nabla\times\mathbf E) = \nabla(\nabla\cdot\mathbf E) - \nabla^2\mathbf E.$$
+```math
+\nabla\times(\nabla\times\mathbf E) = \nabla(\nabla\cdot\mathbf E) - \nabla^2\mathbf E.
+```
 
-In empty space $\nabla\cdot\mathbf E = 0$, so the first term drops and the curl of the curl is just $-\nabla^2\mathbf E$.
+In empty space $`\nabla\cdot\mathbf E = 0`$, so the first term drops and the curl of the curl is just $`-\nabla^2\mathbf E`$.
 
 <details>
 <summary>Checking the identity on one component</summary>
 
-Write $\mathbf E = (E_x, E_y, E_z)$, and $\partial_x$ for $\partial/\partial x$. The $x$-component of $\nabla\times\mathbf E$ is $\partial_y E_z - \partial_z E_y$, and similarly round the cycle. The $x$-component of the curl of the curl is
+Write $`\mathbf E = (E_x, E_y, E_z)`$, and $`\partial_x`$ for $`\partial/\partial x`$. The $`x`$-component of $`\nabla\times\mathbf E`$ is $`\partial_y E_z - \partial_z E_y`$, and similarly round the cycle. The $`x`$-component of the curl of the curl is
 
-$$\partial_y(\partial_x E_y - \partial_y E_x) - \partial_z(\partial_z E_x - \partial_x E_z) = \partial_x(\partial_y E_y + \partial_z E_z) - (\partial_y^2 + \partial_z^2)E_x.$$
+$`\displaystyle \partial_y(\partial_x E_y - \partial_y E_x) - \partial_z(\partial_z E_x - \partial_x E_z) = \partial_x(\partial_y E_y + \partial_z E_z) - (\partial_y^2 + \partial_z^2)E_x.`$
 
-Add and subtract $\partial_x^2 E_x$: the first bracket becomes $\partial_x(\nabla\cdot\mathbf E)$ and the second becomes $\nabla^2 E_x$. The $y$ and $z$ components follow by renaming. The code checks the identity a different way, by finite differences on a field with no divergence that is not a wave: at the point (0.3, 0.7, 1.1) the curl of the curl comes out at −0.50893, −0.80423, −0.94490, and minus the Laplacian, worked by hand, gives the same three numbers.
+Add and subtract $`\partial_x^2 E_x`$: the first bracket becomes $`\partial_x(\nabla\cdot\mathbf E)`$ and the second becomes $`\nabla^2 E_x`$. The $`y`$ and $`z`$ components follow by renaming. The code checks the identity a different way, by finite differences on a field with no divergence that is not a wave: at the point (0.3, 0.7, 1.1) the curl of the curl comes out at −0.50893, −0.80423, −0.94490, and minus the Laplacian, worked by hand, gives the same three numbers.
 
 </details>
 
 ### Step 4: the wave equation, and its speed
 
-Put Step 3 into Step 2 and divide by $-\mu_0\varepsilon_0$:
+Put Step 3 into Step 2 and divide by $`-\mu_0\varepsilon_0`$:
 
-$$\frac{\partial^2 \mathbf E}{\partial t^2} = \frac{1}{\mu_0\varepsilon_0}\,\nabla^2\mathbf E.$$
+```math
+\frac{\partial^2 \mathbf E}{\partial t^2} = \frac{1}{\mu_0\varepsilon_0}\,\nabla^2\mathbf E.
+```
 
-Each of the three components obeys the wave equation from wing 08, with $c^2 = 1/(\mu_0\varepsilon_0)$. The same steps, starting from the curl of the fourth equation, give the same equation for $\mathbf B$.
+Each of the three components obeys the wave equation from wing 08, with $`c^2 = 1/(\mu_0\varepsilon_0)`$. The same steps, starting from the curl of the fourth equation, give the same equation for $`\mathbf B`$.
 
-With the CODATA 2022 constants, $c$ = 299,792,458 m/s. Today that match is built in: the metre is defined from $c$, and since 2019 $\varepsilon_0$ is fixed as $1/(\mu_0 c^2)$, so the code's check of $c$ confirms only that the constants are consistent.
+With the CODATA 2022 constants, $`c`$ = 299,792,458 m/s. Today that match is built in: the metre is defined from $`c`$, and since 2019 $`\varepsilon_0`$ is fixed as $`1/(\mu_0 c^2)`$, so the code's check of $`c`$ confirms only that the constants are consistent.
 
-The real test came first. In the 1850s the combination $1/\sqrt{\mu_0\varepsilon_0}$ was measured on a bench with capacitors and coils, and Maxwell's 1865 paper set it beside the measured speed of light. They agreed within a few percent.
+The real test came first. In the 1850s the combination $`1/\sqrt{\mu_0\varepsilon_0}`$ was measured on a bench with capacitors and coils, and Maxwell's 1865 paper set it beside the measured speed of light. They agreed within a few percent.
 
 ### Step 5: the wave must point across its travel
 
-Try a wave that varies only with $x$. If $\mathbf E$ had a waving part along $x$, that part would change with $x$, and $\nabla\cdot\mathbf E$ would not be zero. So $\mathbf E$ lies across the direction of travel: the wave is **transverse**.
+Try a wave that varies only with $`x`$. If $`\mathbf E`$ had a waving part along $`x`$, that part would change with $`x`$, and $`\nabla\cdot\mathbf E`$ would not be zero. So $`\mathbf E`$ lies across the direction of travel: the wave is **transverse**.
 
-Take $\mathbf E = E_0\hat{\mathbf y}\cos(kx-\omega t)$. Faraday's law then reads $\partial B_z/\partial t = -\partial E_y/\partial x$, which gives $\mathbf B$ along $\hat{\mathbf z}$ with peak $E_0 k/\omega$. The wave equation forces $\omega = ck$, so $B_0 = E_0/c$, and $\lambda = 2\pi/k = 2\pi c/\omega = c/f$. The two fields are at right angles to each other and to the travel, and they peak together.
+Take $`\mathbf E = E_0\hat{\mathbf y}\cos(kx-\omega t)`$. Faraday's law then reads $`\partial B_z/\partial t = -\partial E_y/\partial x`$, which gives $`\mathbf B`$ along $`\hat{\mathbf z}`$ with peak $`E_0 k/\omega`$. The wave equation forces $`\omega = ck`$, so $`B_0 = E_0/c`$, and $`\lambda = 2\pi/k = 2\pi c/\omega = c/f`$. The two fields are at right angles to each other and to the travel, and they peak together.
 
 ### Step 6: polarisation is the direction of E
 
-Nothing above fixes which way across the travel $\mathbf E$ points: up, sideways, or anything between. That direction is the wave's **polarisation**. An antenna is a wire, and only the part of $\mathbf E$ along the wire pushes its electrons. Tilt the wire by $\theta$ away from $\mathbf E$ and the pushing part is $E_0\cos\theta$. The voltage scales by $\cos\theta$ and the received power by $\cos^2\theta$.
+Nothing above fixes which way across the travel $`\mathbf E`$ points: up, sideways, or anything between. That direction is the wave's **polarisation**. An antenna is a wire, and only the part of $`\mathbf E`$ along the wire pushes its electrons. Tilt the wire by $`\theta`$ away from $`\mathbf E`$ and the pushing part is $`E_0\cos\theta`$. The voltage scales by $`\cos\theta`$ and the received power by $`\cos^2\theta`$.
 
 ---
 
 ## Worked numbers, by hand
 
-The station: $f$ = 100 MHz, peak field $E_0$ = 1.000 mV/m.
+The station: $`f`$ = 100 MHz, peak field $`E_0`$ = 1.000 mV/m.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\mu_0\varepsilon_0$ | $1.25663706127\times10^{-6} \times 8.8541878188\times10^{-12}$ | $1.1127\times10^{-17}$ s²/m² |
-| speed, $c = 1/\sqrt{\mu_0\varepsilon_0}$ | $1/\sqrt{1.1127\times10^{-17}}$ | 299,792,458 m/s |
-| period, $1/f$ | $1/(100\times10^6)$ | 10 ns |
-| wavelength, $\lambda = c/f$ | $299{,}792{,}458 / 100{,}000{,}000$ | **2.9979 m** |
-| quarter-wave whip, $\lambda/4$ | $2.9979/4$ | 0.7495 m |
-| half-wave dipole, $\lambda/2$ | $2.9979/2$ | 1.4990 m |
-| angular frequency, $\omega = 2\pi f$ | $2\pi\times100\times10^6$ | $628.3\times10^6$ rad/s |
-| wavenumber, $k = 2\pi/\lambda$ | $2\pi/2.9979$ | 2.0958 rad/m |
-| check, $\omega/k$ | $628.3\times10^6/2.0958$ | 299,792,458 m/s |
-| magnetic peak, $B_0 = E_0/c$ | $0.001/299{,}792{,}458$ | 3.336 pT |
-| antenna tilted 60°, voltage | $\cos 60°$ | × 0.500, which is −6.02 dB (decibels: ten times the base-10 logarithm of the power ratio, here 0.250) |
+| $`\mu_0\varepsilon_0`$ | $`1.25663706127\times10^{-6} \times 8.8541878188\times10^{-12}`$ | $`1.1127\times10^{-17}`$ s²/m² |
+| speed, $`c = 1/\sqrt{\mu_0\varepsilon_0}`$ | $`1/\sqrt{1.1127\times10^{-17}}`$ | 299,792,458 m/s |
+| period, $`1/f`$ | $`1/(100\times10^6)`$ | 10 ns |
+| wavelength, $`\lambda = c/f`$ | $`299{,}792{,}458 / 100{,}000{,}000`$ | **2.9979 m** |
+| quarter-wave whip, $`\lambda/4`$ | $`2.9979/4`$ | 0.7495 m |
+| half-wave dipole, $`\lambda/2`$ | $`2.9979/2`$ | 1.4990 m |
+| angular frequency, $`\omega = 2\pi f`$ | $`2\pi\times100\times10^6`$ | $`628.3\times10^6`$ rad/s |
+| wavenumber, $`k = 2\pi/\lambda`$ | $`2\pi/2.9979`$ | 2.0958 rad/m |
+| check, $`\omega/k`$ | $`628.3\times10^6/2.0958`$ | 299,792,458 m/s |
+| magnetic peak, $`B_0 = E_0/c`$ | $`0.001/299{,}792{,}458`$ | 3.336 pT |
+| antenna tilted 60°, voltage | $`\cos 60°`$ | × 0.500, which is −6.02 dB (decibels: ten times the base-10 logarithm of the power ratio, here 0.250) |
 
-One wave is 2.9979 m long, so a pull-out whip of about 75 cm is a quarter wave, and a wire dipole for the FM band is about 1.5 m tip to tip. The magnetic part of the wave is tiny in tesla, 3.336 pT, but that is only a choice of units: $cB$ equals $E$ exactly.
+One wave is 2.9979 m long, so a pull-out whip of about 75 cm is a quarter wave, and a wire dipole for the FM band is about 1.5 m tip to tip. The magnetic part of the wave is tiny in tesla, 3.336 pT, but that is only a choice of units: $`cB`$ equals $`E`$ exactly.
 
 ### What breaks if you drop a piece
 
@@ -162,10 +174,10 @@ Correct answer: 2.9979 m wavelength at 299,792,458 m/s.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Put $\omega$ where $f$ belongs, $\lambda = c/\omega$ | 0.4771 m, so a whip of 0.1193 m | Rad/s are not hertz; the answer is short by $2\pi$ |
-| Forget the square root, $c = 1/(\mu_0\varepsilon_0)$ | $8.988\times10^{16}$ m/s | That is $c^2$, in the wrong units |
-| Drop Maxwell's term from the fourth equation | no wave at all: nothing is left that changes $\mathbf E$ | The term is the only link from $\mathbf B$ back to $\mathbf E$, and its size sets the speed: at a quarter strength the simulated pulse runs at 0.4972 of $c$, about half |
-| Use the vacuum wavelength inside coaxial cable (polyethylene) | the true length there is 1.9986 m, not 2.9979 m | Outside the model: the material slows the wave by $\sqrt{2.25}$ = 1.5 |
+| Put $`\omega`$ where $`f`$ belongs, $`\lambda = c/\omega`$ | 0.4771 m, so a whip of 0.1193 m | Rad/s are not hertz; the answer is short by $`2\pi`$ |
+| Forget the square root, $`c = 1/(\mu_0\varepsilon_0)`$ | $`8.988\times10^{16}`$ m/s | That is $`c^2`$, in the wrong units |
+| Drop Maxwell's term from the fourth equation | no wave at all: nothing is left that changes $`\mathbf E`$ | The term is the only link from $`\mathbf B`$ back to $`\mathbf E`$, and its size sets the speed: at a quarter strength the simulated pulse runs at 0.4972 of $`c`$, about half |
+| Use the vacuum wavelength inside coaxial cable (polyethylene) | the true length there is 1.9986 m, not 2.9979 m | Outside the model: the material slows the wave by $`\sqrt{2.25}`$ = 1.5 |
 
 The last row is why a quarter-wave matching stub cut from coax is a third shorter than one cut from bare wire.
 
@@ -173,7 +185,7 @@ The last row is why a quarter-wave matching stub cut from coax is a third shorte
 
 ## How the wave moves
 
-The puzzle: out in empty space there is no charge and no current, so what pushes the crest forward? Answer: the two feeds. Wherever $\mathbf E$ slopes across space, $\mathbf B$ changes in time there (Faraday). Wherever $\mathbf B$ slopes, $\mathbf E$ changes (Maxwell's term). Each field's slope just ahead of the crest builds the other there, so the crest reappears a little further on.
+The puzzle: out in empty space there is no charge and no current, so what pushes the crest forward? Answer: the two feeds. Wherever $`\mathbf E`$ slopes across space, $`\mathbf B`$ changes in time there (Faraday). Wherever $`\mathbf B`$ slopes, $`\mathbf E`$ changes (Maxwell's term). Each field's slope just ahead of the crest builds the other there, so the crest reappears a little further on.
 
 One crest, followed for one period:
 
@@ -196,7 +208,7 @@ both feeds, at 9 m        ██████████████████
 
 With both feeds the pulse arrives whole; a flat wave in vacuum does not fade.
 
-Now weaken one feed. Run the simulation with Maxwell's term at a quarter of its size, and the pulse travels at 0.4972 of $c$, about half: the speed goes as the square root of the term's size. Remove the term altogether and the electric field has no equation left that changes it, so nothing can leave the source. That follows from the equations themselves; no simulation is needed to show it.
+Now weaken one feed. Run the simulation with Maxwell's term at a quarter of its size, and the pulse travels at 0.4972 of $`c`$, about half: the speed goes as the square root of the term's size. Remove the term altogether and the electric field has no equation left that changes it, so nothing can leave the source. That follows from the equations themselves; no simulation is needed to show it.
 
 The two moments side by side, as a chart:
 
@@ -210,17 +222,17 @@ xychart-beta
     line [0.00, 0.50, 0.87, 1.00, 0.87, 0.50, 0.00, -0.50, -0.87, -1.00, -0.86, -0.50, 0.00]
 ```
 
-Orange: the field at 0 ns. Green: 2.5 ns later, every crest moved 0.749 m to the right. The magnetic field, scaled by $c$, lies exactly on each curve.
+Orange: the field at 0 ns. Green: 2.5 ns later, every crest moved 0.749 m to the right. The magnetic field, scaled by $`c`$, lies exactly on each curve.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code takes three independent roads. Road 1 is the closed form: the speed from the two constants, then wavelength, wavenumber and the magnetic peak. Its check of $c$ tests only that the constants are consistent (Step 4).
+The code takes three independent roads. Road 1 is the closed form: the speed from the two constants, then wavelength, wavenumber and the magnetic peak. Its check of $`c`$ tests only that the constants are consistent (Step 4).
 
-Road 2 is a simulation that knows nothing but the two curl equations: it splits a 35 m line into 5 cm cells, keeps $E$ on the cell edges and $B$ halfway between, and steps each from the other's slope every 0.1 ns (Yee's leapfrog scheme). It measures the speed of a pulse, the wavelength of a steady 100 MHz drive, and the ratio $E/(cB)$, with no formula for any of them.
+Road 2 is a simulation that knows nothing but the two curl equations: it splits a 35 m line into 5 cm cells, keeps $`E`$ on the cell edges and $`B`$ halfway between, and steps each from the other's slope every 0.1 ns (Yee's leapfrog scheme). It measures the speed of a pulse, the wavelength of a steady 100 MHz drive, and the ratio $`E/(cB)`$, with no formula for any of them.
 
-The grid slows short waves very slightly, so the simulated speed is 0.9989 of $c$ and the wavelength 2.9970 m; both agree with road 1 within the half-percent the asserts allow. Run with Maxwell's term at a quarter of its size, the same simulation finds 0.4972 of $c$, within the 1% of half that its assert allows; the shorter waves sit on fewer cells and are slowed a little more.
+The grid slows short waves very slightly, so the simulated speed is 0.9989 of $`c`$ and the wavelength 2.9970 m; both agree with road 1 within the half-percent the asserts allow. Run with Maxwell's term at a quarter of its size, the same simulation finds 0.4972 of $`c`$, within the 1% of half that its assert allows; the shorter waves sit on fewer cells and are slowed a little more.
 
 Road 3 checks the vector identity of Step 3 by finite differences on a field that is not a wave. Every number on this card is printed by both programs.
 
@@ -579,17 +591,17 @@ ALL CHECKS PASS
 
 Lean proves the three main claims for any smooth fields and any frequency, and checks the worked numbers exactly.
 
-- Take any smooth field $\mathbf E$, one that can be differentiated twice. Then $\nabla\times(\nabla\times\mathbf E) = \nabla(\nabla\cdot\mathbf E) - \nabla^2\mathbf E$ at every point.
-- Suppose smooth fields $\mathbf E$ and $\mathbf B$ obey the four vacuum equations of Step 1, with $\mu_0, \varepsilon_0 > 0$. Then $\partial^2\mathbf E/\partial t^2 = c^2\nabla^2\mathbf E$ everywhere, with $c = 1/\sqrt{\mu_0\varepsilon_0}$.
-- Take any peak $E_0$ and frequency $f > 0$, with $c$, $\lambda$, $k$ and $\omega$ as in the formula. Then the station's plane wave obeys all four vacuum equations at every time and point.
+- Take any smooth field $`\mathbf E`$, one that can be differentiated twice. Then $`\nabla\times(\nabla\times\mathbf E) = \nabla(\nabla\cdot\mathbf E) - \nabla^2\mathbf E`$ at every point.
+- Suppose smooth fields $`\mathbf E`$ and $`\mathbf B`$ obey the four vacuum equations of Step 1, with $`\mu_0, \varepsilon_0 > 0`$. Then $`\partial^2\mathbf E/\partial t^2 = c^2\nabla^2\mathbf E`$ everywhere, with $`c = 1/\sqrt{\mu_0\varepsilon_0}`$.
+- Take any peak $`E_0`$ and frequency $`f > 0`$, with $`c`$, $`\lambda`$, $`k`$ and $`\omega`$ as in the formula. Then the station's plane wave obeys all four vacuum equations at every time and point.
 - At 100 MHz the period is 10 ns and the wavelength is 2.99792458 m.
 - The quarter-wave whip is 0.749481145 m and the half-wave dipole is 1.49896229 m.
 - After 2.5, 5.0, 7.5 and 10 ns the crest is at 0.749481145, 1.49896229, 2.248443435 and 2.99792458 m.
 - At 50 Hz the wavelength is 5,995,849.16 m, about 5,996 km.
-- An antenna tilted 60° keeps $\cos 60°$ = 0.5 of the voltage and 0.25 of the power.
-- In polyethylene the wave slows by $\sqrt{2.25}$ = 1.5.
+- An antenna tilted 60° keeps $`\cos 60°`$ = 0.5 of the voltage and 0.25 of the power.
+- In polyethylene the wave slows by $`\sqrt{2.25}`$ = 1.5.
 
-The value of $c$ from the CODATA constants, the magnetic peak and the simulations are left to the Python and Rust checks.
+The value of $`c`$ from the CODATA constants, the magnetic peak and the simulations are left to the Python and Rust checks.
 
 ```lean
 -- Electromagnetic waves: in empty space, twice continuously differentiable fields that obey Maxwell's four vacuum equations make the electric field obey the wave equation with speed c = 1/√(μ₀ε₀), and the plane wave E₀ ŷ cos(kx − ωt), (E₀/c) ẑ cos(kx − ωt) with λ = c/f is one such pair of fields.
@@ -958,7 +970,7 @@ example : √(9 / 4 : ℝ) = 3 / 2 := by
 > [!TIP]
 > **Try changing**
 > - Guess first: how long is a wave at the bottom of the FM band? Set `F = 88e6`. The wavelength grows to 3.4067 m and the quarter-wave whip to 0.8517 m; the simulation finds 3.4060 m. The "try: F = 88 MHz" line prints all three.
-> - Guess first: what happens with coarser cells? Set `DX, DT = 0.2, 1e-10`, about 15 cells per wavelength. The pulse comes out at 0.9820 of $c$, nearly 2% slow (the "try: 20 cm cells" line), and the speed assert fails. The grid, not the physics, is slowing it.
+> - Guess first: what happens with coarser cells? Set `DX, DT = 0.2, 1e-10`, about 15 cells per wavelength. The pulse comes out at 0.9820 of $`c`$, nearly 2% slow (the "try: 20 cm cells" line), and the speed assert fails. The grid, not the physics, is slowing it.
 > - Guess first: what if the time step is too long? Set `DX, DT = 0.05, 2e-10`, so light would cross 1.20 cells per step (the "try: 0.2 ns step" line). The simulation blows up: the fields grow without bound, the measured "speed" is meaningless, and the assert fails. A step must not let the wave outrun a cell.
 > - Guess first: what does a 45° tilt cost? Voltage × 0.707, power × 0.500, −3.01 dB: the "45 deg" line.
 
@@ -967,13 +979,13 @@ example : √(9 / 4 : ℝ) = 3 / 2 := by
 ## The usual mistake
 
 > [!warning]
-> **Thinking the magnetic field is the small, unimportant half.** $B_0$ = 3.336 pT looks negligible beside $E_0$ = 1.000 mV/m, but the two are in different units, and $cB$ equals $E$ exactly; the simulation measures $E/(cB)$ = 1.000. Each half carries the same energy, and the wave needs both: in the simulation $\mathbf E$ changes only through the slope of $\mathbf B$, and $\mathbf B$ only through the slope of $\mathbf E$.
+> **Thinking the magnetic field is the small, unimportant half.** $`B_0`$ = 3.336 pT looks negligible beside $`E_0`$ = 1.000 mV/m, but the two are in different units, and $`cB`$ equals $`E`$ exactly; the simulation measures $`E/(cB)`$ = 1.000. Each half carries the same energy, and the wave needs both: in the simulation $`\mathbf E`$ changes only through the slope of $`\mathbf B`$, and $`\mathbf B`$ only through the slope of $`\mathbf E`$.
 >
 > Smaller traps:
-> - **Mixing hertz and rad/s.** $\lambda = c/f$, not $c/\omega$. The slip gives 0.4771 m and a whip of 0.1193 m, cut for no station at all.
+> - **Mixing hertz and rad/s.** $`\lambda = c/f`$, not $`c/\omega`$. The slip gives 0.4771 m and a whip of 0.1193 m, cut for no station at all.
 > - **Using the vacuum wavelength inside a cable.** In polyethylene-filled coax the 100 MHz wave is 1.9986 m long, not 2.9979 m.
-> - **Holding the antenna across the field.** At 90° to $\mathbf E$ an ideal wire picks up nothing (× 0.000). In a real room reflections twist some of the field, so a little still arrives, but turning the antenna can cost far more than a 60° tilt's −6.02 dB.
-> - **Leaving out the square root.** $c = 1/\sqrt{\mu_0\varepsilon_0}$. Without the root the "speed" is $8.988\times10^{16}$ m/s.
+> - **Holding the antenna across the field.** At 90° to $`\mathbf E`$ an ideal wire picks up nothing (× 0.000). In a real room reflections twist some of the field, so a little still arrives, but turning the antenna can cost far more than a 60° tilt's −6.02 dB.
+> - **Leaving out the square root.** $`c = 1/\sqrt{\mu_0\varepsilon_0}`$. Without the root the "speed" is $`8.988\times10^{16}`$ m/s.
 
 ---
 
@@ -981,20 +993,20 @@ example : √(9 / 4 : ℝ) = 3 / 2 := by
 
 - **The radio set itself.** Its antenna is cut to a fraction of the 2.9979 m wave, and its RLC tuner picks the one frequency out of the field the antenna feels ([RLC resonance](03-rlc-circuits-and-resonance.md)).
 - **Circuit boards and the lumped-circuit rule.** [Kirchhoff's laws](01-kirchhoffs-laws-and-equivalent-circuits.md) hold while a circuit is small beside the wavelength. A tuner a few centimetres across is tiny beside 3 m; a board trace carrying 3 GHz, where the wave is 0.0999 m, is not, and designers treat it as a transmission line.
-- **Coaxial cable and matching stubs.** Inside the cable the wave travels at about two-thirds of $c$, so every length cut to a fraction of a wave is cut shorter than in air.
-- **Polarised sunglasses and satellite dishes.** Both choose a direction of $\mathbf E$. A sunglass lens blocks the horizontal glare; a satellite feed is turned to the polarisation the satellite sends.
+- **Coaxial cable and matching stubs.** Inside the cable the wave travels at about two-thirds of $`c`$, so every length cut to a fraction of a wave is cut shorter than in air.
+- **Polarised sunglasses and satellite dishes.** Both choose a direction of $`\mathbf E`$. A sunglass lens blocks the horizontal glare; a satellite feed is turned to the polarisation the satellite sends.
 - **Light, microwaves, X-rays.** All the same wave at other frequencies; only the wavelength changes. A microwave oven at 2.45 GHz uses a wave 0.1224 m long.
-- **Timing and distance.** Radar and satellite positioning turn a measured delay into a distance through $c$; one nanosecond of timing error is 0.2998 m.
+- **Timing and distance.** Radar and satellite positioning turn a measured delay into a distance through $`c`$; one nanosecond of timing error is 0.2998 m.
 
 > **Say it back**
-> A changing magnetic field makes a curling electric field, and a changing electric field makes a curling magnetic field. In empty space, putting the two curl equations together gives the wave equation, with speed $c = 1/\sqrt{\mu_0\varepsilon_0}$ = 299,792,458 m/s, the speed of light. The wave is transverse: $\mathbf E$ and $\mathbf B$ lie across the travel, at right angles to each other, with $B = E/c$. A 100 MHz station's wave is 2.9979 m long, so a quarter-wave whip is about 75 cm. The direction of $\mathbf E$ is the polarisation, and an antenna tilted by $\theta$ picks up $\cos\theta$ of the voltage.
+> A changing magnetic field makes a curling electric field, and a changing electric field makes a curling magnetic field. In empty space, putting the two curl equations together gives the wave equation, with speed $`c = 1/\sqrt{\mu_0\varepsilon_0}`$ = 299,792,458 m/s, the speed of light. The wave is transverse: $`\mathbf E`$ and $`\mathbf B`$ lie across the travel, at right angles to each other, with $`B = E/c`$. A 100 MHz station's wave is 2.9979 m long, so a quarter-wave whip is about 75 cm. The direction of $`\mathbf E`$ is the polarisation, and an antenna tilted by $`\theta`$ picks up $`\cos\theta`$ of the voltage.
 
 ---
 
 ## What this builds on
 
 - [Maxwell's equations](07-maxwells-equations.md): the four equations, and the term Maxwell added to Ampère's law. This card sets the sources to zero and combines the two curl equations.
-- [The wave equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/05-the-wave-equation-and-dalemberts-formula.md): the equation itself, its speed $c$, and why every solution is a shape sliding at that speed. This card only derives it from the fields.
+- [The wave equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/05-the-wave-equation-and-dalemberts-formula.md): the equation itself, its speed $`c`$, and why every solution is a shape sliding at that speed. This card only derives it from the fields.
 - [Standing waves](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/06-standing-waves-on-a-string.md): what happens when the wave is held at both ends. A half-wave dipole is the electrical cousin of a string vibrating in its first harmonic.
 
 ## Where this goes next
@@ -1013,4 +1025,4 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Maxwell, James Clerk. "A Dynamical Theory of the Electromagnetic Field." *Philosophical Transactions of the Royal Society of London* 155 (1865): 459–512. [doi:10.1098/rstl.1865.0008](https://doi.org/10.1098/rstl.1865.0008). The original: the displacement term, the wave equation, and the speed computed from electrical measurements matching the speed of light.
 - National Institute of Standards and Technology. CODATA 2022 recommended values: [vacuum magnetic permeability](https://physics.nist.gov/cgi-bin/cuu/Value?mu0) and [vacuum electric permittivity](https://physics.nist.gov/cgi-bin/cuu/Value?ep0). The two constants used on this card.
 - Yee, Kane. "Numerical Solution of Initial Boundary Value Problems Involving Maxwell's Equations in Isotropic Media." *IEEE Transactions on Antennas and Propagation* 14, no. 3 (1966): 302–307. [doi:10.1109/TAP.1966.1138693](https://doi.org/10.1109/TAP.1966.1138693). The staggered leapfrog grid used as road 2, and its stability limit.
-- OpenStax. *University Physics Volume 2*, sections 16.1 and 16.2. [Maxwell's equations and electromagnetic waves](https://openstax.org/books/university-physics-volume-2/pages/16-1-maxwells-equations-and-electromagnetic-waves); [Plane electromagnetic waves](https://openstax.org/books/university-physics-volume-2/pages/16-2-plane-electromagnetic-waves). The derivation from the curl equations and the plane wave with $B = E/c$, at textbook level.
+- OpenStax. *University Physics Volume 2*, sections 16.1 and 16.2. [Maxwell's equations and electromagnetic waves](https://openstax.org/books/university-physics-volume-2/pages/16-1-maxwells-equations-and-electromagnetic-waves); [Plane electromagnetic waves](https://openstax.org/books/university-physics-volume-2/pages/16-2-plane-electromagnetic-waves). The derivation from the curl equations and the plane wave with $`B = E/c`$, at textbook level.

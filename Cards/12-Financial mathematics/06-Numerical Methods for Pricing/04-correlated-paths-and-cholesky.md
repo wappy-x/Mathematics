@@ -47,7 +47,9 @@ Notation first, in words.
 - The **correlation matrix** R holds each pair's correlation in the row of one share and the column of the other, and ones down its diagonal, since every share agrees perfectly with itself. Those asked-for correlations are the **dial**, the name used for them from here on.
 - A share's spread is its standard deviation: the typical size of its wiggle. Its variance is the spread squared.
 
-$$R = L\,L^{T}$$
+```math
+R = L\,L^{T}
+```
 
 **Read it aloud:** the mixing table, dotted against its own sideways copy, gives back the table of correlations.
 
@@ -55,37 +57,45 @@ That one line holds both requirements. The product's diagonal entries are each r
 
 The mixing is one more line:
 
-$$X = L\,Z$$
+```math
+X = L\,Z
+```
 
 **Read it aloud:** hand the independent draws to the rows of the table and out come shocks of the right size that agree the right amount.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $R$, $R_{ij}$, $\rho_{ij}$ | the correlation table, and one pair's correlation inside it | ones on the diagonal, 0.500000 everywhere else | the three move more as one, and their average spreads wider |
-| $\rho$ | one correlation, when every pair is given the same one | 0.500000 | as above |
-| $L$, $L_{ij}$ | the Cholesky factor: rows of length one whose pairwise dot products are the correlations | rows (1.000000, 0, 0), (0.500000, 0.866025, 0), (0.500000, 0.288675, 0.816497) | — |
-| $Z$ | independent standard draws: spread one, no agreement, one per share per step | three per step, 54000 in the run | a finer grid, or more paths |
-| $X$ | the mixed shocks, one per share | three numbers, each of spread one | — |
-| $W$, $W_i$ | a share's running total of shocks: its wiggle so far | spread 1.001116 at one year in the sample | grows with the square root of time |
-| $t_k$, $T$ | the grid dates, and the last of them, in years; a raised T instead means transposed | 0.25, 0.5 and 1 | a finer path, the same law at the end |
-| $\sigma$, $\sigma_i$ | volatility: one share's own size of wiggle per year | 20% for all three | every price spread widens, the dial untouched |
-| $s_i$, $S_i(t_k)$ | one share's price today, and the same share's price at a grid date | $80.00, $100.00, $120.00 today | every later price scales with it |
-| $q_i$ | dividend yield: cash leaking out of one share each year | 1%, 2%, 3% | that share's prices drift lower |
-| $r$ | the riskless rate, continuously compounded | 5% | all three drift higher |
+| $`R`$, $`R_{ij}`$, $`\rho_{ij}`$ | the correlation table, and one pair's correlation inside it | ones on the diagonal, 0.500000 everywhere else | the three move more as one, and their average spreads wider |
+| $`\rho`$ | one correlation, when every pair is given the same one | 0.500000 | as above |
+| $`L`$, $`L_{ij}`$ | the Cholesky factor: rows of length one whose pairwise dot products are the correlations | rows (1.000000, 0, 0), (0.500000, 0.866025, 0), (0.500000, 0.288675, 0.816497) | — |
+| $`Z`$ | independent standard draws: spread one, no agreement, one per share per step | three per step, 54000 in the run | a finer grid, or more paths |
+| $`X`$ | the mixed shocks, one per share | three numbers, each of spread one | — |
+| $`W`$, $`W_i`$ | a share's running total of shocks: its wiggle so far | spread 1.001116 at one year in the sample | grows with the square root of time |
+| $`t_k`$, $`T`$ | the grid dates, and the last of them, in years; a raised T instead means transposed | 0.25, 0.5 and 1 | a finer path, the same law at the end |
+| $`\sigma`$, $`\sigma_i`$ | volatility: one share's own size of wiggle per year | 20% for all three | every price spread widens, the dial untouched |
+| $`s_i`$, $`S_i(t_k)`$ | one share's price today, and the same share's price at a grid date | $80.00, $100.00, $120.00 today | every later price scales with it |
+| $`q_i`$ | dividend yield: cash leaking out of one share each year | 1%, 2%, 3% | that share's prices drift lower |
+| $`r`$ | the riskless rate, continuously compounded | 5% | all three drift higher |
 
 The table is built one column at a time. Take what the diagonal owes and subtract what earlier columns of that row already supply: the remainder is the **pivot**, and its square root is the diagonal entry. Each entry below that is what the pair still owes, divided by the same root:
 
-$$L_{jj} = \sqrt{R_{jj} - \sum_{k<j} L_{jk}^{2}}\,, \qquad L_{ij} = \frac{R_{ij} - \sum_{k<j} L_{ik}L_{jk}}{L_{jj}} \quad (i > j)$$
+```math
+L_{jj} = \sqrt{R_{jj} - \sum_{k<j} L_{jk}^{2}}\,, \qquad L_{ij} = \frac{R_{ij} - \sum_{k<j} L_{ik}L_{jk}}{L_{jj}} \quad (i > j)
+```
 
 An empty sum is zero, so the first pivot is one, and so is the first diagonal entry. Entries above the diagonal stay zero, which is what makes the table triangular.
 
 Paths need more than one shock apiece. Fix the dates, scale each step's mix by the square root of the step's length in years, and add the steps up. A triangle marks one step's worth: the step's length in years, and the shock that step adds.
 
-$$\Delta W_k = \sqrt{\Delta t_k}\;L\,Z_k, \qquad W(t_j) = \sum_{k \le j} \Delta W_k$$
+```math
+\Delta W_k = \sqrt{\Delta t_k}\;L\,Z_k, \qquad W(t_j) = \sum_{k \le j} \Delta W_k
+```
 
 Fresh independent draws for every step. The shocks then turn into prices by the usual lognormal rule, one exponential per date ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)):
 
-$$S_i(t_k) = s_i\exp\!\left[\left(r - q_i - \tfrac{1}{2}\sigma_i^{2}\right)t_k + \sigma_i W_i(t_k)\right]$$
+```math
+S_i(t_k) = s_i\exp\!\left[\left(r - q_i - \tfrac{1}{2}\sigma_i^{2}\right)t_k + \sigma_i W_i(t_k)\right]
+```
 
 ### When it holds
 
@@ -105,7 +115,7 @@ Independent standard draws have spread one and no agreement. Add them up with we
 
 And the covariance of two such sums — the average of their product, since both average zero — is the dot product of the two rows, because every cross term between different draws averages to nothing.
 
-So the job is geometry, not probability: find rows of length one whose dot products are the correlations asked for. In one line, that is $R = L\,L^{T}$.
+So the job is geometry, not probability: find rows of length one whose dot products are the correlations asked for. In one line, that is $`R = L\,L^{T}`$.
 
 ### Step 1: build the rows one at a time
 
@@ -120,13 +130,13 @@ Each share leans on the draws already used plus exactly one new one. That is why
 <details>
 <summary>Detailed proof: exactly one such table exists, and its pivots are positive</summary>
 
-The claim: for every symmetric R giving strictly positive variance to every non-zero holding ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)), there is one and only one lower-triangular L with a positive diagonal and $R = L\,L^{T}$.
+The claim: for every symmetric R giving strictly positive variance to every non-zero holding ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)), there is one and only one lower-triangular L with a positive diagonal and $`R = L\,L^{T}`$.
 
-**Existence, by induction: settle one share, then let each new share ride on the case below it.** One share: R is a single positive number, whose only positive factor is its square root. Split a larger R into its first entry a, the rest of the first column b, and the block C of everything else. Share one held alone has positive variance, so a is positive. Form the smaller table $G = C - b\,b^{T}/a$. It is symmetric, and positive for every non-zero holding y: the holding with first entry $-b^{T}y/a$ and rest y has variance exactly $y^{T}Gy$. By induction $G = M\,M^{T}$ for a lower-triangular M with positive diagonal, and the table with first column $\sqrt{a}$ over $b/\sqrt{a}$, M filling the rest, multiplies out to R. Comparing its entries with R gives back the column recurrence, so every pivot is positive.
+**Existence, by induction: settle one share, then let each new share ride on the case below it.** One share: R is a single positive number, whose only positive factor is its square root. Split a larger R into its first entry a, the rest of the first column b, and the block C of everything else. Share one held alone has positive variance, so a is positive. Form the smaller table $`G = C - b\,b^{T}/a`$. It is symmetric, and positive for every non-zero holding y: the holding with first entry $`-b^{T}y/a`$ and rest y has variance exactly $`y^{T}Gy`$. By induction $`G = M\,M^{T}`$ for a lower-triangular M with positive diagonal, and the table with first column $`\sqrt{a}`$ over $`b/\sqrt{a}`$, M filling the rest, multiplies out to R. Comparing its entries with R gives back the column recurrence, so every pivot is positive.
 
-**Uniqueness.** In any lower-triangular table with positive diagonal satisfying $R = L\,L^{T}$, the product's top-left entry forces the positive root $\sqrt{a}$, and the rest of its first column forces $b/\sqrt{a}$. Removing that column's contribution leaves exactly that smaller table, whose factor is unique by induction.
+**Uniqueness.** In any lower-triangular table with positive diagonal satisfying $`R = L\,L^{T}`$, the product's top-left entry forces the positive root $`\sqrt{a}`$, and the rest of its first column forces $`b/\sqrt{a}`$. Removing that column's contribution leaves exactly that smaller table, whose factor is unique by induction.
 
-**The converse, which the program relies on.** If $R = L\,L^{T}$ with L triangular and its diagonal positive, a holding x has variance the squared length of $L^{T}x$. Working up from the last row, $L^{T}x = 0$ forces x to be zero, so every non-zero holding has positive variance. A run finishing with every pivot positive has proved the dial possible; a run hitting a pivot of zero or less has found a holding the dial cannot price.
+**The converse, which the program relies on.** If $`R = L\,L^{T}`$ with L triangular and its diagonal positive, a holding x has variance the squared length of $`L^{T}x`$. Working up from the last row, $`L^{T}x = 0`$ forces x to be zero, so every non-zero holding has positive variance. A run finishing with every pivot positive has proved the dial possible; a run hitting a pivot of zero or less has found a holding the dial cannot price.
 
 </details>
 
@@ -142,7 +152,9 @@ Scale each step's mixed shocks by the square root of the step's length, and hand
 
 The cross-share, cross-date rule is as plain. Only the steps the two dates share contribute, each contributing its own length times the correlation:
 
-$$\mathrm{Cov}\!\left(W_i(t_a), W_j(t_b)\right) = \rho_{ij}\,\min(t_a, t_b)$$
+```math
+\mathrm{Cov}\!\left(W_i(t_a), W_j(t_b)\right) = \rho_{ij}\,\min(t_a, t_b)
+```
 
 The check verifies all 324 of those entries by exact coefficient algebra, across four settings of the dial, worst gap 0.000000000000.
 
@@ -159,7 +171,9 @@ Now dot one share's weights against another's. Only the steps inside both dates 
 
 Prices are exponentials of shocks, so what "correlation" means depends on which number is correlated. Log returns are the shocks times volatility plus a fixed drift, so their correlation is exactly the dial. Percent returns — the price ratio minus one, the number a brokerage statement shows — are not. For two shares of the same volatility over a stretch of length h,
 
-$$\text{correlation of percent returns} = \frac{e^{\rho\sigma^{2}h} - 1}{e^{\sigma^{2}h} - 1}$$
+```math
+\text{correlation of percent returns} = \frac{e^{\rho\sigma^{2}h} - 1}{e^{\sigma^{2}h} - 1}
+```
 
 At 20% volatility over a year that is 0.495000 against a dial of 0.500000; at 60% volatility, 0.455121. The bend grows with volatility and with the horizon, and always pulls toward zero, because the exponential stretches the good outcomes more than the bad.
 
@@ -168,15 +182,15 @@ In the sample the three pairs of percent returns come out at 0.501178, 0.508628 
 <details>
 <summary>Where that ratio comes from</summary>
 
-Write each share's log return over the stretch as its drift plus $\sigma$ times a standard normal, the two normals having correlation $\rho$. The average of an exponential of a normal is the exponential of its mean plus half its variance, so each price ratio has average $e^{(r-q_i)h}$, and two ratios multiplied together average to the product of those averages times $e^{\rho\sigma^{2}h}$.
+Write each share's log return over the stretch as its drift plus $`\sigma`$ times a standard normal, the two normals having correlation $`\rho`$. The average of an exponential of a normal is the exponential of its mean plus half its variance, so each price ratio has average $`e^{(r-q_i)h}`$, and two ratios multiplied together average to the product of those averages times $`e^{\rho\sigma^{2}h}`$.
 
-Subtracting gives the ratios' covariance: the product of the averages times $e^{\rho\sigma^{2}h} - 1$. The same identity with $\rho$ set to one gives each ratio's variance, its average squared times $e^{\sigma^{2}h} - 1$. Divide by the two standard deviations and every drift factor cancels, leaving the displayed ratio. Turning a ratio into a percent return subtracts one from it, and a shift changes no covariance.
+Subtracting gives the ratios' covariance: the product of the averages times $`e^{\rho\sigma^{2}h} - 1`$. The same identity with $`\rho`$ set to one gives each ratio's variance, its average squared times $`e^{\sigma^{2}h} - 1`$. Divide by the two standard deviations and every drift factor cancels, leaving the displayed ratio. Turning a ratio into a percent return subtracts one from it, and a shift changes no covariance.
 
-At a dial of one half the top exponent is half the bottom one, so the bottom factors as the top times $e^{\rho\sigma^{2}h} + 1$ and the whole ratio collapses to $1/(1 + e^{\rho\sigma^{2}h})$ — the second road the check prints to 0.495000.
+At a dial of one half the top exponent is half the bottom one, so the bottom factors as the top times $`e^{\rho\sigma^{2}h} + 1`$ and the whole ratio collapses to $`1/(1 + e^{\rho\sigma^{2}h})`$ — the second road the check prints to 0.495000.
 
 </details>
 
-**Another route to the same shocks.** Nothing above needed the table to be triangular; it needed row lengths of one and the right dot products. When every pair shares one non-negative correlation there is a shorter recipe: give each share the same slice of one market-wide draw, $\sqrt{\rho}$, plus a private draw of its own, $\sqrt{1-\rho}$.
+**Another route to the same shocks.** Nothing above needed the table to be triangular; it needed row lengths of one and the right dot products. When every pair shares one non-negative correlation there is a shorter recipe: give each share the same slice of one market-wide draw, $`\sqrt{\rho}`$, plus a private draw of its own, $`\sqrt{1-\rho}`$.
 
 At a dial of 0.500000 both weights are 0.707107, and this four-column mixer rebuilds R exactly, worst entry off by 0.000000000000, while sitting 0.866025 away from the triangular factor in one entry. Two tables, one correlation matrix: the triangular one with a positive diagonal is the only one of its kind, and it is what a general dial and a fast program want.
 
@@ -652,10 +666,10 @@ The two outputs match line for line: the counter-based draws and the mixing are 
 
 Lean proves the card's main theorem, its converse and the clock rule for any number of shares, and the worked numbers exactly.
 
-- Take a correlation table R: symmetric, ones down the diagonal, every non-zero holding given a positive variance. Then exactly one lower-triangular L with a positive diagonal has $R = L\,L^{T}$.
-- Take that same table R and any L with $R = L\,L^{T}$. Then every row of L has length one.
-- Take a lower-triangular L with a positive diagonal. Then $L\,L^{T}$ gives every non-zero holding a positive variance, so the dial is possible.
-- Take steps of non-negative length, each step's mix scaled by the square root of its length, and $R = L\,L^{T}$. Then shares i and j at dates $t_a$ and $t_b$ have covariance $R_{ij}\min(t_a, t_b)$.
+- Take a correlation table R: symmetric, ones down the diagonal, every non-zero holding given a positive variance. Then exactly one lower-triangular L with a positive diagonal has $`R = L\,L^{T}`$.
+- Take that same table R and any L with $`R = L\,L^{T}`$. Then every row of L has length one.
+- Take a lower-triangular L with a positive diagonal. Then $`L\,L^{T}`$ gives every non-zero holding a positive variance, so the dial is possible.
+- Take steps of non-negative length, each step's mix scaled by the square root of its length, and $`R = L\,L^{T}`$. Then shares i and j at dates $`t_a`$ and $`t_b`$ have covariance $`R_{ij}\min(t_a, t_b)`$.
 - The worked numbers also hold exactly in fractions. That covers the table used as the mixer, the impossible dial's holding and third pivot, the −0.6 pivot and the chart.
 
 The square roots, the normal draws, the sampled paths, the prices and the percent-return correlations are left to the Python and Rust checks.

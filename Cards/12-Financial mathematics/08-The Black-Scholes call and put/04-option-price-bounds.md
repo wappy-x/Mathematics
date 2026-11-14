@@ -45,43 +45,47 @@ Top line: the ceiling, one share delivered at expiry. Bottom line: the floor, fl
 
 Two pieces of shorthand carry the card, in words before symbols.
 
-A dollar due on expiry day is worth less than a dollar today, since cash in the bank earns interest in between. With interest as a continuously compounded rate, a dollar due in $T$ years is worth $e^{-rT}$ dollars now, where $r$ is that rate and $e$ is the constant 2.71828…. Here $e^{-rT}$ is 0.951229, the **discount factor**.
+A dollar due on expiry day is worth less than a dollar today, since cash in the bank earns interest in between. With interest as a continuously compounded rate, a dollar due in $`T`$ years is worth $`e^{-rT}`$ dollars now, where $`r`$ is that rate and $`e`$ is the constant 2.71828…. Here $`e^{-rT}`$ is 0.951229, the **discount factor**.
 
-A dividend-paying share needs the mirror of that trick. Buy $e^{-qT}$ of a share today, reinvest every dividend into more of the same share, and exactly one whole share is in hand on expiry day; $q$ is the **dividend yield**, the cash a share pays out each year as a rate. Here $e^{-qT}$ is 0.980199, the **dividend drag**.
+A dividend-paying share needs the mirror of that trick. Buy $`e^{-qT}`$ of a share today, reinvest every dividend into more of the same share, and exactly one whole share is in hand on expiry day; $`q`$ is the **dividend yield**, the cash a share pays out each year as a rate. Here $`e^{-qT}`$ is 0.980199, the **dividend drag**.
 
 Those give the two prices every bound is built from:
 
-- the **share side**, $S e^{-qT}$: what it costs today to have exactly one Acme share on expiry day. Here 98.019867.
-- the **cash side**, $K e^{-rT}$: what it costs today to have exactly $K$ dollars on expiry day. Here 95.122942.
+- the **share side**, $`S e^{-qT}`$: what it costs today to have exactly one Acme share on expiry day. Here 98.019867.
+- the **cash side**, $`K e^{-rT}`$: what it costs today to have exactly $`K`$ dollars on expiry day. Here 95.122942.
 
-$$\max\!\left(S e^{-qT} - K e^{-rT},\; 0\right) \;\le\; C \;\le\; S e^{-qT}$$
+```math
+\max\!\left(S e^{-qT} - K e^{-rT},\; 0\right) \;\le\; C \;\le\; S e^{-qT}
+```
 
-$$\max\!\left(K e^{-rT} - S e^{-qT},\; 0\right) \;\le\; P \;\le\; K e^{-rT}$$
+```math
+\max\!\left(K e^{-rT} - S e^{-qT},\; 0\right) \;\le\; P \;\le\; K e^{-rT}
+```
 
 **Read it aloud:** a call costs no more than the share it might deliver and no less than a firm deal to buy that share at the strike; a put costs no more than the strike money it might deliver and no less than a firm deal to sell the share at the strike; and neither costs less than nothing.
 
 | Symbol | Plain meaning | In our example | Push it up and the bounds… |
 | --- | --- | --- | --- |
-| $C$ | what one European call costs today | quoted at 2.50, floor 2.896925 | it is the thing being fenced in |
-| $P$ | what one European put costs today, same strike and day | 6.330081 at 20% volatility | it is the thing being fenced in |
-| $S$ | Acme's share price today | 100 | both call bounds rise, the put floor falls |
-| $K$ | the **strike**: the price the option trades the share at | 100, and 130 where the put floor bites | the call floor falls, both put bounds rise |
-| $T$ | years until expiry day | 1 | both discount factors shrink; with $r$ above $q$ the gap between them widens at first, so the call floor rises |
-| $r$ | the riskless rate, continuously compounded | 5% | the cash side shrinks: call floor up, both put bounds down |
-| $q$ | the dividend yield, as a continuous rate | 2% | the share side shrinks: both call bounds down, put floor up |
-| $S_T$ | Acme's price on expiry day, unknown today | never an input: the bounds hold whatever it turns out to be | — |
-| $e^{-rT}$ | the discount factor: one dollar due at expiry, valued today | 0.951229 | — |
-| $e^{-qT}$ | the dividend drag: shares to buy today to hold one share at expiry | 0.980199 | — |
-| $F$ | the **forward price**, $S e^{(r-q)T}$: the strike that makes a firm deal free today | 103.045453 | the call floor rises |
-| $\sigma$ | volatility, how jumpy the share is. Say "sigma". | 20%, used only for the model prices quoted as a test | nothing at all: it is absent from every bound |
+| $`C`$ | what one European call costs today | quoted at 2.50, floor 2.896925 | it is the thing being fenced in |
+| $`P`$ | what one European put costs today, same strike and day | 6.330081 at 20% volatility | it is the thing being fenced in |
+| $`S`$ | Acme's share price today | 100 | both call bounds rise, the put floor falls |
+| $`K`$ | the **strike**: the price the option trades the share at | 100, and 130 where the put floor bites | the call floor falls, both put bounds rise |
+| $`T`$ | years until expiry day | 1 | both discount factors shrink; with $`r`$ above $`q`$ the gap between them widens at first, so the call floor rises |
+| $`r`$ | the riskless rate, continuously compounded | 5% | the cash side shrinks: call floor up, both put bounds down |
+| $`q`$ | the dividend yield, as a continuous rate | 2% | the share side shrinks: both call bounds down, put floor up |
+| $`S_T`$ | Acme's price on expiry day, unknown today | never an input: the bounds hold whatever it turns out to be | — |
+| $`e^{-rT}`$ | the discount factor: one dollar due at expiry, valued today | 0.951229 | — |
+| $`e^{-qT}`$ | the dividend drag: shares to buy today to hold one share at expiry | 0.980199 | — |
+| $`F`$ | the **forward price**, $`S e^{(r-q)T}`$: the strike that makes a firm deal free today | 103.045453 | the call floor rises |
+| $`\sigma`$ | volatility, how jumpy the share is. Say "sigma". | 20%, used only for the model prices quoted as a test | nothing at all: it is absent from every bound |
 
-A firm deal to buy one Acme share for $K$ on expiry day, with no right to walk away, is a **forward**. It is worth the share side minus the cash side: 98.019867 − 95.122942, or 2.896925 today. That number is the call's floor, which is the whole of Step 3.
+A firm deal to buy one Acme share for $`K`$ on expiry day, with no right to walk away, is a **forward**. It is worth the share side minus the cash side: 98.019867 − 95.122942, or 2.896925 today. That number is the call's floor, which is the whole of Step 3.
 
 ### When it holds
 
-- **European exercise only.** Every cash-flow table below looks at expiry day and nowhere else. A holder who may exercise early — use the right before expiry day, as an American option allows — has more, so an American put is worth at least the larger of this card's floor and the undiscounted $\max(K - S, 0)$, and its ceiling is $K$ rather than the cash side ([Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md)).
-- **One rate for lending and borrowing, and shares that can be sold short.** Every trade below lends or borrows at $r$ and buys or borrows shares. If borrowing costs more than lending pays, the bounds widen by that gap and quotes inside the wider band cannot be traded against.
-- **A known dividend yield.** Get $q$ wrong and the share side is wrong. Reading 3% where the truth is 2% moves the call floor from 2.896925 to 1.921611, so a quote between the two looks broken when it is sound.
+- **European exercise only.** Every cash-flow table below looks at expiry day and nowhere else. A holder who may exercise early — use the right before expiry day, as an American option allows — has more, so an American put is worth at least the larger of this card's floor and the undiscounted $`\max(K - S, 0)`$, and its ceiling is $`K`$ rather than the cash side ([Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md)).
+- **One rate for lending and borrowing, and shares that can be sold short.** Every trade below lends or borrows at $`r`$ and buys or borrows shares. If borrowing costs more than lending pays, the bounds widen by that gap and quotes inside the wider band cannot be traded against.
+- **A known dividend yield.** Get $`q`$ wrong and the share side is wrong. Reading 3% where the truth is 2% moves the call floor from 2.896925 to 1.921611, so a quote between the two looks broken when it is sound.
 - **Costs small enough to leave something.** The four trades below pay 0.396925, 0.980133, 0.877058 and 0.639958 today. Commission, the fee for borrowing shares and the gap between bid and offer (the prices dealers buy and sell at) come out of exactly those amounts, which is why real quotes hug the bounds without touching them.
 
 ---
@@ -98,32 +102,32 @@ Nothing else is assumed below: no distribution for Acme, no volatility, no opini
 
 ### Step 1: two prices a model cannot argue with
 
-Both sides are known today, exactly. One share delivered at expiry costs $S e^{-qT}$ now, since $e^{-qT}$ of a share with its dividends reinvested grows into one whole share. Owing runs in reverse: short $e^{-qT}$ of a share, cover the dividends owed by shorting a little more, and the debt is exactly one share at expiry.
+Both sides are known today, exactly. One share delivered at expiry costs $`S e^{-qT}`$ now, since $`e^{-qT}`$ of a share with its dividends reinvested grows into one whole share. Owing runs in reverse: short $`e^{-qT}`$ of a share, cover the dividends owed by shorting a little more, and the debt is exactly one share at expiry.
 
-$K$ dollars delivered at expiry costs $K e^{-rT}$ now, since that sum lent at $r$ grows into $K$. Every trade below is those two and the option itself.
+$`K`$ dollars delivered at expiry costs $`K e^{-rT}`$ now, since that sum lent at $`r`$ grows into $`K`$. Every trade below is those two and the option itself.
 
 ### Step 2: the call's ceiling, the share side
 
-A call hands over at most one share, and only in exchange for the strike. The share itself hands over one share and asks nothing. So the call cannot cost more than the share side. Suppose one is quoted at 99.00, above that ceiling of 98.019867. Sell the call and buy $e^{-qT}$ shares:
+A call hands over at most one share, and only in exchange for the strike. The share itself hands over one share and asks nothing. So the call cannot cost more than the share side. Suppose one is quoted at 99.00, above that ceiling of 98.019867. Sell the call and buy $`e^{-qT}`$ shares:
 
-| Leg | Today | At expiry if $S_T \le 100$ | At expiry if $S_T > 100$ |
+| Leg | Today | At expiry if $`S_T \le 100`$ | At expiry if $`S_T > 100`$ |
 | --- | --- | --- | --- |
-| Sell the call at 99.00 | +99.00 | 0 | $-(S_T - 100)$ |
-| Buy $e^{-qT}$ shares, dividends reinvested | −98.019867 | $+S_T$ | $+S_T$ |
-| **Total** | **+0.980133** | $S_T$, never below 0 | 100 |
+| Sell the call at 99.00 | +99.00 | 0 | $`-(S_T - 100)`$ |
+| Buy $`e^{-qT}`$ shares, dividends reinvested | −98.019867 | $`+S_T`$ | $`+S_T`$ |
+| **Total** | **+0.980133** | $`S_T`$, never below 0 | 100 |
 
 Paid today, and at expiry the share covers whatever the call owes. The worst outcome is Acme at zero, which pays zero.
 
 ### Step 3: the call's floor, the share side minus the cash side
 
-The call is a forward plus the right to walk away. A right to walk away is never worth less than nothing, so the call is worth at least the forward: 2.896925. Suppose a call is quoted at 2.50. Buy the call, then sell the forward by shorting $e^{-qT}$ shares and lending the cash side:
+The call is a forward plus the right to walk away. A right to walk away is never worth less than nothing, so the call is worth at least the forward: 2.896925. Suppose a call is quoted at 2.50. Buy the call, then sell the forward by shorting $`e^{-qT}`$ shares and lending the cash side:
 
-| Leg | Today | At expiry if $S_T \le 100$ | At expiry if $S_T > 100$ |
+| Leg | Today | At expiry if $`S_T \le 100`$ | At expiry if $`S_T > 100`$ |
 | --- | --- | --- | --- |
-| Buy the call at 2.50 | −2.50 | 0 | $S_T - 100$ |
-| Short $e^{-qT}$ shares, the debt growing to one share | +98.019867 | $-S_T$ | $-S_T$ |
+| Buy the call at 2.50 | −2.50 | 0 | $`S_T - 100`$ |
+| Short $`e^{-qT}`$ shares, the debt growing to one share | +98.019867 | $`-S_T`$ | $`-S_T`$ |
 | Lend 95.122942 at 5% | −95.122942 | +100 | +100 |
-| **Total** | **+0.396925** | $100 - S_T$, never below 0 | 0 |
+| **Total** | **+0.396925** | $`100 - S_T`$, never below 0 | 0 |
 
 That is the trade from the opening. The strike appears discounted because it is handed over on expiry day, so only 95.122942 of it is committed today. Being allowed to pay later is worth something, and the floor is where that worth shows up.
 
@@ -133,20 +137,20 @@ The second floor needs no table. A call is a right, never a duty, so it can only
 
 A put's best outcome is Acme at zero, which pays the strike — on expiry day, not now. So the put cannot cost more than the cash side, 95.122942. Suppose one is quoted at 96.00: sell the put and lend the cash side.
 
-| Leg | Today | At expiry if $S_T \le 100$ | At expiry if $S_T > 100$ |
+| Leg | Today | At expiry if $`S_T \le 100`$ | At expiry if $`S_T > 100`$ |
 | --- | --- | --- | --- |
-| Sell the put at 96.00 | +96.00 | $-(100 - S_T)$ | 0 |
+| Sell the put at 96.00 | +96.00 | $`-(100 - S_T)`$ | 0 |
 | Lend 95.122942 at 5% | −95.122942 | +100 | +100 |
-| **Total** | **+0.877058** | $S_T$, never below 0 | 100 |
+| **Total** | **+0.877058** | $`S_T`$, never below 0 | 100 |
 
-The put's floor is the cash side minus the share side. At the 100 strike that is negative, so the floor that binds is plain zero and no trade can break it. Raise the strike to 130 and the floor bites: the cash side is 123.659825, the share side is still 98.019867, and the floor is 25.639958. Suppose that put is quoted at 25.00: buy the put, buy $e^{-qT}$ shares, borrow the cash side.
+The put's floor is the cash side minus the share side. At the 100 strike that is negative, so the floor that binds is plain zero and no trade can break it. Raise the strike to 130 and the floor bites: the cash side is 123.659825, the share side is still 98.019867, and the floor is 25.639958. Suppose that put is quoted at 25.00: buy the put, buy $`e^{-qT}`$ shares, borrow the cash side.
 
-| Leg | Today | At expiry if $S_T \le 130$ | At expiry if $S_T > 130$ |
+| Leg | Today | At expiry if $`S_T \le 130`$ | At expiry if $`S_T > 130`$ |
 | --- | --- | --- | --- |
-| Buy the put at 25.00 | −25.00 | $130 - S_T$ | 0 |
-| Buy $e^{-qT}$ shares, dividends reinvested | −98.019867 | $+S_T$ | $+S_T$ |
+| Buy the put at 25.00 | −25.00 | $`130 - S_T`$ | 0 |
+| Buy $`e^{-qT}`$ shares, dividends reinvested | −98.019867 | $`+S_T`$ | $`+S_T`$ |
 | Borrow 123.659825 at 5%, repay 130 | +123.659825 | −130 | −130 |
-| **Total** | **+0.639958** | 0 | $S_T - 130$, never below 0 |
+| **Total** | **+0.639958** | 0 | $`S_T - 130`$, never below 0 |
 
 All four tables share three features: the "Today" total is positive, every expiry entry is zero or better whatever Acme does, and some range of outcomes pays strictly more. The checks confirm it at every expiry price from 0 to 300 in 50-cent steps.
 
@@ -166,18 +170,18 @@ Top line: the put's ceiling, the strike money delivered at expiry, flat because 
 <details>
 <summary>Detailed proof</summary>
 
-Write $x^+$ for $\max(x, 0)$. Each table's expiry column, added up, is an identity in $S_T$ that never goes below zero — and that is the whole proof, since each "Today" total is positive by the assumed mispricing.
+Write $`x^+`$ for $`\max(x, 0)`$. Each table's expiry column, added up, is an identity in $`S_T`$ that never goes below zero — and that is the whole proof, since each "Today" total is positive by the assumed mispricing.
 
-- Call floor: $(S_T - K)^+ - S_T + K = (K - S_T)^+ \ge 0$.
-- Call ceiling: $S_T - (S_T - K)^+ = \min(S_T, K) \ge 0$.
-- Put ceiling: $K - (K - S_T)^+ = \min(S_T, K) \ge 0$.
-- Put floor: $(K - S_T)^+ + S_T - K = (S_T - K)^+ \ge 0$.
+- Call floor: $`(S_T - K)^+ - S_T + K = (K - S_T)^+ \ge 0`$.
+- Call ceiling: $`S_T - (S_T - K)^+ = \min(S_T, K) \ge 0`$.
+- Put ceiling: $`K - (K - S_T)^+ = \min(S_T, K) \ge 0`$.
+- Put floor: $`(K - S_T)^+ + S_T - K = (S_T - K)^+ \ge 0`$.
 
-Each identity is two cases checked one at a time. For the first: if $S_T > K$ the left side is $S_T - K - S_T + K$, which is 0, and so is the right side; if $S_T \le K$ the left side is $0 - S_T + K$ and the right side is $K - S_T$. The other three go the same way. So in every case the trader is paid today and holds something that can never pay out less than nothing, which by Step 0 the assumed price cannot survive.
+Each identity is two cases checked one at a time. For the first: if $`S_T > K`$ the left side is $`S_T - K - S_T + K`$, which is 0, and so is the right side; if $`S_T \le K`$ the left side is $`0 - S_T + K`$ and the right side is $`K - S_T`$. The other three go the same way. So in every case the trader is paid today and holds something that can never pay out less than nothing, which by Step 0 the assumed price cannot survive.
 
-The zero floors need no identity: a contract whose payoff is $(S_T - K)^+$ or $(K - S_T)^+$ never pays its holder less than nothing, so a negative price is free money by itself.
+The zero floors need no identity: a contract whose payoff is $`(S_T - K)^+`$ or $`(K - S_T)^+`$ never pays its holder less than nothing, so a negative price is free money by itself.
 
-Two conditions were used and are easy to miss. The option is European, so the tables may look only at expiry day. And the dividend yield is known, so that $e^{-qT}$ shares held or owed today become exactly one share on expiry day. $\blacksquare$
+Two conditions were used and are easy to miss. The option is European, so the tables may look only at expiry day. And the dividend yield is known, so that $`e^{-qT}`$ shares held or owed today become exactly one share on expiry day. $`\blacksquare`$
 
 </details>
 
@@ -187,7 +191,7 @@ The bounds look loose: with Acme at 100 the call's room is more than 95 wide. Th
 
 Run the shelf's formula at a volatility of 0.01% and the call comes out at 2.896925, the floor to six decimals, with the put at 0.000000, its floor. Run it at 5000% and the call is 98.019867 and the put 95.122942, both ceilings. Any tighter bound would rule out prices a legitimate model produces.
 
-Two other roads reach the same edges. The short one runs through parity: $C - P$ equals the share side minus the cash side, always ([Put-call parity](03-put-call-parity.md)).
+Two other roads reach the same edges. The short one runs through parity: $`C - P`$ equals the share side minus the cash side, always ([Put-call parity](03-put-call-parity.md)).
 
 Add "a put is worth at least nothing" and the call floor falls out; "a call is worth at least nothing" gives the put floor; "a put costs at most the cash side" gives the call ceiling.
 
@@ -195,7 +199,7 @@ The four bounds are really two facts: parity, and options never cost less than n
 
 The other road drops models altogether. Any rule of the form "average the payoff, then discount" lands inside, provided the share averages to its forward, 103.045453.
 
-At every expiry price the call payoff sits between $S_T - K$ and $S_T$, and above zero; averaging keeps an ordering that holds outcome by outcome, and discounting turns the averages into the bounds.
+At every expiry price the call payoff sits between $`S_T - K`$ and $`S_T`$, and above zero; averaging keeps an ordering that holds outcome by outcome, and discounting turns the averages into the bounds.
 
 The checks try three spreads that look nothing like a bell curve — a coin toss, a lopsided three-point spread, and one that includes Acme going to zero — and all three land inside.
 
@@ -203,20 +207,20 @@ The checks try three spreads that look nothing like a bell curve — a coin toss
 
 ## Worked numbers, by hand
 
-Acme at $S = 100$, strike $K = 100$, riskless rate $r = 5\%$, dividend yield $q = 2\%$, one year to expiry day.
+Acme at $`S = 100`$, strike $`K = 100`$, riskless rate $`r = 5\%`$, dividend yield $`q = 2\%`$, one year to expiry day.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| cash side, $K e^{-rT}$ | $100 \times e^{-0.05}$ | 95.122942 |
-| share side, $S e^{-qT}$ | $100 \times e^{-0.02}$ | 98.019867 |
-| **call floor** | $\max(98.019867 - 95.122942,\, 0)$ | **2.896925** |
+| cash side, $`K e^{-rT}`$ | $`100 \times e^{-0.05}`$ | 95.122942 |
+| share side, $`S e^{-qT}`$ | $`100 \times e^{-0.02}`$ | 98.019867 |
+| **call floor** | $`\max(98.019867 - 95.122942,\, 0)`$ | **2.896925** |
 | **call ceiling** | the share side | **98.019867** |
-| **put floor** | $\max(95.122942 - 98.019867,\, 0)$ | **0.000000** |
+| **put floor** | $`\max(95.122942 - 98.019867,\, 0)`$ | **0.000000** |
 | **put ceiling** | the cash side | **95.122942** |
-| the forward price, $F$ | $100 \times e^{0.03}$ | 103.045453 |
+| the forward price, $`F`$ | $`100 \times e^{0.03}`$ | 103.045453 |
 | a model price to fence in | the shelf's call at 20% volatility | 9.227006 |
 | and its put | priced on its own, by averaging | 6.330081 |
-| $C - P$ from those two | $9.227006 - 6.330081$ | 2.896925, the call floor exactly |
+| $`C - P`$ from those two | $`9.227006 - 6.330081`$ | 2.896925, the call floor exactly |
 | the quote on the screen | 2.50, under the floor | the trade banks **0.396925** today |
 
 A one-year Acme call struck at today's price must therefore cost between 2.896925 and 98.019867, and the matching put between nothing and 95.122942. The floor is pinned before anyone says the word volatility, because it is what a firm deal to buy the share next year is worth today.
@@ -225,10 +229,10 @@ A one-year Acme call struck at today's price must therefore cost between 2.89692
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The strike taken undiscounted, $\max(S e^{-qT} - K, 0)$ | call floor 0.000000 | The strike is handed over on expiry day, so today it costs 95.122942, not 100. The quote at 2.50 then looks fine and 0.396925 of free money walks past. |
-| The share taken without its dividend drag, $\max(S - K e^{-rT}, 0)$ | call floor 4.877058 | The share leg is $e^{-qT}$ shares, not one. A perfectly fair call at 5% volatility costs 3.711144, under this false floor; the trade it invites banks 1.165913 today and loses 2.222147 if Acme ends at 110. |
-| The $\max(\cdot, 0)$ dropped | put floor −2.896925 | A negative floor forbids nothing. The floor that binds here is zero, and it comes from the contract being a right rather than a duty. |
-| Intrinsic value $\max(K - S, 0)$ read as the put floor, at the 130 strike | 30.000000, against a true floor of 25.639958 | The 130 arrives on expiry day, not today, so its worth now is 123.659825. The model put at that strike costs 26.970744 — under intrinsic value, above the floor, and perfectly sound. |
+| The strike taken undiscounted, $`\max(S e^{-qT} - K, 0)`$ | call floor 0.000000 | The strike is handed over on expiry day, so today it costs 95.122942, not 100. The quote at 2.50 then looks fine and 0.396925 of free money walks past. |
+| The share taken without its dividend drag, $`\max(S - K e^{-rT}, 0)`$ | call floor 4.877058 | The share leg is $`e^{-qT}`$ shares, not one. A perfectly fair call at 5% volatility costs 3.711144, under this false floor; the trade it invites banks 1.165913 today and loses 2.222147 if Acme ends at 110. |
+| The $`\max(\cdot, 0)`$ dropped | put floor −2.896925 | A negative floor forbids nothing. The floor that binds here is zero, and it comes from the contract being a right rather than a duty. |
+| Intrinsic value $`\max(K - S, 0)`$ read as the put floor, at the 130 strike | 30.000000, against a true floor of 25.639958 | The 130 arrives on expiry day, not today, so its worth now is 123.659825. The model put at that strike costs 26.970744 — under intrinsic value, above the floor, and perfectly sound. |
 
 Every number in that table is printed by the code below.
 
@@ -678,9 +682,9 @@ The two outputs match line for line, from different code taking different routes
 
 Lean proves the four bounds for every market meeting the conditions below, and the trades' whole-number expiry sums exactly.
 
-- Suppose prices add across legs, Step 0 holds, Step 1 prices the two sides, and $K$ and $S_T$ are never negative. Then the call and the put each sit inside both of their bounds from The formula.
-- Suppose expiry prices follow any spread that is never negative and averages to the forward price $F$. Then the average call and put payoffs, discounted, land inside all four bounds.
-- Take any expiry price $S_T$ and strike $K$, neither negative. Then each trade's legs add up at expiry as the Detailed proof says, and never fall below zero.
+- Suppose prices add across legs, Step 0 holds, Step 1 prices the two sides, and $`K`$ and $`S_T`$ are never negative. Then the call and the put each sit inside both of their bounds from The formula.
+- Suppose expiry prices follow any spread that is never negative and averages to the forward price $`F`$. Then the average call and put payoffs, discounted, land inside all four bounds.
+- Take any expiry price $`S_T`$ and strike $`K`$, neither negative. Then each trade's legs add up at expiry as the Detailed proof says, and never fall below zero.
 - The four trades' sums at expiry prices 80, 100, 120 and 160, as the checks print them, hold exactly. So does the intrinsic value of 30 at the 130 strike.
 
 The decimal amounts, the model prices pushed against each bound, and the wrong floors are left to the Python and Rust checks.
@@ -852,14 +856,14 @@ example : max ((130 : ℝ) - 100) 0 = 30 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading intrinsic value as the floor.** Intrinsic value is what an option would pay if it could be cashed in this instant: $\max(S - K, 0)$ for a call, $\max(K - S, 0)$ for a put. It feels like a floor. For a European option it is the wrong floor, and wrong in both directions.
+> **Reading intrinsic value as the floor.** Intrinsic value is what an option would pay if it could be cashed in this instant: $`\max(S - K, 0)`$ for a call, $`\max(K - S, 0)`$ for a put. It feels like a floor. For a European option it is the wrong floor, and wrong in both directions.
 >
 > - For a call it is too low whenever the rate beats the dividend yield. Here it says zero while the true floor is 2.896925, so a call quoted at 2.50 passes a test it should fail.
 > - For a put it is too high. At the 130 strike it says 30.000000 while the floor is 25.639958, and a fair model put there costs 26.970744. A European put under its intrinsic value is no arbitrage, no riskless profit, because the strike money cannot be collected until expiry day.
 >
 > Three smaller traps:
 > - **Using these bounds on American options.** Early exercise can only add value, so each floor rises to at least the larger of this card's floor and the undiscounted intrinsic value, and the put's ceiling becomes the undiscounted strike. The call's floor here stays 2.896925, since its intrinsic value is zero.
-> - **Forgetting the dividend drag.** The share leg is $e^{-qT}$ shares, not one. Skip it and the call floor reads 4.877058 instead of 2.896925, and the trade that false floor invites loses 2.222147 with Acme at 110.
+> - **Forgetting the dividend drag.** The share leg is $`e^{-qT}`$ shares, not one. Skip it and the call floor reads 4.877058 instead of 2.896925, and the trade that false floor invites loses 2.222147 with Acme at 110.
 > - **Reading the bounds as a price.** From 2.896925 to 98.019867 is nearly the whole share. Bounds say where a price cannot be, never where it is.
 
 ---

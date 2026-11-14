@@ -36,39 +36,47 @@ The setpoint moves from 30 °C to 38 °C at time zero. The first line (orange) i
 
 Reminders from earlier cards. A transfer function G(s) says what a system does to each exponential e^(st); s is the Laplace variable. On the frequency axis s = jω, where ω is angular frequency in rad/s and engineers write j for the square root of −1 (the rest of the library writes i). The loop gain L(s) is the transfer function once round the loop. The phase margin is how far the loop's phase sits above −180° at the crossover frequency, where |L| = 1 ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
 
-A delay of $\theta$ seconds turns an input u(t) into u(t − θ). Its transfer function, by the shift theorem of [Step functions](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/05-step-functions-and-delays.md), and its effect on a loop are:
+A delay of $`\theta`$ seconds turns an input u(t) into u(t − θ). Its transfer function, by the shift theorem of [Step functions](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/05-step-functions-and-delays.md), and its effect on a loop are:
 
-$$e^{-\theta s}\Big|_{s=j\omega} = e^{-j\omega\theta}: \quad |e^{-j\omega\theta}| = 1, \qquad \arg e^{-j\omega\theta} = -\omega\theta; \qquad \phi_m^{\text{delay}} = \phi_m^{\text{no delay}} - \omega_c\theta.$$
+```math
+e^{-\theta s}\Big|_{s=j\omega} = e^{-j\omega\theta}: \quad |e^{-j\omega\theta}| = 1, \qquad \arg e^{-j\omega\theta} = -\omega\theta; \qquad \phi_m^{\text{delay}} = \phi_m^{\text{no delay}} - \omega_c\theta.
+```
 
 **Read it aloud:** a delay leaves every frequency at full size and turns it back by frequency times delay, so the phase margin falls by the crossover frequency times the delay.
 
-The Smith predictor, with a model $G_m$ of the delay-free mixer and a model delay $\theta_m$, feeds back the measured output plus a correction:
+The Smith predictor, with a model $`G_m`$ of the delay-free mixer and a model delay $`\theta_m`$, feeds back the measured output plus a correction:
 
-$$y_{\text{fed back}} = y + G_m(s)\,\big(1 - e^{-\theta_m s}\big)\,u, \qquad \text{and if the model is exact,}\qquad \frac{Y}{R} = \frac{C\,G_0}{1 + C\,G_0}\,e^{-\theta s}.$$
+```math
+y_{\text{fed back}} = y + G_m(s)\,\big(1 - e^{-\theta_m s}\big)\,u, \qquad \text{and if the model is exact,}\qquad \frac{Y}{R} = \frac{C\,G_0}{1 + C\,G_0}\,e^{-\theta s}.
+```
 
 **Read it aloud:** add to the measurement what the model says the output will become minus what it says the pipe is delivering now; with a perfect model, the loop behaves as if the delay were outside it, tacked on at the end.
 
-The Padé stand-ins replace $e^{-\theta s}$ by rational functions of $x = \theta s$:
+The Padé stand-ins replace $`e^{-\theta s}`$ by rational functions of $`x = \theta s`$:
 
-$$e^{-x} \approx \frac{1 - x/2}{1 + x/2} \;\;(\text{first order}), \qquad e^{-x} \approx \frac{1 - x/2 + x^2/12}{1 + x/2 + x^2/12} \;\;(\text{second order}).$$
+```math
+e^{-x} \approx \frac{1 - x/2}{1 + x/2} \;\;(\text{first order}), \qquad e^{-x} \approx \frac{1 - x/2 + x^2/12}{1 + x/2 + x^2/12} \;\;(\text{second order}).
+```
 
-The shower's numbers. The mixer is $G_0(s) = 1/(\tau s + 1)$: one kelvin at the outlet per kelvin commanded, lag $\tau$ = 2 s. The controller is proportional-integral, $C(s) = K_p\,(1 + 1/(T_i s))$, with the integral time set to $T_i = \tau$. That choice cancels the mixer's lag and leaves the clean loop
+The shower's numbers. The mixer is $`G_0(s) = 1/(\tau s + 1)`$: one kelvin at the outlet per kelvin commanded, lag $`\tau`$ = 2 s. The controller is proportional-integral, $`C(s) = K_p\,(1 + 1/(T_i s))`$, with the integral time set to $`T_i = \tau`$. That choice cancels the mixer's lag and leaves the clean loop
 
-$$L(s) = \frac{K_p\,e^{-\theta s}}{\tau s}, \qquad \omega_c = \frac{K_p}{\tau}, \qquad \phi_m = 90^\circ - \omega_c\theta\cdot\frac{180^\circ}{\pi}, \qquad K_u = \frac{\pi\,\tau}{2\,\theta}.$$
+```math
+L(s) = \frac{K_p\,e^{-\theta s}}{\tau s}, \qquad \omega_c = \frac{K_p}{\tau}, \qquad \phi_m = 90^\circ - \omega_c\theta\cdot\frac{180^\circ}{\pi}, \qquad K_u = \frac{\pi\,\tau}{2\,\theta}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | delay: pipe volume divided by flow | 4.0 s at 8 L/min; 5.33 s at 6 L/min | phase margin falls, ultimate gain falls |
-| $\theta_m$, $\Delta$ | the delay the predictor's model assumes (on [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md) θ_m is the delay margin, a different thing); true delay minus model delay | 4 s; 0 s when the flow is 8 L/min | the predictor rings, then goes unstable past a true delay of 5.49 s |
-| $\tau$, $G_0$, $G_m$ | mixer lag; delay-free mixer 1/(τs + 1); the predictor's copy of it | 2 s | a slower mixer allows a larger gain before the delay bites |
-| $s$, $\omega$, $j$ | Laplace variable; angular frequency; the square root of −1 | ω in rad/s | the delay's phase lag grows in proportion to ω |
-| $C$, $K_p$, $T_i$ | the controller; its proportional gain; its integral time | Kp = 2 (fast) or 0.262 (detuned); Ti = 2 s | higher Kp: faster, until the delay makes it unstable |
-| $L$, $\omega_c$ | loop gain; crossover frequency, where L has size 1 | ω_c = Kp/τ = 1 rad/s at Kp = 2 | a higher crossover loses more phase to the delay |
-| $\phi_m$ | phase margin | 60° detuned; −139° for Kp = 2 with the pipe | a larger margin: calmer, slower response |
-| $K_u$, $\omega_{180}$ | ultimate gain, the gain at which the loop starts to oscillate; the frequency where the phase reaches −180° | 0.785; the swing period is 16 s | — |
-| $T_0$, $T$ | delay-free closed loop C G0/(1 + C G0); T = T0 e^(−θ_m s), the closed loop with the model's delay | 1/(s + 1) at Kp = 2: lag 1 s | — |
-| $x$ | the delay's exponent, θs, in the Padé formulas | 4s | the stand-ins drift from the truth as ωθ grows |
-| $y$, $u$, $r$, $d$ | skin temperature; controller command; target; disturbance at the mixer outlet | 30 → 38 °C; flush d = +3 K | — |
+| $`\theta`$ | delay: pipe volume divided by flow | 4.0 s at 8 L/min; 5.33 s at 6 L/min | phase margin falls, ultimate gain falls |
+| $`\theta_m`$, $`\Delta`$ | the delay the predictor's model assumes (on [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md) θ_m is the delay margin, a different thing); true delay minus model delay | 4 s; 0 s when the flow is 8 L/min | the predictor rings, then goes unstable past a true delay of 5.49 s |
+| $`\tau`$, $`G_0`$, $`G_m`$ | mixer lag; delay-free mixer 1/(τs + 1); the predictor's copy of it | 2 s | a slower mixer allows a larger gain before the delay bites |
+| $`s`$, $`\omega`$, $`j`$ | Laplace variable; angular frequency; the square root of −1 | ω in rad/s | the delay's phase lag grows in proportion to ω |
+| $`C`$, $`K_p`$, $`T_i`$ | the controller; its proportional gain; its integral time | Kp = 2 (fast) or 0.262 (detuned); Ti = 2 s | higher Kp: faster, until the delay makes it unstable |
+| $`L`$, $`\omega_c`$ | loop gain; crossover frequency, where L has size 1 | ω_c = Kp/τ = 1 rad/s at Kp = 2 | a higher crossover loses more phase to the delay |
+| $`\phi_m`$ | phase margin | 60° detuned; −139° for Kp = 2 with the pipe | a larger margin: calmer, slower response |
+| $`K_u`$, $`\omega_{180}`$ | ultimate gain, the gain at which the loop starts to oscillate; the frequency where the phase reaches −180° | 0.785; the swing period is 16 s | — |
+| $`T_0`$, $`T`$ | delay-free closed loop C G0/(1 + C G0); T = T0 e^(−θ_m s), the closed loop with the model's delay | 1/(s + 1) at Kp = 2: lag 1 s | — |
+| $`x`$ | the delay's exponent, θs, in the Padé formulas | 4s | the stand-ins drift from the truth as ωθ grows |
+| $`y`$, $`u`$, $`r`$, $`d`$ | skin temperature; controller command; target; disturbance at the mixer outlet | 30 → 38 °C; flush d = +3 K | — |
 
 ### When it holds
 
@@ -663,10 +671,10 @@ The two outputs are identical to the printed precision.
 
 Lean proves the delay's phase rule, the exact Smith predictor's algebra and the shower's ultimate gain, for any values.
 
-- Take any complex loop value $z$, any frequency $\omega$ and any delay $\theta$. Then $z e^{-j\omega\theta}$ has the same size as $z$, and its angle is $\arg z - \omega\theta$.
-- Suppose the predictor's model is exact: $G_m = G_0$ and $\theta_m = \theta$. Then $(1 + C G_0) y = C G_0 e^{-\theta s} r$. The delay has left the characteristic equation.
-- Take $\tau > 0$, $\theta > 0$ and $\omega_{180} = \pi/(2\theta)$. Then $L(j\omega_{180}) = -1$ exactly when $K_p = \pi\tau/(2\theta)$, the ultimate gain.
-- Take the same $\omega_{180}$. Then the swing period $2\pi/\omega_{180}$ is $4\theta$.
+- Take any complex loop value $`z`$, any frequency $`\omega`$ and any delay $`\theta`$. Then $`z e^{-j\omega\theta}`$ has the same size as $`z`$, and its angle is $`\arg z - \omega\theta`$.
+- Suppose the predictor's model is exact: $`G_m = G_0`$ and $`\theta_m = \theta`$. Then $`(1 + C G_0) y = C G_0 e^{-\theta s} r`$. The delay has left the characteristic equation.
+- Take $`\tau > 0`$, $`\theta > 0`$ and $`\omega_{180} = \pi/(2\theta)`$. Then $`L(j\omega_{180}) = -1`$ exactly when $`K_p = \pi\tau/(2\theta)`$, the ultimate gain.
+- Take the same $`\omega_{180}`$. Then the swing period $`2\pi/\omega_{180}`$ is $`4\theta`$.
 - The worked numbers check: fast crossover 1 rad/s, swing period 16 s, first-order Padé edge 1.000.
 
 The Padé stand-ins, the model-error range, the flush and every simulation are left to the Python and Rust checks.

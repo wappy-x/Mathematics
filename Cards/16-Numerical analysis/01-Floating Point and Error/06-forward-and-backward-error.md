@@ -37,44 +37,50 @@ The first line is the NPV in cents. It crosses zero at 14% and 16% and never ris
 
 ## The formula
 
-Write $x = 1 + \text{rate}$, the growth factor for one year, so 16% is $x = 1.16$. Carry every cash flow to the end of year two, which clears the fractions. The mine's NPV, in dollars at year two, is
+Write $`x = 1 + \text{rate}`$, the growth factor for one year, so 16% is $`x = 1.16`$. Carry every cash flow to the end of year two, which clears the fractions. The mine's NPV, in dollars at year two, is
 
-$$f(x) = -100x^2 + 230x - c, \qquad c = 132.24$$
+```math
+f(x) = -100x^2 + 230x - c, \qquad c = 132.24
+```
 
-Measured at year two rather than today, the NPV is $x^2$ times larger, and it is zero at the same rates. The IRR is a root of $f$. Write $x^*$ for the true root and $\hat x$, read "x hat", for the computed one. The **residual** is $f(\hat x)$: how far the computed answer misses the equation, in dollars.
+Measured at year two rather than today, the NPV is $`x^2`$ times larger, and it is zero at the same rates. The IRR is a root of $`f`$. Write $`x^*`$ for the true root and $`\hat x`$, read "x hat", for the computed one. The **residual** is $`f(\hat x)`$: how far the computed answer misses the equation, in dollars.
 
 The two errors and the rule that joins them:
 
-$$\underbrace{|\hat x - x^*|}_{\text{forward error}} \;\approx\; \kappa_{\text{abs}} \times \underbrace{|\Delta c|}_{\text{backward error}}, \qquad |\Delta c| = |f(\hat x)|, \qquad \kappa_{\text{abs}} = \frac{1}{|f'(x^*)|}$$
+```math
+\underbrace{|\hat x - x^*|}_{\text{forward error}} \;\approx\; \kappa_{\text{abs}} \times \underbrace{|\Delta c|}_{\text{backward error}}, \qquad |\Delta c| = |f(\hat x)|, \qquad \kappa_{\text{abs}} = \frac{1}{|f'(x^*)|}
+```
 
 **Read it aloud:** the distance from the true answer is about the absolute condition number times the smallest change to the data that makes the computed answer exact; for a root, that change is the residual and the absolute condition number is one over the slope.
 
 The same rule in relative terms, the form that works for any problem:
 
-$$\frac{|\hat x - x^*|}{|x^*|} \;\approx\; \kappa_{\text{rel}} \times \frac{|\Delta c|}{|c|}, \qquad \kappa_{\text{rel}} = \kappa_{\text{abs}} \, \frac{|c|}{|x^*|}$$
+```math
+\frac{|\hat x - x^*|}{|x^*|} \;\approx\; \kappa_{\text{rel}} \times \frac{|\Delta c|}{|c|}, \qquad \kappa_{\text{rel}} = \kappa_{\text{abs}} \, \frac{|c|}{|x^*|}
+```
 
-The relative one, $\kappa_{\text{rel}}$, is the condition number κ of [Conditioning and stability](05-conditioning-and-stability.md). The absolute one carries units, here $x$ per dollar.
+The relative one, $`\kappa_{\text{rel}}`$, is the condition number κ of [Conditioning and stability](05-conditioning-and-stability.md). The absolute one carries units, here $`x`$ per dollar.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | growth factor: 1 plus the yearly rate | 1.16 for 16% | — |
-| $f(x)$ | NPV at growth factor $x$, in dollars at year two | $-100x^2 + 230x - 132.24$ | — |
-| $c$ | the cleanup bill: the data that may move | \$132.24 | the two roots close in |
-| $x^*$ | the true root: the true IRR | 1.16 (also 1.14) | — |
-| $\hat x$ | the computed root | 1.159375, rate 15.9375% | — |
-| $\Delta c$ | change to the bill that makes $\hat x$ exact; its size is the backward error | \$0.0012109375 | forward error grows with it |
-| $f'(x^*)$ | slope of the NPV curve at the root, dollars per unit of $x$ | $-2$ | a larger size gives a smaller condition number |
-| $\kappa_{\text{abs}}$ | absolute condition number: answer's change per unit change of data, in $x$ per dollar | 0.5 | each cent of residual costs more |
-| $\kappa_{\text{rel}}$ | relative condition number: relative change out per relative change in; the κ of Conditioning and stability | 57.00 | more digits lost |
-| $m$ | smallest slope size between $\hat x$ and $x^*$ | 1.875 | a tighter guaranteed bound |
-| $\xi$ | a point between $\hat x$ and $x^*$ that a theorem says exists | inside 1.159375 to 1.16 | — |
-| $u$ | unit roundoff: the largest relative rounding of one double operation | $2^{-53}$ | a coarser floor |
+| $`x`$ | growth factor: 1 plus the yearly rate | 1.16 for 16% | — |
+| $`f(x)`$ | NPV at growth factor $`x`$, in dollars at year two | $`-100x^2 + 230x - 132.24`$ | — |
+| $`c`$ | the cleanup bill: the data that may move | \$132.24 | the two roots close in |
+| $`x^*`$ | the true root: the true IRR | 1.16 (also 1.14) | — |
+| $`\hat x`$ | the computed root | 1.159375, rate 15.9375% | — |
+| $`\Delta c`$ | change to the bill that makes $`\hat x`$ exact; its size is the backward error | \$0.0012109375 | forward error grows with it |
+| $`f'(x^*)`$ | slope of the NPV curve at the root, dollars per unit of $`x`$ | $`-2`$ | a larger size gives a smaller condition number |
+| $`\kappa_{\text{abs}}`$ | absolute condition number: answer's change per unit change of data, in $`x`$ per dollar | 0.5 | each cent of residual costs more |
+| $`\kappa_{\text{rel}}`$ | relative condition number: relative change out per relative change in; the κ of Conditioning and stability | 57.00 | more digits lost |
+| $`m`$ | smallest slope size between $`\hat x`$ and $`x^*`$ | 1.875 | a tighter guaranteed bound |
+| $`\xi`$ | a point between $`\hat x`$ and $`x^*`$ that a theorem says exists | inside 1.159375 to 1.16 | — |
+| $`u`$ | unit roundoff: the largest relative rounding of one double operation | $`2^{-53}`$ | a coarser floor |
 
 ### When it holds
 
-- **The slope at the root is not zero.** With a bill of \$132.25 the two roots merge at 15% and $\kappa_{\text{abs}} = 1/0$. A backward error of 1.211e-3 then gives a forward error of 3.480e-3: proportional to the square root of the backward error, not a multiple of it.
-- **The backward error is small compared with the curve's bend.** The rule is first order. Far from the root the slope changes, and the estimate drifts; the bound with the smallest slope $m$ still holds.
-- **The data that moves is named.** Here only the bill moves. Let all three cash flows move and the same $\hat x$ has a smaller backward error, so state which data the backward error refers to.
+- **The slope at the root is not zero.** With a bill of \$132.25 the two roots merge at 15% and $`\kappa_{\text{abs}} = 1/0`$. A backward error of 1.211e-3 then gives a forward error of 3.480e-3: proportional to the square root of the backward error, not a multiple of it.
+- **The backward error is small compared with the curve's bend.** The rule is first order. Far from the root the slope changes, and the estimate drifts; the bound with the smallest slope $`m`$ still holds.
+- **The data that moves is named.** Here only the bill moves. Let all three cash flows move and the same $`\hat x`$ has a smaller backward error, so state which data the backward error refers to.
 - **The residual is computed honestly.** In doubles the computed NPV is itself rounded. Below about 5.92e-14 dollars it is noise, and a computed residual of 0 does not mean an exact root.
 
 ---
@@ -83,83 +89,87 @@ The relative one, $\kappa_{\text{rel}}$, is the condition number κ of [Conditio
 
 ### Step 0: there are two places to measure a mistake
 
-A problem takes data in and gives an answer out. A mistake can be measured on the answer side: how far is $\hat x$ from $x^*$? That is the forward error. It can also be measured on the data side: how little must the data change so that $\hat x$ becomes the exact answer? That is the backward error.
+A problem takes data in and gives an answer out. A mistake can be measured on the answer side: how far is $`\hat x`$ from $`x^*`$? That is the forward error. It can also be measured on the data side: how little must the data change so that $`\hat x`$ becomes the exact answer? That is the backward error.
 
-The backward error is often easy to compute, because it needs no true answer. The forward error needs $x^*$, which is the thing being sought. The condition number is the exchange rate between the two sides.
+The backward error is often easy to compute, because it needs no true answer. The forward error needs $`x^*`$, which is the thing being sought. The condition number is the exchange rate between the two sides.
 
 ### Step 1: for a root, the backward error is the residual
 
-The bill enters $f$ with a plain minus sign. Raise the bill by $\Delta c$ and the whole curve drops by $\Delta c$. So $\hat x$ is an exact root of the changed problem when
+The bill enters $`f`$ with a plain minus sign. Raise the bill by $`\Delta c`$ and the whole curve drops by $`\Delta c`$. So $`\hat x`$ is an exact root of the changed problem when
 
-$$-100\hat x^2 + 230\hat x - (c + \Delta c) = 0, \qquad \text{that is,} \qquad \Delta c = f(\hat x)$$
+```math
+-100\hat x^2 + 230\hat x - (c + \Delta c) = 0, \qquad \text{that is,} \qquad \Delta c = f(\hat x)
+```
 
-No smaller change works, since every dollar of bill moves the NPV by exactly one dollar. At $\hat x = 1.159375$ the residual is \$0.0012109375. So 15.9375% is the exact IRR of a mine with a bill of \$132.2412109375.
+No smaller change works, since every dollar of bill moves the NPV by exactly one dollar. At $`\hat x = 1.159375`$ the residual is \$0.0012109375. So 15.9375% is the exact IRR of a mine with a bill of \$132.2412109375.
 
 The code checks this a second way. It solves the changed problem afresh with the quadratic formula and gets 1.159375 exactly.
 
 ### Step 2: the answer moves by the data change divided by the slope
 
-Drop a curve by $\Delta c$ near a root. The crossing slides sideways by about $\Delta c$ divided by the slope there. A steep curve barely moves its crossing; a shallow one moves it far.
+Drop a curve by $`\Delta c`$ near a root. The crossing slides sideways by about $`\Delta c`$ divided by the slope there. A steep curve barely moves its crossing; a shallow one moves it far.
 
-The mean value theorem makes this exact. It gives a point $\xi$ between $\hat x$ and $x^*$ with $f(\hat x) - f(x^*) = f'(\xi)(\hat x - x^*)$. Since $f(x^*) = 0$,
+The mean value theorem makes this exact. It gives a point $`\xi`$ between $`\hat x`$ and $`x^*`$ with $`f(\hat x) - f(x^*) = f'(\xi)(\hat x - x^*)`$. Since $`f(x^*) = 0`$,
 
-$$|\hat x - x^*| = \frac{|f(\hat x)|}{|f'(\xi)|}$$
+```math
+|\hat x - x^*| = \frac{|f(\hat x)|}{|f'(\xi)|}
+```
 
-Two readings follow. Replace $f'(\xi)$ by the slope at the root, and the forward error is about $\kappa_{\text{abs}} \times |f(\hat x)|$: the rule of thumb. Replace it by the smallest slope size $m$ on the way, and the forward error is *at most* $|f(\hat x)|/m$: a guarantee.
+Two readings follow. Replace $`f'(\xi)`$ by the slope at the root, and the forward error is about $`\kappa_{\text{abs}} \times |f(\hat x)|`$: the rule of thumb. Replace it by the smallest slope size $`m`$ on the way, and the forward error is *at most* $`|f(\hat x)|/m`$: a guarantee.
 
-For the mine, the slope at the root is $-2$, so $\kappa_{\text{abs}} = 0.5$. The estimate is 6.055e-4, the guarantee 6.458e-4, and the true error 6.250e-4 sits between. The guarantee is 1.0333 times the true error. [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) already used the guarantee as a stopping bound: this card names its two pieces.
+For the mine, the slope at the root is $`-2`$, so $`\kappa_{\text{abs}} = 0.5`$. The estimate is 6.055e-4, the guarantee 6.458e-4, and the true error 6.250e-4 sits between. The guarantee is 1.0333 times the true error. [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) already used the guarantee as a stopping bound: this card names its two pieces.
 
 <details>
 <summary>Detailed proof: the bound, and why the estimate is first-order accurate</summary>
 
-Let $f$ have a continuous derivative on the interval between $\hat x$ and $x^*$, with $f(x^*) = 0$ and $|f'| \ge m > 0$ there.
+Let $`f`$ have a continuous derivative on the interval between $`\hat x`$ and $`x^*`$, with $`f(x^*) = 0`$ and $`|f'| \ge m > 0`$ there.
 
-**The bound.** The mean value theorem gives $\xi$ in the interval with $f(\hat x) = f'(\xi)(\hat x - x^*)$. Then $|\hat x - x^*| = |f(\hat x)|/|f'(\xi)| \le |f(\hat x)|/m$.
+**The bound.** The mean value theorem gives $`\xi`$ in the interval with $`f(\hat x) = f'(\xi)(\hat x - x^*)`$. Then $`|\hat x - x^*| = |f(\hat x)|/|f'(\xi)| \le |f(\hat x)|/m`$.
 
-**The estimate.** Write $e = \hat x - x^*$. If $f$ also has a second derivative with $|f''| \le M$ near $x^*$, then $|f'(\xi) - f'(x^*)| \le M|e|$. So
+**The estimate.** Write $`e = \hat x - x^*`$. If $`f`$ also has a second derivative with $`|f''| \le M`$ near $`x^*`$, then $`|f'(\xi) - f'(x^*)| \le M|e|`$. So
 
-$$\frac{|e|}{\kappa_{\text{abs}}\,|f(\hat x)|} = \frac{|f'(x^*)|}{|f'(\xi)|} = 1 + O(|e|) \quad\text{as } e \to 0$$
+$`\displaystyle \frac{|e|}{\kappa_{\text{abs}}\,|f(\hat x)|} = \frac{|f'(x^*)|}{|f'(\xi)|} = 1 + O(|e|) \quad\text{as } e \to 0`$
 
-The ratio of true error to estimate tends to 1. For the mine, $f'' = -200$ and the ratio is 1.0323.
+The ratio of true error to estimate tends to 1. For the mine, $`f'' = -200`$ and the ratio is 1.0323.
 
-**Any problem.** Let an answer $y = G(d)$ depend smoothly on data $d$. Taylor's theorem gives $G(d + \Delta d) - G(d) = G'(d)\,\Delta d + O(|\Delta d|^2)$. If $\hat y = G(d + \Delta d)$ exactly, its forward error is $|G'(d)|\,|\Delta d|$ to first order. That is the condition number times the backward error. Divide by $|y|$ and multiply and divide by $|d|$ for the relative form, with $\kappa_{\text{rel}} = |G'(d)|\,|d|/|y|$.
+**Any problem.** Let an answer $`y = G(d)`$ depend smoothly on data $`d`$. Taylor's theorem gives $`G(d + \Delta d) - G(d) = G'(d)\,\Delta d + O(|\Delta d|^2)`$. If $`\hat y = G(d + \Delta d)`$ exactly, its forward error is $`|G'(d)|\,|\Delta d|`$ to first order. That is the condition number times the backward error. Divide by $`|y|`$ and multiply and divide by $`|d|`$ for the relative form, with $`\kappa_{\text{rel}} = |G'(d)|\,|d|/|y|`$.
 
 </details>
 
 ### Step 3: the rule holds for any problem, in relative terms
 
-[Conditioning and stability](05-conditioning-and-stability.md) defines the condition number $\kappa$ of a problem: how much a small relative change in the data can change the answer, relatively. That is $\kappa_{\text{rel}}$ here. With it the rule reads the same for a root, a sum, a linear system or an integral:
+[Conditioning and stability](05-conditioning-and-stability.md) defines the condition number $`\kappa`$ of a problem: how much a small relative change in the data can change the answer, relatively. That is $`\kappa_{\text{rel}}`$ here. With it the rule reads the same for a root, a sum, a linear system or an integral:
 
-relative forward error ≈ $\kappa_{\text{rel}}$ × relative backward error.
+relative forward error ≈ $`\kappa_{\text{rel}}`$ × relative backward error.
 
-For the mine, $\kappa_{\text{rel}} = 0.5 \times 132.24 / 1.16 = 57.00$. The bill moved by 9.157e-6 of itself. The rule predicts a relative error of 5.220e-4 in $x$; the true one is 5.388e-4. Relative errors are defined on [Absolute and relative error](01-absolute-and-relative-error.md).
+For the mine, $`\kappa_{\text{rel}} = 0.5 \times 132.24 / 1.16 = 57.00`$. The bill moved by 9.157e-6 of itself. The rule predicts a relative error of 5.220e-4 in $`x`$; the true one is 5.388e-4. Relative errors are defined on [Absolute and relative error](01-absolute-and-relative-error.md).
 
-A relative error near $10^{-k}$ means about $k$ correct digits. So a problem with $\kappa_{\text{rel}} \approx 10^{j}$ costs about $j$ digits: here 57 costs between one and two.
+A relative error near $`10^{-k}`$ means about $`k`$ correct digits. So a problem with $`\kappa_{\text{rel}} \approx 10^{j}`$ costs about $`j`$ digits: here 57 costs between one and two.
 
 ### Step 4: the split tells you whom to blame
 
-The backward error belongs to the **algorithm**. An algorithm is **backward stable** when its answer is always the exact answer for data moved by a few units of $u$, the unit roundoff from [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md). The condition number belongs to the **problem**. No algorithm can change it.
+The backward error belongs to the **algorithm**. An algorithm is **backward stable** when its answer is always the exact answer for data moved by a few units of $`u`$, the unit roundoff from [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md). The condition number belongs to the **problem**. No algorithm can change it.
 
-So a backward stable method has forward error about $\kappa_{\text{abs}} \times u \times$ (data size). A large forward error then means one or both of two things. Either the backward error is large (the method or its stop test is sloppy), or $\kappa_{\text{rel}}$ is large (the question is fragile).
+So a backward stable method has forward error about $`\kappa_{\text{abs}} \times u \times`$ (data size). A large forward error then means one or both of two things. Either the backward error is large (the method or its stop test is sloppy), or $`\kappa_{\text{rel}}`$ is large (the question is fragile).
 
-The mine shows both, in different amounts. The stop test allowed a relative backward error of 9.157e-6, and the problem magnified it about $\kappa_{\text{rel}}$ = 57.00 times, into a relative forward error of 5.388e-4: $x$ is right to about 3.27 digits. The condition number costs under two digits, and no method can avoid that cost. The bisection itself is fine; its loose half-cent stop test costs the rest, and a better method recovers them. Run Newton in doubles to the end instead:
+The mine shows both, in different amounts. The stop test allowed a relative backward error of 9.157e-6, and the problem magnified it about $`\kappa_{\text{rel}}`$ = 57.00 times, into a relative forward error of 5.388e-4: $`x`$ is right to about 3.27 digits. The condition number costs under two digits, and no method can avoid that cost. The bisection itself is fine; its loose half-cent stop test costs the rest, and a better method recovers them. Run Newton in doubles to the end instead:
 
-| Newton step | $x$ | computed NPV | true error |
+| Newton step | $`x`$ | computed NPV | true error |
 | --- | --- | --- | --- |
 | 0 | 1.2000000000000000 | −2.40e-1 | 4.00e-2 |
 | 3 | 1.1608120539254565 | −1.69e-3 | 8.12e-4 |
 | 6 | 1.1600000000001089 | −2.27e-13 | 1.09e-13 |
 | 7 | 1.1599999999999953 | 0.00e0 | −4.74e-15 |
 
-Each step obeys the rule: at step 6, $0.5 \times 2.27\text{e-}13$ is about the error 1.09e-13. At step 7 the computed NPV is exactly 0, yet the root is 21 steps of $2^{-52}$ away.
+Each step obeys the rule: at step 6, $`0.5 \times 2.27\text{e-}13`$ is about the error 1.09e-13. At step 7 the computed NPV is exactly 0, yet the root is 21 steps of $`2^{-52}`$ away.
 
-The true NPV of that double, computed in exact fractions, is 9.49e-15 dollars. Rounding in each NPV evaluation is about 5.92e-14 dollars, so no double can show a residual reliably below that. The best possible forward error is $\kappa_{\text{abs}}$ times that floor: a bound of 2.96e-14, and the true 4.74e-15 is under it. The bound is 6.25 times the true error.
+The true NPV of that double, computed in exact fractions, is 9.49e-15 dollars. Rounding in each NPV evaluation is about 5.92e-14 dollars, so no double can show a residual reliably below that. The best possible forward error is $`\kappa_{\text{abs}}`$ times that floor: a bound of 2.96e-14, and the true 4.74e-15 is under it. The bound is 6.25 times the true error.
 
 ### Step 5: where the rule breaks
 
-At a double root the slope is zero and $\kappa_{\text{abs}} = 1/0$. The first-order rule says nothing useful. The next term takes over: near a double root $f(x) \approx \tfrac12 f''(x^*)(x - x^*)^2$, so the forward error grows like the *square root* of the backward error.
+At a double root the slope is zero and $`\kappa_{\text{abs}} = 1/0`$. The first-order rule says nothing useful. The next term takes over: near a double root $`f(x) \approx \tfrac12 f''(x^*)(x - x^*)^2`$, so the forward error grows like the *square root* of the backward error.
 
-For a bill of \$132.25, $f(x) = -(10x - 11.5)^2$. A backward error of 1.211e-3 now gives a forward error of 3.480e-3, nearly three times the backward error. Half the digits of the data's accuracy are lost.
+For a bill of \$132.25, $`f(x) = -(10x - 11.5)^2`$. A backward error of 1.211e-3 now gives a forward error of 3.480e-3, nearly three times the backward error. Half the digits of the data's accuracy are lost.
 
 ---
 
@@ -167,12 +177,12 @@ For a bill of \$132.25, $f(x) = -(10x - 11.5)^2$. A backward error of 1.211e-3 n
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| true roots | $(230 \pm \sqrt{230^2 - 400 \times 132.24})/200 = (230 \pm \sqrt{4})/200$ | 1.14 and 1.16 |
+| true roots | $`(230 \pm \sqrt{230^2 - 400 \times 132.24})/200 = (230 \pm \sqrt{4})/200`$ | 1.14 and 1.16 |
 | bisection stops | NPV at 1.159375 is under half a cent | 0.1211 cents |
 | forward error | 1.16 − 1.159375 | 0.000625 |
-| backward error | $f(1.159375) = 0.01 - (11.59375 - 11.5)^2$ | 0.0012109375 dollars |
+| backward error | $`f(1.159375) = 0.01 - (11.59375 - 11.5)^2`$ | 0.0012109375 dollars |
 | changed bill | 132.24 + 0.0012109375 | 132.2412109375 |
-| slope at root | $-200 \times 1.16 + 230$ | −2 |
+| slope at root | $`-200 \times 1.16 + 230`$ | −2 |
 | absolute condition number | 1 / 2 | 0.5 |
 | estimate | 0.5 × 0.0012109375 | 0.0006055 |
 | guarantee | 0.0012109375 / 1.875 | 0.0006458 |
@@ -184,15 +194,15 @@ The rule of thumb predicts the true error to within about 3%, and the guarantee 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Read the relative backward error 9.157e-6 as the answer's accuracy | true relative error 5.388e-4, 58.8 times worse | the condition number $\kappa_{\text{rel}} = 57.00$ was left out |
-| Apply the rule at a double root (bill \$132.25) | backward error 1.211e-3 gives forward error 3.480e-3; $\kappa_{\text{abs}} = 1/0$ | zero slope: the error grows as a square root, not a multiple |
-| Take a computed NPV of 0 as an exact root | $x$ = 1.1599999999999953, still 4.74e-15 off | the computed residual is rounded; its noise is about 5.92e-14 |
+| Read the relative backward error 9.157e-6 as the answer's accuracy | true relative error 5.388e-4, 58.8 times worse | the condition number $`\kappa_{\text{rel}} = 57.00`$ was left out |
+| Apply the rule at a double root (bill \$132.25) | backward error 1.211e-3 gives forward error 3.480e-3; $`\kappa_{\text{abs}} = 1/0`$ | zero slope: the error grows as a square root, not a multiple |
+| Take a computed NPV of 0 as an exact root | $`x`$ = 1.1599999999999953, still 4.74e-15 off | the computed residual is rounded; its noise is about 5.92e-14 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code finds the mine's IRR by bisection in exact fractions, stopping at half a cent, then measures both errors. It takes five roads. The quadratic formula with a whole-number square root gives the true roots. Bisection gives the computed root. The changed bill, solved afresh, gives back the computed root exactly. Nudging the bill and re-solving measures $\kappa_{\text{abs}}$ against $1/|f'(x^*)|$. Newton in doubles runs to the rounding floor, and exact fractions give the true residual of its last double. The three failures and the chart points close the run.
+The code finds the mine's IRR by bisection in exact fractions, stopping at half a cent, then measures both errors. It takes five roads. The quadratic formula with a whole-number square root gives the true roots. Bisection gives the computed root. The changed bill, solved afresh, gives back the computed root exactly. Nudging the bill and re-solving measures $`\kappa_{\text{abs}}`$ against $`1/|f'(x^*)|`$. Newton in doubles runs to the rounding floor, and exact fractions give the true residual of its last double. The three failures and the chart points close the run.
 
 ### Python
 
@@ -476,12 +486,12 @@ The two outputs match line for line.
 
 Lean proves the rule of thumb, the guaranteed bound and the residual fact for every root, and checks the mine's hand arithmetic exactly.
 
-- Take a root $x^*$ of $f$ where the slope $f'(x^*)$ is not zero. As $\hat x$ nears $x^*$, the true error divided by the estimate $\kappa_{\text{abs}} \times |f(\hat x)|$ tends to 1. Lean needs only the slope at the root, not a bound on $f''$, so it gives no $O(|e|)$ rate.
-- Let $f$ have a continuous derivative between $\hat x$ and $x^*$, with $f(x^*) = 0$ and every slope size at least $m > 0$ there. Then $|\hat x - x^*| \le |f(\hat x)|/m$.
-- Raise the bill by $\Delta c$. Then $\hat x$ is an exact root of the changed problem exactly when $\Delta c = f(\hat x)$, so no other change works.
+- Take a root $`x^*`$ of $`f`$ where the slope $`f'(x^*)`$ is not zero. As $`\hat x`$ nears $`x^*`$, the true error divided by the estimate $`\kappa_{\text{abs}} \times |f(\hat x)|`$ tends to 1. Lean needs only the slope at the root, not a bound on $`f''`$, so it gives no $`O(|e|)`$ rate.
+- Let $`f`$ have a continuous derivative between $`\hat x`$ and $`x^*`$, with $`f(x^*) = 0`$ and every slope size at least $`m > 0`$ there. Then $`|\hat x - x^*| \le |f(\hat x)|/m`$.
+- Raise the bill by $`\Delta c`$. Then $`\hat x`$ is an exact root of the changed problem exactly when $`\Delta c = f(\hat x)`$, so no other change works.
 - The mine's hand numbers hold exactly in fractions: roots 1.14 and 1.16, residual 0.0012109375, changed bill 132.2412109375, slopes −2 and −1.875.
-- The estimate 6.055e-4 sits below the true error 0.000625, which sits below the guarantee 6.458e-4. Also $\kappa_{\text{rel}} = 57$.
-- At a bill of \$132.25, $f(x) = -(10x - 11.5)^2$ for every $x$, and the slope at 1.15 is 0.
+- The estimate 6.055e-4 sits below the true error 0.000625, which sits below the guarantee 6.458e-4. Also $`\kappa_{\text{rel}} = 57`$.
+- At a bill of \$132.25, $`f(x) = -(10x - 11.5)^2`$ for every $`x`$, and the slope at 1.15 is 0.
 
 Bisection, the nudged bill, Newton in doubles, the rounding floor, the double-root error and the chart are left to the Python and Rust checks.
 
@@ -629,9 +639,9 @@ example : -200 * (115 / 100 : ℚ) + 230 = 0 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Tighten the stop.** Change `2 * abs(N)` to `20 * abs(N)`, a twentieth of a cent. Guess the new error first. Answer: two more halvings, $\hat x$ = 1.160156 (16.02%), forward error 1.563e-4, backward error 0.0003149414, ratio 0.9922. A quarter of the error, for a quarter of the residual.
-> - **Spread the roots.** Set `C = 13216`, a bill of \$132.16. Answer: the roots move to 12% and 18%, the slope is −6.0, $\kappa_{\text{abs}}$ = 0.1667, and $\kappa_{\text{rel}}$ falls to 18.67. Bisection stops at 17.97% with forward error 3.125e-4. The chart assert then stops the run, because the curve changed.
-> - **Start Newton further out.** Change `1.2` to `1.3`. Answer: one more step, and the last double is 1.1599999999999968, 14 steps of $2^{-52}$ off. It is still under the 2.96e-14 bound.
+> - **Tighten the stop.** Change `2 * abs(N)` to `20 * abs(N)`, a twentieth of a cent. Guess the new error first. Answer: two more halvings, $`\hat x`$ = 1.160156 (16.02%), forward error 1.563e-4, backward error 0.0003149414, ratio 0.9922. A quarter of the error, for a quarter of the residual.
+> - **Spread the roots.** Set `C = 13216`, a bill of \$132.16. Answer: the roots move to 12% and 18%, the slope is −6.0, $`\kappa_{\text{abs}}`$ = 0.1667, and $`\kappa_{\text{rel}}`$ falls to 18.67. Bisection stops at 17.97% with forward error 3.125e-4. The chart assert then stops the run, because the curve changed.
+> - **Start Newton further out.** Change `1.2` to `1.3`. Answer: one more step, and the last double is 1.1599999999999968, 14 steps of $`2^{-52}`$ off. It is still under the 2.96e-14 bound.
 
 ---
 
@@ -643,14 +653,14 @@ example : -200 * (115 / 100 : ℚ) + 230 = 0 := by norm_num
 > - **Reading relative backward error as accuracy.** The bill moved by 9.157e-6 of itself, but the IRR is off by 5.388e-4 of itself, 58.8 times worse.
 > - **Forgetting the double root.** At a bill of $132.25 the condition number is infinite. The rule fails, and a backward error of 1.211e-3 becomes a forward error of 3.480e-3.
 > - **Trusting a computed residual of 0.** Newton's last double gives a computed NPV of exactly 0, yet it is 4.74e-15 from the root. Below about 5.92e-14 dollars the computed NPV is rounding noise.
-> - **Blaming the problem for the method.** The mine's root has $\kappa_{\text{rel}} = 57.00$, which costs under two digits. The other digits were lost to the half-cent stop test, which a tighter test or Newton recovers.
+> - **Blaming the problem for the method.** The mine's root has $`\kappa_{\text{rel}} = 57.00`$, which costs under two digits. The other digits were lost to the half-cent stop test, which a tighter test or Newton recovers.
 
 ---
 
 ## Where you meet it in real life
 
 - **Rate-of-return solvers.** A spreadsheet or calculator finds an IRR by iteration and stops on a test like this card's. Cash flows that change sign twice, as the mine's do, give two IRRs and a flat NPV curve between them, where a passed test still leaves digits wrong.
-- **Linear systems.** For $Ax = b$ (a matrix $A$ of known numbers times a list $x$ of unknowns gives the known list $b$), the residual $b - A\hat x$ is a backward error, and the matrix condition number turns it into a forward error. Elimination with row swaps is backward stable in practice, so its accuracy is set by the matrix.
+- **Linear systems.** For $`Ax = b`$ (a matrix $`A`$ of known numbers times a list $`x`$ of unknowns gives the known list $`b`$), the residual $`b - A\hat x`$ is a backward error, and the matrix condition number turns it into a forward error. Elimination with row swaps is backward stable in practice, so its accuracy is set by the matrix.
 - **The fitness tracker.** A running total that adds 0.1 ten million times is the exact sum of slightly changed readings. Adding positive numbers is well conditioned, so the forward error is about that backward error; [Adding a million numbers without losing the small ones](07-summation-kahan-and-welford.md) shrinks it.
 - **Polynomial roots.** Software finds the roots of a polynomial as the exact roots of a nearby polynomial. Well-separated roots come out accurate; a near-double root loses about half its digits, as at the $132.25 bill.
 - **Checking anyone's answer.** Plugging an answer back into the equation measures its backward error only. To claim digits, also estimate the condition number.
@@ -662,7 +672,7 @@ example : -200 * (115 / 100 : ℚ) + 230 = 0 := by norm_num
 
 ## What this builds on
 
-- [Conditioning and stability](05-conditioning-and-stability.md): the condition number $\kappa$ of a problem and the idea of a backward stable method, which this card turns into a working rule.
+- [Conditioning and stability](05-conditioning-and-stability.md): the condition number $`\kappa`$ of a problem and the idea of a backward stable method, which this card turns into a working rule.
 - [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the bound "error at most residual over the smallest slope", and a flattened equation that stops at once while 0.414 from the root. This card calls the residual the backward error and one over the slope the condition number.
 
 ## Where this goes next
@@ -671,7 +681,7 @@ example : -200 * (115 / 100 : ℚ) + 230 = 0 := by norm_num
 - [Interval arithmetic](09-interval-arithmetic-in-outline.md): a guaranteed range for the answer instead of an estimate of its error.
 - [When to stop](../02-Root%20Finding%20and%20Fixed%20Points/03-stopping-criteria-and-error-estimates.md): the root-finding shelf's stopping tests, built on residual, step size and this card's rule.
 - [Newton's bad days](../02-Root%20Finding%20and%20Fixed%20Points/04-when-newton-fails.md): double roots, where the condition number is infinite and convergence slows.
-- [Matrix norms and the condition number](../03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): the same rule for a linear system, with $\kappa(A)$.
+- [Matrix norms and the condition number](../03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): the same rule for a linear system, with $`\kappa(A)`$.
 
 How large can the backward error of a whole algorithm be, step by step, before it reaches the answer? That question is carried by the later shelves, one method at a time.
 

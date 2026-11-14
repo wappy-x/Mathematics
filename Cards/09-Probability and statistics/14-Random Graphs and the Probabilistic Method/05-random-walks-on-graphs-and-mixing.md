@@ -38,42 +38,46 @@ Home, Blog and Shop form a triangle, a loop of three links. That odd loop matter
 
 ## The formula
 
-Notation first, in words. Number the pages; $i$ and $j$ name two of them. The **degree** of page $i$, written deg(i), is its number of links. A table $P$ holds the click chances: the entry in row $i$ and column $j$, written $P_{ij}$, is the chance the next click goes to $j$ given the surfer is on $i$, a conditional probability ([Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md)). The walk is a **Markov chain**: the next page depends on the current page only, not on the path that led there. Each row of $P$ adds to 1.
+Notation first, in words. Number the pages; $`i`$ and $`j`$ name two of them. The **degree** of page $`i`$, written deg(i), is its number of links. A table $`P`$ holds the click chances: the entry in row $`i`$ and column $`j`$, written $`P_{ij}`$, is the chance the next click goes to $`j`$ given the surfer is on $`i`$, a conditional probability ([Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md)). The walk is a **Markov chain**: the next page depends on the current page only, not on the path that led there. Each row of $`P`$ adds to 1.
 
-$$P_{ij} = \frac{1}{\deg(i)} \text{ if } i \text{ and } j \text{ are linked, else } 0, \qquad \pi(i) = \frac{\deg(i)}{2m}$$
+```math
+P_{ij} = \frac{1}{\deg(i)} \text{ if } i \text{ and } j \text{ are linked, else } 0, \qquad \pi(i) = \frac{\deg(i)}{2m}
+```
 
 **Read it aloud:** from any page, each link is clicked with the same chance; in the long run a page holds its links' share of all link ends.
 
-Here $m$ is the number of links, 8, and $2m$ = 16 counts link ends, since each link has two. The list $\pi$ (the Greek letter pi, here a list of shares, not the circle constant) is the **stationary distribution**: the shares of time, and also the one spread of chances that one more click leaves unchanged. In matrix form, with $\pi$ as a row, $\pi P = \pi$.
+Here $`m`$ is the number of links, 8, and $`2m`$ = 16 counts link ends, since each link has two. The list $`\pi`$ (the Greek letter pi, here a list of shares, not the circle constant) is the **stationary distribution**: the shares of time, and also the one spread of chances that one more click leaves unchanged. In matrix form, with $`\pi`$ as a row, $`\pi P = \pi`$.
 
-Where the surfer is after $t$ clicks is a row of six chances, $p_t$; one click multiplies it by $P$, so $p_t = p_0 P^t$, where $p_0$ puts chance 1 on the start page. How far $p_t$ is from $\pi$ is measured by the **total variation distance**: half the sum of the gaps, page by page.
+Where the surfer is after $`t`$ clicks is a row of six chances, $`p_t`$; one click multiplies it by $`P`$, so $`p_t = p_0 P^t`$, where $`p_0`$ puts chance 1 on the start page. How far $`p_t`$ is from $`\pi`$ is measured by the **total variation distance**: half the sum of the gaps, page by page.
 
-$$\operatorname{TV}(p_t, \pi) = \tfrac12 \sum_j \lvert p_t(j) - \pi(j) \rvert, \qquad t_{\text{mix}} = \text{the first } t \text{ at which } \max_{\text{start}} \operatorname{TV}(p_t, \pi) \le \tfrac14$$
+```math
+\mathrm{TV}(p_t, \pi) = \tfrac12 \sum_j \lvert p_t(j) - \pi(j) \rvert, \qquad t_{\text{mix}} = \text{the first } t \text{ at which } \max_{\text{start}} \mathrm{TV}(p_t, \pi) \le \tfrac14
+```
 
 **Read it aloud:** the distance is the largest amount of chance any set of pages has too much of; the mixing time is the number of clicks after which, from the worst start, that distance is at most a quarter.
 
-The quarter is a convention. After $k$ stretches of $t_{\text{mix}}$ clicks the distance is at most 1/2 to the power $k$, because each stretch at least halves the largest gap between walks begun on any two pages (Levin and Peres, section 4.5, in Sources); so a smaller target costs only a few more stretches.
+The quarter is a convention. After $`k`$ stretches of $`t_{\text{mix}}`$ clicks the distance is at most 1/2 to the power $`k`$, because each stretch at least halves the largest gap between walks begun on any two pages (Levin and Peres, section 4.5, in Sources); so a smaller target costs only a few more stretches.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$, $j$ | two pages | Home, About, … | — |
-| $n$, $m$ | pages; links, each two-way | 6 and 8 | each page's share is its own links over 2m |
-| deg(i) | page $i$'s number of links | Home 4, About 1 | that page's share rises |
-| $P$, $P_{ij}$ | the click-chance table; its row $i$, column $j$ entry | from Home, each of 4 links 1/4 | — |
-| $\pi$, $\pi(i)$ | the stationary distribution: long-run share of time on page $i$ | Home 0.2500, About 0.0625 | — |
-| $t$, $p_t$, $p_0$ | clicks so far; the chances of each page after $t$ clicks, and at the start | from About, Home after 3 clicks 0.5208 | more clicks: $p_t$ closer to $\pi$ |
+| $`i`$, $`j`$ | two pages | Home, About, … | — |
+| $`n`$, $`m`$ | pages; links, each two-way | 6 and 8 | each page's share is its own links over 2m |
+| deg(i) | page $`i`$'s number of links | Home 4, About 1 | that page's share rises |
+| $`P`$, $`P_{ij}`$ | the click-chance table; its row $`i`$, column $`j`$ entry | from Home, each of 4 links 1/4 | — |
+| $`\pi`$, $`\pi(i)`$ | the stationary distribution: long-run share of time on page $`i`$ | Home 0.2500, About 0.0625 | — |
+| $`t`$, $`p_t`$, $`p_0`$ | clicks so far; the chances of each page after $`t`$ clicks, and at the start | from About, Home after 3 clicks 0.5208 | more clicks: $`p_t`$ closer to $`\pi`$ |
 | TV | total variation distance between two spreads of chance | 0.2917 after 3 clicks from About | — |
-| $t_{\text{mix}}$ | mixing time: clicks until the worst start is within a quarter | 4 clicks | — |
-| $\lambda_k$, $\lambda_*$ | eigenvalues of $P$; the largest size among all but the top one | 1, 0.4193, …, −0.7077; $\lambda_*$ = 0.7077 | $\lambda_*$ near 1: slow mixing |
-| $S$, $D$, $\varphi_k$, $f$, $k$ | in the proofs: the symmetric twin of $P$; the diagonal table of degrees; the eigenvectors of $S$, numbered by $k$; a trial list of page values | — | — |
-| $d$ | PageRank's damping: the chance the surfer clicks a link rather than jumping | 0.85 | nearer 1: closer to the plain walk |
-| $r$, $r(i)$ | PageRank: the stationary distribution of the walk with jumps | Home 0.2475, About 0.0776 | — |
+| $`t_{\text{mix}}`$ | mixing time: clicks until the worst start is within a quarter | 4 clicks | — |
+| $`\lambda_k`$, $`\lambda_*`$ | eigenvalues of $`P`$; the largest size among all but the top one | 1, 0.4193, …, −0.7077; $`\lambda_*`$ = 0.7077 | $`\lambda_*`$ near 1: slow mixing |
+| $`S`$, $`D`$, $`\varphi_k`$, $`f`$, $`k`$ | in the proofs: the symmetric twin of $`P`$; the diagonal table of degrees; the eigenvectors of $`S`$, numbered by $`k`$; a trial list of page values | — | — |
+| $`d`$ | PageRank's damping: the chance the surfer clicks a link rather than jumping | 0.85 | nearer 1: closer to the plain walk |
+| $`r`$, $`r(i)`$ | PageRank: the stationary distribution of the walk with jumps | Home 0.2475, About 0.0776 | — |
 
 ### When it holds
 
 - **Links work both ways.** On a site with one-way links the degree rule fails. Make FAQ link only to Home and the true shares come out with FAQ at 0.0955, while its share of incoming links says 0.1333.
 - **The site is connected.** Every page reachable from every other. Split the site into two pieces and the surfer never crosses: each piece has its own long-run shares and the start decides which one applies.
-- **Some loop has an odd number of links.** Here Home, Blog and Shop make a triangle. On six pages joined in a ring every loop is even, the surfer alternates between two halves, and the distance from the even shares stays at 0.5000 after 60 clicks and after 61. The long-run time shares are still degree over $2m$; only the snapshot fails to settle.
+- **Some loop has an odd number of links.** Here Home, Blog and Shop make a triangle. On six pages joined in a ring every loop is even, the surfer alternates between two halves, and the distance from the even shares stays at 0.5000 after 60 clicks and after 61. The long-run time shares are still degree over $`2m`$; only the snapshot fails to settle.
 - **Each link is equally likely.** With weighted links, clicks proportional to weight, the same proof gives each page its total link weight over twice the total weight.
 
 ---
@@ -82,75 +86,84 @@ The quarter is a convention. After $k$ stretches of $t_{\text{mix}}$ clicks the 
 
 ### Step 0: balance each link, and the whole site balances
 
-In the long run, how often does the surfer cross the Home–Blog link from Home? The surfer is on Home a share $\pi$(Home) of the time and then picks that link with chance 1/deg(Home). Try $\pi(i)$ = deg(i)/2m. Then the traffic across a link in one direction is
+In the long run, how often does the surfer cross the Home–Blog link from Home? The surfer is on Home a share $`\pi`$(Home) of the time and then picks that link with chance 1/deg(Home). Try $`\pi(i)`$ = deg(i)/2m. Then the traffic across a link in one direction is
 
-$$\pi(i)\,P_{ij} = \frac{\deg(i)}{2m} \cdot \frac{1}{\deg(i)} = \frac{1}{2m}.$$
+```math
+\pi(i)\,P_{ij} = \frac{\deg(i)}{2m} \cdot \frac{1}{\deg(i)} = \frac{1}{2m}.
+```
 
 The degree cancels. Every link carries 1/16 = 0.0625 of the clicks in each direction, whichever page it leaves. A link that carries as much one way as the other is in **detailed balance**, and a site where every link balances cannot pile the surfer up anywhere.
 
 ### Step 1: balanced links give the stationary distribution
 
-The chance of being on page $j$ after one more click is the sum, over the pages $i$ linked to $j$, of $\pi(i) P_{ij}$. Each term is 1/2m, and there are deg(j) of them. The total is deg(j)/2m = $\pi(j)$. So one click leaves $\pi$ unchanged: $\pi P = \pi$. The shares also add to 1, since the degrees add to $2m$ (the handshake count: each link adds 1 to two degrees).
+The chance of being on page $`j`$ after one more click is the sum, over the pages $`i`$ linked to $`j`$, of $`\pi(i) P_{ij}`$. Each term is 1/2m, and there are deg(j) of them. The total is deg(j)/2m = $`\pi(j)`$. So one click leaves $`\pi`$ unchanged: $`\pi P = \pi`$. The shares also add to 1, since the degrees add to $`2m`$ (the handshake count: each link adds 1 to two degrees).
 
 For Home: About, Blog, Shop and Contact each send 1/16, and 4/16 = 0.25 is Home's share.
 
 ### Step 2: the start is forgotten, if the site is connected and has an odd loop
 
-Step 1 shows $\pi$ is *a* resting point. The theorem says more: from any start, $p_t$ approaches $\pi$. The tool is the eigenvalues of $P$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)): the stretch factors of the directions a table only stretches, never turns ([The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md) reads walks off powers of a matrix; here each power carries chances instead of counts).
+Step 1 shows $`\pi`$ is *a* resting point. The theorem says more: from any start, $`p_t`$ approaches $`\pi`$. The tool is the eigenvalues of $`P`$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)): the stretch factors of the directions a table only stretches, never turns ([The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md) reads walks off powers of a matrix; here each power carries chances instead of counts).
 
-$P$ is not symmetric: from About to Home is 1, from Home to About 1/4. But rescaling each row by the square root of its page's degree and each column by the inverse gives a symmetric table $S$, with entries $1/\sqrt{\deg(i)\deg(j)}$ on each link.
+$`P`$ is not symmetric: from About to Home is 1, from Home to About 1/4. But rescaling each row by the square root of its page's degree and each column by the inverse gives a symmetric table $`S`$, with entries $`1/\sqrt{\deg(i)\deg(j)}`$ on each link.
 
-$S$ and $P$ share their eigenvalues: $S = D^{1/2} P D^{-1/2}$, with $D$ the diagonal table of degrees, so $S f = \lambda f$ exactly when $P (D^{-1/2} f) = \lambda D^{-1/2} f$. The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): a symmetric table has real eigenvalues and perpendicular eigenvector directions) applies to $S$. For this site they are
+$`S`$ and $`P`$ share their eigenvalues: $`S = D^{1/2} P D^{-1/2}`$, with $`D`$ the diagonal table of degrees, so $`S f = \lambda f`$ exactly when $`P (D^{-1/2} f) = \lambda D^{-1/2} f`$. The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): a symmetric table has real eigenvalues and perpendicular eigenvector directions) applies to $`S`$. For this site they are
 
 1.0000, 0.4193, 0.1094, −0.3210, −0.5000, −0.7077.
 
-The top one, 1, is $\pi$ itself. Every other direction in which $p_t$ can differ from $\pi$ is multiplied by its eigenvalue at each click, so it shrinks at least as fast as $\lambda_*^t$, where $\lambda_*$ is the largest size among the rest: here 0.7077, from the eigenvalue −0.7077. Its minus sign says the slowest leftover pattern flips each click: too much chance on Home, then too little.
+The top one, 1, is $`\pi`$ itself. Every other direction in which $`p_t`$ can differ from $`\pi`$ is multiplied by its eigenvalue at each click, so it shrinks at least as fast as $`\lambda_*^t`$, where $`\lambda_*`$ is the largest size among the rest: here 0.7077, from the eigenvalue −0.7077. Its minus sign says the slowest leftover pattern flips each click: too much chance on Home, then too little.
 
-Three facts make $\lambda_*$ less than 1.
+Three facts make $`\lambda_*`$ less than 1.
 
 - No eigenvalue is bigger than 1 in size: a click replaces each page's value by an average of its neighbours' values, never bigger in size than the list's largest value, so no list is stretched by more than 1.
 - A connected site has only one eigenvalue equal to 1: any other list of page values left unchanged by a click would be an average of its neighbours everywhere, and on a connected site that forces every value equal.
 - A site with an odd loop has no eigenvalue −1: a list flipped in sign by each click alternates sign along every link, which an odd loop cannot do.
 
-The ring of six has that −1, and that is why its snapshot never settles. Its time shares still do: $(-1)^t$ averages to about 0 over many clicks, so the average of $p_t$, the expected share of time on each page, tends to $\pi$.
+The ring of six has that −1, and that is why its snapshot never settles. Its time shares still do: $`(-1)^t`$ averages to about 0 over many clicks, so the average of $`p_t`$, the expected share of time on each page, tends to $`\pi`$.
 
 <details>
 <summary>Detailed proof: every eigenvalue between −1 and 1, one at 1, none at −1, and the distance bound</summary>
 
-**Sizes at most 1.** Suppose $Pf = \lambda f$ for a list $f$ that is not all zero. At the page where $\lvert f \rvert$ is largest, $\lvert \lambda \rvert \lvert f \rvert$ is the size of an average of neighbours' values, each at most that largest size. So $\lvert \lambda \rvert \le 1$.
+**Sizes at most 1.** Suppose $`Pf = \lambda f`$ for a list $`f`$ that is not all zero. At the page where $`\lvert f \rvert`$ is largest, $`\lvert \lambda \rvert \lvert f \rvert`$ is the size of an average of neighbours' values, each at most that largest size. So $`\lvert \lambda \rvert \le 1`$.
 
-**Only one 1.** Suppose $Pf = f$ for a list $f$ of page values: each page's value is the average of its neighbours' values. Take the page where $f$ is largest. An average equals its maximum only if every term does, so every neighbour has the same value, and their neighbours too. A connected site spreads this to every page: $f$ is constant. So the eigenvalue 1 has one direction only.
+**Only one 1.** Suppose $`Pf = f`$ for a list $`f`$ of page values: each page's value is the average of its neighbours' values. Take the page where $`f`$ is largest. An average equals its maximum only if every term does, so every neighbour has the same value, and their neighbours too. A connected site spreads this to every page: $`f`$ is constant. So the eigenvalue 1 has one direction only.
 
-**No −1.** Suppose $Pf = -f$. At the page where $\lvert f \rvert$ is largest, say $f = c > 0$ for some number c (flip the sign of $f$ if needed), the neighbours average to $-c$, so every neighbour is $-c$, their neighbours $+c$, and so on. Around a loop of odd length the signs would have to flip an odd number of times and return to the start, so $c = -c$ and $c = 0$.
+**No −1.** Suppose $`Pf = -f`$. At the page where $`\lvert f \rvert`$ is largest, say $`f = c > 0`$ for some number c (flip the sign of $`f`$ if needed), the neighbours average to $`-c`$, so every neighbour is $`-c`$, their neighbours $`+c`$, and so on. Around a loop of odd length the signs would have to flip an odd number of times and return to the start, so $`c = -c`$ and $`c = 0`$.
 
-**The bound.** Write $S = D^{1/2} P D^{-1/2}$, with $D$ the diagonal table of degrees, so $P^t = D^{-1/2} S^t D^{1/2}$. The spectral theorem gives $S^t = \sum_k \lambda_k^t \varphi_k \varphi_k^{\mathsf T}$ with perpendicular unit eigenvectors, and the top one is $\varphi_1(i) = \sqrt{\pi(i)}$. Starting from page $x$,
-$$\frac{P^t_{xj}}{\pi(j)} - 1 = \sum_{k \ge 2} \lambda_k^t \frac{\varphi_k(x)\varphi_k(j)}{\sqrt{\pi(x)\pi(j)}}.$$
-Square, weight by $\pi(j)$ and add over $j$; the eigenvectors are perpendicular, so the cross terms vanish and
-$$\sum_j \pi(j)\Big(\frac{P^t_{xj}}{\pi(j)} - 1\Big)^2 = \frac{1}{\pi(x)}\sum_{k\ge2}\lambda_k^{2t}\varphi_k(x)^2 \le \lambda_*^{2t}\,\frac{1 - \pi(x)}{\pi(x)},$$
-since the squares $\varphi_k(x)^2$ over all $k$ add to 1 and the $k = 1$ term is $\pi(x)$. The distance is $\tfrac12\sum_j \pi(j)\lvert P^t_{xj}/\pi(j) - 1\rvert$, a $\pi$-weighted average of sizes, which is at most the square root of the weighted average of squares. So
-$$\operatorname{TV}(p_t, \pi) \le \tfrac12\,\lambda_*^t \sqrt{\frac{1}{\pi(x)} - 1}.$$
+**The bound.** Write $`S = D^{1/2} P D^{-1/2}`$, with $`D`$ the diagonal table of degrees, so $`P^t = D^{-1/2} S^t D^{1/2}`$. The spectral theorem gives $`S^t = \sum_k \lambda_k^t \varphi_k \varphi_k^{\mathsf T}`$ with perpendicular unit eigenvectors, and the top one is $`\varphi_1(i) = \sqrt{\pi(i)}`$. Starting from page $`x`$,
+
+$`\displaystyle \frac{P^t_{xj}}{\pi(j)} - 1 = \sum_{k \ge 2} \lambda_k^t \frac{\varphi_k(x)\varphi_k(j)}{\sqrt{\pi(x)\pi(j)}}.`$
+
+Square, weight by $`\pi(j)`$ and add over $`j`$; the eigenvectors are perpendicular, so the cross terms vanish and
+
+$`\displaystyle \sum_j \pi(j)\Big(\frac{P^t_{xj}}{\pi(j)} - 1\Big)^2 = \frac{1}{\pi(x)}\sum_{k\ge2}\lambda_k^{2t}\varphi_k(x)^2 \le \lambda_*^{2t}\,\frac{1 - \pi(x)}{\pi(x)},`$
+
+since the squares $`\varphi_k(x)^2`$ over all $`k`$ add to 1 and the $`k = 1`$ term is $`\pi(x)`$. The distance is $`\tfrac12\sum_j \pi(j)\lvert P^t_{xj}/\pi(j) - 1\rvert`$, a $`\pi`$-weighted average of sizes, which is at most the square root of the weighted average of squares. So
+
+$`\displaystyle \mathrm{TV}(p_t, \pi) \le \tfrac12\,\lambda_*^t \sqrt{\frac{1}{\pi(x)} - 1}.`$
 
 </details>
 
 ### Step 3: the start is forgotten within 4 clicks
 
-The worst start on this site is About, the page with one link: the surfer is certain to be on Home after one click, and the six chances stay lopsided for a few more. The distance from About's start falls 0.9375, 0.7500, 0.3750, 0.2917, 0.1979: under a quarter at 4 clicks, so $t_{\text{mix}}$ = 4.
+The worst start on this site is About, the page with one link: the surfer is certain to be on Home after one click, and the six chances stay lopsided for a few more. The distance from About's start falls 0.9375, 0.7500, 0.3750, 0.2917, 0.1979: under a quarter at 4 clicks, so $`t_{\text{mix}}`$ = 4.
 
-The bound from Step 2, starting at About where $\pi$ = 0.0625, is $\tfrac12 \cdot 0.7077^t \sqrt{15}$. It is 1.9365 at the start, useless there, and first falls below a quarter at 6 clicks, 0.2433. A bound is a guarantee, not a forecast: it promises 6 clicks, the truth is 4, and on a site of a million pages, where the table cannot be powered by hand, the guarantee is what is available. How big $1 - \lambda_*$ (the **spectral gap**) can be kept on large, sparse sites is the subject of [Expanders](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/07-expanders-and-mixing.md).
+The bound from Step 2, starting at About where $`\pi`$ = 0.0625, is $`\tfrac12 \cdot 0.7077^t \sqrt{15}`$. It is 1.9365 at the start, useless there, and first falls below a quarter at 6 clicks, 0.2433. A bound is a guarantee, not a forecast: it promises 6 clicks, the truth is 4, and on a site of a million pages, where the table cannot be powered by hand, the guarantee is what is available. How big $`1 - \lambda_*`$ (the **spectral gap**) can be kept on large, sparse sites is the subject of [Expanders](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/07-expanders-and-mixing.md).
 
 ### Step 4: time on a page is the flip side of the wait to return
 
-If the surfer spends a quarter of the clicks on Home, visits to Home are on average 4 clicks apart. In general the average number of clicks to return to page $i$, having left it, is $1/\pi(i)$ = 2m/deg(i), a result known as Kac's lemma, proved on [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md). For About that is 16 clicks. Starting at About, the surfer goes to Home, wanders, and on average makes 16 clicks before About comes round again. The simulation in the code measures 16.01 with standard error 0.12.
+If the surfer spends a quarter of the clicks on Home, visits to Home are on average 4 clicks apart. In general the average number of clicks to return to page $`i`$, having left it, is $`1/\pi(i)`$ = 2m/deg(i), a result known as Kac's lemma, proved on [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md). For About that is 16 clicks. Starting at About, the surfer goes to Home, wanders, and on average makes 16 clicks before About comes round again. The simulation in the code measures 16.01 with standard error 0.12.
 
 ### Step 5: PageRank is the same walk with a restart
 
-Real web links are one-way, many pages have no links out, and some groups of pages link only among themselves; a plain walk gets stuck. Sergey Brin and Larry Page's 1998 fix: at each click, with chance $d$ = 0.85 the surfer follows a random link, and otherwise jumps to a page chosen uniformly from all $n$. The walk's stationary distribution is **PageRank**, $r$:
+Real web links are one-way, many pages have no links out, and some groups of pages link only among themselves; a plain walk gets stuck. Sergey Brin and Larry Page's 1998 fix: at each click, with chance $`d`$ = 0.85 the surfer follows a random link, and otherwise jumps to a page chosen uniformly from all $`n`$. The walk's stationary distribution is **PageRank**, $`r`$:
 
-$$r(j) = \frac{1-d}{n} + d \sum_i r(i)\,P_{ij}.$$
+```math
+r(j) = \frac{1-d}{n} + d \sum_i r(i)\,P_{ij}.
+```
 
 **Read it aloud:** a page's rank is its share of the random jumps plus 85% of the rank flowing in along its links.
 
-From a page with no links out there is no link to follow, so there the surfer always jumps: that page's row of $P$ is set to 1/n in every column, as if it linked to every page. Without that rule the formula's ranks add to less than 1 and are not a distribution.
+From a page with no links out there is no link to follow, so there the surfer always jumps: that page's row of $`P`$ is set to 1/n in every column, as if it linked to every page. Without that rule the formula's ranks add to less than 1 and are not a distribution.
 
 The jump reaches every page from every page, so the walk with jumps is connected and has odd loops (a page can jump to itself). Once every page has a next step, one stationary distribution exists, whatever the links.
 
@@ -168,9 +181,9 @@ xychart-beta
     line [0.2475, 0.0776, 0.1821, 0.2376, 0.1281, 0.1271]
 ```
 
-Orange bars: the plain walk, degree over 16. Teal line: PageRank with $d$ = 0.85. The jumps pull every share towards the even 1/6: About rises from 0.0625 to 0.0776, Home falls from 0.2500 to 0.2475. Home now edges out Shop, though both have 4 links: About's rank, lifted by the jumps, all flows to Home. With $d$ = 1 PageRank on a two-way site is exactly the degree shares. How PageRank is computed at the scale of the web and read as a ranking is [Centrality](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/01-centrality-and-pagerank.md).
+Orange bars: the plain walk, degree over 16. Teal line: PageRank with $`d`$ = 0.85. The jumps pull every share towards the even 1/6: About rises from 0.0625 to 0.0776, Home falls from 0.2500 to 0.2475. Home now edges out Shop, though both have 4 links: About's rank, lifted by the jumps, all flows to Home. With $`d`$ = 1 PageRank on a two-way site is exactly the degree shares. How PageRank is computed at the scale of the web and read as a ranking is [Centrality](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/01-centrality-and-pagerank.md).
 
-A second road to the stationary distribution skips the degrees: write $\pi P = \pi$ as six equations, replace one by "the shares add to 1", and solve. The code does that, and gets the same six numbers.
+A second road to the stationary distribution skips the degrees: write $`\pi P = \pi`$ as six equations, replace one by "the shares add to 1", and solve. The code does that, and gets the same six numbers.
 
 ---
 
@@ -181,7 +194,7 @@ A second road to the stationary distribution skips the degrees: write $\pi P = \
 | degrees | count each page's links | Home 4, About 1, Blog 3, Shop 4, Contact 2, FAQ 2 |
 | link ends | 4 + 1 + 3 + 4 + 2 + 2 = 2 × 8 | 16 |
 | shares | each degree over 16 | 0.2500, 0.0625, 0.1875, 0.2500, 0.1250, 0.1250 |
-| traffic on a link, each way | $\pi(i)$ / deg(i), e.g. 0.1875 / 3 | 0.0625 on every link |
+| traffic on a link, each way | $`\pi(i)`$ / deg(i), e.g. 0.1875 / 3 | 0.0625 on every link |
 | Home's inflow | four links × 0.0625 | 0.25, Home's own share |
 | from About, 1 click | About's only link | Home 1.0000 |
 | from About, 2 clicks | Home's four links | About, Blog, Shop, Contact 0.2500 each |
@@ -196,9 +209,9 @@ About one click in 16 lands on About, and a surfer who leaves it takes 16 clicks
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Degree rule on one-way links (FAQ links only to Home) | FAQ 0.1333 by incoming links; truth 0.0955 | One-way links break detailed balance; the true shares need $\pi P = \pi$ solved |
+| Degree rule on one-way links (FAQ links only to Home) | FAQ 0.1333 by incoming links; truth 0.0955 | One-way links break detailed balance; the true shares need $`\pi P = \pi`$ solved |
 | A site with no odd loop: six pages in a ring | distance 0.5000 after 60 clicks and after 61 | Eigenvalue −1: the surfer alternates halves; waiting on the spot half the time (the lazy walk) gives 0.0000 |
-| Reading the shares after a few clicks | Home 0.5208 after 3 clicks from About, not 0.2500 | The start is not yet forgotten; 3 is below $t_{\text{mix}}$ = 4 |
+| Reading the shares after a few clicks | Home 0.5208 after 3 clicks from About, not 0.2500 | The start is not yet forgotten; 3 is below $`t_{\text{mix}}`$ = 4 |
 
 The code prints all three.
 
@@ -241,7 +254,7 @@ xychart-beta
     line [1.94, 1.37, 0.97, 0.69, 0.49, 0.34, 0.24, 0.17, 0.12, 0.09, 0.06, 0.04, 0.03]
 ```
 
-Orange: the true distance, starting on About, which is also the worst start at every click; both are plotted to two decimals. Teal: the bound $\tfrac12 \cdot 0.7077^t \sqrt{15}$. The bound sits above the truth at every click and falls at the same rate: from 6 clicks on, each click cuts both by roughly the factor 0.7077.
+Orange: the true distance, starting on About, which is also the worst start at every click; both are plotted to two decimals. Teal: the bound $`\tfrac12 \cdot 0.7077^t \sqrt{15}`$. The bound sits above the truth at every click and falls at the same rate: from 6 clicks on, each click cuts both by roughly the factor 0.7077.
 
 ---
 
@@ -249,12 +262,12 @@ Orange: the true distance, starting on About, which is also the worst start at e
 
 Only `math` is imported in Python, nothing in Rust. The code takes these roads:
 
-- The long-run shares come by three roads: the degree formula, solving $\pi P = \pi$ by Gaussian elimination (subtracting multiples of one equation from the others until the unknowns can be found one at a time), and 20,000 simulated surfers of 40 clicks each.
+- The long-run shares come by three roads: the degree formula, solving $`\pi P = \pi`$ by Gaussian elimination (subtracting multiples of one equation from the others until the unknowns can be found one at a time), and 20,000 simulated surfers of 40 clicks each.
 - The surfers' clicks are drawn from a SplitMix64 random-number generator, written out in both languages with seed 2026.
 - Kac's 16 clicks is checked by one long simulated walk, cut into 20,000 return trips to About; trips between returns are independent, so their average has an honest standard error.
-- The distances are computed by pushing all six starts through 12 clicks. They are computed again exactly in whole numbers, since every degree divides 12, which checks the distances, the worst start and $t_{\text{mix}}$ with no rounding.
-- $\lambda_*$ comes by two roads, Jacobi rotations (turning the symmetric table until it is diagonal) and power iteration (multiplying by the table again and again) with the top direction removed.
-- A third check matches the sum of squared eigenvalues against a count over links, 2/(deg(i) deg(j)) per link, which is the sum of the diagonal of $P^2$.
+- The distances are computed by pushing all six starts through 12 clicks. They are computed again exactly in whole numbers, since every degree divides 12, which checks the distances, the worst start and $`t_{\text{mix}}`$ with no rounding.
+- $`\lambda_*`$ comes by two roads, Jacobi rotations (turning the symmetric table until it is diagonal) and power iteration (multiplying by the table again and again) with the top direction removed.
+- A third check matches the sum of squared eigenvalues against a count over links, 2/(deg(i) deg(j)) per link, which is the sum of the diagonal of $`P^2`$.
 - PageRank is iterated and also solved exactly.
 - The one-way shares are also reached by 500 clicks, and FAQ's share also by Kac's rule (one click to Home, then the two-way walk back to FAQ).
 - The ring's eigenvalue −1 and distance of a half are checked.
@@ -647,17 +660,17 @@ ALL CHECKS PASS
 
 Lean proves the card's main theorem for every finite connected site with two-way links, and checks the six-page site's numbers exactly.
 
-- Take any connected site with two-way links and a loop of odd length. Then from any start, the chance of being on page $j$ settles to deg(j)/2m.
-- Take any connected site with two-way links, odd loop or not. Then the expected share of time on page $j$ settles to deg(j)/2m.
-- Take any site with two-way links. Then each link carries 1/2m of the clicks each way, and one click leaves $\pi$ unchanged: $\pi P = \pi$.
+- Take any connected site with two-way links and a loop of odd length. Then from any start, the chance of being on page $`j`$ settles to deg(j)/2m.
+- Take any connected site with two-way links, odd loop or not. Then the expected share of time on page $`j`$ settles to deg(j)/2m.
+- Take any site with two-way links. Then each link carries 1/2m of the clicks each way, and one click leaves $`\pi`$ unchanged: $`\pi P = \pi`$.
 - The six-page site has degrees 4, 1, 3, 4, 2, 2 and 8 links, so 16 link ends.
 - Its shares are 1/4, 1/16, 3/16, 1/4, 1/8 and 1/8. Every link carries 1/16 each way, and Home's inflow is 1/4.
 - Home, Blog and Shop form a triangle, a loop of three links.
 - From About, the surfer is on Home after 1 click. After 2 clicks, About, Blog, Shop and Contact have 1/4 each.
 - After 3 clicks from About, Home has 25/48, Blog 1/16, Shop 5/24, Contact 1/16 and FAQ 7/48.
 - The distance from About falls 15/16, 3/4, 3/8, 7/24, 19/96 over clicks 0 to 4.
-- About is the worst start at each of those clicks. The worst distance is above a quarter after 3 clicks and within it after 4, so $t_{\text{mix}}$ = 4.
-- The diagonal of $P^2$ adds to 49/24. For About, $1/\pi(\text{About})$ is 16.
+- About is the worst start at each of those clicks. The worst distance is above a quarter after 3 clicks and within it after 4, so $`t_{\text{mix}}`$ = 4.
+- The diagonal of $`P^2`$ adds to 49/24. For About, $`1/\pi(\text{About})`$ is 16.
 - On six pages in a ring, the list +1, −1, +1, −1, +1, −1 flips sign at each click. After 60 clicks the distance from the even shares is 1/2.
 
 The eigenvalues, the spectral bound, PageRank, the one-way site, the lazy walk and the simulations are left to the Python and Rust checks.
@@ -1173,7 +1186,7 @@ end RandomWalksOnGraphsAndMixing
 
 > [!TIP]
 > **Try changing**
-> - **Remove the jumps.** Guess first: what does PageRank become with $d$ = 1? Set `D, r = 1.0, ...` in Python. The run stops at the solve with a division by zero: without jumps the equations lose the term that fixes their total, so they have endless solutions. Move the iterated print above the solve and it shows the degree shares, 0.2500 0.0625 0.1875 0.2500 0.1250 0.1250.
+> - **Remove the jumps.** Guess first: what does PageRank become with $`d`$ = 1? Set `D, r = 1.0, ...` in Python. The run stops at the solve with a division by zero: without jumps the equations lose the term that fixes their total, so they have endless solutions. Move the iterated print above the solve and it shows the degree shares, 0.2500 0.0625 0.1875 0.2500 0.1250 0.1250.
 > - **Stop the surfers early.** Guess first: what do 20,000 surfers look like after 2 clicks? Set `CLICKS` to 2. The shares sit near the 2-click row, 0.0000 0.2500 0.2500 0.2500 0.2500 0.0000, and the simulation assert fails: the start is not forgotten.
 > - **Change the seed.** Guess first: does the verdict move? Replace 2026 with 7. Every simulated share and the return time move by a standard error or two, and every assert still passes, since each allows four standard errors.
 > - **Start the surfers on Home.** Guess first: do 40 clicks still forget the start? Change `page = 1` inside the surfer loop to `page = 0`. The shares, still labelled "from About", stay within sampling error of the degree shares and every assert passes; after 40 clicks both starts are long forgotten.
@@ -1183,7 +1196,7 @@ end RandomWalksOnGraphsAndMixing
 ## The usual mistake
 
 > [!warning]
-> **Reading the long-run share as the chance right now.** $\pi$(Home) = 0.2500 is the chance of being on Home after the start is forgotten, or the share of a long stretch of clicks. Three clicks after landing on About the chance is 0.5208. The share is a statement about many clicks, not the next one, and it holds only after about $t_{\text{mix}}$ clicks.
+> **Reading the long-run share as the chance right now.** $`\pi`$(Home) = 0.2500 is the chance of being on Home after the start is forgotten, or the share of a long stretch of clicks. Three clicks after landing on About the chance is 0.5208. The share is a statement about many clicks, not the next one, and it holds only after about $`t_{\text{mix}}`$ clicks.
 >
 > - **Counting incoming links on a one-way site.** In-degree shares put FAQ at 0.1333; the truth is 0.0955. The degree rule is for two-way links only.
 > - **Assuming every connected site settles.** The ring of six has distance 0.5000 after 60 clicks and after 61; it needs an odd loop, or a lazy step.

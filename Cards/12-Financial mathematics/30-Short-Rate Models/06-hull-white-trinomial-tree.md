@@ -41,13 +41,15 @@ Top line: the highest rung. Middle line: the fitted centre. Bottom line: the low
 
 ## The formula
 
-Notation first, in words. Time runs in steps of length $\Delta t$; step number $i$ is the date $i\,\Delta t$ years from today. The possible rates at each step sit on rungs a fixed distance $\Delta x$ apart, and the rung number $j$ counts up or down from the centre.
+Notation first, in words. Time runs in steps of length $`\Delta t`$; step number $`i`$ is the date $`i\,\Delta t`$ years from today. The possible rates at each step sit on rungs a fixed distance $`\Delta x`$ apart, and the rung number $`j`$ counts up or down from the centre.
 
-A node is one rung at one step, written (i, j); a double subscript such as $r_{i,j}$ means "at step i, rung j". $D(t)$ is today's price of $1 paid at year t, read off the discount curve. Every other symbol is in the table below the formula.
+A node is one rung at one step, written (i, j); a double subscript such as $`r_{i,j}`$ means "at step i, rung j". $`D(t)`$ is today's price of $1 paid at year t, read off the discount curve. Every other symbol is in the table below the formula.
 
 The rate at node (i, j), applying for the next step, and the contract's value there are
 
-$$r_{i,j} = \alpha_i + j\,\Delta x, \qquad V_{i,j} = \max\Big(G_{i,j},\; e^{-r_{i,j}\Delta t}\big(p_u V_{i+1,\,j+1} + p_m V_{i+1,\,j} + p_d V_{i+1,\,j-1}\big)\Big).$$
+```math
+r_{i,j} = \alpha_i + j\,\Delta x, \qquad V_{i,j} = \max\Big(G_{i,j},\; e^{-r_{i,j}\Delta t}\big(p_u V_{i+1,\,j+1} + p_m V_{i+1,\,j} + p_d V_{i+1,\,j-1}\big)\Big).
+```
 
 **Read it aloud:** a node is worth the larger of what exercising pays now and the average of the three nodes it can reach next, discounted for one step at that node's own rate.
 
@@ -55,40 +57,48 @@ On dates with no exercise right the first entry is dropped. At the edge rungs th
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$ | mean reversion: how hard the short rate is pulled back to its centre, per year | 0.3 | cheaper: rates wander less |
-| $\sigma$ | volatility of the short rate, in rate units per square root of a year | 1 percent | dearer: more chance of high rates |
-| $\theta$, $r_0$, $D(t)$ | long-run rate and today's short rate of the house Vasicek curve; the discount curve they produce | 5 percent, 4 percent; $D(1)$ = 0.959496, $D(6)$ = 0.762590 | a higher curve makes the payer right dearer |
-| $\Delta t$, $i$ | step length in years; step number | 0.1 year; 0 to 60 | coarser tree, larger error |
-| $\Delta x$, $j$ | spacing between rungs; rung number | 0.005396; −7 to +7 | wider fan |
-| $M$, $jM$, $j_{max}$ | pull per step, $e^{-a\Delta t} - 1$; the average move from rung j, in rungs; the last rung before the branches turn in | −0.029554; −0.206881 at rung 7; 7 | stronger pull, narrower tree |
-| $p_u$, $p_m$, $p_d$ | weights on the up, middle and down branches | 1/6, 2/3, 1/6 at rung 0 | — |
-| $\alpha_i$, $\alpha_0$, $\alpha_1$, $r_{i,j}$ | the fitted centre at step i; its first two values; the rate at node (i, j) | 4.0148 percent, 4.0439 percent | higher rates at every rung |
-| $Q_{i,j}$ | state price: today's value of $1 paid only if the tree lands on node (i, j) | 0.663995 at node (1, 0) | — |
-| $K$ | the fixed rate Acme would pay after switching | 4.7 percent | cheaper payer right |
-| $G$, $P_{i,j}(y)$ | the swap's worth at a node if entered now, floored at zero; the node's price of $1 paid at year y | 26,180.14 dollars at year 1, rung +2 | — |
-| $V$ | the Bermudan's value at a node | $14,432.09 at the root | — |
+| $`a`$ | mean reversion: how hard the short rate is pulled back to its centre, per year | 0.3 | cheaper: rates wander less |
+| $`\sigma`$ | volatility of the short rate, in rate units per square root of a year | 1 percent | dearer: more chance of high rates |
+| $`\theta`$, $`r_0`$, $`D(t)`$ | long-run rate and today's short rate of the house Vasicek curve; the discount curve they produce | 5 percent, 4 percent; $`D(1)`$ = 0.959496, $`D(6)`$ = 0.762590 | a higher curve makes the payer right dearer |
+| $`\Delta t`$, $`i`$ | step length in years; step number | 0.1 year; 0 to 60 | coarser tree, larger error |
+| $`\Delta x`$, $`j`$ | spacing between rungs; rung number | 0.005396; −7 to +7 | wider fan |
+| $`M`$, $`jM`$, $`j_{max}`$ | pull per step, $`e^{-a\Delta t} - 1`$; the average move from rung j, in rungs; the last rung before the branches turn in | −0.029554; −0.206881 at rung 7; 7 | stronger pull, narrower tree |
+| $`p_u`$, $`p_m`$, $`p_d`$ | weights on the up, middle and down branches | 1/6, 2/3, 1/6 at rung 0 | — |
+| $`\alpha_i`$, $`\alpha_0`$, $`\alpha_1`$, $`r_{i,j}`$ | the fitted centre at step i; its first two values; the rate at node (i, j) | 4.0148 percent, 4.0439 percent | higher rates at every rung |
+| $`Q_{i,j}`$ | state price: today's value of $1 paid only if the tree lands on node (i, j) | 0.663995 at node (1, 0) | — |
+| $`K`$ | the fixed rate Acme would pay after switching | 4.7 percent | cheaper payer right |
+| $`G`$, $`P_{i,j}(y)`$ | the swap's worth at a node if entered now, floored at zero; the node's price of $1 paid at year y | 26,180.14 dollars at year 1, rung +2 | — |
+| $`V`$ | the Bermudan's value at a node | $14,432.09 at the root | — |
 
 The helper formulas:
 
-$$\Delta x = \sqrt{3\,\sigma^2\,\frac{1 - e^{-2a\Delta t}}{2a}}, \qquad j_{max} = \text{the smallest whole number above } \frac{0.184}{-M}.$$
+```math
+\Delta x = \sqrt{3\,\sigma^2\,\frac{1 - e^{-2a\Delta t}}{2a}}, \qquad j_{max} = \text{the smallest whole number above } \frac{0.184}{-M}.
+```
 
 The spacing is the square root of three times one step's variance, the stretch [Trinomial trees](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md) calls root 3; the edge rung is where the ladder stops widening. Step 3 derives the 0.184.
 
-$$p_u = \tfrac16 + \tfrac12\big(j^2M^2 + jM\big), \qquad p_m = \tfrac23 - j^2M^2, \qquad p_d = \tfrac16 + \tfrac12\big(j^2M^2 - jM\big).$$
+```math
+p_u = \tfrac16 + \tfrac12\big(j^2M^2 + jM\big), \qquad p_m = \tfrac23 - j^2M^2, \qquad p_d = \tfrac16 + \tfrac12\big(j^2M^2 - jM\big).
+```
 
-The middle rungs' weights. Above the centre $jM$ is negative, so weight moves to the down branch: that is the pull.
+The middle rungs' weights. Above the centre $`jM`$ is negative, so weight moves to the down branch: that is the pull.
 
-$$\alpha_i = \frac{1}{\Delta t}\,\ln\frac{\sum_j Q_{i,j}\, e^{-j\,\Delta x\,\Delta t}}{D\big((i+1)\Delta t\big)}, \qquad Q_{i+1,k} = \sum_j Q_{i,j}\; p(j \to k)\; e^{-r_{i,j}\Delta t}.$$
+```math
+\alpha_i = \frac{1}{\Delta t}\,\ln\frac{\sum_j Q_{i,j}\, e^{-j\,\Delta x\,\Delta t}}{D\big((i+1)\Delta t\big)}, \qquad Q_{i+1,k} = \sum_j Q_{i,j}\; p(j \to k)\; e^{-r_{i,j}\Delta t}.
+```
 
-Each step's shift is whatever reprices the next zero-coupon bond on the curve; the state prices then move one layer forward. $p(j \to k)$ is the weight on the branch from rung j to rung k, zero if there is none.
+Each step's shift is whatever reprices the next zero-coupon bond on the curve; the state prices then move one layer forward. $`p(j \to k)`$ is the weight on the branch from rung j to rung k, zero if there is none.
 
-$$G_{i,j} = \$1{,}000{,}000 \times \max\Big(1 - P_{i,j}(6) - K\sum_{y = e+1}^{6} P_{i,j}(y),\; 0\Big)$$
+```math
+G_{i,j} = \$1{,}000{,}000 \times \max\Big(1 - P_{i,j}(6) - K\sum_{y = e+1}^{6} P_{i,j}(y),\; 0\Big)
+```
 
 at exercise year e. One minus the six-year bond is the floating side: a loan that resets every year is worth its face at each reset. The sum is the fixed side, 4.7 percent at each remaining year end.
 
 ### When it holds
 
-- **One Gaussian (normally distributed) factor, constant $a$ and $\sigma$.** Every rate on the curve moves together. A Bermudan's value depends on how short and long swap rates move against each other; where they do not move in lockstep, the price is off, and [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a factor.
+- **One Gaussian (normally distributed) factor, constant $`a`$ and $`\sigma`$.** Every rate on the curve moves together. A Bermudan's value depends on how short and long swap rates move against each other; where they do not move in lockstep, the price is off, and [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a factor.
 - **Rates may go below zero.** Here the lowest rung stays above zero, at 0.49 percent by year 1; on a low curve the tree has negative rungs, which a market floored at zero would reject.
 - **Short steps.** The error is first order: $139.60 short on the one-date contract at 60 steps, $67.30 at 120. On the Bermudan the 60-step tree is $194.46 above the grid.
 - **Exercise dates on tree layers.** A date between layers needs an extra step or interpolation.
@@ -100,29 +110,29 @@ at exercise year e. One minus the six-year bond is the floating side: a loan tha
 
 ### Step 0: split the rate into a shape and a position
 
-In the Hull-White model the short rate is a random part plus a curve-fitting shift: $r = x + \alpha(t)$. The random part x starts at zero, is pulled back towards zero at speed $a$, and is kicked by noise of size $\sigma$. It knows nothing about today's curve. The shift $\alpha(t)$ is not random; it is chosen so the model reprices today's bonds.
+In the Hull-White model the short rate is a random part plus a curve-fitting shift: $`r = x + \alpha(t)`$. The random part x starts at zero, is pulled back towards zero at speed $`a`$, and is kicked by noise of size $`\sigma`$. It knows nothing about today's curve. The shift $`\alpha(t)`$ is not random; it is chosen so the model reprices today's bonds.
 
-That split is the whole trick. Build the ladder for x once: same spacing, same weights on every layer, no curve anywhere. Then slide each layer, one number per step, until the curve comes out right. The shape comes from $a$ and $\sigma$; the position comes from the market.
+That split is the whole trick. Build the ladder for x once: same spacing, same weights on every layer, no curve anywhere. Then slide each layer, one number per step, until the curve comes out right. The shape comes from $`a`$ and $`\sigma`$; the position comes from the market.
 
 ### Step 1: what one step of x has to match
 
-Over one step x behaves like the Vasicek rate centred at zero ([Vasicek](02-vasicek-model.md)). From a value x its average move is M times x, and the move's variance is $\sigma^2(1 - e^{-2a\Delta t})/(2a)$. Both are exact, not small-step approximations.
+Over one step x behaves like the Vasicek rate centred at zero ([Vasicek](02-vasicek-model.md)). From a value x its average move is M times x, and the move's variance is $`\sigma^2(1 - e^{-2a\Delta t})/(2a)`$. Both are exact, not small-step approximations.
 
-On rung j, x equals $j\,\Delta x$. Measured in rungs, the average move is $jM$ and the variance is one third, because $\Delta x^2$ was set to three times the step variance.
+On rung j, x equals $`j\,\Delta x`$. Measured in rungs, the average move is $`jM`$ and the variance is one third, because $`\Delta x^2`$ was set to three times the step variance.
 
 ### Step 2: three weights for three conditions
 
-From a middle rung the branches go up one rung, stay, or go down one. The conditions: the weights add to one; the average move is $jM$; the average squared move is the variance plus the square of the average, $\tfrac13 + j^2M^2$.
+From a middle rung the branches go up one rung, stay, or go down one. The conditions: the weights add to one; the average move is $`jM`$; the average squared move is the variance plus the square of the average, $`\tfrac13 + j^2M^2`$.
 
-A move of +1 or −1 has square 1 and staying has square 0. So the up and down weights add to $\tfrac13 + j^2M^2$ and differ by $jM$. Add and halve: $p_u$. Subtract and halve: $p_d$. The middle weight is the rest, $\tfrac23 - j^2M^2$. That is the display formula.
+A move of +1 or −1 has square 1 and staying has square 0. So the up and down weights add to $`\tfrac13 + j^2M^2`$ and differ by $`jM`$. Add and halve: $`p_u`$. Subtract and halve: $`p_d`$. The middle weight is the rest, $`\tfrac23 - j^2M^2`$. That is the display formula.
 
 ### Step 3: turn the branches at the edge, or a weight goes negative
 
-The middle weight $\tfrac23 - j^2M^2$ falls as j grows, and once $|jM|$ passes $\sqrt{2/3}$ = 0.816497 it is negative: from rung 28 on Acme's tree. A negative weight is not a probability; it amplifies errors instead of averaging them. Without a fix the 60-step tree carries a weight of −2.373870.
+The middle weight $`\tfrac23 - j^2M^2`$ falls as j grows, and once $`|jM|`$ passes $`\sqrt{2/3}`$ = 0.816497 it is negative: from rung 28 on Acme's tree. A negative weight is not a probability; it amplifies errors instead of averaging them. Without a fix the 60-step tree carries a weight of −2.373870.
 
-The fix changes the branching. Far above the centre the pull is strong, so the branches go to rungs j, j−1 and j−2. Solving the same three conditions gives the edge weights in the callout; all are positive while $|jM|$ lies between $1 - \sqrt{2/3}$, which is 0.184, and $1 + \sqrt{2/3}$.
+The fix changes the branching. Far above the centre the pull is strong, so the branches go to rungs j, j−1 and j−2. Solving the same three conditions gives the edge weights in the callout; all are positive while $`|jM|`$ lies between $`1 - \sqrt{2/3}`$, which is 0.184, and $`1 + \sqrt{2/3}`$.
 
-Hull and White take the smallest rung past 0.184: for Acme, 0.184 divided by 0.029554 is 6.23, so $j_{max}$ = 7. That is the flat top and bottom of the fan chart.
+Hull and White take the smallest rung past 0.184: for Acme, 0.184 divided by 0.029554 is 6.23, so $`j_{max}`$ = 7. That is the flat top and bottom of the fan chart.
 
 ```mermaid
 flowchart LR
@@ -139,17 +149,17 @@ Left: a middle rung, symmetric at the centre. Right: the top edge, where most we
 <details>
 <summary>The algebra behind the edge weights</summary>
 
-At the top edge the moves are 0, −1, −2 rungs, with squares 0, 1, 4. The conditions: weights add to one, $-p_m - 2p_d = jM$, and $p_m + 4p_d = \tfrac13 + j^2M^2$. Adding the last two gives $p_d = \tfrac16 + \tfrac12(j^2M^2 + jM)$. Then $p_m = -jM - 2p_d = -\tfrac13 - j^2M^2 - 2jM$, and the weight on staying is $1 - p_m - p_d = \tfrac76 + \tfrac12(j^2M^2 + 3jM)$. Write y for $-jM$, positive at the top: the middle weight is $-\tfrac13 - y^2 + 2y$, positive exactly when y lies between $1 - \sqrt{2/3}$ and $1 + \sqrt{2/3}$, and the other two are positive on that range too. The bottom edge is the mirror image.
+At the top edge the moves are 0, −1, −2 rungs, with squares 0, 1, 4. The conditions: weights add to one, $`-p_m - 2p_d = jM`$, and $`p_m + 4p_d = \tfrac13 + j^2M^2`$. Adding the last two gives $`p_d = \tfrac16 + \tfrac12(j^2M^2 + jM)`$. Then $`p_m = -jM - 2p_d = -\tfrac13 - j^2M^2 - 2jM`$, and the weight on staying is $`1 - p_m - p_d = \tfrac76 + \tfrac12(j^2M^2 + 3jM)`$. Write y for $`-jM`$, positive at the top: the middle weight is $`-\tfrac13 - y^2 + 2y`$, positive exactly when y lies between $`1 - \sqrt{2/3}`$ and $`1 + \sqrt{2/3}`$, and the other two are positive on that range too. The bottom edge is the mirror image.
 
 </details>
 
 ### Step 4: fit the curve one layer at a time
 
-A zero-coupon bond paying $1 at step i+1 pays $1 at every node of that layer, so its price today is the sum of that layer's state prices. That sum must equal $D((i+1)\Delta t)$.
+A zero-coupon bond paying $1 at step i+1 pays $1 at every node of that layer, so its price today is the sum of that layer's state prices. That sum must equal $`D((i+1)\Delta t)`$.
 
-Each state price on layer i+1 is built from layer i: a parent's state price, times the branch weight, times one step of discount at the parent's rate $\alpha_i + j\Delta x$. The weights out of each parent add to one, so the layer's sum is $e^{-\alpha_i\Delta t}\sum_j Q_{i,j} e^{-j\Delta x\Delta t}$. Setting it equal to the curve leaves one unknown, $\alpha_i$; logs give the display formula. The sum is positive, so the answer always exists and is unique.
+Each state price on layer i+1 is built from layer i: a parent's state price, times the branch weight, times one step of discount at the parent's rate $`\alpha_i + j\Delta x`$. The weights out of each parent add to one, so the layer's sum is $`e^{-\alpha_i\Delta t}\sum_j Q_{i,j} e^{-j\Delta x\Delta t}`$. Setting it equal to the curve leaves one unknown, $`\alpha_i`$; logs give the display formula. The sum is positive, so the answer always exists and is unique.
 
-Start with $Q_{0,0} = 1$, solve for $\alpha_0$, push the state prices forward, solve for $\alpha_1$, and so on. The check prices the six-year bond by rolling $1 back through the tree and gets 0.762590449, the curve's number to nine places.
+Start with $`Q_{0,0} = 1`$, solve for $`\alpha_0`$, push the state prices forward, solve for $`\alpha_1`$, and so on. The check prices the six-year bond by rolling $1 back through the tree and gets 0.762590449, the curve's number to nine places.
 
 ### Step 5: roll back, deciding at each exercise date
 
@@ -160,9 +170,9 @@ The swap's worth at a node needs bond prices at that node. They come from the sa
 <details>
 <summary>Detailed proof: the tree's prices agree with its fit</summary>
 
-**Claim.** For a payoff H paid at layer m, rolling back to the root gives $\sum_k Q_{m,k} H_k$.
+**Claim.** For a payoff H paid at layer m, rolling back to the root gives $`\sum_k Q_{m,k} H_k`$.
 
-**Proof, by induction on m.** At m = 0 both sides are the payoff at the root, since $Q_{0,0} = 1$. Suppose the claim holds at layer m, and take H paid at layer m+1. One step back turns it into a payoff at layer m: $H'_j = e^{-r_{m,j}\Delta t}\sum_k p(j\to k) H_k$. By the hypothesis the root value is $\sum_j Q_{m,j} H'_j = \sum_k H_k \sum_j Q_{m,j}\,p(j\to k)\,e^{-r_{m,j}\Delta t} = \sum_k Q_{m+1,k} H_k$, by the forward rule for Q.
+**Proof, by induction on m.** At m = 0 both sides are the payoff at the root, since $`Q_{0,0} = 1`$. Suppose the claim holds at layer m, and take H paid at layer m+1. One step back turns it into a payoff at layer m: $`H'_j = e^{-r_{m,j}\Delta t}\sum_k p(j\to k) H_k`$. By the hypothesis the root value is $`\sum_j Q_{m,j} H'_j = \sum_k H_k \sum_j Q_{m,j}\,p(j\to k)\,e^{-r_{m,j}\Delta t} = \sum_k Q_{m+1,k} H_k`$, by the forward rule for Q.
 
 **The curve.** With H equal to 1 everywhere, the root value is the layer's state-price sum, which Step 4 set equal to the curve. Every zero-coupon bond on the grid is repriced, by rollback as well as by the forward sum.
 
@@ -174,25 +184,25 @@ The swap's worth at a node needs bond prices at that node. They come from the sa
 
 ### The other doors
 
-For one exercise date, Jamshidian's formula is exact, because Hull-White fitted to this Vasicek curve with the same $a$ and $\sigma$ is Vasicek itself. The value also solves the term-structure equation ([A short-rate model](01-the-term-structure-equation.md)), which a fine grid in the short rate solves directly. With too many factors for any lattice, simulation with a regression for the waiting value takes over: [Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md).
+For one exercise date, Jamshidian's formula is exact, because Hull-White fitted to this Vasicek curve with the same $`a`$ and $`\sigma`$ is Vasicek itself. The value also solves the term-structure equation ([A short-rate model](01-the-term-structure-equation.md)), which a fine grid in the short rate solves directly. With too many factors for any lattice, simulation with a regression for the waiting value takes over: [Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Acme's contract: $1,000,000 face, fixed 4.7 percent, exercise at years 1 to 5 into a swap ending at year 6, annual payments. The curve is the shelf's house Vasicek curve: reversion 0.3 towards 5 percent, volatility 1 percent, starting at 4 percent; the tree uses the same $a$ = 0.3 and $\sigma$ = 1 percent. The 1-into-5 forward swap rate, the fixed rate that makes that swap worth zero today, is 4.6909 percent. So 4.7 percent is almost exactly at the money: almost equal to that rate.
+Acme's contract: $1,000,000 face, fixed 4.7 percent, exercise at years 1 to 5 into a swap ending at year 6, annual payments. The curve is the shelf's house Vasicek curve: reversion 0.3 towards 5 percent, volatility 1 percent, starting at 4 percent; the tree uses the same $`a`$ = 0.3 and $`\sigma`$ = 1 percent. The 1-into-5 forward swap rate, the fixed rate that makes that swap worth zero today, is 4.6909 percent. So 4.7 percent is almost exactly at the money: almost equal to that rate.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| step length $\Delta t$ | 6 years ÷ 60 steps | 0.1 |
-| pull per step $M$ | $e^{-0.3 \times 0.1} - 1$ | −0.029554 |
-| rung spacing $\Delta x$ | $\sqrt{3 \times 0.01^2 \times (1 - e^{-0.06}) / 0.6}$ | 0.005396 |
-| edge rung $j_{max}$ | smallest whole number above 0.184 ÷ 0.029554 = 6.23 | 7 |
+| step length $`\Delta t`$ | 6 years ÷ 60 steps | 0.1 |
+| pull per step $`M`$ | $`e^{-0.3 \times 0.1} - 1`$ | −0.029554 |
+| rung spacing $`\Delta x`$ | $`\sqrt{3 \times 0.01^2 \times (1 - e^{-0.06}) / 0.6}`$ | 0.005396 |
+| edge rung $`j_{max}`$ | smallest whole number above 0.184 ÷ 0.029554 = 6.23 | 7 |
 | weights at rung 0 | 1/6, 2/3, 1/6 | 0.166667, 0.666667, 0.166667 |
-| weights at rung 7 | edge formulas with $7M$ = −0.206881 | 0.877745, 0.037629, 0.084626 |
-| first shift $\alpha_0$ | $-\ln D(0.1) / 0.1 = -\ln 0.995993 / 0.1$ | 4.0148 percent |
-| state prices at step 1 | weights × $e^{-0.040148 \times 0.1}$ | 0.165999, 0.663995, 0.165999 |
-| second shift $\alpha_1$ | the fit formula on those three | 4.0439 percent |
+| weights at rung 7 | edge formulas with $`7M`$ = −0.206881 | 0.877745, 0.037629, 0.084626 |
+| first shift $`\alpha_0`$ | $`-\ln D(0.1) / 0.1 = -\ln 0.995993 / 0.1`$ | 4.0148 percent |
+| state prices at step 1 | weights × $`e^{-0.040148 \times 0.1}`$ | 0.165999, 0.663995, 0.165999 |
+| second shift $`\alpha_1`$ | the fit formula on those three | 4.0439 percent |
 | … 58 more layers, then roll back from year 6 | | |
 | **Bermudan, 60 steps** | | **$14,432.09** |
 
@@ -235,7 +245,7 @@ Same contract, 60 steps, $14,432.09 when built right:
 | --- | --- | --- |
 | Exercise wherever the swap is worth more than zero | $12,528.95 | The option to wait is thrown away |
 | Skip the fit; centre every layer at today's 4 percent | $4,592.63 | The curve says rates rise towards 5 percent; the unfitted tree misprices every bond and the payer right with them |
-| Keep middle-rung branching out to rung 59 | a weight of −2.373870 | Past $\lvert jM\rvert$ = 0.816497 the middle weight is negative |
+| Keep middle-rung branching out to rung 59 | a weight of −2.373870 | Past $`\lvert jM\rvert`$ = 0.816497 the middle weight is negative |
 | Price only the first date | $7,738.03 | The European 1-into-5: four dates, worth $6,694.06, left out |
 
 ---
@@ -692,11 +702,11 @@ The two outputs are identical line for line.
 
 Lean proves the matched weights, the curve fit and the rollback rule for every rung and layer, and checks three worked numbers.
 
-- Take any tree that starts from the single root rung 0. Then rolling a payoff paid at layer m back to the root gives $\sum_k Q_{m,k} H_k$.
-- Suppose the weights out of each parent add to one, and $\Delta t$, $D$ and Step 4's sum are positive. Then the next layer's state prices sum to the curve's next bond price exactly when $\alpha_i$ equals the display formula. So the shift always exists and is unique.
-- Take the middle-rung weights $p_u$, $p_m$, $p_d$, or the top edge weights. Then each set adds to one, with average move $jM$ and average squared move $\tfrac13 + j^2M^2$.
-- Take a middle rung. Then its middle weight is positive exactly when $\lvert jM\rvert < \sqrt{2/3}$.
-- Take the top edge and write y for $-jM$. Then the middle weight is positive exactly when y lies between $1 - \sqrt{2/3}$ and $1 + \sqrt{2/3}$. On that range all three edge weights are positive.
+- Take any tree that starts from the single root rung 0. Then rolling a payoff paid at layer m back to the root gives $`\sum_k Q_{m,k} H_k`$.
+- Suppose the weights out of each parent add to one, and $`\Delta t`$, $`D`$ and Step 4's sum are positive. Then the next layer's state prices sum to the curve's next bond price exactly when $`\alpha_i`$ equals the display formula. So the shift always exists and is unique.
+- Take the middle-rung weights $`p_u`$, $`p_m`$, $`p_d`$, or the top edge weights. Then each set adds to one, with average move $`jM`$ and average squared move $`\tfrac13 + j^2M^2`$.
+- Take a middle rung. Then its middle weight is positive exactly when $`\lvert jM\rvert < \sqrt{2/3}`$.
+- Take the top edge and write y for $`-jM`$. Then the middle weight is positive exactly when y lies between $`1 - \sqrt{2/3}`$ and $`1 + \sqrt{2/3}`$. On that range all three edge weights are positive.
 - The step length is 6 years ÷ 60 steps = 0.1 year. Rung 0 has weights 1/6, 2/3, 1/6, and rungs −7 to +7 give 15 nodes per full layer.
 
 Exercise choices, every dollar price and the step error are left to the Python and Rust checks.
@@ -857,7 +867,7 @@ end HullWhiteTree
 > **Try changing**
 > Guess the direction first. Then run it.
 > - **Raise the fixed rate to 5 percent**, `on_tree(t, ALL, k=0.05)`. The payer right is further out of the money: **$9,408.73**.
-> - **Double the volatility**, `tree(60, sig=0.02)`. The fan doubles and the Bermudan nearly does, to **$27,864.93**. The fit is untouched: $\sigma$ sets the shape, the curve the position.
+> - **Double the volatility**, `tree(60, sig=0.02)`. The fan doubles and the Bermudan nearly does, to **$27,864.93**. The fit is untouched: $`\sigma`$ sets the shape, the curve the position.
 > - **Halve or double the steps.** 30 steps give **$14,566.56**, 120 give **$14,332.22**; the gap to the grid's $14,237.63 falls from $328.93 to $194.46 to $94.59, roughly halving.
 > - **Exercise greedily**, `on_tree(t, ALL, greedy=True)`: **$12,528.95**, the cost of never waiting.
 
@@ -881,7 +891,7 @@ end HullWhiteTree
 - **Bermudan swaption desks.** Banks sell Acme's right to borrowers and to issuers of callable debt; a one-factor tree fitted to the day's curve is a standard first model for pricing and hedging it.
 - **Callable bonds.** An issuer that may repay early on coupon dates holds a Bermudan option; the same rollback, with "call" for "switch", prices it: [Callable bonds](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md).
 - **Cancellable swaps.** A swap one side may end on reset dates is a plain swap plus a Bermudan swaption the other way.
-- **Calibration.** $a$ and $\sigma$ are first chosen so the model reproduces quoted swaptions; the tree then prices what the quotes do not cover: [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
+- **Calibration.** $`a`$ and $`\sigma`$ are first chosen so the model reproduces quoted swaptions; the tree then prices what the quotes do not cover: [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
 - **Any payoff written from rates at a node.** Caps, range accruals, sinking-fund bonds: the same lattice prices them. That is the "any payoff" in the title.
 
 > **Say it back**
@@ -896,11 +906,11 @@ end HullWhiteTree
 
 ## Where this goes next
 
-- [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): choosing $a$ and $\sigma$ from market swaption prices, so the tree's answers are the market's.
+- [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): choosing $`a`$ and $`\sigma`$ from market swaption prices, so the tree's answers are the market's.
 - [Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md): the same contract by simulation, with a regression estimating the value of waiting; it works where a lattice cannot, in models with many factors.
 - [Callable bonds](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md): the issuer's version of the decision, on a bond instead of a swap.
 
-This card took $a$ and $\sigma$ as given; which values the market implies, and whether one pair can match every swaption quote at once, is the question the calibration card answers.
+This card took $`a`$ and $`\sigma`$ as given; which values the market implies, and whether one pair can match every swaption quote at once, is the question the calibration card answers.
 
 ---
 

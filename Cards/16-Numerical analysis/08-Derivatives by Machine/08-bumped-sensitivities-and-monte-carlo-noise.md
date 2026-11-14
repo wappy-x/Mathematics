@@ -8,7 +8,7 @@
 
 Acme shares trade at 100 dollars. A one-year option to buy one Acme share for 100 dollars is worth 9.227006 dollars in the finance wing's house market: bank rate 5 percent, dividend yield 2 percent, volatility 20 percent. These market numbers are illustrative. The wanted number is **delta**, the option's change in dollars per dollar move in Acme. The exact answer is 0.586851, and a desk wants it to about two decimals.
 
-Here the price comes from a simulation of 10,000 paths. A **path** is one random future for Acme, and the price is the average payoff over all paths. To get delta, bump the share price up and down by a small amount $h$, reprice, and divide the change by $2h$.
+Here the price comes from a simulation of 10,000 paths. A **path** is one random future for Acme, and the price is the average payoff over all paths. To get delta, bump the share price up and down by a small amount $`h`$, reprice, and divide the change by $`2h`$.
 
 Do that with a new set of random numbers for each price, and a one-cent bump returns a delta of **14.6241**, with a **standard error** (the typical miss of an average of random draws) of 9.7316. Do it again with the **same** 10,000 random numbers for both prices, and the one-cent bump returns **0.5902**, with a standard error of 0.0057.
 
@@ -41,49 +41,53 @@ xychart-beta
 
 ## The formula
 
-Notation first, in words. $V(s)$ is the exact price when Acme starts at $s$ dollars. $Y_i(s)$ is the discounted payoff of path $i$, which is the payoff brought back to today's dollars. A hat marks a computed number, as on the first shelf. So $\hat V(s)$, the simulated price, is the average of $Y_i(s)$ over $n$ paths, and $\hat\Delta_h$ is the bumped delta computed from paths with bump $h$:
+Notation first, in words. $`V(s)`$ is the exact price when Acme starts at $`s`$ dollars. $`Y_i(s)`$ is the discounted payoff of path $`i`$, which is the payoff brought back to today's dollars. A hat marks a computed number, as on the first shelf. So $`\hat V(s)`$, the simulated price, is the average of $`Y_i(s)`$ over $`n`$ paths, and $`\hat\Delta_h`$ is the bumped delta computed from paths with bump $`h`$:
 
-$$\hat\Delta_h = \frac{\hat V(S+h) - \hat V(S-h)}{2h}$$
+```math
+\hat\Delta_h = \frac{\hat V(S+h) - \hat V(S-h)}{2h}
+```
 
 **Read it aloud:** the computed delta is the simulated price a bump above, minus the simulated price a bump below, divided by the full gap.
 
-With **fresh draws**, the two averages use different random numbers. With **shared draws**, path $i$ uses the same random number $Z_i$ for both prices.
+With **fresh draws**, the two averages use different random numbers. With **shared draws**, path $`i`$ uses the same random number $`Z_i`$ for both prices.
 
-Its error has two parts. The **bias** $\beta(h)$ is how far the estimate's long-run average sits from the true delta. The **noise** is its standard error. The **mean-square error**, MSE, adds their squares:
+Its error has two parts. The **bias** $`\beta(h)`$ is how far the estimate's long-run average sits from the true delta. The **noise** is its standard error. The **mean-square error**, MSE, adds their squares:
 
-$$\mathrm{MSE}(h) = \beta(h)^2 + \frac{v(h)}{n}, \qquad \beta(h) \approx \tfrac16 V'''\,h^2$$
+```math
+\mathrm{MSE}(h) = \beta(h)^2 + \frac{v(h)}{n}, \qquad \beta(h) \approx \tfrac16 V'''\,h^2
+```
 
 **Read it aloud:** the expected squared error is the bias squared plus one path's variance divided by the number of paths, and the bias is one sixth of the third derivative times the bump squared.
 
-The **root-mean-square error**, RMSE, is the square root of the MSE. It is in the same units as delta. Everything on this card turns on how $v(h)$, the variance of one path's contribution, behaves as $h$ shrinks:
+The **root-mean-square error**, RMSE, is the square root of the MSE. It is in the same units as delta. Everything on this card turns on how $`v(h)`$, the variance of one path's contribution, behaves as $`h`$ shrinks:
 
-| Case | One path's variance $v(h)$ for small $h$ | Best bump scales like | Best RMSE falls like |
+| Case | One path's variance $`v(h)`$ for small $`h`$ | Best bump scales like | Best RMSE falls like |
 | --- | --- | --- | --- |
-| Fresh draws, any payoff | $c/h^2$ | $n^{-1/6}$ | $n^{-1/3}$ |
-| Shared draws, a payoff that jumps | $c/h$ | $n^{-1/5}$ | $n^{-2/5}$ |
-| Shared draws, a payoff with no jump | stays bounded | any small $h$ | $n^{-1/2}$ |
+| Fresh draws, any payoff | $`c/h^2`$ | $`n^{-1/6}`$ | $`n^{-1/3}`$ |
+| Shared draws, a payoff that jumps | $`c/h`$ | $`n^{-1/5}`$ | $`n^{-2/5}`$ |
+| Shared draws, a payoff with no jump | stays bounded | any small $`h`$ | $`n^{-1/2}`$ |
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $h$, $h^{*}$ | the bump, in dollars; $h^{*}$ is the best bump | 0.01 to 32; $h^{*}$ = 10.158 fresh | bias grows; noise shrinks |
-| $n$ | paths per price | 10,000 | noise shrinks like $1/\sqrt n$ |
-| $V(s)$, $\hat V(s)$ | the exact price with Acme at $s$, and the simulated one | 9.227006 for the call | — |
-| $\Delta$ | delta, the slope of $V$ at $S$ | 0.586851 call; 1.895058 digital | — |
-| $\hat\Delta_h$ | the bumped delta computed from paths | 0.5902 at one cent, shared | — |
-| $V'''$ | the third derivative of the price in $S$ | −0.000426 call; −0.004205 digital | bias grows |
-| $\beta(h)$, $\beta_3$ | bias: average estimate minus the truth; $\beta_3 = V'''/6$ is its constant | −0.00699 at $h$ = 10.158 | — |
-| $v(h)$, $c$ | one path's variance; $c$ is its constant for small $h$ | see the table above | noise grows |
-| $Y_i$, $Z_i$, $G_i$ | path $i$'s discounted payoff, its bell-curve random number, and its growth factor | — | — |
-| $A$, $p(h)$, $\phi$, $d_2$ | the digital's discounted payment; the chance a path ends in the band; the bell-curve height (not the golden ratio of the secant card, nor a hat function of shelf 07); the strike's bell-curve distance | $A$ is 100 dollars, discounted one year | — |
+| $`h`$, $`h^{*}`$ | the bump, in dollars; $`h^{*}`$ is the best bump | 0.01 to 32; $`h^{*}`$ = 10.158 fresh | bias grows; noise shrinks |
+| $`n`$ | paths per price | 10,000 | noise shrinks like $`1/\sqrt n`$ |
+| $`V(s)`$, $`\hat V(s)`$ | the exact price with Acme at $`s`$, and the simulated one | 9.227006 for the call | — |
+| $`\Delta`$ | delta, the slope of $`V`$ at $`S`$ | 0.586851 call; 1.895058 digital | — |
+| $`\hat\Delta_h`$ | the bumped delta computed from paths | 0.5902 at one cent, shared | — |
+| $`V'''`$ | the third derivative of the price in $`S`$ | −0.000426 call; −0.004205 digital | bias grows |
+| $`\beta(h)`$, $`\beta_3`$ | bias: average estimate minus the truth; $`\beta_3 = V'''/6`$ is its constant | −0.00699 at $`h`$ = 10.158 | — |
+| $`v(h)`$, $`c`$ | one path's variance; $`c`$ is its constant for small $`h`$ | see the table above | noise grows |
+| $`Y_i`$, $`Z_i`$, $`G_i`$ | path $`i`$'s discounted payoff, its bell-curve random number, and its growth factor | — | — |
+| $`A`$, $`p(h)`$, $`\phi`$, $`d_2`$ | the digital's discounted payment; the chance a path ends in the band; the bell-curve height (not the golden ratio of the secant card, nor a hat function of shelf 07); the strike's bell-curve distance | $`A`$ is 100 dollars, discounted one year | — |
 | MSE, RMSE | mean-square error, and its square root | RMSE 0.01221 at the fresh best bump | — |
-| $S, K, r, q, T, \sigma$ | Acme's price today, strike, bank rate, dividend yield, years, volatility | 100, 100, 5%, 2%, 1, 20% | — |
+| $`S, K, r, q, T, \sigma`$ | Acme's price today, strike, bank rate, dividend yield, years, volatility | 100, 100, 5%, 2%, 1, 20% | — |
 
 The **digital** on this card pays 100 dollars if Acme ends above 100 dollars, and nothing otherwise. It is a hundred of the finance wing's one-dollar digitals.
 
 ### When it holds
 
-- **The price is smooth in $S$.** The bias formula needs a third derivative. The call and the digital both have one: averaging over paths smooths the payoff's kink and jump.
-- **The draws are truly shared.** Path $i$ must use the same random numbers in both prices, in the same order. A simulation that uses a varying count of numbers per path can drift out of step.
+- **The price is smooth in $`S`$.** The bias formula needs a third derivative. The call and the digital both have one: averaging over paths smooths the payoff's kink and jump.
+- **The draws are truly shared.** Path $`i`$ must use the same random numbers in both prices, in the same order. A simulation that uses a varying count of numbers per path can drift out of step.
 - **The payoff has no jump, for the full rate.** A call's payoff moves by at most the bump times the path's growth, so shared draws cap its noise. A jump, such as the digital's fixed payment, breaks that cap.
 - **Enough paths land in the band.** For a digital at a tiny bump, only a few paths change their payment. The run's own standard error is then itself unreliable.
 
@@ -97,56 +101,62 @@ A random estimate misses for two reasons. Its long-run average may sit off the t
 
 ### Step 1: the bias is the same with fresh or shared draws
 
-Each average of payoffs has the exact price as its long-run average. So the long-run average of $\hat\Delta_h$ is $(V(S+h) - V(S-h))/(2h)$, whatever draws are used. That is the central difference of the exact price, and its error is about $\tfrac16 V''' h^2$ ([Forward, backward and central differences](01-forward-backward-and-central-differences.md)).
+Each average of payoffs has the exact price as its long-run average. So the long-run average of $`\hat\Delta_h`$ is $`(V(S+h) - V(S-h))/(2h)`$, whatever draws are used. That is the central difference of the exact price, and its error is about $`\tfrac16 V''' h^2`$ ([Forward, backward and central differences](01-forward-backward-and-central-differences.md)).
 
-For the call, $V'''$ is −0.000426. The check also recovers the digital's −0.004205 from a bump of its exact price, which confirms the formula behind it.
+For the call, $`V'''`$ is −0.000426. The check also recovers the digital's −0.004205 from a bump of its exact price, which confirms the formula behind it.
 
 ### Step 2: fresh draws make the noise grow like one over the bump
 
-With fresh draws the two averages are independent. Their difference has the variance of one plus the variance of the other. Dividing by $2h$ multiplies that spread by $1/(2h)$. The payoffs' spread hardly changes as $h$ shrinks, so the noise grows like $1/h$.
+With fresh draws the two averages are independent. Their difference has the variance of one plus the variance of the other. Dividing by $`2h`$ multiplies that spread by $`1/(2h)`$. The payoffs' spread hardly changes as $`h`$ shrinks, so the noise grows like $`1/h`$.
 
 The run shows it: the exact standard error is 0.0978 at a one-dollar bump and 9.7803 at a one-cent bump, a hundred times larger for a bump a hundred times smaller.
 
 ### Step 3: balancing bias against noise
 
-With fresh draws the MSE is $\beta_3^2 h^4 + c/(n h^2)$, where $\beta_3 = V'''/6$. The first term falls as the bump shrinks and the second rises. The sum is smallest where its slope is zero:
+With fresh draws the MSE is $`\beta_3^2 h^4 + c/(n h^2)`$, where $`\beta_3 = V'''/6`$. The first term falls as the bump shrinks and the second rises. The sum is smallest where its slope is zero:
 
-$$h^{*} = \left(\frac{c}{2\beta_3^{2}\,n}\right)^{1/6}$$
+```math
+h^{*} = \left(\frac{c}{2\beta_3^{2}\,n}\right)^{1/6}
+```
 
 At 10,000 paths that formula gives 9.910 dollars. A direct search on the exact error finds 10.158. The best bump is about a tenth of the share price.
 
-At that bump the noise is $\sqrt 2$ times the bias, so both parts matter. Put $h^{*}$ back in and the MSE goes like $n^{-2/3}$. The RMSE therefore falls like $n^{-1/3}$: a thousand times the paths buys only ten times the accuracy.
+At that bump the noise is $`\sqrt 2`$ times the bias, so both parts matter. Put $`h^{*}`$ back in and the MSE goes like $`n^{-2/3}`$. The RMSE therefore falls like $`n^{-1/3}`$: a thousand times the paths buys only ten times the accuracy.
 
 ### Step 4: shared draws stop the noise growing, for a payoff with no jump
 
-With shared draws, the bumped-up and bumped-down payoffs on one path come from the same future. The finance card shows the identity behind this. The variance of a difference is the two variances minus twice how much they move together, and shared draws make them move together strongly ([Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)). For a call, one path's difference divided by $2h$ is at most that path's discounted growth factor, so $v(h)$ stays bounded.
+With shared draws, the bumped-up and bumped-down payoffs on one path come from the same future. The finance card shows the identity behind this. The variance of a difference is the two variances minus twice how much they move together, and shared draws make them move together strongly ([Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)). For a call, one path's difference divided by $`2h`$ is at most that path's discounted growth factor, so $`v(h)`$ stays bounded.
 
-Then the MSE is $\beta_3^2 h^4 + v/n$. Nothing pulls the bump up, so take it small. A one-cent bump has a bias under 0.00001, and the RMSE falls at the full Monte Carlo rate $n^{-1/2}$ ([Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md)).
+Then the MSE is $`\beta_3^2 h^4 + v/n`$. Nothing pulls the bump up, so take it small. A one-cent bump has a bias under 0.00001, and the RMSE falls at the full Monte Carlo rate $`n^{-1/2}`$ ([Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md)).
 
 ### Step 5: a jump in the payoff breaks the cap
 
-The digital pays 100 dollars, discounted, or nothing. On one path, the two bumped payoffs are either equal or differ by the full payment. They differ only when the path ends in a thin band of width proportional to $h$ around the strike.
+The digital pays 100 dollars, discounted, or nothing. On one path, the two bumped payoffs are either equal or differ by the full payment. They differ only when the path ends in a thin band of width proportional to $`h`$ around the strike.
 
-So the path's contribution is zero with high chance and the payment divided by $2h$ with a chance proportional to $h$. Its variance is about (payment over $2h$) squared times $h$, which is $c/h$. At a one-cent bump, only 3 of the 10,000 paths changed their payment.
+So the path's contribution is zero with high chance and the payment divided by $`2h`$ with a chance proportional to $`h`$. Its variance is about (payment over $`2h`$) squared times $`h`$, which is $`c/h`$. At a one-cent bump, only 3 of the 10,000 paths changed their payment.
 
-The MSE is now $\beta_3^2 h^4 + c/(n h)$. Its best bump shrinks like $n^{-1/5}$: 5.419 dollars at 10,000 paths, against 5.399 from the formula. The RMSE falls like $n^{-2/5}$, between the other two cases.
+The MSE is now $`\beta_3^2 h^4 + c/(n h)`$. Its best bump shrinks like $`n^{-1/5}`$: 5.419 dollars at 10,000 paths, against 5.399 from the formula. The RMSE falls like $`n^{-2/5}`$, between the other two cases.
 
 <details>
 <summary>Detailed proof: the three best bumps and the three rates</summary>
 
-Write $\beta(h) = \beta_3 h^2 + O(h^4)$ with $\beta_3 = V'''/6$, from the Taylor expansion of the exact price.
+Write $`\beta(h) = \beta_3 h^2 + O(h^4)`$ with $`\beta_3 = V'''/6`$, from the Taylor expansion of the exact price.
 
 **Fresh draws.** The legs are independent, so
-$$\mathrm{Var}\,\hat\Delta_h = \frac{\mathrm{Var}\,Y(S+h) + \mathrm{Var}\,Y(S-h)}{4h^2 n} \to \frac{c}{h^2 n}, \qquad c = \tfrac12 \mathrm{Var}\,Y(S).$$
-Set the derivative of $\beta_3^2 h^4 + c/(nh^2)$ to zero: $4\beta_3^2 h^3 = 2c/(nh^3)$, so $h^6 = c/(2\beta_3^2 n)$. At that $h$ the noise squared $c/(nh^2)$ equals $2\beta_3^2 h^4$, twice the bias squared. The MSE is $3\beta_3^2 h^4$, which is a constant times $n^{-2/3}$.
 
-**Shared draws, no jump.** For the call, $|Y_i(S+h) - Y_i(S-h)| \le 2h\,e^{-rT} G_i$, where $G_i$ is path $i$'s growth factor. So $v(h) \le e^{-2rT}\,E[G^2]$ for every $h$. Choose any $h$ with $h^2 \le n^{-1/2}$; then the bias squared is at most a constant over $n$, and the MSE is a constant over $n$.
+$`\displaystyle \mathrm{Var}\,\hat\Delta_h = \frac{\mathrm{Var}\,Y(S+h) + \mathrm{Var}\,Y(S-h)}{4h^2 n} \to \frac{c}{h^2 n}, \qquad c = \tfrac12 \mathrm{Var}\,Y(S).`$
 
-**Shared draws, a jump.** Let $A$ be the discounted payment. Path $i$ contributes $A/(2h)$ when $(S-h)G_i \le K < (S+h)G_i$, and 0 otherwise. That band has chance $p(h) = 2h\,\phi(d_2)/(S\sigma\sqrt T) + O(h^3)$, where $\phi$ is the bell-curve height and $d_2$ is the bell-curve distance of the strike. So
-$$v(h) = \frac{A^2}{4h^2}p(h) - O(1) \to \frac{c}{h}, \qquad c = \frac{A^2\,\phi(d_2)}{2S\sigma\sqrt T}.$$
-Set the derivative of $\beta_3^2 h^4 + c/(nh)$ to zero: $4\beta_3^2 h^3 = c/(nh^2)$, so $h^5 = c/(4\beta_3^2 n)$. The noise squared is then $4\beta_3^2h^4$, four times the bias squared. The MSE is $5\beta_3^2 h^4$, a constant times $n^{-4/5}$, so the RMSE falls like $n^{-2/5}$.
+Set the derivative of $`\beta_3^2 h^4 + c/(nh^2)`$ to zero: $`4\beta_3^2 h^3 = 2c/(nh^3)`$, so $`h^6 = c/(2\beta_3^2 n)`$. At that $`h`$ the noise squared $`c/(nh^2)`$ equals $`2\beta_3^2 h^4`$, twice the bias squared. The MSE is $`3\beta_3^2 h^4`$, which is a constant times $`n^{-2/3}`$.
 
-These are leading-order statements as $n \to \infty$. The check computes the full error, with no leading-term cut, from closed-form prices and Simpson's rule, and confirms them.
+**Shared draws, no jump.** For the call, $`|Y_i(S+h) - Y_i(S-h)| \le 2h\,e^{-rT} G_i`$, where $`G_i`$ is path $`i`$'s growth factor. So $`v(h) \le e^{-2rT}\,E[G^2]`$ for every $`h`$. Choose any $`h`$ with $`h^2 \le n^{-1/2}`$; then the bias squared is at most a constant over $`n`$, and the MSE is a constant over $`n`$.
+
+**Shared draws, a jump.** Let $`A`$ be the discounted payment. Path $`i`$ contributes $`A/(2h)`$ when $`(S-h)G_i \le K < (S+h)G_i`$, and 0 otherwise. That band has chance $`p(h) = 2h\,\phi(d_2)/(S\sigma\sqrt T) + O(h^3)`$, where $`\phi`$ is the bell-curve height and $`d_2`$ is the bell-curve distance of the strike. So
+
+$`\displaystyle v(h) = \frac{A^2}{4h^2}p(h) - O(1) \to \frac{c}{h}, \qquad c = \frac{A^2\,\phi(d_2)}{2S\sigma\sqrt T}.`$
+
+Set the derivative of $`\beta_3^2 h^4 + c/(nh)`$ to zero: $`4\beta_3^2 h^3 = c/(nh^2)`$, so $`h^5 = c/(4\beta_3^2 n)`$. The noise squared is then $`4\beta_3^2h^4`$, four times the bias squared. The MSE is $`5\beta_3^2 h^4`$, a constant times $`n^{-4/5}`$, so the RMSE falls like $`n^{-2/5}`$.
+
+These are leading-order statements as $`n \to \infty`$. The check computes the full error, with no leading-term cut, from closed-form prices and Simpson's rule, and confirms them.
 
 </details>
 
@@ -181,7 +191,7 @@ The call and the digital, 10,000 paths per price, each at its own best bump. All
 
 Three checks on those rows:
 
-1. **The balance.** For fresh draws, the noise over the bias is 0.01001 / 0.00699 = 1.43, near the $\sqrt 2$ = 1.41 of Step 3. For the digital it is 0.03597 / 0.02046 = 1.76, approaching the 2 of Step 5. The run prints both ratios.
+1. **The balance.** For fresh draws, the noise over the bias is 0.01001 / 0.00699 = 1.43, near the $`\sqrt 2`$ = 1.41 of Step 3. For the digital it is 0.03597 / 0.02046 = 1.76, approaching the 2 of Step 5. The run prints both ratios.
 2. **The measured error.** A hundred independent runs at those bumps give RMSEs of 0.01137, 0.04426 and 0.00534. Measured over exact, that is 0.931, 1.069 and 0.931: each about 7 percent off, about what a hundred runs can resolve.
 3. **The cost.** Both methods compute two payoffs per path pair; shared draws need half the random numbers. At 10,000 paths their error is 0.00574 against 0.01221, less than half. At 1,000 paths it is 0.01814 against 0.02654.
 
@@ -200,7 +210,7 @@ Three checks on those rows:
 
 The call, fresh draws, 10,000 paths per price. The bump halves at each step from 32 dollars to 1 dollar. Each entry is the base-10 logarithm of an error's size, as printed by the checks.
 
-| Bump $h$ (dollars) | log10 of the bias | log10 of the noise | log10 of the RMSE | Larger part |
+| Bump $`h`$ (dollars) | log10 of the bias | log10 of the noise | log10 of the RMSE | Larger part |
 | ---: | ---: | ---: | ---: | --- |
 | 32 | −1.34 | −2.40 | −1.34 | bias |
 | 16 | −1.79 | −2.17 | −1.76 | bias |
@@ -226,7 +236,7 @@ Orange is the size of the bias, green the noise, dark blue the RMSE.
 - **The noise rises slowly.** Each halving doubles it: about 0.3 per step.
 - **The total follows whichever is larger.** It bottoms out at −1.88 near 8 dollars. The exact search puts the best bump at 10.158.
 
-More paths lower the green line and leave the orange one alone, so the best bump moves right, to smaller bumps: the $n^{-1/6}$ of Step 3.
+More paths lower the green line and leave the orange one alone, so the best bump moves right, to smaller bumps: the $`n^{-1/6}`$ of Step 3.
 
 ---
 
@@ -234,7 +244,7 @@ More paths lower the green line and leave the orange one alone, so the best bump
 
 Nothing imported holds an answer. The bell-curve area is a series. The random numbers come from SplitMix64, a small generator written out in full ([Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md)), and Box-Muller turns them into bell-curve draws. The roads:
 
-1. **Closed forms.** Exact deltas and third derivatives for the call and the digital, with the digital's $V'''$ confirmed by a bump of its exact price.
+1. **Closed forms.** Exact deltas and third derivatives for the call and the digital, with the digital's $`V'''`$ confirmed by a bump of its exact price.
 2. **Exact error, searched.** Exact variances by **Simpson's rule** (a weighted sum of parabola areas) or the bell-curve area. A **golden-section search** (shrink a bracket around the lowest point by a fixed ratio each step) finds the best bump.
 3. **Theory.** The leading-term formulas for the best bump, held to within 2 percent of the search at a million paths, and the observed orders held to the theorems.
 4. **Simulation.** One run's own standard errors against the exact ones, and 100 independent runs' measured RMSE against the exact RMSE.
@@ -655,16 +665,16 @@ The two outputs agree digit for digit. Both programs add their sums in the same 
 
 ### Lean
 
-Lean proves the algebra behind the three rates and the call's cap, for any $\beta_3 \ne 0$, $c > 0$ and $n > 0$.
+Lean proves the algebra behind the three rates and the call's cap, for any $`\beta_3 \ne 0`$, $`c > 0`$ and $`n > 0`$.
 
-- **Fresh draws.** Over all bumps $h > 0$, $\beta_3^2 h^4 + c/(nh^2)$ is smallest at $h^{*} = (c/(2\beta_3^2 n))^{1/6}$. There it equals $3(\beta_3^2)^{1/3}(c/2)^{2/3}\,n^{-2/3}$.
-- **Shared draws, a payoff that jumps.** Over all $h > 0$, $\beta_3^2 h^4 + c/(nh)$ is smallest at $h^{*} = (c/(4\beta_3^2 n))^{1/5}$. There it equals $5(\beta_3^2)^{1/5}(c/4)^{4/5}\,n^{-4/5}$.
-- **Shared draws, a payoff with no jump.** Say one path's variance $v(h)$ is at most $V$ for every $h > 0$. Then any bump with $h^2 \le n^{-1/2}$ gives $\beta_3^2 h^4 + v(h)/n \le (\beta_3^2 + V)/n$.
+- **Fresh draws.** Over all bumps $`h > 0`$, $`\beta_3^2 h^4 + c/(nh^2)`$ is smallest at $`h^{*} = (c/(2\beta_3^2 n))^{1/6}`$. There it equals $`3(\beta_3^2)^{1/3}(c/2)^{2/3}\,n^{-2/3}`$.
+- **Shared draws, a payoff that jumps.** Over all $`h > 0`$, $`\beta_3^2 h^4 + c/(nh)`$ is smallest at $`h^{*} = (c/(4\beta_3^2 n))^{1/5}`$. There it equals $`5(\beta_3^2)^{1/5}(c/4)^{4/5}\,n^{-4/5}`$.
+- **Shared draws, a payoff with no jump.** Say one path's variance $`v(h)`$ is at most $`V`$ for every $`h > 0`$. Then any bump with $`h^2 \le n^{-1/2}`$ gives $`\beta_3^2 h^4 + v(h)/n \le (\beta_3^2 + V)/n`$.
 - **The balance.** At the best bump, the noise squared is twice the bias squared with fresh draws, and four times it for a payoff that jumps.
-- **The call's cap.** On one path with growth factor $G \ge 0$ and bump $h \ge 0$, the two discounted call payoffs differ by at most $2h\,e^{-rT}G$.
-- **The cost.** At the rate $n^{-1/3}$, a thousand times the paths buys ten times the accuracy, since $10^3 = 1000$.
+- **The call's cap.** On one path with growth factor $`G \ge 0`$ and bump $`h \ge 0`$, the two discounted call payoffs differ by at most $`2h\,e^{-rT}G`$.
+- **The cost.** At the rate $`n^{-1/3}`$, a thousand times the paths buys ten times the accuracy, since $`10^3 = 1000`$.
 
-That the MSE takes these forms, the values of $c$ and $\beta_3$, and every simulated number are left to the Python and Rust checks.
+That the MSE takes these forms, the values of $`c`$ and $`\beta_3`$, and every simulated number are left to the Python and Rust checks.
 
 ```lean
 -- Bumping a simulated price: the best bump balances bias against noise, so the error of a bumped delta falls like n^(-1/3) with fresh draws, n^(-2/5) for a jumping payoff with shared draws, and n^(-1/2) for a call with shared draws, whose noise shared draws cap.
@@ -894,7 +904,7 @@ example : (10 : ℕ) ^ 3 = 1000 := by decide
 
 - [Choosing the step](04-choosing-the-step-truncation-against-rounding.md): the best step when the only noise is rounding. This card replaces rounding with simulation noise, which is far larger.
 - [Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): the first use of common random numbers on the Acme call, the variance-of-a-difference identity and the cap for a payoff with no jump, stated here in one line.
-- [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): the standard error of an average of n draws, and the $n^{-1/2}$ rate that shared draws restore.
+- [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): the standard error of an average of n draws, and the $`n^{-1/2}`$ rate that shared draws restore.
 
 ## Where this goes next
 
@@ -903,7 +913,7 @@ example : (10 : ℕ) ^ 3 = 1000 := by decide
 - [Reverse mode](07-reverse-mode-automatic-differentiation.md): every sensitivity of one simulated price for a small fixed multiple of one pricing.
 - [Variance reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md): antithetic, control and stratified draws, which shrink the noise term further.
 
-Left open: can a delta for a payoff that jumps reach the full $n^{-1/2}$ rate without any bump at all?
+Left open: can a delta for a payoff that jumps reach the full $`n^{-1/2}`$ rate without any bump at all?
 
 ---
 

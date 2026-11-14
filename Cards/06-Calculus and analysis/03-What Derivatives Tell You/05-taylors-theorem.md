@@ -35,32 +35,36 @@ Orange is e^x, green the tangent line 1 + x, dark the degree-3 stand-in. All thr
 
 ## The formula
 
-Notation first, in words. The k-th derivative of f, the rate of change taken k times over, is written $f^{(k)}$; the brackets keep it from reading as a power, and $f^{(0)}$ is f itself ([Second derivatives](../02-Derivatives/08-higher-derivatives-and-concavity.md)). The factorial k! is 1 × 2 × … × k, with 0! = 1.
+Notation first, in words. The k-th derivative of f, the rate of change taken k times over, is written $`f^{(k)}`$; the brackets keep it from reading as a power, and $`f^{(0)}`$ is f itself ([Second derivatives](../02-Derivatives/08-higher-derivatives-and-concavity.md)). The factorial k! is 1 × 2 × … × k, with 0! = 1.
 
 The **Taylor polynomial of degree n** of f at the anchor a:
 
-$$P_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!}\,(x-a)^k$$
+```math
+P_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!}\,(x-a)^k
+```
 
 **Read it aloud:** the value at the anchor, plus each derivative at the anchor times the step to the k-th power, over k factorial.
 
-**Taylor's theorem, Lagrange's form of the remainder:** for each x other than a there is a point $\xi$ (the Greek letter xi) strictly between a and x with
+**Taylor's theorem, Lagrange's form of the remainder:** for each x other than a there is a point $`\xi`$ (the Greek letter xi) strictly between a and x with
 
-$$f(x) = P_n(x) + R_n(x), \qquad R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,h^{n+1}, \quad h = x - a$$
+```math
+f(x) = P_n(x) + R_n(x), \qquad R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,h^{n+1}, \quad h = x - a
+```
 
 **Read it aloud:** the function is its polynomial plus one more term, whose derivative is read somewhere between anchor and target instead of at the anchor.
 
-So if $\lvert f^{(n+1)}\rvert \le M$ everywhere between a and x, then $\lvert R_n(x)\rvert \le M\,\lvert h\rvert^{n+1}/(n+1)!$.
+So if $`\lvert f^{(n+1)}\rvert \le M`$ everywhere between a and x, then $`\lvert R_n(x)\rvert \le M\,\lvert h\rvert^{n+1}/(n+1)!`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $x$, $a$ | the function, the target, the anchor | e^x, 0.1, 0 | a farther target needs more terms |
-| $h$ | the step x − a | 0.1 | error grows like h to the power n + 1 |
-| $n$, $k$ | degree kept; counter from 0 to n | n = 3, four terms | error shrinks near the anchor |
-| $f^{(k)}$ | the k-th derivative | always e^x | bigger coefficients |
-| $P_n$ | the Taylor polynomial | 1.105166667 | nears the truth, near the anchor |
-| $R_n$ | the remainder, f minus the polynomial | 0.000004251 | what the theorem pins down |
-| $\xi$ | the point where the next derivative is read | 0.020134, found afterwards | anywhere between 0 and 0.1 |
-| $M$ | a ceiling on the next derivative between a and x | e^0.1, bounded without its value | a looser ceiling gives a wider, still true, window |
+| $`f`$, $`x`$, $`a`$ | the function, the target, the anchor | e^x, 0.1, 0 | a farther target needs more terms |
+| $`h`$ | the step x − a | 0.1 | error grows like h to the power n + 1 |
+| $`n`$, $`k`$ | degree kept; counter from 0 to n | n = 3, four terms | error shrinks near the anchor |
+| $`f^{(k)}`$ | the k-th derivative | always e^x | bigger coefficients |
+| $`P_n`$ | the Taylor polynomial | 1.105166667 | nears the truth, near the anchor |
+| $`R_n`$ | the remainder, f minus the polynomial | 0.000004251 | what the theorem pins down |
+| $`\xi`$ | the point where the next derivative is read | 0.020134, found afterwards | anywhere between 0 and 0.1 |
+| $`M`$ | a ceiling on the next derivative between a and x | e^0.1, bounded without its value | a looser ceiling gives a wider, still true, window |
 
 ### When it holds
 
@@ -79,42 +83,42 @@ A tangent line matches value and slope, then drifts as the curve bends ([Linear 
 
 ### Step 1: the factorials make the derivatives match
 
-Differentiate $(x-a)^k$ k times and it becomes the constant k!: 3 × 2 × 1 = 6 for the cube. Fewer times and a factor of (x − a) survives, which is 0 at the anchor; more times and it is 0 everywhere. So at the anchor the k-th derivative of $P_n$ sees only the k-th term, which gives its coefficient times k!. To equal $f^{(k)}(a)$ the coefficient must be $f^{(k)}(a)/k!$, and no other polynomial of degree n matches all n + 1 derivatives.
+Differentiate $`(x-a)^k`$ k times and it becomes the constant k!: 3 × 2 × 1 = 6 for the cube. Fewer times and a factor of (x − a) survives, which is 0 at the anchor; more times and it is 0 everywhere. So at the anchor the k-th derivative of $`P_n`$ sees only the k-th term, which gives its coefficient times k!. To equal $`f^{(k)}(a)`$ the coefficient must be $`f^{(k)}(a)/k!`$, and no other polynomial of degree n matches all n + 1 derivatives.
 
-For e^x at 0 every derivative is 1, so the coefficients are 1/k! and $P_3(0.1)$ = 1 + 0.1 + 0.005 + 0.000166667.
+For e^x at 0 every derivative is 1, so the coefficients are 1/k! and $`P_3(0.1)`$ = 1 + 0.1 + 0.005 + 0.000166667.
 
 ### Step 2: the remainder is the next term, read somewhere in between
 
-For n = 0 the claim is $f(x) = f(a) + f'(\xi)h$: the mean value theorem ([Mean value theorem](02-mean-value-theorem.md)). Taylor's theorem pushes it up n rungs.
+For n = 0 the claim is $`f(x) = f(a) + f'(\xi)h`$: the mean value theorem ([Mean value theorem](02-mean-value-theorem.md)). Taylor's theorem pushes it up n rungs.
 
-The proof in words: freeze the target x and slide the anchor to t. Measure how far the polynomial anchored at t falls short of f(x), less one extra next-power term whose constant makes the total 0 at t = a. It is also 0 at t = x. Rolle's theorem (equal values at both ends force a flat point in between) gives such a point; differentiated, the sum cancels in pairs, and the flat point forces the constant to be $f^{(n+1)}(\xi)$.
+The proof in words: freeze the target x and slide the anchor to t. Measure how far the polynomial anchored at t falls short of f(x), less one extra next-power term whose constant makes the total 0 at t = a. It is also 0 at t = x. Rolle's theorem (equal values at both ends force a flat point in between) gives such a point; differentiated, the sum cancels in pairs, and the flat point forces the constant to be $`f^{(n+1)}(\xi)`$.
 
 <details>
 <summary>Detailed proof</summary>
 
-Fix $x \ne a$ and choose K with $R_n(x) = K h^{n+1}/(n+1)!$. For t between a and x let
+Fix $`x \ne a`$ and choose K with $`R_n(x) = K h^{n+1}/(n+1)!`$. For t between a and x let
 
-$$g(t) = f(x) - \sum_{k=0}^{n} \frac{f^{(k)}(t)}{k!}(x-t)^k - K\frac{(x-t)^{n+1}}{(n+1)!}.$$
+$`\displaystyle g(t) = f(x) - \sum_{k=0}^{n} \frac{f^{(k)}(t)}{k!}(x-t)^k - K\frac{(x-t)^{n+1}}{(n+1)!}.`$
 
-Then $g(a) = 0$ by the choice of K, and $g(x) = 0$ since every power of $(x - t)$ vanishes. The hypotheses make g continuous on the closed stretch and differentiable inside, so Rolle gives $\xi$ strictly between with $g'(\xi) = 0$. By the product rule the k-th term differentiates to $\frac{f^{(k+1)}(t)}{k!}(x-t)^k - \frac{f^{(k)}(t)}{(k-1)!}(x-t)^{k-1}$ (second part absent for k = 0); summed, each second part cancels the previous first part, leaving
+Then $`g(a) = 0`$ by the choice of K, and $`g(x) = 0`$ since every power of $`(x - t)`$ vanishes. The hypotheses make g continuous on the closed stretch and differentiable inside, so Rolle gives $`\xi`$ strictly between with $`g'(\xi) = 0`$. By the product rule the k-th term differentiates to $`\frac{f^{(k+1)}(t)}{k!}(x-t)^k - \frac{f^{(k)}(t)}{(k-1)!}(x-t)^{k-1}`$ (second part absent for k = 0); summed, each second part cancels the previous first part, leaving
 
-$$g'(t) = \frac{(x-t)^n}{n!}\left(K - f^{(n+1)}(t)\right).$$
+$`\displaystyle g'(t) = \frac{(x-t)^n}{n!}\left(K - f^{(n+1)}(t)\right).`$
 
-At $t = \xi$, where $x - \xi \ne 0$, this gives $K = f^{(n+1)}(\xi)$. For any tolerance $\varepsilon > 0$, a step with $M\lvert h\rvert^{n+1}/(n+1)! < \varepsilon$ then guarantees $\lvert f(x) - P_n(x)\rvert < \varepsilon$. ∎
+At $`t = \xi`$, where $`x - \xi \ne 0`$, this gives $`K = f^{(n+1)}(\xi)`$. For any tolerance $`\varepsilon > 0`$, a step with $`M\lvert h\rvert^{n+1}/(n+1)! < \varepsilon`$ then guarantees $`\lvert f(x) - P_n(x)\rvert < \varepsilon`$. ∎
 
 </details>
 
 ### Step 3: for e^0.1 the remainder is bounded from both sides
 
-With n = 3 the remainder is $e^{\xi}$ × 0.1^4/24, and 0.1^4/24 = 0.000004167. As $\xi$ lies between 0 and 0.1 and e^x climbs, $e^{\xi}$ is between 1 and e^0.1.
+With n = 3 the remainder is $`e^{\xi}`$ × 0.1^4/24, and 0.1^4/24 = 0.000004167. As $`\xi`$ lies between 0 and 0.1 and e^x climbs, $`e^{\xi}`$ is between 1 and e^0.1.
 
 Low side: the remainder is at least 0.000004167, so e^0.1 is at least 1.105170833. High side, the unknown used against itself: e^0.1 is at most 1.105166667 + e^0.1 × 0.000004167. Collect the e^0.1 terms and divide: e^0.1 is at most 1.105166667 / (1 − 0.000004167) = 1.105171272. No value of e was needed.
 
 ### Step 4: halve the step, divide the error by 16
 
-The degree-3 remainder carries the fourth power of the step, so halving the step should divide the error by about 2 × 2 × 2 × 2. At steps 0.2, 0.1 and 0.05 the errors are 0.000069425, 0.000004251 and 0.000000263: ratios 16.33 and 16.16, closing on 16 as $\xi$ is squeezed towards 0.
+The degree-3 remainder carries the fourth power of the step, so halving the step should divide the error by about 2 × 2 × 2 × 2. At steps 0.2, 0.1 and 0.05 the errors are 0.000069425, 0.000004251 and 0.000000263: ratios 16.33 and 16.16, closing on 16 as $`\xi`$ is squeezed towards 0.
 
-The theorem only says $\xi$ exists. With the true e^0.1 in hand, solving $e^{\xi}$ × 0.000004167 = 0.000004251 gives $\xi$ = 0.020134, inside the stretch.
+The theorem only says $`\xi`$ exists. With the true e^0.1 in hand, solving $`e^{\xi}`$ × 0.000004167 = 0.000004251 gives $`\xi`$ = 0.020134, inside the stretch.
 
 A second route writes the remainder as an integral, by integrating by parts n times ([Integration by parts](../04-Integrals/04-integration-by-parts.md)); [Error bounds and Romberg](../../16-Numerical%20analysis/05-Quadrature/02-error-bounds-and-romberg.md) leans on that form.
 
@@ -140,7 +144,7 @@ A road with no series gives 1.105170918, inside the window. One year at 10% comp
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | No factorials: 1 + 0.1 + 0.01 + 0.001 | 1.111, off by 0.005829082 | coefficients are derivatives over k! |
-| Ceiling read at the anchor, e^ξ at most 1 | ceiling 1.105170833, below the truth 1.105170918 | $\xi$ can be anywhere up to 0.1 |
+| Ceiling read at the anchor, e^ξ at most 1 | ceiling 1.105170833, below the truth 1.105170918 | $`\xi`$ can be anywhere up to 0.1 |
 | Four terms, no remainder | 1.105167 against 1.105171 | the polynomial misses 0.000004251 |
 | Corner \|x − 0.05\|, anchor 0, n = 1 | remainder 0.1; Lagrange needs f″ = 20, but f″ is 0 wherever it exists | no second derivative at 0.05, so no ξ |
 
@@ -150,7 +154,7 @@ The corner function has slope −1.00 at 0, so its tangent line reads −0.05 at
 
 ## Code, from first principles, and it actually runs
 
-Two roads share no arithmetic. Road one sums four Taylor terms and builds the Lagrange window. Road two uses no series: the natural log as the area under 1/t (a fact the Integrals shelf proves), summed by Simpson's rule (parabolas through sampled heights, [Numerical integration](../04-Integrals/08-numerical-integration.md)) and inverted by bisection. The asserts check that the window traps road two, that $\xi$ lies between 0 and 0.1, that both agree to six decimals, and that halving the step divides the error by 16 to within 1.
+Two roads share no arithmetic. Road one sums four Taylor terms and builds the Lagrange window. Road two uses no series: the natural log as the area under 1/t (a fact the Integrals shelf proves), summed by Simpson's rule (parabolas through sampled heights, [Numerical integration](../04-Integrals/08-numerical-integration.md)) and inverted by bisection. The asserts check that the window traps road two, that $`\xi`$ lies between 0 and 0.1, that both agree to six decimals, and that halving the step divides the error by 16 to within 1.
 
 ### Python
 
@@ -350,15 +354,15 @@ ALL CHECKS PASS
 Lean proves Taylor's theorem and the error bound for every f, n, anchor and target that meet When it holds, and the e^0.1 window.
 
 - Take f with n + 1 derivatives strictly between a and x, the n-th continuous up to both ends, and x other than a.
-- Then some $\xi$ strictly between a and x gives $f(x) = P_n(x) + R_n(x)$, with $f^{(n+1)}$ read at $\xi$.
+- Then some $`\xi`$ strictly between a and x gives $`f(x) = P_n(x) + R_n(x)`$, with $`f^{(n+1)}`$ read at $`\xi`$.
 - At the anchor itself, Lean reads each derivative from the side facing the target.
-- If $\lvert f^{(n+1)}\rvert \le M$ everywhere between a and x, then $\lvert R_n(x)\rvert \le M\,\lvert h\rvert^{n+1}/(n+1)!$.
+- If $`\lvert f^{(n+1)}\rvert \le M`$ everywhere between a and x, then $`\lvert R_n(x)\rvert \le M\,\lvert h\rvert^{n+1}/(n+1)!`$.
 - e^0.1 is at least the four terms plus 0.1^4/4!, and at most the four terms over 1 − 0.1^4/4!. No value of e is assumed.
 - The factorials 3! = 6, 0! = 1 and 4! = 24, and the four terms summing to exactly 6631/6000.
 - The window's ends, exactly 265241/240000 and 265240/239999, both round to 1.105171.
 - Without factorials the sum is 1.111. The corner function has remainder 0.1, so Lagrange would need f″ = 20.
 
-The true e^0.1, $\xi$ = 0.020134, the ratios near 16, five terms and the chart are left to the Python and Rust checks.
+The true e^0.1, $`\xi`$ = 0.020134, the ratios near 16, five terms and the chart are left to the Python and Rust checks.
 
 ```lean
 -- Taylor's theorem: a function equals its degree-n Taylor polynomial plus a next term with the next derivative read strictly between anchor and target, so a ceiling on that derivative bounds the error, and four terms trap e^(1/10) in the card's window.
@@ -482,7 +486,7 @@ example : 2 * (1/10 : ℚ) / (1/10) ^ 2 = 20 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Bounding the next derivative at the anchor instead of across the stretch.** The derivative is read at $\xi$, anywhere between a and x. Taking e^0 = 1 as the ceiling claims e^0.1 is at most 1.105170833; the truth, 1.105170918, is above it.
+> **Bounding the next derivative at the anchor instead of across the stretch.** The derivative is read at $`\xi`$, anywhere between a and x. Taking e^0 = 1 as the ceiling claims e^0.1 is at most 1.105170833; the truth, 1.105170918, is above it.
 >
 > - **Forgetting the factorials.** 1.111, off by 0.005829082.
 > - **Reading n as the number of terms.** Degree 3 has four terms; its remainder carries the fourth power and 4!.

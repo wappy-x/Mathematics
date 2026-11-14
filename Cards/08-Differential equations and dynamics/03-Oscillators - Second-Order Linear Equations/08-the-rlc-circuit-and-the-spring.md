@@ -37,7 +37,9 @@ Orange: 2 ohms, overshooting. Teal: 4.47 ohms, critical, the fastest approach wi
 
 Reminder: q' is the rate of q, and q'' the rate of that rate. Here q' is the current, charge passing per second, in amperes (amps).
 
-$$L\,q'' + R\,q' + \frac{q}{C} = V(t)$$
+```math
+L\,q'' + R\,q' + \frac{q}{C} = V(t)
+```
 
 **Read it aloud:** the coil's voltage plus the resistor's voltage plus the capacitor's voltage equals the battery's voltage, at every instant.
 
@@ -54,7 +56,9 @@ A damped spring pushed by a force obeys m x'' + c x' + k x = F(t). Term by term:
 
 Divided by L:
 
-$$q'' + \frac{R}{L}\,q' + \frac{1}{LC}\,q = \frac{V}{L},\qquad \omega_0 = \frac{1}{\sqrt{LC}},\qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}$$
+```math
+q'' + \frac{R}{L}\,q' + \frac{1}{LC}\,q = \frac{V}{L},\qquad \omega_0 = \frac{1}{\sqrt{LC}},\qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
+```
 
 **Read it aloud:** damping R over L, stiffness one over L C; the natural rate is one over root L C, and the damping ratio is R over 2 times root C over L.
 
@@ -62,14 +66,14 @@ For the example, 1/(LC) = 5 and R/L = 2: the law is q'' + 2q' + 5q = 10.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $q$, $i$, $t$ | charge, coulombs; current, amps; time, s | q(0) = 0, i(0) = 0 | — |
-| $L$ | inductance, henries: volts per amp-per-second of change | 1 H | slower ringing |
-| $R$ | resistance, ohms | 2 ohms | less overshoot; none from 4.47 ohms |
-| $C$ | capacitance: coulombs held per volt, farads | 0.2 F | more final charge, a softer spring |
-| $V$ | battery voltage, from t = 0 | 10 V | charges scale with it |
-| $m$, $c$, $k$, $F$ | the spring's mass, damping, stiffness, push | 1 kg, 2 N·s/m, 5 N/m, 10 N | — |
-| $\omega_0$, $\zeta$ | natural rate, rad/s; damping ratio, 1 at critical | 2.2361, 0.4472 | ζ at 1 or more: no overshoot |
-| $r$, $a$, $b$, $A$, $B$ | characteristic roots r = a ± ib; constants fitted to the start | −1 ± 2i; −2, −1 | — |
+| $`q`$, $`i`$, $`t`$ | charge, coulombs; current, amps; time, s | q(0) = 0, i(0) = 0 | — |
+| $`L`$ | inductance, henries: volts per amp-per-second of change | 1 H | slower ringing |
+| $`R`$ | resistance, ohms | 2 ohms | less overshoot; none from 4.47 ohms |
+| $`C`$ | capacitance: coulombs held per volt, farads | 0.2 F | more final charge, a softer spring |
+| $`V`$ | battery voltage, from t = 0 | 10 V | charges scale with it |
+| $`m`$, $`c`$, $`k`$, $`F`$ | the spring's mass, damping, stiffness, push | 1 kg, 2 N·s/m, 5 N/m, 10 N | — |
+| $`\omega_0`$, $`\zeta`$ | natural rate, rad/s; damping ratio, 1 at critical | 2.2361, 0.4472 | ζ at 1 or more: no overshoot |
+| $`r`$, $`a`$, $`b`$, $`A`$, $`B`$ | characteristic roots r = a ± ib; constants fitted to the start | −1 ± 2i; −2, −1 | — |
 
 ### When it holds
 

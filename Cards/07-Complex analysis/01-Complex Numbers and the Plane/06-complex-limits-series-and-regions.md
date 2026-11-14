@@ -26,46 +26,54 @@ To scale: 100 units per metre, with the start at (70, 220). The sixteen stops ru
 
 ## The formula
 
-Notation first, in words. A **sequence** $z_n$ is an endless list of complex numbers, read "z-sub-n". The arrow $z_n \to L$ reads "z-sub-n tends to L": the distance $|z_n - L|$, the modulus from [Conjugate and modulus](02-conjugate-and-modulus.md), shrinks towards 0.
+Notation first, in words. A **sequence** $`z_n`$ is an endless list of complex numbers, read "z-sub-n". The arrow $`z_n \to L`$ reads "z-sub-n tends to L": the distance $`|z_n - L|`$, the modulus from [Conjugate and modulus](02-conjugate-and-modulus.md), shrinks towards 0.
 
-$$z_n \to L \iff \operatorname{Re} z_n \to \operatorname{Re} L \text{ and } \operatorname{Im} z_n \to \operatorname{Im} L$$
+```math
+z_n \to L \iff \mathrm{Re}\, z_n \to \mathrm{Re}\, L \text{ and } \mathrm{Im}\, z_n \to \mathrm{Im}\, L
+```
 
 **Read it aloud:** the points close in on L exactly when their east parts and their north parts both close in.
 
-The link is a pair of inequalities for any complex number $w$:
+The link is a pair of inequalities for any complex number $`w`$:
 
-$$\max(|\operatorname{Re} w|, |\operatorname{Im} w|) \le |w| \le |\operatorname{Re} w| + |\operatorname{Im} w|$$
+```math
+\max(|\mathrm{Re}\, w|, |\mathrm{Im}\, w|) \le |w| \le |\mathrm{Re}\, w| + |\mathrm{Im}\, w|
+```
 
 **Read it aloud:** an arrow is at least as long as either shadow on the axes, and no longer than both laid end to end.
 
-The staircase's n-th tread is $q^n$, where $q = 0.8\,e^{i\pi/6}$ shrinks to 0.8 and turns by π/6 radians, 30 degrees ([Euler's formula](04-eulers-formula.md)). The stop after $N$ treads is the partial sum $S_N$:
+The staircase's n-th tread is $`q^n`$, where $`q = 0.8\,e^{i\pi/6}`$ shrinks to 0.8 and turns by π/6 radians, 30 degrees ([Euler's formula](04-eulers-formula.md)). The stop after $`N`$ treads is the partial sum $`S_N`$:
 
-$$S_N = 1 + q + \cdots + q^{N-1} = \frac{1 - q^N}{1 - q}, \qquad S = \sum_{n=0}^{\infty} q^n = \frac{1}{1 - q} \text{ if } |q| < 1$$
+```math
+S_N = 1 + q + \cdots + q^{N-1} = \frac{1 - q^N}{1 - q}, \qquad S = \sum_{n=0}^{\infty} q^n = \frac{1}{1 - q} \text{ if } |q| < 1
+```
 
-**Read it aloud:** for a ratio shorter than 1, the stops close in on one over one-minus-q, and the gap $|S - S_N| = |q|^N/|1 - q|$ shrinks by the factor 0.8 each tread.
+**Read it aloud:** for a ratio shorter than 1, the stops close in on one over one-minus-q, and the gap $`|S - S_N| = |q|^N/|1 - q|`$ shrinks by the factor 0.8 each tread.
 
-A series with terms $a_n$ whose lengths have a finite total **converges absolutely**, and then converges:
+A series with terms $`a_n`$ whose lengths have a finite total **converges absolutely**, and then converges:
 
-$$\sum |a_n| < \infty \implies \sum a_n \text{ converges, and } \Big|\sum a_n\Big| \le \sum |a_n|$$
+```math
+\sum |a_n| < \infty \implies \sum a_n \text{ converges, and } \Big|\sum a_n\Big| \le \sum |a_n|
+```
 
 **Read it aloud:** a path of finite length ends somewhere, no farther out than its length.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z_n$, $n$, $L$ | a sequence's n-th member; its limit | the stops; L = 1.207660 + 1.572578i | — |
-| $w$, $\lvert w\rvert$ | any complex number; its length | 1 − q, length 0.504341 | — |
-| $q$, $\theta$ | the ratio: shrink, then turn by θ | 0.692820 + 0.400000i; θ = 0.523599 | past length 1, no limit |
-| $a_n$ | a series' n-th term; here the tread $q^n$ | first tread 1 | — |
-| $S_N$, $N$ | the sum of the first N terms | after 5 treads, 1.808020 + 1.820980i | closer to S |
-| $S$ | the full sum, the limit of $S_N$ | 1.207660 + 1.572578i | — |
-| $D(c, r)$, $c$, $r$ | open disc: points closer than r to c | working ratios: centre 0, radius 1 | a bigger disc |
-| $\varepsilon$, $\infty$ | any tolerance; the point at infinity | Detailed proof; Step 5 | — |
+| $`z_n`$, $`n`$, $`L`$ | a sequence's n-th member; its limit | the stops; L = 1.207660 + 1.572578i | — |
+| $`w`$, $`\lvert w\rvert`$ | any complex number; its length | 1 − q, length 0.504341 | — |
+| $`q`$, $`\theta`$ | the ratio: shrink, then turn by θ | 0.692820 + 0.400000i; θ = 0.523599 | past length 1, no limit |
+| $`a_n`$ | a series' n-th term; here the tread $`q^n`$ | first tread 1 | — |
+| $`S_N`$, $`N`$ | the sum of the first N terms | after 5 treads, 1.808020 + 1.820980i | closer to S |
+| $`S`$ | the full sum, the limit of $`S_N`$ | 1.207660 + 1.572578i | — |
+| $`D(c, r)`$, $`c`$, $`r`$ | open disc: points closer than r to c | working ratios: centre 0, radius 1 | a bigger disc |
+| $`\varepsilon`$, $`\infty`$ | any tolerance; the point at infinity | Detailed proof; Step 5 | — |
 
 The words for regions:
 
-- **Open disc** $D(c, r)$: every point closer than $r$ to $c$, rim left out.
+- **Open disc** $`D(c, r)`$: every point closer than $`r`$ to $`c`$, rim left out.
 - **Open set**: each point has a small disc round it inside the set.
-- **Boundary**: points whose every small disc meets both the set and points outside it; for $D(0, 1)$, the circle $|q| = 1$.
+- **Boundary**: points whose every small disc meets both the set and points outside it; for $`D(0, 1)`$, the circle $`|q| = 1`$.
 - **Domain** (or region): open and **connected**, meaning any two points join by a path inside.
 - **Bounded**: fits inside some disc of finite radius.
 
@@ -82,23 +90,23 @@ The words for regions:
 
 ### Step 0: closeness in the plane is closeness in each coordinate
 
-An arrow is long only if a shadow on an axis is long. Pythagoras, $|w|^2 = (\operatorname{Re} w)^2 + (\operatorname{Im} w)^2$, gives both inequalities.
+An arrow is long only if a shadow on an axis is long. Pythagoras, $`|w|^2 = (\mathrm{Re}\, w)^2 + (\mathrm{Im}\, w)^2`$, gives both inequalities.
 
 ### Step 1: a complex limit is two real limits
 
-Put $w = z_n - L$. If $|w| \to 0$, the left inequality squeezes both coordinate gaps to 0. If both gaps shrink to 0, so does their sum, and the right inequality squeezes $|w|$ to 0.
+Put $`w = z_n - L`$. If $`|w| \to 0`$, the left inequality squeezes both coordinate gaps to 0. If both gaps shrink to 0, so does their sum, and the right inequality squeezes $`|w|`$ to 0.
 
 On the staircase the east parts are the real series 1 + 0.8 cos(π/6) + 0.8^2 cos(2π/6) + …, and the north parts use sine. Summed separately they give 1.207660 and 1.572578: the limit, with no complex multiplication.
 
 ### Step 2: the geometric sum telescopes
 
-Multiply $S_N$ by $q$ and every tread moves up one place; subtracting cancels all but two terms: $S_N - qS_N = 1 - q^N$. Only multiplying and adding were used, so this holds for complex q as for real q.
+Multiply $`S_N`$ by $`q`$ and every tread moves up one place; subtracting cancels all but two terms: $`S_N - qS_N = 1 - q^N`$. Only multiplying and adding were used, so this holds for complex q as for real q.
 
 ### Step 3: the leftover term dies inside the disc
 
-The gap $S - S_N$ is $q^N/(1 - q)$, and lengths multiply, so its length is $|q|^N/|1 - q|$: 0.8 to the N over 0.504341, which shrinks to 0.
+The gap $`S - S_N`$ is $`q^N/(1 - q)`$, and lengths multiply, so its length is $`|q|^N/|1 - q|`$: 0.8 to the N over 0.504341, which shrinks to 0.
 
-When $|q| = 1$ the leftover $q^N$ keeps length 1 and walks round the circle. With $q = e^{i\pi/6}$ the stops return to 0 after 12 treads, since that q is a twelfth root of 1 ([Powers and roots](05-powers-roots-and-roots-of-unity.md)). When $|q| > 1$ it grows without bound.
+When $`|q| = 1`$ the leftover $`q^N`$ keeps length 1 and walks round the circle. With $`q = e^{i\pi/6}`$ the stops return to 0 after 12 treads, since that q is a twelfth root of 1 ([Powers and roots](05-powers-roots-and-roots-of-unity.md)). When $`|q| > 1`$ it grows without bound.
 
 ### Step 4: absolute convergence, and why the disc is open
 
@@ -106,30 +114,30 @@ The tread lengths 1, 0.8, 0.8^2, … add to 1/(1 − 0.8) = 5 metres. The real c
 
 No stop lies beyond 2.566107 metres: the stops form a bounded set.
 
-The working ratios form the open disc $D(0, 1)$. It is open: this q sits 0.2 inside the rim, so every ratio within 0.2 of it works too. It is connected, since a straight segment joins any two of its points inside it, so it is a domain. Its boundary, the unit circle, holds no working ratio.
+The working ratios form the open disc $`D(0, 1)`$. It is open: this q sits 0.2 inside the rim, so every ratio within 0.2 of it works too. It is connected, since a straight segment joins any two of its points inside it, so it is a domain. Its boundary, the unit circle, holds no working ratio.
 
 ### The picture: which ratios give a limit
 
 <p align="center"><img src="../figures/complex-limits-series-and-regions-2.svg" alt="The plane of ratios: the open unit disc shaded, the staircase ratio q inside with a small disc round it, e^(i pi/6) on the dashed boundary, 1.25 e^(i pi/6) outside" width="420"></p>
 
-To scale: 80 units per 1, 0 at (180, 120). The ratio q sits at (235.43, 88.00), its dotted disc of radius 0.2 still inside; $e^{i\pi/6}$ sits on the rim at (249.28, 80.00), and 1.25 times it outside at (266.60, 70.00). The rim is dashed: it is not in the open disc.
+To scale: 80 units per 1, 0 at (180, 120). The ratio q sits at (235.43, 88.00), its dotted disc of radius 0.2 still inside; $`e^{i\pi/6}`$ sits on the rim at (249.28, 80.00), and 1.25 times it outside at (266.60, 70.00). The rim is dashed: it is not in the open disc.
 
 ### Step 5: the point at infinity
 
-With ratio 1.25 turned 30 degrees the stops are 11934.3 metres out after 40 treads. Such a sequence tends to infinity, $z_n \to \infty$: $|z_n|$ passes every bound, in any direction, and $\infty$ counts as one extra point.
+With ratio 1.25 turned 30 degrees the stops are 11934.3 metres out after 40 treads. Such a sequence tends to infinity, $`z_n \to \infty`$: $`|z_n|`$ passes every bound, in any direction, and $`\infty`$ counts as one extra point.
 
 Rest a ball on the plane at 0. The straight line from a plane point to the ball's top meets the ball at exactly one other point; send the plane point there. Far points in every direction land near the top, and the top itself is the point at infinity. The ball, so labelled, is the **Riemann sphere**.
 
 <details>
 <summary>Detailed proof: limits by tolerance, coordinates, and absolute convergence</summary>
 
-**The definition.** $z_n \to L$ means: for every tolerance $\varepsilon > 0$, all members from some stage on satisfy $|z_n - L| < \varepsilon$.
+**The definition.** $`z_n \to L`$ means: for every tolerance $`\varepsilon > 0`$, all members from some stage on satisfy $`|z_n - L| < \varepsilon`$.
 
-**Coordinates.** If $z_n \to L$, then from that stage each coordinate gap is at most $|z_n - L| < \varepsilon$. Conversely, past a stage where both coordinate gaps are below $\varepsilon/2$, the right inequality gives $|z_n - L| < \varepsilon$.
+**Coordinates.** If $`z_n \to L`$, then from that stage each coordinate gap is at most $`|z_n - L| < \varepsilon`$. Conversely, past a stage where both coordinate gaps are below $`\varepsilon/2`$, the right inequality gives $`|z_n - L| < \varepsilon`$.
 
-**The geometric series.** For $|q| < 1$, from some stage $|q|^N < \varepsilon\,|1 - q|$, so $|S - S_N| < \varepsilon$. For $|q| \ge 1$ no limit exists: consecutive partial sums of a convergent series eventually differ by less than any tolerance, yet here they differ by a term of length at least 1.
+**The geometric series.** For $`|q| < 1`$, from some stage $`|q|^N < \varepsilon\,|1 - q|`$, so $`|S - S_N| < \varepsilon`$. For $`|q| \ge 1`$ no limit exists: consecutive partial sums of a convergent series eventually differ by less than any tolerance, yet here they differ by a term of length at least 1.
 
-**Absolute convergence.** Since $|\operatorname{Re} a_n| \le |a_n|$, comparison makes the real parts' series absolutely convergent, hence convergent; likewise Im; the coordinates result finishes. The triangle inequality bounds each partial sum by its sum of lengths, and the bound survives the limit.
+**Absolute convergence.** Since $`|\mathrm{Re}\, a_n| \le |a_n|`$, comparison makes the real parts' series absolutely convergent, hence convergent; likewise Im; the coordinates result finishes. The triangle inequality bounds each partial sum by its sum of lengths, and the bound survives the limit.
 
 </details>
 
@@ -155,7 +163,7 @@ The climber ends 1.982787 metres from the start after walking 5 metres of treads
 | --- | --- | --- |
 | Reading 30 as radians, not degrees | 0.629199 − 0.567346i | e^(30i) turns by 30 radians |
 | Adding lengths instead of arrows | 5 m, not 1.982787 m | length walked is not displacement |
-| Ratio on the rim, $e^{i\pi/6}$ | distance swings between 0 and 3.863703 | treads never shrink: no limit |
+| Ratio on the rim, $`e^{i\pi/6}`$ | distance swings between 0 and 3.863703 | treads never shrink: no limit |
 | Ratio 1.25 e^(iπ/6), formula anyway | −0.207660 + 1.572578i; the walk is 11934.3 m out | outside the disc no sum exists |
 
 The code prints all four.
@@ -164,7 +172,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Three roads to the limit: walk 200 treads, divide 1 by 1 − q through the conjugate, and sum the east and north parts as two real series. The asserts compare the roads, the measured gaps with $|q|^N/|1 - q|$, the path with 5 metres, and the rim and outside walks with their failure to settle.
+Three roads to the limit: walk 200 treads, divide 1 by 1 − q through the conjugate, and sum the east and north parts as two real series. The asserts compare the roads, the measured gaps with $`|q|^N/|1 - q|`$, the path with 5 metres, and the rim and outside walks with their failure to settle.
 
 ### Python
 
@@ -445,12 +453,12 @@ example : (1 - (4 / 5 : ℝ))⁻¹ = 5 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Checking only the lengths.** Lengths can settle while points do not. With ratio $e^{i\pi/6}$ every tread is 1 metre and the distance from the start swings between 0 and 3.863703 forever. Convergence needs the distance to the limit to shrink: both coordinates must settle.
+> **Checking only the lengths.** Lengths can settle while points do not. With ratio $`e^{i\pi/6}`$ every tread is 1 metre and the distance from the start swings between 0 and 3.863703 forever. Convergence needs the distance to the limit to shrink: both coordinates must settle.
 >
 > - **Degrees as radians.** 0.8 e^(30i) gives 0.629199 − 0.567346i.
 > - **Path length for displacement.** 5 metres walked, 1.982787 metres out: absolute convergence bounds the sum, it does not give it.
 > - **1/(1 − q) outside the disc.** It prints −0.207660 + 1.572578i while the walk runs off.
-> - **The rim counted as inside.** On $|q| = 1$ the series fails everywhere.
+> - **The rim counted as inside.** On $`|q| = 1`$ the series fails everywhere.
 
 ---
 

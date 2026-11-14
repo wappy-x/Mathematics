@@ -60,11 +60,11 @@ Column by column, that builds the staircase, whose real name is **row echelon fo
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $c$, $p$, $s$ | the prices of one coffee, one pastry, one sandwich, in dollars | $4, $3, $6 | push one up and every total holding it climbs; Tuesday holds no sandwich, so its total stays |
-| $A$, $b$, $x$ | the counts, a row per day (3 × 3); the totals; the prices as a column | `[[2, 1, 1], [1, 1, 0], [1, 2, 2]]`, (17, 7, 22), (4, 3, 6) | all three totals doubled, and the prices double |
-| $m$ | the multiplier for one row move | 0.5, then 0.5, then 3 | wrong, and the entry aimed at survives |
+| $`c`$, $`p`$, $`s`$ | the prices of one coffee, one pastry, one sandwich, in dollars | $4, $3, $6 | push one up and every total holding it climbs; Tuesday holds no sandwich, so its total stays |
+| $`A`$, $`b`$, $`x`$ | the counts, a row per day (3 × 3); the totals; the prices as a column | `[[2, 1, 1], [1, 1, 0], [1, 2, 2]]`, (17, 7, 22), (4, 3, 6) | all three totals doubled, and the prices double |
+| $`m`$ | the multiplier for one row move | 0.5, then 0.5, then 3 | wrong, and the entry aimed at survives |
 
-Counts $A$ times prices $x$ give totals $b$, the matrix equation of [Solving A x = b](01-matrix-equation-ax-b.md). Elimination works on both: the money rides on the end of every row.
+Counts $`A`$ times prices $`x`$ give totals $`b`$, the matrix equation of [Solving A x = b](01-matrix-equation-ax-b.md). Elimination works on both: the money rides on the end of every row.
 
 ### When it holds
 
@@ -126,7 +126,7 @@ flowchart TD
 
 The left branch is a row like `[0, 0, 0 | 1]`: nothing times any price is $1. The right leaves a price column with no pivot, here through `[0, 0, 0 | 0]`, one day being a combination of the others. One such column gives a line of price lists, two a plane.
 
-The count of pivots is the **rank**, which [Rank and nullity](05-rank-nullity.md) is built on. A second route builds the matrix that undoes $A$: [The inverse matrix](03-inverse-matrix.md).
+The count of pivots is the **rank**, which [Rank and nullity](05-rank-nullity.md) is built on. A second route builds the matrix that undoes $`A`$: [The inverse matrix](03-inverse-matrix.md).
 
 ---
 

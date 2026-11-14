@@ -32,35 +32,41 @@ Sizes change in the middle box only.
 
 ## The formula
 
-For every matrix $A$ with real entries:
+For every matrix $`A`$ with real entries:
 
-$$A = U S V^T$$
+```math
+A = U S V^T
+```
 
 **Read it aloud:** read the input along one set of perpendicular axes, stretch each number by its factor, lay the result along another set.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the matrix, read as a map | `[[3, 0], [4, 5]]` | every factor moves with it |
-| $V$, $v_1$, $v_2$, or $v_i$ for either | input axes: perpendicular columns of $V$, length 1 each; $V^T$ swaps rows and columns, reporting coordinates along them | (0.707107, 0.707107) and (0.707107, −0.707107) | — |
-| $S$, $\sigma_1$, $\sigma_2$, or $\sigma_i$ for either | the stretch matrix: the **singular values**, said "sigma", down its diagonal, largest first, never negative | diagonal 6.708204 and 2.236068 | that half-axis lengthens |
-| $U$, $u_1$, $u_2$ | output axes: perpendicular columns of $U$, length 1 each | (0.316228, 0.948683) and (0.948683, −0.316228) | — |
-| $G$, $\lambda_1$, $\lambda_2$, or $\lambda_i$ for either | shorthand for $A^T A$, symmetric, with its eigenvalues, said "lambda": the squared factors | `[[25, 20], [20, 25]]`, 45 and 5 | — |
-| $r$ | the rank: factors above zero | 2 | more directions survive |
+| $`A`$ | the matrix, read as a map | `[[3, 0], [4, 5]]` | every factor moves with it |
+| $`V`$, $`v_1`$, $`v_2`$, or $`v_i`$ for either | input axes: perpendicular columns of $`V`$, length 1 each; $`V^T`$ swaps rows and columns, reporting coordinates along them | (0.707107, 0.707107) and (0.707107, −0.707107) | — |
+| $`S`$, $`\sigma_1`$, $`\sigma_2`$, or $`\sigma_i`$ for either | the stretch matrix: the **singular values**, said "sigma", down its diagonal, largest first, never negative | diagonal 6.708204 and 2.236068 | that half-axis lengthens |
+| $`U`$, $`u_1`$, $`u_2`$ | output axes: perpendicular columns of $`U`$, length 1 each | (0.316228, 0.948683) and (0.948683, −0.316228) | — |
+| $`G`$, $`\lambda_1`$, $`\lambda_2`$, or $`\lambda_i`$ for either | shorthand for $`A^T A`$, symmetric, with its eigenvalues, said "lambda": the squared factors | `[[25, 20], [20, 25]]`, 45 and 5 | — |
+| $`r`$ | the rank: factors above zero | 2 | more directions survive |
 
-The factors are square roots of $G$'s eigenvalues:
+The factors are square roots of $`G`$'s eigenvalues:
 
-$$\sigma_i = \sqrt{\lambda_i}$$
+```math
+\sigma_i = \sqrt{\lambda_i}
+```
 
 Each output axis, one for each factor above zero, is its input axis's image scaled to length 1:
 
-$$u_i = \frac{A v_i}{\sigma_i}$$
+```math
+u_i = \frac{A v_i}{\sigma_i}
+```
 
 ### When it holds
 
 - **Real entries, any number of rows and columns.** Nothing else is required: rectangular and flattening matrices included. Complex entries have their own version.
 - **Lengths by the dot product, one unit system throughout.** Rescale a coordinate and the factors change, so "large" and "small" depend on the units.
 - **Two sets of axes, not one.** Demand a single set for both sides and most matrices refuse; that stricter demand is [Diagonalisation](03-diagonalisation-and-matrix-powers.md).
-- **The factors are unique, the axes are not.** Reverse a matched pair $v_1$ and $u_1$ and the same matrix returns. Building $G$ by hand suits small cases only: forming $A^T A$ doubles the number of digits lost to rounding.
+- **The factors are unique, the axes are not.** Reverse a matched pair $`v_1`$ and $`u_1`$ and the same matrix returns. Building $`G`$ by hand suits small cases only: forming $`A^T A`$ doubles the number of digits lost to rounding.
 
 ---
 
@@ -72,19 +78,23 @@ Eigenvectors answer "which inputs come back pointing the same way" ([Eigenvalues
 
 Ask about length instead. Of all inputs of length 1, which comes out longest? Squared length makes that a dot product:
 
-$$|A x|^2 = (A x) \cdot (A x) = x^T A^T A x = x^T G x$$
+```math
+|A x|^2 = (A x) \cdot (A x) = x^T A^T A x = x^T G x
+```
 
-x is any input, $x^T$ that input as a row, $|A x|$ its output's length, $G$ shorthand for $A^T A$. $G$ is symmetric, and $x^T G x$ is a squared length, never negative ([Quadratic forms](05-quadratic-forms-and-positive-definite.md)).
+x is any input, $`x^T`$ that input as a row, $`|A x|`$ its output's length, $`G`$ shorthand for $`A^T A`$. $`G`$ is symmetric, and $`x^T G x`$ is a squared length, never negative ([Quadratic forms](05-quadratic-forms-and-positive-definite.md)).
 
 ### Step 1: the spectral theorem hands over the input axes
 
-A symmetric matrix has a full set of perpendicular unit eigenvectors with real eigenvalues ([The spectral theorem](04-spectral-theorem.md)). Call $G$'s pair $v_1$ and $v_2$, eigenvalues $\lambda_1$ and $\lambda_2$, largest first: the input axes, and $A$ was never asked to be symmetric or square.
+A symmetric matrix has a full set of perpendicular unit eigenvectors with real eigenvalues ([The spectral theorem](04-spectral-theorem.md)). Call $`G`$'s pair $`v_1`$ and $`v_2`$, eigenvalues $`\lambda_1`$ and $`\lambda_2`$, largest first: the input axes, and $`A`$ was never asked to be symmetric or square.
 
-Feed one in: $G v_i$ is $\lambda_i$ times $v_i$, and $v_i$ has length 1, so
+Feed one in: $`G v_i`$ is $`\lambda_i`$ times $`v_i`$, and $`v_i`$ has length 1, so
 
-$$|A v_i|^2 = v_i^T G v_i = \lambda_i$$
+```math
+|A v_i|^2 = v_i^T G v_i = \lambda_i
+```
 
-The output length is the square root of $\lambda_i$, and that is where the formula's square root comes from. For the sprite $G$ is `[[25, 20], [20, 25]]`, its eigenvalues 45 and 5, the stretches 6.708204 and 2.236068.
+The output length is the square root of $`\lambda_i`$, and that is where the formula's square root comes from. For the sprite $`G`$ is `[[25, 20], [20, 25]]`, its eigenvalues 45 and 5, the stretches 6.708204 and 2.236068.
 
 ```
 Stretch factors against the matrix's own eigenvalues, one bar step = 0.25 of a multiplier
@@ -99,28 +109,34 @@ The top two bars are the half-axes; the bottom two answer another question.
 
 ### Step 2: the output axes come out perpendicular
 
-Compare the two outputs with a dot product. $G v_2$ is $\lambda_2$ times $v_2$, and the axes are perpendicular:
+Compare the two outputs with a dot product. $`G v_2`$ is $`\lambda_2`$ times $`v_2`$, and the axes are perpendicular:
 
-$$(A v_1) \cdot (A v_2) = v_1^T G v_2 = \lambda_2 (v_1 \cdot v_2) = 0$$
+```math
+(A v_1) \cdot (A v_2) = v_1^T G v_2 = \lambda_2 (v_1 \cdot v_2) = 0
+```
 
-Perpendicular in, perpendicular out. Each output is $\sigma_i$ long, so dividing by that length leaves perpendicular unit vectors with $A v_i = \sigma_i u_i$. For the sprite $A v_1$ is (2.121320, 6.363961), which over 6.708204 is $u_1$, (0.316228, 0.948683).
+Perpendicular in, perpendicular out. Each output is $`\sigma_i`$ long, so dividing by that length leaves perpendicular unit vectors with $`A v_i = \sigma_i u_i`$. For the sprite $`A v_1`$ is (2.121320, 6.363961), which over 6.708204 is $`u_1`$, (0.316228, 0.948683).
 
 ### Step 3: rebuild any input
 
 Any input x is the sum of its pieces along the input axes:
 
-$$x = (x \cdot v_1) v_1 + (x \cdot v_2) v_2$$
+```math
+x = (x \cdot v_1) v_1 + (x \cdot v_2) v_2
+```
 
-Apply the matrix piece by piece, using $A v_i = \sigma_i u_i$:
+Apply the matrix piece by piece, using $`A v_i = \sigma_i u_i`$:
 
-$$A x = \sigma_1 (x \cdot v_1) u_1 + \sigma_2 (x \cdot v_2) u_2$$
+```math
+A x = \sigma_1 (x \cdot v_1) u_1 + \sigma_2 (x \cdot v_2) u_2
+```
 
-Three jobs in turn: collecting $x \cdot v_1$ and $x \cdot v_2$ is $V^T x$, multiplying each by its factor is $S$, laying the results along $u_1$ and $u_2$ is $U$. True for every input, so the matrices are equal: $A = U S V^T$. The code rebuilds `[[3, 0], [4, 5]]` exactly.
+Three jobs in turn: collecting $`x \cdot v_1`$ and $`x \cdot v_2`$ is $`V^T x`$, multiplying each by its factor is $`S`$, laying the results along $`u_1`$ and $`u_2`$ is $`U`$. True for every input, so the matrices are equal: $`A = U S V^T`$. The code rebuilds `[[3, 0], [4, 5]]` exactly.
 
 <details>
 <summary>Detailed proof, for any number of rows and columns</summary>
 
-Let $A$ have real entries, any shape, with n columns. $G = A^T A$ is square and symmetric, so the spectral theorem gives perpendicular unit eigenvectors $v_1, \ldots, v_n$ with eigenvalues $\lambda_1 \ge \ldots \ge \lambda_n$, none negative since Step 1 makes $\lambda_k = |A v_k|^2$. Let $r$ count those above zero. For k up to $r$, set $\sigma_k = \sqrt{\lambda_k}$ and $u_k = A v_k / \sigma_k$, perpendicular unit vectors by Step 2; above $r$ the length is zero, so that axis is flattened. Extend $u_1, \ldots, u_r$ to a full perpendicular unit set, the extras meeting zeros in $S$. Then $x = (x \cdot v_1) v_1 + \ldots + (x \cdot v_n) v_n$ gives $A x = \sigma_1 (x \cdot v_1) u_1 + \ldots + \sigma_r (x \cdot v_r) u_r$, which is $U S V^T x$, and matrices agreeing on every input are equal. Repeated eigenvalues leave the axes unfixed, the factors fixed.
+Let $`A`$ have real entries, any shape, with n columns. $`G = A^T A`$ is square and symmetric, so the spectral theorem gives perpendicular unit eigenvectors $`v_1, \ldots, v_n`$ with eigenvalues $`\lambda_1 \ge \ldots \ge \lambda_n`$, none negative since Step 1 makes $`\lambda_k = |A v_k|^2`$. Let $`r`$ count those above zero. For k up to $`r`$, set $`\sigma_k = \sqrt{\lambda_k}`$ and $`u_k = A v_k / \sigma_k`$, perpendicular unit vectors by Step 2; above $`r`$ the length is zero, so that axis is flattened. Extend $`u_1, \ldots, u_r`$ to a full perpendicular unit set, the extras meeting zeros in $`S`$. Then $`x = (x \cdot v_1) v_1 + \ldots + (x \cdot v_n) v_n`$ gives $`A x = \sigma_1 (x \cdot v_1) u_1 + \ldots + \sigma_r (x \cdot v_r) u_r`$, which is $`U S V^T x`$, and matrices agreeing on every input are equal. Repeated eigenvalues leave the axes unfixed, the factors fixed.
 
 </details>
 
@@ -128,11 +144,13 @@ Let $A$ have real entries, any shape, with n columns. $G = A^T A$ is square and 
 
 The determinant, det A, is the factor by which a square matrix scales area, negative when it mirrors ([Determinants](../05-Solving%20Systems/04-determinants.md)). An orthogonal move cannot change area except to mirror it, so its determinant is 1 or −1. For a square matrix:
 
-$$|\det A| = \sigma_1 \sigma_2$$
+```math
+|\det A| = \sigma_1 \sigma_2
+```
 
 Here 6.708204 times 2.236068 is 15.000000, and so is 3 × 5 − 0 × 4 from the entries: the ellipse covers 15.000000 times the coin's area.
 
-Second, the reading that matters for solving systems: the count of factors above zero is the rank, an axis with a zero factor being a direction the matrix flattens ([Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md)). The sprite has rank 2; a rectangular matrix, with no determinant to compare, reads the same way. The same non-zero factors come from $A A^T$, smaller when $A$ is wide.
+Second, the reading that matters for solving systems: the count of factors above zero is the rank, an axis with a zero factor being a direction the matrix flattens ([Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md)). The sprite has rank 2; a rectangular matrix, with no determinant to compare, reads the same way. The same non-zero factors come from $`A A^T`$, smaller when $`A`$ is wide.
 
 ---
 
@@ -140,7 +158,7 @@ Second, the reading that matters for solving systems: the count of factors above
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| build $G = A^T A$ | dot A's columns together | `[[25, 20], [20, 25]]` |
+| build $`G = A^T A`$ | dot A's columns together | `[[25, 20], [20, 25]]` |
 | its characteristic equation | (25 − λ)(25 − λ) − 20 × 20 = 0 | λ = 45 and 5 |
 | the singular values | square roots of 45 and 5 | **6.708204 and 2.236068** |
 | the input axes | (20, 45 − 25) and (20, 5 − 25), scaled to length 1 | (0.707107, 0.707107) and (0.707107, −0.707107) |
@@ -163,7 +181,7 @@ The rim is an ellipse: longest radius 6.708204 along (0.316228, 0.948683), short
 
 ## Code, from first principles, and it actually runs
 
-The factors are reached twice, once by algebra and once by measurement. Road one is the hand method: build $G = A^T A$, solve its characteristic quadratic, take square roots, read off the axes. Road two measures instead, walking 100002 directions and keeping the longest and shortest outputs. Four assertions pin the product against the determinant, the factors against the entries, and the rebuild against the matrix. A second matrix, `[[1, 2], [2, 4]]`, has factors 5.000000 and 0.000000: rank 1, flattening (0.894427, −0.447214) to the zero vector.
+The factors are reached twice, once by algebra and once by measurement. Road one is the hand method: build $`G = A^T A`$, solve its characteristic quadratic, take square roots, read off the axes. Road two measures instead, walking 100002 directions and keeping the longest and shortest outputs. Four assertions pin the product against the determinant, the factors against the entries, and the rebuild against the matrix. A second matrix, `[[1, 2], [2, 4]]`, has factors 5.000000 and 0.000000: rank 1, flattening (0.894427, −0.447214) to the zero vector.
 
 ### Python
 
@@ -365,10 +383,10 @@ The two outputs match line for line.
 
 Lean proves the theorem for every matrix with real entries, any number of rows and columns, and checks the sprite's numbers exactly.
 
-- Every such matrix $A$ equals $U S V^T$, with $U$ and $V$ orthogonal and the singular values down the diagonal of $S$.
-- The factors are unique: write $A$ as $U S V^T$ with factors never negative, largest first, and they are the singular values.
-- The singular values are never negative and come largest first, and their squares are the eigenvalues of $G$, repeats counted.
-- For the sprite, $G$ is `[[25, 20], [20, 25]]` with eigenvalues 45 and 5, and the rebuild returns `[[3, 0], [4, 5]]` exactly.
+- Every such matrix $`A`$ equals $`U S V^T`$, with $`U`$ and $`V`$ orthogonal and the singular values down the diagonal of $`S`$.
+- The factors are unique: write $`A`$ as $`U S V^T`$ with factors never negative, largest first, and they are the singular values.
+- The singular values are never negative and come largest first, and their squares are the eigenvalues of $`G`$, repeats counted.
+- For the sprite, $`G`$ is `[[25, 20], [20, 25]]` with eigenvalues 45 and 5, and the rebuild returns `[[3, 0], [4, 5]]` exactly.
 - The square roots of 45 and 5 multiply to 15, which is det A.
 - The flat matrix `[[1, 2], [2, 4]]` has determinant 0 and flattens (2, −1) to the zero vector.
 
@@ -734,7 +752,7 @@ example : Real.sqrt 25 = 5 := by
 > [!warning]
 > **Reading a matrix's eigenvalues as how much it stretches.** The sprite has eigenvalues 5.000000 and 3.000000 and stretches the rim to 6.708204. Eigenvalues answer which directions survive pointing the same way, and for a matrix that is not symmetric they are not even perpendicular.
 >
-> - **Expecting a negative factor.** It is a length; every flip lives in $U$ or $V$, never in $S$.
+> - **Expecting a negative factor.** It is a length; every flip lives in $`U`$ or $`V`$, never in $`S`$.
 > - **Treating a zero factor as failure.** That direction is flattened; the non-zero count is the rank.
 > - **Expecting input and output axes to match.** Here (0.707107, 0.707107) goes in and (0.316228, 0.948683) comes out.
 > - **Calling the smallest factor noise.** It may be the signal.
@@ -749,7 +767,7 @@ example : Real.sqrt 25 = 5 := by
 <details>
 <summary>Keeping only the biggest stretches</summary>
 
-Step 3 writes the matrix as one piece per factor: $\sigma_1$ times the grid made by multiplying $u_1$ against $v_1$, then the same on the second pair. Drop the smallest and what is left is the closest matrix of that lower rank, by the squares of the entry gaps — Eckart and Young, 1936.
+Step 3 writes the matrix as one piece per factor: $`\sigma_1`$ times the grid made by multiplying $`u_1`$ against $`v_1`$, then the same on the second pair. Drop the smallest and what is left is the closest matrix of that lower rank, by the squares of the entry gaps — Eckart and Young, 1936.
 
 </details>
 
@@ -767,7 +785,7 @@ Step 3 writes the matrix as one piece per factor: $\sigma_1$ times the grid made
 
 - [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): these axes on centred data.
 - [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): how many axes a wide table needs.
-- [Singular value decomposition](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/08-svd-and-the-pseudoinverse.md): the factors without building $A^T A$; best answers to unsolvable systems.
+- [Singular value decomposition](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/08-svd-and-the-pseudoinverse.md): the factors without building $`A^T A`$; best answers to unsolvable systems.
 - [Can you steer every state, and can you see every state](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/03-controllability-and-observability.md): rank off the factors, deciding whether a system steers.
 - [Writing down model error](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): the largest factor as worst-case gain.
 - [Compressed sensing](../../13-Engineering%20mathematics/05-Signals/10-compressed-sensing-in-outline.md): recovery when a matrix flattens most of its input.

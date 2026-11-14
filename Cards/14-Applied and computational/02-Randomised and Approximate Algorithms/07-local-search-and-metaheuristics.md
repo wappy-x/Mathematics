@@ -53,51 +53,57 @@ Orange: hill climbing, stuck at 4 clashes after 6,160 looks. Green: annealing, w
 
 Notation first, in words.
 
-- A **timetable** $x$ lists the slot of each exam.
-- $C(x)$ is its number of clashes: pairs of clashing exams that sit in the same slot.
-- A **move** sends one exam $e$ from its slot $s$ to another slot $s'$.
-- The timetables one move away are the **neighbourhood** of $x$. Here every timetable has 40 × 11 = 440 neighbours.
-- $n_e(s)$ counts the exams that clash with $e$ and sit in slot $s$.
+- A **timetable** $`x`$ lists the slot of each exam.
+- $`C(x)`$ is its number of clashes: pairs of clashing exams that sit in the same slot.
+- A **move** sends one exam $`e`$ from its slot $`s`$ to another slot $`s'`$.
+- The timetables one move away are the **neighbourhood** of $`x`$. Here every timetable has 40 × 11 = 440 neighbours.
+- $`n_e(s)`$ counts the exams that clash with $`e`$ and sit in slot $`s`$.
 - A **look** is one move checked: its change in clashes worked out. Looks are the cost this card counts, never seconds.
 
-$$\Delta = n_e(s') - n_e(s)$$
+```math
+\Delta = n_e(s') - n_e(s)
+```
 
 **Read it aloud:** the change in clashes from a move is the number of clash partners waiting in the new slot minus the number left behind in the old one.
 
-Hill climbing takes the move with the most negative $\Delta$ and stops when no $\Delta$ is negative. Annealing proposes a random move and accepts it with chance
+Hill climbing takes the move with the most negative $`\Delta`$ and stops when no $`\Delta`$ is negative. Annealing proposes a random move and accepts it with chance
 
-$$P(\text{accept}) = \begin{cases} 1 & \text{if } \Delta \le 0 \\ e^{-\Delta/T} & \text{if } \Delta > 0 \end{cases}, \qquad T_t = T_0\,\alpha^{t}$$
+```math
+P(\text{accept}) = \begin{cases} 1 & \text{if } \Delta \le 0 \\ e^{-\Delta/T} & \text{if } \Delta > 0 \end{cases}, \qquad T_t = T_0\,\alpha^{t}
+```
 
-**Read it aloud:** always take a move that does not hurt; take a move that hurts by $\Delta$ with chance e to the minus $\Delta$ over $T$; and shrink $T$ by the same factor after every look.
+**Read it aloud:** always take a move that does not hurt; take a move that hurts by $`\Delta`$ with chance e to the minus $`\Delta`$ over $`T`$; and shrink $`T`$ by the same factor after every look.
 
-If one run succeeds with chance $p$, and runs use fresh random starts, then
+If one run succeeds with chance $`p`$, and runs use fresh random starts, then
 
-$$P(\text{at least one of } k \text{ runs succeeds}) = 1 - (1 - p)^k$$
+```math
+P(\text{at least one of } k \text{ runs succeeds}) = 1 - (1 - p)^k
+```
 
-**Read it aloud:** all k runs fail with chance $(1 - p)^k$, so at least one wins with chance one minus that.
+**Read it aloud:** all k runs fail with chance $`(1 - p)^k`$, so at least one wins with chance one minus that.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | a timetable: one slot for each exam | 40 exams, slots 0 to 11 | — |
-| $C(x)$ | clashes: clashing pairs sharing a slot | 30 at run 1's start | — |
-| $e$, $s$, $s'$ | the exam moved; its old slot; its new slot | exam 2, slot 1 to slot 4 | — |
-| $n_e(s)$ | exam $e$'s clash partners sitting in slot $s$ | 1 in slot 1, 1 in slot 4 | — |
-| $\Delta$ | the move's change in clashes | 0: a tie | a move worth avoiding |
-| $T$ | the **temperature**: how willing the walk is to go uphill | 2 at the start | more uphill moves accepted |
-| $T_0$, $\alpha$, $t$ | starting temperature; cooling factor per look; looks so far | 2; 0.9995; up to 20,000 | slower cooling, more looks |
-| $p$ | chance one hill climb ends clash-free | 0.0550 | fewer restarts needed |
-| $k$ | number of independent runs | 53 for a 95% chance | success more likely |
-| $\pi(x)$, $Z$ | the share of time a fixed-temperature walk spends at $x$; the total of $e^{-C/T}$ over all timetables, which turns weights into shares | 0.2642: the 12 clash-free 8-exam timetables together, at T = 0.5 | — |
-| $c$ | in the fold: the constant in a slow, guaranteed cooling schedule | — | slower cooling |
+| $`x`$ | a timetable: one slot for each exam | 40 exams, slots 0 to 11 | — |
+| $`C(x)`$ | clashes: clashing pairs sharing a slot | 30 at run 1's start | — |
+| $`e`$, $`s`$, $`s'`$ | the exam moved; its old slot; its new slot | exam 2, slot 1 to slot 4 | — |
+| $`n_e(s)`$ | exam $`e`$'s clash partners sitting in slot $`s`$ | 1 in slot 1, 1 in slot 4 | — |
+| $`\Delta`$ | the move's change in clashes | 0: a tie | a move worth avoiding |
+| $`T`$ | the **temperature**: how willing the walk is to go uphill | 2 at the start | more uphill moves accepted |
+| $`T_0`$, $`\alpha`$, $`t`$ | starting temperature; cooling factor per look; looks so far | 2; 0.9995; up to 20,000 | slower cooling, more looks |
+| $`p`$ | chance one hill climb ends clash-free | 0.0550 | fewer restarts needed |
+| $`k`$ | number of independent runs | 53 for a 95% chance | success more likely |
+| $`\pi(x)`$, $`Z`$ | the share of time a fixed-temperature walk spends at $`x`$; the total of $`e^{-C/T}`$ over all timetables, which turns weights into shares | 0.2642: the 12 clash-free 8-exam timetables together, at T = 0.5 | — |
+| $`c`$ | in the fold: the constant in a slow, guaranteed cooling schedule | — | slower cooling |
 
-$\alpha$ here is the cooling factor, not the load factor of the first shelf, nor the acceptance chance $\alpha$ of [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md).
+$`\alpha`$ here is the cooling factor, not the load factor of the first shelf, nor the acceptance chance $`\alpha`$ of [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md).
 
 ### When it holds
 
-- **The change of a move is local.** $\Delta$ needs only exam $e$'s partners, because clashes are a sum over pairs. A rule about the whole timetable, such as slots used, would need a fuller recount per move.
+- **The change of a move is local.** $`\Delta`$ needs only exam $`e`$'s partners, because clashes are a sum over pairs. A rule about the whole timetable, such as slots used, would need a fuller recount per move.
 - **Proposals are symmetric.** Annealing picks the exam and the new slot uniformly, so a move and its reverse are proposed equally often. That is what makes the e^(−C/T) result true. A lopsided proposal shifts the walk's long-run weights, as [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md) shows.
 - **A floor is known.** Here 0 clashes is the floor, so a run that reaches it is provably best. Without a floor, "the best we found" proves nothing. Ask for 11 slots and every run stops at 1 clash, which is the floor for 11 slots: 12 core exams that all clash cannot fit in 11.
-- **Runs are independent.** The restart formula needs a fresh random start for each run. And $p$ is itself measured: 22 of 400 runs, not a known constant.
+- **Runs are independent.** The restart formula needs a fresh random start for each run. And $`p`$ is itself measured: 22 of 400 runs, not a known constant.
 - **The temperature falls.** A walk held at T = 2 never settles: in 20 runs none reaches 0, and the best it sees averages 10.95 clashes.
 
 ---
@@ -106,7 +112,7 @@ $\alpha$ here is the cooling factor, not the load factor of the first shelf, nor
 
 ### Step 0: turn a search into a walk
 
-Nothing can visit 10^43.17 timetables. A neighbourhood links each one to 440 others, so the search becomes a walk. Each step needs only $\Delta$, and $\Delta$ is cheap: keep a table of $n_e(s)$ for every exam and slot, and a move's change is one subtraction. After a move, only the moved exam's partners need their entries updated.
+Nothing can visit 10^43.17 timetables. A neighbourhood links each one to 440 others, so the search becomes a walk. Each step needs only $`\Delta`$, and $`\Delta`$ is cheap: keep a table of $`n_e(s)`$ for every exam and slot, and a move's change is one subtraction. After a move, only the moved exam's partners need their entries updated.
 
 The checks test this against brute force. At run 1's stuck timetable they recount all 401 pairs for each of the 440 moves. Every recount agrees with the subtraction.
 
@@ -124,15 +130,15 @@ Over 400 runs, the end points spread out like this: 22 runs reach 0, 117 stop at
 
 ### Step 3: restarts turn a small chance into a large one
 
-Each run starts from its own random timetable, so the runs are independent. All $k$ fail with chance $(1 - p)^k$, which gives the restart formula.
+Each run starts from its own random timetable, so the runs are independent. All $`k`$ fail with chance $`(1 - p)^k`$, which gives the restart formula.
 
-With $p$ = 22 / 400 = 0.0550, ten runs succeed with chance 0.4320. Split the 400 runs into 40 blocks of 10: 17 of the 40 blocks contain a win, a share close to that.
+With $`p`$ = 22 / 400 = 0.0550, ten runs succeed with chance 0.4320. Split the 400 runs into 40 blocks of 10: 17 of the 40 blocks contain a win, a share close to that.
 
-For a 95% chance, solve $(1 - p)^k \le 0.05$ using ln, the natural log: $k \ge \ln 0.05 / \ln 0.945$, so 53 runs.
+For a 95% chance, solve $`(1 - p)^k \le 0.05`$ using ln, the natural log: $`k \ge \ln 0.05 / \ln 0.945`$, so 53 runs.
 
-But $p$ is itself measured, so 53 is an estimate: across $p$'s likely range, 1.96 standard errors either side, the answer runs from 38 to 91. The standard error of $p$, $\sqrt{p(1-p)/400}$, is the typical size of its error from measuring only 400 runs.
+But $`p`$ is itself measured, so 53 is an estimate: across $`p`$'s likely range, 1.96 standard errors either side, the answer runs from 38 to 91. The standard error of $`p`$, $`\sqrt{p(1-p)/400}`$, is the typical size of its error from measuring only 400 runs.
 
-The number of runs until the first win has average $1/p$. So the expected cost is 7,543.8 looks per run divided by 0.0550: 137,160 looks.
+The number of runs until the first win has average $`1/p`$. So the expected cost is 7,543.8 looks per run divided by 0.0550: 137,160 looks.
 
 A small case can be checked against every possibility. Take 8 exams with 13 clashing pairs and 3 slots. There are 3^8 = 6,561 timetables, so the checks run hill climbing from every one.
 
@@ -142,19 +148,21 @@ It wins from 0.5284 of them. The formula then says 3 restarts win with chance 0.
 
 Run 1 is stuck, but 66 of its moves are ties. One of them: exam 2 sits in slot 1 with 1 clash partner there, and slot 4 also holds 1 of its partners. Moving it changes nothing. But it changes the table, and after a few such moves an improving move can open up.
 
-A walk that proposes random moves and accepts every move with $\Delta \le 0$ wanders across these level stretches. It is annealing at temperature 0. On the 40-exam timetable it finishes 50 of 50 runs, with 1,794.4 looks on average and 5,140 at most.
+A walk that proposes random moves and accepts every move with $`\Delta \le 0`$ wanders across these level stretches. It is annealing at temperature 0. On the 40-exam timetable it finishes 50 of 50 runs, with 1,794.4 looks on average and 5,140 at most.
 
 ### Step 5: annealing pays for uphill moves
 
-At temperature $T$, a move that adds one clash is accepted with chance $e^{-1/T}$: 0.6065 at T = 2 and 0.3679 at T = 1. With $\alpha$ = 0.9995 the temperature after 5,000 looks is 2 × 0.9995^5000 = 0.1641, and a +1 move is then accepted only 0.002254 of the time. So the walk roams early and then settles.
+At temperature $`T`$, a move that adds one clash is accepted with chance $`e^{-1/T}`$: 0.6065 at T = 2 and 0.3679 at T = 1. With $`\alpha`$ = 0.9995 the temperature after 5,000 looks is 2 × 0.9995^5000 = 0.1641, and a +1 move is then accepted only 0.002254 of the time. So the walk roams early and then settles.
 
 Why settling works is the Metropolis rule (the acceptance chance above) from [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md), where detailed balance is proved.
 
-Hold $T$ fixed. The proposal is symmetric, and the acceptance rule satisfies detailed balance (in the long run, each move is made as often as its reverse) with weights $e^{-C(x)/T}$. So in the long run the walk spends a share of its time at timetable $x$ equal to
+Hold $`T`$ fixed. The proposal is symmetric, and the acceptance rule satisfies detailed balance (in the long run, each move is made as often as its reverse) with weights $`e^{-C(x)/T}`$. So in the long run the walk spends a share of its time at timetable $`x`$ equal to
 
-$$\pi(x) = \frac{e^{-C(x)/T}}{Z}.$$
+```math
+\pi(x) = \frac{e^{-C(x)/T}}{Z}.
+```
 
-Here $Z$ is the total of $e^{-C/T}$ over all timetables, which turns weights into shares. Each clash divides a timetable's share by $e^{1/T}$. As $T$ falls that divisor grows, and the weight piles onto the clash-free timetables.
+Here $`Z`$ is the total of $`e^{-C/T}`$ over all timetables, which turns weights into shares. Each clash divides a timetable's share by $`e^{1/T}`$. As $`T`$ falls that divisor grows, and the weight piles onto the clash-free timetables.
 
 The checks test this on the 8-exam case at T = 0.5. Summed over all 6,561 timetables, the formula gives the clash-free ones 0.2642 of the time. Twenty seeded walks spend 0.2608 of their time there, with a standard error of 0.0024.
 
@@ -169,9 +177,9 @@ The temperature-0 walk started there escapes in 0 of 50 runs. Annealing from T =
 
 At a fixed temperature the share formula above is a theorem. A falling temperature has one guarantee, proved by Hajek (1988) and stated here without proof.
 
-Cool as $T_t = c / \ln(t + 1)$. Then the chance of standing on a best timetable tends to 1 exactly when $c$ is at least the depth of the deepest trap. A trap's depth is how far uphill a walk must climb to leave it. That schedule is far too slow to use.
+Cool as $`T_t = c / \ln(t + 1)`$. Then the chance of standing on a best timetable tends to 1 exactly when $`c`$ is at least the depth of the deepest trap. A trap's depth is how far uphill a walk must climb to leave it. That schedule is far too slow to use.
 
-The geometric schedule $T_0\alpha^t$ used here, and nearly everywhere else, carries no guarantee at all. Its results are measured, run by run.
+The geometric schedule $`T_0\alpha^t`$ used here, and nearly everywhere else, carries no guarantee at all. Its results are measured, run by run.
 
 </details>
 
@@ -194,12 +202,12 @@ A likely reason, not tested here, is that slot numbers are only labels. Slot 3 i
 | greedy colouring, listed order | | 13 slots |
 | neighbours of a timetable | 40 × 11 | 440 |
 | clashes in a random timetable, on average | 401 / 12 | 33.42 |
-| a tie move in run 1 | exam 2: $\Delta$ = 1 − 1 | 0 |
+| a tie move in run 1 | exam 2: $`\Delta`$ = 1 − 1 | 0 |
 | hill climbing's chance | 22 / 400 | 0.0550 |
 | ten restarts | 1 − 0.945^10 | 0.4320 |
 | restarts for 95% | ln 0.05 / ln 0.945, rounded up | 53 |
 | restarts, expected looks to a win | 7,543.8 / 0.0550 | 137,160 |
-| annealing accepts +1 at the start | $e^{-1/2}$ | 0.6065 |
+| annealing accepts +1 at the start | $`e^{-1/2}`$ | 0.6065 |
 | ties only, 50 runs | all 50 clash-free; mean looks | 1,794.4 |
 | annealing, 50 runs | all 50 clash-free; mean looks | **6,321.1** |
 
@@ -220,7 +228,7 @@ A clash-free timetable in 12 slots, so the floor is met and no timetable does be
 
 ## Code, from first principles, and it actually runs
 
-Both programs write out their own generator (SplitMix64), build the same synthetic college from seed 20261111, and count cost in looks. They take five independent roads. The table's $\Delta$ meets a full recount for all 440 moves. The restart formula meets blocks of real runs, and hill climbing from all 6,561 timetables of the 8-exam case. The fixed-temperature walk meets $e^{-C/T}/Z$ summed over all 6,561. The 11-slot search meets the floor: 12 exams that all clash cannot share 11 slots. A finished timetable is recounted from scratch.
+Both programs write out their own generator (SplitMix64), build the same synthetic college from seed 20261111, and count cost in looks. They take five independent roads. The table's $`\Delta`$ meets a full recount for all 440 moves. The restart formula meets blocks of real runs, and hill climbing from all 6,561 timetables of the 8-exam case. The fixed-temperature walk meets $`e^{-C/T}/Z`$ summed over all 6,561. The 11-slot search meets the floor: 12 exams that all clash cannot share 11 slots. A finished timetable is recounted from scratch.
 
 ### Python
 
@@ -598,9 +606,9 @@ The two outputs match line for line.
 
 Lean proves three facts for any exams, slots and clashes, and checks the 8-exam trap timetable.
 
-- Hill climbing always stops. Suppose each move in a run of timetables lowers the clashes. Then the run has at most $C(x)$ moves, where $x$ is its start.
-- Take any timetable $x$, and move exam $e$ from its slot $s$ to slot $s'$. Then the change in clashes is $\Delta = n_e(s') - n_e(s)$.
-- Suppose $k$ runs succeed independently, each with chance $p$. Then at least one of them succeeds with chance $1 - (1 - p)^k$.
+- Hill climbing always stops. Suppose each move in a run of timetables lowers the clashes. Then the run has at most $`C(x)`$ moves, where $`x`$ is its start.
+- Take any timetable $`x`$, and move exam $`e`$ from its slot $`s`$ to slot $`s'`$. Then the change in clashes is $`\Delta = n_e(s') - n_e(s)`$.
+- Suppose $`k`$ runs succeed independently, each with chance $`p`$. Then at least one of them succeeds with chance $`1 - (1 - p)^k`$.
 - The 8-exam case has 3^8 = 6,561 timetables and 13 clashing pairs.
 - The trap timetable `[0, 1, 2, 2, 0, 2, 1, 0]` has 1 clash and 16 moves.
 - Every one of those 16 moves adds at least 1 clash, so no level move leads out.
@@ -827,7 +835,7 @@ end LocalSearchAndMetaheuristics
 > - **Counting steps instead of looks.** One hill-climbing step scans 440 moves; one annealing step checks 1. Counted in steps, hill climbing looks far cheaper than it is. Counted in looks, run 1 alone costs 6,160.
 > - **Crediting annealing for what ties did.** Here the temperature-0 walk finishes as often as annealing, in 1,794.4 looks against 6,321.1. Always run the simplest control.
 > - **Blaming the search when the floor is the problem.** With 11 slots every run stops at 1 clash. That is the floor, not a failure.
-> - **Trusting $p$ from a handful of runs.** Ten runs at $p$ = 0.0550 contain a win only 0.4320 of the time. The rest of the time, ten runs would make the method look hopeless.
+> - **Trusting $`p`$ from a handful of runs.** Ten runs at $`p`$ = 0.0550 contain a win only 0.4320 of the time. The rest of the time, ten runs would make the method look hopeless.
 
 ---
 
@@ -836,7 +844,7 @@ end LocalSearchAndMetaheuristics
 - **Exam and course timetables.** Real ones add rooms, gaps between exams and staff, which suit local search: each rule just adds to the cost.
 - **Placing parts on a chip.** Annealing was introduced to optimisation for exactly this: placing circuit parts to shorten the wiring.
 - **Delivery routes.** A route improves by reversing a stretch of stops and keeping the change if the van drives less. That is hill climbing with a different move.
-- **Sampling, not optimising.** Hold the temperature fixed and the same walk draws timetables, or anything else, with chances in proportion to $e^{-C/T}$: [MCMC as a tool](08-markov-chain-monte-carlo-for-computation.md).
+- **Sampling, not optimising.** Hold the temperature fixed and the same walk draws timetables, or anything else, with chances in proportion to $`e^{-C/T}`$: [MCMC as a tool](08-markov-chain-monte-carlo-for-computation.md).
 
 > **Say it back**
 > Local search turns a search over 10^43 timetables into a walk, one move at a time, where each move's change is a single subtraction. Hill climbing always stops, but usually at a local optimum: here all but 22 of 400 runs stopped with clashes left. Restarts multiply chances: k runs win with chance 1 − (1 − p)^k. Annealing accepts a move that hurts by Δ with chance e^(−Δ/T) and lowers T as it goes, which lets it climb out of true traps. Report the result as found, against a floor, in how many runs, at what cost, and next to the simplest control.

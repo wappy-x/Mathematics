@@ -38,47 +38,53 @@ The upper line is a share paying nothing; the lower line is Acme, paying 2 perce
 
 Four letters carry the card, named in words first.
 
-- $S$ is the **spot price**: what one share costs right now, for delivery right now.
-- $r$ is the **bank rate**: the interest a safe loan costs and a safe deposit earns, quoted continuously compounded — added at every instant ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)).
-- $q$ is the **dividend yield**: the income the share pays its holder each year as a fraction of its price, also continuous.
-- $T$ is the wait until delivery, in years.
+- $`S`$ is the **spot price**: what one share costs right now, for delivery right now.
+- $`r`$ is the **bank rate**: the interest a safe loan costs and a safe deposit earns, quoted continuously compounded — added at every instant ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)).
+- $`q`$ is the **dividend yield**: the income the share pays its holder each year as a fraction of its price, also continuous.
+- $`T`$ is the wait until delivery, in years.
 
-The answer is $F$, the forward price.
+The answer is $`F`$, the forward price.
 
-$$F = S\,e^{(r-q)T}$$
+```math
+F = S\,e^{(r-q)T}
+```
 
 **Read it aloud:** today's price of the share, grown at the bank rate, shrunk by the income the share pays before delivery day.
 
 The card uses both halves of that growth factor, so split it:
 
-$$e^{(r-q)T} = e^{rT} \times e^{-qT}$$
+```math
+e^{(r-q)T} = e^{rT} \times e^{-qT}
+```
 
-The first grows money at the bank rate; the second shrinks a share by the income it throws off. Their net, $r - q$, is the **cost of carry**.
+The first grows money at the bank rate; the second shrinks a share by the income it throws off. Their net, $`r - q`$, is the **cost of carry**.
 
-Some assets pay a lump on a known date rather than a trickle: Acme might declare a single cash dividend of 2.00 dollars payable in six months. Then $I$, today's price of that payment, replaces the trickle and the shrinking becomes a subtraction:
+Some assets pay a lump on a known date rather than a trickle: Acme might declare a single cash dividend of 2.00 dollars payable in six months. Then $`I`$, today's price of that payment, replaces the trickle and the shrinking becomes a subtraction:
 
-$$F = (S - I)\,e^{rT}, \qquad I = C\,e^{-rt}$$
+```math
+F = (S - I)\,e^{rT}, \qquad I = C\,e^{-rt}
+```
 
-Here $C$ is the cash payment, 2.00, and small $t$ is when it lands, 0.5 years from today. Take the known payment off the spot price at what it is worth today, and grow only what is left.
+Here $`C`$ is the cash payment, 2.00, and small $`t`$ is when it lands, 0.5 years from today. Take the known payment off the spot price at what it is worth today, and grow only what is left.
 
 | Symbol | Plain meaning | In our example | Push it up and the forward price… |
 | --- | --- | --- | --- |
-| $F$ | the forward price: cash handed over on delivery day | 103.05 | — |
-| $S$ | the spot price: what one share costs now | 100.00 | rises one for one |
-| $r$ | the bank rate, continuously compounded | 5 percent | rises: carrying costs more |
-| $q$ | the dividend yield, continuously compounded | 2 percent | falls: the holder is paid already |
-| $T$ | time from today to delivery, in years | 1 | pushes further from spot while $r$ beats $q$ |
-| $C$ | a known cash payment made before delivery | 2.00 | falls: the buyer never gets it |
-| $t$ | when that payment lands, in years | 0.5 | rises: the seller holds the cash less long |
-| $I$ | today's price of that payment | 1.95 | falls |
-| $K$ | any delivery price written into a contract | 103.05 makes it free | — |
-| $G$ | what a contract at delivery price $K$ is worth today | 0.00 at $K = F$ | falls as $K$ rises |
-| $e^{rT}$ | the growth factor: what a bank dollar becomes by delivery | 1.051271 | rises |
-| $e^{-qT}$ | the fraction of a share that grows into one whole share | 0.980199 | — |
-| $e^{-rT}$ | the discount factor: what a delivery-day dollar costs now | 0.951229 | — |
-| $r - q$ | the cost of carry: holding, net of income | 3 percent | rises: it is the whole exponent |
+| $`F`$ | the forward price: cash handed over on delivery day | 103.05 | — |
+| $`S`$ | the spot price: what one share costs now | 100.00 | rises one for one |
+| $`r`$ | the bank rate, continuously compounded | 5 percent | rises: carrying costs more |
+| $`q`$ | the dividend yield, continuously compounded | 2 percent | falls: the holder is paid already |
+| $`T`$ | time from today to delivery, in years | 1 | pushes further from spot while $`r`$ beats $`q`$ |
+| $`C`$ | a known cash payment made before delivery | 2.00 | falls: the buyer never gets it |
+| $`t`$ | when that payment lands, in years | 0.5 | rises: the seller holds the cash less long |
+| $`I`$ | today's price of that payment | 1.95 | falls |
+| $`K`$ | any delivery price written into a contract | 103.05 makes it free | — |
+| $`G`$ | what a contract at delivery price $`K`$ is worth today | 0.00 at $`K = F`$ | falls as $`K`$ rises |
+| $`e^{rT}`$ | the growth factor: what a bank dollar becomes by delivery | 1.051271 | rises |
+| $`e^{-qT}`$ | the fraction of a share that grows into one whole share | 0.980199 | — |
+| $`e^{-rT}`$ | the discount factor: what a delivery-day dollar costs now | 0.951229 | — |
+| $`r - q`$ | the cost of carry: holding, net of income | 3 percent | rises: it is the whole exponent |
 
-**Conventions verified 14 Sep 2026:** every rate here is continuously compounded and $T$ counts calendar years. Markets quote on day-count and compounding conventions that differ by market and do change; convert before substituting.
+**Conventions verified 14 Sep 2026:** every rate here is continuously compounded and $`T`$ counts calendar years. Markets quote on day-count and compounding conventions that differ by market and do change; convert before substituting.
 
 ### When it holds
 
@@ -100,7 +106,7 @@ So the job is to build a bundle that ends holding exactly one Acme share, out of
 
 ### Step 1: one whole share on delivery day costs 98.02 today
 
-Buy a share and the dividends belong to the buyer. Spend each dividend on more Acme as it arrives and the holding grows by itself at 2 percent a year. So to end the year holding exactly one share, do not buy one share. Buy $e^{-qT}$ of a share: $e^{-0.02} = 0.980199$ of a share, costing 98.019867 dollars. Left alone with its dividends ploughed back, that fraction grows into one whole share, no cash in or out along the way.
+Buy a share and the dividends belong to the buyer. Spend each dividend on more Acme as it arrives and the holding grows by itself at 2 percent a year. So to end the year holding exactly one share, do not buy one share. Buy $`e^{-qT}`$ of a share: $`e^{-0.02} = 0.980199`$ of a share, costing 98.019867 dollars. Left alone with its dividends ploughed back, that fraction grows into one whole share, no cash in or out along the way.
 
 That 98.02 is the **prepaid forward**: the price of one share delivered in a year, paid this morning. Only the timing of the payment separates it from the forward price.
 
@@ -108,14 +114,16 @@ That 98.02 is the **prepaid forward**: the price of one share delivered in a yea
 
 Two packages, each certain to hold one Acme share in a year.
 
-- **Package A.** Sign a forward at delivery price $F$ and put $F\,e^{-rT}$ in the bank. The deposit grows to exactly $F$ by delivery day, and that is handed over for the share. Signing costs nothing, so the package costs $F\,e^{-rT}$.
-- **Package B.** Buy 0.980199 of a share and reinvest the dividends: $S\,e^{-qT}$ today, or 98.019867.
+- **Package A.** Sign a forward at delivery price $`F`$ and put $`F\,e^{-rT}`$ in the bank. The deposit grows to exactly $`F`$ by delivery day, and that is handed over for the share. Signing costs nothing, so the package costs $`F\,e^{-rT}`$.
+- **Package B.** Buy 0.980199 of a share and reinvest the dividends: $`S\,e^{-qT}`$ today, or 98.019867.
 
 Both end holding one share, so their prices today are equal:
 
-$$F\,e^{-rT} = S\,e^{-qT} \quad\Longrightarrow\quad F = S\,e^{(r-q)T}$$
+```math
+F\,e^{-rT} = S\,e^{-qT} \quad\Longrightarrow\quad F = S\,e^{(r-q)T}
+```
 
-For Acme, 98.019867 carried forward a year at 5 percent is $98.019867 \times 1.051271 = 103.045453$, or **103.05**. In one step, $100.00 \times e^{0.03}$.
+For Acme, 98.019867 carried forward a year at 5 percent is $`98.019867 \times 1.051271 = 103.045453`$, or **103.05**. In one step, $`100.00 \times e^{0.03}`$.
 
 ### Step 3: quote it too high and the seller mints money
 
@@ -148,13 +156,15 @@ This is **reverse cash-and-carry**. Between the two trades, every delivery price
 <details>
 <summary>Detailed proof: the value of any delivery price, and why only one of them is free</summary>
 
-Write $K$ for any delivery price agreed now, and $G$ for what a contract paying Acme's price on delivery day minus that $K$ is worth today. Build that payoff: hold $e^{-qT}$ of a share with dividends reinvested, and borrow $K\,e^{-rT}$. On delivery day the holding is one share and the loan is a bill for exactly $K$ — the contract's payoff, on every path. The bundle cost $S\,e^{-qT} - K\,e^{-rT}$ today, so by Step 0,
-$$G = S\,e^{-qT} - K\,e^{-rT} = e^{-rT}\left(S\,e^{(r-q)T} - K\right).$$
-The forward price is the $K$ that makes $G$ zero, since a contract entered for no money must be worth no money. In $K$ that is a straight line of slope $-e^{-rT}$, never zero, so it crosses zero once and only once: existence and uniqueness in one sentence, at $K = S\,e^{(r-q)T}$. The boundaries behave. At $T = 0$ the root is $S$, delivery today at today's price. At $r = q$ it is $S$ for every $T$. At $S = 0$ it is zero: a worthless asset costs nothing to carry.
+Write $`K`$ for any delivery price agreed now, and $`G`$ for what a contract paying Acme's price on delivery day minus that $`K`$ is worth today. Build that payoff: hold $`e^{-qT}`$ of a share with dividends reinvested, and borrow $`K\,e^{-rT}`$. On delivery day the holding is one share and the loan is a bill for exactly $`K`$ — the contract's payoff, on every path. The bundle cost $`S\,e^{-qT} - K\,e^{-rT}`$ today, so by Step 0,
 
-Steps 3 and 4 are that line in algebra. At any zero-cost delivery price above $F$ the matching bundle costs $G < 0$, so selling the contract and buying the bundle pays cash this morning and the two cancel on delivery day; below $F$, buy the contract and sell the bundle short. Both are money from nothing, which Step 0 forbids.
+$`\displaystyle G = S\,e^{-qT} - K\,e^{-rT} = e^{-rT}\left(S\,e^{(r-q)T} - K\right).`$
 
-The known-cash-income version replaces only the bundle. A lump on a fixed date cannot be reinvested into a fraction of a share before it arrives. Instead buy one whole share, costing $S$, and borrow $I = C\,e^{-rt}$, sized so the dividend clears that debt the day it lands. The outlay is $S - I$, and delivery day arrives with one share and no debt, so $F = (S-I)\,e^{rT}$. The payment never had to be positive: a known holding cost such as storage is the same algebra with the sign flipped, and raises the forward price.
+The forward price is the $`K`$ that makes $`G`$ zero, since a contract entered for no money must be worth no money. In $`K`$ that is a straight line of slope $`-e^{-rT}`$, never zero, so it crosses zero once and only once: existence and uniqueness in one sentence, at $`K = S\,e^{(r-q)T}`$. The boundaries behave. At $`T = 0`$ the root is $`S`$, delivery today at today's price. At $`r = q`$ it is $`S`$ for every $`T`$. At $`S = 0`$ it is zero: a worthless asset costs nothing to carry.
+
+Steps 3 and 4 are that line in algebra. At any zero-cost delivery price above $`F`$ the matching bundle costs $`G < 0`$, so selling the contract and buying the bundle pays cash this morning and the two cancel on delivery day; below $`F`$, buy the contract and sell the bundle short. Both are money from nothing, which Step 0 forbids.
+
+The known-cash-income version replaces only the bundle. A lump on a fixed date cannot be reinvested into a fraction of a share before it arrives. Instead buy one whole share, costing $`S`$, and borrow $`I = C\,e^{-rt}`$, sized so the dividend clears that debt the day it lands. The outlay is $`S - I`$, and delivery day arrives with one share and no debt, so $`F = (S-I)\,e^{rT}`$. The payment never had to be positive: a known holding cost such as storage is the same algebra with the sign flipped, and raises the forward price.
 
 </details>
 
@@ -167,7 +177,7 @@ Neither ledger holds a number describing how wildly Acme swings: the trade holds
 
 ### Another road: the average share price in a world priced at the bank rate
 
-A second route reaches the same number, and it runs the rest of this wing. Price every contract as though each asset were valued so that it grows on average at the bank rate, a device set out in [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md) and called a risk-neutral valuation. A share's whole return there is $r$, but part is paid out as dividends at $q$ a year, so only $r - q$ shows as the price climbing. The average Acme price on delivery day is $S\,e^{(r-q)T}$, which is $F$ again.
+A second route reaches the same number, and it runs the rest of this wing. Price every contract as though each asset were valued so that it grows on average at the bank rate, a device set out in [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md) and called a risk-neutral valuation. A share's whole return there is $`r`$, but part is paid out as dividends at $`q`$ a year, so only $`r - q`$ shows as the price climbing. The average Acme price on delivery day is $`S\,e^{(r-q)T}`$, which is $`F`$ again.
 
 The check works that average out the long way, at 10, 20 and 50 percent a year of jumpiness. All three land on 103.045453: volatility cancels out, the ledgers' fact from the other side.
 
@@ -179,14 +189,14 @@ Acme at 100.00, the bank at 5 percent, the dividend yield 2 percent, delivery on
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the share fraction to buy | $e^{-0.02}$ | 0.980199 |
-| what it costs, the prepaid forward | $100.00 \times 0.980199$ | 98.02 |
-| a year of bank growth | $e^{0.05}$ | 1.051271 |
-| **the forward price** | $98.019867 \times 1.051271$ | **103.05** |
-| the same in one step | $100.00 \times e^{0.03}$ | **103.05** |
-| the same share paying nothing | $100.00 \times e^{0.05}$ | 105.13 |
-| a 2.00 dividend due in six months, priced today | $2.00 \times e^{-0.025}$ | 1.95 |
-| that share, with that cash dividend instead | $(100.00 - 1.950620) \times 1.051271$ | 103.08 |
+| the share fraction to buy | $`e^{-0.02}`$ | 0.980199 |
+| what it costs, the prepaid forward | $`100.00 \times 0.980199`$ | 98.02 |
+| a year of bank growth | $`e^{0.05}`$ | 1.051271 |
+| **the forward price** | $`98.019867 \times 1.051271`$ | **103.05** |
+| the same in one step | $`100.00 \times e^{0.03}`$ | **103.05** |
+| the same share paying nothing | $`100.00 \times e^{0.05}`$ | 105.13 |
+| a 2.00 dividend due in six months, priced today | $`2.00 \times e^{-0.025}`$ | 1.95 |
+| that share, with that cash dividend instead | $`(100.00 - 1.950620) \times 1.051271`$ | 103.08 |
 
 Read the answer as a bill: a firm promising Acme in a year must charge 103.05 to come out level. The 2 percent yield is worth 2.08 dollars of it, the gap between 105.13 and 103.05.
 
@@ -241,7 +251,7 @@ dividend yield   Acme's one-year forward price, bank rate held at 5 percent; one
            8%   ██████████████                  $97.04
 ```
 
-The forces cancel when the yield equals the rate: at 5 percent against 5 percent the forward is the spot, 100.00. Push the yield past the rate and the forward falls below spot, which markets call **backwardation**; the ordinary case, a forward above spot, is **contango**. Both are the sign of $r - q$ made visible.
+The forces cancel when the yield equals the rate: at 5 percent against 5 percent the forward is the spot, 100.00. Push the yield past the rate and the forward falls below spot, which markets call **backwardation**; the ordinary case, a forward above spot, is **contango**. Both are the sign of $`r - q`$ made visible.
 
 ---
 
@@ -654,13 +664,13 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's pricing rules for any values of $S$, $r$, $q$, $T$, $C$, $t$ and $K$, with no conditions.
+Lean proves the card's pricing rules for any values of $`S`$, $`r`$, $`q`$, $`T`$, $`C`$, $`t`$ and $`K`$, with no conditions.
 
-- Take any delivery price $K$. Then $G$ equals $e^{-rT}$ times the gap between $F$ and $K$.
-- Take any delivery price $K$. Then the contract costs nothing today exactly when $K = S\,e^{(r-q)T}$.
-- Take any quote $K$. Then neither cash-and-carry nor its reverse nets a profit on delivery day exactly when $K$ is the forward price.
-- Take a cash payment $C$ landing at time $t$. Then the debt $I = C\,e^{-rt}$, grown at the bank rate to time $t$, is exactly $C$.
-- Take the same payment. Then the contract costs nothing today exactly when $K = (S - I)\,e^{rT}$.
+- Take any delivery price $`K`$. Then $`G`$ equals $`e^{-rT}`$ times the gap between $`F`$ and $`K`$.
+- Take any delivery price $`K`$. Then the contract costs nothing today exactly when $`K = S\,e^{(r-q)T}`$.
+- Take any quote $`K`$. Then neither cash-and-carry nor its reverse nets a profit on delivery day exactly when $`K`$ is the forward price.
+- Take a cash payment $`C`$ landing at time $`t`$. Then the debt $`I = C\,e^{-rt}`$, grown at the bank rate to time $`t`$, is exactly $`C`$.
+- Take the same payment. Then the contract costs nothing today exactly when $`K = (S - I)\,e^{rT}`$.
 - The edge cases hold exactly: delivery today, or a yield equal to the rate, gives 100, and a worthless asset gives 0.
 - The simple-interest mistake from the table gives exactly 103.00.
 
@@ -788,7 +798,7 @@ example : (100 : ℚ) * (1 + 5 / 100 - 2 / 100) = 103 := by norm_num
 > - **Confusing the price with the value.** Saying "the forward is worth 103.05" when the delivery price is 103.05 is how contracts get marked with the wrong sign: the value at signing is zero.
 > - **Dropping the income.** Acme priced as if it paid nothing comes out at 105.13, a loss of 2.08 a share.
 > - **Taking a cash dividend at face value.** A 2.00 dividend due in six months is worth 1.95 today. Subtract the full 2.00 and the price comes out at 103.02 instead of 103.08.
-> - **Mismatched units.** $T$ counts years, not months, and $q$ is 0.02, not 2. Rates must be continuously compounded: a bank quoting 5 percent added once a year is $\ln(1.05) = 4.88$ percent here, and the forward moves to 102.92.
+> - **Mismatched units.** $`T`$ counts years, not months, and $`q`$ is 0.02, not 2. Rates must be continuously compounded: a bank quoting 5 percent added once a year is $`\ln(1.05) = 4.88`$ percent here, and the forward moves to 102.92.
 > - **Assuming it always holds in the market.** It is a theorem about a model. Where borrowing is scarce or a short sale impossible, the two trades stop at different prices and the quote sits between them — measured in currency markets since 2008, the last source below.
 
 ---
@@ -809,7 +819,7 @@ example : (100 : ℚ) * (1 + 5 / 100 - 2 / 100) = 103 := by norm_num
 ## What this builds on
 
 - [No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md): the rule in Step 0, that two bundles ending the same must cost the same today.
-- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): why a dollar due on delivery day costs $e^{-rT}$ today, and what continuous compounding means.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): why a dollar due on delivery day costs $`e^{-rT}`$ today, and what continuous compounding means.
 
 ## Where this goes next
 

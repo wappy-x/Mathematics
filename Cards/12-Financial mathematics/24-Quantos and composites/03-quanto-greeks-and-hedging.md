@@ -37,49 +37,55 @@ One line: the euro loan. At 80 euros the desk owes 12.71 euros per call; at 120 
 
 ## The formula
 
-$$\eta = \frac{V_S}{X}\ \text{shares}, \qquad L = \eta\,S\ \text{euros borrowed}, \qquad \text{dollar account} = V, \qquad V_S = \bar{X}\,e^{(\mu - r_d)T}\,N(d_1)$$
+```math
+\eta = \frac{V_S}{X}\ \text{shares}, \qquad L = \eta\,S\ \text{euros borrowed}, \qquad \text{dollar account} = V, \qquad V_S = \bar{X}\,e^{(\mu - r_d)T}\,N(d_1)
+```
 
 **Read it aloud:** hold the dollar delta divided by today's dollars-per-euro in shares, borrow the euros those shares are worth, and keep the option's price in dollars; the dollar delta is the fixed rate times the discounted chance-in-shares from the quanto formula.
 
-Notation first, in words. $V_S$ is the **delta**: how many dollars the price moves when the share moves one euro, everything else held fixed (a partial derivative, the slope in one direction). A subscript on $V$ names the input being nudged, so $V_\rho$ is how many dollars the price moves per unit of correlation. These slopes are the **Greeks**. In the formula, $\eta$ (eta) is the number of shares held per call and $L$ the euros borrowed.
+Notation first, in words. $`V_S`$ is the **delta**: how many dollars the price moves when the share moves one euro, everything else held fixed (a partial derivative, the slope in one direction). A subscript on $`V`$ names the input being nudged, so $`V_\rho`$ is how many dollars the price moves per unit of correlation. These slopes are the **Greeks**. In the formula, $`\eta`$ (eta) is the number of shares held per call and $`L`$ the euros borrowed.
 
 | Symbol | Plain meaning | In our example | Push it up and the hedge… |
 | --- | --- | --- | --- |
-| $V$ | the quanto call's price today, in dollars | 9.151629 USD | holds more dollars |
-| $S$ | the share's price today, in euros | 100 EUR | holds more shares and a bigger euro loan |
-| $K$ | the strike, in euros | 100 EUR | holds fewer shares |
-| $\bar{X}$ | the fixed rate in the contract, dollars per euro | 1.10 | scales every Greek in proportion |
-| $X$, $dX$ | the market exchange rate today, dollars per euro, and a small move in it | 1.15 | holds fewer shares; the price does not move |
-| $r_d$, $r_f$ | dollar and euro interest rates, continuously compounded | 5% and 3% | $r_f$ raises the share's growth; $r_d$ discounts |
-| $q$ | the share's dividend yield | 1% | slows the share's growth |
-| $\sigma_S$, $\sigma_X$ | volatility (yearly spread of log returns) of the share, and of the exchange rate | 20% and 10% | $\sigma_S$ widens outcomes; $\sigma_X$ only bends the drift |
-| $\rho$ | correlation of share moves with dollars-per-euro moves, from −1 to +1 | 0.30 | cheapens the call, shrinks the delta |
-| $T$ | years to expiry | 1 | more time for the drift to bite |
-| $\mu$, $F$ | quanto drift $r_f - q - \rho\sigma_S\sigma_X$, and quanto forward $F = S e^{\mu T}$ | 1.4%; 101.41 EUR | raises delta |
-| $N$, $\varphi$, $d_1$, $d_2$ | bell-curve area and height; the two cut-offs of [Quanto option](02-quanto-option.md) | $d_1$ = 0.17 | — |
+| $`V`$ | the quanto call's price today, in dollars | 9.151629 USD | holds more dollars |
+| $`S`$ | the share's price today, in euros | 100 EUR | holds more shares and a bigger euro loan |
+| $`K`$ | the strike, in euros | 100 EUR | holds fewer shares |
+| $`\bar{X}`$ | the fixed rate in the contract, dollars per euro | 1.10 | scales every Greek in proportion |
+| $`X`$, $`dX`$ | the market exchange rate today, dollars per euro, and a small move in it | 1.15 | holds fewer shares; the price does not move |
+| $`r_d`$, $`r_f`$ | dollar and euro interest rates, continuously compounded | 5% and 3% | $`r_f`$ raises the share's growth; $`r_d`$ discounts |
+| $`q`$ | the share's dividend yield | 1% | slows the share's growth |
+| $`\sigma_S`$, $`\sigma_X`$ | volatility (yearly spread of log returns) of the share, and of the exchange rate | 20% and 10% | $`\sigma_S`$ widens outcomes; $`\sigma_X`$ only bends the drift |
+| $`\rho`$ | correlation of share moves with dollars-per-euro moves, from −1 to +1 | 0.30 | cheapens the call, shrinks the delta |
+| $`T`$ | years to expiry | 1 | more time for the drift to bite |
+| $`\mu`$, $`F`$ | quanto drift $`r_f - q - \rho\sigma_S\sigma_X`$, and quanto forward $`F = S e^{\mu T}`$ | 1.4%; 101.41 EUR | raises delta |
+| $`N`$, $`\varphi`$, $`d_1`$, $`d_2`$ | bell-curve area and height; the two cut-offs of [Quanto option](02-quanto-option.md) | $`d_1`$ = 0.17 | — |
 
-The cut-offs are $d_1 = [\ln(S/K) + (\mu + \tfrac12\sigma_S^2)T]/(\sigma_S\sqrt{T})$ and $d_2 = d_1 - \sigma_S\sqrt{T}$: how many standard deviations of room the share has above the strike, counted in shares and in cash.
+The cut-offs are $`d_1 = [\ln(S/K) + (\mu + \tfrac12\sigma_S^2)T]/(\sigma_S\sqrt{T})`$ and $`d_2 = d_1 - \sigma_S\sqrt{T}`$: how many standard deviations of room the share has above the strike, counted in shares and in cash.
 
 The Greeks, all per call, all in dollars:
 
-$$V_{SS} = \frac{\bar{X} e^{(\mu - r_d)T}\varphi(d_1)}{S\sigma_S\sqrt{T}}, \qquad V_{\sigma_S} = \bar{X} e^{-r_d T} F\left[\sqrt{T}\,\varphi(d_1) - \rho\sigma_X T\,N(d_1)\right]$$
+```math
+V_{SS} = \frac{\bar{X} e^{(\mu - r_d)T}\varphi(d_1)}{S\sigma_S\sqrt{T}}, \qquad V_{\sigma_S} = \bar{X} e^{-r_d T} F\left[\sqrt{T}\,\varphi(d_1) - \rho\sigma_X T\,N(d_1)\right]
+```
 
-$$V_\rho = -\sigma_S\sigma_X T\cdot S V_S, \qquad V_{\sigma_X} = -\rho\sigma_S T\cdot S V_S, \qquad V_{r_f} = T\cdot S V_S, \qquad V_{r_d} = -T\,V, \qquad V_X = 0$$
+```math
+V_\rho = -\sigma_S\sigma_X T\cdot S V_S, \qquad V_{\sigma_X} = -\rho\sigma_S T\cdot S V_S, \qquad V_{r_f} = T\cdot S V_S, \qquad V_{r_d} = -T\,V, \qquad V_X = 0
+```
 
 **Read it aloud:** gamma and the width part of share vega are Black-Scholes; correlation, currency volatility and the euro rate act only through the drift, so each is the drift's own sensitivity times T times the dollar value of the delta position.
 
 | Greek | Plain meaning | Value | Per market unit |
 | --- | --- | --- | --- |
-| $V_S$ | delta: dollars per one-euro move of the share | 0.602171 | — |
-| $\eta$ | shares to hold, $V_S / X$ | 0.523627 shares | — |
-| $L$ | euros to borrow, $\eta S$ | 52.362724 EUR | worth 60.217133 USD |
-| $V_{SS}$ | gamma: change in delta per one-euro move | 0.020862 | — |
-| $V_{\sigma_S}$ | share vega | 39.918126 | 0.399181 per volatility point |
-| $V_{\sigma_X}$ | currency vega | −3.613028 | −0.036130 per volatility point |
-| $V_{r_d}$ | dollar rho | −9.151629 | — |
-| $V_{r_f}$ | euro rho | 60.217133 | — |
-| $V_\rho$ | correlation sensitivity | −1.204343 | −0.012043 per 0.01 |
-| $V_X$ | sensitivity to today's exchange rate | 0 | — |
+| $`V_S`$ | delta: dollars per one-euro move of the share | 0.602171 | — |
+| $`\eta`$ | shares to hold, $`V_S / X`$ | 0.523627 shares | — |
+| $`L`$ | euros to borrow, $`\eta S`$ | 52.362724 EUR | worth 60.217133 USD |
+| $`V_{SS}`$ | gamma: change in delta per one-euro move | 0.020862 | — |
+| $`V_{\sigma_S}`$ | share vega | 39.918126 | 0.399181 per volatility point |
+| $`V_{\sigma_X}`$ | currency vega | −3.613028 | −0.036130 per volatility point |
+| $`V_{r_d}`$ | dollar rho | −9.151629 | — |
+| $`V_{r_f}`$ | euro rho | 60.217133 | — |
+| $`V_\rho`$ | correlation sensitivity | −1.204343 | −0.012043 per 0.01 |
+| $`V_X`$ | sensitivity to today's exchange rate | 0 | — |
 
 The euro rho, 60.22 dollars, equals the dollar value of the euro loan. That is no accident: a higher euro rate raises the drift, and the drift acts on the share position the loan funds.
 
@@ -101,15 +107,15 @@ The call's dollar price depends on the share, the rates, the volatilities and th
 
 ### Step 1: delta in dollars, then in shares
 
-The price moves $V_S$ = 0.602171 dollars per euro the share moves. One share moves one euro, which is worth $X$ = 1.15 dollars today. So the desk needs $V_S / X$ shares for the dollar moves to match: 0.602171 / 1.15 = 0.523627 shares.
+The price moves $`V_S`$ = 0.602171 dollars per euro the share moves. One share moves one euro, which is worth $`X`$ = 1.15 dollars today. So the desk needs $`V_S / X`$ shares for the dollar moves to match: 0.602171 / 1.15 = 0.523627 shares.
 
-The quanto-option formula gives $V_S$ directly. Its share half is $\bar{X} e^{(\mu - r_d)T} S N(d_1)$, and the cut-off terms cancel on differentiation, as on the pilot [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): $\varphi(d_1) F = \varphi(d_2) K$. So $V_S = \bar{X} e^{(\mu - r_d)T} N(d_1)$.
+The quanto-option formula gives $`V_S`$ directly. Its share half is $`\bar{X} e^{(\mu - r_d)T} S N(d_1)`$, and the cut-off terms cancel on differentiation, as on the pilot [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): $`\varphi(d_1) F = \varphi(d_2) K`$. So $`V_S = \bar{X} e^{(\mu - r_d)T} N(d_1)`$.
 
 ### Step 2: the currency leak, and the loan that plugs it
 
-The shares are worth $\eta S X$ dollars: 0.523627 × 100 × 1.15 = 60.22 dollars. If the euro moves by a small amount $dX$ with the share still, the shares gain $\eta S\,dX$ dollars. The call gains nothing: $V_X = 0$. So the desk is exposed to the euro by exactly the euro value of its shares, 52.36 euros.
+The shares are worth $`\eta S X`$ dollars: 0.523627 × 100 × 1.15 = 60.22 dollars. If the euro moves by a small amount $`dX`$ with the share still, the shares gain $`\eta S\,dX`$ dollars. The call gains nothing: $`V_X = 0`$. So the desk is exposed to the euro by exactly the euro value of its shares, 52.36 euros.
 
-A loan of $\eta S$ euros loses $\eta S\,dX$ dollars on the same move. Share position and loan cancel. **The currency hedge equals the euro value of the delta position**, and the desk funds the shares with it.
+A loan of $`\eta S`$ euros loses $`\eta S\,dX`$ dollars on the same move. Share position and loan cancel. **The currency hedge equals the euro value of the delta position**, and the desk funds the shares with it.
 
 Everything left over is dollars: the 9.15 received, since the shares and the loan are worth 60.22 and −60.22 dollars.
 
@@ -117,35 +123,39 @@ Everything left over is dollars: the 9.15 received, since the shares and the loa
 
 Both pieces depend on the state. When the share rises from 100 to 110 euros, delta rises and the desk buys shares: 0.5236 becomes 0.6838. The loan grows from 52.36 to 75.21 euros, faster than the share count, because each share is worth more euros.
 
-The euro matters too. At $X$ = 1.25 with the share still at 100, the price and $V_S$ are unchanged, but each share is worth more dollars, so fewer are needed: 0.481737 shares, funded by a loan of 48.17 euros. A quanto has no currency delta, yet its hedge trades currency every day.
+The euro matters too. At $`X`$ = 1.25 with the share still at 100, the price and $`V_S`$ are unchanged, but each share is worth more dollars, so fewer are needed: 0.481737 shares, funded by a loan of 48.17 euros. A quanto has no currency delta, yet its hedge trades currency every day.
 
 <details>
 <summary>Detailed proof: the funded hedge copies the call exactly</summary>
 
-Let the share and the exchange rate follow $dS/S = \mu\,dt + \sigma_S\,dW^S$ and $dX/X = (r_d - r_f)\,dt + \sigma_X\,dW^X$ in the dollar pricing world, where $W^S$ and $W^X$ are Brownian motions (continuous random walks, [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) whose moves have correlation $\rho$. Then $dS\,dX = \rho\sigma_S\sigma_X S X\,dt$.
+Let the share and the exchange rate follow $`dS/S = \mu\,dt + \sigma_S\,dW^S`$ and $`dX/X = (r_d - r_f)\,dt + \sigma_X\,dW^X`$ in the dollar pricing world, where $`W^S`$ and $`W^X`$ are Brownian motions (continuous random walks, [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) whose moves have correlation $`\rho`$. Then $`dS\,dX = \rho\sigma_S\sigma_X S X\,dt`$.
 
-Hold $\eta = V_S / X$ shares, owe $L = \eta S$ euros, and keep $V$ dollars. The shares pay dividends $q S X\,dt$ dollars per share; the loan costs $r_f X\,dt$ dollars per euro; the dollars earn $r_d$. The gain over a short interval of length $\,dt$ is
-$$dG = \eta\,[d(SX) + qSX\,dt] - \eta S\,[dX + r_f X\,dt] + r_d V\,dt.$$
-[Ito's product rule](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/03-ito-product-rule.md) gives $d(SX) = X\,dS + S\,dX + dS\,dX$. The $dX$ terms cancel, since the loan is sized to the shares' euro value. With $\eta X = V_S$ what remains is
-$$dG = V_S\,dS + (\rho\sigma_S\sigma_X + q - r_f)\,S V_S\,dt + r_d V\,dt = V_S\,dS - \mu S V_S\,dt + r_d V\,dt.$$
-The call's price is the Black-Scholes price with dividend yield $r_d - \mu$, so it solves the Black-Scholes equation with that yield ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)): $\partial V/\partial t + \mu S V_S + \tfrac12\sigma_S^2 S^2 V_{SS} - r_d V = 0$, the first term being the price's slope in calendar time. [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md) on $V(t, S)$ gives $dV = (\partial V/\partial t)\,dt + V_S\,dS + \tfrac12\sigma_S^2 S^2 V_{SS}\,dt = V_S\,dS + (r_d V - \mu S V_S)\,dt$. So $dG = dV$ at every instant.
+Hold $`\eta = V_S / X`$ shares, owe $`L = \eta S`$ euros, and keep $`V`$ dollars. The shares pay dividends $`q S X\,dt`$ dollars per share; the loan costs $`r_f X\,dt`$ dollars per euro; the dollars earn $`r_d`$. The gain over a short interval of length $`\,dt`$ is
 
-The copy starts at $V$, needs no money added or taken out (self-financing), and gains what the call gains. At expiry $V$ equals the payoff $\bar{X}\max(S_T - K, 0)$, so the copy pays the fund. No $dW^X$ term survives anywhere: the currency risk is gone. With $\sigma_S, \sigma_X > 0$ and $|\rho| < 1$ the two random terms are independent directions, and matching them forces this $\eta$ and this $L$: the hedge is the only one. $\blacksquare$
+$`\displaystyle dG = \eta\,[d(SX) + qSX\,dt] - \eta S\,[dX + r_f X\,dt] + r_d V\,dt.`$
+
+[Ito's product rule](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/03-ito-product-rule.md) gives $`d(SX) = X\,dS + S\,dX + dS\,dX`$. The $`dX`$ terms cancel, since the loan is sized to the shares' euro value. With $`\eta X = V_S`$ what remains is
+
+$`\displaystyle dG = V_S\,dS + (\rho\sigma_S\sigma_X + q - r_f)\,S V_S\,dt + r_d V\,dt = V_S\,dS - \mu S V_S\,dt + r_d V\,dt.`$
+
+The call's price is the Black-Scholes price with dividend yield $`r_d - \mu`$, so it solves the Black-Scholes equation with that yield ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)): $`\partial V/\partial t + \mu S V_S + \tfrac12\sigma_S^2 S^2 V_{SS} - r_d V = 0`$, the first term being the price's slope in calendar time. [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md) on $`V(t, S)`$ gives $`dV = (\partial V/\partial t)\,dt + V_S\,dS + \tfrac12\sigma_S^2 S^2 V_{SS}\,dt = V_S\,dS + (r_d V - \mu S V_S)\,dt`$. So $`dG = dV`$ at every instant.
+
+The copy starts at $`V`$, needs no money added or taken out (self-financing), and gains what the call gains. At expiry $`V`$ equals the payoff $`\bar{X}\max(S_T - K, 0)`$, so the copy pays the fund. No $`dW^X`$ term survives anywhere: the currency risk is gone. With $`\sigma_S, \sigma_X > 0`$ and $`|\rho| < 1`$ the two random terms are independent directions, and matching them forces this $`\eta`$ and this $`L`$: the hedge is the only one. $`\blacksquare`$
 
 </details>
 
 ### Step 4: most Greeks are one Greek in disguise
 
-The price is Black-Scholes on the quanto forward $F = S e^{\mu T}$, with width $\sigma_S\sqrt{T}$, discounted at $r_d$ and scaled by $\bar{X}$. Nudging the forward moves the price by $\bar{X} e^{-r_d T} N(d_1)$ per euro of forward. Nudging the width moves it by $\bar{X} e^{-r_d T} F \varphi(d_1)$ per unit.
+The price is Black-Scholes on the quanto forward $`F = S e^{\mu T}`$, with width $`\sigma_S\sqrt{T}`$, discounted at $`r_d`$ and scaled by $`\bar{X}`$. Nudging the forward moves the price by $`\bar{X} e^{-r_d T} N(d_1)`$ per euro of forward. Nudging the width moves it by $`\bar{X} e^{-r_d T} F \varphi(d_1)`$ per unit.
 
-Correlation, currency volatility and the euro rate appear only inside $\mu$. A change in $\mu$ moves the forward by $F T$ times that change. Chain the two:
+Correlation, currency volatility and the euro rate appear only inside $`\mu`$. A change in $`\mu`$ moves the forward by $`F T`$ times that change. Chain the two:
 
-- **Correlation.** $\mu$ falls by $\sigma_S\sigma_X$ per unit of $\rho$, so $V_\rho = -\sigma_S\sigma_X T \cdot S V_S$ = −0.2 × 0.1 × 1 × 100 × 0.602171 = −1.204343.
-- **Currency volatility.** $\mu$ falls by $\rho\sigma_S$ per unit of $\sigma_X$, so $V_{\sigma_X}$ = −0.3 × 0.2 × 100 × 0.602171 = −3.613028. Its sign is minus the sign of $\rho$: negative here.
-- **Euro rate.** $\mu$ rises one for one, so $V_{r_f} = T S V_S$ = 60.217133.
-- **Share volatility** does two jobs: it widens the outcomes, and it sits in the drift through $\rho\sigma_S\sigma_X$. Its vega is the width part minus $\rho\sigma_X T \cdot S V_S$.
+- **Correlation.** $`\mu`$ falls by $`\sigma_S\sigma_X`$ per unit of $`\rho`$, so $`V_\rho = -\sigma_S\sigma_X T \cdot S V_S`$ = −0.2 × 0.1 × 1 × 100 × 0.602171 = −1.204343.
+- **Currency volatility.** $`\mu`$ falls by $`\rho\sigma_S`$ per unit of $`\sigma_X`$, so $`V_{\sigma_X}`$ = −0.3 × 0.2 × 100 × 0.602171 = −3.613028. Its sign is minus the sign of $`\rho`$: negative here.
+- **Euro rate.** $`\mu`$ rises one for one, so $`V_{r_f} = T S V_S`$ = 60.217133.
+- **Share volatility** does two jobs: it widens the outcomes, and it sits in the drift through $`\rho\sigma_S\sigma_X`$. Its vega is the width part minus $`\rho\sigma_X T \cdot S V_S`$.
 
-The chain rule through $\mu$ is the whole story; [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md) does the same bookkeeping for a currency option, where the foreign rate plays the part $\mu$ plays here.
+The chain rule through $`\mu`$ is the whole story; [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md) does the same bookkeeping for a currency option, where the foreign rate plays the part $`\mu`$ plays here.
 
 ### Step 5: correlation is a risk the desk carries
 
@@ -153,24 +163,24 @@ Every other input has something to trade against it. Shares hedge delta, the eur
 
 ### The other door: a tree with two coordinates
 
-A second road to the price never writes $\mu$ down. Step share and exchange rate together on a tree with four branches per step, each with chance one quarter: the currency's shock is ±1, and the share's is $\rho$ times the currency's plus $\sqrt{1-\rho^2}$ times a second ±1. Choose the two step multipliers so that a euro deposit and a share, both held in dollars, grow at the dollar rate on average, interest and dividends included. Work backwards from expiry, discounting at $r_d$ ([Many steps](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md)). With 200 steps the tree's average share at expiry is 101.409869 euros, against the quanto forward 101.409846: the tree finds the slowed drift without being told it. Boyle (1988) built this kind of lattice for two assets.
+A second road to the price never writes $`\mu`$ down. Step share and exchange rate together on a tree with four branches per step, each with chance one quarter: the currency's shock is ±1, and the share's is $`\rho`$ times the currency's plus $`\sqrt{1-\rho^2}`$ times a second ±1. Choose the two step multipliers so that a euro deposit and a share, both held in dollars, grow at the dollar rate on average, interest and dividends included. Work backwards from expiry, discounting at $`r_d`$ ([Many steps](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md)). With 200 steps the tree's average share at expiry is 101.409869 euros, against the quanto forward 101.409846: the tree finds the slowed drift without being told it. Boyle (1988) built this kind of lattice for two assets.
 
 ---
 
 ## Worked numbers, by hand
 
-The house quanto: $S$ = 100 euros, $K$ = 100, $\bar{X}$ = 1.10, $X$ = 1.15, $r_d$ = 5%, $r_f$ = 3%, $q$ = 1%, $\sigma_S$ = 20%, $\sigma_X$ = 10%, $\rho$ = 0.30, $T$ = 1 year.
+The house quanto: $`S`$ = 100 euros, $`K`$ = 100, $`\bar{X}`$ = 1.10, $`X`$ = 1.15, $`r_d`$ = 5%, $`r_f`$ = 3%, $`q`$ = 1%, $`\sigma_S`$ = 20%, $`\sigma_X`$ = 10%, $`\rho`$ = 0.30, $`T`$ = 1 year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| adjustment $\rho\sigma_S\sigma_X$ | 0.30 × 0.20 × 0.10 | 0.006 |
-| quanto drift $\mu$ | 0.03 − 0.01 − 0.006 | 0.014 |
-| $d_1$ | (0 + 0.014 + 0.02) / 0.20 | 0.17 |
-| $N(d_1)$, $\varphi(d_1)$ | bell-curve table | 0.567495, 0.393219 |
-| growth-and-discount factor | $e^{0.014 - 0.05}$ | 0.964640 |
-| delta $V_S$ | 1.10 × 0.964640 × 0.567495 | 0.602171 USD per EUR |
-| **shares** $\eta$ | 0.602171 / 1.15 | **0.523627** |
-| **euro loan** $L$ | 0.523627 × 100 | **52.36 EUR** |
+| adjustment $`\rho\sigma_S\sigma_X`$ | 0.30 × 0.20 × 0.10 | 0.006 |
+| quanto drift $`\mu`$ | 0.03 − 0.01 − 0.006 | 0.014 |
+| $`d_1`$ | (0 + 0.014 + 0.02) / 0.20 | 0.17 |
+| $`N(d_1)`$, $`\varphi(d_1)`$ | bell-curve table | 0.567495, 0.393219 |
+| growth-and-discount factor | $`e^{0.014 - 0.05}`$ | 0.964640 |
+| delta $`V_S`$ | 1.10 × 0.964640 × 0.567495 | 0.602171 USD per EUR |
+| **shares** $`\eta`$ | 0.602171 / 1.15 | **0.523627** |
+| **euro loan** $`L`$ | 0.523627 × 100 | **52.36 EUR** |
 | its dollar value | 52.362724 × 1.15 | 60.22 USD |
 | **dollar account** | the price | **9.15 USD** |
 | gamma | 1.10 × 0.964640 × 0.393219 / (100 × 0.20) | 0.020862 |
@@ -187,11 +197,11 @@ The right hedge leaves a spread of 0.4563 dollars per call after a year of daily
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Shares = $V_S$, not divided by $X$ | 0.602171 shares; spread 3.1354 USD | Delta is in dollars per euro; one share moves 1.15 dollars, not 1 |
+| Shares = $`V_S`$, not divided by $`X`$ | 0.602171 shares; spread 3.1354 USD | Delta is in dollars per euro; one share moves 1.15 dollars, not 1 |
 | No euro loan: shares bought with dollars | spread 7.8143 USD | "No currency delta" read as "no currency hedge"; the shares carry 52 euros of exposure |
 | Euro loan sized on day one, never resized | spread 4.1212 USD | The loan must track the shares' euro value, which moves with the share and the euro |
-| Share vega with the drift held fixed | 0.417246 per point, not 0.399181 | Raising $\sigma_S$ also slows the drift through $\rho\sigma_S\sigma_X$ |
-| Delta from the unadjusted drift $r_f - q$ | 0.618354, not 0.602171 | The hedge over-buys by the same error that over-prices the call |
+| Share vega with the drift held fixed | 0.417246 per point, not 0.399181 | Raising $`\sigma_S`$ also slows the drift through $`\rho\sigma_S\sigma_X`$ |
+| Delta from the unadjusted drift $`r_f - q`$ | 0.618354, not 0.602171 | The hedge over-buys by the same error that over-prices the call |
 
 ---
 
@@ -222,7 +232,7 @@ euro loan frozen             █████████████████
 no euro loan                 ███████████████████████████████████ 7.8143
 ```
 
-The full hedge's spread comes from rebalancing once a day, not from any currency leak. A rule of thumb for daily hedging, the width part of vega times $\sigma_S$ times $\sqrt{\pi/4}$ over the square root of 252 trading days, predicts 0.465873. The simulation lands at 0.4563.
+The full hedge's spread comes from rebalancing once a day, not from any currency leak. A rule of thumb for daily hedging, the width part of vega times $`\sigma_S`$ times $`\sqrt{\pi/4}`$ over the square root of 252 trading days, predicts 0.465873. The simulation lands at 0.4563.
 
 ### How the price leans on correlation
 
@@ -235,7 +245,7 @@ xychart-beta
     line [10.81, 10.48, 10.15, 9.83, 9.52, 9.21, 8.91, 8.62, 8.33]
 ```
 
-One line: the call's price. It falls from 10.81 dollars at −1 to 8.33 at +1, an average slope of −1.237069 dollars per unit of correlation. At the marked 0.30 the slope is −1.204343. The line bends slightly because delta, the other factor in $V_\rho$, shrinks as the price falls.
+One line: the call's price. It falls from 10.81 dollars at −1 to 8.33 at +1, an average slope of −1.237069 dollars per unit of correlation. At the marked 0.30 the slope is −1.204343. The line bends slightly because delta, the other factor in $`V_\rho`$, shrinks as the price falls.
 
 ---
 
@@ -669,15 +679,15 @@ ALL CHECKS PASS
 
 Lean proves the hedge and the Greek formulas for every positive share price, strike, share volatility, time to expiry and exchange rate.
 
-- Take the price $V$ as a function of the share price $S$. Then its slope is $V_S = \bar{X}\,e^{(\mu - r_d)T}\,N(d_1)$.
-- Take $\eta = V_S/X$ shares, a loan of $L = \eta S$ euros and $V$ dollars. Then the copy's slope in the share is $V_S$, matching the call.
+- Take the price $`V`$ as a function of the share price $`S`$. Then its slope is $`V_S = \bar{X}\,e^{(\mu - r_d)T}\,N(d_1)`$.
+- Take $`\eta = V_S/X`$ shares, a loan of $`L = \eta S`$ euros and $`V`$ dollars. Then the copy's slope in the share is $`V_S`$, matching the call.
 - Take the same copy. Then its slope in today's exchange rate is 0, matching the call, whose price has no exchange rate in it.
-- Take any correlation $\rho$. Then $V_\rho = -\sigma_S\sigma_X T\cdot S V_S$.
-- Take any currency volatility $\sigma_X$. Then $V_{\sigma_X} = -\rho\sigma_S T\cdot S V_S$.
-- Take any euro rate $r_f$. Then $V_{r_f} = T\cdot S V_S$.
+- Take any correlation $`\rho`$. Then $`V_\rho = -\sigma_S\sigma_X T\cdot S V_S`$.
+- Take any currency volatility $`\sigma_X`$. Then $`V_{\sigma_X} = -\rho\sigma_S T\cdot S V_S`$.
+- Take any euro rate $`r_f`$. Then $`V_{r_f} = T\cdot S V_S`$.
 - Take gamma, share vega and dollar rho. Then each equals its formula in The formula section.
-- Take the price as a function of the years to expiry. Then it solves the Black-Scholes equation with dividend yield $r_d - \mu$.
-- Take the house quanto. Then $\rho\sigma_S\sigma_X = 0.006$, $\mu = 0.014$, $d_1 = 0.17$ and $d_2 = -0.03$.
+- Take the price as a function of the years to expiry. Then it solves the Black-Scholes equation with dividend yield $`r_d - \mu`$.
+- Take the house quanto. Then $`\rho\sigma_S\sigma_X = 0.006`$, $`\mu = 0.014`$, $`d_1 = 0.17`$ and $`d_2 = -0.03`$.
 
 The decimal Greeks, the tree and the simulated hedges are left to the Python and Rust checks.
 
@@ -1078,10 +1088,10 @@ example : (523627 : ℕ) * 100 = 52362700 := by decide
 > **"A quanto has no currency delta, so it needs no currency hedge."** The price has no currency delta. The hedge does. The shares that copy the call are a euro asset, and their dollar value moves with the euro. Left unfunded in euros, the hedged book's error spreads to 7.8143 dollars per call, against 0.4563 for the funded hedge: on a call that cost 9.15.
 >
 > Four smaller traps:
-> - **Holding $V_S$ shares.** Delta is dollars per euro of share price; a share moves 1.15 dollars per euro. Divide by $X$: 0.523627 shares, not 0.602171.
+> - **Holding $`V_S`$ shares.** Delta is dollars per euro of share price; a share moves 1.15 dollars per euro. Divide by $`X`$: 0.523627 shares, not 0.602171.
 > - **Sizing the euro loan once.** It must equal the shares' euro value every day. Frozen at day one, it leaves a 4.1212-dollar spread.
-> - **Share vega from the width alone.** Raising $\sigma_S$ also raises the adjustment $\rho\sigma_S\sigma_X$ and slows the drift. Vega is 0.399181 per volatility point, not 0.417246.
-> - **Reading currency vega as always negative.** Its sign is minus the sign of $\rho$. At 0.30 it is −0.036130 per point, so the desk, short the call, is long currency volatility; mark the correlation below zero and the desk becomes short it.
+> - **Share vega from the width alone.** Raising $`\sigma_S`$ also raises the adjustment $`\rho\sigma_S\sigma_X`$ and slows the drift. Vega is 0.399181 per volatility point, not 0.417246.
+> - **Reading currency vega as always negative.** Its sign is minus the sign of $`\rho`$. At 0.30 it is −0.036130 per point, so the desk, short the call, is long currency volatility; mark the correlation below zero and the desk becomes short it.
 
 ---
 
@@ -1099,7 +1109,7 @@ example : (523627 : ℕ) * 100 = 52362700 := by decide
 
 ## What this builds on
 
-- [Quanto option](02-quanto-option.md): the price, the slowed drift $\mu$, and the house numbers this card differentiates.
+- [Quanto option](02-quanto-option.md): the price, the slowed drift $`\mu`$, and the house numbers this card differentiates.
 - [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): Greeks in two currencies, and the habit of stating which currency each one is counted in.
 - [Many steps](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md): working a tree backwards from expiry, here with two coordinates.
 - [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): the second road to every Greek, and why the hedges are compared on the same random paths.
@@ -1118,5 +1128,5 @@ Verified 2026-09-27: every link below resolves to the publisher's page.
 
 - Garman, Mark B., and Steven W. Kohlhagen. "Foreign Currency Option Values." *Journal of International Money and Finance* 2, no. 3 (1983): 231–237. [doi:10.1016/S0261-5606(83)80001-1](https://doi.org/10.1016/S0261-5606(83)80001-1). Why the exchange rate grows at the rate difference, the currency half of the proof.
 - Boyle, Phelim P. "A Lattice Framework for Option Pricing with Two State Variables." *Journal of Financial and Quantitative Analysis* 23, no. 1 (1988): 1–12. [doi:10.2307/2331019](https://doi.org/10.2307/2331019). The two-asset lattice behind the second road.
-- Geman, Hélyette, Nicole El Karoui, and Jean-Charles Rochet. "Changes of Numéraire, Changes of Probability Measure and Option Pricing." *Journal of Applied Probability* 32, no. 2 (1995): 443–458. [doi:10.2307/3215299](https://doi.org/10.2307/3215299). Why counting in another currency shifts a drift by a co-movement, the source of $\rho\sigma_S\sigma_X$.
+- Geman, Hélyette, Nicole El Karoui, and Jean-Charles Rochet. "Changes of Numéraire, Changes of Probability Measure and Option Pricing." *Journal of Applied Probability* 32, no. 2 (1995): 443–458. [doi:10.2307/3215299](https://doi.org/10.2307/3215299). Why counting in another currency shifts a drift by a co-movement, the source of $`\rho\sigma_S\sigma_X`$.
 - Shreve, Steven E. *Stochastic Calculus for Finance II: Continuous-Time Models*. Springer, 2004. [Publisher page](https://link.springer.com/book/9780387401010). Two correlated Brownian motions, Ito's product rule and self-financing portfolios, as used in the detailed proof.

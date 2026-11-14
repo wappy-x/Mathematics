@@ -34,52 +34,62 @@ The top road is exact except for slicing one smooth integral. The bottom road is
 
 ## The formula
 
-Notation first. The imaginary unit $i$ squares to −1. A complex number is a point in the plane: its ordinary part runs across, its multiple of $i$ runs up, and Re takes the across part. Euler's formula, $e^{i\alpha} = \cos\alpha + i\sin\alpha$, puts e raised to an imaginary power on the circle of radius 1, at angle α ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
+Notation first. The imaginary unit $`i`$ squares to −1. A complex number is a point in the plane: its ordinary part runs across, its multiple of $`i`$ runs up, and Re takes the across part. Euler's formula, $`e^{i\alpha} = \cos\alpha + i\sin\alpha`$, puts e raised to an imaginary power on the circle of radius 1, at angle α ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
 
 The **characteristic function** of Acme's log price at expiry is
 
-$$\varphi(u) = \mathbb{E}\!\left[e^{iu\ln S_T}\right].$$
+```math
+\varphi(u) = \mathbb{E}\!\left[e^{iu\ln S_T}\right].
+```
 
-Each possible ending price $S_T$ turns an arrow of length 1 through the angle u times ln S_T, and the characteristic function is the average arrow. The average, $\mathbb{E}$, is taken in the pricing world, where the share is expected to grow at the riskless rate less its dividend yield. The **frequency** $u$ sets how fast the arrow turns as the price changes ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)).
+Each possible ending price $`S_T`$ turns an arrow of length 1 through the angle u times ln S_T, and the characteristic function is the average arrow. The average, $`\mathbb{E}`$, is taken in the pricing world, where the share is expected to grow at the riskless rate less its dividend yield. The **frequency** $`u`$ sets how fast the arrow turns as the price changes ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)).
 
 The price of the call:
 
-$$C = \tfrac12\left(S e^{-qT} - K e^{-rT}\right) + \frac{e^{-rT}}{\pi}\int_0^\infty \operatorname{Re}\!\left[\frac{e^{-iu\ln K}\,\big(\varphi(u - i) - K\,\varphi(u)\big)}{iu}\right]du$$
+```math
+C = \tfrac12\left(S e^{-qT} - K e^{-rT}\right) + \frac{e^{-rT}}{\pi}\int_0^\infty \mathrm{Re}\!\left[\frac{e^{-iu\ln K}\,\big(\varphi(u - i) - K\,\varphi(u)\big)}{iu}\right]du
+```
 
 **Read it aloud:** start from half the gap between the discounted share and the discounted strike; then sweep the frequency upward from zero, adding at each frequency the share side minus the strike side, both read off the same characteristic function.
 
 The characteristic function is exact:
 
-$$\varphi(u) = \exp\!\big(iu\ln S + A(u) + B(u)\,v_0\big),$$
+```math
+\varphi(u) = \exp\!\big(iu\ln S + A(u) + B(u)\,v_0\big),
+```
 
-$$\beta = \kappa - \rho\xi iu, \qquad d = \sqrt{\beta^2 + \xi^2\,(u^2 + iu)}, \qquad g = \frac{\beta - d}{\beta + d},$$
+```math
+\beta = \kappa - \rho\xi iu, \qquad d = \sqrt{\beta^2 + \xi^2\,(u^2 + iu)}, \qquad g = \frac{\beta - d}{\beta + d},
+```
 
-$$A(u) = (r - q)\,iuT + \frac{\kappa\theta}{\xi^2}\left[(\beta - d)\,T - 2\ln\frac{1 - g\,e^{-dT}}{1 - g}\right], \qquad B(u) = \frac{\beta - d}{\xi^2}\cdot\frac{1 - e^{-dT}}{1 - g\,e^{-dT}}.$$
+```math
+A(u) = (r - q)\,iuT + \frac{\kappa\theta}{\xi^2}\left[(\beta - d)\,T - 2\ln\frac{1 - g\,e^{-dT}}{1 - g}\right], \qquad B(u) = \frac{\beta - d}{\xi^2}\cdot\frac{1 - e^{-dT}}{1 - g\,e^{-dT}}.
+```
 
-In words: $\beta$ is the pull speed, bent by the correlation. $d$ is a square root, always the one whose real part is not negative; Step 5 shows why. $g$ is the ratio of two roots met in Step 2. $B$ carries today's variance into the characteristic function, and $A$ carries the drift and the pull.
+In words: $`\beta`$ is the pull speed, bent by the correlation. $`d`$ is a square root, always the one whose real part is not negative; Step 5 shows why. $`g`$ is the ratio of two roots met in Step 2. $`B`$ carries today's variance into the characteristic function, and $`A`$ carries the drift and the pull.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$ | the call's price today | 9.059507 | — |
-| $S$, $S_T$, $K$ | Acme's price today; its price at expiry, unknown today; the strike | 100; spread out; 100 | $S$ up: rises. $K$ up: falls |
-| $r$, $q$ | riskless rate and dividend yield, continuously compounded | 5%, 2% | $r$ up: rises. $q$ up: falls |
-| $T$, $\tau$ | years to expiry; $\tau$ is the years left, in the proof | 1 | rises: 13.35 at two years, 21.95 at five |
-| $v_0$, $v$, $\theta$ | variance today, variance later, and the long-run level it is pulled toward | 0.04, moving, 0.04 | rises |
-| $\kappa$ | speed of the pull, per year | 2 | rises: a faster pull damps the shaking, toward Black-Scholes |
-| $\xi$ | vol-of-vol: how hard the variance itself is shaken | 0.3 | this call falls: 8.573392 at 0.6 |
-| $\rho$ | correlation of the share's shocks with the variance's | −0.7 | this call barely moves, 9.040993 at 0; the smile (Black-Scholes volatility across strikes) tilts less |
-| $u$, $i$ | frequency of the probe; the imaginary unit | 0 to 100 | — |
-| $\varphi(u)$, $\mathbb{E}$ | the characteristic function, the average arrow; the average in the pricing world | at frequency 1: $-0.093738 - 0.974607i$ | — |
-| $A$, $B$, $\beta$, $d$, $g$ | the two exponents of $\varphi$ and their three helpers | at frequency 1: $B = -0.230617 - 0.198513i$ | — |
-| $P_1$, $P_2$, $e^{-rT}$ | chance of finishing above the strike, counted in shares and in dollars; the discount on a dollar paid at expiry | 0.655651, 0.580379 | — |
+| $`C`$ | the call's price today | 9.059507 | — |
+| $`S`$, $`S_T`$, $`K`$ | Acme's price today; its price at expiry, unknown today; the strike | 100; spread out; 100 | $`S`$ up: rises. $`K`$ up: falls |
+| $`r`$, $`q`$ | riskless rate and dividend yield, continuously compounded | 5%, 2% | $`r`$ up: rises. $`q`$ up: falls |
+| $`T`$, $`\tau`$ | years to expiry; $`\tau`$ is the years left, in the proof | 1 | rises: 13.35 at two years, 21.95 at five |
+| $`v_0`$, $`v`$, $`\theta`$ | variance today, variance later, and the long-run level it is pulled toward | 0.04, moving, 0.04 | rises |
+| $`\kappa`$ | speed of the pull, per year | 2 | rises: a faster pull damps the shaking, toward Black-Scholes |
+| $`\xi`$ | vol-of-vol: how hard the variance itself is shaken | 0.3 | this call falls: 8.573392 at 0.6 |
+| $`\rho`$ | correlation of the share's shocks with the variance's | −0.7 | this call barely moves, 9.040993 at 0; the smile (Black-Scholes volatility across strikes) tilts less |
+| $`u`$, $`i`$ | frequency of the probe; the imaginary unit | 0 to 100 | — |
+| $`\varphi(u)`$, $`\mathbb{E}`$ | the characteristic function, the average arrow; the average in the pricing world | at frequency 1: $`-0.093738 - 0.974607i`$ | — |
+| $`A`$, $`B`$, $`\beta`$, $`d`$, $`g`$ | the two exponents of $`\varphi`$ and their three helpers | at frequency 1: $`B = -0.230617 - 0.198513i`$ | — |
+| $`P_1`$, $`P_2`$, $`e^{-rT}`$ | chance of finishing above the strike, counted in shares and in dollars; the discount on a dollar paid at expiry | 0.655651, 0.580379 | — |
 
 ### When it holds
 
 - **The share follows the Heston model.** The price is exact for the model, not the market; where the market's smile has a shape Heston cannot make, the price inherits the misfit.
-- **The payoff depends only on the final price.** The characteristic function sees $S_T$, not the path; early exercise or a barrier needs simulation or a grid.
-- **The root $d$ has a real part that is not negative, in this layout.** Heston's 1993 layout agrees at one year, then drifts: \$17.93 against the true \$16.72 at three years.
-- **The inputs are legal:** $v_0$ at least 0; $\kappa$, $\theta$, $\xi$ above 0; $\rho$ strictly between −1 and 1. The formula divides by the square of $\xi$: at vol-of-vol 0.0001 and no correlation it still returns 9.227005 against Black-Scholes's 9.227006, but at exactly 0 it breaks, and Black-Scholes at the average variance, here 20 percent, is the answer.
-- **The integral runs far enough and is sliced finely enough.** At frequency 100 the average arrow has length $7.031\times10^{-12}$; stopping at 10 gives \$8.65. Short expiries need a later stop.
+- **The payoff depends only on the final price.** The characteristic function sees $`S_T`$, not the path; early exercise or a barrier needs simulation or a grid.
+- **The root $`d`$ has a real part that is not negative, in this layout.** Heston's 1993 layout agrees at one year, then drifts: \$17.93 against the true \$16.72 at three years.
+- **The inputs are legal:** $`v_0`$ at least 0; $`\kappa`$, $`\theta`$, $`\xi`$ above 0; $`\rho`$ strictly between −1 and 1. The formula divides by the square of $`\xi`$: at vol-of-vol 0.0001 and no correlation it still returns 9.227005 against Black-Scholes's 9.227006, but at exactly 0 it breaks, and Black-Scholes at the average variance, here 20 percent, is the answer.
+- **The integral runs far enough and is sliced finely enough.** At frequency 100 the average arrow has length $`7.031\times10^{-12}`$; stopping at 10 gives \$8.65. Short expiries need a later stop.
 
 ---
 
@@ -91,41 +101,55 @@ A price is a discounted average of the payoff over the ending prices, and Heston
 
 ### Step 1: the characteristic function, in numbers
 
-By Euler's formula the arrow for one ending price is $\cos(u\ln S_T) + i\sin(u\ln S_T)$, so the characteristic function is the average across part plus $i$ times the average up part. Two values are known before any model is chosen.
+By Euler's formula the arrow for one ending price is $`\cos(u\ln S_T) + i\sin(u\ln S_T)`$, so the characteristic function is the average across part plus $`i`$ times the average up part. Two values are known before any model is chosen.
 
-- At $u = 0$ every arrow points straight across: the average is 1. The check prints 1.000000.
-- At $u = -i$ the exponent $iu\ln S_T$ becomes $\ln S_T$, and the arrow becomes the share price itself. So $\varphi(-i)$ is the average ending price, which in the pricing world is the forward $S e^{(r-q)T}$ = 103.045453. The check prints it both ways. A mistyped characteristic function almost always fails here first.
+- At $`u = 0`$ every arrow points straight across: the average is 1. The check prints 1.000000.
+- At $`u = -i`$ the exponent $`iu\ln S_T`$ becomes $`\ln S_T`$, and the arrow becomes the share price itself. So $`\varphi(-i)`$ is the average ending price, which in the pricing world is the forward $`S e^{(r-q)T}`$ = 103.045453. The check prints it both ways. A mistyped characteristic function almost always fails here first.
 
-At frequency 1 the arrows fan out: $\varphi(1) = -0.093738 - 0.974607i$, just short of length 1, because arrows pointing different ways partly cancel.
+At frequency 1 the arrows fan out: $`\varphi(1) = -0.093738 - 0.974607i`$, just short of length 1, because arrows pointing different ways partly cancel.
 
 ### Step 2: why Heston's characteristic function has a formula
 
-Take the same average from a later moment, when the log price is $x$, the variance is $v$ and $\tau$ years are left. It averages something fixed at expiry, so it cannot be expected to drift; Itô's lemma, the chain rule for random paths, turns that into one equation ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)). Every coefficient of the Heston model is a straight-line function of $v$: the share's variance $v$, the pull $\kappa(\theta - v)$, the variance's own variance $\xi^2 v$, the covariance $\rho\xi v$. So guess that the logarithm of the average is a straight line too:
+Take the same average from a later moment, when the log price is $`x`$, the variance is $`v`$ and $`\tau`$ years are left. It averages something fixed at expiry, so it cannot be expected to drift; Itô's lemma, the chain rule for random paths, turns that into one equation ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)). Every coefficient of the Heston model is a straight-line function of $`v`$: the share's variance $`v`$, the pull $`\kappa(\theta - v)`$, the variance's own variance $`\xi^2 v`$, the covariance $`\rho\xi v`$. So guess that the logarithm of the average is a straight line too:
 
-$$\text{log of the average} = iux + A(\tau) + B(\tau)\,v.$$
+```math
+\text{log of the average} = iux + A(\tau) + B(\tau)\,v.
+```
 
-Substituted, every term either carries a factor $v$ or does not, and each group must vanish alone. Two ordinary differential equations are left, with the prime meaning the rate of change in $\tau$:
+Substituted, every term either carries a factor $`v`$ or does not, and each group must vanish alone. Two ordinary differential equations are left, with the prime meaning the rate of change in $`\tau`$:
 
-$$B' = \tfrac12\xi^2 B^2 - \beta B - \tfrac12\left(u^2 + iu\right), \qquad A' = (r - q)\,iu + \kappa\theta B, \qquad A(0) = B(0) = 0.$$
+```math
+B' = \tfrac12\xi^2 B^2 - \beta B - \tfrac12\left(u^2 + iu\right), \qquad A' = (r - q)\,iu + \kappa\theta B, \qquad A(0) = B(0) = 0.
+```
 
-The first is a **Riccati equation**: its right side is a quadratic in $B$, which factors through its roots $(\beta \pm d)/\xi^2$, so it splits into partial fractions and integrates exactly; $A$ is then the integral of $B$. The check tests this algebra without using it, solving the two equations step by step (fourth-order Runge-Kutta, 4,000 steps). At frequency 1 both give $-0.093738 - 0.974607i$, agreeing to ten decimals.
+The first is a **Riccati equation**: its right side is a quadratic in $`B`$, which factors through its roots $`(\beta \pm d)/\xi^2`$, so it splits into partial fractions and integrates exactly; $`A`$ is then the integral of $`B`$. The check tests this algebra without using it, solving the two equations step by step (fourth-order Runge-Kutta, 4,000 steps). At frequency 1 both give $`-0.093738 - 0.974607i`$, agreeing to ten decimals.
 
 <details>
 <summary>Detailed proof: from the model to A and B</summary>
 
 In the pricing world the log price and the variance move as
-$$dx = \left(r - q - \tfrac12 v\right)dt + \sqrt{v}\,dW_1, \qquad dv = \kappa(\theta - v)\,dt + \xi\sqrt{v}\,dW_2,$$
-two Brownian shocks with correlation ρ. The average seen from time t, given log price x and variance v there, call it f, has zero expected change, so by Itô's lemma
-$$\partial_t f + \left(r - q - \tfrac12 v\right)\partial_x f + \tfrac12 v\,\partial_{xx} f + \kappa(\theta - v)\,\partial_v f + \tfrac12\xi^2 v\,\partial_{vv} f + \rho\xi v\,\partial_{xv} f = 0, \qquad f(T, x, v) = e^{iux}.$$
-Try $f = \exp\big(iux + A(\tau) + B(\tau)v\big)$ with $\tau = T - t$. Each derivative is the average times a factor, in order $-(A' + B'v),\ iu,\ -u^2,\ B,\ B^2,\ iuB$. Dividing by the average,
-$$-A' - B'v + (r - q)\,iu - \tfrac12 v\,iu - \tfrac12 v\,u^2 + \kappa\theta B - \kappa vB + \tfrac12\xi^2 vB^2 + \rho\xi v\,iuB = 0.$$
-The terms without $v$ give the equation for $A$; the terms with $v$ give the Riccati equation.
 
-The Riccati quadratic vanishes at $B_\pm = (\beta \pm d)/\xi^2$, so $B' = \tfrac12\xi^2(B - B_+)(B - B_-)$. Since $B_+ - B_- = 2d/\xi^2$, the logarithm of $(B - B_+)/(B - B_-)$ grows at the constant rate $d$, starting from the logarithm of $B_+/B_-$. With $g = B_-/B_+$,
-$$\frac{B - B_+}{B - B_-} = \frac{e^{d\tau}}{g}, \qquad\text{so}\qquad B(\tau) = B_-\,\frac{1 - e^{-d\tau}}{1 - g\,e^{-d\tau}}.$$
-Write the fraction as $1 - (1 - g)\,e^{-ds}/(1 - g\,e^{-ds})$; the second part integrates to a logarithm, and $B_-(1 - g)/g = 2d/\xi^2$ simplifies the constant:
-$$\int_0^\tau B(s)\,ds = \frac{(\beta - d)\,\tau}{\xi^2} - \frac{2}{\xi^2}\ln\frac{1 - g\,e^{-d\tau}}{1 - g}.$$
-Times $\kappa\theta$, plus $(r - q)iu\tau$, at $\tau = T$: that is $A$. The logarithm meant is the continuous one, 0 at $\tau = 0$; Step 5 is about computing exactly that one.
+$`\displaystyle dx = \left(r - q - \tfrac12 v\right)dt + \sqrt{v}\,dW_1, \qquad dv = \kappa(\theta - v)\,dt + \xi\sqrt{v}\,dW_2,`$
+
+two Brownian shocks with correlation ρ. The average seen from time t, given log price x and variance v there, call it f, has zero expected change, so by Itô's lemma
+
+$`\displaystyle \partial_t f + \left(r - q - \tfrac12 v\right)\partial_x f + \tfrac12 v\,\partial_{xx} f + \kappa(\theta - v)\,\partial_v f + \tfrac12\xi^2 v\,\partial_{vv} f + \rho\xi v\,\partial_{xv} f = 0, \qquad f(T, x, v) = e^{iux}.`$
+
+Try $`f = \exp\big(iux + A(\tau) + B(\tau)v\big)`$ with $`\tau = T - t`$. Each derivative is the average times a factor, in order $`-(A' + B'v),\ iu,\ -u^2,\ B,\ B^2,\ iuB`$. Dividing by the average,
+
+$`\displaystyle -A' - B'v + (r - q)\,iu - \tfrac12 v\,iu - \tfrac12 v\,u^2 + \kappa\theta B - \kappa vB + \tfrac12\xi^2 vB^2 + \rho\xi v\,iuB = 0.`$
+
+The terms without $`v`$ give the equation for $`A`$; the terms with $`v`$ give the Riccati equation.
+
+The Riccati quadratic vanishes at $`B_\pm = (\beta \pm d)/\xi^2`$, so $`B' = \tfrac12\xi^2(B - B_+)(B - B_-)`$. Since $`B_+ - B_- = 2d/\xi^2`$, the logarithm of $`(B - B_+)/(B - B_-)`$ grows at the constant rate $`d`$, starting from the logarithm of $`B_+/B_-`$. With $`g = B_-/B_+`$,
+
+$`\displaystyle \frac{B - B_+}{B - B_-} = \frac{e^{d\tau}}{g}, \qquad\text{so}\qquad B(\tau) = B_-\,\frac{1 - e^{-d\tau}}{1 - g\,e^{-d\tau}}.`$
+
+Write the fraction as $`1 - (1 - g)\,e^{-ds}/(1 - g\,e^{-ds})`$; the second part integrates to a logarithm, and $`B_-(1 - g)/g = 2d/\xi^2`$ simplifies the constant:
+
+$`\displaystyle \int_0^\tau B(s)\,ds = \frac{(\beta - d)\,\tau}{\xi^2} - \frac{2}{\xi^2}\ln\frac{1 - g\,e^{-d\tau}}{1 - g}.`$
+
+Times $`\kappa\theta`$, plus $`(r - q)iu\tau`$, at $`\tau = T`$: that is $`A`$. The logarithm meant is the continuous one, 0 at $`\tau = 0`$; Step 5 is about computing exactly that one.
 
 </details>
 
@@ -133,38 +157,40 @@ Times $\kappa\theta$, plus $(r - q)iu\tau$, at $\tau = T$: that is $A$. The loga
 
 Gil-Pelaez's inversion theorem gives the chance of finishing above the strike:
 
-$$\Pr(S_T > K) = \tfrac12 + \frac1\pi\int_0^\infty \operatorname{Re}\!\left[\frac{e^{-iu\ln K}\,\varphi(u)}{iu}\right]du.$$
+```math
+\Pr(S_T > K) = \tfrac12 + \frac1\pi\int_0^\infty \mathrm{Re}\!\left[\frac{e^{-iu\ln K}\,\varphi(u)}{iu}\right]du.
+```
 
 In words: sine waves of every frequency, each weighted by one over its frequency, add up to a step, π/2 right of zero and −π/2 left of it. Placed at ln K, the step averages to the chance above minus the chance below; each sine wave's average is read off the characteristic function; and the two chances add to 1, which gives the ½.
 
 <details>
 <summary>Detailed proof: Gil-Pelaez in four lines</summary>
 
-For real t, the Dirichlet integral gives $\int_0^\infty \sin(ut)/u\,du = \tfrac{\pi}{2}\,\mathrm{sign}(t)$.
-With t = ln S_T − ln K, the average sign is $2\Pr(S_T > K) - 1$, as landing exactly on K has chance zero.
-The average sine is $\operatorname{Im}\big[e^{-iu\ln K}\varphi(u)\big]$, and for real u the real part of z/(iu) is the imaginary part of z divided by u.
+For real t, the Dirichlet integral gives $`\int_0^\infty \sin(ut)/u\,du = \tfrac{\pi}{2}\,\mathrm{sign}(t)`$.
+With t = ln S_T − ln K, the average sign is $`2\Pr(S_T > K) - 1`$, as landing exactly on K has chance zero.
+The average sine is $`\mathrm{Im}\big[e^{-iu\ln K}\varphi(u)\big]`$, and for real u the real part of z/(iu) is the imaginary part of z divided by u.
 Swapping average and integral gives the formula; the swap needs care, as the sine integral converges slowly, and Gil-Pelaez's note supplies it.
 
 </details>
 
 ### Step 4: two probabilities, merged into one integral
 
-A call pays $S_T - K$ above the strike. As on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), split it into a share received minus cash handed over.
+A call pays $`S_T - K`$ above the strike. As on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), split it into a share received minus cash handed over.
 
-- **The cash side** is $K e^{-rT} P_2$, with $P_2$ from Step 3: 0.580379. The fraction of simulated paths ending above \$100 is 0.579835.
-- **The share side** counts the same event in shares: each ending price weighted by the share's value there. Weighting by $S_T$ over its average gives a new probability with characteristic function $\varphi(u - i)/\varphi(-i)$, because $S_T = e^{i(-i)\ln S_T}$ merges with $e^{iu\ln S_T}$ into $e^{i(u - i)\ln S_T}$. Step 3 then gives $P_1$ = 0.655651; the simulation, weighting paths by their ending price, gives 0.654944.
+- **The cash side** is $`K e^{-rT} P_2`$, with $`P_2`$ from Step 3: 0.580379. The fraction of simulated paths ending above \$100 is 0.579835.
+- **The share side** counts the same event in shares: each ending price weighted by the share's value there. Weighting by $`S_T`$ over its average gives a new probability with characteristic function $`\varphi(u - i)/\varphi(-i)`$, because $`S_T = e^{i(-i)\ln S_T}`$ merges with $`e^{iu\ln S_T}`$ into $`e^{i(u - i)\ln S_T}`$. Step 3 then gives $`P_1`$ = 0.655651; the simulation, weighting paths by their ending price, gives 0.654944.
 
-So $C = S e^{-qT}P_1 - K e^{-rT}P_2$: the Black-Scholes shape, with $P_1$ above $P_2$ because counting in shares tilts the odds toward good outcomes. The share side carries $S e^{-qT}/\varphi(-i)$, and as $\varphi(-i)$ is the forward, that is $e^{-rT}$, the cash side's discount. So both integrands sit under one factor $e^{-rT}/\pi$, and the two halves become $\tfrac12(S e^{-qT} - K e^{-rT})$ = 1.448462. That is the formula: one integral where there were two.
+So $`C = S e^{-qT}P_1 - K e^{-rT}P_2`$: the Black-Scholes shape, with $`P_1`$ above $`P_2`$ because counting in shares tilts the odds toward good outcomes. The share side carries $`S e^{-qT}/\varphi(-i)`$, and as $`\varphi(-i)`$ is the forward, that is $`e^{-rT}`$, the cash side's discount. So both integrands sit under one factor $`e^{-rT}/\pi`$, and the two halves become $`\tfrac12(S e^{-qT} - K e^{-rT})`$ = 1.448462. That is the formula: one integral where there were two.
 
 ### Step 5: the square root with two values
 
-Only $d^2$ is fixed, and $-d$ squares to it too. Swap $d$ for $-d$ and the formula becomes Heston's 1993 layout: $g$ turns into $1/g$ and $e^{-dT}$ into $e^{dT}$. On paper the layouts are one function.
+Only $`d^2`$ is fixed, and $`-d`$ squares to it too. Swap $`d`$ for $`-d`$ and the formula becomes Heston's 1993 layout: $`g`$ turns into $`1/g`$ and $`e^{-dT}`$ into $`e^{dT}`$. On paper the layouts are one function.
 
 A computer's logarithm of a complex number returns one angle, between −π and π, but the formula needs the logarithm that changes continuously with the frequency. The across axis left of zero is that logarithm's **cut**: when the number inside crosses it, the true angle carries on past π and the computer's jumps back by 2π.
 
-The stable layout never reaches the cut. Since $d$ has a real part that is not negative, $e^{-dT}$ has length at most 1; and $g$, scanned on the card's grid at $u$ and at $u - i$, has length at most 0.822665, below 1. So $1 - g\,e^{-dT}$ and $1 - g$ both lie right of the up axis, with angles between −π/2 and π/2, and their ratio's angle stays strictly inside −π to π at every maturity.
+The stable layout never reaches the cut. Since $`d`$ has a real part that is not negative, $`e^{-dT}`$ has length at most 1; and $`g`$, scanned on the card's grid at $`u`$ and at $`u - i`$, has length at most 0.822665, below 1. So $`1 - g\,e^{-dT}`$ and $`1 - g`$ both lie right of the up axis, with angles between −π/2 and π/2, and their ratio's angle stays strictly inside −π to π at every maturity.
 
-The 1993 layout has no such fence: its $g$ is longer than 1 and $e^{dT}$ grows with maturity, so the number inside swings round zero. At one year the layouts still agree, \$9.06. At five years and frequency 4 they part:
+The 1993 layout has no such fence: its $`g`$ is longer than 1 and $`e^{dT}`$ grows with maturity, so the number inside swings round zero. At one year the layouts still agree, \$9.06. At five years and frequency 4 they part:
 
 | Route | characteristic function at frequency 4, five years |
 | --- | --- |
@@ -172,7 +198,7 @@ The 1993 layout has no such fence: its $g$ is longer than 1 and $e^{dT}$ grows w
 | stable layout | +0.223373 + 0.069742i |
 | 1993 layout | +0.107470 − 0.207869i |
 
-The 1993 value has the right length and the wrong angle: the true value turned by −1.396263 radians. The logarithm jumped one full turn, 2π; the factor $2\kappa\theta/\xi^2$ in front made it a turn of $4\pi\kappa\theta/\xi^2$; and $4\pi(\kappa\theta/\xi^2 - 1)$ = −1.396263 is that turn less two whole circles, computed from the inputs alone.
+The 1993 value has the right length and the wrong angle: the true value turned by −1.396263 radians. The logarithm jumped one full turn, 2π; the factor $`2\kappa\theta/\xi^2`$ in front made it a turn of $`4\pi\kappa\theta/\xi^2`$; and $`4\pi(\kappa\theta/\xi^2 - 1)`$ = −1.396263 is that turn less two whole circles, computed from the inputs alone.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -203,33 +229,33 @@ The line is the integrand, the quantity inside the integral sign, at every secon
 
 ### The other door: Lewis's integral
 
-Alan Lewis (2001) moves the integral onto the line where the frequency has imaginary part −½. One value of the characteristic function then serves both sides, the integrand is divided by $u^2 + \tfrac14$ instead of by $i\,u$, and the price is the discounted share minus one integral: 9.059507 again with 2,000 slices. But that divisor doubles between 0 and ½, so the integrand peaks sharply at 0, and slices half a unit wide miss the peak: \$11.49. Pricing a whole strip of strikes at once, by the fast Fourier transform, is [Transform pricing](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
+Alan Lewis (2001) moves the integral onto the line where the frequency has imaginary part −½. One value of the characteristic function then serves both sides, the integrand is divided by $`u^2 + \tfrac14`$ instead of by $`i\,u`$, and the price is the discounted share minus one integral: 9.059507 again with 2,000 slices. But that divisor doubles between 0 and ½, so the integrand peaks sharply at 0, and slices half a unit wide miss the peak: \$11.49. Pricing a whole strip of strikes at once, by the fast Fourier transform, is [Transform pricing](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The house example at frequency 1, with $T = 1$. Complex numbers multiply as brackets do, with $i^2 = -1$.
+The house example at frequency 1, with $`T = 1`$. Complex numbers multiply as brackets do, with $`i^2 = -1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\beta$ | $2 - (-0.7)(0.3)\,i$ | $2 + 0.21i$ |
-| $\beta^2 + \xi^2(u^2 + iu)$ | $(4 - 0.0441 + 0.84i) + (0.09 + 0.09i)$ | $4.0459 + 0.93i$ |
-| $d$ | the square root whose real part is positive | $2.024514 + 0.229685i$ |
-| $g$ | $(-0.024514 - 0.019685i)\,/\,(4.024514 + 0.439685i)$ | $-0.006547 - 0.004176i$ |
-| $e^{-dT}$ | $e^{-2.024514}\,(\cos 0.229685 - i\sin 0.229685)$ | $0.128590 - 0.030066i$ |
-| $B$ | $\dfrac{\beta - d}{0.09}\cdot\dfrac{1 - e^{-dT}}{1 - g\,e^{-dT}}$ | $-0.230617 - 0.198513i$ |
-| $A$ | $0.03i + \dfrac{0.08}{0.09}\left[(\beta - d) - 2\ln\dfrac{1 - g\,e^{-dT}}{1 - g}\right]$ | $-0.011892 + 0.019274i$ |
-| $\varphi(1)$ | $\exp\big(i\ln 100 + A + 0.04\,B\big)$ | $-0.093738 - 0.974607i$ |
+| $`\beta`$ | $`2 - (-0.7)(0.3)\,i`$ | $`2 + 0.21i`$ |
+| $`\beta^2 + \xi^2(u^2 + iu)`$ | $`(4 - 0.0441 + 0.84i) + (0.09 + 0.09i)`$ | $`4.0459 + 0.93i`$ |
+| $`d`$ | the square root whose real part is positive | $`2.024514 + 0.229685i`$ |
+| $`g`$ | $`(-0.024514 - 0.019685i)\,/\,(4.024514 + 0.439685i)`$ | $`-0.006547 - 0.004176i`$ |
+| $`e^{-dT}`$ | $`e^{-2.024514}\,(\cos 0.229685 - i\sin 0.229685)`$ | $`0.128590 - 0.030066i`$ |
+| $`B`$ | $`\dfrac{\beta - d}{0.09}\cdot\dfrac{1 - e^{-dT}}{1 - g\,e^{-dT}}`$ | $`-0.230617 - 0.198513i`$ |
+| $`A`$ | $`0.03i + \dfrac{0.08}{0.09}\left[(\beta - d) - 2\ln\dfrac{1 - g\,e^{-dT}}{1 - g}\right]`$ | $`-0.011892 + 0.019274i`$ |
+| $`\varphi(1)`$ | $`\exp\big(i\ln 100 + A + 0.04\,B\big)`$ | $`-0.093738 - 0.974607i`$ |
 
 Then the price, with the integral done by the check:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the half-gap | $\tfrac12\,(100\,e^{-0.02} - 100\,e^{-0.05})$ | 1.448462 |
+| the half-gap | $`\tfrac12\,(100\,e^{-0.02} - 100\,e^{-0.05})`$ | 1.448462 |
 | the integral | Simpson's rule, 200 slices of width 0.5 from 0 to 100 | 25.136734 |
-| scaled | $25.136734 \times e^{-0.05}/\pi$ | 7.611044 |
-| **the call** | $1.448462 + 7.611044$ | **9.059507** |
+| scaled | $`25.136734 \times e^{-0.05}/\pi`$ | 7.611044 |
+| **the call** | $`1.448462 + 7.611044`$ | **9.059507** |
 | as a Black-Scholes volatility | bisection: the one flat volatility giving the same price | 19.5580% |
 
 The call is worth $9.06, below the flat-20% Black-Scholes $9.23: a Black-Scholes volatility of 19.56%. The vol-of-vol makes this at-the-money call (strike at today's price) cheaper: its price grows roughly with the square root of the variance, which loses more on a fall than it gains on an equal rise. The correlation is not the cause: at 0 the call is lower still, $9.04. The whole smile belongs to [The Heston model](01-heston-model.md).
@@ -257,7 +283,7 @@ The numbered output rows follow the roads:
 
 1. the one integral, checked against 2,000 slices;
 2. Lewis's integral;
-3. the two probabilities $P_1$ and $P_2$, each by its own integral and by simulation;
+3. the two probabilities $`P_1`$ and $`P_2`$, each by its own integral and by simulation;
 4. 200,000 simulated paths of 100 steps, the variance clamped at zero before each use (the "full truncation" of Lord, Koekkoek and van Dijk);
 5. the vol-of-vol switched almost off, which must give the house Black-Scholes price.
 
@@ -694,14 +720,14 @@ The outputs are identical line for line, simulation included: both scripts draw 
 
 ### Lean
 
-Lean proves Step 2's closed forms for $B$ and $A$, and Step 5's fence, at every frequency and every $\tau \ge 0$.
+Lean proves Step 2's closed forms for $`B`$ and $`A`$, and Step 5's fence, at every frequency and every $`\tau \ge 0`$.
 
-- Take the root $d$ with real part not negative, $\xi > 0$, $\beta + d$ not zero, and $g$ shorter than 1. Then $B$ starts at 0 and solves the Riccati equation at every $\tau \ge 0$.
-- Suppose the same four conditions hold. Then $A$, built with the computer's logarithm, starts at 0 and solves its equation from Step 2 at every $\tau \ge 0$.
-- Suppose $d$ has real part not negative, $g$ is shorter than 1, and $\tau \ge 0$. Then $(1 - g e^{-d\tau})/(1 - g)$, the number inside the logarithm, never lies on the cut, nor at zero.
-- At frequency 1 the first two rows of Worked numbers check exactly: $\beta = 2 + 0.21i$ and $4.0459 + 0.93i$.
+- Take the root $`d`$ with real part not negative, $`\xi > 0`$, $`\beta + d`$ not zero, and $`g`$ shorter than 1. Then $`B`$ starts at 0 and solves the Riccati equation at every $`\tau \ge 0`$.
+- Suppose the same four conditions hold. Then $`A`$, built with the computer's logarithm, starts at 0 and solves its equation from Step 2 at every $`\tau \ge 0`$.
+- Suppose $`d`$ has real part not negative, $`g`$ is shorter than 1, and $`\tau \ge 0`$. Then $`(1 - g e^{-d\tau})/(1 - g)`$, the number inside the logarithm, never lies on the cut, nor at zero.
+- At frequency 1 the first two rows of Worked numbers check exactly: $`\beta = 2 + 0.21i`$ and $`4.0459 + 0.93i`$.
 
-That $g$ is shorter than 1 on the card's grid, and every price, are left to the Python and Rust checks.
+That $`g`$ is shorter than 1 on the card's grid, and every price, are left to the Python and Rust checks.
 
 ```lean
 -- Pricing Heston exactly: the closed-form exponents B and A of Heston's characteristic function solve the model's two equations in time, and with the stable root the logarithm inside A never reaches its cut.
@@ -933,10 +959,10 @@ end HestonCF
 ## The usual mistake
 
 > [!warning]
-> **Coding Heston's 1993 characteristic function exactly as printed.** On paper it is the stable layout, and at one year it gives the same \$9.06. But its logarithm crosses the cut as the frequency sweeps, and prices go wrong with no error message: \$17.93 against \$16.72 at three years, too low at seven. Take the root $d$ whose real part is not negative, write $g = (\beta - d)/(\beta + d)$ with $e^{-dT}$, and test a long maturity.
+> **Coding Heston's 1993 characteristic function exactly as printed.** On paper it is the stable layout, and at one year it gives the same \$9.06. But its logarithm crosses the cut as the frequency sweeps, and prices go wrong with no error message: \$17.93 against \$16.72 at three years, too low at seven. Take the root $`d`$ whose real part is not negative, write $`g = (\beta - d)/(\beta + d)`$ with $`e^{-dT}`$, and test a long maturity.
 >
 > - **Dropping the ½.** Without the half-gap the call is \$7.61.
-> - **The plain characteristic function in the share slot.** $\varphi(u)$ where $\varphi(u - i)$ belongs gives −\$6.12, a negative price.
+> - **The plain characteristic function in the share slot.** $`\varphi(u)`$ where $`\varphi(u - i)`$ belongs gives −\$6.12, a negative price.
 > - **Trusting a grid that looks fine.** Lewis's integrand with 200 slices gives \$11.49; this card's, stopped at frequency 10, gives \$8.65. Double the slices and the range; if the price moves, it had not converged.
 > - **Reading a simulation as exact.** 200,000 paths carry a standard error of \$0.03, 20,000 of \$0.08.
 

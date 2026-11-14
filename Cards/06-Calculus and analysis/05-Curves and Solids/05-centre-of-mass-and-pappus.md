@@ -28,31 +28,37 @@ Scale 1 m = 400 units. Shaded: the tube's cut face. Dashed: the same face half a
 
 ## The formula
 
-Slice a flat region beside the axis into thin strips parallel to it. The strip at distance $x$ has height $h(x)$. Weight each strip's area by its distance, add, and divide by the total area: that is the centroid's distance, written $\bar{x}$, read "x bar".
+Slice a flat region beside the axis into thin strips parallel to it. The strip at distance $`x`$ has height $`h(x)`$. Weight each strip's area by its distance, add, and divide by the total area: that is the centroid's distance, written $`\bar{x}`$, read "x bar".
 
-$$\bar{x} = \frac{\int_a^b x\,h(x)\,dx}{\int_a^b h(x)\,dx} = \frac{M}{A}$$
+```math
+\bar{x} = \frac{\int_a^b x\,h(x)\,dx}{\int_a^b h(x)\,dx} = \frac{M}{A}
+```
 
 **Read it aloud:** the centroid's distance is the strips' distances averaged, each strip counting in proportion to its area.
 
-The top integral is the **moment** $M$: area weighted by distance. The bottom is the area $A$. Then Pappus:
+The top integral is the **moment** $`M`$: area weighted by distance. The bottom is the area $`A`$. Then Pappus:
 
-$$V = A \times 2\pi\bar{x}$$
+```math
+V = A \times 2\pi\bar{x}
+```
 
 **Read it aloud:** the volume swept out is the area times the length of the circle the centroid runs round.
 
-For the swim ring, $A$ is the circle's area and $\bar{x} = R$, so
+For the swim ring, $`A`$ is the circle's area and $`\bar{x} = R`$, so
 
-$$V = \pi r^2 \times 2\pi R = 2\pi^2 R r^2$$
+```math
+V = \pi r^2 \times 2\pi R = 2\pi^2 R r^2
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$, $a$, $b$ | distance from the axis; height; the region's nearest and farthest distance | $a$ = 0.2 m, $b$ = 0.4 m | — |
-| $h(x)$ | height of the strip at distance $x$ | $2\sqrt{r^2 - (x-R)^2}$ | more area, more volume |
-| $A$, $M$ | area; moment, the area weighted by distance | 0.0314159 m^2; 0.00942478 m^3 | — |
-| $\bar{x}$, $\bar{y}$ | the centroid's distance from the axis, or up from an edge | 0.3 m; 0.042441 m for the half-disc | volume grows in proportion |
-| $R$, $r$ | tube centre's distance from the axis; tube radius | 0.3 m, 0.1 m | $V$ grows as $R$, and as $r$ squared |
-| $V$ | the volume swept out in one full turn | 59.2176 litres | — |
-| $n$, $x_k$, $A_k$, $M_k$, $V_k$, $\varepsilon$ | proof only: strip count; a strip's edge, area, moment, swept volume; allowed error | — | — |
+| $`x`$, $`y`$, $`a`$, $`b`$ | distance from the axis; height; the region's nearest and farthest distance | $`a`$ = 0.2 m, $`b`$ = 0.4 m | — |
+| $`h(x)`$ | height of the strip at distance $`x`$ | $`2\sqrt{r^2 - (x-R)^2}`$ | more area, more volume |
+| $`A`$, $`M`$ | area; moment, the area weighted by distance | 0.0314159 m^2; 0.00942478 m^3 | — |
+| $`\bar{x}`$, $`\bar{y}`$ | the centroid's distance from the axis, or up from an edge | 0.3 m; 0.042441 m for the half-disc | volume grows in proportion |
+| $`R`$, $`r`$ | tube centre's distance from the axis; tube radius | 0.3 m, 0.1 m | $`V`$ grows as $`R`$, and as $`r`$ squared |
+| $`V`$ | the volume swept out in one full turn | 59.2176 litres | — |
+| $`n`$, $`x_k`$, $`A_k`$, $`M_k`$, $`V_k`$, $`\varepsilon`$ | proof only: strip count; a strip's edge, area, moment, swept volume; allowed error | — | — |
 
 A **centre of mass** weights each piece by mass instead of area ([Averages, mass and work](../04-Integrals/09-average-value-mass-and-work.md)); for a sheet of even thickness the two coincide.
 
@@ -69,44 +75,48 @@ A **centre of mass** weights each piece by mass instead of area ([Averages, mass
 
 ### Step 0: a strip sweeps a shell, and the shell is area times path
 
-Take one thin rectangle of height $h$, standing between distance $x$ and $x + \Delta x$ from the axis, where $\Delta x$ is a small step. Spun once round, it sweeps a hollow cylinder.
+Take one thin rectangle of height $`h`$, standing between distance $`x`$ and $`x + \Delta x`$ from the axis, where $`\Delta x`$ is a small step. Spun once round, it sweeps a hollow cylinder.
 
-Its volume is a big disc minus a small one, times the height: $\pi\left((x+\Delta x)^2 - x^2\right)h$. That expands to $2\pi\left(x + \tfrac{1}{2}\Delta x\right)h\,\Delta x$: the rectangle's area, $h\,\Delta x$, times the length of the circle its own middle travels. For one strip, Pappus is exact.
+Its volume is a big disc minus a small one, times the height: $`\pi\left((x+\Delta x)^2 - x^2\right)h`$. That expands to $`2\pi\left(x + \tfrac{1}{2}\Delta x\right)h\,\Delta x`$: the rectangle's area, $`h\,\Delta x`$, times the length of the circle its own middle travels. For one strip, Pappus is exact.
 
 ### Step 1: add the strips
 
 Add the shells of many thin strips. As they thin, the sum becomes the shell-method integral ([Volumes](03-volumes-by-slices-and-shells.md)):
 
-$$V = \int_a^b 2\pi x\,h(x)\,dx$$
+```math
+V = \int_a^b 2\pi x\,h(x)\,dx
+```
 
 ### Step 2: pull out the constant, and the moment appears
 
-The $2\pi$ is the same for every strip, so it comes outside: $V = 2\pi \int_a^b x\,h(x)\,dx = 2\pi M$. The volume depends on the region only through its moment.
+The $`2\pi`$ is the same for every strip, so it comes outside: $`V = 2\pi \int_a^b x\,h(x)\,dx = 2\pi M`$. The volume depends on the region only through its moment.
 
 ### Step 3: the moment is area times centroid
 
-By the definition of the centroid, $M = A\bar{x}$, so $V = A \times 2\pi\bar{x}$. Every strip travels its own circle; the centroid is the one distance whose circle, times the whole area, gives the same total.
+By the definition of the centroid, $`M = A\bar{x}`$, so $`V = A \times 2\pi\bar{x}`$. Every strip travels its own circle; the centroid is the one distance whose circle, times the whole area, gives the same total.
 
 <details>
 <summary>Detailed proof</summary>
 
-Cut the distances from $a$ to $b$ into $n$ strips of width $\Delta x = (b-a)/n$. Strip k runs from $x_{k-1}$ to $x_k$ and holds area $A_k$ of the region. At any height, the solid it sweeps is cut in flat rings between radii $p < q$ inside that range, of area $\pi(q^2 - p^2) = 2\pi\tfrac{p+q}{2}(q-p)$, between $2\pi x_{k-1}(q-p)$ and $2\pi x_k(q-p)$. The widths $q - p$, integrated over height, give $A_k$. So the swept volume $V_k$ lies between $2\pi x_{k-1}A_k$ and $2\pi x_k A_k$, and the moment $M_k$ between $x_{k-1}A_k$ and $x_k A_k$: $V_k$ and $2\pi M_k$ differ by at most $2\pi\,\Delta x\,A_k$.
+Cut the distances from $`a`$ to $`b`$ into $`n`$ strips of width $`\Delta x = (b-a)/n`$. Strip k runs from $`x_{k-1}`$ to $`x_k`$ and holds area $`A_k`$ of the region. At any height, the solid it sweeps is cut in flat rings between radii $`p < q`$ inside that range, of area $`\pi(q^2 - p^2) = 2\pi\tfrac{p+q}{2}(q-p)`$, between $`2\pi x_{k-1}(q-p)`$ and $`2\pi x_k(q-p)`$. The widths $`q - p`$, integrated over height, give $`A_k`$. So the swept volume $`V_k`$ lies between $`2\pi x_{k-1}A_k`$ and $`2\pi x_k A_k`$, and the moment $`M_k`$ between $`x_{k-1}A_k`$ and $`x_k A_k`$: $`V_k`$ and $`2\pi M_k`$ differ by at most $`2\pi\,\Delta x\,A_k`$.
 
-On one side of the axis, different strips sweep separate solids, so $V = \sum V_k$ and $M = \sum M_k$, and $V$ and $2\pi M$ differ by at most $2\pi(b-a)A/n$. For any $\varepsilon > 0$, an $n$ above $2\pi(b-a)A/\varepsilon$ pushes that below $\varepsilon$; a fixed gap below every $\varepsilon$ is zero. So $V = 2\pi M = A \times 2\pi\bar{x}$. Across the axis, the two sides' solids overlap and the sum fails: the swim ring at 0.05 m.
+On one side of the axis, different strips sweep separate solids, so $`V = \sum V_k`$ and $`M = \sum M_k`$, and $`V`$ and $`2\pi M`$ differ by at most $`2\pi(b-a)A/n`$. For any $`\varepsilon > 0`$, an $`n`$ above $`2\pi(b-a)A/\varepsilon`$ pushes that below $`\varepsilon`$; a fixed gap below every $`\varepsilon`$ is zero. So $`V = 2\pi M = A \times 2\pi\bar{x}`$. Across the axis, the two sides' solids overlap and the sum fails: the swim ring at 0.05 m.
 
 </details>
 
 ### Step 4: the circle's centroid is its middle
 
-For the tube, two strips the same distance either side of $R$ have the same height. Their moments add to $2R$ times one strip's area, so the whole moment is $R$ times the whole area, and $\bar{x} = R = 0.3$ m. The code finds 0.300000 m by integration, without being told.
+For the tube, two strips the same distance either side of $`R`$ have the same height. Their moments add to $`2R`$ times one strip's area, so the whole moment is $`R`$ times the whole area, and $`\bar{x} = R = 0.3`$ m. The code finds 0.300000 m by integration, without being told.
 
 ### Step 5: a centroid that is not in the middle
 
-A half-disc of radius $r = 0.1$ m, flat edge down, has no symmetry upward. At height $y$ its strip is $2\sqrt{r^2 - y^2}$ wide. Its moment about the flat edge is
+A half-disc of radius $`r = 0.1`$ m, flat edge down, has no symmetry upward. At height $`y`$ its strip is $`2\sqrt{r^2 - y^2}`$ wide. Its moment about the flat edge is
 
-$$M = \int_0^r y \cdot 2\sqrt{r^2 - y^2}\,dy = \left[-\tfrac{2}{3}\left(r^2 - y^2\right)^{3/2}\right]_0^r = \tfrac{2}{3}r^3$$
+```math
+M = \int_0^r y \cdot 2\sqrt{r^2 - y^2}\,dy = \left[-\tfrac{2}{3}\left(r^2 - y^2\right)^{3/2}\right]_0^r = \tfrac{2}{3}r^3
+```
 
-Differentiating the antiderivative returns $2y\sqrt{r^2-y^2}$, which checks it. The moment is 0.000666667 m^3; the area, half the disc, is 0.0157080 m^2. So $\bar{y} = M/A = 4r/(3\pi) = 0.042441$ m: below halfway, 0.05 m, because the wide strips sit low.
+Differentiating the antiderivative returns $`2y\sqrt{r^2-y^2}`$, which checks it. The moment is 0.000666667 m^3; the area, half the disc, is 0.0157080 m^2. So $`\bar{y} = M/A = 4r/(3\pi) = 0.042441`$ m: below halfway, 0.05 m, because the wide strips sit low.
 
 ### The picture: the half-disc and one strip
 
@@ -114,7 +124,7 @@ Differentiating the antiderivative returns $2y\sqrt{r^2-y^2}$, which checks it. 
 
 Scale 1 m = 1000 units. The strip 0.08 m up reaches 0.06 m each side of the middle; lower strips are wider.
 
-Spun round its flat edge, the half-disc sweeps a ball of radius 0.1 m. Pappus gives 0.0157080 m^2 × 2π × 0.042441 m = 4.1888 litres, which is the ball formula $\tfrac{4}{3}\pi r^3$. Run backwards, the same line finds the centroid from the ball's known volume.
+Spun round its flat edge, the half-disc sweeps a ball of radius 0.1 m. Pappus gives 0.0157080 m^2 × 2π × 0.042441 m = 4.1888 litres, which is the ball formula $`\tfrac{4}{3}\pi r^3`$. Run backwards, the same line finds the centroid from the ball's known volume.
 
 The other road stacks washers (flat rings) along the axis and never mentions a centroid ([Volumes](03-volumes-by-slices-and-shells.md)); the code takes it. Spinning a curve gives surface area the same way, length times path ([Surface area](04-surface-area-of-revolution.md)).
 

@@ -45,32 +45,36 @@ One line per tick, 9 in all; thick lines are greedy's four pairs. Tomas and timi
 
 ## The formula
 
-The sign-up sheet is a **bipartite graph** $G$: dots in two groups, volunteers and jobs, every line running from one group to the other ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). A **matching** $M$ is a set of lines no two sharing a dot: nobody works two jobs. Bars count lines, so $\lvert M\rvert$ is the matching's size. A dot on a line of $M$ is **matched**; any other dot is **free**.
+The sign-up sheet is a **bipartite graph** $`G`$: dots in two groups, volunteers and jobs, every line running from one group to the other ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). A **matching** $`M`$ is a set of lines no two sharing a dot: nobody works two jobs. Bars count lines, so $`\lvert M\rvert`$ is the matching's size. A dot on a line of $`M`$ is **matched**; any other dot is **free**.
 
-**Maximal**: no line can be added as it stands. **Maximum**: no matching of $G$ is larger; that size is $\nu(G)$, read "nu of G". **Perfect**: every dot is matched. Greedy's four pairs are maximal, not maximum.
+**Maximal**: no line can be added as it stands. **Maximum**: no matching of $`G`$ is larger; that size is $`\nu(G)`$, read "nu of G". **Perfect**: every dot is matched. Greedy's four pairs are maximal, not maximum.
 
-An **alternating path** switches at every step between lines outside $M$ and lines inside it. It is **augmenting**, written $P$, when both its ends are free. The shortest has one line: an unused line between two free dots. Maximal means none of those; maximum, by the theorem below, means none of any length.
+An **alternating path** switches at every step between lines outside $`M`$ and lines inside it. It is **augmenting**, written $`P`$, when both its ends are free. The shortest has one line: an unused line between two free dots. Maximal means none of those; maximum, by the theorem below, means none of any length.
 
-$$M \text{ is maximum} \iff G \text{ has no augmenting path for } M$$
+```math
+M \text{ is maximum} \iff G \text{ has no augmenting path for } M
+```
 
 **Read it aloud:** a matching is as big as possible exactly when no alternating route joins two free dots.
 
 The repair, where a triangle between two sets of lines means the lines in exactly one of them:
 
-$$\lvert M \triangle P\rvert = \lvert M\rvert + 1$$
+```math
+\lvert M \triangle P\rvert = \lvert M\rvert + 1
+```
 
 **Read it aloud:** flip every line of an augmenting path, in for out and out for in, and the matching grows by one.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | the graph: people and jobs as dots, ticks as lines | 5 and 5 dots, 9 lines | more lines, more room to pair |
-| $M$ | a matching: lines sharing no dot | greedy's 4 pairs | — |
-| $\lvert M\rvert$ | its size, the count of pairs | 4, then 5 | — |
-| $\nu(G)$ | the largest size any matching of $G$ reaches | 5 | — |
-| $P$ | an augmenting path: alternating, free at both ends | Tomas's 5-line route to timing | a longer route moves more people |
-| $u$, $w$ | the two free ends of $P$ | Tomas and timing | — |
-| $M \triangle P$ | lines in exactly one of $M$ and $P$: the flipped matching | the 5 pairs after the swap | — |
-| $M^*$ | a larger matching, used in the proof | the other perfect matching | — |
+| $`G`$ | the graph: people and jobs as dots, ticks as lines | 5 and 5 dots, 9 lines | more lines, more room to pair |
+| $`M`$ | a matching: lines sharing no dot | greedy's 4 pairs | — |
+| $`\lvert M\rvert`$ | its size, the count of pairs | 4, then 5 | — |
+| $`\nu(G)`$ | the largest size any matching of $`G`$ reaches | 5 | — |
+| $`P`$ | an augmenting path: alternating, free at both ends | Tomas's 5-line route to timing | a longer route moves more people |
+| $`u`$, $`w`$ | the two free ends of $`P`$ | Tomas and timing | — |
+| $`M \triangle P`$ | lines in exactly one of $`M`$ and $`P`$: the flipped matching | the 5 pairs after the swap | — |
+| $`M^*`$ | a larger matching, used in the proof | the other perfect matching | — |
 
 ### When it holds
 
@@ -84,28 +88,28 @@ $$\lvert M \triangle P\rvert = \lvert M\rvert + 1$$
 
 ### Step 0: a route between two free dots has one spare line
 
-An augmenting path starts and ends at free dots, so its first and last lines are outside $M$. In between, lines alternate. So it holds one more outside line than inside line. Tomas's route has 5 lines: 3 out, 2 in.
+An augmenting path starts and ends at free dots, so its first and last lines are outside $`M`$. In between, lines alternate. So it holds one more outside line than inside line. Tomas's route has 5 lines: 3 out, 2 in.
 
 ### Step 1: a route means the matching is not maximum
 
-Flip the path: its outside lines join $M$, its inside lines leave. Each middle dot swaps one partner for another; the two free ends gain one each; other dots are untouched. The result is a matching one line larger: on the sheet, two pairs leave, three join.
+Flip the path: its outside lines join $`M`$, its inside lines leave. Each middle dot swaps one partner for another; the two free ends gain one each; other dots are untouched. The result is a matching one line larger: on the sheet, two pairs leave, three join.
 
 ### Step 2: no route means the matching is maximum
 
-Suppose a larger matching $M^*$ exists. Keep the lines in exactly one of the two. Each dot touches at most one line of each, so at most two kept lines. Such lines fall into pieces, each a path or a closed loop, alternating between $M$ and $M^*$.
+Suppose a larger matching $`M^*`$ exists. Keep the lines in exactly one of the two. Each dot touches at most one line of each, so at most two kept lines. Such lines fall into pieces, each a path or a closed loop, alternating between $`M`$ and $`M^*`$.
 
-A loop holds equal numbers of each; a path, equal numbers or one more of one kind. Since $M^*$ is larger, some piece is a path starting and ending with lines of $M^*$. Its ends are free in $M$, so it is augmenting. Turned round: no augmenting path means no larger matching.
+A loop holds equal numbers of each; a path, equal numbers or one more of one kind. Since $`M^*`$ is larger, some piece is a path starting and ending with lines of $`M^*`$. Its ends are free in $`M`$, so it is augmenting. Turned round: no augmenting path means no larger matching.
 
 On the sheet, greedy and the other perfect matching differ on all 9 lines, 5 against 4: Tomas's route, 3 against 2, and the loop Omar-water-Sam-parking, 2 against 2.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $\lvert M^*\rvert > \lvert M\rvert$ and keep the lines of $M \triangle M^*$. Each dot lies on at most one line of each matching, so on at most two kept lines, one from each.
+Let $`\lvert M^*\rvert > \lvert M\rvert`$ and keep the lines of $`M \triangle M^*`$. Each dot lies on at most one line of each matching, so on at most two kept lines, one from each.
 
 A connected piece in which every dot has at most two lines is a path or a cycle. Consecutive lines share a dot, so they come from different matchings. An alternating cycle has even length and equal counts; a path has equal counts or one more of one kind.
 
-Lines shared by both matchings are dropped from each count equally, so the kept lines still hold more of $M^*$. Some piece is therefore a path $P$ whose first and last lines lie in $M^*$. Let $u$ be an end. If $M$ matched $u$, that line of $M$ is not in $M^*$, since $u$ already has its $M^*$ line in $P$; so it is kept, and $P$ would continue past $u$. It does not, so $u$ is free in $M$, and likewise the other end $w$. So $P$ is augmenting for $M$. With Step 1, $M$ is maximum if and only if no augmenting path exists.
+Lines shared by both matchings are dropped from each count equally, so the kept lines still hold more of $`M^*`$. Some piece is therefore a path $`P`$ whose first and last lines lie in $`M^*`$. Let $`u`$ be an end. If $`M`$ matched $`u`$, that line of $`M`$ is not in $`M^*`$, since $`u`$ already has its $`M^*`$ line in $`P`$; so it is kept, and $`P`$ would continue past $`u`$. It does not, so $`u`$ is free in $`M`$, and likewise the other end $`w`$. So $`P`$ is augmenting for $`M`$. With Step 1, $`M`$ is maximum if and only if no augmenting path exists.
 
 </details>
 
@@ -361,7 +365,7 @@ The two outputs match line for line.
 Lean proves Berge's theorem and the repair for every finite graph, and checks the sign-up sheet's numbers.
 
 - A matching is maximum exactly when the graph has no augmenting path for it.
-- Flipping an augmenting path $P$ gives a matching: the lines of $M \triangle P$, one more than $M$.
+- Flipping an augmenting path $`P`$ gives a matching: the lines of $`M \triangle P`$, one more than $`M`$.
 - On the sheet: 9 lines, and greedy's 4 pairs are maximal, since no unused tick can be added.
 - Tomas's route has 3 lines out and 2 in. Flipping it gives 5 pairs; stopping at Lena gives 4.
 - Of the 512 sets of lines, the matchings of size 0 to 5 number 1, 9, 28, 35, 16 and 2.

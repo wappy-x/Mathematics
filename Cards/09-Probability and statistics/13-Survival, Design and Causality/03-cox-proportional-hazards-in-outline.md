@@ -36,59 +36,69 @@ First line (orange): non-smokers, the rising **baseline hazard** used in the sim
 
 ## The formula
 
-Notation first, in words. A **covariate** is a measured fact about a person that might change the risk; here it is one number, $x$, equal to 1 for a smoker and 0 for a non-smoker. The hazard at time $t$ for a person with covariate $x$ is written $h(t \mid x)$, read "the hazard at t given x". Deaths happen at times $t_1, t_2, \dots$; at the $j$-th death, the **risk set** $R_j$ is everyone still in the study just before it: alive and not yet gone.
+Notation first, in words. A **covariate** is a measured fact about a person that might change the risk; here it is one number, $`x`$, equal to 1 for a smoker and 0 for a non-smoker. The hazard at time $`t`$ for a person with covariate $`x`$ is written $`h(t \mid x)`$, read "the hazard at t given x". Deaths happen at times $`t_1, t_2, \dots`$; at the $`j`$-th death, the **risk set** $`R_j`$ is everyone still in the study just before it: alive and not yet gone.
 
-$$h(t \mid x) \;=\; h_0(t)\, e^{\beta x}$$
+```math
+h(t \mid x) \;=\; h_0(t)\, e^{\beta x}
+```
 
 **Read it aloud:** the hazard for a person with covariate x is the baseline hazard, the same unknown curve for everyone, multiplied by e to the beta x.
 
-For a non-smoker, $e^{\beta \cdot 0} = 1$ and the hazard is the baseline. For a smoker it is the baseline times $e^{\beta}$. That factor is the **hazard ratio**:
+For a non-smoker, $`e^{\beta \cdot 0} = 1`$ and the hazard is the baseline. For a smoker it is the baseline times $`e^{\beta}`$. That factor is the **hazard ratio**:
 
-$$\text{HR} \;=\; \frac{h(t \mid 1)}{h(t \mid 0)} \;=\; e^{\beta}$$
+```math
+\text{HR} \;=\; \frac{h(t \mid 1)}{h(t \mid 0)} \;=\; e^{\beta}
+```
 
 **Read it aloud:** at every moment, a smoker's hazard divided by a non-smoker's is e to the beta, whatever the moment.
 
 The fit uses the **partial likelihood**, a product with one factor per death:
 
-$$L(\beta) \;=\; \prod_{j} \frac{e^{\beta x_{(j)}}}{\sum_{i \in R_j} e^{\beta x_i}}$$
+```math
+L(\beta) \;=\; \prod_{j} \frac{e^{\beta x_{(j)}}}{\sum_{i \in R_j} e^{\beta x_i}}
+```
 
 **Read it aloud:** at each death, take the dying man's weight e to the beta x, divide by the total weight of everyone at risk, and multiply these fractions over all the deaths.
 
-Here $x_{(j)}$ is the covariate of the man who died at the $j$-th death, and $x_i$ runs over each man $i$ in the risk set. The estimate $\hat\beta$, read "beta hat", is the value that makes $L$ largest. Its logarithm has a slope, the **score**, and a downward curvature whose size is the **information**:
+Here $`x_{(j)}`$ is the covariate of the man who died at the $`j`$-th death, and $`x_i`$ runs over each man $`i`$ in the risk set. The estimate $`\hat\beta`$, read "beta hat", is the value that makes $`L`$ largest. Its logarithm has a slope, the **score**, and a downward curvature whose size is the **information**:
 
-$$U(\beta) = \sum_j \big(x_{(j)} - m_j\big), \qquad m_j = \frac{\sum_{i \in R_j} x_i\, e^{\beta x_i}}{\sum_{i \in R_j} e^{\beta x_i}}, \qquad I(\beta) = \sum_j m_j\,(1 - m_j)$$
+```math
+U(\beta) = \sum_j \big(x_{(j)} - m_j\big), \qquad m_j = \frac{\sum_{i \in R_j} x_i\, e^{\beta x_i}}{\sum_{i \in R_j} e^{\beta x_i}}, \qquad I(\beta) = \sum_j m_j\,(1 - m_j)
+```
 
 **Read it aloud:** the score is observed smoker deaths minus expected smoker deaths, where the expected share at each death is the smokers' share of the risk set's weight; the information adds up how uncertain each of those shares is.
 
-The fit sets $U(\hat\beta) = 0$. The standard error of $\hat\beta$ is $1/\sqrt{I(\hat\beta)}$, and a 95% interval for the hazard ratio is $e^{\hat\beta \pm 1.96\,\text{SE}}$. The form $m_j(1 - m_j)$ holds because $x$ is 0 or 1; for a covariate with more values, the information is the weighted variance of $x$ in each risk set.
+The fit sets $`U(\hat\beta) = 0`$. The standard error of $`\hat\beta`$ is $`1/\sqrt{I(\hat\beta)}`$, and a 95% interval for the hazard ratio is $`e^{\hat\beta \pm 1.96\,\text{SE}}`$. The form $`m_j(1 - m_j)`$ holds because $`x`$ is 0 or 1; for a covariate with more values, the information is the weighted variance of $`x`$ in each risk set.
 
 What the hazard ratio does to survival:
 
-$$S(t \mid x) \;=\; S_0(t)^{\,e^{\beta x}}$$
+```math
+S(t \mid x) \;=\; S_0(t)^{\,e^{\beta x}}
+```
 
 **Read it aloud:** a smoker's chance of being alive at time t is the non-smoker's chance raised to the power of the hazard ratio.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $t_j$, $j$, $dt$ | time since the study began; the time of the $j$-th death, $j$ counting the deaths in order; $dt$ a short stretch of time | years 1 to 10; deaths in years 1, 3, 4, 5, 7, 8, 9 | — |
-| $x$, $x_i$, $i$ | the covariate: 1 for a smoker, 0 for a non-smoker; man $i$'s value, $i$ naming a man | A: 1; B: 0 | the hazard is multiplied by $e^{\beta}$ |
-| $x_{(j)}$ | the covariate of the man who died at the $j$-th death | year 1: A, a smoker, 1 | — |
-| $h(t \mid x)$ | the hazard: death rate per year among those still alive at $t$ | smoker, year 10: 75.00 per 1,000 | deaths come sooner |
-| $h_0(t)$ | the baseline hazard: the hazard at $x = 0$, left unknown | non-smoker, year 10: 37.50 per 1,000 | everyone's risk rises; $\hat\beta$ unchanged |
-| $\beta$ | log of the hazard ratio | fit: 0.6931 = ln 2 | smokers die faster relative to non-smokers |
-| $e^{\beta}$, $c_i$, $C$ | the hazard ratio, HR; in the proof, man $i$'s weight $e^{\beta x_i}$ and the risk set's total weight | fit: 2.0000; year 4 at HR 2: total weight 10 | same |
-| $R_j$ | the risk set: everyone still alive and in the study just before the $j$-th death | year 4: 3 smokers, 4 non-smokers | a bigger denominator, more information |
-| $L(\beta)$ | the partial likelihood | log of it: −10.8967 at the fit | — |
-| $U(\beta)$, $m_j$ | the score: observed minus expected smoker deaths; $m_j$ the expected smoker share of death $j$ | at HR 2: 4.0000 expected, 4 seen | pushes $\hat\beta$ up |
-| $I(\beta)$ | the information: minus the curvature of $\ln L$, giving the standard error | 1.6467, SE 0.7793 | narrower interval |
-| $S(t \mid x)$, $S_0(t)$, $H_0(t)$ | chance of being alive at $t$; the same at $x = 0$; the baseline's **cumulative hazard**, the area under $h_0$ up to $t$ | non-smoker at year 10: 0.78 | — |
+| $`t`$, $`t_j`$, $`j`$, $`dt`$ | time since the study began; the time of the $`j`$-th death, $`j`$ counting the deaths in order; $`dt`$ a short stretch of time | years 1 to 10; deaths in years 1, 3, 4, 5, 7, 8, 9 | — |
+| $`x`$, $`x_i`$, $`i`$ | the covariate: 1 for a smoker, 0 for a non-smoker; man $`i`$'s value, $`i`$ naming a man | A: 1; B: 0 | the hazard is multiplied by $`e^{\beta}`$ |
+| $`x_{(j)}`$ | the covariate of the man who died at the $`j`$-th death | year 1: A, a smoker, 1 | — |
+| $`h(t \mid x)`$ | the hazard: death rate per year among those still alive at $`t`$ | smoker, year 10: 75.00 per 1,000 | deaths come sooner |
+| $`h_0(t)`$ | the baseline hazard: the hazard at $`x = 0`$, left unknown | non-smoker, year 10: 37.50 per 1,000 | everyone's risk rises; $`\hat\beta`$ unchanged |
+| $`\beta`$ | log of the hazard ratio | fit: 0.6931 = ln 2 | smokers die faster relative to non-smokers |
+| $`e^{\beta}`$, $`c_i`$, $`C`$ | the hazard ratio, HR; in the proof, man $`i`$'s weight $`e^{\beta x_i}`$ and the risk set's total weight | fit: 2.0000; year 4 at HR 2: total weight 10 | same |
+| $`R_j`$ | the risk set: everyone still alive and in the study just before the $`j`$-th death | year 4: 3 smokers, 4 non-smokers | a bigger denominator, more information |
+| $`L(\beta)`$ | the partial likelihood | log of it: −10.8967 at the fit | — |
+| $`U(\beta)`$, $`m_j`$ | the score: observed minus expected smoker deaths; $`m_j`$ the expected smoker share of death $`j`$ | at HR 2: 4.0000 expected, 4 seen | pushes $`\hat\beta`$ up |
+| $`I(\beta)`$ | the information: minus the curvature of $`\ln L`$, giving the standard error | 1.6467, SE 0.7793 | narrower interval |
+| $`S(t \mid x)`$, $`S_0(t)`$, $`H_0(t)`$ | chance of being alive at $`t`$; the same at $`x = 0`$; the baseline's **cumulative hazard**, the area under $`h_0`$ up to $`t`$ | non-smoker at year 10: 0.78 | — |
 
 ### When it holds
 
 - **The ratio stays fixed over time (proportional hazards).** If smoking's effect were 4 in the first five years and 1 afterwards, a single fitted ratio comes out at 2.2334, describing neither period.
 - **Leaving says nothing about risk.** A man who leaves the study alive, called **censored**, must leave for reasons unrelated to his chance of dying soon. If men leave because they fall ill, the ones who stay look healthier than they are.
 - **Men independent of each other.** The factors multiply as if each death were a separate event. Clusters, such as families sharing a household, need an adjustment.
-- **The covariate acts on the log scale.** With 0 or 1 this is automatic. For cigarettes a day, $e^{\beta x}$ says each extra cigarette multiplies the hazard by the same factor; if the real effect levels off, the one number misstates it.
+- **The covariate acts on the log scale.** With 0 or 1 this is automatic. For cigarettes a day, $`e^{\beta x}`$ says each extra cigarette multiplies the hazard by the same factor; if the real effect levels off, the one number misstates it.
 - **An association, not a cause.** Smokers in a cohort differ from non-smokers in other ways. The fitted ratio measures how much faster they die; it says smoking is the reason only when the groups were formed by chance or the other differences are measured and included.
 
 ---
@@ -97,48 +107,54 @@ $$S(t \mid x) \;=\; S_0(t)^{\,e^{\beta x}}$$
 
 ### Step 0: ask a question the baseline cannot answer
 
-The baseline $h_0(t)$ is a whole unknown curve. Estimating it alongside $\beta$ would need an assumption about its shape. Cox's idea was to ask a narrower question at each death: given that one man died at this moment, which one was it? Every man's hazard carries the same factor $h_0(t)$, so in the answer it divides out.
+The baseline $`h_0(t)`$ is a whole unknown curve. Estimating it alongside $`\beta`$ would need an assumption about its shape. Cox's idea was to ask a narrower question at each death: given that one man died at this moment, which one was it? Every man's hazard carries the same factor $`h_0(t)`$, so in the answer it divides out.
 
 ### Step 1: a race between two men
 
-Take two men alive at time $t$: a smoker and a non-smoker. In the next short interval of length $dt$, the smoker dies with chance about $2\,h_0(t)\,dt$ and the non-smoker with chance about $h_0(t)\,dt$. Given that exactly one of them died, the chance it was the smoker is
+Take two men alive at time $`t`$: a smoker and a non-smoker. In the next short interval of length $`dt`$, the smoker dies with chance about $`2\,h_0(t)\,dt`$ and the non-smoker with chance about $`h_0(t)\,dt`$. Given that exactly one of them died, the chance it was the smoker is
 
-$$\frac{2\,h_0(t)\,dt}{2\,h_0(t)\,dt + h_0(t)\,dt} \;=\; \frac{2}{3}.$$
+```math
+\frac{2\,h_0(t)\,dt}{2\,h_0(t)\,dt + h_0(t)\,dt} \;=\; \frac{2}{3}.
+```
 
-The baseline, and the interval length, cancel. The answer is 2/3 whether $h_0$ rises with age, falls, or jumps about. The checks confirm it: Simpson's rule, a numerical way to compute an integral, gives 0.6667 on a rising baseline, and 200,000 simulated races on a falling baseline give 0.6667 with a standard error of 0.0011.
+The baseline, and the interval length, cancel. The answer is 2/3 whether $`h_0`$ rises with age, falls, or jumps about. The checks confirm it: Simpson's rule, a numerical way to compute an integral, gives 0.6667 on a rising baseline, and 200,000 simulated races on a falling baseline give 0.6667 with a standard error of 0.0011.
 
 ### Step 2: a whole risk set
 
-With several men at risk, the same argument gives each man a share of the death in proportion to his weight $e^{\beta x_i}$. At year 4 of the ten-man study, three smokers and four non-smokers are at risk. At a hazard ratio of 2, the smokers hold weight 2 + 2 + 2 = 6 of a total 10, so a death at that moment is a smoker's with chance 0.6000.
+With several men at risk, the same argument gives each man a share of the death in proportion to his weight $`e^{\beta x_i}`$. At year 4 of the ten-man study, three smokers and four non-smokers are at risk. At a hazard ratio of 2, the smokers hold weight 2 + 2 + 2 = 6 of a total 10, so a death at that moment is a smoker's with chance 0.6000.
 
 <details>
 <summary>Detailed proof</summary>
 
-Take the men in a risk set and restart the clock at the moment the set is formed, so every one of them is alive at time 0 and $H_0(t)$, the baseline hazard added up over time, counts from there. Give man $i$ the weight $c_i = e^{\beta x_i}$, and write $C$ for the sum of the weights. Man $i$ survives to time $t$ with chance $e^{-c_i H_0(t)}$. The chance that man $i$ is the first to die, and dies in the interval from $t$ to $t + dt$, is his death rate $c_i h_0(t)\,dt$ times the chance that every man, himself included, lasted until $t$:
-$$c_i\, h_0(t)\, dt \;\prod_k e^{-c_k H_0(t)} \;=\; c_i\, h_0(t)\, e^{-C H_0(t)}\, dt.$$
-Add this over all men $i$ and the first death happens in that interval with chance $C\,h_0(t)\,e^{-C H_0(t)}\,dt$. Divide the two: given that the first death is at $t$, it is man $i$'s with chance $c_i / C$. Nothing in that ratio depends on $h_0$ or on $t$. Integrating instead over all $t$, with $H_0$ growing without bound, gives the same $c_i/C$ for "man $i$ dies first", which is the 2/3 of Step 1.
+Take the men in a risk set and restart the clock at the moment the set is formed, so every one of them is alive at time 0 and $`H_0(t)`$, the baseline hazard added up over time, counts from there. Give man $`i`$ the weight $`c_i = e^{\beta x_i}`$, and write $`C`$ for the sum of the weights. Man $`i`$ survives to time $`t`$ with chance $`e^{-c_i H_0(t)}`$. The chance that man $`i`$ is the first to die, and dies in the interval from $`t`$ to $`t + dt`$, is his death rate $`c_i h_0(t)\,dt`$ times the chance that every man, himself included, lasted until $`t`$:
+
+$`\displaystyle c_i\, h_0(t)\, dt \;\prod_k e^{-c_k H_0(t)} \;=\; c_i\, h_0(t)\, e^{-C H_0(t)}\, dt.`$
+
+Add this over all men $`i`$ and the first death happens in that interval with chance $`C\,h_0(t)\,e^{-C H_0(t)}\,dt`$. Divide the two: given that the first death is at $`t`$, it is man $`i`$'s with chance $`c_i / C`$. Nothing in that ratio depends on $`h_0`$ or on $`t`$. Integrating instead over all $`t`$, with $`H_0`$ growing without bound, gives the same $`c_i/C`$ for "man $`i`$ dies first", which is the 2/3 of Step 1.
 
 </details>
 
 ### Step 3: multiply over the deaths
 
-Each death contributes its "which one" chance, and the partial likelihood $L(\beta)$ multiplies them. A censored man never appears on top of a fraction. He appears in the denominators of every death that happened while he was still in the study, then drops out. So the three men who left alive still count: they were at risk, and they did not die.
+Each death contributes its "which one" chance, and the partial likelihood $`L(\beta)`$ multiplies them. A censored man never appears on top of a fraction. He appears in the denominators of every death that happened while he was still in the study, then drops out. So the three men who left alive still count: they were at risk, and they did not die.
 
-What the product leaves out is the timing of the deaths: how long the gaps between them were. The gaps carry information about $h_0$, which the model never needed, and almost none about $\beta$. Cox argued in 1975 that $L(\beta)$ can be treated like an ordinary likelihood: its peak settles on the true $\beta$ as the study grows, and its curvature gives the standard error. The full proof uses martingales, sums of surprises whose average is zero ([Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md) has the idea), run in continuous time, and belongs to the wing [Stochastic processes and calculus](../../11-Stochastic%20processes%20and%20calculus/README.md).
+What the product leaves out is the timing of the deaths: how long the gaps between them were. The gaps carry information about $`h_0`$, which the model never needed, and almost none about $`\beta`$. Cox argued in 1975 that $`L(\beta)`$ can be treated like an ordinary likelihood: its peak settles on the true $`\beta`$ as the study grows, and its curvature gives the standard error. The full proof uses martingales, sums of surprises whose average is zero ([Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md) has the idea), run in continuous time, and belongs to the wing [Stochastic processes and calculus](../../11-Stochastic%20processes%20and%20calculus/README.md).
 
-This card checks it by simulation instead: 400 cohorts of 200 men with a true ratio of 2 give an average $\hat\beta$ of 0.6981, standard error 0.0145, against ln 2 = 0.6931. The 400 estimates spread by 0.2898; the curvature reported 0.2934 on average.
+This card checks it by simulation instead: 400 cohorts of 200 men with a true ratio of 2 give an average $`\hat\beta`$ of 0.6981, standard error 0.0145, against ln 2 = 0.6931. The 400 estimates spread by 0.2898; the curvature reported 0.2934 on average.
 
 ### Step 4: slope and curvature
 
-Take logarithms: $\ln L(\beta) = \sum_j \big[\beta x_{(j)} - \ln \sum_{i \in R_j} e^{\beta x_i}\big]$. Differentiate once. The first term gives $x_{(j)}$. The second gives the weighted average of $x$ over the risk set, which is $m_j$. So the slope is the score $U(\beta)$: observed smoker deaths minus expected. Setting it to zero says the fitted ratio is the one at which the smokers died exactly as often as their weight predicted.
+Take logarithms: $`\ln L(\beta) = \sum_j \big[\beta x_{(j)} - \ln \sum_{i \in R_j} e^{\beta x_i}\big]`$. Differentiate once. The first term gives $`x_{(j)}`$. The second gives the weighted average of $`x`$ over the risk set, which is $`m_j`$. So the slope is the score $`U(\beta)`$: observed smoker deaths minus expected. Setting it to zero says the fitted ratio is the one at which the smokers died exactly as often as their weight predicted.
 
-Differentiate again. The slope of $m_j$ is the weighted variance of $x$ in the risk set; for a 0 or 1 covariate that is $m_j(1 - m_j)$. The information $I(\beta)$ is their sum. Newton's method climbs to the peak by repeating $\beta \leftarrow \beta + U(\beta)/I(\beta)$, the same step used for [Logistic regression](../09-Regression/05-logistic-regression.md), and $1/\sqrt{I(\hat\beta)}$ is the standard error as for any maximum likelihood fit.
+Differentiate again. The slope of $`m_j`$ is the weighted variance of $`x`$ in the risk set; for a 0 or 1 covariate that is $`m_j(1 - m_j)`$. The information $`I(\beta)`$ is their sum. Newton's method climbs to the peak by repeating $`\beta \leftarrow \beta + U(\beta)/I(\beta)`$, the same step used for [Logistic regression](../09-Regression/05-logistic-regression.md), and $`1/\sqrt{I(\hat\beta)}`$ is the standard error as for any maximum likelihood fit.
 
 ### Step 5: from hazard to survival
 
-The chance of being alive at $t$ is $e^{-H(t)}$, where $H(t)$ is the hazard added up from 0 to $t$. A smoker's hazard is $e^{\beta}$ times the baseline at every moment, so its sum is $e^{\beta}$ times the baseline's: $H(t \mid 1) = e^{\beta} H_0(t)$. Then
+The chance of being alive at $`t`$ is $`e^{-H(t)}`$, where $`H(t)`$ is the hazard added up from 0 to $`t`$. A smoker's hazard is $`e^{\beta}`$ times the baseline at every moment, so its sum is $`e^{\beta}`$ times the baseline's: $`H(t \mid 1) = e^{\beta} H_0(t)`$. Then
 
-$$S(t \mid 1) \;=\; e^{-e^{\beta} H_0(t)} \;=\; \big(e^{-H_0(t)}\big)^{e^{\beta}} \;=\; S_0(t)^{e^{\beta}}.$$
+```math
+S(t \mid 1) \;=\; e^{-e^{\beta} H_0(t)} \;=\; \big(e^{-H_0(t)}\big)^{e^{\beta}} \;=\; S_0(t)^{e^{\beta}}.
+```
 
 For the doctors: a non-smoker survives the 35 years with chance 1 − 0.24 = 0.76. With the rate doubled, a smoker survives with chance 0.76 squared, so dies with chance 0.4224: the study's 42%.
 
@@ -154,7 +170,7 @@ xychart-beta
 
 First line (orange): non-smokers. Second line (green): smokers, each value the square of the first. After ten years, 0.2212 of non-smokers and 0.3935 of smokers have died: a ratio of 1.7788, not 2.
 
-A different road fits a full shape for the baseline, such as the Weibull hazard of [Weibull and hazards](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md), and estimates it together with $\beta$ by [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md). It gains a little precision when the shape is right and gives a wrong $\beta$ when it is not. Cox's road gives up the shape and keeps $\beta$ safe.
+A different road fits a full shape for the baseline, such as the Weibull hazard of [Weibull and hazards](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md), and estimates it together with $`\beta`$ by [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md). It gains a little precision when the shape is right and gives a wrong $`\beta`$ when it is not. Cox's road gives up the shape and keeps $`\beta`$ safe.
 
 ---
 
@@ -187,9 +203,9 @@ The hand check: guess a hazard ratio of 2 and see whether observed smoker deaths
 | Year 9, I dies (smoker): 1 and 1 | 2/3 | 0.6667 |
 | Expected smoker deaths | sum of the seven shares | 4.0000 |
 | Observed smoker deaths | A, C, D, I | 4 |
-| Score at HR 2 | 4 − 4.0000 | 0, so $\hat\beta$ = ln 2 = 0.6931 |
+| Score at HR 2 | 4 − 4.0000 | 0, so $`\hat\beta`$ = ln 2 = 0.6931 |
 | Information | sum of share × (1 − share): 0.2222 + 0.2222 + 0.2400 + 0.2500 + 0.2400 + 0.2500 + 0.2222 | 1.6467 |
-| Standard error of $\hat\beta$ | 1 / √1.6467 | 0.7793 |
+| Standard error of $`\hat\beta`$ | 1 / √1.6467 | 0.7793 |
 | 95% interval for the HR | e^(0.6931 ± 1.96 × 0.7793) | 0.4342 to 9.2124 |
 | **Hazard ratio** | e^0.6931 | **2.0000** |
 
@@ -208,7 +224,7 @@ In this made-up cohort, the fitted ratio is 2: the estimate says a smoker still 
 
 ## Code, from first principles, and it actually runs
 
-The checks fit the ten men three ways: by hand (the expected shares at HR 2), by Newton's method on the score, and by a golden-section climb on the raw product $L(\beta)$ with its curvature taken by nudging. They check Step 1's race three ways: the exact 2/3, Simpson's rule on a rising baseline, and a seeded simulation on a falling one. They then simulate cohorts from a known model, a baseline hazard that is either rising or falling and a true ratio of 2, with men also dropping out at 3% a year, and confirm that the fit recovers ln 2 and that its reported standard error matches the real spread of the estimates. Random draws come from SplitMix64 written out in both languages with seed 20260929, so both print the same numbers.
+The checks fit the ten men three ways: by hand (the expected shares at HR 2), by Newton's method on the score, and by a golden-section climb on the raw product $`L(\beta)`$ with its curvature taken by nudging. They check Step 1's race three ways: the exact 2/3, Simpson's rule on a rising baseline, and a seeded simulation on a falling one. They then simulate cohorts from a known model, a baseline hazard that is either rising or falling and a true ratio of 2, with men also dropping out at 3% a year, and confirm that the fit recovers ln 2 and that its reported standard error matches the real spread of the estimates. Random draws come from SplitMix64 written out in both languages with seed 20260929, so both print the same numbers.
 
 ### Python
 
@@ -626,9 +642,9 @@ ALL CHECKS PASS
 
 Lean proves that the baseline cancels, for any risk set and any baseline hazard, plus the survival rule and the hand numbers.
 
-- Take a risk set alive at time 0, and a baseline hazard whose cumulative hazard starts at 0 and grows without bound. Then man $i$ dies first with chance $c_i / C$, whatever the baseline.
-- Suppose the first death in the risk set comes at a time $t$ where $h_0(t) > 0$. Then it is man $i$'s death with chance $c_i / C$: $h_0(t)$ and $t$ divide out.
-- Take survival as $e^{-H}$, with a cumulative hazard $e^{\beta x} H_0(t)$. Then $S(t \mid x) = S_0(t)^{e^{\beta x}}$.
+- Take a risk set alive at time 0, and a baseline hazard whose cumulative hazard starts at 0 and grows without bound. Then man $`i`$ dies first with chance $`c_i / C`$, whatever the baseline.
+- Suppose the first death in the risk set comes at a time $`t`$ where $`h_0(t) > 0`$. Then it is man $`i`$'s death with chance $`c_i / C`$: $`h_0(t)`$ and $`t`$ divide out.
+- Take survival as $`e^{-H}`$, with a cumulative hazard $`e^{\beta x} H_0(t)`$. Then $`S(t \mid x) = S_0(t)^{e^{\beta x}}`$.
 - In the race of two, the smoker dies first with chance 2/3. At year 4, the smokers hold weight 6 of a total 10.
 - At HR 2, the seven expected smoker shares add to exactly 4, the observed smoker deaths.
 - At HR 2, the information is exactly 247/150, about 1.6467.
@@ -749,8 +765,8 @@ example : (1 - (76 / 100 : ℚ) ^ 2) ≠ 2 * (24 / 100) := by norm_num
 > **Try changing**
 > - **F dies in year 6 instead of leaving.** Guess first: does the ratio rise or fall? One more smoker death, when smokers are only 2 of the 5 at risk, pushes it up, to 2.5198.
 > - **Count every man twice.** Guess first: does the ratio move? It stays at 2.0000; the standard error falls from 0.7793 to 0.5510, by the square root of 2. Twenty men still give a wide interval.
-> - **Code non-smokers as 1 instead.** $\hat\beta$ becomes −0.6931 and the ratio 0.5000: the same finding, read from the other group.
-> - **Swap the rising baseline for a falling one in the 400 cohorts.** Guess first: does the average $\hat\beta$ move? No: 0.6981 on the rising baseline, 0.6756 on the falling one, each within about two standard errors of 0.6931. The baseline never entered the fit.
+> - **Code non-smokers as 1 instead.** $`\hat\beta`$ becomes −0.6931 and the ratio 0.5000: the same finding, read from the other group.
+> - **Swap the rising baseline for a falling one in the 400 cohorts.** Guess first: does the average $`\hat\beta`$ move? No: 0.6981 on the rising baseline, 0.6756 on the falling one, each within about two standard errors of 0.6931. The baseline never entered the fit.
 
 ---
 

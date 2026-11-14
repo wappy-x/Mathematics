@@ -6,21 +6,21 @@
 
 ## General Overview
 
-A fitness tracker rides on a runner's wrist at 5 m/s. Special relativity says a moving clock runs slow. The fraction of each second it loses is $f = 1 - \sqrt{1 - (v/c)^2}$, where $v$ is the speed and $c$ is the speed of light, 299792458 m/s. Satellite navigation corrects its clocks for this effect, using the close approximation $f \approx (v/c)^2/2$.
+A fitness tracker rides on a runner's wrist at 5 m/s. Special relativity says a moving clock runs slow. The fraction of each second it loses is $`f = 1 - \sqrt{1 - (v/c)^2}`$, where $`v`$ is the speed and $`c`$ is the speed of light, 299792458 m/s. Satellite navigation corrects its clocks for this effect, using the close approximation $`f \approx (v/c)^2/2`$.
 
-For the runner, $f$ is 1.391e-16. Over a one-hour run the watch falls 5.007e-13 seconds behind. That is a tiny number, but it is a definite one.
+For the runner, $`f`$ is 1.391e-16. Over a one-hour run the watch falls 5.007e-13 seconds behind. That is a tiny number, but it is a definite one.
 
-This $f$ is the smaller root of the quadratic $f^2 - 2f + (v/c)^2 = 0$, so the formula above is the quadratic formula's minus root, the one taught at school. Under its square root, $b^2 = 4$ dwarfs the $4 \times (v/c)^2$ subtracted from it: the classic case where that formula loses its small root.
+This $`f`$ is the smaller root of the quadratic $`f^2 - 2f + (v/c)^2 = 0`$, so the formula above is the quadratic formula's minus root, the one taught at school. Under its square root, $`b^2 = 4`$ dwarfs the $`4 \times (v/c)^2`$ subtracted from it: the classic case where that formula loses its small root.
 
 Type the formula as written, the school formula, into any language that uses standard 64-bit numbers. It returns 2.220446049250313e-16, which is 59.65% too big. At a 2 m/s walk it returns exactly 0. Nothing warns.
 
-Rewrite it as $f = (v/c)^2 / \big(1 + \sqrt{1 - (v/c)^2}\big)$. In exact arithmetic this is the same number. On the machine it returns 1.390812570067023e-16, right to about one unit in the 16th digit.
+Rewrite it as $`f = (v/c)^2 / \big(1 + \sqrt{1 - (v/c)^2}\big)`$. In exact arithmetic this is the same number. On the machine it returns 1.390812570067023e-16, right to about one unit in the 16th digit.
 
 Both results come from one number: **machine epsilon**, the gap between 1 and the next number the machine can store. This card turns that gap into a rule for one rounding, then uses the rule to prove which formula can fail.
 
 **Each machine operation is off by at most half the gap next to one, relative to its own result; subtracting nearly equal numbers shrinks the result but keeps the errors made before it, so the cure is a rewrite with no such subtraction.**
 
-**What kind of fact this is:** the rounding rule (the standard model) is a theorem about the IEEE 754 standard's round-to-nearest mode, proved in Why it works, Step 2. The two error bounds are theorems to first order in $u$, proved in Steps 4 and 6. The clock formula is physics, taken as given from the sources.
+**What kind of fact this is:** the rounding rule (the standard model) is a theorem about the IEEE 754 standard's round-to-nearest mode, proved in Why it works, Step 2. The two error bounds are theorems to first order in $`u`$, proved in Steps 4 and 6. The clock formula is physics, taken as given from the sources.
 
 ### The picture: error of each formula as the speed changes
 
@@ -45,51 +45,59 @@ Orange: the school formula. Green: the bound this card proves for it, always abo
 
 Two constants come first. A **double** is the standard 64-bit computer number. [IEEE 754](02-ieee-floating-point.md) lays out its bits; here only the spacing matters.
 
-$$\varepsilon_{\text{mach}} = 2^{-52} \approx 2.220 \times 10^{-16}, \qquad u = \tfrac12\,\varepsilon_{\text{mach}} = 2^{-53} \approx 1.110 \times 10^{-16}$$
+```math
+\varepsilon_{\text{mach}} = 2^{-52} \approx 2.220 \times 10^{-16}, \qquad u = \tfrac12\,\varepsilon_{\text{mach}} = 2^{-53} \approx 1.110 \times 10^{-16}
+```
 
 **Read it aloud:** machine epsilon is the gap between 1 and the next double, and the unit roundoff u is half of that gap.
 
-Then the **standard model** of one rounding. Write $\mathrm{fl}(\cdot)$, read "float of", for what the machine returns:
+Then the **standard model** of one rounding. Write $`\mathrm{fl}(\cdot)`$, read "float of", for what the machine returns:
 
-$$\mathrm{fl}(x \circ y) = (x \circ y)(1 + \delta), \qquad |\delta| \le u$$
+```math
+\mathrm{fl}(x \circ y) = (x \circ y)(1 + \delta), \qquad |\delta| \le u
+```
 
 **Read it aloud:** the machine's answer to one operation is the exact answer times one plus a tiny relative error delta, and delta is never bigger than u.
 
-The runner's two formulas, with $z = (v/c)^2$ and $s = \sqrt{1 - z}$:
+The runner's two formulas, with $`z = (v/c)^2`$ and $`s = \sqrt{1 - z}`$:
 
-$$f = 1 - s = \frac{z}{1 + s}$$
+```math
+f = 1 - s = \frac{z}{1 + s}
+```
 
-Their error bounds, proved below, to first order in $u$:
+Their error bounds, proved below, to first order in $`u`$:
 
-$$\text{school formula: } \frac{|\hat f - f|}{f} \le \frac{1.5\,u}{f} + 2u, \qquad \text{rewrite: } \frac{|\hat f - f|}{f} \le 4.75\,u$$
+```math
+\text{school formula: } \frac{|\hat f - f|}{f} \le \frac{1.5\,u}{f} + 2u, \qquad \text{rewrite: } \frac{|\hat f - f|}{f} \le 4.75\,u
+```
 
 **Read it aloud:** the school formula's relative error can be as big as one and a half u divided by the answer itself, while the rewrite's never passes four and three-quarter u.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\varepsilon_{\text{mach}}$ | machine epsilon: the gap between 1 and the next double, $2^{-52}$ | 2.220446049250313e-16 | — (fixed by the format) |
-| $u$ | unit roundoff: half that gap, the most one rounding costs, relative | 1.110223024625157e-16 | — (fixed by the format) |
-| $\mathrm{fl}(\cdot)$, $\circ$ | the double the machine returns for an exact value; $\circ$ is one of +, −, ×, ÷ | fl(1 − z) = 1 − 3u | — |
-| $\delta$, $\delta_i$; $r$ | the relative error of one rounding ($\delta_i$: the $i$-th, in Step 6's fold); in that fold, $r$ is the relative error of $\hat s$ | −0.4945u for fl(1 − z) | never past $u$ in size |
-| $\hat f$ | "f hat": the computed $f$, as opposed to the true one | 2.220446049250313e-16 (school), 1.390812570067023e-16 (rewrite) | — |
-| $v$ | the runner's speed | 5 m/s | $f$ grows as $v^2$ and the school formula improves |
-| $c$ | the speed of light, exact by definition | 299792458 m/s | — |
-| $z$ | $(v/c)^2$, the squared speed as a fraction of light's | 2.781625140134046e-16, which is 2.5055u | the school formula's error shrinks |
-| $s$, $\hat s$ | $\sqrt{1 - z}$, the rate of the moving clock, and its computed value | $\hat s$ = 1 − 2u | — |
-| $f$ | the fraction of each second the moving clock loses | 1.390812570067023e-16, which is 1.2527u | the school formula's bound $1.5u/f$ falls |
-| $x$, $y$, $w$; $E$, $g$, $k$ | any numbers fed to one operation; the power of two $2^E$ at or below a number, the grid gap $g$ there, and a whole number $k$ | $x = 1 - 2u$, $y = 1$ in the last subtraction | a larger $E$ means a larger gap |
-| $a$, $b$ | in the quadratic $af^2 + bf + z = 0$, the numbers in front of $f^2$ and $f$ | $a = 1$, $b = -2$ | — |
+| $`\varepsilon_{\text{mach}}`$ | machine epsilon: the gap between 1 and the next double, $`2^{-52}`$ | 2.220446049250313e-16 | — (fixed by the format) |
+| $`u`$ | unit roundoff: half that gap, the most one rounding costs, relative | 1.110223024625157e-16 | — (fixed by the format) |
+| $`\mathrm{fl}(\cdot)`$, $`\circ`$ | the double the machine returns for an exact value; $`\circ`$ is one of +, −, ×, ÷ | fl(1 − z) = 1 − 3u | — |
+| $`\delta`$, $`\delta_i`$; $`r`$ | the relative error of one rounding ($`\delta_i`$: the $`i`$-th, in Step 6's fold); in that fold, $`r`$ is the relative error of $`\hat s`$ | −0.4945u for fl(1 − z) | never past $`u`$ in size |
+| $`\hat f`$ | "f hat": the computed $`f`$, as opposed to the true one | 2.220446049250313e-16 (school), 1.390812570067023e-16 (rewrite) | — |
+| $`v`$ | the runner's speed | 5 m/s | $`f`$ grows as $`v^2`$ and the school formula improves |
+| $`c`$ | the speed of light, exact by definition | 299792458 m/s | — |
+| $`z`$ | $`(v/c)^2`$, the squared speed as a fraction of light's | 2.781625140134046e-16, which is 2.5055u | the school formula's error shrinks |
+| $`s`$, $`\hat s`$ | $`\sqrt{1 - z}`$, the rate of the moving clock, and its computed value | $`\hat s`$ = 1 − 2u | — |
+| $`f`$ | the fraction of each second the moving clock loses | 1.390812570067023e-16, which is 1.2527u | the school formula's bound $`1.5u/f`$ falls |
+| $`x`$, $`y`$, $`w`$; $`E`$, $`g`$, $`k`$ | any numbers fed to one operation; the power of two $`2^E`$ at or below a number, the grid gap $`g`$ there, and a whole number $`k`$ | $`x = 1 - 2u`$, $`y = 1`$ in the last subtraction | a larger $`E`$ means a larger gap |
+| $`a`$, $`b`$ | in the quadratic $`af^2 + bf + z = 0`$, the numbers in front of $`f^2`$ and $`f`$ | $`a = 1`$, $`b = -2`$ | — |
 
-The quadratic row is there because $f$ is the small root of $f^2 - 2f + z = 0$: square $1 - f = s$ and rearrange. So [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) applies, with $b^2 = 4$ dwarfing $4az = 4z$: the classic case where the formula as written fails.
+The quadratic row is there because $`f`$ is the small root of $`f^2 - 2f + z = 0`$: square $`1 - f = s`$ and rearrange. So [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) applies, with $`b^2 = 4`$ dwarfing $`4az = 4z`$: the classic case where the formula as written fails.
 
-[Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md) already spots this trap and rewrites the quadratic formula. [Floating point](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/01-floating-point-in-practice.md) already defines machine epsilon and $u$ and proves the one-operation promise. This card rebuilds that promise from the gap next to one, then turns it into error bounds for whole formulas, to prove which formula is accurate.
+[Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md) already spots this trap and rewrites the quadratic formula. [Floating point](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/01-floating-point-in-practice.md) already defines machine epsilon and $`u`$ and proves the one-operation promise. This card rebuilds that promise from the gap next to one, then turns it into error bounds for whole formulas, to prove which formula is accurate.
 
 ### When it holds
 
-- **Round to nearest, ties to even.** This is the default mode. If the hardware is set to round up or down instead, the bound doubles to $\varepsilon_{\text{mach}}$.
-- **Correctly rounded operations.** IEEE 754 requires +, −, ×, ÷ and square root to return the exact answer, rounded once. Library functions such as exp and sin need not, so their $\delta$ can pass $u$ a little.
-- **Ordinary sizes.** Results must lie between about $10^{-308}$ and $10^{308}$. Past the top they become infinity; near the bottom the gaps stop shrinking (the [IEEE 754](02-ieee-floating-point.md) card's subnormals), and relative error grows.
-- **First order.** The bounds drop products of two $\delta$s. Each is below $u^2$, about $10^{-32}$, so the dropped part is far smaller than any digit printed here.
+- **Round to nearest, ties to even.** This is the default mode. If the hardware is set to round up or down instead, the bound doubles to $`\varepsilon_{\text{mach}}`$.
+- **Correctly rounded operations.** IEEE 754 requires +, −, ×, ÷ and square root to return the exact answer, rounded once. Library functions such as exp and sin need not, so their $`\delta`$ can pass $`u`$ a little.
+- **Ordinary sizes.** Results must lie between about $`10^{-308}`$ and $`10^{308}`$. Past the top they become infinity; near the bottom the gaps stop shrinking (the [IEEE 754](02-ieee-floating-point.md) card's subnormals), and relative error grows.
+- **First order.** The bounds drop products of two $`\delta`$s. Each is below $`u^2`$, about $`10^{-32}`$, so the dropped part is far smaller than any digit printed here.
 
 ---
 
@@ -99,80 +107,86 @@ The quadratic row is there because $f$ is the small root of $f^2 - 2f + z = 0$: 
 
 A double is one point of a fixed grid. Every operation computes the exact answer and returns the nearest grid point. So every error statement on this card comes from one question: how far apart are the grid points near the answer?
 
-### Step 1: the gap next to one is $2^{-52}$
+### Step 1: the gap next to one is $`2^{-52}`$
 
-Between 1 and 2, a double is $1 + k/2^{52}$ for a whole number $k$ from 0 to $2^{52} - 1$. So the next double after 1 is $1 + 2^{-52}$. That gap is machine epsilon.
+Between 1 and 2, a double is $`1 + k/2^{52}`$ for a whole number $`k`$ from 0 to $`2^{52} - 1`$. So the next double after 1 is $`1 + 2^{-52}`$. That gap is machine epsilon.
 
 The checks find it three ways. They read the bits of 1 and add one to the last bit. They halve a number until adding half of it to 1 changes nothing. And they ask the library, as a cross-check. All three give 2.220446049250313e-16.
 
-The halving loop stops at $2^{-52}$, not $2^{-53}$, because of a tie. The exact $1 + u$ sits exactly halfway between 1 and $1 + 2u$. Ties go to the neighbour whose last bit is 0, the even one, which is 1. So fl(1 + u) − 1 is 0u, and fl(1 + 3u) − 1 is 4u.
+The halving loop stops at $`2^{-52}`$, not $`2^{-53}`$, because of a tie. The exact $`1 + u`$ sits exactly halfway between 1 and $`1 + 2u`$. Ties go to the neighbour whose last bit is 0, the even one, which is 1. So fl(1 + u) − 1 is 0u, and fl(1 + 3u) − 1 is 4u.
 
-Between $2^E$ and $2^{E+1}$ the gap is $2^E \times \varepsilon_{\text{mach}}$. From ½ to 1 it is $u$. Near 1,000,000 it is 1.164e-10.
+Between $`2^E`$ and $`2^{E+1}`$ the gap is $`2^E \times \varepsilon_{\text{mach}}`$. From ½ to 1 it is $`u`$. Near 1,000,000 it is 1.164e-10.
 
-### Step 2: one rounding costs at most $u$, relative
+### Step 2: one rounding costs at most $`u`$, relative
 
-Take an exact answer $x$ between $2^E$ and $2^{E+1}$. The grid there has gap $2^E \varepsilon_{\text{mach}}$. The nearest point is at most half a gap away, $2^E u$. Since $x \ge 2^E$, the relative error is
+Take an exact answer $`x`$ between $`2^E`$ and $`2^{E+1}`$. The grid there has gap $`2^E \varepsilon_{\text{mach}}`$. The nearest point is at most half a gap away, $`2^E u`$. Since $`x \ge 2^E`$, the relative error is
 
-$$\frac{|\mathrm{fl}(x) - x|}{|x|} \le \frac{2^E u}{2^E} = u.$$
+```math
+\frac{|\mathrm{fl}(x) - x|}{|x|} \le \frac{2^E u}{2^E} = u.
+```
 
-So $\mathrm{fl}(x) = x(1 + \delta)$ with $|\delta| \le u$. IEEE 754 requires each basic operation to round its exact answer this way. That gives the standard model.
+So $`\mathrm{fl}(x) = x(1 + \delta)`$ with $`|\delta| \le u`$. IEEE 754 requires each basic operation to round its exact answer this way. That gives the standard model.
 
 The model measures each error against the result of that one operation. The next step shows why that matters.
 
 ### Step 3: the runner, one rounding at a time
 
-Count in units of $u$. The checks print each step.
+Count in units of $`u`$. The checks print each step.
 
 | Operation | Exact value | Nearest double | Rounding |
 | --- | --- | --- | --- |
-| $z = 25/c^2$ | 2.5055u | 2.781625140134046e-16 | two roundings, both tiny |
-| $1 - z$ | 1 − 2.5055u | 1 − 3u (gap below 1 is $u$) | δ = −0.4945u |
-| $\sqrt{1 - 3u}$ | about 1 − 1.5u | 1 − 2u | about −0.5u |
-| $1 - (1 - 2u)$ | 2u | 2u, no rounding | 0 |
+| $`z = 25/c^2`$ | 2.5055u | 2.781625140134046e-16 | two roundings, both tiny |
+| $`1 - z`$ | 1 − 2.5055u | 1 − 3u (gap below 1 is $`u`$) | δ = −0.4945u |
+| $`\sqrt{1 - 3u}`$ | about 1 − 1.5u | 1 − 2u | about −0.5u |
+| $`1 - (1 - 2u)`$ | 2u | 2u, no rounding | 0 |
 
-Every operation kept the model's promise. The answer, 2u, is still 59.65% above the true 1.2527u. Each rounding moved $s$ by about half a gap, and the answer is only 1.2527 gaps wide.
+Every operation kept the model's promise. The answer, 2u, is still 59.65% above the true 1.2527u. Each rounding moved $`s`$ by about half a gap, and the answer is only 1.2527 gaps wide.
 
 ### Step 4: the bound for the school formula
 
-The last subtraction is exact. Two doubles within a factor of 2 of each other subtract with no rounding (the Sterbenz lemma, proved in the fold below). So all the error was made before it, in $s$.
+The last subtraction is exact. Two doubles within a factor of 2 of each other subtract with no rounding (the Sterbenz lemma, proved in the fold below). So all the error was made before it, in $`s`$.
 
-Track the absolute error in $s$:
+Track the absolute error in $`s`$:
 
-1. $1 - z$ rounds by at most $u$, since the result is just below 1.
-2. The input $z$ already carried a relative error of up to $2u$, from computing $c \times c$ and dividing. That is an absolute error of $2uz$.
-3. A square root halves a small relative error, so these become at most $u/2 + uz$ in $s$.
-4. The square root's own rounding adds at most $u$.
+1. $`1 - z`$ rounds by at most $`u`$, since the result is just below 1.
+2. The input $`z`$ already carried a relative error of up to $`2u`$, from computing $`c \times c`$ and dividing. That is an absolute error of $`2uz`$.
+3. A square root halves a small relative error, so these become at most $`u/2 + uz`$ in $`s`$.
+4. The square root's own rounding adds at most $`u`$.
 
-So $|\hat s - s| \le 1.5u + uz$. Then $\hat f = 1 - \hat s$ exactly, and dividing by $f$, which is close to $z/2$:
+So $`|\hat s - s| \le 1.5u + uz`$. Then $`\hat f = 1 - \hat s`$ exactly, and dividing by $`f`$, which is close to $`z/2`$:
 
-$$\frac{|\hat f - f|}{f} \le \frac{1.5\,u}{f} + 2u.$$
+```math
+\frac{|\hat f - f|}{f} \le \frac{1.5\,u}{f} + 2u.
+```
 
-For the runner the bound is 119.74%. The measured error is 59.65%, a ratio of 0.498. The bound grows as $f$ shrinks: at 2 m/s it is 7.484e0, and the computed $f$ is 0, an error of 1.000e0.
+For the runner the bound is 119.74%. The measured error is 59.65%, a ratio of 0.498. The bound grows as $`f`$ shrinks: at 2 m/s it is 7.484e0, and the computed $`f`$ is 0, an error of 1.000e0.
 
-The warning sign: a subtraction whose result is far smaller than its inputs, where the inputs already carry rounding. The [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md) card measures the damage as a condition number. Here the inputs are about 1 and the answer about $10^{-16}$, so up to 16 digits can go.
+The warning sign: a subtraction whose result is far smaller than its inputs, where the inputs already carry rounding. The [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md) card measures the damage as a condition number. Here the inputs are about 1 and the answer about $`10^{-16}`$, so up to 16 digits can go.
 
 <details>
 <summary>Detailed proof: the Sterbenz lemma, a close subtraction is exact</summary>
 
-Let $x$ and $y$ be positive doubles with $y/2 \le x \le y$. Let $2^E$ be the power of two at or below $x$, so the grid gap at $x$ is $g = 2^{E-52}$.
+Let $`x`$ and $`y`$ be positive doubles with $`y/2 \le x \le y`$. Let $`2^E`$ be the power of two at or below $`x`$, so the grid gap at $`x`$ is $`g = 2^{E-52}`$.
 
-Every double at least as large as $x$ is a whole multiple of $g$, because gaps only grow with size, each by a factor of 2. So $y - x = kg$ for a whole number $k$.
+Every double at least as large as $`x`$ is a whole multiple of $`g`$, because gaps only grow with size, each by a factor of 2. So $`y - x = kg`$ for a whole number $`k`$.
 
-Also $0 \le y - x \le y/2 \le x < 2^{E+1}$, so $k < 2^{53}$. A whole number below $2^{53}$ times a power of two is a double. The exact difference is already on the grid, so rounding leaves it alone.
+Also $`0 \le y - x \le y/2 \le x < 2^{E+1}`$, so $`k < 2^{53}`$. A whole number below $`2^{53}`$ times a power of two is a double. The exact difference is already on the grid, so rounding leaves it alone.
 
-For the runner, $x = 1 - 2u$ and $y = 1$. They are within a factor of 2, so $1 - \hat s$ is computed exactly.
+For the runner, $`x = 1 - 2u`$ and $`y = 1`$. They are within a factor of 2, so $`1 - \hat s`$ is computed exactly.
 
 </details>
 
 ### Step 5: the rewrite
 
-Multiply top and bottom by $1 + s$. Since $(1 - s)(1 + s) = 1 - s^2 = z$,
+Multiply top and bottom by $`1 + s`$. Since $`(1 - s)(1 + s) = 1 - s^2 = z`$,
 
-$$1 - s = \frac{z}{1 + s}.$$
+```math
+1 - s = \frac{z}{1 + s}.
+```
 
-The quadratic gives the same rewrite. Its two roots multiply to $z/a = z$. The big root is $1 + s$, an addition of two positive numbers, which cannot cancel. So the small root is $z$ divided by the big one.
+The quadratic gives the same rewrite. Its two roots multiply to $`z/a = z`$. The big root is $`1 + s`$, an addition of two positive numbers, which cannot cancel. So the small root is $`z`$ divided by the big one.
 
-The new formula has one subtraction, $1 - z$. Its inputs are 1 and a number about $10^{-16}$, nowhere near each other, so it loses nothing.
+The new formula has one subtraction, $`1 - z`$. Its inputs are 1 and a number about $`10^{-16}`$, nowhere near each other, so it loses nothing.
 
 ### Step 6: proving the rewrite accurate
 
@@ -181,31 +195,31 @@ To first order, relative errors combine by four plain rules:
 - **Multiply or divide:** the relative errors add.
 - **Square root:** the input's relative error halves.
 - **Add two positive numbers:** each input's relative error counts in proportion to its share of the sum, so the result's is never more than the larger input's.
-- **Every operation:** add $u$ for its own rounding.
+- **Every operation:** add $`u`$ for its own rounding.
 
-Apply them to $z / (1 + s)$, one operation at a time:
+Apply them to $`z / (1 + s)`$, one operation at a time:
 
 | Piece | Relative error, at most | Why |
 | --- | --- | --- |
-| $z$ | $2u$ | two roundings: $c \times c$, then the division |
-| $1 - z$ | $u$ | one rounding; $z$'s own error moves $1 - z$ by about $2u \times 10^{-16}$, negligible |
-| $s = \sqrt{1 - z}$ | $u/2 + u = 1.5u$ | input error halved, plus its own rounding |
-| $1 + s$ | $1.5u \times \tfrac12 + u = 1.75u$ | $s$ is half the sum, so half its error counts; plus one rounding |
-| $z/(1 + s)$ | $2u + 1.75u + u = 4.75u$ | errors of top and bottom add, plus one rounding |
+| $`z`$ | $`2u`$ | two roundings: $`c \times c`$, then the division |
+| $`1 - z`$ | $`u`$ | one rounding; $`z`$'s own error moves $`1 - z`$ by about $`2u \times 10^{-16}`$, negligible |
+| $`s = \sqrt{1 - z}`$ | $`u/2 + u = 1.5u`$ | input error halved, plus its own rounding |
+| $`1 + s`$ | $`1.5u \times \tfrac12 + u = 1.75u`$ | $`s`$ is half the sum, so half its error counts; plus one rounding |
+| $`z/(1 + s)`$ | $`2u + 1.75u + u = 4.75u`$ | errors of top and bottom add, plus one rounding |
 
 No step divides by a small difference, so nothing magnifies the errors. The run's error is 1.0079u, a ratio of 0.212 to the bound. At all five speeds it stays between −0.190u and 1.259u.
 
 <details>
 <summary>Detailed proof: the second-order terms are negligible</summary>
 
-Write each rounding as a factor $(1 + \delta_i)$ with $|\delta_i| \le u$. Two steps are not plain rounding factors, and each takes one line.
+Write each rounding as a factor $`(1 + \delta_i)`$ with $`|\delta_i| \le u`$. Two steps are not plain rounding factors, and each takes one line.
 
-- **The computed $z$ inside $1 - z$.** Its error, at most about $2uz$ (twice $u$ times $z$), changes $1 - z$ by a relative amount of about $2uz$. That is tiny even beside $u$, and the square root halves it.
-- **The sum $1 + \hat s$.** Write $\hat s = s(1 + r)$. Then $1 + \hat s = (1 + s)\big(1 + r\,s/(1 + s)\big)$, and $s/(1 + s) \le \tfrac12$, so this factor's size is at most $|r|/2$, exactly. That is the halving the table uses.
+- **The computed $`z`$ inside $`1 - z`$.** Its error, at most about $`2uz`$ (twice $`u`$ times $`z`$), changes $`1 - z`$ by a relative amount of about $`2uz`$. That is tiny even beside $`u`$, and the square root halves it.
+- **The sum $`1 + \hat s`$.** Write $`\hat s = s(1 + r)`$. Then $`1 + \hat s = (1 + s)\big(1 + r\,s/(1 + s)\big)`$, and $`s/(1 + s) \le \tfrac12`$, so this factor's size is at most $`|r|/2`$, exactly. That is the halving the table uses.
 
-So $\hat f$ is the true $f$ times five factors, each one plus something small, or its inverse: four roundings ($c \times c$, the division giving $z$, the add and the last division), each of size at most $u$, and the $1 + \hat s$ factor, of size at most $|r|/2$. By the table's row for $s$, $|r|$ is at most $1.5u$ plus parts of size $u^2$ and $uz$. So the five sizes add to 4.75u plus such parts.
+So $`\hat f`$ is the true $`f`$ times five factors, each one plus something small, or its inverse: four roundings ($`c \times c`$, the division giving $`z`$, the add and the last division), each of size at most $`u`$, and the $`1 + \hat s`$ factor, of size at most $`|r|/2`$. By the table's row for $`s`$, $`|r|`$ is at most $`1.5u`$ plus parts of size $`u^2`$ and $`uz`$. So the five sizes add to 4.75u plus such parts.
 
-If the sizes of such factors add to a total below 1, their product lies within total ÷ (1 − total) of 1. So the error is at most 4.75u plus less than $40u^2 + uz$: about $5 \times 10^{-31}$ at the runner's speed, far beneath any digit printed. Counting every rounding at its full size $u$ instead gives the looser $6u$ the same way.
+If the sizes of such factors add to a total below 1, their product lies within total ÷ (1 − total) of 1. So the error is at most 4.75u plus less than $`40u^2 + uz`$: about $`5 \times 10^{-31}`$ at the runner's speed, far beneath any digit printed. Counting every rounding at its full size $`u`$ instead gives the looser $`6u`$ the same way.
 
 </details>
 
@@ -213,36 +227,36 @@ If the sizes of such factors add to a total below 1, their product lies within t
 
 ## Worked numbers, by hand
 
-The runner at $v$ = 5 m/s, counting in $u$ = 1.110223024625157e-16.
+The runner at $`v`$ = 5 m/s, counting in $`u`$ = 1.110223024625157e-16.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| squared speed fraction | $z = 25 / 299792458^2$ | 2.781625140134046e-16 = 2.5055u |
-| school: $1 - z$ | nearest double to 1 − 2.5055u | 1 − 3u |
+| squared speed fraction | $`z = 25 / 299792458^2`$ | 2.781625140134046e-16 = 2.5055u |
+| school: $`1 - z`$ | nearest double to 1 − 2.5055u | 1 − 3u |
 | school: square root | nearest double to about 1 − 1.5u | 1 − 2u |
-| school: $1 - s$ | exact subtraction | 2u = 2.220446049250313e-16 |
+| school: $`1 - s`$ | exact subtraction | 2u = 2.220446049250313e-16 |
 | school: error | (2u − 1.2527u) / 1.2527u | 59.65%, bound 119.74% |
-| rewrite: $1 + s$ | 1 + (1 − 2u), exact here | 2 − 2u |
-| rewrite: $z/(1 + s)$ | 2.5055u ÷ (2 − 2u) | **1.390812570067023e-16** |
-| check: series | $z/2 + z^2/8$ | 1.390812570067023e-16 |
-| rewrite: error | against the exact $f$ | 1.0079u, bound 4.75u |
+| rewrite: $`1 + s`$ | 1 + (1 − 2u), exact here | 2 − 2u |
+| rewrite: $`z/(1 + s)`$ | 2.5055u ÷ (2 − 2u) | **1.390812570067023e-16** |
+| check: series | $`z/2 + z^2/8`$ | 1.390812570067023e-16 |
+| rewrite: error | against the exact $`f`$ | 1.0079u, bound 4.75u |
 
-The watch loses 1.390812570067023e-16 of every second, 5.007e-13 seconds over an hour, and the computed value is right to one rounding. The rewrite costs one operation more: after $z$, the school formula takes 3 (subtract, square root, subtract) and the rewrite 4 (subtract, square root, add, divide), for an error of 1.0079u instead of 59.65%.
+The watch loses 1.390812570067023e-16 of every second, 5.007e-13 seconds over an hour, and the computed value is right to one rounding. The rewrite costs one operation more: after $`z`$, the school formula takes 3 (subtract, square root, subtract) and the rewrite 4 (subtract, square root, add, divide), for an error of 1.0079u instead of 59.65%.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| School formula at 5 m/s | 2.220446049250313e-16, error 59.65% | the rounding of $1 - z$ and of the root survived an exact subtraction that removed everything else |
-| School formula at 2 m/s | 0, error 1.000e0 | $z$ is under half the gap below 1, so $1 - z$ rounds back to exactly 1 |
-| Rewrite with the sign flipped, $z/(1 - s)$ | 1.2527e0, should be 2.0000e0 | this is the big root, divided by the cancelled difference |
-| Keep only the first series term $z/2$, at 3874 m/s | error 4.175e-11, which is 376016u | a dropped term, not a rounding: a truncation error |
+| School formula at 5 m/s | 2.220446049250313e-16, error 59.65% | the rounding of $`1 - z`$ and of the root survived an exact subtraction that removed everything else |
+| School formula at 2 m/s | 0, error 1.000e0 | $`z`$ is under half the gap below 1, so $`1 - z`$ rounds back to exactly 1 |
+| Rewrite with the sign flipped, $`z/(1 - s)`$ | 1.2527e0, should be 2.0000e0 | this is the big root, divided by the cancelled difference |
+| Keep only the first series term $`z/2`$, at 3874 m/s | error 4.175e-11, which is 376016u | a dropped term, not a rounding: a truncation error |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts find machine epsilon three ways. Then they compute the runner's $f$ by three roads: the school formula, the rewrite and a two-term series. The series must meet the rewrite at all five speeds: at the walk and the run its second term is below half a gap and vanishes, but from 30 m/s up it counts. Errors are measured against the exact $f$, worked in whole numbers from the double's bits. Python adds a fourth road, an exact 400-bit square root, which must agree. The library's epsilon is only a labelled cross-check.
+The scripts find machine epsilon three ways. Then they compute the runner's $`f`$ by three roads: the school formula, the rewrite and a two-term series. The series must meet the rewrite at all five speeds: at the walk and the run its second term is below half a gap and vanishes, but from 30 m/s up it counts. Errors are measured against the exact $`f`$, worked in whole numbers from the double's bits. Python adds a fourth road, an exact 400-bit square root, which must agree. The library's epsilon is only a labelled cross-check.
 
 ### Python
 
@@ -523,11 +537,11 @@ ALL CHECKS PASS
 
 Lean proves the gap next to one, the one-rounding rule and the Sterbenz lemma, and checks the card's whole-number examples.
 
-- $1 + \varepsilon_{\text{mach}}$ is a double, and no double lies strictly between 1 and it.
-- For any operation whose exact result has an ordinary size, as in When it holds, a nearest double is $(x \circ y)(1 + \delta)$ with $|\delta| \le u$. Either choice at a tie keeps this bound.
-- If $x$ and $y$ are positive doubles with $y/2 \le x \le y$, then $y - x$ is a double, so the subtraction is exact.
-- The hand arithmetic holds exactly: $c^2$, $u = \varepsilon_{\text{mach}}/2$, the power of two at or below 1,000,000, and $1 + 3u$ halfway between the doubles $1 + 2u$ and $1 + 4u$.
-- For the runner, $1 - 3u$ and $1 - 2u$ are doubles, rounding $1 - z$ to $1 - 3u$ costs under $u$, and $1 - \hat s$ is exact.
+- $`1 + \varepsilon_{\text{mach}}`$ is a double, and no double lies strictly between 1 and it.
+- For any operation whose exact result has an ordinary size, as in When it holds, a nearest double is $`(x \circ y)(1 + \delta)`$ with $`|\delta| \le u`$. Either choice at a tie keeps this bound.
+- If $`x`$ and $`y`$ are positive doubles with $`y/2 \le x \le y`$, then $`y - x`$ is a double, so the subtraction is exact.
+- The hand arithmetic holds exactly: $`c^2`$, $`u = \varepsilon_{\text{mach}}/2`$, the power of two at or below 1,000,000, and $`1 + 3u`$ halfway between the doubles $`1 + 2u`$ and $`1 + 4u`$.
+- For the runner, $`1 - 3u`$ and $`1 - 2u`$ are doubles, rounding $`1 - z`$ to $`1 - 3u`$ costs under $`u`$, and $`1 - \hat s`$ is exact.
 
 The first-order bounds of Steps 4 and 6, the decimals, the five speeds and Try changing are left to the Python and Rust checks.
 
@@ -959,7 +973,7 @@ end MachineEpsilonCancellation
 > Guess first, then run it. An assert is a line that stops the program when a claim is false.
 > - **Slow the runner to a walk.** Set `v = 5` to `v = 2`. Guess first: what does the school formula return? It prints `0.000000000000000e0`, an error of −100.00% against a bound of 748.36%, and the assert expecting the 60% loss stops the run.
 > - **Drop the square root from the rewrite.** Make `safe` return `z / 2`. Guess first: where does it fail? The walk and the run pass, but at the car's 30 m/s the dropped term is bigger than 4.75u and the loop's assert stops it.
-> - **Halve from 1024 instead of 1.** Change the loop test to `1024.0 + e / 2 > 1024.0`. Guess first: what does the loop find? 2.273736754432321e-13, which is 1024 times machine epsilon: the gap grows with the number. The assert that expects $2^{-52}$ then stops the run.
+> - **Halve from 1024 instead of 1.** Change the loop test to `1024.0 + e / 2 > 1024.0`. Guess first: what does the loop find? 2.273736754432321e-13, which is 1024 times machine epsilon: the gap grows with the number. The assert that expects $`2^{-52}`$ then stops the run.
 
 ---
 
@@ -968,29 +982,29 @@ end MachineEpsilonCancellation
 > [!warning]
 > **"Every operation is accurate to u, so the answer is accurate to about u."** The school formula used three operations, each within u, and the answer is 59.65% wrong. The model bounds each step against that step's own result. A subtraction that shrinks the result turns old, small absolute errors into a large relative one.
 >
-> - **Calling machine epsilon the smallest number.** It is a gap next to 1. The double $z$ = 2.781625140134046e-16 is stored to full accuracy on its own; only 1 + z or 1 − z loses it.
-> - **Mixing up $\varepsilon_{\text{mach}}$ and $u$.** Some books and languages call $2^{-53}$ "machine epsilon". Using $\varepsilon_{\text{mach}}$ in the standard model doubles every bound, here 4.75u becomes 9.5u.
-> - **Blaming the subtraction.** $1 - \hat s$ was exact. More digits at that step change nothing; the fix is a formula with no close subtraction.
-> - **A fixed tolerance.** An absolute test such as "within 1e-12" would accept the 59.65%-wrong 2.220446049250313e-16 as correct. A tolerance must scale with the answer: here 4.75u times $|f|$.
+> - **Calling machine epsilon the smallest number.** It is a gap next to 1. The double $`z`$ = 2.781625140134046e-16 is stored to full accuracy on its own; only 1 + z or 1 − z loses it.
+> - **Mixing up $`\varepsilon_{\text{mach}}`$ and $`u`$.** Some books and languages call $`2^{-53}`$ "machine epsilon". Using $`\varepsilon_{\text{mach}}`$ in the standard model doubles every bound, here 4.75u becomes 9.5u.
+> - **Blaming the subtraction.** $`1 - \hat s`$ was exact. More digits at that step change nothing; the fix is a formula with no close subtraction.
+> - **A fixed tolerance.** An absolute test such as "within 1e-12" would accept the 59.65%-wrong 2.220446049250313e-16 as correct. A tolerance must scale with the answer: here 4.75u times $`|f|`$.
 
 ---
 
 ## Where you meet it in real life
 
-- **Satellite navigation.** Navigation satellites move at about 3874 m/s, so their clocks lose $f$ = 8.349e-11 of each second to speed. The school formula keeps about six digits there (error 2.893e-7); the same code at walking speed returns 0.
+- **Satellite navigation.** Navigation satellites move at about 3874 m/s, so their clocks lose $`f`$ = 8.349e-11 of each second to speed. The school formula keeps about six digits there (error 2.893e-7); the same code at walking speed returns 0.
 - **Running totals on a tracker.** A fitness tracker that adds 0.1 to a total ten million times works near 1,000,000, where the gap is 1.164e-10. Each addition can lose up to 5.821e-11. Ten million of those losses are the subject of [Adding a million numbers without losing the small ones](07-summation-kahan-and-welford.md).
-- **Library functions built for this.** Most languages offer `expm1(x)` for $e^x - 1$ and `log1p(x)` for $\log(1 + x)$. Each avoids a close subtraction when $x$ is small, such as one day's interest at a low rate.
-- **Compilers and FMA.** A fused multiply-add (FMA) computes $x \times y + w$ with one rounding instead of two, so it obeys the model with one $\delta$. A compiler that fuses operations changes the last bits, which is why checks of a computed answer compare against a bound, never with `==`.
+- **Library functions built for this.** Most languages offer `expm1(x)` for $`e^x - 1`$ and `log1p(x)` for $`\log(1 + x)`$. Each avoids a close subtraction when $`x`$ is small, such as one day's interest at a low rate.
+- **Compilers and FMA.** A fused multiply-add (FMA) computes $`x \times y + w`$ with one rounding instead of two, so it obeys the model with one $`\delta`$. A compiler that fuses operations changes the last bits, which is why checks of a computed answer compare against a bound, never with `==`.
 
 > **Say it back**
-> Machine epsilon is the gap between 1 and the next double, $2^{-52}$. Rounding to the nearest double costs at most half a gap relative to the result, $u = 2^{-53}$; that is the standard model. A subtraction of nearly equal numbers is often exact, but it keeps the absolute errors made earlier and shrinks the answer, so the relative error can grow to $u$ divided by the answer. The runner's clock formula loses 59.65% that way. Rewriting it as $z/(1 + s)$ removes the close subtraction, and counting roundings proves its error stays under 4.75u.
+> Machine epsilon is the gap between 1 and the next double, $`2^{-52}`$. Rounding to the nearest double costs at most half a gap relative to the result, $`u = 2^{-53}`$; that is the standard model. A subtraction of nearly equal numbers is often exact, but it keeps the absolute errors made earlier and shrinks the answer, so the relative error can grow to $`u`$ divided by the answer. The runner's clock formula loses 59.65% that way. Rewriting it as $`z/(1 + s)`$ removes the close subtraction, and counting roundings proves its error stays under 4.75u.
 
 ---
 
 ## What this builds on
 
 - [IEEE 754](02-ieee-floating-point.md): the bit layout of a double, the gap ulp(x) at every size, and subnormals, which this card's spacing argument relies on.
-- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the formula itself, and the fact that the two roots multiply to the constant term over $a$ (here $z$), which gives the rewrite.
+- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the formula itself, and the fact that the two roots multiply to the constant term over $`a`$ (here $`z`$), which gives the rewrite.
 - [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md): spotting a close subtraction and the safe quadratic in practice, with the condition number of a subtraction.
 - [Floating point](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/01-floating-point-in-practice.md): machine epsilon and the rounding promise as everyday tools, and the error bound for a long sum.
 
@@ -1000,7 +1014,7 @@ end MachineEpsilonCancellation
 - [Adding a million numbers without losing the small ones](07-summation-kahan-and-welford.md): the tracker's ten million additions, each costing up to half a gap, and how to carry the lost part forward.
 - [Interval arithmetic](09-interval-arithmetic-in-outline.md): instead of proving a bound by hand, let the machine carry an upper and a lower value through every rounding.
 
-The runner's input $z$ already carried two roundings, and both formulas passed them on. When does the problem itself magnify input error, whichever formula computes it? [Conditioning and stability](05-conditioning-and-stability.md) answers that.
+The runner's input $`z`$ already carried two roundings, and both formulas passed them on. When does the problem itself magnify input error, whichever formula computes it? [Conditioning and stability](05-conditioning-and-stability.md) answers that.
 
 ---
 
@@ -1011,5 +1025,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Goldberg, D. "What Every Computer Scientist Should Know About Floating-Point Arithmetic." *ACM Computing Surveys* 23, no. 1 (1991). [doi:10.1145/103162.103163](https://doi.org/10.1145/103162.103163). Machine epsilon, the relative-error model, cancellation and the safe quadratic, with proofs.
 - Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2nd ed. SIAM, 2002. [doi:10.1137/1.9780898718027](https://doi.org/10.1137/1.9780898718027). The standard model, the Sterbenz lemma and the bound on a product of rounding factors (chapters 2 and 3).
 - *IEEE Standard for Floating-Point Arithmetic*, IEEE Std 754-2019. [doi:10.1109/IEEESTD.2019.8766229](https://doi.org/10.1109/IEEESTD.2019.8766229). The requirement that basic operations and square root are correctly rounded, and ties to even.
-- Einstein, A. "Zur Elektrodynamik bewegter Körper." *Annalen der Physik* 322, no. 10 (1905). [doi:10.1002/andp.19053221004](https://doi.org/10.1002/andp.19053221004). The slowing of a moving clock by the factor $\sqrt{1 - v^2/c^2}$.
+- Einstein, A. "Zur Elektrodynamik bewegter Körper." *Annalen der Physik* 322, no. 10 (1905). [doi:10.1002/andp.19053221004](https://doi.org/10.1002/andp.19053221004). The slowing of a moving clock by the factor $`\sqrt{1 - v^2/c^2}`$.
 - Ashby, N. "Relativity in the Global Positioning System." *Living Reviews in Relativity* 6 (2003). [doi:10.12942/lrr-2003-1](https://doi.org/10.12942/lrr-2003-1). The satellite speed of about 3.874 km/s and how navigation clocks correct for relativity.

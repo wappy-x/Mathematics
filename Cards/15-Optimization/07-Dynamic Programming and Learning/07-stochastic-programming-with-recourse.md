@@ -38,38 +38,42 @@ Schematic, not to scale. The root is the decision made before the rain; each lea
 
 ## The formula
 
-$$\min_{0 \,\le\, x \,\le\, 70}\; c^T x \;+\; \sum_{s} p_s\, Q(x, s), \qquad Q(x, s) \;=\; \min_{y_s \,\ge\, 0}\ \big\{\, q^T y_s \;:\; W y_s \,\ge\, h_s - T x \,\big\}$$
+```math
+\min_{0 \,\le\, x \,\le\, 70}\; c^T x \;+\; \sum_{s} p_s\, Q(x, s), \qquad Q(x, s) \;=\; \min_{y_s \,\ge\, 0}\ \big\{\, q^T y_s \;:\; W y_s \,\ge\, h_s - T x \,\big\}
+```
 
 **Read it aloud:** choose the now-decision to make smallest its own cost plus the chance-weighted average, over the scenarios, of the cheapest repair each scenario allows once it is known.
 
-The second half, $Q(x, s)$, is the **recourse** (the after-the-fact correction). The whole problem is called a two-stage program **with recourse**. Write out every $Q$ in full and the two minimisations merge into one, the **extensive form**:
+The second half, $`Q(x, s)`$, is the **recourse** (the after-the-fact correction). The whole problem is called a two-stage program **with recourse**. Write out every $`Q`$ in full and the two minimisations merge into one, the **extensive form**:
 
-$$\min_{x,\ y_1, \dots, y_S}\; c^T x + \sum_s p_s\, q^T y_s \quad \text{subject to} \quad T x + W y_s \ge h_s \ \text{ for every scenario } s, \qquad 0 \le x \le 70,\ \ y_s \ge 0.$$
+```math
+\min_{x,\ y_1, \dots, y_S}\; c^T x + \sum_s p_s\, q^T y_s \quad \text{subject to} \quad T x + W y_s \ge h_s \ \text{ for every scenario } s, \qquad 0 \le x \le 70,\ \ y_s \ge 0.
+```
 
-Here $x$ is one number, so $c^T x$ is $2x$. The raised $T$ (transpose) means "multiply entry by entry, then add up": $q^T y_s$ is each repair price times its amount, summed. It is not the matrix $T$ below. On this card $y$ is the recourse, not the linear-programming shelf's dual prices, which are written $\lambda$ here. $Q$ is this subject's standard letter, and its likeness to the values of [Q-learning](05-q-learning-and-temporal-differences.md) is real: both price a choice followed by the best continuation.
+Here $`x`$ is one number, so $`c^T x`$ is $`2x`$. The raised $`T`$ (transpose) means "multiply entry by entry, then add up": $`q^T y_s`$ is each repair price times its amount, summed. It is not the matrix $`T`$ below. On this card $`y`$ is the recourse, not the linear-programming shelf's dual prices, which are written $`\lambda`$ here. $`Q`$ is this subject's standard letter, and its likeness to the values of [Q-learning](05-q-learning-and-temporal-differences.md) is real: both price a choice followed by the best continuation.
 
-For the reservoir, the water level at the end of November in scenario $s$ is $70 + \xi_s - x - (20 - g_s) - f_s$: what was there, plus rain, minus what was let out, minus what the turbine ran, minus overflow. Each leaf has four rows (limits, one line of the program each): the end level is at most 100 (room), the end level plus the shortfall $b_s$ is at least 50 (reserve), $g_s \le 20$ (turbine), and the end level is at least 0.
+For the reservoir, the water level at the end of November in scenario $`s`$ is $`70 + \xi_s - x - (20 - g_s) - f_s`$: what was there, plus rain, minus what was let out, minus what the turbine ran, minus overflow. Each leaf has four rows (limits, one line of the program each): the end level is at most 100 (room), the end level plus the shortfall $`b_s`$ is at least 50 (reserve), $`g_s \le 20`$ (turbine), and the end level is at least 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the first-stage decision: water let out through the spill gates now, before the rain, million m³ | best $x^* = 30$ | more room if wet, less water if dry; the expected cost falls until 30, then rises |
-| $c$ | cost of letting out one million m³ now, thousand pounds | 2 | $x^*$ falls; at 12 it is 0 |
-| $s$, $p_s$ | a scenario (one leaf of the tree, $S$ leaves in all) and its chance | dry 0.3, normal 0.5, wet 0.2 | more weight on wet: $x^*$ rises (40 at wet 40%) |
-| $\xi_s$ | rain inflow in scenario $s$, million m³ (say "xi") | 10, 30, 90 | more room is needed |
-| $y_s = (g_s, f_s, b_s)$ | the recourse: power bought for turbine water not run, overflow over the crest, shortfall below the 50 reserve, million m³ | wet: (0, 10, 0) | — |
-| $q$ | recourse prices per million m³, thousand pounds | (10, 50, 30) | overflow at 100: $x^* = 40$, cost 280 |
-| $W$, $T$, $h_s$; $A z \ge h$ | how the recourse, the now-decision and the rain enter each leaf's rows; all rows stacked, with $z$ every unknown | four rows per leaf; 13 rows, 10 unknowns | — |
-| $Q(x, s)$ | recourse cost: the cheapest repair in scenario $s$, given $x$ | at $x = 30$: 200, 0, 500 | — |
-| $p^*$ | the optimal value: the best expected cost, the value of the whole program | 220 | — |
-| $\lambda$ | dual prices on the rows: the certificate that nothing beats $p^*$ | 8, 5 and 10 on three rows, 0 elsewhere | — |
-| EEV, VSS | expected cost of the plan made for average rain; the value of the stochastic solution, EEV − $p^*$ | 400, 180 | — |
-| WS, EVPI | wait-and-see: expected cost with perfect foresight; the expected value of perfect information, $p^*$ − WS | 16, 204 | — |
+| $`x`$ | the first-stage decision: water let out through the spill gates now, before the rain, million m³ | best $`x^* = 30`$ | more room if wet, less water if dry; the expected cost falls until 30, then rises |
+| $`c`$ | cost of letting out one million m³ now, thousand pounds | 2 | $`x^*`$ falls; at 12 it is 0 |
+| $`s`$, $`p_s`$ | a scenario (one leaf of the tree, $`S`$ leaves in all) and its chance | dry 0.3, normal 0.5, wet 0.2 | more weight on wet: $`x^*`$ rises (40 at wet 40%) |
+| $`\xi_s`$ | rain inflow in scenario $`s`$, million m³ (say "xi") | 10, 30, 90 | more room is needed |
+| $`y_s = (g_s, f_s, b_s)`$ | the recourse: power bought for turbine water not run, overflow over the crest, shortfall below the 50 reserve, million m³ | wet: (0, 10, 0) | — |
+| $`q`$ | recourse prices per million m³, thousand pounds | (10, 50, 30) | overflow at 100: $`x^* = 40`$, cost 280 |
+| $`W`$, $`T`$, $`h_s`$; $`A z \ge h`$ | how the recourse, the now-decision and the rain enter each leaf's rows; all rows stacked, with $`z`$ every unknown | four rows per leaf; 13 rows, 10 unknowns | — |
+| $`Q(x, s)`$ | recourse cost: the cheapest repair in scenario $`s`$, given $`x`$ | at $`x = 30`$: 200, 0, 500 | — |
+| $`p^*`$ | the optimal value: the best expected cost, the value of the whole program | 220 | — |
+| $`\lambda`$ | dual prices on the rows: the certificate that nothing beats $`p^*`$ | 8, 5 and 10 on three rows, 0 elsewhere | — |
+| EEV, VSS | expected cost of the plan made for average rain; the value of the stochastic solution, EEV − $`p^*`$ | 400, 180 | — |
+| WS, EVPI | wait-and-see: expected cost with perfect foresight; the expected value of perfect information, $`p^*`$ − WS | 16, 204 | — |
 
 ### When it holds
 
-- **The now-decision cannot see the rain.** Give each leaf its own $x$ and the program prices clairvoyance instead (WS = 16), which no operator can achieve.
+- **The now-decision cannot see the rain.** Give each leaf its own $`x`$ and the program prices clairvoyance instead (WS = 16), which no operator can achieve.
 - **The scenarios and chances describe the weather.** Shift the wet chance from 20 to 40 percent, taken from normal, and the best release moves from 30 to 40.
-- **Every leaf has a repair, whatever $x$ is.** Here every shortfall has a price. Make the reserve a hard wall and any $x$ above 30 leaves the dry leaf with no repair: its $Q$ is infinite, and those $x$ are ruled out.
+- **Every leaf has a repair, whatever $`x`$ is.** Here every shortfall has a price. Make the reserve a hard wall and any $`x`$ above 30 leaves the dry leaf with no repair: its $`Q`$ is infinite, and those $`x`$ are ruled out.
 - **Costs and limits are straight lines.** That makes it one linear program. Gates that open only in steps of 25 million m³ would make it an integer program (some unknowns limited to whole steps): see [Integer programs](../05-Integer%20and%20Combinatorial%20Optimisation/01-integer-programs-and-relaxations.md).
 - **The target is the average cost.** The plan accepts a 20 percent chance of a £500,000 bill. An operator who cannot afford that leaf needs a risk measure (a target that counts the bad leaves more heavily than their chance), not the plain average.
 
@@ -81,32 +85,32 @@ For the reservoir, the water level at the end of November in scenario $s$ is $70
 
 The later decisions are made after the rain, so they may depend on it: they are three sets of numbers, one per leaf. The now-decision is one number shared by every leaf. That sharing is the whole content of "decide now": the program cannot use information it will not have.
 
-With the copies written down, the expected cost $c^T x + \sum_s p_s q^T y_s$ is a straight-line function of all the unknowns, because the chances are fixed numbers. Each leaf's limits are straight lines too. That is a linear program.
+With the copies written down, the expected cost $`c^T x + \sum_s p_s q^T y_s`$ is a straight-line function of all the unknowns, because the chances are fixed numbers. Each leaf's limits are straight lines too. That is a linear program.
 
 ### Step 1: one leaf on its own
 
-Fix $x$ and the scenario, and the leaf can be solved in words. The water on hand after the rain is $70 + \xi_s - x$. Run the turbine up to 20 million m³, but not below the 50 million m³ reserve: falling short of the reserve costs 30 per million m³, buying the power costs only 10. Whatever is still above 100 overflows. At $x = 30$ this gives $Q(30, s)$ = 200, 0 and 500, as the worked numbers show.
+Fix $`x`$ and the scenario, and the leaf can be solved in words. The water on hand after the rain is $`70 + \xi_s - x`$. Run the turbine up to 20 million m³, but not below the 50 million m³ reserve: falling short of the reserve costs 30 per million m³, buying the power costs only 10. Whatever is still above 100 overflows. At $`x = 30`$ this gives $`Q(30, s)`$ = 200, 0 and 500, as the worked numbers show.
 
 ### Step 2: the one large program equals the two-stage problem
 
-Fix $x$. No row of the extensive form contains two leaves' variables. So minimising $\sum_s p_s q^T y_s$ over all of them at once is minimising each leaf separately and adding, and each separate minimum is $Q(x, s)$. What is left is the minimum over $x$: the two-stage problem.
+Fix $`x`$. No row of the extensive form contains two leaves' variables. So minimising $`\sum_s p_s q^T y_s`$ over all of them at once is minimising each leaf separately and adding, and each separate minimum is $`Q(x, s)`$. What is left is the minimum over $`x`$: the two-stage problem.
 
 <details>
 <summary>Detailed proof: the extensive form and the two-stage problem have the same value and the same best x</summary>
 
-Call $(x, y_1, \dots, y_S)$ feasible when $0 \le x \le 70$ and $T x + W y_s \ge h_s$, $y_s \ge 0$ for every $s$. Its total cost is $c^T x + \sum_s p_s q^T y_s$.
+Call $`(x, y_1, \dots, y_S)`$ feasible when $`0 \le x \le 70`$ and $`T x + W y_s \ge h_s`$, $`y_s \ge 0`$ for every $`s`$. Its total cost is $`c^T x + \sum_s p_s q^T y_s`$.
 
-For any feasible point, each $y_s$ satisfies the rows that define $Q(x, s)$, so $q^T y_s \ge Q(x, s)$. Every $p_s \ge 0$, so the total cost is at least $c^T x + \sum_s p_s Q(x, s)$. The extensive form's value is at least the two-stage value.
+For any feasible point, each $`y_s`$ satisfies the rows that define $`Q(x, s)`$, so $`q^T y_s \ge Q(x, s)`$. Every $`p_s \ge 0`$, so the total cost is at least $`c^T x + \sum_s p_s Q(x, s)`$. The extensive form's value is at least the two-stage value.
 
-Conversely, fix any $x$ with every $Q(x, s)$ finite, and in each leaf pick a $y_s$ that attains $Q(x, s)$ (a feasible linear program with a finite value attains it). Different leaves share no row, so these choices do not interfere: with $x$ they form a feasible point whose total cost is $c^T x + \sum_s p_s Q(x, s)$. The extensive form's value is at most the two-stage value.
+Conversely, fix any $`x`$ with every $`Q(x, s)`$ finite, and in each leaf pick a $`y_s`$ that attains $`Q(x, s)`$ (a feasible linear program with a finite value attains it). Different leaves share no row, so these choices do not interfere: with $`x`$ they form a feasible point whose total cost is $`c^T x + \sum_s p_s Q(x, s)`$. The extensive form's value is at most the two-stage value.
 
-The two values are equal, and an $x$ is best in one exactly when it is best in the other.
+The two values are equal, and an $`x`$ is best in one exactly when it is best in the other.
 
 </details>
 
 ### Step 3: the expected cost is convex in x, so the best x is a kink
 
-Each $Q(x, s)$ is a **convex** function of $x$ (a curve that never bends down). The rows are straight lines, so a mixture of a repair that works at one release and a repair that works at another works at the same mixture of releases, at the same mixture of costs. A chance-weighted sum of convex functions is convex.
+Each $`Q(x, s)`$ is a **convex** function of $`x`$ (a curve that never bends down). The rows are straight lines, so a mixture of a repair that works at one release and a repair that works at another works at the same mixture of releases, at the same mixture of costs. A chance-weighted sum of convex functions is convex.
 
 So the expected cost has no false local minimum, and being made of straight pieces, it is smallest at a kink (a release where some leaf changes what its repair does) or at an end of the range. Between 10 and 30 the expected cost falls by 25 for every 5 million m³ let out; from 30 to 40 it rises by 30 for every 5.
 
@@ -119,23 +123,25 @@ xychart-beta
     line [400, 360, 320, 295, 270, 245, 220, 250, 280, 360, 440, 570, 700]
 ```
 
-The one line is the expected cost, gates plus the chance-weighted repairs. It bends at 10, 30, 40 and 50, and its lowest point is 220 at $x = 30$.
+The one line is the expected cost, gates plus the chance-weighted repairs. It bends at 10, 30, 40 and 50, and its lowest point is 220 at $`x = 30`$.
 
 ### Step 4: solving the program, and proving nothing beats it
 
-The extensive form here has 10 columns ($x$ and three variables per leaf) and 13 rows (one limit on $x$, four per leaf). The code solves it by the **dual simplex method** in exact fractions ("simplex" meaning the pivoting method of [The simplex method](../04-Linear%20Programming/03-simplex-method.md), not a triangle).
+The extensive form here has 10 columns ($`x`$ and three variables per leaf) and 13 rows (one limit on $`x`$, four per leaf). The code solves it by the **dual simplex method** in exact fractions ("simplex" meaning the pivoting method of [The simplex method](../04-Linear%20Programming/03-simplex-method.md), not a triangle).
 
 Every cost here is at least zero, so "do nothing" is the cheapest plan of all; it just breaks some rows. Each **pivot** (one exchange of a variable into the plan) repairs one broken row at the least extra cost per unit, keeping every **reduced cost** (the extra cost of one more unit of a variable) at zero or above. When no row is broken, the plan is feasible and still cheapest. Here that takes 3 pivots.
 
-The certificate is the dual prices $\lambda \ge 0$, one per row, read off the last table. They pass two tests on the original data: every column's cost is at least that column's entry in $A^T\lambda$, and $h^T\lambda = 220$. Then for any feasible plan $z$,
+The certificate is the dual prices $`\lambda \ge 0`$, one per row, read off the last table. They pass two tests on the original data: every column's cost is at least that column's entry in $`A^T\lambda`$, and $`h^T\lambda = 220`$. Then for any feasible plan $`z`$,
 
-$$\text{cost}(z) \;\ge\; (A^T\lambda)^T z \;=\; \lambda^T (A z) \;\ge\; \lambda^T h \;=\; 220,$$
+```math
+\text{cost}(z) \;\ge\; (A^T\lambda)^T z \;=\; \lambda^T (A z) \;\ge\; \lambda^T h \;=\; 220,
+```
 
-the first step because $z \ge 0$, the second because $\lambda \ge 0$ and $Az \ge h$. This is weak duality, proved on [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md); the chain above is a reminder.
+the first step because $`z \ge 0`$, the second because $`\lambda \ge 0`$ and $`Az \ge h`$. This is weak duality, proved on [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md); the chain above is a reminder.
 
-The plan itself is checked on the same original rows, $z \ge 0$ and $Az \ge h$. That test is needed: at every step of this method $h^T\lambda$ equals the current plan's cost, so the match alone does not show the plan is optimal until the plan is also feasible. No plan can cost less than 220, and this feasible plan costs 220, so it is optimal.
+The plan itself is checked on the same original rows, $`z \ge 0`$ and $`Az \ge h`$. That test is needed: at every step of this method $`h^T\lambda`$ equals the current plan's cost, so the match alone does not show the plan is optimal until the plan is also feasible. No plan can cost less than 220, and this feasible plan costs 220, so it is optimal.
 
-The prices that do the job are 8 on the dry reserve row, 5 on the dry turbine row and 10 on the wet room row. In the $x$ column they balance: 2 for the gates plus 8 from the dry reserve row equals 10 from the wet room row. This corner is degenerate (more rows tight than needed), so the prices are not unique. Read them as the proof, not as the value of one more million m³.
+The prices that do the job are 8 on the dry reserve row, 5 on the dry turbine row and 10 on the wet room row. In the $`x`$ column they balance: 2 for the gates plus 8 from the dry reserve row equals 10 from the wet room row. This corner is degenerate (more rows tight than needed), so the prices are not unique. Read them as the proof, not as the value of one more million m³.
 
 ### Step 5: what the hedge is worth
 
@@ -146,13 +152,13 @@ So wait-and-see ≤ recourse ≤ mean-value plan always holds: here 16 ≤ 220 �
 
 ### Step 6: how big it gets
 
-Each leaf adds three columns and four rows, so $S$ leaves give $1 + 3S$ columns. More stages are worse: a decision every month for a year, with three kinds of month each time, gives 531441 leaves. For large trees the **L-shaped method** splits the program back into leaves: each leaf's dual prices become a straight-line lower bound on its $Q$ (a **cut**), and a small master program in $x$ collects the cuts.
+Each leaf adds three columns and four rows, so $`S`$ leaves give $`1 + 3S`$ columns. More stages are worse: a decision every month for a year, with three kinds of month each time, gives 531441 leaves. For large trees the **L-shaped method** splits the program back into leaves: each leaf's dual prices become a straight-line lower bound on its $`Q`$ (a **cut**), and a small master program in $`x`$ collects the cuts.
 
 ---
 
 ## Worked numbers, by hand
 
-Water in million m³, money in thousand pounds. The plan: let out $x = 30$ now.
+Water in million m³, money in thousand pounds. The plan: let out $`x = 30`$ now.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -164,9 +170,9 @@ Water in million m³, money in thousand pounds. The plan: let out $x = 30$ now.
 | wet: water on hand | 70 + 90 − 30 | 130 |
 | wet: repair | turbine 20 leaves 110; overflow 10 × 50 | 500 |
 | expected repair | 0.3 × 200 + 0.5 × 0 + 0.2 × 500 | 160 |
-| **expected cost $p^*$** | 60 + 160 | **220** |
-| dual bound $h^T\lambda$ | from the three nonzero prices | 220 |
-| neighbours | expected cost at $x$ = 20 and 40 | 270, 280 |
+| **expected cost $`p^*`$** | 60 + 160 | **220** |
+| dual bound $`h^T\lambda`$ | from the three nonzero prices | 220 |
+| neighbours | expected cost at $`x`$ = 20 and 40 | 270, 280 |
 
 Letting 30 million m³ out before the rain costs on average £220,000, and the dual bound shows no plan can cost less.
 
@@ -175,15 +181,15 @@ Letting 30 million m³ out before the rain costs on average £220,000, and the d
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Plan for the average rain, 36 | 400 (forecast 0) | The average month never floods; the real wet month does, and its overflow is priced at 50 |
-| Plan for the wet year | 280, with $x$ = 40 | It buys flood room the dry and normal months then pay for |
-| Average the three clairvoyant plans, 0.2 × 40 | 336, with $x$ = 8 | Averaging the best plans for known weather does not give a good plan for unknown weather |
-| Fix the turbine release now too | 320, with $x$ = 10 and turbine 20 | The modelling assumption that releases adjust after the rain is dropped; that flexibility was worth 100 |
+| Plan for the wet year | 280, with $`x`$ = 40 | It buys flood room the dry and normal months then pay for |
+| Average the three clairvoyant plans, 0.2 × 40 | 336, with $`x`$ = 8 | Averaging the best plans for known weather does not give a good plan for unknown weather |
+| Fix the turbine release now too | 320, with $`x`$ = 10 and turbine 20 | The modelling assumption that releases adjust after the rain is dropped; that flexibility was worth 100 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads. Road 1 writes the whole tree as one linear program and solves it by the dual simplex method in exact fractions. Road 2 checks the plan and the dual prices against the original rows and confirms the prices' bound meets the cost. Road 3 ignores the program: it costs each leaf with the repair rule of Step 1 and scans every whole $x$ from 0 to 70, which is exact because the kinks fall at whole numbers. All three give $x^* = 30$ and £220,000. The scripts also compute the comparisons, the mistakes and the experiments, each experiment by both the program and the scan. Python uses its standard `fractions` module; Rust carries a small rational type.
+Three independent roads. Road 1 writes the whole tree as one linear program and solves it by the dual simplex method in exact fractions. Road 2 checks the plan and the dual prices against the original rows and confirms the prices' bound meets the cost. Road 3 ignores the program: it costs each leaf with the repair rule of Step 1 and scans every whole $`x`$ from 0 to 70, which is exact because the kinks fall at whole numbers. All three give $`x^* = 30`$ and £220,000. The scripts also compute the comparisons, the mistakes and the experiments, each experiment by both the program and the scan. Python uses its standard `fractions` module; Rust carries a small rational type.
 
 ### Python
 
@@ -594,12 +600,12 @@ The two outputs are identical, line for line.
 
 Lean proves that the extensive form matches the two-stage problem for any finite set of scenarios, and solves the card's reservoir exactly.
 
-- Take finitely many scenarios, chances at least zero adding to 1, and straight-line costs and rows. Suppose every leaf has a repair whatever allowed $x$ is chosen, and every $Q(x, s)$ is finite.
+- Take finitely many scenarios, chances at least zero adding to 1, and straight-line costs and rows. Suppose every leaf has a repair whatever allowed $`x`$ is chosen, and every $`Q(x, s)`$ is finite.
 - Then the extensive form and the two-stage problem have the same value. If either can be pushed down without limit, so can the other.
-- With the same conditions, an $x$ is best for the two-stage problem exactly when it is the now-decision of a best extensive-form plan.
+- With the same conditions, an $`x`$ is best for the two-stage problem exactly when it is the now-decision of a best extensive-form plan.
 - For the reservoir, letting out 30, then buying power for 20 if dry and overflowing 10 if wet, meets every row and costs 220.
 - No plan that meets every row costs less than 220, and every plan costing 220 lets out exactly 30.
-- The hand arithmetic holds exactly: the worked numbers, the chart, the scan of every whole $x$ from 0 to 70, and the dual bound.
+- The hand arithmetic holds exactly: the worked numbers, the chart, the scan of every whole $`x`$ from 0 to 70, and the dual bound.
 - So do EEV 400, WS 16, VSS 180, EVPI 204, the first three mistakes and the 531441 leaves.
 
 The dual simplex solve, the full dual-price check, the fixed-turbine mistake and the Try changing experiments are left to the Python and Rust checks.
@@ -1078,7 +1084,7 @@ open TwoStage Reservoir
 >
 > Smaller traps:
 > - **Averaging the answers.** The clairvoyant plans 0, 0 and 40 average to 8, which costs 336.
-> - **Planning for the worst case.** The wet-month plan, $x$ = 40, costs 280: safe in one leaf, dear in two.
+> - **Planning for the worst case.** The wet-month plan, $`x`$ = 40, costs 280: safe in one leaf, dear in two.
 > - **Deciding everything now.** Fixing the turbine before the rain too costs 320. The second stage is the point.
 > - **Taking WS as a target.** The clairvoyant's 16 is a bound no operator acting before the rain can reach.
 

@@ -30,7 +30,9 @@ flowchart TD
 
 ## The formula
 
-$$(1000 - 12 \times 75) \div 4 = 25$$
+```math
+(1000 - 12 \times 75) \div 4 = 25
+```
 
 **Read it aloud:** take the cash, subtract what the apples cost, split what is left between the friends.
 
@@ -42,10 +44,10 @@ Higher rung first, and left to right inside a rung.
 
 | Symbol | Plain meaning | In our example |
 | --- | --- | --- |
-| $\times$ | **multiply**, third rung | twelve apples at 75 cents is 900 |
-| $\div$ | **divide**, third rung as well | 100 cents four ways is 25 |
-| $-$ | **subtract**, fourth rung, so it waits | 1000 less 900 is 100 |
-| $(\;\;)$ | **brackets**, top rung: finish what is inside first | they stop the divide reaching the apples |
+| $`\times`$ | **multiply**, third rung | twelve apples at 75 cents is 900 |
+| $`\div`$ | **divide**, third rung as well | 100 cents four ways is 25 |
+| $`-`$ | **subtract**, fourth rung, so it waits | 1000 less 900 is 100 |
+| $`(\;\;)`$ | **brackets**, top rung: finish what is inside first | they stop the divide reaching the apples |
 
 ### When it holds
 

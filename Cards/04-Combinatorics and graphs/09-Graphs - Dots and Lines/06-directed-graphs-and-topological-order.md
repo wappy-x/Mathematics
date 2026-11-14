@@ -40,29 +40,33 @@ Four steps have nothing pointing at them; only baking has nothing pointing out.
 
 ## The formula
 
-Notation first, in words. A directed graph is written $D = (V, A)$: $V$ collects the dots, still **vertices**, $A$ the arrows, called **arcs** ([Graphs](01-graphs-vertices-and-edges.md)). An edge is unordered; an arc is an *ordered* pair, written $u \to v$. Write $n$ for the vertex count.
+Notation first, in words. A directed graph is written $`D = (V, A)`$: $`V`$ collects the dots, still **vertices**, $`A`$ the arrows, called **arcs** ([Graphs](01-graphs-vertices-and-edges.md)). An edge is unordered; an arc is an *ordered* pair, written $`u \to v`$. Write $`n`$ for the vertex count.
 
-One degree becomes two: the **in-degree** $\mathrm{in}(v)$ counts arrows pointing at a vertex, the **out-degree** $\mathrm{out}(v)$ those leaving. Each arc has one tail, where it starts, and one head, where the arrowhead lands, so both tallies come to the arc count. Bars count members, so $\lvert A\rvert$ is that count:
+One degree becomes two: the **in-degree** $`\mathrm{in}(v)`$ counts arrows pointing at a vertex, the **out-degree** $`\mathrm{out}(v)`$ those leaving. Each arc has one tail, where it starts, and one head, where the arrowhead lands, so both tallies come to the arc count. Bars count members, so $`\lvert A\rvert`$ is that count:
 
-$$\mathrm{in}(v)\text{ added over every } v \;=\; \lvert A\rvert \;=\; \mathrm{out}(v)\text{ added over every } v$$
+```math
+\mathrm{in}(v)\text{ added over every } v \;=\; \lvert A\rvert \;=\; \mathrm{out}(v)\text{ added over every } v
+```
 
 Both come to 8 for the recipe, not 16: 16 is the undirected handshake, counting each edge at both ends ([Degrees and the handshaking lemma](02-degree-and-handshaking.md)).
 
-A **topological order** lists all $n$ vertices, each once, with every arrow's tail earlier than its head. A **directed cycle** is a run of arrows back to its own start — the shortest, an arrow from a vertex to itself. A graph with none is a **DAG**, directed acyclic graph.
+A **topological order** lists all $`n`$ vertices, each once, with every arrow's tail earlier than its head. A **directed cycle** is a run of arrows back to its own start — the shortest, an arrow from a vertex to itself. A graph with none is a **DAG**, directed acyclic graph.
 
-$$D \text{ has a topological order} \quad\Longleftrightarrow\quad D \text{ is a DAG}$$
+```math
+D \text{ has a topological order} \quad\Longleftrightarrow\quad D \text{ is a DAG}
+```
 
 **Read it aloud:** the steps line up with every arrow forward exactly when no run of arrows returns to its start.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $D$ | one directed graph | the recipe's eight steps | — |
-| $V$ | the vertices: the dots, prep steps here | bake to simmer the sauce | more room to reshuffle |
-| $A$ | the arcs: the arrows, ordered pairs | eight "before" rules | fewer orders survive |
-| $\lvert A\rvert$ | how many arcs | 8 | more rules to respect |
-| $u \to v$ | one arc: tail before head | grating → layering | — |
-| $n$ | how many vertices | 8, so 40,320 listings | they grow as $n$ factorial |
-| $\mathrm{in}(v)$, $\mathrm{out}(v)$ | in-degree, out-degree: arrows in, arrows out | 3 in, 1 out at layering | it waits on, or holds up, more |
+| $`D`$ | one directed graph | the recipe's eight steps | — |
+| $`V`$ | the vertices: the dots, prep steps here | bake to simmer the sauce | more room to reshuffle |
+| $`A`$ | the arcs: the arrows, ordered pairs | eight "before" rules | fewer orders survive |
+| $`\lvert A\rvert`$ | how many arcs | 8 | more rules to respect |
+| $`u \to v`$ | one arc: tail before head | grating → layering | — |
+| $`n`$ | how many vertices | 8, so 40,320 listings | they grow as $`n`$ factorial |
+| $`\mathrm{in}(v)`$, $`\mathrm{out}(v)`$ | in-degree, out-degree: arrows in, arrows out | 3 in, 1 out at layering | it waits on, or holds up, more |
 
 In-degree 0 makes a vertex a **source**, out-degree 0 a **sink**: four sources, one sink, baking.
 
@@ -83,7 +87,7 @@ Round a loop, each arrow demands the next vertex stand later, so the start must 
 
 ### Step 1: a finite DAG has a first step
 
-Suppose every vertex had an arrow pointing at it. A walk *backwards* along incoming arrows could then always carry on, and with only $n$ vertices it must revisit one, closing a loop. So where there is no loop, some vertex has nothing pointing at it: the recipe has four such sources.
+Suppose every vertex had an arrow pointing at it. A walk *backwards* along incoming arrows could then always carry on, and with only $`n`$ vertices it must revisit one, closing a loop. So where there is no loop, some vertex has nothing pointing at it: the recipe has four such sources.
 
 ### Step 2: peel a source, the leftover is still a DAG
 
@@ -96,9 +100,9 @@ Peeling the lowest-numbered source writes boil the water, chop the onion, cook t
 
 **A directed cycle means no order.** Number each vertex by its place in the listing. Every arc puts its tail's number below its head's, so round the cycle the numbers climb and the start ends below itself, which no number does.
 
-**No directed cycle means an order exists,** by induction on $n$. One vertex is its own order. Otherwise delete a source: a cycle in the remainder would be one of $D$, so the remainder is a DAG with an order by induction. Put the source in front; its in-degree was 0, so every arc touching it leaves it and runs forward.
+**No directed cycle means an order exists,** by induction on $`n`$. One vertex is its own order. Otherwise delete a source: a cycle in the remainder would be one of $`D`$, so the remainder is a DAG with an order by induction. Put the source in front; its in-degree was 0, so every arc touching it leaves it and runs forward.
 
-**Kahn's peeling is that induction run rather than argued.** Write all $n$ and the listing is an order; stop early and every unwritten vertex is still pointed at, so Step 1 on the leftover yields a cycle.
+**Kahn's peeling is that induction run rather than argued.** Write all $`n`$ and the listing is an order; stop early and every unwritten vertex is still pointed at, so Step 1 on the leftover yields a cycle.
 
 </details>
 

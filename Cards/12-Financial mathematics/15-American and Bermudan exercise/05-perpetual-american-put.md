@@ -36,40 +36,44 @@ The upper line is the perpetual put's value. The lower line is the payoff, $100 
 
 ## The formula
 
-For a share price $S$ above the trigger $S^*$:
+For a share price $`S`$ above the trigger $`S^*`$:
 
-$$P(S) = (K - S^*)\left(\frac{S}{S^*}\right)^{\lambda}, \qquad S^* = \frac{K\lambda}{\lambda - 1},$$
+```math
+P(S) = (K - S^*)\left(\frac{S}{S^*}\right)^{\lambda}, \qquad S^* = \frac{K\lambda}{\lambda - 1},
+```
 
-and for $S$ at or below the trigger, $P(S) = K - S$: exercise now. The power $\lambda$ is the negative root of the quadratic
+and for $`S`$ at or below the trigger, $`P(S) = K - S`$: exercise now. The power $`\lambda`$ is the negative root of the quadratic
 
-$$\tfrac12\sigma^2\lambda^2 + \left(r - q - \tfrac12\sigma^2\right)\lambda - r = 0 .$$
+```math
+\tfrac12\sigma^2\lambda^2 + \left(r - q - \tfrac12\sigma^2\right)\lambda - r = 0 .
+```
 
 **Read it aloud:** the put is worth the cash it will pay at the trigger, times today's value of one dollar collected on the first day the share falls that far; below the trigger it is worth its payoff.
 
-The quadratic's other root, $\mu$, is positive. It belongs to a solution that grows with the share price, which no put can do, so it is thrown away.
+The quadratic's other root, $`\mu`$, is positive. It belongs to a solution that grows with the share price, which no put can do, so it is thrown away.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_t$ | Acme's share price today, and at a later time t | $100 today | the put falls, along the curve above |
-| $K$ | the strike: what the holder may sell for | $100 | the trigger rises in proportion; the put rises faster, as $K^{1-\lambda}$ |
-| $r$ | the riskless rate, continuously compounded | 5% | the trigger rises and the put falls: waiting for cash costs more |
-| $q$ | the dividend yield Acme pays out | 2% | the trigger falls and the put rises: the share sinks by what it pays out |
-| $\sigma$ | volatility, the yearly spread of Acme's log-returns; say "sigma" | 20% | the trigger falls and the put rises: waiting is worth more |
-| $P$ | the perpetual put's price, a function of $S$ | $15.77 at $S$ = 100 | — |
-| $S^*$ | the exercise boundary, or trigger: sell the first time the share reaches it | $64.92 | — |
-| $\lambda$ | the negative root of the quadratic; say "lambda" | −1.850781 | — |
-| $\mu$ | the positive root, discarded; say "mu" | 1.350781 | — |
-| $A$, $B$ | the constants in front of the two power solutions | $B$ = 0 | — |
-| $L$ | a trial trigger: any level below the strike | $80 in the what-breaks table | — |
-| $\Delta$, $\Gamma$ | delta, the slope of $P$ against $S$; gamma, the slope's own slope | −0.291856 and 0.008320 | — |
+| $`S`$, $`S_t`$ | Acme's share price today, and at a later time t | $100 today | the put falls, along the curve above |
+| $`K`$ | the strike: what the holder may sell for | $100 | the trigger rises in proportion; the put rises faster, as $`K^{1-\lambda}`$ |
+| $`r`$ | the riskless rate, continuously compounded | 5% | the trigger rises and the put falls: waiting for cash costs more |
+| $`q`$ | the dividend yield Acme pays out | 2% | the trigger falls and the put rises: the share sinks by what it pays out |
+| $`\sigma`$ | volatility, the yearly spread of Acme's log-returns; say "sigma" | 20% | the trigger falls and the put rises: waiting is worth more |
+| $`P`$ | the perpetual put's price, a function of $`S`$ | $15.77 at $`S`$ = 100 | — |
+| $`S^*`$ | the exercise boundary, or trigger: sell the first time the share reaches it | $64.92 | — |
+| $`\lambda`$ | the negative root of the quadratic; say "lambda" | −1.850781 | — |
+| $`\mu`$ | the positive root, discarded; say "mu" | 1.350781 | — |
+| $`A`$, $`B`$ | the constants in front of the two power solutions | $`B`$ = 0 | — |
+| $`L`$ | a trial trigger: any level below the strike | $80 in the what-breaks table | — |
+| $`\Delta`$, $`\Gamma`$ | delta, the slope of $`P`$ against $`S`$; gamma, the slope's own slope | −0.291856 and 0.008320 | — |
 
-Delta falls straight out of the power: $\Delta = \lambda P / S$, negative because $\lambda$ is. Gamma is $\lambda(\lambda - 1)P/S^2$.
+Delta falls straight out of the power: $`\Delta = \lambda P / S`$, negative because $`\lambda`$ is. Gamma is $`\lambda(\lambda - 1)P/S^2`$.
 
 ### When it holds
 
 - **The share follows geometric Brownian motion with constant volatility** ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). If volatility moves, both the trigger and the price move with it: at 30% volatility the trigger is $47.38 and the put $26.85.
 - **Constant rate and dividend yield.** Over the decades a perpetual contract spans, neither is constant. The formula prices the contract as if today's rates lasted for ever, which is its biggest weakness in practice.
-- **The rate is positive.** Then the quadratic's two roots have product $-2r/\sigma^2$, which is negative, so exactly one is negative and the formula exists and is unique. At a zero rate the negative root shrinks to zero, the trigger falls to zero, and the put is worth the full strike: waiting costs nothing, so nobody exercises.
+- **The rate is positive.** Then the quadratic's two roots have product $`-2r/\sigma^2`$, which is negative, so exactly one is negative and the formula exists and is unique. At a zero rate the negative root shrinks to zero, the trigger falls to zero, and the put is worth the full strike: waiting costs nothing, so nobody exercises.
 - **No expiry, ever.** A finite-life American put is always worth less: a 30-year one is $15.47 on the tree below, not $15.77.
 - **The holder exercises at the best moment.** A holder who sells at another level gets another, lower price; the what-breaks table below prices one such holder.
 
@@ -79,93 +83,103 @@ Delta falls straight out of the power: $\Delta = \lambda P / S$, negative becaus
 
 ### Step 0: without a clock, the price is a curve, not a surface
 
-An ordinary American put's price depends on two things, the share price and the time left. Its exercise boundary moves as expiry nears, and that moving edge is why no exact formula exists. A perpetual put has for ever left on every date. Tomorrow's contract is the same contract as today's. So its price depends on $S$ alone, and the exercise boundary is a single number $S^*$, not a moving curve.
+An ordinary American put's price depends on two things, the share price and the time left. Its exercise boundary moves as expiry nears, and that moving edge is why no exact formula exists. A perpetual put has for ever left on every date. Tomorrow's contract is the same contract as today's. So its price depends on $`S`$ alone, and the exercise boundary is a single number $`S^*`$, not a moving curve.
 
 ### Step 1: the pricing equation loses its time term
 
-Every derivative on a share in this model obeys the Black–Scholes equation ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) wherever the holder is still waiting. Written with $\partial P/\partial t$ for the change in price as the clock runs, $P'$ for the slope against $S$ and $P''$ for the slope's slope, it reads
+Every derivative on a share in this model obeys the Black–Scholes equation ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) wherever the holder is still waiting. Written with $`\partial P/\partial t`$ for the change in price as the clock runs, $`P'`$ for the slope against $`S`$ and $`P''`$ for the slope's slope, it reads
 
-$$\frac{\partial P}{\partial t} + \tfrac12\sigma^2S^2P'' + (r - q)SP' - rP = 0 .$$
+```math
+\frac{\partial P}{\partial t} + \tfrac12\sigma^2S^2P'' + (r - q)SP' - rP = 0 .
+```
 
-Here the price does not change with the date, so the first term is zero. What is left is an ordinary differential equation in $S$ alone, holding above the trigger:
+Here the price does not change with the date, so the first term is zero. What is left is an ordinary differential equation in $`S`$ alone, holding above the trigger:
 
-$$\tfrac12\sigma^2S^2P'' + (r - q)SP' - rP = 0 .$$
+```math
+\tfrac12\sigma^2S^2P'' + (r - q)SP' - rP = 0 .
+```
 
 In words: the drift of the hedged position, from curvature and from the share's growth net of dividends, must pay exactly the riskless rate on the put's value. Theta, the time decay, is zero; the check confirms it by putting the card's delta and gamma back into the equation.
 
 ### Step 2: try a power of the share price
 
-Every term has the same shape: $S^2$ with the second slope, $S$ with the first, a constant with $P$. A power of $S$ keeps that shape. Try $P = S^{\lambda}$. Its slope is $\lambda S^{\lambda-1}$ and its second slope is $\lambda(\lambda-1)S^{\lambda-2}$. Substitute, and every term carries the same factor $S^{\lambda}$, which cancels:
+Every term has the same shape: $`S^2`$ with the second slope, $`S`$ with the first, a constant with $`P`$. A power of $`S`$ keeps that shape. Try $`P = S^{\lambda}`$. Its slope is $`\lambda S^{\lambda-1}`$ and its second slope is $`\lambda(\lambda-1)S^{\lambda-2}`$. Substitute, and every term carries the same factor $`S^{\lambda}`$, which cancels:
 
-$$\tfrac12\sigma^2\lambda(\lambda - 1) + (r - q)\lambda - r = 0 .$$
+```math
+\tfrac12\sigma^2\lambda(\lambda - 1) + (r - q)\lambda - r = 0 .
+```
 
-Multiply out and this is the quadratic in The formula. Guessing a trial form and turning a differential equation into a polynomial is the move of [The characteristic equation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md); there the trial is an exponential in time, here a power of the price. [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) gives the two roots, $\lambda$ = −1.850781 and $\mu$ = 1.350781.
+Multiply out and this is the quadratic in The formula. Guessing a trial form and turning a differential equation into a polynomial is the move of [The characteristic equation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md); there the trial is an exponential in time, here a power of the price. [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) gives the two roots, $`\lambda`$ = −1.850781 and $`\mu`$ = 1.350781.
 
 ### Step 3: throw away the root that grows
 
-Any mix of the two powers solves the equation, so the general solution is $P = AS^{\lambda} + BS^{\mu}$. As the share climbs without limit, the put's worth must shrink to zero: the right to sell at $100 is useless for a share at $10,000. The positive power grows without limit, so its constant must be zero: $B$ = 0. That leaves $P = AS^{\lambda}$, a curve that falls towards zero as $S$ grows, as the picture above shows.
+Any mix of the two powers solves the equation, so the general solution is $`P = AS^{\lambda} + BS^{\mu}`$. As the share climbs without limit, the put's worth must shrink to zero: the right to sell at $100 is useless for a share at $10,000. The positive power grows without limit, so its constant must be zero: $`B`$ = 0. That leaves $`P = AS^{\lambda}`$, a curve that falls towards zero as $`S`$ grows, as the picture above shows.
 
-### Step 4: two conditions at the trigger fix $A$ and $S^*$
+### Step 4: two conditions at the trigger fix $`A`$ and $`S^*`$
 
-Two unknowns remain, $A$ and $S^*$. Two conditions hold where waiting meets exercising.
+Two unknowns remain, $`A`$ and $`S^*`$. Two conditions hold where waiting meets exercising.
 
-- **Value matching.** At the trigger the holder exercises, so the put is worth its payoff: $AS^{*\lambda} = K - S^*$.
-- **Smooth pasting.** The slopes match too. The payoff $K - S$ has slope −1, so $\lambda AS^{*\lambda - 1} = -1$.
+- **Value matching.** At the trigger the holder exercises, so the put is worth its payoff: $`AS^{*\lambda} = K - S^*`$.
+- **Smooth pasting.** The slopes match too. The payoff $`K - S`$ has slope −1, so $`\lambda AS^{*\lambda - 1} = -1`$.
 
-Divide the second by the first. $A$ cancels, leaving $\lambda / S^* = -1/(K - S^*)$, so $\lambda(K - S^*) = -S^*$, and
+Divide the second by the first. $`A`$ cancels, leaving $`\lambda / S^* = -1/(K - S^*)`$, so $`\lambda(K - S^*) = -S^*`$, and
 
-$$S^* = \frac{K\lambda}{\lambda - 1} .$$
+```math
+S^* = \frac{K\lambda}{\lambda - 1} .
+```
 
-Then $A = (K - S^*)S^{*-\lambda}$, which gives the formula. Why the slopes must match is the subject of [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md). This card shows it a second way in Step 5: it is the condition for choosing the best trigger.
+Then $`A = (K - S^*)S^{*-\lambda}`$, which gives the formula. Why the slopes must match is the subject of [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md). This card shows it a second way in Step 5: it is the condition for choosing the best trigger.
 
 ### Step 5: the same trigger, found by picking the best one
 
-Forget smooth pasting. Suppose the holder picks a trigger $L$ below the strike and sells the first time Acme touches it. That pays $K - L$ at an unknown future date. Today's value of one dollar paid on that date is $(S/L)^{\lambda}$: the folded proof below shows why. So that strategy is worth
+Forget smooth pasting. Suppose the holder picks a trigger $`L`$ below the strike and sells the first time Acme touches it. That pays $`K - L`$ at an unknown future date. Today's value of one dollar paid on that date is $`(S/L)^{\lambda}`$: the folded proof below shows why. So that strategy is worth
 
-$$(K - L)\left(\frac{S}{L}\right)^{\lambda} .$$
+```math
+(K - L)\left(\frac{S}{L}\right)^{\lambda} .
+```
 
-A trigger close to the strike gets paid soon but little. A trigger far below pays a lot but late, and often never. Somewhere between lies the best $L$. Set the slope of the logarithm of that value against $L$ to zero: $-1/(K - L) - \lambda/L = 0$. That is the Step 4 equation again, so the best trigger is $S^*$. **Smooth pasting is the first-order condition for choosing the trigger.** The check finds the best trigger by a golden-section search, a hunt that narrows an interval by a fixed ratio each time, and lands on $64.921894$ without being told the smooth-pasting condition.
+A trigger close to the strike gets paid soon but little. A trigger far below pays a lot but late, and often never. Somewhere between lies the best $`L`$. Set the slope of the logarithm of that value against $`L`$ to zero: $`-1/(K - L) - \lambda/L = 0`$. That is the Step 4 equation again, so the best trigger is $`S^*`$. **Smooth pasting is the first-order condition for choosing the trigger.** The check finds the best trigger by a golden-section search, a hunt that narrows an interval by a fixed ratio each time, and lands on $`64.921894`$ without being told the smooth-pasting condition.
 
 <details>
 <summary>Detailed proof: why a dollar at the trigger is worth $(S/L)^{\lambda}$ today, and why no other strategy beats $S^*$</summary>
 
-**The discount.** Let $S_t$ be the share price at a later time t in the risk-neutral world ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)), where it grows at $r - q$ on average. By Itô's lemma (the chain rule for random processes), the process $e^{-rt}S_t^{\lambda}$ has drift $e^{-rt}S_t^{\lambda}\left[\tfrac12\sigma^2\lambda(\lambda - 1) + (r - q)\lambda - r\right]$, which is zero exactly because $\lambda$ solves the quadratic. A process with no drift is a martingale: its expected future value is its value today.
+**The discount.** Let $`S_t`$ be the share price at a later time t in the risk-neutral world ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)), where it grows at $`r - q`$ on average. By Itô's lemma (the chain rule for random processes), the process $`e^{-rt}S_t^{\lambda}`$ has drift $`e^{-rt}S_t^{\lambda}\left[\tfrac12\sigma^2\lambda(\lambda - 1) + (r - q)\lambda - r\right]`$, which is zero exactly because $`\lambda`$ solves the quadratic. A process with no drift is a martingale: its expected future value is its value today.
 
-Stop it at the first time the share touches $L$. Before then $S_t$ stays above $L$, and since $\lambda$ is negative, $S_t^{\lambda}$ stays below $L^{\lambda}$, so the process is bounded and optional stopping applies: a bounded martingale stopped at a random time keeps its expected value. On paths that never touch $L$ the factor $e^{-rt}$ drives it to zero. So $S^{\lambda}$ equals $L^{\lambda}$ times the expected discount factor at the hitting time, which is therefore $(S/L)^{\lambda}$.
+Stop it at the first time the share touches $`L`$. Before then $`S_t`$ stays above $`L`$, and since $`\lambda`$ is negative, $`S_t^{\lambda}`$ stays below $`L^{\lambda}`$, so the process is bounded and optional stopping applies: a bounded martingale stopped at a random time keeps its expected value. On paths that never touch $`L`$ the factor $`e^{-rt}`$ drives it to zero. So $`S^{\lambda}`$ equals $`L^{\lambda}`$ times the expected discount factor at the hitting time, which is therefore $`(S/L)^{\lambda}`$.
 
-**No strategy beats the trigger.** Call $P$ the formula's value. Three facts hold.
+**No strategy beats the trigger.** Call $`P`$ the formula's value. Three facts hold.
 
-1. $P \ge K - S$ everywhere: equal below $S^*$, and above it $P$ is convex (it bends upward) with slope −1 at $S^*$, so it stays on or above the payoff's straight line.
-2. Above $S^*$ the Black–Scholes operator (the left side of the time-free equation in Step 1) applied to $P$ is zero by Step 1.
-3. Below $S^*$, where $P = K - S$, the operator gives $qS - rK$, negative there: holding the share and the put instead of exercising earns the dividend $q\,S$ but forgoes the interest $r\,K$ on the strike, and at the trigger that shortfall is $3.70 a year.
+1. $`P \ge K - S`$ everywhere: equal below $`S^*`$, and above it $`P`$ is convex (it bends upward) with slope −1 at $`S^*`$, so it stays on or above the payoff's straight line.
+2. Above $`S^*`$ the Black–Scholes operator (the left side of the time-free equation in Step 1) applied to $`P`$ is zero by Step 1.
+3. Below $`S^*`$, where $`P = K - S`$, the operator gives $`qS - rK`$, negative there: holding the share and the put instead of exercising earns the dividend $`q\,S`$ but forgoes the interest $`r\,K`$ on the strike, and at the trigger that shortfall is $3.70 a year.
 
-With smooth pasting, Itô's lemma applies across $S^*$ (the second slope jumps, but the first does not), so $e^{-rt}P(S_t)$ never drifts upward. For any exercise time the holder chooses, the expected discounted payoff is at most the expected discounted $P$, which is at most $P$ today. The trigger strategy attains $P$. So $P$ is the price.
+With smooth pasting, Itô's lemma applies across $`S^*`$ (the second slope jumps, but the first does not), so $`e^{-rt}P(S_t)`$ never drifts upward. For any exercise time the holder chooses, the expected discounted payoff is at most the expected discounted $`P`$, which is at most $`P`$ today. The trigger strategy attains $`P`$. So $`P`$ is the price.
 
 </details>
 
-A third road needs neither the power guess nor the optimisation. Start at a trial trigger with the payoff's height and slope, integrate the time-free equation outward step by step (the check uses the fourth-order Runge–Kutta rule), and see whether the solution dies away at large prices or blows up. Only one starting point gives a solution that dies away. The check hunts for it by halving an interval and finds $64.921894$ again, with $15.769332$ at $S$ = 100.
+A third road needs neither the power guess nor the optimisation. Start at a trial trigger with the payoff's height and slope, integrate the time-free equation outward step by step (the check uses the fourth-order Runge–Kutta rule), and see whether the solution dies away at large prices or blows up. Only one starting point gives a solution that dies away. The check hunts for it by halving an interval and finds $`64.921894`$ again, with $`15.769332`$ at $`S`$ = 100.
 
 ---
 
 ## Worked numbers, by hand
 
-House market: $S = K = 100$, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%. Write the quadratic as $a\lambda^2 + b\lambda + c = 0$, the letters of [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): $a = \tfrac12\sigma^2$, $b = r - q - \tfrac12\sigma^2$, $c = -r$.
+House market: $`S = K = 100`$, $`r`$ = 5%, $`q`$ = 2%, $`\sigma`$ = 20%. Write the quadratic as $`a\lambda^2 + b\lambda + c = 0`$, the letters of [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): $`a = \tfrac12\sigma^2`$, $`b = r - q - \tfrac12\sigma^2`$, $`c = -r`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $a = \tfrac12\sigma^2$ | 0.5 × 0.2 × 0.2 | 0.02 |
-| $b = r - q - \tfrac12\sigma^2$ | 0.05 − 0.02 − 0.02 | 0.01 |
+| $`a = \tfrac12\sigma^2`$ | 0.5 × 0.2 × 0.2 | 0.02 |
+| $`b = r - q - \tfrac12\sigma^2`$ | 0.05 − 0.02 − 0.02 | 0.01 |
 | the quadratic | 0.02 λ^2 + 0.01 λ − 0.05 = 0 | — |
-| discriminant, $b^2 - 4ac$ | 0.0001 + 4 × 0.02 × 0.05 | 0.0041 |
+| discriminant, $`b^2 - 4ac`$ | 0.0001 + 4 × 0.02 × 0.05 | 0.0041 |
 | its square root | | 0.064031 |
-| $\lambda$, the negative root | (−0.01 − 0.064031) / 0.04 | −1.850781 |
-| $\mu$, the positive root, discarded | (−0.01 + 0.064031) / 0.04 | 1.350781 |
-| trigger $S^* = K\lambda/(\lambda - 1)$ | 100 × 1.850781 / 2.850781 | $64.92 |
-| payoff at the trigger, $K - S^*$ | 100 − 64.921894 | $35.08 |
-| $S/S^*$ | 100 / 64.921894 | 1.540312 |
+| $`\lambda`$, the negative root | (−0.01 − 0.064031) / 0.04 | −1.850781 |
+| $`\mu`$, the positive root, discarded | (−0.01 + 0.064031) / 0.04 | 1.350781 |
+| trigger $`S^* = K\lambda/(\lambda - 1)`$ | 100 × 1.850781 / 2.850781 | $64.92 |
+| payoff at the trigger, $`K - S^*`$ | 100 − 64.921894 | $35.08 |
+| $`S/S^*`$ | 100 / 64.921894 | 1.540312 |
 | today's value of $1 paid at the trigger | 1.540312 raised to −1.850781 | 0.449549 |
 | **the put** | 35.078106 × 0.449549 | **$15.77** |
-| delta, $\lambda P/S$ | −1.850781 × 15.769332 / 100 | −0.291856 |
+| delta, $`\lambda P/S`$ | −1.850781 × 15.769332 / 100 | −0.291856 |
 
 The holder should keep the put until Acme first falls to $64.92, then sell at $100 and collect $35.08. That collection might come in a year, in thirty, or never; weighing all those dates, a dollar at the trigger is worth 45 cents today. A buyer pays $15.77 for that prospect, and sees the put gain about 29 cents for each dollar Acme falls.
 
@@ -173,11 +187,11 @@ The holder should keep the put until Acme first falls to $64.92, then sell at $1
 
 | Greek | What it measures | Value | Where it comes from |
 | --- | --- | --- | --- |
-| Delta | change in $P$ per $1 rise in Acme | −0.291856 | $\lambda P/S$, confirmed by a bump of $S$ |
-| Gamma | change in delta per $1 rise | 0.008320 | $\lambda(\lambda - 1)P/S^2$, confirmed by a bump |
+| Delta | change in $`P`$ per $1 rise in Acme | −0.291856 | $`\lambda P/S`$, confirmed by a bump of $`S`$ |
+| Gamma | change in delta per $1 rise | 0.008320 | $`\lambda(\lambda - 1)P/S^2`$, confirmed by a bump |
 | Theta | change per year with nothing else moving | 0.000000 | zero by Step 1; the check puts delta and gamma back into the equation |
-| Vega | change per point of volatility | 1.122637 | bump of $\sigma$ in the formula |
-| Rho | change per point of the rate | −3.032881 | bump of $r$ in the formula |
+| Vega | change per point of volatility | 1.122637 | bump of $`\sigma`$ in the formula |
+| Rho | change per point of the rate | −3.032881 | bump of $`r`$ in the formula |
 
 Theta is the striking entry. A finite-life option melts as its expiry nears. This one has no expiry to near.
 
@@ -204,9 +218,9 @@ A 30-year tree still gives $15.47 against the formula's $15.77. That gap is real
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Using the positive root $\mu$ | a trigger of $385.08, above the strike | That solution grows with the price; exercising at $385.08 pays nothing |
+| Using the positive root $`\mu`$ | a trigger of $385.08, above the strike | That solution grows with the price; exercising at $385.08 pays nothing |
 | Forgetting the 2% dividend | trigger $71.43, put $12.32 | That is the no-dividend put: without the payout the share drifts up faster, so the put is cheaper and sold sooner |
-| Value matching alone: exercising at $L$ = $80 | $13.23 | A legal strategy, but not the best: it sells too early |
+| Value matching alone: exercising at $`L`$ = $80 | $13.23 | A legal strategy, but not the best: it sells too early |
 | Pricing a 30-year European put instead | $4.06 | No early exercise, and a sale 30 years away is heavily discounted |
 
 The code prints every one of these.
@@ -604,14 +618,14 @@ The two outputs match line for line. The shooting road and the golden-section ro
 
 Lean proves the formula's main facts for every positive rate and volatility, and a few of the card's exact numbers.
 
-- Suppose the rate $r$ and the volatility $\sigma$ are positive. Then the quadratic has exactly one negative root $\lambda$, whatever the dividend yield $q$.
-- Take a strike $K > 0$, positive $r$ and $\sigma$, and $\lambda$ the negative root. Then the trigger $S^*$ lies strictly between 0 and $K$.
-- Take the same market and any share price $S$ above the trigger. Then delta is $\lambda P/S$ and gamma is $\lambda(\lambda - 1)P/S^2$.
-- Take the same market and any share price above the trigger. Then $P$ solves the time-free equation of Step 1.
-- Take the same market. Then $P$ meets the payoff at the trigger in height and in slope: value matching and smooth pasting.
-- Take the same market. Then $P$ is never below the payoff, and it falls to zero as the share price grows without limit.
-- Take the same market, a share price $S > 0$, and a trial trigger $L$ between 0 and $K$ other than $S^*$. Then $(K - L)(S/L)^{\lambda}$ is strictly less than at $L = S^*$.
-- In the worked numbers, $a$ is exactly 0.02, $b$ is exactly 0.01, and the discriminant is exactly 0.0041.
+- Suppose the rate $`r`$ and the volatility $`\sigma`$ are positive. Then the quadratic has exactly one negative root $`\lambda`$, whatever the dividend yield $`q`$.
+- Take a strike $`K > 0`$, positive $`r`$ and $`\sigma`$, and $`\lambda`$ the negative root. Then the trigger $`S^*`$ lies strictly between 0 and $`K`$.
+- Take the same market and any share price $`S`$ above the trigger. Then delta is $`\lambda P/S`$ and gamma is $`\lambda(\lambda - 1)P/S^2`$.
+- Take the same market and any share price above the trigger. Then $`P`$ solves the time-free equation of Step 1.
+- Take the same market. Then $`P`$ meets the payoff at the trigger in height and in slope: value matching and smooth pasting.
+- Take the same market. Then $`P`$ is never below the payoff, and it falls to zero as the share price grows without limit.
+- Take the same market, a share price $`S > 0`$, and a trial trigger $`L`$ between 0 and $`K`$ other than $`S^*`$. Then $`(K - L)(S/L)^{\lambda}`$ is strictly less than at $`L = S^*`$.
+- In the worked numbers, $`a`$ is exactly 0.02, $`b`$ is exactly 0.01, and the discriminant is exactly 0.0041.
 - With no dividend, the negative root is exactly −5/2, and the trigger is 500/7, or $71.43.
 - With an 8% rate, the negative root is exactly −1 − √5, and the trigger is 100(3 − √5), or $76.39.
 
@@ -950,9 +964,9 @@ end PerpetualAmericanPut
 > [!TIP]
 > **Try changing**
 > Guess the direction first. The rows starting `try:` hold the answers.
-> - **More volatility.** Raise $\sigma$ from 20% to 30%. The trigger falls to $47.38 and the put rises to $26.85: a jumpier share makes waiting for a deeper fall worth more.
-> - **Dearer money.** Raise $r$ from 5% to 8%. The trigger rises to $76.39 and the put falls to $9.88: the strike's interest, forgone while waiting, now costs more, so the holder sells sooner.
-> - **No dividend, share at $200.** Set $q$ to zero and $S$ to 200. The put is worth $2.18, a long way above the trigger but never quite zero.
+> - **More volatility.** Raise $`\sigma`$ from 20% to 30%. The trigger falls to $47.38 and the put rises to $26.85: a jumpier share makes waiting for a deeper fall worth more.
+> - **Dearer money.** Raise $`r`$ from 5% to 8%. The trigger rises to $76.39 and the put falls to $9.88: the strike's interest, forgone while waiting, now costs more, so the holder sells sooner.
+> - **No dividend, share at $200.** Set $`q`$ to zero and $`S`$ to 200. The put is worth $2.18, a long way above the trigger but never quite zero.
 > - **Shoot too short.** In the bisection line, stop the integration at a share price of 1,000 instead of a million. The perpetual put is still worth something there, so the "dies away" test aims at the wrong target; the boundary misses by 0.6 cents and the first assert stops the run.
 
 ---
@@ -964,7 +978,7 @@ end PerpetualAmericanPut
 >
 > - **Keeping the wrong root.** The quadratic has two roots. The positive one, 1.350781, gives a trigger of $385.08, above the strike. The put's price must fall as the share rises, which only the negative root delivers.
 > - **Matching height but not slope.** Any trigger meets the payoff in height. Only one meets it in slope. Exercising at $80 is worth $13.23, not $15.77.
-> - **Dropping the dividend.** With $q$ = 0 the trigger is $71.43 and the put $12.32. That is a correct price for a different share.
+> - **Dropping the dividend.** With $`q`$ = 0 the trigger is $71.43 and the put $12.32. That is a correct price for a different share.
 > - **Treating a long American put as perpetual.** A 30-year American put is $15.47, not $15.77. Thirty years is long, but its end still bends the boundary.
 
 ---
@@ -972,13 +986,13 @@ end PerpetualAmericanPut
 ## Where you meet it in real life
 
 - **The benchmark for American puts.** The perpetual put is the ceiling any finite American put on the same terms approaches from below, and a first test for a new tree or grid.
-- **The engine of the fast approximations.** The power $S^{\lambda}$ with its boundary condition is the correction term in [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md), applied to finite lives.
+- **The engine of the fast approximations.** The power $`S^{\lambda}`$ with its boundary condition is the correction term in [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md), applied to finite lives.
 - **Real options.** A company that may abandon a project and sell its assets at a fixed salvage value holds a perpetual put on the project's worth. The trigger is the point at which to walk away.
 - **Credit and default.** In structural credit models, a firm's owners stop paying and default when the firm's value first falls to a level chosen to make their stake worth the most. That choice is this card's Step 5.
 - **Sensitivities.** The delta and gamma above come from one power; the finite-life versions need numerical bumps: [American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md).
 
 > **Say it back**
-> A put that never expires has the same future on every date, so its value depends on the share price alone. Dropping the time term leaves an equation whose solutions are powers of the price. The power must be the negative root of a quadratic, so the value dies away as the share rises. Matching the payoff's height and slope at the trigger gives $S^* = K\lambda/(\lambda - 1)$: for Acme, sell at $64.92, and the put is worth $15.77 at $100. Matching the slope is the same as choosing the best trigger.
+> A put that never expires has the same future on every date, so its value depends on the share price alone. Dropping the time term leaves an equation whose solutions are powers of the price. The power must be the negative root of a quadratic, so the value dies away as the share rises. Matching the payoff's height and slope at the trigger gives $`S^* = K\lambda/(\lambda - 1)`$: for Acme, sell at $64.92, and the put is worth $15.77 at $100. Matching the slope is the same as choosing the best trigger.
 
 ---
 

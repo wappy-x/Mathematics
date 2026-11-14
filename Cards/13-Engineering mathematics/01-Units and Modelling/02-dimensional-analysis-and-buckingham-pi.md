@@ -41,48 +41,56 @@ Notation first, in words. Square brackets give a quantity's dimension, as on [Un
 
 Suppose the drag is fixed by the other four:
 
-$$F = f(V, A, \rho, \mu).$$
+```math
+F = f(V, A, \rho, \mu).
+```
 
 The theorem says this relation can always be rewritten as
 
-$$\Pi_F = \varphi(\Pi_\mu), \qquad \Pi_F = \frac{F}{\rho V^2 A}, \qquad \Pi_\mu = \frac{\mu}{\rho V \sqrt{A}}.$$
+```math
+\Pi_F = \varphi(\Pi_\mu), \qquad \Pi_F = \frac{F}{\rho V^2 A}, \qquad \Pi_\mu = \frac{\mu}{\rho V \sqrt{A}}.
+```
 
 **Read it aloud:** the drag, divided by the force scale the air's momentum sets, is some function of one other unit-free number; nothing else can matter.
 
 The count behind it, in general:
 
-$$\text{number of groups} = n - k.$$
+```math
+\text{number of groups} = n - k.
+```
 
-Here $n$ = 5 quantities and $k$ = 3 independent dimensions, so two groups, and the law is one curve of one group against the other.
+Here $`n`$ = 5 quantities and $`k`$ = 3 independent dimensions, so two groups, and the law is one curve of one group against the other.
 
-Engineers flip $\Pi_\mu$ and double $\Pi_F$, by convention:
+Engineers flip $`\Pi_\mu`$ and double $`\Pi_F`$, by convention:
 
-$$\mathrm{Re} = \frac{\rho V \sqrt{A}}{\mu}, \qquad C_D = \frac{F}{\tfrac12 \rho V^2 A} = \varphi_D(\mathrm{Re}).$$
+```math
+\mathrm{Re} = \frac{\rho V \sqrt{A}}{\mu}, \qquad C_D = \frac{F}{\tfrac12 \rho V^2 A} = \varphi_D(\mathrm{Re}).
+```
 
-$\mathrm{Re}$ is the **Reynolds number**: the ratio of the air's momentum to its stickiness. $C_D$ is the **drag coefficient**. The half and the choice of $\sqrt{A}$ as the length are habits, not part of the theorem.
+$`\mathrm{Re}`$ is the **Reynolds number**: the ratio of the air's momentum to its stickiness. $`C_D`$ is the **drag coefficient**. The half and the choice of $`\sqrt{A}`$ as the length are habits, not part of the theorem.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | drag force, newtons | 24.65 N | — (the output) |
-| $V$ | speed of the rider through still air | 12 m/s | drag rises roughly as its square |
-| $A$ | frontal area | 0.40 m^2 | drag rises roughly in proportion |
-| $\rho$ | air density, "rho" | 1.225 kg/m^3 | drag rises nearly in proportion |
-| $\mu$ | air's dynamic viscosity, its stickiness, "mu" | 1.7894 × 10^-5 Pa·s | Re falls, C_D rises a little |
-| $n$ | how many quantities are on the list | 5 | one more group per added quantity, unless it brings a new independent dimension |
-| $k$ | rank of the dimension matrix: how many independent units the list really uses | 3 | one fewer group |
-| $\Pi_F$ | drag group, $F/(\rho V^2 A)$ | 0.3493 | — |
-| $\Pi_\mu$ | viscosity group, $\mu/(\rho V \sqrt{A})$ | 1.924687 × 10^-6 | — |
-| $\mathrm{Re}$ | Reynolds number, $1/\Pi_\mu$ | 519,565 | C_D drifts toward its high-Re floor |
-| $C_D$ | drag coefficient, $2\Pi_F$ | 0.6986 | — |
-| $f$, $\varphi$, $\varphi_D$ | the law in raw quantities; the unknown curve the theorem leaves to experiment | one curve | — |
-| $a$, $b$, $c$, $d$, $e$ | the powers of ρ, V, A, F and μ in a trial product (Step 1, Worked numbers) | for $\Pi_F$: −1, −2, −1, 1, 0 | — |
+| $`F`$ | drag force, newtons | 24.65 N | — (the output) |
+| $`V`$ | speed of the rider through still air | 12 m/s | drag rises roughly as its square |
+| $`A`$ | frontal area | 0.40 m^2 | drag rises roughly in proportion |
+| $`\rho`$ | air density, "rho" | 1.225 kg/m^3 | drag rises nearly in proportion |
+| $`\mu`$ | air's dynamic viscosity, its stickiness, "mu" | 1.7894 × 10^-5 Pa·s | Re falls, C_D rises a little |
+| $`n`$ | how many quantities are on the list | 5 | one more group per added quantity, unless it brings a new independent dimension |
+| $`k`$ | rank of the dimension matrix: how many independent units the list really uses | 3 | one fewer group |
+| $`\Pi_F`$ | drag group, $`F/(\rho V^2 A)`$ | 0.3493 | — |
+| $`\Pi_\mu`$ | viscosity group, $`\mu/(\rho V \sqrt{A})`$ | 1.924687 × 10^-6 | — |
+| $`\mathrm{Re}`$ | Reynolds number, $`1/\Pi_\mu`$ | 519,565 | C_D drifts toward its high-Re floor |
+| $`C_D`$ | drag coefficient, $`2\Pi_F`$ | 0.6986 | — |
+| $`f`$, $`\varphi`$, $`\varphi_D`$ | the law in raw quantities; the unknown curve the theorem leaves to experiment | one curve | — |
+| $`a`$, $`b`$, $`c`$, $`d`$, $`e`$ | the powers of ρ, V, A, F and μ in a trial product (Step 1, Worked numbers) | for $`\Pi_F`$: −1, −2, −1, 1, 0 | — |
 | c, in the code's output | speed of sound in the air | 340.29 m/s at sea level | the Mach number V/c falls |
 
 ### When it holds
 
-- **The list is complete.** Every quantity that affects the drag is on it. Leave viscosity off and the theorem predicts one constant $C_D$; the stand-in law below says $C_D$ runs from 0.90 to 0.69 over the tested range.
-- **The units are the right ones to count.** $k$ is the rank of the dimension matrix, not the number of unit names written down. Name temperature as a fourth unit when nothing on the list carries it, and the count wrongly drops to one group.
-- **The shapes are alike.** One length, $\sqrt{A}$, stands for the whole rider. That holds only for riders and models of the same shape and posture; a different shape adds its own length ratios to the list, one group each.
+- **The list is complete.** Every quantity that affects the drag is on it. Leave viscosity off and the theorem predicts one constant $`C_D`$; the stand-in law below says $`C_D`$ runs from 0.90 to 0.69 over the tested range.
+- **The units are the right ones to count.** $`k`$ is the rank of the dimension matrix, not the number of unit names written down. Name temperature as a fourth unit when nothing on the list carries it, and the count wrongly drops to one group.
+- **The shapes are alike.** One length, $`\sqrt{A}`$, stands for the whole rider. That holds only for riders and models of the same shape and posture; a different shape adds its own length ratios to the list, one group each.
 - **The physics does not change regime.** At 12 m/s the air is effectively incompressible; at 150 m/s the speed of sound joins the list and a third group, the Mach number, appears.
 - **The quantities are positive and the law is the same in every unit system.** The proof uses this and the complete list of the first bullet, and nothing else.
 
@@ -92,46 +100,46 @@ $\mathrm{Re}$ is the **Reynolds number**: the ratio of the air's momentum to its
 
 ### Step 0: a law cannot know which ruler was used
 
-Measure the rider in centimetres instead of metres and the number for $A$ grows by 10,000. The drag does not care. A law that held only in metres would be a coincidence of the metre, not physics. Everything below is that one demand turned into arithmetic.
+Measure the rider in centimetres instead of metres and the number for $`A`$ grows by 10,000. The drag does not care. A law that held only in metres would be a coincidence of the metre, not physics. Everything below is that one demand turned into arithmetic.
 
 ### Step 1: write each quantity's units as a column of exponents
 
 Force is kg·m·s^-2, so its column is (1, 1, −2) for (M, L, T). Density is kg·m^-3: (1, −3, 0). Viscosity, in Pa·s, is kg·m^-1·s^-1: (1, −1, −1). The five columns form the **dimension matrix**, three rows by five columns:
 
-| | $\rho$ | $V$ | $A$ | $F$ | $\mu$ |
+| | $`\rho`$ | $`V`$ | $`A`$ | $`F`$ | $`\mu`$ |
 | --- | --- | --- | --- | --- | --- |
 | M | 1 | 0 | 0 | 1 | 1 |
 | L | −3 | 1 | 2 | 1 | −1 |
 | T | 0 | −1 | 0 | −2 | −1 |
 
-A product $\rho^a V^b A^c F^d \mu^e$ has M-exponent $a + d + e$, and so on down the rows. It is dimensionless exactly when all three row sums are zero. So the exponent lists of dimensionless products are the solutions of three linear equations: the **null space** of the matrix.
+A product $`\rho^a V^b A^c F^d \mu^e`$ has M-exponent $`a + d + e`$, and so on down the rows. It is dimensionless exactly when all three row sums are zero. So the exponent lists of dimensionless products are the solutions of three linear equations: the **null space** of the matrix.
 
 ### Step 2: rank–nullity counts them
 
-The matrix has rank 3: its first three columns, $\rho$, $V$ and $A$, are independent. Rank–nullity ([Rank and nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md)) says the null space has dimension columns minus rank: 5 − 3 = 2. Every dimensionless product is a product of powers of two basic ones. Pick the exponent of $F$ to be 1 and of $\mu$ to be 0, solve, and $\Pi_F$ comes out. Swap, and $\Pi_\mu$ comes out.
+The matrix has rank 3: its first three columns, $`\rho`$, $`V`$ and $`A`$, are independent. Rank–nullity ([Rank and nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md)) says the null space has dimension columns minus rank: 5 − 3 = 2. Every dimensionless product is a product of powers of two basic ones. Pick the exponent of $`F`$ to be 1 and of $`\mu`$ to be 0, solve, and $`\Pi_F`$ comes out. Swap, and $`\Pi_\mu`$ comes out.
 
 ### Step 3: choose units that make three quantities equal to 1
 
-Here is the heart of the proof. The three independent columns $\rho$, $V$ and $A$, the **repeating variables**, act like a private unit system. Because their columns are independent, there is a choice of mass, length and time units in which the rider's density, speed and area all read exactly 1. In those units the drag reads $F/(\rho V^2 A)$, which is $\Pi_F$, and the viscosity reads $\Pi_\mu$.
+Here is the heart of the proof. The three independent columns $`\rho`$, $`V`$ and $`A`$, the **repeating variables**, act like a private unit system. Because their columns are independent, there is a choice of mass, length and time units in which the rider's density, speed and area all read exactly 1. In those units the drag reads $`F/(\rho V^2 A)`$, which is $`\Pi_F`$, and the viscosity reads $`\Pi_\mu`$.
 
-The law holds in every unit system, so it holds in this one. There it says: drag-number = $f$(1, 1, 1, viscosity-number). That is $\Pi_F = f(1, 1, 1, \Pi_\mu)$, a function of $\Pi_\mu$ alone.
+The law holds in every unit system, so it holds in this one. There it says: drag-number = $`f`$(1, 1, 1, viscosity-number). That is $`\Pi_F = f(1, 1, 1, \Pi_\mu)`$, a function of $`\Pi_\mu`$ alone.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let the quantities be $Q_1, \dots, Q_n$ whose dimension matrix has rank $k$. Change the unit of each base dimension: the new units of mass, length and time are the old ones divided by $x_M, x_L, x_T$, all positive. A quantity whose column is $(a_1, a_2, a_3)$ then reads $Q \, x_M^{a_1} x_L^{a_2} x_T^{a_3}$ in the new units. In logarithms: $\ln Q$ shifts by the column dotted with $(\ln x_M, \ln x_L, \ln x_T)$.
+Let the quantities be $`Q_1, \dots, Q_n`$ whose dimension matrix has rank $`k`$. Change the unit of each base dimension: the new units of mass, length and time are the old ones divided by $`x_M, x_L, x_T`$, all positive. A quantity whose column is $`(a_1, a_2, a_3)`$ then reads $`Q \, x_M^{a_1} x_L^{a_2} x_T^{a_3}`$ in the new units. In logarithms: $`\ln Q`$ shifts by the column dotted with $`(\ln x_M, \ln x_L, \ln x_T)`$.
 
-Reorder so that $Q_1, \dots, Q_k$ have independent columns. Then the $k$ equations "shift of $\ln Q_j$ equals $-\ln Q_j$" for $j = 1, \dots, k$ have a solution for the log-scales: their coefficient rows are the $k$ independent columns, so the system has full row rank. (When $k$ is less than the number of base dimensions, some scales stay free.) In the chosen units $Q_1 = \dots = Q_k = 1$.
+Reorder so that $`Q_1, \dots, Q_k`$ have independent columns. Then the $`k`$ equations "shift of $`\ln Q_j`$ equals $`-\ln Q_j`$" for $`j = 1, \dots, k`$ have a solution for the log-scales: their coefficient rows are the $`k`$ independent columns, so the system has full row rank. (When $`k`$ is less than the number of base dimensions, some scales stay free.) In the chosen units $`Q_1 = \dots = Q_k = 1`$.
 
-Each remaining quantity $Q_i \; (i > k)$ has a column that is a combination of the first $k$ columns, $\text{col}_i = \sum_j c_{ij}\,\text{col}_j$. So $\Pi_i = Q_i \prod_j Q_j^{-c_{ij}}$ is dimensionless, the same number in every unit system, and in the chosen units it equals that quantity's reading.
+Each remaining quantity $`Q_i \; (i > k)`$ has a column that is a combination of the first $`k`$ columns, $`\text{col}_i = \sum_j c_{ij}\,\text{col}_j`$. So $`\Pi_i = Q_i \prod_j Q_j^{-c_{ij}}`$ is dimensionless, the same number in every unit system, and in the chosen units it equals that quantity's reading.
 
-Write the law as $\Phi(Q_1, \dots, Q_n) = 0$ (capital phi), assumed to hold in every unit system. In the chosen system it reads $\Phi(1, \dots, 1, \Pi_{k+1}, \dots, \Pi_n) = 0$. That is a relation among the $n - k$ groups alone, which is the theorem. These groups are independent because each contains its own leftover quantity and no other.
+Write the law as $`\Phi(Q_1, \dots, Q_n) = 0`$ (capital phi), assumed to hold in every unit system. In the chosen system it reads $`\Phi(1, \dots, 1, \Pi_{k+1}, \dots, \Pi_n) = 0`$. That is a relation among the $`n - k`$ groups alone, which is the theorem. These groups are independent because each contains its own leftover quantity and no other.
 
 </details>
 
 ### Step 4: what the theorem gives, and what it does not
 
-It gives the arguments of the curve: one group against one group. It does not give the curve $\varphi$. That has to be measured, or computed from the flow equations. A rider tested at many speeds, sizes and altitudes traces one curve of $C_D$ against $\mathrm{Re}$, and that curve is all the data needed.
+It gives the arguments of the curve: one group against one group. It does not give the curve $`\varphi`$. That has to be measured, or computed from the flow equations. A rider tested at many speeds, sizes and altitudes traces one curve of $`C_D`$ against $`\mathrm{Re}`$, and that curve is all the data needed.
 
 A second road to the same groups is to write the governing equations and divide out their scales. That is [Nondimensionalisation](03-scaling-and-nondimensionalisation.md); it finds the groups and also says which terms are small.
 
@@ -139,31 +147,31 @@ A second road to the same groups is to write the governing equations and divide 
 
 ## Worked numbers, by hand
 
-Find the exponents of $\Pi_F = F \rho^a V^b A^c$ by setting each row sum to zero:
+Find the exponents of $`\Pi_F = F \rho^a V^b A^c`$ by setting each row sum to zero:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | M row | 1 + a = 0 | a = −1 |
 | T row | −2 − b = 0 | b = −2 |
 | L row | 1 − 3a + b + 2c = 1 + 3 − 2 + 2c = 0 | c = −1 |
-| so | $\Pi_F = F/(\rho V^2 A)$ | exponents −1, −2, −1, 1, 0 |
-| same for $\mu$: M, T, L rows | 1 + a = 0; −1 − b = 0; −1 + 3 − 1 + 2c = 0 | a = −1, b = −1, c = −1/2 |
-| length scale | $\sqrt{0.40}$ | 0.6325 m |
+| so | $`\Pi_F = F/(\rho V^2 A)`$ | exponents −1, −2, −1, 1, 0 |
+| same for $`\mu`$: M, T, L rows | 1 + a = 0; −1 − b = 0; −1 + 3 − 1 + 2c = 0 | a = −1, b = −1, c = −1/2 |
+| length scale | $`\sqrt{0.40}`$ | 0.6325 m |
 | Reynolds number | 1.225 × 12 × √0.40 / 1.7894 × 10^-5 | 519,565 |
 | air's force scale | ½ × 1.225 × 12^2 × 0.40 | 35.28 N |
-| $C_D$ from the curve below | 0.65 + 35 / 720.8 = 0.65 + 0.0486 | 0.6986 |
+| $`C_D`$ from the curve below | 0.65 + 35 / 720.8 = 0.65 + 0.0486 | 0.6986 |
 | **drag** | 35.28 × 0.6986 | **24.65 N** |
 | power | 24.6451 × 12 | 295.7 W |
 
-The rider spends 295.7 W just pushing air at 12 m/s. A half-scale model at 24 m/s has the same Reynolds number, 519,565, so the same $C_D$, and in the same air its drag is the same 24.65 N: the bottom curve in the first picture meeting the top one.
+The rider spends 295.7 W just pushing air at 12 m/s. A half-scale model at 24 m/s has the same Reynolds number, 519,565, so the same $`C_D`$, and in the same air its drag is the same 24.65 N: the bottom curve in the first picture meeting the top one.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Leave viscosity off the list, then test a quarter-scale model at the rider's 12 m/s | full-size drag predicted 26.36 N; true 24.65 N | Four quantities give one group, so $C_D$ looks constant. The model ran at Re = 129,891 with $C_D$ = 0.7471, not the rider's 0.6986. |
-| Count unit names, not rank: add temperature [Θ] because air temperature sets $\mu$ | 5 − 4 = 1 group | No quantity carries [Θ]; its row is all zeros and the rank stays 3. Two groups, not one. |
-| A product that is not dimensionless: $F/(\rho V A)$ | 4.191339 in SI, 25148.036901 in grams, centimetres and minutes | One power of $V$ short; it still carries m/s, so its value depends on the ruler. $\Pi_F$ reads 0.349278 in both. |
+| Leave viscosity off the list, then test a quarter-scale model at the rider's 12 m/s | full-size drag predicted 26.36 N; true 24.65 N | Four quantities give one group, so $`C_D`$ looks constant. The model ran at Re = 129,891 with $`C_D`$ = 0.7471, not the rider's 0.6986. |
+| Count unit names, not rank: add temperature [Θ] because air temperature sets $`\mu`$ | 5 − 4 = 1 group | No quantity carries [Θ]; its row is all zeros and the rank stays 3. Two groups, not one. |
+| A product that is not dimensionless: $`F/(\rho V A)`$ | 4.191339 in SI, 25148.036901 in grams, centimetres and minutes | One power of $`V`$ short; it still carries m/s, so its value depends on the ruler. $`\Pi_F`$ reads 0.349278 in both. |
 | Same list at 150 m/s | Mach number 0.4408 against the rider's 0.0353 | Air compresses; the speed of sound, 340.29 m/s, joins the list: 6 quantities, rank 3, three groups. |
 
 ---
@@ -174,9 +182,11 @@ The code reaches the group count by two independent roads and checks the groups 
 
 The stand-in experiment is a two-term drag law, chosen to give cyclist-like numbers; it is not a measured curve. It is written in raw quantities, with no group inside it:
 
-$$F = \tfrac12 (0.65) \rho V^2 A + 17.5 \sqrt{\rho \mu}\, V^{1.5} A^{0.75}.$$
+```math
+F = \tfrac12 (0.65) \rho V^2 A + 17.5 \sqrt{\rho \mu}\, V^{1.5} A^{0.75}.
+```
 
-Dividing by $\tfrac12 \rho V^2 A$ gives $C_D = 0.65 + 35/\sqrt{\mathrm{Re}}$, the "master curve" the code checks against. Air density and viscosity at altitude come from the US Standard Atmosphere 1976 formulas: temperature falling 6.5 K per km, the pressure law that follows, and Sutherland's law for viscosity. At sea level they reproduce the standard's table, 1.225 kg/m^3 and 1.7894 × 10^-5 Pa·s, and at 4,000 m its density, 0.8194 kg/m^3, to within 0.001 kg/m^3.
+Dividing by $`\tfrac12 \rho V^2 A`$ gives $`C_D = 0.65 + 35/\sqrt{\mathrm{Re}}`$, the "master curve" the code checks against. Air density and viscosity at altitude come from the US Standard Atmosphere 1976 formulas: temperature falling 6.5 K per km, the pressure law that follows, and Sutherland's law for viscosity. At sea level they reproduce the standard's table, 1.225 kg/m^3 and 1.7894 × 10^-5 Pa·s, and at 4,000 m its density, 0.8194 kg/m^3, to within 0.001 kg/m^3.
 
 ### Python
 
@@ -592,17 +602,17 @@ xychart-beta
     line [0.70, 0.70, 0.70, 0.70, 0.70, 0.70]
 ```
 
-The falling line is $C_D$ against Re; all nine setups sit on it, with a spread below 10^-12. The flat line is what a list without viscosity predicts: one constant, read off the full-size rider. At a fixed Re the raw drags still differ, from 22.8542 N to 29.4537 N at Re = 500,000, because air at altitude is thinner; divided by $\tfrac12\rho V^2 A$, the difference vanishes.
+The falling line is $`C_D`$ against Re; all nine setups sit on it, with a spread below 10^-12. The flat line is what a list without viscosity predicts: one constant, read off the full-size rider. At a fixed Re the raw drags still differ, from 22.8542 N to 29.4537 N at Re = 500,000, because air at altitude is thinner; divided by $`\tfrac12\rho V^2 A`$, the difference vanishes.
 
 ### Lean
 
 Lean proves the theorem and its two steps for any list of positive quantities, and checks the cyclist's exponents.
 
-- Take $n$ quantities with a dimension matrix of rank $k$. Then the exponent lists of dimensionless products form a null space of dimension $n - k$.
-- Suppose a law among $n$ positive quantities is the same in every unit system. Then it is a law among $n - k$ independent dimensionless groups alone.
+- Take $`n`$ quantities with a dimension matrix of rank $`k`$. Then the exponent lists of dimensionless products form a null space of dimension $`n - k`$.
+- Suppose a law among $`n`$ positive quantities is the same in every unit system. Then it is a law among $`n - k`$ independent dimensionless groups alone.
 - Take a product whose exponents make every row sum zero. Then it reads the same number after any change of units.
-- Take the cyclist's dimension matrix. Then $\Pi_F$ and $\Pi_\mu$ are dimensionless, and $F/(\rho V A)$ is not.
-- Add the speed of sound c as a sixth quantity. Then the Mach number $V/c$ is dimensionless.
+- Take the cyclist's dimension matrix. Then $`\Pi_F`$ and $`\Pi_\mu`$ are dimensionless, and $`F/(\rho V A)`$ is not.
+- Add the speed of sound c as a sixth quantity. Then the Mach number $`V/c`$ is dimensionless.
 
 The rank 3 of the cyclist's matrix, the drag numbers and the collapse onto one curve are left to the Python and Rust checks.
 
@@ -784,7 +794,7 @@ example : 5 - 3 = 2 ∧ 6 - 3 = 3 := by decide
 > [!TIP]
 > **Try changing**
 > - **Guess first: add a sixth quantity, the speed of sound.** How many groups? Answer: three; the code's sound-speed line prints n = 6, rank 3, groups 3. The new one is the Mach number.
-> - **Guess first: what is $C_D$ at Re = 10^7, a truck at motorway speed?** Answer: `master(1e7)` prints 0.6611, close to the 0.65 floor of this stand-in law.
+> - **Guess first: what is $`C_D`$ at Re = 10^7, a truck at motorway speed?** Answer: `master(1e7)` prints 0.6611, close to the 0.65 floor of this stand-in law.
 > - **Guess first: and at Re = 1,000, a small insect?** Answer: 1.7568. The stand-in law is not meant for that range; a real curve changes shape there, which is why the measured curve, not the theorem, has to be trusted.
 > - **Guess first: change the area exponent in the law from 0.75 to 0.70.** Answer: the law is no longer dimensionally consistent, the collapse line prints "no", and the assert fails.
 
@@ -793,19 +803,19 @@ example : 5 - 3 = 2 ∧ 6 - 3 = 3 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Believing the theorem chooses the variables.** It does not. It counts groups among whatever list it is given. Leave viscosity off and it returns, correctly for that list, a single constant $C_D$; a quarter-scale tunnel model at the rider's speed then predicts 26.36 N for a true 24.65 N. The list is physics; the count is mathematics.
+> **Believing the theorem chooses the variables.** It does not. It counts groups among whatever list it is given. Leave viscosity off and it returns, correctly for that list, a single constant $`C_D`$; a quarter-scale tunnel model at the rider's speed then predicts 26.36 N for a true 24.65 N. The list is physics; the count is mathematics.
 >
 > - **Counting unit names instead of the rank.** Temperature named but unused gives 1 group instead of 2. In other problems two units can appear only in a fixed combination, which drops the rank further.
-> - **Expecting a unique set of groups.** $\mu/(\rho V\sqrt{A})$ and its reciprocal Re are the same group. $F/(\mu V \sqrt{A})$ is a legitimate alternative to $\Pi_F$, a product of $\Pi_F$ and Re. The count, two, is fixed; the labels are not.
-> - **Treating $\varphi$ as known.** The theorem says $C_D$ depends on Re alone. It says nothing about the shape: 0.90 at Re = 20,000 and 0.69 at Re = 1,000,000 in the stand-in law come from the law, not from the theorem.
-> - **Mixing length scales.** Re built on $\sqrt{A}$ and Re built on the rider's height differ by a constant factor. Either is fine; using one for the model and the other for the full-size rider is not.
+> - **Expecting a unique set of groups.** $`\mu/(\rho V\sqrt{A})`$ and its reciprocal Re are the same group. $`F/(\mu V \sqrt{A})`$ is a legitimate alternative to $`\Pi_F`$, a product of $`\Pi_F`$ and Re. The count, two, is fixed; the labels are not.
+> - **Treating $`\varphi`$ as known.** The theorem says $`C_D`$ depends on Re alone. It says nothing about the shape: 0.90 at Re = 20,000 and 0.69 at Re = 1,000,000 in the stand-in law come from the law, not from the theorem.
+> - **Mixing length scales.** Re built on $`\sqrt{A}`$ and Re built on the rider's height differ by a constant factor. Either is fine; using one for the model and the other for the full-size rider is not.
 
 ---
 
 ## Where you meet it in real life
 
 - **Wind tunnels.** A model is useful only at the same groups as the real thing; matching Re for a half-scale model means doubling the speed, 24 m/s for the rider's 12 m/s. The full method is [Similarity](04-similarity-and-model-testing.md).
-- **Cycling at altitude.** At 4,000 m the rider's drag at 12 m/s falls to 16.68 N in the stand-in law, because $\rho$ falls. Several hour records have been set on high-altitude tracks for this reason.
+- **Cycling at altitude.** At 4,000 m the rider's drag at 12 m/s falls to 16.68 N in the stand-in law, because $`\rho`$ falls. Several hour records have been set on high-altitude tracks for this reason.
 - **Pipes and ducts.** The friction factor, a dimensionless pressure drop, depends on Re and the wall roughness divided by the diameter: three groups, one chart of curves (the Moody chart).
 - **Ships.** A towed hull model must match the Froude number, speed over the square root of gravity times length, as well as Re; both cannot be matched in water at once, which is why ship testing splits the drag into parts.
 - **Heat exchangers.** Convection coefficients are tabulated as a Nusselt number against Reynolds and Prandtl numbers, again a count of groups set by Buckingham's theorem. The Nusselt number compares heat carried away by the flow with heat conducted; the Prandtl number compares how fast the fluid spreads momentum and heat.

@@ -26,32 +26,38 @@ To scale, 55 px per unit both ways. The curve: the swing released at 2 rad, for 
 
 ## The formula
 
-The angle from hanging is $\theta$ (theta), in radians; the angular speed is $\omega$ (omega). Time $t$ runs in units of 0.5 s: the square root of rod length, 2.45 m, over gravity's 9.81 m/s^2. A prime is a rate. With damping 0.5 per time unit, the swing is $\theta'' + 0.5\theta' + \sin\theta = 0$, or as a pair:
+The angle from hanging is $`\theta`$ (theta), in radians; the angular speed is $`\omega`$ (omega). Time $`t`$ runs in units of 0.5 s: the square root of rod length, 2.45 m, over gravity's 9.81 m/s^2. A prime is a rate. With damping 0.5 per time unit, the swing is $`\theta'' + 0.5\theta' + \sin\theta = 0`$, or as a pair:
 
-$$\theta' = f(\theta, \omega) = \omega, \qquad \omega' = g(\theta, \omega) = -\sin\theta - 0.5\,\omega$$
+```math
+\theta' = f(\theta, \omega) = \omega, \qquad \omega' = g(\theta, \omega) = -\sin\theta - 0.5\,\omega
+```
 
-Both rates are zero at the **rests**, hanging (0, 0) and inverted (π, 0). Call the rest's angle $\theta_e$ and the offsets from it $u = \theta - \theta_e$ and $v = \omega$. ∂f/∂θ is the slope of f when only θ moves ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
+Both rates are zero at the **rests**, hanging (0, 0) and inverted (π, 0). Call the rest's angle $`\theta_e`$ and the offsets from it $`u = \theta - \theta_e`$ and $`v = \omega`$. ∂f/∂θ is the slope of f when only θ moves ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
 
-$$J = \begin{pmatrix} \partial f/\partial\theta & \partial f/\partial\omega \\ \partial g/\partial\theta & \partial g/\partial\omega \end{pmatrix}_{\text{at the rest}}, \qquad \begin{pmatrix} u \\ v \end{pmatrix}' = J\begin{pmatrix} u \\ v \end{pmatrix} + r$$
+```math
+J = \begin{pmatrix} \partial f/\partial\theta & \partial f/\partial\omega \\ \partial g/\partial\theta & \partial g/\partial\omega \end{pmatrix}_{\text{at the rest}}, \qquad \begin{pmatrix} u \\ v \end{pmatrix}' = J\begin{pmatrix} u \\ v \end{pmatrix} + r
+```
 
 **Read it aloud:** near a rest, the offsets change at the matrix of slopes times the offsets, plus a leftover r that shrinks faster than the offsets.
 
-For the swing the only slope that varies is that of $-\sin\theta$, which is $-\cos\theta$:
+For the swing the only slope that varies is that of $`-\sin\theta`$, which is $`-\cos\theta`$:
 
-$$J = \begin{pmatrix} 0 & 1 \\ -\cos\theta_e & -0.5 \end{pmatrix}: \quad \text{hanging } \begin{pmatrix} 0 & 1 \\ -1 & -0.5 \end{pmatrix}, \quad \text{inverted } \begin{pmatrix} 0 & 1 \\ 1 & -0.5 \end{pmatrix}$$
+```math
+J = \begin{pmatrix} 0 & 1 \\ -\cos\theta_e & -0.5 \end{pmatrix}: \quad \text{hanging } \begin{pmatrix} 0 & 1 \\ -1 & -0.5 \end{pmatrix}, \quad \text{inverted } \begin{pmatrix} 0 & 1 \\ 1 & -0.5 \end{pmatrix}
+```
 
-Trace $\tau$ (the diagonal's sum) and determinant $\Delta$ (the diagonal's product minus the other two entries' product) sort the rest; eigenvalues $\lambda$ solve $\lambda^2 - \tau\lambda + \Delta = 0$. A rest is **hyperbolic** when no eigenvalue has real part zero.
+Trace $`\tau`$ (the diagonal's sum) and determinant $`\Delta`$ (the diagonal's product minus the other two entries' product) sort the rest; eigenvalues $`\lambda`$ solve $`\lambda^2 - \tau\lambda + \Delta = 0`$. A rest is **hyperbolic** when no eigenvalue has real part zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$, $\omega$ | angle from hanging, rad; angular speed, rad per time unit | released at 2 rad | past π, over the top |
-| $t$ | time, in units of 0.5 s | one damped swing: 6.4892 units | — |
-| $f$, $g$ | the rates of θ and ω | ω and −sin θ − 0.5ω | — |
-| $\theta_e$, $u$, $v$, $r$ | rest angle; offsets; leftover | 0 or π; r at most u cubed over 6 | — |
-| $J$ | the rates' slopes at the rest | `[[0, 1], [-1, -0.5]]` hanging | — |
-| $\tau$, $\Delta$ | trace and determinant of J | −0.5; 1 hanging, −1 inverted | Δ below 0 means a saddle |
-| $\lambda$ | eigenvalue: a special motion's rate | −0.25 ± 0.968246i; 0.780776, −1.280776 | real part above 0: it grows |
-| $k$, $E$ | air-drag strength; energy | 0.5; 0.122417 from 0.5 rad | faster loss |
+| $`\theta`$, $`\omega`$ | angle from hanging, rad; angular speed, rad per time unit | released at 2 rad | past π, over the top |
+| $`t`$ | time, in units of 0.5 s | one damped swing: 6.4892 units | — |
+| $`f`$, $`g`$ | the rates of θ and ω | ω and −sin θ − 0.5ω | — |
+| $`\theta_e`$, $`u`$, $`v`$, $`r`$ | rest angle; offsets; leftover | 0 or π; r at most u cubed over 6 | — |
+| $`J`$ | the rates' slopes at the rest | `[[0, 1], [-1, -0.5]]` hanging | — |
+| $`\tau`$, $`\Delta`$ | trace and determinant of J | −0.5; 1 hanging, −1 inverted | Δ below 0 means a saddle |
+| $`\lambda`$ | eigenvalue: a special motion's rate | −0.25 ± 0.968246i; 0.780776, −1.280776 | real part above 0: it grows |
+| $`k`$, $`E`$ | air-drag strength; energy | 0.5; 0.122417 from 0.5 rad | faster loss |
 
 ### When it holds
 
@@ -70,18 +76,18 @@ Zoomed in at 0 the sine curve is the line of slope 1; at π, of slope −1. A sm
 
 ### Step 1: at a rest, the value term vanishes
 
-Both rates are zero at a rest, leaving $J$ times the offset, plus $r$. For the swing, $-\sin u = -u + (u - \sin u)$, and $u - \sin u$ is at most the cube of u over 6 in size. At π, $\sin(\pi + u) = -\sin u$: the slope's sign flips, the leftover's size does not.
+Both rates are zero at a rest, leaving $`J`$ times the offset, plus $`r`$. For the swing, $`-\sin u = -u + (u - \sin u)`$, and $`u - \sin u`$ is at most the cube of u over 6 in size. At π, $`\sin(\pi + u) = -\sin u`$: the slope's sign flips, the leftover's size does not.
 
 ### Step 2: solve the linear part and sort the rest
 
-Linear motions are built from special motions changing like $e^{\lambda t}$.
+Linear motions are built from special motions changing like $`e^{\lambda t}`$.
 
 - **Hanging:** τ = −0.5, Δ = 1, discriminant τ^2 − 4Δ = −3.75. Eigenvalues −0.25 ± 0.968246i: a **stable spiral**. Each swing takes 6.4892 units and keeps 0.1974 of its size.
 - **Inverted:** Δ = −1, so the eigenvalues have opposite signs, 0.780776 and −1.280776: a **saddle**. A nudge along the way out, direction (1, 0.780776), doubles every 0.8878 units.
 
 ### Step 3: when every real part is negative, the leftover cannot win
 
-At the hanging rest every linear motion shrinks like $e^{-0.25t}$. The leftover, relative to the offset, goes to zero with the offset, so near enough the rest it eats part of the 0.25 margin, never all. The true swing shrinks too, a little slower.
+At the hanging rest every linear motion shrinks like $`e^{-0.25t}`$. The leftover, relative to the offset, goes to zero with the offset, so near enough the rest it eats part of the 0.25 margin, never all. The true swing shrinks too, a little slower.
 
 <details>
 <summary>Detailed proof: all real parts negative means the rest attracts</summary>
@@ -108,9 +114,9 @@ The **Hartman–Grobman theorem** (Grobman 1959, Hartman 1960): at a hyperbolic 
 
 ### Step 5: at a centre the matrix says nothing
 
-Replace friction by air drag, growing with speed squared: $\omega' = -\sin\theta - k\,\omega|\omega|$. Drag has slope 0 at ω = 0, so the hanging Jacobian is `[[0, 1], [-1, 0]]`: τ = 0, Δ = 1, a centre, for every k.
+Replace friction by air drag, growing with speed squared: $`\omega' = -\sin\theta - k\,\omega|\omega|`$. Drag has slope 0 at ω = 0, so the hanging Jacobian is `[[0, 1], [-1, 0]]`: τ = 0, Δ = 1, a centre, for every k.
 
-The energy is $E = \omega^2/2 + 1 - \cos\theta$, and the chain rule gives $E' = \omega\omega' + \sin\theta\,\theta' = -k|\omega|^3$. With k = 0 energy is fixed and the swing swings for ever ([The pendulum](03-the-nonlinear-pendulum.md)). With k above 0 energy falls whenever the swing moves: it spirals in. With k below 0, a child pumping, it spirals out. One matrix, three truths.
+The energy is $`E = \omega^2/2 + 1 - \cos\theta`$, and the chain rule gives $`E' = \omega\omega' + \sin\theta\,\theta' = -k|\omega|^3`$. With k = 0 energy is fixed and the swing swings for ever ([The pendulum](03-the-nonlinear-pendulum.md)). With k above 0 energy falls whenever the swing moves: it spirals in. With k below 0, a child pumping, it spirals out. One matrix, three truths.
 
 Released at 0.5 rad, energy 0.122417. At t = 60 the drag-free swing still holds 0.122417; with k = 0.5, 0.002308. Averaging the loss over each swing gives amplitude A(t) = A(0)/(1 + 4kA(0)t/(3π)), shrinking like one over time, not exponentially: energy 0.002303.
 
@@ -337,7 +343,7 @@ Lean proves the attracting case for every smooth system, in any number of variab
 - At a real rest with smooth rates, let every eigenvalue of the Jacobian have real part below zero. Then the rest attracts.
 - That means a path that starts near enough stays as close to the rest as you like, and tends to the rest as time runs on.
 - For every angle offset u, the leftover u − sin u is at most the cube of u over 6 in size.
-- With air drag of strength k, the energy changes at rate $E' = -k|\omega|^3$, for every k: positive, zero or negative.
+- With air drag of strength k, the energy changes at rate $`E' = -k|\omega|^3`$, for every k: positive, zero or negative.
 - The Jacobian at both rests, with traces, determinants and discriminants, the centre's matrix and the rates at (π/2, 0) match the card.
 
 The eigenvalues, the saddle's escape rate and every number along a stepped swing are left to the Python and Rust checks.

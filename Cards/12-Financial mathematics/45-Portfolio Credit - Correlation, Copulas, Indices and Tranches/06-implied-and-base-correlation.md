@@ -45,61 +45,73 @@ The hump is the mezzanine's expected loss. The lower flat line, a quote of 19.5 
 
 Notation first, in words. All amounts are fractions of the pool.
 
-- $p$ is one loan's default chance, 5 percent.
-- $g$ is the share of a loan lost at default, 60 percent.
-- $\rho$ (say "rho") is the asset correlation.
-- The **market factor** $M$ is one bell-curve draw shared by every loan: low means a bad five years.
-- $N$ is the bell-curve area to the left of a point and $N^{-1}$ its inverse, as on [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md).
-- $\mathbb{E}$ is an average over all values of $M$.
+- $`p`$ is one loan's default chance, 5 percent.
+- $`g`$ is the share of a loan lost at default, 60 percent.
+- $`\rho`$ (say "rho") is the asset correlation.
+- The **market factor** $`M`$ is one bell-curve draw shared by every loan: low means a bad five years.
+- $`N`$ is the bell-curve area to the left of a point and $`N^{-1}`$ its inverse, as on [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md).
+- $`\mathbb{E}`$ is an average over all values of $`M`$.
 
 In a pool of very many loans, the loss once the market factor is known is one number, not a random amount ([Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md)):
 
-$$L = g\,N\!\left(\frac{c-\sqrt{\rho}\,M}{\sqrt{1-\rho}}\right), \qquad c = N^{-1}(p).$$
+```math
+L = g\,N\!\left(\frac{c-\sqrt{\rho}\,M}{\sqrt{1-\rho}}\right), \qquad c = N^{-1}(p).
+```
 
-A slice from 0 to $K$ loses $\min(L, K)$: all of the pool's loss up to its size, then no more. Its expected loss is
+A slice from 0 to $`K`$ loses $`\min(L, K)`$: all of the pool's loss up to its size, then no more. Its expected loss is
 
-$$H_\rho(K) = \mathbb{E}\big[\min(L, K)\big].$$
+```math
+H_\rho(K) = \mathbb{E}\big[\min(L, K)\big].
+```
 
-A slice from $A$ to $B$ is the 0-to-$B$ slice minus the 0-to-$A$ slice. Its expected loss, as a share of its own width, is
+A slice from $`A`$ to $`B`$ is the 0-to-$`B`$ slice minus the 0-to-$`A`$ slice. Its expected loss, as a share of its own width, is
 
-$$\mathrm{EL}_{A,B}(\rho) = \frac{H_\rho(B) - H_\rho(A)}{B - A}.$$
+```math
+\mathrm{EL}_{A,B}(\rho) = \frac{H_\rho(B) - H_\rho(A)}{B - A}.
+```
 
 **Read it aloud:** a tranche's expected loss is the difference between two first-loss slices' expected losses, divided by its width.
 
-**Implied correlation**, also called **compound correlation**, is any $\rho$ that solves $\mathrm{EL}_{A,B}(\rho) = Q$ for the tranche's quote $Q$.
+**Implied correlation**, also called **compound correlation**, is any $`\rho`$ that solves $`\mathrm{EL}_{A,B}(\rho) = Q`$ for the tranche's quote $`Q`$.
 
-**Base correlation** turns the quotes into first-loss amounts and inverts those. Stack the tranches upward from zero with boundaries $K_1 < K_2 < \dots$; the quoted loss of the 0-to-$K_i$ slice is
+**Base correlation** turns the quotes into first-loss amounts and inverts those. Stack the tranches upward from zero with boundaries $`K_1 < K_2 < \dots`$; the quoted loss of the 0-to-$`K_i`$ slice is
 
-$$C(K_i) = C(K_{i-1}) + (K_i - K_{i-1})\,Q_i, \qquad C(0) = 0,$$
+```math
+C(K_i) = C(K_{i-1}) + (K_i - K_{i-1})\,Q_i, \qquad C(0) = 0,
+```
 
-and the base correlation $\rho_b(K_i)$ solves $H_{\rho_b(K_i)}(K_i) = C(K_i)$. A slice from $A$ to $B$ that nobody quotes is then priced with a different correlation at each end:
+and the base correlation $`\rho_b(K_i)`$ solves $`H_{\rho_b(K_i)}(K_i) = C(K_i)`$. A slice from $`A`$ to $`B`$ that nobody quotes is then priced with a different correlation at each end:
 
-$$\widehat{\mathrm{EL}}_{A,B} = \frac{H_{\rho_b(B)}(B) - H_{\rho_b(A)}(A)}{B - A}.$$
+```math
+\widehat{\mathrm{EL}}_{A,B} = \frac{H_{\rho_b(B)}(B) - H_{\rho_b(A)}(A)}{B - A}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$ | the pool's loss once the market factor is known, a fraction of the pool | 3% on average | — |
-| $p$ | one loan's chance of default over the five years | 5% | every slice loses more |
-| $g$ | **loss given default**: the share of a loan lost when it defaults, 1 minus recovery | 60% | every slice loses more |
-| $\rho$, $\rho^*$ | asset correlation (say "rho"); $\rho^*$ is where the mezzanine's expected loss peaks | 20%; 25.65% | the equity loses less; the mezzanine gains, then loses |
-| $M$ | the market factor, one bell-curve draw shared by all loans | −2 in a bad five years | pool loss falls |
-| $A$, $B$ | a tranche's **attachment** and **detachment**: where it starts and stops taking loss | 3% and 7% | the slice sits higher and loses less |
-| $K$, $K_i$, $\rho_b(K)$ | the top of a first-loss slice 0-to-$K$; $K_i$ the quoted tranche boundaries; its base correlation | 7%; 25% | — |
-| $c$ | the default threshold $N^{-1}(p)$ | −1.6449 | more defaults |
-| $b_K$, $z_K$ | $b_K = N^{-1}(K/g)$; $z_K$ is the market factor value at which pool loss is exactly $K$ | $b_A$ = −1.6449, $b_B$ = −1.1918 | — |
-| $N$, $N_2$, $\varphi$ | bell-curve area to the left; the same for a correlated pair; the bell curve's height | $N(c)$ = 5% | — |
-| $H_\rho(K)$, $C(K)$ | first-loss expected loss from the model, and from the quotes | 0.018831 at $K$ = 3%, $\rho$ = 20% | $H$ falls as $\rho$ rises |
-| $\mathrm{EL}_{A,B}(\rho)$, $Q$ | a tranche's expected loss as a share of its width; $Q$ its quote | 19.47% for 3–7% at 20% | — |
+| $`L`$ | the pool's loss once the market factor is known, a fraction of the pool | 3% on average | — |
+| $`p`$ | one loan's chance of default over the five years | 5% | every slice loses more |
+| $`g`$ | **loss given default**: the share of a loan lost when it defaults, 1 minus recovery | 60% | every slice loses more |
+| $`\rho`$, $`\rho^*`$ | asset correlation (say "rho"); $`\rho^*`$ is where the mezzanine's expected loss peaks | 20%; 25.65% | the equity loses less; the mezzanine gains, then loses |
+| $`M`$ | the market factor, one bell-curve draw shared by all loans | −2 in a bad five years | pool loss falls |
+| $`A`$, $`B`$ | a tranche's **attachment** and **detachment**: where it starts and stops taking loss | 3% and 7% | the slice sits higher and loses less |
+| $`K`$, $`K_i`$, $`\rho_b(K)`$ | the top of a first-loss slice 0-to-$`K`$; $`K_i`$ the quoted tranche boundaries; its base correlation | 7%; 25% | — |
+| $`c`$ | the default threshold $`N^{-1}(p)`$ | −1.6449 | more defaults |
+| $`b_K`$, $`z_K`$ | $`b_K = N^{-1}(K/g)`$; $`z_K`$ is the market factor value at which pool loss is exactly $`K`$ | $`b_A`$ = −1.6449, $`b_B`$ = −1.1918 | — |
+| $`N`$, $`N_2`$, $`\varphi`$ | bell-curve area to the left; the same for a correlated pair; the bell curve's height | $`N(c)`$ = 5% | — |
+| $`H_\rho(K)`$, $`C(K)`$ | first-loss expected loss from the model, and from the quotes | 0.018831 at $`K`$ = 3%, $`\rho`$ = 20% | $`H`$ falls as $`\rho`$ rises |
+| $`\mathrm{EL}_{A,B}(\rho)`$, $`Q`$ | a tranche's expected loss as a share of its width; $`Q`$ its quote | 19.47% for 3–7% at 20% | — |
 
-The market factor value that makes pool loss equal $K$ comes from setting $L = K$ and solving:
+The market factor value that makes pool loss equal $`K`$ comes from setting $`L = K`$ and solving:
 
-$$z_K = \frac{c - \sqrt{1-\rho}\;b_K}{\sqrt{\rho}}.$$
+```math
+z_K = \frac{c - \sqrt{1-\rho}\;b_K}{\sqrt{\rho}}.
+```
 
-Pool loss exceeds $K$ exactly when $M < z_K$: a worse economy than that.
+Pool loss exceeds $`K`$ exactly when $`M < z_K`$: a worse economy than that.
 
 ### When it holds
 
-- **A very large pool of identical loans.** The formula for $L$ is the limit of many loans. With 100 real loans the losses come in steps of 0.6 percent, and the equity's expected loss at 20 percent correlation is 59.60, not 62.77. The inverse then returns a different correlation for the same quote.
+- **A very large pool of identical loans.** The formula for $`L`$ is the limit of many loans. With 100 real loans the losses come in steps of 0.6 percent, and the equity's expected loss at 20 percent correlation is 59.60, not 62.77. The inverse then returns a different correlation for the same quote.
 - **One bell-curve factor.** The Gaussian copula thins out joint disasters too fast; a tail-heavier copula moves every number here ([Tail dependence](07-tail-dependence-and-the-t-copula.md)).
 - **Quotes as expected losses.** Markets quote spreads or upfront payments; turning those into expected losses needs default timing, discounting and the premium schedule from [Tranches](05-cdo-tranches-in-outline.md). This card starts after that step.
 - **One pool, one date, one recovery.** Base correlation bootstraps across tranches, so every quote must describe the same pool, maturity and 40 percent recovery. Change the recovery and every base correlation moves.
@@ -111,40 +123,44 @@ Pool loss exceeds $K$ exactly when $M < z_K$: a worse economy than that.
 
 ### Step 0: correlation moves loss between scenarios, not in total
 
-Correlation never changes the pool's average loss: $g\,p$ = 3 percent at every correlation. It changes how that 3 percent is spread across scenarios.
+Correlation never changes the pool's average loss: $`g\,p`$ = 3 percent at every correlation. It changes how that 3 percent is spread across scenarios.
 
-At zero correlation every scenario loses exactly 3 percent: defaults are independent, and a huge pool averages them out. At full correlation the loans default together or not at all: 95 percent of scenarios lose nothing and 5 percent lose 60 percent. In between, low values of $M$ bring heavy loss and high values bring light loss.
+At zero correlation every scenario loses exactly 3 percent: defaults are independent, and a huge pool averages them out. At full correlation the loans default together or not at all: 95 percent of scenarios lose nothing and 5 percent lose 60 percent. In between, low values of $`M`$ bring heavy loss and high values bring light loss.
 
 A tranche is a window on the loss. How much of the fixed 3 percent average lands in the window depends on the spread. That is why a tranche's price carries information about correlation.
 
 ### Step 1: every tranche is two first-loss slices
 
-For any loss $L$, the 3–7% tranche loses $\min(L, 7\%) - \min(L, 3\%)$ of the pool. Check three cases. Pool loss 2 percent: 2 − 2 = 0. Pool loss 5 percent: 5 − 3 = 2 percentage points of the pool, half the tranche. Pool loss 9 percent: 7 − 3 = 4, the whole tranche.
+For any loss $`L`$, the 3–7% tranche loses $`\min(L, 7\%) - \min(L, 3\%)`$ of the pool. Check three cases. Pool loss 2 percent: 2 − 2 = 0. Pool loss 5 percent: 5 − 3 = 2 percentage points of the pool, half the tranche. Pool loss 9 percent: 7 − 3 = 4, the whole tranche.
 
-Averaging over scenarios keeps the difference, which gives the formula for $\mathrm{EL}_{A,B}$. So the behaviour of any tranche follows from the behaviour of $H_\rho(K)$, one first-loss slice at a time.
+Averaging over scenarios keeps the difference, which gives the formula for $`\mathrm{EL}_{A,B}`$. So the behaviour of any tranche follows from the behaviour of $`H_\rho(K)`$, one first-loss slice at a time.
 
 ### Step 2: a first-loss slice's expected loss falls strictly with correlation
 
-The 0-to-$K$ slice keeps the pool's loss up to $K$ and ignores the rest. Spread the loss out and two things happen. Heavy scenarios lose more, but the slice cannot lose more than $K$ in them. Light scenarios lose less, and the slice feels every bit of that. The cap blocks the extra loss in bad scenarios but not the relief in good ones, so the average falls.
+The 0-to-$`K`$ slice keeps the pool's loss up to $`K`$ and ignores the rest. Spread the loss out and two things happen. Heavy scenarios lose more, but the slice cannot lose more than $`K`$ in them. Light scenarios lose less, and the slice feels every bit of that. The cap blocks the extra loss in bad scenarios but not the relief in good ones, so the average falls.
 
-The exact statement is a slope. Differentiating $H_\rho(K)$ in $\rho$ gives
+The exact statement is a slope. Differentiating $`H_\rho(K)`$ in $`\rho`$ gives
 
-$$\frac{\partial H_\rho(K)}{\partial \rho} = -\,\frac{g\,\varphi(b_K)\,\varphi(z_K)}{2\sqrt{\rho(1-\rho)}},$$
+```math
+\frac{\partial H_\rho(K)}{\partial \rho} = -\,\frac{g\,\varphi(b_K)\,\varphi(z_K)}{2\sqrt{\rho(1-\rho)}},
+```
 
-which is negative for every $\rho$ strictly between 0 and 1. At $K$ = 7% and $\rho$ = 30% it is −0.025452, and bumping $\rho$ up and down by 0.00001 in the code gives the same number.
+which is negative for every $`\rho`$ strictly between 0 and 1. At $`K`$ = 7% and $`\rho`$ = 30% it is −0.025452, and bumping $`\rho`$ up and down by 0.00001 in the code gives the same number.
 
 <details>
 <summary>Detailed proof: the closed form, and its slope</summary>
 
-Write $\min(L,K) = K$ when $M < z_K$, and $L$ otherwise. So
-$H_\rho(K) = K\,N(z_K) + \mathbb{E}\big[L\,;\,M \ge z_K\big]$.
-The second term is $g$ times the chance that a loan defaults while the economy is at or above $z_K$. A loan's hidden score, $\sqrt{\rho}\,M$ plus $\sqrt{1-\rho}$ times its own bell-curve noise, is a bell-curve draw with correlation $\sqrt{\rho}$ to $M$, so that chance is $p - N_2(c, z_K; \sqrt{\rho})$:
-$$H_\rho(K) = K\,N(z_K) + g\,\big[\,p - N_2(c, z_K; \sqrt{\rho})\,\big].$$
-Differentiate in $\rho$. The pair function obeys two rules: its slope in the second point is $\varphi(z)\,N\big((c - \sqrt{\rho}\,z)/\sqrt{1-\rho}\big)$, and its slope in the correlation is the pair's bell-curve height (Plackett's identity). At $z = z_K$ the first rule gives $\varphi(z_K)\,K/g$, by the definition of $z_K$, so the two terms that move $z_K$ cancel exactly. What remains is the correlation slope times $d\sqrt{\rho}/d\rho = 1/(2\sqrt{\rho})$. The pair's height at $(c, z_K)$ factors as $\varphi(z_K)\,\varphi(b_K)/\sqrt{1-\rho}$, because $(c - \sqrt{\rho}\,z_K)/\sqrt{1-\rho} = b_K$. Multiplying gives the slope in the body. Every factor is positive, and the minus sign makes the slope negative.
+Write $`\min(L,K) = K`$ when $`M < z_K`$, and $`L`$ otherwise. So
+$`H_\rho(K) = K\,N(z_K) + \mathbb{E}\big[L\,;\,M \ge z_K\big]`$.
+The second term is $`g`$ times the chance that a loan defaults while the economy is at or above $`z_K`$. A loan's hidden score, $`\sqrt{\rho}\,M`$ plus $`\sqrt{1-\rho}`$ times its own bell-curve noise, is a bell-curve draw with correlation $`\sqrt{\rho}`$ to $`M`$, so that chance is $`p - N_2(c, z_K; \sqrt{\rho})`$:
+
+$`\displaystyle H_\rho(K) = K\,N(z_K) + g\,\big[\,p - N_2(c, z_K; \sqrt{\rho})\,\big].`$
+
+Differentiate in $`\rho`$. The pair function obeys two rules: its slope in the second point is $`\varphi(z)\,N\big((c - \sqrt{\rho}\,z)/\sqrt{1-\rho}\big)`$, and its slope in the correlation is the pair's bell-curve height (Plackett's identity). At $`z = z_K`$ the first rule gives $`\varphi(z_K)\,K/g`$, by the definition of $`z_K`$, so the two terms that move $`z_K`$ cancel exactly. What remains is the correlation slope times $`d\sqrt{\rho}/d\rho = 1/(2\sqrt{\rho})`$. The pair's height at $`(c, z_K)`$ factors as $`\varphi(z_K)\,\varphi(b_K)/\sqrt{1-\rho}`$, because $`(c - \sqrt{\rho}\,z_K)/\sqrt{1-\rho} = b_K`$. Multiplying gives the slope in the body. Every factor is positive, and the minus sign makes the slope negative.
 
 </details>
 
-The ends are known exactly. At zero correlation, $H_0(K) = \min(g\,p, K)$. At full correlation, $H_1(K) = p\,\min(g, K)$. For the 0–3% equity, as a share of its width, that is 100 percent and 5 percent.
+The ends are known exactly. At zero correlation, $`H_0(K) = \min(g\,p, K)`$. At full correlation, $`H_1(K) = p\,\min(g, K)`$. For the 0–3% equity, as a share of its width, that is 100 percent and 5 percent.
 
 A continuous, strictly falling curve from 100 down to 5 meets every level between once (the intermediate value theorem). So **a quote strictly between 5 and 100 percent has exactly one equity implied correlation; a quote at or outside those ends has none inside (0, 1).** The quote 62.8 percent gives 19.97 percent.
 
@@ -161,32 +177,38 @@ The single line is the equity's expected loss. It falls at every step, so any ho
 
 ### Step 3: the mezzanine is the difference of two falling curves
 
-The 3–7% tranche is $H_\rho(7\%)$ minus $H_\rho(3\%)$, over 4 percent. Both fall with correlation. Their difference rises when the 3% slice falls faster, and falls when the 7% slice does. So the mezzanine can go either way.
+The 3–7% tranche is $`H_\rho(7\%)`$ minus $`H_\rho(3\%)`$, over 4 percent. Both fall with correlation. Their difference rises when the 3% slice falls faster, and falls when the 7% slice does. So the mezzanine can go either way.
 
 The ends pin it down. At zero correlation every scenario loses exactly 3 percent, which stops at the tranche's floor: expected loss 0. At full correlation 5 percent of scenarios lose 60 percent of the pool, which wipes the tranche out: expected loss 5 percent.
 
 In between it climbs to 19.68 percent, because moderate spreading pushes many scenarios into the 3–7% window, then heavy spreading sends scenarios either below the window or straight through it.
 
-Subtracting the two slopes from Step 2, the mezzanine rises exactly when $\varphi(b_A)\,\varphi(z_A) > \varphi(b_B)\,\varphi(z_B)$. Taking logs and cancelling reduces this to a sign test on $(b_A + b_B) - 2c\sqrt{1-\rho}$. As $\rho$ rises, $\sqrt{1-\rho}$ falls steadily, so the sign changes at most once. When $2c < b_A + b_B < 0$ it changes exactly once, at
+Subtracting the two slopes from Step 2, the mezzanine rises exactly when $`\varphi(b_A)\,\varphi(z_A) > \varphi(b_B)\,\varphi(z_B)`$. Taking logs and cancelling reduces this to a sign test on $`(b_A + b_B) - 2c\sqrt{1-\rho}`$. As $`\rho`$ rises, $`\sqrt{1-\rho}`$ falls steadily, so the sign changes at most once. When $`2c < b_A + b_B < 0`$ it changes exactly once, at
 
-$$\rho^* = 1 - \left(\frac{b_A + b_B}{2c}\right)^2.$$
+```math
+\rho^* = 1 - \left(\frac{b_A + b_B}{2c}\right)^2.
+```
 
 For the 3–7% tranche that is 25.65 percent, and a numerical search for the maximum, which knows nothing of this formula, lands on the same value.
 
 <details>
 <summary>Detailed proof: exactly one peak</summary>
 
-From Step 2, the mezzanine's slope is $\dfrac{g}{2\sqrt{\rho(1-\rho)}\,(B-A)}\big[\varphi(b_A)\varphi(z_A) - \varphi(b_B)\varphi(z_B)\big]$, so its sign is the sign of $\log\big(\varphi(b_A)\varphi(z_A)\big) - \log\big(\varphi(b_B)\varphi(z_B)\big)$. Since $\log\varphi(x) = -x^2/2$ plus a constant, that difference is $\tfrac12\big(b_B^2 - b_A^2\big) + \tfrac12\big(z_B^2 - z_A^2\big)$. Put in $z_K = (c - \sqrt{1-\rho}\,b_K)/\sqrt{\rho}$ and expand:
-$$\tfrac12\big(z_B^2 - z_A^2\big) = \frac{(b_B - b_A)\big[\,(1-\rho)(b_A + b_B) - 2c\sqrt{1-\rho}\,\big]}{2\rho}.$$
-Write $\tfrac12(b_B^2 - b_A^2)$ as $\rho\,(b_B - b_A)(b_A + b_B)/(2\rho)$ and add. The $(1-\rho)$ and the $\rho$ combine:
-$$\frac{(b_B - b_A)\big[\,(b_A + b_B) - 2c\sqrt{1-\rho}\,\big]}{2\rho}.$$
-Since $A < B$, $b_B - b_A > 0$, so the sign is that of $(b_A + b_B) - 2c\sqrt{1-\rho}$. With $c < 0$, this moves steadily from $(b_A+b_B) - 2c$ at $\rho = 0$, positive when $b_A + b_B > 2c$, down to $b_A + b_B$ at $\rho = 1$, negative when $b_A + b_B < 0$. So it crosses zero once, where $\sqrt{1-\rho} = (b_A + b_B)/(2c)$. Squaring gives $\rho^*$. Other tranches, or other $p$ and $g$, may fail the inequality: the 0–3% equity has $b_A$ at minus infinity and never rises.
+From Step 2, the mezzanine's slope is $`\dfrac{g}{2\sqrt{\rho(1-\rho)}\,(B-A)}\big[\varphi(b_A)\varphi(z_A) - \varphi(b_B)\varphi(z_B)\big]`$, so its sign is the sign of $`\log\big(\varphi(b_A)\varphi(z_A)\big) - \log\big(\varphi(b_B)\varphi(z_B)\big)`$. Since $`\log\varphi(x) = -x^2/2`$ plus a constant, that difference is $`\tfrac12\big(b_B^2 - b_A^2\big) + \tfrac12\big(z_B^2 - z_A^2\big)`$. Put in $`z_K = (c - \sqrt{1-\rho}\,b_K)/\sqrt{\rho}`$ and expand:
+
+$`\displaystyle \tfrac12\big(z_B^2 - z_A^2\big) = \frac{(b_B - b_A)\big[\,(1-\rho)(b_A + b_B) - 2c\sqrt{1-\rho}\,\big]}{2\rho}.`$
+
+Write $`\tfrac12(b_B^2 - b_A^2)`$ as $`\rho\,(b_B - b_A)(b_A + b_B)/(2\rho)`$ and add. The $`(1-\rho)`$ and the $`\rho`$ combine:
+
+$`\displaystyle \frac{(b_B - b_A)\big[\,(b_A + b_B) - 2c\sqrt{1-\rho}\,\big]}{2\rho}.`$
+
+Since $`A < B`$, $`b_B - b_A > 0`$, so the sign is that of $`(b_A + b_B) - 2c\sqrt{1-\rho}`$. With $`c < 0`$, this moves steadily from $`(b_A+b_B) - 2c`$ at $`\rho = 0`$, positive when $`b_A + b_B > 2c`$, down to $`b_A + b_B`$ at $`\rho = 1`$, negative when $`b_A + b_B < 0`$. So it crosses zero once, where $`\sqrt{1-\rho} = (b_A + b_B)/(2c)`$. Squaring gives $`\rho^*`$. Other tranches, or other $`p`$ and $`g`$, may fail the inequality: the 0–3% equity has $`b_A`$ at minus infinity and never rises.
 
 </details>
 
 The root count follows from the shape. The curve rises from 0 to 19.68 percent, then falls to 5 percent.
 
-| Quote $Q$ for 3–7% | Correlations that reproduce it |
+| Quote $`Q`$ for 3–7% | Correlations that reproduce it |
 | --- | --- |
 | above the peak, 19.675% | none |
 | exactly the peak | one, 25.65% |
@@ -198,13 +220,13 @@ The quote 19.5 percent sits in the third row: 20.41 and 31.84 percent.
 
 ### Step 4: solve each branch separately
 
-Inverting means finding where $\mathrm{EL}_{A,B}(\rho) - Q$ crosses zero ([Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)). Bisection needs a bracket whose two ends give opposite signs. Over the whole range 0 to 1 the 19.5 percent quote fails that test: the curve is below 19.5 at both ends. Plain bisection run anyway walks to 100 percent correlation, where the mezzanine loses 5.00 percent, nowhere near the quote.
+Inverting means finding where $`\mathrm{EL}_{A,B}(\rho) - Q`$ crosses zero ([Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)). Bisection needs a bracket whose two ends give opposite signs. Over the whole range 0 to 1 the 19.5 percent quote fails that test: the curve is below 19.5 at both ends. Plain bisection run anyway walks to 100 percent correlation, where the mezzanine loses 5.00 percent, nowhere near the quote.
 
-The fix is to split at $\rho^*$. On $(0, \rho^*)$ the curve only rises; on $(\rho^*, 1)$ it only falls. Each piece has a proper bracket or none, and each yields at most one root. The code finds each root twice: by bisection, and by Newton's method using the slope formula from Step 2. The two agree to eight decimals.
+The fix is to split at $`\rho^*`$. On $`(0, \rho^*)`$ the curve only rises; on $`(\rho^*, 1)`$ it only falls. Each piece has a proper bracket or none, and each yields at most one root. The code finds each root twice: by bisection, and by Newton's method using the slope formula from Step 2. The two agree to eight decimals.
 
 ### Step 5: base correlation inverts the first-loss slices
 
-Step 2 already contains the fix. Every 0-to-$K$ slice falls strictly with correlation, so every first-loss quote inside its range has exactly one correlation. Base correlation builds those first-loss quotes out of the tranche quotes, by adding each tranche's expected loss, in pool units, onto the stack below it.
+Step 2 already contains the fix. Every 0-to-$`K`$ slice falls strictly with correlation, so every first-loss quote inside its range has exactly one correlation. Base correlation builds those first-loss quotes out of the tranche quotes, by adding each tranche's expected loss, in pool units, onto the stack below it.
 
 The card's test market quotes four tranches: 0–3, 3–7, 7–10 and 10–15 percent. The quotes are generated from a known **skew**, a set of base correlations that rises with the detachment point: 20, 25, 30 and 40 percent. So the inversion can be checked against the truth. Real quotes arrive without that label.
 
@@ -233,7 +255,7 @@ A client wants the 5–10% tranche. Nobody quotes it. Base correlation is known 
 
 Price the 0–10% slice at 30 percent and the 0–5% slice at 22.5 percent, and subtract. The 5–10% tranche loses 7.04 percent of its width in expectation.
 
-Two cautions. The price mixes two correlations, so no single loss distribution stands behind it. And a bent interpolation can make $H_{\rho_b(B)}(B) - H_{\rho_b(A)}(A)$ negative or larger than $B - A$: a tranche that gains from defaults, or loses more than its size. The code checks the quoted stack, $0 \le C(K_i) - C(K_{i-1}) \le K_i - K_{i-1}$, for both.
+Two cautions. The price mixes two correlations, so no single loss distribution stands behind it. And a bent interpolation can make $`H_{\rho_b(B)}(B) - H_{\rho_b(A)}(A)`$ negative or larger than $`B - A`$: a tranche that gains from defaults, or loses more than its size. The code checks the quoted stack, $`0 \le C(K_i) - C(K_{i-1}) \le K_i - K_{i-1}`$, for both.
 
 ### The other door
 
@@ -243,25 +265,25 @@ Base correlation fixes the inverse, not the model. The rising skew says one Gaus
 
 ## Worked numbers, by hand
 
-The pool: $p$ = 5%, $g$ = 60%. The mezzanine: $A$ = 3%, $B$ = 7%.
+The pool: $`p`$ = 5%, $`g`$ = 60%. The mezzanine: $`A`$ = 3%, $`B`$ = 7%.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| default threshold $c$ | $N^{-1}(0.05)$ | −1.644854 |
-| $b_A$ | $N^{-1}(0.03 / 0.60) = N^{-1}(0.05)$ | −1.644854 |
-| $b_B$ | $N^{-1}(0.07 / 0.60)$ | −1.191816 |
-| one peak? | is $2c = -3.29 < b_A + b_B = -2.84 < 0$? | yes |
-| peak correlation $\rho^*$ | $1 - \big((-1.644854 - 1.191816)/(2 \times -1.644854)\big)^2$ | 0.256462 |
-| peak expected loss | $\mathrm{EL}_{3,7}(\rho^*)$, by integral | 19.68% |
+| default threshold $`c`$ | $`N^{-1}(0.05)`$ | −1.644854 |
+| $`b_A`$ | $`N^{-1}(0.03 / 0.60) = N^{-1}(0.05)`$ | −1.644854 |
+| $`b_B`$ | $`N^{-1}(0.07 / 0.60)`$ | −1.191816 |
+| one peak? | is $`2c = -3.29 < b_A + b_B = -2.84 < 0`$? | yes |
+| peak correlation $`\rho^*`$ | $`1 - \big((-1.644854 - 1.191816)/(2 \times -1.644854)\big)^2`$ | 0.256462 |
+| peak expected loss | $`\mathrm{EL}_{3,7}(\rho^*)`$, by integral | 19.68% |
 | quote 19.5%: two roots | below 19.68 and above 5 | 20.41% and 31.84% |
 | quote 21%: none | above the peak | — |
 | equity quote 62.8% | between 5 and 100, one root | 19.97% |
-| base stack at 3% | $0.03 \times 0.627703$ | 0.018831 → 20% |
-| base stack at 7% | $0.018831 + 0.04 \times 0.162777$ | 0.025342 → 25% |
-| base stack at 10% | $0.025342 + 0.03 \times 0.045278$ | 0.026701 → 30% |
-| base correlation at 5% | $20\% + \tfrac{5 - 3}{7 - 3}(25\% - 20\%)$ | 22.5% |
-| 0–5% slice at 22.5% | $H_{0.225}(0.05)$, by integral | 0.023180 |
-| **5–10% tranche** | $(0.026701 - 0.023180) / 0.05$ | **7.04%** |
+| base stack at 3% | $`0.03 \times 0.627703`$ | 0.018831 → 20% |
+| base stack at 7% | $`0.018831 + 0.04 \times 0.162777`$ | 0.025342 → 25% |
+| base stack at 10% | $`0.025342 + 0.03 \times 0.045278`$ | 0.026701 → 30% |
+| base correlation at 5% | $`20\% + \tfrac{5 - 3}{7 - 3}(25\% - 20\%)`$ | 22.5% |
+| 0–5% slice at 22.5% | $`H_{0.225}(0.05)`$, by integral | 0.023180 |
+| **5–10% tranche** | $`(0.026701 - 0.023180) / 0.05`$ | **7.04%** |
 
 Under the base-correlation convention, a 5–10% tranche on this pool is expected to lose about 7 percent of its size over five years.
 
@@ -687,14 +709,14 @@ The two outputs agree line for line.
 
 ### Lean
 
-Lean proves both theorems in Why it works, and the sign test behind the peak, for any $p$ and any $g > 0$.
+Lean proves both theorems in Why it works, and the sign test behind the peak, for any $`p`$ and any $`g > 0`$.
 
-- Take a first-loss slice from 0 to $K$, with $0 < K < g$. Then its expected loss falls strictly as correlation rises from 0 to 1.
-- Take the same slice. Then a quote has one implied correlation, and only one, exactly when it lies strictly between $p K$ and $\min(g p, K)$.
-- Take $0 < \rho < 1$ and $b_A < b_B$. Then $\varphi(b_A) \varphi(z_A) > \varphi(b_B) \varphi(z_B)$ holds exactly when $b_A + b_B > 2c\sqrt{1-\rho}$.
-- Take a tranche from $A$ to $B$, with $b_A < b_B$ and $2c < b_A + b_B < 0$. Then its expected loss rises strictly up to $\rho^*$ and falls strictly after it, and $\rho^*$ lies strictly between 0 and 1.
+- Take a first-loss slice from 0 to $`K`$, with $`0 < K < g`$. Then its expected loss falls strictly as correlation rises from 0 to 1.
+- Take the same slice. Then a quote has one implied correlation, and only one, exactly when it lies strictly between $`p K`$ and $`\min(g p, K)`$.
+- Take $`0 < \rho < 1`$ and $`b_A < b_B`$. Then $`\varphi(b_A) \varphi(z_A) > \varphi(b_B) \varphi(z_B)`$ holds exactly when $`b_A + b_B > 2c\sqrt{1-\rho}`$.
+- Take a tranche from $`A`$ to $`B`$, with $`b_A < b_B`$ and $`2c < b_A + b_B < 0`$. Then its expected loss rises strictly up to $`\rho^*`$ and falls strictly after it, and $`\rho^*`$ lies strictly between 0 and 1.
 - Take the same tranche. Then no correlation reproduces a quote above the peak.
-- Take the same tranche, and a quote below the peak but above its expected loss at zero correlation and at full correlation. Then exactly two correlations reproduce the quote, one on each side of $\rho^*$.
+- Take the same tranche, and a quote below the peak but above its expected loss at zero correlation and at full correlation. Then exactly two correlations reproduce the quote, one on each side of $`\rho^*`$.
 - Lean also redoes the exact sums in Steps 1, 2, 3 and 6. These are the three loss cases, the four end values and the 22.5 percent interpolation.
 
 Every computed number, the 100-loan pool and the base-correlation bootstrap are left to the Python and Rust checks.
@@ -1507,7 +1529,7 @@ end ImpliedAndBaseCorrelation
 >
 > Three smaller traps:
 > - **Reading a base correlation as the tranche's correlation.** The 25 percent at 7% belongs to the 0–7% slice. Pricing the 3–7% tranche at 25 percent alone gives the wrong answer; it needs 20 at the bottom and 25 at the top.
-> - **Confusing asset correlation with default correlation.** $\rho$ is the correlation of the hidden scores. The correlation of the default events themselves is far smaller ([Default correlation](01-default-correlation-and-joint-default.md)).
+> - **Confusing asset correlation with default correlation.** $`\rho`$ is the correlation of the hidden scores. The correlation of the default events themselves is far smaller ([Default correlation](01-default-correlation-and-joint-default.md)).
 > - **Trusting an interpolated slice without checking it.** A bent base-correlation curve can make a thin slice's expected loss negative or bigger than its width. Check that its expected loss lies between 0 and its width every time.
 
 ---
@@ -1527,7 +1549,7 @@ end ImpliedAndBaseCorrelation
 ## What this builds on
 
 - [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md): the pricing model, its market factor, default threshold and asset correlation; this card runs it backwards.
-- [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md): the pool loss $L$ once the market factor is known, which every expected loss here averages.
+- [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md): the pool loss $`L`$ once the market factor is known, which every expected loss here averages.
 - [Tranches](05-cdo-tranches-in-outline.md): the tranche itself, its attachment and detachment, and how a spread quote becomes an expected loss.
 - [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection, Newton, and why a bracket must change sign; Step 4 applies them branch by branch.
 - [Correlation Greeks and implied correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md): implied correlation for an index option, where the inverse is unique; this card is the tranche version, where it need not be.

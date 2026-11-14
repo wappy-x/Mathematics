@@ -34,41 +34,43 @@ flowchart LR
     H --> I["price<br/>91.82958997 − 1537.69228556ε"]
 ```
 
-Schematic, not to scale. Here $w = 4/6$, the fraction of a half year until the next coupon. The pricer never sees a formula for the slope. It sees one operation at a time.
+Schematic, not to scale. Here $`w = 4/6`$, the fraction of a half year until the next coupon. The pricer never sees a formula for the slope. It sees one operation at a time.
 
 ---
 
 ## The formula
 
-A reminder from [Complex steps and dual numbers](05-complex-step-and-dual-numbers.md): a **dual number** is $a + b\,\varepsilon$, where $\varepsilon$ ("epsilon", the dual unit) is a symbol with $\varepsilon^2 = 0$. Here $a$ is the value part and $b$ the slope part.
+A reminder from [Complex steps and dual numbers](05-complex-step-and-dual-numbers.md): a **dual number** is $`a + b\,\varepsilon`$, where $`\varepsilon`$ ("epsilon", the dual unit) is a symbol with $`\varepsilon^2 = 0`$. Here $`a`$ is the value part and $`b`$ the slope part.
 
-$$f(a + b\,\varepsilon) \;=\; f(a) + f'(a)\,b\,\varepsilon, \qquad\text{so}\qquad P(y + 1\,\varepsilon) \;=\; P(y) + P'(y)\,\varepsilon$$
+```math
+f(a + b\,\varepsilon) \;=\; f(a) + f'(a)\,b\,\varepsilon, \qquad\text{so}\qquad P(y + 1\,\varepsilon) \;=\; P(y) + P'(y)\,\varepsilon
+```
 
 **Read it aloud:** give any operation a value with a slope attached, and it returns its own value with the slope multiplied by its own rate of change there; chain the operations of a whole pricer, start the yield's slope at 1, and the price comes out with its derivative attached.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y$ | the bond's yield, a yearly rate | 0.045 (4.5%) | price falls, and the slope shrinks in size |
-| $\varepsilon$ | the dual unit: a symbol whose square is 0 | — | — |
-| $a + b\,\varepsilon$, $c + d\,\varepsilon$ | dual numbers: value parts $a$, $c$; slope parts $b$, $d$ | $0.045 + 1\,\varepsilon$ for the yield | — |
-| $f$, $f'$; $f_k$, $u_k$ | any one operation in the code, and its derivative; in the proof, line $k$'s operation and its value | $\log$, with $f'(a) = 1/a$ | — |
-| $P(y)$ | the bond's clean price per 100 dollars of face: the pricer's output | 91.82958997 | — |
-| $P'(y)$, $P'''(y)$ | the slope of price against yield, the number wanted; its third derivative, which sets a central bump's error | −1537.69228556; $h^2P'''/6$ = −0.00163506 | — |
-| $\text{DV01}$ | price lost per one basis point rise: $-P'(y) \times 0.0001$ | 0.15376923 dollars | grows with maturity |
-| $v$ | one half year's discount factor, $1/(1 + y/2)$ | 0.97799511 | every cash flow is worth more |
-| $w$; $n$ | fraction of a half year until the next coupon; coupons still to be paid | 4/6; 60 | more coupons: the slope grows in size, and the price falls here, since the 4% coupon is below the 4.5% yield |
-| $h$ | the bump, for the difference roads only | 0.0001 (one basis point) | the bump's error grows with it |
-| $L$ | operations in one plain run of the pricer | 188 | every cost scales with it |
+| $`y`$ | the bond's yield, a yearly rate | 0.045 (4.5%) | price falls, and the slope shrinks in size |
+| $`\varepsilon`$ | the dual unit: a symbol whose square is 0 | — | — |
+| $`a + b\,\varepsilon`$, $`c + d\,\varepsilon`$ | dual numbers: value parts $`a`$, $`c`$; slope parts $`b`$, $`d`$ | $`0.045 + 1\,\varepsilon`$ for the yield | — |
+| $`f`$, $`f'`$; $`f_k`$, $`u_k`$ | any one operation in the code, and its derivative; in the proof, line $`k`$'s operation and its value | $`\log`$, with $`f'(a) = 1/a`$ | — |
+| $`P(y)`$ | the bond's clean price per 100 dollars of face: the pricer's output | 91.82958997 | — |
+| $`P'(y)`$, $`P'''(y)`$ | the slope of price against yield, the number wanted; its third derivative, which sets a central bump's error | −1537.69228556; $`h^2P'''/6`$ = −0.00163506 | — |
+| $`\text{DV01}`$ | price lost per one basis point rise: $`-P'(y) \times 0.0001`$ | 0.15376923 dollars | grows with maturity |
+| $`v`$ | one half year's discount factor, $`1/(1 + y/2)`$ | 0.97799511 | every cash flow is worth more |
+| $`w`$; $`n`$ | fraction of a half year until the next coupon; coupons still to be paid | 4/6; 60 | more coupons: the slope grows in size, and the price falls here, since the 4% coupon is below the 4.5% yield |
+| $`h`$ | the bump, for the difference roads only | 0.0001 (one basis point) | the bump's error grows with it |
+| $`L`$ | operations in one plain run of the pricer | 188 | every cost scales with it |
 
 Each operation gets its own rule for the slope part. These are the derivative rules from calculus, written for pairs:
 
 | Operation | Value part | Slope part |
 | --- | --- | --- |
-| $(a + b\varepsilon) + (c + d\varepsilon)$ | $a + c$ | $b + d$ |
-| $(a + b\varepsilon) \times (c + d\varepsilon)$ | $ac$ | $ad + bc$ |
-| $(a + b\varepsilon) \div (c + d\varepsilon)$ | $a/c$ | $(b - (a/c)\,d)/c$ |
-| $\exp(a + b\varepsilon)$ | $e^a$ | $e^a\, b$ |
-| $\log(a + b\varepsilon)$ | $\log a$ | $b/a$ |
+| $`(a + b\varepsilon) + (c + d\varepsilon)`$ | $`a + c`$ | $`b + d`$ |
+| $`(a + b\varepsilon) \times (c + d\varepsilon)`$ | $`ac`$ | $`ad + bc`$ |
+| $`(a + b\varepsilon) \div (c + d\varepsilon)`$ | $`a/c`$ | $`(b - (a/c)\,d)/c`$ |
+| $`\exp(a + b\varepsilon)`$ | $`e^a`$ | $`e^a\, b`$ |
+| $`\log(a + b\varepsilon)`$ | $`\log a`$ | $`b/a`$ |
 
 ### When it holds
 
@@ -94,22 +96,24 @@ The [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule
 
 Multiply two dual numbers and expand:
 
-$$(a + b\varepsilon)(c + d\varepsilon) = ac + (ad + bc)\,\varepsilon + bd\,\varepsilon^2 = ac + (ad + bc)\,\varepsilon.$$
+```math
+(a + b\varepsilon)(c + d\varepsilon) = ac + (ad + bc)\,\varepsilon + bd\,\varepsilon^2 = ac + (ad + bc)\,\varepsilon.
+```
 
-The slope part is the product rule. Division, exp and log follow the same way, using $\varepsilon^2 = 0$ in each Taylor expansion (a function written as a sum of powers of the step). A difference quotient keeps the $h^2$ and higher terms and divides them by $h$; that leftover is its error. With $\varepsilon$ in place of $h$, every power above the first is zero by definition, so nothing is left over.
+The slope part is the product rule. Division, exp and log follow the same way, using $`\varepsilon^2 = 0`$ in each Taylor expansion (a function written as a sum of powers of the step). A difference quotient keeps the $`h^2`$ and higher terms and divides them by $`h`$; that leftover is its error. With $`\varepsilon`$ in place of $`h`$, every power above the first is zero by definition, so nothing is left over.
 
 <details>
 <summary>Detailed proof: every line's slope part is the exact derivative</summary>
 
-Number the pricer's lines $1, 2, \dots, L$. Line $k$ computes $u_k = f_k(u_i, u_j)$ from earlier lines or constants, where $f_k$ is one of $+$, $-$, $\times$, $\div$, $\exp$, $\log$.
+Number the pricer's lines $`1, 2, \dots, L`$. Line $`k`$ computes $`u_k = f_k(u_i, u_j)`$ from earlier lines or constants, where $`f_k`$ is one of $`+`$, $`-`$, $`\times`$, $`\div`$, $`\exp`$, $`\log`$.
 
-**Claim.** When the pricer runs on $y + 1\,\varepsilon$, line $k$ holds $u_k(y) + u_k'(y)\,\varepsilon$, where $u_k(y)$ is the value the plain pricer computes on that line and $u_k'(y)$ is its derivative against the yield.
+**Claim.** When the pricer runs on $`y + 1\,\varepsilon`$, line $`k`$ holds $`u_k(y) + u_k'(y)\,\varepsilon`$, where $`u_k(y)`$ is the value the plain pricer computes on that line and $`u_k'(y)`$ is its derivative against the yield.
 
-**Base.** The input holds $y + 1\varepsilon$, and $dy/dy = 1$. A constant holds its value plus $0\varepsilon$, and its derivative is 0.
+**Base.** The input holds $`y + 1\varepsilon`$, and $`dy/dy = 1`$. A constant holds its value plus $`0\varepsilon`$, and its derivative is 0.
 
-**Step.** Suppose the claim holds for $u_i$ and $u_j$. Line $k$ applies its rule from the table above. For $\times$ the slope part is $u_i u_j' + u_i' u_j$, the product rule. For $\div$ it is $(u_i' - (u_i/u_j)\,u_j')/u_j$, the quotient rule. For $\exp$ and $\log$ it is $f_k'(u_i)\,u_i'$, the chain rule. For $+$ and $-$ it is $u_i' \pm u_j'$. In each case the slope part is $u_k'(y)$, by the rule that calculus proves for that operation.
+**Step.** Suppose the claim holds for $`u_i`$ and $`u_j`$. Line $`k`$ applies its rule from the table above. For $`\times`$ the slope part is $`u_i u_j' + u_i' u_j`$, the product rule. For $`\div`$ it is $`(u_i' - (u_i/u_j)\,u_j')/u_j`$, the quotient rule. For $`\exp`$ and $`\log`$ it is $`f_k'(u_i)\,u_i'`$, the chain rule. For $`+`$ and $`-`$ it is $`u_i' \pm u_j'`$. In each case the slope part is $`u_k'(y)`$, by the rule that calculus proves for that operation.
 
-By induction the last line holds $P(y) + P'(y)\,\varepsilon$. The proof never looks at the formula for $P$, only at the lines that compute it. A loop is just more lines; a branch picks which lines run. That is why a rounded yield returns slope 0: the lines that ran include a flat step.
+By induction the last line holds $`P(y) + P'(y)\,\varepsilon`$. The proof never looks at the formula for $`P`$, only at the lines that compute it. A loop is just more lines; a branch picks which lines run. That is why a rounded yield returns slope 0: the lines that ran include a flat step.
 
 </details>
 
@@ -123,7 +127,7 @@ So the same `clean_price` runs on plain floats, on dual numbers, and on symbolic
 
 Count operations. One plain run of the 30-year pricer does 188. In the dual run, each add or subtract does one more for the slope part; each multiply or divide does three more; exp and log do one more each, reusing the value.
 
-The dual run does 622 operations in all, 3.30851064 times one plain run. Counted by hand from the pricer's lines, the plain run is $3n + 8$ operations and the dual run $10n + 22$, for $n$ coupons; the checks assert both at $n$ = 60. The multiple stays near three at every maturity: the 1-year bond takes 14 plain operations and 42 dual ones.
+The dual run does 622 operations in all, 3.30851064 times one plain run. Counted by hand from the pricer's lines, the plain run is $`3n + 8`$ operations and the dual run $`10n + 22`$, for $`n`$ coupons; the checks assert both at $`n`$ = 60. The multiple stays near three at every maturity: the 1-year bond takes 14 plain operations and 42 dual ones.
 
 The limit is the direction. One run gives the slope against one input. A bond priced off 50 curve points needs 50 runs for 50 sensitivities. [Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md) already runs forward mode on the Black-Scholes tape, one input per pass, and shows when the backward sweep beats it.
 
@@ -148,24 +152,24 @@ The last column is the cure. Keep one copy of each shared piece, and the 30-year
 
 ## Worked numbers, by hand
 
-The pricer's first lines on the dual yield $0.045 + 1\,\varepsilon$, then the loop.
+The pricer's first lines on the dual yield $`0.045 + 1\,\varepsilon`$, then the loop.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| seed the yield | slope part 1: the yield against itself | $0.045 + 1\,\varepsilon$ |
-| halve it | both parts ÷ 2 | $0.0225 + 0.5\,\varepsilon$ |
-| add 1 | a constant's slope part is 0 | $1.0225 + 0.5\,\varepsilon$ |
-| $v = 1/(1 + y/2)$ | value $1/1.0225$; slope $(0 - 0.97799511 \times 0.5)/1.0225$ | $0.97799511 - 0.47823722\,\varepsilon$ |
-| $\log v$ | slope $-0.47823722 / 0.97799511$ | $-0.02225061 - 0.48899756\,\varepsilon$ |
-| times $w = 4/6$ | both parts × 4/6 | $-0.01483374 - 0.32599837\,\varepsilon$ |
-| exp: discount to the first coupon | value $e^{-0.01483374}$; slope $0.98527574 \times (-0.32599837)$ | $0.98527574 - 0.32119828\,\varepsilon$ |
-| first coupon, $2 \times$ that | both parts × 2 | $1.97055148 - 0.64239657\,\varepsilon$ |
-| 59 more coupons, the face, minus accrued | the same rules, 60 passes through the loop | $91.82958997 - 1537.69228556\,\varepsilon$ |
-| DV01 | $1537.69228556 \times 0.0001$ | **0.15376923 dollars** |
+| seed the yield | slope part 1: the yield against itself | $`0.045 + 1\,\varepsilon`$ |
+| halve it | both parts ÷ 2 | $`0.0225 + 0.5\,\varepsilon`$ |
+| add 1 | a constant's slope part is 0 | $`1.0225 + 0.5\,\varepsilon`$ |
+| $`v = 1/(1 + y/2)`$ | value $`1/1.0225`$; slope $`(0 - 0.97799511 \times 0.5)/1.0225`$ | $`0.97799511 - 0.47823722\,\varepsilon`$ |
+| $`\log v`$ | slope $`-0.47823722 / 0.97799511`$ | $`-0.02225061 - 0.48899756\,\varepsilon`$ |
+| times $`w = 4/6`$ | both parts × 4/6 | $`-0.01483374 - 0.32599837\,\varepsilon`$ |
+| exp: discount to the first coupon | value $`e^{-0.01483374}`$; slope $`0.98527574 \times (-0.32599837)`$ | $`0.98527574 - 0.32119828\,\varepsilon`$ |
+| first coupon, $`2 \times`$ that | both parts × 2 | $`1.97055148 - 0.64239657\,\varepsilon`$ |
+| 59 more coupons, the face, minus accrued | the same rules, 60 passes through the loop | $`91.82958997 - 1537.69228556\,\varepsilon`$ |
+| DV01 | $`1537.69228556 \times 0.0001`$ | **0.15376923 dollars** |
 
 Per 100 dollars of face, a one basis point rise in the yield costs 15.38 cents. Repricing at 4.51% gives 91.67600312, a fall of 0.15358685. The small gap is the curve's bend over the basis point, which the bump includes and a derivative does not.
 
-Four roads give the slope. The dual, the symbolic formula, and calculus by hand ($P'(y)$ as a sum of each cash flow's time × amount × discount) agree to every printed digit: both gaps from the hand value print as 0.00000000. The central bump, $(P(y+h) - P(y-h))/2h$ with $h$ one basis point, gives −1537.69392063, off by −0.00163506. That is its truncation error: with the third derivative $P'''$ from calculus by hand, the leading error $h^2P'''/6$ of [Forward, backward and central differences](01-forward-backward-and-central-differences.md) comes to −0.00163506. The one-sided bump gives −1535.86847247, off by 1.82381309.
+Four roads give the slope. The dual, the symbolic formula, and calculus by hand ($`P'(y)`$ as a sum of each cash flow's time × amount × discount) agree to every printed digit: both gaps from the hand value print as 0.00000000. The central bump, $`(P(y+h) - P(y-h))/2h`$ with $`h`$ one basis point, gives −1537.69392063, off by −0.00163506. That is its truncation error: with the third derivative $`P'''`$ from calculus by hand, the leading error $`h^2P'''/6`$ of [Forward, backward and central differences](01-forward-backward-and-central-differences.md) comes to −0.00163506. The one-sided bump gives −1535.86847247, off by 1.82381309.
 
 ### What breaks if you drop a piece
 
@@ -173,8 +177,8 @@ The correct slope is −1537.69228556.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Product rule with one half dropped: slope part $ad$ instead of $ad + bc$ | −44.90924506 | Each step of the loop `df * v` forgets the slope the discount already carried |
-| Chain factor dropped in exp: slope part $e^a$ instead of $e^a b$ | −1415.04240003 | The exp line acts as if its input moved one for one with the yield |
+| Product rule with one half dropped: slope part $`ad`$ instead of $`ad + bc`$ | −44.90924506 | Each step of the loop `df * v` forgets the slope the discount already carried |
+| Chain factor dropped in exp: slope part $`e^a`$ instead of $`e^a b`$ | −1415.04240003 | The exp line acts as if its input moved one for one with the yield |
 | The pricer rounds the yield to a whole basis point first | 0 (a one basis point bump on the same pricer gives −1535.86847247) | Rounding is flat between steps, and forward mode differentiates the code that ran; this is "the code computes the same formula near the point" failing |
 | One-sided bump of one basis point instead of a derivative | −1535.86847247 | The price curve bends inside the step: off by 1.82381309 |
 
@@ -604,11 +608,11 @@ The two outputs are identical line for line.
 
 Lean proves forward mode exact for every program of sums, differences, products, quotients, exp and log, wherever each operation has a slope.
 
-- Suppose every operation has a slope where it runs: every divisor is nonzero and every log input is positive. Then the program's output $P$ has a slope at $y$.
-- Under the same condition, running the program on $y + 1\,\varepsilon$ returns exactly $P(y) + P'(y)\,\varepsilon$. Here exp and log use the table's rules, and $+$, $-$, $\times$, $\div$ use dual arithmetic.
-- Dual multiplication is the product rule: $(a + b\varepsilon)(c + d\varepsilon) = ac + (ad + bc)\,\varepsilon$ for all real $a$, $b$, $c$, $d$.
-- Dual division is the quotient rule: for $c \neq 0$, $(a + b\varepsilon) \div (c + d\varepsilon) = a/c + ((b - (a/c)\,d)/c)\,\varepsilon$.
-- The count formulas $3n + 8$ and $10n + 22$ give the table's operations at $n$ = 2, 10, 20 and 60 coupons. Lean checks only this arithmetic.
+- Suppose every operation has a slope where it runs: every divisor is nonzero and every log input is positive. Then the program's output $`P`$ has a slope at $`y`$.
+- Under the same condition, running the program on $`y + 1\,\varepsilon`$ returns exactly $`P(y) + P'(y)\,\varepsilon`$. Here exp and log use the table's rules, and $`+`$, $`-`$, $`\times`$, $`\div`$ use dual arithmetic.
+- Dual multiplication is the product rule: $`(a + b\varepsilon)(c + d\varepsilon) = ac + (ad + bc)\,\varepsilon`$ for all real $`a`$, $`b`$, $`c`$, $`d`$.
+- Dual division is the quotient rule: for $`c \neq 0`$, $`(a + b\varepsilon) \div (c + d\varepsilon) = a/c + ((b - (a/c)\,d)/c)\,\varepsilon`$.
+- The count formulas $`3n + 8`$ and $`10n + 22`$ give the table's operations at $`n`$ = 2, 10, 20 and 60 coupons. Lean checks only this arithmetic.
 
 The pricer's numbers, counting its operations, the formula sizes and the effect of rounding are left to the Python and Rust checks.
 
@@ -823,7 +827,7 @@ example : 3 * 20 + 8 = 68 ∧ 10 * 20 + 22 = 222 := by norm_num
 > Smaller traps, each with the wrong number it gives here:
 > - **Calling it a careful bump.** A one basis point bump gives −1535.86847247; forward mode takes no step and gives −1537.69228556.
 > - **Calling it symbolic algebra.** A formula written out in full for the 30-year slope has 370,851 nodes; the dual run does 622 operations.
-> - **Forgetting the chain factor in a new rule.** Exp without its $b$ gives −1415.04240003.
+> - **Forgetting the chain factor in a new rule.** Exp without its $`b`$ gives −1415.04240003.
 > - **Dropping half the product rule.** The slope collapses to −44.90924506.
 
 ---
@@ -842,7 +846,7 @@ example : 3 * 20 + 8 = 68 ∧ 10 * 20 + 22 = 222 := by norm_num
 
 ## What this builds on
 
-- [Complex steps and dual numbers](05-complex-step-and-dual-numbers.md): defines the dual number $a + b\varepsilon$ with $\varepsilon^2 = 0$, and shows one dual evaluation of a bond: a par bond with an annual coupon, not this card's bond, so the two slopes differ slightly. This card carries the dual through a whole program.
+- [Complex steps and dual numbers](05-complex-step-and-dual-numbers.md): defines the dual number $`a + b\varepsilon`$ with $`\varepsilon^2 = 0`$, and shows one dual evaluation of a bond: a par bond with an annual coupon, not this card's bond, so the two slopes differ slightly. This card carries the dual through a whole program.
 - [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the theorem underneath. Slopes multiply along a chain, read where the chain actually is.
 - [Automatic differentiation](../../15-Optimization/02-Unconstrained%20Methods/10-automatic-differentiation-and-backpropagation.md): forward and reverse mode by hand on a short program, with their costs. This card adds division, exp, log, loops and the symbolic comparison.
 - [Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md): the first use in finance, forward mode on the Black-Scholes tape one input per pass, beside the backward sweep.

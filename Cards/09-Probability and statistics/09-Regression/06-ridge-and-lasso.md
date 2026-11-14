@@ -45,46 +45,54 @@ Orange: the squared bias, zero with no charge and climbing. Green: the variance,
 
 ## The formula
 
-Reminders of the notation. A hat marks an estimate: $\hat b_j$ is the fitted slope, the true one is $\beta_j$. The table of measurements is a matrix $X$, one row per car and one column per measurement, and $X^\top$ is that table turned on its side, as on the multiple-regression card. Every column of $X$ is centred (its average subtracted), so $G = X^\top X$ holds each pair of columns' summed products.
+Reminders of the notation. A hat marks an estimate: $`\hat b_j`$ is the fitted slope, the true one is $`\beta_j`$. The table of measurements is a matrix $`X`$, one row per car and one column per measurement, and $`X^\top`$ is that table turned on its side, as on the multiple-regression card. Every column of $`X`$ is centred (its average subtracted), so $`G = X^\top X`$ holds each pair of columns' summed products.
 
-Ridge picks the intercept $a$ and the twenty slopes that make one total smallest:
+Ridge picks the intercept $`a`$ and the twenty slopes that make one total smallest:
 
-$$\text{ridge:}\quad \sum_{i=1}^{n}\Big(y_i - a - \sum_{j=1}^{p} x_{ij} b_j\Big)^2 \;+\; \lambda \sum_{j=1}^{p} b_j^2$$
+```math
+\text{ridge:}\quad \sum_{i=1}^{n}\Big(y_i - a - \sum_{j=1}^{p} x_{ij} b_j\Big)^2 \;+\; \lambda \sum_{j=1}^{p} b_j^2
+```
 
 **Read it aloud:** the squared misses on the cars already sold, plus lambda times the sum of the squared slopes.
 
 Lasso changes only the charge:
 
-$$\text{lasso:}\quad \sum_{i=1}^{n}\Big(y_i - a - \sum_{j=1}^{p} x_{ij} b_j\Big)^2 \;+\; \lambda \sum_{j=1}^{p} |b_j|$$
+```math
+\text{lasso:}\quad \sum_{i=1}^{n}\Big(y_i - a - \sum_{j=1}^{p} x_{ij} b_j\Big)^2 \;+\; \lambda \sum_{j=1}^{p} |b_j|
+```
 
 **Read it aloud:** the same squared misses, plus lambda times the sum of the slopes' sizes, signs ignored.
 
 The intercept is never charged; with centred columns it drops out, and ridge's slopes have a formula:
 
-$$\hat b_{\text{ridge}} = (G + \lambda I)^{-1} X^\top y$$
+```math
+\hat b_{\text{ridge}} = (G + \lambda I)^{-1} X^\top y
+```
 
 **Read it aloud:** least squares with lambda added down the diagonal before solving.
 
 Lasso has no formula. It is found one slope at a time, each set by the **soft-threshold** rule, which moves a number toward zero by a fixed amount and stops at zero. In it, sign(r) is +1, 0 or −1 as r is positive, zero or negative:
 
-$$b_j = \frac{S(r_j,\ \lambda/2)}{G_{jj}}, \qquad S(r, t) = \operatorname{sign}(r)\,\max(|r| - t,\ 0), \qquad r_j = (X^\top y)_j - \sum_{k \ne j} G_{jk}\, b_k$$
+```math
+b_j = \frac{S(r_j,\ \lambda/2)}{G_{jj}}, \qquad S(r, t) = \mathrm{sign}(r)\,\max(|r| - t,\ 0), \qquad r_j = (X^\top y)_j - \sum_{k \ne j} G_{jk}\, b_k
+```
 
 **Read it aloud:** take what measurement j explains once the others have had their say, knock lambda over two off its size, and scale.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y_i$ | the price of car i, in thousands of dollars | 15 for the average car, give or take the noise | — |
-| $X$, $x_{ij}$, $n$, $p$ | the centred table of measurements; $x_{ij}$ is measurement j on car i; n cars, p measurements | 40 cars, 20 measurements | more cars: every method improves and the charge matters less |
-| $a$ | the intercept: the price of an average car | 14.67 for ridge at charge 5 | — |
-| $b_j$ | the fitted slope for measurement j: dollars per standard deviation | ridge 2.05 for the first | — |
-| $\beta_j$ | the true slope, known only because this is a simulation | 4, 3, 2, then seventeen zeros | — |
-| $\lambda$ | lambda, the charge per unit of coefficient size | 5 for ridge, 20 for lasso, picked on held-back cars | the slopes' overall size shrinks; bias up, variance down |
-| $\sigma$ | the noise: SD of a price around the true rule | 3, so squared noise 9.00 | every error grows; the best charge grows |
-| $G$, $I$ | $G = X^\top X$, the columns' summed products; $I$ the identity matrix, ones down its diagonal | a 20 by 20 table | — |
-| $d_j$ | the strength of direction j in $G$: how much the 40 cars vary along it | 741.9 at most, 0.86 at least | least squares' variance there falls, as $\sigma^2/d_j$ |
-| $\theta_j$ | the true slopes measured along direction j | — | a large one makes shrinking it costly |
-| $S$ | the soft-threshold: pull toward zero by t, stop at zero | S(2.00, 0.5) = 1.50 | — |
-| $r_j$ | what measurement j explains once the others are fitted | recomputed on every pass | — |
+| $`y_i`$ | the price of car i, in thousands of dollars | 15 for the average car, give or take the noise | — |
+| $`X`$, $`x_{ij}`$, $`n`$, $`p`$ | the centred table of measurements; $`x_{ij}`$ is measurement j on car i; n cars, p measurements | 40 cars, 20 measurements | more cars: every method improves and the charge matters less |
+| $`a`$ | the intercept: the price of an average car | 14.67 for ridge at charge 5 | — |
+| $`b_j`$ | the fitted slope for measurement j: dollars per standard deviation | ridge 2.05 for the first | — |
+| $`\beta_j`$ | the true slope, known only because this is a simulation | 4, 3, 2, then seventeen zeros | — |
+| $`\lambda`$ | lambda, the charge per unit of coefficient size | 5 for ridge, 20 for lasso, picked on held-back cars | the slopes' overall size shrinks; bias up, variance down |
+| $`\sigma`$ | the noise: SD of a price around the true rule | 3, so squared noise 9.00 | every error grows; the best charge grows |
+| $`G`$, $`I`$ | $`G = X^\top X`$, the columns' summed products; $`I`$ the identity matrix, ones down its diagonal | a 20 by 20 table | — |
+| $`d_j`$ | the strength of direction j in $`G`$: how much the 40 cars vary along it | 741.9 at most, 0.86 at least | least squares' variance there falls, as $`\sigma^2/d_j`$ |
+| $`\theta_j`$ | the true slopes measured along direction j | — | a large one makes shrinking it costly |
+| $`S`$ | the soft-threshold: pull toward zero by t, stop at zero | S(2.00, 0.5) = 1.50 | — |
+| $`r_j`$ | what measurement j explains once the others are fitted | recomputed on every pass | — |
 
 ### When it holds
 
@@ -108,15 +116,17 @@ Noise tips a flat bowl easily. A charge on coefficient size adds a second bowl, 
 
 ### Step 1: ridge's slopes come from one linear solve
 
-Centre every column and the price, which takes the intercept out: it becomes the average price, and no longer interacts with the slopes. What remains is the squared misses $\lVert y - Xb\rVert^2$ plus $\lambda \lVert b\rVert^2$, where $\lVert v\rVert^2$ is the sum of the squares of v's entries. Its rate of change in every direction is zero at the bottom:
+Centre every column and the price, which takes the intercept out: it becomes the average price, and no longer interacts with the slopes. What remains is the squared misses $`\lVert y - Xb\rVert^2`$ plus $`\lambda \lVert b\rVert^2`$, where $`\lVert v\rVert^2`$ is the sum of the squares of v's entries. Its rate of change in every direction is zero at the bottom:
 
-$$-2X^\top(y - Xb) + 2\lambda b = 0 \quad\Longleftrightarrow\quad (G + \lambda I)\,b = X^\top y$$
+```math
+-2X^\top(y - Xb) + 2\lambda b = 0 \quad\Longleftrightarrow\quad (G + \lambda I)\,b = X^\top y
+```
 
-For any nonzero direction h, $h^\top (G + \lambda I) h = \lVert Xh\rVert^2 + \lambda \lVert h\rVert^2$, which is positive when lambda is. So the matrix can be inverted, the bowl has one bottom, and ridge has one answer even when two columns are identical. Least squares, at lambda zero, needs the columns to have no exact twins.
+For any nonzero direction h, $`h^\top (G + \lambda I) h = \lVert Xh\rVert^2 + \lambda \lVert h\rVert^2`$, which is positive when lambda is. So the matrix can be inverted, the bowl has one bottom, and ridge has one answer even when two columns are identical. Least squares, at lambda zero, needs the columns to have no exact twins.
 
 ### Step 2: along each direction, ridge multiplies by d/(d + λ)
 
-The spectral theorem for symmetric matrices ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) says $G$ has twenty perpendicular directions along which it only stretches, each by its strength $d_j$ (its eigenvalue). Along direction j, least squares estimates the true coordinate $\theta_j$ with no bias and variance $\sigma^2/d_j$. Ridge multiplies that estimate by $d_j/(d_j + \lambda)$. Its mean falls short of $\theta_j$ by the same factor and its variance becomes $\sigma^2 d_j/(d_j + \lambda)^2$.
+The spectral theorem for symmetric matrices ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) says $`G`$ has twenty perpendicular directions along which it only stretches, each by its strength $`d_j`$ (its eigenvalue). Along direction j, least squares estimates the true coordinate $`\theta_j`$ with no bias and variance $`\sigma^2/d_j`$. Ridge multiplies that estimate by $`d_j/(d_j + \lambda)`$. Its mean falls short of $`\theta_j`$ by the same factor and its variance becomes $`\sigma^2 d_j/(d_j + \lambda)^2`$.
 
 In the dealer's 40 cars the strongest direction has strength 741.9 and the weakest 0.86. Along the strongest, a charge of 5 changes almost nothing. Along the weakest, least squares' variance is 10.43 and ridge's at charge 5 is 0.23. Ridge leaves what the data measured alone and flattens what they did not.
 
@@ -124,22 +134,24 @@ In the dealer's 40 cars the strongest direction has strength 741.9 and the weake
 
 A direction's mean squared error is its variance plus its squared bias ([Bias and variance](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md)):
 
-$$E\big[(\hat\theta_j - \theta_j)^2\big] = \frac{\sigma^2 d_j + \lambda^2 \theta_j^2}{(d_j + \lambda)^2}$$
+```math
+E\big[(\hat\theta_j - \theta_j)^2\big] = \frac{\sigma^2 d_j + \lambda^2 \theta_j^2}{(d_j + \lambda)^2}
+```
 
 Near a charge of zero, the bias term grows like lambda squared while the variance falls in proportion to lambda. So a small enough charge lowers every direction's error at once. That is Hoerl and Kennard's 1970 result. How small depends on the true slopes, which is why the charge has to be tuned, not derived.
 
 <details>
 <summary>Detailed proof: ridge's mean, variance and the gain at small charge</summary>
 
-Write the prices as $y = a_0\mathbf{1} + X\beta + \varepsilon$, where the noises $\varepsilon_i$ are independent, with mean zero and variance $\sigma^2$, and the columns of X are centred. Then $X^\top y = G\beta + X^\top\varepsilon$, since the centred columns sum to zero. Put $A = G + \lambda I$:
+Write the prices as $`y = a_0\mathbf{1} + X\beta + \varepsilon`$, where the noises $`\varepsilon_i`$ are independent, with mean zero and variance $`\sigma^2`$, and the columns of X are centred. Then $`X^\top y = G\beta + X^\top\varepsilon`$, since the centred columns sum to zero. Put $`A = G + \lambda I`$:
 
-$$\hat b = A^{-1}G\beta + A^{-1}X^\top\varepsilon.$$
+$`\displaystyle \hat b = A^{-1}G\beta + A^{-1}X^\top\varepsilon.`$
 
-The second term has mean zero, so $E[\hat b] = A^{-1}G\beta = \beta - \lambda A^{-1}\beta$, and the bias is $-\lambda A^{-1}\beta$. The covariance of $X^\top\varepsilon$ is $\sigma^2 G$, so the covariance of $\hat b$ is $\sigma^2 A^{-1} G A^{-1}$.
+The second term has mean zero, so $`E[\hat b] = A^{-1}G\beta = \beta - \lambda A^{-1}\beta`$, and the bias is $`-\lambda A^{-1}\beta`$. The covariance of $`X^\top\varepsilon`$ is $`\sigma^2 G`$, so the covariance of $`\hat b`$ is $`\sigma^2 A^{-1} G A^{-1}`$.
 
-Diagonalise $G = QDQ^\top$ with Q's columns perpendicular unit directions. Then $A^{-1} = Q(D + \lambda I)^{-1}Q^\top$, and in the coordinates $\theta = Q^\top\beta$ everything separates: direction j has mean $d_j\theta_j/(d_j+\lambda)$ and variance $\sigma^2 d_j/(d_j+\lambda)^2$. Squared bias plus variance gives the displayed error.
+Diagonalise $`G = QDQ^\top`$ with Q's columns perpendicular unit directions. Then $`A^{-1} = Q(D + \lambda I)^{-1}Q^\top`$, and in the coordinates $`\theta = Q^\top\beta`$ everything separates: direction j has mean $`d_j\theta_j/(d_j+\lambda)`$ and variance $`\sigma^2 d_j/(d_j+\lambda)^2`$. Squared bias plus variance gives the displayed error.
 
-Differentiate it in lambda. The numerator's derivative is $2\lambda\theta_j^2$ and the denominator's is $2(d_j + \lambda)$, so at lambda zero the derivative is $-2\sigma^2 d_j \cdot d_j / d_j^4 = -2\sigma^2/d_j^2$, negative for every direction with $d_j > 0$. Summing over directions, the total squared error of the slopes falls as the charge leaves zero. The prediction-weighted error on the chart behaves the same way: its bias part starts at zero with zero slope, and its variance part, $\sigma^2$ times the trace of the prediction weights times $A^{-1}GA^{-1}$, has derivative $-2\sigma^2$ times the trace of the weights times $G^{-2}$ at zero, which is negative.
+Differentiate it in lambda. The numerator's derivative is $`2\lambda\theta_j^2`$ and the denominator's is $`2(d_j + \lambda)`$, so at lambda zero the derivative is $`-2\sigma^2 d_j \cdot d_j / d_j^4 = -2\sigma^2/d_j^2`$, negative for every direction with $`d_j > 0`$. Summing over directions, the total squared error of the slopes falls as the charge leaves zero. The prediction-weighted error on the chart behaves the same way: its bias part starts at zero with zero slope, and its variance part, $`\sigma^2`$ times the trace of the prediction weights times $`A^{-1}GA^{-1}`$, has derivative $`-2\sigma^2`$ times the trace of the weights times $`G^{-2}`$ at zero, which is negative.
 
 </details>
 
@@ -147,10 +159,10 @@ The checks compute this error exactly for the prediction weighting, 3.28 at char
 
 ### Step 4: the sum of sizes has a corner, so lasso can land on zero
 
-Take one standardised measurement across the 40 cars, so the sum of its squares is $d = 40$. If least squares gives it slope z, the squared misses rise by $d(b - z)^2$ as b moves away from z. Charge it and minimise:
+Take one standardised measurement across the 40 cars, so the sum of its squares is $`d = 40`$. If least squares gives it slope z, the squared misses rise by $`d(b - z)^2`$ as b moves away from z. Charge it and minimise:
 
-- **Ridge**, $d(b - z)^2 + \lambda b^2$: set its rate of change to zero and get $b = z\,d/(d + \lambda)$. A fixed fraction of z, never exactly zero unless z is.
-- **Lasso**, $d(b - z)^2 + \lambda |b|$: for positive b the rate of change is $2d(b - z) + \lambda$, zero at $b = z - \lambda/(2d)$. That only lands on the positive side when z exceeds $\lambda/(2d)$. Otherwise the smallest total sits at the corner, b = 0, where the charge's steepness $\lambda$ outweighs what the fit gains. So $b = S(z, \lambda/(2d))$.
+- **Ridge**, $`d(b - z)^2 + \lambda b^2`$: set its rate of change to zero and get $`b = z\,d/(d + \lambda)`$. A fixed fraction of z, never exactly zero unless z is.
+- **Lasso**, $`d(b - z)^2 + \lambda |b|`$: for positive b the rate of change is $`2d(b - z) + \lambda`$, zero at $`b = z - \lambda/(2d)`$. That only lands on the positive side when z exceeds $`\lambda/(2d)`$. Otherwise the smallest total sits at the corner, b = 0, where the charge's steepness $`\lambda`$ outweighs what the fit gains. So $`b = S(z, \lambda/(2d))`$.
 
 The difference is the steepness at zero. A squared charge is flat there, so a small slope costs almost nothing; a size charge rises at rate lambda from the start, and a measurement must beat that to be kept.
 
@@ -169,9 +181,9 @@ Orange: least squares, the slope as the data give it. Green: ridge, every slope 
 
 ### Step 5: lasso is solved one slope at a time, and certified
 
-With twenty correlated slopes there is no formula. **Coordinate descent** fixes all slopes but one, finds the best value for that one by the soft-threshold rule of Step 4 applied to $r_j$, and cycles through all twenty, many times. Each move lowers the total, and the total is **convex**, bowl-shaped with no false bottoms, so the cycle settles on the minimum (Friedman, Hastie and Tibshirani, 2010).
+With twenty correlated slopes there is no formula. **Coordinate descent** fixes all slopes but one, finds the best value for that one by the soft-threshold rule of Step 4 applied to $`r_j`$, and cycles through all twenty, many times. Each move lowers the total, and the total is **convex**, bowl-shaped with no false bottoms, so the cycle settles on the minimum (Friedman, Hastie and Tibshirani, 2010).
 
-The answer can be checked without trusting the search. At lasso's minimum, every kept measurement's summed product with the leftover misses, $\big(X^\top(y - X\hat b)\big)_j$, equals exactly $\lambda/2$ with the slope's sign. Every dropped one's is at most $\lambda/2$ in size. The checks test all twenty at the chosen charge; the worst violation is 0.000000000. The same descent run with ridge's rule matches ridge's linear solve to nine decimals, a second road to ridge's slopes.
+The answer can be checked without trusting the search. At lasso's minimum, every kept measurement's summed product with the leftover misses, $`\big(X^\top(y - X\hat b)\big)_j`$, equals exactly $`\lambda/2`$ with the slope's sign. Every dropped one's is at most $`\lambda/2`$ in size. The checks test all twenty at the chosen charge; the worst violation is 0.000000000. The same descent run with ridge's rule matches ridge's linear solve to nine decimals, a second road to ridge's slopes.
 
 ### Step 6: pick the charge on cars the fit has not seen
 
@@ -201,9 +213,9 @@ The smallest version of the dealer's problem: two measurements that are exact tw
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $G$ | each entry 1 + 0 + 1 | `[[2, 2], [2, 2]]` |
-| $X^\top y$ | (−1)(−2) + 0 + (1)(2), for each twin | 4 and 4 |
-| $G + \lambda I$ | add 2 down the diagonal | `[[4, 2], [2, 4]]` |
+| $`G`$ | each entry 1 + 0 + 1 | `[[2, 2], [2, 2]]` |
+| $`X^\top y`$ | (−1)(−2) + 0 + (1)(2), for each twin | 4 and 4 |
+| $`G + \lambda I`$ | add 2 down the diagonal | `[[4, 2], [2, 4]]` |
 | ridge slopes | by symmetry both equal b, and 4b + 2b = 4 | **0.6667 each** |
 | fit error | 2 × (2 − 2 × 0.6667) squared | 0.8889 |
 | ridge charge | 2 × (0.6667 squared + 0.6667 squared) | 1.7778 |
@@ -634,10 +646,10 @@ The two outputs match line for line.
 
 Lean proves the card's ridge and lasso results in general, under the conditions of When it holds, and checks the worked arithmetic exactly.
 
-- Take a positive charge, centred columns, and the true rule plus noise, independent from car to car with mean zero and one common SD. Then ridge's slopes have mean $\beta - \lambda A^{-1}\beta$, where $A = G + \lambda I$. Their covariance is $\sigma^2 A^{-1} G A^{-1}$.
-- Take the same set-up and a unit direction of $G$ with strength $d$ and true coordinate $\theta$. Then ridge's mean squared error along it is $(\sigma^2 d + \lambda^2 \theta^2)/(d + \lambda)^2$.
-- Take strengths $d_j$ all above 0 and $\sigma$ above 0. Then every small enough positive charge lowers the error below least squares' $\sigma^2/d_j$ in every direction at once.
-- Take one measurement with sum of squares $d$ above 0, least-squares slope $z$, and a charge of at least 0. Then ridge's total is smallest at exactly one slope, $b = z\,d/(d + \lambda)$. Lasso's total is smallest at exactly one slope, $b = S(z, \lambda/(2d))$, and it is zero exactly when $|z| \le \lambda/(2d)$.
+- Take a positive charge, centred columns, and the true rule plus noise, independent from car to car with mean zero and one common SD. Then ridge's slopes have mean $`\beta - \lambda A^{-1}\beta`$, where $`A = G + \lambda I`$. Their covariance is $`\sigma^2 A^{-1} G A^{-1}`$.
+- Take the same set-up and a unit direction of $`G`$ with strength $`d`$ and true coordinate $`\theta`$. Then ridge's mean squared error along it is $`(\sigma^2 d + \lambda^2 \theta^2)/(d + \lambda)^2`$.
+- Take strengths $`d_j`$ all above 0 and $`\sigma`$ above 0. Then every small enough positive charge lowers the error below least squares' $`\sigma^2/d_j`$ in every direction at once.
+- Take one measurement with sum of squares $`d`$ above 0, least-squares slope $`z`$, and a charge of at least 0. Then ridge's total is smallest at exactly one slope, $`b = z\,d/(d + \lambda)`$. Lasso's total is smallest at exactly one slope, $`b = S(z, \lambda/(2d))`$, and it is zero exactly when $`|z| \le \lambda/(2d)`$.
 - The worked arithmetic: the twins' table by hand, the symbol table's soft-threshold value, and the one-measurement chart's halving, its threshold 0.5 and four lasso points.
 
 Coordinate descent's convergence, the check of lasso's answer, the simulated dealer and every number it produces are left to the Python and Rust checks.

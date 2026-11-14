@@ -35,11 +35,15 @@ The nominal answer is one point. The rewritten formula hits the exact range. The
 
 ## The formula
 
-An interval $X = [x_{\text{lo}}, x_{\text{hi}}]$ is every number from its lower end $x_{\text{lo}}$ to its upper end $x_{\text{hi}}$. Its **width** $w(X) = x_{\text{hi}} - x_{\text{lo}}$ measures how unsure the value is. The four operations act only on the ends:
+An interval $`X = [x_{\text{lo}}, x_{\text{hi}}]`$ is every number from its lower end $`x_{\text{lo}}`$ to its upper end $`x_{\text{hi}}`$. Its **width** $`w(X) = x_{\text{hi}} - x_{\text{lo}}`$ measures how unsure the value is. The four operations act only on the ends:
 
-$$X + Y = [\,x_{\text{lo}} + y_{\text{lo}},\ x_{\text{hi}} + y_{\text{hi}}\,] \qquad X - Y = [\,x_{\text{lo}} - y_{\text{hi}},\ x_{\text{hi}} - y_{\text{lo}}\,]$$
+```math
+X + Y = [\,x_{\text{lo}} + y_{\text{lo}},\ x_{\text{hi}} + y_{\text{hi}}\,] \qquad X - Y = [\,x_{\text{lo}} - y_{\text{hi}},\ x_{\text{hi}} - y_{\text{lo}}\,]
+```
 
-$$X \times Y = [\,\min(x_{\text{lo}}y_{\text{lo}},\ x_{\text{lo}}y_{\text{hi}},\ x_{\text{hi}}y_{\text{lo}},\ x_{\text{hi}}y_{\text{hi}}),\ \max(\text{the same four})\,] \qquad X \div Y = X \times [\,1/y_{\text{hi}},\ 1/y_{\text{lo}}\,] \text{ if } 0 \notin Y$$
+```math
+X \times Y = [\,\min(x_{\text{lo}}y_{\text{lo}},\ x_{\text{lo}}y_{\text{hi}},\ x_{\text{hi}}y_{\text{lo}},\ x_{\text{hi}}y_{\text{hi}}),\ \max(\text{the same four})\,] \qquad X \div Y = X \times [\,1/y_{\text{hi}},\ 1/y_{\text{lo}}\,] \text{ if } 0 \notin Y
+```
 
 **Read it aloud:** to add, add the low ends and add the high ends; to subtract, take the low end minus the other high end; to multiply, try all four end products and keep the smallest and largest.
 
@@ -47,24 +51,26 @@ On a computer each end is also **rounded outward**. This card does it the simple
 
 The bridge reaction at A is
 
-$$R = \frac{P\,(L - a)}{L} = P\left(1 - \frac{a}{L}\right)$$
+```math
+R = \frac{P\,(L - a)}{L} = P\left(1 - \frac{a}{L}\right)
+```
 
 The two forms are equal for every single set of inputs. They are not equal as interval computations, and the card shows why.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $Y$ | intervals: every value between two ends | any two inputs below | — |
-| $x$, $y$ | single values inside $X$ and $Y$ | a span of exactly 20 m | — |
-| $x_{\text{lo}}$, $x_{\text{hi}}$ | the lower and upper end of $X$ | 19.95 and 20.05 for the span | — |
-| $w(X)$ | width: upper end minus lower end | 0.1 m for the span | the result's width grows with it |
-| $\circ$ | any one of $+$, $-$, $\times$, $\div$ | $-$ in $L - a$ | — |
-| $z_k$, $Z_k$ | step $k$ of a formula: its value, and its interval | $L - a$ and [11.85, 12.15] | — |
-| $P$ | load on the deck: cart plus cargo, kN | [48, 52] | $R$ rises in proportion |
-| $L$ | span between supports, m | [19.95, 20.05] | $R$ rises: the load sits relatively nearer A |
-| $a$ | distance of the load from A, m | [7.90, 8.10] | $R$ falls: the load moves toward B |
-| $R$ | reaction: the force support A carries, kN | [28.511, 31.511] exactly | — |
-| $c$ | sideways offset of the load, m | [−0.02, 0.03] | the twisting moment $P \times c$ grows |
-| $u$ | unit roundoff: the largest relative error of one rounding | $2^{-53}$ | — |
+| $`X`$, $`Y`$ | intervals: every value between two ends | any two inputs below | — |
+| $`x`$, $`y`$ | single values inside $`X`$ and $`Y`$ | a span of exactly 20 m | — |
+| $`x_{\text{lo}}`$, $`x_{\text{hi}}`$ | the lower and upper end of $`X`$ | 19.95 and 20.05 for the span | — |
+| $`w(X)`$ | width: upper end minus lower end | 0.1 m for the span | the result's width grows with it |
+| $`\circ`$ | any one of $`+`$, $`-`$, $`\times`$, $`\div`$ | $`-`$ in $`L - a`$ | — |
+| $`z_k`$, $`Z_k`$ | step $`k`$ of a formula: its value, and its interval | $`L - a`$ and [11.85, 12.15] | — |
+| $`P`$ | load on the deck: cart plus cargo, kN | [48, 52] | $`R`$ rises in proportion |
+| $`L`$ | span between supports, m | [19.95, 20.05] | $`R`$ rises: the load sits relatively nearer A |
+| $`a`$ | distance of the load from A, m | [7.90, 8.10] | $`R`$ falls: the load moves toward B |
+| $`R`$ | reaction: the force support A carries, kN | [28.511, 31.511] exactly | — |
+| $`c`$ | sideways offset of the load, m | [−0.02, 0.03] | the twisting moment $`P \times c`$ grows |
+| $`u`$ | unit roundoff: the largest relative error of one rounding | $`2^{-53}`$ | — |
 
 ### When it holds
 
@@ -79,19 +85,19 @@ The two forms are equal for every single set of inputs. They are not equal as in
 
 ### Step 0: the extremes sit at the corners
 
-Each of $+$, $-$, $\times$ and $\div$ moves in one direction as one input slides with the other held fixed. So over a box of inputs, the smallest and largest results sit at its corners. The rules list the corners that can matter.
+Each of $`+`$, $`-`$, $`\times`$ and $`\div`$ moves in one direction as one input slides with the other held fixed. So over a box of inputs, the smallest and largest results sit at its corners. The rules list the corners that can matter.
 
 ### Step 1: addition and subtraction
 
-$x + y$ grows when either input grows. So the smallest sum is low plus low, and the largest is high plus high. Widths add: $w(X + Y) = w(X) + w(Y)$.
+$`x + y`$ grows when either input grows. So the smallest sum is low plus low, and the largest is high plus high. Widths add: $`w(X + Y) = w(X) + w(Y)`$.
 
-$x - y$ grows when $x$ grows but shrinks when $y$ grows. So the smallest difference is $x_{\text{lo}} - y_{\text{hi}}$. Widths add here too: subtracting never cancels uncertainty. On the bridge, $L - a = [19.95 - 8.10,\ 20.05 - 7.90] = [11.85, 12.15]$, width 0.3 = 0.1 + 0.2.
+$`x - y`$ grows when $`x`$ grows but shrinks when $`y`$ grows. So the smallest difference is $`x_{\text{lo}} - y_{\text{hi}}`$. Widths add here too: subtracting never cancels uncertainty. On the bridge, $`L - a = [19.95 - 8.10,\ 20.05 - 7.90] = [11.85, 12.15]`$, width 0.3 = 0.1 + 0.2.
 
 ### Step 2: multiplication tries four corners
 
-$x \times y$ is a straight line in $x$ when $y$ is fixed, and in $y$ when $x$ is fixed. A straight line on a segment is largest and smallest at the segment's ends. So the extremes are among the four end products. Which one wins depends on signs, so all four are tried.
+$`x \times y`$ is a straight line in $`x`$ when $`y`$ is fixed, and in $`y`$ when $`x`$ is fixed. A straight line on a segment is largest and smallest at the segment's ends. So the extremes are among the four end products. Which one wins depends on signs, so all four are tried.
 
-Take a load $P = [48, 52]$ kN that sits off-centre by $c = [-0.02, 0.03]$ m. The twisting moment $P \times c$ has four corner products: −0.96, 1.44, −1.04 and 1.56. The range is [−1.0400, 1.5600] kN m (kilonewton-metres, force times distance). The lowest value pairs the *heaviest* load with the negative offset.
+Take a load $`P = [48, 52]`$ kN that sits off-centre by $`c = [-0.02, 0.03]`$ m. The twisting moment $`P \times c`$ has four corner products: −0.96, 1.44, −1.04 and 1.56. The range is [−1.0400, 1.5600] kN m (kilonewton-metres, force times distance). The lowest value pairs the *heaviest* load with the negative offset.
 
 ### Step 3: a chain of steps keeps the guarantee
 
@@ -100,19 +106,19 @@ A formula is a chain of single operations. Each step's output interval contains 
 <details>
 <summary>Detailed proof: inclusion, and exactness when each input appears once</summary>
 
-Write the formula as a sequence of operations $z_k = z_i \circ z_j$, where $\circ$ is one of $+, -, \times, \div$ and each $z_i$ is an input or an earlier result. Let $Z_k$ be the interval computed for $z_k$.
+Write the formula as a sequence of operations $`z_k = z_i \circ z_j`$, where $`\circ`$ is one of $`+, -, \times, \div`$ and each $`z_i`$ is an input or an earlier result. Let $`Z_k`$ be the interval computed for $`z_k`$.
 
-**Inclusion.** Claim: for any choice of inputs inside their intervals, every $z_k$ lies in $Z_k$. It holds for the inputs by assumption. If $z_i \in Z_i$ and $z_j \in Z_j$, then $z_i \circ z_j$ lies between the smallest and largest corner value of $Z_i \times Z_j$ (Steps 1 and 2), and $Z_k$ is exactly that range. Rounding outward only enlarges $Z_k$. Induction over $k$ finishes it.
+**Inclusion.** Claim: for any choice of inputs inside their intervals, every $`z_k`$ lies in $`Z_k`$. It holds for the inputs by assumption. If $`z_i \in Z_i`$ and $`z_j \in Z_j`$, then $`z_i \circ z_j`$ lies between the smallest and largest corner value of $`Z_i \times Z_j`$ (Steps 1 and 2), and $`Z_k`$ is exactly that range. Rounding outward only enlarges $`Z_k`$. Induction over $`k`$ finishes it.
 
-**Exactness when each input appears once.** Then the expression is a tree whose branches share no input. Claim: in exact arithmetic, every point of $Z_k$ is reached by some choice of the inputs feeding $z_k$. For an input it is trivial. For $z_k = z_i \circ z_j$, the two branches use disjoint inputs, so $z_i$ and $z_j$ can be chosen independently, each anywhere in $Z_i$ and $Z_j$. The operation is continuous on the box, so it reaches every value between its corner extremes. That range is $Z_k$.
+**Exactness when each input appears once.** Then the expression is a tree whose branches share no input. Claim: in exact arithmetic, every point of $`Z_k`$ is reached by some choice of the inputs feeding $`z_k`$. For an input it is trivial. For $`z_k = z_i \circ z_j`$, the two branches use disjoint inputs, so $`z_i`$ and $`z_j`$ can be chosen independently, each anywhere in $`Z_i`$ and $`Z_j`$. The operation is continuous on the box, so it reaches every value between its corner extremes. That range is $`Z_k`$.
 
 </details>
 
 ### Step 4: a repeated input loosens the range
 
-In $P(L - a)/L$, the span $L$ appears twice. The low end of the answer is computed as the low end of $P(L - a)$, which uses $L = 19.95$, divided by the high end of $L$, which is 20.05. No real bridge has both spans at once. This is the **dependency problem**: intervals do not remember that two copies are the same number.
+In $`P(L - a)/L`$, the span $`L`$ appears twice. The low end of the answer is computed as the low end of $`P(L - a)`$, which uses $`L = 19.95`$, divided by the high end of $`L`$, which is 20.05. No real bridge has both spans at once. This is the **dependency problem**: intervals do not remember that two copies are the same number.
 
-Rewritten as $P(1 - a/L)$, each input appears once, and Step 3's fold shows the range is then exact. The as-written range is 3.300096 kN wide. The exact range is 2.999944 kN wide.
+Rewritten as $`P(1 - a/L)`$, each input appears once, and Step 3's fold shows the range is then exact. The as-written range is 3.300096 kN wide. The exact range is 2.999944 kN wide.
 
 ### Step 5: outward rounding keeps the guarantee on a real machine
 
@@ -122,9 +128,11 @@ A computed end lies within half a gap of the true end, where the gap is the dist
 
 Widths never cancel. Step 1 shows that subtraction *adds* widths. Now run a typical solver update, which moves a guess halfway toward the balanced value 10:
 
-$$x \leftarrow x - 0.5\,(x - 10)$$
+```math
+x \leftarrow x - 0.5\,(x - 10)
+```
 
-In exact arithmetic this halves the distance from 10 each step, so a spread of starting values halves too. As intervals, $0.5(x - 10)$ has half the width of $x$, and subtracting it from $x$ *adds* that width: the width grows 1.5 times each step. The two copies of $x$ should cancel, but intervals cannot see that.
+In exact arithmetic this halves the distance from 10 each step, so a spread of starting values halves too. As intervals, $`0.5(x - 10)`$ has half the width of $`x`$, and subtracting it from $`x`$ *adds* that width: the width grows 1.5 times each step. The two copies of $`x`$ should cancel, but intervals cannot see that.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -136,7 +144,7 @@ xychart-beta
     line [-1.00, -1.60, -2.20, -2.81, -3.41, -4.01, -4.61, -5.21, -5.82, -6.42, -7.02]
 ```
 
-The rising line is the update as written, $x - 0.5(x - 10)$: its width grows 1.5 times per step. The falling line is the same update rewritten as $0.5x + 5$, with $x$ once: its width halves per step, which is the true spread. After 20 steps the as-written answer is [−156.263, 176.263] for a quantity that truly lies in [9.999999952, 10.000000048]. Its width is 3.4868 billion times too large, because each step multiplies the ratio of the two widths by 1.5 ÷ 0.5 = 3.
+The rising line is the update as written, $`x - 0.5(x - 10)`$: its width grows 1.5 times per step. The falling line is the same update rewritten as $`0.5x + 5`$, with $`x`$ once: its width halves per step, which is the true spread. After 20 steps the as-written answer is [−156.263, 176.263] for a quantity that truly lies in [9.999999952, 10.000000048]. Its width is 3.4868 billion times too large, because each step multiplies the ratio of the two widths by 1.5 ÷ 0.5 = 3.
 
 ---
 
@@ -146,13 +154,13 @@ The reaction at A, both ways. Every input is positive, so each product and quoti
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| load $P$ | [29 + 19, 31 + 21] | [48, 52] kN |
-| $L - a$ | [19.95 − 8.10, 20.05 − 7.90] | [11.85, 12.15] m |
-| $P(L - a)$ | [48 × 11.85, 52 × 12.15] | [568.8, 631.8] kN m |
-| as written, ÷ $L$ | [568.8 ÷ 20.05, 631.8 ÷ 19.95] | [28.369077, 31.669173] kN |
-| $a/L$ | [7.90 ÷ 20.05, 8.10 ÷ 19.95] | [0.394015, 0.406015] |
-| $1 - a/L$ | [1 − 0.406015, 1 − 0.394015] | [0.593985, 0.605985] |
-| rewritten, × $P$ | [48 × 0.593985, 52 × 0.605985] | **[28.511278, 31.511222] kN** |
+| load $`P`$ | [29 + 19, 31 + 21] | [48, 52] kN |
+| $`L - a`$ | [19.95 − 8.10, 20.05 − 7.90] | [11.85, 12.15] m |
+| $`P(L - a)`$ | [48 × 11.85, 52 × 12.15] | [568.8, 631.8] kN m |
+| as written, ÷ $`L`$ | [568.8 ÷ 20.05, 631.8 ÷ 19.95] | [28.369077, 31.669173] kN |
+| $`a/L`$ | [7.90 ÷ 20.05, 8.10 ÷ 19.95] | [0.394015, 0.406015] |
+| $`1 - a/L`$ | [1 − 0.406015, 1 − 0.394015] | [0.593985, 0.605985] |
+| rewritten, × $`P`$ | [48 × 0.593985, 52 × 0.605985] | **[28.511278, 31.511222] kN** |
 | exact check | 48 × 1185 ÷ 1995 and 52 × 1215 ÷ 2005 | [28.511278, 31.511222] kN |
 
 Support A must be sized for up to 31.511 kN, against a nominal 30 kN, and that upper figure is a guarantee, not an estimate.
@@ -161,8 +169,8 @@ Support A must be sized for up to 31.511 kN, against a nominal 30 kN, and that u
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Subtracting low from low and high from high | $L - a$ = [12.05, 11.95] | The "interval" is upside down: the low end of $x - y$ needs the high end of $y$ |
-| Multiplying only low × low and high × high | $P \times c$ = [−0.9600, 1.5600] | Misses −1.04: with a negative end, the heaviest load gives the lowest product |
+| Subtracting low from low and high from high | $`L - a`$ = [12.05, 11.95] | The "interval" is upside down: the low end of $`x - y`$ needs the high end of $`y`$ |
+| Multiplying only low × low and high × high | $`P \times c`$ = [−0.9600, 1.5600] | Misses −1.04: with a negative end, the heaviest load gives the lowest product |
 | Rounding the ends to nearest | tracker total tops out at 999,999.999839 | Below the true 1,000,000: the range no longer contains the answer |
 | Using an input twice | [28.369077, 31.669173] kN | Safe but 1.1001 times too wide: the dependency problem |
 
@@ -489,9 +497,9 @@ Lean proves the card's three main facts in exact real numbers, for every formula
 
 - Run any formula of +, −, × and ÷ through the four rules, rounding each end outward by any amount. Suppose no division is by an interval containing zero, and the true inputs lie in their intervals. Then the final interval contains the true value.
 - With no rounding, suppose each input appears once and no division is by an interval containing zero. Each input interval must have its low end at most its high end. Then the final interval is exactly the set of values the formula can take: every point in it is reached.
-- Run as written on intervals, the solver update $x \leftarrow x - 0.5\,(x - 10)$ multiplies the width by exactly 1.5 each step.
-- Run on single values, $k$ steps carry $[x_{\text{lo}}, x_{\text{hi}}]$ onto exactly $[10 + (x_{\text{lo}} - 10)/2^k,\ 10 + (x_{\text{hi}} - 10)/2^k]$. So the true spread halves each step.
-- The hand numbers hold exactly, lengths in centimetres: the load [48, 52], $L - a$, the four corners of $P \times c$ and both wrong rules.
+- Run as written on intervals, the solver update $`x \leftarrow x - 0.5\,(x - 10)`$ multiplies the width by exactly 1.5 each step.
+- Run on single values, $`k`$ steps carry $`[x_{\text{lo}}, x_{\text{hi}}]`$ onto exactly $`[10 + (x_{\text{lo}} - 10)/2^k,\ 10 + (x_{\text{hi}} - 10)/2^k]`$. So the true spread halves each step.
+- The hand numbers hold exactly, lengths in centimetres: the load [48, 52], $`L - a`$, the four corners of $`P \times c`$ and both wrong rules.
 - The reaction as written runs from 48 × 1185 ÷ 2005 to 52 × 1215 ÷ 1995. Rewritten, it runs from 48 × 1185 ÷ 1995 to 52 × 1215 ÷ 2005, the exact range.
 - The pair [next double below 0.1, 0.1] really encloses one tenth. After 20 solver steps the two widths differ by a factor of exactly 3^20 = 3,486,784,401.
 
@@ -1102,7 +1110,7 @@ example : ((3 : ℚ) / 2) ^ 20 / (1 / 2) ^ 20 = 3486784401 := by norm_num
 > - **Guess first:** does a better-known span shrink the over-width? Set the span to `iv(20.0, 0.01)`. It drops from 1.1001 to 1.0206.
 > - **Guess first:** when is low × low and high × high enough? Set the offset to `out(0.01, 0.03)`. Both rules give [0.4800, 1.5600]: with every end positive they agree.
 > - **Guess first:** what does outward rounding buy? Replace `total = add(total, tenth)` by `total = (total[0] + tenth[0], total[1] + tenth[1])`, which adds to nearest. The upper end falls to 999,999.999839, below one million.
-> - **Guess first:** a bolder solver step. Use 0.9 in place of 0.5 as written, and `0.1 x + 9` rewritten. As written, the width reaches 37,589.973 after 20 steps. Rewritten, it shrinks tenfold a step down to a floor near $10^{-14.45}$, a few gaps between doubles near 10.
+> - **Guess first:** a bolder solver step. Use 0.9 in place of 0.5 as written, and `0.1 x + 9` rewritten. As written, the width reaches 37,589.973 after 20 steps. Rewritten, it shrinks tenfold a step down to a floor near $`10^{-14.45}`$, a few gaps between doubles near 10.
 
 ---
 
@@ -1111,7 +1119,7 @@ example : ((3 : ℚ) / 2) ^ 20 / (1 / 2) ^ 20 = 3486784401 := by norm_num
 > [!warning]
 > **Reading the width as the true spread.** An interval answer is a guarantee that the truth is inside, not a measure of how far it can really move. The as-written reaction claims 3.300096 kN of spread; the real spread is 2.999944 kN. After 20 solver steps the claim is 332.526 for a true spread of 0.000000095.
 >
-> - **Upside-down subtraction.** Low minus low gives $L - a$ = [12.05, 11.95].
+> - **Upside-down subtraction.** Low minus low gives $`L - a`$ = [12.05, 11.95].
 > - **Two corners instead of four.** Across zero, low × low and high × high gives [−0.9600, 1.5600] and misses −1.04.
 > - **Rounding to nearest.** The tracker's upper end falls to 999,999.999839, below the true total.
 > - **Trusting a guessed tolerance.** A tolerance that is too tight gives a range that is too tight, with no warning.
@@ -1133,7 +1141,7 @@ example : ((3 : ℚ) / 2) ^ 20 / (1 / 2) ^ 20 = 3486784401 := by norm_num
 ## What this builds on
 
 - [Absolute and relative error](01-absolute-and-relative-error.md): a tolerance such as ± 0.05 m is an absolute error bound, and an interval is that bound carried through the arithmetic.
-- [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md): the standard model, in which one rounding changes a result by a relative error of at most $u$, which is why one step outward per operation is enough.
+- [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md): the standard model, in which one rounding changes a result by a relative error of at most $`u`$, which is why one step outward per operation is enough.
 - [IEEE 754](02-ieee-floating-point.md): the gaps between neighbouring doubles, which the code steps across through the bit pattern.
 
 ## Where this goes next

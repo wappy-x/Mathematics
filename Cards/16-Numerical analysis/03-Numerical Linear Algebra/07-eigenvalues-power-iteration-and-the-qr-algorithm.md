@@ -39,56 +39,62 @@ Orange: mode 1, the slowest, period 0.4936 s. Every floor sways the same way, mo
 
 ## The formula
 
-**The frame as a matrix.** In a mode, every floor swings at the same rhythm, and the list $v$ of floor sways keeps its shape. Newton's law for the five floors gives $K v = \omega^2 m\,v$. Here $K$ is the stiffness matrix, $m$ the floor mass and $\omega$ the mode's angular frequency in radians per second. Divide by the storey stiffness $s$ and write $A = K/s$:
+**The frame as a matrix.** In a mode, every floor swings at the same rhythm, and the list $`v`$ of floor sways keeps its shape. Newton's law for the five floors gives $`K v = \omega^2 m\,v`$. Here $`K`$ is the stiffness matrix, $`m`$ the floor mass and $`\omega`$ the mode's angular frequency in radians per second. Divide by the storey stiffness $`s`$ and write $`A = K/s`$:
 
 `A = [[2, -1, 0, 0, 0], [-1, 2, -1, 0, 0], [0, -1, 2, -1, 0], [0, 0, -1, 2, -1], [0, 0, 0, -1, 1]]`
 
-Each floor is pulled by the storey below and the storey above. The top floor has no storey above, so its diagonal entry is 1. Then $A v = \lambda v$ with $\lambda = \omega^2 m/s$, and the period is $P = 2\pi/\omega$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
+Each floor is pulled by the storey below and the storey above. The top floor has no storey above, so its diagonal entry is 1. Then $`A v = \lambda v`$ with $`\lambda = \omega^2 m/s`$, and the period is $`P = 2\pi/\omega`$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
 
-**One step.** Pick a shift $\mu$ (a number near the wanted eigenvalue), solve, and rescale to length 1:
+**One step.** Pick a shift $`\mu`$ (a number near the wanted eigenvalue), solve, and rescale to length 1:
 
-$$x_{k+1} = \frac{(A - \mu I)^{-1} x_k}{\lVert (A - \mu I)^{-1} x_k \rVert}, \qquad \hat\lambda_k = x_k^{\mathsf T} A\, x_k .$$
+```math
+x_{k+1} = \frac{(A - \mu I)^{-1} x_k}{\lVert (A - \mu I)^{-1} x_k \rVert}, \qquad \hat\lambda_k = x_k^{\mathsf T} A\, x_k .
+```
 
-Power iteration is the same step with $A x_k$ in place of $(A - \mu I)^{-1} x_k$. Inverse iteration is the step with $\mu = 0$.
+Power iteration is the same step with $`A x_k`$ in place of $`(A - \mu I)^{-1} x_k`$. Inverse iteration is the step with $`\mu = 0`$.
 
-**The rate.** Let $\lambda_t$ be the eigenvalue nearest $\mu$ (the target) and $\lambda_o$ the next nearest. Then
+**The rate.** Let $`\lambda_t`$ be the eigenvalue nearest $`\mu`$ (the target) and $`\lambda_o`$ the next nearest. Then
 
-$$e_k \le \gamma^k \tan\theta_0, \qquad \gamma = \frac{\lvert \lambda_t - \mu\rvert}{\lvert \lambda_o - \mu\rvert}, \qquad \lvert \hat\lambda_k - \lambda_t \rvert \le (\lambda_n - \lambda_1)\, e_k^2 .$$
+```math
+e_k \le \gamma^k \tan\theta_0, \qquad \gamma = \frac{\lvert \lambda_t - \mu\rvert}{\lvert \lambda_o - \mu\rvert}, \qquad \lvert \hat\lambda_k - \lambda_t \rvert \le (\lambda_n - \lambda_1)\, e_k^2 .
+```
 
-For power iteration, $\gamma$ is the second-largest eigenvalue over the largest.
+For power iteration, $`\gamma`$ is the second-largest eigenvalue over the largest.
 
 **Read it aloud:** each step shrinks the distance to the wanted mode by the ratio of how near the target is to the shift against how near the runner-up is, and the eigenvalue estimate's error shrinks with the square of that distance.
 
-**The QR algorithm.** Start from $A_0 = A$ and repeat:
+**The QR algorithm.** Start from $`A_0 = A`$ and repeat:
 
-$$A_k - \mu_k I = Q_k R_k, \qquad A_{k+1} = R_k Q_k + \mu_k I .$$
+```math
+A_k - \mu_k I = Q_k R_k, \qquad A_{k+1} = R_k Q_k + \mu_k I .
+```
 
 **Read it aloud:** factor the shifted matrix into a rotation times a triangle, multiply them back in the other order, and the diagonal slides toward the eigenvalues.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $K$, $I$ | the stiffness matrix $K$ over $s$; the identity matrix | 5 by 5, above | — |
-| $n$, $j$ | the matrix size, one row per floor; a mode's number | 5; 1 to 5 | more modes to find |
-| $\lambda_j$, $v_j$ | eigenvalue $j$, smallest first, and its unit eigenvector, the mode shape | $\lambda_1$ = 0.081014, $\lambda_5$ = 3.682507 | larger $\lambda$: shorter period |
-| $m$, $s$ | floor mass; storey stiffness | 50,000 kg; 1.0e8 N/m | $m$ up: longer periods |
-| $\omega_j$, $P_j$ | angular frequency $\sqrt{\lambda_j s/m}$; period $2\pi/\omega_j$ | $P_1$ = 0.4936 s, $P_5$ = 0.0732 s | — |
-| $x_k$, $c_j$ | the unit vector after $k$ steps; mode $j$'s share of $x_0$ | $x_0 = (1, 1, 1, 1, 1)/\sqrt5$ | — |
-| $\hat\lambda_k$ | the computed eigenvalue: the **Rayleigh quotient** $x_k^{\mathsf T} A x_k$ | 0.200000, 0.081967, 0.081026 | — |
-| $r_k$ | the residual $A x_k - \hat\lambda_k x_k$, which the method can compute | stop when its length is below 1e-10 | — |
-| $\mu$ | the shift | 0.078957, from a 0.5 s guess | nearer $\lambda_t$: smaller $\gamma$ |
-| $\gamma$; $\lambda_t$, $\lambda_o$ | the rate, the error's shrink factor per step; the target eigenvalue and the next nearest to $\mu$ | 0.768724, 0.117364, 0.003365 (power, inverse, shifted); for inverse iteration $\lambda_t = \lambda_1$ and $\lambda_o = \lambda_2$ = 0.690279 | slower convergence |
-| $\theta_k$, $e_k$ | angle between $x_k$ and the true mode; the error $e_k = \sin\theta_k$ | $\log_{10} e_0$ = −0.46 for inverse iteration | — |
-| $A_k$, $Q_k$, $R_k$, $\mu_k$, $\bar Q_k$ | QR iterate; its rotation factor; its upper triangular factor; its shift; the product of the rotations so far | — | — |
+| $`A`$, $`K`$, $`I`$ | the stiffness matrix $`K`$ over $`s`$; the identity matrix | 5 by 5, above | — |
+| $`n`$, $`j`$ | the matrix size, one row per floor; a mode's number | 5; 1 to 5 | more modes to find |
+| $`\lambda_j`$, $`v_j`$ | eigenvalue $`j`$, smallest first, and its unit eigenvector, the mode shape | $`\lambda_1`$ = 0.081014, $`\lambda_5`$ = 3.682507 | larger $`\lambda`$: shorter period |
+| $`m`$, $`s`$ | floor mass; storey stiffness | 50,000 kg; 1.0e8 N/m | $`m`$ up: longer periods |
+| $`\omega_j`$, $`P_j`$ | angular frequency $`\sqrt{\lambda_j s/m}`$; period $`2\pi/\omega_j`$ | $`P_1`$ = 0.4936 s, $`P_5`$ = 0.0732 s | — |
+| $`x_k`$, $`c_j`$ | the unit vector after $`k`$ steps; mode $`j`$'s share of $`x_0`$ | $`x_0 = (1, 1, 1, 1, 1)/\sqrt5`$ | — |
+| $`\hat\lambda_k`$ | the computed eigenvalue: the **Rayleigh quotient** $`x_k^{\mathsf T} A x_k`$ | 0.200000, 0.081967, 0.081026 | — |
+| $`r_k`$ | the residual $`A x_k - \hat\lambda_k x_k`$, which the method can compute | stop when its length is below 1e-10 | — |
+| $`\mu`$ | the shift | 0.078957, from a 0.5 s guess | nearer $`\lambda_t`$: smaller $`\gamma`$ |
+| $`\gamma`$; $`\lambda_t`$, $`\lambda_o`$ | the rate, the error's shrink factor per step; the target eigenvalue and the next nearest to $`\mu`$ | 0.768724, 0.117364, 0.003365 (power, inverse, shifted); for inverse iteration $`\lambda_t = \lambda_1`$ and $`\lambda_o = \lambda_2`$ = 0.690279 | slower convergence |
+| $`\theta_k`$, $`e_k`$ | angle between $`x_k`$ and the true mode; the error $`e_k = \sin\theta_k`$ | $`\log_{10} e_0`$ = −0.46 for inverse iteration | — |
+| $`A_k`$, $`Q_k`$, $`R_k`$, $`\mu_k`$, $`\bar Q_k`$ | QR iterate; its rotation factor; its upper triangular factor; its shift; the product of the rotations so far | — | — |
 
-The ones start sends 88% of its weight to mode 1: $\cos^2\theta_0$ = 0.8795, the same number as mode 1's mass share. So $e_0 = \sqrt{1 - 0.8795}$, and $\log_{10} e_0$ = −0.46.
+The ones start sends 88% of its weight to mode 1: $`\cos^2\theta_0`$ = 0.8795, the same number as mode 1's mass share. So $`e_0 = \sqrt{1 - 0.8795}`$, and $`\log_{10} e_0`$ = −0.46.
 
 ### When it holds
 
-- **A gap.** One eigenvalue must be strictly nearest the shift, so $\gamma < 1$. With the shift exactly midway between $\lambda_1$ and $\lambda_2$, $\gamma = 1$: the estimate settles at 0.135957, which is no eigenvalue, with residual 0.175.
-- **The start contains the target.** If $x_0$ has no share of the target mode, exact arithmetic never finds it. Rounding then brings it back slowly. The ones vector has a share of every mode.
+- **A gap.** One eigenvalue must be strictly nearest the shift, so $`\gamma < 1`$. With the shift exactly midway between $`\lambda_1`$ and $`\lambda_2`$, $`\gamma = 1`$: the estimate settles at 0.135957, which is no eigenvalue, with residual 0.175.
+- **The start contains the target.** If $`x_0`$ has no share of the target mode, exact arithmetic never finds it. Rounding then brings it back slowly. The ones vector has a share of every mode.
 - **Rescale every step.** Without it, power iteration's entries grow by about 3.68 a step and overflow to infinity at step 547.
-- **Symmetry, for the squared eigenvalue error.** The frame's $A$ is symmetric, so its modes are perpendicular and $\hat\lambda_k$ is off by $e_k^2$. For a non-symmetric matrix the vector still converges at rate $\gamma$, but $\hat\lambda_k$ is only off by about $e_k$.
-- **Distinct sizes, for QR without shifts.** Unshifted QR separates eigenvalues at rates $\lambda_{i}/\lambda_{i+1}$. Two equal sizes never separate. Shifts remove the problem and the slowness.
+- **Symmetry, for the squared eigenvalue error.** The frame's $`A`$ is symmetric, so its modes are perpendicular and $`\hat\lambda_k`$ is off by $`e_k^2`$. For a non-symmetric matrix the vector still converges at rate $`\gamma`$, but $`\hat\lambda_k`$ is only off by about $`e_k`$.
+- **Distinct sizes, for QR without shifts.** Unshifted QR separates eigenvalues at rates $`\lambda_{i}/\lambda_{i+1}`$. Two equal sizes never separate. Shifts remove the problem and the slowness.
 
 ---
 
@@ -96,44 +102,44 @@ The ones start sends 88% of its weight to mode 1: $\cos^2\theta_0$ = 0.8795, the
 
 ### Step 0: every vector is a mix of modes, and each step reweights the mix
 
-The five modes $v_1, \dots, v_5$ are perpendicular, so any start is a mix $x_0 = c_1 v_1 + \dots + c_5 v_5$. Multiplying by $A$ multiplies each share $c_j$ by its own $\lambda_j$. After $k$ steps the shares are $c_j \lambda_j^k$.
+The five modes $`v_1, \dots, v_5`$ are perpendicular, so any start is a mix $`x_0 = c_1 v_1 + \dots + c_5 v_5`$. Multiplying by $`A`$ multiplies each share $`c_j`$ by its own $`\lambda_j`$. After $`k`$ steps the shares are $`c_j \lambda_j^k`$.
 
-The share with the largest $\lvert\lambda_j\rvert$ grows fastest, and the others fade relative to it. Rescaling to length 1 changes only the overall size, never the ratios. So the direction turns toward the winning mode.
+The share with the largest $`\lvert\lambda_j\rvert`$ grows fastest, and the others fade relative to it. Rescaling to length 1 changes only the overall size, never the ratios. So the direction turns toward the winning mode.
 
-For the frame the winner is $\lambda_5$ = 3.682507: the stiffest, fastest mode. That is the wrong one for design. Step 2 fixes that.
+For the frame the winner is $`\lambda_5`$ = 3.682507: the stiffest, fastest mode. That is the wrong one for design. Step 2 fixes that.
 
 ### Step 1: the rate is the ratio of the two largest eigenvalues
 
-The error after $k$ steps is set by the largest losing share against the winning share. Each step multiplies that ratio by $\gamma$, the second-largest size over the largest. For the frame, $\gamma = \lambda_4/\lambda_5$ = 0.768724.
+The error after $`k`$ steps is set by the largest losing share against the winning share. Each step multiplies that ratio by $`\gamma`$, the second-largest size over the largest. For the frame, $`\gamma = \lambda_4/\lambda_5`$ = 0.768724.
 
 <details>
 <summary>Detailed proof: tan θ_k ≤ γ^k tan θ_0, and the eigenvalue error is at most the spread times e_k²</summary>
 
-Write $x_0 = \sum_j c_j v_j$ with the $v_j$ perpendicular and of length 1, and let $t$ be the winning index with $c_t \ne 0$. After $k$ steps, before rescaling, the vector is $\sum_j c_j \lambda_j^k v_j$. Rescaling does not change angles.
+Write $`x_0 = \sum_j c_j v_j`$ with the $`v_j`$ perpendicular and of length 1, and let $`t`$ be the winning index with $`c_t \ne 0`$. After $`k`$ steps, before rescaling, the vector is $`\sum_j c_j \lambda_j^k v_j`$. Rescaling does not change angles.
 
-The tangent of the angle to $v_t$ is the length of the part off $v_t$ over the part along it:
+The tangent of the angle to $`v_t`$ is the length of the part off $`v_t`$ over the part along it:
 
-$$\tan\theta_k = \frac{\sqrt{\sum_{j \ne t} c_j^2 \lambda_j^{2k}}}{\lvert c_t\rvert\,\lvert\lambda_t\rvert^k} \le \gamma^k \frac{\sqrt{\sum_{j\ne t} c_j^2}}{\lvert c_t\rvert} = \gamma^k \tan\theta_0,$$
+$`\displaystyle \tan\theta_k = \frac{\sqrt{\sum_{j \ne t} c_j^2 \lambda_j^{2k}}}{\lvert c_t\rvert\,\lvert\lambda_t\rvert^k} \le \gamma^k \frac{\sqrt{\sum_{j\ne t} c_j^2}}{\lvert c_t\rvert} = \gamma^k \tan\theta_0,`$
 
-because every $\lvert\lambda_j\rvert \le \gamma\lvert\lambda_t\rvert$ for $j \ne t$. Since $e_k = \sin\theta_k \le \tan\theta_k$, the bound on $e_k$ follows.
+because every $`\lvert\lambda_j\rvert \le \gamma\lvert\lambda_t\rvert`$ for $`j \ne t`$. Since $`e_k = \sin\theta_k \le \tan\theta_k`$, the bound on $`e_k`$ follows.
 
-For the eigenvalue, write the unit vector as $x_k = \sum_j a_j v_j$ with $\sum_j a_j^2 = 1$. Then $\hat\lambda_k = \sum_j a_j^2 \lambda_j$, so
+For the eigenvalue, write the unit vector as $`x_k = \sum_j a_j v_j`$ with $`\sum_j a_j^2 = 1`$. Then $`\hat\lambda_k = \sum_j a_j^2 \lambda_j`$, so
 
-$$\hat\lambda_k - \lambda_t = \sum_{j \ne t} a_j^2 (\lambda_j - \lambda_t).$$
+$`\displaystyle \hat\lambda_k - \lambda_t = \sum_{j \ne t} a_j^2 (\lambda_j - \lambda_t).`$
 
-The off-target weights add to $\sum_{j \ne t} a_j^2 = \sin^2\theta_k = e_k^2$, and each $\lvert\lambda_j - \lambda_t\rvert$ is at most the spread $\lambda_n - \lambda_1$. That gives $\lvert\hat\lambda_k - \lambda_t\rvert \le (\lambda_n - \lambda_1)\,e_k^2$. The proof uses perpendicular eigenvectors, which a symmetric matrix always has.
+The off-target weights add to $`\sum_{j \ne t} a_j^2 = \sin^2\theta_k = e_k^2`$, and each $`\lvert\lambda_j - \lambda_t\rvert`$ is at most the spread $`\lambda_n - \lambda_1`$. That gives $`\lvert\hat\lambda_k - \lambda_t\rvert \le (\lambda_n - \lambda_1)\,e_k^2`$. The proof uses perpendicular eigenvectors, which a symmetric matrix always has.
 
 </details>
 
-The checks measure the rate directly as $e_{k+1}/e_k$, and the eigenvalue error's ratio beside $\gamma^2$:
+The checks measure the rate directly as $`e_{k+1}/e_k`$, and the eigenvalue error's ratio beside $`\gamma^2`$:
 
-| Method | $\gamma$, from the gap | seen $e_{k+1}/e_k$ | $\gamma^2$ | seen ratio of $\hat\lambda$ errors |
+| Method | $`\gamma`$, from the gap | seen $`e_{k+1}/e_k`$ | $`\gamma^2`$ | seen ratio of $`\hat\lambda`$ errors |
 | --- | --- | --- | --- | --- |
-| power, $A x$ | 0.768724 | 0.772534 at $k$ = 10 | 0.590936 | 0.596738 |
-| inverse, $\mu = 0$ | 0.117364 | 0.117305 at $k$ = 3 | 0.013774 | 0.013737 |
-| shifted, $\mu$ = 0.078957 | 0.003365 | 0.003304 at $k$ = 1 | 0.000011 | 0.000010 |
+| power, $`A x`$ | 0.768724 | 0.772534 at $`k`$ = 10 | 0.590936 | 0.596738 |
+| inverse, $`\mu = 0`$ | 0.117364 | 0.117305 at $`k`$ = 3 | 0.013774 | 0.013737 |
+| shifted, $`\mu`$ = 0.078957 | 0.003365 | 0.003304 at $`k`$ = 1 | 0.000011 | 0.000010 |
 
-The seen $e_{k+1}/e_k$ and $\gamma$ agree to within 2%, the tolerance the checks assert. The power and shifted rows are still settling, because a third mode has not faded yet.
+The seen $`e_{k+1}/e_k`$ and $`\gamma`$ agree to within 2%, the tolerance the checks assert. The power and shifted rows are still settling, because a third mode has not faded yet.
 
 ### The picture: the error against the step
 
@@ -148,96 +154,96 @@ xychart-beta
     line [-0.46, -2.97, -5.45, -7.92, -10.39, -12.87, -15.35, -15.86, -15.95, -15.86, -15.86, -15.86, -15.86]
 ```
 
-Orange, the top line: power iteration toward mode 5, $\gamma$ = 0.768724. Teal, the middle line: inverse iteration toward mode 1, $\gamma$ = 0.117364. Dark blue, the bottom line: shifted inverse iteration, $\gamma$ = 0.003365, until rounding stops it near $10^{-16}$ at step 7. Each line is straight because each step multiplies the error by the same $\gamma$.
+Orange, the top line: power iteration toward mode 5, $`\gamma`$ = 0.768724. Teal, the middle line: inverse iteration toward mode 1, $`\gamma`$ = 0.117364. Dark blue, the bottom line: shifted inverse iteration, $`\gamma`$ = 0.003365, until rounding stops it near $`10^{-16}`$ at step 7. Each line is straight because each step multiplies the error by the same $`\gamma`$.
 
-### Step 2: solving with $A - \mu I$ turns the nearest eigenvalue into the largest
+### Step 2: solving with $`A - \mu I`$ turns the nearest eigenvalue into the largest
 
-The matrix $(A - \mu I)^{-1}$ has the same modes as $A$. Its eigenvalues are $1/(\lambda_j - \mu)$. The largest of those belongs to the $\lambda_j$ nearest $\mu$. So Step 0 and Step 1 apply unchanged, with the target now the mode nearest the shift.
+The matrix $`(A - \mu I)^{-1}`$ has the same modes as $`A`$. Its eigenvalues are $`1/(\lambda_j - \mu)`$. The largest of those belongs to the $`\lambda_j`$ nearest $`\mu`$. So Step 0 and Step 1 apply unchanged, with the target now the mode nearest the shift.
 
-- **Inverse iteration, $\mu = 0$.** The winner is the smallest eigenvalue, mode 1. The rate is $\lambda_1/\lambda_2$ = 0.081014 / 0.690279 = 0.117364.
-- **A shift from a rough guess.** The rule of thumb gives a period of 0.5 s, so $\omega$ = 2π/0.5 and $\mu = \omega^2 m/s$ = 0.078957. The rate is (0.081014 − 0.078957) / (0.690279 − 0.078957) = 0.003365.
+- **Inverse iteration, $`\mu = 0`$.** The winner is the smallest eigenvalue, mode 1. The rate is $`\lambda_1/\lambda_2`$ = 0.081014 / 0.690279 = 0.117364.
+- **A shift from a rough guess.** The rule of thumb gives a period of 0.5 s, so $`\omega`$ = 2π/0.5 and $`\mu = \omega^2 m/s`$ = 0.078957. The rate is (0.081014 − 0.078957) / (0.690279 − 0.078957) = 0.003365.
 
-The inverse is never formed. Each step solves one system with the tridiagonal matrix $A - \mu I$ by the sweep from [The Thomas algorithm](03-tridiagonal-systems-and-the-thomas-algorithm.md): 8n − 7 = 33 flops (floating-point operations) for the general sweep. One product $Ax$ costs 13 flops here, $3n - 2$, because the off-diagonal entries are −1. A step of inverse iteration costs more than a power step, but it needs far fewer steps.
+The inverse is never formed. Each step solves one system with the tridiagonal matrix $`A - \mu I`$ by the sweep from [The Thomas algorithm](03-tridiagonal-systems-and-the-thomas-algorithm.md): 8n − 7 = 33 flops (floating-point operations) for the general sweep. One product $`Ax`$ costs 13 flops here, $`3n - 2`$, because the off-diagonal entries are −1. A step of inverse iteration costs more than a power step, but it needs far fewer steps.
 
-A good shift makes $A - \mu I$ nearly singular, so the solve has a large error. That error points almost entirely along the wanted mode, and rescaling removes it. Peters and Wilkinson (in Sources) give the full analysis.
+A good shift makes $`A - \mu I`$ nearly singular, so the solve has a large error. That error points almost entirely along the wanted mode, and rescaling removes it. Peters and Wilkinson (in Sources) give the full analysis.
 
 ### Step 3: stop on the residual, and read the error from the gap
 
-The method cannot see the true error, but it can compute the **residual** $r_k = A x_k - \hat\lambda_k x_k$. For a symmetric matrix, two facts turn the residual into error bounds:
+The method cannot see the true error, but it can compute the **residual** $`r_k = A x_k - \hat\lambda_k x_k`$. For a symmetric matrix, two facts turn the residual into error bounds:
 
-- some eigenvalue lies within $\lVert r_k\rVert$ of $\hat\lambda_k$;
-- the mode-shape error is at most $\lVert r_k \rVert$ divided by the gap: the distance from $\hat\lambda_k$ to the nearest other eigenvalue.
+- some eigenvalue lies within $`\lVert r_k\rVert`$ of $`\hat\lambda_k`$;
+- the mode-shape error is at most $`\lVert r_k \rVert`$ divided by the gap: the distance from $`\hat\lambda_k`$ to the nearest other eigenvalue.
 
 <details>
 <summary>Detailed proof: an eigenvalue lies within the residual, and the shape error is at most residual over gap</summary>
 
-Write the unit vector as $x_k = \sum_j a_j v_j$, as in the fold of Step 1, with $\sum_j a_j^2 = 1$. Then $A x_k = \sum_j a_j \lambda_j v_j$, so
+Write the unit vector as $`x_k = \sum_j a_j v_j`$, as in the fold of Step 1, with $`\sum_j a_j^2 = 1`$. Then $`A x_k = \sum_j a_j \lambda_j v_j`$, so
 
-$$r_k = \sum_j a_j(\lambda_j - \hat\lambda_k)\, v_j, \qquad \lVert r_k\rVert^2 = \sum_j a_j^2 (\lambda_j - \hat\lambda_k)^2,$$
+$`\displaystyle r_k = \sum_j a_j(\lambda_j - \hat\lambda_k)\, v_j, \qquad \lVert r_k\rVert^2 = \sum_j a_j^2 (\lambda_j - \hat\lambda_k)^2,`$
 
-because the $v_j$ are perpendicular and of length 1.
+because the $`v_j`$ are perpendicular and of length 1.
 
-**First bound.** Every $(\lambda_j - \hat\lambda_k)^2$ is at least the smallest of them, and the $a_j^2$ add to 1. So $\lVert r_k\rVert^2 \ge \min_j(\lambda_j - \hat\lambda_k)^2$: the nearest eigenvalue is within $\lVert r_k\rVert$ of $\hat\lambda_k$.
+**First bound.** Every $`(\lambda_j - \hat\lambda_k)^2`$ is at least the smallest of them, and the $`a_j^2`$ add to 1. So $`\lVert r_k\rVert^2 \ge \min_j(\lambda_j - \hat\lambda_k)^2`$: the nearest eigenvalue is within $`\lVert r_k\rVert`$ of $`\hat\lambda_k`$.
 
-**Second bound.** Drop the target's term, $j = t$. Each remaining $(\lambda_j - \hat\lambda_k)^2$ is at least the gap squared, and the remaining $a_j^2$ add to $\sin^2\theta_k = e_k^2$. So $\lVert r_k\rVert^2 \ge \text{gap}^2\, e_k^2$, which is $e_k \le \lVert r_k\rVert/\text{gap}$.
+**Second bound.** Drop the target's term, $`j = t`$. Each remaining $`(\lambda_j - \hat\lambda_k)^2`$ is at least the gap squared, and the remaining $`a_j^2`$ add to $`\sin^2\theta_k = e_k^2`$. So $`\lVert r_k\rVert^2 \ge \text{gap}^2\, e_k^2`$, which is $`e_k \le \lVert r_k\rVert/\text{gap}`$.
 
-**One losing mode.** If only $a_t$ and one other share $a_o$ are non-zero, then $\hat\lambda_k - \lambda_t = a_o^2(\lambda_o - \lambda_t)$ and $\lambda_o - \hat\lambda_k = a_t^2(\lambda_o - \lambda_t)$. The sum above becomes $\lVert r_k\rVert = \lvert a_t a_o\rvert\,\lvert\lambda_o - \lambda_t\rvert$, and, with $\lambda_o$ the nearest other eigenvalue, the gap is $a_t^2\lvert\lambda_o - \lambda_t\rvert$. So the bound is $\lvert a_o/a_t\rvert = \tan\theta_k$, against the true $\sin\theta_k$: they differ by the factor $\cos\theta_k$. $\blacksquare$
+**One losing mode.** If only $`a_t`$ and one other share $`a_o`$ are non-zero, then $`\hat\lambda_k - \lambda_t = a_o^2(\lambda_o - \lambda_t)`$ and $`\lambda_o - \hat\lambda_k = a_t^2(\lambda_o - \lambda_t)`$. The sum above becomes $`\lVert r_k\rVert = \lvert a_t a_o\rvert\,\lvert\lambda_o - \lambda_t\rvert`$, and, with $`\lambda_o`$ the nearest other eigenvalue, the gap is $`a_t^2\lvert\lambda_o - \lambda_t\rvert`$. So the bound is $`\lvert a_o/a_t\rvert = \tan\theta_k`$, against the true $`\sin\theta_k`$: they differ by the factor $`\cos\theta_k`$. $`\blacksquare`$
 
 </details>
 
-So "converged" on this card means the stopping test $\lVert r_k\rVert < 10^{-10}$ passed:
+So "converged" on this card means the stopping test $`\lVert r_k\rVert < 10^{-10}`$ passed:
 
-| Method | steps to pass | $\hat\lambda$ | true $e_k$ | bound $\lVert r_k\rVert$/gap | true / bound |
+| Method | steps to pass | $`\hat\lambda`$ | true $`e_k`$ | bound $`\lVert r_k\rVert`$/gap | true / bound |
 | --- | --- | --- | --- | --- | --- |
 | power | 90 | 3.682507065662 | 1.1e-10 | 1.1e-10 | 1.000 |
 | inverse | 10 | 0.081014052771 | 1.6e-10 | 1.6e-10 | 1.000 |
 | shifted | 4 | 0.081014052771 | 4.0e-11 | 4.0e-11 | 1.000 |
 
-The bound is nearly exact here: by then one losing mode is left, and for one losing mode the bound misses only by a factor $\cos\theta_k$. The check asserts true ≤ bound to within 0.1%, the rounding in two numbers near 1e-10. The fundamental period is $2\pi/\sqrt{0.081014052771 \times 2000}$ = 0.4936 s.
+The bound is nearly exact here: by then one losing mode is left, and for one losing mode the bound misses only by a factor $`\cos\theta_k`$. The check asserts true ≤ bound to within 0.1%, the rounding in two numbers near 1e-10. The fundamental period is $`2\pi/\sqrt{0.081014052771 \times 2000}`$ = 0.4936 s.
 
-A symmetric matrix's eigenvalues are well conditioned: a change to $A$ of a given size, measured in the 2-norm (the largest factor by which it stretches any vector), moves each eigenvalue by at most that size. The frame's trouble is speed, not conditioning or stability.
+A symmetric matrix's eigenvalues are well conditioned: a change to $`A`$ of a given size, measured in the 2-norm (the largest factor by which it stretches any vector), moves each eigenvalue by at most that size. The frame's trouble is speed, not conditioning or stability.
 
 ### Step 4: the QR algorithm is power iteration on every vector at once
 
-One QR step gives $A_{k+1} = R_k Q_k + \mu_k I = Q_k^{\mathsf T} A_k Q_k$, because $R_k = Q_k^{\mathsf T}(A_k - \mu_k I)$. So every $A_k$ has the same eigenvalues as $A$. The factorisation is the one from [QR](05-qr-householder-and-gram-schmidt.md); the check uses Givens rotations (turns in one plane at a time).
+One QR step gives $`A_{k+1} = R_k Q_k + \mu_k I = Q_k^{\mathsf T} A_k Q_k`$, because $`R_k = Q_k^{\mathsf T}(A_k - \mu_k I)`$. So every $`A_k`$ has the same eigenvalues as $`A`$. The factorisation is the one from [QR](05-qr-householder-and-gram-schmidt.md); the check uses Givens rotations (turns in one plane at a time).
 
 Why the diagonal converges, in words:
 
-1. Multiply the rotations so far, $\bar Q_k = Q_0 Q_1 \cdots Q_{k-1}$. With no shifts, $A^k = \bar Q_k \bar R_k$.
-2. So the first column of $\bar Q_k$ is power iteration started from $(1, 0, 0, 0, 0)$. The check confirms it: the two unit vectors agree to $\lvert\cos\rvert$ = 1.000000000000000 after 10 steps.
+1. Multiply the rotations so far, $`\bar Q_k = Q_0 Q_1 \cdots Q_{k-1}`$. With no shifts, $`A^k = \bar Q_k \bar R_k`$.
+2. So the first column of $`\bar Q_k`$ is power iteration started from $`(1, 0, 0, 0, 0)`$. The check confirms it: the two unit vectors agree to $`\lvert\cos\rvert`$ = 1.000000000000000 after 10 steps.
 3. The first two columns are power iteration on a plane, kept perpendicular. The same holds for three, four and five columns.
-4. The diagonal of $A_k$ therefore sorts into the eigenvalues, largest first. Each entry just below the diagonal shrinks every step by the ratio of the two eigenvalues it separates, smaller over larger.
+4. The diagonal of $`A_k`$ therefore sorts into the eigenvalues, largest first. Each entry just below the diagonal shrinks every step by the ratio of the two eigenvalues it separates, smaller over larger.
 
-After 10 unshifted steps the diagonal reads 3.670167, 2.842853, 1.715687, 0.690279, 0.081014. The entries below it are 1.0e-01, 1.9e-02, 2.5e-04 and 2.8e-10. The last one is tiny because $\lambda_1/\lambda_2$ = 0.117364. The first is slow because $\lambda_4/\lambda_5$ = 0.768724. All four fall below $10^{-12}$ only after 107 steps.
+After 10 unshifted steps the diagonal reads 3.670167, 2.842853, 1.715687, 0.690279, 0.081014. The entries below it are 1.0e-01, 1.9e-02, 2.5e-04 and 2.8e-10. The last one is tiny because $`\lambda_1/\lambda_2`$ = 0.117364. The first is slow because $`\lambda_4/\lambda_5`$ = 0.768724. All four fall below $`10^{-12}`$ only after 107 steps.
 
-The last column of $\bar Q_k$ runs inverse iteration at the same time. So a shift taken from the bottom corner of $A_k$ speeds up the bottom entry exactly as in Step 2. The check uses the **Wilkinson shift**: the eigenvalue of the bottom 2 by 2 block nearest the corner entry. When the bottom entry below the diagonal falls under $10^{-14}$ times its neighbours, that eigenvalue is final. The algorithm then **deflates** (drops the last row and column) and carries on.
+The last column of $`\bar Q_k`$ runs inverse iteration at the same time. So a shift taken from the bottom corner of $`A_k`$ speeds up the bottom entry exactly as in Step 2. The check uses the **Wilkinson shift**: the eigenvalue of the bottom 2 by 2 block nearest the corner entry. When the bottom entry below the diagonal falls under $`10^{-14}`$ times its neighbours, that eigenvalue is final. The algorithm then **deflates** (drops the last row and column) and carries on.
 
-With shifts, all five eigenvalues arrive in 10 steps in total, against 107 without. The corner entry alone as the shift needs 13. They match the closed form $4\sin^2\!\big((2j - 1)\pi/22\big)$ to $10^{-13}$:
+With shifts, all five eigenvalues arrive in 10 steps in total, against 107 without. The corner entry alone as the shift needs 13. They match the closed form $`4\sin^2\!\big((2j - 1)\pi/22\big)`$ to $`10^{-13}`$:
 
-| $j$ | 1 | 2 | 3 | 4 | 5 |
+| $`j`$ | 1 | 2 | 3 | 4 | 5 |
 | --- | --- | --- | --- | --- | --- |
-| $\lambda_j$ | 0.081014052771 | 0.690278532109 | 1.715370323453 | 2.830830026004 | 3.682507065662 |
+| $`\lambda_j`$ | 0.081014052771 | 0.690278532109 | 1.715370323453 | 2.830830026004 | 3.682507065662 |
 
 Two free checks: the eigenvalues add to 9.000000000000, the trace (the sum of the diagonal). They multiply to 1.000000000000, the determinant, which is also the product of the Thomas pivots.
 
-The convergence theorem, stated here and not proved: for a symmetric tridiagonal matrix, QR with the Wilkinson shift always converges, from every start. The bottom entry below the diagonal goes to zero, and once it is small it shrinks at least quadratically: each new value is at most a constant times the square of the last. Parlett (chapter 8, in Sources) gives the proof; Watkins and Trefethen and Bau give the power-iteration picture used above. The cost: for a full symmetric matrix, real codes first reduce it to tridiagonal form, at about $4n^3/3$ flops. Each QR step on the tridiagonal matrix then costs a fixed number of flops per row.
+The convergence theorem, stated here and not proved: for a symmetric tridiagonal matrix, QR with the Wilkinson shift always converges, from every start. The bottom entry below the diagonal goes to zero, and once it is small it shrinks at least quadratically: each new value is at most a constant times the square of the last. Parlett (chapter 8, in Sources) gives the proof; Watkins and Trefethen and Bau give the power-iteration picture used above. The cost: for a full symmetric matrix, real codes first reduce it to tridiagonal form, at about $`4n^3/3`$ flops. Each QR step on the tridiagonal matrix then costs a fixed number of flops per row.
 
 ---
 
 ## Worked numbers, by hand
 
-Inverse iteration on the frame needs no fractions at the start. The inverse of $A$ has a simple pattern: entry $(i, j)$ is the smaller of $i$ and $j$. Rescaling never changes $\hat\lambda$, so the steps below skip it. Since $A y = x$, the quotient $y^{\mathsf T} A y / y^{\mathsf T} y$ equals $y^{\mathsf T} x / y^{\mathsf T} y$.
+Inverse iteration on the frame needs no fractions at the start. The inverse of $`A`$ has a simple pattern: entry $`(i, j)`$ is the smaller of $`i`$ and $`j`$. Rescaling never changes $`\hat\lambda`$, so the steps below skip it. Since $`A y = x`$, the quotient $`y^{\mathsf T} A y / y^{\mathsf T} y`$ equals $`y^{\mathsf T} x / y^{\mathsf T} y`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| start | $x_0 = (1, 1, 1, 1, 1)$; $\hat\lambda_0$ = (sum of all entries of $A$) / 5 = 1/5 | 0.200000 |
-| solve $A y = x_0$ | $y_i$ = sum over $j$ of the smaller of $i$, $j$ | (5, 9, 12, 14, 15) |
-| $\hat\lambda_1$ | $y^{\mathsf T} x_0 / y^{\mathsf T} y$ = 55 / 671 | 0.081967, period 0.4907 s |
-| solve $A z = y$ | $z_1 = 55$, $z_2 = 5 + 2 \times 50$, and so on | (55, 105, 146, 175, 190) |
-| $\hat\lambda_2$ | $z^{\mathsf T} y / z^{\mathsf T} z$ = 8272 / 102091 | 0.081026, period 0.4936 s |
-| shape | $z / 190$ | 0.2895, 0.5526, 0.7684, 0.9211, 1 |
-| rate | $\lambda_1/\lambda_2$ | 0.117364 |
-| **answer** | $2\pi/\sqrt{0.081014 \times 1.0\text{e}8 / 5.0\text{e}4}$ | **0.4936 s** |
+| start | $`x_0 = (1, 1, 1, 1, 1)`$; $`\hat\lambda_0`$ = (sum of all entries of $`A`$) / 5 = 1/5 | 0.200000 |
+| solve $`A y = x_0`$ | $`y_i`$ = sum over $`j`$ of the smaller of $`i`$, $`j`$ | (5, 9, 12, 14, 15) |
+| $`\hat\lambda_1`$ | $`y^{\mathsf T} x_0 / y^{\mathsf T} y`$ = 55 / 671 | 0.081967, period 0.4907 s |
+| solve $`A z = y`$ | $`z_1 = 55`$, $`z_2 = 5 + 2 \times 50`$, and so on | (55, 105, 146, 175, 190) |
+| $`\hat\lambda_2`$ | $`z^{\mathsf T} y / z^{\mathsf T} z`$ = 8272 / 102091 | 0.081026, period 0.4936 s |
+| shape | $`z / 190`$ | 0.2895, 0.5526, 0.7684, 0.9211, 1 |
+| rate | $`\lambda_1/\lambda_2`$ | 0.117364 |
+| **answer** | $`2\pi/\sqrt{0.081014 \times 1.0\text{e}8 / 5.0\text{e}4}`$ | **0.4936 s** |
 
 Two solves already give the period to four digits. The mode shape after two steps is off in the third digit: 0.2895 against the true 0.2846. That is Step 1 in action: the eigenvalue error is about the square of the shape error.
 
@@ -247,8 +253,8 @@ Two solves already give the period to four digits. The mode shape after two step
 | --- | --- | --- |
 | Plain power iteration for the design mode | period 0.0732 s, not 0.4936 s | it finds the largest eigenvalue: the stiffest mode, not the slowest |
 | No rescaling | entries reach infinity at step 547 | sizes grow by about 3.68 a step until they overflow |
-| Shift midway, $\mu$ = 0.385646 | $\hat\lambda$ = 0.135957 after 50 steps, residual 0.175 | two eigenvalues equally near: $\gamma = 1$, no winner |
-| Stop when $\hat\lambda$ moves less than 1e-10 | step 46: $\hat\lambda$ error 1.3e-10, shape error 1.2e-05 | the eigenvalue's error is the square of the shape's, so it stops moving first |
+| Shift midway, $`\mu`$ = 0.385646 | $`\hat\lambda`$ = 0.135957 after 50 steps, residual 0.175 | two eigenvalues equally near: $`\gamma = 1`$, no winner |
+| Stop when $`\hat\lambda`$ moves less than 1e-10 | step 46: $`\hat\lambda`$ error 1.3e-10, shape error 1.2e-05 | the eigenvalue's error is the square of the shape's, so it stops moving first |
 
 The midway shift is the broken hypothesis: no eigenvalue is strictly nearest. The iterate swaps sign between modes 1 and 2 each step, and its Rayleigh quotient sits at a weighted average of the two. Only the residual exposes it.
 
@@ -256,7 +262,7 @@ The midway shift is the broken hypothesis: no eigenvalue is strictly nearest. Th
 
 ## Code, from first principles, and it actually runs
 
-The code finds the frame's eigenvalues three independent ways. Road one is the closed form $4\sin^2((2j-1)\pi/22)$, checked by its residual. Road two is power, inverse and shifted inverse iteration, each measured against road one, with the rate seen against $\gamma$. Road three is the QR algorithm, with and without shifts, checked against road one, the trace, the determinant from the Thomas pivots, and the power vector; the Wilkinson shift is raced against the corner entry alone. Both programs print the broken cases too.
+The code finds the frame's eigenvalues three independent ways. Road one is the closed form $`4\sin^2((2j-1)\pi/22)`$, checked by its residual. Road two is power, inverse and shifted inverse iteration, each measured against road one, with the rate seen against $`\gamma`$. Road three is the QR algorithm, with and without shifts, checked against road one, the trace, the determinant from the Thomas pivots, and the power vector; the Wilkinson shift is raced against the corner entry alone. Both programs print the broken cases too.
 
 ### Python
 
@@ -646,11 +652,11 @@ ALL CHECKS PASS
 
 Lean proves the rate of Steps 1 and 2 and the residual bounds of Step 3, for every symmetric matrix of any size.
 
-- Take power iteration on a symmetric $A$, rescaled every step. Say one eigenvalue $\lambda_t$ is strictly largest in size, and $x_0$ has a share of its mode. Then $\tan\theta_k \le \gamma^k \tan\theta_0$ and $e_k \le \gamma^k \tan\theta_0$ at every step, and $e_k$ goes to 0.
-- In that setting, $\lvert\hat\lambda_k - \lambda_t\rvert \le (\lambda_n - \lambda_1)\,e_k^2$ at every step.
-- Take shifted inverse iteration, with $\lambda_t$ strictly nearest the shift $\mu$ and $x_0$ holding a share of its mode. The same two bounds hold, with $\gamma = \lvert\lambda_t - \mu\rvert/\lvert\lambda_o - \mu\rvert$, and $e_k$ goes to 0. Setting $\mu = 0$ gives inverse iteration.
-- For any unit vector, some eigenvalue lies within $\lVert r_k\rVert$ of $\hat\lambda_k$. If the gap is not zero, the mode-shape error is at most $\lVert r_k\rVert$ divided by the gap.
-- The by-hand numbers check out: the inverse of $A$ has entry $(i, j)$ equal to the smaller of $i$ and $j$. The solves give (5, 9, 12, 14, 15) and (55, 105, 146, 175, 190). The quotients are 1/5, 55/671 and 8272/102091, the trace is 9 and the determinant is 1.
+- Take power iteration on a symmetric $`A`$, rescaled every step. Say one eigenvalue $`\lambda_t`$ is strictly largest in size, and $`x_0`$ has a share of its mode. Then $`\tan\theta_k \le \gamma^k \tan\theta_0`$ and $`e_k \le \gamma^k \tan\theta_0`$ at every step, and $`e_k`$ goes to 0.
+- In that setting, $`\lvert\hat\lambda_k - \lambda_t\rvert \le (\lambda_n - \lambda_1)\,e_k^2`$ at every step.
+- Take shifted inverse iteration, with $`\lambda_t`$ strictly nearest the shift $`\mu`$ and $`x_0`$ holding a share of its mode. The same two bounds hold, with $`\gamma = \lvert\lambda_t - \mu\rvert/\lvert\lambda_o - \mu\rvert`$, and $`e_k`$ goes to 0. Setting $`\mu = 0`$ gives inverse iteration.
+- For any unit vector, some eigenvalue lies within $`\lVert r_k\rVert`$ of $`\hat\lambda_k`$. If the gap is not zero, the mode-shape error is at most $`\lVert r_k\rVert`$ divided by the gap.
+- The by-hand numbers check out: the inverse of $`A`$ has entry $`(i, j)`$ equal to the smaller of $`i`$ and $`j`$. The solves give (5, 9, 12, 14, 15) and (55, 105, 146, 175, 190). The quotients are 1/5, 55/671 and 8272/102091, the trace is 9 and the determinant is 1.
 
 The frame's eigenvalues, the observed rates, the QR algorithm and every row of What breaks are left to the Python and Rust checks.
 
@@ -1163,17 +1169,17 @@ example : frameA.det = 1 := by
 
 > [!TIP]
 > **Try changing**
-> - **Guess first:** set the period guess from 0.5 to 0.4 in `w0 = 2 * pi / 0.5`. Is a worse guess still better than no shift? Yes: $\mu$ = 0.123370, $\gamma$ = 0.074714, and the residual test passes at step 9 instead of 4. Plain inverse iteration needs 10.
-> - **Guess first:** double the floor mass, `m = 1.0e5`. The eigenvalues of $A$ do not change, and every period grows by $\sqrt2$: mode 1 becomes 0.6981 s. The 0.5 s guess is now poor: $\gamma$ = 0.144449 and 12 steps, worse than no shift.
+> - **Guess first:** set the period guess from 0.5 to 0.4 in `w0 = 2 * pi / 0.5`. Is a worse guess still better than no shift? Yes: $`\mu`$ = 0.123370, $`\gamma`$ = 0.074714, and the residual test passes at step 9 instead of 4. Plain inverse iteration needs 10.
+> - **Guess first:** double the floor mass, `m = 1.0e5`. The eigenvalues of $`A`$ do not change, and every period grows by $`\sqrt2`$: mode 1 becomes 0.6981 s. The 0.5 s guess is now poor: $`\gamma`$ = 0.144449 and 12 steps, worse than no shift.
 > - **Guess first:** in `shifted_qr`, take the other root of the 2 by 2 block, the one far from the corner: change `d - (1.0 if h >= 0` to `d + (1.0 if h >= 0`. Does any root of the block do? All five eigenvalues still arrive, but in 13 steps, no better than the corner entry alone, and the assert that Wilkinson's shift wins stops the run.
-> - **Guess first:** start from `[1.0, -1.0, 1.0, -1.0, 1.0]`, which looks like mode 5. Power iteration passes its test at step 75 instead of 90. An assert fails: the shifted run's first-step ratio reads 0.001580, not yet $\gamma$, because this start holds little of mode 2.
+> - **Guess first:** start from `[1.0, -1.0, 1.0, -1.0, 1.0]`, which looks like mode 5. Power iteration passes its test at step 75 instead of 90. An assert fails: the shifted run's first-step ratio reads 0.001580, not yet $`\gamma`$, because this start holds little of mode 2.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Reading "dominant" in two senses.** In power iteration the dominant eigenvalue is the largest one. For the frame that is the stiffest mode, period 0.0732 s, carrying 0.16% of the mass. In structural design the dominant mode is the slowest one, 0.4936 s, carrying 88%. To find it, solve with $A$ instead of multiplying: inverse iteration.
+> **Reading "dominant" in two senses.** In power iteration the dominant eigenvalue is the largest one. For the frame that is the stiffest mode, period 0.0732 s, carrying 0.16% of the mass. In structural design the dominant mode is the slowest one, 0.4936 s, carrying 88%. To find it, solve with $`A`$ instead of multiplying: inverse iteration.
 >
 > - **Stopping when the eigenvalue stops moving.** The eigenvalue settles first. At that point, step 46 of power iteration, the mode shape is still off by 1.2e-05. Stop on the residual instead.
 > - **Forgetting to rescale.** The entries overflow to infinity at step 547.
@@ -1185,29 +1191,29 @@ example : frameA.det = 1 := by
 ## Where you meet it in real life
 
 - **Building and bridge design.** Seismic codes set the design force from the fundamental period. Engineering software finds the lowest few modes by shifted inverse iteration, or by the Lanczos method, which keeps every iteration vector instead of only the last.
-- **Web search.** [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md) runs plain power iteration on a matrix of links. Its damping factor sets $\gamma$ to at most 0.85.
+- **Web search.** [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md) runs plain power iteration on a matrix of links. Its damping factor sets $`\gamma`$ to at most 0.85.
 - **Data analysis.** The first principal component of a data table is the top eigenvector of its covariance matrix. Power iteration finds it without forming every eigenvalue.
 - **Physics and chemistry.** The ground state of a quantum system is the lowest eigenvalue of its energy matrix. Inverse iteration with a shift near a known energy finds it.
 - **Numerical libraries.** Standard routines for all eigenvalues of a symmetric matrix reduce it to tridiagonal form and then run shifted QR steps.
 
 > **Say it back**
-> Multiplying by a matrix again and again turns any vector toward the eigenvector with the largest eigenvalue. The error shrinks each step by the ratio of the second-largest eigenvalue to the largest. Solving with $A - \mu I$ instead makes the eigenvalue nearest $\mu$ win, and a good shift makes the ratio tiny. Stop when the residual is small, and divide it by the gap to bound the shape error. The QR algorithm runs this on all vectors at once and, with shifts, finds every eigenvalue in a few steps.
+> Multiplying by a matrix again and again turns any vector toward the eigenvector with the largest eigenvalue. The error shrinks each step by the ratio of the second-largest eigenvalue to the largest. Solving with $`A - \mu I`$ instead makes the eigenvalue nearest $`\mu`$ win, and a good shift makes the ratio tiny. Stop when the residual is small, and divide it by the gap to bound the shape error. The QR algorithm runs this on all vectors at once and, with shifts, finds every eigenvalue in a few steps.
 
 ---
 
 ## What this builds on
 
-- [QR](05-qr-householder-and-gram-schmidt.md): the factorisation $A = QR$ that each QR step uses, and the keep-them-perpendicular step behind Step 4.
-- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): what $A v = \lambda v$ means, and the trace and determinant checks.
-- [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): writing a vector as a mix of eigenvectors, so that $A^k$ acts on each share separately.
+- [QR](05-qr-householder-and-gram-schmidt.md): the factorisation $`A = QR`$ that each QR step uses, and the keep-them-perpendicular step behind Step 4.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): what $`A v = \lambda v`$ means, and the trace and determinant checks.
+- [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): writing a vector as a mix of eigenvectors, so that $`A^k`$ acts on each share separately.
 - [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md): the first run of power iteration, with its error shrinking by the damping factor. This card proves the rate for any symmetric matrix from the eigenvalue gap.
 
 ## Where this goes next
 
-- [Singular value decomposition](08-svd-and-the-pseudoinverse.md): the singular values are square roots of the eigenvalues of $A^{\mathsf T} A$, and they are computed by a QR-style iteration.
+- [Singular value decomposition](08-svd-and-the-pseudoinverse.md): the singular values are square roots of the eigenvalues of $`A^{\mathsf T} A`$, and they are computed by a QR-style iteration.
 - [Sparse storage and Krylov methods](10-sparse-matrices-and-krylov-methods.md): keeping every power-iteration vector, not only the last, gives Lanczos and Arnoldi, which find a few eigenvalues of huge sparse matrices.
 
-The question this card leaves open: for a matrix with a million rows, where even one QR step is too costly, how many products with $A$ does it take to find the lowest ten modes?
+The question this card leaves open: for a matrix with a million rows, where even one QR step is too costly, how many products with $`A`$ does it take to find the lowest ten modes?
 
 ---
 

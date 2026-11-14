@@ -39,38 +39,44 @@ The first three layers are hard floors: break one and the bank is below a minimu
 
 ## The formula
 
-Notation first. A small $i$ written below a letter labels the bank's loan groups, and the sign Σ in front means "add up over every group". Money is in millions of dollars; rates are written as percent here and as decimals in the code.
+Notation first. A small $`i`$ written below a letter labels the bank's loan groups, and the sign Σ in front means "add up over every group". Money is in millions of dollars; rates are written as percent here and as decimals in the code.
 
-$$R \;=\; \sum_i w_i\,E_i \;+\; 12.5\,(K_M + K_O)$$
+```math
+R \;=\; \sum_i w_i\,E_i \;+\; 12.5\,(K_M + K_O)
+```
 
 **Read it aloud:** risk-weighted assets are each loan group times its risk weight, all added up, plus twelve and a half times the capital the market and operational calculations already ask for.
 
-$$\frac{C}{R} \;\ge\; \frac{F + bR}{R}, \qquad F \;=\; \max\!\big(4.5\%\,R,\;\; 6\%\,R - A_1,\;\; 8\%\,R - A_1 - T_2\big)$$
+```math
+\frac{C}{R} \;\ge\; \frac{F + bR}{R}, \qquad F \;=\; \max\!\big(4.5\%\,R,\;\; 6\%\,R - A_1,\;\; 8\%\,R - A_1 - T_2\big)
+```
 
 **Read it aloud:** CET1 over RWA must cover the CET1 needed to prop up the three minimums, plus the buffer.
 
-The first ratio, $C/R$, is the **CET1 ratio**. The Tier 1 ratio is $(C + A_1)/R$ and the total capital ratio is $(C + A_1 + T_2)/R$; their minimums are 4.5, 6 and 8 percent.
+The first ratio, $`C/R`$, is the **CET1 ratio**. The Tier 1 ratio is $`(C + A_1)/R`$ and the total capital ratio is $`(C + A_1 + T_2)/R`$; their minimums are 4.5, 6 and 8 percent.
 
 | Symbol | Plain meaning | In our example | Push it up and the CET1 ratio… |
 | --- | --- | --- | --- |
-| $E_i$, $i$ | exposure: the amount lent in loan group $i$ | $400m, $400m, $200m | falls: more to cover |
-| $w_i$ | risk weight: the fraction of $E_i$ that counts, set by the rulebook | 30%, 100%, 75% | falls |
-| $K_M$ | market-risk capital charge on the trading book, from its own calculation | $12m | falls |
-| $K_O$ | operational-risk charge: losses from failed processes, fraud, outages | $14.40m | falls |
-| $R$ | risk-weighted assets, RWA | $1,000m | falls: same capital, bigger base |
-| $C$ | Common Equity Tier 1: shares plus retained profit, after deductions | $120m | rises |
-| $A_1$ | Additional Tier 1: perpetual bonds that convert to shares or are written off under stress | $0m | leaves it alone, but lowers what CET1 must cover |
-| $T_2$ | Tier 2: long subordinated debt, repaid only after depositors | $0m | same as $A_1$, total ratio only |
-| $F$ | the CET1 used up meeting the three minimums | $80m | — |
-| $b$ | the buffer rate: 2.5% conservation, plus any countercyclical rate | 2.5% | raises the need |
-| $q$ | the CET1 ratio the payout table reads, after the minimums are met | 8.5% | more payout allowed |
-| $L$ | a loss that comes straight out of CET1 | $0 to $40m | lowers it |
+| $`E_i`$, $`i`$ | exposure: the amount lent in loan group $`i`$ | $400m, $400m, $200m | falls: more to cover |
+| $`w_i`$ | risk weight: the fraction of $`E_i`$ that counts, set by the rulebook | 30%, 100%, 75% | falls |
+| $`K_M`$ | market-risk capital charge on the trading book, from its own calculation | $12m | falls |
+| $`K_O`$ | operational-risk charge: losses from failed processes, fraud, outages | $14.40m | falls |
+| $`R`$ | risk-weighted assets, RWA | $1,000m | falls: same capital, bigger base |
+| $`C`$ | Common Equity Tier 1: shares plus retained profit, after deductions | $120m | rises |
+| $`A_1`$ | Additional Tier 1: perpetual bonds that convert to shares or are written off under stress | $0m | leaves it alone, but lowers what CET1 must cover |
+| $`T_2`$ | Tier 2: long subordinated debt, repaid only after depositors | $0m | same as $`A_1`$, total ratio only |
+| $`F`$ | the CET1 used up meeting the three minimums | $80m | — |
+| $`b`$ | the buffer rate: 2.5% conservation, plus any countercyclical rate | 2.5% | raises the need |
+| $`q`$ | the CET1 ratio the payout table reads, after the minimums are met | 8.5% | more payout allowed |
+| $`L`$ | a loss that comes straight out of CET1 | $0 to $40m | lowers it |
 
-The helper $q$ has its own formula:
+The helper $`q`$ has its own formula:
 
-$$q \;=\; 4.5\% \;+\; \frac{C - F}{R}$$
+```math
+q \;=\; 4.5\% \;+\; \frac{C - F}{R}
+```
 
-In words: start at the bare CET1 minimum, then add whatever CET1 is left after all three minimums are propped up. A bank with only CET1 has $q$ equal to its CET1 ratio minus 3.5 points.
+In words: start at the bare CET1 minimum, then add whatever CET1 is left after all three minimums are propped up. A bank with only CET1 has $`q`$ equal to its CET1 ratio minus 3.5 points.
 
 **Conventions verified 28 Sep 2026** against the Basel Committee's texts in Sources: the 4.5, 6 and 8 percent minimums, the 2.5 percent conservation buffer and its payout table, the rule that CET1 meets the minimums first, the 12.5 multiplier, and the 30, 75 and 100 percent weights used here. National law can add to all of them.
 
@@ -80,7 +86,7 @@ This is a convention: it holds wherever a supervisor has written it into law, an
 
 - **The weights and charges are given.** The card takes the 30, 75 and 100 percent weights, the $12m market charge and the $14.40m operational charge as inputs. Where they come from is the work of other cards; get one wrong and RWA is wrong by that group's share.
 - **One snapshot.** RWA is held fixed while losses hit CET1. In a real downturn loans also get riskier and RWA rises, so the ratio falls faster than the loss alone says.
-- **No add-ons.** No countercyclical buffer, no surcharge for systemically important banks, no supervisor-specific extra. Each one raises $b$ or the minimums, and the whole calculation shifts with it.
+- **No add-ons.** No countercyclical buffer, no surcharge for systemically important banks, no supervisor-specific extra. Each one raises $`b`$ or the minimums, and the whole calculation shifts with it.
 
 ---
 
@@ -96,7 +102,9 @@ The question "is there enough cushion?" needs a yardstick. The earlier card [Exp
 
 A dollar lent against a house worth well more than the loan can lose far less than a dollar lent to an unrated company, because the house can be sold. The rulebook turns that into a **risk weight**: the fraction of the loan that counts towards the yardstick. The mortgages here count at 30 percent, the retail loans at 75, the corporate loans at 100.
 
-$$\text{credit RWA} = 0.30 \times 400 + 1.00 \times 400 + 0.75 \times 200 = 120 + 400 + 150 = 670$$
+```math
+\text{credit RWA} = 0.30 \times 400 + 1.00 \times 400 + 0.75 \times 200 = 120 + 400 + 150 = 670
+```
 
 The weights are not guessed. Under the internal-ratings route, a bank's own default probabilities go into a formula that asks how much of a loan could be lost in a year as bad as one in a thousand; [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md) derives it. The standardised weights used here are fixed values the Committee sets for each kind of loan: a simpler stand-in for that formula.
 
@@ -106,34 +114,36 @@ Market risk and operational risk are not measured loan by loan. Their calculatio
 
 To put those charges on the same scale as credit RWA, ask: what RWA would need exactly this much capital at the 8 percent total minimum? The answer is the charge divided by 8 percent, and dividing by 0.08 is multiplying by 12.5.
 
-$$150 = 12.5 \times 12, \qquad 180 = 12.5 \times 14.40, \qquad R = 670 + 150 + 180 = 1{,}000$$
+```math
+150 = 12.5 \times 12, \qquad 180 = 12.5 \times 14.40, \qquad R = 670 + 150 + 180 = 1{,}000
+```
 
-This gives a second road to $R$. Work in charges instead: 8 percent of the credit RWA is $53.60m; add $12m and $14.40m and the total 8 percent charge is $80m. Scale up by 12.5 and the answer is again $1,000m. The code takes both roads.
+This gives a second road to $`R`$. Work in charges instead: 8 percent of the credit RWA is $53.60m; add $12m and $14.40m and the total 8 percent charge is $80m. Scale up by 12.5 and the answer is again $1,000m. The code takes both roads.
 
 ### Step 3: CET1 meets the minimums first
 
-There are three minimums, one for each ring of capital. CET1 alone must be at least 4.5 percent of RWA. CET1 plus Additional Tier 1 must be at least 6 percent. All capital, adding Tier 2, must be at least 8 percent. Better capital can always stand in for worse, never the reverse. So a bank short of $A_1$ or $T_2$ fills the gap with CET1.
+There are three minimums, one for each ring of capital. CET1 alone must be at least 4.5 percent of RWA. CET1 plus Additional Tier 1 must be at least 6 percent. All capital, adding Tier 2, must be at least 8 percent. Better capital can always stand in for worse, never the reverse. So a bank short of $`A_1`$ or $`T_2`$ fills the gap with CET1.
 
-The CET1 needed is the largest of three shortfalls, which is $F$. For this bank $A_1 = T_2 = 0$, so $F = \max(45, 60, 80) = 80$: the total-capital floor binds, and all $80m comes from CET1.
+The CET1 needed is the largest of three shortfalls, which is $`F`$. For this bank $`A_1 = T_2 = 0`$, so $`F = \max(45, 60, 80) = 80`$: the total-capital floor binds, and all $80m comes from CET1.
 
-A bank that did hold $15m of Additional Tier 1 and $20m of Tier 2 would face $F = \max(45, 45, 45) = 45$. Its CET1 need, with the buffer, would be 7 percent, not 10.5.
+A bank that did hold $15m of Additional Tier 1 and $20m of Tier 2 would face $`F = \max(45, 45, 45) = 45`$. Its CET1 need, with the buffer, would be 7 percent, not 10.5.
 
 <details>
 <summary>Detailed proof: why $F$ is the least CET1 that clears all three minimums</summary>
 
-The three conditions are $C \ge 4.5\%\,R$, $C + A_1 \ge 6\%\,R$ and $C + A_1 + T_2 \ge 8\%\,R$. Rearranged, each is a lower bound on $C$ alone: $C \ge 4.5\%\,R$, $C \ge 6\%\,R - A_1$, $C \ge 8\%\,R - A_1 - T_2$. A number clears several lower bounds exactly when it clears the largest, so the least such $C$ is their maximum, $F$.
+The three conditions are $`C \ge 4.5\%\,R`$, $`C + A_1 \ge 6\%\,R`$ and $`C + A_1 + T_2 \ge 8\%\,R`$. Rearranged, each is a lower bound on $`C`$ alone: $`C \ge 4.5\%\,R`$, $`C \ge 6\%\,R - A_1`$, $`C \ge 8\%\,R - A_1 - T_2`$. A number clears several lower bounds exactly when it clears the largest, so the least such $`C`$ is their maximum, $`F`$.
 
-The conservation buffer is defined as CET1 held **above** what the minimums use, so the full requirement is $C \ge F + b\,R$. Divide by $R$, which is positive: $C/R \ge (F + b\,R)/R$. With $F = 80$, $b = 2.5\%$ and $R = 1{,}000$ that is 10.5 percent.
+The conservation buffer is defined as CET1 held **above** what the minimums use, so the full requirement is $`C \ge F + b\,R`$. Divide by $`R`$, which is positive: $`C/R \ge (F + b\,R)/R`$. With $`F = 80`$, $`b = 2.5\%`$ and $`R = 1{,}000`$ that is 10.5 percent.
 
-The code checks $F$ a second way: it counts CET1 upward a thousand dollars at a time until all three conditions hold, and lands on the same value for both banks.
+The code checks $`F`$ a second way: it counts CET1 upward a thousand dollars at a time until all three conditions hold, and lands on the same value for both banks.
 
 </details>
 
 ### Step 4: the buffer is a slope, not a cliff
 
-The minimums are floors: a bank below one is in breach, and the supervisor steps in. The buffer works differently. A bank may dip into it, which is the point of having it in a bad year, but while it is inside the buffer it must keep a share of its earnings instead of paying them out. The share depends on how deep it has gone. The Basel table reads the ratio $q$:
+The minimums are floors: a bank below one is in breach, and the supervisor steps in. The buffer works differently. A bank may dip into it, which is the point of having it in a bad year, but while it is inside the buffer it must keep a share of its earnings instead of paying them out. The share depends on how deep it has gone. The Basel table reads the ratio $`q`$:
 
-| $q$, the CET1 ratio after minimums | Share of earnings that must be kept |
+| $`q`$, the CET1 ratio after minimums | Share of earnings that must be kept |
 | --- | --- |
 | 4.5% to 5.125% | 100% |
 | above 5.125% to 5.75% | 80% |
@@ -146,27 +156,27 @@ The bands are the four quarters of the 2.5-point buffer. So the same rule can be
 <details>
 <summary>Detailed proof: the percent table and the dollar quarters are the same rule</summary>
 
-Count quarters with a whole number n, which is 1, 2, 3 or 4. The table's band edges are 4.5 percent plus n times 0.625 percent, and 0.625 percent is a quarter of $b = 2.5\%$. Now $q \le 4.5\% + n\,b/4$ holds exactly when $(C - F)/R \le n\,b/4$, which, multiplying by the positive $R$, is $C - F \le n \times b\,R/4$. The left side is the dollars of CET1 left above the minimums; the right side is n quarters of the dollar buffer. So each row of the table is the matching dollar statement, edge for edge, including which side of each edge belongs to which row.
+Count quarters with a whole number n, which is 1, 2, 3 or 4. The table's band edges are 4.5 percent plus n times 0.625 percent, and 0.625 percent is a quarter of $`b = 2.5\%`$. Now $`q \le 4.5\% + n\,b/4`$ holds exactly when $`(C - F)/R \le n\,b/4`$, which, multiplying by the positive $`R`$, is $`C - F \le n \times b\,R/4`$. The left side is the dollars of CET1 left above the minimums; the right side is n quarters of the dollar buffer. So each row of the table is the matching dollar statement, edge for edge, including which side of each edge belongs to which row.
 
 The code runs both statements on every loss from $0 to $40m in steps of $0.1m and requires the same answer each time.
 
 </details>
 
-Notice the top edge. The table says "above 7.0%" for no limit. At exactly $q = 7.0\%$, which is a CET1 ratio of exactly 10.5 percent for this bank, the 40 percent row applies. Meeting the requirement exactly is already inside the buffer.
+Notice the top edge. The table says "above 7.0%" for no limit. At exactly $`q = 7.0\%`$, which is a CET1 ratio of exactly 10.5 percent for this bank, the 40 percent row applies. Meeting the requirement exactly is already inside the buffer.
 
 ### Step 5: two ways to break the buffer
 
-The requirement $C \ge F + b\,R$ can fail from either side.
+The requirement $`C \ge F + b\,R`$ can fail from either side.
 
-**The numerator falls.** A loss $L$ comes straight out of CET1. The buffer is breached once $C - L \le F + bR$, that is once $L \ge C - F - bR = 120 - 80 - 25 = 15$. The minimum itself breaks only past $L = C - F = 40$.
+**The numerator falls.** A loss $`L`$ comes straight out of CET1. The buffer is breached once $`C - L \le F + bR`$, that is once $`L \ge C - F - bR = 120 - 80 - 25 = 15`$. The minimum itself breaks only past $`L = C - F = 40`$.
 
-**The denominator rises.** If the bank lends more, or its loans are downgraded, RWA grows. With a CET1-only bank, $F + bR$ is 10.5 percent of $R$, so the buffer is breached once $R \ge C / 10.5\%$: RWA up by 14.29 percent. No money was lost.
+**The denominator rises.** If the bank lends more, or its loans are downgraded, RWA grows. With a CET1-only bank, $`F + bR`$ is 10.5 percent of $`R`$, so the buffer is breached once $`R \ge C / 10.5\%`$: RWA up by 14.29 percent. No money was lost.
 
 The code finds each breaking point twice: from the formula, and by bisection (halving an interval until it pins the point) on the payout rule itself.
 
 ### Other routes
 
-Banks approved to use their own models compute credit RWA from the internal-ratings formula instead of fixed weights; [The Basel credit formula](03-vasicek-asrf-and-credit-capital.md) does that route properly. Their RWA may not fall below 72.5 percent of the standardised figure, a rule called the output floor. Everything after $R$ on this card is unchanged by the choice.
+Banks approved to use their own models compute credit RWA from the internal-ratings formula instead of fixed weights; [The Basel credit formula](03-vasicek-asrf-and-credit-capital.md) does that route properly. Their RWA may not fall below 72.5 percent of the standardised figure, a rule called the output floor. Everything after $`R`$ on this card is unchanged by the choice.
 
 ---
 
@@ -180,13 +190,13 @@ The bank: loans of $400m at 30%, $400m at 100%, $200m at 75%; a $100m trading bo
 | market RWA | 12.5 × 12 | $150m |
 | operational charge | 12% × 120 | $14.40m |
 | operational RWA | 12.5 × 14.40 | $180m |
-| total RWA, $R$ | 670 + 150 + 180 | $1,000m |
+| total RWA, $`R`$ | 670 + 150 + 180 | $1,000m |
 | CET1 ratio | 120 ÷ 1,000 | 12.00% |
-| CET1 used by minimums, $F$ | max(45, 60 − 0, 80 − 0 − 0) | $80m |
-| buffer, $b\,R$ | 2.5% × 1,000 | $25m |
+| CET1 used by minimums, $`F`$ | max(45, 60 − 0, 80 − 0 − 0) | $80m |
+| buffer, $`b\,R`$ | 2.5% × 1,000 | $25m |
 | CET1 need | (80 + 25) ÷ 1,000 | 10.50% |
 | cushion | 120 − 80 − 25 | **$15m** |
-| payout table ratio, $q$ | 4.5% + (120 − 80) ÷ 1,000 | 8.50%, no limit |
+| payout table ratio, $`q`$ | 4.5% + (120 − 80) ÷ 1,000 | 8.50%, no limit |
 
 The bank clears its requirement by $15m. Any loss of that size or more, or 14.29 percent more RWA, puts it inside the buffer and caps what it may pay out.
 
@@ -211,7 +221,7 @@ The mystery: a bank loses $20m, stays above every minimum by $20m, and is still 
 
 Hold RWA at $1,000m and let losses come straight out of CET1.
 
-| Loss | CET1 | CET1 ratio | $q$ | Must keep | May pay out |
+| Loss | CET1 | CET1 ratio | $`q`$ | Must keep | May pay out |
 | --- | --- | --- | --- | --- | --- |
 | $0m | $120m | 12.00% | 8.500% | 0% | 100% |
 | $10m | $110m | 11.00% | 7.500% | 0% | 100% |
@@ -650,11 +660,11 @@ The two outputs agree line for line.
 
 Lean proves the three rules behind Why it works, for any bank with positive RWA, and checks the worked numbers exactly.
 
-- Take any RWA $R$ and any amounts $A_1$ and $T_2$ of other capital. Then $F$ is the least CET1 that clears all three minimums.
-- Take $R$ above zero and any buffer rate $b$. Then $C \ge F + bR$ holds exactly when $C/R \ge (F + bR)/R$.
-- Take $R$ above zero and any whole number $n$. Then $q \le 4.5\% + nb/4$ holds exactly when $C - F \le nbR/4$. So the percent table and the dollar quarters are the same rule.
+- Take any RWA $`R`$ and any amounts $`A_1`$ and $`T_2`$ of other capital. Then $`F`$ is the least CET1 that clears all three minimums.
+- Take $`R`$ above zero and any buffer rate $`b`$. Then $`C \ge F + bR`$ holds exactly when $`C/R \ge (F + bR)/R`$.
+- Take $`R`$ above zero and any whole number $`n`$. Then $`q \le 4.5\% + nb/4`$ holds exactly when $`C - F \le nbR/4`$. So the percent table and the dollar quarters are the same rule.
 - Take the example bank. Then RWA is $1,000m by both roads, and its CET1 ratio is 12 percent.
-- Take the same bank, with no other capital. Then $F = 80$, the CET1 need is 10.5 percent, and $q$ is 8.5 percent.
+- Take the same bank, with no other capital. Then $`F = 80`$, the CET1 need is 10.5 percent, and $`q`$ is 8.5 percent.
 - Take a bank that also holds $15m of Additional Tier 1 and $20m of Tier 2. Then its CET1 need is 7 percent.
 - Also checked: the $15m cushion, a buffer breach at a $15m loss or one-seventh more RWA, and the minimum at $40m.
 - Also checked: the payout limit after a $20m loss, the countercyclical-buffer numbers and the $50m cushion from reading 7 percent as the need.

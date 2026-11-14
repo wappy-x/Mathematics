@@ -34,45 +34,61 @@ Orange: the plain call's payoff. Green: the reverse knock-out's payoff. It follo
 
 ## The formula
 
-Notation first. $S$ is EURUSD today, $K$ the strike, $H$ the wall, $R$ the rebate, $r_d$ and $r_f$ the dollar and euro rates, $\sigma$ the volatility, $T$ the years to expiry, and $N$ the normal CDF (cumulative distribution function: the area under the bell curve to the left of a point). Two switches turn one set of formulas into all eight types. The **call-put switch** $\phi$ (phi) is +1 for a call and −1 for a put. The **wall switch** $\eta$ (eta) is +1 for a wall below today's rate and −1 for a wall above. Write $s = \sigma\sqrt{T}$ for the spread of log moves up to expiry. Each block is a dollar value today per euro of notional; $x_1$ to $z$, $\mu$ and $\lambda$ are defined just below.
+Notation first. $`S`$ is EURUSD today, $`K`$ the strike, $`H`$ the wall, $`R`$ the rebate, $`r_d`$ and $`r_f`$ the dollar and euro rates, $`\sigma`$ the volatility, $`T`$ the years to expiry, and $`N`$ the normal CDF (cumulative distribution function: the area under the bell curve to the left of a point). Two switches turn one set of formulas into all eight types. The **call-put switch** $`\phi`$ (phi) is +1 for a call and −1 for a put. The **wall switch** $`\eta`$ (eta) is +1 for a wall below today's rate and −1 for a wall above. Write $`s = \sigma\sqrt{T}`$ for the spread of log moves up to expiry. Each block is a dollar value today per euro of notional; $`x_1`$ to $`z`$, $`\mu`$ and $`\lambda`$ are defined just below.
 
-$$A = \phi\,S e^{-r_f T} N(\phi x_1) - \phi\,K e^{-r_d T} N(\phi(x_1 - s))$$
-$$B = \phi\,S e^{-r_f T} N(\phi x_2) - \phi\,K e^{-r_d T} N(\phi(x_2 - s))$$
-$$C = \phi\,S e^{-r_f T} (H/S)^{2\mu+2} N(\eta y_1) - \phi\,K e^{-r_d T} (H/S)^{2\mu} N(\eta(y_1 - s))$$
-$$D = \phi\,S e^{-r_f T} (H/S)^{2\mu+2} N(\eta y_2) - \phi\,K e^{-r_d T} (H/S)^{2\mu} N(\eta(y_2 - s))$$
-$$E = R\,e^{-r_d T}\Big[N(\eta(x_2 - s)) - (H/S)^{2\mu} N(\eta(y_2 - s))\Big]$$
-$$F = R\Big[(H/S)^{\mu+\lambda} N(\eta z) + (H/S)^{\mu-\lambda} N(\eta(z - 2\lambda s))\Big]$$
+```math
+A = \phi\,S e^{-r_f T} N(\phi x_1) - \phi\,K e^{-r_d T} N(\phi(x_1 - s))
+```
+```math
+B = \phi\,S e^{-r_f T} N(\phi x_2) - \phi\,K e^{-r_d T} N(\phi(x_2 - s))
+```
+```math
+C = \phi\,S e^{-r_f T} (H/S)^{2\mu+2} N(\eta y_1) - \phi\,K e^{-r_d T} (H/S)^{2\mu} N(\eta(y_1 - s))
+```
+```math
+D = \phi\,S e^{-r_f T} (H/S)^{2\mu+2} N(\eta y_2) - \phi\,K e^{-r_d T} (H/S)^{2\mu} N(\eta(y_2 - s))
+```
+```math
+E = R\,e^{-r_d T}\Big[N(\eta(x_2 - s)) - (H/S)^{2\mu} N(\eta(y_2 - s))\Big]
+```
+```math
+F = R\Big[(H/S)^{\mu+\lambda} N(\eta z) + (H/S)^{\mu-\lambda} N(\eta(z - 2\lambda s))\Big]
+```
 
 **Read it aloud:** A is the plain option; B is the plain option counted only where the rate ends beyond the wall; C and D are A and B seen in the mirror of the wall and weighted; E is the rebate paid at expiry if the wall was never touched; F is the rebate paid the moment it is.
 
 The distances and exponents:
 
-$$x_1 = \frac{\ln(S/K)}{s} + (1+\mu)s,\quad x_2 = \frac{\ln(S/H)}{s} + (1+\mu)s,\quad y_1 = \frac{\ln\!\big(H^2/(SK)\big)}{s} + (1+\mu)s,\quad y_2 = \frac{\ln(H/S)}{s} + (1+\mu)s$$
+```math
+x_1 = \frac{\ln(S/K)}{s} + (1+\mu)s,\quad x_2 = \frac{\ln(S/H)}{s} + (1+\mu)s,\quad y_1 = \frac{\ln\!\big(H^2/(SK)\big)}{s} + (1+\mu)s,\quad y_2 = \frac{\ln(H/S)}{s} + (1+\mu)s
+```
 
-$$z = \frac{\ln(H/S)}{s} + \lambda s,\qquad \mu = \frac{r_d - r_f - \tfrac12\sigma^2}{\sigma^2},\qquad \lambda = \sqrt{\mu^2 + \frac{2r_d}{\sigma^2}}$$
+```math
+z = \frac{\ln(H/S)}{s} + \lambda s,\qquad \mu = \frac{r_d - r_f - \tfrac12\sigma^2}{\sigma^2},\qquad \lambda = \sqrt{\mu^2 + \frac{2r_d}{\sigma^2}}
+```
 
-In words: $x_1$ is the Garman–Kohlhagen d1; $x_2$ is the same with the wall in place of the strike; $y_1$ and $y_2$ are those two measured from the mirror spot $H^2/S$. The exponent $\mu$ is the drift of log EURUSD in units of its variance, the number that [Knock-out and knock-in](02-barrier-options-by-reflection.md) calls lambda. The exponent $\lambda$ here is the one that discounts money paid at a random touch date.
+In words: $`x_1`$ is the Garman–Kohlhagen d1; $`x_2`$ is the same with the wall in place of the strike; $`y_1`$ and $`y_2`$ are those two measured from the mirror spot $`H^2/S`$. The exponent $`\mu`$ is the drift of log EURUSD in units of its variance, the number that [Knock-out and knock-in](02-barrier-options-by-reflection.md) calls lambda. The exponent $`\lambda`$ here is the one that discounts money paid at a random touch date.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_T$ | EURUSD today, and at expiry, dollars per euro | 1.10 | up-and-out call falls: the wall comes closer |
-| $K$ | the strike | 1.10 | reverse knock-out falls fast: the slice between strike and wall narrows |
-| $H$, $b$ | the barrier (the wall); $b = \ln(H/S)$, its log distance from spot | 1.05 below, 1.20 above | up-and-out call rises: more room before the wall |
-| $R$ | the rebate, dollars per euro | 0.005 | rebate blocks rise in proportion |
-| $r_d$, $r_f$ | the dollar and euro interest rates, continuously compounded | 5%, 3% | drift of EURUSD rises with the dollar rate, falls with the euro rate |
-| $\sigma$, $T$, $s$ | volatility; years to expiry; $s = \sigma\sqrt{T}$ | 10%, 1, 0.10 | knock-outs can fall: more touches |
-| $\phi$, $\eta$ | call-put switch (+1 call, −1 put); wall switch (+1 below, −1 above) | $\phi = 1$, $\eta = -1$ for the up-and-out call | |
-| $\mu$, $\lambda$ | drift of log EURUSD over its variance; the pay-at-touch exponent | 1.5, 3.5 | |
-| $x_1$, $x_2$, $y_1$, $y_2$, $z$ | distances in units of $s$, as defined above | wall 1.20: 0.25, −0.620114, 1.990228, 1.120114, 1.220114 | |
-| $N$, $\varphi$, $(H/S)^{2\mu}$ | bell-curve area to the left; bell-curve height; the mirror weight | wall 1.20: weight 1.298272 | |
-| $A$, $B$, $C$, $D$ | plain; plain beyond the wall; the mirror images of A and B | wall 1.20, call: 0.053556, 0.038997, −0.001488, 0.007630 | |
-| $E$, $F$, $t$ | rebate at expiry if never touched; rebate at the touch; $t$ a time before expiry | per dollar, wall 1.20: 0.537017, 0.425164 | |
+| $`S`$, $`S_T`$ | EURUSD today, and at expiry, dollars per euro | 1.10 | up-and-out call falls: the wall comes closer |
+| $`K`$ | the strike | 1.10 | reverse knock-out falls fast: the slice between strike and wall narrows |
+| $`H`$, $`b`$ | the barrier (the wall); $`b = \ln(H/S)`$, its log distance from spot | 1.05 below, 1.20 above | up-and-out call rises: more room before the wall |
+| $`R`$ | the rebate, dollars per euro | 0.005 | rebate blocks rise in proportion |
+| $`r_d`$, $`r_f`$ | the dollar and euro interest rates, continuously compounded | 5%, 3% | drift of EURUSD rises with the dollar rate, falls with the euro rate |
+| $`\sigma`$, $`T`$, $`s`$ | volatility; years to expiry; $`s = \sigma\sqrt{T}`$ | 10%, 1, 0.10 | knock-outs can fall: more touches |
+| $`\phi`$, $`\eta`$ | call-put switch (+1 call, −1 put); wall switch (+1 below, −1 above) | $`\phi = 1`$, $`\eta = -1`$ for the up-and-out call | |
+| $`\mu`$, $`\lambda`$ | drift of log EURUSD over its variance; the pay-at-touch exponent | 1.5, 3.5 | |
+| $`x_1`$, $`x_2`$, $`y_1`$, $`y_2`$, $`z`$ | distances in units of $`s`$, as defined above | wall 1.20: 0.25, −0.620114, 1.990228, 1.120114, 1.220114 | |
+| $`N`$, $`\varphi`$, $`(H/S)^{2\mu}`$ | bell-curve area to the left; bell-curve height; the mirror weight | wall 1.20: weight 1.298272 | |
+| $`A`$, $`B`$, $`C`$, $`D`$ | plain; plain beyond the wall; the mirror images of A and B | wall 1.20, call: 0.053556, 0.038997, −0.001488, 0.007630 | |
+| $`E`$, $`F`$, $`t`$ | rebate at expiry if never touched; rebate at the touch; $`t`$ a time before expiry | per dollar, wall 1.20: 0.537017, 0.425164 | |
 
 ### The table of recipes
 
 The strike sits on one side of the wall or the other. Knock-outs take block F if they carry a rebate paid at the touch; knock-ins take block E if they carry a rebate paid at expiry when they never came alive.
 
-| Type | $\eta$ | $\phi$ | Strike at or above the wall | Strike below the wall |
+| Type | $`\eta`$ | $`\phi`$ | Strike at or above the wall | Strike below the wall |
 | --- | --- | --- | --- | --- |
 | down-and-out call | +1 | +1 | A − C | B − D |
 | down-and-in call | +1 | +1 | C | A − B + D |
@@ -112,35 +128,37 @@ Integrate the payoff against the ordinary bell curve. Over every expiry rate whe
 
 ### Step 3: the mirror term over the same stretch gives C, D, or their difference
 
-The mirror term is the same integral, for a rate that starts at $H^2/S$, times the mirror weight. Over the same stretches it produces the mirror copies of A, B and A − B. These are blocks C and D. The switch $\eta$ reads the mirror's bell curve from the correct side of the wall: for a wall above, it replaces each area $N(u)$ by $N(-u) = 1 - N(u)$. That flip changes the sign of a difference such as C − D, which is why the reverse knock-out ends in + C − D and not − C + D.
+The mirror term is the same integral, for a rate that starts at $`H^2/S`$, times the mirror weight. Over the same stretches it produces the mirror copies of A, B and A − B. These are blocks C and D. The switch $`\eta`$ reads the mirror's bell curve from the correct side of the wall: for a wall above, it replaces each area $`N(u)`$ by $`N(-u) = 1 - N(u)`$. That flip changes the sign of a difference such as C − D, which is why the reverse knock-out ends in + C − D and not − C + D.
 
 ### Step 4: the four knock-outs, read off
 
 - **Down-and-out call, strike at or above the wall.** The call pays only above the strike, and all of that lies on the live side. The stretch is the whole payoff: A − C. This is the regular knock-out of [Knock-out and knock-in](02-barrier-options-by-reflection.md).
 - **Down-and-out call, strike below the wall.** Expiry rates between strike and wall can only be reached by paths that touched, so they are dead. The stretch is the rates above the wall: B − D.
-- **Up-and-out call, strike below the wall.** The call pays above the strike, but only rates below the wall are alive. The stretch is strike to wall: the cut A − B, minus its mirror, which after the $\eta$ flip is A − B + C − D. This is the reverse knock-out.
+- **Up-and-out call, strike below the wall.** The call pays above the strike, but only rates below the wall are alive. The stretch is strike to wall: the cut A − B, minus its mirror, which after the $`\eta`$ flip is A − B + C − D. This is the reverse knock-out.
 - **Up-and-out call, strike at or above the wall.** Every paying rate lies at or past the wall. Nothing survives: 0.
 
 The puts are the same four cases seen upside down, and Step 1 hands over the four knock-ins.
 
 ### Step 5: the two rebates
 
-A rebate paid at expiry when a knock-in never came alive is the rebate times the chance of no touch, discounted from expiry: the no-touch of [One-touch and no-touch](04-fx-one-touch-and-no-touch.md). Integrating the survival density over the whole live side gives exactly block E. A rebate paid at the touch is the pay-at-hit one-touch of the same card: each touching path is discounted from its own touch date. Discounting at rate $r_d$ is the same as raising the drift from $\mu$ to $\lambda$ in variance units, which is where $\lambda = \sqrt{\mu^2 + 2r_d/\sigma^2}$ comes from; the proof is on that card. Block F is that price times the rebate.
+A rebate paid at expiry when a knock-in never came alive is the rebate times the chance of no touch, discounted from expiry: the no-touch of [One-touch and no-touch](04-fx-one-touch-and-no-touch.md). Integrating the survival density over the whole live side gives exactly block E. A rebate paid at the touch is the pay-at-hit one-touch of the same card: each touching path is discounted from its own touch date. Discounting at rate $`r_d`$ is the same as raising the drift from $`\mu`$ to $`\lambda`$ in variance units, which is where $`\lambda = \sqrt{\mu^2 + 2r_d/\sigma^2}`$ comes from; the proof is on that card. Block F is that price times the rebate.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $u = \ln(S_T/S)$ and $b = \ln(H/S)$. Under the pricing measure $u$ is normal with mean $\mu\sigma^2 T$ and variance $s^2$; write $\varphi$ for its density. On paths that never touched the wall, and on the live side ($u > b$ for $\eta = 1$, $u < b$ for $\eta = -1$), the density of $u$ is
-$$\varphi(u) - (H/S)^{2\mu}\,\varphi(u - 2b)$$
-([Knock-out and knock-in](02-barrier-options-by-reflection.md), Detailed proof, where $e^{2\mu b} = (H/S)^{2\mu}$). A knock-out paying $\phi(Se^u - K)$ is worth $e^{-r_d T}$ times the integral of that payoff against this density over the live stretch of $u$ where the payoff is positive.
+Let $`u = \ln(S_T/S)`$ and $`b = \ln(H/S)`$. Under the pricing measure $`u`$ is normal with mean $`\mu\sigma^2 T`$ and variance $`s^2`$; write $`\varphi`$ for its density. On paths that never touched the wall, and on the live side ($`u > b`$ for $`\eta = 1`$, $`u < b`$ for $`\eta = -1`$), the density of $`u`$ is
 
-**Plain term.** Over the stretch "u beyond a cut point", completing the square as on the Black–Scholes card gives $\phi[S e^{-r_f T}N(\cdot) - K e^{-r_d T} N(\cdot)]$, with arguments $x_1, x_1 - s$ when the cut is the strike and $x_2, x_2 - s$ when it is the wall; $\phi$ turns "above the cut" into "below it" for puts. These are A and B, and a stretch between strike and wall gives A − B.
+$`\displaystyle \varphi(u) - (H/S)^{2\mu}\,\varphi(u - 2b)`$
 
-**Mirror term.** Substitute $u = x + 2b$. The density becomes $(H/S)^{2\mu}\varphi(x)$ and the payoff $\phi((H^2/S)e^x - K)$: the plain term for spot $H^2/S$. Its share leg gains a further $(H^2/S)/S = (H/S)^2$, which is why the share part of C and D carries $(H/S)^{2\mu+2}$. Shifting the cut by $2b$ turns $x_1$ into $y_1$ and $x_2$ into $y_2$ up to sign. For $\eta = 1$ the mirrored stretch lies above its cut and reads $N(y)$; for $\eta = -1$ the live side is $u < b$, the stretch reverses, and the areas become $N(-y)$. These are C and D.
+([Knock-out and knock-in](02-barrier-options-by-reflection.md), Detailed proof, where $`e^{2\mu b} = (H/S)^{2\mu}`$). A knock-out paying $`\phi(Se^u - K)`$ is worth $`e^{-r_d T}`$ times the integral of that payoff against this density over the live stretch of $`u`$ where the payoff is positive.
 
-**Assembly.** For $\eta = -1$, $\phi = 1$, strike below the wall, the stretch is strike to wall. The plain term gives A − B. The mirror term over the same stretch is a difference of two reversed areas; since $N(-y) = 1 - N(y)$, the constant parts cancel in the difference and it equals $-(C - D)$ in the table's sign convention. So the value is $(A - B) + (C - D)$. The other fifteen cells follow the same way; each is checked below against a direct numerical integral.
+**Plain term.** Over the stretch "u beyond a cut point", completing the square as on the Black–Scholes card gives $`\phi[S e^{-r_f T}N(\cdot) - K e^{-r_d T} N(\cdot)]`$, with arguments $`x_1, x_1 - s`$ when the cut is the strike and $`x_2, x_2 - s`$ when it is the wall; $`\phi`$ turns "above the cut" into "below it" for puts. These are A and B, and a stretch between strike and wall gives A − B.
 
-**Rebates.** $E$ is $R e^{-r_d T}$ times the survival density integrated over the whole live side, which is the bracket in E. For F, the first-touch density with drift $\mu\sigma^2$, multiplied by $e^{-r_d t}$, equals $(H/S)^{\mu-\lambda}$ times the first-touch density with drift $\lambda\sigma^2$ (Girsanov's change of drift, as on [One-touch and no-touch](04-fx-one-touch-and-no-touch.md)). The chance of a touch by $T$ at the new drift is $N(\eta(z - 2\lambda s)) + (H/S)^{2\lambda}N(\eta z)$; multiplying through gives the two terms of F.
+**Mirror term.** Substitute $`u = x + 2b`$. The density becomes $`(H/S)^{2\mu}\varphi(x)`$ and the payoff $`\phi((H^2/S)e^x - K)`$: the plain term for spot $`H^2/S`$. Its share leg gains a further $`(H^2/S)/S = (H/S)^2`$, which is why the share part of C and D carries $`(H/S)^{2\mu+2}`$. Shifting the cut by $`2b`$ turns $`x_1`$ into $`y_1`$ and $`x_2`$ into $`y_2`$ up to sign. For $`\eta = 1`$ the mirrored stretch lies above its cut and reads $`N(y)`$; for $`\eta = -1`$ the live side is $`u < b`$, the stretch reverses, and the areas become $`N(-y)`$. These are C and D.
+
+**Assembly.** For $`\eta = -1`$, $`\phi = 1`$, strike below the wall, the stretch is strike to wall. The plain term gives A − B. The mirror term over the same stretch is a difference of two reversed areas; since $`N(-y) = 1 - N(y)`$, the constant parts cancel in the difference and it equals $`-(C - D)`$ in the table's sign convention. So the value is $`(A - B) + (C - D)`$. The other fifteen cells follow the same way; each is checked below against a direct numerical integral.
+
+**Rebates.** $`E`$ is $`R e^{-r_d T}`$ times the survival density integrated over the whole live side, which is the bracket in E. For F, the first-touch density with drift $`\mu\sigma^2`$, multiplied by $`e^{-r_d t}`$, equals $`(H/S)^{\mu-\lambda}`$ times the first-touch density with drift $`\lambda\sigma^2`$ (Girsanov's change of drift, as on [One-touch and no-touch](04-fx-one-touch-and-no-touch.md)). The chance of a touch by $`T`$ at the new drift is $`N(\eta(z - 2\lambda s)) + (H/S)^{2\lambda}N(\eta z)`$; multiplying through gives the two terms of F.
 
 </details>
 
@@ -152,24 +170,24 @@ The same numbers come from brute force. One road multiplies the payoff by the ch
 
 ## Worked numbers, by hand
 
-House market: EURUSD 1.10, strike 1.10, dollar rate 5%, euro rate 3%, volatility 10%, one year. The reverse knock-out: up-and-out call, wall 1.20, so $\eta = -1$, $\phi = +1$, strike below the wall.
+House market: EURUSD 1.10, strike 1.10, dollar rate 5%, euro rate 3%, volatility 10%, one year. The reverse knock-out: up-and-out call, wall 1.20, so $`\eta = -1`$, $`\phi = +1`$, strike below the wall.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\mu$ | $(0.05 - 0.03 - 0.005)/0.01$ | 1.5 |
-| $\lambda$ | $\sqrt{2.25 + 0.10/0.01}$ | 3.5 |
-| $x_1$ | $\ln(1.10/1.10)/0.1 + 2.5 \times 0.1$ | 0.25 |
-| $x_2$ | $\ln(1.10/1.20)/0.1 + 0.25$ | −0.620114 |
-| $y_1$, $y_2$ | $\ln(1.44/1.21)/0.1 + 0.25$; $\ln(1.20/1.10)/0.1 + 0.25$ | 1.990228; 1.120114 |
-| mirror weights | $(1.20/1.10)^{3}$ and $(1.20/1.10)^{5}$ | 1.298272 and 1.545051 |
+| $`\mu`$ | $`(0.05 - 0.03 - 0.005)/0.01`$ | 1.5 |
+| $`\lambda`$ | $`\sqrt{2.25 + 0.10/0.01}`$ | 3.5 |
+| $`x_1`$ | $`\ln(1.10/1.10)/0.1 + 2.5 \times 0.1`$ | 0.25 |
+| $`x_2`$ | $`\ln(1.10/1.20)/0.1 + 0.25`$ | −0.620114 |
+| $`y_1`$, $`y_2`$ | $`\ln(1.44/1.21)/0.1 + 0.25`$; $`\ln(1.20/1.10)/0.1 + 0.25`$ | 1.990228; 1.120114 |
+| mirror weights | $`(1.20/1.10)^{3}`$ and $`(1.20/1.10)^{5}`$ | 1.298272 and 1.545051 |
 | A, the plain call | Garman–Kohlhagen | 0.053556 |
 | B, the call beyond 1.20 | the payoff counted above 1.20 only | 0.038997 |
 | C, D | the mirror copies, read from above the wall | −0.001488, 0.007630 |
-| **up-and-out call** | $A - B + C - D$ with $C = -0.001488$: $0.053556 - 0.038997 - 0.001488 - 0.007630$ | **0.005440** |
-| up-and-in call | $B - C + D = 0.038997 + 0.001488 + 0.007630$ | 0.048115 |
+| **up-and-out call** | $`A - B + C - D`$ with $`C = -0.001488`$: $`0.053556 - 0.038997 - 0.001488 - 0.007630`$ | **0.005440** |
+| up-and-in call | $`B - C + D = 0.038997 + 0.001488 + 0.007630`$ | 0.048115 |
 | check, full precision | up-and-out plus up-and-in | 0.053555771, the plain call |
 
-A hand sum of six-decimal blocks can miss the last digit; the checks carry full precision. C is negative: with $\eta = -1$ the blocks are signed pieces, not prices.
+A hand sum of six-decimal blocks can miss the last digit; the checks carry full precision. C is negative: with $`\eta = -1`$ the blocks are signed pieces, not prices.
 
 The reverse knock-out is 0.1016 of the plain call; the knock-in takes 0.8984. B is the reason. Of the plain call's 0.053556, 0.038997 comes from expiry rates above 1.20, and those are all dead for the knock-out. The mirror term removes the rest: paths that end below 1.20 after visiting it.
 
@@ -212,7 +230,7 @@ Right answers: reverse knock-out 0.005440; down-and-out call 0.041661.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Use the regular recipe A − C for the up-and-out call | 0.055044 | Priced the whole plain payoff as if it survived; the answer exceeds the plain call, 0.053556, which no knock-out can. |
-| Leave the euro rate out of $\mu$ (down-and-out call) | 0.043844 against 0.041661 | Gave EURUSD the drift of a share with no dividend; the mirror weight and every distance shift. |
+| Leave the euro rate out of $`\mu`$ (down-and-out call) | 0.043844 against 0.041661 | Gave EURUSD the drift of a share with no dividend; the mirror weight and every distance shift. |
 | Up-and-in from parity when the knock-out carries a touch rebate | 0.045990 against 0.050801 | In-plus-out equals the plain option only without rebates; with them, each side's rebate must be added back. |
 
 ---
@@ -684,8 +702,8 @@ Lean proves the table for all sixteen cases, in-plus-out parity in every model, 
 - Take any of the sixteen cases, with today's rate on the live side of the wall. Then the knock-out, priced from the mirror density of Step 0, equals its table entry.
 - In the same cases, each knock-in, priced as the plain option minus its knock-out, equals its table entry.
 - In any model where "the wall was touched" has a probability, knock-in plus knock-out is the plain option, with no rebates.
-- Take a rebate $R$ paid at the touch, discounted at $r_d$ from the touch date, up to expiry, with $\lambda$ real. Then its value, from the first-touch density, is block F.
-- It also checks the house numbers. These are $\mu = 1.5$, $\lambda = 3.5$, the mirror exponents, the reverse knock-out's 10-cent cap, and the counts 8 and 16.
+- Take a rebate $`R`$ paid at the touch, discounted at $`r_d`$ from the touch date, up to expiry, with $`\lambda`$ real. Then its value, from the first-touch density, is block F.
+- It also checks the house numbers. These are $`\mu = 1.5`$, $`\lambda = 3.5`$, the mirror exponents, the reverse knock-out's 10-cent cap, and the counts 8 and 16.
 
 Block E, the block values, the Monte Carlo and the Greeks are left to the Python and Rust checks.
 
@@ -1492,7 +1510,7 @@ The table prices each option with one wall; the open question is what happens wh
 Verified 2026-09-27: every link below resolves to the publisher's page.
 
 - Rubinstein, Mark, and Eric Reiner. "Breaking Down the Barriers." *Risk* 4, September 1991. No DOI; listed in the author's [publication record at UC Berkeley Haas](https://haas.berkeley.edu/wp-content/uploads/rubinstein_mark.pdf). The original table of eight barrier types with rebates.
-- Haug, Espen Gaarder. *The Complete Guide to Option Pricing Formulas*, 2nd ed. McGraw-Hill, 2007. [Publisher page](https://www.mheducation.com/highered/mhp/product/complete-guide-to-option-pricing-formulas-2e.html). Blocks A to F in the $\phi$, $\eta$ notation used on this card.
+- Haug, Espen Gaarder. *The Complete Guide to Option Pricing Formulas*, 2nd ed. McGraw-Hill, 2007. [Publisher page](https://www.mheducation.com/highered/mhp/product/complete-guide-to-option-pricing-formulas-2e.html). Blocks A to F in the $`\phi`$, $`\eta`$ notation used on this card.
 - Wystup, Uwe. *FX Options and Structured Products*, 2nd ed. Wiley, 2017. [Publisher page](https://www.wiley.com/en-us/FX+Options+and+Structured+Products%2C+2nd+Edition-p-9781118471067). Reverse knock-outs and rebates as FX desks sell them.
 - Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The first down-and-out call formula.
 - Garman, Mark B., and Steven W. Kohlhagen. "Foreign Currency Option Values." *Journal of International Money and Finance* 2, no. 3 (1983): 231–237. [doi:10.1016/S0261-5606(83)80001-1](https://doi.org/10.1016/S0261-5606(83)80001-1). Block A, the plain currency option.

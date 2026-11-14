@@ -36,39 +36,45 @@ From the bottom: guess 1, the line 1 + t (orange); guess 2 (green); guess 3 (dar
 
 ## The formula
 
-Notation first, in words. The unknown is $y$, the mass in grams, and the rule is $f$: $y' = f(t, y)$, "the rate of y at time t is f of t and y", from $y(0) = y_0$. The guess made by the n-th pass is the whole curve $\phi_n$, read "phi n". Inside an integral the running time is $s$, leaving $t$ as the end point.
+Notation first, in words. The unknown is $`y`$, the mass in grams, and the rule is $`f`$: $`y' = f(t, y)`$, "the rate of y at time t is f of t and y", from $`y(0) = y_0`$. The guess made by the n-th pass is the whole curve $`\phi_n`$, read "phi n". Inside an integral the running time is $`s`$, leaving $`t`$ as the end point.
 
 The equation and its starting value together are one integral equation:
 
-$$y(t) = y_0 + \int_0^t f\bigl(s, y(s)\bigr)\,ds$$
+```math
+y(t) = y_0 + \int_0^t f\bigl(s, y(s)\bigr)\,ds
+```
 
 **Read it aloud:** the value at time t is the starting value plus all the rate collected since time 0.
 
 Picard iteration turns that into a recipe:
 
-$$\phi_0(t) = y_0, \qquad \phi_{n+1}(t) = y_0 + \int_0^t f\bigl(s, \phi_n(s)\bigr)\,ds$$
+```math
+\phi_0(t) = y_0, \qquad \phi_{n+1}(t) = y_0 + \int_0^t f\bigl(s, \phi_n(s)\bigr)\,ds
+```
 
 **Read it aloud:** start with the constant curve; for each next guess, put the current guess into the rule, integrate from 0 to t, and add the starting value.
 
-For the yeast, $f(t, y) = y$ and $y_0 = 1$, and the guesses are partial sums of the exponential series:
+For the yeast, $`f(t, y) = y`$ and $`y_0 = 1`$, and the guesses are partial sums of the exponential series:
 
-$$\phi_n(t) = 1 + t + \frac{t^2}{2!} + \dots + \frac{t^n}{n!}$$
+```math
+\phi_n(t) = 1 + t + \frac{t^2}{2!} + \dots + \frac{t^n}{n!}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $s$ | hours after noon; $s$ runs from 0 to t inside the integral | t = 1 | more passes needed |
-| $y$, $y'$ | mass (g) and its rate (g per hour) | 1 g, 1 g/h at noon | — |
-| $f$ | the rate rule | rate equals mass | a faster rule needs more passes |
-| $y_0$ | the starting value | 1 g | every guess scales with it |
-| $\phi_n$, $n$ | the n-th guess, a whole curve; the pass number | guess 5: 2.7167 at t = 1 | closer to the solution |
-| $L$ | Lipschitz constant: most change in rate per unit change in the unknown | 1 per hour | slower convergence |
-| $M$ | largest rate the starting guess produces | 1 g/h | larger error bound |
-| $e$ | 2.71828…, the true mass at 1 pm | 2.718282 g | — |
+| $`t`$, $`s`$ | hours after noon; $`s`$ runs from 0 to t inside the integral | t = 1 | more passes needed |
+| $`y`$, $`y'`$ | mass (g) and its rate (g per hour) | 1 g, 1 g/h at noon | — |
+| $`f`$ | the rate rule | rate equals mass | a faster rule needs more passes |
+| $`y_0`$ | the starting value | 1 g | every guess scales with it |
+| $`\phi_n`$, $`n`$ | the n-th guess, a whole curve; the pass number | guess 5: 2.7167 at t = 1 | closer to the solution |
+| $`L`$ | Lipschitz constant: most change in rate per unit change in the unknown | 1 per hour | slower convergence |
+| $`M`$ | largest rate the starting guess produces | 1 g/h | larger error bound |
+| $`e`$ | 2.71828…, the true mass at 1 pm | 2.718282 g | — |
 
 ### When it holds
 
 - **The rule is continuous.** Then every integral exists. If the rule jumps, the limit need not have a slope everywhere.
-- **The rule has a Lipschitz constant $L$:** the rate changes by at most L times any change in the unknown. Without it the guesses may find one solution among several: y' = √y from 0 gives the zero curve and misses t^2/4.
+- **The rule has a Lipschitz constant $`L`$:** the rate changes by at most L times any change in the unknown. Without it the guesses may find one solution among several: y' = √y from 0 gives the zero curve and misses t^2/4.
 - **The guesses stay where the constant holds.** For y' = y, everywhere. For y' = y^2 the constant grows with y, and convergence stops at the blow-up time: [Blow-up](03-blow-up-and-the-life-span-of-a-solution.md).
 - **The integrals are exact.** On a computer each carries a quadrature error, the error of adding up areas on a grid, and the guesses converge to the grid version's solution.
 
@@ -82,19 +88,21 @@ A guess with a small wiggle can have a wildly wrong slope but a nearly right int
 
 ### Step 1: the integral equation says the same thing
 
-If $y$ solves the equation, integrate both sides from 0 to t: by the fundamental theorem of calculus, $y(t) - y_0$ is the integral of $f$ along the curve. Conversely, if a continuous curve satisfies the integral equation, its integrand is continuous, so the fundamental theorem differentiates the right side into $y' = f(t, y)$. Setting t = 0 gives $y(0) = y_0$. One integral equation carries both statements.
+If $`y`$ solves the equation, integrate both sides from 0 to t: by the fundamental theorem of calculus, $`y(t) - y_0`$ is the integral of $`f`$ along the curve. Conversely, if a continuous curve satisfies the integral equation, its integrand is continuous, so the fundamental theorem differentiates the right side into $`y' = f(t, y)`$. Setting t = 0 gives $`y(0) = y_0`$. One integral equation carries both statements.
 
 ### Step 2: for the yeast, each pass adds one term
 
-The rule returns the guess itself, so $\phi_1(t) = 1 + \int_0^t 1\,ds = 1 + t$. Integrating $s^k/k!$ from 0 to t gives $t^{k+1}/(k+1)!$, so each pass lifts every term one power and puts a fresh 1 in front. By induction $\phi_n$ is the degree-n Taylor polynomial of $e^t$ ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). The method rebuilt the exponential without using it.
+The rule returns the guess itself, so $`\phi_1(t) = 1 + \int_0^t 1\,ds = 1 + t`$. Integrating $`s^k/k!`$ from 0 to t gives $`t^{k+1}/(k+1)!`$, so each pass lifts every term one power and puts a fresh 1 in front. By induction $`\phi_n`$ is the degree-n Taylor polynomial of $`e^t`$ ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). The method rebuilt the exponential without using it.
 
 ### Step 3: the gaps between guesses shrink like a factorial
 
 Two consecutive passes differ only through the rule, which changes by at most L times the change in the unknown. So each new gap is at most L times the integral of the previous one. The first gap is at most M t, and integrating repeatedly turns t into t^2/2, t^3/6, and so on:
 
-$$|\phi_{n+1}(t) - \phi_n(t)| \le \frac{M L^n t^{n+1}}{(n+1)!}$$
+```math
+|\phi_{n+1}(t) - \phi_n(t)| \le \frac{M L^n t^{n+1}}{(n+1)!}
+```
 
-The factorial beats any power, so the gaps add up to a finite total, $(M/L)(e^{Lt} - 1)$, wherever the constant holds, and the guesses settle. For the yeast, M = L = 1 and the gap is exactly $t^{n+1}/(n+1)!$. Over the first hour the gaps after guess n add to at most 2/(n+1)!: 0.002778 for guess 5, against a true gap of 0.001615.
+The factorial beats any power, so the gaps add up to a finite total, $`(M/L)(e^{Lt} - 1)`$, wherever the constant holds, and the guesses settle. For the yeast, M = L = 1 and the gap is exactly $`t^{n+1}/(n+1)!`$. Over the first hour the gaps after guess n add to at most 2/(n+1)!: 0.002778 for guess 5, against a true gap of 0.001615.
 
 ### Step 4: the limit solves the equation
 
@@ -103,11 +111,11 @@ The gaps shrink at the same rate at every time, so the limit curve is continuous
 <details>
 <summary>Detailed proof: the guesses converge to a solution</summary>
 
-Let $f$ be continuous for $0 \le t \le T$ and all y, with $|f(t, a) - f(t, b)| \le L|a - b|$, and let M be the largest value of $|f(t, y_0)|$ there.
+Let $`f`$ be continuous for $`0 \le t \le T`$ and all y, with $`|f(t, a) - f(t, b)| \le L|a - b|`$, and let M be the largest value of $`|f(t, y_0)|`$ there.
 
-Claim: $|\phi_{n+1}(t) - \phi_n(t)| \le M L^n t^{n+1}/(n+1)!$ on [0, T]. For n = 0 the integrand is at most M, so the gap is at most M t. If the claim holds for n − 1, the rule's bound gives $|\phi_{n+1}(t) - \phi_n(t)| \le L \int_0^t M L^{n-1} s^n/n!\,ds = M L^n t^{n+1}/(n+1)!$.
+Claim: $`|\phi_{n+1}(t) - \phi_n(t)| \le M L^n t^{n+1}/(n+1)!`$ on [0, T]. For n = 0 the integrand is at most M, so the gap is at most M t. If the claim holds for n − 1, the rule's bound gives $`|\phi_{n+1}(t) - \phi_n(t)| \le L \int_0^t M L^{n-1} s^n/n!\,ds = M L^n t^{n+1}/(n+1)!`$.
 
-These bounds sum to $(M/L)(e^{LT} - 1)$, so for every ε > 0 there is an N with $|\phi_m(t) - \phi_n(t)| < ε$ for all m > n ≥ N and every t in [0, T]. The guesses converge uniformly to a continuous y. The integrals of the rule along $\phi_n$ and along y differ by at most L T times the largest gap, which tends to 0. So y satisfies the integral equation, and by the fundamental theorem of calculus it solves the problem. That y is the only solution is proved on the Picard-Lindelöf card.
+These bounds sum to $`(M/L)(e^{LT} - 1)`$, so for every ε > 0 there is an N with $`|\phi_m(t) - \phi_n(t)| < ε`$ for all m > n ≥ N and every t in [0, T]. The guesses converge uniformly to a continuous y. The integrals of the rule along $`\phi_n`$ and along y differ by at most L T times the largest gap, which tends to 0. So y satisfies the integral equation, and by the fundamental theorem of calculus it solves the problem. That y is the only solution is proved on the Picard-Lindelöf card.
 
 </details>
 
@@ -141,7 +149,7 @@ After five passes the predicted mass at 1 pm is 1.6 milligrams light, inside the
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Stop at guess 2 | 2.5 g, 0.218282 g short | a partial sum, not the solution |
-| Integrate but never add $y_0$ | guess 5 reads 0.008333 g | only the term t^5/5! survives |
+| Integrate but never add $`y_0`$ | guess 5 reads 0.008333 g | only the term t^5/5! survives |
 | No Lipschitz constant: y' = √y, y(0) = 0 | guesses read 0.0000 at t = 2; t^2/4 also solves it, reading 1.0000 | iteration finds a solution, not the only one |
 
 The code prints all three.
@@ -344,9 +352,9 @@ The two outputs match line for line. A tenfold smaller Euler step cuts its gap t
 Lean proves that the guesses converge for every continuous rule with a Lipschitz constant, and finds the yeast's guesses for every pass.
 
 - Let the rule be continuous for times 0 to T and every value, with a Lipschitz constant L there. Then the guesses converge at the same rate at every time from 0 to T.
-- The limit is a continuous curve that satisfies the integral equation and starts at $y_0$. Its slope is the one the rule gives, from 0 to T.
-- Let M bound the rate the starting guess produces. At time t, guesses n and n + 1 differ by at most $M L^n t^{n+1}/(n+1)!$.
-- For y' = y from 1, guess n is $1 + t + t^2/2! + \dots + t^n/n!$ at every time t.
+- The limit is a continuous curve that satisfies the integral equation and starts at $`y_0`$. Its slope is the one the rule gives, from 0 to T.
+- Let M bound the rate the starting guess produces. At time t, guesses n and n + 1 differ by at most $`M L^n t^{n+1}/(n+1)!`$.
+- For y' = y from 1, guess n is $`1 + t + t^2/2! + \dots + t^n/n!`$ at every time t.
 - At 1 pm, guesses 0 to 5 read 1, 2, 5/2, 8/3, 65/24 and 163/60 g.
 - The arithmetic: 2/6! is 1/360 g, 1/5! is 1/120 g, and t^2/4 reads 1 at t = 2.
 

@@ -34,47 +34,53 @@ Orange: random service times (M/M/1, defined below). Green: every sale takes exa
 
 ## The formula
 
-The wing 11 card on [Continuous-time chains](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md) already derives the one-till queue. There, the chance of $n$ people in the shop is $(1 - \rho)\rho^n$, the average number is $L = \rho/(1 - \rho)$, and the average time inside is $W = L/\lambda$. This card adds the wait in line alone, many tills, and Little's law in general.
+The wing 11 card on [Continuous-time chains](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md) already derives the one-till queue. There, the chance of $`n`$ people in the shop is $`(1 - \rho)\rho^n`$, the average number is $`L = \rho/(1 - \rho)`$, and the average time inside is $`W = L/\lambda`$. This card adds the wait in line alone, many tills, and Little's law in general.
 
-New notation, in words first. M/M/c names a queue: arrivals at random (the first M, for memoryless), random service times (the second M), and $c$ servers sharing one line. $L_q$ is the average number standing in line, not counting anyone at a till, and $W_q$ is the average time spent in line before service starts.
+New notation, in words first. M/M/c names a queue: arrivals at random (the first M, for memoryless), random service times (the second M), and $`c`$ servers sharing one line. $`L_q`$ is the average number standing in line, not counting anyone at a till, and $`W_q`$ is the average time spent in line before service starts.
 
 **Little's law**, for any stable system:
 
-$$L = \lambda\,W.$$
+```math
+L = \lambda\,W.
+```
 
 **Read it aloud:** the average number inside equals the rate at which people arrive times the average time each one stays.
 
-**One till, M/M/1**, with the load $\rho = \lambda/\mu$ below 1:
+**One till, M/M/1**, with the load $`\rho = \lambda/\mu`$ below 1:
 
-$$W_q = \frac{1}{\mu}\cdot\frac{\rho}{1 - \rho} = \frac{\rho}{\mu - \lambda}, \qquad L_q = \lambda\,W_q = \frac{\rho^2}{1 - \rho}.$$
+```math
+W_q = \frac{1}{\mu}\cdot\frac{\rho}{1 - \rho} = \frac{\rho}{\mu - \lambda}, \qquad L_q = \lambda\,W_q = \frac{\rho^2}{1 - \rho}.
+```
 
 **Read it aloud:** the wait in line is one service time, multiplied by busy over idle.
 
-**$c$ tills, M/M/c**, with $a = \lambda/\mu$ and $\rho = a/c$ below 1. The chance an arrival has to wait at all is the Erlang C formula:
+**$`c`$ tills, M/M/c**, with $`a = \lambda/\mu`$ and $`\rho = a/c`$ below 1. The chance an arrival has to wait at all is the Erlang C formula:
 
-$$P_{\text{wait}} = \frac{\dfrac{a^c}{c!}\,\dfrac{1}{1 - \rho}}{\displaystyle\sum_{k=0}^{c-1}\frac{a^k}{k!} + \frac{a^c}{c!}\,\frac{1}{1 - \rho}}, \qquad W_q = \frac{P_{\text{wait}}}{c\mu - \lambda}.$$
+```math
+P_{\text{wait}} = \frac{\dfrac{a^c}{c!}\,\dfrac{1}{1 - \rho}}{\displaystyle\sum_{k=0}^{c-1}\frac{a^k}{k!} + \frac{a^c}{c!}\,\frac{1}{1 - \rho}}, \qquad W_q = \frac{P_{\text{wait}}}{c\mu - \lambda}.
+```
 
 **Read it aloud:** the chance that every till is busy when you walk in, divided by the rate at which the tills, all working, out-run the arrivals.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\lambda$ | arrival rate, customers per hour | 55 | every wait rises, and fast near capacity |
-| $\mu$ | service rate of one till while busy; one sale takes $1/\mu$ hours | 60 (1 minute a sale) | every wait falls |
-| $\rho$ | utilisation: the share of time each till is busy, $\lambda/(c\mu)$ | 0.9167 | the wait grows like $\rho/(1 - \rho)$; at 1 or above the line never settles |
-| $c$ | number of tills sharing one line | 1, then 2 | the wait collapses |
-| $a$ | offered load, $\lambda/\mu$: the work arriving, counted in tills' worth | 0.9167 | more tills needed |
-| $L$, $W$ | average number in the shop, in line or at a till; average time in the shop, line plus service | 11; 12 minutes | — |
-| $L_q$, $W_q$ | average number in line, not yet at a till; average time in line before service starts | 10.083; 11 minutes | — |
-| $P_{\text{wait}}$, $k$ | chance an arriving customer finds every till busy; $k$ counts tills in the Erlang C sum | 0.9167 with one till, 0.2881 with two | — |
-| $\pi_n$ | long-run share of time with $n$ people in the shop | empty 0.0833 of the time | — |
-| $N(t)$, $T$ | number in the shop at time $t$; the length of a stretch of time watched | — | — |
-| $A_i$, $D_i$, $W_i$, $n(T)$, $\varepsilon$, $\delta$ | in the proof: customer $i$'s arrival time, leaving time and stay; arrivals by time $T$; two small fixed fractions | — | — |
+| $`\lambda`$ | arrival rate, customers per hour | 55 | every wait rises, and fast near capacity |
+| $`\mu`$ | service rate of one till while busy; one sale takes $`1/\mu`$ hours | 60 (1 minute a sale) | every wait falls |
+| $`\rho`$ | utilisation: the share of time each till is busy, $`\lambda/(c\mu)`$ | 0.9167 | the wait grows like $`\rho/(1 - \rho)`$; at 1 or above the line never settles |
+| $`c`$ | number of tills sharing one line | 1, then 2 | the wait collapses |
+| $`a`$ | offered load, $`\lambda/\mu`$: the work arriving, counted in tills' worth | 0.9167 | more tills needed |
+| $`L`$, $`W`$ | average number in the shop, in line or at a till; average time in the shop, line plus service | 11; 12 minutes | — |
+| $`L_q`$, $`W_q`$ | average number in line, not yet at a till; average time in line before service starts | 10.083; 11 minutes | — |
+| $`P_{\text{wait}}`$, $`k`$ | chance an arriving customer finds every till busy; $`k`$ counts tills in the Erlang C sum | 0.9167 with one till, 0.2881 with two | — |
+| $`\pi_n`$ | long-run share of time with $`n`$ people in the shop | empty 0.0833 of the time | — |
+| $`N(t)`$, $`T`$ | number in the shop at time $`t`$; the length of a stretch of time watched | — | — |
+| $`A_i`$, $`D_i`$, $`W_i`$, $`n(T)`$, $`\varepsilon`$, $`\delta`$ | in the proof: customer $`i`$'s arrival time, leaving time and stay; arrivals by time $`T`$; two small fixed fractions | — | — |
 
 ### When it holds
 
-- **Stability: arrivals slower than service, $\lambda < c\mu$.** If not, there is no average to compute. At 62 an hour on one 60-an-hour till the formula gives $L = -31.0$, which is nonsense; the simulated shop holds about 33 people after 8 hours and is still filling.
+- **Stability: arrivals slower than service, $`\lambda < c\mu`$.** If not, there is no average to compute. At 62 an hour on one 60-an-hour till the formula gives $`L = -31.0`$, which is nonsense; the simulated shop holds about 33 people after 8 hours and is still filling.
 - **Random arrivals.** M/M/c assumes arrivals form a [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): many people deciding independently. Booked appointments arrive more evenly and wait less. A coach party arrives in a lump and waits more.
-- **Random service times.** If every sale takes exactly one minute, the wait halves: 5.50 minutes, not 11 (the Pollaczek–Khinchine formula for one server, in Kleinrock, Sources). Kingman's approximation extends this: the wait scales with how variable the arrival gaps and service times are, and always keeps the factor $\rho/(1 - \rho)$.
+- **Random service times.** If every sale takes exactly one minute, the wait halves: 5.50 minutes, not 11 (the Pollaczek–Khinchine formula for one server, in Kleinrock, Sources). Kingman's approximation extends this: the wait scales with how variable the arrival gaps and service times are, and always keeps the factor $`\rho/(1 - \rho)`$.
 - **Steady rates and enough time.** The formulas are long-run averages. Opened empty at 55 an hour, the simulated shop holds about 10 people on average after 8 hours (9.9 over 400 simulated days), still short of 11. A lunch rush that lasts one hour never reaches the long-run figure.
 - **Little's law needs only stability.** It holds whatever the arrival pattern, service times, number of tills or order of service, as long as long-run averages exist.
 
@@ -84,7 +90,7 @@ $$P_{\text{wait}} = \frac{\dfrac{a^c}{c!}\,\dfrac{1}{1 - \rho}}{\displaystyle\su
 
 ### Step 0: idle time is the only thing that drains a queue
 
-A till serving 60 an hour against 55 arrivals has a spare rate of $\mu - \lambda$ = 5 customers an hour. That spare rate is all that clears a backlog.
+A till serving 60 an hour against 55 arrivals has a spare rate of $`\mu - \lambda`$ = 5 customers an hour. That spare rate is all that clears a backlog.
 
 Five extra customers, one burst from a bus, take an hour of spare capacity to clear, and in that hour more bursts arrive. A minute of idle time, once lost while the shop is empty, can never be spent later.
 
@@ -92,27 +98,27 @@ So the queue depends on the gap between capacity and demand, not on capacity alo
 
 ### Step 1: Little's law, by counting one area two ways
 
-Watch the shop for a long stretch of $T$ hours and draw $N(t)$, the number of people inside, against time. Each customer adds 1 to the height from the moment they arrive to the moment they leave. So the area under the graph is a stack of strips, one per customer, each as long as that customer's time inside.
+Watch the shop for a long stretch of $`T`$ hours and draw $`N(t)`$, the number of people inside, against time. Each customer adds 1 to the height from the moment they arrive to the moment they leave. So the area under the graph is a stack of strips, one per customer, each as long as that customer's time inside.
 
 Count the area two ways:
 
-- By time: area $= T \times$ (average height) $= T\,L$.
-- By customer: area $=$ (number of customers) $\times$ (average stay) $= \lambda T \times W$.
+- By time: area $`= T \times`$ (average height) $`= T\,L`$.
+- By customer: area $`=`$ (number of customers) $`\times`$ (average stay) $`= \lambda T \times W`$.
 
-Set them equal and divide by $T$: $L = \lambda W$. Nothing about the arrival pattern, the service times or the order of service was used. The only gap is at the edges: people already inside at the start, or still inside at the end, have strips cut off. In a stable system that cut-off grows more slowly than $T$, so it vanishes once divided by a long $T$.
+Set them equal and divide by $`T`$: $`L = \lambda W`$. Nothing about the arrival pattern, the service times or the order of service was used. The only gap is at the edges: people already inside at the start, or still inside at the end, have strips cut off. In a stable system that cut-off grows more slowly than $`T`$, so it vanishes once divided by a long $`T`$.
 
 <details>
 <summary>Detailed proof: Little's law on one long run</summary>
 
-Number customers in order of arrival. Customer $i$ arrives at $A_i$ and leaves at $D_i \ge A_i$; their stay is $W_i = D_i - A_i$. Start with an empty system at time 0. Let $n(T)$ count arrivals by time $T$. Suppose the two long-run averages exist and are finite: $n(T)/T \to \lambda$, and $\frac{1}{n}\sum_{i \le n} W_i \to W$.
+Number customers in order of arrival. Customer $`i`$ arrives at $`A_i`$ and leaves at $`D_i \ge A_i`$; their stay is $`W_i = D_i - A_i`$. Start with an empty system at time 0. Let $`n(T)`$ count arrivals by time $`T`$. Suppose the two long-run averages exist and are finite: $`n(T)/T \to \lambda`$, and $`\frac{1}{n}\sum_{i \le n} W_i \to W`$.
 
-The area $\int_0^T N(t)\,dt$ contains every whole strip that ends by $T$, and is at most the total of all strips that start by $T$:
+The area $`\int_0^T N(t)\,dt`$ contains every whole strip that ends by $`T`$, and is at most the total of all strips that start by $`T`$:
 
-$$\sum_{i:\,D_i \le T} W_i \;\le\; \int_0^T N(t)\,dt \;\le\; \sum_{i \le n(T)} W_i.$$
+$`\displaystyle \sum_{i:\,D_i \le T} W_i \;\le\; \int_0^T N(t)\,dt \;\le\; \sum_{i \le n(T)} W_i.`$
 
-Divide by $T$. The right side is $\frac{n(T)}{T}\cdot\frac{1}{n(T)}\sum_{i \le n(T)} W_i \to \lambda W$.
+Divide by $`T`$. The right side is $`\frac{n(T)}{T}\cdot\frac{1}{n(T)}\sum_{i \le n(T)} W_i \to \lambda W`$.
 
-For the left side: because the average stay converges, $W_i/i \to 0$ (subtract the averages for $i$ and $i - 1$). So for large $i$, customer $i$ leaves by $A_i + \varepsilon i$ for any small fixed $\varepsilon$. Choose $\varepsilon$ below $\delta/\lambda$; then every customer who arrived by $T(1 - \delta)$ for a small $\delta$ has left by $T$, once $T$ is large. The left side is therefore at least $\frac{1}{T}\sum_{i \le n(T(1 - \delta))} W_i \to (1 - \delta)\,\lambda W$. Let $\delta$ shrink: both sides tend to $\lambda W$, so $L = \lambda W$. This is the sample-path proof of Stidham (1974); Little's original 1961 proof assumed more.
+For the left side: because the average stay converges, $`W_i/i \to 0`$ (subtract the averages for $`i`$ and $`i - 1`$). So for large $`i`$, customer $`i`$ leaves by $`A_i + \varepsilon i`$ for any small fixed $`\varepsilon`$. Choose $`\varepsilon`$ below $`\delta/\lambda`$; then every customer who arrived by $`T(1 - \delta)`$ for a small $`\delta`$ has left by $`T`$, once $`T`$ is large. The left side is therefore at least $`\frac{1}{T}\sum_{i \le n(T(1 - \delta))} W_i \to (1 - \delta)\,\lambda W`$. Let $`\delta`$ shrink: both sides tend to $`\lambda W`$, so $`L = \lambda W`$. This is the sample-path proof of Stidham (1974); Little's original 1961 proof assumed more.
 
 </details>
 
@@ -120,27 +126,31 @@ For the left side: because the average stay converges, $W_i/i \to 0$ (subtract t
 
 The law holds for any "system" you draw a box around, so draw three boxes:
 
-- **The whole shop:** $L = \lambda W$. With $L$ = 11, $W$ = 11/55 hours = 12 minutes.
-- **The till alone:** at most one person is inside, so the average number inside is the share of time busy. Each stays one service time, $1/\mu$. So busy share $= \lambda/\mu = \rho$. Utilisation is Little's law.
-- **The line alone:** $L_q = \lambda W_q$. The shop holds the line plus the till, so $L_q = L - \rho$ = 11 − 0.9167 = 10.083, and $W_q = L_q/\lambda$ = 11 minutes.
+- **The whole shop:** $`L = \lambda W`$. With $`L`$ = 11, $`W`$ = 11/55 hours = 12 minutes.
+- **The till alone:** at most one person is inside, so the average number inside is the share of time busy. Each stays one service time, $`1/\mu`$. So busy share $`= \lambda/\mu = \rho`$. Utilisation is Little's law.
+- **The line alone:** $`L_q = \lambda W_q`$. The shop holds the line plus the till, so $`L_q = L - \rho`$ = 11 − 0.9167 = 10.083, and $`W_q = L_q/\lambda`$ = 11 minutes.
 
 ### Step 3: the same wait from an arriving customer's view
 
-Random arrivals see the shop as it is on average over time; this is "Poisson arrivals see time averages", from the [Continuous-time chains](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md) card. So a new customer finds $L$ = 11 people ahead on average. With exponential service, the sale in progress has, on average, a full minute left, whatever time it has already taken. So the wait is 11 sales of one minute each:
+Random arrivals see the shop as it is on average over time; this is "Poisson arrivals see time averages", from the [Continuous-time chains](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md) card. So a new customer finds $`L`$ = 11 people ahead on average. With exponential service, the sale in progress has, on average, a full minute left, whatever time it has already taken. So the wait is 11 sales of one minute each:
 
-$$W_q = \frac{L}{\mu} = \frac{1}{\mu}\cdot\frac{\rho}{1 - \rho} = 11 \text{ minutes}.$$
+```math
+W_q = \frac{L}{\mu} = \frac{1}{\mu}\cdot\frac{\rho}{1 - \rho} = 11 \text{ minutes}.
+```
 
-Two different arguments, one number. The ratio $\rho/(1 - \rho)$ is the whole story of the chart above: busy time over idle time. At 50 percent busy it is 1; at 80 percent, 4; at 92 percent, 11; at 98 percent (59 an hour), 59. Near the top every step costs more than the last: one more customer an hour, from 55 to 56, adds 3 minutes.
+Two different arguments, one number. The ratio $`\rho/(1 - \rho)`$ is the whole story of the chart above: busy time over idle time. At 50 percent busy it is 1; at 80 percent, 4; at 92 percent, 11; at 98 percent (59 an hour), 59. Near the top every step costs more than the last: one more customer an hour, from 55 to 56, adds 3 minutes.
 
 ### Step 4: many tills, by cutting the line
 
-Number the states by people in the shop, as on the wing 11 card, and cut between $n$ and $n + 1$. Upward crossings happen at the arrival rate $\lambda$. Downward crossings happen at the rate of all busy tills: with $n + 1$ people inside, $\min(n + 1, c)$ tills are busy. Balancing the crossings,
+Number the states by people in the shop, as on the wing 11 card, and cut between $`n`$ and $`n + 1`$. Upward crossings happen at the arrival rate $`\lambda`$. Downward crossings happen at the rate of all busy tills: with $`n + 1`$ people inside, $`\min(n + 1, c)`$ tills are busy. Balancing the crossings,
 
-$$\lambda\,\pi_n = \min(n + 1,\, c)\,\mu\,\pi_{n+1}.$$
+```math
+\lambda\,\pi_n = \min(n + 1,\, c)\,\mu\,\pi_{n+1}.
+```
 
-Below $c$ this gives $\pi_n = \pi_0\,a^n/n!$. From $c$ upward every till is busy, the ratio is fixed at $\rho$, and $\pi_n = \pi_c\,\rho^{n - c}$: a geometric tail. Its total is $\pi_c/(1 - \rho)$, which is $P_{\text{wait}}$. Fixing $\pi_0$ so all shares add to 1 gives the Erlang C formula.
+Below $`c`$ this gives $`\pi_n = \pi_0\,a^n/n!`$. From $`c`$ upward every till is busy, the ratio is fixed at $`\rho`$, and $`\pi_n = \pi_c\,\rho^{n - c}`$: a geometric tail. Its total is $`\pi_c/(1 - \rho)`$, which is $`P_{\text{wait}}`$. Fixing $`\pi_0`$ so all shares add to 1 gives the Erlang C formula.
 
-Given that a customer must wait, the line ahead is geometric with ratio $\rho$ and averages $\rho/(1 - \rho)$ people; so overall $L_q = P_{\text{wait}}\,\rho/(1 - \rho)$. Little's law on the line turns that into time: $W_q = L_q/\lambda = P_{\text{wait}}/(c\mu - \lambda)$. With $c$ = 1, $P_{\text{wait}} = \rho$ and this is the M/M/1 formula again.
+Given that a customer must wait, the line ahead is geometric with ratio $`\rho`$ and averages $`\rho/(1 - \rho)`$ people; so overall $`L_q = P_{\text{wait}}\,\rho/(1 - \rho)`$. Little's law on the line turns that into time: $`W_q = L_q/\lambda = P_{\text{wait}}/(c\mu - \lambda)`$. With $`c`$ = 1, $`P_{\text{wait}} = \rho`$ and this is the M/M/1 formula again.
 
 ### Step 5: why one shared line beats separate lines
 
@@ -154,14 +164,14 @@ One till, 55 an hour, 60 an hour when busy.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| utilisation $\rho$ | 55 / 60 | 0.9167 |
+| utilisation $`\rho`$ | 55 / 60 | 0.9167 |
 | idle time | 60 × (1 − 0.9167) minutes | 5 minutes an hour |
 | spare rate | 60 − 55 | 5 an hour |
-| in the shop, $L$ | 0.9167 / 0.0833 | 11 |
-| in line, $L_q$ | 11 − 0.9167 | 10.083 |
-| time in shop, $W$ | 11 / 55 hours | 12 minutes |
-| wait from the arrival's view, $L/\mu$ | 11 people × 1 minute | 11 minutes |
-| time in line, $W_q$ | 10.083 / 55 hours | **11 minutes** |
+| in the shop, $`L`$ | 0.9167 / 0.0833 | 11 |
+| in line, $`L_q`$ | 11 − 0.9167 | 10.083 |
+| time in shop, $`W`$ | 11 / 55 hours | 12 minutes |
+| wait from the arrival's view, $`L/\mu`$ | 11 people × 1 minute | 11 minutes |
+| time in line, $`W_q`$ | 10.083 / 55 hours | **11 minutes** |
 
 The average customer stands in line 11 minutes for a 1-minute sale. One more customer an hour, 56, makes it (56/60) / (60 − 56) hours = 14 minutes.
 
@@ -169,12 +179,12 @@ Two tills, one line, 55 an hour:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| offered load $a$, utilisation $\rho$ | 55/60; 0.9167 / 2 | 0.9167; 0.4583 |
+| offered load $`a`$, utilisation $`\rho`$ | 55/60; 0.9167 / 2 | 0.9167; 0.4583 |
 | top of Erlang C | 0.9167² / 2 × 1 / (1 − 0.4583) | 0.7756 |
 | bottom | 1 + 0.9167 + 0.7756 | 2.6923 |
-| $P_{\text{wait}}$ | 0.7756 / 2.6923 | 0.2881 |
-| in line, $L_q$ | 0.2881 × 0.4583 / (1 − 0.4583) | 0.244 people |
-| $W_q$ | 0.2881 / (120 − 55) hours | **0.27 minutes**, 16 seconds |
+| $`P_{\text{wait}}`$ | 0.7756 / 2.6923 | 0.2881 |
+| in line, $`L_q`$ | 0.2881 × 0.4583 / (1 − 0.4583) | 0.244 people |
+| $`W_q`$ | 0.2881 / (120 − 55) hours | **0.27 minutes**, 16 seconds |
 
 The second till cuts the wait from 11 minutes to about 16 seconds, because it turns the spare rate from 5 an hour into 65. It does not need to be busy to earn its keep: it is busy less than half the time.
 
@@ -184,7 +194,7 @@ Doubling the whole shop is different. Two tills facing 110 an hour are each 92 p
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Use the formula when arrivals beat service: 62 an hour on one till | $L = -31.0$ | The formula needs $\rho < 1$. The simulated shop, opened empty, holds about 9.5 people after one hour and about 33 after eight, and keeps climbing. |
+| Use the formula when arrivals beat service: 62 an hour on one till | $`L = -31.0`$ | The formula needs $`\rho < 1`$. The simulated shop, opened empty, holds about 9.5 people after one hour and about 33 after eight, and keeps climbing. |
 | Assume random service times when every sale takes exactly 1 minute | 11.00 minutes (right: 5.50) | Half of this wait comes from variable service times; the simulation gives 5.59. |
 | Two tills, but each with its own line, customers splitting at random | 0.85 minutes (one shared line: 0.27) | A till with an empty line sits idle while the other line waits. |
 | Expect the long-run figure at the end of the first shift | 11 in the shop | Opened empty, the simulated shop averages about 10 after 8 hours: near capacity, the long run takes hours to arrive. |
@@ -195,10 +205,10 @@ Doubling the whole shop is different. Two tills facing 110 an hour are each 92 p
 
 The code reaches each answer by independent roads:
 
-- The one-till wait comes from the closed form, from the cut equations solved state by state over 6,000 states, and from the arrival's view $L/\mu$.
+- The one-till wait comes from the closed form, from the cut equations solved state by state over 6,000 states, and from the arrival's view $`L/\mu`$.
 - Erlang C meets the same cut equations for two tills.
 - Then a seeded simulation runs a million customers through each of three shops: random service, fixed service and two tills. Its random numbers come from SplitMix64, a small generator written into the script; the fixed seed 20261111 makes every run repeat exactly. It compares each average wait with its formula within four batch standard errors (the spread of the averages over 20 batches of customers, a measure of simulation noise).
-- For the one-till shops it also checks Little's law directly: it sweeps through arrivals and departures in time order, measures the area under $N(t)$, and compares the time-average with $\lambda \times W$ measured customer by customer.
+- For the one-till shops it also checks Little's law directly: it sweeps through arrivals and departures in time order, measures the area under $`N(t)`$, and compares the time-average with $`\lambda \times W`$ measured customer by customer.
 - Last, it runs 400 eight-hour days at 55 and at 62 an hour, to show one line settling and the other filling.
 
 ### Python
@@ -568,14 +578,14 @@ The two outputs match line for line.
 
 Lean proves Little's law for any run that keeps up, and the one-till and many-till waits from the cut equations.
 
-- Take customers in order of arrival, each leaving after arriving, from an empty shop at time 0. Suppose $n(T)/T \to \lambda$ and the average stay tends to $W$. Then the average of $N(t)$ over the first $T$ hours tends to $\lambda W$.
+- Take customers in order of arrival, each leaving after arriving, from an empty shop at time 0. Suppose $`n(T)/T \to \lambda`$ and the average stay tends to $`W`$. Then the average of $`N(t)`$ over the first $`T`$ hours tends to $`\lambda W`$.
 - Little's law uses nothing about the arrival pattern, the service times, the number of tills or the order of service.
-- Take one till with $\lambda < \mu$, and shares $\pi_n$ that meet the cut equations and add to 1. Then $\pi_n = (1 - \rho)\rho^n$.
-- Take the same till. Then $L = \rho/(1 - \rho)$ and $L_q = \rho^2/(1 - \rho)$.
-- Take the same till. Then $W_q = L_q/\lambda$ equals both $\rho/(\mu - \lambda)$ and the arrival's view $L/\mu$.
-- Take $c$ tills with $\lambda < c\mu$, and shares $\pi_n$ that meet the cut equations and add to 1. Then $P_{\text{wait}}$ is the Erlang C formula.
-- Take the same tills. Then $L_q = P_{\text{wait}}\,\rho/(1 - \rho)$ and $W_q = L_q/\lambda = P_{\text{wait}}/(c\mu - \lambda)$.
-- The bakery's numbers check exactly: $L$ = 11, $L_q$ = 121/12, $W_q$ = 11 minutes, and the chart's waits.
+- Take one till with $`\lambda < \mu`$, and shares $`\pi_n`$ that meet the cut equations and add to 1. Then $`\pi_n = (1 - \rho)\rho^n`$.
+- Take the same till. Then $`L = \rho/(1 - \rho)`$ and $`L_q = \rho^2/(1 - \rho)`$.
+- Take the same till. Then $`W_q = L_q/\lambda`$ equals both $`\rho/(\mu - \lambda)`$ and the arrival's view $`L/\mu`$.
+- Take $`c`$ tills with $`\lambda < c\mu`$, and shares $`\pi_n`$ that meet the cut equations and add to 1. Then $`P_{\text{wait}}`$ is the Erlang C formula.
+- Take the same tills. Then $`L_q = P_{\text{wait}}\,\rho/(1 - \rho)`$ and $`W_q = L_q/\lambda = P_{\text{wait}}/(c\mu - \lambda)`$.
+- The bakery's numbers check exactly: $`L`$ = 11, $`L_q`$ = 121/12, $`W_q`$ = 11 minutes, and the chart's waits.
 - The Erlang C values check too: 121/420 for two tills at 55, 121/138 at 110, and 1331/18156 for three tills.
 
 The simulations, the fixed-service wait, the eight-hour days and the 6,000-state solution are left to the Python and Rust checks.
@@ -1064,9 +1074,9 @@ end Queues
 ## The usual mistake
 
 > [!warning]
-> **Reading 92 percent busy as 8 percent slack.** Utilisation says how much of the till's time is used, not how long people wait. The wait is one service time times $\rho/(1 - \rho)$: 11 minutes at 92 percent, 1 minute at 50 percent. Pushing a till from 80 to 92 percent busy looks like a small gain in efficiency and nearly triples the wait, from 4 to 11 minutes.
+> **Reading 92 percent busy as 8 percent slack.** Utilisation says how much of the till's time is used, not how long people wait. The wait is one service time times $`\rho/(1 - \rho)`$: 11 minutes at 92 percent, 1 minute at 50 percent. Pushing a till from 80 to 92 percent busy looks like a small gain in efficiency and nearly triples the wait, from 4 to 11 minutes.
 >
-> - **Mixing up the wait in line and the time in the shop.** $W_q$ is 11 minutes; $W$ is 12, because it adds the sale. Little's law pairs $L$ with $W$ and $L_q$ with $W_q$, never across.
+> - **Mixing up the wait in line and the time in the shop.** $`W_q`$ is 11 minutes; $`W`$ is 12, because it adds the sale. Little's law pairs $`L`$ with $`W`$ and $`L_q`$ with $`W_q`$, never across.
 > - **Averaging the load over the day.** A shop at 55 an hour on average may run at 62 for the lunch hour. For that hour the line grows, and the daily average hides it.
 > - **Planning two tills as two separate shops.** With separate lines the wait is 0.85 minutes; with one shared line it is 0.27.
 > - **Trusting random-service formulas for a fixed-length job.** A machine that always takes one minute has half the M/M/1 wait: 5.50 minutes, not 11.
@@ -1082,15 +1092,15 @@ end Queues
 - **Hospitals.** Emergency departments run near capacity, and their waits behave like the right end of the chart.
 
 > **Say it back**
-> A queue is drained only by spare capacity, the gap between how fast a till can serve and how fast people arrive. The wait in line is one service time times busy over idle, so at 92 percent busy one till gives an 11-minute wait for a 1-minute sale. A second till sharing the line cuts that to about 16 seconds. Little's law, $L = \lambda W$, links the number inside to the time each spends there, for any system that keeps up. It follows from counting one area two ways.
+> A queue is drained only by spare capacity, the gap between how fast a till can serve and how fast people arrive. The wait in line is one service time times busy over idle, so at 92 percent busy one till gives an 11-minute wait for a 1-minute sale. A second till sharing the line cuts that to about 16 seconds. Little's law, $`L = \lambda W`$, links the number inside to the time each spends there, for any system that keeps up. It follows from counting one area two ways.
 
 ---
 
 ## What this builds on
 
-- [Continuous-time chains](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): the one-till queue as a chain on the number in the system, its law $(1 - \rho)\rho^n$, and the cut argument reused here for many tills.
+- [Continuous-time chains](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): the one-till queue as a chain on the number in the system, its law $`(1 - \rho)\rho^n`$, and the cut argument reused here for many tills.
 - [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): arrivals from many independent people, with exponential gaps; the "random arrivals" this card assumes.
-- [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the count of arrivals in an hour, whose mean is the arrival rate $\lambda$.
+- [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the count of arrivals in an hour, whose mean is the arrival rate $`\lambda`$.
 
 ## Where this goes next
 
@@ -1107,5 +1117,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Little, John D. C. "A Proof for the Queuing Formula: L = λW." *Operations Research* 9, no. 3 (1961): 383–387. [doi:10.1287/opre.9.3.383](https://doi.org/10.1287/opre.9.3.383). The first proof of the law.
 - Stidham, Shaler. "A Last Word on L = λW." *Operations Research* 22, no. 2 (1974): 417–421. [doi:10.1287/opre.22.2.417](https://doi.org/10.1287/opre.22.2.417). The sample-path proof used in the fold above, with no assumptions about randomness.
 - Little, John D. C. "Little's Law as Viewed on Its 50th Anniversary." *Operations Research* 59, no. 3 (2011): 536–549. [doi:10.1287/opre.1110.0940](https://doi.org/10.1287/opre.1110.0940). The law's history and its use in factories, services and computing.
-- Kingman, J. F. C. "The Single Server Queue in Heavy Traffic." *Mathematical Proceedings of the Cambridge Philosophical Society* 57, no. 4 (1961): 902–904. [doi:10.1017/S0305004100036094](https://doi.org/10.1017/S0305004100036094). Why waits near full load scale like $1/(1 - \rho)$ for general arrivals and services.
+- Kingman, J. F. C. "The Single Server Queue in Heavy Traffic." *Mathematical Proceedings of the Cambridge Philosophical Society* 57, no. 4 (1961): 902–904. [doi:10.1017/S0305004100036094](https://doi.org/10.1017/S0305004100036094). Why waits near full load scale like $`1/(1 - \rho)`$ for general arrivals and services.
 - Kleinrock, Leonard. *Queueing Systems, Volume 1: Theory*. Wiley, 1975. [Publisher page](https://www.wiley.com/en-us/Queueing+Systems%2C+Volume+1%3A+Theory-p-9780471491101). M/M/1 and M/M/c (Erlang C) in Chapter 3; the M/G/1 queue and the fixed-service-time wait in Chapter 5.

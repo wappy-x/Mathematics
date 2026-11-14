@@ -12,7 +12,7 @@ Something mechanical happens on that morning. The share drops by roughly $2.00. 
 
 A call option is not so lucky. A call is the right to buy one share for a fixed $100.00 in one year's time. That fixed price is the **strike**, and it does not drop by $2.00 in sympathy. So the holder of the call takes the fall and collects none of the cash. A dividend is pure loss to a call and pure gain to a put, the right to sell at the strike ([Black-Scholes put](02-black-scholes-put.md)).
 
-The other cards on this shelf handle dividends with a **yield**, written $q$: a steady 2% a year, leaking out every instant. Real boards do not leak. They declare an amount on a date. So what goes into the formula when the payout is $2.00 on one known day?
+The other cards on this shelf handle dividends with a **yield**, written $`q`$: a steady 2% a year, leaking out every instant. Real boards do not leak. They declare an amount on a date. So what goes into the formula when the payout is $2.00 on one known day?
 
 A split. Of Acme's $100.00, part is not a business at all. It is a cheque for $2.00 dated six months out. Discounted back at 5% a year that cheque is worth $1.95 today, and it is riskless: short of a cut, it pays $2.00 whatever the share does. The other $98.05 is the part that wanders. The option is a claim on the wandering part and on nothing else.
 
@@ -40,13 +40,19 @@ The upper line is Acme with the dividend still inside it: drifting up at the ris
 
 ## The formula
 
-Four new pieces of notation, in words first. $D_1$ is the cash the share pays, in dollars a share. $t_1$ is when it pays, in years from today. $D_0$ is that same cash valued today — the subscript is the date, so $D_1$ is the amount at $t_1$ and $D_0$ is its worth at time zero. And $S^{*}$, read "S-star", is the quoted price with $D_0$ taken out.
+Four new pieces of notation, in words first. $`D_1`$ is the cash the share pays, in dollars a share. $`t_1`$ is when it pays, in years from today. $`D_0`$ is that same cash valued today — the subscript is the date, so $`D_1`$ is the amount at $`t_1`$ and $`D_0`$ is its worth at time zero. And $`S^{*}`$, read "S-star", is the quoted price with $`D_0`$ taken out.
 
-$$D_0 = D_1 e^{-r t_1}, \qquad S^{*} = S - D_0$$
+```math
+D_0 = D_1 e^{-r t_1}, \qquad S^{*} = S - D_0
+```
 
-$$C = S^{*} N(d_1) - K e^{-rT} N(d_2), \qquad P = K e^{-rT} N(-d_2) - S^{*} N(-d_1)$$
+```math
+C = S^{*} N(d_1) - K e^{-rT} N(d_2), \qquad P = K e^{-rT} N(-d_2) - S^{*} N(-d_1)
+```
 
-$$d_1 = \frac{\ln(S^{*}/K) + (r + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S^{*}/K) + (r + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
 **Read it aloud:** discount the dividend back to today, take it off the share price, and price the option with the ordinary formula on what remains — no yield term anywhere.
 
@@ -54,30 +60,32 @@ More than one payout before expiry: discount each to today and subtract the tota
 
 | Symbol | Plain meaning | In our example | Push it up and the call… |
 | --- | --- | --- | --- |
-| $S$ | Acme's quoted price today, dividend still inside it | 100.00 | rises: more share to receive |
-| $K$ | the **strike**, the price the call may buy at | 100.00 | falls: further to climb |
-| $T$ | years until the option expires | 1 | rises: more room for a big move |
-| $r$ | the riskless rate, continuously compounded | 5% | rises: the cash owed later is worth less today, and $D_0$ shrinks too |
-| $\sigma$ | **volatility**, how jumpy the share is. Say "sigma". | 20% | rises, and this input matters most |
-| $D_1$ at $t_1$ | the declared cash, and the year-fraction when the share goes ex | 2.00 at 0.50 | falls for a bigger cheque, rises for a later one |
-| $D_0$ | that cash valued today: the **escrow** | 1.950620 | falls, for the same reason |
-| $S^{*}$ | the **escrowed spot**: the share with the escrow removed | 98.049380 | rises |
-| $d_1$, $d_2$ | how far the escrowed spot sits from the strike, in units of $\sigma\sqrt{T}$ | 0.251505 and 0.051505 | — |
-| $N$ | the bell-curve area to the left of a point: a chance between 0 and 1 | — | — |
-| $q$ | a continuous dividend **yield**, the input the other shelf cards take | 2% | falls |
-| $C$, $P$ | the call and put premiums | 9.24 and 6.32 | — |
+| $`S`$ | Acme's quoted price today, dividend still inside it | 100.00 | rises: more share to receive |
+| $`K`$ | the **strike**, the price the call may buy at | 100.00 | falls: further to climb |
+| $`T`$ | years until the option expires | 1 | rises: more room for a big move |
+| $`r`$ | the riskless rate, continuously compounded | 5% | rises: the cash owed later is worth less today, and $`D_0`$ shrinks too |
+| $`\sigma`$ | **volatility**, how jumpy the share is. Say "sigma". | 20% | rises, and this input matters most |
+| $`D_1`$ at $`t_1`$ | the declared cash, and the year-fraction when the share goes ex | 2.00 at 0.50 | falls for a bigger cheque, rises for a later one |
+| $`D_0`$ | that cash valued today: the **escrow** | 1.950620 | falls, for the same reason |
+| $`S^{*}`$ | the **escrowed spot**: the share with the escrow removed | 98.049380 | rises |
+| $`d_1`$, $`d_2`$ | how far the escrowed spot sits from the strike, in units of $`\sigma\sqrt{T}`$ | 0.251505 and 0.051505 | — |
+| $`N`$ | the bell-curve area to the left of a point: a chance between 0 and 1 | — | — |
+| $`q`$ | a continuous dividend **yield**, the input the other shelf cards take | 2% | falls |
+| $`C`$, $`P`$ | the call and put premiums | 9.24 and 6.32 | — |
 
 Put-call parity is restated with the escrow on the call's side, and nothing else changes ([Put-call parity](03-put-call-parity.md)):
 
-$$C - P = S - D_0 - K e^{-rT} = S^{*} - K e^{-rT}$$
+```math
+C - P = S - D_0 - K e^{-rT} = S^{*} - K e^{-rT}
+```
 
 ### When it holds
 
 - **The dividend is known, not forecast.** A declared amount on an announced date is known. Next year's guess is not, and escrowing a guess prices a certainty nobody has.
 - **Only payouts before expiry count.** A cheque that arrives after the option dies is none of its business. Escrow a second $2.00 at eighteen months as well and the premium comes out far too cheap — $8.17 instead of $9.24, in the table below.
 - **No early exercise.** The card prices a European option, exercisable only on the last day. A cash dividend is the main reason an American call holder would exercise early, and that belongs to [Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md).
-- **The dividend never exceeds the share.** $S^{*}$ must stay positive, or there is nothing left to price; in the rival model below the share itself must clear the cheque on the ex-date, or a share is asked to go negative. For Acme the cheque is a fiftieth of the share price, so neither binds here; both bind for a large special dividend.
-- **The volatility sits on $S^{*}$, not on $S$.** This is the modelling choice, not a fact. Costed at eight cents below.
+- **The dividend never exceeds the share.** $`S^{*}`$ must stay positive, or there is nothing left to price; in the rival model below the share itself must clear the cheque on the ex-date, or a share is asked to go negative. For Acme the cheque is a fiftieth of the share price, so neither binds here; both bind for a large special dividend.
+- **The volatility sits on $`S^{*}`$, not on $`S`$.** This is the modelling choice, not a fact. Costed at eight cents below.
 
 ---
 
@@ -97,32 +105,32 @@ Now ask what the call owns. It is the right to buy a share in one year — after
 
 So price the option on the wandering part. That part is worth $98.05 today, and it carries all the jumpiness, because a riskless cheque has none: setting $1.95 aside removes value but no risk.
 
-That is the whole method. The call is a one-year 100-strike call on a thing worth $98.049380 today that pays nothing out along the way. Black–Scholes with no dividend is exactly the tool for that ([Black–Scholes call](01-black-scholes-call.md)). Feed it $S^{*}$ and $q = 0$ and read off $9.244684.
+That is the whole method. The call is a one-year 100-strike call on a thing worth $98.049380 today that pays nothing out along the way. Black–Scholes with no dividend is exactly the tool for that ([Black–Scholes call](01-black-scholes-call.md)). Feed it $`S^{*}`$ and $`q = 0`$ and read off $9.244684.
 
-The name for the set-aside cheque is the **escrow**, and for $S^{*}$ the **escrowed spot**. Those are the terms from here on.
+The name for the set-aside cheque is the **escrow**, and for $`S^{*}`$ the **escrowed spot**. Those are the terms from here on.
 
 ### Step 2: parity, with the escrow on the call's side
 
-Parity compares two parcels held to expiry. One call plus cash $K e^{-rT}$ is worth $K$ at expiry if the share finishes below the strike and the share's price if above. One put plus one share does the same — except that the share parcel also collects $2.00 on the ex-date, and the call parcel does not.
+Parity compares two parcels held to expiry. One call plus cash $`K e^{-rT}`$ is worth $`K`$ at expiry if the share finishes below the strike and the share's price if above. One put plus one share does the same — except that the share parcel also collects $2.00 on the ex-date, and the call parcel does not.
 
-Hand the call parcel the same cheque and the two match again. Adding $D_0$ of cash today to the call side gives $C + K e^{-rT} + D_0 = P + S$, which rearranges to $C - P = S - D_0 - K e^{-rT}$. The check below prices the put by its own numerical average, subtracts, and lands on $2.926438 from both sides.
+Hand the call parcel the same cheque and the two match again. Adding $`D_0`$ of cash today to the call side gives $`C + K e^{-rT} + D_0 = P + S`$, which rearranges to $`C - P = S - D_0 - K e^{-rT}`$. The check below prices the put by its own numerical average, subtracts, and lands on $2.926438 from both sides.
 
 <details>
 <summary>Detailed proof: parity with one known dividend</summary>
 
-Write $\tau = T - t_1$ for the time from the ex-date to expiry, and let $S_{\text{end}}$ be the share's price on the last day.
+Write $`\tau = T - t_1`$ for the time from the ex-date to expiry, and let $`S_{\text{end}}`$ be the share's price on the last day.
 
-Parcel A: one call, a bond paying $K$ at $T$, and a bond paying $D_1$ at $t_1$. Cost today $C + Ke^{-rT} + D_0$. At $t_1$ that second bond pays $D_1$; bank it at the riskless rate and it is $D_1 e^{r\tau}$ at expiry. The call and the $K$ bond together are worth $\max(S_{\text{end}} - K, 0) + K$, which is $K$ when the share finishes below the strike and $S_{\text{end}}$ when above. Total at expiry: $\max(S_{\text{end}}, K) + D_1 e^{r\tau}$.
+Parcel A: one call, a bond paying $`K`$ at $`T`$, and a bond paying $`D_1`$ at $`t_1`$. Cost today $`C + Ke^{-rT} + D_0`$. At $`t_1`$ that second bond pays $`D_1`$; bank it at the riskless rate and it is $`D_1 e^{r\tau}`$ at expiry. The call and the $`K`$ bond together are worth $`\max(S_{\text{end}} - K, 0) + K`$, which is $`K`$ when the share finishes below the strike and $`S_{\text{end}}`$ when above. Total at expiry: $`\max(S_{\text{end}}, K) + D_1 e^{r\tau}`$.
 
-Parcel B: one put and one share. Cost today $P + S$. At $t_1$ the share pays $D_1$; bank it the same way, $D_1 e^{r\tau}$ at expiry. Put plus share is $\max(K - S_{\text{end}}, 0) + S_{\text{end}}$, which is $K$ below the strike and $S_{\text{end}}$ above. Total at expiry: $\max(S_{\text{end}}, K) + D_1 e^{r\tau}$.
+Parcel B: one put and one share. Cost today $`P + S`$. At $`t_1`$ the share pays $`D_1`$; bank it the same way, $`D_1 e^{r\tau}`$ at expiry. Put plus share is $`\max(K - S_{\text{end}}, 0) + S_{\text{end}}`$, which is $`K`$ below the strike and $`S_{\text{end}}`$ above. Total at expiry: $`\max(S_{\text{end}}, K) + D_1 e^{r\tau}`$.
 
-Identical in every future, so identical in cost today. Hence $C + Ke^{-rT} + D_0 = P + S$. Note what was not needed: no bell curve, no volatility, no model of how the share wanders. Only that the $D_1$ is certain, so that its value today is $D_0$.
+Identical in every future, so identical in cost today. Hence $`C + Ke^{-rT} + D_0 = P + S`$. Note what was not needed: no bell curve, no volatility, no model of how the share wanders. Only that the $`D_1`$ is certain, so that its value today is $`D_0`$.
 
 </details>
 
 ### Step 3: why the tree stops recombining, and how escrow saves it
 
-A binomial tree is cheap because paths meet ([Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md)). Each step multiplies the price by $u$ going up or by $d = 1/u$ going down, so up-then-down returns to where it started. Two thousand steps over the year need only 2,001 prices in the final layer, not $2^{2000}$ paths.
+A binomial tree is cheap because paths meet ([Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md)). Each step multiplies the price by $`u`$ going up or by $`d = 1/u`$ going down, so up-then-down returns to where it started. Two thousand steps over the year need only 2,001 prices in the final layer, not $`2^{2000}`$ paths.
 
 Take 2,000 steps, half of them landing on or before the ex-date. In the dividend layer, go up from node 500, or go down from node 501. In a tree with no dividend both paths land on the same price and one number serves both.
 
@@ -133,9 +141,9 @@ Escrow removes the problem before it starts. Build the tree on $98.049380 and pa
 <details>
 <summary>Escrowing is Merton's yield model at one particular yield</summary>
 
-Merton's version of the formula takes a continuous yield $q$ and prices on $S e^{-qT}$. Escrow prices on $S - D_0$. Choose $q$ so that $S e^{-qT} = S - D_0$, that is $q = -\ln(S^{*}/S)/T$. Then the two are the same formula with the same numbers. $d_1$, $d_2$ and the premium all coincide, because $\ln(S^{*}/K) = \ln(S/K) - qT$ turns one $d_1$ into the other.
+Merton's version of the formula takes a continuous yield $`q`$ and prices on $`S e^{-qT}`$. Escrow prices on $`S - D_0`$. Choose $`q`$ so that $`S e^{-qT} = S - D_0`$, that is $`q = -\ln(S^{*}/S)/T`$. Then the two are the same formula with the same numbers. $`d_1`$, $`d_2`$ and the premium all coincide, because $`\ln(S^{*}/K) = \ln(S/K) - qT`$ turns one $`d_1`$ into the other.
 
-For Acme that yield is $1.969895\%$, and the yield formula fed it returns $9.244684 — the escrowed answer to every digit. So the honest reading of "a $2.00 dividend at six months" is not "a 2% yield". It is a $1.97\%$ yield. The shelf's house $q = 2\%$ is a slightly heavier drag, worth just under two cents on this call: $9.227006 against $9.244684. The same gap shows in the forward price, the price agreed today for the share in one year: $103.045453 under the house yield against $103.076479 under the cash dividend.
+For Acme that yield is $`1.969895\%`$, and the yield formula fed it returns $9.244684 — the escrowed answer to every digit. So the honest reading of "a $2.00 dividend at six months" is not "a 2% yield". It is a $`1.97\%`$ yield. The shelf's house $`q = 2\%`$ is a slightly heavier drag, worth just under two cents on this call: $9.227006 against $9.244684. The same gap shows in the forward price, the price agreed today for the share in one year: $103.045453 under the house yield against $103.076479 under the cash dividend.
 
 </details>
 
@@ -145,32 +153,32 @@ Escrow makes one choice out loud: it puts the 20% jumpiness on the $98.05, not o
 
 The check prices that second model two ways, by nested averages and by a tree that really pays the cash at every node, and gets **$9.32**: $9.321312 and $9.321508. Escrow gives $9.244684. The gap is $0.076628, about eight cents, or four-fifths of one percent of the premium. The reason fits in a line: shaking $100.00 by 20% shakes the $98.05 inside it by more than 20%, and a call likes shaking.
 
-Neither model is the truth. $\sigma$ is a fitted number, and the model it was fitted with is the model it has to be priced with. Escrow is the market's default because it is one subtraction and it keeps trees and grids recombining. The gap is the price of the convenience, and eight cents on a nine-dollar option is not nothing.
+Neither model is the truth. $`\sigma`$ is a fitted number, and the model it was fitted with is the model it has to be priced with. Escrow is the market's default because it is one subtraction and it keeps trees and grids recombining. The gap is the price of the convenience, and eight cents on a nine-dollar option is not nothing.
 
 ---
 
 ## Worked numbers, by hand
 
-Acme: $S = 100.00$, $K = 100.00$, $r = 5\%$, $\sigma = 20\%$, $T = 1$ year, one dividend of $D_1 = 2.00$ at $t_1 = 0.50$.
+Acme: $`S = 100.00`$, $`K = 100.00`$, $`r = 5\%`$, $`\sigma = 20\%`$, $`T = 1`$ year, one dividend of $`D_1 = 2.00`$ at $`t_1 = 0.50`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the dividend, brought back to today | $2.00 \times e^{-0.05 \times 0.50}$ | $1.950620$ |
-| the escrowed spot | $100.00 - 1.950620$ | $98.049380$ |
-| the drift in the escrowed world, $r + \tfrac12\sigma^2$ | $0.05 + 0.02$ | $0.07$ |
-| one wiggle unit, $\sigma\sqrt{T}$ | $0.20 \times 1$ | $0.20$ |
-| $d_1$, measured on the escrowed spot | $(\ln(98.049380/100) + 0.07)/0.20$ | $0.251505$ |
-| $d_2$ | $0.251505 - 0.20$ | $0.051505$ |
-| the call | $98.049380\,N(0.251505) - 100\,e^{-0.05}N(0.051505)$ | $\mathbf{9.244684}$ |
-| the put, the same two areas mirrored | $100\,e^{-0.05}N(-0.051505) - 98.049380\,N(-0.251505)$ | $\mathbf{6.318246}$ |
-| the check: call minus put | $9.244684 - 6.318246$ | $\mathbf{2.926438}$ |
-| parity's other side | $98.049380 - 100\,e^{-0.05}$ | $\mathbf{2.926438}$ |
-| the forward, carrying the escrowed spot | $98.049380 \times e^{0.05}$ | $103.076479$ |
-| the forward again, from the carry ledger | $100.00\,e^{0.05} - 2.00\,e^{0.05 \times 0.50}$ | $103.076479$ |
+| the dividend, brought back to today | $`2.00 \times e^{-0.05 \times 0.50}`$ | $`1.950620`$ |
+| the escrowed spot | $`100.00 - 1.950620`$ | $`98.049380`$ |
+| the drift in the escrowed world, $`r + \tfrac12\sigma^2`$ | $`0.05 + 0.02`$ | $`0.07`$ |
+| one wiggle unit, $`\sigma\sqrt{T}`$ | $`0.20 \times 1`$ | $`0.20`$ |
+| $`d_1`$, measured on the escrowed spot | $`(\ln(98.049380/100) + 0.07)/0.20`$ | $`0.251505`$ |
+| $`d_2`$ | $`0.251505 - 0.20`$ | $`0.051505`$ |
+| the call | $`98.049380\,N(0.251505) - 100\,e^{-0.05}N(0.051505)`$ | $`\mathbf{9.244684}`$ |
+| the put, the same two areas mirrored | $`100\,e^{-0.05}N(-0.051505) - 98.049380\,N(-0.251505)`$ | $`\mathbf{6.318246}`$ |
+| the check: call minus put | $`9.244684 - 6.318246`$ | $`\mathbf{2.926438}`$ |
+| parity's other side | $`98.049380 - 100\,e^{-0.05}`$ | $`\mathbf{2.926438}`$ |
+| the forward, carrying the escrowed spot | $`98.049380 \times e^{0.05}`$ | $`103.076479`$ |
+| the forward again, from the carry ledger | $`100.00\,e^{0.05} - 2.00\,e^{0.05 \times 0.50}`$ | $`103.076479`$ |
 
 So the dividend takes the call down from $10.45, which is what the same option fetches on a share that pays nothing, to $9.24. The put moves the other way, and parity fixes the total: call minus put falls by exactly the escrow, $1.95.
 
-The rest of the shelf prices the same market with a 2% yield: call $9.227006, put $6.330081, forward $103.045453. The cash-dividend answers sit a touch above on the call and below on the put. The reason: a $2.00 cheque at six months drags the share slightly less than a 2% yield does — $1.969895\%$, as the folded note works out.
+The rest of the shelf prices the same market with a 2% yield: call $9.227006, put $6.330081, forward $103.045453. The cash-dividend answers sit a touch above on the call and below on the put. The reason: a $2.00 cheque at six months drags the share slightly less than a 2% yield does — $`1.969895\%`$, as the folded note works out.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -191,8 +199,8 @@ Same option throughout, correct answer $9.244684.
 | Mistake | Call comes out at | What went wrong |
 | --- | --- | --- |
 | Subtract the $2.00 without discounting it | $9.215115 | You paid the dividend today rather than in six months and threw away three cents of interest |
-| Read the cash as the shelf's $q = 2\%$ | $9.227006 | A $2.00 cheque at six months is a $1.969895\%$ drag, not 2%. Almost two cents too cheap |
-| Escrow the dividend and leave $q = 2\%$ in as well | $8.118841 | The dividend is now charged twice. Over a dollar too cheap |
+| Read the cash as the shelf's $`q = 2\%`$ | $9.227006 | A $2.00 cheque at six months is a $`1.969895\%`$ drag, not 2%. Almost two cents too cheap |
+| Escrow the dividend and leave $`q = 2\%`$ in as well | $8.118841 | The dividend is now charged twice. Over a dollar too cheap |
 | Escrow a second $2.00 dividend, this one at eighteen months | $8.167107 | The option expires at twelve. A payout after expiry is none of its business |
 
 The code prints all four.
@@ -207,9 +215,9 @@ Follow one option with six months left to run, and watch the two prices come apa
 
 | Moment | Acme quoted | Dividend still ahead | Escrowed spot | Call, six months left |
 | --- | --- | --- | --- | --- |
-| The evening before the share goes ex | $100.00 | $2.00, tomorrow | $98.00 | $\mathbf{5.75}$ |
-| The morning after | $98.00 | none | $98.00 | $\mathbf{5.75}$ |
-| A share that never pays a dividend | $100.00 | none | $100.00 | $\mathbf{6.89}$ |
+| The evening before the share goes ex | $100.00 | $2.00, tomorrow | $98.00 | $`\mathbf{5.75}`$ |
+| The morning after | $98.00 | none | $98.00 | $`\mathbf{5.75}`$ |
+| A share that never pays a dividend | $100.00 | none | $100.00 | $`\mathbf{6.89}`$ |
 
 The first two rows are the same option at the same value. The share lost $2.00 and the option lost nothing, because the escrowed spot — the only number the option cares about — was $98.00 on both days. The fall was priced in the moment the dividend was declared, not the morning it was paid.
 
@@ -689,10 +697,10 @@ The two outputs match byte for byte.
 
 Lean proves the card's three facts, the formula, parity and the yield match, for every value meeting the conditions below.
 
-- Suppose one known dividend falls before expiry, the volatility sits on $S^{*}$, and $S^{*}$, $K$, $\sigma$ and $T$ are positive. Then averaging the call's and the put's payoffs, discounted to today, gives exactly the formulas above, fed $S^{*}$ with no yield.
+- Suppose one known dividend falls before expiry, the volatility sits on $`S^{*}`$, and $`S^{*}`$, $`K`$, $`\sigma`$ and $`T`$ are positive. Then averaging the call's and the put's payoffs, discounted to today, gives exactly the formulas above, fed $`S^{*}`$ with no yield.
 - Take any final share price. Then the two parcels in Step 2, each with its dividend banked to expiry, pay the same.
-- Take the conditions of the first bullet. Then the formulas give $C - P = S - D_0 - K e^{-rT}$.
-- Suppose $S$ and $S^{*}$ are positive, and set $q = -\ln(S^{*}/S)/T$. Then $S e^{-qT} = S^{*}$, and the yield formula at that $q$ gives exactly the escrowed call and put.
+- Take the conditions of the first bullet. Then the formulas give $`C - P = S - D_0 - K e^{-rT}`$.
+- Suppose $`S`$ and $`S^{*}`$ are positive, and set $`q = -\ln(S^{*}/S)/T`$. Then $`S e^{-qT} = S^{*}`$, and the yield formula at that $`q`$ gives exactly the escrowed call and put.
 - Some worked numbers also hold exactly: the drift 0.07, the wiggle unit 0.20, the carry-ledger forward, and the 1,002,001 nodes.
 
 Acme's prices, such as the $9.24 call, the cash-drop model, the trees and the wrong answers are left to the Python and Rust checks.
@@ -1137,12 +1145,12 @@ example : (1000 + 1) * (1000 + 1) = 1002001 ∧ 1002001 / (2000 + 1) = 500 := by
 
 - **Any option screen on a single share.** Listed options on dividend payers are quoted against escrowed spots, or against a forward built the same way. The dividend assumption is part of the quote whether or not it is shown.
 - **Index options.** An index has hundreds of members paying on scattered dates. Desks escrow the dated dividends out to the near expiries, where the calendar is known, and switch to a yield for the far ones, where it is not.
-- **Implied volatility.** Running the formula backwards to get $\sigma$ from a price depends on the dividend handling. Two desks agreeing on a $9.24 price and disagreeing about the dividend disagree about volatility, and will quote different prices for the next option along.
+- **Implied volatility.** Running the formula backwards to get $`\sigma`$ from a price depends on the dividend handling. Two desks agreeing on a $9.24 price and disagreeing about the dividend disagree about volatility, and will quote different prices for the next option along.
 - **Early exercise.** A cash dividend is the main reason to exercise an American call before expiry: exercising the day before the share goes ex collects the cash instead of watching the price fall. When that is never worth doing is [Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md).
 - **Employee options and warrants.** Long-dated claims on dividend-paying shares, valued for company accounts with an escrow or a yield, which is one of the assumptions auditors ask about.
 - **Where it stops working.** Any payoff that watches the whole path rather than the last day's price, any barrier the share can cross on the ex-date, and any dividend large enough to matter against the share price itself. Then the model's choice about where volatility lives stops being a rounding difference.
 
-**Conventions verified 19 Sep 2026.** Dividend dating, as this card uses it: $t_1$ is the day the share goes ex — the day a buyer stops receiving the payment — and $D_0$ discounts from there. The cash usually arrives some weeks later; dating from the payment date instead shrinks $D_0$ by a fraction of a cent at these rates, and by more when rates are high. Which date a desk uses is a convention worth asking about.
+**Conventions verified 19 Sep 2026.** Dividend dating, as this card uses it: $`t_1`$ is the day the share goes ex — the day a buyer stops receiving the payment — and $`D_0`$ discounts from there. The cash usually arrives some weeks later; dating from the payment date instead shrinks $`D_0`$ by a fraction of a cent at these rates, and by more when rates are high. Which date a desk uses is a convention worth asking about.
 
 > **Say it back**
 > A declared cash dividend splits a share into a dated cheque and a business. The cheque is riskless, so it carries none of the jumpiness and the option has no claim on it. Discount the cheque back to today, subtract it from the quoted price, and price the option on what is left with no yield term at all: $100.00 minus $1.95 gives $98.05, and the one-year call is worth $9.24. Parity carries the escrow on the call's side. Trees must escrow rather than pay the cash at a node, or they stop recombining and blow up from 2,001 nodes to 1,002,001. The catch is that escrow puts the volatility on the reduced share, and a model that shakes the whole share instead prices the same call eight cents higher.
@@ -1151,9 +1159,9 @@ example : (1000 + 1) * (1000 + 1) = 1002001 ∧ 1002001 / (2000 + 1) = 500 := by
 
 ## What this builds on
 
-- [Put-call parity](03-put-call-parity.md): the two-parcel argument this card extends by handing the call parcel a bond worth $D_0$.
-- [Black–Scholes call](01-black-scholes-call.md): the formula itself, and what $d_1$, $d_2$ and $N$ mean. This card changes only what is fed into it.
-- [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): why $u$ and $d = 1/u$ make paths meet, which is the property a cash dividend destroys.
+- [Put-call parity](03-put-call-parity.md): the two-parcel argument this card extends by handing the call parcel a bond worth $`D_0`$.
+- [Black–Scholes call](01-black-scholes-call.md): the formula itself, and what $`d_1`$, $`d_2`$ and $`N`$ mean. This card changes only what is fed into it.
+- [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): why $`u`$ and $`d = 1/u`$ make paths meet, which is the property a cash dividend destroys.
 
 ## Where this goes next
 

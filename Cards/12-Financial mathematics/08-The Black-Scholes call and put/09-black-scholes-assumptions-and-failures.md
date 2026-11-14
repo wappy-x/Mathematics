@@ -43,42 +43,46 @@ All three lines run on the same record of daily moves, so they run together thro
 
 Two formulas run this card. The first is the model premium, from [Black–Scholes call](01-black-scholes-call.md):
 
-$$C = S\,e^{-qT}N(d_1) \;-\; K\,e^{-rT}N(d_2), \qquad d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+C = S\,e^{-qT}N(d_1) \;-\; K\,e^{-rT}N(d_2), \qquad d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
 **Read it aloud:** the premium is the opening balance sheet of a copy — buy this many shares, borrow that much cash, and the difference is what the copy costs to start.
 
-That reading is literal: the copy opens by buying $\delta = e^{-qT}N(d_1) = 0.586851$ of a share and borrowing everything above the premium. Every idealisation here is a condition for that balance sheet to stay accurate to expiry.
+That reading is literal: the copy opens by buying $`\delta = e^{-qT}N(d_1) = 0.586851`$ of a share and borrowing everything above the premium. Every idealisation here is a condition for that balance sheet to stay accurate to expiry.
 
-The second formula is the ledger that tests it. Notation first, in words. Write $v$ for the same call formula applied to today's date and today's price, with the time left in place of $T$: the contract's **mark**.
+The second formula is the ledger that tests it. Notation first, in words. Write $`v`$ for the same call formula applied to today's date and today's price, with the time left in place of $`T`$: the contract's **mark**.
 
-Write $\delta$ for the share count the mark prescribes, $V$ for the hedging account's worth, $h$ for one trading day as a fraction of a year, and $R = e^{rh}$ for one day's growth of a bank balance. Hold the mark's share count, keep the rest in the bank, and one day later
+Write $`\delta`$ for the share count the mark prescribes, $`V`$ for the hedging account's worth, $`h`$ for one trading day as a fraction of a year, and $`R = e^{rh}`$ for one day's growth of a bank balance. Hold the mark's share count, keep the rest in the bank, and one day later
 
-$$V_{i+1} = \delta_i S_{i+1} \;+\; (V_i - \delta_i S_i)\,R \;+\; \delta_i S_i\,(e^{qh} - 1), \qquad \text{leftover} = V_T - \max(S_T - K,\,0),$$
+```math
+V_{i+1} = \delta_i S_{i+1} \;+\; (V_i - \delta_i S_i)\,R \;+\; \delta_i S_i\,(e^{qh} - 1), \qquad \text{leftover} = V_T - \max(S_T - K,\,0),
+```
 
 where a subscript counts days. In words: the bank balance earns a day's interest, the shares pay a day's dividend and are worth whatever tomorrow says, and on the last day the account settles the call and keeps the difference. The account starts at the premium, so a leftover of zero means the copy cost exactly what was charged for it.
 
 | Symbol | Plain meaning | In our example | Push it up and the leftover… |
 | --- | --- | --- | --- |
-| $C$, $P$ | the model premium for the call, and for the put | $9.23 and $6.33 | — |
-| $S$, $s$, $K$ | Acme's price, a price in general, and the **strike** it may be bought at | $100 and $100 | — |
-| $T$, $t$, $h$, $R$ | the option's life, a date inside it, one trading day, a day's bank growth | 1, and 1/252 | — |
-| $r$, $q$ | the bank rate, and the **dividend yield** the shares pay out | 5% and 2% | a second rate for borrowing opens a band |
-| $\sigma$ | **volatility**, how jumpy Acme is taken to be. Say "sigma". | 20% marked, 30% in one world | delivered above the marked figure: the leftover goes negative |
-| $N(x)$, $d_1$, $d_2$ | the **bell curve** area left of $x$, and the two points the formula weighs the share and the cash at | as on the call card | — |
-| $\delta$ | **delta**: shares held per call sold, $e^{-qT}N(d_1)$ | 0.586851 | — |
-| $\Gamma$, $\mathcal{B}$ | **gamma**, the bend: how fast delta itself moves, and the bill a gap pays for it | 0.018951, and $1.42 on the traced record | bigger bend, bigger bill for every gap |
-| $V$, $v$, $E$, $D_i$ | the account's worth, the contract's mark, the surplus of one over the other, and one day's miss | $V$ and $v$ start at $9.23 | — |
-| $J$ | an overnight **gap**: a jump in dollars with no chance to trade | −$10.64 on the traced record | bigger gap, a bill growing with its square |
+| $`C`$, $`P`$ | the model premium for the call, and for the put | $9.23 and $6.33 | — |
+| $`S`$, $`s`$, $`K`$ | Acme's price, a price in general, and the **strike** it may be bought at | $100 and $100 | — |
+| $`T`$, $`t`$, $`h`$, $`R`$ | the option's life, a date inside it, one trading day, a day's bank growth | 1, and 1/252 | — |
+| $`r`$, $`q`$ | the bank rate, and the **dividend yield** the shares pay out | 5% and 2% | a second rate for borrowing opens a band |
+| $`\sigma`$ | **volatility**, how jumpy Acme is taken to be. Say "sigma". | 20% marked, 30% in one world | delivered above the marked figure: the leftover goes negative |
+| $`N(x)`$, $`d_1`$, $`d_2`$ | the **bell curve** area left of $`x`$, and the two points the formula weighs the share and the cash at | as on the call card | — |
+| $`\delta`$ | **delta**: shares held per call sold, $`e^{-qT}N(d_1)`$ | 0.586851 | — |
+| $`\Gamma`$, $`\mathcal{B}`$ | **gamma**, the bend: how fast delta itself moves, and the bill a gap pays for it | 0.018951, and $1.42 on the traced record | bigger bend, bigger bill for every gap |
+| $`V`$, $`v`$, $`E`$, $`D_i`$ | the account's worth, the contract's mark, the surplus of one over the other, and one day's miss | $`V`$ and $`v`$ start at $9.23 | — |
+| $`J`$ | an overnight **gap**: a jump in dollars with no chance to trade | −$10.64 on the traced record | bigger gap, a bill growing with its square |
 
 ### When it holds
 
 Six idealisations. Each holds up a term of the formula; each failure is counted in dollars in Worked numbers.
 
-- **Volatility is one known constant.** It holds up the single $\sigma$ inside $d_1$ and $d_2$. Deliver more than the marked figure and the copy was built too cheap.
-- **The price never gaps: it visits every price on the way.** This is what allows $\delta$ to be used at all, a share count being a slope, and a slope right only for small moves. A jump is taken whole, with no chance to re-measure.
+- **Volatility is one known constant.** It holds up the single $`\sigma`$ inside $`d_1`$ and $`d_2`$. Deliver more than the marked figure and the copy was built too cheap.
+- **The price never gaps: it visits every price on the way.** This is what allows $`\delta`$ to be used at all, a share count being a slope, and a slope right only for small moves. A jump is taken whole, with no chance to re-measure.
 - **Trading is free, and possible at every instant.** This holds up the absence of any cost term. Reset the share count at a finite rate and the bend's bill arrives in lumps rather than smoothly; pay for each trade and the copy costs more than the formula says.
-- **One interest rate, for borrowing and for lending alike.** This holds up the single $e^{-rT}$ and the single carry term. Two rates give two costs of carry, so the answer is a band rather than a price.
-- **Moves are lognormal: the logarithm of the price is bell-curved.** This holds up $N(\cdot)$, which turns an average over possible prices into a formula. That curve rates a 10% down day at 8.38 standard deviations: 8.38 times a typical day's move.
+- **One interest rate, for borrowing and for lending alike.** This holds up the single $`e^{-rT}`$ and the single carry term. Two rates give two costs of carry, so the answer is a band rather than a price.
+- **Moves are lognormal: the logarithm of the price is bell-curved.** This holds up $`N(\cdot)`$, which turns an average over possible prices into a formula. That curve rates a 10% down day at 8.38 standard deviations: 8.38 times a typical day's move.
 - **European exercise: the option is used on the last day only.** This holds up reading the payoff at one date, which is what makes the answer a formula. An option that may be used earlier is worth at least as much, and no closed formula fits it.
 
 Conventions verified 19 Sep 2026: 252 trading days is the usual count for a US equity year, and ten basis points — a tenth of one per cent of the value traded — is a round figure for a liquid single stock rather than a quoted standard.
@@ -95,11 +99,11 @@ A price that is the cost of a recipe is right only if the kitchen behaves. So an
 
 ### Step 1: each idealisation enters at one line of the derivation
 
-1. The share drifts and takes random kicks in log space, with $\sigma$ fixed ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): lognormal moves and constant volatility, spent at once.
+1. The share drifts and takes random kicks in log space, with $`\sigma`$ fixed ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): lognormal moves and constant volatility, spent at once.
 2. Itô's lemma, the chain rule for a randomly moving price, turns that into the option's move ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)), keeping terms as far as the bend. Dropping the rest is legitimate only because the moves are small: no gaps.
-3. Holding $\delta$ shares cancels the randomness — if shares can be traded at that instant for nothing.
+3. Holding $`\delta`$ shares cancels the randomness — if shares can be traded at that instant for nothing.
 4. What is left must earn the bank rate, and there must be exactly one such rate.
-5. Dividends arrive smoothly at rate $q$, so the hedge's shares carry a known income.
+5. Dividends arrive smoothly at rate $`q`$, so the hedge's shares carry a known income.
 6. The payoff is read at expiry and nowhere else, supplying the equation's final condition.
 
 Six lines, six conditions. This card prices each line's failure rather than redoing the derivation.
@@ -108,13 +112,17 @@ Six lines, six conditions. This card prices each line's failure rather than redo
 
 Call the **defect** of one day the amount by which the account's change misses the mark's change:
 
-$$D_i = \delta_i(S_{i+1} - S_i) + \delta_i S_i(e^{qh} - 1) + (R - 1)(v_i - \delta_i S_i) - (v_{i+1} - v_i).$$
+```math
+D_i = \delta_i(S_{i+1} - S_i) + \delta_i S_i(e^{qh} - 1) + (R - 1)(v_i - \delta_i S_i) - (v_{i+1} - v_i).
+```
 
-The first three pieces are what the account earned: the shares' move, their dividend, the interest on the cash. The last is what the mark did. A perfect copy would make the two agree, leaving $D_i$ at zero every day.
+The first three pieces are what the account earned: the shares' move, their dividend, the interest on the cash. The last is what the mark did. A perfect copy would make the two agree, leaving $`D_i`$ at zero every day.
 
-They never quite agree, and the misses accumulate with interest. Writing the account's running surplus over the mark as $E$,
+They never quite agree, and the misses accumulate with interest. Writing the account's running surplus over the mark as $`E`$,
 
-$$E_{i+1} = R\,E_i + D_i, \qquad\text{so}\qquad E_T = \sum_i e^{r(T - t_{i+1})} D_i.$$
+```math
+E_{i+1} = R\,E_i + D_i, \qquad\text{so}\qquad E_T = \sum_i e^{r(T - t_{i+1})} D_i.
+```
 
 The mark on the last day is the payoff, so the final surplus is the leftover. That is an exact identity, not an approximation, and it is the line drawn in the picture above. The code reaches the leftover both ways — rolling the account forward, and summing the defects — and on all 600 runs the two agree to better than a ten-millionth of a dollar.
 
@@ -122,18 +130,24 @@ The mark on the last day is the payoff, so the final surplus is the leftover. Th
 <summary>Detailed proof: the leftover is the day's defects, carried with interest</summary>
 
 Collecting the ledger's terms in the account's worth gives
-$$V_{i+1} = R\,V_i + \delta_i(S_{i+1} - R\,S_i) + \delta_i S_i(e^{qh} - 1).$$
-Subtract $v_{i+1}$, then add and subtract $R\,v_i$:
-$$E_{i+1} = R\,E_i + \Big[\delta_i(S_{i+1} - R\,S_i) + \delta_i S_i(e^{qh}-1) + (R-1)v_i - (v_{i+1} - v_i)\Big].$$
-Writing $R\,S_i$ as $S_i + (R-1)S_i$ and collecting the $(R-1)$ terms turns the bracket into $D_i$. Rebalancing at the end of a day swaps shares for cash at one price, changing neither the account nor the surplus. Starting from a surplus of zero, iterating multiplies each day's defect by $R$ once for every day that follows it, which is $e^{r(T-t_{i+1})}$. At expiry the mark equals the payoff. No limit and no stochastic calculus is used: this is finite arithmetic on the prices that actually occurred.
+
+$`\displaystyle V_{i+1} = R\,V_i + \delta_i(S_{i+1} - R\,S_i) + \delta_i S_i(e^{qh} - 1).`$
+
+Subtract $`v_{i+1}`$, then add and subtract $`R\,v_i`$:
+
+$`\displaystyle E_{i+1} = R\,E_i + \Big[\delta_i(S_{i+1} - R\,S_i) + \delta_i S_i(e^{qh}-1) + (R-1)v_i - (v_{i+1} - v_i)\Big].`$
+
+Writing $`R\,S_i`$ as $`S_i + (R-1)S_i`$ and collecting the $`(R-1)`$ terms turns the bracket into $`D_i`$. Rebalancing at the end of a day swaps shares for cash at one price, changing neither the account nor the surplus. Starting from a surplus of zero, iterating multiplies each day's defect by $`R`$ once for every day that follows it, which is $`e^{r(T-t_{i+1})}`$. At expiry the mark equals the payoff. No limit and no stochastic calculus is used: this is finite arithmetic on the prices that actually occurred.
 
 </details>
 
 ### Step 3: a gap splits into a stale slope and a bill for the bend
 
-A gap is a move with no chance to trade in the middle of it. Let $s$ be the price just before, $J$ the jump in dollars, $\delta_{\text{old}}$ the share count carried in from yesterday's mark, and $\delta_*$ the count the mark prescribes at $s$ right now. The gap's defect splits exactly:
+A gap is a move with no chance to trade in the middle of it. Let $`s`$ be the price just before, $`J`$ the jump in dollars, $`\delta_{\text{old}}`$ the share count carried in from yesterday's mark, and $`\delta_*`$ the count the mark prescribes at $`s`$ right now. The gap's defect splits exactly:
 
-$$D_{\text{gap}} = (\delta_{\text{old}} - \delta_*)\,J \;-\; \mathcal{B}, \qquad \mathcal{B} = v(t, s+J) - v(t, s) - \delta_* J.$$
+```math
+D_{\text{gap}} = (\delta_{\text{old}} - \delta_*)\,J \;-\; \mathcal{B}, \qquad \mathcal{B} = v(t, s+J) - v(t, s) - \delta_* J.
+```
 
 The first piece prices a stale share count: yesterday's slope applied to today's jump. Its sign goes either way, and over 200 records it averages 0.001449 dollars, a seventh of a cent. The second, the bill for the bend, is the distance between the option's curve and its tangent — never negative, because that curve bends upward everywhere. On the traced record the two came to −$0.71 and $1.42.
 
@@ -142,9 +156,11 @@ Hedging more often shrinks the stale-slope term towards nothing, and does nothin
 <details>
 <summary>Detailed proof: a gap always bills the hedger for the bend</summary>
 
-Fix a date before expiry and a price $s > 0$. On the segment from $s$ to $s+J$ the mark is twice differentiable and its second derivative, the bend $\Gamma$, is strictly positive. Put $f(u) = v(t, s + uJ)$ for $u$ between 0 and 1, so $f'(u) = J\,\delta(t, s+uJ)$ and $f''(u) = J^2\,\Gamma(t, s+uJ)$. Integrating twice, in the form $f(1) - f(0) - f'(0) = \int_0^1 (1-u) f''(u)\,du$, gives
-$$\mathcal{B} = J^2 \int_0^1 (1-u)\,\Gamma(t, s+uJ)\,du \; \ge \; 0,$$
-strictly positive whenever the jump is not zero, and growing with its square. Direction never enters: an upward gap bills the hedger of a short call exactly as a downward one does. Adding and subtracting $\delta_* J$ in the defect $\delta_{\text{old}}J - [v(t,s+J) - v(t,s)]$ gives the split above. The code checks the split to a billionth of a dollar on every record, and finds the bill positive on all 200.
+Fix a date before expiry and a price $`s > 0`$. On the segment from $`s`$ to $`s+J`$ the mark is twice differentiable and its second derivative, the bend $`\Gamma`$, is strictly positive. Put $`f(u) = v(t, s + uJ)`$ for $`u`$ between 0 and 1, so $`f'(u) = J\,\delta(t, s+uJ)`$ and $`f''(u) = J^2\,\Gamma(t, s+uJ)`$. Integrating twice, in the form $`f(1) - f(0) - f'(0) = \int_0^1 (1-u) f''(u)\,du`$, gives
+
+$`\displaystyle \mathcal{B} = J^2 \int_0^1 (1-u)\,\Gamma(t, s+uJ)\,du \; \ge \; 0,`$
+
+strictly positive whenever the jump is not zero, and growing with its square. Direction never enters: an upward gap bills the hedger of a short call exactly as a downward one does. Adding and subtracting $`\delta_* J`$ in the defect $`\delta_{\text{old}}J - [v(t,s+J) - v(t,s)]`$ gives the split above. The code checks the split to a billionth of a dollar on every record, and finds the bill positive on all 200.
 
 </details>
 
@@ -166,13 +182,13 @@ Volatility is the sharpest of the six, because its cost needs no simulation at a
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| variance the year delivers | $\tfrac12 \times 0.20^2 + \tfrac12 \times 0.30^2$ | $0.065$ |
-| the whole year's volatility | $\sqrt{0.065}$ | $0.254951$ |
-| the premium that volatility deserves | the same formula at 25.4951% | $\$11.311639$ |
-| the premium actually charged | the house call at 20% | $\$9.227006$ |
-| the gap between the two prices | $11.311639 - 9.227006$ | $\mathbf{\$2.084633}$ |
-| the same from vega, the premium's gain per unit of volatility, over 5.4951 points of it | $37.901158 \times 0.054951$ | $\approx \$2.08$ |
-| what 200 hedged records actually left | mean leftover, switch world | $\mathbf{-\$2.113681}$ |
+| variance the year delivers | $`\tfrac12 \times 0.20^2 + \tfrac12 \times 0.30^2`$ | $`0.065`$ |
+| the whole year's volatility | $`\sqrt{0.065}`$ | $`0.254951`$ |
+| the premium that volatility deserves | the same formula at 25.4951% | $`\$11.311639`$ |
+| the premium actually charged | the house call at 20% | $`\$9.227006`$ |
+| the gap between the two prices | $`11.311639 - 9.227006`$ | $`\mathbf{\$2.084633}`$ |
+| the same from vega, the premium's gain per unit of volatility, over 5.4951 points of it | $`37.901158 \times 0.054951`$ | $`\approx \$2.08`$ |
+| what 200 hedged records actually left | mean leftover, switch world | $`\mathbf{-\$2.113681}`$ |
 
 The measured loss and the difference between two prices agree to three cents, inside the sampling error of 200 records. **Getting volatility wrong is not bad luck; the bill's size is the distance between two prices.** The hedge collects it unevenly, though: across the 200 records the spread is $1.56 and the worst record paid $6.89. The same arithmetic, reversed, pays the dealer who marks 20% into a quiet 10% year.
 
@@ -182,12 +198,12 @@ Same option, same $9.23 premium, one idealisation dropped at a time.
 
 | Dropped | Comes out at | What went wrong |
 | --- | --- | --- |
-| One constant volatility: 20% marked, 25.50% delivered | mean −$2.11, worst −$6.89 | $\sigma$ sets the width of the future, and the copy used the wrong one |
-| No gaps: a 10% overnight fall at mid-year | mean −$1.06, worst −$2.84 | $\delta$ is a slope, and the curve pulls away from it over a big move |
+| One constant volatility: 20% marked, 25.50% delivered | mean −$2.11, worst −$6.89 | $`\sigma`$ sets the width of the future, and the copy used the wrong one |
+| No gaps: a 10% overnight fall at mid-year | mean −$1.06, worst −$2.84 | $`\delta`$ is a slope, and the curve pulls away from it over a big move |
 | Continuous hedging: once a day instead | spread of $0.45 about a mean of $0.02, worst −$1.77 | the bend's bill arrives in lumps, not smoothly; Boyle-Emanuel puts the spread at $0.42 |
 | Free trading: ten basis points a trade | $0.53 of bill, $0.47 of it rebalancing | the formula has nowhere to put a commission; Leland's form says $0.47 |
 | One rate: borrow at 7%, lend at 3% | a band from $8.27 to $10.24, $1.98 wide | two rates give two costs of carry, so there is no one price |
-| Lognormal moves: a 10% down day | 8.38 standard deviations, one per $10^{14}$ years | a bell curve on the log price leaves no room for a day markets keep having |
+| Lognormal moves: a 10% down day | 8.38 standard deviations, one per $`10^{14}`$ years | a bell curve on the log price leaves no room for a day markets keep having |
 | European exercise: an American put instead | $6.66 against $6.33 | the payoff is no longer read at one date, so no closed formula fits |
 
 The last row measures a put rather than the call: with Acme's dividend below the bank rate, exercising this call early gains almost nothing, while the put gains $0.33.
@@ -807,7 +823,7 @@ end BlackScholesAssumptions
 
 ## Where you meet it in real life
 
-- **Quoting in volatility.** Desks run the formula backwards, price in and $\sigma$ out, precisely because the assumptions fail in known ways: it survives as a common language, not a truth claim. See [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md).
+- **Quoting in volatility.** Desks run the formula backwards, price in and $`\sigma`$ out, precisely because the assumptions fail in known ways: it survives as a common language, not a truth claim. See [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md).
 - **The smile.** One volatility cannot fit every strike, and that refusal is the first idealisation failing in public, every day: [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).
 - **Overnight risk limits.** A desk's cap on how short it may be in one name near an earnings date exists because of the bend's bill, not the average. Short in one name means owing one company's shares; an earnings date is the day that company reports its profits.
 - **Model risk review.** A validation team asks what this card measures: which assumption is this book short, and what does it cost when it fails. See [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md).

@@ -38,54 +38,49 @@ Each corner is a pure bean; each point inside is a blend, nearer the bean it hol
 
 ## The formula
 
-This card introduces the wing's names for a problem's parts, in words first. The **objective** $f_0$ is the function to minimise. Each **inequality function** $f_i$ must stay at or below zero; each **equality function** $h_j$ must equal zero exactly. A point that meets all of them is **feasible**. The **optimal value** $p^\star$ is the lowest objective over all feasible points.
+This card introduces the wing's names for a problem's parts, in words first. The **objective** $`f_0`$ is the function to minimise. Each **inequality function** $`f_i`$ must stay at or below zero; each **equality function** $`h_j`$ must equal zero exactly. A point that meets all of them is **feasible**. The **optimal value** $`p^\star`$ is the lowest objective over all feasible points.
 
-$$
-\begin{aligned}
-\text{minimise}\quad & f_0(x)\\
-\text{subject to}\quad & f_i(x) \le 0, \qquad i = 1, \dots, m\\
-& h_j(x) = 0, \qquad j = 1, \dots, p
-\end{aligned}
-\qquad\text{with } f_0, f_1, \dots, f_m \text{ convex and } h_1, \dots, h_p \text{ affine.}
-$$
+```math
+\begin{aligned} \text{minimise}\quad & f_0(x)\\ \text{subject to}\quad & f_i(x) \le 0, \qquad i = 1, \dots, m\\ & h_j(x) = 0, \qquad j = 1, \dots, p \end{aligned} \qquad\text{with } f_0, f_1, \dots, f_m \text{ convex and } h_1, \dots, h_p \text{ affine.}
+```
 
 **Read it aloud:** make a convex cost as small as possible while some convex quantities stay at or below zero and some flat ones sit exactly at zero.
 
-An **affine** function is a weighted sum of the variables plus a constant, such as $x_1 + x_2 + x_3 - 1$: its graph is flat. A **convex** function bends upward or not at all: its chord between any two points sits on or above its graph ([Convex functions](03-convex-functions-and-their-tests.md)).
+An **affine** function is a weighted sum of the variables plus a constant, such as $`x_1 + x_2 + x_3 - 1`$: its graph is flat. A **convex** function bends upward or not at all: its chord between any two points sits on or above its graph ([Convex functions](03-convex-functions-and-their-tests.md)).
 
-The blend, moved into this shape. Write $c = (9, 12, 6)$ for the prices, $s = (1.2, 1.4, 2.4)$ for the caffeine, $r = (0.5, 0.3, 0.2)$ for the house recipe, and $c^{\mathsf T}x = 9x_1 + 12x_2 + 6x_3$ for a price-weighted sum (the code writes it `c.x`). Every "at least" is flipped into "at most zero" by moving everything to one side:
+The blend, moved into this shape. Write $`c = (9, 12, 6)`$ for the prices, $`s = (1.2, 1.4, 2.4)`$ for the caffeine, $`r = (0.5, 0.3, 0.2)`$ for the house recipe, and $`c^{\mathsf T}x = 9x_1 + 12x_2 + 6x_3`$ for a price-weighted sum (the code writes it `c.x`). Every "at least" is flipped into "at most zero" by moving everything to one side:
 
 | Piece | Formula | Kind |
 | --- | --- | --- |
-| $f_0$, the cost to minimise | $c^{\mathsf T}x$, pounds a kilo | affine, so convex |
-| $f_1$, the caffeine shortfall | $1.6 - s^{\mathsf T}x \le 0$ | affine |
-| $f_2$, the taste excess | $\lVert x - r\rVert^2 - 0.04 \le 0$ | convex |
-| $f_3, f_4, f_5$, no negative beans | $-x_1 \le 0$, $-x_2 \le 0$, $-x_3 \le 0$ | affine |
-| $h_1$, one kilo in all | $x_1 + x_2 + x_3 - 1 = 0$ | affine |
+| $`f_0`$, the cost to minimise | $`c^{\mathsf T}x`$, pounds a kilo | affine, so convex |
+| $`f_1`$, the caffeine shortfall | $`1.6 - s^{\mathsf T}x \le 0`$ | affine |
+| $`f_2`$, the taste excess | $`\lVert x - r\rVert^2 - 0.04 \le 0`$ | convex |
+| $`f_3, f_4, f_5`$, no negative beans | $`-x_1 \le 0`$, $`-x_2 \le 0`$, $`-x_3 \le 0`$ | affine |
+| $`h_1`$, one kilo in all | $`x_1 + x_2 + x_3 - 1 = 0`$ | affine |
 
-Here $m = 5$ and $p = 1$. Call $\lVert x - r\rVert^2$, the squared distance from the recipe, the **taste** of a blend.
+Here $`m = 5`$ and $`p = 1`$. Call $`\lVert x - r\rVert^2`$, the squared distance from the recipe, the **taste** of a blend.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (x_1, x_2, x_3)$ | the choice: kilos of Brazil, Colombia, Robusta in one kilo | (0.5000, 0.1586, 0.3414) at the best | — |
-| $f_0$ | the objective: the function minimised | cost, $c^{\mathsf T}x$ | — |
-| $f_i$ | an inequality function, kept at or below 0 | caffeine shortfall, taste excess, minus each share | raise its limit and $p^\star$ can only fall |
-| $h_j$ | an equality function, held at exactly 0 | $x_1 + x_2 + x_3 - 1$ | — |
-| $m$, $p$; $i$, $j$ | how many inequalities and equalities; the counters that number them | 5 and 1 | more pieces, fewer feasible points |
-| $p^\star$ | the optimal value: lowest objective over feasible points | £8.4515 a kilo | — |
-| $x^\star$ | a minimiser: a feasible point whose objective is $p^\star$ | (0.5000, 0.1586, 0.3414) | — |
-| $c$ | the price of each bean, £ a kilo | (9, 12, 6) | $p^\star$ rises |
-| $s$ | the caffeine of each bean, percent | (1.2, 1.4, 2.4) | the floor is easier to meet |
-| $r$ | the house recipe | (0.5, 0.3, 0.2) | — |
-| $\theta$, $y$ | a mixing weight between 0 and 1, and a second blend to mix $x$ with | one half, in the midpoint test | — |
-| $\lVert v\rVert$ | the length of a vector $v$: square root of its squared entries added | $\lVert x^\star - r\rVert = 0.2$ | — |
+| $`x = (x_1, x_2, x_3)`$ | the choice: kilos of Brazil, Colombia, Robusta in one kilo | (0.5000, 0.1586, 0.3414) at the best | — |
+| $`f_0`$ | the objective: the function minimised | cost, $`c^{\mathsf T}x`$ | — |
+| $`f_i`$ | an inequality function, kept at or below 0 | caffeine shortfall, taste excess, minus each share | raise its limit and $`p^\star`$ can only fall |
+| $`h_j`$ | an equality function, held at exactly 0 | $`x_1 + x_2 + x_3 - 1`$ | — |
+| $`m`$, $`p`$; $`i`$, $`j`$ | how many inequalities and equalities; the counters that number them | 5 and 1 | more pieces, fewer feasible points |
+| $`p^\star`$ | the optimal value: lowest objective over feasible points | £8.4515 a kilo | — |
+| $`x^\star`$ | a minimiser: a feasible point whose objective is $`p^\star`$ | (0.5000, 0.1586, 0.3414) | — |
+| $`c`$ | the price of each bean, £ a kilo | (9, 12, 6) | $`p^\star`$ rises |
+| $`s`$ | the caffeine of each bean, percent | (1.2, 1.4, 2.4) | the floor is easier to meet |
+| $`r`$ | the house recipe | (0.5, 0.3, 0.2) | — |
+| $`\theta`$, $`y`$ | a mixing weight between 0 and 1, and a second blend to mix $`x`$ with | one half, in the midpoint test | — |
+| $`\lVert v\rVert`$ | the length of a vector $`v`$: square root of its squared entries added | $`\lVert x^\star - r\rVert = 0.2`$ | — |
 
 ### When it holds
 
-- **Every $f_i$ is convex.** Then "at most zero" cuts out a region with no dents. Flip the taste rule to "at least 0.04 away" and the allowed blends are the triangle with a hole in it: two blends on opposite sides of the hole mix to one inside it.
-- **Every $h_j$ is affine.** A curved function set equal to a number is a thin curve, not a region. "Taste exactly 0.04" is the circle itself, and the mix of two points on it lands inside.
+- **Every $`f_i`$ is convex.** Then "at most zero" cuts out a region with no dents. Flip the taste rule to "at least 0.04 away" and the allowed blends are the triangle with a hole in it: two blends on opposite sides of the hole mix to one inside it.
+- **Every $`h_j`$ is affine.** A curved function set equal to a number is a thin curve, not a region. "Taste exactly 0.04" is the circle itself, and the mix of two points on it lands inside.
 - **The objective is convex, and minimised.** To maximise, minimise its negative, which needs the original to be concave. A ratio such as cost per caffeine point is neither, and the rulebook rejects it.
-- **Something is feasible.** A caffeine floor above Robusta's own 2.4 percent rules out every blend; the solver reports the problem infeasible and $p^\star$ is taken to be $+\infty$.
+- **Something is feasible.** A caffeine floor above Robusta's own 2.4 percent rules out every blend; the solver reports the problem infeasible and $`p^\star`$ is taken to be $`+\infty`$.
 
 ---
 
@@ -97,23 +92,25 @@ Deciding whether an arbitrary formula is convex is hard. For polynomials of degr
 
 ### Step 1: a convex function at most zero cuts out a convex region
 
-Take two blends $x$ and $y$ that both pass $f_i \le 0$, and mix them with weight $\theta$ between 0 and 1: the point $\theta x + (1 - \theta) y$ ([Convex sets](02-convex-sets.md)). Convexity says the function at the mix is at most the same mix of its values:
+Take two blends $`x`$ and $`y`$ that both pass $`f_i \le 0`$, and mix them with weight $`\theta`$ between 0 and 1: the point $`\theta x + (1 - \theta) y`$ ([Convex sets](02-convex-sets.md)). Convexity says the function at the mix is at most the same mix of its values:
 
-$$f_i(\theta x + (1-\theta)y) \le \theta f_i(x) + (1-\theta) f_i(y) \le 0.$$
+```math
+f_i(\theta x + (1-\theta)y) \le \theta f_i(x) + (1-\theta) f_i(y) \le 0.
+```
 
 Both values on the right are at most zero, so their weighted average is too. The mix passes. On the blend: two blends inside the taste circle mix to a blend inside it.
 
 ### Step 2: equalities must be flat
 
-For an affine $h_j$ the mixing inequality is an equality, so two points with $h_j = 0$ mix to a point with $h_j = 0$: the set is a flat plane, and planes are convex.
+For an affine $`h_j`$ the mixing inequality is an equality, so two points with $`h_j = 0`$ mix to a point with $`h_j = 0`$: the set is a flat plane, and planes are convex.
 
-Why not allow a convex $h_j$? The rule "$h_j = 0$" is the pair "$h_j \le 0$ and $-h_j \le 0$". Step 1 needs both $h_j$ and $-h_j$ to be convex, so $h_j$ bends neither up nor down: it is affine.
+Why not allow a convex $`h_j`$? The rule "$`h_j = 0`$" is the pair "$`h_j \le 0`$ and $`-h_j \le 0`$". Step 1 needs both $`h_j`$ and $`-h_j`$ to be convex, so $`h_j`$ bends neither up nor down: it is affine.
 
 The taste circle shows the failure. The cheapest blend x* = (0.5000, 0.1586, 0.3414) and its mirror image through the recipe, (0.5000, 0.4414, 0.0586), both have taste exactly 0.0400. Their midpoint is the recipe itself, taste 0.0000: off the circle.
 
 ### Step 3: overlap keeps convexity
 
-A point is feasible when it passes every piece. If $x$ and $y$ are feasible, Steps 1 and 2 put every mix of them inside each piece's region, so inside all of them at once. The feasible set of a standard-form problem is convex. For the blend it is the shaded piece of the circle in the picture.
+A point is feasible when it passes every piece. If $`x`$ and $`y`$ are feasible, Steps 1 and 2 put every mix of them inside each piece's region, so inside all of them at once. The feasible set of a standard-form problem is convex. For the blend it is the shaded piece of the circle in the picture.
 
 ### Step 4: a convex objective on a convex set has no false bottoms
 
@@ -123,14 +120,14 @@ On a convex feasible set, every local minimum of a convex objective is global ([
 
 The solver cannot test convexity numerically on every point, so it reads the formula as a tree of known parts and applies the operations of [Building convex functions](09-operations-that-preserve-convexity.md):
 
-1. **Known atoms.** An affine expression is affine. The square of an affine expression is convex. A length $\lVert v\rVert$ is convex. A square root is concave (bends down) and increasing.
+1. **Known atoms.** An affine expression is affine. The square of an affine expression is convex. A length $`\lVert v\rVert`$ is convex. A square root is concave (bends down) and increasing.
 2. **Sums and multiples.** A sum of convex pieces is convex; a positive multiple keeps the shape and a negative one flips it.
 3. **Composition.** A convex atom applied to an affine expression stays convex. An increasing convex atom applied to a convex expression stays convex, and an increasing concave atom applied to a concave expression stays concave.
 4. **Anything else is "unknown"**, and an unknown piece is rejected.
 
-The taste piece passes in three moves: $x_1 - 0.5$ is affine, so its square is convex; three convex squares add to a convex sum; subtracting 0.04 keeps it convex.
+The taste piece passes in three moves: $`x_1 - 0.5`$ is affine, so its square is convex; three convex squares add to a convex sum; subtracting 0.04 keeps it convex.
 
-The rulebook is cautious, not clever. Write the same taste rule as $\sqrt{\lVert x - r\rVert^2} - 0.2 \le 0$ and it fails: a concave square root of a convex sum has no rule, though the result is the length $\lVert x - r\rVert$, which is convex. The code shows this twice: the rules say "unknown", and 0 of 2,000 random midpoint tests find a dent. Squared as above, it passes; written with rule 1's length atom it would pass too, though the code's small rulebook leaves that atom out.
+The rulebook is cautious, not clever. Write the same taste rule as $`\sqrt{\lVert x - r\rVert^2} - 0.2 \le 0`$ and it fails: a concave square root of a convex sum has no rule, though the result is the length $`\lVert x - r\rVert`$, which is convex. The code shows this twice: the rules say "unknown", and 0 of 2,000 random midpoint tests find a dent. Squared as above, it passes; written with rule 1's length atom it would pass too, though the code's small rulebook leaves that atom out.
 
 This discipline, building every formula from parts whose shape is known, is called **disciplined convex programming** (the paper of that name in Sources).
 
@@ -138,13 +135,15 @@ This discipline, building every formula from parts whose shape is known, is call
 
 The rules prove the problem is convex; they do not say what the answer is. The wing's honesty rule asks for evidence that nothing does better, and for the blend one inequality gives it.
 
-Every blend $x$ and the recipe $r$ both add to 1, so $x - r$ adds to 0. Subtracting the same number from every price therefore leaves $c^{\mathsf T}(x - r)$ unchanged. Subtract the average price, 9: the prices become (0, 3, −3). The average is the choice that makes this price vector shortest, so the bound below is as tight as it can be. Then
+Every blend $`x`$ and the recipe $`r`$ both add to 1, so $`x - r`$ adds to 0. Subtracting the same number from every price therefore leaves $`c^{\mathsf T}(x - r)`$ unchanged. Subtract the average price, 9: the prices become (0, 3, −3). The average is the choice that makes this price vector shortest, so the bound below is as tight as it can be. Then
 
-$$c^{\mathsf T}x = c^{\mathsf T}r + (0, 3, -3)^{\mathsf T}(x - r) \;\ge\; 9.30 - \lVert(0, 3, -3)\rVert \cdot \lVert x - r\rVert \;\ge\; 9.30 - 4.2426 \times 0.2 = 8.4515.$$
+```math
+c^{\mathsf T}x = c^{\mathsf T}r + (0, 3, -3)^{\mathsf T}(x - r) \;\ge\; 9.30 - \lVert(0, 3, -3)\rVert \cdot \lVert x - r\rVert \;\ge\; 9.30 - 4.2426 \times 0.2 = 8.4515.
+```
 
-The middle step is the Cauchy–Schwarz inequality: a dot product is at least minus the product of the two lengths. The last step uses the taste rule, $\lVert x - r\rVert \le 0.2$. So no blend that tastes right costs less than £8.4515 a kilo, whatever its caffeine.
+The middle step is the Cauchy–Schwarz inequality: a dot product is at least minus the product of the two lengths. The last step uses the taste rule, $`\lVert x - r\rVert \le 0.2`$. So no blend that tastes right costs less than £8.4515 a kilo, whatever its caffeine.
 
-The bound is met when $x - r$ points exactly against (0, 3, −3) with length 0.2: $x^\star = r - 0.2 \times (0, 3, -3)/4.2426$. That blend has 1.6414 percent caffeine, above the floor, and no negative bean. It is feasible and meets the bound, so it is optimal, and $p^\star = 8.4515$.
+The bound is met when $`x - r`$ points exactly against (0, 3, −3) with length 0.2: $`x^\star = r - 0.2 \times (0, 3, -3)/4.2426`$. That blend has 1.6414 percent caffeine, above the floor, and no negative bean. It is feasible and meets the bound, so it is optimal, and $`p^\star = 8.4515`$.
 
 The caffeine floor is not tight at the answer: it rules out the recipe, but the cheapest tasting-right blend clears it anyway. When a floor is tight, the certificate needs a price on that constraint too, a Lagrange multiplier; that general version waits for the [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md) (named for Karush, Kuhn and Tucker) on the constrained-optimisation shelf.
 
@@ -173,7 +172,7 @@ The blend meets the bound, so nothing tastes right and costs less: switch to 50 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Taste written as "exactly 0.04" | rejected; x* and its mirror both have taste 0.0400, their midpoint 0.0000 | A curved equality is a circle, not a region |
-| Taste written as $\sqrt{\text{taste}} - 0.2 \le 0$ | rejected, though 0 of 2,000 midpoint tests fail | The rules have no case for a concave root of a convex sum |
+| Taste written as $`\sqrt{\text{taste}} - 0.2 \le 0`$ | rejected, though 0 of 2,000 midpoint tests fail | The rules have no case for a concave root of a convex sum |
 | Minimise cost per caffeine point | rejected; Brazil 7.5000, Colombia 8.5714, half and half 8.0769, above their average 8.0357 | A ratio of affine functions is not convex |
 | Caffeine floor typed the wrong way round, "at most 1.6" | accepted; £8.4916 a kilo | The rules check shape, not meaning |
 
@@ -570,7 +569,7 @@ Lean proves the standard-form facts for any number of variables and pieces, and 
 - If every inequality function is convex and every equality function is affine, the feasible set is convex: any mix of two feasible points is feasible.
 - With a convex objective on that feasible set, a feasible point lowest among the feasible points near it is lowest among all of them.
 - No feasible blend costs less than 9.30 − 0.2 × √18, which is 93/10 − 3√2/5, about £8.4515 a kilo.
-- The blend (0.5, 0.3 − √2/10, 0.2 + √2/10) is feasible and costs exactly that, so the optimal value $p^\star$ is 93/10 − 3√2/5.
+- The blend (0.5, 0.3 − √2/10, 0.2 + √2/10) is feasible and costs exactly that, so the optimal value $`p^\star`$ is 93/10 − 3√2/5.
 - The hand arithmetic holds exactly: the recipe costs £9.30 at 1.5 percent caffeine. Prices minus their average 9 are (0, 3, −3), squared length 18.
 - The ratio mistake holds exactly: Brazil 7.5, Colombia 60/7, half and half 105/13, above their average 225/28.
 
@@ -704,7 +703,7 @@ example : (225 / 28 : ℚ) < 105 / 13 := by norm_num
 > **Setting a curved quantity equal to a number.** "The taste distance is exactly 0.04" sounds as harmless as "at most 0.04", but it asks for a thin circle, not the disc inside it. The mix of x* and its mirror blend is the recipe, taste 0.0000, so the set has gaps and a solver may stop at a point that is not the lowest. The rulebook rejects it because only affine functions may be set equal to zero.
 >
 > - **Getting the direction wrong.** "Caffeine at most 1.6" is still convex and is accepted, and the answer, £8.4916 a kilo, answers the wrong question. The rules check shape, not meaning.
-> - **Taking a rejection as proof of non-convexity.** $\sqrt{\text{taste}} - 0.2 \le 0$ is rejected, yet 0 of 2,000 midpoint tests fail: it is a convex length written in a form the rules cannot read. Rewrite it with a known atom.
+> - **Taking a rejection as proof of non-convexity.** $`\sqrt{\text{taste}} - 0.2 \le 0`$ is rejected, yet 0 of 2,000 midpoint tests fail: it is a convex length written in a form the rules cannot read. Rewrite it with a known atom.
 > - **Taking a passed midpoint test as proof.** Random tests can only find dents, never rule them out; the ratio fails on 218 of 2,000 pairs, and a smaller sample could miss them all.
 > - **Calling a search's best answer optimal without a certificate.** The grid's best, £8.4540, is 0.0025 above the true answer; only the bound shows that £8.4515 is the floor.
 

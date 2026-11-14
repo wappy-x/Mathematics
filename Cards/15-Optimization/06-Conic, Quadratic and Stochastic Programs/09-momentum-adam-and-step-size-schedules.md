@@ -6,11 +6,13 @@
 
 ## General Overview
 
-A courier fits delivery times with two weights (multipliers): one on the number of parcels on the van, one on the distance driven in kilometres. The distances run ten times larger than the parcel counts, so the squared error of the fit bends 100 times more sharply in the distance weight than in the parcel weight. Measure each weight from its best value, strip the fit to its shape, and the job is: choose two numbers, $x_1$ and $x_2$, to **minimise**
+A courier fits delivery times with two weights (multipliers): one on the number of parcels on the van, one on the distance driven in kilometres. The distances run ten times larger than the parcel counts, so the squared error of the fit bends 100 times more sharply in the distance weight than in the parcel weight. Measure each weight from its best value, strip the fit to its shape, and the job is: choose two numbers, $`x_1`$ and $`x_2`$, to **minimise**
 
-$$f(x_1, x_2) = \tfrac12\left(x_1^2 + 100\,x_2^2\right),$$
+```math
+f(x_1, x_2) = \tfrac12\left(x_1^2 + 100\,x_2^2\right),
+```
 
-with no limits on either number, starting from $(10, 1)$. The bottom is $(0, 0)$, where $f = 0$. That is certain, not found: $f$ is a sum of squares, so it is never below 0. The surface is a long narrow valley: 10 units to walk along the floor, between walls that curve 100 times more sharply than the floor.
+with no limits on either number, starting from $`(10, 1)`$. The bottom is $`(0, 0)`$, where $`f = 0`$. That is certain, not found: $`f`$ is a sum of squares, so it is never below 0. The surface is a long narrow valley: 10 units to walk along the floor, between walls that curve 100 times more sharply than the floor.
 
 Plain gradient descent (step downhill, a fixed distance per unit of slope) needs **576 steps** to come within 0.0001 of the bottom, even with its best fixed step. The steep walls force a short step, and the short step crawls along the gentle floor while it zigzags from wall to wall.
 
@@ -30,49 +32,57 @@ Every panel is drawn to the same scale in both directions, from the printed coor
 
 ## The formula
 
-Notation first, in words. $x_k$ is the point after $k$ steps and $\alpha$ is the step size, as on [Gradient descent](../02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md). This card introduces $\beta$, the **momentum fraction**: how much of the last move is carried into the next. It also introduces $\beta_1$ and $\beta_2$, Adam's two memory fractions. Write $g = \nabla f$ for the slope (gradient).
+Notation first, in words. $`x_k`$ is the point after $`k`$ steps and $`\alpha`$ is the step size, as on [Gradient descent](../02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md). This card introduces $`\beta`$, the **momentum fraction**: how much of the last move is carried into the next. It also introduces $`\beta_1`$ and $`\beta_2`$, Adam's two memory fractions. Write $`g = \nabla f`$ for the slope (gradient).
 
 **Heavy ball** (Polyak, 1964):
 
-$$x_{k+1} = x_k - \alpha\,\nabla f(x_k) + \beta\,(x_k - x_{k-1})$$
+```math
+x_{k+1} = x_k - \alpha\,\nabla f(x_k) + \beta\,(x_k - x_{k-1})
+```
 
 **Read it aloud:** step downhill from where you are, then keep going a fraction β of the way you just came.
 
 **Nesterov's method** (1983) moves first, then looks:
 
-$$y_k = x_k + \beta\,(x_k - x_{k-1}), \qquad x_{k+1} = y_k - \alpha\,\nabla f(y_k)$$
+```math
+y_k = x_k + \beta\,(x_k - x_{k-1}), \qquad x_{k+1} = y_k - \alpha\,\nabla f(y_k)
+```
 
 **Read it aloud:** coast a fraction β of the last move to a look-ahead point, then step downhill using the slope measured there.
 
-**Adam** (Kingma and Ba, 2014) works on each variable separately. Step $k = 1, 2, \dots$ takes the slope $g_k$ at $x_{k-1}$ and keeps two running averages, of the slope and of its square:
+**Adam** (Kingma and Ba, 2014) works on each variable separately. Step $`k = 1, 2, \dots`$ takes the slope $`g_k`$ at $`x_{k-1}`$ and keeps two running averages, of the slope and of its square:
 
-$$m_k = \beta_1 m_{k-1} + (1-\beta_1)\,g_k, \qquad v_k = \beta_2 v_{k-1} + (1-\beta_2)\,g_k^2, \qquad m_0 = v_0 = 0$$
+```math
+m_k = \beta_1 m_{k-1} + (1-\beta_1)\,g_k, \qquad v_k = \beta_2 v_{k-1} + (1-\beta_2)\,g_k^2, \qquad m_0 = v_0 = 0
+```
 
-$$x_k = x_{k-1} - \alpha_k\,\frac{\hat m_k}{\sqrt{\hat v_k} + \epsilon}, \qquad \hat m_k = \frac{m_k}{1-\beta_1^{\,k}}, \quad \hat v_k = \frac{v_k}{1-\beta_2^{\,k}}$$
+```math
+x_k = x_{k-1} - \alpha_k\,\frac{\hat m_k}{\sqrt{\hat v_k} + \epsilon}, \qquad \hat m_k = \frac{m_k}{1-\beta_1^{\,k}}, \quad \hat v_k = \frac{v_k}{1-\beta_2^{\,k}}
+```
 
 **Read it aloud:** move each variable by the step size times its recent average slope divided by its recent typical slope size.
 
-The settings tuned to this valley, from Why it works: heavy ball takes $\alpha = 4/(\sqrt L + \sqrt\mu)^2$ and $\beta = \big((\sqrt\kappa - 1)/(\sqrt\kappa + 1)\big)^2$; Nesterov takes $\alpha = 1/L$ and $\beta = (\sqrt\kappa - 1)/(\sqrt\kappa + 1)$.
+The settings tuned to this valley, from Why it works: heavy ball takes $`\alpha = 4/(\sqrt L + \sqrt\mu)^2`$ and $`\beta = \big((\sqrt\kappa - 1)/(\sqrt\kappa + 1)\big)^2`$; Nesterov takes $`\alpha = 1/L`$ and $`\beta = (\sqrt\kappa - 1)/(\sqrt\kappa + 1)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $x = (x_1, x_2)$ | the cost being minimised; the two numbers chosen | $(x_1^2 + 100x_2^2)/2$ | — |
-| $x_k$, $x^*$ | the point after k steps; the minimiser | $x_0 = (10, 1)$; $x^* = (0, 0)$ | — |
-| $g_k$, $\nabla f$ | the slope, one entry per variable | $(10, 100)$ at the start | longer steps for the same α |
-| $\alpha$, $\alpha_k$ | step size, fixed or by schedule | 0.0198 plain; 0.0331 heavy; 0.0100 Nesterov; 0.3 Adam | faster, until a wall throws the walk out |
-| $\beta$ | momentum fraction | 0.6694 heavy; 0.8182 Nesterov | more carry along the floor, more swing up the walls |
-| $y_k$ | Nesterov's look-ahead point | $y_0 = x_0 = (10, 1)$ | — |
-| $\mu$, $L$, $\kappa$ | gentlest and steepest curvature; their ratio L/μ | 1, 100, 100 | larger κ, slower for every method but Adam here |
-| $\lambda$, $s$, $e_k$, $c$ | one direction's curvature; $s = \alpha\lambda$; the error along it; a factor scaling one variable's slopes | λ = 1 along the floor, 100 across | — |
-| $r$, $\rho$ | rate: the error's shrink factor per step; a double root of the recurrence | 0.98020 plain; 0.81818 heavy; 0.90000 Nesterov | slower |
-| $\beta_1$, $\beta_2$ | Adam's memories for slope and squared slope | 0.9, 0.999 | longer memory, smoother but laggier steps |
-| $m_k$, $v_k$, $\hat m_k$, $\hat v_k$ | Adam's averages; the same, corrected for starting at zero | $\hat m_1 = g_1$, $\hat v_1 = g_1^2$ | — |
-| $\epsilon$ | a guard against dividing by zero | $10^{-8}$ | — |
+| $`f`$, $`x = (x_1, x_2)`$ | the cost being minimised; the two numbers chosen | $`(x_1^2 + 100x_2^2)/2`$ | — |
+| $`x_k`$, $`x^*`$ | the point after k steps; the minimiser | $`x_0 = (10, 1)`$; $`x^* = (0, 0)`$ | — |
+| $`g_k`$, $`\nabla f`$ | the slope, one entry per variable | $`(10, 100)`$ at the start | longer steps for the same α |
+| $`\alpha`$, $`\alpha_k`$ | step size, fixed or by schedule | 0.0198 plain; 0.0331 heavy; 0.0100 Nesterov; 0.3 Adam | faster, until a wall throws the walk out |
+| $`\beta`$ | momentum fraction | 0.6694 heavy; 0.8182 Nesterov | more carry along the floor, more swing up the walls |
+| $`y_k`$ | Nesterov's look-ahead point | $`y_0 = x_0 = (10, 1)`$ | — |
+| $`\mu`$, $`L`$, $`\kappa`$ | gentlest and steepest curvature; their ratio L/μ | 1, 100, 100 | larger κ, slower for every method but Adam here |
+| $`\lambda`$, $`s`$, $`e_k`$, $`c`$ | one direction's curvature; $`s = \alpha\lambda`$; the error along it; a factor scaling one variable's slopes | λ = 1 along the floor, 100 across | — |
+| $`r`$, $`\rho`$ | rate: the error's shrink factor per step; a double root of the recurrence | 0.98020 plain; 0.81818 heavy; 0.90000 Nesterov | slower |
+| $`\beta_1`$, $`\beta_2`$ | Adam's memories for slope and squared slope | 0.9, 0.999 | longer memory, smoother but laggier steps |
+| $`m_k`$, $`v_k`$, $`\hat m_k`$, $`\hat v_k`$ | Adam's averages; the same, corrected for starting at zero | $`\hat m_1 = g_1`$, $`\hat v_1 = g_1^2`$ | — |
+| $`\epsilon`$ | a guard against dividing by zero | $`10^{-8}`$ | — |
 
 ### When it holds
 
-- **The tuning needs the true μ and L.** Heavy ball's settings come from the curvatures. Tune for 100 on a valley whose walls curve at 150 and the walk is $7.076 \times 10^{48}$ from the bottom after 100 steps.
-- **The step must stay inside the momentum's stable range**, $\alpha L < 2(1 + \beta)$. Heavy ball's step is longer than plain descent could survive. Remove the momentum and keep the step, and the walk is $1.383 \times 10^{18}$ away after 50 steps.
+- **The tuning needs the true μ and L.** Heavy ball's settings come from the curvatures. Tune for 100 on a valley whose walls curve at 150 and the walk is $`7.076 \times 10^{48}`$ from the bottom after 100 steps.
+- **The step must stay inside the momentum's stable range**, $`\alpha L < 2(1 + \beta)`$. Heavy ball's step is longer than plain descent could survive. Remove the momentum and keep the step, and the walk is $`1.383 \times 10^{18}`$ away after 50 steps.
 - **The rates proved here are for quadratic bowls.** Nesterov's rate is a theorem for every smooth, strongly convex function (a bowl whose curvature stays between μ and L everywhere). Polyak's heavy-ball tuning is proved for quadratics and near a minimum.
 - **Adam's per-variable step helps when the stretch lines up with the variables.** Turn the same bowl 45 degrees and Adam needs 223 steps instead of 192; the other three methods need exactly what they did.
 - **Adam has no general convergence promise, and noisy slopes need a falling step.** Both are shown below, with numbers.
@@ -83,71 +93,81 @@ The settings tuned to this valley, from Why it works: heavy ball takes $\alpha =
 
 ### Step 0: one direction at a time
 
-On a quadratic bowl the slope along each main direction of the bowl is that direction's curvature λ times the error $e_k$ along it. Here the main directions are the two axes, with λ = 1 along the floor and λ = 100 across it. Every method on this card except Adam is built from slopes and past moves added together. So each direction runs its own one-number walk, untouched by the other.
+On a quadratic bowl the slope along each main direction of the bowl is that direction's curvature λ times the error $`e_k`$ along it. Here the main directions are the two axes, with λ = 1 along the floor and λ = 100 across it. Every method on this card except Adam is built from slopes and past moves added together. So each direction runs its own one-number walk, untouched by the other.
 
 ### Step 1: plain descent is held back by the walls
 
-One plain step multiplies the error along a direction by $1 - \alpha\lambda$. As [Convergence rates](../02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md) shows, the best fixed step balances the two ends, $\alpha = 2/(\mu + L) = 0.0198$: the factors are $+0.98020$ along the floor and $-0.98020$ across it, and the minus sign is the zigzag in the picture. So the error shrinks by only
+One plain step multiplies the error along a direction by $`1 - \alpha\lambda`$. As [Convergence rates](../02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md) shows, the best fixed step balances the two ends, $`\alpha = 2/(\mu + L) = 0.0198`$: the factors are $`+0.98020`$ along the floor and $`-0.98020`$ across it, and the minus sign is the zigzag in the picture. So the error shrinks by only
 
-$$r = \frac{\kappa - 1}{\kappa + 1} = 0.98020$$
+```math
+r = \frac{\kappa - 1}{\kappa + 1} = 0.98020
+```
 
-per step. Each tenfold cut costs about $(\kappa/2)\ln 10$ steps. The distance is exactly $\sqrt{101}\,(0.98020)^k$, and the first $k$ that puts it under 0.0001 is 576, the count the loop reaches too.
+per step. Each tenfold cut costs about $`(\kappa/2)\ln 10`$ steps. The distance is exactly $`\sqrt{101}\,(0.98020)^k`$, and the first $`k`$ that puts it under 0.0001 is 576, the count the loop reaches too.
 
 ### Step 2: heavy ball turns each direction into a two-step recurrence
 
-Put $e_k$ into the heavy-ball update along one direction, with $s = \alpha\lambda$:
+Put $`e_k`$ into the heavy-ball update along one direction, with $`s = \alpha\lambda`$:
 
-$$e_{k+1} = (1 + \beta - s)\,e_k - \beta\,e_{k-1}.$$
+```math
+e_{k+1} = (1 + \beta - s)\,e_k - \beta\,e_{k-1}.
+```
 
-Each new error depends on the last two. Try $e_k = r^k$, and $r$ must solve $r^2 - (1 + \beta - s)\,r + \beta = 0$. The two roots multiply to β. When they are complex (a pair with a rotation in them), they share one size, $\sqrt\beta$. Every direction whose roots are complex then shrinks at the same rate, $\sqrt\beta$, whatever its curvature.
+Each new error depends on the last two. Try $`e_k = r^k`$, and $`r`$ must solve $`r^2 - (1 + \beta - s)\,r + \beta = 0`$. The two roots multiply to β. When they are complex (a pair with a rotation in them), they share one size, $`\sqrt\beta`$. Every direction whose roots are complex then shrinks at the same rate, $`\sqrt\beta`$, whatever its curvature.
 
 That is the whole trick. Polyak chose α and β so that the gentlest and steepest curvatures both sit exactly at the edge of the complex range. Then every curvature in between has complex roots too, and the rate is
 
-$$r = \sqrt\beta = \frac{\sqrt\kappa - 1}{\sqrt\kappa + 1} = \frac{9}{11} = 0.81818.$$
+```math
+r = \sqrt\beta = \frac{\sqrt\kappa - 1}{\sqrt\kappa + 1} = \frac{9}{11} = 0.81818.
+```
 
-A tenfold cut now costs about $(\sqrt\kappa/2)\ln 10$ steps: the square root of the stretch ratio, not the ratio.
+A tenfold cut now costs about $`(\sqrt\kappa/2)\ln 10`$ steps: the square root of the stretch ratio, not the ratio.
 
 <details>
 <summary>Detailed proof: Polyak's settings, and the stability limit</summary>
 
-The roots are complex when the discriminant is negative: $(1 + \beta - s)^2 < 4\beta$, that is, $(1 - \sqrt\beta)^2 < s < (1 + \sqrt\beta)^2$. Put the two ends of the curvature range on the two edges: $\alpha\mu = (1 - \sqrt\beta)^2$ and $\alpha L = (1 + \sqrt\beta)^2$. Dividing, $\sqrt\kappa = (1 + \sqrt\beta)/(1 - \sqrt\beta)$, so $\sqrt\beta = (\sqrt\kappa - 1)/(\sqrt\kappa + 1)$. Adding the square roots, $\sqrt\alpha(\sqrt L + \sqrt\mu) = 2$, so $\alpha = 4/(\sqrt L + \sqrt\mu)^2$. With μ = 1 and L = 100: α = 4/121 = 0.0331 and β = 81/121 = 0.6694.
+The roots are complex when the discriminant is negative: $`(1 + \beta - s)^2 < 4\beta`$, that is, $`(1 - \sqrt\beta)^2 < s < (1 + \sqrt\beta)^2`$. Put the two ends of the curvature range on the two edges: $`\alpha\mu = (1 - \sqrt\beta)^2`$ and $`\alpha L = (1 + \sqrt\beta)^2`$. Dividing, $`\sqrt\kappa = (1 + \sqrt\beta)/(1 - \sqrt\beta)`$, so $`\sqrt\beta = (\sqrt\kappa - 1)/(\sqrt\kappa + 1)`$. Adding the square roots, $`\sqrt\alpha(\sqrt L + \sqrt\mu) = 2`$, so $`\alpha = 4/(\sqrt L + \sqrt\mu)^2`$. With μ = 1 and L = 100: α = 4/121 = 0.0331 and β = 81/121 = 0.6694.
 
-At the two edges the discriminant is zero and the two roots coincide. A recurrence with a double root $\rho$ has solutions $(A + Bk)\rho^k$. The start $x_{-1} = x_0$ gives $e_1 = (1 - s)e_0$, so $A = e_0$ and $B = e_1/\rho - e_0$. Along the floor ρ = 0.8182 and B = 1.8182: $x_{1,k} = (10 + 1.8182k)(0.8182)^k$. Across it ρ = −0.8182 and B = 1.8182 again. At step 20 this gives (0.837865, 0.675221), the loop's point to six decimals. The extra factor $k$ is why the count is 73, a little more than the rate alone suggests.
+At the two edges the discriminant is zero and the two roots coincide. A recurrence with a double root $`\rho`$ has solutions $`(A + Bk)\rho^k`$. The start $`x_{-1} = x_0`$ gives $`e_1 = (1 - s)e_0`$, so $`A = e_0`$ and $`B = e_1/\rho - e_0`$. Along the floor ρ = 0.8182 and B = 1.8182: $`x_{1,k} = (10 + 1.8182k)(0.8182)^k`$. Across it ρ = −0.8182 and B = 1.8182 again. At step 20 this gives (0.837865, 0.675221), the loop's point to six decimals. The extra factor $`k`$ is why the count is 73, a little more than the rate alone suggests.
 
-Stability, roots inside the unit circle (every root of size below 1), needs $\beta < 1$ and $0 < s < 2(1 + \beta)$: at $s = 2(1+\beta)$ one root reaches −1. Here $\alpha L = 3.3058 < 2(1 + \beta) = 3.3388$. Plain descent needs $\alpha L < 2$, so momentum is what lets this long step survive.
+Stability, roots inside the unit circle (every root of size below 1), needs $`\beta < 1`$ and $`0 < s < 2(1 + \beta)`$: at $`s = 2(1+\beta)`$ one root reaches −1. Here $`\alpha L = 3.3058 < 2(1 + \beta) = 3.3388`$. Plain descent needs $`\alpha L < 2`$, so momentum is what lets this long step survive.
 
 </details>
 
-Momentum works for a reason visible in the recurrence. Across the valley the slope flips sign every step, so the carried moves cancel. Along the floor the slope keeps one sign, so the carried moves add up, to as much as $1/(1 - \beta)$ times one step. The price is the swing up the walls in the picture: heavy ball climbs to 3.71 above the floor before the rotation in its roots brings it back.
+Momentum works for a reason visible in the recurrence. Across the valley the slope flips sign every step, so the carried moves cancel. Along the floor the slope keeps one sign, so the carried moves add up, to as much as $`1/(1 - \beta)`$ times one step. The price is the swing up the walls in the picture: heavy ball climbs to 3.71 above the floor before the rotation in its roots brings it back.
 
 ### Step 3: Nesterov measures the slope where it is going
 
 Along one direction Nesterov's update reads
 
-$$e_{k+1} = (1 + \beta)(1 - s)\,e_k - \beta(1 - s)\,e_{k-1}.$$
+```math
+e_{k+1} = (1 + \beta)(1 - s)\,e_k - \beta(1 - s)\,e_{k-1}.
+```
 
 Take α = 1/L and β = (√κ − 1)/(√κ + 1). Along the floor, s = 1/κ, and a line of algebra shows the two roots coincide at
 
-$$r = 1 - \frac{1}{\sqrt\kappa} = 0.90000.$$
+```math
+r = 1 - \frac{1}{\sqrt\kappa} = 0.90000.
+```
 
-So $x_{1,k} = (10 + k)(0.9)^k$, coefficient 1.0000, and the count is 135. Across the floor, s = αL = 1, so $1 - s = 0$ and the error is wiped out in one step. That is the drop onto the floor in the picture.
+So $`x_{1,k} = (10 + k)(0.9)^k`$, coefficient 1.0000, and the count is 135. Across the floor, s = αL = 1, so $`1 - s = 0`$ and the error is wiped out in one step. That is the drop onto the floor in the picture.
 
-On this bowl Nesterov is slower than heavy ball. It matters because its promise is wider. For every smooth, strongly convex function, with curvature between μ and L everywhere, Nesterov's method shrinks a bound on the cost gap $f(x_k) - f(x^*)$ by a factor $1 - 1/\sqrt\kappa$ per step. Heavy ball with Polyak's settings has no such guarantee away from quadratics. The same source proves a floor: no method that moves only along combinations of past slopes can beat $\big((\sqrt\kappa - 1)/(\sqrt\kappa + 1)\big)^k$ on every such problem. Heavy ball meets that floor on this bowl. Both results are stated here, not proved; they are in Nesterov's *Lectures on Convex Optimization*, chapter 2.
+On this bowl Nesterov is slower than heavy ball. It matters because its promise is wider. For every smooth, strongly convex function, with curvature between μ and L everywhere, Nesterov's method shrinks a bound on the cost gap $`f(x_k) - f(x^*)`$ by a factor $`1 - 1/\sqrt\kappa`$ per step. Heavy ball with Polyak's settings has no such guarantee away from quadratics. The same source proves a floor: no method that moves only along combinations of past slopes can beat $`\big((\sqrt\kappa - 1)/(\sqrt\kappa + 1)\big)^k`$ on every such problem. Heavy ball meets that floor on this bowl. Both results are stated here, not proved; they are in Nesterov's *Lectures on Convex Optimization*, chapter 2.
 
 <details>
 <summary>Detailed proof: Nesterov's double root along the floor</summary>
 
-With $s = 1/\kappa$ and $\beta = (\sqrt\kappa - 1)/(\sqrt\kappa + 1)$, the product of the roots is $\beta(1 - 1/\kappa) = \frac{\sqrt\kappa - 1}{\sqrt\kappa + 1}\cdot\frac{(\sqrt\kappa - 1)(\sqrt\kappa + 1)}{\kappa} = (1 - 1/\sqrt\kappa)^2$. Their sum is $(1 + \beta)(1 - 1/\kappa) = \frac{2\sqrt\kappa}{\sqrt\kappa + 1}\cdot\frac{(\sqrt\kappa - 1)(\sqrt\kappa + 1)}{\kappa} = 2(1 - 1/\sqrt\kappa)$. Two numbers whose sum is $2\rho$ and product is $\rho^2$ are both $\rho$, so the double root is $1 - 1/\sqrt\kappa$. With κ = 100 the recurrence is $r^2 - 1.8r + 0.81 = 0$, which is $(r - 0.9)^2$. The start gives $B = e_1/\rho - e_0 = 9.9/0.9 - 10 = 1$.
+With $`s = 1/\kappa`$ and $`\beta = (\sqrt\kappa - 1)/(\sqrt\kappa + 1)`$, the product of the roots is $`\beta(1 - 1/\kappa) = \frac{\sqrt\kappa - 1}{\sqrt\kappa + 1}\cdot\frac{(\sqrt\kappa - 1)(\sqrt\kappa + 1)}{\kappa} = (1 - 1/\sqrt\kappa)^2`$. Their sum is $`(1 + \beta)(1 - 1/\kappa) = \frac{2\sqrt\kappa}{\sqrt\kappa + 1}\cdot\frac{(\sqrt\kappa - 1)(\sqrt\kappa + 1)}{\kappa} = 2(1 - 1/\sqrt\kappa)`$. Two numbers whose sum is $`2\rho`$ and product is $`\rho^2`$ are both $`\rho`$, so the double root is $`1 - 1/\sqrt\kappa`$. With κ = 100 the recurrence is $`r^2 - 1.8r + 0.81 = 0`$, which is $`(r - 0.9)^2`$. The start gives $`B = e_1/\rho - e_0 = 9.9/0.9 - 10 = 1`$.
 
 </details>
 
 ### Step 4: Adam gives each variable its own step
 
-Adam looks at each variable on its own. The ratio $\hat m_k / \sqrt{\hat v_k}$ is the recent average slope divided by the recent typical slope size. If the slope keeps one sign, it is near 1. If the slope flips back and forth, it is near 0. So each variable moves at most about α per step, whatever the size of its slope.
+Adam looks at each variable on its own. The ratio $`\hat m_k / \sqrt{\hat v_k}`$ is the recent average slope divided by the recent typical slope size. If the slope keeps one sign, it is near 1. If the slope flips back and forth, it is near 0. So each variable moves at most about α per step, whatever the size of its slope.
 
-The first step shows it exactly. With $m_0 = v_0 = 0$, the corrected averages are $\hat m_1 = g_1$ and $\hat v_1 = g_1^2$. The step is α times the sign of the slope, in each variable: from (10, 1) to (9.7000, 0.7000). The slope across the valley was 100 and along it 10, yet both moved 0.3. The corrections $1 - \beta_1^{\,k}$ and $1 - \beta_2^{\,k}$ exist because both averages start at zero: without them the early averages are too small, and the two are too small by different amounts.
+The first step shows it exactly. With $`m_0 = v_0 = 0`$, the corrected averages are $`\hat m_1 = g_1`$ and $`\hat v_1 = g_1^2`$. The step is α times the sign of the slope, in each variable: from (10, 1) to (9.7000, 0.7000). The slope across the valley was 100 and along it 10, yet both moved 0.3. The corrections $`1 - \beta_1^{\,k}`$ and $`1 - \beta_2^{\,k}`$ exist because both averages start at zero: without them the early averages are too small, and the two are too small by different amounts.
 
-Multiply every slope of one variable by a constant $c$. Then $m$ grows by $c$, $v$ by $c^2$, and the ratio does not change. So the path of $x_2$ is the same whether the walls curve at 100, 150 or 10,000, apart from the tiny ε: 192 steps each time. That is the "step size per variable" in the title. AdaGrad (2011) divided by the square root of each variable's summed squared slopes; Adam keeps a fading average of them instead, as RMSProp did, and adds momentum through $m_k$.
+Multiply every slope of one variable by a constant $`c`$. Then $`m`$ grows by $`c`$, $`v`$ by $`c^2`$, and the ratio does not change. So the path of $`x_2`$ is the same whether the walls curve at 100, 150 or 10,000, apart from the tiny ε: 192 steps each time. That is the "step size per variable" in the title. AdaGrad (2011) divided by the square root of each variable's summed squared slopes; Adam keeps a fading average of them instead, as RMSProp did, and adds momentum through $`m_k`$.
 
 The scale-blindness is per variable, not per direction. Turned 45 degrees, the valley's steep direction mixes both variables, and Adam's division no longer separates walls from floor: 223 steps. Plain descent, heavy ball and Nesterov use only slopes and past moves, which turn with the bowl, so they take exactly 576, 73 and 135 again.
 
@@ -164,17 +184,17 @@ When each slope comes from a sample of data, as on [Stochastic gradient](08-stoc
 
 A constant step of 0.3 gets near the bottom in 100 steps and then hovers. Each step adds a noise kick roughly as long as the step itself, and the walk settles where the pull towards the bottom balances the kicks. A step of 0.03 hovers much closer, 0.0579 at step 1,000, but is still 1.8212 away at step 400.
 
-A **schedule**, a step size that changes with $k$ by a fixed rule, gets most of both: long steps while far away, short steps once close. Halving every 200 steps matches the fast start, is ten times closer than the slow step at step 400, and ends at 0.0655, near the slow step's 0.0579 and against 0.3579 for the constant 0.3. The cosine schedule, $\alpha_k = 0.15\,(1 + \cos(\pi k / 1000))$, slides smoothly from 0.3 to 0 and ends at 0.0770.
+A **schedule**, a step size that changes with $`k`$ by a fixed rule, gets most of both: long steps while far away, short steps once close. Halving every 200 steps matches the fast start, is ten times closer than the slow step at step 400, and ends at 0.0655, near the slow step's 0.0579 and against 0.3579 for the constant 0.3. The cosine schedule, $`\alpha_k = 0.15\,(1 + \cos(\pi k / 1000))`$, slides smoothly from 0.3 to 0 and ends at 0.0770.
 
-The rule behind this is on [Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md), proved there for plain stochastic steps: the steps must shrink to zero, so the noise dies down, but their sum must grow without limit, so the walk can still travel any distance. The two schedules here fit a fixed budget of 1,000 steps and meet only the first half: halving forever gives steps whose sum stays finite. A step such as $0.3/\sqrt k$ meets both halves.
+The rule behind this is on [Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md), proved there for plain stochastic steps: the steps must shrink to zero, so the noise dies down, but their sum must grow without limit, so the walk can still travel any distance. The two schedules here fit a fixed budget of 1,000 steps and meet only the first half: halving forever gives steps whose sum stays finite. A step such as $`0.3/\sqrt k`$ meets both halves.
 
-The Robbins–Monro condition stated on that card asks for more: the sum of the steps unlimited and the sum of their squares finite. $0.3/\sqrt k$ fails the second part, because its squares are $0.09/k$ and add up without limit; a step such as $0.3/k^{0.75}$ meets both.
+The Robbins–Monro condition stated on that card asks for more: the sum of the steps unlimited and the sum of their squares finite. $`0.3/\sqrt k`$ fails the second part, because its squares are $`0.09/k`$ and add up without limit; a step such as $`0.3/k^{0.75}`$ meets both.
 
 ### Step 6: what Adam does not promise
 
-Reddi, Kale and Kumar (2018) built a one-variable convex problem where Adam settles at the worst point. Choose $x$ between −1 and 1. Every third round the cost is $3x$; the other two rounds it is $-x$. Over three rounds the total is $x$, so the best choice is $x = -1$, with an average cost of −0.3333 per round. Run Adam as in their first theorem, with $\beta_1 = 0$, $\beta_2 = 1/(1 + 3^2) = 0.1$ and steps $0.5/\sqrt k$.
+Reddi, Kale and Kumar (2018) built a one-variable convex problem where Adam settles at the worst point. Choose $`x`$ between −1 and 1. Every third round the cost is $`3x`$; the other two rounds it is $`-x`$. Over three rounds the total is $`x`$, so the best choice is $`x = -1`$, with an average cost of −0.3333 per round. Run Adam as in their first theorem, with $`\beta_1 = 0`$, $`\beta_2 = 1/(1 + 3^2) = 0.1`$ and steps $`0.5/\sqrt k`$.
 
-The rare large slope (3) is forgotten almost at once by the short memory $\beta_2 = 0.1$. So each of the two small slopes (−1) is divided by a small typical size and pushes hard towards +1, while the large slope is divided by a large one and pushes back only weakly. After 3,000 rounds Adam sits at x = 1.0000, average cost 0.3390 per round. Their repair keeps the largest $v$ seen so far, so the divisor never shrinks; it ends at x = −0.9936, average −0.3209.
+The rare large slope (3) is forgotten almost at once by the short memory $`\beta_2 = 0.1`$. So each of the two small slopes (−1) is divided by a small typical size and pushes hard towards +1, while the large slope is divided by a large one and pushes back only weakly. After 3,000 rounds Adam sits at x = 1.0000, average cost 0.3390 per round. Their repair keeps the largest $`v`$ seen so far, so the divisor never shrinks; it ends at x = −0.9936, average −0.3209.
 
 ---
 
@@ -182,18 +202,18 @@ The rare large slope (3) is forgotten almost at once by the short memory $\beta_
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| slope at the start | $(1 \times 10,\ 100 \times 1)$ | (10, 100) |
+| slope at the start | $`(1 \times 10,\ 100 \times 1)`$ | (10, 100) |
 | plain step size | 2/(1 + 100) | 0.0198 |
-| first plain step | $10 - 0.0198 \times 10$; $1 - 0.0198 \times 100$ | (9.80, −0.98) |
+| first plain step | $`10 - 0.0198 \times 10`$; $`1 - 0.0198 \times 100`$ | (9.80, −0.98) |
 | plain rate | (100 − 1)/(100 + 1) | 0.98020 |
 | heavy-ball settings | α = 4/(10 + 1)²; β = (9/11)² | 0.0331; 0.6694 |
 | heavy-ball stability | αL = 400/121 against 2(1 + 81/121) | 3.3058 < 3.3388 |
-| first heavy-ball step | no past move yet; $10 - 0.0331 \times 10$; $1 - 3.3058$ | (9.67, −2.31) |
+| first heavy-ball step | no past move yet; $`10 - 0.0331 \times 10`$; $`1 - 3.3058`$ | (9.67, −2.31) |
 | heavy-ball rate | √0.6694 = 9/11 | 0.81818 |
 | Nesterov settings | α = 1/100; β = 9/11 | 0.0100; 0.8182 |
-| Nesterov's first step | across: $1 - (1/100) \times 100 = 0$ | (9.90, 0.00) |
+| Nesterov's first step | across: $`1 - (1/100) \times 100 = 0`$ | (9.90, 0.00) |
 | Nesterov rate | 1 − 1/10 | 0.90000 |
-| Adam's first step | $\hat m_1/\sqrt{\hat v_1}$ is the sign of the slope; 0.3 each way | (9.7000, 0.7000) |
+| Adam's first step | $`\hat m_1/\sqrt{\hat v_1}`$ is the sign of the slope; 0.3 each way | (9.7000, 0.7000) |
 | steps to within 0.0001 | plain; heavy ball; Nesterov; Adam | **576; 73; 135; 192** |
 
 Heavy ball reaches the bottom in an eighth of plain descent's steps, because its rate depends on √κ = 10 instead of κ = 100.
@@ -202,8 +222,8 @@ Heavy ball reaches the bottom in an eighth of plain descent's steps, because its
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Settings tuned for curvature 100 on walls that curve at 150 | heavy ball $7.076 \times 10^{48}$ away after 100 steps; plain $2.839 \times 10^{29}$; Nesterov $1.091 \times 10^{9}$ | αL passes the stability limit; Adam, blind to scale, still takes 192 steps |
-| Heavy ball's step kept, momentum dropped (β = 0) | $1.383 \times 10^{18}$ away after 50 steps | αL = 3.3058 is above plain descent's limit of 2 |
+| Settings tuned for curvature 100 on walls that curve at 150 | heavy ball $`7.076 \times 10^{48}`$ away after 100 steps; plain $`2.839 \times 10^{29}`$; Nesterov $`1.091 \times 10^{9}`$ | αL passes the stability limit; Adam, blind to scale, still takes 192 steps |
+| Heavy ball's step kept, momentum dropped (β = 0) | $`1.383 \times 10^{18}`$ away after 50 steps | αL = 3.3058 is above plain descent's limit of 2 |
 | Adam on the Reddi–Kale–Kumar problem | x = 1.0000, cost 0.3390 a round; best is x = −1, −0.3333 | a short memory forgets the rare large slope |
 | Constant step 0.3 with noisy slopes | 0.3579 from the bottom at step 1,000; halving gives 0.0655 | the noise kicks never shrink |
 
@@ -217,7 +237,7 @@ The puzzle: all four walks start at (10, 1) and use one slope per step. Heavy ba
 
 ### One story: distance from the bottom
 
-The table writes distances as the code prints them: 1.84e-01 means $1.84 \times 10^{-1}$.
+The table writes distances as the code prints them: 1.84e-01 means $`1.84 \times 10^{-1}`$.
 
 | Step k | 0 | 1 | 2 | 5 | 10 | 25 | 50 | 100 | 200 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -653,10 +673,10 @@ The two outputs match line for line.
 
 Lean proves the card's facts about heavy ball, Nesterov and Adam for every μ and L, and checks the hand arithmetic exactly.
 
-- Heavy ball with Polyak's settings: take any curvature λ between μ and L. Every root $r$ of $r^2 - (1 + \beta - s)\,r + \beta = 0$ then has size $(\sqrt\kappa - 1)/(\sqrt\kappa + 1)$. Complex roots count too.
-- Nesterov with α = 1/L and β = (√κ − 1)/(√κ + 1): let $\rho = 1 - 1/\sqrt\kappa$. Along the floor, $r^2 - (1 + \beta)(1 - s)\,r + \beta(1 - s)$ is exactly $(r - \rho)^2$.
-- Adam, with ε taken as 0: multiply every slope of one variable by a constant $c > 0$, and that variable's path stays the same at every step. This holds for any step-size schedule and any $\beta_1$, $\beta_2$.
-- The hand arithmetic holds exactly: heavy ball's α = 4/121 and β = 81/121, Nesterov's β = 9/11, and the plain step and rate. So do the stability check, the factoring into $(r - 0.9)^2$, and Adam's first step to (9.7, 0.7).
+- Heavy ball with Polyak's settings: take any curvature λ between μ and L. Every root $`r`$ of $`r^2 - (1 + \beta - s)\,r + \beta = 0`$ then has size $`(\sqrt\kappa - 1)/(\sqrt\kappa + 1)`$. Complex roots count too.
+- Nesterov with α = 1/L and β = (√κ − 1)/(√κ + 1): let $`\rho = 1 - 1/\sqrt\kappa`$. Along the floor, $`r^2 - (1 + \beta)(1 - s)\,r + \beta(1 - s)`$ is exactly $`(r - \rho)^2`$.
+- Adam, with ε taken as 0: multiply every slope of one variable by a constant $`c > 0`$, and that variable's path stays the same at every step. This holds for any step-size schedule and any $`\beta_1`$, $`\beta_2`$.
+- The hand arithmetic holds exactly: heavy ball's α = 4/121 and β = 81/121, Nesterov's β = 9/11, and the plain step and rate. So do the stability check, the factoring into $`(r - 0.9)^2`$, and Adam's first step to (9.7, 0.7).
 
 The step counts, the race table, the noisy schedules, the turned bowl and the Reddi–Kale–Kumar run are left to the Python and Rust checks.
 
@@ -933,9 +953,9 @@ example : (adamRun 1 (fun _ => 3 / 10) (9 / 10) (999 / 1000) 10 1).1 = 97 / 10 �
 ## The usual mistake
 
 > [!warning]
-> **Copying momentum settings from one problem to another.** Heavy ball's speed comes from tuning α and β to the exact curvatures μ and L. The tuned step is longer than plain descent could survive, and only the momentum keeps it stable. If the walls are steeper than assumed, 150 instead of 100, the walk is $7.076 \times 10^{48}$ from the bottom after 100 steps. Estimate L first, or use a method that adapts.
+> **Copying momentum settings from one problem to another.** Heavy ball's speed comes from tuning α and β to the exact curvatures μ and L. The tuned step is longer than plain descent could survive, and only the momentum keeps it stable. If the walls are steeper than assumed, 150 instead of 100, the walk is $`7.076 \times 10^{48}`$ from the bottom after 100 steps. Estimate L first, or use a method that adapts.
 >
-> - **Dropping β but keeping α.** Without momentum the long step is unstable: $1.383 \times 10^{18}$ away after 50 steps.
+> - **Dropping β but keeping α.** Without momentum the long step is unstable: $`1.383 \times 10^{18}`$ away after 50 steps.
 > - **Reading Adam's α as a slope multiplier.** It is close to a distance per step. An α of 0.03 on a valley 10 units long needs 1,354 steps.
 > - **Trusting Adam to converge because it adapts.** On the Reddi–Kale–Kumar problem it settles at x = 1.0000, the worst point.
 > - **Keeping the step constant on noisy slopes.** Adam with 0.3 hovers at 0.3579 from the bottom after 1,000 steps; halving every 200 steps ends at 0.0655.
@@ -944,7 +964,7 @@ example : (adamRun 1 (fun _ => 3 / 10) (9 / 10) (999 / 1000) 10 1).1 = 97 / 10 �
 
 ## Where you meet it in real life
 
-- **Training neural networks.** Adam, with $\beta_1 = 0.9$ and $\beta_2 = 0.999$, is the default way to fit networks whose slopes come from [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md). The step usually rises for a short warm-up, then falls on a cosine or stepped schedule, for the reason in Step 5.
+- **Training neural networks.** Adam, with $`\beta_1 = 0.9`$ and $`\beta_2 = 0.999`$, is the default way to fit networks whose slopes come from [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md). The step usually rises for a short warm-up, then falls on a cosine or stepped schedule, for the reason in Step 5.
 - **Image deblurring and the lasso.** The lasso is a data fit charged for the sum of its coefficients' sizes, which makes most of them exactly zero. Nesterov's look-ahead, added to a gradient step and a shrink, is FISTA on [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md).
 - **Large linear systems.** Conjugate gradient is heavy ball with α and β re-chosen at every step from the bowl itself, so it needs no estimate of μ or L.
 - **A ball rolling in a bowl.** The name is literal: heavy ball is a mass with friction, sampled at fixed times, and 1 − β is the share of its speed lost to friction each step.

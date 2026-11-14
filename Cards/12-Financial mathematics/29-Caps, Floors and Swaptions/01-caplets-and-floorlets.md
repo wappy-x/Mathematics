@@ -38,40 +38,44 @@ The upper line (orange) is the payment: nothing up to 5 percent, then \$12,500 f
 
 ## The formula
 
-Notation first, in words. $M$ is the notional in dollars. $\tau$ (tau) is the length of the interest period as a fraction of a year. $T_1$ is the **reset date**, when the rate is fixed; $T_2$ is the **payment date**, when the interest is paid. $L$ is the rate that will actually be fixed at $T_1$. $D(t)$ is the **discount factor**: today's price of a bond paying \$1 at a time t years away. $F$ is the **forward rate** for the period, read from two discount factors. $N(x)$ is the bell-curve area to the left of $x$.
+Notation first, in words. $`M`$ is the notional in dollars. $`\tau`$ (tau) is the length of the interest period as a fraction of a year. $`T_1`$ is the **reset date**, when the rate is fixed; $`T_2`$ is the **payment date**, when the interest is paid. $`L`$ is the rate that will actually be fixed at $`T_1`$. $`D(t)`$ is the **discount factor**: today's price of a bond paying \$1 at a time t years away. $`F`$ is the **forward rate** for the period, read from two discount factors. $`N(x)`$ is the bell-curve area to the left of $`x`$.
 
-$$\text{Caplet} = M\,\tau\,D(T_2)\,\bigl[\,F\,N(d_1) - K\,N(d_2)\,\bigr], \qquad \text{Floorlet} = M\,\tau\,D(T_2)\,\bigl[\,K\,N(-d_2) - F\,N(-d_1)\,\bigr]$$
+```math
+\text{Caplet} = M\,\tau\,D(T_2)\,\bigl[\,F\,N(d_1) - K\,N(d_2)\,\bigr], \qquad \text{Floorlet} = M\,\tau\,D(T_2)\,\bigl[\,K\,N(-d_2) - F\,N(-d_1)\,\bigr]
+```
 
 **Read it aloud:** the forward rate the holder might collect, minus the strike given up, each weighted by its own chance, turned into dollars by the notional and the period's length, and discounted from the day the money moves.
 
-$$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T_1}{\sigma\sqrt{T_1}}, \qquad d_2 = d_1 - \sigma\sqrt{T_1}, \qquad F = \frac{1}{\tau}\left(\frac{D(T_1)}{D(T_2)} - 1\right)$$
+```math
+d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T_1}{\sigma\sqrt{T_1}}, \qquad d_2 = d_1 - \sigma\sqrt{T_1}, \qquad F = \frac{1}{\tau}\left(\frac{D(T_1)}{D(T_2)} - 1\right)
+```
 
-$d_1$ and $d_2$ are the distance from the forward to the strike, in standard deviations of the log rate up to the reset date; they are one such standard deviation apart. The forward rate is the simple interest rate that turns \$1 at the reset date into its value at the payment date.
+$`d_1`$ and $`d_2`$ are the distance from the forward to the strike, in standard deviations of the log rate up to the reset date; they are one such standard deviation apart. The forward rate is the simple interest rate that turns \$1 at the reset date into its value at the payment date.
 
 | Symbol | Plain meaning | In our example | Push it up and the caplet… |
 | --- | --- | --- | --- |
-| $M$ | notional: the loan size the payment is measured on | \$10,000,000 | rises in proportion |
-| $\tau$ | accrual: the period's length as a fraction of a year | 0.25 | rises in proportion: the excess is paid for longer |
-| $T_1$ | reset date: the rate is fixed, the option expires | 2.5 years | rises: more time for the rate to wander |
-| $T_2$ | payment date: the interest changes hands | 2.75 years | falls: the same dollars arrive later |
-| $L$ | the rate fixed at $T_1$, unknown today | — | it is what the payoff depends on |
-| $F$ | forward rate for the quarter from 2.5 to 2.75 years | 5.031381% | rises: more likely to clear the strike |
-| $K$ | strike: the rate above which the caplet pays | 5% | falls: less is covered |
-| $\sigma$ | volatility: yearly spread of the log of the rate | 30% | rises: the payoff cannot go below zero, so spread only helps |
-| $D(t)$, $r$ | discount factor $e^{-rt}$ on a flat curve at rate $r$, continuously compounded | $r$ = 5%; $D(T_1)$ = 0.882497, $D(T_2)$ = 0.871534 | rises: less discounting |
-| $d_1$, $d_2$ | standardised distances of forward from strike | 0.250361 and −0.223981 | — |
-| $N(x)$ | normal CDF: chance a standard bell-curve draw lands below $x$ | $N(d_1)$ = 0.598846, $N(d_2)$ = 0.411386 | — |
-| $X$ | price at the reset date of \$1 paid at the payment date, $1/(1+\tau L)$ | unknown today | — |
+| $`M`$ | notional: the loan size the payment is measured on | \$10,000,000 | rises in proportion |
+| $`\tau`$ | accrual: the period's length as a fraction of a year | 0.25 | rises in proportion: the excess is paid for longer |
+| $`T_1`$ | reset date: the rate is fixed, the option expires | 2.5 years | rises: more time for the rate to wander |
+| $`T_2`$ | payment date: the interest changes hands | 2.75 years | falls: the same dollars arrive later |
+| $`L`$ | the rate fixed at $`T_1`$, unknown today | — | it is what the payoff depends on |
+| $`F`$ | forward rate for the quarter from 2.5 to 2.75 years | 5.031381% | rises: more likely to clear the strike |
+| $`K`$ | strike: the rate above which the caplet pays | 5% | falls: less is covered |
+| $`\sigma`$ | volatility: yearly spread of the log of the rate | 30% | rises: the payoff cannot go below zero, so spread only helps |
+| $`D(t)`$, $`r`$ | discount factor $`e^{-rt}`$ on a flat curve at rate $`r`$, continuously compounded | $`r`$ = 5%; $`D(T_1)`$ = 0.882497, $`D(T_2)`$ = 0.871534 | rises: less discounting |
+| $`d_1`$, $`d_2`$ | standardised distances of forward from strike | 0.250361 and −0.223981 | — |
+| $`N(x)`$ | normal CDF: chance a standard bell-curve draw lands below $`x`$ | $`N(d_1)`$ = 0.598846, $`N(d_2)`$ = 0.411386 | — |
+| $`X`$ | price at the reset date of \$1 paid at the payment date, $`1/(1+\tau L)`$ | unknown today | — |
 
 ### When it holds
 
-- **The rate is lognormal around its forward, with one volatility.** The market quotes each strike with its own volatility (a smile). With a single $\sigma$ the price is right at the quoted strike and off elsewhere, by roughly vega (the price change per point of volatility, in The Greeks below) times the volatility gap.
-- **The rate is positive.** $\ln(F/K)$ needs a positive forward and strike. With rates near or below zero the market prices caplets with a shifted or a normal model instead ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
-- **The rate is fixed at the start of the period and paid at the end.** That is the term-rate convention of LIBOR, the London interbank rate retired in 2023. Rates compounded from overnight fixings (SOFR in dollars, SONIA in sterling) are only known at the period's end, so the uncertainty runs past $T_1$ into the period; Lyashenko and Mercurio extend the formula for that case.
+- **The rate is lognormal around its forward, with one volatility.** The market quotes each strike with its own volatility (a smile). With a single $`\sigma`$ the price is right at the quoted strike and off elsewhere, by roughly vega (the price change per point of volatility, in The Greeks below) times the volatility gap.
+- **The rate is positive.** $`\ln(F/K)`$ needs a positive forward and strike. With rates near or below zero the market prices caplets with a shifted or a normal model instead ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
+- **The rate is fixed at the start of the period and paid at the end.** That is the term-rate convention of LIBOR, the London interbank rate retired in 2023. Rates compounded from overnight fixings (SOFR in dollars, SONIA in sterling) are only known at the period's end, so the uncertainty runs past $`T_1`$ into the period; Lyashenko and Mercurio extend the formula for that case.
 - **One curve gives both the forward and the discount.** Since 2008 the forward comes from a projection curve for the index and the discount factor from the overnight curve. The formula survives with each input read from its own curve; reading both from one curve misprices by the spread between them.
 - **The seller pays.** No allowance is made for the insurer defaulting.
 
-**Conventions verified 2026-09-28:** the example uses $\tau$ = 0.25 exactly and a flat continuously compounded curve. A real contract takes $\tau$ from its day count (actual days over 360 for dollar rates) and its discount factors from the overnight curve.
+**Conventions verified 2026-09-28:** the example uses $`\tau`$ = 0.25 exactly and a flat continuously compounded curve. A real contract takes $`\tau`$ from its day count (actual days over 360 for dollar rates) and its discount factors from the overnight curve.
 
 ---
 
@@ -83,9 +87,11 @@ A caplet's payoff lands on the payment date. Count its value not in dollars but 
 
 ### Step 1: the forward rate is a ratio of two bond prices
 
-Buy a bond paying \$1 at 2.5 years, for $D(T_1)$ = 0.882497. On that date, lend the \$1 for a quarter at whatever rate is fixed; at 2.75 years it returns $1 + \tau L$. Now fix the rate in advance instead: an agreement to lend at rate $F$ costs nothing to enter only if $D(T_1) = (1 + \tau F)\,D(T_2)$. Solve:
+Buy a bond paying \$1 at 2.5 years, for $`D(T_1)`$ = 0.882497. On that date, lend the \$1 for a quarter at whatever rate is fixed; at 2.75 years it returns $`1 + \tau L`$. Now fix the rate in advance instead: an agreement to lend at rate $`F`$ costs nothing to enter only if $`D(T_1) = (1 + \tau F)\,D(T_2)`$. Solve:
 
-$$F = \frac{1}{0.25}\left(\frac{0.882497}{0.871534} - 1\right) = 5.031381\%.$$
+```math
+F = \frac{1}{0.25}\left(\frac{0.882497}{0.871534} - 1\right) = 5.031381\%.
+```
 
 That contract, a **forward rate agreement** (FRA), is worth nothing today ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)). The forward is not a forecast; it is arithmetic on two prices. It is also not the curve's 5 percent: the curve compounds continuously, and the forward is simple interest over one quarter.
 
@@ -97,50 +103,56 @@ flowchart LR
     B -->|"a known amount waits a quarter:<br/>discounting runs to the far end"| C["Payment date, 2.75 years<br/>caplet pays 10m x 0.25 x max(L - 5%, 0)"]
 ```
 
-Once the rate is fixed, the amount owed is known. Nothing random happens between reset and payment. So the spread of outcomes is clocked to $T_1$: the log rate has $\sigma\sqrt{T_1}$ = 0.474342 of standard deviation. The money arrives at $T_2$, so the discount is $D(T_2)$. On the reset date, the payment is worth $X\,\tau\,(L - K)^+$ per dollar of notional, where $X = 1/(1+\tau L)$ is the price then of \$1 at the payment date and $(\,\cdot\,)^+$ means "the amount if positive, else zero".
+Once the rate is fixed, the amount owed is known. Nothing random happens between reset and payment. So the spread of outcomes is clocked to $`T_1`$: the log rate has $`\sigma\sqrt{T_1}`$ = 0.474342 of standard deviation. The money arrives at $`T_2`$, so the discount is $`D(T_2)`$. On the reset date, the payment is worth $`X\,\tau\,(L - K)^+`$ per dollar of notional, where $`X = 1/(1+\tau L)`$ is the price then of \$1 at the payment date and $`(\,\cdot\,)^+`$ means "the amount if positive, else zero".
 
 ### Step 3: which odds make the forward a fair bet? A two-state test
 
-Shrink the future to two outcomes at the reset date: the rate fixes at 8 percent or at 3 percent. A **state price** is today's cost of \$1 delivered at the reset date in one outcome only. Two facts pin both state prices. Together they must cost $D(T_1)$. And a payment-date bond, worth $X$ in each outcome at the reset date, must cost $D(T_2)$. Solving gives 0.361165 for the 8 percent outcome and 0.521332 for the 3 percent one.
+Shrink the future to two outcomes at the reset date: the rate fixes at 8 percent or at 3 percent. A **state price** is today's cost of \$1 delivered at the reset date in one outcome only. Two facts pin both state prices. Together they must cost $`D(T_1)`$. And a payment-date bond, worth $`X`$ in each outcome at the reset date, must cost $`D(T_2)`$. Solving gives 0.361165 for the 8 percent outcome and 0.521332 for the 3 percent one.
 
 Now average the rate two ways.
 
 - **With odds proportional to the state prices** (the reset-date bond's odds): the average rate is 5.046269 percent. Not the forward.
-- **With odds proportional to state price times $X$** (the payment-date bond's odds): the average is 5.031381 percent. Exactly $F$.
+- **With odds proportional to state price times $`X`$** (the payment-date bond's odds): the average is 5.031381 percent. Exactly $`F`$.
 
-The caplet in this toy world pays only in the 8 percent outcome. Its true price, each state price times the payment's value $X$ there, is \$26,556.27. Discount to the payment date and average with the payment-date odds: the same \$26,556.27. Use the payment-date discount with the reset-date odds and it comes out at \$26,750.91: too dear. The odds and the discount date belong together.
+The caplet in this toy world pays only in the 8 percent outcome. Its true price, each state price times the payment's value $`X`$ there, is \$26,556.27. Discount to the payment date and average with the payment-date odds: the same \$26,556.27. Use the payment-date discount with the reset-date odds and it comes out at \$26,750.91: too dear. The odds and the discount date belong together.
 
 <details>
 <summary>Detailed proof: under the payment-date bond's odds, the forward is a fair bet in any model</summary>
 
-Let the outcomes at the reset date be numbered by an index s, as many as the model likes, with state prices $\pi_s > 0$ and bond values $X_s = 1/(1 + \tau L_s)$. No-arbitrage makes today's price of any claim the state-price-weighted sum of its value at the reset date. So
-$$D(T_1) = \sum_s \pi_s, \qquad D(T_2) = \sum_s \pi_s X_s.$$
-A payment at the payment date, of size V in outcome s, is worth $X_s V_s$ at the reset date, so today it costs
-$$\sum_s \pi_s X_s V_s = D(T_2)\sum_s q_s V_s, \qquad q_s = \frac{\pi_s X_s}{D(T_2)}.$$
-These weights are positive and add to 1: they are odds, the forward measure. Apply this to the payment $\tau L_s$. Since $X_s\,\tau L_s = 1 - X_s$,
-$$D(T_2)\sum_s q_s\,\tau L_s = \sum_s \pi_s (1 - X_s) = D(T_1) - D(T_2),$$
-so the average rate under these odds is $\bigl(D(T_1)/D(T_2) - 1\bigr)/\tau = F$. Nothing was assumed about how rates move. The caplet's price is therefore $M\,\tau\,D(T_2)$ times its average payoff under odds in which $L$ is centred on $F$.
+Let the outcomes at the reset date be numbered by an index s, as many as the model likes, with state prices $`\pi_s > 0`$ and bond values $`X_s = 1/(1 + \tau L_s)`$. No-arbitrage makes today's price of any claim the state-price-weighted sum of its value at the reset date. So
+
+$`\displaystyle D(T_1) = \sum_s \pi_s, \qquad D(T_2) = \sum_s \pi_s X_s.`$
+
+A payment at the payment date, of size V in outcome s, is worth $`X_s V_s`$ at the reset date, so today it costs
+
+$`\displaystyle \sum_s \pi_s X_s V_s = D(T_2)\sum_s q_s V_s, \qquad q_s = \frac{\pi_s X_s}{D(T_2)}.`$
+
+These weights are positive and add to 1: they are odds, the forward measure. Apply this to the payment $`\tau L_s`$. Since $`X_s\,\tau L_s = 1 - X_s`$,
+
+$`\displaystyle D(T_2)\sum_s q_s\,\tau L_s = \sum_s \pi_s (1 - X_s) = D(T_1) - D(T_2),`$
+
+so the average rate under these odds is $`\bigl(D(T_1)/D(T_2) - 1\bigr)/\tau = F`$. Nothing was assumed about how rates move. The caplet's price is therefore $`M\,\tau\,D(T_2)`$ times its average payoff under odds in which $`L`$ is centred on $`F`$.
 
 </details>
 
 ### Step 4: add Black's assumption and integrate
 
-The model's one assumption: under the payment-date odds, $L$ is lognormal, centred on $F$, with log standard deviation $\sigma\sqrt{T_1}$. That is exactly the setting of Black-76 with $F$ as the forward and no carry. The average of $(L - K)^+$ is $F\,N(d_1) - K\,N(d_2)$, derived on [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md). Multiply by $M\,\tau\,D(T_2)$. That is the caplet formula. The floorlet is the same average of $(K - L)^+$.
+The model's one assumption: under the payment-date odds, $`L`$ is lognormal, centred on $`F`$, with log standard deviation $`\sigma\sqrt{T_1}`$. That is exactly the setting of Black-76 with $`F`$ as the forward and no carry. The average of $`(L - K)^+`$ is $`F\,N(d_1) - K\,N(d_2)`$, derived on [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md). Multiply by $`M\,\tau\,D(T_2)`$. That is the caplet formula. The floorlet is the same average of $`(K - L)^+`$.
 
 <details>
 <summary>The integral, in three lines</summary>
 
-Write $L = F\,e^{-\sigma^2 T_1/2 + \sigma\sqrt{T_1}\,z}$ with $z$ a standard normal draw. The payoff is positive when $z > -d_2$, so the strike term is $K\,N(d_2)$. The rate term has $e^{\sigma\sqrt{T_1}z}$ times the bell curve, which completes the square into the bell curve slid right by $\sigma\sqrt{T_1}$; the stray $e^{\sigma^2 T_1/2}$ cancels the drift, and the lower limit becomes $-d_1$. So the rate term is $F\,N(d_1)$.
+Write $`L = F\,e^{-\sigma^2 T_1/2 + \sigma\sqrt{T_1}\,z}`$ with $`z`$ a standard normal draw. The payoff is positive when $`z > -d_2`$, so the strike term is $`K\,N(d_2)`$. The rate term has $`e^{\sigma\sqrt{T_1}z}`$ times the bell curve, which completes the square into the bell curve slid right by $`\sigma\sqrt{T_1}`$; the stray $`e^{\sigma^2 T_1/2}`$ cancels the drift, and the lower limit becomes $`-d_1`$. So the rate term is $`F\,N(d_1)`$.
 
 </details>
 
 ### Step 5: caplet minus floorlet is a forward rate agreement
 
-For any fixing, $(L - K)^+ - (K - L)^+ = L - K$. So a caplet bought and a floorlet sold pay $M\tau(L - K)$ at the payment date whatever happens. By Step 3 that is worth $M\,\tau\,D(T_2)(F - K)$ = \$683.73, with no volatility in it. The caplet (\$20,831.65) exceeds the floorlet (\$20,147.92) by exactly that. The whole-cap version, cap minus floor equals a swap, is on [Caps and floors](02-caps-floors-and-parity.md).
+For any fixing, $`(L - K)^+ - (K - L)^+ = L - K`$. So a caplet bought and a floorlet sold pay $`M\tau(L - K)`$ at the payment date whatever happens. By Step 3 that is worth $`M\,\tau\,D(T_2)(F - K)`$ = \$683.73, with no volatility in it. The caplet (\$20,831.65) exceeds the floorlet (\$20,147.92) by exactly that. The whole-cap version, cap minus floor equals a swap, is on [Caps and floors](02-caps-floors-and-parity.md).
 
 ### The other door: a caplet is a put on a bond
 
-On the reset date the payment is worth $X\tau(L-K)^+$, and a line of algebra turns that into $(1 + \tau K)\,(1/(1+\tau K) - X)^+$: puts on the payment-date bond, struck at 0.98765432. High rates and low bond prices are the same event. Priced in units of the *reset-date* bond, with the odds reweighted accordingly, this route gives \$20,831.65 again (road 4 in the code). Short-rate models price caplets this way ([Bond options](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md)).
+On the reset date the payment is worth $`X\tau(L-K)^+`$, and a line of algebra turns that into $`(1 + \tau K)\,(1/(1+\tau K) - X)^+`$: puts on the payment-date bond, struck at 0.98765432. High rates and low bond prices are the same event. Priced in units of the *reset-date* bond, with the odds reweighted accordingly, this route gives \$20,831.65 again (road 4 in the code). Short-rate models price caplets this way ([Bond options](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md)).
 
 ---
 
@@ -150,20 +162,20 @@ Notional \$10,000,000; quarter from 2.5 to 2.75 years; strike 5%; volatility 30%
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $D(T_1)$, $D(T_2)$ | $e^{-0.05 \times 2.5}$, $e^{-0.05 \times 2.75}$ | 0.882497, 0.871534 |
-| forward rate $F$ | $(0.882497 / 0.871534 - 1) / 0.25$ | 5.031381% |
-| one standard deviation | $0.30 \times \sqrt{2.5}$ | 0.474342 |
-| $d_1$ | $(\ln(5.031381/5) + \tfrac12 \times 0.474342^2) / 0.474342$ | 0.250361 |
-| $d_2$ | $0.250361 - 0.474342$ | −0.223981 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.598846, 0.411386 |
-| rate term | $0.05031381 \times 0.598846$ | 0.03013021 |
-| strike term | $0.05 \times 0.411386$ | 0.02056930 |
-| Black value per unit of rate | $0.03013021 - 0.02056930$ | 0.00956091 |
-| dollars per unit of rate, $M\tau D(T_2)$ | $10{,}000{,}000 \times 0.25 \times 0.871534$ | \$2,178,835.87 |
-| **caplet** | $2{,}178{,}835.87 \times 0.00956091$ | **\$20,831.65** |
-| as a share of notional | $20{,}831.65 / 10{,}000{,}000$ | 0.2083% |
-| floorlet, same inputs | $2{,}178{,}835.87 \times [0.05\,N(0.223981) - 0.05031381\,N(-0.250361)]$ | \$20,147.92 |
-| breakeven fixing | $5\% + 20{,}831.65 / 2{,}178{,}835.87$ | 5.9561% |
+| $`D(T_1)`$, $`D(T_2)`$ | $`e^{-0.05 \times 2.5}`$, $`e^{-0.05 \times 2.75}`$ | 0.882497, 0.871534 |
+| forward rate $`F`$ | $`(0.882497 / 0.871534 - 1) / 0.25`$ | 5.031381% |
+| one standard deviation | $`0.30 \times \sqrt{2.5}`$ | 0.474342 |
+| $`d_1`$ | $`(\ln(5.031381/5) + \tfrac12 \times 0.474342^2) / 0.474342`$ | 0.250361 |
+| $`d_2`$ | $`0.250361 - 0.474342`$ | −0.223981 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.598846, 0.411386 |
+| rate term | $`0.05031381 \times 0.598846`$ | 0.03013021 |
+| strike term | $`0.05 \times 0.411386`$ | 0.02056930 |
+| Black value per unit of rate | $`0.03013021 - 0.02056930`$ | 0.00956091 |
+| dollars per unit of rate, $`M\tau D(T_2)`$ | $`10{,}000{,}000 \times 0.25 \times 0.871534`$ | \$2,178,835.87 |
+| **caplet** | $`2{,}178{,}835.87 \times 0.00956091`$ | **\$20,831.65** |
+| as a share of notional | $`20{,}831.65 / 10{,}000{,}000`$ | 0.2083% |
+| floorlet, same inputs | $`2{,}178{,}835.87 \times [0.05\,N(0.223981) - 0.05031381\,N(-0.250361)]`$ | \$20,147.92 |
+| breakeven fixing | $`5\% + 20{,}831.65 / 2{,}178{,}835.87`$ | 5.9561% |
 
 About \$21,000 insures one quarter on \$10 million against rates above 5 percent, two and a half years out. The forward sits just above the strike, and 30 percent volatility over two and a half years spreads the fixing widely. So the Black value, 0.00956091, is close to one percentage point of annual interest, charged for one quarter and paid up front.
 
@@ -173,8 +185,8 @@ Each Greek (a sensitivity of the price to one input) is computed by formula and 
 
 | Greek | What it measures | Formula | Caplet | Floorlet |
 | --- | --- | --- | --- | --- |
-| delta | dollars per 1 basis point (0.01%) rise in $F$, discount held | $M\tau D(T_2)N(d_1) \times 0.0001$ | \$130.48 | −\$87.40 |
-| vega | dollars per 1 point rise in $\sigma$ | $M\tau D(T_2)\,F\,\sqrt{T_1}\times$ bell height at $d_1$ $\times 0.01$ | \$670.16 | the same |
+| delta | dollars per 1 basis point (0.01%) rise in $`F`$, discount held | $`M\tau D(T_2)N(d_1) \times 0.0001`$ | \$130.48 | −\$87.40 |
+| vega | dollars per 1 point rise in $`\sigma`$ | $`M\tau D(T_2)\,F\,\sqrt{T_1}\times`$ bell height at $`d_1`$ $`\times 0.01`$ | \$670.16 | the same |
 
 The two deltas differ by the FRA's delta, which has no volatility in it; the vegas are equal for the same reason.
 
@@ -184,17 +196,17 @@ Same caplet, right answer \$20,831.65:
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Discount to the reset date, $D(T_1)$ | \$21,093.68 | The money moves a quarter later than the rate is fixed |
-| Volatility clocked to the payment date, $T_2$ | \$21,811.58 | The rate is credited with a quarter of wandering it never does |
+| Discount to the reset date, $`D(T_1)`$ | \$21,093.68 | The money moves a quarter later than the rate is fixed |
+| Volatility clocked to the payment date, $`T_2`$ | \$21,811.58 | The rate is credited with a quarter of wandering it never does |
 | The curve's 5% read as the forward | \$20,423.94 | A continuous zero rate is not the simple forward for one quarter |
-| No accrual $\tau$ | \$83,326.60 | A rate is not a payment; a quarter's interest is a quarter of the rate |
-| $N(d_2)$ on both terms | \$281.28 | The rate term must be weighted by where the rate is high |
+| No accrual $`\tau`$ | \$83,326.60 | A rate is not a payment; a quarter's interest is a quarter of the rate |
+| $`N(d_2)`$ on both terms | \$281.28 | The rate term must be weighted by where the rate is high |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts price the caplet four independent ways: Black's formula; a brute-force average of the payoff over the lognormal rate by Simpson's rule, with no $d_1$, $d_2$ or $N$; a Monte Carlo of 200,000 fixings from a hand-written random number generator; and the bond-put route counted in reset-date bonds. They then check caplet minus floorlet against the FRA, run the two-state test of Step 3, bump the Greeks, and reproduce every wrong number above. Python builds $N$ from the Taylor series of the error function; Rust adds up thin slices under the bell curve.
+The scripts price the caplet four independent ways: Black's formula; a brute-force average of the payoff over the lognormal rate by Simpson's rule, with no $`d_1`$, $`d_2`$ or $`N`$; a Monte Carlo of 200,000 fixings from a hand-written random number generator; and the bond-put route counted in reset-date bonds. They then check caplet minus floorlet against the FRA, run the two-state test of Step 3, bump the Greeks, and reproduce every wrong number above. Python builds $`N`$ from the Taylor series of the error function; Rust adds up thin slices under the bell curve.
 
 ### Python
 
@@ -588,9 +600,9 @@ The two outputs agree line for line, although the bell-curve area was built two 
 
 Lean proves three exact facts from Why it works, for any finite set of outcomes with positive state prices and positive rates.
 
-- Take the payment-date bond's odds, each state price times $X$ over $D(T_2)$. Then they are positive, add to 1, and average the fixed rate to $F$.
-- Take a caplet bought and a floorlet sold, on notional $M$ and positive strike $K$. Then together they are worth $M\,\tau\,D(T_2)\,(F - K)$ today.
-- Take a positive fixed rate $L$ and strike $K$. Then the caplet's payment on the reset date equals $1 + \tau K$ puts on the payment-date bond, struck at $1/(1 + \tau K)$.
+- Take the payment-date bond's odds, each state price times $`X`$ over $`D(T_2)`$. Then they are positive, add to 1, and average the fixed rate to $`F`$.
+- Take a caplet bought and a floorlet sold, on notional $`M`$ and positive strike $`K`$. Then together they are worth $`M\,\tau\,D(T_2)\,(F - K)`$ today.
+- Take a positive fixed rate $`L`$ and strike $`K`$. Then the caplet's payment on the reset date equals $`1 + \tau K`$ puts on the payment-date bond, struck at $`1/(1 + \tau K)`$.
 - At 7 percent the caplet pays \$50,000, and at 4 percent nothing.
 - Each half point above 5 percent adds \$12,500, and the bond strike is exactly 80/81.
 
@@ -750,13 +762,13 @@ example : (1 : ℚ) / (1 + 1 / 4 * (5 / 100)) = 80 / 81 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Discounting from the reset date because that is when the option "expires".** The rate is fixed at 2.5 years but the money moves at 2.75. Discounting from $T_1$ prices this caplet at \$21,093.68, too dear, and the error sits in every caplet of a cap, always in the same direction. The forward measure ties the discount to the payment date: those are the only odds under which the forward is a fair bet.
+> **Discounting from the reset date because that is when the option "expires".** The rate is fixed at 2.5 years but the money moves at 2.75. Discounting from $`T_1`$ prices this caplet at \$21,093.68, too dear, and the error sits in every caplet of a cap, always in the same direction. The forward measure ties the discount to the payment date: those are the only odds under which the forward is a fair bet.
 >
 > Four smaller traps:
 > - **Running the volatility clock to the payment date.** \$21,811.58 instead of \$20,831.65. Nothing is random after the fixing.
 > - **Reading the curve's rate as the forward.** The curve's 5 percent, continuously compounded, is not the 5.031381 percent simple forward for the quarter; using it gives \$20,423.94.
-> - **Forgetting that a rate is not a payment.** Dropping $\tau$ quadruples a quarterly caplet, to \$83,326.60. And $\tau$ comes from the contract's day count, not the calendar.
-> - **Reading $N(d_2)$ as a forecast.** 0.411386 is the chance of a payout under the payment-date bond's odds, not the real-world chance that rates rise.
+> - **Forgetting that a rate is not a payment.** Dropping $`\tau`$ quadruples a quarterly caplet, to \$83,326.60. And $`\tau`$ comes from the contract's day count, not the calendar.
+> - **Reading $`N(d_2)`$ as a forecast.** 0.411386 is the chance of a payout under the payment-date bond's odds, not the real-world chance that rates rise.
 
 ---
 

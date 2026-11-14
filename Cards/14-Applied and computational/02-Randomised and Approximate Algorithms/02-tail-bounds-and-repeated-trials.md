@@ -38,48 +38,56 @@ Orange, steep: the one-sided check, each run adding 0.30 digits. Green, shallow:
 
 ## The formula
 
-Two letters are introduced here and used across this wing. $\delta$ (delta) is a **failure probability**: the chance allowed for the whole guarantee to fail, here 1 in a million. $\varepsilon$ (epsilon) is an **error allowance**: how far off an answer may be, or how much margin a test has over a guess. A randomised method that has a fixed cost but may be wrong is a **Monte Carlo** method ([Randomised algorithms](01-randomised-algorithms-and-expectation.md)); the check above is one.
+Two letters are introduced here and used across this wing. $`\delta`$ (delta) is a **failure probability**: the chance allowed for the whole guarantee to fail, here 1 in a million. $`\varepsilon`$ (epsilon) is an **error allowance**: how far off an answer may be, or how much margin a test has over a guess. A randomised method that has a fixed cost but may be wrong is a **Monte Carlo** method ([Randomised algorithms](01-randomised-algorithms-and-expectation.md)); the check above is one.
 
-The number of runs to buy, for a method used $N$ times with total failure chance at most $\delta$:
+The number of runs to buy, for a method used $`N`$ times with total failure chance at most $`\delta`$:
 
-$$k = \left\lceil \frac{\ln(N/\delta)}{r} \right\rceil$$
+```math
+k = \left\lceil \frac{\ln(N/\delta)}{r} \right\rceil
+```
 
 **Read it aloud:** the runs needed are the natural log of the number of uses divided by the allowed failure, divided by the rate each run buys, rounded up.
 
-The rate $r$ depends on the kind of test:
+The rate $`r`$ depends on the kind of test:
 
-$$\text{one-sided:}\ \ P(\text{all } k \text{ runs miss}) = m^k,\quad r = \ln\frac{1}{m}$$
+```math
+\text{one-sided:}\ \ P(\text{all } k \text{ runs miss}) = m^k,\quad r = \ln\frac{1}{m}
+```
 
-$$\text{two-sided, majority vote:}\ \ P(\text{vote wrong}) \le e^{-k\,D(\frac12\,\|\,1-p)} \le e^{-2k\varepsilon^2},\quad \varepsilon = p - \tfrac12$$
+```math
+\text{two-sided, majority vote:}\ \ P(\text{vote wrong}) \le e^{-k\,D(\frac12\,\|\,1-p)} \le e^{-2k\varepsilon^2},\quad \varepsilon = p - \tfrac12
+```
 
-$$\text{many uses, the union bound:}\ \ P(\text{some use fails}) \le N \times (\text{failure chance of one use})$$
+```math
+\text{many uses, the union bound:}\ \ P(\text{some use fails}) \le N \times (\text{failure chance of one use})
+```
 
-**Read it aloud:** a one-sided test misses only when every run misses. A majority vote is wrong with a chance that falls exponentially at Chernoff's rate $D$. The chance that any of $N$ uses fails is at most $N$ times the chance for one.
+**Read it aloud:** a one-sided test misses only when every run misses. A majority vote is wrong with a chance that falls exponentially at Chernoff's rate $`D`$. The chance that any of $`N`$ uses fails is at most $`N`$ times the chance for one.
 
-Here $D(a\,\|\,b) = a\ln\frac{a}{b} + (1-a)\ln\frac{1-a}{1-b}$ is Chernoff's rate, the gap between a coin with chance $a$ and one with chance $b$ ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)). For a vote, $a = \frac12$ is the line a majority must cross and $b = 1 - p$ is a run's chance of being wrong.
+Here $`D(a\,\|\,b) = a\ln\frac{a}{b} + (1-a)\ln\frac{1-a}{1-b}`$ is Chernoff's rate, the gap between a coin with chance $`a`$ and one with chance $`b`$ ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)). For a vote, $`a = \frac12`$ is the line a majority must cross and $`b = 1 - p`$ is a run's chance of being wrong.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $k$ | runs per use | 20 for one request; 44 for a safe day; 97 for the two-sided vote | the failure chance falls exponentially |
-| $m$ | chance one run of a one-sided check misses a wrong answer | 1/2 | more runs needed; at 1/4 only 10 |
-| $p$ | chance one run of a two-sided test is right | 3/4 | fewer runs; at 2/3 the guarantee needs 235 |
-| $\varepsilon$ | error allowance: the margin $p - \frac12$, or how far an estimate may be off | 1/4 for the vote; 0.01 for an estimate | runs or samples fall like $1/\varepsilon^2$ |
-| $\delta$ | failure probability allowed for the whole job | 1 in a million | runs fall, but only like $\ln(1/\delta)$ |
-| $N$ | uses the guarantee must cover | 1 request, or 10,000,000 a day | runs rise, but only like $\ln N$ |
-| $r$ | rate: how much one run cuts the log of the failure chance | $\ln 2 = 0.6931$ one-sided; $D = 0.1438$ vote | fewer runs |
-| $D(a\,\|\,b)$ | Chernoff's rate, the gap between two coins | $D(\frac12\,\|\,\frac14) = 0.1438$ | the vote's bound falls faster |
-| $W$ | count of wrong runs among $k$ | the vote fails when $W \ge (k+1)/2$ | — |
-| $n$ | random samples drawn for an estimate | 72,544 | the estimate tightens like $1/\sqrt n$ |
-| $A$, $B$, $C$ | the two tables and the claimed product | 1,000 by 1,000 | — |
-| $x$ | the random list of zeros and ones | 1,000 entries | — |
+| $`k`$ | runs per use | 20 for one request; 44 for a safe day; 97 for the two-sided vote | the failure chance falls exponentially |
+| $`m`$ | chance one run of a one-sided check misses a wrong answer | 1/2 | more runs needed; at 1/4 only 10 |
+| $`p`$ | chance one run of a two-sided test is right | 3/4 | fewer runs; at 2/3 the guarantee needs 235 |
+| $`\varepsilon`$ | error allowance: the margin $`p - \frac12`$, or how far an estimate may be off | 1/4 for the vote; 0.01 for an estimate | runs or samples fall like $`1/\varepsilon^2`$ |
+| $`\delta`$ | failure probability allowed for the whole job | 1 in a million | runs fall, but only like $`\ln(1/\delta)`$ |
+| $`N`$ | uses the guarantee must cover | 1 request, or 10,000,000 a day | runs rise, but only like $`\ln N`$ |
+| $`r`$ | rate: how much one run cuts the log of the failure chance | $`\ln 2 = 0.6931`$ one-sided; $`D = 0.1438`$ vote | fewer runs |
+| $`D(a\,\Vert\,b)`$ | Chernoff's rate, the gap between two coins | $`D(\frac12\,\Vert\,\frac14) = 0.1438`$ | the vote's bound falls faster |
+| $`W`$ | count of wrong runs among $`k`$ | the vote fails when $`W \ge (k+1)/2`$ | — |
+| $`n`$ | random samples drawn for an estimate | 72,544 | the estimate tightens like $`1/\sqrt n`$ |
+| $`A`$, $`B`$, $`C`$ | the two tables and the claimed product | 1,000 by 1,000 | — |
+| $`x`$ | the random list of zeros and ones | 1,000 entries | — |
 
 ### When it holds
 
-- **Fresh randomness on every run.** The product $m^k$ needs independent runs. Reuse one random list and a wrong product that slips past once slips past every time: the miss chance stays at 1/2, simulated 0.5007.
+- **Fresh randomness on every run.** The product $`m^k`$ needs independent runs. Reuse one random list and a wrong product that slips past once slips past every time: the miss chance stays at 1/2, simulated 0.5007.
 - **The any-alarm rule only for a one-sided test.** "Reject if any run objects" is safe only when a right answer never draws an objection. On a test with false alarms 1 time in 4, 20 runs reject a right answer with chance 0.9968.
-- **A real margin for a vote.** Each run must be right more often than not, on every input. At $p = \frac12$ a majority of 101 runs is still wrong half the time.
-- **A worst-case rate per run.** $m$ and $p$ must hold for every input, not on average over inputs, or the bad input escapes the bound.
-- **A union bound below 1.** It needs no independence between uses, but once $N$ times the per-use chance passes 1, as 9.54 does, it says nothing.
+- **A real margin for a vote.** Each run must be right more often than not, on every input. At $`p = \frac12`$ a majority of 101 runs is still wrong half the time.
+- **A worst-case rate per run.** $`m`$ and $`p`$ must hold for every input, not on average over inputs, or the bad input escapes the bound.
+- **A union bound below 1.** It needs no independence between uses, but once $`N`$ times the per-use chance passes 1, as 9.54 does, it says nothing.
 
 ---
 
@@ -89,33 +97,33 @@ Here $D(a\,\|\,b) = a\ln\frac{a}{b} + (1-a)\ln\frac{1-a}{1-b}$ is Chernoff's rat
 
 A one-sided method fails only if every run fails, and independent failures multiply, so each run cuts the failure chance by a fixed factor. A two-sided method decided by majority fails only if more than half its runs fail. That is a tail of a binomial count: the chance that the count of failed runs lands far above its mean. Chernoff's bound shows that this tail also falls exponentially, under a guarantee that shrinks by a fixed factor per run.
 
-Either way the runs needed grow with the logarithm of the target. The union bound then spreads one budget $\delta$ across many uses at the same logarithmic price.
+Either way the runs needed grow with the logarithm of the target. The union bound then spreads one budget $`\delta`$ across many uses at the same logarithmic price.
 
 ### Step 1: one run of the check catches a wrong product at least half the time
 
-The check compares $A(Bx)$ with $Cx$. Together the two sides take three passes of a table over a list, two for $A(Bx)$ and one for $Cx$: about $3 \times 1{,}000^2 = 3{,}000{,}000$ multiplications, against $1{,}000^3$ to redo $AB$.
+The check compares $`A(Bx)`$ with $`Cx`$. Together the two sides take three passes of a table over a list, two for $`A(Bx)`$ and one for $`Cx`$: about $`3 \times 1{,}000^2 = 3{,}000{,}000`$ multiplications, against $`1{,}000^3`$ to redo $`AB`$.
 
-If $C = AB$ the two sides are equal for every list, so a right product is never rejected. If $C$ is wrong, the error table $AB - C$ has some entry that is not zero, in row $i$ and column $j$. Entry $i$ of $(AB - C)x$ is that entry times $x_j$, plus terms that do not involve $x_j$. Fix every other entry of the list. Of the two values $x_j$ can take, 0 and 1, at most one makes the total zero, because they differ by the nonzero entry. So at least half of all lists expose the error.
+If $`C = AB`$ the two sides are equal for every list, so a right product is never rejected. If $`C`$ is wrong, the error table $`AB - C`$ has some entry that is not zero, in row $`i`$ and column $`j`$. Entry $`i`$ of $`(AB - C)x`$ is that entry times $`x_j`$, plus terms that do not involve $`x_j`$. Fix every other entry of the list. Of the two values $`x_j`$ can take, 0 and 1, at most one makes the total zero, because they differ by the nonzero entry. So at least half of all lists expose the error.
 
 The code checks this on a 3 by 3 product with one entry off by one: exactly 4 of the 8 possible lists catch it, and 0 of 8 flag the right product.
 
 ### Step 2: one-sided repeats multiply the doubt
 
-Each run draws its own list, so the runs are independent, and the chance that all $k$ miss is the product of the per-run misses: at most $m^k$. With $m = \frac12$, ask for $(\frac12)^k \le \delta$. Taking logs, $k \ge \ln(1/\delta)/\ln 2 = 13.82/0.6931 = 19.93$, so 20 runs. This is the formula with $N = 1$ and $r = \ln 2$.
+Each run draws its own list, so the runs are independent, and the chance that all $`k`$ miss is the product of the per-run misses: at most $`m^k`$. With $`m = \frac12`$, ask for $`(\frac12)^k \le \delta`$. Taking logs, $`k \ge \ln(1/\delta)/\ln 2 = 13.82/0.6931 = 19.93`$, so 20 runs. This is the formula with $`N = 1`$ and $`r = \ln 2`$.
 
-The test that finds primes for encryption keys is the same shape with $m = \frac14$: each fresh base leaves at most a quarter of the doubt ([The Miller-Rabin test](../../02-Number%20theory/06-Codes%20and%20Secrets/05-miller-rabin.md)), so 10 bases reach 1 in a million.
+The test that finds primes for encryption keys is the same shape with $`m = \frac14`$: each fresh base leaves at most a quarter of the doubt ([The Miller-Rabin test](../../02-Number%20theory/06-Codes%20and%20Secrets/05-miller-rabin.md)), so 10 bases reach 1 in a million.
 
 ### Step 3: two-sided tests need a vote, and the vote needs Chernoff
 
-Now take a yes-or-no test that is right with chance $p = \frac34$ whichever answer is true. One objection proves nothing, so run it an odd number $k$ of times and take the majority. The vote is wrong only when the count of wrong runs $W$ reaches $(k+1)/2$. $W$ counts successes in $k$ independent trials with chance $\frac14$ each, so it is binomial with mean $k/4$.
+Now take a yes-or-no test that is right with chance $`p = \frac34`$ whichever answer is true. One objection proves nothing, so run it an odd number $`k`$ of times and take the majority. The vote is wrong only when the count of wrong runs $`W`$ reaches $`(k+1)/2`$. $`W`$ counts successes in $`k`$ independent trials with chance $`\frac14`$ each, so it is binomial with mean $`k/4`$.
 
 Three bounds on that tail, from weakest to strongest:
 
-- **Markov** ([Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) uses the mean alone: $P(W \ge k/2) \le (k/4)/(k/2) = \frac12$. That is 0.50 at every $k$: more runs never improve it.
-- **Chebyshev** uses the variance $k \cdot \frac14 \cdot \frac34 = 3k/16$ and the distance $k/4$ from the mean: the bound is $3/k$. It falls, but only like one over the runs: 1 in a million needs 3,000,000 runs.
-- **Chernoff** ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)) uses the whole binomial law: $P(W \ge k/2) \le e^{-k\,D(\frac12\,\|\,\frac14)}$, with $D = \frac12\ln 2 + \frac12\ln\frac23 = 0.1438$. Hoeffding's simpler form gives $e^{-2k\varepsilon^2} = e^{-k/8}$, rate 0.1250.
+- **Markov** ([Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) uses the mean alone: $`P(W \ge k/2) \le (k/4)/(k/2) = \frac12`$. That is 0.50 at every $`k`$: more runs never improve it.
+- **Chebyshev** uses the variance $`k \cdot \frac14 \cdot \frac34 = 3k/16`$ and the distance $`k/4`$ from the mean: the bound is $`3/k`$. It falls, but only like one over the runs: 1 in a million needs 3,000,000 runs.
+- **Chernoff** ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)) uses the whole binomial law: $`P(W \ge k/2) \le e^{-k\,D(\frac12\,\|\,\frac14)}`$, with $`D = \frac12\ln 2 + \frac12\ln\frac23 = 0.1438`$. Hoeffding's simpler form gives $`e^{-2k\varepsilon^2} = e^{-k/8}`$, rate 0.1250.
 
-Setting each below 1 in a million: Hoeffding needs 111 runs, Chernoff $13.82/0.1438 = 96.05$, so 97. The exact binomial sum, counted term by term in the code, first drops below 1 in a million at 79 runs: at 77 it is $1.17 \times 10^{-6}$, at 79 it is $8.65 \times 10^{-7}$. Chernoff's guarantee costs 18 extra runs over the truth. Chebyshev's costs millions.
+Setting each below 1 in a million: Hoeffding needs 111 runs, Chernoff $`13.82/0.1438 = 96.05`$, so 97. The exact binomial sum, counted term by term in the code, first drops below 1 in a million at 79 runs: at 77 it is $`1.17 \times 10^{-6}`$, at 79 it is $`8.65 \times 10^{-7}`$. Chernoff's guarantee costs 18 extra runs over the truth. Chebyshev's costs millions.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -134,34 +142,34 @@ Orange, top: the exact failure chance of the vote. Green, middle: Chernoff's gua
 
 The service does not run the check once; it runs it 10,000,000 times a day. The **union bound** ([Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)) says the chance that at least one of many events happens is at most the sum of their chances. It needs no independence, which suits requests that share machines.
 
-With 20 runs per request, the sum is $10^7 \times 9.54 \times 10^{-7} = 9.54$. A bound above 1 says nothing. The worst case is grim: if a broken worker spoiled every product and the checks ran independently, the chance of at least one wrong product reaching a customer would be 0.99993.
+With 20 runs per request, the sum is $`10^7 \times 9.54 \times 10^{-7} = 9.54`$. A bound above 1 says nothing. The worst case is grim: if a broken worker spoiled every product and the checks ran independently, the chance of at least one wrong product reaching a customer would be 0.99993.
 
-To make the whole day fail with chance at most 1 in a million, give each request $\delta/N = 10^{-13}$. Then $k \ge \ln(10^{13})/\ln 2 = 29.93/0.6931 = 43.19$, so 44 runs, and the union bound reads $5.68 \times 10^{-7}$. Ten million times as many uses cost 24 more runs, because $\log_2(10^7)$ is about 23.3. The two-sided vote needs $29.93/0.1438 = 208.10$, so 209 runs by Chernoff, and 189 by the exact sum.
+To make the whole day fail with chance at most 1 in a million, give each request $`\delta/N = 10^{-13}`$. Then $`k \ge \ln(10^{13})/\ln 2 = 29.93/0.6931 = 43.19`$, so 44 runs, and the union bound reads $`5.68 \times 10^{-7}`$. Ten million times as many uses cost 24 more runs, because $`\log_2(10^7)`$ is about 23.3. The two-sided vote needs $`29.93/0.1438 = 208.10`$, so 209 runs by Chernoff, and 189 by the exact sum.
 
 ### Step 5: the same recipe for an estimate
 
-The service also wants the share of slow requests, without timing all ten million. Draw $n$ requests at random, independently, and report the share that were slow. Hoeffding's bound, counting misses above and below, says the sample share misses the true share by $\varepsilon$ or more with chance at most $2e^{-2n\varepsilon^2}$. Set that to $\delta$: $n = \lceil \ln(2/\delta)/(2\varepsilon^2) \rceil$. For $\varepsilon = 0.01$ and $\delta$ 1 in a million that is 72,544 samples, under 1% of the day.
+The service also wants the share of slow requests, without timing all ten million. Draw $`n`$ requests at random, independently, and report the share that were slow. Hoeffding's bound, counting misses above and below, says the sample share misses the true share by $`\varepsilon`$ or more with chance at most $`2e^{-2n\varepsilon^2}`$. Set that to $`\delta`$: $`n = \lceil \ln(2/\delta)/(2\varepsilon^2) \rceil`$. For $`\varepsilon = 0.01`$ and $`\delta`$ 1 in a million that is 72,544 samples, under 1% of the day.
 
-This pair, "within $\varepsilon$, except with chance $\delta$", is the shape of the guarantees later on this shelf. $\delta$ sits inside a logarithm and $\varepsilon$ is squared underneath: $\varepsilon = 0.001$ costs 7,254,329 samples, a hundred times more.
+This pair, "within $`\varepsilon`$, except with chance $`\delta`$", is the shape of the guarantees later on this shelf. $`\delta`$ sits inside a logarithm and $`\varepsilon`$ is squared underneath: $`\varepsilon = 0.001`$ costs 7,254,329 samples, a hundred times more.
 
 ---
 
 ## Worked numbers, by hand
 
-The service's check, one-sided with $m = \frac12$, and the two-sided vote with $p = \frac34$.
+The service's check, one-sided with $`m = \frac12`$, and the two-sided vote with $`p = \frac34`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| allowed failure, one request | $\delta$ | 1 in a million |
-| log of the target | $\ln(10^6)$ | 13.82 |
+| allowed failure, one request | $`\delta`$ | 1 in a million |
+| log of the target | $`\ln(10^6)`$ | 13.82 |
 | one-sided runs | 13.82 / 0.6931 = 19.93, round up | 20 |
-| miss chance at 20 runs | $(\frac12)^{20}$ = 1 / 1,048,576 | $9.54 \times 10^{-7}$ |
+| miss chance at 20 runs | $`(\frac12)^{20}`$ = 1 / 1,048,576 | $`9.54 \times 10^{-7}`$ |
 | cost of 20 checks | 20 × 3,000,000 / 1,000,000,000 | 6.0% of a redo |
-| the day at 20 runs, every product wrong | 10,000,000 × $9.54 \times 10^{-7}$ | 9.54 expected misses |
-| per-request target for a safe day | $10^{-6} / 10^{7}$, log $\ln(10^{13})$ | 29.93 |
+| the day at 20 runs, every product wrong | 10,000,000 × $`9.54 \times 10^{-7}`$ | 9.54 expected misses |
+| per-request target for a safe day | $`10^{-6} / 10^{7}`$, log $`\ln(10^{13})`$ | 29.93 |
 | one-sided runs for the day | 29.93 / 0.6931 = 43.19, round up | **44** |
-| union bound at 44 runs | 10,000,000 × $2^{-44}$ | $5.68 \times 10^{-7}$ |
-| two-sided rate | $\frac12\ln 2 + \frac12\ln\frac23$ | 0.1438 |
+| union bound at 44 runs | 10,000,000 × $`2^{-44}`$ | $`5.68 \times 10^{-7}`$ |
+| two-sided rate | $`\frac12\ln 2 + \frac12\ln\frac23`$ | 0.1438 |
 | two-sided runs, one request | 13.82 / 0.1438 = 96.05, round up | **97** |
 | two-sided runs, the day | 29.93 / 0.1438 = 208.10, round up | **209** |
 
@@ -173,14 +181,14 @@ Forty-four runs of a three-million-multiplication check, 13.2% of the cost of re
 | --- | --- | --- |
 | One random list reused for all 4 runs of the check | misses a wrong product 0.5007 of the time (simulated); fresh lists give 0.0612, exact 0.0625 | the runs are not independent, so the doubts do not multiply |
 | Any-alarm rule on a two-sided test right 3 times in 4, 20 runs | rejects a right answer with chance 0.9968 | the rule assumes a right answer never draws an objection |
-| Majority of 101 runs of a test right only half the time | wrong with chance 0.5000 | no margin: $\varepsilon = 0$, so Chernoff's rate is 0 |
+| Majority of 101 runs of a test right only half the time | wrong with chance 0.5000 | no margin: $`\varepsilon = 0`$, so Chernoff's rate is 0 |
 | 20 runs per request across 10,000,000 requests | union bound 9.54; if every product is wrong, at least one miss with chance 0.99993 | one request's budget was spent on every request |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script runs Freivalds' check (the random-list check above) on a 3 by 3 product and takes **three independent roads**. Closed forms: $m^k$, the Chernoff and Hoeffding exponentials, the union sum and the run-count formula. Exact counts: all 8 random lists, a run-by-run loop, and the binomial tail summed term by term and again built up one run at a time. A seeded simulation: SplitMix64, a small random-number generator written out in both languages, drives 100,000 trials of the real check, with fresh and with reused lists, and 100,000 votes of 9 runs. Asserts tie the roads together, simulations within four standard errors (four times the scatter expected from chance alone).
+The script runs Freivalds' check (the random-list check above) on a 3 by 3 product and takes **three independent roads**. Closed forms: $`m^k`$, the Chernoff and Hoeffding exponentials, the union sum and the run-count formula. Exact counts: all 8 random lists, a run-by-run loop, and the binomial tail summed term by term and again built up one run at a time. A seeded simulation: SplitMix64, a small random-number generator written out in both languages, drives 100,000 trials of the real check, with fresh and with reused lists, and 100,000 votes of 9 runs. Asserts tie the roads together, simulations within four standard errors (four times the scatter expected from chance alone).
 
 ### Python
 
@@ -590,16 +598,16 @@ The two outputs match line for line.
 
 Lean proves the one-sided repeat rule with the union bound, and the check's catch rate, for every number of runs and uses.
 
-- Suppose each run misses with chance at most $m$, with $0 < m < 1$, and $k \ge \ln(N/\delta)/r$. Then the chance that some of the $N$ uses has all $k$ runs miss is at most $\delta$.
+- Suppose each run misses with chance at most $`m`$, with $`0 < m < 1`$, and $`k \ge \ln(N/\delta)/r`$. Then the chance that some of the $`N`$ uses has all $`k`$ runs miss is at most $`\delta`$.
 - The runs inside one use must be independent, but different uses need not be.
-- Suppose $C = AB$. Then $A(Bx) = Cx$ for every list $x$ of zeros and ones.
-- Suppose $C \ne AB$. Then at least half of all lists $x$ of zeros and ones give $A(Bx) \ne Cx$.
+- Suppose $`C = AB`$. Then $`A(Bx) = Cx`$ for every list $`x`$ of zeros and ones.
+- Suppose $`C \ne AB`$. Then at least half of all lists $`x`$ of zeros and ones give $`A(Bx) \ne Cx`$.
 - On the card's 3 by 3 tables, 4 of the 8 lists catch the wrong product and 0 of 8 flag the right one.
 - One check costs 3,000,000 multiplications against 1,000,000,000 for a redo; 20 checks are 6% of a redo and 44 are 13.2%.
 - 20 runs reach 1 in a million and 19 do not; at a miss chance of 1/4, 10 runs do and 9 do not.
 - Over 10,000,000 requests, 20 runs give a union bound above 1; 44 runs reach 1 in a million and 43 do not.
 - For the vote right 3 times in 4, the margin is 1/4 and Hoeffding's rate is 1/8.
-- Markov's bound is 1/2 at every $k$, and Chebyshev's is $3/k$, reaching 1 in a million only at 3,000,000 runs.
+- Markov's bound is 1/2 at every $`k`$, and Chebyshev's is $`3/k`$, reaching 1 in a million only at 3,000,000 runs.
 - The exact vote sum drops below 1 in a million at 79 runs and is still above it at 77.
 
 Chernoff's bound, the counts 97, 209 and 72,544, and the simulations are left to the Python and Rust checks.

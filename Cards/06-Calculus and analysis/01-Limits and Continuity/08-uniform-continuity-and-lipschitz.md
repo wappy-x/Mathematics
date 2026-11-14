@@ -35,35 +35,39 @@ The line is the most side error each tile can take. Up to 2 m its lowest value i
 
 ## The formula
 
-Bars around a difference, as in $\lvert x - y\rvert$, give the distance between two numbers. A function $f$ is **Lipschitz** on an interval, with **Lipschitz constant** $K$, when no two inputs have outputs further apart than $K$ times their own distance:
+Bars around a difference, as in $`\lvert x - y\rvert`$, give the distance between two numbers. A function $`f`$ is **Lipschitz** on an interval, with **Lipschitz constant** $`K`$, when no two inputs have outputs further apart than $`K`$ times their own distance:
 
-$$\lvert f(x) - f(y)\rvert \le K\,\lvert x - y\rvert \quad \text{for every } x, y \text{ in the interval.}$$
+```math
+\lvert f(x) - f(y)\rvert \le K\,\lvert x - y\rvert \quad \text{for every } x, y \text{ in the interval.}
+```
 
 **Read it aloud:** the gap between two outputs is at most K times the gap between the inputs, wherever the two inputs sit.
 
-Divided by the input gap, the left side is the slope of a **chord**, the straight line joining two points of the graph. So K caps the steepness of every chord. For the tiles, $f(x) = x^2$ on sides 0 to 2 m, and $K = 4$ square metres per metre. The shortcut:
+Divided by the input gap, the left side is the slope of a **chord**, the straight line joining two points of the graph. So K caps the steepness of every chord. For the tiles, $`f(x) = x^2`$ on sides 0 to 2 m, and $`K = 4`$ square metres per metre. The shortcut:
 
-$$\text{input tolerance} = \frac{\text{output tolerance}}{K} = \frac{0.01}{4} = 0.0025 \text{ m}.$$
+```math
+\text{input tolerance} = \frac{\text{output tolerance}}{K} = \frac{0.01}{4} = 0.0025 \text{ m}.
+```
 
 **Read it aloud:** the error the output can bear, divided by the steepness cap, is the error the input may carry, everywhere at once.
 
-When no K is at hand, **Heine–Cantor** still guarantees one tolerance: a function continuous at every point of a closed, bounded interval $[a, b]$ is uniformly continuous on it.
+When no K is at hand, **Heine–Cantor** still guarantees one tolerance: a function continuous at every point of a closed, bounded interval $`[a, b]`$ is uniformly continuous on it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the function: side in, area out | $f(x) = x^2$ | — |
-| $x$, $y$ | any two inputs | sides 1.9975 m and 2 m | — |
-| $\lvert x - y\rvert$ | their distance | 0.0025 m | output gap may grow |
-| $K$ | Lipschitz constant: cap on chord steepness, output units per input unit | 4 m^2 per m | tolerance shrinks |
-| $a$, $b$ | the interval's ends, both included | 0 m and 2 m | b up: larger K, smaller tolerance |
-| $c$ | one fixed side, for continuity at a point | 0.5 m, 100 m | its tolerance shrinks |
-| $h$ | a proposed input tolerance | 0.1 m to 0.001 m | — |
-| $x_n$, $y_n$, $x_{n_j}$, $y_{n_j}$ | the folded proof's bad pairs, and a settling subsequence | — | — |
+| $`f`$ | the function: side in, area out | $`f(x) = x^2`$ | — |
+| $`x`$, $`y`$ | any two inputs | sides 1.9975 m and 2 m | — |
+| $`\lvert x - y\rvert`$ | their distance | 0.0025 m | output gap may grow |
+| $`K`$ | Lipschitz constant: cap on chord steepness, output units per input unit | 4 m^2 per m | tolerance shrinks |
+| $`a`$, $`b`$ | the interval's ends, both included | 0 m and 2 m | b up: larger K, smaller tolerance |
+| $`c`$ | one fixed side, for continuity at a point | 0.5 m, 100 m | its tolerance shrinks |
+| $`h`$ | a proposed input tolerance | 0.1 m to 0.001 m | — |
+| $`x_n`$, $`y_n`$, $`x_{n_j}`$, $`y_{n_j}`$ | the folded proof's bad pairs, and a settling subsequence | — | — |
 
 ### When it holds
 
 - **Continuous.** A switch reading 0 below 1 and 1 from 1 up has no tolerance: inputs 0.9999 and 1 give outputs 1 apart.
-- **Closed, both ends included.** On 0 to 1 with 0 left out, $1/x$ is continuous, yet inputs 1/100 and 1/101, 0.00009901 apart, give outputs 1 apart, and 1/n against 1/(n + 1) does the same ever closer.
+- **Closed, both ends included.** On 0 to 1 with 0 left out, $`1/x`$ is continuous, yet inputs 1/100 and 1/101, 0.00009901 apart, give outputs 1 apart, and 1/n against 1/(n + 1) does the same ever closer.
 - **Bounded.** Squaring on the whole line is continuous but not uniformly so (Step 2).
 - **A tolerance, not a constant.** The square root on 0 to 1 is uniformly continuous, but no K fits it near 0 (Step 4).
 
@@ -77,52 +81,56 @@ If no chord is steeper than K, an input gap below the output tolerance divided b
 
 ### Step 1: find K for the tiles by factoring
 
-The area gap between sides $x$ and $y$ factors as a difference of squares:
+The area gap between sides $`x`$ and $`y`$ factors as a difference of squares:
 
-$$\lvert x^2 - y^2\rvert = \lvert x - y\rvert \cdot (x + y) \le 4\,\lvert x - y\rvert.$$
+```math
+\lvert x^2 - y^2\rvert = \lvert x - y\rvert \cdot (x + y) \le 4\,\lvert x - y\rvert.
+```
 
-On sides up to 2 m, $x + y$ is at most 4, so K = 4 and the tolerance is 0.01 / 4 = 0.0025 m. The hardest pair sits at the top end, 1.9975 m against 2 m: area gap 0.00999375 m^2, just inside.
+On sides up to 2 m, $`x + y`$ is at most 4, so K = 4 and the tolerance is 0.01 / 4 = 0.0025 m. The hardest pair sits at the top end, 1.9975 m against 2 m: area gap 0.00999375 m^2, just inside.
 
 The largest single tolerance that works makes that top pair's gap exactly 0.01: 2 − √(4 − 0.01) = 0.00250156 m. The shortcut gives up almost nothing.
 
 ### Step 2: at each side, its own tolerance; on the whole line, no floor
 
-Plain continuity at one side $c$ tests only pairs with one member at $c$. Upwards is tighter, since the curve steepens, so the largest safe error solves $(c + h)^2 - c^2 = 0.01$: it is $\sqrt{c^2 + 0.01} - c$. At 0.5 m that is 0.00990195 m; at 100 m, 0.00005 m. The chart plots it.
+Plain continuity at one side $`c`$ tests only pairs with one member at $`c`$. Upwards is tighter, since the curve steepens, so the largest safe error solves $`(c + h)^2 - c^2 = 0.01`$: it is $`\sqrt{c^2 + 0.01} - c`$. At 0.5 m that is 0.00990195 m; at 100 m, 0.00005 m. The chart plots it.
 
-Every side has its tolerance, but on the whole line no single one survives. Propose any input tolerance $h$. The sides $1/h$ and $1/h + h/2$ are closer than $h$, yet
+Every side has its tolerance, but on the whole line no single one survives. Propose any input tolerance $`h`$. The sides $`1/h`$ and $`1/h + h/2`$ are closer than $`h`$, yet
 
-$$\left(\tfrac{1}{h} + \tfrac{h}{2}\right)^2 - \left(\tfrac{1}{h}\right)^2 = 1 + \tfrac{h^2}{4} > 1,$$
+```math
+\left(\tfrac{1}{h} + \tfrac{h}{2}\right)^2 - \left(\tfrac{1}{h}\right)^2 = 1 + \tfrac{h^2}{4} > 1,
+```
 
-a hundred times the permitted 0.01 m^2. With $h$ = 0.0025 m the sides are 400 m and 400.00125 m, area gap 1.00000156 m^2. Every proposal fails somewhere.
+a hundred times the permitted 0.01 m^2. With $`h`$ = 0.0025 m the sides are 400 m and 400.00125 m, area gap 1.00000156 m^2. Every proposal fails somewhere.
 
 ### Step 3: Heine–Cantor, the shape of the proof
 
-Suppose some output tolerance on $[a, b]$ had no single input tolerance. Then for each input tolerance tried, 1, 1/2, 1/3 and on, some pair of inputs closer than that has outputs at least the fixed tolerance apart.
+Suppose some output tolerance on $`[a, b]`$ had no single input tolerance. Then for each input tolerance tried, 1, 1/2, 1/3 and on, some pair of inputs closer than that has outputs at least the fixed tolerance apart.
 
 Bounded: the first members of those pairs have a subsequence settling on one point (Bolzano–Weierstrass, from [Extreme value theorem](07-extreme-value-theorem.md)). Closed: that point is in the interval. The second members, ever closer to the first, settle there too. Continuity at that point pulls both outputs to one value, so their gap shrinks: a contradiction.
 
-On the whole line the bad pairs run off, never settling; with 0 left out, the $1/x$ pairs settle on 0, outside the domain.
+On the whole line the bad pairs run off, never settling; with 0 left out, the $`1/x`$ pairs settle on 0, outside the domain.
 
 <details>
 <summary>Detailed proof: Heine–Cantor</summary>
 
-Write ε for an output tolerance and δ for an input tolerance, both positive. Uniform continuity on $[a, b]$: for every ε some δ makes any two inputs closer than δ have outputs closer than ε.
+Write ε for an output tolerance and δ for an input tolerance, both positive. Uniform continuity on $`[a, b]`$: for every ε some δ makes any two inputs closer than δ have outputs closer than ε.
 
-Suppose it fails for some ε. Then for each whole number n, δ = 1/n fails: some $x_n$ and $y_n$ in $[a, b]$ have $\lvert x_n - y_n\rvert < 1/n$ and $\lvert f(x_n) - f(y_n)\rvert \ge$ ε.
+Suppose it fails for some ε. Then for each whole number n, δ = 1/n fails: some $`x_n`$ and $`y_n`$ in $`[a, b]`$ have $`\lvert x_n - y_n\rvert < 1/n`$ and $`\lvert f(x_n) - f(y_n)\rvert \ge`$ ε.
 
-The first members lie in a bounded interval, so a subsequence of them, $x_{n_j}$ with growing indices, converges to some point p (Bolzano–Weierstrass). Since every term lies between a and b, so does p: closedness is used here.
+The first members lie in a bounded interval, so a subsequence of them, $`x_{n_j}`$ with growing indices, converges to some point p (Bolzano–Weierstrass). Since every term lies between a and b, so does p: closedness is used here.
 
-By the triangle inequality, $\lvert y_{n_j} - p\rvert \le \lvert y_{n_j} - x_{n_j}\rvert + \lvert x_{n_j} - p\rvert < 1/n_j + \lvert x_{n_j} - p\rvert$, and both terms go to 0. So $y_{n_j}$ converges to p too.
+By the triangle inequality, $`\lvert y_{n_j} - p\rvert \le \lvert y_{n_j} - x_{n_j}\rvert + \lvert x_{n_j} - p\rvert < 1/n_j + \lvert x_{n_j} - p\rvert`$, and both terms go to 0. So $`y_{n_j}`$ converges to p too.
 
-By continuity at p, eventually both $f(x_{n_j})$ and $f(y_{n_j})$ lie within ε/3 of $f(p)$, so their gap is below 2ε/3, contradicting its being at least ε. The proof shows a δ exists without computing one; a K gives δ = ε/K.
+By continuity at p, eventually both $`f(x_{n_j})`$ and $`f(y_{n_j})`$ lie within ε/3 of $`f(p)`$, so their gap is below 2ε/3, contradicting its being at least ε. The proof shows a δ exists without computing one; a K gives δ = ε/K.
 
 </details>
 
 ### Step 4: uniform does not give a K
 
-The square root on 0 to 1 is continuous on a closed, bounded interval, so Heine–Cantor applies. For inputs $0 \le x \le y$, $(\sqrt{y} - \sqrt{x})^2 \le (\sqrt{y} - \sqrt{x})(\sqrt{y} + \sqrt{x}) = y - x$: the output gap never exceeds the square root of the input gap. So inputs 0.01 apart have outputs at most 0.1 apart; the code finds that largest gap at 0.
+The square root on 0 to 1 is continuous on a closed, bounded interval, so Heine–Cantor applies. For inputs $`0 \le x \le y`$, $`(\sqrt{y} - \sqrt{x})^2 \le (\sqrt{y} - \sqrt{x})(\sqrt{y} + \sqrt{x}) = y - x`$: the output gap never exceeds the square root of the input gap. So inputs 0.01 apart have outputs at most 0.1 apart; the code finds that largest gap at 0.
 
-No K fits. Propose K = 4: inputs 0 and 0.04 give a chord of steepness 5. Inputs 0 and $1/(K+1)^2$ beat any proposed K with steepness $K + 1$. The graph stands vertical at 0.
+No K fits. Propose K = 4: inputs 0 and 0.04 give a chord of steepness 5. Inputs 0 and $`1/(K+1)^2`$ beat any proposed K with steepness $`K + 1`$. The graph stands vertical at 0.
 
 So Lipschitz gives uniform, uniform gives plain continuity, and neither arrow reverses: the square root blocks the first, squaring on the whole line the second.
 
@@ -150,7 +158,7 @@ A saw held to 2.5 mm keeps every tile inside the contract; one tuned on small ti
 | --- | --- | --- |
 | Tolerance from side 0.5 used at side 2 | area gap 0.03950976 m^2 | a pointwise tolerance, not a uniform one |
 | Any size, tolerance 0.0025 m | sides 400 and 400.00125, gap 1.00000156 m^2 | bounded dropped |
-| $1/x$, 0 left out | inputs 0.00009901 apart, outputs 1 apart | closed dropped |
+| $`1/x`$, 0 left out | inputs 0.00009901 apart, outputs 1 apart | closed dropped |
 | K assumed from uniformity | square root, 0 and 0.04: steepness 5 | uniform is not Lipschitz |
 | Switch jumping at 1 | inputs 0.9999 and 1, outputs 1 apart | continuous dropped |
 
@@ -160,7 +168,7 @@ The code prints all five.
 
 ## Code, from first principles, and it actually runs
 
-Each tolerance is reached twice: by formula, and by bisection, halving a search interval sixty times and keeping the half where sampled pairs meet the area tolerance, with no roots taken. K = 4 is checked against two million sampled chords, the whole-line gaps against $1 + h^2/4$.
+Each tolerance is reached twice: by formula, and by bisection, halving a search interval sixty times and keeping the half where sampled pairs meet the area tolerance, with no roots taken. K = 4 is checked against two million sampled chords, the whole-line gaps against $`1 + h^2/4`$.
 
 ### Python
 
@@ -353,7 +361,7 @@ The two outputs agree line for line.
 
 Lean proves three theorems, for every function on the real numbers that meets their conditions.
 
-- Heine–Cantor: a function continuous on a closed, bounded interval $[a, b]$ is uniformly continuous on it.
+- Heine–Cantor: a function continuous on a closed, bounded interval $`[a, b]`$ is uniformly continuous on it.
 - A Lipschitz function is uniformly continuous on its interval.
 - With Lipschitz constant K, inputs closer than the output tolerance divided by K have outputs closer than that tolerance.
 - The square root on 0 to 1 is uniformly continuous, yet no K fits it.

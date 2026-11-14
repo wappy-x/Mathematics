@@ -28,50 +28,58 @@ Drawn to scale. The short thick arrows (4, 1) and (-1, 3) and the long dashed ar
 
 ## The formula
 
-Notation first, in words. A **lattice** $L(B)$ is every whole-number mix of the arrows in a **basis** $B$ ([Basis and dimension](../../03-Algebra/03-Vectors/05-basis-and-dimension.md)). In two dimensions:
+Notation first, in words. A **lattice** $`L(B)`$ is every whole-number mix of the arrows in a **basis** $`B`$ ([Basis and dimension](../../03-Algebra/03-Vectors/05-basis-and-dimension.md)). In two dimensions:
 
-$$L(B) = \{\, x_1 b_1 + x_2 b_2 \;:\; x_1, x_2 \text{ whole numbers} \,\}$$
+```math
+L(B) = \{\, x_1 b_1 + x_2 b_2 \;:\; x_1, x_2 \text{ whole numbers} \,\}
+```
 
 **Read it aloud:** the lattice is every point you can reach by whole steps along each arrow, forwards or backwards.
 
-The **shortest-vector problem** (SVP) asks for a nonzero point of $L(B)$ of the smallest length, $\lambda_1$, given only $B$.
+The **shortest-vector problem** (SVP) asks for a nonzero point of $`L(B)`$ of the smallest length, $`\lambda_1`$, given only $`B`$.
 
-**Learning with errors** (LWE) hides a secret $s$ of small numbers. Everyone sees a random table $A$ and the result $t$, all mod $q$ (arithmetic on a clock of size $q$):
+**Learning with errors** (LWE) hides a secret $`s`$ of small numbers. Everyone sees a random table $`A`$ and the result $`t`$, all mod $`q`$ (arithmetic on a clock of size $`q`$):
 
-$$t = A\,s + e \pmod q$$
+```math
+t = A\,s + e \pmod q
+```
 
 **Read it aloud:** each published number is a known mix of the secret numbers, plus a small error, wrapped round the clock.
 
-Kyber's encryption uses LWE twice. Below, $A^{\mathsf T}$ is $A$ with rows and columns swapped, $t^{\mathsf T} r$ and $s^{\mathsf T} u$ are dot products, and 1665 is q/2 rounded, so a 1 bit is sent as half the clock. To send bits $m$ to the key's owner, pick fresh small $r$, $e_1$, $e_2$ and send
+Kyber's encryption uses LWE twice. Below, $`A^{\mathsf T}`$ is $`A`$ with rows and columns swapped, $`t^{\mathsf T} r`$ and $`s^{\mathsf T} u`$ are dot products, and 1665 is q/2 rounded, so a 1 bit is sent as half the clock. To send bits $`m`$ to the key's owner, pick fresh small $`r`$, $`e_1`$, $`e_2`$ and send
 
-$$u = A^{\mathsf T} r + e_1, \qquad v = t^{\mathsf T} r + e_2 + 1665\, m \pmod q$$
+```math
+u = A^{\mathsf T} r + e_1, \qquad v = t^{\mathsf T} r + e_2 + 1665\, m \pmod q
+```
 
-The owner, knowing $s$, computes
+The owner, knowing $`s`$, computes
 
-$$v - s^{\mathsf T} u = 1665\, m + \big(e^{\mathsf T} r - s^{\mathsf T} e_1 + e_2\big) \pmod q$$
+```math
+v - s^{\mathsf T} u = 1665\, m + \big(e^{\mathsf T} r - s^{\mathsf T} e_1 + e_2\big) \pmod q
+```
 
 **Read it aloud:** take away the secret's share and what is left is each message bit, as 0 or about half the clock, plus a small noise that rounding removes.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $b_1, b_2$, $B$, $x_1, x_2$ | arrows of a basis, the list of them, and the whole numbers of steps taken along each | good (4, 1), (-1, 3); bad (17, 14), (10, 9) | longer, more skewed arrows hide the short ones better |
-| $L(B)$ | the lattice: all whole-number mixes of the arrows | the dots in the picture, one per area of 13 | — |
-| $\lambda_1$ | length of the shortest nonzero lattice point | length² 10, at (1, -3) | — |
-| $q$ | the clock size: all arithmetic is mod q | 3329 | more room for noise, larger keys |
-| $n$, $k$ | each entry is a polynomial of n numbers in a variable X, with $X^{256} = -1$; the table is k by k | n = 256, k = 3: 768 secret numbers | more secret numbers, harder attack, bigger key |
-| $A$, $A^{\mathsf T}$ | the public random table, mod q, and the same with rows and columns swapped | 3 × 3 polynomials, rebuilt from a 32-byte seed | — |
-| $s$, $e$ | the secret and the key's error: small numbers, each from −η to η | η = 2 | larger η: more noise, harder attack, more decryption failures |
-| $t$ | the public key's main part: $As + e$ | 3 polynomials of 12-bit numbers, 1,152 bytes plus the seed | — |
-| $r$, $e_1$, $e_2$ | fresh small numbers chosen for each encryption | same size as s | must never repeat |
-| $u$, $v$ | the ciphertext, rounded to 10 and 4 bits a number | 1,088 bytes | — |
-| $m$ | the message bits, 256 of them; 1665 is q/2 rounded | 256 random bits, hashed into the 32-byte shared key | — |
-| $\beta$ | block size the best attack must handle; cost about $2^{0.292\beta}$ | 624 for Kyber-768 | bigger β, costlier attack |
+| $`b_1, b_2`$, $`B`$, $`x_1, x_2`$ | arrows of a basis, the list of them, and the whole numbers of steps taken along each | good (4, 1), (-1, 3); bad (17, 14), (10, 9) | longer, more skewed arrows hide the short ones better |
+| $`L(B)`$ | the lattice: all whole-number mixes of the arrows | the dots in the picture, one per area of 13 | — |
+| $`\lambda_1`$ | length of the shortest nonzero lattice point | length² 10, at (1, -3) | — |
+| $`q`$ | the clock size: all arithmetic is mod q | 3329 | more room for noise, larger keys |
+| $`n`$, $`k`$ | each entry is a polynomial of n numbers in a variable X, with $`X^{256} = -1`$; the table is k by k | n = 256, k = 3: 768 secret numbers | more secret numbers, harder attack, bigger key |
+| $`A`$, $`A^{\mathsf T}`$ | the public random table, mod q, and the same with rows and columns swapped | 3 × 3 polynomials, rebuilt from a 32-byte seed | — |
+| $`s`$, $`e`$ | the secret and the key's error: small numbers, each from −η to η | η = 2 | larger η: more noise, harder attack, more decryption failures |
+| $`t`$ | the public key's main part: $`As + e`$ | 3 polynomials of 12-bit numbers, 1,152 bytes plus the seed | — |
+| $`r`$, $`e_1`$, $`e_2`$ | fresh small numbers chosen for each encryption | same size as s | must never repeat |
+| $`u`$, $`v`$ | the ciphertext, rounded to 10 and 4 bits a number | 1,088 bytes | — |
+| $`m`$ | the message bits, 256 of them; 1665 is q/2 rounded | 256 random bits, hashed into the 32-byte shared key | — |
+| $`\beta`$ | block size the best attack must handle; cost about $`2^{0.292\beta}`$ | 624 for Kyber-768 | bigger β, costlier attack |
 
 ### When it holds
 
 - **The errors are small next to q.** Decryption needs the total noise below q/4 = 832. With η = 2 the largest noise in 2,048 bits is 280. Widen to η = 24 and 30 of 256 bits come out wrong.
-- **The errors are there at all.** Without $e$, $t = As$ is ordinary linear equations, and elimination returns the secret exactly.
-- **Fresh randomness for every encryption.** Reuse $r$, $e_1$, $e_2$ for two messages and their XOR (where the bits differ) can be read off in all 256 places.
+- **The errors are there at all.** Without $`e`$, $`t = As`$ is ordinary linear equations, and elimination returns the secret exactly.
+- **Fresh randomness for every encryption.** Reuse $`r`$, $`e_1`$, $`e_2`$ for two messages and their XOR (where the bits differ) can be read off in all 256 places.
 - **The dimension is large.** The toy below with 8 unknowns is insecure: try every secret. Kyber-768's 768 unknowns put the best known attack near 2^182.
 - **The receiving key is reused safely only with the full wrapper.** The bare scheme on this card is secure against eavesdroppers. ML-KEM adds hashing and a re-encryption check, so a forged ciphertext tells the attacker nothing.
 
@@ -81,7 +89,7 @@ $$v - s^{\mathsf T} u = 1665\, m + \big(e^{\mathsf T} r - s^{\mathsf T} e_1 + e_
 
 ### Step 0: small errors make algebra useless, but cost the owner nothing
 
-Without errors, $t = As$ is a set of linear equations. School elimination solves them, mod q as easily as with ordinary numbers. The toy in the code has 8 unknowns: elimination returns the secret `[0, 1, 1, 2, 0, 0, -1, 0]` exactly.
+Without errors, $`t = As`$ is a set of linear equations. School elimination solves them, mod q as easily as with ordinary numbers. The toy in the code has 8 unknowns: elimination returns the secret `[0, 1, 1, 2, 0, 0, -1, 0]` exactly.
 
 Add an error of −2 to 2 to each equation and elimination returns `[-793, 1365, -1647, -1425, -252, 44, -311, 598]`. Elimination mixes the equations, so the errors are multiplied and added until they fill the whole clock. Each equation now only says "close to", and "close to" does not survive mixing.
 
@@ -95,7 +103,7 @@ The good basis (4, 1), (-1, 3) and the bad basis (17, 14), (10, 9) make the same
 
 This is [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md) with the rule that only whole multiples may be subtracted. The LLL algorithm extends it to many dimensions. It runs fast but only promises a vector within a factor that grows exponentially with the dimension.
 
-The better tool, BKZ, solves SVP exactly in blocks of β dimensions, and its cost grows like $2^{0.292\beta}$ with the best known classical method.
+The better tool, BKZ, solves SVP exactly in blocks of β dimensions, and its cost grows like $`2^{0.292\beta}`$ with the best known classical method.
 
 **Finding the nearest point.** Write the target (6, 10) in the basis and round each amount. With the good basis the amounts are 28/13 and 34/13, which round to 2 and 3: the point (5, 11), distance² 2. With the bad basis they are −46/13 and 86/13, which round to −4 and 7: the point (2, 7), distance² 25.
 
@@ -103,11 +111,11 @@ Long, skewed arrows turn a small rounding error into a big jump. So a good basis
 
 ### Step 2: LWE is a short-vector problem in disguise
 
-Rewrite $t = As + e$ as $A s + e - t \equiv 0 \pmod q$. The list of whole numbers $(s, e, -1)$ satisfies it. The set of all whole-number lists that satisfy it is a lattice, and the attacker can write down a basis for it from $A$, $t$ and $q$. That basis is a bad one.
+Rewrite $`t = As + e`$ as $`A s + e - t \equiv 0 \pmod q`$. The list of whole numbers $`(s, e, -1)`$ satisfies it. The set of all whole-number lists that satisfy it is a lattice, and the attacker can write down a basis for it from $`A`$, $`t`$ and $`q`$. That basis is a bad one.
 
-In that lattice, $(s, e, -1)$ is unusually short: every entry is between −2 and 2, while a typical lattice point has entries spread over the whole clock. So recovering the secret means finding an unusually short vector in a lattice with more dimensions than the 768 secret numbers. This is the "primal attack".
+In that lattice, $`(s, e, -1)`$ is unusually short: every entry is between −2 and 2, while a typical lattice point has entries spread over the whole clock. So recovering the secret means finding an unusually short vector in a lattice with more dimensions than the 768 secret numbers. This is the "primal attack".
 
-How hard is it? The standard estimate (from the 2016 New Hope paper) asks for the smallest block size β at which BKZ would expose that short vector. The code runs the estimate. For Kyber-768 it gives β = 624: about $2^{0.292 \times 624} = 2^{182.2}$ operations classically. The standard quantum estimate changes 0.292 to 0.265, giving $2^{165.4}$.
+How hard is it? The standard estimate (from the 2016 New Hope paper) asks for the smallest block size β at which BKZ would expose that short vector. The code runs the estimate. For Kyber-768 it gives β = 624: about $`2^{0.292 \times 624} = 2^{182.2}`$ operations classically. The standard quantum estimate changes 0.292 to 0.265, giving $`2^{165.4}`$.
 
 Kyber-512 and Kyber-1024 come out at 2^118.6 and 2^255.2 classically. Run on New Hope's own parameters, the same code gives β = 968 against the 967 in that paper's Table 1, so the rule is implemented as published. These are estimates of the best known attack, not proofs.
 
@@ -115,17 +123,19 @@ Regev proved the link in the other direction too: solving random LWE would solve
 
 ### Step 3: Kyber in outline, and why decryption is right
 
-Kyber packs 256 numbers into each entry as a polynomial with $X^{256} = -1$. A 3 × 3 table of polynomials then acts like a 768 × 768 table of numbers, and it is rebuilt from a 32-byte seed instead of being sent. The polynomial structure also lets one key of 768 numbers carry all 256 message bits. Together they keep the key at 1,184 bytes instead of hundreds of kilobytes.
+Kyber packs 256 numbers into each entry as a polynomial with $`X^{256} = -1`$. A 3 × 3 table of polynomials then acts like a 768 × 768 table of numbers, and it is rebuilt from a 32-byte seed instead of being sent. The polynomial structure also lets one key of 768 numbers carry all 256 message bits. Together they keep the key at 1,184 bytes instead of hundreds of kilobytes.
 
-- **Key generation (the laptop).** Pick $A$ from a seed, small $s$ and $e$. Publish $t = As + e$ and the seed: 3 × 256 numbers of 12 bits each, 1,152 bytes, plus 32 bytes of seed, so 1,184.
-- **Encryption (the bank; ML-KEM calls it encapsulation).** Pick 256 random bits $m$. Send $u = A^{\mathsf T} r + e_1$ and $v = t^{\mathsf T} r + e_2 + 1665\,m$, rounded to 10 bits and 4 bits a number: (3 × 256 × 10 + 256 × 4) / 8 = 1,088 bytes.
-- **Decryption (the laptop).** Compute $v - s^{\mathsf T}u$ and round each number to 0 or 1665.
+- **Key generation (the laptop).** Pick $`A`$ from a seed, small $`s`$ and $`e`$. Publish $`t = As + e`$ and the seed: 3 × 256 numbers of 12 bits each, 1,152 bytes, plus 32 bytes of seed, so 1,184.
+- **Encryption (the bank; ML-KEM calls it encapsulation).** Pick 256 random bits $`m`$. Send $`u = A^{\mathsf T} r + e_1`$ and $`v = t^{\mathsf T} r + e_2 + 1665\,m`$, rounded to 10 bits and 4 bits a number: (3 × 256 × 10 + 256 × 4) / 8 = 1,088 bytes.
+- **Decryption (the laptop).** Compute $`v - s^{\mathsf T}u`$ and round each number to 0 or 1665.
 
 Why it is right, in four lines of algebra:
 
-$$v - s^{\mathsf T}u = (As + e)^{\mathsf T} r + e_2 + 1665\,m - s^{\mathsf T} A^{\mathsf T} r - s^{\mathsf T} e_1$$
+```math
+v - s^{\mathsf T}u = (As + e)^{\mathsf T} r + e_2 + 1665\,m - s^{\mathsf T} A^{\mathsf T} r - s^{\mathsf T} e_1
+```
 
-The terms $(As)^{\mathsf T} r$ and $s^{\mathsf T}A^{\mathsf T} r$ are the same number, so they cancel. What remains is $1665\,m + e^{\mathsf T} r - s^{\mathsf T} e_1 + e_2$. Each noise term is a sum of hundreds of products of small numbers with random signs. They mostly cancel, so the total stays far below q/4 = 832.
+The terms $`(As)^{\mathsf T} r`$ and $`s^{\mathsf T}A^{\mathsf T} r`$ are the same number, so they cancel. What remains is $`1665\,m + e^{\mathsf T} r - s^{\mathsf T} e_1 + e_2`$. Each noise term is a sum of hundreds of products of small numbers with random signs. They mostly cancel, so the total stays far below q/4 = 832.
 
 In the worst case, every product large and the same sign, it would not; the parameters make that so unlikely that FIPS 203 treats failure as negligible. Then rounding to the nearer of 0 and 1665 returns each bit.
 
@@ -137,13 +147,13 @@ ML-KEM wraps this inner scheme. The 256 bits are hashed into the shared key, and
 
 ML-DSA (Dilithium, FIPS 204) signs by proving knowledge of a short secret, in the style of the Schnorr signature named on [Digital signatures](07-digital-signatures.md), whose commit, challenge, answer pattern is laid out on [Zero-knowledge](10-zero-knowledge-proofs-in-outline.md):
 
-1. Pick a random mask, as long as the secret, and commit to the rough size (the high bits) of the table $A$ times the mask.
+1. Pick a random mask, as long as the secret, and commit to the rough size (the high bits) of the table $`A`$ times the mask.
 2. Hash that commitment with the message to get a small challenge.
-3. Answer with the mask plus the challenge times the secret $s$.
+3. Answer with the mask plus the challenge times the secret $`s`$.
 
-The verifier multiplies the answer by $A$, takes away the challenge times $t$, and checks the high bits match the commitment.
+The verifier multiplies the answer by $`A`$, takes away the challenge times $`t`$, and checks the high bits match the commitment.
 
-The catch: the answer is the secret pushed by a random mask, and when it lands near the edge of its allowed range, it leaks which way $s$ pushed it. So the signer **throws away** any answer that lands too near an edge, and tries again. The kept answers have the same spread whatever the secret is.
+The catch: the answer is the secret pushed by a random mask, and when it lands near the edge of its allowed range, it leaks which way $`s`$ pushed it. So the signer **throws away** any answer that lands too near an edge, and tries again. The kept answers have the same spread whatever the secret is.
 
 The standard's parameters set how near is too near. Worked through in the code, they give 5.09 expected tries for ML-DSA-65, against 5.1 in the standard's table. The cost is size: a 1,952-byte public key and a 3,309-byte signature.
 
@@ -167,8 +177,8 @@ Kyber-768: n = 256, k = 3, q = 3329, η = 2.
 | --- | --- | --- |
 | secret numbers | k × n = 3 × 256 | 768 |
 | public key | 3 × 256 numbers × 12 bits / 8, plus 32-byte seed | 1,152 + 32 = 1,184 bytes |
-| ciphertext, $u$ | 3 × 256 numbers × 10 bits / 8 | 960 bytes |
-| ciphertext, $v$ | 256 numbers × 4 bits / 8 | 128 bytes |
+| ciphertext, $`u`$ | 3 × 256 numbers × 10 bits / 8 | 960 bytes |
+| ciphertext, $`v`$ | 256 numbers × 4 bits / 8 | 128 bytes |
 | ciphertext | 960 + 128 | 1,088 bytes |
 | a 1 bit is sent as | q/2 rounded | 1665 |
 | decryption margin | q/4, rounded down | 832 |
@@ -186,13 +196,13 @@ In practice the two exchanges run side by side, the "hybrid" X25519MLKEM768 in [
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No error: publish $t = As$ | elimination on the 8-unknown toy returns the secret exactly | Without noise, LWE is linear algebra |
+| No error: publish $`t = As`$ | elimination on the 8-unknown toy returns the secret exactly | Without noise, LWE is linear algebra |
 | Noise too wide, η = 24 | 30 of 256 bits wrong; largest noise 1511, past the margin 832 | The noise crossed q/4, so rounding picks the wrong bit |
-| Same $r$, $e_1$, $e_2$ for two messages | XOR of the two messages read off in 256 of 256 places | The masks cancel when the two $v$ are subtracted, as with a reused pad |
+| Same $`r`$, $`e_1`$, $`e_2`$ for two messages | XOR of the two messages read off in 256 of 256 places | The masks cancel when the two $`v`$ are subtracted, as with a reused pad |
 | Rounding in the bad basis | (2, 7) at distance² 25, not (5, 11) at distance² 2 | Skewed arrows magnify rounding error: no trapdoor |
 | Shor's step with base 2 on 3233 | period 780, but 2^390 = 3232 = −1: no factor | The method needs a period whose half-power is not −1; retry with another base |
 
-The reused-randomness row repeats the reused-pad failure of [The one-time pad](01-one-time-pad-and-perfect-secrecy.md). The term $t^{\mathsf T} r + e_2$ acts as a pad on the message, and it cancels when it is used twice.
+The reused-randomness row repeats the reused-pad failure of [The one-time pad](01-one-time-pad-and-perfect-secrecy.md). The term $`t^{\mathsf T} r + e_2`$ acts as a pad on the message, and it cancels when it is used twice.
 
 ---
 
@@ -592,15 +602,15 @@ ALL CHECKS PASS
 
 Lean proves the decryption algebra, the rounding rule and the same-lattice fact for all inputs, and checks the worked numbers exactly.
 
-- Take $t = As + e$, $u = A^{\mathsf T} r + e_1$ and $v = t^{\mathsf T} r + e_2 + 1665\, m$. Then $v - s^{\mathsf T} u = 1665\, m + e^{\mathsf T} r - s^{\mathsf T} e_1 + e_2$. This holds for any table size, with numbers mod q or with Kyber's polynomials.
-- Take a bit $b$ sent as $1665\, b$, and a total noise $d$ with $|d| < 832$. Then rounding $1665\, b + d$ mod 3329 to the nearer of 0 and 1665 returns $b$.
-- Take two arrows $g_1, g_2$ and whole numbers $a, b, c, d$ with $ad - bc = 1$. Then $a g_1 + b g_2$ and $c g_1 + d g_2$ build the same lattice as $g_1, g_2$.
+- Take $`t = As + e`$, $`u = A^{\mathsf T} r + e_1`$ and $`v = t^{\mathsf T} r + e_2 + 1665\, m`$. Then $`v - s^{\mathsf T} u = 1665\, m + e^{\mathsf T} r - s^{\mathsf T} e_1 + e_2`$. This holds for any table size, with numbers mod q or with Kyber's polynomials.
+- Take a bit $`b`$ sent as $`1665\, b`$, and a total noise $`d`$ with $`|d| < 832`$. Then rounding $`1665\, b + d`$ mod 3329 to the nearer of 0 and 1665 returns $`b`$.
+- Take two arrows $`g_1, g_2`$ and whole numbers $`a, b, c, d`$ with $`ad - bc = 1`$. Then $`a g_1 + b g_2`$ and $`c g_1 + d g_2`$ build the same lattice as $`g_1, g_2`$.
 - The bad arrows (17, 14) and (10, 9) are whole-number mixes of the good ones, with area factor 1. Both cells have area 13.
 - No nonzero lattice point has length² below 10. No lattice point is nearer the target (6, 10) than (5, 11), at distance² 2.
 - Rounding in the bad basis gives the amounts −4 and 7, so the point (2, 7) at distance² 25.
 - The sizes in Worked numbers check: 1,184 and 1,088 bytes, the hybrid shares, Kyber-512, Kyber-1024 and ML-DSA-65.
-- The powers of 3 mod 3233 repeat every 260 steps, and $3^{130} = 794$ gives the factors 61 and 53.
-- The powers of 2 repeat every 780 steps, but $2^{390} = 3232 = -1$, so no factor comes out.
+- The powers of 3 mod 3233 repeat every 260 steps, and $`3^{130} = 794`$ gives the factors 61 and 53.
+- The powers of 2 repeat every 780 steps, but $`2^{390} = 3232 = -1`$, so no factor comes out.
 
 The noise run, the attack estimates, Dilithium's tries and the broken variants are left to the Python and Rust checks.
 
@@ -815,7 +825,7 @@ end LatticesAndPostQuantumCryptography
 >
 > Smaller traps:
 > - **Dropping or shrinking the noise "for efficiency".** Without it the key is linear equations: elimination returns the toy secret exactly. Too much noise fails the other way: 30 of 256 bits wrong at η = 24.
-> - **Reusing encryption randomness.** The same $r$ for two messages leaks their XOR in 256 of 256 places, the reused-pad failure again.
+> - **Reusing encryption randomness.** The same $`r`$ for two messages leaks their XOR in 256 of 256 places, the reused-pad failure again.
 > - **Using the bare inner scheme with a long-lived key.** It resists eavesdroppers only. Without ML-KEM's re-encryption check, an attacker who sends crafted ciphertexts to a server that keeps one key for many connections, and watches its reactions, can learn the secret bit by bit.
 > - **Expecting small keys.** A Kyber-768 key is 1,184 bytes, 37.0 times an X25519 key, and an ML-DSA-65 signature is 3,309 bytes. Protocols with fixed small message sizes have to be redesigned.
 
@@ -856,4 +866,4 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - National Institute of Standards and Technology. *Module-Lattice-Based Key-Encapsulation Mechanism Standard*, FIPS 203 (2024). [doi:10.6028/NIST.FIPS.203](https://doi.org/10.6028/NIST.FIPS.203). ML-KEM: the parameters, the 1,184-byte key and 1,088-byte ciphertext of ML-KEM-768, and the wrapper the code leaves out.
 - National Institute of Standards and Technology. *Module-Lattice-Based Digital Signature Standard*, FIPS 204 (2024). [doi:10.6028/NIST.FIPS.204](https://doi.org/10.6028/NIST.FIPS.204). ML-DSA: the parameters, sizes and expected repetitions used in Step 4.
 - Shor, Peter W. "Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer." *SIAM Journal on Computing* 26, no. 5 (1997): 1484–1509. [doi:10.1137/S0097539795293172](https://doi.org/10.1137/S0097539795293172). The proof that period finding breaks factoring and discrete logarithms.
-- Alkim, Erdem, Léo Ducas, Thomas Pöppelmann, and Peter Schwabe. "Post-quantum Key Exchange—A New Hope." *25th USENIX Security Symposium* (2016): 327–343. [Publisher page](https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/alkim). The primal-attack estimate and the $2^{0.292\beta}$ and $2^{0.265\beta}$ cost rule that the code runs.
+- Alkim, Erdem, Léo Ducas, Thomas Pöppelmann, and Peter Schwabe. "Post-quantum Key Exchange—A New Hope." *25th USENIX Security Symposium* (2016): 327–343. [Publisher page](https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/alkim). The primal-attack estimate and the $`2^{0.292\beta}`$ and $`2^{0.265\beta}`$ cost rule that the code runs.

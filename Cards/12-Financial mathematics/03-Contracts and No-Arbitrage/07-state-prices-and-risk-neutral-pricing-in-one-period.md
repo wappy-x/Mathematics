@@ -37,50 +37,58 @@ flowchart LR
 
 ## The formula
 
-Notation first, in words. The two endings are called **states**: "up" is Acme at $120.00, "down" is Acme at $90.00. A subscript u or d means "in that state", so $S_0$ is Acme's price today and $S_u$ and $S_d$ are its two endings. The Greek letter psi, written $\psi_u$ and $\psi_d$, is the standard letter for a state price; $D$ is today's price of a dollar due in a year whatever happens.
+Notation first, in words. The two endings are called **states**: "up" is Acme at $120.00, "down" is Acme at $90.00. A subscript u or d means "in that state", so $`S_0`$ is Acme's price today and $`S_u`$ and $`S_d`$ are its two endings. The Greek letter psi, written $`\psi_u`$ and $`\psi_d`$, is the standard letter for a state price; $`D`$ is today's price of a dollar due in a year whatever happens.
 
-The two traded things give two equations. The bank account, read as a contract, pays $1.00 in both states; Acme pays $S_u$ or $S_d$:
+The two traded things give two equations. The bank account, read as a contract, pays $1.00 in both states; Acme pays $`S_u`$ or $`S_d`$:
 
-$$\psi_u + \psi_d = D, \qquad \psi_u S_u + \psi_d S_d = S_0$$
+```math
+\psi_u + \psi_d = D, \qquad \psi_u S_u + \psi_d S_d = S_0
+```
 
 **Read it aloud:** one dollar in both states costs what a sure dollar costs; and the two state prices, weighted by what Acme pays in each state, must add back to what Acme costs today.
 
-Two equations, two unknowns. They are independent exactly when Acme pays different amounts in the two states, $S_u \neq S_d$; then one solution exists and no other:
+Two equations, two unknowns. They are independent exactly when Acme pays different amounts in the two states, $`S_u \neq S_d`$; then one solution exists and no other:
 
-$$\psi_u = \frac{S_0 - D\,S_d}{S_u - S_d}, \qquad \psi_d = \frac{D\,S_u - S_0}{S_u - S_d}$$
+```math
+\psi_u = \frac{S_0 - D\,S_d}{S_u - S_d}, \qquad \psi_d = \frac{D\,S_u - S_0}{S_u - S_d}
+```
 
-A contract paying $H_u$ in the up state and $H_d$ in the down state is $H_u$ up tickets plus $H_d$ down tickets, so its price today is
+A contract paying $`H_u`$ in the up state and $`H_d`$ in the down state is $`H_u`$ up tickets plus $`H_d`$ down tickets, so its price today is
 
-$$V_0 = \psi_u H_u + \psi_d H_d$$
+```math
+V_0 = \psi_u H_u + \psi_d H_d
+```
 
 **Read it aloud:** the price of a contract is each payment multiplied by what a dollar in that state costs, added up.
 
-Divide the state prices by their own total, $D$, and they become weights adding to one:
+Divide the state prices by their own total, $`D`$, and they become weights adding to one:
 
-$$q_u = \frac{\psi_u}{D}, \qquad q_d = \frac{\psi_d}{D}, \qquad V_0 = D\,\bigl(q_u H_u + q_d H_d\bigr)$$
+```math
+q_u = \frac{\psi_u}{D}, \qquad q_d = \frac{\psi_d}{D}, \qquad V_0 = D\,\bigl(q_u H_u + q_d H_d\bigr)
+```
 
 **Read it aloud:** scale the state prices so they add to one, and the price is the average payment, discounted back to today.
 
-That last line is the sentence quoted everywhere in finance: a price is a discounted expected payoff, where "expected" means averaged with $q_u$ and $q_d$, not with anything a forecaster would recognise ([Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)).
+That last line is the sentence quoted everywhere in finance: a price is a discounted expected payoff, where "expected" means averaged with $`q_u`$ and $`q_d`$, not with anything a forecaster would recognise ([Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_0$ | Acme's price today | 100.00 | the up ticket dearer, the down ticket cheaper |
-| $S_u$, $S_d$ | what Acme is worth in each state | 120.00 and 90.00 | a wider gap makes both tickets cheaper |
-| $R$ | what $1.00 in the bank becomes over the year | 1.05 | the up ticket dearer, the down ticket cheaper |
-| $D$ | the discount factor, $1/R$: today's price of a sure dollar | 0.952381 | — |
-| $\psi_u$, $\psi_d$ | the state prices: today's price of $1.00 paid in that state alone | 0.476190 each | contracts paying in that state cost more |
-| $H_u$, $H_d$ | what a contract pays in each state | 20.00 and 0.00 for the call | worth more, by that state's price per dollar |
-| $V_0$ | what the contract costs today | 9.523810 for the call | — |
-| $q_u$, $q_d$ | risk-neutral probabilities: the state prices scaled to add to one | 0.500000 each | the average tilts to that state's payment |
-| $p$ | the real-world chance of the up state | 0.70 | nothing moves |
+| $`S_0`$ | Acme's price today | 100.00 | the up ticket dearer, the down ticket cheaper |
+| $`S_u`$, $`S_d`$ | what Acme is worth in each state | 120.00 and 90.00 | a wider gap makes both tickets cheaper |
+| $`R`$ | what $1.00 in the bank becomes over the year | 1.05 | the up ticket dearer, the down ticket cheaper |
+| $`D`$ | the discount factor, $`1/R`$: today's price of a sure dollar | 0.952381 | — |
+| $`\psi_u`$, $`\psi_d`$ | the state prices: today's price of $1.00 paid in that state alone | 0.476190 each | contracts paying in that state cost more |
+| $`H_u`$, $`H_d`$ | what a contract pays in each state | 20.00 and 0.00 for the call | worth more, by that state's price per dollar |
+| $`V_0`$ | what the contract costs today | 9.523810 for the call | — |
+| $`q_u`$, $`q_d`$ | risk-neutral probabilities: the state prices scaled to add to one | 0.500000 each | the average tilts to that state's payment |
+| $`p`$ | the real-world chance of the up state | 0.70 | nothing moves |
 
-**Conventions verified 14 Sep 2026:** this card's bank adds its 5 percent once, at year end, so $R = 1.05$ and $D = 20/21$ exactly; the rest of this wing compounds continuously, where 5 percent gives 1.051271. Neither choice changes an argument below.
+**Conventions verified 14 Sep 2026:** this card's bank adds its 5 percent once, at year end, so $`R = 1.05`$ and $`D = 20/21`$ exactly; the rest of this wing compounds continuously, where 5 percent gives 1.051271. Neither choice changes an argument below.
 
 ### When it holds
 
 - **Two states, and two traded assets that pay different amounts in them.** If Acme paid the same in both states it would be a second bank account, the two equations would collapse into one, and no ticket would have a price.
-- **A bank factor strictly inside the two returns:** $S_d < R\,S_0 < S_u$, here 90.00 < 105.00 < 120.00. Outside it a state price is zero or negative, which is free money rather than a market: the check sets the bank to 1.25 and prints −0.133333.
+- **A bank factor strictly inside the two returns:** $`S_d < R\,S_0 < S_u`$, here 90.00 < 105.00 < 120.00. Outside it a state price is zero or negative, which is free money rather than a market: the check sets the bank to 1.25 and prints −0.133333.
 - **One period, settling at the end of it.** Nothing trades in between, Acme pays no dividend first, there are no fees, borrowing and lending cost the same, and positions may be long (owned) or short (sold without owning) in any size. A dividend before settlement joins Acme's equation, and both state prices shift.
 - **As many traded assets as states.** Three endings priced by two assets leaves an unknown too many: the equations allow a range of state prices, so a contract has a band of prices rather than one, until a third is quoted.
 
@@ -90,7 +98,7 @@ That last line is the sentence quoted everywhere in finance: a price is a discou
 
 ### Step 0: every contract in this market is a pile of two tickets
 
-A contract paying $H_u$ up and $H_d$ down is $H_u$ up tickets and $H_d$ down tickets, with nothing left over:
+A contract paying $`H_u`$ up and $`H_d`$ down is $`H_u`$ up tickets and $`H_d`$ down tickets, with nothing left over:
 
 - the call is twenty up tickets;
 - a put struck at 100.00, which pays whatever Acme ends below 100.00 (its strike), is ten down tickets;
@@ -101,9 +109,11 @@ Price the two tickets and the market is priced. The step is legal because two co
 
 ### Step 1: the two prices already quoted fix the two ticket prices
 
-Acme and the bank are the two contracts the market does quote; read as piles of tickets, their prices are the two equations above. Multiply the first by $S_d$ and subtract it from the second, and the down ticket vanishes:
+Acme and the bank are the two contracts the market does quote; read as piles of tickets, their prices are the two equations above. Multiply the first by $`S_d`$ and subtract it from the second, and the down ticket vanishes:
 
-$$\psi_u\,(S_u - S_d) = S_0 - D\,S_d$$
+```math
+\psi_u\,(S_u - S_d) = S_0 - D\,S_d
+```
 
 Here the bank turns 20 into 21, so a sure dollar costs 20/21 exactly and working over 21 keeps every number whole. The numerator is 100.00 × 21 − 90.00 × 20 = 300, and the gap between Acme's endings is 30.00. So 21 up tickets cost 300 ÷ 30.00 = 10 and one costs 10/21, which is 0.476190. The same subtraction the other way gives the down ticket, also 10/21.
 
@@ -116,11 +126,11 @@ The reverse holds too, and matters more. If both state prices are positive then 
 <details>
 <summary>Detailed proof: positive state prices and free money are exact opposites</summary>
 
-Free money means a contract costing nothing or less today that never pays out less than nothing and pays something in at least one state. A contract paying $(H_u, H_d)$ costs $V_0 = \psi_u H_u + \psi_d H_d$.
+Free money means a contract costing nothing or less today that never pays out less than nothing and pays something in at least one state. A contract paying $`(H_u, H_d)`$ costs $`V_0 = \psi_u H_u + \psi_d H_d`$.
 
-**Positive prices rule it out.** Suppose both state prices are above zero, and take any contract with $H_u \ge 0$, $H_d \ge 0$ and at least one of them above zero. Every term of $\psi_u H_u + \psi_d H_d$ is at least zero and one is strictly above it, so $V_0 > 0$: the contract costs real money today, and free money is impossible.
+**Positive prices rule it out.** Suppose both state prices are above zero, and take any contract with $`H_u \ge 0`$, $`H_d \ge 0`$ and at least one of them above zero. Every term of $`\psi_u H_u + \psi_d H_d`$ is at least zero and one is strictly above it, so $`V_0 > 0`$: the contract costs real money today, and free money is impossible.
 
-**Free money rules them out.** Suppose instead $\psi_u \le 0$. The up ticket is a real portfolio — the mix of Acme and cash that pays 1.00 in the up state and nothing in the down state — so anyone may hold it at that price. It pays its holder today or costs nothing, and it never returns less than nothing: free money. The same argument runs for $\psi_d \le 0$ with the other ticket, so no free money forces both prices strictly above zero.
+**Free money rules them out.** Suppose instead $`\psi_u \le 0`$. The up ticket is a real portfolio — the mix of Acme and cash that pays 1.00 in the up state and nothing in the down state — so anyone may hold it at that price. It pays its holder today or costs nothing, and it never returns less than nothing: free money. The same argument runs for $`\psi_d \le 0`$ with the other ticket, so no free money forces both prices strictly above zero.
 
 Neither half assumed anything about how likely a state is; both used only the two quoted prices.
 
@@ -143,9 +153,9 @@ The climbing line is the up state's price, the falling line the down state's, th
 
 ### Step 3: rescale, and the state prices turn into probabilities
 
-The state prices add to $D$, since a dollar in both states is a sure dollar. Divide each by $D$: the two numbers keep their ratio, stay positive, and now add to one, 0.500000 and 0.500000. That is all averaging asks for, so the price reads as an average of the two payments taken with those weights, discounted once by $D$. Nothing new has been claimed; it is the same arithmetic, cut differently.
+The state prices add to $`D`$, since a dollar in both states is a sure dollar. Divide each by $`D`$: the two numbers keep their ratio, stay positive, and now add to one, 0.500000 and 0.500000. That is all averaging asks for, so the price reads as an average of the two payments taken with those weights, discounted once by $`D`$. Nothing new has been claimed; it is the same arithmetic, cut differently.
 
-Dividing by $D$ also clears it out of the formula: $q_u = (R\,S_0 - S_d)/(S_u - S_d)$, how far the banked $R\,S_0$ sits between the two endings. Here 105.00 sits halfway between 90.00 and 120.00, so $q_u$ is 0.500000. That is the code's third road, and it needs no state price.
+Dividing by $`D`$ also clears it out of the formula: $`q_u = (R\,S_0 - S_d)/(S_u - S_d)`$, how far the banked $`R\,S_0`$ sits between the two endings. Here 105.00 sits halfway between 90.00 and 120.00, so $`q_u`$ is 0.500000. That is the code's third road, and it needs no state price.
 
 ### Step 4: under those weights Acme earns the bank rate
 
@@ -612,13 +622,13 @@ The two outputs match line for line, flips included: the generator is written ou
 Lean proves the card's claims for every two-state market with a bank and one stock, and checks the worked numbers exactly.
 
 - Suppose the bank factor is not zero, and Acme pays different amounts in the two states. Then exactly one pair of state prices fits both, given by the formula above.
-- Take any payoff, $H_u$ up and $H_d$ down. Then shares and cash can copy it, and every copy costs $\psi_u H_u + \psi_d H_d$.
-- Take the two state prices, each divided by $D$. Then the weights $q_u$ and $q_d$ add to one.
-- Take the same market. Then $q_u = (R\,S_0 - S_d)/(S_u - S_d)$, with no state price needed.
-- Take any payoff. Then its price equals $D\,(q_u H_u + q_d H_d)$, the discounted average.
-- Take the weights $q_u$ and $q_d$. Then Acme averages $R\,S_0$ under them: its price grown at the bank.
+- Take any payoff, $`H_u`$ up and $`H_d`$ down. Then shares and cash can copy it, and every copy costs $`\psi_u H_u + \psi_d H_d`$.
+- Take the two state prices, each divided by $`D`$. Then the weights $`q_u`$ and $`q_d`$ add to one.
+- Take the same market. Then $`q_u = (R\,S_0 - S_d)/(S_u - S_d)`$, with no state price needed.
+- Take any payoff. Then its price equals $`D\,(q_u H_u + q_d H_d)`$, the discounted average.
+- Take the weights $`q_u`$ and $`q_d`$. Then Acme averages $`R\,S_0`$ under them: its price grown at the bank.
 - In the same market, no portfolio of shares and cash is free money exactly when both state prices are above zero.
-- Suppose the bank factor is positive, and Acme pays more up than down. Then both state prices are positive exactly when $S_d < R\,S_0 < S_u$.
+- Suppose the bank factor is positive, and Acme pays more up than down. Then both state prices are positive exactly when $`S_d < R\,S_0 < S_u`$.
 - The hand arithmetic holds exactly, as fractions: tickets, call, put, forward, weights, the what-breaks table and the bank at 1.25.
 
 The coin flips, the printed decimals and the chart's sweep of bank factors are left to the Python and Rust checks.

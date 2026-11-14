@@ -38,44 +38,52 @@ The ringing line is the tip temperature rise, one value per tick, from the firmw
 
 **The z-transform** of a sequence y[0], y[1], y[2], … is one function of a complex variable z:
 
-$$Y(z) = \sum_{n=0}^{\infty} y[n]\, z^{-n} = y[0] + \frac{y[1]}{z} + \frac{y[2]}{z^2} + \cdots$$
+```math
+Y(z) = \sum_{n=0}^{\infty} y[n]\, z^{-n} = y[0] + \frac{y[1]}{z} + \frac{y[2]}{z^2} + \cdots
+```
 
 **Read it aloud:** hang each sample on a power of one over z, the power counting how many ticks have passed, and add them up.
 
 This card introduces two pieces of notation the rest of the wing uses. The letter z is the transform's variable, a complex number. Its reciprocal z^(-1) is read "one-tick delay": a sequence delayed by one tick has the transform z^(-1) Y(z). Replace z by 1/x and Y(z) is the ordinary generating function of the sequence, the power series y[0] + y[1] x + y[2] x^2 + … of [Generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md).
 
-**The thermostat as two difference equations.** Write y[n] for the tip's temperature rise above where it started, in °C, at tick n, and u[n] for the extra heater power during that tick, in W, on top of the 16.5 W that holds it. Over one tick the tip keeps a share $a$ of its rise and gains $b$ degrees per watt. The thermostat acts on the reading taken one tick earlier, since reading and filtering take a tick:
+**The thermostat as two difference equations.** Write y[n] for the tip's temperature rise above where it started, in °C, at tick n, and u[n] for the extra heater power during that tick, in W, on top of the 16.5 W that holds it. Over one tick the tip keeps a share $`a`$ of its rise and gains $`b`$ degrees per watt. The thermostat acts on the reading taken one tick earlier, since reading and filtering take a tick:
 
-$$y[n+1] = a\,y[n] + b\,u[n], \qquad u[n] = K\,\bigl(r - y[n-1]\bigr).$$
+```math
+y[n+1] = a\,y[n] + b\,u[n], \qquad u[n] = K\,\bigl(r - y[n-1]\bigr).
+```
 
 **Read it aloud:** next tick's temperature is most of this tick's plus the heater's push; the push is the gain times how far last tick's reading fell short.
 
 **What the transform turns them into.** With the tip at rest to begin with, the closed loop's transfer function, the transform of the output over the transform of the setpoint, is
 
-$$H(z) = \frac{Y(z)}{R(z)} = \frac{bK\,z}{z^2 - a\,z + bK} = \frac{0.5\,z}{z^2 - 0.998\,z + 0.5}.$$
+```math
+H(z) = \frac{Y(z)}{R(z)} = \frac{bK\,z}{z^2 - a\,z + bK} = \frac{0.5\,z}{z^2 - 0.998\,z + 0.5}.
+```
 
 **Read it aloud:** the loop multiplies the setpoint's transform by a fraction whose denominator is a quadratic in z.
 
-**Stability.** The poles $p$ are the roots of the denominator. The loop settles from any start, and turns every bounded setpoint into a bounded temperature, exactly when every pole satisfies |p| < 1: every pole strictly inside the unit circle, the circle of radius 1 about the origin. A pole on the circle rings forever; one outside grows every tick.
+**Stability.** The poles $`p`$ are the roots of the denominator. The loop settles from any start, and turns every bounded setpoint into a bounded temperature, exactly when every pole satisfies |p| < 1: every pole strictly inside the unit circle, the circle of radius 1 about the origin. A pole on the circle rings forever; one outside grows every tick.
 
-**Settling value.** If every pole is inside, a step of size $r$ settles at H(1) r, the fraction at z = 1:
+**Settling value.** If every pole is inside, a step of size $`r`$ settles at H(1) r, the fraction at z = 1:
 
-$$y[\infty] = H(1)\,r = \frac{bK}{1 - a + bK}\, r = 4.98008\ ^\circ\text{C}.$$
+```math
+y[\infty] = H(1)\,r = \frac{bK}{1 - a + bK}\, r = 4.98008\ ^\circ\text{C}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $T$ | tick count; time between ticks | one tick = 0.1 s | — |
-| $y$, $u$ | tip temperature rise (°C); extra heater power (W), at tick n | y settles at 4.98008 °C | — |
-| $r$ | setpoint step | 5 °C | final rise grows in proportion |
-| $C_{th}$, $R_{th}$ | heat capacity of the tip; thermal resistance to the air | 2.5 J/°C; 20 °C/W | smaller tip (lower C_th) raises b and moves poles out |
-| $a$, $b$ | share of the rise kept per tick, 1 − T/(R_th C_th); warming per watt per tick, T/C_th | 0.998; 0.04 °C per W per tick | larger b: poles move toward the circle |
-| $K$ | thermostat gain, watts per degree short | 12.5 W/°C | poles move out; limit 25 W/°C |
-| $Y$, $R$ | transforms of the temperature sequence and the setpoint sequence | R(z) = 5z/(z − 1) | — |
-| $H$, $h$ | closed-loop transfer function; its impulse response, h[n] | H(1) = 0.996016 | — |
-| $p$, $\rho$ | a pole; a circle radius for the inverse transform | \|p\| = 0.70711; 1.2 | \|p\| near 1: slow, ringing settle |
-| $s$, $j$ | Laplace variable; square root of −1, engineers' letter | s = −3.4657 ± 7.8740j rad/s | — |
-| $f$, $\theta$ | frequency of a wobble (Hz); its angle per tick, 2πfT | 1 Hz; 36° | — |
-| $d$ | heat drawn by a joint being soldered | 20 W | tip sags 1.5936 °C |
+| $`n`$, $`T`$ | tick count; time between ticks | one tick = 0.1 s | — |
+| $`y`$, $`u`$ | tip temperature rise (°C); extra heater power (W), at tick n | y settles at 4.98008 °C | — |
+| $`r`$ | setpoint step | 5 °C | final rise grows in proportion |
+| $`C_{th}`$, $`R_{th}`$ | heat capacity of the tip; thermal resistance to the air | 2.5 J/°C; 20 °C/W | smaller tip (lower C_th) raises b and moves poles out |
+| $`a`$, $`b`$ | share of the rise kept per tick, 1 − T/(R_th C_th); warming per watt per tick, T/C_th | 0.998; 0.04 °C per W per tick | larger b: poles move toward the circle |
+| $`K`$ | thermostat gain, watts per degree short | 12.5 W/°C | poles move out; limit 25 W/°C |
+| $`Y`$, $`R`$ | transforms of the temperature sequence and the setpoint sequence | R(z) = 5z/(z − 1) | — |
+| $`H`$, $`h`$ | closed-loop transfer function; its impulse response, h[n] | H(1) = 0.996016 | — |
+| $`p`$, $`\rho`$ | a pole; a circle radius for the inverse transform | \|p\| = 0.70711; 1.2 | \|p\| near 1: slow, ringing settle |
+| $`s`$, $`j`$ | Laplace variable; square root of −1, engineers' letter | s = −3.4657 ± 7.8740j rad/s | — |
+| $`f`$, $`\theta`$ | frequency of a wobble (Hz); its angle per tick, 2πfT | 1 Hz; 36° | — |
+| $`d`$ | heat drawn by a joint being soldered | 20 W | tip sags 1.5936 °C |
 
 ### When it holds
 
@@ -97,7 +105,9 @@ A continuous system remembers through its derivatives; the Laplace transform ([T
 
 The building block is the sequence p^n: each sample p times the last, the discrete version of an exponential. Its transform is a geometric series with ratio p/z:
 
-$$\sum_{n=0}^{\infty} p^n z^{-n} = \frac{1}{1 - p/z} = \frac{z}{z - p}, \qquad \text{valid for } |z| > |p|.$$
+```math
+\sum_{n=0}^{\infty} p^n z^{-n} = \frac{1}{1 - p/z} = \frac{z}{z - p}, \qquad \text{valid for } |z| > |p|.
+```
 
 The sum converges only outside the circle of radius |p|. That set is the region of convergence.
 
@@ -111,13 +121,17 @@ In the terms of [Laurent series](../../07-Complex%20analysis/05-Laurent%20Series
 
 Take the transform of y[n + 1], the sequence moved one tick earlier:
 
-$$\sum_{n=0}^{\infty} y[n+1]\, z^{-n} = z \sum_{m=1}^{\infty} y[m]\, z^{-m} = z\,Y(z) - z\,y[0].$$
+```math
+\sum_{n=0}^{\infty} y[n+1]\, z^{-n} = z \sum_{m=1}^{\infty} y[m]\, z^{-m} = z\,Y(z) - z\,y[0].
+```
 
 The sequence moved one tick later, y[n − 1], has transform z^(-1) Y(z) + y[−1]. The leftover terms are the initial conditions. The tip starts at rest, y[0] = y[−1] = 0, so they vanish.
 
 Transform both equations. The tip gives z Y(z) = a Y(z) + b U(z). The thermostat gives U(z) = K (R(z) − z^(-1) Y(z)). Substitute the second into the first and collect the terms in Y(z):
 
-$$Y(z)\,\bigl(z - a + bK\,z^{-1}\bigr) = bK\,R(z) \quad\Longrightarrow\quad Y(z) = \frac{bK\,z}{z^2 - a\,z + bK}\,R(z).$$
+```math
+Y(z)\,\bigl(z - a + bK\,z^{-1}\bigr) = bK\,R(z) \quad\Longrightarrow\quad Y(z) = \frac{bK\,z}{z^2 - a\,z + bK}\,R(z).
+```
 
 That is H(z). No step of it needed the numbers; the numbers enter only at the end. For the dial step, r = 5 °C every tick from n = 0, so R(z) = 5z/(z − 1) by Step 1 with p = 1.
 
@@ -125,7 +139,9 @@ That is H(z). No step of it needed the numbers; the numbers enter only at the en
 
 The denominator z^2 − a z + bK has two roots p1 and p2. Splitting Y(z)/z into simple fractions, as in [Poles and zeros](03-poles-zeros-and-stability.md) and with Step 1 read backwards, gives the whole response in closed form:
 
-$$y[n] = H(1)\,r \;+\; c_1\,p_1^{\,n} \;+\; c_2\,p_2^{\,n}, \qquad c_1 = \frac{bK\,r\,p_1}{(p_1 - 1)(p_1 - p_2)},$$
+```math
+y[n] = H(1)\,r \;+\; c_1\,p_1^{\,n} \;+\; c_2\,p_2^{\,n}, \qquad c_1 = \frac{bK\,r\,p_1}{(p_1 - 1)(p_1 - p_2)},
+```
 
 and c_2 likewise, with p_1 and p_2 swapped.
 
@@ -139,7 +155,9 @@ The ringing turns 45.11° per tick, one full turn in 7.980 ticks, 0.7980 s. Each
 
 Step 3 needed the roots. A second route needs only the fraction. Y(z) is a Laurent series in z, so its coefficients are integrals around any circle outside all the poles:
 
-$$y[n] = \frac{1}{2\pi j}\oint_{|z| = \rho} Y(z)\, z^{n-1}\, dz.$$
+```math
+y[n] = \frac{1}{2\pi j}\oint_{|z| = \rho} Y(z)\, z^{n-1}\, dz.
+```
 
 [The residue theorem](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md) works out a loop integral from the poles inside the loop alone. It turns this integral back into the sum over poles of Step 3. Evaluated numerically, with 256 points on the circle of radius 1.2, it is an independent road: the code takes it and agrees with the firmware loop to better than 1e-9 °C at every tick from 0 to 40.
 
@@ -651,11 +669,11 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the stability theorem, Jury's test and the transform of $p^n$ for every case, and checks the worked numbers.
+Lean proves the stability theorem, Jury's test and the transform of $`p^n`$ for every case, and checks the worked numbers.
 
-- Take a linear difference equation with the same complex coefficients every tick. Then it settles from any start exactly when every pole satisfies $|p| < 1$.
-- Take a quadratic $z^2 + c_1 z + c_0$ with real coefficients. Then both roots satisfy $|z| < 1$ exactly when $|c_0| < 1$, $1 + c_1 + c_0 > 0$ and $1 - c_1 + c_0 > 0$.
-- Take complex numbers $p$ and $z$ with $|z| > |p|$. Then the sum of $p^n z^{-n}$ over $n \ge 0$ is $z/(z - p)$.
+- Take a linear difference equation with the same complex coefficients every tick. Then it settles from any start exactly when every pole satisfies $`|p| < 1`$.
+- Take a quadratic $`z^2 + c_1 z + c_0`$ with real coefficients. Then both roots satisfy $`|z| < 1`$ exactly when $`|c_0| < 1`$, $`1 + c_1 + c_0 > 0`$ and $`1 - c_1 + c_0 > 0`$.
+- Take complex numbers $`p`$ and $`z`$ with $`|z| > |p|`$. Then the sum of $`p^n z^{-n}`$ over $`n \ge 0`$ is $`z/(z - p)`$.
 - The thermostat's factors check out: a = 0.998, b = 0.04 and bK = 0.5.
 - The first three ticks give 2.5, 4.995 and 6.23501 °C, and tick 4 is lower.
 - The settling value is 4.98008 °C, the stability limit is 25 W/°C, and the gain margin is 2.

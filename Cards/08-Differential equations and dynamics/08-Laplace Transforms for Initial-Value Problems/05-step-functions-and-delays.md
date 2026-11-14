@@ -34,34 +34,42 @@ Orange: the temperature the room is pulled toward, 20 C until 2 h, then 30 C. Te
 
 ## The formula
 
-Notation first, in words. The **unit step** $u$ is a switch: it reads 0 before time zero and 1 from time zero on. Shifted, $u(t - a)$ reads 0 before time a and 1 after. A reminder from [The Laplace transform](01-the-laplace-transform.md): the curly $\mathcal{L}$ reads "the transform of", and the capital letter names the result, $F = \mathcal{L}[f]$.
+Notation first, in words. The **unit step** $`u`$ is a switch: it reads 0 before time zero and 1 from time zero on. Shifted, $`u(t - a)`$ reads 0 before time a and 1 after. A reminder from [The Laplace transform](01-the-laplace-transform.md): the curly $`\mathcal{L}`$ reads "the transform of", and the capital letter names the result, $`F = \mathcal{L}[f]`$.
 
-The room, with $T$ its temperature in C and $t$ the time in hours:
+The room, with $`T`$ its temperature in C and $`t`$ the time in hours:
 
-$$T' = -0.5\,\bigl(T - 20 - 10\,u(t-2)\bigr), \qquad T(0) = 20$$
+```math
+T' = -0.5\,\bigl(T - 20 - 10\,u(t-2)\bigr), \qquad T(0) = 20
+```
 
 The target inside the bracket is 20 C before 2 h and 30 C after. The two rules that solve it:
 
-$$\mathcal{L}\bigl[f(t-a)\,u(t-a)\bigr](s) = e^{-as}\,F(s)$$
+```math
+\mathcal{L}\bigl[f(t-a)\,u(t-a)\bigr](s) = e^{-as}\,F(s)
+```
 
-$$\mathcal{L}\bigl[e^{ct} f(t)\bigr](s) = F(s-c)$$
+```math
+\mathcal{L}\bigl[e^{ct} f(t)\bigr](s) = F(s-c)
+```
 
 **Read it aloud:** restart a signal a hours late and its transform picks up the factor e to the minus a s; multiply a signal by e to the c t and its transform slides by c, rightward when c is positive.
 
 The first is the **delay rule**, the second the **s-shift rule**. With f = 1 the delay rule gives the switch itself:
 
-$$\mathcal{L}\bigl[u(t-a)\bigr](s) = \frac{e^{-as}}{s}$$
+```math
+\mathcal{L}\bigl[u(t-a)\bigr](s) = \frac{e^{-as}}{s}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since the start, in hours | 0 to 10 h | — |
-| $T$, $x$ | room temperature in C; its excess over 20 C, x = T − 20 | T(4) = 26.3212 C | — |
-| $u$ | the unit step: 0 before time zero, 1 from then on | u(t − 2) is the heater | — |
-| $a$ | the switch time, the delay, in hours | 2 h | the whole reply slides later |
-| $s$ | the transform's fade rate, per hour | s = 1 in the checks | e^(−as) shrinks |
-| $f$, $F$, $X$ | a signal and its transform; the transform of the excess x | X(1) = 0.451118 | — |
-| $c$ | the rate in the exponential factor e^(ct), per hour | c = −0.5, the room's own fade | F is read further right |
-| $M$, $\alpha$ | a growth bound: the size of f stays below M e^(αt) | α = 0 for the room | the rules need a larger s |
+| $`t`$ | time since the start, in hours | 0 to 10 h | — |
+| $`T`$, $`x`$ | room temperature in C; its excess over 20 C, x = T − 20 | T(4) = 26.3212 C | — |
+| $`u`$ | the unit step: 0 before time zero, 1 from then on | u(t − 2) is the heater | — |
+| $`a`$ | the switch time, the delay, in hours | 2 h | the whole reply slides later |
+| $`s`$ | the transform's fade rate, per hour | s = 1 in the checks | e^(−as) shrinks |
+| $`f`$, $`F`$, $`X`$ | a signal and its transform; the transform of the excess x | X(1) = 0.451118 | — |
+| $`c`$ | the rate in the exponential factor e^(ct), per hour | c = −0.5, the room's own fade | F is read further right |
+| $`M`$, $`\alpha`$ | a growth bound: the size of f stays below M e^(αt) | α = 0 for the room | the rules need a larger s |
 
 ### When it holds
 
@@ -82,7 +90,9 @@ A signal that is zero until time a contributes nothing to the transform before a
 
 The step u(t − a) is 0 before a and 1 after, so only the part from a onward counts:
 
-$$\int_a^\infty e^{-st}\,dt = \frac{e^{-as}}{s}, \qquad s > 0$$
+```math
+\int_a^\infty e^{-st}\,dt = \frac{e^{-as}}{s}, \qquad s > 0
+```
 
 The heater's forcing, 5u(t − 2) (the 10 C jump in target times the rate 0.5), has transform 5e^(−2s)/s: 0.676676 at s = 1, which a midpoint sum in the checks confirms.
 
@@ -90,7 +100,9 @@ The heater's forcing, 5u(t − 2) (the 10 C jump in target times the rate 0.5), 
 
 The delayed signal f(t − a)u(t − a) is zero before a. Substitute τ = t − a in what is left:
 
-$$\int_a^\infty e^{-st} f(t-a)\,dt = \int_0^\infty e^{-s(\tau + a)} f(\tau)\,d\tau = e^{-as}\,F(s)$$
+```math
+\int_a^\infty e^{-st} f(t-a)\,dt = \int_0^\infty e^{-s(\tau + a)} f(\tau)\,d\tau = e^{-as}\,F(s)
+```
 
 The factor e^(−as) comes out of the integral because it does not depend on τ. The minus sign is the weight evaluated a hours later, not a convention.
 
@@ -98,14 +110,16 @@ The factor e^(−as) comes out of the integral because it does not depend on τ.
 
 Multiply a signal by e^(ct). Inside the transform the two exponentials combine:
 
-$$\int_0^\infty e^{-st}\,e^{ct} f(t)\,dt = \int_0^\infty e^{-(s-c)t} f(t)\,dt = F(s - c)$$
+```math
+\int_0^\infty e^{-st}\,e^{ct} f(t)\,dt = \int_0^\infty e^{-(s-c)t} f(t)\,dt = F(s - c)
+```
 
 The room needs it once: the entry 1/s for the constant 1, read at s + 0.5 (so c = −0.5), gives 1/(s + 0.5) for e^(−0.5t). The checks test a case with more shape: e^(−0.5t) times t should have transform 1/(s + 0.5)^2, 0.444444 at s = 1, and a midpoint sum agrees.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let f be piecewise continuous on t ≥ 0, with the size of f(t) at most $M$ e^(αt) for all t.
+Let f be piecewise continuous on t ≥ 0, with the size of f(t) at most $`M`$ e^(αt) for all t.
 
 Delay rule. Take a ≥ 0 and s > α. Up to a finite cutoff R > a, the substitution τ = t − a turns the integral of e^(−st) f(t − a) from a to R into e^(−as) times the integral of e^(−sτ) f(τ) from 0 to R − a. That integrand's size is at most M e^(−(s − α)τ), whose integral to infinity is M/(s − α), so the right side converges as R grows ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). The left side equals it at every R, so it has the same limit, e^(−as)F(s).
 
@@ -119,11 +133,15 @@ The step's value at the switch changes one point only and no integral.
 
 Work with the excess over 20 C, x = T − 20, starting at 0: x' = −0.5x + 5u(t − 2). Transform both sides; the rate becomes sX − x(0) = sX ([Transforming a derivative](02-transforms-of-derivatives.md)):
 
-$$sX = -0.5X + \frac{5e^{-2s}}{s} \quad\Longrightarrow\quad X = e^{-2s}\,\frac{5}{s(s + 0.5)}$$
+```math
+sX = -0.5X + \frac{5e^{-2s}}{s} \quad\Longrightarrow\quad X = e^{-2s}\,\frac{5}{s(s + 0.5)}
+```
 
 Leave the factor e^(−2s) aside. Split the rest by partial fractions ([Inverting](03-inverting-by-partial-fractions.md)): 5/(s(s + 0.5)) = 10/s − 10/(s + 0.5). The s-shift rule reads 1/(s + 0.5) as e^(−0.5t), so the undelayed answer is 10(1 − e^(−0.5t)), a heater on from the start. The delay rule turns the factor into a two-hour late start:
 
-$$x(t) = 10\,\bigl(1 - e^{-0.5(t-2)}\bigr)\,u(t-2)$$
+```math
+x(t) = 10\,\bigl(1 - e^{-0.5(t-2)}\bigr)\,u(t-2)
+```
 
 Back in the room: 20 C exactly until 2 h, then T = 20 + 10(1 − e^(−0.5(t − 2))). It reaches 25 C when e^(−0.5(t − 2)) = 1/2, at t = 2 + 2 ln 2 = 3.386 h.
 

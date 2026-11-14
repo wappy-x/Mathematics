@@ -45,78 +45,94 @@ Everything below the model is the same arithmetic whatever the model was.
 
 ## The formula
 
-Notation first. Both methods work in logarithms measured against today's share price, so the middle of every grid sits at 100. Write $Y$ for the log share price at expiry and $k$ for the log strike, both measured that way:
+Notation first. Both methods work in logarithms measured against today's share price, so the middle of every grid sits at 100. Write $`Y`$ for the log share price at expiry and $`k`$ for the log strike, both measured that way:
 
-$$Y = \log(S_T/S), \qquad k = \log(K/S)$$
+```math
+Y = \log(S_T/S), \qquad k = \log(K/S)
+```
 
-with $S$ Acme today, $S_T$ Acme on expiry day, $K$ the strike. Strike 100 is $k = 0$; strike 121.70 is $k = 0.196$.
+with $`S`$ Acme today, $`S_T`$ Acme on expiry day, $`K`$ the strike. Strike 100 is $`k = 0`$; strike 121.70 is $`k = 0.196`$.
 
-The one thing taken from the model is an average of an exponential of $Y$:
+The one thing taken from the model is an average of an exponential of $`Y`$:
 
-$$\Phi(z) = E\!\left[e^{zY}\right]$$
+```math
+\Phi(z) = E\!\left[e^{zY}\right]
+```
 
-**Read it aloud:** average the exponential of $z$ times the log price over every way the year can end. Here $z$ may carry a multiple of $i$, the square root of minus one. At $z = iu$, with $u$ a real frequency, this is the **characteristic function** of the log price: the Fourier transform of its distribution. Carr–Madan needs it just off that line, at $z = p + iu$, so the extended version is written here.
+**Read it aloud:** average the exponential of $`z`$ times the log price over every way the year can end. Here $`z`$ may carry a multiple of $`i`$, the square root of minus one. At $`z = iu`$, with $`u`$ a real frequency, this is the **characteristic function** of the log price: the Fourier transform of its distribution. Carr–Madan needs it just off that line, at $`z = p + iu`$, so the extended version is written here.
 
-A call struck at $K$ is worth, in these coordinates,
+A call struck at $`K`$ is worth, in these coordinates,
 
-$$C(k) = S\,e^{-rT}\,E\!\left[\left(e^{Y} - e^{k}\right)^{+}\right]$$
+```math
+C(k) = S\,e^{-rT}\,E\!\left[\left(e^{Y} - e^{k}\right)^{+}\right]
+```
 
-with $r$ the riskless rate, $T$ the years to expiry, $e^{-rT}$ the discount to today, and the superscript plus meaning "or zero, whichever is larger" — the ordinary risk-neutral average ([Black-Scholes by expectation](../05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md)) rewritten in logs.
+with $`r`$ the riskless rate, $`T`$ the years to expiry, $`e^{-rT}`$ the discount to today, and the superscript plus meaning "or zero, whichever is larger" — the ordinary risk-neutral average ([Black-Scholes by expectation](../05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md)) rewritten in logs.
 
 ### Carr–Madan: damp, transform, invert
 
-Pick a damping exponent $\alpha > 0$ and set $p = \alpha + 1$. The **damped call curve** is $c(k) = e^{\alpha k}C(k)$, and its Fourier transform is
+Pick a damping exponent $`\alpha > 0`$ and set $`p = \alpha + 1`$. The **damped call curve** is $`c(k) = e^{\alpha k}C(k)`$, and its Fourier transform is
 
-$$\psi(u) = \int_{-\infty}^{\infty} e^{iuk}\,c(k)\,dk \;=\; \frac{S\,e^{-rT}\,\Phi(p + iu)}{(\alpha + iu)(p + iu)}$$
+```math
+\psi(u) = \int_{-\infty}^{\infty} e^{iuk}\,c(k)\,dk \;=\; \frac{S\,e^{-rT}\,\Phi(p + iu)}{(\alpha + iu)(p + iu)}
+```
 
-**Read it aloud:** the model sits in the numerator, inside one call to $\Phi$; the damping sits in the two factors underneath, neither of which can vanish for real $u$ since $\alpha$ and $p$ are positive.
+**Read it aloud:** the model sits in the numerator, inside one call to $`\Phi`$; the damping sits in the two factors underneath, neither of which can vanish for real $`u`$ since $`\alpha`$ and $`p`$ are positive.
 
 Inverting recovers the price at every log strike:
 
-$$C(k) = \frac{e^{-\alpha k}}{\pi}\,\mathrm{Re}\int_{0}^{\infty} e^{-iuk}\,\psi(u)\,du$$
+```math
+C(k) = \frac{e^{-\alpha k}}{\pi}\,\mathrm{Re}\int_{0}^{\infty} e^{-iuk}\,\psi(u)\,du
+```
 
 Run along the positive frequencies, keep the real part, undo the damping. The real part is not decoration: a half-line integral of a complex function is generally not real.
 
 Now the grids. Sample frequencies at panel midpoints — the middle of each frequency step — and log strikes evenly:
 
-$$u_j = \left(j + \tfrac{1}{2}\right)\eta, \qquad k_\ell = -\frac{\pi}{\eta} + \ell\lambda, \qquad \lambda\eta = \frac{2\pi}{N}$$
+```math
+u_j = \left(j + \tfrac{1}{2}\right)\eta, \qquad k_\ell = -\frac{\pi}{\eta} + \ell\lambda, \qquad \lambda\eta = \frac{2\pi}{N}
+```
 
-with $\eta$ the frequency step, $\lambda$ the log-strike step, $N$ the number of points, and both indices running from 0 to $N - 1$. With those choices the finite approximation is a discrete Fourier transform ([The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)) and nothing more, the hat marking what the finite sum gives for the price at $k_\ell$:
+with $`\eta`$ the frequency step, $`\lambda`$ the log-strike step, $`N`$ the number of points, and both indices running from 0 to $`N - 1`$. With those choices the finite approximation is a discrete Fourier transform ([The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)) and nothing more, the hat marking what the finite sum gives for the price at $`k_\ell`$:
 
-$$\widehat{C}_\ell = \frac{\eta\,e^{-\alpha k_\ell}}{\pi}\,\mathrm{Re}\!\left[e^{-i\pi\ell/N}\sum_{j=0}^{N-1} i(-1)^{j}\,\psi(u_j)\,e^{-2\pi i j\ell/N}\right]$$
+```math
+\widehat{C}_\ell = \frac{\eta\,e^{-\alpha k_\ell}}{\pi}\,\mathrm{Re}\!\left[e^{-i\pi\ell/N}\sum_{j=0}^{N-1} i(-1)^{j}\,\psi(u_j)\,e^{-2\pi i j\ell/N}\right]
+```
 
-Flip the sign of every other sample, multiply by $i$, run one FFT, twist each output by a half-cell phase, take the real part, undo the damping: every grid strike comes out together.
+Flip the sign of every other sample, multiply by $`i`$, run one FFT, twist each output by a half-cell phase, take the real part, undo the damping: every grid strike comes out together.
 
 ### COS: cosine modes on a window
 
-The second machine confines the log price to a window $[a, b]$ of width $L = b - a$ and expands what lies inside in cosine waves of frequency $\omega_n = n\pi/L$. It prices the **put**, not the call, for a reason given in Step 5. With $M$ modes,
+The second machine confines the log price to a window $`[a, b]`$ of width $`L = b - a`$ and expands what lies inside in cosine waves of frequency $`\omega_n = n\pi/L`$. It prices the **put**, not the call, for a reason given in Step 5. With $`M`$ modes,
 
-$$P_M = e^{-rT}\,\frac{L}{2}\left[\frac{F_0V_0}{2} + \sum_{n=1}^{M-1} F_nV_n\right], \qquad F_n = \frac{2}{L}\,\mathrm{Re}\!\left(e^{-i\omega_n a}\,\Phi(i\omega_n)\right)$$
+```math
+P_M = e^{-rT}\,\frac{L}{2}\left[\frac{F_0V_0}{2} + \sum_{n=1}^{M-1} F_nV_n\right], \qquad F_n = \frac{2}{L}\,\mathrm{Re}\!\left(e^{-i\omega_n a}\,\Phi(i\omega_n)\right)
+```
 
-At each mode, multiply what the distribution puts into that wave by what the payoff takes out of it, and add. $F_n$ is the distribution's weight, straight from the characteristic function; $V_n$ is the payoff's, given in closed form in Why it works. Both carry the $2/L$. The constant mode counts half, a property of cosine series rather than a fudge. The call comes free from put–call parity ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)), an exact identity: $C = P + S\,e^{-qT} - K\,e^{-rT}$, with $q$ the dividend yield.
+At each mode, multiply what the distribution puts into that wave by what the payoff takes out of it, and add. $`F_n`$ is the distribution's weight, straight from the characteristic function; $`V_n`$ is the payoff's, given in closed form in Why it works. Both carry the $`2/L`$. The constant mode counts half, a property of cosine series rather than a fudge. The call comes free from put–call parity ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)), an exact identity: $`C = P + S\,e^{-qT} - K\,e^{-rT}`$, with $`q`$ the dividend yield.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_T$, $K$ | Acme today, Acme on expiry day, the strike | 100, unknown, 82 to 122 | a cheaper call |
-| $Y$, $k$ | log share price at expiry, log strike, both against today's 100 | 0 at strike 100 | — |
-| $r$, $q$, $\sigma$, $T$ | riskless rate, dividend yield, volatility, years to expiry | 5%, 2%, 20%, 1 | the shelf's market |
-| $\Phi$, $z$, $i$ | the model's whole contribution, the average of $e^{zY}$ at a complex argument $z$; $i$ is the square root of minus one | $\Phi(1) = 1.030454534$ | — |
-| $\alpha$, $p$ | the damping exponent, and $p = \alpha + 1$ | 1.5 and 2.5 | a higher moment needed |
-| $\psi$ | Fourier transform of the damped call curve | $\psi(0) = 29.471224$ | — |
-| $u$, $\eta$, $N$ | frequency, its step, the number of grid points | 0 to 1024, 0.25, 4,096 | finer panels |
-| $\lambda$ | the log-strike step, locked by $\lambda\eta = 2\pi/N$ | 0.006135923 | coarser strikes, finer frequencies |
-| $C$, $P$ | the call and the put at one strike | 9.227006 and 6.330081 | — |
-| $a$, $b$, $L$ | the window's ends and its width | −3, 3, 6 | a wider window needs more modes |
-| $\omega_n$, $M$ | the cosine frequencies, and how many are summed | steps of $\pi/6$, 128 | a closer sum |
-| $F_n$, $V_n$ | each mode's weight from the law, and from the payoff | — | — |
+| $`S`$, $`S_T`$, $`K`$ | Acme today, Acme on expiry day, the strike | 100, unknown, 82 to 122 | a cheaper call |
+| $`Y`$, $`k`$ | log share price at expiry, log strike, both against today's 100 | 0 at strike 100 | — |
+| $`r`$, $`q`$, $`\sigma`$, $`T`$ | riskless rate, dividend yield, volatility, years to expiry | 5%, 2%, 20%, 1 | the shelf's market |
+| $`\Phi`$, $`z`$, $`i`$ | the model's whole contribution, the average of $`e^{zY}`$ at a complex argument $`z`$; $`i`$ is the square root of minus one | $`\Phi(1) = 1.030454534`$ | — |
+| $`\alpha`$, $`p`$ | the damping exponent, and $`p = \alpha + 1`$ | 1.5 and 2.5 | a higher moment needed |
+| $`\psi`$ | Fourier transform of the damped call curve | $`\psi(0) = 29.471224`$ | — |
+| $`u`$, $`\eta`$, $`N`$ | frequency, its step, the number of grid points | 0 to 1024, 0.25, 4,096 | finer panels |
+| $`\lambda`$ | the log-strike step, locked by $`\lambda\eta = 2\pi/N`$ | 0.006135923 | coarser strikes, finer frequencies |
+| $`C`$, $`P`$ | the call and the put at one strike | 9.227006 and 6.330081 | — |
+| $`a`$, $`b`$, $`L`$ | the window's ends and its width | −3, 3, 6 | a wider window needs more modes |
+| $`\omega_n`$, $`M`$ | the cosine frequencies, and how many are summed | steps of $`\pi/6`$, 128 | a closer sum |
+| $`F_n`$, $`V_n`$ | each mode's weight from the law, and from the payoff | — | — |
 
 ### When it holds
 
-- **The damped curve must be integrable**, which needs $E[S_T^{p}]$ finite: the share price raised to $\alpha + 1$ must have a finite average. Lognormal has every such moment; heavy tails cap $\alpha$ outright, and past the ceiling the integral does not exist even though the finite sum still prints a number.
-- **The damping must also beat the strike window.** Sampling at step $\eta$ rebuilds the damped curve plus copies of itself shifted by $2\pi/\eta$ in log strike and alternating in sign. The nearest copy drags in the plateau the call price settles on at low strikes, $Se^{-qT}$, scaled by $e^{-2\pi\alpha/\eta}$: nothing at $\alpha = 1.5$, eighteen cents at $\alpha = 0.25$.
-- **The frequency run must outlast the transform.** The lognormal $\psi$ has fallen to 0.000000000137 by $u = 32$; Heston's is a million times larger there, 0.000189658714, reaching 0.000000008333 only at $u = 64$.
-- **The strike must sit on the grid.** The FFT prices the log strikes $k_\ell$ and nothing between them.
-- **The window must hold the mass.** Probability outside $[a, b]$ is dropped and no number of modes brings it back. The window below reaches fifteen standard deviations of the log price either way and costs nothing measurable; at one and a half the put loses 73 cents.
+- **The damped curve must be integrable**, which needs $`E[S_T^{p}]`$ finite: the share price raised to $`\alpha + 1`$ must have a finite average. Lognormal has every such moment; heavy tails cap $`\alpha`$ outright, and past the ceiling the integral does not exist even though the finite sum still prints a number.
+- **The damping must also beat the strike window.** Sampling at step $`\eta`$ rebuilds the damped curve plus copies of itself shifted by $`2\pi/\eta`$ in log strike and alternating in sign. The nearest copy drags in the plateau the call price settles on at low strikes, $`Se^{-qT}`$, scaled by $`e^{-2\pi\alpha/\eta}`$: nothing at $`\alpha = 1.5`$, eighteen cents at $`\alpha = 0.25`$.
+- **The frequency run must outlast the transform.** The lognormal $`\psi`$ has fallen to 0.000000000137 by $`u = 32`$; Heston's is a million times larger there, 0.000189658714, reaching 0.000000008333 only at $`u = 64`$.
+- **The strike must sit on the grid.** The FFT prices the log strikes $`k_\ell`$ and nothing between them.
+- **The window must hold the mass.** Probability outside $`[a, b]`$ is dropped and no number of modes brings it back. The window below reaches fifteen standard deviations of the log price either way and costs nothing measurable; at one and a half the put loses 73 cents.
 - **The complex square root and logarithm need the right branch.** Heston's characteristic function contains both, and the wrong branch silently prices a different model.
 
 ---
@@ -131,61 +147,71 @@ So move the calculation into frequency space. The payoff's transform is worked o
 
 ### Step 1: the call curve has no transform until it is damped
 
-Watch the call price as a function of log strike at both ends. Toward plus infinity the strike becomes unreachable and the price falls to zero fast. Toward minus infinity the strike becomes free and the price rises to $S e^{-qT}$, a positive constant.
+Watch the call price as a function of log strike at both ends. Toward plus infinity the strike becomes unreachable and the price falls to zero fast. Toward minus infinity the strike becomes free and the price rises to $`S e^{-qT}`$, a positive constant.
 
-A function settling on a positive constant is not integrable, so it has no Fourier transform. Multiplying by $e^{\alpha k}$ kills that end, and the other end already vanished faster than $e^{\alpha k}$ grows, provided the share price has a finite moment of order $p$. That is the whole role of the damping, and why zero damping fails: the transform would blow up — have a pole — on the integration path.
+A function settling on a positive constant is not integrable, so it has no Fourier transform. Multiplying by $`e^{\alpha k}`$ kills that end, and the other end already vanished faster than $`e^{\alpha k}`$ grows, provided the share price has a finite moment of order $`p`$. That is the whole role of the damping, and why zero damping fails: the transform would blow up — have a pole — on the integration path.
 
 ### Step 2: the damped transform is one line of the model's transform
 
-Substituting the call and swapping the order of integration turns $\psi$ into a single average, and the payoff's two pieces integrate in closed form.
+Substituting the call and swapping the order of integration turns $`\psi`$ into a single average, and the payoff's two pieces integrate in closed form.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-The payoff is zero unless the log strike lies below $Y$, so
-$$\psi(u) = S\,e^{-rT}\,E\int_{-\infty}^{Y} e^{(\alpha + iu)k}\left(e^{Y} - e^{k}\right)dk.$$
-The inner integral is elementary: the real part of the exponent's coefficient is $\alpha > 0$, so both exponentials vanish at the lower limit, and
-$$\int_{-\infty}^{Y} e^{(\alpha + iu)k}\left(e^{Y} - e^{k}\right)dk = e^{(p + iu)Y}\left[\frac{1}{\alpha + iu} - \frac{1}{p + iu}\right] = \frac{e^{(p+iu)Y}}{(\alpha + iu)(p + iu)},$$
-the last step because $p - \alpha = 1$. Averaging what is left gives $\Phi(p + iu)$. Swapping the average and the integral is allowed because the integrand is non-negative before the phase is applied, and the total, $S e^{-rT}\Phi(p)/(\alpha p)$, is finite exactly when $E[S_T^{p}]$ is — the moment condition, arriving on its own.
+The payoff is zero unless the log strike lies below $`Y`$, so
 
-At zero frequency that total is a cheap check: $\Phi(2.5) = e^{0.15}$ here, so $\psi(0) = 100\,e^{-0.05}e^{0.15}/3.75 = 29.471224$, which the code prints on its third line.
+$`\displaystyle \psi(u) = S\,e^{-rT}\,E\int_{-\infty}^{Y} e^{(\alpha + iu)k}\left(e^{Y} - e^{k}\right)dk.`$
+
+The inner integral is elementary: the real part of the exponent's coefficient is $`\alpha > 0`$, so both exponentials vanish at the lower limit, and
+
+$`\displaystyle \int_{-\infty}^{Y} e^{(\alpha + iu)k}\left(e^{Y} - e^{k}\right)dk = e^{(p + iu)Y}\left[\frac{1}{\alpha + iu} - \frac{1}{p + iu}\right] = \frac{e^{(p+iu)Y}}{(\alpha + iu)(p + iu)},`$
+
+the last step because $`p - \alpha = 1`$. Averaging what is left gives $`\Phi(p + iu)`$. Swapping the average and the integral is allowed because the integrand is non-negative before the phase is applied, and the total, $`S e^{-rT}\Phi(p)/(\alpha p)`$, is finite exactly when $`E[S_T^{p}]`$ is — the moment condition, arriving on its own.
+
+At zero frequency that total is a cheap check: $`\Phi(2.5) = e^{0.15}`$ here, so $`\psi(0) = 100\,e^{-0.05}e^{0.15}/3.75 = 29.471224`$, which the code prints on its third line.
 
 </details>
 
 ### Step 3: half the frequency line is enough
 
-The damped curve is a real function, and the transform of a real function satisfies $\psi(-u) = \overline{\psi(u)}$, the bar meaning flip the sign of the imaginary part. So the negative-frequency half of the inversion integral mirrors the positive half, and their sum is twice the real part of the positive one: the usual $1/(2\pi)$ becomes $1/\pi$ of the real part over the half-line. Undoing the damping returns the price.
+The damped curve is a real function, and the transform of a real function satisfies $`\psi(-u) = \overline{\psi(u)}`$, the bar meaning flip the sign of the imaginary part. So the negative-frequency half of the inversion integral mirrors the positive half, and their sum is twice the real part of the positive one: the usual $`1/(2\pi)`$ becomes $`1/\pi`$ of the real part over the half-line. Undoing the damping returns the price.
 
 ### Step 4: one FFT, every strike, and the grid lock
 
-The only place a strike enters the sum is the factor $e^{-iu_jk_\ell}$. On the grids above it splits into one piece depending only on the frequency index, one depending only on the strike index, and the discrete Fourier kernel that couples them. The split is exact, and it is what makes the method fast.
+The only place a strike enters the sum is the factor $`e^{-iu_jk_\ell}`$. On the grids above it splits into one piece depending only on the frequency index, one depending only on the strike index, and the discrete Fourier kernel that couples them. The split is exact, and it is what makes the method fast.
 
 <details>
 <summary>Detailed proof: the phase identity behind the FFT step</summary>
 
-With $u_j = (j + \frac{1}{2})\eta$ and $k_\ell = -\pi/\eta + \ell\lambda$,
-$$u_jk_\ell = -\pi\left(j + \tfrac{1}{2}\right) + \left(j + \tfrac{1}{2}\right)\ell\,\lambda\eta = -\pi\left(j + \tfrac{1}{2}\right) + \frac{2\pi j\ell}{N} + \frac{\pi\ell}{N},$$
-using $\lambda\eta = 2\pi/N$ in the last two terms. Exponentiating and separating,
-$$e^{-iu_jk_\ell} = e^{i\pi j}\,e^{i\pi/2}\,e^{-2\pi i j\ell/N}\,e^{-i\pi\ell/N} = i(-1)^{j}\,e^{-2\pi i j\ell/N}\,e^{-i\pi\ell/N}.$$
-Substitute that into the midpoint sum $\eta\sum_j e^{-iu_jk_\ell}\psi(u_j)$ and the boxed expression appears: pack $i(-1)^j\psi(u_j)$ into an array of length $N$, take its minus-sign discrete Fourier transform, and each output is the sum for its own log strike, up to the twist $e^{-i\pi\ell/N}$ and the outside factors. The identity holds for every power of two, down to $N = 1$.
+With $`u_j = (j + \frac{1}{2})\eta`$ and $`k_\ell = -\pi/\eta + \ell\lambda`$,
 
-Two approximations came before this step and none during it: the frequency integral was cut at $N\eta$, and what remained was sampled at panel midpoints. The first error follows the transform's tail past the cutoff, the second falls like $\eta$ squared. All $N$ sums then cost about $N\log_2 N$ operations instead of $N$ squared, some 340 times less work at 4,096 points.
+$`\displaystyle u_jk_\ell = -\pi\left(j + \tfrac{1}{2}\right) + \left(j + \tfrac{1}{2}\right)\ell\,\lambda\eta = -\pi\left(j + \tfrac{1}{2}\right) + \frac{2\pi j\ell}{N} + \frac{\pi\ell}{N},`$
+
+using $`\lambda\eta = 2\pi/N`$ in the last two terms. Exponentiating and separating,
+
+$`\displaystyle e^{-iu_jk_\ell} = e^{i\pi j}\,e^{i\pi/2}\,e^{-2\pi i j\ell/N}\,e^{-i\pi\ell/N} = i(-1)^{j}\,e^{-2\pi i j\ell/N}\,e^{-i\pi\ell/N}.`$
+
+Substitute that into the midpoint sum $`\eta\sum_j e^{-iu_jk_\ell}\psi(u_j)`$ and the boxed expression appears: pack $`i(-1)^j\psi(u_j)`$ into an array of length $`N`$, take its minus-sign discrete Fourier transform, and each output is the sum for its own log strike, up to the twist $`e^{-i\pi\ell/N}`$ and the outside factors. The identity holds for every power of two, down to $`N = 1`$.
+
+Two approximations came before this step and none during it: the frequency integral was cut at $`N\eta`$, and what remained was sampled at panel midpoints. The first error follows the transform's tail past the cutoff, the second falls like $`\eta`$ squared. All $`N`$ sums then cost about $`N\log_2 N`$ operations instead of $`N`$ squared, some 340 times less work at 4,096 points.
 
 </details>
 
-The lock is the price of the speed: since $\lambda = 2\pi/(N\eta)$, a longer frequency run at fixed $N$ means coarser strikes. Below, $\eta = 0.25$ and 4,096 points give a cutoff of 1,024 — far past where either transform matters — and a strike ladder 0.6% apart.
+The lock is the price of the speed: since $`\lambda = 2\pi/(N\eta)`$, a longer frequency run at fixed $`N`$ means coarser strikes. Below, $`\eta = 0.25`$ and 4,096 points give a cutoff of 1,024 — far past where either transform matters — and a strike ladder 0.6% apart.
 
 ### Step 5: the other machine, and why it prices the put
 
 COS starts from the other end. On a finite window any well-behaved density is a cosine series, which can be integrated against the payoff term by term. Two facts make that practical.
 
-First, the density's cosine coefficients are unavailable but the characteristic function's values are, and on a window they nearly coincide: $F_n$ equals the true coefficient plus an error no larger than $2/L$ times the probability lying outside. That substitution is what the method rests on, and why the window must be wide.
+First, the density's cosine coefficients are unavailable but the characteristic function's values are, and on a window they nearly coincide: $`F_n`$ equals the true coefficient plus an error no larger than $`2/L`$ times the probability lying outside. That substitution is what the method rests on, and why the window must be wide.
 
-Second, the payoff's coefficients are elementary. The put pays only below the log strike $k$, so set $d = \min(b, k)$ and integrate over $[a, d]$; if the log strike is at or below $a$, every coefficient is zero. For the constant mode the two integrals are $d - a$ and $e^{d} - e^{a}$; for the rest they are
+Second, the payoff's coefficients are elementary. The put pays only below the log strike $`k`$, so set $`d = \min(b, k)`$ and integrate over $`[a, d]`$; if the log strike is at or below $`a`$, every coefficient is zero. For the constant mode the two integrals are $`d - a`$ and $`e^{d} - e^{a}`$; for the rest they are
 
-$$\frac{\sin\left(\omega_n(d - a)\right)}{\omega_n} \qquad\text{and}\qquad \frac{e^{d}\left[\cos\left(\omega_n(d-a)\right) + \omega_n\sin\left(\omega_n(d-a)\right)\right] - e^{a}}{1 + \omega_n^{2}}$$
+```math
+\frac{\sin\left(\omega_n(d - a)\right)}{\omega_n} \qquad\text{and}\qquad \frac{e^{d}\left[\cos\left(\omega_n(d-a)\right) + \omega_n\sin\left(\omega_n(d-a)\right)\right] - e^{a}}{1 + \omega_n^{2}}
+```
 
-and $V_n$ is $2/L$ times the difference: the strike times the first, less today's share price times the second. Differentiating each expression recovers its integrand, which is the proof.
+and $`V_n`$ is $`2/L`$ times the difference: the strike times the first, less today's share price times the second. Differentiating each expression recovers its integrand, which is the proof.
 
 Why the put? Its payoff never exceeds the strike, so dropping the far tails costs at most the strike times the probability dropped, which can be bounded and made tiny. A call's payoff grows without limit and has no such bound.
 
@@ -197,21 +223,21 @@ The same identity can be used one strike at a time by any numerical integration 
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, damping $\alpha = 1.5$. The grid first, since every later number depends on it.
+Acme: $`S = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year, damping $`\alpha = 1.5`$. The grid first, since every later number depends on it.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| frequency step $\eta$ | chosen | $0.25$ |
-| frequency cutoff | $N\eta = 4096 \times 0.25$ | $1024$ |
-| log-strike step $\lambda$ | $2\pi/(N\eta) = 6.283185/1024$ | $0.006135923$ |
-| half-window | $\pi/\eta = 3.141593/0.25$ | $12.566371$ |
-| damping pair | $\alpha = 1.5$, so $p = \alpha + 1$ | $2.5$ |
-| transform at zero frequency | $\psi(0) = 100\,e^{0.1}/3.75$ | $29.471224$ |
-| the middle grid cell | $k = 0$, so $K = 100\,e^{0}$ | $100.000000$ |
-| the call there, from one FFT | that cell, twisted and undamped | $\mathbf{9.227006}$ |
-| the same call, closed formula | Black–Scholes, for comparison | $9.227006$ |
+| frequency step $`\eta`$ | chosen | $`0.25`$ |
+| frequency cutoff | $`N\eta = 4096 \times 0.25`$ | $`1024`$ |
+| log-strike step $`\lambda`$ | $`2\pi/(N\eta) = 6.283185/1024`$ | $`0.006135923`$ |
+| half-window | $`\pi/\eta = 3.141593/0.25`$ | $`12.566371`$ |
+| damping pair | $`\alpha = 1.5`$, so $`p = \alpha + 1`$ | $`2.5`$ |
+| transform at zero frequency | $`\psi(0) = 100\,e^{0.1}/3.75`$ | $`29.471224`$ |
+| the middle grid cell | $`k = 0`$, so $`K = 100\,e^{0}`$ | $`100.000000`$ |
+| the call there, from one FFT | that cell, twisted and undamped | $`\mathbf{9.227006}`$ |
+| the same call, closed formula | Black–Scholes, for comparison | $`9.227006`$ |
 
-Each cell up multiplies the strike by $e^{\lambda}$, so the ladder is geometric with rungs about 0.6% apart, 4,096 of them across the window. Five rungs, 16 and 32 cells either side of the middle, all from that one transform:
+Each cell up multiplies the strike by $`e^{\lambda}`$, so the ladder is geometric with rungs about 0.6% apart, 4,096 of them across the window. Five rungs, 16 and 32 cells either side of the middle, all from that one transform:
 
 | Strike | Carr–Madan FFT | Direct sum, one strike | Black–Scholes | Heston, same machine |
 | --- | --- | --- | --- | --- |
@@ -247,9 +273,9 @@ Same Acme option, correct answers 9.227006 for the call and 6.330081 for the put
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No damping, $\alpha = 0$ | −39.782928 | The transform has a pole at zero frequency; the sum returns a negative "price" |
+| No damping, $`\alpha = 0`$ | −39.782928 | The transform has a pole at zero frequency; the sum returns a negative "price" |
 | Nearest rung read for strike 100.30, rung at 100.00 | 9.227006, not 9.079483 | Fifteen cents, from thirty cents of strike |
-| Window cut to $-0.3$ to $0.3$, the put | 5.604335, not 6.330081 | One and a half standard deviations is not enough; 73 cents thrown away |
+| Window cut to $`-0.3`$ to $`0.3`$, the put | 5.604335, not 6.330081 | One and a half standard deviations is not enough; 73 cents thrown away |
 | Constant cosine mode counted in full, the put | 38.827044, not 6.330081 | That term of a cosine series carries half weight |
 
 ---
@@ -670,16 +696,16 @@ ALL CHECKS PASS
 
 Lean proves the three exact identities of Why it works for every model and grid, and checks the grid arithmetic.
 
-- Suppose $\alpha > 0$ and $E[S_T^{p}]$ is finite. Then the damped call curve $c(k)$ is integrable over every log strike.
-- Take the same conditions and any real frequency $u$. Then $\psi(u) = S\,e^{-rT}\,\Phi(p + iu)/\big((\alpha + iu)(p + iu)\big)$.
-- Take any transform $\psi$, and put $u_j$ and $k_\ell$ on the locked grids with $\lambda\eta = 2\pi/N$. Then the sum of $e^{-iu_jk_\ell}\psi(u_j)$ over $j$ equals the bracket inside $\widehat{C}_\ell$.
-- Take a cosine frequency $\omega_n$ that is not zero. Then the put's two payoff integrals over $[a, d]$ have the closed forms in Step 5.
-- Take $N = 4096$ and $\eta = 0.25$. Then the cutoff $N\eta$ is 1024, and $\log_2 N = 12$.
-- Damping $\alpha = 1.5$ gives $p = 2.5$.
-- In whole numbers $N^2/(N\log_2 N)$ is 341, the "some 340 times less work" of Step 4.
-- The middle grid cell is $N/2 = 2048$, and the cells 32 either side are 2016 and 2080.
+- Suppose $`\alpha > 0`$ and $`E[S_T^{p}]`$ is finite. Then the damped call curve $`c(k)`$ is integrable over every log strike.
+- Take the same conditions and any real frequency $`u`$. Then $`\psi(u) = S\,e^{-rT}\,\Phi(p + iu)/\big((\alpha + iu)(p + iu)\big)`$.
+- Take any transform $`\psi`$, and put $`u_j`$ and $`k_\ell`$ on the locked grids with $`\lambda\eta = 2\pi/N`$. Then the sum of $`e^{-iu_jk_\ell}\psi(u_j)`$ over $`j`$ equals the bracket inside $`\widehat{C}_\ell`$.
+- Take a cosine frequency $`\omega_n`$ that is not zero. Then the put's two payoff integrals over $`[a, d]`$ have the closed forms in Step 5.
+- Take $`N = 4096`$ and $`\eta = 0.25`$. Then the cutoff $`N\eta`$ is 1024, and $`\log_2 N = 12`$.
+- Damping $`\alpha = 1.5`$ gives $`p = 2.5`$.
+- In whole numbers $`N^2/(N\log_2 N)`$ is 341, the "some 340 times less work" of Step 4.
+- The middle grid cell is $`N/2 = 2048`$, and the cells 32 either side are 2016 and 2080.
 
-The inversion formula, the cosine weights $F_n$, and every printed price are left to the Python and Rust checks.
+The inversion formula, the cosine weights $`F_n`$, and every printed price are left to the Python and Rust checks.
 
 ```lean
 -- Transform pricing: the damped call curve's Fourier transform is one line of the log price's characteristic function, the locked grids turn the inversion sum into one discrete Fourier transform, and the COS put coefficients have the stated closed forms.
@@ -937,8 +963,8 @@ example : 4096 / 2 = 2048 ∧ 2048 - 32 = 2016 ∧ 2048 + 32 = 2080 := by norm_n
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it. Several asserts are pinned to this grid, so expect one to stop the program.
-> - **Shorten the frequency run.** Set `ETA` to `0.03125`. The cutoff falls from 1024 to 128, still far past where either transform matters, so the price at strike 100 does not move in any printed digit — but $\lambda$ grows eightfold with it, so the other four reported strikes fly out to a fifth and nearly five times the share price, where a call carries no recoverable implied volatility, and an assert stops the run.
-> - **Push the damping up, then down.** Set `ALPHA` to `5.0` and every printed price stays, though the $\psi$ lines above them change: any positive damping is legitimate for a lognormal law. Set it to `0.25` and all five calls come out eighteen cents too cheap: the fold-back named in When it holds, made visible.
+> - **Shorten the frequency run.** Set `ETA` to `0.03125`. The cutoff falls from 1024 to 128, still far past where either transform matters, so the price at strike 100 does not move in any printed digit — but $`\lambda`$ grows eightfold with it, so the other four reported strikes fly out to a fifth and nearly five times the share price, where a call carries no recoverable implied volatility, and an assert stops the run.
+> - **Push the damping up, then down.** Set `ALPHA` to `5.0` and every printed price stays, though the $`\psi`$ lines above them change: any positive damping is legitimate for a lognormal law. Set it to `0.25` and all five calls come out eighteen cents too cheap: the fold-back named in When it holds, made visible.
 > - **Move the cosine window.** In the `OFFSETS, LOW, HIGH` line set the window to `-1.0, 1.0`: the put stalls half a millionth from the house number and no number of modes closes the gap, because the tail left outside is gone for good. Set it to `-8.0, 8.0` and 128 modes are no longer enough, though 256 are.
 
 ---
@@ -946,9 +972,9 @@ example : 4096 / 2 = 2048 ∧ 2048 - 32 = 2016 ∧ 2048 + 32 = 2080 := by norm_n
 ## The usual mistake
 
 > [!warning]
-> **Thinking the FFT is the method.** It is not. The method is the damped inversion identity, which is exact; the FFT only evaluates the resulting finite sums at once, changing no number. And the speed comes with a chain, $\lambda\eta = 2\pi/N$: finer strikes buy a shorter frequency run. Refining "the grid" without deciding which half usually improves one number and spoils another.
+> **Thinking the FFT is the method.** It is not. The method is the damped inversion identity, which is exact; the FFT only evaluates the resulting finite sums at once, changing no number. And the speed comes with a chain, $`\lambda\eta = 2\pi/N`$: finer strikes buy a shorter frequency run. Refining "the grid" without deciding which half usually improves one number and spoils another.
 >
-> - **Dropping the damping.** With $\alpha = 0$ the transform has a pole at zero frequency and the price is not integrable in log strike. The sum does not complain: it returns −39.782928 for a call worth 9.227006.
+> - **Dropping the damping.** With $`\alpha = 0`$ the transform has a pole at zero frequency and the price is not integrable in log strike. The sum does not complain: it returns −39.782928 for a call worth 9.227006.
 > - **Reading the nearest rung.** Asking for 100.30 and taking the 100.00 rung costs fifteen cents. Interpolate across three or four rungs, or choose a grid whose rungs include the strikes that matter.
 > - **Trusting the cosine window to be generous.** At one and a half standard deviations the put reads 5.604335 instead of 6.330081. Size the window from the law's spread, not from habit.
 > - **Forgetting that the constant cosine mode counts half.** Give it full weight and the put reads 38.827044. The half comes from the even reflection that makes the series work at all.
@@ -964,7 +990,7 @@ example : 4096 / 2 = 2048 ∧ 2048 - 32 = 2016 ∧ 2048 + 32 = 2080 := by norm_n
 - **Where it stops.** Early exercise needs the expansion repeated at every monitoring date, which is where a grid solver competes ([American options on a grid](08-american-options-by-psor-and-lcp.md)). A path-dependent payoff, or a basket of twenty correlated shares, offers no one-dimensional transform at all: simulation's territory ([Monte Carlo pricing](01-monte-carlo-pricing.md), [Correlated paths](04-correlated-paths-and-cholesky.md)).
 
 > **Say it back**
-> A model may have no formula for the distribution of the future share price and still have one for that distribution's Fourier transform, the characteristic function. That transform is enough to price options. Carr and Madan damp the call price so it has a transform of its own, write that transform as one line of the characteristic function, and invert over positive frequencies; grids tied by $\lambda\eta = 2\pi/N$ turn the whole family of sums into one FFT, so a row of strikes costs what one strike costs. Fang and Oosterlee instead expand the distribution in cosine modes on a window and multiply each mode's weight by the put payoff's. On Acme both land on 9.227006, which Black–Scholes confirms; on Heston both land on 9.059507, which nothing else can confirm, and their agreement to nine decimals is the whole assurance available.
+> A model may have no formula for the distribution of the future share price and still have one for that distribution's Fourier transform, the characteristic function. That transform is enough to price options. Carr and Madan damp the call price so it has a transform of its own, write that transform as one line of the characteristic function, and invert over positive frequencies; grids tied by $`\lambda\eta = 2\pi/N`$ turn the whole family of sums into one FFT, so a row of strikes costs what one strike costs. Fang and Oosterlee instead expand the distribution in cosine modes on a window and multiply each mode's weight by the put payoff's. On Acme both land on 9.227006, which Black–Scholes confirms; on Heston both land on 9.059507, which nothing else can confirm, and their agreement to nine decimals is the whole assurance available.
 
 ---
 
@@ -972,8 +998,8 @@ example : 4096 / 2 = 2048 ∧ 2048 - 32 = 2016 ∧ 2048 + 32 = 2080 := by norm_n
 
 - [Black-Scholes by expectation](../05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md): the price as a discounted average of the payoff — the average this card computes without ever seeing the density.
 - [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): what a transform is, and the inversion formula Step 3 folds onto half the line.
-- [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): the finite sum the grid lock produces, and the radix-two algorithm ([The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md)) that evaluates it in $N\log_2 N$ steps.
-- [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): why a distribution's transform determines it, which licenses reading a price off $\Phi$ alone.
+- [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): the finite sum the grid lock produces, and the radix-two algorithm ([The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md)) that evaluates it in $`N\log_2 N`$ steps.
+- [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): why a distribution's transform determines it, which licenses reading a price off $`\Phi`$ alone.
 
 ## Where this goes next
 

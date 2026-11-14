@@ -34,39 +34,45 @@ The upper line is the series 1 + 1 + 1/2! + … + 1/n!. The lower line is one do
 
 ## The formula
 
-Reminder: a sigma sum running to infinity means the limit of its partial sums ([Infinite series](01-series-convergence.md)). One new shorthand, for any number $a$ and whole $k$ from 0 up:
+Reminder: a sigma sum running to infinity means the limit of its partial sums ([Infinite series](01-series-convergence.md)). One new shorthand, for any number $`a`$ and whole $`k`$ from 0 up:
 
-$$C(a,k) = \frac{a(a-1)(a-2)\cdots(a-k+1)}{k!}, \qquad C(a,0) = 1.$$
+```math
+C(a,k) = \frac{a(a-1)(a-2)\cdots(a-k+1)}{k!}, \qquad C(a,0) = 1.
+```
 
-That is $k$ factors counting down from $a$, divided by $k!$. For a whole $a$ it is "a choose k" ([The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)). For $a$ = 1/2 it gives 1, 0.5, −0.125, 0.0625.
+That is $`k`$ factors counting down from $`a`$, divided by $`k!`$. For a whole $`a`$ it is "a choose k" ([The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)). For $`a`$ = 1/2 it gives 1, 0.5, −0.125, 0.0625.
 
-$$(1+x)^a = \sum_{k=0}^{\infty} C(a,k)\,x^k \qquad \text{whenever } -1 < x < 1$$
+```math
+(1+x)^a = \sum_{k=0}^{\infty} C(a,k)\,x^k \qquad \text{whenever } -1 < x < 1
+```
 
 **Read it aloud:** one plus x to the power a is the sum, over every k, of the extended choice count times x to the k.
 
 Three consequences:
 
-$$e = \lim_{n\to\infty}\Bigl(1+\frac1n\Bigr)^n = \sum_{k=0}^{\infty}\frac{1}{k!}, \qquad \frac1e = \sum_{k=0}^{\infty}\frac{(-1)^k}{k!}, \qquad \lim_{n\to\infty}\frac{D(n)}{n!} = \frac1e.$$
+```math
+e = \lim_{n\to\infty}\Bigl(1+\frac1n\Bigr)^n = \sum_{k=0}^{\infty}\frac{1}{k!}, \qquad \frac1e = \sum_{k=0}^{\infty}\frac{(-1)^k}{k!}, \qquad \lim_{n\to\infty}\frac{D(n)}{n!} = \frac1e.
+```
 
 **Read it aloud:** compounding ever more often heads for the sum of one over every factorial; with alternating signs that sum is one over e; the clean share of a large draw heads there too.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$ | the power, any number | 1/2, a square root | — |
-| $x$ | the added bit beside the 1 | 0.1 | pieces shrink more slowly |
-| $k$, $m$ | piece counters | 0, 1, 2, … | the piece shrinks |
-| $C(a,k)$ | extended choice count | 1, 0.5, −0.125, 0.0625 | — |
-| $n$, $n!$ | people or payments; all possible draws | 6 and 720 | the share settles on 1/e |
-| $D(n)$ | draws with nobody on their own name | 265 | — |
-| $e$ | the compounding ceiling | 2.718281828459, and 1/e = 0.367879441171 | — |
-| $g$, $S$, $L_n$, $L$ | series totals: binomial, for e; the ladder at $n$, its limit | 1.048808848170; 2.718281828459; 2.57 at $n$ = 8 | — |
+| $`a`$ | the power, any number | 1/2, a square root | — |
+| $`x`$ | the added bit beside the 1 | 0.1 | pieces shrink more slowly |
+| $`k`$, $`m`$ | piece counters | 0, 1, 2, … | the piece shrinks |
+| $`C(a,k)`$ | extended choice count | 1, 0.5, −0.125, 0.0625 | — |
+| $`n`$, $`n!`$ | people or payments; all possible draws | 6 and 720 | the share settles on 1/e |
+| $`D(n)`$ | draws with nobody on their own name | 265 | — |
+| $`e`$ | the compounding ceiling | 2.718281828459, and 1/e = 0.367879441171 | — |
+| $`g`$, $`S`$, $`L_n`$, $`L`$ | series totals: binomial, for e; the ladder at $`n`$, its limit | 1.048808848170; 2.718281828459; 2.57 at $`n`$ = 8 | — |
 
 ### When it holds
 
-- **The added bit $x$ strictly between −1 and 1.** Drop it and the pieces grow: for the root of 4, $x$ = 3, the partial sums run −0.10, 155.68, 2966803.56.
-- **Or a whole power $a$ of 0 or more.** Then the sum stops, any $x$ works, and this is the binomial theorem.
-- **At $x$ = 1 or −1** the answer depends on $a$: an endpoint question ([Power series](04-power-series.md)).
-- **The rounding rule for $D(n)$ from $n$ = 1 on.** At $n$ = 0 the empty draw is clean, but 0!/e rounds to 0.
+- **The added bit $`x`$ strictly between −1 and 1.** Drop it and the pieces grow: for the root of 4, $`x`$ = 3, the partial sums run −0.10, 155.68, 2966803.56.
+- **Or a whole power $`a`$ of 0 or more.** Then the sum stops, any $`x`$ works, and this is the binomial theorem.
+- **At $`x`$ = 1 or −1** the answer depends on $`a`$: an endpoint question ([Power series](04-power-series.md)).
+- **The rounding rule for $`D(n)`$ from $`n`$ = 1 on.** At $`n`$ = 0 the empty draw is clean, but 0!/e rounds to 0.
 
 ---
 
@@ -74,32 +80,32 @@ $$e = \lim_{n\to\infty}\Bigl(1+\frac1n\Bigr)^n = \sum_{k=0}^{\infty}\frac{1}{k!}
 
 ### Step 0: a power as a function, expanded by its rates
 
-Treat $(1+x)^a$ as a function of $x$ and take its Taylor series: the endless polynomial whose value and every rate match the function at $x$ = 0 ([Taylor series](05-taylor-series.md)). Then ask: does it add up, and to the power itself?
+Treat $`(1+x)^a`$ as a function of $`x`$ and take its Taylor series: the endless polynomial whose value and every rate match the function at $`x`$ = 0 ([Taylor series](05-taylor-series.md)). Then ask: does it add up, and to the power itself?
 
 ### Step 1: the coefficients are extended choice counts
 
-Each derivative brings the current power down as a factor and lowers it by one: $a(1+x)^{a-1}$, then $a(a-1)(1+x)^{a-2}$, and the $k$-th is $a(a-1)\cdots(a-k+1)(1+x)^{a-k}$. At $x$ = 0 the bracket is 1. Dividing by $k!$, as Taylor's recipe does, gives exactly $C(a,k)$.
+Each derivative brings the current power down as a factor and lowers it by one: $`a(1+x)^{a-1}`$, then $`a(a-1)(1+x)^{a-2}`$, and the $`k`$-th is $`a(a-1)\cdots(a-k+1)(1+x)^{a-k}`$. At $`x`$ = 0 the bracket is 1. Dividing by $`k!`$, as Taylor's recipe does, gives exactly $`C(a,k)`$.
 
-For a whole $a$ the countdown reaches $a - a$ = 0 and every later coefficient vanishes. For $a$ = 1/2 it runs 1/2, −1/2, −3/2, … and never hits zero.
+For a whole $`a`$ the countdown reaches $`a - a`$ = 0 and every later coefficient vanishes. For $`a`$ = 1/2 it runs 1/2, −1/2, −3/2, … and never hits zero.
 
 ### Step 2: the pieces shrink when the added bit is small
 
-Going from piece $k$ to piece $k+1$ multiplies by $x$ and by $(a-k)/(k+1)$. As $k$ grows that fraction closes on −1, whatever $a$ is. So far out, each piece is about $x$ times the one before, give or take its sign.
+Going from piece $`k`$ to piece $`k+1`$ multiplies by $`x`$ and by $`(a-k)/(k+1)`$. As $`k`$ grows that fraction closes on −1, whatever $`a`$ is. So far out, each piece is about $`x`$ times the one before, give or take its sign.
 
 The ratio test compares the series with a geometric one of that ratio ([Convergence tests](02-comparison-ratio-and-root-tests.md)): ratio 0.1 converges fast; ratio 3 is the root-of-4 failure.
 
 ### Step 3: the total is the power
 
-Call the total $g(x)$. At $x$ = 0 it is 1. And $(1+x)$ times its rate equals $a$ times itself, exactly as for the power. Divide one by the other: the quotient's rate is zero everywhere, so it never leaves its starting value 1.
+Call the total $`g(x)`$. At $`x`$ = 0 it is 1. And $`(1+x)`$ times its rate equals $`a`$ times itself, exactly as for the power. Divide one by the other: the quotient's rate is zero everywhere, so it never leaves its starting value 1.
 
 <details>
 <summary>Detailed proof: the series equals the power for every x between −1 and 1</summary>
 
-Inside $-1 < x < 1$ a power series may be differentiated piece by piece ([Power series](04-power-series.md)).
+Inside $`-1 < x < 1`$ a power series may be differentiated piece by piece ([Power series](04-power-series.md)).
 
-The coefficient of $x^k$ in $(1+x)\,g'(x)$ is $(k+1)\,C(a,k+1) + k\,C(a,k)$. Since $C(a,k+1) = C(a,k)\,(a-k)/(k+1)$, that is $(a-k)\,C(a,k) + k\,C(a,k) = a\,C(a,k)$, the coefficient of $x^k$ in $a\,g(x)$. So $(1+x)\,g'(x) = a\,g(x)$.
+The coefficient of $`x^k`$ in $`(1+x)\,g'(x)`$ is $`(k+1)\,C(a,k+1) + k\,C(a,k)`$. Since $`C(a,k+1) = C(a,k)\,(a-k)/(k+1)`$, that is $`(a-k)\,C(a,k) + k\,C(a,k) = a\,C(a,k)`$, the coefficient of $`x^k`$ in $`a\,g(x)`$. So $`(1+x)\,g'(x) = a\,g(x)`$.
 
-Let $h(x) = g(x)\,(1+x)^{-a}$. By the product rule, $h'(x) = (1+x)^{-a-1}\bigl[(1+x)\,g'(x) - a\,g(x)\bigr] = 0$. A function with zero derivative on an interval is constant (mean value theorem), so $h(x) = h(0) = 1$ and $g(x) = (1+x)^a$.
+Let $`h(x) = g(x)\,(1+x)^{-a}`$. By the product rule, $`h'(x) = (1+x)^{-a-1}\bigl[(1+x)\,g'(x) - a\,g(x)\bigr] = 0`$. A function with zero derivative on an interval is constant (mean value theorem), so $`h(x) = h(0) = 1`$ and $`g(x) = (1+x)^a`$.
 
 </details>
 
@@ -109,46 +115,50 @@ After the first, the pieces for the root of 1.1 alternate in sign and shrink, so
 
 ### Step 5: the compounding ceiling is the series
 
-Expand one dollar at 100% paid in $n$ instalments by the binomial theorem:
+Expand one dollar at 100% paid in $`n`$ instalments by the binomial theorem:
 
-$$\Bigl(1+\frac1n\Bigr)^n = \sum_{k=0}^{n} C(n,k)\,\frac{1}{n^k} = \sum_{k=0}^{n}\frac{1}{k!}\Bigl(1-\frac1n\Bigr)\Bigl(1-\frac2n\Bigr)\cdots\Bigl(1-\frac{k-1}{n}\Bigr).$$
+```math
+\Bigl(1+\frac1n\Bigr)^n = \sum_{k=0}^{n} C(n,k)\,\frac{1}{n^k} = \sum_{k=0}^{n}\frac{1}{k!}\Bigl(1-\frac1n\Bigr)\Bigl(1-\frac2n\Bigr)\cdots\Bigl(1-\frac{k-1}{n}\Bigr).
+```
 
-Every bracket is below 1, so each piece is at most $1/k!$: the lower line stays under the upper. As $n$ grows each bracket heads for 1. So the limit, the e of [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md), is the whole series: 2.718281828459.
+Every bracket is below 1, so each piece is at most $`1/k!`$: the lower line stays under the upper. As $`n`$ grows each bracket heads for 1. So the limit, the e of [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md), is the whole series: 2.718281828459.
 
 <details>
 <summary>Detailed proof: the limit of the ladder equals the sum</summary>
 
-Write $L_n = (1+1/n)^n$ and $S$ for the series. The expansion gives $L_n \le S$. The ladder climbs with $n$, since each bracket grows and a new piece joins, so it has a limit $L \le S$.
+Write $`L_n = (1+1/n)^n`$ and $`S`$ for the series. The expansion gives $`L_n \le S`$. The ladder climbs with $`n`$, since each bracket grows and a new piece joins, so it has a limit $`L \le S`$.
 
-Fix a cutoff $m$. For $n > m$, dropping the pieces past $m$ leaves $L_n$ at least the first $m+1$ pieces. As $n$ grows those finitely many brackets head for 1, so $L$ is at least $1/0! + \cdots + 1/m!$. That holds for every $m$, so $L \ge S$, and $L = S$.
+Fix a cutoff $`m`$. For $`n > m`$, dropping the pieces past $`m`$ leaves $`L_n`$ at least the first $`m+1`$ pieces. As $`n`$ grows those finitely many brackets head for 1, so $`L`$ is at least $`1/0! + \cdots + 1/m!`$. That holds for every $`m`$, so $`L \ge S`$, and $`L = S`$.
 
 </details>
 
 ### Step 6: the same sum with alternating signs is 1/e
 
-Multiply the series for e by $1 - 1 + 1/2! - 1/3! + \cdots$ and group the products $1/k!$ times $(-1)^{m-k}/(m-k)!$ by $m$, the sum of their two positions:
+Multiply the series for e by $`1 - 1 + 1/2! - 1/3! + \cdots`$ and group the products $`1/k!`$ times $`(-1)^{m-k}/(m-k)!`$ by $`m`$, the sum of their two positions:
 
-$$\sum_{k=0}^{m}\frac{(-1)^{m-k}}{k!\,(m-k)!} = \frac{1}{m!}\sum_{k=0}^{m} C(m,k)\,(-1)^{m-k} = \frac{(1-1)^m}{m!},$$
+```math
+\sum_{k=0}^{m}\frac{(-1)^{m-k}}{k!\,(m-k)!} = \frac{1}{m!}\sum_{k=0}^{m} C(m,k)\,(-1)^{m-k} = \frac{(1-1)^m}{m!},
+```
 
-by the binomial theorem. For $m \ge 1$ that is zero; $m$ = 0 gives 1. So the product is 1 and the alternating series is 1/e: 0.367879441171. The regrouping is safe because both series converge even with every sign made positive.
+by the binomial theorem. For $`m \ge 1`$ that is zero; $`m`$ = 0 gives 1. So the product is 1 and the alternating series is 1/e: 0.367879441171. The regrouping is safe because both series converge even with every sign made positive.
 
 ### Step 7: the derangement share settles on 1/e, fast
 
-The sieve of [Derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md) gave the clean share $D(n)/n!$ as $1 - 1/1! + 1/2! - \cdots \pm 1/n!$: Step 6's series, stopped at $n$. By Step 4's rule it misses 1/e by less than $1/(n+1)!$. For six people: share 0.368056, gap +0.000176, bound 0.000198.
+The sieve of [Derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md) gave the clean share $`D(n)/n!`$ as $`1 - 1/1! + 1/2! - \cdots \pm 1/n!`$: Step 6's series, stopped at $`n`$. By Step 4's rule it misses 1/e by less than $`1/(n+1)!`$. For six people: share 0.368056, gap +0.000176, bound 0.000198.
 
-Times $n!$: $D(n)$ misses $n!/e$ by less than $1/(n+1)$, at most one half. A whole number that close to 264.873 must be 265: $D(n)$ is $n!/e$ rounded.
+Times $`n!`$: $`D(n)`$ misses $`n!/e`$ by less than $`1/(n+1)`$, at most one half. A whole number that close to 264.873 must be 265: $`D(n)`$ is $`n!/e`$ rounded.
 
-A second road to 1/e is the Taylor series of the function that is its own rate, read at $x$ = −1 ([Taylor series](05-taylor-series.md)).
+A second road to 1/e is the Taylor series of the function that is its own rate, read at $`x`$ = −1 ([Taylor series](05-taylor-series.md)).
 
 ---
 
 ## Worked numbers, by hand
 
-The root of 1.1; each coefficient is the last times $(a-k)/(k+1)$.
+The root of 1.1; each coefficient is the last times $`(a-k)/(k+1)`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| piece 0 | $C(a,0)$ = 1 | 1.0000000000 |
+| piece 0 | $`C(a,0)`$ = 1 | 1.0000000000 |
 | piece 1 | 1 × (1/2) / 1 = 0.5, times 0.1 | 0.0500000000 |
 | piece 2 | 0.5 × (−1/2) / 2 = −0.125, times 0.01 | −0.0012500000 |
 | piece 3 | −0.125 × (−3/2) / 3 = 0.0625, times 0.001 | 0.0000625000 |
@@ -163,8 +173,8 @@ A 1-metre length scaled by the root of 1.1 is 1.0488 m from four pieces, good to
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Root of 4 at $x$ = 3 | −0.10, 155.68, 2966803.56 after 5, 10, 20 pieces | Each piece about 3 times the last |
-| No $k!$ | 1.047875 for the root of 1.1 | The countdown is the rate, not the coefficient |
+| Root of 4 at $`x`$ = 3 | −0.10, 155.68, 2966803.56 after 5, 10, 20 pieces | Each piece about 3 times the last |
+| No $`k!`$ | 1.047875 for the root of 1.1 | The countdown is the rate, not the coefficient |
 | Signs dropped in the share | 720 × 2.718056 = 1957 of 720 draws | That sum heads for e, not 1/e |
 
 The code prints all three.
@@ -580,7 +590,7 @@ example : (1 : ℚ) + 1 + 1 / 2 = 5 / 2 := by norm_num
 > [!warning]
 > **Using the endless series for any x.** A whole power expands for every number; the endless series only for an added bit between −1 and 1. The root of 4 as (1 + 3) to the half gives 155.68 after ten pieces. Rewrite first so the added bit is small.
 >
-> - **Forgetting the $k!$:** 1.047875 instead of 1.0488125.
+> - **Forgetting the $`k!`$:** 1.047875 instead of 1.0488125.
 > - **Dropping the signs:** 1957 clean draws out of 720.
 > - **Calling (1 + 1/n)^n e for a modest n.** Eight payments give 2.57; the series reaches 2.72 by its fifth piece.
 
@@ -608,9 +618,9 @@ example : (1 : ℚ) + 1 + 1 / 2 = 5 / 2 := by norm_num
 
 - [Uniform convergence](07-uniform-convergence.md): when a whole curve of partial sums settles at once.
 - [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md): why Step 3 may differentiate piece by piece.
-- [Stirling's approximation](09-stirlings-approximation.md): e inside the size of $n!$.
+- [Stirling's approximation](09-stirlings-approximation.md): e inside the size of $`n!`$.
 
-The derangement count is now $n!/e$ rounded, but $n!$ is still a product of $n$ numbers; how large it is without multiplying them out is what [Stirling's approximation](09-stirlings-approximation.md) answers.
+The derangement count is now $`n!/e`$ rounded, but $`n!`$ is still a product of $`n`$ numbers; how large it is without multiplying them out is what [Stirling's approximation](09-stirlings-approximation.md) answers.
 
 ---
 

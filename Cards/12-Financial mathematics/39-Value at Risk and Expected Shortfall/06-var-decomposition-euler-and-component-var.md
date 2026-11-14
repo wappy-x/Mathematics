@@ -40,37 +40,41 @@ Every line shrinks once it sits in the book, because the other lines absorb some
 
 ## The formula
 
-$$C_i \;=\; x_i\,M_i \;=\; x_i\,\frac{\partial V}{\partial x_i} \;=\; z\,\frac{x_i\,(\Sigma x)_i}{\sigma_p}, \qquad \sum_i C_i \;=\; V.$$
+```math
+C_i \;=\; x_i\,M_i \;=\; x_i\,\frac{\partial V}{\partial x_i} \;=\; z\,\frac{x_i\,(\Sigma x)_i}{\sigma_p}, \qquad \sum_i C_i \;=\; V.
+```
 
 **Read it aloud:** a line's share of the book's VaR is its size times the rate at which VaR climbs as that line grows, and the shares add up to the whole.
 
-The notation, in words first. The book has lines numbered 1, 2, 3 (shares, bonds, calls). A letter with a small i under it means "the one for line i". The curly ∂ means a slope with every other line held fixed ([Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md)). $(\Sigma x)_i$ is entry i of the covariance table multiplied into the list of positions.
+The notation, in words first. The book has lines numbered 1, 2, 3 (shares, bonds, calls). A letter with a small i under it means "the one for line i". The curly ∂ means a slope with every other line held fixed ([Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md)). $`(\Sigma x)_i`$ is entry i of the covariance table multiplied into the list of positions.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$ | dollars exposed to line i; for the calls, delta (the change in a call's value per $1 rise in Acme's price) times shares times price | $10,000k, $5,000k, $5,868.51k | book VaR moves by the line's marginal VaR per extra dollar |
-| $\sigma_i$ | one-day volatility of line i: the typical size of one day's move, as a fraction | 1.35%, 0.30%, 20% ÷ √252 | the line's standalone VaR grows in proportion |
-| $\rho_{ij}$, $\Sigma$ | correlation of lines i and j, from −1 (opposite) to +1 (together); the covariance table, whose entry i, j is correlation times the two volatilities | shares–Acme 0.5, shares–bonds −0.2, bonds–Acme −0.1 | for two long lines, book VaR grows |
-| $(\Sigma x)_i$ | how line i's move goes with the whole book's P&L (profit and loss), in dollars | $2,281.07, −$58.18, $1,763.03 | the line's marginal VaR grows |
-| $\sigma_p$ | the book's one-day standard deviation of P&L, in dollars | $181.29k | VaR grows in proportion |
-| $z$ | the 99 percent point of the standard bell curve | 2.326348 | VaR and every component grow in proportion |
-| $V$ | the book's value at risk | $421.74k | — |
-| $M_i$ | marginal VaR: extra VaR per extra dollar in line i | 2.9271¢, −0.0747¢, 2.2624¢ per dollar | — |
-| $C_i$ | component VaR: line i's piece of $V$ | $292.71k, −$3.73k, $132.77k | — |
-| $k$ | the expected-shortfall multiplier: bell-curve height at $z$ divided by 0.01 | 2.665214 | expected shortfall and its pieces grow |
-| $\lambda$ | a scale factor applied to every position at once | 1 in the book; 2 in the doubling test | VaR grows by the same factor |
-| $L_i$, $L$ | tomorrow's loss on line i, and on the whole book (their sum) | one random day | — |
+| $`x_i`$ | dollars exposed to line i; for the calls, delta (the change in a call's value per $1 rise in Acme's price) times shares times price | $10,000k, $5,000k, $5,868.51k | book VaR moves by the line's marginal VaR per extra dollar |
+| $`\sigma_i`$ | one-day volatility of line i: the typical size of one day's move, as a fraction | 1.35%, 0.30%, 20% ÷ √252 | the line's standalone VaR grows in proportion |
+| $`\rho_{ij}`$, $`\Sigma`$ | correlation of lines i and j, from −1 (opposite) to +1 (together); the covariance table, whose entry i, j is correlation times the two volatilities | shares–Acme 0.5, shares–bonds −0.2, bonds–Acme −0.1 | for two long lines, book VaR grows |
+| $`(\Sigma x)_i`$ | how line i's move goes with the whole book's P&L (profit and loss), in dollars | $2,281.07, −$58.18, $1,763.03 | the line's marginal VaR grows |
+| $`\sigma_p`$ | the book's one-day standard deviation of P&L, in dollars | $181.29k | VaR grows in proportion |
+| $`z`$ | the 99 percent point of the standard bell curve | 2.326348 | VaR and every component grow in proportion |
+| $`V`$ | the book's value at risk | $421.74k | — |
+| $`M_i`$ | marginal VaR: extra VaR per extra dollar in line i | 2.9271¢, −0.0747¢, 2.2624¢ per dollar | — |
+| $`C_i`$ | component VaR: line i's piece of $`V`$ | $292.71k, −$3.73k, $132.77k | — |
+| $`k`$ | the expected-shortfall multiplier: bell-curve height at $`z`$ divided by 0.01 | 2.665214 | expected shortfall and its pieces grow |
+| $`\lambda`$ | a scale factor applied to every position at once | 1 in the book; 2 in the doubling test | VaR grows by the same factor |
+| $`L_i`$, $`L`$ | tomorrow's loss on line i, and on the whole book (their sum) | one random day | — |
 
 The helpers, each in one line:
 
-$$\sigma_p = \sqrt{\textstyle\sum_{i,j} x_i\,\Sigma_{ij}\,x_j}, \qquad V = z\,\sigma_p, \qquad M_i = z\,\frac{(\Sigma x)_i}{\sigma_p}.$$
+```math
+\sigma_p = \sqrt{\textstyle\sum_{i,j} x_i\,\Sigma_{ij}\,x_j}, \qquad V = z\,\sigma_p, \qquad M_i = z\,\frac{(\Sigma x)_i}{\sigma_p}.
+```
 
-The first is the book's spread from the covariance table, the second turns spread into a 99 percent loss, the third is the slope of the second. The same split works for expected shortfall, the average loss on the worst 1 percent of days ([Expected shortfall](05-expected-shortfall-and-coherence.md)): replace $z$ by $k$ and the pieces add to the book's expected shortfall of $483.18k.
+The first is the book's spread from the covariance table, the second turns spread into a 99 percent loss, the third is the slope of the second. The same split works for expected shortfall, the average loss on the worst 1 percent of days ([Expected shortfall](05-expected-shortfall-and-coherence.md)): replace $`z`$ by $`k`$ and the pieces add to the book's expected shortfall of $483.18k.
 
 ### When it holds
 
 - **The risk measure scales with the book.** Double every position and VaR doubles. That holds when prices do not react to the book's own trades. For a position too large to sell in a day, doubling it more than doubles the real risk, and the pieces stop adding to anything meaningful.
-- **The measure has a slope at this book.** The normal formula needs $\sigma_p > 0$. A VaR read off a finite list of simulated days jumps from one day to the next as positions change, so its slopes are noisy; smoothing, or using expected shortfall, fixes that.
+- **The measure has a slope at this book.** The normal formula needs $`\sigma_p > 0`$. A VaR read off a finite list of simulated days jumps from one day to the next as positions change, so its slopes are noisy; smoothing, or using expected shortfall, fixes that.
 - **The delta mapping of the calls.** The calls enter as $5,868.51k of Acme shares. That ignores their curvature (gamma), so their component is the delta-normal one; the curvature correction is [Options in the book](04-delta-gamma-var-and-cornish-fisher.md).
 - **One fixed model of tomorrow.** Components answer "under these volatilities and correlations". Change the correlation of shares and Acme from 0.5 to 0.9 and the shares' share of VaR falls from 69.40 to 65.61 percent without a single trade.
 
@@ -80,7 +84,7 @@ The first is the book's spread from the covariance table, the second turns sprea
 
 ### Step 0: VaR scales with the book
 
-Take every position and double it. Every day's P&L doubles, so the loss exceeded one day in a hundred doubles too. The same holds for any positive factor $\lambda$: VaR of the scaled book is $\lambda$ times VaR of the book.
+Take every position and double it. Every day's P&L doubles, so the loss exceeded one day in a hundred doubles too. The same holds for any positive factor $`\lambda`$: VaR of the scaled book is $`\lambda`$ times VaR of the book.
 
 The check confirms it: VaR of the doubled book divided by VaR of the book is 2.000000. This single property, called **positive homogeneity of degree one**, is the whole reason the pieces add up.
 
@@ -88,40 +92,48 @@ The check confirms it: VaR of the doubled book divided by VaR of the book is 2.0
 
 The book's variance is a sum over every pair of lines:
 
-$$\sigma_p^2 = \sum_{i,j} x_i\,\Sigma_{ij}\,x_j.$$
+```math
+\sigma_p^2 = \sum_{i,j} x_i\,\Sigma_{ij}\,x_j.
+```
 
-Line i appears in row i and in column i. Differentiating with respect to its size picks up both, and since the table is symmetric they are equal, so the slope of the variance is $2(\Sigma x)_i$. The slope of a square root is one over twice the root, so
+Line i appears in row i and in column i. Differentiating with respect to its size picks up both, and since the table is symmetric they are equal, so the slope of the variance is $`2(\Sigma x)_i`$. The slope of a square root is one over twice the root, so
 
-$$\frac{\partial \sigma_p}{\partial x_i} = \frac{(\Sigma x)_i}{\sigma_p}, \qquad M_i = z\,\frac{(\Sigma x)_i}{\sigma_p}.$$
+```math
+\frac{\partial \sigma_p}{\partial x_i} = \frac{(\Sigma x)_i}{\sigma_p}, \qquad M_i = z\,\frac{(\Sigma x)_i}{\sigma_p}.
+```
 
-The ratio $(\Sigma x)_i / \sigma_p$ has a plain reading. It is line i's volatility times its correlation with the whole book. A line that rises when the book falls has a negative correlation, and a negative marginal VaR: adding to it lowers the book's risk. For the bonds, $(\Sigma x)_i$ is −$58.18, so each extra dollar of bonds removes 0.0747 cents of VaR.
+The ratio $`(\Sigma x)_i / \sigma_p`$ has a plain reading. It is line i's volatility times its correlation with the whole book. A line that rises when the book falls has a negative correlation, and a negative marginal VaR: adding to it lowers the book's risk. For the bonds, $`(\Sigma x)_i`$ is −$58.18, so each extra dollar of bonds removes 0.0747 cents of VaR.
 
 ### Step 2: Euler's rule turns slopes into pieces
 
-Write $V(\lambda x)$ for VaR of the book with every position multiplied by $\lambda$. Step 0 says this equals $\lambda V(x)$. Differentiate both sides with respect to $\lambda$ and set $\lambda = 1$. The right side gives $V$. The left side, by the chain rule, is each position times the slope in its direction, added up. So
+Write $`V(\lambda x)`$ for VaR of the book with every position multiplied by $`\lambda`$. Step 0 says this equals $`\lambda V(x)`$. Differentiate both sides with respect to $`\lambda`$ and set $`\lambda = 1`$. The right side gives $`V`$. The left side, by the chain rule, is each position times the slope in its direction, added up. So
 
-$$\sum_i x_i\,\frac{\partial V}{\partial x_i} = V.$$
+```math
+\sum_i x_i\,\frac{\partial V}{\partial x_i} = V.
+```
 
-That is Euler's rule. It needs nothing about the bell curve: any measure that scales with the book and has slopes there splits exactly this way. For the normal formula it can be checked directly, since $\sum_i x_i (\Sigma x)_i$ is $\sigma_p^2$, so $\sum_i C_i = z\sigma_p^2/\sigma_p = z\sigma_p = V$.
+That is Euler's rule. It needs nothing about the bell curve: any measure that scales with the book and has slopes there splits exactly this way. For the normal formula it can be checked directly, since $`\sum_i x_i (\Sigma x)_i`$ is $`\sigma_p^2`$, so $`\sum_i C_i = z\sigma_p^2/\sigma_p = z\sigma_p = V`$.
 
 <details>
 <summary>Detailed proof: Euler's rule for a function that scales with its inputs</summary>
 
-Let $V$ be any rule that takes a list of positions to a number, with $V(\lambda x) = \lambda V(x)$ for every $\lambda > 0$, and let it be differentiable at the book: near $x$ its change is its gradient $\nabla V(x)$, the list of its slopes $\partial V/\partial x_i$, dotted with the move, up to an error smaller than the move.
+Let $`V`$ be any rule that takes a list of positions to a number, with $`V(\lambda x) = \lambda V(x)`$ for every $`\lambda > 0`$, and let it be differentiable at the book: near $`x`$ its change is its gradient $`\nabla V(x)`$, the list of its slopes $`\partial V/\partial x_i`$, dotted with the move, up to an error smaller than the move.
 
-Follow the straight path $\lambda \mapsto V(\lambda x)$. By scaling it equals $\lambda V(x)$, a straight line in $\lambda$ whose slope at $\lambda = 1$ is $V(x)$.
+Follow the straight path $`\lambda \mapsto V(\lambda x)`$. By scaling it equals $`\lambda V(x)`$, a straight line in $`\lambda`$ whose slope at $`\lambda = 1`$ is $`V(x)`$.
 
-The same path, moved from $\lambda = 1$ to $\lambda = 1 + \epsilon$ for a small number epsilon, moves the positions from $x$ to $x + \epsilon x$. Differentiability gives $V(x + \epsilon x) - V(x) = \epsilon\,\nabla V(x)\cdot x$ plus an error smaller than epsilon, so the slope at $\lambda = 1$ is also $\nabla V(x)\cdot x = \sum_i x_i\,\partial V/\partial x_i$.
+The same path, moved from $`\lambda = 1`$ to $`\lambda = 1 + \epsilon`$ for a small number epsilon, moves the positions from $`x`$ to $`x + \epsilon x`$. Differentiability gives $`V(x + \epsilon x) - V(x) = \epsilon\,\nabla V(x)\cdot x`$ plus an error smaller than epsilon, so the slope at $`\lambda = 1`$ is also $`\nabla V(x)\cdot x = \sum_i x_i\,\partial V/\partial x_i`$.
 
-One path, one slope, two expressions for it: they are equal, which is the rule. Differentiability matters: a book with no risk at all, $\sigma_p = 0$, has a VaR that bends at a corner, and components there are not defined.
+One path, one slope, two expressions for it: they are equal, which is the rule. Differentiability matters: a book with no risk at all, $`\sigma_p = 0`$, has a VaR that bends at a corner, and components there are not defined.
 
 </details>
 
 ### Step 3: what a component is, day by day
 
-The slope formula has a second reading that needs no calculus. Write $L_i$ for line i's loss tomorrow and $L$ for the book's loss, their sum. Under the bell-curve model, the average of $L_i$ over the days when the book loses exactly $V$ is
+The slope formula has a second reading that needs no calculus. Write $`L_i`$ for line i's loss tomorrow and $`L`$ for the book's loss, their sum. Under the bell-curve model, the average of $`L_i`$ over the days when the book loses exactly $`V`$ is
 
-$$\text{average of } L_i \text{ given } L = V \;=\; \frac{\text{covariance of } L_i \text{ and } L}{\text{variance of } L}\times V \;=\; \frac{x_i(\Sigma x)_i}{\sigma_p^2}\times z\sigma_p \;=\; C_i.$$
+```math
+\text{average of } L_i \text{ given } L = V \;=\; \frac{\text{covariance of } L_i \text{ and } L}{\text{variance of } L}\times V \;=\; \frac{x_i(\Sigma x)_i}{\sigma_p^2}\times z\sigma_p \;=\; C_i.
+```
 
 So **a component is what that line lost, on average, on the days the book lost its VaR.** On those days the shares lost $292.71k on average, the calls $132.77k, and the bonds made $3.73k. The first equality is the usual fact that for two jointly normal quantities, the average of one given the other is a straight line in the other.
 
@@ -143,7 +155,7 @@ xychart-beta
 
 The orange curve is the book's VaR recomputed at each size: incremental VaR is the gap between two points on it. The green straight line is the tangent at today's 1,000 contracts; its slope is the calls' marginal VaR. The two touch at $421.74k and the curve lies above the tangent everywhere else.
 
-That last fact is general. $\sigma_p$ is a length, and a length bends upward along any straight path, so VaR is **convex** in each position. Follow the tangent from 1,000 contracts down to zero and it lands at $V - C_i$, since the drop along the tangent is the slope times the whole position. The curve lies above it, so **selling a line entirely saves at most its component**.
+That last fact is general. $`\sigma_p`$ is a length, and a length bends upward along any straight path, so VaR is **convex** in each position. Follow the tangent from 1,000 contracts down to zero and it lands at $`V - C_i`$, since the drop along the tangent is the slope times the whole position. The curve lies above it, so **selling a line entirely saves at most its component**.
 
 Selling all the calls saves $112.77k, not $132.77k. Selling all the bonds saves nothing: VaR rises by $5.15k, more than the $3.73k the component predicts, because a hedge removed is worth more than its tangent says.
 
@@ -163,19 +175,19 @@ The book is the one on [Parametric VaR](02-parametric-var-and-delta-normal.md).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| call delta, house Acme call | $e^{-0.02}\,N(0.25)$, with N the bell-curve area to the left | 0.586851 |
+| call delta, house Acme call | $`e^{-0.02}\,N(0.25)`$, with N the bell-curve area to the left | 0.586851 |
 | calls as Acme dollars | 1,000 × 100 × 0.586851 × $100 | $5,868.51k |
-| shares row of $\Sigma x$ | 0.0135 × 0.0135 × 10,000k − 0.2 × 0.0135 × 0.003 × 5,000k + 0.5 × 0.0135 × (0.20 ÷ √252) × 5,868.51k | $2,281.07 |
+| shares row of $`\Sigma x`$ | 0.0135 × 0.0135 × 10,000k − 0.2 × 0.0135 × 0.003 × 5,000k + 0.5 × 0.0135 × (0.20 ÷ √252) × 5,868.51k | $2,281.07 |
 | bonds and calls rows | same recipe | −$58.18, $1,763.03 |
-| each line's $x_i(\Sigma x)_i$ | 10,000k × 2,281.07, and so on | 22,810.70, −290.90, 10,346.37 ($k)^2 |
-| book variance, $\sigma_p^2$ | sum of the three | 32,866.17 ($k)^2 |
-| book spread, $\sigma_p$ | square root | $181.29k |
-| book VaR, $V$ | 2.326348 × 181.29k | $421.74k |
-| shares marginal, $M_i$ | 2.326348 × 2,281.07 ÷ 181,290 | 2.9271¢ per dollar |
-| shares component, $C_i$ | 10,000k × 0.029271 | $292.71k |
+| each line's $`x_i(\Sigma x)_i`$ | 10,000k × 2,281.07, and so on | 22,810.70, −290.90, 10,346.37 ($k)^2 |
+| book variance, $`\sigma_p^2`$ | sum of the three | 32,866.17 ($k)^2 |
+| book spread, $`\sigma_p`$ | square root | $181.29k |
+| book VaR, $`V`$ | 2.326348 × 181.29k | $421.74k |
+| shares marginal, $`M_i`$ | 2.326348 × 2,281.07 ÷ 181,290 | 2.9271¢ per dollar |
+| shares component, $`C_i`$ | 10,000k × 0.029271 | $292.71k |
 | **shares' share of VaR** | 22,810.70 ÷ 32,866.17 | **69.40%** |
 
-The shares' share is the shares' row of the variance divided by the whole variance: $z$ and the square root cancel. So seven dollars in every ten of this book's VaR belong to the shares, three to the calls, and the bonds hand back almost one dollar in a hundred.
+The shares' share is the shares' row of the variance divided by the whole variance: $`z`$ and the square root cancel. So seven dollars in every ten of this book's VaR belong to the shares, three to the calls, and the bonds hand back almost one dollar in a hundred.
 
 ### What breaks if you drop a piece
 
@@ -545,10 +557,10 @@ The two outputs match line for line, simulated rows included, because both run t
 
 Lean proves Euler's rule for every measure that scales with the book, and the normal-formula facts for any number of lines.
 
-- Take any measure $V$ that scales with the book for every $\lambda > 0$ and has slopes at the book. Then the components $x_i\,\partial V/\partial x_i$ add up to $V$ exactly.
-- Take a symmetric covariance table $\Sigma$, any $z$, and a book with $\sigma_p > 0$. Then the marginal VaR is $M_i = z\,(\Sigma x)_i/\sigma_p$.
-- Take the same table, $z$ and book. Then the components $x_i M_i$ add up to $V = z\sigma_p$.
-- Take a covariance table, so no book has negative variance, with $z \ge 0$ and $\sigma_p > 0$. Then selling line i entirely lowers $V$ by at most $C_i$.
+- Take any measure $`V`$ that scales with the book for every $`\lambda > 0`$ and has slopes at the book. Then the components $`x_i\,\partial V/\partial x_i`$ add up to $`V`$ exactly.
+- Take a symmetric covariance table $`\Sigma`$, any $`z`$, and a book with $`\sigma_p > 0`$. Then the marginal VaR is $`M_i = z\,(\Sigma x)_i/\sigma_p`$.
+- Take the same table, $`z`$ and book. Then the components $`x_i M_i`$ add up to $`V = z\sigma_p`$.
+- Take a covariance table, so no book has negative variance, with $`z \ge 0`$ and $`\sigma_p > 0`$. Then selling line i entirely lowers $`V`$ by at most $`C_i`$.
 
 The day-by-day reading of Step 3, the simulations and every dollar figure are left to the Python and Rust checks.
 
@@ -771,7 +783,7 @@ theorem selling_a_line_saves_at_most_its_component {n : ℕ}
 
 ## What this builds on
 
-- [Parametric VaR](02-parametric-var-and-delta-normal.md): VaR as $z$ times a spread built from a covariance table, and the delta mapping of the calls into Acme dollars.
+- [Parametric VaR](02-parametric-var-and-delta-normal.md): VaR as $`z`$ times a spread built from a covariance table, and the delta mapping of the calls into Acme dollars.
 - [Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md): slopes in one direction with the others held fixed, and the chain rule along a straight path used in Euler's rule.
 
 ## Where this goes next

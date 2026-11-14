@@ -28,17 +28,21 @@ Drawn to scale, in metres. Open circles mark end points the intervals leave out.
 
 ## The formula
 
-Notation first, in words. An **open interval** $(c, d)$ is every point strictly between $c$ and $d$; its **length** $\ell\big((c, d)\big)$ is $d - c$. A **cover** of a set $A$ is a list $I_1, I_2, I_3, \dots$ of open intervals whose union (the points lying in at least one of them) contains every point of $A$; $A \subseteq B$ means every point of $A$ lies in $B$. The symbol $\inf$ is the infimum: the greatest number lying at or below every member of a collection ([No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). A star on lambda, $\lambda^*$, read "lambda star", names outer measure.
+Notation first, in words. An **open interval** $`(c, d)`$ is every point strictly between $`c`$ and $`d`$; its **length** $`\ell\big((c, d)\big)`$ is $`d - c`$. A **cover** of a set $`A`$ is a list $`I_1, I_2, I_3, \dots`$ of open intervals whose union (the points lying in at least one of them) contains every point of $`A`$; $`A \subseteq B`$ means every point of $`A`$ lies in $`B`$. The symbol $`\inf`$ is the infimum: the greatest number lying at or below every member of a collection ([No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). A star on lambda, $`\lambda^*`$, read "lambda star", names outer measure.
 
-$$\lambda^*(A) \;=\; \inf\Big\{\, \sum_{k=1}^{\infty} \ell(I_k) \;:\; I_1, I_2, \dots \text{ open intervals with } A \subseteq \bigcup_{k=1}^{\infty} I_k \Big\}$$
+```math
+\lambda^*(A) \;=\; \inf\Big\{\, \sum_{k=1}^{\infty} \ell(I_k) \;:\; I_1, I_2, \dots \text{ open intervals with } A \subseteq \bigcup_{k=1}^{\infty} I_k \Big\}
+```
 
 **Read it aloud:** list every way to cover the set with a sequence of open intervals, add up each list's lengths, and take the greatest number at or below all those totals.
 
-A total may be infinite, and so may $\lambda^*(A)$; the whole line has outer measure infinity. A finite list counts as a sequence padded with empty intervals of length 0.
+A total may be infinite, and so may $`\lambda^*(A)`$; the whole line has outer measure infinity. A finite list counts as a sequence padded with empty intervals of length 0.
 
 Three properties do the work on this card and the rest of the shelf.
 
-$$A \subseteq B \;\Rightarrow\; \lambda^*(A) \le \lambda^*(B) \qquad \lambda^*\Big(\bigcup_{n=1}^{\infty} A_n\Big) \;\le\; \sum_{n=1}^{\infty} \lambda^*(A_n) \qquad \lambda^*\big([a, b]\big) = b - a$$
+```math
+A \subseteq B \;\Rightarrow\; \lambda^*(A) \le \lambda^*(B) \qquad \lambda^*\Big(\bigcup_{n=1}^{\infty} A_n\Big) \;\le\; \sum_{n=1}^{\infty} \lambda^*(A_n) \qquad \lambda^*\big([a, b]\big) = b - a
+```
 
 **Read it aloud:** a bigger set is never smaller; a union of a sequence of sets is at most the sum of their sizes; and a closed interval's size is its length.
 
@@ -46,18 +50,18 @@ The first is **monotonicity**, the second **countable subadditivity** ("countabl
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\lambda^*(A)$ | outer measure: the greatest number every cover's total reaches or beats | 0 for the spots, 3 for the fence | — |
-| $A$, $B$, $A_n$ | sets of real numbers; $A_n$ the $n$-th in a list | the spots, the fence | a bigger set has outer measure at least as big |
-| $I_k$, $k$, $n$ | the $k$-th open interval of a cover; $k$ and $n$ count positions in a list | (−0.2, 1.1), first in the picture | — |
-| $\ell(I)$ | length of an interval: right end minus left end | 1.1 − (−0.2) for the first tape | the cover's total rises |
-| $\sum$, $\bigcup$ | add up a list; join a list of sets into one | 4.8 m for the five tapes | — |
-| $\inf$ | greatest number at or below every total | 3 over all covers of the fence | — |
-| $\varepsilon$ | epsilon: any positive allowance, as small as wished | 0.01 m | the covers built from it get dearer |
-| $F$ | the fence, the closed interval [0, 3] in metres | length 3 | — |
-| $S$ | the 100 rust spots at 0.03, 0.06, … , 3 | outer measure 0 | — |
-| $\mathbb{Q}$, $q_k$ | the rationals; $q_k$ the $k$-th in a fixed list | the third is 1/2 | — |
-| $a$, $b$, $c$, $d$, $s$, $x$, $y$ | points on the line: interval ends; $x$ a spot or a reachable point, $s$ a supremum, $y$ a point past it | 0 and 3 | $b - a$ rises with $b$ |
-| $\lambda$ | Lebesgue measure: outer measure kept on the well-behaved sets | 3 for the fence | — |
+| $`\lambda^*(A)`$ | outer measure: the greatest number every cover's total reaches or beats | 0 for the spots, 3 for the fence | — |
+| $`A`$, $`B`$, $`A_n`$ | sets of real numbers; $`A_n`$ the $`n`$-th in a list | the spots, the fence | a bigger set has outer measure at least as big |
+| $`I_k`$, $`k`$, $`n`$ | the $`k`$-th open interval of a cover; $`k`$ and $`n`$ count positions in a list | (−0.2, 1.1), first in the picture | — |
+| $`\ell(I)`$ | length of an interval: right end minus left end | 1.1 − (−0.2) for the first tape | the cover's total rises |
+| $`\sum`$, $`\bigcup`$ | add up a list; join a list of sets into one | 4.8 m for the five tapes | — |
+| $`\inf`$ | greatest number at or below every total | 3 over all covers of the fence | — |
+| $`\varepsilon`$ | epsilon: any positive allowance, as small as wished | 0.01 m | the covers built from it get dearer |
+| $`F`$ | the fence, the closed interval [0, 3] in metres | length 3 | — |
+| $`S`$ | the 100 rust spots at 0.03, 0.06, … , 3 | outer measure 0 | — |
+| $`\mathbb{Q}`$, $`q_k`$ | the rationals; $`q_k`$ the $`k`$-th in a fixed list | the third is 1/2 | — |
+| $`a`$, $`b`$, $`c`$, $`d`$, $`s`$, $`x`$, $`y`$ | points on the line: interval ends; $`x`$ a spot or a reachable point, $`s`$ a supremum, $`y`$ a point past it | 0 and 3 | $`b - a`$ rises with $`b`$ |
+| $`\lambda`$ | Lebesgue measure: outer measure kept on the well-behaved sets | 3 for the fence | — |
 
 ### When it holds
 
@@ -74,42 +78,42 @@ The formula is a definition, so it holds for every set of real numbers by fiat; 
 
 ### Step 0: measure from outside, and allow a list of pieces
 
-Length is known for intervals, so any other set is wrapped in them. The infimum is the price of the best wrapping, or the limit of better and better ones when no best exists. An endless list makes a scattered set cheap: the $k$-th piece shrinks as $k$ grows, so the total stays small.
+Length is known for intervals, so any other set is wrapped in them. The infimum is the price of the best wrapping, or the limit of better and better ones when no best exists. An endless list makes a scattered set cheap: the $`k`$-th piece shrinks as $`k`$ grows, so the total stays small.
 
 ### Step 1: a point, a finite set and a countable set each have outer measure 0
 
-A single rust spot at $x$ sits inside the interval from $x - \varepsilon/2$ to $x + \varepsilon/2$, of length $\varepsilon$. So 0 ≤ $\lambda^*$ of the spot ≤ $\varepsilon$ for every positive $\varepsilon$, and a number between 0 and every positive number is 0.
+A single rust spot at $`x`$ sits inside the interval from $`x - \varepsilon/2`$ to $`x + \varepsilon/2`$, of length $`\varepsilon`$. So 0 ≤ $`\lambda^*`$ of the spot ≤ $`\varepsilon`$ for every positive $`\varepsilon`$, and a number between 0 and every positive number is 0.
 
-All 100 spots: give each an interval of length $\varepsilon/100$. The total is $\varepsilon$, so again the outer measure is 0. With $\varepsilon$ = 0.01 m, each interval is 0.0001 m long.
+All 100 spots: give each an interval of length $`\varepsilon/100`$. The total is $`\varepsilon`$, so again the outer measure is 0. With $`\varepsilon`$ = 0.01 m, each interval is 0.0001 m long.
 
-The rationals in [0, 1] can be listed: by denominator, 0, 1, 1/2, 1/3, 2/3, 1/4, 3/4, 1/5, … . Give the $k$-th rational $q_k$ an interval of length $\varepsilon/2^k$. The lengths are $\varepsilon/2 + \varepsilon/4 + \varepsilon/8 + \cdots$, a geometric series summing to $\varepsilon$ ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). With $\varepsilon$ = 0.01, every rational in [0, 1] lies inside intervals totalling 0.01, and the argument works for every $\varepsilon$, so $\lambda^*(\mathbb{Q} \cap [0, 1]) = 0$, where $\cap$ keeps the points in both sets.
+The rationals in [0, 1] can be listed: by denominator, 0, 1, 1/2, 1/3, 2/3, 1/4, 3/4, 1/5, … . Give the $`k`$-th rational $`q_k`$ an interval of length $`\varepsilon/2^k`$. The lengths are $`\varepsilon/2 + \varepsilon/4 + \varepsilon/8 + \cdots`$, a geometric series summing to $`\varepsilon`$ ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). With $`\varepsilon`$ = 0.01, every rational in [0, 1] lies inside intervals totalling 0.01, and the argument works for every $`\varepsilon`$, so $`\lambda^*(\mathbb{Q} \cap [0, 1]) = 0`$, where $`\cap`$ keeps the points in both sets.
 
 A set of outer measure 0 is a null set ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); this card supplies the length that sentence was measured with.
 
 ### Step 2: a bigger set is never smaller
 
-Take $A$ inside $B$. Every cover of $B$ covers $A$, so $A$ has all of $B$'s totals and perhaps cheaper ones. An infimum over more options is no higher: $\lambda^*(A) \le \lambda^*(B)$.
+Take $`A`$ inside $`B`$. Every cover of $`B`$ covers $`A`$, so $`A`$ has all of $`B`$'s totals and perhaps cheaper ones. An infimum over more options is no higher: $`\lambda^*(A) \le \lambda^*(B)`$.
 
 On the fence: the fence minus its spots lies inside the fence, so its outer measure is at most 3.
 
 ### Step 3: a union costs at most the sum of its pieces
 
-Cover each piece $A_n$ almost as cheaply as possible, allowing an overshoot of $\varepsilon/2^n$ on the $n$-th piece. Pool every interval from every cover into one list. That list covers the union, and its total is at most the sum of the $\lambda^*(A_n)$ plus $\varepsilon/2 + \varepsilon/4 + \cdots = \varepsilon$. Since $\varepsilon$ is arbitrary, the union's outer measure is at most the sum.
+Cover each piece $`A_n`$ almost as cheaply as possible, allowing an overshoot of $`\varepsilon/2^n`$ on the $`n`$-th piece. Pool every interval from every cover into one list. That list covers the union, and its total is at most the sum of the $`\lambda^*(A_n)`$ plus $`\varepsilon/2 + \varepsilon/4 + \cdots = \varepsilon`$. Since $`\varepsilon`$ is arbitrary, the union's outer measure is at most the sum.
 
-On the fence, with $F \setminus S$ read "the fence minus the spots": the fence is $F \setminus S$ joined with $S$, so 3 ≤ $\lambda^*(F \setminus S)$ + 0, using the fence's outer measure 3 from Step 4. Step 2 gave at most 3, so the fence without its spots has outer measure exactly 3. Removing 100 points costs nothing.
+On the fence, with $`F \setminus S`$ read "the fence minus the spots": the fence is $`F \setminus S`$ joined with $`S`$, so 3 ≤ $`\lambda^*(F \setminus S)`$ + 0, using the fence's outer measure 3 from Step 4. Step 2 gave at most 3, so the fence without its spots has outer measure exactly 3. Removing 100 points costs nothing.
 
 <details>
 <summary>Detailed proof: countable subadditivity</summary>
 
-If some $\lambda^*(A_n)$ is infinite, or the sum is, the right side is infinite and there is nothing to prove. Otherwise fix $\varepsilon > 0$.
+If some $`\lambda^*(A_n)`$ is infinite, or the sum is, the right side is infinite and there is nothing to prove. Otherwise fix $`\varepsilon > 0`$.
 
-For each $n$, the number $\lambda^*(A_n) + \varepsilon/2^n$ is above the infimum, so it is not a lower bound for the totals: some cover $I_{n,1}, I_{n,2}, \dots$ of $A_n$ has total at most $\lambda^*(A_n) + \varepsilon/2^n$ (definition of infimum).
+For each $`n`$, the number $`\lambda^*(A_n) + \varepsilon/2^n`$ is above the infimum, so it is not a lower bound for the totals: some cover $`I_{n,1}, I_{n,2}, \dots`$ of $`A_n`$ has total at most $`\lambda^*(A_n) + \varepsilon/2^n`$ (definition of infimum).
 
-The intervals $I_{n,k}$, over all $n$ and $k$, can be put in one list by walking the diagonals $n + k = 2, 3, 4, \dots$; each interval appears once. Any point of the union lies in some $A_n$, so in some $I_{n,k}$: the list covers the union.
+The intervals $`I_{n,k}`$, over all $`n`$ and $`k`$, can be put in one list by walking the diagonals $`n + k = 2, 3, 4, \dots`$; each interval appears once. Any point of the union lies in some $`A_n`$, so in some $`I_{n,k}`$: the list covers the union.
 
-Its total is a series of non-negative terms. Any first stretch of the list uses finitely many of the $I_{n,k}$, drawn from finitely many of the covers. The intervals it takes from any one cover total at most that cover's whole total, so the stretch totals at most $\sum_n \big(\lambda^*(A_n) + \varepsilon/2^n\big) = \sum_n \lambda^*(A_n) + \varepsilon$. The partial sums never pass that bound, so neither does their limit, the series' sum ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)).
+Its total is a series of non-negative terms. Any first stretch of the list uses finitely many of the $`I_{n,k}`$, drawn from finitely many of the covers. The intervals it takes from any one cover total at most that cover's whole total, so the stretch totals at most $`\sum_n \big(\lambda^*(A_n) + \varepsilon/2^n\big) = \sum_n \lambda^*(A_n) + \varepsilon`$. The partial sums never pass that bound, so neither does their limit, the series' sum ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)).
 
-So $\lambda^*$ of the union is at most $\sum_n \lambda^*(A_n) + \varepsilon$ for every $\varepsilon > 0$, hence at most $\sum_n \lambda^*(A_n)$.
+So $`\lambda^*`$ of the union is at most $`\sum_n \lambda^*(A_n) + \varepsilon`$ for every $`\varepsilon > 0`$, hence at most $`\sum_n \lambda^*(A_n)`$.
 
 </details>
 
@@ -117,40 +121,40 @@ So $\lambda^*$ of the union is at most $\sum_n \lambda^*(A_n) + \varepsilon$ for
 
 This step makes outer measure agree with the ruler, and it is the only hard one.
 
-**At most $b - a$.** The single interval $(a - \varepsilon, b + \varepsilon)$ covers $[a, b]$ and has length $b - a + 2\varepsilon$. For the fence with $\varepsilon$ = 0.001, the cover (−0.001, 3.001) totals 3.002 m. Every $\varepsilon$ works, so $\lambda^*([a, b]) \le b - a$.
+**At most $`b - a`$.** The single interval $`(a - \varepsilon, b + \varepsilon)`$ covers $`[a, b]`$ and has length $`b - a + 2\varepsilon`$. For the fence with $`\varepsilon`$ = 0.001, the cover (−0.001, 3.001) totals 3.002 m. Every $`\varepsilon`$ works, so $`\lambda^*([a, b]) \le b - a`$.
 
-**At least $b - a$.** Take any cover of $[a, b]$ by open intervals. Two facts finish it.
+**At least $`b - a`$.** Take any cover of $`[a, b]`$ by open intervals. Two facts finish it.
 
-1. *Finitely many of the intervals already cover $[a, b]$.* This is the finite-subcover property of a closed, bounded interval, often called the Heine–Borel theorem. It fails for the rationals in [0, 1], and that failure is exactly why they can be cheap.
-2. *Finitely many open intervals covering $[a, b]$ total more than $b - a$.* From $a$, take the interval reaching furthest right; from its right end, which it leaves out, take the next; and so on past $b$. Each link starts before the last one ends, so the chain's lengths exceed $b - a$.
+1. *Finitely many of the intervals already cover $`[a, b]`$.* This is the finite-subcover property of a closed, bounded interval, often called the Heine–Borel theorem. It fails for the rationals in [0, 1], and that failure is exactly why they can be cheap.
+2. *Finitely many open intervals covering $`[a, b]`$ total more than $`b - a`$.* From $`a`$, take the interval reaching furthest right; from its right end, which it leaves out, take the next; and so on past $`b`$. Each link starts before the last one ends, so the chain's lengths exceed $`b - a`$.
 
-In the picture the chain is (−0.2, 1.1), (0.8, 1.9), (1.5, 2.6), (2.4, 3.3), totalling 4.4 m, with (1, 1.4) skipped. Every cover totals more than $b - a$, so the infimum is at least $b - a$.
+In the picture the chain is (−0.2, 1.1), (0.8, 1.9), (1.5, 2.6), (2.4, 3.3), totalling 4.4 m, with (1, 1.4) skipped. Every cover totals more than $`b - a`$, so the infimum is at least $`b - a`$.
 
 <details>
 <summary>Detailed proof: the finite-subcover step</summary>
 
-Let $I_1, I_2, \dots$ be open intervals covering $[a, b]$. Call a point $x$ of $[a, b]$ *reachable* if $[a, x]$ is covered by finitely many of the $I_k$. The point $a$ is reachable: it lies in some $I_k$. Reachable points are bounded above by $b$, so they have a supremum $s$, with $a \le s \le b$ (completeness, [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)).
+Let $`I_1, I_2, \dots`$ be open intervals covering $`[a, b]`$. Call a point $`x`$ of $`[a, b]`$ *reachable* if $`[a, x]`$ is covered by finitely many of the $`I_k`$. The point $`a`$ is reachable: it lies in some $`I_k`$. Reachable points are bounded above by $`b`$, so they have a supremum $`s`$, with $`a \le s \le b`$ (completeness, [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)).
 
-The point $s$ lies in $[a, b]$, so in one of the intervals, say $(c, d)$, with $c < s < d$. Since $s$ is the least upper bound, some reachable $x$ has $c < x \le s$. Finitely many intervals cover $[a, x]$; add $(c, d)$ and they cover $[a, y]$ for every $y$ in $[a, b]$ with $y < d$.
+The point $`s`$ lies in $`[a, b]`$, so in one of the intervals, say $`(c, d)`$, with $`c < s < d`$. Since $`s`$ is the least upper bound, some reachable $`x`$ has $`c < x \le s`$. Finitely many intervals cover $`[a, x]`$; add $`(c, d)`$ and they cover $`[a, y]`$ for every $`y`$ in $`[a, b]`$ with $`y < d`$.
 
-If $s < b$, pick $y$ with $s < y < \min(d, b)$: $y$ is reachable and larger than $s$, a contradiction. So $s = b$, and taking $y = b$ (allowed, since $b = s < d$) shows $[a, b]$ is covered by finitely many intervals.
+If $`s < b`$, pick $`y`$ with $`s < y < \min(d, b)`$: $`y`$ is reachable and larger than $`s`$, a contradiction. So $`s = b`$, and taking $`y = b`$ (allowed, since $`b = s < d`$) shows $`[a, b]`$ is covered by finitely many intervals.
 
 </details>
 
 <details>
 <summary>Detailed proof: finitely many open intervals covering [a, b] total more than b − a</summary>
 
-Induction on the number $n$ of intervals. With $n = 1$, one interval $(c, d)$ contains $[a, b]$, so $c < a$ and $d > b$, and $d - c > b - a$.
+Induction on the number $`n`$ of intervals. With $`n = 1`$, one interval $`(c, d)`$ contains $`[a, b]`$, so $`c < a`$ and $`d > b`$, and $`d - c > b - a`$.
 
-Suppose it holds for every cover by $n - 1$ intervals, and let $n$ open intervals cover $[a, b]$. The point $a$ lies in one of them, $(c_1, d_1)$, with $c_1 < a < d_1$. If $d_1 > b$, that interval alone has length $d_1 - c_1 > b - a$. Otherwise $a < d_1 \le b$. No point of $[d_1, b]$ lies in $(c_1, d_1)$, so the other $n - 1$ intervals cover $[d_1, b]$, and by the induction hypothesis their lengths total more than $b - d_1$. Adding: total $> (b - d_1) + (d_1 - c_1) = b - c_1 > b - a$.
+Suppose it holds for every cover by $`n - 1`$ intervals, and let $`n`$ open intervals cover $`[a, b]`$. The point $`a`$ lies in one of them, $`(c_1, d_1)`$, with $`c_1 < a < d_1`$. If $`d_1 > b`$, that interval alone has length $`d_1 - c_1 > b - a`$. Otherwise $`a < d_1 \le b`$. No point of $`[d_1, b]`$ lies in $`(c_1, d_1)`$, so the other $`n - 1`$ intervals cover $`[d_1, b]`$, and by the induction hypothesis their lengths total more than $`b - d_1`$. Adding: total $`> (b - d_1) + (d_1 - c_1) = b - c_1 > b - a`$.
 
 </details>
 
-**Other intervals.** An open or half-open interval from $a$ to $b$ sits between $[a + \varepsilon, b - \varepsilon]$ and $[a, b]$, so by Step 2 its outer measure lies between $b - a - 2\varepsilon$ and $b - a$, hence equals $b - a$. An interval running to infinity contains closed intervals of every length, so its outer measure is infinite.
+**Other intervals.** An open or half-open interval from $`a`$ to $`b`$ sits between $`[a + \varepsilon, b - \varepsilon]`$ and $`[a, b]`$, so by Step 2 its outer measure lies between $`b - a - 2\varepsilon`$ and $`b - a`$, hence equals $`b - a`$. An interval running to infinity contains closed intervals of every length, so its outer measure is infinite.
 
 The code checks instances: the covers above, and 1,292 random covers of the fence, each totalling more than 3. Only the proof reaches every cover, endless lists included.
 
-A second road to the same outer measure starts from length on half-open intervals and extends it by a general theorem; that is [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md). Using closed or half-open intervals in the cover, in place of open ones, gives the same numbers: each can be swapped for a slightly longer open interval at a cost of $\varepsilon/2^k$.
+A second road to the same outer measure starts from length on half-open intervals and extends it by a general theorem; that is [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md). Using closed or half-open intervals in the cover, in place of open ones, gives the same numbers: each can be swapped for a slightly longer open interval at a cost of $`\varepsilon/2^k`$.
 
 ---
 
@@ -558,9 +562,9 @@ The two outputs match line for line.
 Lean proves the theorems of Steps 1 to 4 for every set and every bounded interval, and checks the worked numbers.
 
 - Outer measure is defined by the card's formula: the infimum of the totals of all covers by a list of open intervals.
-- Suppose $A \subseteq B$. Then $\lambda^*(A) \le \lambda^*(B)$.
-- Take any list of sets $A_1, A_2, \dots$. Then the outer measure of their union is at most the sum of their outer measures.
-- Take any numbers $a \le b$. Then $[a, b]$, $(a, b)$ and the two half-open intervals between them all have outer measure $b - a$.
+- Suppose $`A \subseteq B`$. Then $`\lambda^*(A) \le \lambda^*(B)`$.
+- Take any list of sets $`A_1, A_2, \dots`$. Then the outer measure of their union is at most the sum of their outer measures.
+- Take any numbers $`a \le b`$. Then $`[a, b]`$, $`(a, b)`$ and the two half-open intervals between them all have outer measure $`b - a`$.
 - A point, a finite set and every countable set, such as the rationals in [0, 1], each have outer measure 0.
 - The fence [0, 3] with its 100 rust spots taken out has outer measure exactly 3.
 - The cover (−0.001, 3.001) totals 3.002 m, and the gap cover totals 3.001 m.
@@ -736,7 +740,7 @@ example : ((2 : ℤ) - 0) + (3 - 1) = 4 ∧ (3 : ℤ) - 0 = 3 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading outer measure as a measure.** It is defined for every set and it is subadditive, but it is not additive: two sets with no common point can have outer measures summing to more than their union's. The sets where it does add up are picked out on [Caratheodory's criterion](02-caratheodory-measurable-sets.md), and on them it becomes Lebesgue measure $\lambda$.
+> **Reading outer measure as a measure.** It is defined for every set and it is subadditive, but it is not additive: two sets with no common point can have outer measures summing to more than their union's. The sets where it does add up are picked out on [Caratheodory's criterion](02-caratheodory-measurable-sets.md), and on them it becomes Lebesgue measure $`\lambda`$.
 >
 > - **Finite covers only.** That is an older notion, Jordan content, and it gives the rationals in [0, 1] size 1, not 0.
 > - **Size 0 means few points.** Outer measure 0 is about length, not count. Countable sets have it, but so do some uncountable sets: [The Cantor set](07-the-cantor-set.md).
@@ -760,7 +764,7 @@ example : ((2 : ℤ) - 0) + (3 - 1) = 4 ∧ (3 : ℤ) - 0 = 3 := by norm_num
 ## What this builds on
 
 - [Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md): the idea of a set of size zero, which this card makes precise on the line.
-- [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): the geometric series behind every $\varepsilon/2^k$ cover, and a series' sum as the limit of its partial sums.
+- [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): the geometric series behind every $`\varepsilon/2^k`$ cover, and a series' sum as the limit of its partial sums.
 - [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the infimum in the definition, and the supremum in the finite-subcover proof.
 
 ## Where this goes next

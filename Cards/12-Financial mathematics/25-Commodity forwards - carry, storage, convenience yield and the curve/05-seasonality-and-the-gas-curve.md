@@ -36,47 +36,53 @@ Orange: the quoted strip. Green: the fitted level-times-cosine curve. The fit fo
 
 ## The formula
 
-Two formulas, one for each question. Notation first, in words. Time $t$ is measured in years from 1 April, so July delivery is $t = 0.25$ and January is $t = 0.75$. The cosine of an angle (the horizontal coordinate of a point that far round a circle of radius 1) repeats every full turn, and a full turn is 2π radians, so 2π times a time in years turns once per year.
+Two formulas, one for each question. Notation first, in words. Time $`t`$ is measured in years from 1 April, so July delivery is $`t = 0.25`$ and January is $`t = 0.75`$. The cosine of an angle (the horizontal coordinate of a point that far round a circle of radius 1) repeats every full turn, and a full turn is 2π radians, so 2π times a time in years turns once per year.
 
 **The shape.**
 
-$$F(t) = L\, e^{\beta \cos(2\pi (t - t_0))}$$
+```math
+F(t) = L\, e^{\beta \cos(2\pi (t - t_0))}
+```
 
 **Read it aloud:** the forward for delivery at time t is a level, stretched up by as much as a factor e to the beta at the peak date and squeezed down by the same factor half a year away.
 
 Taking logs turns it into a sum, and expanding the cosine of a difference makes it a straight-line fit:
 
-$$\ln F(t) = a + A\cos(2\pi t) + B\sin(2\pi t), \qquad \beta = \sqrt{A^2 + B^2}, \qquad 2\pi t_0 = \text{the angle whose cosine and sine are } A/\beta,\ B/\beta.$$
+```math
+\ln F(t) = a + A\cos(2\pi t) + B\sin(2\pi t), \qquad \beta = \sqrt{A^2 + B^2}, \qquad 2\pi t_0 = \text{the angle whose cosine and sine are } A/\beta,\ B/\beta.
+```
 
 **The bound.**
 
-$$F_w - F_s \;\le\; c + F_s\,(e^{r\tau} - 1)$$
+```math
+F_w - F_s \;\le\; c + F_s\,(e^{r\tau} - 1)
+```
 
 **Read it aloud:** winter can sit above summer by at most the cost of storing the gas plus the interest on the money paid for it in summer.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F(t)$ | the forward price today for gas delivered at time $t$ | $2.50 July, $3.50 January | — |
-| $t$, $m$ | delivery date in years after 1 April; $m$ counts months from 0 (April) to 11 (March), so $t = m/12$ | 0.25 July, 0.75 January | — |
-| $L$ | the **level**: the curve's typical price, with the season taken out | $2.85 | every month rises in proportion |
-| $\beta$ | the **amplitude**: how far the log price swings above and below the level. Say "beta". | 0.168 | winter higher, summer lower, spread wider |
-| $t_0$ | the **peak date**, where the shape is highest | 0.743, within three days of the January slot | the hump slides later in the year |
-| $a$, $A$, $B$ | the three numbers the fit finds: the log of the level, and the cosine and sine parts of the swing | 1.049, −0.0074, −0.167 | — |
-| $F_s$ | the summer (July) forward | $2.50 | the cap rises by the extra interest |
-| $F_w$ | the winter (January) forward | $3.50 | the storage trade earns more |
-| $c$ | **all-in storage cost**: injection (pumping in), space for the season, withdrawal (pumping out), paid in January | $0.60: space $0.50, pumping $0.05 each way | the cap rises dollar for dollar |
-| $r$ | the interest rate, continuously compounded | 5% | the cap rises |
-| $\tau$ | time from summer to winter delivery. Say "tau". | 0.5 years | the cap rises |
-| $e^{r\tau}$ | what $1 borrowed in July has grown to by January | 1.0253 | — |
+| $`F(t)`$ | the forward price today for gas delivered at time $`t`$ | $2.50 July, $3.50 January | — |
+| $`t`$, $`m`$ | delivery date in years after 1 April; $`m`$ counts months from 0 (April) to 11 (March), so $`t = m/12`$ | 0.25 July, 0.75 January | — |
+| $`L`$ | the **level**: the curve's typical price, with the season taken out | $2.85 | every month rises in proportion |
+| $`\beta`$ | the **amplitude**: how far the log price swings above and below the level. Say "beta". | 0.168 | winter higher, summer lower, spread wider |
+| $`t_0`$ | the **peak date**, where the shape is highest | 0.743, within three days of the January slot | the hump slides later in the year |
+| $`a`$, $`A`$, $`B`$ | the three numbers the fit finds: the log of the level, and the cosine and sine parts of the swing | 1.049, −0.0074, −0.167 | — |
+| $`F_s`$ | the summer (July) forward | $2.50 | the cap rises by the extra interest |
+| $`F_w`$ | the winter (January) forward | $3.50 | the storage trade earns more |
+| $`c`$ | **all-in storage cost**: injection (pumping in), space for the season, withdrawal (pumping out), paid in January | $0.60: space $0.50, pumping $0.05 each way | the cap rises dollar for dollar |
+| $`r`$ | the interest rate, continuously compounded | 5% | the cap rises |
+| $`\tau`$ | time from summer to winter delivery. Say "tau". | 0.5 years | the cap rises |
+| $`e^{r\tau}`$ | what $1 borrowed in July has grown to by January | 1.0253 | — |
 
-The pair $A$, $B$ and the pair $\beta$, $2\pi t_0$ are the same information in two forms. $A$ and $B$ are the two legs of a right triangle, $\beta$ is its hypotenuse and $2\pi t_0$ is its angle ([Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). The legs are easy to fit. The hypotenuse and angle are easy to read.
+The pair $`A`$, $`B`$ and the pair $`\beta`$, $`2\pi t_0`$ are the same information in two forms. $`A`$ and $`B`$ are the two legs of a right triangle, $`\beta`$ is its hypotenuse and $`2\pi t_0`$ is its angle ([Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). The legs are easy to fit. The hypotenuse and angle are easy to read.
 
 ### When it holds
 
-- **The shape is deterministic and repeats yearly.** Weather, not the calendar, drives demand. A mild winter shrinks the hump that year, and a single fixed $\beta$ cannot follow it; refit the shape from each day's strip.
+- **The shape is deterministic and repeats yearly.** Weather, not the calendar, drives demand. A mild winter shrinks the hump that year, and a single fixed $`\beta`$ cannot follow it; refit the shape from each day's strip.
 - **One cosine is enough.** Real gas has a flat summer and a sharp winter, and one cosine misses April and October by 13 cents here. A second cosine turning twice a year fixes most of that; the bound below does not use the shape at all.
-- **Storage can be bought at the stated cost.** The cap is $c$ plus interest only for someone with access to space at $c$. When every cavern is full, the next MMBtu of space costs more and the cap rises with it.
-- **Money can be borrowed and lent at $r$.** A trader who funds at 10% faces a cap of $0.73, not $0.66.
+- **Storage can be bought at the stated cost.** The cap is $`c`$ plus interest only for someone with access to space at $`c`$. When every cavern is full, the next MMBtu of space costs more and the cap rises with it.
+- **Money can be borrowed and lent at $`r`$.** A trader who funds at 10% faces a cap of $0.73, not $0.66.
 - **The bound needs no model.** It holds whatever shape the curve has, as long as the storage and funding costs are right.
 
 ---
@@ -91,19 +97,23 @@ A forward contract fixes a price today for delivery later. Storage turns a July 
 
 On 1 April, with no money changing hands:
 
-1. Agree to buy gas for July delivery at $F_s$ = $2.50.
-2. Agree to sell the same gas for January delivery at $F_w$ = $3.50.
-3. Lease storage space for the season at an all-in $c$ = $0.60, payable in January.
+1. Agree to buy gas for July delivery at $`F_s`$ = $2.50.
+2. Agree to sell the same gas for January delivery at $`F_w`$ = $3.50.
+3. Lease storage space for the season at an all-in $`c`$ = $0.60, payable in January.
 
 In July, borrow $2.50, take the gas and pump it in. In January, pump it out, deliver it, collect $3.50, repay the loan with interest and pay the storage bill. Every amount was fixed on 1 April. What is left in January is
 
-$$F_w - F_s\,e^{r\tau} - c = 3.50 - 2.5633 - 0.60 = 0.3367.$$
+```math
+F_w - F_s\,e^{r\tau} - c = 3.50 - 2.5633 - 0.60 = 0.3367.
+```
 
 ### Step 2: no free money means the leftover cannot be positive
 
-The trade costs nothing on 1 April and carries no risk after: every price, fee and rate was locked. A positive leftover is money from nothing. Storage owners would run the trade until buying July pushed its forward up and selling January pushed its forward down. So in a market without such gifts, $F_w - F_s e^{r\tau} - c \le 0$, which rearranges to the bound:
+The trade costs nothing on 1 April and carries no risk after: every price, fee and rate was locked. A positive leftover is money from nothing. Storage owners would run the trade until buying July pushed its forward up and selling January pushed its forward down. So in a market without such gifts, $`F_w - F_s e^{r\tau} - c \le 0`$, which rearranges to the bound:
 
-$$F_w - F_s \le c + F_s\,(e^{r\tau} - 1) = 0.60 + 0.0633 = 0.6633.$$
+```math
+F_w - F_s \le c + F_s\,(e^{r\tau} - 1) = 0.60 + 0.0633 = 0.6633.
+```
 
 The second road to the same number makes no rearrangement. It values the trade's cash flows from 1 April, paying $2.50 discounted from July and receiving the January price less the fee discounted from January, and searches by halving intervals for the January price at which that value is exactly zero. The search lands on $3.1633, a spread of $0.6633, matching the formula to nine decimals.
 
@@ -115,38 +125,42 @@ So nothing pins the spread from below. It can sit at $0.30, at zero, or below ze
 
 ### Step 4: why a level times a shape
 
-Seasonal premiums scale with price. When gas is $5, the winter premium is a larger number of dollars than when gas is $2.50, because the same cold snap bids up a dearer fuel. A multiplicative shape captures that: every month is the level times a factor that depends only on the calendar. Logs turn the product into a sum, $\ln F = \ln L + \beta\cos(2\pi(t - t_0))$.
+Seasonal premiums scale with price. When gas is $5, the winter premium is a larger number of dollars than when gas is $2.50, because the same cold snap bids up a dearer fuel. A multiplicative shape captures that: every month is the level times a factor that depends only on the calendar. Logs turn the product into a sum, $`\ln F = \ln L + \beta\cos(2\pi(t - t_0))`$.
 
 The cosine of a difference splits into two pieces ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)):
 
-$$\beta\cos(2\pi t - 2\pi t_0) = \underbrace{\beta\cos(2\pi t_0)}_{A}\cos(2\pi t) + \underbrace{\beta\sin(2\pi t_0)}_{B}\sin(2\pi t).$$
+```math
+\beta\cos(2\pi t - 2\pi t_0) = \underbrace{\beta\cos(2\pi t_0)}_{A}\cos(2\pi t) + \underbrace{\beta\sin(2\pi t_0)}_{B}\sin(2\pi t).
+```
 
-The unknowns $A$ and $B$ now sit outside the cosine and sine, multiplying known numbers. Fitting them is a straight-line fit with two slopes, solved by least squares: choose $a$, $A$ and $B$ to make the sum of squared misses in the log prices as small as possible.
+The unknowns $`A`$ and $`B`$ now sit outside the cosine and sine, multiplying known numbers. Fitting them is a straight-line fit with two slopes, solved by least squares: choose $`a`$, $`A`$ and $`B`$ to make the sum of squared misses in the log prices as small as possible.
 
 ### Step 5: twelve evenly spaced months make the fit a set of averages
 
 For monthly points spread evenly round the year, the cosine column, the sine column and the constant column are **orthogonal**: the sum of the products of any two different columns is zero. Least squares then splits into three separate problems, one per column, and each answer is an average:
 
-$$a = \tfrac{1}{12}\sum_m \ln F_m, \qquad A = \tfrac{2}{12}\sum_m \ln F_m \cos(2\pi m/12), \qquad B = \tfrac{2}{12}\sum_m \ln F_m \sin(2\pi m/12).$$
+```math
+a = \tfrac{1}{12}\sum_m \ln F_m, \qquad A = \tfrac{2}{12}\sum_m \ln F_m \cos(2\pi m/12), \qquad B = \tfrac{2}{12}\sum_m \ln F_m \sin(2\pi m/12).
+```
 
-Here $m$ runs over the months 0 (April) to 11 (March). For this strip, $a = 1.049048$, so the level is $e^{1.049} = 2.85$. $A = -0.0074$ and $B = -0.1674$. The hypotenuse is $\beta = 0.1676$. The angle lands at $t_0 = 0.743$ years, 8.92 months after 1 April: the January slot, within three days.
+Here $`m`$ runs over the months 0 (April) to 11 (March). For this strip, $`a = 1.049048`$, so the level is $`e^{1.049} = 2.85`$. $`A = -0.0074`$ and $`B = -0.1674`$. The hypotenuse is $`\beta = 0.1676`$. The angle lands at $`t_0 = 0.743`$ years, 8.92 months after 1 April: the January slot, within three days.
 
 <details>
 <summary>Detailed proof: why the three columns are orthogonal over twelve months</summary>
 
-Write $\theta_m = 2\pi m/12$ for $m = 0, \dots, 11$. These are twelve angles evenly spaced round a full turn.
+Write $`\theta_m = 2\pi m/12`$ for $`m = 0, \dots, 11`$. These are twelve angles evenly spaced round a full turn.
 
-1. **Sum of cosines and of sines is zero.** The twelve points $(\cos\theta_m, \sin\theta_m)$ sit at the corners of a regular twelve-sided shape centred on the origin. Turning the shape by one step, $2\pi/12$, maps it onto itself, so it also maps the sum of the twelve points onto itself. The only point that a turn leaves fixed is the origin. So $\sum\cos\theta_m = 0$ and $\sum\sin\theta_m = 0$: the constant column is orthogonal to both others.
-2. **Sum of cosine times sine is zero.** $\cos\theta\sin\theta = \tfrac12\sin 2\theta$, and the angles $2\theta_m$ are six evenly spaced angles visited twice, so by part 1 their sines sum to zero.
-3. **Sum of squares is six.** $\cos^2\theta = \tfrac12(1 + \cos 2\theta)$. Summing, the cosines of $2\theta_m$ vanish by the same argument, leaving $\tfrac12 \times 12 = 6$. The sine squares also sum to 6.
+1. **Sum of cosines and of sines is zero.** The twelve points $`(\cos\theta_m, \sin\theta_m)`$ sit at the corners of a regular twelve-sided shape centred on the origin. Turning the shape by one step, $`2\pi/12`$, maps it onto itself, so it also maps the sum of the twelve points onto itself. The only point that a turn leaves fixed is the origin. So $`\sum\cos\theta_m = 0`$ and $`\sum\sin\theta_m = 0`$: the constant column is orthogonal to both others.
+2. **Sum of cosine times sine is zero.** $`\cos\theta\sin\theta = \tfrac12\sin 2\theta`$, and the angles $`2\theta_m`$ are six evenly spaced angles visited twice, so by part 1 their sines sum to zero.
+3. **Sum of squares is six.** $`\cos^2\theta = \tfrac12(1 + \cos 2\theta)`$. Summing, the cosines of $`2\theta_m`$ vanish by the same argument, leaving $`\tfrac12 \times 12 = 6`$. The sine squares also sum to 6.
 
-With these, the least-squares equations have off-diagonal entries of zero and diagonal entries 12, 6 and 6. Each equation then solves alone: $12a = \sum \ln F_m$, $6A = \sum \ln F_m\cos\theta_m$, $6B = \sum \ln F_m \sin\theta_m$. These are the averages of Step 5. The code solves the full three-by-three system by elimination as well, without using orthogonality, and gets the same numbers to twelve decimals.
+With these, the least-squares equations have off-diagonal entries of zero and diagonal entries 12, 6 and 6. Each equation then solves alone: $`12a = \sum \ln F_m`$, $`6A = \sum \ln F_m\cos\theta_m`$, $`6B = \sum \ln F_m \sin\theta_m`$. These are the averages of Step 5. The code solves the full three-by-three system by elimination as well, without using orthogonality, and gets the same numbers to twelve decimals.
 
 </details>
 
 ### Step 6: the level moves, the shape stays
 
-A cold forecast lifts the whole strip. In this model, that is a change in $L$ with $\beta$ and $t_0$ fixed. The spread is then $L$ times the gap between the winter and summer factors, so it grows in proportion to the level. The cap does not: $c$ is a fee in dollars, and only the interest term grows with the July price. Lift the level by 20% and the $1.00 spread becomes $1.20 while the cap moves from $0.6633 to only $0.6759; the locked profit rises from $0.3367 to $0.5241. High prices make storage worth more.
+A cold forecast lifts the whole strip. In this model, that is a change in $`L`$ with $`\beta`$ and $`t_0`$ fixed. The spread is then $`L`$ times the gap between the winter and summer factors, so it grows in proportion to the level. The cap does not: $`c`$ is a fee in dollars, and only the interest term grows with the July price. Lift the level by 20% and the $1.00 spread becomes $1.20 while the cap moves from $0.6633 to only $0.6759; the locked profit rises from $0.3367 to $0.5241. High prices make storage worth more.
 
 The alternative road to a curve's shape starts from the spot price instead: a spot that is pulled back toward a seasonal mean produces a forward curve with the same hump, damped at long dates ([A spot price that reverts](06-mean-reverting-spot-and-the-futures-curve.md)).
 
@@ -158,26 +172,26 @@ July $2.50, January $3.50, storage $0.60 all-in paid in January, interest 5%, si
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| growth of $1 from July to January | $e^{0.05 \times 0.5}$ | 1.0253 |
-| interest on the July gas | $2.50 \times 0.0253$ | $0.0633 |
-| **cap on the spread** | $0.60 + 0.0633$ | **$0.6633** |
-| January break-even price | $2.50 + 0.6633$ | $3.1633 |
-| quoted spread | $3.50 − 2.50$ | $1.00 |
-| profit locked for January | $3.50 − 2.5633 − 0.60$ | **$0.3367** |
-| the same profit valued on 1 April | $0.3367 \times e^{-0.05 \times 0.75}$ | $0.3243 |
-| on a million MMBtu of space | $0.3367 \times 1{,}000{,}000$ | $336,712 |
-| low case, January at $2.80 | $2.80 − 2.5633 − 0.60$ | −$0.3633: no trade |
+| growth of $1 from July to January | $`e^{0.05 \times 0.5}`$ | 1.0253 |
+| interest on the July gas | $`2.50 \times 0.0253`$ | $0.0633 |
+| **cap on the spread** | $`0.60 + 0.0633`$ | **$0.6633** |
+| January break-even price | $`2.50 + 0.6633`$ | $3.1633 |
+| quoted spread | $`3.50 − 2.50`$ | $1.00 |
+| profit locked for January | $`3.50 − 2.5633 − 0.60`$ | **$0.3367** |
+| the same profit valued on 1 April | $`0.3367 \times e^{-0.05 \times 0.75}`$ | $0.3243 |
+| on a million MMBtu of space | $`0.3367 \times 1{,}000{,}000`$ | $336,712 |
+| low case, January at $2.80 | $`2.80 − 2.5633 − 0.60`$ | −$0.3633: no trade |
 
 The shape, from the same strip:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| mean log price, $a$ | average of the twelve logs | 1.0490 |
-| level, $L$ | $e^{1.0490}$ | $2.8549 |
-| amplitude, $\beta$ | $\sqrt{0.0074^2 + 0.1674^2}$ | 0.1676 |
-| peak date, $t_0$ | angle of the triangle, over one full turn | 0.743 years |
-| peak-to-trough ratio | $e^{2 \times 0.1676}$ | 1.398 |
-| fitted July to January spread | $3.38 − 2.41$ | $0.9605 |
+| mean log price, $`a`$ | average of the twelve logs | 1.0490 |
+| level, $`L`$ | $`e^{1.0490}`$ | $2.8549 |
+| amplitude, $`\beta`$ | $`\sqrt{0.0074^2 + 0.1674^2}`$ | 0.1676 |
+| peak date, $`t_0`$ | angle of the triangle, over one full turn | 0.743 years |
+| peak-to-trough ratio | $`e^{2 \times 0.1676}`$ | 1.398 |
+| fitted July to January spread | $`3.38 − 2.41`$ | $0.9605 |
 
 A storage owner with a million MMBtu of space who sees this strip on 1 April locks $336,712 for January, $0.3243 per MMBtu in today's money, with no view on the weather. At a $0.30 spread the same owner leaves the cavern empty; nobody else can profit either.
 
@@ -565,11 +579,11 @@ The two outputs agree line for line at the printed precision.
 
 Lean proves the card's main claims for every rate, storage cost, price and date, not just the July and January example.
 
-- Take any July price, storage cost, rate and delivery dates, and let the cap be $c + F_s\,(e^{r\tau} - 1)$. Then the storage trade is worth nothing or less on 1 April exactly when the spread is at most the cap.
-- Take the same inputs and any level $M$, however low. Then some January price puts the spread below $M$ while the storage trade still loses or breaks even.
-- Take a level $L > 0$, an amplitude $\beta$ and a peak date $t_0$. Then the shape $F(t)$ equals $e$ to the power $a + A\cos(2\pi t) + B\sin(2\pi t)$. Here $a = \ln L$, $A = \beta\cos(2\pi t_0)$ and $B = \beta\sin(2\pi t_0)$.
-- Take $\beta \ge 0$ as well. Then $\beta = \sqrt{A^2 + B^2}$: the amplitude is the hypotenuse of the triangle with legs $A$ and $B$.
-- Take the twelve months $m = 0, \dots, 11$ and $\theta_m = 2\pi m/12$. Then the cosines, the sines and the cosine-times-sine products each sum to zero.
+- Take any July price, storage cost, rate and delivery dates, and let the cap be $`c + F_s\,(e^{r\tau} - 1)`$. Then the storage trade is worth nothing or less on 1 April exactly when the spread is at most the cap.
+- Take the same inputs and any level $`M`$, however low. Then some January price puts the spread below $`M`$ while the storage trade still loses or breaks even.
+- Take a level $`L > 0`$, an amplitude $`\beta`$ and a peak date $`t_0`$. Then the shape $`F(t)`$ equals $`e`$ to the power $`a + A\cos(2\pi t) + B\sin(2\pi t)`$. Here $`a = \ln L`$, $`A = \beta\cos(2\pi t_0)`$ and $`B = \beta\sin(2\pi t_0)`$.
+- Take $`\beta \ge 0`$ as well. Then $`\beta = \sqrt{A^2 + B^2}`$: the amplitude is the hypotenuse of the triangle with legs $`A`$ and $`B`$.
+- Take the twelve months $`m = 0, \dots, 11`$ and $`\theta_m = 2\pi m/12`$. Then the cosines, the sines and the cosine-times-sine products each sum to zero.
 - Take the same twelve months. Then the squared cosines sum to 6, and so do the squared sines. These are the sums the detailed proof in Step 5 uses.
 - Take the card's quotes. Then the all-in storage cost is $0.60, the quoted spreads are $1.00 and $0.30, and a 20% lift makes $1.20.
 
@@ -794,8 +808,8 @@ Orange: the storage trade's January profit if run regardless. Green: its value t
 
 - [Contango and backwardation](04-contango-backwardation-and-roll-yield.md): the words for a curve that rises or falls with delivery date, which this card bends into a yearly hump.
 - [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md): the one-sided ceiling that storage puts on a forward, here applied between two future dates.
-- [Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md): cosine, sine and the triangle whose legs are $A$ and $B$ and whose hypotenuse is $\beta$.
-- [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the best fit by smallest sum of squared misses, which fit road 2 solves for $a$, $A$ and $B$ without using orthogonality.
+- [Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md): cosine, sine and the triangle whose legs are $`A`$ and $`B`$ and whose hypotenuse is $`\beta`$.
+- [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the best fit by smallest sum of squared misses, which fit road 2 solves for $`a`$, $`A`$ and $`B`$ without using orthogonality.
 
 ## Where this goes next
 

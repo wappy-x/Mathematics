@@ -26,40 +26,46 @@ Scale 1 m = 50 units. The height runs down the dashed centre line, square to the
 
 ## The formula
 
-$V$ is the volume; $B$ the base's area; $h$ the height, measured square on (at a right angle) from base to tip; $\pi$, as on [Circles](01-circle-circumference-and-area.md), a circle's circumference over its diameter.
+$`V`$ is the volume; $`B`$ the base's area; $`h`$ the height, measured square on (at a right angle) from base to tip; $`\pi`$, as on [Circles](01-circle-circumference-and-area.md), a circle's circumference over its diameter.
 
-$$V = \tfrac13\,B\,h$$
+```math
+V = \tfrac13\,B\,h
+```
 
 **Read it aloud:** a pyramid or cone holds one third of its base area times its height.
 
-A cone on a circle of radius $r$ has $B = \pi r^2$. Its slant $\ell$, rim to tip along the wall, comes from Pythagoras ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)); $S$ is the wall's area:
+A cone on a circle of radius $`r`$ has $`B = \pi r^2`$. Its slant $`\ell`$, rim to tip along the wall, comes from Pythagoras ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)); $`S`$ is the wall's area:
 
-$$V = \tfrac13\,\pi r^2 h, \qquad \ell = \sqrt{r^2 + h^2}, \qquad S = \pi r \ell$$
+```math
+V = \tfrac13\,\pi r^2 h, \qquad \ell = \sqrt{r^2 + h^2}, \qquad S = \pi r \ell
+```
 
 **Read it aloud:** a cone holds a third of the cylinder on its rim; its wall is pi times radius times slant.
 
-For a ball of radius $r$, $S$ is the skin's area:
+For a ball of radius $`r`$, $`S`$ is the skin's area:
 
-$$V = \tfrac43\,\pi r^3, \qquad S = 4\pi r^2$$
+```math
+V = \tfrac43\,\pi r^3, \qquad S = 4\pi r^2
+```
 
 **Read it aloud:** a ball holds four thirds of pi r cubed; its skin is four of its widest circles.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | volume | 0.785398; ball 4.188790 m^3 | — |
-| $B$ | base area | 3.141593 m^2 | rises in step |
-| $h$ | height, square on | 0.75 m | rises in step |
-| $r$ | radius, rim or ball | 1 m | cone volume by its square, ball by its cube |
-| $\ell$ | slant along the wall | 1.25 m | steel rises in step |
-| $S$ | curved area: wall, or skin | 3.926991; 12.566371 m^2 | — |
-| $\pi$ | circumference over diameter | 3.141593 | fixed |
-| $z$ | a slice's height above the tip, or the ball's middle | 0.6 m, Step 5 | — |
+| $`V`$ | volume | 0.785398; ball 4.188790 m^3 | — |
+| $`B`$ | base area | 3.141593 m^2 | rises in step |
+| $`h`$ | height, square on | 0.75 m | rises in step |
+| $`r`$ | radius, rim or ball | 1 m | cone volume by its square, ball by its cube |
+| $`\ell`$ | slant along the wall | 1.25 m | steel rises in step |
+| $`S`$ | curved area: wall, or skin | 3.926991; 12.566371 m^2 | — |
+| $`\pi`$ | circumference over diameter | 3.141593 | fixed |
+| $`z`$ | a slice's height above the tip, or the ball's middle | 0.6 m, Step 5 | — |
 
 ### When it holds
 
 - **Straight sides to one tip.** A curved bowl does not obey it.
-- **Height square on.** The slant as height gives 1.308997. A leaning cone keeps $\tfrac13 B h$.
-- **A right cone for the wall**: tip above the rim's centre. Tilt it and the slant varies round the rim, so $\pi r \ell$ fails. A lid adds $\pi r^2$.
+- **Height square on.** The slant as height gives 1.308997. A leaning cone keeps $`\tfrac13 B h`$.
+- **A right cone for the wall**: tip above the rim's centre. Tilt it and the slant varies round the rim, so $`\pi r \ell`$ fails. A lid adds $`\pi r^2`$.
 - **A true sphere**, all of it one distance from the centre. An egg obeys neither formula.
 
 ---
@@ -97,23 +103,23 @@ Squash the cube to 0.75 m tall: piece 3 becomes a pyramid on a 1 m square, 0.75 
 
 ### Step 3: from a square base to the round rim
 
-At height $z$ above the tip, measured square on, a slice of any pyramid or cone is its base shrunk to $z/h$ in every width ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Its area is $B$ times $(z/h)^2$, one factor for each level direction. The square pyramid and the hopper share $B$ and $h$, so their slices match at every level: by Cavalieri the hopper holds 0.785398 cubic metres. Neither the base's shape nor the tip's position entered, so every pyramid and cone holds $\tfrac13 B h$.
+At height $`z`$ above the tip, measured square on, a slice of any pyramid or cone is its base shrunk to $`z/h`$ in every width ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Its area is $`B`$ times $`(z/h)^2`$, one factor for each level direction. The square pyramid and the hopper share $`B`$ and $`h`$, so their slices match at every level: by Cavalieri the hopper holds 0.785398 cubic metres. Neither the base's shape nor the tip's position entered, so every pyramid and cone holds $`\tfrac13 B h`$.
 
 Stacks of thin cylinders inside and outside trap it: 1000 layers give 0.784220 to 0.786577 cubic metres.
 
 ### Step 4: the hopper's steel, unrolled
 
-Cut the wall from rim to tip and lay it flat: a sector, a slice of a disc cut from its centre ([Radians](02-radians-arcs-and-sectors.md)). Its radius is the slant, 1.25 m; its curved edge is the rim, 1/1.25 of the full circle of that radius. So the sector is 0.80 of the disc, 288 degrees: 0.80 × π × 1.25^2 = 3.926991 square metres. In letters, $r/\ell$ of $\pi \ell^2$ is $\pi r \ell$. A pyramid on a many-sided polygon inside the rim agrees: 3.924945 with 96 sides, 3.926990 with 6144.
+Cut the wall from rim to tip and lay it flat: a sector, a slice of a disc cut from its centre ([Radians](02-radians-arcs-and-sectors.md)). Its radius is the slant, 1.25 m; its curved edge is the rim, 1/1.25 of the full circle of that radius. So the sector is 0.80 of the disc, 288 degrees: 0.80 × π × 1.25^2 = 3.926991 square metres. In letters, $`r/\ell`$ of $`\pi \ell^2`$ is $`\pi r \ell`$. A pyramid on a many-sided polygon inside the rim agrees: 3.924945 with 96 sides, 3.926990 with 6144.
 
 ### Step 5: the ball's volume, as a cylinder minus a cone
 
 Archimedes' comparison. Beside half the ball, flat face down, stand a cylinder of radius 1 m and height 1 m with a cone scooped out, tip at the bottom centre, rim on the top edge.
 
-Slice both 0.6 m up. The half-ball's slice has radius 0.800000 m, by Pythagoras, and area 2.010619 square metres. The cone widens as fast as it rises, so its disc there has radius 0.6 m; the cylinder's slice is π minus that disc, again 2.010619. At any height $z$ both are $\pi(r^2 - z^2)$. By Cavalieri the half-ball holds π − π/3 = 2.094395 cubic metres, and the ball 4.188790, which is $\tfrac43 \pi r^3$: 0.666667 of the 2 m cylinder around it, 6.283185. Archimedes wanted this sphere-in-cylinder on his tomb.
+Slice both 0.6 m up. The half-ball's slice has radius 0.800000 m, by Pythagoras, and area 2.010619 square metres. The cone widens as fast as it rises, so its disc there has radius 0.6 m; the cylinder's slice is π minus that disc, again 2.010619. At any height $`z`$ both are $`\pi(r^2 - z^2)`$. By Cavalieri the half-ball holds π − π/3 = 2.094395 cubic metres, and the ball 4.188790, which is $`\tfrac43 \pi r^3`$: 0.666667 of the 2 m cylinder around it, 6.283185. Archimedes wanted this sphere-in-cylinder on his tomb.
 
 ### Step 6: the ball's skin, from thin pyramids
 
-Cover the skin with small patches and join each to the centre: thin pyramids, each with a patch for base and the radius for height. So the ball holds a third of skin times radius: $S = 3V/r$ = 3 × 4.188790 = 12.566371 square metres, which is $4\pi r^2$.
+Cover the skin with small patches and join each to the centre: thin pyramids, each with a patch for base and the radius for height. So the ball holds a third of skin times radius: $`S = 3V/r`$ = 3 × 4.188790 = 12.566371 square metres, which is $`4\pi r^2`$.
 
 The patches curve, so the pieces are only nearly pyramids; calculus makes "nearly" exact. The code spins a many-sided outline of the ball into bands, each a big cone's wall minus a small one's: π times its two radii added, times its slant width. 1000 bands give 12.566336. The skin equals the 2 m cylinder's curved wall, as Archimedes found.
 
@@ -346,12 +352,12 @@ The two outputs match line for line.
 Lean proves the one-third rule for every base shape and tip, the ball's volume for every radius, and the three-pyramid cube.
 
 - A pyramid or cone holds one third of base area times height, with height square on. The base may be any shape with an area, and the cone may lean.
-- A ball of radius $r$ holds four thirds of pi r cubed.
+- A ball of radius $`r`$ holds four thirds of pi r cubed.
 - In the 1 m cube, the pyramid on the face x = 0 with tip P is exactly the points nearest that face.
 - A third of a turn about PQ carries that piece onto the other two, and the three pieces together fill the cube.
 - The card's own sums: the 1.25 m slant, the hopper's third, the 288-degree sector, the 0.8 m slice, the half-ball, and the ball twice as wide.
 
-The wall's $\pi r \ell$ and the skin's $4\pi r^2$ in general, and the slabs, polygons and bands, are left to the Python and Rust checks.
+The wall's $`\pi r \ell`$ and the skin's $`4\pi r^2`$ in general, and the slabs, polygons and bands, are left to the Python and Rust checks.
 
 ```lean
 -- Pyramids, cones and spheres: a pyramid or cone of any base holds one third of base area times height, a ball of radius r holds four thirds of pi r cubed, and three equal pyramids with one shared tip fill a cube.

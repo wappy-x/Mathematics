@@ -37,23 +37,27 @@ Nine lines on six dots, none joining two houses or two mains: the ceiling is 8.
 
 ## The formula
 
-A reminder from the sibling card: $V$ counts a drawing's dots, $E$ its lines and $F$ its regions, the patch outside counted as one ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). The graphs shelf calls them vertices and edges, and a dot's **degree** is the lines meeting it.
+A reminder from the sibling card: $`V`$ counts a drawing's dots, $`E`$ its lines and $`F`$ its regions, the patch outside counted as one ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). The graphs shelf calls them vertices and edges, and a dot's **degree** is the lines meeting it.
 
 Two names are new. **K(5)** is five dots with every pair joined, 10 lines. **K(3,3)** is two groups of three, every cross pair joined and none inside a group, 9 lines — the houses and the mains.
 
-$$E \le 3V - 6$$
+```math
+E \le 3V - 6
+```
 
 **Read it aloud:** a simple network drawn flat on three dots or more holds at most three lines per dot, minus six.
 
-$$E \le 2V - 4$$
+```math
+E \le 2V - 4
+```
 
 **Read it aloud:** with no three dots closing a ring, the ceiling falls to two per dot, minus four.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | dots: houses and mains | 6 | each dot lifts the ceiling by 3, or by 2 |
-| $E$ | lines: pipes and cables | 9 | past the ceiling, no flat drawing |
-| $F$ | regions, the outside counted | 5, if drawable | more walls to pay for |
+| $`V`$ | dots: houses and mains | 6 | each dot lifts the ceiling by 3, or by 2 |
+| $`E`$ | lines: pipes and cables | 9 | past the ceiling, no flat drawing |
+| $`F`$ | regions, the outside counted | 5, if drawable | more walls to pay for |
 | K(5) | five dots, every pair joined | 10 lines, ceiling 9 | — |
 | K(3,3) | two groups of three, cross pairs joined | the utilities: 9, ceiling 8 | — |
 
@@ -72,32 +76,40 @@ $$E \le 2V - 4$$
 
 Walk one region's boundary, counting lines as they pass: a line with the same region on both sides counts twice, any other once. So the side-counts of all regions add to twice the lines:
 
-$$\text{sides of all regions added} = 2E$$
+```math
+\text{sides of all regions added} = 2E
+```
 
 Nine pipes supply 18 sides, however they are laid.
 
 ### Step 1: no region closes with fewer than three sides
 
-One side would need a line looping from a dot back to itself, two sides a second line between one pair. A simple network has neither, so each of the $F$ regions demands three sides at least:
+One side would need a line looping from a dot back to itself, two sides a second line between one pair. A simple network has neither, so each of the $`F`$ regions demands three sides at least:
 
-$$2E \ge 3F$$
+```math
+2E \ge 3F
+```
 
 ### Step 2: trade regions for lines
 
-Euler's formula fixes the regions of a crossing-free drawing in one piece: $F = E - V + 2$ ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). Substitute and take $2E$ from both sides:
+Euler's formula fixes the regions of a crossing-free drawing in one piece: $`F = E - V + 2`$ ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). Substitute and take $`2E`$ from both sides:
 
-$$2E \ge 3(E - V + 2), \qquad E \le 3V - 6$$
+```math
+2E \ge 3(E - V + 2), \qquad E \le 3V - 6
+```
 
-The ceiling belongs to the network, not to one drawing of it. Where no three dots close a ring, no region has three sides: the demand becomes $4F$ and the same substitution gives
+The ceiling belongs to the network, not to one drawing of it. Where no three dots close a ring, no region has three sides: the demand becomes $`4F`$ and the same substitution gives
 
-$$2E \ge 4(E - V + 2), \qquad E \le 2V - 4.$$
+```math
+2E \ge 4(E - V + 2), \qquad E \le 2V - 4.
+```
 
 <details>
 <summary>Detailed proof: what the steps glossed over</summary>
 
-**The side count.** A line whose removal splits the drawing has the same region on both sides, its walk passing it twice, so the walks still add to $2E$.
+**The side count.** A line whose removal splits the drawing has the same region on both sides, its walk passing it twice, so the walks still add to $`2E`$.
 
-**The floor.** Simplicity forbids a loop and a repeated pair, and $V \ge 3$ forbids a region walled by one line, so no walk closes in under three steps. Equality comes when every region has exactly three sides, or four.
+**The floor.** Simplicity forbids a loop and a repeated pair, and $`V \ge 3`$ forbids a region walled by one line, so no walk closes in under three steps. Equality comes when every region has exactly three sides, or four.
 
 **Pieces.** Separate pieces can be joined across the outer region with no crossing, and the joined drawing holds more lines and still obeys the ceiling.
 
@@ -111,7 +123,7 @@ The first ceiling catches K(5), 10 lines against 3 × 5 − 6 = 9. It misses the
 
 ### Step 4: somewhere a dot of degree five or less
 
-Degrees add to $2E$, each line raising two. In a flat drawing $2E \le 6V - 12$, so degrees average below 6 and some dot carries 5 lines or fewer.
+Degrees add to $`2E`$, each line raising two. In a flat drawing $`2E \le 6V - 12`$, so degrees average below 6 and some dot carries 5 lines or fewer.
 
 Five cannot be lowered to four: the icosahedron's skeleton, the twenty-triangle solid flattened, has 12 dots and 30 lines, exactly 3 × 12 − 6, every dot of degree 5.
 
@@ -164,7 +176,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one is the arithmetic above: count the lines, work out both ceilings, report which is broken. Road two never mentions a ceiling. A flat drawing is recorded by the cyclic order in which lines leave each dot, so the code tries every order at every dot and keeps the best region count. For a network in one piece, a flat drawing is the one reaching $E - V + 2$. Road one can only say no, so on K(5) minus one line and on Petersen road two answers alone.
+Nothing is imported. Road one is the arithmetic above: count the lines, work out both ceilings, report which is broken. Road two never mentions a ceiling. A flat drawing is recorded by the cyclic order in which lines leave each dot, so the code tries every order at every dot and keeps the best region count. For a network in one piece, a flat drawing is the one reaching $`E - V + 2`$. Road one can only say no, so on K(5) minus one line and on Petersen road two answers alone.
 
 ### Python
 
@@ -393,7 +405,7 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [Planar graphs](01-planar-graphs-and-eulers-formula.md): the region count $F = E - V + 2$ behind both ceilings.
+- [Planar graphs](01-planar-graphs-and-eulers-formula.md): the region count $`F = E - V + 2`$ behind both ceilings.
 - [Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md): why lines drawn only between two groups close no ring of three.
 - [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): Step 3's shape, a layout assumed and refuted by its own count.
 

@@ -28,45 +28,51 @@ The eight ordinary houses climb steeply. The line through all nine is tilted dow
 
 ## The formula
 
-Notation first, in words. Sale number i has floor area $x_i$ and price $y_i$. A hat marks an estimate, as on shelf 07: $\hat y_i$ is the fitted line's price for sale i. $\bar x$ is the average area. A subscript in brackets, as in $\hat y_{(i)}$, means "fitted with sale i left out". Var, as on shelf 02, is the variance: the long-run average squared distance from the mean. $\sigma$ is the spread of the true errors around the true line, and $s$ its estimate from the residuals. $p$ counts the numbers the line estimates: 2, intercept and slope.
+Notation first, in words. Sale number i has floor area $`x_i`$ and price $`y_i`$. A hat marks an estimate, as on shelf 07: $`\hat y_i`$ is the fitted line's price for sale i. $`\bar x`$ is the average area. A subscript in brackets, as in $`\hat y_{(i)}`$, means "fitted with sale i left out". Var, as on shelf 02, is the variance: the long-run average squared distance from the mean. $`\sigma`$ is the spread of the true errors around the true line, and $`s`$ its estimate from the residuals. $`p`$ counts the numbers the line estimates: 2, intercept and slope.
 
 The residual and the leverage:
 
-$$e_i = y_i - \hat y_i, \qquad h_i = \frac{1}{n} + \frac{(x_i - \bar x)^2}{S_{xx}}, \qquad S_{xx} = \sum_{j=1}^{n} (x_j - \bar x)^2$$
+```math
+e_i = y_i - \hat y_i, \qquad h_i = \frac{1}{n} + \frac{(x_i - \bar x)^2}{S_{xx}}, \qquad S_{xx} = \sum_{j=1}^{n} (x_j - \bar x)^2
+```
 
 **Read it aloud:** a residual is price minus fitted price; a sale's leverage is one over the number of sales, plus its squared distance from the average area as a share of all such squared distances.
 
 The residual's spread, and the residual rescaled by it:
 
-$$\operatorname{Var}(e_i) = \sigma^2 (1 - h_i), \qquad r_i = \frac{e_i}{s\sqrt{1 - h_i}}$$
+```math
+\mathrm{Var}(e_i) = \sigma^2 (1 - h_i), \qquad r_i = \frac{e_i}{s\sqrt{1 - h_i}}
+```
 
 **Read it aloud:** a sale's residual scatters less the more leverage it has; dividing by its own spread puts every residual on one scale.
 
 Deleting sale i, and what that does to the whole fit:
 
-$$e_{(i)} = y_i - \hat y_{(i)} = \frac{e_i}{1 - h_i}, \qquad D_i = \frac{\sum_{j} \bigl(\hat y_j - \hat y_{j(i)}\bigr)^2}{p\, s^2} = \frac{r_i^2}{p} \cdot \frac{h_i}{1 - h_i}$$
+```math
+e_{(i)} = y_i - \hat y_{(i)} = \frac{e_i}{1 - h_i}, \qquad D_i = \frac{\sum_{j} \bigl(\hat y_j - \hat y_{j(i)}\bigr)^2}{p\, s^2} = \frac{r_i^2}{p} \cdot \frac{h_i}{1 - h_i}
+```
 
 **Read it aloud:** the sale's miss when the line never saw it is its ordinary miss divided by one minus its leverage; Cook's distance is how far all the fitted prices move when the sale is deleted, and it needs no refit.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of sales | 9 | the average leverage, p/n, falls |
-| $x_i$, $y_i$ | floor area and price of sale i | mansion: 600 sq m, 1,400 | a sale far from $\bar x$ gains leverage |
-| $\hat y_i$, $e_i$ | fitted price; residual, price minus fitted | mansion: 1,417.4 and −17.4 | — |
-| $\bar x$, $S_{xx}$ | average area; total squared distance of areas from it | 184.44 sq m; 203,822.22 | a wider spread of areas lowers every $h_i$ |
-| $h_i$ | leverage: how far the fitted price follows a change of 1 in the price | mansion 0.958; house 8, 0.111 | the sale's residual is squeezed toward 0 |
-| $p$ | numbers the line estimates, intercept and slope | 2 | the leverages add up to it |
-| $\sigma$, $\sigma_j$ | spread of the true errors, unknown; the same at sale j, when it varies | simulation: 40, or a funnel | every residual scatters more |
-| $s$, $s_{(i)}$ | estimate of $\sigma$ from the residuals, with n − p in the divisor; the same without sale i | 34.84; mansion out, 14.52 | — |
-| $r_i$, $t_i$ | studentized residual (scaled by its own estimated spread), using $s$; external version, using $s_{(i)}$ | mansion −2.44; −5.86 | beyond about ±2 the sale is flagged |
-| $\hat y_{(i)}$, $e_{(i)}$ | fitted price and miss, from a line that never saw sale i | mansion 1,816.7 and −416.7 | — |
-| $D_i$ | Cook's distance: the shift of all fitted prices when sale i goes | mansion 68.548; the rest below 0.15 | above 1 the sale is steering the fit |
-| $X$, $H$ | in the proofs: the table holding a 1 and the area for each sale; the hat matrix $X(X^{\top}X)^{-1}X^{\top}$, which turns prices into fitted prices ($^{\top}$ swaps rows and columns; $^{-1}$ is the matrix inverse) | 9 rows by 2; 9 by 9, the leverages down its diagonal | — |
-| $\beta$, $\varepsilon$ | in the proofs: the true intercept and slope; the true errors, price minus the true line | unknown for the street; simulation: 120 and 2.8 | — |
-| $I$ | the identity matrix: 1s down its diagonal, 0s elsewhere | 9 by 9 | — |
-| $\Phi^{-1}$ | the normal quantile of shelf 04: the point on the bell curve with a given chance below it | the quantile plot's straight line | — |
+| $`n`$ | number of sales | 9 | the average leverage, p/n, falls |
+| $`x_i`$, $`y_i`$ | floor area and price of sale i | mansion: 600 sq m, 1,400 | a sale far from $`\bar x`$ gains leverage |
+| $`\hat y_i`$, $`e_i`$ | fitted price; residual, price minus fitted | mansion: 1,417.4 and −17.4 | — |
+| $`\bar x`$, $`S_{xx}`$ | average area; total squared distance of areas from it | 184.44 sq m; 203,822.22 | a wider spread of areas lowers every $`h_i`$ |
+| $`h_i`$ | leverage: how far the fitted price follows a change of 1 in the price | mansion 0.958; house 8, 0.111 | the sale's residual is squeezed toward 0 |
+| $`p`$ | numbers the line estimates, intercept and slope | 2 | the leverages add up to it |
+| $`\sigma`$, $`\sigma_j`$ | spread of the true errors, unknown; the same at sale j, when it varies | simulation: 40, or a funnel | every residual scatters more |
+| $`s`$, $`s_{(i)}`$ | estimate of $`\sigma`$ from the residuals, with n − p in the divisor; the same without sale i | 34.84; mansion out, 14.52 | — |
+| $`r_i`$, $`t_i`$ | studentized residual (scaled by its own estimated spread), using $`s`$; external version, using $`s_{(i)}`$ | mansion −2.44; −5.86 | beyond about ±2 the sale is flagged |
+| $`\hat y_{(i)}`$, $`e_{(i)}`$ | fitted price and miss, from a line that never saw sale i | mansion 1,816.7 and −416.7 | — |
+| $`D_i`$ | Cook's distance: the shift of all fitted prices when sale i goes | mansion 68.548; the rest below 0.15 | above 1 the sale is steering the fit |
+| $`X`$, $`H`$ | in the proofs: the table holding a 1 and the area for each sale; the hat matrix $`X(X^{\top}X)^{-1}X^{\top}`$, which turns prices into fitted prices ($`^{\top}`$ swaps rows and columns; $`^{-1}`$ is the matrix inverse) | 9 rows by 2; 9 by 9, the leverages down its diagonal | — |
+| $`\beta`$, $`\varepsilon`$ | in the proofs: the true intercept and slope; the true errors, price minus the true line | unknown for the street; simulation: 120 and 2.8 | — |
+| $`I`$ | the identity matrix: 1s down its diagonal, 0s elsewhere | 9 by 9 | — |
+| $`\Phi^{-1}`$ | the normal quantile of shelf 04: the point on the bell curve with a given chance below it | the quantile plot's straight line | — |
 
-The external version $t_i$ swaps $s$ for $s_{(i)}$, so a wild sale cannot inflate the yardstick it is measured with. The usual cut-offs are conventions, not theorems: leverage above 2p/n, here 0.444; $\lvert t_i \rvert$ above 2 or 3; Cook's distance above 1.
+The external version $`t_i`$ swaps $`s`$ for $`s_{(i)}`$, so a wild sale cannot inflate the yardstick it is measured with. The usual cut-offs are conventions, not theorems: leverage above 2p/n, here 0.444; $`\lvert t_i \rvert`$ above 2 or 3; Cook's distance above 1.
 
 ### When it holds
 
@@ -76,7 +82,7 @@ These are the assumptions a least squares line quietly makes, each with the resi
 - **The spread is the same everywhere.** If it changes with size, the residual plot fans out like a funnel. The slope stays right on average, but its textbook standard error is wrong: too small when the largest spreads sit at the sales far from the average area, which carry the most weight in the slope, too large when they sit near it. Step 5's funnel is the first kind, and a "95 percent" interval covers the truth about 90 percent of the time.
 - **No single sale steers the fit.** A sale with high leverage can hold the line to itself. Its residual looks small; Cook's distance and the external studentized residual expose it.
 - **The errors are independent.** Sales on one street in one month share shocks. Correlated errors leave residuals in runs, and the standard errors are again too small; the cure is the funnel's cure (Step 5) in its clustered form, which lets errors within a group of sales move together.
-- **For small samples, bell-shaped errors.** The t-based intervals of [Regression error bars](02-regression-inference.md) use it. A normal quantile plot checks it: the sorted residuals against $\Phi^{-1}$, the normal quantile of shelf 04, of evenly spaced chances lie on a straight line if the errors are bell-shaped; with fifty or more sales it matters much less.
+- **For small samples, bell-shaped errors.** The t-based intervals of [Regression error bars](02-regression-inference.md) use it. A normal quantile plot checks it: the sorted residuals against $`\Phi^{-1}`$, the normal quantile of shelf 04, of evenly spaced chances lie on a straight line if the errors are bell-shaped; with fifty or more sales it matters much less.
 
 ---
 
@@ -88,59 +94,59 @@ Least squares chooses the line that makes the sum of squared residuals as small 
 
 ### Step 1: leverage is how far the fitted price follows the sale's own price
 
-Raise the mansion's price by 1, a thousand dollars, and refit. The line's price for the mansion rises by 0.958: the line follows 0.958 of any change in that sale's price. That sensitivity is the leverage $h_i$. The code measures it this way for all nine sales, by nudging and refitting, and gets the same numbers as the formula.
+Raise the mansion's price by 1, a thousand dollars, and refit. The line's price for the mansion rises by 0.958: the line follows 0.958 of any change in that sale's price. That sensitivity is the leverage $`h_i`$. The code measures it this way for all nine sales, by nudging and refitting, and gets the same numbers as the formula.
 
-The formula comes from how the line is built. The fitted price is $\hat y_i = \bar y + b(x_i - \bar x)$, where $\bar y$ is the average price and b the slope, $b = \sum_j (x_j - \bar x) y_j / S_{xx}$. Raise $y_i$ by 1: the average price rises by $1/n$, and the slope rises by $(x_i - \bar x)/S_{xx}$, which moves the fitted price at $x_i$ by that times $(x_i - \bar x)$. Together, $h_i = 1/n + (x_i - \bar x)^2/S_{xx}$. For the mansion: 0.1111 + 172,686.4/203,822.22 = 0.1111 + 0.8472 = 0.9584.
+The formula comes from how the line is built. The fitted price is $`\hat y_i = \bar y + b(x_i - \bar x)`$, where $`\bar y`$ is the average price and b the slope, $`b = \sum_j (x_j - \bar x) y_j / S_{xx}`$. Raise $`y_i`$ by 1: the average price rises by $`1/n`$, and the slope rises by $`(x_i - \bar x)/S_{xx}`$, which moves the fitted price at $`x_i`$ by that times $`(x_i - \bar x)`$. Together, $`h_i = 1/n + (x_i - \bar x)^2/S_{xx}`$. For the mansion: 0.1111 + 172,686.4/203,822.22 = 0.1111 + 0.8472 = 0.9584.
 
-The leverages always add up to $p$, the number of things the line estimates: here 2.0000, an average of 2/9 per sale. The mansion holds almost half of the total by itself.
+The leverages always add up to $`p`$, the number of things the line estimates: here 2.0000, an average of 2/9 per sale. The mansion holds almost half of the total by itself.
 
 ### Step 2: a high-leverage residual has a small spread
 
-The residual is the price minus a fitted price that already contains fraction $h_i$ of the sale's own error. Only $1 - h_i$ of that error survives, plus small shares of the other sales' errors, and the variance works out to exactly $\sigma^2(1 - h_i)$. For house 1 the residual's spread is 0.914 of the error's spread; for the mansion it is 0.204. The mansion's residual is held to about a fifth of the size of anyone else's. Judged on one yardstick, a residual of −17.4 looks tame; divided by its own spread, $s\sqrt{1 - h_i} = 7.11$, it is −2.44, the largest on the street.
+The residual is the price minus a fitted price that already contains fraction $`h_i`$ of the sale's own error. Only $`1 - h_i`$ of that error survives, plus small shares of the other sales' errors, and the variance works out to exactly $`\sigma^2(1 - h_i)`$. For house 1 the residual's spread is 0.914 of the error's spread; for the mansion it is 0.204. The mansion's residual is held to about a fifth of the size of anyone else's. Judged on one yardstick, a residual of −17.4 looks tame; divided by its own spread, $`s\sqrt{1 - h_i} = 7.11`$, it is −2.44, the largest on the street.
 
 <details>
 <summary>Detailed proof: the residual's variance</summary>
 
-Stack the prices into a column y. The fitted prices are $\hat y = Hy$, where $H = X(X^{\top}X)^{-1}X^{\top}$ is the **hat matrix** of [Multiple regression](03-multiple-regression-and-gauss-markov.md): it turns prices into fitted prices. X has a column of 1s and a column of areas. Its diagonal entries are the leverages: the i-th is the change in $\hat y_i$ per unit change in $y_i$, which is Step 1's $h_i$.
+Stack the prices into a column y. The fitted prices are $`\hat y = Hy`$, where $`H = X(X^{\top}X)^{-1}X^{\top}`$ is the **hat matrix** of [Multiple regression](03-multiple-regression-and-gauss-markov.md): it turns prices into fitted prices. X has a column of 1s and a column of areas. Its diagonal entries are the leverages: the i-th is the change in $`\hat y_i`$ per unit change in $`y_i`$, which is Step 1's $`h_i`$.
 
-H is symmetric ($H^{\top} = H$), and $HH = H$, because fitting a line to prices already on the line changes nothing. The residuals are $e = (I - H)y$. Write $y = X\beta + \varepsilon$, with the errors ε independent, mean 0 and variance $\sigma^2$. Since $HX = X$, the line part cancels and $e = (I - H)\varepsilon$. So the variance matrix of e is $(I - H)\,\sigma^2 I\,(I - H)^{\top} = \sigma^2 (I - H)$, using symmetry and $HH = H$ once. Its diagonal entry is $\operatorname{Var}(e_i) = \sigma^2(1 - h_i)$.
+H is symmetric ($`H^{\top} = H`$), and $`HH = H`$, because fitting a line to prices already on the line changes nothing. The residuals are $`e = (I - H)y`$. Write $`y = X\beta + \varepsilon`$, with the errors ε independent, mean 0 and variance $`\sigma^2`$. Since $`HX = X`$, the line part cancels and $`e = (I - H)\varepsilon`$. So the variance matrix of e is $`(I - H)\,\sigma^2 I\,(I - H)^{\top} = \sigma^2 (I - H)`$, using symmetry and $`HH = H`$ once. Its diagonal entry is $`\mathrm{Var}(e_i) = \sigma^2(1 - h_i)`$.
 
-The leverages add to the trace of H, the sum of its diagonal entries. The trace of $X(X^{\top}X)^{-1}X^{\top}$ equals the trace of $(X^{\top}X)^{-1}X^{\top}X$, the p-by-p identity, which is p.
+The leverages add to the trace of H, the sum of its diagonal entries. The trace of $`X(X^{\top}X)^{-1}X^{\top}`$ equals the trace of $`(X^{\top}X)^{-1}X^{\top}X`$, the p-by-p identity, which is p.
 
 </details>
 
 ### Step 3: deleting a sale multiplies its residual by exactly one over one minus its leverage
 
-To see whether a sale fits the pattern of the others, price it with a line that never saw it. That line prices the mansion at 1,816.7, a miss of −416.7, against −17.4 when the mansion was in. The ratio is $1/(1 - h_i) = 1/0.0416$, and that is no accident.
+To see whether a sale fits the pattern of the others, price it with a line that never saw it. That line prices the mansion at 1,816.7, a miss of −416.7, against −17.4 when the mansion was in. The ratio is $`1/(1 - h_i) = 1/0.0416`$, and that is no accident.
 
-Replace the mansion's price with the deleted line's 1,816.7. That sale now sits exactly on the eight-house line, so adding it costs that line nothing, and least squares on all nine returns the same line. The mansion's own price moved by $-e_{(i)}$, up 416.7, and its fitted price followed by $h_i$ times that move (Step 1). Before the move, then, its fitted price was $\hat y_{(i)} + h_i e_{(i)}$, so $e_i = e_{(i)} - h_i e_{(i)} = (1 - h_i) e_{(i)}$. One fit gives every sale's deleted residual, with no refitting. The code refits nine times anyway, as the second road.
+Replace the mansion's price with the deleted line's 1,816.7. That sale now sits exactly on the eight-house line, so adding it costs that line nothing, and least squares on all nine returns the same line. The mansion's own price moved by $`-e_{(i)}`$, up 416.7, and its fitted price followed by $`h_i`$ times that move (Step 1). Before the move, then, its fitted price was $`\hat y_{(i)} + h_i e_{(i)}`$, so $`e_i = e_{(i)} - h_i e_{(i)} = (1 - h_i) e_{(i)}`$. One fit gives every sale's deleted residual, with no refitting. The code refits nine times anyway, as the second road.
 
 ### Step 4: Cook's distance is the shift of every fitted price, read off one fit
 
-Deleting sale i moves every fitted price, not just its own. Adding the squared moves and scaling by $p s^2$ gives Cook's distance, $D_i$. The replacement argument of Step 3 turns it into $D_i = (r_i^2/p) \cdot h_i/(1 - h_i)$: a sale steers the fit only if it both misses (large $r_i$) and has leverage (large $h_i$). Neither alone is enough. House 8 has the biggest raw residual, 43.5, and a Cook's distance of 0.110. The mansion has one of the smallest and a Cook's distance of 68.548.
+Deleting sale i moves every fitted price, not just its own. Adding the squared moves and scaling by $`p s^2`$ gives Cook's distance, $`D_i`$. The replacement argument of Step 3 turns it into $`D_i = (r_i^2/p) \cdot h_i/(1 - h_i)`$: a sale steers the fit only if it both misses (large $`r_i`$) and has leverage (large $`h_i`$). Neither alone is enough. House 8 has the biggest raw residual, 43.5, and a Cook's distance of 0.110. The mansion has one of the smallest and a Cook's distance of 68.548.
 
-The external studentized residual asks the same question as a test. It divides the deleted residual by its own standard error as a prediction from the eight-house line, whose spread is $s_{(i)} = 14.52$. The mansion gets −5.86: it sits nearly six standard errors from where the other eight houses put it.
+The external studentized residual asks the same question as a test. It divides the deleted residual by its own standard error as a prediction from the eight-house line, whose spread is $`s_{(i)} = 14.52`$. The mansion gets −5.86: it sits nearly six standard errors from where the other eight houses put it.
 
 <details>
 <summary>Detailed proof: Cook's distance from one fit</summary>
 
-Deleting sale i gives the same line as keeping it with its price replaced by $\hat y_{(i)}$ (Step 3). That replacement changes the price column by $-e_{(i)}$ in entry i and nothing elsewhere, so the fitted prices change by $-e_{(i)}$ times column i of H: $\hat y_j - \hat y_{j(i)} = H_{ji}\, e_{(i)}$.
+Deleting sale i gives the same line as keeping it with its price replaced by $`\hat y_{(i)}`$ (Step 3). That replacement changes the price column by $`-e_{(i)}`$ in entry i and nothing elsewhere, so the fitted prices change by $`-e_{(i)}`$ times column i of H: $`\hat y_j - \hat y_{j(i)} = H_{ji}\, e_{(i)}`$.
 
-Summing squares, $\sum_j H_{ji}^2 = (HH)_{ii} = h_i$, by symmetry and $HH = H$. So $\sum_j (\hat y_j - \hat y_{j(i)})^2 = h_i\, e_{(i)}^2 = h_i e_i^2 / (1 - h_i)^2$. Divide by $p s^2$ and write $e_i^2 = r_i^2 s^2 (1 - h_i)$: $D_i = r_i^2 h_i / (p(1 - h_i))$.
+Summing squares, $`\sum_j H_{ji}^2 = (HH)_{ii} = h_i`$, by symmetry and $`HH = H`$. So $`\sum_j (\hat y_j - \hat y_{j(i)})^2 = h_i\, e_{(i)}^2 = h_i e_i^2 / (1 - h_i)^2`$. Divide by $`p s^2`$ and write $`e_i^2 = r_i^2 s^2 (1 - h_i)`$: $`D_i = r_i^2 h_i / (p(1 - h_i))`$.
 
-The external version: the line without sale i misses each sale j, at its real price, by $y_j - \hat y_{j(i)} = e_j + H_{ji}\, e_{(i)}$. Square and add over all nine sales. The cross term is $2e_{(i)}(He)_i$, which is 0 because $He = (H - HH)y = 0$, so the total is $\sum_j e_j^2 + h_i e_{(i)}^2$. The eight-sale sum leaves out sale i's own term, $e_{(i)}^2$. So removing sale i takes $(1 - h_i)\, e_{(i)}^2 = e_{(i)} e_i = e_i^2/(1 - h_i)$ off the sum of squared residuals, which gives $(n - p - 1)s_{(i)}^2 = (n - p)s^2 - e_i^2/(1 - h_i)$, and $t_i = e_i / (s_{(i)}\sqrt{1 - h_i})$.
+The external version: the line without sale i misses each sale j, at its real price, by $`y_j - \hat y_{j(i)} = e_j + H_{ji}\, e_{(i)}`$. Square and add over all nine sales. The cross term is $`2e_{(i)}(He)_i`$, which is 0 because $`He = (H - HH)y = 0`$, so the total is $`\sum_j e_j^2 + h_i e_{(i)}^2`$. The eight-sale sum leaves out sale i's own term, $`e_{(i)}^2`$. So removing sale i takes $`(1 - h_i)\, e_{(i)}^2 = e_{(i)} e_i = e_i^2/(1 - h_i)`$ off the sum of squared residuals, which gives $`(n - p - 1)s_{(i)}^2 = (n - p)s^2 - e_i^2/(1 - h_i)`$, and $`t_i = e_i / (s_{(i)}\sqrt{1 - h_i})`$.
 
 </details>
 
 ### Step 5: an uneven spread leaves the slope right and its error bar wrong
 
-The slope is a weighted sum of prices, $b = \sum_j (x_j - \bar x) y_j / S_{xx}$. With independent errors of spread $\sigma_j$ at sale j, its variance is $\sum_j (x_j - \bar x)^2 \sigma_j^2 / S_{xx}^2$: one over $S_{xx}$ times an average of the $\sigma_j^2$ that weights each sale by $(x_j - \bar x)^2$. The textbook formula replaces every $\sigma_j$ by one common $\sigma$, giving $\sigma^2/S_{xx}$, and its estimate $s^2$ averages the $\sigma_j^2$ almost evenly.
+The slope is a weighted sum of prices, $`b = \sum_j (x_j - \bar x) y_j / S_{xx}`$. With independent errors of spread $`\sigma_j`$ at sale j, its variance is $`\sum_j (x_j - \bar x)^2 \sigma_j^2 / S_{xx}^2`$: one over $`S_{xx}`$ times an average of the $`\sigma_j^2`$ that weights each sale by $`(x_j - \bar x)^2`$. The textbook formula replaces every $`\sigma_j`$ by one common $`\sigma`$, giving $`\sigma^2/S_{xx}`$, and its estimate $`s^2`$ averages the $`\sigma_j^2`$ almost evenly.
 
 So the textbook figure is too small when the largest spreads sit at the sales far from the average area, and too large when they sit near it; a spread that grows with area does not settle which. In the funnel below, the spread climbs fastest at the biggest houses, which carry the largest weights, and the textbook formula undercounts them.
 
 The code tests this on 50 simulated sales, 60 to 240 square metres, true price 120 + 2.8 × area, run 4,000 times. With an even spread of 40, the slope's true spread is 0.1022, the textbook standard error averages 0.1016, and "slope ± 2 standard errors" covers the true slope in 0.9490 of runs.
 
-With a funnel, spread $40 \times (\text{area}/150)^2$, the slope still averages 2.8018. But its true spread is 0.1637, the textbook standard error averages 0.1393, and the interval covers the truth in 0.9052 of runs. The residual plot shows it: residuals below 120 square metres average 13.0 in size, those at 180 and up average 62.1.
+With a funnel, spread $`40 \times (\text{area}/150)^2`$, the slope still averages 2.8018. But its true spread is 0.1637, the textbook standard error averages 0.1393, and the interval covers the truth in 0.9052 of runs. The residual plot shows it: residuals below 120 square metres average 13.0 in size, those at 180 and up average 62.1.
 
 Heteroskedasticity is the statisticians' word for an uneven spread. White's heteroskedasticity-consistent standard error (1980) estimates the weighted sum above from the squared residuals, and is the usual cure for a funnel. A line that resists a single sale, such as a least absolute deviations fit (the line with the smallest sum of absolute misses), is one cure for a steering outlier. White's paper is in the Sources.
 
@@ -584,9 +590,9 @@ The two outputs match line for line. The formula columns and the refit columns a
 
 Lean proves the three formulas for every set of sales that meets their conditions, and checks the mansion's numbers as exact fractions.
 
-- Suppose the sales other than sale i do not all have the same area. Then deleting sale i divides its residual by one minus its leverage: $e_{(i)} = e_i/(1 - h_i)$.
-- Take the same sales. Then Cook's distance $D_i$, found by deleting sale i, equals $(r_i^2/p) \cdot h_i/(1 - h_i)$ from one fit.
-- Suppose each price is the true line plus an independent error, with mean 0 and variance $\sigma^2$, and not all areas are equal. Then the residual's variance is $\sigma^2(1 - h_i)$, so a sale with high leverage has a residual with a small spread.
+- Suppose the sales other than sale i do not all have the same area. Then deleting sale i divides its residual by one minus its leverage: $`e_{(i)} = e_i/(1 - h_i)`$.
+- Take the same sales. Then Cook's distance $`D_i`$, found by deleting sale i, equals $`(r_i^2/p) \cdot h_i/(1 - h_i)`$ from one fit.
+- Suppose each price is the true line plus an independent error, with mean 0 and variance $`\sigma^2`$, and not all areas are equal. Then the residual's variance is $`\sigma^2(1 - h_i)`$, so a sale with high leverage has a residual with a small spread.
 - For the nine sales, the mansion's leverage is exactly 4395/4586, about 0.958, above the flag line 4/9.
 - The slopes are exactly 36277/18344 with the mansion and 540/191 without it, about 1.9776 and 2.8272.
 - The mansion's residual is exactly −79595/4586, about −17.4. Divided by one minus its leverage, it gives −79595/191, about −416.7.
@@ -1022,7 +1028,7 @@ open Diagnostics
 ## The usual mistake
 
 > [!warning]
-> **Hunting outliers by the size of the raw residual.** The sale that steers the line hardest is the one the line was bent to meet, so its residual is small by construction. The mansion misses by 17.4, seventh of nine; its external studentized residual is −5.86 and its Cook's distance 68.548. Judge each residual against its own spread, $s\sqrt{1 - h_i}$, or by deleting the sale.
+> **Hunting outliers by the size of the raw residual.** The sale that steers the line hardest is the one the line was bent to meet, so its residual is small by construction. The mansion misses by 17.4, seventh of nine; its external studentized residual is −5.86 and its Cook's distance 68.548. Judge each residual against its own spread, $`s\sqrt{1 - h_i}`$, or by deleting the sale.
 >
 > - **Deleting the flagged sale and moving on.** A high Cook's distance says the answer depends on that sale, not that the sale is wrong. The mansion is a real sale; what fails is one straight line for all sizes. Pricing a 600 square metre house from the eight-house line gives 1,816.7 against a real 1,400.
 > - **Reading a small standard error as a good fit.** With the mansion in, the slope's standard error is 0.0772, half the eight-house 0.1486, and the slope is the wrong one.
@@ -1051,7 +1057,7 @@ open Diagnostics
 
 - [Logistic regression](05-logistic-regression.md): a yes-or-no outcome, where the spread is uneven by design, widest where the chance is one half, and least squares gives way to maximum likelihood.
 - [Regularisation](06-ridge-and-lasso.md): a fit that trades a little bias for stability when predictors move together.
-- [Overfitting](08-cross-validation-and-overfitting.md): pricing each sale from a fit that never saw it, for which Step 3's $e_i/(1 - h_i)$ is the one-fit shortcut.
+- [Overfitting](08-cross-validation-and-overfitting.md): pricing each sale from a fit that never saw it, for which Step 3's $`e_i/(1 - h_i)`$ is the one-fit shortcut.
 
 Every check on this card reads a line against the sales it was fitted to; how well a fit prices a sale it has never seen is the question cross-validation answers.
 

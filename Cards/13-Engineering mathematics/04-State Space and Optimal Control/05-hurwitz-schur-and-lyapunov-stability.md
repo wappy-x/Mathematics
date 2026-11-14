@@ -36,9 +36,13 @@ Orange: motor off, the eigenvalue at plus four wins. Green: the angle feedback u
 
 Notation first. The model is x' = Ax: x is the state (the list of four numbers) and A the rate matrix. Sampled every h seconds it becomes x_{k+1} = A_d x_k, with step matrix A_d = e^(Ah), the matrix exponential. The transpose x^T is x written as a row, so x^T P x is a single number. A matrix P is **positive definite**, written P > 0, when x^T P x is positive for every x except 0 ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). Q is any chosen positive definite matrix; this card takes Q = I, the identity.
 
-$$\text{Hurwitz: } \operatorname{Re}\lambda_i(A) < 0 \text{ for all } i, \qquad \text{Schur: } |\lambda_i(A_d)| < 1 \text{ for all } i$$
+```math
+\text{Hurwitz: } \mathrm{Re}\,\lambda_i(A) < 0 \text{ for all } i, \qquad \text{Schur: } |\lambda_i(A_d)| < 1 \text{ for all } i
+```
 
-$$A^{\mathsf T}P + PA = -Q \;\;\text{has a solution } P > 0 \iff A \text{ is Hurwitz}, \qquad A_d^{\mathsf T}PA_d - P = -Q \;\;\text{has one} \iff A_d \text{ is Schur}$$
+```math
+A^{\mathsf T}P + PA = -Q \;\;\text{has a solution } P > 0 \iff A \text{ is Hurwitz}, \qquad A_d^{\mathsf T}PA_d - P = -Q \;\;\text{has one} \iff A_d \text{ is Schur}
+```
 
 **Read it aloud:** every growth rate is negative, or every one-step multiplier is smaller than one in size; and that happens exactly when a bowl-shaped score x^T P x exists that every motion slides down at rate x^T Q x.
 
@@ -46,18 +50,18 @@ The score is V(x) = x^T P x. Along a motion its rate is V' = x^T(A^T P + PA)x = 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_k$ | the state: cart position m, cart speed m/s, tilt rad, tilt rate rad/s; at sample k | tilt 0.1 rad, the rest zero | V grows as its square |
-| $t$, $k$ | time in s; sample count | 0 to 3 s | modes shrink or grow |
-| $A$, $A_{cl}$, $B$ | rate matrix of x' = Ax; with feedback; input column | open eigenvalues 4, 0, 0, −4 per s | — |
-| $\lambda_i$, $\bar\lambda$, $v$, $v^*$, $s$ | eigenvalues (growth rates, per s) and the complex conjugate of λ; an eigenvector and its conjugate transpose; the variable of det(sI − A) | +4: the falling pole | any real part past 0 fails Hurwitz |
-| $g/l$ | gravity over pole length, per s^2 | 9.81 / 0.613125 = 16 | the tilt eigenvalue √(g/l) grows |
-| $u$ | input: cart acceleration, m/s^2 | 14.715 θ + 3.679 ω | — |
-| $\theta$, $\omega$ | tilt, rad, and tilt rate, rad/s | angle loop ω' = −8θ − 6ω | — |
-| $h$, $z$ | sampling interval, s; a one-step multiplier e^(λh) | 0.01 s; z = 1.040811 | past 0.4024 s the digital loop fails |
-| $A_d$, $M$ | one-step matrix: e^(Ah) for the open cart; M with held feedback; its radius is the largest eigenvalue size | radius 1.040811; 0.9796 | radius past 1 fails Schur |
-| $Q$, $I$ | chosen positive definite rate of loss; the identity | Q = I | P scales with it |
-| $P$, $p_{11}$, $p_{12}$, $p_{22}$, $\lambda_{max}$ | the certificate and its entries; its largest eigenvalue | 1.125, 0.0625, 0.09375; 1.1288 | — |
-| $V$, $V'$ | the score x^T P x and its rate, −x^T Q x | 0.011250 and −0.010000 at θ = 0.1 rad | V' more negative: faster settling |
+| $`x`$, $`x_k`$ | the state: cart position m, cart speed m/s, tilt rad, tilt rate rad/s; at sample k | tilt 0.1 rad, the rest zero | V grows as its square |
+| $`t`$, $`k`$ | time in s; sample count | 0 to 3 s | modes shrink or grow |
+| $`A`$, $`A_{cl}`$, $`B`$ | rate matrix of x' = Ax; with feedback; input column | open eigenvalues 4, 0, 0, −4 per s | — |
+| $`\lambda_i`$, $`\bar\lambda`$, $`v`$, $`v^*`$, $`s`$ | eigenvalues (growth rates, per s) and the complex conjugate of λ; an eigenvector and its conjugate transpose; the variable of det(sI − A) | +4: the falling pole | any real part past 0 fails Hurwitz |
+| $`g/l`$ | gravity over pole length, per s^2 | 9.81 / 0.613125 = 16 | the tilt eigenvalue √(g/l) grows |
+| $`u`$ | input: cart acceleration, m/s^2 | 14.715 θ + 3.679 ω | — |
+| $`\theta`$, $`\omega`$ | tilt, rad, and tilt rate, rad/s | angle loop ω' = −8θ − 6ω | — |
+| $`h`$, $`z`$ | sampling interval, s; a one-step multiplier e^(λh) | 0.01 s; z = 1.040811 | past 0.4024 s the digital loop fails |
+| $`A_d`$, $`M`$ | one-step matrix: e^(Ah) for the open cart; M with held feedback; its radius is the largest eigenvalue size | radius 1.040811; 0.9796 | radius past 1 fails Schur |
+| $`Q`$, $`I`$ | chosen positive definite rate of loss; the identity | Q = I | P scales with it |
+| $`P`$, $`p_{11}`$, $`p_{12}`$, $`p_{22}`$, $`\lambda_{max}`$ | the certificate and its entries; its largest eigenvalue | 1.125, 0.0625, 0.09375; 1.1288 | — |
+| $`V`$, $`V'`$ | the score x^T P x and its rate, −x^T Q x | 0.011250 and −0.010000 at θ = 0.1 rad | V' more negative: faster settling |
 
 ### When it holds
 

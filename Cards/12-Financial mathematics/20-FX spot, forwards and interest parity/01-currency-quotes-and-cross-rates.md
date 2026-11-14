@@ -35,36 +35,40 @@ Each arrow either multiplies or divides, and the quote's name decides which. Sel
 
 ## The formula
 
-Notation first, in words. Write a currency pair as two three-letter codes run together, AB, with A first. The price of that pair is written $S_{AB}$: the number of units of B that one unit of A costs. The letter S is the finance habit for "spot": the price for the earliest standard delivery, one or two business days after the trade.
+Notation first, in words. Write a currency pair as two three-letter codes run together, AB, with A first. The price of that pair is written $`S_{AB}`$: the number of units of B that one unit of A costs. The letter S is the finance habit for "spot": the price for the earliest standard delivery, one or two business days after the trade.
 
 The three-letter codes are the international standard ones: EUR for the euro, USD for the US dollar, JPY for the yen, GBP for the pound.
 
-$$S_{BA} = \frac{1}{S_{AB}}, \qquad S_{AC} = S_{AB} \times S_{BC}, \qquad S_{AB}\,S_{BC}\,S_{CA} = 1$$
+```math
+S_{BA} = \frac{1}{S_{AB}}, \qquad S_{AC} = S_{AB} \times S_{BC}, \qquad S_{AB}\,S_{BC}\,S_{CA} = 1
+```
 
 **Read it aloud:** the flipped quote is one over the quote; a cross is the two legs multiplied, with the shared currency cancelling; and going round a triangle of quotes brings one unit back as exactly one unit.
 
-The same rules in units: $S_{AB}$ is "B per A". Then "USD per EUR" times "JPY per USD" is "JPY per EUR". The dollars cancel like metres in "metres per second times seconds".
+The same rules in units: $`S_{AB}`$ is "B per A". Then "USD per EUR" times "JPY per USD" is "JPY per EUR". The dollars cancel like metres in "metres per second times seconds".
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the **base** currency, written first: the thing with the price tag. Pricing papers call it **foreign**. | EUR | — |
-| $B$ | the **quote** currency, written second: the money the price is counted in. Pricing papers call it **domestic**. | USD | — |
-| $C$ | a third currency, used to build a cross | JPY | — |
-| $S_{AB}$ | price of one A, in units of B | EURUSD 1.1000 | the euro is dearer, the dollar cheaper |
-| $S_{BC}$ | price of one B, in units of C | USDJPY 150.00 | the dollar is dearer, the yen cheaper |
-| $S_{BA}$ | the flipped quote: price of one B in A | 0.909091 euros per dollar | falls whenever $S_{AB}$ rises |
-| $S_{AC}$ | the **cross**: price of one A in C, built through B | EURJPY 165.00 | rises with either leg |
-| $S_{CA}$ | price of one C in A, the leg that closes a triangle | 1/165.50 euros per yen, at the broker | — |
-| $e$ | the **edge**: how far a quoted cross sits from the built one, as a fraction | 165.50/165.00 − 1 = 0.3030% | a bigger free loop |
-| $b$, $a$ | the **bid** and **ask**: the prices at which a dealer buys and sells the base currency | EURUSD 1.0999 and 1.1001 | a wider gap eats more of any loop |
-| $q$ | a cross price quoted directly by a dealer, to be checked against the built one | broker EURJPY 165.50 | above the band, selling euros to the dealer pays |
-| $p$ | a **pip**: the smallest customary step in the price | 0.0001 for EURUSD, 0.01 for any pair against yen | — |
+| $`A`$ | the **base** currency, written first: the thing with the price tag. Pricing papers call it **foreign**. | EUR | — |
+| $`B`$ | the **quote** currency, written second: the money the price is counted in. Pricing papers call it **domestic**. | USD | — |
+| $`C`$ | a third currency, used to build a cross | JPY | — |
+| $`S_{AB}`$ | price of one A, in units of B | EURUSD 1.1000 | the euro is dearer, the dollar cheaper |
+| $`S_{BC}`$ | price of one B, in units of C | USDJPY 150.00 | the dollar is dearer, the yen cheaper |
+| $`S_{BA}`$ | the flipped quote: price of one B in A | 0.909091 euros per dollar | falls whenever $`S_{AB}`$ rises |
+| $`S_{AC}`$ | the **cross**: price of one A in C, built through B | EURJPY 165.00 | rises with either leg |
+| $`S_{CA}`$ | price of one C in A, the leg that closes a triangle | 1/165.50 euros per yen, at the broker | — |
+| $`e`$ | the **edge**: how far a quoted cross sits from the built one, as a fraction | 165.50/165.00 − 1 = 0.3030% | a bigger free loop |
+| $`b`$, $`a`$ | the **bid** and **ask**: the prices at which a dealer buys and sells the base currency | EURUSD 1.0999 and 1.1001 | a wider gap eats more of any loop |
+| $`q`$ | a cross price quoted directly by a dealer, to be checked against the built one | broker EURJPY 165.50 | above the band, selling euros to the dealer pays |
+| $`p`$ | a **pip**: the smallest customary step in the price | 0.0001 for EURUSD, 0.01 for any pair against yen | — |
 
 A cross between two currencies that are both quoted against the same money currency divides instead of multiplying. The pound is quoted as GBPUSD 1.2500, dollars per pound. Flip it to get pounds per dollar, then multiply: EURGBP = 1.1000 × (1/1.2500) = 1.1000 / 1.2500 = 0.8800. The rule never changes; only where the flip hides does.
 
 With a dealer's two prices, the flip swaps them. The dealer's bid for dollars in euros is one over the ask for euros in dollars:
 
-$$b_{BA} = \frac{1}{a_{AB}}, \qquad a_{BA} = \frac{1}{b_{AB}}$$
+```math
+b_{BA} = \frac{1}{a_{AB}}, \qquad a_{BA} = \frac{1}{b_{AB}}
+```
 
 In words: the dealer who sells euros at 1.1001 dollars is, from the other side, buying dollars at 1/1.1001 euros each.
 
@@ -118,15 +122,15 @@ So without free money, the product round the triangle is exactly 1, which is the
 <details>
 <summary>Detailed proof: without free loops, the cross sits inside the band built from the legs</summary>
 
-Let every leg carry a bid and an ask, and suppose a dealer quotes the cross at a single price $q$, dealt both ways. Selling one euro through dollars into yen gives $b_{AB} \times b_{BC}$ yen, since each sale happens at a dealer's bid. Buying one euro through dollars with yen costs $a_{AB} \times a_{BC}$ yen, since each purchase happens at an ask.
+Let every leg carry a bid and an ask, and suppose a dealer quotes the cross at a single price $`q`$, dealt both ways. Selling one euro through dollars into yen gives $`b_{AB} \times b_{BC}`$ yen, since each sale happens at a dealer's bid. Buying one euro through dollars with yen costs $`a_{AB} \times a_{BC}`$ yen, since each purchase happens at an ask.
 
-If $q > a_{AB}\,a_{BC}$: buy a euro the long way for $a_{AB}\,a_{BC}$ yen and sell it to the cross dealer for $q$. The euro is gone, the yen gained is $q - a_{AB}\,a_{BC} > 0$. Free money.
+If $`q > a_{AB}\,a_{BC}`$: buy a euro the long way for $`a_{AB}\,a_{BC}`$ yen and sell it to the cross dealer for $`q`$. The euro is gone, the yen gained is $`q - a_{AB}\,a_{BC} > 0`$. Free money.
 
-If $q < b_{AB}\,b_{BC}$: buy a euro from the cross dealer for $q$ yen and sell it the long way for $b_{AB}\,b_{BC}$. Free money again.
+If $`q < b_{AB}\,b_{BC}`$: buy a euro from the cross dealer for $`q`$ yen and sell it the long way for $`b_{AB}\,b_{BC}`$. Free money again.
 
-So no free loop exists exactly when $b_{AB}\,b_{BC} \le q \le a_{AB}\,a_{BC}$. With the example's legs, that band is 164.974001 to 165.026001 yen. When bid and ask meet at one mid price, the band closes to a single point, $q = S_{AB}\,S_{BC}$, which is the cross formula. The edge a loop keeps is $q / (a_{AB}\,a_{BC}) - 1$ above the band, 0.2872% for a broker at 165.50, and $(b_{AB}\,b_{BC})/q - 1$ below it.
+So no free loop exists exactly when $`b_{AB}\,b_{BC} \le q \le a_{AB}\,a_{BC}`$. With the example's legs, that band is 164.974001 to 165.026001 yen. When bid and ask meet at one mid price, the band closes to a single point, $`q = S_{AB}\,S_{BC}`$, which is the cross formula. The edge a loop keeps is $`q / (a_{AB}\,a_{BC}) - 1`$ above the band, 0.2872% for a broker at 165.50, and $`(b_{AB}\,b_{BC})/q - 1`$ below it.
 
-If the cross dealer also quotes a bid and an ask, a loop pays only when the dealer's bid is above $a_{AB}\,a_{BC}$ or the dealer's ask is below $b_{AB}\,b_{BC}$. A broker quoting 165.00/166.00 has mid 165.50, yet its bid sits below 165.026001 and its ask above 164.974001: no loop pays.
+If the cross dealer also quotes a bid and an ask, a loop pays only when the dealer's bid is above $`a_{AB}\,a_{BC}`$ or the dealer's ask is below $`b_{AB}\,b_{BC}`$. A broker quoting 165.00/166.00 has mid 165.50, yet its bid sits below 165.026001 and its ask above 164.974001: no loop pays.
 
 </details>
 
@@ -555,9 +559,9 @@ The two outputs agree line for line.
 
 Lean proves the three loop rules of Why it works for any positive quotes, and checks the worked numbers.
 
-- Take positive quotes $S_{AB}$ and $S_{BC}$, and a cross $q$ dealt both ways. Then no loop round the triangle pays exactly when $q = S_{AB}\,S_{BC}$.
-- Take legs with positive bids and asks, and a cross $q$ dealt both ways. Then no loop pays exactly when $b_{AB}\,b_{BC} \le q \le a_{AB}\,a_{BC}$.
-- Take the same positive quotes, with $q \ne S_{AB}\,S_{BC}$. Then exactly one of the two loop directions pays.
+- Take positive quotes $`S_{AB}`$ and $`S_{BC}`$, and a cross $`q`$ dealt both ways. Then no loop round the triangle pays exactly when $`q = S_{AB}\,S_{BC}`$.
+- Take legs with positive bids and asks, and a cross $`q`$ dealt both ways. Then no loop pays exactly when $`b_{AB}\,b_{BC} \le q \le a_{AB}\,a_{BC}`$.
+- Take the same positive quotes, with $`q \ne S_{AB}\,S_{BC}`$. Then exactly one of the two loop directions pays.
 - The worked numbers come out exactly: USDEUR 10/11, EURJPY 165.00, EURGBP 0.8800, 50 pips, and an edge of 1/330.
 - The loop keeps 50,000 yen. The band runs from 164.974001 to 165.026001, and 165.50 sits above it.
 - A 165.00/166.00 broker leaves no loop that pays, and the multiply mistake gives 1.3750.

@@ -41,55 +41,61 @@ Orange: forward difference for the slope. Green: central difference for the slop
 
 The balance itself is on [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md): truncation grows with the step, rounding shrinks with it, and the best step balances them. This card writes all three formulas as one law, then turns it into a rule that needs no derivatives.
 
-A difference formula for the $k$-th derivative, accurate to order $p$, has a total error of about
+A difference formula for the $`k`$-th derivative, accurate to order $`p`$, has a total error of about
 
-$$E(h) \;\approx\; A\,h^{p} \;+\; \frac{B\,\eta}{h^{k}}.$$
+```math
+E(h) \;\approx\; A\,h^{p} \;+\; \frac{B\,\eta}{h^{k}}.
+```
 
-**Read it aloud:** the error is a truncation part that grows like the step to the power $p$, plus a rounding part, the noise in each value divided by the step to the power $k$.
+**Read it aloud:** the error is a truncation part that grows like the step to the power $`p`$, plus a rounding part, the noise in each value divided by the step to the power $`k`$.
 
 It is smallest at
 
-$$h^\ast = \left(\frac{k\,B\,\eta}{p\,A}\right)^{1/(p+k)}, \qquad E^\ast = \Big(1 + \frac{p}{k}\Big)\,A\,(h^\ast)^{p}.$$
+```math
+h^\ast = \left(\frac{k\,B\,\eta}{p\,A}\right)^{1/(p+k)}, \qquad E^\ast = \Big(1 + \frac{p}{k}\Big)\,A\,(h^\ast)^{p}.
+```
 
-**Read it aloud:** the best step is the $(p+k)$-th root of the noise over the truncation constant, and at that step the truncation part is $k/(p+k)$ of the whole error.
+**Read it aloud:** the best step is the $`(p+k)`$-th root of the noise over the truncation constant, and at that step the truncation part is $`k/(p+k)`$ of the whole error.
 
 When the derivatives are unknown, the rule is
 
-$$h \;=\; \varepsilon_{\text{mach}}^{\,1/(p+k)}\,\max\big(|x|,\ x_{\text{typ}}\big), \quad \text{rounded to a power of two.}$$
+```math
+h \;=\; \varepsilon_{\text{mach}}^{\,1/(p+k)}\,\max\big(|x|,\ x_{\text{typ}}\big), \quad \text{rounded to a power of two.}
+```
 
-**Read it aloud:** take the $(p+k)$-th root of machine epsilon, scale it by the size of the input, and round it to a step the machine stores exactly.
+**Read it aloud:** take the $`(p+k)`$-th root of machine epsilon, scale it by the size of the input, and round it to a step the machine stores exactly.
 
 The three formulas on this shelf fill in the letters:
 
-| Formula | Difference | $k$ | $p$ | $A$ | $B$ | Best step grows like | Best error grows like |
+| Formula | Difference | $`k`$ | $`p`$ | $`A`$ | $`B`$ | Best step grows like | Best error grows like |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Forward | $\big(f(x+h) - f(x)\big)/h$ | 1 | 1 | $\lvert f''\rvert/2$ | 2 | $\eta^{1/2}$ | $\eta^{1/2}$ |
-| Central | $\big(f(x+h) - f(x-h)\big)/(2h)$ | 1 | 2 | $\lvert f'''\rvert/6$ | 1 | $\eta^{1/3}$ | $\eta^{2/3}$ |
-| Second | $\big(f(x+h) - 2f(x) + f(x-h)\big)/h^2$ | 2 | 2 | $\lvert f''''\rvert/12$ | 4 | $\eta^{1/4}$ | $\eta^{1/2}$ |
+| Forward | $`\big(f(x+h) - f(x)\big)/h`$ | 1 | 1 | $`\lvert f''\rvert/2`$ | 2 | $`\eta^{1/2}`$ | $`\eta^{1/2}`$ |
+| Central | $`\big(f(x+h) - f(x-h)\big)/(2h)`$ | 1 | 2 | $`\lvert f'''\rvert/6`$ | 1 | $`\eta^{1/3}`$ | $`\eta^{2/3}`$ |
+| Second | $`\big(f(x+h) - 2f(x) + f(x-h)\big)/h^2`$ | 2 | 2 | $`\lvert f''''\rvert/12`$ | 4 | $`\eta^{1/4}`$ | $`\eta^{1/2}`$ |
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f(x)$ | the function being differentiated | the bond price $P(y)$: 100.000000000 dollars at 0.05 | — |
-| $f'$, $f''$, $f'''$, $f''''$, $f^{(j)}$ | its first to fourth derivatives; $f^{(j)}$ is the $j$-th | −1537.245102688, 35046.6671183, −931746.817574, 26954091.1777 | larger $A$, smaller best step |
-| $x$ | the input where the derivative is wanted | the yield, 0.05 as a decimal or 500 in basis points | the rule's step grows with it |
-| $h$ | the step, in the same units as $x$ | 1e-12, then the rule's 9.31e-10 | truncation grows, rounding shrinks |
-| $k$, $p$ | the derivative's order and the formula's order of accuracy | $k = 1$, $p = 1$ for forward | — |
-| $A$, $B$ | the truncation constant (a derivative over a count) and the noise multiplier | $A = 35046.6671183/2$, $B = 2$ for forward | best step shrinks, grows |
-| $\eta$ | the noise in each computed value of $f$, read "eta" | 1.64e-13 dollars, estimated from the code; 0.005 on cent quotes | best step and best error grow |
-| $\varepsilon_{\text{mach}}$ | machine epsilon, $2^{-52}$: the gap between 1 and the next double | 2.22e-16 | — |
-| $x_{\text{typ}}$ | a typical size of $x$, in its own units, used when $x$ is near zero | 0.05 for a yield | larger floor on the step |
-| $h^\ast$, $E^\ast$ | the best step and the error there | 4.32e-9 and about 9.85e-8 of the slope, forward | — |
-| $E(h)$ | the total error at step $h$ | 1.11e-4 of the slope at 1e-12, forward | — |
-| $a$, $w$ | height and width of a wiggle added to the data (Step 5) | 0.004 dollars and 0.0001 in yield | the slope gap $2\pi a/w$ grows |
+| $`f(x)`$ | the function being differentiated | the bond price $`P(y)`$: 100.000000000 dollars at 0.05 | — |
+| $`f'`$, $`f''`$, $`f'''`$, $`f''''`$, $`f^{(j)}`$ | its first to fourth derivatives; $`f^{(j)}`$ is the $`j`$-th | −1537.245102688, 35046.6671183, −931746.817574, 26954091.1777 | larger $`A`$, smaller best step |
+| $`x`$ | the input where the derivative is wanted | the yield, 0.05 as a decimal or 500 in basis points | the rule's step grows with it |
+| $`h`$ | the step, in the same units as $`x`$ | 1e-12, then the rule's 9.31e-10 | truncation grows, rounding shrinks |
+| $`k`$, $`p`$ | the derivative's order and the formula's order of accuracy | $`k = 1`$, $`p = 1`$ for forward | — |
+| $`A`$, $`B`$ | the truncation constant (a derivative over a count) and the noise multiplier | $`A = 35046.6671183/2`$, $`B = 2`$ for forward | best step shrinks, grows |
+| $`\eta`$ | the noise in each computed value of $`f`$, read "eta" | 1.64e-13 dollars, estimated from the code; 0.005 on cent quotes | best step and best error grow |
+| $`\varepsilon_{\text{mach}}`$ | machine epsilon, $`2^{-52}`$: the gap between 1 and the next double | 2.22e-16 | — |
+| $`x_{\text{typ}}`$ | a typical size of $`x`$, in its own units, used when $`x`$ is near zero | 0.05 for a yield | larger floor on the step |
+| $`h^\ast`$, $`E^\ast`$ | the best step and the error there | 4.32e-9 and about 9.85e-8 of the slope, forward | — |
+| $`E(h)`$ | the total error at step $`h`$ | 1.11e-4 of the slope at 1e-12, forward | — |
+| $`a`$, $`w`$ | height and width of a wiggle added to the data (Step 5) | 0.004 dollars and 0.0001 in yield | the slope gap $`2\pi a/w`$ grows |
 
-Here $2\pi$ is twice pi, the full turn of a sine wave.
+Here $`2\pi`$ is twice pi, the full turn of a sine wave.
 
 ### When it holds
 
-- **The noise is a fixed size per value.** Code with a stopping tolerance, such as an iterative solver, has noise that jumps when its iteration count changes. Then $\eta$ is the size of that jump, and only a measured $\eta$ is safe.
-- **The function changes on the scale of $x$.** The rule assumes $\lvert f^{(j)}\rvert \approx \lvert f\rvert/\lvert x\rvert^j$ (Step 2). An input near zero breaks this; that is what $x_{\text{typ}}$ is for.
-- **The function is smooth across the bump.** The truncation law needs $f''$, $f'''$ or $f''''$ across $[x - h, x + h]$. At a kink no step helps.
-- **The step reaches the function intact.** If $x + h$ is rounded, the quotient divides by the wrong step (Step 3).
+- **The noise is a fixed size per value.** Code with a stopping tolerance, such as an iterative solver, has noise that jumps when its iteration count changes. Then $`\eta`$ is the size of that jump, and only a measured $`\eta`$ is safe.
+- **The function changes on the scale of $`x`$.** The rule assumes $`\lvert f^{(j)}\rvert \approx \lvert f\rvert/\lvert x\rvert^j`$ (Step 2). An input near zero breaks this; that is what $`x_{\text{typ}}`$ is for.
+- **The function is smooth across the bump.** The truncation law needs $`f''`$, $`f'''`$ or $`f''''`$ across $`[x - h, x + h]`$. At a kink no step helps.
+- **The step reaches the function intact.** If $`x + h`$ is rounded, the quotient divides by the wrong step (Step 3).
 - **The data are computed, not measured.** Measured or quoted data carry far larger noise, and the ill-posedness of differentiation then dominates (Step 5).
 
 ---
@@ -98,32 +104,34 @@ Here $2\pi$ is twice pi, the full turn of a sine wave.
 
 ### Step 0: two errors pull in opposite directions
 
-Every difference quotient makes two errors ([Two different errors](../01-Floating%20Point%20and%20Error/04-truncation-versus-rounding-error.md)). Truncation comes from the finite step; Taylor's theorem gives it as $A h^p$. Rounding comes from noise $\eta$ in each value of $f$; the formula adds a few such values and divides by $h^k$, so it grows as $B\eta/h^k$. One rises as $h$ falls, the other falls. A sum of a rising and a falling power has one lowest point.
+Every difference quotient makes two errors ([Two different errors](../01-Floating%20Point%20and%20Error/04-truncation-versus-rounding-error.md)). Truncation comes from the finite step; Taylor's theorem gives it as $`A h^p`$. Rounding comes from noise $`\eta`$ in each value of $`f`$; the formula adds a few such values and divides by $`h^k`$, so it grows as $`B\eta/h^k`$. One rises as $`h`$ falls, the other falls. A sum of a rising and a falling power has one lowest point.
 
 ### Step 1: the best step for any formula
 
-Set the rate of change of $E(h)$ to zero:
+Set the rate of change of $`E(h)`$ to zero:
 
-$$p A h^{p-1} - \frac{k B \eta}{h^{k+1}} = 0 \quad\Longrightarrow\quad h^{p+k} = \frac{k B \eta}{p A}.$$
+```math
+p A h^{p-1} - \frac{k B \eta}{h^{k+1}} = 0 \quad\Longrightarrow\quad h^{p+k} = \frac{k B \eta}{p A}.
+```
 
-At that step, $p A h^p = k B \eta / h^k$. So the rounding part is $p/k$ times the truncation part, and the total is $(1 + p/k) A h^p$.
+At that step, $`p A h^p = k B \eta / h^k`$. So the rounding part is $`p/k`$ times the truncation part, and the total is $`(1 + p/k) A h^p`$.
 
 <details>
 <summary>Detailed proof: this point is the minimum, and the error there falls like a power of the noise</summary>
 
-For $h > 0$, $E'(h) = pAh^{p-1} - kB\eta h^{-k-1}$. Multiply by $h^{k+1} > 0$: the sign of $E'(h)$ is the sign of $pAh^{p+k} - kB\eta$. That is negative below $h^\ast$ and positive above it. So $E$ falls, then rises, and $h^\ast$ is its only minimum.
+For $`h > 0`$, $`E'(h) = pAh^{p-1} - kB\eta h^{-k-1}`$. Multiply by $`h^{k+1} > 0`$: the sign of $`E'(h)`$ is the sign of $`pAh^{p+k} - kB\eta`$. That is negative below $`h^\ast`$ and positive above it. So $`E`$ falls, then rises, and $`h^\ast`$ is its only minimum.
 
-Substitute $h^\ast$ into $A h^p$:
+Substitute $`h^\ast`$ into $`A h^p`$:
 
-$$E^\ast = \Big(1 + \frac{p}{k}\Big) A \left(\frac{kB\eta}{pA}\right)^{p/(p+k)} \;\propto\; A^{k/(p+k)}\,\eta^{p/(p+k)}.$$
+$`\displaystyle E^\ast = \Big(1 + \frac{p}{k}\Big) A \left(\frac{kB\eta}{pA}\right)^{p/(p+k)} \;\propto\; A^{k/(p+k)}\,\eta^{p/(p+k)}.`$
 
-For forward, $p/(p+k) = 1/2$; for central, $2/3$; for the second difference, $1/2$. The best error is a fixed power of the noise. More noise always costs digits, but a higher order $p$ costs fewer of them.
+For forward, $`p/(p+k) = 1/2`$; for central, $`2/3`$; for the second difference, $`1/2`$. The best error is a fixed power of the noise. More noise always costs digits, but a higher order $`p`$ costs fewer of them.
 
 </details>
 
-For the bond the noise, estimated from the code (Step 3), is $\eta$ = 1.64e-13 dollars. The table compares the predicted best step with a search over powers of ten. The search measures the typical (root-mean-square) relative error over 201 yields.
+For the bond the noise, estimated from the code (Step 3), is $`\eta`$ = 1.64e-13 dollars. The table compares the predicted best step with a search over powers of ten. The search measures the typical (root-mean-square) relative error over 201 yields.
 
-| Formula | $h^\ast$ from $\eta$ | Its error | Law $E^\ast$ | Ratio | Best power of ten | Its error |
+| Formula | $`h^\ast`$ from $`\eta`$ | Its error | Law $`E^\ast`$ | Ratio | Best power of ten | Its error |
 | --- | --- | --- | --- | --- | --- | --- |
 | Forward | 4.32e-9 | 5.35e-8 | 9.85e-8 | 0.54 | 1e-8 | 1.14e-7 |
 | Central | 8.07e-7 | 1.00e-10 | 1.98e-10 | 0.51 | 1e-6 | 1.12e-10 |
@@ -131,26 +139,28 @@ For the bond the noise, estimated from the code (Step 3), is $\eta$ = 1.64e-13 d
 
 The law overstates the error by about two, as expected: it adds each value's noise at full size, while real rounding errors partly cancel.
 
-### Step 2: why the step scales with the size of $x$
+### Step 2: why the step scales with the size of $`x`$
 
-The law needs $\eta$ and a derivative, and usually neither is known. Two guesses replace them.
+The law needs $`\eta`$ and a derivative, and usually neither is known. Two guesses replace them.
 
-- **Noise:** a value computed in double precision is off by a small multiple of $\varepsilon_{\text{mach}}\,\lvert f\rvert$. For the bond, the estimated $\eta$ is 7.4 times $\varepsilon_{\text{mach}} P$.
-- **Derivatives:** a function that changes on the scale of $x$ has $\lvert f^{(j)}\rvert \approx \lvert f\rvert/\lvert x\rvert^j$. For the bond those scales are 0.0534, 0.0475 and 0.0439, against a yield of 0.05.
+- **Noise:** a value computed in double precision is off by a small multiple of $`\varepsilon_{\text{mach}}\,\lvert f\rvert`$. For the bond, the estimated $`\eta`$ is 7.4 times $`\varepsilon_{\text{mach}} P`$.
+- **Derivatives:** a function that changes on the scale of $`x`$ has $`\lvert f^{(j)}\rvert \approx \lvert f\rvert/\lvert x\rvert^j`$. For the bond those scales are 0.0534, 0.0475 and 0.0439, against a yield of 0.05.
 
-Put both into $h^{p+k} = kB\eta/(pA)$. The factor $\lvert f\rvert$ cancels, and what is left is
+Put both into $`h^{p+k} = kB\eta/(pA)`$. The factor $`\lvert f\rvert`$ cancels, and what is left is
 
-$$h \;\approx\; \text{a modest constant} \times \varepsilon_{\text{mach}}^{1/(p+k)}\,\lvert x\rvert.$$
+```math
+h \;\approx\; \text{a modest constant} \times \varepsilon_{\text{mach}}^{1/(p+k)}\,\lvert x\rvert.
+```
 
-The roots of $\varepsilon_{\text{mach}}$ are 1.49e-8, 6.06e-6 and 1.22e-4 for $p + k$ = 2, 3, 4. The factor $\lvert x\rvert$ makes the rule blind to units. A yield of 0.05 gets a forward step of 9.31e-10; the same yield written as 500 basis points gets 7.63e-6 basis points. Both bump the bond by about the same amount. Their typical errors are 5.91e-8 and 1.26e-7. The second is about twice the first because the code divides by 10,000 to turn basis points back into a yield, so its step is no longer exact (Step 3).
+The roots of $`\varepsilon_{\text{mach}}`$ are 1.49e-8, 6.06e-6 and 1.22e-4 for $`p + k`$ = 2, 3, 4. The factor $`\lvert x\rvert`$ makes the rule blind to units. A yield of 0.05 gets a forward step of 9.31e-10; the same yield written as 500 basis points gets 7.63e-6 basis points. Both bump the bond by about the same amount. Their typical errors are 5.91e-8 and 1.26e-7. The second is about twice the first because the code divides by 10,000 to turn basis points back into a yield, so its step is no longer exact (Step 3).
 
 A fixed step is not blind to units. A trillionth is 2e-11 of a yield of 0.05, but only 2e-15 of 500. Turned back into a yield, the second step is 1e-16. That is smaller than the spacing of doubles near 1 + y, which the code forms first, so the price never changes and the slope comes out as 0.0.
 
-The constants do not matter much. The rule's forward step, 9.31e-10, is 4.6 times smaller than $h^\ast$ = 4.32e-9, yet its error, 5.91e-8, is almost the same as the 5.35e-8 at $h^\ast$. Near its minimum $E(h)$ is flat. For a forward difference, the law says a step some factor too large or too small multiplies the error by the average of that factor and its reciprocal; the run lost even less.
+The constants do not matter much. The rule's forward step, 9.31e-10, is 4.6 times smaller than $`h^\ast`$ = 4.32e-9, yet its error, 5.91e-8, is almost the same as the 5.35e-8 at $`h^\ast`$. Near its minimum $`E(h)`$ is flat. For a forward difference, the law says a step some factor too large or too small multiplies the error by the average of that factor and its reciprocal; the run lost even less.
 
 ### Step 3: the step the machine actually takes
 
-A computer cannot store most numbers exactly. It stores $x + h$ as the nearest double, so the step that reaches $f$ is $(x + h) - x$, not $h$. In basis points, a trillionth added to 500 becomes a step of 1.023182e-12, which is 2.32e-2 too long. A quotient divided by $h$ is then 2.3% wrong before any other error.
+A computer cannot store most numbers exactly. It stores $`x + h`$ as the nearest double, so the step that reaches $`f`$ is $`(x + h) - x`$, not $`h`$. In basis points, a trillionth added to 500 becomes a step of 1.023182e-12, which is 2.32e-2 too long. A quotient divided by $`h`$ is then 2.3% wrong before any other error.
 
 The classic repair is to compute the step that was taken:
 
@@ -159,34 +169,36 @@ temp = x + h
 h = temp - x        (exact: both are doubles close together)
 ```
 
-That fixes the step in $x$. The bond code then forms $1 + y$, a bigger number with coarser spacing, and rounds again. A step that is a **power of two**, and no smaller than the spacing of doubles near the largest number it is added to, is exact at every stage. Over the 201 yields:
+That fixes the step in $`x`$. The bond code then forms $`1 + y`$, a bigger number with coarser spacing, and rounds again. A step that is a **power of two**, and no smaller than the spacing of doubles near the largest number it is added to, is exact at every stage. Over the 201 yields:
 
 | Step | Typical relative error | Same step times 1.0001 |
 | --- | --- | --- |
-| $2^{-30}$ (about 9.31e-10) | 5.91e-8 | 1.31e-7 |
-| $2^{-40}$ (about a trillionth) | 6.29e-5 | 1.26e-4 |
+| $`2^{-30}`$ (about 9.31e-10) | 5.91e-8 | 1.31e-7 |
+| $`2^{-40}`$ (about a trillionth) | 6.29e-5 | 1.26e-4 |
 
 An exact step halves the error at both sizes. The inexact step adds the rounding of the inputs to the rounding of the outputs. The best power of ten, 1e-8, loses for another reason: it is too large, and truncation alone gives 1.14e-7. Its neighbour 1e-9 is about the rule's size but not exact, and loses a factor of two: 1.19e-7 against 5.91e-8.
 
-The noise $\eta$ itself can be measured. Take many values of $f$ a tiny distance apart and form their fourth differences. The smooth part of $f$ is wiped out, and what remains is noise magnified by a known factor, $\sqrt{70}$. Four hundred prices 1e-12 apart give the estimate $\eta$ = 1.64e-13 dollars. The Python check also computes the exact rounding error of 100 of those prices in fractions, and asserts that the estimate is within a factor of two of its typical size.
+The noise $`\eta`$ itself can be measured. Take many values of $`f`$ a tiny distance apart and form their fourth differences. The smooth part of $`f`$ is wiped out, and what remains is noise magnified by a known factor, $`\sqrt{70}`$. Four hundred prices 1e-12 apart give the estimate $`\eta`$ = 1.64e-13 dollars. The Python check also computes the exact rounding error of 100 of those prices in fractions, and asserts that the estimate is within a factor of two of its typical size.
 
 ### Step 4: the best step for a second derivative
 
-The bond's convexity comes from the second difference. It divides by $h^2$, so its rounding part is $4\eta/h^2$, and $k = 2$. The best step is a fourth root of the noise, and the best error a square root:
+The bond's convexity comes from the second difference. It divides by $`h^2`$, so its rounding part is $`4\eta/h^2`$, and $`k = 2`$. The best step is a fourth root of the noise, and the best error a square root:
 
-$$h^\ast = \left(\frac{48\,\eta}{\lvert f''''\rvert}\right)^{1/4}, \qquad E^\ast = 2\sqrt{\frac{\eta\,\lvert f''''\rvert}{3}}.$$
+```math
+h^\ast = \left(\frac{48\,\eta}{\lvert f''''\rvert}\right)^{1/4}, \qquad E^\ast = 2\sqrt{\frac{\eta\,\lvert f''''\rvert}{3}}.
+```
 
-The rule gives $2^{-17}$, about 7.63e-6, with a typical error of 7.47e-8. That is about half the digits of a double, as for a forward slope. Reusing the central slope's step, 2.38e-7, for the curvature gives 7.68e-5: a thousand times worse.
+The rule gives $`2^{-17}`$, about 7.63e-6, with a typical error of 7.47e-8. That is about half the digits of a double, as for a forward slope. Reusing the central slope's step, 2.38e-7, for the curvature gives 7.68e-5: a thousand times worse.
 
 ### Step 5: on noisy data, differentiation is ill-posed
 
 A problem is **well-posed** when it has a solution, only one, and the solution moves only a little when the data move a little. Differentiation fails the last test.
 
-Add a small wiggle to the bond's price curve: $a \sin\!\big(2\pi (y - 0.05)/w\big)$, with height $a$ = 0.004 dollars and width $w$ = 0.0001. Every price moves by less than half a cent. The slope at 0.05 moves by $2\pi a / w$ = 251.3, and the code computes −1285.9 instead of −1537.2. Make $w$ smaller and the gap grows without limit. So data that agree to within half a cent can have any slopes at all.
+Add a small wiggle to the bond's price curve: $`a \sin\!\big(2\pi (y - 0.05)/w\big)`$, with height $`a`$ = 0.004 dollars and width $`w`$ = 0.0001. Every price moves by less than half a cent. The slope at 0.05 moves by $`2\pi a / w`$ = 251.3, and the code computes −1285.9 instead of −1537.2. Make $`w`$ smaller and the gap grows without limit. So data that agree to within half a cent can have any slopes at all.
 
-In practice the noise is fixed by the data, and the step decides how much of it is amplified. On prices quoted to the cent, $\eta$ = 0.005. A central bump of a trillionth sees two equal quotes and returns 0.0. A one-basis-point bump returns −1500.0, off by 2.42%. The law's step is $(3\eta/\lvert P'''\rvert)^{1/3}$ = 2.53e-3 (25.3 basis points). It returns −1538.6, off by 1.36 against the law's estimate of 2.97 (ratio 0.46).
+In practice the noise is fixed by the data, and the step decides how much of it is amplified. On prices quoted to the cent, $`\eta`$ = 0.005. A central bump of a trillionth sees two equal quotes and returns 0.0. A one-basis-point bump returns −1500.0, off by 2.42%. The law's step is $`(3\eta/\lvert P'''\rvert)^{1/3}`$ = 2.53e-3 (25.3 basis points). It returns −1538.6, off by 1.36 against the law's estimate of 2.97 (ratio 0.46).
 
-The step works as a smoothing setting: larger steps average more noise and admit more truncation. The best error falls only like $\eta^{2/3}$, so ten times cleaner quotes buy about 4.6 times less error. Fitting a low-degree polynomial to many quotes by least squares, then differentiating the fit, averages more noise per answer; in signal processing this is the Savitzky–Golay filter.
+The step works as a smoothing setting: larger steps average more noise and admit more truncation. The best error falls only like $`\eta^{2/3}`$, so ten times cleaner quotes buy about 4.6 times less error. Fitting a low-degree polynomial to many quotes by least squares, then differentiating the fit, averages more noise per answer; in signal processing this is the Savitzky–Golay filter.
 
 ---
 
@@ -211,9 +223,9 @@ The bumped slope is right to about one part in a thousand. No step does reliably
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | A trillionth step on a yield stored as 500 basis points | slope 0.0 | The step is 1e-16 in decimal yield, lost when the code forms 1 + y |
-| The rule's step without the factor $\lvert x\rvert$, on 500 basis points | typical error 5.77e-5, against 1.26e-7 | The step 1.49e-8 was meant for an input of size 1 |
+| The rule's step without the factor $`\lvert x\rvert`$, on 500 basis points | typical error 5.77e-5, against 1.26e-7 | The step 1.49e-8 was meant for an input of size 1 |
 | The central slope's step reused for the second difference | typical error 7.68e-5, against 7.47e-8 | A second derivative needs the fourth root, not the cube root |
-| A step that is not exact, $2^{-30}$ times 1.0001 | typical error 1.31e-7, against 5.91e-8 | The rounded inputs add their own noise |
+| A step that is not exact, $`2^{-30}`$ times 1.0001 | typical error 1.31e-7, against 5.91e-8 | The rounded inputs add their own noise |
 | A one-basis-point central bump on cent quotes | −1500.0, off by 2.42% | Noise of 0.005 divided by a step of 0.0001 |
 
 The code prints all five.
@@ -596,13 +608,13 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the best steps of Steps 1 and 4 and the wiggle of Step 5, for any positive constants and any orders $p, k \ge 1$.
+Lean proves the best steps of Steps 1 and 4 and the wiggle of Step 5, for any positive constants and any orders $`p, k \ge 1`$.
 
-- The law $E(h) = A h^p + B\eta/h^k$ falls up to $h^\ast = (kB\eta/(pA))^{1/(p+k)}$ and rises after it, so $h^\ast$ is its only minimum for $h > 0$.
-- At $h^\ast$ the rounding part is $p/k$ times the truncation part, and $E^\ast = (1 + p/k)\,A\,(h^\ast)^p$.
-- For the second difference, $E(h) = (\lvert f''''\rvert/12)\,h^2 + 4\eta/h^2$ is smallest at $h^\ast = (48\eta/\lvert f''''\rvert)^{1/4}$, with $E^\ast = 2\sqrt{\eta\,\lvert f''''\rvert/3}$.
-- Adding the wiggle $a \sin\!\big(2\pi (y - x)/w\big)$ to any function with a slope at $x$ moves every value by at most $a$, and the slope at $x$ by exactly $2\pi a/w$.
-- The best error's exponents $p/(p+k)$ are 1/2, 2/3 and 1/2 for forward, central and second, and $kB/(pA)$ is $48/\lvert f''''\rvert$ for the second difference.
+- The law $`E(h) = A h^p + B\eta/h^k`$ falls up to $`h^\ast = (kB\eta/(pA))^{1/(p+k)}`$ and rises after it, so $`h^\ast`$ is its only minimum for $`h > 0`$.
+- At $`h^\ast`$ the rounding part is $`p/k`$ times the truncation part, and $`E^\ast = (1 + p/k)\,A\,(h^\ast)^p`$.
+- For the second difference, $`E(h) = (\lvert f''''\rvert/12)\,h^2 + 4\eta/h^2`$ is smallest at $`h^\ast = (48\eta/\lvert f''''\rvert)^{1/4}`$, with $`E^\ast = 2\sqrt{\eta\,\lvert f''''\rvert/3}`$.
+- Adding the wiggle $`a \sin\!\big(2\pi (y - x)/w\big)`$ to any function with a slope at $`x`$ moves every value by at most $`a`$, and the slope at $`x`$ by exactly $`2\pi a/w`$.
+- The best error's exponents $`p/(p+k)`$ are 1/2, 2/3 and 1/2 for forward, central and second, and $`kB/(pA)`$ is $`48/\lvert f''''\rvert`$ for the second difference.
 
 Whether real errors follow the law, the scaling rule, exact steps, the measured noise and the bond's numbers are left to Python and Rust.
 
@@ -792,21 +804,21 @@ example : (2 : ℚ) * 4 / (2 * (1 / 12)) = 48 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - Guess first: quotes to a tenth of a cent instead of a cent. Set the rounding to 1000 and $\eta$ to 0.0005. The best step shrinks from 2.53e-3 to 1.17e-3, and the error falls from 1.36 to 0.29: about 4.6 times, as $\eta^{2/3}$ predicts.
-> - Guess first: a yield of 0.0001, almost zero. The rule with $\lvert x\rvert$ alone gives a step far too small, and a relative error of 5.21e-5. With $x_{\text{typ}}$ = 0.05 the error is 8.23e-8.
-> - Guess first: use $h^\ast$ from the measured noise instead of the rule. The forward error moves only from 5.91e-8 to 5.35e-8: the bottom of the curve is flat.
+> - Guess first: quotes to a tenth of a cent instead of a cent. Set the rounding to 1000 and $`\eta`$ to 0.0005. The best step shrinks from 2.53e-3 to 1.17e-3, and the error falls from 1.36 to 0.29: about 4.6 times, as $`\eta^{2/3}`$ predicts.
+> - Guess first: a yield of 0.0001, almost zero. The rule with $`\lvert x\rvert`$ alone gives a step far too small, and a relative error of 5.21e-5. With $`x_{\text{typ}}`$ = 0.05 the error is 8.23e-8.
+> - Guess first: use $`h^\ast`$ from the measured noise instead of the rule. The forward error moves only from 5.91e-8 to 5.35e-8: the bottom of the curve is flat.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Picking the step as an absolute number.** A step such as 1e-6 or 1e-12 means nothing until it is compared with the size of the input. A trillionth gave four digits on a yield of 0.05 and none on the same yield written as 500 basis points. Scale the step by $\max(\lvert x\rvert, x_{\text{typ}})$.
+> **Picking the step as an absolute number.** A step such as 1e-6 or 1e-12 means nothing until it is compared with the size of the input. A trillionth gave four digits on a yield of 0.05 and none on the same yield written as 500 basis points. Scale the step by $`\max(\lvert x\rvert, x_{\text{typ}})`$.
 >
 > Smaller traps:
 > - **One root for every formula.** The square root is for forward slopes, the cube root for central slopes and the fourth root for second differences. The cube-root step used for the bond's curvature gives 7.68e-5 against 7.47e-8.
 > - **Ignoring the step the machine took.** A trillionth added to 500 becomes a step 2.32e-2 too long. Use `temp = x + h; h = temp - x`, or a power of two.
-> - **Assuming the noise is $\varepsilon_{\text{mach}}$.** The bond's estimated noise is 7.4 times $\varepsilon_{\text{mach}} P$, and code with a stopping tolerance can be far noisier. When in doubt, measure the noise.
+> - **Assuming the noise is $`\varepsilon_{\text{mach}}`$.** The bond's estimated noise is 7.4 times $`\varepsilon_{\text{mach}} P`$, and code with a stopping tolerance can be far noisier. When in doubt, measure the noise.
 > - **Shrinking the step on measured data.** On cent quotes a one-basis-point bump is off by 2.42% and a trillionth returns 0.0. With noisy data the step must grow until truncation and noise balance.
 
 ---
@@ -820,14 +832,14 @@ example : (2 : ℚ) * 4 / (2 * (1 / 12)) = 48 := by norm_num
 - **Simulated prices.** A Monte Carlo price carries random noise far above rounding, so its bump must be much larger: [Bumping a simulated price](08-bumped-sensitivities-and-monte-carlo-noise.md).
 
 > **Say it back**
-> A difference quotient has a truncation error that grows with the step and a rounding error that grows as the step shrinks. The best step is the $(p+k)$-th root of the noise over a derivative, and with no derivatives known it is that root of machine epsilon times the size of the input. A forward slope takes the square root, a central slope the cube root, and a second derivative the fourth root. The step should be one the machine stores exactly, such as a power of two. On noisy data no step is safe from the noise, because differentiation is ill-posed; the step becomes a smoothing setting.
+> A difference quotient has a truncation error that grows with the step and a rounding error that grows as the step shrinks. The best step is the $`(p+k)`$-th root of the noise over a derivative, and with no derivatives known it is that root of machine epsilon times the size of the input. A forward slope takes the square root, a central slope the cube root, and a second derivative the fourth root. The step should be one the machine stores exactly, such as a power of two. On noisy data no step is safe from the noise, because differentiation is ill-posed; the step becomes a smoothing setting.
 
 ---
 
 ## What this builds on
 
 - [Two different errors](../01-Floating%20Point%20and%20Error/04-truncation-versus-rounding-error.md): the split of every error into truncation and rounding, which this card turns into a best step.
-- [Richardson extrapolation](03-richardson-extrapolation.md): combining two steps to cancel the leading truncation term, which raises $p$ and so enlarges the best step.
+- [Richardson extrapolation](03-richardson-extrapolation.md): combining two steps to cancel the leading truncation term, which raises $`p`$ and so enlarges the best step.
 - [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md): the forward and central error laws, and the square-root and cube-root steps for a known noise level.
 
 ## Where this goes next
@@ -845,8 +857,8 @@ This card leaves one question open: when the noise is random, as in a simulated 
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Dennis, J. E., and Robert B. Schnabel. *Numerical Methods for Unconstrained Optimization and Nonlinear Equations*. SIAM Classics in Applied Mathematics, 1996. [doi:10.1137/1.9781611971200](https://doi.org/10.1137/1.9781611971200). The scaled step $\sqrt{\varepsilon_{\text{mach}}}\max(\lvert x\rvert, x_{\text{typ}})$ for finite-difference derivatives, with a typical size for inputs near zero.
-- Moré, Jorge J., and Stefan M. Wild. "Estimating Computational Noise." *SIAM Journal on Scientific Computing* 33, no. 3 (2011): 1292–1314. [doi:10.1137/100786125](https://doi.org/10.1137/100786125). Measuring $\eta$ from high-order differences, as in Step 3.
+- Dennis, J. E., and Robert B. Schnabel. *Numerical Methods for Unconstrained Optimization and Nonlinear Equations*. SIAM Classics in Applied Mathematics, 1996. [doi:10.1137/1.9781611971200](https://doi.org/10.1137/1.9781611971200). The scaled step $`\sqrt{\varepsilon_{\text{mach}}}\max(\lvert x\rvert, x_{\text{typ}})`$ for finite-difference derivatives, with a typical size for inputs near zero.
+- Moré, Jorge J., and Stefan M. Wild. "Estimating Computational Noise." *SIAM Journal on Scientific Computing* 33, no. 3 (2011): 1292–1314. [doi:10.1137/100786125](https://doi.org/10.1137/100786125). Measuring $`\eta`$ from high-order differences, as in Step 3.
 - Moré, Jorge J., and Stefan M. Wild. "Estimating Derivatives of Noisy Simulations." *ACM Transactions on Mathematical Software* 38, no. 3 (2012): 1–21. [doi:10.1145/2168773.2168777](https://doi.org/10.1145/2168773.2168777). Choosing the difference step from the measured noise.
 - Hanke, Martin, and Otmar Scherzer. "Inverse Problems Light: Numerical Differentiation." *The American Mathematical Monthly* 108, no. 6 (2001): 512–521. [doi:10.1080/00029890.2001.11919778](https://doi.org/10.1080/00029890.2001.11919778). Differentiation of noisy data as an ill-posed problem, and the step as its regulariser.
 - Savitzky, Abraham, and M. J. E. Golay. "Smoothing and Differentiation of Data by Simplified Least Squares Procedures." *Analytical Chemistry* 36, no. 8 (1964): 1627–1639. [doi:10.1021/ac60214a047](https://doi.org/10.1021/ac60214a047). The least-squares smoothing filter for differentiating measured data.

@@ -40,52 +40,62 @@ Each arrow reads "must finish before". The critical path is A → B → D → E 
 
 ## The formula
 
-Notation first, in words. Each job is a dot and each "must finish first" rule an arrow, written $i \to j$. That makes a directed graph. Because no job can wait on itself, it has no loop.
+Notation first, in words. Each job is a dot and each "must finish first" rule an arrow, written $`i \to j`$. That makes a directed graph. Because no job can wait on itself, it has no loop.
 
-So its jobs can be listed with every arrow pointing forward: a topological order. Kahn's peeling finds one: repeatedly take a job that has no arrow in from a job not yet taken ([Directed graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)). Job $j$ takes $p_j$ working days, its **processing time**. Times count working days from handover: a start of 3 means the job begins once 3 days are done.
+So its jobs can be listed with every arrow pointing forward: a topological order. Kahn's peeling finds one: repeatedly take a job that has no arrow in from a job not yet taken ([Directed graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)). Job $`j`$ takes $`p_j`$ working days, its **processing time**. Times count working days from handover: a start of 3 means the job begins once 3 days are done.
 
-**The forward pass.** Take the jobs in topological order. Write $ES_j$ and $EF_j$ for job $j$'s earliest start and earliest finish. A job with no arrow in starts at 0; every other job starts when its slowest predecessor finishes:
+**The forward pass.** Take the jobs in topological order. Write $`ES_j`$ and $`EF_j`$ for job $`j`$'s earliest start and earliest finish. A job with no arrow in starts at 0; every other job starts when its slowest predecessor finishes:
 
-$$ES_j = \max_{i \to j}\,\bigl(ES_i + p_i\bigr), \qquad EF_j = ES_j + p_j, \qquad T = \max_j EF_j$$
+```math
+ES_j = \max_{i \to j}\,\bigl(ES_i + p_i\bigr), \qquad EF_j = ES_j + p_j, \qquad T = \max_j EF_j
+```
 
 **Read it aloud:** a job starts as soon as the last thing it waits on is done, and the project ends when the last job ends.
 
-$T$ is the **makespan**: the finish time of the whole project, here 22.
+$`T`$ is the **makespan**: the finish time of the whole project, here 22.
 
-**The backward pass.** Write $LS_j$ and $LF_j$ for the latest start and latest finish that still keep $T$. Take the jobs in reverse order. A job with no arrow out may finish at $T$; any other must finish by the moment its first successor must start:
+**The backward pass.** Write $`LS_j`$ and $`LF_j`$ for the latest start and latest finish that still keep $`T`$. Take the jobs in reverse order. A job with no arrow out may finish at $`T`$; any other must finish by the moment its first successor must start:
 
-$$LF_j = \min_{j \to k}\,LS_k, \qquad LS_j = LF_j - p_j$$
+```math
+LF_j = \min_{j \to k}\,LS_k, \qquad LS_j = LF_j - p_j
+```
 
 **Read it aloud:** a job may finish as late as the first moment something after it must begin.
 
 **The float.** Two kinds, both in days:
 
-$$TF_j = LS_j - ES_j, \qquad FF_j = \min_{j \to k} ES_k \;-\; EF_j$$
+```math
+TF_j = LS_j - ES_j, \qquad FF_j = \min_{j \to k} ES_k \;-\; EF_j
+```
 
-Total float $TF_j$ is how far job $j$ can slip before the opening moves. Free float $FF_j$ is how far it can slip before any next job's earliest start moves; a job with no arrow out uses $T$ in place of the minimum. The critical path is the chain of jobs with $TF_j = 0$.
+Total float $`TF_j`$ is how far job $`j`$ can slip before the opening moves. Free float $`FF_j`$ is how far it can slip before any next job's earliest start moves; a job with no arrow out uses $`T`$ in place of the minimum. The critical path is the chain of jobs with $`TF_j = 0`$.
 
-**One oven.** Five batches wait at 5:00 for one oven. In a chosen order, batch $j$ comes out at its **completion time** $C_j$. Its van leaves at the **due time** $d_j$, so its **lateness** is $L_j = C_j - d_j$, negative when early. Two rules, each best at one target:
+**One oven.** Five batches wait at 5:00 for one oven. In a chosen order, batch $`j`$ comes out at its **completion time** $`C_j`$. Its van leaves at the **due time** $`d_j`$, so its **lateness** is $`L_j = C_j - d_j`$, negative when early. Two rules, each best at one target:
 
-$$\text{SPT (shortest processing time first) makes } \textstyle\sum_j C_j \text{ as small as possible}$$
+```math
+\text{SPT (shortest processing time first) makes } \textstyle\sum_j C_j \text{ as small as possible}
+```
 
-$$\text{EDD (earliest due date first) makes } L_{\max} = \max_j L_j \text{ as small as possible}$$
+```math
+\text{EDD (earliest due date first) makes } L_{\max} = \max_j L_j \text{ as small as possible}
+```
 
 **Read it aloud:** bake the quickest batch first to cut the average wait; bake for the earliest van first to cut the worst lateness.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i \to j$, $j \to k$ | an arrow: the first job must finish before the second starts | D → E: tiles before ovens | more arrows, fewer jobs side by side, $T$ can only rise |
-| $p_j$ | processing time: how long job $j$ takes | ovens 6 days; croissants 25 minutes | on the critical path, $T$ rises day for day |
-| $ES_j$, $EF_j$ | earliest start, earliest finish | ovens 10 and 16 | — |
-| $LS_j$, $LF_j$ | latest start and finish that keep $T$ | electrics 5 and 10 | — |
-| $TF_j$ | total float: slip allowed before $T$ moves | electrics 2 | more room to juggle crews |
-| $FF_j$ | free float: slip allowed before any next job moves | counter 0, paint 2 | — |
-| $T$ | makespan: when the whole project ends | 22 working days | the opening day moves |
-| $n$ | how many batches wait for the oven | 5, so 120 possible orders | orders grow as $n$ factorial |
-| $C_j$, $\sum_j C_j$ | completion time: when batch $j$ leaves the oven; their total, which divided by $n$ is the mean wait | sourdough 120, total 425, under SPT | — |
-| $d_j$ | due time: when batch $j$'s van leaves | sourdough 90 minutes | the batch can wait longer |
-| $L_j$, $L_{\max}$ | lateness $C_j - d_j$, and the worst of them | worst 30 under SPT, 0 under EDD | — |
-| $a$, $b$, $s$ | two neighbouring batches in an order, and the minute the first of them starts | used in the swap proofs | — |
+| $`i \to j`$, $`j \to k`$ | an arrow: the first job must finish before the second starts | D → E: tiles before ovens | more arrows, fewer jobs side by side, $`T`$ can only rise |
+| $`p_j`$ | processing time: how long job $`j`$ takes | ovens 6 days; croissants 25 minutes | on the critical path, $`T`$ rises day for day |
+| $`ES_j`$, $`EF_j`$ | earliest start, earliest finish | ovens 10 and 16 | — |
+| $`LS_j`$, $`LF_j`$ | latest start and finish that keep $`T`$ | electrics 5 and 10 | — |
+| $`TF_j`$ | total float: slip allowed before $`T`$ moves | electrics 2 | more room to juggle crews |
+| $`FF_j`$ | free float: slip allowed before any next job moves | counter 0, paint 2 | — |
+| $`T`$ | makespan: when the whole project ends | 22 working days | the opening day moves |
+| $`n`$ | how many batches wait for the oven | 5, so 120 possible orders | orders grow as $`n`$ factorial |
+| $`C_j`$, $`\sum_j C_j`$ | completion time: when batch $`j`$ leaves the oven; their total, which divided by $`n`$ is the mean wait | sourdough 120, total 425, under SPT | — |
+| $`d_j`$ | due time: when batch $`j`$'s van leaves | sourdough 90 minutes | the batch can wait longer |
+| $`L_j`$, $`L_{\max}`$ | lateness $`C_j - d_j`$, and the worst of them | worst 30 under SPT, 0 under EDD | — |
+| $`a`$, $`b`$, $`s`$ | two neighbouring batches in an order, and the minute the first of them starts | used in the swap proofs | — |
 
 Times on the oven are minutes after 5:00.
 
@@ -108,32 +118,34 @@ Three chains run from the strip-out to the inspection: A B D E H I at 22 days, A
 
 ### Step 1: the forward pass finds that chain, and nothing beats it
 
-Taking jobs in topological order means every predecessor of $j$ already has its earliest start when $j$ is reached. So $ES_j$ is the length of the longest chain ending just before $j$.
+Taking jobs in topological order means every predecessor of $`j`$ already has its earliest start when $`j`$ is reached. So $`ES_j`$ is the length of the longest chain ending just before $`j`$.
 
-Two facts make $T$ the best possible finish. Starting every job at $ES_j$ breaks no arrow, so $T$ can be reached. And the jobs on the longest chain must run one after another, so no schedule finishes sooner. A finish that can be reached and cannot be beaten is the optimum.
+Two facts make $`T`$ the best possible finish. Starting every job at $`ES_j`$ breaks no arrow, so $`T`$ can be reached. And the jobs on the longest chain must run one after another, so no schedule finishes sooner. A finish that can be reached and cannot be beaten is the optimum.
 
 <details>
 <summary>Detailed proof: the forward pass gives the longest chain</summary>
 
-Claim: $ES_j$ equals the largest total of $p_i$ over chains of jobs ending in an arrow into $j$, and 0 if nothing points at $j$.
+Claim: $`ES_j`$ equals the largest total of $`p_i`$ over chains of jobs ending in an arrow into $`j`$, and 0 if nothing points at $`j`$.
 
-Induction along the topological order. A job with no arrow in gets 0, and no chain ends just before it. For any other job $j$, a chain ending just before $j$ ends with some predecessor $i$. Its length is (a chain ending just before $i$) plus $p_i$. By induction the longest chain ending just before $i$ is $ES_i$, so the longest chain through $i$ into $j$ is $ES_i + p_i$. The best over all predecessors is the max in the forward pass.
+Induction along the topological order. A job with no arrow in gets 0, and no chain ends just before it. For any other job $`j`$, a chain ending just before $`j`$ ends with some predecessor $`i`$. Its length is (a chain ending just before $`i`$) plus $`p_i`$. By induction the longest chain ending just before $`i`$ is $`ES_i`$, so the longest chain through $`i`$ into $`j`$ is $`ES_i + p_i`$. The best over all predecessors is the max in the forward pass.
 
-Feasibility: if $i \to j$ then $ES_j \ge ES_i + p_i$, so $i$ finishes before $j$ starts. Lower bound: in any valid schedule the jobs on a chain start one after another, so the last ends no earlier than the chain's length. Hence $T$ is the shortest finish of any valid schedule.
+Feasibility: if $`i \to j`$ then $`ES_j \ge ES_i + p_i`$, so $`i`$ finishes before $`j`$ starts. Lower bound: in any valid schedule the jobs on a chain start one after another, so the last ends no earlier than the chain's length. Hence $`T`$ is the shortest finish of any valid schedule.
 
 </details>
 
 ### Step 2: the backward pass is the same idea with time reversed
 
-Reverse every arrow and run the clock back from $T$. The same argument shows $T - LS_j$ is the longest chain from the start of $j$ to the end of the project. So $LS_j$ is the latest $j$ can start while still leaving room for everything after it.
+Reverse every arrow and run the clock back from $`T`$. The same argument shows $`T - LS_j`$ is the longest chain from the start of $`j`$ to the end of the project. So $`LS_j`$ is the latest $`j`$ can start while still leaving room for everything after it.
 
 ### Step 3: float is the gap to the longest chain
 
 Put the two passes together:
 
-$$TF_j = LS_j - ES_j = T - \bigl(\text{longest chain ending just before } j\bigr) - \bigl(\text{longest chain from } j \text{ on}\bigr)$$
+```math
+TF_j = LS_j - ES_j = T - \bigl(\text{longest chain ending just before } j\bigr) - \bigl(\text{longest chain from } j \text{ on}\bigr)
+```
 
-The two brackets join into the longest chain *through* $j$. So $TF_j = T$ minus the longest chain through job $j$. Electrics lie only on A C E H I, 20 days long, so their float is 22 − 20 = 2. A job has zero float exactly when it lies on a longest chain: that is why the critical path and the zero-float jobs are the same thing.
+The two brackets join into the longest chain *through* $`j`$. So $`TF_j = T`$ minus the longest chain through job $`j`$. Electrics lie only on A C E H I, 20 days long, so their float is 22 − 20 = 2. A job has zero float exactly when it lies on a longest chain: that is why the critical path and the zero-float jobs are the same thing.
 
 ### Step 4: total float belongs to a chain, free float to a job
 
@@ -145,15 +157,15 @@ Free float tells them apart. The counter's free float is 0: any slip pushes the 
 
 On one oven the makespan is fixed: the five batches take 180 minutes in any order. What the order changes is who waits.
 
-Take two neighbours in the order, $a$ then $b$, starting together at minute $s$. Everything else stays put. With $a$ first they come out at $s + p_a$ and $s + p_a + p_b$; with $b$ first, at $s + p_b$ and $s + p_a + p_b$. The swap changes the total by $p_b - p_a$.
+Take two neighbours in the order, $`a`$ then $`b`$, starting together at minute $`s`$. Everything else stays put. With $`a`$ first they come out at $`s + p_a`$ and $`s + p_a + p_b`$; with $`b`$ first, at $`s + p_b`$ and $`s + p_a + p_b`$. The swap changes the total by $`p_b - p_a`$.
 
 So if a longer batch sits just before a shorter one, swapping them lowers the total. Keep swapping until no longer batch precedes a shorter one: that order is SPT, and no order has a smaller total.
 
-There is a second way to see it. Each bake time is counted once for every batch still waiting while it bakes, itself included. The first batch's time is waited on by all five, the last by one. So put the smallest times where they are counted most: $15 \times 5 + 25 \times 4 + 30 \times 3 + 50 \times 2 + 60 \times 1 = 425$.
+There is a second way to see it. Each bake time is counted once for every batch still waiting while it bakes, itself included. The first batch's time is waited on by all five, the last by one. So put the smallest times where they are counted most: $`15 \times 5 + 25 \times 4 + 30 \times 3 + 50 \times 2 + 60 \times 1 = 425`$.
 
 ### Step 6: one oven, earliest van first
 
-Now take neighbours $a$ then $b$ where $a$'s van leaves later, $d_a > d_b$. Swap them. Batch $b$ now comes out earlier, so its lateness falls. Batch $a$ comes out at $s + p_a + p_b$, exactly when $b$ used to. Its lateness, $s + p_a + p_b - d_a$, is below $b$'s old lateness $s + p_a + p_b - d_b$, because $d_a > d_b$.
+Now take neighbours $`a`$ then $`b`$ where $`a`$'s van leaves later, $`d_a > d_b`$. Swap them. Batch $`b`$ now comes out earlier, so its lateness falls. Batch $`a`$ comes out at $`s + p_a + p_b`$, exactly when $`b`$ used to. Its lateness, $`s + p_a + p_b - d_a`$, is below $`b`$'s old lateness $`s + p_a + p_b - d_b`$, because $`d_a > d_b`$.
 
 So the worse of the pair never gets worse, and nothing outside the pair moves. Swap until the vans are in order of departure: that is EDD, and its worst lateness is as small as any order's.
 
@@ -211,7 +223,7 @@ The code prints all five.
 Nothing is imported. Three roads reach the float:
 
 1. the two passes in Kahn's order;
-2. every chain from first job to last, with float as $T$ minus the longest chain through each job;
+2. every chain from first job to last, with float as $`T`$ minus the longest chain through each job;
 3. a slip test that lengthens each job a day at a time and re-runs the forward pass until the opening moves.
 
 Road two shares no arithmetic with the passes; road three shares only the forward pass. The wobble line runs all 19,683 ways the nine jobs can each run a day short, on time or a day long. The oven rules meet a brute force over all 120 orders, and SPT's total meets the "once per batch still waiting" sum. The `try,` lines run the experiments in the box below.
@@ -596,13 +608,13 @@ The two outputs match line for line.
 
 Lean proves the two passes and both oven rules for any project and any batches, and checks the card's numbers.
 
-- Take any project with fixed whole-day durations, unlimited crews and no loop of arrows. Then the longest chain is the earliest finish any schedule can reach: $T$.
-- Take any job $j$. Then $ES_j$ is the earliest start any schedule allows, and the longest chain ending just before $j$.
-- Take any job $j$. Then $LS_j$ is its latest start that still finishes by $T$.
-- Take the same job. Then $T - LS_j$ is the longest chain from $j$ on.
-- Take any job $j$. Then $TF_j$ is $T$ minus the longest chain through $j$. So zero float means $j$ lies on a longest chain.
-- Take one oven, whole-minute bake times, every batch ready at 5:00 and none interrupted. Then SPT's total $\sum_j C_j$ is no larger than any other order's.
-- Take the same oven. Then EDD's worst lateness $L_{\max}$ is no larger than any other order's.
+- Take any project with fixed whole-day durations, unlimited crews and no loop of arrows. Then the longest chain is the earliest finish any schedule can reach: $`T`$.
+- Take any job $`j`$. Then $`ES_j`$ is the earliest start any schedule allows, and the longest chain ending just before $`j`$.
+- Take any job $`j`$. Then $`LS_j`$ is its latest start that still finishes by $`T`$.
+- Take the same job. Then $`T - LS_j`$ is the longest chain from $`j`$ on.
+- Take any job $`j`$. Then $`TF_j`$ is $`T`$ minus the longest chain through $`j`$. So zero float means $`j`$ lies on a longest chain.
+- Take one oven, whole-minute bake times, every batch ready at 5:00 and none interrupted. Then SPT's total $`\sum_j C_j`$ is no larger than any other order's.
+- Take the same oven. Then EDD's worst lateness $`L_{\max}`$ is no larger than any other order's.
 - The fit-out's earliest and latest starts keep every arrow and end by day 22. Its three chains run 22, 20 and 20 days.
 - The floats check: 2 days for electrics, counter and paint. Slip counter and paint by 2, and A B D F G I runs 24 days.
 - The oven numbers check too: SPT 425 with 30 late, EDD 505 with 0 late, biggest first 655 with 105 late.

@@ -34,34 +34,40 @@ Orange: 1 − 1/2 + 1/3 − … in its first order, closing in on ln 2. Teal: th
 
 ## The formula
 
-A reminder from [Infinite series](01-series-convergence.md): a sigma sign running to infinity means the limit of the running totals, the **partial sums**. The factor $(-1)^{n-1}$ is a sign switch: +1 when $n$ is odd, −1 when $n$ is even.
+A reminder from [Infinite series](01-series-convergence.md): a sigma sign running to infinity means the limit of the running totals, the **partial sums**. The factor $`(-1)^{n-1}`$ is a sign switch: +1 when $`n`$ is odd, −1 when $`n`$ is even.
 
-Take sizes $b_n$, never negative. The alternating series built from them is
+Take sizes $`b_n`$, never negative. The alternating series built from them is
 
-$$S = \sum_{n=1}^{\infty} (-1)^{n-1} b_n = b_1 - b_2 + b_3 - b_4 + \cdots$$
+```math
+S = \sum_{n=1}^{\infty} (-1)^{n-1} b_n = b_1 - b_2 + b_3 - b_4 + \cdots
+```
 
 **Read it aloud:** add the first size, take away the second, and so on forever; the sum is where the totals head.
 
-Write $S_N$ for the partial sum after $N$ terms. If the sizes never grow and head for zero, the limit $S$ exists and
+Write $`S_N`$ for the partial sum after $`N`$ terms. If the sizes never grow and head for zero, the limit $`S`$ exists and
 
-$$|S - S_N| \le b_{N+1}, \qquad S - S_N \text{ has the sign of the first term left out.}$$
+```math
+|S - S_N| \le b_{N+1}, \qquad S - S_N \text{ has the sign of the first term left out.}
+```
 
 **Read it aloud:** stop after N terms and the miss is no bigger than the next size, and points the way that term points.
 
-For any series with terms $a_n$:
+For any series with terms $`a_n`$:
 
-$$\text{absolutely convergent: } \sum |a_n| \text{ is finite}; \qquad \text{conditionally convergent: } \sum a_n \text{ settles but } \sum |a_n| \text{ does not.}$$
+```math
+\text{absolutely convergent: } \sum |a_n| \text{ is finite}; \qquad \text{conditionally convergent: } \sum a_n \text{ settles but } \sum |a_n| \text{ does not.}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a_n$ | the n-th term, sign included | 1, −1/2, 1/3, … | — |
-| $b_n$, $b_{N+1}$ | the n-th size; the first size left out | 1/n; 1/11 at N = 10 | bigger next size, looser guarantee |
-| $n$, $N$ | a term's position; how many terms are kept | N = 10, 100, 999 | more terms, smaller miss |
-| $S_N$, $S$, $S_{2m}$, $S_{4m}$ | the partial sum after N (or 2m, 4m) terms; the limit | 0.645634921 at N = 10; ln 2 = 0.693147181 | — |
-| $T_{3m}$, $m$ | the reordered partial sum after m two-up, one-down triples | 1.039470818 at m = 1000 | closer to 1.039720771 |
-| $H_m$ | the harmonic partial sum 1 + 1/2 + … + 1/m | half of it is 2.371945 at m = 64 | grows without limit |
-| $t$ | the variable of the integral that names ln 2 | runs from 0 to 1 | — |
-| $\varepsilon$ | a tolerance, used inside the folded proof | 0.001 in the main text | smaller tolerance, more terms |
+| $`a_n`$ | the n-th term, sign included | 1, −1/2, 1/3, … | — |
+| $`b_n`$, $`b_{N+1}`$ | the n-th size; the first size left out | 1/n; 1/11 at N = 10 | bigger next size, looser guarantee |
+| $`n`$, $`N`$ | a term's position; how many terms are kept | N = 10, 100, 999 | more terms, smaller miss |
+| $`S_N`$, $`S`$, $`S_{2m}`$, $`S_{4m}`$ | the partial sum after N (or 2m, 4m) terms; the limit | 0.645634921 at N = 10; ln 2 = 0.693147181 | — |
+| $`T_{3m}`$, $`m`$ | the reordered partial sum after m two-up, one-down triples | 1.039470818 at m = 1000 | closer to 1.039720771 |
+| $`H_m`$ | the harmonic partial sum 1 + 1/2 + … + 1/m | half of it is 2.371945 at m = 64 | grows without limit |
+| $`t`$ | the variable of the integral that names ln 2 | runs from 0 to 1 | — |
+| $`\varepsilon`$ | a tolerance, used inside the folded proof | 0.001 in the main text | smaller tolerance, more terms |
 
 ### When it holds
 
@@ -82,55 +88,63 @@ Each step overshoots and the next pulls back by less, so the limit sits between 
 
 The even-numbered totals 0.50, 0.58, 0.62 rise: each adds a size and takes away a smaller one.
 
-$$S_{2m+2} - S_{2m} = b_{2m+1} - b_{2m+2} \ge 0.$$
+```math
+S_{2m+2} - S_{2m} = b_{2m+1} - b_{2m+2} \ge 0.
+```
 
 The odd-numbered totals 1.00, 0.83, 0.78 fall for the mirror reason. Each odd total is the even total before it plus a size, so it sits above that even total; as evens rise and odds fall, every odd total sits above every even one.
 
 ### Step 2: both chains settle, on one number
 
-The even totals rise but never pass 1, so they settle on their least upper bound, the smallest number at or above them all: the real numbers have no gaps ([No gaps](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The odd totals fall but never pass 0.5, so they settle too. Neighbours differ by $b_{2m+1}$, which heads for zero, so the two limits are one number, $S$.
+The even totals rise but never pass 1, so they settle on their least upper bound, the smallest number at or above them all: the real numbers have no gaps ([No gaps](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The odd totals fall but never pass 0.5, so they settle too. Neighbours differ by $`b_{2m+1}`$, which heads for zero, so the two limits are one number, $`S`$.
 
-$S$ lies between $S_N$ and the next total, which differ by $b_{N+1}$: that is the bound, and the miss points the way term N + 1 points. To land within 0.001, keep 999 terms: there 1/(N + 1) is 0.001 exactly.
+$`S`$ lies between $`S_N`$ and the next total, which differ by $`b_{N+1}`$: that is the bound, and the miss points the way term N + 1 points. To land within 0.001, keep 999 terms: there 1/(N + 1) is 0.001 exactly.
 
 <details>
 <summary>Detailed proof: the alternating series test</summary>
 
-Let $b_n \ge 0$ fall steadily to 0. The even totals rise, bounded above by the first total, so converge to their least upper bound E; the odd totals fall, bounded below, to their greatest lower bound (largest number below them all) O ≥ E. As 0 ≤ O − E ≤ $b_{2m+1}$ for every m, E = O = S. Given $\varepsilon > 0$, both chains are within $\varepsilon$ of S from some position on, so every total is. S lies between $S_N$ and $S_{N+1}$, so $|S - S_N| \le b_{N+1}$, with the sign of $(-1)^N b_{N+1}$ or zero. If the sizes fall only from some later term, apply this to that tail.
+Let $`b_n \ge 0`$ fall steadily to 0. The even totals rise, bounded above by the first total, so converge to their least upper bound E; the odd totals fall, bounded below, to their greatest lower bound (largest number below them all) O ≥ E. As 0 ≤ O − E ≤ $`b_{2m+1}`$ for every m, E = O = S. Given $`\varepsilon > 0`$, both chains are within $`\varepsilon`$ of S from some position on, so every total is. S lies between $`S_N`$ and $`S_{N+1}`$, so $`|S - S_N| \le b_{N+1}`$, with the sign of $`(-1)^N b_{N+1}`$ or zero. If the sizes fall only from some later term, apply this to that tail.
 
 </details>
 
 ### Step 3: the limit is ln 2, from finite sums only
 
-A finite identity names the limit. For $t$ between 0 and 1, the geometric sum with ratio −t and N terms gives
+A finite identity names the limit. For $`t`$ between 0 and 1, the geometric sum with ratio −t and N terms gives
 
-$$\frac{1}{1+t} = 1 - t + t^2 - \cdots + (-t)^{N-1} + \frac{(-t)^N}{1+t}.$$
+```math
+\frac{1}{1+t} = 1 - t + t^2 - \cdots + (-t)^{N-1} + \frac{(-t)^N}{1+t}.
+```
 
-Integrate from 0 to 1. The left side's antiderivative is ln(1 + t), so its area is ln 2. On the right, each of the finitely many powers $t^k$ integrates to 1/(k + 1), giving exactly $S_N$. So
+Integrate from 0 to 1. The left side's antiderivative is ln(1 + t), so its area is ln 2. On the right, each of the finitely many powers $`t^k`$ integrates to 1/(k + 1), giving exactly $`S_N`$. So
 
-$$\ln 2 = S_N + (-1)^N \int_0^1 \frac{t^N}{1+t}\,dt.$$
+```math
+\ln 2 = S_N + (-1)^N \int_0^1 \frac{t^N}{1+t}\,dt.
+```
 
-The leftover integral is positive and below the integral of $t^N$, 1/(N + 1), which shrinks to zero; so $S$ = ln 2. No infinite sum was swapped with an integral; that licence is in [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md).
+The leftover integral is positive and below the integral of $`t^N`$, 1/(N + 1), which shrinks to zero; so $`S`$ = ln 2. No infinite sum was swapped with an integral; that licence is in [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md).
 
 ### Step 4: absolute convergence is the stronger kind
 
 Over any finite stretch, the terms total no more than their sizes. If the sizes add to a finite amount, far stretches are tiny, so the partial sums stop moving and, as the real numbers have no gaps, settle: absolute convergence implies convergence.
 
-The converse fails. The sizes 1, 1/2, 1/3, … form the harmonic series, whose partial sums $H_m$ grow without limit ([Infinite series](01-series-convergence.md)), so 1 − 1/2 + 1/3 − … converges only conditionally. The sizes of 1 − 1/2 + 1/4 − 1/8 + … are geometric with ratio one half and pass the tests in [Convergence tests](02-comparison-ratio-and-root-tests.md). It converges absolutely, to 0.666666667, in either order.
+The converse fails. The sizes 1, 1/2, 1/3, … form the harmonic series, whose partial sums $`H_m`$ grow without limit ([Infinite series](01-series-convergence.md)), so 1 − 1/2 + 1/3 − … converges only conditionally. The sizes of 1 − 1/2 + 1/4 − 1/8 + … are geometric with ratio one half and pass the tests in [Convergence tests](02-comparison-ratio-and-root-tests.md). It converges absolutely, to 0.666666667, in either order.
 
 <details>
 <summary>Detailed proof: reordering cannot move an absolutely convergent sum</summary>
 
-Pick N with the sizes beyond N adding to less than $\varepsilon$. Once a reordering has used the first N terms, each total is $S_N$ plus terms from beyond N: within $2\varepsilon$ of S.
+Pick N with the sizes beyond N adding to less than $`\varepsilon`$. Once a reordering has used the first N terms, each total is $`S_N`$ plus terms from beyond N: within $`2\varepsilon`$ of S.
 
 </details>
 
 ### Step 5: the reordering really changes the sum
 
-After m triples, the reordered total $T_{3m}$ has added every 1/(odd number) below 4m and subtracted 1/2 through 1/(2m). The original $S_{4m}$ adds the same but subtracts 1/2 through 1/(4m). The difference is the part not yet subtracted:
+After m triples, the reordered total $`T_{3m}`$ has added every 1/(odd number) below 4m and subtracted 1/2 through 1/(2m). The original $`S_{4m}`$ adds the same but subtracts 1/2 through 1/(4m). The difference is the part not yet subtracted:
 
-$$T_{3m} - S_{4m} = \frac{1}{2m+2} + \cdots + \frac{1}{4m} = \tfrac12\,(H_{2m} - H_m) = \tfrac12\, S_{2m}.$$
+```math
+T_{3m} - S_{4m} = \frac{1}{2m+2} + \cdots + \frac{1}{4m} = \tfrac12\,(H_{2m} - H_m) = \tfrac12\, S_{2m}.
+```
 
-The last step holds because the alternating sum of 2m terms is every reciprocal up to 2m minus twice the even ones. Both $S_{4m}$ and $S_{2m}$ head for ln 2, so $T_{3m}$ heads for one and a half times ln 2, 1.039720771. Totals stopped mid-triple are at most two shrinking terms away, so the whole series lands there.
+The last step holds because the alternating sum of 2m terms is every reciprocal up to 2m minus twice the even ones. Both $`S_{4m}`$ and $`S_{2m}`$ head for ln 2, so $`T_{3m}`$ heads for one and a half times ln 2, 1.039720771. Totals stopped mid-triple are at most two shrinking terms away, so the whole series lands there.
 
 <details>
 <summary>Riemann's theorem: any target at all</summary>
@@ -367,15 +381,15 @@ ALL CHECKS PASS
 Lean proves the test and its bound for all sizes that never grow and head for zero, and the ln 2 results exactly.
 
 - If the sizes never grow and head for zero, the partial sums of the alternating series settle on a limit S.
-- For every N, the miss S − $S_N$ is no bigger than the first size left out, and points the way that term points.
+- For every N, the miss S − $`S_N`$ is no bigger than the first size left out, and points the way that term points.
 - 1 − 1/2 + 1/3 − … settles on ln 2.
 - Its sizes 1, 1/2, 1/3, … alone do not add to a finite total, so it is conditionally convergent.
 - The two-up, one-down order 1 + 1/3 − 1/2 + 1/5 + 1/7 − 1/4 + … uses every term exactly once.
 - In that order the partial sums settle on one and a half times ln 2.
 - If a series is absolutely convergent, its partial sums settle, and every reordering settles on the same number.
 - Ten terms total exactly 1627/2520, and the bound first reaches 0.001 at N = 999.
-- 1 − 1 + 1 − … has totals 1, 0, 1, 0, 1, 0, and eight uneven pairs total 761/560, half of $H_8$.
-- Step 5's identity holds exactly at m = 2: $T_6 - S_8 = \tfrac12 S_4$.
+- 1 − 1 + 1 − … has totals 1, 0, 1, 0, 1, 0, and eight uneven pairs total 761/560, half of $`H_8`$.
+- Step 5's identity holds exactly at m = 2: $`T_6 - S_8 = \tfrac12 S_4`$.
 
 The decimals, Simpson's ln 2, the 500-term walk, the 64 pairs and the geometric reordering are left to the Python and Rust checks.
 

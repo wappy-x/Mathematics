@@ -36,38 +36,44 @@ Upper curve: one year to expiry. Lower curve: three months. Both are humps. An o
 
 ## The formula
 
-Notation first, in words. Vega is written with a script capital V, $\mathcal{V}$, because there is no Greek letter vega; the name was coined on trading floors to sound like the other Greeks. The partial derivative $\partial C/\partial\sigma$ means the slope of the call price $C$ against volatility $\sigma$ with every other input frozen ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
+Notation first, in words. Vega is written with a script capital V, $`\mathcal{V}`$, because there is no Greek letter vega; the name was coined on trading floors to sound like the other Greeks. The partial derivative $`\partial C/\partial\sigma`$ means the slope of the call price $`C`$ against volatility $`\sigma`$ with every other input frozen ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
 
-$$\mathcal{V} \;=\; \frac{\partial C}{\partial \sigma} \;=\; \frac{\partial P}{\partial \sigma} \;=\; S\,e^{-qT}\,\varphi(d_1)\,\sqrt{T}$$
+```math
+\mathcal{V} \;=\; \frac{\partial C}{\partial \sigma} \;=\; \frac{\partial P}{\partial \sigma} \;=\; S\,e^{-qT}\,\varphi(d_1)\,\sqrt{T}
+```
 
 **Read it aloud:** the share value at stake, times how much probability sits at the strike's distance, times how long the extra volatility has to work.
 
 The same number has a cash-side form, from an identity proved in Step 1:
 
-$$\mathcal{V} \;=\; K\,e^{-rT}\,\varphi(d_2)\,\sqrt{T}$$
+```math
+\mathcal{V} \;=\; K\,e^{-rT}\,\varphi(d_2)\,\sqrt{T}
+```
 
-For small moves, vega turns a change in volatility into a change in price: $C(\sigma + \Delta\sigma) \approx C(\sigma) + \mathcal{V}\,\Delta\sigma$.
+For small moves, vega turns a change in volatility into a change in price: $`C(\sigma + \Delta\sigma) \approx C(\sigma) + \mathcal{V}\,\Delta\sigma`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mathcal{V}$ | vega: dollars of option price per 1.00 of volatility | 37.90, or 0.379 per point | — |
-| $C$, $P$ | call and put prices | $9.23 and $6.33 | — |
-| $S$, $S_T$ | Acme's price today, and at expiry | $100 today | vega falls; its peak is at $99.00 |
-| $K$ | the strike, the price the option lets its owner deal at | $100 | vega rises, peaks at $105.13, then falls |
-| $r$ | riskless rate, continuously compounded | 5% | shifts the hump sideways through $d_1$ |
-| $q$ | dividend yield, continuously compounded | 2% | shrinks the share value at stake, and shifts the hump |
-| $\sigma$, $\Delta\sigma$ | volatility, and a small change in it | 20%, and 0.01 | near the strike, barely moves vega: 36.78 at 10%, 37.90 at 30% |
-| $T$ | time to expiry, in years | 1 | rises with $\sqrt{T}$ while short: 19.69 at three months; peaks at 75.58 near 9.76 years |
-| $d_1$, $d_2$ | the strike's distance, in standard deviations, counted in shares and in cash | 0.25 and 0.05 | the further from 0, the smaller vega |
-| $\varphi(x)$, $N(x)$ | bell-curve height at $x$, and area to the left of $x$ | $\varphi(0.25) = 0.386668$ | — |
-| $e^{-rT}$, $e^{-qT}$ | discount factor, and dividend drag | 0.951 and 0.980 | — |
-| $\Gamma$ | gamma, the slope of delta against the share price | 0.018951 | — |
+| $`\mathcal{V}`$ | vega: dollars of option price per 1.00 of volatility | 37.90, or 0.379 per point | — |
+| $`C`$, $`P`$ | call and put prices | $9.23 and $6.33 | — |
+| $`S`$, $`S_T`$ | Acme's price today, and at expiry | $100 today | vega falls; its peak is at $99.00 |
+| $`K`$ | the strike, the price the option lets its owner deal at | $100 | vega rises, peaks at $105.13, then falls |
+| $`r`$ | riskless rate, continuously compounded | 5% | shifts the hump sideways through $`d_1`$ |
+| $`q`$ | dividend yield, continuously compounded | 2% | shrinks the share value at stake, and shifts the hump |
+| $`\sigma`$, $`\Delta\sigma`$ | volatility, and a small change in it | 20%, and 0.01 | near the strike, barely moves vega: 36.78 at 10%, 37.90 at 30% |
+| $`T`$ | time to expiry, in years | 1 | rises with $`\sqrt{T}`$ while short: 19.69 at three months; peaks at 75.58 near 9.76 years |
+| $`d_1`$, $`d_2`$ | the strike's distance, in standard deviations, counted in shares and in cash | 0.25 and 0.05 | the further from 0, the smaller vega |
+| $`\varphi(x)`$, $`N(x)`$ | bell-curve height at $`x`$, and area to the left of $`x`$ | $`\varphi(0.25) = 0.386668`$ | — |
+| $`e^{-rT}`$, $`e^{-qT}`$ | discount factor, and dividend drag | 0.951 and 0.980 | — |
+| $`\Gamma`$ | gamma, the slope of delta against the share price | 0.018951 | — |
 
 The helpers are the pilot's ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)):
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \varphi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \varphi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}
+```
 
-In words: $d_1$ and $d_2$ are how far Acme sits from the strike, measured in units of its whole-life spread $\sigma\sqrt{T}$; $\varphi$ is the bell curve's height, whose area to the left of $x$ is $N(x)$.
+In words: $`d_1`$ and $`d_2`$ are how far Acme sits from the strike, measured in units of its whole-life spread $`\sigma\sqrt{T}`$; $`\varphi`$ is the bell curve's height, whose area to the left of $`x`$ is $`N(x)`$.
 
 ### When it holds
 
@@ -82,37 +88,43 @@ In words: $d_1$ and $d_2$ are how far Acme sits from the strike, measured in uni
 
 ### Step 0: volatility hides inside two bell-curve areas
 
-The call price is $C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)$. Volatility appears nowhere outside $d_1$ and $d_2$. So the slope in $\sigma$ comes from how fast the two areas $N(d_1)$ and $N(d_2)$ change. The slope of a bell-curve area is the bell curve's height: $N$ grows at rate $\varphi$. Differentiating therefore trades areas for heights. One identity then makes almost everything cancel.
+The call price is $`C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)`$. Volatility appears nowhere outside $`d_1`$ and $`d_2`$. So the slope in $`\sigma`$ comes from how fast the two areas $`N(d_1)`$ and $`N(d_2)`$ change. The slope of a bell-curve area is the bell curve's height: $`N`$ grows at rate $`\varphi`$. Differentiating therefore trades areas for heights. One identity then makes almost everything cancel.
 
 ### Step 1: the share side and the cash side carry equal weight at the strike
 
-The claim: $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$. For Acme, $98.019867 \times 0.386668$ and $95.122942 \times 0.398444$ are both $37.901158$.
+The claim: $`S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)`$. For Acme, $`98.019867 \times 0.386668`$ and $`95.122942 \times 0.398444`$ are both $`37.901158`$.
 
-The proof is two lines. Since $d_1 - d_2 = \sigma\sqrt{T}$, the difference of squares is
+The proof is two lines. Since $`d_1 - d_2 = \sigma\sqrt{T}`$, the difference of squares is
 
-$$d_1^2 - d_2^2 = (d_1 - d_2)(d_1 + d_2) = 2\ln(S/K) + 2(r - q)T.$$
+```math
+d_1^2 - d_2^2 = (d_1 - d_2)(d_1 + d_2) = 2\ln(S/K) + 2(r - q)T.
+```
 
-The ratio of heights is $\varphi(d_1)/\varphi(d_2) = e^{-(d_1^2 - d_2^2)/2} = (K/S)\,e^{-(r-q)T}$. Multiply both sides by $S e^{-qT}\varphi(d_2)$ and the identity appears.
+The ratio of heights is $`\varphi(d_1)/\varphi(d_2) = e^{-(d_1^2 - d_2^2)/2} = (K/S)\,e^{-(r-q)T}`$. Multiply both sides by $`S e^{-qT}\varphi(d_2)`$ and the identity appears.
 
 ### Step 2: differentiate each half
 
-The share value, strike, rates and time are frozen, so only $d_1$ and $d_2$ move. The chain rule gives
+The share value, strike, rates and time are frozen, so only $`d_1`$ and $`d_2`$ move. The chain rule gives
 
-$$\frac{\partial C}{\partial \sigma} = S e^{-qT}\varphi(d_1)\,\frac{\partial d_1}{\partial \sigma} \;-\; K e^{-rT}\varphi(d_2)\,\frac{\partial d_2}{\partial \sigma}.$$
+```math
+\frac{\partial C}{\partial \sigma} = S e^{-qT}\varphi(d_1)\,\frac{\partial d_1}{\partial \sigma} \;-\; K e^{-rT}\varphi(d_2)\,\frac{\partial d_2}{\partial \sigma}.
+```
 
-Each of $\partial d_1/\partial\sigma$ and $\partial d_2/\partial\sigma$ is messy on its own.
+Each of $`\partial d_1/\partial\sigma`$ and $`\partial d_2/\partial\sigma`$ is messy on its own.
 
 ### Step 3: the mess cancels
 
 By Step 1 the two front factors are the same number. Pull it out:
 
-$$\frac{\partial C}{\partial \sigma} = S e^{-qT}\varphi(d_1)\left(\frac{\partial d_1}{\partial \sigma} - \frac{\partial d_2}{\partial \sigma}\right) = S e^{-qT}\varphi(d_1)\,\frac{\partial (d_1 - d_2)}{\partial \sigma}.$$
+```math
+\frac{\partial C}{\partial \sigma} = S e^{-qT}\varphi(d_1)\left(\frac{\partial d_1}{\partial \sigma} - \frac{\partial d_2}{\partial \sigma}\right) = S e^{-qT}\varphi(d_1)\,\frac{\partial (d_1 - d_2)}{\partial \sigma}.
+```
 
-The difference $d_1 - d_2$ is $\sigma\sqrt{T}$, whose slope in $\sigma$ is $\sqrt{T}$. That proves the formula. The messy slopes were never needed, only their difference.
+The difference $`d_1 - d_2`$ is $`\sigma\sqrt{T}`$, whose slope in $`\sigma`$ is $`\sqrt{T}`$. That proves the formula. The messy slopes were never needed, only their difference.
 
 ### Step 4: the put has the same vega
 
-Put–call parity says $C - P = S e^{-qT} - K e^{-rT}$. The right side holds no $\sigma$, so its slope in $\sigma$ is zero, and $\partial P/\partial\sigma = \partial C/\partial\sigma$ exactly. The call and the put differ by a forward contract, and a forward, having no choice in it, does not care how widely the share might spread.
+Put–call parity says $`C - P = S e^{-qT} - K e^{-rT}`$. The right side holds no $`\sigma`$, so its slope in $`\sigma`$ is zero, and $`\partial P/\partial\sigma = \partial C/\partial\sigma`$ exactly. The call and the put differ by a forward contract, and a forward, having no choice in it, does not care how widely the share might spread.
 
 ### Step 5: vega is always positive
 
@@ -120,30 +132,34 @@ Every factor is positive whenever the share price, strike, volatility and time a
 
 ### Step 6: it fades away from the strike, and peaks off it
 
-As Acme's price runs far above or far below the strike, $d_1$ runs off to plus or minus infinity. The bell-curve height $\varphi(d_1)$ collapses faster than the share price grows, so vega goes to zero at both ends: the hump in the picture.
+As Acme's price runs far above or far below the strike, $`d_1`$ runs off to plus or minus infinity. The bell-curve height $`\varphi(d_1)`$ collapses faster than the share price grows, so vega goes to zero at both ends: the hump in the picture.
 
-Where is the top? It depends on which input is varied. Holding the strike fixed and varying the share price, vega peaks where $d_2 = 0$: at $S = K e^{-(r - q - \sigma^2/2)T}$, which is $99.00. Holding the share price fixed and varying the strike, vega peaks where $d_1 = 0$: at $K = S e^{(r - q + \sigma^2/2)T}$, which is $105.13. Neither peak is at the $100 strike, and the second is not even at the forward price $F = S e^{(r-q)T}$, $103.05.
+Where is the top? It depends on which input is varied. Holding the strike fixed and varying the share price, vega peaks where $`d_2 = 0`$: at $`S = K e^{-(r - q - \sigma^2/2)T}`$, which is $99.00. Holding the share price fixed and varying the strike, vega peaks where $`d_1 = 0`$: at $`K = S e^{(r - q + \sigma^2/2)T}`$, which is $105.13. Neither peak is at the $100 strike, and the second is not even at the forward price $`F = S e^{(r-q)T}`$, $103.05.
 
 <details>
 <summary>Detailed proof: where vega peaks</summary>
 
-**In the share price.** Write vega as $e^{-qT}\sqrt{T}\cdot S\varphi(d_1)$. Since $\partial d_1/\partial S = 1/(S\sigma\sqrt{T})$ and $\varphi'(x) = -x\varphi(x)$,
-$$\frac{\partial \mathcal{V}}{\partial S} = e^{-qT}\sqrt{T}\,\varphi(d_1)\left(1 - \frac{d_1}{\sigma\sqrt{T}}\right).$$
-The bracket is positive while $d_1 < \sigma\sqrt{T}$ and negative after, and $d_1$ rises steadily with $S$. So vega rises, then falls, with one peak where $d_1 = \sigma\sqrt{T}$, that is $d_2 = 0$. Solving $\ln(S/K) + (r - q - \tfrac12\sigma^2)T = 0$ gives $S = K e^{-(r - q - \sigma^2/2)T}$.
+**In the share price.** Write vega as $`e^{-qT}\sqrt{T}\cdot S\varphi(d_1)`$. Since $`\partial d_1/\partial S = 1/(S\sigma\sqrt{T})`$ and $`\varphi'(x) = -x\varphi(x)`$,
 
-**In the strike.** The strike enters only through $d_1$, with $\partial d_1/\partial K = -1/(K\sigma\sqrt{T})$. So
-$$\frac{\partial \mathcal{V}}{\partial K} = S e^{-qT}\sqrt{T}\,\bigl(-d_1\varphi(d_1)\bigr)\left(-\frac{1}{K\sigma\sqrt{T}}\right) = \frac{S e^{-qT}\,d_1\,\varphi(d_1)}{K\sigma}.$$
-This is positive while $d_1 > 0$ and negative after, and $d_1$ falls steadily as $K$ rises. One peak, at $d_1 = 0$: $K = S e^{(r - q + \sigma^2/2)T}$.
+$`\displaystyle \frac{\partial \mathcal{V}}{\partial S} = e^{-qT}\sqrt{T}\,\varphi(d_1)\left(1 - \frac{d_1}{\sigma\sqrt{T}}\right).`$
 
-**At the ends.** As $S$ grows, $d_1$ grows like $\ln S/(\sigma\sqrt{T})$, and $\varphi(d_1)$ shrinks like $e^{-(\ln S)^2/(2\sigma^2 T)}$, which beats any power of $S$. As $S$ shrinks to zero, the factor $S$ itself goes to zero while $\varphi$ stays below 0.4. Both ends go to zero.
+The bracket is positive while $`d_1 < \sigma\sqrt{T}`$ and negative after, and $`d_1`$ rises steadily with $`S`$. So vega rises, then falls, with one peak where $`d_1 = \sigma\sqrt{T}`$, that is $`d_2 = 0`$. Solving $`\ln(S/K) + (r - q - \tfrac12\sigma^2)T = 0`$ gives $`S = K e^{-(r - q - \sigma^2/2)T}`$.
+
+**In the strike.** The strike enters only through $`d_1`$, with $`\partial d_1/\partial K = -1/(K\sigma\sqrt{T})`$. So
+
+$`\displaystyle \frac{\partial \mathcal{V}}{\partial K} = S e^{-qT}\sqrt{T}\,\bigl(-d_1\varphi(d_1)\bigr)\left(-\frac{1}{K\sigma\sqrt{T}}\right) = \frac{S e^{-qT}\,d_1\,\varphi(d_1)}{K\sigma}.`$
+
+This is positive while $`d_1 > 0`$ and negative after, and $`d_1`$ falls steadily as $`K`$ rises. One peak, at $`d_1 = 0`$: $`K = S e^{(r - q + \sigma^2/2)T}`$.
+
+**At the ends.** As $`S`$ grows, $`d_1`$ grows like $`\ln S/(\sigma\sqrt{T})`$, and $`\varphi(d_1)`$ shrinks like $`e^{-(\ln S)^2/(2\sigma^2 T)}`$, which beats any power of $`S`$. As $`S`$ shrinks to zero, the factor $`S`$ itself goes to zero while $`\varphi`$ stays below 0.4. Both ends go to zero.
 
 </details>
 
 ### Step 7: the square root of time
 
-Volatility is quoted per year, but it acts over $T$ years. Independent yearly wiggles add in variance, so the whole-life spread is $\sigma\sqrt{T}$, and a slope in $\sigma$ picks up $\sqrt{T}$. For an option near its strike with little time left, $\varphi(d_1)$ is close to its top value, $\varphi(0) = 0.398942$, and $e^{-qT}$ is close to 1, so vega is about $0.4\,S\sqrt{T}$. Four times the time, about twice the vega: 19.69 at three months, 37.90 at one year.
+Volatility is quoted per year, but it acts over $`T`$ years. Independent yearly wiggles add in variance, so the whole-life spread is $`\sigma\sqrt{T}`$, and a slope in $`\sigma`$ picks up $`\sqrt{T}`$. For an option near its strike with little time left, $`\varphi(d_1)`$ is close to its top value, $`\varphi(0) = 0.398942`$, and $`e^{-qT}`$ is close to 1, so vega is about $`0.4\,S\sqrt{T}`$. Four times the time, about twice the vega: 19.69 at three months, 37.90 at one year.
 
-The square root is exact, but the other two factors are not constant. Over long horizons the dividend drag $e^{-qT}$ shrinks and the drift pushes $d_1$ away from zero, lowering $\varphi(d_1)$. For the $100-strike Acme option, vega peaks at 75.58 near 9.76 years and falls after:
+The square root is exact, but the other two factors are not constant. Over long horizons the dividend drag $`e^{-qT}`$ shrinks and the drift pushes $`d_1`$ away from zero, lowering $`\varphi(d_1)`$. For the $100-strike Acme option, vega peaks at 75.58 near 9.76 years and falls after:
 
 ```
 vega of the $100-strike Acme option, by years to expiry; one block = $2.50 per 1.00 of volatility
@@ -161,44 +177,48 @@ So "vega grows with the square root of time" is a statement about short and midd
 
 ### The other road: vega is gamma, scaled
 
-The sibling [Gamma](02-gamma.md) finds $\Gamma = e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$. Multiply by $\sigma T S^2$ and vega appears:
+The sibling [Gamma](02-gamma.md) finds $`\Gamma = e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})`$. Multiply by $`\sigma T S^2`$ and vega appears:
 
-$$\mathcal{V} = \sigma\,T\,S^2\,\Gamma.$$
+```math
+\mathcal{V} = \sigma\,T\,S^2\,\Gamma.
+```
 
-For Acme, $0.2 \times 1 \times 10{,}000 \times 0.018951 = 37.90$. The meaning: a hedged option earns about half of gamma times each squared share move, and over the life those squares add up to about $S^2\sigma^2 T$. So the expected hedging profit is about $\tfrac12\Gamma S^2\sigma^2 T$. Its slope in $\sigma$ is $\Gamma S^2\sigma T$: vega is how fast that profit grows as volatility rises, not the profit itself. The accounting is [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
+For Acme, $`0.2 \times 1 \times 10{,}000 \times 0.018951 = 37.90`$. The meaning: a hedged option earns about half of gamma times each squared share move, and over the life those squares add up to about $`S^2\sigma^2 T`$. So the expected hedging profit is about $`\tfrac12\Gamma S^2\sigma^2 T`$. Its slope in $`\sigma`$ is $`\Gamma S^2\sigma T`$: vega is how fast that profit grows as volatility rises, not the profit itself. The accounting is [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\ln(S/K)$ | $\ln 1$ | 0 |
-| $(r - q + \tfrac12\sigma^2)T$ | $0.05 - 0.02 + 0.02$ | 0.05 |
-| $\sigma\sqrt{T}$ | $0.20 \times 1$ | 0.20 |
-| $d_1$ | $0.05 / 0.20$ | 0.25 |
-| $\varphi(d_1)$ | $e^{-0.03125} / 2.506628$ | 0.386668 |
-| $S e^{-qT}$ | $100 \times e^{-0.02}$ | 98.019867 |
-| **vega** | $98.019867 \times 0.386668 \times 1$ | **37.901158** |
-| per volatility point | $37.901158 / 100$ | **0.379012** |
-| call at 21%, repriced in full | Black–Scholes at $\sigma = 0.21$ | $9.606124 |
-| true change, 20% to 21% | $9.606124 - 9.227006$ | 0.379118 |
-| vega plus half of volga times $0.01^2$ | $0.379012 + \tfrac12 \times 2.368822 \times 0.0001$ | 0.379130 |
+| $`\ln(S/K)`$ | $`\ln 1`$ | 0 |
+| $`(r - q + \tfrac12\sigma^2)T`$ | $`0.05 - 0.02 + 0.02`$ | 0.05 |
+| $`\sigma\sqrt{T}`$ | $`0.20 \times 1`$ | 0.20 |
+| $`d_1`$ | $`0.05 / 0.20`$ | 0.25 |
+| $`\varphi(d_1)`$ | $`e^{-0.03125} / 2.506628`$ | 0.386668 |
+| $`S e^{-qT}`$ | $`100 \times e^{-0.02}`$ | 98.019867 |
+| **vega** | $`98.019867 \times 0.386668 \times 1`$ | **37.901158** |
+| per volatility point | $`37.901158 / 100`$ | **0.379012** |
+| call at 21%, repriced in full | Black–Scholes at $`\sigma = 0.21`$ | $9.606124 |
+| true change, 20% to 21% | $`9.606124 - 9.227006`$ | 0.379118 |
+| vega plus half of volga times $`0.01^2`$ | $`0.379012 + \tfrac12 \times 2.368822 \times 0.0001`$ | 0.379130 |
 
 One volatility point is worth 37.9 cents on a $9.23 option. Vega's estimate, 0.379012, sits just under the full reprice, 0.379118; adding the curvature term gives 0.379130, closer still. The put moves the same 37.9 cents, from $6.330081 to $6.709199.
 
 ### Steering by vega: an implied volatility in three steps
 
-Markets quote prices; the volatility is hidden inside them. Suppose the one-year Acme call is quoted at $12.00. Which volatility reproduces it? One exists only if the quote lies strictly between the price at zero volatility, $\max(S e^{-qT} - K e^{-rT}, 0) = 2.896925$, and the limit as volatility grows without bound, $S e^{-qT} = 98.019867$. At either bound, or outside, no finite positive volatility fits. $12.00 is inside. Newton's method guesses, prices, and corrects by the gap divided by the slope, and the slope is vega:
+Markets quote prices; the volatility is hidden inside them. Suppose the one-year Acme call is quoted at $12.00. Which volatility reproduces it? One exists only if the quote lies strictly between the price at zero volatility, $`\max(S e^{-qT} - K e^{-rT}, 0) = 2.896925`$, and the limit as volatility grows without bound, $`S e^{-qT} = 98.019867`$. At either bound, or outside, no finite positive volatility fits. $12.00 is inside. Newton's method guesses, prices, and corrects by the gap divided by the slope, and the slope is vega:
 
-$$\sigma_{\text{new}} = \sigma_{\text{old}} - \frac{C(\sigma_{\text{old}}) - 12.00}{\mathcal{V}(\sigma_{\text{old}})}.$$
+```math
+\sigma_{\text{new}} = \sigma_{\text{old}} - \frac{C(\sigma_{\text{old}}) - 12.00}{\mathcal{V}(\sigma_{\text{old}})}.
+```
 
 | Step | Arithmetic | Volatility |
 | --- | --- | --- |
 | start | the market's last volatility | 0.20 |
-| 1 | $0.20 - (9.227006 - 12.00) / 37.901158$ | 0.273164 |
+| 1 | $`0.20 - (9.227006 - 12.00) / 37.901158`$ | 0.273164 |
 | 2 | reprice at 0.273164, divide the gap by vega there | 0.273094 |
 | 4 | two more steps change nothing at six decimals | **0.273094** |
 | bisection | halve a bracket from 1% to 200%, sixty times | 0.273094 |
@@ -211,9 +231,9 @@ The hazard is Step 6. Far from the strike, vega is tiny, and dividing by it thro
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Area $N(d_1)$ in place of height $\varphi(d_1)$ | 58.69 | That is the share half of the price, not a slope |
-| Share side paired with $\varphi(d_2)$ | 39.06 | Each front factor has its own height; mixed, neither form holds |
-| No $\sqrt{T}$, four-year option | 32.50 (right: 65.00) | Volatility acts over the whole life, in variance |
+| Area $`N(d_1)`$ in place of height $`\varphi(d_1)`$ | 58.69 | That is the share half of the price, not a slope |
+| Share side paired with $`\varphi(d_2)`$ | 39.06 | Each front factor has its own height; mixed, neither form holds |
+| No $`\sqrt{T}`$, four-year option | 32.50 (right: 65.00) | Volatility acts over the whole life, in variance |
 | Vega per 1.00 applied to one point | $37.90 predicted for 20% to 21% | The quoted move is 0.01, so 0.379 |
 | "1 percent" read as 20% to 20.2% | 0.0758 | A relative move, a fifth of a volatility point |
 
@@ -223,15 +243,15 @@ Every number in the table is printed by both checks.
 
 ## Code, from first principles, and it actually runs
 
-The checks build their own bell-curve area: Python sums its series, $N(x) = \tfrac12 + \varphi(x)(x + x^3/3 + x^5/15 + \dots)$, and Rust adds thin slices under the curve by Simpson's rule. Vega is then reached seven ways:
+The checks build their own bell-curve area: Python sums its series, $`N(x) = \tfrac12 + \varphi(x)(x + x^3/3 + x^5/15 + \dots)`$, and Rust adds thin slices under the curve by Simpson's rule. Vega is then reached seven ways:
 
 1. the formula;
 2. its cash-side form;
-3. bumping the formula price up and down in $\sigma$;
-4. bumping a price built by Simpson's rule over the bell curve, which uses no $d_1$, $d_2$ or $N$;
+3. bumping the formula price up and down in $`\sigma`$;
+4. bumping a price built by Simpson's rule over the bell curve, which uses no $`d_1`$, $`d_2`$ or $`N`$;
 5. bumping a put built the same way;
-6. a pathwise Monte Carlo, which differentiates each simulated path, using $\partial S_T/\partial\sigma = S_T(\sqrt{T}Z - \sigma T)$ for the final price $S_T$ driven by a bell-curve draw $Z$, from home-made random numbers;
-7. and gamma from a second difference of the price, scaled by $\sigma T S^2$.
+6. a pathwise Monte Carlo, which differentiates each simulated path, using $`\partial S_T/\partial\sigma = S_T(\sqrt{T}Z - \sigma T)`$ for the final price $`S_T`$ driven by a bell-curve draw $`Z`$, from home-made random numbers;
+7. and gamma from a second difference of the price, scaled by $`\sigma T S^2`$.
 
 Grid searches find the peaks, Newton and bisection find the implied volatility, and every number on the card is printed.
 
@@ -640,16 +660,16 @@ bars 0.25y 19.69 0.5y 27.50 1y 37.90 2y 50.92 4y 65.00 10y 75.57 20y 64.01 30y 4
 ALL CHECKS PASS
 ```
 
-The two outputs agree line for line. Five of the seven roads land on 37.901158 at six decimals; the price bump reads 37.901157, a last-digit rounding of the same number; the Monte Carlo lands at 37.877491, well inside one standard error, 0.164207. Twelve asserts guard the roads. Each of these breaks trips at least one: the formula losing its $\sqrt{T}$, its dividend drag or its $d_1$; the cash-side form losing its own discount; the pathwise slope losing its $-\sigma T$.
+The two outputs agree line for line. Five of the seven roads land on 37.901158 at six decimals; the price bump reads 37.901157, a last-digit rounding of the same number; the Monte Carlo lands at 37.877491, well inside one standard error, 0.164207. Twelve asserts guard the roads. Each of these breaks trips at least one: the formula losing its $`\sqrt{T}`$, its dividend drag or its $`d_1`$; the cash-side form losing its own discount; the pathwise slope losing its $`-\sigma T`$.
 
 ### Lean
 
 Lean proves the vega formula and its sign, for every positive share price, strike, volatility and time.
 
-- Take a positive share price, strike, volatility and time. Then the call and the put both have slope $S e^{-qT}\varphi(d_1)\sqrt{T}$ against volatility.
-- Take the same positive inputs. Then $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$, as in Step 1.
+- Take a positive share price, strike, volatility and time. Then the call and the put both have slope $`S e^{-qT}\varphi(d_1)\sqrt{T}`$ against volatility.
+- Take the same positive inputs. Then $`S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)`$, as in Step 1.
 - With the same inputs, vega is always positive, and the call price strictly rises as volatility rises.
-- For Acme, $d_1 = 0.25$ and $d_2 = 0.05$ exactly.
+- For Acme, $`d_1 = 0.25`$ and $`d_2 = 0.05`$ exactly.
 
 The dollar values, the peaks and the square-root-of-time rule are left to the Python and Rust checks.
 
@@ -862,7 +882,7 @@ example :
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
-> - **Raise volatility to 30 percent.** Vega comes out at 37.901158, the same as at 20 percent. Here $d_1 = (r - q)/\sigma + \sigma/2$ is 0.25 at both, so the height is the same. At 10 percent it is 36.781009. Near the strike, vega hardly depends on the level of volatility.
+> - **Raise volatility to 30 percent.** Vega comes out at 37.901158, the same as at 20 percent. Here $`d_1 = (r - q)/\sigma + \sigma/2`$ is 0.25 at both, so the height is the same. At 10 percent it is 36.781009. Near the strike, vega hardly depends on the level of volatility.
 > - **Cut the time to three months.** Vega falls to 19.693172, a shade over half the one-year value: the square root of a quarter is a half.
 > - **Start Newton at 10 percent on the $150-strike call.** The first step lands at a volatility of 106.845750. Start at 20 percent instead: the first step lands at 0.707846, and Newton then settles on 40 percent.
 
@@ -873,7 +893,7 @@ example :
 > [!warning]
 > **Mixing the two units.** The formula gives dollars per 1.00 of volatility, a move from 20 to 120 percent. Screens quote dollars per volatility point, a move of 0.01. The Acme call's 37.90 means 38 cents per point, not $37.90; a risk report that forgets the factor of 100 overstates the exposure a hundredfold.
 >
-> - **Area for height.** Vega uses the bell curve's height $\varphi(d_1)$. The area $N(d_1)$ belongs to delta; swapped in, it gives 58.69.
+> - **Area for height.** Vega uses the bell curve's height $`\varphi(d_1)`$. The area $`N(d_1)`$ belongs to delta; swapped in, it gives 58.69.
 > - **"Vega peaks at the money."** Not exactly, and the place depends on what varies. Holding the strike, the peak is at a share price of $99.00; holding the share price, at a strike of $105.13. The forward is $103.05, which is neither.
 > - **A relative "1 percent".** A move from 20 to 20.2 percent is worth 0.0758, a fifth of a point.
 > - **A separate put vega.** Parity holds no volatility, so the put's vega is the call's, to the last digit.
@@ -885,7 +905,7 @@ example :
 - **A volatility desk's risk report.** Positions are summed as vega per point: a book's vega per point is the dollars it gains if every implied volatility rises one point. Quoting convention, dated 2026-09-19: vega is shown per one point, a 0.01 move in volatility, as in Hull's textbook below.
 - **Implied volatility solvers.** Many solvers behind a quoted "20 vol" use Newton's method steered by vega, with a guard for strikes where vega is tiny: [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md).
 - **Hedging volatility.** Shares carry no vega, so volatility risk is hedged with other options. Matching vega at one strike leaves the change of vega with the share price and with volatility itself, which are [Vanna](06-vanna.md) and [Volga](07-volga.md).
-- **Currencies and futures.** The same formula, with the foreign interest rate in place of $q$, or the discounted futures price $F e^{-rT}$ in place of $S e^{-qT}$: [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md), [Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md).
+- **Currencies and futures.** The same formula, with the foreign interest rate in place of $`q`$, or the discounted futures price $`F e^{-rT}`$ in place of $`S e^{-qT}`$: [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md), [Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md).
 - **Contracts where vega can turn negative.** Step 5 holds for plain calls and puts. A digital, which pays a fixed sum, or a knock-out barrier can lose value when volatility rises: [Digital Greeks and pin risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md), [Barrier Greeks](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md).
 - **The whole Greek set.** Vega is one term in the price-change expansion that [The Greeks together](09-greeks-together-taylor-pnl.md) assembles with [Delta](01-delta.md), [Theta](04-theta.md) and [Rho and dividend rho](05-rho-and-dividend-rho.md).
 

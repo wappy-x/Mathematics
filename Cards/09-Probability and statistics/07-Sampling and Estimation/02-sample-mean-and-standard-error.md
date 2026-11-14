@@ -36,50 +36,56 @@ Orange: the formula σ/√n. Green: the standard deviation of 1,000 simulated av
 
 ## The formula
 
-A reminder of the wing's notation. $E[X]$ is the long-run average of a random variable X. $\mathrm{Var}(X)$ is its variance, the average squared distance from $E[X]$. $\mathrm{Cov}(X, Y)$ is the covariance of two of them, a measure of how they move together. A hat marks an estimate, as in $\hat p$ for the poll's share.
+A reminder of the wing's notation. $`E[X]`$ is the long-run average of a random variable X. $`\mathrm{Var}(X)`$ is its variance, the average squared distance from $`E[X]`$. $`\mathrm{Cov}(X, Y)`$ is the covariance of two of them, a measure of how they move together. A hat marks an estimate, as in $`\hat p`$ for the poll's share.
 
-New notation, in words first. A bar over a letter marks an average over the sample: $\bar X$, read "X-bar", is the average of the answers. $S^2$ is the **sample variance**, the spread of the sample's own answers around $\bar X$, with the divisor n − 1. SE stands for standard error, SD for standard deviation.
+New notation, in words first. A bar over a letter marks an average over the sample: $`\bar X`$, read "X-bar", is the average of the answers. $`S^2`$ is the **sample variance**, the spread of the sample's own answers around $`\bar X`$, with the divisor n − 1. SE stands for standard error, SD for standard deviation.
 
-Before the calls, voter number $i$'s answer is a random variable $X_i$: 1 for yes, 0 for no. The answers are **iid**: independent (one tells nothing about another) and identically distributed (each has the same law: the same chances for every value). One answer has mean $\mu$ and variance $\sigma^2$. The sample mean is
+Before the calls, voter number $`i`$'s answer is a random variable $`X_i`$: 1 for yes, 0 for no. The answers are **iid**: independent (one tells nothing about another) and identically distributed (each has the same law: the same chances for every value). One answer has mean $`\mu`$ and variance $`\sigma^2`$. The sample mean is
 
-$$\bar X = \frac{X_1 + X_2 + \dots + X_n}{n}$$
+```math
+\bar X = \frac{X_1 + X_2 + \dots + X_n}{n}
+```
 
 and the theorem says
 
-$$E[\bar X] = \mu, \qquad \mathrm{Var}(\bar X) = \frac{\sigma^2}{n}, \qquad \mathrm{SE} = \frac{\sigma}{\sqrt n}.$$
+```math
+E[\bar X] = \mu, \qquad \mathrm{Var}(\bar X) = \frac{\sigma^2}{n}, \qquad \mathrm{SE} = \frac{\sigma}{\sqrt n}.
+```
 
 **Read it aloud:** the average aims at the population mean, and it typically misses by the spread of one answer divided by the square root of the sample size.
 
-The spread $\sigma$ is unknown, so it is estimated from the data:
+The spread $`\sigma`$ is unknown, so it is estimated from the data:
 
-$$S^2 = \frac{1}{n-1}\sum_{i=1}^{n} (X_i - \bar X)^2, \qquad E[S^2] = \sigma^2, \qquad \widehat{\mathrm{SE}} = \frac{s}{\sqrt n}.$$
+```math
+S^2 = \frac{1}{n-1}\sum_{i=1}^{n} (X_i - \bar X)^2, \qquad E[S^2] = \sigma^2, \qquad \widehat{\mathrm{SE}} = \frac{s}{\sqrt n}.
+```
 
 **Read it aloud:** add the squared distances of the answers from their own average, divide by one less than the number of answers, and the result is right on average; its square root over root n is the estimated standard error.
 
-The sign $\sum$ adds the term after it for every $i$ from 1 to $n$. A capital $S$ is the rule before the data arrive; a small $s$ is its value on the actual poll. For answers of 1 and 0 the mean is the yes share, $\mu = p$, and $\sigma^2 = p(1-p)$, which [Samples and estimators](01-populations-samples-and-estimators.md) derived for the share alone.
+The sign $`\sum`$ adds the term after it for every $`i`$ from 1 to $`n`$. A capital $`S`$ is the rule before the data arrive; a small $`s`$ is its value on the actual poll. For answers of 1 and 0 the mean is the yes share, $`\mu = p`$, and $`\sigma^2 = p(1-p)`$, which [Samples and estimators](01-populations-samples-and-estimators.md) derived for the share alone.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_i$, $i$, $j$ | answer number $i$ (1 yes, 0 no), random before the call; $j$ names a second voter | 520 ones, 480 zeros | — |
-| $n$ | the sample size: answers averaged | 1,000 | the SE falls like $1/\sqrt n$ |
-| $\bar X$ | the sample mean: the answers' average; for 0/1 answers it is the share $\hat p$ | 0.52 | — |
-| $\mu$ | the population mean: the long-run average of one answer | the true yes share $p$, unknown | the average's target moves with it |
-| $p$, $\hat p$ | the electorate's true yes share, and the poll's share | unknown; 0.52 | $p(1-p)$ peaks at 0.5 |
-| $\sigma$, $\sigma^2$ | the SD and variance of one answer | 0.4996 and 0.2496 at $p$ = 0.52 | the SE grows in proportion |
-| $\mathrm{SE}$ | the standard error: the SD of $\bar X$ over every possible poll, $\sigma/\sqrt n$ | 0.0158 | — |
-| $Q$, $\sum$ | the sum of squared deviations from the sample mean; $\sum$ adds a term for every $i$ | 249.6 | — |
-| $N$ | the number of voters in the population | millions | the without-replacement factor fades to 1 |
-| $S^2$, $s$ | the sample variance $Q/(n-1)$, and its square root on this poll | 0.249850 and 0.499850 | — |
-| $V$ | the divide-by-$n$ version, $Q/n$: the spread of the recorded answers themselves | 0.2496 | — |
-| $\widehat{\mathrm{SE}}$ | the estimated standard error $s/\sqrt n$ | 0.015807 | — |
+| $`X_i`$, $`i`$, $`j`$ | answer number $`i`$ (1 yes, 0 no), random before the call; $`j`$ names a second voter | 520 ones, 480 zeros | — |
+| $`n`$ | the sample size: answers averaged | 1,000 | the SE falls like $`1/\sqrt n`$ |
+| $`\bar X`$ | the sample mean: the answers' average; for 0/1 answers it is the share $`\hat p`$ | 0.52 | — |
+| $`\mu`$ | the population mean: the long-run average of one answer | the true yes share $`p`$, unknown | the average's target moves with it |
+| $`p`$, $`\hat p`$ | the electorate's true yes share, and the poll's share | unknown; 0.52 | $`p(1-p)`$ peaks at 0.5 |
+| $`\sigma`$, $`\sigma^2`$ | the SD and variance of one answer | 0.4996 and 0.2496 at $`p`$ = 0.52 | the SE grows in proportion |
+| $`\mathrm{SE}`$ | the standard error: the SD of $`\bar X`$ over every possible poll, $`\sigma/\sqrt n`$ | 0.0158 | — |
+| $`Q`$, $`\sum`$ | the sum of squared deviations from the sample mean; $`\sum`$ adds a term for every $`i`$ | 249.6 | — |
+| $`N`$ | the number of voters in the population | millions | the without-replacement factor fades to 1 |
+| $`S^2`$, $`s`$ | the sample variance $`Q/(n-1)`$, and its square root on this poll | 0.249850 and 0.499850 | — |
+| $`V`$ | the divide-by-$`n`$ version, $`Q/n`$: the spread of the recorded answers themselves | 0.2496 | — |
+| $`\widehat{\mathrm{SE}}`$ | the estimated standard error $`s/\sqrt n`$ | 0.015807 | — |
 
 ### When it holds
 
-- **Independent answers.** Step 2 uses independence; Step 1 does not. Poll 100 households of 10 who always vote alike and the averages scatter by 0.0500, but $s/\sqrt{1000}$ still reports 0.0157: the estimate cannot see the dependence.
-- **One common mean.** Every answer must aim at the same $\mu$. Equal variances are a convenience: with different ones, $\mathrm{Var}(\bar X)$ is their average divided by $n$.
+- **Independent answers.** Step 2 uses independence; Step 1 does not. Poll 100 households of 10 who always vote alike and the averages scatter by 0.0500, but $`s/\sqrt{1000}`$ still reports 0.0157: the estimate cannot see the dependence.
+- **One common mean.** Every answer must aim at the same $`\mu`$. Equal variances are a convenience: with different ones, $`\mathrm{Var}(\bar X)`$ is their average divided by $`n`$.
 - **A finite variance.** Yes/no answers always have one. A heavy-tailed law such as the Cauchy has none, and its average never settles ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
-- **Draws with replacement, or a population far larger than the sample.** Drawing without replacement multiplies the variance by $(N - n)/(N - 1)$, with $N$ the population size; for millions of voters that factor is indistinguishable from 1 ([Samples and estimators](01-populations-samples-and-estimators.md)).
-- **At least two answers for $S^2$.** With $n = 1$ there is no spread to measure, and $n - 1$ is zero.
+- **Draws with replacement, or a population far larger than the sample.** Drawing without replacement multiplies the variance by $`(N - n)/(N - 1)`$, with $`N`$ the population size; for millions of voters that factor is indistinguishable from 1 ([Samples and estimators](01-populations-samples-and-estimators.md)).
+- **At least two answers for $`S^2`$.** With $`n = 1`$ there is no spread to measure, and $`n - 1`$ is zero.
 
 ---
 
@@ -87,54 +93,62 @@ The sign $\sum$ adds the term after it for every $i$ from 1 to $n$. A capital $S
 
 ### Step 0: adding spreads the sum, dividing shrinks it more
 
-A sum of $n$ independent answers is more spread out than one answer, but not $n$ times as much: yeses and noes partly cancel. Its variance grows $n$-fold, so its standard deviation grows only $\sqrt n$-fold. Dividing by $n$ to get the average shrinks the standard deviation $n$-fold. Net: $\sqrt n / n = 1/\sqrt n$. That mismatch between how sums spread and how division shrinks is the whole idea.
+A sum of $`n`$ independent answers is more spread out than one answer, but not $`n`$ times as much: yeses and noes partly cancel. Its variance grows $`n`$-fold, so its standard deviation grows only $`\sqrt n`$-fold. Dividing by $`n`$ to get the average shrinks the standard deviation $`n`$-fold. Net: $`\sqrt n / n = 1/\sqrt n`$. That mismatch between how sums spread and how division shrinks is the whole idea.
 
 ### Step 1: the average aims at the mean
 
 Expectation adds up and passes through constants ([Expectation](../02-Random%20Variables/02-expectation.md)):
 
-$$E[\bar X] = \frac{E[X_1] + \dots + E[X_n]}{n} = \frac{n\mu}{n} = \mu.$$
+```math
+E[\bar X] = \frac{E[X_1] + \dots + E[X_n]}{n} = \frac{n\mu}{n} = \mu.
+```
 
 No independence was used. Any sample of answers with a common mean gives an average with no bias: its centre sits on the target, not to one side.
 
 ### Step 2: the variance of the average is σ^2/n
 
-The variance of a sum is the sum of all variances plus every covariance between two different terms ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent answers have zero covariance, so only the $n$ variances remain: $\mathrm{Var}(X_1 + \dots + X_n) = n\sigma^2$. Dividing a random variable by $n$ divides its variance by $n^2$ ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)):
+The variance of a sum is the sum of all variances plus every covariance between two different terms ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent answers have zero covariance, so only the $`n`$ variances remain: $`\mathrm{Var}(X_1 + \dots + X_n) = n\sigma^2`$. Dividing a random variable by $`n`$ divides its variance by $`n^2`$ ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)):
 
-$$\mathrm{Var}(\bar X) = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n}.$$
+```math
+\mathrm{Var}(\bar X) = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n}.
+```
 
-For the poll, 0.2496 / 1,000 has square root 0.015799. The checks list every one of the $2^n$ possible answer lists for polls of 2 to 8 voters and weigh each by its chance. The variance of the average they find matches $\sigma^2/n$ at every size: 0.124800 at 2 voters, 0.031200 at 8.
+For the poll, 0.2496 / 1,000 has square root 0.015799. The checks list every one of the $`2^n`$ possible answer lists for polls of 2 to 8 voters and weigh each by its chance. The variance of the average they find matches $`\sigma^2/n`$ at every size: 0.124800 at 2 voters, 0.031200 at 8.
 
 ### Step 3: the square-root law
 
-Taking the square root gives $\mathrm{SE} = \sigma/\sqrt n$. The cost of precision follows at once. Halving the error takes four times the sample; a tenth of the error takes a hundred times. A national poll of 1,000 has an SE of 1.58 points; 250 voters give 3.16, and 1,000 simulated polls of each size scatter by 1.62 and 3.21 points (standard errors 0.036 and 0.072). About 2 polls in 3 (0.679 of the simulated ones, standard error 0.0148) land within one standard error of the truth.
+Taking the square root gives $`\mathrm{SE} = \sigma/\sqrt n`$. The cost of precision follows at once. Halving the error takes four times the sample; a tenth of the error takes a hundred times. A national poll of 1,000 has an SE of 1.58 points; 250 voters give 3.16, and 1,000 simulated polls of each size scatter by 1.62 and 3.21 points (standard errors 0.036 and 0.072). About 2 polls in 3 (0.679 of the simulated ones, standard error 0.0148) land within one standard error of the truth.
 
 ### Step 4: the sample's own spread runs small
 
-The formula needs $\sigma$, and $\sigma$ depends on the unknown $p$. The natural stand-in is the spread of the 1,000 recorded answers. Measure it around the sample's own average, $\bar X$, since $\mu$ is unknown too.
+The formula needs $`\sigma`$, and $`\sigma`$ depends on the unknown $`p`$. The natural stand-in is the spread of the 1,000 recorded answers. Measure it around the sample's own average, $`\bar X`$, since $`\mu`$ is unknown too.
 
-That is where the catch lies. $\bar X$ is the single number that sits closest to the sample in total squared distance, because it was computed from those very answers. So the squared deviations from $\bar X$ never add to more than the squared deviations from the true $\mu$ would. The shortfall is exact:
+That is where the catch lies. $`\bar X`$ is the single number that sits closest to the sample in total squared distance, because it was computed from those very answers. So the squared deviations from $`\bar X`$ never add to more than the squared deviations from the true $`\mu`$ would. The shortfall is exact:
 
-$$\sum_{i=1}^{n} (X_i - \bar X)^2 = \sum_{i=1}^{n} (X_i - \mu)^2 - n(\bar X - \mu)^2.$$
+```math
+\sum_{i=1}^{n} (X_i - \bar X)^2 = \sum_{i=1}^{n} (X_i - \mu)^2 - n(\bar X - \mu)^2.
+```
 
-Take expectations. Each $(X_i - \mu)^2$ averages $\sigma^2$, so the first sum averages $n\sigma^2$. By Step 2, $(\bar X - \mu)^2$ averages $\sigma^2/n$, so the second term averages $\sigma^2$. The total averages $(n - 1)\sigma^2$. Divide by $n - 1$ and the estimate is right on average; divide by $n$ and it runs low by the factor $(n - 1)/n$.
+Take expectations. Each $`(X_i - \mu)^2`$ averages $`\sigma^2`$, so the first sum averages $`n\sigma^2`$. By Step 2, $`(\bar X - \mu)^2`$ averages $`\sigma^2/n`$, so the second term averages $`\sigma^2`$. The total averages $`(n - 1)\sigma^2`$. Divide by $`n - 1`$ and the estimate is right on average; divide by $`n`$ and it runs low by the factor $`(n - 1)/n`$.
 
 <details>
 <summary>Detailed proof: both theorems, line by line</summary>
 
-**Setting.** $X_1, \dots, X_n$ are independent, each with mean $\mu$ and finite variance $\sigma^2$, and $n \ge 2$.
+**Setting.** $`X_1, \dots, X_n`$ are independent, each with mean $`\mu`$ and finite variance $`\sigma^2`$, and $`n \ge 2`$.
 
-**The mean.** Expectation is linear, so $E[\bar X] = \frac{1}{n}\sum_i E[X_i] = \mu$.
+**The mean.** Expectation is linear, so $`E[\bar X] = \frac{1}{n}\sum_i E[X_i] = \mu`$.
 
-**The variance.** $\mathrm{Var}\big(\sum_i X_i\big) = \sum_i \mathrm{Var}(X_i) + \sum_{i \ne j} \mathrm{Cov}(X_i, X_j)$. Independence makes every covariance zero, so the sum's variance is $n\sigma^2$. Dividing a random variable by $n$ divides its variance by $n^2$, so $\mathrm{Var}(\bar X) = \sigma^2/n$.
+**The variance.** $`\mathrm{Var}\big(\sum_i X_i\big) = \sum_i \mathrm{Var}(X_i) + \sum_{i \ne j} \mathrm{Cov}(X_i, X_j)`$. Independence makes every covariance zero, so the sum's variance is $`n\sigma^2`$. Dividing a random variable by $`n`$ divides its variance by $`n^2`$, so $`\mathrm{Var}(\bar X) = \sigma^2/n`$.
 
-**The identity.** Write $X_i - \bar X = (X_i - \mu) - (\bar X - \mu)$ and square:
-$$\sum_i (X_i - \bar X)^2 = \sum_i (X_i - \mu)^2 - 2(\bar X - \mu)\sum_i (X_i - \mu) + n(\bar X - \mu)^2.$$
-The middle sum is $\sum_i (X_i - \mu) = n\bar X - n\mu = n(\bar X - \mu)$, so the middle term is $-2n(\bar X - \mu)^2$ and the identity follows: $\sum_i (X_i - \bar X)^2 = \sum_i (X_i - \mu)^2 - n(\bar X - \mu)^2$. This step is pure algebra and holds for every list of numbers.
+**The identity.** Write $`X_i - \bar X = (X_i - \mu) - (\bar X - \mu)`$ and square:
 
-**The expectation.** $E[(X_i - \mu)^2] = \sigma^2$ by definition, and $E[(\bar X - \mu)^2] = \mathrm{Var}(\bar X) = \sigma^2/n$ because $E[\bar X] = \mu$. So $E\big[\sum_i (X_i - \bar X)^2\big] = n\sigma^2 - n \cdot \sigma^2/n = (n - 1)\sigma^2$, and $E[S^2] = \sigma^2$. The divide-by-$n$ version has $E[V] = (n-1)\sigma^2/n$.
+$`\displaystyle \sum_i (X_i - \bar X)^2 = \sum_i (X_i - \mu)^2 - 2(\bar X - \mu)\sum_i (X_i - \mu) + n(\bar X - \mu)^2.`$
 
-Independence entered only through $\mathrm{Var}(\bar X)$. Nothing needed a normal law or a fourth moment.
+The middle sum is $`\sum_i (X_i - \mu) = n\bar X - n\mu = n(\bar X - \mu)`$, so the middle term is $`-2n(\bar X - \mu)^2`$ and the identity follows: $`\sum_i (X_i - \bar X)^2 = \sum_i (X_i - \mu)^2 - n(\bar X - \mu)^2`$. This step is pure algebra and holds for every list of numbers.
+
+**The expectation.** $`E[(X_i - \mu)^2] = \sigma^2`$ by definition, and $`E[(\bar X - \mu)^2] = \mathrm{Var}(\bar X) = \sigma^2/n`$ because $`E[\bar X] = \mu`$. So $`E\big[\sum_i (X_i - \bar X)^2\big] = n\sigma^2 - n \cdot \sigma^2/n = (n - 1)\sigma^2`$, and $`E[S^2] = \sigma^2`$. The divide-by-$`n`$ version has $`E[V] = (n-1)\sigma^2/n`$.
+
+Independence entered only through $`\mathrm{Var}(\bar X)`$. Nothing needed a normal law or a fourth moment.
 
 </details>
 
@@ -148,22 +162,22 @@ xychart-beta
     line [50.00, 66.67, 75.00, 80.00, 83.33, 85.71, 87.50]
 ```
 
-Orange: $S^2$, dividing by $n - 1$, averaged exactly over every answer list. It sits on the true 0.2496 at every size. Green: $V$, dividing by $n$. It averages half the truth at 2 voters, 0.1248, and is still 87.50 percent of it at 8. On this poll's data the two give 0.249850 and 0.249600, which is why the poll barely notices.
+Orange: $`S^2`$, dividing by $`n - 1`$, averaged exactly over every answer list. It sits on the true 0.2496 at every size. Green: $`V`$, dividing by $`n`$. It averages half the truth at 2 voters, 0.1248, and is still 87.50 percent of it at 8. On this poll's data the two give 0.249850 and 0.249600, which is why the poll barely notices.
 
 <details>
 <summary>Why exactly one is lost: the two-voter poll</summary>
 
-Two voters, one yes and one no, happens with chance 2 × 0.52 × 0.48 = 0.4992. Their average is 0.5 and each sits 0.5 from it, so the squared deviations total 0.5. Two voters who agree have no spread at all. So $S^2$ (dividing by 1) averages 0.4992 × 0.5 = 0.2496, the truth, and $V$ (dividing by 2) averages 0.1248. The deviations $X_i - \bar X$ always add to zero, so once $n - 1$ of them are known the last is fixed. Only $n - 1$ of them carry independent information, and that count is called the **degrees of freedom**.
+Two voters, one yes and one no, happens with chance 2 × 0.52 × 0.48 = 0.4992. Their average is 0.5 and each sits 0.5 from it, so the squared deviations total 0.5. Two voters who agree have no spread at all. So $`S^2`$ (dividing by 1) averages 0.4992 × 0.5 = 0.2496, the truth, and $`V`$ (dividing by 2) averages 0.1248. The deviations $`X_i - \bar X`$ always add to zero, so once $`n - 1`$ of them are known the last is fixed. Only $`n - 1`$ of them carry independent information, and that count is called the **degrees of freedom**.
 
 </details>
 
 ### Step 5: the estimated standard error
 
-Put the pieces together: $\widehat{\mathrm{SE}} = s/\sqrt n$. For answers of 1 and 0 the sum of squares works out to $n\hat p(1 - \hat p)$, so $s^2 = \frac{n}{n-1}\hat p(1-\hat p)$ and $\widehat{\mathrm{SE}}$ is within a factor $\sqrt{1000/999}$ of the plug-in $\sqrt{\hat p(1-\hat p)/n}$. For the poll both round to 0.0158.
+Put the pieces together: $`\widehat{\mathrm{SE}} = s/\sqrt n`$. For answers of 1 and 0 the sum of squares works out to $`n\hat p(1 - \hat p)`$, so $`s^2 = \frac{n}{n-1}\hat p(1-\hat p)`$ and $`\widehat{\mathrm{SE}}`$ is within a factor $`\sqrt{1000/999}`$ of the plug-in $`\sqrt{\hat p(1-\hat p)/n}`$. For the poll both round to 0.0158.
 
-One caution. $S^2$ is right on average, but its square root is not: a square root pulls large values in more than small ones, so $s$ runs slightly low. In a two-voter poll, $S$ averages 0.3530 against $\sigma = 0.4996$. The shortfall fades fast: at 8 voters $S$ averages 0.4954, and across 1,000 simulated polls of 1,000 the estimated SE averages 0.015798 against the true 0.015799.
+One caution. $`S^2`$ is right on average, but its square root is not: a square root pulls large values in more than small ones, so $`s`$ runs slightly low. In a two-voter poll, $`S`$ averages 0.3530 against $`\sigma = 0.4996`$. The shortfall fades fast: at 8 voters $`S`$ averages 0.4954, and across 1,000 simulated polls of 1,000 the estimated SE averages 0.015798 against the true 0.015799.
 
-The formula is not the only road. Resampling the 1,000 answers themselves and watching how their average moves estimates the same standard error with no formula for $\sigma$. That road, which works for statistics with no closed form (no ready-made formula), is [Bootstrap](08-bootstrap.md).
+The formula is not the only road. Resampling the 1,000 answers themselves and watching how their average moves estimates the same standard error with no formula for $`\sigma`$. That road, which works for statistics with no closed form (no ready-made formula), is [Bootstrap](08-bootstrap.md).
 
 ---
 
@@ -174,24 +188,24 @@ The formula is not the only road. Resampling the 1,000 answers themselves and wa
 | the average | 520 / 1,000 | 0.52 |
 | a yes answer's squared deviation | (1 − 0.52) × (1 − 0.52) | 0.2304 |
 | a no answer's squared deviation | 0.52 × 0.52 | 0.2704 |
-| sum of squares $Q$ | 520 × 0.2304 + 480 × 0.2704 = 119.808 + 129.792 | 249.6 |
-| sample variance $s^2$ | 249.6 / 999 | 0.249850 |
-| sample SD $s$ | square root | 0.499850 |
+| sum of squares $`Q`$ | 520 × 0.2304 + 480 × 0.2704 = 119.808 + 129.792 | 249.6 |
+| sample variance $`s^2`$ | 249.6 / 999 | 0.249850 |
+| sample SD $`s`$ | square root | 0.499850 |
 | **estimated SE** | 0.499850 / 31.6228 | **0.015807** |
 | plug-in check | square root of 0.52 × 0.48 / 1,000 | 0.015799 |
 
 The poll reads 52 percent with a standard error of 1.6 points. A second random poll of 1,000 would typically land within about 1.6 points of the true share. Quoted as a 95 percent interval, 1.96 standard errors either side, that is a margin of 0.030981, the "plus or minus 3 points" printed under poll headlines. That interval is a statement about the method, not about this poll; [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md) builds it properly.
 
-A second check on a question with three answers: a follow-up asks how firm the vote is, 1, 2 or 3, with chances 0.25, 0.5 and 0.25, so $\sigma^2 = 0.5$. Over every possible list of 4 answers, $S^2$ averages 0.5000 and $V$ averages 0.3750. The $n - 1$ rule is not a property of yes/no data.
+A second check on a question with three answers: a follow-up asks how firm the vote is, 1, 2 or 3, with chances 0.25, 0.5 and 0.25, so $`\sigma^2 = 0.5`$. Over every possible list of 4 answers, $`S^2`$ averages 0.5000 and $`V`$ averages 0.3750. The $`n - 1`$ rule is not a property of yes/no data.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Dividing by $n$ in a poll of 2 | average 0.1248; the truth is 0.2496 | deviations measured from the sample's own mean run small |
-| Quoting one answer's SD as the poll's error | 0.4996, nearly 50 points, not 0.0158 | the $\sqrt n$ was left out |
-| 100 households of 10 who vote alike | $s/\sqrt{1000}$ says 0.0157; the averages actually scatter by 0.0500 | the answers are not independent: 1,000 calls hold 100 answers |
-| Taking the square root of an unbiased $S^2$ as unbiased | $S$ averages 0.3530 at 2 voters, not 0.4996 | a square root does not pass through an average |
+| Dividing by $`n`$ in a poll of 2 | average 0.1248; the truth is 0.2496 | deviations measured from the sample's own mean run small |
+| Quoting one answer's SD as the poll's error | 0.4996, nearly 50 points, not 0.0158 | the $`\sqrt n`$ was left out |
+| 100 households of 10 who vote alike | $`s/\sqrt{1000}`$ says 0.0157; the averages actually scatter by 0.0500 | the answers are not independent: 1,000 calls hold 100 answers |
+| Taking the square root of an unbiased $`S^2`$ as unbiased | $`S`$ averages 0.3530 at 2 voters, not 0.4996 | a square root does not pass through an average |
 
 The code prints all four.
 
@@ -199,7 +213,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The scripts take three roads. Road 1 is the formula, fed the poll's own 1,000 answers. Road 2 lists every possible answer list for polls of 2 to 8 voters, $2^n$ of them, weighs each by its exact chance, and averages the mean, the two variances and $S$; it does the same for the three-answer question. Road 3 runs 1,000 seeded polls of 1,000 voters and 1,000 clustered polls, drawing from SplitMix64, a short recipe for pseudo-random whole numbers written out in both languages so both draw the same answers. Asserts compare the enumeration with the proved formulas, and the simulation with them to within four standard errors.
+The scripts take three roads. Road 1 is the formula, fed the poll's own 1,000 answers. Road 2 lists every possible answer list for polls of 2 to 8 voters, $`2^n`$ of them, weighs each by its exact chance, and averages the mean, the two variances and $`S`$; it does the same for the three-answer question. Road 3 runs 1,000 seeded polls of 1,000 voters and 1,000 clustered polls, drawing from SplitMix64, a short recipe for pseudo-random whole numbers written out in both languages so both draw the same answers. Asserts compare the enumeration with the proved formulas, and the simulation with them to within four standard errors.
 
 ### Python
 
@@ -604,16 +618,16 @@ The two outputs match line for line.
 
 Lean proves both theorems for any n independent answers with a common mean and finite variance, and checks the poll's numbers exactly.
 
-- Suppose n independent answers, n at least 1, each have mean $\mu$ and finite variance $\sigma^2$. Then $E[\bar X] = \mu$, $\mathrm{Var}(\bar X) = \sigma^2/n$ and $\mathrm{SE} = \sigma/\sqrt n$.
-- Suppose the same, with at least two answers. Then $E[S^2] = \sigma^2$, and the divide-by-$n$ version has $E[V] = (n - 1)\sigma^2/n$.
-- The identity in Step 4 holds for every list of numbers, with any number in place of $\mu$.
-- Take the poll: 520 yes and 480 no. Then $Q = 249.6$, $s^2 = 249.6/999$ and $\sigma^2/n = 0.2496/1000$.
-- Take a poll of 2 voters. Then $S^2$ averages 0.2496, the truth, and $V$ averages 0.1248.
-- Take 2, 4, 5 and 8 voters. Then $E[V]$ is 50, 75, 80 and 87.5 percent of $\sigma^2$.
-- Take the three-answer question and 4 answers. Then $E[S^2] = 0.5$ and $E[V] = 0.375$.
+- Suppose n independent answers, n at least 1, each have mean $`\mu`$ and finite variance $`\sigma^2`$. Then $`E[\bar X] = \mu`$, $`\mathrm{Var}(\bar X) = \sigma^2/n`$ and $`\mathrm{SE} = \sigma/\sqrt n`$.
+- Suppose the same, with at least two answers. Then $`E[S^2] = \sigma^2`$, and the divide-by-$`n`$ version has $`E[V] = (n - 1)\sigma^2/n`$.
+- The identity in Step 4 holds for every list of numbers, with any number in place of $`\mu`$.
+- Take the poll: 520 yes and 480 no. Then $`Q = 249.6`$, $`s^2 = 249.6/999`$ and $`\sigma^2/n = 0.2496/1000`$.
+- Take a poll of 2 voters. Then $`S^2`$ averages 0.2496, the truth, and $`V`$ averages 0.1248.
+- Take 2, 4, 5 and 8 voters. Then $`E[V]`$ is 50, 75, 80 and 87.5 percent of $`\sigma^2`$.
+- Take the three-answer question and 4 answers. Then $`E[S^2] = 0.5`$ and $`E[V] = 0.375`$.
 - Take 100 households of 10. Then the average's variance is 0.2496/100, not 0.2496/1000.
 
-The decimals, square roots, simulated polls, the chart and the caution that $s$ runs low are left to the Python and Rust checks.
+The decimals, square roots, simulated polls, the chart and the caution that $`s`$ runs low are left to the Python and Rust checks.
 
 ```lean
 -- Standard error: the average of n independent answers with common mean μ and variance σ² has mean μ, variance σ²/n and standard deviation σ/√n, and the sample variance that divides by n − 1 has mean exactly σ² when n ≥ 2.
@@ -799,9 +813,9 @@ example : (2496 / 10000 : ℚ) / 100 = 2496 / 1000000 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Divide by n.** In `exact`, change `q / (n - 1)` to `q / n` in the term added to `es2`. Guess which size fails first. The enumerated average now matches $(n - 1)\sigma^2/n$, not $\sigma^2$, and an assert stops the program at $n = 2$.
+> - **Divide by n.** In `exact`, change `q / (n - 1)` to `q / n` in the term added to `es2`. Guess which size fails first. The enumerated average now matches $`(n - 1)\sigma^2/n`$, not $`\sigma^2`$, and an assert stops the program at $`n = 2`$.
 > - **Break up the households.** Set `HOMES, SIZE = 1000, 1`. Every answer is now its own draw, the clustered averages scatter like an honest poll, about 0.0158, and the assert expecting 0.0500 stops the program. Dependence, not the number of calls, set the error.
-> - **A tied electorate.** Set `P` to 0.5. Guess the change in the standard error. It barely moves: $p(1-p)$ is flat near its peak at 0.5, so polls near a tie all carry about the same error for the same size. Every assert still passes.
+> - **A tied electorate.** Set `P` to 0.5. Guess the change in the standard error. It barely moves: $`p(1-p)`$ is flat near its peak at 0.5, so polls near a tie all carry about the same error for the same size. Every assert still passes.
 > - **Another seed.** Change `SEED`. The simulated spreads move by a few hundredths of a point, inside four standard errors; the enumerated rows do not move at all.
 
 ---
@@ -809,7 +823,7 @@ example : (2496 / 10000 : ℚ) / 100 = 2496 / 1000000 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Confusing the standard deviation with the standard error.** The SD, 0.4996 here, describes how one answer varies: a single voter is a coin with 52 percent on yes. The SE, 0.0158, describes how the average varies from poll to poll. They differ by $\sqrt n$, a factor of 31.6 for this poll. A report that quotes the SD as the error bar overstates the uncertainty thirtyfold; one that quotes the SE as the spread of voters understates their disagreement just as badly.
+> **Confusing the standard deviation with the standard error.** The SD, 0.4996 here, describes how one answer varies: a single voter is a coin with 52 percent on yes. The SE, 0.0158, describes how the average varies from poll to poll. They differ by $`\sqrt n`$, a factor of 31.6 for this poll. A report that quotes the SD as the error bar overstates the uncertainty thirtyfold; one that quotes the SE as the spread of voters understates their disagreement just as badly.
 >
 > - **Expecting error to fall in proportion to effort.** Ten times the voters divides the error by the square root of 10, not by 10: 5.00 points at 100 voters, 1.58 at 1,000.
 > - **Dividing by n to estimate σ^2.** Harmless at 1,000 voters, a factor of 2 at two: 0.1248 against 0.2496.
@@ -832,12 +846,12 @@ example : (2496 / 10000 : ℚ) / 100 = 2496 / 1000000 := by norm_num
 
 ## What this builds on
 
-- [Samples and estimators](01-populations-samples-and-estimators.md): estimators, bias and noise, and the poll share's noise with the true $p$ in hand.
+- [Samples and estimators](01-populations-samples-and-estimators.md): estimators, bias and noise, and the poll share's noise with the true $`p`$ in hand.
 
 ## Where this goes next
 
-- [The reference distributions](03-chi-square-t-and-f-distributions.md): the exact laws of $S^2$ and of the average divided by its estimated SE when the data are normal.
-- [Bias and variance](06-bias-variance-and-mean-squared-error.md): when a biased divisor, such as $n$ or $n + 1$, gives a smaller total error than $n - 1$.
+- [The reference distributions](03-chi-square-t-and-f-distributions.md): the exact laws of $`S^2`$ and of the average divided by its estimated SE when the data are normal.
+- [Bias and variance](06-bias-variance-and-mean-squared-error.md): when a biased divisor, such as $`n`$ or $`n + 1`$, gives a smaller total error than $`n - 1`$.
 - [Bootstrap](08-bootstrap.md): the standard error of any statistic, found by resampling the data.
 - [Realised variance](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md): a sample variance of daily returns, traded as a contract.
 - [Performance measures](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md): a ratio of a sample mean to a sample SD, and how noisy it is.
@@ -851,6 +865,6 @@ The standard error says how wide the scatter is, not its shape; dividing the ave
 Verified 28 Sep 2026: every link below resolves to the publisher's page.
 
 - Freedman, David, Robert Pisani, and Roger Purves. *Statistics*, 4th ed. W. W. Norton, 2007. [Publisher page](https://wwnorton.com/books/9780393929720). The standard error of an average and of a percentage, and the square-root law, taught without calculus.
-- Casella, George, and Roger L. Berger. *Statistical Inference*, 2nd ed. Chapman and Hall/CRC. [Publisher page](https://www.routledge.com/Statistical-Inference/Casella-Berger/p/book/9781032593036). The mean and variance of the sample mean and the unbiasedness of $S^2$, proved for random samples.
+- Casella, George, and Roger L. Berger. *Statistical Inference*, 2nd ed. Chapman and Hall/CRC. [Publisher page](https://www.routledge.com/Statistical-Inference/Casella-Berger/p/book/9781032593036). The mean and variance of the sample mean and the unbiasedness of $`S^2`$, proved for random samples.
 - Wasserman, Larry. *All of Statistics*. Springer, 2004. [doi:10.1007/978-0-387-21736-9](https://doi.org/10.1007/978-0-387-21736-9). A compact modern treatment of estimators and standard errors, with the bootstrap alongside.
 - Student (W. S. Gosset). "The Probable Error of a Mean." *Biometrika* 6, no. 1 (1908): 1–25. [doi:10.2307/2331554](https://doi.org/10.2307/2331554). The paper that asked what happens when the standard error is itself estimated from a small sample.

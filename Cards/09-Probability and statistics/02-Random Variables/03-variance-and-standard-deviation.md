@@ -35,48 +35,56 @@ The two bars sum to 99. The win, one ticket in a hundred, supplies 98.01 of it: 
 
 ## The formula
 
-A reminder of the notation. $X$ is the random variable, here the ticket's payout; its values are written in lower case, $x$. $E[X]$ is its expectation, the long-run average, and this card writes it $\mu$ (the Greek letter mu, read "mew") to keep the formulas short. The sign $\sum_x$ (a capital Greek sigma) means "add up over every value $x$". New on this card: $\mathrm{Var}(X)$, read "the variance of X", and $\sigma$ (Greek sigma), its square root.
+A reminder of the notation. $`X`$ is the random variable, here the ticket's payout; its values are written in lower case, $`x`$. $`E[X]`$ is its expectation, the long-run average, and this card writes it $`\mu`$ (the Greek letter mu, read "mew") to keep the formulas short. The sign $`\sum_x`$ (a capital Greek sigma) means "add up over every value $`x`$". New on this card: $`\mathrm{Var}(X)`$, read "the variance of X", and $`\sigma`$ (Greek sigma), its square root.
 
-$$\mathrm{Var}(X) = E\big[(X - \mu)^2\big] = \sum_x (x - \mu)^2 \, P(X = x)$$
+```math
+\mathrm{Var}(X) = E\big[(X - \mu)^2\big] = \sum_x (x - \mu)^2 \, P(X = x)
+```
 
 **Read it aloud:** for each value the payout can take, measure its distance from the mean, square it, weight it by its chance, and add.
 
-$$\sigma = \sqrt{\mathrm{Var}(X)}$$
+```math
+\sigma = \sqrt{\mathrm{Var}(X)}
+```
 
 **Read it aloud:** the standard deviation is the square root of the variance, which puts it back in dollars.
 
 Two results make the definition usable. The **shortcut** computes the same number from two averages:
 
-$$\mathrm{Var}(X) = E[X^2] - \mu^2$$
+```math
+\mathrm{Var}(X) = E[X^2] - \mu^2
+```
 
 **Read it aloud:** the average of the square, minus the square of the average.
 
-The **rescaling rule** says what happens when every payout is multiplied by a number $a$ and then shifted by a number $b$:
+The **rescaling rule** says what happens when every payout is multiplied by a number $`a`$ and then shifted by a number $`b`$:
 
-$$\mathrm{Var}(aX + b) = a^2 \, \mathrm{Var}(X), \qquad \sigma_{aX+b} = \lvert a \rvert \, \sigma$$
+```math
+\mathrm{Var}(aX + b) = a^2 \, \mathrm{Var}(X), \qquad \sigma_{aX+b} = \lvert a \rvert \, \sigma
+```
 
-**Read it aloud:** shifting changes nothing; stretching by $a$ multiplies the variance by $a$ squared and the standard deviation by the size of $a$, sign dropped.
+**Read it aloud:** shifting changes nothing; stretching by $`a`$ multiplies the variance by $`a`$ squared and the standard deviation by the size of $`a`$, sign dropped.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the random variable: the ticket's payout | $0 or $100 | — |
-| $x$ | one value $X$ can take | 0, then 100 | a value farther from the mean adds more |
-| $P(X = x)$ | the chance $X$ takes the value $x$ | 0.99 and 0.01 | more chance on the far value, more variance |
-| $\mu$ | the mean, $E[X]$, the long-run average payout | $1 | a shift moves it, and the variance stays put |
-| $E[X^2]$ | the average of the squared payout | 100 square dollars | variance rises one for one |
-| $\mathrm{Var}(X)$ | the variance: average squared distance from $\mu$ | 99 square dollars | — |
-| $\sigma$ | the standard deviation, $\sqrt{\mathrm{Var}(X)}$ | about $9.95 | — |
-| $a$ | a stretch applied to every payout | 2 for a doubled prize | variance grows as $a$ squared |
-| $b$ | a shift added to every payout | −2 for a $2 ticket price | no change at all |
-| $p$ | the chance of the win | 0.01 | variance $p(1-p)$ times prize squared |
-| $\sum_x$ | add over every value $X$ can take | two terms, $0 and $100 | — |
-| $n$ | tickets drawn in the simulation | 1,000,000 | the standard error (the typical size of the simulation's miss) shrinks like $1/\sqrt{n}$ |
+| $`X`$ | the random variable: the ticket's payout | $0 or $100 | — |
+| $`x`$ | one value $`X`$ can take | 0, then 100 | a value farther from the mean adds more |
+| $`P(X = x)`$ | the chance $`X`$ takes the value $`x`$ | 0.99 and 0.01 | more chance on the far value, more variance |
+| $`\mu`$ | the mean, $`E[X]`$, the long-run average payout | $1 | a shift moves it, and the variance stays put |
+| $`E[X^2]`$ | the average of the squared payout | 100 square dollars | variance rises one for one |
+| $`\mathrm{Var}(X)`$ | the variance: average squared distance from $`\mu`$ | 99 square dollars | — |
+| $`\sigma`$ | the standard deviation, $`\sqrt{\mathrm{Var}(X)}`$ | about $9.95 | — |
+| $`a`$ | a stretch applied to every payout | 2 for a doubled prize | variance grows as $`a`$ squared |
+| $`b`$ | a shift added to every payout | −2 for a $2 ticket price | no change at all |
+| $`p`$ | the chance of the win | 0.01 | variance $`p(1-p)`$ times prize squared |
+| $`\sum_x`$ | add over every value $`X`$ can take | two terms, $0 and $100 | — |
+| $`n`$ | tickets drawn in the simulation | 1,000,000 | the standard error (the typical size of the simulation's miss) shrinks like $`1/\sqrt{n}`$ |
 
 ### When it holds
 
-- **The variance is a definition, so it always applies where it exists.** It exists when $E[X^2]$ is finite. Every variable with finitely many values qualifies. One with endlessly many can fail: a payout of 1, 2, 3, … dollars, with chance proportional to one over the payout cubed, has a finite mean, but $E[X^2]$ adds terms proportional to one over the payout, and that sum runs off to infinity.
-- **The shortcut needs $E[X^2]$ finite too.** Without it the right side is infinity minus a number, and no subtraction makes sense.
-- **The rescaling rule needs $a$ and $b$ to be fixed numbers.** If $a$ is itself random, $a$ times $X$ is a product of two random variables and its variance depends on how they move together: [Two variables at once](04-joint-distributions-and-covariance.md).
+- **The variance is a definition, so it always applies where it exists.** It exists when $`E[X^2]`$ is finite. Every variable with finitely many values qualifies. One with endlessly many can fail: a payout of 1, 2, 3, … dollars, with chance proportional to one over the payout cubed, has a finite mean, but $`E[X^2]`$ adds terms proportional to one over the payout, and that sum runs off to infinity.
+- **The shortcut needs $`E[X^2]`$ finite too.** Without it the right side is infinity minus a number, and no subtraction makes sense.
+- **The rescaling rule needs $`a`$ and $`b`$ to be fixed numbers.** If $`a`$ is itself random, $`a`$ times $`X`$ is a product of two random variables and its variance depends on how they move together: [Two variables at once](04-joint-distributions-and-covariance.md).
 - **Variances of a sum do not add in general.** That rule needs independence and belongs to the covariance card just named.
 
 ---
@@ -89,32 +97,32 @@ The first try is the average signed distance from the mean. For the ticket: 0.99
 
 ### Step 1: the definition, worked on the ticket
 
-Distances from $\mu = 1$: the loss sits 1 below, the win 99 above. Squared: 1 and 9,801. Weighted by chance: 0.99 × 1 = 0.99 and 0.01 × 9,801 = 98.01. Sum: 99 square dollars.
+Distances from $`\mu = 1`$: the loss sits 1 below, the win 99 above. Squared: 1 and 9,801. Weighted by chance: 0.99 × 1 = 0.99 and 0.01 × 9,801 = 98.01. Sum: 99 square dollars.
 
-The distances were squared, so the unit is square dollars. The square root undoes that: $\sigma = \sqrt{99} \approx 9.95$ dollars.
+The distances were squared, so the unit is square dollars. The square root undoes that: $`\sigma = \sqrt{99} \approx 9.95`$ dollars.
 
 ### Step 2: the shortcut, from linearity of the average
 
-Expand the square inside the average: $(X - \mu)^2 = X^2 - 2\mu X + \mu^2$. The average of a sum is the sum of the averages, and a fixed number comes out of an average unchanged ([Expectation](02-expectation.md)). So the average of the expansion is $E[X^2] - 2\mu \cdot \mu + \mu^2 = E[X^2] - \mu^2$.
+Expand the square inside the average: $`(X - \mu)^2 = X^2 - 2\mu X + \mu^2`$. The average of a sum is the sum of the averages, and a fixed number comes out of an average unchanged ([Expectation](02-expectation.md)). So the average of the expansion is $`E[X^2] - 2\mu \cdot \mu + \mu^2 = E[X^2] - \mu^2`$.
 
-On the ticket: $E[X^2]$ = 0.99 × 0 + 0.01 × 10,000 = 100. Minus $1^2$: 99 again.
+On the ticket: $`E[X^2]`$ = 0.99 × 0 + 0.01 × 10,000 = 100. Minus $`1^2`$: 99 again.
 
-Because a variance is an average of squares it is never negative, so the shortcut also proves $E[X^2] \ge \mu^2$: the average of the squares is at least the square of the average, with equality only when $X$ never moves.
+Because a variance is an average of squares it is never negative, so the shortcut also proves $`E[X^2] \ge \mu^2`$: the average of the squares is at least the square of the average, with equality only when $`X`$ never moves.
 
 ### Step 3: the rescaling rule, from one line of distances
 
-Multiply every payout by $a$ and add $b$. The mean moves the same way: $a\mu + b$. Each new distance from the new mean is $(ax + b) - (a\mu + b) = a(x - \mu)$. The shift $b$ cancels, since it moves payouts and mean together. The stretch survives as $a$, and squaring makes it $a^2$. Averaging the squared distances gives $a^2 \, \mathrm{Var}(X)$. The square root gives $\lvert a \rvert \sigma$, since a square root is never negative.
+Multiply every payout by $`a`$ and add $`b`$. The mean moves the same way: $`a\mu + b`$. Each new distance from the new mean is $`(ax + b) - (a\mu + b) = a(x - \mu)`$. The shift $`b`$ cancels, since it moves payouts and mean together. The stretch survives as $`a`$, and squaring makes it $`a^2`$. Averaging the squared distances gives $`a^2 \, \mathrm{Var}(X)`$. The square root gives $`\lvert a \rvert \sigma`$, since a square root is never negative.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $X$ take the values $x$ with chances $P(X = x)$ summing to 1, and suppose $\sum_x x^2 P(X = x)$ is finite. Then $\sum_x \lvert x \rvert P(X = x) \le \sum_x (1 + x^2) P(X = x)$ is finite too, so $\mu$ exists.
+Let $`X`$ take the values $`x`$ with chances $`P(X = x)`$ summing to 1, and suppose $`\sum_x x^2 P(X = x)`$ is finite. Then $`\sum_x \lvert x \rvert P(X = x) \le \sum_x (1 + x^2) P(X = x)`$ is finite too, so $`\mu`$ exists.
 
-**Shortcut.** $\sum_x (x - \mu)^2 P(X = x) = \sum_x x^2 P(X = x) - 2\mu \sum_x x P(X = x) + \mu^2 \sum_x P(X = x)$. Each of the three sums is finite, so splitting is allowed. The middle sum is $\mu$ and the last is 1, giving $E[X^2] - 2\mu^2 + \mu^2 = E[X^2] - \mu^2$.
+**Shortcut.** $`\sum_x (x - \mu)^2 P(X = x) = \sum_x x^2 P(X = x) - 2\mu \sum_x x P(X = x) + \mu^2 \sum_x P(X = x)`$. Each of the three sums is finite, so splitting is allowed. The middle sum is $`\mu`$ and the last is 1, giving $`E[X^2] - 2\mu^2 + \mu^2 = E[X^2] - \mu^2`$.
 
-**Rescaling.** The rescaled payout $aX + b$ takes the value $ax + b$ with chance $P(X = x)$. (If $a = 0$ every value collapses to $b$ and both sides are 0.) Its mean is $\sum_x (ax + b) P(X = x) = a\mu + b$. Its variance is $\sum_x \big(ax + b - a\mu - b\big)^2 P(X = x) = a^2 \sum_x (x - \mu)^2 P(X = x) = a^2 \, \mathrm{Var}(X)$.
+**Rescaling.** The rescaled payout $`aX + b`$ takes the value $`ax + b`$ with chance $`P(X = x)`$. (If $`a = 0`$ every value collapses to $`b`$ and both sides are 0.) Its mean is $`\sum_x (ax + b) P(X = x) = a\mu + b`$. Its variance is $`\sum_x \big(ax + b - a\mu - b\big)^2 P(X = x) = a^2 \sum_x (x - \mu)^2 P(X = x) = a^2 \, \mathrm{Var}(X)`$.
 
-**Zero spread.** Every term $(x - \mu)^2 P(X = x)$ is at least 0. The sum is 0 only if each term is, so every value with positive chance equals $\mu$: $X$ is constant.
+**Zero spread.** Every term $`(x - \mu)^2 P(X = x)`$ is at least 0. The sum is 0 only if each term is, so every value with positive chance equals $`\mu`$: $`X`$ is constant.
 
 For a variable with a density (a curve that spreads its chance over a range of values) the sums become integrals and every line holds unchanged; the general case, one integral for all of them, is [Expectation as an integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
 
@@ -131,7 +139,7 @@ The average unsigned distance is a real measure of spread, the mean absolute dev
 
 </details>
 
-A third road reaches 99 through the rescaling rule. The payout is $100 times a yes-or-no variable that is 1 on a win and 0 otherwise, with win chance $p$. That variable equals its own square, so its mean and its average square are both $p$, and the shortcut gives its variance as $p - p^2 = p(1 - p)$ = 0.01 × 0.99 = 0.0099. The rescaling rule with $a = 100$ multiplies it by 10,000: 99.
+A third road reaches 99 through the rescaling rule. The payout is $100 times a yes-or-no variable that is 1 on a win and 0 otherwise, with win chance $`p`$. That variable equals its own square, so its mean and its average square are both $`p`$, and the shortcut gives its variance as $`p - p^2 = p(1 - p)`$ = 0.01 × 0.99 = 0.0099. The rescaling rule with $`a = 100`$ multiplies it by 10,000: 99.
 
 ---
 
@@ -158,12 +166,12 @@ The ticket's law is its list of payouts with their chances. The large dot is the
 
 ### A second case: the same ticket, rescaled
 
-| Rescaled payout | $a$ | $b$ | Mean | Variance | Standard deviation |
+| Rescaled payout | $`a`$ | $`b`$ | Mean | Variance | Standard deviation |
 | --- | --- | --- | --- | --- | --- |
-| net of a $2 price, $X - 2$ | 1 | −2 | −$1 | 99 | $9.95 |
-| the organiser's side, $2 - X$ | −1 | 2 | $1 | 99 | $9.95 |
-| a doubled prize, $2X$ | 2 | 0 | $2 | 396 | $19.90 |
-| counted in cents, $100X$ | 100 | 0 | 100 cents | 990,000 square cents | 994.99 cents |
+| net of a $2 price, $`X - 2`$ | 1 | −2 | −$1 | 99 | $9.95 |
+| the organiser's side, $`2 - X`$ | −1 | 2 | $1 | 99 | $9.95 |
+| a doubled prize, $`2X`$ | 2 | 0 | $2 | 396 | $19.90 |
+| counted in cents, $`100X`$ | 100 | 0 | 100 cents | 990,000 square cents | 994.99 cents |
 
 The ticket price moves the mean and leaves the spread alone. The organiser faces the buyer's spread, sign reversed. Doubling the prize quadruples the variance and doubles the standard deviation. In cents the variance grows 10,000-fold: only the standard deviation converts the way money does.
 
@@ -173,8 +181,8 @@ The ticket price moves the mean and leaves the spread alone. The organiser faces
 | --- | --- | --- |
 | Average the signed distances | 0 | Distances below and above the mean always cancel |
 | Double the prize, double the variance | 198, not 396 | The stretch enters squared |
-| Shortcut on $2X$, subtracting its mean, not its mean squared | 398, not 396 | At mean $1 the slip is invisible; at mean $2 it shows |
-| Shift and stretch both carried into $\mathrm{Var}(2 - X)$ | −97, not 99 | A shift drops out, and a squared sign cannot be negative |
+| Shortcut on $`2X`$, subtracting its mean, not its mean squared | 398, not 396 | At mean $1 the slip is invisible; at mean $2 it shows |
+| Shift and stretch both carried into $`\mathrm{Var}(2 - X)`$ | −97, not 99 | A shift drops out, and a squared sign cannot be negative |
 
 The code prints all four.
 
@@ -182,7 +190,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the variance by four roads. The definition and the shortcut use the two-line law. A count over a real raffle of 100 tickets, ticket 37 the winner, uses whole numbers only, so no rounding can creep in. A seeded simulation draws a million tickets from a SplitMix64 generator (a short, well-tested recipe for pseudo-random numbers, written out in both languages so both draw the same tickets) and reports its estimate with a standard error, the typical size of a simulation's miss. A fifth line checks the yes-or-no road. The rescaled table counts rescaled tickets directly and compares with $a^2$ times 99. Square roots are Newton's method, written out.
+The scripts reach the variance by four roads. The definition and the shortcut use the two-line law. A count over a real raffle of 100 tickets, ticket 37 the winner, uses whole numbers only, so no rounding can creep in. A seeded simulation draws a million tickets from a SplitMix64 generator (a short, well-tested recipe for pseudo-random numbers, written out in both languages so both draw the same tickets) and reports its estimate with a standard error, the typical size of a simulation's miss. A fifth line checks the yes-or-no road. The rescaled table counts rescaled tickets directly and compares with $`a^2`$ times 99. Square roots are Newton's method, written out.
 
 ### Python
 
@@ -509,16 +517,16 @@ The two outputs match line for line. The simulated variance, 100.08, sits about 
 
 ### Lean
 
-Lean proves the shortcut, the rescaling rule and the zero-spread fact for every $X$ with $E[X^2]$ finite, and the raffle's arithmetic.
+Lean proves the shortcut, the rescaling rule and the zero-spread fact for every $`X`$ with $`E[X^2]`$ finite, and the raffle's arithmetic.
 
-- Take any $X$ with $E[X^2]$ finite. Then $\mathrm{Var}(X) = E\big[(X - \mu)^2\big]$, and the shortcut gives $\mathrm{Var}(X) = E[X^2] - \mu^2$.
-- Take such an $X$ and fixed numbers $a$ and $b$. Then $\mathrm{Var}(aX + b) = a^2 \, \mathrm{Var}(X)$ and $\sigma_{aX+b} = \lvert a \rvert \, \sigma$.
-- Take any $X$ with $E[X^2]$ finite. Then $E[X^2] \ge \mu^2$, with equality exactly when $X$ never moves: it equals $\mu$ with chance 1.
+- Take any $`X`$ with $`E[X^2]`$ finite. Then $`\mathrm{Var}(X) = E\big[(X - \mu)^2\big]`$, and the shortcut gives $`\mathrm{Var}(X) = E[X^2] - \mu^2`$.
+- Take such an $`X`$ and fixed numbers $`a`$ and $`b`$. Then $`\mathrm{Var}(aX + b) = a^2 \, \mathrm{Var}(X)`$ and $`\sigma_{aX+b} = \lvert a \rvert \, \sigma`$.
+- Take any $`X`$ with $`E[X^2]`$ finite. Then $`E[X^2] \ge \mu^2`$, with equality exactly when $`X`$ never moves: it equals $`\mu`$ with chance 1.
 - The raffle ticket has mean 1 dollar, and its signed distances from the mean average to 0.
 - The chart's two bars are 0.99 and 98.01, and they sum to 99.
 - The variance is 99 by the definition, by the shortcut 100 − 1, and by the count over 100 tickets.
-- Take $p = 0.01$. Then $p(1 - p) = 0.0099$, and $100^2$ times it is 99.
-- Take $a$ = 1, −1, 2 and 100. Then $a^2$ times 99 gives the rescaled variances: 99, 99, 396 and 990,000.
+- Take $`p = 0.01`$. Then $`p(1 - p) = 0.0099`$, and $`100^2`$ times it is 99.
+- Take $`a`$ = 1, −1, 2 and 100. Then $`a^2`$ times 99 gives the rescaled variances: 99, 99, 396 and 990,000.
 - The rescaled means are −1, 1 and 2 dollars for the price, the organiser and the doubled prize.
 - The mistakes come out at 0, 198, 398 and −97, and the mean absolute deviation at 1.98 dollars.
 - In Try changing, the 1,000 dollar prize has mean 1 and variance 999; the coin-flip ticket has variance 1.
@@ -649,9 +657,9 @@ example : (1 / 2 : ℚ) * (0 - 1) ^ 2 + 1 / 2 * (2 - 1) ^ 2 = 1 := by norm_num
 > **Reading the standard deviation as a place the payout lands.** "Mean $1, standard deviation $9.95" does not say the payout sits between −$8.95 and $10.95. The ticket never pays anything in that band except $0, and it pays $100, far outside it, once in a hundred. How much chance lies within a given distance is a separate question, bounded for every variable by [Markov and Chebyshev](08-markov-and-chebyshev-inequalities.md).
 >
 > - **Quoting variance in the payout's units.** The ticket's variance is 99 square dollars, not $99. In cents it becomes 990,000, which looks alarming and means the same thing.
-> - **Scaling the variance by $a$.** A doubled prize has variance 396, not 198. The standard deviation doubles; the variance quadruples.
-> - **Squaring the wrong thing in the shortcut.** $E[X^2] - E[X]$ gives the right 99 here only because the mean is 1. On the doubled prize it gives 398, not 396.
-> - **Dividing by $n - 1$ where no data exist.** A calculator's sample standard deviation divides by one less than the count, a correction for estimating spread from data. A known law, like the ticket's, has no sample and no correction.
+> - **Scaling the variance by $`a`$.** A doubled prize has variance 396, not 198. The standard deviation doubles; the variance quadruples.
+> - **Squaring the wrong thing in the shortcut.** $`E[X^2] - E[X]`$ gives the right 99 here only because the mean is 1. On the doubled prize it gives 398, not 396.
+> - **Dividing by $`n - 1`$ where no data exist.** A calculator's sample standard deviation divides by one less than the count, a correction for estimating spread from data. A known law, like the ticket's, has no sample and no correction.
 
 ---
 
@@ -675,7 +683,7 @@ example : (1 / 2 : ℚ) * (0 - 1) ^ 2 + 1 / 2 * (2 - 1) ^ 2 = 1 := by norm_num
 
 - [Two variables at once](04-joint-distributions-and-covariance.md): the variance of a sum, and the cross term that dependence adds.
 - [Markov and Chebyshev](08-markov-and-chebyshev-inequalities.md): how much chance a standard deviation can leave in the tails.
-- [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the $p(1 - p)$ variance of a yes-or-no variable, and $n$ of them.
+- [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the $`p(1 - p)`$ variance of a yes-or-no variable, and $`n`$ of them.
 - [Expectation as an integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): one integral that covers sums and densities alike.
 - [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): the rescaling rule applied to a measured input.
 - [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md): why the shortcut can fail in floating point.

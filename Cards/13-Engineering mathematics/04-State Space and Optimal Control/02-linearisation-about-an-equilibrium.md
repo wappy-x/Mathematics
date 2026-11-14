@@ -34,39 +34,47 @@ Orange is the true push, 16 sin θ. Green is the straight model, 16θ. They agre
 
 ## The formula
 
-Notation first, in words. The state $x$ is the list of numbers the model carries, the input $u$ is what the controller sets, and the output $y$ is what the sensors read ([State space](01-state-space-models-and-the-matrix-exponential.md)). A curved plant is any rule
+Notation first, in words. The state $`x`$ is the list of numbers the model carries, the input $`u`$ is what the controller sets, and the output $`y`$ is what the sensors read ([State space](01-state-space-models-and-the-matrix-exponential.md)). A curved plant is any rule
 
-$$x' = f(x, u), \qquad y = h(x, u)$$
+```math
+x' = f(x, u), \qquad y = h(x, u)
+```
 
-where a prime means a rate per second. An **operating point** is a pair $(x_e, u_e)$ (e for equilibrium) that holds the plant still: $f(x_e, u_e) = 0$. Measure everything as an offset from it, written with δ (delta): $\delta x = x - x_e$, $\delta u = u - u_e$, $\delta y = y - h(x_e, u_e)$. Then, near the point,
+where a prime means a rate per second. An **operating point** is a pair $`(x_e, u_e)`$ (e for equilibrium) that holds the plant still: $`f(x_e, u_e) = 0`$. Measure everything as an offset from it, written with δ (delta): $`\delta x = x - x_e`$, $`\delta u = u - u_e`$, $`\delta y = y - h(x_e, u_e)`$. Then, near the point,
 
-$$\delta x' \approx A\,\delta x + B\,\delta u, \qquad \delta y \approx C\,\delta x + D\,\delta u$$
+```math
+\delta x' \approx A\,\delta x + B\,\delta u, \qquad \delta y \approx C\,\delta x + D\,\delta u
+```
 
-$$A = \frac{\partial f}{\partial x}, \quad B = \frac{\partial f}{\partial u}, \quad C = \frac{\partial h}{\partial x}, \quad D = \frac{\partial h}{\partial u}, \quad \text{all taken at } (x_e, u_e)$$
+```math
+A = \frac{\partial f}{\partial x}, \quad B = \frac{\partial f}{\partial u}, \quad C = \frac{\partial h}{\partial x}, \quad D = \frac{\partial h}{\partial u}, \quad \text{all taken at } (x_e, u_e)
+```
 
 Each of A, B, C, D is a **Jacobian**: a table of slopes, one row per rate or reading and one column per state or input, entry (i, j) being how fast the i-th rate changes when only the j-th variable moves ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
 
 **Read it aloud:** near a point where the plant can rest, the offsets' rates are the slopes times the offsets, and the readings' offsets are the slopes of the sensors times the offsets.
 
-For the cart and pole the state is cart position $p$, cart speed $v$, lean $\theta$ from upright and lean rate $\omega$ (omega). The input $u$ is the cart's acceleration. With gravity $g$ and length $l$:
+For the cart and pole the state is cart position $`p`$, cart speed $`v`$, lean $`\theta`$ from upright and lean rate $`\omega`$ (omega). The input $`u`$ is the cart's acceleration. With gravity $`g`$ and length $`l`$:
 
-$$f = \begin{pmatrix} v \\ u \\ \omega \\ (g\sin\theta - u\cos\theta)/l \end{pmatrix}, \qquad h = \begin{pmatrix} \theta \\ p + l\sin\theta \end{pmatrix}$$
+```math
+f = \begin{pmatrix} v \\ u \\ \omega \\ (g\sin\theta - u\cos\theta)/l \end{pmatrix}, \qquad h = \begin{pmatrix} \theta \\ p + l\sin\theta \end{pmatrix}
+```
 
 The first reading is the encoder at the hinge. The second is where the pole's tip is along the rail, as a camera would see it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$; $p$, $v$, $\theta$, $\omega$ | state: cart position (m), speed (m/s), lean (rad), lean rate (rad/s) | upright: all 0 | far from 0, the straight model drifts from the truth |
-| $u$ | input: the cart's acceleration | 0 m/s² upright; 3.0346 m/s² to hold a 0.3 rad lean | a bigger held push holds a bigger lean |
-| $y$ | outputs: encoder angle; tip position | θ; p + l sin θ | — |
-| $f$, $h$, $r$ | the curved rules for the rates and the readings; $r$ is the leftover the straight model drops | above; $r$ is about $\theta^3/6$ times 16 upright | — |
-| $x_e$, $u_e$, $\theta_e$ | the operating point: a state and input where every rate is 0; $\theta_e$ is its lean | upright with $u_e = 0$; or lean 0.3 rad with $u_e = 3.0346$ | — |
-| $\delta x$, $\delta u$, $\delta y$ | offsets from the operating point | a 0.01 rad lean | larger leftover, growing like the offset cubed here |
-| $A$ | slopes of the rates against the state | entry (4, 3): 16 per s² | a faster-falling pole |
-| $B$ | slopes of the rates against the input | (0, 1, 0, −1.631) | more steering per m/s² of push |
-| $C$, $D$ | slopes of the readings against state and input | C rows (0, 0, 1, 0) and (1, 0, 0.613, 0); D = 0 | — |
-| $g$, $l$ | gravity (NIST CODATA standard gravity, rounded); pole length | 9.81 m/s²; 0.613125 m, so g/l = 16 per s² | longer pole: slower fall |
-| $\lambda$ | eigenvalue of A: the growth rate of one special motion | 0, 0, +4 and −4 per s | positive real part: that motion grows |
+| $`x`$; $`p`$, $`v`$, $`\theta`$, $`\omega`$ | state: cart position (m), speed (m/s), lean (rad), lean rate (rad/s) | upright: all 0 | far from 0, the straight model drifts from the truth |
+| $`u`$ | input: the cart's acceleration | 0 m/s² upright; 3.0346 m/s² to hold a 0.3 rad lean | a bigger held push holds a bigger lean |
+| $`y`$ | outputs: encoder angle; tip position | θ; p + l sin θ | — |
+| $`f`$, $`h`$, $`r`$ | the curved rules for the rates and the readings; $`r`$ is the leftover the straight model drops | above; $`r`$ is about $`\theta^3/6`$ times 16 upright | — |
+| $`x_e`$, $`u_e`$, $`\theta_e`$ | the operating point: a state and input where every rate is 0; $`\theta_e`$ is its lean | upright with $`u_e = 0`$; or lean 0.3 rad with $`u_e = 3.0346`$ | — |
+| $`\delta x`$, $`\delta u`$, $`\delta y`$ | offsets from the operating point | a 0.01 rad lean | larger leftover, growing like the offset cubed here |
+| $`A`$ | slopes of the rates against the state | entry (4, 3): 16 per s² | a faster-falling pole |
+| $`B`$ | slopes of the rates against the input | (0, 1, 0, −1.631) | more steering per m/s² of push |
+| $`C`$, $`D`$ | slopes of the readings against state and input | C rows (0, 0, 1, 0) and (1, 0, 0.613, 0); D = 0 | — |
+| $`g`$, $`l`$ | gravity (NIST CODATA standard gravity, rounded); pole length | 9.81 m/s²; 0.613125 m, so g/l = 16 per s² | longer pole: slower fall |
+| $`\lambda`$ | eigenvalue of A: the growth rate of one special motion | 0, 0, +4 and −4 per s | positive real part: that motion grows |
 
 ### When it holds
 
@@ -87,42 +95,46 @@ The first reading is the encoder at the hinge. The second is where the pole's ti
 
 Taylor's first-order statement in several variables ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)) treats the input as one more variable:
 
-$$f(x_e + \delta x,\, u_e + \delta u) = f(x_e, u_e) + A\,\delta x + B\,\delta u + r$$
+```math
+f(x_e + \delta x,\, u_e + \delta u) = f(x_e, u_e) + A\,\delta x + B\,\delta u + r
+```
 
-The leftover $r$ is set by the second slopes (the Hessian of each rate). It shrinks like the offsets squared, or faster.
+The leftover $`r`$ is set by the second slopes (the Hessian of each rate). It shrinks like the offsets squared, or faster.
 
-The first term is zero, because the point is a rest. The rates of the true state are the rates of the offsets, since $x_e$ is fixed. That leaves $\delta x' = A\,\delta x + B\,\delta u + r$. Drop $r$ and the model is straight.
+The first term is zero, because the point is a rest. The rates of the true state are the rates of the offsets, since $`x_e`$ is fixed. That leaves $`\delta x' = A\,\delta x + B\,\delta u + r`$. Drop $`r`$ and the model is straight.
 
-The readings expand the same way, but $h(x_e, u_e)$ is not zero: the encoder reads 0.3 rad at a 0.3 rad lean. So the reading's offset, $\delta y$, is what the straight model predicts.
+The readings expand the same way, but $`h(x_e, u_e)`$ is not zero: the encoder reads 0.3 rad at a 0.3 rad lean. So the reading's offset, $`\delta y`$, is what the straight model predicts.
 
 ### Step 2: the slopes at upright
 
-Only the fourth rate, $(g\sin\theta - u\cos\theta)/l$, is curved. Its slope against θ is $(g\cos\theta + u\sin\theta)/l$; against $u$ it is $-\cos\theta/l$. At upright, θ = 0 and u = 0, so these are g/l = 16 and −1/l = −1.631. The other rates are already straight: $p' = v$ gives a 1 in row 1, column 2, and so on.
+Only the fourth rate, $`(g\sin\theta - u\cos\theta)/l`$, is curved. Its slope against θ is $`(g\cos\theta + u\sin\theta)/l`$; against $`u`$ it is $`-\cos\theta/l`$. At upright, θ = 0 and u = 0, so these are g/l = 16 and −1/l = −1.631. The other rates are already straight: $`p' = v`$ gives a 1 in row 1, column 2, and so on.
 
-$$A = \begin{pmatrix} 0&1&0&0 \\ 0&0&0&0 \\ 0&0&0&1 \\ 0&0&16&0 \end{pmatrix}, \quad B = \begin{pmatrix} 0 \\ 1 \\ 0 \\ -1.631 \end{pmatrix}, \quad C = \begin{pmatrix} 0&0&1&0 \\ 1&0&0.613&0 \end{pmatrix}, \quad D = 0$$
+```math
+A = \begin{pmatrix} 0&1&0&0 \\ 0&0&0&0 \\ 0&0&0&1 \\ 0&0&16&0 \end{pmatrix}, \quad B = \begin{pmatrix} 0 \\ 1 \\ 0 \\ -1.631 \end{pmatrix}, \quad C = \begin{pmatrix} 0&0&1&0 \\ 1&0&0.613&0 \end{pmatrix}, \quad D = 0
+```
 
-The tip reading's slope against θ is $l\cos\theta$: tilt the pole a little and its tip moves sideways by about the length times the tilt.
+The tip reading's slope against θ is $`l\cos\theta`$: tilt the pole a little and its tip moves sideways by about the length times the tilt.
 
 ### Step 3: a rest that has to be held
 
-Now ask the pole to lean forward at a steady 0.3 rad (17.19°), like a rider leaning into a sprint. The lean holds when gravity's tip equals the motor's tip-back: $g\sin\theta_e = u_e\cos\theta_e$, so $u_e = g\tan\theta_e = 3.0346$ m/s². The cart must keep accelerating at that rate.
+Now ask the pole to lean forward at a steady 0.3 rad (17.19°), like a rider leaning into a sprint. The lean holds when gravity's tip equals the motor's tip-back: $`g\sin\theta_e = u_e\cos\theta_e`$, so $`u_e = g\tan\theta_e = 3.0346`$ m/s². The cart must keep accelerating at that rate.
 
-Its speed keeps growing, so the full four-number state never rests: $f(x_e, u_e)$ is not zero, since its speed row is 3.0346 m/s². This is an equilibrium of the lean and its rate only, $(\theta, \omega)$.
+Its speed keeps growing, so the full four-number state never rests: $`f(x_e, u_e)`$ is not zero, since its speed row is 3.0346 m/s². This is an equilibrium of the lean and its rate only, $`(\theta, \omega)`$.
 
-The cart's two rows, $p' = v$ and $v' = u$, are straight already. So offsets of $p$ and $v$ measured from the cart's steadily accelerating path obey them exactly. The four-state A, B and C at the lean, which the code prints, describe offsets from that moving path. The cart's position is left to an outer loop.
+The cart's two rows, $`p' = v`$ and $`v' = u`$, are straight already. So offsets of $`p`$ and $`v`$ measured from the cart's steadily accelerating path obey them exactly. The four-state A, B and C at the lean, which the code prints, describe offsets from that moving path. The cart's position is left to an outer loop.
 
 The slopes there are different:
 
-- against θ: $(g\cos\theta_e + u_e\sin\theta_e)/l = 16/\cos 0.3 = 16.7480$ per s²;
-- against u: $-\cos\theta_e/l = -1.5581$ rad per m.
+- against θ: $`(g\cos\theta_e + u_e\sin\theta_e)/l = 16/\cos 0.3 = 16.7480`$ per s²;
+- against u: $`-\cos\theta_e/l = -1.5581`$ rad per m.
 
-There is a plain reason. Inside the accelerating cart, gravity and the push add up to a tilted, stronger gravity of $\sqrt{g^2 + u_e^2} = 10.2686$ m/s², and the pole is balancing along it. Divide by the length and the 16.7480 comes back. The pole now falls faster, by $\sqrt{16.7480} = 4.0924$ per s instead of 4, and the motor grips it 4.47% less.
+There is a plain reason. Inside the accelerating cart, gravity and the push add up to a tilted, stronger gravity of $`\sqrt{g^2 + u_e^2} = 10.2686`$ m/s², and the pole is balancing along it. Divide by the length and the 16.7480 comes back. The pole now falls faster, by $`\sqrt{16.7480} = 4.0924`$ per s instead of 4, and the motor grips it 4.47% less.
 
-The offsets matter here. The straight model is $\delta\theta'' = 16.7480\,\delta\theta - 1.5581\,\delta u$, where $\delta u$ is the push *on top of* the 3.0346 m/s² already being spent.
+The offsets matter here. The straight model is $`\delta\theta'' = 16.7480\,\delta\theta - 1.5581\,\delta u`$, where $`\delta u`$ is the push *on top of* the 3.0346 m/s² already being spent.
 
 ### Step 4: the leftover shrinks faster than the offset
 
-At upright the second slope of sin θ is −sin 0 = 0, so the leftover starts at the cube: $\theta - \sin\theta$ is about $\theta^3/6$. Halve the starting lean and the error between true and straight halves three times, a factor of 8. The code lets the pole fall for 0.5 s from 0.02 rad and from 0.01 rad. The errors are 11.872 and 1.484 microradians, a ratio of 8.00.
+At upright the second slope of sin θ is −sin 0 = 0, so the leftover starts at the cube: $`\theta - \sin\theta`$ is about $`\theta^3/6`$. Halve the starting lean and the error between true and straight halves three times, a factor of 8. The code lets the pole fall for 0.5 s from 0.02 rad and from 0.01 rad. The errors are 11.872 and 1.484 microradians, a ratio of 8.00.
 
 At the held lean the ratio is 8.00 too, 13.380 against 1.673. Seen along the tilted gravity, the pole is upright again, so its leftover is also a cube.
 
@@ -164,7 +176,7 @@ The code prints all four.
 
 ## The model is only good near the point it was taken at
 
-A balancing rule from [Pole placement](04-pole-placement-and-observers.md) sets $u = l\,(32\theta + 8\omega)$. On the straight model it turns $\theta'' = 16\theta - u/l$ into $\theta'' = -16\theta - 8\omega$: both eigenvalues at −4 per s, so every lean dies away. How does it do on the true pole?
+A balancing rule from [Pole placement](04-pole-placement-and-observers.md) sets $`u = l\,(32\theta + 8\omega)`$. On the straight model it turns $`\theta'' = 16\theta - u/l`$ into $`\theta'' = -16\theta - 8\omega`$: both eigenvalues at −4 per s, so every lean dies away. How does it do on the true pole?
 
 ### One story: four releases, straight against true
 
@@ -190,7 +202,7 @@ lean 1.2 rad  ██████████████████████
 
 ### Force two: the motor, losing grip as the pole tips
 
-The rule's true push on the lean, with the pole momentarily still, is $32\theta\cos\theta$: the cart pushes harder as the lean grows, but the cosine shrinks its grip. Between 0.9 and 1.2 rad the shrinking grip takes over.
+The rule's true push on the lean, with the pole momentarily still, is $`32\theta\cos\theta`$: the cart pushes harder as the lean grows, but the cosine shrinks its grip. Between 0.9 and 1.2 rad the shrinking grip takes over.
 
 ```
 lean 0.3 rad  ██████████████████                    9.171
@@ -199,7 +211,7 @@ lean 0.9 rad  ██████████████████████
 lean 1.2 rad  ████████████████████████████         13.915
 ```
 
-At 1.2 rad gravity's 14.913 beats the rule's 13.915. The two are equal where $16\sin\theta = 32\theta\cos\theta$, that is $\tan\theta = 2\theta$, at 1.1656 rad. Released from rest beyond that lean, the pole is lost.
+At 1.2 rad gravity's 14.913 beats the rule's 13.915. The two are equal where $`16\sin\theta = 32\theta\cos\theta`$, that is $`\tan\theta = 2\theta`$, at 1.1656 rad. Released from rest beyond that lean, the pole is lost.
 
 ### Both forces in one picture
 
@@ -220,7 +232,7 @@ Orange: the true pole from 1.0 rad, caught but slower than promised. Green: the 
 
 ## Code, from first principles, and it actually runs
 
-The code builds the curved model, then takes its slopes **two independent ways**: written out by hand (road 1) and by nudging each variable by a millionth and differencing the curved model (road 2). Road 3 steps both the curved and the straight model forward with Runge–Kutta 4 ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) and checks the straight run against its closed form, 1 mrad times cosh 4t, with t the time in seconds. Here cosh is the hyperbolic cosine, $\cosh z = (e^z + e^{-z})/2$. The largest lean the rule catches is found twice: by bisecting on simulated releases (halving the range of starting leans each time), and by solving tan θ = 2θ. Five asserts tie the roads together.
+The code builds the curved model, then takes its slopes **two independent ways**: written out by hand (road 1) and by nudging each variable by a millionth and differencing the curved model (road 2). Road 3 steps both the curved and the straight model forward with Runge–Kutta 4 ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) and checks the straight run against its closed form, 1 mrad times cosh 4t, with t the time in seconds. Here cosh is the hyperbolic cosine, $`\cosh z = (e^z + e^{-z})/2`$. The largest lean the rule catches is found twice: by bisecting on simulated releases (halving the range of starting leans each time), and by solving tan θ = 2θ. Five asserts tie the roads together.
 
 ### Python
 
@@ -590,13 +602,13 @@ ALL CHECKS PASS
 
 Lean proves the rule for any smooth plant at a rest, and the cart and pole's slopes, leftover and eigenvalues.
 
-- Suppose $f$ and $h$ are smooth at an operating point $(x_e, u_e)$ with $f(x_e, u_e) = 0$. Then $\delta x'$ is $A\,\delta x + B\,\delta u$ plus a leftover that shrinks faster than the offsets.
-- Take the same smooth $f$ and $h$ and the same point. Then $\delta y$ is $C\,\delta x + D\,\delta u$ plus a leftover that shrinks faster than the offsets.
-- Take any lean $\theta_e$ with $\cos\theta_e \ne 0$, held by $u_e = g\tan\theta_e$. Then the lean's rate is 0 there, and its slope against θ is $g/(l\cos\theta_e)$. Its slope against u is $-\cos\theta_e/l$.
-- Take a lean θ near upright. Then the leftover $\theta - \sin\theta$ is $\theta^3/6$, up to a part that shrinks faster than $\theta^3$.
+- Suppose $`f`$ and $`h`$ are smooth at an operating point $`(x_e, u_e)`$ with $`f(x_e, u_e) = 0`$. Then $`\delta x'`$ is $`A\,\delta x + B\,\delta u`$ plus a leftover that shrinks faster than the offsets.
+- Take the same smooth $`f`$ and $`h`$ and the same point. Then $`\delta y`$ is $`C\,\delta x + D\,\delta u`$ plus a leftover that shrinks faster than the offsets.
+- Take any lean $`\theta_e`$ with $`\cos\theta_e \ne 0`$, held by $`u_e = g\tan\theta_e`$. Then the lean's rate is 0 there, and its slope against θ is $`g/(l\cos\theta_e)`$. Its slope against u is $`-\cos\theta_e/l`$.
+- Take a lean θ near upright. Then the leftover $`\theta - \sin\theta`$ is $`\theta^3/6`$, up to a part that shrinks faster than $`\theta^3`$.
 - 9.81 divided by 0.613125 is exactly 16, so g/l = 16 per s².
 - The upright A has eigenvalues +4, −4 and 0. Lean checks one special motion for each: (0, 0, 1, 4), (0, 0, 1, −4) and (1, 0, 0, 0).
-- For the balancing rule, 16 − 32 = −16, and −4 solves $\lambda^2 + 8\lambda + 16 = 0$.
+- For the balancing rule, 16 − 32 = −16, and −4 solves $`\lambda^2 + 8\lambda + 16 = 0`$.
 
 Lean runs no simulation, so the nudged slopes, the RK4 runs and the largest lean caught are left to the Python and Rust checks.
 
@@ -752,7 +764,7 @@ example : (16 : ℤ) - 32 = -16 ∧ (-4 : ℤ) ^ 2 + 8 * (-4) + 16 = 0 := by nor
 ## The usual mistake
 
 > [!warning]
-> **Forgetting that the straight model is about offsets.** A, B, C and D act on δx, δu and δy, not on x, u and y. At upright the two coincide, because the operating point is all zeros, so the mistake hides. At a held lean of 0.3 rad, plug the true lean and the true push into $16.7480\,\theta - 1.5581\,u$ and the held pole appears to accelerate at 0.2961 rad/s². A controller built on that adds the held 3.0346 m/s² twice, or not at all.
+> **Forgetting that the straight model is about offsets.** A, B, C and D act on δx, δu and δy, not on x, u and y. At upright the two coincide, because the operating point is all zeros, so the mistake hides. At a held lean of 0.3 rad, plug the true lean and the true push into $`16.7480\,\theta - 1.5581\,u`$ and the held pole appears to accelerate at 0.2961 rad/s². A controller built on that adds the held 3.0346 m/s² twice, or not at all.
 >
 > Smaller traps:
 > - **Reusing the upright model at another operating point.** At the 0.3 rad lean it says 16 and −1.631; the truth is 16.7480 and −1.5581. The motor is 4.47% weaker than the model thinks.

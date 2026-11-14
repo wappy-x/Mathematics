@@ -42,50 +42,58 @@ Orange: within r of the centre, exactly r times r. Green: within r of the rim, e
 
 ## The formula
 
-Notation first, in words. A **measure space** $(\Omega, \mathcal{F}, \mu)$ is a set of outcomes, the collection of its subsets we allow ourselves to measure, and a measure that gives each of them a size ([Measures](04-measures.md)). Here the outcomes are the points of the board, the sizes are areas, and the probability is area divided by π.
+Notation first, in words. A **measure space** $`(\Omega, \mathcal{F}, \mu)`$ is a set of outcomes, the collection of its subsets we allow ourselves to measure, and a measure that gives each of them a size ([Measures](04-measures.md)). Here the outcomes are the points of the board, the sizes are areas, and the probability is area divided by π.
 
 A **null set** is a set we may measure whose measure is zero:
 
-$$N \in \mathcal{F} \quad\text{and}\quad \mu(N) = 0$$
+```math
+N \in \mathcal{F} \quad\text{and}\quad \mu(N) = 0
+```
 
 **Read it aloud:** N is one of the measurable sets, and its size is zero.
 
 A property of outcomes holds **almost everywhere**, or **μ-a.e.**, when the outcomes where it fails fit inside a null set:
 
-$$\{\omega \in \Omega : \text{the property fails at } \omega\} \subseteq N \quad\text{for some null set } N$$
+```math
+\{\omega \in \Omega : \text{the property fails at } \omega\} \subseteq N \quad\text{for some null set } N
+```
 
 **Read it aloud:** the property can fail only inside some set of size zero.
 
 The main theorem: countably many null sets make a null set.
 
-$$\mu\Big(\bigcup_{k=1}^{\infty} N_k\Big) \;\le\; \sum_{k=1}^{\infty} \mu(N_k) \;=\; 0$$
+```math
+\mu\Big(\bigcup_{k=1}^{\infty} N_k\Big) \;\le\; \sum_{k=1}^{\infty} \mu(N_k) \;=\; 0
+```
 
 **Read it aloud:** the size of the union of a list of null sets is at most the sum of their sizes, and that sum is zero.
 
 The **completion** adds every piece of a null set:
 
-$$\bar{\mathcal{F}} = \{A \cup M : A \in \mathcal{F},\ M \subseteq N \text{ for some null } N\}, \qquad \bar\mu(A \cup M) = \mu(A)$$
+```math
+\bar{\mathcal{F}} = \{A \cup M : A \in \mathcal{F},\ M \subseteq N \text{ for some null } N\}, \qquad \bar\mu(A \cup M) = \mu(A)
+```
 
 **Read it aloud:** take a measurable set and glue on any piece of a null set; the new set gets the old set's size.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$ | the set of all outcomes | every point of the board | — |
-| $\mathcal{F}$ | the sets we allow ourselves to measure (a sigma-algebra) | discs, rings, squares, single points, and everything built from them by countable unions and complements | more sets, more that can be null |
-| $\mu$, $\nu$ | measures: each gives every set in $\mathcal{F}$ a size, zero or more | area, or the chance area divided by π | a bigger measure has fewer null sets |
-| $P$ | a probability: a measure whose whole space has size 1; here area divided by π | a disc of radius r: π r r / π | — |
-| $\omega$, $p$ | one outcome; a point of the board | the point where the dart lands | — |
-| $N$ | a null set | the centre; the rim; the rational points | — |
-| $N_k$ | the k-th null set in a list, k = 1, 2, 3, … | the k-th rational point | a longer list is still null |
-| $\varepsilon$ | any positive size, however small (say "epsilon") | 0.001 square metres | a looser cover |
-| $r$ | a distance, in metres | 0.1 m from the centre or the rim | chance near the centre r r, near the rim about 2 r |
-| $A$, $B$, $A_k$, $E$ | sets in $\mathcal{F}$; $E$ any set being tested | $A$ = the whole board | — |
-| $M$, $M_k$, $S$ | pieces of null sets, measurable or not | $M$ = the centre alone | — |
-| $\bar{\mathcal{F}}$, $\bar\mu$ | the completed collection and its measure | adds every subset of a null set | — |
+| $`\Omega`$ | the set of all outcomes | every point of the board | — |
+| $`\mathcal{F}`$ | the sets we allow ourselves to measure (a sigma-algebra) | discs, rings, squares, single points, and everything built from them by countable unions and complements | more sets, more that can be null |
+| $`\mu`$, $`\nu`$ | measures: each gives every set in $`\mathcal{F}`$ a size, zero or more | area, or the chance area divided by π | a bigger measure has fewer null sets |
+| $`P`$ | a probability: a measure whose whole space has size 1; here area divided by π | a disc of radius r: π r r / π | — |
+| $`\omega`$, $`p`$ | one outcome; a point of the board | the point where the dart lands | — |
+| $`N`$ | a null set | the centre; the rim; the rational points | — |
+| $`N_k`$ | the k-th null set in a list, k = 1, 2, 3, … | the k-th rational point | a longer list is still null |
+| $`\varepsilon`$ | any positive size, however small (say "epsilon") | 0.001 square metres | a looser cover |
+| $`r`$ | a distance, in metres | 0.1 m from the centre or the rim | chance near the centre r r, near the rim about 2 r |
+| $`A`$, $`B`$, $`A_k`$, $`E`$ | sets in $`\mathcal{F}`$; $`E`$ any set being tested | $`A`$ = the whole board | — |
+| $`M`$, $`M_k`$, $`S`$ | pieces of null sets, measurable or not | $`M`$ = the centre alone | — |
+| $`\bar{\mathcal{F}}`$, $`\bar\mu`$ | the completed collection and its measure | adds every subset of a null set | — |
 
 ### When it holds
 
-- **Null means measurable and zero.** A set outside $\mathcal{F}$ has no size at all, so it is not null, even when it sits inside a null set. Completion is the repair.
+- **Null means measurable and zero.** A set outside $`\mathcal{F}`$ has no size at all, so it is not null, even when it sits inside a null set. Completion is the repair.
 - **Null is relative to a measure.** Under area the centre is null; under counting measure, which gives each point size 1, it is not. Every "a.e." carries its measure, even when unnamed.
 - **Countably many, not uncountably many.** The theorem rests on countable subadditivity. The board is a union of null points and has chance 1, because its points cannot be listed.
 - **Completion needs nothing.** Every measure space has a completion; there are no hypotheses to check.
@@ -96,50 +104,50 @@ $$\bar{\mathcal{F}} = \{A \cup M : A \in \mathcal{F},\ M \subseteq N \text{ for 
 
 ### Step 0: a null set can be covered by sets of any small total size
 
-Size zero means smaller than every positive number. To show a set is null, cover it by measurable pieces whose total size is below any chosen $\varepsilon$. The trick for a list is to spend half of $\varepsilon$ on the first item, a quarter on the second, an eighth on the third, and so on. The spending never exceeds $\varepsilon$, however long the list.
+Size zero means smaller than every positive number. To show a set is null, cover it by measurable pieces whose total size is below any chosen $`\varepsilon`$. The trick for a list is to spend half of $`\varepsilon`$ on the first item, a quarter on the second, an eighth on the third, and so on. The spending never exceeds $`\varepsilon`$, however long the list.
 
 ### Step 1: every single point is null
 
 Put a disc of radius r around the centre. The dart's chance of landing in it is π r r divided by π, which is r times r. The centre lies inside every such disc, and a set inside another cannot be bigger (monotonicity, [Continuity and subadditivity](05-continuity-of-measure.md)). So the centre's chance is at most 0.01, at most 0.0001, at most r times r for every r. The only number that small is 0.
 
-The same argument works at any point of the board. The rim circle, a closed set and so in $\mathcal{F}$, is null too: it lies inside the ring of points within r of it, of chance 1 − (1 − r)(1 − r), which falls to 0.
+The same argument works at any point of the board. The rim circle, a closed set and so in $`\mathcal{F}`$, is null too: it lies inside the ring of points within r of it, of chance 1 − (1 − r)(1 − r), which falls to 0.
 
 ### Step 2: countably many null sets make a null set
 
 A countable set is one whose members can be listed first, second, third ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). The rational points of the board are countable: list them by the size of their denominators. The code lists the 225 rational points of the board with denominator at most 6.
 
-Give the k-th point a small square of area $\varepsilon$ divided by 2 to the power k. After K points the squares' total area is $\varepsilon$ times (1 − 1/2^K), below $\varepsilon$ for every K. With $\varepsilon$ = 0.001 square metres, the chance of landing on some rational point is at most 0.001/π, about 0.0003183099. Since $\varepsilon$ was any positive number, that chance is 0.
+Give the k-th point a small square of area $`\varepsilon`$ divided by 2 to the power k. After K points the squares' total area is $`\varepsilon`$ times (1 − 1/2^K), below $`\varepsilon`$ for every K. With $`\varepsilon`$ = 0.001 square metres, the chance of landing on some rational point is at most 0.001/π, about 0.0003183099. Since $`\varepsilon`$ was any positive number, that chance is 0.
 
-The general statement needs no squares. The union of null sets $N_1, N_2, \ldots$ is measurable, since a sigma-algebra is closed under countable unions. Its size is at most the sum of their sizes (countable subadditivity, [Continuity and subadditivity](05-continuity-of-measure.md)). The sum of zeros is zero.
+The general statement needs no squares. The union of null sets $`N_1, N_2, \ldots`$ is measurable, since a sigma-algebra is closed under countable unions. Its size is at most the sum of their sizes (countable subadditivity, [Continuity and subadditivity](05-continuity-of-measure.md)). The sum of zeros is zero.
 
 Turn it round. If each of countably many properties holds almost everywhere, they all hold together almost everywhere: the outcomes where some property fails form a countable union of null sets. "The dart lands off the first rational point" holds a.s., and so does each of the rest; so "off every rational point" holds a.s.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Theorem 1.** In a measure space $(\Omega, \mathcal{F}, \mu)$, if $N_1, N_2, \ldots$ are null sets, their union $N$ is null.
+**Theorem 1.** In a measure space $`(\Omega, \mathcal{F}, \mu)`$, if $`N_1, N_2, \ldots`$ are null sets, their union $`N`$ is null.
 
-*Proof.* Each $N_k$ is in $\mathcal{F}$, and a sigma-algebra holds every countable union of its members, so $N$ is in $\mathcal{F}$. Countable subadditivity (proved from countable additivity on [Continuity and subadditivity](05-continuity-of-measure.md)) gives $\mu(N) \le \sum_k \mu(N_k) = 0$. A measure is never negative, so $\mu(N) = 0$.
+*Proof.* Each $`N_k`$ is in $`\mathcal{F}`$, and a sigma-algebra holds every countable union of its members, so $`N`$ is in $`\mathcal{F}`$. Countable subadditivity (proved from countable additivity on [Continuity and subadditivity](05-continuity-of-measure.md)) gives $`\mu(N) \le \sum_k \mu(N_k) = 0`$. A measure is never negative, so $`\mu(N) = 0`$.
 
-**Corollary.** If each property in a list holds $\mu$-a.e., they hold together $\mu$-a.e. *Proof.* Property number k fails only inside a null set $N_k$. An outcome where some property fails lies in the union of the $N_k$, null by Theorem 1.
+**Corollary.** If each property in a list holds $`\mu`$-a.e., they hold together $`\mu`$-a.e. *Proof.* Property number k fails only inside a null set $`N_k`$. An outcome where some property fails lies in the union of the $`N_k`$, null by Theorem 1.
 
-**Theorem 2 (the board is not a countable set).** *Proof.* Every point $p$ of the board lies in the disc of radius r around it, of chance at most r r, so $P(\{p\}) \le r r$ for every r > 0, and $P(\{p\}) = 0$. If the points could be listed, Theorem 1 would make the board null, but $P(\text{board}) = 1$. So they cannot be listed. The diagonal argument ([Cantor's diagonal](../../01-Foundations/09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md)) reaches the same conclusion with no measure at all.
+**Theorem 2 (the board is not a countable set).** *Proof.* Every point $`p`$ of the board lies in the disc of radius r around it, of chance at most r r, so $`P(\{p\}) \le r r`$ for every r > 0, and $`P(\{p\}) = 0`$. If the points could be listed, Theorem 1 would make the board null, but $`P(\text{board}) = 1`$. So they cannot be listed. The diagonal argument ([Cantor's diagonal](../../01-Foundations/09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md)) reaches the same conclusion with no measure at all.
 
-**Theorem 3 (an uncountable null set).** The horizontal diameter is uncountable, since its points match the numbers from −1 to 1. It is a closed segment, so it is in $\mathcal{F}$. It lies inside n squares of side 2/n laid along it, of total area n times (2/n)(2/n) = 4/n. That falls below any $\varepsilon$, so the diameter is null.
+**Theorem 3 (an uncountable null set).** The horizontal diameter is uncountable, since its points match the numbers from −1 to 1. It is a closed segment, so it is in $`\mathcal{F}`$. It lies inside n squares of side 2/n laid along it, of total area n times (2/n)(2/n) = 4/n. That falls below any $`\varepsilon`$, so the diameter is null.
 
-**Theorem 4 (completion).** Let $\bar{\mathcal{F}}$ and $\bar\mu$ be as in The formula. Then (a) $\bar{\mathcal{F}}$ is a sigma-algebra containing $\mathcal{F}$; (b) $\bar\mu$ is well defined; (c) $\bar\mu$ is a measure that agrees with $\mu$ on $\mathcal{F}$; (d) every subset of a $\bar\mu$-null set is in $\bar{\mathcal{F}}$; (e) no other measure on $\bar{\mathcal{F}}$ extends $\mu$.
+**Theorem 4 (completion).** Let $`\bar{\mathcal{F}}`$ and $`\bar\mu`$ be as in The formula. Then (a) $`\bar{\mathcal{F}}`$ is a sigma-algebra containing $`\mathcal{F}`$; (b) $`\bar\mu`$ is well defined; (c) $`\bar\mu`$ is a measure that agrees with $`\mu`$ on $`\mathcal{F}`$; (d) every subset of a $`\bar\mu`$-null set is in $`\bar{\mathcal{F}}`$; (e) no other measure on $`\bar{\mathcal{F}}`$ extends $`\mu`$.
 
-(a) Taking $M$ empty puts every set of $\mathcal{F}$ in $\bar{\mathcal{F}}$. Countable unions: the union of the sets $A_k \cup M_k$, with $M_k \subseteq N_k$, is the union of the $A_k$ glued to the union of the $M_k$; the first is in $\mathcal{F}$, and the second sits inside the union of the $N_k$, null by Theorem 1. Complements: if $M \subseteq N$, an outcome is outside $A \cup M$ exactly when it is outside $A \cup N$, or inside $N$ but outside both $A$ and $M$. The first set is in $\mathcal{F}$ and the second is a piece of $N$, so the complement has the required form.
+(a) Taking $`M`$ empty puts every set of $`\mathcal{F}`$ in $`\bar{\mathcal{F}}`$. Countable unions: the union of the sets $`A_k \cup M_k`$, with $`M_k \subseteq N_k`$, is the union of the $`A_k`$ glued to the union of the $`M_k`$; the first is in $`\mathcal{F}`$, and the second sits inside the union of the $`N_k`$, null by Theorem 1. Complements: if $`M \subseteq N`$, an outcome is outside $`A \cup M`$ exactly when it is outside $`A \cup N`$, or inside $`N`$ but outside both $`A`$ and $`M`$. The first set is in $`\mathcal{F}`$ and the second is a piece of $`N`$, so the complement has the required form.
 
-(b) Suppose $A \cup M = B \cup M'$ with $M \subseteq N$, $M' \subseteq N'$ and $N$, $N'$ null. Then $A \subseteq B \cup N'$, so $\mu(A) \le \mu(B) + \mu(N') = \mu(B)$. Swapping the roles gives $\mu(B) \le \mu(A)$. The value does not depend on how the set was written.
+(b) Suppose $`A \cup M = B \cup M'`$ with $`M \subseteq N`$, $`M' \subseteq N'`$ and $`N`$, $`N'`$ null. Then $`A \subseteq B \cup N'`$, so $`\mu(A) \le \mu(B) + \mu(N') = \mu(B)`$. Swapping the roles gives $`\mu(B) \le \mu(A)`$. The value does not depend on how the set was written.
 
-(c) If the sets $A_k \cup M_k$ do not overlap, neither do the $A_k$. Then $\bar\mu$ of the union is $\mu$ of the union of the $A_k$, which is $\sum_k \mu(A_k)$ by countable additivity of $\mu$. On $\mathcal{F}$, $\bar\mu(A) = \bar\mu(A \cup \emptyset) = \mu(A)$.
+(c) If the sets $`A_k \cup M_k`$ do not overlap, neither do the $`A_k`$. Then $`\bar\mu`$ of the union is $`\mu`$ of the union of the $`A_k`$, which is $`\sum_k \mu(A_k)`$ by countable additivity of $`\mu`$. On $`\mathcal{F}`$, $`\bar\mu(A) = \bar\mu(A \cup \emptyset) = \mu(A)`$.
 
-(d) If $\bar\mu(A \cup M) = 0$ then $\mu(A) = 0$, and $A \cup M$ sits inside $A \cup N$, a null set of $\mathcal{F}$. Any subset $S$ of it is then $\emptyset \cup S$, which has the required form.
+(d) If $`\bar\mu(A \cup M) = 0`$ then $`\mu(A) = 0`$, and $`A \cup M`$ sits inside $`A \cup N`$, a null set of $`\mathcal{F}`$. Any subset $`S`$ of it is then $`\emptyset \cup S`$, which has the required form.
 
-(e) If $\nu$ is a measure on $\bar{\mathcal{F}}$ equal to $\mu$ on $\mathcal{F}$, monotonicity gives $\mu(A) = \nu(A) \le \nu(A \cup M) \le \nu(A \cup N) \le \mu(A) + \mu(N) = \mu(A)$.
+(e) If $`\nu`$ is a measure on $`\bar{\mathcal{F}}`$ equal to $`\mu`$ on $`\mathcal{F}`$, monotonicity gives $`\mu(A) = \nu(A) \le \nu(A \cup M) \le \nu(A \cup N) \le \mu(A) + \mu(N) = \mu(A)`$.
 
-**Sandwich form.** A set $E$ is in $\bar{\mathcal{F}}$ exactly when some $A$ and $B$ in $\mathcal{F}$ satisfy $A \subseteq E \subseteq B$ with $B$ minus $A$ null. Given $A \cup M$ with $M \subseteq N$, take $B = A \cup N$. Given a sandwich, $E$ is $A$ glued to $E$ minus $A$, a piece of the null set $B$ minus $A$.
+**Sandwich form.** A set $`E`$ is in $`\bar{\mathcal{F}}`$ exactly when some $`A`$ and $`B`$ in $`\mathcal{F}`$ satisfy $`A \subseteq E \subseteq B`$ with $`B`$ minus $`A`$ null. Given $`A \cup M`$ with $`M \subseteq N`$, take $`B = A \cup N`$. Given a sandwich, $`E`$ is $`A`$ glued to $`E`$ minus $`A`$, a piece of the null set $`B`$ minus $`A`$.
 
 </details>
 
@@ -166,7 +174,7 @@ The diameter is null and has as many points as the whole line. Every one of its 
 
 </details>
 
-A second road to null sets starts from covers instead of a measure: a set is null when it fits inside countably many rectangles of total area below every $\varepsilon$. That definition needs no sigma-algebra and makes completeness automatic; it is built on [Outer measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md).
+A second road to null sets starts from covers instead of a measure: a set is null when it fits inside countably many rectangles of total area below every $`\varepsilon`$. That definition needs no sigma-algebra and makes completeness automatic; it is built on [Outer measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md).
 
 ---
 
@@ -180,9 +188,9 @@ A second road to null sets starts from covers instead of a measure: a set is nul
 | the exact centre | at most r × r for every r | **0** |
 | within 0.01 m of the rim | 1 − 0.99 × 0.99 | 0.0199 |
 | the rim circle | at most 1 − (1 − r)(1 − r) for every r | **0** |
-| cover of the first 5 rational points, $\varepsilon$ = 0.001 | 0.001 × (1 − 1/32) | 0.00096875 |
+| cover of the first 5 rational points, $`\varepsilon`$ = 0.001 | 0.001 × (1 − 1/32) | 0.00096875 |
 | cover of all rational points | at most 0.001, as a chance 0.001/π | 0.0003183099 |
-| every rational point, $\varepsilon$ as small as wished | at most every positive number | **0** |
+| every rational point, $`\varepsilon`$ as small as wished | at most every positive number | **0** |
 | off every rational point | 1 − 0 | **1** |
 
 The dart can land on a rational point, and it lands off every one of them almost surely.

@@ -33,49 +33,55 @@ The single line is the five-year zero's price as today's short rate runs from 0 
 
 ## The formula
 
-Notation first. The rate is written in the shorthand of Itô calculus ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)): $dr_t$ is the change in the rate over a short step of time $dt$, and $dW_t$ is a random shock over that step, with average zero and variance $dt$. A price that depends on time and on the rate is written $p(t, r)$. A subscript marks a rate of change with the other input held still: $p_t$ is how fast the price moves as the clock runs, $p_r$ how fast it moves as the rate moves, and $p_{rr}$ how fast $p_r$ itself moves, the curvature.
+Notation first. The rate is written in the shorthand of Itô calculus ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)): $`dr_t`$ is the change in the rate over a short step of time $`dt`$, and $`dW_t`$ is a random shock over that step, with average zero and variance $`dt`$. A price that depends on time and on the rate is written $`p(t, r)`$. A subscript marks a rate of change with the other input held still: $`p_t`$ is how fast the price moves as the clock runs, $`p_r`$ how fast it moves as the rate moves, and $`p_{rr}`$ how fast $`p_r`$ itself moves, the curvature.
 
 The model, in the real world:
 
-$$dr_t = \mu(t, r_t)\,dt + s(t, r_t)\,dW_t$$
+```math
+dr_t = \mu(t, r_t)\,dt + s(t, r_t)\,dW_t
+```
 
-**Read it aloud:** over each instant the short rate drifts by $\mu$ and is shaken by a random shock of size $s$.
+**Read it aloud:** over each instant the short rate drifts by $`\mu`$ and is shaken by a random shock of size $`s`$.
 
-The equation every zero must satisfy, for each maturity $T$:
+The equation every zero must satisfy, for each maturity $`T`$:
 
-$$\boxed{\;p_t + \bigl(\mu + \lambda s\bigr)\,p_r + \tfrac12 s^2\,p_{rr} - r\,p = 0, \qquad p(T, r) = 1\;}$$
+```math
+\boxed{\;p_t + \bigl(\mu + \lambda s\bigr)\,p_r + \tfrac12 s^2\,p_{rr} - r\,p = 0, \qquad p(T, r) = 1\;}
+```
 
 **Read it aloud:** the price's change from the clock, from the rate's drift nudged by the market price of risk, and from the rate's randomness together pay exactly the bank rate on the price; and at maturity the zero is worth its $1.
 
 Its solution, by the Feynman-Kac formula ([Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md)):
 
-$$P(t, T) = \mathbb{E}_Q\!\left[\,e^{-\int_t^T r_u\,du}\,\right], \qquad \text{with the rate drifting at } \mu + \lambda s \text{ under } Q.$$
+```math
+P(t, T) = \mathbb{E}_Q\!\left[\,e^{-\int_t^T r_u\,du}\,\right], \qquad \text{with the rate drifting at } \mu + \lambda s \text{ under } Q.
+```
 
 **Read it aloud:** the bond price is the average of the path discount, taken in the pricing world where the rate's drift is shifted up by the market price of risk times the rate's volatility.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r_t$, $r$ | the **short rate**: the rate on a loan for the next instant, continuously compounded | 4% today | bond falls: \$72.12 at 8% |
-| $t$, $T$, $\tau$, $T_1$, $T_2$ | now, the payment date, and the time left $\tau = T - t$, in years; $T_1$, $T_2$ are two maturities | 0, 5, 5 | more time left, lower price: \$23.39 at 30 years |
-| $\mu$, $s$ | the rate's real-world **drift** and its **volatility**, both per year | $\mu = a(\theta_P - r)$, $s = \sigma$ | — |
-| $a$, $\theta_P$, $\theta$, $\sigma$ | speed of the pull, real-world level, pricing-world level, rate volatility | 0.3, 4.5%, 5%, 1% | a higher $\sigma$ raises the price: \$80.17 at 2% |
-| $W_t$, $dW_t$, $dt$, $dr_t$ | the single random shock, its step over a short time $dt$, and the rate's change over that step | one draw moves every bond | — |
-| $D$ | the **path discount** $e^{-\int_t^T r_u du}$: what \$1 at $T$ is worth along one path of rates | random; average \$79.9856 per \$100 | — |
-| $P(t,T)$, $p$ | the zero's price per \$1 due at $T$; as a function of time and rate, $p(t, r)$ | \$79.9856 per \$100 | — |
-| $p_t$, $p_r$, $p_{rr}$ | rates of change of the price with the clock, with the rate, and its curvature | per \$100: 3.79 a year, then see Worked numbers | — |
-| $Q$, $\mathbb{E}_Q$ | the **pricing world** (the risk-neutral measure) and an average taken in it: the rate drifts at $\mu + \lambda s$ | $a(\theta - r)$ | — |
-| $\lambda$ | the **market price of risk**: extra expected return per unit of bond volatility, shared by every bond | 0.15 | pricing drift up, bond prices down |
-| $\alpha_T$, $\beta_T$, $\alpha_{T_1}$, $\beta_{T_1}$, $\alpha_{T_2}$, $\beta_{T_2}$ | a zero's real-world expected return and its volatility, per year | 4.3884% and 2.5896% at 5 years | — |
-| $I$, $m$, $v$ | the area under the rate's path, $I = \int_t^T r_u du$, and its mean and variance in the pricing world | 0.224104 and 0.00156062 | a larger $v$ raises the price |
+| $`r_t`$, $`r`$ | the **short rate**: the rate on a loan for the next instant, continuously compounded | 4% today | bond falls: \$72.12 at 8% |
+| $`t`$, $`T`$, $`\tau`$, $`T_1`$, $`T_2`$ | now, the payment date, and the time left $`\tau = T - t`$, in years; $`T_1`$, $`T_2`$ are two maturities | 0, 5, 5 | more time left, lower price: \$23.39 at 30 years |
+| $`\mu`$, $`s`$ | the rate's real-world **drift** and its **volatility**, both per year | $`\mu = a(\theta_P - r)`$, $`s = \sigma`$ | — |
+| $`a`$, $`\theta_P`$, $`\theta`$, $`\sigma`$ | speed of the pull, real-world level, pricing-world level, rate volatility | 0.3, 4.5%, 5%, 1% | a higher $`\sigma`$ raises the price: \$80.17 at 2% |
+| $`W_t`$, $`dW_t`$, $`dt`$, $`dr_t`$ | the single random shock, its step over a short time $`dt`$, and the rate's change over that step | one draw moves every bond | — |
+| $`D`$ | the **path discount** $`e^{-\int_t^T r_u du}`$: what \$1 at $`T`$ is worth along one path of rates | random; average \$79.9856 per \$100 | — |
+| $`P(t,T)`$, $`p`$ | the zero's price per \$1 due at $`T`$; as a function of time and rate, $`p(t, r)`$ | \$79.9856 per \$100 | — |
+| $`p_t`$, $`p_r`$, $`p_{rr}`$ | rates of change of the price with the clock, with the rate, and its curvature | per \$100: 3.79 a year, then see Worked numbers | — |
+| $`Q`$, $`\mathbb{E}_Q`$ | the **pricing world** (the risk-neutral measure) and an average taken in it: the rate drifts at $`\mu + \lambda s`$ | $`a(\theta - r)`$ | — |
+| $`\lambda`$ | the **market price of risk**: extra expected return per unit of bond volatility, shared by every bond | 0.15 | pricing drift up, bond prices down |
+| $`\alpha_T`$, $`\beta_T`$, $`\alpha_{T_1}`$, $`\beta_{T_1}`$, $`\alpha_{T_2}`$, $`\beta_{T_2}`$ | a zero's real-world expected return and its volatility, per year | 4.3884% and 2.5896% at 5 years | — |
+| $`I`$, $`m`$, $`v`$ | the area under the rate's path, $`I = \int_t^T r_u du`$, and its mean and variance in the pricing world | 0.224104 and 0.00156062 | a larger $`v`$ raises the price |
 
-In the example the pricing-world drift works out as $a(\theta_P - r) + \lambda\sigma = a(\theta - r)$, because $\theta = \theta_P + \lambda\sigma/a$: 4.5% plus 0.15 × 0.01 / 0.3 gives 5%. The real-world rate is pulled toward 4.5%; bonds are priced as if it were pulled toward 5%.
+In the example the pricing-world drift works out as $`a(\theta_P - r) + \lambda\sigma = a(\theta - r)`$, because $`\theta = \theta_P + \lambda\sigma/a`$: 4.5% plus 0.15 × 0.01 / 0.3 gives 5%. The real-world rate is pulled toward 4.5%; bonds are priced as if it were pulled toward 5%.
 
 ### When it holds
 
 - **One random number drives every bond.** All maturities then move in lockstep: a rise in the two-year yield forces a rise in the ten-year. Real curves also twist, the short end up and the long end down. Two or more shocks are needed for that: [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md).
 - **The rate moves continuously.** Brownian shocks, no jumps. On a central-bank day the rate jumps by a quarter point, and a jump cannot be hedged away by a second bond in the same instant.
 - **The market price of risk depends only on time and today's rate.** If investors' appetite for risk moves with something else, such as inflation news, that something is a second state variable and one rate no longer prices everything.
-- **Frictionless borrowing at the short rate, no default.** The hedge in Step 2 borrows and lends at $r$. Government zeros fit; a corporate bond needs a credit spread on top.
+- **Frictionless borrowing at the short rate, no default.** The hedge in Step 2 borrows and lends at $`r`$. Government zeros fit; a corporate bond needs a credit spread on top.
 - **The discounted price is a genuine fair bet.** Having no drift is not quite enough: Feynman-Kac also needs a bound on how wildly the price can swing, stated in Step 5's proof. Vasicek and Cox-Ingersoll-Ross meet it. Without it the equation can have several solutions, and only one of them is the average.
 
 ---
@@ -88,34 +94,40 @@ Every zero's price moves only because the short rate moves. Hold one five-year z
 
 ### Step 1: how a zero's price moves
 
-Itô's lemma applied to $p(t, r_t)$ splits the price's change into a steady part and a random part:
+Itô's lemma applied to $`p(t, r_t)`$ splits the price's change into a steady part and a random part:
 
-$$dp = \bigl(p_t + \mu\,p_r + \tfrac12 s^2 p_{rr}\bigr)\,dt + s\,p_r\,dW_t.$$
+```math
+dp = \bigl(p_t + \mu\,p_r + \tfrac12 s^2 p_{rr}\bigr)\,dt + s\,p_r\,dW_t.
+```
 
-The half-$s^2$ term is the curvature correction: the price is a bent function of the rate, and shaking the rate moves the average price. Divide by $p$ and name the parts. The zero's expected return per year is $\alpha_T = (p_t + \mu p_r + \tfrac12 s^2 p_{rr})/p$. Its volatility is $\beta_T = -s\,p_r/p$, positive because a zero falls when the rate rises. So each zero moves as $dp/p = \alpha_T\,dt - \beta_T\,dW_t$.
+The half-$`s^2`$ term is the curvature correction: the price is a bent function of the rate, and shaking the rate moves the average price. Divide by $`p`$ and name the parts. The zero's expected return per year is $`\alpha_T = (p_t + \mu p_r + \tfrac12 s^2 p_{rr})/p`$. Its volatility is $`\beta_T = -s\,p_r/p`$, positive because a zero falls when the rate rises. So each zero moves as $`dp/p = \alpha_T\,dt - \beta_T\,dW_t`$.
 
 ### Step 2: the hedge forces one ratio on every bond
 
-Take two zeros, maturities $T_1$ and $T_2$. Put $\beta_{T_2}$ dollars in the first and $-\beta_{T_1}$ dollars in the second, a short sale. The random parts are $-\beta_{T_2}\beta_{T_1}\,dW$ and $+\beta_{T_1}\beta_{T_2}\,dW$: they cancel. The position is riskless, so its return must equal the bank rate on its value. Rearranged, that says
+Take two zeros, maturities $`T_1`$ and $`T_2`$. Put $`\beta_{T_2}`$ dollars in the first and $`-\beta_{T_1}`$ dollars in the second, a short sale. The random parts are $`-\beta_{T_2}\beta_{T_1}\,dW`$ and $`+\beta_{T_1}\beta_{T_2}\,dW`$: they cancel. The position is riskless, so its return must equal the bank rate on its value. Rearranged, that says
 
-$$\frac{\alpha_{T_1} - r}{\beta_{T_1}} = \frac{\alpha_{T_2} - r}{\beta_{T_2}}.$$
+```math
+\frac{\alpha_{T_1} - r}{\beta_{T_1}} = \frac{\alpha_{T_2} - r}{\beta_{T_2}}.
+```
 
 <details>
 <summary>The algebra behind this</summary>
 
-The position is worth $\beta_{T_2} - \beta_{T_1}$ dollars. Its steady gain per unit time is $\beta_{T_2}\alpha_{T_1} - \beta_{T_1}\alpha_{T_2}$. No risk means this must equal $r(\beta_{T_2} - \beta_{T_1})$. Move terms: $\beta_{T_2}(\alpha_{T_1} - r) = \beta_{T_1}(\alpha_{T_2} - r)$. Divide both sides by $\beta_{T_1}\beta_{T_2}$, which is not zero because each zero does move with the rate.
+The position is worth $`\beta_{T_2} - \beta_{T_1}`$ dollars. Its steady gain per unit time is $`\beta_{T_2}\alpha_{T_1} - \beta_{T_1}\alpha_{T_2}`$. No risk means this must equal $`r(\beta_{T_2} - \beta_{T_1})`$. Move terms: $`\beta_{T_2}(\alpha_{T_1} - r) = \beta_{T_1}(\alpha_{T_2} - r)`$. Divide both sides by $`\beta_{T_1}\beta_{T_2}`$, which is not zero because each zero does move with the rate.
 
 </details>
 
 ### Step 3: name the shared ratio
 
-The two maturities were arbitrary, so every zero has the same ratio of extra return to volatility. It can depend on time and today's rate, but not on the maturity. Call it $\lambda$, the market price of risk:
+The two maturities were arbitrary, so every zero has the same ratio of extra return to volatility. It can depend on time and today's rate, but not on the maturity. Call it $`\lambda`$, the market price of risk:
 
-$$\alpha_T = r + \lambda\,\beta_T.$$
+```math
+\alpha_T = r + \lambda\,\beta_T.
+```
 
-In the example, the code reads $\lambda$ back out of three bonds by computing each one's expected return and volatility from its price. The two-year zero expects 4.2256% a year with volatility 1.5040%. The five-year expects 4.3884% with 2.5896%. The ten-year expects 4.4751% with 3.1674%. Subtract the 4% short rate and divide: 0.150000 each time. A bond priced to give a different ratio would let the Step 2 hedge earn more than the bank with no risk.
+In the example, the code reads $`\lambda`$ back out of three bonds by computing each one's expected return and volatility from its price. The two-year zero expects 4.2256% a year with volatility 1.5040%. The five-year expects 4.3884% with 2.5896%. The ten-year expects 4.4751% with 3.1674%. Subtract the 4% short rate and divide: 0.150000 each time. A bond priced to give a different ratio would let the Step 2 hedge earn more than the bank with no risk.
 
-A positive $\lambda$ means investors demand extra return for holding rate risk. The chart shows what that does to the yield curve, where the yield of a zero is $-\ln P / \tau$, its steady equivalent interest rate.
+A positive $`\lambda`$ means investors demand extra return for holding rate risk. The chart shows what that does to the yield curve, where the yield of a zero is $`-\ln P / \tau`$, its steady equivalent interest rate.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -131,38 +143,44 @@ Orange, upper: the market's curve, priced with the drift toward 5%. Green, lower
 
 ### Step 4: substitute, and the equation appears
 
-Put $\alpha_T$ from Step 1 into $\alpha_T = r + \lambda\beta_T$ and multiply through by $p$:
+Put $`\alpha_T`$ from Step 1 into $`\alpha_T = r + \lambda\beta_T`$ and multiply through by $`p`$:
 
-$$p_t + \mu\,p_r + \tfrac12 s^2 p_{rr} = r\,p - \lambda s\,p_r.$$
+```math
+p_t + \mu\,p_r + \tfrac12 s^2 p_{rr} = r\,p - \lambda s\,p_r.
+```
 
 Move everything to the left and the term structure equation stands:
 
-$$p_t + (\mu + \lambda s)\,p_r + \tfrac12 s^2 p_{rr} - r\,p = 0.$$
+```math
+p_t + (\mu + \lambda s)\,p_r + \tfrac12 s^2 p_{rr} - r\,p = 0.
+```
 
-The final condition is the contract: at maturity the zero pays \$1 whatever the rate, so $p(T, r) = 1$. Every maturity solves the same equation; only the date of that final condition differs.
+The final condition is the contract: at maturity the zero pays \$1 whatever the rate, so $`p(T, r) = 1`$. Every maturity solves the same equation; only the date of that final condition differs.
 
 ### Step 5: the equation's solution is an average
 
-The equation is linear with a final condition, the shape the Feynman-Kac formula solves. Its answer: run the rate forward with drift $\mu + \lambda s$ instead of $\mu$, discount along each path at the short rate, and average. That is $P(t,T) = \mathbb{E}_Q[D]$.
+The equation is linear with a final condition, the shape the Feynman-Kac formula solves. Its answer: run the rate forward with drift $`\mu + \lambda s`$ instead of $`\mu`$, discount along each path at the short rate, and average. That is $`P(t,T) = \mathbb{E}_Q[D]`$.
 
-The reason in words: along any path, the discounted price, $p$ multiplied by the discount accumulated so far, has no drift, because the equation cancels it. A quantity with no drift is a fair bet. A fair bet is worth today what it is worth on average at the end, and at maturity the discounted price is the path discount times \$1.
+The reason in words: along any path, the discounted price, $`p`$ multiplied by the discount accumulated so far, has no drift, because the equation cancels it. A quantity with no drift is a fair bet. A fair bet is worth today what it is worth on average at the end, and at maturity the discounted price is the path discount times \$1.
 
 <details>
 <summary>Detailed proof: from the equation to the average</summary>
 
-Fix $t$ and let $D_u = e^{-\int_t^u r_v dv}$ for $u \ge t$, so $dD_u = -r_u D_u\,du$ with no random part. Let $X_u = D_u\,p(u, r_u)$, with the rate moving under $Q$ as $dr_u = (\mu + \lambda s)\,du + s\,dW^Q_u$.
+Fix $`t`$ and let $`D_u = e^{-\int_t^u r_v dv}`$ for $`u \ge t`$, so $`dD_u = -r_u D_u\,du`$ with no random part. Let $`X_u = D_u\,p(u, r_u)`$, with the rate moving under $`Q`$ as $`dr_u = (\mu + \lambda s)\,du + s\,dW^Q_u`$.
 
-The product rule for Itô processes gives $dX_u = D_u\,dp - r_u D_u p\,du$, since $D$ has no random part and so no cross term. Itô's lemma under $Q$ gives $dp = \bigl(p_t + (\mu + \lambda s)p_r + \tfrac12 s^2 p_{rr}\bigr)du + s\,p_r\,dW^Q_u$. Hence
-$$dX_u = D_u\bigl(p_t + (\mu + \lambda s)p_r + \tfrac12 s^2 p_{rr} - r_u p\bigr)du + D_u\,s\,p_r\,dW^Q_u.$$
-The bracket is zero by the equation. What is left has no drift. If $\mathbb{E}_Q\int_t^T (D_u s p_r)^2 du$ is finite, the remaining term is a true martingale (a fair bet), so $X_t = \mathbb{E}_Q[X_T]$. Now $X_t = p(t, r_t)$ because $D_t = 1$, and $X_T = D_T \cdot 1$ by the final condition. So $p(t, r_t) = \mathbb{E}_Q[e^{-\int_t^T r_u du}]$.
+The product rule for Itô processes gives $`dX_u = D_u\,dp - r_u D_u p\,du`$, since $`D`$ has no random part and so no cross term. Itô's lemma under $`Q`$ gives $`dp = \bigl(p_t + (\mu + \lambda s)p_r + \tfrac12 s^2 p_{rr}\bigr)du + s\,p_r\,dW^Q_u`$. Hence
 
-The finiteness condition is the "genuine fair bet" assumption in When it holds. It is met in Vasicek: $p_r = -Bp$ with $B$ bounded, and the discounted price has finite variance. For the reverse direction, that the average is smooth enough to satisfy the equation, see [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md).
+$`\displaystyle dX_u = D_u\bigl(p_t + (\mu + \lambda s)p_r + \tfrac12 s^2 p_{rr} - r_u p\bigr)du + D_u\,s\,p_r\,dW^Q_u.`$
+
+The bracket is zero by the equation. What is left has no drift. If $`\mathbb{E}_Q\int_t^T (D_u s p_r)^2 du`$ is finite, the remaining term is a true martingale (a fair bet), so $`X_t = \mathbb{E}_Q[X_T]`$. Now $`X_t = p(t, r_t)`$ because $`D_t = 1`$, and $`X_T = D_T \cdot 1`$ by the final condition. So $`p(t, r_t) = \mathbb{E}_Q[e^{-\int_t^T r_u du}]`$.
+
+The finiteness condition is the "genuine fair bet" assumption in When it holds. It is met in Vasicek: $`p_r = -Bp`$ with $`B`$ bounded, and the discounted price has finite variance. For the reverse direction, that the average is smooth enough to satisfy the equation, see [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md).
 
 </details>
 
 ### Step 6: in the example, the average has a closed form
 
-Under $Q$ the example rate is a pulled random walk, an Ornstein-Uhlenbeck process ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). The area $I$ under its path is then normal. For a normal $I$ with mean $m$ and variance $v$, the average of $e^{-I}$ is $e^{-m + v/2}$. The mean follows from the rate's expected path, which still has a fraction $e^{-au}$ of today's gap to 5% left after $u$ years. The variance adds up each shock's effect on the rest of the path. Both come out in closed form; [Vasicek](02-vasicek-model.md) derives them and the bond formula they give. This card only uses the result, as one road among four.
+Under $`Q`$ the example rate is a pulled random walk, an Ornstein-Uhlenbeck process ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). The area $`I`$ under its path is then normal. For a normal $`I`$ with mean $`m`$ and variance $`v`$, the average of $`e^{-I}`$ is $`e^{-m + v/2}`$. The mean follows from the rate's expected path, which still has a fraction $`e^{-au}`$ of today's gap to 5% left after $`u`$ years. The variance adds up each shock's effect on the rest of the path. Both come out in closed form; [Vasicek](02-vasicek-model.md) derives them and the bond formula they give. This card only uses the result, as one road among four.
 
 The other route runs the opposite way. Instead of choosing the short rate and solving for every bond, model the whole forward curve and let no-arbitrage fix its drift. That is the Heath-Jarrow-Morton framework, [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md), and every short-rate model is a special case of it.
 
@@ -170,19 +188,19 @@ The other route runs the opposite way. Instead of choosing the short rate and so
 
 ## Worked numbers, by hand
 
-The five-year zero, \$100 face: today's rate 4%, pricing-world level $\theta$ = 5%, speed $a$ = 0.3, volatility $\sigma$ = 1%. The mean of the path area is $m = \theta T + (r - \theta)B$ with $B = (1 - e^{-aT})/a$. Its variance is $v = (\sigma/a)^2\,\bigl(T - 2B + (1 - e^{-2aT})/(2a)\bigr)$.
+The five-year zero, \$100 face: today's rate 4%, pricing-world level $`\theta`$ = 5%, speed $`a`$ = 0.3, volatility $`\sigma`$ = 1%. The mean of the path area is $`m = \theta T + (r - \theta)B`$ with $`B = (1 - e^{-aT})/a`$. Its variance is $`v = (\sigma/a)^2\,\bigl(T - 2B + (1 - e^{-2aT})/(2a)\bigr)`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| share of today's gap to 5% left after 5 years | $e^{-0.3 \times 5}$ | 0.223130 |
-| $B$ | $(1 - 0.223130)/0.3$ | 2.589566 |
-| mean area $m$ | $0.05 \times 5 + (0.04 - 0.05) \times 2.589566$ | 0.224104 |
-| second-order piece | $(1 - e^{-3})/0.6$ | 1.583688 |
-| bracket | $5 - 2 \times 2.589566 + 1.583688$ | 1.404556 |
-| variance $v$ | $(0.01/0.3)^2 \times 1.404556$ | 0.00156062 |
-| exponent | $-0.224104 + 0.00156062/2$ | −0.223324 |
-| **price** | $100 \times e^{-0.223324}$ | **$79.99** (79.9856) |
-| yield | $0.223324 / 5$ | 4.4665% |
+| share of today's gap to 5% left after 5 years | $`e^{-0.3 \times 5}`$ | 0.223130 |
+| $`B`$ | $`(1 - 0.223130)/0.3`$ | 2.589566 |
+| mean area $`m`$ | $`0.05 \times 5 + (0.04 - 0.05) \times 2.589566`$ | 0.224104 |
+| second-order piece | $`(1 - e^{-3})/0.6`$ | 1.583688 |
+| bracket | $`5 - 2 \times 2.589566 + 1.583688`$ | 1.404556 |
+| variance $`v`$ | $`(0.01/0.3)^2 \times 1.404556`$ | 0.00156062 |
+| exponent | $`-0.224104 + 0.00156062/2`$ | −0.223324 |
+| **price** | $`100 \times e^{-0.223324}`$ | **$79.99** (79.9856) |
+| yield | $`0.223324 / 5`$ | 4.4665% |
 
 The government's promise of $100 in five years sells for $79.99 in this model, a yield of 4.47% a year: more than today's 4% because the rate is expected, in the pricing world, to climb toward 5%.
 
@@ -192,10 +210,10 @@ At today's rate and date, per $100 of face, the four terms of the equation (from
 
 | Term | Meaning | Dollars a year |
 | --- | --- | --- |
-| $p_t$ | the clock: a zero gains value as maturity nears | +3.793988 |
-| $(\mu + \lambda s)\,p_r$ | the pricing-world drift, $a(\theta - r)p_r$: the rate is expected to climb, which costs | −0.621384 |
-| $\tfrac12 s^2 p_{rr}$ | the curvature: shaking a bent price function helps the holder | +0.026819 |
-| $-r\,p$ | the bank's interest on \$79.99 at 4% | −3.199423 |
+| $`p_t`$ | the clock: a zero gains value as maturity nears | +3.793988 |
+| $`(\mu + \lambda s)\,p_r`$ | the pricing-world drift, $`a(\theta - r)p_r`$: the rate is expected to climb, which costs | −0.621384 |
+| $`\tfrac12 s^2 p_{rr}`$ | the curvature: shaking a bent price function helps the holder | +0.026819 |
+| $`-r\,p`$ | the bank's interest on \$79.99 at 4% | −3.199423 |
 | **sum** | | **0 (below 1e-9)** |
 
 Read as accounts: holding the zero for a year earns $3.79 from the clock and $0.03 from randomness, loses $0.62 to the expected rise in rates, and the net, $3.20, is exactly the bank's 4% on the price. In the pricing world a bond earns the bank rate, no more and no less.
@@ -206,8 +224,8 @@ Read as accounts: holding the zero for a year earns $3.79 from the clock and $0.
 | --- | --- | --- |
 | Average with the real-world drift toward 4.5% | $80.96 | forecasting drift used for pricing; the market price of risk left out |
 | Freeze the rate at 4% | $81.87 | no drift and no randomness: the pull toward 5% is ignored |
-| Discount the average path, $e^{-m}$ | \$79.92 | the average of $e^{-I}$ is not e to the minus the average of $I$; the $v/2$ is dropped |
-| Drop the pull: rate wanders freely from 4% | \$82.04 | no mean reversion; variance grows like $T^3$ and the drift toward 5% is lost |
+| Discount the average path, $`e^{-m}`$ | \$79.92 | the average of $`e^{-I}`$ is not e to the minus the average of $`I`$; the $`v/2`$ is dropped |
+| Drop the pull: rate wanders freely from 4% | \$82.04 | no mean reversion; variance grows like $`T^3`$ and the drift toward 5% is lost |
 
 Every row is reproduced by both check scripts below.
 
@@ -215,7 +233,7 @@ Every row is reproduced by both check scripts below.
 
 ## Code, from first principles, and it actually runs
 
-The code prices the five-year zero four ways. Road 1 computes the path area's mean and variance by Simpson's rule, adding thin slices, and takes $e^{-m+v/2}$. Road 2 simulates 8,000 rate paths with its own random numbers and averages the path discount. Road 3 solves the term structure equation itself on a grid of rates, marching backward from $p = 1$ at maturity. Road 4 is the closed form from [Vasicek](02-vasicek-model.md), used only as a cross-check. Then the closed form is plugged into the equation to confirm it solves it, and the market price of risk is read back from three bonds.
+The code prices the five-year zero four ways. Road 1 computes the path area's mean and variance by Simpson's rule, adding thin slices, and takes $`e^{-m+v/2}`$. Road 2 simulates 8,000 rate paths with its own random numbers and averages the path discount. Road 3 solves the term structure equation itself on a grid of rates, marching backward from $`p = 1`$ at maturity. Road 4 is the closed form from [Vasicek](02-vasicek-model.md), used only as a cross-check. Then the closed form is plugged into the equation to confirm it solves it, and the market price of risk is read back from three bonds.
 
 ### Python
 
@@ -577,10 +595,10 @@ The two outputs agree line for line at the printed precision.
 
 Lean proves Steps 2 to 4 for any one random rate, Step 6's average for any normal area, and the example's closed form.
 
-- Suppose each zero moves with the rate, and every hedge of Step 2 earns exactly the bank rate. Then one market price of risk $\lambda$, set by the date and today's rate, makes every zero solve the term structure equation.
-- Suppose the area $I$ is normal with mean $m$ and variance $v$. Then the average of $e^{-I}$ is $e^{-m + v/2}$.
-- Take the closed form $e^{-m + v/2}$, for a rate pulled toward $\theta$ at speed $a > 0$ with volatility $\sigma$. Then it solves the equation with drift $a(\theta - r)$ at every date and rate, and equals 1 at maturity.
-- A real-world level of 4.5% with $\lambda$ = 0.15 gives the pricing-world level of 5%. So does 5.5% with $\lambda$ = −0.15.
+- Suppose each zero moves with the rate, and every hedge of Step 2 earns exactly the bank rate. Then one market price of risk $`\lambda`$, set by the date and today's rate, makes every zero solve the term structure equation.
+- Suppose the area $`I`$ is normal with mean $`m`$ and variance $`v`$. Then the average of $`e^{-I}`$ is $`e^{-m + v/2}`$.
+- Take the closed form $`e^{-m + v/2}`$, for a rate pulled toward $`\theta`$ at speed $`a > 0`$ with volatility $`\sigma`$. Then it solves the equation with drift $`a(\theta - r)`$ at every date and rate, and equals 1 at maturity.
+- A real-world level of 4.5% with $`\lambda`$ = 0.15 gives the pricing-world level of 5%. So does 5.5% with $`\lambda`$ = −0.15.
 
 Lean has no Itô calculus, so Steps 1 and 5 and the bond prices are left to the Python and Rust checks.
 
@@ -753,7 +771,7 @@ example : (55 / 1000 : ℚ) + (-15 / 100) * (1 / 100) / (3 / 10) = 5 / 100 := by
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
-> - **Double the rate's volatility.** Call `gauss_road(r0, T, theta, 0.02)`. The price rises, to **\$80.17**. The mean area is unchanged, and a wider spread raises the average of $e^{-I}$, since the discount is a bent function of $I$.
+> - **Double the rate's volatility.** Call `gauss_road(r0, T, theta, 0.02)`. The price rises, to **\$80.17**. The mean area is unchanged, and a wider spread raises the average of $`e^{-I}`$, since the discount is a bent function of $`I`$.
 > - **Start at 8 percent.** Call `gauss_road(0.08, T, theta)`. The zero falls to **$72.12**; the equation's grid gives $72.11 at the same rate, the right end of the first chart.
 > - **Wait thirty years.** Call `gauss_road(r0, 30.0, theta)`. The zero is worth **$23.39**. Over that span the rate spends most of its life near 5% and the start at 4% hardly matters.
 > - **Flip the market price of risk.** The last two `try` rows keep the pricing world and set the risk price to −0.15. The real-world level becomes 5.5%, the five-year bond reports −0.150000, and its price, $79.99, does not move: today's curve cannot tell the level and the risk price apart.
@@ -766,10 +784,10 @@ example : (55 / 1000 : ℚ) + (-15 / 100) * (1 / 100) / (3 / 10) = 5 / 100 := by
 > **Averaging with the forecast.** The rate's real-world drift, estimated from history or from economists' forecasts, is the wrong drift for pricing. Averaging with it gives $80.96, not $79.99: too dear by nearly a dollar per $100. Bonds are priced with the drift shifted by the market price of risk times volatility, because investors charge for carrying rate risk. The pricing-world level is not a forecast of where rates will settle.
 >
 > Smaller traps:
-> - **Discounting the average rate.** $e^{-m}$ gives \$79.92. The average of a discount is not the discount of the average; the $v/2$ is the correction, and it grows fast with maturity.
-> - **The sign of $\lambda$.** On this card $\lambda$ is extra return per unit of bond volatility, so the pricing drift is $\mu + \lambda s$. Many books define it per unit of the rate's shock and write $\mu - \lambda s$. Both give the same prices; mixing them flips the term premium's sign.
-> - **The sign of $p_t$.** The equation's $p_t$ holds the maturity date fixed and moves today's date. Code often works in time left, $\tau = T - t$, and the slope with respect to $\tau$ is minus $p_t$. The code's `parts` function carries that minus sign; drop it and the residual is no longer zero.
-> - **Expecting today's curve to reveal $\lambda$.** Prices only fix the pricing drift $\mu + \lambda s$. A real-world level of 4.5% with $\lambda$ = 0.15, or 5.5% with $\lambda$ = −0.15, give the same curve. Separating them needs a history of bond returns.
+> - **Discounting the average rate.** $`e^{-m}`$ gives \$79.92. The average of a discount is not the discount of the average; the $`v/2`$ is the correction, and it grows fast with maturity.
+> - **The sign of $`\lambda`$.** On this card $`\lambda`$ is extra return per unit of bond volatility, so the pricing drift is $`\mu + \lambda s`$. Many books define it per unit of the rate's shock and write $`\mu - \lambda s`$. Both give the same prices; mixing them flips the term premium's sign.
+> - **The sign of $`p_t`$.** The equation's $`p_t`$ holds the maturity date fixed and moves today's date. Code often works in time left, $`\tau = T - t`$, and the slope with respect to $`\tau`$ is minus $`p_t`$. The code's `parts` function carries that minus sign; drop it and the residual is no longer zero.
+> - **Expecting today's curve to reveal $`\lambda`$.** Prices only fix the pricing drift $`\mu + \lambda s`$. A real-world level of 4.5% with $`\lambda`$ = 0.15, or 5.5% with $`\lambda`$ = −0.15, give the same curve. Separating them needs a history of bond returns.
 
 ---
 
@@ -777,7 +795,7 @@ example : (55 / 1000 : ℚ) + (-15 / 100) * (1 / 100) / (3 / 10) = 5 / 100 := by
 
 - **Term-premium estimates.** Central banks and research desks split long yields into expected future short rates and a term premium. The split is Step 3's chart: the gap between the pricing-world curve and the no-premium curve.
 - **Pricing callable bonds and bond options.** A callable bond, which the issuer may repay early, has no closed-form average, so desks solve this equation on a grid or a tree with the option's payoff as the final condition: [Bond options](05-bond-options-and-jamshidians-trick.md) and [The Hull-White tree](06-hull-white-trinomial-tree.md).
-- **Choosing the rate's volatility shape.** Swap $s = \sigma$ for $s = \sigma\sqrt{r}$ and the same equation gives rates that cannot go negative: [Cox-Ingersoll-Ross](03-cox-ingersoll-ross-model.md).
+- **Choosing the rate's volatility shape.** Swap $`s = \sigma`$ for $`s = \sigma\sqrt{r}`$ and the same equation gives rates that cannot go negative: [Cox-Ingersoll-Ross](03-cox-ingersoll-ross-model.md).
 - **Fitting today's curve exactly.** Let the level move with time and the equation reproduces every quoted zero: [Hull-White](04-hull-white-model.md) and [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
 - **Pension and insurance liabilities.** A promise to pay pensions for decades is a stack of zeros. Valuing it under a random rate, rather than at one frozen rate, is this card's average applied to every payment date.
 
@@ -794,7 +812,7 @@ example : (55 / 1000 : ℚ) + (-15 / 100) * (1 / 100) / (3 / 10) = 5 / 100 := by
 ## Where this goes next
 
 - [Vasicek](02-vasicek-model.md): solves this card's equation in closed form for the example rate, giving every maturity's price as an exponential of a straight line in today's rate.
-- Convection-diffusion: the term structure equation seen as a physicist would, drift carrying the price along and volatility spreading it out, with the $-rp$ term as a steady leak.
+- Convection-diffusion: the term structure equation seen as a physicist would, drift carrying the price along and volatility spreading it out, with the $`-rp`$ term as a steady leak.
 
 The equation says what every bond price must satisfy but not what it is; solving it for a named rate model, and seeing how the level, speed and volatility shape the whole yield curve, is the work of [Vasicek](02-vasicek-model.md).
 

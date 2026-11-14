@@ -37,43 +37,49 @@ Row 20 entry by entry: one empty board, 20 of one cheese, up to 184,756 at ten, 
 
 ## The formula
 
-Notation first, in words. $n$ is how many items there are to choose from, $k$ how many go in one pick, C(n, k) the number of picks. An even row number has one entry dead centre; write the row as 2n and that entry is C(2n, n). With n of 10 it is C(20, 10) = 184,756.
+Notation first, in words. $`n`$ is how many items there are to choose from, $`k`$ how many go in one pick, C(n, k) the number of picks. An even row number has one entry dead centre; write the row as 2n and that entry is C(2n, n). With n of 10 it is C(20, 10) = 184,756.
 
 Side-by-side entries have a ratio with no factorials in it:
 
-$$\frac{C(n,k)}{C(n,k-1)} = \frac{n-k+1}{k}$$
+```math
+\frac{C(n,k)}{C(n,k-1)} = \frac{n-k+1}{k}
+```
 
 **Read it aloud:** one step right multiplies the count by the items still unpicked, over the items now picked.
 
 That makes the middle entry the largest, which gives the sandwich:
 
-$$\frac{4^n}{2n+1} \;\le\; C(2n,n) \;\le\; 4^n$$
+```math
+\frac{4^n}{2n+1} \;\le\; C(2n,n) \;\le\; 4^n
+```
 
 **Read it aloud:** the middle entry is at most the whole row, at least the row shared evenly among its entries.
 
-Away from the middle the row total is too blunt. A second pair serves, for every $k$ from 1 to $n$:
+Away from the middle the row total is too blunt. A second pair serves, for every $`k`$ from 1 to $`n`$:
 
-$$\left(\frac{n}{k}\right)^{k} \;\le\; C(n,k) \;\le\; \frac{n^{k}}{k!}$$
+```math
+\left(\frac{n}{k}\right)^{k} \;\le\; C(n,k) \;\le\; \frac{n^{k}}{k!}
+```
 
 **Read it aloud:** the count lies between n over k multiplied in k times, and n multiplied in k times over the orderings of a pick.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | items to choose from | 20 cheeses | longer rows, larger counts |
-| $k$ | items in one pick | 10 on a board | climbs to mid-row, then falls |
-| $C(n,k)$ | picks of $k$ from $n$, order ignored | C(20,10) = 184,756 | — |
-| $C(2n,n)$ | the middle entry of an even row | 184,756, with n of 10 | — |
-| $4^n$ | 4 multiplied in $n$ times: row 2n's total | 1,048,576 | the sandwich slides up, same width |
-| $2n+1$ | entries in row 2n | 21 | the lower bound sinks |
-| $(n/k)^k$ | the lower bound away from the middle | (20/10)^10 = 1,024 | — |
-| $n^k/k!$ | the upper bound away from the middle | 20^10/10! = 2,821,869.49 | — |
+| $`n`$ | items to choose from | 20 cheeses | longer rows, larger counts |
+| $`k`$ | items in one pick | 10 on a board | climbs to mid-row, then falls |
+| $`C(n,k)`$ | picks of $`k`$ from $`n`$, order ignored | C(20,10) = 184,756 | — |
+| $`C(2n,n)`$ | the middle entry of an even row | 184,756, with n of 10 | — |
+| $`4^n`$ | 4 multiplied in $`n`$ times: row 2n's total | 1,048,576 | the sandwich slides up, same width |
+| $`2n+1`$ | entries in row 2n | 21 | the lower bound sinks |
+| $`(n/k)^k`$ | the lower bound away from the middle | (20/10)^10 = 1,024 | — |
+| $`n^k/k!`$ | the upper bound away from the middle | 20^10/10! = 2,821,869.49 | — |
 
 ### When it holds
 
-- **Whole numbers, $k$ from 0 to $n$.** Past those ends the count is zero by convention; the neighbour ratio needs $k$ at least 1.
+- **Whole numbers, $`k`$ from 0 to $`n`$.** Past those ends the count is zero by convention; the neighbour ratio needs $`k`$ at least 1.
 - **One peak needs an even row.** An odd row has two biggest entries side by side, the ratio landing on 1 between them.
 - **The sandwich is about row 2n, not row n.** Row 20 adds to 1,048,576, so the power is 4^10. Use 2^10 = 1,024 and the "upper bound" falls below the count it caps.
-- **The general pair needs $n$ at least $k$.** Past that the count is zero and the lower bound is not.
+- **The general pair needs $`n`$ at least $`k`$.** Past that the count is zero and the lower bound is not.
 
 ---
 

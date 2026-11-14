@@ -36,38 +36,46 @@ Orange, half a metre out: the sums settle on 0.80, the true height. Teal, 1.2 me
 
 ## The formula
 
-Notation first, in words. A **power series** about a centre $c$ adds powers of the offset z − c, each times a fixed complex number $a_n$, its **coefficient**. The **radius of convergence** $R$ is the distance from $c$ within which the sum settles. A **pole** is a point where a function runs off to infinity like one over a distance.
+Notation first, in words. A **power series** about a centre $`c`$ adds powers of the offset z − c, each times a fixed complex number $`a_n`$, its **coefficient**. The **radius of convergence** $`R`$ is the distance from $`c`$ within which the sum settles. A **pole** is a point where a function runs off to infinity like one over a distance.
 
-$$f(z) = \sum_{n=0}^{\infty} a_n (z - c)^n = a_0 + a_1 (z-c) + a_2 (z-c)^2 + \cdots$$
+```math
+f(z) = \sum_{n=0}^{\infty} a_n (z - c)^n = a_0 + a_1 (z-c) + a_2 (z-c)^2 + \cdots
+```
 
 **Read it aloud:** f of z is the coefficients times the powers of the offset from the centre, added for ever.
 
-The ratio test gives R as the limit of |a_n / a_(n+1)| when that limit exists. The Cauchy–Hadamard formula always gives it, using $\limsup$, the eventual ceiling of a list: the smallest number the list exceeds, by any fixed margin, only finitely often.
+The ratio test gives R as the limit of |a_n / a_(n+1)| when that limit exists. The Cauchy–Hadamard formula always gives it, using $`\limsup`$, the eventual ceiling of a list: the smallest number the list exceeds, by any fixed margin, only finitely often.
 
-$$\frac{1}{R} = \limsup_{n \to \infty} |a_n|^{1/n}$$
+```math
+\frac{1}{R} = \limsup_{n \to \infty} |a_n|^{1/n}
+```
 
 **Read it aloud:** the n-th roots of the coefficients' sizes have eventual ceiling one over the radius.
 
 Inside the disc, the slope is the series of slopes, with the same radius:
 
-$$f'(z) = \sum_{n=1}^{\infty} n\, a_n (z - c)^{n-1}, \qquad |z - c| < R$$
+```math
+f'(z) = \sum_{n=1}^{\infty} n\, a_n (z - c)^{n-1}, \qquad |z - c| < R
+```
 
 **Read it aloud:** to differentiate, bring each power down as a factor and lower it by one.
 
-The bump about 0, with $k$ counting the non-zero terms:
+The bump about 0, with $`k`$ counting the non-zero terms:
 
-$$\frac{1}{1 + z^2} = \sum_{k=0}^{\infty} (-1)^k z^{2k} = 1 - z^2 + z^4 - \cdots, \qquad |z| < 1$$
+```math
+\frac{1}{1 + z^2} = \sum_{k=0}^{\infty} (-1)^k z^{2k} = 1 - z^2 + z^4 - \cdots, \qquad |z| < 1
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $z$ | a road point, metres from the centre; a plane point | 0.5; 0.5 + 0.5i | past R: no sum |
-| $f$, $f'$ | the bump 1/(1 + z^2); its complex slope | 0.8 − 0.4i; −1.12 + 0.16i | — |
-| $c$, $w$ | the centre; the offset z − c | 0, then 1 | moves the disc |
-| $a_n$, $n$ | coefficient of the n-th power; the power | 1, 0, −1, 0, 1 | smaller radius |
-| $k$, $N$ | counts non-zero terms; terms kept | 60 | nearer the sum |
-| $R$ | radius of convergence | 1 about 0; 1.414214 about 1 | reaches farther |
-| $i$, $-i$ | the poles, where 1 + z^2 = 0 | distance 1.000000 from 0 | bigger disc |
-| $\limsup$, $h$ | eventual ceiling; a small complex step | along 1 and i | — |
+| $`x`$, $`z`$ | a road point, metres from the centre; a plane point | 0.5; 0.5 + 0.5i | past R: no sum |
+| $`f`$, $`f'`$ | the bump 1/(1 + z^2); its complex slope | 0.8 − 0.4i; −1.12 + 0.16i | — |
+| $`c`$, $`w`$ | the centre; the offset z − c | 0, then 1 | moves the disc |
+| $`a_n`$, $`n`$ | coefficient of the n-th power; the power | 1, 0, −1, 0, 1 | smaller radius |
+| $`k`$, $`N`$ | counts non-zero terms; terms kept | 60 | nearer the sum |
+| $`R`$ | radius of convergence | 1 about 0; 1.414214 about 1 | reaches farther |
+| $`i`$, $`-i`$ | the poles, where 1 + z^2 = 0 | distance 1.000000 from 0 | bigger disc |
+| $`\limsup`$, $`h`$ | eventual ceiling; a small complex step | along 1 and i | — |
 
 ### When it holds
 
@@ -81,26 +89,26 @@ $$\frac{1}{1 + z^2} = \sum_{k=0}^{\infty} (-1)^k z^{2k} = 1 - z^2 + z^4 - \cdots
 
 ### Step 0: every term is beaten by a geometric series
 
-Suppose at distance s from the centre every term's length $|a_n| s^n$ stays below a fixed number M. At a closer distance r, the n-th term is at most M times (r/s)^n: a geometric series with ratio below 1, which settles ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)). Only the length |z − c| enters, never the direction, so pushing s out as far as it goes gives a disc, of radius $R$. Beyond $R$ the terms do not shrink to 0, so no sum exists.
+Suppose at distance s from the centre every term's length $`|a_n| s^n`$ stays below a fixed number M. At a closer distance r, the n-th term is at most M times (r/s)^n: a geometric series with ratio below 1, which settles ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)). Only the length |z − c| enters, never the direction, so pushing s out as far as it goes gives a disc, of radius $`R`$. Beyond $`R`$ the terms do not shrink to 0, so no sum exists.
 
 ### Step 1: the ratio test finds R
 
-For the bump about 0, consecutive non-zero terms are $(-1)^k z^{2k}$ and $(-1)^{k+1} z^{2k+2}$. Their ratio has length |z|^2. The real ratio test ([Power series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md)) says: below 1, the series converges; above 1, it fails. So R = 1.
+For the bump about 0, consecutive non-zero terms are $`(-1)^k z^{2k}`$ and $`(-1)^{k+1} z^{2k+2}`$. Their ratio has length |z|^2. The real ratio test ([Power series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md)) says: below 1, the series converges; above 1, it fails. So R = 1.
 
 The ratio of coefficients fails here: every odd coefficient is 0, so a_0/a_1 has no value. The root form never divides: the non-zero coefficients have size 1, so 1/R = 1.
 
 ### Step 2: termwise differentiation is legal inside
 
-Multiplying the n-th coefficient by n leaves the radius alone, since the n-th root of n tends to 1. Inside the disc, the difference quotient (f(z + h) − f(z))/h differs from the derivative series by at most a constant times |h|, in whatever direction the small step $h$ points. So the sum has a complex derivative everywhere in its disc: it is **holomorphic** there ([The complex derivative](01-complex-derivative-and-cauchy-riemann.md)).
+Multiplying the n-th coefficient by n leaves the radius alone, since the n-th root of n tends to 1. Inside the disc, the difference quotient (f(z + h) − f(z))/h differs from the derivative series by at most a constant times |h|, in whatever direction the small step $`h`$ points. So the sum has a complex derivative everywhere in its disc: it is **holomorphic** there ([The complex derivative](01-complex-derivative-and-cauchy-riemann.md)).
 
 At z = 0.5 + 0.5i, sixty terms of the derivative series give −1.12 + 0.16i; so do the quotient rule and difference quotients along 1 and along i.
 
 <details>
 <summary>Detailed proof: the radius formula and the termwise slope</summary>
 
-**Cauchy–Hadamard.** Let L be the limsup of $|a_n|^{1/n}$. If $|z| < 1/L$, pick q with $L|z| < q < 1$; from some n on, $|a_n|^{1/n}|z| < q$, so $|a_n z^n| < q^n$ and the series converges. If $|z| > 1/L$, then $|a_n|^{1/n}|z| > 1$ infinitely often, so infinitely many terms have length above 1, and no sum exists.
+**Cauchy–Hadamard.** Let L be the limsup of $`|a_n|^{1/n}`$. If $`|z| < 1/L`$, pick q with $`L|z| < q < 1`$; from some n on, $`|a_n|^{1/n}|z| < q`$, so $`|a_n z^n| < q^n`$ and the series converges. If $`|z| > 1/L`$, then $`|a_n|^{1/n}|z| > 1`$ infinitely often, so infinitely many terms have length above 1, and no sum exists.
 
-**The slope.** Fix |z| < ρ < R, with ρ another radius, and a step $h$ with $|z + h| \le ρ$. The finite identity $((z+h)^n - z^n)/h - n z^{n-1} = \sum_{j=0}^{n-1} z^{n-1-j}((z+h)^j - z^j)$ bounds each bracket by $j|h|ρ^{j-1}$, so the error in the n-th term is at most $\tfrac{n(n-1)}{2}|h|ρ^{n-2}|a_n|$. Summed over n, this is $C|h|$ with C finite, by the root test on $n^2 |a_n| ρ^n$. For every tolerance ε > 0, a step shorter than ε/C keeps the error below ε, in every direction.
+**The slope.** Fix |z| < ρ < R, with ρ another radius, and a step $`h`$ with $`|z + h| \le ρ`$. The finite identity $`((z+h)^n - z^n)/h - n z^{n-1} = \sum_{j=0}^{n-1} z^{n-1-j}((z+h)^j - z^j)`$ bounds each bracket by $`j|h|ρ^{j-1}`$, so the error in the n-th term is at most $`\tfrac{n(n-1)}{2}|h|ρ^{n-2}|a_n|`$. Summed over n, this is $`C|h|`$ with C finite, by the root test on $`n^2 |a_n| ρ^n`$. For every tolerance ε > 0, a step shorter than ε/C keeps the error below ε, in every direction.
 
 </details>
 

@@ -26,35 +26,39 @@ To scale, 15 units per km, depot at 0. The drone and its mirror sit on the same 
 
 ## The formula
 
-Notation first, in words. For $z = a + bi$, with real part $a$ and imaginary part $b$, the conjugate is written $z$ with a bar over it, $\bar z$, read "z-bar". The modulus is written between upright bars, $\lvert z\rvert$, like an absolute value, read "mod z".
+Notation first, in words. For $`z = a + bi`$, with real part $`a`$ and imaginary part $`b`$, the conjugate is written $`z`$ with a bar over it, $`\bar z`$, read "z-bar". The modulus is written between upright bars, $`\lvert z\rvert`$, like an absolute value, read "mod z".
 
-$$\bar z = a - bi, \qquad \lvert z\rvert = \sqrt{a^2 + b^2} = \sqrt{z\,\bar z}$$
+```math
+\bar z = a - bi, \qquad \lvert z\rvert = \sqrt{a^2 + b^2} = \sqrt{z\,\bar z}
+```
 
 **Read it aloud:** z-bar flips the sign of the imaginary part; mod z, the distance from 0 to z, is the square root of z times z-bar.
 
 Three consequences carry the rest of the card:
 
-$$\frac{p}{z} = \frac{p\,\bar z}{\lvert z\rvert^2}, \qquad \lvert z w\rvert = \lvert z\rvert\,\lvert w\rvert, \qquad \lvert z + w\rvert \le \lvert z\rvert + \lvert w\rvert$$
+```math
+\frac{p}{z} = \frac{p\,\bar z}{\lvert z\rvert^2}, \qquad \lvert z w\rvert = \lvert z\rvert\,\lvert w\rvert, \qquad \lvert z + w\rvert \le \lvert z\rvert + \lvert w\rvert
+```
 
 **Read it aloud:** to divide by z, multiply by z-bar and divide by a real number; the length of a product is the product of the lengths; the length of a sum is at most the sum of the lengths.
 
-The distance between two points is the modulus of their difference, $\lvert w - z\rvert$. The last rule is the **triangle inequality**, after the triangle with corners 0, $z$ and $z + w$.
+The distance between two points is the modulus of their difference, $`\lvert w - z\rvert`$. The last rule is the **triangle inequality**, after the triangle with corners 0, $`z`$ and $`z + w`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$ | a complex number: the drone, in km | 3 + 4i | the mirror moves too |
-| $a$, $b$ | real and imaginary parts, Re z and Im z | 3 and 4 | a longer arrow |
-| $i$ | the number whose square is −1 | 0 + 1i | — |
-| $\bar z$ | the conjugate: $z$ reflected in the real axis | 3 − 4i | same size, flipped |
-| $\lvert z\rvert$ | the modulus: distance from 0 to $z$ | 5 | a longer arrow |
-| $w$ | the second drone | 6 + 8i | a new distance from $z$ |
-| $p$ | a beacon, divided by $z$ | 1 + 2i | a bigger quotient |
-| $t$ | a direction in radians from east, for the shadow check | best along the drone's own line | the shadow rises, then falls |
+| $`z`$ | a complex number: the drone, in km | 3 + 4i | the mirror moves too |
+| $`a`$, $`b`$ | real and imaginary parts, Re z and Im z | 3 and 4 | a longer arrow |
+| $`i`$ | the number whose square is −1 | 0 + 1i | — |
+| $`\bar z`$ | the conjugate: $`z`$ reflected in the real axis | 3 − 4i | same size, flipped |
+| $`\lvert z\rvert`$ | the modulus: distance from 0 to $`z`$ | 5 | a longer arrow |
+| $`w`$ | the second drone | 6 + 8i | a new distance from $`z`$ |
+| $`p`$ | a beacon, divided by $`z`$ | 1 + 2i | a bigger quotient |
+| $`t`$ | a direction in radians from east, for the shadow check | best along the drone's own line | the shadow rises, then falls |
 
 ### When it holds
 
-- **Any complex number:** both are definitions, valid for every $z$.
-- **Division needs a nonzero bottom:** $\lvert z\rvert^2$ is 0 only when $z = 0$, and then no quotient exists.
+- **Any complex number:** both are definitions, valid for every $`z`$.
+- **Division needs a nonzero bottom:** $`\lvert z\rvert^2`$ is 0 only when $`z = 0`$, and then no quotient exists.
 - **Distance needs equal units on both axes:** otherwise Pythagoras, and so the modulus, stops meaning distance.
 - **Inequalities compare moduli only:** complex numbers themselves have no order.
 
@@ -64,56 +68,66 @@ The distance between two points is the modulus of their difference, $\lvert w - 
 
 ### Step 1: z times z-bar is the squared length
 
-Expand, using $i^2 = -1$. The middle terms cancel and the last turns positive:
+Expand, using $`i^2 = -1`$. The middle terms cancel and the last turns positive:
 
-$$z\,\bar z = (a + bi)(a - bi) = a^2 - abi + abi - b^2 i^2 = a^2 + b^2$$
+```math
+z\,\bar z = (a + bi)(a - bi) = a^2 - abi + abi - b^2 i^2 = a^2 + b^2
+```
 
-For the drone, 9 − 12i + 12i + 16 = 25. By Pythagoras, $a^2 + b^2$ is the squared distance from 0 to $(a, b)$ ([Absolute value](../../01-Foundations/02-The%20Number%20Line/05-absolute-value-and-distance.md)). So $\lvert z\rvert = \sqrt{z\,\bar z}$, and the modulus is 5 km. The root is the non-negative one ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)). For a real number, $b = 0$ and the modulus is the ordinary absolute value.
+For the drone, 9 − 12i + 12i + 16 = 25. By Pythagoras, $`a^2 + b^2`$ is the squared distance from 0 to $`(a, b)`$ ([Absolute value](../../01-Foundations/02-The%20Number%20Line/05-absolute-value-and-distance.md)). So $`\lvert z\rvert = \sqrt{z\,\bar z}`$, and the modulus is 5 km. The root is the non-negative one ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)). For a real number, $`b = 0`$ and the modulus is the ordinary absolute value.
 
 ### Step 2: the mirror respects adding and multiplying
 
-Flipping twice returns the original; the flip of a sum is the sum of flips. With $w = c + di$:
+Flipping twice returns the original; the flip of a sum is the sum of flips. With $`w = c + di`$:
 
-$$\overline{z w} = (ac - bd) - (ad + bc)i = (a - bi)(c - di) = \bar z\,\bar w$$
+```math
+\overline{z w} = (ac - bd) - (ad + bc)i = (a - bi)(c - di) = \bar z\,\bar w
+```
 
-The mirror of a product is the product of mirrors. And a number plus its flip doubles the real part, $z + \bar z = 2a = 2\,\mathrm{Re}\,z$.
+The mirror of a product is the product of mirrors. And a number plus its flip doubles the real part, $`z + \bar z = 2a = 2\,\mathrm{Re}\,z`$.
 
 ### Step 3: division by z becomes division by a real number
 
-Multiply top and bottom by the same nonzero number, $\bar z$:
+Multiply top and bottom by the same nonzero number, $`\bar z`$:
 
-$$\frac{1 + 2i}{3 + 4i} = \frac{(1 + 2i)(3 - 4i)}{(3 + 4i)(3 - 4i)} = \frac{3 - 4i + 6i + 8}{25} = \frac{11 + 2i}{25} = 0.44 + 0.08i$$
+```math
+\frac{1 + 2i}{3 + 4i} = \frac{(1 + 2i)(3 - 4i)}{(3 + 4i)(3 - 4i)} = \frac{3 - 4i + 6i + 8}{25} = \frac{11 + 2i}{25} = 0.44 + 0.08i
+```
 
-The bottom is now real. With $p = 1$ this gives the reciprocal, $1/z = \bar z / \lvert z\rvert^2$: for the drone, 0.12 − 0.16i.
+The bottom is now real. With $`p = 1`$ this gives the reciprocal, $`1/z = \bar z / \lvert z\rvert^2`$: for the drone, 0.12 − 0.16i.
 
-A second road skips the conjugate. Ask which $x + iy$ gives $(3 + 4i)(x + iy) = 1 + 2i$. Matching parts gives two real equations, $3x - 4y = 1$ and $4x + 3y = 2$, solved by $x = 11/25$, $y = 2/25$. The 25 reappears as their determinant, 3 × 3 + 4 × 4, the number both answers are divided by ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The conjugate solves the pair in one move.
+A second road skips the conjugate. Ask which $`x + iy`$ gives $`(3 + 4i)(x + iy) = 1 + 2i`$. Matching parts gives two real equations, $`3x - 4y = 1`$ and $`4x + 3y = 2`$, solved by $`x = 11/25`$, $`y = 2/25`$. The 25 reappears as their determinant, 3 × 3 + 4 × 4, the number both answers are divided by ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The conjugate solves the pair in one move.
 
 ### Step 4: lengths multiply
 
 Step 1 on the product, then Step 2:
 
-$$\lvert z w\rvert^2 = (z w)\,\overline{z w} = z\,\bar z\,w\,\bar w = \lvert z\rvert^2\,\lvert w\rvert^2$$
+```math
+\lvert z w\rvert^2 = (z w)\,\overline{z w} = z\,\bar z\,w\,\bar w = \lvert z\rvert^2\,\lvert w\rvert^2
+```
 
-Square roots of non-negative numbers agree, so $\lvert zw\rvert = \lvert z\rvert\,\lvert w\rvert$. With the beacon: (3 + 4i)(1 + 2i) = −5 + 10i has length 11.180340, and 5 × $\sqrt 5$ is the same 11.180340. Multiplying by $w$ stretches every length by $\lvert w\rvert$; the turn is for [Polar form](03-polar-form-and-argument.md).
+Square roots of non-negative numbers agree, so $`\lvert zw\rvert = \lvert z\rvert\,\lvert w\rvert`$. With the beacon: (3 + 4i)(1 + 2i) = −5 + 10i has length 11.180340, and 5 × $`\sqrt 5`$ is the same 11.180340. Multiplying by $`w`$ stretches every length by $`\lvert w\rvert`$; the turn is for [Polar form](03-polar-form-and-argument.md).
 
 ### Step 5: a detour is never shorter
 
 By Step 1:
 
-$$\lvert z + w\rvert^2 = (z + w)(\bar z + \bar w) = \lvert z\rvert^2 + \lvert w\rvert^2 + 2\,\mathrm{Re}(z\,\bar w)$$
+```math
+\lvert z + w\rvert^2 = (z + w)(\bar z + \bar w) = \lvert z\rvert^2 + \lvert w\rvert^2 + 2\,\mathrm{Re}(z\,\bar w)
+```
 
-The middle terms, $z\bar w$ and $\bar z w$, are mirror images, so by Step 2 they add to twice the real part. A real part never exceeds the length, $a \le \sqrt{a^2 + b^2}$, so $\mathrm{Re}(z\bar w) \le \lvert z\bar w\rvert = \lvert z\rvert\,\lvert w\rvert$, by Step 4 and because the flip keeps length. The right side is then at most $(\lvert z\rvert + \lvert w\rvert)^2$; square roots give the triangle inequality.
+The middle terms, $`z\bar w`$ and $`\bar z w`$, are mirror images, so by Step 2 they add to twice the real part. A real part never exceeds the length, $`a \le \sqrt{a^2 + b^2}`$, so $`\mathrm{Re}(z\bar w) \le \lvert z\bar w\rvert = \lvert z\rvert\,\lvert w\rvert`$, by Step 4 and because the flip keeps length. The right side is then at most $`(\lvert z\rvert + \lvert w\rvert)^2`$; square roots give the triangle inequality.
 
-Drone plus beacon: $\lvert z + p\rvert$ ≈ 7.211103, under 5 + $\sqrt 5$ ≈ 7.236068. The second drone gives equality, $\lvert w\rvert = \lvert z\rvert + \lvert w - z\rvert$, 10 = 5 + 5: depot and drones share one line.
+Drone plus beacon: $`\lvert z + p\rvert`$ ≈ 7.211103, under 5 + $`\sqrt 5`$ ≈ 7.236068. The second drone gives equality, $`\lvert w\rvert = \lvert z\rvert + \lvert w - z\rvert`$, 10 = 5 + 5: depot and drones share one line.
 
-Applied to $z = (z - w) + w$, the same rule gives the **reverse triangle inequality**, $\bigl\lvert \lvert z\rvert - \lvert w\rvert \bigr\rvert \le \lvert z - w\rvert$: two distances from 0 differ by at most the distance between the points.
+Applied to $`z = (z - w) + w`$, the same rule gives the **reverse triangle inequality**, $`\bigl\lvert \lvert z\rvert - \lvert w\rvert \bigr\rvert \le \lvert z - w\rvert`$: two distances from 0 differ by at most the distance between the points.
 
 <details>
 <summary>Detailed proof: equality, and the longest shadow</summary>
 
-**When the triangle inequality is an equality.** Equality needs $\mathrm{Re}(z\bar w) = \lvert z\bar w\rvert$, so $z\bar w$ is real and non-negative. For $w \ne 0$, $z/w = z\bar w / \lvert w\rvert^2$ is then a non-negative real number: $z$ is $w$ stretched, pointing the same way.
+**When the triangle inequality is an equality.** Equality needs $`\mathrm{Re}(z\bar w) = \lvert z\bar w\rvert`$, so $`z\bar w`$ is real and non-negative. For $`w \ne 0`$, $`z/w = z\bar w / \lvert w\rvert^2`$ is then a non-negative real number: $`z`$ is $`w`$ stretched, pointing the same way.
 
-**The modulus is the longest shadow.** The shadow of $z = a + bi$ on the direction at angle $t$ radians from east is how far $z$ reaches that way. It is $a\cos t + b\sin t = \mathrm{Re}(z\,\overline{u})$, with $u = \cos t + i\sin t$ of length 1. By Step 5 it is at most $\lvert z\rvert$, and $u = z / \lvert z\rvert$ reaches it. So $\lvert z\rvert$ is the largest shadow, found by a search over $t$ with no square root.
+**The modulus is the longest shadow.** The shadow of $`z = a + bi`$ on the direction at angle $`t`$ radians from east is how far $`z`$ reaches that way. It is $`a\cos t + b\sin t = \mathrm{Re}(z\,\overline{u})`$, with $`u = \cos t + i\sin t`$ of length 1. By Step 5 it is at most $`\lvert z\rvert`$, and $`u = z / \lvert z\rvert`$ reaches it. So $`\lvert z\rvert`$ is the largest shadow, found by a search over $`t`$ with no square root.
 
 </details>
 
@@ -136,9 +150,9 @@ Multiplying 3 + 4i by 0.44 + 0.08i lands on the beacon at 1 + 2i: that is what t
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No square root | 25 km, not 5 | $z\bar z$ is the squared length |
-| Only the top multiplied by $\bar z$ | 11 + 2i, not 0.44 + 0.08i | The fraction grew 25 times |
-| Conjugate used as reciprocal | 3 − 4i, not 0.12 − 0.16i | $1/z$ also divides by $\lvert z\rvert^2$ |
+| No square root | 25 km, not 5 | $`z\bar z`$ is the squared length |
+| Only the top multiplied by $`\bar z`$ | 11 + 2i, not 0.44 + 0.08i | The fraction grew 25 times |
+| Conjugate used as reciprocal | 3 − 4i, not 0.12 − 0.16i | $`1/z`$ also divides by $`\lvert z\rvert^2`$ |
 | Difference of moduli as distance | 0 km to the mirror, not 8 | Only a lower bound |
 
 The code prints all four.
@@ -147,7 +161,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two independent roads to each key number. Division runs through the conjugate and through Step 3's two real equations. Every length is $\sqrt{z\bar z}$ and, separately, the longest shadow of the detailed proof: a sweep of 7,200 directions, then a narrowing search. Python uses its built-in complex type; Rust defines a small pair type.
+Two independent roads to each key number. Division runs through the conjugate and through Step 3's two real equations. Every length is $`\sqrt{z\bar z}`$ and, separately, the longest shadow of the detailed proof: a sweep of 7,200 directions, then a narrowing search. Python uses its built-in complex type; Rust defines a small pair type.
 
 ### Python
 
@@ -344,11 +358,11 @@ The two outputs match line for line.
 
 Lean proves the card's rules for every complex number, and the division rule for every nonzero bottom.
 
-- For any $z = a + bi$, the conjugate $\bar z$ is $a - bi$, and $z\,\bar z$ is the real number $a^2 + b^2$.
-- The modulus $\lvert z\rvert$ is $\sqrt{a^2 + b^2}$, so $z\,\bar z$ is $\lvert z\rvert^2$, the squared distance from 0.
-- To divide $p$ by a nonzero $z$, multiply by $\bar z$ and divide by the real number $\lvert z\rvert^2$.
-- Lengths multiply: $\lvert z w\rvert = \lvert z\rvert\,\lvert w\rvert$.
-- The triangle inequality holds: $\lvert z + w\rvert \le \lvert z\rvert + \lvert w\rvert$.
+- For any $`z = a + bi`$, the conjugate $`\bar z`$ is $`a - bi`$, and $`z\,\bar z`$ is the real number $`a^2 + b^2`$.
+- The modulus $`\lvert z\rvert`$ is $`\sqrt{a^2 + b^2}`$, so $`z\,\bar z`$ is $`\lvert z\rvert^2`$, the squared distance from 0.
+- To divide $`p`$ by a nonzero $`z`$, multiply by $`\bar z`$ and divide by the real number $`\lvert z\rvert^2`$.
+- Lengths multiply: $`\lvert z w\rvert = \lvert z\rvert\,\lvert w\rvert`$.
+- The triangle inequality holds: $`\lvert z + w\rvert \le \lvert z\rvert + \lvert w\rvert`$.
 - The reverse triangle inequality holds: two distances from 0 differ by at most the distance between the points.
 - The drone times its flip is exactly 25, and the drone is exactly 5 km out.
 - The beacon times the flip is 11 + 2i, the quotient is (11 + 2i)/25, and the reciprocal is (3 − 4i)/25.
@@ -473,26 +487,26 @@ example : ((3 : ℂ) + 4 * I) * ((1 : ℂ) + 2 * I) = -5 + 10 * I := by
 > **Try changing**
 > Guess first, then run it.
 > - **Put the beacon on the drone's line.** Set `p` to `1.5 + 2j` (Rust: `c(1.5, 2.0)`). The triangle line reads 7.500000 on both sides: same direction, so equality. The quotient becomes 0.500000 + 0.000000i, a shrink with no turn.
-> - **Drop the flip.** Make `conj` return `z` unchanged. $z$ times $z$ is −7 + 24i, not real: Python stops at the square root of −7; Rust prints NaN and the first assert stops it.
-> - **Divide by zero.** Set `z` to `0j`. The bottom $z\bar z$ is 0 and Python stops with a division error.
+> - **Drop the flip.** Make `conj` return `z` unchanged. $`z`$ times $`z`$ is −7 + 24i, not real: Python stops at the square root of −7; Rust prints NaN and the first assert stops it.
+> - **Divide by zero.** Set `z` to `0j`. The bottom $`z\bar z`$ is 0 and Python stops with a division error.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Treating the modulus as if it added.** Lengths multiply but do not add: $\lvert z + w\rvert$ is at most $\lvert z\rvert + \lvert w\rvert$, equal only when the arrows share a direction. The drone plus the beacon measure 7.211103, not 7.236068.
+> **Treating the modulus as if it added.** Lengths multiply but do not add: $`\lvert z + w\rvert`$ is at most $`\lvert z\rvert + \lvert w\rvert`$, equal only when the arrows share a direction. The drone plus the beacon measure 7.211103, not 7.236068.
 >
-> - **Mirror mistaken for reciprocal.** They agree only when $\lvert z\rvert$ is 1; the drone's are 3 − 4i and 0.12 − 0.16i.
+> - **Mirror mistaken for reciprocal.** They agree only when $`\lvert z\rvert`$ is 1; the drone's are 3 − 4i and 0.12 − 0.16i.
 > - **Taking 4i as the imaginary part.** Im z is the real number 4, not 4i; the conjugate flips that number's sign.
 
 ---
 
 ## Where you meet it in real life
 
-- **Navigation and mapping.** Planar positions stored as complex numbers are compared by $\lvert w - z\rvert$, the drone arithmetic here.
+- **Navigation and mapping.** Planar positions stored as complex numbers are compared by $`\lvert w - z\rvert`$, the drone arithmetic here.
 - **Electrical engineering.** An alternating current is written as a complex number whose modulus is its amplitude; dividing a voltage by a complex impedance, a part's opposition to current, uses Step 3's conjugate trick.
-- **Complex vectors.** The squared length of a list of complex numbers adds $z\bar z$ over the entries, the starting point of [Complex vectors and matrices](07-complex-vectors-and-matrices.md).
+- **Complex vectors.** The squared length of a list of complex numbers adds $`z\bar z`$ over the entries, the starting point of [Complex vectors and matrices](07-complex-vectors-and-matrices.md).
 
 > **Say it back**
 > The conjugate flips a point across the real axis. A point times its flip is its squared distance from 0, a real number; its square root is the modulus. Multiplying top and bottom by the conjugate turns any division into division by a real number. Lengths multiply, but a sum is never longer than its parts. The distance between two points is the modulus of their difference.
@@ -501,7 +515,7 @@ example : ((3 : ℂ) + 4 * I) * ((1 : ℂ) + 2 * I) = -5 + 10 * I := by
 
 ## What this builds on
 
-- [Complex numbers](01-complex-numbers.md): the point a + bi, the rule $i^2 = -1$, and multiplication of pairs.
+- [Complex numbers](01-complex-numbers.md): the point a + bi, the rule $`i^2 = -1`$, and multiplication of pairs.
 - [Absolute value](../../01-Foundations/02-The%20Number%20Line/05-absolute-value-and-distance.md): distance on a line as the absolute value of a difference, which the modulus extends to the plane.
 - [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the non-negative square root that turns 25 into 5.
 
@@ -510,7 +524,7 @@ example : ((3 : ℂ) + 4 * I) * ((1 : ℂ) + 2 * I) = -5 + 10 * I := by
 - [Polar form](03-polar-form-and-argument.md): the modulus becomes the r of polar form, joined by an angle.
 - [Complex vectors and matrices](07-complex-vectors-and-matrices.md): the conjugate gives a complex vector its length.
 
-Left open: multiplying by $w$ stretches every length by $\lvert w\rvert$, but how does it turn the arrow?
+Left open: multiplying by $`w`$ stretches every length by $`\lvert w\rvert`$, but how does it turn the arrow?
 
 ---
 

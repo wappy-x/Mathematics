@@ -36,49 +36,55 @@ Bars: the exact chance of each possible 10-roll average, counted over all 6^10 o
 
 ## The formula
 
-Notation first, in words. Write $n$ for the number of rolls and $X_i$ for the i-th roll. A reminder from shelf 02: E[X], the expectation, is the long-run average value of X, and Var(X) is its variance.
+Notation first, in words. Write $`n`$ for the number of rolls and $`X_i`$ for the i-th roll. A reminder from shelf 02: E[X], the expectation, is the long-run average value of X, and Var(X) is its variance.
 
-Here $\mu$ (mu) is E[X] for one roll and $\sigma$ (sigma) is one roll's spread, its standard deviation. A bar over a letter means an average: $\bar X_n$ is the average of the first n rolls. Φ, from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), is the standard bell's area to the left of a point.
+Here $`\mu`$ (mu) is E[X] for one roll and $`\sigma`$ (sigma) is one roll's spread, its standard deviation. A bar over a letter means an average: $`\bar X_n`$ is the average of the first n rolls. Φ, from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), is the standard bell's area to the left of a point.
 
 The average's miss, measured in its own spreads, is the **standardised error**:
 
-$$Z_n = \frac{\bar X_n - \mu}{\sigma/\sqrt{n}}$$
+```math
+Z_n = \frac{\bar X_n - \mu}{\sigma/\sqrt{n}}
+```
 
 The theorem says its chances approach the standard bell's:
 
-$$P(Z_n \le z) \;\longrightarrow\; \Phi(z) \quad \text{as } n \to \infty, \text{ for every number } z$$
+```math
+P(Z_n \le z) \;\longrightarrow\; \Phi(z) \quad \text{as } n \to \infty, \text{ for every number } z
+```
 
 **Read it aloud:** the chance that the average's miss is at most z of its own spreads tends, as the rolls pile up, to the standard bell's area left of z.
 
-This kind of limit, where the chances converge but $Z_n$ itself never settles on one value, is called **convergence in distribution**. The working rule for a window of half-width $\varepsilon$ round the mean follows at once:
+This kind of limit, where the chances converge but $`Z_n`$ itself never settles on one value, is called **convergence in distribution**. The working rule for a window of half-width $`\varepsilon`$ round the mean follows at once:
 
-$$P\big(|\bar X_n - \mu| \le \varepsilon\big) \;\approx\; 2\,\Phi\!\left(\frac{\varepsilon\sqrt{n}}{\sigma}\right) - 1$$
+```math
+P\big(|\bar X_n - \mu| \le \varepsilon\big) \;\approx\; 2\,\Phi\!\left(\frac{\varepsilon\sqrt{n}}{\sigma}\right) - 1
+```
 
 **Read it aloud:** count how many of the average's spreads fit into the window, then read the area of the standard bell within that many spreads of its centre.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the number of independent rolls | 1,000 | rises: the average's spread shrinks like 1/√n |
-| $X_i$ | the i-th roll, a random variable | a face from 1 to 6 | — |
-| $\mu$ | one roll's mean, E[X] | 3.5 | moves the centre, not the answer |
-| $\sigma$ | one roll's spread, its standard deviation | 1.707825 | falls: a wider bell |
-| $\bar X_n$ | the average of the n rolls | e.g. 3.47 | — |
-| $\sigma/\sqrt{n}$ | the average's own spread, its standard error | 0.054006 | falls |
-| $Z_n$ | the standardised error: the miss in units of $\sigma/\sqrt{n}$ | the window edge is 1.851640 | — |
-| $\varepsilon$ | half-width of the window round $\mu$ | 0.1 | rises |
-| $z$ | a count of spreads | 1.851640 | rises |
-| $\Phi$ | the standard bell's area left of z | Φ(1.851640) = 0.967961 | rises from 0 to 1 |
-| $M$ | a moment generating function, $M(t) = E[e^{tX}]$ | $M$ of $Z_n$ at t = 1 is 1.648634 | — |
-| $t$ | the input of a moment generating function | 1 | — |
-| $Y$ | one roll's own standardised miss, $(X - \mu)/\sigma$ | from −2.5/σ to 2.5/σ | — |
-| $s$ | the input of $M_Y(s)$, the generating function of $Y$; Step 3 puts $s = t/\sqrt{n}$ | t/√1,000 | — |
-| $c$, $C$ | in the Detailed proof: the largest size of $Y$, and the constant in the bound on the remainder | c = 2.5/σ | — |
-| $r(s)$, $a_n$ | in the Detailed proof: what is left of $M_Y(s)$ after $1 + s^2/2$, and the exponent with that remainder folded in | — | — |
+| $`n`$ | the number of independent rolls | 1,000 | rises: the average's spread shrinks like 1/√n |
+| $`X_i`$ | the i-th roll, a random variable | a face from 1 to 6 | — |
+| $`\mu`$ | one roll's mean, E[X] | 3.5 | moves the centre, not the answer |
+| $`\sigma`$ | one roll's spread, its standard deviation | 1.707825 | falls: a wider bell |
+| $`\bar X_n`$ | the average of the n rolls | e.g. 3.47 | — |
+| $`\sigma/\sqrt{n}`$ | the average's own spread, its standard error | 0.054006 | falls |
+| $`Z_n`$ | the standardised error: the miss in units of $`\sigma/\sqrt{n}`$ | the window edge is 1.851640 | — |
+| $`\varepsilon`$ | half-width of the window round $`\mu`$ | 0.1 | rises |
+| $`z`$ | a count of spreads | 1.851640 | rises |
+| $`\Phi`$ | the standard bell's area left of z | Φ(1.851640) = 0.967961 | rises from 0 to 1 |
+| $`M`$ | a moment generating function, $`M(t) = E[e^{tX}]`$ | $`M`$ of $`Z_n`$ at t = 1 is 1.648634 | — |
+| $`t`$ | the input of a moment generating function | 1 | — |
+| $`Y`$ | one roll's own standardised miss, $`(X - \mu)/\sigma`$ | from −2.5/σ to 2.5/σ | — |
+| $`s`$ | the input of $`M_Y(s)`$, the generating function of $`Y`$; Step 3 puts $`s = t/\sqrt{n}`$ | t/√1,000 | — |
+| $`c`$, $`C`$ | in the Detailed proof: the largest size of $`Y`$, and the constant in the bound on the remainder | c = 2.5/σ | — |
+| $`r(s)`$, $`a_n`$ | in the Detailed proof: what is left of $`M_Y(s)`$ after $`1 + s^2/2`$, and the exponent with that remainder folded in | — | — |
 
 ### When it holds
 
 - **Independent rolls.** Each roll must carry fresh information. If all 1,000 "rolls" are copies of one roll, the average is that one face, and a single face is never within 0.1 of 3.5: the chance is 0, not 0.9359.
-- **A finite spread.** The spread $\sigma$ must exist. Readings from the standard Cauchy law (a heavy-tailed law with no finite mean or spread, [Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) never settle: the average of 1,000 lands within 0.1 of the centre with chance 0.0635, exactly as often as one reading does.
+- **A finite spread.** The spread $`\sigma`$ must exist. Readings from the standard Cauchy law (a heavy-tailed law with no finite mean or spread, [Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) never settle: the average of 1,000 lands within 0.1 of the centre with chance 0.0635, exactly as often as one reading does.
 - **The same law each time.** The card's version needs every roll drawn from one law. Lindeberg's version relaxes this to many small, different pieces, none of which dominates; it is proved in wing 10.
 - **A positive spread.** A die that always shows 4 has σ = 0; there is no error to standardise.
 - **Enough rolls, and no universal "enough".** The theorem is a limit. At 10 rolls the plain bell says 14.69 percent for the window and the truth is 7.27 percent; at 1,000 the two agree to 0.0013. A lopsided ingredient, such as a reading that is almost always 0, needs far more rolls than a die. The Berry–Esseen theorem bounds the error at a given n, by a constant times E|Y|^3/√n, where Y = (X − μ)/σ is one roll's own standardised miss.
@@ -99,32 +105,36 @@ From [Law of large numbers](01-law-of-large-numbers.md): E of the average is μ,
 
 ### Step 2: standardise
 
-Subtract μ and divide by σ/√n. The result $Z_n$ has mean 0 and spread 1 for every n. Without this step there is no limit to take: the raw average collapses onto 3.5, and the raw sum spreads out without bound. The √n is the one scale that keeps the miss in view.
+Subtract μ and divide by σ/√n. The result $`Z_n`$ has mean 0 and spread 1 for every n. Without this step there is no limit to take: the raw average collapses onto 3.5, and the raw sum spreads out without bound. The √n is the one scale that keeps the miss in view.
 
 ### Step 3: the generating function of the miss tends to the bell's
 
-A reminder from shelf 02 ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)): a moment generating function $M(t) = E[e^{tX}]$ packs all of a law's moments into one function, and independent readings multiply their generating functions. Write each roll's own standardised miss as Y = (X − μ)/σ. Then $Z_n$ is the sum of n independent copies of Y, divided by √n, so
+A reminder from shelf 02 ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)): a moment generating function $`M(t) = E[e^{tX}]`$ packs all of a law's moments into one function, and independent readings multiply their generating functions. Write each roll's own standardised miss as Y = (X − μ)/σ. Then $`Z_n`$ is the sum of n independent copies of Y, divided by √n, so
 
-$$M_{Z_n}(t) = \Big[M_Y\big(t/\sqrt{n}\big)\Big]^n$$
+```math
+M_{Z_n}(t) = \Big[M_Y\big(t/\sqrt{n}\big)\Big]^n
+```
 
 Near 0, Taylor's series gives M_Y(s) = 1 + s·0 + s^2/2 + (terms of order s^3), since Y has mean 0 and variance 1. Put s = t/√n:
 
-$$M_{Z_n}(t) = \left[1 + \frac{t^2}{2n} + (\text{order } n^{-3/2})\right]^n \;\longrightarrow\; e^{t^2/2}$$
+```math
+M_{Z_n}(t) = \left[1 + \frac{t^2}{2n} + (\text{order } n^{-3/2})\right]^n \;\longrightarrow\; e^{t^2/2}
+```
 
 And e^(t^2/2) is exactly the standard normal's generating function. Everything about the die except its mean and variance sat in the order n^(−3/2) terms, and those die out. That is the "whatever the ingredients" of the title, as algebra. For dice at t = 1 the code gets 1.577093 at n = 1, 1.640196 at n = 10, 1.647852 at 100 and 1.648634 at 1,000, against the limit e^(1/2) = 1.648721.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** Take $Y_i = (X_i - \mu)/\sigma$, independent, each with mean 0 and variance 1, and bounded, as a die is: |Y| is at most c, here c = 2.5/1.707825.
+**Setting.** Take $`Y_i = (X_i - \mu)/\sigma`$, independent, each with mean 0 and variance 1, and bounded, as a die is: |Y| is at most c, here c = 2.5/1.707825.
 
 **The expansion.** Taylor's theorem with remainder for e^(sy) gives e^(sy) = 1 + sy + s^2y^2/2 + R, with |R| at most |s|^3 c^3 e^(|s| c)/6 when |y| is at most c. Take expectations: M_Y(s) = 1 + 0 + s^2/2 + r(s), where |r(s)| is at most C|s|^3 for |s| at most 1, with C = c^3 e^c / 6.
 
-**Independence.** $E[e^{t(Y_1+\dots+Y_n)/\sqrt n}]$ is a product of n equal factors, because the expectation of a product of independent readings is the product of their expectations. So $M_{Z_n}(t) = [1 + a_n/n]^n$ with $a_n = t^2/2 + n\,r(t/\sqrt n)$, and |n r(t/√n)| is at most C|t|^3/√n, which tends to 0. So $a_n \to t^2/2$.
+**Independence.** $`E[e^{t(Y_1+\dots+Y_n)/\sqrt n}]`$ is a product of n equal factors, because the expectation of a product of independent readings is the product of their expectations. So $`M_{Z_n}(t) = [1 + a_n/n]^n`$ with $`a_n = t^2/2 + n\,r(t/\sqrt n)`$, and |n r(t/√n)| is at most C|t|^3/√n, which tends to 0. So $`a_n \to t^2/2`$.
 
-**The limit.** For numbers $a_n \to a$, $(1 + a_n/n)^n \to e^{a}$: take logarithms and use log(1 + y) = y + (order y^2). So $M_{Z_n}(t) \to e^{t^2/2}$.
+**The limit.** For numbers $`a_n \to a`$, $`(1 + a_n/n)^n \to e^{a}`$: take logarithms and use log(1 + y) = y + (order y^2). So $`M_{Z_n}(t) \to e^{t^2/2}`$.
 
-**The bell's generating function.** $\int e^{tz} e^{-z^2/2}\,dz / \sqrt{2\pi}$: complete the square, tz − z^2/2 = t^2/2 − (z − t)^2/2, and the Gaussian integral of the shifted bell is √(2π). So it equals e^(t^2/2).
+**The bell's generating function.** $`\int e^{tz} e^{-z^2/2}\,dz / \sqrt{2\pi}`$: complete the square, tz − z^2/2 = t^2/2 − (z − t)^2/2, and the Gaussian integral of the shifted bell is √(2π). So it equals e^(t^2/2).
 
 **The borrowed step.** Curtiss's continuity theorem (1942): if generating functions converge to a generating function on an interval round 0, the chances P(Z_n ≤ z) converge to those of the limit law at every z where its CDF (cumulative distribution function: the chance of a value at most z) is continuous, here every z. Its proof needs measure theory, and this card states it without proof. Wing 10 proves the whole theorem by Lindeberg's swap ([The central limit theorem, proved](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md)) and proves Lévy's continuity theorem, the same step for characteristic functions ([Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)). Readings without a generating function, but with a finite spread, need characteristic functions instead: that proof is the second road on the wing-10 central-limit-theorem card.
 
@@ -132,7 +142,7 @@ And e^(t^2/2) is exactly the standard normal's generating function. Everything a
 
 ### Step 4: from the bell to a window
 
-By Step 3, $Z_n$ behaves like a standard normal Z. The event "average within ε of μ" is the event "|Z_n| at most ε√n/σ". The bell is symmetric, so the chance within z spreads of its centre is Φ(z) − Φ(−z) = 2Φ(z) − 1. That is the working rule of The formula.
+By Step 3, $`Z_n`$ behaves like a standard normal Z. The event "average within ε of μ" is the event "|Z_n| at most ε√n/σ". The bell is symmetric, so the chance within z spreads of its centre is Φ(z) − Φ(−z) = 2Φ(z) − 1. That is the working rule of The formula.
 
 ### Step 5: the ingredient does not matter, and the check shows it
 
@@ -607,12 +617,12 @@ The two outputs are identical. The simulated 0.9336 sits within one standard err
 
 Lean proves the whole theorem and the window rule for every finite, positive spread, and Step 3 for bounded readings.
 
-- Suppose the readings are independent, share one law, and have a finite, positive spread σ. Then $P(Z_n \le z)$ tends to $\Phi(z)$ as n grows, for every number z.
-- Take the same readings and any count of spreads $z \ge 0$. Then the chance that $\bar X_n$ lands within z of its own spreads of μ tends to $2\Phi(z) - 1$.
-- Suppose the misses Y are independent, share one law, and have size at most c, as a die's do. Then $M_{Z_n}(t) \to e^{t^2/2}$ for every t, the standard bell's own generating function.
+- Suppose the readings are independent, share one law, and have a finite, positive spread σ. Then $`P(Z_n \le z)`$ tends to $`\Phi(z)`$ as n grows, for every number z.
+- Take the same readings and any count of spreads $`z \ge 0`$. Then the chance that $`\bar X_n`$ lands within z of its own spreads of μ tends to $`2\Phi(z) - 1`$.
+- Suppose the misses Y are independent, share one law, and have size at most c, as a die's do. Then $`M_{Z_n}(t) \to e^{t^2/2}`$ for every t, the standard bell's own generating function.
 - The fair die's arithmetic holds exactly: mean 7/2, variance 35/12, and 6^10 outcomes for ten rolls.
 - The lopsided die's arithmetic holds exactly: chances adding to 1, mean 5/2 and variance 13/4.
-- At 1,000 rolls the window of 0.1 holds $z = \sqrt{24/7}$ spreads, as does the window 0.05 at 4,000 rolls.
+- At 1,000 rolls the window of 0.1 holds $`z = \sqrt{24/7}`$ spreads, as does the window 0.05 at 4,000 rolls.
 
 Exact counts, the simulation, Φ's decimals, Cauchy readings and the error at a fixed n are left to the Python and Rust checks.
 
@@ -950,7 +960,7 @@ example : (6 : ℕ) ^ 10 = 60466176 := by norm_num
 
 - [Law of large numbers](01-law-of-large-numbers.md): the average settles at μ, with variance σ^2/n; this card shapes the miss that is left.
 - [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): the standard bell, its area Φ, and the series that computes it.
-- [Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md): $M(t) = E[e^{tX}]$, and the rule that independent readings multiply their generating functions; Step 3 is built on both.
+- [Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md): $`M(t) = E[e^{tX}]`$, and the rule that independent readings multiply their generating functions; Step 3 is built on both.
 
 ## Where this goes next
 

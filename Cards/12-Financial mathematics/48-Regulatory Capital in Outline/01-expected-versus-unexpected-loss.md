@@ -38,34 +38,38 @@ Orange line: book B, where each borrower fails or not on its own. Every year lan
 
 ## The formula
 
-Notation first, in words. $L$ is the bank's credit loss over the year, in dollars: a random amount, not yet known. $\mathbb{E}[L]$ is its expectation, the long-run average over many such years ([Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md) builds it for one loan). $P(L \le x)$ is the chance the loss is at most $x$ dollars. PD, LGD and EAD are a loan's probability of default, loss given default and exposure at default, as on that card. $\alpha$ (alpha) is a confidence level the bank chooses, such as 99.9%. The capital sigma, $\sum$, means "add up over the loans", numbered $i = 1$ to $n$.
+Notation first, in words. $`L`$ is the bank's credit loss over the year, in dollars: a random amount, not yet known. $`\mathbb{E}[L]`$ is its expectation, the long-run average over many such years ([Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md) builds it for one loan). $`P(L \le x)`$ is the chance the loss is at most $`x`$ dollars. PD, LGD and EAD are a loan's probability of default, loss given default and exposure at default, as on that card. $`\alpha`$ (alpha) is a confidence level the bank chooses, such as 99.9%. The capital sigma, $`\sum`$, means "add up over the loans", numbered $`i = 1`$ to $`n`$.
 
-$$\text{EL} = \mathbb{E}[L] = \sum_{i=1}^{n} \text{PD}_i \times \text{LGD}_i \times \text{EAD}_i$$
+```math
+\text{EL} = \mathbb{E}[L] = \sum_{i=1}^{n} \text{PD}_i \times \text{LGD}_i \times \text{EAD}_i
+```
 
 **Read it aloud:** the expected loss is, for each loan, its chance of default times the fraction lost in a default times the money at stake, added up over the book.
 
-$$q_\alpha = \text{the smallest } x \text{ with } P(L \le x) \ge \alpha, \qquad \text{UL}_\alpha = q_\alpha - \text{EL}$$
+```math
+q_\alpha = \text{the smallest } x \text{ with } P(L \le x) \ge \alpha, \qquad \text{UL}_\alpha = q_\alpha - \text{EL}
+```
 
-**Read it aloud:** find the smallest loss that the year stays at or below with chance at least $\alpha$; the unexpected loss is that loss minus the average.
+**Read it aloud:** find the smallest loss that the year stays at or below with chance at least $`\alpha`$; the unexpected loss is that loss minus the average.
 
-The line $q_\alpha$ is called the **$\alpha$-quantile** of the loss, or the loss at confidence level $\alpha$. At $\alpha = 99.9\%$ it is the loss exceeded at most one year in a thousand.
+The line $`q_\alpha`$ is called the **$`\alpha`$-quantile** of the loss, or the loss at confidence level $`\alpha`$. At $`\alpha = 99.9\%`$ it is the loss exceeded at most one year in a thousand.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$, $L_i$ | the year's credit loss in dollars, not yet known; $L_i$ is loan $i$'s part of it | $0 to $400 million | — |
-| $n$, $i$, $\sum$ | number of loans in the book; $i$ numbers them 1 to $n$; $\sum$ adds over them | 1,000 (book A: 10) | UL falls if loans fail independently; EL unchanged |
-| $\text{PD}_i$ | probability of default: chance loan $i$ fails within the year | 2% | EL and UL both rise |
-| $\text{LGD}_i$ | loss given default: fraction of the exposure lost if loan $i$ fails | 40% | EL and UL rise in proportion |
-| $\text{EAD}_i$ | exposure at default: money owed on loan $i$ when it fails | $1 million (book A: $100 million) | EL and UL rise in proportion |
-| $\text{EL}$ | expected loss, the long-run average of $L$ | $8.00 million | — |
-| $\alpha$ | confidence level: how rare a year the bank plans to survive | 99.9% | $q_\alpha$ and UL rise |
-| $q_\alpha$ | the $\alpha$-quantile: the loss exceeded with chance at most $1 - \alpha$ | $53.60 million (book C) | UL rises one for one |
-| $\text{UL}_\alpha$ | unexpected loss at level $\alpha$: $q_\alpha$ minus EL | $45.60 million (book C) | capital needed rises |
-| $D_i$ | default flag: 1 if loan $i$ fails in the year, 0 if not | 1 with chance 2% | — |
-| $N$, $k$ | number of loans that fail in the year; $k$ is one possible value of it | 20 on average | loss rises by LGD × EAD per default |
-| $K$ | capital: the owners' money held against losses beyond the provision | $45.60 million (book C) | survives rarer years |
+| $`L`$, $`L_i`$ | the year's credit loss in dollars, not yet known; $`L_i`$ is loan $`i`$'s part of it | $0 to $400 million | — |
+| $`n`$, $`i`$, $`\sum`$ | number of loans in the book; $`i`$ numbers them 1 to $`n`$; $`\sum`$ adds over them | 1,000 (book A: 10) | UL falls if loans fail independently; EL unchanged |
+| $`\text{PD}_i`$ | probability of default: chance loan $`i`$ fails within the year | 2% | EL and UL both rise |
+| $`\text{LGD}_i`$ | loss given default: fraction of the exposure lost if loan $`i`$ fails | 40% | EL and UL rise in proportion |
+| $`\text{EAD}_i`$ | exposure at default: money owed on loan $`i`$ when it fails | $1 million (book A: $100 million) | EL and UL rise in proportion |
+| $`\text{EL}`$ | expected loss, the long-run average of $`L`$ | $8.00 million | — |
+| $`\alpha`$ | confidence level: how rare a year the bank plans to survive | 99.9% | $`q_\alpha`$ and UL rise |
+| $`q_\alpha`$ | the $`\alpha`$-quantile: the loss exceeded with chance at most $`1 - \alpha`$ | $53.60 million (book C) | UL rises one for one |
+| $`\text{UL}_\alpha`$ | unexpected loss at level $`\alpha`$: $`q_\alpha`$ minus EL | $45.60 million (book C) | capital needed rises |
+| $`D_i`$ | default flag: 1 if loan $`i`$ fails in the year, 0 if not | 1 with chance 2% | — |
+| $`N`$, $`k`$ | number of loans that fail in the year; $`k`$ is one possible value of it | 20 on average | loss rises by LGD × EAD per default |
+| $`K`$ | capital: the owners' money held against losses beyond the provision | $45.60 million (book C) | survives rarer years |
 
-When all loans share one PD, LGD and EAD, the sum collapses to $n \times \text{PD} \times \text{LGD} \times \text{EAD}$: 1,000 × 0.02 × 0.40 × $1 million = $8 million.
+When all loans share one PD, LGD and EAD, the sum collapses to $`n \times \text{PD} \times \text{LGD} \times \text{EAD}`$: 1,000 × 0.02 × 0.40 × $1 million = $8 million.
 
 ### When it holds
 
@@ -84,27 +88,31 @@ The book's loss is the sum of the loans' losses. Averages add: the average of a 
 
 ### Step 1: one loan's average loss
 
-Loan $i$ either fails or it does not. Write its default flag $D_i$: 1 if it fails, 0 if not. Its loss is then
+Loan $`i`$ either fails or it does not. Write its default flag $`D_i`$: 1 if it fails, 0 if not. Its loss is then
 
-$$L_i = \text{EAD}_i \times \text{LGD}_i \times D_i.$$
+```math
+L_i = \text{EAD}_i \times \text{LGD}_i \times D_i.
+```
 
-The average of a 0-or-1 flag is the chance it is 1, so the average of $D_i$ is $\text{PD}_i$. With EAD and LGD fixed, the average loss is $\text{EAD}_i \times \text{LGD}_i \times \text{PD}_i$. For a $1 million loan: $1,000,000 × 0.40 × 0.02 = $8,000.
+The average of a 0-or-1 flag is the chance it is 1, so the average of $`D_i`$ is $`\text{PD}_i`$. With EAD and LGD fixed, the average loss is $`\text{EAD}_i \times \text{LGD}_i \times \text{PD}_i`$. For a $1 million loan: $1,000,000 × 0.40 × 0.02 = $8,000.
 
 ### Step 2: add the loans
 
-$L = L_1 + L_2 + \dots + L_n$. By Step 0,
+$`L = L_1 + L_2 + \dots + L_n`$. By Step 0,
 
-$$\mathbb{E}[L] = \sum_{i=1}^n \mathbb{E}[L_i] = \sum_{i=1}^n \text{PD}_i \times \text{LGD}_i \times \text{EAD}_i.$$
+```math
+\mathbb{E}[L] = \sum_{i=1}^n \mathbb{E}[L_i] = \sum_{i=1}^n \text{PD}_i \times \text{LGD}_i \times \text{EAD}_i.
+```
 
 Nothing here asked whether defaults are independent. So every book on this card, from ten $100 million loans to a book where all 1,000 loans fail together, has EL = $8.00 million. The code checks this for each book by averaging over its full loss distribution, a second road that never uses the formula.
 
 ### Step 3: the tail needs the whole distribution
 
-A quantile asks where the chance piles up, so it needs the chance of every possible loss. Take book A, ten loans of $100 million, failing independently. Each default costs 0.40 × $100 million = $40 million. The number of defaults $N$ follows the binomial rule: the chance that exactly $k$ of the ten fail is the number of ways to pick the $k$ failures times $0.02^k \times 0.98^{10-k}$.
+A quantile asks where the chance piles up, so it needs the chance of every possible loss. Take book A, ten loans of $100 million, failing independently. Each default costs 0.40 × $100 million = $40 million. The number of defaults $`N`$ follows the binomial rule: the chance that exactly $`k`$ of the ten fail is the number of ways to pick the $`k`$ failures times $`0.02^k \times 0.98^{10-k}`$.
 
-- No default: $0.98^{10} = 0.817073$.
-- One: $10 \times 0.02 \times 0.98^9 = 0.166750$.
-- Two: $45 \times 0.02^2 \times 0.98^8 = 0.015314$.
+- No default: $`0.98^{10} = 0.817073`$.
+- One: $`10 \times 0.02 \times 0.98^9 = 0.166750`$.
+- Two: $`45 \times 0.02^2 \times 0.98^8 = 0.015314`$.
 
 Chance of at most one default: 0.983822, short of 99%. At most two: 0.999136, past both 99% and 99.9%. So the 99% and the 99.9% quantile are both two defaults, $80 million, and UL = $80 − $8 = $72 million at either level. The loss comes in $40 million steps, so the quantile jumps rather than slides.
 
@@ -112,26 +120,30 @@ For book C the same idea is a mixture: with chance 0.9 a normal year (each loan 
 
 ### Step 4: why capital is set at the quantile minus the average
 
-The bank wants to survive every year except the worst $1 - \alpha$ of them. It has two layers of protection. Provisions and pricing already absorb EL. Capital $K$ absorbs anything beyond that. The bank survives the year when
+The bank wants to survive every year except the worst $`1 - \alpha`$ of them. It has two layers of protection. Provisions and pricing already absorb EL. Capital $`K`$ absorbs anything beyond that. The bank survives the year when
 
-$$L \le \text{EL} + K.$$
+```math
+L \le \text{EL} + K.
+```
 
-The chance of surviving must be at least $\alpha$. The smallest amount $\text{EL} + K$ that the loss stays at or below with chance at least $\alpha$ is, by definition, $q_\alpha$. So the smallest capital that does the job is
+The chance of surviving must be at least $`\alpha`$. The smallest amount $`\text{EL} + K`$ that the loss stays at or below with chance at least $`\alpha`$ is, by definition, $`q_\alpha`$. So the smallest capital that does the job is
 
-$$K = q_\alpha - \text{EL} = \text{UL}_\alpha.$$
+```math
+K = q_\alpha - \text{EL} = \text{UL}_\alpha.
+```
 
-That is the reason for the subtraction. Capital does not need to cover the average, because the average is already paid for. Holding $q_\alpha$ in capital on top of the provisions would count the $8 million twice.
+That is the reason for the subtraction. Capital does not need to cover the average, because the average is already paid for. Holding $`q_\alpha`$ in capital on top of the provisions would count the $8 million twice.
 
 <details>
 <summary>Detailed proof</summary>
 
-**EL.** Each $L_i$ takes two values, 0 and $\text{EAD}_i \times \text{LGD}_i$, so its average is $0 \times (1 - \text{PD}_i) + \text{EAD}_i \times \text{LGD}_i \times \text{PD}_i$. For finitely many random amounts with finite averages, $\mathbb{E}[L_1 + \dots + L_n] = \mathbb{E}[L_1] + \dots + \mathbb{E}[L_n]$: write each average as a sum over the joint outcomes, weighted by their chances, and swap the order of the two sums. The swap uses the joint chances but never factors them, so no independence is needed.
+**EL.** Each $`L_i`$ takes two values, 0 and $`\text{EAD}_i \times \text{LGD}_i`$, so its average is $`0 \times (1 - \text{PD}_i) + \text{EAD}_i \times \text{LGD}_i \times \text{PD}_i`$. For finitely many random amounts with finite averages, $`\mathbb{E}[L_1 + \dots + L_n] = \mathbb{E}[L_1] + \dots + \mathbb{E}[L_n]`$: write each average as a sum over the joint outcomes, weighted by their chances, and swap the order of the two sums. The swap uses the joint chances but never factors them, so no independence is needed.
 
-**The quantile exists and is attained.** The function $F(x) = P(L \le x)$ never decreases, runs from 0 (below the smallest loss) to 1 (at the largest), and is continuous from the right: it jumps up at each possible loss and is flat between. For $0 < \alpha < 1$ the set of $x$ with $F(x) \ge \alpha$ is non-empty and bounded below, and right-continuity puts its lowest point inside the set. So $q_\alpha$ is a real loss with $P(L \le q_\alpha) \ge \alpha$, and every smaller $x$ has $P(L \le x) < \alpha$.
+**The quantile exists and is attained.** The function $`F(x) = P(L \le x)`$ never decreases, runs from 0 (below the smallest loss) to 1 (at the largest), and is continuous from the right: it jumps up at each possible loss and is flat between. For $`0 < \alpha < 1`$ the set of $`x`$ with $`F(x) \ge \alpha`$ is non-empty and bounded below, and right-continuity puts its lowest point inside the set. So $`q_\alpha`$ is a real loss with $`P(L \le q_\alpha) \ge \alpha`$, and every smaller $`x`$ has $`P(L \le x) < \alpha`$.
 
-**Capital.** The bank survives when $L \le \text{EL} + K$. Requiring $P(L \le \text{EL} + K) \ge \alpha$ means $\text{EL} + K$ lies in the set above, so $\text{EL} + K \ge q_\alpha$, with equality possible. The least such $K$ is $q_\alpha - \text{EL}$.
+**Capital.** The bank survives when $`L \le \text{EL} + K`$. Requiring $`P(L \le \text{EL} + K) \ge \alpha`$ means $`\text{EL} + K`$ lies in the set above, so $`\text{EL} + K \ge q_\alpha`$, with equality possible. The least such $`K`$ is $`q_\alpha - \text{EL}`$.
 
-**UL can be negative.** If a loss of 0 already has chance at least $\alpha$, then $q_\alpha = 0$ and $\text{UL}_\alpha = -\text{EL}$. Book D at 95% shows it: $0 - 8 = -8$ million. A capital rule floors this at zero; that floor is a convention, not part of the definition.
+**UL can be negative.** If a loss of 0 already has chance at least $`\alpha`$, then $`q_\alpha = 0`$ and $`\text{UL}_\alpha = -\text{EL}`$. Book D at 95% shows it: $`0 - 8 = -8`$ million. A capital rule floors this at zero; that floor is a convention, not part of the definition.
 
 </details>
 
@@ -152,12 +164,12 @@ Book A: ten loans of $100 million, $1 billion in all, each with PD 2% and LGD 40
 | loss per default | 0.40 × $100 million | $40 million |
 | EL per loan | 0.02 × 0.40 × $100 million | $0.80 million |
 | EL of the book | 10 × $0.80 million | $8.00 million |
-| chance of no default | $0.98^{10}$ | 0.817073 |
-| chance of one default | $10 \times 0.02 \times 0.98^{9}$ | 0.166750 |
-| chance of two defaults | $45 \times 0.02^2 \times 0.98^{8}$ | 0.015314 |
+| chance of no default | $`0.98^{10}`$ | 0.817073 |
+| chance of one default | $`10 \times 0.02 \times 0.98^{9}`$ | 0.166750 |
+| chance of two defaults | $`45 \times 0.02^2 \times 0.98^{8}`$ | 0.015314 |
 | chance of at most one | 0.817073 + 0.166750 | 0.983822, below 99.9% |
 | chance of at most two | 0.983822 + 0.015314 | 0.999136, reaches 99.9% |
-| $q_{99.9\%}$ | 2 defaults × $40 million | $80 million |
+| $`q_{99.9\%}`$ | 2 defaults × $40 million | $80 million |
 | **UL at 99.9%** | $80 million − $8 million | **$72.00 million** |
 
 A bank with this book prices in and provisions $8 million a year, and holds $72 million of capital so that only a year with three or more defaults, chance 0.000864, eats through both.
@@ -597,9 +609,9 @@ Columns are in $ millions. "formula" is road 1; "EL" is road 2, the average over
 
 Lean proves the EL formula for any book, however defaults move together, and the capital rule for any level strictly between 0 and 1.
 
-- Take a finite book where loan $i$ has a 0-or-1 default flag $D_i$, a fixed LGD and a fixed EAD. Then EL is the sum over the loans of PD × LGD × EAD, with no independence assumed.
-- Take any year's loss $L$ and a confidence level $\alpha$ strictly between 0 and 1. Then the smallest capital $K$ that survives with chance at least $\alpha$ is $q_\alpha$ minus EL.
-- So the quantile $q_\alpha$ is a real loss, and the loss stays at or below it with chance at least $\alpha$.
+- Take a finite book where loan $`i`$ has a 0-or-1 default flag $`D_i`$, a fixed LGD and a fixed EAD. Then EL is the sum over the loans of PD × LGD × EAD, with no independence assumed.
+- Take any year's loss $`L`$ and a confidence level $`\alpha`$ strictly between 0 and 1. Then the smallest capital $`K`$ that survives with chance at least $`\alpha`$ is $`q_\alpha`$ minus EL.
+- So the quantile $`q_\alpha`$ is a real loss, and the loss stays at or below it with chance at least $`\alpha`$.
 - The book's EL is 1,000 × 0.02 × 0.40 × $1 million = $8 million, and one loan's EL is $8,000.
 - Book C's average PD is 0.9 × 1% + 0.1 × 11% = 2%.
 - Book C's UL at 99.9% is $53.60 − $8.00 = $45.60 million.

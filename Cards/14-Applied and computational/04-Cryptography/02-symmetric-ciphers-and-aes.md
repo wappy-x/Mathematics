@@ -44,30 +44,34 @@ Schematic: the first chart is the inside of AES, the second is GCM using AES as 
 
 Bytes on this card are written in hexadecimal: two digits from 0 to 9 and a to f, so 50 is one byte, not fifty.
 
-One AES round on the state $s$, which starts as a 16-byte block XORed with round key $k_0$, and GCM on the backup's blocks:
+One AES round on the state $`s`$, which starts as a 16-byte block XORed with round key $`k_0`$, and GCM on the backup's blocks:
 
-$$s \;\leftarrow\; M \cdot \mathrm{ShiftRows}\big(S(s)\big) \,\oplus\, k_r, \qquad r = 1, 2, \dots, 14 \quad (\text{no } M \text{ in round } 14)$$
+```math
+s \;\leftarrow\; M \cdot \mathrm{ShiftRows}\big(S(s)\big) \,\oplus\, k_r, \qquad r = 1, 2, \dots, 14 \quad (\text{no } M \text{ in round } 14)
+```
 
-$$c_i = m_i \oplus E_k(N \,\|\, i{+}1), \qquad T = E_k(N \,\|\, 1) \oplus \mathrm{GHASH}_H(c_1, \dots, c_n), \qquad H = E_k(0)$$
+```math
+c_i = m_i \oplus E_k(N \,\|\, i{+}1), \qquad T = E_k(N \,\|\, 1) \oplus \mathrm{GHASH}_H(c_1, \dots, c_n), \qquad H = E_k(0)
+```
 
 **Read it aloud:** each round swaps every byte through a fixed table, slides the rows, mixes each column, and adds a key; GCM XORs each block of the file with AES of a never-repeated counter, then masks a polynomial checksum of the result to make the tag.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $\leftarrow$ | the **state**: 16 bytes in a 4 × 4 grid, filled column by column; $s \leftarrow x$ means "replace $s$ by $x$" | starts as one 16-byte block of the backup | change one bit and about 65 of 128 output bits flip |
-| $S$ | the **S-box**: each byte replaced by its reciprocal in the 256-element field, then scrambled by a fixed bit-mix | S(50) = 53 | — |
-| ShiftRows | row $r$ of the grid slides $r$ places left (row 0 stays put) | moves 53 into column 0 | — |
-| $M$ | the **mix matrix**, 4 × 4, entries 2, 3, 1, 1 rotated, arithmetic in the field | column 63 53 e0 8c becomes 5f 72 64 15 | — |
-| $k_r$ | **round key** $r$, one of 15 ($k_0$ to $k_{14}$), 16 bytes each, grown from the 32-byte key by the key schedule (a short recipe of byte rotations, S-box lookups and XORs) | $k_1$ = 10 11 … 1f | — |
-| $\oplus$, $\delta$, $\Delta$ | XOR: add bit by bit with 1 + 1 = 0 ([The one-time pad](01-one-time-pad-and-perfect-secrecy.md)); $\delta$ and $\Delta$ are XOR differences, between two versions of one byte and of the tag | 5f ⊕ 10 = 4f | — |
-| $E_k$; $L$, $v$ | AES itself under key $k$: 16 bytes in, 16 bytes out, 14 rounds. Without the S-box it would be $E(x) = Lx \oplus v$: a fixed 128 × 128 bit matrix $L$ and a constant block $v$ | $k$ is 32 bytes, 256 bits | each extra key bit doubles the work of trying every key |
-| $m_i$, $c_i$, $B_i$; $m$, $m'$, $c$, $c'$ | block $i$ of the backup, and of the stored ciphertext, called $B_i$ once GHASH reads it as a field element ($B'_i$ after a forger's change); $m$ and $m'$ are two whole backups under one nonce, $c$ and $c'$ their ciphertexts | 16 bytes each | — |
-| $n$ | the number of 16-byte blocks | 268,435,456 | more AES calls and a weaker forgery bound, both in proportion |
-| $N \,\|\, j$ | the **nonce** $N$ (a 12-byte number used once per key) followed by a 4-byte counter $j$ | one nonce per nightly backup | reuse it and the pad repeats |
-| $H$, GHASH | the **hash key** $H = E_k(0)$, and the checksum that treats blocks as coefficients of a polynomial evaluated at $H$ | 128-bit field elements | — |
-| $T$ | the **tag**: 16 bytes stored with the ciphertext and checked before decrypting | one per backup | — |
+| $`s`$, $`\leftarrow`$ | the **state**: 16 bytes in a 4 × 4 grid, filled column by column; $`s \leftarrow x`$ means "replace $`s`$ by $`x`$" | starts as one 16-byte block of the backup | change one bit and about 65 of 128 output bits flip |
+| $`S`$ | the **S-box**: each byte replaced by its reciprocal in the 256-element field, then scrambled by a fixed bit-mix | S(50) = 53 | — |
+| ShiftRows | row $`r`$ of the grid slides $`r`$ places left (row 0 stays put) | moves 53 into column 0 | — |
+| $`M`$ | the **mix matrix**, 4 × 4, entries 2, 3, 1, 1 rotated, arithmetic in the field | column 63 53 e0 8c becomes 5f 72 64 15 | — |
+| $`k_r`$ | **round key** $`r`$, one of 15 ($`k_0`$ to $`k_{14}`$), 16 bytes each, grown from the 32-byte key by the key schedule (a short recipe of byte rotations, S-box lookups and XORs) | $`k_1`$ = 10 11 … 1f | — |
+| $`\oplus`$, $`\delta`$, $`\Delta`$ | XOR: add bit by bit with 1 + 1 = 0 ([The one-time pad](01-one-time-pad-and-perfect-secrecy.md)); $`\delta`$ and $`\Delta`$ are XOR differences, between two versions of one byte and of the tag | 5f ⊕ 10 = 4f | — |
+| $`E_k`$; $`L`$, $`v`$ | AES itself under key $`k`$: 16 bytes in, 16 bytes out, 14 rounds. Without the S-box it would be $`E(x) = Lx \oplus v`$: a fixed 128 × 128 bit matrix $`L`$ and a constant block $`v`$ | $`k`$ is 32 bytes, 256 bits | each extra key bit doubles the work of trying every key |
+| $`m_i`$, $`c_i`$, $`B_i`$; $`m`$, $`m'`$, $`c`$, $`c'`$ | block $`i`$ of the backup, and of the stored ciphertext, called $`B_i`$ once GHASH reads it as a field element ($`B'_i`$ after a forger's change); $`m`$ and $`m'`$ are two whole backups under one nonce, $`c`$ and $`c'`$ their ciphertexts | 16 bytes each | — |
+| $`n`$ | the number of 16-byte blocks | 268,435,456 | more AES calls and a weaker forgery bound, both in proportion |
+| $`N \,\Vert\, j`$ | the **nonce** $`N`$ (a 12-byte number used once per key) followed by a 4-byte counter $`j`$ | one nonce per nightly backup | reuse it and the pad repeats |
+| $`H`$, GHASH | the **hash key** $`H = E_k(0)`$, and the checksum that treats blocks as coefficients of a polynomial evaluated at $`H`$ | 128-bit field elements | — |
+| $`T`$ | the **tag**: 16 bytes stored with the ciphertext and checked before decrypting | one per backup | — |
 
-The S-box and $M$ use arithmetic in GF(2^8), the field of 256 bytes where adding is XOR and multiplying wraps by $x^8 + x^4 + x^3 + x + 1$; [Finite fields](../../03-Algebra/09-Rings%20and%20Fields/05-finite-fields.md) builds such fields, and AES is one of its named users. $M$ is an ordinary matrix multiplied in the usual row-by-column way ([Matrices](../../03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo.md)), only with field arithmetic inside.
+The S-box and $`M`$ use arithmetic in GF(2^8), the field of 256 bytes where adding is XOR and multiplying wraps by $`x^8 + x^4 + x^3 + x + 1`$; [Finite fields](../../03-Algebra/09-Rings%20and%20Fields/05-finite-fields.md) builds such fields, and AES is one of its named users. $`M`$ is an ordinary matrix multiplied in the usual row-by-column way ([Matrices](../../03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo.md)), only with field arithmetic inside.
 
 ### When it holds
 
@@ -91,24 +95,24 @@ AES gets both by repeating one cheap round fourteen times. Each round is four st
 
 ### Step 1: every step can be undone
 
-- **Add key.** XOR with $k_r$ is undone by XOR with $k_r$ again.
+- **Add key.** XOR with $`k_r`$ is undone by XOR with $`k_r`$ again.
 - **Shift.** Sliding rows is a reordering; slide them back.
 - **Substitute.** In a field every nonzero byte has exactly one reciprocal, so "replace by the reciprocal" is a bijection (0 is sent to 0). The fixed bit-mix afterwards is also undoable. For the byte 50: its reciprocal is ed, because 50 × ed = 01 in the field, and the bit-mix XORs ed with itself rotated 1, 2, 3 and 4 places (db, b7, 6f, de) and with 63, giving **53**.
-- **Mix.** $M$ has an inverse matrix, with entries 0e, 0b, 0d, 09 (14, 11, 13, 9) rotated. The code multiplies them in the field and gets the identity.
+- **Mix.** $`M`$ has an inverse matrix, with entries 0e, 0b, 0d, 09 (14, 11, 13, 9) rotated. The code multiplies them in the field and gets the identity.
 
 So decryption exists: run the steps backwards with the inverse table, the inverse matrix and the round keys in reverse order. The code decrypts the standard's test block back to 00112233…ff.
 
 ### Step 2: the S-box supplies the confusion
 
-Everything except the S-box is **linear** over bits: shifting and mixing send the XOR of two inputs to the XOR of their outputs, and adding a key only adds a constant. Take the S-box out, replacing it by "leave the byte alone", and the whole cipher obeys $E(a) \oplus E(b) \oplus E(c) = E(a \oplus b \oplus c)$ for every three blocks: XOR three outputs and the constant appears three times, which is once.
+Everything except the S-box is **linear** over bits: shifting and mixing send the XOR of two inputs to the XOR of their outputs, and adding a key only adds a constant. Take the S-box out, replacing it by "leave the byte alone", and the whole cipher obeys $`E(a) \oplus E(b) \oplus E(c) = E(a \oplus b \oplus c)`$ for every three blocks: XOR three outputs and the constant appears three times, which is once.
 
-The code checks this: **True** with no S-box, **False** with the real one. A cipher with that property is an affine map, $E(x) = Lx \oplus v$ for a fixed 128 × 128 bit matrix $L$ and constant block $v$.
+The code checks this: **True** with no S-box, **False** with the real one. A cipher with that property is an affine map, $`E(x) = Lx \oplus v`$ for a fixed 128 × 128 bit matrix $`L`$ and constant block $`v`$.
 
-Then about 129 known blocks, one per input bit plus one, pin down $L$ and $v$ by elimination, and every other block decrypts without ever finding the key. The reciprocal map is very far from linear, and that is what stops the elimination.
+Then about 129 known blocks, one per input bit plus one, pin down $`L`$ and $`v`$ by elimination, and every other block decrypts without ever finding the key. The reciprocal map is very far from linear, and that is what stops the elimination.
 
 ### Step 3: shift and mix supply the diffusion
 
-Change one byte of the state. The S-box changes that one byte. Shifting moves it but keeps it alone. Then mixing: if one byte of a column changes by $\delta$ (an XOR difference), each output byte of that column changes by $\delta$ times one entry of $M$'s column. Every entry of $M$ is nonzero, and in a field a product of two nonzero numbers is never zero. So **all 4 bytes of the column change**.
+Change one byte of the state. The S-box changes that one byte. Shifting moves it but keeps it alone. Then mixing: if one byte of a column changes by $`\delta`$ (an XOR difference), each output byte of that column changes by $`\delta`$ times one entry of $`M`$'s column. Every entry of $`M`$ is nonzero, and in a field a product of two nonzero numbers is never zero. So **all 4 bytes of the column change**.
 
 In round 2 the shift sends those 4 changed bytes into 4 different columns, one each. Mixing turns each into a fully changed column: **all 16 bytes change**. The code flips one plaintext bit and counts changed bytes after each round:
 
@@ -130,7 +134,7 @@ AES encrypts exactly 16 bytes, and the same block under the same key always give
 
 **Counter mode** fixes this by never feeding AES the data at all. AES encrypts the nonce followed by a counter, 2, 3, 4 and so on, and the outputs are XORed onto the backup as a pad. Each counter value is different, so each pad block is different, and the four blocks come out **4 distinct**.
 
-This is the one-time pad with the pad generated from a short key. It inherits the pad's rule: never reuse a pad. Use the same key and nonce for two backups, $m$ on Monday and $m'$ on Tuesday, and the pads cancel: $c \oplus c' = m \oplus m'$.
+This is the one-time pad with the pad generated from a short key. It inherits the pad's rule: never reuse a pad. Use the same key and nonce for two backups, $`m`$ on Monday and $`m'`$ on Tuesday, and the pads cancel: $`c \oplus c' = m \oplus m'`$.
 
 In the code Monday's backup held "balance: 1200.00". Anyone who knows that recovers Tuesday's "balance: 9875.50" from the two ciphertexts alone.
 
@@ -138,26 +142,28 @@ Counter mode has a second weakness. Flipping a ciphertext bit flips exactly that
 
 ### Step 5: the GCM tag catches any change, by counting polynomial roots
 
-GCM adds a tag. Split the ciphertext into blocks $B_1, \dots, B_n$, add one last block $B_{n+1}$ holding the lengths, and read each block as an element of GF(2^128), a field of 2^128 elements. Then
+GCM adds a tag. Split the ciphertext into blocks $`B_1, \dots, B_n`$, add one last block $`B_{n+1}`$ holding the lengths, and read each block as an element of GF(2^128), a field of 2^128 elements. Then
 
-$$\mathrm{GHASH}_H = B_1 H^{n+1} \oplus B_2 H^{n} \oplus \cdots \oplus B_{n+1} H,$$
+```math
+\mathrm{GHASH}_H = B_1 H^{n+1} \oplus B_2 H^{n} \oplus \cdots \oplus B_{n+1} H,
+```
 
-a polynomial in the secret $H$ whose coefficients are the ciphertext blocks. The code computes it two ways: by Horner's rule (multiply as you go, which is how GCM is specified) and as this sum of powers. They agree.
+a polynomial in the secret $`H`$ whose coefficients are the ciphertext blocks. The code computes it two ways: by Horner's rule (multiply as you go, which is how GCM is specified) and as this sum of powers. They agree.
 
 <details>
 <summary>Why a forger wins with chance at most about (n + 1) in 2^128</summary>
 
-A forger changes the ciphertext from blocks $B$ to blocks $B'$ and must produce a matching tag. The mask $E_k(N \| 1)$ is the same for both, so the forger needs $\mathrm{GHASH}_H(B') = \mathrm{GHASH}_H(B) \oplus \Delta$ for some tag change $\Delta$ of their choosing. Move everything to one side: $H$ must be a root of the polynomial
+A forger changes the ciphertext from blocks $`B`$ to blocks $`B'`$ and must produce a matching tag. The mask $`E_k(N \| 1)`$ is the same for both, so the forger needs $`\mathrm{GHASH}_H(B') = \mathrm{GHASH}_H(B) \oplus \Delta`$ for some tag change $`\Delta`$ of their choosing. Move everything to one side: $`H`$ must be a root of the polynomial
 
-$$(B_1 \oplus B'_1) H^{n+1} \oplus \cdots \oplus (B_{n+1} \oplus B'_{n+1}) H \oplus \Delta .$$
+$`\displaystyle (B_1 \oplus B'_1) H^{n+1} \oplus \cdots \oplus (B_{n+1} \oplus B'_{n+1}) H \oplus \Delta .`$
 
-It is not the zero polynomial, because some block changed. A nonzero polynomial of degree at most $n + 1$ over a field has at most $n + 1$ roots. $H$ is one of 2^128 values, unknown to the forger. So the forgery works for at most $n + 1$ of them: chance at most $(n+1)/2^{128}$. Treating $H$ and the mask as truly random is where the AES assumption enters; The GCM paper in the Sources gives the full bound.
+It is not the zero polynomial, because some block changed. A nonzero polynomial of degree at most $`n + 1`$ over a field has at most $`n + 1`$ roots. $`H`$ is one of 2^128 values, unknown to the forger. So the forgery works for at most $`n + 1`$ of them: chance at most $`(n+1)/2^{128}`$. Treating $`H`$ and the mask as truly random is where the AES assumption enters; The GCM paper in the Sources gives the full bound.
 
 </details>
 
-For the backup, $n + 1$ = 268,435,457, just over 2^28, so a forger's chance per attempt is about **2^-100**. When the code flips one ciphertext bit, the tag check says **False** and the restore refuses; the untouched ciphertext checks **True**.
+For the backup, $`n + 1`$ = 268,435,457, just over 2^28, so a forger's chance per attempt is about **2^-100**. When the code flips one ciphertext bit, the tag check says **False** and the restore refuses; the untouched ciphertext checks **True**.
 
-One more bound, about the pad. AES under one key never gives the same output twice, while a truly random pad would repeat a block now and then. Over $n$ blocks that difference is visible with chance at most about $n^2 / 2^{129}$, the birthday bound for 128-bit blocks ([Hashes and MACs](03-hash-functions-and-macs.md) derives birthday bounds in general). For 2^28 blocks that is **2^-73**.
+One more bound, about the pad. AES under one key never gives the same output twice, while a truly random pad would repeat a block now and then. Over $`n`$ blocks that difference is visible with chance at most about $`n^2 / 2^{129}`$, the birthday bound for 128-bit blocks ([Hashes and MACs](03-hash-functions-and-macs.md) derives birthday bounds in general). For 2^28 blocks that is **2^-73**.
 
 ---
 
@@ -186,8 +192,8 @@ For the whole 4 GB backup:
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | bytes | 4 × 2^30 | 4,294,967,296 |
-| blocks, $n$ | 4,294,967,296 / 16 | 268,435,456 |
-| AES calls | one per block, plus $H = E_k(0)$, plus the tag mask | 268,435,458 |
+| blocks, $`n`$ | 4,294,967,296 / 16 | 268,435,456 |
+| AES calls | one per block, plus $`H = E_k(0)`$, plus the tag mask | 268,435,458 |
 | GHASH multiplications | one per block, plus the length block | 268,435,457 |
 | stored beside the backup | 12-byte nonce + 16-byte tag | **28 bytes** |
 | forgery chance per attempt | about 2^28 / 2^128 | about 2^-100 |
@@ -202,7 +208,7 @@ So the backup grows by just 28 bytes, and both failure chances are far below any
 | Drop the mix step | 1 byte of 16 changed after all 14 rounds | No diffusion: each byte is encrypted on its own, a 256-entry code book per position |
 | Replace the S-box by "leave the byte alone" | E(a) ⊕ E(b) ⊕ E(c) = E(a ⊕ b ⊕ c): True | No confusion: the cipher is linear, solvable by elimination |
 | Encrypt each block separately (ECB) | 2 distinct ciphertext blocks of 4 | Equal blocks give equal ciphertext; the zeros show |
-| Reuse the nonce for two nights | Tuesday's "balance: 9875.50" recovered | The pad cancels: $c \oplus c' = m \oplus m'$ |
+| Reuse the nonce for two nights | Tuesday's "balance: 9875.50" recovered | The pad cancels: $`c \oplus c' = m \oplus m'`$ |
 | Counter mode with no tag | one flipped bit restores as "CACKUP v1 part 1" | Counter mode is malleable; only the tag catches it |
 
 ---
@@ -607,12 +613,12 @@ The two outputs match line for line.
 
 Lean proves three steps of Why it works for every field, finite for the tag bound, and checks the worked numbers.
 
-- Take blocks in any finite field, and a forger who changes at least one block and picks any tag change $\Delta$. Then the forgery works for at most $n + 1$ hash keys $H$.
-- Take a mix matrix with no zero entry, and change one byte of a column by a nonzero $\delta$. Then every byte of the mixed column changes.
+- Take blocks in any finite field, and a forger who changes at least one block and picks any tag change $`\Delta`$. Then the forgery works for at most $`n + 1`$ hash keys $`H`$.
+- Take a mix matrix with no zero entry, and change one byte of a column by a nonzero $`\delta`$. Then every byte of the mixed column changes.
 - In any field, "replace by the reciprocal", with 0 sent to 0, is a bijection. So that part of the S-box can be undone.
 - The bit-mix of ed gives 53, and the top byte of the mixed column is 5f. Adding round key 1 to 5f 72 64 15 gives 4f 63 76 06.
 - For the backup, Lean checks 268,435,456 blocks, 268,435,458 AES calls, 268,435,457 GHASH multiplications and 28 stored bytes.
-- It also checks that $n + 1$ lies between 2^28 and 2^29, and that (2^28)^2 / 2^129 is 2^-73.
+- It also checks that $`n + 1`$ lies between 2^28 and 2^29, and that (2^28)^2 / 2^129 is 2^-73.
 - The message limit of 68,719,476,704 bytes and the nonce figure of 1 in 8,589,934,594 also check.
 
 The full cipher, its inverse, the diffusion counts and the GCM test vectors are left to the Python and Rust checks.
@@ -757,7 +763,7 @@ example : 2 ^ 97 / (2 ^ 32 * (2 ^ 32 - 1)) = 8589934594 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reusing a nonce.** GCM's whole safety rests on never using the same key and nonce twice. Reuse it once and the two pads cancel: $c \oplus c' = m \oplus m'$, and Monday's known "balance: 1200.00" hands over Tuesday's "balance: 9875.50". Worse, NIST SP 800-38D warns that the two tags then let an attacker solve for $H$ and forge tags at will. A backup tool that restarts its nonce counter after a crash, or copies a configuration to a second laptop with the same key, does exactly this.
+> **Reusing a nonce.** GCM's whole safety rests on never using the same key and nonce twice. Reuse it once and the two pads cancel: $`c \oplus c' = m \oplus m'`$, and Monday's known "balance: 1200.00" hands over Tuesday's "balance: 9875.50". Worse, NIST SP 800-38D warns that the two tags then let an attacker solve for $`H`$ and forge tags at will. A backup tool that restarts its nonce counter after a crash, or copies a configuration to a second laptop with the same key, does exactly this.
 >
 > - **Using AES "on its own" (ECB).** Equal blocks encrypt equally: the code's four blocks show 2 distinct ciphertexts, and the empty space on the disk is visible.
 > - **Decrypting before checking the tag.** Counter mode returns "CACKUP v1 part 1" for one flipped bit, with no warning. Check the tag over the whole file first.

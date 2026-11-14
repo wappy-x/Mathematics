@@ -41,52 +41,58 @@ Orange, falling: the call. Green, rising: the put. Dark, flat: the $5.00 target.
 
 The problem is an equation with one unknown. For the strike:
 
-$$C(K) \;=\; S\,e^{-qT}\,N(d_1) \;-\; K\,e^{-rT}\,N(d_2) \;=\; v, \qquad \text{solve for } K.$$
+```math
+C(K) \;=\; S\,e^{-qT}\,N(d_1) \;-\; K\,e^{-rT}\,N(d_2) \;=\; v, \qquad \text{solve for } K.
+```
 
 **Read it aloud:** find the strike at which the Black–Scholes call price equals the premium on offer.
 
-For the spot, the same equation is solved for $S$ with $K$ held fixed. The whole card rests on two slopes. A **partial derivative**, written with a curly ∂, is the slope of a formula when one input moves and every other input stays put:
+For the spot, the same equation is solved for $`S`$ with $`K`$ held fixed. The whole card rests on two slopes. A **partial derivative**, written with a curly ∂, is the slope of a formula when one input moves and every other input stays put:
 
-$$\frac{\partial C}{\partial K} = -\,e^{-rT}\,N(d_2) \;<\; 0, \qquad \frac{\partial C}{\partial S} = e^{-qT}\,N(d_1) \;>\; 0.$$
+```math
+\frac{\partial C}{\partial K} = -\,e^{-rT}\,N(d_2) \;<\; 0, \qquad \frac{\partial C}{\partial S} = e^{-qT}\,N(d_1) \;>\; 0.
+```
 
-**Read it aloud:** one more dollar of strike takes off $e^{-rT}N(d_2)$, today's value of a dollar paid if the call finishes **in the money**, with Acme above the strike at expiry. One more dollar of spot adds $e^{-qT}N(d_1)$, the call's delta.
+**Read it aloud:** one more dollar of strike takes off $`e^{-rT}N(d_2)`$, today's value of a dollar paid if the call finishes **in the money**, with Acme above the strike at expiry. One more dollar of spot adds $`e^{-qT}N(d_1)`$, the call's delta.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $v$ | the **target premium**, the price the buyer will pay | $5.00 | strike falls, spot rises |
-| $C$, $P$ | the Black–Scholes call and put prices | call $9.23 and put $6.33 at $K = 100$ | — |
-| $S$ | Acme's price today, the **spot** | $100 | call strike for $5.00 rises |
-| $K$, $K_0$, $K_n$ | the **strike**; $K_n$ is the solver's guess at step n, from $K_0$ | $110.60 | — |
-| $T$ | years to expiry | 1 | call strike for $5.00 rises |
-| $r$ | riskless rate, continuously compounded | 5% | call strike for $5.00 rises |
-| $q$ | dividend yield, continuously compounded | 2% | call strike for $5.00 falls |
-| $\sigma$ | volatility: how widely Acme's log-price spreads in a year | 20% | call strike for $5.00 rises, fast |
-| $N(x)$ | bell-curve area to the left of $x$, between 0 and 1 | $N(d_2) = 0.3250$ at $110.60$ | — |
-| $\phi$ | the bell curve's height, $\phi(x) = e^{-x^2/2}/\sqrt{2\pi}$ | — | — |
-| $d_1$, $d_2$ | how far the spot sits from the strike in units of $\sigma\sqrt{T}$ | $-0.2538$ and $-0.4538$ at $110.60$ | — |
-| $e^{-rT}$, $e^{-qT}$ | today's value of a dollar due at expiry; the dividend drag on one share | 0.951229 and 0.980199 | — |
+| $`v`$ | the **target premium**, the price the buyer will pay | $5.00 | strike falls, spot rises |
+| $`C`$, $`P`$ | the Black–Scholes call and put prices | call $9.23 and put $6.33 at $`K = 100`$ | — |
+| $`S`$ | Acme's price today, the **spot** | $100 | call strike for $5.00 rises |
+| $`K`$, $`K_0`$, $`K_n`$ | the **strike**; $`K_n`$ is the solver's guess at step n, from $`K_0`$ | $110.60 | — |
+| $`T`$ | years to expiry | 1 | call strike for $5.00 rises |
+| $`r`$ | riskless rate, continuously compounded | 5% | call strike for $5.00 rises |
+| $`q`$ | dividend yield, continuously compounded | 2% | call strike for $5.00 falls |
+| $`\sigma`$ | volatility: how widely Acme's log-price spreads in a year | 20% | call strike for $5.00 rises, fast |
+| $`N(x)`$ | bell-curve area to the left of $`x`$, between 0 and 1 | $`N(d_2) = 0.3250`$ at $`110.60`$ | — |
+| $`\phi`$ | the bell curve's height, $`\phi(x) = e^{-x^2/2}/\sqrt{2\pi}`$ | — | — |
+| $`d_1`$, $`d_2`$ | how far the spot sits from the strike in units of $`\sigma\sqrt{T}`$ | $`-0.2538`$ and $`-0.4538`$ at $`110.60`$ | — |
+| $`e^{-rT}`$, $`e^{-qT}`$ | today's value of a dollar due at expiry; the dividend drag on one share | 0.951229 and 0.980199 | — |
 
 The two helpers, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}.$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}.
+```
 
-In words: $d_1$ and $d_2$ fall as the strike rises and climb as the spot rises. They are where the strike and spot enter the bell-curve areas.
+In words: $`d_1`$ and $`d_2`$ fall as the strike rises and climb as the spot rises. They are where the strike and spot enter the bell-curve areas.
 
 Which inverse has an answer depends on the product and the unknown:
 
 | Unknown, product | Premium as the unknown rises | Premiums with exactly one answer |
 | --- | --- | --- |
-| strike, call | falls | between 0 and $S e^{-qT}$, here $98.02 |
+| strike, call | falls | between 0 and $`S e^{-qT}`$, here $98.02 |
 | strike, put | rises | any positive premium |
 | spot, call | rises | any positive premium |
-| spot, put | falls | between 0 and $K e^{-rT}$, here $95.12 for $K = 100$ |
+| spot, put | falls | between 0 and $`K e^{-rT}`$, here $95.12 for $`K = 100`$ |
 
 A premium at or beyond a listed end has no finite, positive answer.
 
 ### When it holds
 
-- **Volatility and time both positive.** At $\sigma = 0$ or $T = 0$ the price is a straight line with a flat floor at zero. A positive premium still has one strike, but a zero premium fits a whole interval of strikes. The $5.00 answer moves from $110.60 to $97.79 at $\sigma = 0$, and to $95.00 at $T = 0$.
-- **Every other input fixed.** On a real market, volatility changes with strike (the **smile**). Solving with one $\sigma$ for every strike gives the strike this model prices at $5.00, not the one the market does.
+- **Volatility and time both positive.** At $`\sigma = 0`$ or $`T = 0`$ the price is a straight line with a flat floor at zero. A positive premium still has one strike, but a zero premium fits a whole interval of strikes. The $5.00 answer moves from $110.60 to $97.79 at $`\sigma = 0`$, and to $95.00 at $`T = 0`$.
+- **Every other input fixed.** On a real market, volatility changes with strike (the **smile**). Solving with one $`\sigma`$ for every strike gives the strike this model prices at $5.00, not the one the market does.
 - **The target inside the range.** A $99.00 call target is above the $98.02 ceiling. No strike exists, and a solver that does not check first returns the edge of its search.
 - **One quote, one unknown.** One premium is one equation. It cannot fix spot and volatility together: $9.227 fits spot $100 at 20% volatility, spot $105.27 at 10%, and spot $92.99 at 30%.
 
@@ -108,29 +114,29 @@ This needs no formula. Take two strikes, $100 and $110. At expiry the $100 call 
 
 The $100 call pays at least as much in every outcome. It pays strictly more whenever Acme ends above $100, and the model gives that a positive chance. The premium is the discounted average payoff over those outcomes ([Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md) states this for any model free of arbitrage), so the lower strike costs strictly more. Arbitrage is a riskless profit from nothing.
 
-The formula gives the slope's size. Differentiate $C$ in $K$: the terms from $d_1$ and $d_2$ cancel, and what is left is $-e^{-rT}N(d_2)$. At the $110.60$ answer that is $-0.3091$: a dollar more strike takes 31 cents off the premium. The slope is minus the value of a bet that pays $1 if Acme ends above $K$ ([Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md)), which is always positive, so the call never flattens.
+The formula gives the slope's size. Differentiate $`C`$ in $`K`$: the terms from $`d_1`$ and $`d_2`$ cancel, and what is left is $`-e^{-rT}N(d_2)`$. At the $`110.60`$ answer that is $`-0.3091`$: a dollar more strike takes 31 cents off the premium. The slope is minus the value of a bet that pays $1 if Acme ends above $`K`$ ([Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md)), which is always positive, so the call never flattens.
 
 ### Step 2: the strike range is 0 to $98.02
 
-Upper end. The formula's second term is positive, so $C < S e^{-qT}N(d_1) < S e^{-qT}$. As the strike falls towards zero, $d_1$ and $d_2$ run off to $+\infty$, both areas tend to 1, the cash term vanishes, and the call tends to $S e^{-qT} = 98.02$.
+Upper end. The formula's second term is positive, so $`C < S e^{-qT}N(d_1) < S e^{-qT}`$. As the strike falls towards zero, $`d_1`$ and $`d_2`$ run off to $`+\infty`$, both areas tend to 1, the cash term vanishes, and the call tends to $`S e^{-qT} = 98.02`$.
 
 A zero-strike call delivers the share at expiry for nothing; its value is the share today less the dividends paid before then. That value is approached, never reached.
 
-Lower end. As the strike rises without limit, $d_1$ runs off to $-\infty$ and $C \le S e^{-qT}N(d_1)$ tends to 0. So the premiums a positive strike can produce are exactly those between 0 and $98.02, and each is produced once.
+Lower end. As the strike rises without limit, $`d_1`$ runs off to $`-\infty`$ and $`C \le S e^{-qT}N(d_1)`$ tends to 0. So the premiums a positive strike can produce are exactly those between 0 and $98.02, and each is produced once.
 
 ### Step 3: the call gets dearer as the spot rises, without limit
 
-At expiry Acme's price is today's spot times a random growth factor, and that factor does not depend on where the spot started. A higher spot multiplies every outcome up, so the payoff is at least as large everywhere and strictly larger whenever the call pays. The premium rises. Differentiating gives the slope $e^{-qT}N(d_1)$, the call's **delta** ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)).
+At expiry Acme's price is today's spot times a random growth factor, and that factor does not depend on where the spot started. A higher spot multiplies every outcome up, so the payoff is at least as large everywhere and strictly larger whenever the call pays. The premium rises. Differentiating gives the slope $`e^{-qT}N(d_1)`$, the call's **delta** ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)).
 
-Ends: $C \le S e^{-qT}$, so the call tends to 0 as the spot falls to 0. And the call is worth at least a **forward contract**, $S e^{-qT} - K e^{-rT}$ ([Option price bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md)), which grows without limit with the spot. A forward contract is a promise to buy the share at $K$ at expiry. Every positive call premium has exactly one spot.
+Ends: $`C \le S e^{-qT}`$, so the call tends to 0 as the spot falls to 0. And the call is worth at least a **forward contract**, $`S e^{-qT} - K e^{-rT}`$ ([Option price bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md)), which grows without limit with the spot. A forward contract is a promise to buy the share at $`K`$ at expiry. Every positive call premium has exactly one spot.
 
 ### Step 4: the put follows from parity
 
-Put–call parity says $C - P = S e^{-qT} - K e^{-rT}$ at every matching strike and spot ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)).
+Put–call parity says $`C - P = S e^{-qT} - K e^{-rT}`$ at every matching strike and spot ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)).
 
-Subtract the right side's slope from the call's. In strike, the put's slope is $-e^{-rT}N(d_2) + e^{-rT} = e^{-rT}N(-d_2) > 0$. In spot, it is $e^{-qT}N(d_1) - e^{-qT} = -e^{-qT}N(-d_1) < 0$.
+Subtract the right side's slope from the call's. In strike, the put's slope is $`-e^{-rT}N(d_2) + e^{-rT} = e^{-rT}N(-d_2) > 0`$. In spot, it is $`e^{-qT}N(d_1) - e^{-qT} = -e^{-qT}N(-d_1) < 0`$.
 
-The ends come from the call's ends: the put runs from 0 to unlimited in strike, and from $K e^{-rT}$ down to 0 in spot. That fills the range table.
+The ends come from the call's ends: the put runs from 0 to unlimited in strike, and from $`K e^{-rT}`$ down to 0 in spot. That fills the range table.
 
 Parity holds only between a call and a put that share one strike. A $5.00 call at $110.60 says nothing about a put at $96.88; each strike carries its own premium.
 
@@ -140,9 +146,11 @@ A solver needs two strikes whose premiums sit on opposite sides of the target. S
 
 **Bisection** then halves the bracket repeatedly, keeping the half whose ends still straddle the target. Eighty halvings shrink a $100-wide bracket far below a cent. It cannot fail once the bracket is right.
 
-**Newton's method** ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) is faster. From a guess $K_n$, follow the tangent line down to the target:
+**Newton's method** ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) is faster. From a guess $`K_n`$, follow the tangent line down to the target:
 
-$$K_{n+1} = K_n + \frac{C(K_n) - v}{e^{-rT}\,N(d_2)}.$$
+```math
+K_{n+1} = K_n + \frac{C(K_n) - v}{e^{-rT}\,N(d_2)}.
+```
 
 For the call's strike it is also safe. The call is **convex** in strike: its slope climbs towards zero, so the curve bends upward and every tangent lies below it.
 
@@ -151,33 +159,33 @@ Started at a strike whose premium is above the target, the tangent reaches the t
 <details>
 <summary>Detailed proof: the two slopes, convexity, and Newton never overshooting</summary>
 
-**The cancellation.** Write $\phi$ for the bell curve's height. Expanding $\phi(d_1)$ with $d_1 = d_2 + \sigma\sqrt{T}$ gives $\phi(d_1) = \phi(d_2)\,e^{-d_2\sigma\sqrt{T} - \sigma^2 T/2}$, and $d_2\sigma\sqrt{T} + \sigma^2T/2 = \ln(S/K) + (r-q)T$. So
+**The cancellation.** Write $`\phi`$ for the bell curve's height. Expanding $`\phi(d_1)`$ with $`d_1 = d_2 + \sigma\sqrt{T}`$ gives $`\phi(d_1) = \phi(d_2)\,e^{-d_2\sigma\sqrt{T} - \sigma^2 T/2}`$, and $`d_2\sigma\sqrt{T} + \sigma^2T/2 = \ln(S/K) + (r-q)T`$. So
 
-$$S\,e^{-qT}\,\phi(d_1) = K\,e^{-rT}\,\phi(d_2).$$
+$`\displaystyle S\,e^{-qT}\,\phi(d_1) = K\,e^{-rT}\,\phi(d_2).`$
 
-**Strike slope.** Both $d_1$ and $d_2$ have slope $-1/(K\sigma\sqrt{T})$ in $K$. By the product and chain rules,
+**Strike slope.** Both $`d_1`$ and $`d_2`$ have slope $`-1/(K\sigma\sqrt{T})`$ in $`K`$. By the product and chain rules,
 
-$$\frac{\partial C}{\partial K} = S e^{-qT}\phi(d_1)\cdot\frac{-1}{K\sigma\sqrt{T}} - e^{-rT}N(d_2) - K e^{-rT}\phi(d_2)\cdot\frac{-1}{K\sigma\sqrt{T}} = -e^{-rT}N(d_2),$$
+$`\displaystyle \frac{\partial C}{\partial K} = S e^{-qT}\phi(d_1)\cdot\frac{-1}{K\sigma\sqrt{T}} - e^{-rT}N(d_2) - K e^{-rT}\phi(d_2)\cdot\frac{-1}{K\sigma\sqrt{T}} = -e^{-rT}N(d_2),`$
 
-the first and third terms cancelling by the identity. **Spot slope.** Both $d$'s have slope $1/(S\sigma\sqrt{T})$ in $S$; the same cancellation leaves $e^{-qT}N(d_1)$.
+the first and third terms cancelling by the identity. **Spot slope.** Both $`d`$'s have slope $`1/(S\sigma\sqrt{T})`$ in $`S`$; the same cancellation leaves $`e^{-qT}N(d_1)`$.
 
-**Convexity.** Differentiate the strike slope once more: $\partial^2 C/\partial K^2 = e^{-rT}\phi(d_2)/(K\sigma\sqrt{T}) > 0$. The slope is negative and rising.
+**Convexity.** Differentiate the strike slope once more: $`\partial^2 C/\partial K^2 = e^{-rT}\phi(d_2)/(K\sigma\sqrt{T}) > 0`$. The slope is negative and rising.
 
-**Newton from the left.** Let $K^\ast$ be the answer and $K_n < K^\ast$ with $C(K_n) > v$. Convexity puts the tangent at $K_n$ below the curve at every other strike, so at $K^\ast$ the tangent's height is at most $C(K^\ast) = v$. The tangent falls, so it reaches $v$ at some $K_{n+1} \le K^\ast$. It moved right, since $C(K_n) > v$ and the slope is negative. Then $C(K_{n+1}) \ge v$ and the argument repeats. The guesses rise and stay at or below $K^\ast$, so they converge, the premium at their limit equals $v$, and uniqueness makes that limit $K^\ast$. Started to the right of the answer, the first step lands at or left of it, after which the same argument applies, provided it lands at a positive strike. Far right the slope is nearly flat and the step can land below zero, so start at a strike priced above the target.
+**Newton from the left.** Let $`K^\ast`$ be the answer and $`K_n < K^\ast`$ with $`C(K_n) > v`$. Convexity puts the tangent at $`K_n`$ below the curve at every other strike, so at $`K^\ast`$ the tangent's height is at most $`C(K^\ast) = v`$. The tangent falls, so it reaches $`v`$ at some $`K_{n+1} \le K^\ast`$. It moved right, since $`C(K_n) > v`$ and the slope is negative. Then $`C(K_{n+1}) \ge v`$ and the argument repeats. The guesses rise and stay at or below $`K^\ast`$, so they converge, the premium at their limit equals $`v`$, and uniqueness makes that limit $`K^\ast`$. Started to the right of the answer, the first step lands at or left of it, after which the same argument applies, provided it lands at a positive strike. Far right the slope is nearly flat and the step can land below zero, so start at a strike priced above the target.
 
 </details>
 
 ### Step 6: the degenerate cases
 
-With $\sigma = 0$ the share grows like a bank balance and the call pays for certain or not at all: $C = \max(S e^{-qT} - K e^{-rT}, 0)$. A positive premium has one strike, $K = (S e^{-qT} - v)\,e^{rT}$, which for $5.00 gives $97.79. Any strike at or above the **forward price** $S e^{(r-q)T}$, the price agreed today for delivery at expiry, costs zero, so a zero quote fits all of them.
+With $`\sigma = 0`$ the share grows like a bank balance and the call pays for certain or not at all: $`C = \max(S e^{-qT} - K e^{-rT}, 0)`$. A positive premium has one strike, $`K = (S e^{-qT} - v)\,e^{rT}`$, which for $5.00 gives $97.79. Any strike at or above the **forward price** $`S e^{(r-q)T}`$, the price agreed today for delivery at expiry, costs zero, so a zero quote fits all of them.
 
-With $T = 0$ the call is its payoff, $\max(S - K, 0)$, and a $5.00 call has strike $95.00.
+With $`T = 0`$ the call is its payoff, $`\max(S - K, 0)`$, and a $5.00 call has strike $95.00.
 
 A quote identifies one unknown. Treat spot and volatility as unknown together and the $9.227 quote draws a curve of answers rather than a point: spot $105.27 at 10% volatility, $100 at 20%, $92.99 at 30%. A second, independent quote (another strike, or the share's own price) is needed to pin both.
 
 The other inverses on this shelf take the same shape with a different target:
 
-- [Implied volatility](01-implied-volatility.md) solves for $\sigma$.
+- [Implied volatility](01-implied-volatility.md) solves for $`\sigma`$.
 - [Strike from delta](03-strike-from-delta.md) solves for the strike that gives a chosen delta.
 - [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md) covers the solvers in general.
 
@@ -185,26 +193,26 @@ The other inverses on this shelf take the same shape with a different target:
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$, target $v = 5.00$. Newton starts at $K_0 = 100$.
+Acme: $`S = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$, target $`v = 5.00`$. Newton starts at $`K_0 = 100`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| ceiling, $S e^{-qT}$ | $100 \times 0.980199$ | $98.02, above 5.00, so a strike exists |
-| premium at $K_0 = 100$ | the house call | $9.2270 |
-| gap to target | $9.2270 - 5.00$ | $4.2270 |
-| slope at $K_0$, $-e^{-rT}N(d_2)$ | $-0.951229 \times 0.519939$ | $-0.4946$ |
-| $K_1$ | $100 + 4.2270 / 0.4946$ | $108.55 |
-| $K_2$, $K_3$ | same step, repeated | $110.50, $110.60 |
-| check: $\ln(S/K)$ at $110.60$ | $\ln(100/110.60)$ | $-0.1008$ |
-| $d_1$ | $(-0.1008 + 0.05)/0.20$ | $-0.2538$ |
-| $d_2$ | $-0.2538 - 0.20$ | $-0.4538$ |
-| share half, $S e^{-qT}N(d_1)$ | $98.02 \times 0.3998$ | $39.19 |
-| cash half, $K e^{-rT}N(d_2)$ | $110.60 \times 0.951229 \times 0.3250$ | $34.19 |
-| **premium** | $39.19 - 34.19$ | **$5.00** |
+| ceiling, $`S e^{-qT}`$ | $`100 \times 0.980199`$ | $98.02, above 5.00, so a strike exists |
+| premium at $`K_0 = 100`$ | the house call | $9.2270 |
+| gap to target | $`9.2270 - 5.00`$ | $4.2270 |
+| slope at $`K_0`$, $`-e^{-rT}N(d_2)`$ | $`-0.951229 \times 0.519939`$ | $`-0.4946`$ |
+| $`K_1`$ | $`100 + 4.2270 / 0.4946`$ | $108.55 |
+| $`K_2`$, $`K_3`$ | same step, repeated | $110.50, $110.60 |
+| check: $`\ln(S/K)`$ at $`110.60`$ | $`\ln(100/110.60)`$ | $`-0.1008`$ |
+| $`d_1`$ | $`(-0.1008 + 0.05)/0.20`$ | $`-0.2538`$ |
+| $`d_2`$ | $`-0.2538 - 0.20`$ | $`-0.4538`$ |
+| share half, $`S e^{-qT}N(d_1)`$ | $`98.02 \times 0.3998`$ | $39.19 |
+| cash half, $`K e^{-rT}N(d_2)`$ | $`110.60 \times 0.951229 \times 0.3250`$ | $34.19 |
+| **premium** | $`39.19 - 34.19`$ | **$5.00** |
 
 A call struck at $110.60 costs the $5.00 budget. The buyer gives up the first $10.60 of Acme's rise in exchange for paying $4.23 less than the at-the-money call, the one struck at the spot, $100.
 
-The spot inverse on the same numbers: hold $K = 100$, the $9.227 quote returns spot $100.00, and a $5.00 call quote returns spot $91.60.
+The spot inverse on the same numbers: hold $`K = 100`$, the $9.227 quote returns spot $100.00, and a $5.00 call quote returns spot $91.60.
 
 ### What breaks if you drop a piece
 
@@ -625,12 +633,12 @@ The two outputs match line for line.
 
 Lean proves the last column of the range table and both slopes, for any positive volatility and time.
 
-- Take a fixed positive spot $S$. Then a call premium has exactly one positive strike exactly when it lies strictly between 0 and $S e^{-qT}$.
-- Take a fixed positive strike $K$. Then a call premium has exactly one positive spot exactly when it is positive.
-- Take a fixed positive spot $S$. Then a put premium has exactly one positive strike exactly when it is positive.
-- Take a fixed positive strike $K$. Then a put premium has exactly one positive spot exactly when it lies strictly between 0 and $K e^{-rT}$.
-- Take a positive spot and a positive strike. Then the call's slope in strike is $-e^{-rT}N(d_2)$. Its slope in spot is $e^{-qT}N(d_1)$, the delta.
-- At the money, Acme's $d_1$ is exactly 0.25 and $d_2$ is exactly 0.05.
+- Take a fixed positive spot $`S`$. Then a call premium has exactly one positive strike exactly when it lies strictly between 0 and $`S e^{-qT}`$.
+- Take a fixed positive strike $`K`$. Then a call premium has exactly one positive spot exactly when it is positive.
+- Take a fixed positive spot $`S`$. Then a put premium has exactly one positive strike exactly when it is positive.
+- Take a fixed positive strike $`K`$. Then a put premium has exactly one positive spot exactly when it lies strictly between 0 and $`K e^{-rT}`$.
+- Take a positive spot and a positive strike. Then the call's slope in strike is $`-e^{-rT}N(d_2)`$. Its slope in spot is $`e^{-qT}N(d_1)`$, the delta.
+- At the money, Acme's $`d_1`$ is exactly 0.25 and $`d_2`$ is exactly 0.05.
 - The card's rounded sums add up: the $5.00 payoff at expiry, the $99.00 target above $98.02, and parity's $2.90 gap.
 
 The premiums themselves, the solved strikes and spots, Newton's steps, convexity and the degenerate cases are left to the Python and Rust checks.
@@ -1281,7 +1289,7 @@ example : (11060 : ℚ) / 100 - 100 = 1060 / 100 ∧ (923 : ℚ) / 100 - 5 = 423
 ## The usual mistake
 
 > [!warning]
-> **Solving before checking the range.** A solver asked for a $99.00 call on a $100 share returns a number, here a strike of $0.00, because bisection slides to whichever end of its bracket it was given. The ceiling is $S e^{-qT} = 98.02$: no strike reaches $99.00, since even a zero strike buys a share that pays away 2% a year in dividends before delivery. Test the target against the range table first, then solve.
+> **Solving before checking the range.** A solver asked for a $99.00 call on a $100 share returns a number, here a strike of $0.00, because bisection slides to whichever end of its bracket it was given. The ceiling is $`S e^{-qT} = 98.02`$: no strike reaches $99.00, since even a zero strike buys a share that pays away 2% a year in dividends before delivery. Test the target against the range table first, then solve.
 >
 > - **Searching the wrong way.** The call falls in strike but rises in spot; the put does the opposite of each. Keep the wrong half of a bisection bracket and the search runs to an end of the bracket, as in the $99.00 case.
 > - **Reusing one premium across strikes.** Parity links a call and a put at the same strike. It does not let a $5.00 quote at one strike stand in for another; each candidate strike is repriced.
@@ -1298,7 +1306,7 @@ example : (11060 : ℚ) / 100 - 100 = 1060 / 100 ∧ (923 : ℚ) / 100 - 5 = 423
 - **Market checks.** A price feed can be tested by solving for the spot that a quoted option implies. If it disagrees with the share's own price, one of the inputs is stale; [Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md) runs the same check with two quotes.
 
 > **Say it back**
-> A call's premium falls strictly as its strike rises, from $S e^{-qT}$ down to zero, and rises strictly as the spot rises, from zero without limit; the put runs the other way in each. So a premium inside the range fixes one strike or one spot, and a premium outside it fixes none. Bracket by doubling and halving, then solve by bisection or by Newton, which never overshoots on the call's strike because the price curve is convex. With zero volatility or zero time the answer comes from a straight line. One quote fixes one unknown, never two.
+> A call's premium falls strictly as its strike rises, from $`S e^{-qT}`$ down to zero, and rises strictly as the spot rises, from zero without limit; the put runs the other way in each. So a premium inside the range fixes one strike or one spot, and a premium outside it fixes none. Bracket by doubling and halving, then solve by bisection or by Newton, which never overshoots on the call's strike because the price curve is convex. With zero volatility or zero time the answer comes from a straight line. One quote fixes one unknown, never two.
 
 ---
 

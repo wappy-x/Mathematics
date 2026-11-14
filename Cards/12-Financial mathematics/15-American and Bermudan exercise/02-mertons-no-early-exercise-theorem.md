@@ -37,47 +37,55 @@ Top line: the live call, priced by the ordinary [Black–Scholes call](../08-The
 
 ## The formula
 
-Notation first, in words. $S$ is Acme's price today, $K$ the strike and $r$ the riskless rate. $C_{\text{Am}}$ is the American call's price and $C_{\text{Eu}}$ the European call's, both on the same share, strike and expiry. $\tau$, read "tau", is the time left to expiry, in years. The house convention writes the discount factor, what a dollar due at expiry is worth today, as $e^{-r\tau}$.
+Notation first, in words. $`S`$ is Acme's price today, $`K`$ the strike and $`r`$ the riskless rate. $`C_{\text{Am}}`$ is the American call's price and $`C_{\text{Eu}}`$ the European call's, both on the same share, strike and expiry. $`\tau`$, read "tau", is the time left to expiry, in years. The house convention writes the discount factor, what a dollar due at expiry is worth today, as $`e^{-r\tau}`$.
 
-$$C_{\text{Am}} \;\ge\; C_{\text{Eu}} \;\ge\; S - K e^{-r\tau} \;\ge\; S - K$$
+```math
+C_{\text{Am}} \;\ge\; C_{\text{Eu}} \;\ge\; S - K e^{-r\tau} \;\ge\; S - K
+```
 
 **Read it aloud:** the American call is worth at least the European one, which is worth at least the share minus the discounted strike, which is at least what exercising pays today.
 
 Every link in that chain says "live beats dead". The theorem closes the loop from the other side and proves
 
-$$C_{\text{Am}} = C_{\text{Eu}} \qquad \text{when no dividend falls before expiry and } r \ge 0.$$
+```math
+C_{\text{Am}} = C_{\text{Eu}} \qquad \text{when no dividend falls before expiry and } r \ge 0.
+```
 
-One cash dividend $D$ paid at time $t_1$ breaks the chain in one place. Exercise just before that payment can be worth it only if
+One cash dividend $`D`$ paid at time $`t_1`$ breaks the chain in one place. Exercise just before that payment can be worth it only if
 
-$$D \;>\; K\left(1 - e^{-r(T - t_1)}\right)$$
+```math
+D \;>\; K\left(1 - e^{-r(T - t_1)}\right)
+```
 
 **Read it aloud:** the dividend must be bigger than the interest the strike money would earn from the payment date to expiry.
 
 When it is, Black's approximation prices the American call as the better of two European calls, one for each date on which exercise could make sense:
 
-$$C_{\text{Am}} \;\approx\; \max\Big(C_{\text{Eu}}(S^{*}, K, T),\; C_{\text{Eu}}(S^{*}, K - D, t_1)\Big)$$
+```math
+C_{\text{Am}} \;\approx\; \max\Big(C_{\text{Eu}}(S^{*}, K, T),\; C_{\text{Eu}}(S^{*}, K - D, t_1)\Big)
+```
 
-Here $C_{\text{Eu}}(\text{share}, \text{strike}, \text{time})$ is the European call priced by the Black-Scholes formula with those three inputs and no yield, and $S^{*}$, the **escrowed spot**, is today's price less the dividend's value today.
+Here $`C_{\text{Eu}}(\text{share}, \text{strike}, \text{time})`$ is the European call priced by the Black-Scholes formula with those three inputs and no yield, and $`S^{*}`$, the **escrowed spot**, is today's price less the dividend's value today.
 
 | Symbol | Plain meaning | In our example | Push it up and the early-exercise premium… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | 100.00 | rises once a dividend is ahead: deep calls lose most to the drop |
-| $K$ | the strike, the price the call may buy at | 100.00 | falls: more strike money left earning interest |
-| $r$ | the riskless rate, continuously compounded | 5% | falls: waiting earns more; below zero the theorem fails |
-| $\sigma$ | volatility, how jumpy the share is. Say "sigma". | 20% | falls: the right to walk away is worth more |
-| $T$ | years from today to expiry | 1 | — |
-| $\tau$ | years left to expiry at the moment of deciding | 1 today | — |
-| $q$ | a continuous dividend yield, the house market's usual 2% | 0 here | rises: a yield is a dividend spread thin |
-| $C_{\text{Am}}$, $C_{\text{Eu}}$ | American and European call prices | 10.45 and 10.45 | — |
-| $P_{\text{Am}}$, $P_{\text{Eu}}$ | American and European put prices, the right to sell at $K$ | 6.09 and 5.57 | — |
-| $D$ | one cash dividend, dollars a share | 2.00, then 5.00 | rises, once past the threshold |
-| $t_1$ | when the share goes ex-dividend: from that date a buyer no longer gets the payment | 0.5 | — |
-| $S^{*}$ | the **escrowed spot**: today's price less the dividend's value today | 98.05 for $D = 2$ | — |
+| $`S`$ | Acme's price today | 100.00 | rises once a dividend is ahead: deep calls lose most to the drop |
+| $`K`$ | the strike, the price the call may buy at | 100.00 | falls: more strike money left earning interest |
+| $`r`$ | the riskless rate, continuously compounded | 5% | falls: waiting earns more; below zero the theorem fails |
+| $`\sigma`$ | volatility, how jumpy the share is. Say "sigma". | 20% | falls: the right to walk away is worth more |
+| $`T`$ | years from today to expiry | 1 | — |
+| $`\tau`$ | years left to expiry at the moment of deciding | 1 today | — |
+| $`q`$ | a continuous dividend yield, the house market's usual 2% | 0 here | rises: a yield is a dividend spread thin |
+| $`C_{\text{Am}}`$, $`C_{\text{Eu}}`$ | American and European call prices | 10.45 and 10.45 | — |
+| $`P_{\text{Am}}`$, $`P_{\text{Eu}}`$ | American and European put prices, the right to sell at $`K`$ | 6.09 and 5.57 | — |
+| $`D`$ | one cash dividend, dollars a share | 2.00, then 5.00 | rises, once past the threshold |
+| $`t_1`$ | when the share goes ex-dividend: from that date a buyer no longer gets the payment | 0.5 | — |
+| $`S^{*}`$ | the **escrowed spot**: today's price less the dividend's value today | 98.05 for $`D = 2`$ | — |
 
 ### When it holds
 
-- **No dividend before expiry.** A share that sheds cash drops in price, and the call holder gets none of the cash. With $D = 5.00$ at six months the premium is $0.35: American $7.93, European $7.58.
-- **Rates not below zero.** The chain uses $K e^{-r\tau} \le K$. With a negative rate, paying the strike later costs money instead of earning it, and exercise can win.
+- **No dividend before expiry.** A share that sheds cash drops in price, and the call holder gets none of the cash. With $`D = 5.00`$ at six months the premium is $0.35: American $7.93, European $7.58.
+- **Rates not below zero.** The chain uses $`K e^{-r\tau} \le K`$. With a negative rate, paying the strike later costs money instead of earning it, and exercise can win.
 - **A call, not a put.** A put holder *receives* the strike on exercise, and receiving money sooner is better. The American put here is worth $6.09 against $5.57 for the European.
 - **No riskless profit and a market to sell in.** The proof compares prices. A holder who cannot sell the call, such as an employee with a stock grant, may still have reasons to exercise; the price does not change, only the holder's options.
 
@@ -93,28 +101,32 @@ Exercising a call swaps it for its exercise value, the share price minus the str
 
 Build two parcels today and hold both to expiry.
 
-- **Parcel A:** one European call, plus $K e^{-r\tau}$ in the bank. At expiry the bank holds exactly $K$.
+- **Parcel A:** one European call, plus $`K e^{-r\tau}`$ in the bank. At expiry the bank holds exactly $`K`$.
 - **Parcel B:** one Acme share.
 
-At expiry, if Acme is above $K$, parcel A exercises, pays $K$ from the bank and holds a share: the same as B. If Acme is at or below $K$, A lets the call lapse and keeps $K$ in cash, which is at least what B's share is worth. So A is worth at least B in every future. Anything that always pays at least as much must cost at least as much today, or buying A and selling B would be a riskless profit. So
+At expiry, if Acme is above $`K`$, parcel A exercises, pays $`K`$ from the bank and holds a share: the same as B. If Acme is at or below $`K`$, A lets the call lapse and keeps $`K`$ in cash, which is at least what B's share is worth. So A is worth at least B in every future. Anything that always pays at least as much must cost at least as much today, or buying A and selling B would be a riskless profit. So
 
-$$C_{\text{Eu}} + K e^{-r\tau} \;\ge\; S, \qquad C_{\text{Eu}} \;\ge\; S - K e^{-r\tau}.$$
+```math
+C_{\text{Eu}} + K e^{-r\tau} \;\ge\; S, \qquad C_{\text{Eu}} \;\ge\; S - K e^{-r\tau}.
+```
 
 This is the lower bound from [Option price bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md). It needed no model of how Acme moves. It did need "no dividend": parcel B is one share with nothing paid out along the way.
 
 ### Step 2: the floor beats the exercise value
 
-When $r \ge 0$, the discounted strike $K e^{-r\tau}$ is at most $K$. So the floor $S - K e^{-r\tau}$ is at least $S - K$. A call is also never worth less than zero. Together:
+When $`r \ge 0`$, the discounted strike $`K e^{-r\tau}`$ is at most $`K`$. So the floor $`S - K e^{-r\tau}`$ is at least $`S - K`$. A call is also never worth less than zero. Together:
 
-$$C_{\text{Eu}} \;\ge\; \max(S - K e^{-r\tau},\, 0) \;\ge\; \max(S - K,\, 0).$$
+```math
+C_{\text{Eu}} \;\ge\; \max(S - K e^{-r\tau},\, 0) \;\ge\; \max(S - K,\, 0).
+```
 
-When $r > 0$ and time is left, the floor sits strictly above the exercise value, by $K(1 - e^{-r\tau})$, the interest on the strike, $4.88 on a one-year $100 strike.
+When $`r > 0`$ and time is left, the floor sits strictly above the exercise value, by $`K(1 - e^{-r\tau})`$, the interest on the strike, $4.88 on a one-year $100 strike.
 
-[Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) says a European call minus a European put on the same share, strike and expiry equals $S - K e^{-r\tau}$. On top of the floor sits the put that parity adds: $C_{\text{Eu}} = (S - K e^{-r\tau}) + P_{\text{Eu}}$. At $S = 100$ that is $4.88 of floor plus $5.57 of put, $10.45 in all. The interest is what early exercise throws away for certain; the put is the right to walk away, thrown away too.
+[Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) says a European call minus a European put on the same share, strike and expiry equals $`S - K e^{-r\tau}`$. On top of the floor sits the put that parity adds: $`C_{\text{Eu}} = (S - K e^{-r\tau}) + P_{\text{Eu}}`$. At $`S = 100`$ that is $4.88 of floor plus $5.57 of put, $10.45 in all. The interest is what early exercise throws away for certain; the put is the right to walk away, thrown away too.
 
 ### Step 3: the American call is worth no more than the European one
 
-Step 2 says the European call is worth at least its exercise value at every moment and every share price. The American call can always copy the European one by never exercising, so $C_{\text{Am}} \ge C_{\text{Eu}}$.
+Step 2 says the European call is worth at least its exercise value at every moment and every share price. The American call can always copy the European one by never exercising, so $`C_{\text{Am}} \ge C_{\text{Eu}}`$.
 
 The other direction comes from working back from expiry. At the last moment both calls pay the same. One step earlier, the American holder chooses the larger of exercising now and waiting. Waiting is worth exactly what the European is worth, and Step 2 says that is at least the exercise value. So the American holder waits, and the two prices stay equal. Repeat back to today.
 
@@ -123,23 +135,23 @@ The check runs exactly this on a 2,000-step tree. It tests the choice at every n
 <details>
 <summary>Detailed proof: backward induction on the tree, and the continuous version</summary>
 
-Take a recombining tree with steps of length $\Delta t$, up factor $u$ and down factor $1/u$, and pricing weight $p = (e^{r\Delta t} - 1/u)/(u - 1/u)$, which lies strictly between 0 and 1 because $1/u < e^{r\Delta t} < u$. Inside this proof only, E is the European value at a node and V the American value.
+Take a recombining tree with steps of length $`\Delta t`$, up factor $`u`$ and down factor $`1/u`$, and pricing weight $`p = (e^{r\Delta t} - 1/u)/(u - 1/u)`$, which lies strictly between 0 and 1 because $`1/u < e^{r\Delta t} < u`$. Inside this proof only, E is the European value at a node and V the American value.
 
-At expiry $V = E = \max(S - K, 0)$. Suppose $V = E$ at every node one step later. At the current node, waiting is worth $e^{-r\Delta t}\,[\,p\,V_{\text{up}} + (1-p)\,V_{\text{down}}\,] = e^{-r\Delta t}\,[\,p\,E_{\text{up}} + (1-p)\,E_{\text{down}}\,] = E$. Parity holds exactly inside such a tree, $E - P = S - K e^{-r\tau}$ with $P \ge 0$, so $E \ge S - K e^{-r\tau} \ge S - K$, and $E \ge 0$. Hence $V = \max(S - K,\, E) = E$. Induction back to today gives $V = E$ at the root.
+At expiry $`V = E = \max(S - K, 0)`$. Suppose $`V = E`$ at every node one step later. At the current node, waiting is worth $`e^{-r\Delta t}\,[\,p\,V_{\text{up}} + (1-p)\,V_{\text{down}}\,] = e^{-r\Delta t}\,[\,p\,E_{\text{up}} + (1-p)\,E_{\text{down}}\,] = E`$. Parity holds exactly inside such a tree, $`E - P = S - K e^{-r\tau}`$ with $`P \ge 0`$, so $`E \ge S - K e^{-r\tau} \ge S - K`$, and $`E \ge 0`$. Hence $`V = \max(S - K,\, E) = E`$. Induction back to today gives $`V = E`$ at the root.
 
-In continuous time, any exercise policy is a random time, written θ (theta), chosen without seeing the future. Its value today is the average, in the risk-neutral world, of $e^{-r\theta}(S_\theta - K)^+$. At the moment θ, Step 2 says $(S_\theta - K)^+ \le C_{\text{Eu}}$ at that moment. The discounted European price is a fair game: its average future value, discounted, is its value today. So every policy is worth at most $C_{\text{Eu}}$ today. The American price is the best policy's value, hence $C_{\text{Am}} \le C_{\text{Eu}}$. With Step 3's other half, $C_{\text{Am}} = C_{\text{Eu}}$.
+In continuous time, any exercise policy is a random time, written θ (theta), chosen without seeing the future. Its value today is the average, in the risk-neutral world, of $`e^{-r\theta}(S_\theta - K)^+`$. At the moment θ, Step 2 says $`(S_\theta - K)^+ \le C_{\text{Eu}}`$ at that moment. The discounted European price is a fair game: its average future value, discounted, is its value today. So every policy is worth at most $`C_{\text{Eu}}`$ today. The American price is the best policy's value, hence $`C_{\text{Am}} \le C_{\text{Eu}}`$. With Step 3's other half, $`C_{\text{Am}} = C_{\text{Eu}}`$.
 
 </details>
 
 ### Step 4: where a dividend breaks it, and why only just before the payment
 
-Let Acme pay one cash dividend $D$ at $t_1$. Treat it as the [Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md) card does: the dividend's value today is set aside, and what is left, the escrowed spot $S^{*}$, is the part of the share that wanders.
+Let Acme pay one cash dividend $`D`$ at $`t_1`$. Treat it as the [Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md) card does: the dividend's value today is set aside, and what is left, the escrowed spot $`S^{*}`$, is the part of the share that wanders.
 
-**Most dates are still ruled out.** After the payment, no more dividends are due, so Steps 1 to 3 apply as they stand: no exercise between $t_1$ and expiry. Before the payment, the share pays nothing until $t_1$. Replace "expiry" with "just before $t_1$" and the same two-parcel argument says the call is worth more alive than dead at any earlier date. The only moment left is the instant before the share goes ex-dividend.
+**Most dates are still ruled out.** After the payment, no more dividends are due, so Steps 1 to 3 apply as they stand: no exercise between $`t_1`$ and expiry. Before the payment, the share pays nothing until $`t_1`$. Replace "expiry" with "just before $`t_1`$" and the same two-parcel argument says the call is worth more alive than dead at any earlier date. The only moment left is the instant before the share goes ex-dividend.
 
-**At that instant, compare.** Exercising pays $S - K$ and collects a share that still carries the dividend. Holding keeps a call on a share about to drop by $D$, with $T - t_1$ left to run. Step 1's floor, applied to the dropped share, says holding is worth at least $S - D - K e^{-r(T - t_1)}$. That floor beats $S - K$ whenever $D \le K(1 - e^{-r(T - t_1)})$. Then exercise never pays, at any share price.
+**At that instant, compare.** Exercising pays $`S - K`$ and collects a share that still carries the dividend. Holding keeps a call on a share about to drop by $`D`$, with $`T - t_1`$ left to run. Step 1's floor, applied to the dropped share, says holding is worth at least $`S - D - K e^{-r(T - t_1)}`$. That floor beats $`S - K`$ whenever $`D \le K(1 - e^{-r(T - t_1)})`$. Then exercise never pays, at any share price.
 
-For Acme, $K(1 - e^{-0.05 \times 0.5}) = 2.47$. **A $2.00 dividend is under the line.** The tree, run on the escrowed share, finds no node where exercise wins, and prices the American call at $9.244880. The European formula gives $9.244684; the 0.02-cent gap is the tree's step error, not a premium. A dividend is necessary for early exercise, not sufficient.
+For Acme, $`K(1 - e^{-0.05 \times 0.5}) = 2.47`$. **A $2.00 dividend is under the line.** The tree, run on the escrowed share, finds no node where exercise wins, and prices the American call at $9.244880. The European formula gives $9.244684; the 0.02-cent gap is the tree's step error, not a premium. A dividend is necessary for early exercise, not sufficient.
 
 **A $5.00 dividend is over it.** Now the tree exercises at 489 nodes, every one of them at step 1,000 of 2,000, the step just before the ex-date. The American call is worth $7.925722 against $7.577356 for the European.
 
@@ -155,16 +167,16 @@ xychart-beta
 
 The first line is what exercise pays, the share price less $100. The second is what holding is worth: a six-month European call on the share after it drops $5.00. Holding wins at $110, $10.20 against $10.00. Exercise wins at $115, $15.00 against $14.08. A bisection, a search that halves the gap between a low and a high guess each round, puts the crossing at $110.75. The tree's lowest exercised node sits at $110.90, within one tree step of it.
 
-**This also gives a second road to the price.** Since the only decision is at $t_1$, the American call is the discounted average, over where Acme's escrowed share lands at $t_1$, of the larger of those two lines. A single integral, split at the $110.75 boundary, gives $7.925118. The tree gives $7.925722. Two methods that share nothing but the model agree to within a tenth of a cent.
+**This also gives a second road to the price.** Since the only decision is at $`t_1`$, the American call is the discounted average, over where Acme's escrowed share lands at $`t_1`$, of the larger of those two lines. A single integral, split at the $110.75 boundary, gives $7.925118. The tree gives $7.925722. Two methods that share nothing but the model agree to within a tenth of a cent.
 
 ### Step 5: Black's approximation, the better of two fixed plans
 
-Fischer Black's 1975 shortcut follows from Step 4. Only two exercise dates matter: the instant before $t_1$, and expiry. Price each as if it were fixed in advance.
+Fischer Black's 1975 shortcut follows from Step 4. Only two exercise dates matter: the instant before $`t_1`$, and expiry. Price each as if it were fixed in advance.
 
-- **Plan 1, hold to expiry.** A European call on the escrowed share: $C_{\text{Eu}}(S^{*}, K, T)$.
-- **Plan 2, exercise just before the ex-date if the call is in the money**, that is, if the share is above the strike. That pays the share still carrying the dividend, $S^{*}_{t_1} + D$, less $K$. That is a call on the escrowed share with strike $K - D$ expiring at $t_1$: $C_{\text{Eu}}(S^{*}, K - D, t_1)$.
+- **Plan 1, hold to expiry.** A European call on the escrowed share: $`C_{\text{Eu}}(S^{*}, K, T)`$.
+- **Plan 2, exercise just before the ex-date if the call is in the money**, that is, if the share is above the strike. That pays the share still carrying the dividend, $`S^{*}_{t_1} + D`$, less $`K`$. That is a call on the escrowed share with strike $`K - D`$ expiring at $`t_1`$: $`C_{\text{Eu}}(S^{*}, K - D, t_1)`$.
 
-Take the larger. The American holder can follow either plan, so each is a lower bound on the true price, and so is their maximum. It falls short because the real holder does not commit today. At $t_1$ the holder sees the share price and picks the better line of the chart above.
+Take the larger. The American holder can follow either plan, so each is a lower bound on the true price, and so is their maximum. It falls short because the real holder does not commit today. At $`t_1`$ the holder sees the share price and picks the better line of the chart above.
 
 | Dividend | European | Black | American (integral) | Premium over European |
 | --- | --- | --- | --- | --- |
@@ -176,41 +188,41 @@ Take the larger. The American holder can follow either plan, so each is a lower 
 
 At the money, Black's second plan loses: for the $5.00 dividend it is worth $6.618302 against $7.577356 for holding, so Black returns the European price and misses the whole premium. At $8.00 plan 2 takes over, $6.4563 against $6.0884, yet Black still sits well below the integral's $7.1929. Deeper in the money Black captures most of the premium, as the experiments below show.
 
-Textbooks often write plan 2 as $C_{\text{Eu}}(S, K, t_1)$, a call on today's full price. That is worth $6.888729 here, not $6.618302: it puts the 20% volatility on the whole share rather than on the escrowed part. Inside the escrowed model the $K - D$ version is the consistent one.
+Textbooks often write plan 2 as $`C_{\text{Eu}}(S, K, t_1)`$, a call on today's full price. That is worth $6.888729 here, not $6.618302: it puts the 20% volatility on the whole share rather than on the escrowed part. Inside the escrowed model the $`K - D`$ version is the consistent one.
 
 ### Step 6: why puts are different
 
-Mirror Step 1 for a put. Parcel A is a put plus one share; parcel B is $K e^{-r\tau}$ in the bank. The same reasoning gives $P_{\text{Eu}} \ge K e^{-r\tau} - S$. But that floor sits *below* the put's exercise value $K - S$, by the interest on the strike. The chain that protected the call runs the wrong way.
+Mirror Step 1 for a put. Parcel A is a put plus one share; parcel B is $`K e^{-r\tau}`$ in the bank. The same reasoning gives $`P_{\text{Eu}} \ge K e^{-r\tau} - S`$. But that floor sits *below* the put's exercise value $`K - S`$, by the interest on the strike. The chain that protected the call runs the wrong way.
 
-The reason is plain. A put holder who exercises receives $K$. Cash received now earns interest; cash received at expiry does not. Deep in the money, where the chance of a recovery is small, the lost interest outweighs the right to wait.
+The reason is plain. A put holder who exercises receives $`K`$. Cash received now earns interest; cash received at expiry does not. Deep in the money, where the chance of a recovery is small, the lost interest outweighs the right to wait.
 
-At $S = 80$ the European put's floor is $15.122942$, below the $20.00 exercise value, and the American put tree exercises at once: it is worth exactly $20.000000. At $S = 100$ the American put is worth $6.089990 against $5.573526 for the European, and the tree exercises at 964,807 nodes. The put's exercise boundary belongs to [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md).
+At $`S = 80`$ the European put's floor is $`15.122942`$, below the $20.00 exercise value, and the American put tree exercises at once: it is worth exactly $20.000000. At $`S = 100`$ the American put is worth $6.089990 against $5.573526 for the European, and the tree exercises at 964,807 nodes. The put's exercise boundary belongs to [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md).
 
-The exact price for one known dividend, by compound options (options on options), is the Roll-Geske-Whaley formula; the integral in Step 4 is its numerical twin. A continuous yield $q > 0$ can also make early exercise pay at any date, not only one; that is the house market's American call, though at $q = 2\%$ its premium is under a millionth of a dollar, and [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md) prices it.
+The exact price for one known dividend, by compound options (options on options), is the Roll-Geske-Whaley formula; the integral in Step 4 is its numerical twin. A continuous yield $`q > 0`$ can also make early exercise pay at any date, not only one; that is the house market's American call, though at $`q = 2\%`$ its premium is under a millionth of a dollar, and [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md) prices it.
 
 ---
 
 ## Worked numbers, by hand
 
-Acme: $S = 100.00$, $K = 100.00$, $r = 5\%$, $\sigma = 20\%$, $T = 1$, $q = 0$.
+Acme: $`S = 100.00`$, $`K = 100.00`$, $`r = 5\%`$, $`\sigma = 20\%`$, $`T = 1`$, $`q = 0`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| exercise value today | $\max(100 - 100, 0)$ | $0.00 |
-| floor | $100 - 100\,e^{-0.05}$ | $4.877058 |
+| exercise value today | $`\max(100 - 100, 0)`$ | $0.00 |
+| floor | $`100 - 100\,e^{-0.05}`$ | $4.877058 |
 | European put, the right to walk away | the ordinary put formula | $5.573526 |
-| European call | floor plus put, $4.877058 + 5.573526$ | $10.450584 |
+| European call | floor plus put, $`4.877058 + 5.573526`$ | $10.450584 |
 | American call, tree with a choice at every node | no node exercises | **$10.449584, equal to the European tree** |
 | same call, share at $120 | the ordinary formula | $26.169044 |
-| thrown away by exercising at $120 | $26.169044 - 20.00$ | **$6.169044** |
-| dividend threshold, $D$ at six months | $100\,(1 - e^{-0.05 \times 0.5})$ | $2.469009 |
-| $D = 2.00$: escrowed spot | $100 - 2\,e^{-0.025}$ | $98.049380 |
-| $D = 2.00$: American call | under the threshold, equals European | **$9.244684** |
-| $D = 5.00$: escrowed spot | $100 - 5\,e^{-0.025}$ | $95.123450 |
-| $D = 5.00$: European call | ordinary formula on $95.123450 | $7.577356 |
-| $D = 5.00$: Black's plan 2 | call on $95.123450, strike $95, six months | $6.618302 |
-| $D = 5.00$: Black's approximation | the larger | $7.577356 |
-| $D = 5.00$: American call | integral split at $110.75 | **$7.925118** |
+| thrown away by exercising at $120 | $`26.169044 - 20.00`$ | **$6.169044** |
+| dividend threshold, $`D`$ at six months | $`100\,(1 - e^{-0.05 \times 0.5})`$ | $2.469009 |
+| $`D = 2.00`$: escrowed spot | $`100 - 2\,e^{-0.025}`$ | $98.049380 |
+| $`D = 2.00`$: American call | under the threshold, equals European | **$9.244684** |
+| $`D = 5.00`$: escrowed spot | $`100 - 5\,e^{-0.025}`$ | $95.123450 |
+| $`D = 5.00`$: European call | ordinary formula on $95.123450 | $7.577356 |
+| $`D = 5.00`$: Black's plan 2 | call on $95.123450, strike $95, six months | $6.618302 |
+| $`D = 5.00`$: Black's approximation | the larger | $7.577356 |
+| $`D = 5.00`$: American call | integral split at $110.75 | **$7.925118** |
 
 With no dividend, the American right is worth nothing, and exercising a call worth $26.17 for $20.00 destroys $6.17. With a $5.00 dividend the right is worth about 35 cents, and all of it is the choice made the instant before the ex-date.
 
@@ -633,9 +645,9 @@ ALL CHECKS PASS
 
 Lean proves the no-dividend claims on the tree from the detailed proof, for any strike and any number of steps.
 
-- Take that tree with $r \ge 0$, $1/u < e^{r\Delta t} < u$ and a strike $K \ge 0$. Then $C_{\text{Am}} = C_{\text{Eu}}$ at every share price.
-- Take the same tree, with $\tau$ the time left. Then $\max(S - K, 0) \le \max(S - K e^{-r\tau}, 0) \le C_{\text{Eu}}$.
-- Take the same tree with $r > 0$, $K > 0$ and at least one step left. Then at some share price, $P_{\text{Am}}$ is above $P_{\text{Eu}}$.
+- Take that tree with $`r \ge 0`$, $`1/u < e^{r\Delta t} < u`$ and a strike $`K \ge 0`$. Then $`C_{\text{Am}} = C_{\text{Eu}}`$ at every share price.
+- Take the same tree, with $`\tau`$ the time left. Then $`\max(S - K, 0) \le \max(S - K e^{-r\tau}, 0) \le C_{\text{Eu}}`$.
+- Take the same tree with $`r > 0`$, $`K > 0`$ and at least one step left. Then at some share price, $`P_{\text{Am}}`$ is above $`P_{\text{Eu}}`$.
 - A 2,000-step tree has 2,001,000 decision points before expiry.
 - Exercising a call with strike 100 at a share price of 120 pays 20.
 - Step 1,000 of 2,000 is exactly half the year, the six-month ex-date.
@@ -919,7 +931,7 @@ end MertonNoEarlyExercise
 - **Listed calls on non-dividend shares.** Listed share options are mostly American. On shares that pay nothing, the European formula prices the calls with no correction.
 - **Dividend-capture exercise.** The evening before a large dividend goes ex, deep in-the-money calls get exercised in bulk. A holder who misses that evening keeps a call on a share about to drop, and loses the difference.
 - **Employee stock options.** They cannot be sold, so Step 0's "sell rather than exercise" is closed. Employees exercise early to diversify or to meet a tax date. The price has not changed; the holder's exit has.
-- **Negative rates.** Several central banks set deposit rates below zero in the 2010s. The chain in The formula breaks at $K e^{-r\tau} \le K$, and early exercise of calls could pay without any dividend.
+- **Negative rates.** Several central banks set deposit rates below zero in the 2010s. The chain in The formula breaks at $`K e^{-r\tau} \le K`$, and early exercise of calls could pay without any dividend.
 - **Puts.** At a positive rate every American put carries an early-exercise premium. Where the exercise line sits is mapped by [The perpetual American put](05-perpetual-american-put.md) for a put with no expiry and [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md) for the general case.
 
 > **Say it back**
@@ -930,8 +942,8 @@ end MertonNoEarlyExercise
 ## What this builds on
 
 - [American options](01-american-options-and-early-exercise.md): the American contract, the tree with a choice at every node, and the early-exercise premium this card shows is zero for calls.
-- [Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md): the escrowed spot $S^{*}$ and the European call on it, $9.244684 for the $2.00 dividend.
-- [Option price bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md): the floor $S - K e^{-r\tau}$ that carries Steps 1 and 2.
+- [Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md): the escrowed spot $`S^{*}`$ and the European call on it, $9.244684 for the $2.00 dividend.
+- [Option price bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md): the floor $`S - K e^{-r\tau}`$ that carries Steps 1 and 2.
 
 ## Where this goes next
 

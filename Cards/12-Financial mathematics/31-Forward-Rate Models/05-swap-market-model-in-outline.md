@@ -38,56 +38,68 @@ Orange: the swap rate's volatility implied by the forward market model, rising f
 
 ## The formula
 
-Notation first, in words. $P(t,T)$ is the price at date $t$ of one dollar paid at date $T$: a zero-coupon bond. A superscript on $Q$ names the unit of account that prices are counted in: $Q^{A}$ is the **annuity measure** ([The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)), under which prices are counted in annuities, and $Q^{T_3}$ counts them in bonds paying at $T_3$. A $dW$ is the tiny random kick of a Brownian motion over a tiny slice of time.
+Notation first, in words. $`P(t,T)`$ is the price at date $`t`$ of one dollar paid at date $`T`$: a zero-coupon bond. A superscript on $`Q`$ names the unit of account that prices are counted in: $`Q^{A}`$ is the **annuity measure** ([The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)), under which prices are counted in annuities, and $`Q^{T_3}`$ counts them in bonds paying at $`T_3`$. A $`dW`$ is the tiny random kick of a Brownian motion over a tiny slice of time.
 
-The swap starts at $T_1$ = 1 year and pays fixed at $T_2$ = 2 and $T_3$ = 3 years, one year's interest each time. Its **annuity** and **swap rate** are
+The swap starts at $`T_1`$ = 1 year and pays fixed at $`T_2`$ = 2 and $`T_3`$ = 3 years, one year's interest each time. Its **annuity** and **swap rate** are
 
-$$A(t) = P(t,T_2) + P(t,T_3), \qquad S(t) = \frac{P(t,T_1) - P(t,T_3)}{A(t)}.$$
+```math
+A(t) = P(t,T_2) + P(t,T_3), \qquad S(t) = \frac{P(t,T_1) - P(t,T_3)}{A(t)}.
+```
 
-The **swap market model** chooses, before $T_1$,
+The **swap market model** chooses, before $`T_1`$,
 
-$$\frac{dS(t)}{S(t)} = \gamma(t)\,dW^{A}(t) \quad\text{under } Q^{A},$$
+```math
+\frac{dS(t)}{S(t)} = \gamma(t)\,dW^{A}(t) \quad\text{under } Q^{A},
+```
 
-with $\gamma$ a fixed number or a fixed function of time, never of rates. A payer swaption (the right to enter the swap paying the fixed rate) with strike $K$ on notional $M$ then has exactly Black's price:
+with $`\gamma`$ a fixed number or a fixed function of time, never of rates. A payer swaption (the right to enter the swap paying the fixed rate) with strike $`K`$ on notional $`M`$ then has exactly Black's price:
 
-$$V = M\,A(0)\,\bigl[S(0)\,N(d_1) - K\,N(d_2)\bigr], \qquad d_{1,2} = \frac{\ln(S(0)/K) \pm \tfrac12\gamma^2 T_1}{\gamma\sqrt{T_1}}.$$
+```math
+V = M\,A(0)\,\bigl[S(0)\,N(d_1) - K\,N(d_2)\bigr], \qquad d_{1,2} = \frac{\ln(S(0)/K) \pm \tfrac12\gamma^2 T_1}{\gamma\sqrt{T_1}}.
+```
 
 **Read it aloud:** the swap rate's percentage moves are pure noise of a fixed size when counted in annuities, so a swaption is today's annuity times a Black call on the swap rate.
 
-The **forward market model** makes a different choice. Each forward, $L_1$ for year 1 to 2 and $L_2$ for year 2 to 3, is lognormal under the unit of its own payment bond:
+The **forward market model** makes a different choice. Each forward, $`L_1`$ for year 1 to 2 and $`L_2`$ for year 2 to 3, is lognormal under the unit of its own payment bond:
 
-$$\frac{dL_1}{L_1} = \sigma_1\,dW_1 \ \text{under } Q^{T_2}, \qquad \frac{dL_2}{L_2} = \sigma_2\,dW_2 \ \text{under } Q^{T_3}.$$
+```math
+\frac{dL_1}{L_1} = \sigma_1\,dW_1 \ \text{under } Q^{T_2}, \qquad \frac{dL_2}{L_2} = \sigma_2\,dW_2 \ \text{under } Q^{T_3}.
+```
 
 The clash is one line of algebra. Bonds link the swap rate to the forwards:
 
-$$S = \frac{L_1 + L_2 + L_1 L_2}{2 + L_2},$$
+```math
+S = \frac{L_1 + L_2 + L_1 L_2}{2 + L_2},
+```
 
 and under the forward market model the swap rate's percentage volatility has one piece per shock:
 
-$$\Gamma_1 = \frac{\sigma_1 L_1 (1 + L_2)}{L_1 + L_2 + L_1 L_2}, \qquad \Gamma_2 = \frac{\sigma_2 L_2 (2 + L_1)}{(2 + L_2)(L_1 + L_2 + L_1 L_2)}, \qquad \Gamma = \sqrt{\Gamma_1^2 + \Gamma_2^2}.$$
+```math
+\Gamma_1 = \frac{\sigma_1 L_1 (1 + L_2)}{L_1 + L_2 + L_1 L_2}, \qquad \Gamma_2 = \frac{\sigma_2 L_2 (2 + L_1)}{(2 + L_2)(L_1 + L_2 + L_1 L_2)}, \qquad \Gamma = \sqrt{\Gamma_1^2 + \Gamma_2^2}.
+```
 
 **Read it aloud:** the swap rate's volatility is made of the forwards' volatilities, weighted by how much each forward matters to the swap right now, and those weights change as the forwards move.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T_1$, $T_2$, $T_3$, $t$ | swap start and swaption expiry; the two fixed payment dates; any date before $T_1$ | 1, 2, 3 years | a later expiry gives more room for the weights to drift |
-| $P(t,T)$, $T$ | price at date $t$ of one dollar paid at date $T$ | 0.975610, 0.947194, 0.910763 today | the swap rate falls if only the far bond rises |
-| $L_1$, $L_2$, $x$, $y$ | forward rates for year 1 to 2 and year 2 to 3 (written $x$, $y$ in the proof) | 3% and 4% | the swap rate rises; its volatility moves too (up, as $L_1$ runs from 1% to 8%) |
-| $\sigma_1$, $\sigma_2$ | volatilities of the forwards in the forward market model | 20% and 10% a year | the swap rate's volatility rises |
-| $W_1$, $W_2$, $W^{A}$, $dW$ | independent random shocks; the swap model's single shock under $Q^{A}$; a shock's tiny kick | — | — |
-| $A$ | the annuity: value of one dollar of fixed rate paid on each payment date | 1.857957 | each point of rate is worth more money |
-| $S$ | the swap rate: the fixed rate that makes the swap worth zero | 3.4902% | a payer swaption is worth more |
-| $\gamma$ | the swap market model's volatility for $S$, chosen by the modeller | 10.40% a year | every swaption rises |
-| $\Gamma_1$, $\Gamma_2$, $\Gamma$ | the swap rate's volatility from each shock, and in total, under the forward market model | 8.7640%, 5.5904%, 10.3953% | — |
-| $K$, $M$, $V$ | swaption strike; notional, the amount the swap's interest is paid on; the payer swaption's price today | 2.5% to 5%; $10,000,000; see the smile table | payer falls; everything scales; — |
-| $N(x)$, $d_1$, $d_2$ | bell-curve area left of $x$; Black's two cut-offs | — | — |
-| $Q$, $Q^{A}$, $Q^{T_2}$, $Q^{T_3}$ | pricing weights with annuities, or bonds paying at $T_2$ or $T_3$, as the unit | — | — |
+| $`T_1`$, $`T_2`$, $`T_3`$, $`t`$ | swap start and swaption expiry; the two fixed payment dates; any date before $`T_1`$ | 1, 2, 3 years | a later expiry gives more room for the weights to drift |
+| $`P(t,T)`$, $`T`$ | price at date $`t`$ of one dollar paid at date $`T`$ | 0.975610, 0.947194, 0.910763 today | the swap rate falls if only the far bond rises |
+| $`L_1`$, $`L_2`$, $`x`$, $`y`$ | forward rates for year 1 to 2 and year 2 to 3 (written $`x`$, $`y`$ in the proof) | 3% and 4% | the swap rate rises; its volatility moves too (up, as $`L_1`$ runs from 1% to 8%) |
+| $`\sigma_1`$, $`\sigma_2`$ | volatilities of the forwards in the forward market model | 20% and 10% a year | the swap rate's volatility rises |
+| $`W_1`$, $`W_2`$, $`W^{A}`$, $`dW`$ | independent random shocks; the swap model's single shock under $`Q^{A}`$; a shock's tiny kick | — | — |
+| $`A`$ | the annuity: value of one dollar of fixed rate paid on each payment date | 1.857957 | each point of rate is worth more money |
+| $`S`$ | the swap rate: the fixed rate that makes the swap worth zero | 3.4902% | a payer swaption is worth more |
+| $`\gamma`$ | the swap market model's volatility for $`S`$, chosen by the modeller | 10.40% a year | every swaption rises |
+| $`\Gamma_1`$, $`\Gamma_2`$, $`\Gamma`$ | the swap rate's volatility from each shock, and in total, under the forward market model | 8.7640%, 5.5904%, 10.3953% | — |
+| $`K`$, $`M`$, $`V`$ | swaption strike; notional, the amount the swap's interest is paid on; the payer swaption's price today | 2.5% to 5%; $10,000,000; see the smile table | payer falls; everything scales; — |
+| $`N(x)`$, $`d_1`$, $`d_2`$ | bell-curve area left of $`x`$; Black's two cut-offs | — | — |
+| $`Q`$, $`Q^{A}`$, $`Q^{T_2}`$, $`Q^{T_3}`$ | pricing weights with annuities, or bonds paying at $`T_2`$ or $`T_3`$, as the unit | — | — |
 
 ### When it holds
 
 - **Positive rates, one curve.** The same bonds set both the forwards and the discounting. Lognormal rates cannot go below zero. With negative rates a desk shifts the rate or uses a normal model ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)); the clash on this card survives in the shifted rates.
-- **Deterministic volatility.** $\gamma$ may depend on time, not on rates. Let it depend on rates or on a random factor and the clash can go away, at the price of Black no longer being exact.
-- **A physically settled swaption.** The holder receives the swap itself, worth $A(T_1)(S(T_1) - K)$ per dollar of notional. Cash settlement uses a different annuity formula and needs its own pricing unit.
+- **Deterministic volatility.** $`\gamma`$ may depend on time, not on rates. Let it depend on rates or on a random factor and the clash can go away, at the price of Black no longer being exact.
+- **A physically settled swaption.** The holder receives the swap itself, worth $`A(T_1)(S(T_1) - K)`$ per dollar of notional. Cash settlement uses a different annuity formula and needs its own pricing unit.
 - **Two or more coupons, and moving forwards.** With one coupon the swap rate is the forward itself and nothing clashes. With every volatility zero nothing moves and nothing clashes either.
 
 ---
@@ -98,63 +110,71 @@ $$\Gamma_1 = \frac{\sigma_1 L_1 (1 + L_2)}{L_1 + L_2 + L_1 L_2}, \qquad \Gamma_2
 
 A two-year swap pays the fixed rate twice and receives the two floating rates. It is fair when the fixed rate equals an average of the two forwards, each weighted by the value of its payment date:
 
-$$S = \frac{P(t,T_2)}{A}\,L_1 + \frac{P(t,T_3)}{A}\,L_2.$$
+```math
+S = \frac{P(t,T_2)}{A}\,L_1 + \frac{P(t,T_3)}{A}\,L_2.
+```
 
 Today the weights are 0.509804 and 0.490196. Both depend on bond prices, and bond prices depend on the forwards. So the swap rate is not a fixed blend. It is a blend whose recipe changes as rates move.
 
 ### Step 1: write the swap rate as a function of the two forwards
 
-Count every bond in units of the $T_1$ bond. Rolling a dollar forward one year at $L_1$ gives $P(T_2)/P(T_1) = 1/(1 + L_1)$, and another year gives $P(T_3)/P(T_1) = 1/((1 + L_1)(1 + L_2))$. Put those into $S = (P(T_1) - P(T_3))/A$ and multiply top and bottom by $(1 + L_1)(1 + L_2)$:
+Count every bond in units of the $`T_1`$ bond. Rolling a dollar forward one year at $`L_1`$ gives $`P(T_2)/P(T_1) = 1/(1 + L_1)`$, and another year gives $`P(T_3)/P(T_1) = 1/((1 + L_1)(1 + L_2))`$. Put those into $`S = (P(T_1) - P(T_3))/A`$ and multiply top and bottom by $`(1 + L_1)(1 + L_2)`$:
 
-$$S = \frac{(1+L_1)(1+L_2) - 1}{(1 + L_2) + 1} = \frac{L_1 + L_2 + L_1 L_2}{2 + L_2}.$$
+```math
+S = \frac{(1+L_1)(1+L_2) - 1}{(1 + L_2) + 1} = \frac{L_1 + L_2 + L_1 L_2}{2 + L_2}.
+```
 
-The $L_1 L_2$ term is interest on interest. The denominator is the annuity in the same units.
+The $`L_1 L_2`$ term is interest on interest. The denominator is the annuity in the same units.
 
 ### Step 2: the swap rate has no drift in annuity units, whatever the model
 
-A swap rate is a traded difference of bonds divided by a traded annuity. Any traded price divided by the unit of account has no drift under that unit's pricing weights. So $S$ is a **martingale** (a process whose average future value is its value today) under $Q^{A}$, in every model without free money. That is the annuity-measure card's theorem.
+A swap rate is a traded difference of bonds divided by a traded annuity. Any traded price divided by the unit of account has no drift under that unit's pricing weights. So $`S`$ is a **martingale** (a process whose average future value is its value today) under $`Q^{A}`$, in every model without free money. That is the annuity-measure card's theorem.
 
-It says nothing about the *size* or *shape* of the swap rate's moves. The swap market model's extra assumption is the shape: lognormal, with fixed $\gamma$.
+It says nothing about the *size* or *shape* of the swap rate's moves. The swap market model's extra assumption is the shape: lognormal, with fixed $`\gamma`$.
 
 The draws in the code confirm the no-drift half: averaged with annuity weights over two million simulated futures, the swap rate at expiry is 3.4902%, today's value.
 
 ### Step 3: under the forward market model, the swap rate's volatility depends on the rates
 
-Take the forward market model with independent shocks. Counted in $T_3$ bonds, both forwards have no drift: the second by construction, the first because its drift correction is proportional to the correlation between the shocks, here zero. Now apply Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) to Step 1's formula. The random part of the swap rate's percentage move is
+Take the forward market model with independent shocks. Counted in $`T_3`$ bonds, both forwards have no drift: the second by construction, the first because its drift correction is proportional to the correlation between the shocks, here zero. Now apply Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) to Step 1's formula. The random part of the swap rate's percentage move is
 
-$$\frac{dS}{S} = (\text{no drift under } Q^{A}) + \Gamma_1\,dW_1 + \Gamma_2\,dW_2^{A},$$
+```math
+\frac{dS}{S} = (\text{no drift under } Q^{A}) + \Gamma_1\,dW_1 + \Gamma_2\,dW_2^{A},
+```
 
-with $\Gamma_1$ and $\Gamma_2$ as in The formula, and $dW_2^{A}$ the second shock as seen in annuity units. Each is a forward's volatility times the percentage sensitivity of $S$ to that forward. At today's rates those sensitivities are 0.438202 and 0.559044, giving $\Gamma_1$ = 8.7640% and $\Gamma_2$ = 5.5904%. The total, $\Gamma$ = 10.3953%, is the square root of the sum of squares because the shocks are independent.
+with $`\Gamma_1`$ and $`\Gamma_2`$ as in The formula, and $`dW_2^{A}`$ the second shock as seen in annuity units. Each is a forward's volatility times the percentage sensitivity of $`S`$ to that forward. At today's rates those sensitivities are 0.438202 and 0.559044, giving $`\Gamma_1`$ = 8.7640% and $`\Gamma_2`$ = 5.5904%. The total, $`\Gamma`$ = 10.3953%, is the square root of the sum of squares because the shocks are independent.
 
-Move the first forward to 6% and $\Gamma_1$ becomes 12.1875% and $\Gamma_2$ 3.9445%; the total becomes 12.8099%. The swap rate's volatility has changed although no volatility input changed.
+Move the first forward to 6% and $`\Gamma_1`$ becomes 12.1875% and $`\Gamma_2`$ 3.9445%; the total becomes 12.8099%. The swap rate's volatility has changed although no volatility input changed.
 
 ### Step 4: a deterministic volatility cannot equal a moving one
 
-The swap market model demands that the swap rate's squared volatility equal $\gamma(t)^2$, a number fixed in advance for each date. The forward market model delivers $\Gamma^2$, which depends on where $L_1$ and $L_2$ happen to be. Both forwards are lognormal with independent shocks, so at any date before expiry every pair of positive rates is possible. $\Gamma^2$ takes different values across those pairs. No fixed number can match all of them. So the two models cannot both hold for the same swap.
+The swap market model demands that the swap rate's squared volatility equal $`\gamma(t)^2`$, a number fixed in advance for each date. The forward market model delivers $`\Gamma^2`$, which depends on where $`L_1`$ and $`L_2`$ happen to be. Both forwards are lognormal with independent shocks, so at any date before expiry every pair of positive rates is possible. $`\Gamma^2`$ takes different values across those pairs. No fixed number can match all of them. So the two models cannot both hold for the same swap.
 
-The squared volatility is the right thing to compare because it does not depend on how the shocks are labelled: rotate or recombine $W_1$ and $W_2$ and the total variance of $\ln S$ per unit time stays the same.
+The squared volatility is the right thing to compare because it does not depend on how the shocks are labelled: rotate or recombine $`W_1`$ and $`W_2`$ and the total variance of $`\ln S`$ per unit time stays the same.
 
 <details>
 <summary>Detailed proof</summary>
 
-Work before $T_1$ and write $x = L_1$, $y = L_2$, $f(x,y) = (x + y + xy)/(2 + y)$.
+Work before $`T_1`$ and write $`x = L_1`$, $`y = L_2`$, $`f(x,y) = (x + y + xy)/(2 + y)`$.
 
-**The two forwards under $Q^{T_3}$.** $y$ is driftless lognormal under $Q^{T_3}$ by assumption. $x$ is driftless under $Q^{T_2}$; the density of $Q^{T_2}$ relative to $Q^{T_3}$ is proportional to $P(t,T_2)/P(t,T_3) = 1 + y$, whose random part is driven by $W_2$ alone. Since $W_1$ and $W_2$ are independent, the change of unit shifts only $W_2$, so $x$ stays driftless under $Q^{T_3}$ too. Hence $x_t = L_1(0)\,e^{\sigma_1 W_1(t) - \sigma_1^2 t/2}$ and $y_t = L_2(0)\,e^{\sigma_2 W_2(t) - \sigma_2^2 t/2}$, independent, with a strictly positive joint density on the whole positive quadrant at every $0 < t \le T_1$.
+**The two forwards under $`Q^{T_3}`$.** $`y`$ is driftless lognormal under $`Q^{T_3}`$ by assumption. $`x`$ is driftless under $`Q^{T_2}`$; the density of $`Q^{T_2}`$ relative to $`Q^{T_3}`$ is proportional to $`P(t,T_2)/P(t,T_3) = 1 + y`$, whose random part is driven by $`W_2`$ alone. Since $`W_1`$ and $`W_2`$ are independent, the change of unit shifts only $`W_2`$, so $`x`$ stays driftless under $`Q^{T_3}`$ too. Hence $`x_t = L_1(0)\,e^{\sigma_1 W_1(t) - \sigma_1^2 t/2}`$ and $`y_t = L_2(0)\,e^{\sigma_2 W_2(t) - \sigma_2^2 t/2}`$, independent, with a strictly positive joint density on the whole positive quadrant at every $`0 < t \le T_1`$.
 
-**Change to annuity units.** The density of $Q^{A}$ relative to $Q^{T_3}$ is $A(t)/P(t,T_3) = 2 + y$, normalised by its value today. Its random part is $\sigma_2 y/(2 + y)\,dW_2$, so Girsanov's theorem gives $dW_2 = dW_2^{A} + \sigma_2 y/(2 + y)\,dt$ and leaves $W_1$ alone. Under $Q^{A}$, $dx = \sigma_1 x\,dW_1$ and $dy = \sigma_2^2 y^2/(2 + y)\,dt + \sigma_2 y\,dW_2^{A}$. Equivalent measures agree on which sets of states have positive probability, so full support survives.
+**Change to annuity units.** The density of $`Q^{A}`$ relative to $`Q^{T_3}`$ is $`A(t)/P(t,T_3) = 2 + y`$, normalised by its value today. Its random part is $`\sigma_2 y/(2 + y)\,dW_2`$, so Girsanov's theorem gives $`dW_2 = dW_2^{A} + \sigma_2 y/(2 + y)\,dt`$ and leaves $`W_1`$ alone. Under $`Q^{A}`$, $`dx = \sigma_1 x\,dW_1`$ and $`dy = \sigma_2^2 y^2/(2 + y)\,dt + \sigma_2 y\,dW_2^{A}`$. Equivalent measures agree on which sets of states have positive probability, so full support survives.
 
-**Itô's lemma on $f(x,y)$.** The partial derivatives are $f_x = (1 + y)/(2 + y)$, $f_y = (2 + x)/(2 + y)^2$, $f_{xx} = 0$, $f_{yy} = -2(2 + x)/(2 + y)^3$, and $x$, $y$ have no joint variation. The drift of $S = f(x,y)$ under $Q^{A}$ is
-$$f_y\,\frac{\sigma_2^2 y^2}{2 + y} + \tfrac12 f_{yy}\,\sigma_2^2 y^2 = \frac{\sigma_2^2 y^2 (2 + x)}{(2 + y)^3} - \frac{\sigma_2^2 y^2 (2 + x)}{(2 + y)^3} = 0,$$
-as Step 2 promised. The diffusion is $f_x \sigma_1 x\,dW_1 + f_y \sigma_2 y\,dW_2^{A}$. Dividing by $S$ gives $\Gamma_1$ and $\Gamma_2$ as stated.
+**Itô's lemma on $`f(x,y)`$.** The partial derivatives are $`f_x = (1 + y)/(2 + y)`$, $`f_y = (2 + x)/(2 + y)^2`$, $`f_{xx} = 0`$, $`f_{yy} = -2(2 + x)/(2 + y)^3`$, and $`x`$, $`y`$ have no joint variation. The drift of $`S = f(x,y)`$ under $`Q^{A}`$ is
 
-**The contradiction.** The variance rate of $\ln S$ is $v(x,y) = \Gamma_1^2 + \Gamma_2^2$, a quantity that no relabelling of the shocks changes. It is continuous, and it is not constant: at $y$ = 4% its square root is 10.3953% at $x$ = 3% and 12.8099% at $x$ = 6%, as Worked numbers shows. If the swap market model held, $v(x_t, y_t) = \gamma(t)^2$ for almost every $t$ with probability one. Pick such a $t > 0$: full support and continuity would force $v(x,y)$ to be constant on the quadrant. It is not. So a non-degenerate two-factor lognormal forward model and a deterministic-volatility lognormal swap model cannot describe the same two-coupon swap.
+$`\displaystyle f_y\,\frac{\sigma_2^2 y^2}{2 + y} + \tfrac12 f_{yy}\,\sigma_2^2 y^2 = \frac{\sigma_2^2 y^2 (2 + x)}{(2 + y)^3} - \frac{\sigma_2^2 y^2 (2 + x)}{(2 + y)^3} = 0,`$
+
+as Step 2 promised. The diffusion is $`f_x \sigma_1 x\,dW_1 + f_y \sigma_2 y\,dW_2^{A}`$. Dividing by $`S`$ gives $`\Gamma_1`$ and $`\Gamma_2`$ as stated.
+
+**The contradiction.** The variance rate of $`\ln S`$ is $`v(x,y) = \Gamma_1^2 + \Gamma_2^2`$, a quantity that no relabelling of the shocks changes. It is continuous, and it is not constant: at $`y`$ = 4% its square root is 10.3953% at $`x`$ = 3% and 12.8099% at $`x`$ = 6%, as Worked numbers shows. If the swap market model held, $`v(x_t, y_t) = \gamma(t)^2`$ for almost every $`t`$ with probability one. Pick such a $`t > 0`$: full support and continuity would force $`v(x,y)`$ to be constant on the quadrant. It is not. So a non-degenerate two-factor lognormal forward model and a deterministic-volatility lognormal swap model cannot describe the same two-coupon swap.
 
 </details>
 
 
 ### Step 5: the converse in numbers
 
-Suppose the swap rate and the second forward are both lognormal, as a swap market model on the two swaps ending at year 3 says (the one-coupon swap from year 2 to 3 has swap rate $L_2$). Then the first forward is whatever the bonds make it: $L_1 = (S(2 + L_2) - L_2)/(1 + L_2)$. If the swap rate falls to 1% while $L_2$ stays at 4%, the first forward comes out at −1.8846%. Both roads in the code, the formula and rebuilding the bonds, agree.
+Suppose the swap rate and the second forward are both lognormal, as a swap market model on the two swaps ending at year 3 says (the one-coupon swap from year 2 to 3 has swap rate $`L_2`$). Then the first forward is whatever the bonds make it: $`L_1 = (S(2 + L_2) - L_2)/(1 + L_2)`$. If the swap rate falls to 1% while $`L_2`$ stays at 4%, the first forward comes out at −1.8846%. Both roads in the code, the formula and rebuilding the bonds, agree.
 
 When the two lognormal rates are driven by shocks that are not perfectly correlated, every pair of positive values is possible, so this state has positive probability. A lognormal rate never goes below zero, so in a swap market model the forwards are not lognormal, and caplets are no longer priced exactly by Black.
 
@@ -162,26 +182,26 @@ When the two lognormal rates are driven by shocks that are not perfectly correla
 
 The practical escape is approximation: pretend the moving parts stay where they are today. Rebonato's formula, the one the calibration card uses ([Calibrating a market model](04-calibrating-a-market-model.md)), freezes Step 0's weights at 0.509804 and 0.490196. The swap rate's volatility is then 10.4101% for the whole life of the option.
 
-Freezing instead Step 3's sensitivities, which also count how the weights move, gives today's $\Gamma$, 10.3953%. At the money (strike equal to today's swap rate, 3.4902%) these price the swaption at $26,918.72 and $26,880.39, against the forward model's $26,905.75: close, not exact, and the gap grows away from the money.
+Freezing instead Step 3's sensitivities, which also count how the weights move, gives today's $`\Gamma`$, 10.3953%. At the money (strike equal to today's swap rate, 3.4902%) these price the swaption at $26,918.72 and $26,880.39, against the forward model's $26,905.75: close, not exact, and the gap grows away from the money.
 
 ---
 
 ## Worked numbers, by hand
 
-Notional $10,000,000. The rate for the first year is 2.5%, so $P(0,T_1)$ = 1/1.025. Forwards 3% and 4%, volatilities 20% and 10%, independent shocks, expiry one year.
+Notional $10,000,000. The rate for the first year is 2.5%, so $`P(0,T_1)`$ = 1/1.025. Forwards 3% and 4%, volatilities 20% and 10%, independent shocks, expiry one year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $P(0,T_1)$ | $1/1.025$ | 0.975610 |
-| $P(0,T_2)$ | $0.975610/1.03$ | 0.947194 |
-| $P(0,T_3)$ | $0.947194/1.04$ | 0.910763 |
-| annuity $A(0)$ | $0.947194 + 0.910763$ | 1.857957 |
-| swap rate $S(0)$ | $(0.03 + 0.04 + 0.0012)/2.04 = 0.0712/2.04$ | **3.4902%** |
-| $\Gamma_1$ at $L_1$ = 3% | $0.20 \times 0.03 \times 1.04 / 0.0712$ | 8.7640% |
-| $\Gamma_2$ at $L_1$ = 3% | $0.10 \times 0.04 \times 2.03 / (2.04 \times 0.0712)$ | 5.5904% |
-| $\Gamma$ at $L_1$ = 3% | $\sqrt{0.087640^2 + 0.055904^2}$ | **10.3953%** |
-| $\Gamma_1$ at $L_1$ = 6% | $0.20 \times 0.06 \times 1.04 / 0.1024$ | 12.1875% |
-| $\Gamma$ at $L_1$ = 6% | $\sqrt{0.121875^2 + 0.039445^2}$ | **12.8099%** |
+| $`P(0,T_1)`$ | $`1/1.025`$ | 0.975610 |
+| $`P(0,T_2)`$ | $`0.975610/1.03`$ | 0.947194 |
+| $`P(0,T_3)`$ | $`0.947194/1.04`$ | 0.910763 |
+| annuity $`A(0)`$ | $`0.947194 + 0.910763`$ | 1.857957 |
+| swap rate $`S(0)`$ | $`(0.03 + 0.04 + 0.0012)/2.04 = 0.0712/2.04`$ | **3.4902%** |
+| $`\Gamma_1`$ at $`L_1`$ = 3% | $`0.20 \times 0.03 \times 1.04 / 0.0712`$ | 8.7640% |
+| $`\Gamma_2`$ at $`L_1`$ = 3% | $`0.10 \times 0.04 \times 2.03 / (2.04 \times 0.0712)`$ | 5.5904% |
+| $`\Gamma`$ at $`L_1`$ = 3% | $`\sqrt{0.087640^2 + 0.055904^2}`$ | **10.3953%** |
+| $`\Gamma_1`$ at $`L_1`$ = 6% | $`0.20 \times 0.06 \times 1.04 / 0.1024`$ | 12.1875% |
+| $`\Gamma`$ at $`L_1`$ = 6% | $`\sqrt{0.121875^2 + 0.039445^2}`$ | **12.8099%** |
 
 Doubling the first forward lifted the swap rate's volatility by almost a quarter, with no input volatility touched. A desk running a forward market model sees its swap-rate volatilities drift with the curve; a desk running a swap market model sees its caplet volatilities do the same.
 
@@ -225,7 +245,7 @@ The code prints every one of these.
 
 ## Code, from first principles, and it actually runs
 
-Every result is reached twice. The swap rate comes from bond prices and from Step 1's algebra. Its volatility comes from the $\Gamma$ formulas and from nudging each forward and re-pricing the bonds.
+Every result is reached twice. The swap rate comes from bond prices and from Step 1's algebra. Its volatility comes from the $`\Gamma`$ formulas and from nudging each forward and re-pricing the bonds.
 
 Each swaption is priced by one integral over the second forward's shock, with Black's formula handling the first forward exactly given the second, and by a million pairs of random shocks, each used with its mirror image. Halving an interval backs out each Black volatility. Nothing imported knows the answer: the bell-curve area is summed slice by slice and the random numbers come from a hand-written xorshift generator.
 
@@ -625,14 +645,14 @@ The two outputs agree line for line. The random draws agree too, because both pr
 
 Lean proves the algebra behind the clash, for any positive forwards, and checks the worked numbers as exact fractions.
 
-- Take any bond price $P(T_1) > 0$ and positive forwards $L_1$, $L_2$. Then the swap rate from the bonds equals $(L_1 + L_2 + L_1 L_2)/(2 + L_2)$.
-- Take the same bonds. Then the swap rate is also Step 0's average, with weights $P(T_2)/A$ and $P(T_3)/A$.
-- Suppose $\sigma_1$ or $\sigma_2$ is not zero. Then no fixed $\gamma$ gives $\Gamma^2 = \gamma^2$ at every pair of positive forwards.
-- Take any $L_2 > 0$ and any swap rate $S$. Then exactly one first forward gives $S$: $L_1 = (S(2 + L_2) - L_2)/(1 + L_2)$.
-- Take any $L_2 > 0$. Then some positive swap rate makes that first forward negative.
-- Take the worked case. Then $S$ = 3.4902%, the first weight is 0.509804, and $\Gamma_1$ is 8.7640% at $L_1$ = 3%.
-- Take the same case. Then moving $L_1$ to 6% gives $\Gamma_1$ = 12.1875% and raises $\Gamma^2$.
-- Take $S$ = 1% and $L_2$ = 4%. Then $L_1$ = −1.8846%.
+- Take any bond price $`P(T_1) > 0`$ and positive forwards $`L_1`$, $`L_2`$. Then the swap rate from the bonds equals $`(L_1 + L_2 + L_1 L_2)/(2 + L_2)`$.
+- Take the same bonds. Then the swap rate is also Step 0's average, with weights $`P(T_2)/A`$ and $`P(T_3)/A`$.
+- Suppose $`\sigma_1`$ or $`\sigma_2`$ is not zero. Then no fixed $`\gamma`$ gives $`\Gamma^2 = \gamma^2`$ at every pair of positive forwards.
+- Take any $`L_2 > 0`$ and any swap rate $`S`$. Then exactly one first forward gives $`S`$: $`L_1 = (S(2 + L_2) - L_2)/(1 + L_2)`$.
+- Take any $`L_2 > 0`$. Then some positive swap rate makes that first forward negative.
+- Take the worked case. Then $`S`$ = 3.4902%, the first weight is 0.509804, and $`\Gamma_1`$ is 8.7640% at $`L_1`$ = 3%.
+- Take the same case. Then moving $`L_1`$ to 6% gives $`\Gamma_1`$ = 12.1875% and raises $`\Gamma^2`$.
+- Take $`S`$ = 1% and $`L_2`$ = 4%. Then $`L_1`$ = −1.8846%.
 
 The Itô and change-of-unit steps, the swaption prices and the smile are left to the Python and Rust checks.
 

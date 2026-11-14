@@ -30,26 +30,32 @@ To scale, 70 px a unit: across, 100 gazelles; up, 10 cheetahs. Dashed: the nullc
 
 A planar system gives each state two rates:
 
-$$x' = f(x, y), \qquad y' = g(x, y)$$
+```math
+x' = f(x, y), \qquad y' = g(x, y)
+```
 
-$$\text{x-nullcline: } f(x, y) = 0 \qquad \text{y-nullcline: } g(x, y) = 0 \qquad \text{rest: both at once}$$
+```math
+\text{x-nullcline: } f(x, y) = 0 \qquad \text{y-nullcline: } g(x, y) = 0 \qquad \text{rest: both at once}
+```
 
 **Read it aloud:** the x-nullcline is where x stops changing, the y-nullcline where y stops, and a rest lies on both.
 
-The arrow points right or left by the sign of $f$, up or down by the sign of $g$. For the reserve:
+The arrow points right or left by the sign of $`f`$, up or down by the sign of $`g`$. For the reserve:
 
-$$f(x, y) = x(1 - y), \qquad g(x, y) = y(x - 1)$$
+```math
+f(x, y) = x(1 - y), \qquad g(x, y) = y(x - 1)
+```
 
-A product is zero when a factor is: $f = 0$ on x = 0 or y = 1, $g = 0$ on y = 0 or x = 1.
+A product is zero when a factor is: $`f = 0`$ on x = 0 or y = 1, $`g = 0`$ on y = 0 or x = 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | gazelles, in hundreds | 2 at the start | cheetahs gain faster |
-| $y$ | cheetahs, in tens | 1 at the start | gazelles lose faster |
-| $t$ | time, in years | one turn: 6.608 | further round the loop |
-| $f$ | gazelle rate x', hundreds a year | 0 at the start | moves right faster |
-| $g$ | cheetah rate y', tens a year | 1 at the start | moves up faster |
-| $V$ | x − ln x + y − ln y (ln: natural logarithm), fixed along a path | 2.3069 on our loop | a bigger loop |
+| $`x`$ | gazelles, in hundreds | 2 at the start | cheetahs gain faster |
+| $`y`$ | cheetahs, in tens | 1 at the start | gazelles lose faster |
+| $`t`$ | time, in years | one turn: 6.608 | further round the loop |
+| $`f`$ | gazelle rate x', hundreds a year | 0 at the start | moves right faster |
+| $`g`$ | cheetah rate y', tens a year | 1 at the start | moves up faster |
+| $`V`$ | x − ln x + y − ln y (ln: natural logarithm), fixed along a path | 2.3069 on our loop | a bigger loop |
 
 ### When it holds
 
@@ -64,15 +70,15 @@ A product is zero when a factor is: $f = 0$ on x = 0 or y = 1, $g = 0$ on y = 0 
 
 ### Step 0: only signs are needed to draw an arrow
 
-Each point gets a velocity: $f$ across, $g$ up. Its direction, to the nearest quarter-turn, needs only the two signs. At (2, 0.5): x' = 2 × 0.5 = +1 and y' = 0.5 × 1 = +0.5, so right and up.
+Each point gets a velocity: $`f`$ across, $`g`$ up. Its direction, to the nearest quarter-turn, needs only the two signs. At (2, 0.5): x' = 2 × 0.5 = +1 and y' = 0.5 × 1 = +0.5, so right and up.
 
 ### Step 1: a sign can flip only on a nullcline
 
-Join two points of one region by a path inside it. Along the path $f$ is continuous. Positive at one end and negative at the other, it would pass through zero between them (the intermediate value theorem), at a point of the x-nullcline, which the region excludes. So $f$ keeps one sign in the region, and so does $g$: one test point fixes the arrow for all of it.
+Join two points of one region by a path inside it. Along the path $`f`$ is continuous. Positive at one end and negative at the other, it would pass through zero between them (the intermediate value theorem), at a point of the x-nullcline, which the region excludes. So $`f`$ keeps one sign in the region, and so does $`g`$: one test point fixes the arrow for all of it.
 
 ### Step 2: rests sit at mixed crossings
 
-A rest needs $f = 0$ and $g = 0$ together. Here x = 0 meets y = 0 at (0, 0), and y = 1 meets x = 1 at (1, 1). Two curves of one kind do not count: at (0, 1) two x-nullclines meet, x' = 0, but y' = 1 × (0 − 1) = −1.
+A rest needs $`f = 0`$ and $`g = 0`$ together. Here x = 0 meets y = 0 at (0, 0), and y = 1 meets x = 1 at (1, 1). Two curves of one kind do not count: at (0, 1) two x-nullclines meet, x' = 0, but y' = 1 × (0 − 1) = −1.
 
 ### Step 3: paths cross nullclines straight
 
@@ -97,7 +103,7 @@ With no gazelles, none appear, and cheetahs die away at y' = −y; with no cheet
 
 ### Step 6: what the signs cannot tell
 
-The signs say the path turns, not whether it closes or spirals. One more fact settles it: $V = x - \ln x + y - \ln y$ has rate (1 − 1/x)x' + (1 − 1/y)y' = (x − 1)(1 − y) + (y − 1)(x − 1) = 0 along a path. Curves of constant $V$ round (1, 1) are closed, so the path is a loop. The model's full story is on [Predator and prey](06-predator-prey.md).
+The signs say the path turns, not whether it closes or spirals. One more fact settles it: $`V = x - \ln x + y - \ln y`$ has rate (1 − 1/x)x' + (1 − 1/y)y' = (x − 1)(1 − y) + (y − 1)(x − 1) = 0 along a path. Curves of constant $`V`$ round (1, 1) are closed, so the path is a loop. The model's full story is on [Predator and prey](06-predator-prey.md).
 
 <details>
 <summary>Detailed proof: fences hold, and level curves of V close</summary>
@@ -155,7 +161,7 @@ The code prints all three.
 
 Road one reads the rates: mixed crossings, checked by a 301 x 301 grid scan for exact zeros, then the four test points. Road two steps the flow with Runge-Kutta 4 (four slope samples a step, from [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) at step h = 0.01 years, logs the regions in order, and checks each step against road one's signs.
 
-The referee is $V$: bisection (halving an interval until it pins the root) finds the loop's extremes, and the stepped path must match. Halving the step cuts the error about 16-fold (16.7 here), as a fourth-order method should.
+The referee is $`V`$: bisection (halving an interval until it pins the root) finds the loop's extremes, and the stepped path must match. Halving the step cuts the error about 16-fold (16.7 here), as a fourth-order method should.
 
 ### Python
 
@@ -492,7 +498,7 @@ example : (2 : ℝ) - Real.log 2 + 1 - Real.log 1 - 1 = 2 - Real.log 2 := by sim
 
 > [!TIP]
 > **Try changing**
-> - **Start nearer the rest.** Guess first: longer or shorter turn? Start at (1.5, 1). The loop sits inside the first, $V$ is smaller, and the turn is shorter than 6.608 years.
+> - **Start nearer the rest.** Guess first: longer or shorter turn? Start at (1.5, 1). The loop sits inside the first, $`V`$ is smaller, and the turn is shorter than 6.608 years.
 > - **Move the cheetahs' break-even.** Guess first: which assert fails? Set g to y(x − 1.5). The grid finds a rest at (1.5, 1), the hand list still says (1, 1), and the first assert fails.
 > - **Let gazelles help each other.** Guess first: in or out? Replace −0.2x by +0.05x in the crowded herd. The turning is unchanged, the path spirals out, and the last assert fails.
 > - **Halve the step again.** Guess first: what ratio? Compare 0.1 with 0.05: close to 16 again.
@@ -517,7 +523,7 @@ example : (2 : ℝ) - Real.log 2 + 1 - Real.log 1 - 1 = 2 - Real.log 2 := by sim
 - **Nerve cells.** Two-variable neuron models have a cubic nullcline and a straight one; a spike is a path round the cubic's bend.
 
 > **Say it back**
-> Two changing quantities make a point in a plane, and the rates give it an arrow. Curves where one rate is zero split the plane into regions of fixed signs, so one test point per region draws every arrow. Rests sit where curves of the two kinds cross, and paths cross each nullcline straight. The reserve turns counterclockwise round 100 gazelles and 10 cheetahs. Whether the turning closes takes one more fact, here the unchanging $V$.
+> Two changing quantities make a point in a plane, and the rates give it an arrow. Curves where one rate is zero split the plane into regions of fixed signs, so one test point per region draws every arrow. Rests sit where curves of the two kinds cross, and paths cross each nullcline straight. The reserve turns counterclockwise round 100 gazelles and 10 cheetahs. Whether the turning closes takes one more fact, here the unchanging $`V`$.
 
 ---
 

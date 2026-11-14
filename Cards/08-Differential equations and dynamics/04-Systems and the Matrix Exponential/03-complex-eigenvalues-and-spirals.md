@@ -26,30 +26,34 @@ To scale: 22 px per cm across, 12 px per cm/s up, axes crossing at rest. One tur
 
 ## The formula
 
-Reminder: x' = Ax reads "the rate of the state is the matrix A times the state" ([From one equation to a system](01-from-one-equation-to-a-system.md)). Here y' = v and v' = −5y − 2v, so $A$ is `[[0, 1], [-5, -2]]`.
+Reminder: x' = Ax reads "the rate of the state is the matrix A times the state" ([From one equation to a system](01-from-one-equation-to-a-system.md)). Here y' = v and v' = −5y − 2v, so $`A`$ is `[[0, 1], [-5, -2]]`.
 
-Let $A$ be a real 2-by-2 matrix with eigenvalue $\lambda = \alpha + i\beta$, $\beta \neq 0$, and eigenvector $\mathbf{w} = \mathbf{p} + i\mathbf{q}$, where p and q are real vectors. Then
+Let $`A`$ be a real 2-by-2 matrix with eigenvalue $`\lambda = \alpha + i\beta`$, $`\beta \neq 0`$, and eigenvector $`\mathbf{w} = \mathbf{p} + i\mathbf{q}`$, where p and q are real vectors. Then
 
-$$\mathbf{x}(t) = c_1\,e^{\alpha t}\big(\mathbf{p}\cos\beta t - \mathbf{q}\sin\beta t\big) + c_2\,e^{\alpha t}\big(\mathbf{p}\sin\beta t + \mathbf{q}\cos\beta t\big)$$
+```math
+\mathbf{x}(t) = c_1\,e^{\alpha t}\big(\mathbf{p}\cos\beta t - \mathbf{q}\sin\beta t\big) + c_2\,e^{\alpha t}\big(\mathbf{p}\sin\beta t + \mathbf{q}\cos\beta t\big)
+```
 
-is every solution, with $c_1$, $c_2$ fixed by the start: $\mathbf{x}(0) = c_1\mathbf{p} + c_2\mathbf{q}$.
+is every solution, with $`c_1`$, $`c_2`$ fixed by the start: $`\mathbf{x}(0) = c_1\mathbf{p} + c_2\mathbf{q}`$.
 
 **Read it aloud:** two fixed arrows, p and q, rotate into each other at β radians per second while everything scales by e to the α t.
 
-$$T = \frac{2\pi}{\beta},\qquad \mathbf{x}(t+T) = e^{\alpha T}\,\mathbf{x}(t).$$
+```math
+T = \frac{2\pi}{\beta},\qquad \mathbf{x}(t+T) = e^{\alpha T}\,\mathbf{x}(t).
+```
 
 **Read it aloud:** a turn takes 2π over the turning rate, and multiplies the state by e to the α T.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $\mathbf{x}$, $y$, $v$ | time in s; state (y, v): position in cm, velocity in cm/s | start (10, 0) | the spiral scales up |
-| $A$ | the matrix of the rate law | `[[0, 1], [-5, -2]]` | −5 pushed further below 0 (stiffer spring): faster turning |
-| $\lambda$, $i$ | eigenvalue α + iβ, partner α − iβ; i is the square root of −1 | −1 ± 2i | — |
-| $\alpha$ | real part: growth rate, one over time | −1 per s | slower shrinking; above 0 the spiral opens out |
-| $\beta$ | imaginary part: turning rate, radians per s | 2 per s | faster turning, shorter turn |
-| $\mathbf{w}$, $\mathbf{p}$, $\mathbf{q}$ | eigenvector, solving A w = λ w; w = p + iq: real part p, imaginary part q | p = (1, −1), q = (0, 2) | — |
-| $c_1$, $c_2$ | constants fixed by the start | 10 and 5 | — |
-| $T$ | time for one turn, 2π/β | 3.1416 s | — |
+| $`t`$, $`\mathbf{x}`$, $`y`$, $`v`$ | time in s; state (y, v): position in cm, velocity in cm/s | start (10, 0) | the spiral scales up |
+| $`A`$ | the matrix of the rate law | `[[0, 1], [-5, -2]]` | −5 pushed further below 0 (stiffer spring): faster turning |
+| $`\lambda`$, $`i`$ | eigenvalue α + iβ, partner α − iβ; i is the square root of −1 | −1 ± 2i | — |
+| $`\alpha`$ | real part: growth rate, one over time | −1 per s | slower shrinking; above 0 the spiral opens out |
+| $`\beta`$ | imaginary part: turning rate, radians per s | 2 per s | faster turning, shorter turn |
+| $`\mathbf{w}`$, $`\mathbf{p}`$, $`\mathbf{q}`$ | eigenvector, solving A w = λ w; w = p + iq: real part p, imaginary part q | p = (1, −1), q = (0, 2) | — |
+| $`c_1`$, $`c_2`$ | constants fixed by the start | 10 and 5 | — |
+| $`T`$ | time for one turn, 2π/β | 3.1416 s | — |
 
 ### When it holds
 
@@ -75,7 +79,9 @@ The first row of A w = λ w reads w₂ = λ w₁; take w₁ = 1, so w = (1, −1
 
 Euler's formula gives e^(λt) = e^(αt)(cos βt + i sin βt). Multiply by w = p + iq and sort the terms by whether they carry i:
 
-$$\mathbf{w}e^{\lambda t} = e^{\alpha t}\big(\mathbf{p}\cos\beta t - \mathbf{q}\sin\beta t\big) + i\,e^{\alpha t}\big(\mathbf{p}\sin\beta t + \mathbf{q}\cos\beta t\big).$$
+```math
+\mathbf{w}e^{\lambda t} = e^{\alpha t}\big(\mathbf{p}\cos\beta t - \mathbf{q}\sin\beta t\big) + i\,e^{\alpha t}\big(\mathbf{p}\sin\beta t + \mathbf{q}\cos\beta t\big).
+```
 
 The first bracket is the real part; the second, without its i, the imaginary part.
 

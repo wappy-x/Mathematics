@@ -44,42 +44,48 @@ Under the second-price rule every firm bids its value, so the value bars are the
 
 ## The formula
 
-Notation first, in words. There are $n$ bidders; here $n = 5$ firms (on this wing $n$ is usually an input size; on this card it counts bidders). Firm $i$ has value $v_i$ and bids $b_i$. $c$ is the highest competing bid: the best bid among firm $i$'s rivals. Money is in thousands of pounds.
+Notation first, in words. There are $`n`$ bidders; here $`n = 5`$ firms (on this wing $`n`$ is usually an input size; on this card it counts bidders). Firm $`i`$ has value $`v_i`$ and bids $`b_i`$. $`c`$ is the highest competing bid: the best bid among firm $`i`$'s rivals. Money is in thousands of pounds.
 
-The second-price rule, and the profit it gives firm $i$:
+The second-price rule, and the profit it gives firm $`i`$:
 
-$$\text{firm } i \text{ wins if } b_i > c, \text{ pays } c, \text{ and makes profit } u_i = v_i - c; \text{ otherwise } u_i = 0$$
+```math
+\text{firm } i \text{ wins if } b_i > c, \text{ pays } c, \text{ and makes profit } u_i = v_i - c; \text{ otherwise } u_i = 0
+```
 
 **Read it aloud:** the highest bid wins, the winner pays the best rival bid, and the winner's profit is its value minus that price.
 
-The price $c$ does not contain $b_i$. That single fact is the whole proof of honesty, in Why it works.
+The price $`c`$ does not contain $`b_i`$. That single fact is the whole proof of honesty, in Why it works.
 
-Revenue equivalence needs a formula for what a bidder pays on average. Let $F(v)$ be the chance that one firm's value is at most $v$. With values spread evenly between 0 and $\bar V$ = 100, $F(v) = v/100$. Let $P(v)$ be the chance that a firm with value $v$ wins. If the highest value always wins, that is the chance all $n - 1$ rivals have lower values:
+Revenue equivalence needs a formula for what a bidder pays on average. Let $`F(v)`$ be the chance that one firm's value is at most $`v`$. With values spread evenly between 0 and $`\bar V`$ = 100, $`F(v) = v/100`$. Let $`P(v)`$ be the chance that a firm with value $`v`$ wins. If the highest value always wins, that is the chance all $`n - 1`$ rivals have lower values:
 
-$$P(v) = F(v)^{\,n-1}, \qquad m(v) = v\,P(v) - \int_0^v P(x)\,dx$$
+```math
+P(v) = F(v)^{\,n-1}, \qquad m(v) = v\,P(v) - \int_0^v P(x)\,dx
+```
 
-**Read it aloud:** a firm with value $v$ pays, on average, its value times its chance of winning, minus the area under the win-chance curve up to its value.
+**Read it aloud:** a firm with value $`v`$ pays, on average, its value times its chance of winning, minus the area under the win-chance curve up to its value.
 
-That right-hand side contains only $P$, the rule for who wins. Nothing about *how* the auction charges appears in it. So every auction that hands the contract to the highest value charges each value the same on average, and raises the same average revenue $R$:
+That right-hand side contains only $`P`$, the rule for who wins. Nothing about *how* the auction charges appears in it. So every auction that hands the contract to the highest value charges each value the same on average, and raises the same average revenue $`R`$:
 
-$$R = n \times \text{average of } m(v) = \text{average second-highest value} = \frac{n-1}{n+1}\,\bar V = \frac{4}{6} \times 100 = 66.67$$
+```math
+R = n \times \text{average of } m(v) = \text{average second-highest value} = \frac{n-1}{n+1}\,\bar V = \frac{4}{6} \times 100 = 66.67
+```
 
-In the first-price auction with these values, each firm bids $b = \tfrac{n-1}{n}\,v = 0.8\,v$, derived in Step 2.
+In the first-price auction with these values, each firm bids $`b = \tfrac{n-1}{n}\,v = 0.8\,v`$, derived in Step 2.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $k$ | the number of bidders; $k$ is a rank among their values, counted from the smallest | 5 firms; the second-highest is $k = 4$ | revenue rises, bids shade less |
-| $v$, $v_i$ | a firm's value: the most the contract is worth to it | A: 82 (£82,000) | the firm wins more often |
-| $b$, $b_i$ | a firm's sealed bid | A: 82 second-price, 65.6 first-price | wins more often, and in first-price pays more |
-| $c$ | the highest competing bid | 71, firm B's bid, facing A | the second-price winner pays more |
-| $u_i$ | a firm's profit: value minus price if it wins, else 0 | A: 11 second-price | — |
-| $\bar V$ | the top of the spread of values | 100 (£100,000) | every price scales with it |
-| $F(v)$ | the chance one firm's value is at most $v$ | $F(82) = 0.82$ | — |
-| $P(v)$ | the chance value $v$ is the highest of $n$ | $P(82) = 0.82^4 = 0.4521$ | — |
-| $x$ | a value between 0 and $v$, the variable inside the area | — | — |
-| $U(v)$ | the average profit of a firm with value $v$ | $U(82) = 7.41$ (£7,415) | — |
-| $m(v)$ | the average payment of a firm with value $v$ | $m(82) = 29.66$ | — |
-| $R$ | the seller's average revenue | 66.67 (£66,667) | — |
+| $`n`$, $`k`$ | the number of bidders; $`k`$ is a rank among their values, counted from the smallest | 5 firms; the second-highest is $`k = 4`$ | revenue rises, bids shade less |
+| $`v`$, $`v_i`$ | a firm's value: the most the contract is worth to it | A: 82 (£82,000) | the firm wins more often |
+| $`b`$, $`b_i`$ | a firm's sealed bid | A: 82 second-price, 65.6 first-price | wins more often, and in first-price pays more |
+| $`c`$ | the highest competing bid | 71, firm B's bid, facing A | the second-price winner pays more |
+| $`u_i`$ | a firm's profit: value minus price if it wins, else 0 | A: 11 second-price | — |
+| $`\bar V`$ | the top of the spread of values | 100 (£100,000) | every price scales with it |
+| $`F(v)`$ | the chance one firm's value is at most $`v`$ | $`F(82) = 0.82`$ | — |
+| $`P(v)`$ | the chance value $`v`$ is the highest of $`n`$ | $`P(82) = 0.82^4 = 0.4521`$ | — |
+| $`x`$ | a value between 0 and $`v`$, the variable inside the area | — | — |
+| $`U(v)`$ | the average profit of a firm with value $`v`$ | $`U(82) = 7.41`$ (£7,415) | — |
+| $`m(v)`$ | the average payment of a firm with value $`v`$ | $`m(82) = 29.66`$ | — |
+| $`R`$ | the seller's average revenue | 66.67 (£66,667) | — |
 
 ### When it holds
 
@@ -87,7 +93,7 @@ In the first-price auction with these values, each firm bids $b = \tfrac{n-1}{n}
 - **One item, and bidders who cannot team up.** Two firms who agree that one bids low can cut the second price. The Vickrey rule stops a lone firm from gaining by lying; it does not stop a ring.
 - **Independent values from one known spread, for revenue equivalence.** If firm A is known to be strong and E weak, the first-price auction can hand the contract to the wrong firm and the two rules no longer raise the same amount.
 - **Risk-neutral bidders, for revenue equivalence.** A firm that prefers a sure profit to a gamble with the same average shades less in a first-price auction. With square-root utility (the last row of What breaks), the first-price auction raises £74,074, not £66,667. The second-price rule is unaffected: honesty stays best.
-- **The same rule for who wins, and nothing paid by a firm with value 0.** A reserve price (no sale below £50,000) keeps the second condition (a firm with value 0 pays nothing) but changes the first (the rule for who wins): $P(v)$ drops to 0 below the reserve, so revenue moves from £66,667 to £67,188. A first-price auction with the same reserve raises the same £67,188; the simulation finds £67,221.
+- **The same rule for who wins, and nothing paid by a firm with value 0.** A reserve price (no sale below £50,000) keeps the second condition (a firm with value 0 pays nothing) but changes the first (the rule for who wins): $`P(v)`$ drops to 0 below the reserve, so revenue moves from £66,667 to £67,188. A first-price auction with the same reserve raises the same £67,188; the simulation finds £67,221.
 
 ---
 
@@ -95,56 +101,60 @@ In the first-price auction with these values, each firm bids $b = \tfrac{n-1}{n}
 
 ### Step 0: under the second-price rule, your bid is a switch, not a price
 
-In the first-price auction your bid does two jobs. It decides whether you win, and it sets what you pay. Those jobs pull against each other: a higher bid wins more often but leaves less profit. Under the second-price rule, the bid does only the first job. The price is $c$, the best rival bid, which you cannot touch. So the only question your bid answers is: "do I want the contract at price $c$?" You do exactly when $c$ is below your value. Bidding your value answers that question correctly for every possible $c$.
+In the first-price auction your bid does two jobs. It decides whether you win, and it sets what you pay. Those jobs pull against each other: a higher bid wins more often but leaves less profit. Under the second-price rule, the bid does only the first job. The price is $`c`$, the best rival bid, which you cannot touch. So the only question your bid answers is: "do I want the contract at price $`c`$?" You do exactly when $`c`$ is below your value. Bidding your value answers that question correctly for every possible $`c`$.
 
 ### Step 1: honesty is never beaten under the second-price rule
 
-Take firm A, value 82. Compare bidding 82 with bidding anything else, $b$.
+Take firm A, value 82. Compare bidding 82 with bidding anything else, $`b`$.
 
-- **Overbid, $b > 82$.** This changes the outcome only when $c$ falls between 82 and $b$. Then the overbid wins and pays $c$, more than the contract is worth: a loss. Firm E shows it on the day: value 40, it bids 90 to be sure of winning, wins, pays A's 82 and loses £42,000.
-- **Underbid, $b < 82$.** This changes the outcome only when $c$ falls between $b$ and 82. Then the underbid loses a contract that would have paid a profit of $82 - c$. On the day, A shading to 65.6 loses to B's 71 and gives up £11,000.
-- **Anywhere else**, the two bids win or lose together and pay the same $c$.
+- **Overbid, $`b > 82`$.** This changes the outcome only when $`c`$ falls between 82 and $`b`$. Then the overbid wins and pays $`c`$, more than the contract is worth: a loss. Firm E shows it on the day: value 40, it bids 90 to be sure of winning, wins, pays A's 82 and loses £42,000.
+- **Underbid, $`b < 82`$.** This changes the outcome only when $`c`$ falls between $`b`$ and 82. Then the underbid loses a contract that would have paid a profit of $`82 - c`$. On the day, A shading to 65.6 loses to B's 71 and gives up £11,000.
+- **Anywhere else**, the two bids win or lose together and pay the same $`c`$.
 
 So the truthful bid's profit is at least as large as any other bid's, for every rival bid. In game-theory terms, truth is a **weakly dominant strategy**: a best reply to every possible behaviour of the others, not only to an equilibrium ([Nash equilibrium](09-game-theory-and-nash-equilibrium.md)). A rule with this property is called **strategy-proof** or **incentive compatible**: telling the truth is in each player's own interest. The proof used nothing about how values are spread. The code checks it on a grid: 80,802 combinations of value, bid and rival bid, and the truthful bid is never beaten.
 
-### Step 2: first-price bidders shade, by exactly one part in $n$
+### Step 2: first-price bidders shade, by exactly one part in $`n`$
 
-Now the first-price rule. Suppose every rival bids 0.8 of its value. Rival values are spread evenly up to 100, so rival bids are spread evenly up to 80. A bid of $b$ beats one rival with chance $b/80$, and beats all four with chance $(b/80)^4$. Firm A's average profit from bidding $b$ is
+Now the first-price rule. Suppose every rival bids 0.8 of its value. Rival values are spread evenly up to 100, so rival bids are spread evenly up to 80. A bid of $`b`$ beats one rival with chance $`b/80`$, and beats all four with chance $`(b/80)^4`$. Firm A's average profit from bidding $`b`$ is
 
-$$(82 - b)\left(\frac{b}{80}\right)^4.$$
+```math
+(82 - b)\left(\frac{b}{80}\right)^4.
+```
 
-The first bracket is the margin; it falls as $b$ rises. The second is the win chance; it rises with $b$. The best bid balances them. Take the slope with respect to $b$ and set it to zero: $b^3\,(4 \times 82 - 5b) = 0$, so $b = \tfrac45 \times 82 = 65.6$.
+The first bracket is the margin; it falls as $`b`$ rises. The second is the win chance; it rises with $`b`$. The best bid balances them. Take the slope with respect to $`b`$ and set it to zero: $`b^3\,(4 \times 82 - 5b) = 0`$, so $`b = \tfrac45 \times 82 = 65.6`$.
 
-The same algebra for any value $v$ gives $b = 0.8\,v$. So if rivals bid 0.8 of their values, each firm's best reply is to bid 0.8 of its own value as well: bidding $0.8\,v$ is a Nash equilibrium. With $n$ bidders the same calculation gives $(n-1)/n$: each extra rival forces bids closer to values.
+The same algebra for any value $`v`$ gives $`b = 0.8\,v`$. So if rivals bid 0.8 of their values, each firm's best reply is to bid 0.8 of its own value as well: bidding $`0.8\,v`$ is a Nash equilibrium. With $`n`$ bidders the same calculation gives $`(n-1)/n`$: each extra rival forces bids closer to values.
 
 A grid search over every bid from 0 to 100 in steps of 0.01 lands on 65.60, and A's average profit there is £7,415.
 
 ### Step 3: the win chance fixes the payment, whatever the rule
 
-This is the step that makes revenue equivalence true. Take any auction in which, at equilibrium, the highest value wins. A firm with value $v$ wins with chance $P(v)$ and pays $m(v)$ on average, so its average profit is $U(v) = v\,P(v) - m(v)$.
+This is the step that makes revenue equivalence true. Take any auction in which, at equilibrium, the highest value wins. A firm with value $`v`$ wins with chance $`P(v)`$ and pays $`m(v)`$ on average, so its average profit is $`U(v) = v\,P(v) - m(v)`$.
 
-The firm could always copy the bidding of a slightly lower value, $x$. It would then win with chance $P(x)$ and pay $m(x)$. In equilibrium it chooses not to, so its own strategy is at least as good. Now raise $v$ a little, by $dv$. A firm that kept its old bidding would gain $P(v)\,dv$: same win chance, same payment, and each win now worth $dv$ more. Choosing a better bid on top changes profit by much less than $dv$, because the old bid was already best. So profit rises at rate $P(v)$:
+The firm could always copy the bidding of a slightly lower value, $`x`$. It would then win with chance $`P(x)`$ and pay $`m(x)`$. In equilibrium it chooses not to, so its own strategy is at least as good. Now raise $`v`$ a little, by $`dv`$. A firm that kept its old bidding would gain $`P(v)\,dv`$: same win chance, same payment, and each win now worth $`dv`$ more. Choosing a better bid on top changes profit by much less than $`dv`$, because the old bid was already best. So profit rises at rate $`P(v)`$:
 
-$$U(v) = \int_0^v P(x)\,dx, \quad\text{since a firm with value 0 never profits.}$$
+```math
+U(v) = \int_0^v P(x)\,dx, \quad\text{since a firm with value 0 never profits.}
+```
 
-Put this back into $U(v) = v\,P(v) - m(v)$ and out comes the formula for $m(v)$. Two auctions with the same $P$ have the same $U$ and the same $m$.
+Put this back into $`U(v) = v\,P(v) - m(v)`$ and out comes the formula for $`m(v)`$. Two auctions with the same $`P`$ have the same $`U`$ and the same $`m`$.
 
 <details>
 <summary>Detailed proof: the two-sided squeeze</summary>
 
-A firm with value $v$ could bid as if its value were $x$. Equilibrium says this does not pay:
+A firm with value $`v`$ could bid as if its value were $`x`$. Equilibrium says this does not pay:
 
-$$v\,P(v) - m(v) \ \ge\ v\,P(x) - m(x).$$
+$`\displaystyle v\,P(v) - m(v) \ \ge\ v\,P(x) - m(x).`$
 
-Write $U(x) = x\,P(x) - m(x)$. Then the inequality reads $U(v) \ge U(x) + (v - x)\,P(x)$. Swap the roles of $v$ and $x$ to get $U(x) \ge U(v) + (x - v)\,P(v)$. Together, for $x < v$:
+Write $`U(x) = x\,P(x) - m(x)`$. Then the inequality reads $`U(v) \ge U(x) + (v - x)\,P(x)`$. Swap the roles of $`v`$ and $`x`$ to get $`U(x) \ge U(v) + (x - v)\,P(v)`$. Together, for $`x < v`$:
 
-$$(v - x)\,P(x) \ \le\ U(v) - U(x) \ \le\ (v - x)\,P(v).$$
+$`\displaystyle (v - x)\,P(x) \ \le\ U(v) - U(x) \ \le\ (v - x)\,P(v).`$
 
-Divide by $v - x$ and let $x$ approach $v$. When $P$ is continuous, both bounds approach $P(v)$, so the slope of $U$ at $v$ is $P(v)$. With $U(0) = 0$, adding up the slopes gives $U(v) = \int_0^v P(x)\,dx$, and $m(v) = v\,P(v) - U(v)$.
+Divide by $`v - x`$ and let $`x`$ approach $`v`$. When $`P`$ is continuous, both bounds approach $`P(v)`$, so the slope of $`U`$ at $`v`$ is $`P(v)`$. With $`U(0) = 0`$, adding up the slopes gives $`U(v) = \int_0^v P(x)\,dx`$, and $`m(v) = v\,P(v) - U(v)`$.
 
 </details>
 
-For firm A, $P(82) = 0.82^4 = 0.4521$. The area under $x^4/100^4$ from 0 to 82 is $82^5/(5 \times 100^4) = 7.4148$. So A's average profit is £7,415 under *any* such rule, and its average payment is $82 \times 0.4521 - 7.4148 = 29.66$. The code reaches 29.66 twice: as A's first-price bid 65.6 times its win chance, and as an integral of the best rival bid, when it is below 82, under the second-price rule.
+For firm A, $`P(82) = 0.82^4 = 0.4521`$. The area under $`x^4/100^4`$ from 0 to 82 is $`82^5/(5 \times 100^4) = 7.4148`$. So A's average profit is £7,415 under *any* such rule, and its average payment is $`82 \times 0.4521 - 7.4148 = 29.66`$. The code reaches 29.66 twice: as A's first-price bid 65.6 times its win chance, and as an integral of the best rival bid, when it is below 82, under the second-price rule.
 
 ### The picture: firm A's average profit against its bid
 
@@ -162,13 +172,15 @@ Orange: the second-price rule, rivals bidding their values. It peaks at A's valu
 
 ### Step 4: add up over the five firms
 
-The seller's average revenue is $n$ times the average of $m(v)$ over values. With $P(v) = (v/100)^4$, $m(v) = 0.8\,v^5/100^4$, and averaging $v^5$ over values spread evenly up to 100 gives $100^5/6$. So
+The seller's average revenue is $`n`$ times the average of $`m(v)`$ over values. With $`P(v) = (v/100)^4`$, $`m(v) = 0.8\,v^5/100^4`$, and averaging $`v^5`$ over values spread evenly up to 100 gives $`100^5/6`$. So
 
-$$R = 5 \times 0.8 \times \frac{100}{6} = 66.67.$$
+```math
+R = 5 \times 0.8 \times \frac{100}{6} = 66.67.
+```
 
-The order-statistics road agrees. The k-th smallest of $n$ values spread evenly up to 1 averages $k/(n+1)$ of the range ([Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)). The second-price auction collects the second-highest, rank 4 of 5: $4/6 \times 100 = 66.67$. The first-price auction collects 0.8 of the highest, rank 5 of 5: $0.8 \times 5/6 \times 100 = 66.67$.
+The order-statistics road agrees. The k-th smallest of $`n`$ values spread evenly up to 1 averages $`k/(n+1)`$ of the range ([Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)). The second-price auction collects the second-highest, rank 4 of 5: $`4/6 \times 100 = 66.67`$. The first-price auction collects 0.8 of the highest, rank 5 of 5: $`0.8 \times 5/6 \times 100 = 66.67`$.
 
-An **all-pay auction**, where every firm pays its bid win or lose, also gives the contract to the highest value. There each firm bids $m(v)$ itself, and a simulation of 200,000 synthetic auctions finds average revenue £66,706, within one standard error (the typical size of a simulated average's random error) of £66,667.
+An **all-pay auction**, where every firm pays its bid win or lose, also gives the contract to the highest value. There each firm bids $`m(v)`$ itself, and a simulation of 200,000 synthetic auctions finds average revenue £66,706, within one standard error (the typical size of a simulated average's random error) of £66,667.
 
 ---
 
@@ -180,14 +192,14 @@ The day's values, in £ thousands: A 82, B 71, C 64, D 55, E 40. Values for the 
 | --- | --- | --- |
 | second-price: everyone bids their value | highest bid A 82, next B 71 | A wins |
 | second-price price and profit | A pays 71; profit 82 − 71 | £71,000; £11,000 |
-| first-price shading factor | $(n-1)/n = 4/5$ | 0.8 |
+| first-price shading factor | $`(n-1)/n = 4/5`$ | 0.8 |
 | first-price bids | 0.8 × 82, 71, 64, 55, 40 | 65.6, 56.8, 51.2, 44.0, 32.0 |
 | first-price price and profit | A pays 65.6; profit 82 − 65.6 | £65,600; £16,400 |
-| A's win chance | $0.82^4$ | 0.4521 |
-| A's average profit, any rule | $82^5 / (5 \times 100^4)$ | £7,415 |
+| A's win chance | $`0.82^4`$ | 0.4521 |
+| A's average profit, any rule | $`82^5 / (5 \times 100^4)`$ | £7,415 |
 | A's average payment, any rule | 82 × 0.4521 − 7.4148 | £29,659 |
-| average revenue, second-price | $4/6 \times 100$ | 66.67 |
-| average revenue, first-price | $0.8 \times 5/6 \times 100$ | 66.67 |
+| average revenue, second-price | $`4/6 \times 100`$ | 66.67 |
+| average revenue, first-price | $`0.8 \times 5/6 \times 100`$ | 66.67 |
 | **average revenue, either rule** | | **£66,667** |
 
 On this particular day the second-price rule earned the chain more: £71,000 against £65,600. On another day it earns less. Over many contracts the two rules earn the same, but the first-price revenue swings less: a standard deviation of £11,274 against £17,806 in the simulation.
@@ -202,13 +214,13 @@ On this particular day the second-price rule earned the chain more: £71,000 aga
 | Firm E (value 40) bids 90 to be sure | wins, pays 82; profit −£42,000 | Overbidding only ever wins contracts at a loss |
 | Bidders are risk-averse (square-root utility) | first-price revenue £74,074, not £66,667 | Revenue equivalence assumed risk-neutral bidders: A now bids 72.89 |
 
-The last row is a hypothesis failing, not an arithmetic slip. A firm with square-root utility values a sure £1 of profit more than a gamble with the same average. It gives up margin for a safer win, so its best bid rises to $4/4.5$ of its value: 72.89 for A. The second-price auction does not move, since honesty was best whatever the firm's attitude to risk.
+The last row is a hypothesis failing, not an arithmetic slip. A firm with square-root utility values a sure £1 of profit more than a gamble with the same average. It gives up margin for a safer win, so its best bid rises to $`4/4.5`$ of its value: 72.89 for A. The second-price auction does not move, since honesty was best whatever the firm's attitude to risk.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the revenue and the bidding rules by three independent roads. Road 1 is the closed forms: the shading factor $(n-1)/n$, the revenue $(n-1)/(n+1)$ of the top value, and the envelope formula for $m(v)$ (the payment formula from Step 3).
+The scripts reach the revenue and the bidding rules by three independent roads. Road 1 is the closed forms: the shading factor $`(n-1)/n`$, the revenue $`(n-1)/(n+1)`$ of the top value, and the envelope formula for $`m(v)`$ (the payment formula from Step 3).
 
 Road 2 is exhaustive: it checks honesty on every point of a 0.5-step grid of bids and rival bids, finds each rule's best bid by grid search, and integrates payments and revenue by Simpson's rule (a strip sum fitting a parabola across each pair of strips).
 
@@ -569,9 +581,9 @@ ALL CHECKS PASS
 
 Lean proves Steps 1, 2 and 3 for any number of firms and any values, and checks the day's numbers.
 
-- Under the second-price rule, bidding your value earns at least as much profit as any other bid, for every rival bid $c$.
-- Take $n \ge 2$ firms, values spread evenly up to $\bar V$, and rivals bidding $(n-1)/n$ of their values. Then for a firm with value $v$, no bid earns a higher average profit than $\tfrac{n-1}{n}\,v$.
-- Take any auction where $P$ is continuous, a firm with value 0 pays nothing, and no firm gains by copying another value's bidding. Then $m(v) = v\,P(v) - \int_0^v P(x)\,dx$ for every value $v$ up to $\bar V$.
+- Under the second-price rule, bidding your value earns at least as much profit as any other bid, for every rival bid $`c`$.
+- Take $`n \ge 2`$ firms, values spread evenly up to $`\bar V`$, and rivals bidding $`(n-1)/n`$ of their values. Then for a firm with value $`v`$, no bid earns a higher average profit than $`\tfrac{n-1}{n}\,v`$.
+- Take any auction where $`P`$ is continuous, a firm with value 0 pays nothing, and no firm gains by copying another value's bidding. Then $`m(v) = v\,P(v) - \int_0^v P(x)\,dx`$ for every value $`v`$ up to $`\bar V`$.
 - On the day, A makes £11,000 under the second-price rule and £16,400 under the first-price rule.
 - Shading to 65.6 earns A £0 under the second-price rule, and E's bid of 90 loses £42,000.
 - The first-price bids are 65.6, 56.8, 51.2, 44.0 and 32.0.
@@ -810,7 +822,7 @@ example : ((5 : ℚ) - 1) / 5 * (5 / (5 + 1)) * 100 = 200 / 3 := by norm_num
 ## What this builds on
 
 - [Nash equilibrium](09-game-theory-and-nash-equilibrium.md): the first-price bids of 0.8 times value are a Nash equilibrium, each a best reply to the others. The second-price auction goes further: truth is best against any behaviour.
-- [Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md): the k-th of $n$ evenly spread values averages $k/(n+1)$ of the range, which gives both auctions' revenue in one line.
+- [Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md): the k-th of $`n`$ evenly spread values averages $`k/(n+1)`$ of the range, which gives both auctions' revenue in one line.
 - [Stable matching](../../04-Combinatorics%20and%20graphs/13-Matchings%20and%20Flows/04-stable-matching-gale-shapley.md): the proposing algorithm; that its proposers cannot gain by lying about their rankings is Roth's 1982 result (Sources).
 
 ## Where this goes next

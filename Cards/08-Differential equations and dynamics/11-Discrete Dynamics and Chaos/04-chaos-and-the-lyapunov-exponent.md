@@ -34,33 +34,37 @@ Orange: the base-10 logarithm of the true gap; each unit up is a tenfold larger 
 
 ## The formula
 
-Reminder: a map $x_{n+1} = f(x_n)$ turns this year's state into next year's; the list $x_0, x_1, x_2, \dots$ is the orbit. Here $f(x) = r x (1 - x)$, and the size of its derivative, $\lvert f'(x) \rvert = \lvert r(1 - 2x) \rvert$, is one step's stretch at $x$; the bars drop the sign. The capital sigma, Σ, adds the terms after it, for $k$ from 0 to $n - 1$.
+Reminder: a map $`x_{n+1} = f(x_n)`$ turns this year's state into next year's; the list $`x_0, x_1, x_2, \dots`$ is the orbit. Here $`f(x) = r x (1 - x)`$, and the size of its derivative, $`\lvert f'(x) \rvert = \lvert r(1 - 2x) \rvert`$, is one step's stretch at $`x`$; the bars drop the sign. The capital sigma, Σ, adds the terms after it, for $`k`$ from 0 to $`n - 1`$.
 
-$$\lambda = \lim_{n \to \infty} \frac{1}{n} \sum_{k=0}^{n-1} \ln \lvert f'(x_k) \rvert$$
+```math
+\lambda = \lim_{n \to \infty} \frac{1}{n} \sum_{k=0}^{n-1} \ln \lvert f'(x_k) \rvert
+```
 
 **Read it aloud:** follow the orbit, take the logarithm of each step's stretch, and average over the long run.
 
 The error law and the forecast horizon follow:
 
-$$\delta_n \approx \delta_0 \, e^{\lambda n}, \qquad n_* = \frac{\ln(\Delta / \delta_0)}{\lambda}$$
+```math
+\delta_n \approx \delta_0 \, e^{\lambda n}, \qquad n_* = \frac{\ln(\Delta / \delta_0)}{\lambda}
+```
 
 **Read it aloud:** a small error grows by a factor e to the lambda per step, so it reaches the tolerance after ln of tolerance over error, divided by lambda, steps.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_n$, $x_0$, $x_k$ | the state after $n$ steps; the start; at step $k$ | start 0.2 | — |
-| $r$ | the growth factor in the map | 3.9, and 4 | larger exponent, not steadily |
-| $f$, $f'$ | the map; one step's stretch | 2.34 at 0.2 | — |
-| $\lambda$ | the Lyapunov exponent, per step | 0.4965 at 3.9; 0.6931 at 4 | horizon shrinks |
-| $\delta_0$, $\delta_n$ | the gap at the start; after $n$ steps | 1e-10 | horizon shrinks, logarithmically |
-| $n$, $k$ | step counts | years | — |
-| $\Delta$, $n_*$ | the tolerance; the horizon in steps | 0.5; 44.98 | horizon grows |
-| $\theta$, $\theta_0$, $\theta_k$ | an angle with $x = \sin^2\theta$ | $\sin^2\theta_0 = 0.2$ | — |
+| $`x_n`$, $`x_0`$, $`x_k`$ | the state after $`n`$ steps; the start; at step $`k`$ | start 0.2 | — |
+| $`r`$ | the growth factor in the map | 3.9, and 4 | larger exponent, not steadily |
+| $`f`$, $`f'`$ | the map; one step's stretch | 2.34 at 0.2 | — |
+| $`\lambda`$ | the Lyapunov exponent, per step | 0.4965 at 3.9; 0.6931 at 4 | horizon shrinks |
+| $`\delta_0`$, $`\delta_n`$ | the gap at the start; after $`n`$ steps | 1e-10 | horizon shrinks, logarithmically |
+| $`n`$, $`k`$ | step counts | years | — |
+| $`\Delta`$, $`n_*`$ | the tolerance; the horizon in steps | 0.5; 44.98 | horizon grows |
+| $`\theta`$, $`\theta_0`$, $`\theta_k`$ | an angle with $`x = \sin^2\theta`$ | $`\sin^2\theta_0 = 0.2`$ | — |
 
 ### When it holds
 
 - **A typical start.** Exceptional starts differ: at growth factor 4 the start 0 is an unstable fixed point (a state the map sends to itself) giving ln 4 = 1.3863, and 0.5 lands on 0.
-- **A small gap.** The law $\delta_0 e^{\lambda n}$ holds while the gap is far smaller than the range; near 0.5 it stops growing.
+- **A small gap.** The law $`\delta_0 e^{\lambda n}`$ holds while the gap is far smaller than the range; near 0.5 it stops growing.
 - **A typical horizon, not a guarantee.** Over 1,000 starts the gap reached 0.5 between steps 34 and 72, median 45, against the predicted 44.98.
 - **Negative means settled.** At growth factor 2.8 the orbit settles on a fixed point where the stretch is 0.8, and the exponent is ln 0.8 = −0.2231: every error shrinks to 0.8 of itself per step.
 
@@ -70,46 +74,56 @@ $$\delta_n \approx \delta_0 \, e^{\lambda n}, \qquad n_* = \frac{\ln(\Delta / \d
 
 ### Step 1: stretches multiply, so their logarithms add
 
-Start orbits at $x_0$ and $x_0 + \delta_0$. By the chain rule the derivative of $n$ steps is the product of one-step derivatives along the orbit. The capital pi, ∏, multiplies terms as Σ adds them, so
+Start orbits at $`x_0`$ and $`x_0 + \delta_0`$. By the chain rule the derivative of $`n`$ steps is the product of one-step derivatives along the orbit. The capital pi, ∏, multiplies terms as Σ adds them, so
 
-$$\delta_n \approx \delta_0 \prod_{k=0}^{n-1} \lvert f'(x_k) \rvert = \delta_0 \, e^{\sum \ln \lvert f'(x_k) \rvert} \approx \delta_0 \, e^{\lambda n}.$$
+```math
+\delta_n \approx \delta_0 \prod_{k=0}^{n-1} \lvert f'(x_k) \rvert = \delta_0 \, e^{\sum \ln \lvert f'(x_k) \rvert} \approx \delta_0 \, e^{\lambda n}.
+```
 
-The logarithm of a product is a sum; the last step replaces that sum by $n$ times its average. Solving $\delta_0 e^{\lambda n} = \Delta$ gives the horizon: 22.33 / 0.4965 = 44.98 steps.
+The logarithm of a product is a sum; the last step replaces that sum by $`n`$ times its average. Solving $`\delta_0 e^{\lambda n} = \Delta`$ gives the horizon: 22.33 / 0.4965 = 44.98 steps.
 
 ### Step 2: the logarithm is what makes the horizon cheap to extend
 
-The horizon depends on $\ln(\Delta / \delta_0)$. A survey a thousand times sharper, 1e-13 instead of 1e-10, buys ln(1000) / 0.4965 = 13.91 more years; across 1,000 starts it bought 13.97. Each tenfold gain in precision buys the same fixed number of steps.
+The horizon depends on $`\ln(\Delta / \delta_0)`$. A survey a thousand times sharper, 1e-13 instead of 1e-10, buys ln(1000) / 0.4965 = 13.91 more years; across 1,000 starts it bought 13.97. Each tenfold gain in precision buys the same fixed number of steps.
 
 ### Step 3: at growth factor 4, the sine-squared substitution doubles an angle
 
-Write the state as $x = \sin^2\theta$ ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)). Then $1 - x = \cos^2\theta$ and
+Write the state as $`x = \sin^2\theta`$ ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)). Then $`1 - x = \cos^2\theta`$ and
 
-$$f(x) = 4\sin^2\theta\cos^2\theta = (2\sin\theta\cos\theta)^2 = \sin^2(2\theta).$$
+```math
+f(x) = 4\sin^2\theta\cos^2\theta = (2\sin\theta\cos\theta)^2 = \sin^2(2\theta).
+```
 
-Each step doubles the angle: $\theta_k = 2^k \theta_0$. From 0.2, twenty steps give 0.82001387, as does $\sin^2(2^{20}\theta_0)$.
+Each step doubles the angle: $`\theta_k = 2^k \theta_0`$. From 0.2, twenty steps give 0.82001387, as does $`\sin^2(2^{20}\theta_0)`$.
 
 ### Step 4: the stretches telescope to 2^n
 
-By the cosine double-angle formula, $f'(x_k) = 4(1 - 2\sin^2\theta_k) = 4\cos 2\theta_k$. The sine one, $\sin 4\theta = 2\sin 2\theta \cos 2\theta$, rewrites it as
+By the cosine double-angle formula, $`f'(x_k) = 4(1 - 2\sin^2\theta_k) = 4\cos 2\theta_k`$. The sine one, $`\sin 4\theta = 2\sin 2\theta \cos 2\theta`$, rewrites it as
 
-$$\lvert f'(x_k) \rvert = 2\,\frac{\lvert \sin 2\theta_{k+1} \rvert}{\lvert \sin 2\theta_k \rvert}.$$
+```math
+\lvert f'(x_k) \rvert = 2\,\frac{\lvert \sin 2\theta_{k+1} \rvert}{\lvert \sin 2\theta_k \rvert}.
+```
 
-Multiplied over $n$ steps, every inner sine cancels:
+Multiplied over $`n`$ steps, every inner sine cancels:
 
-$$\prod_{k=0}^{n-1} \lvert f'(x_k) \rvert = 2^n \, \frac{\lvert \sin 2\theta_n \rvert}{\lvert \sin 2\theta_0 \rvert}.$$
+```math
+\prod_{k=0}^{n-1} \lvert f'(x_k) \rvert = 2^n \, \frac{\lvert \sin 2\theta_n \rvert}{\lvert \sin 2\theta_0 \rvert}.
+```
 
-Over 20 steps from 0.2 both sides are 1007094.07. Take logarithms and divide by $n$:
+Over 20 steps from 0.2 both sides are 1007094.07. Take logarithms and divide by $`n`$:
 
-$$\frac{1}{n}\sum_{k=0}^{n-1} \ln \lvert f'(x_k) \rvert = \ln 2 + \frac{1}{n} \ln \frac{\lvert \sin 2\theta_n \rvert}{\lvert \sin 2\theta_0 \rvert}.$$
+```math
+\frac{1}{n}\sum_{k=0}^{n-1} \ln \lvert f'(x_k) \rvert = \ln 2 + \frac{1}{n} \ln \frac{\lvert \sin 2\theta_n \rvert}{\lvert \sin 2\theta_0 \rvert}.
+```
 
-For a typical start the last term shrinks to zero, so $\lambda = \ln 2$: one bit lost per step.
+For a typical start the last term shrinks to zero, so $`\lambda = \ln 2`$: one bit lost per step.
 
 <details>
 <summary>Detailed proof: the correction term vanishes</summary>
 
-From above: $\lvert \sin 2\theta_n \rvert \le 1$, so the correction is at most $\frac{1}{n}\ln(1/\lvert \sin 2\theta_0 \rvert)$, which tends to 0 when $x_0$ is neither 0 nor 1.
+From above: $`\lvert \sin 2\theta_n \rvert \le 1`$, so the correction is at most $`\frac{1}{n}\ln(1/\lvert \sin 2\theta_0 \rvert)`$, which tends to 0 when $`x_0`$ is neither 0 nor 1.
 
-From below: $\theta_n / \pi$ doubles each step, and only its fractional part matters. $\sin 2\theta_n$ is tiny only when that part is near 0, 1/2 or 1. Doubling shifts the binary digits of $\theta_0 / \pi$ one place left, so that part comes within a tiny distance of those points only when the digits from place $n + 2$ begin with a long run of equal digits; the closer, the longer the run. Given $\varepsilon > 0$, the correction falls below $-\varepsilon$ at step $n$ only if $\lvert \sin 2\theta_n \rvert < e^{-\varepsilon n}$, which needs a run of length proportional to $n$. A start whose digits never carry runs growing in proportion to their position has correction tending to 0 from below too, so $\lambda = \ln 2$. Starts whose digits end in all zeros, such as 0.5 (angle $\pi/4$, digits 0.01), land on 0: the exceptions.
+From below: $`\theta_n / \pi`$ doubles each step, and only its fractional part matters. $`\sin 2\theta_n`$ is tiny only when that part is near 0, 1/2 or 1. Doubling shifts the binary digits of $`\theta_0 / \pi`$ one place left, so that part comes within a tiny distance of those points only when the digits from place $`n + 2`$ begin with a long run of equal digits; the closer, the longer the run. Given $`\varepsilon > 0`$, the correction falls below $`-\varepsilon`$ at step $`n`$ only if $`\lvert \sin 2\theta_n \rvert < e^{-\varepsilon n}`$, which needs a run of length proportional to $`n`$. A start whose digits never carry runs growing in proportion to their position has correction tending to 0 from below too, so $`\lambda = \ln 2`$. Starts whose digits end in all zeros, such as 0.5 (angle $`\pi/4`$, digits 0.01), land on 0: the exceptions.
 
 </details>
 
@@ -354,8 +368,8 @@ The two outputs match line for line.
 
 Lean proves the exact exponent at growth factors 4 and 2.8, and the telescope of the stretches for every angle.
 
-- Take growth factor 4 and a typical start between 0 and 1. Then the average of ln of the stretch over the first $n$ steps tends to ln 2 as $n$ grows. The starts that fail, such as 0 and 0.5, have total length zero.
-- Take growth factor 4 and a start $x_0 = \sin^2\theta_0$. Then $\lvert \sin 2\theta_0 \rvert$ times the product of the first $n$ stretches equals $2^n \lvert \sin 2\theta_n \rvert$. Written without division, it holds for every angle, even where $\sin 2\theta_0$ is 0.
+- Take growth factor 4 and a typical start between 0 and 1. Then the average of ln of the stretch over the first $`n`$ steps tends to ln 2 as $`n`$ grows. The starts that fail, such as 0 and 0.5, have total length zero.
+- Take growth factor 4 and a start $`x_0 = \sin^2\theta_0`$. Then $`\lvert \sin 2\theta_0 \rvert`$ times the product of the first $`n`$ stretches equals $`2^n \lvert \sin 2\theta_n \rvert`$. Written without division, it holds for every angle, even where $`\sin 2\theta_0`$ is 0.
 - Take growth factor 2.8 and the start 0.2. Then the average of ln of the stretch tends to ln 0.8, which is negative: the orbit settles.
 - At growth factor 2.8 the fixed point is 9/14, and the stretch there is 0.8.
 - At growth factor 4 the start 0 is a fixed point with stretch 4, and 0.5 lands on 0 in two steps.

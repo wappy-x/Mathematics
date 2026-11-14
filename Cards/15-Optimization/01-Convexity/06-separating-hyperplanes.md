@@ -28,39 +28,43 @@ Drawn to scale, with 1 g/kg across the same length as £1 up. The short segment 
 
 ## The formula
 
-Notation first, in words. A point $x$ is a list of numbers; here $x$ = (caffeine in g/kg, cost in £/kg). $C$ is a convex set: the straight segment between any two of its points, every mix $\theta x + (1 - \theta)x'$ of two of its points $x$ and $x'$, with $0 \le \theta \le 1$, stays inside ([Convex sets](02-convex-sets.md)). **Closed** means $C$ contains its own edge. $a^T x$ is the dot product of $a$ and $x$, written as a row times a column ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)), and $\lVert a\rVert$ is the length of $a$.
+Notation first, in words. A point $`x`$ is a list of numbers; here $`x`$ = (caffeine in g/kg, cost in £/kg). $`C`$ is a convex set: the straight segment between any two of its points, every mix $`\theta x + (1 - \theta)x'`$ of two of its points $`x`$ and $`x'`$, with $`0 \le \theta \le 1`$, stays inside ([Convex sets](02-convex-sets.md)). **Closed** means $`C`$ contains its own edge. $`a^T x`$ is the dot product of $`a`$ and $`x`$, written as a row times a column ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)), and $`\lVert a\rVert`$ is the length of $`a`$.
 
-$$x_0 \notin C \quad\Longrightarrow\quad a^T x \;\ge\; a^T p \;>\; a^T x_0 \ \text{ for every } x \in C, \qquad a = p - x_0,$$
+```math
+x_0 \notin C \quad\Longrightarrow\quad a^T x \;\ge\; a^T p \;>\; a^T x_0 \ \text{ for every } x \in C, \qquad a = p - x_0,
+```
 
-where $p$ is the point of $C$ closest to $x_0$. The gap is exact: $a^T p - a^T x_0 = \lVert a\rVert^2$.
+where $`p`$ is the point of $`C`$ closest to $`x_0`$. The gap is exact: $`a^T p - a^T x_0 = \lVert a\rVert^2`$.
 
 **Read it aloud:** take the arrow from the outside point to the nearest point of the set; scored along that arrow, every point of the set beats the outside point by at least the arrow's length squared.
 
-The wall is $\{x : a^T x = \beta\}$ for any level $\beta$ between $a^T x_0$ and $a^T p$. Farkas' lemma is the same fact for equations. For a matrix $A$ and a column $b$, **exactly one** of these holds:
+The wall is $`\{x : a^T x = \beta\}`$ for any level $`\beta`$ between $`a^T x_0`$ and $`a^T p`$. Farkas' lemma is the same fact for equations. For a matrix $`A`$ and a column $`b`$, **exactly one** of these holds:
 
-$$\text{(i)}\ \ A\theta = b \text{ with } \theta \ge 0 \qquad\qquad \text{(ii)}\ \ A^T y \ge 0 \text{ and } b^T y < 0$$
+```math
+\text{(i)}\ \ A\theta = b \text{ with } \theta \ge 0 \qquad\qquad \text{(ii)}\ \ A^T y \ge 0 \text{ and } b^T y < 0
+```
 
-Vector inequalities hold entry by entry. Here each column of $A$ is a bean with a 1 on top, so (i) asks for a recipe: weights adding to 1, none negative, hitting both numbers.
+Vector inequalities hold entry by entry. Here each column of $`A`$ is a bean with a 1 on top, so (i) asks for a recipe: weights adding to 1, none negative, hitting both numbers.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x'$ | points: caffeine in g/kg, cost in £/kg | half Robusta, half Brazil: (17.5, 6.50) | — |
-| $C$ | the set: every blend's point | the triangle with corners (22, 5), (13, 8), (11, 14) | a bigger set leaves less room for a wall |
-| $x_0$ | the point outside: the café's spec | (18, 5.50) | raise its cost to £6.50 and it is inside: a recipe exists |
-| $p$ | the closest point of $C$ to $x_0$ | 7/12 Robusta, 5/12 Brazil: (18.25, 6.25) | — |
-| $a$ | the wall's normal (the arrow at right angles to it): $p - x_0$ | (0.25, 0.75), or (1, 3) rescaled by 4 | a longer arrow, a wider gap |
-| $\lVert a\rVert$ | the gap's length, here in mixed units | 0.7906; squared, 5/8 | — |
-| $a^T x$ | the score along $a$ | caffeine + 3 × cost, after rescaling | — |
-| $\beta$ | the wall's level | anything from 34.5 to 37; the picture uses 35.75 | 37 touches the triangle's edge |
-| $\theta$ | weights in a mix, none negative | 7/12, 5/12, 0 for the closest blend | — |
-| $A$, $b$ | the beans as columns (1, caffeine, cost), and the target | columns (1, 22, 5), (1, 13, 8), (1, 11, 14); $b$ = (1, 18, 5.5) | — |
-| $y$ | Farkas' certificate: $(-a^T p,\ a)$ | (−37, 1, 3) | — |
+| $`x`$, $`x'`$ | points: caffeine in g/kg, cost in £/kg | half Robusta, half Brazil: (17.5, 6.50) | — |
+| $`C`$ | the set: every blend's point | the triangle with corners (22, 5), (13, 8), (11, 14) | a bigger set leaves less room for a wall |
+| $`x_0`$ | the point outside: the café's spec | (18, 5.50) | raise its cost to £6.50 and it is inside: a recipe exists |
+| $`p`$ | the closest point of $`C`$ to $`x_0`$ | 7/12 Robusta, 5/12 Brazil: (18.25, 6.25) | — |
+| $`a`$ | the wall's normal (the arrow at right angles to it): $`p - x_0`$ | (0.25, 0.75), or (1, 3) rescaled by 4 | a longer arrow, a wider gap |
+| $`\lVert a\rVert`$ | the gap's length, here in mixed units | 0.7906; squared, 5/8 | — |
+| $`a^T x`$ | the score along $`a`$ | caffeine + 3 × cost, after rescaling | — |
+| $`\beta`$ | the wall's level | anything from 34.5 to 37; the picture uses 35.75 | 37 touches the triangle's edge |
+| $`\theta`$ | weights in a mix, none negative | 7/12, 5/12, 0 for the closest blend | — |
+| $`A`$, $`b`$ | the beans as columns (1, caffeine, cost), and the target | columns (1, 22, 5), (1, 13, 8), (1, 11, 14); $`b`$ = (1, 18, 5.5) | — |
+| $`y`$ | Farkas' certificate: $`(-a^T p,\ a)`$ | (−37, 1, 3) | — |
 
 ### When it holds
 
 - **The set is convex.** Sell the beans only as single-origin bags, no mixing, and the reachable points are three dots. The spec (15, 10) is none of them, yet no line separates it from all three: over 360 directions the best margin is −0.5913, a wall that always leaves a bean on the wrong side.
 - **The set is closed.** Insist every blend use some of all three beans and the edge drops out. The spec (19, 6), which is 2/3 Robusta and 1/3 Brazil, is now missed, but blends come within 0.0047 of it, and the wall caffeine + 3 × cost = 37 has a gap of 0: it can only touch, not separate.
-- **The point really is outside.** A point inside $C$ has itself as the closest point, $a = 0$, and no wall. Farkas' lemma turns that into option (i).
+- **The point really is outside.** A point inside $`C`$ has itself as the closest point, $`a = 0`$, and no wall. Farkas' lemma turns that into option (i).
 - **Finitely many numbers.** Step 1 finds the closest point through the extreme value theorem, which needs finitely many numbers. For functions or infinite sequences with length measured as here, by a sum of squares, a closest point still exists by a different argument, and Steps 2 and 3 go through unchanged. With other measures of length a closest point need not exist, and the statement needs the Hahn–Banach theorem from functional analysis.
 
 ---
@@ -73,36 +77,38 @@ Stand at the spec and find the nearest blend. If some other blend lay on the spe
 
 ### Step 1: a closest point exists
 
-Squared distance to $x_0$ is a smooth bowl. Pick any point of $C$ and keep only the points of $C$ at most that far from $x_0$; that piece is closed and bounded, so the [Extreme value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/07-extreme-value-theorem.md) from wing 06 gives a minimum. This step minimises; nothing here maximises. Call the winner $p$.
+Squared distance to $`x_0`$ is a smooth bowl. Pick any point of $`C`$ and keep only the points of $`C`$ at most that far from $`x_0`$; that piece is closed and bounded, so the [Extreme value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/07-extreme-value-theorem.md) from wing 06 gives a minimum. This step minimises; nothing here maximises. Call the winner $`p`$.
 
-For the blends, the spec sits below the edge from Robusta to Brazil, so the closest point is on that edge. Projecting onto the edge lands 5/12 of the way from Robusta to Brazil: $p$ = 7/12 Robusta and 5/12 Brazil, at 18.25 g/kg and £6.25. Squared distance 0.25² + 0.75² = 5/8.
+For the blends, the spec sits below the edge from Robusta to Brazil, so the closest point is on that edge. Projecting onto the edge lands 5/12 of the way from Robusta to Brazil: $`p`$ = 7/12 Robusta and 5/12 Brazil, at 18.25 g/kg and £6.25. Squared distance 0.25² + 0.75² = 5/8.
 
 ### Step 2: every point of the set makes an angle of at most 90° with the gap
 
-Take any $x$ in $C$. Mixing $p$ and $x$ stays in $C$, and $p$ is closest, so moving any small fraction $\theta$ from $p$ toward $x$ cannot reduce the distance. Expanding the squared length, as the dot product card does, the first-order term must not be negative:
+Take any $`x`$ in $`C`$. Mixing $`p`$ and $`x`$ stays in $`C`$, and $`p`$ is closest, so moving any small fraction $`\theta`$ from $`p`$ toward $`x`$ cannot reduce the distance. Expanding the squared length, as the dot product card does, the first-order term must not be negative:
 
-$$a^T (x - p) \ge 0 \quad \text{for every } x \in C.$$
+```math
+a^T (x - p) \ge 0 \quad \text{for every } x \in C.
+```
 
-On the blends, with $a$ rescaled to (1, 3), the three beans give 0, 0 and 16. Robusta and Brazil sit on the wall line itself; Ethiopia sits well clear. A blend's value is the same weighted average, so no blend goes negative.
+On the blends, with $`a`$ rescaled to (1, 3), the three beans give 0, 0 and 16. Robusta and Brazil sit on the wall line itself; Ethiopia sits well clear. A blend's value is the same weighted average, so no blend goes negative.
 
 <details>
 <summary>Detailed proof: the closest-point argument, line by line</summary>
 
-Let $x \in C$ and $0 < \theta \le 1$. By convexity $p + \theta(x - p) \in C$, so it is no closer to $x_0$ than $p$:
+Let $`x \in C`$ and $`0 < \theta \le 1`$. By convexity $`p + \theta(x - p) \in C`$, so it is no closer to $`x_0`$ than $`p`$:
 
-$$\lVert p + \theta(x - p) - x_0\rVert^2 \ge \lVert p - x_0\rVert^2.$$
+$`\displaystyle \lVert p + \theta(x - p) - x_0\rVert^2 \ge \lVert p - x_0\rVert^2.`$
 
-With $a = p - x_0$ the left side expands to $\lVert a\rVert^2 + 2\theta\, a^T(x - p) + \theta^2 \lVert x - p\rVert^2$. Cancel $\lVert a\rVert^2$ and divide by $\theta > 0$:
+With $`a = p - x_0`$ the left side expands to $`\lVert a\rVert^2 + 2\theta\, a^T(x - p) + \theta^2 \lVert x - p\rVert^2`$. Cancel $`\lVert a\rVert^2`$ and divide by $`\theta > 0`$:
 
-$$2\, a^T(x - p) + \theta \lVert x - p\rVert^2 \ge 0.$$
+$`\displaystyle 2\, a^T(x - p) + \theta \lVert x - p\rVert^2 \ge 0.`$
 
-Let $\theta$ shrink to 0: $a^T(x - p) \ge 0$. Now $a^T x \ge a^T p$, and $a^T p - a^T x_0 = a^T a = \lVert a\rVert^2 > 0$ because $p \ne x_0$. So $a^T x \ge a^T p > a^T x_0$ for every $x$ in $C$, which is the theorem. Any $\beta$ strictly between the two numbers gives a wall with $C$ strictly on one side. The same inequality shows the closest point is unique: if two points were both closest, applying it from each to the other and adding the two results gives minus their squared distance apart at least 0, so they are the same point.
+Let $`\theta`$ shrink to 0: $`a^T(x - p) \ge 0`$. Now $`a^T x \ge a^T p`$, and $`a^T p - a^T x_0 = a^T a = \lVert a\rVert^2 > 0`$ because $`p \ne x_0`$. So $`a^T x \ge a^T p > a^T x_0`$ for every $`x`$ in $`C`$, which is the theorem. Any $`\beta`$ strictly between the two numbers gives a wall with $`C`$ strictly on one side. The same inequality shows the closest point is unique: if two points were both closest, applying it from each to the other and adding the two results gives minus their squared distance apart at least 0, so they are the same point.
 
 </details>
 
 ### Step 3: the wall and its margin
 
-Step 2 says every point of $C$ scores at least $a^T p$. And $a^T p = a^T x_0 + a^T a$, so the spec scores $\lVert a\rVert^2$ less. That is the theorem. In the blend's rescaled numbers, every blend scores at least 37 and the spec 34.5. The gap, 2.5, is the rescaling factor 4 times the squared distance 5/8.
+Step 2 says every point of $`C`$ scores at least $`a^T p`$. And $`a^T p = a^T x_0 + a^T a`$, so the spec scores $`\lVert a\rVert^2`$ less. That is the theorem. In the blend's rescaled numbers, every blend scores at least 37 and the spec 34.5. The gap, 2.5, is the rescaling factor 4 times the squared distance 5/8.
 
 The score line through the edge, caffeine + 3 × cost = 37, is a **price line**. At 18 g/kg it says cost ≥ (37 − 18) / 3 = 19/3, £6.33 a kilo. The blend 5/9 Robusta, 4/9 Brazil reaches exactly 18 g at exactly £6.33, so the bound is met: £6.33 is the cheapest 18-gram blend, with the line as its proof.
 
@@ -110,26 +116,26 @@ The finance wing already ran this argument once: a flat sheet of zero-cost payof
 
 ### Step 4: Farkas' lemma, read off the wall
 
-Put the recipe question as equations. The unknowns are the weights $\theta$; the columns of $A$ are the beans with a 1 on top; $b$ = (1, 18, 5.5). Then $A\theta = b$ says "weights add to 1 and hit both numbers", and $\theta \ge 0$ says "no negative amounts".
+Put the recipe question as equations. The unknowns are the weights $`\theta`$; the columns of $`A`$ are the beans with a 1 on top; $`b`$ = (1, 18, 5.5). Then $`A\theta = b`$ says "weights add to 1 and hit both numbers", and $`\theta \ge 0`$ says "no negative amounts".
 
-**Not both.** If a recipe $\theta \ge 0$ existed and also a $y$ with $A^T y \ge 0$, then $b^T y = \theta^T (A^T y)$, a sum of products of numbers that are all zero or more, so $b^T y \ge 0$. Option (ii) is impossible.
+**Not both.** If a recipe $`\theta \ge 0`$ existed and also a $`y`$ with $`A^T y \ge 0`$, then $`b^T y = \theta^T (A^T y)`$, a sum of products of numbers that are all zero or more, so $`b^T y \ge 0`$. Option (ii) is impossible.
 
-**At least one.** For this step let $C$ be everything the columns can make, $\{A\theta : \theta \ge 0\}$. It is convex, and closed under stretching by any factor 0 or more: a **cone**. If (i) fails, $b$ is outside $C$, and Step 3 gives an $a$ with $a^T x \ge a^T p > a^T b$ for all $x$ in $C$. Because $C$ is a cone, the zero point is in it, so $a^T p \le 0$; and if some $x$ in $C$ scored below 0, stretching it would push the score below any bound. So $a^T x \ge 0$ on all of $C$, every column included, while $a^T b < 0$. That $a$ is the $y$ of option (ii).
+**At least one.** For this step let $`C`$ be everything the columns can make, $`\{A\theta : \theta \ge 0\}`$. It is convex, and closed under stretching by any factor 0 or more: a **cone**. If (i) fails, $`b`$ is outside $`C`$, and Step 3 gives an $`a`$ with $`a^T x \ge a^T p > a^T b`$ for all $`x`$ in $`C`$. Because $`C`$ is a cone, the zero point is in it, so $`a^T p \le 0`$; and if some $`x`$ in $`C`$ scored below 0, stretching it would push the score below any bound. So $`a^T x \ge 0`$ on all of $`C`$, every column included, while $`a^T b < 0`$. That $`a`$ is the $`y`$ of option (ii).
 
 <details>
 <summary>Detailed proof: the cone is closed</summary>
 
-Step 3 needs the cone closed. Take any point $A\theta$ with $\theta \ge 0$. If the columns used, those with positive weight, are linearly dependent, some combination of them adds to zero, with at least one coefficient positive. Subtract as much of that combination from $\theta$ as keeps every weight at zero or more: the point is unchanged and one more weight is now zero. Repeat until the columns used are independent. So the cone is the union of the cones built on independent sets of columns, finitely many. Each of those is the image of the closed set $\{\theta \ge 0\}$ under a linear map that can be undone on its image, so each is closed, and a finite union of closed sets is closed.
+Step 3 needs the cone closed. Take any point $`A\theta`$ with $`\theta \ge 0`$. If the columns used, those with positive weight, are linearly dependent, some combination of them adds to zero, with at least one coefficient positive. Subtract as much of that combination from $`\theta`$ as keeps every weight at zero or more: the point is unchanged and one more weight is now zero. Repeat until the columns used are independent. So the cone is the union of the cones built on independent sets of columns, finitely many. Each of those is the image of the closed set $`\{\theta \ge 0\}`$ under a linear map that can be undone on its image, so each is closed, and a finite union of closed sets is closed.
 
 </details>
 
-For the spec, the certificate is $y$ = (−37, 1, 3): minus the price line's level in the top entry, then the normal. Against a column (1, caffeine, cost) it gives that column's score minus 37, so $A^T y \ge 0$ says every bean is on the far side of the price line. Against the three bean columns it gives 0, 0 and 16, all at least 0. Against $b$ it gives −37 + 18 + 16.5 = −2.5, below 0. Three dot products prove no recipe exists.
+For the spec, the certificate is $`y`$ = (−37, 1, 3): minus the price line's level in the top entry, then the normal. Against a column (1, caffeine, cost) it gives that column's score minus 37, so $`A^T y \ge 0`$ says every bean is on the far side of the price line. Against the three bean columns it gives 0, 0 and 16, all at least 0. Against $`b`$ it gives −37 + 18 + 16.5 = −2.5, below 0. Three dot products prove no recipe exists.
 
 ### Step 5: why the equations alone don't decide it
 
 Three equations, three unknowns: solving them gives one mix, 25/48 Robusta, 61/96 Brazil and −5/32 Ethiopia. It hits 18 g and £5.50 exactly, but asks for −0.15625 kg of Ethiopian beans in every kilo. Signs are the whole question. With ten beans instead of three, the equations would have endless solutions, and checking their signs one by one would never finish. A complete search is still finite: by the fold in Step 4, a recipe that exists can be cut down to at most three beans, so solving for every choice of three settles it. The certificate does it in three numbers and a handful of products.
 
-For contrast, ask for 15 g at £10. The equations give 1/3 Robusta, 1/6 Brazil, 1/2 Ethiopia, all at least 0: option (i), a real recipe. The old certificate gives $b^T y$ = 8 there, not negative, as the "not both" half requires.
+For contrast, ask for 15 g at £10. The equations give 1/3 Robusta, 1/6 Brazil, 1/2 Ethiopia, all at least 0: option (i), a real recipe. The old certificate gives $`b^T y`$ = 8 there, not negative, as the "not both" half requires.
 
 ---
 
@@ -527,10 +533,10 @@ The two outputs match line for line.
 
 Lean proves the wall theorem for every closed convex set and Farkas' lemma for every matrix, and checks the café's numbers.
 
-- Points are lists of $n$ numbers, for any $n$. If $x_0$ lies outside a closed convex set $C$ that has a point, $C$ has exactly one closest point $p$.
-- Take $a = p - x_0$. Then every $x$ in $C$ has $a^T x \ge a^T p > a^T x_0$. The gap $a^T p - a^T x_0$ is exactly $\lVert a\rVert^2$.
-- Some wall $\{x : a^T x = \beta\}$ has $x_0$ strictly on one side and every point of $C$ strictly on the other.
-- Farkas' lemma: for any matrix $A$ and column $b$, exactly one of (i) and (ii) holds.
+- Points are lists of $`n`$ numbers, for any $`n`$. If $`x_0`$ lies outside a closed convex set $`C`$ that has a point, $`C`$ has exactly one closest point $`p`$.
+- Take $`a = p - x_0`$. Then every $`x`$ in $`C`$ has $`a^T x \ge a^T p > a^T x_0`$. The gap $`a^T p - a^T x_0`$ is exactly $`\lVert a\rVert^2`$.
+- Some wall $`\{x : a^T x = \beta\}`$ has $`x_0`$ strictly on one side and every point of $`C`$ strictly on the other.
+- Farkas' lemma: for any matrix $`A`$ and column $`b`$, exactly one of (i) and (ii) holds.
 - The beans score 37, 37 and 53 on caffeine + 3 × cost. The spec scores 34.5, and the gap is 2.5.
 - Half Robusta, half Brazil lands at (17.5, 6.50).
 - 7/12 Robusta, 5/12 Brazil lands at (18.25, 6.25), at squared distance 5/8 from the spec.

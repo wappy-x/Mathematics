@@ -36,48 +36,56 @@ Orange: the payoff, a tent 10 wide on each side and $10 tall at $100. Green: the
 
 ## The formula
 
-Notation first, in words. $C(K)$ is today's price of the call struck at $K$, all other terms held fixed. The symbol $\partial C / \partial K$ is its slope: how fast the price changes as the strike moves, everything else held still. $\partial^2 C / \partial K^2$ is the slope of that slope: how fast the price curve bends.
+Notation first, in words. $`C(K)`$ is today's price of the call struck at $`K`$, all other terms held fixed. The symbol $`\partial C / \partial K`$ is its slope: how fast the price changes as the strike moves, everything else held still. $`\partial^2 C / \partial K^2`$ is the slope of that slope: how fast the price curve bends.
 
-$$f(K) \;=\; \frac{1}{D(T)}\,\frac{\partial^2 C}{\partial K^2}(K), \qquad D(T) = e^{-rT}$$
+```math
+f(K) \;=\; \frac{1}{D(T)}\,\frac{\partial^2 C}{\partial K^2}(K), \qquad D(T) = e^{-rT}
+```
 
 **Read it aloud:** the probability density of the finishing price at K is the bend of the call price curve at K, grown back up by one year of interest.
 
-The version that runs on quotes replaces the bend by a butterfly of half-width $h$:
+The version that runs on quotes replaces the bend by a butterfly of half-width $`h`$:
 
-$$\frac{\partial^2 C}{\partial K^2} \;\approx\; \frac{C(K-h) - 2\,C(K) + C(K+h)}{h^2}$$
+```math
+\frac{\partial^2 C}{\partial K^2} \;\approx\; \frac{C(K-h) - 2\,C(K) + C(K+h)}{h^2}
+```
 
 **Read it aloud:** the bend is the butterfly's price divided by the tent's area.
 
 On the way there, one derivative gives the cash digital, the discounted chance of finishing above K ([Cash-or-nothing digital](01-cash-or-nothing-digital.md)):
 
-$$-\frac{\partial C}{\partial K} \;=\; D(T)\times(\text{chance that } S_T > K)$$
+```math
+-\frac{\partial C}{\partial K} \;=\; D(T)\times(\text{chance that } S_T > K)
+```
 
 In the house market, where the log of the finishing price follows a bell curve, the bend has a closed form:
 
-$$\frac{\partial^2 C}{\partial K^2} \;=\; e^{-rT}\,\frac{\phi(d_2)}{K\,\sigma\sqrt{T}}, \qquad d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}$$
+```math
+\frac{\partial^2 C}{\partial K^2} \;=\; e^{-rT}\,\frac{\phi(d_2)}{K\,\sigma\sqrt{T}}, \qquad d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}
+```
 
-In words: $d_2$ is how many spreads of the bell curve separate the strike from the centre of the finishing price's log; $\phi(d_2)$ is the bell curve's height there; dividing by $K\sigma\sqrt{T}$ converts height per unit of log price into height per dollar.
+In words: $`d_2`$ is how many spreads of the bell curve separate the strike from the centre of the finishing price's log; $`\phi(d_2)`$ is the bell curve's height there; dividing by $`K\sigma\sqrt{T}`$ converts height per unit of log price into height per dollar.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100 | moves the whole density right |
-| $K$ | the strike where the density is read | $100 | reads the curve further right |
-| $S_T$ | Acme's price on expiry day, unknown today | the thing the density describes | — |
-| $C(K)$ | today's price of the call struck at $K$ | $9.23 at $K$ = 100 | — |
-| $h$ | half-width of the butterfly: gap between neighbouring strikes | $1, then $10 | the estimate averages over a wider band and drifts from the true bend |
-| $f(K)$, $G$ | density: chance per dollar of finishing at $K$; survival: chance of finishing above | 0.019922 at $100; discounted, 0.494581 | — |
-| $r$, $D(T)$ | riskless rate; discount factor $e^{-rT}$, today's value of $1 paid at expiry | 5%; 0.951229 | the density read from a price grows |
-| $q$, $F$ | dividend yield; forward price $S e^{(r-q)T}$, the density's mean | 2%; $103.05 | shifts the density's centre |
-| $\sigma$ | volatility: how jumpy Acme is, per root year | 20% | the density spreads and its peak falls |
-| $T$ | years to expiry | 1 | the density spreads |
-| $d_2$, $\phi$, $N$ | standardized distance; bell-curve height; bell-curve area to the left | 0.05; 0.398444 | — |
-| $\Gamma$ | spot gamma: bend of the call price in today's price $S$ | 0.018951 at $S$ = $K$ | — |
+| $`S`$ | Acme's price today | $100 | moves the whole density right |
+| $`K`$ | the strike where the density is read | $100 | reads the curve further right |
+| $`S_T`$ | Acme's price on expiry day, unknown today | the thing the density describes | — |
+| $`C(K)`$ | today's price of the call struck at $`K`$ | $9.23 at $`K`$ = 100 | — |
+| $`h`$ | half-width of the butterfly: gap between neighbouring strikes | $1, then $10 | the estimate averages over a wider band and drifts from the true bend |
+| $`f(K)`$, $`G`$ | density: chance per dollar of finishing at $`K`$; survival: chance of finishing above | 0.019922 at $100; discounted, 0.494581 | — |
+| $`r`$, $`D(T)`$ | riskless rate; discount factor $`e^{-rT}`$, today's value of $1 paid at expiry | 5%; 0.951229 | the density read from a price grows |
+| $`q`$, $`F`$ | dividend yield; forward price $`S e^{(r-q)T}`$, the density's mean | 2%; $103.05 | shifts the density's centre |
+| $`\sigma`$ | volatility: how jumpy Acme is, per root year | 20% | the density spreads and its peak falls |
+| $`T`$ | years to expiry | 1 | the density spreads |
+| $`d_2`$, $`\phi`$, $`N`$ | standardized distance; bell-curve height; bell-curve area to the left | 0.05; 0.398444 | — |
+| $`\Gamma`$ | spot gamma: bend of the call price in today's price $`S`$ | 0.018951 at $`S`$ = $`K`$ | — |
 
 ### When it holds
 
-- **European calls at one expiry, at every strike.** Early exercise adds a premium that is not about the finishing price. Listed strikes are discrete, so in practice the curve is interpolated first; a wide gap $h$ blurs the density over the band.
+- **European calls at one expiry, at every strike.** Early exercise adds a premium that is not about the finishing price. Listed strikes are discrete, so in practice the curve is interpolated first; a wide gap $`h`$ blurs the density over the band.
 - **No static arbitrage: prices fall and bend upward in strike.** A price curve that rises anywhere implies a negative chance; one that bends down gives a negative density and a butterfly that costs less than nothing. The recovered "density" then means nothing.
-- **A known discount factor.** With deterministic rates $D(T)$ is the price of a zero-coupon bond. With random rates the same formula still holds, with that bond's price as the divisor, and the density becomes the one that prices in bond units.
+- **A known discount factor.** With deterministic rates $`D(T)`$ is the price of a zero-coupon bond. With random rates the same formula still holds, with that bond's price as the divisor, and the density becomes the one that prices in bond units.
 - **A smooth curve.** If the finishing price can land on one exact value with positive chance (a takeover at a fixed price), the density has a spike there and the price curve has a kink.
 - **It is a price, not a forecast.** The density is the risk-neutral one: it prices payoffs, and it carries the market's fear of crashes inside it.
 
@@ -87,63 +95,79 @@ In words: $d_2$ is how many spreads of the bell curve separate the strike from t
 
 ### Step 0: a butterfly is a tent, and a tent measures a small band
 
-Long one call at $K-h$, short two at $K$, long one at $K+h$. Below $K-h$ none pay. Between $K-h$ and $K$ only the first pays, rising from 0 to $h$. Between $K$ and $K+h$ the two short calls take back two dollars for every dollar of rise, so the tent falls to 0. Above $K+h$ the slopes cancel: +1 − 2 + 1 = 0. The payoff is a tent of height $h$ and area $h^2$.
+Long one call at $`K-h`$, short two at $`K`$, long one at $`K+h`$. Below $`K-h`$ none pay. Between $`K-h`$ and $`K`$ only the first pays, rising from 0 to $`h`$. Between $`K`$ and $`K+h`$ the two short calls take back two dollars for every dollar of rise, so the tent falls to 0. Above $`K+h`$ the slopes cancel: +1 − 2 + 1 = 0. The payoff is a tent of height $`h`$ and area $`h^2`$.
 
-Today's price of any payoff is the discounted average of that payoff over the finishing-price density. If the density is nearly flat across the tent's base, that average is $f(K)$ times the tent's area:
+Today's price of any payoff is the discounted average of that payoff over the finishing-price density. If the density is nearly flat across the tent's base, that average is $`f(K)`$ times the tent's area:
 
-$$\text{butterfly} \;\approx\; D(T)\, f(K)\, h^2.$$
+```math
+\text{butterfly} \;\approx\; D(T)\, f(K)\, h^2.
+```
 
-Divide by $D(T)\,h^2$ and the density comes out. The rest of this section makes that exact.
+Divide by $`D(T)\,h^2`$ and the density comes out. The rest of this section makes that exact.
 
 ### Step 1: write the call as an area under the survival curve
 
-A call pays $S_T - K$ when positive. Its price is the discounted average:
+A call pays $`S_T - K`$ when positive. Its price is the discounted average:
 
-$$C(K) = D(T)\int_K^\infty (x - K)\, f(x)\, dx.$$
+```math
+C(K) = D(T)\int_K^\infty (x - K)\, f(x)\, dx.
+```
 
-Let $G(x)$ be the chance that $S_T$ finishes above $x$; its slope is $-f(x)$ ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). Integrate by parts, with $x - K$ as the part to differentiate and $f$ as the part to integrate, whose integral is $-G$ ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)):
+Let $`G(x)`$ be the chance that $`S_T`$ finishes above $`x`$; its slope is $`-f(x)`$ ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). Integrate by parts, with $`x - K`$ as the part to differentiate and $`f`$ as the part to integrate, whose integral is $`-G`$ ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)):
 
-$$C(K) = D(T)\Big(\big[-(x-K)\,G(x)\big]_K^\infty + \int_K^\infty G(x)\,dx\Big) = D(T)\int_K^\infty G(x)\,dx.$$
+```math
+C(K) = D(T)\Big(\big[-(x-K)\,G(x)\big]_K^\infty + \int_K^\infty G(x)\,dx\Big) = D(T)\int_K^\infty G(x)\,dx.
+```
 
-The bracket is zero at both ends. At $x = K$ the factor $x - K$ is zero. At infinity $G$ dies faster than $x$ grows, because the finishing price has a finite average (the forward). So a call price is the discounted area under the survival curve to the right of the strike.
+The bracket is zero at both ends. At $`x = K`$ the factor $`x - K`$ is zero. At infinity $`G`$ dies faster than $`x`$ grows, because the finishing price has a finite average (the forward). So a call price is the discounted area under the survival curve to the right of the strike.
 
 ### Step 2: one derivative gives the digital
 
-Move the strike up by a small step. The area loses a thin strip of width one step and height $G(K)$. So
+Move the strike up by a small step. The area loses a thin strip of width one step and height $`G(K)`$. So
 
-$$\frac{\partial C}{\partial K} = -D(T)\,G(K).$$
+```math
+\frac{\partial C}{\partial K} = -D(T)\,G(K).
+```
 
-Minus the slope of the call curve is the discounted chance of finishing above $K$: the cash digital. In the house market that is 0.494581, the shelf's cash digital to six places. A call spread is this slope measured with two strikes ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)).
+Minus the slope of the call curve is the discounted chance of finishing above $`K`$: the cash digital. In the house market that is 0.494581, the shelf's cash digital to six places. A call spread is this slope measured with two strikes ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)).
 
 ### Step 3: a second derivative gives the density
 
-Differentiate again. The slope of $-G$ is $+f$:
+Differentiate again. The slope of $`-G`$ is $`+f`$:
 
-$$\frac{\partial^2 C}{\partial K^2} = D(T)\,f(K).$$
+```math
+\frac{\partial^2 C}{\partial K^2} = D(T)\,f(K).
+```
 
-That is the theorem. Nothing about how Acme moves was used: only that a call pays $S_T - K$ above the strike and that prices are discounted averages. A second road to the same line is the tent itself: the second derivative of the payoff $(x-K)^+$ in $K$ is a spike at $x = K$ with area 1, and averaging a spike reads off the density at the spike.
+That is the theorem. Nothing about how Acme moves was used: only that a call pays $`S_T - K`$ above the strike and that prices are discounted averages. A second road to the same line is the tent itself: the second derivative of the payoff $`(x-K)^+`$ in $`K`$ is a spike at $`x = K`$ with area 1, and averaging a spike reads off the density at the spike.
 
 ### Step 4: why halving the gap cuts the error by four
 
-Expand each neighbouring price around $K$ in powers of $h$ (a Taylor series). The odd powers cancel between $K+h$ and $K-h$:
+Expand each neighbouring price around $`K`$ in powers of $`h`$ (a Taylor series). The odd powers cancel between $`K+h`$ and $`K-h`$:
 
-$$\frac{C(K-h) - 2C(K) + C(K+h)}{h^2} = \frac{\partial^2 C}{\partial K^2} + \frac{h^2}{12}\,\frac{\partial^4 C}{\partial K^4} + \dots$$
+```math
+\frac{C(K-h) - 2C(K) + C(K+h)}{h^2} = \frac{\partial^2 C}{\partial K^2} + \frac{h^2}{12}\,\frac{\partial^4 C}{\partial K^4} + \dots
+```
 
-The error is proportional to $h^2$. Halve $h$ and the error falls by four. The checks print error ratios of 3.997987 and 3.999497. Near the peak the density bends downward, so a wide tent averages in lower neighbours and reads low: at $h$ = 8 the butterfly gives 0.018714 against 0.018951.
+The error is proportional to $`h^2`$. Halve $`h`$ and the error falls by four. The checks print error ratios of 3.997987 and 3.999497. Near the peak the density bends downward, so a wide tent averages in lower neighbours and reads low: at $`h`$ = 8 the butterfly gives 0.018714 against 0.018951.
 
 ### Step 5: the house market's closed form, and why it equals gamma
 
-In the house market $\ln S_T$ follows a bell curve with centre $\ln S + (r - q - \tfrac12\sigma^2)T$ and spread $\sigma\sqrt{T}$ ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The strike $K$ sits $d_2$ spreads below that centre. A bell-curve height per unit of log price becomes a height per dollar by dividing by $K\sigma\sqrt{T}$, since a small step in log price at $K$ is a step $K$ times as large in dollars. So $f(K) = \phi(d_2)/(K\sigma\sqrt{T})$, and Step 3 multiplies by $e^{-rT}$.
+In the house market $`\ln S_T`$ follows a bell curve with centre $`\ln S + (r - q - \tfrac12\sigma^2)T`$ and spread $`\sigma\sqrt{T}`$ ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The strike $`K`$ sits $`d_2`$ spreads below that centre. A bell-curve height per unit of log price becomes a height per dollar by dividing by $`K\sigma\sqrt{T}`$, since a small step in log price at $`K`$ is a step $`K`$ times as large in dollars. So $`f(K) = \phi(d_2)/(K\sigma\sqrt{T})`$, and Step 3 multiplies by $`e^{-rT}`$.
 
-At $S = K$ the result equals the call's spot gamma, the bend in today's price. The reason is scaling. Double both the share price and the strike and the call price doubles. That one fact ties the two bends together: $S^2\,\Gamma = K^2\,\partial^2 C/\partial K^2$. At $S = K$ the squares cancel.
+At $`S = K`$ the result equals the call's spot gamma, the bend in today's price. The reason is scaling. Double both the share price and the strike and the call price doubles. That one fact ties the two bends together: $`S^2\,\Gamma = K^2\,\partial^2 C/\partial K^2`$. At $`S = K`$ the squares cancel.
 
 <details>
 <summary>Detailed proof: the scaling identity</summary>
 
-Write the call price as $C(S, K)$. Doubling both inputs doubles the price, and the same holds for any factor $\lambda > 0$: $C(\lambda S, \lambda K) = \lambda\,C(S, K)$. Differentiate in that factor and set $\lambda = 1$:
-$$S\,\frac{\partial C}{\partial S} + K\,\frac{\partial C}{\partial K} = C.$$
-Differentiate this in $S$: $S\,\partial^2 C/\partial S^2 + K\,\partial^2 C/\partial S\,\partial K = 0$. Differentiate it in $K$ instead: $S\,\partial^2 C/\partial S\,\partial K + K\,\partial^2 C/\partial K^2 = 0$. Multiply the first by $S$, the second by $K$, and subtract. The mixed terms cancel:
-$$S^2\,\frac{\partial^2 C}{\partial S^2} = K^2\,\frac{\partial^2 C}{\partial K^2}.$$
+Write the call price as $`C(S, K)`$. Doubling both inputs doubles the price, and the same holds for any factor $`\lambda > 0`$: $`C(\lambda S, \lambda K) = \lambda\,C(S, K)`$. Differentiate in that factor and set $`\lambda = 1`$:
+
+$`\displaystyle S\,\frac{\partial C}{\partial S} + K\,\frac{\partial C}{\partial K} = C.`$
+
+Differentiate this in $`S`$: $`S\,\partial^2 C/\partial S^2 + K\,\partial^2 C/\partial S\,\partial K = 0`$. Differentiate it in $`K`$ instead: $`S\,\partial^2 C/\partial S\,\partial K + K\,\partial^2 C/\partial K^2 = 0`$. Multiply the first by $`S`$, the second by $`K`$, and subtract. The mixed terms cancel:
+
+$`\displaystyle S^2\,\frac{\partial^2 C}{\partial S^2} = K^2\,\frac{\partial^2 C}{\partial K^2}.`$
+
 The scaling holds whenever the finishing price is today's price times a random growth factor that does not depend on today's price, which is true in the house market and in any model where returns ignore the price level.
 
 </details>
@@ -164,30 +188,30 @@ xychart-beta
 
 Orange: flat 20% volatility, the lognormal density. Green: the smile. The green curve is taller at the peak, thinner from $70 to $90 and from $130 to $150, and much fatter far out on the left, from $60 down. The chance of finishing below $70 rises from 3.21% to 5.39%. The chance above $150 rises from 2.35% to 2.51%. Total probability stays 1 and the mean stays at the forward, $103.05: a smile reshapes the density but cannot move its mean. A tall middle with fat tails is what "fat-tailed" means.
 
-The same area argument, run on puts instead of calls, gives the same density: by put-call parity a put's price differs from the call's by a straight line in $K$, which has no bend. [Any payoff from a strip of options](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md) runs the argument backwards: any payoff is a portfolio of butterflies, so any payoff can be priced from the call curve.
+The same area argument, run on puts instead of calls, gives the same density: by put-call parity a put's price differs from the call's by a straight line in $`K`$, which has no bend. [Any payoff from a strip of options](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md) runs the argument backwards: any payoff is a portfolio of butterflies, so any payoff can be priced from the call curve.
 
 ---
 
 ## Worked numbers, by hand
 
-House market: $S$ = 100, $K$ = 100, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%, $T$ = 1 year.
+House market: $`S`$ = 100, $`K`$ = 100, $`r`$ = 5%, $`q`$ = 2%, $`\sigma`$ = 20%, $`T`$ = 1 year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_2$ | (ln 1 + (0.05 − 0.02 − 0.02) × 1) / 0.20 | 0.05 |
-| $\phi(d_2)$ | bell-curve height at 0.05 | 0.398444 |
-| $K\sigma\sqrt{T}$ | 100 × 0.20 × 1 | 20 |
-| density $f(100)$ | 0.398444 / 20 | 0.019922 |
-| $D(T)$ | $e^{-0.05}$ | 0.951229 |
-| **bend $\partial^2 C/\partial K^2$** | 0.951229 × 0.019922 | **0.018951** |
+| $`d_2`$ | (ln 1 + (0.05 − 0.02 − 0.02) × 1) / 0.20 | 0.05 |
+| $`\phi(d_2)`$ | bell-curve height at 0.05 | 0.398444 |
+| $`K\sigma\sqrt{T}`$ | 100 × 0.20 × 1 | 20 |
+| density $`f(100)`$ | 0.398444 / 20 | 0.019922 |
+| $`D(T)`$ | $`e^{-0.05}`$ | 0.951229 |
+| **bend $`\partial^2 C/\partial K^2`$** | 0.951229 × 0.019922 | **0.018951** |
 
 The same number from three listed prices:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $C(99)$, $C(100)$, $C(101)$ | house formula at each strike | 9.731084, 9.227006, 8.741874 |
-| $1 butterfly, $h$ = 1 | 9.731084 − 2 × 9.227006 + 8.741874, at full precision | 0.018947 |
-| divide by $h^2$ = 1 | | **0.018947** |
+| $`C(99)`$, $`C(100)`$, $`C(101)`$ | house formula at each strike | 9.731084, 9.227006, 8.741874 |
+| $1 butterfly, $`h`$ = 1 | 9.731084 − 2 × 9.227006 + 8.741874, at full precision | 0.018947 |
+| divide by $`h^2`$ = 1 | | **0.018947** |
 | density | 0.018947 / 0.951229 | about 0.0199 |
 
 The butterfly gives 0.018947 against the closed form's 0.018951. The market prices a one-dollar band around $100 at a 1.99% chance: about one chance in fifty that Acme finishes within fifty cents of $100.
@@ -211,16 +235,16 @@ Correct bend 0.018951; correct density 0.019922.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Forget to undo the discount | 0.018951 as the density | short by the factor 0.951229: every probability too small |
-| Read the 90/100/110 butterfly with $h$ = 10 as it stands | 0.019536 | the tent averages the curve over $20 of strikes, and the peak bends down |
-| Divide the butterfly by $h$, not $h^2$ | 0.195355 | ten times too big: the tent's area is $h^2$, not its height |
-| Use spot gamma as the bend at $K$ = 120 | 0.015709 (right: 0.010909) | gamma equals the strike bend only at $S = K$; elsewhere they differ by $(K/S)^2$ |
-| Mark $C(100)$ three cents too high | −0.043158 | a negative density: the $1 butterfly now costs less than nothing |
+| Read the 90/100/110 butterfly with $`h`$ = 10 as it stands | 0.019536 | the tent averages the curve over $20 of strikes, and the peak bends down |
+| Divide the butterfly by $`h`$, not $`h^2`$ | 0.195355 | ten times too big: the tent's area is $`h^2`$, not its height |
+| Use spot gamma as the bend at $`K`$ = 120 | 0.015709 (right: 0.010909) | gamma equals the strike bend only at $`S = K`$; elsewhere they differ by $`(K/S)^2`$ |
+| Mark $`C(100)`$ three cents too high | −0.043158 | a negative density: the $1 butterfly now costs less than nothing |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The checks reach the bend at $K$ = 100 by four roads: the closed form; butterflies of width 8, 4, 2, 1 and 0.5, with the error ratio printed; spot gamma, by formula and by bumping today's price; and a simulation of one million finishing prices, counting the share that lands in the one-dollar band at $100. Then they read the whole density off a grid of strikes every 50 cents out to $600, flat and smiling, and check total probability, mean and sign. The normal CDF is Marsaglia's series, written out. The random numbers are xorshift64*, written out.
+The checks reach the bend at $`K`$ = 100 by four roads: the closed form; butterflies of width 8, 4, 2, 1 and 0.5, with the error ratio printed; spot gamma, by formula and by bumping today's price; and a simulation of one million finishing prices, counting the share that lands in the one-dollar band at $100. Then they read the whole density off a grid of strikes every 50 cents out to $600, flat and smiling, and check total probability, mean and sign. The normal CDF is Marsaglia's series, written out. The random numbers are xorshift64*, written out.
 
 ### Python
 
@@ -640,11 +664,11 @@ The two outputs agree line for line. Both use the same series for the bell-curve
 
 Lean proves the card's main facts for any continuous density with a finite mean, and any positive discount factor.
 
-- Suppose each call price is $D(T)$ times its average payoff over that density. Then minus the slope of $C$ at $K$ is $D(T)\,G(K)$: the cash digital.
-- Take the same call prices. Then the bend of $C$ at every strike $K$ is $D(T)\,f(K)$.
-- Take the same call prices, and let the half-width $h$ shrink to zero. Then the butterfly's price divided by $h^2$ tends to $D(T)\,f(K)$.
-- Take any strike $K$ and half-width $h > 0$. Then the butterfly pays a tent of height $h$, and its area is $h^2$.
-- The worked numbers also hold exactly: the 90/100/110 butterfly's payoffs, $K\sigma\sqrt{T}$ = 20, and $d_2$ = 0.05.
+- Suppose each call price is $`D(T)`$ times its average payoff over that density. Then minus the slope of $`C`$ at $`K`$ is $`D(T)\,G(K)`$: the cash digital.
+- Take the same call prices. Then the bend of $`C`$ at every strike $`K`$ is $`D(T)\,f(K)`$.
+- Take the same call prices, and let the half-width $`h`$ shrink to zero. Then the butterfly's price divided by $`h^2`$ tends to $`D(T)\,f(K)`$.
+- Take any strike $`K`$ and half-width $`h > 0`$. Then the butterfly pays a tent of height $`h`$, and its area is $`h^2`$.
+- The worked numbers also hold exactly: the 90/100/110 butterfly's payoffs, $`K\sigma\sqrt{T}`$ = 20, and $`d_2`$ = 0.05.
 
 The house market's closed form, the error ratio of four, spot gamma, the simulation and the smile are left to Python and Rust.
 
@@ -902,9 +926,9 @@ example : ((5 / 100 : ℚ) - 2 / 100 - (1 / 5) ^ 2 / 2) * 1 / (1 / 5) = 1 / 20 :
 >
 > Smaller traps:
 > - **Forgetting the undo of discounting.** The bend is the density times 0.951229. Skip the division and every probability is short by about 5% at one year.
-> - **Differencing wide listed strikes directly.** At $h$ = 10 the density reads 0.019536 instead of 0.019922. Interpolate volatility first, then difference prices on a fine grid.
-> - **Differencing noisy quotes.** Dividing by $h^2$ magnifies noise. Three cents on one mid turns the density at $100 into −0.043158. Use smoothed mids.
-> - **Treating spot gamma as the strike bend everywhere.** They agree only at $S = K$. At $K$ = 120 the gamma formula gives 0.015709 and the true strike bend is 0.010909.
+> - **Differencing wide listed strikes directly.** At $`h`$ = 10 the density reads 0.019536 instead of 0.019922. Interpolate volatility first, then difference prices on a fine grid.
+> - **Differencing noisy quotes.** Dividing by $`h^2`$ magnifies noise. Three cents on one mid turns the density at $100 into −0.043158. Use smoothed mids.
+> - **Treating spot gamma as the strike bend everywhere.** They agree only at $`S = K`$. At $`K`$ = 120 the gamma formula gives 0.015709 and the true strike bend is 0.010909.
 
 ---
 

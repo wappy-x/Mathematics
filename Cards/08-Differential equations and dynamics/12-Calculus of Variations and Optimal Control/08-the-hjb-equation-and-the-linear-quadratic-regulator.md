@@ -33,39 +33,45 @@ The one line is the speed error under the rule "push equals minus the error", st
 
 ## The formula
 
-Notation first, in words. A prime means rate in time. For a function of time and state, subscripts mean partial derivatives: $V_t$ is the rate in time with the state fixed, $V_x$ the slope in the state. The car's motion and cost are
+Notation first, in words. A prime means rate in time. For a function of time and state, subscripts mean partial derivatives: $`V_t`$ is the rate in time with the state fixed, $`V_x`$ the slope in the state. The car's motion and cost are
 
-$$x' = u, \qquad J = \int_0^\infty \big(x^2 + u^2\big)\,dt .$$
+```math
+x' = u, \qquad J = \int_0^\infty \big(x^2 + u^2\big)\,dt .
+```
 
-The **value function** $V(t, x)$ is the least cost any control can achieve from state $x$ at time $t$. The HJB equation says
+The **value function** $`V(t, x)`$ is the least cost any control can achieve from state $`x`$ at time $`t`$. The HJB equation says
 
-$$-V_t = \min_{u}\big(x^2 + u^2 + V_x\, u\big).$$
+```math
+-V_t = \min_{u}\big(x^2 + u^2 + V_x\, u\big).
+```
 
 **Read it aloud:** the best cost falls with time at the smallest cost rate available now, counting the push's effect on the best cost.
 
-With no deadline, $V_t = 0$. The guess $V = P x^2$ turns the equation into the **Riccati equation** $1 - P^2 = 0$, whose positive root gives
+With no deadline, $`V_t = 0`$. The guess $`V = P x^2`$ turns the equation into the **Riccati equation** $`1 - P^2 = 0`$, whose positive root gives
 
-$$V(x) = x^2, \qquad u = -\tfrac12 V_x = -x .$$
+```math
+V(x) = x^2, \qquad u = -\tfrac12 V_x = -x .
+```
 
 **Read it aloud:** the best cost from error x is x squared, and the best push is minus the error.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_0$ | speed error, m/s; its starting value | $x_0$ = 2 m/s | cost grows as its square |
-| $u$ | commanded acceleration, m/s^2 | −2 m/s^2 at the start | faster fix, dearer pushing |
-| $t$, $h$ | time in s; $h$ a short step of time | $h$ = 0.1, 0.01, 0.001 s | larger $h$: cruder step |
-| $J$ | total cost, the integral of $x^2 + u^2$ | 4 under the best rule | — |
-| $V$, $V_t$, $V_x$, $W$ | value function; its rate in time; its slope in the state; $W$ a candidate for $V$ | $V(x) = x^2$, $V_x = 2x$ | — |
-| $P$ | coefficient of the quadratic value, $V = P x^2$ | 1 with no deadline | bigger $P$: stronger push |
-| $k$ | feedback gain: the rule $u = -k x$ | 1 is best | above 1 overpays for pushing |
-| $T$, $s$, $\tanh$ | deadline, s; time left $s = T - t$; the hyperbolic tangent, $(e^{2s}-1)/(e^{2s}+1)$ | 1 s left: $P$ = 0.761594 | longer horizon: $P$ nears 1 |
+| $`x`$, $`x_0`$ | speed error, m/s; its starting value | $`x_0`$ = 2 m/s | cost grows as its square |
+| $`u`$ | commanded acceleration, m/s^2 | −2 m/s^2 at the start | faster fix, dearer pushing |
+| $`t`$, $`h`$ | time in s; $`h`$ a short step of time | $`h`$ = 0.1, 0.01, 0.001 s | larger $`h`$: cruder step |
+| $`J`$ | total cost, the integral of $`x^2 + u^2`$ | 4 under the best rule | — |
+| $`V`$, $`V_t`$, $`V_x`$, $`W`$ | value function; its rate in time; its slope in the state; $`W`$ a candidate for $`V`$ | $`V(x) = x^2`$, $`V_x = 2x`$ | — |
+| $`P`$ | coefficient of the quadratic value, $`V = P x^2`$ | 1 with no deadline | bigger $`P`$: stronger push |
+| $`k`$ | feedback gain: the rule $`u = -k x`$ | 1 is best | above 1 overpays for pushing |
+| $`T`$, $`s`$, $`\tanh`$ | deadline, s; time left $`s = T - t`$; the hyperbolic tangent, $`(e^{2s}-1)/(e^{2s}+1)`$ | 1 s left: $`P`$ = 0.761594 | longer horizon: $`P`$ nears 1 |
 
 ### When it holds
 
-- **A smooth value function.** The derivation uses $V_x$. If the push is capped and the cost is the time to reach zero error, the value has a corner at zero and HJB holds only in a weaker sense.
-- **A positive cost on the push.** Without $u^2$ the minimum over $u$ does not exist.
-- **Linear motion and squared costs, for the quadratic guess.** With drag, HJB still holds but $V$ is no longer $P x^2$.
-- **The positive root.** $P = -1$ also solves $1 - P^2 = 0$, and gives a runaway car.
+- **A smooth value function.** The derivation uses $`V_x`$. If the push is capped and the cost is the time to reach zero error, the value has a corner at zero and HJB holds only in a weaker sense.
+- **A positive cost on the push.** Without $`u^2`$ the minimum over $`u`$ does not exist.
+- **Linear motion and squared costs, for the quadratic guess.** With drag, HJB still holds but $`V`$ is no longer $`P x^2`$.
+- **The positive root.** $`P = -1`$ also solves $`1 - P^2 = 0`$, and gives a runaway car.
 - **No noise.** Chance adds a second-derivative term (wing 11).
 
 ---
@@ -78,57 +84,63 @@ The best cost from here is the cost of the next short stretch plus the best cost
 
 ### Step 1: the Bellman equation over a short step
 
-Hold the push $u$ for a short time $h$. The stretch costs about $(x^2 + u^2)h$ and moves the error to $x + uh$:
+Hold the push $`u`$ for a short time $`h`$. The stretch costs about $`(x^2 + u^2)h`$ and moves the error to $`x + uh`$:
 
-$$V(t, x) = \min_u \Big( (x^2 + u^2)\,h + V(t + h,\; x + u h) \Big).$$
+```math
+V(t, x) = \min_u \Big( (x^2 + u^2)\,h + V(t + h,\; x + u h) \Big).
+```
 
-To first order ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)), $V(t+h, x+uh) = V + V_t h + V_x u h$. $V$ cancels from both sides. Divide by $h$ and let it shrink to zero:
+To first order ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)), $`V(t+h, x+uh) = V + V_t h + V_x u h`$. $`V`$ cancels from both sides. Divide by $`h`$ and let it shrink to zero:
 
-$$0 = V_t + \min_u \big( x^2 + u^2 + V_x u \big).$$
+```math
+0 = V_t + \min_u \big( x^2 + u^2 + V_x u \big).
+```
 
 ### Step 2: the minimum over the push
 
-The bracket is a bowl in $u$ with slope $2u + V_x$, zero at $u = -V_x/2$. There the bracket is $x^2 - V_x^2/4$, so HJB becomes $V_t + x^2 - \tfrac14 V_x^2 = 0$. At $x$ = 2 with $V_x$ = 4 (the slope Step 3 finds), a search in the check scripts, which never uses this algebra, finds the bottom at $u$ = −2.0000, with the bracket at 0.000000.
+The bracket is a bowl in $`u`$ with slope $`2u + V_x`$, zero at $`u = -V_x/2`$. There the bracket is $`x^2 - V_x^2/4`$, so HJB becomes $`V_t + x^2 - \tfrac14 V_x^2 = 0`$. At $`x`$ = 2 with $`V_x`$ = 4 (the slope Step 3 finds), a search in the check scripts, which never uses this algebra, finds the bottom at $`u`$ = −2.0000, with the bracket at 0.000000.
 
 ### Step 3: guess a square, get a Riccati equation
 
-Doubling the error doubles every sensible push and quadruples every cost. So try $V = P x^2$: then $V_x = 2Px$ and HJB reads $V_t + x^2 - P^2x^2 = 0$.
+Doubling the error doubles every sensible push and quadruples every cost. So try $`V = P x^2`$: then $`V_x = 2Px`$ and HJB reads $`V_t + x^2 - P^2x^2 = 0`$.
 
-With no deadline, $V_t = 0$ and $1 - P^2 = 0$, the **algebraic Riccati equation**. Its root $P = 1$ gives $u = -x$, so $x' = -x$ and $x = 2e^{-t}$, which halves when $t = \ln 2$ = 0.693 s.
+With no deadline, $`V_t = 0`$ and $`1 - P^2 = 0`$, the **algebraic Riccati equation**. Its root $`P = 1`$ gives $`u = -x`$, so $`x' = -x`$ and $`x = 2e^{-t}`$, which halves when $`t = \ln 2`$ = 0.693 s.
 
-With a deadline, $V = P(t)x^2$ and dividing by $x^2$ leaves the **Riccati differential equation**. In the time left $s$ it reads $dP/ds = 1 - P^2$, with $P = 0$ when no time is left. Its solution ([Bernoulli and Riccati equations](../01-Rate%20Equations/09-bernoulli-and-riccati-substitutions.md)) is $P = \tanh s$: 0.761594 with 1 s left, 0.995055 with 3 s left.
+With a deadline, $`V = P(t)x^2`$ and dividing by $`x^2`$ leaves the **Riccati differential equation**. In the time left $`s`$ it reads $`dP/ds = 1 - P^2`$, with $`P = 0`$ when no time is left. Its solution ([Bernoulli and Riccati equations](../01-Rate%20Equations/09-bernoulli-and-riccati-substitutions.md)) is $`P = \tanh s`$: 0.761594 with 1 s left, 0.995055 with 3 s left.
 
 ### Step 4: no other rule does better
 
-The error's square changes at rate $2xu$, and $(x+u)^2 \geq 0$ gives
+The error's square changes at rate $`2xu`$, and $`(x+u)^2 \geq 0`$ gives
 
-$$x^2 + u^2 \;\geq\; -2xu \;=\; -\frac{d}{dt}\,x^2 .$$
+```math
+x^2 + u^2 \;\geq\; -2xu \;=\; -\frac{d}{dt}\,x^2 .
+```
 
-Integrate from time 0: any control that returns the error to zero costs at least $x_0^2$ = 4, with equality only when $u = -x$.
+Integrate from time 0: any control that returns the error to zero costs at least $`x_0^2`$ = 4, with equality only when $`u = -x`$.
 
 <details>
 <summary>Detailed proof: the verification theorem</summary>
 
-Let $W(t, x)$ be smooth, satisfy HJB, and be zero at the deadline $T$. Along any control's motion $W$ changes at rate $W_t + W_x u$ (chain rule), which HJB says is at least $-(x^2 + u^2)$. Integrating from 0 to $T$ gives $0 - W(0, x_0) \geq -J$, so every control costs at least $W(0, x_0)$. The minimising control makes each inequality an equality, so it costs exactly $W(0, x_0)$: $W$ is the value.
+Let $`W(t, x)`$ be smooth, satisfy HJB, and be zero at the deadline $`T`$. Along any control's motion $`W`$ changes at rate $`W_t + W_x u`$ (chain rule), which HJB says is at least $`-(x^2 + u^2)`$. Integrating from 0 to $`T`$ gives $`0 - W(0, x_0) \geq -J`$, so every control costs at least $`W(0, x_0)`$. The minimising control makes each inequality an equality, so it costs exactly $`W(0, x_0)`$: $`W`$ is the value.
 
-With no deadline, let $T$ grow: a control of finite cost makes $x^2$ and its rate $2xu$ integrable, so $x^2$, and with it $W$, tends to zero.
+With no deadline, let $`T`$ grow: a control of finite cost makes $`x^2`$ and its rate $`2xu`$ integrable, so $`x^2`$, and with it $`W`$, tends to zero.
 
 </details>
 
 ### Step 5: a second road, Bellman on short steps
 
-Apply Bellman's rule exactly on steps of $h$, back from $P = 0$: each step turns $P$ into $h + P/(1+hP)$.
+Apply Bellman's rule exactly on steps of $`h`$, back from $`P = 0`$: each step turns $`P`$ into $`h + P/(1+hP)`$.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-One step costs $h(x^2 + u^2) + P(x + hu)^2$. Its slope in $u$ vanishes at $u = -Px/(1+hP)$, where $x + hu = x/(1+hP)$ and the step's best cost is $x^2\big(h + P/(1+hP)\big)$.
+One step costs $`h(x^2 + u^2) + P(x + hu)^2`$. Its slope in $`u`$ vanishes at $`u = -Px/(1+hP)`$, where $`x + hu = x/(1+hP)`$ and the step's best cost is $`x^2\big(h + P/(1+hP)\big)`$.
 
 </details>
 
 The recursion settles at 1.051249 for steps of 0.1 s, 1.005012 for 0.01 s, 1.000500 for 0.001 s: the gap to 1 shrinks with the step.
 
-Pontryagin's principle ([Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md)) is a third road: its costate, the price it puts on a unit of state, is $V_x$ along the best path. It finds one path from one start; HJB finds the best push from every state.
+Pontryagin's principle ([Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md)) is a third road: its costate, the price it puts on a unit of state, is $`V_x`$ along the best path. It finds one path from one start; HJB finds the best push from every state.
 
 ---
 
@@ -136,18 +148,18 @@ Pontryagin's principle ([Pontryagin's principle](06-pontryagins-principle-and-ba
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| HJB, no deadline, $V = Px^2$ | $1 - P^2 = 0$, positive root | $P$ = 1 |
-| best push at the start | $u = -x_0$ | −2 m/s^2 |
-| error after 1 s | $2e^{-1}$ | 0.74 m/s |
-| halving time | $\ln 2$ | 0.693 s |
-| total cost | $V(x_0) = x_0^2$ | **4** |
-| with a 1 s deadline | $x_0^2 \tanh 1$ | 3.0464 |
+| HJB, no deadline, $`V = Px^2`$ | $`1 - P^2 = 0`$, positive root | $`P`$ = 1 |
+| best push at the start | $`u = -x_0`$ | −2 m/s^2 |
+| error after 1 s | $`2e^{-1}`$ | 0.74 m/s |
+| halving time | $`\ln 2`$ | 0.693 s |
+| total cost | $`V(x_0) = x_0^2`$ | **4** |
+| with a 1 s deadline | $`x_0^2 \tanh 1`$ | 3.0464 |
 
 The car sheds its excess speed with a brake that eases off as the error shrinks, and no rule does it for less than 4.
 
 ### The picture: what other gains cost
 
-A fixed gain $k$ gives cost $x_0^2 (1 + k^2)/(2k)$; the check scripts step each gain instead.
+A fixed gain $`k`$ gives cost $`x_0^2 (1 + k^2)/(2k)`$; the check scripts step each gain instead.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -164,10 +176,10 @@ The one line is each gain's stepped cost, lowest at gain 1; a scan in steps of 0
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No cost on the push | gain 20: error cost 0.1000, true cost 40.1000; no gain is best | without $u^2$ the minimum over $u$ does not exist |
-| Slope of $x^2$ taken as $x$ | gain 0.5, cost 5.0000, halving in 1.386 s | the slope of $x^2$ is $2x$ |
-| Root $P = -1$ | $u = +x$; error 40.1711 m/s after 3 s | a cost cannot be negative |
-| No-deadline value on a 1 s trip | 4.0000 instead of 3.0464 | a deadline needs $P = \tanh s$ |
+| No cost on the push | gain 20: error cost 0.1000, true cost 40.1000; no gain is best | without $`u^2`$ the minimum over $`u`$ does not exist |
+| Slope of $`x^2`$ taken as $`x`$ | gain 0.5, cost 5.0000, halving in 1.386 s | the slope of $`x^2`$ is $`2x`$ |
+| Root $`P = -1`$ | $`u = +x`$; error 40.1711 m/s after 3 s | a cost cannot be negative |
+| No-deadline value on a 1 s trip | 4.0000 instead of 3.0464 | a deadline needs $`P = \tanh s`$ |
 
 The code prints every entry.
 
@@ -175,7 +187,7 @@ The code prints every entry.
 
 ## Code, from first principles, and it actually runs
 
-Five roads: a ternary search (discarding a third of an interval at a time) for the best push; fourth-order Runge-Kutta (RK4) stepping the car and its cost under each gain; a scan over gains; the stepped Bellman recursion; and RK4 on the Riccati equation against $\tanh$ built from the exponential.
+Five roads: a ternary search (discarding a third of an interval at a time) for the best push; fourth-order Runge-Kutta (RK4) stepping the car and its cost under each gain; a scan over gains; the stepped Bellman recursion; and RK4 on the Riccati equation against $`\tanh`$ built from the exponential.
 
 ### Python
 
@@ -374,18 +386,18 @@ The two outputs match line for line. Halving the RK4 step on the Riccati equatio
 
 ### Lean
 
-Lean proves the card's three main facts for every starting error, every coefficient $P$ and every time left.
+Lean proves the card's three main facts for every starting error, every coefficient $`P`$ and every time left.
 
-- Suppose the error starts at $x_0$, moves by $x' = u$ and returns to zero. Then the total cost $J$ is at least $x_0^2$.
-- Suppose such a control costs exactly $x_0^2$. Then $u = -x$ at every time, except on a set of times of total length zero.
-- Suppose the push follows the rule $u = -x$. Then the total cost is exactly $x_0^2$.
-- Take the guess $V = P x^2$, so $V_x = 2Px$. Then the bracket $x^2 + u^2 + V_x u$ is smallest at $u = -Px$, and only there.
-- That smallest value is $(1 - P^2) x^2$. So the no-deadline HJB equation holds at every state exactly when $1 - P^2 = 0$.
-- Suppose $P$ solves $dP/ds = 1 - P^2$ in the time left $s$, with $P = 0$ when no time is left. Then $P = \tanh s$ for every $s \geq 0$, and $\tanh$ does solve it.
+- Suppose the error starts at $`x_0`$, moves by $`x' = u`$ and returns to zero. Then the total cost $`J`$ is at least $`x_0^2`$.
+- Suppose such a control costs exactly $`x_0^2`$. Then $`u = -x`$ at every time, except on a set of times of total length zero.
+- Suppose the push follows the rule $`u = -x`$. Then the total cost is exactly $`x_0^2`$.
+- Take the guess $`V = P x^2`$, so $`V_x = 2Px`$. Then the bracket $`x^2 + u^2 + V_x u`$ is smallest at $`u = -Px`$, and only there.
+- That smallest value is $`(1 - P^2) x^2`$. So the no-deadline HJB equation holds at every state exactly when $`1 - P^2 = 0`$.
+- Suppose $`P`$ solves $`dP/ds = 1 - P^2`$ in the time left $`s`$, with $`P = 0`$ when no time is left. Then $`P = \tanh s`$ for every $`s \geq 0`$, and $`\tanh`$ does solve it.
 - The arithmetic: from 2 m/s the best cost is 4, the first push is −2 m/s^2, and the HJB bracket is then 0.
 - The fixed gains 1, 1/2, 2 and 1/4 cost 4, 5, 5 and 8.50 by the formula.
 
-Stepped costs, the halving time, the Bellman recursion and the decimals of $\tanh$ are left to the Python and Rust checks.
+Stepped costs, the halving time, the Bellman recursion and the decimals of $`\tanh`$ are left to the Python and Rust checks.
 
 ```lean
 -- The HJB equation: for the car x' = u with cost the integral of x^2 + u^2, no control costs less than x0^2, the rule u = -x costs exactly x0^2, the quadratic guess V = P x^2 turns HJB into 1 - P^2 = 0, and P = tanh s solves the deadline Riccati equation.
@@ -611,15 +623,15 @@ example : (2 : ℚ) ^ 2 * (1 + (1 / 4) ^ 2) / (2 * (1 / 4)) = 17 / 2 := by norm_
 > **Try changing**
 > Guess first, then run it.
 > - **A bigger error.** Set `X0 = 3.0`. The cost becomes 9; the halving time stays 0.693 s. Every assert passes.
-> - **Dearer pushing.** In `run`, make the cost rate `(1 + 4 * k * k) * x * x`. Now $P = 2$ and the best gain is 0.5; the scan reports 0.50, cost 8, and the first assert stops the run.
-> - **Never push.** In `bellman`, replace `p / (1 + h * p)` with `p`. $P$ climbs to 40; the third assert stops the run.
+> - **Dearer pushing.** In `run`, make the cost rate `(1 + 4 * k * k) * x * x`. Now $`P = 2`$ and the best gain is 0.5; the scan reports 0.50, cost 8, and the first assert stops the run.
+> - **Never push.** In `bellman`, replace `p / (1 + h * p)` with `p`. $`P`$ climbs to 40; the third assert stops the run.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Solving for a path instead of a rule.** HJB gives the push as a function of the current error, $u = -x$. The schedule $u = -2e^{-t}$ matches it only if nothing disturbs the car; after a gust the schedule pushes as planned, while the rule reads the new error. The other slips are in the table under What breaks.
+> **Solving for a path instead of a rule.** HJB gives the push as a function of the current error, $`u = -x`$. The schedule $`u = -2e^{-t}`$ matches it only if nothing disturbs the car; after a gust the schedule pushes as planned, while the rule reads the new error. The other slips are in the table under What breaks.
 
 ---
 
@@ -637,14 +649,14 @@ example : (2 : ℚ) ^ 2 * (1 + (1 / 4) ^ 2) / (2 * (1 / 4)) = 17 / 2 := by norm_
 ## What this builds on
 
 - [Dynamic programming](07-dynamic-programming-and-the-bellman-equation.md): the stage-by-stage balance Step 1 shrinks to an instant.
-- [Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md): the path-by-path road whose costate is $V_x$.
-- [Bernoulli and Riccati equations](../01-Rate%20Equations/09-bernoulli-and-riccati-substitutions.md): solving $dP/ds = 1 - P^2$.
+- [Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md): the path-by-path road whose costate is $`V_x`$.
+- [Bernoulli and Riccati equations](../01-Rate%20Equations/09-bernoulli-and-riccati-substitutions.md): solving $`dP/ds = 1 - P^2`$.
 - [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the first-order expansion behind Step 1.
 
 ## Where this goes next
 
 - [Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): noise adds a second-derivative term; Feynman-Kac, a formula that writes the solution as an average over random paths, ties it to averages.
-- [The LQR](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md): many states, a matrix $P$, the matrix Riccati equation.
+- [The LQR](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md): many states, a matrix $`P`$, the matrix Riccati equation.
 - The HJB equation, a planned card in the Partial differential equations wing: value functions with corners.
 - [Merton's problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md): the stochastic HJB equation choosing a stock holding.
 

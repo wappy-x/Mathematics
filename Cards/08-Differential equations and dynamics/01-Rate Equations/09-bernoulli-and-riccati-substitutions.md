@@ -36,28 +36,32 @@ Orange: the Bernoulli answer, P = 1000/(1 + 99e^(−0.8t)). Teal: the same subst
 
 Reminder: y' is the rate of y at time t. A **linear** equation, y' + p(t) y = q(t), is solved by [The integrating factor](05-integrating-factor.md).
 
-A Bernoulli equation adds one power $n$ of the unknown on the right. The new unknown $v = y^{1-n}$ obeys a linear law:
+A Bernoulli equation adds one power $`n`$ of the unknown on the right. The new unknown $`v = y^{1-n}`$ obeys a linear law:
 
-$$y' + p(t)\,y = q(t)\,y^{n} \quad\Longrightarrow\quad v' + (1-n)\,p(t)\,v = (1-n)\,q(t)$$
+```math
+y' + p(t)\,y = q(t)\,y^{n} \quad\Longrightarrow\quad v' + (1-n)\,p(t)\,v = (1-n)\,q(t)
+```
 
 **Read it aloud:** y to the power one minus n has a linear law, both coefficients multiplied by one minus n.
 
-A Riccati equation allows a constant term, a linear term and a square. Given one solution $y_1$, the new unknown $w$ with $y = y_1 + 1/w$ obeys a linear law:
+A Riccati equation allows a constant term, a linear term and a square. Given one solution $`y_1`$, the new unknown $`w`$ with $`y = y_1 + 1/w`$ obeys a linear law:
 
-$$y' = a(t) + b(t)\,y + c(t)\,y^{2} \quad\Longrightarrow\quad w' = -\big(b(t) + 2c(t)\,y_1\big)\,w - c(t)$$
+```math
+y' = a(t) + b(t)\,y + c(t)\,y^{2} \quad\Longrightarrow\quad w' = -\big(b(t) + 2c(t)\,y_1\big)\,w - c(t)
+```
 
 **Read it aloud:** one known solution plus one over a new unknown makes the Riccati law linear.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time | days; for the skydiver, units of 5 s | P nears 1000, y nears −1 |
-| $y$, $P$ | the unknown; P counts knowers | P(0) = 10; skydiver y(0) = 0 | half the school sooner |
-| $p$, $q$ | Bernoulli's coefficients | −0.8 per day, −0.0008 per pupil per day | the ceiling p/q = 1000 moves |
-| $n$ | the power of the unknown | 2 | v = y^(1−n) changes with it |
-| $v$, $w$ | new unknowns: y^(1−n) and 1/(y − y1) | v = 1/P, 0.1 at the start | v: fewer knowers |
-| $a$, $b$, $c$ | Riccati's coefficients | −1, 0, 1 | a more negative: faster terminal speed |
-| $y_1$ | a solution already known | y1 = 1, the constant solution | y1 = −1 gives the same y |
-| $C$ | constant of integration | 0.099; skydiver −1 | rumour: a smaller start |
+| $`t`$ | time | days; for the skydiver, units of 5 s | P nears 1000, y nears −1 |
+| $`y`$, $`P`$ | the unknown; P counts knowers | P(0) = 10; skydiver y(0) = 0 | half the school sooner |
+| $`p`$, $`q`$ | Bernoulli's coefficients | −0.8 per day, −0.0008 per pupil per day | the ceiling p/q = 1000 moves |
+| $`n`$ | the power of the unknown | 2 | v = y^(1−n) changes with it |
+| $`v`$, $`w`$ | new unknowns: y^(1−n) and 1/(y − y1) | v = 1/P, 0.1 at the start | v: fewer knowers |
+| $`a`$, $`b`$, $`c`$ | Riccati's coefficients | −1, 0, 1 | a more negative: faster terminal speed |
+| $`y_1`$ | a solution already known | y1 = 1, the constant solution | y1 = −1 gives the same y |
+| $`C`$ | constant of integration | 0.099; skydiver −1 | rumour: a smaller start |
 
 The rumour, P' − 0.8P = −0.0008P^2, is Bernoulli with n = 2, so v = 1/P.
 
@@ -97,7 +101,7 @@ The gap 1/P − 1/1000 shrinks by the factor e^(−0.8t), as the coffee's gap ab
 
 ### Step 3: a Riccati equation is a Bernoulli equation one step removed
 
-Suppose $y_1$ solves y' = a + b y + c y^2. Write y = y1 + u, u the gap between two solutions. Subtract the two laws; a cancels:
+Suppose $`y_1`$ solves y' = a + b y + c y^2. Write y = y1 + u, u the gap between two solutions. Subtract the two laws; a cancels:
 
 u' = (b + 2c y1) u + c u^2.
 

@@ -39,17 +39,21 @@ Three reminders first. A transfer function says what a system does to each expon
 
 The error e is the setpoint minus the room temperature. Its transform E(s) is the target's transform R(s) passed through the sensitivity. The final value theorem then gives e_∞, where the error settles:
 
-$$e_\infty \;=\; \lim_{s\to 0}\; s\,\frac{R(s)}{1+L(s)}$$
+```math
+e_\infty \;=\; \lim_{s\to 0}\; s\,\frac{R(s)}{1+L(s)}
+```
 
 **Read it aloud:** the leftover error is s times the target's transform divided by one plus the loop gain, as s shrinks to zero.
 
-Two targets matter most. A step of size $A$, held for ever, has transform A/s. A ramp rising at $a$ kelvin per minute has transform a/s^2. Put each in:
+Two targets matter most. A step of size $`A`$, held for ever, has transform A/s. A ramp rising at $`a`$ kelvin per minute has transform a/s^2. Put each in:
 
-$$e_{\text{step}} = \frac{A}{1+K_0},\qquad K_0 = L(0); \qquad\qquad e_{\text{ramp}} = \frac{a}{K_v},\qquad K_v = \lim_{s\to 0} s\,L(s).$$
+```math
+e_{\text{step}} = \frac{A}{1+K_0},\qquad K_0 = L(0); \qquad\qquad e_{\text{ramp}} = \frac{a}{K_v},\qquad K_v = \lim_{s\to 0} s\,L(s).
+```
 
 **Read it aloud:** a step leaves its size divided by one plus the loop's zero-frequency gain; a ramp leaves its slope divided by the loop's velocity constant.
 
-The **system type** $N$ is the number of integrators in L(s): the power of s it divides by near zero. An integrator's transfer function is 1/s, since the running total of e^(st) is e^(st)/s. That one count fills the whole table:
+The **system type** $`N`$ is the number of integrators in L(s): the power of s it divides by near zero. An integrator's transfer function is 1/s, since the running total of e^(st) is e^(st)/s. That one count fills the whole table:
 
 | Type of the loop | Step of size A | Ramp of slope a |
 | --- | --- | --- |
@@ -57,27 +61,29 @@ The **system type** $N$ is the number of integrators in L(s): the power of s it 
 | 1: one integrator | 0 | a/K_v |
 | 2: two integrators | 0 | 0 |
 
-For the room, with $k_c$ the thermostat's gain in watts per kelvin, $U$ the walls' heat loss in watts per kelvin, $\tau_r$, $\tau_p$ the room's and the pipe's lags, and $T_i$ the integral time:
+For the room, with $`k_c`$ the thermostat's gain in watts per kelvin, $`U`$ the walls' heat loss in watts per kelvin, $`\tau_r`$, $`\tau_p`$ the room's and the pipe's lags, and $`T_i`$ the integral time:
 
-$$L_{\text{P}}(s) = \frac{k_c/U}{(\tau_r s+1)(\tau_p s+1)}, \qquad L_{\text{PI}}(s) = \frac{k_c}{U}\Big(1+\frac{1}{T_i\, s}\Big)\frac{1}{(\tau_r s+1)(\tau_p s+1)}.$$
+```math
+L_{\text{P}}(s) = \frac{k_c/U}{(\tau_r s+1)(\tau_p s+1)}, \qquad L_{\text{PI}}(s) = \frac{k_c}{U}\Big(1+\frac{1}{T_i\, s}\Big)\frac{1}{(\tau_r s+1)(\tau_p s+1)}.
+```
 
-The proportional loop is type 0 with K_0 = 1900/100 = 19. Adding integral action, the term with integral time $T_i$, divides by s once: type 1, with K_v = 19/30 = 0.633 per minute. Textbooks often write K_p for the position constant K_0; this library keeps K_p for the proportional gain of [PID control](07-pid-control-and-tuning.md), so the two never collide.
+The proportional loop is type 0 with K_0 = 1900/100 = 19. Adding integral action, the term with integral time $`T_i`$, divides by s once: type 1, with K_v = 19/30 = 0.633 per minute. Textbooks often write K_p for the position constant K_0; this library keeps K_p for the proportional gain of [PID control](07-pid-control-and-tuning.md), so the two never collide.
 
 | Symbol | Plain meaning | In our example | Push it up and the error… |
 | --- | --- | --- | --- |
-| $e$, $E(s)$, $e_\infty$ | error, setpoint minus room temperature; its transform; its final value | 1.00 °C with the proportional thermostat | — |
-| $r$, $R(s)$ | the target and its Laplace transform | 20 °C | grows with the target's distance from outdoors |
-| $\theta$, $\theta_o$ | room and outdoor temperature | 19 °C and 0 °C | outdoors colder: a bigger step for the loop |
-| $A$, $a$ | step size; ramp slope | 20 K (20 °C above 0 °C); 2 K per hour | grows in proportion |
-| $L(s)$, $S(s)$, $s$ | loop gain; sensitivity 1/(1 + L); the Laplace variable | thermostat × pipe × room; S(0) = 1/20 for the proportional loop | a bigger L(0) means a smaller S(0) and a smaller step error |
-| $\omega$, $j$ | angular frequency in rad/min; the square root of −1, as engineers write it | very low, to approach s = 0 | — |
-| $N$ | system type: integrators in L(s) | 0 without integral action, 1 with | one more clears one more kind of target |
-| $K_0$ | position constant, L(0) | 19 | shrinks the step error, never to zero |
-| $K_v$ | velocity constant, s L(s) at s = 0 | 0.633 per minute | shrinks the ramp error |
-| $k_c$, $U$ | thermostat gain; heat loss through the walls | 1900 W/K; 100 W/K | k_c shrinks it; U grows it |
-| $\tau_r$, $\tau_p$ | lags of the room and of the pipe | 200 min; 10 min | no effect on the final error; they set the way there and the stability edge |
-| $T_i$ | integral time: how long the integral term takes to match the proportional one on a steady error | 30 min | ramp error grows in proportion; too short and the loop goes unstable |
-| $K$, $M(s)$, $m$ | in the folded proof: the loop's low-frequency constant; the rest of the loop, scaled so that M(0) = 1; the target's order, 0 for a step, 1 for a ramp, 2 for a parabola | K = K_0 or K_v | K shrinks it when N = m; a higher m needs one more integrator |
+| $`e`$, $`E(s)`$, $`e_\infty`$ | error, setpoint minus room temperature; its transform; its final value | 1.00 °C with the proportional thermostat | — |
+| $`r`$, $`R(s)`$ | the target and its Laplace transform | 20 °C | grows with the target's distance from outdoors |
+| $`\theta`$, $`\theta_o`$ | room and outdoor temperature | 19 °C and 0 °C | outdoors colder: a bigger step for the loop |
+| $`A`$, $`a`$ | step size; ramp slope | 20 K (20 °C above 0 °C); 2 K per hour | grows in proportion |
+| $`L(s)`$, $`S(s)`$, $`s`$ | loop gain; sensitivity 1/(1 + L); the Laplace variable | thermostat × pipe × room; S(0) = 1/20 for the proportional loop | a bigger L(0) means a smaller S(0) and a smaller step error |
+| $`\omega`$, $`j`$ | angular frequency in rad/min; the square root of −1, as engineers write it | very low, to approach s = 0 | — |
+| $`N`$ | system type: integrators in L(s) | 0 without integral action, 1 with | one more clears one more kind of target |
+| $`K_0`$ | position constant, L(0) | 19 | shrinks the step error, never to zero |
+| $`K_v`$ | velocity constant, s L(s) at s = 0 | 0.633 per minute | shrinks the ramp error |
+| $`k_c`$, $`U`$ | thermostat gain; heat loss through the walls | 1900 W/K; 100 W/K | k_c shrinks it; U grows it |
+| $`\tau_r`$, $`\tau_p`$ | lags of the room and of the pipe | 200 min; 10 min | no effect on the final error; they set the way there and the stability edge |
+| $`T_i`$ | integral time: how long the integral term takes to match the proportional one on a steady error | 30 min | ramp error grows in proportion; too short and the loop goes unstable |
+| $`K`$, $`M(s)`$, $`m`$ | in the folded proof: the loop's low-frequency constant; the rest of the loop, scaled so that M(0) = 1; the target's order, 0 for a step, 1 for a ramp, 2 for a parabola | K = K_0 or K_v | K shrinks it when N = m; a higher m needs one more integrator |
 
 ### When it holds
 
@@ -116,7 +122,9 @@ The room needs 2000 W for ever. A proportional thermostat makes heat only as k_c
 
 Around the loop, the room's transform is L times the error's. The error is the target minus the room, so E = R − L E. Solve for E:
 
-$$E(s) = \frac{R(s)}{1+L(s)} = S(s)\,R(s).$$
+```math
+E(s) = \frac{R(s)}{1+L(s)} = S(s)\,R(s).
+```
 
 Here everything is measured from outdoors: the target is the room's height above 0 °C. The derivation of the closed loop is on [Feedback](01-feedback-and-closed-loop-transfer-functions.md).
 
@@ -139,10 +147,12 @@ A ramp of slope a has R = a/s^2. Then s E = a / (s + s L(s)). For a type-0 loop,
 <details>
 <summary>Detailed proof: the whole table at once</summary>
 
-Write the loop gain near zero as $L(s) = K\,M(s)/s^N$, where $N$ is the type, K is a positive constant, and M(s) is the rest of the loop scaled so that M(0) = 1. Take a target $R(s) = A/s^{m+1}$: m = 0 is a step, m = 1 a ramp, m = 2 a parabola.
+Write the loop gain near zero as $`L(s) = K\,M(s)/s^N`$, where $`N`$ is the type, K is a positive constant, and M(s) is the rest of the loop scaled so that M(0) = 1. Take a target $`R(s) = A/s^{m+1}`$: m = 0 is a step, m = 1 a ramp, m = 2 a parabola.
 
 Then, assuming the closed loop is stable,
-$$s\,E(s) = \frac{A\,s^{N-m}}{s^N + K\,M(s)}.$$
+
+$`\displaystyle s\,E(s) = \frac{A\,s^{N-m}}{s^N + K\,M(s)}.`$
+
 As s goes to zero the bottom tends to K when N ≥ 1 and to 1 + K when N = 0.
 
 - If N > m, the top goes to zero: no error.
@@ -565,13 +575,13 @@ The two outputs are identical to the printed precision.
 
 Lean proves the whole table for any type and target, the room's results for any positive constants, and the worked numbers.
 
-- Suppose $L(s) = K M(s)/s^N$ and $R(s) = A/s^{m+1}$, with $K > 0$, $M(0) = 1$, M continuous at zero. Then, as positive s shrinks to zero, s E(s) tends to zero whenever N > m.
-- Take $N = m = 0$, a type-0 loop and a step. Then s E(s) tends to $A/(1 + K)$, the step offset.
-- Take $N = m \ge 1$, as for a type-1 loop and a ramp. Then s E(s) tends to $A/K$, the ramp lag $a/K_v$ when N = 1.
-- Take $N < m$ and $A \ne 0$, as for a type-0 loop and a ramp. Then the size of s E(s) grows without limit.
-- Take $k_c \ge 0$ and $U > 0$. Then the heat in, $k_c e$, equals the heat out, $U(A - e)$, exactly when $e = A/(1 + k_c/U)$.
-- Take positive $k_c$, $U$, $\tau_r$, $\tau_p$ and $T_i$ in $L_{\text{PI}}$. Then a step of any size leaves zero error.
-- Take the same $L_{\text{PI}}$ and a ramp of slope a. Then the error tends to $a/K_v$, with $K_v = k_c/(U T_i)$.
+- Suppose $`L(s) = K M(s)/s^N`$ and $`R(s) = A/s^{m+1}`$, with $`K > 0`$, $`M(0) = 1`$, M continuous at zero. Then, as positive s shrinks to zero, s E(s) tends to zero whenever N > m.
+- Take $`N = m = 0`$, a type-0 loop and a step. Then s E(s) tends to $`A/(1 + K)`$, the step offset.
+- Take $`N = m \ge 1`$, as for a type-1 loop and a ramp. Then s E(s) tends to $`A/K`$, the ramp lag $`a/K_v`$ when N = 1.
+- Take $`N < m`$ and $`A \ne 0`$, as for a type-0 loop and a ramp. Then the size of s E(s) grows without limit.
+- Take $`k_c \ge 0`$ and $`U > 0`$. Then the heat in, $`k_c e`$, equals the heat out, $`U(A - e)`$, exactly when $`e = A/(1 + k_c/U)`$.
+- Take positive $`k_c`$, $`U`$, $`\tau_r`$, $`\tau_p`$ and $`T_i`$ in $`L_{\text{PI}}`$. Then a step of any size leaves zero error.
+- Take the same $`L_{\text{PI}}`$ and a ramp of slope a. Then the error tends to $`a/K_v`$, with $`K_v = k_c/(U T_i)`$.
 - The worked numbers hold: K_0 = 19, the 1.00 °C offset, 1.15 °C after the front, and the 1/19 °C ramp error.
 - So do the 1.10 °C, 5.00 °C, 1.46 °C, 0.50 °C and 0.0263 °C of the mistakes and trials.
 

@@ -43,51 +43,55 @@ The calculus wing already gives the three everyday rules with their error bounds
 
 Three words first. A **node** is a point where the curve is read: here, a reading time. A **weight** is the number each reading is multiplied by. A **panel** is one piece of the interval, covering m slices of width h, with m + 1 equally spaced nodes.
 
-One panel, read at the nodes $x_0, \dots, x_m$:
+One panel, read at the nodes $`x_0, \dots, x_m`$:
 
-$$\int_{x_0}^{x_m} P(t)\,dt \;\approx\; mh\sum_{j=0}^{m} w_j\,P(x_j), \qquad w_j = \frac{1}{m}\int_0^m \ell_j(s)\,ds, \qquad \ell_j(s) = \prod_{k \ne j}\frac{s-k}{j-k}$$
+```math
+\int_{x_0}^{x_m} P(t)\,dt \;\approx\; mh\sum_{j=0}^{m} w_j\,P(x_j), \qquad w_j = \frac{1}{m}\int_0^m \ell_j(s)\,ds, \qquad \ell_j(s) = \prod_{k \ne j}\frac{s-k}{j-k}
+```
 
 **Read it aloud:** the panel's area is its width times a weighted average of its readings, and each weight is the average height, over the panel, of the polynomial that is 1 at that node and 0 at the others.
 
-The **degree of exactness** $d$ is the highest degree such that the rule gets the area of every polynomial of that degree or less exactly right.
+The **degree of exactness** $`d`$ is the highest degree such that the rule gets the area of every polynomial of that degree or less exactly right.
 
-The **composite rule** $Q_n$ cuts $[a, b]$ into $n$ slices, so $n/m$ panels, and adds the panel areas. Its error obeys
+The **composite rule** $`Q_n`$ cuts $`[a, b]`$ into $`n`$ slices, so $`n/m`$ panels, and adds the panel areas. Its error obeys
 
-$$|E - Q_n| \;\le\; (1 + W_m)\,(b-a)\,B\,\frac{(mh)^{d+1}}{(d+1)!}, \qquad W_m = \sum_{j=0}^{m} |w_j|$$
+```math
+|E - Q_n| \;\le\; (1 + W_m)\,(b-a)\,B\,\frac{(mh)^{d+1}}{(d+1)!}, \qquad W_m = \sum_{j=0}^{m} |w_j|
+```
 
-**Read it aloud:** the error is at most a constant times the panel width to the power one more than the rule's degree of exactness, and the constant grows with the total size of the weights. Here $B$ is a ceiling on the size of the $(d+1)$th derivative of $P$ on $[a, b]$.
+**Read it aloud:** the error is at most a constant times the panel width to the power one more than the rule's degree of exactness, and the constant grows with the total size of the weights. Here $`B`$ is a ceiling on the size of the $`(d+1)`$th derivative of $`P`$ on $`[a, b]`$.
 
-| Rule | Points per panel | Weights $w_j$ (per unit width) | Degree $d$ | Error falls like |
+| Rule | Points per panel | Weights $`w_j`$ (per unit width) | Degree $`d`$ | Error falls like |
 | --- | --- | --- | --- | --- |
-| Midpoint (open) | 1, at the centre | 1 | 1 | $h^2$ |
-| Trapezoid, $m = 1$ | 2 | 1/2, 1/2 | 1 | $h^2$ |
-| Simpson, $m = 2$ | 3 | 1/6, 2/3, 1/6 | 3 | $h^4$ |
-| Three-eighths, $m = 3$ | 4 | 1/8, 3/8, 3/8, 1/8 | 3 | $h^4$ |
-| Boole, $m = 4$ | 5 | 7/90, 16/45, 2/15, 16/45, 7/90 | 5 | $h^6$ |
+| Midpoint (open) | 1, at the centre | 1 | 1 | $`h^2`$ |
+| Trapezoid, $`m = 1`$ | 2 | 1/2, 1/2 | 1 | $`h^2`$ |
+| Simpson, $`m = 2`$ | 3 | 1/6, 2/3, 1/6 | 3 | $`h^4`$ |
+| Three-eighths, $`m = 3`$ | 4 | 1/8, 3/8, 3/8, 1/8 | 3 | $`h^4`$ |
+| Boole, $`m = 4`$ | 5 | 7/90, 16/45, 2/15, 16/45, 7/90 | 5 | $`h^6`$ |
 
 A **closed** rule uses both ends of the panel as nodes. An **open** rule uses only interior points: the midpoint rule is the one-point open rule.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $x$ | time of day, in hours; $x$ is the variable of the bell test in Step 4 | 0 to 24 | — |
-| $P(t) = c\,v(t)^3$ | turbine power in kW; $v$ is the wind speed in m/s, $c$ a turbine constant | $c = 0.02$; 0.54 kW at midnight, 14.58 kW at noon | more energy |
-| $a$, $b$ | the ends of the interval | 0 h and 24 h | raise $b$: more energy; raise $a$: less; the error bound grows with $b - a$ |
-| $h$, $n$ | the spacing of the readings, and the number of slices, $n = (b-a)/h$ | 1/6 hour (10 minutes), 144 | larger $h$: error grows like $h^{d+1}$ |
-| $x_j$, $j$, $k$ | the nodes in a panel, and the counters that number them | readings 10 minutes apart | — |
-| $m$ | slices per panel | 1, 2, 3, 4 for trapezoid, Simpson, three-eighths, Boole | higher degree, until the weights turn negative |
-| $w_j$ | the weights, per unit of panel width; they add to 1 | 1/6, 2/3, 1/6 for Simpson | — |
-| $\ell_j(s)$, $s$ | the Lagrange basis polynomial: 1 at node $j$, 0 at the other nodes; $s$ counts slices from the panel's start | $\ell_0(s) = 1 - s$ for the trapezoid | — |
-| $d$ | the degree of exactness | 1, 3, 3, 5 | the error falls faster as $h$ shrinks |
-| $E$, $Q_n$ | the true energy, and a rule's computed energy | 195.140571429 kWh; Simpson gives 195.140571 | — |
-| $W_m$ | the total size of the weights | 1 while all weights are positive; 7.5317 at $m = 12$ | reading errors and the bound grow |
-| $B$ | a ceiling on the size of the $(d+1)$th derivative of $P$ on $[a, b]$ | used in the proof | a larger bound |
+| $`t`$, $`x`$ | time of day, in hours; $`x`$ is the variable of the bell test in Step 4 | 0 to 24 | — |
+| $`P(t) = c\,v(t)^3`$ | turbine power in kW; $`v`$ is the wind speed in m/s, $`c`$ a turbine constant | $`c = 0.02`$; 0.54 kW at midnight, 14.58 kW at noon | more energy |
+| $`a`$, $`b`$ | the ends of the interval | 0 h and 24 h | raise $`b`$: more energy; raise $`a`$: less; the error bound grows with $`b - a`$ |
+| $`h`$, $`n`$ | the spacing of the readings, and the number of slices, $`n = (b-a)/h`$ | 1/6 hour (10 minutes), 144 | larger $`h`$: error grows like $`h^{d+1}`$ |
+| $`x_j`$, $`j`$, $`k`$ | the nodes in a panel, and the counters that number them | readings 10 minutes apart | — |
+| $`m`$ | slices per panel | 1, 2, 3, 4 for trapezoid, Simpson, three-eighths, Boole | higher degree, until the weights turn negative |
+| $`w_j`$ | the weights, per unit of panel width; they add to 1 | 1/6, 2/3, 1/6 for Simpson | — |
+| $`\ell_j(s)`$, $`s`$ | the Lagrange basis polynomial: 1 at node $`j`$, 0 at the other nodes; $`s`$ counts slices from the panel's start | $`\ell_0(s) = 1 - s`$ for the trapezoid | — |
+| $`d`$ | the degree of exactness | 1, 3, 3, 5 | the error falls faster as $`h`$ shrinks |
+| $`E`$, $`Q_n`$ | the true energy, and a rule's computed energy | 195.140571429 kWh; Simpson gives 195.140571 | — |
+| $`W_m`$ | the total size of the weights | 1 while all weights are positive; 7.5317 at $`m = 12`$ | reading errors and the bound grow |
+| $`B`$ | a ceiling on the size of the $`(d+1)`$th derivative of $`P`$ on $`[a, b]`$ | used in the proof | a larger bound |
 
 ### When it holds
 
-- **The curve is smooth.** The bound needs the $(d+1)$th derivative to exist and stay bounded. A kink, such as a turbine hitting its maximum output, breaks this and the error stops falling at the promised rate. [Adaptive quadrature and awkward integrals](05-adaptive-and-improper-quadrature.md) handles that case.
+- **The curve is smooth.** The bound needs the $`(d+1)`$th derivative to exist and stay bounded. A kink, such as a turbine hitting its maximum output, breaks this and the error stops falling at the promised rate. [Adaptive quadrature and awkward integrals](05-adaptive-and-improper-quadrature.md) handles that case.
 - **The slices fit the panels.** The number of slices must be a multiple of m. With 143 slices, Simpson's weights give an error of 0.0380 kWh in size, against 2.568e-07 on 144 slices.
 - **The readings are equally spaced.** The weights assume nodes at equal steps. A late or missing reading needs its own weights.
-- **The weights are positive.** Then $W_m = 1$, and an error in the readings passes into the answer without growth. From $m = 8$ on (except $m = 9$), some weights are negative and reading errors are magnified by $W_m$.
+- **The weights are positive.** Then $`W_m = 1`$, and an error in the readings passes into the answer without growth. From $`m = 8`$ on (except $`m = 9`$), some weights are negative and reading errors are magnified by $`W_m`$.
 - **Rounding stays below the method's error.** Here, rounding sets a floor near 1e-13 kWh.
 
 ---
@@ -98,23 +102,23 @@ A **closed** rule uses both ends of the panel as nodes. An **open** rule uses on
 
 Through m + 1 readings passes exactly one polynomial of degree m or less: the interpolating polynomial. Its area is exact and easy to find.
 
-That polynomial is a sum of the readings, each times its own basis polynomial: $\sum_j P(x_j)\,\ell_j(s)$. Integrate it term by term and each reading comes out multiplied by the area of its basis polynomial. That area is the weight. The weights depend only on where the nodes sit, not on the curve, so they are computed once and reused on every panel.
+That polynomial is a sum of the readings, each times its own basis polynomial: $`\sum_j P(x_j)\,\ell_j(s)`$. Integrate it term by term and each reading comes out multiplied by the area of its basis polynomial. That area is the weight. The weights depend only on where the nodes sit, not on the curve, so they are computed once and reused on every panel.
 
 ### Step 1: the weights, rule by rule
 
-- **Trapezoid, m = 1.** The basis polynomials are $\ell_0(s) = 1 - s$ and $\ell_1(s) = s$ on $[0, 1]$. Each has average height 1/2. So the panel area is $h\,(P_0 + P_1)/2$: the trapezoid.
+- **Trapezoid, m = 1.** The basis polynomials are $`\ell_0(s) = 1 - s`$ and $`\ell_1(s) = s`$ on $`[0, 1]`$. Each has average height 1/2. So the panel area is $`h\,(P_0 + P_1)/2`$: the trapezoid.
 - **Midpoint.** One node at the centre. The only basis polynomial is the constant 1, so the weight is 1: width times the centre height.
 - **Simpson, m = 2.** The calculus card finds 1/6, 2/3, 1/6 by making the rule exact for 1, t and t squared ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)). Integrating the three basis parabolas gives the same numbers.
-- **Three-eighths, m = 3.** By symmetry the two end weights match, and so do the two inner ones. On a panel of width 1 with nodes 0, 1/3, 2/3, 1, exactness for 1 gives 2 × end + 2 × inner = 1. Exactness for $s^2$ gives end × (0 + 1) + inner × (1/9 + 4/9) = 1/3. So inner = 3/8 and end = 1/8.
+- **Three-eighths, m = 3.** By symmetry the two end weights match, and so do the two inner ones. On a panel of width 1 with nodes 0, 1/3, 2/3, 1, exactness for 1 gives 2 × end + 2 × inner = 1. Exactness for $`s^2`$ gives end × (0 + 1) + inner × (1/9 + 4/9) = 1/3. So inner = 3/8 and end = 1/8.
 - **Boole, m = 4.** The same integrals give 7/90, 16/45, 2/15, 16/45, 7/90.
 
 The checks integrate every basis polynomial in exact fractions and reproduce the rules table. They add two open rules: points 1/3, 2/3 with weights 1/2, 1/2, and Milne's points 1/4, 1/2, 3/4 with weights 2/3, −1/3, 2/3.
 
 ### Step 2: the degree of exactness, and a free extra degree
 
-A polynomial of degree m or less is its own interpolating polynomial. So every rule built on m + 1 nodes integrates it exactly, and $d \ge m$.
+A polynomial of degree m or less is its own interpolating polynomial. So every rule built on m + 1 nodes integrates it exactly, and $`d \ge m`$.
 
-When m is even, the rule gets one more degree free. Put the origin at the panel's centre. The power $(s - \text{centre})^{m+1}$ is then an odd power: its area over the panel is zero. The nodes sit in mirror pairs with equal weights, so the readings also cancel in pairs, and the rule gives zero too. Any polynomial of degree m + 1 is a multiple of that odd power plus lower terms, so the rule is exact on all of them.
+When m is even, the rule gets one more degree free. Put the origin at the panel's centre. The power $`(s - \text{centre})^{m+1}`$ is then an odd power: its area over the panel is zero. The nodes sit in mirror pairs with equal weights, so the readings also cancel in pairs, and the rule gives zero too. Any polynomial of degree m + 1 is a multiple of that odd power plus lower terms, so the rule is exact on all of them.
 
 That is why Simpson (m = 2) has degree 3, not 2, and Boole (m = 4) has degree 5. The three-eighths rule (m = 3, odd) gains nothing, so it has degree 3 like Simpson while using one more point per panel. The midpoint rule gains in the same way: one node, degree 1.
 
@@ -124,20 +128,20 @@ That seven-point rule gives a second road to the day's energy. The power curve i
 
 ### Step 3: composite rules, and why the order is d + 1
 
-One panel of width mh errs by roughly a constant times $(mh)^{d+2}$. There are $(b-a)/(mh)$ panels. Multiply, and the total error is a constant times $(mh)^{d+1}$. So halving the spacing divides the error by $2^{d+1}$: by 4 for trapezoid and midpoint, 16 for Simpson and three-eighths, 64 for Boole.
+One panel of width mh errs by roughly a constant times $`(mh)^{d+2}`$. There are $`(b-a)/(mh)`$ panels. Multiply, and the total error is a constant times $`(mh)^{d+1}`$. So halving the spacing divides the error by $`2^{d+1}`$: by 4 for trapezoid and midpoint, 16 for Simpson and three-eighths, 64 for Boole.
 
 <details>
 <summary>Detailed proof: the composite error bound</summary>
 
-Take one panel of width $mh$. Expand $P$ by Taylor's theorem to degree $d$ about the panel's start. The leftover, $P$ minus that Taylor polynomial, is at most $B\,(mh)^{d+1}/(d+1)!$ in size anywhere on the panel.
+Take one panel of width $`mh`$. Expand $`P`$ by Taylor's theorem to degree $`d`$ about the panel's start. The leftover, $`P`$ minus that Taylor polynomial, is at most $`B\,(mh)^{d+1}/(d+1)!`$ in size anywhere on the panel.
 
-The rule is exact on the Taylor polynomial, because its degree is $d$. So the panel error is the rule's error on the leftover alone.
+The rule is exact on the Taylor polynomial, because its degree is $`d`$. So the panel error is the rule's error on the leftover alone.
 
-The true area of the leftover is at most $mh$ times its largest size. The rule's value on it is $mh \sum_j w_j$ times leftover values, at most $mh\,W_m$ times its largest size. So the panel error is at most $(1 + W_m)\,mh\,B\,(mh)^{d+1}/(d+1)!$.
+The true area of the leftover is at most $`mh`$ times its largest size. The rule's value on it is $`mh \sum_j w_j`$ times leftover values, at most $`mh\,W_m`$ times its largest size. So the panel error is at most $`(1 + W_m)\,mh\,B\,(mh)^{d+1}/(d+1)!`$.
 
-There are $(b-a)/(mh)$ panels. Adding their bounds gives $(1 + W_m)(b-a)\,B\,(mh)^{d+1}/(d+1)!$. ∎
+There are $`(b-a)/(mh)`$ panels. Adding their bounds gives $`(1 + W_m)(b-a)\,B\,(mh)^{d+1}/(d+1)!`$. ∎
 
-The constant is crude. [Error bounds and Romberg](02-error-bounds-and-romberg.md) gives the sharp ones, such as Simpson's 1/180. The point here is the power of $mh$, and the factor $1 + W_m$.
+The constant is crude. [Error bounds and Romberg](02-error-bounds-and-romberg.md) gives the sharp ones, such as Simpson's 1/180. The point here is the power of $`mh`$, and the factor $`1 + W_m`$.
 
 </details>
 
@@ -175,14 +179,14 @@ If degree buys accuracy, why not one rule of degree 144 through all the readings
 | m (slices per panel) | 1 | 2 | 4 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Smallest weight | 0.5000 | 0.1667 | 0.0778 | 0.0321 | 0.0435 | −0.1601 | 0.0121 | −0.4352 | −0.1102 | −1.3922 |
-| $W_m$ | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.4512 | 1.0000 | 3.0648 | 1.5894 | 7.5317 |
+| $`W_m`$ | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.4512 | 1.0000 | 3.0648 | 1.5894 | 7.5317 |
 
-From m = 8 on, every rule but m = 9 has a negative weight, and $W_m$ grows, unevenly: 1.4512, 3.0648, 1.5894, 7.5317. Two things follow.
+From m = 8 on, every rule but m = 9 has a negative weight, and $`W_m`$ grows, unevenly: 1.4512, 3.0648, 1.5894, 7.5317. Two things follow.
 
 1. **Reading errors are magnified.** Readings logged to 0.1 kW can each be off by 0.05 kW. Over 24 hours, a rule with positive weights moves by at most 0.05 × 24 = 1.20 kWh. One 13-point rule (m = 12) moves by up to 9.04 kWh.
-2. **The error bound loses its grip.** The factor $1 + W_m$ grows, and the interpolating polynomial itself can swing wildly between equally spaced nodes.
+2. **The error bound loses its grip.** The factor $`1 + W_m`$ grows, and the interpolating polynomial itself can swing wildly between equally spaced nodes.
 
-The standard test is the bell $1/(1 + 25x^2)$ on $[-1, 1]$, whose area is 0.5493603068. Compare one rule built on a degree-m polynomial with composite Simpson on the same m + 1 points.
+The standard test is the bell $`1/(1 + 25x^2)`$ on $`[-1, 1]`$, whose area is 0.5493603068. Compare one rule built on a degree-m polynomial with composite Simpson on the same m + 1 points.
 
 | m | One rule, error | Composite Simpson, error |
 | --- | --- | --- |
@@ -195,7 +199,7 @@ The standard test is the bell $1/(1 + 25x^2)$ on $[-1, 1]$, whose area is 0.5493
 
 More points make the single rule worse. The same points, used piece by piece, make composite Simpson better.
 
-Pólya proved in 1933 that a sequence of rules converges for every continuous function exactly when it converges on every polynomial and its weight totals $W$ stay bounded. Newton-Cotes rules pass the first test and fail the second, so there are continuous functions, even infinitely smooth ones, on which they do not converge as m grows. This card states the theorem and shows the failure; the proof is in Pólya's paper. The cure is the one this card uses: keep m small and add panels.
+Pólya proved in 1933 that a sequence of rules converges for every continuous function exactly when it converges on every polynomial and its weight totals $`W`$ stay bounded. Newton-Cotes rules pass the first test and fail the second, so there are continuous functions, even infinitely smooth ones, on which they do not converge as m grows. This card states the theorem and shows the failure; the proof is in Pólya's paper. The cure is the one this card uses: keep m small and add panels.
 
 ---
 
@@ -224,7 +228,7 @@ The sums in the table use the unrounded readings, so they differ slightly from s
 | One reading lost, Simpson's weights forced onto 143 slices | 195.0048 kWh against a true 195.0428, error −0.0380 | the last slice has no partner; Simpson on 142 slices plus one trapezoid slice gives 195.0430, error 1.24e-04 |
 | Spacing written as 10 (minutes), not 1/6 (hour) | 11708.28 "kWh" | kW times minutes is not kWh: 60 times too big |
 | Every reading times h, ends not halved | 195.2281 kWh, error 0.0875 | the two end readings get double their trapezoid weight |
-| One rule through 13 equally spaced points, on the bell | error 6.12e-01; composite Simpson 9.00e-03 | weights down to −1.3922, $W_{12}$ = 7.5317 |
+| One rule through 13 equally spaced points, on the bell | error 6.12e-01; composite Simpson 9.00e-03 | weights down to −1.3922, $`W_{12}`$ = 7.5317 |
 
 ---
 
@@ -618,17 +622,17 @@ The two outputs match line for line.
 
 Lean proves the composite error bound for any rule, the degree of exactness of every closed rule, and the day's exact energy.
 
-- For any one-panel rule with its nodes inside the panel and degree of exactness $d$, the composite error is at most $(1 + W_m)\,(b-a)\,B\,(mh)^{d+1}/(d+1)!$.
-- That bound needs a continuous $(d+1)$th derivative of size at most $B$ on $[a, b]$, and a slice count that is a multiple of $m$.
-- The closed rule on $m + 1$ equally spaced nodes, with weights $w_j = \frac{1}{m}\int_0^m \ell_j(s)\,ds$, is exact for every polynomial of degree $m$ or less.
-- When $m$ is even, that rule is also exact for every polynomial of degree $m + 1$.
+- For any one-panel rule with its nodes inside the panel and degree of exactness $`d`$, the composite error is at most $`(1 + W_m)\,(b-a)\,B\,(mh)^{d+1}/(d+1)!`$.
+- That bound needs a continuous $`(d+1)`$th derivative of size at most $`B`$ on $`[a, b]`$, and a slice count that is a multiple of $`m`$.
+- The closed rule on $`m + 1`$ equally spaced nodes, with weights $`w_j = \frac{1}{m}\int_0^m \ell_j(s)\,ds`$, is exact for every polynomial of degree $`m`$ or less.
+- When $`m`$ is even, that rule is also exact for every polynomial of degree $`m + 1`$.
 - The day's true energy is exactly 170748/875 kWh, about 195.140571429 kWh.
-- In exact fractions, Simpson, three-eighths and Boole are exact on powers of $s$ up to degrees 3, 3 and 5, and miss the next power.
+- In exact fractions, Simpson, three-eighths and Boole are exact on powers of $`s`$ up to degrees 3, 3 and 5, and miss the next power.
 - Milne's open rule is exact up to degree 3.
 - The seven-point rule on readings four hours apart gives exactly 170748/875 kWh.
-- At $m = 8$ the weights are exact up to degree 9, some are negative, and $W_8$ = 41142/28350, about 1.4512.
+- At $`m = 8`$ the weights are exact up to degree 9, some are negative, and $`W_8`$ = 41142/28350, about 1.4512.
 
-Floating-point results, observed orders, the rounding floor, weights beyond $m = 8$, the bell test and the mistakes are left to the Python and Rust checks.
+Floating-point results, observed orders, the rounding floor, weights beyond $`m = 8`$, the bell test and the mistakes are left to the Python and Rust checks.
 
 ```lean
 -- Trapezoid, midpoint and Simpson: a composite Newton-Cotes rule exact up to degree d errs by at most a constant times the panel width to the power d + 1, and the closed rule on m + 1 equally spaced points is exact up to degree m, or m + 1 when m is even.
@@ -1106,7 +1110,7 @@ example : ∑ j : Fin 9,
 > [!TIP]
 > **Try changing**
 > - **Guess first:** in `weights`, flip `-=` to `+=`, which builds the polynomials on the wrong nodes. The degree list no longer reads 1, 1, 3, 3, 5, 1, 3, 7, and the first assert fails.
-> - **Guess first:** change the wind's base from 3 to 4 m/s, in `v` and in the line `3 ** (3 - j)`. Simpson's observed order jumps to about 6 and the order assert fails. At 4 m/s the third derivative of the power happens to be zero at both ends, so the leading $h^4$ error term cancels: an observed order can beat the theorem on a lucky curve.
+> - **Guess first:** change the wind's base from 3 to 4 m/s, in `v` and in the line `3 ** (3 - j)`. Simpson's observed order jumps to about 6 and the order assert fails. At 4 m/s the third derivative of the power happens to be zero at both ends, so the leading $`h^4`$ error term cancels: an observed order can beat the theorem on a lucky curve.
 > - **Guess first:** replace `closed(6)` in road 2 by `closed(4)`, Boole's rule. Its degree, 5, is below the curve's 6. The degree assert fails first; with it commented out, the road-2 assert fails, because the answer is no longer exact.
 
 ---

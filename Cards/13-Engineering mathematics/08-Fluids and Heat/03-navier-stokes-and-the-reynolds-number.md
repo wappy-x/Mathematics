@@ -30,36 +30,40 @@ Left of the reducer the dots fall at −10.0, −8.1 and −6.3 mm. Leaving the 
 
 ## The formula
 
-$$\rho\left(\frac{\partial \mathbf u}{\partial t} + (\mathbf u\cdot\nabla)\,\mathbf u\right) \;=\; -\nabla p \;+\; \mu\,\nabla^2\mathbf u \;+\; \rho\,\mathbf g, \qquad \nabla\cdot\mathbf u = 0$$
+```math
+\rho\left(\frac{\partial \mathbf u}{\partial t} + (\mathbf u\cdot\nabla)\,\mathbf u\right) \;=\; -\nabla p \;+\; \mu\,\nabla^2\mathbf u \;+\; \rho\,\mathbf g, \qquad \nabla\cdot\mathbf u = 0
+```
 
 Measured in the flow's own units (starred letters), it becomes
 
-$$\frac{\partial \mathbf u^*}{\partial t^*} + (\mathbf u^*\cdot\nabla^*)\,\mathbf u^* \;=\; -\nabla^* p^* \;+\; \frac{1}{\mathrm{Re}}\,\nabla^{*2}\mathbf u^*, \qquad \mathrm{Re} = \frac{\rho\,U L}{\mu} = \frac{U L}{\nu}.$$
+```math
+\frac{\partial \mathbf u^*}{\partial t^*} + (\mathbf u^*\cdot\nabla^*)\,\mathbf u^* \;=\; -\nabla^* p^* \;+\; \frac{1}{\mathrm{Re}}\,\nabla^{*2}\mathbf u^*, \qquad \mathrm{Re} = \frac{\rho\,U L}{\mu} = \frac{U L}{\nu}.
+```
 
 **Read it aloud:** "density times the parcel's acceleration equals the pressure push plus the viscous drag plus its weight, and the water does not compress; in the flow's own units, the drag carries a factor of one over the Reynolds number."
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mathbf u = (u, v, w)$; $u_\text{in}$, $u_\text{out}$ | the water's velocity at a point: its three components along $x$, $y$, $z$ (so $v$ here is the $y$ part; [Continuity and Bernoulli](01-continuity-and-bernoulli.md) used $v$ for the mean speed); the speeds before and after the reducer | mean 1.00 m/s along the pipe; 0.4649 and 1.0000 m/s | Re rises |
-| $\mathbf x = (x, y, z)$, $t$ | position, in metres; time, in seconds | — | — |
-| $\rho$ | density: mass per cubic metre | 998.207 kg/m³ (20 °C) | Re rises |
-| $p$ | pressure, in pascals (Pa = N/m²) | 391.2 Pa spent in the reducer | — |
-| $\mu$, $\nu$ | viscosity, the water's internal friction, in Pa·s; and $\nu = \mu/\rho$, viscosity per unit density, in m²/s | 1.00160 mPa·s; 1.0034 × 10⁻⁶ m²/s | Re falls |
-| $\mathbf g$ | gravity's pull per kilogram, pointing down | the exit acceleration is 4.76 times it | — |
-| $\frac{\partial \mathbf u}{\partial t} + (\mathbf u\cdot\nabla)\mathbf u$ | the parcel's acceleration: change in time at a fixed point, plus change from moving to where the water flows differently | 16.35 m/s² mid-reducer, from the second part alone | — |
-| $\nabla p$, $\nabla^2\mathbf u$, $\nabla\cdot\mathbf u$ | the pressure gradient (how fast pressure changes with position); the Laplacian of velocity (how much a parcel's speed differs from the average of its neighbours'); the divergence of velocity (how much more water flows out of a point than in; zero means the water does not compress) | — | — |
-| $\tau$ ($\tau_{xx}, \tau_{xy}, \tau_{xz}$); $\delta V$, $A$, $\delta x$, $\delta y$, $\delta t$ | shear stress, friction force per square metre between sliding layers (and its parts on one face); a parcel's small volume, a face's area, its small sides, and a short time | — | — |
-| $U$, $L$ | the flow's speed scale and length scale; in a pipe, mean speed and bore $D$ | 1 m/s; $D$ = 0.015 m | Re rises |
-| $\mathrm{Re}$ | the Reynolds number: inertia's size over friction's size, a pure number | 14,949.2 | turbulence |
-| $\mathbf u^*, \mathbf x^*, t^*, p^*, \nabla^*$; $k$, $f$ | the starred letters are the same quantities in the flow's units: $\mathbf u/U$, $\mathbf x/D$, $tU/D$, $p/(\rho U^2)$, and the gradient in those units. $k$ is the check flow's wavenumber, $\pi$ divided by the eddy's size; $f$ is the pipe friction factor in What breaks | $D/U$ = 15.0 ms; $\rho U^2$ = 998.2 Pa; $k = \pi/D$; $f$ = 0.02861 | — |
+| $`\mathbf u = (u, v, w)`$; $`u_\text{in}`$, $`u_\text{out}`$ | the water's velocity at a point: its three components along $`x`$, $`y`$, $`z`$ (so $`v`$ here is the $`y`$ part; [Continuity and Bernoulli](01-continuity-and-bernoulli.md) used $`v`$ for the mean speed); the speeds before and after the reducer | mean 1.00 m/s along the pipe; 0.4649 and 1.0000 m/s | Re rises |
+| $`\mathbf x = (x, y, z)`$, $`t`$ | position, in metres; time, in seconds | — | — |
+| $`\rho`$ | density: mass per cubic metre | 998.207 kg/m³ (20 °C) | Re rises |
+| $`p`$ | pressure, in pascals (Pa = N/m²) | 391.2 Pa spent in the reducer | — |
+| $`\mu`$, $`\nu`$ | viscosity, the water's internal friction, in Pa·s; and $`\nu = \mu/\rho`$, viscosity per unit density, in m²/s | 1.00160 mPa·s; 1.0034 × 10⁻⁶ m²/s | Re falls |
+| $`\mathbf g`$ | gravity's pull per kilogram, pointing down | the exit acceleration is 4.76 times it | — |
+| $`\frac{\partial \mathbf u}{\partial t} + (\mathbf u\cdot\nabla)\mathbf u`$ | the parcel's acceleration: change in time at a fixed point, plus change from moving to where the water flows differently | 16.35 m/s² mid-reducer, from the second part alone | — |
+| $`\nabla p`$, $`\nabla^2\mathbf u`$, $`\nabla\cdot\mathbf u`$ | the pressure gradient (how fast pressure changes with position); the Laplacian of velocity (how much a parcel's speed differs from the average of its neighbours'); the divergence of velocity (how much more water flows out of a point than in; zero means the water does not compress) | — | — |
+| $`\tau`$ ($`\tau_{xx}, \tau_{xy}, \tau_{xz}`$); $`\delta V`$, $`A`$, $`\delta x`$, $`\delta y`$, $`\delta t`$ | shear stress, friction force per square metre between sliding layers (and its parts on one face); a parcel's small volume, a face's area, its small sides, and a short time | — | — |
+| $`U`$, $`L`$ | the flow's speed scale and length scale; in a pipe, mean speed and bore $`D`$ | 1 m/s; $`D`$ = 0.015 m | Re rises |
+| $`\mathrm{Re}`$ | the Reynolds number: inertia's size over friction's size, a pure number | 14,949.2 | turbulence |
+| $`\mathbf u^*, \mathbf x^*, t^*, p^*, \nabla^*`$; $`k`$, $`f`$ | the starred letters are the same quantities in the flow's units: $`\mathbf u/U`$, $`\mathbf x/D`$, $`tU/D`$, $`p/(\rho U^2)`$, and the gradient in those units. $`k`$ is the check flow's wavenumber, $`\pi`$ divided by the eddy's size; $`f`$ is the pipe friction factor in What breaks | $`D/U`$ = 15.0 ms; $`\rho U^2`$ = 998.2 Pa; $`k = \pi/D`$; $`f`$ = 0.02861 | — |
 
 ### When it holds
 
 - **The water is a continuum.** A parcel must hold enough molecules for density and speed to be smooth. In a gas so thin that molecules cross the pipe between collisions, the equation fails.
-- **The fluid is Newtonian.** Friction stress is proportional to the rate of shearing, with one fixed $\mu$. Water, air and oil obey this. Paint, ketchup and the black sludge in an old heating system do not.
-- **The water does not compress.** That is $\nabla\cdot\mathbf u = 0$, from [Continuity and Bernoulli](01-continuity-and-bernoulli.md). It holds when speeds are far below the speed of sound: excellent for 1 m/s water, wrong for a jet engine.
-- **Temperature is fixed, so $\mu$ is fixed.** In the loop it isn't: as the water warms to 70 °C, $\nu$ falls to less than half and Re climbs from 14,949.2 to 36,343.8. Use the viscosity at the water's actual temperature.
-- **2,300 belongs to pipes, with $L = D$.** The threshold depends on the shape and on which length was chosen. A wing, a river and a stirred tank each have their own.
+- **The fluid is Newtonian.** Friction stress is proportional to the rate of shearing, with one fixed $`\mu`$. Water, air and oil obey this. Paint, ketchup and the black sludge in an old heating system do not.
+- **The water does not compress.** That is $`\nabla\cdot\mathbf u = 0`$, from [Continuity and Bernoulli](01-continuity-and-bernoulli.md). It holds when speeds are far below the speed of sound: excellent for 1 m/s water, wrong for a jet engine.
+- **Temperature is fixed, so $`\mu`$ is fixed.** In the loop it isn't: as the water warms to 70 °C, $`\nu`$ falls to less than half and Re climbs from 14,949.2 to 36,343.8. Use the viscosity at the water's actual temperature.
+- **2,300 belongs to pipes, with $`L = D`$.** The threshold depends on the shape and on which length was chosen. A wing, a river and a stirred tank each have their own.
 
 ---
 
@@ -67,42 +71,44 @@ $$\frac{\partial \mathbf u^*}{\partial t^*} + (\mathbf u^*\cdot\nabla^*)\,\mathb
 
 ### Step 0: Newton's law, for a blob that moves with the water
 
-Pick out one parcel: a tiny volume $\delta V$ of water, mass $\rho\,\delta V$, followed as the flow carries it. Its mass times its acceleration equals the total force on it.
+Pick out one parcel: a tiny volume $`\delta V`$ of water, mass $`\rho\,\delta V`$, followed as the flow carries it. Its mass times its acceleration equals the total force on it.
 
 Two things make this harder than for a ball. The parcel doesn't stay put, so its acceleration is not just the change of velocity at one spot. And most forces arrive through its surface: pressure squeezes it and friction drags its faces. Only gravity acts on the whole volume. Steps 1 to 3 handle the pieces; Step 4 adds them up.
 
 ### Step 1: the parcel's acceleration
 
-Write the parcel's speed along the pipe as $u$. In a short time $\delta t$ the speed changes for two reasons. Time passes, so the field itself may change: $\frac{\partial u}{\partial t}\,\delta t$. And the parcel moves a distance $u\,\delta t$ to a place where the speed is different: $\frac{\partial u}{\partial x}\,u\,\delta t$. Do the same along $y$ and $z$, divide by $\delta t$, and the chain rule gives the parcel's acceleration:
+Write the parcel's speed along the pipe as $`u`$. In a short time $`\delta t`$ the speed changes for two reasons. Time passes, so the field itself may change: $`\frac{\partial u}{\partial t}\,\delta t`$. And the parcel moves a distance $`u\,\delta t`$ to a place where the speed is different: $`\frac{\partial u}{\partial x}\,u\,\delta t`$. Do the same along $`y`$ and $`z`$, divide by $`\delta t`$, and the chain rule gives the parcel's acceleration:
 
-$$\frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} + v\frac{\partial u}{\partial y} + w\frac{\partial u}{\partial z} \;=\; \frac{\partial u}{\partial t} + (\mathbf u\cdot\nabla)\,u.$$
+```math
+\frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} + v\frac{\partial u}{\partial y} + w\frac{\partial u}{\partial z} \;=\; \frac{\partial u}{\partial t} + (\mathbf u\cdot\nabla)\,u.
+```
 
 The second part is the **convective acceleration**. It is velocity multiplied by its own rate of change, so it is nonlinear: double every speed and it quadruples. This is the term that makes eddies feed on each other.
 
-In the reducer the flow is steady, so $\frac{\partial u}{\partial t} = 0$. Halfway along, the product $u\,\frac{\partial u}{\partial x}$ alone is 16.3533 m/s². The code also follows one parcel through the reducer step by step and measures how fast its speed changes: 16.3533 m/s² again. Field formula and parcel tracking agree, which is the chain rule, measured.
+In the reducer the flow is steady, so $`\frac{\partial u}{\partial t} = 0`$. Halfway along, the product $`u\,\frac{\partial u}{\partial x}`$ alone is 16.3533 m/s². The code also follows one parcel through the reducer step by step and measures how fast its speed changes: 16.3533 m/s² again. Field formula and parcel tracking agree, which is the chain rule, measured.
 
 ### Step 2: the pressure force
 
-Take the parcel as a small box with faces of area $A$ across the flow and length $\delta x$ along it. Pressure $p$ pushes on the back face; pressure $p + \frac{\partial p}{\partial x}\delta x$ pushes back on the front face. The net push along $x$ is $-\frac{\partial p}{\partial x}\,A\,\delta x = -\frac{\partial p}{\partial x}\,\delta V$. Do it in all three directions and the force is $-\nabla p\,\delta V$. Water is pushed from high pressure towards low.
+Take the parcel as a small box with faces of area $`A`$ across the flow and length $`\delta x`$ along it. Pressure $`p`$ pushes on the back face; pressure $`p + \frac{\partial p}{\partial x}\delta x`$ pushes back on the front face. The net push along $`x`$ is $`-\frac{\partial p}{\partial x}\,A\,\delta x = -\frac{\partial p}{\partial x}\,\delta V`$. Do it in all three directions and the force is $`-\nabla p\,\delta V`$. Water is pushed from high pressure towards low.
 
-For a parcel of any shape, the [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md) does the same job: the pressure summed over the closed surface equals $-\nabla p$ summed through the inside.
+For a parcel of any shape, the [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md) does the same job: the pressure summed over the closed surface equals $`-\nabla p`$ summed through the inside.
 
-In the reducer, with friction negligible over 20 mm, pressure alone pays for the speed-up: $\rho\,(u_\text{out}^2 - u_\text{in}^2)/2$ = 391.2 Pa. That is Bernoulli's trade of pressure for speed: Navier-Stokes with the viscous term dropped.
+In the reducer, with friction negligible over 20 mm, pressure alone pays for the speed-up: $`\rho\,(u_\text{out}^2 - u_\text{in}^2)/2`$ = 391.2 Pa. That is Bernoulli's trade of pressure for speed: Navier-Stokes with the viscous term dropped.
 
 ### Step 3: the viscous force
 
-Layers sliding over each other rub. [Viscosity](02-viscosity-and-pipe-flow.md) measures the rub: shear stress $\tau = \mu\,\frac{\partial u}{\partial y}$, proportional to how fast the speed changes across the layers.
+Layers sliding over each other rub. [Viscosity](02-viscosity-and-pipe-flow.md) measures the rub: shear stress $`\tau = \mu\,\frac{\partial u}{\partial y}`$, proportional to how fast the speed changes across the layers.
 
-Take a thin slab of thickness $\delta y$. Faster water above drags its top face forward; slower water below holds its bottom face back. Only the *difference* between the two stresses moves the slab: $\frac{\partial \tau}{\partial y}\,\delta y\,A = \mu\,\frac{\partial^2 u}{\partial y^2}\,\delta V$. A uniform shear pulls equally on both faces and nets to nothing. Only a *bend* in the speed profile pushes a parcel. Adding the three directions gives $\mu\,\nabla^2 u$: the parcel is pulled toward the average speed of its neighbours.
+Take a thin slab of thickness $`\delta y`$. Faster water above drags its top face forward; slower water below holds its bottom face back. Only the *difference* between the two stresses moves the slab: $`\frac{\partial \tau}{\partial y}\,\delta y\,A = \mu\,\frac{\partial^2 u}{\partial y^2}\,\delta V`$. A uniform shear pulls equally on both faces and nets to nothing. Only a *bend* in the speed profile pushes a parcel. Adding the three directions gives $`\mu\,\nabla^2 u`$: the parcel is pulled toward the average speed of its neighbours.
 
 <details>
 <summary>Detailed derivation: why the full stress collapses to $\mu\nabla^2\mathbf u$</summary>
 
-A Newtonian fluid's friction stresses on a face normal to $x$ are $\tau_{xx} = 2\mu\,\frac{\partial u}{\partial x}$, $\tau_{xy} = \mu\left(\frac{\partial u}{\partial y} + \frac{\partial v}{\partial x}\right)$ and $\tau_{xz} = \mu\left(\frac{\partial u}{\partial z} + \frac{\partial w}{\partial x}\right)$. The net friction force along $x$ per unit volume is the rate these change across the parcel:
+A Newtonian fluid's friction stresses on a face normal to $`x`$ are $`\tau_{xx} = 2\mu\,\frac{\partial u}{\partial x}`$, $`\tau_{xy} = \mu\left(\frac{\partial u}{\partial y} + \frac{\partial v}{\partial x}\right)`$ and $`\tau_{xz} = \mu\left(\frac{\partial u}{\partial z} + \frac{\partial w}{\partial x}\right)`$. The net friction force along $`x`$ per unit volume is the rate these change across the parcel:
 
-$$\frac{\partial \tau_{xx}}{\partial x} + \frac{\partial \tau_{xy}}{\partial y} + \frac{\partial \tau_{xz}}{\partial z} = \mu\left(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2}\right) + \mu\,\frac{\partial}{\partial x}\left(\frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z}\right).$$
+$`\displaystyle \frac{\partial \tau_{xx}}{\partial x} + \frac{\partial \tau_{xy}}{\partial y} + \frac{\partial \tau_{xz}}{\partial z} = \mu\left(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2}\right) + \mu\,\frac{\partial}{\partial x}\left(\frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z}\right).`$
 
-The bracket in the last term is $\nabla\cdot\mathbf u$, which is zero for water that does not compress. What is left is $\mu\nabla^2 u$. The $y$ and $z$ components go the same way. For a gas that compresses, the stress itself gains a term: $\tau_{xx} = 2\mu\,\frac{\partial u}{\partial x} - \tfrac23\mu\,\nabla\cdot\mathbf u$, under Stokes's usual assumption that squeezing alone causes no friction. The equation then keeps a smaller piece, $\tfrac{\mu}{3}\,\nabla(\nabla\cdot\mathbf u)$.
+The bracket in the last term is $`\nabla\cdot\mathbf u`$, which is zero for water that does not compress. What is left is $`\mu\nabla^2 u`$. The $`y`$ and $`z`$ components go the same way. For a gas that compresses, the stress itself gains a term: $`\tau_{xx} = 2\mu\,\frac{\partial u}{\partial x} - \tfrac23\mu\,\nabla\cdot\mathbf u`$, under Stokes's usual assumption that squeezing alone causes no friction. The equation then keeps a smaller piece, $`\tfrac{\mu}{3}\,\nabla(\nabla\cdot\mathbf u)`$.
 
 </details>
 
@@ -110,33 +116,37 @@ The bracket in the last term is $\nabla\cdot\mathbf u$, which is zero for water 
 
 Mass times acceleration equals pressure force plus viscous force plus weight:
 
-$$\rho\,\delta V\left(\frac{\partial \mathbf u}{\partial t} + (\mathbf u\cdot\nabla)\mathbf u\right) = -\nabla p\,\delta V + \mu\nabla^2\mathbf u\,\delta V + \rho\,\mathbf g\,\delta V.$$
+```math
+\rho\,\delta V\left(\frac{\partial \mathbf u}{\partial t} + (\mathbf u\cdot\nabla)\mathbf u\right) = -\nabla p\,\delta V + \mu\nabla^2\mathbf u\,\delta V + \rho\,\mathbf g\,\delta V.
+```
 
-Divide by $\delta V$ and that is the Navier-Stokes equation. Every term is a force per cubic metre, N/m³. With $\nabla\cdot\mathbf u = 0$ it makes four equations for four unknowns: three velocity components and the pressure. The unknowns depend on place and time at once, so it is a partial differential equation ([A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md)).
+Divide by $`\delta V`$ and that is the Navier-Stokes equation. Every term is a force per cubic metre, N/m³. With $`\nabla\cdot\mathbf u = 0`$ it makes four equations for four unknowns: three velocity components and the pressure. The unknowns depend on place and time at once, so it is a partial differential equation ([A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md)).
 
-In a closed loop with no free surface, gravity only adds the still-water pressure $\rho g$ times depth. It is absorbed into $p$ and drops out of the flow. From here on it is left out.
+In a closed loop with no free surface, gravity only adds the still-water pressure $`\rho g`$ times depth. It is absorbed into $`p`$ and drops out of the flow. From here on it is left out.
 
 ### Step 5: measure every term in the flow's own units
 
-Follow the recipe from [Nondimensionalisation](../01-Units%20and%20Modelling/03-scaling-and-nondimensionalisation.md): replace each variable by its natural size times a starred number near one. Here $\mathbf u = U\mathbf u^*$, $\mathbf x = D\mathbf x^*$, $t = (D/U)\,t^*$ and $p = \rho U^2 p^*$. The natural time $D/U$ is 15.0 ms, the time to travel one bore. The pressure scale $\rho U^2$ is 998.2 Pa.
+Follow the recipe from [Nondimensionalisation](../01-Units%20and%20Modelling/03-scaling-and-nondimensionalisation.md): replace each variable by its natural size times a starred number near one. Here $`\mathbf u = U\mathbf u^*`$, $`\mathbf x = D\mathbf x^*`$, $`t = (D/U)\,t^*`$ and $`p = \rho U^2 p^*`$. The natural time $`D/U`$ is 15.0 ms, the time to travel one bore. The pressure scale $`\rho U^2`$ is 998.2 Pa.
 
-Each derivative brings its scale out in front: $\rho U^2/D$ for the acceleration and pressure terms, $\mu U/D^2$ for the viscous term:
+Each derivative brings its scale out in front: $`\rho U^2/D`$ for the acceleration and pressure terms, $`\mu U/D^2`$ for the viscous term:
 
-$$\frac{\rho U^2}{D}\left(\frac{\partial \mathbf u^*}{\partial t^*} + (\mathbf u^*\cdot\nabla^*)\mathbf u^*\right) = -\frac{\rho U^2}{D}\nabla^* p^* + \frac{\mu U}{D^2}\nabla^{*2}\mathbf u^*.$$
+```math
+\frac{\rho U^2}{D}\left(\frac{\partial \mathbf u^*}{\partial t^*} + (\mathbf u^*\cdot\nabla^*)\mathbf u^*\right) = -\frac{\rho U^2}{D}\nabla^* p^* + \frac{\mu U}{D^2}\nabla^{*2}\mathbf u^*.
+```
 
-Divide through by $\rho U^2/D$. The viscous coefficient becomes $\frac{\mu U/D^2}{\rho U^2/D} = \frac{\mu}{\rho U D} = \frac{1}{\mathrm{Re}}$. That is the dimensionless form in The formula.
+Divide through by $`\rho U^2/D`$. The viscous coefficient becomes $`\frac{\mu U/D^2}{\rho U^2/D} = \frac{\mu}{\rho U D} = \frac{1}{\mathrm{Re}}`$. That is the dimensionless form in The formula.
 
 So two flows of the same shape and the same Re obey the same starred equation and have the same starred solution: one flow, rescaled.
 
 ### Step 6: read the Reynolds number
 
-Re is the ratio of the two scales in Step 5. For the heating pipe, inertia's scale is $\rho U^2/D$ = 66,547.1 N/m³ and friction's is $\mu U/D^2$ = 4.4516 N/m³. Their ratio is 14,949.2, the same as $UD/\nu$.
+Re is the ratio of the two scales in Step 5. For the heating pipe, inertia's scale is $`\rho U^2/D`$ = 66,547.1 N/m³ and friction's is $`\mu U/D^2`$ = 4.4516 N/m³. Their ratio is 14,949.2, the same as $`UD/\nu`$.
 
 Read it as a contest. At the scale of the pipe, inertia is about 15,000 times stronger, so a small wobble carries itself along before friction can smooth it, and wobbles feed each other through the nonlinear term.
 
-The 1883 dye experiment in Sources showed it: at low $UD/\nu$ a dye streak in a glass pipe stays a thread; at high $UD/\nu$ the thread breaks into swirls. Reynolds found that the switch point depends on how calm the inlet is; the working threshold engineers use for pipes is about 2,300. The heating pipe sits 6.50 times above it.
+The 1883 dye experiment in Sources showed it: at low $`UD/\nu`$ a dye streak in a glass pipe stays a thread; at high $`UD/\nu`$ the thread breaks into swirls. Reynolds found that the switch point depends on how calm the inlet is; the working threshold engineers use for pipes is about 2,300. The heating pipe sits 6.50 times above it.
 
-Re gives an *order* of size, not an exact ratio. In Step 7's test flow, with one eddy filling the bore, the measured ratio of the two terms is 1,189.6: Re divided by $4\pi$. Re sets the order; the shape sets the factor.
+Re gives an *order* of size, not an exact ratio. In Step 7's test flow, with one eddy filling the bore, the measured ratio of the two terms is 1,189.6: Re divided by $`4\pi`$. Re sets the order; the shape sets the factor.
 
 ### Step 7: test the assembled equation on an exact flow
 
@@ -144,10 +154,10 @@ The **Taylor-Green vortex**, a checkerboard of eddies decaying under friction, i
 
 | Term | Largest size on the grid |
 | --- | ---: |
-| $\rho\,\partial u/\partial t$ | 87.870 N/m³ |
-| $\rho\,(\mathbf u\cdot\nabla)u$ | 104,531.992 N/m³ |
-| $-\partial p/\partial x$ | 104,531.992 N/m³ |
-| $\mu\nabla^2 u$ | 87.870 N/m³ |
+| $`\rho\,\partial u/\partial t`$ | 87.870 N/m³ |
+| $`\rho\,(\mathbf u\cdot\nabla)u`$ | 104,531.992 N/m³ |
+| $`-\partial p/\partial x`$ | 104,531.992 N/m³ |
+| $`\mu\nabla^2 u`$ | 87.870 N/m³ |
 | left side minus right side | 0.001 N/m³ |
 
 It balances to a thousandth of a newton per cubic metre, against terms of a hundred thousand. Pressure pays for the convective acceleration; friction pays for the slow decay.
@@ -162,33 +172,33 @@ Water at 20 °C (values from NIST, the US National Institute of Standards and Te
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\nu = \mu/\rho$ | $1.0016 \times 10^{-3} / 998.207$ | $1.0034 \times 10^{-6}$ m²/s |
-| inertia scale, $\rho U^2/D$ | $998.207 \times 1^2 / 0.015$ | 66,547.1 N/m³ |
-| viscous scale, $\mu U/D^2$ | $1.0016 \times 10^{-3} \times 1 / 0.015^2$ | 4.4516 N/m³ |
-| their ratio | $66{,}547.1 / 4.4516$ | 14,949.2 |
-| $\mathrm{Re} = UD/\nu$, the same number | $1 \times 0.015 / (1.0034 \times 10^{-6})$ | 14,949.2 |
-| speed where Re would be 2,300 | $2300 \times 1.0034 \times 10^{-6} / 0.015$ | 0.1539 m/s |
-| how far over the pipe limit | $14{,}949.2 / 2300$ | **6.50 times: Re about 15,000, turbulent** |
+| $`\nu = \mu/\rho`$ | $`1.0016 \times 10^{-3} / 998.207`$ | $`1.0034 \times 10^{-6}`$ m²/s |
+| inertia scale, $`\rho U^2/D`$ | $`998.207 \times 1^2 / 0.015`$ | 66,547.1 N/m³ |
+| viscous scale, $`\mu U/D^2`$ | $`1.0016 \times 10^{-3} \times 1 / 0.015^2`$ | 4.4516 N/m³ |
+| their ratio | $`66{,}547.1 / 4.4516`$ | 14,949.2 |
+| $`\mathrm{Re} = UD/\nu`$, the same number | $`1 \times 0.015 / (1.0034 \times 10^{-6})`$ | 14,949.2 |
+| speed where Re would be 2,300 | $`2300 \times 1.0034 \times 10^{-6} / 0.015`$ | 0.1539 m/s |
+| how far over the pipe limit | $`14{,}949.2 / 2300`$ | **6.50 times: Re about 15,000, turbulent** |
 
 At 1 m/s, the heating pipe runs at Re 15,000, so its flow is turbulent: below 0.1539 m/s it would be smooth, and the pump would see a very different pipe.
 
 ### What breaks if you drop a piece
 
-Same pipe, correct answer Re 14,949.2 and a turbulent pressure drop of 952.1 Pa per metre (from Blasius' smooth-pipe friction factor $f$ = 0.02861, valid in this range).
+Same pipe, correct answer Re 14,949.2 and a turbulent pressure drop of 952.1 Pa per metre (from Blasius' smooth-pipe friction factor $`f`$ = 0.02861, valid in this range).
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Use $\mu$ for $\nu$: Re $= UD/\mu$ | 14.98 | Density was left out. The answer has units, and it calls a turbulent pipe syrupy. |
-| Use the radius for $L$ | 7,474.6; at 0.2 m/s, 1,494.9 against the true 2,989.8 | The 2,300 limit was measured with the diameter. At 0.2 m/s the radius version calls a pipe that is over the limit smooth. |
+| Use $`\mu`$ for $`\nu`$: Re $`= UD/\mu`$ | 14.98 | Density was left out. The answer has units, and it calls a turbulent pipe syrupy. |
+| Use the radius for $`L`$ | 7,474.6; at 0.2 m/s, 1,494.9 against the true 2,989.8 | The 2,300 limit was measured with the diameter. At 0.2 m/s the radius version calls a pipe that is over the limit smooth. |
 | Use the cold-start Re for the loop running at 70 °C | 14,949.2; true 36,343.8 | Hot water is less than half as viscous. Re more than doubles. |
 | Drop viscosity because 1/Re is tiny | 0.0 Pa/m for a straight pipe; it needs 952.1 Pa/m | Without friction, nothing resists steady flow, so the pump would need no pressure at all. |
-| Use the laminar law $32\mu U/D^2$ at Re 14,949.2 | 142.4 Pa/m; needs 952.1 Pa/m | A formula for smooth flow, used 6.50 times above its limit: 6.68 times too low. |
+| Use the laminar law $`32\mu U/D^2`$ at Re 14,949.2 | 142.4 Pa/m; needs 952.1 Pa/m | A formula for smooth flow, used 6.50 times above its limit: 6.68 times too low. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts take two independent roads. First, marked road 1 in the code, they compute Re and restate it as the ratio of the inertia and friction scales; that is the same algebra, so the two agree by construction and are not a check. Road 2 checks the convective acceleration: the field formula $u\,\partial u/\partial x$ against a parcel followed through the reducer by RK4 (a standard four-stage step for ordinary differential equations), and the tracked transit time against its integral. Road 3 builds every term of Navier-Stokes by finite differences on the Taylor-Green vortex, checks that they balance, and measures the term ratio against Re/(4π): the real check on Re. The script then prints every "what breaks" number and the figure's dot positions.
+The scripts take two independent roads. First, marked road 1 in the code, they compute Re and restate it as the ratio of the inertia and friction scales; that is the same algebra, so the two agree by construction and are not a check. Road 2 checks the convective acceleration: the field formula $`u\,\partial u/\partial x`$ against a parcel followed through the reducer by RK4 (a standard four-stage step for ordinary differential equations), and the tracked transit time against its integral. Road 3 builds every term of Navier-Stokes by finite differences on the Taylor-Green vortex, checks that they balance, and measures the term ratio against Re/(4π): the real check on Re. The script then prints every "what breaks" number and the figure's dot positions.
 
 ### Python
 
@@ -554,9 +564,9 @@ The two outputs are identical, line for line.
 
 Lean proves the algebra of Steps 3, 5 and 6 exactly, for every flow that meets the conditions, with no numbers plugged in.
 
-- Take a velocity field whose second derivatives are continuous and that does not compress, with the Newtonian friction stresses of Step 3. Then the net friction force per unit volume along $x$, $y$ or $z$ is exactly $\mu\nabla^2\mathbf u$ in that direction.
-- Take a flow that obeys Navier-Stokes with gravity absorbed into $p$, and does not compress, with $\rho$, $\mu$, $U$, $D$ positive. Then the starred flow obeys the starred equation, with friction carrying $1/\mathrm{Re}$ and $\mathrm{Re} = \rho U D/\mu$. The starred flow still does not compress.
-- Take $\rho$, $\mu$, $U$ and $D$ positive. Then $(\rho U^2/D)/(\mu U/D^2) = \rho U D/\mu = UD/\nu$, where $\nu = \mu/\rho$.
+- Take a velocity field whose second derivatives are continuous and that does not compress, with the Newtonian friction stresses of Step 3. Then the net friction force per unit volume along $`x`$, $`y`$ or $`z`$ is exactly $`\mu\nabla^2\mathbf u`$ in that direction.
+- Take a flow that obeys Navier-Stokes with gravity absorbed into $`p`$, and does not compress, with $`\rho`$, $`\mu`$, $`U`$, $`D`$ positive. Then the starred flow obeys the starred equation, with friction carrying $`1/\mathrm{Re}`$ and $`\mathrm{Re} = \rho U D/\mu`$. The starred flow still does not compress.
+- Take $`\rho`$, $`\mu`$, $`U`$ and $`D`$ positive. Then $`(\rho U^2/D)/(\mu U/D^2) = \rho U D/\mu = UD/\nu`$, where $`\nu = \mu/\rho`$.
 
 Every number on the card, the parcel in the reducer and the Taylor-Green test are left to the Python and Rust checks.
 
@@ -740,7 +750,7 @@ theorem newtonian_stress_divergence_eq_mu_laplacian
 > [!TIP]
 > **Try changing**
 > - Guess first: how slow must the pump run for smooth flow? Set `U = 0.15` at the top (a `try:` line prints the answer without the edit). Re is **2,242.4**, just under 2,300: the flow is probably laminar. With the edit, the first assert stops the script after the printout, because it guards the 15,000 example.
-> - Guess first: the loop warms to 70 °C. Same pipe, same speed. Re is **36,343.8**, because hot water's $\nu$ is less than half the cold value.
+> - Guess first: the loop warms to 70 °C. Same pipe, same speed. Re is **36,343.8**, because hot water's $`\nu`$ is less than half the cold value.
 > - Guess first: move the same 10.60 L/min into a 22 mm pipe. Speed drops to **0.4649 m/s** and Re to **10,192.6**. At a fixed flow, speed falls with the bore squared and Re with the bore, so a wider pipe *lowers* Re.
 > - Guess first: shrink the test eddy tenfold, to 1.5 mm. Inertia's lead over friction falls from 1,189.6 to **119.0**. Small eddies are where friction catches up, which is where turbulence finally turns motion into heat.
 
@@ -749,12 +759,12 @@ theorem newtonian_stress_divergence_eq_mu_laplacian
 ## The usual mistake
 
 > [!warning]
-> **"Re is 15,000, so 1/Re is tiny, so drop the viscous term."** It is the biggest trap on the card. The viscous term has the highest derivative, and it alone makes water stick to the wall. Drop it and a straight pipe needs 0.0 Pa/m to push water along; the real pipe needs 952.1 Pa/m. Near the wall, speeds change over a thin layer much smaller than $D$, so the viscous term grows until it matches inertia there. That thin layer is where drag comes from. A small 1/Re means friction is negligible *at the chosen scale*, not everywhere.
+> **"Re is 15,000, so 1/Re is tiny, so drop the viscous term."** It is the biggest trap on the card. The viscous term has the highest derivative, and it alone makes water stick to the wall. Drop it and a straight pipe needs 0.0 Pa/m to push water along; the real pipe needs 952.1 Pa/m. Near the wall, speeds change over a thin layer much smaller than $`D`$, so the viscous term grows until it matches inertia there. That thin layer is where drag comes from. A small 1/Re means friction is negligible *at the chosen scale*, not everywhere.
 >
 > Smaller traps:
-> - **Viscosity without density.** $UD/\mu$ instead of $UD/\nu$ gives 14.98, and calls the heating pipe syrupy. An Re that carries units is wrong.
+> - **Viscosity without density.** $`UD/\mu`$ instead of $`UD/\nu`$ gives 14.98, and calls the heating pipe syrupy. An Re that carries units is wrong.
 > - **The wrong length.** The pipe limit of 2,300 assumes the diameter. The radius halves Re: 1,494.9 instead of 2,989.8 at 0.2 m/s, which flips the verdict.
-> - **Re as an exact ratio.** It is an order of size. In the test eddy the real ratio is 1,189.6, Re divided by $4\pi$.
+> - **Re as an exact ratio.** It is an order of size. In the test eddy the real ratio is 1,189.6, Re divided by $`4\pi`$.
 > - **The wrong temperature.** The cold-start Re used for the loop once it runs at 70 °C: 14,949.2 instead of 36,343.8.
 
 ---
@@ -768,16 +778,16 @@ theorem newtonian_stress_divergence_eq_mu_laplacian
 - **Simulation software.** Fluid-flow programs chop the domain into cells and solve exactly this equation, cell by cell. [Finite elements](09-finite-element-method-in-outline.md) shows the idea on a simpler equation.
 
 > **Say it back**
-> Navier-Stokes is Newton's second law for a parcel of fluid: density times acceleration equals pressure push plus viscous drag plus weight. The acceleration has a part from moving to where the water flows faster, which is nonlinear and is why eddies feed each other. Measure every term in the flow's own speed and size and one number is left, the Reynolds number $UD/\nu$, in front of the friction term. Cold water at 1 m/s in a 15 mm pipe has Re about 15,000, far above the pipe limit of 2,300, so it is turbulent. A small 1/Re does not mean friction can be dropped: near the walls it is as big as everything else.
+> Navier-Stokes is Newton's second law for a parcel of fluid: density times acceleration equals pressure push plus viscous drag plus weight. The acceleration has a part from moving to where the water flows faster, which is nonlinear and is why eddies feed each other. Measure every term in the flow's own speed and size and one number is left, the Reynolds number $`UD/\nu`$, in front of the friction term. Cold water at 1 m/s in a 15 mm pipe has Re about 15,000, far above the pipe limit of 2,300, so it is turbulent. A small 1/Re does not mean friction can be dropped: near the walls it is as big as everything else.
 
 ---
 
 ## What this builds on
 
-- [Continuity and Bernoulli](01-continuity-and-bernoulli.md): the companion equation $\nabla\cdot\mathbf u = 0$, and Bernoulli's trade of pressure for speed, which is Navier-Stokes without friction along a streamline.
-- [Viscosity](02-viscosity-and-pipe-flow.md): the friction law $\tau = \mu\,\partial u/\partial y$ that becomes the $\mu\nabla^2\mathbf u$ term, and the pipe pressure drops quoted here.
+- [Continuity and Bernoulli](01-continuity-and-bernoulli.md): the companion equation $`\nabla\cdot\mathbf u = 0`$, and Bernoulli's trade of pressure for speed, which is Navier-Stokes without friction along a streamline.
+- [Viscosity](02-viscosity-and-pipe-flow.md): the friction law $`\tau = \mu\,\partial u/\partial y`$ that becomes the $`\mu\nabla^2\mathbf u`$ term, and the pipe pressure drops quoted here.
 - [Nondimensionalisation](../01-Units%20and%20Modelling/03-scaling-and-nondimensionalisation.md): the recipe of Step 5, choosing natural scales so that the small parameter appears.
-- [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md): turns the pressure on a parcel's surface into $-\nabla p$ through its inside.
+- [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md): turns the pressure on a parcel's surface into $`-\nabla p`$ through its inside.
 - [A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md): what an equation in several variables at once says, and why it needs boundary conditions such as no slip at the wall.
 
 ## Where this goes next

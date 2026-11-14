@@ -37,40 +37,48 @@ Orange, straight: the hook's height t/2 cm, itself a forced solution. Green: the
 
 ## The formula
 
-Notation first, in words. As on [A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md), a dash means a rate: $y'$ is the weight's speed, and $y''$, "y double prime", its acceleration. $L[y]$ is a machine that takes a whole curve and returns another: the curve's acceleration plus the curve itself.
+Notation first, in words. As on [A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md), a dash means a rate: $`y'`$ is the weight's speed, and $`y''`$, "y double prime", its acceleration. $`L[y]`$ is a machine that takes a whole curve and returns another: the curve's acceleration plus the curve itself.
 
 The spring pulls 1 cm/s^2 per cm of stretch (stiffness over mass, 1 per s^2), so with the hook fixed
 
-$$L[y] = y'' + y = 0.$$
+```math
+L[y] = y'' + y = 0.
+```
 
 **Read it aloud:** the acceleration is always the height with its sign flipped.
 
-For any numbers $a$ and $b$ and any curves $y_1$ and $y_2$,
+For any numbers $`a`$ and $`b`$ and any curves $`y_1`$ and $`y_2`$,
 
-$$L[a\,y_1 + b\,y_2] = a\,L[y_1] + b\,L[y_2].$$
+```math
+L[a\,y_1 + b\,y_2] = a\,L[y_1] + b\,L[y_2].
+```
 
 **Read it aloud:** the machine applied to a weighted sum is the same weighted sum of its outputs.
 
 Every free solution is (Step 3 proves nothing is missed)
 
-$$y_h = c_1 \cos t + c_2 \sin t, \qquad c_1 = y(0),\; c_2 = y'(0),$$
+```math
+y_h = c_1 \cos t + c_2 \sin t, \qquad c_1 = y(0),\; c_2 = y'(0),
+```
 
-and with the hook rising, $L[y] = f(t)$ with $f(t) = t/2$, every solution is
+and with the hook rising, $`L[y] = f(t)`$ with $`f(t) = t/2`$, every solution is
 
-$$y = y_p + c_1 \cos t + c_2 \sin t, \qquad y_p = t/2.$$
+```math
+y = y_p + c_1 \cos t + c_2 \sin t, \qquad y_p = t/2.
+```
 
 **Read it aloud:** one forced motion plus any free swing.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since release, s | 0 to 8 s | the swing repeats every 6.28 s |
-| $y$, $y'$, $y''$ | height above rest (cm), speed (cm/s), acceleration (cm/s^2) | 3 cm and −2 cm/s at the start | — |
-| $L[y]$ | acceleration plus height: the push per kg the curve needs | 0 for a free swing | — |
-| $f(t)$ | the forcing: the hook's pull per kg, set by its height | t/2 | the motion drifts upwards |
-| $y_1$, $y_2$ | two free solutions | cos t and sin t | — |
-| $a$, $b$, $c_1$, $c_2$ | weights in a sum; $c_1$, $c_2$ are the ones the start fixes | 3 and −2 free, 3 and −2.5 forced | taller swing |
-| $y_h$, $y_p$ | a free (homogeneous) solution; one particular forced solution | 3 cos t − 2 sin t; t/2 | — |
-| $E$ | twice the energy per kg: speed squared plus height squared | 13 for the free swing | — |
+| $`t`$ | time since release, s | 0 to 8 s | the swing repeats every 6.28 s |
+| $`y`$, $`y'`$, $`y''`$ | height above rest (cm), speed (cm/s), acceleration (cm/s^2) | 3 cm and −2 cm/s at the start | — |
+| $`L[y]`$ | acceleration plus height: the push per kg the curve needs | 0 for a free swing | — |
+| $`f(t)`$ | the forcing: the hook's pull per kg, set by its height | t/2 | the motion drifts upwards |
+| $`y_1`$, $`y_2`$ | two free solutions | cos t and sin t | — |
+| $`a`$, $`b`$, $`c_1`$, $`c_2`$ | weights in a sum; $`c_1`$, $`c_2`$ are the ones the start fixes | 3 and −2 free, 3 and −2.5 forced | taller swing |
+| $`y_h`$, $`y_p`$ | a free (homogeneous) solution; one particular forced solution | 3 cos t − 2 sin t; t/2 | — |
+| $`E`$ | twice the energy per kg: speed squared plus height squared | 13 for the free swing | — |
 
 **Homogeneous** means the forcing is zero, the hook held still. A **particular solution** is any one solution of the forced equation.
 
@@ -87,37 +95,37 @@ $$y = y_p + c_1 \cos t + c_2 \sin t, \qquad y_p = t/2.$$
 
 ### Step 0: rates respect sums and multiples
 
-The rate of a sum is the sum of the rates; the rate of 3 times a curve is 3 times its rate. Twice over, for the acceleration: $L[a\,y_1 + b\,y_2] = a\,y_1'' + b\,y_2'' + a\,y_1 + b\,y_2 = a\,L[y_1] + b\,L[y_2]$.
+The rate of a sum is the sum of the rates; the rate of 3 times a curve is 3 times its rate. Twice over, for the acceleration: $`L[a\,y_1 + b\,y_2] = a\,y_1'' + b\,y_2'' + a\,y_1 + b\,y_2 = a\,L[y_1] + b\,L[y_2]`$.
 
 ### Step 1: weighted sums of free swings are free swings
 
-cos t has acceleration −cos t, so $L[\cos t] = 0$; likewise $L[\sin t] = 0$. By Step 0, $L[3\cos t - 2\sin t] = 3 \times 0 - 2 \times 0 = 0$. The free solutions are closed under weighted sums ([Linear combinations and span](../../03-Algebra/03-Vectors/03-linear-combinations-and-span.md)): a vector space whose members are curves.
+cos t has acceleration −cos t, so $`L[\cos t] = 0`$; likewise $`L[\sin t] = 0`$. By Step 0, $`L[3\cos t - 2\sin t] = 3 \times 0 - 2 \times 0 = 0`$. The free solutions are closed under weighted sums ([Linear combinations and span](../../03-Algebra/03-Vectors/03-linear-combinations-and-span.md)): a vector space whose members are curves.
 
 ### Step 2: two starting readings fix the two weights
 
-At t = 0, cos is 1 with speed 0 and sin is 0 with speed 1, so $y_h(0) = c_1$ and $y_h'(0) = c_2$: here 3 and −2. Height alone allows 3 cos t + c sin t for every number c.
+At t = 0, cos is 1 with speed 0 and sin is 0 with speed 1, so $`y_h(0) = c_1`$ and $`y_h'(0) = c_2`$: here 3 and −2. Height alone allows 3 cos t + c sin t for every number c.
 
 The pair works because its starting table, height and speed of each, has determinant 1, not 0. The determinant is the first's height times the second's speed, minus the second's height times the first's speed. That test is [The Wronskian](04-wronskian-and-reduction-of-order.md).
 
 ### Step 3: nothing is missed
 
-Take any free motion $y$. Build $w = y(0)\cos t + y'(0)\sin t$, which starts the same way. The difference $z = y - w$ is free and starts at height 0, speed 0.
+Take any free motion $`y`$. Build $`w = y(0)\cos t + y'(0)\sin t`$, which starts the same way. The difference $`z = y - w`$ is free and starts at height 0, speed 0.
 
-Its $E = z'^2 + z^2$ has rate $2z'z'' + 2zz' = 2z'(z'' + z) = 0$, so $E$ stays at its starting value, 0. Two squares summing to 0 force $z = 0$.
+Its $`E = z'^2 + z^2`$ has rate $`2z'z'' + 2zz' = 2z'(z'' + z) = 0`$, so $`E`$ stays at its starting value, 0. Two squares summing to 0 force $`z = 0`$.
 
-So $y = w$: every free motion is exactly one mix of cos t and sin t. The free solutions form a space of dimension 2 with basis cos t and sin t ([Basis and dimension](../../03-Algebra/03-Vectors/05-basis-and-dimension.md)).
+So $`y = w`$: every free motion is exactly one mix of cos t and sin t. The free solutions form a space of dimension 2 with basis cos t and sin t ([Basis and dimension](../../03-Algebra/03-Vectors/05-basis-and-dimension.md)).
 
-For the swing 3 cos t − 2 sin t, $E$ reads 13 throughout, so it peaks at √13 = 3.61 cm.
+For the swing 3 cos t − 2 sin t, $`E`$ reads 13 throughout, so it peaks at √13 = 3.61 cm.
 
 ### Step 4: forced motions differ by a free motion
 
-If $y$ and $y_p$ both solve $L[y] = t/2$, Step 0 gives $L[y - y_p] = t/2 - t/2 = 0$, so the difference is free. By Step 3 it is $c_1 \cos t + c_2 \sin t$.
+If $`y`$ and $`y_p`$ both solve $`L[y] = t/2`$, Step 0 gives $`L[y - y_p] = t/2 - t/2 = 0`$, so the difference is free. By Step 3 it is $`c_1 \cos t + c_2 \sin t`$.
 
-A straight line has acceleration 0, so $L[t/2] = t/2$: following the hook is one forced motion. The start 3 cm, −2 cm/s gives $c_1 = 3$ and $1/2 + c_2 = -2$, so $c_2 = -2.5$.
+A straight line has acceleration 0, so $`L[t/2] = t/2`$: following the hook is one forced motion. The start 3 cm, −2 cm/s gives $`c_1 = 3`$ and $`1/2 + c_2 = -2`$, so $`c_2 = -2.5`$.
 
 ### Step 5: forcing scales and adds
 
-$L[2y] = 2L[y]$: twice a motion needs twice the forcing. Raise the hook at 1 cm/s, start at 6 cm, −4 cm/s, and the weight moves exactly twice as far. Two forcings together are met by the sum of their responses, which is why [Undetermined coefficients](05-undetermined-coefficients.md) can treat a forcing term by term.
+$`L[2y] = 2L[y]`$: twice a motion needs twice the forcing. Raise the hook at 1 cm/s, start at 6 cm, −4 cm/s, and the weight moves exactly twice as far. Two forcings together are met by the sum of their responses, which is why [Undetermined coefficients](05-undetermined-coefficients.md) can treat a forcing term by term.
 
 <details>
 <summary>Detailed proof: any second-order linear equation</summary>
@@ -126,7 +134,7 @@ Let the coefficients p(t), q(t) and the forcing f(t) be continuous on an interva
 
 Send each homogeneous solution to its starting pair, height and speed at 0. This map is linear. By the existence and uniqueness theorem for linear equations, each pair is reached by exactly one solution on the whole interval, since linear equations never blow up ([Blow-up](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/03-blow-up-and-the-life-span-of-a-solution.md)). So the map is one-to-one and onto the plane: the solutions form a vector space of dimension 2, and two of them are a basis exactly when their starting pairs are independent.
 
-For $L[y] = f$, if $y_p$ is one solution then $L[y - y_p] = 0$ for every other, so $y - y_p$ lies in that plane of solutions. The forced solutions are one point plus that plane, not a vector space: two of them sum to forcing 2f.
+For $`L[y] = f`$, if $`y_p`$ is one solution then $`L[y - y_p] = 0`$ for every other, so $`y - y_p`$ lies in that plane of solutions. The forced solutions are one point plus that plane, not a vector space: two of them sum to forcing 2f.
 
 </details>
 
@@ -138,10 +146,10 @@ A second road needs no formula: from the start, step the height by the speed and
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| free weights | $c_1$ = height, $c_2$ = speed at the start | 3 and −2 |
+| free weights | $`c_1`$ = height, $`c_2`$ = speed at the start | 3 and −2 |
 | energy of the free swing | (−2)^2 + 3^2 | 13, so a peak of 3.61 cm |
 | one forced solution | L[t/2] = 0 + t/2 | t/2 |
-| forced weights | 3 = 0 + $c_1$; −2 = 1/2 + $c_2$ | 3 and −2.5 |
+| forced weights | 3 = 0 + $`c_1`$; −2 = 1/2 + $`c_2`$ | 3 and −2.5 |
 | cos and sin at 2 s | from tables or a calculator | −0.4161 and 0.9093 |
 | forced motion at t = 2 s | 1 + 3 × (−0.4161) − 2.5 × 0.9093 | **−2.5217 cm** |
 | doubled hook and start | 2 × (−2.5217) | −5.0434 cm |
@@ -153,7 +161,7 @@ Two seconds in, the weight is 2.52 cm below rest though the hook has risen 1 cm:
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Adding two forced solutions | forcing 2.000 at t = 2 s, not 1.000 | Forcings add too |
-| Halving the pendulum's balance, $y'' + \sin y = 0$, from y = π to π/2 | residual 1.000 rad/s^2, not 0.000 | sin y is not linear |
+| Halving the pendulum's balance, $`y'' + \sin y = 0`$, from y = π to π/2 | residual 1.000 rad/s^2, not 0.000 | sin y is not linear |
 | A dependent pair, cos t and 2 cos t | start determinant 0.000 | Both start at speed 0; no mix reaches −2 cm/s |
 | Height as the only starting value | 3 cos t + c sin t, any c | The speed is needed too |
 
@@ -161,7 +169,7 @@ Two seconds in, the weight is 2.52 cm below rest though the hook has risen 1 cm:
 
 ## Code, from first principles, and it actually runs
 
-Two roads. Road one puts each closed form (the solution written as a formula) into $L$. It measures acceleration by a centred difference: the heights a small step before and after t, compared with the height at t.
+Two roads. Road one puts each closed form (the solution written as a formula) into $`L`$. It measures acceleration by a centred difference: the heights a small step before and after t, compared with the height at t.
 
 Road two is Euler's rule, stepping from the start with the rate law alone; it must match the closed form at t = 2 s, its error falling tenfold with the step. The doubled case is stepped separately and must land at twice the formula. Every chart point and what-breaks number is printed.
 

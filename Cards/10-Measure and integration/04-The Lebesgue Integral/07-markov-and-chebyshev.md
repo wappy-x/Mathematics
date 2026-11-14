@@ -26,55 +26,63 @@ Drawn to scale, 300 units to the kilometre and 150 units to the metre. The curve
 
 ## The formula
 
-Notation, as a reminder. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure (a sigma-algebra), and a measure giving each a size. The integral $\int f \, d\mu$, read "the integral of f against mu", is the area under $f$ measured by $\mu$ ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)). The indicator $\mathbf{1}_A$ is one on the set $A$ and zero off it. On the river, $\Omega$ is the stretch `[0, 1]` in km, $\mathcal{F}$ is its Borel sets, and $\mu$ is Lebesgue measure $\lambda$, length in km. The stretch is 1 km long, so length is also the probability $P$ of a uniform mooring, and the average depth is $\int d \, d\lambda$, also written E[d] ([Expectation as an integral](06-expectation-as-an-integral.md)).
+Notation, as a reminder. A measure space $`(\Omega, \mathcal{F}, \mu)`$ is a set of points, the sets we allow ourselves to measure (a sigma-algebra), and a measure giving each a size. The integral $`\int f \, d\mu`$, read "the integral of f against mu", is the area under $`f`$ measured by $`\mu`$ ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)). The indicator $`\mathbf{1}_A`$ is one on the set $`A`$ and zero off it. On the river, $`\Omega`$ is the stretch `[0, 1]` in km, $`\mathcal{F}`$ is its Borel sets, and $`\mu`$ is Lebesgue measure $`\lambda`$, length in km. The stretch is 1 km long, so length is also the probability $`P`$ of a uniform mooring, and the average depth is $`\int d \, d\lambda`$, also written E[d] ([Expectation as an integral](06-expectation-as-an-integral.md)).
 
-**Markov's inequality.** For a measure space $(\Omega, \mathcal{F}, \mu)$, a function $f$ from $\Omega$ to `[0, ∞]` measurable with respect to $\mathcal{F}$, and a number $a > 0$:
+**Markov's inequality.** For a measure space $`(\Omega, \mathcal{F}, \mu)`$, a function $`f`$ from $`\Omega`$ to `[0, ∞]` measurable with respect to $`\mathcal{F}`$, and a number $`a > 0`$:
 
-$$\mu\big(\{\omega \in \Omega : f(\omega) \ge a\}\big) \;\le\; \frac{1}{a} \int f \, d\mu.$$
+```math
+\mu\big(\{\omega \in \Omega : f(\omega) \ge a\}\big) \;\le\; \frac{1}{a} \int f \, d\mu.
+```
 
 **Read it aloud:** the size of the set where f reaches at least a is at most the integral of f divided by a.
 
-The same bound applied to $\lvert f \rvert^p$ at the level $a^p$ gives the **moment form**, for any measurable real $f$ and any power $p > 0$:
+The same bound applied to $`\lvert f \rvert^p`$ at the level $`a^p`$ gives the **moment form**, for any measurable real $`f`$ and any power $`p > 0`$:
 
-$$\mu\big(\{\lvert f \rvert \ge a\}\big) \;\le\; \frac{1}{a^p} \int \lvert f \rvert^p \, d\mu.$$
+```math
+\mu\big(\{\lvert f \rvert \ge a\}\big) \;\le\; \frac{1}{a^p} \int \lvert f \rvert^p \, d\mu.
+```
 
-**Chebyshev's inequality.** For a probability measure $P$, a random variable $X$ (a real function measurable with respect to $\mathcal{F}$) with $\int X^2 \, dP$ finite, its mean $m = \int X \, dP$, its variance $\sigma^2 = \int (X - m)^2 \, dP$, and a distance $\varepsilon > 0$:
+**Chebyshev's inequality.** For a probability measure $`P`$, a random variable $`X`$ (a real function measurable with respect to $`\mathcal{F}`$) with $`\int X^2 \, dP`$ finite, its mean $`m = \int X \, dP`$, its variance $`\sigma^2 = \int (X - m)^2 \, dP`$, and a distance $`\varepsilon > 0`$:
 
-$$P\big(\lvert X - m \rvert \ge \varepsilon\big) \;\le\; \frac{\sigma^2}{\varepsilon^2}.$$
+```math
+P\big(\lvert X - m \rvert \ge \varepsilon\big) \;\le\; \frac{\sigma^2}{\varepsilon^2}.
+```
 
 **Read it aloud:** the probability of landing at least epsilon from the mean is at most the variance over epsilon squared.
 
-With $\varepsilon = k\sigma$ for a number $k > 0$ it reads $P(\lvert X - m \rvert \ge k\sigma) \le 1/k^2$: at most a quarter of the probability lies two or more standard deviations from the mean.
+With $`\varepsilon = k\sigma`$ for a number $`k > 0`$ it reads $`P(\lvert X - m \rvert \ge k\sigma) \le 1/k^2`$: at most a quarter of the probability lies two or more standard deviations from the mean.
 
-**The Chernoff bound.** For every $t \ge 0$ with $M(t) = \int e^{tX} \, dP$ finite:
+**The Chernoff bound.** For every $`t \ge 0`$ with $`M(t) = \int e^{tX} \, dP`$ finite:
 
-$$P(X \ge a) \;\le\; e^{-ta} M(t), \qquad\text{so}\qquad P(X \ge a) \;\le\; \inf_{t \ge 0}\, e^{-ta} M(t).$$
+```math
+P(X \ge a) \;\le\; e^{-ta} M(t), \qquad\text{so}\qquad P(X \ge a) \;\le\; \inf_{t \ge 0}\, e^{-ta} M(t).
+```
 
 **Read it aloud:** the probability of reaching a is at most e to the minus t a times the average of e to the t X, for every t, so at most the smallest such number.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $d$, $x$ | the depth in m at the point $x$ km along the stretch | $d(x) = 4x(1 - x)$; $d(0.5) = 1$ | a deeper river raises the Markov bound |
-| $\Omega$, $\omega$ | the space and a point of it | the stretch `[0, 1]`; a mooring | — |
-| $\mu$, $\lambda$, $P$ | a measure; $\lambda$ is length; $P$ is a measure of total size 1 | $\lambda$ = $P$ on the 1 km stretch | a bigger measure, a bigger integral and a bigger bound |
-| $f$ | a non-negative measurable function | $f = d$ | a larger $f$ raises the bound |
-| $a$ | the threshold, above 0 | 0.9 m | the bound falls like 1 over $a$ |
-| $A$, $\mathbf{1}_A$ | the set where $f \ge a$, and its indicator | the stretch from 0.3419 to 0.6581 km | — |
-| $X$, $m$ | a random variable and its mean | the mooring depth; $m = 2/3$ m | — |
-| $\sigma^2$, $\sigma$ | the variance and its square root, the standard deviation | $\sigma^2 = 4/45$ = 0.088889 square metres | the Chebyshev bound rises with it |
-| $\varepsilon$ | the distance from the mean | 0.5 m | the bound falls like 1 over $\varepsilon^2$ |
-| $p$, $\varphi$ | the power in the moment form; $\varphi$ any non-negative increasing function | $p = 4$ gives 0.6193 at $a = 0.9$ | the best $p$ depends on $a$ |
-| $t$, $M$ | the Chernoff parameter; $M(t)$ the average of $e^{tX}$ | best $t$ = 4.907 at $a = 0.9$ | too small or too large a $t$ loosens the bound |
-| $k$ | in $\varepsilon = k\sigma$, a number of standard deviations; in Corollary 2, a counter | $k = 2$: at most 1/4 | the bound falls like $1/k^2$ |
-| $g$, $n$, $s$ | in the proof, a non-negative function with integral 0; a counter; a level | $g = f - a\mathbf{1}_A$ for the tight law | — |
+| $`d`$, $`x`$ | the depth in m at the point $`x`$ km along the stretch | $`d(x) = 4x(1 - x)`$; $`d(0.5) = 1`$ | a deeper river raises the Markov bound |
+| $`\Omega`$, $`\omega`$ | the space and a point of it | the stretch `[0, 1]`; a mooring | — |
+| $`\mu`$, $`\lambda`$, $`P`$ | a measure; $`\lambda`$ is length; $`P`$ is a measure of total size 1 | $`\lambda`$ = $`P`$ on the 1 km stretch | a bigger measure, a bigger integral and a bigger bound |
+| $`f`$ | a non-negative measurable function | $`f = d`$ | a larger $`f`$ raises the bound |
+| $`a`$ | the threshold, above 0 | 0.9 m | the bound falls like 1 over $`a`$ |
+| $`A`$, $`\mathbf{1}_A`$ | the set where $`f \ge a`$, and its indicator | the stretch from 0.3419 to 0.6581 km | — |
+| $`X`$, $`m`$ | a random variable and its mean | the mooring depth; $`m = 2/3`$ m | — |
+| $`\sigma^2`$, $`\sigma`$ | the variance and its square root, the standard deviation | $`\sigma^2 = 4/45`$ = 0.088889 square metres | the Chebyshev bound rises with it |
+| $`\varepsilon`$ | the distance from the mean | 0.5 m | the bound falls like 1 over $`\varepsilon^2`$ |
+| $`p`$, $`\varphi`$ | the power in the moment form; $`\varphi`$ any non-negative increasing function | $`p = 4`$ gives 0.6193 at $`a = 0.9`$ | the best $`p`$ depends on $`a`$ |
+| $`t`$, $`M`$ | the Chernoff parameter; $`M(t)`$ the average of $`e^{tX}`$ | best $`t`$ = 4.907 at $`a = 0.9`$ | too small or too large a $`t`$ loosens the bound |
+| $`k`$ | in $`\varepsilon = k\sigma`$, a number of standard deviations; in Corollary 2, a counter | $`k = 2`$: at most 1/4 | the bound falls like $`1/k^2`$ |
+| $`g`$, $`n`$, $`s`$ | in the proof, a non-negative function with integral 0; a counter; a level | $`g = f - a\mathbf{1}_A`$ for the tight law | — |
 
 ### When it holds
 
-- **Non-negative, or take a size first.** The proof needs $f \ge a\mathbf{1}_A$, which fails where $f$ is negative. For a signed $f$, use $\lvert f \rvert$ or $\lvert f \rvert^p$.
-- **Measurable with respect to $\mathcal{F}$.** Otherwise the set $A$ has no size. Continuity is not needed: the indicator of the rational points, which has no Riemann integral, has integral 0, so every level set above 0 has size 0.
-- **A threshold above 0.** At $a = 0$ the right side divides by zero.
-- **Chebyshev needs a finite $\int X^2 \, dP$.** Otherwise the variance is infinite and the bound says nothing.
-- **Chernoff needs $M(t)$ finite for some $t > 0$.** A tail that thins only like a power (claim sizes, city populations) has $M(t)$ infinite for every $t > 0$; only the moment form is left.
+- **Non-negative, or take a size first.** The proof needs $`f \ge a\mathbf{1}_A`$, which fails where $`f`$ is negative. For a signed $`f`$, use $`\lvert f \rvert`$ or $`\lvert f \rvert^p`$.
+- **Measurable with respect to $`\mathcal{F}`$.** Otherwise the set $`A`$ has no size. Continuity is not needed: the indicator of the rational points, which has no Riemann integral, has integral 0, so every level set above 0 has size 0.
+- **A threshold above 0.** At $`a = 0`$ the right side divides by zero.
+- **Chebyshev needs a finite $`\int X^2 \, dP`$.** Otherwise the variance is infinite and the bound says nothing.
+- **Chernoff needs $`M(t)`$ finite for some $`t > 0`$.** A tail that thins only like a power (claim sizes, city populations) has $`M(t)`$ infinite for every $`t > 0`$; only the moment form is left.
 
 ---
 
@@ -82,35 +90,39 @@ $$P(X \ge a) \;\le\; e^{-ta} M(t), \qquad\text{so}\qquad P(X \ge a) \;\le\; \inf
 
 ### Step 0: a rectangle fits under the function
 
-On the set $A$ where $f \ge a$, the function is at least $a$. Off $A$, it is at least 0. So $f$ sits above the simple function $a\mathbf{1}_A$ everywhere: a rectangle of height $a$ on the base $A$. The integral respects that order, and the rectangle's integral is height times base. That is the whole proof. Every inequality on this card is this one, applied to a new non-negative function.
+On the set $`A`$ where $`f \ge a`$, the function is at least $`a`$. Off $`A`$, it is at least 0. So $`f`$ sits above the simple function $`a\mathbf{1}_A`$ everywhere: a rectangle of height $`a`$ on the base $`A`$. The integral respects that order, and the rectangle's integral is height times base. That is the whole proof. Every inequality on this card is this one, applied to a new non-negative function.
 
 ### Step 1: Markov, from two properties of the integral
 
-The integral of the simple function $a\mathbf{1}_A$ is $a\,\mu(A)$: value times size of piece ([The integral of a simple function](01-integral-of-a-simple-function.md)). The integral of non-negative functions is monotone: if $g \le f$ at every point, then $\int g \, d\mu \le \int f \, d\mu$ ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)). Together:
+The integral of the simple function $`a\mathbf{1}_A`$ is $`a\,\mu(A)`$: value times size of piece ([The integral of a simple function](01-integral-of-a-simple-function.md)). The integral of non-negative functions is monotone: if $`g \le f`$ at every point, then $`\int g \, d\mu \le \int f \, d\mu`$ ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)). Together:
 
-$$a\,\mu(A) \;=\; \int a\mathbf{1}_A \, d\mu \;\le\; \int f \, d\mu.$$
+```math
+a\,\mu(A) \;=\; \int a\mathbf{1}_A \, d\mu \;\le\; \int f \, d\mu.
+```
 
-Divide by $a$. Nothing used a density, a finite measure, continuity, or the real line.
+Divide by $`a`$. Nothing used a density, a finite measure, continuity, or the real line.
 
-On the river: $A$ runs from 0.3419 to 0.6581 km, length $\sqrt{0.1}$ = 0.316228. The rectangle has area 0.9 × 0.316228 = 0.284605, below the 0.666667 under the curve. So $\lambda(A) \le 0.666667 / 0.9$ = 0.740741. The ceiling is over twice the truth: the rectangle wastes the area outside $A$ and above 0.9 m inside it.
+On the river: $`A`$ runs from 0.3419 to 0.6581 km, length $`\sqrt{0.1}`$ = 0.316228. The rectangle has area 0.9 × 0.316228 = 0.284605, below the 0.666667 under the curve. So $`\lambda(A) \le 0.666667 / 0.9`$ = 0.740741. The ceiling is over twice the truth: the rectangle wastes the area outside $`A`$ and above 0.9 m inside it.
 
 ### Step 2: Chebyshev is Markov on the squared distance
 
-Put $f = (X - m)^2$. It is non-negative, and measurable because squaring and subtracting a constant keep measurability. For $\varepsilon > 0$, the sets $\{\lvert X - m \rvert \ge \varepsilon\}$ and $\{(X - m)^2 \ge \varepsilon^2\}$ are the same set. Markov at the level $\varepsilon^2$ gives
+Put $`f = (X - m)^2`$. It is non-negative, and measurable because squaring and subtracting a constant keep measurability. For $`\varepsilon > 0`$, the sets $`\{\lvert X - m \rvert \ge \varepsilon\}`$ and $`\{(X - m)^2 \ge \varepsilon^2\}`$ are the same set. Markov at the level $`\varepsilon^2`$ gives
 
-$$P\big(\lvert X - m \rvert \ge \varepsilon\big) \;\le\; \frac{1}{\varepsilon^2} \int (X - m)^2 \, dP \;=\; \frac{\sigma^2}{\varepsilon^2}.$$
+```math
+P\big(\lvert X - m \rvert \ge \varepsilon\big) \;\le\; \frac{1}{\varepsilon^2} \int (X - m)^2 \, dP \;=\; \frac{\sigma^2}{\varepsilon^2}.
+```
 
-A finite $\int X^2 \, dP$ makes $m$ and $\sigma^2$ finite, and linearity ([Integrable functions](04-integrable-functions-and-l1.md)) gives $\sigma^2 = \int X^2 \, dP - m^2$.
+A finite $`\int X^2 \, dP`$ makes $`m`$ and $`\sigma^2`$ finite, and linearity ([Integrable functions](04-integrable-functions-and-l1.md)) gives $`\sigma^2 = \int X^2 \, dP - m^2`$.
 
-On the river: $\int d^2 \, d\lambda = \int 16x^2(1 - x)^2 \, dx = 8/15$, so $\sigma^2 = 8/15 - 4/9 = 4/45$ = 0.088889. At $\varepsilon = 0.5$ the bound is 0.088889 / 0.25 = 0.355556. The true value is $1 - \sqrt{5/6}$ = 0.087129: the depth never exceeds 1 m, so the whole event is the shallow side, below 1/6 m.
+On the river: $`\int d^2 \, d\lambda = \int 16x^2(1 - x)^2 \, dx = 8/15`$, so $`\sigma^2 = 8/15 - 4/9 = 4/45`$ = 0.088889. At $`\varepsilon = 0.5`$ the bound is 0.088889 / 0.25 = 0.355556. The true value is $`1 - \sqrt{5/6}`$ = 0.087129: the depth never exceeds 1 m, so the whole event is the shallow side, below 1/6 m.
 
-A one-sided question can use Markov on a different non-negative function. Shallow water is where $1 - d$ is large. Since $1 - d \ge 0$ with integral 1/3, $P(d \le 1/6) = P(1 - d \ge 5/6) \le (1/3)/(5/6)$ = 0.4. Markov on $d$ itself cannot answer it: it bounds how often $d$ is large, never how often it is small.
+A one-sided question can use Markov on a different non-negative function. Shallow water is where $`1 - d`$ is large. Since $`1 - d \ge 0`$ with integral 1/3, $`P(d \le 1/6) = P(1 - d \ge 5/6) \le (1/3)/(5/6)`$ = 0.4. Markov on $`d`$ itself cannot answer it: it bounds how often $`d`$ is large, never how often it is small.
 
 ### Step 3: any increasing function gives a bound, and the exponential is the Chernoff bound
 
-If $\varphi$ is non-negative and increasing, then $X \ge a$ forces $\varphi(X) \ge \varphi(a)$, and Markov applied to $\varphi(X)$ gives $P(X \ge a) \le \int \varphi(X) \, dP / \varphi(a)$. The power $\varphi(x) = x^p$ gives the moment form. The exponential $\varphi(x) = e^{tx}$ with $t > 0$ gives $P(X \ge a) \le e^{-ta} M(t)$. Every $t$ gives a valid bound; the best is the smallest.
+If $`\varphi`$ is non-negative and increasing, then $`X \ge a`$ forces $`\varphi(X) \ge \varphi(a)`$, and Markov applied to $`\varphi(X)`$ gives $`P(X \ge a) \le \int \varphi(X) \, dP / \varphi(a)`$. The power $`\varphi(x) = x^p`$ gives the moment form. The exponential $`\varphi(x) = e^{tx}`$ with $`t > 0`$ gives $`P(X \ge a) \le e^{-ta} M(t)`$. Every $`t`$ gives a valid bound; the best is the smallest.
 
-On the river, $M(t) = \int_0^1 e^{4tx(1 - x)} \, dx$. The best $t$ for $a = 0.9$ is 4.907, and the bound is 0.652368, better than Markov's 0.740741. The moment bounds $\int d^p \, d\lambda / 0.9^p$ for $p$ = 1 to 8 are 0.7407, 0.6584, 0.6271, 0.6193, 0.6256, 0.6416, 0.6654, 0.6958. The best, 0.6193 at $p = 4$, beats Chernoff, and always will: the exponential is a weighted sum of powers, so its bound cannot beat the best moment bound (Corollary 2 in the detailed proof). Chernoff is used anyway because $M$ factorises over sums of independent pieces.
+On the river, $`M(t) = \int_0^1 e^{4tx(1 - x)} \, dx`$. The best $`t`$ for $`a = 0.9`$ is 4.907, and the bound is 0.652368, better than Markov's 0.740741. The moment bounds $`\int d^p \, d\lambda / 0.9^p`$ for $`p`$ = 1 to 8 are 0.7407, 0.6584, 0.6271, 0.6193, 0.6256, 0.6416, 0.6654, 0.6958. The best, 0.6193 at $`p = 4`$, beats Chernoff, and always will: the exponential is a weighted sum of powers, so its bound cannot beat the best moment bound (Corollary 2 in the detailed proof). Chernoff is used anyway because $`M`$ factorises over sums of independent pieces.
 
 Chernoff does not always beat Markov. Near the mean it does worse:
 
@@ -125,42 +137,42 @@ xychart-beta
     line [0.99, 0.96, 0.89, 0.79, 0.65, 0.46]
 ```
 
-Orange: the true probability $\sqrt{1 - a}$. Green: Markov's ceiling $(2/3)/a$. Dark blue: the best Chernoff ceiling. Markov is lower up to 0.85 m; from 0.90 m Chernoff is lower, and at 0.95 m it gives 0.46 against Markov's 0.70.
+Orange: the true probability $`\sqrt{1 - a}`$. Green: Markov's ceiling $`(2/3)/a`$. Dark blue: the best Chernoff ceiling. Markov is lower up to 0.85 m; from 0.90 m Chernoff is lower, and at 0.95 m it gives 0.46 against Markov's 0.70.
 
-The lower tail works the same way with $e^{-tX}$: $P(d \le 1/6) \le e^{t/6} M(-t)$, best at $t$ = 6.791, giving 0.251768. Of the three ceilings on grounding, Markov on $1 - d$ gives 0.4, Chebyshev 0.355556 and Chernoff 0.251768, against the truth 0.087129.
+The lower tail works the same way with $`e^{-tX}`$: $`P(d \le 1/6) \le e^{t/6} M(-t)`$, best at $`t`$ = 6.791, giving 0.251768. Of the three ceilings on grounding, Markov on $`1 - d`$ gives 0.4, Chebyshev 0.355556 and Chernoff 0.251768, against the truth 0.087129.
 
 ### Step 4: a function with integral zero is zero almost everywhere
 
-Markov turns "integral zero" into "zero except on a set of size zero", written a.e. Let $g \ge 0$ with $\int g \, d\mu = 0$. For each whole number $n$, Markov at $a = 1/n$ gives $\mu(\{g \ge 1/n\}) \le n \cdot 0 = 0$. The set where $g > 0$ is the union of these countably many sets, so its measure is at most the sum of their measures, 0. So a random variable with variance 0 equals its mean almost surely (take $g = (X - m)^2$), and Step 5 reads off when Markov is an equality.
+Markov turns "integral zero" into "zero except on a set of size zero", written a.e. Let $`g \ge 0`$ with $`\int g \, d\mu = 0`$. For each whole number $`n`$, Markov at $`a = 1/n`$ gives $`\mu(\{g \ge 1/n\}) \le n \cdot 0 = 0`$. The set where $`g > 0`$ is the union of these countably many sets, so its measure is at most the sum of their measures, 0. So a random variable with variance 0 equals its mean almost surely (take $`g = (X - m)^2`$), and Step 5 reads off when Markov is an equality.
 
 ### Step 5: each inequality is tight for some law
 
-Markov is an equality exactly when no area is wasted: $f = a\mathbf{1}_A$ almost everywhere, since $f - a\mathbf{1}_A \ge 0$ then has integral 0 and Step 4 applies. For the river's numbers, take a channel 0.9 m deep for the first 20/27 km and dry after. Its integral is 0.9 × 20/27 = 2/3, as for the river, and it reaches 0.9 m on 20/27 = 0.740741 km, exactly the bound. No smaller constant can replace $1/a$.
+Markov is an equality exactly when no area is wasted: $`f = a\mathbf{1}_A`$ almost everywhere, since $`f - a\mathbf{1}_A \ge 0`$ then has integral 0 and Step 4 applies. For the river's numbers, take a channel 0.9 m deep for the first 20/27 km and dry after. Its integral is 0.9 × 20/27 = 2/3, as for the river, and it reaches 0.9 m on 20/27 = 0.740741 km, exactly the bound. No smaller constant can replace $`1/a`$.
 
-Chebyshev is tight when $X - m$ takes only the values $-\varepsilon$, 0 and $\varepsilon$. For the river's mean 2/3 and variance 4/45 at $\varepsilon = 0.5$: depth 1/6 m on 8/45 km, 2/3 m on 29/45 km, and 7/6 m on 8/45 km. Its mean is 2/3, its variance is 2 × 8/45 × 0.25 = 4/45, and the probability of landing at least 0.5 m from the mean is 16/45 = 0.355556, the bound exactly. The equality needs the "at least": the probability of landing more than 0.5 m away is 0.
+Chebyshev is tight when $`X - m`$ takes only the values $`-\varepsilon`$, 0 and $`\varepsilon`$. For the river's mean 2/3 and variance 4/45 at $`\varepsilon = 0.5`$: depth 1/6 m on 8/45 km, 2/3 m on 29/45 km, and 7/6 m on 8/45 km. Its mean is 2/3, its variance is 2 × 8/45 × 0.25 = 4/45, and the probability of landing at least 0.5 m from the mean is 16/45 = 0.355556, the bound exactly. The equality needs the "at least": the probability of landing more than 0.5 m away is 0.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space. For non-negative measurable functions the integral is monotone ($0 \le g \le f$ implies $\int g \, d\mu \le \int f \, d\mu$) and gives a simple function its value times the size of its piece: $\int a\mathbf{1}_A \, d\mu = a\,\mu(A)$ ([The integral of a simple function](01-integral-of-a-simple-function.md), [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)).
+**Setting.** $`(\Omega, \mathcal{F}, \mu)`$ is a measure space. For non-negative measurable functions the integral is monotone ($`0 \le g \le f`$ implies $`\int g \, d\mu \le \int f \, d\mu`$) and gives a simple function its value times the size of its piece: $`\int a\mathbf{1}_A \, d\mu = a\,\mu(A)`$ ([The integral of a simple function](01-integral-of-a-simple-function.md), [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)).
 
-**Theorem 1 (Markov).** Let $f : \Omega \to [0, \infty]$ be measurable with respect to $\mathcal{F}$ and $a > 0$. Then $\mu(\{f \ge a\}) \le a^{-1} \int f \, d\mu$. *Proof.* $A = \{f \ge a\} = f^{-1}([a, \infty])$ is in $\mathcal{F}$ by measurability. At $\omega \in A$, $a\mathbf{1}_A(\omega) = a \le f(\omega)$; at $\omega \notin A$, $a\mathbf{1}_A(\omega) = 0 \le f(\omega)$. By monotonicity and the simple-function integral, $a\,\mu(A) \le \int f \, d\mu$. Divide by $a > 0$ (if $\int f \, d\mu = \infty$ the statement holds trivially).
+**Theorem 1 (Markov).** Let $`f : \Omega \to [0, \infty]`$ be measurable with respect to $`\mathcal{F}`$ and $`a > 0`$. Then $`\mu(\{f \ge a\}) \le a^{-1} \int f \, d\mu`$. *Proof.* $`A = \{f \ge a\} = f^{-1}([a, \infty])`$ is in $`\mathcal{F}`$ by measurability. At $`\omega \in A`$, $`a\mathbf{1}_A(\omega) = a \le f(\omega)`$; at $`\omega \notin A`$, $`a\mathbf{1}_A(\omega) = 0 \le f(\omega)`$. By monotonicity and the simple-function integral, $`a\,\mu(A) \le \int f \, d\mu`$. Divide by $`a > 0`$ (if $`\int f \, d\mu = \infty`$ the statement holds trivially).
 
-**Corollary 1 (moments and increasing functions).** If $\varphi : [0, \infty] \to [0, \infty]$ is increasing and Borel measurable with $\varphi(a) > 0$, and $f \ge 0$ is measurable, then $\{f \ge a\} \subseteq \{\varphi(f) \ge \varphi(a)\}$, so $\mu(\{f \ge a\}) \le \varphi(a)^{-1} \int \varphi(f) \, d\mu$ by Theorem 1 applied to $\varphi \circ f$, which is measurable as a composition. With $\varphi(y) = y^p$ and $f$ replaced by $\lvert f \rvert$, this is the moment form.
+**Corollary 1 (moments and increasing functions).** If $`\varphi : [0, \infty] \to [0, \infty]`$ is increasing and Borel measurable with $`\varphi(a) > 0`$, and $`f \ge 0`$ is measurable, then $`\{f \ge a\} \subseteq \{\varphi(f) \ge \varphi(a)\}`$, so $`\mu(\{f \ge a\}) \le \varphi(a)^{-1} \int \varphi(f) \, d\mu`$ by Theorem 1 applied to $`\varphi \circ f`$, which is measurable as a composition. With $`\varphi(y) = y^p`$ and $`f`$ replaced by $`\lvert f \rvert`$, this is the moment form.
 
-**Theorem 2 (Chebyshev).** Let $P$ be a probability measure and $\int X^2 \, dP < \infty$. Since $\lvert X \rvert \le (1 + X^2)/2$, $X$ is integrable and $m = \int X \, dP$ is finite. $(X - m)^2$ is measurable and non-negative, and $(X - m)^2 \le 2X^2 + 2m^2$ makes its integral $\sigma^2$ finite. For $\varepsilon > 0$, $\{\lvert X - m \rvert \ge \varepsilon\} = \{(X - m)^2 \ge \varepsilon^2\}$, because squaring is increasing on `[0, ∞)`. Theorem 1 with $f = (X - m)^2$ and $a = \varepsilon^2$ gives the result.
+**Theorem 2 (Chebyshev).** Let $`P`$ be a probability measure and $`\int X^2 \, dP < \infty`$. Since $`\lvert X \rvert \le (1 + X^2)/2`$, $`X`$ is integrable and $`m = \int X \, dP`$ is finite. $`(X - m)^2`$ is measurable and non-negative, and $`(X - m)^2 \le 2X^2 + 2m^2`$ makes its integral $`\sigma^2`$ finite. For $`\varepsilon > 0`$, $`\{\lvert X - m \rvert \ge \varepsilon\} = \{(X - m)^2 \ge \varepsilon^2\}`$, because squaring is increasing on `[0, ∞)`. Theorem 1 with $`f = (X - m)^2`$ and $`a = \varepsilon^2`$ gives the result.
 
-**Theorem 3 (Chernoff).** Let $t \ge 0$ with $M(t) = \int e^{tX} \, dP < \infty$. If $t > 0$, $e^{tX} \ge 0$ is measurable and $\{X \ge a\} \subseteq \{e^{tX} \ge e^{ta}\}$, so Theorem 1 gives $P(X \ge a) \le e^{-ta} M(t)$. If $t = 0$ the right side is 1, which bounds any probability. Taking the infimum over all such $t$ keeps the bound.
+**Theorem 3 (Chernoff).** Let $`t \ge 0`$ with $`M(t) = \int e^{tX} \, dP < \infty`$. If $`t > 0`$, $`e^{tX} \ge 0`$ is measurable and $`\{X \ge a\} \subseteq \{e^{tX} \ge e^{ta}\}`$, so Theorem 1 gives $`P(X \ge a) \le e^{-ta} M(t)`$. If $`t = 0`$ the right side is 1, which bounds any probability. Taking the infimum over all such $`t`$ keeps the bound.
 
-**Corollary 2 (moments beat Chernoff for $X \ge 0$).** Let $X \ge 0$, $a > 0$, $t > 0$, and $b = \inf_{k \ge 0} a^{-k}\int X^k \, dP$ over whole numbers $k$ (the term $k = 0$ is 1). By monotone convergence ([The monotone convergence theorem](03-monotone-convergence-theorem.md)) the integral of the series $e^{tX} = \sum_k t^k X^k / k!$ is the sum of the integrals, so $M(t) = \sum_k \frac{(ta)^k}{k!} \cdot a^{-k}\int X^k \, dP \ge b \sum_k \frac{(ta)^k}{k!} = b\,e^{ta}$. Hence $e^{-ta}M(t) \ge b$ for every $t$: the best moment bound is at least as good as the best Chernoff bound.
+**Corollary 2 (moments beat Chernoff for $`X \ge 0`$).** Let $`X \ge 0`$, $`a > 0`$, $`t > 0`$, and $`b = \inf_{k \ge 0} a^{-k}\int X^k \, dP`$ over whole numbers $`k`$ (the term $`k = 0`$ is 1). By monotone convergence ([The monotone convergence theorem](03-monotone-convergence-theorem.md)) the integral of the series $`e^{tX} = \sum_k t^k X^k / k!`$ is the sum of the integrals, so $`M(t) = \sum_k \frac{(ta)^k}{k!} \cdot a^{-k}\int X^k \, dP \ge b \sum_k \frac{(ta)^k}{k!} = b\,e^{ta}`$. Hence $`e^{-ta}M(t) \ge b`$ for every $`t`$: the best moment bound is at least as good as the best Chernoff bound.
 
-**Lemma (zero integral).** If $g \ge 0$ is measurable and $\int g \, d\mu = 0$, then $\mu(\{g > 0\}) = 0$. *Proof.* $\{g > 0\} = \bigcup_{n \ge 1} \{g \ge 1/n\}$, and Theorem 1 gives each set measure at most $n \cdot 0 = 0$. Countable subadditivity of $\mu$ finishes it. With $g = (X - m)^2$: variance 0 implies $X = m$ almost surely.
+**Lemma (zero integral).** If $`g \ge 0`$ is measurable and $`\int g \, d\mu = 0`$, then $`\mu(\{g > 0\}) = 0`$. *Proof.* $`\{g > 0\} = \bigcup_{n \ge 1} \{g \ge 1/n\}`$, and Theorem 1 gives each set measure at most $`n \cdot 0 = 0`$. Countable subadditivity of $`\mu`$ finishes it. With $`g = (X - m)^2`$: variance 0 implies $`X = m`$ almost surely.
 
-**Theorem 4 (equality).** Suppose $\int f \, d\mu < \infty$. Then $a\,\mu(\{f \ge a\}) = \int f \, d\mu$ exactly when $f = a\mathbf{1}_{\{f \ge a\}}$ almost everywhere. *Proof.* Put $A = \{f \ge a\}$ and $g = f - a\mathbf{1}_A \ge 0$. Both integrals are finite, so linearity gives $\int g \, d\mu = \int f \, d\mu - a\,\mu(A)$, which is 0 exactly when $g = 0$ a.e., by the Lemma one way and because a null set carries no integral the other. For Chebyshev, equality holds exactly when $(X - m)^2 = \varepsilon^2 \mathbf{1}_{\{\lvert X - m \rvert \ge \varepsilon\}}$ almost surely, that is $X - m \in \{-\varepsilon, 0, \varepsilon\}$ almost surely. Both are attained by the step laws of Step 5, so neither constant can be lowered.
+**Theorem 4 (equality).** Suppose $`\int f \, d\mu < \infty`$. Then $`a\,\mu(\{f \ge a\}) = \int f \, d\mu`$ exactly when $`f = a\mathbf{1}_{\{f \ge a\}}`$ almost everywhere. *Proof.* Put $`A = \{f \ge a\}`$ and $`g = f - a\mathbf{1}_A \ge 0`$. Both integrals are finite, so linearity gives $`\int g \, d\mu = \int f \, d\mu - a\,\mu(A)`$, which is 0 exactly when $`g = 0`$ a.e., by the Lemma one way and because a null set carries no integral the other. For Chebyshev, equality holds exactly when $`(X - m)^2 = \varepsilon^2 \mathbf{1}_{\{\lvert X - m \rvert \ge \varepsilon\}}`$ almost surely, that is $`X - m \in \{-\varepsilon, 0, \varepsilon\}`$ almost surely. Both are attained by the step laws of Step 5, so neither constant can be lowered.
 
 </details>
 
-A second road to Markov goes through the layer-cake formula $\int f \, d\mu = \int_0^\infty \mu(\{f \ge s\}) \, ds$: the integrand never increases in $s$, so the part from 0 to $a$ alone is at least $a\,\mu(\{f \ge a\})$. That formula needs Fubini's theorem and is proved on [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
+A second road to Markov goes through the layer-cake formula $`\int f \, d\mu = \int_0^\infty \mu(\{f \ge s\}) \, ds`$: the integrand never increases in $`s`$, so the part from 0 to $`a`$ alone is at least $`a\,\mu(\{f \ge a\})`$. That formula needs Fubini's theorem and is proved on [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
 
 ---
 
@@ -168,14 +180,14 @@ A second road to Markov goes through the layer-cake formula $\int f \, d\mu = \i
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average depth | $\int_0^1 (4x - 4x^2)\,dx$ = 4/2 − 4/3 | 2/3 = 0.666667 m |
-| average squared depth | $\int_0^1 (16x^2 - 32x^3 + 16x^4)\,dx$ = 16/3 − 8 + 16/5 | 8/15 square metres |
+| average depth | $`\int_0^1 (4x - 4x^2)\,dx`$ = 4/2 − 4/3 | 2/3 = 0.666667 m |
+| average squared depth | $`\int_0^1 (16x^2 - 32x^3 + 16x^4)\,dx`$ = 16/3 − 8 + 16/5 | 8/15 square metres |
 | variance | 8/15 − (2/3)^2 = 24/45 − 20/45 | 4/45 = 0.088889 square metres |
-| where the depth reaches 0.9 m | $4x(1 - x) = 0.9$ at $x = (1 \mp \sqrt{0.1})/2$ | 0.3419 to 0.6581 km |
-| true $P(d \ge 0.9)$ | $\sqrt{0.1}$ | 0.316228 |
+| where the depth reaches 0.9 m | $`4x(1 - x) = 0.9`$ at $`x = (1 \mp \sqrt{0.1})/2`$ | 0.3419 to 0.6581 km |
+| true $`P(d \ge 0.9)`$ | $`\sqrt{0.1}`$ | 0.316228 |
 | Markov ceiling | (2/3) / 0.9 = 20/27 | **0.740741** |
-| where the depth is below 1/6 m | $4x(1 - x) = 1/6$ at $x = (1 \mp \sqrt{5/6})/2$ | two ends, total $1 - \sqrt{5/6}$ |
-| true $P(\lvert d - 2/3 \rvert \ge 0.5)$ | $1 - \sqrt{5/6}$ | 0.087129 |
+| where the depth is below 1/6 m | $`4x(1 - x) = 1/6`$ at $`x = (1 \mp \sqrt{5/6})/2`$ | two ends, total $`1 - \sqrt{5/6}`$ |
+| true $`P(\lvert d - 2/3 \rvert \ge 0.5)`$ | $`1 - \sqrt{5/6}`$ | 0.087129 |
 | Chebyshev ceiling | (4/45) / 0.5^2 = 16/45 | **0.355556** |
 
 The authority's one number guarantees that at most 74% of moorings sit in 0.9 m of water or more. With the variance, at most 36% lie 0.5 m or more from the average, and that includes every mooring that grounds a keel of 1/6 m. The real shares are 32% and 9%. Each ceiling holds for every river with the same average, or the same average and variance, and a channel of Step 5 reaches it. The Chebyshev channel spends half its tail on the deep side, so for grounding alone 36% is a valid ceiling but not a reachable one.
@@ -184,15 +196,15 @@ The authority's one number guarantees that at most 74% of moorings sit in 0.9 m 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Markov on the signed height $d - 2/3$ at 0.2 m | a "bound" of 0.000000, against a true 0.365148 | the function goes negative, so the rectangle no longer fits under it |
-| Chebyshev with $\sigma^2/\varepsilon$ instead of $\sigma^2/\varepsilon^2$, on the tight law | 0.177778, below its true tail 0.355556 | the level for the squared distance is $\varepsilon^2$, not $\varepsilon$ |
-| Markov on $d$ itself for the shallow side, $P(d \le 1/6)$ | 4.000000 | Markov caps upper tails; use $1 - d$, which gives 0.400000 |
+| Markov on the signed height $`d - 2/3`$ at 0.2 m | a "bound" of 0.000000, against a true 0.365148 | the function goes negative, so the rectangle no longer fits under it |
+| Chebyshev with $`\sigma^2/\varepsilon`$ instead of $`\sigma^2/\varepsilon^2`$, on the tight law | 0.177778, below its true tail 0.355556 | the level for the squared distance is $`\varepsilon^2`$, not $`\varepsilon`$ |
+| Markov on $`d`$ itself for the shallow side, $`P(d \le 1/6)`$ | 4.000000 | Markov caps upper tails; use $`1 - d`$, which gives 0.400000 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code checks one river and two step-shaped channels; that the inequalities hold for every measurable function on every measure space rests on the proof. Every tail and moment is reached three ways: exactly (fractions for moments, square roots for tails), by counting the size of each level set on a grid of a million cells, and by mooring 200000 boats at random with a SplitMix64 generator seeded 20260929. The Chernoff integral $M(t)$ is computed by Simpson's rule and by its power series $\sum_k (4t)^k k!/(2k+1)!$, and the best $t$ by a golden-section search (repeatedly shrinking a bracket around the minimum). The tight laws are summed piece by piece in exact fractions, and each breaks row is printed. The Rust writes its own fraction type on 64-bit integers and the same generator bit for bit.
+The code checks one river and two step-shaped channels; that the inequalities hold for every measurable function on every measure space rests on the proof. Every tail and moment is reached three ways: exactly (fractions for moments, square roots for tails), by counting the size of each level set on a grid of a million cells, and by mooring 200000 boats at random with a SplitMix64 generator seeded 20260929. The Chernoff integral $`M(t)`$ is computed by Simpson's rule and by its power series $`\sum_k (4t)^k k!/(2k+1)!`$, and the best $`t`$ by a golden-section search (repeatedly shrinking a bracket around the minimum). The tight laws are summed piece by piece in exact fractions, and each breaks row is printed. The Rust writes its own fraction type on 64-bit integers and the same generator bit for bit.
 
 ### Python
 
@@ -507,9 +519,9 @@ The two outputs are identical line for line.
 
 Lean proves Markov, Chebyshev and Chernoff for every case the card allows, and checks the worked numbers in exact fractions.
 
-- Take any measure space, a measurable $f$ with values in `[0, ∞]`, and a number $a > 0$. Then $\mu(\{f \ge a\}) \le \frac{1}{a} \int f \, d\mu$: Markov's inequality.
-- Take a probability measure $P$, a random variable $X$ with $\int X^2 \, dP$ finite, and $\varepsilon > 0$. Then $P(\lvert X - m \rvert \ge \varepsilon) \le \sigma^2 / \varepsilon^2$: Chebyshev's inequality.
-- Take a probability measure $P$, a random variable $X$, any level $a$, and $t \ge 0$ with $M(t)$ finite. Then $P(X \ge a) \le e^{-ta} M(t)$: the Chernoff bound.
+- Take any measure space, a measurable $`f`$ with values in `[0, ∞]`, and a number $`a > 0`$. Then $`\mu(\{f \ge a\}) \le \frac{1}{a} \int f \, d\mu`$: Markov's inequality.
+- Take a probability measure $`P`$, a random variable $`X`$ with $`\int X^2 \, dP`$ finite, and $`\varepsilon > 0`$. Then $`P(\lvert X - m \rvert \ge \varepsilon) \le \sigma^2 / \varepsilon^2`$: Chebyshev's inequality.
+- Take a probability measure $`P`$, a random variable $`X`$, any level $`a`$, and $`t \ge 0`$ with $`M(t)`$ finite. Then $`P(X \ge a) \le e^{-ta} M(t)`$: the Chernoff bound.
 - The average depth is 2/3 m, the variance 4/45, the Markov ceiling 20/27 and the Chebyshev ceiling 16/45.
 - Markov on 1 − d caps the shallow side at (1/3) / (5/6), which is 2/5.
 - A channel 0.9 m deep on 20/27 km has integral 2/3, the river's average depth.
@@ -615,7 +627,7 @@ example : ((4 : ℚ) / 45) / (1 / 2) = 8 / 45 ∧ (8 : ℚ) / 45 < 16 / 45 := by
 > [!TIP]
 > **Try changing**
 > - **Another seed.** Guess first: does the sampled column still pass with seed 7? Yes. The sampled tail at 0.9 m moves to 0.314590 against the exact 0.316228, well inside the allowance of four standard errors.
-> - **A far threshold.** Guess first: add 0.99 to the thresholds, by changing `range(14, 20)` to `range(14, 21)` and `x = k / 20` to `x = min(k / 20, 0.99)`. The true tail is 0.1 and Markov gives 0.673401. The best Chernoff $t$ lies beyond the search range 0 to 40, so the search stops at its edge and prints 0.209042: valid, since every $t$ gives a ceiling, but not the best. A range of 0 to 200 finds 0.206637.
+> - **A far threshold.** Guess first: add 0.99 to the thresholds, by changing `range(14, 20)` to `range(14, 21)` and `x = k / 20` to `x = min(k / 20, 0.99)`. The true tail is 0.1 and Markov gives 0.673401. The best Chernoff $`t`$ lies beyond the search range 0 to 40, so the search stops at its edge and prints 0.209042: valid, since every $`t`$ gives a ceiling, but not the best. A range of 0 to 200 finds 0.206637.
 > - **A channel with thinner edges.** Guess first: change the tight Chebyshev weights to 7/45, 31/45, 7/45. The run stops: the variance becomes 7/90, not 4/45. The new channel is still tight for its own variance: its tail 14/45 equals (7/90)/0.25.
 
 ---
@@ -626,16 +638,16 @@ example : ((4 : ℚ) / 45) / (1 / 2) = 8 / 45 ∧ (8 : ℚ) / 45 < 16 / 45 := by
 > **Reading the ceiling as an estimate.** Markov says at most 0.741 of moorings reach 0.9 m; the true share is 0.316. The bound is exact for the 20/27 km channel and loose for this river. It answers "how bad can it be, given only the average?", not "how bad is it?".
 >
 > - **Applying Markov to a signed quantity.** Depth above average has integral 0, and Markov would claim it never reaches 0.2 m; it does on 0.365148 km.
-> - **Forgetting to square $\varepsilon$.** On the tight channel, $\sigma^2/\varepsilon$ gives 0.177778, below the true 0.355556.
-> - **Using Markov for a lower tail.** On $d$ it gives 4.000000 for the shallow side; the right move is Markov on $1 - d$, giving 0.400000.
+> - **Forgetting to square $`\varepsilon`$.** On the tight channel, $`\sigma^2/\varepsilon`$ gives 0.177778, below the true 0.355556.
+> - **Using Markov for a lower tail.** On $`d`$ it gives 4.000000 for the shallow side; the right move is Markov on $`1 - d`$, giving 0.400000.
 > - **Assuming Chernoff always wins.** At 0.70 m it gives 0.993607 against Markov's 0.952381; it pays off only far from the mean.
 
 ---
 
 ## Where you meet it in real life
 
-- **The weak law of large numbers.** Chebyshev applied to an average of $n$ independent readings, whose variance is $\sigma^2/n$, shows the average settles near the mean ([The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md)).
-- **Convergence of functions.** If $\int \lvert f_n - f \rvert^p \, d\mu$ shrinks to 0, the moment form makes the measure of the set where $\lvert f_n - f \rvert \ge a$ shrink to 0, for each $a > 0$: a small integral of the gap forces the gap to be small except on a set of small measure.
+- **The weak law of large numbers.** Chebyshev applied to an average of $`n`$ independent readings, whose variance is $`\sigma^2/n`$, shows the average settles near the mean ([The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md)).
+- **Convergence of functions.** If $`\int \lvert f_n - f \rvert^p \, d\mu`$ shrinks to 0, the moment form makes the measure of the set where $`\lvert f_n - f \rvert \ge a`$ shrink to 0, for each $`a > 0`$: a small integral of the gap forces the gap to be small except on a set of small measure.
 - **Differentiating integrals.** A Markov-type bound on the Hardy–Littlewood maximal function (at each point, the largest average of the function over intervals around it) is the key estimate behind [The Lebesgue differentiation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md).
 - **Algorithms and risk.** Randomised algorithms bound their chance of failure with Chernoff; the probability wing does this for sums of coin flips ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)).
 

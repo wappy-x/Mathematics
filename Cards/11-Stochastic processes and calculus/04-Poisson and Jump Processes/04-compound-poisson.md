@@ -35,39 +35,43 @@ One line: the running total, a sample path (one run of the process drawn against
 
 ## The formula
 
-Notation first, in words. Time $t$ is measured in hours. The claims counted by hour $t$ are $N(t)$, a Poisson process at rate $\lambda$, here 4 an hour ([Poisson process](01-poisson-process.md)); so $N(t)$ follows the Poisson law with mean $\lambda t$ ([Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)).
+Notation first, in words. Time $`t`$ is measured in hours. The claims counted by hour $`t`$ are $`N(t)`$, a Poisson process at rate $`\lambda`$, here 4 an hour ([Poisson process](01-poisson-process.md)); so $`N(t)`$ follows the Poisson law with mean $`\lambda t`$ ([Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)).
 
-The sizes of the first, second, third claim are $Y_1, Y_2, Y_3, \dots$, drawn independently from one claim law and independently of the arrivals. A generic claim is written $Y$, and the average claim is $\mu = E[Y]$. The total claimed by hour $t$ is
+The sizes of the first, second, third claim are $`Y_1, Y_2, Y_3, \dots`$, drawn independently from one claim law and independently of the arrivals. A generic claim is written $`Y`$, and the average claim is $`\mu = E[Y]`$. The total claimed by hour $`t`$ is
 
-$$S(t) = Y_1 + Y_2 + \dots + Y_{N(t)}, \qquad S(t) = 0 \text{ when } N(t) = 0.$$
+```math
+S(t) = Y_1 + Y_2 + \dots + Y_{N(t)}, \qquad S(t) = 0 \text{ when } N(t) = 0.
+```
 
 The number of terms is itself random. That is the whole difficulty, and the whole idea.
 
-The moment generating function of a claim is $M_Y(s) = E[e^{sY}]$, the average of e raised to the dial times the claim ([Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)). That card calls the dial $t$; here $t$ is time, so the dial is $s$, measured per dollar. The three results:
+The moment generating function of a claim is $`M_Y(s) = E[e^{sY}]`$, the average of e raised to the dial times the claim ([Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)). That card calls the dial $`t`$; here $`t`$ is time, so the dial is $`s`$, measured per dollar. The three results:
 
-$$E[S(t)] = \lambda t\,\mu, \qquad \operatorname{Var} S(t) = \lambda t\,E[Y^2], \qquad M_{S(t)}(s) = \exp\!\big(\lambda t\,(M_Y(s) - 1)\big).$$
+```math
+E[S(t)] = \lambda t\,\mu, \qquad \mathrm{Var}\, S(t) = \lambda t\,E[Y^2], \qquad M_{S(t)}(s) = \exp\!\big(\lambda t\,(M_Y(s) - 1)\big).
+```
 
 **Read it aloud:** the expected total is the expected number of claims times the average claim; the variance is the expected number of claims times the average *squared* claim; and the generating function of the total is e to the power "expected number of claims times how far the claim's generating function sits above 1".
 
-The claim law here puts chance $p_k$ on size $a_k$: 0.5 on $100, 0.3 on $500, 0.2 on $2,000. So $\mu = \sum_k p_k a_k$ = $600, $E[Y^2] = \sum_k p_k a_k^2$ = 880,000 square dollars, and $M_Y(s) = \sum_k p_k e^{s a_k}$.
+The claim law here puts chance $`p_k`$ on size $`a_k`$: 0.5 on $100, 0.3 on $500, 0.2 on $2,000. So $`\mu = \sum_k p_k a_k`$ = $600, $`E[Y^2] = \sum_k p_k a_k^2`$ = 880,000 square dollars, and $`M_Y(s) = \sum_k p_k e^{s a_k}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since the desk opened, in hours | 1 hour, or an 8-hour shift | mean, variance and exponent all grow in proportion |
-| $\lambda$ | the rate: claims per hour on average | 4 | mean, variance and exponent grow in proportion |
-| $N(t)$ | claims that have arrived by hour $t$ | Poisson, mean 4 in an hour | — |
-| $Y_i$, $Y$ | the size of claim i; a generic claim | $100, $500 or $2,000 | — |
-| $a_k$, $p_k$ | the possible claim sizes and their chances | $100, $500, $2,000; 0.5, 0.3, 0.2 | a bigger large claim moves the variance most |
-| $\mu$ | the average claim, $E[Y]$ | $600 | the mean total rises |
-| $E[Y^2]$ | the average squared claim | 880,000 | the variance rises |
-| $S(t)$ | total claimed by hour $t$ | $2,400 on average in an hour | — |
-| $s$ | the dial of a generating function, per dollar | 0.0002 | both generating functions rise, fastest through the largest claim |
-| $M_Y(s)$, $M_{S(t)}(s)$ | moment generating functions, $E[e^{sY}]$ and $E[e^{sS(t)}]$ | 1.140017 and 1.750791 | — |
-| $\kappa_k$ | the k-th cumulant: k-th derivative at 0 of the log of the generating function; the first two are mean and variance | third, for one hour: 6.5520e9 | — |
-| $n$, $S_n$ | a fixed claim count; the sum of the first n claims | 0, 1, 2…; for n = 1, one claim of $100, $500 or $2,000 | — |
-| $m$ | slots the hour is cut into | 10 to 10000 | — |
-| $x$ | a threshold for the hourly total, in dollars | $10,000 | — |
-| $z$, $y$ | shorthand for $M_Y(s)$; the variable of the exponential series, here $\lambda t z$ | $z$ = 1.140017 | — |
+| $`t`$ | time since the desk opened, in hours | 1 hour, or an 8-hour shift | mean, variance and exponent all grow in proportion |
+| $`\lambda`$ | the rate: claims per hour on average | 4 | mean, variance and exponent grow in proportion |
+| $`N(t)`$ | claims that have arrived by hour $`t`$ | Poisson, mean 4 in an hour | — |
+| $`Y_i`$, $`Y`$ | the size of claim i; a generic claim | $100, $500 or $2,000 | — |
+| $`a_k`$, $`p_k`$ | the possible claim sizes and their chances | $100, $500, $2,000; 0.5, 0.3, 0.2 | a bigger large claim moves the variance most |
+| $`\mu`$ | the average claim, $`E[Y]`$ | $600 | the mean total rises |
+| $`E[Y^2]`$ | the average squared claim | 880,000 | the variance rises |
+| $`S(t)`$ | total claimed by hour $`t`$ | $2,400 on average in an hour | — |
+| $`s`$ | the dial of a generating function, per dollar | 0.0002 | both generating functions rise, fastest through the largest claim |
+| $`M_Y(s)`$, $`M_{S(t)}(s)`$ | moment generating functions, $`E[e^{sY}]`$ and $`E[e^{sS(t)}]`$ | 1.140017 and 1.750791 | — |
+| $`\kappa_k`$ | the k-th cumulant: k-th derivative at 0 of the log of the generating function; the first two are mean and variance | third, for one hour: 6.5520e9 | — |
+| $`n`$, $`S_n`$ | a fixed claim count; the sum of the first n claims | 0, 1, 2…; for n = 1, one claim of $100, $500 or $2,000 | — |
+| $`m`$ | slots the hour is cut into | 10 to 10000 | — |
+| $`x`$ | a threshold for the hourly total, in dollars | $10,000 | — |
+| $`z`$, $`y`$ | shorthand for $`M_Y(s)`$; the variable of the exponential series, here $`\lambda t z`$ | $`z`$ = 1.140017 | — |
 
 The hourly total has the law below: exact bars, simulated line.
 
@@ -81,13 +85,13 @@ xychart-beta
     line [28.29, 14.64, 24.97, 11.63, 10.49, 4.86, 2.88, 1.17, 0.64, 0.30, 0.14]
 ```
 
-Orange bars: the exact law of $S(1)$, computed with no simulation. Green line: the share of 20000 simulated hours in each band, with a standard error of 0.32 percentage points in the first band down to 0.03 in the last, printed by the checks; every band lies within 2 standard errors of its exact bar. The law is lumpy: the $2,000–2,999 band beats the $1,000–1,999 band because one burst pipe alone lands there.
+Orange bars: the exact law of $`S(1)`$, computed with no simulation. Green line: the share of 20000 simulated hours in each band, with a standard error of 0.32 percentage points in the first band down to 0.03 in the last, printed by the checks; every band lies within 2 standard errors of its exact bar. The law is lumpy: the $2,000–2,999 band beats the $1,000–1,999 band because one burst pipe alone lands there.
 
 ### When it holds
 
 - **Arrivals form a Poisson process at a constant rate.** If the rate itself is random, 2 an hour on calm days and 6 on stormy ones, the mean survives but the variance does not: exactly 4,960,000 against the formula's 3,520,000, because the count now varies more than its mean.
 - **Claim sizes independent, with one law, and independent of the arrivals.** A storm that raises both the number and the size of claims ties them together; conditioning on the count then no longer leaves independent sizes, and all three formulas fail.
-- **The needed moments exist.** The mean needs $\mu$ finite, the variance $E[Y^2]$ finite, and the generating function needs $M_Y(s)$ finite at the dial used. A heavy-tailed claim law (the chance of a claim above a given size shrinks more slowly than any exponential as the size grows), such as a Pareto law with a finite mean, has $M_Y(s)$ infinite for every $s > 0$: the first formula still holds, the third says nothing.
+- **The needed moments exist.** The mean needs $`\mu`$ finite, the variance $`E[Y^2]`$ finite, and the generating function needs $`M_Y(s)`$ finite at the dial used. A heavy-tailed claim law (the chance of a claim above a given size shrinks more slowly than any exponential as the size grows), such as a Pareto law with a finite mean, has $`M_Y(s)`$ infinite for every $`s > 0`$: the first formula still holds, the third says nothing.
 
 ---
 
@@ -95,13 +99,15 @@ Orange bars: the exact law of $S(1)$, computed with no simulation. Green line: t
 
 ### Step 0: freeze the count, then average over it
 
-For a fixed count of $n$ claims, the total is a plain sum of $n$ independent claims, and sums are easy. The Poisson law then says how often each $n$ happens. Every result below conditions on $N(t)$, then averages over the count's law.
+For a fixed count of $`n`$ claims, the total is a plain sum of $`n`$ independent claims, and sums are easy. The Poisson law then says how often each $`n`$ happens. Every result below conditions on $`N(t)`$, then averages over the count's law.
 
 ### Step 1: the mean is count times size
 
-Given $N(t) = n$, the total is $Y_1 + \dots + Y_n$, whose mean is $n\mu$. So $E[S(t) \mid N(t)] = N(t)\,\mu$. Averaging over the count,
+Given $`N(t) = n`$, the total is $`Y_1 + \dots + Y_n`$, whose mean is $`n\mu`$. So $`E[S(t) \mid N(t)] = N(t)\,\mu`$. Averaging over the count,
 
-$$E[S(t)] = E\big[N(t)\,\mu\big] = \lambda t\,\mu.$$
+```math
+E[S(t)] = E\big[N(t)\,\mu\big] = \lambda t\,\mu.
+```
 
 One hour: 4 × $600 = $2,400. One shift: 32 × $600 = $19,200.
 
@@ -109,72 +115,86 @@ One hour: 4 × $600 = $2,400. One shift: 32 × $600 = $19,200.
 
 The law of total variance ([Conditional expectation as a projection](../../10-Measure%20and%20integration/09-Conditional%20Expectation/03-conditional-expectation-as-projection.md)) splits any variance into the average spread given the condition plus the spread of the conditional average:
 
-$$\operatorname{Var} S = E\big[\operatorname{Var}(S \mid N)\big] + \operatorname{Var}\big(E[S \mid N]\big).$$
+```math
+\mathrm{Var}\, S = E\big[\mathrm{Var}(S \mid N)\big] + \mathrm{Var}\big(E[S \mid N]\big).
+```
 
-Given $N = n$, the sizes are independent, so their variances add: $\operatorname{Var}(S \mid N) = N \operatorname{Var} Y$. The conditional mean is $N\mu$, whose variance is $\mu^2 \operatorname{Var} N$. For the Poisson law, $\operatorname{Var} N = E[N] = \lambda t$. So
+Given $`N = n`$, the sizes are independent, so their variances add: $`\mathrm{Var}(S \mid N) = N \mathrm{Var}\, Y`$. The conditional mean is $`N\mu`$, whose variance is $`\mu^2 \mathrm{Var}\, N`$. For the Poisson law, $`\mathrm{Var}\, N = E[N] = \lambda t`$. So
 
-$$\operatorname{Var} S(t) = \lambda t \operatorname{Var} Y + \lambda t\,\mu^2 = \lambda t\,(\operatorname{Var} Y + \mu^2) = \lambda t\,E[Y^2].$$
+```math
+\mathrm{Var}\, S(t) = \lambda t \mathrm{Var}\, Y + \lambda t\,\mu^2 = \lambda t\,(\mathrm{Var}\, Y + \mu^2) = \lambda t\,E[Y^2].
+```
 
 The first term is the claims' own spread: 4 × 520,000 = 2,080,000. The second is the count's spread: 4 × 360,000 = 1,440,000. Together, 3,520,000 square dollars, a standard deviation of $1,876.17. The two terms fuse into one only because a Poisson count's variance equals its mean.
 
 ### Step 3: the generating function is the Poisson law evaluated at the claim's
 
-Given $N = n$, the total is a sum of $n$ independent claims, so $e^{sS}$ is a product of $n$ independent factors $e^{sY_i}$, and the expectation of a product of independent factors is the product of their expectations:
+Given $`N = n`$, the total is a sum of $`n`$ independent claims, so $`e^{sS}`$ is a product of $`n`$ independent factors $`e^{sY_i}`$, and the expectation of a product of independent factors is the product of their expectations:
 
-$$E\big[e^{sS} \mid N = n\big] = M_Y(s)^n.$$
+```math
+E\big[e^{sS} \mid N = n\big] = M_Y(s)^n.
+```
 
-Now average over the Poisson count. Write $z$ for $M_Y(s)$:
+Now average over the Poisson count. Write $`z`$ for $`M_Y(s)`$:
 
-$$E[e^{sS}] = \sum_{n=0}^{\infty} e^{-\lambda t}\frac{(\lambda t)^n}{n!}\,z^n = e^{-\lambda t}\,e^{\lambda t z} = e^{\lambda t (z - 1)}.$$
+```math
+E[e^{sS}] = \sum_{n=0}^{\infty} e^{-\lambda t}\frac{(\lambda t)^n}{n!}\,z^n = e^{-\lambda t}\,e^{\lambda t z} = e^{\lambda t (z - 1)}.
+```
 
-The middle step is the series for the exponential, $\sum_n y^n/n! = e^y$, with $y = \lambda t z$. At $s$ = 0.0002 per dollar: $M_Y(s)$ = 1.140017, the exponent is 4 × 0.140017 = 0.560068, and $M_{S(1)}(s)$ = 1.750791.
+The middle step is the series for the exponential, $`\sum_n y^n/n! = e^y`$, with $`y = \lambda t z`$. At $`s`$ = 0.0002 per dollar: $`M_Y(s)`$ = 1.140017, the exponent is 4 × 0.140017 = 0.560068, and $`M_{S(1)}(s)`$ = 1.750791.
 
 ### Step 4: every moment falls out, and the shape smooths with time
 
-Take logarithms: $\ln M_{S(t)}(s) = \lambda t\,(M_Y(s) - 1)$. The k-th derivative of $M_Y$ at 0 is $E[Y^k]$ (the generating-function card's main fact). So the k-th derivative of $\ln M_{S(t)}$ at 0, the cumulant $\kappa_k$, is
+Take logarithms: $`\ln M_{S(t)}(s) = \lambda t\,(M_Y(s) - 1)`$. The k-th derivative of $`M_Y`$ at 0 is $`E[Y^k]`$ (the generating-function card's main fact). So the k-th derivative of $`\ln M_{S(t)}`$ at 0, the cumulant $`\kappa_k`$, is
 
-$$\kappa_k = \lambda t\,E[Y^k].$$
+```math
+\kappa_k = \lambda t\,E[Y^k].
+```
 
-The first two cumulants are the mean and the variance, so Steps 1 and 2 drop out again. The third is the third central moment, $E[(S - E S)^3]$: 4 × 1,638,000,000 = 6.5520e9 for one hour.
+The first two cumulants are the mean and the variance, so Steps 1 and 2 drop out again. The third is the third central moment, $`E[(S - E S)^3]`$: 4 × 1,638,000,000 = 6.5520e9 for one hour.
 
-Divided by the standard deviation cubed, it gives the skewness, a measure of how lopsided the law is: 0.9921 for one hour, a long right side. Every cumulant grows like $t$, so the skewness, a third cumulant over a variance to the power 1.5, falls like $1/\sqrt{t}$: 0.3508 for an 8-hour shift. Over long horizons the total looks more and more bell-shaped.
+Divided by the standard deviation cubed, it gives the skewness, a measure of how lopsided the law is: 0.9921 for one hour, a long right side. Every cumulant grows like $`t`$, so the skewness, a third cumulant over a variance to the power 1.5, falls like $`1/\sqrt{t}`$: 0.3508 for an 8-hour shift. Over long horizons the total looks more and more bell-shaped.
 
 ### Step 5: the continuous clock, as a limit of slots
 
-Cut the hour into $m$ equal slots. In each, let a claim arrive with chance $\lambda/m$, at most one per slot. The generating function is then a product of $m$ independent slot factors:
+Cut the hour into $`m`$ equal slots. In each, let a claim arrive with chance $`\lambda/m`$, at most one per slot. The generating function is then a product of $`m`$ independent slot factors:
 
-$$\Big(1 + \frac{\lambda}{m}\,(M_Y(s) - 1)\Big)^m \;\longrightarrow\; e^{\lambda (M_Y(s) - 1)} \quad \text{as } m \to \infty.$$
+```math
+\Big(1 + \frac{\lambda}{m}\,(M_Y(s) - 1)\Big)^m \;\longrightarrow\; e^{\lambda (M_Y(s) - 1)} \quad \text{as } m \to \infty.
+```
 
-It is the same limit that turns compound interest into e. The slot variance is $\lambda E[Y^2] - \lambda^2 \mu^2/m$: the slot count has variance $\lambda - \lambda^2/m$, a little below its mean, so the total's variance falls short by exactly $\lambda^2\mu^2/m$. The code prints both errors shrinking tenfold for every tenfold rise in $m$: the variance is short by 576,000 at $m$ = 10 and by 576.00 at $m$ = 10000.
+It is the same limit that turns compound interest into e. The slot variance is $`\lambda E[Y^2] - \lambda^2 \mu^2/m`$: the slot count has variance $`\lambda - \lambda^2/m`$, a little below its mean, so the total's variance falls short by exactly $`\lambda^2\mu^2/m`$. The code prints both errors shrinking tenfold for every tenfold rise in $`m`$: the variance is short by 576,000 at $`m`$ = 10 and by 576.00 at $`m`$ = 10000.
 
-Because the exponent is proportional to $t$, the generating function of a shift is that of one hour raised to the 8th power: $M_{S(8)} = M_{S(1)}^8$, 1.750791^8 = 88.282360. A product of generating functions belongs to a sum of independent pieces: the eight hours of a shift carry independent totals with one shared law.
+Because the exponent is proportional to $`t`$, the generating function of a shift is that of one hour raised to the 8th power: $`M_{S(8)} = M_{S(1)}^8`$, 1.750791^8 = 88.282360. A product of generating functions belongs to a sum of independent pieces: the eight hours of a shift carry independent totals with one shared law.
 
 ### Step 6: why the generating function earns its place
 
-Its main practical use is a bound on the chance of a very bad hour. Since $e^{sS} \ge e^{sx}$ whenever $S \ge x$, Markov's inequality ([Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) gives, for every $s > 0$,
+Its main practical use is a bound on the chance of a very bad hour. Since $`e^{sS} \ge e^{sx}`$ whenever $`S \ge x`$, Markov's inequality ([Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) gives, for every $`s > 0`$,
 
-$$P(S \ge x) \le e^{-s x}\,M_S(s).$$
+```math
+P(S \ge x) \le e^{-s x}\,M_S(s).
+```
 
-This is the Chernoff bound ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)). At $x$ = $10,000 in one hour, the best dial is $s$ = 0.000856 per dollar, and the bound is 0.016437. The exact chance is 0.001707, about 1 hour in 590. The bound is ten times too cautious, but it needs no simulation, and it falls fast as $x$ grows, as the true tail does. Lundberg's bound on an insurer's chance of ruin is built from the same generating function.
+This is the Chernoff bound ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)). At $`x`$ = $10,000 in one hour, the best dial is $`s`$ = 0.000856 per dollar, and the bound is 0.016437. The exact chance is 0.001707, about 1 hour in 590. The bound is ten times too cautious, but it needs no simulation, and it falls fast as $`x`$ grows, as the true tail does. Lundberg's bound on an insurer's chance of ruin is built from the same generating function.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $N(t)$ is Poisson with mean $\lambda t$. $Y_1, Y_2, \dots$ are independent with a common law, independent of $N(t)$. $S = \sum_{i=1}^{N(t)} Y_i$, with the empty sum 0. Write $S_n = Y_1 + \dots + Y_n$, so $S = S_n$ on $\{N(t) = n\}$.
+**Setting.** $`N(t)`$ is Poisson with mean $`\lambda t`$. $`Y_1, Y_2, \dots`$ are independent with a common law, independent of $`N(t)`$. $`S = \sum_{i=1}^{N(t)} Y_i`$, with the empty sum 0. Write $`S_n = Y_1 + \dots + Y_n`$, so $`S = S_n`$ on $`\{N(t) = n\}`$.
 
-**1. Mean.** Assume $E|Y| < \infty$. On $\{N = n\}$, $S = S_n$, and $S_n$ is independent of $\{N = n\}$. So $E[|S|] \le \sum_n P(N = n)\,n\,E|Y| = \lambda t\,E|Y| < \infty$, and $E[S] = \sum_n P(N = n)\,E[S_n] = \sum_n P(N = n)\,n\mu = \mu\,E[N] = \lambda t\mu$. The exchange of sum and expectation is justified by the absolute bound (dominated convergence).
+**1. Mean.** Assume $`E|Y| < \infty`$. On $`\{N = n\}`$, $`S = S_n`$, and $`S_n`$ is independent of $`\{N = n\}`$. So $`E[|S|] \le \sum_n P(N = n)\,n\,E|Y| = \lambda t\,E|Y| < \infty`$, and $`E[S] = \sum_n P(N = n)\,E[S_n] = \sum_n P(N = n)\,n\mu = \mu\,E[N] = \lambda t\mu`$. The exchange of sum and expectation is justified by the absolute bound (dominated convergence).
 
-**2. Second moment.** Assume $E[Y^2] < \infty$. $E[S_n^2] = \operatorname{Var} S_n + (E S_n)^2 = n \operatorname{Var} Y + n^2\mu^2$, by independence of the $Y_i$. So $E[S^2] = \sum_n P(N = n)(n \operatorname{Var} Y + n^2 \mu^2) = E[N]\operatorname{Var} Y + E[N^2]\mu^2$, every term non-negative, so the rearrangement is justified by monotone convergence. With $E[N] = \lambda t$ and $E[N^2] = \lambda t + (\lambda t)^2$: $\operatorname{Var} S = E[S^2] - (\lambda t \mu)^2 = \lambda t \operatorname{Var} Y + \lambda t \mu^2 = \lambda t E[Y^2]$.
+**2. Second moment.** Assume $`E[Y^2] < \infty`$. $`E[S_n^2] = \mathrm{Var}\, S_n + (E S_n)^2 = n \mathrm{Var}\, Y + n^2\mu^2`$, by independence of the $`Y_i`$. So $`E[S^2] = \sum_n P(N = n)(n \mathrm{Var}\, Y + n^2 \mu^2) = E[N]\mathrm{Var}\, Y + E[N^2]\mu^2`$, every term non-negative, so the rearrangement is justified by monotone convergence. With $`E[N] = \lambda t`$ and $`E[N^2] = \lambda t + (\lambda t)^2`$: $`\mathrm{Var}\, S = E[S^2] - (\lambda t \mu)^2 = \lambda t \mathrm{Var}\, Y + \lambda t \mu^2 = \lambda t E[Y^2]`$.
 
-**3. Generating function.** Fix $s$ with $z = M_Y(s) < \infty$. $e^{sS_n} = \prod_{i \le n} e^{sY_i}$, a product of independent non-negative factors, so $E[e^{sS_n}] = z^n$. Summing non-negative terms (monotone convergence), $E[e^{sS}] = \sum_n e^{-\lambda t}(\lambda t)^n z^n / n! = e^{\lambda t(z - 1)}$. If $M_Y(s) = \infty$, the $n = 1$ term alone is infinite, so $M_S(s) = \infty$.
+**3. Generating function.** Fix $`s`$ with $`z = M_Y(s) < \infty`$. $`e^{sS_n} = \prod_{i \le n} e^{sY_i}`$, a product of independent non-negative factors, so $`E[e^{sS_n}] = z^n`$. Summing non-negative terms (monotone convergence), $`E[e^{sS}] = \sum_n e^{-\lambda t}(\lambda t)^n z^n / n! = e^{\lambda t(z - 1)}`$. If $`M_Y(s) = \infty`$, the $`n = 1`$ term alone is infinite, so $`M_S(s) = \infty`$.
 
-**4. Cumulants.** If $M_Y$ is finite on an interval around 0, it is smooth there with $M_Y^{(k)}(0) = E[Y^k]$ (the generating-function card). Then $\ln M_S(s) = \lambda t(M_Y(s) - 1)$ is smooth near 0, and its k-th derivative at 0 is $\lambda t\,E[Y^k]$.
+**4. Cumulants.** If $`M_Y`$ is finite on an interval around 0, it is smooth there with $`M_Y^{(k)}(0) = E[Y^k]`$ (the generating-function card). Then $`\ln M_S(s) = \lambda t(M_Y(s) - 1)`$ is smooth near 0, and its k-th derivative at 0 is $`\lambda t\,E[Y^k]`$.
 
-**5. Chernoff.** For $s > 0$, $\mathbf{1}\{S \ge x\} \le e^{s(S - x)}$ pointwise; take expectations.
+**5. Chernoff.** For $`s > 0`$, $`\mathbf{1}\{S \ge x\} \le e^{s(S - x)}`$ pointwise; take expectations.
 
 </details>
 
-**Another road.** Split the claims by size. The $100 claims, the $500 claims and the $2,000 claims form three independent Poisson processes at rates 2, 1.2 and 0.8 an hour ([Splitting and merging](03-splitting-and-superposition.md)). The total is then $100 N_1 + 500 N_2 + 2000 N_3$, a fixed combination of three independent Poisson counts, and its variance is $100^2 \cdot 2 + 500^2 \cdot 1.2 + 2000^2 \cdot 0.8$ = 20,000 + 300,000 + 3,200,000 = 3,520,000.
+**Another road.** Split the claims by size. The $100 claims, the $500 claims and the $2,000 claims form three independent Poisson processes at rates 2, 1.2 and 0.8 an hour ([Splitting and merging](03-splitting-and-superposition.md)). The total is then $`100 N_1 + 500 N_2 + 2000 N_3`$, a fixed combination of three independent Poisson counts, and its variance is $`100^2 \cdot 2 + 500^2 \cdot 1.2 + 2000^2 \cdot 0.8`$ = 20,000 + 300,000 + 3,200,000 = 3,520,000.
 
 The same answer, with no conditioning at all, and it shows where the risk sits: the $2,000 claims are a fifth of all claims and 90.9 percent of the variance. Multiplying the three Poisson generating functions gives the third formula the same way.
 
@@ -182,11 +202,11 @@ The same answer, with no conditioning at all, and it shows where the risk sits: 
 
 ## Worked numbers, by hand
 
-One hour at the desk, $\lambda t$ = 4.
+One hour at the desk, $`\lambda t`$ = 4.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average claim $\mu$ | 0.5 × 100 + 0.3 × 500 + 0.2 × 2,000 | $600 |
+| average claim $`\mu`$ | 0.5 × 100 + 0.3 × 500 + 0.2 × 2,000 | $600 |
 | average squared claim | 0.5 × 10,000 + 0.3 × 250,000 + 0.2 × 4,000,000 | 880,000 |
 | claim variance | 880,000 − 600^2 | 520,000 |
 | **mean total** | 4 × 600 | **$2,400** |
@@ -194,8 +214,8 @@ One hour at the desk, $\lambda t$ = 4.
 | count's spread | 4 × 600^2 | 1,440,000 |
 | **variance of the total** | 2,080,000 + 1,440,000, or 4 × 880,000 | **3,520,000** |
 | standard deviation | square root of 3,520,000 | $1,876.17 |
-| $M_Y(s)$ at $s$ = 0.0002 | 0.5 e^0.02 + 0.3 e^0.1 + 0.2 e^0.4 | 1.140017 |
-| **$M_{S(1)}(s)$** | e^(4 × 0.140017) = e^0.560068 | **1.750791** |
+| $`M_Y(s)`$ at $`s`$ = 0.0002 | 0.5 e^0.02 + 0.3 e^0.1 + 0.2 e^0.4 | 1.140017 |
+| **$`M_{S(1)}(s)`$** | e^(4 × 0.140017) = e^0.560068 | **1.750791** |
 | chance of no claims | e^−4 | 0.018316 |
 
 The desk should expect $2,400 an hour, give or take $1,876.17, and about one hour in 55 with nothing to pay. Over a shift the mean is $19,200 and the standard deviation $5,306.60: eight times the mean, but only the square root of eight times the spread.
@@ -204,8 +224,8 @@ The desk should expect $2,400 an hour, give or take $1,876.17, and about one hou
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Variance from the claims' spread only, $\lambda t \operatorname{Var} Y$ | 2,080,000 against 3,520,000 | The count was treated as fixed at 4 |
-| Variance from the count only, $\operatorname{Var} N \cdot \mu^2$ | 1,440,000 | Every claim treated as exactly $600 |
+| Variance from the claims' spread only, $`\lambda t \mathrm{Var}\, Y`$ | 2,080,000 against 3,520,000 | The count was treated as fixed at 4 |
+| Variance from the count only, $`\mathrm{Var}\, N \cdot \mu^2`$ | 1,440,000 | Every claim treated as exactly $600 |
 | Rate 2 or 6 an hour at random, formula still used | exact variance 4,960,000; no-claim chance 0.068907 against 0.018316 | Poisson arrivals dropped: the count's variance is 8, not 4 |
 | Hour cut into 10 slots, one claim at most each | variance 2,944,000 | Two claims in one 6-minute slot were forbidden |
 
@@ -215,9 +235,9 @@ The code prints every row. The third is the one insurers meet: weather makes cou
 
 ## Code, from first principles, and it actually runs
 
-Four roads lead to the mean, variance and generating function. The first is the formulas. The second builds the exact law of $S(t)$ on a $100 grid: the claim law added to itself n times, weighted by the Poisson chance of n claims, with every moment read straight off the law.
+Four roads lead to the mean, variance and generating function. The first is the formulas. The second builds the exact law of $`S(t)`$ on a $100 grid: the claim law added to itself n times, weighted by the Poisson chance of n claims, with every moment read straight off the law.
 
-The third cuts the hour into $m$ slots and prints the error shrinking. The fourth simulates 20000 hours from exponential gaps between claims, with a SplitMix64 generator written out (seed 20260930 for the hours, 20260929 for the pictured shift), and prints each estimate with its standard error.
+The third cuts the hour into $`m`$ slots and prints the error shrinking. The fourth simulates 20000 hours from exponential gaps between claims, with a SplitMix64 generator written out (seed 20260930 for the hours, 20260929 for the pictured shift), and prints each estimate with its standard error.
 
 The asserts compare the formulas with the exact law, and with the simulation within 4 standard errors. The slot variance is checked against the curvature of the slot generating function's logarithm at 0, and the random-rate row against the two-source variance formula.
 
@@ -601,9 +621,9 @@ The two outputs match line for line.
 
 Lean proves the three results for every rate, time and claim law, and checks the card's arithmetic.
 
-- Take the conditions in When it holds, with $\mu$ finite. Then $S(t)$ has a finite mean, and $E[S(t)] = \lambda t\,\mu$.
-- Take the same conditions, with $E[Y^2]$ finite. Then $S(t)$ has a finite variance, and $\operatorname{Var} S(t) = \lambda t\,E[Y^2]$.
-- Take the same conditions, with $M_Y(s)$ finite at the dial $s$. Then $M_{S(t)}(s)$ is finite and equals $\exp(\lambda t\,(M_Y(s) - 1))$.
+- Take the conditions in When it holds, with $`\mu`$ finite. Then $`S(t)`$ has a finite mean, and $`E[S(t)] = \lambda t\,\mu`$.
+- Take the same conditions, with $`E[Y^2]`$ finite. Then $`S(t)`$ has a finite variance, and $`\mathrm{Var}\, S(t) = \lambda t\,E[Y^2]`$.
+- Take the same conditions, with $`M_Y(s)`$ finite at the dial $`s`$. Then $`M_{S(t)}(s)`$ is finite and equals $`\exp(\lambda t\,(M_Y(s) - 1))`$.
 - The average claim is $600, the average squared claim 880,000, and the claim variance 520,000.
 - For one hour, the mean total is $2,400. The variance is 3,520,000: the claims' own spread 2,080,000 plus the count's spread 1,440,000.
 - For one 8-hour shift, the mean total is $19,200 and the variance 28,160,000.
@@ -611,7 +631,7 @@ Lean proves the three results for every rate, time and claim law, and checks the
 - Split by size, the three Poisson streams add 20,000, 300,000 and 3,200,000 to the variance, 3,520,000 in all.
 - For a rate of 2 or 6 an hour at random, 4 × 520,000 + 8 × 600^2 gives 4,960,000.
 - With 10 slots, the variance falls short by 4^2 × 600^2 / 10 = 576,000.
-- The chance of no claims in one hour is $e^{-4}$.
+- The chance of no claims in one hour is $`e^{-4}`$.
 
 The cumulant formula, exact law, decimal values, Chernoff bound, slots and simulations are left to the Python and Rust checks.
 
@@ -923,7 +943,7 @@ example : (poissonMeasure 4).real {0} = exp (-4) := by
 > - **Make the burst pipe dearer.** Change 2000 to 4000 in `SIZES` and in `claims_until`. Guess the standard deviation first. The variance becomes 4 × (5,000 + 75,000 + 3,200,000) = 13,120,000, a standard deviation of $3,622.15, nearly double, while the mean rises from $2,400 to $4,000. Every check still passes.
 > - **Remove all spread from the claims.** Set all three sizes to 600, in `SIZES` and in `claims_until`. The variance falls to 1,440,000, a standard deviation of $1,200: the count's randomness alone, the second row of What breaks.
 > - **Double the rate.** Set `LAM` to 8.0. Mean and variance double to $4,800 and 7,040,000; the standard deviation grows only by the square root of 2, to $2,653.30, and the skewness falls from 0.9921 to 0.7015.
-> - **Push the dial too far.** Set `DIAL` to 0.002. The formula gives 5.13 × 10^19; the exact law, kept to hours of at most 58 claims, gives 4.61 × 10^19, and the first generating-function assert stops the run. At that dial the average of $e^{sS}$ is carried by hours so extreme that their chance is below 1 in a trillion: a generating function far from 0 describes the tail, not the typical hour.
+> - **Push the dial too far.** Set `DIAL` to 0.002. The formula gives 5.13 × 10^19; the exact law, kept to hours of at most 58 claims, gives 4.61 × 10^19, and the first generating-function assert stops the run. At that dial the average of $`e^{sS}`$ is carried by hours so extreme that their chance is below 1 in a trillion: a generating function far from 0 describes the tail, not the typical hour.
 
 ---
 

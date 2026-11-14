@@ -35,40 +35,46 @@ Orange: a single day, the bell curve centred on zero. Green: the second-worst da
 
 ## The formula
 
-Notation first, in words. Write the 20 daily losses as $L_1, L_2, \ldots, L_n$, with $n = 20$ days; a gain is a negative loss. Sort them from smallest to largest. The k-th value in that sorted list is written $L_{(k)}$, read "the k-th order statistic"; the round brackets in the subscript mark a rank, not a day. So $L_{(1)}$ is the smallest loss, the best day, and $L_{(n)}$ is the largest, the worst day. $F(x)$ is one day's cumulative chance of a loss at most x dollars, and $f(x)$ its density ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)).
+Notation first, in words. Write the 20 daily losses as $`L_1, L_2, \ldots, L_n`$, with $`n = 20`$ days; a gain is a negative loss. Sort them from smallest to largest. The k-th value in that sorted list is written $`L_{(k)}`$, read "the k-th order statistic"; the round brackets in the subscript mark a rank, not a day. So $`L_{(1)}`$ is the smallest loss, the best day, and $`L_{(n)}`$ is the largest, the worst day. $`F(x)`$ is one day's cumulative chance of a loss at most x dollars, and $`f(x)`$ its density ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)).
 
-$$P\bigl(L_{(n)} \le x\bigr) = F(x)^n, \qquad P\bigl(L_{(1)} \le x\bigr) = 1 - \bigl(1 - F(x)\bigr)^n$$
+```math
+P\bigl(L_{(n)} \le x\bigr) = F(x)^n, \qquad P\bigl(L_{(1)} \le x\bigr) = 1 - \bigl(1 - F(x)\bigr)^n
+```
 
 **Read it aloud:** the worst day is at most x exactly when every day is, and the best day is above x exactly when every day is.
 
-For any rank k between 1 and n, the count of days at or below x decides the question; $j$ runs over the possible counts:
+For any rank k between 1 and n, the count of days at or below x decides the question; $`j`$ runs over the possible counts:
 
-$$P\bigl(L_{(k)} \le x\bigr) = \sum_{j=k}^{n} \binom{n}{j}\, F(x)^j \bigl(1 - F(x)\bigr)^{n-j}$$
+```math
+P\bigl(L_{(k)} \le x\bigr) = \sum_{j=k}^{n} \binom{n}{j}\, F(x)^j \bigl(1 - F(x)\bigr)^{n-j}
+```
 
 **Read it aloud:** the k-th smallest is at most x when k or more of the n days are at most x, and the chance of exactly j such days is the binomial chance.
 
-When one day's loss has a density, so does each rank. $g_k(x)$ is the density of the k-th smallest:
+When one day's loss has a density, so does each rank. $`g_k(x)`$ is the density of the k-th smallest:
 
-$$g_k(x) = \frac{n!}{(k-1)!\,(n-k)!}\; f(x)\, F(x)^{k-1} \bigl(1 - F(x)\bigr)^{n-k}$$
+```math
+g_k(x) = \frac{n!}{(k-1)!\,(n-k)!}\; f(x)\, F(x)^{k-1} \bigl(1 - F(x)\bigr)^{n-k}
+```
 
 **Read it aloud:** one day lands at x, k − 1 of the others land below it, n − k land above it, and the fraction in front counts the ways of choosing which day is which.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the number of days in the sample | 20 trading days | the worst day moves right |
-| $k$ | the rank asked about, counted from the smallest | 20 for the worst, 19 for the second worst | a larger value, further right |
-| $L_i$ | the loss on day i, in dollars; a gain is negative | one day of the month | — |
-| $L_{(k)}$ | the k-th smallest of the n losses | $L_{(20)}$, the worst day | — |
-| $x$ | a threshold in dollars | \$23,263, the 99% VaR | larger x: a larger chance of staying under |
-| $F(x)$ | one day's chance of a loss at most x | 0.99 at \$23,263 | — |
-| $f(x)$ | one day's density: chance per dollar of loss near x | peaks at 0, about 4% per \$1,000 | — |
-| $g_k(x)$ | the density of the k-th smallest | the dark blue curve for k = 20 | — |
-| $j$ | a possible count of days at or below x | 19 or 20 for the second worst | — |
-| $\binom{n}{j}$ | the number of ways to choose which j of n days | C(20, 19) = 20 ways to pick which 19 days stay under the line | — |
-| $\sigma$ | the standard deviation of one day's loss | \$10,000 | every dollar figure scales with it |
-| $\Phi$ | the standard normal's cumulative area | Φ(x / σ) is F(x) here | — |
+| $`n`$ | the number of days in the sample | 20 trading days | the worst day moves right |
+| $`k`$ | the rank asked about, counted from the smallest | 20 for the worst, 19 for the second worst | a larger value, further right |
+| $`L_i`$ | the loss on day i, in dollars; a gain is negative | one day of the month | — |
+| $`L_{(k)}`$ | the k-th smallest of the n losses | $`L_{(20)}`$, the worst day | — |
+| $`x`$ | a threshold in dollars | \$23,263, the 99% VaR | larger x: a larger chance of staying under |
+| $`F(x)`$ | one day's chance of a loss at most x | 0.99 at \$23,263 | — |
+| $`f(x)`$ | one day's density: chance per dollar of loss near x | peaks at 0, about 4% per \$1,000 | — |
+| $`g_k(x)`$ | the density of the k-th smallest | the dark blue curve for k = 20 | — |
+| $`j`$ | a possible count of days at or below x | 19 or 20 for the second worst | — |
+| $`\binom{n}{j}`$ | the number of ways to choose which j of n days | C(20, 19) = 20 ways to pick which 19 days stay under the line | — |
+| $`\sigma`$ | the standard deviation of one day's loss | \$10,000 | every dollar figure scales with it |
+| $`\Phi`$ | the standard normal's cumulative area | Φ(x / σ) is F(x) here | — |
 
-In this example one day's loss follows the normal law N(0, σ^2), so $F(x) = \Phi(x/\sigma)$; the normal card writes the area as Φ ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). The counting formulas do not need the bell: they hold for any one-day law.
+In this example one day's loss follows the normal law N(0, σ^2), so $`F(x) = \Phi(x/\sigma)`$; the normal card writes the area as Φ ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). The counting formulas do not need the bell: they hold for any one-day law.
 
 ### When it holds
 
@@ -90,7 +96,9 @@ Draw a line at x dollars. The k-th smallest loss is at most x exactly when at le
 
 The worst of 20 losses is at most x when all 20 are. With independent days the chances multiply:
 
-$$P\bigl(L_{(20)} \le x\bigr) = F(x)^{20}$$
+```math
+P\bigl(L_{(20)} \le x\bigr) = F(x)^{20}
+```
 
 At the 99% VaR each day stays under with chance 0.99, so the whole month does with chance 0.99^20 = 0.8179. The worst day beats the VaR with the remaining 0.1821. The picture below repeats the calculation for months of other lengths: over a year of 250 trading days the one-day VaR is beaten on at least one day 91.89 percent of the time.
 
@@ -107,7 +115,7 @@ Each bar is 100 × (1 − 0.99^n). The longer the sample, the surer a rare day t
 
 ### Step 2: the best day, by "every day" the other way
 
-The smallest loss is above x when all 20 days are above x, which has chance (1 − F(x))^20. Its complement gives the minimum's law, $1 - (1 - F(x))^{20}$.
+The smallest loss is above x when all 20 days are above x, which has chance (1 − F(x))^20. Its complement gives the minimum's law, $`1 - (1 - F(x))^{20}`$.
 
 Two readings. The best day gains more than $20,000, a loss below −$20,000, with chance 1 − (1 − F(−20,000))^20. By the bell's symmetry that is 1 − Φ(2)^20 = 0.3689, a little over 1 month in 3. And every day of the month is a loss only when the best day is a loss, chance 0.5^20, or 1 in 1,048,576.
 
@@ -117,7 +125,9 @@ Let the count of days at or below the line be the number of successes in 20 tria
 
 The second-worst day is rank 19. A risk desk that estimates the 95% VaR from 20 days of history reads off exactly this day, since 5 percent of 20 is one day beyond it. The true 95% VaR is $16,449, where F = 0.95. The second-worst day comes in at or below it when 19 or 20 of the days do:
 
-$$0.95^{20} + 20 \times 0.05 \times 0.95^{19} = 0.7358$$
+```math
+0.95^{20} + 20 \times 0.05 \times 0.95^{19} = 0.7358
+```
 
 So a 20-day historical estimate falls short of the true 95% VaR in about 3 months out of 4, and its median is $13,884, not $16,449. That result used only F = 0.95 at the true VaR, never the bell's shape. It holds for any continuous daily law.
 
@@ -128,20 +138,24 @@ The middle of the sample works the same way. The true median daily loss is zero.
 For the density, ask for the chance that the k-th smallest lands in a narrow band just above x. Under a density, two days in the same narrow band have a chance that shrinks faster than the width, so count one day in the band, k − 1 below it and n − k above.
 
 - The day in the band can be any of the n days: n ways.
-- The k − 1 days below are chosen from the other n − 1: $\binom{n-1}{k-1}$ ways.
+- The k − 1 days below are chosen from the other n − 1: $`\binom{n-1}{k-1}`$ ways.
 - The rest go above. Each arrangement has chance f(x) × width × F(x)^(k−1) × (1 − F(x))^(n−k).
 
-Multiplying the count n × C(n − 1, k − 1) = n! / ((k − 1)! (n − k)!) by that chance and dividing by the width gives $g_k$. For the second worst of 20 the count is 20 × 19 = 380, and for the worst it is 20, which makes $g_{20}(x) = 20\, f(x)\, F(x)^{19}$: the derivative of F(x)^20, as it must be.
+Multiplying the count n × C(n − 1, k − 1) = n! / ((k − 1)! (n − k)!) by that chance and dividing by the width gives $`g_k`$. For the second worst of 20 the count is 20 × 19 = 380, and for the worst it is 20, which makes $`g_{20}(x) = 20\, f(x)\, F(x)^{19}`$: the derivative of F(x)^20, as it must be.
 
 <details>
 <summary>Detailed proof: the density is the slope of the binomial tail</summary>
 
-Write F for F(x) and f for f(x). The slope of $\binom{n}{j} F^j (1-F)^{n-j}$ in x is
-$$f \left[\, j\binom{n}{j} F^{j-1}(1-F)^{n-j} - (n-j)\binom{n}{j} F^{j}(1-F)^{n-j-1} \right].$$
-Two counting identities hold: $j\binom{n}{j} = n\binom{n-1}{j-1}$ (choose the j days, then one leader among them, or the leader first) and $(n-j)\binom{n}{j} = n\binom{n-1}{j}$ (the same with a leader outside). So each slope is n f times a difference $a_{j} - a_{j+1}$, where $a_j = \binom{n-1}{j-1} F^{j-1}(1-F)^{n-j}$ and $a_{n+1} = 0$.
+Write F for F(x) and f for f(x). The slope of $`\binom{n}{j} F^j (1-F)^{n-j}`$ in x is
+
+$`\displaystyle f \left[\, j\binom{n}{j} F^{j-1}(1-F)^{n-j} - (n-j)\binom{n}{j} F^{j}(1-F)^{n-j-1} \right].`$
+
+Two counting identities hold: $`j\binom{n}{j} = n\binom{n-1}{j-1}`$ (choose the j days, then one leader among them, or the leader first) and $`(n-j)\binom{n}{j} = n\binom{n-1}{j}`$ (the same with a leader outside). So each slope is n f times a difference $`a_{j} - a_{j+1}`$, where $`a_j = \binom{n-1}{j-1} F^{j-1}(1-F)^{n-j}`$ and $`a_{n+1} = 0`$.
 
 Adding the slopes from j = k to n, the differences cancel in pairs and leave n f times the first term, the one with j = k:
-$$g_k(x) = n\binom{n-1}{k-1} f(x)\, F(x)^{k-1}\bigl(1-F(x)\bigr)^{n-k}, \qquad n\binom{n-1}{k-1} = \frac{n!}{(k-1)!\,(n-k)!}.$$
+
+$`\displaystyle g_k(x) = n\binom{n-1}{k-1} f(x)\, F(x)^{k-1}\bigl(1-F(x)\bigr)^{n-k}, \qquad n\binom{n-1}{k-1} = \frac{n!}{(k-1)!\,(n-k)!}.`$
+
 Integrating the density from far left to x recovers the binomial tail, which the code checks by Simpson's rule for k = 19 and k = 20. Each density has total area 1, since the tail reaches 1 far to the right.
 
 </details>
@@ -150,7 +164,7 @@ Integrating the density from far left to x recovers the binomial tail, which the
 
 The worst day's median is the x where F(x)^20 = 0.5, so F(x) = 0.5^(1/20) = 0.96594. The loss one day stays under with chance 0.96594 is $18,242, from the normal quantile ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)). Half of all months have a worst day below that.
 
-The average is the area under x times $g_{20}(x)$, which has no closed form for the bell. Simpson's rule, an area sum over thin strips (described under the code), gives \$18,675, a little above the median because the right tail is long. Over a year of 250 days the worst day averages \$28,192: the maximum of bell-shaped draws keeps growing with n, but slowly.
+The average is the area under x times $`g_{20}(x)`$, which has no closed form for the bell. Simpson's rule, an area sum over thin strips (described under the code), gives \$18,675, a little above the median because the right tail is long. Over a year of 250 days the worst day averages \$28,192: the maximum of bell-shaped draws keeps growing with n, but slowly.
 
 <details>
 <summary>Where the maximum settles as n grows: the Fisher–Tippett theorem</summary>
@@ -612,8 +626,8 @@ The two outputs match line for line, simulated figures included, because both pr
 Lean proves the rank laws for any number of independent days that share one law, with ties allowed.
 
 - The k-th smallest is at most x exactly when at least k of the days are at most x.
-- Suppose the n days are independent, each with cumulative chance F. Then the worst day is at most x with chance $F(x)^n$.
-- Take the same days. Then the best day is at most x with chance $1 - (1 - F(x))^n$.
+- Suppose the n days are independent, each with cumulative chance F. Then the worst day is at most x with chance $`F(x)^n`$.
+- Take the same days. Then the best day is at most x with chance $`1 - (1 - F(x))^n`$.
 - Take the same days and any rank k from 1 to n. Then the k-th smallest is at most x with the binomial tail's chance.
 - The hand counts hold exactly: 0.5^20 is 1 in 1,048,576, C(20, 19) = 20, and the density's count is 380.
 - The second worst's binomial tail at F = 0.95 is exactly 0.95^20 + 20 × 0.05 × 0.95^19.

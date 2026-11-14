@@ -42,47 +42,51 @@ Orange, lower: the CVA itself, loss × price × chance of default within the yea
 
 Notation first, in words.
 
-- $V(t)$ is the call's clean value to the bank at date $t$, the value it would have if Northwind could not fail. $V^+(t)$ is its positive part, $\max(V(t), 0)$: what Northwind would owe on that date, or zero if the bank owed Northwind.
-- The default date is $\tau$ (Greek "tau"), a random number of years from today.
-- $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
-- The **expected exposure** $\mathrm{EE}(t) = \mathbb{E}[V^+(t)]$ is the average amount owed at date $t$; times the discount factor $D(t) = e^{-rt}$ it becomes the **discounted expected exposure**, in today's dollars ([Expected exposure over time](02-expected-exposure-profiles.md)).
-- $T$ is the expiry in years.
-- $\lambda$ ("lambda") is Northwind's **hazard**, its yearly default rate among survivors; $Q(t) = e^{-\lambda t}$ is the chance it survives to $t$.
-- $R$ is the **recovery**, the fraction of the claim collected, so $1-R$ is the fraction lost.
+- $`V(t)`$ is the call's clean value to the bank at date $`t`$, the value it would have if Northwind could not fail. $`V^+(t)`$ is its positive part, $`\max(V(t), 0)`$: what Northwind would owe on that date, or zero if the bank owed Northwind.
+- The default date is $`\tau`$ (Greek "tau"), a random number of years from today.
+- $`\mathbb{E}[\,\cdot\,]`$ is an average over the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
+- The **expected exposure** $`\mathrm{EE}(t) = \mathbb{E}[V^+(t)]`$ is the average amount owed at date $`t`$; times the discount factor $`D(t) = e^{-rt}`$ it becomes the **discounted expected exposure**, in today's dollars ([Expected exposure over time](02-expected-exposure-profiles.md)).
+- $`T`$ is the expiry in years.
+- $`\lambda`$ ("lambda") is Northwind's **hazard**, its yearly default rate among survivors; $`Q(t) = e^{-\lambda t}`$ is the chance it survives to $`t`$.
+- $`R`$ is the **recovery**, the fraction of the claim collected, so $`1-R`$ is the fraction lost.
 
-$$\mathrm{CVA} = (1-R)\int_0^T D(t)\,\mathrm{EE}(t)\,\lambda\,Q(t)\,dt \;\approx\; (1-R)\sum_{i=1}^{n} D(t_i^*)\,\mathrm{EE}(t_i^*)\,\bigl[Q(t_{i-1}) - Q(t_i)\bigr]$$
+```math
+\mathrm{CVA} = (1-R)\int_0^T D(t)\,\mathrm{EE}(t)\,\lambda\,Q(t)\,dt \;\approx\; (1-R)\sum_{i=1}^{n} D(t_i^*)\,\mathrm{EE}(t_i^*)\,\bigl[Q(t_{i-1}) - Q(t_i)\bigr]
+```
 
 **Read it aloud:** the loss fraction, times the sum over the deal's life of what the bank would be owed at each date in today's money, weighted by the chance Northwind defaults at that date.
 
-On the right the year is cut into $n$ buckets with edges $t_i = iT/n$, and $t_i^*$ is the middle of bucket $i$. The bracket $Q(t_{i-1}) - Q(t_i)$ is the chance default lands in that bucket: alive at its start, gone by its end. The integral on the left is the limit as the buckets shrink; $\lambda Q(t)\,dt$ is the chance default lands in the short stretch after $t$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)).
+On the right the year is cut into $`n`$ buckets with edges $`t_i = iT/n`$, and $`t_i^*`$ is the middle of bucket $`i`$. The bracket $`Q(t_{i-1}) - Q(t_i)`$ is the chance default lands in that bucket: alive at its start, gone by its end. The integral on the left is the limit as the buckets shrink; $`\lambda Q(t)\,dt`$ is the chance default lands in the short stretch after $`t`$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)).
 
 For a long option under a flat hazard the whole integral collapses:
 
-$$\mathrm{CVA} = (1-R)\times C_0\times\bigl(1 - e^{-\lambda T}\bigr), \qquad \text{risky price} = C_0 - \mathrm{CVA}.$$
+```math
+\mathrm{CVA} = (1-R)\times C_0\times\bigl(1 - e^{-\lambda T}\bigr), \qquad \text{risky price} = C_0 - \mathrm{CVA}.
+```
 
-**Read it aloud:** loss fraction, times today's clean price, times the chance of default before expiry. At the edges it is zero: a counterparty that cannot fail ($\lambda = 0$), full recovery ($R = 1$), or a worthless option ($C_0 = 0$).
+**Read it aloud:** loss fraction, times today's clean price, times the chance of default before expiry. At the edges it is zero: a counterparty that cannot fail ($`\lambda = 0`$), full recovery ($`R = 1`$), or a worthless option ($`C_0 = 0`$).
 
 | Symbol | Plain meaning | In our example | Push it up and CVA… |
 | --- | --- | --- | --- |
-| $C_0$, $X$ | the clean price: the call's value if the seller could not fail; the call's payoff at expiry | \$9.227006 | rises in proportion |
-| $V(t)$, $V^+(t)$ | the call's clean value to the bank at date $t$; its positive part, the amount owed | $V(0) = C_0$; always positive for a bought call | — |
-| $\tau$ | Northwind's default date, in years from today; random | inside the year with chance 0.019801 | — |
-| $\lambda$, $Q(t)$ | the **hazard** ("lambda"): yearly default rate among survivors; the survival chance $e^{-\lambda t}$ | 2%; $1 - Q(1) = 0.019801$ | rises, slightly less than in proportion |
-| $R$, $1-R$ | **recovery**, the fraction of the claim collected; **loss given default**, the fraction lost | 40%; 60% | falls with $R$ |
-| $D(t)$, $r$ | the discount factor $e^{-rt}$; the riskless rate, continuously compounded | 5% | moves it only through $C_0$: the discounting cancels, see Step 3 |
-| $\mathrm{EE}(t)$ | expected exposure: the average of $V^+(t)$ | \$9.23 today, \$9.70 at expiry | rises |
-| $T$, $t$ | the call's expiry; a date in years | $T = 1$ | rises: more time to default |
-| $t_i$, $i$, $n$ | bucket edges $iT/n$; the bucket's number; how many buckets | weekly, $n = 52$ | no effect here: see Step 3 |
-| $S$, $K$, $q$, $\sigma$ | Acme's price, the strike, the dividend yield, the volatility | \$100, \$100, 2%, 20% | through $C_0$ |
-| $\mathrm{CVA}$ | the credit valuation adjustment | \$0.109624 | — |
-| $s$, $A_E$ | a running premium rate; the exposure annuity $\int_0^T D(t)\,\mathrm{EE}(t)\,Q(t)\,dt$ | 1.2% a year; 9.135348 | — |
+| $`C_0`$, $`X`$ | the clean price: the call's value if the seller could not fail; the call's payoff at expiry | \$9.227006 | rises in proportion |
+| $`V(t)`$, $`V^+(t)`$ | the call's clean value to the bank at date $`t`$; its positive part, the amount owed | $`V(0) = C_0`$; always positive for a bought call | — |
+| $`\tau`$ | Northwind's default date, in years from today; random | inside the year with chance 0.019801 | — |
+| $`\lambda`$, $`Q(t)`$ | the **hazard** ("lambda"): yearly default rate among survivors; the survival chance $`e^{-\lambda t}`$ | 2%; $`1 - Q(1) = 0.019801`$ | rises, slightly less than in proportion |
+| $`R`$, $`1-R`$ | **recovery**, the fraction of the claim collected; **loss given default**, the fraction lost | 40%; 60% | falls with $`R`$ |
+| $`D(t)`$, $`r`$ | the discount factor $`e^{-rt}`$; the riskless rate, continuously compounded | 5% | moves it only through $`C_0`$: the discounting cancels, see Step 3 |
+| $`\mathrm{EE}(t)`$ | expected exposure: the average of $`V^+(t)`$ | \$9.23 today, \$9.70 at expiry | rises |
+| $`T`$, $`t`$ | the call's expiry; a date in years | $`T = 1`$ | rises: more time to default |
+| $`t_i`$, $`i`$, $`n`$ | bucket edges $`iT/n`$; the bucket's number; how many buckets | weekly, $`n = 52`$ | no effect here: see Step 3 |
+| $`S`$, $`K`$, $`q`$, $`\sigma`$ | Acme's price, the strike, the dividend yield, the volatility | \$100, \$100, 2%, 20% | through $`C_0`$ |
+| $`\mathrm{CVA}`$ | the credit valuation adjustment | \$0.109624 | — |
+| $`s`$, $`A_E`$ | a running premium rate; the exposure annuity $`\int_0^T D(t)\,\mathrm{EE}(t)\,Q(t)\,dt`$ | 1.2% a year; 9.135348 | — |
 
 ### When it holds
 
 - **Default is independent of the exposure.** The formula multiplies the average exposure by the default chance, which is only right if Northwind's failure says nothing about Acme's price. If the exposure tends to be high exactly when Northwind fails, CVA is larger than this; see [Wrong-way risk](05-wrong-way-risk.md).
 - **The bank itself cannot fail.** This is the one-sided CVA. If the bank can fail too, Northwind faces the mirror cost, and the two sides' adjustments meet in [DVA](04-dva-and-bilateral-cva.md).
 - **No collateral.** Collateral posted by Northwind shrinks the amount owed at default, and with it the CVA; [Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md) prices what is left.
-- **The hazard comes from the market.** $\lambda$ is read off Northwind's credit default swap (CDS) quotes, the market price of insurance against its failure, not off a history of defaults. A historical rate gives a different number, and a bank that cannot hedge at it.
+- **The hazard comes from the market.** $`\lambda`$ is read off Northwind's credit default swap (CDS) quotes, the market price of insurance against its failure, not off a history of defaults. A historical rate gives a different number, and a bank that cannot hedge at it.
 - **A fixed recovery, paid at default.** Real recoveries arrive months later and vary. A random recovery independent of everything else can be replaced by its average; one that falls in bad times cannot.
 
 ---
@@ -91,36 +95,44 @@ $$\mathrm{CVA} = (1-R)\times C_0\times\bigl(1 - e^{-\lambda T}\bigr), \qquad \te
 
 ### Step 0: a promise from a company that can fail is worth less by the expected loss
 
-The clean price $C_0$ is what the call's payoff is worth if it is certain to be paid. Northwind's promise pays the same payoff in every future except those where Northwind fails first. In those futures the bank collects a fraction of the call's worth on the failure date instead. So the risky price is the clean price minus the average, in today's money, of what is lost in the failure futures. That average is the CVA. Everything below computes it.
+The clean price $`C_0`$ is what the call's payoff is worth if it is certain to be paid. Northwind's promise pays the same payoff in every future except those where Northwind fails first. In those futures the bank collects a fraction of the call's worth on the failure date instead. So the risky price is the clean price minus the average, in today's money, of what is lost in the failure futures. That average is the CVA. Everything below computes it.
 
-### Step 1: the loss on the default date is $(1-R)\,V^+(\tau)$
+### Step 1: the loss on the default date is $`(1-R)\,V^+(\tau)`$
 
-When a company fails, open trades are closed at their clean value on the failure date. This is **closeout**. If the call is worth $V(\tau)$ to the bank and that number is positive, the bank is a creditor for it and collects $R\,V(\tau)$. If it were negative, the bank would owe Northwind and would pay in full: a failed company's estate still collects its debts. Either way the shortfall against the clean value is $(1-R)\,V^+(\tau)$.
+When a company fails, open trades are closed at their clean value on the failure date. This is **closeout**. If the call is worth $`V(\tau)`$ to the bank and that number is positive, the bank is a creditor for it and collects $`R\,V(\tau)`$. If it were negative, the bank would owe Northwind and would pay in full: a failed company's estate still collects its debts. Either way the shortfall against the clean value is $`(1-R)\,V^+(\tau)`$.
 
 Averaging over when default comes, and discounting to today:
 
-$$\mathrm{CVA} = (1-R)\,\mathbb{E}\bigl[D(\tau)\,V^+(\tau)\,;\ \tau \le T\bigr],$$
+```math
+\mathrm{CVA} = (1-R)\,\mathbb{E}\bigl[D(\tau)\,V^+(\tau)\,;\ \tau \le T\bigr],
+```
 
-where "; $\tau \le T$" means only futures with default before expiry count. After expiry there is nothing left to lose.
+where "; $`\tau \le T`$" means only futures with default before expiry count. After expiry there is nothing left to lose.
 
 <details>
 <summary>Detailed proof: risky price = clean price − CVA</summary>
 
-Write $X$ for the call's payoff at $T$. The clean price is $C_0 = \mathbb{E}[D(T)X]$. Split every future by whether $\tau > T$:
-$$C_0 = \mathbb{E}[D(T)X;\ \tau > T] + \mathbb{E}[D(T)X;\ \tau \le T].$$
-In the second term, the value at date $\tau$ of everything still to come is $V(\tau)$, so the pricing average gives $\mathbb{E}[D(T)X;\ \tau \le T] = \mathbb{E}[D(\tau)V(\tau);\ \tau \le T]$. This uses only that $V(\tau)$ is the clean value on that date, which holds when default does not change the pricing of Acme.
+Write $`X`$ for the call's payoff at $`T`$. The clean price is $`C_0 = \mathbb{E}[D(T)X]`$. Split every future by whether $`\tau > T`$:
 
-The risky claim pays $X$ if $\tau > T$, and at $\tau \le T$ pays $R\,V^+(\tau) - V^-(\tau)$, where $V^- = \max(-V, 0)$: the bank collects a fraction of what it is owed and pays all of what it owes. Its price is
-$$\mathbb{E}[D(T)X;\ \tau > T] + \mathbb{E}\bigl[D(\tau)\bigl(R\,V^+(\tau) - V^-(\tau)\bigr);\ \tau \le T\bigr].$$
-Subtract from $C_0$, using $V = V^+ - V^-$:
-$$V - (R\,V^+ - V^-) = V^+ - V^- - R\,V^+ + V^- = (1-R)\,V^+.$$
-So clean minus risky is $(1-R)\,\mathbb{E}[D(\tau)V^+(\tau);\ \tau \le T]$, which is CVA.
+$`\displaystyle C_0 = \mathbb{E}[D(T)X;\ \tau > T] + \mathbb{E}[D(T)X;\ \tau \le T].`$
+
+In the second term, the value at date $`\tau`$ of everything still to come is $`V(\tau)`$, so the pricing average gives $`\mathbb{E}[D(T)X;\ \tau \le T] = \mathbb{E}[D(\tau)V(\tau);\ \tau \le T]`$. This uses only that $`V(\tau)`$ is the clean value on that date, which holds when default does not change the pricing of Acme.
+
+The risky claim pays $`X`$ if $`\tau > T`$, and at $`\tau \le T`$ pays $`R\,V^+(\tau) - V^-(\tau)`$, where $`V^- = \max(-V, 0)`$: the bank collects a fraction of what it is owed and pays all of what it owes. Its price is
+
+$`\displaystyle \mathbb{E}[D(T)X;\ \tau > T] + \mathbb{E}\bigl[D(\tau)\bigl(R\,V^+(\tau) - V^-(\tau)\bigr);\ \tau \le T\bigr].`$
+
+Subtract from $`C_0`$, using $`V = V^+ - V^-`$:
+
+$`\displaystyle V - (R\,V^+ - V^-) = V^+ - V^- - R\,V^+ + V^- = (1-R)\,V^+.`$
+
+So clean minus risky is $`(1-R)\,\mathbb{E}[D(\tau)V^+(\tau);\ \tau \le T]`$, which is CVA.
 
 </details>
 
 ### Step 2: independence turns the average into a sum over dates
 
-If Northwind's failure is independent of Acme, the average can be taken in two stages. First fix the default date $t$ and average the exposure: that gives $D(t)\,\mathrm{EE}(t)$. Then average over $t$, weighting each date by the chance default lands there, $\lambda Q(t)\,dt$. That is the integral in The formula. Cut the year into buckets and read the exposure at each bucket's middle: that is the sum.
+If Northwind's failure is independent of Acme, the average can be taken in two stages. First fix the default date $`t`$ and average the exposure: that gives $`D(t)\,\mathrm{EE}(t)`$. Then average over $`t`$, weighting each date by the chance default lands there, $`\lambda Q(t)\,dt`$. That is the integral in The formula. Cut the year into buckets and read the exposure at each bucket's middle: that is the sum.
 
 The checks do this with 52 weekly buckets. They find each week's discounted exposure by integrating the call's value over every price Acme could have that week, 2,000 Simpson slices across the bell curve, with no shortcut. Simpson's rule adds up the area under a curve by fitting short parabolas to it. The sum is 0.109624. Grouped by quarter, the weekly pieces are:
 
@@ -136,7 +148,7 @@ Nearly equal. The small fall comes from survival: to default in the fourth quart
 
 ### Step 3: for a bought option, the discounted exposure is flat
 
-A bought call is never worth less than zero, so $V^+ = V$ and the exposure is the call's value itself. And in the pricing world, today's price of any traded claim is the discounted average of its price at any later date: otherwise buying now and selling later would be a sure gain or loss. So $\mathbb{E}[D(t)V(t)] = C_0$ at every date $t$.
+A bought call is never worth less than zero, so $`V^+ = V`$ and the exposure is the call's value itself. And in the pricing world, today's price of any traded claim is the discounted average of its price at any later date: otherwise buying now and selling later would be a sure gain or loss. So $`\mathbb{E}[D(t)V(t)] = C_0`$ at every date $`t`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -148,43 +160,45 @@ xychart-beta
     line [9.23, 9.23, 9.23, 9.23, 9.23]
 ```
 
-Orange, rising: $\mathrm{EE}(t)$, the average amount owed at each date, in that date's dollars. Green, flat: $D(t)\,\mathrm{EE}(t)$, the same in today's dollars. The checks integrate both at each date; at expiry they average the payoff itself and land on $C_0$ to six decimals.
+Orange, rising: $`\mathrm{EE}(t)`$, the average amount owed at each date, in that date's dollars. Green, flat: $`D(t)\,\mathrm{EE}(t)`$, the same in today's dollars. The checks integrate both at each date; at expiry they average the payoff itself and land on $`C_0`$ to six decimals.
 
 A flat discounted exposure comes out of the integral:
 
-$$\mathrm{CVA} = (1-R)\,C_0\int_0^T \lambda e^{-\lambda t}\,dt = (1-R)\,C_0\,\bigl(1 - e^{-\lambda T}\bigr).$$
+```math
+\mathrm{CVA} = (1-R)\,C_0\int_0^T \lambda e^{-\lambda t}\,dt = (1-R)\,C_0\,\bigl(1 - e^{-\lambda T}\bigr).
+```
 
-The integral is the chance of default before $T$. That is the closed form: loss × price × default chance. It also explains why the bucket count does not matter here. A flat exposure times the bucket chances adds up to the same total however the year is cut; the checks get 0.109624 from one bucket and from 52. For a swap, whose exposure rises and falls over its life ([Expected exposure over time](02-expected-exposure-profiles.md)), the buckets matter and the sum is the only road.
+The integral is the chance of default before $`T`$. That is the closed form: loss × price × default chance. It also explains why the bucket count does not matter here. A flat exposure times the bucket chances adds up to the same total however the year is cut; the checks get 0.109624 from one bucket and from 52. For a swap, whose exposure rises and falls over its life ([Expected exposure over time](02-expected-exposure-profiles.md)), the buckets matter and the sum is the only road.
 
 ### Step 4: CVA is a CDS written on the exposure
 
-The protection leg of a credit default swap on Northwind, per \$1 insured, is $(1-R)\int_0^T D(t)\,\lambda Q(t)\,dt$ ([Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md)). Put $\mathrm{EE}(t)$ in place of the \$1 and it is the CVA integral, term for term. CVA is the price of default protection on Northwind whose insured amount, at each date, is the exposure at that date. Such a contract is called a **contingent CDS**. A bank that buys ordinary CDS protection on Northwind in roughly that amount has hedged its CVA, and this is what CVA desks do; [CVA risk numbers](06-cva-risk-numbers-and-hedging.md) sizes the hedge.
+The protection leg of a credit default swap on Northwind, per \$1 insured, is $`(1-R)\int_0^T D(t)\,\lambda Q(t)\,dt`$ ([Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md)). Put $`\mathrm{EE}(t)`$ in place of the \$1 and it is the CVA integral, term for term. CVA is the price of default protection on Northwind whose insured amount, at each date, is the exposure at that date. Such a contract is called a **contingent CDS**. A bank that buys ordinary CDS protection on Northwind in roughly that amount has hedged its CVA, and this is what CVA desks do; [CVA risk numbers](06-cva-risk-numbers-and-hedging.md) sizes the hedge.
 
-The CDS view also gives CVA as a running premium. Protection paid for continuously at the rate $s$ a year, on the exposure, while Northwind survives, has a premium leg of $s$ times the **exposure annuity** $A_E = \int_0^T D(t)\,\mathrm{EE}(t)\,Q(t)\,dt$. Under a flat hazard the fair rate is $s = (1-R)\lambda$, 120 basis points (1.2% a year) for Northwind: the credit triangle ([The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md)). The checks integrate $A_E = 9.135348$ with the exposure found numerically, and $0.012 \times 9.135348 = 0.109624$. Same CVA, reached through the premium side of the swap instead of the protection side.
+The CDS view also gives CVA as a running premium. Protection paid for continuously at the rate $`s`$ a year, on the exposure, while Northwind survives, has a premium leg of $`s`$ times the **exposure annuity** $`A_E = \int_0^T D(t)\,\mathrm{EE}(t)\,Q(t)\,dt`$. Under a flat hazard the fair rate is $`s = (1-R)\lambda`$, 120 basis points (1.2% a year) for Northwind: the credit triangle ([The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md)). The checks integrate $`A_E = 9.135348`$ with the exposure found numerically, and $`0.012 \times 9.135348 = 0.109624`$. Same CVA, reached through the premium side of the swap instead of the protection side.
 
 ### The other roads: simulation, and risky discounting
 
 Simulation draws 400,000 default dates from the hazard, each conditioned to fall inside the year, and for each one a price for Acme on that date. It values the call there, takes 60% of it, discounts, and averages; multiplying by the 0.019801 chance of default in the year gives the CVA. It lands on 0.109532, with a standard error (the typical size of its random miss) of 0.000174: within one standard error of 0.109624.
 
-A shortcut is also common: discount the whole payoff at the riskless rate plus the spread, $C_0\,e^{-(1-R)\lambda T}$. For Northwind that gives 9.116943, against the exact 9.117381: equal to three decimals. The shortcut works for a claim that only ever pays the bank, like a bought option or a bond. It fails for a trade whose value can turn negative, where there is no single payoff to discount.
+A shortcut is also common: discount the whole payoff at the riskless rate plus the spread, $`C_0\,e^{-(1-R)\lambda T}`$. For Northwind that gives 9.116943, against the exact 9.117381: equal to three decimals. The shortcut works for a claim that only ever pays the bank, like a bought option or a bond. It fails for a trade whose value can turn negative, where there is no single payoff to discount.
 
 ---
 
 ## Worked numbers, by hand
 
-The Acme call: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$. Bought from Northwind: $\lambda = 2\%$, $R = 40\%$.
+The Acme call: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$. Bought from Northwind: $`\lambda = 2\%`$, $`R = 40\%`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| clean call $C_0$ | Black-Scholes, house market | 9.227006 |
-| default chance before expiry | $1 - e^{-0.02}$ | 0.019801 |
-| loss given default | $1 - 0.40$ | 0.60 |
-| **CVA** | $0.60 \times 9.227006 \times 0.019801$ | **0.109624** |
-| **risky price** | $9.2270 - 0.1096$ | **\$9.1174** |
+| clean call $`C_0`$ | Black-Scholes, house market | 9.227006 |
+| default chance before expiry | $`1 - e^{-0.02}`$ | 0.019801 |
+| loss given default | $`1 - 0.40`$ | 0.60 |
+| **CVA** | $`0.60 \times 9.227006 \times 0.019801`$ | **0.109624** |
+| **risky price** | $`9.2270 - 0.1096`$ | **\$9.1174** |
 | 52-week bucketed sum | weekly exposure × weekly default chance, added | 0.109624 |
-| CDS view | $0.012 \times 9.135348$ | 0.109624 |
+| CDS view | $`0.012 \times 9.135348`$ | 0.109624 |
 | simulated default dates | 400,000 draws | 0.109532 |
-| risky discounting shortcut | $9.227006 \times e^{-0.012}$ | 9.116943 |
+| risky discounting shortcut | $`9.227006 \times e^{-0.012}`$ | 9.116943 |
 
 The bank should pay Northwind about \$9.12 for the call, not \$9.23. The 10.96 cents is what the bank would pay a third party today to insure the call against Northwind's failure.
 
@@ -194,8 +208,8 @@ Same trade, correct CVA 0.109624.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $R$ in place of $1 - R$ | 0.073083 | Charges for the 40 cents recovered instead of the 60 lost |
-| Exposure not discounted: $\mathrm{EE}(t)$ in place of $D(t)\,\mathrm{EE}(t)$ | 0.112402 | Treats a claim owed in year one as if it were owed today |
+| $`R`$ in place of $`1 - R`$ | 0.073083 | Charges for the 40 cents recovered instead of the 60 lost |
+| Exposure not discounted: $`\mathrm{EE}(t)`$ in place of $`D(t)\,\mathrm{EE}(t)`$ | 0.112402 | Treats a claim owed in year one as if it were owed today |
 | Risky discounting and CVA both | risky price 9.007319, not 9.117381 | Charges for Northwind's default twice |
 | CVA charged on a call sold to Northwind | 0.109624, not 0 | The bank owes on a sold call; its exposure is 0.000000 (checked at six months) |
 
@@ -549,10 +563,10 @@ The two outputs agree line for line. The simulation draws the same numbers in bo
 
 Lean proves the risky price, the sum over dates and the bought-option closed form, for any recovery, hazard and discount factor.
 
-- Suppose the deal's dates are numbered $0$ to $n-1$, and Northwind's default date is independent of the exposure. Then CVA is $1-R$ times the sum over dates of discounted expected exposure times the chance of default on that date.
+- Suppose the deal's dates are numbered $`0`$ to $`n-1`$, and Northwind's default date is independent of the exposure. Then CVA is $`1-R`$ times the sum over dates of discounted expected exposure times the chance of default on that date.
 - Suppose the trade's discounted payoff and its discounted value on the default date average the same over futures with default before expiry. Then the risky price, with closeout at the clean value, is the clean price minus CVA.
-- Take a bought option whose discounted average value is $C_0$ at every date up to $T$. Then the CVA integral equals $(1-R)\,C_0\,(1 - e^{-\lambda T})$.
-- Recovery 40% leaves 60% lost, and with hazard 2% a year the fair running rate $s$ is 1.2% a year.
+- Take a bought option whose discounted average value is $`C_0`$ at every date up to $`T`$. Then the CVA integral equals $`(1-R)\,C_0\,(1 - e^{-\lambda T})`$.
+- Recovery 40% leaves 60% lost, and with hazard 2% a year the fair running rate $`s`$ is 1.2% a year.
 
 The call's price, the step from dates to the integral, the simulation and every decimal are left to the Python and Rust checks.
 
@@ -754,7 +768,7 @@ example : (1 : ℚ) - 40 / 100 = 60 / 100 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
-> - **A weaker Northwind.** Set the hazard to 5%. CVA rises to **0.270004**, a little under two and a half times the 2% answer, because the default chance $1 - e^{-0.05}$ grows more slowly than the hazard.
+> - **A weaker Northwind.** Set the hazard to 5%. CVA rises to **0.270004**, a little under two and a half times the 2% answer, because the default chance $`1 - e^{-0.05}`$ grows more slowly than the hazard.
 > - **Nothing recovered.** Set `R = 0`. CVA is **0.182707**: the full price times the default chance, with no 60% factor.
 > - **A put instead of a call.** Buy the house put, clean price \$6.33, from Northwind. CVA is **0.075206**. The closed form holds for any bought option; only the price changes.
 > - **Five years.** A five-year Acme call from Northwind carries a CVA of **1.256781**. Both the price and the default chance grow with the term.
@@ -766,7 +780,7 @@ example : (1 : ℚ) - 40 / 100 = 60 / 100 := by norm_num
 > [!warning]
 > **Carrying loss × price × default chance to every trade.** The closed form rests on Step 3: a bought option's discounted exposure is flat at today's price. A swap starts at zero value and still carries exposure, because its value can move either way and only the positive side counts. Its CVA comes from the bucketed sum with the exposure profile, never from today's value, which would give zero.
 >
-> - **Recovery in place of loss.** $R$ where $1 - R$ belongs gives 0.073083.
+> - **Recovery in place of loss.** $`R`$ where $`1 - R`$ belongs gives 0.073083.
 > - **Undiscounted exposure.** Using the average amount owed in that date's dollars gives 0.112402: the error grows with the deal's length.
 > - **Charging twice.** A price already discounted at the risky rate has CVA in it. Subtracting CVA again gives 9.007319.
 > - **CVA on the wrong side.** A call sold to Northwind is owed by the bank, never to it. Its CVA to the bank is zero; the cost sits on Northwind's books, as the mirror adjustment on [DVA](04-dva-and-bilateral-cva.md).

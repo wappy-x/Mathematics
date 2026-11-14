@@ -42,42 +42,48 @@ At tick 3 the clipped LQR is still pushing left at −0.96 A, because it does no
 
 ## The formula
 
-[Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md) turns the cart and pendulum into a 20 Hz model, $x_{k+1} = A x_k + B u_k$. It is exact when the current is held flat over each tick. The model is linear: it is the straight-line version of the pendulum near upright, from [Linearisation](02-linearisation-about-an-equilibrium.md), so it is trustworthy only for small leans.
+[Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md) turns the cart and pendulum into a 20 Hz model, $`x_{k+1} = A x_k + B u_k`$. It is exact when the current is held flat over each tick. The model is linear: it is the straight-line version of the pendulum near upright, from [Linearisation](02-linearisation-about-an-equilibrium.md), so it is trustworthy only for small leans.
 
 Each tick, predictive control solves
 
-$$\min_{u_0,\dots,u_{N-1}}\; \sum_{k=0}^{N-1}\left(x_k^{\top} Q\, x_k + R\,u_k^2\right) + x_N^{\top} P\, x_N \quad\text{subject to}\quad x_{k+1} = A x_k + B u_k,\quad x_0 = \text{the state measured now},\quad -\bar u \le u_k \le \bar u,$$
+```math
+\min_{u_0,\dots,u_{N-1}}\; \sum_{k=0}^{N-1}\left(x_k^{\top} Q\, x_k + R\,u_k^2\right) + x_N^{\top} P\, x_N \quad\text{subject to}\quad x_{k+1} = A x_k + B u_k,\quad x_0 = \text{the state measured now},\quad -\bar u \le u_k \le \bar u,
+```
 
-applies $u_0$, and throws the rest away. Stack the moves into one column $U$, substitute the model, and the problem becomes a quadratic program:
+applies $`u_0`$, and throws the rest away. Stack the moves into one column $`U`$, substitute the model, and the problem becomes a quadratic program:
 
-$$\min_{U}\; U^{\top} H\, U + 2\,(F x_0)^{\top} U \quad\text{subject to}\quad -\bar u \le U \le \bar u.$$
+```math
+\min_{U}\; U^{\top} H\, U + 2\,(F x_0)^{\top} U \quad\text{subject to}\quad -\bar u \le U \le \bar u.
+```
 
-For zero offset, the model carries one more state, a constant push $d$ added to the motor current:
+For zero offset, the model carries one more state, a constant push $`d`$ added to the motor current:
 
-$$x_{k+1} = A x_k + B\,(u_k + d_k), \qquad d_{k+1} = d_k.$$
+```math
+x_{k+1} = A x_k + B\,(u_k + d_k), \qquad d_{k+1} = d_k.
+```
 
 **Read it aloud:** choose the next N motor currents that keep the predicted cart near the target and the pendulum upright as cheaply as possible, inside the current limit and with the final state priced by the LQR; use the first, then do it all again.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_k$, $k$ | the state $k$ ticks into the plan, measured from the target: cart position $p$ (m), cart speed $v$ (m/s), pendulum angle $\theta$ from upright (rad), its rate $\omega$ (rad/s) | starts at `(-2, 0, 0, 0)`; elsewhere on the card, cart positions are measured from the start, where the target is 2 m | a bigger start error presses the limits for longer |
-| $u_k$ | the motor current at tick $k$, measured from $u_s$, in amps | first move −1.000 A | — |
-| $\bar u$ | the driver's current limit | 1 A, which is 4 N | at 1.5 A even the clipped LQR copes |
-| $N$, $T$ | the horizon (how far ahead each plan looks), in ticks; one tick | 20 ticks of 0.05 s, 1 s ahead | longer: closer to the best over all time, more work |
-| $A$, $B$ | the 20 Hz model of [Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md) | the pendulum's lean grows by a factor of 1.2214 each tick on its own; $B$ = `(0.0050, 0.2002, -0.0068, -0.2739)` | — |
-| $Q$, $R$ | weights on state error and on current; $\top$ means transpose (a column turned into a row), so $x^{\top}Qx = 1\,p^2 + 0.1\,v^2 + 10\,\theta^2 + 0.1\,\omega^2$, a weighted sum of squares | $Q$ = diag(1, 0.1, 10, 0.1): these weights on the diagonal, zeros elsewhere; $R$ = 0.1 | bigger $R$: gentler current, slower arrival |
-| $P$, $K$, $K_p$ | the LQR's cost-to-go matrix (the best cost from state $x$ onwards is $x^{\top}Px$) and gain, from the Riccati equation (the LQR's equation for $P$); $K_p$ is the gain's entry on cart position | $K$ = `(-2.0838, -2.5703, -17.4541, -4.3411)` | — |
-| $U$ | the plan: all $N$ moves stacked in one column | 20 currents | — |
-| $H$, $F$ | the quadratic program's bowl (20 by 20) and its tilt per unit of state (20 by 4); inside them, $W_k$ is $Q$, or $P$ at $k = N$, and $S_{kj}$ is the effect of move $j$ on tick $k$; $i$, $j$ number the moves | built once, offline | — |
-| $J$ | the cost of the best plan, in cost units | 104.0446 at tick 0 | — |
-| $d$, $\hat d$, $e$ | an unmodelled steady push, in amps of motor current; its estimate; $e$, the surprise: the state measured minus the state the push-free model predicted one tick ago | 0.5 N push to the right, 0.125 A; estimate 0.1250 A | a bigger $d$ eats into the limit |
-| $r$, $C$, $x_s$, $u_s$ | the target cart position; $C$ picks $p$ out of the state, and $I$ is the identity matrix; the steady state and steady current that hold $p = r$ against $\hat d$ | 2 m; `(1, 0, 0, 0)`; `(2, 0, 0, 0)`; −0.125 A | — |
+| $`x_k`$, $`k`$ | the state $`k`$ ticks into the plan, measured from the target: cart position $`p`$ (m), cart speed $`v`$ (m/s), pendulum angle $`\theta`$ from upright (rad), its rate $`\omega`$ (rad/s) | starts at `(-2, 0, 0, 0)`; elsewhere on the card, cart positions are measured from the start, where the target is 2 m | a bigger start error presses the limits for longer |
+| $`u_k`$ | the motor current at tick $`k`$, measured from $`u_s`$, in amps | first move −1.000 A | — |
+| $`\bar u`$ | the driver's current limit | 1 A, which is 4 N | at 1.5 A even the clipped LQR copes |
+| $`N`$, $`T`$ | the horizon (how far ahead each plan looks), in ticks; one tick | 20 ticks of 0.05 s, 1 s ahead | longer: closer to the best over all time, more work |
+| $`A`$, $`B`$ | the 20 Hz model of [Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md) | the pendulum's lean grows by a factor of 1.2214 each tick on its own; $`B`$ = `(0.0050, 0.2002, -0.0068, -0.2739)` | — |
+| $`Q`$, $`R`$ | weights on state error and on current; $`\top`$ means transpose (a column turned into a row), so $`x^{\top}Qx = 1\,p^2 + 0.1\,v^2 + 10\,\theta^2 + 0.1\,\omega^2`$, a weighted sum of squares | $`Q`$ = diag(1, 0.1, 10, 0.1): these weights on the diagonal, zeros elsewhere; $`R`$ = 0.1 | bigger $`R`$: gentler current, slower arrival |
+| $`P`$, $`K`$, $`K_p`$ | the LQR's cost-to-go matrix (the best cost from state $`x`$ onwards is $`x^{\top}Px`$) and gain, from the Riccati equation (the LQR's equation for $`P`$); $`K_p`$ is the gain's entry on cart position | $`K`$ = `(-2.0838, -2.5703, -17.4541, -4.3411)` | — |
+| $`U`$ | the plan: all $`N`$ moves stacked in one column | 20 currents | — |
+| $`H`$, $`F`$ | the quadratic program's bowl (20 by 20) and its tilt per unit of state (20 by 4); inside them, $`W_k`$ is $`Q`$, or $`P`$ at $`k = N`$, and $`S_{kj}`$ is the effect of move $`j`$ on tick $`k`$; $`i`$, $`j`$ number the moves | built once, offline | — |
+| $`J`$ | the cost of the best plan, in cost units | 104.0446 at tick 0 | — |
+| $`d`$, $`\hat d`$, $`e`$ | an unmodelled steady push, in amps of motor current; its estimate; $`e`$, the surprise: the state measured minus the state the push-free model predicted one tick ago | 0.5 N push to the right, 0.125 A; estimate 0.1250 A | a bigger $`d`$ eats into the limit |
+| $`r`$, $`C`$, $`x_s`$, $`u_s`$ | the target cart position; $`C`$ picks $`p`$ out of the state, and $`I`$ is the identity matrix; the steady state and steady current that hold $`p = r`$ against $`\hat d`$ | 2 m; `(1, 0, 0, 0)`; `(2, 0, 0, 0)`; −0.125 A | — |
 
 ### When it holds
 
 - **The model is close to the plant.** The plan is only as good as its prediction. Here the model is exact, so the moves applied match the tick-0 plan to 1e-9. A real plant drifts from its model, and replanning from each new measurement is what corrects it.
 - **The state is known.** The code measures all four states. With one noisy encoder, they come from [The Kalman filter](07-kalman-filter.md), and [LQG](09-lqg-and-the-separation-principle.md) says when an estimate may stand in for the state. If the estimate is poor, every plan starts from the wrong place.
-- **The final state is priced right.** Price $x_N$ with the LQR's $P$ and a 20-tick plan works. Drop $P$ and shorten the horizon to 5 ticks, and the plan cannot see far enough. The cart runs to −2.2747 m by 2 s and the pendulum is past 0.5 rad at 2.30 s.
+- **The final state is priced right.** Price $`x_N`$ with the LQR's $`P`$ and a 20-tick plan works. Drop $`P`$ and shorten the horizon to 5 ticks, and the plan cannot see far enough. The cart runs to −2.2747 m by 2 s and the pendulum is past 0.5 rad at 2.30 s.
 - **The problem stays feasible.** Limits on the current alone can always be met: zero current obeys them. A limit on the state, say the end of the track, can become impossible after a disturbance, and then the solver has no answer. The standard fix is a soft constraint: a slack variable (a paid allowance for breaking the limit) with a large weight in the cost.
 - **The solver finishes inside one tick.** Here that is 20 variables, small enough to solve many times over inside one 0.05 s tick. Fast motors with long horizons need fast solvers; that is the job of the Optimization wing.
 
@@ -87,26 +93,26 @@ $$x_{k+1} = A x_k + B\,(u_k + d_k), \qquad d_{k+1} = d_k.$$
 
 ### Step 0: a plan is easy to check, a policy is hard to compute
 
-With a limit on the motor, the best move as a function of every possible state is a patchwork of pieces, no longer one matrix $K$. Computing it everywhere is the dynamic program of [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md) over four continuous numbers, which is hopeless. But the best plan from *one* state, the one measured now, is a small finite problem. Predictive control solves only that, every tick, and re-solves when the state changes.
+With a limit on the motor, the best move as a function of every possible state is a patchwork of pieces, no longer one matrix $`K`$. Computing it everywhere is the dynamic program of [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md) over four continuous numbers, which is hopeless. But the best plan from *one* state, the one measured now, is a small finite problem. Predictive control solves only that, every tick, and re-solves when the state changes.
 
 ### Step 1: substituting the model turns the plan into a quadratic program
 
-Run the model forward from $x_0$. The state after $k$ ticks is a sum: the free motion $A^k x_0$, plus each earlier move's effect, $A^{k-1-j} B\, u_j$ for move $j$. Every predicted state is therefore linear in $U$. The cost is a sum of squares of linear things, so it is quadratic in $U$: a bowl. The limits are a box. A convex bowl in a box has exactly one lowest point, and a solver can find it reliably.
+Run the model forward from $`x_0`$. The state after $`k`$ ticks is a sum: the free motion $`A^k x_0`$, plus each earlier move's effect, $`A^{k-1-j} B\, u_j`$ for move $`j`$. Every predicted state is therefore linear in $`U`$. The cost is a sum of squares of linear things, so it is quadratic in $`U`$: a bowl. The limits are a box. A convex bowl in a box has exactly one lowest point, and a solver can find it reliably.
 
 <details>
 <summary>The matrices, written out</summary>
 
-Write $S_{kj} = A^{k-1-j}B$ for the effect of move $j$ on the state at tick $k$ ($j < k$), and $W_k = Q$ for $k < N$, $W_N = P$. Then
+Write $`S_{kj} = A^{k-1-j}B`$ for the effect of move $`j`$ on the state at tick $`k`$ ($`j < k`$), and $`W_k = Q`$ for $`k < N`$, $`W_N = P`$. Then
 
-$$H_{ij} = R\,[i = j] + \sum_{k = \max(i,j)+1}^{N} S_{ki}^{\top} W_k\, S_{kj}, \qquad F_i = \sum_{k=i+1}^{N} S_{ki}^{\top} W_k\, A^k.$$
+$`\displaystyle H_{ij} = R\,[i = j] + \sum_{k = \max(i,j)+1}^{N} S_{ki}^{\top} W_k\, S_{kj}, \qquad F_i = \sum_{k=i+1}^{N} S_{ki}^{\top} W_k\, A^k.`$
 
-Here $[i = j]$ is 1 when $i = j$ and 0 otherwise. $H$ is positive definite (the bowl curves upwards in every direction) because $R > 0$. The code builds both once; each tick it only multiplies $F$ by the new state.
+Here $`[i = j]`$ is 1 when $`i = j`$ and 0 otherwise. $`H`$ is positive definite (the bowl curves upwards in every direction) because $`R > 0`$. The code builds both once; each tick it only multiplies $`F`$ by the new state.
 
 </details>
 
 ### Step 2: with no limit, the first planned move is the LQR move
 
-Take the limit away and the bowl's lowest point solves $HU = -F x_0$. With the final state priced by $P$, the 20-tick problem is exactly the infinite-horizon LQR problem cut at tick 20, because $x_N^{\top} P x_N$ is the true cost of everything after. The principle of optimality (every tail of a best plan is itself a best plan) from [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md) then makes the first move $-Kx_0$. The code finds −4.1675 A both ways. Predictive control is the LQR with the limit written in.
+Take the limit away and the bowl's lowest point solves $`HU = -F x_0`$. With the final state priced by $`P`$, the 20-tick problem is exactly the infinite-horizon LQR problem cut at tick 20, because $`x_N^{\top} P x_N`$ is the true cost of everything after. The principle of optimality (every tail of a best plan is itself a best plan) from [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md) then makes the first move $`-Kx_0`$. The code finds −4.1675 A both ways. Predictive control is the LQR with the limit written in.
 
 ### Step 3: with the limit, the answer is certified by its gradient
 
@@ -118,27 +124,31 @@ The code computes the slopes by a separate route, running the plan through the m
 
 ### Step 4: replan from the measurement, then the cost falls tick by tick
 
-Let $J(x)$ be the cost of the best plan from state $x$. At tick 0 the plan is $u_0, \dots, u_{19}$. At tick 1 one candidate is the old plan's tail, $u_1, \dots, u_{19}$, plus one new move: the LQR move $-Kx_{20}$.
+Let $`J(x)`$ be the cost of the best plan from state $`x`$. At tick 0 the plan is $`u_0, \dots, u_{19}`$. At tick 1 one candidate is the old plan's tail, $`u_1, \dots, u_{19}`$, plus one new move: the LQR move $`-Kx_{20}`$.
 
-If that move fits inside the limit, the candidate's cost is $J(x_0)$ minus the first stage cost $x_0^{\top}Qx_0 + Ru_0^2$. The reason is that $P$ satisfies the Riccati equation, so the new last stage plus the new final price add up to the old final price. The best plan at tick 1 costs no more than that candidate. So
+If that move fits inside the limit, the candidate's cost is $`J(x_0)`$ minus the first stage cost $`x_0^{\top}Qx_0 + Ru_0^2`$. The reason is that $`P`$ satisfies the Riccati equation, so the new last stage plus the new final price add up to the old final price. The best plan at tick 1 costs no more than that candidate. So
 
-$$J(x_1) \;\le\; J(x_0) - \left(x_0^{\top} Q\, x_0 + R\,u_0^2\right).$$
+```math
+J(x_1) \;\le\; J(x_0) - \left(x_0^{\top} Q\, x_0 + R\,u_0^2\right).
+```
 
 The cost falls by at least the stage cost every tick, and it can never go below zero. So the stage costs shrink to zero, and the state goes to the target. The cost is a Lyapunov function (an energy-like number that can only fall), as in [Stability of a state-space model](05-hurwitz-schur-and-lyapunov-stability.md). Along this run the drop is exactly the stage cost: 4.1000, then 4.1320. The cost never rises in 120 ticks.
 
-The condition is that the LQR move at the end of the plan fits inside the limit. Designs that need a guarantee add it as a terminal constraint: $x_N$ must lie in a set where the LQR never asks for more than $\bar u$ and never leaves the set. Such a set is control invariant (once inside, a move exists that keeps you inside). Feasibility then carries from one tick to the next: the shifted plan is always available.
+The condition is that the LQR move at the end of the plan fits inside the limit. Designs that need a guarantee add it as a terminal constraint: $`x_N`$ must lie in a set where the LQR never asks for more than $`\bar u`$ and never leaves the set. Such a set is control invariant (once inside, a move exists that keeps you inside). Feasibility then carries from one tick to the next: the shifted plan is always available.
 
 ### Step 5: a disturbance state removes the offset
 
-Push the cart with a steady 0.5 N to the right, towards the target, that the model does not know about: a slight slope in the track, say. The predictor keeps predicting a push-free world. At rest the plant needs −0.125 A of current to cancel the push, and the only way the controller makes that current is from an error: $-K_p(p - r) = -0.125$. So it parks off target by $0.125/K_p$.
+Push the cart with a steady 0.5 N to the right, towards the target, that the model does not know about: a slight slope in the track, say. The predictor keeps predicting a push-free world. At rest the plant needs −0.125 A of current to cancel the push, and the only way the controller makes that current is from an error: $`-K_p(p - r) = -0.125`$. So it parks off target by $`0.125/K_p`$.
 
-That is short of the target, although the push points at it, because $K_p$ is negative: the LQR answers a cart that is short with a push left, the lean-first move of the overview.
+That is short of the target, although the push points at it, because $`K_p`$ is negative: the LQR answers a cart that is short with a push left, the lean-first move of the overview.
 
-The fix is to put the push into the model as a state that does not change, $d_{k+1} = d_k$, and estimate it. Each tick, the surprise $e$ is the state measured minus the state the push-free model predicted one tick ago. Here it is exactly $B d$. The part of $e$ that looks like extra current, $B^{\top}e / B^{\top}B$, is a fresh reading of $d$. The estimate moves a fifth of the way towards it each tick. Then the target is recomputed by solving
+The fix is to put the push into the model as a state that does not change, $`d_{k+1} = d_k`$, and estimate it. Each tick, the surprise $`e`$ is the state measured minus the state the push-free model predicted one tick ago. Here it is exactly $`B d`$. The part of $`e`$ that looks like extra current, $`B^{\top}e / B^{\top}B`$, is a fresh reading of $`d`$. The estimate moves a fifth of the way towards it each tick. Then the target is recomputed by solving
 
-$$\begin{pmatrix} A - I & B \\ C & 0 \end{pmatrix}\begin{pmatrix} x_s \\ u_s \end{pmatrix} = \begin{pmatrix} -B\hat d \\ r \end{pmatrix},$$
+```math
+\begin{pmatrix} A - I & B \\ C & 0 \end{pmatrix}\begin{pmatrix} x_s \\ u_s \end{pmatrix} = \begin{pmatrix} -B\hat d \\ r \end{pmatrix},
+```
 
-which here gives $x_s$ = `(2, 0, 0, 0)` and $u_s = -\hat d$. The plan is made about $(x_s, u_s)$. The estimate stops moving only when it equals the reading, so it settles on the true push, and the cart settles at $p = r$. The argument needs only that the steady state exists and that the push is visible in the surprise. For the cart and pendulum both hold, since the 5-by-5 matrix above is invertible.
+which here gives $`x_s`$ = `(2, 0, 0, 0)` and $`u_s = -\hat d`$. The plan is made about $`(x_s, u_s)`$. The estimate stops moving only when it equals the reading, so it settles on the true push, and the cart settles at $`p = r`$. The argument needs only that the steady state exists and that the push is visible in the surprise. For the cart and pendulum both hold, since the 5-by-5 matrix above is invertible.
 
 ---
 
@@ -148,16 +158,16 @@ From rest, 2 m short of the target, current limit 1 A; then the same move agains
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| LQR's first request | $-K x_0 = -(-2.0838) \times (-2)$ | −4.1675 A |
+| LQR's first request | $`-K x_0 = -(-2.0838) \times (-2)`$ | −4.1675 A |
 | against the limit | more than four times 1 A | plan's first move −1.000 A |
-| first stage cost | $1 \times (-2)^2 + 0.1 \times (-1)^2$ | 4.1000 |
+| first stage cost | $`1 \times (-2)^2 + 0.1 \times (-1)^2`$ | 4.1000 |
 | cost of the best plan, tick 0 then tick 1 | 104.0446 → 99.9446 | drop 4.1000 |
 | push, as motor current | 0.5 N ÷ 4 N/A | 0.125 A |
-| plain predictive control, parked offset | $0.125 / K_p = 0.125/(-2.0838)$ | −0.0600 m: parks at 1.9400 m |
-| offset-free: steady current | $u_s = -\hat d$ | −0.1250 A |
-| **offset-free: cart at 9.95 s** | settles on $r$ | **2.0000 m** |
+| plain predictive control, parked offset | $`0.125 / K_p = 0.125/(-2.0838)`$ | −0.0600 m: parks at 1.9400 m |
+| offset-free: steady current | $`u_s = -\hat d`$ | −0.1250 A |
+| **offset-free: cart at 9.95 s** | settles on $`r`$ | **2.0000 m** |
 
-The cart reaches the target and stays there. The motor holds −0.1250 A, which cancels the push exactly, and the estimate $\hat d$ has settled on 0.1250 A.
+The cart reaches the target and stays there. The motor holds −0.1250 A, which cancels the push exactly, and the estimate $`\hat d`$ has settled on 0.1250 A.
 
 ### What breaks if you drop a piece
 
@@ -166,7 +176,7 @@ The cart reaches the target and stays there. The motor holds −0.1250 A, which 
 | Clip the LQR move instead of planning with the limit | pendulum past 0.5 rad at 0.60 s | The LQR assumes it can always push harder later. Clipped, it commits too long to the first push and cannot catch the pendulum. |
 | No disturbance state | parks at 1.9400 m, 0.0600 m short | The plan keeps aiming for a push-free world; only an error can produce the current the push needs |
 | Apply the whole tick-0 plan without replanning, with the push | angle −1.0904 rad at 1 s, planned 0.0282, on the linear model; far outside its range, the real pendulum has fallen | An unstable plant amplifies every prediction error; only feedback from new measurements corrects them |
-| Horizon 5 ticks, final state priced by $Q$ instead of $P$ | cart at −2.2747 m at 2 s, pendulum past 0.5 rad at 2.30 s | A quarter-second view sees a cheap plan that leaves the pendulum's unstable mode for later |
+| Horizon 5 ticks, final state priced by $`Q`$ instead of $`P`$ | cart at −2.2747 m at 2 s, pendulum past 0.5 rad at 2.30 s | A quarter-second view sees a cheap plan that leaves the pendulum's unstable mode for later |
 
 ---
 
@@ -188,7 +198,7 @@ Here is the 0.5 N push story, cart position in metres:
 
 Both start by stepping back, −0.06 m and −0.07 m at 0.5 s, before setting off. The plain version replans every tick from the true state, so the pendulum stays up and the cart arrives.
 
-But at 1.94 m each plan promises to close the last 0.0600 m, and its first move is exactly cancelled by the push. The next tick starts from the same place, and promises the same again. The version with the disturbance state keeps refining $\hat d$ until it agrees with what it measures, and its target current moves to −0.125 A.
+But at 1.94 m each plan promises to close the last 0.0600 m, and its first move is exactly cancelled by the push. The next tick starts from the same place, and promises the same again. The version with the disturbance state keeps refining $`\hat d`$ until it agrees with what it measures, and its target current moves to −0.125 A.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -206,9 +216,9 @@ The first line (orange) is plain predictive control, which parks at 1.94 m. The 
 
 ## Code, from first principles, and it actually runs
 
-The script discretises the plant itself (Van Loan's exponential of a 5-by-5 matrix, as in [Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md)) and finds the LQR by iterating the Riccati equation. It builds $H$ and $F$, then reaches the tick-0 plan by **three independent roads**.
+The script discretises the plant itself (Van Loan's exponential of a 5-by-5 matrix, as in [Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md)) and finds the LQR by iterating the Riccati equation. It builds $`H`$ and $`F`$, then reaches the tick-0 plan by **three independent roads**.
 
-Road 1 is an active-set solver: fix the moves that want to break a limit at the limit, solve the rest exactly, release any limit the slopes say is wrong, repeat. Road 2 is an accelerated projected gradient method: roll downhill, clip to the box, 20,000 times. Road 3 is the costate certificate of Step 3, which never touches $H$. A fourth check removes the limit and compares with the LQR.
+Road 1 is an active-set solver: fix the moves that want to break a limit at the limit, solve the rest exactly, release any limit the slopes say is wrong, repeat. Road 2 is an accelerated projected gradient method: roll downhill, clip to the box, 20,000 times. Road 3 is the costate certificate of Step 3, which never touches $`H`$. A fourth check removes the limit and compares with the LQR.
 
 The script then runs the closed loop for 6 s and 10 s and reproduces every row of the tables above. In the code and its output, MPC (model predictive control) means predictive control, and QP means quadratic program.
 
@@ -385,7 +395,7 @@ chart p, offset-free 0.00 -0.07 0.59 1.30 1.74 1.94 2.02 2.03 2.02 2.01 2.01 2.0
 ALL CHECKS PASS
 ```
 
-The projected gradient method lands within 2.51e-04 A of the active-set plan; it is slow because the bowl is long and thin, which is why real solvers use active sets or interior points (methods that approach the best plan from inside the box). When the plan's one second runs out, the cart is only at 0.6035 m of its 2 m: the final price $P$ is what makes a 1-second plan aim at a 6-second journey.
+The projected gradient method lands within 2.51e-04 A of the active-set plan; it is slow because the bowl is long and thin, which is why real solvers use active sets or interior points (methods that approach the best plan from inside the box). When the plan's one second runs out, the cart is only at 0.6035 m of its 2 m: the final price $`P`$ is what makes a 1-second plan aim at a 6-second journey.
 
 ### Rust
 
@@ -596,12 +606,12 @@ ALL CHECKS PASS
 
 Lean proves Steps 3 and 4 for any number of states and any horizon, plus the hand arithmetic.
 
-- Suppose $P$ solves the Riccati equation, $U$ is a best plan from $x_0$, and the LQR move at its end fits inside the limit. Then $J(x_1) \le J(x_0) - (x_0^{\top} Q\, x_0 + R\,u_0^2)$.
+- Suppose $`P`$ solves the Riccati equation, $`U`$ is a best plan from $`x_0`$, and the LQR move at its end fits inside the limit. Then $`J(x_1) \le J(x_0) - (x_0^{\top} Q\, x_0 + R\,u_0^2)`$.
 - Take a bowl that never curves downwards, inside a box, and a plan in the box that passes the KKT conditions. Then no plan in the box costs less.
-- Suppose the cost never goes below zero and falls by at least the stage cost every tick, with $Q$ positive definite and $R \ge 0$. Then the stage costs shrink to zero, and the state goes to the target.
+- Suppose the cost never goes below zero and falls by at least the stage cost every tick, with $`Q`$ positive definite and $`R \ge 0`$. Then the stage costs shrink to zero, and the state goes to the target.
 - The hand arithmetic holds: the first stage cost 4.1000, the drop from 104.0446 to 99.9446, and the push of 0.125 A. Twenty ticks of 0.05 s make the 1 s horizon, and 120 ticks make the 6 s run.
 
-Lean does not compute plans, $P$ or $K$; those, and the run's numbers, are left to the Python and Rust checks.
+Lean does not compute plans, $`P`$ or $`K`$; those, and the run's numbers, are left to the Python and Rust checks.
 
 ```lean
 -- Predictive control: when the final state is priced by a Riccati solution and the LQR move at the end of the best plan fits inside the limit, the best plan's cost falls by at least the stage cost each tick; a plan in the box that passes the KKT slope test is the best plan; and a cost that falls by the stage cost drives the state to the target.
@@ -870,7 +880,7 @@ example : (20 : ℚ) * (1 / 20) = 1 ∧ (120 : ℚ) * (1 / 20) = 6 ∧ (119 : �
 
 > [!TIP]
 > **Try changing**
-> - Guess first: does a 10-tick horizon, still priced by $P$, change much? That is `build(10, P)` in the script. The peak angle goes from 0.2190 to 0.2223 rad. With the right final price, a short plan loses little.
+> - Guess first: does a 10-tick horizon, still priced by $`P`$, change much? That is `build(10, P)` in the script. The peak angle goes from 0.2190 to 0.2223 rad. With the right final price, a short plan loses little.
 > - Guess first: with a 1.5 A limit, does the clipped LQR still fall? That is `run("clip", 0.0, 120, um=1.5)`. It never passes 0.5 rad. Clipping fails only when the limit binds hard.
 > - Guess first: a tighter 0.5 A limit, more lean or less? That is `um=0.5` on the `mpc` run. Peak angle 0.1425 rad, and the cart is still at 2.0006 m at 5.95 s. A weaker push makes the plan tip the pendulum less.
 > - Guess first: double the push to 1 N (`2 * D`). Does the offset come back? With the disturbance state the cart still ends at 2.0000 m, holding −0.2500 A.
@@ -883,7 +893,7 @@ example : (20 : ℚ) * (1 / 20) = 1 ∧ (120 : ℚ) * (1 / 20) = 6 ∧ (119 : �
 > **Treating the plan as the output.** The plan is 20 moves long, and it is thrown away after one. Running the tick-0 plan to the end, with a 0.5 N push the model does not know, leaves the pendulum at −1.0904 rad after 1 s where the plan promised 0.0282 rad. That is the linear model's number, far outside its range: the real pendulum has fallen. The point of the method is the replanning: the plan is how the first move is chosen, and feedback comes from planning again from each new measurement.
 >
 > - **Clipping a design made without the limit.** The LQR's move is optimal only if the motor can deliver it. Clipped, it fell after 0.60 s; planned with the limit, it lands at 2.0001 m.
-> - **Forgetting the final price.** Price only the first 5 ticks and the cart runs to −2.2747 m by 2 s. A horizon short enough to compute fast needs $P$ on its last state.
+> - **Forgetting the final price.** Price only the first 5 ticks and the cart runs to −2.2747 m by 2 s. A horizon short enough to compute fast needs $`P`$ on its last state.
 > - **Expecting replanning to remove offset by itself.** Replanning from the true state still parks at 1.9400 m against a 0.5 N push. Only a disturbance state, estimated and fed into the target, removes it.
 > - **Putting hard limits on states.** A track-end limit can make the problem impossible after a big disturbance, and then the solver returns nothing. Soften state limits with a weighted slack; keep only the physical ones, like the current, hard.
 
@@ -904,9 +914,9 @@ example : (20 : ℚ) * (1 / 20) = 1 ∧ (120 : ℚ) * (1 / 20) = 6 ∧ (119 : �
 
 ## What this builds on
 
-- [The LQR](06-linear-quadratic-regulator.md): the gain $K$ and the cost-to-go matrix $P$; here $P$ prices the last state of every plan, and $K$ is the answer when no limit binds.
+- [The LQR](06-linear-quadratic-regulator.md): the gain $`K`$ and the cost-to-go matrix $`P`$; here $`P`$ prices the last state of every plan, and $`K`$ is the answer when no limit binds.
 - [Linearisation](02-linearisation-about-an-equilibrium.md): the straight-line model of the pendulum near upright, which every plan runs on and which fails far from upright.
-- [Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md): the zero-order-hold model $A$, $B$ that the plan runs forward 20 times.
+- [Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md): the zero-order-hold model $`A`$, $`B`$ that the plan runs forward 20 times.
 - [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md): the principle of optimality, which makes the plan's tail optimal and gives the cost-falls-every-tick argument.
 
 ## Where this goes next

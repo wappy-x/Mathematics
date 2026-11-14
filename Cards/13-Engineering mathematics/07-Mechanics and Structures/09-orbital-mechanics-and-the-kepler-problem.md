@@ -26,37 +26,41 @@ Drawn to scale, 1 unit = 200 km. The 300 km orbit is the dashed ring on Earth's 
 
 ## The formula
 
-Notation first. Put the Earth's centre at the origin and describe the satellite in polar coordinates ([Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md)): distance $r$ from the centre and angle $\theta$ ("theta") measured from the orbit's lowest point. A dot over a letter means its rate of change in time $t$: $\dot\theta$ is how fast the angle turns, in radians per second. Gravity's strength is one constant, $\mu = GM$ ("mu"), the gravitational constant times the Earth's mass.
+Notation first. Put the Earth's centre at the origin and describe the satellite in polar coordinates ([Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md)): distance $`r`$ from the centre and angle $`\theta`$ ("theta") measured from the orbit's lowest point. A dot over a letter means its rate of change in time $`t`$: $`\dot\theta`$ is how fast the angle turns, in radians per second. Gravity's strength is one constant, $`\mu = GM`$ ("mu"), the gravitational constant times the Earth's mass.
 
-$$r = \frac{p}{1 + e\cos\theta}, \qquad r^2\dot\theta = h, \qquad T = 2\pi\sqrt{\frac{a^3}{\mu}}, \qquad v^2 = \mu\left(\frac{2}{r} - \frac{1}{a}\right)$$
+```math
+r = \frac{p}{1 + e\cos\theta}, \qquad r^2\dot\theta = h, \qquad T = 2\pi\sqrt{\frac{a^3}{\mu}}, \qquad v^2 = \mu\left(\frac{2}{r} - \frac{1}{a}\right)
+```
 
 **Read it aloud:** the orbit is a conic with the Earth at its focus; the distance squared times the turning rate never changes; the time round grows as the long half-axis to the power one and a half; and the speed at any point follows from the distance there and the orbit's size.
 
-The two burns between circles of radius $r_1$ and $r_2$ use the last formula with the transfer ellipse's $a = (r_1 + r_2)/2$:
+The two burns between circles of radius $`r_1`$ and $`r_2`$ use the last formula with the transfer ellipse's $`a = (r_1 + r_2)/2`$:
 
-$$\Delta v_1 = \sqrt{\mu\left(\tfrac{2}{r_1} - \tfrac{1}{a}\right)} - \sqrt{\tfrac{\mu}{r_1}}, \qquad \Delta v_2 = \sqrt{\tfrac{\mu}{r_2}} - \sqrt{\mu\left(\tfrac{2}{r_2} - \tfrac{1}{a}\right)}$$
+```math
+\Delta v_1 = \sqrt{\mu\left(\tfrac{2}{r_1} - \tfrac{1}{a}\right)} - \sqrt{\tfrac{\mu}{r_1}}, \qquad \Delta v_2 = \sqrt{\tfrac{\mu}{r_2}} - \sqrt{\mu\left(\tfrac{2}{r_2} - \tfrac{1}{a}\right)}
+```
 
 **Read it aloud:** each burn is the speed you need on the new orbit minus the speed you have on the old one, at the point where they touch.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mu = GM$ | Earth's gravity strength: constant $G$ times Earth's mass $M$ (strictly $G(M + m)$, $m$ the satellite's mass) | 3.986004418 × 10¹⁴ m³/s² | every orbit speeds up; same orbit, shorter period |
-| $r$, $\mathbf r$, $r_1$, $r_2$, $r_p$, $r_a$ | distance from Earth's centre, not height; $\mathbf r$ the arrow from Earth to satellite; the low and high circles; an ellipse's lowest and highest distances | 6,678.14 km; 42,164.17 km | circular speed falls |
-| $\theta$, $t$ | angle from the lowest point; time | 0 at burn 1, 180° at burn 2 | — |
-| $h$ | angular momentum per kilogram, $r^2\dot\theta$: the "turning amount" gravity cannot change | 67.7931 × 10⁹ m²/s on the transfer | wider orbit, more area per hour |
-| $p$, $u$, $c$, $C$, $\theta_0$ | the conic's width parameter $h^2/\mu$; $u = 1/r$, used in the proof; $c = 1/p$, $C$ and $\theta_0$ the constants of the proof's general solution | 11,530.09 km | larger orbit |
-| $e$ | eccentricity: how stretched the conic is (0 circle, below 1 ellipse, 1 parabola, above 1 hyperbola) | 0.7265 on the transfer | lowest point drops, highest rises |
-| $a$, $b$ | long and short half-axes of the ellipse | 24,421.15 km; $b = \sqrt{r_1 r_2}$ on the transfer | longer period, less negative energy |
-| $v$, $v_p$, $v_a$ | speed; speed at the lowest point (**perigee**) and highest (**apogee**) | 10,151.49 and 1,607.84 m/s | — |
-| $T$ | period: time for one lap | 90.52 min low, 10.55 h transfer, 86,164.10 s high | — |
-| $E$ | orbital energy per kilogram, $\tfrac12 v^2 - \mu/r$ | $-\mu/(2a)$ | orbit grows; at 0 it escapes |
-| $\Delta v$ | "delta-v": speed added by a burn | 2,425.73 + 1,466.82 = 3,892.56 m/s | more fuel |
-| $\omega_E$, $J_2$ | Earth's spin rate; its flattening term (how much the equator bulges) | 7.292115 × 10⁻⁵ rad/s; 1.0826359 × 10⁻³ | faster spin: lower geostationary circle; bigger bulge: orbit planes turn faster |
+| $`\mu = GM`$ | Earth's gravity strength: constant $`G`$ times Earth's mass $`M`$ (strictly $`G(M + m)`$, $`m`$ the satellite's mass) | 3.986004418 × 10¹⁴ m³/s² | every orbit speeds up; same orbit, shorter period |
+| $`r`$, $`\mathbf r`$, $`r_1`$, $`r_2`$, $`r_p`$, $`r_a`$ | distance from Earth's centre, not height; $`\mathbf r`$ the arrow from Earth to satellite; the low and high circles; an ellipse's lowest and highest distances | 6,678.14 km; 42,164.17 km | circular speed falls |
+| $`\theta`$, $`t`$ | angle from the lowest point; time | 0 at burn 1, 180° at burn 2 | — |
+| $`h`$ | angular momentum per kilogram, $`r^2\dot\theta`$: the "turning amount" gravity cannot change | 67.7931 × 10⁹ m²/s on the transfer | wider orbit, more area per hour |
+| $`p`$, $`u`$, $`c`$, $`C`$, $`\theta_0`$ | the conic's width parameter $`h^2/\mu`$; $`u = 1/r`$, used in the proof; $`c = 1/p`$, $`C`$ and $`\theta_0`$ the constants of the proof's general solution | 11,530.09 km | larger orbit |
+| $`e`$ | eccentricity: how stretched the conic is (0 circle, below 1 ellipse, 1 parabola, above 1 hyperbola) | 0.7265 on the transfer | lowest point drops, highest rises |
+| $`a`$, $`b`$ | long and short half-axes of the ellipse | 24,421.15 km; $`b = \sqrt{r_1 r_2}`$ on the transfer | longer period, less negative energy |
+| $`v`$, $`v_p`$, $`v_a`$ | speed; speed at the lowest point (**perigee**) and highest (**apogee**) | 10,151.49 and 1,607.84 m/s | — |
+| $`T`$ | period: time for one lap | 90.52 min low, 10.55 h transfer, 86,164.10 s high | — |
+| $`E`$ | orbital energy per kilogram, $`\tfrac12 v^2 - \mu/r`$ | $`-\mu/(2a)`$ | orbit grows; at 0 it escapes |
+| $`\Delta v`$ | "delta-v": speed added by a burn | 2,425.73 + 1,466.82 = 3,892.56 m/s | more fuel |
+| $`\omega_E`$, $`J_2`$ | Earth's spin rate; its flattening term (how much the equator bulges) | 7.292115 × 10⁻⁵ rad/s; 1.0826359 × 10⁻³ | faster spin: lower geostationary circle; bigger bulge: orbit planes turn faster |
 
 ### When it holds
 
-- **Point masses, gravity only.** The Earth is not a sphere: its equator bulges. That bulge, $J_2$, turns the plane of a 300 km orbit tilted 28.5° to the equator by **7.46° per day**, by the standard formula for this drift (Curtis, in Sources; not derived on this card).
-- **Burns that take no time.** A chemical motor burns for minutes against a 5.28-hour coast, so the kick model fits. A gentle steady push of 0.02 m/s², chosen so the simulation runs in seconds, takes 2.68 days and spirals out; it needs **4,629.00 m/s**, not 3,892.56. Real electric thrusters push far more gently. Eutelsat 172B's all-electric climb to geostationary orbit took four months, which the European Space Agency (ESA) reported as the fastest of its kind. It started from a transfer ellipse, not from 300 km (ESA, in Sources). At such gentle pushes the cost tends to the spiral rule, $v_1 - v_2$ = 4,651.10 m/s. See What breaks.
+- **Point masses, gravity only.** The Earth is not a sphere: its equator bulges. That bulge, $`J_2`$, turns the plane of a 300 km orbit tilted 28.5° to the equator by **7.46° per day**, by the standard formula for this drift (Curtis, in Sources; not derived on this card).
+- **Burns that take no time.** A chemical motor burns for minutes against a 5.28-hour coast, so the kick model fits. A gentle steady push of 0.02 m/s², chosen so the simulation runs in seconds, takes 2.68 days and spirals out; it needs **4,629.00 m/s**, not 3,892.56. Real electric thrusters push far more gently. Eutelsat 172B's all-electric climb to geostationary orbit took four months, which the European Space Agency (ESA) reported as the fastest of its kind. It started from a transfer ellipse, not from 300 km (ESA, in Sources). At such gentle pushes the cost tends to the spiral rule, $`v_1 - v_2`$ = 4,651.10 m/s. See What breaks.
 - **One plane.** A launch from off the equator leaves the orbit tilted, and turning the plane costs extra speed not counted here.
 - **Two bodies, no air.** At 300 km thin air slowly drags the orbit down; at geostationary height the Moon and Sun tug the orbit's tilt. Both are small over one transfer, large over years.
 
@@ -66,79 +70,91 @@ $$\Delta v_1 = \sqrt{\mu\left(\tfrac{2}{r_1} - \tfrac{1}{a}\right)} - \sqrt{\tfr
 
 ### Step 0: the pull points at one place, so two quantities never change
 
-A force aimed at the centre cannot twist the satellite round it, so the turning amount $h$ stays fixed. Gravity depends only on distance, so energy stays fixed too. The inverse square then makes the path close on itself, as a conic.
+A force aimed at the centre cannot twist the satellite round it, so the turning amount $`h`$ stays fixed. Gravity depends only on distance, so energy stays fixed too. The inverse square then makes the path close on itself, as a conic.
 
 ### Step 1: two bodies become one
 
 The Earth is pulled by the satellite as hard as the satellite by the Earth ([Newton's laws](01-newtons-laws-work-and-energy.md)). Subtract the two accelerations, and the satellite's position *relative to* Earth obeys
 
-$$\ddot{\mathbf r} = -\frac{\mu}{r^3}\,\mathbf r, \qquad \mu = G(M + m) \approx GM.$$
+```math
+\ddot{\mathbf r} = -\frac{\mu}{r^3}\,\mathbf r, \qquad \mu = G(M + m) \approx GM.
+```
 
-Two dots mean acceleration. The arrow $\mathbf r$ points from Earth to satellite, length $r$; the minus sign aims the pull back at Earth, with size $\mu/r^2$.
+Two dots mean acceleration. The arrow $`\mathbf r`$ points from Earth to satellite, length $`r`$; the minus sign aims the pull back at Earth, with size $`\mu/r^2`$.
 
 ### Step 2: equal areas in equal times (Kepler's second law)
 
-In polar coordinates, acceleration has two parts: outward, $\ddot r - r\dot\theta^2$, and sideways, $\tfrac{1}{r}\tfrac{d}{dt}(r^2\dot\theta)$. Gravity has no sideways part, so $r^2\dot\theta$ does not change. Call it $h$.
+In polar coordinates, acceleration has two parts: outward, $`\ddot r - r\dot\theta^2`$, and sideways, $`\tfrac{1}{r}\tfrac{d}{dt}(r^2\dot\theta)`$. Gravity has no sideways part, so $`r^2\dot\theta`$ does not change. Call it $`h`$.
 
-In a short time $dt$ the line from Earth to satellite sweeps a thin triangle of area $\tfrac12 r \cdot r\,d\theta$. So area grows at $\tfrac12 r^2\dot\theta = h/2$, a constant. On the transfer, that is 122.03 × 10¹² m² every hour, low or high.
+In a short time $`dt`$ the line from Earth to satellite sweeps a thin triangle of area $`\tfrac12 r \cdot r\,d\theta`$. So area grows at $`\tfrac12 r^2\dot\theta = h/2`$, a constant. On the transfer, that is 122.03 × 10¹² m² every hour, low or high.
 
 <details>
 <summary>Detailed derivation: acceleration in polar coordinates</summary>
 
-Write the position as $r(\cos\theta, \sin\theta)$. Call the outward unit arrow $\hat{\mathbf r} = (\cos\theta, \sin\theta)$ and the sideways one $\hat{\boldsymbol\theta} = (-\sin\theta, \cos\theta)$; turning the angle moves each into the other, $\dot{\hat{\mathbf r}} = \dot\theta\,\hat{\boldsymbol\theta}$ and $\dot{\hat{\boldsymbol\theta}} = -\dot\theta\,\hat{\mathbf r}$. (Here a hat means a unit arrow.) Differentiate $r\hat{\mathbf r}$ once: velocity $\dot r\,\hat{\mathbf r} + r\dot\theta\,\hat{\boldsymbol\theta}$. Again:
+Write the position as $`r(\cos\theta, \sin\theta)`$. Call the outward unit arrow $`\hat{\mathbf r} = (\cos\theta, \sin\theta)`$ and the sideways one $`\hat{\boldsymbol\theta} = (-\sin\theta, \cos\theta)`$; turning the angle moves each into the other, $`\dot{\hat{\mathbf r}} = \dot\theta\,\hat{\boldsymbol\theta}`$ and $`\dot{\hat{\boldsymbol\theta}} = -\dot\theta\,\hat{\mathbf r}`$. (Here a hat means a unit arrow.) Differentiate $`r\hat{\mathbf r}`$ once: velocity $`\dot r\,\hat{\mathbf r} + r\dot\theta\,\hat{\boldsymbol\theta}`$. Again:
 
-$$\ddot{\mathbf r} = (\ddot r - r\dot\theta^2)\,\hat{\mathbf r} + (2\dot r\dot\theta + r\ddot\theta)\,\hat{\boldsymbol\theta}.$$
+$`\displaystyle \ddot{\mathbf r} = (\ddot r - r\dot\theta^2)\,\hat{\mathbf r} + (2\dot r\dot\theta + r\ddot\theta)\,\hat{\boldsymbol\theta}.`$
 
-The sideways bracket equals $\tfrac{1}{r}\tfrac{d}{dt}(r^2\dot\theta)$: expand the derivative and divide by $r$.
+The sideways bracket equals $`\tfrac{1}{r}\tfrac{d}{dt}(r^2\dot\theta)`$: expand the derivative and divide by $`r`$.
 
 </details>
 
 ### Step 3: the path is a conic (Kepler's first law)
 
-The outward part of Step 1 reads $\ddot r - r\dot\theta^2 = -\mu/r^2$. The trick is to stop timing the satellite by $t$ and time it by $\theta$ instead, and to work with $u = 1/r$. Because $\dot\theta = hu^2$, every time derivative turns into $hu^2$ times a $\theta$ derivative, and the equation becomes
+The outward part of Step 1 reads $`\ddot r - r\dot\theta^2 = -\mu/r^2`$. The trick is to stop timing the satellite by $`t`$ and time it by $`\theta`$ instead, and to work with $`u = 1/r`$. Because $`\dot\theta = hu^2`$, every time derivative turns into $`hu^2`$ times a $`\theta`$ derivative, and the equation becomes
 
-$$\frac{d^2u}{d\theta^2} + u = \frac{\mu}{h^2}.$$
+```math
+\frac{d^2u}{d\theta^2} + u = \frac{\mu}{h^2}.
+```
 
-That is the equation of a spring pushed by a steady force. Its solutions are the steady part plus a cosine: $u = \tfrac{\mu}{h^2}(1 + e\cos\theta)$, where $e$ is set by the start and $\theta$ is counted from the lowest point. Flip back to $r$:
+That is the equation of a spring pushed by a steady force. Its solutions are the steady part plus a cosine: $`u = \tfrac{\mu}{h^2}(1 + e\cos\theta)`$, where $`e`$ is set by the start and $`\theta`$ is counted from the lowest point. Flip back to $`r`$:
 
-$$r = \frac{p}{1 + e\cos\theta}, \qquad p = \frac{h^2}{\mu}.$$
+```math
+r = \frac{p}{1 + e\cos\theta}, \qquad p = \frac{h^2}{\mu}.
+```
 
-This is the polar equation of a conic with its focus at the origin. For $e$ below 1 the bottom line never reaches zero, so $r$ stays finite: the orbit is an ellipse. Its lowest and highest distances are $p/(1+e)$ and $p/(1-e)$, so its long half-axis is $a = p/(1 - e^2)$ and its focus sits $ae$ from the centre, as on [Ellipses and hyperbolas](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/05-ellipses-and-hyperbolas.md).
+This is the polar equation of a conic with its focus at the origin. For $`e`$ below 1 the bottom line never reaches zero, so $`r`$ stays finite: the orbit is an ellipse. Its lowest and highest distances are $`p/(1+e)`$ and $`p/(1-e)`$, so its long half-axis is $`a = p/(1 - e^2)`$ and its focus sits $`ae`$ from the centre, as on [Ellipses and hyperbolas](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/05-ellipses-and-hyperbolas.md).
 
-For the transfer, $p$ = 11,530.09 km and $e$ = 0.7265 give 6,678.14 km at the bottom and 42,164.17 km at the top.
+For the transfer, $`p`$ = 11,530.09 km and $`e`$ = 0.7265 give 6,678.14 km at the bottom and 42,164.17 km at the top.
 
 <details>
 <summary>Detailed derivation: the orbit equation in u and θ</summary>
 
-By the chain rule, $\dot r = \frac{d}{dt}\frac1u = -\frac{1}{u^2}\frac{du}{d\theta}\dot\theta = -h\frac{du}{d\theta}$, using $\dot\theta = hu^2$. Again: $\ddot r = -h\frac{d^2u}{d\theta^2}\dot\theta = -h^2u^2\frac{d^2u}{d\theta^2}$. And $r\dot\theta^2 = \frac1u h^2u^4 = h^2u^3$. Substitute in $\ddot r - r\dot\theta^2 = -\mu u^2$ and divide by $-h^2u^2$. The general solution of $u'' + u = c$ (each prime is one derivative in $\theta$) is $c + C\cos(\theta - \theta_0)$; measuring $\theta$ from the lowest point sets $\theta_0 = 0$, and $e = Ch^2/\mu$.
+By the chain rule, $`\dot r = \frac{d}{dt}\frac1u = -\frac{1}{u^2}\frac{du}{d\theta}\dot\theta = -h\frac{du}{d\theta}`$, using $`\dot\theta = hu^2`$. Again: $`\ddot r = -h\frac{d^2u}{d\theta^2}\dot\theta = -h^2u^2\frac{d^2u}{d\theta^2}`$. And $`r\dot\theta^2 = \frac1u h^2u^4 = h^2u^3`$. Substitute in $`\ddot r - r\dot\theta^2 = -\mu u^2`$ and divide by $`-h^2u^2`$. The general solution of $`u'' + u = c`$ (each prime is one derivative in $`\theta`$) is $`c + C\cos(\theta - \theta_0)`$; measuring $`\theta`$ from the lowest point sets $`\theta_0 = 0`$, and $`e = Ch^2/\mu`$.
 
 </details>
 
 ### Step 4: energy fixes the size, and gives the speed anywhere
 
-Energy per kilogram is $E = \tfrac12 v^2 - \mu/r$: motion minus the depth of the gravity well. At the lowest and highest points the satellite moves square to the radius, so $v = h/r$ there and
+Energy per kilogram is $`E = \tfrac12 v^2 - \mu/r`$: motion minus the depth of the gravity well. At the lowest and highest points the satellite moves square to the radius, so $`v = h/r`$ there and
 
-$$E = \frac{h^2}{2r^2} - \frac{\mu}{r} \quad\Longleftrightarrow\quad E r^2 + \mu r - \tfrac12 h^2 = 0.$$
+```math
+E = \frac{h^2}{2r^2} - \frac{\mu}{r} \quad\Longleftrightarrow\quad E r^2 + \mu r - \tfrac12 h^2 = 0.
+```
 
-Both turning distances solve this one quadratic. The two roots of a quadratic add to minus the middle number over the first, so $r_p + r_a = -\mu/E$. That sum is $2a$, so
+Both turning distances solve this one quadratic. The two roots of a quadratic add to minus the middle number over the first, so $`r_p + r_a = -\mu/E`$. That sum is $`2a`$, so
 
-$$E = -\frac{\mu}{2a}.$$
+```math
+E = -\frac{\mu}{2a}.
+```
 
-Energy depends only on the long half-axis. Put that in $E = \tfrac12 v^2 - \mu/r$ and solve for speed: $v^2 = \mu(2/r - 1/a)$. Engineers call it the **vis-viva** equation, Latin for "living force", the old name for kinetic energy.
+Energy depends only on the long half-axis. Put that in $`E = \tfrac12 v^2 - \mu/r`$ and solve for speed: $`v^2 = \mu(2/r - 1/a)`$. Engineers call it the **vis-viva** equation, Latin for "living force", the old name for kinetic energy.
 
 ### Step 5: the period (Kepler's third law)
 
-The ellipse has area $\pi ab$, with short half-axis $b = a\sqrt{1 - e^2}$. Area grows at $h/2$, and from Step 3 $h = \sqrt{\mu p} = \sqrt{\mu a(1 - e^2)}$. Divide:
+The ellipse has area $`\pi ab`$, with short half-axis $`b = a\sqrt{1 - e^2}`$. Area grows at $`h/2`$, and from Step 3 $`h = \sqrt{\mu p} = \sqrt{\mu a(1 - e^2)}`$. Divide:
 
-$$T = \frac{\pi ab}{h/2} = \frac{2\pi a^2\sqrt{1-e^2}}{\sqrt{\mu a(1-e^2)}} = 2\pi\sqrt{\frac{a^3}{\mu}}.$$
+```math
+T = \frac{\pi ab}{h/2} = \frac{2\pi a^2\sqrt{1-e^2}}{\sqrt{\mu a(1-e^2)}} = 2\pi\sqrt{\frac{a^3}{\mu}}.
+```
 
-The stretch $e$ cancels. Only the long half-axis sets the period. Run it backwards for the geostationary circle: set $T$ to one turn of the Earth, $2\pi/\omega_E$ = 86,164.10 s, and solve for $a$. Out comes 42,164.17 km.
+The stretch $`e`$ cancels. Only the long half-axis sets the period. Run it backwards for the geostationary circle: set $`T`$ to one turn of the Earth, $`2\pi/\omega_E`$ = 86,164.10 s, and solve for $`a`$. Out comes 42,164.17 km.
 
 ### Step 6: the two-burn plan
 
 Pick the ellipse that touches the low circle at its bottom and the high circle at its top. At both points old and new paths run the same way, so a burn along the direction of travel wastes nothing on turning.
 
-Its long axis is $r_1 + r_2$, so $a$ = 24,421.15 km. Vis-viva gives its speeds at the two ends, 10,151.49 and 1,607.84 m/s; the circles' speeds are $\sqrt{\mu/r}$. The burns are the differences. The coast is half the ellipse's period, 5.275 hours.
+Its long axis is $`r_1 + r_2`$, so $`a`$ = 24,421.15 km. Vis-viva gives its speeds at the two ends, 10,151.49 and 1,607.84 m/s; the circles' speeds are $`\sqrt{\mu/r}`$. The burns are the differences. The coast is half the ellipse's period, 5.275 hours.
 
 Among all two-burn routes between two circles, whatever their sizes, this ellipse, the **Hohmann transfer**, is the cheapest; this card states that without proof (Curtis, in Sources, treats it). A three-burn route first climbs far above the high circle, then drops back to it. It beats two burns only when the high circle's radius is more than 11.94 times the low one's. Here it is 6.31 times, so two burns win.
 
@@ -148,17 +164,17 @@ Among all two-burn routes between two circles, whatever their sizes, this ellips
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| low radius $r_1$ | 6,378.14 + 300 | 6,678.14 km |
-| high radius $r_2$, from Kepler III | $(\mu T^2/4\pi^2)^{1/3}$ with $T$ = 86,164.10 s | 42,164.17 km |
-| low circle speed | $\sqrt{3.986 \times 10^{14} / 6.678 \times 10^6}$ | 7,725.76 m/s |
-| high circle speed | $\sqrt{3.986 \times 10^{14} / 4.216 \times 10^7}$ | 3,074.66 m/s |
-| transfer $a$ | (6,678.14 + 42,164.17) ÷ 2 | 24,421.15 km |
-| speed at perigee, vis-viva | $\sqrt{\mu(2/r_1 - 1/a)}$ | 10,151.49 m/s |
-| speed at apogee | $10{,}151.49 \times 6{,}678.14 / 42{,}164.17$ (same $h$) | 1,607.84 m/s |
+| low radius $`r_1`$ | 6,378.14 + 300 | 6,678.14 km |
+| high radius $`r_2`$, from Kepler III | $`(\mu T^2/4\pi^2)^{1/3}`$ with $`T`$ = 86,164.10 s | 42,164.17 km |
+| low circle speed | $`\sqrt{3.986 \times 10^{14} / 6.678 \times 10^6}`$ | 7,725.76 m/s |
+| high circle speed | $`\sqrt{3.986 \times 10^{14} / 4.216 \times 10^7}`$ | 3,074.66 m/s |
+| transfer $`a`$ | (6,678.14 + 42,164.17) ÷ 2 | 24,421.15 km |
+| speed at perigee, vis-viva | $`\sqrt{\mu(2/r_1 - 1/a)}`$ | 10,151.49 m/s |
+| speed at apogee | $`10{,}151.49 \times 6{,}678.14 / 42{,}164.17`$ (same $`h`$) | 1,607.84 m/s |
 | burn 1 | 10,151.49 − 7,725.76 | 2,425.73 m/s |
 | burn 2 | 3,074.66 − 1,607.84 | 1,466.82 m/s |
 | **total** | 2,425.73 + 1,466.82 | **3,892.56 m/s** |
-| coast | half of $2\pi\sqrt{a^3/\mu}$ | 5.275 h |
+| coast | half of $`2\pi\sqrt{a^3/\mu}`$ | 5.275 h |
 
 The motors must supply 3,892.56 m/s of speed change, in two burns 5.28 hours apart.
 
@@ -166,17 +182,17 @@ The motors must supply 3,892.56 m/s of speed change, in two burns 5.28 hours apa
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Height 300 km used as $r$ in $\sqrt{\mu/r}$ | 36,450.90 m/s | $r$ is from Earth's centre. That speed would leave Earth for good. |
+| Height 300 km used as $`r`$ in $`\sqrt{\mu/r}`$ | 36,450.90 m/s | $`r`$ is from Earth's centre. That speed would leave Earth for good. |
 | A 24-hour (86,400 s) day in Kepler III | radius 42,241.10 km; drifts west 0.986° a day | Earth turns once in 86,164.10 s against the stars: the sidereal day. The 24-hour day adds a little extra turn to face the Sun again. |
 | Braking by 7,725.76 − 3,074.66 because the high orbit is slower | lowest point 574.34 km from Earth's centre | That is deep inside the Earth. Speed buys height; slowing drops the satellite. |
 | Skipping burn 2 | swings between 300 and 35,786 km every 10.55 h | Without the second kick the satellite stays on the ellipse and falls back. |
-| A slow steady push treated as two kicks (model failure) | needs 4,629.00 m/s, not 3,892.56 | Pushing for days, the satellite spirals and keeps nearly circular. It loses the benefit of burning at the bottom and top. The rule for a slow spiral is $v_1 - v_2$ = 4,651.10 m/s. |
+| A slow steady push treated as two kicks (model failure) | needs 4,629.00 m/s, not 3,892.56 | Pushing for days, the satellite spirals and keeps nearly circular. It loses the benefit of burning at the bottom and top. The rule for a slow spiral is $`v_1 - v_2`$ = 4,651.10 m/s. |
 
 ---
 
 ## The coast, hour by hour
 
-The puzzle: the satellite slows from 10.15 km/s to 1.61 km/s on the way up, with no motor running. Gravity is the brake, trading speed for height as for a ball thrown upward. What it cannot change is $h$, so as $r$ grows the sideways speed must shrink.
+The puzzle: the satellite slows from 10.15 km/s to 1.61 km/s on the way up, with no motor running. Gravity is the brake, trading speed for height as for a ball thrown upward. What it cannot change is $`h`$, so as $`r`$ grows the sideways speed must shrink.
 
 | Time after burn 1 | Height | Speed | Area swept in that hour | Distance flown in that hour |
 | --- | --- | --- | --- | --- |
@@ -217,7 +233,7 @@ Orange: the satellite's speed from the simulation in the code, at whole hours. M
 The script sizes the transfer by **three roads**.
 
 - Road 1 is the formulas above. It also finds, by bisection (halving the search range again and again), the size ratio of the two circles above which a three-burn route would beat the two burns.
-- Road 2 never uses them: it starts the satellite at the low circle with burn 1 added and steps Newton's law $\ddot{\mathbf r} = -\mu\mathbf r/r^3$ forward one second at a time by fourth-order Runge–Kutta ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)). It stops where the satellite stops climbing and reads off the radius, the speed and the time. On the way it checks every point against the conic. It also adds up the area swept and the distance flown each hour; the distance uses the trapezoid rule, averaging the speeds at the two ends of each second. Then it adds burn 2 and times one lap.
+- Road 2 never uses them: it starts the satellite at the low circle with burn 1 added and steps Newton's law $`\ddot{\mathbf r} = -\mu\mathbf r/r^3`$ forward one second at a time by fourth-order Runge–Kutta ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)). It stops where the satellite stops climbing and reads off the radius, the speed and the time. On the way it checks every point against the conic. It also adds up the area swept and the distance flown each hour; the distance uses the trapezoid rule, averaging the speeds at the two ends of each second. Then it adds burn 2 and times one lap.
 - Road 3 pushes gently from the low circle until the energy reaches the high circle's.
 
 Constants are from the IERS Conventions (2010), the reference values published by the International Earth Rotation and Reference Systems Service (IERS).
@@ -633,10 +649,10 @@ The simulation lands on the high circle to the last printed digit and stays with
 
 Lean proves Kepler's first two laws and vis-viva for Step 1's pull in one plane, and the algebra of Step 5's period.
 
-- Take a body moving in one plane under Step 1's pull, never at the Earth's centre. Then $h$ never changes, so equal areas are swept in equal times.
-- Take the same body. Then $r(1 + e\cos\theta) = p$ at every moment, with $p = h^2/\mu$ and $e$ fixed. Here $\theta$ is measured from one fixed direction, so the path is a conic with the Earth's centre at a focus.
-- Take the same body at two moments when it moves square to the radius, at two different distances. Then $v^2 = \mu(2/r - 1/a)$ at every moment, with $a$ half the sum of those two distances.
-- Take $\mu > 0$, $a > 0$, and $e$ at least 0 and below 1, with $b$ and $h$ as in Step 5. Then Step 5's division, $\pi ab$ over $h/2$, comes to $2\pi\sqrt{a^3/\mu}$, so $e$ cancels.
+- Take a body moving in one plane under Step 1's pull, never at the Earth's centre. Then $`h`$ never changes, so equal areas are swept in equal times.
+- Take the same body. Then $`r(1 + e\cos\theta) = p`$ at every moment, with $`p = h^2/\mu`$ and $`e`$ fixed. Here $`\theta`$ is measured from one fixed direction, so the path is a conic with the Earth's centre at a focus.
+- Take the same body at two moments when it moves square to the radius, at two different distances. Then $`v^2 = \mu(2/r - 1/a)`$ at every moment, with $`a`$ half the sum of those two distances.
+- Take $`\mu > 0`$, $`a > 0`$, and $`e`$ at least 0 and below 1, with $`b`$ and $`h`$ as in Step 5. Then Step 5's division, $`\pi ab`$ over $`h/2`$, comes to $`2\pi\sqrt{a^3/\mu}`$, so $`e`$ cancels.
 
 The burn sizes, the coast time, the simulation and the spiral are left to the Python and Rust checks.
 
@@ -865,9 +881,9 @@ theorem kepler_third_law_period (μ a e : ℝ) (hμ : 0 < μ) (ha : 0 < a)
 > **Thinking a slower orbit needs braking.** The high circle's speed, 3,074.66 m/s, is well below the low circle's 7,725.76 m/s. Yet both burns *add* speed. Speed at the bottom becomes height on the coast; the second burn only stops the satellite falling back. Braking by the difference drops the lowest point to 574.34 km from Earth's centre, inside the planet.
 >
 > Smaller traps, each with the wrong number it gives:
-> - **Height for radius.** $\sqrt{\mu/300\ \text{km}}$ gives 36,450.90 m/s. Every $r$ on this card is measured from Earth's centre.
+> - **Height for radius.** $`\sqrt{\mu/300\ \text{km}}`$ gives 36,450.90 m/s. Every $`r`$ on this card is measured from Earth's centre.
 > - **The solar day.** Kepler III with 86,400 s puts the satellite at 42,241.10 km, and it drifts west 0.986° a day. Use the sidereal day, 86,164.10 s.
-> - **Apogee radius in Kepler III.** Using 42,164.17 km as $a$ for the transfer gives a full sidereal day per lap. The transfer's $a$ is the average of its low and high points, so its lap is 10.55 h.
+> - **Apogee radius in Kepler III.** Using 42,164.17 km as $`a`$ for the transfer gives a full sidereal day per lap. The transfer's $`a`$ is the average of its low and high points, so its lap is 10.55 h.
 
 ---
 
@@ -879,14 +895,14 @@ theorem kepler_third_law_period (μ a e : ℝ) (hμ : 0 < μ) (ha : 0 < a)
 - **Trips to other planets.** A Hohmann ellipse round the Sun, touching Earth's orbit and Mars's, is the baseline for a Mars mission. Launch windows open when the planets line up for its coast.
 
 > **Say it back**
-> Gravity pulls toward the Earth's centre and weakens as one over distance squared. Because it pulls toward one point, the turning amount $h$ stays fixed, so the satellite sweeps equal areas in equal times. Because it is inverse-square, the path is a conic with the Earth at a focus, and the period depends only on the long half-axis, as its power 1.5. Energy depends only on that half-axis too, which gives the speed anywhere: $v^2 = \mu(2/r - 1/a)$. From 300 km up to geostationary that means two forward burns, 2,425.73 and 1,466.82 m/s, 5.28 hours apart.
+> Gravity pulls toward the Earth's centre and weakens as one over distance squared. Because it pulls toward one point, the turning amount $`h`$ stays fixed, so the satellite sweeps equal areas in equal times. Because it is inverse-square, the path is a conic with the Earth at a focus, and the period depends only on the long half-axis, as its power 1.5. Energy depends only on that half-axis too, which gives the speed anywhere: $`v^2 = \mu(2/r - 1/a)`$. From 300 km up to geostationary that means two forward burns, 2,425.73 and 1,466.82 m/s, 5.28 hours apart.
 
 ---
 
 ## What this builds on
 
 - [Newton's laws](01-newtons-laws-work-and-energy.md): force sets acceleration, and work becomes energy. Step 1's equation of motion and Step 4's energy are both from there.
-- [Lagrangian and Hamiltonian mechanics](04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): writing the energies and reading off the equations. An angle that the energy does not depend on gives a conserved quantity; here that is $h$.
+- [Lagrangian and Hamiltonian mechanics](04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): writing the energies and reading off the equations. An angle that the energy does not depend on gives a conserved quantity; here that is $`h`$.
 - [Ellipses and hyperbolas](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/05-ellipses-and-hyperbolas.md): the shapes, the foci, eccentricity and the half-axes. Step 3 shows gravity draws exactly these curves.
 - [Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md): a point as distance and angle, the natural way to describe a pull toward one centre.
 
@@ -903,7 +919,7 @@ The question this card leaves open: once a third body pulls as well, as the Moon
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Petit, Gérard, and Brian Luzum, eds. *IERS Conventions (2010)*. IERS Technical Note 36. Frankfurt am Main: Verlag des Bundesamts für Kartographie und Geodäsie, 2010. [Full text](https://iers-conventions.obspm.fr/content/tn36.pdf). Table 1.1 gives $GM$ of the Earth, its equatorial radius and $J_2$; Table 1.2 gives the Earth's spin rate.
+- Petit, Gérard, and Brian Luzum, eds. *IERS Conventions (2010)*. IERS Technical Note 36. Frankfurt am Main: Verlag des Bundesamts für Kartographie und Geodäsie, 2010. [Full text](https://iers-conventions.obspm.fr/content/tn36.pdf). Table 1.1 gives $`GM`$ of the Earth, its equatorial radius and $`J_2`$; Table 1.2 gives the Earth's spin rate.
 - Curtis, Howard D. *Orbital Mechanics for Engineering Students*, 4th ed. Elsevier, 2020. [Publisher page](https://shop.elsevier.com/books/orbital-mechanics-for-engineering-students/curtis/978-0-12-824025-0). The two-body problem, the orbit equation, vis-viva and the Hohmann transfer, by the engineering route used here. Chapter 4 gives the formula for the bulge's turning of the orbit plane used for the 7.46° per day; chapter 6 compares the Hohmann transfer with three-burn (bi-elliptic) routes.
 - Edelbaum, Theodore N. "Propulsion Requirements for Controllable Satellites." *ARS Journal* 31, no. 8 (1961): 1079–1089. [doi:10.2514/8.5723](https://doi.org/10.2514/8.5723). The slow-thrust result: a gentle spiral between circles costs the difference of their speeds.
 - European Space Agency. "Robotic arms for Electric Orbit Raising fly off the shelf." 25 October 2019. [ESA page](https://resilience.esa.int/archives/news/robotic-arms-electric-orbit-raising-fly-shelf). Eutelsat 172B's all-electric climb to geostationary orbit in four months, reported as the fastest of its kind.

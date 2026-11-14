@@ -36,34 +36,42 @@ The curving line is the balance. The straight line is its tangent at ten years, 
 
 A reminder from [The derivative](01-the-derivative.md): f'(x), also written dy/dx, is the rate of y per unit of x. Written in front of an expression, d/dx means "the rate, per unit of x, of what follows". A secant is the average rate over a step h, the difference quotient (f(x + h) − f(x))/h; the rate is its limit as h shrinks.
 
-$$\frac{d}{dx}\,e^x = e^x, \qquad \frac{d}{dx}\,\ln x = \frac{1}{x} \quad (x > 0)$$
+```math
+\frac{d}{dx}\,e^x = e^x, \qquad \frac{d}{dx}\,\ln x = \frac{1}{x} \quad (x > 0)
+```
 
 **Read it aloud:** e to the x grows at a rate equal to itself; the natural log of x grows at one over x.
 
-The balance after $t$ years is $B$ = 100 e^(rt), with $r$ = 0.05. The chain rule ([Chain rule](03-chain-rule.md)) adds the inner rate r:
+The balance after $`t`$ years is $`B`$ = 100 e^(rt), with $`r`$ = 0.05. The chain rule ([Chain rule](03-chain-rule.md)) adds the inner rate r:
 
-$$\frac{dB}{dt} = r \cdot 100\,e^{rt} = r\,B$$
+```math
+\frac{dB}{dt} = r \cdot 100\,e^{rt} = r\,B
+```
 
 Units: r per year times dollars gives dollars per year.
 
-For any positive base $b$, and the log to that base when b ≠ 1:
+For any positive base $`b`$, and the log to that base when b ≠ 1:
 
-$$\frac{d}{dx}\,b^x = b^x \ln b, \qquad \frac{d}{dx}\,\log_b x = \frac{1}{x \ln b}$$
+```math
+\frac{d}{dx}\,b^x = b^x \ln b, \qquad \frac{d}{dx}\,\log_b x = \frac{1}{x \ln b}
+```
 
 And for a positive quantity f built from products and powers, **logarithmic differentiation** reads its relative rate, its rate divided by its value, off its log:
 
-$$\frac{f'}{f} = \frac{d}{dx}\,\ln f$$
+```math
+\frac{f'}{f} = \frac{d}{dx}\,\ln f
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $e$ | the compounding ceiling | 2.718282 | fixed; nothing moves it |
-| $x$, $h$ | any input; a small step added to it | h = 0.01 year | the secant drifts from the rate |
-| $t$ | years since the deposit | 10 | balance and rate both rise |
-| $r$ | continuous interest rate per year | 0.05 | rate rises, faster later |
-| $B$ | balance in dollars; its rate is dB/dt | 164.87; 8.24 per year | rate rises in proportion |
-| $T$ | years needed to reach a balance B | 13.862944 for 200 | each extra dollar costs less time |
-| $b$ | another positive base | 1.05, yearly compounding | the factor ln b rises |
-| $n$, $p$, $V$ | fund shares, share price, fund value | 200; 32.974425; 6594.885083 | relative rates add |
+| $`e`$ | the compounding ceiling | 2.718282 | fixed; nothing moves it |
+| $`x`$, $`h`$ | any input; a small step added to it | h = 0.01 year | the secant drifts from the rate |
+| $`t`$ | years since the deposit | 10 | balance and rate both rise |
+| $`r`$ | continuous interest rate per year | 0.05 | rate rises, faster later |
+| $`B`$ | balance in dollars; its rate is dB/dt | 164.87; 8.24 per year | rate rises in proportion |
+| $`T`$ | years needed to reach a balance B | 13.862944 for 200 | each extra dollar costs less time |
+| $`b`$ | another positive base | 1.05, yearly compounding | the factor ln b rises |
+| $`n`$, $`p`$, $`V`$ | fund shares, share price, fund value | 200; 32.974425; 6594.885083 | relative rates add |
 
 ### When it holds
 
@@ -78,7 +86,9 @@ $$\frac{f'}{f} = \frac{d}{dx}\,\ln f$$
 
 Powers of e multiply: e^(x+h) = e^x × e^h. So
 
-$$\frac{e^{x+h} - e^x}{h} = e^x \cdot \frac{e^h - 1}{h}.$$
+```math
+\frac{e^{x+h} - e^x}{h} = e^x \cdot \frac{e^h - 1}{h}.
+```
 
 The slope at x is e^x times the slope at 0. The theorem reduces to one fact: the slope at zero is exactly 1.
 
@@ -91,7 +101,9 @@ Two inequalities from the e card:
 
 Subtract 1 and divide by a positive h:
 
-$$1 \;\le\; \frac{e^h - 1}{h} \;\le\; \frac{1}{1-h} \qquad (0 < h < 1)$$
+```math
+1 \;\le\; \frac{e^h - 1}{h} \;\le\; \frac{1}{1-h} \qquad (0 < h < 1)
+```
 
 For negative h the division flips the walls: the quotient sits between 1/(1 − h) and 1. At h = 0.01 the quotient is 1.005017, between 1 and 1.010101. At h = −0.01 it is 0.995017, between 0.990099 and 1.
 
@@ -116,7 +128,7 @@ The chain rule feeds rt into e^x and multiplies by the inner rate r: dB/dt = r �
 
 The log undoes the exponential: y = ln x exactly when e^y = x. Put a log in place of h in the same two inequalities and they trap the log's difference quotient over a step k > 0 between 1/(x + k) and 1/x. Both walls close on 1/x.
 
-In money terms, the years to reach a balance B are $T$ = ln(B/100)/r, with rate 1/(rB) years per dollar. Reaching 200 dollars takes 13.862944 years; each extra dollar of target adds 0.1 year.
+In money terms, the years to reach a balance B are $`T`$ = ln(B/100)/r, with rate 1/(rB) years per dollar. Reaching 200 dollars takes 13.862944 years; each extra dollar of target adds 0.1 year.
 
 At 164.87 dollars it costs 0.121306 years, which is 1/8.243606: years per dollar flips dollars per year. The flip for any inverse is [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md).
 
@@ -130,11 +142,13 @@ The log to base b is ln x divided by the constant ln b, so its rate is 1/(x ln b
 
 Logs turn products into sums: ln(np) = ln n + ln p. Differentiate with the chain rule:
 
-$$\frac{V'}{V} = \frac{n'}{n} + \frac{p'}{p}.$$
+```math
+\frac{V'}{V} = \frac{n'}{n} + \frac{p'}{p}.
+```
 
-A fund starts with 100 shares and buys 10 a year, so at ten years $n$ = 200 shares, relative rate 10/200 = 0.05. Each share's price $p$ = 20e^(0.05t) is 32.974425 dollars, relative rate 0.05.
+A fund starts with 100 shares and buys 10 a year, so at ten years $`n`$ = 200 shares, relative rate 10/200 = 0.05. Each share's price $`p`$ = 20e^(0.05t) is 32.974425 dollars, relative rate 0.05.
 
-The value $V$ = 6594.885083 has relative rate 0.10, so it grows at 659.488508 dollars per year. The product rule from [Product and quotient rules](02-product-and-quotient-rules.md) agrees; for long products, logs are shorter.
+The value $`V`$ = 6594.885083 has relative rate 0.10, so it grows at 659.488508 dollars per year. The product rule from [Product and quotient rules](02-product-and-quotient-rules.md) agrees; for long products, logs are shorter.
 
 ---
 

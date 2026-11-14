@@ -35,34 +35,42 @@ Orange: the trapezoidal rule, ringing. Green: backward Euler. Dark blue: the exa
 
 ## The formula
 
-Reminder: $y' = f(t, y)$ says the rate of $y$ at time $t$ is the rule $f$. A step of size $h$ moves from time $t_n$ to $t_{n+1} = t_n + h$, and $y_n$ is the estimate after $n$ steps ([Euler's method](01-eulers-method.md)). The three steps differ only in where they read the slope:
+Reminder: $`y' = f(t, y)`$ says the rate of $`y`$ at time $`t`$ is the rule $`f`$. A step of size $`h`$ moves from time $`t_n`$ to $`t_{n+1} = t_n + h`$, and $`y_n`$ is the estimate after $`n`$ steps ([Euler's method](01-eulers-method.md)). The three steps differ only in where they read the slope:
 
-$$\text{forward: } y_{n+1} = y_n + h\,f(t_n, y_n)$$
+```math
+\text{forward: } y_{n+1} = y_n + h\,f(t_n, y_n)
+```
 
-$$\text{backward: } y_{n+1} = y_n + h\,f(t_{n+1}, y_{n+1})$$
+```math
+\text{backward: } y_{n+1} = y_n + h\,f(t_{n+1}, y_{n+1})
+```
 
-$$\text{trapezoid: } y_{n+1} = y_n + \tfrac{h}{2}\bigl(f(t_n, y_n) + f(t_{n+1}, y_{n+1})\bigr)$$
+```math
+\text{trapezoid: } y_{n+1} = y_n + \tfrac{h}{2}\bigl(f(t_n, y_n) + f(t_{n+1}, y_{n+1})\bigr)
+```
 
 **Read it aloud:** forward Euler uses the slope where it stands, backward Euler the slope where it lands, the trapezoid their average.
 
-The unknown on the right makes the last two **implicit**: each step is an equation. Here $f$ is a straight line in $y$, so one division solves it.
+The unknown on the right makes the last two **implicit**: each step is an equation. Here $`f`$ is a straight line in $`y`$, so one division solves it.
 
-The fast part is the gap $d = y - \cos t$. It obeys $d' = \lambda d$ with $\lambda = -1000$ per s. Write $z = h\lambda$. Each method multiplies the gap per step by its **gap factor** $R$:
+The fast part is the gap $`d = y - \cos t`$. It obeys $`d' = \lambda d`$ with $`\lambda = -1000`$ per s. Write $`z = h\lambda`$. Each method multiplies the gap per step by its **gap factor** $`R`$:
 
-$$R_{\text{forward}} = 1 + z, \qquad R_{\text{backward}} = \frac{1}{1 - z}, \qquad R_{\text{trapezoid}} = \frac{1 + z/2}{1 - z/2}, \qquad R_{\text{exact}} = e^{z}.$$
+```math
+R_{\text{forward}} = 1 + z, \qquad R_{\text{backward}} = \frac{1}{1 - z}, \qquad R_{\text{trapezoid}} = \frac{1 + z/2}{1 - z/2}, \qquad R_{\text{exact}} = e^{z}.
+```
 
 **Read it aloud:** at h = 0.01 s, z is −10, and the three methods multiply the gap by −9, 1/11 and −2/3, while the truth multiplies it by e^(−10), about 0.000045.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $t_n$, $n$ | time in s; the time after $n$ steps; the step count | 0 to 1 s | — |
-| $y$, $y_n$ | intermediate level, mmol/L above average; the estimate after $n$ steps | 0 at the start, near 1 after | — |
-| $f$ | the rule giving the rate of $y$ | −1000(y − cos t) − sin t | — |
-| $h$ | step size, s | 0.01 | forward Euler blows up past 0.002 |
-| $\lambda$ | rate of the fast part, per s | −1000 | more negative: a tighter forward limit |
-| $z$ | $h\lambda$: step size measured in fast-part lifetimes | −10 | — |
-| $R$ | gap factor: what one step multiplies the gap by | −9, 1/11, −2/3 | above 1 in size: blow-up |
-| $d$, $d_n$, $\ell_n$ | gap: level minus balance curve, exact and after $n$ steps; one step's leftover | −1 at the start | — |
+| $`t`$, $`t_n`$, $`n`$ | time in s; the time after $`n`$ steps; the step count | 0 to 1 s | — |
+| $`y`$, $`y_n`$ | intermediate level, mmol/L above average; the estimate after $`n`$ steps | 0 at the start, near 1 after | — |
+| $`f`$ | the rule giving the rate of $`y`$ | −1000(y − cos t) − sin t | — |
+| $`h`$ | step size, s | 0.01 | forward Euler blows up past 0.002 |
+| $`\lambda`$ | rate of the fast part, per s | −1000 | more negative: a tighter forward limit |
+| $`z`$ | $`h\lambda`$: step size measured in fast-part lifetimes | −10 | — |
+| $`R`$ | gap factor: what one step multiplies the gap by | −9, 1/11, −2/3 | above 1 in size: blow-up |
+| $`d`$, $`d_n`$, $`\ell_n`$ | gap: level minus balance curve, exact and after $`n`$ steps; one step's leftover | −1 at the start | — |
 
 ### When it holds
 
@@ -76,38 +84,38 @@ $$R_{\text{forward}} = 1 + z, \qquad R_{\text{backward}} = \frac{1}{1 - z}, \qqu
 
 ### Step 0: split the level into a slow curve and a fast gap
 
-Put $d = y - \cos t$. Then $d' = y' + \sin t = -1000\,d$, so $d = d(0)\,e^{-1000t}$ ([The integrating factor](../01-Rate%20Equations/05-integrating-factor.md)). The start gives $d(0) = -1$, so the exact level is $y = \cos t - e^{-1000t}$.
+Put $`d = y - \cos t`$. Then $`d' = y' + \sin t = -1000\,d`$, so $`d = d(0)\,e^{-1000t}`$ ([The integrating factor](../01-Rate%20Equations/05-integrating-factor.md)). The start gives $`d(0) = -1`$, so the exact level is $`y = \cos t - e^{-1000t}`$.
 
-Since $f$ is straight in $y$, each step moves the gap by its own factor, plus a small leftover $\ell_n$ from the curve's bend.
+Since $`f`$ is straight in $`y`$, each step moves the gap by its own factor, plus a small leftover $`\ell_n`$ from the curve's bend.
 
 ### Step 1: forward Euler multiplies the gap by 1 + z
 
-Put $y_n = \cos t_n + d_n$ into the forward step. The cosines nearly cancel: $d_{n+1} = (1 - 1000h)\,d_n + \ell_n$ with $\ell_n$ about $h^2/2$. At h = 0.01 the factor is −9: y at 0.1 s is −3.487e9, at 1 s −2.656e95. Starting on the curve at y = 1 does not help; the leftovers seed the gap and the error at 0.1 s is −1.743e4.
+Put $`y_n = \cos t_n + d_n`$ into the forward step. The cosines nearly cancel: $`d_{n+1} = (1 - 1000h)\,d_n + \ell_n`$ with $`\ell_n`$ about $`h^2/2`$. At h = 0.01 the factor is −9: y at 0.1 s is −3.487e9, at 1 s −2.656e95. Starting on the curve at y = 1 does not help; the leftovers seed the gap and the error at 0.1 s is −1.743e4.
 
-The gap shrinks only while $|1 - 1000h| < 1$: h < 0.002. At h = 0.0019, factor −0.9, 500 steps end 5.529e-7 from the truth; at h = 0.0021, factor −1.1, the error is −4.970e20. A step limit set by a part of the solution that vanished in milliseconds is stiffness.
+The gap shrinks only while $`|1 - 1000h| < 1`$: h < 0.002. At h = 0.0019, factor −0.9, 500 steps end 5.529e-7 from the truth; at h = 0.0021, factor −1.1, the error is −4.970e20. A step limit set by a part of the solution that vanished in milliseconds is stiffness.
 
 ### Step 2: backward Euler divides by 1 − z
 
-The same split in the backward step gives $(1 + 1000h)\,d_{n+1} = d_n + \ell_n$. The factor $1/(1 + 1000h)$ is below 1 for every positive step: 0.500000 at h = 0.001, 0.090909 at 0.01, 0.000100 at 10. The longer the step, the harder the damping.
+The same split in the backward step gives $`(1 + 1000h)\,d_{n+1} = d_n + \ell_n`$. The factor $`1/(1 + 1000h)`$ is below 1 for every positive step: 0.500000 at h = 0.001, 0.090909 at 0.01, 0.000100 at 10. The longer the step, the harder the damping.
 
-The leftovers now pile up as a shrinking geometric series: once the start gap has died, the error is at most $h/2000$ (proof below). The run gives −2.720e-6, −1.356e-6 and −6.773e-7 at 1 s for h = 0.01, 0.005 and 0.0025: ratios 2.01 and 2.00. That is first order: halve the step and the error halves.
+The leftovers now pile up as a shrinking geometric series: once the start gap has died, the error is at most $`h/2000`$ (proof below). The run gives −2.720e-6, −1.356e-6 and −6.773e-7 at 1 s for h = 0.01, 0.005 and 0.0025: ratios 2.01 and 2.00. That is first order: halve the step and the error halves.
 
 ### Step 3: the trapezoid is second order, but rings
 
-Averaging the slopes gives $(1 - z/2)\,d_{n+1} = (1 + z/2)\,d_n$ plus a leftover of order $h^3$. Its errors at 1 s are 7.008e-9, 1.752e-9 and 4.380e-10: ratios 4.00, second order ([Order of a method](02-local-and-global-error-and-order.md)).
+Averaging the slopes gives $`(1 - z/2)\,d_{n+1} = (1 + z/2)\,d_n`$ plus a leftover of order $`h^3`$. Its errors at 1 s are 7.008e-9, 1.752e-9 and 4.380e-10: ratios 4.00, second order ([Order of a method](02-local-and-global-error-and-order.md)).
 
 Its factor tends to −1 as the step grows. At h = 0.1 it is −49/51, about −0.9608: the start gap swings through 0.9608, −0.9231, 0.8869 and is still −0.6703 at 1 s. Backward Euler with the same step is off by −2.843e-5.
 
 <details>
 <summary>Detailed proof: the implicit factors, and backward Euler's error bound</summary>
 
-Let $\lambda$ be complex with negative real part, and $z = h\lambda$ have real part $a < 0$.
+Let $`\lambda`$ be complex with negative real part, and $`z = h\lambda`$ have real part $`a < 0`$.
 
-Backward: $|1 - z|^2 = (1 - a)^2 + (\text{imaginary part})^2 > 1$, since $1 - a > 1$. So $|R_{\text{backward}}| < 1$, and the denominator is never 0.
+Backward: $`|1 - z|^2 = (1 - a)^2 + (\text{imaginary part})^2 > 1`$, since $`1 - a > 1`$. So $`|R_{\text{backward}}| < 1`$, and the denominator is never 0.
 
-Trapezoid: $|1 + z/2|^2 - |1 - z/2|^2 = 2a < 0$, the imaginary parts cancelling. So $|R_{\text{trapezoid}}| < 1$. Along the negative real line, $R_{\text{trapezoid}} \to -1$ while $R_{\text{backward}} \to 0$.
+Trapezoid: $`|1 + z/2|^2 - |1 - z/2|^2 = 2a < 0`$, the imaginary parts cancelling. So $`|R_{\text{trapezoid}}| < 1`$. Along the negative real line, $`R_{\text{trapezoid}} \to -1`$ while $`R_{\text{backward}} \to 0`$.
 
-Error bound: Taylor's theorem at $t_{n+1}$, with the cosine's second derivative at most 1 in size, gives $|\ell_n| \le h^2/2$. With $R = 1/(1 + 1000h)$, $|d_{n+1}| \le R|d_n| + R\,h^2/2$. Summing the geometric series, $|d_n| \le R^n|d_0| + \frac{R\,h^2/2}{1 - R} = R^n|d_0| + \frac{h}{2000}$. The exact gap is $e^{-1000t_n}$ in size, so the error is at most $R^n + e^{-1000t_n} + h/2000$.
+Error bound: Taylor's theorem at $`t_{n+1}`$, with the cosine's second derivative at most 1 in size, gives $`|\ell_n| \le h^2/2`$. With $`R = 1/(1 + 1000h)`$, $`|d_{n+1}| \le R|d_n| + R\,h^2/2`$. Summing the geometric series, $`|d_n| \le R^n|d_0| + \frac{R\,h^2/2}{1 - R} = R^n|d_0| + \frac{h}{2000}`$. The exact gap is $`e^{-1000t_n}`$ in size, so the error is at most $`R^n + e^{-1000t_n} + h/2000`$.
 
 </details>
 
@@ -468,7 +476,7 @@ example : -(1000 : ℚ) * (1 / 100) = -10 := by norm_num
 ## What this builds on
 
 - [Euler's method](01-eulers-method.md): the forward step and its step size, which this card turns round.
-- [The integrating factor](../01-Rate%20Equations/05-integrating-factor.md): the exact solution $y = \cos t - e^{-1000t}$ that every step is measured against.
+- [The integrating factor](../01-Rate%20Equations/05-integrating-factor.md): the exact solution $`y = \cos t - e^{-1000t}`$ that every step is measured against.
 
 ## Where this goes next
 

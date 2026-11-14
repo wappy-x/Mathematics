@@ -41,33 +41,37 @@ Notation first, in words.
 
 - A **vector** here is a list of six numbers, one per tenor (a tenor is a time to maturity: 0.5, 1, 2, 3, 4 and 5 years).
 - A **matrix** is a square table of numbers. A matrix times a vector gives a new vector: each entry is one row of the table multiplied entry by entry with the vector and added up.
-- A superscript $\top$ turns a column of numbers into a row, so $u^{\top}w$ is the plain sum of products $u_1w_1 + \dots + u_6w_6$.
+- A superscript $`\top`$ turns a column of numbers into a row, so $`u^{\top}w`$ is the plain sum of products $`u_1w_1 + \dots + u_6w_6`$.
 - Two vectors are **perpendicular** when that sum is zero.
-- $w\,w^{\top}$ is the six-by-six table of every product $w_i\,w_j$.
+- $`w\,w^{\top}`$ is the six-by-six table of every product $`w_i\,w_j`$.
 
-$$\Sigma \;=\; \frac{1}{n}\sum_{t=1}^{n}\bigl(x_t-\bar x\bigr)\bigl(x_t-\bar x\bigr)^{\top}, \qquad \Sigma\,u_k \;=\; \lambda_k\,u_k, \qquad R_3 \;=\; \frac{\lambda_1+\lambda_2+\lambda_3}{\operatorname{tr}\Sigma}$$
+```math
+\Sigma \;=\; \frac{1}{n}\sum_{t=1}^{n}\bigl(x_t-\bar x\bigr)\bigl(x_t-\bar x\bigr)^{\top}, \qquad \Sigma\,u_k \;=\; \lambda_k\,u_k, \qquad R_3 \;=\; \frac{\lambda_1+\lambda_2+\lambda_3}{\mathrm{tr}\,\Sigma}
+```
 
 **Read it aloud:** average the day-by-day table of how the tenors move together; find the directions that this table only stretches, never turns; the stretch along each direction is the movement it carries, and the top three stretches over the total are the share that three factors explain.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$ | tenor: time to maturity, in years | 0.5, 1, 2, 3, 4, 5 | — |
-| $D(T)$, $z(T)$ | discount factor: today's price of a dollar due at tenor $T$; zero rate, continuously compounded, $-\ln D(T)/T$ | $D(5)$ = 0.79621728; $z(5)$ = 4.5577% | — |
-| $m$, $n$; $t$, $i$, $j$, $k$, $l$ | number of tenors; number of days; counters for a day, two tenors and two factors | 6; 500 | more tenors add more small factors |
-| $x_t$ | day $t$'s curve change: six changes in bp | one row of the record | — |
-| $\bar x$ | the average daily change, tenor by tenor | close to zero | — |
-| $\Sigma$ | covariance matrix: entry $(i, j)$ averages the product of tenor $i$'s and tenor $j$'s centred changes; the diagonal holds the six variances | diagonal from 5.29^2 to 5.58^2 bp^2 | bigger moves, bigger stretches |
-| $u_k$; $u_1$, $u_2$, $u_3$ | loading, or factor shape $k$: a unit-length vector the matrix only stretches | level: 0.4154 … 0.3958 | — |
-| $\lambda_k$; $\lambda_1$, $\lambda_2$, $\lambda_3$ | eigenvalue: the variance carried by factor $k$, in bp^2 | 155.0758, 11.8141, 3.9319 | a larger share for factor $k$ |
-| $a_{tk}$, $\top$ | score: how much of shape $k$ day $t$ contained, $u_k^{\top}(x_t-\bar x)$; the $\top$ lays a column on its side | varies by day | — |
-| $\operatorname{tr}\Sigma$; $P$, $w_k$, $w$ | trace: sum of the diagonal, the total variance; $P$ is a projection and $w_k$ a surviving squared length, both in the detailed proof; $w$ is any vector of six numbers | 175.6880 bp^2 | every share shrinks |
-| $R_3$ | share of the total carried by the top three factors | 97.23% | — |
+| $`T`$ | tenor: time to maturity, in years | 0.5, 1, 2, 3, 4, 5 | — |
+| $`D(T)`$, $`z(T)`$ | discount factor: today's price of a dollar due at tenor $`T`$; zero rate, continuously compounded, $`-\ln D(T)/T`$ | $`D(5)`$ = 0.79621728; $`z(5)`$ = 4.5577% | — |
+| $`m`$, $`n`$; $`t`$, $`i`$, $`j`$, $`k`$, $`l`$ | number of tenors; number of days; counters for a day, two tenors and two factors | 6; 500 | more tenors add more small factors |
+| $`x_t`$ | day $`t`$'s curve change: six changes in bp | one row of the record | — |
+| $`\bar x`$ | the average daily change, tenor by tenor | close to zero | — |
+| $`\Sigma`$ | covariance matrix: entry $`(i, j)`$ averages the product of tenor $`i`$'s and tenor $`j`$'s centred changes; the diagonal holds the six variances | diagonal from 5.29^2 to 5.58^2 bp^2 | bigger moves, bigger stretches |
+| $`u_k`$; $`u_1`$, $`u_2`$, $`u_3`$ | loading, or factor shape $`k`$: a unit-length vector the matrix only stretches | level: 0.4154 … 0.3958 | — |
+| $`\lambda_k`$; $`\lambda_1`$, $`\lambda_2`$, $`\lambda_3`$ | eigenvalue: the variance carried by factor $`k`$, in bp^2 | 155.0758, 11.8141, 3.9319 | a larger share for factor $`k`$ |
+| $`a_{tk}`$, $`\top`$ | score: how much of shape $`k`$ day $`t`$ contained, $`u_k^{\top}(x_t-\bar x)`$; the $`\top`$ lays a column on its side | varies by day | — |
+| $`\mathrm{tr}\,\Sigma`$; $`P`$, $`w_k`$, $`w`$ | trace: sum of the diagonal, the total variance; $`P`$ is a projection and $`w_k`$ a surviving squared length, both in the detailed proof; $`w`$ is any vector of six numbers | 175.6880 bp^2 | every share shrinks |
+| $`R_3`$ | share of the total carried by the top three factors | 97.23% | — |
 
 A **variance** is the average squared distance from the average; its square root is the **standard deviation**, the typical size of a move. "Centred" means the average has been subtracted. An **eigenvector** of a matrix is a direction the matrix only stretches; the stretch factor is its **eigenvalue**. The needs-first card on [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md) builds these words in full; this card uses them on a curve.
 
 Each day then splits exactly into factors:
 
-$$x_t \;=\; \bar x + a_{t1}u_1 + a_{t2}u_2 + \dots + a_{t6}u_6 .$$
+```math
+x_t \;=\; \bar x + a_{t1}u_1 + a_{t2}u_2 + \dots + a_{t6}u_6 .
+```
 
 In words: a day's change is the average change plus so much level, so much slope, so much curvature, and three small remainders.
 
@@ -85,46 +89,52 @@ In words: a day's change is the average change plus so much level, so much slope
 
 ### Step 0: the best single shape leaves the least unexplained
 
-Suppose every day had to be described by one number: how much of one fixed shape it contained. Some shape would leave the smallest leftover, averaged over the record. That shape is the first factor. Finding it is a question about one six-by-six table, because the leftover depends on the record only through $\Sigma$.
+Suppose every day had to be described by one number: how much of one fixed shape it contained. Some shape would leave the smallest leftover, averaged over the record. That shape is the first factor. Finding it is a question about one six-by-six table, because the leftover depends on the record only through $`\Sigma`$.
 
-The leftover and the captured part are the two sides of a right angle. A day's centred change is the hypotenuse. Its piece along a unit shape $u$ is one side, its leftover the other. Pythagoras says their squares add to the day's squared size. So **least leftover is the same as most captured**, and the first factor is the shape along which the days vary most.
+The leftover and the captured part are the two sides of a right angle. A day's centred change is the hypotenuse. Its piece along a unit shape $`u`$ is one side, its leftover the other. Pythagoras says their squares add to the day's squared size. So **least leftover is the same as most captured**, and the first factor is the shape along which the days vary most.
 
 ### Step 1: the movement along a shape is one number from the table
 
-Take a unit shape $u$: six weights whose squares add to one. Day $t$'s score along it is $u^{\top}(x_t-\bar x)$. Square it and average over the days:
+Take a unit shape $`u`$: six weights whose squares add to one. Day $`t`$'s score along it is $`u^{\top}(x_t-\bar x)`$. Square it and average over the days:
 
-$$\frac{1}{n}\sum_{t}\bigl(u^{\top}(x_t-\bar x)\bigr)^2 \;=\; u^{\top}\Sigma\,u .$$
+```math
+\frac{1}{n}\sum_{t}\bigl(u^{\top}(x_t-\bar x)\bigr)^2 \;=\; u^{\top}\Sigma\,u .
+```
 
-The step is expanding a square: $(u^{\top}w)^2 = u^{\top}(w\,w^{\top})u$, then averaging $w\,w^{\top}$ over the days, which is $\Sigma$. This number is never negative, since it is an average of squares. A table with that property is called positive semidefinite.
+The step is expanding a square: $`(u^{\top}w)^2 = u^{\top}(w\,w^{\top})u`$, then averaging $`w\,w^{\top}`$ over the days, which is $`\Sigma`$. This number is never negative, since it is an average of squares. A table with that property is called positive semidefinite.
 
 ### Step 2: the best shape is the top eigenvector
 
-$\Sigma$ is symmetric: entry $(i, j)$ equals entry $(j, i)$, because tenor $i$ moves with tenor $j$ exactly as $j$ moves with $i$. A symmetric table has six perpendicular unit eigenvectors $u_1, \dots, u_6$ with real eigenvalues $\lambda_1 \ge \dots \ge \lambda_6 \ge 0$. That is the spectral theorem, used on the principal-components card.
+$`\Sigma`$ is symmetric: entry $`(i, j)`$ equals entry $`(j, i)`$, because tenor $`i`$ moves with tenor $`j`$ exactly as $`j`$ moves with $`i`$. A symmetric table has six perpendicular unit eigenvectors $`u_1, \dots, u_6`$ with real eigenvalues $`\lambda_1 \ge \dots \ge \lambda_6 \ge 0`$. That is the spectral theorem, used on the principal-components card.
 
-Write any unit shape as a mix of those six: $u = c_1u_1 + \dots + c_6u_6$, where the squared weights $c_k^2$ add to one. The table stretches each piece by its own eigenvalue, and perpendicular pieces do not interact, so
+Write any unit shape as a mix of those six: $`u = c_1u_1 + \dots + c_6u_6`$, where the squared weights $`c_k^2`$ add to one. The table stretches each piece by its own eigenvalue, and perpendicular pieces do not interact, so
 
-$$u^{\top}\Sigma\,u \;=\; \lambda_1c_1^2 + \lambda_2c_2^2 + \dots + \lambda_6c_6^2 .$$
+```math
+u^{\top}\Sigma\,u \;=\; \lambda_1c_1^2 + \lambda_2c_2^2 + \dots + \lambda_6c_6^2 .
+```
 
-That is an average of the eigenvalues with weights $c_k^2$. An average is largest when all its weight sits on the largest value. So the best shape is $u_1$, and the movement it carries is $\lambda_1$: 155.0758 bp^2 on this record.
+That is an average of the eigenvalues with weights $`c_k^2`$. An average is largest when all its weight sits on the largest value. So the best shape is $`u_1`$, and the movement it carries is $`\lambda_1`$: 155.0758 bp^2 on this record.
 
 ### Step 3: the next best shapes, and why the shares add up
 
-Ask for the best shape perpendicular to $u_1$. The same average, now with $c_1 = 0$, peaks at $u_2$ with $\lambda_2$. Then $u_3$ with $\lambda_3$, and so on. Three consequences follow.
+Ask for the best shape perpendicular to $`u_1`$. The same average, now with $`c_1 = 0`$, peaks at $`u_2`$ with $`\lambda_2`$. Then $`u_3`$ with $`\lambda_3`$, and so on. Three consequences follow.
 
-- **The scores are uncorrelated.** The average product of the scores on factors $k$ and $l$ is $u_k^{\top}\Sigma\,u_l = \lambda_l\,u_k^{\top}u_l$, which is zero for two perpendicular shapes. A level day tells nothing about the same day's slope, within the record.
+- **The scores are uncorrelated.** The average product of the scores on factors $`k`$ and $`l`$ is $`u_k^{\top}\Sigma\,u_l = \lambda_l\,u_k^{\top}u_l`$, which is zero for two perpendicular shapes. A level day tells nothing about the same day's slope, within the record.
 - **The eigenvalues add up to the total.** The total variance is the trace, and the trace equals the sum of the eigenvalues: 175.6880 bp^2, which the checks confirm by adding the six eigenvalues.
-- **The leftover is the tail.** Keep three factors and the average squared leftover is exactly $\lambda_4 + \lambda_5 + \lambda_6$ = 4.8662 bp^2. The checks compute it the long way too, day by day, and land on the same number.
+- **The leftover is the tail.** Keep three factors and the average squared leftover is exactly $`\lambda_4 + \lambda_5 + \lambda_6`$ = 4.8662 bp^2. The checks compute it the long way too, day by day, and land on the same number.
 
-The share of factor $k$ is $\lambda_k / \operatorname{tr}\Sigma$. Any three shapes capture something; the theorem says the top three eigenvectors capture the most.
+The share of factor $`k`$ is $`\lambda_k / \mathrm{tr}\,\Sigma`$. Any three shapes capture something; the theorem says the top three eigenvectors capture the most.
 
 <details>
 <summary>Detailed proof: no three shapes beat the top three eigenvectors</summary>
 
-Let $P$ be the projection onto any three-dimensional set of shapes: the table that keeps a vector's part inside that set and drops the rest. The captured variance is the trace of $P\Sigma$. Write $w_k$ for the squared length of $P u_k$, the part of eigenvector $k$ that survives. Each $w_k$ lies between 0 and 1, and the six add to 3, the trace of $P$. The captured variance is $\lambda_1w_1 + \dots + \lambda_6w_6$.
+Let $`P`$ be the projection onto any three-dimensional set of shapes: the table that keeps a vector's part inside that set and drops the rest. The captured variance is the trace of $`P\Sigma`$. Write $`w_k`$ for the squared length of $`P u_k`$, the part of eigenvector $`k`$ that survives. Each $`w_k`$ lies between 0 and 1, and the six add to 3, the trace of $`P`$. The captured variance is $`\lambda_1w_1 + \dots + \lambda_6w_6`$.
 
-Compare with the top three, $\lambda_1 + \lambda_2 + \lambda_3$. The difference is
-$$\sum_{k\le 3}(\lambda_k-\lambda_3)(1-w_k) \;+\; \sum_{k>3}(\lambda_3-\lambda_k)\,w_k \;\ge\; 0,$$
-since every bracket and every weight is non-negative. The identity uses only that the $w_k$ add to 3. Equality needs the lost weight to sit only on eigenvalues equal to $\lambda_3$, so when $\lambda_3 > \lambda_4$ the top three shapes are the unique best set. Pythagoras turns most captured into least leftover, averaged over the days.
+Compare with the top three, $`\lambda_1 + \lambda_2 + \lambda_3`$. The difference is
+
+$`\displaystyle \sum_{k\le 3}(\lambda_k-\lambda_3)(1-w_k) \;+\; \sum_{k>3}(\lambda_3-\lambda_k)\,w_k \;\ge\; 0,`$
+
+since every bracket and every weight is non-negative. The identity uses only that the $`w_k`$ add to 3. Equality needs the lost weight to sit only on eigenvalues equal to $`\lambda_3`$, so when $`\lambda_3 > \lambda_4`$ the top three shapes are the unique best set. Pythagoras turns most captured into least leftover, averaged over the days.
 
 </details>
 
@@ -132,7 +142,7 @@ since every bracket and every weight is non-negative. The identity uses only tha
 
 PCA knows nothing about curves. The shapes come from how rates move together.
 
-- **Level has one sign.** Every pair of tenors moves in the same direction on average, so every entry of $\Sigma$ is positive. For such a table the top eigenvector has all entries of one sign (the Perron–Frobenius theorem). Here they are nearly equal, 0.3958 to 0.4154: close to a flat shape.
+- **Level has one sign.** Every pair of tenors moves in the same direction on average, so every entry of $`\Sigma`$ is positive. For such a table the top eigenvector has all entries of one sign (the Perron–Frobenius theorem). Here they are nearly equal, 0.3958 to 0.4154: close to a flat shape.
 - **Slope changes sign once.** It must be perpendicular to an all-positive shape, so it has to be negative somewhere and positive somewhere. The cheapest way to do that, for rates whose co-movement fades smoothly with the distance between tenors, is one crossing: here between two and three years.
 - **Curvature changes sign twice.** Perpendicular to both, the next smoothest shape has two crossings: down at the ends, up in the belly.
 
@@ -145,7 +155,7 @@ Nearly, but not exactly. The scripts made each day as a flat move of typical siz
 
 </details>
 
-Another road reaches the same shapes: the singular value decomposition, which factors the 500-by-6 table of centred changes itself into turn, stretch, turn, without forming $\Sigma$. With many tenors it is the numerically safer route.
+Another road reaches the same shapes: the singular value decomposition, which factors the 500-by-6 table of centred changes itself into turn, stretch, turn, without forming $`\Sigma`$. With many tenors it is the numerically safer route.
 
 ---
 
@@ -155,15 +165,15 @@ The slice E record, 500 days, changes in bp.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| variance of each tenor | squared standard deviations, 5.5631^2, 5.3287^2, … , 5.5799^2 | the diagonal of $\Sigma$ |
-| total variance, $\operatorname{tr}\Sigma$ | the six variances added | 175.6880 bp^2 |
-| level, $\lambda_1$ | top eigenvalue | 155.0758 bp^2 |
+| variance of each tenor | squared standard deviations, 5.5631^2, 5.3287^2, … , 5.5799^2 | the diagonal of $`\Sigma`$ |
+| total variance, $`\mathrm{tr}\,\Sigma`$ | the six variances added | 175.6880 bp^2 |
+| level, $`\lambda_1`$ | top eigenvalue | 155.0758 bp^2 |
 | level's share | 155.0758 ÷ 175.6880 | 88.27% |
 | slope's share | 11.8141 ÷ 175.6880 | 6.72% |
 | curvature's share | 3.9319 ÷ 175.6880 | 2.24% |
 | **three together** | (155.0758 + 11.8141 + 3.9319) ÷ 175.6880 | **97.23%** |
 | leftover | 1.7166 + 1.6865 + 1.4632 | 4.8662 bp^2 |
-| level's typical day | $\sqrt{155.0758}$ | 12.45 bp along the shape |
+| level's typical day | $`\sqrt{155.0758}`$ | 12.45 bp along the shape |
 
 The typical level day moves the unit shape by 12.45 bp. Spread over six tenors with loadings near 0.41, that is about 5 bp at each tenor: most of the per-tenor standard deviations of 5.29 to 5.58 bp.
 
@@ -173,7 +183,7 @@ The house example is the slice E curve shocked by each factor on a three-standar
 | --- | --- | --- |
 | move at five years | 3 × 12.4529 × 0.3958, three typical level days times the five-year loading | 14.79 bp |
 | new five-year zero | 4.5577% plus the 14.79 bp, unrounded | 4.7055% |
-| five-year zero-coupon bond, per $100 | $100 e^{-0.045577 \times 5}$ becomes $100 e^{-0.047055 \times 5}$ | **$79.62 to $79.04** |
+| five-year zero-coupon bond, per $100 | $`100 e^{-0.045577 \times 5}`$ becomes $`100 e^{-0.047055 \times 5}`$ | **$79.62 to $79.04** |
 
 The three rare days, applied to the whole curve, in percent:
 
@@ -404,7 +414,7 @@ chart, curvature bp      -3.27    -0.98     2.62     2.84     1.36    -2.64
 ALL CHECKS PASS
 ```
 
-Two solvers, one answer: the Jacobi and power-iteration eigenvalues and shapes agree to every printed digit. The day-by-day leftover lands on $\lambda_4 + \lambda_5 + \lambda_6$, and the largest covariance between two factors' scores is zero to four decimals.
+Two solvers, one answer: the Jacobi and power-iteration eigenvalues and shapes agree to every printed digit. The day-by-day leftover lands on $`\lambda_4 + \lambda_5 + \lambda_6`$, and the largest covariance between two factors' scores is zero to four decimals.
 
 ### Rust
 
@@ -624,9 +634,9 @@ The two outputs agree line for line.
 
 Lean proves the card's theorem, Step 1 and two consequences from Step 3, for any record and any number of tenors.
 
-- Take any shape $w$. Then the movement it carries, its squared score averaged over the days, equals $w^{\top}\Sigma\,w$.
-- Take perpendicular unit eigenvectors of $\Sigma$, one per tenor, ranked from largest eigenvalue down, and any three perpendicular unit shapes. Then those three shapes carry at most $\lambda_1 + \lambda_2 + \lambda_3$ of the movement.
-- Take perpendicular unit eigenvectors of $\Sigma$, one per tenor. Then their eigenvalues add up to $\operatorname{tr}\Sigma$, the total variance.
+- Take any shape $`w`$. Then the movement it carries, its squared score averaged over the days, equals $`w^{\top}\Sigma\,w`$.
+- Take perpendicular unit eigenvectors of $`\Sigma`$, one per tenor, ranked from largest eigenvalue down, and any three perpendicular unit shapes. Then those three shapes carry at most $`\lambda_1 + \lambda_2 + \lambda_3`$ of the movement.
+- Take perpendicular unit eigenvectors of $`\Sigma`$, one per tenor. Then their eigenvalues add up to $`\mathrm{tr}\,\Sigma`$, the total variance.
 - Take the same eigenvectors, and keep any three of them as the shapes. Then the average squared leftover over the days is exactly the sum of the other eigenvalues.
 
 Lean takes the eigenvectors as given, so finding them, Step 4 and every number are left to the Python and Rust checks.
@@ -945,7 +955,7 @@ end CurvePCA
 > - **Running PCA on levels, or mixing units.** Both change the answer; What breaks has the numbers.
 > - **Trusting the small factors' shapes.** Eigenvalues 1.72, 1.69 and 1.46 are nearly tied; their shapes rotate from one window to the next. Only a clear gap makes a shape meaningful.
 > - **Comparing signs across studies.** Minus a loading is equally correct. One paper's "steepening" is another's negative slope score.
-> - **Dividing by n − 1 and expecting new shares.** Using $n-1$ instead of $n$ multiplies every eigenvalue by the same 500/499, so the shapes and every share are unchanged.
+> - **Dividing by n − 1 and expecting new shares.** Using $`n-1`$ instead of $`n`$ multiplies every eigenvalue by the same 500/499, so the shapes and every share are unchanged.
 
 ---
 

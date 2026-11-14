@@ -34,38 +34,46 @@ Orange: the series summed to x^30. Teal: 1 + x^3/6 alone. They agree to two deci
 
 ## The formula
 
-Here the rates run up the rod, not through time. Height $x$ is measured up from the tip in **natural lengths** (865.9 mm here, derived below); $y$ is the tilt over the tip's tilt. The law is **Airy's equation**, met by George Airy in 1838 at a rainbow's edge:
+Here the rates run up the rod, not through time. Height $`x`$ is measured up from the tip in **natural lengths** (865.9 mm here, derived below); $`y`$ is the tilt over the tip's tilt. The law is **Airy's equation**, met by George Airy in 1838 at a rainbow's edge:
 
-$$y'' = x\,y, \qquad y(0) = 1, \qquad y'(0) = 0.$$
+```math
+y'' = x\,y, \qquad y(0) = 1, \qquad y'(0) = 0.
+```
 
 **Read it aloud:** the rate of the tilt's rate equals height times tilt; at the tip the tilt is 1 and not changing.
 
-The method, for any equation $y'' + P(x)\,y' + Q(x)\,y = 0$ with the leading coefficient divided out:
+The method, for any equation $`y'' + P(x)\,y' + Q(x)\,y = 0`$ with the leading coefficient divided out:
 
-$$y = \sum_{n=0}^{\infty} a_n\,(x - x_0)^n, \qquad a_0 = y(x_0), \quad a_1 = y'(x_0).$$
+```math
+y = \sum_{n=0}^{\infty} a_n\,(x - x_0)^n, \qquad a_0 = y(x_0), \quad a_1 = y'(x_0).
+```
 
 **Read it aloud:** the answer is a power series around the start; its first two coefficients are the starting value and rate, and the equation fixes the rest.
 
-For Airy's equation, with $x_0 = 0$:
+For Airy's equation, with $`x_0 = 0`$:
 
-$$a_2 = 0, \qquad a_{n+3} = \frac{a_n}{(n+3)(n+2)} \quad (n \ge 0)$$
+```math
+a_2 = 0, \qquad a_{n+3} = \frac{a_n}{(n+3)(n+2)} \quad (n \ge 0)
+```
 
 **Read it aloud:** each coefficient is the one three places back, divided by the two numbers just stepped past.
 
-The point $x_0$ is **ordinary** when $P$ and $Q$ are power series around it. The reach:
+The point $`x_0`$ is **ordinary** when $`P`$ and $`Q`$ are power series around it. The reach:
 
-$$R \;\ge\; \text{distance from } x_0 \text{ to the nearest complex point where } P \text{ or } Q \text{ fails}.$$
+```math
+R \;\ge\; \text{distance from } x_0 \text{ to the nearest complex point where } P \text{ or } Q \text{ fails}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | height above the tip, in natural lengths | 0 tip, 1 clamp | tilt grows faster |
-| $y$, $y'$, $y''$ | tilt over tip tilt; its rate; that rate's rate | 1.1723 at the clamp | — |
-| $\ell$ | natural length, (EI/w)^(1/3): E stiffness, I bending factor, w weight per metre | 865.9 mm | the tip keeps more of the clamp's tilt |
-| $x_0$ | centre of the series | 0, the tip | — |
-| $P$, $Q$ | coefficients of y' and y, y'' alone | P = 0, Q = −x | — |
-| $a_n$, $n$ | coefficient of the n-th power; the power | a_3 = 1/6 | — |
-| $S_N$ | partial sum, cut after power N | S_3 = 1.166667 | nearer 1.172300 |
-| $R$ | radius of convergence: how far out the series adds up | unlimited; 1 for arctan | — |
+| $`x`$ | height above the tip, in natural lengths | 0 tip, 1 clamp | tilt grows faster |
+| $`y`$, $`y'`$, $`y''`$ | tilt over tip tilt; its rate; that rate's rate | 1.1723 at the clamp | — |
+| $`\ell`$ | natural length, (EI/w)^(1/3): E stiffness, I bending factor, w weight per metre | 865.9 mm | the tip keeps more of the clamp's tilt |
+| $`x_0`$ | centre of the series | 0, the tip | — |
+| $`P`$, $`Q`$ | coefficients of y' and y, y'' alone | P = 0, Q = −x | — |
+| $`a_n`$, $`n`$ | coefficient of the n-th power; the power | a_3 = 1/6 | — |
+| $`S_N`$ | partial sum, cut after power N | S_3 = 1.166667 | nearer 1.172300 |
+| $`R`$ | radius of convergence: how far out the series adds up | unlimited; 1 for arctan | — |
 
 ### When it holds
 
@@ -91,7 +99,7 @@ Height s in metres up from the tip; u(s) the sideways offset; θ = u' the tilt. 
 
 ### Step 1: substitute and match the powers
 
-With $y = \sum a_n x^n$, $y'' = \sum (n+2)(n+1)\,a_{n+2}\,x^n$ and $x\,y = \sum a_{n-1}\,x^n$ from n = 1. Match x^n. At n = 0, 2 a_2 = 0, since x y has no constant term. For n ≥ 1, (n + 2)(n + 1) a_{n+2} = a_{n−1}; renaming n − 1 as n gives the rule. It steps by three, so there are three chains, from a_0, a_1 and a_2; the last stays zero.
+With $`y = \sum a_n x^n`$, $`y'' = \sum (n+2)(n+1)\,a_{n+2}\,x^n`$ and $`x\,y = \sum a_{n-1}\,x^n`$ from n = 1. Match x^n. At n = 0, 2 a_2 = 0, since x y has no constant term. For n ≥ 1, (n + 2)(n + 1) a_{n+2} = a_{n−1}; renaming n − 1 as n gives the rule. It steps by three, so there are three chains, from a_0, a_1 and a_2; the last stays zero.
 
 ### Step 2: the two starting values fix the two free coefficients
 

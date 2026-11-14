@@ -36,42 +36,48 @@ Orange: the gap's bell if the drug does nothing. Green: its bell if the drug add
 
 ## The formula
 
-Notation first, in words. Write $p_0$ for the placebo's recovery chance and $p_1$ for the drug's. The gain is $\delta = p_1 - p_0$ (delta). Write $n$ for the number of patients in each arm. The test's false-alarm rate, the chance it calls a useless drug significant, is $\alpha$ (alpha). The chance it misses a real gain is $\beta$ (beta), so the power is $1 - \beta$. A reminder from [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): $\Phi$ is the standard bell's area to the left of a point, and $\Phi^{-1}$ undoes it. Here $z_{1-\alpha/2} = \Phi^{-1}(1 - \alpha/2)$ and $z_{1-\beta} = \Phi^{-1}(1 - \beta)$.
+Notation first, in words. Write $`p_0`$ for the placebo's recovery chance and $`p_1`$ for the drug's. The gain is $`\delta = p_1 - p_0`$ (delta). Write $`n`$ for the number of patients in each arm. The test's false-alarm rate, the chance it calls a useless drug significant, is $`\alpha`$ (alpha). The chance it misses a real gain is $`\beta`$ (beta), so the power is $`1 - \beta`$. A reminder from [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): $`\Phi`$ is the standard bell's area to the left of a point, and $`\Phi^{-1}`$ undoes it. Here $`z_{1-\alpha/2} = \Phi^{-1}(1 - \alpha/2)`$ and $`z_{1-\beta} = \Phi^{-1}(1 - \beta)`$.
 
-$$n = \frac{\bigl(z_{1-\alpha/2}\,\sigma_0 + z_{1-\beta}\,\sigma_1\bigr)^2}{\delta^2}$$
+```math
+n = \frac{\bigl(z_{1-\alpha/2}\,\sigma_0 + z_{1-\beta}\,\sigma_1\bigr)^2}{\delta^2}
+```
 
 **Read it aloud:** the patients needed per arm are the square of the sum of two cutoffs, each scaled by one patient's worth of spread, divided by the square of the gain being chased.
 
 The two spreads are the scatter one pair of patients adds to the gap, first if the drug does nothing, then if it works:
 
-$$\sigma_0 = \sqrt{2\,\bar p\,(1 - \bar p)}, \qquad \sigma_1 = \sqrt{p_0(1 - p_0) + p_1(1 - p_1)}, \qquad \bar p = \frac{p_0 + p_1}{2}$$
+```math
+\sigma_0 = \sqrt{2\,\bar p\,(1 - \bar p)}, \qquad \sigma_1 = \sqrt{p_0(1 - p_0) + p_1(1 - p_1)}, \qquad \bar p = \frac{p_0 + p_1}{2}
+```
 
 The same pieces, run forwards, give the power of a trial of any size:
 
-$$\text{power}(n) \approx \Phi\!\left(\frac{\delta\sqrt{n} - z_{1-\alpha/2}\,\sigma_0}{\sigma_1}\right)$$
+```math
+\text{power}(n) \approx \Phi\!\left(\frac{\delta\sqrt{n} - z_{1-\alpha/2}\,\sigma_0}{\sigma_1}\right)
+```
 
 **Read it aloud:** measure how far the true gain sits beyond the cutoff, in units of the gap's wobble under the drug; the power is the bell's area to the left of that distance.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p_0$, $p_1$ | recovery chance on placebo, on the drug | 0.35 and 0.45 | nearer 0.5 widens the spread: more patients |
-| $\delta$ | the gain being chased, $p_1 - p_0$ | 0.10, ten points | patients fall like one over its square |
-| $\bar p$, $\hat p$ | the average of the two chances, where the test's pooled rate settles when the drug delivers the gain; $\hat p$ is the trial's own pooled rate | 0.40; 0.40 in the 100-per-arm trial | — |
-| $n$ | patients in each arm | 376 needed, 400 booked | power rises |
-| $\alpha$ | false-alarm rate, split over both tails | 0.05 | larger alpha: fewer patients |
-| $\beta$ | miss chance; power is $1 - \beta$ | 0.20, so power 0.80 | larger beta: fewer patients |
-| $z_{1-\alpha/2}$, $z_{1-\beta}$; $z_{1-\alpha}$ | the bell's cutoffs for those two rates; the cutoff a one-sided test uses | 1.959964 and 0.841621; 1.644854 | more patients |
-| $\Phi$, $\Phi^{-1}$ | bell area left of a point, and its reverse | $\Phi(0.9317) = 0.8242$ | — |
-| $\sigma_0$, $\sigma_1$ | one pair of patients' spread in the gap, without and with the gain | 0.692820 and 0.689202 | more patients |
-| $X_0$, $X_1$; $x_0$, $x_1$ | recovery counts in the placebo and drug arms, random before the trial; lower case for one particular pair of counts | 35 and 45 in the 100-per-arm trial | — |
-| $\hat D$ | the observed gap, $X_1/n - X_0/n$ | 0.10 in the 100-per-arm trial | — |
-| $c$ | the cutoff: the smallest gap the test calls significant, $z_{1-\alpha/2}\sigma_0/\sqrt n$ | 0.0679 at 400 per arm | shrinks as $n$ grows |
-| $m$ | the margin: how far an interval may reach either side of its centre | 0.05, in Where you meet it | patients fall like one over its square |
+| $`p_0`$, $`p_1`$ | recovery chance on placebo, on the drug | 0.35 and 0.45 | nearer 0.5 widens the spread: more patients |
+| $`\delta`$ | the gain being chased, $`p_1 - p_0`$ | 0.10, ten points | patients fall like one over its square |
+| $`\bar p`$, $`\hat p`$ | the average of the two chances, where the test's pooled rate settles when the drug delivers the gain; $`\hat p`$ is the trial's own pooled rate | 0.40; 0.40 in the 100-per-arm trial | — |
+| $`n`$ | patients in each arm | 376 needed, 400 booked | power rises |
+| $`\alpha`$ | false-alarm rate, split over both tails | 0.05 | larger alpha: fewer patients |
+| $`\beta`$ | miss chance; power is $`1 - \beta`$ | 0.20, so power 0.80 | larger beta: fewer patients |
+| $`z_{1-\alpha/2}`$, $`z_{1-\beta}`$; $`z_{1-\alpha}`$ | the bell's cutoffs for those two rates; the cutoff a one-sided test uses | 1.959964 and 0.841621; 1.644854 | more patients |
+| $`\Phi`$, $`\Phi^{-1}`$ | bell area left of a point, and its reverse | $`\Phi(0.9317) = 0.8242`$ | — |
+| $`\sigma_0`$, $`\sigma_1`$ | one pair of patients' spread in the gap, without and with the gain | 0.692820 and 0.689202 | more patients |
+| $`X_0`$, $`X_1`$; $`x_0`$, $`x_1`$ | recovery counts in the placebo and drug arms, random before the trial; lower case for one particular pair of counts | 35 and 45 in the 100-per-arm trial | — |
+| $`\hat D`$ | the observed gap, $`X_1/n - X_0/n`$ | 0.10 in the 100-per-arm trial | — |
+| $`c`$ | the cutoff: the smallest gap the test calls significant, $`z_{1-\alpha/2}\sigma_0/\sqrt n`$ | 0.0679 at 400 per arm | shrinks as $`n`$ grows |
+| $`m`$ | the margin: how far an interval may reach either side of its centre | 0.05, in Where you meet it | patients fall like one over its square |
 
 ### When it holds
 
-- **Patients are independent.** If patients come in clinics whose recoveries move together, the gap wobbles more and the formula's $n$ is too small.
-- **Equal arms, two-sided test.** A one-sided test uses $z_{1-\alpha}$ instead; unequal arms need their own spreads.
+- **Patients are independent.** If patients come in clinics whose recoveries move together, the gap wobbles more and the formula's $`n`$ is too small.
+- **Equal arms, two-sided test.** A one-sided test uses $`z_{1-\alpha}`$ instead; unequal arms need their own spreads.
 - **The bell fits the gap.** With hundreds of patients and chances well away from 0 and 1 the normal curve is close to the exact count law; for rare events, count exactly.
 - **The gain is named in advance.** Power is always power *at* a stated gain; without one the number means nothing.
 
@@ -81,46 +87,54 @@ $$\text{power}(n) \approx \Phi\!\left(\frac{\delta\sqrt{n} - z_{1-\alpha/2}\,\si
 
 ### Step 0: power is a chance about the test, fixed before the data
 
-A test is a rule: compute the observed gap and call it significant if it lands beyond a cutoff. Before the trial the gap is random, so whether the rule fires is random too. If the drug does nothing, it fires with chance $\alpha$ by design. If the drug adds 10 points, it fires with some other chance: the power. The trial's actual result never enters it.
+A test is a rule: compute the observed gap and call it significant if it lands beyond a cutoff. Before the trial the gap is random, so whether the rule fires is random too. If the drug does nothing, it fires with chance $`\alpha`$ by design. If the drug adds 10 points, it fires with some other chance: the power. The trial's actual result never enters it.
 
 ### Step 1: the observed gap scatters round the true gain
 
-Write $\hat D$ for the observed gap. Each arm's recovery count follows the binomial law ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). A recovery rate built from $n$ patients, each recovering with chance $p_0$ (or $p_1$), has variance $p_0(1-p_0)/n$ (or $p_1(1-p_1)/n$). The two arms are independent, so their variances add:
+Write $`\hat D`$ for the observed gap. Each arm's recovery count follows the binomial law ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). A recovery rate built from $`n`$ patients, each recovering with chance $`p_0`$ (or $`p_1`$), has variance $`p_0(1-p_0)/n`$ (or $`p_1(1-p_1)/n`$). The two arms are independent, so their variances add:
 
-$$\operatorname{Var}(\hat D) = \frac{p_0(1-p_0) + p_1(1-p_1)}{n} = \frac{\sigma_1^2}{n}$$
+```math
+\mathrm{Var}(\hat D) = \frac{p_0(1-p_0) + p_1(1-p_1)}{n} = \frac{\sigma_1^2}{n}
+```
 
 At 400 per arm, the gap's standard error, its typical wobble, is 0.689202 divided by 20: 0.034460. The observed gap will usually land within about 3.4 points of the true 10.
 
 ### Step 2: the cutoff is set by the no-effect world
 
-The test pools both arms into one recovery rate and measures the gap against the scatter it would have if that one rate held in both. Under the hoped-for gain the pooled rate settles at the average $\bar p$, 0.40, so the power calculation computes $\sigma_0$ there. The no-effect gap then scatters round 0 with standard error $\sigma_0/\sqrt n$: 0.034641 at 400 per arm. The test fires when the gap passes $z_{1-\alpha/2}$ of these wobbles in either direction. That fixes the cutoff:
+The test pools both arms into one recovery rate and measures the gap against the scatter it would have if that one rate held in both. Under the hoped-for gain the pooled rate settles at the average $`\bar p`$, 0.40, so the power calculation computes $`\sigma_0`$ there. The no-effect gap then scatters round 0 with standard error $`\sigma_0/\sqrt n`$: 0.034641 at 400 per arm. The test fires when the gap passes $`z_{1-\alpha/2}`$ of these wobbles in either direction. That fixes the cutoff:
 
-$$c = z_{1-\alpha/2}\,\frac{\sigma_0}{\sqrt n} = 1.959964 \times 0.034641 = 0.0679$$
+```math
+c = z_{1-\alpha/2}\,\frac{\sigma_0}{\sqrt n} = 1.959964 \times 0.034641 = 0.0679
+```
 
 ### Step 3: the power is the area of the gain's bell beyond the cutoff
 
-The central limit theorem ([Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)) makes the gap close to normal: centre $\delta$, standard error $\sigma_1/\sqrt n$. The chance it lands above the cutoff is the bell's area beyond $c$:
+The central limit theorem ([Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)) makes the gap close to normal: centre $`\delta`$, standard error $`\sigma_1/\sqrt n`$. The chance it lands above the cutoff is the bell's area beyond $`c`$:
 
-$$P(\hat D > c) \approx \Phi\!\left(\frac{\delta - c}{\sigma_1/\sqrt n}\right) = \Phi\!\left(\frac{0.10 - 0.0679}{0.034460}\right) = \Phi(0.9317) = 0.8242$$
+```math
+P(\hat D > c) \approx \Phi\!\left(\frac{\delta - c}{\sigma_1/\sqrt n}\right) = \Phi\!\left(\frac{0.10 - 0.0679}{0.034460}\right) = \Phi(0.9317) = 0.8242
+```
 
-The test also fires if the gap lands below $-c$, calling the drug harmful. Under a 10-point gain that chance is 0.000001 at 400 per arm, and 0.000312 even at 100. The formula drops it.
+The test also fires if the gap lands below $`-c`$, calling the drug harmful. Under a 10-point gain that chance is 0.000001 at 400 per arm, and 0.000312 even at 100. The formula drops it.
 
 ### Step 4: solve for the number of patients
 
-Demand power $1 - \beta$. That means the distance inside $\Phi$ must equal $z_{1-\beta}$:
+Demand power $`1 - \beta`$. That means the distance inside $`\Phi`$ must equal $`z_{1-\beta}`$:
 
-$$\frac{\delta\sqrt n - z_{1-\alpha/2}\,\sigma_0}{\sigma_1} = z_{1-\beta}$$
+```math
+\frac{\delta\sqrt n - z_{1-\alpha/2}\,\sigma_0}{\sigma_1} = z_{1-\beta}
+```
 
-Move the cutoff term across and divide by $\delta$: $\sqrt n = (z_{1-\alpha/2}\,\sigma_0 + z_{1-\beta}\,\sigma_1)/\delta$. Square both sides and the formula appears. In words: the true gain must clear the no-effect cutoff by enough of its own wobble that 80 percent of its bell lies beyond.
+Move the cutoff term across and divide by $`\delta`$: $`\sqrt n = (z_{1-\alpha/2}\,\sigma_0 + z_{1-\beta}\,\sigma_1)/\delta`$. Square both sides and the formula appears. In words: the true gain must clear the no-effect cutoff by enough of its own wobble that 80 percent of its bell lies beyond.
 
 <details>
 <summary>Detailed proof: where the approximation enters, and how big it is</summary>
 
-The count $X_0$ is a sum of $n$ independent yes-or-no outcomes with chance $p_0$, so $E[X_0] = n p_0$ and $\operatorname{Var}(X_0) = n p_0(1 - p_0)$; the same holds for $X_1$ with $p_1$. The observed gap is $\hat D = X_1/n - X_0/n$. Expectations subtract, and for independent counts variances add, each scaled by $1/n^2$: $E[\hat D] = \delta$ and $\operatorname{Var}(\hat D) = \sigma_1^2/n$. These two facts are exact.
+The count $`X_0`$ is a sum of $`n`$ independent yes-or-no outcomes with chance $`p_0`$, so $`E[X_0] = n p_0`$ and $`\mathrm{Var}(X_0) = n p_0(1 - p_0)`$; the same holds for $`X_1`$ with $`p_1`$. The observed gap is $`\hat D = X_1/n - X_0/n`$. Expectations subtract, and for independent counts variances add, each scaled by $`1/n^2`$: $`E[\hat D] = \delta`$ and $`\mathrm{Var}(\hat D) = \sigma_1^2/n`$. These two facts are exact.
 
-The real test uses the trial's own pooled rate, $\hat p = (X_0 + X_1)/2n$, and fires when $|\hat D| > z_{1-\alpha/2}\sqrt{2\hat p(1-\hat p)/n}$. Three approximations lead to the formula: $\hat p$ is replaced by $\bar p$, which it approaches as $n$ grows; the law of $\hat D$ is replaced by a bell, by the central limit theorem; and the lower tail is dropped, at the cost printed in Step 3.
+The real test uses the trial's own pooled rate, $`\hat p = (X_0 + X_1)/2n`$, and fires when $`|\hat D| > z_{1-\alpha/2}\sqrt{2\hat p(1-\hat p)/n}`$. Three approximations lead to the formula: $`\hat p`$ is replaced by $`\bar p`$, which it approaches as $`n`$ grows; the law of $`\hat D`$ is replaced by a bell, by the central limit theorem; and the lower tail is dropped, at the cost printed in Step 3.
 
-Every rejecting outcome can also be counted. For each pair of counts $(x_0, x_1)$ from $(0, 0)$ to $(n, n)$, the chance is the product of two binomial masses, and the test either fires or not. Adding the chances of the firing pairs gives the exact power of the real test. At 400 per arm that sum is 0.8224, against the formula's 0.8242. At 376 it is 0.7985, just short of 0.80; the exact count first reaches 0.80 at 378 per arm. The approximation costs two patients per arm.
+Every rejecting outcome can also be counted. For each pair of counts $`(x_0, x_1)`$ from $`(0, 0)`$ to $`(n, n)`$, the chance is the product of two binomial masses, and the test either fires or not. Adding the chances of the firing pairs gives the exact power of the real test. At 400 per arm that sum is 0.8224, against the formula's 0.8242. At 376 it is 0.7985, just short of 0.80; the exact count first reaches 0.80 at 378 per arm. The approximation costs two patients per arm.
 
 </details>
 
@@ -151,17 +165,17 @@ Placebo 0.35, drug 0.45, false-alarm rate 0.05 split over two tails, power 0.80.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the gain $\delta$ | 0.45 − 0.35 | 0.10 |
-| the average $\bar p$ | (0.35 + 0.45) / 2 | 0.40 |
-| spread without gain, $\sigma_0$ | √(2 × 0.40 × 0.60) = √0.48 | 0.692820 |
-| spread with gain, $\sigma_1$ | √(0.35 × 0.65 + 0.45 × 0.55) = √0.475 | 0.689202 |
-| cutoffs from the bell | $\Phi^{-1}(0.975)$ and $\Phi^{-1}(0.80)$ | 1.959964 and 0.841621 |
+| the gain $`\delta`$ | 0.45 − 0.35 | 0.10 |
+| the average $`\bar p`$ | (0.35 + 0.45) / 2 | 0.40 |
+| spread without gain, $`\sigma_0`$ | √(2 × 0.40 × 0.60) = √0.48 | 0.692820 |
+| spread with gain, $`\sigma_1`$ | √(0.35 × 0.65 + 0.45 × 0.55) = √0.475 | 0.689202 |
+| cutoffs from the bell | $`\Phi^{-1}(0.975)`$ and $`\Phi^{-1}(0.80)`$ | 1.959964 and 0.841621 |
 | the two pieces | 1.959964 × 0.692820 and 0.841621 × 0.689202 | 1.357903 and 0.580047 |
 | their sum | 1.357903 + 0.580047 | 1.937950 |
 | divide by the gain, square | (1.937950 / 0.10)^2 | 375.57 |
 | **patients per arm** | round up | **376** |
 | allow 1 in 20 to drop out | 376 / 0.95 | 395.8, booked as 400 |
-| power at 400 | $\Phi$((0.10 × 20 − 1.357903) / 0.689202) | 0.8242 |
+| power at 400 | $`\Phi`$((0.10 × 20 − 1.357903) / 0.689202) | 0.8242 |
 
 A trial of 400 per arm catches a real 10-point gain about 82 times in 100. The 100-per-arm trial would catch it about 31 times in 100: its cutoff was 0.1358, and a true gain of 0.10 sits below it.
 
@@ -173,14 +187,14 @@ Same trial, same 10-point gain, right answer 376 per arm and power 0.80:
 | --- | --- | --- |
 | One-sided cutoff 1.644854 in a two-sided test | 296 per arm, true power 0.7006 | the plan and the analysis use different cutoffs |
 | 376 read as the total, not per arm | 188 per arm, power 0.5077 | half the patients: a coin flip |
-| Chasing 5 points by doubling to 752 | power 0.5171; 1471 needed | the gain enters squared, so halving it quadruples $n$ |
+| Chasing 5 points by doubling to 752 | power 0.5171; 1471 needed | the gain enters squared, so halving it quadruples $`n`$ |
 | Planning for a 15-point gain when the truth is 10 | 170 per arm, power 0.4688 | an optimistic gain buys a small trial that misses the real one |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads lead to the trial's power. Road 1 is the formula with the far tail kept, the bell's area from its Taylor series and the cutoffs by Newton's method; nothing imported knows the normal curve. Road 2 checks Step 1's variance by summing over every count, then visits every pair of recovery counts and adds the binomial chances of those where the real pooled test fires. Road 3 runs 10,000 simulated trials, patient by patient, from a SplitMix64 generator with seed 20260928, quoted with a standard error. The code also scans for the exact $n$ and prints every number on this card, including each plotted point.
+Three independent roads lead to the trial's power. Road 1 is the formula with the far tail kept, the bell's area from its Taylor series and the cutoffs by Newton's method; nothing imported knows the normal curve. Road 2 checks Step 1's variance by summing over every count, then visits every pair of recovery counts and adds the binomial chances of those where the real pooled test fires. Road 3 runs 10,000 simulated trials, patient by patient, from a SplitMix64 generator with seed 20260928, quoted with a standard error. The code also scans for the exact $`n`$ and prints every number on this card, including each plotted point.
 
 ### Python
 
@@ -562,9 +576,9 @@ The two outputs agree line for line. The simulated powers, 0.3124 ± 0.0046 and 
 
 Lean proves the sample-size formula and the observed gap's exact mean and variance in general, and checks the card's hand numbers.
 
-- Take $0 < p_0 < p_1 < 1$, $0 < \alpha < 1$ and $0 < \beta \le 1/2$. Then the power formula at $n$ patients per arm reaches $1 - \beta$ exactly when $n$ is at least the formula's answer.
-- Suppose the counts $X_0$ and $X_1$ are independent and binomial, with $n$ patients each and chances $p_0$ and $p_1$. Then the observed gap $\hat D$ has mean exactly $\delta$ and variance exactly $\sigma_1^2/n$.
-- The average rate $\bar p$ is 0.40, $\sigma_0^2$ is 0.48, and $\sigma_1^2$ is 0.475, as exact fractions.
+- Take $`0 < p_0 < p_1 < 1`$, $`0 < \alpha < 1`$ and $`0 < \beta \le 1/2`$. Then the power formula at $`n`$ patients per arm reaches $`1 - \beta`$ exactly when $`n`$ is at least the formula's answer.
+- Suppose the counts $`X_0`$ and $`X_1`$ are independent and binomial, with $`n`$ patients each and chances $`p_0`$ and $`p_1`$. Then the observed gap $`\hat D`$ has mean exactly $`\delta`$ and variance exactly $`\sigma_1^2/n`$.
+- The average rate $`\bar p`$ is 0.40, $`\sigma_0^2`$ is 0.48, and $`\sigma_1^2`$ is 0.475, as exact fractions.
 - Allowing 1 in 20 to drop out turns 376 into 396: 395 would leave fewer than 376.
 - Booking 400 per arm, if 1 in 20 leave, 380 remain, still above 376.
 
@@ -821,7 +835,7 @@ example : 400 - 400 / 20 = 380 ∧ 376 ≤ 380 := by decide
 > - **Not significant read as no effect.** At 100 per arm a real 10-point gain is missed 69 times in 100. A p-value is never the chance the drug works.
 > - **Per arm against total.** Reading 376 as the total leaves 188 per arm and power 0.5077.
 > - **An optimistic gain.** Plan for the smallest gain worth finding. Plan for 15 points when the truth is 10 and 170 per arm gives power 0.4688.
-> - **Dropouts and many outcomes.** Patients who leave shrink $n$. Testing several outcomes at 5 percent each raises the false-alarm rate, which [Many tests](08-multiple-testing.md) repairs, at the price of a smaller $\alpha$ and so a larger trial.
+> - **Dropouts and many outcomes.** Patients who leave shrink $`n`$. Testing several outcomes at 5 percent each raises the false-alarm rate, which [Many tests](08-multiple-testing.md) repairs, at the price of a smaller $`\alpha`$ and so a larger trial.
 
 ---
 
@@ -830,7 +844,7 @@ example : 400 - 400 / 20 = 380 ∧ 376 ≤ 380 := by decide
 - **Drug approval.** A trial protocol states, before enrolment, the gain it is powered to detect, the power, usually 80 or 90 percent, and the resulting number of patients. An underpowered trial exposes patients to risk with little chance of an answer, so ethics boards read that paragraph first.
 - **A/B tests on websites.** Two page designs, a 5 percent click rate on one, a hoped-for 5.5 on the other. The gain is half a point, so the square law demands 31234 visitors per arm. The design side is on [Randomised experiments](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md).
 - **Opinion polls.** Detecting a swing from 50 to 53 percent between two months, with 80 percent power, takes 4356 people in each poll.
-- **Sizing an interval instead of a test.** A study that wants its 95 percent interval for the gap to reach no more than $m$ either side solves the same equation with the power term removed and the interval's own spread, $\sigma_1$, in the cutoff term: $n = (z_{1-\alpha/2}\,\sigma_1 / m)^2$ per arm. For ±5 points at the house rates that is (1.959964 × 0.689202 / 0.05)^2, rounded up: 730 per arm.
+- **Sizing an interval instead of a test.** A study that wants its 95 percent interval for the gap to reach no more than $`m`$ either side solves the same equation with the power term removed and the interval's own spread, $`\sigma_1`$, in the cutoff term: $`n = (z_{1-\alpha/2}\,\sigma_1 / m)^2`$ per arm. For ±5 points at the house rates that is (1.959964 × 0.689202 / 0.05)^2, rounded up: 730 per arm.
 
 > **Say it back**
 > Power is the chance a test comes out significant when a stated real effect is present, worked out before the data. The observed gap scatters round the true gain with a wobble that shrinks like one over the square root of the patients. The test's cutoff is set where the no-effect world rarely reaches; the power is how much of the gain's bell lies beyond it. Solving for 80 percent power gives 376 per arm for a 10-point gain over 35 percent, booked as 400. Halve the gain and the trial must be about four times as large.
@@ -839,7 +853,7 @@ example : 400 - 400 / 20 = 380 ∧ 376 ≤ 380 := by decide
 
 ## What this builds on
 
-- [Hypothesis tests](03-hypothesis-tests-and-p-values.md): the test whose firing chance this card measures, its false-alarm rate $\alpha$, and the two-proportion z statistic.
+- [Hypothesis tests](03-hypothesis-tests-and-p-values.md): the test whose firing chance this card measures, its false-alarm rate $`\alpha`$, and the two-proportion z statistic.
 
 ## Where this goes next
 

@@ -40,47 +40,55 @@ The wandering line is the share of rainy days so far; the flat line is the promi
 
 ## The formula
 
-Notation first, in words. Something that may or may not happen, such as "measurable rain tomorrow", is called an **event** and gets a capital letter, here $A$. Its probability is written $P(A)$, read aloud "the chance of A". Probabilities are written as decimals: 30 percent is 0.30.
+Notation first, in words. Something that may or may not happen, such as "measurable rain tomorrow", is called an **event** and gets a capital letter, here $`A`$. Its probability is written $`P(A)`$, read aloud "the chance of A". Probabilities are written as decimals: 30 percent is 0.30.
 
-The three readings of the same statement, $P(A) = p$:
+The three readings of the same statement, $`P(A) = p`$:
 
-$$\frac{n_A}{n} \;\longrightarrow\; p \quad\text{as } n \text{ grows}$$
+```math
+\frac{n_A}{n} \;\longrightarrow\; p \quad\text{as } n \text{ grows}
+```
 
-**Read it aloud:** out of $n$ days like this one, the share $n_A / n$ that turn out rainy settles on $p$.
+**Read it aloud:** out of $`n`$ days like this one, the share $`n_A / n`$ that turn out rainy settles on $`p`$.
 
-$$\text{fair price of a ticket paying \$1 if } A \;=\; \$p, \qquad \text{odds against } A \;=\; \frac{1-p}{p}$$
+```math
+\text{fair price of a ticket paying \$1 if } A \;=\; \$p, \qquad \text{odds against } A \;=\; \frac{1-p}{p}
+```
 
-**Read it aloud:** a ticket that pays one dollar if it rains is worth $p$ dollars; the odds against rain are the chance of no rain divided by the chance of rain.
+**Read it aloud:** a ticket that pays one dollar if it rains is worth $`p`$ dollars; the odds against rain are the chance of no rain divided by the chance of rain.
 
-$$B(q) \;=\; p\,(1-q)^2 + (1-p)\,q^2$$
+```math
+B(q) \;=\; p\,(1-q)^2 + (1-p)\,q^2
+```
 
-**Read it aloud:** a forecaster who announces the chance $q$ is charged the squared miss, $(1-q)^2$ if it rains and $q^2$ if it stays dry; weighing the two by how often each happens gives the average charge.
+**Read it aloud:** a forecaster who announces the chance $`q`$ is charged the squared miss, $`(1-q)^2`$ if it rains and $`q^2`$ if it stays dry; weighing the two by how often each happens gives the average charge.
 
 This is the **Brier score** (Glenn Brier, 1950): the average squared miss, lower is better. Weather services grade forecasters with it.
 
 The rules every reading obeys:
 
-$$0 \le P(A) \le 1, \qquad P(\text{rain}) + P(\text{no rain}) = 1$$
+```math
+0 \le P(A) \le 1, \qquad P(\text{rain}) + P(\text{no rain}) = 1
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | an event: something that may or may not happen | measurable rain at the forecast point tomorrow | — |
-| $P(A)$ | the chance of A, a number from 0 to 1 | 0.30 | — |
-| $p$ | the true chance, the value $P(A)$ takes | 0.30 | more rainy days, a dearer ticket, shorter odds |
-| $n$ | how many comparable days are counted | 10 up to 100,000 | the share wobbles less, like one over the square root of $n$ |
-| $n_A$ | how many of those days were rainy | 29,799 of 100,000 | — |
-| $n_A / n$ | the share of rainy days | 0.2980 | — |
-| $q$ | the chance a forecaster announces | 0.30 when honest | away from $p$, the Brier score rises |
-| $B(q)$ | Brier score: average squared miss of the forecast $q$ | 0.21 at $q = 0.30$ | lower is a better forecaster |
-| $a$, $b$ | prices of the rain and no-rain tickets, in dollars | 0.30 and 0.60 for the incoherent bookmaker | a sum away from 1 opens a sure win |
-| $h$, $k$ | how many rain and no-rain tickets are held; negative means sold | 1 and 1 | — |
-| $(1-p)/p$ | odds against: dollars won per dollar staked on a fair bet | 2.3333, that is 7 to 3 | — |
+| $`A`$ | an event: something that may or may not happen | measurable rain at the forecast point tomorrow | — |
+| $`P(A)`$ | the chance of A, a number from 0 to 1 | 0.30 | — |
+| $`p`$ | the true chance, the value $`P(A)`$ takes | 0.30 | more rainy days, a dearer ticket, shorter odds |
+| $`n`$ | how many comparable days are counted | 10 up to 100,000 | the share wobbles less, like one over the square root of $`n`$ |
+| $`n_A`$ | how many of those days were rainy | 29,799 of 100,000 | — |
+| $`n_A / n`$ | the share of rainy days | 0.2980 | — |
+| $`q`$ | the chance a forecaster announces | 0.30 when honest | away from $`p`$, the Brier score rises |
+| $`B(q)`$ | Brier score: average squared miss of the forecast $`q`$ | 0.21 at $`q = 0.30`$ | lower is a better forecaster |
+| $`a`$, $`b`$ | prices of the rain and no-rain tickets, in dollars | 0.30 and 0.60 for the incoherent bookmaker | a sum away from 1 opens a sure win |
+| $`h`$, $`k`$ | how many rain and no-rain tickets are held; negative means sold | 1 and 1 | — |
+| $`(1-p)/p`$ | odds against: dollars won per dollar staked on a fair bet | 2.3333, that is 7 to 3 | — |
 
 ### When it holds
 
 A probability is a definition, so it holds by fiat; what can fail is each reading's link to the world.
 
-- **Frequency needs many comparable cases.** A one-off event, such as one election, has nothing to count. With only 10 days the rainy share is typically 0.1449 off the chance. That typical gap is the **standard error**, $\sqrt{p(1-p)/n}$, derived on shelf 02: [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md) gives the $p(1-p)$ part.
+- **Frequency needs many comparable cases.** A one-off event, such as one election, has nothing to count. With only 10 days the rainy share is typically 0.1449 off the chance. That typical gap is the **standard error**, $`\sqrt{p(1-p)/n}`$, derived on shelf 02: [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md) gives the $`p(1-p)`$ part.
 - **Price needs a bet taken either way, at stakes that do not hurt.** A bookmaker's margin, or fear of losing the rent, moves the price off the chance.
 - **Belief needs coherence.** Beliefs that break the rules above can be turned into bets that lose whatever happens (Step 3).
 - **Belief meets frequency only if checked.** A coherent forecaster can still be wrong about the weather; only a calibration check against the record (Step 4) catches it.
@@ -97,7 +105,7 @@ Counting ties "How often?" to "What price?"; money ties "What price?" to "How su
 
 Count days on which the chance of rain is really 0.30. After 10 days the simulation has seen 4 rainy ones, a share of 0.40; after 100 days, 0.35; after 100,000, 0.2980.
 
-The share never has to hit 0.30 exactly. What shrinks is the typical gap. The standard error, $\sqrt{0.30 \times 0.70 / n}$, is 0.1449 at 10 days, 0.0145 at 1,000 and 0.0014 at 100,000. Ten times as many days buys about three times less wobble, because of the square root.
+The share never has to hit 0.30 exactly. What shrinks is the typical gap. The standard error, $`\sqrt{0.30 \times 0.70 / n}`$, is 0.1449 at 10 days, 0.0145 at 1,000 and 0.0014 at 100,000. Ten times as many days buys about three times less wobble, because of the square root.
 
 That the share settles at all is the **law of large numbers**. It is stated here, checked by the simulation, and proved later in the wing, in [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md), with Chebyshev's inequality.
 
@@ -107,7 +115,9 @@ Sell one ticket a day that pays $1 on a rainy day. Over 100,000 days, 29,799 tic
 
 Odds are the same price said another way. "7 to 3 against" means a stake of $3 wins $7. On a rainy day, 3 times in 10, the bettor gains 7. On a dry day, 7 times in 10, the bettor loses 3. Weighed by the chances:
 
-$$0.30 \times 7 \;-\; 0.70 \times 3 \;=\; 2.1 - 2.1 \;=\; 0.$$
+```math
+0.30 \times 7 \;-\; 0.70 \times 3 \;=\; 2.1 - 2.1 \;=\; 0.
+```
 
 A fair bet gains nothing on average. The simulated days give −0.0201 dollars per bet, standard error 0.0145: within one and a half standard errors of zero. Going back from odds to a chance: 3 wins in 3 + 7 = 10 cases is 3/10.
 
@@ -117,21 +127,23 @@ Now let the chance be a belief rather than a count. A bookmaker believes in 30 p
 
 A set of bets that loses in every outcome is called a **Dutch book**. The bookmaker walked into one because the two beliefs summed to 0.90, not 1. Had they summed to more than 1, selling both tickets to the bookmaker would win for sure instead.
 
-Only prices that obey $P(\text{rain}) + P(\text{no rain}) = 1$, with each between 0 and 1, are safe. Frank Ramsey (1926) and Bruno de Finetti (1937) made this the foundation of the belief reading. A degree of belief is only worth the name if it could be used as a betting price without a sure loss.
+Only prices that obey $`P(\text{rain}) + P(\text{no rain}) = 1`$, with each between 0 and 1, are safe. Frank Ramsey (1926) and Bruno de Finetti (1937) made this the foundation of the belief reading. A degree of belief is only worth the name if it could be used as a betting price without a sure loss.
 
 <details>
 <summary>Detailed proof: the prices must sum to 1, and then no book can be made</summary>
 
-Let the rain ticket cost $a$ and the no-rain ticket cost $b$, each paying 1 in its own weather.
+Let the rain ticket cost $`a`$ and the no-rain ticket cost $`b`$, each paying 1 in its own weather.
 
-**Sum below 1.** Buy one of each. The cost is $a + b$ and exactly one ticket pays 1, so the buyer nets $1 - (a + b) > 0$ in both weathers.
+**Sum below 1.** Buy one of each. The cost is $`a + b`$ and exactly one ticket pays 1, so the buyer nets $`1 - (a + b) > 0`$ in both weathers.
 
-**Sum above 1.** Sell one of each to the bookmaker. The seller receives $a + b$ and pays out 1, netting $(a + b) - 1 > 0$ in both weathers.
+**Sum above 1.** Sell one of each to the bookmaker. The seller receives $`a + b`$ and pays out 1, netting $`(a + b) - 1 > 0`$ in both weathers.
 
 **A price below 0 or above 1.** A negative price pays the buyer to take a ticket that never costs anything later; a price above 1 charges more than the ticket can ever pay. Either is a sure loss for one side.
 
-**Sum exactly 1: no sure win exists.** Hold $h$ rain tickets and $k$ no-rain tickets (a negative count means sold). The cost is $ha + kb$. The net is $h - (ha + kb)$ if it rains and $k - (ha + kb)$ if dry. Average the two nets with weights $a$ and $b$:
-$$a\,[h - (ha + kb)] + b\,[k - (ha + kb)] = (ha + kb) - (ha + kb)(a + b) = 0.$$
+**Sum exactly 1: no sure win exists.** Hold $`h`$ rain tickets and $`k`$ no-rain tickets (a negative count means sold). The cost is $`ha + kb`$. The net is $`h - (ha + kb)`$ if it rains and $`k - (ha + kb)`$ if dry. Average the two nets with weights $`a`$ and $`b`$:
+
+$`\displaystyle a\,[h - (ha + kb)] + b\,[k - (ha + kb)] = (ha + kb) - (ha + kb)(a + b) = 0.`$
+
 The weights are non-negative and sum to 1. If both nets were positive, their weighted average would be positive, not 0. So no holding wins in both weathers. Coherent prices cannot be beaten.
 
 </details>
@@ -140,11 +152,13 @@ The weights are non-negative and sum to 1. If both nets were positive, their wei
 
 A forecaster believes the chance is 0.30. Would announcing 0.50, to look cautious, score better? Expand the Brier score:
 
-$$B(q) = p\,(1 - 2q + q^2) + (1-p)\,q^2 = p - 2pq + q^2 = p(1-p) + (q - p)^2.$$
+```math
+B(q) = p\,(1 - 2q + q^2) + (1-p)\,q^2 = p - 2pq + q^2 = p(1-p) + (q - p)^2.
+```
 
-The first term, $p(1-p)$, does not depend on the forecast. The second, $(q-p)^2$, is zero when $q = p$ and positive otherwise. So the average score is lowest exactly when the announced chance equals the true one. A scoring rule with this property is called **proper**.
+The first term, $`p(1-p)`$, does not depend on the forecast. The second, $`(q-p)^2`$, is zero when $`q = p`$ and positive otherwise. So the average score is lowest exactly when the announced chance equals the true one. A scoring rule with this property is called **proper**.
 
-With $p = 0.30$: forecasting 0.30 scores 0.21 on average, 0.50 scores 0.25, and always saying 0 scores 0.30.
+With $`p = 0.30`$: forecasting 0.30 scores 0.21 on average, 0.50 scores 0.25, and always saying 0 scores 0.30.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -155,11 +169,11 @@ xychart-beta
     line [0.30, 0.25, 0.22, 0.21, 0.22, 0.25, 0.30, 0.37, 0.46, 0.57, 0.70]
 ```
 
-The one line is $B(q) = 0.21 + (q - 0.30)^2$: a bowl whose floor sits at the true chance. Over the simulated days the score at 0.30 comes out at 0.2092, against 0.21 expected.
+The one line is $`B(q) = 0.21 + (q - 0.30)^2`$: a bowl whose floor sits at the true chance. Over the simulated days the score at 0.30 comes out at 0.2092, against 0.21 expected.
 
 Here the readings meet. Under a proper score, the best announcement is the honest belief. Grouping days by the announced chance and counting the rainy share in each group is a **calibration** check. A forecaster is **calibrated** when it rains on about 30 percent of the days announced at 30 percent.
 
-Missing the frequency costs extra. Take the days a forecaster announced 0.90. Their average squared miss has the same form as $B(q)$, with the share of those days that were rainy in place of $p$. By the expansion above, it equals what announcing that share would have scored, plus the square of the gap between 0.90 and the share.
+Missing the frequency costs extra. Take the days a forecaster announced 0.90. Their average squared miss has the same form as $`B(q)`$, with the share of those days that were rainy in place of $`p`$. By the expansion above, it equals what announcing that share would have scored, plus the square of the gap between 0.90 and the share.
 
 So a miscalibrated forecaster can always lower its score by recalibrating: announcing, on each group of days, the share that came up rainy. The lowest average score needs every announcement to equal the true chance. Calibration is needed for that, but it is not enough, as the climate average below shows.
 
@@ -183,7 +197,7 @@ Calibration is not the whole story: announcing the climate average, 0.30, every 
 <details>
 <summary>Why a squared miss and not a plain miss?</summary>
 
-Charging the plain gap between the forecast and the outcome, counted as 1 for rain and 0 for dry, averages to $p(1-q) + (1-p)q$. That is a straight line in $q$, so its lowest point is at an end: with $p = 0.30$ the best announcement is 0, not 0.30. The plain gap rewards exaggeration. The square makes the average a bowl with its floor at the truth.
+Charging the plain gap between the forecast and the outcome, counted as 1 for rain and 0 for dry, averages to $`p(1-q) + (1-p)q`$. That is a straight line in $`q`$, so its lowest point is at an end: with $`p = 0.30`$ the best announcement is 0, not 0.30. The plain gap rewards exaggeration. The square makes the average a bowl with its floor at the truth.
 
 </details>
 
@@ -603,11 +617,11 @@ The two outputs match line for line.
 
 Lean proves the card's two theorems for all prices and chances, the rules for every event, and the worked numbers exactly.
 
-- Take any prices $a$ and $b$ for the rain and no-rain tickets. Then some holding $h$, $k$ wins in both weathers exactly when a price is below 0 or $a + b \ne 1$.
-- Take any true chance $p$ and announced chance $q$. Then the Brier score splits as $B(q) = p(1-p) + (q-p)^2$.
-- So announcing the true chance $p$ scores strictly lower than announcing any other chance.
-- Take any event $A$. Then $0 \le P(A) \le 1$, and $P(A) + P(\text{not } A) = 1$.
-- The worked numbers: no rain 0.70, odds 7 to 3, a fair bet gains 0, and $3/(3 + 7) = 0.30$, not $3/7$.
+- Take any prices $`a`$ and $`b`$ for the rain and no-rain tickets. Then some holding $`h`$, $`k`$ wins in both weathers exactly when a price is below 0 or $`a + b \ne 1`$.
+- Take any true chance $`p`$ and announced chance $`q`$. Then the Brier score splits as $`B(q) = p(1-p) + (q-p)^2`$.
+- So announcing the true chance $`p`$ scores strictly lower than announcing any other chance.
+- Take any event $`A`$. Then $`0 \le P(A) \le 1`$, and $`P(A) + P(\text{not } A) = 1`$.
+- The worked numbers: no rain 0.70, odds 7 to 3, a fair bet gains 0, and $`3/(3 + 7) = 0.30`$, not $`3/7`$.
 - At the bookmaker's prices of 30 and 60 cents, buying both tickets nets 10 cents in either weather.
 - With true chance 0.30, the Brier score is 0.21 for 0.30, 0.25 for 0.50, and 0.30 for 0.
 - The honest forecast's squared misses are 0.49 if it rains and 0.09 if dry.

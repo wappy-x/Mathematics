@@ -26,15 +26,19 @@ Drawn to scale, 200 pixels to one unit on both axes. Solid curve: y = cos x. Das
 
 ## The formula
 
-Notation first, in words. The rule is $g$; the reading after $n$ presses is $x_n$, starting from $x_0$; the fixed point is $p$. Vertical bars give distance: |x − y| is how far apart x and y are. The contraction condition, on the closed interval from $a$ to $b$, ends included:
+Notation first, in words. The rule is $`g`$; the reading after $`n`$ presses is $`x_n`$, starting from $`x_0`$; the fixed point is $`p`$. Vertical bars give distance: |x − y| is how far apart x and y are. The contraction condition, on the closed interval from $`a`$ to $`b`$, ends included:
 
-$$|g(x) - g(y)| \le q\,|x - y| \quad \text{for all } x, y \text{ in } [a, b], \qquad 0 \le q < 1$$
+```math
+|g(x) - g(y)| \le q\,|x - y| \quad \text{for all } x, y \text{ in } [a, b], \qquad 0 \le q < 1
+```
 
 **Read it aloud:** after one press, any two points are at most q times as far apart as they were before.
 
-Pressing is $x_{n+1} = g(x_n)$. The theorem then gives two bounds on the error:
+Pressing is $`x_{n+1} = g(x_n)`$. The theorem then gives two bounds on the error:
 
-$$|x_n - p| \le \frac{q^n}{1 - q}\,|x_1 - x_0| \qquad\qquad |x_n - p| \le \frac{q}{1 - q}\,|x_n - x_{n-1}|$$
+```math
+|x_n - p| \le \frac{q^n}{1 - q}\,|x_1 - x_0| \qquad\qquad |x_n - p| \le \frac{q}{1 - q}\,|x_n - x_{n-1}|
+```
 
 **Read it aloud:** the error after n presses is at most q to the n over one minus q, times the first step; and at most q over one minus q, times the last step.
 
@@ -42,14 +46,14 @@ The **first-step bound** budgets the work before it starts; the **last-step boun
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $g$ | the rule pressed | cos, radians | steeper settles slower |
-| $x_0$, $x_n$ | start; reading after n presses | 0; 0.731404 at 10 | — |
-| $n$ | presses so far | 10 | bounds fall |
-| $p$ | fixed point: g(p) = p | 0.7390851332 | — |
-| $q$ | contraction factor, worst over all pairs | sin 1 = 0.841471 | bounds grow |
-| $a$, $b$ | ends of the interval | 0 and 1 | — |
-| $x$, $y$ | any two points in it | any pair | — |
-| $c$ | the mean value theorem's in-between point | depends on the pair | — |
+| $`g`$ | the rule pressed | cos, radians | steeper settles slower |
+| $`x_0`$, $`x_n`$ | start; reading after n presses | 0; 0.731404 at 10 | — |
+| $`n`$ | presses so far | 10 | bounds fall |
+| $`p`$ | fixed point: g(p) = p | 0.7390851332 | — |
+| $`q`$ | contraction factor, worst over all pairs | sin 1 = 0.841471 | bounds grow |
+| $`a`$, $`b`$ | ends of the interval | 0 and 1 | — |
+| $`x`$, $`y`$ | any two points in it | any pair | — |
+| $`c`$ | the mean value theorem's in-between point | depends on the pair | — |
 
 All in radians; the slope of cos is radians per radian, so q has no unit.
 
@@ -72,15 +76,19 @@ The distance to p is unknown; the steps between presses are known. Each step is 
 
 Apply the contraction to the latest two readings:
 
-$$|x_{n+1} - x_n| = |g(x_n) - g(x_{n-1})| \le q\,|x_n - x_{n-1}|$$
+```math
+|x_{n+1} - x_n| = |g(x_n) - g(x_{n-1})| \le q\,|x_n - x_{n-1}|
+```
 
-Repeated down to the first step: $|x_{n+1} - x_n| \le q^n |x_1 - x_0|$. For cos from 0, that is 0.841471 to the n.
+Repeated down to the first step: $`|x_{n+1} - x_n| \le q^n |x_1 - x_0|`$. For cos from 0, that is 0.841471 to the n.
 
 ### Step 2: every later reading stays within a known distance
 
 From press n to any later press m, the pressing covers at most the sum of the steps between; bound each by Step 1 and sum:
 
-$$|x_m - x_n| \le \left(q^n + q^{n+1} + \dots + q^{m-1}\right)|x_1 - x_0| < \frac{q^n}{1 - q}\,|x_1 - x_0| \qquad \text{for every } m > n$$
+```math
+|x_m - x_n| \le \left(q^n + q^{n+1} + \dots + q^{m-1}\right)|x_1 - x_0| < \frac{q^n}{1 - q}\,|x_1 - x_0| \qquad \text{for every } m > n
+```
 
 The tolerance game, with numbers: to keep every later reading within 0.001 of the reading at press n, make the right side at most 0.001. For cos from 0 that first happens at n = 51, and it holds however long the pressing goes on.
 
@@ -117,9 +125,11 @@ Let g map [a, b] into itself with |g(x) − g(y)| ≤ q|x − y|, 0 ≤ q < 1, a
 
 ### Step 6: checking that cos is a contraction, with the derivative
 
-Two facts about cos on 0 to 1. It maps the interval into itself: cos falls from 1 at 0 to 0.540302 at 1. And the factor q: the mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) says a chord's slope equals the curve's slope at some point $c$ between the ends. The slope of cos is −sin, so
+Two facts about cos on 0 to 1. It maps the interval into itself: cos falls from 1 at 0 to 0.540302 at 1. And the factor q: the mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) says a chord's slope equals the curve's slope at some point $`c`$ between the ends. The slope of cos is −sin, so
 
-$$|\cos x - \cos y| = |\sin c|\,|x - y| \le \sin 1\,|x - y|$$
+```math
+|\cos x - \cos y| = |\sin c|\,|x - y| \le \sin 1\,|x - y|
+```
 
 since sin rises from 0 to 0.841471 across the interval. So q = sin 1. In general, **a rule whose slope stays between −q and q on the interval is a contraction with factor q**: the derivative certifies the shrinking.
 

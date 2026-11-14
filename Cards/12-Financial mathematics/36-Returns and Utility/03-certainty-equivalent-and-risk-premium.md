@@ -20,7 +20,7 @@ Utility itself is in units nobody can spend. Expected utility says which gamble 
 
 ### The picture: the curve and the chord
 
-The log curve, $\ln W$, bends downward. The straight chord joins the two outcomes of the coin. Halfway along the chord sits the gamble's expected utility: 4.46. The curve reaches that height not at \$100 but at \$86.60.
+The log curve, $`\ln W`$, bends downward. The straight chord joins the two outcomes of the coin. Halfway along the chord sits the gamble's expected utility: 4.46. The curve reaches that height not at \$100 but at \$86.60.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -38,52 +38,56 @@ Upper line (orange): the log utility curve. Lower line (green): the chord from $
 
 ## The formula
 
-Notation first, in words. $W$ is wealth at the end of the year, a random quantity. $\mathbb{E}[\,\cdot\,]$ is the average of whatever sits inside, each outcome weighted by its probability. $u$ is the utility function, turning dollars into satisfaction; $u^{-1}$ runs it backwards, from satisfaction to dollars.
+Notation first, in words. $`W`$ is wealth at the end of the year, a random quantity. $`\mathbb{E}[\,\cdot\,]`$ is the average of whatever sits inside, each outcome weighted by its probability. $`u`$ is the utility function, turning dollars into satisfaction; $`u^{-1}`$ runs it backwards, from satisfaction to dollars.
 
-$$u(\mathrm{CE}) = \mathbb{E}[u(W)], \qquad \mathrm{CE} = u^{-1}\big(\mathbb{E}[u(W)]\big), \qquad \pi = \mathbb{E}[W] - \mathrm{CE}$$
+```math
+u(\mathrm{CE}) = \mathbb{E}[u(W)], \qquad \mathrm{CE} = u^{-1}\big(\mathbb{E}[u(W)]\big), \qquad \pi = \mathbb{E}[W] - \mathrm{CE}
+```
 
 **Read it aloud:** average the satisfaction over the outcomes, find the sure sum with that same satisfaction, and call the shortfall from the average wealth the risk premium.
 
-For the coin: $\mathbb{E}[\ln W] = \tfrac12\ln 150 + \tfrac12\ln 50 = 4.4613$, so $\mathrm{CE} = e^{4.4613} = \$86.60$ and $\pi = \$13.40$.
+For the coin: $`\mathbb{E}[\ln W] = \tfrac12\ln 150 + \tfrac12\ln 50 = 4.4613`$, so $`\mathrm{CE} = e^{4.4613} = \$86.60`$ and $`\pi = \$13.40`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $W$, $m$ | wealth at year end, not yet known; $m$ is its average | \$150 or \$50, even odds; m = \$100 | a better gamble: higher CE |
-| $\mathbb{E}$ | probability-weighted average | E[W] = \$100 | — |
-| $u$, $u^{-1}$ | utility: dollars turned into satisfaction; and the same read backwards, from a satisfaction $y$ to dollars | ln W, and e to the power y | — |
-| $u'$, $u''$, $u'''$ | slope of $u$, how fast the slope changes, and how fast that changes | 1/W, −1/W squared, 2/W cubed | a more negative $u''$: more bend, larger premium |
-| $\mathrm{CE}$, $c$, $t$ | certainty equivalent; a candidate sure sum; the target height, the expected utility | \$86.60; t = 4.4613 | — |
-| $\pi$ | risk premium: average minus CE | \$13.40 | — |
-| $\gamma$ | relative risk aversion (say "gamma"): the bend measured relative to wealth, $\gamma = W \times A$ | 1 for the log | CE falls: \$75.00 at 2 |
-| $a$ | absolute risk aversion for the exponential utility | 0.01 per dollar | CE falls |
-| $A$ | local risk aversion, $A(W) = -u''(W)/u'(W)$ | 1/100 at \$100 | premium rises in proportion |
-| $\sigma^2$, $\varepsilon$, $\xi$, $\eta$ | variance, the average squared swing; the swing itself, W − m; in-between points in Taylor's remainder | 2500 dollars squared; ±\$50 | premium rises in proportion, for small risks |
-| $x$, $k$ | the stake (the coin is \$100 plus or minus x); a scale or shift applied to every outcome | 50; 10 and 100 | premium rises faster than the stake |
-| $R$, $\mu$, $s^2$ | the fund's gross return per dollar; centre and variance of ln R | 1.08 average; 0.067408; 0.019106 | a higher $\mu$: higher CE |
+| $`W`$, $`m`$ | wealth at year end, not yet known; $`m`$ is its average | \$150 or \$50, even odds; m = \$100 | a better gamble: higher CE |
+| $`\mathbb{E}`$ | probability-weighted average | E[W] = \$100 | — |
+| $`u`$, $`u^{-1}`$ | utility: dollars turned into satisfaction; and the same read backwards, from a satisfaction $`y`$ to dollars | ln W, and e to the power y | — |
+| $`u'`$, $`u''`$, $`u'''`$ | slope of $`u`$, how fast the slope changes, and how fast that changes | 1/W, −1/W squared, 2/W cubed | a more negative $`u''`$: more bend, larger premium |
+| $`\mathrm{CE}`$, $`c`$, $`t`$ | certainty equivalent; a candidate sure sum; the target height, the expected utility | \$86.60; t = 4.4613 | — |
+| $`\pi`$ | risk premium: average minus CE | \$13.40 | — |
+| $`\gamma`$ | relative risk aversion (say "gamma"): the bend measured relative to wealth, $`\gamma = W \times A`$ | 1 for the log | CE falls: \$75.00 at 2 |
+| $`a`$ | absolute risk aversion for the exponential utility | 0.01 per dollar | CE falls |
+| $`A`$ | local risk aversion, $`A(W) = -u''(W)/u'(W)`$ | 1/100 at \$100 | premium rises in proportion |
+| $`\sigma^2`$, $`\varepsilon`$, $`\xi`$, $`\eta`$ | variance, the average squared swing; the swing itself, W − m; in-between points in Taylor's remainder | 2500 dollars squared; ±\$50 | premium rises in proportion, for small risks |
+| $`x`$, $`k`$ | the stake (the coin is \$100 plus or minus x); a scale or shift applied to every outcome | 50; 10 and 100 | premium rises faster than the stake |
+| $`R`$, $`\mu`$, $`s^2`$ | the fund's gross return per dollar; centre and variance of ln R | 1.08 average; 0.067408; 0.019106 | a higher $`\mu`$: higher CE |
 
 The three standard utilities give three closed forms, each an average of a different kind:
 
 | Utility | Formula | Certainty equivalent | The coin |
 | --- | --- | --- | --- |
-| log | $\ln W$ | geometric mean, $e^{\mathbb{E}[\ln W]}$ | \$86.60 |
-| power (CRRA) | $W^{1-\gamma}/(1-\gamma)$ | power mean, $\big(\mathbb{E}[W^{1-\gamma}]\big)^{1/(1-\gamma)}$ | \$75.00 at $\gamma = 2$ |
-| exponential (CARA) | $-e^{-aW}$ | $-\tfrac1a \ln \mathbb{E}[e^{-aW}]$ | \$87.99 at $a = 0.01$ |
+| log | $`\ln W`$ | geometric mean, $`e^{\mathbb{E}[\ln W]}`$ | \$86.60 |
+| power (CRRA) | $`W^{1-\gamma}/(1-\gamma)`$ | power mean, $`\big(\mathbb{E}[W^{1-\gamma}]\big)^{1/(1-\gamma)}`$ | \$75.00 at $`\gamma = 2`$ |
+| exponential (CARA) | $`-e^{-aW}`$ | $`-\tfrac1a \ln \mathbb{E}[e^{-aW}]`$ | \$87.99 at $`a = 0.01`$ |
 
-CRRA stands for constant relative risk aversion; CARA for constant absolute risk aversion. The log is the power utility at $\gamma = 1$. At $\gamma = 2$ the power mean is the harmonic mean: two divided by $1/150 + 1/50$, which is \$75.00.
+CRRA stands for constant relative risk aversion; CARA for constant absolute risk aversion. The log is the power utility at $`\gamma = 1`$. At $`\gamma = 2`$ the power mean is the harmonic mean: two divided by $`1/150 + 1/50`$, which is \$75.00.
 
 For small risks, one approximation covers every utility, the **Arrow–Pratt formula**:
 
-$$\pi \approx \tfrac12\, A(\mathbb{E}[W])\,\sigma^2$$
+```math
+\pi \approx \tfrac12\, A(\mathbb{E}[W])\,\sigma^2
+```
 
-**Read it aloud:** the premium is about half the local risk aversion times the variance. For the coin, $\tfrac12 \times \tfrac1{100} \times 2500 = \$12.50$, against the exact \$13.40.
+**Read it aloud:** the premium is about half the local risk aversion times the variance. For the coin, $`\tfrac12 \times \tfrac1{100} \times 2500 = \$12.50`$, against the exact \$13.40.
 
 ### When it holds
 
-The certainty equivalent is an inverse: it solves $u(c) = t$ for a given height $t$. So existence, uniqueness and the edge cases come first.
+The certainty equivalent is an inverse: it solves $`u(c) = t`$ for a given height $`t`$. So existence, uniqueness and the edge cases come first.
 
-- **Existence: $u$ continuous on the range of outcomes.** The target $\mathbb{E}[u(W)]$ lies between $u$ of the worst outcome and $u$ of the best, so the curve passes that height somewhere between them (the intermediate value theorem). With no worst or best outcome, as for the fund below, $\mathbb{E}[u(W)]$ must be finite; it then still lies inside the range of $u$. If $u$ jumps, there may be no sure sum with exactly that satisfaction.
-- **Uniqueness: $u$ strictly increasing.** More money is always better, so only one wealth level has any given satisfaction. A flat stretch in $u$ would leave a range of certainty equivalents.
-- **Edge cases.** A sure thing is its own certainty equivalent. A straight-line $u$ gives CE equal to the average and a premium of zero. An outcome of \$0 under the log or any $\gamma \ge 1$ has utility of minus infinity, so the CE is \$0: the saver would give up the whole average to escape it. As $\gamma$ grows without limit, the CE falls to the worst outcome, \$50.
+- **Existence: $`u`$ continuous on the range of outcomes.** The target $`\mathbb{E}[u(W)]`$ lies between $`u`$ of the worst outcome and $`u`$ of the best, so the curve passes that height somewhere between them (the intermediate value theorem). With no worst or best outcome, as for the fund below, $`\mathbb{E}[u(W)]`$ must be finite; it then still lies inside the range of $`u`$. If $`u`$ jumps, there may be no sure sum with exactly that satisfaction.
+- **Uniqueness: $`u`$ strictly increasing.** More money is always better, so only one wealth level has any given satisfaction. A flat stretch in $`u`$ would leave a range of certainty equivalents.
+- **Edge cases.** A sure thing is its own certainty equivalent. A straight-line $`u`$ gives CE equal to the average and a premium of zero. An outcome of \$0 under the log or any $`\gamma \ge 1`$ has utility of minus infinity, so the CE is \$0: the saver would give up the whole average to escape it. As $`\gamma`$ grows without limit, the CE falls to the worst outcome, \$50.
 - **The approximation needs a small risk.** Arrow–Pratt drops terms in the third and higher powers of the stake. At a $10 stake it is exact to the cent; at $90 it says $40.50 where the truth is $56.41. Lopsided risks, like an insurance loss, miss by more.
 
 ---
@@ -96,25 +100,27 @@ A dollar gained at $150 adds less satisfaction than a dollar lost at $50 takes a
 
 ### Step 1: the certainty equivalent exists and is unique
 
-Take the target height $t = \mathbb{E}[u(W)]$. It is an average of values between $u(\$50)$ and $u(\$150)$, so it lies between them. A continuous $u$ passes through every height between its endpoint values, so some $c$ between \$50 and \$150 has $u(c) = t$. A strictly increasing $u$ reaches each height once, so that $c$ is the only one. The code finds it this way: it halves the interval \$50 to \$150 two hundred times, keeping the half where $u(c) - t$ changes sign. That road never uses a formula for the answer.
+Take the target height $`t = \mathbb{E}[u(W)]`$. It is an average of values between $`u(\$50)`$ and $`u(\$150)`$, so it lies between them. A continuous $`u`$ passes through every height between its endpoint values, so some $`c`$ between \$50 and \$150 has $`u(c) = t`$. A strictly increasing $`u`$ reaches each height once, so that $`c`$ is the only one. The code finds it this way: it halves the interval \$50 to \$150 two hundred times, keeping the half where $`u(c) - t`$ changes sign. That road never uses a formula for the answer.
 
 ### Step 2: a bending curve makes the premium positive
 
-A curve that bends downward, a **concave** curve, lies above every chord drawn between two of its points. The chord's midpoint is $\tfrac12 u(150) + \tfrac12 u(50)$, which is $\mathbb{E}[u(W)]$. The curve's height above the same wealth, \$100, is $u(\mathbb{E}[W])$. So
+A curve that bends downward, a **concave** curve, lies above every chord drawn between two of its points. The chord's midpoint is $`\tfrac12 u(150) + \tfrac12 u(50)`$, which is $`\mathbb{E}[u(W)]`$. The curve's height above the same wealth, \$100, is $`u(\mathbb{E}[W])`$. So
 
-$$\mathbb{E}[u(W)] \le u(\mathbb{E}[W]).$$
+```math
+\mathbb{E}[u(W)] \le u(\mathbb{E}[W]).
+```
 
-For any number of outcomes the same inequality holds; it is Jensen's inequality. Both sides are satisfactions. Read them back through the increasing $u^{-1}$: $\mathrm{CE} \le \mathbb{E}[W]$, so $\pi \ge 0$. The premium is zero only when $u$ is a straight line across the outcomes, or the risk is not really there.
+For any number of outcomes the same inequality holds; it is Jensen's inequality. Both sides are satisfactions. Read them back through the increasing $`u^{-1}`$: $`\mathrm{CE} \le \mathbb{E}[W]`$, so $`\pi \ge 0`$. The premium is zero only when $`u`$ is a straight line across the outcomes, or the risk is not really there.
 
 ### Step 3: each utility gives its own average
 
-Apply $u^{-1}$ to $\mathbb{E}[u(W)]$ and see what comes out.
+Apply $`u^{-1}`$ to $`\mathbb{E}[u(W)]`$ and see what comes out.
 
-- **Log.** $u^{-1}$ is $e^y$, so $\mathrm{CE} = e^{\mathbb{E}[\ln W]}$. For two equally likely outcomes that is $\sqrt{150 \times 50} = \$86.60$: the geometric mean.
-- **Power.** $u^{-1}(y) = \big((1-\gamma)y\big)^{1/(1-\gamma)}$, and the $1-\gamma$ factors cancel: $\mathrm{CE} = \big(\mathbb{E}[W^{1-\gamma}]\big)^{1/(1-\gamma)}$. That is a power mean.
-- **Exponential.** $u^{-1}(y) = -\tfrac1a\ln(-y)$, giving $-\tfrac1a\ln\mathbb{E}[e^{-aW}] = \$87.99$ at $a = 0.01$.
+- **Log.** $`u^{-1}`$ is $`e^y`$, so $`\mathrm{CE} = e^{\mathbb{E}[\ln W]}`$. For two equally likely outcomes that is $`\sqrt{150 \times 50} = \$86.60`$: the geometric mean.
+- **Power.** $`u^{-1}(y) = \big((1-\gamma)y\big)^{1/(1-\gamma)}`$, and the $`1-\gamma`$ factors cancel: $`\mathrm{CE} = \big(\mathbb{E}[W^{1-\gamma}]\big)^{1/(1-\gamma)}`$. That is a power mean.
+- **Exponential.** $`u^{-1}(y) = -\tfrac1a\ln(-y)`$, giving $`-\tfrac1a\ln\mathbb{E}[e^{-aW}] = \$87.99`$ at $`a = 0.01`$.
 
-Power means fall as the power falls: the power-mean inequality, which is Jensen again, applied to a power curve. So raising $\gamma$ lowers the certainty equivalent, one step at a time:
+Power means fall as the power falls: the power-mean inequality, which is Jensen again, applied to a power curve. So raising $`\gamma`$ lowers the certainty equivalent, one step at a time:
 
 ```
 gamma  certainty equivalent of the coin, $ (average is $100)
@@ -126,22 +132,26 @@ gamma  certainty equivalent of the coin, $ (average is $100)
   10   ██████████████████████                    $54.00
 ```
 
-At $\gamma = 0$ the saver cares only about the average. At $\gamma = 10$ the coin is worth barely more than its worst outcome.
+At $`\gamma = 0`$ the saver cares only about the average. At $`\gamma = 10`$ the coin is worth barely more than its worst outcome.
 
 ### Step 4: small risks, and where the half-variance comes from
 
-Expand both sides of $u(\mathrm{CE}) = \mathbb{E}[u(W)]$ around the average wealth $m = \mathbb{E}[W]$. The left side moves by the premium times the slope: $u(m) - \pi\,u'(m)$. On the right, the up and down swings cancel at first order, and what survives is half the bend times the average squared swing: $u(m) + \tfrac12 u''(m)\sigma^2$. Set them equal and $\pi \approx \tfrac12\big(-u''(m)/u'(m)\big)\sigma^2$.
+Expand both sides of $`u(\mathrm{CE}) = \mathbb{E}[u(W)]`$ around the average wealth $`m = \mathbb{E}[W]`$. The left side moves by the premium times the slope: $`u(m) - \pi\,u'(m)`$. On the right, the up and down swings cancel at first order, and what survives is half the bend times the average squared swing: $`u(m) + \tfrac12 u''(m)\sigma^2`$. Set them equal and $`\pi \approx \tfrac12\big(-u''(m)/u'(m)\big)\sigma^2`$.
 
-That ratio $-u''/u'$ is the local risk aversion $A$ from [Expected utility](02-expected-utility-and-risk-aversion.md). Dividing by the slope makes it a property of preferences, not of the units: doubling $u$, or adding a constant to it, changes neither $A$ nor the certainty equivalent. For the log, $A = 1/W$, and $\gamma = W \times A = 1$.
+That ratio $`-u''/u'`$ is the local risk aversion $`A`$ from [Expected utility](02-expected-utility-and-risk-aversion.md). Dividing by the slope makes it a property of preferences, not of the units: doubling $`u`$, or adding a constant to it, changes neither $`A`$ nor the certainty equivalent. For the log, $`A = 1/W`$, and $`\gamma = W \times A = 1`$.
 
 <details>
 <summary>Detailed proof: the Arrow–Pratt formula and its error</summary>
 
-Write $W = m + \varepsilon$, where the swing $\varepsilon$ has average 0 and variance $\sigma^2$. Taylor's theorem to second order, with remainder, on the right side:
-$$\mathbb{E}[u(m+\varepsilon)] = u(m) + u'(m)\,\mathbb{E}[\varepsilon] + \tfrac12 u''(m)\,\sigma^2 + \tfrac16\,\mathbb{E}\big[u'''(\xi)\,\varepsilon^3\big],$$
-with $\xi$ between $m$ and $m+\varepsilon$, and $\mathbb{E}[\varepsilon] = 0$. On the left, to first order with remainder, $u(m-\pi) = u(m) - \pi\,u'(m) + \tfrac12 u''(\eta)\pi^2$. Equate and divide by $u'(m)$:
-$$\pi = \tfrac12 A(m)\,\sigma^2 \;+\; \frac{\tfrac12 u''(\eta)\pi^2 - \tfrac16\mathbb{E}[u'''(\xi)\varepsilon^3]}{u'(m)}.$$
-The leftover terms are of third order in the stake: $\pi^2$ is of order $\sigma^4$, and $\varepsilon^3$ is of order $\sigma^3$. So the error shrinks faster than the main term as the stake shrinks. For the log with stake $x$, the exact premium is $100 - \sqrt{100^2 - x^2}$ and the approximation is $x^2/200$; their ratio tends to 1 as $x$ shrinks. At $x = 5$: exact 0.1251, approximation 0.1250. A lopsided swing has a nonzero third moment, which enters at order $\sigma^3$; a symmetric one, like the coin, has the error pushed to fourth order.
+Write $`W = m + \varepsilon`$, where the swing $`\varepsilon`$ has average 0 and variance $`\sigma^2`$. Taylor's theorem to second order, with remainder, on the right side:
+
+$`\displaystyle \mathbb{E}[u(m+\varepsilon)] = u(m) + u'(m)\,\mathbb{E}[\varepsilon] + \tfrac12 u''(m)\,\sigma^2 + \tfrac16\,\mathbb{E}\big[u'''(\xi)\,\varepsilon^3\big],`$
+
+with $`\xi`$ between $`m`$ and $`m+\varepsilon`$, and $`\mathbb{E}[\varepsilon] = 0`$. On the left, to first order with remainder, $`u(m-\pi) = u(m) - \pi\,u'(m) + \tfrac12 u''(\eta)\pi^2`$. Equate and divide by $`u'(m)`$:
+
+$`\displaystyle \pi = \tfrac12 A(m)\,\sigma^2 \;+\; \frac{\tfrac12 u''(\eta)\pi^2 - \tfrac16\mathbb{E}[u'''(\xi)\varepsilon^3]}{u'(m)}.`$
+
+The leftover terms are of third order in the stake: $`\pi^2`$ is of order $`\sigma^4`$, and $`\varepsilon^3`$ is of order $`\sigma^3`$. So the error shrinks faster than the main term as the stake shrinks. For the log with stake $`x`$, the exact premium is $`100 - \sqrt{100^2 - x^2}`$ and the approximation is $`x^2/200`$; their ratio tends to 1 as $`x`$ shrinks. At $`x = 5`$: exact 0.1251, approximation 0.1250. A lopsided swing has a nonzero third moment, which enters at order $`\sigma^3`$; a symmetric one, like the coin, has the error pushed to fourth order.
 
 </details>
 
@@ -157,19 +167,19 @@ xychart-beta
     line [0.00, 0.50, 2.00, 4.50, 8.00, 12.50, 18.00, 24.50, 32.00, 40.50]
 ```
 
-Upper line (orange): the exact premium, $100 - \sqrt{100^2 - x^2}$. Lower line (green): Arrow–Pratt, $x^2/200$. They agree to the cent at a \$10 stake, part at \$50 (\$13.40 against \$12.50), and split wide as the loss side nears zero wealth.
+Upper line (orange): the exact premium, $`100 - \sqrt{100^2 - x^2}`$. Lower line (green): Arrow–Pratt, $`x^2/200`$. They agree to the cent at a \$10 stake, part at \$50 (\$13.40 against \$12.50), and split wide as the loss side nears zero wealth.
 
 ### Step 5: how the premium scales with wealth
 
 The two families answer "does a richer saver mind this coin less?" differently, and the algebra shows why.
 
-- **Power utility scales.** Multiply every outcome by $k$: $W^{1-\gamma}$ picks up $k^{1-\gamma}$, which the outer power undoes to $k$. So CE and premium scale by $k$. Ten times the coin, \$1,500 or \$500, has CE \$866.03: ten times \$86.60. Premium in proportion to wealth is what "constant *relative*" means.
-- **Exponential utility shifts.** Add $k$ to every outcome: $e^{-a(W+k)} = e^{-ak}e^{-aW}$, and the log turns the factor $e^{-ak}$ into $-k$ after dividing by $-a$. So CE shifts by $k$ and the premium stays put: \$12.01 on the coin at wealth \$100, and \$12.01 on the same coin at wealth \$200.
+- **Power utility scales.** Multiply every outcome by $`k`$: $`W^{1-\gamma}`$ picks up $`k^{1-\gamma}`$, which the outer power undoes to $`k`$. So CE and premium scale by $`k`$. Ten times the coin, \$1,500 or \$500, has CE \$866.03: ten times \$86.60. Premium in proportion to wealth is what "constant *relative*" means.
+- **Exponential utility shifts.** Add $`k`$ to every outcome: $`e^{-a(W+k)} = e^{-ak}e^{-aW}`$, and the log turns the factor $`e^{-ak}`$ into $`-k`$ after dividing by $`-a`$. So CE shifts by $`k`$ and the premium stays put: \$12.01 on the coin at wealth \$100, and \$12.01 on the same coin at wealth \$200.
 - **The log in between.** The same ±$50 coin on $200 of wealth has CE $193.65 and premium $6.35, about half: the stake halved relative to wealth, and the premium follows the stake squared over wealth.
 
 ### Step 6: the premium is the room for insurance
 
-Now a homeowner, same \$100 of wealth, faces a 10% chance of a \$60 loss. The average loss is \$6.00. With log utility, the uninsured position has $\mathrm{CE} = 100^{0.9}\times 40^{0.1} = 100 \times 0.4^{0.1} = \$91.24$.
+Now a homeowner, same \$100 of wealth, faces a 10% chance of a \$60 loss. The average loss is \$6.00. With log utility, the uninsured position has $`\mathrm{CE} = 100^{0.9}\times 40^{0.1} = 100 \times 0.4^{0.1} = \$91.24`$.
 
 Full cover at a given price leaves $100 minus that price, for sure. The homeowner buys whenever that sure sum beats the CE, so the most worth paying is $100 − $91.24 = $8.76. That splits into the average loss, $6.00, plus the risk premium, $2.76.
 
@@ -177,7 +187,7 @@ The insurer holds many such policies whose losses do not move together, so its a
 
 Arrow–Pratt here says $1.72, well short of $2.76. The loss is lopsided: small chance, large size. Step 4's third-order term is doing the work.
 
-The same premium, read in rates instead of dollars, is the extra return investors demand for holding a risky fund over a deposit. [Stochastic dominance](04-stochastic-dominance.md) asks when every risk-averse saver agrees on a ranking without choosing a $u$ at all.
+The same premium, read in rates instead of dollars, is the extra return investors demand for holding a risky fund over a deposit. [Stochastic dominance](04-stochastic-dominance.md) asks when every risk-averse saver agrees on a ranking without choosing a $`u`$ at all.
 
 ---
 
@@ -187,31 +197,33 @@ The coin, log utility, $100 staked:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average wealth | $\tfrac12 \times 150 + \tfrac12 \times 50$ | \$100.00 |
-| variance | $\tfrac12 \times 50^2 + \tfrac12 \times 50^2$ | 2500 |
-| utilities of the two outcomes | $\ln 150$, $\ln 50$ | 5.01, 3.91 |
+| average wealth | $`\tfrac12 \times 150 + \tfrac12 \times 50`$ | \$100.00 |
+| variance | $`\tfrac12 \times 50^2 + \tfrac12 \times 50^2`$ | 2500 |
+| utilities of the two outcomes | $`\ln 150`$, $`\ln 50`$ | 5.01, 3.91 |
 | expected utility | average of the two | 4.4613 |
-| utility of the average | $\ln 100$ | 4.6052 |
-| certainty equivalent | $e^{4.4613} = \sqrt{150 \times 50}$ | **\$86.60** |
+| utility of the average | $`\ln 100`$ | 4.6052 |
+| certainty equivalent | $`e^{4.4613} = \sqrt{150 \times 50}`$ | **\$86.60** |
 | risk premium | 100 − 86.60 | **$13.40** |
-| Arrow–Pratt | $\tfrac12 \times \tfrac1{100} \times 2500$ | \$12.50 |
+| Arrow–Pratt | $`\tfrac12 \times \tfrac1{100} \times 2500`$ | \$12.50 |
 
 The saver would trade the coin for any sure sum above $86.60, and so would accept up to $13.40 less than its average to be rid of it.
 
-**The house fund.** The shelf's saver chooses between a 4% deposit and a fund whose gross return $R$ (end value per dollar) averages 1.08 with spread 0.15. Take $R$ lognormal: $\ln R$ follows a bell curve with centre $\mu$ and variance $s^2$ ([Returns](01-returns-simple-log-and-annualised.md) sets out log returns). Matching the mean and spread gives $s^2 = \ln(1 + (0.15/1.08)^2) = 0.019106$ and $\mu = \ln 1.08 - s^2/2 = 0.067408$. Then for power utility
+**The house fund.** The shelf's saver chooses between a 4% deposit and a fund whose gross return $`R`$ (end value per dollar) averages 1.08 with spread 0.15. Take $`R`$ lognormal: $`\ln R`$ follows a bell curve with centre $`\mu`$ and variance $`s^2`$ ([Returns](01-returns-simple-log-and-annualised.md) sets out log returns). Matching the mean and spread gives $`s^2 = \ln(1 + (0.15/1.08)^2) = 0.019106`$ and $`\mu = \ln 1.08 - s^2/2 = 0.067408`$. Then for power utility
 
-$$\mathrm{CE} = \exp\!\big(\mu + (1-\gamma)\,s^2/2\big).$$
+```math
+\mathrm{CE} = \exp\!\big(\mu + (1-\gamma)\,s^2/2\big).
+```
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| log saver, $\gamma = 1$ | $e^{0.067408}$ | 1.0697: a sure 6.97% |
+| log saver, $`\gamma = 1`$ | $`e^{0.067408}`$ | 1.0697: a sure 6.97% |
 | premium, in points | 8 − 6.97 | 1.03 |
-| Arrow–Pratt, in points | $\tfrac12 \times 0.15^2 / 1.08 \times 100$ | 1.04 |
-| $\gamma = 2$ | $e^{\mu - s^2/2}$ | a sure 5.96% |
-| $\gamma = 6$ | $e^{\mu - 5 s^2/2}$ | a sure 1.98% |
-| where fund equals deposit | $-2(\ln 1.04 - \mu)/s^2 + 1$ | **$\gamma$ = 3.95** |
+| Arrow–Pratt, in points | $`\tfrac12 \times 0.15^2 / 1.08 \times 100`$ | 1.04 |
+| $`\gamma = 2`$ | $`e^{\mu - s^2/2}`$ | a sure 5.96% |
+| $`\gamma = 6`$ | $`e^{\mu - 5 s^2/2}`$ | a sure 1.98% |
+| where fund equals deposit | $`-2(\ln 1.04 - \mu)/s^2 + 1`$ | **$`\gamma`$ = 3.95** |
 
-The log saver values the fund like a sure 6.97% and takes it over the 4% deposit. A saver with $\gamma$ above 3.95 keeps the deposit.
+The log saver values the fund like a sure 6.97% and takes it over the 4% deposit. A saver with $`\gamma`$ above 3.95 keeps the deposit.
 
 ### What breaks if you drop a piece
 
@@ -219,8 +231,8 @@ Same coin, correct CE $86.60 and premium $13.40:
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Report $\mathbb{E}[\ln W]$ as the value | 4.46 | That is satisfaction, not dollars. It must go back through $u^{-1}$. |
-| Take utility of the average, $u(\mathbb{E}[W])$ | CE \$100.00, premium \$0.00 | The order matters: average the utilities, not the wealth. This is the risk-neutral answer. |
+| Report $`\mathbb{E}[\ln W]`$ as the value | 4.46 | That is satisfaction, not dollars. It must go back through $`u^{-1}`$. |
+| Take utility of the average, $`u(\mathbb{E}[W])`$ | CE \$100.00, premium \$0.00 | The order matters: average the utilities, not the wealth. This is the risk-neutral answer. |
 | Arrow–Pratt on a large stake | $12.50 | A small-risk formula used on a coin that halves wealth. |
 | Arrow–Pratt on the insurance loss | $1.72 (right: $2.76) | A lopsided loss; the third-order term is large. |
 
@@ -228,9 +240,9 @@ Same coin, correct CE $86.60 and premium $13.40:
 
 ## Code, from first principles, and it actually runs
 
-Both programs compute every certainty equivalent on this card by two roads: the closed form (geometric, power or exponential mean) and a bisection that finds the sure sum using only the utility function itself. The fund takes a third road, a Monte Carlo average over 200,000 simulated returns with a home-made random number generator; its expectation under power utility comes from Simpson's rule on the bell curve (an integral approximated by a weighted sum over thousands of evenly spaced points), and the $\gamma$ at which fund and deposit tie is found by bisection on top of that.
+Both programs compute every certainty equivalent on this card by two roads: the closed form (geometric, power or exponential mean) and a bisection that finds the sure sum using only the utility function itself. The fund takes a third road, a Monte Carlo average over 200,000 simulated returns with a home-made random number generator; its expectation under power utility comes from Simpson's rule on the bell curve (an integral approximated by a weighted sum over thousands of evenly spaced points), and the $`\gamma`$ at which fund and deposit tie is found by bisection on top of that.
 
-Asserts check closed form against bisection, the harmonic mean at $\gamma = 2$, the falling ladder, scaling and shifting, the Arrow–Pratt limit, the $8.00 insurance purchase, the fund's mean and spread, and its three roads.
+Asserts check closed form against bisection, the harmonic mean at $`\gamma = 2`$, the falling ladder, scaling and shifting, the Arrow–Pratt limit, the $8.00 insurance purchase, the fund's mean and spread, and its three roads.
 
 ### Python
 
@@ -652,10 +664,10 @@ The two outputs agree line for line. The Monte Carlo road lands at 1.0694 agains
 
 Lean proves the general facts in Why it works for any gamble with finitely many outcomes, and checks the coin's hand arithmetic.
 
-- Take a continuous, strictly increasing $u$ on an interval holding every outcome. Then exactly one sure sum in that interval has utility equal to the expected utility.
-- Take a concave, strictly increasing $u$ on an interval holding every outcome, and a certainty equivalent $c$ in it. Then the risk premium $\mathbb{E}[W] - c$ is never negative.
+- Take a continuous, strictly increasing $`u`$ on an interval holding every outcome. Then exactly one sure sum in that interval has utility equal to the expected utility.
+- Take a concave, strictly increasing $`u`$ on an interval holding every outcome, and a certainty equivalent $`c`$ in it. Then the risk premium $`\mathbb{E}[W] - c`$ is never negative.
 - Take a log investor and an even coin between two positive outcomes. Then the certainty equivalent is the square root of their product: the geometric mean.
-- Take the \$150 or \$50 coin. Then its average is \$100, its variance 2500, its premium \$25.00 at $\gamma = 2$, and Arrow–Pratt says \$12.50.
+- Take the \$150 or \$50 coin. Then its average is \$100, its variance 2500, its premium \$25.00 at $`\gamma = 2`$, and Arrow–Pratt says \$12.50.
 - The log certainty equivalent of the coin lies between \$86.60 and \$86.61. For the log homeowner, insuring at \$8.00 beats keeping the risk.
 
 The Python and Rust checks cover the rest: the exponential utility, the Arrow–Pratt error, the house fund, and every decimal.
@@ -772,7 +784,7 @@ example : (100 : ℕ) ^ 9 * 40 < 92 ^ 10 := by norm_num
 > **Try changing**
 > - **Give the saver $200 and keep the ±$50 coin.** Guess first: does the premium halve, or quarter? Log utility: CE $193.65, premium $6.35, about half. Exponential utility: $12.01, unchanged.
 > - **Scale the whole coin by ten**, $1,500 or $500. Guess the CE before running. It is $866.03: power utilities scale.
-> - **Set $\gamma = 6$ in the fund.** Guess whether the fund still beats the 4% deposit. It does not: a sure 1.98%.
+> - **Set $`\gamma = 6`$ in the fund.** Guess whether the fund still beats the 4% deposit. It does not: a sure 1.98%.
 > - **Shrink the stake to $10.** Guess how close Arrow–Pratt comes. Exact and approximate both print 0.50.
 
 ---
@@ -780,10 +792,10 @@ example : (100 : ℕ) ^ 9 * 40 < 92 ^ 10 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Averaging the wealth instead of the satisfaction.** $\ln$ of the average wealth is 4.6052; the average of $\ln$ wealth is 4.4613. The first treats the coin as worth \$100.00 and finds no premium at all. The certainty equivalent comes from averaging utilities first and only then converting back to dollars. The order of those two operations is the whole idea.
+> **Averaging the wealth instead of the satisfaction.** $`\ln`$ of the average wealth is 4.6052; the average of $`\ln`$ wealth is 4.4613. The first treats the coin as worth \$100.00 and finds no premium at all. The certainty equivalent comes from averaging utilities first and only then converting back to dollars. The order of those two operations is the whole idea.
 >
 > Smaller traps:
-> - **Reading expected utility as money.** 4.46 is not a price. Only $u^{-1}$ turns it into one, \$86.60.
+> - **Reading expected utility as money.** 4.46 is not a price. Only $`u^{-1}`$ turns it into one, \$86.60.
 > - **Using Arrow–Pratt where the risk is large or lopsided.** It gives $12.50 for the coin and $1.72 for the insurance, against $13.40 and $2.76. It is a small-risk formula.
 > - **Forgetting that the premium depends on wealth.** The same coin costs a log saver $13.40 at $100 and $6.35 at $200. A premium quoted without the wealth behind it is incomplete, except under exponential utility.
 > - **Confusing the risk premium with the insurance price.** The most worth paying is the average loss plus the premium, $6.00 + $2.76 = $8.76, not the premium alone.
@@ -793,9 +805,9 @@ example : (100 : ℕ) ^ 9 * 40 < 92 ^ 10 := by norm_num
 ## Where you meet it in real life
 
 - **Insurance.** Every policy is sold inside the gap Step 6 describes: above the average loss, below the average loss plus the buyer's risk premium. Insurers profit because pooling makes them close to risk-neutral while buyers are not.
-- **The equity premium.** Shares have long returned more than bank deposits. The house fund pays 4 points over the deposit. A log saver would give up only 1.03 of them for certainty; a saver with $\gamma = 3.95$ would give up all 4.
+- **The equity premium.** Shares have long returned more than bank deposits. The house fund pays 4 points over the deposit. A log saver would give up only 1.03 of them for certainty; a saver with $`\gamma = 3.95`$ would give up all 4.
 - **Selling a lottery-like asset.** A private business owner or an employee holding company stock often values it below its average payoff: the certainty equivalent. That gap explains why concentrated holders sell to diversified buyers at a discount.
-- **Kelly betting.** The log saver maximises the average of $\ln W$, which is the long-run growth rate of wealth: [Kelly](05-kelly-criterion-and-growth.md).
+- **Kelly betting.** The log saver maximises the average of $`\ln W`$, which is the long-run growth rate of wealth: [Kelly](05-kelly-criterion-and-growth.md).
 - **Mean-variance portfolio rules.** "Expected return minus half of risk aversion times variance", the objective of mean-variance portfolio choice, is the Arrow–Pratt formula written as a target.
 
 > **Say it back**
@@ -805,7 +817,7 @@ example : (100 : ℕ) ^ 9 * 40 < 92 ^ 10 := by norm_num
 
 ## What this builds on
 
-- [Expected utility](02-expected-utility-and-risk-aversion.md): the utility function, choosing by expected utility, and the risk-aversion measures $A$ and $\gamma$. This card turns those verdicts into dollars.
+- [Expected utility](02-expected-utility-and-risk-aversion.md): the utility function, choosing by expected utility, and the risk-aversion measures $`A`$ and $`\gamma`$. This card turns those verdicts into dollars.
 
 ## Where this goes next
 
@@ -813,7 +825,7 @@ example : (100 : ℕ) ^ 9 * 40 < 92 ^ 10 := by norm_num
 - [Stochastic dominance](04-stochastic-dominance.md): rankings every risk-averse saver agrees on, with no utility chosen.
 - [Kelly](05-kelly-criterion-and-growth.md): the log saver's choice, repeated, as a rule for sizing bets.
 
-Expected utility with one concave $u$ predicts that the same person never both insures and buys a lottery ticket, yet many do; prospect theory is the account of choice built to explain that.
+Expected utility with one concave $`u`$ predicts that the same person never both insures and buys a lottery ticket, yet many do; prospect theory is the account of choice built to explain that.
 
 ---
 
@@ -822,6 +834,6 @@ Expected utility with one concave $u$ predicts that the same person never both i
 Verified 2026-09-28: every link below resolves to the publisher's page or a registered DOI.
 
 - Bernoulli, Daniel. "Exposition of a New Theory on the Measurement of Risk." Translated by Louise Sommer. *Econometrica* 22, no. 1 (1954): 23–36. [doi:10.2307/1909829](https://doi.org/10.2307/1909829). The 1738 paper that proposed log utility and priced a gamble by its certainty equivalent.
-- Pratt, John W. "Risk Aversion in the Small and in the Large." *Econometrica* 32, no. 1/2 (1964): 122–136. [doi:10.2307/1913738](https://doi.org/10.2307/1913738). Defines the risk premium, the measure $-u''/u'$, and the half-variance approximation.
+- Pratt, John W. "Risk Aversion in the Small and in the Large." *Econometrica* 32, no. 1/2 (1964): 122–136. [doi:10.2307/1913738](https://doi.org/10.2307/1913738). Defines the risk premium, the measure $`-u''/u'`$, and the half-variance approximation.
 - Mossin, Jan. "Aspects of Rational Insurance Purchasing." *Journal of Political Economy* 76, no. 4 (1968): 553–568. [doi:10.1086/259427](https://doi.org/10.1086/259427). The insurance side: full cover is the best choice at a fair price, partial cover once the price exceeds the average loss.
 - Eeckhoudt, Louis, Christian Gollier, and Harris Schlesinger. *Economic and Financial Decisions under Risk*. Princeton University Press, 2005. [Publisher page](https://press.princeton.edu/books/paperback/9780691122151/economic-and-financial-decisions-under-risk). A textbook treatment of certainty equivalents, risk premia and insurance demand.

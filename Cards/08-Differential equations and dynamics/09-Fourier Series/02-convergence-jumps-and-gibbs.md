@@ -35,36 +35,42 @@ The slow line is 10 harmonics, peaking at 1.18 near x = 0.15. The fast line is 5
 
 ## The formula
 
-Notation first, in words. $S_N(x)$ is the stack of the first $N$ odd harmonics at position $x$, the **partial sum**. A sigma, Σ, means "add the terms as the counter $k$ runs over the range shown". $f(x^-)$ is the value the wave approaches from the left of $x$, $f(x^+)$ from the right.
+Notation first, in words. $`S_N(x)`$ is the stack of the first $`N`$ odd harmonics at position $`x`$, the **partial sum**. A sigma, Σ, means "add the terms as the counter $`k`$ runs over the range shown". $`f(x^-)`$ is the value the wave approaches from the left of $`x`$, $`f(x^+)`$ from the right.
 
 For the square wave:
 
-$$S_N(x) = \frac{4}{\pi}\sum_{k=1}^{N}\frac{\sin\big((2k-1)x\big)}{2k-1}$$
+```math
+S_N(x) = \frac{4}{\pi}\sum_{k=1}^{N}\frac{\sin\big((2k-1)x\big)}{2k-1}
+```
 
 **Read it aloud:** add the first N odd tones, each sized one over its frequency, times 4 over pi.
 
 Dirichlet's theorem, for any periodic function made of finitely many smooth pieces per cycle:
 
-$$\lim_{N\to\infty} S_N(x) = \tfrac{1}{2}\big(f(x^-) + f(x^+)\big)$$
+```math
+\lim_{N\to\infty} S_N(x) = \tfrac{1}{2}\big(f(x^-) + f(x^+)\big)
+```
 
 **Read it aloud:** with more tones, the stack at x settles on the average of the values just left and just right of x.
 
 The overshoot beside a jump, for the square wave:
 
-$$\max_{0<x<\pi} S_N(x) \;\to\; \frac{2}{\pi}\,\mathrm{Si}(\pi), \qquad \mathrm{Si}(\pi) = \int_0^{\pi}\frac{\sin u}{u}\,du$$
+```math
+\max_{0<x<\pi} S_N(x) \;\to\; \frac{2}{\pi}\,\mathrm{Si}(\pi), \qquad \mathrm{Si}(\pi) = \int_0^{\pi}\frac{\sin u}{u}\,du
+```
 
 **Read it aloud:** the stack's peak tends to 2 over pi times the area under sin u over u from 0 to pi: 1.178980.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | position through the cycle, in radians | 0 at the flip, π/2 mid-top | — |
-| $f$ | the square wave, in volts | +1 top, −1 bottom | — |
-| $N$ | how many odd harmonics are kept | 10, 50, 250 | smooth points settle closer; the peak moves in and stays near 1.179 |
-| $S_N$ | the partial sum | 1.179013 at x = 0.03142, N = 50 | — |
-| $k$, Σ | the counter and the sum; tone $k$ has frequency $2k-1$ | 1, 2, 3, … | — |
-| $f(x^-)$, $f(x^+)$ | values approached from left and right | −1 and +1 at x = 0 | a bigger jump, a proportionally bigger overshoot |
-| $t$, $u$ | stand-in positions inside an integral | — | — |
-| $\mathrm{Si}$ | the sine integral: area under sin u/u from 0 | gives the limit 1.178980 | — |
+| $`x`$ | position through the cycle, in radians | 0 at the flip, π/2 mid-top | — |
+| $`f`$ | the square wave, in volts | +1 top, −1 bottom | — |
+| $`N`$ | how many odd harmonics are kept | 10, 50, 250 | smooth points settle closer; the peak moves in and stays near 1.179 |
+| $`S_N`$ | the partial sum | 1.179013 at x = 0.03142, N = 50 | — |
+| $`k`$, Σ | the counter and the sum; tone $`k`$ has frequency $`2k-1`$ | 1, 2, 3, … | — |
+| $`f(x^-)`$, $`f(x^+)`$ | values approached from left and right | −1 and +1 at x = 0 | a bigger jump, a proportionally bigger overshoot |
+| $`t`$, $`u`$ | stand-in positions inside an integral | — | — |
+| $`\mathrm{Si}`$ | the sine integral: area under sin u/u from 0 | gives the limit 1.178980 | — |
 
 ### When it holds
 
@@ -83,25 +89,29 @@ Each coefficient is an area under the wave times a tone. Adding N tones back giv
 
 ### Step 1: the square wave's stack has a closed-form slope
 
-The slope of $S_N$ is (4/π) times cos x + cos 3x + … + cos((2N−1)x). Multiply that sum by 2 sin x. Each product 2 sin x cos((2k−1)x) equals sin(2kx) − sin((2k−2)x), so the sum telescopes, each term cancelling part of the next, down to sin(2Nx). Hence
+The slope of $`S_N`$ is (4/π) times cos x + cos 3x + … + cos((2N−1)x). Multiply that sum by 2 sin x. Each product 2 sin x cos((2k−1)x) equals sin(2kx) − sin((2k−2)x), so the sum telescopes, each term cancelling part of the next, down to sin(2Nx). Hence
 
-$$S_N'(x) = \frac{2}{\pi}\,\frac{\sin(2Nx)}{\sin x}, \qquad S_N(x) = \frac{2}{\pi}\int_0^{x}\frac{\sin(2Nt)}{\sin t}\,dt,$$
+```math
+S_N'(x) = \frac{2}{\pi}\,\frac{\sin(2Nx)}{\sin x}, \qquad S_N(x) = \frac{2}{\pi}\int_0^{x}\frac{\sin(2Nt)}{\sin t}\,dt,
+```
 
-the second because $S_N$ starts from 0 at x = 0. This fraction is the weighting bump of Step 0, written out for this wave.
+the second because $`S_N`$ starts from 0 at x = 0. This fraction is the weighting bump of Step 0, written out for this wave.
 
 ### Step 2: at the jump, every tone is zero
 
-At x = 0 every sine is 0, so $S_N(0) = 0$ for every N: the midpoint of −1 and +1. Nothing else was possible. The wave is odd (flipping x flips the sign), so each partial sum is odd, and an odd function is 0 at 0.
+At x = 0 every sine is 0, so $`S_N(0) = 0`$ for every N: the midpoint of −1 and +1. Nothing else was possible. The wave is odd (flipping x flips the sign), so each partial sum is odd, and an odd function is 0 at 0.
 
 ### Step 3: at a smooth point, the stack tends to 1
 
-Fix x between 0 and π. In Step 1's integral, sin(2Nt) swings faster as N grows, and away from t = 0 its positive and negative lobes nearly cancel against the slowly changing 1/sin t. Only the tall lobe near t = 0 survives, with area tending to π/2. So $S_N(x)$ tends to (2/π)(π/2) = 1. At x = π/2 the error is −0.031752, −0.006366, −0.001273 for N = 10, 50, 250: about 1/(πN), falling fivefold each time N grows fivefold.
+Fix x between 0 and π. In Step 1's integral, sin(2Nt) swings faster as N grows, and away from t = 0 its positive and negative lobes nearly cancel against the slowly changing 1/sin t. Only the tall lobe near t = 0 survives, with area tending to π/2. So $`S_N(x)`$ tends to (2/π)(π/2) = 1. At x = π/2 the error is −0.031752, −0.006366, −0.001273 for N = 10, 50, 250: about 1/(πN), falling fivefold each time N grows fivefold.
 
 ### Step 4: the peak settles at 1.179 and moves in
 
 Step 1's slope is first zero where sin(2Nx) returns to 0: x = π/(2N), the first peak, 0.03142 for N = 50. Substitute u = 2Nt:
 
-$$S_N\!\left(\frac{\pi}{2N}\right) = \frac{2}{\pi}\int_0^{\pi}\frac{\sin u}{2N\sin\!\big(u/(2N)\big)}\,du.$$
+```math
+S_N\!\left(\frac{\pi}{2N}\right) = \frac{2}{\pi}\int_0^{\pi}\frac{\sin u}{2N\sin\!\big(u/(2N)\big)}\,du.
+```
 
 As N grows, 2N sin(u/(2N)) tends to u, since sin of a small angle is nearly the angle. The limit, (2/π) Si(π) = 1.178980, has no N in it: only the peak's place depends on N. The excess 0.178980 is 8.95% of the jump.
 
@@ -109,22 +119,24 @@ As N grows, 2N sin(u/(2N)) tends to u, since sin of a small angle is nearly the 
 
 At x = π/2, sin((2k−1)π/2) runs +1, −1, +1, … and the wave is smoothly 1 there. Step 3 then says
 
-$$1 = \frac{4}{\pi}\Big(1 - \tfrac13 + \tfrac15 - \tfrac17 + \cdots\Big), \qquad \text{so} \qquad \frac{\pi}{4} = 1 - \tfrac13 + \tfrac15 - \cdots,$$
+```math
+1 = \frac{4}{\pi}\Big(1 - \tfrac13 + \tfrac15 - \tfrac17 + \cdots\Big), \qquad \text{so} \qquad \frac{\pi}{4} = 1 - \tfrac13 + \tfrac15 - \cdots,
+```
 
 Leibniz's formula for π, read off a square wave.
 
 <details>
 <summary>Detailed proof: Dirichlet's theorem for any piecewise-smooth wave</summary>
 
-Let n count every harmonic. From the coefficient formulas, $S_n(x) = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(x+t)\,D_n(t)\,dt$ with the Dirichlet kernel $D_n(t) = \frac{\sin((n+\frac12)t)}{\sin(t/2)} = 1 + 2\sum_{j=1}^{n}\cos(jt)$.
+Let n count every harmonic. From the coefficient formulas, $`S_n(x) = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(x+t)\,D_n(t)\,dt`$ with the Dirichlet kernel $`D_n(t) = \frac{\sin((n+\frac12)t)}{\sin(t/2)} = 1 + 2\sum_{j=1}^{n}\cos(jt)`$.
 
-The cosine form gives $\frac{1}{2\pi}\int_0^{\pi} D_n = \frac12$, and the same over $(-\pi, 0)$. So $S_n(x) - \tfrac12\big(f(x^+) + f(x^-)\big) = \frac{1}{2\pi}\int_0^{\pi} g_+(t)\sin((n+\tfrac12)t)\,dt + \frac{1}{2\pi}\int_{-\pi}^{0} g_-(t)\sin((n+\tfrac12)t)\,dt$, where $g_+(t) = \frac{f(x+t) - f(x^+)}{\sin(t/2)}$ and $g_-$ uses $f(x^-)$.
+The cosine form gives $`\frac{1}{2\pi}\int_0^{\pi} D_n = \frac12`$, and the same over $`(-\pi, 0)`$. So $`S_n(x) - \tfrac12\big(f(x^+) + f(x^-)\big) = \frac{1}{2\pi}\int_0^{\pi} g_+(t)\sin((n+\tfrac12)t)\,dt + \frac{1}{2\pi}\int_{-\pi}^{0} g_-(t)\sin((n+\tfrac12)t)\,dt`$, where $`g_+(t) = \frac{f(x+t) - f(x^+)}{\sin(t/2)}`$ and $`g_-`$ uses $`f(x^-)`$.
 
-A one-sided slope at x keeps $g_\pm$ bounded near t = 0, and they are piecewise smooth elsewhere.
+A one-sided slope at x keeps $`g_\pm`$ bounded near t = 0, and they are piecewise smooth elsewhere.
 
-Riemann–Lebesgue: integrating by parts on each piece, $\int g(t)\sin(mt)\,dt = \big[-g\cos(mt)/m\big] + \frac1m\int g'(t)\cos(mt)\,dt$, so for every ε > 0 (any small positive number) there is M with the integral below ε once m > M.
+Riemann–Lebesgue: integrating by parts on each piece, $`\int g(t)\sin(mt)\,dt = \big[-g\cos(mt)/m\big] + \frac1m\int g'(t)\cos(mt)\,dt`$, so for every ε > 0 (any small positive number) there is M with the integral below ε once m > M.
 
-With m = n + ½ both integrals vanish in the limit: $S_n(x)$ tends to the midpoint, which is f(x) at a smooth point.
+With m = n + ½ both integrals vanish in the limit: $`S_n(x)`$ tends to the midpoint, which is f(x) at a smooth point.
 
 </details>
 
@@ -354,8 +366,8 @@ Lean proves Dirichlet's theorem for every piecewise-smooth wave, Gibbs's peak li
 
 - Take a wave repeating every 2π, with finitely many smooth pieces per cycle, approaching L left of x and R right of x. Then its partial sums at x, counting every harmonic, tend to the midpoint (L + R)/2.
 - Where the wave is smooth, L and R both equal its value there. The wave's own value at a jump plays no part.
-- Take the square wave's stack $S_N$ of N odd harmonics. Then its highest value between 0 and π tends to (2/π) Si(π) as N grows.
-- Take the first peak, x = π/(2N). Then $S_N$ there tends to the same limit, (2/π) Si(π).
+- Take the square wave's stack $`S_N`$ of N odd harmonics. Then its highest value between 0 and π tends to (2/π) Si(π) as N grows.
+- Take the first peak, x = π/(2N). Then $`S_N`$ there tends to the same limit, (2/π) Si(π).
 - Take the alternating sum 1 − 1/3 + 1/5 − 1/7 + …, stopped after any number of terms. Then it tends to π/4 as terms are added.
 - Take one, two and three tones at x = π/2. Then the stack is exactly 4/π, 4/π × 2/3 and 4/π × 13/15.
 - Take 50 tones. Then the stack at the jump is exactly 0, and the first peak sits at π/100.

@@ -40,38 +40,50 @@ Notation first, in words. Subscript 1 means gasoline, subscript 2 crude. The tab
 
 The price, recalled from [Spread options](04-margrabe-and-kirk-spread-options.md):
 
-$$V = D\,\bigl[F_1 N(d_1) - F_2 N(d_2)\bigr], \qquad \sigma = \sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2}, \qquad v = \sigma\sqrt{T}$$
+```math
+V = D\,\bigl[F_1 N(d_1) - F_2 N(d_2)\bigr], \qquad \sigma = \sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2}, \qquad v = \sigma\sqrt{T}
+```
 
-$$d_1 = \frac{\ln(F_1/F_2) + \tfrac12 v^2}{v}, \qquad d_2 = d_1 - v$$
+```math
+d_1 = \frac{\ln(F_1/F_2) + \tfrac12 v^2}{v}, \qquad d_2 = d_1 - v
+```
 
 The Greeks:
 
-$$\Delta_1 = \frac{\partial V}{\partial F_1} = D\,N(d_1), \qquad \Delta_2 = \frac{\partial V}{\partial F_2} = -D\,N(d_2)$$
+```math
+\Delta_1 = \frac{\partial V}{\partial F_1} = D\,N(d_1), \qquad \Delta_2 = \frac{\partial V}{\partial F_2} = -D\,N(d_2)
+```
 
-$$\Gamma_{11} = \frac{D\,n(d_1)}{F_1 v}, \qquad \Gamma_{12} = \frac{\partial^2 V}{\partial F_1\,\partial F_2} = -\frac{D\,n(d_1)}{F_2 v}, \qquad \Gamma_{22} = \frac{D\,n(d_1)\,F_1}{F_2^2\, v}$$
+```math
+\Gamma_{11} = \frac{D\,n(d_1)}{F_1 v}, \qquad \Gamma_{12} = \frac{\partial^2 V}{\partial F_1\,\partial F_2} = -\frac{D\,n(d_1)}{F_2 v}, \qquad \Gamma_{22} = \frac{D\,n(d_1)\,F_1}{F_2^2\, v}
+```
 
-$$\nu_1 = D F_1 n(d_1)\sqrt{T}\;\frac{\sigma_1 - \rho\sigma_2}{\sigma}, \qquad \nu_2 = D F_1 n(d_1)\sqrt{T}\;\frac{\sigma_2 - \rho\sigma_1}{\sigma}, \qquad \frac{\partial V}{\partial \rho} = -D F_1 n(d_1)\sqrt{T}\;\frac{\sigma_1\sigma_2}{\sigma}$$
+```math
+\nu_1 = D F_1 n(d_1)\sqrt{T}\;\frac{\sigma_1 - \rho\sigma_2}{\sigma}, \qquad \nu_2 = D F_1 n(d_1)\sqrt{T}\;\frac{\sigma_2 - \rho\sigma_1}{\sigma}, \qquad \frac{\partial V}{\partial \rho} = -D F_1 n(d_1)\sqrt{T}\;\frac{\sigma_1\sigma_2}{\sigma}
+```
 
 And the bridge that ties correlation to cross gamma:
 
-$$\frac{\partial V}{\partial \rho} \;=\; \sigma_1\sigma_2\,T\,F_1F_2\,\Gamma_{12}$$
+```math
+\frac{\partial V}{\partial \rho} \;=\; \sigma_1\sigma_2\,T\,F_1F_2\,\Gamma_{12}
+```
 
 **Read it aloud:** each delta is a discounted in-the-money chance, counted in its own barrels; the gammas share one bell-curve height; the two vegas and the correlation sensitivity are one vega split by the chain rule; and the correlation sensitivity is the cross gamma times both volatilities, both prices and the time left.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | the option's price today, per barrel of spread | 13.15 USD | |
-| $F_1$, $F_2$ | gasoline and crude futures prices for the expiry month | 100 and 90 USD per barrel | $F_1$ up: price rises 0.72 per dollar; $F_2$ up: price falls 0.65 per dollar |
-| $K$ | strike on the gap; zero here, 10 USD in the Kirk comparison | 0 | price falls |
-| $\sigma_1$, $\sigma_2$ | each leg's volatility, the yearly spread of its percentage moves | 0.30 and 0.25 | both raise the price here, but $\nu_2$ turns negative when $\rho\sigma_1 > \sigma_2$ |
-| $\rho$ | correlation of the two legs' moves, from −1 to 1 | 0.5 | price falls: a steadier gap |
-| $\sigma$, $v$ | volatility of the ratio gasoline/crude, and that volatility over the option's life | 0.2784 and 0.1969 | price rises |
-| $T$, $r$, $D$ | years to expiry, the riskless rate, and the discount factor $e^{-rT}$ | 0.5, 5%, 0.9753 | $r$ up: every Greek shrinks by the same factor |
-| $d_1$, $d_2$ | how far gasoline sits above crude, in units of $v$, counted in gasoline and in crude | 0.6337 and 0.4368 | |
-| $N$, $n$ | bell-curve area to the left of a point, and bell-curve height at a point | $N(d_1)$ = 0.7368, $n(d_1)$ = 0.3264 | |
-| $\Delta_1$, $\Delta_2$ | futures to hold per barrel of spread to cancel small moves: gasoline, crude | +0.7187 and −0.6524 | |
-| $\Gamma_{11}$, $\Gamma_{12}$, $\Gamma_{22}$ | how each delta changes per dollar move in a price; $\Gamma_{12}$ is the cross gamma | 0.0162, −0.0180, 0.0200 | |
-| $\nu_1$, $\nu_2$ | price change per unit (100 points) of each leg's volatility | 14.15 and 8.09 | |
+| $`V`$ | the option's price today, per barrel of spread | 13.15 USD | |
+| $`F_1`$, $`F_2`$ | gasoline and crude futures prices for the expiry month | 100 and 90 USD per barrel | $`F_1`$ up: price rises 0.72 per dollar; $`F_2`$ up: price falls 0.65 per dollar |
+| $`K`$ | strike on the gap; zero here, 10 USD in the Kirk comparison | 0 | price falls |
+| $`\sigma_1`$, $`\sigma_2`$ | each leg's volatility, the yearly spread of its percentage moves | 0.30 and 0.25 | both raise the price here, but $`\nu_2`$ turns negative when $`\rho\sigma_1 > \sigma_2`$ |
+| $`\rho`$ | correlation of the two legs' moves, from −1 to 1 | 0.5 | price falls: a steadier gap |
+| $`\sigma`$, $`v`$ | volatility of the ratio gasoline/crude, and that volatility over the option's life | 0.2784 and 0.1969 | price rises |
+| $`T`$, $`r`$, $`D`$ | years to expiry, the riskless rate, and the discount factor $`e^{-rT}`$ | 0.5, 5%, 0.9753 | $`r`$ up: every Greek shrinks by the same factor |
+| $`d_1`$, $`d_2`$ | how far gasoline sits above crude, in units of $`v`$, counted in gasoline and in crude | 0.6337 and 0.4368 | |
+| $`N`$, $`n`$ | bell-curve area to the left of a point, and bell-curve height at a point | $`N(d_1)`$ = 0.7368, $`n(d_1)`$ = 0.3264 | |
+| $`\Delta_1`$, $`\Delta_2`$ | futures to hold per barrel of spread to cancel small moves: gasoline, crude | +0.7187 and −0.6524 | |
+| $`\Gamma_{11}`$, $`\Gamma_{12}`$, $`\Gamma_{22}`$ | how each delta changes per dollar move in a price; $`\Gamma_{12}`$ is the cross gamma | 0.0162, −0.0180, 0.0200 | |
+| $`\nu_1`$, $`\nu_2`$ | price change per unit (100 points) of each leg's volatility | 14.15 and 8.09 | |
 
 ### When it holds
 
@@ -87,73 +99,91 @@ $$\frac{\partial V}{\partial \rho} \;=\; \sigma_1\sigma_2\,T\,F_1F_2\,\Gamma_{12
 
 ### Step 0: every Greek is a partial derivative of one formula
 
-Two features of Margrabe's formula keep the derivatives short. The volatilities and the correlation enter only through the spread volatility $\sigma$, so three sensitivities become one vega and a chain rule. And the formula is **homogeneous of degree one**: multiply both futures prices by the same number and the price is multiplied by it too. That forces relations among the deltas and among the gammas.
+Two features of Margrabe's formula keep the derivatives short. The volatilities and the correlation enter only through the spread volatility $`\sigma`$, so three sensitivities become one vega and a chain rule. And the formula is **homogeneous of degree one**: multiply both futures prices by the same number and the price is multiplied by it too. That forces relations among the deltas and among the gammas.
 
 ### Step 1: the bell-height identity
 
-The two bell heights are $n(d_1) = e^{-d_1^2/2}/\sqrt{2\pi}$ and $n(d_2)$ likewise. Their ratio is
+The two bell heights are $`n(d_1) = e^{-d_1^2/2}/\sqrt{2\pi}`$ and $`n(d_2)`$ likewise. Their ratio is
 
-$$\frac{n(d_2)}{n(d_1)} = e^{(d_1^2 - d_2^2)/2} = e^{(d_1 + d_2)(d_1 - d_2)/2} = e^{\,(d_1+d_2)v/2}.$$
+```math
+\frac{n(d_2)}{n(d_1)} = e^{(d_1^2 - d_2^2)/2} = e^{(d_1 + d_2)(d_1 - d_2)/2} = e^{\,(d_1+d_2)v/2}.
+```
 
-From the definitions, $d_1 + d_2 = 2\ln(F_1/F_2)/v$. So the exponent is $\ln(F_1/F_2)$, the ratio is $F_1/F_2$, and $F_1\,n(d_1) = F_2\,n(d_2)$.
+From the definitions, $`d_1 + d_2 = 2\ln(F_1/F_2)/v`$. So the exponent is $`\ln(F_1/F_2)`$, the ratio is $`F_1/F_2`$, and $`F_1\,n(d_1) = F_2\,n(d_2)`$.
 
 ### Step 2: the deltas
 
-Differentiate the price in gasoline's futures price. The product rule gives the plain term $D\,N(d_1)$ plus a bracket:
+Differentiate the price in gasoline's futures price. The product rule gives the plain term $`D\,N(d_1)`$ plus a bracket:
 
-$$\frac{\partial V}{\partial F_1} = D\,N(d_1) + D\Bigl[F_1\,n(d_1)\,\frac{\partial d_1}{\partial F_1} - F_2\,n(d_2)\,\frac{\partial d_2}{\partial F_1}\Bigr].$$
+```math
+\frac{\partial V}{\partial F_1} = D\,N(d_1) + D\Bigl[F_1\,n(d_1)\,\frac{\partial d_1}{\partial F_1} - F_2\,n(d_2)\,\frac{\partial d_2}{\partial F_1}\Bigr].
+```
 
-Since $d_2 = d_1 - v$ and $v$ does not depend on the prices, the two inner derivatives are equal. By Step 1 the two bell terms are equal too. The bracket is zero. So $\Delta_1 = D\,N(d_1)$. The same argument in crude's price gives $\Delta_2 = -D\,N(d_2)$.
+Since $`d_2 = d_1 - v`$ and $`v`$ does not depend on the prices, the two inner derivatives are equal. By Step 1 the two bell terms are equal too. The bracket is zero. So $`\Delta_1 = D\,N(d_1)`$. The same argument in crude's price gives $`\Delta_2 = -D\,N(d_2)`$.
 
-Each delta is a discounted probability. $N(d_1)$ is the chance the option finishes in the money, counted in barrels of gasoline; $N(d_2)$ is the same event counted in barrels of crude. The minus sign on crude is the delivery the option holder makes.
+Each delta is a discounted probability. $`N(d_1)`$ is the chance the option finishes in the money, counted in barrels of gasoline; $`N(d_2)`$ is the same event counted in barrels of crude. The minus sign on crude is the delivery the option holder makes.
 
 ### Step 3: the deltas rebuild the price
 
 Homogeneity has a consequence known as Euler's theorem: the price equals each input times its derivative, summed.
 
-$$V = F_1\,\Delta_1 + F_2\,\Delta_2.$$
+```math
+V = F_1\,\Delta_1 + F_2\,\Delta_2.
+```
 
-Proof in one line: scale both prices by a common factor, so the price scales by it too, and differentiate in that factor at 1. Compare a single call on a futures price, whose formula carries a separate cash term, the discounted strike times $N(d_2)$, outside its delta. Here crude plays the strike's role, so the two deltas carry the whole price. Step 4 uses this.
+Proof in one line: scale both prices by a common factor, so the price scales by it too, and differentiate in that factor at 1. Compare a single call on a futures price, whose formula carries a separate cash term, the discounted strike times $`N(d_2)`$, outside its delta. Here crude plays the strike's role, so the two deltas carry the whole price. Step 4 uses this.
 
 ### Step 4: the gamma table, and the direction it cannot see
 
-Differentiate the deltas. Only $d_1$ and $d_2$ move, and $\partial d_1/\partial F_1 = 1/(F_1 v)$, $\partial d_1/\partial F_2 = -1/(F_2 v)$. That gives
+Differentiate the deltas. Only $`d_1`$ and $`d_2`$ move, and $`\partial d_1/\partial F_1 = 1/(F_1 v)`$, $`\partial d_1/\partial F_2 = -1/(F_2 v)`$. That gives
 
-$$\Gamma_{11} = \frac{D\,n(d_1)}{F_1 v}, \qquad \Gamma_{12} = -\frac{D\,n(d_1)}{F_2 v}, \qquad \Gamma_{22} = \frac{D\,n(d_2)}{F_2 v} = \frac{D\,n(d_1)\,F_1}{F_2^2 v},$$
+```math
+\Gamma_{11} = \frac{D\,n(d_1)}{F_1 v}, \qquad \Gamma_{12} = -\frac{D\,n(d_1)}{F_2 v}, \qquad \Gamma_{22} = \frac{D\,n(d_2)}{F_2 v} = \frac{D\,n(d_1)\,F_1}{F_2^2 v},
+```
 
-the last step by Step 1. The cross gamma $\Gamma_{12}$ is negative. It says: when crude rises, the gasoline delta falls. That makes sense, since a higher crude price makes the gap smaller and the option less likely to pay.
+the last step by Step 1. The cross gamma $`\Gamma_{12}`$ is negative. It says: when crude rises, the gasoline delta falls. That makes sense, since a higher crude price makes the gap smaller and the option less likely to pay.
 
-Now multiply the first row by the prices: $F_1\Gamma_{11} + F_2\Gamma_{12} = D n(d_1)/v - D n(d_1)/v = 0$. The deltas are homogeneous of degree zero (they depend only on the ratio), and this is Euler's theorem again, one level down. The gamma table is therefore **singular**: there is one direction of moves it cannot see. That direction is both prices moving by the same percentage.
+Now multiply the first row by the prices: $`F_1\Gamma_{11} + F_2\Gamma_{12} = D n(d_1)/v - D n(d_1)/v = 0`$. The deltas are homogeneous of degree zero (they depend only on the ratio), and this is Euler's theorem again, one level down. The gamma table is therefore **singular**: there is one direction of moves it cannot see. That direction is both prices moving by the same percentage.
 
 Push gasoline and crude both up 5 percent and a delta-hedged book gains or loses nothing at all, to every order: the option's value rises by 5 percent of itself, and by Step 3 the hedge's gain, 5 percent of each price times its delta, is the same amount. Only moves that change the ratio of the two prices cost a hedged seller money.
 
 ### Step 5: vegas and correlation through one volatility
 
-By Step 0, each sensitivity is the same vega in $\sigma$, times how much the input moves $\sigma$. The vega in $\sigma$ is Black's vega with gasoline as the asset: $\partial V/\partial\sigma = D F_1 n(d_1)\sqrt{T}$. The chain rule through $\sigma^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2$ gives
+By Step 0, each sensitivity is the same vega in $`\sigma`$, times how much the input moves $`\sigma`$. The vega in $`\sigma`$ is Black's vega with gasoline as the asset: $`\partial V/\partial\sigma = D F_1 n(d_1)\sqrt{T}`$. The chain rule through $`\sigma^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2`$ gives
 
-$$\frac{\partial\sigma}{\partial\sigma_1} = \frac{\sigma_1 - \rho\sigma_2}{\sigma} = 0.6286, \qquad \frac{\partial\sigma}{\partial\sigma_2} = \frac{\sigma_2 - \rho\sigma_1}{\sigma} = 0.3592, \qquad \frac{\partial\sigma}{\partial\rho} = -\frac{\sigma_1\sigma_2}{\sigma} = -0.2694.$$
+```math
+\frac{\partial\sigma}{\partial\sigma_1} = \frac{\sigma_1 - \rho\sigma_2}{\sigma} = 0.6286, \qquad \frac{\partial\sigma}{\partial\sigma_2} = \frac{\sigma_2 - \rho\sigma_1}{\sigma} = 0.3592, \qquad \frac{\partial\sigma}{\partial\rho} = -\frac{\sigma_1\sigma_2}{\sigma} = -0.2694.
+```
 
-The correlation sensitivity is always negative, because raising correlation always shrinks the spread volatility. A leg's vega can have either sign. When $\rho\sigma_1$ exceeds $\sigma_2$, more crude volatility makes crude track gasoline more closely, the gap steadies, and the option loses value.
+The correlation sensitivity is always negative, because raising correlation always shrinks the spread volatility. A leg's vega can have either sign. When $`\rho\sigma_1`$ exceeds $`\sigma_2`$, more crude volatility makes crude track gasoline more closely, the gap steadies, and the option loses value.
 
 ### Step 6: the bridge from correlation to cross gamma
 
-Take the product of $\Gamma_{12}$ with $\sigma_1\sigma_2 T F_1 F_2$:
+Take the product of $`\Gamma_{12}`$ with $`\sigma_1\sigma_2 T F_1 F_2`$:
 
-$$\sigma_1\sigma_2 T F_1 F_2 \cdot \Bigl(-\frac{D n(d_1)}{F_2\,\sigma\sqrt{T}}\Bigr) = -D F_1 n(d_1)\sqrt{T}\,\frac{\sigma_1\sigma_2}{\sigma} = \frac{\partial V}{\partial\rho}.$$
+```math
+\sigma_1\sigma_2 T F_1 F_2 \cdot \Bigl(-\frac{D n(d_1)}{F_2\,\sigma\sqrt{T}}\Bigr) = -D F_1 n(d_1)\sqrt{T}\,\frac{\sigma_1\sigma_2}{\sigma} = \frac{\partial V}{\partial\rho}.
+```
 
 That is the algebra. The reason is the hedged seller's profit over a short step, which to second order is minus half the gamma table applied to the price moves:
 
-$$\text{hedged P\&L of the seller} \approx -\tfrac12\bigl(\Gamma_{11}\,dF_1^2 + 2\,\Gamma_{12}\,dF_1\,dF_2 + \Gamma_{22}\,dF_2^2\bigr) + \text{time decay}.$$
+```math
+\text{hedged P\&L of the seller} \approx -\tfrac12\bigl(\Gamma_{11}\,dF_1^2 + 2\,\Gamma_{12}\,dF_1\,dF_2 + \Gamma_{22}\,dF_2^2\bigr) + \text{time decay}.
+```
 
-The product $dF_1\,dF_2$ averages to $\rho\,\sigma_1\sigma_2F_1F_2$ per unit of time. So correlation reaches the book only through the cross-gamma term, and summed over the option's life its weight is the correlation sensitivity. The time decay pays for the correlation the option was sold at. If realised correlation is lower, $\Gamma_{12}$ being negative, the cross term takes money from the seller, on average, on every step. Futures have no gamma, so no futures position changes this term. The single-asset version of this bookkeeping is [Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md).
+The product $`dF_1\,dF_2`$ averages to $`\rho\,\sigma_1\sigma_2F_1F_2`$ per unit of time. So correlation reaches the book only through the cross-gamma term, and summed over the option's life its weight is the correlation sensitivity. The time decay pays for the correlation the option was sold at. If realised correlation is lower, $`\Gamma_{12}`$ being negative, the cross term takes money from the seller, on average, on every step. Futures have no gamma, so no futures position changes this term. The single-asset version of this bookkeeping is [Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md).
 
 <details>
 <summary>Detailed proof: the bridge holds for any strike, not only Margrabe's</summary>
 
-Write the price as a function of the prices, the two variances $\sigma_1^2T$ and $\sigma_2^2T$ of the log prices at expiry, and their covariance $c = \rho\sigma_1\sigma_2T$. For any European payoff on two lognormal futures, the price obeys the two-dimensional heat relation
-$$\frac{\partial V}{\partial c} = F_1F_2\,\frac{\partial^2 V}{\partial F_1\,\partial F_2}.$$
-It follows from writing the price as a discounted integral of the payoff against the bivariate normal density of the two log prices. That density's derivative in its covariance equals its mixed second derivative in the two log prices, a standard property of the normal density. Two integrations by parts move those derivatives onto the payoff side. A mixed derivative in the two log prices is the product of the two prices times the mixed derivative in the prices, and no first-derivative terms appear, because the log means depend on the two variances but not on the covariance. Since $\rho$ reaches the price only through the covariance, the chain rule gives
-$$\frac{\partial V}{\partial\rho} = \frac{\partial V}{\partial c}\,\frac{\partial c}{\partial\rho} = \sigma_1\sigma_2T\,F_1F_2\,\Gamma_{12}.$$
+Write the price as a function of the prices, the two variances $`\sigma_1^2T`$ and $`\sigma_2^2T`$ of the log prices at expiry, and their covariance $`c = \rho\sigma_1\sigma_2T`$. For any European payoff on two lognormal futures, the price obeys the two-dimensional heat relation
+
+$`\displaystyle \frac{\partial V}{\partial c} = F_1F_2\,\frac{\partial^2 V}{\partial F_1\,\partial F_2}.`$
+
+It follows from writing the price as a discounted integral of the payoff against the bivariate normal density of the two log prices. That density's derivative in its covariance equals its mixed second derivative in the two log prices, a standard property of the normal density. Two integrations by parts move those derivatives onto the payoff side. A mixed derivative in the two log prices is the product of the two prices times the mixed derivative in the prices, and no first-derivative terms appear, because the log means depend on the two variances but not on the covariance. Since $`\rho`$ reaches the price only through the covariance, the chain rule gives
+
+$`\displaystyle \frac{\partial V}{\partial\rho} = \frac{\partial V}{\partial c}\,\frac{\partial c}{\partial\rho} = \sigma_1\sigma_2T\,F_1F_2\,\Gamma_{12}.`$
+
 Nothing in the argument used the strike. At a 10-dollar strike the check computes both sides by bumping an exact integral: −6.8334 by bumping correlation, −6.8333 from the cross gamma. The two agree to the bumps' accuracy.
 
 </details>
@@ -162,34 +192,34 @@ Nothing in the argument used the strike. At a 10-dollar strike the check compute
 
 At a positive strike there is no closed form, and Kirk's approximation is a common market choice. Desks bump it: reprice with one input nudged up and down and divide the difference by the nudge ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)). A cross gamma needs four repricings: both prices up, both down, and the two mixed cases.
 
-Checking Kirk needs an exact price to bump. Fix crude's random shock at expiry. Crude's price is then known, and gasoline is still lognormal, with volatility cut by the factor $\sqrt{1-\rho^2}$. So the conditional value is Black's formula on gasoline with a known strike, and averaging it over crude's shock with Simpson's rule gives the exact price for any strike.
+Checking Kirk needs an exact price to bump. Fix crude's random shock at expiry. Crude's price is then known, and gasoline is still lognormal, with volatility cut by the factor $`\sqrt{1-\rho^2}`$. So the conditional value is Black's formula on gasoline with a known strike, and averaging it over crude's shock with Simpson's rule gives the exact price for any strike.
 
 ---
 
 ## Worked numbers, by hand
 
-House crack: $F_1$ = 100, $F_2$ = 90, $\sigma_1$ = 0.30, $\sigma_2$ = 0.25, $\rho$ = 0.5, $T$ = 0.5, $r$ = 5%, zero strike.
+House crack: $`F_1`$ = 100, $`F_2`$ = 90, $`\sigma_1`$ = 0.30, $`\sigma_2`$ = 0.25, $`\rho`$ = 0.5, $`T`$ = 0.5, $`r`$ = 5%, zero strike.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| spread variance $\sigma^2$ | $0.09 + 0.0625 - 2(0.5)(0.30)(0.25)$ | 0.0775 |
-| spread volatility $\sigma$ | $\sqrt{0.0775}$ | 0.2784 |
-| $v = \sigma\sqrt{T}$ | $0.2784 \times \sqrt{0.5}$ | 0.1969 |
-| discount $D$ | $e^{-0.05 \times 0.5}$ | 0.9753 |
-| $d_1$ | $(\ln(100/90) + \tfrac12 v^2)/v = (0.1054 + 0.0194)/0.1969$ | 0.6337 |
-| $d_2$ | $0.6337 - 0.1969$ | 0.4368 |
-| $N(d_1)$, $N(d_2)$, $n(d_1)$ | bell-curve area and height | 0.7368, 0.6689, 0.3264 |
-| gasoline delta $\Delta_1$ | $0.9753 \times 0.7368$ | **+0.7187** |
-| crude delta $\Delta_2$ | $-0.9753 \times 0.6689$ | **−0.6524** |
-| rebuild the price | $100 \times 0.7187 - 90 \times 0.6524$ | 13.15 |
-| $\Gamma_{11}$ | $0.9753 \times 0.3264 / (100 \times 0.1969)$ | 0.0162 |
-| cross gamma $\Gamma_{12}$ | $-0.9753 \times 0.3264 / (90 \times 0.1969)$ | **−0.0180** |
-| $\Gamma_{22}$ | $0.9753 \times 0.3264 \times 100 / (90^2 \times 0.1969)$ | 0.0200 |
-| vega in $\sigma$ | $0.9753 \times 100 \times 0.3264 \times \sqrt{0.5}$ | 22.51 |
-| gasoline vega $\nu_1$ | $22.51 \times 0.6286$ | 14.15 |
-| crude vega $\nu_2$ | $22.51 \times 0.3592$ | 8.09 |
-| correlation sensitivity | $22.51 \times (-0.2694)$ | **−6.06** |
-| bridge check | $0.30 \times 0.25 \times 0.5 \times 100 \times 90 \times (-0.017967)$ | −6.06 |
+| spread variance $`\sigma^2`$ | $`0.09 + 0.0625 - 2(0.5)(0.30)(0.25)`$ | 0.0775 |
+| spread volatility $`\sigma`$ | $`\sqrt{0.0775}`$ | 0.2784 |
+| $`v = \sigma\sqrt{T}`$ | $`0.2784 \times \sqrt{0.5}`$ | 0.1969 |
+| discount $`D`$ | $`e^{-0.05 \times 0.5}`$ | 0.9753 |
+| $`d_1`$ | $`(\ln(100/90) + \tfrac12 v^2)/v = (0.1054 + 0.0194)/0.1969`$ | 0.6337 |
+| $`d_2`$ | $`0.6337 - 0.1969`$ | 0.4368 |
+| $`N(d_1)`$, $`N(d_2)`$, $`n(d_1)`$ | bell-curve area and height | 0.7368, 0.6689, 0.3264 |
+| gasoline delta $`\Delta_1`$ | $`0.9753 \times 0.7368`$ | **+0.7187** |
+| crude delta $`\Delta_2`$ | $`-0.9753 \times 0.6689`$ | **−0.6524** |
+| rebuild the price | $`100 \times 0.7187 - 90 \times 0.6524`$ | 13.15 |
+| $`\Gamma_{11}`$ | $`0.9753 \times 0.3264 / (100 \times 0.1969)`$ | 0.0162 |
+| cross gamma $`\Gamma_{12}`$ | $`-0.9753 \times 0.3264 / (90 \times 0.1969)`$ | **−0.0180** |
+| $`\Gamma_{22}`$ | $`0.9753 \times 0.3264 \times 100 / (90^2 \times 0.1969)`$ | 0.0200 |
+| vega in $`\sigma`$ | $`0.9753 \times 100 \times 0.3264 \times \sqrt{0.5}`$ | 22.51 |
+| gasoline vega $`\nu_1`$ | $`22.51 \times 0.6286`$ | 14.15 |
+| crude vega $`\nu_2`$ | $`22.51 \times 0.3592`$ | 8.09 |
+| correlation sensitivity | $`22.51 \times (-0.2694)`$ | **−6.06** |
+| bridge check | $`0.30 \times 0.25 \times 0.5 \times 100 \times 90 \times (-0.017967)`$ | −6.06 |
 
 The desk that sold this option buys 0.72 barrels of gasoline futures and sells 0.65 barrels of crude futures for each barrel of spread, and then carries a correlation exposure of −6.06 dollars per unit that it cannot trade away.
 
@@ -213,8 +243,8 @@ The strike pulls both deltas toward a half, since the option sits closer to the 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Use $N(d_2)$ for the gasoline delta | 0.6524 instead of 0.7187 | That is crude's hedge size. Gasoline's delta counts the in-the-money chance in gasoline, not crude. |
-| Write $+2\rho\sigma_1\sigma_2$ in the spread volatility | price 17.88 instead of 13.15 | The sign turns correlation into anti-correlation; the correlation sensitivity flips sign too. |
+| Use $`N(d_2)`$ for the gasoline delta | 0.6524 instead of 0.7187 | That is crude's hedge size. Gasoline's delta counts the in-the-money chance in gasoline, not crude. |
+| Write $`+2\rho\sigma_1\sigma_2`$ in the spread volatility | price 17.88 instead of 13.15 | The sign turns correlation into anti-correlation; the correlation sensitivity flips sign too. |
 | Drop the discount on the futures delta | 0.7368 instead of 0.7187 | A futures option pays in six months; its delta is a discounted probability. |
 | Hedge crude with the gasoline size, −0.72 | loses 0.30 when both legs rise 5% | The spread is not one asset. Equal and opposite hedges leave the book short too much crude. |
 
@@ -464,7 +494,7 @@ try: crude 100, delta gasoline      0.525890
 ALL CHECKS PASS
 ```
 
-The three columns of the zero-strike table agree to the sixth decimal on every Greek, apart from a last-digit bump error on the deltas. The row $F_1\Gamma_{11} + F_2\Gamma_{12}$ is zero: the singular gamma table of Step 4.
+The three columns of the zero-strike table agree to the sixth decimal on every Greek, apart from a last-digit bump error on the deltas. The row $`F_1\Gamma_{11} + F_2\Gamma_{12}`$ is zero: the singular gamma table of Step 4.
 
 ### Rust
 
@@ -702,13 +732,13 @@ The two outputs are identical line for line, including the simulation, because b
 
 ### Lean
 
-Lean proves the card's zero-strike formulas whenever $F_1$, $F_2$, $T$ and $\sigma$ are all above zero.
+Lean proves the card's zero-strike formulas whenever $`F_1`$, $`F_2`$, $`T`$ and $`\sigma`$ are all above zero.
 
-- Take Margrabe's price $V$ at zero strike. Then $\Delta_1 = D\,N(d_1)$ and $\Delta_2 = -D\,N(d_2)$.
-- Take each delta and move one price. Then the slopes are the card's $\Gamma_{11}$, $\Gamma_{12}$ and $\Gamma_{22}$. Both deltas give the same negative cross gamma.
-- Take the slopes of $V$ in $\sigma_1$, $\sigma_2$ and $\rho$. Then each is $D F_1 n(d_1)\sqrt{T}$ times the matching slope of $\sigma$.
-- Take $\Gamma_{12}$ as the true second derivative of $V$. Then $\partial V/\partial\rho = \sigma_1\sigma_2\,T\,F_1F_2\,\Gamma_{12}$.
-- Take the two deltas. Then $V = F_1\Delta_1 + F_2\Delta_2$.
+- Take Margrabe's price $`V`$ at zero strike. Then $`\Delta_1 = D\,N(d_1)`$ and $`\Delta_2 = -D\,N(d_2)`$.
+- Take each delta and move one price. Then the slopes are the card's $`\Gamma_{11}`$, $`\Gamma_{12}`$ and $`\Gamma_{22}`$. Both deltas give the same negative cross gamma.
+- Take the slopes of $`V`$ in $`\sigma_1`$, $`\sigma_2`$ and $`\rho`$. Then each is $`D F_1 n(d_1)\sqrt{T}`$ times the matching slope of $`\sigma`$.
+- Take $`\Gamma_{12}`$ as the true second derivative of $`V`$. Then $`\partial V/\partial\rho = \sigma_1\sigma_2\,T\,F_1F_2\,\Gamma_{12}`$.
+- Take the two deltas. Then $`V = F_1\Delta_1 + F_2\Delta_2`$.
 - Suppose both prices are multiplied by the same positive number. Then the delta-hedged book's change is exactly zero.
 
 Kirk's approximation at a positive strike, the exact integral, the hedging simulation and every dollar figure are left to the Python and Rust checks.

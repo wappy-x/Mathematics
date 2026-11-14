@@ -38,52 +38,62 @@ The sagging line is the real balance. The straight line is the same debt cleared
 
 ## The formula
 
-Notation first, in words. A **period** is one gap between payments: here, one month. The **period rate** $i$ is the interest charged on the balance over one period, written as a decimal. The **discount factor** for a payment $k$ periods away is $(1+i)^{-k}$ — divide by $1+i$ once for every period the money has to wait.
+Notation first, in words. A **period** is one gap between payments: here, one month. The **period rate** $`i`$ is the interest charged on the balance over one period, written as a decimal. The **discount factor** for a payment $`k`$ periods away is $`(1+i)^{-k}`$ — divide by $`1+i`$ once for every period the money has to wait.
 
-The value today of one dollar paid at the end of each of $n$ periods is written $a_n(i)$, said "a-n at i": the annuity factor. (Actuarial books draw an angle over the $n$; this card puts the period count in brackets and the rate after it.)
+The value today of one dollar paid at the end of each of $`n`$ periods is written $`a_n(i)`$, said "a-n at i": the annuity factor. (Actuarial books draw an angle over the $`n`$; this card puts the period count in brackets and the rate after it.)
 
-$$a_n(i) \;=\; \sum_{k=1}^{n} (1+i)^{-k} \;=\; \frac{1-(1+i)^{-n}}{i}$$
+```math
+a_n(i) \;=\; \sum_{k=1}^{n} (1+i)^{-k} \;=\; \frac{1-(1+i)^{-n}}{i}
+```
 
 **Read it aloud:** one dollar at the end of every period for n periods is worth, today, one minus the discount factor of the very last payment, all divided by the period rate.
 
-A level stream of $A$ per period is $A$ copies of that dollar, so a loan and its payment are two readings of the same line:
+A level stream of $`A`$ per period is $`A`$ copies of that dollar, so a loan and its payment are two readings of the same line:
 
-$$L \;=\; A\,a_n(i), \qquad A \;=\; \frac{L}{a_n(i)}$$
+```math
+L \;=\; A\,a_n(i), \qquad A \;=\; \frac{L}{a_n(i)}
+```
 
 **Read it aloud:** the sum borrowed is the payment times the annuity factor, so the payment is the sum borrowed divided by the annuity factor.
 
-If the payments never stop and the rate is above zero, the last discount factor falls away to nothing and the factor settles at $1/i$. A never-ending level stream is a **perpetuity**, worth $A/i$.
+If the payments never stop and the rate is above zero, the last discount factor falls away to nothing and the factor settles at $`1/i`$. A never-ending level stream is a **perpetuity**, worth $`A/i`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$ | the sum borrowed today | $200,000.00 | the payment rises in step: twice the loan, twice the payment |
-| $A$ | the level payment, at the end of each period | $1,169.18 | the debt clears sooner, and the term no longer fits |
-| $i$ | the period rate: interest on the balance over one period | 0.416667 percent a month | less of each payment reaches the debt, so the payment must rise |
-| $n$ | how many payments the contract has | 300 | the payment falls, and the total interest climbs |
-| $k$ | which payment is being looked at, 1 to $n$ | 100 | — |
-| $a_n(i)$ | the annuity factor: today's value of 1 per period for $n$ periods | 171.060047 | each dollar of payment supports more debt |
-| $s_k(i)$ | the accumulation factor: what 1 at the end of each of $k$ periods grows into by period $k$ | 123.740222 after 100 | — |
-| $B_k$ | the balance still owed just after payment $k$ | $158,442.25 after 100 | — |
-| $I_k$ | the interest inside payment $k$ | $833.33 in month 1 | — |
-| $Q_k$ | the principal inside payment $k$: what comes off the debt | $335.85 in month 1 | — |
-| $r$ | the rate as the market quotes it, per year | 5 percent | the payment rises, and more of each one is interest |
-| $m$ | payments per year, the number that turns $r$ into $i$ | 12 | each payment is smaller, and interest is charged more often |
+| $`L`$ | the sum borrowed today | $200,000.00 | the payment rises in step: twice the loan, twice the payment |
+| $`A`$ | the level payment, at the end of each period | $1,169.18 | the debt clears sooner, and the term no longer fits |
+| $`i`$ | the period rate: interest on the balance over one period | 0.416667 percent a month | less of each payment reaches the debt, so the payment must rise |
+| $`n`$ | how many payments the contract has | 300 | the payment falls, and the total interest climbs |
+| $`k`$ | which payment is being looked at, 1 to $`n`$ | 100 | — |
+| $`a_n(i)`$ | the annuity factor: today's value of 1 per period for $`n`$ periods | 171.060047 | each dollar of payment supports more debt |
+| $`s_k(i)`$ | the accumulation factor: what 1 at the end of each of $`k`$ periods grows into by period $`k`$ | 123.740222 after 100 | — |
+| $`B_k`$ | the balance still owed just after payment $`k`$ | $158,442.25 after 100 | — |
+| $`I_k`$ | the interest inside payment $`k`$ | $833.33 in month 1 | — |
+| $`Q_k`$ | the principal inside payment $`k`$: what comes off the debt | $335.85 in month 1 | — |
+| $`r`$ | the rate as the market quotes it, per year | 5 percent | the payment rises, and more of each one is interest |
+| $`m`$ | payments per year, the number that turns $`r`$ into $`i`$ | 12 | each payment is smaller, and interest is charged more often |
 
 Three helper lines. The first is the market's translation from the quoted rate to the period rate:
 
-$$i \;=\; \frac{r}{m}, \qquad n \;=\; m \times (\text{years in the term})$$
+```math
+i \;=\; \frac{r}{m}, \qquad n \;=\; m \times (\text{years in the term})
+```
 
-In plain words: cut the quoted yearly rate into $m$ equal pieces, one per payment period, and count the periods. That is a convention, not algebra; the next bullet list says what depends on it.
+In plain words: cut the quoted yearly rate into $`m`$ equal pieces, one per payment period, and count the periods. That is a convention, not algebra; the next bullet list says what depends on it.
 
 The second gives the balance at any point, two ways round:
 
-$$B_k \;=\; A\,a_{n-k}(i) \;=\; L(1+i)^k - A\,s_k(i), \qquad s_k(i) = \frac{(1+i)^k-1}{i}$$
+```math
+B_k \;=\; A\,a_{n-k}(i) \;=\; L(1+i)^k - A\,s_k(i), \qquad s_k(i) = \frac{(1+i)^k-1}{i}
+```
 
-In plain words: what is still owed is the value of the payments still due; equally, it is the loan grown forward to date $k$ less every payment made, each grown forward to the same date. The accumulation factor $s_k(i)$ is what one dollar at the end of each of $k$ periods grows into by period $k$.
+In plain words: what is still owed is the value of the payments still due; equally, it is the loan grown forward to date $`k`$ less every payment made, each grown forward to the same date. The accumulation factor $`s_k(i)`$ is what one dollar at the end of each of $`k`$ periods grows into by period $`k`$.
 
 The third splits a single payment:
 
-$$I_k \;=\; i\,B_{k-1}, \qquad Q_k \;=\; A - I_k$$
+```math
+I_k \;=\; i\,B_{k-1}, \qquad Q_k \;=\; A - I_k
+```
 
 In plain words: interest is charged on last period's balance, and whatever is left of the payment comes off the debt.
 
@@ -91,9 +101,9 @@ In plain words: interest is charged on last period's balance, and whatever is le
 
 - **Equal periods, one payment at the end of each.** Move every payment to the start of its month and each one arrives a period earlier: the same loan then needs $1,164.33 a month, $4.85 less.
 - **One rate for the whole run.** A rate that resets makes the factor right only up to the reset; after it, a fresh factor is worked out on the balance owing then. Rates fixed for a whole 25-year term are ordinary in some markets and unavailable in others.
-- **The rate must match the period.** $i$ is per payment period, never per year unless the payments are yearly. Price the loan as 25 year-end payments and split each by twelve and it comes to $1,182.54: wrong, and close enough to look right.
+- **The rate must match the period.** $`i`$ is per payment period, never per year unless the payments are yearly. Price the loan as 25 year-end payments and split each by twelve and it comes to $1,182.54: wrong, and close enough to look right.
 - **Payments as written, nothing else charged.** Fees, arrears, default and early repayment all sit outside the formula. The schedule is the contract's arithmetic, not a forecast of what a household will do ([Mortgage pools](../35-Mortgages%2C%20Callables%20and%20Prepayment/02-mortgage-cash-flows-and-prepayment.md)).
-- **A perpetuity needs a rate above zero.** At zero or below, the discounted payments stop shrinking and the total runs away. $A/i$ would still print a number; it would not be a value.
+- **A perpetuity needs a rate above zero.** At zero or below, the discounted payments stop shrinking and the total runs away. $`A/i`$ would still print a number; it would not be a value.
 
 **Conventions verified 14 Sep 2026:** the 5 percent here is a nominal yearly rate charged as one twelfth of itself each month, which is how United States mortgages are quoted and disclosed (Regulation Z, cited below). Canadian mortgage law makes the lender state a rate "calculated yearly or half-yearly, not in advance", so the identical quoted number produces a different monthly charge there. Check the quoting rule before feeding a rate into the factor; day counts and payment dates are the sibling card [Day counts](02-day-counts-and-dates.md).
 
@@ -103,40 +113,44 @@ In plain words: interest is charged on last period's balance, and whatever is le
 
 ### Step 0: price each payment on its own, then add them up
 
-There is no way to value a whole loan in one stroke. There is an easy way to value one payment: a dollar due $k$ months out is worth $(1+i)^{-k}$ today. So value the three hundred payments one at a time and add the answers. The loan is the payment times the sum of three hundred discount factors, and the only hard part left is that sum.
+There is no way to value a whole loan in one stroke. There is an easy way to value one payment: a dollar due $`k`$ months out is worth $`(1+i)^{-k}`$ today. So value the three hundred payments one at a time and add the answers. The loan is the payment times the sum of three hundred discount factors, and the only hard part left is that sum.
 
 ### Step 1: the terms form a chain with a fixed ratio
 
-The first term is $1/(1+i)$. The second is that divided by $1+i$ again. Every term is the one before it divided by the same number, three hundred rungs down. A chain with a constant ratio like this is a geometric series ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)), and geometric chains are the one kind that can be added in closed form.
+The first term is $`1/(1+i)`$. The second is that divided by $`1+i`$ again. Every term is the one before it divided by the same number, three hundred rungs down. A chain with a constant ratio like this is a geometric series ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)), and geometric chains are the one kind that can be added in closed form.
 
 ### Step 2: shift the chain and subtract it from itself
 
-Multiply the whole sum by $1+i$. Every term climbs one rung: the month-two term becomes the month-one term, the month-three term becomes the month-two term, and so on. Now subtract the original sum from the shifted one. Every rung in the middle appears in both lists and cancels. Two survive: a bare 1 at the top, and $(1+i)^{-n}$ at the bottom. The left-hand side of that subtraction is the sum multiplied by $i$, so
+Multiply the whole sum by $`1+i`$. Every term climbs one rung: the month-two term becomes the month-one term, the month-three term becomes the month-two term, and so on. Now subtract the original sum from the shifted one. Every rung in the middle appears in both lists and cancels. Two survive: a bare 1 at the top, and $`(1+i)^{-n}`$ at the bottom. The left-hand side of that subtraction is the sum multiplied by $`i`$, so
 
-$$i\,a_n(i) \;=\; 1 - (1+i)^{-n}.$$
+```math
+i\,a_n(i) \;=\; 1 - (1+i)^{-n}.
+```
 
-Divide by $i$ and the closed form is out. For the mortgage the last discount factor is 0.287250 and the monthly rate is 0.416667 percent, so the factor is 171.060047: the entire 25-year stream of one dollar a month is worth a little over 171 dollars today.
+Divide by $`i`$ and the closed form is out. For the mortgage the last discount factor is 0.287250 and the monthly rate is 0.416667 percent, so the factor is 171.060047: the entire 25-year stream of one dollar a month is worth a little over 171 dollars today.
 
 <details>
 <summary>Detailed proof: the collapse, the balance and the limit</summary>
 
-**The sum.** Write $S = \sum_{k=1}^{n}(1+i)^{-k}$. Then
-$$(1+i)S = \sum_{k=1}^{n}(1+i)^{-(k-1)} = \sum_{j=0}^{n-1}(1+i)^{-j}.$$
-Subtracting, $(1+i)S - S = iS$, and on the right every index from 1 to $n-1$ appears in both sums and cancels, leaving $(1+i)^{0} - (1+i)^{-n} = 1-(1+i)^{-n}$. So $iS = 1-(1+i)^{-n}$, which is the closed form for $i \ne 0$. At $i = 0$ every term is 1 and $S = n$ directly; the closed form's zero denominator is an artefact of the division, and the sum has no trouble there.
+**The sum.** Write $`S = \sum_{k=1}^{n}(1+i)^{-k}`$. Then
 
-**The balance.** Let $B_0 = L$ and $B_k = (1+i)B_{k-1} - A$: interest is added, then the payment lands. Induction gives $B_k = L(1+i)^k - A\sum_{j=1}^{k}(1+i)^{k-j} = L(1+i)^k - A\,s_k(i)$, since multiplying the previous line by $1+i$ raises every exponent and the new $-A$ joins the sum at exponent 0. Substituting $L = A\sum_{j=1}^{n}(1+i)^{-j}$ and multiplying through by $(1+i)^k$ cancels the terms with $j \le k$ against $s_k(i)$, leaving $B_k = A\sum_{j=k+1}^{n}(1+i)^{k-j} = A\,a_{n-k}(i)$. At $k=n$ the sum is empty, so $B_n = 0$: the payment from Step 3 clears the loan exactly.
+$`\displaystyle (1+i)S = \sum_{k=1}^{n}(1+i)^{-(k-1)} = \sum_{j=0}^{n-1}(1+i)^{-j}.`$
 
-**The split.** $Q_k = A - iB_{k-1} = B_{k-1} - B_k$. Using $B_k = A\,a_{n-k}(i)$ and $a_m(i) - a_{m-1}(i) = (1+i)^{-m}$ gives $Q_k = A(1+i)^{-(n-k+1)}$, so $Q_{k+1} = (1+i)Q_k$ and the principal parts are themselves a geometric chain. Adding them telescopes to $B_0 - B_n = L$, so the principal parts total the loan and the interest parts total $nA - L$ — no separate calculation needed.
+Subtracting, $`(1+i)S - S = iS`$, and on the right every index from 1 to $`n-1`$ appears in both sums and cancels, leaving $`(1+i)^{0} - (1+i)^{-n} = 1-(1+i)^{-n}`$. So $`iS = 1-(1+i)^{-n}`$, which is the closed form for $`i \ne 0`$. At $`i = 0`$ every term is 1 and $`S = n`$ directly; the closed form's zero denominator is an artefact of the division, and the sum has no trouble there.
 
-**The limit.** For $i>0$, $(1+i)^{-n} \to 0$, so $a_n(i) \to 1/i$ and the tail beyond payment $n$ is $A/i - A\,a_n(i) = (A/i)(1+i)^{-n}$. For $-1 < i \le 0$ each discounted payment is at least $A$, so $n$ of them total at least $n$ times the payment, which grows without bound: no perpetuity value exists there.
+**The balance.** Let $`B_0 = L`$ and $`B_k = (1+i)B_{k-1} - A`$: interest is added, then the payment lands. Induction gives $`B_k = L(1+i)^k - A\sum_{j=1}^{k}(1+i)^{k-j} = L(1+i)^k - A\,s_k(i)`$, since multiplying the previous line by $`1+i`$ raises every exponent and the new $`-A`$ joins the sum at exponent 0. Substituting $`L = A\sum_{j=1}^{n}(1+i)^{-j}`$ and multiplying through by $`(1+i)^k`$ cancels the terms with $`j \le k`$ against $`s_k(i)`$, leaving $`B_k = A\sum_{j=k+1}^{n}(1+i)^{k-j} = A\,a_{n-k}(i)`$. At $`k=n`$ the sum is empty, so $`B_n = 0`$: the payment from Step 3 clears the loan exactly.
+
+**The split.** $`Q_k = A - iB_{k-1} = B_{k-1} - B_k`$. Using $`B_k = A\,a_{n-k}(i)`$ and $`a_m(i) - a_{m-1}(i) = (1+i)^{-m}`$ gives $`Q_k = A(1+i)^{-(n-k+1)}`$, so $`Q_{k+1} = (1+i)Q_k`$ and the principal parts are themselves a geometric chain. Adding them telescopes to $`B_0 - B_n = L`$, so the principal parts total the loan and the interest parts total $`nA - L`$ — no separate calculation needed.
+
+**The limit.** For $`i>0`$, $`(1+i)^{-n} \to 0`$, so $`a_n(i) \to 1/i`$ and the tail beyond payment $`n`$ is $`A/i - A\,a_n(i) = (A/i)(1+i)^{-n}`$. For $`-1 < i \le 0`$ each discounted payment is at least $`A`$, so $`n`$ of them total at least $`n`$ times the payment, which grows without bound: no perpetuity value exists there.
 
 </details>
 
 ### Step 3: divide, and know the division is safe
 
-Before inverting anything, check the inversion is legitimate. The annuity factor is a sum of $n$ strictly positive terms, so it is positive for every rate above $-1$; dividing by it is always allowed and always gives exactly one answer. It also falls steadily as the rate rises, since every term shrinks, so a higher rate always means a bigger payment and never a second solution. The one boundary case is a rate of exactly zero: the closed form divides by zero, while the sum itself is $n$, and the payment is the loan split $n$ ways.
+Before inverting anything, check the inversion is legitimate. The annuity factor is a sum of $`n`$ strictly positive terms, so it is positive for every rate above $`-1`$; dividing by it is always allowed and always gives exactly one answer. It also falls steadily as the rate rises, since every term shrinks, so a higher rate always means a bigger payment and never a second solution. The one boundary case is a rate of exactly zero: the closed form divides by zero, while the sum itself is $`n`$, and the payment is the loan split $`n`$ ways.
 
-So $200,000.00 \div 171.060047$, which is **$1,169.18** a month.
+So $`200,000.00 \div 171.060047`$, which is **$1,169.18** a month.
 
 ### Step 4: the balance runs forwards and backwards to the same place
 
@@ -146,11 +160,11 @@ Looking ahead: 200 payments remain, so the debt is worth exactly what those 200 
 
 Looking back: grow the original $200,000.00 forward 100 months at the monthly rate, then subtract each of the 100 payments made, every one grown forward to the same date. Same answer, $158,442.25. The first view is what a lender quotes as a redemption figure (the sum that pays the loan off today); the second is what the ledger actually did.
 
-The split inside a payment follows at once. Interest is the rate times last month's balance; the rest is principal. Because the balance falls, the interest part falls and the principal part grows — by a factor of exactly $1+i$ each month, which makes the principal parts their own geometric chain, climbing at the loan's own rate. The final month's principal is the payment divided by $1+i$: $1,164.33.
+The split inside a payment follows at once. Interest is the rate times last month's balance; the rest is principal. Because the balance falls, the interest part falls and the principal part grows — by a factor of exactly $`1+i`$ each month, which makes the principal parts their own geometric chain, climbing at the loan's own rate. The final month's principal is the payment divided by $`1+i`$: $1,164.33.
 
 ### Step 5: let the payments run on forever
 
-As $n$ grows, $(1+i)^{-n}$ shrinks toward nothing whenever $i > 0$, so the factor settles at $1/i$ and a never-ending stream is worth $A/i$. Read backwards, it says which payment a sum will support forever: $200,000.00 at 0.416667 percent a month gives exactly $833.33. That is the interest-only payment, and it repays nothing at all. Every cent of the real $1,169.18 above it is principal.
+As $`n`$ grows, $`(1+i)^{-n}`$ shrinks toward nothing whenever $`i > 0`$, so the factor settles at $`1/i`$ and a never-ending stream is worth $`A/i`$. Read backwards, it says which payment a sum will support forever: $200,000.00 at 0.416667 percent a month gives exactly $833.33. That is the interest-only payment, and it repays nothing at all. Every cent of the real $1,169.18 above it is principal.
 
 The same limit measures what the 25-year contract leaves on the table: everything past the three hundredth payment is worth $80,603.22 today. A mortgage is a perpetuity with its tail sold off.
 
@@ -182,7 +196,7 @@ The same factor prices this shelf's house bond, which is the cross-check. A $1,0
 | --- | --- | --- |
 | Yearly rate, 25 yearly payments, then split by 12 | 1,182.54 | Eleven of each year's twelve payments arrive early and start cutting the balance sooner; one year-end payment does not |
 | 5 percent charged flat on the whole $200,000 for 25 years | 1,500.00 | The balance falls every month, so flat quoting charges interest on money already repaid |
-| Payments taken at the start of each month, priced as if at the end | 1,164.33 is right, 1,169.18 charged | Every payment arrives one period earlier, so the right payment is the level one divided by $1+i$ |
+| Payments taken at the start of each month, priced as if at the end | 1,164.33 is right, 1,169.18 charged | Every payment arrives one period earlier, so the right payment is the level one divided by $`1+i`$ |
 | Paying the interest and nothing else | 833.33 | That is the perpetuity payment: it rents the money forever and never buys any of it |
 
 The code prints all four.
@@ -646,11 +660,11 @@ The two outputs match line for line. The balance after the final payment prints 
 
 Lean proves the closed form, both readings of the balance, the zero final balance and the perpetuity limit, for every allowed rate.
 
-- Suppose the period rate $i$ is not zero, and $1+i$ is not zero either. Then the sum of the $n$ discount factors equals $(1-(1+i)^{-n})/i$.
-- Suppose the rate is above −1, there is at least one payment, and the payment is the loan divided by the annuity factor. Then after any $k$ payments up to $n$, the balance $B_k$ equals $A\,a_{n-k}(i)$.
-- Take the same loan and ledger. Then $B_k = L(1+i)^k - A\,s_k(i)$, the loan grown forward less the payments grown forward.
+- Suppose the period rate $`i`$ is not zero, and $`1+i`$ is not zero either. Then the sum of the $`n`$ discount factors equals $`(1-(1+i)^{-n})/i`$.
+- Suppose the rate is above −1, there is at least one payment, and the payment is the loan divided by the annuity factor. Then after any $`k`$ payments up to $`n`$, the balance $`B_k`$ equals $`A\,a_{n-k}(i)`$.
+- Take the same loan and ledger. Then $`B_k = L(1+i)^k - A\,s_k(i)`$, the loan grown forward less the payments grown forward.
 - Take the same loan again. Then after the last payment the balance is exactly zero.
-- Take a period rate above zero. Then the annuity factor tends to $1/i$ as the number of payments grows.
+- Take a period rate above zero. Then the annuity factor tends to $`1/i`$ as the number of payments grows.
 - Take a rate above −1 and at most zero. Then the factor grows without bound, so no perpetuity value exists.
 - Exact fractions also confirm the monthly rate, the interest-only payment, the flat-quoted 1,500 a month, and the house bond's two prices agreeing.
 
@@ -820,8 +834,8 @@ example :
 > - **Pricing yearly, then paying monthly.** The rate and the payment must share a period. Pricing 25 year-end payments and splitting each by twelve gives $1,182.54, which looks entirely plausible next to $1,169.18.
 > - **Flat quoting.** "5 percent for 25 years" applied to the whole sum gives $1,500.00 a month. It is a different and much more expensive contract, and it has been sold as though it were this one.
 > - **Reading the quoted payment as exact.** $1,169.18 is $1,169.180083 trimmed to cents. Pay the trimmed figure three hundred times and $0.05 is still owing, so the last payment is $1,169.23. Contracts say which payment absorbs the difference.
-> - **Counting $n$ in years.** $n$ counts payments, not years: 300 here, not 25.
-> - **Dropping the perpetuity's condition.** $A/i$ needs a rate above zero. At or below zero the stream has no finite value, whatever the division prints.
+> - **Counting $`n`$ in years.** $`n`$ counts payments, not years: 300 here, not 25.
+> - **Dropping the perpetuity's condition.** $`A/i`$ needs a rate above zero. At or below zero the stream has no finite value, whatever the division prints.
 
 ---
 

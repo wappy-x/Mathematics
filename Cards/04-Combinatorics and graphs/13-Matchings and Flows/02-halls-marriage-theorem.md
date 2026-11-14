@@ -41,30 +41,34 @@ Applicants on the left, posts on the right, one line per qualification: 13 lines
 
 ## The formula
 
-The hiring is a **bipartite graph**: dots in two groups, every line running across, none inside a group ([Matchings](01-matchings-and-augmenting-paths.md)). Call it $G$, the applicants $A$, the posts $B$. A **matching** is a set of lines, no two sharing an applicant or a post. It **covers** $A$ when every applicant is on one of its lines: a full placement.
+The hiring is a **bipartite graph**: dots in two groups, every line running across, none inside a group ([Matchings](01-matchings-and-augmenting-paths.md)). Call it $`G`$, the applicants $`A`$, the posts $`B`$. A **matching** is a set of lines, no two sharing an applicant or a post. It **covers** $`A`$ when every applicant is on one of its lines: a full placement.
 
-Write $S$ for any group of applicants and $N(S)$ for the posts it reaches, every post at least one member is qualified for ($N$ for neighbours). Bars count members: $\lvert S\rvert$ applicants, $\lvert N(S)\rvert$ posts.
+Write $`S`$ for any group of applicants and $`N(S)`$ for the posts it reaches, every post at least one member is qualified for ($`N`$ for neighbours). Bars count members: $`\lvert S\rvert`$ applicants, $`\lvert N(S)\rvert`$ posts.
 
-$$\lvert N(S)\rvert \;\ge\; \lvert S\rvert \qquad \text{for every group } S \text{ of applicants}$$
+```math
+\lvert N(S)\rvert \;\ge\; \lvert S\rvert \qquad \text{for every group } S \text{ of applicants}
+```
 
 **Read it aloud:** no group of applicants is qualified, between them, for fewer posts than the group has members.
 
-That is **Hall's condition**. The theorem: a matching covering $A$ exists exactly when it holds.
+That is **Hall's condition**. The theorem: a matching covering $`A`$ exists exactly when it holds.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | the bipartite graph | 6 applicants, 6 posts, 13 lines | more lines, more room |
-| $A$ | the side to be covered | the six applicants | more ways to crowd |
-| $B$ | the other side | the six posts | easier to place |
-| $S$, $T$ | any group of applicants; $\lvert S\rvert$ counts its members | Ana, Ben, Cleo, so 3 | — |
-| $N(S)$ | the posts that group reaches; $\lvert N(S)\rvert$ counts them | front desk and accounts, so 2 | — |
-| $a$, $b$ | one applicant and one post she qualifies for | Cleo, accounts | — |
-| $\nu(G)$ | the largest matching's size, read "nu of G" | 5 before the repair, 6 after | — |
-| $d$ | the defect: the worst group's members minus its posts | 1 before the repair, 0 after | fewer placed |
+| $`G`$ | the bipartite graph | 6 applicants, 6 posts, 13 lines | more lines, more room |
+| $`A`$ | the side to be covered | the six applicants | more ways to crowd |
+| $`B`$ | the other side | the six posts | easier to place |
+| $`S`$, $`T`$ | any group of applicants; $`\lvert S\rvert`$ counts its members | Ana, Ben, Cleo, so 3 | — |
+| $`N(S)`$ | the posts that group reaches; $`\lvert N(S)\rvert`$ counts them | front desk and accounts, so 2 | — |
+| $`a`$, $`b`$ | one applicant and one post she qualifies for | Cleo, accounts | — |
+| $`\nu(G)`$ | the largest matching's size, read "nu of G" | 5 before the repair, 6 after | — |
+| $`d`$ | the defect: the worst group's members minus its posts | 1 before the repair, 0 after | fewer placed |
 
 One helper formula. The **defect** is the worst crowding: the most by which any group, the empty one included, outnumbers its posts. It is never below 0.
 
-$$\nu(G) \;=\; \lvert A\rvert - \max_S \bigl(\lvert S\rvert - \lvert N(S)\rvert\bigr)$$
+```math
+\nu(G) \;=\; \lvert A\rvert - \max_S \bigl(\lvert S\rvert - \lvert N(S)\rvert\bigr)
+```
 
 **Read it aloud:** the most applicants that can be placed is all of them minus the worst crowding. The hotel's defect is 1, so 5 can start. Hall's condition is defect 0.
 
@@ -85,7 +89,7 @@ A crowded group plainly blocks a placement. What needs proving is that nothing e
 
 ### Step 1: any full placement forces the condition
 
-Take a full placement and any group $S$. Its members hold $\lvert S\rvert$ different posts, since no post is shared, and each of those posts is one its holder is qualified for, so each lies in $N(S)$. Hence $\lvert N(S)\rvert \ge \lvert S\rvert$.
+Take a full placement and any group $`S`$. Its members hold $`\lvert S\rvert`$ different posts, since no post is shared, and each of those posts is one its holder is qualified for, so each lies in $`N(S)`$. Hence $`\lvert N(S)\rvert \ge \lvert S\rvert`$.
 
 So Ana, Ben and Cleo, reaching two posts, prove without any search that the hotel cannot place all six.
 
@@ -95,22 +99,22 @@ The other direction is an induction on the number of applicants ([Strong inducti
 
 Call a group **tight** when it reaches exactly as many posts as it has members, as Ana and Ben do. Two cases.
 
-**Case 1, room to spare everywhere.** Every non-empty group short of all of $A$ reaches more posts than it has members. Place any applicant $a$ in any post $b$ she is qualified for, and delete both. Each remaining group loses at most that one post, and it had one to spare. The condition survives, and the induction places the rest.
+**Case 1, room to spare everywhere.** Every non-empty group short of all of $`A`$ reaches more posts than it has members. Place any applicant $`a`$ in any post $`b`$ she is qualified for, and delete both. Each remaining group loses at most that one post, and it had one to spare. The condition survives, and the induction places the rest.
 
-**Case 2, some tight group.** Let $S$ be tight, neither empty nor all of $A$. A group inside $S$ reaches the same posts as before, so the condition holds for $S$ alone, and the induction places $S$ into all of $N(S)$. Delete $S$ and $N(S)$, and take any group $T$ of the applicants left. The induction places them too, once $T$ still reaches at least $\lvert T\rvert$ posts.
+**Case 2, some tight group.** Let $`S`$ be tight, neither empty nor all of $`A`$. A group inside $`S`$ reaches the same posts as before, so the condition holds for $`S`$ alone, and the induction places $`S`$ into all of $`N(S)`$. Delete $`S`$ and $`N(S)`$, and take any group $`T`$ of the applicants left. The induction places them too, once $`T`$ still reaches at least $`\lvert T\rvert`$ posts.
 
 <details>
 <summary>Detailed proof of the last step</summary>
 
-Every post reached by $S$ or $T$ in the original hiring lies either in $N(S)$ or among the posts $T$ reaches after the deletion, and those two sets share nothing. So $\lvert N(S)\rvert$ plus $T$'s new reach is at least $\lvert N(S \cup T)\rvert$, which is at least $\lvert S\rvert + \lvert T\rvert$ by Hall's condition on the group $S \cup T$ (the members of $S$ and of $T$ together). Cancelling $\lvert N(S)\rvert = \lvert S\rvert$ leaves $T$'s new reach at least $\lvert T\rvert$. Together the two placements cover $A$.
+Every post reached by $`S`$ or $`T`$ in the original hiring lies either in $`N(S)`$ or among the posts $`T`$ reaches after the deletion, and those two sets share nothing. So $`\lvert N(S)\rvert`$ plus $`T`$'s new reach is at least $`\lvert N(S \cup T)\rvert`$, which is at least $`\lvert S\rvert + \lvert T\rvert`$ by Hall's condition on the group $`S \cup T`$ (the members of $`S`$ and of $`T`$ together). Cancelling $`\lvert N(S)\rvert = \lvert S\rvert`$ leaves $`T`$'s new reach at least $`\lvert T\rvert`$. Together the two placements cover $`A`$.
 
 </details>
 
 ### Step 3: when it fails, the worst group counts who is left out
 
-Say the worst group beats its reach by $d$, the defect. At least $d$ applicants go unplaced, since that group has $d$ more members than posts. The count is exact: add $d$ spare posts everyone is qualified for. Every non-empty group's reach grows by $d$, so everyone is placed; at most $d$ sit in spare posts, so at least $\lvert A\rvert - d$ hold real ones. The bounds meet: at the hotel, 5 exactly.
+Say the worst group beats its reach by $`d`$, the defect. At least $`d`$ applicants go unplaced, since that group has $`d`$ more members than posts. The count is exact: add $`d`$ spare posts everyone is qualified for. Every non-empty group's reach grows by $`d`$, so everyone is placed; at most $`d`$ sit in spare posts, so at least $`\lvert A\rvert - d`$ hold real ones. The bounds meet: at the hotel, 5 exactly.
 
-Another road: treat the hiring as a network with a pipe along every line. A full placement is a flow of $\lvert A\rvert$ units, and a crowded group is a cheap place to cut the network: [Max-flow min-cut](06-max-flow-min-cut.md).
+Another road: treat the hiring as a network with a pipe along every line. A full placement is a flow of $`\lvert A\rvert`$ units, and a crowded group is a cheap place to cut the network: [Max-flow min-cut](06-max-flow-min-cut.md).
 
 ---
 

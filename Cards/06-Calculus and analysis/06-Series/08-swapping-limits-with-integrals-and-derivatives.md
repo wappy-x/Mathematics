@@ -35,36 +35,42 @@ Orange: stage 1, peak 2 at x = 0.5. Teal: stage 2, peak 4 at x = 0.25. Dark blue
 
 ## The formula
 
-Reminders: the stage-n function is $f_n$, its limit $f$, and sup is the least upper bound ([Uniform convergence](07-uniform-convergence.md)); the integral sign with ends a and b adds up area, and dx names the variable along the base ([The integral](../04-Integrals/01-riemann-integral.md)).
+Reminders: the stage-n function is $`f_n`$, its limit $`f`$, and sup is the least upper bound ([Uniform convergence](07-uniform-convergence.md)); the integral sign with ends a and b adds up area, and dx names the variable along the base ([The integral](../04-Integrals/01-riemann-integral.md)).
 
-**The integration theorem.** If each $f_n$ is integrable on the closed interval from a to b and
+**The integration theorem.** If each $`f_n`$ is integrable on the closed interval from a to b and
 
-$$E_n=\sup_{a\le x\le b}\,\lvert f_n(x)-f(x)\rvert \to 0,$$
+```math
+E_n=\sup_{a\le x\le b}\,\lvert f_n(x)-f(x)\rvert \to 0,
+```
 
-then $f$ is integrable and
+then $`f`$ is integrable and
 
-$$\left\lvert \int_a^b f_n(x)\,dx-\int_a^b f(x)\,dx \right\rvert \le (b-a)\,E_n,\qquad\text{so}\qquad \lim_{n\to\infty}\int_a^b f_n(x)\,dx=\int_a^b \lim_{n\to\infty} f_n(x)\,dx .$$
+```math
+\left\lvert \int_a^b f_n(x)\,dx-\int_a^b f(x)\,dx \right\rvert \le (b-a)\,E_n,\qquad\text{so}\qquad \lim_{n\to\infty}\int_a^b f_n(x)\,dx=\int_a^b \lim_{n\to\infty} f_n(x)\,dx .
+```
 
 **Read it aloud:** the areas miss by at most width times worst gap, so when the worst gap shrinks to nothing, limit and area can be taken in either order.
 
-**The differentiation theorem.** If each $f_n$ has a continuous derivative $f_n'$ on the closed, bounded interval, the derivatives close in uniformly on a function $g$, and at one point $x_0$ of the interval the values $f_n(x_0)$ head for a number $c$, then the $f_n$ close in uniformly on
+**The differentiation theorem.** If each $`f_n`$ has a continuous derivative $`f_n'`$ on the closed, bounded interval, the derivatives close in uniformly on a function $`g`$, and at one point $`x_0`$ of the interval the values $`f_n(x_0)`$ head for a number $`c`$, then the $`f_n`$ close in uniformly on
 
-$$f(x)=c+\int_{x_0}^{x} g(s)\,ds,\qquad\text{and}\qquad f'(x)=g(x)=\lim_{n\to\infty} f_n'(x).$$
+```math
+f(x)=c+\int_{x_0}^{x} g(s)\,ds,\qquad\text{and}\qquad f'(x)=g(x)=\lim_{n\to\infty} f_n'(x).
+```
 
 **Read it aloud:** if the slopes settle uniformly and one height settles, the slope of the limit is the limit of the slopes.
 
-The working case is the uniform-convergence card's series: partial sums $S_N(x)=(x/2)+(x/2)^2+\cdots+(x/2)^N$ closing in on $S(x)=x/(2-x)$ from 0 to 1. At x = 1 it is the house series 1/2 + 1/4 + 1/8 + ⋯.
+The working case is the uniform-convergence card's series: partial sums $`S_N(x)=(x/2)+(x/2)^2+\cdots+(x/2)^N`$ closing in on $`S(x)=x/(2-x)`$ from 0 to 1. At x = 1 it is the house series 1/2 + 1/4 + 1/8 + ⋯.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f_n$, $S_N$ | the stage-n function; a partial sum of N terms | the spike with base 1/n; ten terms of the series | — |
-| $f$, $S$ | the limit function | 0 for the spikes; $x/(2-x)$ | — |
-| $n$, $N$ | the stage, the sequence's clock | 1, 10, 50, 1000 | spikes taller, sums closer |
-| $x$, $s$ | an input; the variable along the base inside an integral | 0.01 | — |
-| $a$, $b$ | the ends of the interval | 0 and 1 | a wider interval loosens the bound |
-| $E_n$, $G_n$ | the worst gap of the functions; of their slopes | 2n for the spikes; 0.000976562 for ten terms | a bigger miss in area allowed |
-| $f_n'$, $g$ | the slope at stage n; the limit of the slopes | cos(nx) for the waves | — |
-| $x_0$, $c$ | the anchor point; the height settled on there | 0 and 0 | shifts the limit up or down |
+| $`f_n`$, $`S_N`$ | the stage-n function; a partial sum of N terms | the spike with base 1/n; ten terms of the series | — |
+| $`f`$, $`S`$ | the limit function | 0 for the spikes; $`x/(2-x)`$ | — |
+| $`n`$, $`N`$ | the stage, the sequence's clock | 1, 10, 50, 1000 | spikes taller, sums closer |
+| $`x`$, $`s`$ | an input; the variable along the base inside an integral | 0.01 | — |
+| $`a`$, $`b`$ | the ends of the interval | 0 and 1 | a wider interval loosens the bound |
+| $`E_n`$, $`G_n`$ | the worst gap of the functions; of their slopes | 2n for the spikes; 0.000976562 for ten terms | a bigger miss in area allowed |
+| $`f_n'`$, $`g`$ | the slope at stage n; the limit of the slopes | cos(nx) for the waves | — |
+| $`x_0`$, $`c`$ | the anchor point; the height settled on there | 0 and 0 | shifts the limit up or down |
 
 ### When it holds
 
@@ -78,59 +84,61 @@ The working case is the uniform-convergence card's series: partial sums $S_N(x)=
 
 ### Step 0: an integral sees area, and a uniform gap is a thin strip
 
-If every gap is at most $E_n$, the graph of $f_n$ lies in a strip of half-height $E_n$ around the graph of $f$. The area between them is at most width times $E_n$. Uniform convergence squeezes the strip to nothing; pointwise convergence gives no strip at all.
+If every gap is at most $`E_n`$, the graph of $`f_n`$ lies in a strip of half-height $`E_n`$ around the graph of $`f`$. The area between them is at most width times $`E_n`$. Uniform convergence squeezes the strip to nothing; pointwise convergence gives no strip at all.
 
 ### Step 1: the limit has an integral
 
-If each $f_n$ is continuous, so is $f$ (uniform-convergence card, Step 4), and a continuous function on a closed, bounded interval has an integral. Stages with jumps need upper and lower sums, folded below.
+If each $`f_n`$ is continuous, so is $`f`$ (uniform-convergence card, Step 4), and a continuous function on a closed, bounded interval has an integral. Stages with jumps need upper and lower sums, folded below.
 
 <details>
 <summary>Detailed proof: a uniform limit of integrable functions is integrable</summary>
 
-For a partition P of the interval, U(P, h) and L(P, h) are the upper and lower sums of h: rectangles at the sup and inf (greatest lower bound) of h on each piece. Since $f_n - E_n \le f \le f_n + E_n$ everywhere, adding over pieces of total width b − a gives
+For a partition P of the interval, U(P, h) and L(P, h) are the upper and lower sums of h: rectangles at the sup and inf (greatest lower bound) of h on each piece. Since $`f_n - E_n \le f \le f_n + E_n`$ everywhere, adding over pieces of total width b − a gives
 
-$$U(P,f)-L(P,f)\le U(P,f_n)-L(P,f_n)+2(b-a)E_n .$$
+$`\displaystyle U(P,f)-L(P,f)\le U(P,f_n)-L(P,f_n)+2(b-a)E_n .`$
 
-Given a tolerance ε > 0, fix n with $2(b-a)E_n < ε/2$, then a partition pinching the sums of $f_n$ within ε/2. The sums of f are then within ε, which is the definition of integrable. The same bounds show f is bounded.
+Given a tolerance ε > 0, fix n with $`2(b-a)E_n < ε/2`$, then a partition pinching the sums of $`f_n`$ within ε/2. The sums of f are then within ε, which is the definition of integrable. The same bounds show f is bounded.
 
 </details>
 
 ### Step 2: the bound on the areas
 
-The integral of a difference is the difference of the integrals, and a function never above $E_n$ has integral at most $E_n$ times the width. So
+The integral of a difference is the difference of the integrals, and a function never above $`E_n`$ has integral at most $`E_n`$ times the width. So
 
-$$\left\lvert \int_a^b f_n-\int_a^b f \right\rvert=\left\lvert \int_a^b (f_n-f) \right\rvert\le \int_a^b \lvert f_n-f\rvert \le (b-a)E_n .$$
+```math
+\left\lvert \int_a^b f_n-\int_a^b f \right\rvert=\left\lvert \int_a^b (f_n-f) \right\rvert\le \int_a^b \lvert f_n-f\rvert \le (b-a)E_n .
+```
 
 The right side heads for 0, so the left side does.
 
-The tolerance game, with numbers. The integral of $S$ from 0 to 1, from its antiderivative −x − 2 ln(2 − x), is 2 ln 2 − 1 = 0.386294361. Land within 0.001 of it by integrating finitely many terms, each on its own: the term $(x/2)^k$ has integral $1/((k+1)2^k)$.
+The tolerance game, with numbers. The integral of $`S`$ from 0 to 1, from its antiderivative −x − 2 ln(2 − x), is 2 ln 2 − 1 = 0.386294361. Land within 0.001 of it by integrating finitely many terms, each on its own: the term $`(x/2)^k`$ has integral $`1/((k+1)2^k)`$.
 
-The worst gap of $S_N$ sits at x = 1 and is the house series' leftover, $1/2^N$. For N = 10 it is 0.000976562, under 0.001.
+The worst gap of $`S_N`$ sits at x = 1 and is the house series' leftover, $`1/2^N`$. For N = 10 it is 0.000976562, under 0.001.
 
 ### Step 3: where the spikes escape
 
-For the stage-n spike the worst gap from zero is its peak, 2n, so the bound $(b-a)E_n$ grows instead of shrinking. The area hides in a base 1/n wide next to 0: every fixed point is eventually outside it, yet no stage is uniformly close to 0.
+For the stage-n spike the worst gap from zero is its peak, 2n, so the bound $`(b-a)E_n`$ grows instead of shrinking. The area hides in a base 1/n wide next to 0: every fixed point is eventually outside it, yet no stage is uniformly close to 0.
 
 ### Step 4: derivatives need more
 
 Uniform heights say nothing about slopes. The waves sin(nx)/n have worst gap 1, 0.1, 0.01 at stages 1, 10, 100, but their slope cos(nx) is 1 at x = 0 at every stage, while their limit, zero, has slope 0.
 
-So the theorem puts the uniformity on the slopes. By the [Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md) each stage is its anchor height plus the area under its slope; the anchor heads for $c$, Step 2 carries the area to the area under $g$, and the fundamental theorem read backwards gives the limit the slope $g$.
+So the theorem puts the uniformity on the slopes. By the [Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md) each stage is its anchor height plus the area under its slope; the anchor heads for $`c`$, Step 2 carries the area to the area under $`g`$, and the fundamental theorem read backwards gives the limit the slope $`g`$.
 
 <details>
 <summary>Detailed proof: the differentiation theorem</summary>
 
-Let $G_n$, the sup of $\lvert f_n' - g\rvert$, head for 0. The limit g is continuous, so $F(x) = c + \int_{x_0}^{x} g(s)\,ds$ exists and $F' = g$. For every x in the interval,
+Let $`G_n`$, the sup of $`\lvert f_n' - g\rvert`$, head for 0. The limit g is continuous, so $`F(x) = c + \int_{x_0}^{x} g(s)\,ds`$ exists and $`F' = g`$. For every x in the interval,
 
-$$\lvert f_n(x)-F(x)\rvert \le \lvert f_n(x_0)-c\rvert+\left\lvert \int_{x_0}^{x} (f_n'-g) \right\rvert \le \lvert f_n(x_0)-c\rvert+(b-a)G_n .$$
+$`\displaystyle \lvert f_n(x)-F(x)\rvert \le \lvert f_n(x_0)-c\rvert+\left\lvert \int_{x_0}^{x} (f_n'-g) \right\rvert \le \lvert f_n(x_0)-c\rvert+(b-a)G_n .`$
 
-The right side has no x in it and heads for 0, so $f_n \to F$ uniformly and $f' = F' = g = \lim f_n'$.
+The right side has no x in it and heads for 0, so $`f_n \to F`$ uniformly and $`f' = F' = g = \lim f_n'`$.
 
 </details>
 
-The series passes. The slope of $(x/2)^k$ is $k x^{k-1}/2^k$, at most $k/2^k$ from 0 to 1; these caps add to 2.000000. The M-test says a series converges uniformly when its terms sit under number caps with a finite sum ([Uniform convergence](07-uniform-convergence.md), Step 5). So the slopes converge uniformly, and every partial sum is 0 at the anchor 0.
+The series passes. The slope of $`(x/2)^k`$ is $`k x^{k-1}/2^k`$, at most $`k/2^k`$ from 0 to 1; these caps add to 2.000000. The M-test says a series converges uniformly when its terms sit under number caps with a finite sum ([Uniform convergence](07-uniform-convergence.md), Step 5). So the slopes converge uniformly, and every partial sum is 0 at the anchor 0.
 
-At x = 0.5 the terms' slopes add to 0.888889, matching the formula $2/(2-x)^2$ and a difference quotient of $S$.
+At x = 0.5 the terms' slopes add to 0.888889, matching the formula $`2/(2-x)^2`$ and a difference quotient of $`S`$.
 
 Another route, [Dominated convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md), replaces the uniform gap by one fixed function of finite area lying above the size of every stage.
 
@@ -142,7 +150,7 @@ Another route, [Dominated convergence](../../10-Measure%20and%20integration/05-S
 | --- | --- | --- |
 | spike area, stage 1000 | ½ × (1/1000) × 2000 | **1** |
 | spike height at 0.01, stages 1, 10, 50, 1000 | 4n^2 × 0.01 on the rising side, 0 past the base | 0.04, 4, 100, 0 |
-| integral of $S$ from 0 to 1 | 2 ln 2 − 1 | 0.386294361 |
+| integral of $`S`$ from 0 to 1 | 2 ln 2 − 1 | 0.386294361 |
 | first ten terms integrated | 1/4 + 1/12 + 1/32 + ⋯ + 1/(11 × 2^10) | 0.386218491 |
 | promised miss | width 1 × worst gap 1/2^10 | 0.000976562 |
 | actual miss | 0.386294361 − 0.386218491 | **0.000075870** |
@@ -348,11 +356,11 @@ The two outputs are identical.
 
 Lean proves both theorems on every closed, bounded interval, and checks the card's hand arithmetic exactly.
 
-- If each stage $f_n$ is integrable from a to b and the worst gap shrinks to 0, the limit $f$ is integrable. The integrals of $f_n$ head for the integral of $f$.
-- If two integrable functions never differ by more than E on the interval, their integrals differ by at most $(b-a)E$.
-- Let each $f_n$ have a continuous slope $f_n'$, let the slopes close in uniformly on $g$, and let $f_n(x_0)$ head for $c$. Then the $f_n$ close in uniformly on $f(x)=c+\int_{x_0}^{x} g(s)\,ds$, and $f$ has slope $g(x)$ at every point of the interval.
+- If each stage $`f_n`$ is integrable from a to b and the worst gap shrinks to 0, the limit $`f`$ is integrable. The integrals of $`f_n`$ head for the integral of $`f`$.
+- If two integrable functions never differ by more than E on the interval, their integrals differ by at most $`(b-a)E`$.
+- Let each $`f_n`$ have a continuous slope $`f_n'`$, let the slopes close in uniformly on $`g`$, and let $`f_n(x_0)`$ head for $`c`$. Then the $`f_n`$ close in uniformly on $`f(x)=c+\int_{x_0}^{x} g(s)\,ds`$, and $`f`$ has slope $`g(x)`$ at every point of the interval.
 - The hand arithmetic holds exactly, as fractions: spike area 1, heights 1/25, 4, 100 and 0 at 0.01, and peaks 2, 4 and 8.
-- The rest hold exactly too: worst gap $1/2^{10}$, ten terms' integrals 274073/709632, caps $2-62/2^{60}$, slope 8/9, and each block's area 1.
+- The rest hold exactly too: worst gap $`1/2^{10}`$, ten terms' integrals 274073/709632, caps $`2-62/2^{60}`$, slope 8/9, and each block's area 1.
 
 The decimals, the rectangle and Simpson sums, the spikes' and waves' failures, and the difference quotients are left to the Python and Rust checks.
 

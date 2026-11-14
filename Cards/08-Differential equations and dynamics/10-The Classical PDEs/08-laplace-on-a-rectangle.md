@@ -26,32 +26,38 @@ To scale, 200 units to the metre, from the points both checks print on their "fi
 
 ## The formula
 
-Reminder from [A partial differential equation](01-what-a-pde-says.md): $u_{xx}$ is the bend of the temperature across the plate, height held still; $u_{yy}$ the bend up it. $u(x, y)$ is the settled temperature in C, $x$ metres from the left edge and $y$ up from the bottom:
+Reminder from [A partial differential equation](01-what-a-pde-says.md): $`u_{xx}`$ is the bend of the temperature across the plate, height held still; $`u_{yy}`$ the bend up it. $`u(x, y)`$ is the settled temperature in C, $`x`$ metres from the left edge and $`y`$ up from the bottom:
 
-$$u_{xx} + u_{yy} = 0, \qquad u(0, y) = u(1, y) = u(x, 0) = 0, \qquad u(x, 1) = f(x).$$
+```math
+u_{xx} + u_{yy} = 0, \qquad u(0, y) = u(1, y) = u(x, 0) = 0, \qquad u(x, 1) = f(x).
+```
 
 Separation gives
 
-$$u(x, y) = \sum_{n=1}^{\infty} b_n \sin(n\pi x)\,\frac{\sinh(n\pi y)}{\sinh(n\pi)}, \qquad b_n = 2\int_0^1 f(x)\sin(n\pi x)\,dx .$$
+```math
+u(x, y) = \sum_{n=1}^{\infty} b_n \sin(n\pi x)\,\frac{\sinh(n\pi y)}{\sinh(n\pi)}, \qquad b_n = 2\int_0^1 f(x)\sin(n\pi x)\,dx .
+```
 
 **Read it aloud:** the temperature is a sum of sine waves across the plate; the n-th has n humps, is sized by the hot edge's share of it, and grows up the plate from 0 at the bottom to 1 at the top.
 
-For the bar at 100 C, $f = 100$, so $b_n = 400/(n\pi)$ for odd n and 0 for even n:
+For the bar at 100 C, $`f = 100`$, so $`b_n = 400/(n\pi)`$ for odd n and 0 for even n:
 
-$$u(x, y) = \sum_{n \text{ odd}} \frac{400}{n\pi}\,\sin(n\pi x)\,\frac{\sinh(n\pi y)}{\sinh(n\pi)} .$$
+```math
+u(x, y) = \sum_{n \text{ odd}} \frac{400}{n\pi}\,\sin(n\pi x)\,\frac{\sinh(n\pi y)}{\sinh(n\pi)} .
+```
 
-A rectangle $W$ wide and $H$ high, hot on top, uses $\sin(n\pi x/W)$ and $\sinh(n\pi y/W)/\sinh(n\pi H/W)$ with $b_n = (2/W)\int_0^W f(x)\sin(n\pi x/W)\,dx$.
+A rectangle $`W`$ wide and $`H`$ high, hot on top, uses $`\sin(n\pi x/W)`$ and $`\sinh(n\pi y/W)/\sinh(n\pi H/W)`$ with $`b_n = (2/W)\int_0^W f(x)\sin(n\pi x/W)\,dx`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $f$ | settled temperature, C; $f$ the hot edge's | $f = 100$; centre 25.0 | — |
-| $x$, $y$, $W$, $H$ | across and up, m; width and height | 0 to 1; $W = H = 1$ | nearer the hot edge, warmer |
-| $u_{xx}$, $u_{yy}$ | bend across and up, C per square metre | cancel inside | one up forces the other down |
-| $X$, $Y$ | shape across, profile up, of one product | $\sin(\pi x)$ and $\sinh(\pi y)$ | — |
-| $\lambda$ | separation constant, $\lambda = n^2\pi^2$ | $\pi^2$ for n = 1 | faster fade from the edge |
-| $n$ | wave number: humps across the plate | 1, 3, 5, … | finer wave, smaller share, faster fade |
-| $b_n$ | Fourier sine coefficient: the edge's share of wave n, C | 127.3240, 42.4413, 25.4648 | larger share of that wave |
-| $\sinh$, $\cosh$ | hyperbolic sine and cosine: (e^s − e^(−s))/2 and (e^s + e^(−s))/2 | sinh(π/2)/sinh(π) = 0.199268 | — |
+| $`u`$, $`f`$ | settled temperature, C; $`f`$ the hot edge's | $`f = 100`$; centre 25.0 | — |
+| $`x`$, $`y`$, $`W`$, $`H`$ | across and up, m; width and height | 0 to 1; $`W = H = 1`$ | nearer the hot edge, warmer |
+| $`u_{xx}`$, $`u_{yy}`$ | bend across and up, C per square metre | cancel inside | one up forces the other down |
+| $`X`$, $`Y`$ | shape across, profile up, of one product | $`\sin(\pi x)`$ and $`\sinh(\pi y)`$ | — |
+| $`\lambda`$ | separation constant, $`\lambda = n^2\pi^2`$ | $`\pi^2`$ for n = 1 | faster fade from the edge |
+| $`n`$ | wave number: humps across the plate | 1, 3, 5, … | finer wave, smaller share, faster fade |
+| $`b_n`$ | Fourier sine coefficient: the edge's share of wave n, C | 127.3240, 42.4413, 25.4648 | larger share of that wave |
+| $`\sinh`$, $`\cosh`$ | hyperbolic sine and cosine: (e^s − e^(−s))/2 and (e^s + e^(−s))/2 | sinh(π/2)/sinh(π) = 0.199268 | — |
 
 ### When it holds
 
@@ -70,7 +76,7 @@ The bend across plus the bend up is zero. Where a pattern bends down across the 
 
 ### Step 1: the equation splits
 
-Put $u = X(x)\,Y(y)$ into $u_{xx} + u_{yy} = 0$: X''Y + XY'' = 0. Divide by XY:
+Put $`u = X(x)\,Y(y)`$ into $`u_{xx} + u_{yy} = 0`$: X''Y + XY'' = 0. Divide by XY:
 
 X''(x) / X(x) = −Y''(y) / Y(y).
 
@@ -352,10 +358,10 @@ The two outputs match line for line.
 
 Lean proves the separation steps for every rectangle and any finite sum of waves, the hot edge's coefficients, and uniqueness.
 
-- Take a plate W wide and H high, and u any finite sum of waves in the formula's rectangle form. Then u solves $u_{xx} + u_{yy} = 0$ at every point.
-- That same sum is 0 on the left, right and bottom edges. On the top edge it reads $\sum b_n \sin(n\pi x/W)$.
-- Take the bar at 100 C on the 1 m plate, so $f = 100$. Then $b_n = 400/(n\pi)$ for odd n and 0 for even n.
-- Suppose two temperatures solve $u_{xx} + u_{yy} = 0$ inside, bend smoothly, have no jumps, and match on every edge. Then they agree at every point of the plate.
+- Take a plate W wide and H high, and u any finite sum of waves in the formula's rectangle form. Then u solves $`u_{xx} + u_{yy} = 0`$ at every point.
+- That same sum is 0 on the left, right and bottom edges. On the top edge it reads $`\sum b_n \sin(n\pi x/W)`$.
+- Take the bar at 100 C on the 1 m plate, so $`f = 100`$. Then $`b_n = 400/(n\pi)`$ for odd n and 0 for even n.
+- Suppose two temperatures solve $`u_{xx} + u_{yy} = 0`$ inside, bend smoothly, have no jumps, and match on every edge. Then they agree at every point of the plate.
 - The hand arithmetic holds exactly: the centre's quarter share of 25 C, the second case's 45 C, and which wave numbers are odd.
 
 The infinite series, its convergence, the 54.05 C reading, the grid and the figure are left to the Python and Rust checks.

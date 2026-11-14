@@ -37,32 +37,38 @@ The line is the integrator: a leap of 0.40 at $0 (the zero-payers), a steady cli
 
 Notation first, in words. The integral of f against G is written with the stretched S and dG where dx used to be: the rises of G, not widths, supply the weights. It is read "the integral of f with respect to G".
 
-Write $G$ for the integrator and $f$ for the value being averaged, here the payout itself, f(x) = x. Cut the interval from a to b at points $a = x_0 < x_1 < \dots < x_n = b$. Slice k runs from $x_{k-1}$ to $x_k$, and its weight is how far G rises across it:
+Write $`G`$ for the integrator and $`f`$ for the value being averaged, here the payout itself, f(x) = x. Cut the interval from a to b at points $`a = x_0 < x_1 < \dots < x_n = b`$. Slice k runs from $`x_{k-1}`$ to $`x_k`$, and its weight is how far G rises across it:
 
-$$\Delta G_k = G(x_k) - G(x_{k-1})$$
+```math
+\Delta G_k = G(x_k) - G(x_{k-1})
+```
 
-Pick any point $\xi_k$ in slice k, its **tag**. A **Stieltjes sum** $S$ adds value at the tag times weight; the integral is where these sums settle as the widest slice shrinks, whatever the tags:
+Pick any point $`\xi_k`$ in slice k, its **tag**. A **Stieltjes sum** $`S`$ adds value at the tag times weight; the integral is where these sums settle as the widest slice shrinks, whatever the tags:
 
-$$\int_a^b f(x)\,dG(x) = \lim_{\text{widest slice} \to 0}\ \sum_{k=1}^{n} f(\xi_k)\,\bigl(G(x_k) - G(x_{k-1})\bigr)$$
+```math
+\int_a^b f(x)\,dG(x) = \lim_{\text{widest slice} \to 0}\ \sum_{k=1}^{n} f(\xi_k)\,\bigl(G(x_k) - G(x_{k-1})\bigr)
+```
 
 **Read it aloud:** weigh each thin slice by how much the integrator climbs across it, multiply by the value there, add, and see where the total settles.
 
-When G is a steady rise plus a few jumps, this becomes a working formula. $G'$ is the rate of G (its derivative) where it climbs smoothly; a jump of size $w_j$ sits at $c_j$:
+When G is a steady rise plus a few jumps, this becomes a working formula. $`G'`$ is the rate of G (its derivative) where it climbs smoothly; a jump of size $`w_j`$ sits at $`c_j`$:
 
-$$\int_a^b f\,dG = \int_a^b f(x)\,G'(x)\,dx + \sum_j w_j\,f(c_j)$$
+```math
+\int_a^b f\,dG = \int_a^b f(x)\,G'(x)\,dx + \sum_j w_j\,f(c_j)
+```
 
 **Read it aloud:** the smooth part is an ordinary integral with G's rate as a density; each jump adds its size times the value there.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the value being averaged | the payout x | scales the average |
-| $G$ | the integrator: a running total that never falls | share paying at most x | a later rise raises it |
-| $x$, $a$, $b$ | the variable; the interval's ends | dollars; −20 and 100 | — |
-| $n$, $k$, $x_k$ | slice count, a slice's counter, its right cut | 12 slices of $10 | tighter bracket |
-| $\Delta G_k$ | weight of slice k: G's rise across it | 0.40 on the slice ending at $0 | — |
-| $\xi_k$, $S$, $L$, $U$ | a tag; its sum; lowest and highest sums | L = 27.50, U = 37.50 at 12 slices | — |
-| $G'$ | rate of G where it climbs smoothly | 0.005 per dollar | more contracts in the spread |
-| $w_j$, $c_j$, $j$ | size and place of jump j; its counter | 0.40 at $0, 0.10 at $100 | a bigger cap lump raises it |
+| $`f`$ | the value being averaged | the payout x | scales the average |
+| $`G`$ | the integrator: a running total that never falls | share paying at most x | a later rise raises it |
+| $`x`$, $`a`$, $`b`$ | the variable; the interval's ends | dollars; −20 and 100 | — |
+| $`n`$, $`k`$, $`x_k`$ | slice count, a slice's counter, its right cut | 12 slices of $10 | tighter bracket |
+| $`\Delta G_k`$ | weight of slice k: G's rise across it | 0.40 on the slice ending at $0 | — |
+| $`\xi_k`$, $`S`$, $`L`$, $`U`$ | a tag; its sum; lowest and highest sums | L = 27.50, U = 37.50 at 12 slices | — |
+| $`G'`$ | rate of G where it climbs smoothly | 0.005 per dollar | more contracts in the spread |
+| $`w_j`$, $`c_j`$, $`j`$ | size and place of jump j; its counter | 0.40 at $0, 0.10 at $100 | a bigger cap lump raises it |
 
 Units: dollars per contract. The total weight G(b) − G(a) is 1.00, the whole book, so the integral is the average.
 

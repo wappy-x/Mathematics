@@ -40,33 +40,39 @@ Ten lines, so 10 matches. Counted from the teams instead, each of the 5 touches 
 
 ## The formula
 
-Notation first, in words. Bars count members: $\lvert A \rvert$ is how many things collection A holds. An arrow names a rule sending each member of one collection to a member of another, so $f : A \to B$ reads "f sends each member of A to a member of B"; a double arrow means "so". And C(n, k), read "n choose k", counts the ways of choosing k things out of n when order does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
+Notation first, in words. Bars count members: $`\lvert A \rvert`$ is how many things collection A holds. An arrow names a rule sending each member of one collection to a member of another, so $`f : A \to B`$ reads "f sends each member of A to a member of B"; a double arrow means "so". And C(n, k), read "n choose k", counts the ways of choosing k things out of n when order does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
-$$f : A \to B \ \text{one to one and onto} \quad \Longrightarrow \quad \lvert A \rvert = \lvert B \rvert$$
+```math
+f : A \to B \ \text{one to one and onto} \quad \Longrightarrow \quad \lvert A \rvert = \lvert B \rvert
+```
 
 **Read it aloud:** if every member of A has exactly one partner in B, and every member of B is somebody's partner, the two collections are the same size.
 
-Double counting usually arrives as a listing that names each wanted thing the same number of times — call that number $d$.
+Double counting usually arrives as a listing that names each wanted thing the same number of times — call that number $`d`$.
 
-$$\lvert A \rvert = d \times \lvert B \rvert$$
+```math
+\lvert A \rvert = d \times \lvert B \rvert
+```
 
 **Read it aloud:** a listing running d entries per thing counted is d times too long, so divide by d.
 
 Here A is the 380 fixture slips, one per team per opponent, so team 3 holds a slip naming team 11. B is the matches, and d is 2. Worked for any number of teams, the two rules give this card's identities:
 
-$$C(n, 2) = \frac{n(n-1)}{2} \qquad \text{and} \qquad C(n, k) = C(n, n-k)$$
+```math
+C(n, 2) = \frac{n(n-1)}{2} \qquad \text{and} \qquad C(n, k) = C(n, n-k)
+```
 
 For k, the league later sends 6 of its 20 teams to a playoff: C(20, 6) = 38760 possible sixes, counted in Step 3.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $B$ | the two collections compared | 380 slips, 190 matches | — |
-| $\lvert A \rvert$ | the size of a collection | 380 | — |
-| $f$ | the rule sending each member of one to a member of the other | slip → its match | — |
-| $d$ | how many members of A name each member of B | 2, one per side | fewer things counted |
-| $n$ | how many things to choose from | 20 teams | far more choices |
-| $k$ | how many are chosen | 6 playoff places | peaks at half of n |
-| $C(n, k)$ | ways to choose k of n, order ignored | C(20, 2) = 190 | — |
+| $`A`$, $`B`$ | the two collections compared | 380 slips, 190 matches | — |
+| $`\lvert A \rvert`$ | the size of a collection | 380 | — |
+| $`f`$ | the rule sending each member of one to a member of the other | slip → its match | — |
+| $`d`$ | how many members of A name each member of B | 2, one per side | fewer things counted |
+| $`n`$ | how many things to choose from | 20 teams | far more choices |
+| $`k`$ | how many are chosen | 6 playoff places | peaks at half of n |
+| $`C(n, k)`$ | ways to choose k of n, order ignored | C(20, 2) = 190 | — |
 
 ### When it holds
 
@@ -98,16 +104,18 @@ Nothing above used the number 20. With n teams each has n − 1 opponents, so th
 
 A match is a choice of 2 teams out of n, order ignored — which is what C(n, 2) counts.
 
-$$C(n, 2) = \frac{n(n-1)}{2}$$
+```math
+C(n, 2) = \frac{n(n-1)}{2}
+```
 
 No factorials, and no formula for C(n, k) assumed. The check lists the matches for 2, 3, 4, 5 and 6 teams — 1, 3, 6, 10, 15 — and n(n − 1) / 2 agrees every time.
 
 <details>
 <summary>Detailed proof: the division rule, in general</summary>
 
-Let A and B be finite, and $f$ a rule sending each member of A to a member of B, with every member b of B named by exactly d members of A, the same d throughout.
+Let A and B be finite, and $`f`$ a rule sending each member of A to a member of B, with every member b of B named by exactly d members of A, the same d throughout.
 
-The groups, one per b, cover A: every member of A goes somewhere, so it sits in the group of its destination. They do not overlap: a member goes to one member of B, not two. So A is cut into $\lvert B \rvert$ blocks of d, and counting block by block gives $\lvert A \rvert = d \times \lvert B \rvert$. The bijection rule is d = 1, each block one member.
+The groups, one per b, cover A: every member of A goes somewhere, so it sits in the group of its destination. They do not overlap: a member goes to one member of B, not two. So A is cut into $`\lvert B \rvert`$ blocks of d, and counting block by block gives $`\lvert A \rvert = d \times \lvert B \rvert`$. The bijection rule is d = 1, each block one member.
 
 </details>
 
@@ -132,7 +140,9 @@ flowchart LR
 
 Swapping twice returns the original, so the swap undoes itself, and a rule with an undo is one to one and onto: nothing fused, nothing missed. The six-team and fourteen-team strings match one for one, and by Step 3 so do the playoff sixes and the also-ran fourteens — 38760 of each.
 
-$$C(n, k) = C(n, n-k)$$
+```math
+C(n, k) = C(n, n-k)
+```
 
 Choosing who is in is the same act as choosing who is out. Nothing is computed.
 

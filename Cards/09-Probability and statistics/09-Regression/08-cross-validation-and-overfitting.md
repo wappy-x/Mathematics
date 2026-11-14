@@ -18,7 +18,7 @@ The cure is to score the curve on readings it was not allowed to see. Cutting th
 
 **A curve's error on its own data is biased low by an amount that grows with its flexibility, so a fitting procedure is judged, and its flexibility chosen, by its error on data held out from the fit.**
 
-**What kind of fact this is:** a method. The fact that makes it work is a theorem proved on this card in Why it works: against repeat readings at the same hours, training error flatters a least-squares fit by $2\sigma^2 p/n$ on average. That is twice the noise variance $\sigma^2$ times the number of coefficients $p$, divided by the number of readings $n$. A least-squares fit is the curve with the smallest sum of squared misses ([Least squares](01-least-squares-regression.md)). The shortcut that gives a fit's leave-one-out errors from one fit is proved on [Diagnostics](04-diagnostics-and-residuals.md).
+**What kind of fact this is:** a method. The fact that makes it work is a theorem proved on this card in Why it works: against repeat readings at the same hours, training error flatters a least-squares fit by $`2\sigma^2 p/n`$ on average. That is twice the noise variance $`\sigma^2`$ times the number of coefficients $`p`$, divided by the number of readings $`n`$. A least-squares fit is the curve with the smallest sum of squared misses ([Least squares](01-least-squares-regression.md)). The shortcut that gives a fit's leave-one-out errors from one fit is proved on [Diagnostics](04-diagnostics-and-residuals.md).
 
 ### The picture: ten readings, two curves
 
@@ -32,45 +32,51 @@ The cubic stays near the true level except at the left end, where the low readin
 
 ## The formula
 
-Notation first. Reading $i$ is $y_i$, taken at hour $t_i$, for $i = 1, \dots, n$; here $n = 10$ and $t_i = i - 1$. A hat marks an estimate, as on [Samples and estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md): $\hat f$ is the fitted curve. A superscript in brackets with a minus sign names what was left out: $\hat f^{(-k)}$ is the curve fitted with part $k$ of the data held back.
+Notation first. Reading $`i`$ is $`y_i`$, taken at hour $`t_i`$, for $`i = 1, \dots, n`$; here $`n = 10`$ and $`t_i = i - 1`$. A hat marks an estimate, as on [Samples and estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md): $`\hat f`$ is the fitted curve. A superscript in brackets with a minus sign names what was left out: $`\hat f^{(-k)}`$ is the curve fitted with part $`k`$ of the data held back.
 
-The data are cut into $K$ parts of about equal size, called **folds**; here $K = 5$, and fold $k$ holds hours $k - 1$ and $k + 4$: hours 0 and 5, then 1 and 6, and so on. The **K-fold cross-validation estimate** of a procedure's error is
+The data are cut into $`K`$ parts of about equal size, called **folds**; here $`K = 5`$, and fold $`k`$ holds hours $`k - 1`$ and $`k + 4`$: hours 0 and 5, then 1 and 6, and so on. The **K-fold cross-validation estimate** of a procedure's error is
 
-$$\mathrm{CV}_K = \frac{1}{n}\sum_{k=1}^{K}\ \sum_{i \in \text{fold } k}\big(y_i - \hat f^{(-k)}(t_i)\big)^2$$
+```math
+\mathrm{CV}_K = \frac{1}{n}\sum_{k=1}^{K}\ \sum_{i \in \text{fold } k}\big(y_i - \hat f^{(-k)}(t_i)\big)^2
+```
 
-**Read it aloud:** hold back one fold, fit on the rest, square the misses on the held-back readings; do this for every fold, and average all $n$ squared misses.
+**Read it aloud:** hold back one fold, fit on the rest, square the misses on the held-back readings; do this for every fold, and average all $`n`$ squared misses.
 
-With $K = n$ each fold is one reading. That is **leave-one-out** cross-validation. For a least-squares fit it needs no refitting at all:
+With $`K = n`$ each fold is one reading. That is **leave-one-out** cross-validation. For a least-squares fit it needs no refitting at all:
 
-$$y_i - \hat f^{(-i)}(t_i) = \frac{e_i}{1 - h_i}$$
+```math
+y_i - \hat f^{(-i)}(t_i) = \frac{e_i}{1 - h_i}
+```
 
 **Read it aloud:** the miss on a reading the fit never saw is the ordinary miss on it, its residual, divided by one minus its leverage.
 
-The **leverage** $h_i$ is how strongly reading $i$ pulls the fitted curve toward itself, a number between 0 and 1 ([Diagnostics](04-diagnostics-and-residuals.md) proves the shortcut above and uses leverage to flag influential points). The leverages are the diagonal entries of the **hat matrix** $H$, the matrix that turns the ten readings into the ten fitted values.
+The **leverage** $`h_i`$ is how strongly reading $`i`$ pulls the fitted curve toward itself, a number between 0 and 1 ([Diagnostics](04-diagnostics-and-residuals.md) proves the shortcut above and uses leverage to flag influential points). The leverages are the diagonal entries of the **hat matrix** $`H`$, the matrix that turns the ten readings into the ten fitted values.
 
-Why training error cannot be trusted is one more line. Write $\overline{\mathrm{err}}$ for the **training error**, the average squared residual over the $n$ readings; $p$ for the number of coefficients; and $\sigma$ for the noise's standard deviation.
+Why training error cannot be trusted is one more line. Write $`\overline{\mathrm{err}}`$ for the **training error**, the average squared residual over the $`n`$ readings; $`p`$ for the number of coefficients; and $`\sigma`$ for the noise's standard deviation.
 
-Suppose each reading is taken again at the same hour, with new noise. The average amount by which training error falls short of the error on those repeat readings is the **in-sample optimism**: in-sample, because the repeat readings sit at the hours the curve was fitted to. Averaged over all the records the gauge could produce, an average written $E[\dots]$ for expected value,
+Suppose each reading is taken again at the same hour, with new noise. The average amount by which training error falls short of the error on those repeat readings is the **in-sample optimism**: in-sample, because the repeat readings sit at the hours the curve was fitted to. Averaged over all the records the gauge could produce, an average written $`E[\dots]`$ for expected value,
 
-$$E[\text{error on the repeat readings}] - E[\overline{\mathrm{err}}] = \frac{2\sigma^2 p}{n}$$
+```math
+E[\text{error on the repeat readings}] - E[\overline{\mathrm{err}}] = \frac{2\sigma^2 p}{n}
+```
 
 **Read it aloud:** a least-squares fit's error on its own readings is lower than on repeat readings at the same hours, on average, by twice the noise variance times the number of coefficients, divided by the number of readings.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t_i$, $y_i$, $i$, $j$ | the hour and the gauge reading of reading $i$; $j$ is a second reading's number | hour 0, −0.45 m | — |
-| $y_i'$, $\varepsilon_i'$ | in the optimism proof: a repeat reading at hour $t_i$, and its fresh noise | — | — |
-| $n$ | the number of readings | 10 | the optimism shrinks like $1/n$ |
-| $X$ | the design matrix, one row per reading holding the powers of its rescaled hour | 10 rows, 4 columns at degree 3 | — |
-| $f$ | the true level, a sine wave; unknown outside a simulation | −0.9914 m at hour 8.75 | — |
-| $d$, $p$ | the polynomial's degree, and its number of coefficients, $p = d + 1$ | degree 3, $p = 4$ | training error falls; the optimism grows |
-| $\hat f$, $\hat y$, $\hat y_i$ | the curve fitted by least squares to all ten readings; its fitted values at the ten hours, and the one at hour $t_i$ | the cubic in the picture | — |
-| $K$, $k$, $\hat f^{(-k)}$ | the number of folds, one fold, and the curve fitted without it ($\hat f^{(-i)}$: without reading $i$) | 5 folds of two readings; cubics on 8 readings | each fit sees more of the data |
-| $\mathrm{CV}_K$ | the cross-validation estimate, in square metres | 0.1651, 5-fold, degree 3 | — |
-| $e_i$ | the residual: reading minus fitted value | 0.1583 m at hour 0, degree 3 | — |
-| $H$, $h_{ij}$, $h_i$ | the hat matrix, its entries, and its $i$-th diagonal entry, the leverage | $h_i$ = 0.8238 at hour 0, degree 3 | the held-out miss grows as $1/(1 - h_i)$ |
-| $\sigma$, $\varepsilon_i$ | the gauge noise's standard deviation, and reading $i$'s own noise | 0.3 m | every error grows |
-| $\overline{\mathrm{err}}$, $\mathrm{Err}$ | training error, and true error: the average squared miss on a fresh reading at a random moment in hours 0 to 9 | 0.0434 and 0.1197 at degree 3 | — |
+| $`t_i`$, $`y_i`$, $`i`$, $`j`$ | the hour and the gauge reading of reading $`i`$; $`j`$ is a second reading's number | hour 0, −0.45 m | — |
+| $`y_i'`$, $`\varepsilon_i'`$ | in the optimism proof: a repeat reading at hour $`t_i`$, and its fresh noise | — | — |
+| $`n`$ | the number of readings | 10 | the optimism shrinks like $`1/n`$ |
+| $`X`$ | the design matrix, one row per reading holding the powers of its rescaled hour | 10 rows, 4 columns at degree 3 | — |
+| $`f`$ | the true level, a sine wave; unknown outside a simulation | −0.9914 m at hour 8.75 | — |
+| $`d`$, $`p`$ | the polynomial's degree, and its number of coefficients, $`p = d + 1`$ | degree 3, $`p = 4`$ | training error falls; the optimism grows |
+| $`\hat f`$, $`\hat y`$, $`\hat y_i`$ | the curve fitted by least squares to all ten readings; its fitted values at the ten hours, and the one at hour $`t_i`$ | the cubic in the picture | — |
+| $`K`$, $`k`$, $`\hat f^{(-k)}`$ | the number of folds, one fold, and the curve fitted without it ($`\hat f^{(-i)}`$: without reading $`i`$) | 5 folds of two readings; cubics on 8 readings | each fit sees more of the data |
+| $`\mathrm{CV}_K`$ | the cross-validation estimate, in square metres | 0.1651, 5-fold, degree 3 | — |
+| $`e_i`$ | the residual: reading minus fitted value | 0.1583 m at hour 0, degree 3 | — |
+| $`H`$, $`h_{ij}`$, $`h_i`$ | the hat matrix, its entries, and its $`i`$-th diagonal entry, the leverage | $`h_i`$ = 0.8238 at hour 0, degree 3 | the held-out miss grows as $`1/(1 - h_i)`$ |
+| $`\sigma`$, $`\varepsilon_i`$ | the gauge noise's standard deviation, and reading $`i`$'s own noise | 0.3 m | every error grows |
+| $`\overline{\mathrm{err}}`$, $`\mathrm{Err}`$ | training error, and true error: the average squared miss on a fresh reading at a random moment in hours 0 to 9 | 0.0434 and 0.1197 at degree 3 | — |
 
 ### When it holds
 
@@ -78,7 +84,7 @@ $$E[\text{error on the repeat readings}] - E[\overline{\mathrm{err}}] = \frac{2\
 - **New cases like the old ones.** Cross-validation scores the fit on hours 0 to 9. It says nothing about hour 12, where every polynomial here is a guess.
 - **Every choice made inside the loop.** Anything learned from the data, such as a scaling or a selection of inputs, is learned again on each fold's training part. The degree picked by the lowest score, quoted with that same score, is flattered, since the score helped pick it; an untouched test set, or a second cross-validation wrapped around the first, gives the honest figure.
 - **The fit being scored is the fit on fewer readings.** Five-fold fits on 8 readings, not 10. At high degrees that is a much worse curve than the one finally used; What breaks shows degree 7.
-- **The optimism formula needs a least-squares fit and plain noise:** each reading's noise averaging zero, all with the same variance, no two correlated. Readings that drift together can flatter the fit by far more than $2\sigma^2 p/n$.
+- **The optimism formula needs a least-squares fit and plain noise:** each reading's noise averaging zero, all with the same variance, no two correlated. Readings that drift together can flatter the fit by far more than $`2\sigma^2 p/n`$.
 
 ---
 
@@ -108,9 +114,9 @@ Orange: training error, falling to 0.00 at degree 9. Green: true error, lowest a
 
 ### Step 2: how much training error flatters
 
-Write each reading as the true level plus noise: $y_i = f(t_i) + \varepsilon_i$. A least-squares fitted value is a weighted sum of all the readings, and reading $i$'s own weight is its leverage $h_i$. So the fitted value at hour $t_i$ contains $h_i \varepsilon_i$, a share of the very noise it is scored against.
+Write each reading as the true level plus noise: $`y_i = f(t_i) + \varepsilon_i`$. A least-squares fitted value is a weighted sum of all the readings, and reading $`i`$'s own weight is its leverage $`h_i`$. So the fitted value at hour $`t_i`$ contains $`h_i \varepsilon_i`$, a share of the very noise it is scored against.
 
-A repeat reading at the same hour carries fresh noise the fit never copied. The two errors differ on average by $2\sigma^2 h_i$, and the leverages add up to $p$ ([Diagnostics](04-diagnostics-and-residuals.md)), so the average gap over the readings is $2\sigma^2 p/n$.
+A repeat reading at the same hour carries fresh noise the fit never copied. The two errors differ on average by $`2\sigma^2 h_i`$, and the leverages add up to $`p`$ ([Diagnostics](04-diagnostics-and-residuals.md)), so the average gap over the readings is $`2\sigma^2 p/n`$.
 
 For the cubic: 2 × 0.09 × 4 / 10 = 0.0720 square metres. Ten thousand simulated records give 0.0721, with standard error 0.0007. At degree 9 the in-sample optimism is 0.1800, twice the noise variance: the curve has swallowed all the noise.
 
@@ -119,35 +125,37 @@ Between the readings a flexible curve can do far worse. The chart's gap at degre
 <details>
 <summary>Detailed proof: the optimism of training error is $2\sigma^2 p/n$</summary>
 
-**Setup.** Readings $y_i = f(t_i) + \varepsilon_i$ for $i = 1, \dots, n$. The noises have average 0 and variance $\sigma^2$, and no two are correlated. A repeat reading $y_i' = f(t_i) + \varepsilon_i'$ has fresh noise with the same properties, uncorrelated with all the $\varepsilon_j$. The fit is least squares on a design matrix $X$ with $n$ rows and $p$ columns, full column rank (no column is a mix of the others), so the fitted values are $\hat y = Hy$, where $H = X(X^\top X)^{-1}X^\top$ is the hat matrix of [Diagnostics](04-diagnostics-and-residuals.md). Write $h_{ij}$ for the entries of $H$ and $h_i = h_{ii}$.
+**Setup.** Readings $`y_i = f(t_i) + \varepsilon_i`$ for $`i = 1, \dots, n`$. The noises have average 0 and variance $`\sigma^2`$, and no two are correlated. A repeat reading $`y_i' = f(t_i) + \varepsilon_i'`$ has fresh noise with the same properties, uncorrelated with all the $`\varepsilon_j`$. The fit is least squares on a design matrix $`X`$ with $`n`$ rows and $`p`$ columns, full column rank (no column is a mix of the others), so the fitted values are $`\hat y = Hy`$, where $`H = X(X^\top X)^{-1}X^\top`$ is the hat matrix of [Diagnostics](04-diagnostics-and-residuals.md). Write $`h_{ij}`$ for the entries of $`H`$ and $`h_i = h_{ii}`$.
 
-**The repeat reading.** $y_i' - \hat y_i = \varepsilon_i' + (f(t_i) - \hat y_i)$. The fitted value does not involve $\varepsilon_i'$, so the cross term averages to zero: $E[(y_i' - \hat y_i)^2] = \sigma^2 + E[(f(t_i) - \hat y_i)^2]$.
+**The repeat reading.** $`y_i' - \hat y_i = \varepsilon_i' + (f(t_i) - \hat y_i)`$. The fitted value does not involve $`\varepsilon_i'`$, so the cross term averages to zero: $`E[(y_i' - \hat y_i)^2] = \sigma^2 + E[(f(t_i) - \hat y_i)^2]`$.
 
-**The training reading.** $y_i - \hat y_i = \varepsilon_i + (f(t_i) - \hat y_i)$, so $E[(y_i - \hat y_i)^2] = \sigma^2 + E[(f(t_i) - \hat y_i)^2] - 2E[\varepsilon_i \hat y_i]$, using $E[\varepsilon_i f(t_i)] = 0$. Now $\hat y_i = \sum_j h_{ij}(f(t_j) + \varepsilon_j)$, and $E[\varepsilon_i \varepsilon_j]$ is $\sigma^2$ when $j = i$ and 0 otherwise, so $E[\varepsilon_i \hat y_i] = h_i \sigma^2$.
+**The training reading.** $`y_i - \hat y_i = \varepsilon_i + (f(t_i) - \hat y_i)`$, so $`E[(y_i - \hat y_i)^2] = \sigma^2 + E[(f(t_i) - \hat y_i)^2] - 2E[\varepsilon_i \hat y_i]`$, using $`E[\varepsilon_i f(t_i)] = 0`$. Now $`\hat y_i = \sum_j h_{ij}(f(t_j) + \varepsilon_j)`$, and $`E[\varepsilon_i \varepsilon_j]`$ is $`\sigma^2`$ when $`j = i`$ and 0 otherwise, so $`E[\varepsilon_i \hat y_i] = h_i \sigma^2`$.
 
-**Subtract and average.** Each reading's gap is $2\sigma^2 h_i$. Averaged over $i$ it is $2\sigma^2 \big(\sum_i h_i\big)/n$, and the leverages add up to $p$, as [Diagnostics](04-diagnostics-and-residuals.md) proves, so the average gap is $2\sigma^2 p/n$.
+**Subtract and average.** Each reading's gap is $`2\sigma^2 h_i`$. Averaged over $`i`$ it is $`2\sigma^2 \big(\sum_i h_i\big)/n`$, and the leverages add up to $`p`$, as [Diagnostics](04-diagnostics-and-residuals.md) proves, so the average gap is $`2\sigma^2 p/n`$.
 
-Nothing here needed bell-shaped noise, or the true level to be a polynomial. The checks confirm $\sum_i h_i = p$ for every degree, 4.0000 for the cubic and 10.0000 for degree 9.
+Nothing here needed bell-shaped noise, or the true level to be a polynomial. The checks confirm $`\sum_i h_i = p`$ for every degree, 4.0000 for the cubic and 10.0000 for degree 9.
 
 </details>
 
 ### Step 3: a held-out reading is scored honestly
 
-Fit without reading $i$. The curve $\hat f^{(-i)}$ is built from the other nine readings, so it contains no share of $\varepsilon_i$. The cross term from Step 2 is now zero, and
+Fit without reading $`i`$. The curve $`\hat f^{(-i)}`$ is built from the other nine readings, so it contains no share of $`\varepsilon_i`$. The cross term from Step 2 is now zero, and
 
-$$E\big[(y_i - \hat f^{(-i)}(t_i))^2\big] = \sigma^2 + E\big[(f(t_i) - \hat f^{(-i)}(t_i))^2\big]$$
+```math
+E\big[(y_i - \hat f^{(-i)}(t_i))^2\big] = \sigma^2 + E\big[(f(t_i) - \hat f^{(-i)}(t_i))^2\big]
+```
 
-That is exactly the average error of a brand-new reading at hour $t_i$, for the curve fitted to nine readings. The held-out miss is an honest sample of new-reading error. It is honest about a slightly different procedure, one that had nine readings instead of ten.
+That is exactly the average error of a brand-new reading at hour $`t_i`$, for the curve fitted to nine readings. The held-out miss is an honest sample of new-reading error. It is honest about a slightly different procedure, one that had nine readings instead of ten.
 
 ### Step 4: rotate the hold-out
 
-One held-out reading is a noisy score. Rotating uses every reading once as a test and $K - 1$ times as training. With five folds, the first fold holds out hours 0 and 5, the next hours 1 and 6, and so on; each time the cubic is refitted on the other eight, and the two squared misses are added. For degree 3 the five folds give 0.8357, 0.4036, 0.2052, 0.1624 and 0.0442. Their total over ten readings is the five-fold estimate, 0.1651.
+One held-out reading is a noisy score. Rotating uses every reading once as a test and $`K - 1`$ times as training. With five folds, the first fold holds out hours 0 and 5, the next hours 1 and 6, and so on; each time the cubic is refitted on the other eight, and the two squared misses are added. For degree 3 the five folds give 0.8357, 0.4036, 0.2052, 0.1624 and 0.0442. Their total over ten readings is the five-fold estimate, 0.1651.
 
 The first fold is the worst because it holds out hour 0, and the curve fitted to hours 1–4 and 6–9 must reach back past its data to get there. Held-out end points are where polynomials are most exposed.
 
 ### Step 5: leave-one-out from a single fit
 
-Leave-one-out seems to need ten refits per degree. For least squares one fit is enough: the held-out miss is $e_i/(1 - h_i)$, the deleted-residual identity proved on [Diagnostics](04-diagnostics-and-residuals.md).
+Leave-one-out seems to need ten refits per degree. For least squares one fit is enough: the held-out miss is $`e_i/(1 - h_i)`$, the deleted-residual identity proved on [Diagnostics](04-diagnostics-and-residuals.md).
 
 At hour 0 the cubic's residual is 0.1583 m and its leverage 0.8238: an end reading pulls a cubic hard toward itself. So the held-out miss is 0.1583 / (1 − 0.8238) = 0.8984 m, and the refit without hour 0 misses by 0.8984 m too.
 
@@ -161,7 +169,7 @@ The scores tend to sit above the true error on average, because each was earned 
 
 Hitting the very best degree is not guaranteed, and this record is a kind one: on most records from the same gauge, at the same noise, leave-one-out picks a degree near the best rather than the best itself, usually one off, and only rarely one of the wild high degrees. Try changing shows misses with a quieter gauge, a noisier one and another record.
 
-Two other roads lead to the same place. Adding $2\sigma^2 p/n$ back onto the training error estimates the repeat-reading error directly; this is Mallows' Cp, and it needs the noise level known. Resampling the readings with replacement estimates the optimism instead ([Bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md)). Cross-validation needs neither a noise level nor a least-squares fit, which is why it is the default.
+Two other roads lead to the same place. Adding $`2\sigma^2 p/n`$ back onto the training error estimates the repeat-reading error directly; this is Mallows' Cp, and it needs the noise level known. Resampling the readings with replacement estimates the optimism instead ([Bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md)). Cross-validation needs neither a noise level nor a least-squares fit, which is why it is the default.
 
 ---
 
@@ -596,9 +604,9 @@ The two outputs match line for line.
 
 Lean proves the optimism formula for every least-squares fit with plain noise, and Step 1's two facts for any readings.
 
-- Suppose a least-squares fit uses $X$ of full column rank, and all noises, repeats included, average zero with variance $\sigma^2$, none correlated. Then, on average, error on the repeat readings exceeds training error by exactly $2\sigma^2 p/n$.
-- Take any readings at any hours, and degrees $d \le d'$. Then the best training error at degree $d'$ is at most the best at degree $d$.
-- Take $n$ readings at $n$ different hours. Then the best training error over polynomials with $n$ coefficients is exactly zero.
+- Suppose a least-squares fit uses $`X`$ of full column rank, and all noises, repeats included, average zero with variance $`\sigma^2`$, none correlated. Then, on average, error on the repeat readings exceeds training error by exactly $`2\sigma^2 p/n`$.
+- Take any readings at any hours, and degrees $`d \le d'`$. Then the best training error at degree $`d'`$ is at most the best at degree $`d`$.
+- Take $`n`$ readings at $`n`$ different hours. Then the best training error over polynomials with $`n`$ coefficients is exactly zero.
 - The cubic's optimism is exactly 2 × 0.09 × 4 / 10 = 0.0720 square metres, and degree 9's is 0.1800, twice the noise variance.
 - The five folds together cover hours 0 to 9, and fold 1 holds exactly hours 0 and 5.
 
@@ -823,7 +831,7 @@ example : ((Finset.range 5).biUnion fun k => ({k, k + 5} : Finset ℕ)) = Finset
 ## The usual mistake
 
 > [!warning]
-> **Judging a model by its error on the data it was fitted to.** That error is biased low, and the bias grows with every coefficient. For least squares it sits $2\sigma^2 p/n$ below the error on repeat readings at the same hours, on average; at fresh moments between the readings a flexible curve can do far worse. On the tide gauge training error ranks degree 9 first, at 0.0000, when degree 9's true error is 4.45 times the cubic's. Only error on data the fit never saw can rank models.
+> **Judging a model by its error on the data it was fitted to.** That error is biased low, and the bias grows with every coefficient. For least squares it sits $`2\sigma^2 p/n`$ below the error on repeat readings at the same hours, on average; at fresh moments between the readings a flexible curve can do far worse. On the tide gauge training error ranks degree 9 first, at 0.0000, when degree 9's true error is 4.45 times the cubic's. Only error on data the fit never saw can rank models.
 >
 > - **Letting copies cross the split.** Repeat visits by one patient or overlapping time windows put a held-out case's twin in the training part. With every gauge reading entered twice, leave-one-out scores degree 9 at 0.0000.
 > - **Learning anything outside the loop.** A scaling, a fill-in value for missing data or a chosen set of inputs, computed before splitting, has already seen the held-out part. Each is learned again inside every fold.
@@ -869,6 +877,6 @@ Verified 28 Sep 2026: every link below resolves to the publisher's page or the p
 
 - Stone, M. "Cross-Validatory Choice and Assessment of Statistical Predictions." *Journal of the Royal Statistical Society, Series B* 36 (1974): 111–133. [DOI 10.1111/j.2517-6161.1974.tb00994.x](https://doi.org/10.1111/j.2517-6161.1974.tb00994.x). Cross-validation for choosing and for assessing a predictor.
 - Efron, Bradley. "How Biased Is the Apparent Error Rate of a Prediction Rule?" *Journal of the American Statistical Association* 81 (1986): 461–470. [DOI 10.1080/01621459.1986.10478291](https://doi.org/10.1080/01621459.1986.10478291). The optimism of training error as a covariance, the argument of Step 2.
-- Hastie, Trevor, Robert Tibshirani and Jerome Friedman. *The Elements of Statistical Learning*, 2nd ed. Springer, 2009. [DOI 10.1007/978-0-387-84858-7](https://doi.org/10.1007/978-0-387-84858-7); the authors' [free edition](https://hastie.su.domains/ElemStatLearn/). Chapter 7: the $2\sigma^2 p/n$ optimism, K-fold cross-validation and its pitfalls.
+- Hastie, Trevor, Robert Tibshirani and Jerome Friedman. *The Elements of Statistical Learning*, 2nd ed. Springer, 2009. [DOI 10.1007/978-0-387-84858-7](https://doi.org/10.1007/978-0-387-84858-7); the authors' [free edition](https://hastie.su.domains/ElemStatLearn/). Chapter 7: the $`2\sigma^2 p/n`$ optimism, K-fold cross-validation and its pitfalls.
 - James, Gareth, Daniela Witten, Trevor Hastie and Robert Tibshirani. *An Introduction to Statistical Learning*. [Book site with free editions](https://www.statlearning.com/). Chapter 5 states the leave-one-out shortcut with leverage.
 - Bishop, Christopher M. *Pattern Recognition and Machine Learning*. Springer, 2006. [Microsoft Research page](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/). Section 1.1 fits a degree-9 polynomial through ten noisy points of a sine wave, the picture this card redraws.

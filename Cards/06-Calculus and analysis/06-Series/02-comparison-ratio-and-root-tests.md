@@ -35,35 +35,39 @@ Orange: the harmonic total. Green: the floor 1 + k/2 after 2^k terms, proved in 
 
 ## The formula
 
-A reminder from [Infinite series](01-series-convergence.md): $a_n$ is the term in position n, and the sigma sign running to infinity means the limit of the running totals $S_N$, the sum of the first N terms. Every test assumes terms that are never negative, from some position on.
+A reminder from [Infinite series](01-series-convergence.md): $`a_n`$ is the term in position n, and the sigma sign running to infinity means the limit of the running totals $`S_N`$, the sum of the first N terms. Every test assumes terms that are never negative, from some position on.
 
 The result this card settles, the **p-series** (one over n to a fixed power p):
 
-$$\sum_{n=1}^{\infty} \frac{1}{n^p} \ \text{ converges exactly when } \ p > 1.$$
+```math
+\sum_{n=1}^{\infty} \frac{1}{n^p} \ \text{ converges exactly when } \ p > 1.
+```
 
 **Read it aloud:** one over n to the power p adds to a finite total when p is bigger than one, and grows without end otherwise.
 
 The harmonic series is p = 1, the squares p = 2. Four tests reach it:
 
-- **Comparison.** If $0 \le a_n \le b_n$ and the sum of $b_n$ converges, so does the sum of $a_n$. A divergent smaller sum makes the bigger diverge.
-- **Integral.** If $a_n = f(n)$ for a curve $f$ that is positive and falling, the series and the area under $f$ from 1 to infinity share a verdict. The totals sit between two areas:
+- **Comparison.** If $`0 \le a_n \le b_n`$ and the sum of $`b_n`$ converges, so does the sum of $`a_n`$. A divergent smaller sum makes the bigger diverge.
+- **Integral.** If $`a_n = f(n)`$ for a curve $`f`$ that is positive and falling, the series and the area under $`f`$ from 1 to infinity share a verdict. The totals sit between two areas:
 
-$$\int_{1}^{N+1} f(x)\,dx \ \le \ S_N \ \le \ f(1) + \int_{1}^{N} f(x)\,dx$$
+```math
+\int_{1}^{N+1} f(x)\,dx \ \le \ S_N \ \le \ f(1) + \int_{1}^{N} f(x)\,dx
+```
 
-- **Ratio.** For positive terms, let $L = \lim (n \to \infty)\ a_{n+1}/a_n$, each term against the one before. Below 1: converges; above 1, or infinite: diverges.
-- **Root.** Let $L = \lim (n \to \infty)\ (a_n)^{1/n}$, the n-th root of the n-th term. Same verdicts.
+- **Ratio.** For positive terms, let $`L = \lim (n \to \infty)\ a_{n+1}/a_n`$, each term against the one before. Below 1: converges; above 1, or infinite: diverges.
+- **Root.** Let $`L = \lim (n \to \infty)\ (a_n)^{1/n}`$, the n-th root of the n-th term. Same verdicts.
 
 **At L = 1, ratio and root say nothing.** Both our series land there.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a_n$, $n$ | the term in position n | 1/n, or 1/n^2 | bigger totals |
-| $b_n$ | a comparison term with a known sum | 1/((n − 1)n), from n = 2 | a looser ceiling |
-| $S_N$, $N$ | the running total of the first N terms | 1.643935 and 7.485471 at N = 1000 | creeps to the full sum |
-| $f$, $x$ | a falling curve through the terms, and its input | f(x) = 1/x^2 | more area |
-| $p$ | the power in a p-series | 1, or 2 | above 1, a finite total |
-| $L$ | long-run ratio, or n-th root, of the terms | 1 for both | past 1, divergence |
-| $q$, $k$ | a fixed ceiling ratio below 1, and steps taken | q = 3/4 for n/2^n | nearer 1, a weaker ceiling |
+| $`a_n`$, $`n`$ | the term in position n | 1/n, or 1/n^2 | bigger totals |
+| $`b_n`$ | a comparison term with a known sum | 1/((n − 1)n), from n = 2 | a looser ceiling |
+| $`S_N`$, $`N`$ | the running total of the first N terms | 1.643935 and 7.485471 at N = 1000 | creeps to the full sum |
+| $`f`$, $`x`$ | a falling curve through the terms, and its input | f(x) = 1/x^2 | more area |
+| $`p`$ | the power in a p-series | 1, or 2 | above 1, a finite total |
+| $`L`$ | long-run ratio, or n-th root, of the terms | 1 for both | past 1, divergence |
+| $`q`$, $`k`$ | a fixed ceiling ratio below 1, and steps taken | q = 3/4 for n/2^n | nearer 1, a weaker ceiling |
 
 ### When it holds
 
@@ -93,7 +97,9 @@ Terms never negative make the totals rise or stand still. The real numbers have 
 
 Squares. For n from 2 on, n^2 is at least (n − 1)n, so 1/n^2 is at most 1/(n − 1) − 1/n. Added up, these cancel in a chain (they telescope) to 1 − 1/N. With the first term in front:
 
-$$S_N \le 1 + \Big(1 - \frac{1}{N}\Big) = 2 - \frac{1}{N} < 2.$$
+```math
+S_N \le 1 + \Big(1 - \frac{1}{N}\Big) = 2 - \frac{1}{N} < 2.
+```
 
 At N = 1000 that ceiling reads 1.999000. A ceiling for every N, so the squares converge.
 
@@ -101,13 +107,15 @@ Harmonic. Group the terms in doubling blocks: 1/2; then 1/3 + 1/4; then 1/5 to 1
 
 ### Step 2: the integral test traps totals between areas
 
-Let $f$ fall, with $f(n) = a_n$. Between n and n + 1 a width-1 rectangle of height $a_n$ covers the area under the curve, and one of height $a_{n+1}$ fits beneath it. Adding rectangles gives the sandwich.
+Let $`f`$ fall, with $`f(n) = a_n`$. Between n and n + 1 a width-1 rectangle of height $`a_n`$ covers the area under the curve, and one of height $`a_{n+1}`$ fits beneath it. Adding rectangles gives the sandwich.
 
 For 1/x^p the area from 1 to a far endpoint T is (T^(1−p) − 1)/(1 − p), or log T when p = 1, log being the natural logarithm ([Improper integrals](../04-Integrals/07-improper-integrals.md)). It settles to 1/(p − 1) when p > 1 and grows without end otherwise: the p-series.
 
 The rectangles also bound the tail after N terms: between the areas from N + 1 on and from N on, for the squares 1/(N + 1) and 1/N.
 
-$$S_N + \frac{1}{N+1} \ \le \ \sum_{n=1}^{\infty} \frac{1}{n^2} \ \le \ S_N + \frac{1}{N}.$$
+```math
+S_N + \frac{1}{N+1} \ \le \ \sum_{n=1}^{\infty} \frac{1}{n^2} \ \le \ S_N + \frac{1}{N}.
+```
 
 At N = 1000 the full sum lies between 1.644934 and 1.644935. Leonhard Euler found its exact value, pi^2/6, in the 1730s; the check builds pi from its own series and gets 1.644934, inside the box.
 
@@ -121,7 +129,7 @@ The harmonic ratio at n = 1000 is 0.999001; the squares', 0.998003. Both head fo
 
 ### Step 4: the root test is the same comparison
 
-If the n-th root of $a_n$ settles below 1, fix q between L and 1: eventually $a_n$ is below q^n, a geometric term, and the tail is at most q^N/(1 − q). If it settles above 1, eventually $a_n$ exceeds 1 and the terms cannot shrink to 0. At n = 1000 the n-th root of 1/n is 0.993116, of 1/n^2 is 0.986279: both creeping to 1, no verdict.
+If the n-th root of $`a_n`$ settles below 1, fix q between L and 1: eventually $`a_n`$ is below q^n, a geometric term, and the tail is at most q^N/(1 − q). If it settles above 1, eventually $`a_n`$ exceeds 1 and the terms cannot shrink to 0. At n = 1000 the n-th root of 1/n is 0.993116, of 1/n^2 is 0.986279: both creeping to 1, no verdict.
 
 <details>
 <summary>Detailed proof: ratio, root and integral tests</summary>

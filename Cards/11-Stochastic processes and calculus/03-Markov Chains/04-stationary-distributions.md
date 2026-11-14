@@ -36,46 +36,54 @@ Orange: the running share of rainy days in one sample, 100,000 days drawn with a
 
 ## The formula
 
-Notation first, in words. The kind of day on day $n$ is written $X_n$, the value of the process at time $n$, with time counted in days ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The chances of one night's change sit in a table $P$, the transition matrix ([Markov chains](01-markov-chains.md)): its entry $p_{ij}$, in row $i$ and column $j$, is the chance tomorrow is $j$ given today is $i$. Each row adds to 1. Rows and columns run sunny, cloudy, rainy:
+Notation first, in words. The kind of day on day $`n`$ is written $`X_n`$, the value of the process at time $`n`$, with time counted in days ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The chances of one night's change sit in a table $`P`$, the transition matrix ([Markov chains](01-markov-chains.md)): its entry $`p_{ij}`$, in row $`i`$ and column $`j`$, is the chance tomorrow is $`j`$ given today is $`i`$. Each row adds to 1. Rows and columns run sunny, cloudy, rainy:
 
 `P = [[0.6, 0.3, 0.1], [0.4, 0.4, 0.2], [0.4, 0.3, 0.3]]`
 
-A mix of chances over the three kinds of day is written as a row of three numbers. The row $\mu P$, the row times the table, is tomorrow's mix when today's is $\mu$; $\mu P^n$ is the mix $n$ days on ([n-step transitions](02-multi-step-transitions.md)).
+A mix of chances over the three kinds of day is written as a row of three numbers. The row $`\mu P`$, the row times the table, is tomorrow's mix when today's is $`\mu`$; $`\mu P^n`$ is the mix $`n`$ days on ([n-step transitions](02-multi-step-transitions.md)).
 
-The Greek letter $\pi$ (here a row of shares, not the circle constant) names the stationary distribution. With $N$ states, here $N = 3$, it is any row with
+The Greek letter $`\pi`$ (here a row of shares, not the circle constant) names the stationary distribution. With $`N`$ states, here $`N = 3`$, it is any row with
 
-$$\pi P = \pi, \qquad \pi_j \ge 0 \text{ for every } j, \qquad \pi_1 + \pi_2 + \dots + \pi_N = 1.$$
+```math
+\pi P = \pi, \qquad \pi_j \ge 0 \text{ for every } j, \qquad \pi_1 + \pi_2 + \dots + \pi_N = 1.
+```
 
 **Read it aloud:** a mix of chances that one more day of weather hands back unchanged, with no negative entries and a total of 1.
 
-Written out one column at a time, $\pi P = \pi$ is one equation per state, the **balance equations**:
+Written out one column at a time, $`\pi P = \pi`$ is one equation per state, the **balance equations**:
 
-$$\pi_j = \sum_{i} \pi_i \, p_{ij} \quad \text{for every state } j.$$
+```math
+\pi_j = \sum_{i} \pi_i \, p_{ij} \quad \text{for every state } j.
+```
 
-**Read it aloud:** the share of days that are $j$ equals the sum, over every kind of day $i$, of the share of $i$-days times the chance an $i$-day is followed by a $j$-day.
+**Read it aloud:** the share of days that are $`j`$ equals the sum, over every kind of day $`i`$, of the share of $`i`$-days times the chance an $`i`$-day is followed by a $`j`$-day.
 
-Subtract $\pi_j p_{jj}$ from both sides and the same equation reads as a flow: days leaving $j$ balance days arriving.
+Subtract $`\pi_j p_{jj}`$ from both sides and the same equation reads as a flow: days leaving $`j`$ balance days arriving.
 
-$$\pi_j\,(1 - p_{jj}) = \sum_{i \ne j} \pi_i \, p_{ij}.$$
+```math
+\pi_j\,(1 - p_{jj}) = \sum_{i \ne j} \pi_i \, p_{ij}.
+```
 
-The mean return time $m_j$ is the average number of days from a $j$-day to the next $j$-day. The third theorem gives it for free:
+The mean return time $`m_j`$ is the average number of days from a $`j`$-day to the next $`j`$-day. The third theorem gives it for free:
 
-$$m_j = \frac{1}{\pi_j}.$$
+```math
+m_j = \frac{1}{\pi_j}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_n$, $n$ | the kind of day on day $n$; days counted from today, day 0 | sunny on day 0 | — |
-| $i$, $j$, $k$ | two states, today's and tomorrow's; $k$ a third state, or a count of visits or steps | $i$ sunny, $j$ rainy | — |
-| $N$ | the number of states, here kinds of day | 3 | more equations, same method |
-| $P$, $p_{ij}$, $I$ | the transition matrix; chance tomorrow is $j$ given today is $i$; the table that changes nothing | 0.1 from sunny to rainy, 0.3 from rainy to rainy | raising a chance into rainy raises $\pi_R$ |
-| $\mu$ | a starting mix, a row; $\mu P^n$ is the mix $n$ days later | sunny for certain: (1, 0, 0) | — |
-| $\pi$, $\pi_i$, $\pi_j$ | the stationary distribution; its entry for a state | (1/2, 1/3, 1/6) | — |
-| $\pi_S$, $\pi_C$, $\pi_R$ | the long-run shares of sunny, cloudy, rainy days | 1/2, 1/3, 1/6 | — |
-| $m_j$, $m_R$ | mean days from a $j$-day to the next $j$-day; the same for rain | 2, 3, 6; $m_R$ = 6 | a larger mean wait means a smaller share |
-| $V_n$ | the count of $j$-days among days 1 to $n$ | 16,857 rainy in 100,000 | — |
-| $v$, $w$, $h$, $\delta$ | in the proofs: a row with $vP = v$; its entries made non-negative; a column with $Ph = h$; a smallest chance of reaching $j$ | — | — |
-| $T_j$, $\tau_k$, $\tau_1$, $P_i$, $P_j$, $E_i$ | in the proofs: the first day after day 0 that is $j$; the day of the $k$-th visit; chance and average starting from $i$ | — | — |
-| $\nu$, $\nu_i$, $\nu_R$ | in the proofs: expected days of each kind in one stretch between two $j$-days | (3, 2, 1) for $j$ rainy | — |
+| $`X_n`$, $`n`$ | the kind of day on day $`n`$; days counted from today, day 0 | sunny on day 0 | — |
+| $`i`$, $`j`$, $`k`$ | two states, today's and tomorrow's; $`k`$ a third state, or a count of visits or steps | $`i`$ sunny, $`j`$ rainy | — |
+| $`N`$ | the number of states, here kinds of day | 3 | more equations, same method |
+| $`P`$, $`p_{ij}`$, $`I`$ | the transition matrix; chance tomorrow is $`j`$ given today is $`i`$; the table that changes nothing | 0.1 from sunny to rainy, 0.3 from rainy to rainy | raising a chance into rainy raises $`\pi_R`$ |
+| $`\mu`$ | a starting mix, a row; $`\mu P^n`$ is the mix $`n`$ days later | sunny for certain: (1, 0, 0) | — |
+| $`\pi`$, $`\pi_i`$, $`\pi_j`$ | the stationary distribution; its entry for a state | (1/2, 1/3, 1/6) | — |
+| $`\pi_S`$, $`\pi_C`$, $`\pi_R`$ | the long-run shares of sunny, cloudy, rainy days | 1/2, 1/3, 1/6 | — |
+| $`m_j`$, $`m_R`$ | mean days from a $`j`$-day to the next $`j`$-day; the same for rain | 2, 3, 6; $`m_R`$ = 6 | a larger mean wait means a smaller share |
+| $`V_n`$ | the count of $`j`$-days among days 1 to $`n`$ | 16,857 rainy in 100,000 | — |
+| $`v`$, $`w`$, $`h`$, $`\delta`$ | in the proofs: a row with $`vP = v`$; its entries made non-negative; a column with $`Ph = h`$; a smallest chance of reaching $`j`$ | — | — |
+| $`T_j`$, $`\tau_k`$, $`\tau_1`$, $`P_i`$, $`P_j`$, $`E_i`$ | in the proofs: the first day after day 0 that is $`j`$; the day of the $`k`$-th visit; chance and average starting from $`i`$ | — | — |
+| $`\nu`$, $`\nu_i`$, $`\nu_R`$ | in the proofs: expected days of each kind in one stretch between two $`j`$-days | (3, 2, 1) for $`j`$ rainy | — |
 
 ### The picture: the town's weather as a chain
 
@@ -87,7 +95,7 @@ Each circle's area is drawn to the scale of its long-run share of days, so the s
 
 - **Finitely many states.** With a finite list a stationary distribution always exists. On an endless list it can fail to: a walk on all the whole numbers, stepping up or down with chance 1/2, would need every state to hold the same share, and no equal shares of infinitely many states add to 1.
 - **Every state reachable from every other**, the chain being **irreducible** ([Classifying states](03-classifying-states.md)). This buys uniqueness and start-free time fractions. Split the town into a dry spell that never rains and a wet spell that never clears, and two different mixes both balance; the long-run share of rain is 0 or 1 depending on the first day. One closed class plus transient states also gives just one: chance only drains out of the transient states, so a mix that never changes gives them 0, and Step 3 applies on the closed class. On the board from Classifying states the start square gets 0 and the jail 2/3, the 0.6667 seen there after 200 turns.
-- **The same table every day.** A seasonal climate has a different table each month; one fixed $\pi$ then describes nothing, and the long-run shares come from the year-long cycle instead.
+- **The same table every day.** A seasonal climate has a different table each month; one fixed $`\pi`$ then describes nothing, and the long-run shares come from the year-long cycle instead.
 - **Tomorrow depends on today only.** If a third wet day in a row were likelier than a second, the three-state table is the wrong model. Fitted by counting the record's changes, it still gets the share of rainy days right, since counted changes balance as in Step 0; but long wet spells come out too rare, and forecasts two or more days ahead are off.
 - **Not needed: settling down.** Neither existence, uniqueness nor the time fractions needs the day-by-day forecasts to converge. That extra property, and the aperiodicity it requires, is the business of [Convergence to equilibrium](05-convergence-to-equilibrium.md).
 
@@ -97,39 +105,39 @@ Each circle's area is drawn to the scale of its long-run share of days, so the s
 
 ### Step 0: a long record balances its flows
 
-Count the rainy days in a long record. Each one began either as a change into rain or as rain carrying on, and each one ends by carrying on or by changing out. Over a long record the changes into rain and out of rain differ by at most one. Divide by the length of the record and the share of days that turn rainy equals the share that stop being rainy. That is the flow equation above for rainy, and the same holds for every state. The long-run shares must balance, so they must solve $\pi P = \pi$. The steps below make this exact: a balancing mix exists, it is the only one, and the long-run shares do settle on it.
+Count the rainy days in a long record. Each one began either as a change into rain or as rain carrying on, and each one ends by carrying on or by changing out. Over a long record the changes into rain and out of rain differ by at most one. Divide by the length of the record and the share of days that turn rainy equals the share that stop being rainy. That is the flow equation above for rainy, and the same holds for every state. The long-run shares must balance, so they must solve $`\pi P = \pi`$. The steps below make this exact: a balancing mix exists, it is the only one, and the long-run shares do settle on it.
 
 ### Step 1: a stationary start stays stationary
 
-If today's mix is $\pi$, tomorrow's is $\pi P = \pi$, and the day after is $\pi P = \pi$ again. By induction $\pi P^n = \pi$ for every $n$: forecasts of any day ahead are the same mix. More holds. The chance of any run of weather, say sunny then rainy then sunny, starting on day $n$ is $\pi_S\,p_{SR}\,p_{RS}$ whatever $n$ is, because only the first factor could depend on $n$. The whole process, not only each day's mix, looks the same from any starting day. That is what **stationary** means: the statistics stand still while the weather moves.
+If today's mix is $`\pi`$, tomorrow's is $`\pi P = \pi`$, and the day after is $`\pi P = \pi`$ again. By induction $`\pi P^n = \pi`$ for every $`n`$: forecasts of any day ahead are the same mix. More holds. The chance of any run of weather, say sunny then rainy then sunny, starting on day $`n`$ is $`\pi_S\,p_{SR}\,p_{RS}`$ whatever $`n`$ is, because only the first factor could depend on $`n`$. The whole process, not only each day's mix, looks the same from any starting day. That is what **stationary** means: the statistics stand still while the weather moves.
 
 ### Step 2: a balancing mix always exists
 
-Each row of $P$ adds to 1, so $P$ times a column of ones is that column of ones: 1 is an eigenvalue of $P$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). A square table and its transpose, the table flipped across its diagonal, share eigenvalues, so some row $v$, not all zero, has $vP = v$. It is a left eigenvector: it multiplies from the left.
+Each row of $`P`$ adds to 1, so $`P`$ times a column of ones is that column of ones: 1 is an eigenvalue of $`P`$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). A square table and its transpose, the table flipped across its diagonal, share eigenvalues, so some row $`v`$, not all zero, has $`vP = v`$. It is a left eigenvector: it multiplies from the left.
 
-Its entries could be negative, and a share cannot be. Replace every entry by its size, giving $w$. Each entry of the row $w$ times $P$ is at least the matching entry of $w$, because the size of a sum is at most the sum of the sizes. But both rows have the same total, because every row of $P$ adds to 1. A row that is nowhere smaller and has the same total is equal: $wP = w$. Divide $w$ by its total and it is a stationary distribution. Nothing here used irreducibility: every finite chain has at least one.
+Its entries could be negative, and a share cannot be. Replace every entry by its size, giving $`w`$. Each entry of the row $`w`$ times $`P`$ is at least the matching entry of $`w`$, because the size of a sum is at most the sum of the sizes. But both rows have the same total, because every row of $`P`$ adds to 1. A row that is nowhere smaller and has the same total is equal: $`wP = w`$. Divide $`w`$ by its total and it is a stationary distribution. Nothing here used irreducibility: every finite chain has at least one.
 
 ### Step 3: irreducible means only one
 
-Take any column $h$ with $Ph = h$. Each entry of $P$ times $h$ is an average of entries of $h$, weighted by a row of $P$. Look at the largest entry of $h$. It is an average of entries none larger than itself, so every entry it averages over, every state reachable in one day, holds the same largest value. In an irreducible chain that spreads to every state. So $h$ is constant: the only columns $P$ leaves unchanged are multiples of the column of ones.
+Take any column $`h`$ with $`Ph = h`$. Each entry of $`P`$ times $`h`$ is an average of entries of $`h`$, weighted by a row of $`P`$. Look at the largest entry of $`h`$. It is an average of entries none larger than itself, so every entry it averages over, every state reachable in one day, holds the same largest value. In an irreducible chain that spreads to every state. So $`h`$ is constant: the only columns $`P`$ leaves unchanged are multiples of the column of ones.
 
-That fixes a count. The solutions of $(P - I)h = 0$, with $I$ the table that changes nothing, form a line, so $P - I$ has rank $N - 1$: the rank, the number of independent rows, and the dimension of the solutions add up to $N$ ([Rank and nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md)). A table and its transpose have the same rank, so the rows with $v(P - I) = 0$ also form a line. Requiring a total of 1 picks one point on it. The stationary distribution is unique.
+That fixes a count. The solutions of $`(P - I)h = 0`$, with $`I`$ the table that changes nothing, form a line, so $`P - I`$ has rank $`N - 1`$: the rank, the number of independent rows, and the dimension of the solutions add up to $`N`$ ([Rank and nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md)). A table and its transpose have the same rank, so the rows with $`v(P - I) = 0`$ also form a line. Requiring a total of 1 picks one point on it. The stationary distribution is unique.
 
-Every entry is positive, too. Some state $i$ has $\pi_i > 0$; state $j$ is reachable from $i$ in some number of days $n$, so $\pi_j = (\pi P^n)_j \ge \pi_i\,(P^n)_{ij} > 0$.
+Every entry is positive, too. Some state $`i`$ has $`\pi_i > 0`$; state $`j`$ is reachable from $`i`$ in some number of days $`n`$, so $`\pi_j = (\pi P^n)_j \ge \pi_i\,(P^n)_{ij} > 0`$.
 
 ### Step 4: the stationary share is the long-run time fraction
 
-Fix rainy. Cut one long run of weather at every rainy day. The stretches between consecutive rainy days are **excursions**. Each excursion starts from a rainy day, and from then on the chain forgets everything earlier. So the excursions are independent, and their lengths all follow one distribution, with mean $m_R$.
+Fix rainy. Cut one long run of weather at every rainy day. The stretches between consecutive rainy days are **excursions**. Each excursion starts from a rainy day, and from then on the chain forgets everything earlier. So the excursions are independent, and their lengths all follow one distribution, with mean $`m_R`$.
 
-By the strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)), $k$ excursions take about $k\,m_R$ days, with probability 1. So among $n$ days about $n / m_R$ are rainy: the fraction of rainy days tends to $1/m_R$ on almost every path, whatever the first day.
+By the strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)), $`k`$ excursions take about $`k\,m_R`$ days, with probability 1. So among $`n`$ days about $`n / m_R`$ are rainy: the fraction of rainy days tends to $`1/m_R`$ on almost every path, whatever the first day.
 
-It remains to see that $1/m_R$ is $\pi_R$. Let $\nu_i$ be the expected number of $i$-days in one excursion, counting its opening rainy day. Then $\nu_R = 1$, and the $\nu_i$ add to $m_R$, the excursion's mean length. One more day moves each excursion's days one place along: its opening rainy day drops off the front and the rainy day that closes it arrives at the back. So $\nu P = \nu$. By Step 3, $\nu / m_R$ is $\pi$, and its rainy entry is $1/m_R$. Here $\nu$ = (3, 2, 1): an excursion from rain averages 3 sunny days, 2 cloudy and the 1 rainy day, 6 in all.
+It remains to see that $`1/m_R`$ is $`\pi_R`$. Let $`\nu_i`$ be the expected number of $`i`$-days in one excursion, counting its opening rainy day. Then $`\nu_R = 1`$, and the $`\nu_i`$ add to $`m_R`$, the excursion's mean length. One more day moves each excursion's days one place along: its opening rainy day drops off the front and the rainy day that closes it arrives at the back. So $`\nu P = \nu`$. By Step 3, $`\nu / m_R`$ is $`\pi`$, and its rainy entry is $`1/m_R`$. Here $`\nu`$ = (3, 2, 1): an excursion from rain averages 3 sunny days, 2 cloudy and the 1 rainy day, 6 in all.
 
 ### Step 5: stationary is not the same as settling
 
 Replace the weather by a rota: sunny, then cloudy, then rainy, then sunny again, for certain. Every state reaches every other, so Steps 2 to 4 apply. The stationary distribution is (1/3, 1/3, 1/3), and a third of days are rainy.
 
-Now forecast from a sunny day. The chance of rain on day $n$ is 0, 1, 0, 0, 1, 0, …: it never settles. The rota is **periodic**: it returns to each state only in multiples of 3 days.
+Now forecast from a sunny day. The chance of rain on day $`n`$ is 0, 1, 0, 0, 1, 0, …: it never settles. The rota is **periodic**: it returns to each state only in multiples of 3 days.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -142,26 +150,26 @@ xychart-beta
     line [33.33, 33.33, 33.33, 33.33, 33.33, 33.33, 33.33, 33.33, 33.33, 33.33, 33.33, 33.33]
 ```
 
-Orange: the chance, per 100, that day $n$ is rainy; it jumps between 0 and 100 forever. Green: rainy days per 100 up to day $n$, closing in on 33.33. Dark: the stationary share. A stationary distribution, a settling forecast and a time fraction are three different things; the town has all three, the rota only the first and third.
+Orange: the chance, per 100, that day $`n`$ is rainy; it jumps between 0 and 100 forever. Green: rainy days per 100 up to day $`n`$, closing in on 33.33. Dark: the stationary share. A stationary distribution, a settling forecast and a time fraction are three different things; the town has all three, the rota only the first and third.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** A chain on the states 1 to $N$ with transition matrix $P$: $p_{ij} \ge 0$ and $\sum_j p_{ij} = 1$ for each $i$. Write $\mathbf{1}$ for the column of ones and $P_i$, $E_i$ for chance and average when $X_0 = i$.
+**Setting.** A chain on the states 1 to $`N`$ with transition matrix $`P`$: $`p_{ij} \ge 0`$ and $`\sum_j p_{ij} = 1`$ for each $`i`$. Write $`\mathbf{1}`$ for the column of ones and $`P_i`$, $`E_i`$ for chance and average when $`X_0 = i`$.
 
-**1. Existence (any finite chain).** $P\mathbf{1} = \mathbf{1}$, so $P - I$ is singular, so is its transpose, and some row $v \ne 0$ has $vP = v$. Let $w_j = \lvert v_j\rvert$. Then $w_j = \lvert\sum_i v_i p_{ij}\rvert \le \sum_i w_i p_{ij} = (wP)_j$. Summing over $j$, $\sum_j (wP)_j = \sum_i w_i \sum_j p_{ij} = \sum_i w_i$. So the non-negative differences $(wP)_j - w_j$ add to 0 and all vanish: $wP = w$, and $\pi = w / \sum_i w_i$ is stationary.
+**1. Existence (any finite chain).** $`P\mathbf{1} = \mathbf{1}`$, so $`P - I`$ is singular, so is its transpose, and some row $`v \ne 0`$ has $`vP = v`$. Let $`w_j = \lvert v_j\rvert`$. Then $`w_j = \lvert\sum_i v_i p_{ij}\rvert \le \sum_i w_i p_{ij} = (wP)_j`$. Summing over $`j`$, $`\sum_j (wP)_j = \sum_i w_i \sum_j p_{ij} = \sum_i w_i`$. So the non-negative differences $`(wP)_j - w_j`$ add to 0 and all vanish: $`wP = w`$, and $`\pi = w / \sum_i w_i`$ is stationary.
 
-**2. Uniqueness and positivity (irreducible).** Let $Ph = h$ and let $h_i = \max_k h_k$. Then $0 = \sum_k p_{ik}(h_i - h_k)$, a sum of non-negative terms, so $h_k = h_i$ whenever $p_{ik} > 0$. Repeating along a path from $i$ to any state, which irreducibility provides, $h$ is constant. So the null space of $P - I$ is spanned by $\mathbf{1}$, its rank is $N - 1$, the left null space has dimension $N - (N - 1) = 1$, and at most one row in it has entries adding to 1. With part 1, exactly one does. Positivity is Step 3's inequality.
+**2. Uniqueness and positivity (irreducible).** Let $`Ph = h`$ and let $`h_i = \max_k h_k`$. Then $`0 = \sum_k p_{ik}(h_i - h_k)`$, a sum of non-negative terms, so $`h_k = h_i`$ whenever $`p_{ik} > 0`$. Repeating along a path from $`i`$ to any state, which irreducibility provides, $`h`$ is constant. So the null space of $`P - I`$ is spanned by $`\mathbf{1}`$, its rank is $`N - 1`$, the left null space has dimension $`N - (N - 1) = 1`$, and at most one row in it has entries adding to 1. With part 1, exactly one does. Positivity is Step 3's inequality.
 
-**3. Finite mean return time.** Irreducibility gives, for each start $i$, a path to $j$ of at most $N$ days with positive chance; let $\delta > 0$ be the smallest of these $N$ chances. Let $T_j$ be the first day $n \ge 1$ with $X_n = j$. From any state, $j$ is reached within the next $N$ days with chance at least $\delta$, so by the Markov property $P_i(T_j > kN) \le (1 - \delta)^k$ and $E_i T_j = \sum_{n \ge 0} P_i(T_j > n) \le N/\delta < \infty$. Write $m_j = E_j T_j$.
+**3. Finite mean return time.** Irreducibility gives, for each start $`i`$, a path to $`j`$ of at most $`N`$ days with positive chance; let $`\delta > 0`$ be the smallest of these $`N`$ chances. Let $`T_j`$ be the first day $`n \ge 1`$ with $`X_n = j`$. From any state, $`j`$ is reached within the next $`N`$ days with chance at least $`\delta`$, so by the Markov property $`P_i(T_j > kN) \le (1 - \delta)^k`$ and $`E_i T_j = \sum_{n \ge 0} P_i(T_j > n) \le N/\delta < \infty`$. Write $`m_j = E_j T_j`$.
 
-**4. Time fractions.** Let $\tau_1 < \tau_2 < \dots$ be the successive days $n \ge 1$ with $X_n = j$; each is finite with probability 1 by part 3, and each is a stopping time (the day can be recognised when it arrives). By the strong Markov property, the gaps $\tau_{k+1} - \tau_k$ are independent, each with the law of $T_j$ under $P_j$, and independent of $\tau_1$. The strong law gives $\tau_k / k \to m_j$ almost surely. With $V_n$ the number of $j$-days among days 1 to $n$, $\tau_{V_n} \le n < \tau_{V_n + 1}$, so $V_n/n \to 1/m_j$ almost surely, from any start.
+**4. Time fractions.** Let $`\tau_1 < \tau_2 < \dots`$ be the successive days $`n \ge 1`$ with $`X_n = j`$; each is finite with probability 1 by part 3, and each is a stopping time (the day can be recognised when it arrives). By the strong Markov property, the gaps $`\tau_{k+1} - \tau_k`$ are independent, each with the law of $`T_j`$ under $`P_j`$, and independent of $`\tau_1`$. The strong law gives $`\tau_k / k \to m_j`$ almost surely. With $`V_n`$ the number of $`j`$-days among days 1 to $`n`$, $`\tau_{V_n} \le n < \tau_{V_n + 1}`$, so $`V_n/n \to 1/m_j`$ almost surely, from any start.
 
-**5. Kac's formula, $\pi_j = 1/m_j$.** Let $\nu_i = E_j \sum_{k=0}^{T_j - 1} \mathbf{1}\{X_k = i\} = \sum_{k \ge 0} P_j(X_k = i,\ k < T_j)$. Then $\nu_j = 1$ and $\sum_i \nu_i = E_j T_j = m_j$. The event $\{k < T_j\}$ is decided by $X_0, \dots, X_k$, so the Markov property gives $\sum_i P_j(X_k = i, k < T_j)\,p_{il} = P_j(X_{k+1} = l, k + 1 \le T_j)$. Summing over $k \ge 0$: $(\nu P)_l = E_j \sum_{k=1}^{T_j} \mathbf{1}\{X_k = l\}$. Since $X_0 = X_{T_j} = j$, shifting the window from days $0, \dots, T_j - 1$ to days $1, \dots, T_j$ changes no count, and $(\nu P)_l = \nu_l$. So $\nu / m_j$ is stationary; by part 2 it is $\pi$, and $\pi_j = \nu_j / m_j = 1/m_j$. With part 4, the fraction of $j$-days tends to $\pi_j$.
+**5. Kac's formula, $`\pi_j = 1/m_j`$.** Let $`\nu_i = E_j \sum_{k=0}^{T_j - 1} \mathbf{1}\{X_k = i\} = \sum_{k \ge 0} P_j(X_k = i,\ k < T_j)`$. Then $`\nu_j = 1`$ and $`\sum_i \nu_i = E_j T_j = m_j`$. The event $`\{k < T_j\}`$ is decided by $`X_0, \dots, X_k`$, so the Markov property gives $`\sum_i P_j(X_k = i, k < T_j)\,p_{il} = P_j(X_{k+1} = l, k + 1 \le T_j)`$. Summing over $`k \ge 0`$: $`(\nu P)_l = E_j \sum_{k=1}^{T_j} \mathbf{1}\{X_k = l\}`$. Since $`X_0 = X_{T_j} = j`$, shifting the window from days $`0, \dots, T_j - 1`$ to days $`1, \dots, T_j`$ changes no count, and $`(\nu P)_l = \nu_l`$. So $`\nu / m_j`$ is stationary; by part 2 it is $`\pi`$, and $`\pi_j = \nu_j / m_j = 1/m_j`$. With part 4, the fraction of $`j`$-days tends to $`\pi_j`$.
 
 </details>
 
-**Another road.** When every change is matched by its reverse, $\pi_i p_{ij} = \pi_j p_{ji}$ for every pair, the flows balance link by link, and summing over $i$ gives $\pi P = \pi$ at once. This **detailed balance** is how [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) finds a random walk's stationary distribution, proportional to each page's number of links, and how [MCMC](07-markov-chain-monte-carlo.md) builds a chain with a chosen $\pi$. The town's weather does not have it: $\pi_S p_{SR}$ = 0.05 but $\pi_R p_{RS}$ = 0.0667, so fewer days go straight from sunny to rainy than from rainy to sunny. A net drift round the loop sunny, cloudy, rainy makes up the difference.
+**Another road.** When every change is matched by its reverse, $`\pi_i p_{ij} = \pi_j p_{ji}`$ for every pair, the flows balance link by link, and summing over $`i`$ gives $`\pi P = \pi`$ at once. This **detailed balance** is how [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) finds a random walk's stationary distribution, proportional to each page's number of links, and how [MCMC](07-markov-chain-monte-carlo.md) builds a chain with a chosen $`\pi`$. The town's weather does not have it: $`\pi_S p_{SR}`$ = 0.05 but $`\pi_R p_{RS}`$ = 0.0667, so fewer days go straight from sunny to rainy than from rainy to sunny. A net drift round the loop sunny, cloudy, rainy makes up the difference.
 
 ---
 
@@ -171,17 +179,17 @@ Solve the flow equations for the town. The sunny equation first, then the rainy 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| sunny: out = in | $0.4\,\pi_S = 0.4\,\pi_C + 0.4\,\pi_R$ | $\pi_S = \pi_C + \pi_R$ |
-| shares add to 1 | $\pi_S + (\pi_C + \pi_R) = 2\,\pi_S = 1$ | $\pi_S$ = 1/2 |
-| rainy: out = in | $0.7\,\pi_R = 0.1 \times \tfrac12 + 0.2\,\pi_C$ | — |
-| use $\pi_C = \tfrac12 - \pi_R$ | $0.7\,\pi_R = 0.05 + 0.1 - 0.2\,\pi_R$, so $0.9\,\pi_R = 0.15$ | **$\pi_R$ = 1/6** |
-| cloudy | $1 - \tfrac12 - \tfrac16$ | $\pi_C$ = 1/3 |
-| check the spare equation, cloudy | $\tfrac12(0.3) + \tfrac13(0.4) + \tfrac16(0.3) = 0.15 + 0.1333 + 0.05$ | 1/3 |
-| flow out of rainy, per day | $\tfrac16 \times 0.7$ | 7/60 |
-| flow into rainy, per day | $\tfrac12 \times 0.1 + \tfrac13 \times 0.2$ | 7/60 |
-| mean return to rain | $1 / \pi_R$ | **6 days** |
+| sunny: out = in | $`0.4\,\pi_S = 0.4\,\pi_C + 0.4\,\pi_R`$ | $`\pi_S = \pi_C + \pi_R`$ |
+| shares add to 1 | $`\pi_S + (\pi_C + \pi_R) = 2\,\pi_S = 1`$ | $`\pi_S`$ = 1/2 |
+| rainy: out = in | $`0.7\,\pi_R = 0.1 \times \tfrac12 + 0.2\,\pi_C`$ | — |
+| use $`\pi_C = \tfrac12 - \pi_R`$ | $`0.7\,\pi_R = 0.05 + 0.1 - 0.2\,\pi_R`$, so $`0.9\,\pi_R = 0.15`$ | **$`\pi_R`$ = 1/6** |
+| cloudy | $`1 - \tfrac12 - \tfrac16`$ | $`\pi_C`$ = 1/3 |
+| check the spare equation, cloudy | $`\tfrac12(0.3) + \tfrac13(0.4) + \tfrac16(0.3) = 0.15 + 0.1333 + 0.05`$ | 1/3 |
+| flow out of rainy, per day | $`\tfrac16 \times 0.7`$ | 7/60 |
+| flow into rainy, per day | $`\tfrac12 \times 0.1 + \tfrac13 \times 0.2`$ | 7/60 |
+| mean return to rain | $`1 / \pi_R`$ | **6 days** |
 
-One day in six is rainy, about 61 days a year, and a rainy day comes back after 6 days on average. A sunny day recurs every 2 days on average and a cloudy one every 3. The code reaches 2, 3 and 6 a second way, from the first-step equations for the waiting time, knowing nothing of $\pi$. Each such equation says the wait from a state is one day plus the average wait from wherever tomorrow lands ([Absorption](06-absorption-and-first-step-analysis.md)).
+One day in six is rainy, about 61 days a year, and a rainy day comes back after 6 days on average. A sunny day recurs every 2 days on average and a cloudy one every 3. The code reaches 2, 3 and 6 a second way, from the first-step equations for the waiting time, knowing nothing of $`\pi`$. Each such equation says the wait from a state is one day plus the average wait from wherever tomorrow lands ([Absorption](06-absorption-and-first-step-analysis.md)).
 
 The three balance equations are one too many: they always add up to "total in = total out", so one is spare, and the total of 1 takes its place. The check row confirms the spare one.
 
@@ -189,11 +197,11 @@ The three balance equations are one too many: they always add up to "total in = 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Solve $P x = x$, a column, instead of $\pi P = \pi$ | 1/3 rainy, against 1/6 | Every row of $P$ adds to 1, so the column of ones always solves it; the answer is uniform whatever the weather |
+| Solve $`P x = x`$, a column, instead of $`\pi P = \pi`$ | 1/3 rainy, against 1/6 | Every row of $`P`$ adds to 1, so the column of ones always solves it; the answer is uniform whatever the weather |
 | Average the rain column: (0.1 + 0.2 + 0.3)/3 | 1/5 | Weights each kind of today equally; sunny days are three times as common as rainy ones |
 | Read rain-after-rain as the share | 3/10 | That is a chance given today is rainy, not a share of all days |
 | Drop irreducibility: dry spell and wet spell never meet | 0 or 1, depending on day 0 | Two mixes balance, (1/2, 1/2, 0) and (0, 0, 1), and the record picks one |
-| Expect a periodic chain's forecast to reach $\pi$ | forecast 0, 100, 0 per 100 forever | $\pi$ exists and is the time fraction, but the forecast never settles |
+| Expect a periodic chain's forecast to reach $`\pi`$ | forecast 0, 100, 0 per 100 forever | $`\pi`$ exists and is the time fraction, but the forecast never settles |
 
 The code prints every row.
 
@@ -201,7 +209,7 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-The code takes three independent roads to the long-run shares. The first solves the balance equations exactly in fractions by elimination, with the spare equation replaced by the total. The second solves the first-step equations for the mean wait until each state returns, exactly, and takes one over each: Kac's formula, reached without ever writing $\pi P = \pi$. The third simulates 100,000 days with a SplitMix64 generator written out, seed 20260929, and prints each share with a standard error from 100 blocks of 1,000 days, since neighbouring days are not independent. It also prints every other number on the card. The asserts tie the roads together, hold the simulated shares to within 4 standard errors, and check the rota, the split climate and the transient start of the classifying-states board.
+The code takes three independent roads to the long-run shares. The first solves the balance equations exactly in fractions by elimination, with the spare equation replaced by the total. The second solves the first-step equations for the mean wait until each state returns, exactly, and takes one over each: Kac's formula, reached without ever writing $`\pi P = \pi`$. The third simulates 100,000 days with a SplitMix64 generator written out, seed 20260929, and prints each share with a standard error from 100 blocks of 1,000 days, since neighbouring days are not independent. It also prints every other number on the card. The asserts tie the roads together, hold the simulated shares to within 4 standard errors, and check the rota, the split climate and the transient start of the classifying-states board.
 
 ### Python
 
@@ -583,13 +591,13 @@ Lean proves existence, uniqueness and the long-run time fractions for every fini
 
 - Every chain on finitely many states has at least one stationary distribution.
 - Suppose the chain is also irreducible. Then it has exactly one stationary distribution.
-- Suppose an irreducible chain uses the same table every day, and tomorrow depends on today only. Then, from any first day, with probability 1 the fraction of $j$-days among days 1 to $n$ tends to $\pi_j$.
+- Suppose an irreducible chain uses the same table every day, and tomorrow depends on today only. Then, from any first day, with probability 1 the fraction of $`j`$-days among days 1 to $`n`$ tends to $`\pi_j`$.
 - Take the town's table. Then (1/2, 1/3, 1/6) is its stationary distribution, and every state reaches every other in one day.
 - The hand solution, the spare cloudy equation and the flows of 7/60 check out in exact fractions. So does the failure of detailed balance.
 - Take the rota. Then (1/3, 1/3, 1/3) is its stationary distribution.
 - Take the rota from a sunny day. Then the chance of rain is 0 on day 10 and 1 on day 11.
 - Take the split climate. Then (1/2, 1/2, 0) and (0, 0, 1) both balance it.
-- Take the town's table. Then the column of ones solves $P x = x$, and averaging the rain column gives 1/5, not 1/6.
+- Take the town's table. Then the column of ones solves $`P x = x`$, and averaging the rain column gives 1/5, not 1/6.
 
 The mean return times, the positive entries and the 100,000-day simulation are left to the Python and Rust checks.
 
@@ -1357,9 +1365,9 @@ end StationaryDistributions
 ## The usual mistake
 
 > [!warning]
-> **Taking the stationary distribution to be where the chain ends up.** The weather never stops changing. What stands still is the mix of chances, and the long-run fraction of time. A chain started in its stationary distribution is still sunny one day and rainy the next; only its statistics are the same from day to day. And a chain started elsewhere need not have its forecasts approach $\pi$ at all: the rota's never do, while its time fractions still are $\pi$.
+> **Taking the stationary distribution to be where the chain ends up.** The weather never stops changing. What stands still is the mix of chances, and the long-run fraction of time. A chain started in its stationary distribution is still sunny one day and rainy the next; only its statistics are the same from day to day. And a chain started elsewhere need not have its forecasts approach $`\pi`$ at all: the rota's never do, while its time fractions still are $`\pi`$.
 >
-> - **Row against column.** $\pi$ multiplies $P$ from the left. Solving $P x = x$ gives the column of ones, 1/3 for each kind of day, whatever the table.
+> - **Row against column.** $`\pi`$ multiplies $`P`$ from the left. Solving $`P x = x`$ gives the column of ones, 1/3 for each kind of day, whatever the table.
 > - **Forgetting the total.** The balance equations alone have a whole line of solutions, including all zeros; only the total of 1 picks the shares.
 > - **Independent-days error bars.** Treating 100,000 simulated days as independent gives a standard error of 0.0012; blocks of 1,000 days give 0.0015. Neighbouring days are alike, so a run carries less information than its length suggests.
 > - **Share read as return time.** A share of 1/6 means rain returns every 6 days on average, not that it returns every 6 days: excursions from rain vary in length, and only their mean is 6.
@@ -1370,25 +1378,25 @@ end StationaryDistributions
 
 - **Weather generators.** Crop and flood models draw wet and dry days from a Markov chain fitted to a station's record; the fitted chain's stationary share of wet days is checked against the record's long-run share.
 - **Web search.** PageRank is the stationary distribution of a surfer clicking links with occasional random jumps ([Centrality](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/01-centrality-and-pagerank.md)).
-- **Queues and call centres.** The long-run chance that a line holds $k$ callers is the stationary distribution of a chain in continuous time ([Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md)).
-- **Sampling hard distributions.** MCMC turns this card round: choose the $\pi$ to sample, build a chain that has it, and read averages off one long run, the time fractions of Step 4 ([MCMC](07-markov-chain-monte-carlo.md)).
+- **Queues and call centres.** The long-run chance that a line holds $`k`$ callers is the stationary distribution of a chain in continuous time ([Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md)).
+- **Sampling hard distributions.** MCMC turns this card round: choose the $`\pi`$ to sample, build a chain that has it, and read averages off one long run, the time fractions of Step 4 ([MCMC](07-markov-chain-monte-carlo.md)).
 - **Credit ratings.** Rating agencies publish tables of yearly moves between grades. Default is a trap, so with it in the table the stationary mix is all default ([Absorption](06-absorption-and-first-step-analysis.md)); with default left out and rows rescaled over surviving bonds, it is the long-run spread of grades, if nothing else changes.
 
 > **Say it back**
-> A stationary distribution is a mix of chances over the states that one more step leaves unchanged: $\pi P = \pi$, with non-negative entries adding to 1. Every finite chain has one, and if every state can reach every other it has exactly one, with every entry positive. Its entries are the long-run fractions of time in each state, and one over an entry is the mean time to return. For the town, one day in six is rainy and rain comes back every 6 days on average. None of this needs the forecasts to settle; that is a separate property.
+> A stationary distribution is a mix of chances over the states that one more step leaves unchanged: $`\pi P = \pi`$, with non-negative entries adding to 1. Every finite chain has one, and if every state can reach every other it has exactly one, with every entry positive. Its entries are the long-run fractions of time in each state, and one over an entry is the mean time to return. For the town, one day in six is rainy and rain comes back every 6 days on average. None of this needs the forecasts to settle; that is a separate property.
 
 ---
 
 ## What this builds on
 
 - [Classifying states](03-classifying-states.md): irreducible and periodic chains, the hypotheses that decide uniqueness and settling.
-- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): $\pi$ is a left eigenvector for eigenvalue 1.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): $`\pi`$ is a left eigenvector for eigenvalue 1.
 - [Rank and nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md): how Step 3 counts the stationary distributions.
 - [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): the special case solved by detailed balance, shares in proportion to links.
 
 ## Where this goes next
 
-- [Convergence to equilibrium](05-convergence-to-equilibrium.md): when forecasts from any start approach $\pi$, and how fast.
+- [Convergence to equilibrium](05-convergence-to-equilibrium.md): when forecasts from any start approach $`\pi`$, and how fast.
 - [MCMC](07-markov-chain-monte-carlo.md): building a chain whose stationary distribution is a target.
 - [Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): the balance equations with rates in place of chances.
 - [MCMC as a tool](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/08-markov-chain-monte-carlo-for-computation.md): sampling and counting by running a chain to its stationary distribution.
@@ -1403,5 +1411,5 @@ The town's forecasts close in on 1/6 while the rota's never do; why one settles 
 
 Verified 30 Sep 2026: every link below resolves to the publisher's page or the authors' own page for the book.
 
-- Norris, J. R. *Markov Chains*. Cambridge University Press, 1997. [Publisher page](https://www.cambridge.org/core/books/markov-chains/A3F966B10633A32C8F06F37158031739). Section 1.7 proves existence and uniqueness of the invariant distribution and $\pi_j = 1/m_j$ by the excursion argument used here; Section 1.10 proves the time fractions.
+- Norris, J. R. *Markov Chains*. Cambridge University Press, 1997. [Publisher page](https://www.cambridge.org/core/books/markov-chains/A3F966B10633A32C8F06F37158031739). Section 1.7 proves existence and uniqueness of the invariant distribution and $`\pi_j = 1/m_j`$ by the excursion argument used here; Section 1.10 proves the time fractions.
 - Levin, David A., and Yuval Peres, with Elizabeth L. Wilmer. *Markov Chains and Mixing Times*, 2nd ed. American Mathematical Society, 2017. [Authors' page, with the full text](https://pages.uoregon.edu/dlevin/MARKOV/). Chapter 1 builds the stationary distribution from expected visits during an excursion and proves uniqueness from harmonic functions, the two arguments of Steps 3 and 4.

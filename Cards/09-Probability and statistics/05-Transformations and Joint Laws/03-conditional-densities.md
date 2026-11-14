@@ -30,51 +30,59 @@ The solid line joins the slice means at every height, rising 6/7 kg per cm. The 
 
 ## The formula
 
-Notation first, in words. As on [Joint densities](02-joint-densities-and-marginals.md), $f(h, w)$ is the joint density, chance per cm per kg near height $h$ and weight $w$. The symbol $f_H(h)$ is the density of height alone, the area of the surface's cross-section at $h$. A vertical bar inside a density reads "given", as in $P(A \mid B)$: $f_{W\mid H}(w \mid h)$ is read "the density of weight at $w$, given height $h$".
+Notation first, in words. As on [Joint densities](02-joint-densities-and-marginals.md), $`f(h, w)`$ is the joint density, chance per cm per kg near height $`h`$ and weight $`w`$. The symbol $`f_H(h)`$ is the density of height alone, the area of the surface's cross-section at $`h`$. A vertical bar inside a density reads "given", as in $`P(A \mid B)`$: $`f_{W\mid H}(w \mid h)`$ is read "the density of weight at $`w`$, given height $`h`$".
 
-$$f_{W\mid H}(w \mid h) \;=\; \frac{f(h,w)}{f_H(h)}, \qquad f_H(h) \;=\; \int_{-\infty}^{\infty} f(h,w)\,dw$$
+```math
+f_{W\mid H}(w \mid h) \;=\; \frac{f(h,w)}{f_H(h)}, \qquad f_H(h) \;=\; \int_{-\infty}^{\infty} f(h,w)\,dw
+```
 
 **Read it aloud:** the density of weight given height h is the slice of the joint density at h, divided by the slice's area.
 
 The conditional mean is the ordinary average taken with that density:
 
-$$E[W \mid H = h] \;=\; \int_{-\infty}^{\infty} w\, f_{W\mid H}(w \mid h)\,dw$$
+```math
+E[W \mid H = h] \;=\; \int_{-\infty}^{\infty} w\, f_{W\mid H}(w \mid h)\,dw
+```
 
 **Read it aloud:** the average weight among adults of height h is each weight times its slice density, added up.
 
 Chances come from areas under the rescaled slice. Over 90 kg at 180 cm:
 
-$$P(W > 90 \mid H = 180) \;=\; \int_{90}^{\infty} f_{W\mid H}(w \mid 180)\,dw \;=\; 0.2290$$
+```math
+P(W > 90 \mid H = 180) \;=\; \int_{90}^{\infty} f_{W\mid H}(w \mid 180)\,dw \;=\; 0.2290
+```
 
-The example's surface is the tilted bell of the previous card, with spreads $\sigma_H = 7$ cm and $\sigma_W = 12$ kg and correlation $\rho = 0.5$. With $z_h = (h - 175)/7$ and $z_w = (w - 78)/12$, each value measured in spreads from its centre,
+The example's surface is the tilted bell of the previous card, with spreads $`\sigma_H = 7`$ cm and $`\sigma_W = 12`$ kg and correlation $`\rho = 0.5`$. With $`z_h = (h - 175)/7`$ and $`z_w = (w - 78)/12`$, each value measured in spreads from its centre,
 
-$$f(h,w) \;=\; \frac{1}{2\pi\,\sigma_H\,\sigma_W\sqrt{1-\rho^2}}\;\exp\!\left(-\,\frac{z_h^2 - 2\rho\,z_h z_w + z_w^2}{2\,(1-\rho^2)}\right)$$
+```math
+f(h,w) \;=\; \frac{1}{2\pi\,\sigma_H\,\sigma_W\sqrt{1-\rho^2}}\;\exp\!\left(-\,\frac{z_h^2 - 2\rho\,z_h z_w + z_w^2}{2\,(1-\rho^2)}\right)
+```
 
-In words: the surface is highest at the centre and falls away in tilted rings; the $-2\rho\, z_h z_w$ term is the tilt, and it vanishes when $\rho = 0$.
+In words: the surface is highest at the centre and falls away in tilted rings; the $`-2\rho\, z_h z_w`$ term is the tilt, and it vanishes when $`\rho = 0`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $H$, $W$ | an adult's height and weight, not yet measured | cm and kg | — |
-| $h$, $w$, $t$ | particular heights and weights; $t$ is a height inside a band | 180 cm; 90 kg | a taller h moves the whole slice up in weight |
-| $f$ | the joint density: chance per cm per kg | the tilted bell | — |
-| $f_H$ | density of height alone: the slice's area | 0.044159 per cm at 180 cm | a larger area only rescales; the slice's shape decides the answer |
-| $f_{W\mid H}$ | the rescaled slice: density of weight given height | a bell centred at 82.286 kg | — |
-| $E[W \mid H = h]$ | average weight among adults of height h | 82.286 kg at 180 cm | rises 6/7 kg per cm of height |
-| $\mu_H$, $\sigma_H$, $\mu_W$, $\sigma_W$ | centres and spreads of height and weight | 175 cm, 7 cm; 78 kg, 12 kg | a larger $\sigma_W$ widens every slice |
-| $\rho$ | correlation of height and weight, from −1 to 1 | 0.5 | slice centre moves further from 78, slice narrows |
-| $z_h$, $z_w$ | height and weight in spreads from their centres | $z_h$ = 5/7 at 180 cm | — |
-| $\delta$ | width of the thin band of heights $B_\delta$, from 180 to 180 + δ cm | 2 cm in the simulation, which centres its band: 179 to 181 cm | a wider band blurs the slice |
-| $t_\delta$, $s_\delta$ | heights inside the band given by the mean value theorem (Detailed proof) | between 180 and 180 + δ cm | — |
-| $R$, $g_R$ | a range of weights; the slice's area over that range | over 90 kg | — |
-| $\Phi$ | the standard bell's area to the left of a point | Φ(0.7423) | rises from 0 to 1 |
+| $`H`$, $`W`$ | an adult's height and weight, not yet measured | cm and kg | — |
+| $`h`$, $`w`$, $`t`$ | particular heights and weights; $`t`$ is a height inside a band | 180 cm; 90 kg | a taller h moves the whole slice up in weight |
+| $`f`$ | the joint density: chance per cm per kg | the tilted bell | — |
+| $`f_H`$ | density of height alone: the slice's area | 0.044159 per cm at 180 cm | a larger area only rescales; the slice's shape decides the answer |
+| $`f_{W\mid H}`$ | the rescaled slice: density of weight given height | a bell centred at 82.286 kg | — |
+| $`E[W \mid H = h]`$ | average weight among adults of height h | 82.286 kg at 180 cm | rises 6/7 kg per cm of height |
+| $`\mu_H`$, $`\sigma_H`$, $`\mu_W`$, $`\sigma_W`$ | centres and spreads of height and weight | 175 cm, 7 cm; 78 kg, 12 kg | a larger $`\sigma_W`$ widens every slice |
+| $`\rho`$ | correlation of height and weight, from −1 to 1 | 0.5 | slice centre moves further from 78, slice narrows |
+| $`z_h`$, $`z_w`$ | height and weight in spreads from their centres | $`z_h`$ = 5/7 at 180 cm | — |
+| $`\delta`$ | width of the thin band of heights $`B_\delta`$, from 180 to 180 + δ cm | 2 cm in the simulation, which centres its band: 179 to 181 cm | a wider band blurs the slice |
+| $`t_\delta`$, $`s_\delta`$ | heights inside the band given by the mean value theorem (Detailed proof) | between 180 and 180 + δ cm | — |
+| $`R`$, $`g_R`$ | a range of weights; the slice's area over that range | over 90 kg | — |
+| $`\Phi`$ | the standard bell's area to the left of a point | Φ(0.7423) | rises from 0 to 1 |
 
 ### When it holds
 
 - **A joint density exists.** If all the chance sat on a line, with weight fixed exactly by height, there would be no surface to slice; the conditional law would be a single point, not a density.
-- **The slice has positive area.** Where $f_H(h) = 0$ the division fails: no adult has that height, and no answer is defined there.
+- **The slice has positive area.** Where $`f_H(h) = 0`$ the division fails: no adult has that height, and no answer is defined there.
 - **The density is continuous near the slice.** Then a thin band of heights around 180 behaves like the slice itself, which is what gives the definition its meaning (Step 2). Change the density along one line and every chance stays the same, yet that line's slice changes: slices are pinned down only where the density is continuous.
 - **The condition is "height = 180", held through height.** Reach the same line through another quantity, such as (height − 180)/weight = 0, and the thin bands change shape; the answer moves from 82.286 kg to 83.598 kg (What breaks).
-- **The mean exists.** The conditional mean needs the integral of $w$ times the slice to be finite; for the tilted bell it always is.
+- **The mean exists.** The conditional mean needs the integral of $`w`$ times the slice to be finite; for the tilted bell it always is.
 
 ---
 
@@ -82,59 +90,71 @@ In words: the surface is highest at the centre and falls away in tilted rings; t
 
 ### Step 0: the idea — condition on a thin band, then shrink it
 
-Height is continuous, so the chance that a patient is exactly 180.000… cm is zero. The rule $P(A \mid B) = P(A \text{ and } B)/P(B)$ from [Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md) divides by $P(B)$, and zero will not do. So take instead the band $B_\delta$: height between 180 and $180 + \delta$ cm. It has positive chance, so ordinary conditioning works. Then let the band shrink. Whatever the answer settles to is the conditional law at 180, and the formula is what it settles to.
+Height is continuous, so the chance that a patient is exactly 180.000… cm is zero. The rule $`P(A \mid B) = P(A \text{ and } B)/P(B)`$ from [Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md) divides by $`P(B)`$, and zero will not do. So take instead the band $`B_\delta`$: height between 180 and $`180 + \delta`$ cm. It has positive chance, so ordinary conditioning works. Then let the band shrink. Whatever the answer settles to is the conditional law at 180, and the formula is what it settles to.
 
 ### Step 1: the band's chance is the slice area times the width
 
-The chance of the band is the volume under the surface over a strip $\delta$ cm wide. For a thin strip, that volume is the strip's width times the area of its cross-section:
+The chance of the band is the volume under the surface over a strip $`\delta`$ cm wide. For a thin strip, that volume is the strip's width times the area of its cross-section:
 
-$$P(B_\delta) \;=\; \int_{180}^{180+\delta} f_H(t)\,dt \;\approx\; \delta\, f_H(180)$$
+```math
+P(B_\delta) \;=\; \int_{180}^{180+\delta} f_H(t)\,dt \;\approx\; \delta\, f_H(180)
+```
 
-For the clinic, $f_H(180) = 0.044159$ per cm, so a band 1 cm wide holds about 4.4 percent of adults.
+For the clinic, $`f_H(180) = 0.044159`$ per cm, so a band 1 cm wide holds about 4.4 percent of adults.
 
 ### Step 2: the width cancels, the slice's shape survives
 
-Now ask for the band's adults with weight in some range $R$, say over 90 kg. The same thin-strip reasoning gives
+Now ask for the band's adults with weight in some range $`R`$, say over 90 kg. The same thin-strip reasoning gives
 
-$$P(W \in R \text{ and } B_\delta) \;\approx\; \delta \int_R f(180, w)\,dw$$
+```math
+P(W \in R \text{ and } B_\delta) \;\approx\; \delta \int_R f(180, w)\,dw
+```
 
-Divide one by the other. The width $\delta$ appears on top and bottom and cancels:
+Divide one by the other. The width $`\delta`$ appears on top and bottom and cancels:
 
-$$P(W \in R \mid B_\delta) \;\approx\; \frac{\int_R f(180,w)\,dw}{f_H(180)} \;=\; \int_R f_{W\mid H}(w \mid 180)\,dw$$
+```math
+P(W \in R \mid B_\delta) \;\approx\; \frac{\int_R f(180,w)\,dw}{f_H(180)} \;=\; \int_R f_{W\mid H}(w \mid 180)\,dw
+```
 
-The approximation becomes exact as $\delta$ shrinks to 0. So the slice divided by its area gives, as area, the chance of every weight range given height 180. That is exactly what a density for weight must do.
+The approximation becomes exact as $`\delta`$ shrinks to 0. So the slice divided by its area gives, as area, the chance of every weight range given height 180. That is exactly what a density for weight must do.
 
 <details>
 <summary>Detailed proof</summary>
 
-Assume $f$ is continuous near the line $h = 180$, that $f_H(180) > 0$, and that near that line $f(t, w)$ stays below one integrable function of $w$ (true for the tilted bell). For a weight range $R$ put $g_R(t) = \int_R f(t, w)\,dw$, the area of the part of the slice at height $t$ that lies over $R$. The bound lets continuity pass through the integral, so $g_R$ is continuous at 180. For the tilted bell no bound is needed. By Step 3, $g_R(t)$ is the height bell at t times a difference of Φ values whose arguments move in step with t, so it is continuous on sight. For a general surface this step is the dominated convergence theorem, proved with measure in wing 10 on [Dominated convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md).
+Assume $`f`$ is continuous near the line $`h = 180`$, that $`f_H(180) > 0`$, and that near that line $`f(t, w)`$ stays below one integrable function of $`w`$ (true for the tilted bell). For a weight range $`R`$ put $`g_R(t) = \int_R f(t, w)\,dw`$, the area of the part of the slice at height $`t`$ that lies over $`R`$. The bound lets continuity pass through the integral, so $`g_R`$ is continuous at 180. For the tilted bell no bound is needed. By Step 3, $`g_R(t)`$ is the height bell at t times a difference of Φ values whose arguments move in step with t, so it is continuous on sight. For a general surface this step is the dominated convergence theorem, proved with measure in wing 10 on [Dominated convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md).
 
-The chance of weight in $R$ and height in $[180, 180+\delta]$ is a double integral, done height last:
-$$P(W \in R,\ 180 \le H \le 180+\delta) = \int_{180}^{180+\delta} g_R(t)\,dt.$$
-By the mean value theorem for integrals there is a height $t_\delta$ in the band with $\int_{180}^{180+\delta} g_R(t)\,dt = \delta\, g_R(t_\delta)$. Take $R$ to be every weight and the same step gives $P(B_\delta) = \delta\, f_H(s_\delta)$ for some $s_\delta$ in the band. Divide:
-$$P(W \in R \mid B_\delta) = \frac{g_R(t_\delta)}{f_H(s_\delta)}.$$
-As $\delta \to 0$, both $t_\delta$ and $s_\delta$ are squeezed to 180. Continuity gives the limit $g_R(180)/f_H(180) = \int_R f_{W\mid H}(w \mid 180)\,dw$. A band below 180, or one centred on it, gives the same limit by the same steps.
+The chance of weight in $`R`$ and height in $`[180, 180+\delta]`$ is a double integral, done height last:
 
-The rescaled slice is a density: it is never negative, and its total is $f_H(180)/f_H(180) = 1$.
+$`\displaystyle P(W \in R,\ 180 \le H \le 180+\delta) = \int_{180}^{180+\delta} g_R(t)\,dt.`$
+
+By the mean value theorem for integrals there is a height $`t_\delta`$ in the band with $`\int_{180}^{180+\delta} g_R(t)\,dt = \delta\, g_R(t_\delta)`$. Take $`R`$ to be every weight and the same step gives $`P(B_\delta) = \delta\, f_H(s_\delta)`$ for some $`s_\delta`$ in the band. Divide:
+
+$`\displaystyle P(W \in R \mid B_\delta) = \frac{g_R(t_\delta)}{f_H(s_\delta)}.`$
+
+As $`\delta \to 0`$, both $`t_\delta`$ and $`s_\delta`$ are squeezed to 180. Continuity gives the limit $`g_R(180)/f_H(180) = \int_R f_{W\mid H}(w \mid 180)\,dw`$. A band below 180, or one centred on it, gives the same limit by the same steps.
+
+The rescaled slice is a density: it is never negative, and its total is $`f_H(180)/f_H(180) = 1`$.
 
 </details>
 
 ### Step 3: the slice at 180 cm is a bell centred at 82.3 kg
 
-At 180 cm, $z_h = 5/7$. Complete the square in $z_w$ inside the exponent:
+At 180 cm, $`z_h = 5/7`$. Complete the square in $`z_w`$ inside the exponent:
 
-$$\frac{z_h^2 - 2\rho\, z_h z_w + z_w^2}{1 - \rho^2} \;=\; \frac{(z_w - \rho\, z_h)^2}{1 - \rho^2} \;+\; z_h^2$$
+```math
+\frac{z_h^2 - 2\rho\, z_h z_w + z_w^2}{1 - \rho^2} \;=\; \frac{(z_w - \rho\, z_h)^2}{1 - \rho^2} \;+\; z_h^2
+```
 
-The $z_h^2$ gives a factor $e^{-z_h^2/2}$ that does not depend on weight. It belongs to the slice's area, and dividing by the area removes it: $f_H(180) = e^{-z_h^2/2}/(7\sqrt{2\pi}) = 0.044159$ per cm, the height bell at 180 cm. What is left is a bell in $z_w$ centred at $\rho\, z_h = 0.5 \times 5/7$ with spread $\sqrt{1 - \rho^2} = \sqrt{0.75}$. Back in kilograms:
+The $`z_h^2`$ gives a factor $`e^{-z_h^2/2}`$ that does not depend on weight. It belongs to the slice's area, and dividing by the area removes it: $`f_H(180) = e^{-z_h^2/2}/(7\sqrt{2\pi}) = 0.044159`$ per cm, the height bell at 180 cm. What is left is a bell in $`z_w`$ centred at $`\rho\, z_h = 0.5 \times 5/7`$ with spread $`\sqrt{1 - \rho^2} = \sqrt{0.75}`$. Back in kilograms:
 
-- centre $78 + 12 \times 0.5 \times 5/7 = 82.2857$ kg;
-- spread $12 \times \sqrt{0.75} = 10.3923$ kg.
+- centre $`78 + 12 \times 0.5 \times 5/7 = 82.2857`$ kg;
+- spread $`12 \times \sqrt{0.75} = 10.3923`$ kg.
 
 So weight given height 180 cm is a bell centred at 82.3 kg with spread 10.39 kg: higher than the overall 78, narrower than the overall 12. Knowing the height moved the guess and removed some of the uncertainty.
 
 ### Step 4: the line of averages, and why it is shallower
 
-The same completed square works at any height: the slice at $z_h$ spreads is a bell centred at $\rho\, z_h$ spreads. In kilograms the conditional mean is $78 + (6/7)(h - 175)$. The checks confirm it by slicing at 161, 168, 175, 180, 182 and 189 cm. The general version, for any tilted bell and any number of variables, is on [Bivariate normal](05-bivariate-normal-and-conditioning.md).
+The same completed square works at any height: the slice at $`z_h`$ spreads is a bell centred at $`\rho\, z_h`$ spreads. In kilograms the conditional mean is $`78 + (6/7)(h - 175)`$. The checks confirm it by slicing at 161, 168, 175, 180, 182 and 189 cm. The general version, for any tilted bell and any number of variables, is on [Bivariate normal](05-bivariate-normal-and-conditioning.md).
 
 Why only half as many spreads? Think of each adult's weight, in spreads, as two parts. One part goes with height: half the height's spread count. The other part goes with everything else (build, diet, muscle) and averages zero at every height. Fixing the height fixes the first part. The second part still averages zero. So the slice's mean sits half as far out as the height does.
 
@@ -144,15 +164,19 @@ It runs both ways. Slice at weight 90 kg, one spread up, and the average height 
 
 ### Step 5: the slices put back together give the whole
 
-Rearrange the definition: $f(h,w) = f_H(h)\, f_{W\mid H}(w \mid h)$. The joint density is the height density times the weight-given-height density, the continuous copy of "chance of A and B = chance of B times chance of A given B". Integrate over heights and the overall weight density returns:
+Rearrange the definition: $`f(h,w) = f_H(h)\, f_{W\mid H}(w \mid h)`$. The joint density is the height density times the weight-given-height density, the continuous copy of "chance of A and B = chance of B times chance of A given B". Integrate over heights and the overall weight density returns:
 
-$$f_W(w) \;=\; \int f_{W\mid H}(w \mid h)\, f_H(h)\,dh$$
+```math
+f_W(w) \;=\; \int f_{W\mid H}(w \mid h)\, f_H(h)\,dh
+```
 
-Multiply by $w$ and integrate over weights as well. Swapping the order of the double integral gives the tower rule of [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md), with integrals in place of sums:
+Multiply by $`w`$ and integrate over weights as well. Swapping the order of the double integral gives the tower rule of [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md), with integrals in place of sums:
 
-$$\int E[W \mid H = h]\, f_H(h)\,dh \;=\; \int\!\!\int w\, f(h,w)\,dw\,dh \;=\; E[W]$$
+```math
+\int E[W \mid H = h]\, f_H(h)\,dh \;=\; \int\!\!\int w\, f(h,w)\,dw\,dh \;=\; E[W]
+```
 
-The slice means, weighted by how common each height is, give back 78 kg. The checks do both integrals: 78.0000 kg, and $f_W(90) = 0.020164$ per kg, matching the weight bell.
+The slice means, weighted by how common each height is, give back 78 kg. The checks do both integrals: 78.0000 kg, and $`f_W(90) = 0.020164`$ per kg, matching the weight bell.
 
 ### The other road: a band of simulated adults
 
@@ -166,14 +190,14 @@ Height 180 cm; the tilted bell with centres 175 cm and 78 kg, spreads 7 cm and 1
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| height in spreads, $z_h$ | (180 − 175) / 7 | 5/7 |
-| slice area, $f_H(180)$ | $e^{-z_h^2/2} / (7\sqrt{2\pi})$ | 0.044159 per cm |
-| slice centre in spreads | $\rho\, z_h = 0.5 \times 5/7$ | half of $z_h$ |
+| height in spreads, $`z_h`$ | (180 − 175) / 7 | 5/7 |
+| slice area, $`f_H(180)`$ | $`e^{-z_h^2/2} / (7\sqrt{2\pi})`$ | 0.044159 per cm |
+| slice centre in spreads | $`\rho\, z_h = 0.5 \times 5/7`$ | half of $`z_h`$ |
 | slice centre in kg | 78 + 12 × 0.5 × 5/7 | 82.2857 kg |
-| slice spread | $12\sqrt{1 - 0.25}$ | 10.3923 kg |
+| slice spread | $`12\sqrt{1 - 0.25}`$ | 10.3923 kg |
 | 90 kg in slice spreads | (90 − 82.2857) / 10.3923 | 0.7423 |
-| over 90 kg at 180 cm | $1 - \Phi(0.7423)$ | **0.2290** |
-| over 90 kg, all adults | $1 - \Phi(1)$ | 0.1587 |
+| over 90 kg at 180 cm | $`1 - \Phi(0.7423)`$ | **0.2290** |
+| over 90 kg, all adults | $`1 - \Phi(1)`$ | 0.1587 |
 
 About 23 percent of adults at 180 cm weigh over 90 kg, against about 16 percent of all adults. The expected weight at 180 cm is 82.3 kg.
 
@@ -187,15 +211,15 @@ About 23 percent of adults at 180 cm weigh over 90 kg, against about 16 percent 
 | Line of averages run backwards from 90 kg | 189.0 cm, not 178.500 | height given weight has its own, different line |
 | The line H = 180 reached through bands in (H − 180)/W | 83.598 kg, not 82.286 | those bands are wider for heavier people, so they over-count them |
 
-The last row is the Borel paradox, after Émile Borel, who met it on a sphere. The event "(H − 180)/W = 0" is the same line as "H = 180", yet its thin bands, $\lvert H - 180\rvert < 0.01\,W$, are wider where weight is larger.
+The last row is the Borel paradox, after Émile Borel, who met it on a sphere. The event "(H − 180)/W = 0" is the same line as "H = 180", yet its thin bands, $`\lvert H - 180\rvert < 0.01\,W`$, are wider where weight is larger.
 
-Each weight then counts in proportion to $w$ times the slice, and the mean climbs to 83.598 kg; the simulated band gives 83.534 kg, standard error 0.084. A conditional density depends on the quantity held fixed, not only on the line where it is fixed.
+Each weight then counts in proportion to $`w`$ times the slice, and the mean climbs to 83.598 kg; the simulated band gives 83.534 kg, standard error 0.084. A conditional density depends on the quantity held fixed, not only on the line where it is fixed.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Each script builds the tilted bell, then reaches the weight law at 180 cm by three independent roads: Simpson's rule on the slice and its area; the completed square, with the bell's area from a power series for $\Phi$; and 3,000,000 proposals of rejection sampling from a SplitMix64 generator (seed 20260928), keeping a band 2 cm wide. It then slices at six heights to show the line of averages, slices the other way at 90 kg, averages the slices back to the whole, and prints every number in the what-breaks table, the chart and the figure. Twelve asserts compare independent roads; a simulated number is allowed four standard errors.
+Each script builds the tilted bell, then reaches the weight law at 180 cm by three independent roads: Simpson's rule on the slice and its area; the completed square, with the bell's area from a power series for $`\Phi`$; and 3,000,000 proposals of rejection sampling from a SplitMix64 generator (seed 20260928), keeping a band 2 cm wide. It then slices at six heights to show the line of averages, slices the other way at 90 kg, averages the slices back to the whole, and prints every number in the what-breaks table, the chart and the figure. Twelve asserts compare independent roads; a simulated number is allowed four standard errors.
 
 ### Python
 
@@ -607,8 +631,8 @@ ALL CHECKS PASS
 Lean proves Steps 2 and 5 for a general joint density, under the conditions below, and Steps 3 and 4 for every tilted bell.
 
 - Suppose the joint density's slice at h has positive area, and near it the density is continuous and below one integrable function of weight. Then, as a band from h up shrinks, the chance of weight in R, given the band, tends to the rescaled slice's area over R.
-- Suppose height and weight have a joint density and the mean of weight exists. Then the slice means, weighted by how common each height is, average back to $E[W]$.
-- Take the tilted bell with positive spreads and $\rho$ strictly between −1 and 1. Then the slice at h, divided by its area, is a bell centred at $\mu_W + \rho\,\sigma_W z_h$. Its spread is $\sigma_W\sqrt{1-\rho^2}$, at every height h.
+- Suppose height and weight have a joint density and the mean of weight exists. Then the slice means, weighted by how common each height is, average back to $`E[W]`$.
+- Take the tilted bell with positive spreads and $`\rho`$ strictly between −1 and 1. Then the slice at h, divided by its area, is a bell centred at $`\mu_W + \rho\,\sigma_W z_h`$. Its spread is $`\sigma_W\sqrt{1-\rho^2}`$, at every height h.
 - The hand arithmetic at 180 cm is exact: centre 576/7 kg, and spread squared 108.
 - The line of averages is exact: slope 6/7 kg per cm, and 66 to 90 kg from 161 to 189 cm.
 - The spread line's 606/7 kg at 180 cm is exact, and so are 178.5 cm and 189 cm at 90 kg.

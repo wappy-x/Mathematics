@@ -33,33 +33,37 @@ The line is the area of every rectangle the fence allows. It peaks at 100 m^2 at
 
 ## The formula
 
-Notation first, in words. The rule is written $g(x, y) = P$: a function of the dials equals a fixed number. The gradient $\nabla A$, "grad A", is the arrow of the partial rates of $A$, its rate as one dial moves while the other stays fixed ([Gradient](03-gradient-and-directional-derivatives.md)). The Greek letter $\lambda$, "lambda", is the multiplier.
+Notation first, in words. The rule is written $`g(x, y) = P`$: a function of the dials equals a fixed number. The gradient $`\nabla A`$, "grad A", is the arrow of the partial rates of $`A`$, its rate as one dial moves while the other stays fixed ([Gradient](03-gradient-and-directional-derivatives.md)). The Greek letter $`\lambda`$, "lambda", is the multiplier.
 
-$$\nabla A(x, y) = \lambda \, \nabla g(x, y), \qquad g(x, y) = P$$
+```math
+\nabla A(x, y) = \lambda \, \nabla g(x, y), \qquad g(x, y) = P
+```
 
 **Read it aloud:** at the best point, the arrow of steepest area gain is some number times the arrow of steepest fence use, and the point still obeys the fence.
 
-For the paddock, $A = xy$ and $g = 2x + 2y$, so $\nabla A = (y, x)$ and $\nabla g = (2, 2)$. The formula is three ordinary equations in three unknowns:
+For the paddock, $`A = xy`$ and $`g = 2x + 2y`$, so $`\nabla A = (y, x)`$ and $`\nabla g = (2, 2)`$. The formula is three ordinary equations in three unknowns:
 
-$$y = 2\lambda, \qquad x = 2\lambda, \qquad 2x + 2y = 40.$$
+```math
+y = 2\lambda, \qquad x = 2\lambda, \qquad 2x + 2y = 40.
+```
 
-The same equations say that the helper function $\mathcal{L} = A - \lambda\,(g - P)$, the **Lagrangian**, has zero rate in $x$, in $y$ and in $\lambda$. That is bookkeeping, not a claim that it has a maximum.
+The same equations say that the helper function $`\mathcal{L} = A - \lambda\,(g - P)`$, the **Lagrangian**, has zero rate in $`x`$, in $`y`$ and in $`\lambda`$. That is bookkeeping, not a claim that it has a maximum.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$, $p$ | length and width; $p$, the best point, in the proof | 10 m, 10 m | leaves the fence unless the other drops |
-| $A$, $f$ | what is made best: area $A = xy$ ($f$ in the proof) | 100 m^2 | — |
-| $g$ | the rule's function: fence used, $2x + 2y$ | 40 m | — |
-| $P$, $c$ | the fixed amount allowed ($c$ in the proof) | 40 m | best area rises about $\lambda$ per metre |
-| $\nabla A$, $\nabla g$ | gradients: arrows of partial rates | $(10, 10)$, $(2, 2)$ | — |
-| $\lambda$ | the multiplier: stretch between the arrows, and the rule's price, objective units per rule unit | 5 m^2 per metre | a dearer rule |
-| $t$ | a step that stays on the fence | $(1, -1)$ | — |
-| $\mathcal{L}$ | the Lagrangian | zero rates at (10, 10, 5) | — |
+| $`x`$, $`y`$, $`p`$ | length and width; $`p`$, the best point, in the proof | 10 m, 10 m | leaves the fence unless the other drops |
+| $`A`$, $`f`$ | what is made best: area $`A = xy`$ ($`f`$ in the proof) | 100 m^2 | — |
+| $`g`$ | the rule's function: fence used, $`2x + 2y`$ | 40 m | — |
+| $`P`$, $`c`$ | the fixed amount allowed ($`c`$ in the proof) | 40 m | best area rises about $`\lambda`$ per metre |
+| $`\nabla A`$, $`\nabla g`$ | gradients: arrows of partial rates | $`(10, 10)`$, $`(2, 2)`$ | — |
+| $`\lambda`$ | the multiplier: stretch between the arrows, and the rule's price, objective units per rule unit | 5 m^2 per metre | a dearer rule |
+| $`t`$ | a step that stays on the fence | $`(1, -1)`$ | — |
+| $`\mathcal{L}`$ | the Lagrangian | zero rates at (10, 10, 5) | — |
 
 ### When it holds
 
-- **Smooth functions.** $A$ and $g$ need continuous partial rates; a kink has no gradient.
-- **A regular rule: $\nabla g$ is not the zero arrow.** Write the same fence as $(2x + 2y - 40)^2 = 0$ and its gradient is $(0, 0)$ all along it; the true best point then solves no multiplier equation.
+- **Smooth functions.** $`A`$ and $`g`$ need continuous partial rates; a kink has no gradient.
+- **A regular rule: $`\nabla g`$ is not the zero arrow.** Write the same fence as $`(2x + 2y - 40)^2 = 0`$ and its gradient is $`(0, 0)`$ all along it; the true best point then solves no multiplier equation.
 - **Equality, not a ceiling.** "At most 40 m" adds edges, such as zero width, which are checked by hand.
 - **Necessary, not sufficient.** A solution can be a worst point or neither; candidates still need comparing.
 
@@ -73,38 +77,38 @@ From the 15 m by 5 m pen, a step to 14 by 6 raises the area from 75 to 84 m^2, s
 
 ### Step 1: the allowed steps are the ones the rule's gradient does not see
 
-A step $t$ changes fence use at the rate $\nabla g \cdot t$, a dot product: multiply matching parts and add. Staying on the fence makes that rate zero. For $\nabla g = (2, 2)$ that leaves $t = (1, -1)$ and its multiples: one side grows as the other shrinks.
+A step $`t`$ changes fence use at the rate $`\nabla g \cdot t`$, a dot product: multiply matching parts and add. Staying on the fence makes that rate zero. For $`\nabla g = (2, 2)`$ that leaves $`t = (1, -1)`$ and its multiples: one side grows as the other shrinks.
 
 ### Step 2: at the best point, the area's gradient does not see them either
 
-The area changes along that step at the rate $\nabla A \cdot t = y - x$. At the 15 by 5 pen that is $5 - 15 = -10$: lengthening loses 10 m^2 per metre, so shortening gains it. At the best point the rate is zero, or one direction would pay: $\nabla A \cdot t = 0$.
+The area changes along that step at the rate $`\nabla A \cdot t = y - x`$. At the 15 by 5 pen that is $`5 - 15 = -10`$: lengthening loses 10 m^2 per metre, so shortening gains it. At the best point the rate is zero, or one direction would pay: $`\nabla A \cdot t = 0`$.
 
 ### Step 3: two arrows at right angles to the same step lie along one line
 
-In the plane, the arrows at right angles to $t = (1, -1)$ are the multiples of $(1, 1)$, and both gradients are among them. Since $\nabla g$ is not zero, $\nabla A = \lambda \nabla g$ for some number $\lambda$. Here the regular-rule condition is used: a zero $\nabla g$ has only zero multiples.
+In the plane, the arrows at right angles to $`t = (1, -1)`$ are the multiples of $`(1, 1)`$, and both gradients are among them. Since $`\nabla g`$ is not zero, $`\nabla A = \lambda \nabla g`$ for some number $`\lambda`$. Here the regular-rule condition is used: a zero $`\nabla g`$ has only zero multiples.
 
 ### Step 4: solve
 
-$y = 2\lambda$ and $x = 2\lambda$ give $x = y$. The fence gives $4x = 40$. So $x = y = 10$ m and $\lambda = 5$. The equations have no other solution, so if a best rectangle exists, it is this square.
+$`y = 2\lambda`$ and $`x = 2\lambda`$ give $`x = y`$. The fence gives $`4x = 40`$. So $`x = y = 10`$ m and $`\lambda = 5`$. The equations have no other solution, so if a best rectangle exists, it is this square.
 
 ### Step 5: prove it is the best, not just a candidate
 
-Along the fence, $y = 20 - x$, and the area is $x(20 - x) = 100 - (x - 10)^2$. A square is never negative, so no allowed rectangle beats 100 m^2, and only the 10 by 10 square reaches it. This second road uses no multiplier.
+Along the fence, $`y = 20 - x`$, and the area is $`x(20 - x) = 100 - (x - 10)^2`$. A square is never negative, so no allowed rectangle beats 100 m^2, and only the 10 by 10 square reaches it. This second road uses no multiplier.
 
 ### Step 6: the multiplier is the price of the rule
 
-Let the fence length $P$ vary, and assume the best point moves smoothly with it; the best area $A^*(P)$ moves too. By the chain rule ([Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md)), the best area's rate is $\nabla A$ dotted with the best point's velocity, how fast it moves per metre of fence. Swap in $\lambda \nabla g$: the rate is $\lambda$ times the rate of $g$, and $g$ equals $P$ throughout, so that rate is 1. The best area grows at $\lambda$ square metres per metre of fence.
+Let the fence length $`P`$ vary, and assume the best point moves smoothly with it; the best area $`A^*(P)`$ moves too. By the chain rule ([Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md)), the best area's rate is $`\nabla A`$ dotted with the best point's velocity, how fast it moves per metre of fence. Swap in $`\lambda \nabla g`$: the rate is $`\lambda`$ times the rate of $`g`$, and $`g`$ equals $`P`$ throughout, so that rate is 1. The best area grows at $`\lambda`$ square metres per metre of fence.
 
-Here $A^*(P) = P^2 / 16$, with rate $40 / 8 = 5$ at 40 m. A 41 m fence gives a 10.25 m square, 105.0625 m^2: a gain of 5.0625, the extra from the bend.
+Here $`A^*(P) = P^2 / 16`$, with rate $`40 / 8 = 5`$ at 40 m. A 41 m fence gives a 10.25 m square, 105.0625 m^2: a gain of 5.0625, the extra from the bend.
 
-Against a river, one long side needs no fence: $x + 2y = 40$. The same steps give 20 m by 10 m and $\lambda = 10$; each metre of fence works twice as hard.
+Against a river, one long side needs no fence: $`x + 2y = 40`$. The same steps give 20 m by 10 m and $`\lambda = 10`$; each metre of fence works twice as hard.
 
 <details>
 <summary>Detailed proof, for any smooth objective and one regular rule in the plane</summary>
 
-Let $f$ and $g$ have continuous partial rates near $p = (a, b)$, with $g(p) = c$, $\nabla g(p) \neq 0$, and $p$ a local best point of $f$ among nearby points with $g = c$. Write $f_x = \partial f / \partial x$ and so on, and say $g_y \neq 0$ at $p$ (else swap $x$ and $y$). The implicit function theorem ([Inverse and implicit function theorems](07-inverse-and-implicit-function-theorems.md)) gives a smooth $Y(x)$ near $x = a$ with $Y(a) = b$ and $g(x, Y(x)) = c$, covering the rule near $p$.
+Let $`f`$ and $`g`$ have continuous partial rates near $`p = (a, b)`$, with $`g(p) = c`$, $`\nabla g(p) \neq 0`$, and $`p`$ a local best point of $`f`$ among nearby points with $`g = c`$. Write $`f_x = \partial f / \partial x`$ and so on, and say $`g_y \neq 0`$ at $`p`$ (else swap $`x`$ and $`y`$). The implicit function theorem ([Inverse and implicit function theorems](07-inverse-and-implicit-function-theorems.md)) gives a smooth $`Y(x)`$ near $`x = a`$ with $`Y(a) = b`$ and $`g(x, Y(x)) = c`$, covering the rule near $`p`$.
 
-Then $\Phi(x) = f(x, Y(x))$ has a local best value at the inner point $x = a$, so $0 = \Phi'(a) = f_x + f_y Y'(a)$, while $g_x + g_y Y'(a) = 0$, partials at $p$. Put $\lambda = f_y / g_y$. Then $f_y = \lambda g_y$, and $f_x = -f_y Y'(a) = -\lambda g_y Y'(a) = \lambda g_x$.
+Then $`\Phi(x) = f(x, Y(x))`$ has a local best value at the inner point $`x = a`$, so $`0 = \Phi'(a) = f_x + f_y Y'(a)`$, while $`g_x + g_y Y'(a) = 0`$, partials at $`p`$. Put $`\lambda = f_y / g_y`$. Then $`f_y = \lambda g_y`$, and $`f_x = -f_y Y'(a) = -\lambda g_y Y'(a) = \lambda g_x`$.
 
 </details>
 
@@ -123,12 +127,12 @@ Scale: 9 pixels per metre. The straight line is the fence, length plus width 20 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| line them up | $y = 2\lambda$, $x = 2\lambda$ | $x = y$ |
-| use the fence | $2x + 2y = 40$, so $4x = 40$ | $x = y = 10$ m |
-| multiplier | $\lambda = y / 2 = 10 / 2$ | **5 m^2 per metre** |
-| best area | $10 \times 10$ | **100 m^2** |
-| check the price | 41 m: $10.25 \times 10.25$ | 105.0625 m^2, gain 5.0625 |
-| river | $y = \lambda$, $x = 2\lambda$, $x + 2y = 40$ | 20 by 10, 200 m^2, $\lambda = 10$ |
+| line them up | $`y = 2\lambda`$, $`x = 2\lambda`$ | $`x = y`$ |
+| use the fence | $`2x + 2y = 40`$, so $`4x = 40`$ | $`x = y = 10`$ m |
+| multiplier | $`\lambda = y / 2 = 10 / 2`$ | **5 m^2 per metre** |
+| best area | $`10 \times 10`$ | **100 m^2** |
+| check the price | 41 m: $`10.25 \times 10.25`$ | 105.0625 m^2, gain 5.0625 |
+| river | $`y = \lambda`$, $`x = 2\lambda`$, $`x + 2y = 40`$ | 20 by 10, 200 m^2, $`\lambda = 10`$ |
 
 The square is best, and one more metre of fence is worth about 5 m^2 of grass.
 
@@ -136,9 +140,9 @@ The square is best, and one more metre of fence is worth about 5 m^2 of grass.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Set $\nabla A = 0$, no fence | (0, 0), area 0 | Only the empty paddock has zero rates |
-| Drop the fence equation | $\lambda = 6$: 12 by 12, 48 m, 144 m^2 | Every square solves the gradient equations |
-| Square the rule: $(2x + 2y - 40)^2 = 0$ | gradient (0, 0) at (10, 10); no $\lambda$ | The rule is no longer regular |
+| Set $`\nabla A = 0`$, no fence | (0, 0), area 0 | Only the empty paddock has zero rates |
+| Drop the fence equation | $`\lambda = 6`$: 12 by 12, 48 m, 144 m^2 | Every square solves the gradient equations |
+| Square the rule: $`(2x + 2y - 40)^2 = 0`$ | gradient (0, 0) at (10, 10); no $`\lambda`$ | The rule is no longer regular |
 | Four-side price used by the river | predicts 5 m^2; true gain 10.125 | A multiplier belongs to one rule |
 
 The code prints all four.
@@ -147,7 +151,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the best paddock, for both fences. Road one solves the multiplier equations by Cramer's rule. Road two never mentions a multiplier: a golden-section search (a bracket shrunk by the golden ratio each step) walks the fence to the peak. The price comes from road two alone, as the best area's difference quotient over a millimetre of fence, checked against road one's $\lambda$. A third assert checks Step 5's identity at 141 points.
+Two roads to the best paddock, for both fences. Road one solves the multiplier equations by Cramer's rule. Road two never mentions a multiplier: a golden-section search (a bracket shrunk by the golden ratio each step) walks the fence to the peak. The price comes from road two alone, as the best area's difference quotient over a millimetre of fence, checked against road one's $`\lambda`$. A third assert checks Step 5's identity at 141 points.
 
 ### Python
 
@@ -337,10 +341,10 @@ The two outputs match line for line.
 
 Lean proves the line-up and the price for any smooth objective and regular rule in the plane, and the paddock's best shape.
 
-- Take smooth $f$ and $g$, and a point $p$ on the rule $g = c$ where $\nabla g$ is not the zero arrow. If $p$ is a local best point of $f$ among nearby points on the rule, then $\nabla f = \lambda \nabla g$ at $p$ for some number $\lambda$.
-- Let the allowed amount $P$ vary, and let the best point move smoothly with it, always on the rule. Then the best value grows at exactly $\lambda$ per unit of $P$.
+- Take smooth $`f`$ and $`g`$, and a point $`p`$ on the rule $`g = c`$ where $`\nabla g`$ is not the zero arrow. If $`p`$ is a local best point of $`f`$ among nearby points on the rule, then $`\nabla f = \lambda \nabla g`$ at $`p`$ for some number $`\lambda`$.
+- Let the allowed amount $`P`$ vary, and let the best point move smoothly with it, always on the rule. Then the best value grows at exactly $`\lambda`$ per unit of $`P`$.
 - Every rectangle on 40 m of fence holds at most 100 m^2, and only the 10 m by 10 m square holds exactly 100.
-- Step 5's identity $100 - x(20 - x) = (x - 10)^2$ holds for every real $x$.
+- Step 5's identity $`100 - x(20 - x) = (x - 10)^2`$ holds for every real $`x`$.
 - The hand arithmetic holds exactly: the three pens, the fence-side area, the multiplier equations, the price at 40 m and 41 m, the river, and mistakes 2 and 3.
 
 Road two's search along the fence, the decimal outputs and the figure's pixel points are left to the Python and Rust checks.
@@ -496,8 +500,8 @@ example : 2 * (2 * 10 + 2 * 10 - 40 : ℤ) * 2 = 0 := by decide
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **A longer roll.** Change the three `40`s in the loop to `60`. Answer: 15 by 15, 225 m^2, $\lambda = 7.5$.
-> - **Fence the river side at double cost.** Change the river's `1, 2` to `3, 2`. Answer: $x = 20/3 \approx 6.667$ m, $y = 10$ m, $\lambda = 10/3 \approx 3.333$.
+> - **A longer roll.** Change the three `40`s in the loop to `60`. Answer: 15 by 15, 225 m^2, $`\lambda = 7.5`$.
+> - **Fence the river side at double cost.** Change the river's `1, 2` to `3, 2`. Answer: $`x = 20/3 \approx 6.667`$ m, $`y = 10`$ m, $`\lambda = 10/3 \approx 3.333`$.
 
 ---
 
@@ -506,7 +510,7 @@ example : 2 * (2 * 10 + 2 * 10 - 40 : ℤ) * 2 = 0 := by decide
 > [!warning]
 > **Treating the multiplier equations as the answer.** They list candidates, which may be worst points or neither, and they never list edges such as a zero-width strip. The square is confirmed by Step 5.
 >
-> - **Reading $\lambda$ as the answer.** $\lambda = 5$ is square metres per metre of fence; the area is 100.
+> - **Reading $`\lambda`$ as the answer.** $`\lambda = 5`$ is square metres per metre of fence; the area is 100.
 
 ---
 
@@ -517,7 +521,7 @@ example : 2 * (2 * 10 + 2 * 10 - 40 : ℤ) * 2 = 0 := by decide
 - **Machine learning.** A support vector machine finds the widest gap between two classes; the multipliers pick out the points that matter, in [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md).
 
 > **Say it back**
-> A rule ties the dials, so only some steps are allowed. At the best point no allowed step pays, so both gradients are at right angles to every allowed step and share a line: one is $\lambda$ times the other. With the rule, that lists candidates, which still need checking. The multiplier is the rule's price: 5 m^2 per metre of fence.
+> A rule ties the dials, so only some steps are allowed. At the best point no allowed step pays, so both gradients are at right angles to every allowed step and share a line: one is $`\lambda`$ times the other. With the rule, that lists candidates, which still need checking. The multiplier is the rule's price: 5 m^2 per metre of fence.
 
 ---
 

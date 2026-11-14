@@ -38,50 +38,58 @@ Falling line: the annuity measure's weight on each future. Flat line: no re-weig
 
 ## The formula
 
-Notation first, in words. $D(T)$ is today's price of one dollar paid at time $T$, in years. $D(t, T)$ is the same price as it will stand at a later date $t$. The swap starts at $T_0$, the swaption's expiry, and pays fixed on dates $T_1$ to $T_n$. Its **annuity** at date $t$ is $A_t$: the value then of one unit of rate paid on every fixed date. $\mathbb{E}^{A}[\,\cdot\,]$ is an average taken with the annuity measure's weights. The Greek capital sigma, Σ, means "add the terms for i = 1 to n".
+Notation first, in words. $`D(T)`$ is today's price of one dollar paid at time $`T`$, in years. $`D(t, T)`$ is the same price as it will stand at a later date $`t`$. The swap starts at $`T_0`$, the swaption's expiry, and pays fixed on dates $`T_1`$ to $`T_n`$. Its **annuity** at date $`t`$ is $`A_t`$: the value then of one unit of rate paid on every fixed date. $`\mathbb{E}^{A}[\,\cdot\,]`$ is an average taken with the annuity measure's weights. The Greek capital sigma, Σ, means "add the terms for i = 1 to n".
 
-$$\mathbb{E}^{A}\!\left[S_T\right] = F = \frac{D(T_0) - D(T_n)}{A_0}, \qquad A_0 = \sum_{i=1}^{n} \tau_i\, D(T_i)$$
+```math
+\mathbb{E}^{A}\!\left[S_T\right] = F = \frac{D(T_0) - D(T_n)}{A_0}, \qquad A_0 = \sum_{i=1}^{n} \tau_i\, D(T_i)
+```
 
 **Read it aloud:** averaged with annuity weights, the swap rate on the expiry date equals today's forward swap rate, which is the floating leg's value divided by the annuity.
 
-Behind it sits the pricing rule for the annuity unit, true for any payoff $X$ paid at $T_0$:
+Behind it sits the pricing rule for the annuity unit, true for any payoff $`X`$ paid at $`T_0`$:
 
-$$V_0 = A_0\,\mathbb{E}^{A}\!\left[\frac{X}{A_T}\right]$$
+```math
+V_0 = A_0\,\mathbb{E}^{A}\!\left[\frac{X}{A_T}\right]
+```
 
 **Read it aloud:** a claim is worth today's annuity times the average number of annuities it pays.
 
-A payer swaption pays $X = L\,A_T\,(S_T - K)^+$, where $(y)^+$ means y if positive and zero otherwise. The annuities cancel:
+A payer swaption pays $`X = L\,A_T\,(S_T - K)^+`$, where $`(y)^+`$ means y if positive and zero otherwise. The annuities cancel:
 
-$$V_{\text{pay}} = L\,A_0\,\mathbb{E}^{A}\!\left[(S_T - K)^+\right] = L\,A_0\left[F\,N(d_1) - K\,N(d_2)\right]$$
+```math
+V_{\text{pay}} = L\,A_0\,\mathbb{E}^{A}\!\left[(S_T - K)^+\right] = L\,A_0\left[F\,N(d_1) - K\,N(d_2)\right]
+```
 
-The first equals sign is exact. The second assumes the rate is lognormal under the annuity measure. Switching units is done by a weight $w$ that tilts expiry-date dollars into annuities: $\mathbb{E}^{A}[Y] = \mathbb{E}^{T}[\,w\,Y\,]$, with $w = D(T_0)\,A_T / A_0$.
+The first equals sign is exact. The second assumes the rate is lognormal under the annuity measure. Switching units is done by a weight $`w`$ that tilts expiry-date dollars into annuities: $`\mathbb{E}^{A}[Y] = \mathbb{E}^{T}[\,w\,Y\,]`$, with $`w = D(T_0)\,A_T / A_0`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | the forward swap rate today: the fixed rate that makes the future swap worth zero | 4.1937 percent | payer swaption rises |
-| $S_T$, $S_t$ | the swap rate for the same five years, as it stands at expiry, or at any date $t$ | unknown today; 1.75 to 6.77 percent across the chart | payer pays more |
-| $A_0$, $A_T$, $A_t$ | the annuity today, at expiry, and at date $t$ | 4.204423; 4.1152 to 4.7342 in the model | each basis point is worth more money |
-| $D(T)$, $D(t, T)$ | discount factor: price of $1 paid at $T$, today or at date $t$ | 0.952381 at one year, 0.776060 at six | the forward swap rate moves |
-| $T$, $T_0$, $T_1$, $T_i$, $T_n$, $n$, $t$ | expiry, which is the swap's start; the fixed payment dates; how many; any date up to expiry | 1 year; years 2 to 6; five; 0 to 1 | more time for the rate to wander |
-| $\tau_i$ | accrual fraction: period i's length in years, by the day-count rule | 1 each | the annuity grows |
-| $K$, $L$ | strike: the fixed rate the holder may pay; notional: the amount interest is worked on | 4.1937 percent; $10,000,000 | payer falls; everything scales |
-| $\sigma$ | Black volatility of the swap rate: spread of its logarithm per root-year | 30 percent | both payer and receiver rise |
-| $N(x)$, $\varphi$, $d_1$, $d_2$ | bell-curve area left of $x$; the bell curve's height; the two cut-offs of Black's formula | $d_1$ = 0.15, $d_2$ = −0.15 | — |
-| $\mathbb{E}^{A}$, $\mathbb{E}^{T}$, $B_t$ | average with annuity-measure weights; average in dollars paid at expiry; the bank account, the risk-neutral unit | 4.1937 and 4.2377 percent for the swap rate | — |
-| $w$ | the tilt from expiry dollars to annuities; averages to 1 | 0.9322 to 1.0724 | — |
-| $V_0$, $V_t$, $X$ | price today, and at date $t$; payoff at expiry | $210,237.41 for the Black payer | — |
+| $`F`$ | the forward swap rate today: the fixed rate that makes the future swap worth zero | 4.1937 percent | payer swaption rises |
+| $`S_T`$, $`S_t`$ | the swap rate for the same five years, as it stands at expiry, or at any date $`t`$ | unknown today; 1.75 to 6.77 percent across the chart | payer pays more |
+| $`A_0`$, $`A_T`$, $`A_t`$ | the annuity today, at expiry, and at date $`t`$ | 4.204423; 4.1152 to 4.7342 in the model | each basis point is worth more money |
+| $`D(T)`$, $`D(t, T)`$ | discount factor: price of $1 paid at $`T`$, today or at date $`t`$ | 0.952381 at one year, 0.776060 at six | the forward swap rate moves |
+| $`T`$, $`T_0`$, $`T_1`$, $`T_i`$, $`T_n`$, $`n`$, $`t`$ | expiry, which is the swap's start; the fixed payment dates; how many; any date up to expiry | 1 year; years 2 to 6; five; 0 to 1 | more time for the rate to wander |
+| $`\tau_i`$ | accrual fraction: period i's length in years, by the day-count rule | 1 each | the annuity grows |
+| $`K`$, $`L`$ | strike: the fixed rate the holder may pay; notional: the amount interest is worked on | 4.1937 percent; $10,000,000 | payer falls; everything scales |
+| $`\sigma`$ | Black volatility of the swap rate: spread of its logarithm per root-year | 30 percent | both payer and receiver rise |
+| $`N(x)`$, $`\varphi`$, $`d_1`$, $`d_2`$ | bell-curve area left of $`x`$; the bell curve's height; the two cut-offs of Black's formula | $`d_1`$ = 0.15, $`d_2`$ = −0.15 | — |
+| $`\mathbb{E}^{A}`$, $`\mathbb{E}^{T}`$, $`B_t`$ | average with annuity-measure weights; average in dollars paid at expiry; the bank account, the risk-neutral unit | 4.1937 and 4.2377 percent for the swap rate | — |
+| $`w`$ | the tilt from expiry dollars to annuities; averages to 1 | 0.9322 to 1.0724 | — |
+| $`V_0`$, $`V_t`$, $`X`$ | price today, and at date $`t`$; payoff at expiry | $210,237.41 for the Black payer | — |
 
 The two cut-offs, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card with its interest-rate term gone:
 
-$$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: how many standard deviations of the log-rate separate the forward from the strike, shifted half a variance each way. No interest rate appears inside them; the curve was used up building $A_0$ and $F$.
+In words: how many standard deviations of the log-rate separate the forward from the strike, shifted half a variance each way. No interest rate appears inside them; the curve was used up building $`A_0`$ and $`F`$.
 
 ### When it holds
 
 - **The annuity is a positive traded portfolio.** It is five bonds, so it is. If the unit could be worth zero, dividing by it would fail.
 - **No free money in the curve model.** Every bond's future price, counted in expiry dollars, must average to today's forward price. Break that and the forward swap rate picks up a drift in annuity units too; the check tests this gap at 0.000000.
-- **The swaption settles into the physical swap.** Then the payoff really is $A_T (S_T - K)^+$ and the annuity cancels exactly. Cash-settled swaptions replace $A_T$ with a formula in $S_T$ alone; that formula is not a traded portfolio, so the cancellation holds only approximately.
+- **The swaption settles into the physical swap.** Then the payoff really is $`A_T (S_T - K)^+`$ and the annuity cancels exactly. Cash-settled swaptions replace $`A_T`$ with a formula in $`S_T`$ alone; that formula is not a traded portfolio, so the cancellation holds only approximately.
 - **Lognormal under the annuity measure, for Black only.** The driftlessness needs no shape. The Black formula needs a lognormal one. The model on this card is closer to normal, and its implied Black volatility falls from 34.17 to 27.03 percent across strikes 1 percent either side of the forward.
 
 ---
@@ -96,59 +104,69 @@ This is the change-of-numeraire theorem ([Change of numeraire](../../11-Stochast
 
 ### Step 1: the annuity qualifies as a unit
 
-$A_t = \sum_i \tau_i D(t, T_i)$ is the value of a strip of zero-coupon bonds (bonds that pay one sum at maturity and nothing before): $\tau_i$ of the bond maturing at each $T_i$. It can be bought, and it is always positive. Step 0 applies.
+$`A_t = \sum_i \tau_i D(t, T_i)`$ is the value of a strip of zero-coupon bonds (bonds that pay one sum at maturity and nothing before): $`\tau_i`$ of the bond maturing at each $`T_i`$. It can be bought, and it is always positive. Step 0 applies.
 
 ### Step 2: the forward swap rate is a traded price over the annuity
 
-A forward-starting swap has two legs. The floating leg is worth $D(t, T_0) - D(t, T_n)$ per dollar of notional at any date $t$ before it starts: a dollar placed at $T_0$ and rolled at the floating rate until $T_n$ grows into exactly what the floating leg pays, plus the returned dollar ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)). The fixed leg at rate $K$ is worth $K A_t$. The swap rate is the $K$ that makes them equal:
+A forward-starting swap has two legs. The floating leg is worth $`D(t, T_0) - D(t, T_n)`$ per dollar of notional at any date $`t`$ before it starts: a dollar placed at $`T_0`$ and rolled at the floating rate until $`T_n`$ grows into exactly what the floating leg pays, plus the returned dollar ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)). The fixed leg at rate $`K`$ is worth $`K A_t`$. The swap rate is the $`K`$ that makes them equal:
 
-$$S_t = \frac{D(t, T_0) - D(t, T_n)}{A_t}.$$
+```math
+S_t = \frac{D(t, T_0) - D(t, T_n)}{A_t}.
+```
 
-The top is the price of a real portfolio, long one bond and short another. The bottom is the unit. By Step 0 the ratio is a martingale under the annuity measure. Its value today is $F$, so its average at expiry is $F$.
+The top is the price of a real portfolio, long one bond and short another. The bottom is the unit. By Step 0 the ratio is a martingale under the annuity measure. Its value today is $`F`$, so its average at expiry is $`F`$.
 
 <details>
 <summary>Detailed proof: the martingale property, from the pricing rule</summary>
 
-Let $Q^{A}$ be the annuity measure, defined by the property that for every traded price $V_t$, the ratio $V_t / A_t$ is a martingale. Apply that to $V_t = D(t, T_0) - D(t, T_n)$, the price of the long-short bond pair. Then for any date $t$ before $T_0$:
-$$\mathbb{E}^{A}\!\left[\frac{V_{T_0}}{A_{T_0}}\,\Big|\,\text{what is known at } t\right] = \frac{V_t}{A_t}, \quad\text{that is}\quad \mathbb{E}^{A}\!\left[S_{T_0} \mid t\right] = S_t.$$
-At $t = 0$ this reads $\mathbb{E}^{A}[S_{T_0}] = F$.
+Let $`Q^{A}`$ be the annuity measure, defined by the property that for every traded price $`V_t`$, the ratio $`V_t / A_t`$ is a martingale. Apply that to $`V_t = D(t, T_0) - D(t, T_n)`$, the price of the long-short bond pair. Then for any date $`t`$ before $`T_0`$:
 
-Existence of $Q^{A}$: start from any pricing measure with numeraire $B_t$ (the bank account) and define the new weights by the ratio $w = (A_{T_0}/A_0) / (B_{T_0}/B_0)$. This $w$ is positive and averages to 1 because $A_t / B_t$ is itself a martingale. For any traded price $V_t$, $\mathbb{E}^{A}[V_{T_0}/A_{T_0}] = \mathbb{E}^{B}[w\,V_{T_0}/A_{T_0}] = \mathbb{E}^{B}[V_{T_0}/B_{T_0}] \cdot B_0 / A_0 = V_0/A_0$. With dollars at expiry as the starting unit, $B_t$ is replaced by $D(t, T_0)$, which equals 1 at $T_0$, and $w = D(T_0) A_{T_0} / A_0$: the tilt on this card.
+$`\displaystyle \mathbb{E}^{A}\!\left[\frac{V_{T_0}}{A_{T_0}}\,\Big|\,\text{what is known at } t\right] = \frac{V_t}{A_t}, \quad\text{that is}\quad \mathbb{E}^{A}\!\left[S_{T_0} \mid t\right] = S_t.`$
+
+At $`t = 0`$ this reads $`\mathbb{E}^{A}[S_{T_0}] = F`$.
+
+Existence of $`Q^{A}`$: start from any pricing measure with numeraire $`B_t`$ (the bank account) and define the new weights by the ratio $`w = (A_{T_0}/A_0) / (B_{T_0}/B_0)`$. This $`w`$ is positive and averages to 1 because $`A_t / B_t`$ is itself a martingale. For any traded price $`V_t`$, $`\mathbb{E}^{A}[V_{T_0}/A_{T_0}] = \mathbb{E}^{B}[w\,V_{T_0}/A_{T_0}] = \mathbb{E}^{B}[V_{T_0}/B_{T_0}] \cdot B_0 / A_0 = V_0/A_0`$. With dollars at expiry as the starting unit, $`B_t`$ is replaced by $`D(t, T_0)`$, which equals 1 at $`T_0`$, and $`w = D(T_0) A_{T_0} / A_0`$: the tilt on this card.
 
 </details>
 
 ### Step 3: the swaption's payoff is a whole number of annuities
 
-At expiry the holder compares the market's swap rate $S_T$ with the strike. Entering the swap at $K$ when the market rate is $S_T$ is worth the floating leg minus the fixed leg: $L[(D(T, T_0) - D(T, T_n)) - K A_T] = L\,A_T\,(S_T - K)$. The holder enters only when that is positive. So the payoff is $L\,A_T\,(S_T - K)^+$.
+At expiry the holder compares the market's swap rate $`S_T`$ with the strike. Entering the swap at $`K`$ when the market rate is $`S_T`$ is worth the floating leg minus the fixed leg: $`L[(D(T, T_0) - D(T, T_n)) - K A_T] = L\,A_T\,(S_T - K)`$. The holder enters only when that is positive. So the payoff is $`L\,A_T\,(S_T - K)^+`$.
 
-Price it in annuities. The pricing rule divides the payoff by $A_T$:
+Price it in annuities. The pricing rule divides the payoff by $`A_T`$:
 
-$$V_{\text{pay}} = A_0\,\mathbb{E}^{A}\!\left[\frac{L\,A_T\,(S_T - K)^+}{A_T}\right] = L\,A_0\,\mathbb{E}^{A}\!\left[(S_T - K)^+\right].$$
+```math
+V_{\text{pay}} = A_0\,\mathbb{E}^{A}\!\left[\frac{L\,A_T\,(S_T - K)^+}{A_T}\right] = L\,A_0\,\mathbb{E}^{A}\!\left[(S_T - K)^+\right].
+```
 
 The random annuity at expiry, which depends on the whole future curve, has gone. What remains is an ordinary call on one number whose average is known. Nothing was approximated.
 
 ### Step 4: add a lognormal shape and Black's formula drops out
 
-Now assume $S_T$ is lognormal under the annuity measure with volatility $\sigma$. Its average must be $F$ by Step 2, which fixes the centre: $S_T = F e^{-\frac12\sigma^2 T + \sigma\sqrt{T}Z}$, with $Z$ a standard bell-curve draw. The call average is then the same integral as on the Black–Scholes call card ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) with the stock replaced by a driftless forward:
+Now assume $`S_T`$ is lognormal under the annuity measure with volatility $`\sigma`$. Its average must be $`F`$ by Step 2, which fixes the centre: $`S_T = F e^{-\frac12\sigma^2 T + \sigma\sqrt{T}Z}`$, with $`Z`$ a standard bell-curve draw. The call average is then the same integral as on the Black–Scholes call card ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) with the stock replaced by a driftless forward:
 
-$$\mathbb{E}^{A}\!\left[(S_T - K)^+\right] = F\,N(d_1) - K\,N(d_2).$$
+```math
+\mathbb{E}^{A}\!\left[(S_T - K)^+\right] = F\,N(d_1) - K\,N(d_2).
+```
 
 <details>
 <summary>The algebra behind this</summary>
 
-The payoff is positive when $Z > -d_2$. The strike piece is $K$ times the chance of that, $K\,N(d_2)$. The rate piece is $F\int_{-d_2}^{\infty} e^{-\frac12\sigma^2 T + \sigma\sqrt{T}z}\varphi(z)\,dz$, with $\varphi$ the bell-curve height. Completing the square gives $e^{-\frac12\sigma^2 T + \sigma\sqrt{T}z}\varphi(z) = \varphi(z - \sigma\sqrt{T})$. Substitute $u = z - \sigma\sqrt{T}$; the lower limit becomes $-d_1$ and the piece is $F\,N(d_1)$.
+The payoff is positive when $`Z > -d_2`$. The strike piece is $`K`$ times the chance of that, $`K\,N(d_2)`$. The rate piece is $`F\int_{-d_2}^{\infty} e^{-\frac12\sigma^2 T + \sigma\sqrt{T}z}\varphi(z)\,dz`$, with $`\varphi`$ the bell-curve height. Completing the square gives $`e^{-\frac12\sigma^2 T + \sigma\sqrt{T}z}\varphi(z) = \varphi(z - \sigma\sqrt{T})`$. Substitute $`u = z - \sigma\sqrt{T}`$; the lower limit becomes $`-d_1`$ and the piece is $`F\,N(d_1)`$.
 
 </details>
 
-Multiply by $L\,A_0$ and the swaption's Black formula is complete. Step 2 supplied the centre, Step 3 removed the annuity, Step 4 supplied the shape.
+Multiply by $`L\,A_0`$ and the swaption's Black formula is complete. Step 2 supplied the centre, Step 3 removed the annuity, Step 4 supplied the shape.
 
 ### Step 5: the same rate drifts when counted in dollars
 
-Why not skip all this and average in expiry dollars? Because there the rate is not a martingale. The product $S_T A_T = D(T, T_0) - D(T, T_n)$ is a traded price, so its dollar average is known: $F A_0 / D(T_0)$. The annuity's dollar average is $A_0 / D(T_0)$. The average of a product is the product of averages plus their covariance (how much they move together), so
+Why not skip all this and average in expiry dollars? Because there the rate is not a martingale. The product $`S_T A_T = D(T, T_0) - D(T, T_n)`$ is a traded price, so its dollar average is known: $`F A_0 / D(T_0)`$. The annuity's dollar average is $`A_0 / D(T_0)`$. The average of a product is the product of averages plus their covariance (how much they move together), so
 
-$$\mathbb{E}^{T}[S_T] = F - \frac{\text{Cov}^{T}(S_T, A_T)}{A_0 / D(T_0)}.$$
+```math
+\mathbb{E}^{T}[S_T] = F - \frac{\text{Cov}^{T}(S_T, A_T)}{A_0 / D(T_0)}.
+```
 
-When rates rise the annuity falls, so the covariance is negative and the dollar average sits above $F$. In the model it sits 4.40 basis points above. That gap is a **convexity adjustment**: the correction needed whenever a rate is averaged under a measure that is not its own.
+When rates rise the annuity falls, so the covariance is negative and the dollar average sits above $`F`$. In the model it sits 4.40 basis points above. That gap is a **convexity adjustment**: the correction needed whenever a rate is averaged under a measure that is not its own.
 
 The other road to the same formula is a hedge: hold the swaption, offset its sensitivity to the swap rate with forward swaps, and demand the hedged book earn nothing extra. That argument lives on [Swaption Greeks](08-swaption-greeks-and-hedging.md).
 
@@ -160,15 +178,15 @@ Today's one-year forward rates for years 1 to 6 are 5.00, 4.60, 4.30, 4.10, 4.00
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $D(1)$ | $1 / 1.05$ | 0.952381 |
-| $D(2)$ to $D(6)$ | divide by 1.046, 1.043, 1.041, 1.040, 1.039 in turn | 0.910498, 0.872961, 0.838579, 0.806326, 0.776060 |
-| annuity $A_0$ | $0.910498 + 0.872961 + 0.838579 + 0.806326 + 0.776060$ | 4.204423 |
-| dollars per basis point | $10{,}000{,}000 \times 4.204423 \times 0.0001$ | $4,204.42 |
-| forward swap rate $F$ | $(0.952381 - 0.776060) / 4.204423$ | 4.1937 percent |
-| $d_1$, $d_2$ | $\ln 1 = 0$, so $\pm\tfrac12 \times 0.30$ | 0.15 and −0.15 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.559618, 0.440382 |
-| Black bracket | $0.041937 \times (0.559618 - 0.440382)$ | 0.00500039 |
-| **payer premium** | $10{,}000{,}000 \times 4.204423 \times 0.00500039$ | **$210,237.41** |
+| $`D(1)`$ | $`1 / 1.05`$ | 0.952381 |
+| $`D(2)`$ to $`D(6)`$ | divide by 1.046, 1.043, 1.041, 1.040, 1.039 in turn | 0.910498, 0.872961, 0.838579, 0.806326, 0.776060 |
+| annuity $`A_0`$ | $`0.910498 + 0.872961 + 0.838579 + 0.806326 + 0.776060`$ | 4.204423 |
+| dollars per basis point | $`10{,}000{,}000 \times 4.204423 \times 0.0001`$ | $4,204.42 |
+| forward swap rate $`F`$ | $`(0.952381 - 0.776060) / 4.204423`$ | 4.1937 percent |
+| $`d_1`$, $`d_2`$ | $`\ln 1 = 0`$, so $`\pm\tfrac12 \times 0.30`$ | 0.15 and −0.15 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.559618, 0.440382 |
+| Black bracket | $`0.041937 \times (0.559618 - 0.440382)`$ | 0.00500039 |
+| **payer premium** | $`10{,}000{,}000 \times 4.204423 \times 0.00500039`$ | **$210,237.41** |
 
 The company pays $210,237.41, which is 2.10 percent of the notional, or 50.00 basis points of rate at $4,204.42 a basis point. At the money the receiver costs the same.
 
@@ -180,10 +198,10 @@ Right answer: $210,237.41 for Black at 30 percent, and $210,379.75 in the curve 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Use the dollar average of the rate, 4.2377 percent, as Black's forward | $220,705.72 | That average carries the 4.40 basis-point convexity drift; only the annuity average is $F$ |
-| Discount by $D(1)$ only, as if the swaption paid once | $47,622.73 | The payoff is a five-year stream: $A_0$ = 4.204423, not 0.952381 |
+| Use the dollar average of the rate, 4.2377 percent, as Black's forward | $220,705.72 | That average carries the 4.40 basis-point convexity drift; only the annuity average is $`F`$ |
+| Discount by $`D(1)`$ only, as if the swaption paid once | $47,622.73 | The payoff is a five-year stream: $`A_0`$ = 4.204423, not 0.952381 |
 | Build the annuity over years 1 to 5 | $219,054.16 | The annuity runs over payment dates, 2 to 6, not fixing dates |
-| Simulate the model and average the call payoff in dollars, no tilt | $219,762.96 (model right: $210,379.75) | The unit and the weights must match; dropping $w$ counts high-rate futures too heavily |
+| Simulate the model and average the call payoff in dollars, no tilt | $219,762.96 (model right: $210,379.75) | The unit and the weights must match; dropping $`w`$ counts high-rate futures too heavily |
 
 Every number in that table is printed by the code below.
 
@@ -191,7 +209,7 @@ Every number in that table is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-The script builds today's curve, then a one-factor model of the curve in one year: one bell-curve draw $z$ shifts every rate together by 1.20 percent per standard deviation, and every bond's price, counted in expiry dollars, averages to today's forward price. It reaches the annuity-unit average of the swap rate by three roads: today's curve alone, a Simpson integral over $z$ (adding thin slices under a curve) with the tilt $w$, and a Monte Carlo average over 100,000 home-made random draws, each used with its mirror image. It prices the swaption in both units, checks Black's formula against a lognormal simulation, and solves for the model's Black volatility by bisection (halving a search interval until it closes on the answer). The normal CDF (the bell-curve area $N$), the integrator, the random numbers and the root finder are all written out.
+The script builds today's curve, then a one-factor model of the curve in one year: one bell-curve draw $`z`$ shifts every rate together by 1.20 percent per standard deviation, and every bond's price, counted in expiry dollars, averages to today's forward price. It reaches the annuity-unit average of the swap rate by three roads: today's curve alone, a Simpson integral over $`z`$ (adding thin slices under a curve) with the tilt $`w`$, and a Monte Carlo average over 100,000 home-made random draws, each used with its mirror image. It prices the swaption in both units, checks Black's formula against a lognormal simulation, and solves for the model's Black volatility by bisection (halving a search interval until it closes on the answer). The normal CDF (the bell-curve area $`N`$), the integrator, the random numbers and the root finder are all written out.
 
 ### Python
 
@@ -586,12 +604,12 @@ The two outputs agree line for line.
 
 Lean proves the card's three exact facts for any curve model without free money, and checks the curve's numbers.
 
-- Take positive accruals, positive bond prices, and each bond's expiry price averaging to today's forward price in expiry dollars. Then $\mathbb{E}^{A}[S_T] = F$.
-- Take the same conditions. Then the tilt $w$ averages to 1 in expiry dollars, so the annuity measure's weights are true probabilities.
-- Take the same conditions, a notional $L$ and a strike $K$. Then $D(T_0)$ times the payer's average payoff in expiry dollars equals $L\,A_0\,\mathbb{E}^{A}[(S_T - K)^+]$.
-- Take the card's curve. Then $D(1) = 20/21$, which prints as 0.952381.
-- Take the card's curve. Then $A_0$ rounds to 4.204423 and $F$ to 4.1937 percent.
-- Take $K = F$, $\sigma$ = 30 percent and one year. Then $d_1 = 0.15$ and $d_2 = -0.15$.
+- Take positive accruals, positive bond prices, and each bond's expiry price averaging to today's forward price in expiry dollars. Then $`\mathbb{E}^{A}[S_T] = F`$.
+- Take the same conditions. Then the tilt $`w`$ averages to 1 in expiry dollars, so the annuity measure's weights are true probabilities.
+- Take the same conditions, a notional $`L`$ and a strike $`K`$. Then $`D(T_0)`$ times the payer's average payoff in expiry dollars equals $`L\,A_0\,\mathbb{E}^{A}[(S_T - K)^+]`$.
+- Take the card's curve. Then $`D(1) = 20/21`$, which prints as 0.952381.
+- Take the card's curve. Then $`A_0`$ rounds to 4.204423 and $`F`$ to 4.1937 percent.
+- Take $`K = F`$, $`\sigma`$ = 30 percent and one year. Then $`d_1 = 0.15`$ and $`d_2 = -0.15`$.
 
 Black's lognormal formula, the dates before expiry, the simulations and the other decimals are left to the Python and Rust checks.
 
@@ -822,11 +840,11 @@ example : (15 : ℚ) / 100 - 30 / 100 = -15 / 100 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating the forward swap rate as the expected future swap rate, full stop.** It is the expected future swap rate only when futures are weighted by the annuity. Counted in expiry-date dollars, or in the bank account, the same rate drifts: 4.40 basis points up in the model on this card, 17.57 at double the volatility of rates. Any product that pays the swap rate without the annuity attached, such as a constant-maturity swap that pays the five-year rate on one date, needs that convexity adjustment. Pricing it at $F$ is wrong by exactly the gap Step 5 computes.
+> **Treating the forward swap rate as the expected future swap rate, full stop.** It is the expected future swap rate only when futures are weighted by the annuity. Counted in expiry-date dollars, or in the bank account, the same rate drifts: 4.40 basis points up in the model on this card, 17.57 at double the volatility of rates. Any product that pays the swap rate without the annuity attached, such as a constant-maturity swap that pays the five-year rate on one date, needs that convexity adjustment. Pricing it at $`F`$ is wrong by exactly the gap Step 5 computes.
 >
 > Smaller traps:
-> - **Discounting a swaption with one discount factor.** It pays a stream, not a lump. $D(1)$ in place of $A_0$ gives $47,622.73 instead of $210,237.41.
-> - **Dropping the tilt in a simulation.** Averaging the model's rates in dollars and then multiplying by $A_0$ mixes two units: $219,762.96 instead of $210,379.75.
+> - **Discounting a swaption with one discount factor.** It pays a stream, not a lump. $`D(1)`$ in place of $`A_0`$ gives $47,622.73 instead of $210,237.41.
+> - **Dropping the tilt in a simulation.** Averaging the model's rates in dollars and then multiplying by $`A_0`$ mixes two units: $219,762.96 instead of $210,379.75.
 > - **Using the annuity measure for a caplet.** One forward rate paid once has its own unit, the bond maturing on its payment date ([Caplets and floorlets](01-caplets-and-floorlets.md)). A cap and a swaption live under different measures, which is why a single model must be chosen to price both consistently.
 > - **Reading "driftless" as "lognormal".** The martingale property is exact. The lognormal shape is Black's assumption, and the model on this card already shows Black volatility falling from 34.17 to 27.03 percent across strikes 1 percent either side of the forward.
 
@@ -834,7 +852,7 @@ example : (15 : ℚ) / 100 - 30 / 100 = -15 / 100 := by norm_num
 
 ## Where you meet it in real life
 
-- **Swaption screens.** Every European swaption volatility quoted in Black terms is the $\sigma$ that makes $L\,A_0[F N(d_1) - K N(d_2)]$ match a traded price. The annuity measure is what makes that quote mean something.
+- **Swaption screens.** Every European swaption volatility quoted in Black terms is the $`\sigma`$ that makes $`L\,A_0[F N(d_1) - K N(d_2)]`$ match a traded price. The annuity measure is what makes that quote mean something.
 - **Premium in basis points.** Dividing the premium by dollars-per-basis-point, $4,204.42 here, turns $210,237.41 into 50.00 basis points of rate: the swaption's price in annuity units, the natural currency of this measure.
 - **The swap market model.** Jamshidian's framework models each forward swap rate as lognormal under its own annuity measure, giving Black's formula for a whole family of swaptions at once, such as all those ending on the same date. The cost: caplets then no longer follow Black's formula exactly.
 - **Constant-maturity swaps.** Coupons fixed on a swap rate but paid once need the Step 5 adjustment; desks compute it from a swaption smile across strikes ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).

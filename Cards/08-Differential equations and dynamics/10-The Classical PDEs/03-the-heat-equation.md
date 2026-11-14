@@ -12,7 +12,7 @@ The arch sinks and keeps its shape, halving every 0.070 time units. The time uni
 
 The reason is local. Each point compares itself with its two neighbours' average: warmer, it cools; cooler, it warms. So bumps flatten, and no new hot spot forms.
 
-**Each point warms or cools in proportion to its gap from its neighbours' average; with $u$ the temperature and $\kappa$ the rod's diffusivity (how fast heat spreads in it), that is $u_t = \kappa u_{xx}$, a sine bump of frequency $n$ decays as $e^{-\kappa n^2 \pi^2 t}$, and the rod is never hotter inside than at the start or the ends.**
+**Each point warms or cools in proportion to its gap from its neighbours' average; with $`u`$ the temperature and $`\kappa`$ the rod's diffusivity (how fast heat spreads in it), that is $`u_t = \kappa u_{xx}`$, a sine bump of frequency $`n`$ decays as $`e^{-\kappa n^2 \pi^2 t}`$, and the rod is never hotter inside than at the start or the ends.**
 
 **What kind of fact this is:** a model, built from conservation of heat and Fourier's law, a measured law of materials; the decay rate and the maximum principle (no new hot spot inside the rod) are theorems about the model, proved on this card in Why it works.
 
@@ -28,40 +28,44 @@ xychart-beta
     line [1.00, 0.25, 0.06, 0.02, 0.00, 0.00, 0.00, 0.00, 0.00]
 ```
 
-Orange: the arch, $n = 1$, halving every 0.070. Green: the double bump, $n = 2$, at 0.06 of its height when the arch has halved.
+Orange: the arch, $`n = 1`$, halving every 0.070. Green: the double bump, $`n = 2`$, at 0.06 of its height when the arch has halved.
 
 ---
 
 ## The formula
 
-Notation from [A partial differential equation](01-what-a-pde-says.md): $u(x, t)$ is the temperature at place $x$ and time $t$; a subscript means a rate with the other variable held still, so $u_t$ is how fast one spot warms and $u_{xx}$ is the bend of the profile along the rod.
+Notation from [A partial differential equation](01-what-a-pde-says.md): $`u(x, t)`$ is the temperature at place $`x`$ and time $`t`$; a subscript means a rate with the other variable held still, so $`u_t`$ is how fast one spot warms and $`u_{xx}`$ is the bend of the profile along the rod.
 
-$$u_t = \kappa\, u_{xx}, \qquad u(0, t) = u(1, t) = 0, \qquad u(x, 0) = \sin(\pi x)$$
+```math
+u_t = \kappa\, u_{xx}, \qquad u(0, t) = u(1, t) = 0, \qquad u(x, 0) = \sin(\pi x)
+```
 
 **Read it aloud:** each spot warms at the diffusivity times the bend of the profile there; the ends stay at 0; the rod starts as one arch.
 
-For a start of frequency $n$, $\sin(n\pi x)$, the solution is
+For a start of frequency $`n`$, $`\sin(n\pi x)`$, the solution is
 
-$$u(x, t) = e^{-\lambda_n t} \sin(n \pi x), \qquad \lambda_n = \kappa\, n^2 \pi^2 .$$
+```math
+u(x, t) = e^{-\lambda_n t} \sin(n \pi x), \qquad \lambda_n = \kappa\, n^2 \pi^2 .
+```
 
 **Read it aloud:** the shape stays; its height shrinks exponentially, at a rate growing with the frequency squared.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | temperature above the ends, in C | 1 in the middle at the start | — |
-| $x$, $t$ | place along the rod in m; time in scaled units | 0 to 1; 0.070 for one half-life | — |
-| $u_t$, $u_{xx}$ | warming rate at one spot; bend of the profile | both −4.87463 at x = 0.3, t = 0.05 | — |
-| $\kappa$ | diffusivity: conductivity over heat capacity, m^2/s | 1 scaled; 1.11e-4 for copper | bumps fade faster |
-| $q$, $k$ | heat flow rightward per unit area; conductivity | $q = -k u_x$ | more flow per degree of slope |
-| $\rho$, $c$ | density; heat to warm 1 kg by 1 C | product: heat capacity per volume | slower change |
-| $n$, $\lambda_n$ | frequency (humps across the rod); its decay rate | 1 and 9.869604; 2 and 39.478418 | rate grows as $n$ squared |
-| $h$ | spacing of grid points along the rod | 0.1, 0.05, 0.025 m | grid error grows as $h$ squared |
+| $`u`$ | temperature above the ends, in C | 1 in the middle at the start | — |
+| $`x`$, $`t`$ | place along the rod in m; time in scaled units | 0 to 1; 0.070 for one half-life | — |
+| $`u_t`$, $`u_{xx}`$ | warming rate at one spot; bend of the profile | both −4.87463 at x = 0.3, t = 0.05 | — |
+| $`\kappa`$ | diffusivity: conductivity over heat capacity, m^2/s | 1 scaled; 1.11e-4 for copper | bumps fade faster |
+| $`q`$, $`k`$ | heat flow rightward per unit area; conductivity | $`q = -k u_x`$ | more flow per degree of slope |
+| $`\rho`$, $`c`$ | density; heat to warm 1 kg by 1 C | product: heat capacity per volume | slower change |
+| $`n`$, $`\lambda_n`$ | frequency (humps across the rod); its decay rate | 1 and 9.869604; 2 and 39.478418 | rate grows as $`n`$ squared |
+| $`h`$ | spacing of grid points along the rod | 0.1, 0.05, 0.025 m | grid error grows as $`h`$ squared |
 
 ### When it holds
 
 - **No heat source inside.** A heater of 20 C per time unit lifts the middle to 2.5 C: the maximum principle fails.
 - **Heat flows down the temperature slope, in proportion to it.** Flip the sign and every ripple explodes.
-- **A uniform rod.** If $k$, $\rho$ or $c$ vary along it, sines stop decaying cleanly.
+- **A uniform rod.** If $`k`$, $`\rho`$ or $`c`$ vary along it, sines stop decaying cleanly.
 - **Insulated sides.** Sides losing heat to the air add a loss term; bumps fade faster.
 - **Ends held at 0 C.** Insulated ends make cosines the natural shapes.
 
@@ -75,35 +79,41 @@ Heat in the rod is neither made nor destroyed. It only moves, from warmer to coo
 
 ### Step 1: conservation on a short slice
 
-Take the slice between $x = a$ and $x = b$, cross-section 1 m^2. Its heat, $\rho c$ times the integral of $u$, changes only by what flows in at the left minus out at the right:
+Take the slice between $`x = a`$ and $`x = b`$, cross-section 1 m^2. Its heat, $`\rho c`$ times the integral of $`u`$, changes only by what flows in at the left minus out at the right:
 
-$$\frac{d}{dt}\int_a^b \rho c\, u \, dx = q(a, t) - q(b, t) = -\int_a^b q_x \, dx .$$
+```math
+\frac{d}{dt}\int_a^b \rho c\, u \, dx = q(a, t) - q(b, t) = -\int_a^b q_x \, dx .
+```
 
-This holds for every slice, however short, so the integrands agree at every point: $\rho c\, u_t = -q_x$.
+This holds for every slice, however short, so the integrands agree at every point: $`\rho c\, u_t = -q_x`$.
 
 ### Step 2: Fourier's law closes the equation
 
-Joseph Fourier's law of conduction, published in 1822, says the flow runs down the temperature slope: $q = -k u_x$, the minus sign sending heat from warm to cool. Substitute it:
+Joseph Fourier's law of conduction, published in 1822, says the flow runs down the temperature slope: $`q = -k u_x`$, the minus sign sending heat from warm to cool. Substitute it:
 
-$$\rho c\, u_t = k\, u_{xx}, \qquad\text{so}\qquad u_t = \kappa\, u_{xx}, \quad \kappa = \frac{k}{\rho c} .$$
+```math
+\rho c\, u_t = k\, u_{xx}, \qquad\text{so}\qquad u_t = \kappa\, u_{xx}, \quad \kappa = \frac{k}{\rho c} .
+```
 
-$\kappa$ has units of m^2/s: conductivity drives change, heat capacity resists it.
+$`\kappa`$ has units of m^2/s: conductivity drives change, heat capacity resists it.
 
 ### Step 3: the bend is a gap from the neighbours' average
 
-Put points a small distance $h$ apart. The standard estimate of the bend is
+Put points a small distance $`h`$ apart. The standard estimate of the bend is
 
-$$u_{xx} \approx \frac{u(x-h) - 2u(x) + u(x+h)}{h^2} = \frac{2}{h^2}\left(\frac{u(x-h) + u(x+h)}{2} - u(x)\right).$$
+```math
+u_{xx} \approx \frac{u(x-h) - 2u(x) + u(x+h)}{h^2} = \frac{2}{h^2}\left(\frac{u(x-h) + u(x+h)}{2} - u(x)\right).
+```
 
 The bracket is the neighbours' average minus the point. So: **each point moves toward its neighbours' average, at a rate proportional to the gap.** A peak sinks, a dip fills, a straight profile stays.
 
-Stepping this rule forward with time steps of $h^2/4$ is the code's second road. Each new value is half the old one plus a quarter of each neighbour: an average, never above the largest of the three. That is the grid's own maximum principle; the method has its own card, [Stepping the heat equation on a grid](09-finite-differences-for-the-heat-equation.md).
+Stepping this rule forward with time steps of $`h^2/4`$ is the code's second road. Each new value is half the old one plus a quarter of each neighbour: an average, never above the largest of the three. That is the grid's own maximum principle; the method has its own card, [Stepping the heat equation on a grid](09-finite-differences-for-the-heat-equation.md).
 
-### Step 4: the sine keeps its shape and decays at rate $\kappa n^2\pi^2$
+### Step 4: the sine keeps its shape and decays at rate $`\kappa n^2\pi^2`$
 
-Try $u = e^{-\lambda t}\sin(n\pi x)$. Differentiating in time multiplies it by $-\lambda$; twice in place, by $-n^2\pi^2$, each derivative bringing out $n\pi$ and the pair flipping the sign. The equation then asks $-\lambda u = -\kappa n^2 \pi^2 u$, so $\lambda = \kappa n^2 \pi^2$. The ends stay at 0, since $\sin(n\pi) = 0$.
+Try $`u = e^{-\lambda t}\sin(n\pi x)`$. Differentiating in time multiplies it by $`-\lambda`$; twice in place, by $`-n^2\pi^2`$, each derivative bringing out $`n\pi`$ and the pair flipping the sign. The equation then asks $`-\lambda u = -\kappa n^2 \pi^2 u`$, so $`\lambda = \kappa n^2 \pi^2`$. The ends stay at 0, since $`\sin(n\pi) = 0`$.
 
-The height halves when $e^{-\lambda t} = 1/2$, at $t = \ln 2 / \lambda$: 0.070230 for the arch, 0.017558 for the double bump.
+The height halves when $`e^{-\lambda t} = 1/2`$, at $`t = \ln 2 / \lambda`$: 0.070230 for the arch, 0.017558 for the double bump.
 
 Why the square? Doubling the frequency halves the distance from warm hump to cold dip and doubles the slope between them: half as far, pushed twice as hard.
 
@@ -111,16 +121,16 @@ Why the square? Doubling the frequency halves the distance from warm hump to col
 
 **Over any stretch of time, the rod's hottest temperature is reached at the start or at an end; no point inside ever exceeds it.** Likewise the coldest, so bumps and dips only shrink.
 
-The idea: at a hottest point inside the rod the profile is capped, so $u_{xx} \le 0$ and $u_t \le 0$: the spot is not warming. A tiny tilt makes that airtight.
+The idea: at a hottest point inside the rod the profile is capped, so $`u_{xx} \le 0`$ and $`u_t \le 0`$: the spot is not warming. A tiny tilt makes that airtight.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let M be the largest value of $u$ at time 0 or at the two ends, over times 0 to T. Pick any $\varepsilon > 0$ and set $v = u + \varepsilon x^2$. Then $v_t - \kappa v_{xx} = u_t - \kappa u_{xx} - 2\kappa\varepsilon = -2\kappa\varepsilon < 0$.
+Let M be the largest value of $`u`$ at time 0 or at the two ends, over times 0 to T. Pick any $`\varepsilon > 0`$ and set $`v = u + \varepsilon x^2`$. Then $`v_t - \kappa v_{xx} = u_t - \kappa u_{xx} - 2\kappa\varepsilon = -2\kappa\varepsilon < 0`$.
 
-Suppose v reaches its largest value over the rod and the time span at a point with $0 < x < 1$ and $0 < t \le T$. There v is at a peak along the rod, so $v_{xx} \le 0$; and it was no larger a moment earlier, so $v_t \ge 0$ (a one-sided rate if $t = T$). Then $v_t - \kappa v_{xx} \ge 0$, which contradicts the strict inequality. So the largest value of v lies at $t = 0$ or at an end, where $v \le M + \varepsilon$.
+Suppose v reaches its largest value over the rod and the time span at a point with $`0 < x < 1`$ and $`0 < t \le T`$. There v is at a peak along the rod, so $`v_{xx} \le 0`$; and it was no larger a moment earlier, so $`v_t \ge 0`$ (a one-sided rate if $`t = T`$). Then $`v_t - \kappa v_{xx} \ge 0`$, which contradicts the strict inequality. So the largest value of v lies at $`t = 0`$ or at an end, where $`v \le M + \varepsilon`$.
 
-Hence $u \le v \le M + \varepsilon$ everywhere, for every ε > 0, so $u \le M$. The same argument on $-u$ gives the minimum. A heater breaks the first line: with a source, $v_t - \kappa v_{xx}$ need not be negative.
+Hence $`u \le v \le M + \varepsilon`$ everywhere, for every ε > 0, so $`u \le M`$. The same argument on $`-u`$ gives the minimum. A heater breaks the first line: with a source, $`v_t - \kappa v_{xx}`$ need not be negative.
 
 </details>
 
@@ -138,7 +148,7 @@ Scale: 300 units per metre across, 90 per degree up, zero at 120. After one half
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| arch's decay rate | $\kappa n^2\pi^2$ = 1 × 1 × 9.869604 | 9.869604 |
+| arch's decay rate | $`\kappa n^2\pi^2`$ = 1 × 1 × 9.869604 | 9.869604 |
 | arch's half-life | 0.693147 ÷ 9.869604 | **0.070230** |
 | double bump's rate | 1 × 4 × 9.869604 | 39.478418 |
 | its half-life | 0.693147 ÷ 39.478418 | **0.017558** |
@@ -150,15 +160,15 @@ Scale: 300 units per metre across, 90 per degree up, zero at 120. After one half
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Rate linear in frequency, $\kappa n\pi^2$ | double-bump half-life 0.035115, true 0.017558 | Two derivatives, two factors of $n$ |
-| Sign flipped, $u_t = -\kappa u_{xx}$ | a 0.001 ripple of frequency 10 grows by e^98.696 = 10^42.86 in 0.1 | Heat running uphill sharpens every bump |
+| Rate linear in frequency, $`\kappa n\pi^2`$ | double-bump half-life 0.035115, true 0.017558 | Two derivatives, two factors of $`n`$ |
+| Sign flipped, $`u_t = -\kappa u_{xx}`$ | a 0.001 ripple of frequency 10 grows by e^98.696 = 10^42.86 in 0.1 | Heat running uphill sharpens every bump |
 | Heater inside, 20 C per time unit | middle 2.499919 at t = 1, above the starting 1 | The principle needs no source; steady peak 20/8 = 2.5 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Road one is the formula, $\ln 2 / (\kappa n^2 \pi^2)$. Road two never uses it: on 10, 20 and 40 intervals it moves each point toward its neighbours' average, time step $h^2/4$, until the middle halves; its error falls by 4 as the spacing halves. The check also differentiates the formula numerically, runs a tent whose peak only falls, and runs the heater.
+Road one is the formula, $`\ln 2 / (\kappa n^2 \pi^2)`$. Road two never uses it: on 10, 20 and 40 intervals it moves each point toward its neighbours' average, time step $`h^2/4`$, until the middle halves; its error falls by 4 as the spacing halves. The check also differentiates the formula numerically, runs a tent whose peak only falls, and runs the heater.
 
 ### Python
 
@@ -354,9 +364,9 @@ ALL CHECKS PASS
 
 Lean proves the sine bump's decay for every frequency, and the maximum principle for every rod that obeys the equation with no heat source.
 
-- Take any diffusivity $\kappa$ and any whole frequency $n$, and set $u = e^{-\kappa n^2 \pi^2 t}\sin(n\pi x)$. Then $u_t = \kappa u_{xx}$ everywhere, both ends stay at 0, and the start is $\sin(n\pi x)$.
-- Suppose $\kappa > 0$, no heat source, no jumps in $u$, and $u$ at most $M$ at the start and both ends. Then $u \le M$ at every point of the rod, at every time up to $T$.
-- Take the arch's half-life, $t = \ln 2 / (\kappa \pi^2)$. Then a sine bump of frequency $n$ is at $(1/2)^{n^2}$ of its starting height.
+- Take any diffusivity $`\kappa`$ and any whole frequency $`n`$, and set $`u = e^{-\kappa n^2 \pi^2 t}\sin(n\pi x)`$. Then $`u_t = \kappa u_{xx}`$ everywhere, both ends stay at 0, and the start is $`\sin(n\pi x)`$.
+- Suppose $`\kappa > 0`$, no heat source, no jumps in $`u`$, and $`u`$ at most $`M`$ at the start and both ends. Then $`u \le M`$ at every point of the rod, at every time up to $`T`$.
+- Take the arch's half-life, $`t = \ln 2 / (\kappa \pi^2)`$. Then a sine bump of frequency $`n`$ is at $`(1/2)^{n^2}`$ of its starting height.
 - The hand sums hold exactly: the rate ratio 4, the double bump's 0.0625, the grid weights summing to 1, and the heater's 2.5.
 
 Decimal values, the grid runs, the tent, the heater run, copper's 633 s and the charts are left to the Python and Rust checks.
@@ -563,11 +573,11 @@ example : (20 / 8 : ℚ) = 25 / 10 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading the rate from the slope, not the bend.** A rod with ends at 10 C and 30 C and a straight profile between has heat flowing through it, yet no spot changes: $u_{xx} = 0$, so $u_t = 0$. What moves a point is its gap from its neighbours' average.
+> **Reading the rate from the slope, not the bend.** A rod with ends at 10 C and 30 C and a straight profile between has heat flowing through it, yet no spot changes: $`u_{xx} = 0`$, so $`u_t = 0`$. What moves a point is its gap from its neighbours' average.
 >
 > - **Frequency to the first power.** The double bump's half-life is 0.017558, not 0.035115.
 > - **Expecting a sine to change shape.** It only shrinks; a mixture changes shape as its parts shrink at different rates.
-> - **Forgetting the scaling.** 0.070 is in units of length squared over $\kappa$: 633 s for 1 m of copper.
+> - **Forgetting the scaling.** 0.070 is in units of length squared over $`\kappa`$: 633 s for 1 m of copper.
 
 ---
 
@@ -579,13 +589,13 @@ example : (20 / 8 : ℚ) = 25 / 10 := by norm_num
 - **Image smoothing.** The neighbour-average rule on a photograph's pixels blurs it, fine detail first.
 
 > **Say it back**
-> Heat is conserved and flows down the temperature slope, which gives $u_t = \kappa u_{xx}$. The bend is a point's gap from its neighbours' average, so every point drifts toward it. A sine bump keeps its shape and decays at rate $\kappa n^2\pi^2$: the arch halves every 0.070, the double bump four times faster. Without a source, the rod is never hotter inside than at the start or ends.
+> Heat is conserved and flows down the temperature slope, which gives $`u_t = \kappa u_{xx}`$. The bend is a point's gap from its neighbours' average, so every point drifts toward it. A sine bump keeps its shape and decays at rate $`\kappa n^2\pi^2`$: the arch halves every 0.070, the double bump four times faster. Without a source, the rod is never hotter inside than at the start or ends.
 
 ---
 
 ## What this builds on
 
-- [A partial differential equation](01-what-a-pde-says.md): the notation $u(x, t)$, $u_t$ and $u_{xx}$, and what it means for an equation to hold at every place and time.
+- [A partial differential equation](01-what-a-pde-says.md): the notation $`u(x, t)`$, $`u_t`$ and $`u_{xx}`$, and what it means for an equation to hold at every place and time.
 
 ## Where this goes next
 
@@ -598,7 +608,7 @@ example : (20 / 8 : ℚ) = 25 / 10 := by norm_num
 - [Three families](../../16-Numerical%20analysis/07-PDE%20Solvers/01-pde-families-elliptic-parabolic-hyperbolic.md): the model parabolic equation, one rate in time and a bend in space, which smooths as time runs.
 - Hille-Yosida: when such a law defines an evolution.
 - Two evolutions: the solution as an exponential of the bend.
-- Solving differential equations by transform: the $n^2$ decay as a multiplier.
+- Solving differential equations by transform: the $`n^2`$ decay as a multiplier.
 - Volume form and Laplace-Beltrami: the bend on a curved surface.
 - Ricci flow: a heat equation smoothing a space's shape.
 

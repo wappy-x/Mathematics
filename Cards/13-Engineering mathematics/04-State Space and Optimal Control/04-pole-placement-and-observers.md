@@ -34,39 +34,45 @@ Crosses: the open loop, with the falling rod at +4 on the wrong side. Filled dot
 
 ## The formula
 
-The state is $x = (p, v, \theta, \omega)$: cart position, cart speed, lean and lean rate ([State space](01-state-space-models-and-the-matrix-exponential.md)). A prime marks the rate of change, so $x'$ is how fast $x$ moves. Near upright the plant is $x' = Ax + Bu$, with $p'' = u$ and $\theta'' = 16\,\theta - c\,u$ ([Linearisation](02-linearisation-about-an-equilibrium.md)). The readings are $y = Cx$, the cart position and the lean. The controller and the observer are
+The state is $`x = (p, v, \theta, \omega)`$: cart position, cart speed, lean and lean rate ([State space](01-state-space-models-and-the-matrix-exponential.md)). A prime marks the rate of change, so $`x'`$ is how fast $`x`$ moves. Near upright the plant is $`x' = Ax + Bu`$, with $`p'' = u`$ and $`\theta'' = 16\,\theta - c\,u`$ ([Linearisation](02-linearisation-about-an-equilibrium.md)). The readings are $`y = Cx`$, the cart position and the lean. The controller and the observer are
 
-$$u = -K\hat x, \qquad \hat x' = A\hat x + Bu + L\,(y - C\hat x),$$
+```math
+u = -K\hat x, \qquad \hat x' = A\hat x + Bu + L\,(y - C\hat x),
+```
 
 with the gains chosen so that
 
-$$\det(sI - A + BK) = \Delta_c(s), \qquad \det(sI - A + LC) = \Delta_o(s),$$
+```math
+\det(sI - A + BK) = \Delta_c(s), \qquad \det(sI - A + LC) = \Delta_o(s),
+```
 
 and for one motor the controller gain has a closed form, Ackermann's formula:
 
-$$K = \begin{pmatrix} 0 & 0 & 0 & 1 \end{pmatrix} \mathcal{C}^{-1}\,\Delta_c(A), \qquad \mathcal{C} = \begin{pmatrix} B & AB & A^2B & A^3B \end{pmatrix}.$$
+```math
+K = \begin{pmatrix} 0 & 0 & 0 & 1 \end{pmatrix} \mathcal{C}^{-1}\,\Delta_c(A), \qquad \mathcal{C} = \begin{pmatrix} B & AB & A^2B & A^3B \end{pmatrix}.
+```
 
-Here $\det$ is the determinant, and $\Delta_c(A)$ means the chosen polynomial with the matrix $A$ put in place of $s$. The observer gain $L$ is the same formula applied to $A^\top$ and $C^\top$ (the transposes), then transposed back. The joined loop's polynomial is $\Delta_c(s)\,\Delta_o(s)$.
+Here $`\det`$ is the determinant, and $`\Delta_c(A)`$ means the chosen polynomial with the matrix $`A`$ put in place of $`s`$. The observer gain $`L`$ is the same formula applied to $`A^\top`$ and $`C^\top`$ (the transposes), then transposed back. The joined loop's polynomial is $`\Delta_c(s)\,\Delta_o(s)`$.
 
 **Read it aloud:** push by minus a gain times the estimated state; run a copy of the model and correct it by a gain times the reading's surprise; pick both gains so that the two characteristic polynomials come out as the ones you wrote down.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $\hat x$, $e$ | the state $(p, v, \theta, \omega)$ in m, m/s, rad, rad/s; the observer's estimate of it; the estimation error $e = x - \hat x$ | start $x = (0, 0, 0.05, 0)$, $\hat x = 0$ | — |
-| $u$ | push: the cart acceleration the motor commands, m/s² | peak 7.940 m/s² with the state known, 7.070 with the observer | — |
-| $A$, $B$, $I$, $\bar A$ | how the state drifts; how the push enters, `B = (0, 1, 0, −c)`; the identity matrix; $\bar A = A - BK$, the closed loop | $A$ holds the 16 | — |
-| $16$, $l$, $c$ | gravity over rod length, $g/l$ with $g = 9.81$ m/s² (NIST CODATA standard gravity, rounded), per s²; rod length; $c = 1/l$, per m | 16; 0.613125 m; 1.630989 per m | a shorter rod falls faster |
-| $y$, $C$ | the readings; $C$ picks out the cart position and the lean | two readings, no speeds | — |
-| $K$, $k_1 \ldots k_4$, $k_\theta$, $k_\omega$ | controller gain, one number per state, in 1/s², 1/s, m/s² per rad, m/s² per rad/s; $k_\theta$, $k_\omega$ the two gains when the rod is balanced alone | −81, −40.5, −158.799, −35.868; 32 per s² and 8 per s | harder pushes |
-| $L$, $\ell_1$, $\ell_2$ | observer gain, a 4 × 2 table; $\ell_1$, $\ell_2$ its two entries for one reading | cart (20, 100), rod (20, 116) | faster estimate, more noise let through |
-| $s$, $j$ | the Laplace variable; a pole is a value of $s$; $j = \sqrt{-1}$ | −3 ± 3j, −6 ± 6j | — |
-| $\Delta_c$, $a_3 \ldots a_0$ | the chosen controller polynomial $s^4 + a_3 s^3 + a_2 s^2 + a_1 s + a_0$ | 18, 162, 648, 1296 | — |
-| $\Delta_o$ | the chosen observer polynomial | $(s + 10)^4$ | — |
-| $\mathcal{C}$ | the controllability matrix: what the push reaches in one, two, three and four integrations | invertible | — |
+| $`x`$, $`\hat x`$, $`e`$ | the state $`(p, v, \theta, \omega)`$ in m, m/s, rad, rad/s; the observer's estimate of it; the estimation error $`e = x - \hat x`$ | start $`x = (0, 0, 0.05, 0)`$, $`\hat x = 0`$ | — |
+| $`u`$ | push: the cart acceleration the motor commands, m/s² | peak 7.940 m/s² with the state known, 7.070 with the observer | — |
+| $`A`$, $`B`$, $`I`$, $`\bar A`$ | how the state drifts; how the push enters, `B = (0, 1, 0, −c)`; the identity matrix; $`\bar A = A - BK`$, the closed loop | $`A`$ holds the 16 | — |
+| $`16`$, $`l`$, $`c`$ | gravity over rod length, $`g/l`$ with $`g = 9.81`$ m/s² (NIST CODATA standard gravity, rounded), per s²; rod length; $`c = 1/l`$, per m | 16; 0.613125 m; 1.630989 per m | a shorter rod falls faster |
+| $`y`$, $`C`$ | the readings; $`C`$ picks out the cart position and the lean | two readings, no speeds | — |
+| $`K`$, $`k_1 \ldots k_4`$, $`k_\theta`$, $`k_\omega`$ | controller gain, one number per state, in 1/s², 1/s, m/s² per rad, m/s² per rad/s; $`k_\theta`$, $`k_\omega`$ the two gains when the rod is balanced alone | −81, −40.5, −158.799, −35.868; 32 per s² and 8 per s | harder pushes |
+| $`L`$, $`\ell_1`$, $`\ell_2`$ | observer gain, a 4 × 2 table; $`\ell_1`$, $`\ell_2`$ its two entries for one reading | cart (20, 100), rod (20, 116) | faster estimate, more noise let through |
+| $`s`$, $`j`$ | the Laplace variable; a pole is a value of $`s`$; $`j = \sqrt{-1}`$ | −3 ± 3j, −6 ± 6j | — |
+| $`\Delta_c`$, $`a_3 \ldots a_0`$ | the chosen controller polynomial $`s^4 + a_3 s^3 + a_2 s^2 + a_1 s + a_0`$ | 18, 162, 648, 1296 | — |
+| $`\Delta_o`$ | the chosen observer polynomial | $`(s + 10)^4`$ | — |
+| $`\mathcal{C}`$ | the controllability matrix: what the push reaches in one, two, three and four integrations | invertible | — |
 
 ### When it holds
 
-- **Every state steerable.** The proof needs $\mathcal{C}$ invertible ([Can you steer every state, and can you see every state](03-controllability-and-observability.md)). A pole the push cannot reach stays where it is, whatever $K$ is.
+- **Every state steerable.** The proof needs $`\mathcal{C}`$ invertible ([Can you steer every state, and can you see every state](03-controllability-and-observability.md)). A pole the push cannot reach stays where it is, whatever $`K`$ is.
 - **Every state seen.** The observer needs the readings to reveal every state. Read the lean alone and the cart's estimate can only count its own pushes. Bump the cart to 0.1 m/s and the observer never notices: after 10 s the cart is 1.0000 m from home and still rolling at 0.1000 m/s, while the controller believes it is parked.
 - **The model is the plant.** Separation is exact only when the observer's copy matches the real thing. With the controller and observer built for 0.613125 m, the joined loop stays stable for a real rod from 0.3005 m to 0.7635 m. A rod 10% long still balances, but the rod takes 3.610 s to settle instead of 1.977 s.
 - **Small angles and an unlimited motor.** The model is straight-line about upright, and pole placement never asks what the push costs. Doubling every pole's speed asks for a push of 60.086 m/s².
@@ -78,58 +84,66 @@ Here $\det$ is the determinant, and $\Delta_c(A)$ means the chosen polynomial wi
 
 ### Step 0: four gains, four coefficients
 
-The closed loop's rates are the roots of its characteristic polynomial ([The characteristic equation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md)), which are the eigenvalues of $A - BK$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). A four-state loop has a polynomial with four free coefficients below the leading $s^4$. Each coefficient turns out to be a straight-line function of the four gains. Four unknowns, four straight-line equations: if the equations are independent, there is exactly one gain for any polynomial you ask for. "Independent" is precisely "every state steerable".
+The closed loop's rates are the roots of its characteristic polynomial ([The characteristic equation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md)), which are the eigenvalues of $`A - BK`$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). A four-state loop has a polynomial with four free coefficients below the leading $`s^4`$. Each coefficient turns out to be a straight-line function of the four gains. Four unknowns, four straight-line equations: if the equations are independent, there is exactly one gain for any polynomial you ask for. "Independent" is precisely "every state steerable".
 
 ### Step 1: the rod alone, by hand
 
-Ignore the cart for a moment. The rod obeys $\theta'' = 16\,\theta - u/l$. Push by $u = l\,(k_\theta\,\theta + k_\omega\,\omega)$ and the rod obeys $\theta'' = (16 - k_\theta)\,\theta - k_\omega\,\omega$, whose polynomial is $s^2 + k_\omega s + (k_\theta - 16)$. Each gain sets one coefficient. Ask for $(s + 4)^2 = s^2 + 8s + 16$ and you need $k_\omega = 8$ and $k_\theta = 32$: the push $u = 19.6200\,\theta + 4.9050\,\omega$ in m/s². That is the balancing rule that [The Kalman filter](07-kalman-filter.md) feeds its estimates into.
+Ignore the cart for a moment. The rod obeys $`\theta'' = 16\,\theta - u/l`$. Push by $`u = l\,(k_\theta\,\theta + k_\omega\,\omega)`$ and the rod obeys $`\theta'' = (16 - k_\theta)\,\theta - k_\omega\,\omega`$, whose polynomial is $`s^2 + k_\omega s + (k_\theta - 16)`$. Each gain sets one coefficient. Ask for $`(s + 4)^2 = s^2 + 8s + 16`$ and you need $`k_\omega = 8`$ and $`k_\theta = 32`$: the push $`u = 19.6200\,\theta + 4.9050\,\omega`$ in m/s². That is the balancing rule that [The Kalman filter](07-kalman-filter.md) feeds its estimates into.
 
 ### Step 2: the whole cart, by matching coefficients
 
-Now all four. Push by $u = -(k_1 p + k_2 v + k_3 \theta + k_4 \omega)$. Write each motion as an exponential at rate $s$: the cart gives $s^2 p = u$, the rod $(s^2 - 16)\,\theta = -c\,u$. Put both into the push, clear the fractions by multiplying through by $s^2(s^2 - 16)$, and the loop's polynomial comes out as
+Now all four. Push by $`u = -(k_1 p + k_2 v + k_3 \theta + k_4 \omega)`$. Write each motion as an exponential at rate $`s`$: the cart gives $`s^2 p = u`$, the rod $`(s^2 - 16)\,\theta = -c\,u`$. Put both into the push, clear the fractions by multiplying through by $`s^2(s^2 - 16)`$, and the loop's polynomial comes out as
 
-$$s^4 + (k_2 - c\,k_4)\,s^3 + (k_1 - 16 - c\,k_3)\,s^2 - 16\,k_2\,s - 16\,k_1.$$
+```math
+s^4 + (k_2 - c\,k_4)\,s^3 + (k_1 - 16 - c\,k_3)\,s^2 - 16\,k_2\,s - 16\,k_1.
+```
 
-Every coefficient is a straight-line function of the gains, as Step 0 promised. Match it against the chosen $s^4 + a_3 s^3 + a_2 s^2 + a_1 s + a_0$ and read off the gains from the bottom up:
+Every coefficient is a straight-line function of the gains, as Step 0 promised. Match it against the chosen $`s^4 + a_3 s^3 + a_2 s^2 + a_1 s + a_0`$ and read off the gains from the bottom up:
 
-$$k_1 = -\frac{a_0}{16}, \quad k_2 = -\frac{a_1}{16}, \quad k_3 = \frac{k_1 - 16 - a_2}{c}, \quad k_4 = \frac{k_2 - a_3}{c}.$$
+```math
+k_1 = -\frac{a_0}{16}, \quad k_2 = -\frac{a_1}{16}, \quad k_3 = \frac{k_1 - 16 - a_2}{c}, \quad k_4 = \frac{k_2 - a_3}{c}.
+```
 
 All four gains come out negative. A negative cart gain looks backwards: the cart sits right of home and the push is to the right. It is not. To bring the cart left, the rod must first lean left, and the only way to lean it left is to drive the cart right underneath it. The cart moves away from home before it comes back.
 
 ### Step 3: why any steerable plant works
 
-Matching coefficients worked because this plant's algebra was easy. Ackermann's formula does the same job for any one-motor plant whose $\mathcal{C}$ is invertible, and the checks confirm it gives the same four gains to every printed digit.
+Matching coefficients worked because this plant's algebra was easy. Ackermann's formula does the same job for any one-motor plant whose $`\mathcal{C}`$ is invertible, and the checks confirm it gives the same four gains to every printed digit.
 
 <details>
 <summary>Detailed proof: Ackermann's formula places the poles</summary>
 
-Write $\bar A = A - BK$ for the closed loop. Then $A = \bar A + BK$, and by induction
+Write $`\bar A = A - BK`$ for the closed loop. Then $`A = \bar A + BK`$, and by induction
 
-$$A^k = \bar A^k + \sum_{i=0}^{k-1} A^i B\,K\,\bar A^{\,k-1-i}.$$
+$`\displaystyle A^k = \bar A^k + \sum_{i=0}^{k-1} A^i B\,K\,\bar A^{\,k-1-i}.`$
 
-(For $k = 2$: $A^2 = A\bar A + ABK = \bar A^2 + BK\bar A + ABK$.)
+(For $`k = 2`$: $`A^2 = A\bar A + ABK = \bar A^2 + BK\bar A + ABK`$.)
 
-Suppose $K$ places the poles, so $\Delta_c$ is the characteristic polynomial of $\bar A$. Form $\Delta_c(A) = A^4 + a_3 A^3 + a_2 A^2 + a_1 A + a_0 I$ and substitute the expansion. The $\bar A$ powers add up to $\Delta_c(\bar A)$, which is zero: every matrix satisfies its own characteristic polynomial (the Cayley–Hamilton theorem). What remains is a sum of terms $A^i B$ times a row, that is $\mathcal{C}$ times a stack of four rows. The row multiplying $A^3B$ comes only from the $A^4$ term with $i = 3$, and it is $K$ itself. So $K$ is the last row of $\mathcal{C}^{-1}\Delta_c(A)$, which is the formula.
+Suppose $`K`$ places the poles, so $`\Delta_c`$ is the characteristic polynomial of $`\bar A`$. Form $`\Delta_c(A) = A^4 + a_3 A^3 + a_2 A^2 + a_1 A + a_0 I`$ and substitute the expansion. The $`\bar A`$ powers add up to $`\Delta_c(\bar A)`$, which is zero: every matrix satisfies its own characteristic polynomial (the Cayley–Hamilton theorem). What remains is a sum of terms $`A^i B`$ times a row, that is $`\mathcal{C}`$ times a stack of four rows. The row multiplying $`A^3B`$ comes only from the $`A^4`$ term with $`i = 3`$, and it is $`K`$ itself. So $`K`$ is the last row of $`\mathcal{C}^{-1}\Delta_c(A)`$, which is the formula.
 
-That shows any placing gain must equal the formula. To see that one exists, change coordinates into the companion form, by an invertible matrix built from $\mathcal{C}$ (it exists exactly when $\mathcal{C}$ is invertible). In the companion form, $B$ is $(0, 0, 0, 1)$ and the last row of $A$ holds the open-loop coefficients with their signs flipped. There the push only touches the last row, and $A - BK$ has last row equal to minus (open-loop coefficients plus $K$). Any target polynomial is then one subtraction away. With several motors the same theorem holds but the gain is no longer unique (Wonham, 1967).
+That shows any placing gain must equal the formula. To see that one exists, change coordinates into the companion form, by an invertible matrix built from $`\mathcal{C}`$ (it exists exactly when $`\mathcal{C}`$ is invertible). In the companion form, $`B`$ is $`(0, 0, 0, 1)`$ and the last row of $`A`$ holds the open-loop coefficients with their signs flipped. There the push only touches the last row, and $`A - BK`$ has last row equal to minus (open-loop coefficients plus $`K`$). Any target polynomial is then one subtraction away. With several motors the same theorem holds but the gain is no longer unique (Wonham, 1967).
 
 </details>
 
 ### Step 4: the observer, by turning the problem on its side
 
-The observer's copy obeys $\hat x' = A\hat x + Bu + L(y - C\hat x)$. Subtract it from the real plant $x' = Ax + Bu$ and the push cancels:
+The observer's copy obeys $`\hat x' = A\hat x + Bu + L(y - C\hat x)`$. Subtract it from the real plant $`x' = Ax + Bu`$ and the push cancels:
 
-$$e' = (A - LC)\,e.$$
+```math
+e' = (A - LC)\,e.
+```
 
-The error dies at the eigenvalues of $A - LC$. A matrix and its transpose have the same eigenvalues, and $(A - LC)^\top = A^\top - C^\top L^\top$. That is a controller problem: plant $A^\top$, "push" entering through $C^\top$, "gain" $L^\top$. Solve it with Step 2 or Step 3 and transpose the answer. This is **duality**. Its condition, the dual plant being steerable, is word for word the original plant being seeable.
+The error dies at the eigenvalues of $`A - LC`$. A matrix and its transpose have the same eigenvalues, and $`(A - LC)^\top = A^\top - C^\top L^\top`$. That is a controller problem: plant $`A^\top`$, "push" entering through $`C^\top`$, "gain" $`L^\top`$. Solve it with Step 2 or Step 3 and transpose the answer. This is **duality**. Its condition, the dual plant being steerable, is word for word the original plant being seeable.
 
-Here $A$ splits into a cart block and a rod block, and each reading sees one block, so each gets its own two-number gain. For the rod, $A - LC$ is `[[−ℓ1, 1], [16 − ℓ2, 0]]`, with polynomial $s^2 + \ell_1 s + (\ell_2 - 16)$. For the cart it is $s^2 + \ell_1 s + \ell_2$. Ask for $(s + 10)^2 = s^2 + 20s + 100$ from each: the cart needs $(20, 100)$ and the rod $(20, 116)$. The 16 extra on the rod is the observer cancelling the rod's own fall.
+Here $`A`$ splits into a cart block and a rod block, and each reading sees one block, so each gets its own two-number gain. For the rod, $`A - LC`$ is `[[−ℓ1, 1], [16 − ℓ2, 0]]`, with polynomial $`s^2 + \ell_1 s + (\ell_2 - 16)`$. For the cart it is $`s^2 + \ell_1 s + \ell_2`$. Ask for $`(s + 10)^2 = s^2 + 20s + 100`$ from each: the cart needs $`(20, 100)`$ and the rod $`(20, 116)`$. The 16 extra on the rod is the observer cancelling the rod's own fall.
 
 ### Step 5: separation, the joined loop keeps both sets of poles
 
-Feed the estimate to the controller: $x' = Ax - BK\hat x$. Replace $\hat x$ by $x - e$:
+Feed the estimate to the controller: $`x' = Ax - BK\hat x`$. Replace $`\hat x`$ by $`x - e`$:
 
-$$\begin{pmatrix} x \\ e \end{pmatrix}' = \begin{pmatrix} A - BK & BK \\ 0 & A - LC \end{pmatrix}\begin{pmatrix} x \\ e \end{pmatrix}.$$
+```math
+\begin{pmatrix} x \\ e \end{pmatrix}' = \begin{pmatrix} A - BK & BK \\ 0 & A - LC \end{pmatrix}\begin{pmatrix} x \\ e \end{pmatrix}.
+```
 
 The bottom-left block is zero: the error ignores the state, because the observer sees the same push the plant does. The determinant of a block-triangular matrix is the product of the diagonal blocks' determinants, so the eight poles are the controller's four plus the observer's four. You can design the two halves apart. The checks build the joined 8 × 8 matrix in the original coordinates, compute its polynomial without knowing this argument, and get the product, coefficient for coefficient.
 
@@ -137,22 +151,22 @@ The bottom-left block is zero: the error ignores the state, because the observer
 
 ## Worked numbers, by hand
 
-The target: settle in two seconds. A pole pair with real part −3 per s dies away roughly as $e^{-3t}$. So settling time is set by the distance of the slowest poles from the imaginary axis ([Step response specs](../02-Linear%20Systems%20and%20Transforms/07-step-response-specifications.md)). Real part −3 settles the rod in 1.443 s with the state known, which leaves room for the observer to catch up. The faster pair sits twice as far out on the same damping line.
+The target: settle in two seconds. A pole pair with real part −3 per s dies away roughly as $`e^{-3t}`$. So settling time is set by the distance of the slowest poles from the imaginary axis ([Step response specs](../02-Linear%20Systems%20and%20Transforms/07-step-response-specifications.md)). Real part −3 settles the rod in 1.443 s with the state known, which leaves room for the observer to catch up. The faster pair sits twice as far out on the same damping line.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| slow pair, $(s + 3)^2 + 9$ | $s^2 + 6s + 18$ | — |
-| fast pair, $(s + 6)^2 + 36$ | $s^2 + 12s + 72$ | — |
-| $\Delta_c$, the product | $s^4 + (6 + 12)s^3 + (72 + 72 + 18)s^2 + (432 + 216)s + 1296$ | 18, 162, 648, 1296 |
-| $c$ | $16 / 9.81$ | 1.630989 per m |
-| $k_1 = -a_0/16$ | $-1296/16$ | −81 |
-| $k_2 = -a_1/16$ | $-648/16$ | −40.5 |
-| $k_3 = (k_1 - 16 - a_2)/c$ | $-259 \times 0.613125$ | −158.799 |
-| $k_4 = (k_2 - a_3)/c$ | $-58.5 \times 0.613125$ | −35.868 |
-| first push, $u = -k_3 \times 0.05$ | $158.799 \times 0.05$ | 7.940 m/s² |
-| observer, cart $(\ell_1, \ell_2)$ | $(s+10)^2$: $20$, $100$ | (20, 100) |
-| observer, rod $(\ell_1, \ell_2)$ | $20$, $100 + 16$ | (20, 116) |
-| joined, $s^7$ coefficient | $18 + 40$ | 58 |
+| slow pair, $`(s + 3)^2 + 9`$ | $`s^2 + 6s + 18`$ | — |
+| fast pair, $`(s + 6)^2 + 36`$ | $`s^2 + 12s + 72`$ | — |
+| $`\Delta_c`$, the product | $`s^4 + (6 + 12)s^3 + (72 + 72 + 18)s^2 + (432 + 216)s + 1296`$ | 18, 162, 648, 1296 |
+| $`c`$ | $`16 / 9.81`$ | 1.630989 per m |
+| $`k_1 = -a_0/16`$ | $`-1296/16`$ | −81 |
+| $`k_2 = -a_1/16`$ | $`-648/16`$ | −40.5 |
+| $`k_3 = (k_1 - 16 - a_2)/c`$ | $`-259 \times 0.613125`$ | −158.799 |
+| $`k_4 = (k_2 - a_3)/c`$ | $`-58.5 \times 0.613125`$ | −35.868 |
+| first push, $`u = -k_3 \times 0.05`$ | $`158.799 \times 0.05`$ | 7.940 m/s² |
+| observer, cart $`(\ell_1, \ell_2)`$ | $`(s+10)^2`$: $`20`$, $`100`$ | (20, 100) |
+| observer, rod $`(\ell_1, \ell_2)`$ | $`20`$, $`100 + 16`$ | (20, 116) |
+| joined, $`s^7`$ coefficient | $`18 + 40`$ | 58 |
 | **settling, observer in the loop** | simulated | **rod 1.977 s, cart 1.177 s** |
 
 The rod is inside 1 mrad of upright and the cart inside 1 cm of home 1.977 s after the knock. With the state known, the times are 1.443 s and 0.668 s. The observer's catch-up costs the difference, which is what the margin was for.
@@ -182,9 +196,9 @@ From 1.0 s on, estimate and truth lie on top of each other, and the loop rides t
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Push with $u = +Kx$, sign flipped | a pole at +26.362 per s: the rod falls faster than with no control at all | the gain was solved for $A - BK$; flipping the sign builds $A + BK$ |
-| Design with $B = (0, 1, 0, +c)$ | poles at +2.186 and +102.413 per s on the real cart | the model said pushing right tips the rod right; it tips it left, so every gain is aimed wrong |
-| Observer reads the lean only | cart bumped to 0.1 m/s: 1.0000 m from home after 10 s, still rolling at 0.1000 m/s | the cart is not observable from the lean; its error poles stay at 0 and 0 whatever $L$ is |
+| Push with $`u = +Kx`$, sign flipped | a pole at +26.362 per s: the rod falls faster than with no control at all | the gain was solved for $`A - BK`$; flipping the sign builds $`A + BK`$ |
+| Design with $`B = (0, 1, 0, +c)`$ | poles at +2.186 and +102.413 per s on the real cart | the model said pushing right tips the rod right; it tips it left, so every gain is aimed wrong |
+| Observer reads the lean only | cart bumped to 0.1 m/s: 1.0000 m from home after 10 s, still rolling at 0.1000 m/s | the cart is not observable from the lean; its error poles stay at 0 and 0 whatever $`L`$ is |
 | Observer slower than the controller, all at −1 | rod settles in 2.540 s, cart in 3.936 s | the loop can be no faster than its slowest pole; now the estimate is the bottleneck |
 
 ---
@@ -195,7 +209,7 @@ The scripts build the cart from its rod length and reach the design by **four in
 
 - Road 1 is the hand formula of Step 2.
 - Road 2 is Ackermann's formula, with its own matrix inverse by Gaussian elimination; the two gains must agree.
-- Road 3 recomputes the closed loop's polynomial from the matrix $A - BK$ by the Faddeev–LeVerrier recursion, which never sees how the gain was found. It finds the roots by Durand–Kerner, which refines all roots at once. It also builds the joined 8 × 8 loop and checks that its polynomial is the product of the two designs.
+- Road 3 recomputes the closed loop's polynomial from the matrix $`A - BK`$ by the Faddeev–LeVerrier recursion, which never sees how the gain was found. It finds the roots by Durand–Kerner, which refines all roots at once. It also builds the joined 8 × 8 loop and checks that its polynomial is the product of the two designs.
 - Road 4 simulates the loop with RK4 ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) in 1 ms steps and measures settling. It then repeats the two main runs in 0.5 ms steps, which must give the same settling times to 2 ms.
 
 Stability under a wrong rod length comes from Routh's test ([Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md)) and bisection. The Durand–Kerner roots then confirm each edge: the largest real part changes sign within 0.5 mm of it.
@@ -606,10 +620,10 @@ ALL CHECKS PASS
 
 Lean proves the card's three theorems for any number of states, the first two with one motor or one reading.
 
-- Suppose the plant has one motor and every state is steerable. Take any chosen polynomial with real coefficients, shaped like $\Delta_c$. Then exactly one gain $K$ makes it the characteristic polynomial of $A - BK$. Real coefficients mean complex poles come in mirror pairs.
-- Suppose the plant has one reading $y = Cx$ and every state is seen. Take any chosen polynomial with real coefficients, shaped like $\Delta_o$. Then some observer gain $L$ makes it the characteristic polynomial of $A - LC$. The card's cart has two readings, split in Step 4 into two one-reading blocks.
-- Take any plant, with any number of motors and readings, and any gains $K$ and $L$. Then the joined loop, built from $x$ and $\hat x$, has the controller's polynomial times the observer's.
-- Lean also redoes the card's whole-number hand arithmetic, from $\Delta_c$ to the two observer blocks and the 58.
+- Suppose the plant has one motor and every state is steerable. Take any chosen polynomial with real coefficients, shaped like $`\Delta_c`$. Then exactly one gain $`K`$ makes it the characteristic polynomial of $`A - BK`$. Real coefficients mean complex poles come in mirror pairs.
+- Suppose the plant has one reading $`y = Cx`$ and every state is seen. Take any chosen polynomial with real coefficients, shaped like $`\Delta_o`$. Then some observer gain $`L`$ makes it the characteristic polynomial of $`A - LC`$. The card's cart has two readings, split in Step 4 into two one-reading blocks.
+- Take any plant, with any number of motors and readings, and any gains $`K`$ and $`L`$. Then the joined loop, built from $`x`$ and $`\hat x`$, has the controller's polynomial times the observer's.
+- Lean also redoes the card's whole-number hand arithmetic, from $`\Delta_c`$ to the two observer blocks and the 58.
 
 The decimal gains, the settling times, the pushes and the rod-length limits are left to the Python and Rust checks.
 
@@ -945,7 +959,7 @@ example : (18 : ℤ) + 40 = 58 := by norm_num
 > **Pushing the poles far left and calling the job done.** The theorem says you *can* put the poles anywhere. It says nothing about the push that costs. Every step left multiplies the gains, the first push and the noise the motor sees: doubling the poles' speed took the push from 7.940 m/s² to 60.086 m/s². A motor that saturates is no longer the linear loop the poles describe. Pole placement chooses speed; [The LQR](06-linear-quadratic-regulator.md) chooses it by pricing the push.
 >
 > Smaller traps:
-> - **A sign flip.** $u = -Kx$, not $+Kx$: flipped, a pole sits at +26.362 per s.
+> - **A sign flip.** $`u = -Kx`$, not $`+Kx`$: flipped, a pole sits at +26.362 per s.
 > - **The wrong sign on the rod's input.** Pushing the cart right tips the rod left. Design as if it tipped right and the real loop has a pole at +102.413 per s.
 > - **An observer that cannot see.** With the lean alone, a 0.1 m/s bump leaves the cart 1.0000 m away after 10 s, unnoticed.
 > - **An observer slower than the controller.** At −1 the estimate drags the loop: the cart takes 3.936 s.
@@ -968,7 +982,7 @@ example : (18 : ℤ) + 40 = 58 := by norm_num
 ## What this builds on
 
 - [Can you steer every state, and can you see every state](03-controllability-and-observability.md): the two tests, steerable and seeable, that are this card's two hypotheses. Here they become "the gain exists" and "the observer exists".
-- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the poles of $x' = (A - BK)x$ are the eigenvalues of $A - BK$, roots of $\det(sI - A + BK)$.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the poles of $`x' = (A - BK)x`$ are the eigenvalues of $`A - BK`$, roots of $`\det(sI - A + BK)`$.
 - [The characteristic equation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md): guess an exponential and a differential equation becomes a polynomial, whose roots are the rates. Step 2 does exactly that with four states.
 
 ## Where this goes next

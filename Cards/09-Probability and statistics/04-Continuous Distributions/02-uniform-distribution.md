@@ -34,46 +34,52 @@ Bars: the share of 100,000 simulated waits landing in each one-minute slot, prin
 
 ## The formula
 
-Notation first. $X$ is the wait in minutes, a random variable: a number fixed only when the bus comes. The window runs from $a$ to $b$. The shorthand $X \sim \mathrm{Uniform}(a, b)$, read "X is uniform between a and b", names the law. The density $f(x)$ and the cumulative chance $F(x)$ are the ones from [Densities](01-densities-and-cdfs.md): chance per minute, and chance of waiting at most $x$ minutes.
+Notation first. $`X`$ is the wait in minutes, a random variable: a number fixed only when the bus comes. The window runs from $`a`$ to $`b`$. The shorthand $`X \sim \mathrm{Uniform}(a, b)`$, read "X is uniform between a and b", names the law. The density $`f(x)`$ and the cumulative chance $`F(x)`$ are the ones from [Densities](01-densities-and-cdfs.md): chance per minute, and chance of waiting at most $`x`$ minutes.
 
-$$f(x) = \frac{1}{b-a} \text{ for } a \le x \le b, \qquad F(x) = \frac{x-a}{b-a} \text{ for } a \le x \le b$$
+```math
+f(x) = \frac{1}{b-a} \text{ for } a \le x \le b, \qquad F(x) = \frac{x-a}{b-a} \text{ for } a \le x \le b
+```
 
-Outside the window, $f(x) = 0$; $F(x)$ is 0 before $a$ and 1 after $b$.
+Outside the window, $`f(x) = 0`$; $`F(x)`$ is 0 before $`a`$ and 1 after $`b`$.
 
-**Read it aloud:** the chance per minute is one over the window's length, so the chance of waiting at most $x$ is the fraction of the window already used up.
+**Read it aloud:** the chance per minute is one over the window's length, so the chance of waiting at most $`x`$ is the fraction of the window already used up.
 
 Three consequences, each proved below:
 
-$$E[X] = \frac{a+b}{2}, \qquad \operatorname{Var}(X) = \frac{(b-a)^2}{12}, \qquad Q(u) = a + (b-a)\,u$$
+```math
+E[X] = \frac{a+b}{2}, \qquad \mathrm{Var}(X) = \frac{(b-a)^2}{12}, \qquad Q(u) = a + (b-a)\,u
+```
 
-**Read it aloud:** the average wait is the window's midpoint; the variance is the width squared over twelve; the wait reached with chance $u$ sits the fraction $u$ of the way along the window.
+**Read it aloud:** the average wait is the window's midpoint; the variance is the width squared over twelve; the wait reached with chance $`u`$ sits the fraction $`u`$ of the way along the window.
 
-And the rule that makes the uniform the raw material of simulation. If $U \sim \mathrm{Uniform}(0, 1)$ and $G$ is any cumulative chance function with quantile $G^{-1}$, then
+And the rule that makes the uniform the raw material of simulation. If $`U \sim \mathrm{Uniform}(0, 1)`$ and $`G`$ is any cumulative chance function with quantile $`G^{-1}`$, then
 
-$$G^{-1}(U) \text{ has cumulative chance } G.$$
+```math
+G^{-1}(U) \text{ has cumulative chance } G.
+```
 
 **Read it aloud:** push a uniform draw between 0 and 1 through a law's quantile and out comes a draw from that law.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $x$ | the wait, a random variable; $x$ is one particular wait, a plain number | minutes after 8:00; $x = 3$ | $x$ up: $F(x)$ grows |
-| $a$ | start of the window | 0 minutes (8:00) | mean rises, spread shrinks |
-| $b$ | end of the window | 10 minutes (8:10) | mean and spread both rise |
-| $f(x)$ | density: chance per minute inside the window | 0.1 per minute | — (fixed by $a$ and $b$) |
-| $F(x)$ | cumulative chance of waiting at most $x$ | $F(3) = 0.3$ | — |
-| $E[X]$ | the mean: the average wait in the long run | 5 minutes | — |
-| $\operatorname{Var}(X)$, $\sigma$ | variance: the average squared distance from the mean; $\sigma$, the standard deviation, is its square root | 8.3333 minutes squared; $\sigma$ = 2.8868 minutes | — |
-| $Q(u)$ | quantile: the wait reached with chance $u$ | $Q(0.9) = 9$ minutes | $u$ up, $Q(u)$ up in a straight line |
-| $U$ | a uniform draw between 0 and 1, what a random number generator hands out | 0.7 | — |
-| $G$ | the cumulative chance of a target law, with quantile $G^{-1}$ | an exponential wait with mean 5 minutes | — |
-| $n$ | number of equally spaced points in a discrete stand-in for the window | 10 and 100 | grid variance climbs to 8.3333 |
-| $q$, $y$, $h$ | helper values in the Detailed proof: the least qualifying value, a qualifying value, a small step | — | — |
+| $`X`$, $`x`$ | the wait, a random variable; $`x`$ is one particular wait, a plain number | minutes after 8:00; $`x = 3`$ | $`x`$ up: $`F(x)`$ grows |
+| $`a`$ | start of the window | 0 minutes (8:00) | mean rises, spread shrinks |
+| $`b`$ | end of the window | 10 minutes (8:10) | mean and spread both rise |
+| $`f(x)`$ | density: chance per minute inside the window | 0.1 per minute | — (fixed by $`a`$ and $`b`$) |
+| $`F(x)`$ | cumulative chance of waiting at most $`x`$ | $`F(3) = 0.3`$ | — |
+| $`E[X]`$ | the mean: the average wait in the long run | 5 minutes | — |
+| $`\mathrm{Var}(X)`$, $`\sigma`$ | variance: the average squared distance from the mean; $`\sigma`$, the standard deviation, is its square root | 8.3333 minutes squared; $`\sigma`$ = 2.8868 minutes | — |
+| $`Q(u)`$ | quantile: the wait reached with chance $`u`$ | $`Q(0.9) = 9`$ minutes | $`u`$ up, $`Q(u)`$ up in a straight line |
+| $`U`$ | a uniform draw between 0 and 1, what a random number generator hands out | 0.7 | — |
+| $`G`$ | the cumulative chance of a target law, with quantile $`G^{-1}`$ | an exponential wait with mean 5 minutes | — |
+| $`n`$ | number of equally spaced points in a discrete stand-in for the window | 10 and 100 | grid variance climbs to 8.3333 |
+| $`q`$, $`y`$, $`h`$ | helper values in the Detailed proof: the least qualifying value, a qualifying value, a small step | — | — |
 
 ### When it holds
 
 - **No time in the window is favoured.** If buses bunch toward 8:08, a three-minute stretch near the end holds more chance, and the flat density understates late waits.
 - **The window is finite.** "Any time at all, equally likely" has no uniform law: a flat density over an endless line cannot total 1.
-- **The endpoints are firm.** A bus that sometimes comes at 8:12 puts chance outside the window, and $Q(0.9) = 9$ undercounts the bad mornings.
+- **The endpoints are firm.** A bus that sometimes comes at 8:12 puts chance outside the window, and $`Q(0.9) = 9`$ undercounts the bad mornings.
 - **For the inverse-transform rule, the input is truly uniform.** Feed it anything else and the output follows the wrong law: What breaks shows the mean dropping from 5 to 3.0685.
 
 ---
@@ -82,105 +88,113 @@ $$G^{-1}(U) \text{ has cumulative chance } G.$$
 
 ### Step 0: equal chance for equal length forces a flat density
 
-"Every moment equally likely" cannot mean each instant has positive chance: ten minutes hold endlessly many instants, and the chances would total more than 1. The workable meaning is about stretches: two stretches of the same length hold the same chance. Chance per minute, the density, must then be the same everywhere in the window. The total chance is 1 and the window is $b - a$ minutes long, so the density is $1/(b-a)$. For the bus, $1/10 = 0.1$ per minute. A single instant has length zero and so chance zero; the density 0.1 is a rate, not a chance.
+"Every moment equally likely" cannot mean each instant has positive chance: ten minutes hold endlessly many instants, and the chances would total more than 1. The workable meaning is about stretches: two stretches of the same length hold the same chance. Chance per minute, the density, must then be the same everywhere in the window. The total chance is 1 and the window is $`b - a`$ minutes long, so the density is $`1/(b-a)`$. For the bus, $`1/10 = 0.1`$ per minute. A single instant has length zero and so chance zero; the density 0.1 is a rate, not a chance.
 
 ### Step 1: the cumulative chance is a straight ramp
 
-The chance of waiting at most $x$ is the area under the density from $a$ to $x$: a rectangle of height $1/(b-a)$ and width $x - a$. So $F(x) = (x-a)/(b-a)$. Any stretch inside the window gets the difference of two ramp heights, which is its length over the window's length. For 8:04 to 8:07 that is $F(7) - F(4) = 3/10 = 0.3$.
+The chance of waiting at most $`x`$ is the area under the density from $`a`$ to $`x`$: a rectangle of height $`1/(b-a)`$ and width $`x - a`$. So $`F(x) = (x-a)/(b-a)`$. Any stretch inside the window gets the difference of two ramp heights, which is its length over the window's length. For 8:04 to 8:07 that is $`F(7) - F(4) = 3/10 = 0.3`$.
 
 ### Step 2: the mean is the midpoint
 
 The mean weights each wait by its density and adds up, which for a density means integrating:
 
-$$E[X] = \int_a^b x \cdot \frac{1}{b-a}\,dx = \frac{1}{b-a}\cdot\frac{b^2 - a^2}{2} = \frac{a+b}{2}.$$
+```math
+E[X] = \int_a^b x \cdot \frac{1}{b-a}\,dx = \frac{1}{b-a}\cdot\frac{b^2 - a^2}{2} = \frac{a+b}{2}.
+```
 
-The factor $b^2 - a^2 = (b-a)(b+a)$ cancels the width. The shape agrees: a flat block balances at its middle. For the bus, 5 minutes.
+The factor $`b^2 - a^2 = (b-a)(b+a)`$ cancels the width. The shape agrees: a flat block balances at its middle. For the bus, 5 minutes.
 
 ### Step 3: the variance is the width squared over 12
 
 Variance is the mean square minus the square of the mean. The mean square is
 
-$$E[X^2] = \int_a^b x^2 \cdot \frac{1}{b-a}\,dx = \frac{b^3 - a^3}{3(b-a)} = \frac{a^2 + ab + b^2}{3}.$$
+```math
+E[X^2] = \int_a^b x^2 \cdot \frac{1}{b-a}\,dx = \frac{b^3 - a^3}{3(b-a)} = \frac{a^2 + ab + b^2}{3}.
+```
 
-Subtract $(a+b)^2/4$ over the common denominator 12:
+Subtract $`(a+b)^2/4`$ over the common denominator 12:
 
-$$\operatorname{Var}(X) = \frac{4a^2 + 4ab + 4b^2 - 3a^2 - 6ab - 3b^2}{12} = \frac{(b-a)^2}{12}.$$
+```math
+\mathrm{Var}(X) = \frac{4a^2 + 4ab + 4b^2 - 3a^2 - 6ab - 3b^2}{12} = \frac{(b-a)^2}{12}.
+```
 
-Only the width survives, as it must: sliding the window later moves the mean but not the spread. For the bus, $E[X^2] = 100/3 = 33.3333$, and $\operatorname{Var}(X) = 100/12 = 8.3333$. The standard deviation is $\sigma = 10/\sqrt{12} = 2.8868$ minutes. Doubling the window quadruples the variance and doubles $\sigma$.
+Only the width survives, as it must: sliding the window later moves the mean but not the spread. For the bus, $`E[X^2] = 100/3 = 33.3333`$, and $`\mathrm{Var}(X) = 100/12 = 8.3333`$. The standard deviation is $`\sigma = 10/\sqrt{12} = 2.8868`$ minutes. Doubling the window quadruples the variance and doubles $`\sigma`$.
 
 ### Step 4: the quantile inverts the ramp
 
-The quantile $Q(u)$ is the wait whose cumulative chance is $u$. Set $F(x) = u$ and solve: $(x-a)/(b-a) = u$ gives $x = a + (b-a)\,u$. The ramp climbs steadily across the window, so exactly one $x$ solves it for every $u$ strictly between 0 and 1. For the bus, the median is $Q(0.5) = 5$ minutes and $Q(0.9) = 9$: nine mornings in ten, the bus is there by 8:09.
+The quantile $`Q(u)`$ is the wait whose cumulative chance is $`u`$. Set $`F(x) = u`$ and solve: $`(x-a)/(b-a) = u`$ gives $`x = a + (b-a)\,u`$. The ramp climbs steadily across the window, so exactly one $`x`$ solves it for every $`u`$ strictly between 0 and 1. For the bus, the median is $`Q(0.5) = 5`$ minutes and $`Q(0.9) = 9`$: nine mornings in ten, the bus is there by 8:09.
 
 ### Step 5: a uniform draw pushed through a quantile has that quantile's law
 
-Take $U$ uniform between 0 and 1, so $P(U \le u) = u$ for any $u$ in that range: Step 1 with $a = 0$, $b = 1$. Let $G$ be a cumulative chance function with no jumps that climbs steadily wherever it lies strictly between 0 and 1, and $G^{-1}$ its quantile. Then $G^{-1}(U) \le x$ happens exactly when $U \le G(x)$, since $G$ and $G^{-1}$ undo each other and both keep order. So
+Take $`U`$ uniform between 0 and 1, so $`P(U \le u) = u`$ for any $`u`$ in that range: Step 1 with $`a = 0`$, $`b = 1`$. Let $`G`$ be a cumulative chance function with no jumps that climbs steadily wherever it lies strictly between 0 and 1, and $`G^{-1}`$ its quantile. Then $`G^{-1}(U) \le x`$ happens exactly when $`U \le G(x)`$, since $`G`$ and $`G^{-1}`$ undo each other and both keep order. So
 
-$$P\big(G^{-1}(U) \le x\big) = P\big(U \le G(x)\big) = G(x).$$
+```math
+P\big(G^{-1}(U) \le x\big) = P\big(U \le G(x)\big) = G(x).
+```
 
-The draw $G^{-1}(U)$ has cumulative chance $G$: it follows the target law. Step 4 is the special case where $G$ is the bus's own ramp, which is why a program makes bus waits as $10 \times U$.
+The draw $`G^{-1}(U)`$ has cumulative chance $`G`$: it follows the target law. Step 4 is the special case where $`G`$ is the bus's own ramp, which is why a program makes bus waits as $`10 \times U`$.
 
-The exponential law, with its own card at [Exponential](03-exponential-distribution.md), is the standard test. With mean 5 minutes its cumulative chance is $G(x) = 1 - e^{-x/5}$ and its quantile is $G^{-1}(u) = -5\ln(1-u)$. The picture reads the rule off the curve.
+The exponential law, with its own card at [Exponential](03-exponential-distribution.md), is the standard test. With mean 5 minutes its cumulative chance is $`G(x) = 1 - e^{-x/5}`$ and its quantile is $`G^{-1}(u) = -5\ln(1-u)`$. The picture reads the rule off the curve.
 
 ### The picture: one uniform draw becomes one exponential wait
 
 <p align="center"><img src="../figures/uniform-distribution.svg" alt="The exponential cumulative chance with mean 5 minutes for waits from 0 to 20 minutes; a uniform draw of 0.70 on the vertical axis is read across to the curve and down to a wait of 6.0199 minutes" width="420"></p>
 
-Drawn to scale from the checks' `figure,` lines. The uniform draw 0.70 sits on the vertical axis; read across to the curve and down, and the wait is $-5\ln(0.3) = 6.0199$ minutes. Draws spread evenly up the axis; the steep start of the curve packs them into short waits. That packing is the exponential shape.
+Drawn to scale from the checks' `figure,` lines. The uniform draw 0.70 sits on the vertical axis; read across to the curve and down, and the wait is $`-5\ln(0.3) = 6.0199`$ minutes. Draws spread evenly up the axis; the steep start of the curve packs them into short waits. That packing is the exponential shape.
 
 <details>
 <summary>Detailed proof: the rule for any cumulative chance, jumps and flat stretches included</summary>
 
-Real laws can jump (a chance lump at one value) or stay flat (a gap with no chance). Then $G$ has no ordinary inverse, and the quantile is defined as the smallest qualifying value: $G^{-1}(u) = $ the least $x$ with $G(x) \ge u$, for $0 < u < 1$.
+Real laws can jump (a chance lump at one value) or stay flat (a gap with no chance). Then $`G`$ has no ordinary inverse, and the quantile is defined as the smallest qualifying value: $G^{-1}(u) = $ the least $`x`$ with $`G(x) \ge u`$, for $`0 < u < 1`$.
 
-**The least value exists.** Fix $u$ strictly between 0 and 1. Since $G$ tends to 0 far left and to 1 far right, some $x$ has $G(x) \ge u$ and every $x$ far enough left has $G(x) < u$. So the qualifying set is non-empty and bounded below, and has a greatest lower bound $q$. For every $h > 0$ some qualifying $y$ lies below $q + h$, and $G$ never decreases, so $G(q + h) \ge u$. A cumulative chance function is continuous from the right, so letting $h$ shrink gives $G(q) \ge u$: $q$ itself qualifies.
+**The least value exists.** Fix $`u`$ strictly between 0 and 1. Since $`G`$ tends to 0 far left and to 1 far right, some $`x`$ has $`G(x) \ge u`$ and every $`x`$ far enough left has $`G(x) < u`$. So the qualifying set is non-empty and bounded below, and has a greatest lower bound $`q`$. For every $`h > 0`$ some qualifying $`y`$ lies below $`q + h`$, and $`G`$ never decreases, so $`G(q + h) \ge u`$. A cumulative chance function is continuous from the right, so letting $`h`$ shrink gives $`G(q) \ge u`$: $`q`$ itself qualifies.
 
-**The switch.** Every $x \ge q$ qualifies, since $G$ never decreases, and no $x < q$ does. So $G^{-1}(u) \le x$ exactly when $u \le G(x)$.
+**The switch.** Every $`x \ge q`$ qualifies, since $`G`$ never decreases, and no $`x < q`$ does. So $`G^{-1}(u) \le x`$ exactly when $`u \le G(x)`$.
 
-**The conclusion.** $P(G^{-1}(U) \le x) = P(U \le G(x)) = G(x)$, as in Step 5. A lump at one value is hit by every $u$ in a stretch of length equal to the lump's chance; a flat stretch of $G$ is skipped, as it should be, since it holds no chance. Draws with $u$ exactly 0 or 1 have chance zero and change nothing.
+**The conclusion.** $`P(G^{-1}(U) \le x) = P(U \le G(x)) = G(x)`$, as in Step 5. A lump at one value is hit by every $`u`$ in a stretch of length equal to the lump's chance; a flat stretch of $`G`$ is skipped, as it should be, since it holds no chance. Draws with $`u`$ exactly 0 or 1 have chance zero and change nothing.
 
 </details>
 
-Another route to Steps 2 and 3 is to count. Replace the window by $n$ equally spaced points, each with chance $1/n$. The mean is exactly 5 and the variance is $\frac{(b-a)^2}{12}\left(1 - \frac{1}{n^2}\right)$, climbing to the continuous value as $n$ grows; the checks print $n = 10$ and $n = 100$. A generator's output, a 53-bit whole number divided by $2^{53}$, is a grid of the same kind, too fine for any simulation to tell apart.
+Another route to Steps 2 and 3 is to count. Replace the window by $`n`$ equally spaced points, each with chance $`1/n`$. The mean is exactly 5 and the variance is $`\frac{(b-a)^2}{12}\left(1 - \frac{1}{n^2}\right)`$, climbing to the continuous value as $`n`$ grows; the checks print $`n = 10`$ and $`n = 100`$. A generator's output, a 53-bit whole number divided by $`2^{53}`$, is a grid of the same kind, too fine for any simulation to tell apart.
 
 ---
 
 ## Worked numbers, by hand
 
-The bus: $a = 0$, $b = 10$ minutes.
+The bus: $`a = 0`$, $`b = 10`$ minutes.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| density $f(x)$ | $1/(10 - 0)$ | 0.1 per minute |
-| chance the wait is at most 3 minutes | $(3 - 0)/10$ | 0.3 |
-| chance of arriving between 8:04 and 8:07 | $(7 - 4)/10$ | 0.3 |
-| mean $E[X]$ | $(0 + 10)/2$ | 5 minutes |
-| mean square $E[X^2]$ | $(0 + 0 + 100)/3$ | 33.3333 |
-| variance | $33.3333 - 5^2$ | 8.3333 = 100/12 |
-| standard deviation $\sigma$ | $\sqrt{8.3333}$ | 2.8868 minutes |
-| chance within one $\sigma$ of the mean | $2 \times 2.8868 / 10$ | 0.5774 |
-| 90th-percentile wait $Q(0.9)$ | $0 + 10 \times 0.9$ | **9 minutes** |
+| density $`f(x)`$ | $`1/(10 - 0)`$ | 0.1 per minute |
+| chance the wait is at most 3 minutes | $`(3 - 0)/10`$ | 0.3 |
+| chance of arriving between 8:04 and 8:07 | $`(7 - 4)/10`$ | 0.3 |
+| mean $`E[X]`$ | $`(0 + 10)/2`$ | 5 minutes |
+| mean square $`E[X^2]`$ | $`(0 + 0 + 100)/3`$ | 33.3333 |
+| variance | $`33.3333 - 5^2`$ | 8.3333 = 100/12 |
+| standard deviation $`\sigma`$ | $`\sqrt{8.3333}`$ | 2.8868 minutes |
+| chance within one $`\sigma`$ of the mean | $`2 \times 2.8868 / 10`$ | 0.5774 |
+| 90th-percentile wait $`Q(0.9)`$ | $`0 + 10 \times 0.9`$ | **9 minutes** |
 
 Nine mornings in ten, the bus is there by 8:09; on average the wait is 5 minutes, give or take about 3.
 
-**A second case: the rider has already waited 4 minutes.** Given the bus has not come by 8:04, it comes uniformly in the 6 minutes left. The chance it comes by 8:07, written $P(X \le 7 \mid X > 4)$ and read "the chance of a wait of at most 7 given more than 4", is $(7-4)/(10-4) = 0.5$. The mean still to wait is $6/2 = 3$ minutes, down from 5. Waiting has told the rider something. An exponential wait behaves differently, and its card says how.
+**A second case: the rider has already waited 4 minutes.** Given the bus has not come by 8:04, it comes uniformly in the 6 minutes left. The chance it comes by 8:07, written $`P(X \le 7 \mid X > 4)`$ and read "the chance of a wait of at most 7 given more than 4", is $`(7-4)/(10-4) = 0.5`$. The mean still to wait is $`6/2 = 3`$ minutes, down from 5. Waiting has told the rider something. An exponential wait behaves differently, and its card says how.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| standard deviation taken as $(b-a)/12$ | 0.8333 minutes (right: 2.8868) | the 12 divides the width *squared*; the square root gives $\sqrt{12}$ |
+| standard deviation taken as $`(b-a)/12`$ | 0.8333 minutes (right: 2.8868) | the 12 divides the width *squared*; the square root gives $`\sqrt{12}`$ |
 | the window treated as the 11 whole minutes 0 to 10 | variance 10.0000 (right: 8.3333) | a coarse grid with endpoints overweights the edges; the continuous law is the fine-grid limit |
-| uniform draw fed to $G$ instead of $G^{-1}$ | mean 0.0937 minutes (right: 5) | $G$ turns waits into chances; a chance is not a wait |
-| $U^2$ fed to $G^{-1}$: the input is not uniform | mean 3.0685 exact, 3.0470 simulated (right: 5) | squaring piles draws near 0, so short waits come out too often |
+| uniform draw fed to $`G`$ instead of $`G^{-1}`$ | mean 0.0937 minutes (right: 5) | $`G`$ turns waits into chances; a chance is not a wait |
+| $`U^2`$ fed to $`G^{-1}`$: the input is not uniform | mean 3.0685 exact, 3.0470 simulated (right: 5) | squaring piles draws near 0, so short waits come out too often |
 
-The last row is the inverse-transform rule with its hypothesis dropped. Its exact value $10 - 10\ln 2$ is the integral of $-5\ln(1-u^2)$ from 0 to 1.
+The last row is the inverse-transform rule with its hypothesis dropped. Its exact value $`10 - 10\ln 2`$ is the integral of $`-5\ln(1-u^2)`$ from 0 to 1.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs draw 100,000 bus waits from the same SplitMix64 generator (a short published recipe that scrambles a counter into 64 random-looking bits) with seed 20260928, so Python and Rust see identical numbers. Every quantity then comes three ways where it can: the closed formula, a numerical road (Simpson's rule for the integrals, bisection on $F$ for the quantiles, a discrete grid), and the simulation, printed with its standard error (the typical size of its chance noise). A second 100,000 uniform draws go through the exponential quantile to test the inverse-transform rule, and through two wrong recipes for the What breaks table. Ten asserts compare independent roads; each simulated check allows four standard errors.
+Both programs draw 100,000 bus waits from the same SplitMix64 generator (a short published recipe that scrambles a counter into 64 random-looking bits) with seed 20260928, so Python and Rust see identical numbers. Every quantity then comes three ways where it can: the closed formula, a numerical road (Simpson's rule for the integrals, bisection on $`F`$ for the quantiles, a discrete grid), and the simulation, printed with its standard error (the typical size of its chance noise). A second 100,000 uniform draws go through the exponential quantile to test the inverse-transform rule, and through two wrong recipes for the What breaks table. Ten asserts compare independent roads; each simulated check allows four standard errors.
 
 ### Python
 
@@ -491,10 +505,10 @@ The two outputs are identical line for line.
 
 Lean proves the uniform law's chances, mean, variance and quantile for every window, and the inverse-transform rule for every cumulative chance function.
 
-- Take $X \sim \mathrm{Uniform}(a, b)$ with $a < b$. Then every stretch inside the window holds a chance equal to its length over $b - a$.
-- Take the same $X$. Then $E[X] = (a+b)/2$ and $\operatorname{Var}(X) = (b-a)^2/12$.
-- Take the same $X$ and any $u$ strictly between 0 and 1. Then the one wait $x$ in the window with $F(x) = u$ is $x = a + (b-a)\,u$.
-- Take $U \sim \mathrm{Uniform}(0, 1)$ and any cumulative chance function $G$, jumps and flat stretches included, with quantile $G^{-1}$. Then $P(G^{-1}(U) \le x) = G(x)$ for every $x$.
+- Take $`X \sim \mathrm{Uniform}(a, b)`$ with $`a < b`$. Then every stretch inside the window holds a chance equal to its length over $`b - a`$.
+- Take the same $`X`$. Then $`E[X] = (a+b)/2`$ and $`\mathrm{Var}(X) = (b-a)^2/12`$.
+- Take the same $`X`$ and any $`u`$ strictly between 0 and 1. Then the one wait $`x`$ in the window with $`F(x) = u`$ is $`x = a + (b-a)\,u`$.
+- Take $`U \sim \mathrm{Uniform}(0, 1)`$ and any cumulative chance function $`G`$, jumps and flat stretches included, with quantile $`G^{-1}`$. Then $`P(G^{-1}(U) \le x) = G(x)`$ for every $`x`$.
 - The worked numbers for the bus hold exactly, including the 4-minute case, the 10-point grid and the whole-minutes mistake.
 
 The simulations, Simpson's rule, bisection, the standard deviation and the exponential example are left to the Python and Rust checks.
@@ -690,7 +704,7 @@ example : (∑ k ∈ Finset.range 11, ((k : ℚ) - 5) ^ 2) / 11 = 10 := by
 > **Try changing**
 > - **Widen the window.** Guess first: set `B = 20.0` in both programs. The mean doubles to the new midpoint, the variance quadruples, the standard deviation and every quantile double, and all ten asserts still pass.
 > - **Change the seed.** Guess first: which numbers move? Every `sim` value shifts by a standard error or two; every `formula`, `simpson` and `bisection` value stays put to the last digit.
-> - **Use `u` in place of `1 - u` in the exponential recipe.** Guess first: does anything break? No. If $U$ is uniform between 0 and 1, so is $1 - U$, and both feed the same law; only the individual draws change.
+> - **Use `u` in place of `1 - u` in the exponential recipe.** Guess first: does anything break? No. If $`U`$ is uniform between 0 and 1, so is $`1 - U`$, and both feed the same law; only the individual draws change.
 
 ---
 
@@ -705,7 +719,7 @@ example : (∑ k ∈ Finset.range 11, ((k : ℚ) - 5) ^ 2) / 11 = 10 := by
 
 ## Where you meet it in real life
 
-- **Random number generators.** Every simulation starts from uniform draws between 0 and 1; the draws in the checks are 53-bit whole numbers divided by $2^{53}$.
+- **Random number generators.** Every simulation starts from uniform draws between 0 and 1; the draws in the checks are 53-bit whole numbers divided by $`2^{53}`$.
 - **Rounding.** A reading rounded to the nearest whole unit carries an error roughly uniform between −0.5 and 0.5, so by Step 3 its variance is 0.0833 of a unit squared, whatever the unit.
 - **Normal draws.** Pushing uniform draws through the normal quantile of [Normal quantiles](05-normal-quantile.md) makes bell-curve samples by Step 5.
 - **Waiting and lifetimes.** Uniform waits leave less to wait as time passes; exponential ones do not, which is the contrast [Exponential](03-exponential-distribution.md) draws. The same contrast shapes the hazard rates of [Weibull and hazards](09-weibull-and-hazard-rates.md).

@@ -39,40 +39,46 @@ Orange: the Pareto law with shape 1.5. Green: the bell curve with the same mean 
 
 ## The formula
 
-Notation first. $X$ is one household's fortune in millions of dollars, a random variable (a quantity settled by chance); $x$ is a particular level. $E[X]$ reads "the average value of X in the long run" ([Expectation](../02-Random%20Variables/02-expectation.md)). $E[X^k]$, the average of the fortune to the power $k$, is the $k$-th **moment**. The variance is $E[X^2] - (E[X])^2$ ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so it needs the second moment.
+Notation first. $`X`$ is one household's fortune in millions of dollars, a random variable (a quantity settled by chance); $`x`$ is a particular level. $`E[X]`$ reads "the average value of X in the long run" ([Expectation](../02-Random%20Variables/02-expectation.md)). $`E[X^k]`$, the average of the fortune to the power $`k`$, is the $`k`$-th **moment**. The variance is $`E[X^2] - (E[X])^2`$ ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so it needs the second moment.
 
-The Pareto law with lower cutoff $b$ and shape $a$ (both above zero):
+The Pareto law with lower cutoff $`b`$ and shape $`a`$ (both above zero):
 
-$$f(x) = \frac{a\,b^{a}}{x^{a+1}} \ \text{ for } x \ge b, \qquad P(X > x) = \left(\frac{b}{x}\right)^{a}, \qquad E[X^k] = \begin{cases} \dfrac{a\,b^{k}}{a-k} & k < a \\[4pt] \text{infinite} & k \ge a \end{cases}$$
+```math
+f(x) = \frac{a\,b^{a}}{x^{a+1}} \ \text{ for } x \ge b, \qquad P(X > x) = \left(\frac{b}{x}\right)^{a}, \qquad E[X^k] = \begin{cases} \dfrac{a\,b^{k}}{a-k} & k < a \\[4pt] \text{infinite} & k \ge a \end{cases}
+```
 
 **Read it aloud:** the density falls like one over the fortune to the power a plus one; the chance of exceeding a level falls like one over that level to the power a; and the k-th moment is finite exactly when k is below a.
 
-Below $b$ the density is 0. With $a = 1.5$ and $b = 1$: the mean is $1.5/0.5 = 3$, and the second moment is infinite, since $2 \ge 1.5$. Two consequences used throughout:
+Below $`b`$ the density is 0. With $`a = 1.5`$ and $`b = 1`$: the mean is $`1.5/0.5 = 3`$, and the second moment is infinite, since $`2 \ge 1.5`$. Two consequences used throughout:
 
-$$\text{mean} = \frac{a\,b}{a-1}\ (a > 1), \qquad \text{share of all wealth held by the top fraction } p = p^{\,1 - 1/a}$$
+```math
+\text{mean} = \frac{a\,b}{a-1}\ (a > 1), \qquad \text{share of all wealth held by the top fraction } p = p^{\,1 - 1/a}
+```
 
 The standard Cauchy law, on the whole number line:
 
-$$g(z) = \frac{1}{\pi\,(1+z^2)}, \qquad F(z) = \frac12 + \frac{\arctan z}{\pi}, \qquad E\big[\,|Z|^{r}\big] \text{ is finite exactly when } r < 1$$
+```math
+g(z) = \frac{1}{\pi\,(1+z^2)}, \qquad F(z) = \frac12 + \frac{\arctan z}{\pi}, \qquad E\big[\,|Z|^{r}\big] \text{ is finite exactly when } r < 1
+```
 
 **Read it aloud:** the Cauchy density is one over pi times one plus z squared; its area left of z is a half plus arctangent z over pi; a power of its size has a finite average only for powers below one.
 
-So $E[|Z|]$ is infinite, the mean $E[Z]$ is undefined, and the variance does not exist.
+So $`E[|Z|]`$ is infinite, the mean $`E[Z]`$ is undefined, and the variance does not exist.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | one household's fortune, in millions of dollars | at least 1 | — |
-| $x$, $y$, $q$ | particular fortune levels, $y$ above $x$; $q$ marks where a top group starts | 10; 21.5443 | tail chance shrinks as $x^{-a}$ |
-| $b$ | the lower cutoff: the smallest fortune in the group | 1 | every fortune scales with it |
-| $a$ | the shape, or tail index: how fast the tail thins | 1.5 | more moments exist; top share falls |
-| $f(x)$ | the Pareto density: chance per million dollars near $x$ | $1.5\,x^{-2.5}$ | — |
-| $k$ | the power in a moment: 1 for the mean, 2 for the second moment | 1 and 2 | at $a$ or above, infinite |
-| $R$, $c$ | a cutoff where an integral is stopped; $c$ multiplies the right-hand cutoff | 10 to 1,000,000; $c = 2$ | partial moments reach a limit or grow forever |
-| $p$ | a top fraction of households | 0.01 | the top share $p^{1-1/a}$ rises |
-| $u$, $U$, $Q(u)$ | a level between 0 and 1; a uniform random draw; the quantile, the fortune below which a share $u$ sits | $Q(0.99) = 21.5443$ | $Q(u) = b(1-u)^{-1/a}$ has no ceiling |
-| $Z$ | a Cauchy variable: one daily return divided by another | half its values in −1 to 1 | — |
-| $g(z)$, $F(z)$ | the Cauchy density and its cumulative area | $F(1) - F(-1) = 0.5$ | — |
-| $r$ | a power, possibly fractional, applied to the size of $Z$ | 0.5 gives 1.4142 | at 1 and above, infinite |
+| $`X`$ | one household's fortune, in millions of dollars | at least 1 | — |
+| $`x`$, $`y`$, $`q`$ | particular fortune levels, $`y`$ above $`x`$; $`q`$ marks where a top group starts | 10; 21.5443 | tail chance shrinks as $`x^{-a}`$ |
+| $`b`$ | the lower cutoff: the smallest fortune in the group | 1 | every fortune scales with it |
+| $`a`$ | the shape, or tail index: how fast the tail thins | 1.5 | more moments exist; top share falls |
+| $`f(x)`$ | the Pareto density: chance per million dollars near $`x`$ | $`1.5\,x^{-2.5}`$ | — |
+| $`k`$ | the power in a moment: 1 for the mean, 2 for the second moment | 1 and 2 | at $`a`$ or above, infinite |
+| $`R`$, $`c`$ | a cutoff where an integral is stopped; $`c`$ multiplies the right-hand cutoff | 10 to 1,000,000; $`c = 2`$ | partial moments reach a limit or grow forever |
+| $`p`$ | a top fraction of households | 0.01 | the top share $`p^{1-1/a}`$ rises |
+| $`u`$, $`U`$, $`Q(u)`$ | a level between 0 and 1; a uniform random draw; the quantile, the fortune below which a share $`u`$ sits | $`Q(0.99) = 21.5443`$ | $`Q(u) = b(1-u)^{-1/a}`$ has no ceiling |
+| $`Z`$ | a Cauchy variable: one daily return divided by another | half its values in −1 to 1 | — |
+| $`g(z)`$, $`F(z)`$ | the Cauchy density and its cumulative area | $`F(1) - F(-1) = 0.5`$ | — |
+| $`r`$ | a power, possibly fractional, applied to the size of $`Z`$ | 0.5 gives 1.4142 | at 1 and above, infinite |
 
 ### When it holds
 
@@ -88,60 +94,72 @@ So $E[|Z|]$ is infinite, the mean $E[Z]$ is undefined, and the variance does not
 
 ### Step 0: the idea: area and weighted area are different questions
 
-A density is a valid law when it is never negative and its area is 1 ([Densities](01-densities-and-cdfs.md)). A moment is a second, separate area: the density multiplied by $x$ or $x^2$. Far out, that multiplier is huge. If the density thins like a power, the product can thin too slowly for its area to be finite. The test is the power test for improper integrals ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)): $\int_1^\infty x^{-s}\,dx$ is finite exactly when $s > 1$.
+A density is a valid law when it is never negative and its area is 1 ([Densities](01-densities-and-cdfs.md)). A moment is a second, separate area: the density multiplied by $`x`$ or $`x^2`$. Far out, that multiplier is huge. If the density thins like a power, the product can thin too slowly for its area to be finite. The test is the power test for improper integrals ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)): $`\int_1^\infty x^{-s}\,dx`$ is finite exactly when $`s > 1`$.
 
 ### Step 1: the Pareto density has area 1
 
-Integrate from the cutoff to a far point $R$, then let $R$ grow:
+Integrate from the cutoff to a far point $`R`$, then let $`R`$ grow:
 
-$$\int_b^R \frac{a\,b^a}{x^{a+1}}\,dx = \Big[-\Big(\frac{b}{x}\Big)^{a}\Big]_b^R = 1 - \Big(\frac{b}{R}\Big)^{a} \longrightarrow 1.$$
+```math
+\int_b^R \frac{a\,b^a}{x^{a+1}}\,dx = \Big[-\Big(\frac{b}{x}\Big)^{a}\Big]_b^R = 1 - \Big(\frac{b}{R}\Big)^{a} \longrightarrow 1.
+```
 
-Any positive shape works. The same integral started at $x$ instead of $b$ gives the tail chance $(b/x)^a$: at $x = 10$, $10^{-1.5} = 0.03162$.
+Any positive shape works. The same integral started at $`x`$ instead of $`b`$ gives the tail chance $`(b/x)^a`$: at $`x = 10`$, $`10^{-1.5} = 0.03162`$.
 
 ### Step 2: the moments stop at the shape
 
-Multiply by $x^k$. The integrand becomes $a\,b^a x^{k-a-1}$, a power with exponent $k - a - 1$. By the power test its integral to infinity is finite exactly when $k - a - 1 < -1$, that is, $k < a$. Then
+Multiply by $`x^k`$. The integrand becomes $`a\,b^a x^{k-a-1}`$, a power with exponent $`k - a - 1`$. By the power test its integral to infinity is finite exactly when $`k - a - 1 < -1`$, that is, $`k < a`$. Then
 
-$$E[X^k] = a\,b^a \int_b^\infty x^{k-a-1}\,dx = \frac{a\,b^k}{a-k}.$$
+```math
+E[X^k] = a\,b^a \int_b^\infty x^{k-a-1}\,dx = \frac{a\,b^k}{a-k}.
+```
 
-At $a = 1.5$ the mean ($k = 1$) is $3$; the second moment ($k = 2$) is not. Watch both as the cutoff $R$ moves out. The partial mean is $3(1 - R^{-1/2})$: 2.0513 at $R = 10$, 2.9970 at $R$ = 1,000,000, closing on 3. The partial second moment is $3(R^{1/2} - 1)$: 6.4868, 27, 297 and 2997 at $R$ = 10, 100, 10,000 and 1,000,000, growing like the square root of the cutoff with no ceiling.
+At $`a = 1.5`$ the mean ($`k = 1`$) is $`3`$; the second moment ($`k = 2`$) is not. Watch both as the cutoff $`R`$ moves out. The partial mean is $`3(1 - R^{-1/2})`$: 2.0513 at $`R = 10`$, 2.9970 at $`R`$ = 1,000,000, closing on 3. The partial second moment is $`3(R^{1/2} - 1)`$: 6.4868, 27, 297 and 2997 at $`R`$ = 10, 100, 10,000 and 1,000,000, growing like the square root of the cutoff with no ceiling.
 
-Infinite second moment with finite mean means infinite variance: for fortunes above twice the mean, $(X - 3)^2$ is at least $X^2/4$, and that part alone has infinite average.
+Infinite second moment with finite mean means infinite variance: for fortunes above twice the mean, $`(X - 3)^2`$ is at least $`X^2/4`$, and that part alone has infinite average.
 
-The variance formula valid for $a > 2$, $a b^2 / ((a-1)^2 (a-2))$, gives $-12$ at shape 1.5: an impossible negative variance from a formula used outside its range.
+The variance formula valid for $`a > 2`$, $`a b^2 / ((a-1)^2 (a-2))`$, gives $`-12`$ at shape 1.5: an impossible negative variance from a formula used outside its range.
 
 ### Step 3: the top share and the mean above a level
 
-The wealth held above a level $q$ is the mean integral started at $q$:
+The wealth held above a level $`q`$ is the mean integral started at $`q`$:
 
-$$\int_q^\infty x\,\frac{a\,b^a}{x^{a+1}}\,dx = \frac{a\,b^a\,q^{1-a}}{a-1}.$$
+```math
+\int_q^\infty x\,\frac{a\,b^a}{x^{a+1}}\,dx = \frac{a\,b^a\,q^{1-a}}{a-1}.
+```
 
-Divide by the mean $ab/(a-1)$ to get the share, $(q/b)^{1-a}$. The top fraction $p$ starts at $q = Q(1-p) = b\,p^{-1/a}$, so the share is $p^{1 - 1/a}$: at $p = 0.01$, $0.01^{1/3} = 0.2154$. The bell curve's share comes from the thin tail of $e^{-x^2/2}$ and is 0.0186.
+Divide by the mean $`ab/(a-1)`$ to get the share, $`(q/b)^{1-a}`$. The top fraction $`p`$ starts at $`q = Q(1-p) = b\,p^{-1/a}`$, so the share is $`p^{1 - 1/a}`$: at $`p = 0.01`$, $`0.01^{1/3} = 0.2154`$. The bell curve's share comes from the thin tail of $`e^{-x^2/2}`$ and is 0.0186.
 
-Above any level $x$, fortunes are Pareto again with cutoff $x$ and the same shape, since the chance of passing a higher level $y$, given $x$, is $(x/y)^a$. So the mean fortune above $x$ is $ax/(a-1)$, three times $x$: households above 10 million dollars average 30 million. For the memoryless [Exponential](03-exponential-distribution.md) the expected excess is constant; for Pareto it grows with the level. The further out, the further the rest of the tail reaches.
+Above any level $`x`$, fortunes are Pareto again with cutoff $`x`$ and the same shape, since the chance of passing a higher level $`y`$, given $`x`$, is $`(x/y)^a`$. So the mean fortune above $`x`$ is $`ax/(a-1)`$, three times $`x`$: households above 10 million dollars average 30 million. For the memoryless [Exponential](03-exponential-distribution.md) the expected excess is constant; for Pareto it grows with the level. The further out, the further the rest of the tail reaches.
 
 ### Step 4: the Cauchy law, and why its mean is undefined
 
 Where it comes from. Take the daily returns of two unrelated shares, each a bell curve centred at zero with spread 1.2 percent (the shelf's house example), and divide one by the other. The pair, plotted as a point, has a density that depends only on distance from the origin, so its direction is equally likely to be any angle.
 
-The ratio is the tangent of that angle, and a uniform angle between $-\pi/2$ and $\pi/2$ gives $P(Z \le z) = \tfrac12 + \arctan(z)/\pi$. The 1.2 percent cancels. Differentiate to get $g(z)$; its area is 1, and half of it lies between −1 and 1.
+The ratio is the tangent of that angle, and a uniform angle between $`-\pi/2`$ and $`\pi/2`$ gives $`P(Z \le z) = \tfrac12 + \arctan(z)/\pi`$. The 1.2 percent cancels. Differentiate to get $`g(z)`$; its area is 1, and half of it lies between −1 and 1.
 
-The mean. Far out, $z\,g(z)$ behaves like $1/(\pi z)$: exponent 1, just on the wrong side of the power test. Each half diverges:
+The mean. Far out, $`z\,g(z)`$ behaves like $`1/(\pi z)`$: exponent 1, just on the wrong side of the power test. Each half diverges:
 
-$$\int_0^R \frac{z}{\pi(1+z^2)}\,dz = \frac{\ln(1+R^2)}{2\pi}: \quad 0.7345,\ 1.4659,\ 2.1988 \text{ at } R = 10,\ 100,\ 1000.$$
+```math
+\int_0^R \frac{z}{\pi(1+z^2)}\,dz = \frac{\ln(1+R^2)}{2\pi}: \quad 0.7345,\ 1.4659,\ 2.1988 \text{ at } R = 10,\ 100,\ 1000.
+```
 
-It grows like a logarithm, slowly and without limit; the left half mirrors it. Infinity minus infinity has no value, so $E[Z]$ is undefined. Symmetric cutoffs $-R$ and $R$ give 0 every time, which looks like a mean. Stop the right side at $2R$ instead and the limit is $\ln 4 / (2\pi) = 0.2206$; other pairings give any number at all. A mean cannot depend on how cutoffs are paired.
+It grows like a logarithm, slowly and without limit; the left half mirrors it. Infinity minus infinity has no value, so $`E[Z]`$ is undefined. Symmetric cutoffs $`-R`$ and $`R`$ give 0 every time, which looks like a mean. Stop the right side at $`2R`$ instead and the limit is $`\ln 4 / (2\pi) = 0.2206`$; other pairings give any number at all. A mean cannot depend on how cutoffs are paired.
 
 <details>
 <summary>Detailed proof: which Cauchy moments exist, and the asymmetric cutoff</summary>
 
-**Fractional powers.** For $0 \le z \le 1$, $z^r g(z) \le 1/\pi$, a bounded piece. For $z \ge 1$, $1 + z^2$ lies between $z^2$ and $2z^2$, so
-$$\frac{z^{r-2}}{2\pi} \le z^r g(z) \le \frac{z^{r-2}}{\pi}.$$
-Both bounds are powers with exponent $r - 2$. The power test says $\int_1^\infty z^{r-2}\,dz$ is finite exactly when $r - 2 < -1$, that is $r < 1$. The negative half is the mirror image. So $E[|Z|^r]$ is finite for $0 \le r < 1$ and infinite for $r \ge 1$, the divergence at $r = 1$ being logarithmic. The finite values have the closed form $1/\cos(\pi r/2)$, derived by contour integration; at $r = 0.5$ it is $\sqrt 2 = 1.4142$, which the checks confirm by integration.
+**Fractional powers.** For $`0 \le z \le 1`$, $`z^r g(z) \le 1/\pi`$, a bounded piece. For $`z \ge 1`$, $`1 + z^2`$ lies between $`z^2`$ and $`2z^2`$, so
 
-**Cutoffs.** On $[-R, cR]$ with $c > 0$, the odd part cancels on $[-R, R]$ and leaves
-$$\int_{-R}^{cR} \frac{z\,dz}{\pi(1+z^2)} = \frac{1}{2\pi}\ln\frac{1+c^2R^2}{1+R^2} \longrightarrow \frac{\ln c}{\pi}.$$
-As $c$ runs over all positive numbers, $\ln c / \pi$ takes every real value. At $c = 2$ it is 0.2206. An expectation must be one number, fixed by the law alone; this is a family of numbers fixed by a choice of cutoffs, so none of them is a mean.
+$`\displaystyle \frac{z^{r-2}}{2\pi} \le z^r g(z) \le \frac{z^{r-2}}{\pi}.`$
+
+Both bounds are powers with exponent $`r - 2`$. The power test says $`\int_1^\infty z^{r-2}\,dz`$ is finite exactly when $`r - 2 < -1`$, that is $`r < 1`$. The negative half is the mirror image. So $`E[|Z|^r]`$ is finite for $`0 \le r < 1`$ and infinite for $`r \ge 1`$, the divergence at $`r = 1`$ being logarithmic. The finite values have the closed form $`1/\cos(\pi r/2)`$, derived by contour integration; at $`r = 0.5`$ it is $`\sqrt 2 = 1.4142`$, which the checks confirm by integration.
+
+**Cutoffs.** On $`[-R, cR]`$ with $`c > 0`$, the odd part cancels on $`[-R, R]`$ and leaves
+
+$`\displaystyle \int_{-R}^{cR} \frac{z\,dz}{\pi(1+z^2)} = \frac{1}{2\pi}\ln\frac{1+c^2R^2}{1+R^2} \longrightarrow \frac{\ln c}{\pi}.`$
+
+As $`c`$ runs over all positive numbers, $`\ln c / \pi`$ takes every real value. At $`c = 2`$ it is 0.2206. An expectation must be one number, fixed by the law alone; this is a family of numbers fixed by a choice of cutoffs, so none of them is a mean.
 
 </details>
 
@@ -171,8 +189,8 @@ Among households with at least $1 million, the richest 1 percent hold about a fi
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| A bell curve for wealth, same mean and middle half | top 1 percent hold 0.0186, not 0.2154; P(X > 10) = 2.658 × 10^-13, not 0.03162 | Its tail thins like $e^{-x^2/2}$, far faster than any power |
-| The variance formula used at shape 1.5 | −12 | The formula needs $a > 2$; below that the variance is infinite |
+| A bell curve for wealth, same mean and middle half | top 1 percent hold 0.0186, not 0.2154; P(X > 10) = 2.658 × 10^-13, not 0.03162 | Its tail thins like $`e^{-x^2/2}`$, far faster than any power |
+| The variance formula used at shape 1.5 | −12 | The formula needs $`a > 2`$; below that the variance is infinite |
 | A symmetric cutoff taken as the Cauchy mean | 0; the cutoffs −R and 2R give 0.2206 | Two infinite halves cancel only by choice of cutoffs |
 | Averaging 100 Cauchy ratios to tame them | P(−1 < average < 1) = 0.4810, as for one ratio | No mean, so the law of large numbers does not apply |
 | Quoting the sample standard deviation of fortunes | 1.0493 at 100 draws, 24.8098 at 1,000,000 | The true value is infinite; the estimate grows with the sample |
@@ -186,9 +204,9 @@ The fourth row is the hypothesis dropped: averages of 100 daily returns all land
 Four roads:
 
 - The closed forms.
-- Simpson's rule (an integrator written into the script) in log-space, with $x = e^t$, for the area, the top share and the partial moments.
-- The Cauchy area by a fold: $w = 1/z$ maps the tail beyond 1 onto 0 to 1, so the area is four times the area from 0 to 1, with no arctangent.
-- A SplitMix64 generator, seed 2026, in both languages: 1,000,000 fortunes by the inverse transform $X = b\,U^{-1/a}$, and 100,000 pairs of bell-curve returns by the Box–Muller method (two uniforms turned into a bell-curve draw with a logarithm and a cosine), whose ratios never touch the Cauchy formula.
+- Simpson's rule (an integrator written into the script) in log-space, with $`x = e^t`$, for the area, the top share and the partial moments.
+- The Cauchy area by a fold: $`w = 1/z`$ maps the tail beyond 1 onto 0 to 1, so the area is four times the area from 0 to 1, with no arctangent.
+- A SplitMix64 generator, seed 2026, in both languages: 1,000,000 fortunes by the inverse transform $`X = b\,U^{-1/a}`$, and 100,000 pairs of bell-curve returns by the Box–Muller method (two uniforms turned into a bell-curve draw with a logarithm and a cosine), whose ratios never touch the Cauchy formula.
 
 The comparison bell curve comes from its own Taylor series and bisection. Simulated numbers carry a standard error (se), the typical size of a simulation's error; the top share's comes from 10 batches of 100,000, and asserts allow four.
 
@@ -582,14 +600,14 @@ Orange: the running average of ratios of returns, a Cauchy sample, swinging from
 
 Lean proves the facts behind Steps 1, 2 and 4, for every positive cutoff and shape, and for the standard Cauchy law.
 
-- Take a cutoff $b > 0$ and a shape $a > 0$. Then the Pareto density has area 1.
-- Take also any power $k$. Then $E[X^k]$ is finite exactly when $k < a$.
-- Suppose $k < a$. Then $E[X^k] = a\,b^k/(a-k)$.
-- The standard Cauchy density $g$ has area 1.
-- Take a power $r \ge 0$. Then $E[|Z|^r]$ is finite exactly when $r < 1$.
-- Weight $g(z)$ by the size $|z|$. Then the area is infinite, so the mean $E[Z]$ does not exist.
-- Take $c > 0$, and stop the integral of $z\,g(z)$ at $-R$ and $cR$. Then, as $R$ grows, it tends to $\ln c / \pi$.
-- Take $b = 1$ and $a = 1.5$. Then the hand arithmetic holds: mean 3, mean 30 above 10, the variance formula's −12, and the partial moments.
+- Take a cutoff $`b > 0`$ and a shape $`a > 0`$. Then the Pareto density has area 1.
+- Take also any power $`k`$. Then $`E[X^k]`$ is finite exactly when $`k < a`$.
+- Suppose $`k < a`$. Then $`E[X^k] = a\,b^k/(a-k)`$.
+- The standard Cauchy density $`g`$ has area 1.
+- Take a power $`r \ge 0`$. Then $`E[|Z|^r]`$ is finite exactly when $`r < 1`$.
+- Weight $`g(z)`$ by the size $`|z|`$. Then the area is infinite, so the mean $`E[Z]`$ does not exist.
+- Take $`c > 0`$, and stop the integral of $`z\,g(z)`$ at $`-R`$ and $`cR`$. Then, as $`R`$ grows, it tends to $`\ln c / \pi`$.
+- Take $`b = 1`$ and $`a = 1.5`$. Then the hand arithmetic holds: mean 3, mean 30 above 10, the variance formula's −12, and the partial moments.
 
 The bell curve, the top share, the ratio of returns and the simulations are left to the Python and Rust checks.
 
@@ -833,7 +851,7 @@ example : (10 : ℕ) ^ 2 = 100 ∧ (100 : ℕ) ^ 2 = 10000 ∧ (1000 : ℕ) ^ 2 
 
 ## What this builds on
 
-- [Densities](01-densities-and-cdfs.md): a density, its area, and the cumulative area $F$; here the Cauchy $F$ is the arctangent.
+- [Densities](01-densities-and-cdfs.md): a density, its area, and the cumulative area $`F`$; here the Cauchy $`F`$ is the arctangent.
 - [Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): the power test that decides every moment on this card.
 
 ## Where this goes next

@@ -45,48 +45,54 @@ A town of 8 people with chance 0.3 per pair, drawn once by the checks' generator
 
 ## The formula
 
-Notation, in words first. $G(n,p)$ names the model: n people, each pair a friendship with chance p, all coins independent. $\binom{n}{2}$, read "n choose 2", counts the pairs. For people $u$ and $v$, the **indicator** $I_{uv}$ is 1 if they are friends and 0 if not.
+Notation, in words first. $`G(n,p)`$ names the model: n people, each pair a friendship with chance p, all coins independent. $`\binom{n}{2}`$, read "n choose 2", counts the pairs. For people $`u`$ and $`v`$, the **indicator** $`I_{uv}`$ is 1 if they are friends and 0 if not.
 
 The wing's notation carries on: P(A) is the chance of A, E[X] the long-run average of X, and X ~ Binomial(m, p) reads "X follows the binomial law with m trials and chance p".
 
-The number of edges $M$ and the degree $D$ of any one person obey
+The number of edges $`M`$ and the degree $`D`$ of any one person obey
 
-$$M = \sum_{u<v} I_{uv} \sim \text{Binomial}\!\left(\binom{n}{2},\, p\right), \qquad E[M] = \binom{n}{2}\,p$$
+```math
+M = \sum_{u<v} I_{uv} \sim \text{Binomial}\!\left(\binom{n}{2},\, p\right), \qquad E[M] = \binom{n}{2}\,p
+```
 
-$$P(D = k) = \binom{n-1}{k}\,p^k\,(1-p)^{\,n-1-k}, \qquad E[D] = (n-1)\,p = \lambda$$
+```math
+P(D = k) = \binom{n-1}{k}\,p^k\,(1-p)^{\,n-1-k}, \qquad E[D] = (n-1)\,p = \lambda
+```
 
 **Read it aloud:** the edge count is a sum of one yes-or-no per pair, so it is binomial with one trial per pair; one person's friend count is binomial with one trial for each of the other n − 1 people, and its average is lambda.
 
 When p is small and λ stays fixed, the degree law is close to Poisson:
 
-$$P(D = k) \approx e^{-\lambda}\,\frac{\lambda^k}{k!}, \qquad \Delta \le (n-1)\,p\,(1 - e^{-p}) \le (n-1)\,p^2$$
+```math
+P(D = k) \approx e^{-\lambda}\,\frac{\lambda^k}{k!}, \qquad \Delta \le (n-1)\,p\,(1 - e^{-p}) \le (n-1)\,p^2
+```
 
 **Read it aloud:** the chance of k friends is nearly e to the minus lambda, times lambda to the k, over k factorial; and no event's chance differs between the two laws by more than n − 1 times p squared.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of people (vertices) | 1,000 | more pairs, more friends each at the same p |
-| $p$ | chance that one pair are friends | 0.003 | friendships and friends each rise in proportion; the Poisson form gets worse |
-| $G(n,p)$ | the model: every pair its own independent coin with chance p | G(1000, 0.003) | — |
-| $\binom{n}{2}$ | number of pairs, n(n − 1)/2 | 499,500 | grows like n squared |
-| $\binom{n}{3}$ | number of groups of three, n(n − 1)(n − 2)/6 | 166,167,000 | grows like n cubed |
-| $I_{uv}$ | 1 if people $u$ and $v$ are friends, else 0 | 1 with chance 0.003 | — |
-| $u$, $v$ | two people, with u listed before v | persons 3 and 7 | — |
-| $M$ | number of friendships (edges) | about 1,498.5 | — |
-| $D$ | one person's number of friends (degree) | about 2.997 | — |
-| $k$ | a particular friend count | 0, 1, 2, … | past the average, chances fall fast |
-| $\lambda$ | average degree, (n − 1)p; say "lambda" | 2.997 | the degree law's peak moves right |
-| $\Delta$ | the gap between two laws: the largest difference in chance they give any event | 0.000752 | the Poisson form is a worse stand-in |
-| $A$ | an event, such as one person having a given set of friend counts | "8 or more friends" | — |
-| $U$ | in the coupling proof, a uniform random number between 0 and 1 that builds one coin and its Poisson partner | one per coin, 999 per person | — |
+| $`n`$ | number of people (vertices) | 1,000 | more pairs, more friends each at the same p |
+| $`p`$ | chance that one pair are friends | 0.003 | friendships and friends each rise in proportion; the Poisson form gets worse |
+| $`G(n,p)`$ | the model: every pair its own independent coin with chance p | G(1000, 0.003) | — |
+| $`\binom{n}{2}`$ | number of pairs, n(n − 1)/2 | 499,500 | grows like n squared |
+| $`\binom{n}{3}`$ | number of groups of three, n(n − 1)(n − 2)/6 | 166,167,000 | grows like n cubed |
+| $`I_{uv}`$ | 1 if people $`u`$ and $`v`$ are friends, else 0 | 1 with chance 0.003 | — |
+| $`u`$, $`v`$ | two people, with u listed before v | persons 3 and 7 | — |
+| $`M`$ | number of friendships (edges) | about 1,498.5 | — |
+| $`D`$ | one person's number of friends (degree) | about 2.997 | — |
+| $`k`$ | a particular friend count | 0, 1, 2, … | past the average, chances fall fast |
+| $`\lambda`$ | average degree, (n − 1)p; say "lambda" | 2.997 | the degree law's peak moves right |
+| $`\Delta`$ | the gap between two laws: the largest difference in chance they give any event | 0.000752 | the Poisson form is a worse stand-in |
+| $`A`$ | an event, such as one person having a given set of friend counts | "8 or more friends" | — |
+| $`U`$ | in the coupling proof, a uniform random number between 0 and 1 that builds one coin and its Poisson partner | one per coin, 999 per person | — |
 
-A second quantity follows from the same sums. The expected number of people with no friends is $n(1-p)^{n-1}$, 49.71 here. The expected number of **triangles**, three people all friends with each other, is $\binom{n}{3}p^3$, 4.49 here.
+A second quantity follows from the same sums. The expected number of people with no friends is $`n(1-p)^{n-1}`$, 49.71 here. The expected number of **triangles**, three people all friends with each other, is $`\binom{n}{3}p^3`$, 4.49 here.
 
 ### When it holds
 
 - **Every pair has the same chance.** If some people are far more sociable, the degree law grows a long right tail of hubs that no binomial has. [Small worlds and hubs](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/04-small-world-and-scale-free-models.md) builds those networks.
 - **The coins are independent.** The averages survive dependence, since an average of a sum never needs independence, but the laws do not. If one coin decided every pair at once, the average degree would still be 2.997, yet each person would have no friends with chance 0.997.
-- **p is small for the Poisson form.** The binomial law is exact for any p. Poisson is a stand-in whose error is at most $(n-1)p^2$: 0.009 here, but in a town of 11 at p = 0.3 the gap is 0.0864.
+- **p is small for the Poisson form.** The binomial law is exact for any p. Poisson is a stand-in whose error is at most $`(n-1)p^2`$: 0.009 here, but in a town of 11 at p = 0.3 the gap is 0.0864.
 - **The model, not the world.** Real friendships cluster: two friends of one person are often friends. Here that chance is just p, 0.003, and the whole town holds about 4.49 triangles.
 
 ---
@@ -103,7 +109,9 @@ The average of one indicator is the chance its thing happens. So every expected 
 
 Each of n people can pair with n − 1 others, giving n(n − 1) ordered pairs. Each unordered pair appears twice in that list, once as (u, v) and once as (v, u). So there are
 
-$$\binom{n}{2} = \frac{n(n-1)}{2} = \frac{1000 \times 999}{2} = 499{,}500$$
+```math
+\binom{n}{2} = \frac{n(n-1)}{2} = \frac{1000 \times 999}{2} = 499{,}500
+```
 
 pairs, and 499,500 coins.
 
@@ -125,11 +133,13 @@ Every person is alike under the rule, so every person's degree has this same law
 
 Keep λ = (n − 1)p fixed and let the town grow, so p shrinks.
 
-The chance of no friends is $(1-p)^{n-1}$. With p = λ/(n − 1) this is $(1 - \lambda/(n-1))^{n-1}$, which tends to $e^{-\lambda}$: 0.0497 against 0.0499 here.
+The chance of no friends is $`(1-p)^{n-1}`$. With p = λ/(n − 1) this is $`(1 - \lambda/(n-1))^{n-1}`$, which tends to $`e^{-\lambda}`$: 0.0497 against 0.0499 here.
 
 Each next chance is the last one times a ratio:
 
-$$\frac{P(D=k+1)}{P(D=k)} = \frac{n-1-k}{k+1}\cdot\frac{p}{1-p}$$
+```math
+\frac{P(D=k+1)}{P(D=k)} = \frac{n-1-k}{k+1}\cdot\frac{p}{1-p}
+```
 
 For a fixed k and large n, n − 1 − k is nearly n − 1 and 1 − p is nearly 1, so the ratio tends to λ/(k + 1). The Poisson law has exactly that start and exactly that ratio. The [Poisson](../03-Discrete%20Distributions/04-poisson.md) card proves this limit in full; nothing about graphs enters it.
 
@@ -137,18 +147,18 @@ For a fixed k and large n, n − 1 − k is nearly n − 1 and 1 − p is nearly
 
 A limit says nothing about a town of exactly 1,000. The gap Δ does. It is half the summed differences of the two laws' chances, and it bounds how far apart the two laws can put any event's chance.
 
-A coupling builds both counts from the same random numbers, so the two can be compared draw by draw. The coupling proof below gives $\Delta \le (n-1)\,p\,(1-e^{-p})$, which is below $(n-1)p^2$, the form Lucien Le Cam proved in 1960. Here that is 0.008978, under 0.009. The true gap, summed over every count, is 0.000752: the bound is safe, and loose.
+A coupling builds both counts from the same random numbers, so the two can be compared draw by draw. The coupling proof below gives $`\Delta \le (n-1)\,p\,(1-e^{-p})`$, which is below $`(n-1)p^2`$, the form Lucien Le Cam proved in 1960. Here that is 0.008978, under 0.009. The true gap, summed over every count, is 0.000752: the bound is safe, and loose.
 
 <details>
 <summary>Detailed proof: the coupling bound</summary>
 
-Build each of a person's n − 1 coins from one uniform number U between 0 and 1. The coin is 0 if U ≤ 1 − p and 1 otherwise, so it has chance p. From the same U, build a Poisson count with mean p: it is 0 if $U \le e^{-p}$, 1 if U lies between $e^{-p}$ and $e^{-p}(1+p)$, and 2 or more above that.
+Build each of a person's n − 1 coins from one uniform number U between 0 and 1. The coin is 0 if U ≤ 1 − p and 1 otherwise, so it has chance p. From the same U, build a Poisson count with mean p: it is 0 if $`U \le e^{-p}`$, 1 if U lies between $`e^{-p}`$ and $`e^{-p}(1+p)`$, and 2 or more above that.
 
-Since $e^{-p} \ge 1-p$, the two disagree only when $1-p < U \le e^{-p}$ (coin 1, count 0), with chance $e^{-p}-1+p$, or when $U > e^{-p}(1+p)$ (count at least 2), with chance $1-e^{-p}-p\,e^{-p}$. The two add to $p(1-e^{-p})$, and since $1-e^{-p} \le p$, that is at most $p^2$.
+Since $`e^{-p} \ge 1-p`$, the two disagree only when $`1-p < U \le e^{-p}`$ (coin 1, count 0), with chance $`e^{-p}-1+p`$, or when $`U > e^{-p}(1+p)`$ (count at least 2), with chance $`1-e^{-p}-p\,e^{-p}`$. The two add to $`p(1-e^{-p})`$, and since $`1-e^{-p} \le p`$, that is at most $`p^2`$.
 
-Do this for all n − 1 coins with independent U's. The coins sum to D. The Poisson counts sum to a Poisson count with mean (n − 1)p = λ, since independent Poisson counts add ([Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md)). The two sums can differ only if some coin disagrees with its partner. By the union bound (the chance that at least one of several events happens is at most the sum of their chances), that has chance at most $(n-1)\,p\,(1-e^{-p})$.
+Do this for all n − 1 coins with independent U's. The coins sum to D. The Poisson counts sum to a Poisson count with mean (n − 1)p = λ, since independent Poisson counts add ([Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md)). The two sums can differ only if some coin disagrees with its partner. By the union bound (the chance that at least one of several events happens is at most the sum of their chances), that has chance at most $`(n-1)\,p\,(1-e^{-p})`$.
 
-For any event A, P(D in A) and P(Poisson in A) are two chances of events that coincide except when the sums differ. So they differ by at most the chance that the sums differ. That is $\Delta \le (n-1)\,p\,(1-e^{-p}) \le (n-1)p^2$.
+For any event A, P(D in A) and P(Poisson in A) are two chances of events that coincide except when the sums differ. So they differ by at most the chance that the sums differ. That is $`\Delta \le (n-1)\,p\,(1-e^{-p}) \le (n-1)p^2`$.
 
 </details>
 
@@ -156,11 +166,11 @@ For any event A, P(D in A) and P(Poisson in A) are two chances of events that co
 
 The share of the town with k friends is a sum over people: 1 for each person with exactly k, divided by n. By Step 0 its average is P(D = k), with no independence needed between people. So the bars of the chart are both one person's chance and the expected share of the town.
 
-The same indicator sum counts people with no friends: n chances of $(1-p)^{n-1}$ each, 1,000 × 0.049712 = 49.71. It counts triangles too. There are $\binom{n}{3}$ = 166,167,000 groups of three, and each is a triangle only when its three coins all land, chance $p^3$. The average is 4.486509.
+The same indicator sum counts people with no friends: n chances of $`(1-p)^{n-1}`$ each, 1,000 × 0.049712 = 49.71. It counts triangles too. There are $`\binom{n}{3}`$ = 166,167,000 groups of three, and each is a triangle only when its three coins all land, chance $`p^3`$. The average is 4.486509.
 
 How tightly the share clusters around its average is a question about variance, not averages. The tool is the variance of a sum of indicators, which [First and second moments](04-first-and-second-moment-methods.md) works out for the triangle count.
 
-Erdős and Rényi's own model is the close cousin: fix a number of edges, then choose exactly that many of the 499,500 pairs, every choice equally likely. Fix the number near 1,498.5 and most questions get the same answers as in $G(n,p)$, because the edge count of $G(n,p)$ rarely strays far from its average. The Frieze and Karoński book below treats both and moves between them.
+Erdős and Rényi's own model is the close cousin: fix a number of edges, then choose exactly that many of the 499,500 pairs, every choice equally likely. Fix the number near 1,498.5 and most questions get the same answers as in $`G(n,p)`$, because the edge count of $`G(n,p)`$ rarely strays far from its average. The Frieze and Karoński book below treats both and moves between them.
 
 ---
 

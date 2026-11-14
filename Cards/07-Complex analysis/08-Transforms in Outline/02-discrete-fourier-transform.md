@@ -34,30 +34,34 @@ Bars: the readings. Line: the mean plus the one cosine wave the k = 1 output des
 
 ## The formula
 
-Notation first, in words. The N samples are $x_n$, with $n$ counting slots from 0 to N − 1. The N outputs are $X_k$, with $k$ counting frequency in whole cycles per record. A bar over a number is its conjugate ([Conjugate and modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). The sigma sign adds over the counter under it.
+Notation first, in words. The N samples are $`x_n`$, with $`n`$ counting slots from 0 to N − 1. The N outputs are $`X_k`$, with $`k`$ counting frequency in whole cycles per record. A bar over a number is its conjugate ([Conjugate and modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). The sigma sign adds over the counter under it.
 
-$$w = e^{-2\pi i/N}, \qquad X_k = \sum_{n=0}^{N-1} x_n\, w^{kn}, \qquad x_n = \frac{1}{N}\sum_{k=0}^{N-1} X_k\, \overline{w}^{\,kn}$$
+```math
+w = e^{-2\pi i/N}, \qquad X_k = \sum_{n=0}^{N-1} x_n\, w^{kn}, \qquad x_n = \frac{1}{N}\sum_{k=0}^{N-1} X_k\, \overline{w}^{\,kn}
+```
 
 **Read it aloud:** to get frequency k, turn sample n clockwise by k times n steps of one N-th of a circle and add; to get the samples back, turn the other way, add, and divide by N.
 
-As a matrix ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)): $F$ has $w^{kn}$ in row k, column n, and the outputs are $F$ times the samples. Scale it to $U = F/\sqrt{N}$. Then
+As a matrix ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)): $`F`$ has $`w^{kn}`$ in row k, column n, and the outputs are $`F`$ times the samples. Scale it to $`U = F/\sqrt{N}`$. Then
 
-$$\overline{U}^{\,T} U = I, \qquad \sum_{n=0}^{N-1} \lvert x_n\rvert^2 = \frac{1}{N}\sum_{k=0}^{N-1} \lvert X_k\rvert^2$$
+```math
+\overline{U}^{\,T} U = I, \qquad \sum_{n=0}^{N-1} \lvert x_n\rvert^2 = \frac{1}{N}\sum_{k=0}^{N-1} \lvert X_k\rvert^2
+```
 
 **Read it aloud:** the conjugate transpose of U undoes U, which is what unitary means; so the samples' energy equals the outputs' energy divided by N.
 
-T is the transpose, rows swapped with columns, and I the identity matrix ([Complex vectors and matrices](../01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)). For real samples, outputs k and N − k are conjugate twins that together make one cosine wave, $A\cos(2\pi kn/N + \varphi)$, with amplitude $A = 2\lvert X_k\rvert/N$ and phase $\varphi = \arg X_k$, the angle of $X_k$.
+T is the transpose, rows swapped with columns, and I the identity matrix ([Complex vectors and matrices](../01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)). For real samples, outputs k and N − k are conjugate twins that together make one cosine wave, $`A\cos(2\pi kn/N + \varphi)`$, with amplitude $`A = 2\lvert X_k\rvert/N`$ and phase $`\varphi = \arg X_k`$, the angle of $`X_k`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | number of samples, and of frequencies | 8 readings, 3 hours apart | finer frequency steps, more work |
-| $n$, $k$ | slot counter; cycles per record | n = 5 is 15:00; k = 1 is once a day | k past N/2 mirrors a lower frequency |
-| $x_n$ | sample n | 11, 9, 10, 15, 20, 22, 19, 14 | every output moves by its turned share |
-| $w$ | one clockwise step, e to the −2πi/N | 0.707107 − 0.707107i | — |
-| $X_k$ ($X_0$, $X_1$, $X_7$) | output k | $X_0$ = 120; $X_1$ = −18.899495 + 17.485281i; $X_7$ its conjugate | — |
-| $F$, $\overline{F}$ | the matrix of powers of w, and its conjugate | 8 by 8, entries on the unit circle | — |
-| $U$ | F divided by the square root of N | keeps lengths | — |
-| $A$, $\varphi$ | amplitude and phase of one wave | 6.436837 degrees; 2.395043 rad | a bigger swing; an earlier peak |
+| $`N`$ | number of samples, and of frequencies | 8 readings, 3 hours apart | finer frequency steps, more work |
+| $`n`$, $`k`$ | slot counter; cycles per record | n = 5 is 15:00; k = 1 is once a day | k past N/2 mirrors a lower frequency |
+| $`x_n`$ | sample n | 11, 9, 10, 15, 20, 22, 19, 14 | every output moves by its turned share |
+| $`w`$ | one clockwise step, e to the −2πi/N | 0.707107 − 0.707107i | — |
+| $`X_k`$ ($`X_0`$, $`X_1`$, $`X_7`$) | output k | $`X_0`$ = 120; $`X_1`$ = −18.899495 + 17.485281i; $`X_7`$ its conjugate | — |
+| $`F`$, $`\overline{F}`$ | the matrix of powers of w, and its conjugate | 8 by 8, entries on the unit circle | — |
+| $`U`$ | F divided by the square root of N | keeps lengths | — |
+| $`A`$, $`\varphi`$ | amplitude and phase of one wave | 6.436837 degrees; 2.395043 rad | a bigger swing; an earlier peak |
 
 ### When it holds
 
@@ -77,36 +81,36 @@ The number w is an 8th root of unity, a turn of one eighth of a circle ([Powers 
 
 ### Step 1: each output is a walk of turned samples
 
-Take k = 1. Lay the readings end to end as arrows: 11 pointing east, 9 turned an eighth clockwise, 10 a quarter, and so on. Where the walk ends is $X_1$.
+Take k = 1. Lay the readings end to end as arrows: 11 pointing east, 9 turned an eighth clockwise, 10 a quarter, and so on. Where the walk ends is $`X_1`$.
 
 <p align="center"><img src="../figures/discrete-fourier-transform.svg" alt="The eight readings laid end to end, each turned 45 degrees clockwise from the last; the walk ends at X_1 = -18.899495 + 17.485281i, drawn to scale" width="420"></p>
 
-To scale: 4.5 units per degree Celsius. Solid arrows are readings, labelled; the dashed arrow is $X_1$.
+To scale: 4.5 units per degree Celsius. Solid arrows are readings, labelled; the dashed arrow is $`X_1`$.
 
-A steady day would walk round an octagon back to the start: Step 0. The warm afternoon arrows are longer and point west and north-west, so the walk overshoots that way; the overshoot measures the swing. For k = 0 nothing turns: $X_0$ = 120 is the plain sum, 8 times the mean.
+A steady day would walk round an octagon back to the start: Step 0. The warm afternoon arrows are longer and point west and north-west, so the walk overshoots that way; the overshoot measures the swing. For k = 0 nothing turns: $`X_0`$ = 120 is the plain sum, 8 times the mean.
 
 ### Step 2: the columns are perpendicular, so the conjugate matrix inverts
 
-Row j of $\overline{F}$ against column k of $F$ adds eight products w^(kn) times the conjugate of w^(jn), each equal to w^((k − j)n), since conjugating a point on the unit circle turns it back. By Step 0 the total is 8 when j = k and 0 otherwise. So $\overline{F}$ times $F$ is 8 times the identity, and dividing by 8 gives the inverse. F is symmetric, since $w^{kn} = w^{nk}$, so $\overline{F}$ is also its conjugate transpose.
+Row j of $`\overline{F}`$ against column k of $`F`$ adds eight products w^(kn) times the conjugate of w^(jn), each equal to w^((k − j)n), since conjugating a point on the unit circle turns it back. By Step 0 the total is 8 when j = k and 0 otherwise. So $`\overline{F}`$ times $`F`$ is 8 times the identity, and dividing by 8 gives the inverse. F is symmetric, since $`w^{kn} = w^{nk}`$, so $`\overline{F}`$ is also its conjugate transpose.
 
 ### Step 3: unitary means lengths are kept, and that is Parseval
 
-Divide $F$ by the square root of 8 and every column has length 1: $U$ is unitary, a rigid turn in N complex dimensions that stretches nothing. So the samples and $U$ times the samples have the same squared length. Undo the scaling: 15744 = 8 × 1968.
+Divide $`F`$ by the square root of 8 and every column has length 1: $`U`$ is unitary, a rigid turn in N complex dimensions that stretches nothing. So the samples and $`U`$ times the samples have the same squared length. Undo the scaling: 15744 = 8 × 1968.
 
 <details>
 <summary>Detailed proof: inversion and Parseval for every N</summary>
 
 For a whole number m, if w^m = 1 the sum of w^(mn) over n = 0 to N − 1 is N. Otherwise the geometric-series formula gives (1 − w^(mN)) / (1 − w^m) = 0, since w^(mN) = 1. And w^m = 1 exactly when N divides m, which for a difference of two counters between 0 and N − 1 means the counters are equal.
 
-**Inversion.** The conjugate of w is w^(−1), since w times its conjugate is its squared length, 1. Put the forward sum into the inverse: (1/N) times the sum over k of $X_k$ w^(−kn) becomes (1/N) times the sum over slots p of sample p times the sum over k of w^(k(p − n)). The inner sum is N when p = n and 0 otherwise, leaving $x_n$.
+**Inversion.** The conjugate of w is w^(−1), since w times its conjugate is its squared length, 1. Put the forward sum into the inverse: (1/N) times the sum over k of $`X_k`$ w^(−kn) becomes (1/N) times the sum over slots p of sample p times the sum over k of w^(k(p − n)). The inner sum is N when p = n and 0 otherwise, leaving $`x_n`$.
 
-**Parseval.** Expand the sum over k of $X_k$ times its conjugate: the inner sum over k of w^(k(n − p)) keeps only slot pairs with n = p, each with factor N, leaving N times the sum of |$x_n$|^2.
+**Parseval.** Expand the sum over k of $`X_k`$ times its conjugate: the inner sum over k of w^(k(n − p)) keeps only slot pairs with n = p, each with factor N, leaving N times the sum of |$`x_n`$|^2.
 
 </details>
 
 ### Step 4: twins make one cosine wave
 
-Real samples make $X_{N-k}$ the conjugate of $X_k$: here $X_7$ = −18.899495 − 17.485281i. In the inverse sum the twins add to twice a real part. With $X_1$ of length 25.747349 and angle 2.395043 rad, that is a cosine of amplitude 2 × 25.747349 / 8 = 6.436837, peaking where its angle is a whole turn, at hour 14.851609.
+Real samples make $`X_{N-k}`$ the conjugate of $`X_k`$: here $`X_7`$ = −18.899495 − 17.485281i. In the inverse sum the twins add to twice a real part. With $`X_1`$ of length 25.747349 and angle 2.395043 rad, that is a cosine of amplitude 2 × 25.747349 / 8 = 6.436837, peaking where its angle is a whole turn, at hour 14.851609.
 
 ### Step 5: the fast route
 
@@ -120,11 +124,11 @@ Each power of w has parts 0, ±1 or ±0.707107, so the sums group.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $X_0$ | 11 + 9 + 10 + 15 + 20 + 22 + 19 + 14 | 120 |
+| $`X_0`$ | 11 + 9 + 10 + 15 + 20 + 22 + 19 + 14 | 120 |
 | mean | 120 / 8 | 15 |
-| real part of $X_1$ | 11 − 20 + 0.707107 × (9 − 15 − 22 + 14) | −18.899495 |
-| imaginary part of $X_1$ | −10 + 19 + 0.707107 × (−9 − 15 + 22 + 14) | 17.485281 |
-| size of $X_1$ | square root of (18.899495^2 + 17.485281^2) | 25.747349 |
+| real part of $`X_1`$ | 11 − 20 + 0.707107 × (9 − 15 − 22 + 14) | −18.899495 |
+| imaginary part of $`X_1`$ | −10 + 19 + 0.707107 × (−9 − 15 + 22 + 14) | 17.485281 |
+| size of $`X_1`$ | square root of (18.899495^2 + 17.485281^2) | 25.747349 |
 | amplitude | 2 × 25.747349 / 8 | **6.436837 degrees** |
 | phase, peak | arg = 2.395043 rad; 2πn/8 + 2.395043 = 2π at n = 4.950536; × 3 hours | **hour 14.851609** |
 | energy check | 11^2 + 9^2 + … + 14^2 = 1968; sum of sizes squared 15744, / 8 | **1968 = 1968** |
@@ -138,7 +142,7 @@ The day swings 6.436837 degrees about 15, warmest just before 15:00.
 | Inverse without 1/N | 88, 72, 80, … | Each column has squared length 8, not 1 |
 | Inverse with F, not its conjugate | 11, 14, 19, 22, 20, 15, 10, 9 | Turning the same way twice runs the day backwards |
 | Parseval without 1/N | 15744 against 1968 | The unscaled matrix stretches squared lengths by 8 |
-| Amplitude as the size of $X_1$ over N | 3.218419, not 6.436837 | The twin at k = 7 carries the other half |
+| Amplitude as the size of $`X_1`$ over N | 3.218419, not 6.436837 | The twin at k = 7 carries the other half |
 
 ---
 
@@ -349,9 +353,9 @@ Lean proves inversion, the unitary matrix and Parseval for every N and any N com
 - For any N complex samples, the conjugate matrix divided by N undoes the transform: every sample comes back.
 - The matrix divided by the square root of N is unitary: its conjugate transpose times it is the identity matrix.
 - Parseval holds: the samples' squared sizes add up to the outputs' squared sizes divided by N.
-- The eight readings add to $X_0$ = 120, and the mean is 120 / 8 = 15.
-- The transform itself gives $X_0$ = 120 for the eight readings.
-- $X_1$ is exactly $(-9 - 7\sqrt{2}) + (9 + 6\sqrt{2})i$, that is −18.899495 + 17.485281i.
+- The eight readings add to $`X_0`$ = 120, and the mean is 120 / 8 = 15.
+- The transform itself gives $`X_0`$ = 120 for the eight readings.
+- $`X_1`$ is exactly $`(-9 - 7\sqrt{2}) + (9 + 6\sqrt{2})i`$, that is −18.899495 + 17.485281i.
 - The squared readings add to 1968, the outputs' squared sizes add to exactly 15744, and 15744 / 8 = 1968.
 
 The other outputs, the FFT, the amplitude and peak hour, and the mistakes table are left to the Python and Rust checks.
@@ -553,9 +557,9 @@ example : ∑ k : Fin 8, ‖∑ m : Fin 8, (![11, 9, 10, 15, 20, 22, 19, 14] : F
 
 > [!TIP]
 > **Try changing**
-> - **Add 2 to every reading.** Guess first: which outputs move? Only $X_0$: a constant has no swing.
+> - **Add 2 to every reading.** Guess first: which outputs move? Only $`X_0`$: a constant has no swing.
 > - **Move the 11 to the end, so the record starts at 03:00.** Guess first: does the amplitude change? No. Only the angles turn, and the peak moves one slot, three hours, earlier on the new clock.
-> - **Flip the sign of the sine in w.** Guess first: what happens? Each $X_k$ becomes its conjugate, its twin's value. The FFT still turns clockwise, so the first assert stops the run.
+> - **Flip the sign of the sine in w.** Guess first: what happens? Each $`X_k`$ becomes its conjugate, its twin's value. The FFT still turns clockwise, so the first assert stops the run.
 
 ---
 

@@ -45,52 +45,56 @@ Orange: the delta limit (sensitivity to Acme's price). Teal: the stress limit (l
 
 ## The formula
 
-Notation first, in words. The gauges are numbered by a letter $j$. Gauge $j$ reads $x_j$ and has cap $b_j$. A gauge's **utilisation** is its reading over its cap, and its **headroom** is the cap minus the reading. For a book of $q$ identical units, $a_j$ is the reading one unit adds.
+Notation first, in words. The gauges are numbered by a letter $`j`$. Gauge $`j`$ reads $`x_j`$ and has cap $`b_j`$. A gauge's **utilisation** is its reading over its cap, and its **headroom** is the cap minus the reading. For a book of $`q`$ identical units, $`a_j`$ is the reading one unit adds.
 
-$$u_j = \frac{x_j}{b_j}, \qquad h_j = b_j - x_j, \qquad q^* = \min_j \frac{b_j}{a_j}$$
+```math
+u_j = \frac{x_j}{b_j}, \qquad h_j = b_j - x_j, \qquad q^* = \min_j \frac{b_j}{a_j}
+```
 
 **Read it aloud:** divide each cap by what one unit uses of it; the smallest answer is the largest book allowed, and the gauge that gives it is the binding limit.
 
-To add units to a book already holding some, the same rule runs on headroom: the most that can be added is the smallest $h_j / a_j$.
+To add units to a book already holding some, the same rule runs on headroom: the most that can be added is the smallest $`h_j / a_j`$.
 
 The stop becomes a cap on daily risk through a second formula. It uses these symbols:
 
-- $D$ is the drawdown.
-- $\sigma_d$ is the standard deviation of one day's profit and loss (its typical size).
-- $\tau_L$ is the number of days until the drawdown first reaches the stop $L$.
-- $\mathbb{E}$ means the average over all the ways the future could go.
-- $m$ is the firm's patience, the fewest days the stop should take to reach by chance.
-- $z$ = 2.3263 is the 99 percent point of the bell curve, in standard deviations.
+- $`D`$ is the drawdown.
+- $`\sigma_d`$ is the standard deviation of one day's profit and loss (its typical size).
+- $`\tau_L`$ is the number of days until the drawdown first reaches the stop $`L`$.
+- $`\mathbb{E}`$ means the average over all the ways the future could go.
+- $`m`$ is the firm's patience, the fewest days the stop should take to reach by chance.
+- $`z`$ = 2.3263 is the 99 percent point of the bell curve, in standard deviations.
 
 For a book with no edge (an average daily profit of zero),
 
-$$\mathbb{E}[\tau_L] = \left(\frac{L}{\sigma_d}\right)^2 \quad\text{days}, \qquad\text{so}\qquad b_{\text{VaR}} = z\,\frac{L}{\sqrt{m}}$$
+```math
+\mathbb{E}[\tau_L] = \left(\frac{L}{\sigma_d}\right)^2 \quad\text{days}, \qquad\text{so}\qquad b_{\text{VaR}} = z\,\frac{L}{\sqrt{m}}
+```
 
-**Read it aloud:** a book with no edge reaches its stop, on average, after the square of the stop counted in daily standard deviations; to wait at least $m$ days, cap one-day VaR at $z$ times the stop divided by the square root of $m$.
+**Read it aloud:** a book with no edge reaches its stop, on average, after the square of the stop counted in daily standard deviations; to wait at least $`m`$ days, cap one-day VaR at $`z`$ times the stop divided by the square root of $`m`$.
 
-Here VaR, **value at risk**, is the one-day loss exceeded on one day in a hundred ([Value at risk](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md)). For a bell-shaped day it equals $z\,\sigma_d$. Conventions verified 2026-09-28: VaR at 99 percent over one trading day, 252 trading days a year.
+Here VaR, **value at risk**, is the one-day loss exceeded on one day in a hundred ([Value at risk](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md)). For a bell-shaped day it equals $`z\,\sigma_d`$. Conventions verified 2026-09-28: VaR at 99 percent over one trading day, 252 trading days a year.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$, $L$ | capital set against the desk; the stop, the largest drawdown allowed, 3% of $C$ | $50,000,000; $1,500,000 | every cap derived from them rises |
-| $D$ | drawdown: the fall in the book's value from its highest point so far | $300,000 before the shock | less of the stop is left |
-| $j$, $x_j$, $b_j$ | a gauge, its reading, its cap | delta gauge, cap $37,500 per 1% move | a higher cap binds later |
-| $u_j$, $h_j$ | utilisation (reading over cap) and headroom (cap minus reading) | delta today: 82.63% used | nearer to binding |
-| $a_j$ | reading added by one unit | stress: $16.2387 per unit | that gauge binds at a smaller book |
-| $q$, $q^*$ | book size in units; the largest size inside every cap | 75,000 held; 90,766 allowed | every reading rises in step |
-| $\sigma_d$ | standard deviation of one day's profit and loss | $41,189.41 for today's book | the stop comes sooner, as a square |
-| $\tau_L$ | days until the drawdown first reaches $L$ | 1,326 on average today | — |
-| $m$ | patience: the fewest days, on average, the stop should take to reach by chance | 100 | the VaR cap falls as one over its square root |
-| $z$ | the 99% point of the bell curve, in standard deviations | 2.3263 | the VaR cap rises |
-| $n$ | the stop counted in daily standard deviations, $L / \sigma_d$ | 10 at the VaR cap before rounding | days to the stop grow as its square |
-| $k$, $E_k$, $A$, $M$ | used only in the folded proof: a drawdown counted in coin steps, the average days to the stop from it, a constant to be found, coin tosses per day | 110 days from drawdown 0 when the stop is 10 steps | — |
+| $`C`$, $`L`$ | capital set against the desk; the stop, the largest drawdown allowed, 3% of $`C`$ | $50,000,000; $1,500,000 | every cap derived from them rises |
+| $`D`$ | drawdown: the fall in the book's value from its highest point so far | $300,000 before the shock | less of the stop is left |
+| $`j`$, $`x_j`$, $`b_j`$ | a gauge, its reading, its cap | delta gauge, cap $37,500 per 1% move | a higher cap binds later |
+| $`u_j`$, $`h_j`$ | utilisation (reading over cap) and headroom (cap minus reading) | delta today: 82.63% used | nearer to binding |
+| $`a_j`$ | reading added by one unit | stress: $16.2387 per unit | that gauge binds at a smaller book |
+| $`q`$, $`q^*`$ | book size in units; the largest size inside every cap | 75,000 held; 90,766 allowed | every reading rises in step |
+| $`\sigma_d`$ | standard deviation of one day's profit and loss | $41,189.41 for today's book | the stop comes sooner, as a square |
+| $`\tau_L`$ | days until the drawdown first reaches $`L`$ | 1,326 on average today | — |
+| $`m`$ | patience: the fewest days, on average, the stop should take to reach by chance | 100 | the VaR cap falls as one over its square root |
+| $`z`$ | the 99% point of the bell curve, in standard deviations | 2.3263 | the VaR cap rises |
+| $`n`$ | the stop counted in daily standard deviations, $`L / \sigma_d`$ | 10 at the VaR cap before rounding | days to the stop grow as its square |
+| $`k`$, $`E_k`$, $`A`$, $`M`$ | used only in the folded proof: a drawdown counted in coin steps, the average days to the stop from it, a constant to be found, coin tosses per day | 110 days from drawdown 0 when the stop is 10 steps | — |
 
 ### When it holds
 
 - **Every gauge scales with size.** Double every position and each reading doubles. True of notional, delta, vega, a fixed-scenario loss and VaR. If the new trade is a different product, the readings do not add, and the whole book must be re-measured: VaR of two books can exceed the sum of their VaRs ([Expected shortfall](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md)).
-- **Readings at today's market.** Every $a_j$ is measured now. After a shock the per-unit readings change, and a book that fitted can breach with no trade at all (the shock day below).
-- **No edge, for the square law.** If the desk earns a steady positive return, the stop comes later than $(L/\sigma_d)^2$ days; if it bleeds, sooner. The formula is a yardstick for patience, not a forecast.
-- **A bell-shaped day, for the VaR cap.** VaR equals $z\,\sigma_d$ only when the day's result is close to bell-shaped. With fat tails, VaR$/z$ misstates $\sigma_d$, and one large day can cross the stop at once.
+- **Readings at today's market.** Every $`a_j`$ is measured now. After a shock the per-unit readings change, and a book that fitted can breach with no trade at all (the shock day below).
+- **No edge, for the square law.** If the desk earns a steady positive return, the stop comes later than $`(L/\sigma_d)^2`$ days; if it bleeds, sooner. The formula is a yardstick for patience, not a forecast.
+- **A bell-shaped day, for the VaR cap.** VaR equals $`z\,\sigma_d`$ only when the day's result is close to bell-shaped. With fat tails, VaR$`/z`$ misstates $`\sigma_d`$, and one large day can cross the stop at once.
 
 ---
 
@@ -106,26 +110,26 @@ Take the book of 75,000 units and double it. Twice the shares and twice the sold
 
 ### Step 2: the first gauge to fill decides the size
 
-With $q$ units, gauge $j$ reads $q\,a_j$. The book is inside that limit when $q\,a_j \le b_j$, that is, when $q \le b_j / a_j$. Inside every limit means inside each one, so $q$ must be at most every ratio at once, and the largest such $q$ is the smallest ratio. That is $q^* = \min_j b_j/a_j$.
+With $`q`$ units, gauge $`j`$ reads $`q\,a_j`$. The book is inside that limit when $`q\,a_j \le b_j`$, that is, when $`q \le b_j / a_j`$. Inside every limit means inside each one, so $`q`$ must be at most every ratio at once, and the largest such $`q`$ is the smallest ratio. That is $`q^* = \min_j b_j/a_j`$.
 
 The ratios on this book are 100,000.0 units for notional, 90,766.3 for delta, 131,922.1 for vega, 92,372.2 for stress and 273,948.6 for VaR. Delta binds first. The book may hold 90,766 units.
 
 ### Step 3: the drawdown and the square law
 
-The **drawdown** is $D$ = (the book's highest value so far) minus (its current value). It never goes below zero, and it resets to zero at each new high.
+The **drawdown** is $`D`$ = (the book's highest value so far) minus (its current value). It never goes below zero, and it resets to zero at each new high.
 
-Start with a model a coin can play. Each day the book makes or loses exactly $\sigma_d$, with even odds. Count the stop in those steps: $L = n\,\sigma_d$. The drawdown then moves on the whole numbers 0 to $n$. From 0, a winning day makes a new high and leaves it at 0; a losing day takes it to 1. Anywhere else it moves one step down on a win and one step up on a loss.
+Start with a model a coin can play. Each day the book makes or loses exactly $`\sigma_d`$, with even odds. Count the stop in those steps: $`L = n\,\sigma_d`$. The drawdown then moves on the whole numbers 0 to $`n`$. From 0, a winning day makes a new high and leaves it at 0; a losing day takes it to 1. Anywhere else it moves one step down on a win and one step up on a loss.
 
-The average number of days to reach $n$ from 0 turns out to be exactly $n(n+1)$. At $n$ = 10 that is 110 days. A simulation of 20,000 such books gives 110.42.
+The average number of days to reach $`n`$ from 0 turns out to be exactly $`n(n+1)`$. At $`n`$ = 10 that is 110 days. A simulation of 20,000 such books gives 110.42.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $E_k$ be the average number of days to reach $n$ starting from drawdown $k$. At the stop, $E_n = 0$. From 0, one day passes and the drawdown is 0 or 1 with even odds: $E_0 = 1 + \tfrac12 E_0 + \tfrac12 E_1$, so $E_0 = 2 + E_1$. From any $k$ between 1 and $n - 1$: $E_k = 1 + \tfrac12 E_{k-1} + \tfrac12 E_{k+1}$.
+Let $`E_k`$ be the average number of days to reach $`n`$ starting from drawdown $`k`$. At the stop, $`E_n = 0`$. From 0, one day passes and the drawdown is 0 or 1 with even odds: $`E_0 = 1 + \tfrac12 E_0 + \tfrac12 E_1`$, so $`E_0 = 2 + E_1`$. From any $`k`$ between 1 and $`n - 1`$: $`E_k = 1 + \tfrac12 E_{k-1} + \tfrac12 E_{k+1}`$.
 
-Try $E_k = A - k^2 - k$. Then $\tfrac12 (E_{k-1} + E_{k+1}) - E_k = -\tfrac12\big((k-1)^2 + (k+1)^2 - 2k^2\big) - \tfrac12\big((k-1) + (k+1) - 2k\big) = -1$, which is the middle equation. At the bottom, $E_0 - E_1 = A - (A - 2) = 2$, which is the first. The last fixes $A$: $0 = A - n^2 - n$, so $A = n(n+1)$ and $E_0 = n(n+1)$. The equations have only this solution: the difference of two solutions would satisfy the same equations with the 1s removed, forcing it to be a straight line that is flat at 0 and zero at $n$, hence zero everywhere.
+Try $`E_k = A - k^2 - k`$. Then $`\tfrac12 (E_{k-1} + E_{k+1}) - E_k = -\tfrac12\big((k-1)^2 + (k+1)^2 - 2k^2\big) - \tfrac12\big((k-1) + (k+1) - 2k\big) = -1`$, which is the middle equation. At the bottom, $`E_0 - E_1 = A - (A - 2) = 2`$, which is the first. The last fixes $`A`$: $`0 = A - n^2 - n`$, so $`A = n(n+1)`$ and $`E_0 = n(n+1)`$. The equations have only this solution: the difference of two solutions would satisfy the same equations with the 1s removed, forcing it to be a straight line that is flat at 0 and zero at $`n`$, hence zero everywhere.
 
-Now split each day into $M$ smaller coin tosses of size $\sigma_d / \sqrt{M}$, which keeps the day's standard deviation at $\sigma_d$. The stop is now $n\sqrt{M}$ steps, the count is $n\sqrt{M}\,(n\sqrt{M} + 1)$ tosses, and each toss is $1/M$ of a day. That is $n^2 + n/\sqrt{M}$ days, which falls to $n^2$ as the tosses get finer. In the limit the book's value wanders as Brownian motion, and $\mathbb{E}[\tau_L] = (L/\sigma_d)^2$. Taylor (1975) proved the formula for Brownian motion directly, drift included.
+Now split each day into $`M`$ smaller coin tosses of size $`\sigma_d / \sqrt{M}`$, which keeps the day's standard deviation at $`\sigma_d`$. The stop is now $`n\sqrt{M}`$ steps, the count is $`n\sqrt{M}\,(n\sqrt{M} + 1)`$ tosses, and each toss is $`1/M`$ of a day. That is $`n^2 + n/\sqrt{M}`$ days, which falls to $`n^2`$ as the tosses get finer. In the limit the book's value wanders as Brownian motion, and $`\mathbb{E}[\tau_L] = (L/\sigma_d)^2`$. Taylor (1975) proved the formula for Brownian motion directly, drift included.
 
 </details>
 
@@ -141,11 +145,11 @@ xychart-beta
     line [4, 16, 36, 64, 100, 144]
 ```
 
-Orange: the coin-toss book, $n(n+1)$ days. Teal: the Brownian limit (the same coin game with ever smaller, ever more frequent tosses), $n^2$ days.
+Orange: the coin-toss book, $`n(n+1)`$ days. Teal: the Brownian limit (the same coin game with ever smaller, ever more frequent tosses), $`n^2`$ days.
 
 ### Step 4: from the stop to a VaR cap
 
-The firm chooses its patience: a book with no edge should take at least $m$ = 100 trading days, on average, to hit the stop by chance alone. The square law says this needs $(L/\sigma_d)^2 \ge m$, that is, $\sigma_d \le L/\sqrt{m}$, one tenth of the stop. For a bell-shaped day, VaR is $z\,\sigma_d$. So the VaR cap is $z L/\sqrt{m}$ = 2.3263 × 1,500,000 / 10 = $348,952.18, which the policy rounds to $350,000.
+The firm chooses its patience: a book with no edge should take at least $`m`$ = 100 trading days, on average, to hit the stop by chance alone. The square law says this needs $`(L/\sigma_d)^2 \ge m`$, that is, $`\sigma_d \le L/\sqrt{m}`$, one tenth of the stop. For a bell-shaped day, VaR is $`z\,\sigma_d`$. So the VaR cap is $`z L/\sqrt{m}`$ = 2.3263 × 1,500,000 / 10 = $348,952.18, which the policy rounds to $350,000.
 
 ### Step 5: from the stop to the other caps
 
@@ -191,7 +195,7 @@ The desk holds 75,000 units and may grow to at most 90,766. A proposed trade to 
 | --- | --- | --- |
 | stress loss estimated from delta and vega only | $13.9482 per unit, allowing 107,541.1 units | ignores gamma: the sold calls' delta shrinks as Acme falls, so the shares take more of the fall |
 | notional measured net: shares minus calls | $0.00 per unit | the calls offset the shares on paper; the notional limit never binds |
-| patience counted as a line, $L/\sigma_d$ days | VaR cap $34,895.22 | ten times too tight: the stop is $n^2$ days away, not $n$ |
+| patience counted as a line, $`L/\sigma_d`$ days | VaR cap $34,895.22 | ten times too tight: the stop is $`n^2`$ days away, not $`n`$ |
 | drawdown measured from the start, not the high: up $600,000, then down $1,700,000 | $1,100,000 lost, stop not hit | the drawdown is $1,700,000: the stop was hit |
 
 ---
@@ -249,7 +253,7 @@ The code prices the house call with its own normal distribution function, builds
 - the stress loss by the pricing formula and by integrating the call's payoff;
 - one-day VaR by the exact 1 percent quantile and by 40,000 simulated days drawn from its own random numbers;
 - the largest book by the min rule and by growing the book one unit at a time;
-- days to the stop by the exact count $n(n+1)$, by 20,000 simulated coin-toss books, and by the Brownian limit $n^2$.
+- days to the stop by the exact count $`n(n+1)`$, by 20,000 simulated coin-toss books, and by the Brownian limit $`n^2`$.
 
 It ends with the shock day and the wrong answers from the table above.
 
@@ -691,10 +695,10 @@ The two outputs agree line for line: both programs use the same random-number ru
 
 Lean proves Step 2, the coin-toss count of Step 3 and Step 4 for any inputs, and checks the whole-number examples.
 
-- Suppose each unit adds a positive reading $a_j$ to gauge $j$, whose cap is $b_j$. Then the largest book inside every cap is $q^* = \min_j b_j/a_j$.
-- Take the coin-toss book, with the stop $n \ge 1$ steps below the high. Then the equations for $E_k$ in the folded proof hold exactly when $E_k = n(n+1) - k^2 - k$ for every $k \le n$.
-- So the coin-toss book needs $E_0 = n(n+1)$ days on average to reach the stop from a new high.
-- Take a stop $L$, daily standard deviation $\sigma_d$, patience $m$ and $z$, all positive. Then $(L/\sigma_d)^2 \ge m$ exactly when VaR $z \sigma_d$ is at most $z L/\sqrt{m}$.
+- Suppose each unit adds a positive reading $`a_j`$ to gauge $`j`$, whose cap is $`b_j`$. Then the largest book inside every cap is $`q^* = \min_j b_j/a_j`$.
+- Take the coin-toss book, with the stop $`n \ge 1`$ steps below the high. Then the equations for $`E_k`$ in the folded proof hold exactly when $`E_k = n(n+1) - k^2 - k`$ for every $`k \le n`$.
+- So the coin-toss book needs $`E_0 = n(n+1)`$ days on average to reach the stop from a new high.
+- Take a stop $`L`$, daily standard deviation $`\sigma_d`$, patience $`m`$ and $`z`$, all positive. Then $`(L/\sigma_d)^2 \ge m`$ exactly when VaR $`z \sigma_d`$ is at most $`z L/\sqrt{m}`$.
 - Lean also checks the whole-number examples: the $1,500,000 stop, the $37,500 delta cap, the $50,000 vega cap and the $20,000,000 notional cap.
 - It also checks the $1,700,000 drawdown from the high, and both lines of the days-to-the-stop chart.
 
@@ -832,13 +836,13 @@ example : [2, 4, 6, 8, 10, 12].map (fun n : ℕ => n ^ 2) = [4, 16, 36, 64, 100,
 ## The usual mistake
 
 > [!warning]
-> **Setting each limit on its own, against the full stop, and never looking at the drawdown already spent.** Each cap was sized as if the book stood at its high. After a bad month it does not. Here the stress test read 81.19 percent and looked safe, while only $1,200,000 of the stop was left; the disaster would use 101.49 percent of that, and it did. The fix is to let the stress cap shrink with the drawdown: cap stress loss at $L - D$, not $L$.
+> **Setting each limit on its own, against the full stop, and never looking at the drawdown already spent.** Each cap was sized as if the book stood at its high. After a bad month it does not. Here the stress test read 81.19 percent and looked safe, while only $1,200,000 of the stop was left; the disaster would use 101.49 percent of that, and it did. The fix is to let the stress cap shrink with the drawdown: cap stress loss at $`L - D`$, not $`L`$.
 >
 > Smaller traps:
 > - **Trusting VaR on a book of sold options.** VaR here reads 27.38 percent while stress reads 81.19 percent. Sold options lose little on ordinary days and a lot on rare ones; VaR only sees ordinary days.
 > - **Netting notional.** Shares long and calls short net to $0.00 of notional per unit, so the one model-free limit stops working exactly when a model is wrong.
 > - **Estimating stress from Greeks.** Delta and vega alone give $13.9482 per unit instead of $16.2387 and let the book grow to 107,541.1 units. Reprice the book in the scenario.
-> - **Reading the stop as ten bad days away.** At $n$ = 10 daily standard deviations it is on average 110 days away for the coin book, 100 in the limit. The square matters in both directions: halve daily risk and the stop moves four times further off.
+> - **Reading the stop as ten bad days away.** At $`n`$ = 10 daily standard deviations it is on average 110 days away for the coin book, 100 in the limit. The square matters in both directions: halve daily risk and the stop moves four times further off.
 
 ---
 
@@ -851,7 +855,7 @@ example : [2, 4, 6, 8, 10, 12].map (fun n : ℕ => n ^ 2) = [4, 16, 36, 64, 100,
 - **Imperfect hedges.** A delta cap met with futures on an index rather than Acme itself leaves basis risk that no Greek limit sees: [Imperfect hedges](03-hedge-ratios-basis-risk-and-cross-hedging.md).
 
 > **Say it back**
-> The firm writes one number first: the most a desk may lose from its high before it stops, here 3 percent of capital. Every limit is a fraction of that stop, each guarding a different way to lose it. Because every gauge grows in step with the book, the largest book is the smallest cap-over-usage ratio, and that gauge binds. A stop $n$ daily standard deviations away takes about $n^2$ days to reach by chance, which turns the stop into a cap on daily risk. Limits are read at today's market, so a shock can breach them with no trade, and a stress cap should shrink as the drawdown grows.
+> The firm writes one number first: the most a desk may lose from its high before it stops, here 3 percent of capital. Every limit is a fraction of that stop, each guarding a different way to lose it. Because every gauge grows in step with the book, the largest book is the smallest cap-over-usage ratio, and that gauge binds. A stop $`n`$ daily standard deviations away takes about $`n^2`$ days to reach by chance, which turns the stop into a cap on daily risk. Limits are read at today's market, so a shock can breach them with no trade, and a stress cap should shrink as the drawdown grows.
 
 ---
 

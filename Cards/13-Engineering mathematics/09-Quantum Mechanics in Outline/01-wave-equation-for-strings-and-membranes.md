@@ -39,39 +39,43 @@ Orange: harmonic 1, one arch, 329.63 Hz. Teal: harmonic 2, two arches with a sti
 
 ## The formula
 
-Reminder: the height of a string, $u(x,t)$, obeys the wave equation $u_{tt} = c^2 u_{xx}$. A subscript is a rate with the other variable held still: $u_{tt}$ is a point's acceleration, $u_{xx}$ the string's bending ([Standing waves](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/06-standing-waves-on-a-string.md)). A drum head has height $u(x,y,t)$ and bends two ways: $u_{tt} = c^2(u_{xx} + u_{yy})$. Holding the edges still means $u = 0$ there at every moment.
+Reminder: the height of a string, $`u(x,t)`$, obeys the wave equation $`u_{tt} = c^2 u_{xx}`$. A subscript is a rate with the other variable held still: $`u_{tt}`$ is a point's acceleration, $`u_{xx}`$ the string's bending ([Standing waves](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/06-standing-waves-on-a-string.md)). A drum head has height $`u(x,y,t)`$ and bends two ways: $`u_{tt} = c^2(u_{xx} + u_{yy})`$. Holding the edges still means $`u = 0`$ there at every moment.
 
 The patterns the edges allow, and their frequencies:
 
-$$\text{string:}\quad u = \sin\frac{n\pi x}{L}\,\cos(2\pi f_n t), \qquad f_n = \frac{n\,c}{2L}, \qquad c = \sqrt{T/\mu}$$
+```math
+\text{string:}\quad u = \sin\frac{n\pi x}{L}\,\cos(2\pi f_n t), \qquad f_n = \frac{n\,c}{2L}, \qquad c = \sqrt{T/\mu}
+```
 
-$$\text{drum, } a \text{ by } b\text{:}\quad u = \sin\frac{m\pi x}{a}\,\sin\frac{n\pi y}{b}\,\cos(2\pi f_{mn} t), \qquad f_{mn} = \frac{c}{2}\sqrt{\frac{m^2}{a^2} + \frac{n^2}{b^2}}$$
+```math
+\text{drum, } a \text{ by } b\text{:}\quad u = \sin\frac{m\pi x}{a}\,\sin\frac{n\pi y}{b}\,\cos(2\pi f_{mn} t), \qquad f_{mn} = \frac{c}{2}\sqrt{\frac{m^2}{a^2} + \frac{n^2}{b^2}}
+```
 
 **Read it aloud:** a string rings only in shapes with a whole number of half-waves, at that number times the speed over twice the length; a rectangular drum rings in a whole number of half-waves each way, and its frequency combines the two directions like the sides of a right triangle.
 
-For a square drum, $a = b$, the second formula is $f_{mn} = \frac{c}{2a}\sqrt{m^2 + n^2}$. A head's wave speed is the square root of its tension per metre of edge over its mass per square metre. The 100 m/s used here is a round value chosen for the example, not measured on a real head.
+For a square drum, $`a = b`$, the second formula is $`f_{mn} = \frac{c}{2a}\sqrt{m^2 + n^2}`$. A head's wave speed is the square root of its tension per metre of edge over its mass per square metre. The 100 m/s used here is a round value chosen for the example, not measured on a real head.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | height of the string or head above rest | a fraction of the largest | — |
-| $x$, $y$, $t$ | position along the string or across the head; time, s | 0 to 0.648 m; 0 to 0.30 m | — |
-| $c$ | wave speed: how fast a ripple travels | 427.20 m/s string; 100 m/s head, a round value | every note rises in step |
-| $L$; $a$, $b$ | string length, nut to bridge; the head's two sides | 0.648 m; 0.30 m and 0.30 m | every note falls |
-| $T$, $\mu$ | string tension, N; string mass per metre | 72.6 N; 0.3978 g/m | $T$ up: notes rise as its square root |
-| $n$, $m$ | mode numbers: half-waves along each direction | 1, 2, 3 | higher note, more still lines |
-| $f_n$, $f_{mn}$ | a mode's frequency, Hz | 329.63 Hz; 235.70 Hz for (1,1) | — |
-| $k$, $\omega$ | wavenumber, radians of shape per metre, $2\pi f/c$; angular frequency $2\pi f$, rad/s | $n\pi/L$ on the string | higher frequency |
-| $p$, $r$ | the wavenumber's parts along $x$ and along $y$ | $m\pi/a$, $n\pi/b$ | — |
-| $X$, $Y$, $W$, $q$ | shape along $x$; shape along $y$; shape over the head; time factor | sines; cosines | — |
-| $A$, $v$, $\lambda$ | a matrix, its eigenvector and eigenvalue, for comparison only | — | — |
-| $c_{mn}$ | the share of mode (m, n) in a shape, in the fold | — | — |
+| $`u`$ | height of the string or head above rest | a fraction of the largest | — |
+| $`x`$, $`y`$, $`t`$ | position along the string or across the head; time, s | 0 to 0.648 m; 0 to 0.30 m | — |
+| $`c`$ | wave speed: how fast a ripple travels | 427.20 m/s string; 100 m/s head, a round value | every note rises in step |
+| $`L`$; $`a`$, $`b`$ | string length, nut to bridge; the head's two sides | 0.648 m; 0.30 m and 0.30 m | every note falls |
+| $`T`$, $`\mu`$ | string tension, N; string mass per metre | 72.6 N; 0.3978 g/m | $`T`$ up: notes rise as its square root |
+| $`n`$, $`m`$ | mode numbers: half-waves along each direction | 1, 2, 3 | higher note, more still lines |
+| $`f_n`$, $`f_{mn}`$ | a mode's frequency, Hz | 329.63 Hz; 235.70 Hz for (1,1) | — |
+| $`k`$, $`\omega`$ | wavenumber, radians of shape per metre, $`2\pi f/c`$; angular frequency $`2\pi f`$, rad/s | $`n\pi/L`$ on the string | higher frequency |
+| $`p`$, $`r`$ | the wavenumber's parts along $`x`$ and along $`y`$ | $`m\pi/a`$, $`n\pi/b`$ | — |
+| $`X`$, $`Y`$, $`W`$, $`q`$ | shape along $`x`$; shape along $`y`$; shape over the head; time factor | sines; cosines | — |
+| $`A`$, $`v`$, $`\lambda`$ | a matrix, its eigenvector and eigenvalue, for comparison only | — | — |
+| $`c_{mn}`$ | the share of mode (m, n) in a shape, in the fold | — | — |
 
 A **mode** is one of these patterns: every point swings in step at one frequency, and the shape never changes. Mode (m, n) on the drum has m half-waves across and n up.
 
 ### When it holds
 
 - **Edges held still.** Free one end of the string (a ring that slides on a rod) and the list changes to 164.82 Hz, 494.45 Hz and on: odd multiples of a quarter-wave note, half the pitch.
-- **Small swings.** A swing stretches the string and raises its tension. The extra tension comes and goes twice each cycle, so the pitch rises by three eighths of $f_1$ times the peak rise over $T$, not the half a steady rise would give. At 1 mm in harmonic 1 the pitch rises 0.10 Hz, 0.03%, too little to hear. At 5 mm, a hard pluck, the tension peaks 1.49 N higher and the pitch rises 2.54 Hz, 0.77%: outside the model. A hard-picked note starts sharp and settles as it fades; that is this error.
+- **Small swings.** A swing stretches the string and raises its tension. The extra tension comes and goes twice each cycle, so the pitch rises by three eighths of $`f_1`$ times the peak rise over $`T`$, not the half a steady rise would give. At 1 mm in harmonic 1 the pitch rises 0.10 Hz, 0.03%, too little to hear. At 5 mm, a hard pluck, the tension peaks 1.49 N higher and the pitch rises 2.54 Hz, 0.77%: outside the model. A hard-picked note starts sharp and settles as it fades; that is this error.
 - **A thin, even, flexible string or sheet.** A stiff string pushes its high harmonics slightly sharp; a thick plate obeys a different, fourth-order equation (built on fourth rates of change, not second) with differently spaced modes.
 - **Straight edges for the drum formula.** A round head needs the zeros of Bessel's function instead ([Bessel's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/03-bessels-equation-and-the-drum.md)).
 - **No air and no losses.** Real modes fade, high ones first, and air pressing on a drum head shifts its notes; the list of shapes survives, the exact numbers move.
@@ -86,37 +90,45 @@ The wave equation is linear: add two motions and the sum is a motion. So find th
 
 ### Step 1: split off time, and an eigenvalue problem is left
 
-Try $u = X(x)\,q(t)$: a fixed shape $X$ times a swinging size $q$. The wave equation becomes $q''/q = c^2 X''/X$. The left side depends only on time, the right only on place, so both equal one constant, written $-\omega^2$, with $\omega = 2\pi f$ the angular frequency in rad/s. Time then obeys $q'' = -\omega^2 q$, a plain oscillator: $q = \cos\omega t$. Shape obeys
+Try $`u = X(x)\,q(t)`$: a fixed shape $`X`$ times a swinging size $`q`$. The wave equation becomes $`q''/q = c^2 X''/X`$. The left side depends only on time, the right only on place, so both equal one constant, written $`-\omega^2`$, with $`\omega = 2\pi f`$ the angular frequency in rad/s. Time then obeys $`q'' = -\omega^2 q`$, a plain oscillator: $`q = \cos\omega t`$. Shape obeys
 
-$$-X'' = k^2 X, \qquad k = \omega / c.$$
+```math
+-X'' = k^2 X, \qquad k = \omega / c.
+```
 
-Bend the shape (take $-X''$) and the same shape comes back, scaled by $k^2$. A shape with that property is an **eigenfunction** of bending, and $k^2$ is its **eigenvalue**: the same idea as a matrix eigenvector, $A v = \lambda v$, with "bend it" in place of the matrix ([Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md)).
+Bend the shape (take $`-X''`$) and the same shape comes back, scaled by $`k^2`$. A shape with that property is an **eigenfunction** of bending, and $`k^2`$ is its **eigenvalue**: the same idea as a matrix eigenvector, $`A v = \lambda v`$, with "bend it" in place of the matrix ([Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md)).
 
 ### Step 2: the ends pick the numbers
 
-Without ends, every $k$ works: $\sin kx$ and $\cos kx$ both satisfy $-X'' = k^2X$. The nut demands $X(0) = 0$, which removes the cosine. The bridge demands $X(L) = \sin kL = 0$, which happens only when $kL$ is a whole multiple of $\pi$:
+Without ends, every $`k`$ works: $`\sin kx`$ and $`\cos kx`$ both satisfy $`-X'' = k^2X`$. The nut demands $`X(0) = 0`$, which removes the cosine. The bridge demands $`X(L) = \sin kL = 0`$, which happens only when $`kL`$ is a whole multiple of $`\pi`$:
 
-$$k = \frac{n\pi}{L}, \qquad f = \frac{c\,k}{2\pi} = \frac{n\,c}{2L}.$$
+```math
+k = \frac{n\pi}{L}, \qquad f = \frac{c\,k}{2\pi} = \frac{n\,c}{2L}.
+```
 
-Try a frequency that is not on the list, 400 Hz. The shape that starts at the nut reaches the bridge at $\sin kL = -0.6215$ of its full height, not 0. The bridge cannot hold that, so 400 Hz cannot ring. This is what **quantised** means: the allowed values form a list with gaps, and the gaps come from the edges, not from the equation.
+Try a frequency that is not on the list, 400 Hz. The shape that starts at the nut reaches the bridge at $`\sin kL = -0.6215`$ of its full height, not 0. The bridge cannot hold that, so 400 Hz cannot ring. This is what **quantised** means: the allowed values form a list with gaps, and the gaps come from the edges, not from the equation.
 
-The light finger in the overview adds one more still point. Mode n has still points at $L/n$, $2L/n$ and on, so a finger at $L/3$ keeps modes 3, 6, 9 and silences the rest.
+The light finger in the overview adds one more still point. Mode n has still points at $`L/n`$, $`2L/n`$ and on, so a finger at $`L/3`$ keeps modes 3, 6, 9 and silences the rest.
 
 ### Step 3: the drum splits into two strings
 
-On the head, try $u = W(x,y)\,q(t)$. Time behaves as before, and shape obeys
+On the head, try $`u = W(x,y)\,q(t)`$. Time behaves as before, and shape obeys
 
-$$-(W_{xx} + W_{yy}) = k^2 W, \qquad W = 0 \text{ on all four edges.}$$
+```math
+-(W_{xx} + W_{yy}) = k^2 W, \qquad W = 0 \text{ on all four edges.}
+```
 
-Try one more split, $W = X(x)\,Y(y)$. Divide by $W$: $X''/X + Y''/Y = -k^2$. The first term depends only on $x$ and the second only on $y$, so each is constant: $-X'' = p^2 X$ and $-Y'' = r^2 Y$, with $p^2 + r^2 = k^2$. Each is the string problem of Step 2, with the edges at $0$ and $a$, or $0$ and $b$. So $p = m\pi/a$, $r = n\pi/b$, and
+Try one more split, $`W = X(x)\,Y(y)`$. Divide by $`W`$: $`X''/X + Y''/Y = -k^2`$. The first term depends only on $`x`$ and the second only on $`y`$, so each is constant: $`-X'' = p^2 X`$ and $`-Y'' = r^2 Y`$, with $`p^2 + r^2 = k^2`$. Each is the string problem of Step 2, with the edges at $`0`$ and $`a`$, or $`0`$ and $`b`$. So $`p = m\pi/a`$, $`r = n\pi/b`$, and
 
-$$k^2 = \left(\frac{m\pi}{a}\right)^2 + \left(\frac{n\pi}{b}\right)^2.$$
+```math
+k^2 = \left(\frac{m\pi}{a}\right)^2 + \left(\frac{n\pi}{b}\right)^2.
+```
 
 The wavenumbers add like the sides of a right triangle, so frequencies do not stack in whole-number steps. On the 0.30 m square head the ratios run 1, 1.581, 2.000, 2.236, 2.550. No single pitch fits them all, which is why a drum thuds where a string sings.
 
 ### Step 4: one note, two shapes
 
-On a square, mode (1,2) and mode (2,1) have the same $m^2 + n^2 = 5$, so both ring at 372.68 Hz. Any mix of the two also rings at 372.68 Hz, because the equation is linear and both have the same $k^2$. Their sum has its still line along a diagonal, a shape neither one has alone.
+On a square, mode (1,2) and mode (2,1) have the same $`m^2 + n^2 = 5`$, so both ring at 372.68 Hz. Any mix of the two also rings at 372.68 Hz, because the equation is linear and both have the same $`k^2`$. Their sum has its still line along a diagonal, a shape neither one has alone.
 
 <p align="center"><img src="../figures/wave-equation-for-strings-and-membranes.svg" alt="Four 0.30 m squares: mode (1,1) with no still line at 235.7 Hz; mode (2,1) with a vertical still line and mode (1,2) with a horizontal one, both 372.7 Hz; and their sum, with a diagonal still line, also 372.7 Hz" width="420"></p>
 
@@ -126,12 +138,12 @@ Several shapes sharing one frequency is called **degeneracy**. Here it comes fro
 
 ### Step 5: nothing else rings
 
-A drum struck anywhere rings at a mix of these modes and at no other frequency. The reason is that the products $\sin(m\pi x/a)\sin(n\pi y/b)$ can build any reasonable starting shape, and they do not overlap (orthogonality), so each one carries its own share of the start. The proof is the one-dimensional sine series used in both directions; [Standing waves](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/06-standing-waves-on-a-string.md) proves it for the string.
+A drum struck anywhere rings at a mix of these modes and at no other frequency. The reason is that the products $`\sin(m\pi x/a)\sin(n\pi y/b)`$ can build any reasonable starting shape, and they do not overlap (orthogonality), so each one carries its own share of the start. The proof is the one-dimensional sine series used in both directions; [Standing waves](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/06-standing-waves-on-a-string.md) proves it for the string.
 
 <details>
 <summary>Why the split in Step 3 finds every mode on a rectangle</summary>
 
-Suppose some shape $W$, zero on the edges, satisfies $-(W_{xx} + W_{yy}) = k^2 W$. Expand it as a double sine series, $W = \sum c_{mn} \sin(m\pi x/a)\sin(n\pi y/b)$, which is possible because each one-dimensional sine series is complete. Bending each product multiplies it by $(m\pi/a)^2 + (n\pi/b)^2$. Matching both sides term by term gives $c_{mn}\left[(m\pi/a)^2 + (n\pi/b)^2 - k^2\right] = 0$. So every product with a nonzero share has exactly the eigenvalue $k^2$. Every mode is a mix of products from the list, and every frequency is on the list.
+Suppose some shape $`W`$, zero on the edges, satisfies $`-(W_{xx} + W_{yy}) = k^2 W`$. Expand it as a double sine series, $`W = \sum c_{mn} \sin(m\pi x/a)\sin(n\pi y/b)`$, which is possible because each one-dimensional sine series is complete. Bending each product multiplies it by $`(m\pi/a)^2 + (n\pi/b)^2`$. Matching both sides term by term gives $`c_{mn}\left[(m\pi/a)^2 + (n\pi/b)^2 - k^2\right] = 0`$. So every product with a nonzero share has exactly the eigenvalue $`k^2`$. Every mode is a mix of products from the list, and every frequency is on the list.
 
 </details>
 
@@ -145,9 +157,9 @@ Steel's density, 7850 kg/m³, and its stiffness (Young's modulus), 200 GPa, are 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| string mass per metre, $\mu$ | 7850 kg/m³ × π × (0.254 mm)² / 4 | 0.3978 g/m |
-| wave speed, from $f_1 = c/(2L)$ | 2 × 0.648 × 329.63 | 427.20 m/s |
-| tension, $T = \mu c^2$ | 0.0003978 × 427.20² | 72.6 N |
+| string mass per metre, $`\mu`$ | 7850 kg/m³ × π × (0.254 mm)² / 4 | 0.3978 g/m |
+| wave speed, from $`f_1 = c/(2L)`$ | 2 × 0.648 × 329.63 | 427.20 m/s |
+| tension, $`T = \mu c^2`$ | 0.0003978 × 427.20² | 72.6 N |
 | harmonics 2, 3, 4 | 2, 3, 4 × 329.63 | 659.26, 988.89, 1318.52 Hz |
 | finger at the 7th fret | 0.648 / 3 = 0.216 m: lowest mode with a still point there is 3 | 988.89 Hz |
 | drum mode (1,1) | 100 / (2 × 0.30) × √2 | 235.70 Hz |
@@ -162,8 +174,8 @@ The guitar's second note is exactly twice its first; the square drum's is 1.581 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drum's next note taken as 2 × 235.70 Hz | 471.4 Hz, but the true next note is 372.7 Hz | String habits: in two dimensions frequencies combine as squares |
-| Mode numbers added, $\tfrac{c}{2a}(1+2)$ | 500.0 Hz for (1,2), true 372.7 Hz | Directions combine like a right triangle's sides, not end to end |
-| The 2 dropped, $f_1 = c/L$ | 659.26 Hz for the open string | Harmonic 1 is half a wave, not a whole one |
+| Mode numbers added, $`\tfrac{c}{2a}(1+2)`$ | 500.0 Hz for (1,2), true 372.7 Hz | Directions combine like a right triangle's sides, not end to end |
+| The 2 dropped, $`f_1 = c/L`$ | 659.26 Hz for the open string | Harmonic 1 is half a wave, not a whole one |
 | One end free, but fixed-end formula used | 329.63, 659.26 Hz; true 164.82, 494.45 Hz | The edge condition picks the list, so a new edge gives a new list |
 
 ---
@@ -173,7 +185,7 @@ The guitar's second note is exactly twice its first; the square drum's is 1.581 
 The scripts take three independent roads to the same lists.
 
 - Road 1 is the formulas.
-- Road 2 is **shooting**: start the string's shape at the nut, march it to the bridge with RK4 (the classic fourth-order step-by-step solver), and adjust $k$ by bisection (halving the bracket) until the shape lands on zero there. Nothing in it knows about sines. [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md) explains the method.
+- Road 2 is **shooting**: start the string's shape at the nut, march it to the bridge with RK4 (the classic fourth-order step-by-step solver), and adjust $`k`$ by bisection (halving the bracket) until the shape lands on zero there. Nothing in it knows about sines. [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md) explains the method.
 - Road 3 simulates the whole square head on a 30 by 30 grid of points. It steps the head forward in time after an off-centre tap and records one point for 0.2 s. Then it scans that recording frequency by frequency with a written-out Fourier sum (a weighted sum of the recording against a cosine and a sine) to see where it rings.
 
 The grid shifts each note a little, so road 3 agrees to within 0.3%, and the check allows 1%.
@@ -587,14 +599,14 @@ ALL CHECKS PASS
 
 Lean proves the string's list of notes, that each rectangular drum mode solves the wave equation, and the square head's diagonal still line.
 
-- Take a string of length $L$, held still at both ends, and a frequency $f > 0$. Then a shape with $-X'' = k^2 X$, not zero everywhere, fits only when $f = nc/(2L)$ for a whole number $n$.
-- Take a whole number $n \ge 1$ and $f = nc/(2L)$. Then such a shape exists, so the string can ring at $f$.
-- Take an $a$ by $b$ head with wave speed $c$, and whole numbers $m$ and $n$. Then mode (m, n) at $f_{mn}$ obeys $u_{tt} = c^2(u_{xx} + u_{yy})$ and is zero on all four edges.
-- Take a square head of side $a$, and add modes (1,2) and (2,1), which share one frequency. Then the sum obeys the wave equation, is zero on all four edges, and stays still along the diagonal $x + y = a$.
+- Take a string of length $`L`$, held still at both ends, and a frequency $`f > 0`$. Then a shape with $`-X'' = k^2 X`$, not zero everywhere, fits only when $`f = nc/(2L)`$ for a whole number $`n`$.
+- Take a whole number $`n \ge 1`$ and $`f = nc/(2L)`$. Then such a shape exists, so the string can ring at $`f`$.
+- Take an $`a`$ by $`b`$ head with wave speed $`c`$, and whole numbers $`m`$ and $`n`$. Then mode (m, n) at $`f_{mn}`$ obeys $`u_{tt} = c^2(u_{xx} + u_{yy})`$ and is zero on all four edges.
+- Take a square head of side $`a`$, and add modes (1,2) and (2,1), which share one frequency. Then the sum obeys the wave equation, is zero on all four edges, and stays still along the diagonal $`x + y = a`$.
 - Harmonics 1 to 4 of the high E are 329.63, 659.26, 988.89 and 1318.52 Hz.
 - Of modes 1 to 9, the multiples of 3 are 3, 6 and 9; the even ones are 2, 4, 6 and 8.
-- For modes (1,1), (1,2), (2,1) and (2,2), $m^2 + n^2$ is 2, 5, 5 and 8.
-- Adding mode numbers for (1,2) gives $(1 + 2)^2 = 9$, not the right $1^2 + 2^2 = 5$.
+- For modes (1,1), (1,2), (2,1) and (2,2), $`m^2 + n^2`$ is 2, 5, 5 and 8.
+- Adding mode numbers for (1,2) gives $`(1 + 2)^2 = 9`$, not the right $`1^2 + 2^2 = 5`$.
 - On a 0.30 m by 0.20 m head at 100 m/s, mode (2,1) rings at exactly 1250/3 Hz, about 416.7 Hz.
 
 Step 5 (nothing else rings), the shooting, the simulation, the free end and the decimals are left to the Python and Rust checks.
@@ -933,11 +945,11 @@ example : (50 : ℝ) * √((2 / (3 / 10)) ^ 2 + (1 / (2 / 10)) ^ 2) = 1250 / 3 :
 ## The usual mistake
 
 > [!warning]
-> **Expecting a drum's overtones to be whole-number multiples, like a string's.** A string's still points are evenly spaced because it has one direction. A head has two, and its frequencies combine as $\sqrt{m^2 + n^2}$, so the square head's second note is 1.581 times its first, not 2. Guess 471.4 Hz and the real 372.7 Hz is missing from the list.
+> **Expecting a drum's overtones to be whole-number multiples, like a string's.** A string's still points are evenly spaced because it has one direction. A head has two, and its frequencies combine as $`\sqrt{m^2 + n^2}`$, so the square head's second note is 1.581 times its first, not 2. Guess 471.4 Hz and the real 372.7 Hz is missing from the list.
 >
 > Smaller traps:
-> - **Adding the mode numbers.** $\tfrac{c}{2a}(m + n)$ puts mode (1,2) at 500.0 Hz instead of 372.7 Hz.
-> - **Forgetting the half-wave.** $f_1 = c/L$ gives 659.26 Hz, one octave too high for the open string.
+> - **Adding the mode numbers.** $`\tfrac{c}{2a}(m + n)`$ puts mode (1,2) at 500.0 Hz instead of 372.7 Hz.
+> - **Forgetting the half-wave.** $`f_1 = c/L`$ gives 659.26 Hz, one octave too high for the open string.
 > - **Assuming an edge is fixed when it is free.** A free end gives 164.82 Hz and 494.45 Hz, a different list, not a small correction.
 > - **Counting a shared note twice.** Modes (1,2) and (2,1) are two shapes but one frequency. Eight modes lie below 650 Hz on the square head, and the recording shows five peaks.
 
@@ -946,10 +958,10 @@ example : (50 : ℝ) * √((2 / (3 / 10)) ^ 2 + (1 / (2 / 10)) ^ 2) = 1250 / 3 :
 ## Where you meet it in real life
 
 - **Guitar and violin harmonics.** A light touch at a half, a third or a quarter of the string picks out 659.26, 988.89 or 1318.52 Hz on the high E, exactly the modes with a still point under the finger.
-- **Tuning pegs.** Turning a peg changes tension $T$, so $c = \sqrt{T/\mu}$ and every mode move together. The high E needs about 72.6 N to sit on 329.63 Hz.
+- **Tuning pegs.** Turning a peg changes tension $`T`$, so $`c = \sqrt{T/\mu}`$ and every mode move together. The high E needs about 72.6 N to sit on 329.63 Hz.
 - **Drums and why they thud.** Uneven ratios, 1, 1.581, 2.000, 2.236, give a cloud of notes rather than one pitch. In a timpani, the kettle's air pulls the round head's modes nearer to whole-number ratios, which is why it has a pitch.
 - **Circuit boards, screens and panels.** Engineers list a panel's lowest modes and keep them away from the frequencies of fans, motors and road noise, because a mode driven at its own frequency resonates.
-- **An electron in a box.** Confine an electron to 1 nm and its allowed states are the guitar string's shapes, $\sin(n\pi x/L)$, with energies 0.376, 1.504 and 3.384 eV (electronvolts). The ladder runs 1 : 4 : 9 rather than 1 : 2 : 3, because the quantum equation has one time derivative where the wave equation has two. [Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md) works it out.
+- **An electron in a box.** Confine an electron to 1 nm and its allowed states are the guitar string's shapes, $`\sin(n\pi x/L)`$, with energies 0.376, 1.504 and 3.384 eV (electronvolts). The ladder runs 1 : 4 : 9 rather than 1 : 2 : 3, because the quantum equation has one time derivative where the wave equation has two. [Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md) works it out.
 
 > **Say it back**
 > A string or drum held still at its edges can ring only in special shapes, its modes, each with its own frequency.

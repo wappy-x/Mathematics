@@ -36,46 +36,52 @@ The top bar is the uncollateralised CVA. The second is the agreement in this car
 
 ## The formula
 
-Notation first, in words. $V(t)$ is the call's clean value to the bank at date $t$, in years from today: the value if Northwind could not fail. For any amount $x$, $x^+$ means $\max(x, 0)$: the amount if positive, else zero. $H$ is the threshold, $M$ the minimum transfer amount, and $\delta$ ("delta") the margin period of risk in years. $C(t)$ is the collateral the bank holds at date $t$. $X(t)$ is the **residual exposure**: what Northwind would owe beyond the collateral, if it failed at $t$.
+Notation first, in words. $`V(t)`$ is the call's clean value to the bank at date $`t`$, in years from today: the value if Northwind could not fail. For any amount $`x`$, $`x^+`$ means $`\max(x, 0)`$: the amount if positive, else zero. $`H`$ is the threshold, $`M`$ the minimum transfer amount, and $`\delta`$ ("delta") the margin period of risk in years. $`C(t)`$ is the collateral the bank holds at date $`t`$. $`X(t)`$ is the **residual exposure**: what Northwind would owe beyond the collateral, if it failed at $`t`$.
 
-$$C(t) = \bigl(V(t-\delta) - H\bigr)^+, \qquad X(t) = \bigl(V(t) - C(t)\bigr)^+$$
+```math
+C(t) = \bigl(V(t-\delta) - H\bigr)^+, \qquad X(t) = \bigl(V(t) - C(t)\bigr)^+
+```
 
 **Read it aloud:** the collateral held is the trade's value ten days before the failure, less the threshold; the bank is exposed to whatever the trade is worth now above that.
 
-The CVA is the formula of [CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md) with the residual in place of the full value. $\mathbb{E}$ is the average in the pricing world, where every asset grows at the riskless rate:
+The CVA is the formula of [CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md) with the residual in place of the full value. $`\mathbb{E}`$ is the average in the pricing world, where every asset grows at the riskless rate:
 
-$$\mathrm{CVA} = (1-R)\int_0^T D(t)\,\mathbb{E}\bigl[X(t)\bigr]\,\lambda\,Q(t)\,dt$$
+```math
+\mathrm{CVA} = (1-R)\int_0^T D(t)\,\mathbb{E}\bigl[X(t)\bigr]\,\lambda\,Q(t)\,dt
+```
 
-Here $R$ is the **recovery**, the fraction of an unsecured claim collected, so $1-R$ is the loss fraction. $\lambda$ ("lambda") is Northwind's **hazard**, its yearly default rate among survivors, and $Q(t) = e^{-\lambda t}$ its chance of surviving to $t$. $D(t) = e^{-rt}$ discounts at the riskless rate $r$, and $T$ is the expiry.
+Here $`R`$ is the **recovery**, the fraction of an unsecured claim collected, so $`1-R`$ is the loss fraction. $`\lambda`$ ("lambda") is Northwind's **hazard**, its yearly default rate among survivors, and $`Q(t) = e^{-\lambda t}`$ its chance of surviving to $`t`$. $`D(t) = e^{-rt}`$ discounts at the riskless rate $`r`$, and $`T`$ is the expiry.
 
 **Read it aloud:** the loss fraction, times the discounted average residual at each date, weighted by the chance Northwind fails at that date, added over the year.
 
-Two refinements change $C(t)$. Under a minimum transfer amount, the balance moves to its target only when the change is at least $M$; otherwise it stays. Under a **haircut** $h$, collateral posted as bonds of market value $B$ counts as $(1-h)B$: a bond can fall in price while the bank waits to sell it, and the haircut is the cushion. Every refinement leaves one ceiling standing, proved in Step 4:
+Two refinements change $`C(t)`$. Under a minimum transfer amount, the balance moves to its target only when the change is at least $`M`$; otherwise it stays. Under a **haircut** $`h`$, collateral posted as bonds of market value $`B`$ counts as $`(1-h)B`$: a bond can fall in price while the bank waits to sell it, and the haircut is the cushion. Every refinement leaves one ceiling standing, proved in Step 4:
 
-$$0 \le X(t) \le H + M + \bigl(V(t) - V(t-\delta)\bigr)^+$$
+```math
+0 \le X(t) \le H + M + \bigl(V(t) - V(t-\delta)\bigr)^+
+```
 
 **Read it aloud:** the residual is never more than the threshold, plus the minimum transfer, plus what the trade gained during the frozen stretch.
 
 | Symbol | Plain meaning | In our example | Push it up and CVA… |
 | --- | --- | --- | --- |
-| $V(t)$, $V(0)$ | the call's clean value at date $t$; today's value | $V(0)$ = \$9.227006 | rises |
-| $H$ | the **threshold**: value Northwind may owe before any margin is due | \$2 | rises: 1.13 cents at \$0, 7.53 at \$10 |
-| $M$ | the **minimum transfer amount**: smaller changes are not sent | \$0 in the headline; \$0.50 in the checks | barely moves: it cuts both ways |
-| $\delta$ | the **margin period of risk**, in years | 10/252 = 0.039683 | rises, roughly with $\sqrt{\delta}$ |
-| $C(t)$, $A$, $G$ | collateral held at date $t$; in the proofs, the amount held and its target | \$7.227006 called today | falls |
-| $X(t)$ | residual exposure: owed beyond the collateral | about \$2.22 on average in the first month | — |
-| $h$, $B$ | haircut; market value of bonds posted | 4%; \$7.528131 | falls: more cushion |
-| $R$, $\lambda$, $\tau$ | recovery; hazard; the default date ("tau") | 40%; 2%; before $T$ with chance 0.019801 | falls with $R$, rises with $\lambda$ |
-| $Q(t)$, $D(t)$ | survival chance $e^{-\lambda t}$; discount factor $e^{-rt}$ | $1 - Q(1)$ = 0.019801 | — |
-| $r$, $T$, $t$ | riskless rate; expiry; a date, in years | 5%; 1 year | — |
-| $S$, $\sigma$, $\Delta$ | Acme's price; its volatility ("sigma"); the call's **delta**, dollars of call value per dollar of Acme | \$100; 20%; 0.586851 | $\sigma$ up: more move, more residual |
-| $z$ | the 99% point of the standard bell curve | 2.326348 | — |
+| $`V(t)`$, $`V(0)`$ | the call's clean value at date $`t`$; today's value | $`V(0)`$ = \$9.227006 | rises |
+| $`H`$ | the **threshold**: value Northwind may owe before any margin is due | \$2 | rises: 1.13 cents at \$0, 7.53 at \$10 |
+| $`M`$ | the **minimum transfer amount**: smaller changes are not sent | \$0 in the headline; \$0.50 in the checks | barely moves: it cuts both ways |
+| $`\delta`$ | the **margin period of risk**, in years | 10/252 = 0.039683 | rises, roughly with $`\sqrt{\delta}`$ |
+| $`C(t)`$, $`A`$, $`G`$ | collateral held at date $`t`$; in the proofs, the amount held and its target | \$7.227006 called today | falls |
+| $`X(t)`$ | residual exposure: owed beyond the collateral | about \$2.22 on average in the first month | — |
+| $`h`$, $`B`$ | haircut; market value of bonds posted | 4%; \$7.528131 | falls: more cushion |
+| $`R`$, $`\lambda`$, $`\tau`$ | recovery; hazard; the default date ("tau") | 40%; 2%; before $`T`$ with chance 0.019801 | falls with $`R`$, rises with $`\lambda`$ |
+| $`Q(t)`$, $`D(t)`$ | survival chance $`e^{-\lambda t}`$; discount factor $`e^{-rt}`$ | $`1 - Q(1)`$ = 0.019801 | — |
+| $`r`$, $`T`$, $`t`$ | riskless rate; expiry; a date, in years | 5%; 1 year | — |
+| $`S`$, $`\sigma`$, $`\Delta`$ | Acme's price; its volatility ("sigma"); the call's **delta**, dollars of call value per dollar of Acme | \$100; 20%; 0.586851 | $`\sigma`$ up: more move, more residual |
+| $`z`$ | the 99% point of the standard bell curve | 2.326348 | — |
 
 ### When it holds
 
 - **Default is independent of Acme.** The average residual multiplies the default chance only if Northwind's failure says nothing about Acme's move in the frozen stretch. If Acme tends to jump exactly when Northwind fails, the residual at default is larger: [Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md).
-- **The collateral is really there.** Cash held by the bank, or bonds it can sell for at least $(1-h)B$. Collateral lent on, frozen by a court or paid in Northwind's own bonds covers less than its face value.
-- **One frozen gap of fixed length.** The last good margin call comes $\delta$ before the failure, and nothing moves in either direction after it. A dispute that stretches the gap to 20 days raises the CVA to 2.76 cents, as Try changing shows.
+- **The collateral is really there.** Cash held by the bank, or bonds it can sell for at least $`(1-h)B`$. Collateral lent on, frozen by a court or paid in Northwind's own bonds covers less than its face value.
+- **One frozen gap of fixed length.** The last good margin call comes $`\delta`$ before the failure, and nothing moves in either direction after it. A dispute that stretches the gap to 20 days raises the CVA to 2.76 cents, as Try changing shows.
 - **Margin is called daily and the bank cannot fail.** A weekly call adds a week to the gap. If the bank can fail too, the mirror adjustment appears: [DVA](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md).
 
 ---
@@ -86,38 +92,40 @@ $$0 \le X(t) \le H + M + \bigl(V(t) - V(t-\delta)\bigr)^+$$
 
 Without collateral, the bank's whole claim on a failed Northwind is at the mercy of the bankruptcy court. With collateral, part of it is already in hand. At closeout the bank values the trade, keeps the collateral against it, and files a claim only for the rest. The court's recovery rate applies to that rest alone. So CVA keeps its shape and changes one input: the amount at risk on each date is the residual, not the full value.
 
-### Step 1: the loss at default is $(1-R)X(\tau)$
+### Step 1: the loss at default is $`(1-R)X(\tau)`$
 
-When Northwind fails at date $\tau$, the call is closed at its clean value $V(\tau)$. The bank holds cash $C(\tau)$. If $V(\tau) > C(\tau)$, the bank keeps the cash, claims the gap, and recovers $R$ of it: the loss is $(1-R)\bigl(V(\tau) - C(\tau)\bigr)$. If $V(\tau) \le C(\tau)$, the bank returns the surplus cash and loses nothing. Either way the loss is $(1-R)X(\tau)$.
+When Northwind fails at date $`\tau`$, the call is closed at its clean value $`V(\tau)`$. The bank holds cash $`C(\tau)`$. If $`V(\tau) > C(\tau)`$, the bank keeps the cash, claims the gap, and recovers $`R`$ of it: the loss is $`(1-R)\bigl(V(\tau) - C(\tau)\bigr)`$. If $`V(\tau) \le C(\tau)`$, the bank returns the surplus cash and loses nothing. Either way the loss is $`(1-R)X(\tau)`$.
 
 Averaging over the default date and Acme's price, as in the CVA card, gives the formula above.
 
 <details>
 <summary>Detailed proof: the surplus goes back, so the loss is never negative</summary>
 
-Write $A = C(\tau)$ for the collateral. The loss is measured against the clean value. The bank is owed $V(\tau)$ and holds $A$.
+Write $`A = C(\tau)`$ for the collateral. The loss is measured against the clean value. The bank is owed $`V(\tau)`$ and holds $`A`$.
 
-If $V(\tau) > A$: the bank applies $A$ in full and is an unsecured creditor for $V(\tau) - A$, collecting $R\bigl(V(\tau) - A\bigr)$. It ends with $A + R\bigl(V(\tau) - A\bigr)$ against a clean value $V(\tau)$, so the loss is $(1-R)\bigl(V(\tau) - A\bigr)$.
+If $`V(\tau) > A`$: the bank applies $`A`$ in full and is an unsecured creditor for $`V(\tau) - A`$, collecting $`R\bigl(V(\tau) - A\bigr)`$. It ends with $`A + R\bigl(V(\tau) - A\bigr)`$ against a clean value $`V(\tau)`$, so the loss is $`(1-R)\bigl(V(\tau) - A\bigr)`$.
 
-If $V(\tau) \le A$: the bank takes $V(\tau)$ from the collateral and owes the surplus $A - V(\tau)$ back to Northwind's estate, which collects it in full. It ends with exactly $V(\tau)$, so the loss is zero.
+If $`V(\tau) \le A`$: the bank takes $`V(\tau)`$ from the collateral and owes the surplus $`A - V(\tau)`$ back to Northwind's estate, which collects it in full. It ends with exactly $`V(\tau)`$, so the loss is zero.
 
-Both cases are the loss $(1-R)\bigl(V(\tau) - A\bigr)^+ = (1-R)X(\tau)$. Discounting and averaging over $\tau \le T$ with $\tau$ independent of Acme, as in the CVA card's Step 2, turns $(1-R)\,\mathbb{E}[D(\tau)X(\tau);\ \tau \le T]$ into the integral in The formula.
+Both cases are the loss $`(1-R)\bigl(V(\tau) - A\bigr)^+ = (1-R)X(\tau)`$. Discounting and averaging over $`\tau \le T`$ with $`\tau`$ independent of Acme, as in the CVA card's Step 2, turns $`(1-R)\,\mathbb{E}[D(\tau)X(\tau);\ \tau \le T]`$ into the integral in The formula.
 
 </details>
 
 ### Step 2: with instant margin, the residual is capped at the threshold
 
-Suppose margin could be seized the moment Northwind fails, so $C(t) = \bigl(V(t) - H\bigr)^+$. If the call is worth more than \$2, the bank holds all but \$2. If less, it holds nothing and is owed less than \$2. Either way the residual is the smaller of the value and the threshold: $X(t) = \min\bigl(V(t), H\bigr)$.
+Suppose margin could be seized the moment Northwind fails, so $`C(t) = \bigl(V(t) - H\bigr)^+`$. If the call is worth more than \$2, the bank holds all but \$2. If less, it holds nothing and is owed less than \$2. Either way the residual is the smaller of the value and the threshold: $`X(t) = \min\bigl(V(t), H\bigr)`$.
 
-So every date carries at most \$2 at risk, in that date's money. Replace $X(t)$ by $H$ in the CVA integral and the integral can be done by hand:
+So every date carries at most \$2 at risk, in that date's money. Replace $`X(t)`$ by $`H`$ in the CVA integral and the integral can be done by hand:
 
-$$\mathrm{CVA} \le (1-R)\,H\int_0^T e^{-rt}\,\lambda e^{-\lambda t}\,dt = (1-R)\,H\,\frac{\lambda}{\lambda + r}\bigl(1 - e^{-(\lambda + r)T}\bigr) = 0.023179.$$
+```math
+\mathrm{CVA} \le (1-R)\,H\int_0^T e^{-rt}\,\lambda e^{-\lambda t}\,dt = (1-R)\,H\,\frac{\lambda}{\lambda + r}\bigl(1 - e^{-(\lambda + r)T}\bigr) = 0.023179.
+```
 
 The exact figure is lower, 0.019687, because the call is sometimes worth less than \$2. That happens more often late in the year, when Acme has had time to fall well below the strike and the call has little time left.
 
 ### Step 3: the margin period puts the ten-day move back in
 
-Instant seizure is a fiction. A margin call is missed, chased and disputed before the trade can be closed and replaced. Through all of it the collateral stays at the level of the last call it met, set $\delta$ earlier. The residual becomes $X(t) = \bigl(V(t) - (V(t-\delta) - H)^+\bigr)^+$: the threshold, plus whatever the call gained in those ten days, minus whatever it lost.
+Instant seizure is a fiction. A margin call is missed, chased and disputed before the trade can be closed and replaced. Through all of it the collateral stays at the level of the last call it met, set $`\delta`$ earlier. The residual becomes $`X(t) = \bigl(V(t) - (V(t-\delta) - H)^+\bigr)^+`$: the threshold, plus whatever the call gained in those ten days, minus whatever it lost.
 
 A gain and a loss of the same size do not cancel. A gain adds to the residual in full. A loss can only eat the \$2 down to zero. The average residual therefore sits above \$2 early in the year, \$2.22 in the first month, and the CVA rises from 1.97 cents to **2.41 cents**.
 
@@ -136,36 +144,42 @@ Orange, top: threshold \$2 with the ten-day gap, the agreement on this card. Gre
 
 ### Step 4: the ceiling on the residual, with every refinement
 
-Without a minimum transfer, the collateral is $\bigl(V(t-\delta) - H\bigr)^+ \ge V(t-\delta) - H$. So the residual is at most $V(t) - V(t-\delta) + H$, and never negative. With a minimum transfer, the balance can lag its target by less than $M$, so the held amount is at least the target minus $M$. That adds $M$ to the ceiling:
+Without a minimum transfer, the collateral is $`\bigl(V(t-\delta) - H\bigr)^+ \ge V(t-\delta) - H`$. So the residual is at most $`V(t) - V(t-\delta) + H`$, and never negative. With a minimum transfer, the balance can lag its target by less than $`M`$, so the held amount is at least the target minus $`M`$. That adds $`M`$ to the ceiling:
 
-$$X(t) \le H + M + \bigl(V(t) - V(t-\delta)\bigr)^+.$$
+```math
+X(t) \le H + M + \bigl(V(t) - V(t-\delta)\bigr)^+.
+```
 
 The Monte Carlo road below, an average over many simulated random paths of Acme, checks this on every path and every default day, 1,260,000 residuals under a \$0.50 minimum transfer. The largest amount by which any residual exceeds its ceiling is −0.000002: none does, and the closest comes within two millionths.
 
 <details>
 <summary>Detailed proof: the ceiling</summary>
 
-Write $G = \bigl(V(t-\delta) - H\bigr)^+$ for the target at the last margin call and $A$ for the collateral actually held from then on. Without a minimum transfer $A = G$. With one, the rule moves $A$ to $G$ when $\lvert G - A_{\text{old}}\rvert \ge M$ and leaves it otherwise, so in both cases $\lvert A - G\rvert < M$ or $A = G$; hence $A \ge G - M$.
+Write $`G = \bigl(V(t-\delta) - H\bigr)^+`$ for the target at the last margin call and $`A`$ for the collateral actually held from then on. Without a minimum transfer $`A = G`$. With one, the rule moves $`A`$ to $`G`$ when $`\lvert G - A_{\text{old}}\rvert \ge M`$ and leaves it otherwise, so in both cases $`\lvert A - G\rvert < M`$ or $`A = G`$; hence $`A \ge G - M`$.
 
-Since $G \ge V(t-\delta) - H$, we get $A \ge V(t-\delta) - H - M$, so
-$$V(t) - A \le V(t) - V(t-\delta) + H + M \le \bigl(V(t) - V(t-\delta)\bigr)^+ + H + M.$$
-The right side is at least zero, so taking the positive part of the left keeps the inequality: $X(t) \le H + M + \bigl(V(t) - V(t-\delta)\bigr)^+$. With a haircut, cash $A$ is replaced by $(1-h)B$; the ceiling holds as long as the bank calls enough bonds that $(1-h)B$ meets the same rule and the bonds keep that value until sold.
+Since $`G \ge V(t-\delta) - H`$, we get $`A \ge V(t-\delta) - H - M`$, so
+
+$`\displaystyle V(t) - A \le V(t) - V(t-\delta) + H + M \le \bigl(V(t) - V(t-\delta)\bigr)^+ + H + M.`$
+
+The right side is at least zero, so taking the positive part of the left keeps the inequality: $`X(t) \le H + M + \bigl(V(t) - V(t-\delta)\bigr)^+`$. With a haircut, cash $`A`$ is replaced by $`(1-h)B`$; the ceiling holds as long as the bank calls enough bonds that $`(1-h)B`$ meets the same rule and the bonds keep that value until sold.
 
 </details>
 
 ### Step 5: a zero threshold leaves the ten-day move, and it is not zero
 
-Set $H = 0$. The residual is $\bigl(V(t) - V(t-\delta)\bigr)^+$: the call's gain over the frozen stretch, if it gained. Over ten days the call moves about $\Delta$ dollars for each dollar Acme moves. Acme's ten-day moves are close to a bell curve with spread $S\sigma\sqrt{\delta}$. A bell-curve move centred on zero, counted only when positive, averages its spread divided by $\sqrt{2\pi}$. That gives a back-of-envelope CVA:
+Set $`H = 0`$. The residual is $`\bigl(V(t) - V(t-\delta)\bigr)^+`$: the call's gain over the frozen stretch, if it gained. Over ten days the call moves about $`\Delta`$ dollars for each dollar Acme moves. Acme's ten-day moves are close to a bell curve with spread $`S\sigma\sqrt{\delta}`$. A bell-curve move centred on zero, counted only when positive, averages its spread divided by $`\sqrt{2\pi}`$. That gives a back-of-envelope CVA:
 
-$$\mathrm{CVA} \approx (1-R)\,\bigl(1 - e^{-\lambda T}\bigr)\,\frac{\Delta\,S\,\sigma\sqrt{\delta}}{\sqrt{2\pi}} = 0.011082,$$
+```math
+\mathrm{CVA} \approx (1-R)\,\bigl(1 - e^{-\lambda T}\bigr)\,\frac{\Delta\,S\,\sigma\sqrt{\delta}}{\sqrt{2\pi}} = 0.011082,
+```
 
 against the exact 0.011252. The estimate ignores the call's curvature and its drift, which is why it comes out slightly low.
 
-This is the floor under any daily agreement. It is zero only if Northwind cannot fail ($\lambda = 0$), recovers everything ($R = 1$), the gap has no length ($\delta = 0$), or Acme cannot move ($\sigma = 0$). In any real market none of these holds, so collateral cuts CVA but never removes it. The next cut needs collateral posted in advance of the move: initial margin, sized on the ten-day tail. That is [MVA](03-mva.md).
+This is the floor under any daily agreement. It is zero only if Northwind cannot fail ($`\lambda = 0`$), recovers everything ($`R = 1`$), the gap has no length ($`\delta = 0`$), or Acme cannot move ($`\sigma = 0`$). In any real market none of these holds, so collateral cuts CVA but never removes it. The next cut needs collateral posted in advance of the move: initial margin, sized on the ten-day tail. That is [MVA](03-mva.md).
 
 ### Step 6: the 99% ten-day move, and the tail of the residual
 
-The average move prices CVA. The bad move sizes limits and initial margin. At 99%, the delta rule puts it at $z\,\Delta\,S\,\sigma\sqrt{\delta}$ = \$5.44, where $z$ = 2.326348 is the bell curve's 99% point, found in the checks by bisection. So the residual under a \$2 threshold reaches **\$7.44** in one future in a hundred, if the last good margin call was today.
+The average move prices CVA. The bad move sizes limits and initial margin. At 99%, the delta rule puts it at $`z\,\Delta\,S\,\sigma\sqrt{\delta}`$ = \$5.44, where $`z`$ = 2.326348 is the bell curve's 99% point, found in the checks by bisection. So the residual under a \$2 threshold reaches **\$7.44** in one future in a hundred, if the last good margin call was today.
 
 The delta rule is a straight-line estimate. A bought call gains faster than delta on the way up, so revaluing the call at the 99% Acme price gives \$6.35, and the Monte Carlo paths give \$6.25. The straight line understates the tail, but it is quick, and it is the convention behind the ten-day figure of about \$5.4 used across this shelf.
 
@@ -185,22 +199,22 @@ The formula road uses Simpson's rule: a weighted sum over a grid of Acme prices 
 
 ## Worked numbers, by hand
 
-The Acme call, $S = K = 100$ (price and strike), $r = 5\%$, $q = 2\%$ (Acme's dividend yield), $\sigma = 20\%$, $T = 1$, bought from Northwind, $\lambda = 2\%$, $R = 40\%$; threshold \$2, margin period 10 trading days.
+The Acme call, $`S = K = 100`$ (price and strike), $`r = 5\%`$, $`q = 2\%`$ (Acme's dividend yield), $`\sigma = 20\%`$, $`T = 1`$, bought from Northwind, $`\lambda = 2\%`$, $`R = 40\%`$; threshold \$2, margin period 10 trading days.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| clean call $V(0)$ | Black-Scholes, house market | 9.227006 |
-| CVA with no collateral | $0.60 \times 9.227006 \times (1 - e^{-0.02})$ | 0.109624 |
-| margin called today | $9.227006 - 2$ | 7.227006 |
-| margin period $\delta$ | $10 / 252$ | 0.039683 |
-| ceiling, instant margin | $0.60 \times 2 \times \frac{0.02}{0.07}(1 - e^{-0.07})$ | 0.023179 |
+| clean call $`V(0)`$ | Black-Scholes, house market | 9.227006 |
+| CVA with no collateral | $`0.60 \times 9.227006 \times (1 - e^{-0.02})`$ | 0.109624 |
+| margin called today | $`9.227006 - 2`$ | 7.227006 |
+| margin period $`\delta`$ | $`10 / 252`$ | 0.039683 |
+| ceiling, instant margin | $`0.60 \times 2 \times \frac{0.02}{0.07}(1 - e^{-0.07})`$ | 0.023179 |
 | CVA, instant margin | Simpson over Acme's price, 12 monthly default buckets | 0.019687 |
 | **CVA, threshold \$2 and ten-day gap** | Simpson over two bell curves, 12 monthly buckets | **0.024056** |
 | same, simulated | 5,000 daily paths | 0.024001 |
 | CVA, zero threshold | Simpson, as above | 0.011252 |
-| same, back of envelope | $0.60 \times 0.019801 \times 0.586851 \times 100 \times 0.20\sqrt{0.039683} / \sqrt{2\pi}$ | 0.011082 |
-| 99% ten-day move, delta rule | $2.326348 \times 0.586851 \times 100 \times 0.20\sqrt{0.039683}$ | 5.439166 |
-| 99% residual | $2 + 5.439166$ | 7.439166 |
+| same, back of envelope | $`0.60 \times 0.019801 \times 0.586851 \times 100 \times 0.20\sqrt{0.039683} / \sqrt{2\pi}`$ | 0.011082 |
+| 99% ten-day move, delta rule | $`2.326348 \times 0.586851 \times 100 \times 0.20\sqrt{0.039683}`$ | 5.439166 |
+| 99% residual | $`2 + 5.439166`$ | 7.439166 |
 
 The collateral agreement takes the bank's expected default loss from 10.96 cents a call to 2.41. The 2.41 cents that remain are still a real charge, and the desk books it as the CVA of a collateralised trade.
 
@@ -681,9 +695,9 @@ Orange, rising: CVA under the agreement, by threshold. Green, flat: CVA with no 
 
 Lean proves the two ceilings on the residual and Step 2's integral, for any values of the inputs.
 
-- Suppose $H, M \ge 0$ and $C(t)$ equals its target $(V(t-\delta) - H)^+$, or lags it by less than $M$. Then $0 \le X(t) \le H + M + (V(t) - V(t-\delta))^+$.
-- Suppose margin is seized the instant Northwind fails, so $C(t) = (V(t) - H)^+$, with $V(t) \ge 0$ and $H \ge 0$. Then $X(t) = \min(V(t), H)$, so the residual is never more than the threshold.
-- Take $\lambda + r \ne 0$, and put $H$ in place of $X(t)$ in the CVA integral. Then it works out to Step 2's closed form, $(1-R)H\frac{\lambda}{\lambda+r}(1 - e^{-(\lambda+r)T})$.
+- Suppose $`H, M \ge 0`$ and $`C(t)`$ equals its target $`(V(t-\delta) - H)^+`$, or lags it by less than $`M`$. Then $`0 \le X(t) \le H + M + (V(t) - V(t-\delta))^+`$.
+- Suppose margin is seized the instant Northwind fails, so $`C(t) = (V(t) - H)^+`$, with $`V(t) \ge 0`$ and $`H \ge 0`$. Then $`X(t) = \min(V(t), H)`$, so the residual is never more than the threshold.
+- Take $`\lambda + r \ne 0`$, and put $`H`$ in place of $`X(t)`$ in the CVA integral. Then it works out to Step 2's closed form, $`(1-R)H\frac{\lambda}{\lambda+r}(1 - e^{-(\lambda+r)T})`$.
 
 Step 1's loss rule, every CVA figure and the simulations are left to the Python and Rust checks.
 
@@ -762,7 +776,7 @@ theorem instant_margin_cva_ceiling_eq
 
 > [!TIP]
 > **Try changing**
-> - **Double the margin period to 20 days**, the Basel floor for large or hard-to-replace netting sets. A netting set is the group of trades with one counterparty that settle as one amount ([Counterparty exposure](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md)). Guess first. Threshold \$2: 0.027573. Zero threshold: 0.015652, close to $\sqrt{2}$ times 0.011252, because a move over twice the time is about $\sqrt{2}$ times as large.
+> - **Double the margin period to 20 days**, the Basel floor for large or hard-to-replace netting sets. A netting set is the group of trades with one counterparty that settle as one amount ([Counterparty exposure](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md)). Guess first. Threshold \$2: 0.027573. Zero threshold: 0.015652, close to $`\sqrt{2}`$ times 0.011252, because a move over twice the time is about $`\sqrt{2}`$ times as large.
 > - **Double Northwind's hazard to 4%.** Guess first. The CVA goes to 0.047663, just under twice 0.024056: more defaults, but fewer survivors left to default late.
 > - **Add a \$0.50 minimum transfer amount.** Guess first. The CVA goes to 0.023764, slightly lower. The rule cuts both ways: when the call falls, Northwind waits longer to get cash back, and the bank holds a little extra.
 > - **Raise the threshold to \$10.** Guess first. The CVA is 7.53 cents: with the call worth about \$9.23, a \$10 threshold means most futures never trigger a call at all.

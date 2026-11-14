@@ -36,39 +36,49 @@ Orange: the function, rounded to two places. Green: its Taylor series at 0, zero
 
 ## The formula
 
-A reminder of notation from [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): $f^{(k)}(a)$ is the k-th derivative of $f$ at the point $a$, with $f^{(0)}$ the function itself. The Taylor series of $f$ centred at $a$ is
+A reminder of notation from [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): $`f^{(k)}(a)`$ is the k-th derivative of $`f`$ at the point $`a`$, with $`f^{(0)}`$ the function itself. The Taylor series of $`f`$ centred at $`a`$ is
 
-$$f(x)\stackrel{?}{=}\sum_{k=0}^{\infty}\frac{f^{(k)}(a)}{k!}\,(x-a)^k$$
+```math
+f(x)\stackrel{?}{=}\sum_{k=0}^{\infty}\frac{f^{(k)}(a)}{k!}\,(x-a)^k
+```
 
 **Read it aloud:** the k-th derivative at the centre, over k factorial, times the k-th power of the distance from the centre, added over every k.
 
-The question mark is the point. The right side is a power series ([Power series](04-power-series.md)); whether it adds up to $f(x)$ is a separate fact. Stopping after term n gives the Taylor polynomial $T_n$, and Taylor's theorem gives the leftover exactly:
+The question mark is the point. The right side is a power series ([Power series](04-power-series.md)); whether it adds up to $`f(x)`$ is a separate fact. Stopping after term n gives the Taylor polynomial $`T_n`$, and Taylor's theorem gives the leftover exactly:
 
-$$R_n(x)=f(x)-T_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\,(x-a)^{n+1}$$
+```math
+R_n(x)=f(x)-T_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\,(x-a)^{n+1}
+```
 
-for some point $\xi$ between $a$ and $x$. The series equals $f(x)$ exactly when this leftover heads for 0 as $n$ grows. With centre 0, the four series proved here:
+for some point $`\xi`$ between $`a`$ and $`x`$. The series equals $`f(x)`$ exactly when this leftover heads for 0 as $`n`$ grows. With centre 0, the four series proved here:
 
-$$e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\cdots\qquad\text{every } x$$
+```math
+e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\cdots\qquad\text{every } x
+```
 
-$$\sin x=x-\frac{x^3}{3!}+\frac{x^5}{5!}-\cdots\qquad\cos x=1-\frac{x^2}{2!}+\frac{x^4}{4!}-\cdots\qquad\text{every } x$$
+```math
+\sin x=x-\frac{x^3}{3!}+\frac{x^5}{5!}-\cdots\qquad\cos x=1-\frac{x^2}{2!}+\frac{x^4}{4!}-\cdots\qquad\text{every } x
+```
 
-$$\ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}-\cdots\qquad-1<x\le1$$
+```math
+\ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}-\cdots\qquad-1<x\le1
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the function rebuilt | e to the x | — |
-| $x$, $a$ | the input; the centre | x = 2, a = 0 | farther x, more terms |
-| $k$, $n$, $k!$ | term counter; last term kept; 1 × 2 × … × k | n = 5, then 10 | smaller error, where it converges |
-| $f^{(k)}(a)$ | the k-th derivative at the centre | 1 for every k | bigger coefficient |
-| $T_n(x)$ | Taylor polynomial: terms 0 to n | T_5(2) = 7.2666666667 | closes on e squared |
-| $R_n(x)$ | the leftover f(x) − T_n(x) | 0.1224 at n = 5 | shrinks when the series works |
-| $\xi$ | an unknown point between a and x | in 0 to 2 | — |
-| $g$, $h$ | the impostor e^(−1/x^2), with g(0) = 0; h a small step | g(0.5) = 0.0183156389 | its series stays 0 |
+| $`f`$ | the function rebuilt | e to the x | — |
+| $`x`$, $`a`$ | the input; the centre | x = 2, a = 0 | farther x, more terms |
+| $`k`$, $`n`$, $`k!`$ | term counter; last term kept; 1 × 2 × … × k | n = 5, then 10 | smaller error, where it converges |
+| $`f^{(k)}(a)`$ | the k-th derivative at the centre | 1 for every k | bigger coefficient |
+| $`T_n(x)`$ | Taylor polynomial: terms 0 to n | T_5(2) = 7.2666666667 | closes on e squared |
+| $`R_n(x)`$ | the leftover f(x) − T_n(x) | 0.1224 at n = 5 | shrinks when the series works |
+| $`\xi`$ | an unknown point between a and x | in 0 to 2 | — |
+| $`g`$, $`h`$ | the impostor e^(−1/x^2), with g(0) = 0; h a small step | g(0.5) = 0.0183156389 | its series stays 0 |
 
 ### When it holds
 
 - **Every derivative exists near the centre.** The size of x, cubed, has no third derivative at 0, so its series cannot be written.
-- **The leftover shrinks to zero.** Derivatives alone are not enough: the impostor $g$ has all of them and still misses by 0.0183156389 at x = 0.5.
+- **The leftover shrinks to zero.** Derivatives alone are not enough: the impostor $`g`$ has all of them and still misses by 0.0183156389 at x = 0.5.
 - **The input lies inside the radius of convergence** (the distance from the centre within which the series adds up). For ln(1 + x) it is 1; at x = 1.5 the sums of 10, 20 and 40 terms run −2.4, −96.8, −164192.6.
 
 ---
@@ -77,7 +87,7 @@ $$\ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}-\cdots\qquad-1<x\le1$$
 
 ### Step 0: the leftover is the whole story
 
-Taylor's theorem gives the error $R_n(x)$ exactly, up to the unknown point $\xi$. So bound that derivative over the stretch from $a$ to $x$, and show the bound heads for 0.
+Taylor's theorem gives the error $`R_n(x)`$ exactly, up to the unknown point $`\xi`$. So bound that derivative over the stretch from $`a`$ to $`x`$, and show the bound heads for 0.
 
 ### Step 1: a factorial outruns any power
 
@@ -87,7 +97,9 @@ Take x = 2. The quantity 2 to the (n + 1), over (n + 1)!, gains a factor 2/(n + 
 
 Every derivative of e to the x is e to the x. Between 0 and 2 it is at most e squared, under 9 because e is under 3. So
 
-$$\lvert R_n(2)\rvert\le9\cdot\frac{2^{n+1}}{(n+1)!}$$
+```math
+\lvert R_n(2)\rvert\le9\cdot\frac{2^{n+1}}{(n+1)!}
+```
 
 and Step 1 sends it to 0. The tolerance game with real numbers: to land within 0.001 of e squared, the bound first drops under 0.001 at n = 10, where it reads 4.618e-04; the real error there is 6.139e-05. For a general x, e to the size of x replaces 9.
 
@@ -101,11 +113,15 @@ At 0, sin's derivatives cycle 0, 1, 0, −1, which leaves odd powers with altern
 
 The geometric series with its exact leftover says, for t above −1,
 
-$$\frac{1}{1+t}=1-t+t^2-\cdots+(-t)^{n-1}+\frac{(-t)^n}{1+t}$$
+```math
+\frac{1}{1+t}=1-t+t^2-\cdots+(-t)^{n-1}+\frac{(-t)^n}{1+t}
+```
 
-Integrate from 0 to x: the left side gives ln(1 + x), the polynomial gives $T_n(x)$, and the leftover becomes the integral of (−t) to the n over 1 + t. For |x| < 1, 1 + t stays at least 1 − |x|, so
+Integrate from 0 to x: the left side gives ln(1 + x), the polynomial gives $`T_n(x)`$, and the leftover becomes the integral of (−t) to the n over 1 + t. For |x| < 1, 1 + t stays at least 1 − |x|, so
 
-$$\lvert R_n(x)\rvert\le\frac{\lvert x\rvert^{n+1}}{(n+1)(1-\lvert x\rvert)}$$
+```math
+\lvert R_n(x)\rvert\le\frac{\lvert x\rvert^{n+1}}{(n+1)(1-\lvert x\rvert)}
+```
 
 At x = 0.5, n = 20: bound 4.541e-08, real error 1.537e-08. At x = 1 the leftover is at most 1/(n + 1), so ln 2 = 1 − 1/2 + 1/3 − … holds, slowly: 1000 terms leave 4.998e-04.
 
@@ -113,18 +129,18 @@ For |x| > 1 the terms x to the k, over k, grow without limit, so the sum cannot 
 
 ### Step 5: the smooth impostor
 
-Let $g$ be e to the minus 1 over x squared, with g(0) = 0. At 0 every derivative is 0, so its series is 0 and $T_n(0.5) = 0$ for every n, while g(0.5) = 0.0183156389. The leftover never shrinks.
+Let $`g`$ be e to the minus 1 over x squared, with g(0) = 0. At 0 every derivative is 0, so its series is 0 and $`T_n(0.5) = 0`$ for every n, while g(0.5) = 0.0183156389. The leftover never shrinks.
 
 The proof is a race: e to the minus 1 over x squared shrinks faster than any power of x as x heads for 0. The difference quotient g(h)/h, heading for the first derivative, reads 6.944e-11, 3.720e-43 and 3.830e-173 at h = 0.2, 0.1 and 0.05. Divided by h to the 10th: 1.356e-04, 3.720e-34, 1.961e-161.
 
 <details>
 <summary>Detailed proof: every derivative of the impostor at 0 is 0</summary>
 
-**Claim 1.** For x ≠ 0, the k-th derivative of g is a polynomial in 1/x times $e^{-1/x^2}$. True for k = 0. If true for k, the product and chain rules turn $p(1/x)\,e^{-1/x^2}$ into $\bigl(-p'(1/x)/x^2 + 2p(1/x)/x^3\bigr)e^{-1/x^2}$, again of that form.
+**Claim 1.** For x ≠ 0, the k-th derivative of g is a polynomial in 1/x times $`e^{-1/x^2}`$. True for k = 0. If true for k, the product and chain rules turn $`p(1/x)\,e^{-1/x^2}`$ into $`\bigl(-p'(1/x)/x^2 + 2p(1/x)/x^3\bigr)e^{-1/x^2}`$, again of that form.
 
-**Claim 2.** For each whole number m, $e^{-1/x^2}/x^m$ heads for 0 as x does. Put s = 1/x^2 and pick a whole j > m/2. The exp series has positive terms, so $e^{s}>s^{j}/j!$, and the size is $s^{m/2}e^{-s}<j!\,s^{m/2-j}$: below any $\varepsilon>0$ once s is large, that is once |x| < δ for some δ > 0.
+**Claim 2.** For each whole number m, $`e^{-1/x^2}/x^m`$ heads for 0 as x does. Put s = 1/x^2 and pick a whole j > m/2. The exp series has positive terms, so $`e^{s}>s^{j}/j!`$, and the size is $`s^{m/2}e^{-s}<j!\,s^{m/2-j}`$: below any $`\varepsilon>0`$ once s is large, that is once |x| < δ for some δ > 0.
 
-**Claim 3.** Induction on k. If the k-th derivative is 0 at 0, the next is the limit of $p(1/h)\,e^{-1/h^2}/h$, powers of 1/h times $e^{-1/h^2}$, which Claim 2 sends to 0. So every coefficient is 0, while g(x) > 0 for x ≠ 0.
+**Claim 3.** Induction on k. If the k-th derivative is 0 at 0, the next is the limit of $`p(1/h)\,e^{-1/h^2}/h`$, powers of 1/h times $`e^{-1/h^2}`$, which Claim 2 sends to 0. So every coefficient is 0, while g(x) > 0 for x ≠ 0.
 
 </details>
 

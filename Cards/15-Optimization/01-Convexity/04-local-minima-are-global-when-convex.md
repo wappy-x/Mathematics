@@ -28,29 +28,37 @@ Brazil share runs across and Colombia share runs up; the Sumatra share is whatev
 
 ## The formula
 
-Notation first, in words. A blend is $x = (x_B, x_C, x_E)$, the Brazil, Colombia and Sumatra shares. $f(x)$ is its cost in pounds per kilo. $C$ is the **allowed set**: every blend whose shares are at least 0, add to 1 and score at least 7.
+Notation first, in words. A blend is $`x = (x_B, x_C, x_E)`$, the Brazil, Colombia and Sumatra shares. $`f(x)`$ is its cost in pounds per kilo. $`C`$ is the **allowed set**: every blend whose shares are at least 0, add to 1 and score at least 7.
 
-A **local minimiser** $x^*$, written x* in prose, is an allowed blend with a radius $r$ around it inside which no allowed blend is cheaper, as in [Local and global minima](01-local-and-global-minima.md). $\lVert x - x^* \rVert$ is the straight-line distance between two blends.
+A **local minimiser** $`x^*`$, written x* in prose, is an allowed blend with a radius $`r`$ around it inside which no allowed blend is cheaper, as in [Local and global minima](01-local-and-global-minima.md). $`\lVert x - x^* \rVert`$ is the straight-line distance between two blends.
 
 The roaster's problem, minimised:
 
-$$f(x) = \sum_{i \in \{B, C, E\}} \big(a_i x_i + 5x_i^2\big), \qquad C = \{x : x \ge 0,\ x_B + x_C + x_E = 1,\ 5x_B + 6x_C + 9x_E \ge 7\}$$
+```math
+f(x) = \sum_{i \in \{B, C, E\}} \big(a_i x_i + 5x_i^2\big), \qquad C = \{x : x \ge 0,\ x_B + x_C + x_E = 1,\ 5x_B + 6x_C + 9x_E \ge 7\}
+```
 
-with base prices $a_B, a_C, a_E$ = £6, £9, £11. The theorem:
+with base prices $`a_B, a_C, a_E`$ = £6, £9, £11. The theorem:
 
-$$f(x^*) \le f(x) \text{ for every } x \in C \text{ with } \lVert x - x^* \rVert < r \quad\Longrightarrow\quad f(x^*) \le f(y) \text{ for every } y \in C$$
+```math
+f(x^*) \le f(x) \text{ for every } x \in C \text{ with } \lVert x - x^* \rVert < r \quad\Longrightarrow\quad f(x^*) \le f(y) \text{ for every } y \in C
+```
 
-**Read it aloud:** if no allowed blend near x* is cheaper, then no allowed blend anywhere is cheaper, provided $f$ and $C$ are convex.
+**Read it aloud:** if no allowed blend near x* is cheaper, then no allowed blend anywhere is cheaper, provided $`f`$ and $`C`$ are convex.
 
 The second half of the job:
 
-$$\operatorname*{argmin}_{x \in C} f(x) \text{ is a convex set}$$
+```math
+\underset{x \in C}{\mathrm{argmin}} f(x) \text{ is a convex set}
+```
 
 **Read it aloud:** mix any two cheapest blends and the mix is a cheapest blend too.
 
-The test the code uses to certify the answer, where $\nabla f(x^*)$ is the gradient, the extra cost per unit of each bean at x*:
+The test the code uses to certify the answer, where $`\nabla f(x^*)`$ is the gradient, the extra cost per unit of each bean at x*:
 
-$$\nabla f(x^*)^{\top}(y - x^*) \ge 0 \text{ for every } y \in C$$
+```math
+\nabla f(x^*)^{\top}(y - x^*) \ge 0 \text{ for every } y \in C
+```
 
 The left side multiplies each bean's gradient entry by the change in that bean's share and adds the three products.
 
@@ -58,17 +66,17 @@ The left side multiplies each bean's gradient entry by the change in that bean's
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (x_B, x_C, x_E)$ | a blend: the three bean shares, adding to 1 | (0.35, 0.2, 0.45) at the answer | — |
-| $f(x)$ | cost of a kilo of the blend, £ | £10.675 at x* | — |
-| $a_i$ | bean i's base price per kilo, i being B, C or E | £6, £9, £11 | that bean's share falls |
-| $C$ | the allowed set | the shaded triangle E, P, Q | a looser rule widens it; the cost can only fall |
-| $x^*$ | a local minimiser: the cheapest blend nearby | (0.35, 0.2, 0.45) | — |
-| $y$ | any other allowed blend | E, all Sumatra, £16.00 | — |
-| $\theta$ | theta, the weight on x* when mixing it with y | 0.9 and 0.5 | the mix sits closer to x* |
-| $r$, $\lVert \cdot \rVert$ | how near counts as nearby; distance between blends | any small radius | — |
-| $\nabla f(x^*)$ | the gradient: cost per extra unit of each bean, at x* | (9.5, 11, 15.5), £ a kilo | — |
-| $\operatorname{argmin}$ | the set of all cheapest allowed blends | x* alone; under a flat quote, the whole edge P–Q | — |
-| $m$, $z$ | the least cost; a mix point used in the proof | £10.675; the 90% mix of x* and E | — |
+| $`x = (x_B, x_C, x_E)`$ | a blend: the three bean shares, adding to 1 | (0.35, 0.2, 0.45) at the answer | — |
+| $`f(x)`$ | cost of a kilo of the blend, £ | £10.675 at x* | — |
+| $`a_i`$ | bean i's base price per kilo, i being B, C or E | £6, £9, £11 | that bean's share falls |
+| $`C`$ | the allowed set | the shaded triangle E, P, Q | a looser rule widens it; the cost can only fall |
+| $`x^*`$ | a local minimiser: the cheapest blend nearby | (0.35, 0.2, 0.45) | — |
+| $`y`$ | any other allowed blend | E, all Sumatra, £16.00 | — |
+| $`\theta`$ | theta, the weight on x* when mixing it with y | 0.9 and 0.5 | the mix sits closer to x* |
+| $`r`$, $`\lVert \cdot \rVert`$ | how near counts as nearby; distance between blends | any small radius | — |
+| $`\nabla f(x^*)`$ | the gradient: cost per extra unit of each bean, at x* | (9.5, 11, 15.5), £ a kilo | — |
+| $`\mathrm{argmin}`$ | the set of all cheapest allowed blends | x* alone; under a flat quote, the whole edge P–Q | — |
+| $`m`$, $`z`$ | the least cost; a mix point used in the proof | £10.675; the 90% mix of x* and E | — |
 
 ### When it holds
 
@@ -76,7 +84,7 @@ The left side multiplies each bean's gradient entry by the change in that bean's
 - **The cost is convex**: on every straight path it lies on or below the chord, the straight line joining its values at the two ends ([Convex functions](03-convex-functions-and-their-tests.md)). A bulk discount, a price that falls as the order grows, bends the cost the wrong way, and the theorem no longer applies.
 - **Strictly convex, for one answer.** A flat price list is convex but not strictly. Then a whole edge of blends ties at £12.50, still a convex set, but not one point.
 - **Local means local among allowed points.** x* need only beat allowed blends nearby. Forbidden blends next to it, like the bowl's bottom, may be cheaper.
-- **A minimiser must exist.** The theorem says nothing if no blend is cheapest. Here $C$ is closed and bounded and $f$ is continuous, so the extreme value theorem supplies one: a continuous cost on a closed, bounded set reaches a lowest value ([Extreme value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/07-extreme-value-theorem.md)).
+- **A minimiser must exist.** The theorem says nothing if no blend is cheapest. Here $`C`$ is closed and bounded and $`f`$ is continuous, so the extreme value theorem supplies one: a continuous cost on a closed, bounded set reaches a lowest value ([Extreme value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/07-extreme-value-theorem.md)).
 
 ---
 
@@ -86,40 +94,42 @@ Without any rules, the calculus wing already proves that a convex function's loc
 
 ### Step 0: a cheaper blend anywhere would pull the cost down right beside x*
 
-Suppose some allowed blend $y$ were cheaper than x*. Walk the straight path from x* toward $y$. Two facts would then make the cost fall from the very first step.
+Suppose some allowed blend $`y`$ were cheaper than x*. Walk the straight path from x* toward $`y`$. Two facts would then make the cost fall from the very first step.
 
-Convexity of $C$ keeps the path allowed. Convexity of $f$ keeps the cost on the path at or below the straight line, the **chord**, joining the two costs. That chord falls from $f(x^*)$ toward the lower $f(y)$.
+Convexity of $`C`$ keeps the path allowed. Convexity of $`f`$ keeps the cost on the path at or below the straight line, the **chord**, joining the two costs. That chord falls from $`f(x^*)`$ toward the lower $`f(y)`$.
 
 So allowed blends just beside x* would be cheaper than x*, and x* would not be a local bottom. Each half of the hypothesis closes one escape route.
 
 ### Step 1: the path to any allowed blend stays allowed
 
-Mixing x* with $y$ at weight $\theta$ gives $\theta x^* + (1 - \theta) y$. Each rule in $C$ is a straight-line inequality or equation. A weighted average of two blends that obey one obeys it too, so $C$ is convex.
+Mixing x* with $`y`$ at weight $`\theta`$ gives $`\theta x^* + (1 - \theta) y`$. Each rule in $`C`$ is a straight-line inequality or equation. A weighted average of two blends that obey one obeys it too, so $`C`$ is convex.
 
-In numbers, take $y$ = E, all Sumatra. The 90% mix is (0.315, 0.18, 0.505), strength 7.2. The 50% mix is (0.175, 0.1, 0.725), strength 8. Both are allowed.
+In numbers, take $`y`$ = E, all Sumatra. The 90% mix is (0.315, 0.18, 0.505), strength 7.2. The 50% mix is (0.175, 0.1, 0.725), strength 8. Both are allowed.
 
 ### Step 2: the chord pulls the cost down, so a cheaper blend is a contradiction
 
-The cost is convex. Each bean adds a straight line $a_i x_i$ plus an upward parabola $5x_i^2$, and a sum of convex pieces is convex ([Building convex functions](09-operations-that-preserve-convexity.md)). So on the path:
+The cost is convex. Each bean adds a straight line $`a_i x_i`$ plus an upward parabola $`5x_i^2`$, and a sum of convex pieces is convex ([Building convex functions](09-operations-that-preserve-convexity.md)). So on the path:
 
-$$f\big(\theta x^* + (1 - \theta) y\big) \le \theta f(x^*) + (1 - \theta) f(y)$$
+```math
+f\big(\theta x^* + (1 - \theta) y\big) \le \theta f(x^*) + (1 - \theta) f(y)
+```
 
-If $f(y) < f(x^*)$, the right side is below $f(x^*)$ for every $\theta < 1$. Take $\theta$ close enough to 1 and the mix lies within $r$ of x*. It is allowed and cheaper, which contradicts x* being a local bottom.
+If $`f(y) < f(x^*)`$, the right side is below $`f(x^*)`$ for every $`\theta < 1`$. Take $`\theta`$ close enough to 1 and the mix lies within $`r`$ of x*. It is allowed and cheaper, which contradicts x* being a local bottom.
 
 With E, which is dearer at £16.00, there is no contradiction. The 90% mix costs £10.998 under a chord of £11.208. The 50% mix costs £12.756 under a chord of £13.338. Both stay above £10.675.
 
 <details>
 <summary>Detailed proof: a local minimiser of a convex problem is global</summary>
 
-Let $C$ be convex and $f$ convex on $C$. Let $x^* \in C$ and $r > 0$ satisfy $f(x^*) \le f(x)$ for all $x \in C$ with $\lVert x - x^* \rVert < r$.
+Let $`C`$ be convex and $`f`$ convex on $`C`$. Let $`x^* \in C`$ and $`r > 0`$ satisfy $`f(x^*) \le f(x)`$ for all $`x \in C`$ with $`\lVert x - x^* \rVert < r`$.
 
-Suppose some $y \in C$ has $f(y) < f(x^*)$. Then $y \ne x^*$. Choose $\theta$ with $\max\big(0,\ 1 - r / \lVert y - x^* \rVert\big) < \theta < 1$ and put $z = \theta x^* + (1 - \theta) y$.
+Suppose some $`y \in C`$ has $`f(y) < f(x^*)`$. Then $`y \ne x^*`$. Choose $`\theta`$ with $`\max\big(0,\ 1 - r / \lVert y - x^* \rVert\big) < \theta < 1`$ and put $`z = \theta x^* + (1 - \theta) y`$.
 
-Then $z \in C$ by convexity of $C$, and $\lVert z - x^* \rVert = (1 - \theta)\lVert y - x^* \rVert < r$. By convexity of $f$,
+Then $`z \in C`$ by convexity of $`C`$, and $`\lVert z - x^* \rVert = (1 - \theta)\lVert y - x^* \rVert < r`$. By convexity of $`f`$,
 
-$$f(z) \le \theta f(x^*) + (1 - \theta) f(y) < \theta f(x^*) + (1 - \theta) f(x^*) = f(x^*).$$
+$`\displaystyle f(z) \le \theta f(x^*) + (1 - \theta) f(y) < \theta f(x^*) + (1 - \theta) f(x^*) = f(x^*).`$
 
-So $z$ is an allowed point within $r$ of x* that is cheaper than x*, a contradiction. Hence $f(x^*) \le f(y)$ for every $y \in C$.
+So $`z`$ is an allowed point within $`r`$ of x* that is cheaper than x*, a contradiction. Hence $`f(x^*) \le f(y)`$ for every $`y \in C`$.
 
 </details>
 
@@ -127,19 +137,21 @@ So $z$ is an allowed point within $r$ of x* that is cheaper than x*, a contradic
 
 A search that stops is not proof. The evidence is a slope test. For a differentiable convex function, the tangent plane lies under the graph, the tangent test of [Convex functions](03-convex-functions-and-their-tests.md):
 
-$$f(y) \ge f(x^*) + \nabla f(x^*)^{\top}(y - x^*)$$
+```math
+f(y) \ge f(x^*) + \nabla f(x^*)^{\top}(y - x^*)
+```
 
-So if the slope from x* toward every allowed blend is at least 0, no allowed blend is cheaper. That slope is a straight-line expression in $y$, so over the triangle E, P, Q its smallest value sits at a corner. Three numbers settle it.
+So if the slope from x* toward every allowed blend is at least 0, no allowed blend is cheaper. That slope is a straight-line expression in $`y`$, so over the triangle E, P, Q its smallest value sits at a corner. Three numbers settle it.
 
-The gradient is $a_i + 10x_i$ for each bean: (9.5, 11, 15.5). The slope toward E is 3. The slope toward P is 0, and toward Q it is 0. None is negative, so x* is the cheapest allowed blend: optimal, with a printed certificate.
+The gradient is $`a_i + 10x_i`$ for each bean: (9.5, 11, 15.5). The slope toward E is 3. The slope toward P is 0, and toward Q it is 0. None is negative, so x* is the cheapest allowed blend: optimal, with a printed certificate.
 
 The test works in both directions. At any local minimiser the slope toward every allowed blend is at least 0, since otherwise a small step that way would be cheaper. Note what it does *not* ask for. The gradient need not be zero. It only has to point "uphill or level" along every allowed direction, and here it is level along the strength-7 edge.
 
 ### Step 4: the cheapest blends form a convex set
 
-Let $x$ and $y$ both be cheapest, with cost $m$. Their mix is allowed by Step 1, and by Step 2 it costs at most $\theta m + (1 - \theta) m = m$. It cannot cost less than the minimum, so it costs exactly $m$: the mix is cheapest too.
+Let $`x`$ and $`y`$ both be cheapest, with cost $`m`$. Their mix is allowed by Step 1, and by Step 2 it costs at most $`\theta m + (1 - \theta) m = m`$. It cannot cost less than the minimum, so it costs exactly $`m`$: the mix is cheapest too.
 
-With strict convexity there is only one. If $x \ne y$ were both cheapest, their midpoint would cost strictly less than $m$, which is impossible. The roaster's cost is strictly convex, because each $5x_i^2$ curves upward, so x* is the only answer.
+With strict convexity there is only one. If $`x \ne y`$ were both cheapest, their midpoint would cost strictly less than $`m`$, which is impossible. The roaster's cost is strictly convex, because each $`5x_i^2`$ curves upward, so x* is the only answer.
 
 A second supplier quotes flat prices, with no rise: £9.50, £11 and £15.50 a kilo. These are exactly the gradient at x*: the price list the rising quote looks like to a buyer standing at x*.
 
@@ -165,19 +177,19 @@ The curved line is the rising quote: one dip, at a Colombia share of 0.2, so one
 
 ## Worked numbers, by hand
 
-The strength rule must bind, since the bowl's bottom scores only 5.7. So search the edge where the strength is exactly 7. On that edge the Colombia share $x_C$ fixes the other two shares.
+The strength rule must bind, since the bowl's bottom scores only 5.7. So search the edge where the strength is exactly 7. On that edge the Colombia share $`x_C`$ fixes the other two shares.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| shares on the edge | solve $x_B + x_E = 1 - x_C$ and $5x_B + 9x_E = 7 - 6x_C$ | $x_B = (2 - 3x_C)/4$, $x_E = (2 - x_C)/4$ |
-| cost on the edge | put those shares into $f$ and collect terms | $11 - 3.25\,x_C + 8.125\,x_C^2$ |
-| slope zero | $-3.25 + 2 \times 8.125\,x_C = 0$ | $x_C = 0.2$ |
-| the blend | $x_B = (2 - 0.6)/4$, $x_E = (2 - 0.2)/4$ | (0.35, 0.2, 0.45) |
-| base part of the cost | $6(0.35) + 9(0.2) + 11(0.45)$ | 8.85 |
-| rise part | $5(0.35^2 + 0.2^2 + 0.45^2)$ | 1.825 |
+| shares on the edge | solve $`x_B + x_E = 1 - x_C`$ and $`5x_B + 9x_E = 7 - 6x_C`$ | $`x_B = (2 - 3x_C)/4`$, $`x_E = (2 - x_C)/4`$ |
+| cost on the edge | put those shares into $`f`$ and collect terms | $`11 - 3.25\,x_C + 8.125\,x_C^2`$ |
+| slope zero | $`-3.25 + 2 \times 8.125\,x_C = 0`$ | $`x_C = 0.2`$ |
+| the blend | $`x_B = (2 - 0.6)/4`$, $`x_E = (2 - 0.2)/4`$ | (0.35, 0.2, 0.45) |
+| base part of the cost | $`6(0.35) + 9(0.2) + 11(0.45)`$ | 8.85 |
+| rise part | $`5(0.35^2 + 0.2^2 + 0.45^2)`$ | 1.825 |
 | cost | 8.85 + 1.825 | 10.675 |
-| gradient | $6 + 10(0.35)$, $9 + 10(0.2)$, $11 + 10(0.45)$ | (9.5, 11, 15.5) |
-| slope toward E | $9.5(-0.35) + 11(-0.2) + 15.5(0.55)$ | 3 |
+| gradient | $`6 + 10(0.35)`$, $`9 + 10(0.2)`$, $`11 + 10(0.45)`$ | (9.5, 11, 15.5) |
+| slope toward E | $`9.5(-0.35) + 11(-0.2) + 15.5(0.55)`$ | 3 |
 | slope toward P and toward Q | the same sum with P's and Q's shares | 0 and 0 |
 | **cheapest allowed blend** | no slope negative, so the certificate holds | **35% Brazil, 20% Colombia, 45% Sumatra, £10.675 a kilo** |
 
@@ -187,8 +199,8 @@ The roaster pays £10.675 a kilo, more than the forbidden bowl bottom at £9.70,
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Dropping the strength rule | (0.6, 0.3, 0.1) at £9.70, strength 5.7 | The bowl's bottom lies outside $C$: cheaper, but not allowed |
-| A 40% minimum order, search from all Sumatra | stuck at (0, 0, 1), £16.00 | The rule makes $C$ non-convex: every nearby blend breaks it |
+| Dropping the strength rule | (0.6, 0.3, 0.1) at £9.70, strength 5.7 | The bowl's bottom lies outside $`C`$: cheaper, but not allowed |
+| A 40% minimum order, search from all Sumatra | stuck at (0, 0, 1), £16.00 | The rule makes $`C`$ non-convex: every nearby blend breaks it |
 | The same rule, search from (0, 0.4, 0.6) | stuck at (0, 0.6, 0.4), £12.40 | A second false bottom; the best under the rule is P at £11.00 |
 | Expecting one answer under the flat quote | 11 grid blends tie at £12.50 | Convex but not strictly: the cheapest set is the whole edge P–Q |
 
@@ -527,11 +539,11 @@ The two outputs match line for line.
 
 Lean proves the theorem, the convex cheapest set and the one-answer rule for any number of beans, and checks the hand arithmetic exactly.
 
-- Take a convex allowed set and a cost convex on it. If no allowed choice within some radius $r$ of x* is cheaper, no allowed choice anywhere is cheaper.
+- Take a convex allowed set and a cost convex on it. If no allowed choice within some radius $`r`$ of x* is cheaper, no allowed choice anywhere is cheaper.
 - With the same convex set and convex cost, the cheapest allowed choices form a convex set: mix two and the mix is cheapest too.
 - With a strictly convex cost on a convex allowed set, two cheapest allowed choices are the same choice.
 - The answer's numbers hold exactly: shares adding to 1, strength 7, base part 8.85, rise part 1.825 and cost £10.675.
-- On the strength-7 edge, $11 - 3.25\,x_C + 8.125\,x_C^2$ is £10.675 at $x_C = 0.2$, and its slope is zero there.
+- On the strength-7 edge, $`11 - 3.25\,x_C + 8.125\,x_C^2`$ is £10.675 at $`x_C = 0.2`$, and its slope is zero there.
 - The certificate holds exactly: gradient (9.5, 11, 15.5) and slopes 3, 0 and 0 toward E, P and Q.
 - Corners E and P cost £16 and £11, and under the flat quote a strength-7 blend costs £12.50.
 

@@ -42,9 +42,11 @@ Steep line: the swaption alone, which gains when rates rise and loses when they 
 
 ## The formula
 
-Notation first, in words. Black's formula for a swaption prices it as the **annuity**, the value today of 1 dollar of fixed rate paid on each of the swap's dates, times a call on the forward swap rate ([The annuity measure](05-the-annuity-measure.md)). A small number set low, as in $d_1$, is a label. A prime, as in A′, means the slope: how fast a quantity changes as the curve's rate moves.
+Notation first, in words. Black's formula for a swaption prices it as the **annuity**, the value today of 1 dollar of fixed rate paid on each of the swap's dates, times a call on the forward swap rate ([The annuity measure](05-the-annuity-measure.md)). A small number set low, as in $`d_1`$, is a label. A prime, as in A′, means the slope: how fast a quantity changes as the curve's rate moves.
 
-$$V = M\,A\,\big[F\,N(d_1) - K\,N(d_2)\big], \qquad d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+V = M\,A\,\big[F\,N(d_1) - K\,N(d_2)\big], \qquad d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}
+```
 
 **Read it aloud:** the swaption is the notional, times the annuity, times a Black call on the forward swap rate.
 
@@ -52,30 +54,30 @@ The four Greeks, and the hedge ratio the card is named for:
 
 | Greek | Formula | Our swaption | In words |
 | --- | --- | --- | --- |
-| $\Delta$, delta in swaps | $N(d_1)$ | 0.574599 | forward swaps per swaption if the annuity held still |
-| $h$, hedge ratio in dollars | $N(d_1) + \dfrac{A'}{A}\,\big[F N(d_1) - K N(d_2)\big]$ | 0.554091 | forward swaps per swaption once the annuity moves |
-| $\Gamma$, gamma | $\dfrac{\varphi(d_1)}{F\,\sigma\sqrt{T}}$ per unit of rate | 0.029693 per 10 bp | how much $\Delta$ rises as the forward rises |
-| $\nu$, vega | $M\,A\,F\,\varphi(d_1)\sqrt{T}$ | 7,271.99 dollars per vol point | value per 1 percentage point of volatility |
-| $\Theta$, theta | $-\dfrac{M A F \varphi(d_1)\sigma}{2\sqrt{T}} + V\ln(1+y)$, per year | −271.64 dollars a day | decay of the option, less the carry of the annuity |
+| $`\Delta`$, delta in swaps | $`N(d_1)`$ | 0.574599 | forward swaps per swaption if the annuity held still |
+| $`h`$, hedge ratio in dollars | $`N(d_1) + \dfrac{A'}{A}\,\big[F N(d_1) - K N(d_2)\big]`$ | 0.554091 | forward swaps per swaption once the annuity moves |
+| $`\Gamma`$, gamma | $`\dfrac{\varphi(d_1)}{F\,\sigma\sqrt{T}}`$ per unit of rate | 0.029693 per 10 bp | how much $`\Delta`$ rises as the forward rises |
+| $`\nu`$, vega | $`M\,A\,F\,\varphi(d_1)\sqrt{T}`$ | 7,271.99 dollars per vol point | value per 1 percentage point of volatility |
+| $`\Theta`$, theta | $`-\dfrac{M A F \varphi(d_1)\sigma}{2\sqrt{T}} + V\ln(1+y)`$, per year | −271.64 dollars a day | decay of the option, less the carry of the annuity |
 
 **Read it aloud:** delta in swaps is N(d1); the dollar hedge trims it by the annuity's percentage slope times the option's value per unit of annuity.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | the swaption's value in dollars | 230,666.45 | — |
-| $B$ | the value per unit of annuity: $F N(d_1) - K N(d_2)$, in rate points | 0.0054703 | — |
-| $M$ | the notional: the face amount the swap's payments are computed on | 10,000,000 dollars | every Greek in dollars scales with it |
-| $A$ | the annuity: value today of 1 per year paid on each fixed date, in years; A′ is its slope as the curve's rate rises | 4.216702; A′ = −15.808392 | the price rises in proportion |
-| $D(t)$, $t$, $y$ | discount factor, today's price of 1 dollar due at time $t$ years, here (1 + y) to the power −t; $y$ is the flat curve's yearly rate | $y$ = 4.40 percent | a higher $y$ lowers every $D(t)$ and the annuity |
-| $F$, $F_0$ | the forward swap rate: the fixed rate that makes the swap starting in one year worth zero today; $F_0$ is its value on the day a hedge swap is struck | 4.40 percent | the payer gains, since it pays a fixed rate below the market's |
-| $K$ | the strike: the fixed rate the swaption lets its holder pay | 4.35 percent | the payer loses value |
-| $\sigma$ | volatility: the yearly standard deviation of the log of the forward swap rate | 30 percent | the price rises; that rise is vega |
-| $T$ | time to the option's expiry, in years | 1 | more time, more value; its passing is theta |
-| $d_1$, $d_2$ | how far the forward sits above the strike, in units of $\sigma\sqrt{T}$, the second one unit lower | 0.188096, −0.111904 | — |
-| $N(x)$, $\varphi(x)$ | the bell curve's area left of $x$, and its height at $x$ | $N(d_1)$ = 0.574599, $N(d_2)$ = 0.455450 | — |
-| $h$ | hedge ratio: forward swaps per swaption that cancel a small parallel move | 0.554091 | — |
+| $`V`$ | the swaption's value in dollars | 230,666.45 | — |
+| $`B`$ | the value per unit of annuity: $`F N(d_1) - K N(d_2)`$, in rate points | 0.0054703 | — |
+| $`M`$ | the notional: the face amount the swap's payments are computed on | 10,000,000 dollars | every Greek in dollars scales with it |
+| $`A`$ | the annuity: value today of 1 per year paid on each fixed date, in years; A′ is its slope as the curve's rate rises | 4.216702; A′ = −15.808392 | the price rises in proportion |
+| $`D(t)`$, $`t`$, $`y`$ | discount factor, today's price of 1 dollar due at time $`t`$ years, here (1 + y) to the power −t; $`y`$ is the flat curve's yearly rate | $`y`$ = 4.40 percent | a higher $`y`$ lowers every $`D(t)`$ and the annuity |
+| $`F`$, $`F_0`$ | the forward swap rate: the fixed rate that makes the swap starting in one year worth zero today; $`F_0`$ is its value on the day a hedge swap is struck | 4.40 percent | the payer gains, since it pays a fixed rate below the market's |
+| $`K`$ | the strike: the fixed rate the swaption lets its holder pay | 4.35 percent | the payer loses value |
+| $`\sigma`$ | volatility: the yearly standard deviation of the log of the forward swap rate | 30 percent | the price rises; that rise is vega |
+| $`T`$ | time to the option's expiry, in years | 1 | more time, more value; its passing is theta |
+| $`d_1`$, $`d_2`$ | how far the forward sits above the strike, in units of $`\sigma\sqrt{T}`$, the second one unit lower | 0.188096, −0.111904 | — |
+| $`N(x)`$, $`\varphi(x)`$ | the bell curve's area left of $`x`$, and its height at $`x`$ | $`N(d_1)`$ = 0.574599, $`N(d_2)`$ = 0.455450 | — |
+| $`h`$ | hedge ratio: forward swaps per swaption that cancel a small parallel move | 0.554091 | — |
 
-The formula for $d_1$ in words: the log distance from strike to forward, plus half a variance, over one standard deviation of the rate's log over the option's life.
+The formula for $`d_1`$ in words: the log distance from strike to forward, plus half a variance, over one standard deviation of the rate's log over the option's life.
 
 ### When it holds
 
@@ -93,56 +95,60 @@ The formula for $d_1$ in words: the log distance from strike to forward, plus ha
 
 ### Step 0: count everything in annuity units and the swaption becomes a plain call
 
-The swaption is $M\,A$ times a Black call on $F$. An at-market forward swap, paying fixed $F_0$ from year one, is worth $M\,A\,(F - F_0)$: the difference in rates, paid on each date, discounted, which is the annuity times the difference. Both carry the same factor $M\,A$.
+The swaption is $`M\,A`$ times a Black call on $`F`$. An at-market forward swap, paying fixed $`F_0`$ from year one, is worth $`M\,A\,(F - F_0)`$: the difference in rates, paid on each date, discounted, which is the annuity times the difference. Both carry the same factor $`M\,A`$.
 
-Divide both by $M\,A$. Counted in these units the swaption is a call on the forward rate, and the swap is just $F - F_0$: one unit per unit of rate. The annuity measure makes $F$ driftless in those units, so the whole of Black–Scholes hedging applies with zero interest rate ([The annuity measure](05-the-annuity-measure.md)). The hedge ratio in those units is the call's slope, $N(d_1)$ = 0.574599.
+Divide both by $`M\,A`$. Counted in these units the swaption is a call on the forward rate, and the swap is just $`F - F_0`$: one unit per unit of rate. The annuity measure makes $`F`$ driftless in those units, so the whole of Black–Scholes hedging applies with zero interest rate ([The annuity measure](05-the-annuity-measure.md)). The hedge ratio in those units is the call's slope, $`N(d_1)`$ = 0.574599.
 
 ### Step 1: the call's slope is N(d1)
 
-Differentiate $F N(d_1) - K N(d_2)$ in $F$. Three terms appear: $N(d_1)$ from the first factor, plus $F \varphi(d_1)$ and $-K \varphi(d_2)$ times the slopes of $d_1$ and $d_2$, which are equal. The last two cancel because $F \varphi(d_1) = K \varphi(d_2)$ exactly. What remains is $N(d_1)$.
+Differentiate $`F N(d_1) - K N(d_2)`$ in $`F`$. Three terms appear: $`N(d_1)`$ from the first factor, plus $`F \varphi(d_1)`$ and $`-K \varphi(d_2)`$ times the slopes of $`d_1`$ and $`d_2`$, which are equal. The last two cancel because $`F \varphi(d_1) = K \varphi(d_2)`$ exactly. What remains is $`N(d_1)`$.
 
 <details>
 <summary>Detailed proof: why the two height terms cancel</summary>
 
-Write $v = \sigma\sqrt{T}$, so $d_2 = d_1 - v$. Then
-$$\frac{\varphi(d_2)}{\varphi(d_1)} = e^{-\frac12 (d_1 - v)^2 + \frac12 d_1^2} = e^{d_1 v - \frac12 v^2} = e^{\ln(F/K)} = \frac{F}{K},$$
-using $d_1 v = \ln(F/K) + \tfrac12 v^2$ from the definition of $d_1$. So $K\varphi(d_2) = F\varphi(d_1)$.
+Write $`v = \sigma\sqrt{T}`$, so $`d_2 = d_1 - v`$. Then
 
-Both $d_1$ and $d_2$ have slope $1/(F v)$ in $F$. The derivative of $F N(d_1) - K N(d_2)$ is therefore $N(d_1) + \big[F\varphi(d_1) - K\varphi(d_2)\big]/(F v) = N(d_1)$.
+$`\displaystyle \frac{\varphi(d_2)}{\varphi(d_1)} = e^{-\frac12 (d_1 - v)^2 + \frac12 d_1^2} = e^{d_1 v - \frac12 v^2} = e^{\ln(F/K)} = \frac{F}{K},`$
 
-The same identity gives the others. Gamma is the slope of $N(d_1)$: $\varphi(d_1)/(F v)$. Vega is the slope in $\sigma$: the $N$ terms' slopes cancel the same way and leave $F\varphi(d_1)\sqrt{T}$. The decay part of theta is the slope in $T$ with a minus sign, since time passing shortens $T$: $-F\varphi(d_1)\sigma/(2\sqrt{T})$.
+using $`d_1 v = \ln(F/K) + \tfrac12 v^2`$ from the definition of $`d_1`$. So $`K\varphi(d_2) = F\varphi(d_1)`$.
+
+Both $`d_1`$ and $`d_2`$ have slope $`1/(F v)`$ in $`F`$. The derivative of $`F N(d_1) - K N(d_2)`$ is therefore $`N(d_1) + \big[F\varphi(d_1) - K\varphi(d_2)\big]/(F v) = N(d_1)`$.
+
+The same identity gives the others. Gamma is the slope of $`N(d_1)`$: $`\varphi(d_1)/(F v)`$. Vega is the slope in $`\sigma`$: the $`N`$ terms' slopes cancel the same way and leave $`F\varphi(d_1)\sqrt{T}`$. The decay part of theta is the slope in $`T`$ with a minus sign, since time passing shortens $`T`$: $`-F\varphi(d_1)\sigma/(2\sqrt{T})`$.
 
 </details>
 
 ### Step 2: in dollars the annuity moves, and only the option feels it
 
-A trader's risk is measured in dollars for a move of the curve. Move the flat rate $y$ by a small amount. Two things change: $F$ and $A$. On this flat curve with yearly payments, $F$ equals $y$ exactly, so $F$ moves one for one. The annuity falls, with slope $A'$ = −15.808392: every discount factor shrinks when rates rise.
+A trader's risk is measured in dollars for a move of the curve. Move the flat rate $`y`$ by a small amount. Two things change: $`F`$ and $`A`$. On this flat curve with yearly payments, $`F`$ equals $`y`$ exactly, so $`F`$ moves one for one. The annuity falls, with slope $`A'`$ = −15.808392: every discount factor shrinks when rates rise.
 
-By the product rule, the swaption's slope in $y$ is $M\,[A' B + A\,N(d_1)]$, where $B = F N(d_1) - K N(d_2)$ is its value per unit of annuity. The at-market swap's slope is $M\,[A' (F - F_0) + A]$, and $F - F_0$ is zero on the trade date. The annuity's slope multiplies the swaption's value but multiplies zero in the swap.
+By the product rule, the swaption's slope in $`y`$ is $`M\,[A' B + A\,N(d_1)]`$, where $`B = F N(d_1) - K N(d_2)`$ is its value per unit of annuity. The at-market swap's slope is $`M\,[A' (F - F_0) + A]`$, and $`F - F_0`$ is zero on the trade date. The annuity's slope multiplies the swaption's value but multiplies zero in the swap.
 
 Divide one slope by the other:
 
-$$h = N(d_1) + \frac{A'}{A}\,B.$$
+```math
+h = N(d_1) + \frac{A'}{A}\,B.
+```
 
-$A'/A$ = −3.748994: the annuity loses about 3.75 percent of itself per percentage point of rates. Times $B$, the swaption's value per unit of annuity, that is −0.020508. So $h$ = 0.574599 − 0.020508 = 0.554091. On a curve that is not flat, divide the second term by $F$'s own slope in the curve move.
+$`A'/A`$ = −3.748994: the annuity loses about 3.75 percent of itself per percentage point of rates. Times $`B`$, the swaption's value per unit of annuity, that is −0.020508. So $`h`$ = 0.574599 − 0.020508 = 0.554091. On a curve that is not flat, divide the second term by $`F`$'s own slope in the curve move.
 
 ### Step 3: gamma is how fast the hedge goes stale
 
-$N(d_1)$ rises as $F$ rises. Its slope, $\varphi(d_1)/(F\sigma\sqrt{T})$, is 0.029693 per 10 basis points. After rates rise 10 basis points the full hedge ratio is 0.581042; after they fall 10 it is 0.525939.
+$`N(d_1)`$ rises as $`F`$ rises. Its slope, $`\varphi(d_1)/(F\sigma\sqrt{T})`$, is 0.029693 per 10 basis points. After rates rise 10 basis points the full hedge ratio is 0.581042; after they fall 10 it is 0.525939.
 
 A hedge set at 0.554091 is then too small or too large, and the profit and loss (P&L) it misses grows with the square of the move. The hedged book's value changes by about half the dollar gamma times the move squared, and the table in Worked numbers shows it: 634.94 dollars measured against 626.03 predicted at −10 basis points.
 
 ### Step 4: vega belongs to one cell of the cube
 
-Vega is $M A F \varphi(d_1)\sqrt{T}$: 7,271.99 dollars for one percentage point of volatility. No swap hedges it, because a swap has no volatility in it. Only another option does.
+Vega is $`M A F \varphi(d_1)\sqrt{T}`$: 7,271.99 dollars for one percentage point of volatility. No swap hedges it, because a swap has no volatility in it. Only another option does.
 
 Swaption volatilities are quoted on a grid with three sides: option expiry, the length of the swap underneath, and the strike. That grid is the **volatility cube** ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)). This swaption's vega sits in one cell: 1-year expiry, 5-year swap, strike 4.35 percent. A 2-into-5 swaption hedges it only as far as those two cells move together. Desks report vega cell by cell for that reason.
 
 ### Step 5: theta is decay less carry, and it pays for gamma
 
-Let one day pass with the curve unchanged. Two things happen. The option has less time, which costs $M A F \varphi(d_1)\sigma/(2\sqrt{T})$ a year: 298.85 dollars a day. And every payment date is a day nearer, so each discount factor grows by the factor $(1+y)$ to the power one day: the annuity, and the swaption with it, grow at the rate $\ln(1+y)$. That carry is 27.21 dollars a day. Net theta: −271.64 dollars a day.
+Let one day pass with the curve unchanged. Two things happen. The option has less time, which costs $`M A F \varphi(d_1)\sigma/(2\sqrt{T})`$ a year: 298.85 dollars a day. And every payment date is a day nearer, so each discount factor grows by the factor $`(1+y)`$ to the power one day: the annuity, and the swaption with it, grow at the rate $`\ln(1+y)`$. That carry is 27.21 dollars a day. Net theta: −271.64 dollars a day.
 
-In annuity units the carry vanishes and the decay alone is exactly $\tfrac12 \sigma^2 F^2$ times gamma, with a minus sign. That is Black–Scholes' balance with no interest rate ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)): the time a long option loses each day is the average profit its gamma earns on the day's moves. A hedged payer loses 298.85 dollars a day of decay and, on average, earns it back in the smile of the picture above.
+In annuity units the carry vanishes and the decay alone is exactly $`\tfrac12 \sigma^2 F^2`$ times gamma, with a minus sign. That is Black–Scholes' balance with no interest rate ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)): the time a long option loses each day is the average profit its gamma earns on the day's moves. A hedged payer loses 298.85 dollars a day of decay and, on average, earns it back in the smile of the picture above.
 
 <details>
 <summary>Why a hedge ratio in forward swaps and not in dollars per basis point?</summary>
@@ -151,7 +157,7 @@ Desks do both. The swaption's DV01, its value change per basis point, is 2,336.4
 
 </details>
 
-The other route runs through normal volatility: price with Bachelier's formula, where the rate moves by basis points rather than percentages, and delta becomes $N$ of a different $d$. The annuity correction is the same. That route is [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md).
+The other route runs through normal volatility: price with Bachelier's formula, where the rate moves by basis points rather than percentages, and delta becomes $`N`$ of a different $`d`$. The annuity correction is the same. That route is [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md).
 
 ---
 
@@ -161,16 +167,16 @@ A 1-into-5 payer on 10 million dollars, strike 4.35 percent, flat curve at 4.40 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| annuity $A$ | $D(2) + D(3) + D(4) + D(5) + D(6)$, each $1.044^{-t}$ | 4.216702 |
-| forward $F$ | $(D(1) - D(6)) / A$ | 4.40 percent |
-| $d_1$ | $(\ln(4.40/4.35) + 0.045) / 0.30$ | 0.188096 |
-| $d_2$ | $0.188096 - 0.30$ | −0.111904 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.574599, 0.455450 |
-| price | $10{,}000{,}000 \times 4.216702 \times (0.044 \times 0.574599 - 0.0435 \times 0.455450)$ | 230,666.45 dollars |
-| annuity slope over annuity | $-15.808392 / 4.216702$ | −3.748994 |
-| annuity term | $-3.748994 \times 0.0054703$ | −0.020508 |
-| **hedge ratio** | $0.574599 - 0.020508$ | **0.554091** |
-| hedge notional | $0.554091 \times 10{,}000{,}000$ | 5,540,910.24 dollars |
+| annuity $`A`$ | $`D(2) + D(3) + D(4) + D(5) + D(6)`$, each $`1.044^{-t}`$ | 4.216702 |
+| forward $`F`$ | $`(D(1) - D(6)) / A`$ | 4.40 percent |
+| $`d_1`$ | $`(\ln(4.40/4.35) + 0.045) / 0.30`$ | 0.188096 |
+| $`d_2`$ | $`0.188096 - 0.30`$ | −0.111904 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.574599, 0.455450 |
+| price | $`10{,}000{,}000 \times 4.216702 \times (0.044 \times 0.574599 - 0.0435 \times 0.455450)`$ | 230,666.45 dollars |
+| annuity slope over annuity | $`-15.808392 / 4.216702`$ | −3.748994 |
+| annuity term | $`-3.748994 \times 0.0054703`$ | −0.020508 |
+| **hedge ratio** | $`0.574599 - 0.020508`$ | **0.554091** |
+| hedge notional | $`0.554091 \times 10{,}000{,}000`$ | 5,540,910.24 dollars |
 
 The bank pays fixed 4.40 percent on 5,540,910.24 dollars of a swap starting in one year. That leaves it with no first-order exposure to a parallel move of rates, and with 7,271.99 dollars of vega and a gamma it can only hedge with options.
 
@@ -191,7 +197,7 @@ The net is small, positive both ways, and close to the gamma guess. The gap betw
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Hedge with $N(d_1)$ = 0.574599 swaps | net 8,506.19 at −30 bp, 2,778.48 at +30 bp (right: 5,882.48, 5,343.83) | over-hedged by the annuity term: a bet of 86.48 dollars a basis point that rates fall |
+| Hedge with $`N(d_1)`$ = 0.574599 swaps | net 8,506.19 at −30 bp, 2,778.48 at +30 bp (right: 5,882.48, 5,343.83) | over-hedged by the annuity term: a bet of 86.48 dollars a basis point that rates fall |
 | Hedge with a spot-starting 5-year swap, 0.554091 of it | net 8,788.87 at −30 bp, 2,086.21 at +30 bp | a swap starting today has a larger annuity than one starting in a year, so it over-hedges |
 | Theta without the annuity's carry | −298.85 dollars a day (right: −271.64) | payment dates get nearer each day; the discount factors grow |
 | Price without the annuity | 54,703.05 dollars (right: 230,666.45) | Black's formula gives rate points; the annuity turns them into dollars |
@@ -670,17 +676,17 @@ The two outputs are identical. The simulated hedging errors average −286.84 do
 
 Lean proves the card's slopes of Black's formula for any positive inputs, and the dollar hedge ratio on any flat curve.
 
-- Take $F$, $K$, $\sigma$ and $T$ all positive. Then $F\varphi(d_1) = K\varphi(d_2)$, so the two height terms cancel.
-- Take the same inputs. Then the slope of $B$ in $F$ is exactly $N(d_1)$, the delta in swaps.
-- Take the same inputs. Then gamma, the slope of $N(d_1)$ in $F$, is $\varphi(d_1)/(F\sigma\sqrt{T})$.
-- Take the same inputs. Then vega per unit of annuity, the slope of $B$ in $\sigma$, is $F\varphi(d_1)\sqrt{T}$.
-- Take the same inputs. Then the slope of $B$ in $T$ is $F\varphi(d_1)\sigma/(2\sqrt{T})$, the decay with its sign flipped. It equals $\tfrac12\sigma^2F^2$ times gamma: theta pays for gamma.
-- Take a flat curve at rate $y > 0$ with yearly payments, positive $M$, $K$, $\sigma$, and whole years to expiry. Then $F = y$ exactly.
-- Take the same swaption. Then $h = N(d_1) + (A'/A)B$ forward swaps match the swaption's slope in dollars.
-- Take the same swaption. Then $h < N(d_1)$, because the annuity falls as rates rise.
-- The forward of 4.40 percent, $d_2$, the hedge ratio 0.554091, the hedge table's nets and the daily theta also check.
+- Take $`F`$, $`K`$, $`\sigma`$ and $`T`$ all positive. Then $`F\varphi(d_1) = K\varphi(d_2)`$, so the two height terms cancel.
+- Take the same inputs. Then the slope of $`B`$ in $`F`$ is exactly $`N(d_1)`$, the delta in swaps.
+- Take the same inputs. Then gamma, the slope of $`N(d_1)`$ in $`F`$, is $`\varphi(d_1)/(F\sigma\sqrt{T})`$.
+- Take the same inputs. Then vega per unit of annuity, the slope of $`B`$ in $`\sigma`$, is $`F\varphi(d_1)\sqrt{T}`$.
+- Take the same inputs. Then the slope of $`B`$ in $`T`$ is $`F\varphi(d_1)\sigma/(2\sqrt{T})`$, the decay with its sign flipped. It equals $`\tfrac12\sigma^2F^2`$ times gamma: theta pays for gamma.
+- Take a flat curve at rate $`y > 0`$ with yearly payments, positive $`M`$, $`K`$, $`\sigma`$, and whole years to expiry. Then $`F = y`$ exactly.
+- Take the same swaption. Then $`h = N(d_1) + (A'/A)B`$ forward swaps match the swaption's slope in dollars.
+- Take the same swaption. Then $`h < N(d_1)`$, because the annuity falls as rates rise.
+- The forward of 4.40 percent, $`d_2`$, the hedge ratio 0.554091, the hedge table's nets and the daily theta also check.
 
-Decimal values like $N(d_1)$, the integrals, the bumped curve and the hedging simulation are left to the Python and Rust checks.
+Decimal values like $`N(d_1)`$, the integrals, the bumped curve and the hedging simulation are left to the Python and Rust checks.
 
 ```lean
 -- Swaption Greeks: in Black's model the swaption's slope in the forward swap rate, counted per unit of annuity, is N(d₁), its gamma, vega and time decay have the card's closed forms with decay equal to half σ²F² times gamma, and on a flat curve the dollar hedge ratio in forward swaps is N(d₁) + (A′/A)·B, strictly below N(d₁).
@@ -1064,8 +1070,8 @@ example : (-29885 : ℚ) / 100 + 2721 / 100 = -27164 / 100 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - **Volatility to 20 percent.** Guess first: does the hedge ratio rise or fall? It falls, to 0.5484, and the price drops to 157,730.17 dollars. Less volatility means a smaller option, so a smaller annuity term, but a lower $N(d_1)$ too.
-> - **Strike to 4.40 percent, at the money.** Guess first. The hedge ratio falls to 0.539949: $N(d_1)$ drops to $N(0.15)$ = 0.559618, and the annuity term shrinks a little because a higher strike makes the option worth less per unit of annuity.
+> - **Volatility to 20 percent.** Guess first: does the hedge ratio rise or fall? It falls, to 0.5484, and the price drops to 157,730.17 dollars. Less volatility means a smaller option, so a smaller annuity term, but a lower $`N(d_1)`$ too.
+> - **Strike to 4.40 percent, at the money.** Guess first. The hedge ratio falls to 0.539949: $`N(d_1)`$ drops to $`N(0.15)`$ = 0.559618, and the annuity term shrinks a little because a higher strike makes the option worth less per unit of annuity.
 > - **Rates up 10 basis points.** The hedge ratio becomes 0.581042. The bank must pay fixed on about 0.027 more swaps: that purchase is gamma at work.
 > - **Three months to expiry, rates unchanged.** The ratio is 0.551380, barely moved, while the daily theta has grown to 606.43 dollars.
 
@@ -1074,7 +1080,7 @@ example : (-29885 : ℚ) / 100 + 2721 / 100 = -27164 / 100 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Hedging with N(d1) swaps.** $N(d_1)$ is the delta counted in annuity units, where the annuity is the unit of account and cannot move. A trader's P&L is in dollars, and in dollars the annuity falls when rates rise. The swaption's price carries that fall; an at-market swap, worth zero, does not. Hedging with 0.574599 instead of 0.554091 leaves a directional bet of 86.48 dollars per basis point on a 10 million dollar swaption.
+> **Hedging with N(d1) swaps.** $`N(d_1)`$ is the delta counted in annuity units, where the annuity is the unit of account and cannot move. A trader's P&L is in dollars, and in dollars the annuity falls when rates rise. The swaption's price carries that fall; an at-market swap, worth zero, does not. Hedging with 0.574599 instead of 0.554091 leaves a directional bet of 86.48 dollars per basis point on a 10 million dollar swaption.
 >
 > Smaller traps:
 > - **Hedging with a swap that starts today.** The swaption's underlying starts in a year. A spot 5-year swap has a larger annuity, and covers the first year that the option does not; the net at +30 bp falls to 2,086.21 from 5,343.83.
@@ -1100,7 +1106,7 @@ example : (-29885 : ℚ) / 100 + 2721 / 100 = -27164 / 100 := by norm_num
 ## What this builds on
 
 - [Swaptions](04-swaptions-payer-and-receiver.md): the payer contract, the forward swap rate and Black's formula as the annuity times a call, which this card differentiates.
-- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): $N(d_1)$ as the hedge ratio of a share option, and the proof that the two height terms cancel, which Step 1 repeats on the forward swap rate.
+- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): $`N(d_1)`$ as the hedge ratio of a share option, and the proof that the two height terms cancel, which Step 1 repeats on the forward swap rate.
 - [The annuity measure](05-the-annuity-measure.md): why the forward swap rate has no drift when counted in annuity units, which makes the swaption a plain Black call there and its delta N(d1).
 
 ## Where this goes next

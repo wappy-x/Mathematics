@@ -38,32 +38,38 @@ The left branch is an over-count; nothing in the picture points at one plan.
 
 Notation first, in words. C(n, k), read "n choose k", counts the ways to pick k things from n, order ignored. K(n) is n dots with every pair joined. R(k,k) is the smallest n at which every two-colouring of K(n) holds a one-colour K(k). And k!, read "k factorial", is 1 x 2 x ... x k.
 
-$$\text{bad colourings of } K(n) \;\le\; 2 \times C(n,k) \times 2^{\,C(n,2) - C(k,2)}$$
+```math
+\text{bad colourings of } K(n) \;\le\; 2 \times C(n,k) \times 2^{\,C(n,2) - C(k,2)}
+```
 
 **Read it aloud:** pick the colour, pick the k dots, and let every edge outside those k dots fall as it likes.
 
-All colourings number $2^{C(n,2)}$, one choice of two per edge. Divide through:
+All colourings number $`2^{C(n,2)}`$, one choice of two per edge. Divide through:
 
-$$\text{bad share} \;\le\; C(n,k)\;2^{\,1 - C(k,2)}, \qquad\text{and if this is under 1, then } R(k,k) > n.$$
+```math
+\text{bad share} \;\le\; C(n,k)\;2^{\,1 - C(k,2)}, \qquad\text{and if this is under 1, then } R(k,k) > n.
+```
 
 **Read it aloud:** the k-sets, doubled for two colours, halved for each edge a k-set forces; below 1, a good colouring is left.
 
-With $n$ at 2^(k/2) the test collapses to one fraction:
+With $`n`$ at 2^(k/2) the test collapses to one fraction:
 
-$$\text{bad share} \;\le\; \frac{2^{\,1 + k/2}}{k!}$$
+```math
+\text{bad share} \;\le\; \frac{2^{\,1 + k/2}}{k!}
+```
 
 **Read it aloud:** two to the power one plus half the clique size, over the clique size's factorial.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | dots, or machines | 32 | more k-sets, so a larger bad share |
-| $k$ | size of the one-colour clique to avoid | 10 | more edges forced, so a far smaller bad share |
-| $K(n)$ | the complete graph: n dots, every pair joined | K(32), 496 edges | — |
-| $C(n,k)$ | k-sets among n things, order ignored | C(32,10) = 64512240 | — |
-| $C(k,2)$ | edges inside one k-set | 45 | — |
-| $2^{C(n,2)}$ | all colourings | 2^496 | — |
-| $k!$ | 1 x 2 x ... x k | 10! = 3628800 | the loose share falls fast |
-| $R(k,k)$ | smallest n forcing a one-colour K(k) | more than 32 | — |
+| $`n`$ | dots, or machines | 32 | more k-sets, so a larger bad share |
+| $`k`$ | size of the one-colour clique to avoid | 10 | more edges forced, so a far smaller bad share |
+| $`K(n)`$ | the complete graph: n dots, every pair joined | K(32), 496 edges | — |
+| $`C(n,k)`$ | k-sets among n things, order ignored | C(32,10) = 64512240 | — |
+| $`C(k,2)`$ | edges inside one k-set | 45 | — |
+| $`2^{C(n,2)}`$ | all colourings | 2^496 | — |
+| $`k!`$ | 1 x 2 x ... x k | 10! = 3628800 | the loose share falls fast |
+| $`R(k,k)`$ | smallest n forcing a one-colour K(k) | more than 32 | — |
 
 ### When it holds
 
@@ -93,21 +99,24 @@ A plan with two offending ten-sets is counted twice. That is allowed. Adding the
 
 The 2^451 and the factor 2 cancel all but 44 of the 496 twos below:
 
-$$\frac{2 \times 64512240 \times 2^{451}}{2^{496}} \;=\; \frac{64512240}{2^{44}} \;=\; 0.00000367$$
+```math
+\frac{2 \times 64512240 \times 2^{451}}{2^{496}} \;=\; \frac{64512240}{2^{44}} \;=\; 0.00000367
+```
 
 So a good plan exists, and R(10,10) > 32.
 
 ### Step 4: why the threshold is 2^(k/2)
 
-Now let $n$ and $k$ vary. The k-set count C(n, k) grows with $n$; the shrink factor $2^{\,1-C(k,2)}$ ignores $n$. The cheap bound C(n, k) ≤ n^k / k! ([The middle of the row](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)) shows the balance. At $n$ = 2^(k/2), n^k = 2^(k^2/2) almost exactly cancels the shrink factor, leaving $2^{\,1+k/2}/k!$, under 1 from k = 3 on. So R(k,k) > 2^(k/2). At k = 10 it reads 0.00001764: looser than the exact 0.00000367, as a cheaper bound should be.
+Now let $`n`$ and $`k`$ vary. The k-set count C(n, k) grows with $`n`$; the shrink factor $`2^{\,1-C(k,2)}`$ ignores $`n`$. The cheap bound C(n, k) ≤ n^k / k! ([The middle of the row](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)) shows the balance. At $`n`$ = 2^(k/2), n^k = 2^(k^2/2) almost exactly cancels the shrink factor, leaving $`2^{\,1+k/2}/k!`$, under 1 from k = 3 on. So R(k,k) > 2^(k/2). At k = 10 it reads 0.00001764: looser than the exact 0.00000367, as a cheaper bound should be.
 
 <details>
 <summary>Detailed proof, for every clique size at once</summary>
 
-Let $k$ be 3 or more and $n$ the whole part of 2^(k/2). Steps 1 to 3, with $n$ and $k$ for 32 and 10, bound the bad share by $C(n,k)\,2^{\,1-C(k,2)}$. Using C(n, k) ≤ n^k / k! and n^k ≤ 2^(k^2/2):
-$$C(n,k)\,2^{\,1-C(k,2)} \;\le\; \frac{2^{\,k^2/2}}{k!} \times 2^{\,1 - k^2/2 + k/2} \;=\; \frac{2^{\,1+k/2}}{k!}.$$
+Let $`k`$ be 3 or more and $`n`$ the whole part of 2^(k/2). Steps 1 to 3, with $`n`$ and $`k`$ for 32 and 10, bound the bad share by $`C(n,k)\,2^{\,1-C(k,2)}`$. Using C(n, k) ≤ n^k / k! and n^k ≤ 2^(k^2/2):
 
-This is under 1 when $2^{\,1+k/2} < k!$, which squared reads 2^(k+2) < (k!)^2. At k = 3 that is 32 < 36. Raising k by one doubles the left side and multiplies the right by (k + 1)^2, which is larger, so the inequality holds from k = 3 on. Some colouring of K(n) has no one-colour K(k), and R(k,k) > n. ∎
+$`\displaystyle C(n,k)\,2^{\,1-C(k,2)} \;\le\; \frac{2^{\,k^2/2}}{k!} \times 2^{\,1 - k^2/2 + k/2} \;=\; \frac{2^{\,1+k/2}}{k!}.`$
+
+This is under 1 when $`2^{\,1+k/2} < k!`$, which squared reads 2^(k+2) < (k!)^2. At k = 3 that is 32 < 36. Raising k by one doubles the left side and multiplies the right by (k + 1)^2, which is larger, so the inequality holds from k = 3 on. Some colouring of K(n) has no one-colour K(k), and R(k,k) > n. ∎
 
 </details>
 

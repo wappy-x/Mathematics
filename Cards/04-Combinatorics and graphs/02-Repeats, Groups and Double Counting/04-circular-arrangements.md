@@ -39,34 +39,38 @@ All 24 orders appear, four to a row: 24 / 4 = 6 dinners. Every row starts with A
 
 ## The formula
 
-Notation first, in words: $n!$ is the whole numbers from $n$ down to 1 multiplied together; it counts the ways of putting $n$ different things in a row.
+Notation first, in words: $`n!`$ is the whole numbers from $`n`$ down to 1 multiplied together; it counts the ways of putting $`n`$ different things in a row.
 
 Round a table, where rotating everyone counts as the same:
 
-$$\frac{n!}{n} = (n-1)!$$
+```math
+\frac{n!}{n} = (n-1)!
+```
 
 **Read it aloud:** each arrangement turns up once per position it can be rotated into, so divide the row count by the number of positions.
 
 On a ring that can also be turned over, so an arrangement and its reverse are one:
 
-$$\frac{n!}{2n} = \frac{(n-1)!}{2}$$
+```math
+\frac{n!}{2n} = \frac{(n-1)!}{2}
+```
 
 **Read it aloud:** turning over doubles the orders showing one ring, so divide by twice the number of positions.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many different things go round the ring | 8 guests, 6 beads | climbs steeply |
-| $n!$ | their orders in a row, before dividing | 40,320 for eight guests | — |
-| $(n-1)!$ | arrangements round a table, rotations as one | 5,040 dinners | — |
-| $(n-1)!/2$ | arrangements on a bracelet, the flip as one too | 60 bracelets | — |
-| $2n$ | moves leaving a bracelet unchanged: a turn, with or without a flip | 12 for six beads | more divided out, fewer bracelets |
+| $`n`$ | how many different things go round the ring | 8 guests, 6 beads | climbs steeply |
+| $`n!`$ | their orders in a row, before dividing | 40,320 for eight guests | — |
+| $`(n-1)!`$ | arrangements round a table, rotations as one | 5,040 dinners | — |
+| $`(n-1)!/2`$ | arrangements on a bracelet, the flip as one too | 60 bracelets | — |
+| $`2n`$ | moves leaving a bracelet unchanged: a turn, with or without a flip | 12 for six beads | more divided out, fewer bracelets |
 
 ### When it holds
 
-- **All $n$ things different.** With a repeat, an arrangement can be its own mirror image and one division no longer serves for all: beads R R B B G Y make 16 bracelets, not the 15 halving predicts.
+- **All $`n`$ things different.** With a repeat, an arrangement can be its own mirror image and one division no longer serves for all: beads R R B B G Y make 16 bracelets, not the 15 halving predicts.
 - **Rotating must change nothing that matters.** Numbered chairs, a head of the table, a seat facing the window: positions differ and the answer is the plain 40,320.
 - **The flip must be possible and count as the same.** A bracelet turns over; a dinner table does not. Halving the table gives 2,520, and it is wrong: a flip swaps every guest's left neighbour for the right one.
-- **At least three things before halving.** With two beads, turning the ring over does what turning it round does, and half of $(n-1)!$ is no whole number.
+- **At least three things before halving.** With two beads, turning the ring over does what turning it round does, and half of $`(n-1)!`$ is no whole number.
 
 ---
 
@@ -86,7 +90,7 @@ There are 40,320 orders, every family holds 8, and no order sits in two families
 
 ### Step 3: the same answer with one guest nailed down
 
-Every family holds exactly one order with Ada in chair 1: rotate until she is there, and only one rotation does it. So the families match those orders one for one, and those orders put the other seven guests in the seven other chairs: 7! = 5,040. No division anywhere, and it is where the shape $(n-1)!$ comes from. Matching two collections one for one is a method of its own ([Bijections and double counting](05-bijection-and-double-counting.md)).
+Every family holds exactly one order with Ada in chair 1: rotate until she is there, and only one rotation does it. So the families match those orders one for one, and those orders put the other seven guests in the seven other chairs: 7! = 5,040. No division anywhere, and it is where the shape $`(n-1)!`$ comes from. Matching two collections one for one is a method of its own ([Bijections and double counting](05-bijection-and-double-counting.md)).
 
 ### Step 4: the flip halves it again
 
@@ -101,11 +105,11 @@ Twelve strings, one bracelet: 720 / 12 = 60, which is also 120 / 2 — the flip 
 <details>
 <summary>Detailed proof: why every family is exactly the same size</summary>
 
-Number the positions round the ring; all $n$ items differ.
+Number the positions round the ring; all $`n`$ items differ.
 
-**Turns.** Suppose a turn, short of a full circle, left an arrangement unchanged. Every position would then hold the same item as the position that far on, and that is a different position, so two positions hold the same item — which all items differing forbids. The $n$ turns give $n$ different orders.
+**Turns.** Suppose a turn, short of a full circle, left an arrangement unchanged. Every position would then hold the same item as the position that far on, and that is a different position, so two positions hold the same item — which all items differing forbids. The $`n`$ turns give $`n`$ different orders.
 
-**Flips.** A flip reverses the ring, and a flip followed by a turn gives $n$ such moves, $2n$ in all. Each pairs the positions off, leaving at most two where they were, so with $n$ at least 3 one genuine pair is swapped — and the arrangement survives only if that pair holds the same item. So a family holds $n$ orders on a table, $2n$ on a bracelet.
+**Flips.** A flip reverses the ring, and a flip followed by a turn gives $`n`$ such moves, $`2n`$ in all. Each pairs the positions off, leaving at most two where they were, so with $`n`$ at least 3 one genuine pair is swapped — and the arrangement survives only if that pair holds the same item. So a family holds $`n`$ orders on a table, $`2n`$ on a bracelet.
 
 </details>
 
@@ -344,11 +348,11 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves these counts for any number $n$ of different things, not just eight guests or six beads.
+Lean proves these counts for any number $`n`$ of different things, not just eight guests or six beads.
 
-- Round a table, $n$ different guests make $(n-1)!$ dinners.
-- Every family of row-orders that turning makes the same holds exactly $n$ orders.
-- With $n$ at least 3, $n$ different beads make $(n-1)!/2$ bracelets.
+- Round a table, $`n`$ different guests make $`(n-1)!`$ dinners.
+- Every family of row-orders that turning makes the same holds exactly $`n`$ orders.
+- With $`n`$ at least 3, $`n`$ different beads make $`(n-1)!/2`$ bracelets.
 - The card's own numbers come out exactly: 40,320, 5,040, 2,520, 720, 120 and 60, and the arithmetic behind 15 and 16.
 
 The brute-force sorting into families, and the 16 bracelets for R R B B G Y, are left to the Python and Rust checks.
@@ -580,7 +584,7 @@ example : Nat.factorial 6 / (2 * 2) = 180 ∧ 180 / 6 = 30 ∧ 30 / 2 = 15 ∧ (
 >
 > - **Leaving the chairs numbered.** 40,320 answers another question — eight guests in chairs that can be told apart.
 > - **Halving the dinner table.** 2,520 treats a seating and its mirror image as one dinner.
-> - **Calling every round count $(n-1)!$.** A key ring turns over, so six different keys go on it in 60 ways, not 120.
+> - **Calling every round count $`(n-1)!`$.** A key ring turns over, so six different keys go on it in 60 ways, not 120.
 
 ---
 

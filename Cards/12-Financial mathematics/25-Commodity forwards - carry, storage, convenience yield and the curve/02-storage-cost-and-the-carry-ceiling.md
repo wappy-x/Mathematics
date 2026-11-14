@@ -42,36 +42,40 @@ Orange, climbing: the ceiling, spot plus storage plus interest. Green, flat: spo
 
 With storage paid as a bill today:
 
-$$F \;\le\; (S + U)\,e^{rT}$$
+```math
+F \;\le\; (S + U)\,e^{rT}
+```
 
 **Read it aloud:** the forward price can be at most what it costs to buy the grain and pay the warehouse today, both financed until delivery.
 
 With storage charged as a rate, a fixed fraction of the grain's value per year:
 
-$$F \;\le\; S\,e^{(r+u)T}$$
+```math
+F \;\le\; S\,e^{(r+u)T}
+```
 
 **Read it aloud:** the grain's price grows at the interest rate plus the storage rate, and the forward can be at most that.
 
-Here $e^{rT}$ is the continuous-compounding growth factor: what one dollar borrowed today is owed at time $T$ when interest is added in ever smaller slices ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). The two forms agree when the rate matches the bill: $u = \ln\big((S+U)/S\big)$, which makes $S e^{uT} = S + U$ at $T = 1$.
+Here $`e^{rT}`$ is the continuous-compounding growth factor: what one dollar borrowed today is owed at time $`T`$ when interest is added in ever smaller slices ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). The two forms agree when the rate matches the bill: $`u = \ln\big((S+U)/S\big)`$, which makes $`S e^{uT} = S + U`$ at $`T = 1`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the ceiling… |
 | --- | --- | --- | --- |
-| $F$ | the forward price: agreed today, paid on delivery | tested at $6.80 and $6.00 | (it is the thing being bounded) |
-| $S$ | the spot price: wheat bought today | $6.00 a bushel | rises one for one, grown by $e^{rT}$ |
-| $U$ | the storage bill for the whole period, paid today | $0.30 a bushel | rises, grown by $e^{rT}$ |
-| $u$ | storage as a continuous rate, a fraction of value per year | 4.879% (matches the $0.30 bill) | rises |
-| $r$ | the interest rate, continuously compounded | 5% | rises: the loan costs more |
-| $T$ | time to delivery, in years | 1 | rises: more interest and more storage |
-| $e^{rT}$ | growth factor on borrowed money | 1.051271 | — |
-| $S_T$ | the spot price on delivery day, unknown today | anything | no effect: it cancels |
-| $U_i$, $t_i$ | storage bills paid in instalments, and the times they fall due (Detailed proof) | one bill, $0.30 at time 0 | a later bill is financed for less time |
-| $n$ | how many short spells a year is cut into, when storage or interest is run step by step | 200,000 in the code | the step-by-step answer closes on the formula |
+| $`F`$ | the forward price: agreed today, paid on delivery | tested at $6.80 and $6.00 | (it is the thing being bounded) |
+| $`S`$ | the spot price: wheat bought today | $6.00 a bushel | rises one for one, grown by $`e^{rT}`$ |
+| $`U`$ | the storage bill for the whole period, paid today | $0.30 a bushel | rises, grown by $`e^{rT}`$ |
+| $`u`$ | storage as a continuous rate, a fraction of value per year | 4.879% (matches the $0.30 bill) | rises |
+| $`r`$ | the interest rate, continuously compounded | 5% | rises: the loan costs more |
+| $`T`$ | time to delivery, in years | 1 | rises: more interest and more storage |
+| $`e^{rT}`$ | growth factor on borrowed money | 1.051271 | — |
+| $`S_T`$ | the spot price on delivery day, unknown today | anything | no effect: it cancels |
+| $`U_i`$, $`t_i`$ | storage bills paid in instalments, and the times they fall due (Detailed proof) | one bill, $0.30 at time 0 | a later bill is financed for less time |
+| $`n`$ | how many short spells a year is cut into, when storage or interest is run step by step | 200,000 in the code | the step-by-step answer closes on the formula |
 
 ### When it holds
 
-- **Borrowing at $r$.** The trader must fund the $6.30 at the rate used. A trader who pays more faces a higher ceiling of their own; the market's ceiling is set by the cheapest funder with a warehouse.
+- **Borrowing at $`r`$.** The trader must fund the $6.30 at the rate used. A trader who pays more faces a higher ceiling of their own; the market's ceiling is set by the cheapest funder with a warehouse.
 - **Space at the quoted storage bill.** If the tanks or bins are full, cash-and-carry cannot be done and the ceiling stops binding. In April 2020 tanks at Cushing, Oklahoma, the US crude delivery point, ran short: the May crude contract fell below zero while June stayed far above it, a gap wider than any carry.
-- **The same grain, in the same place.** The forward names a grade and a delivery point. Grain of another grade, or grain elsewhere, carries extra costs of cleaning or transport that enter $U$.
+- **The same grain, in the same place.** The forward names a grade and a delivery point. Grain of another grade, or grain elsewhere, carries extra costs of cleaning or transport that enter $`U`$.
 - **Both sides pay.** A forward is a promise; if the buyer might default, the locked gap is not locked.
 - **The bill is known today.** If storage fees can change during the year, the ceiling uses the worst case the trader cannot contract away.
 
@@ -85,76 +89,80 @@ A forward promises grain later. Grain later can be manufactured from grain now p
 
 ### Step 1: cash-and-carry sets the ceiling
 
-A trader who sees a forward at $F$ does four things today:
+A trader who sees a forward at $`F`$ does four things today:
 
-1. Sells the forward: promises one bushel on delivery day for $F$.
-2. Borrows $S + U = 6.30$.
-3. Buys one bushel for $S = 6.00$.
-4. Pays the warehouse $U = 0.30$.
+1. Sells the forward: promises one bushel on delivery day for $`F`$.
+2. Borrows $`S + U = 6.30`$.
+3. Buys one bushel for $`S = 6.00`$.
+4. Pays the warehouse $`U = 0.30`$.
 
-Net cash today: zero. On delivery day the trader hands over the bushel, receives $F$, and repays $(S + U)e^{rT}$. The profit is
+Net cash today: zero. On delivery day the trader hands over the bushel, receives $`F`$, and repays $`(S + U)e^{rT}`$. The profit is
 
-$$F - (S + U)\,e^{rT},$$
+```math
+F - (S + U)\,e^{rT},
+```
 
-and every piece of it is known today. Wheat's price on delivery day, $S_T$, never enters. At $F = 6.80$ the profit is $6.80 - 6.623008 = 0.176992$ a bushel. Every trader with access to credit and a warehouse wants this trade. Their selling pushes the forward down until the profit is gone. So the forward settles at or under the ceiling.
+and every piece of it is known today. Wheat's price on delivery day, $`S_T`$, never enters. At $`F = 6.80`$ the profit is $`6.80 - 6.623008 = 0.176992`$ a bushel. Every trader with access to credit and a warehouse wants this trade. Their selling pushes the forward down until the profit is gone. So the forward settles at or under the ceiling.
 
-If the forward is settled in cash rather than grain, the trader sells the stored bushel for $S_T$ and pays the forward's buyer $S_T - F$. The two $S_T$ terms cancel and the profit is the same. The simulation in the code checks exactly that across 20,000 random delivery-day prices.
+If the forward is settled in cash rather than grain, the trader sells the stored bushel for $`S_T`$ and pays the forward's buyer $`S_T - F`$. The two $`S_T`$ terms cancel and the profit is the same. The simulation in the code checks exactly that across 20,000 random delivery-day prices.
 
 ### Step 2: the reverse trade needs grain nobody lends
 
-Now take a forward below the ceiling, at $F = 6.00$. The mirror trade would be:
+Now take a forward below the ceiling, at $`F = 6.00`$. The mirror trade would be:
 
 1. Buy the forward: agree to receive a bushel for $6.00.
 2. Borrow a bushel and sell it today for $6.00.
 3. Put the $6.00 in the bank.
 
-On delivery day the bank pays $6.307627$, the forward delivers a bushel for $6.00$, and that bushel repays the grain loan. The gain is $0.307627$, before any fee for the loan of grain.
+On delivery day the bank pays $`6.307627`$, the forward delivers a bushel for $`6.00`$, and that bushel repays the grain loan. The gain is $`0.307627`$, before any fee for the loan of grain.
 
 Step 2 is the catch. Selling a bushel one does not own is a **short sale**: borrowing the thing, selling it, and returning it later. Shares can be borrowed for a small fee. Gold can be borrowed at a quoted lease rate, which is why the gold forward sits on its line rather than under it ([Gold forward](01-gold-forward-and-the-lease-rate.md)). Wheat has no such market. A mill holding wheat will not lend it for a year, because it needs the grain to keep the mill running. An outsider who buys the $6.00 forward without grain is just betting on the price: the simulation shows the result ranging from a loss of $3.48 to a gain of $9.84.
 
 ### Step 3: holders could do it, and choose not to
 
-The only people who can run the reverse trade are those already holding grain. A holder who sells today also skips the $0.30 warehouse bill, so banks $6.30. Buying the forward, that holder ends the year with the same bushel plus $6.623008 - 6.00 = 0.623008$. Holders who do not do this are telling the market that having grain in the bin this year is worth at least $0.62 to them: it keeps a mill running, meets an order, avoids a shutdown. That benefit of holding the physical good has a name and its own card ([Convenience yield](03-convenience-yield-implied-by-the-forward.md)). It is not a payment anyone receives; it is how much a holder values not selling. So nothing forces the forward up to the ceiling.
+The only people who can run the reverse trade are those already holding grain. A holder who sells today also skips the $0.30 warehouse bill, so banks $6.30. Buying the forward, that holder ends the year with the same bushel plus $`6.623008 - 6.00 = 0.623008`$. Holders who do not do this are telling the market that having grain in the bin this year is worth at least $0.62 to them: it keeps a mill running, meets an order, avoids a shutdown. That benefit of holding the physical good has a name and its own card ([Convenience yield](03-convenience-yield-implied-by-the-forward.md)). It is not a payment anyone receives; it is how much a holder values not selling. So nothing forces the forward up to the ceiling.
 
 ### Step 4: storage as a rate gives the same ceiling
 
-Some warehouses charge in kind: they keep a small sliver of the grain each day instead of a bill. Call the yearly rate $u$. To end the year holding one full bushel, a trader must start with $e^{uT}$ bushels, since a sliver $u\,\Delta t$ taken over many short spells $\Delta t$ shrinks the pile by the factor $e^{-uT}$. Buying $e^{uT}$ bushels at $S$ and financing them gives the ceiling $S\,e^{(r+u)T}$.
+Some warehouses charge in kind: they keep a small sliver of the grain each day instead of a bill. Call the yearly rate $`u`$. To end the year holding one full bushel, a trader must start with $`e^{uT}`$ bushels, since a sliver $`u\,\Delta t`$ taken over many short spells $`\Delta t`$ shrinks the pile by the factor $`e^{-uT}`$. Buying $`e^{uT}`$ bushels at $`S`$ and financing them gives the ceiling $`S\,e^{(r+u)T}`$.
 
-Matching the two forms: a $0.30 bill on $6.00 grain is the same as $u = \ln(6.30/6.00) = 4.879\%$. The code runs the in-kind warehouse slice by slice, 200,000 slices, and lands on $6.623008$, the same as the bill.
+Matching the two forms: a $0.30 bill on $6.00 grain is the same as $`u = \ln(6.30/6.00) = 4.879\%`$. The code runs the in-kind warehouse slice by slice, 200,000 slices, and lands on $`6.623008`$, the same as the bill.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** Suppose money can be borrowed and lent at the continuously compounded rate $r$, a warehouse stores the commodity until $T$ for bills $U_1, \dots, U_k$ paid at known times $t_1, \dots, t_k$ between 0 and $T$, and the forward contract is honoured. If no riskless profit is available, then
-$$F \le S\,e^{rT} + \sum_i U_i\,e^{r(T - t_i)}.$$
-With one bill paid today this is $(S + U)e^{rT}$.
+**Claim.** Suppose money can be borrowed and lent at the continuously compounded rate $`r`$, a warehouse stores the commodity until $`T`$ for bills $`U_1, \dots, U_k`$ paid at known times $`t_1, \dots, t_k`$ between 0 and $`T`$, and the forward contract is honoured. If no riskless profit is available, then
 
-**Proof.** Suppose instead $F$ exceeds the right side. At time 0, sell one forward, borrow $S$ and buy a unit. At each $t_i$ borrow $U_i$ and pay the warehouse. At $T$ deliver the unit, receive $F$, and repay every loan: the first costs $S e^{rT}$, the one taken at $t_i$ costs $U_i e^{r(T - t_i)}$. Net cash at every date before $T$ is zero; at $T$ it is $F$ minus the right side, which is positive by assumption. A position that costs nothing and pays a positive amount for sure is a riskless profit, a contradiction.
+$`\displaystyle F \le S\,e^{rT} + \sum_i U_i\,e^{r(T - t_i)}.`$
 
-**Why no lower bound follows.** The reverse argument must deliver, at time 0, a unit of the commodity the trader does not own. That requires borrowing the commodity and returning it at $T$. If such a loan exists at a known cost, the same algebra gives a matching floor, and for gold it does. If no lender exists, the argument cannot start. The only floor left is the lowest possible delivery-day price, since a long forward (the buyer's side) below it pays $S_T - F > 0$ for sure. When $S_T$ can fall close to zero, as in the simulation, any $F > 0$ up to the ceiling is consistent with no-arbitrage.
+With one bill paid today this is $`(S + U)e^{rT}`$.
 
-**Storage as a rate.** If the warehouse keeps the fraction $u\,\Delta t$ in each spell of length $\Delta t$, $n$ spells leave $(1 - uT/n)^n$ of the pile, which tends to $e^{-uT}$ as $n$ grows. Starting with $e^{uT}$ units leaves one; financing them costs $S e^{uT} e^{rT}$.
+**Proof.** Suppose instead $`F`$ exceeds the right side. At time 0, sell one forward, borrow $`S`$ and buy a unit. At each $`t_i`$ borrow $`U_i`$ and pay the warehouse. At $`T`$ deliver the unit, receive $`F`$, and repay every loan: the first costs $`S e^{rT}`$, the one taken at $`t_i`$ costs $`U_i e^{r(T - t_i)}`$. Net cash at every date before $`T`$ is zero; at $`T`$ it is $`F`$ minus the right side, which is positive by assumption. A position that costs nothing and pays a positive amount for sure is a riskless profit, a contradiction.
+
+**Why no lower bound follows.** The reverse argument must deliver, at time 0, a unit of the commodity the trader does not own. That requires borrowing the commodity and returning it at $`T`$. If such a loan exists at a known cost, the same algebra gives a matching floor, and for gold it does. If no lender exists, the argument cannot start. The only floor left is the lowest possible delivery-day price, since a long forward (the buyer's side) below it pays $`S_T - F > 0`$ for sure. When $`S_T`$ can fall close to zero, as in the simulation, any $`F > 0`$ up to the ceiling is consistent with no-arbitrage.
+
+**Storage as a rate.** If the warehouse keeps the fraction $`u\,\Delta t`$ in each spell of length $`\Delta t`$, $`n`$ spells leave $`(1 - uT/n)^n`$ of the pile, which tends to $`e^{-uT}`$ as $`n`$ grows. Starting with $`e^{uT}`$ units leaves one; financing them costs $`S e^{uT} e^{rT}`$.
 
 </details>
 
-A second route reaches the same ceiling from the gold card: its lease argument, with the lease income set to zero and the storage bill added to the cost of holding, gives $(S + U)e^{rT}$ as the upper half. Gold keeps the lower half because a lender exists; wheat loses it because none does ([Gold forward](01-gold-forward-and-the-lease-rate.md)).
+A second route reaches the same ceiling from the gold card: its lease argument, with the lease income set to zero and the storage bill added to the cost of holding, gives $`(S + U)e^{rT}`$ as the upper half. Gold keeps the lower half because a lender exists; wheat loses it because none does ([Gold forward](01-gold-forward-and-the-lease-rate.md)).
 
 ---
 
 ## Worked numbers, by hand
 
-Wheat: $S = 6.00$, $U = 0.30$, $r = 5\%$, $T = 1$.
+Wheat: $`S = 6.00`$, $`U = 0.30`$, $`r = 5\%`$, $`T = 1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| cash needed today | $6.00 + 0.30$ | $6.30 |
-| growth factor $e^{rT}$ | $e^{0.05}$ | 1.051271 |
-| interest on the grain and the bill | $6.30 \times (1.051271 - 1)$ | $0.323008 |
-| the bill alone, grown | $0.30 \times 1.051271$ | $0.315381 |
-| **ceiling** | $6.30 \times 1.051271$ | **$6.623008** |
-| carry profit at $6.80 | $6.80 - 6.623008$ | $0.176992 |
-| gain at $6.00 with grain lent free | $6.307627 - 6.00$ | $0.307627 |
-| gain at $6.00 for a holder, bill skipped | $6.623008 - 6.00$ | $0.623008 |
+| cash needed today | $`6.00 + 0.30`$ | $6.30 |
+| growth factor $`e^{rT}`$ | $`e^{0.05}`$ | 1.051271 |
+| interest on the grain and the bill | $`6.30 \times (1.051271 - 1)`$ | $0.323008 |
+| the bill alone, grown | $`0.30 \times 1.051271`$ | $0.315381 |
+| **ceiling** | $`6.30 \times 1.051271`$ | **$6.623008** |
+| carry profit at $6.80 | $`6.80 - 6.623008`$ | $0.176992 |
+| gain at $6.00 with grain lent free | $`6.307627 - 6.00`$ | $0.307627 |
+| gain at $6.00 for a holder, bill skipped | $`6.623008 - 6.00`$ | $0.623008 |
 
 A miller quoted $6.80 for next year's wheat is being overcharged by about 18 cents a bushel, and a trader with a warehouse can collect those 18 cents today. A miller quoted $6.00 is not being undercharged by anything anyone can collect.
 
@@ -176,14 +184,14 @@ Correct ceiling: $6.623008.
 | --- | --- | --- |
 | Leave storage out | $6.307627 | Forwards between $6.31 and $6.62 look overpriced; trading them loses money once the warehouse is paid. |
 | Add the bill without financing it | $6.607627 | The $0.30 is paid today and borrowed for a year. Correct only if the bill is due at delivery. |
-| Read $0.30 on $6.00 as $u = 5\%$ | $6.631026 | A 5% in-kind rate needs $e^{0.05} = 1.0513$ bushels bought per bushel delivered, 5.13% extra; the matching rate is 4.879%. |
-| Simple interest instead of continuous | $6.615000 | $6.30 \times 1.05$. The error hides at two decimals and grows with $T$ and $r$. |
+| Read $0.30 on $6.00 as $`u = 5\%`$ | $6.631026 | A 5% in-kind rate needs $`e^{0.05} = 1.0513`$ bushels bought per bushel delivered, 5.13% extra; the matching rate is 4.879%. |
+| Simple interest instead of continuous | $6.615000 | $`6.30 \times 1.05`$. The error hides at two decimals and grows with $`T`$ and $`r`$. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the ceiling by **three independent roads** and then test the trade on a fourth. Road 1 is the formula. Road 2 runs the cash-and-carry loan through 200,000 short spells of simple interest, with no exponential function. Road 3 charges storage in kind, a sliver of grain per spell, and finances the extra grain. Road 4 repays the loan from a home-made Taylor series for $e^x$ and draws 20,000 delivery-day wheat prices from a home-made random number generator (a linear congruential generator, turned into bell-curve draws by the Box–Muller formula) with 25% volatility (a typical yearly price move of about 25%), and records the cash-and-carry profit at $6.80 and a grain-less buyer's result at $6.00. The asserts check that each road lands on the ceiling, that the carry profit is the same on the worst and best path, and that the $6.00 forward can lose.
+The scripts reach the ceiling by **three independent roads** and then test the trade on a fourth. Road 1 is the formula. Road 2 runs the cash-and-carry loan through 200,000 short spells of simple interest, with no exponential function. Road 3 charges storage in kind, a sliver of grain per spell, and finances the extra grain. Road 4 repays the loan from a home-made Taylor series for $`e^x`$ and draws 20,000 delivery-day wheat prices from a home-made random number generator (a linear congruential generator, turned into bell-curve draws by the Box–Muller formula) with 25% volatility (a typical yearly price move of about 25%), and records the cash-and-carry profit at $6.80 and a grain-less buyer's result at $6.00. The asserts check that each road lands on the ceiling, that the carry profit is the same on the worst and best path, and that the $6.00 forward can lose.
 
 ### Python
 
@@ -465,15 +473,15 @@ The two outputs match line for line.
 
 Lean proves the carry ceiling, the missing floor and the match with storage as a rate, for any prices, rates and times.
 
-- Suppose bills $U_i$ fall due at times $t_i$ between 0 and $T$, and cash-and-carry gives no riskless profit. Then $F \le S\,e^{rT} + \sum_i U_i\,e^{r(T - t_i)}$.
-- Take one bill $U \ge 0$ paid today, $S > 0$, and $0 < F \le (S + U)e^{rT}$. Then neither cash-and-carry nor buying the forward without grain is a riskless profit, when $S_T$ can be any positive price.
-- Suppose the warehouse keeps the fraction $uT/n$ of the pile in each of $n$ spells. Then the pile left tends to $e^{-uT}$, and financing $e^{uT}$ bushels costs $S\,e^{(r+u)T}$.
-- Take $S > 0$, $S + U > 0$ and $u = \ln\big((S+U)/S\big)$. Then the one-year ceilings agree: $S\,e^{r+u} = (S + U)\,e^{r}$.
-- With the wheat numbers, one bill paid today turns the general ceiling into $(S + U)\,e^{rT}$.
-- Cash needed today is $6.00 + 0.30 = 6.30$ a bushel.
-- The carry profit at a forward of $6.80$ is the same whatever wheat costs on delivery day.
-- The simple-interest wrong answer is $6.30 \times 1.05 = 6.615$.
-- Three months of the yearly bill is $0.30 \times 3/12 = 0.075$.
+- Suppose bills $`U_i`$ fall due at times $`t_i`$ between 0 and $`T`$, and cash-and-carry gives no riskless profit. Then $`F \le S\,e^{rT} + \sum_i U_i\,e^{r(T - t_i)}`$.
+- Take one bill $`U \ge 0`$ paid today, $`S > 0`$, and $`0 < F \le (S + U)e^{rT}`$. Then neither cash-and-carry nor buying the forward without grain is a riskless profit, when $`S_T`$ can be any positive price.
+- Suppose the warehouse keeps the fraction $`uT/n`$ of the pile in each of $`n`$ spells. Then the pile left tends to $`e^{-uT}`$, and financing $`e^{uT}`$ bushels costs $`S\,e^{(r+u)T}`$.
+- Take $`S > 0`$, $`S + U > 0`$ and $`u = \ln\big((S+U)/S\big)`$. Then the one-year ceilings agree: $`S\,e^{r+u} = (S + U)\,e^{r}`$.
+- With the wheat numbers, one bill paid today turns the general ceiling into $`(S + U)\,e^{rT}`$.
+- Cash needed today is $`6.00 + 0.30 = 6.30`$ a bushel.
+- The carry profit at a forward of $`6.80`$ is the same whatever wheat costs on delivery day.
+- The simple-interest wrong answer is $`6.30 \times 1.05 = 6.615`$.
+- Three months of the yearly bill is $`0.30 \times 3/12 = 0.075`$.
 
 Decimal values, the slice-by-slice runs and the 20,000 simulated wheat prices are left to the Python and Rust checks.
 
@@ -590,10 +598,10 @@ example : (3 / 10 : ℚ) * 3 / 12 = 75 / 1000 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Writing the carry formula as an equality.** Many treatments write $F = S\,e^{(r+u)T}$, or subtract a convenience yield as though it were income paid to the holder, and then call any forward off the line mispriced in either direction. Only the upper side is enforced. A wheat forward at $6.00 is not $0.62 cheap; it is a market in which holders value grain in hand. Treating the line as an equality produces arbitrage signals that no one can trade.
+> **Writing the carry formula as an equality.** Many treatments write $`F = S\,e^{(r+u)T}`$, or subtract a convenience yield as though it were income paid to the holder, and then call any forward off the line mispriced in either direction. Only the upper side is enforced. A wheat forward at $6.00 is not $0.62 cheap; it is a market in which holders value grain in hand. Treating the line as an equality produces arbitrage signals that no one can trade.
 >
 > Smaller traps:
-> - **Forgetting storage.** $S e^{rT} = 6.307627$ makes forwards between $6.31 and $6.62 look like free money. They are not.
+> - **Forgetting storage.** $`S e^{rT} = 6.307627`$ makes forwards between $6.31 and $6.62 look like free money. They are not.
 > - **Not financing the bill.** $6.607627 instead of $6.623008. The timing of the storage payment matters: a bill paid today is borrowed for the year.
 > - **Mixing the two storage conventions.** A bill of $0.30 on $6.00 grain is a rate of 4.879%, not 5%; using 5% gives $6.631026.
 > - **Assuming the ceiling holds when storage is full.** No space means no cash-and-carry, so no ceiling for that delivery date.
@@ -603,13 +611,13 @@ example : (3 / 10 : ℚ) * 3 / 12 = 75 / 1000 := by norm_num
 ## Where you meet it in real life
 
 - **Grain elevators and calendar spreads.** Grain merchants quote the gap between two delivery months as a fraction of **full carry**, the ceiling's gap: storage plus interest. A spread near full carry says grain is plentiful and the bins are paid to hold it; a spread well under says grain is wanted now.
-- **Exchange storage rules.** Grain futures exchanges set the maximum fee warehouses may charge for delivered grain, and so set $U$ for the ceiling. The Chicago wheat contract adjusts that fee according to how close spreads trade to full carry (its variable storage rate, in force since 2010). Conventions dated 2026-09-27; the rulebook of CME Group (the Chicago Mercantile Exchange group, which runs the Chicago wheat contract) was not reachable that day to re-verify.
+- **Exchange storage rules.** Grain futures exchanges set the maximum fee warehouses may charge for delivered grain, and so set $`U`$ for the ceiling. The Chicago wheat contract adjusts that fee according to how close spreads trade to full carry (its variable storage rate, in force since 2010). Conventions dated 2026-09-27; the rulebook of CME Group (the Chicago Mercantile Exchange group, which runs the Chicago wheat contract) was not reachable that day to re-verify.
 - **Oil in tankers.** When crude for later delivery trades far above crude today, traders charter tankers and hold oil at sea: the cash-and-carry trade, run with ships. It stops when the forward falls back to the cost of the tanker plus interest.
 - **Gold, the contrast.** Gold is lent out at a lease rate, so the reverse trade is possible and the forward sits on its line: [Gold forward](01-gold-forward-and-the-lease-rate.md).
 - **Curve shapes.** Forwards sitting near the ceiling make an upward curve; forwards well under it can fall below spot. The names and the returns from rolling along each shape are on [Contango and backwardation](04-contango-backwardation-and-roll-yield.md).
 
 > **Say it back**
-> A forward on grain can be copied by borrowing, buying the grain now and paying a warehouse until delivery. That copy costs $(S + U)e^{rT}$, $6.62 for wheat at $6.00 with a $0.30 bill at 5%. A forward above that is sold against the copy for a sure profit, 18 cents at $6.80. A forward below it cannot be attacked, because the reverse trade needs borrowed grain and holders keep theirs. So storage sets a ceiling and no floor.
+> A forward on grain can be copied by borrowing, buying the grain now and paying a warehouse until delivery. That copy costs $`(S + U)e^{rT}`$, $6.62 for wheat at $6.00 with a $0.30 bill at 5%. A forward above that is sold against the copy for a sure profit, 18 cents at $6.80. A forward below it cannot be attacked, because the reverse trade needs borrowed grain and holders keep theirs. So storage sets a ceiling and no floor.
 
 ---
 

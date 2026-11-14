@@ -12,7 +12,7 @@ That cost is a bowl in 1,000 dimensions. Its lowest point solves a linear system
 
 For a single chain of minutes like this one, elimination along the chain is cheaper still, one sweep forward and one back, and exact. The code uses it as a check. Conjugate gradient pays off on grids in two or three dimensions, such as a photograph, where elimination turns many of the zeros into numbers it must store (see Where you meet it in real life).
 
-From a flat 15 °C start, it shrinks the cost's slope to $10^{-8}$ of its starting size in 84 steps. Gradient descent, with the best step length each time, needs 882. The smoothed curve sits 0.129 °C from the true warming, root-mean-square (the typical size of a miss); the raw readings sit 0.573 °C from it.
+From a flat 15 °C start, it shrinks the cost's slope to $`10^{-8}`$ of its starting size in 84 steps. Gradient descent, with the best step length each time, needs 882. The smoothed curve sits 0.129 °C from the true warming, root-mean-square (the typical size of a miss); the raw readings sit 0.573 °C from it.
 
 The difference is the directions. Gradient descent heads straight downhill, and each step partly undoes the last, so it zigzags. Conjugate gradient picks each direction so that moving along it keeps the progress made along every earlier one. With n unknowns, n directions finish the job.
 
@@ -32,37 +32,41 @@ Both methods first move right to (16.5, 15), where the path touches an oval. Gra
 
 ## The formula
 
-Notation first, in words. The cost is a **quadratic**, a bowl set by a matrix $A$ and a list $b$. For two lists $u$ and $v$, $u^T v$ is their dot product: multiply entry by entry and add. Its gradient is $Ax - b$, so the bottom is where $Ax = b$. The **residual** $r = b - Ax$ is minus the gradient: the downhill direction. Directions $d_i$ and $d_j$ are **conjugate** when $d_i^T A\, d_j = 0$: perpendicular once the bowl's stretch is counted.
+Notation first, in words. The cost is a **quadratic**, a bowl set by a matrix $`A`$ and a list $`b`$. For two lists $`u`$ and $`v`$, $`u^T v`$ is their dot product: multiply entry by entry and add. Its gradient is $`Ax - b`$, so the bottom is where $`Ax = b`$. The **residual** $`r = b - Ax`$ is minus the gradient: the downhill direction. Directions $`d_i`$ and $`d_j`$ are **conjugate** when $`d_i^T A\, d_j = 0`$: perpendicular once the bowl's stretch is counted.
 
-$$f(x) = \tfrac12\, x^T A\, x - b^T x, \qquad \text{start } d_0 = r_0 = b - A x_0,$$
+```math
+f(x) = \tfrac12\, x^T A\, x - b^T x, \qquad \text{start } d_0 = r_0 = b - A x_0,
+```
 
-$$\alpha_k = \frac{r_k^T r_k}{d_k^T A\, d_k}, \quad x_{k+1} = x_k + \alpha_k d_k, \quad r_{k+1} = r_k - \alpha_k A d_k, \quad \beta_k = \frac{r_{k+1}^T r_{k+1}}{r_k^T r_k}, \quad d_{k+1} = r_{k+1} + \beta_k d_k$$
+```math
+\alpha_k = \frac{r_k^T r_k}{d_k^T A\, d_k}, \quad x_{k+1} = x_k + \alpha_k d_k, \quad r_{k+1} = r_k - \alpha_k A d_k, \quad \beta_k = \frac{r_{k+1}^T r_{k+1}}{r_k^T r_k}, \quad d_{k+1} = r_{k+1} + \beta_k d_k
+```
 
 **Read it aloud:** go to the lowest point along the current direction, update the downhill slope, and make the next direction that slope plus a fraction of the old direction.
 
-For the thermometer, the cost $f(x) = \tfrac12 \sum_i (x_i - y_i)^2 + \tfrac{w}{2} \sum_i (x_{i+1} - x_i)^2$ is the quadratic above plus a constant, with $b = y$. Row $i$ of $Ax$ is $x_i + w\,(x_i - x_{i-1}) + w\,(x_i - x_{i+1})$, dropping the missing neighbour at each end. That line is all the code knows about $A$. This is the same smoother as on [L-BFGS](06-l-bfgs-and-limited-memory-updates.md), at half the scale and with its own letters. Halving the cost halves every curvature, so the least curvature here is $\mu = 1$, not 2.
+For the thermometer, the cost $`f(x) = \tfrac12 \sum_i (x_i - y_i)^2 + \tfrac{w}{2} \sum_i (x_{i+1} - x_i)^2`$ is the quadratic above plus a constant, with $`b = y`$. Row $`i`$ of $`Ax`$ is $`x_i + w\,(x_i - x_{i-1}) + w\,(x_i - x_{i+1})`$, dropping the missing neighbour at each end. That line is all the code knows about $`A`$. This is the same smoother as on [L-BFGS](06-l-bfgs-and-limited-memory-updates.md), at half the scale and with its own letters. Halving the cost halves every curvature, so the least curvature here is $`\mu = 1`$, not 2.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_i$, $x^*$; $u$, $v$ | the smoothed curve; its value at minute $i$ (on the banana, $x_1$, $x_2$ are the point's coordinates); $x^*$ the exact bottom; the two smoothed values in the two-reading example | 20.584 °C read at minute 500 becomes 19.817 °C; $(u, v)$ = (17, 16) at the two-reading bottom | the answer, not an input |
-| $y$, $b$ | the readings, which play the part of $b$ | 1,000 readings, 15.716 °C at minute 0 | the curve follows them |
-| $w$ | the jump weight: how much a minute-to-minute jump costs | 25 | smoother curve, more steps |
-| $A$ | the bowl's matrix, never stored: row $i$ of $Ax$ as above | 1,000 × 1,000, three non-zero entries a row | — |
-| $f(x)$, $\lVert z \rVert_A$ | the cost being minimised, in °C²; the length of a list $z$ in the bowl's own units, $\sqrt{z^T A z}$ | 16,758.2945 at the start, 148.620606 at the bottom | — |
-| $x_k$, $k$ | the guess after $k$ steps, counting from $k = 0$ | $x_0$ = flat 15 °C; 84 steps to the tolerance | — |
-| $r_k$, $g_k$ | the residual $b - A x_k$, the downhill slope; off a bowl, $g_k = \nabla f(x_k)$ and $r_k = -g_k$ | falls to $10^{-8}$ of its starting size | — |
-| $d_k$, $c_i$ | the $k$-th direction (`p` in the code); $c_i$ an amount of $d_i$ in a mix | $d_0 = r_0$ | — |
-| $\alpha_k$ | the step length along $d_k$ that reaches the lowest point on that line | 0.5, then 0.6667, for the two readings | — |
-| $\beta_k$, $\beta_k^{\text{FR}}$, $\beta_k^{\text{PR+}}$ | how much of the old direction joins the new slope; the two nonlinear versions | 0.25 for the two readings | 0 turns the method into gradient descent |
-| $n$ | the number of unknowns | 1,000 | the most steps exact arithmetic can need |
-| $\kappa = L/\mu$ | the stretch: largest eigenvalue $L$ of $A$ (the bowl's steepest curvature) over the smallest $\mu$ (its gentlest) | 101.00, from $L \approx 1 + 4w$ and $\mu = 1$ | more steps, growing like $\sqrt{\kappa}$ |
+| $`x`$, $`x_i`$, $`x^*`$; $`u`$, $`v`$ | the smoothed curve; its value at minute $`i`$ (on the banana, $`x_1`$, $`x_2`$ are the point's coordinates); $`x^*`$ the exact bottom; the two smoothed values in the two-reading example | 20.584 °C read at minute 500 becomes 19.817 °C; $`(u, v)`$ = (17, 16) at the two-reading bottom | the answer, not an input |
+| $`y`$, $`b`$ | the readings, which play the part of $`b`$ | 1,000 readings, 15.716 °C at minute 0 | the curve follows them |
+| $`w`$ | the jump weight: how much a minute-to-minute jump costs | 25 | smoother curve, more steps |
+| $`A`$ | the bowl's matrix, never stored: row $`i`$ of $`Ax`$ as above | 1,000 × 1,000, three non-zero entries a row | — |
+| $`f(x)`$, $`\lVert z \rVert_A`$ | the cost being minimised, in °C²; the length of a list $`z`$ in the bowl's own units, $`\sqrt{z^T A z}`$ | 16,758.2945 at the start, 148.620606 at the bottom | — |
+| $`x_k`$, $`k`$ | the guess after $`k`$ steps, counting from $`k = 0`$ | $`x_0`$ = flat 15 °C; 84 steps to the tolerance | — |
+| $`r_k`$, $`g_k`$ | the residual $`b - A x_k`$, the downhill slope; off a bowl, $`g_k = \nabla f(x_k)`$ and $`r_k = -g_k`$ | falls to $`10^{-8}`$ of its starting size | — |
+| $`d_k`$, $`c_i`$ | the $`k`$-th direction (`p` in the code); $`c_i`$ an amount of $`d_i`$ in a mix | $`d_0 = r_0`$ | — |
+| $`\alpha_k`$ | the step length along $`d_k`$ that reaches the lowest point on that line | 0.5, then 0.6667, for the two readings | — |
+| $`\beta_k`$, $`\beta_k^{\text{FR}}`$, $`\beta_k^{\text{PR+}}`$ | how much of the old direction joins the new slope; the two nonlinear versions | 0.25 for the two readings | 0 turns the method into gradient descent |
+| $`n`$ | the number of unknowns | 1,000 | the most steps exact arithmetic can need |
+| $`\kappa = L/\mu`$ | the stretch: largest eigenvalue $`L`$ of $`A`$ (the bowl's steepest curvature) over the smallest $`\mu`$ (its gentlest) | 101.00, from $`L \approx 1 + 4w`$ and $`\mu = 1`$ | more steps, growing like $`\sqrt{\kappa}`$ |
 
 ### When it holds
 
-- **$A$ is symmetric.** Otherwise the short recipe for $\beta_k$ stops producing conjugate directions, and the n-step promise is gone.
-- **$A$ is positive definite** (every direction curves upward: a bowl; see [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). Otherwise $d_k^T A d_k$ can be negative, there is no lowest point along $d_k$, and on the saddle in "What breaks" the method ends higher than it started.
-- **The arithmetic is exact, for the n-step promise.** Rounding slowly spoils conjugacy. The worst A-cosine (the cosine of the angle between two directions, measured the bowl's way: 0 when conjugate) is $10^{-13.36}$ among the first 20 directions and $10^{-12.17}$ among all 84. It creeps up as the run goes on, though here it stays tiny. Real codes stop on a residual tolerance.
-- **The stretch is modest, for speed.** The step count grows with $\sqrt{\kappa}$; n is only the ceiling.
+- **$`A`$ is symmetric.** Otherwise the short recipe for $`\beta_k`$ stops producing conjugate directions, and the n-step promise is gone.
+- **$`A`$ is positive definite** (every direction curves upward: a bowl; see [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). Otherwise $`d_k^T A d_k`$ can be negative, there is no lowest point along $`d_k`$, and on the saddle in "What breaks" the method ends higher than it started.
+- **The arithmetic is exact, for the n-step promise.** Rounding slowly spoils conjugacy. The worst A-cosine (the cosine of the angle between two directions, measured the bowl's way: 0 when conjugate) is $`10^{-13.36}`$ among the first 20 directions and $`10^{-12.17}`$ among all 84. It creeps up as the run goes on, though here it stays tiny. Real codes stop on a residual tolerance.
+- **The stretch is modest, for speed.** The step count grows with $`\sqrt{\kappa}`$; n is only the ceiling.
 - **Off a bowl, the line search is accurate.** Steps must pass the strong Wolfe tests ([Line search](04-line-search-armijo-and-wolfe.md)): the cost drops enough and the slope along the line flattens enough. Without the second test the banana run takes 1,124 iterations, not 34.
 
 ---
@@ -71,52 +75,56 @@ For the thermometer, the cost $f(x) = \tfrac12 \sum_i (x_i - y_i)^2 + \tfrac{w}{
 
 ### Step 0: why gradient descent undoes its own work, and what to ask for instead
 
-Stop at the lowest point along a direction $d_0$: there the slope along $d_0$ is zero. Now move an amount $\alpha$ along a second direction $d_1$. In a bowl that changes the gradient by $\alpha A d_1$, so the slope along $d_0$ changes by $\alpha\, d_0^T A d_1$. Unless that is zero, the first step's work is partly undone. Gradient descent takes $d_1$ perpendicular to $d_0$, which does not make $d_0^T A d_1$ zero, so it undoes.
+Stop at the lowest point along a direction $`d_0`$: there the slope along $`d_0`$ is zero. Now move an amount $`\alpha`$ along a second direction $`d_1`$. In a bowl that changes the gradient by $`\alpha A d_1`$, so the slope along $`d_0`$ changes by $`\alpha\, d_0^T A d_1`$. Unless that is zero, the first step's work is partly undone. Gradient descent takes $`d_1`$ perpendicular to $`d_0`$, which does not make $`d_0^T A d_1`$ zero, so it undoes.
 
-So ask for $d_0^T A d_1 = 0$, which is conjugacy. With n mutually conjugate directions, minimising once along each finishes the job, in any order.
+So ask for $`d_0^T A d_1 = 0`$, which is conjugacy. With n mutually conjugate directions, minimising once along each finishes the job, in any order.
 
 ### Step 1: in conjugate directions the bowl splits into n separate one-dimensional problems
 
-Write any point as the start plus a mix of the directions: $x = x_0 + \sum_i c_i d_i$. Expand the cost:
+Write any point as the start plus a mix of the directions: $`x = x_0 + \sum_i c_i d_i`$. Expand the cost:
 
-$$f(x) = f(x_0) + \sum_i \Big( \tfrac12 c_i^2\, d_i^T A d_i - c_i\, d_i^T r_0 \Big).$$
+```math
+f(x) = f(x_0) + \sum_i \Big( \tfrac12 c_i^2\, d_i^T A d_i - c_i\, d_i^T r_0 \Big).
+```
 
-The cross terms $c_i c_j\, d_i^T A d_j$ have vanished, because the directions are conjugate. What is left is n parabolas, one per amount $c_i$, that do not interact: each has its own best $c_i = d_i^T r_0 / d_i^T A d_i$, and fixing one never moves another. That is the card's title as algebra.
+The cross terms $`c_i c_j\, d_i^T A d_j`$ have vanished, because the directions are conjugate. What is left is n parabolas, one per amount $`c_i`$, that do not interact: each has its own best $`c_i = d_i^T r_0 / d_i^T A d_i`$, and fixing one never moves another. That is the card's title as algebra.
 
-The directions are also independent: if $\sum_i c_i d_i = 0$, multiplying by $d_j^T A$ leaves $c_j\, d_j^T A d_j = 0$, and $d_j^T A d_j > 0$ in a bowl, so $c_j = 0$. So n of them reach every point, the bottom included.
+The directions are also independent: if $`\sum_i c_i d_i = 0`$, multiplying by $`d_j^T A`$ leaves $`c_j\, d_j^T A d_j = 0`$, and $`d_j^T A d_j > 0`$ in a bowl, so $`c_j = 0`$. So n of them reach every point, the bottom included.
 
 ### Step 2: the next direction needs only the last one
 
-Correcting each new slope against all earlier directions would mean storing them all. The recipe stores one. Step length first: along $d_k$ the cost's slope is $-d_k^T r_k + \alpha\, d_k^T A d_k$, zero at $\alpha = d_k^T r_k / d_k^T A d_k$. Since $d_k = r_k + \beta_{k-1} d_{k-1}$ and $r_k$ is perpendicular to $d_{k-1}$, the top is $r_k^T r_k$: the formula's $\alpha_k$.
+Correcting each new slope against all earlier directions would mean storing them all. The recipe stores one. Step length first: along $`d_k`$ the cost's slope is $`-d_k^T r_k + \alpha\, d_k^T A d_k`$, zero at $`\alpha = d_k^T r_k / d_k^T A d_k`$. Since $`d_k = r_k + \beta_{k-1} d_{k-1}`$ and $`r_k`$ is perpendicular to $`d_{k-1}`$, the top is $`r_k^T r_k`$: the formula's $`\alpha_k`$.
 
-Then $\beta_k$: make $d_{k+1} = r_{k+1} + \beta_k d_k$ conjugate to $d_k$, so $\beta_k = -r_{k+1}^T A d_k / d_k^T A d_k$. Put in $A d_k = (r_k - r_{k+1})/\alpha_k$ and use that successive residuals are perpendicular: $\beta_k = r_{k+1}^T r_{k+1} / r_k^T r_k$.
+Then $`\beta_k`$: make $`d_{k+1} = r_{k+1} + \beta_k d_k`$ conjugate to $`d_k`$, so $`\beta_k = -r_{k+1}^T A d_k / d_k^T A d_k`$. Put in $`A d_k = (r_k - r_{k+1})/\alpha_k`$ and use that successive residuals are perpendicular: $`\beta_k = r_{k+1}^T r_{k+1} / r_k^T r_k`$.
 
-Conjugacy to all the earlier directions comes free: $A$ times an earlier direction is a difference of earlier residuals, and the new residual is perpendicular to all of those.
+Conjugacy to all the earlier directions comes free: $`A`$ times an earlier direction is a difference of earlier residuals, and the new residual is perpendicular to all of those.
 
 <details>
 <summary>Detailed proof: every direction is conjugate to every earlier one, and the method ends within n steps</summary>
 
-Claim, for every $k$ and every $j < k$: (i) $r_k^T d_j = 0$; (ii) $r_k^T r_j = 0$; (iii) $d_k^T A d_j = 0$. Induction on $k$; for $k = 0$ there is nothing to prove.
+Claim, for every $`k`$ and every $`j < k`$: (i) $`r_k^T d_j = 0`$; (ii) $`r_k^T r_j = 0`$; (iii) $`d_k^T A d_j = 0`$. Induction on $`k`$; for $`k = 0`$ there is nothing to prove.
 
-(i) Unroll the residual update: $r_k = r_{j+1} - \sum_{i=j+1}^{k-1} \alpha_i A d_i$. The first term is perpendicular to $d_j$ because $\alpha_j$ put $x_{j+1}$ at the lowest point along $d_j$, where the slope along $d_j$ is $-d_j^T r_{j+1} = 0$. Every other term contains $d_j^T A d_i$ with $i > j$, which is zero by (iii) for the earlier steps.
+(i) Unroll the residual update: $`r_k = r_{j+1} - \sum_{i=j+1}^{k-1} \alpha_i A d_i`$. The first term is perpendicular to $`d_j`$ because $`\alpha_j`$ put $`x_{j+1}`$ at the lowest point along $`d_j`$, where the slope along $`d_j`$ is $`-d_j^T r_{j+1} = 0`$. Every other term contains $`d_j^T A d_i`$ with $`i > j`$, which is zero by (iii) for the earlier steps.
 
-(ii) $r_j = d_j - \beta_{j-1} d_{j-1}$ (with $r_0 = d_0$) lies in the span of $d_j$ and $d_{j-1}$, and (i) makes $r_k$ perpendicular to both.
+(ii) $`r_j = d_j - \beta_{j-1} d_{j-1}`$ (with $`r_0 = d_0`$) lies in the span of $`d_j`$ and $`d_{j-1}`$, and (i) makes $`r_k`$ perpendicular to both.
 
-(iii) For $j = k-1$ this is how $\beta_{k-1}$ was chosen. For $j < k-1$, write $d_k = r_k + \beta_{k-1} d_{k-1}$. The second part gives $d_{k-1}^T A d_j = 0$ by induction. The first gives $r_k^T A d_j = r_k^T (r_j - r_{j+1})/\alpha_j = 0$ by (ii).
+(iii) For $`j = k-1`$ this is how $`\beta_{k-1}`$ was chosen. For $`j < k-1`$, write $`d_k = r_k + \beta_{k-1} d_{k-1}`$. The second part gives $`d_{k-1}^T A d_j = 0`$ by induction. The first gives $`r_k^T A d_j = r_k^T (r_j - r_{j+1})/\alpha_j = 0`$ by (ii).
 
-Finish: $d_0, \dots, d_{n-1}$ are conjugate and non-zero, so independent (Step 1), so they span all n dimensions. By (i), $r_n$ is perpendicular to all of them, so $r_n = 0$ and $x_n$ is the bottom. If some $r_k = 0$ earlier, the method has already stopped there.
+Finish: $`d_0, \dots, d_{n-1}`$ are conjugate and non-zero, so independent (Step 1), so they span all n dimensions. By (i), $`r_n`$ is perpendicular to all of them, so $`r_n = 0`$ and $`x_n`$ is the bottom. If some $`r_k = 0`$ earlier, the method has already stopped there.
 
 </details>
 
 ### Step 3: how fast, when n is far away
 
-For the thermometer, 1,000 steps would be no bargain. What matters is the speed bound, stated here and proved with Chebyshev polynomials in Shewchuk's report, section 9.2 (Sources). Measuring error in the bowl's own units, $\lVert z \rVert_A = \sqrt{z^T A z}$ for any list $z$:
+For the thermometer, 1,000 steps would be no bargain. What matters is the speed bound, stated here and proved with Chebyshev polynomials in Shewchuk's report, section 9.2 (Sources). Measuring error in the bowl's own units, $`\lVert z \rVert_A = \sqrt{z^T A z}`$ for any list $`z`$:
 
-$$\lVert x_k - x^* \rVert_A \;\le\; 2 \left( \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1} \right)^{k} \lVert x_0 - x^* \rVert_A ,$$
+```math
+\lVert x_k - x^* \rVert_A \;\le\; 2 \left( \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1} \right)^{k} \lVert x_0 - x^* \rVert_A ,
+```
 
-Gradient descent with exact steps has the factor $(\kappa - 1)/(\kappa + 1)$ instead, in the same units (Shewchuk, section 6.2; [Convergence rates](03-rates-of-convergence-and-conditioning.md) finds the same factor for the best fixed step). For the thermometer, $\kappa = 101.00$ gives 0.8190 a step against 0.9804.
+Gradient descent with exact steps has the factor $`(\kappa - 1)/(\kappa + 1)`$ instead, in the same units (Shewchuk, section 6.2; [Convergence rates](03-rates-of-convergence-and-conditioning.md) finds the same factor for the best fixed step). For the thermometer, $`\kappa = 101.00`$ gives 0.8190 a step against 0.9804.
 
-Measured the bounds' way, as the error in the bowl's units from the exact bottom found by elimination, the average shrink per step was 0.7906 and 0.9790, both inside. The code asserts each bound at the last step. A digit costs about $\sqrt{\kappa}$ steps instead of $\kappa$, each step one pass over the 1,000 minutes.
+Measured the bounds' way, as the error in the bowl's units from the exact bottom found by elimination, the average shrink per step was 0.7906 and 0.9790, both inside. The code asserts each bound at the last step. A digit costs about $`\sqrt{\kappa}`$ steps instead of $`\kappa`$, each step one pass over the 1,000 minutes.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -128,54 +136,56 @@ xychart-beta
     line [0.00, -0.43, -0.52, -0.60, -0.69, -0.78, -0.86, -0.95]
 ```
 
-Steep line: conjugate gradient, crossing $-8$ at step 84. Flat line: gradient descent with exact steps, which needs 882.
+Steep line: conjugate gradient, crossing $`-8`$ at step 84. Flat line: gradient descent with exact steps, which needs 882.
 
 ### Step 4: the nonlinear version
 
-Off a bowl, three things change. The residual becomes $-g_k$, minus the gradient $g_k = \nabla f(x_k)$. The step length comes from a line search. And $\beta_k$ must use only gradients. The two classic choices:
+Off a bowl, three things change. The residual becomes $`-g_k`$, minus the gradient $`g_k = \nabla f(x_k)`$. The step length comes from a line search. And $`\beta_k`$ must use only gradients. The two classic choices:
 
-$$\beta_k^{\text{FR}} = \frac{g_{k+1}^T g_{k+1}}{g_k^T g_k}, \qquad \beta_k^{\text{PR+}} = \max\!\left(0,\ \frac{g_{k+1}^T (g_{k+1} - g_k)}{g_k^T g_k}\right),$$
+```math
+\beta_k^{\text{FR}} = \frac{g_{k+1}^T g_{k+1}}{g_k^T g_k}, \qquad \beta_k^{\text{PR+}} = \max\!\left(0,\ \frac{g_{k+1}^T (g_{k+1} - g_k)}{g_k^T g_k}\right),
+```
 
-Fletcher–Reeves, and Polak–Ribière with a "plus" floor at 0. On a bowl with exact line searches both equal the linear $\beta_k$, because successive gradients are perpendicular. Off a bowl they differ: when progress stalls, $g_{k+1} \approx g_k$, Polak–Ribière drops toward 0 and restarts itself downhill. If a direction ever fails to point downhill, the code restarts along $-g_k$.
+Fletcher–Reeves, and Polak–Ribière with a "plus" floor at 0. On a bowl with exact line searches both equal the linear $`\beta_k`$, because successive gradients are perpendicular. Off a bowl they differ: when progress stalls, $`g_{k+1} \approx g_k`$, Polak–Ribière drops toward 0 and restarts itself downhill. If a direction ever fails to point downhill, the code restarts along $`-g_k`$.
 
 ---
 
 ## Worked numbers, by hand
 
-The two-reading smoother from the picture: readings 18 °C and 15 °C, weight $w = 1$. Call the two smoothed values $u$ and $v$. The cost is $\tfrac12(u - 18)^2 + \tfrac12(v - 15)^2 + \tfrac12(v - u)^2$, so $A$ = `[[2, -1], [-1, 2]]` and $b = (18, 15)$. Start at $x_0 = (15, 15)$, where the cost is 3.0000 above its lowest value.
+The two-reading smoother from the picture: readings 18 °C and 15 °C, weight $`w = 1`$. Call the two smoothed values $`u`$ and $`v`$. The cost is $`\tfrac12(u - 18)^2 + \tfrac12(v - 15)^2 + \tfrac12(v - u)^2`$, so $`A`$ = `[[2, -1], [-1, 2]]` and $`b = (18, 15)`$. Start at $`x_0 = (15, 15)`$, where the cost is 3.0000 above its lowest value.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| residual $r_0 = b - A x_0$ | $(18, 15) - (15, 15)$ | $(3, 0)$ |
-| first direction $d_0 = r_0$ | | $(3, 0)$ |
-| $A d_0$ | $(2 \times 3 - 0,\ -3 + 2 \times 0)$ | $(6, -3)$ |
-| $\alpha_0 = r_0^T r_0 / d_0^T A d_0$ | $9 / 18$ | $0.5$ |
-| $x_1 = x_0 + \alpha_0 d_0$ | $(15 + 0.5 \times 3,\ 15)$ | $(16.5, 15)$, gap 0.75 |
-| $r_1 = r_0 - \alpha_0 A d_0$ | $(3 - 3,\ 0 + 1.5)$ | $(0, 1.5)$ |
-| $\beta_0 = r_1^T r_1 / r_0^T r_0$ | $2.25 / 9$ | $0.25$ |
-| $d_1 = r_1 + \beta_0 d_0$ | $(0 + 0.25 \times 3,\ 1.5)$ | $(0.75, 1.5)$ |
-| conjugate? $d_1^T A d_0$ | $0.75 \times 6 + 1.5 \times (-3)$ | $0$ |
-| $A d_1$ | $(1.5 - 1.5,\ -0.75 + 3)$ | $(0, 2.25)$ |
-| $\alpha_1 = r_1^T r_1 / d_1^T A d_1$ | $2.25 / 3.375$ | $0.6667$ |
-| $x_2 = x_1 + \alpha_1 d_1$ | $(16.5 + 0.5,\ 15 + 1)$ | **$(17, 16)$**, gap 0 |
+| residual $`r_0 = b - A x_0`$ | $`(18, 15) - (15, 15)`$ | $`(3, 0)`$ |
+| first direction $`d_0 = r_0`$ | | $`(3, 0)`$ |
+| $`A d_0`$ | $`(2 \times 3 - 0,\ -3 + 2 \times 0)`$ | $`(6, -3)`$ |
+| $`\alpha_0 = r_0^T r_0 / d_0^T A d_0`$ | $`9 / 18`$ | $`0.5`$ |
+| $`x_1 = x_0 + \alpha_0 d_0`$ | $`(15 + 0.5 \times 3,\ 15)`$ | $`(16.5, 15)`$, gap 0.75 |
+| $`r_1 = r_0 - \alpha_0 A d_0`$ | $`(3 - 3,\ 0 + 1.5)`$ | $`(0, 1.5)`$ |
+| $`\beta_0 = r_1^T r_1 / r_0^T r_0`$ | $`2.25 / 9`$ | $`0.25`$ |
+| $`d_1 = r_1 + \beta_0 d_0`$ | $`(0 + 0.25 \times 3,\ 1.5)`$ | $`(0.75, 1.5)`$ |
+| conjugate? $`d_1^T A d_0`$ | $`0.75 \times 6 + 1.5 \times (-3)`$ | $`0`$ |
+| $`A d_1`$ | $`(1.5 - 1.5,\ -0.75 + 3)`$ | $`(0, 2.25)`$ |
+| $`\alpha_1 = r_1^T r_1 / d_1^T A d_1`$ | $`2.25 / 3.375`$ | $`0.6667`$ |
+| $`x_2 = x_1 + \alpha_1 d_1`$ | $`(16.5 + 0.5,\ 15 + 1)`$ | **$`(17, 16)`$**, gap 0 |
 
-Two readings, two steps, exact: smoothed temperatures 17 °C and 16 °C, the 3 °C jump pulled in to 1 °C. Gradient descent visits (16.5, 15), (16.5, 15.75), (16.875, 15.75), (16.875, 15.9375), (16.9688, 15.9375), its gap falling 0.75, 0.1875, 0.0469, 0.0117, 0.0029: a factor of 4 a step, never zero. It needs 40 steps to bring the residual below $10^{-12}$ of its start.
+Two readings, two steps, exact: smoothed temperatures 17 °C and 16 °C, the 3 °C jump pulled in to 1 °C. Gradient descent visits (16.5, 15), (16.5, 15.75), (16.875, 15.75), (16.875, 15.9375), (16.9688, 15.9375), its gap falling 0.75, 0.1875, 0.0469, 0.0117, 0.0029: a factor of 4 a step, never zero. It needs 40 steps to bring the residual below $`10^{-12}`$ of its start.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop $\beta$: set $\beta_k = 0$ (gradient descent with exact steps) | 882 steps on the thermometer instead of 84; 40 on the two readings instead of 2 | each direction is perpendicular to the last, not conjugate, so it partly undoes it: the zigzag |
-| Run it on `[[1, 2], [2, 1]]` with $b = (3, 0)$, which is not positive definite | $d_1^T A d_1 = -108.0$; it stops at $(-1, 2)$ with cost 1.5000, above the start's 0.0000, while $f(10, -10) = -130.0$ | a saddle: $Ax = b$ is solved, but the cost has no bottom |
+| Drop $`\beta`$: set $`\beta_k = 0`$ (gradient descent with exact steps) | 882 steps on the thermometer instead of 84; 40 on the two readings instead of 2 | each direction is perpendicular to the last, not conjugate, so it partly undoes it: the zigzag |
+| Run it on `[[1, 2], [2, 1]]` with $`b = (3, 0)`$, which is not positive definite | $`d_1^T A d_1 = -108.0`$; it stops at $`(-1, 2)`$ with cost 1.5000, above the start's 0.0000, while $`f(10, -10) = -130.0`$ | a saddle: $`Ax = b`$ is solved, but the cost has no bottom |
 | Nonlinear version with a line search that checks only sufficient decrease | 1,124 iterations and 986 restarts on the banana, instead of 34 and 0 | the slope along the old line is left steep, so the new direction often points uphill and is thrown away |
 
 ---
 
 ## How it moves: the nonlinear version in the banana valley
 
-The Rosenbrock valley is the shelf's narrow curved trough, $f(x_1, x_2) = 100\,(x_2 - x_1^2)^2 + (1 - x_1)^2$, minimised. Every run starts at $(-1.2, 1)$ with $k = 0$, stops when the gradient's length is below $10^{-6}$, and uses one line search: bisection until the strong Wolfe tests pass, constants $10^{-4}$ and 0.1.
+The Rosenbrock valley is the shelf's narrow curved trough, $`f(x_1, x_2) = 100\,(x_2 - x_1^2)^2 + (1 - x_1)^2`$, minimised. Every run starts at $`(-1.2, 1)`$ with $`k = 0`$, stops when the gradient's length is below $`10^{-6}`$, and uses one line search: bisection until the strong Wolfe tests pass, constants $`10^{-4}`$ and 0.1.
 
-| Iteration $k$ | Polak–Ribière+ is at |
+| Iteration $`k`$ | Polak–Ribière+ is at |
 | --- | --- |
 | 1 | (−1.042, 1.064) |
 | 5 | (−0.126, −0.008) |
@@ -199,9 +209,9 @@ All three end at (1, 1) to five decimal places. The certificate: the cost is a s
 
 ## Code, from first principles, and it actually runs
 
-The script never stores the matrix; it multiplies by it with the three-neighbour rule. Three independent roads reach the bottom. Road 1 is conjugate gradient. Road 2 is elimination on the three-diagonal system (forward sweep, back substitution, as in [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)); the two agree to $10^{-7.45}$ °C.
+The script never stores the matrix; it multiplies by it with the three-neighbour rule. Three independent roads reach the bottom. Road 1 is conjugate gradient. Road 2 is elimination on the three-diagonal system (forward sweep, back substitution, as in [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)); the two agree to $`10^{-7.45}`$ °C.
 
-Road 3 is a certificate: the final residual has size $10^{-5.80}$, and with smallest eigenvalue $\mu = 1$ no smoothed value is further than that from the exact bottom. The two-reading answer is checked against $A$'s inverse, the banana runs against the floor of 0 at (1, 1). Asserts test all three roads, conjugacy, both rate bounds in the bowl's units, that smoothing cuts the error by more than 3 times, and the banana counts, Polak–Ribière+'s 34 included.
+Road 3 is a certificate: the final residual has size $`10^{-5.80}`$, and with smallest eigenvalue $`\mu = 1`$ no smoothed value is further than that from the exact bottom. The two-reading answer is checked against $`A`$'s inverse, the banana runs against the floor of 0 at (1, 1). Asserts test all three roads, conjugacy, both rate bounds in the bowl's units, that smoothing cuts the error by more than 3 times, and the banana counts, Polak–Ribière+'s 34 included.
 
 ### Python
 
@@ -581,13 +591,13 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the n-step promise and the conjugacy for every symmetric positive definite $A$, in exact arithmetic, from any start and any $b$.
+Lean proves the n-step promise and the conjugacy for every symmetric positive definite $`A`$, in exact arithmetic, from any start and any $`b`$.
 
-- For a symmetric positive definite $A$, after n steps the guess solves $Ax = b$. No point has a lower cost.
-- Every direction is conjugate to every earlier one: $d_k^T A\, d_j = 0$ whenever $j < k$.
-- Every residual is perpendicular to every earlier one: $r_k^T r_j = 0$ whenever $j < k$.
+- For a symmetric positive definite $`A`$, after n steps the guess solves $`Ax = b`$. No point has a lower cost.
+- Every direction is conjugate to every earlier one: $`d_k^T A\, d_j = 0`$ whenever $`j < k`$.
+- Every residual is perpendicular to every earlier one: $`r_k^T r_j = 0`$ whenever $`j < k`$.
 - With the two readings 18 °C and 15 °C, the first move reaches (16.5, 15) and the second lands on (17, 16) exactly. The two directions are conjugate, and the start's cost sits 3 above the bottom's.
-- On the saddle `[[1, 2], [2, 1]]` with $b = (3, 0)$, $d_1^T A d_1 = -108$. The method stops at $(-1, 2)$ with cost 1.5, above the start's 0, while $f(10, -10) = -130$.
+- On the saddle `[[1, 2], [2, 1]]` with $`b = (3, 0)`$, $`d_1^T A d_1 = -108`$. The method stops at $`(-1, 2)`$ with cost 1.5, above the start's 0, while $`f(10, -10) = -130`$.
 
 The thermometer run, the speed bounds, the effect of rounding and the banana valley are left to the Python and Rust checks.
 
@@ -921,20 +931,20 @@ end ConjugateGradient
 
 > [!TIP]
 > **Try changing**
-> - Guess first: $w$ from 25 to 100, what happens to the step counts? Set `w` to `100.0`. $\kappa$ rises about fourfold, so conjugate gradient's steps roughly double and gradient descent's roughly quadruple; the second assert stops the run.
+> - Guess first: $`w`$ from 25 to 100, what happens to the step counts? Set `w` to `100.0`. $`\kappa`$ rises about fourfold, so conjugate gradient's steps roughly double and gradient descent's roughly quadruple; the second assert stops the run.
 > - Guess first: does a worse start cost more steps? Set `start` to `[0.0] * n`. Both counts fall a little: the stopping test is relative to the first residual, and a worse start loosens it.
 > - Guess first: what does a looser line search cost on the banana? Change `c2=0.1` to `c2=0.9` in `ncg`. Polak–Ribière+ takes about three times as many iterations and starts restarting; Fletcher–Reeves more than doubles. The last assert, which pins Polak–Ribière+ at 34 iterations, stops the run.
-> - Guess first: two readings with $w = 2$, still exactly two moves? Set `A2` to `[[3.0, -2.0], [-2.0, 3.0]]`. Yes, to a smoother pair; the first assert, pinned to (17, 16), stops it.
+> - Guess first: two readings with $`w = 2`$, still exactly two moves? Set `A2` to `[[3.0, -2.0], [-2.0, 3.0]]`. Yes, to a smoother pair; the first assert, pinned to (17, 16), stops it.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Using it on a matrix that is not symmetric positive definite.** The recipe only multiplies by $A$, so it runs on any square matrix without complaint. On the saddle `[[1, 2], [2, 1]]` it returns $(-1, 2)$, which solves $Ax = b$ but has cost 1.5000, above the start, on a surface that falls to $-130.0$ at $(10, -10)$. Check that $A$ is symmetric and the bowl curves up before trusting the answer.
+> **Using it on a matrix that is not symmetric positive definite.** The recipe only multiplies by $`A`$, so it runs on any square matrix without complaint. On the saddle `[[1, 2], [2, 1]]` it returns $`(-1, 2)`$, which solves $`Ax = b`$ but has cost 1.5000, above the start, on a surface that falls to $`-130.0`$ at $`(10, -10)`$. Check that $`A`$ is symmetric and the bowl curves up before trusting the answer.
 >
 > - **Expecting exactly n steps on a computer.** That promise is for exact arithmetic. Real runs stop on a tolerance, here at 84 steps; in very long runs rounding erodes conjugacy and the count can pass n.
-> - **Restarting every step "to be safe".** That is $\beta_k = 0$, gradient descent: 882 steps instead of 84.
+> - **Restarting every step "to be safe".** That is $`\beta_k = 0`$, gradient descent: 882 steps instead of 84.
 > - **A sloppy line search off a bowl.** Checking only sufficient decrease costs the banana run 1,124 iterations and 986 restarts, against 34.
 > - **Reading "converged" as "optimal" off a bowl.** A near-zero gradient is a candidate. The banana's (1, 1) is the global minimum only because its cost cannot go below 0.
 
@@ -947,25 +957,25 @@ end ConjugateGradient
 - **Newton steps at scale.** Large Newton steps come from conjugate gradient on the Hessian (second-derivative) system, stopped early ([Trust regions](08-trust-region-methods.md)).
 
 > **Say it back**
-> Conjugate gradient minimises a bowl, which is the same as solving $Ax = b$ for a symmetric positive definite $A$. Each step goes to the lowest point along the current direction, then takes the new downhill slope plus a multiple $\beta_k$ of the old direction. That choice makes every direction conjugate to all the earlier ones, so no step undoes another and n steps finish the job in exact arithmetic. In practice it stops much sooner, at a speed set by $\sqrt{\kappa}$: 84 steps for 1,000 thermometer readings against 882 for gradient descent, holding 4,000 numbers instead of a million. With a line search and a gradient-only $\beta_k$, the same idea crosses the banana valley in 34 iterations.
+> Conjugate gradient minimises a bowl, which is the same as solving $`Ax = b`$ for a symmetric positive definite $`A`$. Each step goes to the lowest point along the current direction, then takes the new downhill slope plus a multiple $`\beta_k`$ of the old direction. That choice makes every direction conjugate to all the earlier ones, so no step undoes another and n steps finish the job in exact arithmetic. In practice it stops much sooner, at a speed set by $`\sqrt{\kappa}`$: 84 steps for 1,000 thermometer readings against 882 for gradient descent, holding 4,000 numbers instead of a million. With a line search and a gradient-only $`\beta_k`$, the same idea crosses the banana valley in 34 iterations.
 
 ---
 
 ## What this builds on
 
-- [Convergence rates](03-rates-of-convergence-and-conditioning.md): the stretch $\kappa = L/\mu$ and gradient descent's rate, which this card's $\sqrt{\kappa}$ bound improves on.
+- [Convergence rates](03-rates-of-convergence-and-conditioning.md): the stretch $`\kappa = L/\mu`$ and gradient descent's rate, which this card's $`\sqrt{\kappa}`$ bound improves on.
 - [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md): the system the bowl's bottom solves, and elimination, used here as the second road.
-- [Gradient descent](02-gradient-descent-and-its-rate.md): the method conjugate gradient becomes when $\beta_k = 0$.
+- [Gradient descent](02-gradient-descent-and-its-rate.md): the method conjugate gradient becomes when $`\beta_k = 0`$.
 - [Line search](04-line-search-armijo-and-wolfe.md): the strong Wolfe tests that the nonlinear version's steps must pass.
 
 ## Where this goes next
 
-- [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): huge systems solved by repeated products, with preconditioning to shrink $\kappa$ first.
+- [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): huge systems solved by repeated products, with preconditioning to shrink $`\kappa`$ first.
 - [Trust regions](08-trust-region-methods.md): conjugate gradient, stopped at the region's edge, solves the inner problem.
 - [Nonlinear least squares](09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): each Gauss-Newton step is a bowl that conjugate gradient can solve without forming its matrix.
 - [L-BFGS](06-l-bfgs-and-limited-memory-updates.md): the other fast method with a few stored lists; on a bowl with exact line searches it retraces conjugate gradient's steps.
 
-The open question: how to reshape the bowl so that $\kappa$, and the step count with it, falls before the first step.
+The open question: how to reshape the bowl so that $`\kappa`$, and the step count with it, falls before the first step.
 
 ---
 
@@ -974,7 +984,7 @@ The open question: how to reshape the bowl so that $\kappa$, and the step count 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hestenes, Magnus R., and Eduard Stiefel. "Methods of Conjugate Gradients for Solving Linear Systems." *Journal of Research of the National Bureau of Standards* 49, no. 6 (1952): 409–436. [doi:10.6028/jres.049.044](https://doi.org/10.6028/jres.049.044). The original method and its n-step termination.
-- Fletcher, R., and C. M. Reeves. "Function Minimization by Conjugate Gradients." *The Computer Journal* 7, no. 2 (1964): 149–154. [doi:10.1093/comjnl/7.2.149](https://doi.org/10.1093/comjnl/7.2.149). The first nonlinear version, with the $\beta^{\text{FR}}$ formula.
-- Polak, E., and G. Ribière. "Note sur la convergence de méthodes de directions conjuguées." *Revue française d'informatique et de recherche opérationnelle, Série rouge* 3, no. R1 (1969): 35–43. [doi:10.1051/m2an/196903R100351](https://doi.org/10.1051/m2an/196903R100351). The $\beta^{\text{PR}}$ formula.
-- Nocedal, Jorge, and Stephen J. Wright. *Numerical Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5). Chapter 5: the proofs, the statement of the $\sqrt{\kappa}$ bound and the "plus" floor.
-- Shewchuk, Jonathan Richard. *An Introduction to the Conjugate Gradient Method Without the Agonizing Pain*. Carnegie Mellon University, School of Computer Science, 1994. [Report](https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf). An illustrated, geometric walk through the same ideas; section 6.2 gives gradient descent's exact-step factor, and section 9.2 proves the $\sqrt{\kappa}$ bound with Chebyshev polynomials.
+- Fletcher, R., and C. M. Reeves. "Function Minimization by Conjugate Gradients." *The Computer Journal* 7, no. 2 (1964): 149–154. [doi:10.1093/comjnl/7.2.149](https://doi.org/10.1093/comjnl/7.2.149). The first nonlinear version, with the $`\beta^{\text{FR}}`$ formula.
+- Polak, E., and G. Ribière. "Note sur la convergence de méthodes de directions conjuguées." *Revue française d'informatique et de recherche opérationnelle, Série rouge* 3, no. R1 (1969): 35–43. [doi:10.1051/m2an/196903R100351](https://doi.org/10.1051/m2an/196903R100351). The $`\beta^{\text{PR}}`$ formula.
+- Nocedal, Jorge, and Stephen J. Wright. *Numerical Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5). Chapter 5: the proofs, the statement of the $`\sqrt{\kappa}`$ bound and the "plus" floor.
+- Shewchuk, Jonathan Richard. *An Introduction to the Conjugate Gradient Method Without the Agonizing Pain*. Carnegie Mellon University, School of Computer Science, 1994. [Report](https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf). An illustrated, geometric walk through the same ideas; section 6.2 gives gradient descent's exact-step factor, and section 9.2 proves the $`\sqrt{\kappa}`$ bound with Chebyshev polynomials.

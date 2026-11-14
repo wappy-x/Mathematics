@@ -34,46 +34,52 @@ The first line (orange) is the middle of the 60 m span; the second (green) is th
 
 ## The formula
 
-Notation, in words first. This is the engineer's first frame model of the deck, a two-mass frame. The sideways sway of each span is lumped into one mass at its middle: $m_1$ = 60000 kg for the long span and $m_2$ = 40000 kg for the short one.
+Notation, in words first. This is the engineer's first frame model of the deck, a two-mass frame. The sideways sway of each span is lumped into one mass at its middle: $`m_1`$ = 60000 kg for the long span and $`m_2`$ = 40000 kg for the short one.
 
-Three springs, each of stiffness $k$ = 2000000 N/m, stand for what holds the deck sideways. There is one from each abutment (the bank-side support) to its span, and one between the spans for the deck's continuity over the pier. The pier is taken as a slender column that gives the deck almost no sideways restraint, so it has no spring of its own. The three stiffnesses are set equal, at a value chosen to put the slow mode near 1 Hz; they are not measured from a real bridge.
+Three springs, each of stiffness $`k`$ = 2000000 N/m, stand for what holds the deck sideways. There is one from each abutment (the bank-side support) to its span, and one between the spans for the deck's continuity over the pier. The pier is taken as a slender column that gives the deck almost no sideways restraint, so it has no spring of its own. The three stiffnesses are set equal, at a value chosen to put the slow mode near 1 Hz; they are not measured from a real bridge.
 
-The two sways, in metres, form a vector $x$; a dot over it is a rate of change in time $t$, so $\ddot x$ is acceleration.
+The two sways, in metres, form a vector $`x`$; a dot over it is a rate of change in time $`t`$, so $`\ddot x`$ is acceleration.
 
-Newton's second law for both masses at once, with the crowd's push $F$ repeating at angular frequency $\Omega$ (rad/s):
+Newton's second law for both masses at once, with the crowd's push $`F`$ repeating at angular frequency $`\Omega`$ (rad/s):
 
-$$M\ddot x + C\dot x + Kx = F\sin\Omega t, \qquad M = \begin{pmatrix} m_1 & 0 \\ 0 & m_2 \end{pmatrix}, \qquad K = \begin{pmatrix} 2k & -k \\ -k & 2k \end{pmatrix}.$$
+```math
+M\ddot x + C\dot x + Kx = F\sin\Omega t, \qquad M = \begin{pmatrix} m_1 & 0 \\ 0 & m_2 \end{pmatrix}, \qquad K = \begin{pmatrix} 2k & -k \\ -k & 2k \end{pmatrix}.
+```
 
 **Read it aloud:** mass times acceleration, plus damping times speed, plus stiffness times sway, equals the crowd's push, for both spans at once.
 
-$M$ is the **mass matrix** and $K$ the **stiffness matrix**: row i of $Kx$ is the total spring force on mass i. $C$ is the **damping matrix**, the force per unit speed; it is set below. A mode is a shape $v_r$ (r = 1, 2) and a number $\lambda_r$ with
+$`M`$ is the **mass matrix** and $`K`$ the **stiffness matrix**: row i of $`Kx`$ is the total spring force on mass i. $`C`$ is the **damping matrix**, the force per unit speed; it is set below. A mode is a shape $`v_r`$ (r = 1, 2) and a number $`\lambda_r`$ with
 
-$$K v_r = \lambda_r M v_r, \qquad \omega_r = \sqrt{\lambda_r}, \qquad f_r = \frac{\omega_r}{2\pi}.$$
+```math
+K v_r = \lambda_r M v_r, \qquad \omega_r = \sqrt{\lambda_r}, \qquad f_r = \frac{\omega_r}{2\pi}.
+```
 
 **Read it aloud:** in a mode, the spring forces are the same multiple of mass times sway on every span; that multiple is the squared angular frequency.
 
-This is the **generalised eigenvalue problem**: an eigenvalue problem ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)) with the mass matrix on the right. The response to the crowd, as a steady sway amplitude $X$ (a vector, one entry per span), is a sum over modes:
+This is the **generalised eigenvalue problem**: an eigenvalue problem ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)) with the mass matrix on the right. The response to the crowd, as a steady sway amplitude $`X`$ (a vector, one entry per span), is a sum over modes:
 
-$$X = \sum_r v_r\,\frac{p_r}{k_r}\,H_r(\Omega), \qquad p_r = v_r\cdot F, \quad k_r = v_r\cdot K v_r, \quad \lvert H_r\rvert = \frac{1}{\sqrt{\left(1-\Omega^2/\omega_r^2\right)^2 + \left(2\zeta\,\Omega/\omega_r\right)^2}}.$$
+```math
+X = \sum_r v_r\,\frac{p_r}{k_r}\,H_r(\Omega), \qquad p_r = v_r\cdot F, \quad k_r = v_r\cdot K v_r, \quad \lvert H_r\rvert = \frac{1}{\sqrt{\left(1-\Omega^2/\omega_r^2\right)^2 + \left(2\zeta\,\Omega/\omega_r\right)^2}}.
+```
 
 **Read it aloud:** each mode takes its share of the push, divides by its own stiffness to get a static sway, and multiplies by a gain that depends on how close the push is to that mode's frequency.
 
-At resonance, $\Omega = \omega_r$, the gain is $1/(2\zeta)$. With $\zeta$ = 0.01 that is 50.
+At resonance, $`\Omega = \omega_r`$, the gain is $`1/(2\zeta)`$. With $`\zeta`$ = 0.01 that is 50.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $m_1$, $m_2$ | sway mass lumped at mid-span, long and short span | 60000 kg, 40000 kg | both frequencies fall |
-| $k$ | stiffness of each of the three springs | 2000000 N/m | both frequencies rise |
-| $M$, $K$ | mass matrix; stiffness matrix | as displayed | — |
-| $C$, $c_r$, $\alpha$, $\beta$ | damping matrix $\alpha M + \beta K$; modal damping $v_r\cdot Cv_r$; the two coefficients | 0.08057 1/s, 0.001139 s | sway falls |
-| $\zeta$ | damping ratio of each mode: damping as a fraction of critical damping, the least damping at which a released mode returns to rest without swinging | 0.01 | sway at resonance falls as 1/ζ |
-| $\lambda_r$, $\omega_r$, $f_r$ | mode r's squared angular frequency; angular frequency; frequency | 39.2375 1/s^2, 6.2640 rad/s, 0.9969 Hz; 127.4292 1/s^2, 11.2885 rad/s, 1.7966 Hz | — |
-| $v_r$ | mode shape, span 1 scaled to 1 | (1, 0.8229); (1, −1.8229) | — |
-| $q_r$ | amount of mode r in the motion at time t, in m | 32.40 mm, 0.02 mm (amplitudes) | — |
-| $m_r$, $k_r$ | modal mass $v_r\cdot Mv_r$; modal stiffness $v_r\cdot Kv_r$ | 87085 kg, 3416995 N/m; 192915 kg, 24583005 N/m | that mode sways less |
-| $F$, $p_r$ | crowd's push on each span; modal force $v_r\cdot F$ | (1500, 1000) N; 2322.9 N, −322.9 N | sway grows in proportion |
-| $\Omega$, $t$ | crowd's angular frequency, 2π × 1.00 Hz; time | 6.2832 rad/s | sways peak where Ω meets an ω_r |
-| $H_r$, $X$, $x$ | gain of mode r; steady sway amplitude; sway at time t | 47.66, 1.45; (32.41, 26.65) mm | — |
+| $`m_1`$, $`m_2`$ | sway mass lumped at mid-span, long and short span | 60000 kg, 40000 kg | both frequencies fall |
+| $`k`$ | stiffness of each of the three springs | 2000000 N/m | both frequencies rise |
+| $`M`$, $`K`$ | mass matrix; stiffness matrix | as displayed | — |
+| $`C`$, $`c_r`$, $`\alpha`$, $`\beta`$ | damping matrix $`\alpha M + \beta K`$; modal damping $`v_r\cdot Cv_r`$; the two coefficients | 0.08057 1/s, 0.001139 s | sway falls |
+| $`\zeta`$ | damping ratio of each mode: damping as a fraction of critical damping, the least damping at which a released mode returns to rest without swinging | 0.01 | sway at resonance falls as 1/ζ |
+| $`\lambda_r`$, $`\omega_r`$, $`f_r`$ | mode r's squared angular frequency; angular frequency; frequency | 39.2375 1/s^2, 6.2640 rad/s, 0.9969 Hz; 127.4292 1/s^2, 11.2885 rad/s, 1.7966 Hz | — |
+| $`v_r`$ | mode shape, span 1 scaled to 1 | (1, 0.8229); (1, −1.8229) | — |
+| $`q_r`$ | amount of mode r in the motion at time t, in m | 32.40 mm, 0.02 mm (amplitudes) | — |
+| $`m_r`$, $`k_r`$ | modal mass $`v_r\cdot Mv_r`$; modal stiffness $`v_r\cdot Kv_r`$ | 87085 kg, 3416995 N/m; 192915 kg, 24583005 N/m | that mode sways less |
+| $`F`$, $`p_r`$ | crowd's push on each span; modal force $`v_r\cdot F`$ | (1500, 1000) N; 2322.9 N, −322.9 N | sway grows in proportion |
+| $`\Omega`$, $`t`$ | crowd's angular frequency, 2π × 1.00 Hz; time | 6.2832 rad/s | sways peak where Ω meets an ω_r |
+| $`H_r`$, $`X`$, $`x`$ | gain of mode r; steady sway amplitude; sway at time t | 47.66, 1.45; (32.41, 26.65) mm | — |
 
 Here ζ and ω_n are the damping ratio and natural frequency of [Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md): each mode is one of those systems, with its own ω_r.
 
@@ -85,7 +91,7 @@ The figure is the deck seen from above, spans to scale (60 m and 40 m). Dashed i
 
 - **Small sways, linear springs.** The springs stand for bearings and steel that obey Hooke's law (force in proportion to stretch) for sways of millimetres. At hundreds of millimetres bearings slide and people stop walking; the linear model's 648 mm for 2000 walkers in step is a number outside its range.
 - **Two lumped masses are enough.** A real deck has infinitely many modes. Lumping each span into one mass keeps only the lowest two modes; the next modes, with bends inside each span, need more masses or the continuous beam ([Waves on strings and drums](../09-Quantum%20Mechanics%20in%20Outline/01-wave-equation-for-strings-and-membranes.md)).
-- **Damping that does not couple the modes.** The split into separate modes needs $v_1\cdot C v_2 = 0$. Damping of the form $\alpha M + \beta K$ (Rayleigh damping) has this property. Concentrated dampers fitted at one point generally do not; then the modes leak into each other and the sum is only approximate.
+- **Damping that does not couple the modes.** The split into separate modes needs $`v_1\cdot C v_2 = 0`$. Damping of the form $`\alpha M + \beta K`$ (Rayleigh damping) has this property. Concentrated dampers fitted at one point generally do not; then the modes leak into each other and the sum is only approximate.
 - **The crowd is a given force.** The model takes the push as fixed. Real walkers feel the sway and adjust their steps, falling into step with the bridge; the force then grows with the sway, which no fixed-force model captures.
 
 ---
@@ -96,54 +102,62 @@ The figure is the deck seen from above, spans to scale (60 m and 40 m). Dashed i
 
 A mode keeps its shape because, at every instant, the spring force on each mass is exactly what that mass needs to follow the shape. If span 1 swings by 1 and span 2 by 0.8229, the springs must pull span 1 back with 60000 × λ times its sway and span 2 with 40000 × λ times its sway, for the same λ. Then both accelerate in proportion, and the shape never changes.
 
-Written out, that is $Kv = \lambda Mv$. The mass matrix is on the right because heavy spans need more force for the same acceleration. With equal masses it drops to the ordinary eigenvalue problem, as on [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md), which proves the general case for any number of masses.
+Written out, that is $`Kv = \lambda Mv`$. The mass matrix is on the right because heavy spans need more force for the same acceleration. With equal masses it drops to the ordinary eigenvalue problem, as on [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md), which proves the general case for any number of masses.
 
 ### Step 1: two masses give a quadratic for λ
 
-$Kv = \lambda Mv$ has a non-zero answer only when $K - \lambda M$ squashes some direction to nothing, so its determinant is zero:
+$`Kv = \lambda Mv`$ has a non-zero answer only when $`K - \lambda M`$ squashes some direction to nothing, so its determinant is zero:
 
-$$\det(K - \lambda M) = (2k - \lambda m_1)(2k - \lambda m_2) - k^2 = m_1m_2\,\lambda^2 - 2k(m_1 + m_2)\,\lambda + 3k^2 = 0 .$$
+```math
+\det(K - \lambda M) = (2k - \lambda m_1)(2k - \lambda m_2) - k^2 = m_1m_2\,\lambda^2 - 2k(m_1 + m_2)\,\lambda + 3k^2 = 0 .
+```
 
 In units of 10^9 this is 2.4 λ^2 − 400.0 λ + 12000.0 = 0. The roots are λ_1 = 39.2375 and λ_2 = 127.4292, in 1/s^2. Their square roots are 6.2640 and 11.2885 rad/s, which is 0.9969 Hz and 1.7966 Hz.
 
-For each λ, the first row of $(K - \lambda M)v = 0$ gives the shape. With span 1 set to 1, span 2 is $(2k - \lambda m_1)/k$: 0.8229 for mode 1 and −1.8229 for mode 2.
+For each λ, the first row of $`(K - \lambda M)v = 0`$ gives the shape. With span 1 set to 1, span 2 is $`(2k - \lambda m_1)/k`$: 0.8229 for mode 1 and −1.8229 for mode 2.
 
 ### Step 2: the modes are perpendicular, weighted by mass
 
-Take the two equations $Kv_1 = \lambda_1 Mv_1$ and $Kv_2 = \lambda_2 Mv_2$. Dot the first with $v_2$ and the second with $v_1$. $K$ and $M$ are symmetric (each equals its own mirror image across the main diagonal, so the dot product comes out the same either way round), so the left sides are equal, and
+Take the two equations $`Kv_1 = \lambda_1 Mv_1`$ and $`Kv_2 = \lambda_2 Mv_2`$. Dot the first with $`v_2`$ and the second with $`v_1`$. $`K`$ and $`M`$ are symmetric (each equals its own mirror image across the main diagonal, so the dot product comes out the same either way round), so the left sides are equal, and
 
-$$(\lambda_1 - \lambda_2)\; v_1\cdot M v_2 = 0 .$$
+```math
+(\lambda_1 - \lambda_2)\; v_1\cdot M v_2 = 0 .
+```
 
-The λ's differ, so $v_1\cdot Mv_2 = 0$. Check: 60000 × 1 × 1 + 40000 × 0.8229 × (−1.8229) = 60000 − 60000 = 0, because 0.8229 × 1.8229 = 1.5 = m_1/m_2. The same argument gives $v_1\cdot Kv_2 = 0$. The code prints both as 0.000000.
+The λ's differ, so $`v_1\cdot Mv_2 = 0`$. Check: 60000 × 1 × 1 + 40000 × 0.8229 × (−1.8229) = 60000 − 60000 = 0, because 0.8229 × 1.8229 = 1.5 = m_1/m_2. The same argument gives $`v_1\cdot Kv_2 = 0`$. The code prints both as 0.000000.
 
 ### Step 3: in mode coordinates the bridge comes apart into two one-mass problems
 
-Write any motion as a mix of the modes, $x = q_1 v_1 + q_2 v_2$, where $q_r$ is how much of mode r is present at time t. Put this in the equation of motion and dot with $v_r$. Every cross term holds $v_1\cdot Mv_2$, $v_1\cdot Kv_2$ or $v_1\cdot Cv_2$, and all three are zero. What is left, for each r, is
+Write any motion as a mix of the modes, $`x = q_1 v_1 + q_2 v_2`$, where $`q_r`$ is how much of mode r is present at time t. Put this in the equation of motion and dot with $`v_r`$. Every cross term holds $`v_1\cdot Mv_2`$, $`v_1\cdot Kv_2`$ or $`v_1\cdot Cv_2`$, and all three are zero. What is left, for each r, is
 
-$$m_r\,\ddot q_r + c_r\,\dot q_r + k_r\,q_r = p_r \sin\Omega t, \qquad m_r = v_r\cdot Mv_r,\ c_r = v_r\cdot Cv_r,\ k_r = v_r\cdot Kv_r,\ p_r = v_r\cdot F .$$
+```math
+m_r\,\ddot q_r + c_r\,\dot q_r + k_r\,q_r = p_r \sin\Omega t, \qquad m_r = v_r\cdot Mv_r,\ c_r = v_r\cdot Cv_r,\ k_r = v_r\cdot Kv_r,\ p_r = v_r\cdot F .
+```
 
-Each line is a single mass on a spring with a damper: the system of [Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md). Its natural frequency is $\sqrt{k_r/m_r} = \omega_r$. For mode 1, 3416995 / 87085 = 39.2375, the same λ_1 as Step 1.
+Each line is a single mass on a spring with a damper: the system of [Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md). Its natural frequency is $`\sqrt{k_r/m_r} = \omega_r`$. For mode 1, 3416995 / 87085 = 39.2375, the same λ_1 as Step 1.
 
-The damping needs one choice. Engineers quote measured damping per mode, as a damping ratio. Take ζ = 0.01 in both modes, and build $C = \alpha M + \beta K$ with
+The damping needs one choice. Engineers quote measured damping per mode, as a damping ratio. Take ζ = 0.01 in both modes, and build $`C = \alpha M + \beta K`$ with
 
-$$\alpha = \frac{2\zeta\,\omega_1\omega_2}{\omega_1 + \omega_2} = 0.08057\ \text{1/s}, \qquad \beta = \frac{2\zeta}{\omega_1 + \omega_2} = 0.001139\ \text{s}.$$
+```math
+\alpha = \frac{2\zeta\,\omega_1\omega_2}{\omega_1 + \omega_2} = 0.08057\ \text{1/s}, \qquad \beta = \frac{2\zeta}{\omega_1 + \omega_2} = 0.001139\ \text{s}.
+```
 
-Dotting $C$ with $v_r$ gives $c_r = m_r(\alpha + \beta\omega_r^2)$, so the damping ratio of mode r is $\alpha/(2\omega_r) + \beta\omega_r/2$; the two formulas are what make this 0.0100 at both modes. Because $C$ is built from $M$ and $K$, it inherits their orthogonality, and Step 3 holds exactly.
+Dotting $`C`$ with $`v_r`$ gives $`c_r = m_r(\alpha + \beta\omega_r^2)`$, so the damping ratio of mode r is $`\alpha/(2\omega_r) + \beta\omega_r/2`$; the two formulas are what make this 0.0100 at both modes. Because $`C`$ is built from $`M`$ and $`K`$, it inherits their orthogonality, and Step 3 holds exactly.
 
 ### Step 4: match the push to each mode, in frequency and in shape
 
-Each mode's steady sway is its static sway $p_r/k_r$ times its gain $\lvert H_r\rvert$. The gain is the frequency match; the modal force $p_r$ is the shape match.
+Each mode's steady sway is its static sway $`p_r/k_r`$ times its gain $`\lvert H_r\rvert`$. The gain is the frequency match; the modal force $`p_r`$ is the shape match.
 
 The crowd spreads evenly along 100 m of deck: 60 walkers on span 1 and 40 on span 2, each pushing 25 N, gives F = (1500, 1000) N when all are in step.
 
-- **Mode 1.** The shape (1, 0.8229) moves both spans the way the crowd pushes, so $p_1$ = 1500 + 0.8229 × 1000 = 2322.9 N. The push at 1.00 Hz is 1.00307 times the mode's frequency, so the gain is 47.66, close to the peak of 50. Static sway 2322.9 / 3416995 = 0.6798 mm, times 47.66: **32.40 mm** of mode 1.
-- **Mode 2.** The shape (1, −1.8229) has the short span moving against the long one. The crowd's push on span 2 works against mode 2's span-1 part: $p_2$ = 1500 − 1.8229 × 1000 = −322.9 N, far less than mode 1's. Mode 2's frequency is also much higher, λ_2 = 127.4292 against λ_1 = 39.2375 1/s^2, so the push is only 0.55660 of its frequency, for a gain of 1.45. Result: 0.02 mm.
+- **Mode 1.** The shape (1, 0.8229) moves both spans the way the crowd pushes, so $`p_1`$ = 1500 + 0.8229 × 1000 = 2322.9 N. The push at 1.00 Hz is 1.00307 times the mode's frequency, so the gain is 47.66, close to the peak of 50. Static sway 2322.9 / 3416995 = 0.6798 mm, times 47.66: **32.40 mm** of mode 1.
+- **Mode 2.** The shape (1, −1.8229) has the short span moving against the long one. The crowd's push on span 2 works against mode 2's span-1 part: $`p_2`$ = 1500 − 1.8229 × 1000 = −322.9 N, far less than mode 1's. Mode 2's frequency is also much higher, λ_2 = 127.4292 against λ_1 = 39.2375 1/s^2, so the push is only 0.55660 of its frequency, for a gain of 1.45. Result: 0.02 mm.
 
 Mode 1 is the worst mode on both counts. Adding the two (each carries its own timing, so the sum is of complex amplitudes) gives a sway of 32.41 mm at span 1 and 26.65 mm at span 2. Even with the crowd pushing exactly at 1.7966 Hz, both modes together sway span 1 by only 0.72 mm and span 2 by 1.23 mm. The crowd's even spread almost cancels against mode 2's opposite-moving shape.
 
 ### Step 5: resonance takes time to build
 
-Starting from rest, the sway grows towards its steady size at the rate set by the damping. Each mode's decay time is $1/(\zeta\omega_r)$: 15.96 s for mode 1. The simulation below, of the crowd at 1.00 Hz from a still bridge, shows the largest sway of span 1 in each second.
+Starting from rest, the sway grows towards its steady size at the rate set by the damping. Each mode's decay time is $`1/(\zeta\omega_r)`$: 15.96 s for mode 1. The simulation below, of the crowd at 1.00 Hz from a still bridge, shows the largest sway of span 1 in each second.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -194,14 +208,14 @@ The code prints all four, and the linear model's 648 mm for 2000 walkers in step
 
 The script builds the bridge's mass and stiffness matrices and reaches the modes by three roads:
 
-- the quadratic $\det(K - \lambda M) = 0$;
-- inverse iteration: repeatedly solving $Ky = Mx$, which pulls any start towards the slowest mode. Mode 2 is kept mass-perpendicular to mode 1, and its frequency is read off as the Rayleigh quotient $v\cdot Kv / v\cdot Mv$, which equals λ for a mode;
+- the quadratic $`\det(K - \lambda M) = 0`$;
+- inverse iteration: repeatedly solving $`Ky = Mx`$, which pulls any start towards the slowest mode. Mode 2 is kept mass-perpendicular to mode 1, and its frequency is read off as the Rayleigh quotient $`v\cdot Kv / v\cdot Mv`$, which equals λ for a mode;
 - an RK4 simulation ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) of the deck released in mode 1's shape, timing its swing.
 
 It then reaches the crowd's sway by three roads:
 
 - the modal sum;
-- a direct solve of the 2 by 2 complex system $(K - \Omega^2M + j\Omega C)X = F$, with $j$ for √−1 as engineers write it (the rest of the library writes i);
+- a direct solve of the 2 by 2 complex system $`(K - \Omega^2M + j\Omega C)X = F`$, with $`j`$ for √−1 as engineers write it (the rest of the library writes i);
 - an RK4 run of the crowd for 160 s.
 
 It also prints both charts, every row of the what-breaks table and the figure's coordinates.
@@ -598,15 +612,15 @@ The two outputs match line for line.
 
 Lean proves the main facts of Steps 1 to 3 for any masses, stiffnesses and frequencies, and checks the bridge's exact numbers.
 
-- Take any number of masses, symmetric $M$ and $K$, and two modes with different λ. Then the modes are perpendicular weighted by mass: $v_1\cdot Mv_2 = 0$.
-- Take the same two modes. Then they are also perpendicular weighted by stiffness: $v_1\cdot Kv_2 = 0$.
-- Take the same two modes and Rayleigh damping $C = \alpha M + \beta K$, for any $\alpha$ and $\beta$. Then $v_1\cdot Cv_2 = 0$.
-- Take masses $m_1$, $m_2$ and three springs of stiffness $k$, as on the bridge. Then $\det(K - \lambda M) = m_1m_2\,\lambda^2 - 2k(m_1 + m_2)\,\lambda + 3k^2$.
-- Take positive $\omega_1$ and $\omega_2$, a damping ratio $\zeta$, and $\alpha$ and $\beta$ from the two formulas in Step 3. Then each mode's damping ratio, $\alpha/(2\omega_r) + \beta\omega_r/2$, equals $\zeta$, for r = 1 and 2.
+- Take any number of masses, symmetric $`M`$ and $`K`$, and two modes with different λ. Then the modes are perpendicular weighted by mass: $`v_1\cdot Mv_2 = 0`$.
+- Take the same two modes. Then they are also perpendicular weighted by stiffness: $`v_1\cdot Kv_2 = 0`$.
+- Take the same two modes and Rayleigh damping $`C = \alpha M + \beta K`$, for any $`\alpha`$ and $`\beta`$. Then $`v_1\cdot Cv_2 = 0`$.
+- Take masses $`m_1`$, $`m_2`$ and three springs of stiffness $`k`$, as on the bridge. Then $`\det(K - \lambda M) = m_1m_2\,\lambda^2 - 2k(m_1 + m_2)\,\lambda + 3k^2`$.
+- Take positive $`\omega_1`$ and $`\omega_2`$, a damping ratio $`\zeta`$, and $`\alpha`$ and $`\beta`$ from the two formulas in Step 3. Then each mode's damping ratio, $`\alpha/(2\omega_r) + \beta\omega_r/2`$, equals $`\zeta`$, for r = 1 and 2.
 - With the bridge's numbers, the quadratic's coefficients are 2.4, 400 and 12000, in units of 10^9.
 - Sixty walkers on span 1 and 40 on span 2, at 25 N each, give F = (1500, 1000) N.
-- Take the push held still. Then $x$ = (2/3 mm, 7/12 mm) solves $Kx = F$: the 0.6667 mm and 0.5833 mm above.
-- With ζ = 0.01, the resonance gain $1/(2\zeta)$ is exactly 50.
+- Take the push held still. Then $`x`$ = (2/3 mm, 7/12 mm) solves $`Kx = F`$: the 0.6667 mm and 0.5833 mm above.
+- With ζ = 0.01, the resonance gain $`1/(2\zeta)`$ is exactly 50.
 
 The roots, shapes, decimals and simulations are left to the Python and Rust checks.
 
@@ -719,7 +733,7 @@ example : (1 : ℚ) / (2 * (1 / 100)) = 50 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating resonance as a frequency match alone.** A push at a mode's frequency drives that mode only as far as its pattern matches the mode's shape; the modal force $p_r = v_r\cdot F$ measures the match. The evenly spread crowd at 1.7966 Hz, exactly mode 2's frequency, sways the long span 0.72 mm, because the push on the short span works against the shape: $p_2$ = −322.9 N against $p_1$ = 2322.9 N. The same crowd at 0.9969 Hz sways it 33.99 mm. A check that lists only the frequencies near the forcing gets the worst mode right here by luck; a check that also computes each $p_r$ gets it right by design.
+> **Treating resonance as a frequency match alone.** A push at a mode's frequency drives that mode only as far as its pattern matches the mode's shape; the modal force $`p_r = v_r\cdot F`$ measures the match. The evenly spread crowd at 1.7966 Hz, exactly mode 2's frequency, sways the long span 0.72 mm, because the push on the short span works against the shape: $`p_2`$ = −322.9 N against $`p_1`$ = 2322.9 N. The same crowd at 0.9969 Hz sways it 33.99 mm. A check that lists only the frequencies near the forcing gets the worst mode right here by luck; a check that also computes each $`p_r`$ gets it right by design.
 >
 > - **Leaving out damping.** At 1.00 Hz the undamped answer is 110.73 mm, not 32.41 mm; at 0.9969 Hz it is infinite. Damping is small, and it sets the whole height of the peak.
 > - **Ignoring the mass matrix.** Taking both spans as 50000 kg turns the problem into an ordinary eigenvalue problem with shapes (1, 1) and (1, −1), and gives a long-span sway of 26.33 mm.

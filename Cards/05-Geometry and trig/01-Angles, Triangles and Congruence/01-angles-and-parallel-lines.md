@@ -29,25 +29,27 @@ Drawn to scale, 1 m = 40 units: the top at (90, 27.06), the foot at (158.40, 215
 Notation first, in words.
 
 - The small circle ° is the degree sign: 70° means 70 degrees.
-- The Greek letter theta, $\theta$, names the measured angle.
+- The Greek letter theta, $`\theta`$, names the measured angle.
 - Two angles making a straight line together, 180°, are **supplementary**; two making a right angle, 90°, are **complementary**.
 - The two angles facing each other where two lines cross are **vertical angles** (they share a vertex, the corner point; nothing to do with upright).
 - A line crossing two others is a **transversal**: the ladder crosses the ground and the gutter line.
 
-$$s = 180^\circ - \theta \qquad v = \theta \qquad c = a = \theta \qquad i = 180^\circ - \theta \qquad w = 90^\circ - \theta$$
+```math
+s = 180^\circ - \theta \qquad v = \theta \qquad c = a = \theta \qquad i = 180^\circ - \theta \qquad w = 90^\circ - \theta
+```
 
 **Read it aloud:** a neighbour on a straight line takes what is left of 180°; the angle across a crossing is equal; a parallel line is met at the same angle in the matching corner and the opposite inside corner, and at what is left of 180° in the same-side inside corner; the wall gets what is left of 90°.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | the measured angle, ladder to ground, wall side | 70° | the ladder stands steeper |
-| $s$ | the supplement: neighbour on the same straight line | 110°, foot, far side | falls |
-| $v$ | the vertical angle, facing $\theta$ across the foot | 70°, below ground | rises with it |
-| $c$ | the corresponding angle: same corner position at the gutter line | 70°, above it, wall side | rises with it |
-| $a$ | the alternate angle: inside the parallels, other side of the ladder | 70°, below it, away from wall | rises with it |
-| $i$ | the co-interior angle: inside the parallels, same side | 110°, below it, wall side | falls |
-| $w$ | the angle between ladder and wall | 20° | falls |
-| $^\circ$ | the degree: one 360th of a full turn | 360° in a turn | a unit, not a quantity |
+| $`\theta`$ | the measured angle, ladder to ground, wall side | 70° | the ladder stands steeper |
+| $`s`$ | the supplement: neighbour on the same straight line | 110°, foot, far side | falls |
+| $`v`$ | the vertical angle, facing $`\theta`$ across the foot | 70°, below ground | rises with it |
+| $`c`$ | the corresponding angle: same corner position at the gutter line | 70°, above it, wall side | rises with it |
+| $`a`$ | the alternate angle: inside the parallels, other side of the ladder | 70°, below it, away from wall | rises with it |
+| $`i`$ | the co-interior angle: inside the parallels, same side | 110°, below it, wall side | falls |
+| $`w`$ | the angle between ladder and wall | 20° | falls |
+| $`^\circ`$ | the degree: one 360th of a full turn | 360° in a turn | a unit, not a quantity |
 
 Angle types: under 90° is **acute** (20°, 70°); exactly 90° is **right**; between 90° and 180° is **obtuse** (110°); exactly 180° is **straight**; over 180° is **reflex**, such as the 290° the long way round from ground to ladder.
 
@@ -74,17 +76,17 @@ Babylonian astronomy counted in sixties, and 360 stayed because it splits well: 
 
 ### Step 1: angles on a straight line add to 180°
 
-The ground is a straight line. At the foot the ladder splits its half turn into 70° towards the wall and the rest: 180° − 70° = 110°. That is $s = 180^\circ - \theta$.
+The ground is a straight line. At the foot the ladder splits its half turn into 70° towards the wall and the rest: 180° − 70° = 110°. That is $`s = 180^\circ - \theta`$.
 
 ### Step 2: vertical angles are equal
 
-Continue the ladder's line past its foot into the ground; the two lines now cross, making four angles. The 70° angle and the one facing it below ground each share a straight line with the same 110° angle, so each is 180° − 110°: $v = \theta$. Round the crossing: 70 + 110 + 70 + 110 = 360. This is Euclid's Book I, Proposition 15.
+Continue the ladder's line past its foot into the ground; the two lines now cross, making four angles. The 70° angle and the one facing it below ground each share a straight line with the same 110° angle, so each is 180° − 110°: $`v = \theta`$. Round the crossing: 70 + 110 + 70 + 110 = 360. This is Euclid's Book I, Proposition 15.
 
 ### Step 3: a transversal meets parallel lines at the same angle
 
 The gutter line and the ground are both level, so they never meet: they are parallel. Treat each as a full line, running on through the wall on paper. The claim: the ladder crosses the gutter line at 70°, in the same corner position as at the foot. Slide the ground up the ladder without turning it and it lands on the gutter line, angle and all. Proving it lands exactly there needs one assumption about the plane.
 
-The **parallel postulate**, in John Playfair's form: through a point off a line there is exactly one line that never meets it. It cannot be proved from Euclid's other assumptions; it is what makes the plane flat. With it, $c = \theta$ follows: a line through the top at exactly 70° is itself parallel to the ground, so it must be the gutter line.
+The **parallel postulate**, in John Playfair's form: through a point off a line there is exactly one line that never meets it. It cannot be proved from Euclid's other assumptions; it is what makes the plane flat. With it, $`c = \theta`$ follows: a line through the top at exactly 70° is itself parallel to the ground, so it must be the gutter line.
 
 <details>
 <summary>Detailed proof: corresponding angles on parallel lines are equal</summary>
@@ -99,11 +101,11 @@ Now m and ℓ are two different lines through T, both parallel to g. The paralle
 
 ### Step 4: the alternate and co-interior angles come free
 
-At the top, the alternate angle (below the gutter line, away from the wall) faces the corresponding angle across the crossing, so by Step 2 it is 70°: $a = \theta$. The co-interior angle (below the gutter line, wall side) shares a straight line with it, so by Step 1 it is 110°: $i = 180^\circ - \theta$.
+At the top, the alternate angle (below the gutter line, away from the wall) faces the corresponding angle across the crossing, so by Step 2 it is 70°: $`a = \theta`$. The co-interior angle (below the gutter line, wall side) shares a straight line with it, so by Step 1 it is 110°: $`i = 180^\circ - \theta`$.
 
 ### Step 5: the angle against the wall
 
-The wall meets the ground at 90° and crosses the gutter line too, so by Step 3 it meets the gutter line at 90°. At the top the ladder splits that right angle into the alternate angle, 70°, and the angle against the wall: $w = 90^\circ - 70^\circ = 20^\circ$.
+The wall meets the ground at 90° and crosses the gutter line too, so by Step 3 it meets the gutter line at 90°. At the top the ladder splits that right angle into the alternate angle, 70°, and the angle against the wall: $`w = 90^\circ - 70^\circ = 20^\circ`$.
 
 Step 3 also runs backwards: equal corresponding angles make two lines parallel. That direction needs only Proposition 16, not the postulate. It is how parallels are drawn with a set square or a compass: [Ruler and compass](../06-Beyond%20Euclid/03-ruler-and-compass-constructions.md).
 

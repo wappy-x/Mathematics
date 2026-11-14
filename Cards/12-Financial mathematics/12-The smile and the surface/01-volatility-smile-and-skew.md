@@ -40,53 +40,61 @@ The orange curve is the crash market's implied volatility at each strike. The gr
 
 Two formulas, pointing in opposite directions. The first defines the smile. The second builds a market that has one.
 
-**The smile.** At each strike $K$, the implied volatility is the one number that makes Black-Scholes agree with the market's call price $C(K)$:
+**The smile.** At each strike $`K`$, the implied volatility is the one number that makes Black-Scholes agree with the market's call price $`C(K)`$:
 
-$$\sigma_{\text{imp}}(K) \ \text{ is the } \sigma \text{ that solves } \ C_{\text{BS}}(K, \sigma) = C(K)$$
+```math
+\sigma_{\text{imp}}(K) \ \text{ is the } \sigma \text{ that solves } \ C_{\text{BS}}(K, \sigma) = C(K)
+```
 
 **Read it aloud:** at each strike, find the one volatility that makes the textbook price equal the market price; the smile is that answer drawn across all strikes.
 
 The horizontal axis is usually **log-moneyness**, the log of the strike over the forward:
 
-$$k = \ln\frac{K}{F}, \qquad F = S\,e^{(r-q)T}$$
+```math
+k = \ln\frac{K}{F}, \qquad F = S\,e^{(r-q)T}
+```
 
-**Read it aloud:** log-moneyness measures how far the strike sits from the forward price, as a log ratio, so $k = 0$ is the forward itself. Here $F$ is $103.05, the price fixed today for delivery in a year.
+**Read it aloud:** log-moneyness measures how far the strike sits from the forward price, as a log ratio, so $`k = 0`$ is the forward itself. Here $`F`$ is $103.05, the price fixed today for delivery in a year.
 
 **The skew** is the slope of the smile against log-moneyness at one expiry:
 
-$$\text{skew} = \frac{\Delta \sigma_{\text{imp}}}{\Delta k}$$
+```math
+\text{skew} = \frac{\Delta \sigma_{\text{imp}}}{\Delta k}
+```
 
 **Read it aloud:** the skew is how much implied volatility changes per unit step in log-moneyness. Between the $90 and $110 strikes it is −0.1898: each 1% step up in strike lowers implied volatility by about 0.19 of a percentage point.
 
-**The crash market.** Two legs, each a lognormal (a price whose log follows a bell curve) with its own centre and width. With chance $p$ the year is a crash, centred on $F_c$ with volatility $\sigma_c$; otherwise it is calm, centred on $F_n$ with volatility $\sigma_n$. Every option is priced as the weighted average of the two legs' Black-Scholes prices:
+**The crash market.** Two legs, each a lognormal (a price whose log follows a bell curve) with its own centre and width. With chance $`p`$ the year is a crash, centred on $`F_c`$ with volatility $`\sigma_c`$; otherwise it is calm, centred on $`F_n`$ with volatility $`\sigma_n`$. Every option is priced as the weighted average of the two legs' Black-Scholes prices:
 
-$$C(K) = p\,C_{\text{BS}}(K;\,F_c,\,\sigma_c) + (1-p)\,C_{\text{BS}}(K;\,F_n,\,\sigma_n), \qquad p\,F_c + (1-p)\,F_n = F$$
+```math
+C(K) = p\,C_{\text{BS}}(K;\,F_c,\,\sigma_c) + (1-p)\,C_{\text{BS}}(K;\,F_n,\,\sigma_n), \qquad p\,F_c + (1-p)\,F_n = F
+```
 
 **Read it aloud:** the market price is the crash leg's price times its chance plus the calm leg's price times its chance, and the two legs must average to the market's own forward.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\sigma_{\text{imp}}(K)$ | implied volatility at strike $K$ | 26.12% at $80, 17.90% at $120 | is the answer |
-| $C_{\text{BS}}(K, \sigma)$ | the Black-Scholes call price at strike $K$ and volatility $\sigma$; written $C_{\text{BS}}(K;\,F_i,\,\sigma_i)$ when centred on a leg's forward | $9.23 at $100 and 20%, the crash market's own $100 call | rises with $\sigma$, one-for-one in rank: that is why the inverse exists |
-| $C(K)$, $P(K)$ | the market's call and put prices at strike $K$ (a put is the right to sell at $K$) | call $23.90, put $1.98 at $80 | raise the implied volatility at that strike and no other |
-| $K$ | strike | $80 to $120 | slides along the curve: lower strikes, higher volatility here |
-| $S$, $F$ | spot price today; forward price for delivery at $T$ | $100; $103.05 | drag the whole curve sideways: its shape is pinned to $F$ |
-| $k$ | log-moneyness, $\ln(K/F)$ | −0.2531 at $80, +0.1523 at $120 | same as raising $K$ |
-| $T$ | time to expiry, in years | 1 | spreads the same crash over a longer life (next card) |
-| $r$, $q$ | riskless rate and dividend yield, continuously compounded | 5%, 2% | move $F$; get them wrong and a fake skew appears |
-| $e^{-rT}$ | discount factor: today's value of $1 due at $T$ | 0.9512 | scales every price, cancels in the inversion |
-| $p$, $F_c$, $\sigma_c$ | crash leg: chance, centre, volatility | 12%, $72.13 (70% of $F$), 40% | $p$ or $\sigma_c$ up, or $F_c$ down: steeper skew, low strikes lifted |
-| $F_n$, $\sigma_n$ | calm leg: centre (set so the legs average to $F$), volatility | $107.26, 15% | $\sigma_n$ lifts the whole curve, most at high strikes |
-| $N(x)$ | area under the standard bell curve to the left of $x$ | used inside every $C_{\text{BS}}$ | |
+| $`\sigma_{\text{imp}}(K)`$ | implied volatility at strike $`K`$ | 26.12% at $80, 17.90% at $120 | is the answer |
+| $`C_{\text{BS}}(K, \sigma)`$ | the Black-Scholes call price at strike $`K`$ and volatility $`\sigma`$; written $`C_{\text{BS}}(K;\,F_i,\,\sigma_i)`$ when centred on a leg's forward | $9.23 at $100 and 20%, the crash market's own $100 call | rises with $`\sigma`$, one-for-one in rank: that is why the inverse exists |
+| $`C(K)`$, $`P(K)`$ | the market's call and put prices at strike $`K`$ (a put is the right to sell at $`K`$) | call $23.90, put $1.98 at $80 | raise the implied volatility at that strike and no other |
+| $`K`$ | strike | $80 to $120 | slides along the curve: lower strikes, higher volatility here |
+| $`S`$, $`F`$ | spot price today; forward price for delivery at $`T`$ | $100; $103.05 | drag the whole curve sideways: its shape is pinned to $`F`$ |
+| $`k`$ | log-moneyness, $`\ln(K/F)`$ | −0.2531 at $80, +0.1523 at $120 | same as raising $`K`$ |
+| $`T`$ | time to expiry, in years | 1 | spreads the same crash over a longer life (next card) |
+| $`r`$, $`q`$ | riskless rate and dividend yield, continuously compounded | 5%, 2% | move $`F`$; get them wrong and a fake skew appears |
+| $`e^{-rT}`$ | discount factor: today's value of $1 due at $`T`$ | 0.9512 | scales every price, cancels in the inversion |
+| $`p`$, $`F_c`$, $`\sigma_c`$ | crash leg: chance, centre, volatility | 12%, $72.13 (70% of $`F`$), 40% | $`p`$ or $`\sigma_c`$ up, or $`F_c`$ down: steeper skew, low strikes lifted |
+| $`F_n`$, $`\sigma_n`$ | calm leg: centre (set so the legs average to $`F`$), volatility | $107.26, 15% | $`\sigma_n`$ lifts the whole curve, most at high strikes |
+| $`N(x)`$ | area under the standard bell curve to the left of $`x`$ | used inside every $`C_{\text{BS}}`$ | |
 
 ### When it holds
 
 The smile and the skew are definitions, so they hold whenever the inversion has an answer. That needs:
 
 - **European options on one expiry.** An option exercisable early carries an extra right; inverting it with the European formula mixes that right into the volatility.
-- **Prices free of arbitrage** (no riskless profit from combining them). A call priced outside its bounds, below $e^{-rT}\max(F-K, 0)$ or at or above $S e^{-qT}$, has no implied volatility at all; one priced exactly on the lower bound has implied volatility zero.
-- **The right forward.** The inversion uses $F$; with the wrong $r$ or $q$ it returns a curve that is partly the forward error (see What breaks).
-- **A put and a call at one strike share one volatility** only if put-call parity ($C(K) - P(K) = e^{-rT}(F - K)$; see [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)) holds, which the crash market guarantees by making its legs average to $F$.
+- **Prices free of arbitrage** (no riskless profit from combining them). A call priced outside its bounds, below $`e^{-rT}\max(F-K, 0)`$ or at or above $`S e^{-qT}`$, has no implied volatility at all; one priced exactly on the lower bound has implied volatility zero.
+- **The right forward.** The inversion uses $`F`$; with the wrong $`r`$ or $`q`$ it returns a curve that is partly the forward error (see What breaks).
+- **A put and a call at one strike share one volatility** only if put-call parity ($`C(K) - P(K) = e^{-rT}(F - K)`$; see [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)) holds, which the crash market guarantees by making its legs average to $`F`$.
 
 ---
 
@@ -100,15 +108,15 @@ Black-Scholes has exactly one dial for that distribution's width. Turning it wid
 
 ### Step 1: the crash market's price is a weighted average
 
-A price is a discounted average payoff. An average over a two-way coin flip is the chance-weighted average of the two conditional averages. So the crash market's call at $K$ is $p$ times the crash leg's Black-Scholes call plus $1 - p$ times the calm leg's. Nothing deeper is needed.
+A price is a discounted average payoff. An average over a two-way coin flip is the chance-weighted average of the two conditional averages. So the crash market's call at $`K`$ is $`p`$ times the crash leg's Black-Scholes call plus $`1 - p`$ times the calm leg's. Nothing deeper is needed.
 
-The legs are not free to sit anywhere. Put-call parity, a cash-flow identity, says $C(K) - P(K) = e^{-rT}(F - K)$ for every strike. In the crash market the left side equals $e^{-rT}(pF_c + (1-p)F_n - K)$. The two agree only if $pF_c + (1-p)F_n = F$. That fixes the calm centre: with the crash at 70% of $F$, the calm leg sits at $107.26, 104.09% of $F$. A crash is paid for by a slightly better calm year.
+The legs are not free to sit anywhere. Put-call parity, a cash-flow identity, says $`C(K) - P(K) = e^{-rT}(F - K)`$ for every strike. In the crash market the left side equals $`e^{-rT}(pF_c + (1-p)F_n - K)`$. The two agree only if $`pF_c + (1-p)F_n = F`$. That fixes the calm centre: with the crash at 70% of $`F`$, the calm leg sits at $107.26, 104.09% of $`F`$. A crash is paid for by a slightly better calm year.
 
 ### Step 2: every strike has exactly one implied volatility
 
-Before solving, the inverse must exist and be unique ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md) proves this in full). As volatility falls to zero, the Black-Scholes call falls to $e^{-rT}\max(F - K, 0)$. As volatility grows without limit, the call rises to $e^{-rT}F$. In between it climbs strictly.
+Before solving, the inverse must exist and be unique ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md) proves this in full). As volatility falls to zero, the Black-Scholes call falls to $`e^{-rT}\max(F - K, 0)`$. As volatility grows without limit, the call rises to $`e^{-rT}F`$. In between it climbs strictly.
 
-Each leg's price sits strictly inside its own bounds. Their weighted average therefore sits below $e^{-rT}F$, and above $e^{-rT}\max(F-K, 0)$, since averaging the two legs' "forward minus strike" never falls below the forward's own. So every crash-market price lies strictly inside the range, and exactly one volatility reaches it.
+Each leg's price sits strictly inside its own bounds. Their weighted average therefore sits below $`e^{-rT}F`$, and above $`e^{-rT}\max(F-K, 0)`$, since averaging the two legs' "forward minus strike" never falls below the forward's own. So every crash-market price lies strictly inside the range, and exactly one volatility reaches it.
 
 Bisection (halving a bracket that holds the answer) finds it; so does Newton's method (following the slope to the root; here the slope is vega, the price's rate of change with volatility). The check runs both, on the call and the put separately, and they agree at every strike.
 
@@ -133,9 +141,9 @@ The orange curve is the crash market's density: a tall calm hump near $107 and a
 <details>
 <summary>Detailed proof: no single lognormal matches the crash market</summary>
 
-Raise the final price to a whole-number power n and average: that is the n-th moment. A lognormal centred on $F$ with volatility $\sigma$ has n-th moment $F^n e^{n(n-1)\sigma^2 T/2}$. A mixture's moments are the chance-weighted moments of its legs.
+Raise the final price to a whole-number power n and average: that is the n-th moment. A lognormal centred on $`F`$ with volatility $`\sigma`$ has n-th moment $`F^n e^{n(n-1)\sigma^2 T/2}`$. A mixture's moments are the chance-weighted moments of its legs.
 
-Any lognormal that equals the crash market must match its mean, which every candidate does, and its second moment. The second moment fixes the volatility: $\sigma = \sqrt{\ln(\text{second moment}/F^2)/T}$, which is 20.79% here. That one lognormal then has a third moment of 1,245,667. The crash market's third moment is 1,234,558.
+Any lognormal that equals the crash market must match its mean, which every candidate does, and its second moment. The second moment fixes the volatility: $`\sigma = \sqrt{\ln(\text{second moment}/F^2)/T}`$, which is 20.79% here. That one lognormal then has a third moment of 1,245,667. The crash market's third moment is 1,234,558.
 
 The two distributions differ, so their call prices differ at some strike, so the implied volatility is not constant. More generally, a mixture of two different lognormals is never itself a lognormal: the log of a sum of two distinct bell curves is not a parabola.
 
@@ -162,18 +170,18 @@ The $80 put is almost a pure crash contract. The calm leg, centred on $107.26 wi
 
 Walk up the strikes and the calm leg takes over, and the implied volatility sinks toward the calm 15%. Above $130 the crash market is thinner than the 20% lognormal, so high-strike calls are cheap, and cheap reads as low volatility.
 
-Different widths bend the curve. The tilt comes from different centres: with both legs centred on $F$, the curve becomes an even smile in log-moneyness, and the check asserts 19.3122% at both $k = -0.2$ and $k = +0.2$.
+Different widths bend the curve. The tilt comes from different centres: with both legs centred on $`F`$, the curve becomes an even smile in log-moneyness, and the check asserts 19.3122% at both $`k = -0.2`$ and $`k = +0.2`$.
 
 <details>
 <summary>Why the equal-centre smile is exactly even</summary>
 
-Write prices per unit of forward and let $f(x)$ be the density of $x = \ln(S_T/F)$. For one lognormal centred on $F$, and so for any mixture of them, $f(-x) = e^{x} f(x)$. Substituting $x \to -x$ in the call integral turns the call at $k$ into $e^{k}$ times the put at $-k$. Black-Scholes obeys the same identity. So the volatility that fits the call at $k$ fits the put at $-k$, and parity gives the call at $-k$ the same volatility.
+Write prices per unit of forward and let $`f(x)`$ be the density of $`x = \ln(S_T/F)`$. For one lognormal centred on $`F`$, and so for any mixture of them, $`f(-x) = e^{x} f(x)`$. Substituting $`x \to -x`$ in the call integral turns the call at $`k`$ into $`e^{k}`$ times the put at $`-k`$. Black-Scholes obeys the same identity. So the volatility that fits the call at $`k`$ fits the put at $`-k`$, and parity gives the call at $`-k`$ the same volatility.
 
 </details>
 
 ### Step 5: why the slope is measured in log-moneyness
 
-A strike alone is not a distance. $90 is close to the money on a $100 share and far from it on a $300 one. The ratio $K/F$ fixes that. The log fixes a second problem: a 20% fall and a 20% rise do not cancel in prices, but they sit at equal and opposite distances in logs. So skew per unit of $k$ means the same thing on any underlying, at any price level.
+A strike alone is not a distance. $90 is close to the money on a $100 share and far from it on a $300 one. The ratio $`K/F`$ fixes that. The log fixes a second problem: a 20% fall and a 20% rise do not cancel in prices, but they sit at equal and opposite distances in logs. So skew per unit of $`k`$ means the same thing on any underlying, at any price level.
 
 For the Acme strip it is −0.1898 between $90 and $110, and −0.1572 in a narrow band around the forward, where the implied volatility is 19.49%.
 
@@ -187,24 +195,24 @@ The $80 put: the right to sell one Acme share for $80 in a year. It is the strik
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forward | $100 \times e^{0.05 - 0.02}$ | $103.05 |
-| crash centre | $0.70 \times 103.0455$ | $72.13 |
-| calm centre | $(103.0455 - 0.12 \times 72.1318) / 0.88$ | $107.26 |
+| forward | $`100 \times e^{0.05 - 0.02}`$ | $103.05 |
+| crash centre | $`0.70 \times 103.0455`$ | $72.13 |
+| calm centre | $`(103.0455 - 0.12 \times 72.1318) / 0.88`$ | $107.26 |
 | crash leg's $80 put | Black-Scholes at 40%, centred on $72.13 | $15.5887 |
 | calm leg's $80 put | Black-Scholes at 15%, centred on $107.26 | $0.1262 |
-| market's $80 put | $0.12 \times 15.5887 + 0.88 \times 0.1262$ | $1.98 |
+| market's $80 put | $`0.12 \times 15.5887 + 0.88 \times 0.1262`$ | $1.98 |
 | flat 20% put, for comparison | Black-Scholes at 20% on the forward | $0.84 |
 | bisection from 0% to 50%: try 25% | put $1.75, too cheap | raise the floor |
 | try 37.5% | put $4.78, too dear | lower the ceiling |
 | try 31.25%, then 28.125%, then 26.5625% | $3.16, $2.42, $2.08: all too dear | lower the ceiling |
 | try 25.78125% | $1.91, too cheap | raise the floor |
-| **implied volatility at $80** | keep halving until the bracket is narrower than $10^{-15}$ | **26.12%** |
+| **implied volatility at $80** | keep halving until the bracket is narrower than $`10^{-15}`$ | **26.12%** |
 
 The market charges $1.98 for protection below $80 where a flat 20% world would charge $0.84. Quoted as a volatility, that premium is 26.12%. The same arithmetic at each strike draws the curve:
 
 | Strike | $80 | $90 | $100 | $110 | $120 |
 | --- | --- | --- | --- | --- | --- |
-| $k$ | −0.2531 | −0.1354 | −0.0300 | +0.0653 | +0.1523 |
+| $`k`$ | −0.2531 | −0.1354 | −0.0300 | +0.0653 | +0.1523 |
 | call price | $23.90 | $15.85 | $9.23 | $4.67 | $2.07 |
 | implied volatility | 26.12% | 22.44% | 20.00% | 18.63% | 17.90% |
 
@@ -213,7 +221,7 @@ The market charges $1.98 for protection below $80 where a flat 20% world would c
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Invert with the 2% dividend forgotten | 8.64% at $80, 16.72% at $100, 16.39% at $120 (right: 26.12%, 20.00%, 17.90%) | the inverter used a forward of $105.13, not $103.05; the skew's shape is now mostly the forward error |
-| Leave the calm leg on $F$, so the legs do not average to the forward | call 13.85%, put 23.18% at the $100 strike | parity fails; one strike reports two volatilities, and the gap is riskless profit |
+| Leave the calm leg on $`F`$, so the legs do not average to the forward | call 13.85%, put 23.18% at the $100 strike | parity fails; one strike reports two volatilities, and the gap is riskless profit |
 | Bisect from a bracket of 1% to 25% at $80 | 25.00% (right: 26.12%) | the answer lay outside the bracket; bisection returns the edge without complaint |
 
 ---
@@ -222,7 +230,7 @@ The market charges $1.98 for protection below $80 where a flat 20% world would c
 
 The code builds the crash market, prices the nine strikes three independent ways (the weighted Black-Scholes formula; Simpson's rule integrating payoff times density, with no Black-Scholes anywhere; a 200,000-path Monte Carlo simulation, drawing a leg and then a price, from a hand-written random number generator), and inverts each price two independent ways (bisection on the call, Newton's method on the put).
 
-A flat 20% market is inverted as a control. The normal CDF (cumulative distribution function: the $N(x)$ of the symbol table) is written out from its series. Every number on the card, including every chart point, is printed.
+A flat 20% market is inverted as a control. The normal CDF (cumulative distribution function: the $`N(x)`$ of the symbol table) is written out from its series. Every number on the card, including every chart point, is printed.
 
 ### Python
 
@@ -628,9 +636,9 @@ The two outputs are identical line for line.
 
 Lean proves the card's three general facts for all markets and strikes, not just for Acme's numbers.
 
-- The curve is flat only for one lognormal. Suppose every call matches the Black-Scholes call at one volatility $\sigma$, at every positive strike. Then the market's distribution is exactly the lognormal centred on $F$ with volatility $\sigma$. That lognormal does give a flat curve.
-- Every strike has exactly one implied volatility. Take a call priced strictly above $e^{-rT}\max(F-K, 0)$ and strictly below $e^{-rT}F$. Then exactly one positive volatility makes the Black-Scholes call equal that price.
-- Put-call parity holds in the crash market exactly when its legs average to the forward. Take any crash chance $p$ from 0 to 1. Then parity holds at every positive strike exactly when $pF_c + (1-p)F_n = F$.
+- The curve is flat only for one lognormal. Suppose every call matches the Black-Scholes call at one volatility $`\sigma`$, at every positive strike. Then the market's distribution is exactly the lognormal centred on $`F`$ with volatility $`\sigma`$. That lognormal does give a flat curve.
+- Every strike has exactly one implied volatility. Take a call priced strictly above $`e^{-rT}\max(F-K, 0)`$ and strictly below $`e^{-rT}F`$. Then exactly one positive volatility makes the Black-Scholes call equal that price.
+- Put-call parity holds in the crash market exactly when its legs average to the forward. Take any crash chance $`p`$ from 0 to 1. Then parity holds at every positive strike exactly when $`pF_c + (1-p)F_n = F`$.
 - The Acme strip has nine strikes, from $80 to $120 in $5 steps.
 
 The Acme numbers themselves, the 26.12% to 17.90% curve, the skew and the moments, are left to the Python and Rust checks.
@@ -1229,7 +1237,7 @@ example : ((Finset.range 9).image (fun i => 80 + 5 * i)).card = 9 := by
 > Guess first, then run.
 > - **Remove the crash.** Set the crash weight to 0 in `legs`. The market becomes one lognormal at 15%, and the curve goes flat: 15.00% at $80, $100 and $120.
 > - **Deepen the crash.** Move the crash centre from 70% to 50% of the forward. The $80 strike jumps to 32.68%, $100 to 23.55%, $120 to 19.48%: a steeper skew and a higher curve.
-> - **Centre both legs on the forward.** Set the crash centre to 100% of $F$. The tilt vanishes and an even smile remains: 19.3122% at both $k = -0.2$ and $k = +0.2$.
+> - **Centre both legs on the forward.** Set the crash centre to 100% of $`F`$. The tilt vanishes and an even smile remains: 19.3122% at both $`k = -0.2`$ and $`k = +0.2`$.
 
 ---
 

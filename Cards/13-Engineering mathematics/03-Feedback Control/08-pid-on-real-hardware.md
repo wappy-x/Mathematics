@@ -44,47 +44,55 @@ Orange: the design on paper, a valve with no limit; it peaks at 22.26 °C after 
 
 ## The formula
 
-Reminder: a PI controller's output is a proportional part $K_p e$ plus an integral part $x_I$ that grows at rate $K_i e$, where $e$ is the error, setpoint minus measurement ([PID control](07-pid-control-and-tuning.md)). Time on this card is in minutes, the natural scale of a room.
+Reminder: a PI controller's output is a proportional part $`K_p e`$ plus an integral part $`x_I`$ that grows at rate $`K_i e`$, where $`e`$ is the error, setpoint minus measurement ([PID control](07-pid-control-and-tuning.md)). Time on this card is in minutes, the natural scale of a room.
 
-This is a larger room than the one on [PID control](07-pid-control-and-tuning.md), and its pipe lags rather than delays. So here $\theta$ is the room temperature, not a delay, and $C$ is the room's heat capacity, not a controller. The room and its radiator, with $\theta$ the room temperature, $Q$ the radiator's heat output and $u$ the valve opening from 0 (shut) to 1 (wide open):
+This is a larger room than the one on [PID control](07-pid-control-and-tuning.md), and its pipe lags rather than delays. So here $`\theta`$ is the room temperature, not a delay, and $`C`$ is the room's heat capacity, not a controller. The room and its radiator, with $`\theta`$ the room temperature, $`Q`$ the radiator's heat output and $`u`$ the valve opening from 0 (shut) to 1 (wide open):
 
-$$\tau_q \frac{dQ}{dt} = Q_{\max}\,u - Q, \qquad C\,\frac{d\theta}{dt} = Q - UA\,(\theta - \theta_o).$$
+```math
+\tau_q \frac{dQ}{dt} = Q_{\max}\,u - Q, \qquad C\,\frac{d\theta}{dt} = Q - UA\,(\theta - \theta_o).
+```
 
 The controller as it must be built, with the valve limit written in:
 
-$$v = K_p e + x_I, \qquad u = \min(\max(v, 0), 1), \qquad \frac{dx_I}{dt} = \begin{cases} 0 & \text{if } u \ne v \text{ and } e \text{ pushes } v \text{ further past the limit} \\ K_i\, e & \text{otherwise.} \end{cases}$$
+```math
+v = K_p e + x_I, \qquad u = \min(\max(v, 0), 1), \qquad \frac{dx_I}{dt} = \begin{cases} 0 & \text{if } u \ne v \text{ and } e \text{ pushes } v \text{ further past the limit} \\ K_i\, e & \text{otherwise.} \end{cases}
+```
 
-**Read it aloud:** ask for $v$, get the nearest valve setting the hardware has, and stop adding to the integral whenever the request is already out of reach and the error would push it further out.
+**Read it aloud:** ask for $`v`$, get the nearest valve setting the hardware has, and stop adding to the integral whenever the request is already out of reach and the error would push it further out.
 
 The fact that makes the clamp necessary, the **integral-area identity**: if the integral is never stopped and the loop settles, then
 
-$$\int_0^\infty e\,dt = \frac{u_\infty - u_0}{K_i},$$
+```math
+\int_0^\infty e\,dt = \frac{u_\infty - u_0}{K_i},
+```
 
-where $u_0$ and $u_\infty$ are the valve settings that hold the old and the new steady state. **Read it aloud:** the error's total area, in degree-minutes, is fixed in advance by how far the valve must move, whatever the valve does on the way.
+where $`u_0`$ and $`u_\infty`$ are the valve settings that hold the old and the new steady state. **Read it aloud:** the error's total area, in degree-minutes, is fixed in advance by how far the valve must move, whatever the valve does on the way.
 
-The filtered derivative, as the controller computes it once every sample period $h$ on the measured temperature $y$:
+The filtered derivative, as the controller computes it once every sample period $`h`$ on the measured temperature $`y`$:
 
-$$D_k = a\,D_{k-1} - b\,(y_k - y_{k-1}), \qquad a = \frac{T_f}{T_f + h}, \quad b = \frac{K_d}{T_f + h}, \qquad \sigma_D = b\,\sigma\sqrt{\frac{2}{1 + a}}.$$
+```math
+D_k = a\,D_{k-1} - b\,(y_k - y_{k-1}), \qquad a = \frac{T_f}{T_f + h}, \quad b = \frac{K_d}{T_f + h}, \qquad \sigma_D = b\,\sigma\sqrt{\frac{2}{1 + a}}.
+```
 
-**Read it aloud:** the derivative term keeps a fraction $a$ of its last value and subtracts a scaled step in the measurement; sensor noise of size $\sigma$ makes the valve jitter by $\sigma_D$. With $T_f = 0$ it is the raw difference quotient: $a = 0$, $b = K_d/h$.
+**Read it aloud:** the derivative term keeps a fraction $`a`$ of its last value and subtracts a scaled step in the measurement; sensor noise of size $`\sigma`$ makes the valve jitter by $`\sigma_D`$. With $`T_f = 0`$ it is the raw difference quotient: $`a = 0`$, $`b = K_d/h`$.
 
-Feedforward, from a measured outdoor temperature: $u_{\text{ff}} = UA\,(r - \theta_o)/Q_{\max}$, the valve that would hold the setpoint $r$ at today's outdoor temperature, added to $v$.
+Feedforward, from a measured outdoor temperature: $`u_{\text{ff}} = UA\,(r - \theta_o)/Q_{\max}`$, the valve that would hold the setpoint $`r`$ at today's outdoor temperature, added to $`v`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$, $\theta_o$, $y$ | room temperature; outdoor temperature; the thermometer's reading of θ, °C | 15 → 21 °C; −5 °C; θ plus noise | outdoor down: more heat needed, longer at the limit |
-| $r$, $e$, $t$ | setpoint; error r − θ, °C; time, min | 21 °C; 6 °C at 06:00 | bigger step: longer pinned, more windup |
-| $v$, $u$, $u_0$, $u_\infty$, $u_{\text{ff}}$ | valve asked for; valve reached; valve holding the old and the new steady state; feedforward valve | 1.4167; 1; 0.6667; 0.8667; UA(r − θ_o)/Q_max | v past 1: the integral is unchecked |
-| $Q$, $Q_0$, $Q_{\max}$ | radiator heat output; its steady value before a change; its wide-open maximum, kW | 4 → 5.2 kW; 4 kW at 06:00, 4.2 kW at 21 °C with 0 °C outside; 6 kW | bigger radiator: less time pinned |
-| $\tau_q$, $\tau_r$ | radiator-and-pipe lag; room time constant C/UA, min | 4 min; 30 min | slower pipe: bigger cold-front dip with feedforward |
-| $C$, $UA$ | room heat capacity, kW·min/°C; heat-loss coefficient, kW/°C | 6; 0.2 | UA up: more heat needed to hold 21 °C |
-| $K_p$, $K_i$ | proportional gain, per °C; integral gain, per °C per min | 0.125; 0.008333 | K_i up: smaller fixed area, faster windup |
-| $x_I$ | integral term, in valve units | 0.6667, peaks at 1.4406 | above 1: a request no valve can meet |
-| $K_d$, $T_f$ | derivative gain, valve per (°C/min); derivative filter time, min | 0.25; 0.2 | T_f up: less jitter, more lag |
-| $h$, $\sigma$, $\sigma_D$ | sample period, min; sensor noise, as a root-mean-square (rms) size, °C; valve jitter, rms | 0.1 min; 0.05 °C; 0.0456 | h down: raw jitter grows as 1/h |
-| $D_k$ | the filtered derivative term at sample k, in valve units | jitters by σ_D | K_d up: larger |
-| $a$, $b$ | filter memory; filter scale, valve per °C | 0.6667; 0.8333 | a toward 1: smoother, slower |
-| $K_{\text{in}}$, $s$ | inner-loop gain, valve per kW; Laplace variable, 1/min, in which a lag of time τ reads 1/(τ s + 1) | 8/6 per kW, so K_in Q_max = 8 | K_in up: faster inner loop |
+| $`\theta`$, $`\theta_o`$, $`y`$ | room temperature; outdoor temperature; the thermometer's reading of θ, °C | 15 → 21 °C; −5 °C; θ plus noise | outdoor down: more heat needed, longer at the limit |
+| $`r`$, $`e`$, $`t`$ | setpoint; error r − θ, °C; time, min | 21 °C; 6 °C at 06:00 | bigger step: longer pinned, more windup |
+| $`v`$, $`u`$, $`u_0`$, $`u_\infty`$, $`u_{\text{ff}}`$ | valve asked for; valve reached; valve holding the old and the new steady state; feedforward valve | 1.4167; 1; 0.6667; 0.8667; UA(r − θ_o)/Q_max | v past 1: the integral is unchecked |
+| $`Q`$, $`Q_0`$, $`Q_{\max}`$ | radiator heat output; its steady value before a change; its wide-open maximum, kW | 4 → 5.2 kW; 4 kW at 06:00, 4.2 kW at 21 °C with 0 °C outside; 6 kW | bigger radiator: less time pinned |
+| $`\tau_q`$, $`\tau_r`$ | radiator-and-pipe lag; room time constant C/UA, min | 4 min; 30 min | slower pipe: bigger cold-front dip with feedforward |
+| $`C`$, $`UA`$ | room heat capacity, kW·min/°C; heat-loss coefficient, kW/°C | 6; 0.2 | UA up: more heat needed to hold 21 °C |
+| $`K_p`$, $`K_i`$ | proportional gain, per °C; integral gain, per °C per min | 0.125; 0.008333 | K_i up: smaller fixed area, faster windup |
+| $`x_I`$ | integral term, in valve units | 0.6667, peaks at 1.4406 | above 1: a request no valve can meet |
+| $`K_d`$, $`T_f`$ | derivative gain, valve per (°C/min); derivative filter time, min | 0.25; 0.2 | T_f up: less jitter, more lag |
+| $`h`$, $`\sigma`$, $`\sigma_D`$ | sample period, min; sensor noise, as a root-mean-square (rms) size, °C; valve jitter, rms | 0.1 min; 0.05 °C; 0.0456 | h down: raw jitter grows as 1/h |
+| $`D_k`$ | the filtered derivative term at sample k, in valve units | jitters by σ_D | K_d up: larger |
+| $`a`$, $`b`$ | filter memory; filter scale, valve per °C | 0.6667; 0.8333 | a toward 1: smoother, slower |
+| $`K_{\text{in}}`$, $`s`$ | inner-loop gain, valve per kW; Laplace variable, 1/min, in which a lag of time τ reads 1/(τ s + 1) | 8/6 per kW, so K_in Q_max = 8 | K_in up: faster inner loop |
 
 ### When it holds
 
@@ -108,9 +116,11 @@ Two repairs on this card deal with that: anti-windup restores the check, and the
 
 ### Step 1: the room while the valve is pinned, solved exactly
 
-With $u = 1$ from 06:00 the two equations are linear with constant input. The radiator rises as Q = 6 − 2e^(−t/4) kW. Put that into the room equation and solve:
+With $`u = 1`$ from 06:00 the two equations are linear with constant input. The radiator rises as Q = 6 − 2e^(−t/4) kW. Put that into the room equation and solve:
 
-$$\theta(t) = 25.00 + 1.5385\,e^{-t/4} - 11.5385\,e^{-t/30} \ \ ^\circ\text{C}.$$
+```math
+\theta(t) = 25.00 + 1.5385\,e^{-t/4} - 11.5385\,e^{-t/30} \ \ ^\circ\text{C}.
+```
 
 25 °C is where a wide-open radiator would leave the room at −5 °C outside: −5 + 6/0.2. The room crosses 21 °C at 31.778 min.
 
@@ -123,7 +133,7 @@ The room equation is θ' = Q/C − (θ − θ_o)/τ_r with Q = Q_max − (Q_max 
 
 ### Step 2: the integral-area identity
 
-**Claim.** If $x_I$ is never stopped and the loop settles, the error's total area is $(u_\infty - u_0)/K_i$.
+**Claim.** If $`x_I`$ is never stopped and the loop settles, the error's total area is $`(u_\infty - u_0)/K_i`$.
 
 **Proof.** Integrate dx_I/dt = K_i e from 0 to a late time t_end: x_I(t_end) − x_I(0) = K_i × (area of e up to t_end). At the start the room is steady, e = 0, so the valve is all integral: x_I(0) = u_0. Once the room has settled, e = 0 again and x_I(t_end) = u_∞. Divide by K_i. ∎
 
@@ -139,7 +149,7 @@ At the crossing of 21 °C, 31.778 min, the integral term stood at 1.4406. From t
 
 ### Step 4: clamping, and what it costs
 
-Clamping, the rule in the formula, freezes $x_I$ while the valve is pinned and the error is still positive. Now the request is 0.125 e + 0.6667, which falls back to 1 when the room reaches 21 − (1 − 0.6667)/0.125 = 18.333 °C. Step 1's solution reaches 18.333 °C at 16.341 min. From then on the loop is closed and linear, and the room creeps to 21 °C without overshoot: within 0.2 °C after 36.6 min.
+Clamping, the rule in the formula, freezes $`x_I`$ while the valve is pinned and the error is still positive. Now the request is 0.125 e + 0.6667, which falls back to 1 when the room reaches 21 − (1 − 0.6667)/0.125 = 18.333 °C. Step 1's solution reaches 18.333 °C at 16.341 min. From then on the loop is closed and linear, and the room creeps to 21 °C without overshoot: within 0.2 °C after 36.6 min.
 
 The identity no longer binds, because the frozen minutes were never added to the integral: the error's total area is 97.967 °C·min, not 24. The price is the slow last approach (20.89 °C at 40 min, still short), since the integral starts climbing from 0.6667 only at 16.3 min. A common alternative, **back-calculation**, bleeds the integral toward the value that would make v equal the valve limit, at a rate set by a tracking time; it trades the creep against a little overshoot.
 
@@ -170,7 +180,9 @@ At 21 °C with 0 °C outside, a cold front drops the outdoor temperature to −6
 
 It still cannot hold the room flat. The cold acts on the room directly, through its walls; the extra heat arrives through the 4 min pipe. With feedforward alone the room's error is the difference of those two paths, and solving the two lags gives:
 
-$$\theta(t) - 21 = \Delta\theta_o\,\frac{\tau_q}{\tau_r - \tau_q}\left(e^{-t/\tau_r} - e^{-t/\tau_q}\right),$$
+```math
+\theta(t) - 21 = \Delta\theta_o\,\frac{\tau_q}{\tau_r - \tau_q}\left(e^{-t/\tau_r} - e^{-t/\tau_q}\right),
+```
 
 with Δθ_o = −6 °C. It is lowest at t = ln(τ_r/τ_q) τ_r τ_q/(τ_r − τ_q) = 9.300 min, at −0.5868 °C, and then recovers. Feedback and feedforward together bottom at 20.5515 °C. Feedback, having seen the dip, then over-corrects a little, to 21.22 °C at 25 min.
 
@@ -195,7 +207,9 @@ A cascade adds a heat meter on the radiator pipe (flow rate times the drop in wa
 
 With the room loop held still, the inner loop's answer to the 1.2 kW loss is
 
-$$Q(t) - Q_0 = -\frac{1.2}{7}\left(e^{-t/4} - e^{-8t/4}\right) \text{ kW},$$
+```math
+Q(t) - Q_0 = -\frac{1.2}{7}\left(e^{-t/4} - e^{-8t/4}\right) \text{ kW},
+```
 
 because the inner loop's sensitivity (its leftover share of a disturbance, from [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)) is τ_q s/(τ_q s + 8), and the loss enters through the pipe's 1/(τ_q s + 1). The dip is deepest at (4 ln 8)/7 = 1.188 min, at −0.1114 kW, and is gone within a few minutes.
 
@@ -652,11 +666,11 @@ The two outputs are identical.
 
 Lean proves the integral-area identity and the derivative-noise sum for all gains, plus the fast-sampling limit, and checks the worked numbers.
 
-- Suppose $K_i \ne 0$, $x_I$ grows at rate $K_i e$ and is never stopped, and the loop starts steady and settles. Then the error's total area is $(u_\infty - u_0)/K_i$.
-- Take $0 \le a < 1$. Then the squared filter outputs from one noisy reading sum to $2b^2/(1 + a)$. So $\sigma^2$ times this sum is $\sigma_D^2$, with $\sigma_D = b\,\sigma\sqrt{2/(1 + a)}$.
-- Take $T_f > 0$ fixed. Then as $h$ shrinks to 0, $\sigma_D$ tends to $K_d \sigma / T_f$, a bounded value.
+- Suppose $`K_i \ne 0`$, $`x_I`$ grows at rate $`K_i e`$ and is never stopped, and the loop starts steady and settles. Then the error's total area is $`(u_\infty - u_0)/K_i`$.
+- Take $`0 \le a < 1`$. Then the squared filter outputs from one noisy reading sum to $`2b^2/(1 + a)`$. So $`\sigma^2`$ times this sum is $`\sigma_D^2`$, with $`\sigma_D = b\,\sigma\sqrt{2/(1 + a)}`$.
+- Take $`T_f > 0`$ fixed. Then as $`h`$ shrinks to 0, $`\sigma_D`$ tends to $`K_d \sigma / T_f`$, a bounded value.
 - The worked numbers check exactly: 4 and 5.2 kW, the first request 1.4167, 25 °C, the area 24, and 18.333 °C.
-- So do the filter's $a$ and $b$, the squared jitters behind 0.1768 and 0.0456, and the inner loop's 0.50 min.
+- So do the filter's $`a`$ and $`b`$, the squared jitters behind 0.1768 and 0.0456, and the inner loop's 0.50 min.
 
 Lean has no white noise or room model, so random-noise tests and all the room simulations are left to the Python and Rust checks.
 

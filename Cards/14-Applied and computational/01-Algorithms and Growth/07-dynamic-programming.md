@@ -37,41 +37,43 @@ flowchart TB
     E -->|"take cheese, 5 kg"| F
 ```
 
-Schematic: a corner of the search, not all of it. Each box is a small question: the best money from the first $i$ items with $w$ kg of room, written K($i$, $w$). Candles and honey together weigh 5 kg, the same as the cheese, so two different paths leave the same three items and the same 10 kg. A plain search solves K(3, 10) twice; a table solves it once.
+Schematic: a corner of the search, not all of it. Each box is a small question: the best money from the first $`i`$ items with $`w`$ kg of room, written K($`i`$, $`w`$). Candles and honey together weigh 5 kg, the same as the cheese, so two different paths leave the same three items and the same 10 kg. A plain search solves K(3, 10) twice; a table solves it once.
 
 ---
 
 ## The formula
 
-Notation first, in words. The items are numbered 1 to $n$ in the order of the table above. Item $i$ weighs $m_i$ kg and sells for $v_i$ pounds. $W$ is the rucksack's limit. $K(i, w)$, read "K of i and w", is the most money that can be packed from items 1 to $i$ alone into $w$ kg of room.
+Notation first, in words. The items are numbered 1 to $`n`$ in the order of the table above. Item $`i`$ weighs $`m_i`$ kg and sells for $`v_i`$ pounds. $`W`$ is the rucksack's limit. $`K(i, w)`$, read "K of i and w", is the most money that can be packed from items 1 to $`i`$ alone into $`w`$ kg of room.
 
-$$K(i, w) = \max\Big( K(i-1,\, w),\;\; v_i + K(i-1,\, w - m_i) \Big), \qquad K(0, w) = 0$$
+```math
+K(i, w) = \max\Big( K(i-1,\, w),\;\; v_i + K(i-1,\, w - m_i) \Big), \qquad K(0, w) = 0
+```
 
-The second option counts only when item $i$ fits, $m_i \le w$. The answer is $K(n, W)$.
+The second option counts only when item $`i`$ fits, $`m_i \le w`$. The answer is $`K(n, W)`$.
 
-**Read it aloud:** the best from the first $i$ items is the better of leaving item $i$ out, or putting it in and filling the room that remains from the items before it; with no items, nothing is packed.
+**Read it aloud:** the best from the first $`i`$ items is the better of leaving item $`i`$ out, or putting it in and filling the room that remains from the items before it; with no items, nothing is packed.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of items | 6 | can only rise; the table gains a row |
-| $W$ | the rucksack's limit, kg | 15 | can only rise; the table gains columns |
-| $i$ | how many items, counted from the first, are in play | 0 to 6 | can only rise |
-| $w$ | room still free, kg | 0 to 15 | can only rise |
-| $m_i$ | weight of item $i$, kg | wool, item 3: 7 | falls or stays |
-| $v_i$ | money item $i$ sells for, £ | wool: 135 | rises or stays |
-| $K(i, w)$ | most money from items 1 to $i$ in $w$ kg | $K(3, 10)$ = 160, $K(6, 15)$ = 310 | — |
-| $P$ | a best packing, used in the proof | wool, cheese, honey | — |
-| $T(n)$ | calls a plain recursion makes on $n$ items when all fit | $T(8)$ = 511 | doubles, plus one, per item |
-| $\Theta(\cdot)$ | "grows exactly like, up to a constant" | $\Theta(nW)$ cells | — |
+| $`n`$ | number of items | 6 | can only rise; the table gains a row |
+| $`W`$ | the rucksack's limit, kg | 15 | can only rise; the table gains columns |
+| $`i`$ | how many items, counted from the first, are in play | 0 to 6 | can only rise |
+| $`w`$ | room still free, kg | 0 to 15 | can only rise |
+| $`m_i`$ | weight of item $`i`$, kg | wool, item 3: 7 | falls or stays |
+| $`v_i`$ | money item $`i`$ sells for, £ | wool: 135 | rises or stays |
+| $`K(i, w)`$ | most money from items 1 to $`i`$ in $`w`$ kg | $`K(3, 10)`$ = 160, $`K(6, 15)`$ = 310 | — |
+| $`P`$ | a best packing, used in the proof | wool, cheese, honey | — |
+| $`T(n)`$ | calls a plain recursion makes on $`n`$ items when all fit | $`T(8)`$ = 511 | doubles, plus one, per item |
+| $`\Theta(\cdot)`$ | "grows exactly like, up to a constant" | $`\Theta(nW)`$ cells | — |
 
-Each cell takes one comparison, so filling the table costs $n(W+1)$ cells: 6 × 16 = 96 here. In the notation of [Big-O](01-big-o-and-growth-rates.md), that is $\Theta(nW)$: it grows exactly like $n$ times $W$, up to a constant.
+Each cell takes one comparison, so filling the table costs $`n(W+1)`$ cells: 6 × 16 = 96 here. In the notation of [Big-O](01-big-o-and-growth-rates.md), that is $`\Theta(nW)`$: it grows exactly like $`n`$ times $`W`$, up to a constant.
 
 ### When it holds
 
-- **Best answers are built from best answers** (optimal substructure). Take item $i$ out of a best packing, and what is left is a best packing of the earlier items in the remaining room. It fails if items interact: a bonus for cheese and honey sold together means the remaining room alone no longer fixes what the rest is worth. The question must then also remember what is already packed.
+- **Best answers are built from best answers** (optimal substructure). Take item $`i`$ out of a best packing, and what is left is a best packing of the earlier items in the remaining room. It fails if items interact: a bonus for cheese and honey sold together means the remaining room alone no longer fixes what the rest is worth. The question must then also remember what is already packed.
 - **The small questions repeat** (overlapping subproblems). Without repeats, storing answers saves nothing. Items weighing 1, 2, 4, 8, 16 and 32 kg in 63 kg of room leave a different room after every choice: 127 calls with a notebook or without one.
-- **Weights are whole numbers, and the limit $W$ is small.** The table has one column per kilogram. Measure the same items in grams and it needs 6 × 15,001 = 90,006 cells, not 96. The cost grows with the size of the number $W$, not with the number of digits needed to write it. If the size of the input counts those digits as well as the items, this cost is exponential, so it is not polynomial time in the sense of [Polynomial or exponential](03-polynomial-versus-exponential-time.md). Such a method is called **pseudo-polynomial**: polynomial in the value of $W$, not in its length.
-- **Each item is used at most once.** That is why the "take" option looks one row up, at $K(i-1, \cdot)$. Unlimited copies of each item is a different problem with a different table.
+- **Weights are whole numbers, and the limit $`W`$ is small.** The table has one column per kilogram. Measure the same items in grams and it needs 6 × 15,001 = 90,006 cells, not 96. The cost grows with the size of the number $`W`$, not with the number of digits needed to write it. If the size of the input counts those digits as well as the items, this cost is exponential, so it is not polynomial time in the sense of [Polynomial or exponential](03-polynomial-versus-exponential-time.md). Such a method is called **pseudo-polynomial**: polynomial in the value of $`W`$, not in its length.
+- **Each item is used at most once.** That is why the "take" option looks one row up, at $`K(i-1, \cdot)`$. Unlimited copies of each item is a different problem with a different table.
 
 ---
 
@@ -79,27 +81,27 @@ Each cell takes one comparison, so filling the table costs $n(W+1)$ cells: 6 × 
 
 ### Step 0: a small question with few versions
 
-The packings number $2^n$. The small questions number only $(n+1)(W+1)$, because a small question is fixed by two whole numbers: how many items are in play and how much room is free. If each small question can be answered from smaller ones, the whole problem costs about as much as the number of small questions, not the number of packings.
+The packings number $`2^n`$. The small questions number only $`(n+1)(W+1)`$, because a small question is fixed by two whole numbers: how many items are in play and how much room is free. If each small question can be answered from smaller ones, the whole problem costs about as much as the number of small questions, not the number of packings.
 
 The same idea runs a backward toll-road plan on the optimal-control card [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md), which proves Bellman's principle of optimality: any tail of a best plan is itself a best plan. Here the same cut-and-paste argument gives the rucksack's rule.
 
 ### Step 1: optimal substructure, by cut and paste
 
-Take a best packing $P$ from items 1 to $i$ in $w$ kg. Item $i$ is either in $P$ or not.
+Take a best packing $`P`$ from items 1 to $`i`$ in $`w`$ kg. Item $`i`$ is either in $`P`$ or not.
 
-- **Not in $P$.** Then $P$ uses only items 1 to $i-1$ in $w$ kg. If some packing of those did better, it would also beat $P$ here. So $P$ is worth exactly $K(i-1, w)$.
-- **In $P$.** Then the rest of $P$ uses items 1 to $i-1$ in $w - m_i$ kg. If a better rest existed, paste it next to item $i$: the total would still fit and beat $P$. So $P$ is worth exactly $v_i + K(i-1, w - m_i)$.
+- **Not in $`P`$.** Then $`P`$ uses only items 1 to $`i-1`$ in $`w`$ kg. If some packing of those did better, it would also beat $`P`$ here. So $`P`$ is worth exactly $`K(i-1, w)`$.
+- **In $`P`$.** Then the rest of $`P`$ uses items 1 to $`i-1`$ in $`w - m_i`$ kg. If a better rest existed, paste it next to item $`i`$: the total would still fit and beat $`P`$. So $`P`$ is worth exactly $`v_i + K(i-1, w - m_i)`$.
 
-Every packing falls in one case, so the best is the larger of the two. In the example, the best for 15 kg either skips the candles, worth $K(5, 15)$ = 310, or takes them and fills 13 kg from the first five, 50 + 240 = 290. The table keeps 310.
+Every packing falls in one case, so the best is the larger of the two. In the example, the best for 15 kg either skips the candles, worth $`K(5, 15)`$ = 310, or takes them and fills 13 kg from the first five, 50 + 240 = 290. The table keeps 310.
 
 <details>
 <summary>Detailed proof, by induction on i</summary>
 
-Claim: take any $i$ from 0 to $n$ and any $w$ from 0 to $W$. Then the number $K(i, w)$ computed by the rule equals the most money over all packings that use only items 1 to $i$ and weigh at most $w$.
+Claim: take any $`i`$ from 0 to $`n`$ and any $`w`$ from 0 to $`W`$. Then the number $`K(i, w)`$ computed by the rule equals the most money over all packings that use only items 1 to $`i`$ and weigh at most $`w`$.
 
-Base, $i = 0$: the only packing is empty, worth 0, and $K(0, w) = 0$.
+Base, $`i = 0`$: the only packing is empty, worth 0, and $`K(0, w) = 0`$.
 
-Step: assume the claim for $i - 1$ and every room. Split the packings of items 1 to $i$ within $w$ by whether they contain item $i$. Those without it are exactly the packings of items 1 to $i - 1$ within $w$, whose best is $K(i-1, w)$ by assumption. Those with it exist only if $m_i \le w$. Each is item $i$ plus a packing of items 1 to $i-1$ within $w - m_i$, so its worth is $v_i$ plus that packing's worth. The best of them is $v_i + K(i-1, w - m_i)$ by assumption. The best overall is the larger of the two groups' bests, which is the rule. By [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md), the claim holds at $i = n$, $w = W$.
+Step: assume the claim for $`i - 1`$ and every room. Split the packings of items 1 to $`i`$ within $`w`$ by whether they contain item $`i`$. Those without it are exactly the packings of items 1 to $`i - 1`$ within $`w`$, whose best is $`K(i-1, w)`$ by assumption. Those with it exist only if $`m_i \le w`$. Each is item $`i`$ plus a packing of items 1 to $`i-1`$ within $`w - m_i`$, so its worth is $`v_i`$ plus that packing's worth. The best of them is $`v_i + K(i-1, w - m_i)`$ by assumption. The best overall is the larger of the two groups' bests, which is the rule. By [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md), the claim holds at $`i = n`$, $`w = W`$.
 
 </details>
 
@@ -107,19 +109,19 @@ Step: assume the claim for $i - 1$ and every room. Split the packings of items 1
 
 Written as a function that calls itself, the rule is correct but wasteful. On the six items, a plain recursion makes 96 calls but meets only 55 different questions. K(3, 10) is asked twice, as in the picture.
 
-With six items the waste is small. It grows like the packings. When every item fits, each call makes two more, so $n$ items cost $2^{n+1} - 1$ calls.
+With six items the waste is small. It grows like the packings. When every item fits, each call makes two more, so $`n`$ items cost $`2^{n+1} - 1`$ calls.
 
 The code builds synthetic shops from a random-number generator with a stated seed (its starting number): weights 1 to 10 kg, prices £10 to £99, a 50 kg rucksack. In the shops of 8 and 12 items every item fits at once, so 8 items take 511 calls and 12 take 8,191.
 
-By 16 items the weights add up to more than 50 kg and some branches run out of room, yet 20 items still take 1,883,476 calls. The different questions never exceed $(n+1)(W+1)$: at 20 items only 725 are ever asked.
+By 16 items the weights add up to more than 50 kg and some branches run out of room, yet 20 items still take 1,883,476 calls. The different questions never exceed $`(n+1)(W+1)`$: at 20 items only 725 are ever asked.
 
-Counting calls when everything fits gives $T(n) = 2T(n-1) + 1$ with $T(0) = 1$: the Tower of Hanoi rule on [Recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/01-recurrences-and-fibonacci.md), with a different seed.
+Counting calls when everything fits gives $`T(n) = 2T(n-1) + 1`$ with $`T(0) = 1`$: the Tower of Hanoi rule on [Recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/01-recurrences-and-fibonacci.md), with a different seed.
 
 ### Step 3: write each answer down, one of two ways
 
-**Memoise backwards.** Keep the recursion, starting from $K(6, 15)$, and add a notebook: before working on a question, look it up; after, write the answer in. This is **memoisation** (from "memo", a note to oneself). On the rucksack it makes 71 calls instead of 96 and solves each of the 55 questions once. It only ever touches the questions the answer needs.
+**Memoise backwards.** Keep the recursion, starting from $`K(6, 15)`$, and add a notebook: before working on a question, look it up; after, write the answer in. This is **memoisation** (from "memo", a note to oneself). On the rucksack it makes 71 calls instead of 96 and solves each of the 55 questions once. It only ever touches the questions the answer needs.
 
-**Fill a table forwards.** Start at row $i = 0$, all zeros, and fill each row left to right from the row above. Every cell's two ingredients are ready when it is reached. This costs exactly $n(W+1)$ cells, 96 here, and needs no recursion. It fills some cells no path ever uses, but it is simple, and its loops are easy to count.
+**Fill a table forwards.** Start at row $`i = 0`$, all zeros, and fill each row left to right from the row above. Every cell's two ingredients are ready when it is reached. This costs exactly $`n(W+1)`$ cells, 96 here, and needs no recursion. It fills some cells no path ever uses, but it is simple, and its loops are easy to count.
 
 Both give £310. The difference is the order of the work, not the rule.
 
@@ -133,19 +135,19 @@ xychart-beta
     line [204, 408, 612, 816, 1020]
 ```
 
-The orange line is the plain recursion's calls: 31, 511, 8,191, 128,044, 1,883,476. The green line is the table's cells: 204, 408, 612, 816, 1,020. It grows in step with $n$ and hugs the axis.
+The orange line is the plain recursion's calls: 31, 511, 8,191, 128,044, 1,883,476. The green line is the table's cells: 204, 408, 612, 816, 1,020. It grows in step with $`n`$ and hugs the axis.
 
 ### Step 4: read the packing back
 
-The table holds money, not items. To recover the items, start at $K(6, 15)$ and walk up. If a cell equals the one above it, item $i$ was left out. If it differs, item $i$ went in: subtract its weight from the room and continue one row up. No extra search is needed.
+The table holds money, not items. To recover the items, start at $`K(6, 15)`$ and walk up. If a cell equals the one above it, item $`i`$ was left out. If it differs, item $`i`$ went in: subtract its weight from the room and continue one row up. No extra search is needed.
 
 ---
 
 ## Worked numbers, by hand
 
-The whole table. Row $i$ uses items 1 to $i$; column $w$ is the room in kg.
+The whole table. Row $`i`$ uses items 1 to $`i`$; column $`w`$ is the room in kg.
 
-| $i$ \ $w$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
+| $`i`$ \ $`w`$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 1 books | 0 | 0 | 0 | 0 | 0 | 0 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 |
@@ -157,16 +159,16 @@ The whole table. Row $i$ uses items 1 to $i$; column $w$ is the room in kg.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| books alone, 6 kg free | they fit: max(0, 100 + 0) | $K(1, 6)$ = 100 |
-| add soap, 10 kg free | max($K(1, 10)$, 60 + $K(1, 6)$) = max(100, 160) | $K(2, 10)$ = 160 |
-| add wool, 15 kg free | max($K(2, 15)$, 135 + $K(2, 8)$) = max(160, 135 + 100) | $K(3, 15)$ = 235 |
-| add cheese, 15 kg free | max($K(3, 15)$, 95 + $K(3, 10)$) = max(235, 95 + 160) | $K(4, 15)$ = 255 |
-| add honey, 15 kg free | max($K(4, 15)$, 80 + $K(4, 12)$) = max(255, 80 + 230) | $K(5, 15)$ = 310 |
-| add candles, 15 kg free | max($K(5, 15)$, 50 + $K(5, 13)$) = max(310, 50 + 240) | $K(6, 15)$ = 310 |
-| read back: candles? | $K(6, 15)$ = $K(5, 15)$ = 310 | out, 15 kg free |
-| honey? | $K(5, 15)$ = 310 ≠ $K(4, 15)$ = 255 | in, 15 − 3 = 12 kg free |
-| cheese? | $K(4, 12)$ = 230 ≠ $K(3, 12)$ = 195 | in, 12 − 5 = 7 kg free |
-| wool? | $K(3, 7)$ = 135 ≠ $K(2, 7)$ = 100 | in, 7 − 7 = 0 kg free |
+| books alone, 6 kg free | they fit: max(0, 100 + 0) | $`K(1, 6)`$ = 100 |
+| add soap, 10 kg free | max($`K(1, 10)`$, 60 + $`K(1, 6)`$) = max(100, 160) | $`K(2, 10)`$ = 160 |
+| add wool, 15 kg free | max($`K(2, 15)`$, 135 + $`K(2, 8)`$) = max(160, 135 + 100) | $`K(3, 15)`$ = 235 |
+| add cheese, 15 kg free | max($`K(3, 15)`$, 95 + $`K(3, 10)`$) = max(235, 95 + 160) | $`K(4, 15)`$ = 255 |
+| add honey, 15 kg free | max($`K(4, 15)`$, 80 + $`K(4, 12)`$) = max(255, 80 + 230) | $`K(5, 15)`$ = 310 |
+| add candles, 15 kg free | max($`K(5, 15)`$, 50 + $`K(5, 13)`$) = max(310, 50 + 240) | $`K(6, 15)`$ = 310 |
+| read back: candles? | $`K(6, 15)`$ = $`K(5, 15)`$ = 310 | out, 15 kg free |
+| honey? | $`K(5, 15)`$ = 310 ≠ $`K(4, 15)`$ = 255 | in, 15 − 3 = 12 kg free |
+| cheese? | $`K(4, 12)`$ = 230 ≠ $`K(3, 12)`$ = 195 | in, 12 − 5 = 7 kg free |
+| wool? | $`K(3, 7)`$ = 135 ≠ $`K(2, 7)`$ = 100 | in, 7 − 7 = 0 kg free |
 | the packing | 135 + 95 + 80, weighing 7 + 5 + 3 = 15 kg | **£310** |
 
 The trader should carry wool, cheese and honey: £310, with not a gram of the 15 kg wasted. No other packing of the 64 does better.
@@ -178,7 +180,7 @@ The trader should carry wool, cheese and honey: £310, with not a gram of the 15
 | Greedy: best value per kg first | £265: honey, candles, wool | The two best-per-kg items leave 10 kg, wool takes 7, and 3 kg sit empty |
 | Greedy: dearest item first | £285: wool, books, candles | Books are dear but heavy; they crowd out cheese and honey |
 | One row, filled left to right | £400 | The "take" option reads a cell already updated this row, so an item is packed again and again |
-| Notebook keyed on $i$ alone, room forgotten | £520 | The answer for one room is reused for another; the rucksack would weigh more than 15 kg |
+| Notebook keyed on $`i`$ alone, room forgotten | £520 | The answer for one room is reused for another; the rucksack would weigh more than 15 kg |
 
 The code prints all four. £400 and £520 beat the true best, which is the giveaway: no honest method can beat 310.
 
@@ -573,10 +575,10 @@ The two outputs match line for line.
 
 Lean proves the table rule gives the best packing for any items, counts the plain recursion's calls when all fit, and checks the numbers.
 
-- Take items with whole-number weights and prices of zero or more, each used at most once. Then every cell $K(i, w)$ equals the most money from any packing of items 1 to $i$ within $w$ kg.
-- Take $n$ items whose weights add up to at most the room. Then a plain recursion on them makes $2^{n+1} - 1$ calls.
-- Take the six items and the 15 kg rucksack. Then $K(6, 15)$ = 310, and wool, cheese and honey weigh 15 kg and fetch £310.
-- Cells from the picture and the worked steps also check, such as $K(3, 10)$ = 160 and $K(5, 13)$ = 240.
+- Take items with whole-number weights and prices of zero or more, each used at most once. Then every cell $`K(i, w)`$ equals the most money from any packing of items 1 to $`i`$ within $`w`$ kg.
+- Take $`n`$ items whose weights add up to at most the room. Then a plain recursion on them makes $`2^{n+1} - 1`$ calls.
+- Take the six items and the 15 kg rucksack. Then $`K(6, 15)`$ = 310, and wool, cheese and honey weigh 15 kg and fetch £310.
+- Cells from the picture and the worked steps also check, such as $`K(3, 10)`$ = 160 and $`K(5, 13)`$ = 240.
 - Of the 64 packings, 40 fit in 15 kg, and the best of them fetches £310.
 - Take the six items in 15 kg. Then a plain recursion makes 96 calls.
 - Take weights of 1, 2, 4, 8, 16 and 32 kg in 63 kg of room. Then a plain recursion makes 127 calls.
@@ -732,7 +734,7 @@ end DynamicProgramming
 >
 > - **Filling one row in place, left to right.** The "take" option then reads a value that already includes this item, so items repeat: £400, an impossible packing.
 > - **A notebook that forgets part of the question.** Keyed on the item count alone, it hands one room's answer to another: £520.
-> - **Calling $\Theta(nW)$ fast without asking about $W$.** The same six items in grams need 90,006 cells instead of 96.
+> - **Calling $`\Theta(nW)`$ fast without asking about $`W`$.** The same six items in grams need 90,006 cells instead of 96.
 > - **Memoising where nothing repeats.** With weights 1, 2, 4, 8, 16 and 32 kg and 63 kg of room, every one of 127 questions is different, so the notebook only adds bookkeeping.
 
 ---
@@ -746,14 +748,14 @@ end DynamicProgramming
 - **Cutting stock.** Cutting a steel bar or a roll of paper into ordered lengths for the most value is a rucksack in disguise.
 
 > **Say it back**
-> The best packing of the first $i$ items either leaves item $i$ out or puts it in, and in each case the rest must be a best packing of the earlier items in the room left over. So one small question, the best from the first $i$ items in $w$ kg, is answered from two smaller ones. A plain search asks the same small question many times; dynamic programming answers each once and writes it down, either in a notebook while recursing backwards or in a table filled forwards. At six items the table's 96 cells are no cheaper than the 64 packings; at 20 items it is 1,020 cells against 1,883,476 calls. The catch is that the table grows with the room measured in units, not with the number of digits.
+> The best packing of the first $`i`$ items either leaves item $`i`$ out or puts it in, and in each case the rest must be a best packing of the earlier items in the room left over. So one small question, the best from the first $`i`$ items in $`w`$ kg, is answered from two smaller ones. A plain search asks the same small question many times; dynamic programming answers each once and writes it down, either in a notebook while recursing backwards or in a table filled forwards. At six items the table's 96 cells are no cheaper than the 64 packings; at 20 items it is 1,020 cells against 1,883,476 calls. The catch is that the table grows with the room measured in units, not with the number of digits.
 
 ---
 
 ## What this builds on
 
 - [Recurrences](04-recurrences-and-the-master-theorem.md): reads off the cost of a method that calls itself, such as the plain recursion here.
-- [Recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/01-recurrences-and-fibonacci.md): a term built from the terms behind it, plus seeds; $K(0, w) = 0$ is the seed row here, and the call count follows the Tower of Hanoi rule.
+- [Recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/01-recurrences-and-fibonacci.md): a term built from the terms behind it, plus seeds; $`K(0, w) = 0`$ is the seed row here, and the call count follows the Tower of Hanoi rule.
 - [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md): the principle of optimality and backward induction on a toll road, with stages instead of items.
 
 ## Where this goes next
@@ -773,4 +775,4 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Bellman, Richard. "The theory of dynamic programming." *Bulletin of the American Mathematical Society* 60(6), 1954, 503–515. [doi:10.1090/S0002-9904-1954-09848-8](https://doi.org/10.1090/S0002-9904-1954-09848-8). The method and the principle of optimality, as first set out.
 - Dantzig, George B. "Discrete-variable extremum problems." *Operations Research* 5(2), 1957, 266–288. [doi:10.1287/opre.5.2.266](https://doi.org/10.1287/opre.5.2.266). The rucksack problem, and why packing by best value per unit fails for whole items.
 - Michie, Donald. "'Memo' functions and machine learning." *Nature* 218, 1968, 19–22. [doi:10.1038/218019a0](https://doi.org/10.1038/218019a0). Introduces memo functions, the source of the word memoisation.
-- Kleinberg, Jon, and Éva Tardos. *Algorithm Design*. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/algorithm-design/P200000003259/9780137546350). The rucksack table, its $\Theta(nW)$ cost, and memoisation against filling forwards, in its chapter on dynamic programming.
+- Kleinberg, Jon, and Éva Tardos. *Algorithm Design*. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/algorithm-design/P200000003259/9780137546350). The rucksack table, its $`\Theta(nW)`$ cost, and memoisation against filling forwards, in its chapter on dynamic programming.

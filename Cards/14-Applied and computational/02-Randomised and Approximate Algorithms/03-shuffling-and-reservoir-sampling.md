@@ -40,43 +40,49 @@ The upper, smooth line is the expected count of replacements by each hour; the l
 
 ## The formula
 
-Three facts: one per method, one for the cost. The letter $n$ counts the items, $k$ the slots, and $t$ numbers the item now arriving, from 1. A random **draw** from 0 up to a top value means a whole number in that range, every value equally likely. $P$ is a probability, the chance of what is in its brackets. The capital pi, $\prod$, multiplies a run of factors, as $\sum$ adds a run of terms.
+Three facts: one per method, one for the cost. The letter $`n`$ counts the items, $`k`$ the slots, and $`t`$ numbers the item now arriving, from 1. A random **draw** from 0 up to a top value means a whole number in that range, every value equally likely. $`P`$ is a probability, the chance of what is in its brackets. The capital pi, $`\prod`$, multiplies a run of factors, as $`\sum`$ adds a run of terms.
 
-The shuffle. Walk the list from the back; at position $i$ (counting from 0) draw $j$ from 0 to $i$, and swap the items at $i$ and $j$:
+The shuffle. Walk the list from the back; at position $`i`$ (counting from 0) draw $`j`$ from 0 to $`i`$, and swap the items at $`i`$ and $`j`$:
 
-$$P(\text{any one order}) = \frac{1}{n}\times\frac{1}{n-1}\times\cdots\times\frac{1}{2} = \frac{1}{n!}$$
+```math
+P(\text{any one order}) = \frac{1}{n}\times\frac{1}{n-1}\times\cdots\times\frac{1}{2} = \frac{1}{n!}
+```
 
-The reservoir. Once the slots are full, request $t$ (so $t > k$) enters with chance $k/t$, and each later request $s$ then pushes it out with chance $1/s$. The first $k$ requests enter for certain and reach the same $k/n$ (Step 3):
+The reservoir. Once the slots are full, request $`t`$ (so $`t > k`$) enters with chance $`k/t`$, and each later request $`s`$ then pushes it out with chance $`1/s`$. The first $`k`$ requests enter for certain and reach the same $`k/n`$ (Step 3):
 
-$$P(\text{request } t \text{ is kept}) = \frac{k}{t}\times\prod_{s=t+1}^{n}\frac{s-1}{s} = \frac{k}{t}\times\frac{t}{n} = \frac{k}{n}$$
+```math
+P(\text{request } t \text{ is kept}) = \frac{k}{t}\times\prod_{s=t+1}^{n}\frac{s-1}{s} = \frac{k}{t}\times\frac{t}{n} = \frac{k}{n}
+```
 
-The cost. Let $W$ count the replacements, also called writes, after the slots are full:
+The cost. Let $`W`$ count the replacements, also called writes, after the slots are full:
 
-$$E[W] = \sum_{t=k+1}^{n}\frac{k}{t} \approx k\ln\frac{n}{k}$$
+```math
+E[W] = \sum_{t=k+1}^{n}\frac{k}{t} \approx k\ln\frac{n}{k}
+```
 
 **Read it aloud:** each order of the list has one chance in n factorial; each request survives the day with chance k over n, whenever it arrived; and the slots are rewritten only about k times the natural log of n over k, here about 138 times in 10 million.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | items in the stream or list | 10,000,000 requests | each request's chance $k/n$ falls |
-| $k$ | slots in the reservoir | 10 | each request's chance rises; writes rise about in step |
-| $t$ | number of the item now arriving, from 1 | request 11; request 5,000,000 at noon | its chance of getting in, $k/t$, falls |
-| $s$ | a later item, after $t$ | requests 12 to 10,000,000 | — |
-| $i$ | the shuffle's position, counting down from $n - 1$ | 3, 2, 1 for four items | — |
-| $j$ | the random draw: a slot or a position | from 0 to $t - 1$, or 0 to $i$ | — |
-| $n!$ | $n \times (n - 1) \times \cdots \times 1$, the orders of $n$ things | 10! = 3,628,800 | — |
-| $P$ | the chance of what is in the brackets | 1 in a million for each request | — |
-| $\prod$, $\sum$ | multiply, or add, the terms over the range written under and over the sign | $11/12 \times 12/13 \times \cdots$; $10/11 + 10/12 + \cdots$ | — |
-| $W$ | replacements after the first $k$ fills | 129 in the seeded run | — |
-| $E[W]$ | the expected value of $W$ ([Randomised algorithms](01-randomised-algorithms-and-expectation.md)) | 137.7 | — |
-| $\ln$ | natural logarithm | $10\ln(1{,}000{,}000) \approx 138.2$ | — |
+| $`n`$ | items in the stream or list | 10,000,000 requests | each request's chance $`k/n`$ falls |
+| $`k`$ | slots in the reservoir | 10 | each request's chance rises; writes rise about in step |
+| $`t`$ | number of the item now arriving, from 1 | request 11; request 5,000,000 at noon | its chance of getting in, $`k/t`$, falls |
+| $`s`$ | a later item, after $`t`$ | requests 12 to 10,000,000 | — |
+| $`i`$ | the shuffle's position, counting down from $`n - 1`$ | 3, 2, 1 for four items | — |
+| $`j`$ | the random draw: a slot or a position | from 0 to $`t - 1`$, or 0 to $`i`$ | — |
+| $`n!`$ | $`n \times (n - 1) \times \cdots \times 1`$, the orders of $`n`$ things | 10! = 3,628,800 | — |
+| $`P`$ | the chance of what is in the brackets | 1 in a million for each request | — |
+| $`\prod`$, $`\sum`$ | multiply, or add, the terms over the range written under and over the sign | $`11/12 \times 12/13 \times \cdots`$; $`10/11 + 10/12 + \cdots`$ | — |
+| $`W`$ | replacements after the first $`k`$ fills | 129 in the seeded run | — |
+| $`E[W]`$ | the expected value of $`W`$ ([Randomised algorithms](01-randomised-algorithms-and-expectation.md)) | 137.7 | — |
+| $`\ln`$ | natural logarithm | $`10\ln(1{,}000{,}000) \approx 138.2`$ | — |
 
 ### When it holds
 
-- **Each draw is exactly uniform over exactly the stated range.** Draw from the wrong range and the shuffle is no longer fair: swapping with any of the $n$ positions favours some orders, and drawing below $i$ never lets an item stay put. Squeezing a 32-bit number, a whole number from 0 to $2^{32} - 1$, into 0 to 9,999,999 with a remainder gives the lowest 4,967,296 values 430 chances against 429. That is about 0.23% extra weight.
+- **Each draw is exactly uniform over exactly the stated range.** Draw from the wrong range and the shuffle is no longer fair: swapping with any of the $`n`$ positions favours some orders, and drawing below $`i`$ never lets an item stay put. Squeezing a 32-bit number, a whole number from 0 to $`2^{32} - 1`$, into 0 to 9,999,999 with a remainder gives the lowest 4,967,296 values 430 chances against 429. That is about 0.23% extra weight.
 - **The draws are independent of the items.** The generator ([Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md)) must not be steered by what it is sampling. A sender who can predict the generator's next draws can time its requests to win slots far more often than 1 in a million.
-- **The count $t$ is exact.** Lose count after a restart and the newcomers are judged against the wrong $t$: reset to 0 at noon and the afternoon's requests are treated as if the day had just begun, so they flood the slots.
-- **The generator has enough starting points.** A 52-card deck has 52!, about $2^{225.6}$ orders. A generator started from a 64-bit seed can reach at most $2^{64}$ of them, so almost every order of a real deck can never be dealt. For ten requests, 64 bits covers the 3,628,800 orders of ten items, but not the about $2^{210.7}$ possible sets of ten from 10 million: most samples can never be drawn. That limits which samples can appear, not each request's chance of about 1 in a million.
+- **The count $`t`$ is exact.** Lose count after a restart and the newcomers are judged against the wrong $`t`$: reset to 0 at noon and the afternoon's requests are treated as if the day had just begun, so they flood the slots.
+- **The generator has enough starting points.** A 52-card deck has 52!, about $`2^{225.6}`$ orders. A generator started from a 64-bit seed can reach at most $`2^{64}`$ of them, so almost every order of a real deck can never be dealt. For ten requests, 64 bits covers the 3,628,800 orders of ten items, but not the about $`2^{210.7}`$ possible sets of ten from 10 million: most samples can never be drawn. That limits which samples can appear, not each request's chance of about 1 in a million.
 
 ---
 
@@ -88,46 +94,48 @@ A randomised method is a tree of draws. When every path through the tree is equa
 
 ### Step 1: Fisher-Yates has exactly n! paths, one per order
 
-At position $n - 1$ there are $n$ choices for $j$; at $n - 2$, $n - 1$ choices; down to 2 choices at position 1. That is $n \times (n - 1) \times \cdots \times 2 = n!$ equally likely paths ([Arranging with repeats](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md) counts the orders of $n$ distinct things the same way).
+At position $`n - 1`$ there are $`n`$ choices for $`j`$; at $`n - 2`$, $`n - 1`$ choices; down to 2 choices at position 1. That is $`n \times (n - 1) \times \cdots \times 2 = n!`$ equally likely paths ([Arranging with repeats](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md) counts the orders of $`n`$ distinct things the same way).
 
-Different paths give different orders. After the first swap, position $n - 1$ is never touched again, so the item that ends there tells you the first draw. Peel it off, and the same reasoning reads the second draw from position $n - 2$. Each order therefore names exactly one path, and $n!$ paths cover $n!$ orders once each. Every order has chance $1/n!$.
+Different paths give different orders. After the first swap, position $`n - 1`$ is never touched again, so the item that ends there tells you the first draw. Peel it off, and the same reasoning reads the second draw from position $`n - 2`$. Each order therefore names exactly one path, and $`n!`$ paths cover $`n!`$ orders once each. Every order has chance $`1/n!`$.
 
 By hand, four items 1234, with draws 1, 2, 0 at positions 3, 2, 1: swap positions 3 and 1 to get 1432; swap position 2 with itself, still 1432; swap positions 1 and 0 to get 4132. The last item, 2, sat in position 3 after the first draw, and nothing moved it again.
 
 ### Step 2: the tempting shortcuts cannot be fair, by counting alone
 
-The common shortcut swaps each position with any of the $n$ positions. That is $n^n$ paths: $3^3 = 27$ for three items, spread over 3! = 6 orders. 27 is not a multiple of 6, so the orders cannot share the paths evenly; listing them gives counts 4, 5, 5, 5, 4, 4. For ten items, $10^{10}$ paths over 3,628,800 orders leave a remainder of 2,656,000, so the split is uneven again.
+The common shortcut swaps each position with any of the $`n`$ positions. That is $`n^n`$ paths: $`3^3 = 27`$ for three items, spread over 3! = 6 orders. 27 is not a multiple of 6, so the orders cannot share the paths evenly; listing them gives counts 4, 5, 5, 5, 4, 4. For ten items, $`10^{10}`$ paths over 3,628,800 orders leave a remainder of 2,656,000, so the split is uneven again.
 
-The other slip draws $j$ below $i$, never equal to it. Now the item at position $i$ must leave, so no item ever stays in its starting place. That is a different algorithm with a use of its own, Sattolo's, which makes one single cycle: a loop through all the items in which each one moves to the next one's place. It reaches only $(n - 1)!$ orders: 2 of the 6 for three items.
+The other slip draws $`j`$ below $`i`$, never equal to it. Now the item at position $`i`$ must leave, so no item ever stays in its starting place. That is a different algorithm with a use of its own, Sattolo's, which makes one single cycle: a loop through all the items in which each one moves to the next one's place. It reaches only $`(n - 1)!`$ orders: 2 of the 6 for three items.
 
 ### Step 3: each request survives the day with chance k/n
 
-Follow request $t$, with $t > k$. It enters when the draw lands on one of the $k$ slots: chance $k/t$. A later request $s$ evicts it only if that draw lands on one of the $k$ slots, chance $k/s$, and on this particular slot, chance $1/k$: together $1/s$. So it survives request $s$ with chance $(s - 1)/s$.
+Follow request $`t`$, with $`t > k`$. It enters when the draw lands on one of the $`k`$ slots: chance $`k/t`$. A later request $`s`$ evicts it only if that draw lands on one of the $`k`$ slots, chance $`k/s`$, and on this particular slot, chance $`1/k`$: together $`1/s`$. So it survives request $`s`$ with chance $`(s - 1)/s`$.
 
 Multiply the survivals and almost everything cancels:
 
-$$\frac{t}{t+1}\times\frac{t+1}{t+2}\times\cdots\times\frac{n-1}{n} = \frac{t}{n}$$
+```math
+\frac{t}{t+1}\times\frac{t+1}{t+2}\times\cdots\times\frac{n-1}{n} = \frac{t}{n}
+```
 
-Each top cancels the bottom just before it, leaving the first top and the last bottom. Entering times surviving is $k/t \times t/n = k/n$, whatever $t$ is. The first $k$ requests enter for certain and survive with chance $k/n$ by the same product started at $s = k + 1$. Request 11 enters with chance 0.9091 and survives with chance 0.0000011; the noon request enters with chance 0.000002 and survives with chance 0.5. Both end at 1 in a million.
+Each top cancels the bottom just before it, leaving the first top and the last bottom. Entering times surviving is $`k/t \times t/n = k/n`$, whatever $`t`$ is. The first $`k`$ requests enter for certain and survive with chance $`k/n`$ by the same product started at $`s = k + 1`$. Request 11 enters with chance 0.9091 and survives with chance 0.0000011; the noon request enters with chance 0.000002 and survives with chance 0.5. Both end at 1 in a million.
 
 ### Step 4: every set of ten is equally likely, not just every request
 
 Equal chances for each request are not enough on their own. A method that kept requests 1 to 10 half the time and 11 to 20 the other half gives those twenty equal chances, and is useless.
 
-Run Fisher-Yates forwards instead, "inside out": item $t$ arrives, draw $j$ from 0 to $t - 1$, move whatever sits in slot $j$ to the new end, and put item $t$ in slot $j$. At step $t$ there are $t$ choices, so $1 \times 2 \times \cdots \times n = n!$ paths, and as in Step 1 they give the $n!$ orders once each. So the first $k$ slots hold a uniformly random arrangement of $k$ of the items, and every set of $k$ is equally likely.
+Run Fisher-Yates forwards instead, "inside out": item $`t`$ arrives, draw $`j`$ from 0 to $`t - 1`$, move whatever sits in slot $`j`$ to the new end, and put item $`t`$ in slot $`j`$. At step $`t`$ there are $`t`$ choices, so $`1 \times 2 \times \cdots \times n = n!`$ paths, and as in Step 1 they give the $`n!`$ orders once each. So the first $`k`$ slots hold a uniformly random arrangement of $`k`$ of the items, and every set of $`k`$ is equally likely.
 
-Now watch only the first $k$ slots. If $j$ is below $k$, item $t$ lands in slot $j$ and the old occupant moves out to position $t - 1$, beyond the first $k$. If $j$ is $k$ or more, the first $k$ slots are untouched. That is the reservoir rule, draw for draw. The reservoir is the inside-out shuffle with everything past slot $k - 1$ thrown away, and it never needs $n$ in advance. The check runs both on 1,000 requests from the same seed and gets the same ten slots.
+Now watch only the first $`k`$ slots. If $`j`$ is below $`k`$, item $`t`$ lands in slot $`j`$ and the old occupant moves out to position $`t - 1`$, beyond the first $`k`$. If $`j`$ is $`k`$ or more, the first $`k`$ slots are untouched. That is the reservoir rule, draw for draw. The reservoir is the inside-out shuffle with everything past slot $`k - 1`$ thrown away, and it never needs $`n`$ in advance. The check runs both on 1,000 requests from the same seed and gets the same ten slots.
 
 <details>
 <summary>Why the inside-out paths give each order once</summary>
 
-Read the draws back from the finished order. Item $n$ was placed last, and nothing moved it after: its position is the last draw. The item it displaced, if any, sits at the end, position $n - 1$. Move that item back into item $n$'s place, delete the end, and you have the order after $n - 1$ steps. Repeat. Each order yields exactly one sequence of draws, so $n!$ paths and $n!$ orders match one to one, and each order has chance $1/n!$.
+Read the draws back from the finished order. Item $`n`$ was placed last, and nothing moved it after: its position is the last draw. The item it displaced, if any, sits at the end, position $`n - 1`$. Move that item back into item $`n`$'s place, delete the end, and you have the order after $`n - 1`$ steps. Repeat. Each order yields exactly one sequence of draws, so $`n!`$ paths and $`n!`$ orders match one to one, and each order has chance $`1/n!`$.
 
 </details>
 
 ### Step 5: the cost is n draws, k slots and about k ln(n/k) writes
 
-Every request costs one draw and one comparison: 10 million draws. Memory is the $k$ slots and the counter $t$. Request $t$ causes a write with chance $k/t$, so, since expected values add ([Randomised algorithms](01-randomised-algorithms-and-expectation.md)), the expected number of writes is $k$ times the sum of $1/t$ from $k + 1$ to $n$. That sum is close to the area under $1/t$, which is $\ln(n/k)$. With 10 slots and 10 million requests the exact sum gives 137.7 and $k\ln(n/k)$ gives 138.2. Most writes come early, because $k/t$ is large only while $t$ is small.
+Every request costs one draw and one comparison: 10 million draws. Memory is the $`k`$ slots and the counter $`t`$. Request $`t`$ causes a write with chance $`k/t`$, so, since expected values add ([Randomised algorithms](01-randomised-algorithms-and-expectation.md)), the expected number of writes is $`k`$ times the sum of $`1/t`$ from $`k + 1`$ to $`n`$. That sum is close to the area under $`1/t`$, which is $`\ln(n/k)`$. With 10 slots and 10 million requests the exact sum gives 137.7 and $`k\ln(n/k)`$ gives 138.2. Most writes come early, because $`k/t`$ is large only while $`t`$ is small.
 
 When one draw per request is too many, a variant draws how many requests to skip before the next write, cutting the draws to about the number of writes (the 1985 paper in Sources).
 
@@ -155,12 +163,12 @@ Every request, at any hour, ends the day in the sample with the same chance, 1 i
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Shuffle by swapping with any of the $n$ positions | for three items, order 132 has chance 5/27 = 0.185, not 1/6 = 0.167 | 27 paths cannot split evenly over 6 orders |
-| Draw $j$ from 0 to $i - 1$, not 0 to $i$ | 2 of the 6 orders for three items; for ten, 362,880 of 3,628,800 | no item can ever stay in its place |
-| Let a newcomer in with chance $1/t$, the one-slot rule, with 10 slots | 0.670 of the ten from after noon, not 5 | early requests are favoured: the afternoon is badly under-sampled |
+| Shuffle by swapping with any of the $`n`$ positions | for three items, order 132 has chance 5/27 = 0.185, not 1/6 = 0.167 | 27 paths cannot split evenly over 6 orders |
+| Draw $`j`$ from 0 to $`i - 1`$, not 0 to $`i`$ | 2 of the 6 orders for three items; for ten, 362,880 of 3,628,800 | no item can ever stay in its place |
+| Let a newcomer in with chance $`1/t`$, the one-slot rule, with 10 slots | 0.670 of the ten from after noon, not 5 | early requests are favoured: the afternoon is badly under-sampled |
 | Keep the first ten | all ten from the first 0.086 seconds | not a sample of the day at all |
 
-The checks print every number in this table. The third is computed two ways: an exact product over all 10 million requests, and the estimate $10\times(1 - 0.5^{1/10})$, which both give 0.670.
+The checks print every number in this table. The third is computed two ways: an exact product over all 10 million requests, and the estimate $`10\times(1 - 0.5^{1/10})`$, which both give 0.670.
 
 ---
 
@@ -570,13 +578,13 @@ The 20,000 repeated runs show no favouritism. Their chi-square, the squared gap 
 
 Lean proves both methods exactly fair, for any number of items and slots, when every draw is exactly uniform.
 
-- Take $n$ items shuffled by Fisher-Yates with uniform draws. Then each of the $n!$ orders has chance $1/n!$.
-- Take a stream of $n$ items and $k$ slots, with uniform draws. Then every set of $k$ items is kept with the same chance.
-- Take $k$ slots and at least $k$ items. Then every item, whenever it arrived, is kept with chance $k/n$.
+- Take $`n`$ items shuffled by Fisher-Yates with uniform draws. Then each of the $`n!`$ orders has chance $`1/n!`$.
+- Take a stream of $`n`$ items and $`k`$ slots, with uniform draws. Then every set of $`k`$ items is kept with the same chance.
+- Take $`k`$ slots and at least $`k`$ items. Then every item, whenever it arrived, is kept with chance $`k/n`$.
 - Four items have 4! = 24 orders and 24 paths; ten items have 10! = 3,628,800 orders.
 - Fisher-Yates by hand on 1234, with draws 1, 2, 0, gives 4132.
 - Three items give 27 paths, which cannot split evenly over 6 orders.
-- For ten items, $10^{10}$ paths over 10! orders leave 2,656,000 over; Sattolo's slip reaches 9! = 362,880 orders.
+- For ten items, $`10^{10}`$ paths over 10! orders leave 2,656,000 over; Sattolo's slip reaches 9! = 362,880 orders.
 - Keeping 2 of 6 gives 15 pairs, 48 paths each, and each item kept in 240 paths.
 - A 32-bit draw squeezed into 0 to 9,999,999 leaves 4,967,296 over: 430 chances against 429.
 
@@ -1136,9 +1144,9 @@ example : 2 ^ 32 % 10000000 = 4967296 ∧ 2 ^ 32 / 10000000 = 429 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong.
-> - **Guess first: one slot instead of ten.** Set `K` to `1`. Expected replacements fall to 15.695 for the day, and every assert still passes: the method is the same at any $k$.
+> - **Guess first: one slot instead of ten.** Set `K` to `1`. Expected replacements fall to 15.695 for the day, and every assert still passes: the method is the same at any $`k`$.
 > - **Guess first: as many slots as items.** Set `K` to `100`. Expected replacements for the day rise to 1150.8, but the 100-item test now keeps every item in every run, and the uniformity assert stops it.
-> - **Guess first: break the shuffle's range.** In `size`, change `'fy': i + 1` to `'fy': i`. Fisher-Yates becomes Sattolo's cycle, which reaches only $(n - 1)!$ orders, and the first assert stops it.
+> - **Guess first: break the shuffle's range.** In `size`, change `'fy': i + 1` to `'fy': i`. Fisher-Yates becomes Sattolo's cycle, which reaches only $`(n - 1)!`$ orders, and the first assert stops it.
 > - **Guess first: a different day.** Change `SEED`. A different ten requests are kept, the replacements land near 137.7, and nothing stops.
 
 ---
@@ -1146,10 +1154,10 @@ example : 2 ^ 32 % 10000000 = 4967296 ∧ 2 ^ 32 / 10000000 = 429 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Swapping each position with any position.** It looks as random as Fisher-Yates, and it uses the same number of draws. But it has $n^n$ equally likely paths, and $n^n$ is not a multiple of $n!$ once $n$ is 3 or more, so some orders must come up more often. For three items, order 132 comes up 5 times in 27, 0.185, against the fair 0.167. The fix is one character: draw from 0 to $i$, not from 0 to $n - 1$.
+> **Swapping each position with any position.** It looks as random as Fisher-Yates, and it uses the same number of draws. But it has $`n^n`$ equally likely paths, and $`n^n`$ is not a multiple of $`n!`$ once $`n`$ is 3 or more, so some orders must come up more often. For three items, order 132 comes up 5 times in 27, 0.185, against the fair 0.167. The fix is one character: draw from 0 to $`i`$, not from 0 to $`n - 1`$.
 >
-> - **Drawing below $i$.** Sattolo's algorithm, not a shuffle: ten items reach 362,880 of their 3,628,800 orders, and nothing stays put.
-> - **Using the one-slot rule with ten slots.** Letting a newcomer in with chance $1/t$ instead of $k/t$ leaves 0.670 of the ten from after noon, where 5 is right.
+> - **Drawing below $`i`$.** Sattolo's algorithm, not a shuffle: ten items reach 362,880 of their 3,628,800 orders, and nothing stays put.
+> - **Using the one-slot rule with ten slots.** Letting a newcomer in with chance $`1/t`$ instead of $`k/t`$ leaves 0.670 of the ten from after noon, where 5 is right.
 > - **A remainder in place of a uniform draw.** A 32-bit draw taken modulo 10,000,000 gives the first 4,967,296 values 430 chances against 429, 0.233% extra weight. Rejecting the uneven top removes it: draw again whenever a draw lands in the highest 4,967,296 values, which costs 0.116% of draws. With 64-bit draws the same bias is far smaller but still not zero.
 
 ---
@@ -1170,7 +1178,7 @@ example : 2 ^ 32 % 10000000 = 4967296 ∧ 2 ^ 32 / 10000000 = 429 := by norm_num
 
 - [Randomised algorithms](01-randomised-algorithms-and-expectation.md): coin flips inside a method and adding expected values, used here to count the writes; its quicksort assumed the uniform shuffle this card builds.
 - [Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md): where the draws come from, SplitMix64, seeds, and why a generator's number of starting points limits what it can shuffle.
-- [Arranging with repeats](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md): counting orders with $n!$, the count every fair shuffle must split evenly.
+- [Arranging with repeats](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md): counting orders with $`n!`$, the count every fair shuffle must split evenly.
 
 ## Where this goes next
 

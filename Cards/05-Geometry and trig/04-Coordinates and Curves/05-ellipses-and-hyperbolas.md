@@ -28,37 +28,41 @@ Drawn at 1 million km = 1 unit; filled dot the sun, open dot the empty focus. Th
 
 Centre the orbit at (0, 0), long axis along the x-axis, in millions of km; the sun is at (20, 0). A point (x, y) is on the orbit when
 
-$$\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1, \qquad c^2 = a^2 - b^2, \qquad e = \frac{c}{a}$$
+```math
+\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1, \qquad c^2 = a^2 - b^2, \qquad e = \frac{c}{a}
+```
 
 **Read it aloud:** across-distance over the long half-axis, squared, plus up-distance over the short half-axis, squared, makes one.
 
 The hyperbola changes one sign in each:
 
-$$\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1, \qquad c^2 = a^2 + b^2$$
+```math
+\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1, \qquad c^2 = a^2 + b^2
+```
 
 **Read it aloud:** the same two squares, one taken from the other, makes one.
 
-The comet shares the foci, (±20, 0), and its distances differ by 32 million km, so $a$ = 16, $b$ = 12, and it passes the sun at 20 − 16 = 4 million km.
+The comet shares the foci, (±20, 0), and its distances differ by 32 million km, so $`a`$ = 16, $`b`$ = 12, and it passes the sun at 20 − 16 = 4 million km.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | position across and up from the centre | T = (60, 78.38) | — |
-| $a$ | half the fixed sum or difference | 100; comet 16 | the curve grows |
-| $b$ | short half-axis; for a hyperbola, the arms' steepness | 97.98; 12 | rounder ellipse; wider arms |
-| $c$ | centre to each focus | 20 | the foci spread apart |
-| $e$ | eccentricity, $c$ divided by $a$ | 0.2; 1.25 | more stretch; past 1, a hyperbola |
-| $L$, $R$ | distances to the empty focus and the sun | 112 and 88 at T | — |
-| $P$, $Q$ | the numbers multiplying $x^2$ and $y^2$ | 24 and 25 | their signs name the curve |
-| $U$, $V$, $W$ | the numbers multiplying $x$ and $y$, and the constant | 960, 0, −230400 | move the curve, not its shape |
+| $`x`$, $`y`$ | position across and up from the centre | T = (60, 78.38) | — |
+| $`a`$ | half the fixed sum or difference | 100; comet 16 | the curve grows |
+| $`b`$ | short half-axis; for a hyperbola, the arms' steepness | 97.98; 12 | rounder ellipse; wider arms |
+| $`c`$ | centre to each focus | 20 | the foci spread apart |
+| $`e`$ | eccentricity, $`c`$ divided by $`a`$ | 0.2; 1.25 | more stretch; past 1, a hyperbola |
+| $`L`$, $`R`$ | distances to the empty focus and the sun | 112 and 88 at T | — |
+| $`P`$, $`Q`$ | the numbers multiplying $`x^2`$ and $`y^2`$ | 24 and 25 | their signs name the curve |
+| $`U`$, $`V`$, $`W`$ | the numbers multiplying $`x`$ and $`y`$, and the constant | 960, 0, −230400 | move the curve, not its shape |
 
-**Telling the four apart.** With its axes along the x- and y-axes, each is $Px^2 + Qy^2 + Ux + Vy + W = 0$. Equal $P$ and $Q$ of one sign: circle, $e$ = 0. Unequal, one sign: ellipse, $e$ below 1. One of them 0: parabola, $e$ = 1. Opposite signs: hyperbola, $e$ above 1.
+**Telling the four apart.** With its axes along the x- and y-axes, each is $`Px^2 + Qy^2 + Ux + Vy + W = 0`$. Equal $`P`$ and $`Q`$ of one sign: circle, $`e`$ = 0. Unequal, one sign: ellipse, $`e`$ below 1. One of them 0: parabola, $`e`$ = 1. Opposite signs: hyperbola, $`e`$ above 1.
 
 ### When it holds
 
 - **No tilt.** A tilted curve gains a term in x times y and the sign test fails; OpenStax 10.4 (Sources) gives the tilted test.
-- **The right gap.** An ellipse needs $2a$ longer than the gap between the foci, $2c$, or it flattens to a segment or vanishes; a hyperbola needs $2a$ between 0 and $2c$.
-- **Which axis is long.** A larger denominator under $y^2$ stands the ellipse upright, foci at (0, ±c); a hyperbola opens along whichever square is positive.
-- **A real curve left over.** $x^2 + y^2 + 1 = 0$ passes the sign test and has no points; completing squares shows it.
+- **The right gap.** An ellipse needs $`2a`$ longer than the gap between the foci, $`2c`$, or it flattens to a segment or vanishes; a hyperbola needs $`2a`$ between 0 and $`2c`$.
+- **Which axis is long.** A larger denominator under $`y^2`$ stands the ellipse upright, foci at (0, ±c); a hyperbola opens along whichever square is positive.
+- **A real curve left over.** $`x^2 + y^2 + 1 = 0`$ passes the sign test and has no points; completing squares shows it.
 
 ---
 
@@ -66,27 +70,31 @@ The comet shares the foci, (±20, 0), and its distances differ by 32 million km,
 
 ### Step 0: one identity serves both curves
 
-For any point (x, y), the distance formula ([Distance and midpoint](01-distance-and-midpoint.md)) gives $L^2 = (x + c)^2 + y^2$ and $R^2 = (x - c)^2 + y^2$. Subtract, and all but one term cancels:
+For any point (x, y), the distance formula ([Distance and midpoint](01-distance-and-midpoint.md)) gives $`L^2 = (x + c)^2 + y^2`$ and $`R^2 = (x - c)^2 + y^2`$. Subtract, and all but one term cancels:
 
-$$L^2 - R^2 = 4cx$$
+```math
+L^2 - R^2 = 4cx
+```
 
-The curves differ only in which of $L + R$ and $L - R$ is fixed.
+The curves differ only in which of $`L + R`$ and $`L - R`$ is fixed.
 
 ### Step 1: a fixed sum splits into two exact distances
 
-On the ellipse $L + R = 2a$. Write the left side of Step 0 as $(L - R)(L + R)$ and divide by $2a$: $L - R = 2cx/a$. Adding and subtracting the two equations:
+On the ellipse $`L + R = 2a`$. Write the left side of Step 0 as $`(L - R)(L + R)`$ and divide by $`2a`$: $`L - R = 2cx/a`$. Adding and subtracting the two equations:
 
-$$L = a + ex, \qquad R = a - ex$$
+```math
+L = a + ex, \qquad R = a - ex
+```
 
-At T, x = 60: R = 100 − 0.2 × 60 = 88, L = 112. The sun's distance is least at x = a, $a - c$ = 80, and greatest at x = −a, $a + c$ = 120.
+At T, x = 60: R = 100 − 0.2 × 60 = 88, L = 112. The sun's distance is least at x = a, $`a - c`$ = 80, and greatest at x = −a, $`a + c`$ = 120.
 
 ### Step 2: square once, and the standard form appears
 
-Set $R = a - ex$ equal to its distance-formula value and square: $(x - c)^2 + y^2 = (a - cx/a)^2$. The $-2cx$ on each side cancels, leaving $x^2(1 - c^2/a^2) + y^2 = a^2 - c^2$. Name $a^2 - c^2$ as $b^2$ and divide by it: the ellipse's equation. At the top both distances are $a$, so centre, focus and top make a right triangle: $b^2 = 100^2 - 20^2$ = 9600, $b$ = 97.98.
+Set $`R = a - ex`$ equal to its distance-formula value and square: $`(x - c)^2 + y^2 = (a - cx/a)^2`$. The $`-2cx`$ on each side cancels, leaving $`x^2(1 - c^2/a^2) + y^2 = a^2 - c^2`$. Name $`a^2 - c^2`$ as $`b^2`$ and divide by it: the ellipse's equation. At the top both distances are $`a`$, so centre, focus and top make a right triangle: $`b^2 = 100^2 - 20^2`$ = 9600, $`b`$ = 97.98.
 
 ### Step 3: a fixed difference flips one sign
 
-On the comet's arm $L - R = 2a$. The same factoring gives $L + R = 2cx/a$ and $R = ex - a$. Squaring as before gives $x^2(c^2/a^2 - 1) - y^2 = c^2 - a^2$. Now $c$ exceeds $a$, so $b^2 = c^2 - a^2$ = 400 − 256 = 144 is positive and the minus lands in the equation. The other arm, $L - R = -2a$, is its mirror image. Far out the arms hug the lines $y = \pm(b/a)x$, the asymptotes: at y = 3000, y ÷ x = 0.7500 = 12 ÷ 16.
+On the comet's arm $`L - R = 2a`$. The same factoring gives $`L + R = 2cx/a`$ and $`R = ex - a`$. Squaring as before gives $`x^2(c^2/a^2 - 1) - y^2 = c^2 - a^2`$. Now $`c`$ exceeds $`a`$, so $`b^2 = c^2 - a^2`$ = 400 − 256 = 144 is positive and the minus lands in the equation. The other arm, $`L - R = -2a`$, is its mirror image. Far out the arms hug the lines $`y = \pm(b/a)x`$, the asymptotes: at y = 3000, y ÷ x = 0.7500 = 12 ÷ 16.
 
 ### The picture: the comet's hyperbola, to scale
 
@@ -96,20 +104,20 @@ Drawn at 1 million km = 3 units. The comet's arm bends round the sun, 4 million 
 
 ### Step 4: eccentricity is one ratio for all four curves
 
-Step 1 gave $R = a - ex = e(a/e - x)$. The bracket is the distance to the upright line $x = a/e$ = 500, the **directrix**. So the sun's distance is always $e$ times the directrix distance: at T, 88 ÷ 440 = 0.2000. The comet's directrix is $x$ = 12.8: at its tip, 4 ÷ 3.2 = 1.2500. Equal distances, $e$ = 1, is the parabola of [Circles and parabolas](04-circles-and-parabolas.md); a circle is an ellipse whose foci have met, $c$ = 0 and so $e$ = 0.
+Step 1 gave $`R = a - ex = e(a/e - x)`$. The bracket is the distance to the upright line $`x = a/e`$ = 500, the **directrix**. So the sun's distance is always $`e`$ times the directrix distance: at T, 88 ÷ 440 = 0.2000. The comet's directrix is $`x`$ = 12.8: at its tip, 4 ÷ 3.2 = 1.2500. Equal distances, $`e`$ = 1, is the parabola of [Circles and parabolas](04-circles-and-parabolas.md); a circle is an ellipse whose foci have met, $`c`$ = 0 and so $`e`$ = 0.
 
 ### Step 5: read the curve off a general equation
 
-With the sun at (0, 0), clearing fractions gives $24x^2 + 25y^2 + 960x - 230400 = 0$. Completing the square in $x$ gives $24(x + 20)^2 + 25y^2$ = a constant, and dividing by it returns the denominators 10000 and 9600. Completing squares shifts the curve without touching $P$ and $Q$: their signs decide the curve, their ratio its shape, $e^2 = 1 - 24/25$.
+With the sun at (0, 0), clearing fractions gives $`24x^2 + 25y^2 + 960x - 230400 = 0`$. Completing the square in $`x`$ gives $`24(x + 20)^2 + 25y^2`$ = a constant, and dividing by it returns the denominators 10000 and 9600. Completing squares shifts the curve without touching $`P`$ and $`Q`$: their signs decide the curve, their ratio its shape, $`e^2 = 1 - 24/25`$.
 
 <details>
 <summary>Detailed proof: squaring adds no false points, and why the sign test works</summary>
 
 Squaring can add points, so the reverse needs checking.
 
-- **Ellipse.** The equation forces $x^2 \le a^2$, so $a - ex \ge a - c > 0$. Substituting $y^2 = b^2(1 - x^2/a^2)$ into $(x - c)^2 + y^2$ gives exactly $(a - ex)^2$, so $R = a - ex$; likewise $L = a + ex$. They add to $2a$.
-- **Hyperbola.** The equation forces $x^2 \ge a^2$. On the right arm $ex - a \ge c - a > 0$, and the same substitution gives $R = ex - a$, $L = ex + a$, differing by $2a$. The left arm mirrors it.
-- **The sign test.** Completed, the equation is $P$ times a square plus $Q$ times a square equals a constant, and the denominators are the constant over $P$ and over $Q$. Same signs throughout give an ellipse with $e^2 = 1 - P/Q$ (taking $P < Q$); opposite signs a hyperbola with $e^2 = 1 + |P/Q|$ (opening along $x$); a zero leaves one variable unsquared, a parabola.
+- **Ellipse.** The equation forces $`x^2 \le a^2`$, so $`a - ex \ge a - c > 0`$. Substituting $`y^2 = b^2(1 - x^2/a^2)`$ into $`(x - c)^2 + y^2`$ gives exactly $`(a - ex)^2`$, so $`R = a - ex`$; likewise $`L = a + ex`$. They add to $`2a`$.
+- **Hyperbola.** The equation forces $`x^2 \ge a^2`$. On the right arm $`ex - a \ge c - a > 0`$, and the same substitution gives $`R = ex - a`$, $`L = ex + a`$, differing by $`2a`$. The left arm mirrors it.
+- **The sign test.** Completed, the equation is $`P`$ times a square plus $`Q`$ times a square equals a constant, and the denominators are the constant over $`P`$ and over $`Q`$. Same signs throughout give an ellipse with $`e^2 = 1 - P/Q`$ (taking $`P < Q`$); opposite signs a hyperbola with $`e^2 = 1 + |P/Q|`$ (opening along $`x`$); a zero leaves one variable unsquared, a parabola.
 
 </details>
 
@@ -121,31 +129,31 @@ Another route names them: each is a flat slice of a double cone, hence "conic"; 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| centre to focus | $c = ae$ = 100 × 0.2 | 20 million km |
-| short half-axis | $b = \sqrt{100^2 - 20^2} = \sqrt{9600}$ | 97.98 million km |
-| perihelion, aphelion | $a - c$, $a + c$ | **80 and 120 million km** |
-| T, 60 across | $R = a - ex$ = 100 − 12; $L$ = 100 + 12 | 88 + 112 = 200 |
+| centre to focus | $`c = ae`$ = 100 × 0.2 | 20 million km |
+| short half-axis | $`b = \sqrt{100^2 - 20^2} = \sqrt{9600}`$ | 97.98 million km |
+| perihelion, aphelion | $`a - c`$, $`a + c`$ | **80 and 120 million km** |
+| T, 60 across | $`R = a - ex`$ = 100 − 12; $`L`$ = 100 + 12 | 88 + 112 = 200 |
 | directrix check | 88 ÷ (500 − 60) | 0.2000 |
-| comet | $b = \sqrt{20^2 - 16^2}$; $e$ = 20 ÷ 16 | 12; **1.2500** |
+| comet | $`b = \sqrt{20^2 - 16^2}`$; $`e`$ = 20 ÷ 16 | 12; **1.2500** |
 
-The planet's distance from its sun swings between 80 and 120 million km; the comet's $e$ above 1 marks a path that never closes.
+The planet's distance from its sun swings between 80 and 120 million km; the comet's $`e`$ above 1 marks a path that never closes.
 
 The sign test from The formula names all four curves from their equations:
 
-| Equation | $P$, $Q$ | Curve | $e$ |
+| Equation | $`P`$, $`Q`$ | Curve | $`e`$ |
 | --- | --- | --- | --- |
-| $24x^2 + 25y^2 + 960x - 230400 = 0$, orbit | 24, 25 | ellipse | 0.2000 |
-| $9x^2 - 16y^2 - 2304 = 0$, comet | 9, −16 | hyperbola | 1.2500 |
-| $x^2 + y^2 - 10000 = 0$, round orbit | 1, 1 | circle | 0.0000 |
-| $y^2 - 16x - 64 = 0$, escaping comet | 0, 1 | parabola | 1.0000 |
+| $`24x^2 + 25y^2 + 960x - 230400 = 0`$, orbit | 24, 25 | ellipse | 0.2000 |
+| $`9x^2 - 16y^2 - 2304 = 0`$, comet | 9, −16 | hyperbola | 1.2500 |
+| $`x^2 + y^2 - 10000 = 0`$, round orbit | 1, 1 | circle | 0.0000 |
+| $`y^2 - 16x - 64 = 0`$, escaping comet | 0, 1 | parabola | 1.0000 |
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Ellipse focus from $\sqrt{a^2 + b^2}$ | 140.00, outside the orbit | the hyperbola's rule |
-| Perihelion as $a - b$ | 2.02 million km | $b$ is not the sun's offset |
-| Comet focus from $\sqrt{a^2 - b^2}$ | 10.58, inside the tip at 16 | the ellipse's rule |
+| Ellipse focus from $`\sqrt{a^2 + b^2}`$ | 140.00, outside the orbit | the hyperbola's rule |
+| Perihelion as $`a - b`$ | 2.02 million km | $`b`$ is not the sun's offset |
+| Comet focus from $`\sqrt{a^2 - b^2}`$ | 10.58, inside the tip at 16 | the ellipse's rule |
 
 ---
 
@@ -352,10 +360,10 @@ ALL CHECKS PASS
 
 Lean proves these facts for every size of curve with the right gap, foci at (−c, 0) and (c, 0).
 
-- Ellipse: a point's distances to the foci add to $2a$ exactly when $x^2/a^2 + y^2/b^2 = 1$, with $b^2 = a^2 - c^2$.
-- Hyperbola: the distances differ by $2a$, either one the larger, exactly when $x^2/a^2 - y^2/b^2 = 1$, with $b^2 = c^2 - a^2$.
-- On the ellipse, $R = a - ex$ and $L = a + ex$, so the sun's distance stays between $a - c$ and $a + c$.
-- The card's exact numbers: 80 and 120, 88 and 112 at T, $b^2$ = 9600 and 144, both directrix ratios, and both general equations.
+- Ellipse: a point's distances to the foci add to $`2a`$ exactly when $`x^2/a^2 + y^2/b^2 = 1`$, with $`b^2 = a^2 - c^2`$.
+- Hyperbola: the distances differ by $`2a`$, either one the larger, exactly when $`x^2/a^2 - y^2/b^2 = 1`$, with $`b^2 = c^2 - a^2`$.
+- On the ellipse, $`R = a - ex`$ and $`L = a + ex`$, so the sun's distance stays between $`a - c`$ and $`a + c`$.
+- The card's exact numbers: 80 and 120, 88 and 112 at T, $`b^2`$ = 9600 and 144, both directrix ratios, and both general equations.
 
 The sign test, the halving searches, the asymptotes and decimals such as 97.98 are left to the Python and Rust checks.
 
@@ -590,7 +598,7 @@ example : 1 + (9 : ℚ) / 16 = (5 / 4) ^ 2 := by norm_num
 > [!warning]
 > **Putting the sun at the centre.** It sits at a focus, 20 million km off centre. Centred, the planet would stay 100.00 million km away; the real distance runs from 80 to 120.
 >
-> - **Reading $a$ and $b$ as the denominators.** They are the square roots: denominators 10000 and 9600, half-axes 100 and 97.98.
+> - **Reading $`a`$ and $`b`$ as the denominators.** They are the square roots: denominators 10000 and 9600, half-axes 100 and 97.98.
 
 ---
 
@@ -601,7 +609,7 @@ example : 1 + (9 : ℚ) / 16 = (5 / 4) ^ 2 := by norm_num
 - **Drawing it.** Stepping a point round an ellipse by a clock-like parameter is [Parametric curves](06-parametric-curves.md).
 
 > **Say it back**
-> An ellipse fixes the sum of the distances to two foci; a hyperbola fixes their difference. In coordinates that is a plus or a minus between two squares. The eccentricity $e = c/a$ is 0 for a circle, below 1 for an ellipse, 1 for a parabola, above 1 for a hyperbola, and the signs of an equation's $x^2$ and $y^2$ numbers say which. An orbit of eccentricity 0.2 and half-axis 100 million km keeps its sun between 80 and 120 million km away.
+> An ellipse fixes the sum of the distances to two foci; a hyperbola fixes their difference. In coordinates that is a plus or a minus between two squares. The eccentricity $`e = c/a`$ is 0 for a circle, below 1 for an ellipse, 1 for a parabola, above 1 for a hyperbola, and the signs of an equation's $`x^2`$ and $`y^2`$ numbers say which. An orbit of eccentricity 0.2 and half-axis 100 million km keeps its sun between 80 and 120 million km away.
 
 ---
 

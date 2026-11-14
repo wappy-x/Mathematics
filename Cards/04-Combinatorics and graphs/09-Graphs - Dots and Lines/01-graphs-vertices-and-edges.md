@@ -36,36 +36,42 @@ The ring A-B-C-D-E-F-A carries six lines; B-E and C-F are the crossings.
 
 ## The formula
 
-Notation first, in words. The dots are **vertices** — one is a vertex — collected as $V$; the lines are **edges**, collected as $E$. Two stations a line joins are **adjacent**, each the other's neighbour. An edge has no order: A-B and B-A name one line. A graph is the two lists:
+Notation first, in words. The dots are **vertices** — one is a vertex — collected as $`V`$; the lines are **edges**, collected as $`E`$. Two stations a line joins are **adjacent**, each the other's neighbour. An edge has no order: A-B and B-A name one line. A graph is the two lists:
 
-$$G = (V, E)$$
+```math
+G = (V, E)
+```
 
 **Read it aloud:** a graph is a set of stations, plus the station pairs a line joins.
 
-Here $V$ is A to F, $E$ the eight pairs above, and $n$ the number of vertices, six; bars count members, so $\lvert E\rvert$ is 8. One row per station naming its neighbours holds the same map — the **adjacency list**, which the code prints.
+Here $`V`$ is A to F, $`E`$ the eight pairs above, and $`n`$ the number of vertices, six; bars count members, so $`\lvert E\rvert`$ is 8. One row per station naming its neighbours holds the same map — the **adjacency list**, which the code prints.
 
-An edge is an unordered pair of different stations, so the pairs available are the two-element subsets of $V$, counted by C(6, 2), read "six choose two" ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)):
+An edge is an unordered pair of different stations, so the pairs available are the two-element subsets of $`V`$, counted by C(6, 2), read "six choose two" ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)):
 
-$$\lvert E\rvert \;\le\; C(n, 2) \;=\; \frac{n(n-1)}{2}$$
+```math
+\lvert E\rvert \;\le\; C(n, 2) \;=\; \frac{n(n-1)}{2}
+```
 
 **Read it aloud:** the lines can never outnumber the pairs of stations, so 15 are possible and the city runs 8.
 
-A renaming $f$ matches the stations of one map one-to-one onto those of the other ([Relations](../../01-Foundations/08-Relations%20and%20Functions/01-relations.md)). It makes them **isomorphic** — "the same graph, differently named" — when
+A renaming $`f`$ matches the stations of one map one-to-one onto those of the other ([Relations](../../01-Foundations/08-Relations%20and%20Functions/01-relations.md)). It makes them **isomorphic** — "the same graph, differently named" — when
 
-$$u\text{-}v \text{ is an edge of the first} \quad\text{exactly when}\quad f(u)\text{-}f(v) \text{ is an edge of the second}$$
+```math
+u\text{-}v \text{ is an edge of the first} \quad\text{exactly when}\quad f(u)\text{-}f(v) \text{ is an edge of the second}
+```
 
 **Read it aloud:** a line must stand in the second map exactly where one stood in the first.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | one graph, dots and pairs only | the ring map | — |
-| $V$ | the vertices: the dots, here stations | A to F | — |
-| $E$ | the edges: the joined pairs | the eight lines | a fuller map |
-| $\lvert E\rvert$ | how many lines | 8 | — |
-| $n$ | how many vertices | 6 | the ceiling climbs with n squared |
-| $C(n, 2)$ | n choose 2: the pairs available | C(6, 2) = 15 | — |
-| $u$, $v$ | two stations | A and B | — |
-| $f$ | the renaming, station by station | 3 is A, 1 is B, 5 is C, 2 is D, 6 is E, 4 is F | — |
+| $`G`$ | one graph, dots and pairs only | the ring map | — |
+| $`V`$ | the vertices: the dots, here stations | A to F | — |
+| $`E`$ | the edges: the joined pairs | the eight lines | a fuller map |
+| $`\lvert E\rvert`$ | how many lines | 8 | — |
+| $`n`$ | how many vertices | 6 | the ceiling climbs with n squared |
+| $`C(n, 2)`$ | n choose 2: the pairs available | C(6, 2) = 15 | — |
+| $`u`$, $`v`$ | two stations | A and B | — |
+| $`f`$ | the renaming, station by station | 3 is A, 1 is B, 5 is C, 2 is D, 6 is E, 4 is F | — |
 
 ### When it holds
 

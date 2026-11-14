@@ -38,55 +38,61 @@ The line falling to the right is the 0 percent floorlet: $30,000 if prices fall 
 
 Notation first, in words.
 
-- $y_i$ is the **year-on-year rate** for year $i$: the index at the end of year $i$ over the index at its start, minus one.
-- $M$ is the notional, the dollar amount the rate is paid on; $n$ is the number of yearly fixings; and $T_i$ is the date, in years, when year $i$ fixes and pays.
-- $F$ is the **forward** year-on-year rate: what the market expects $y_i$ to be, read from inflation swaps. $K$ is the strike.
-- $a$ is the **shift**, slid onto rate and strike alike; the slid pair get their own letters, $G = F + a$ and $L = K + a$.
-- $\sigma$, say "sigma", is the volatility of the slid rate, a yearly fraction of itself, and $w = \sigma\sqrt{T_i}$ is one **wiggle unit** for year $i$.
-- $D(T)$ is the **discount factor**: what one dollar paid at time $T$ costs today, $(1 + r_N)^{-T}$ with $r_N$ the nominal yearly rate.
-- $N(x)$ is the bell-curve area left of $x$, a chance between 0 and 1. The sign $\sum_{i=1}^{n}$ means "add the terms for $i = 1, 2, \ldots, n$".
+- $`y_i`$ is the **year-on-year rate** for year $`i`$: the index at the end of year $`i`$ over the index at its start, minus one.
+- $`M`$ is the notional, the dollar amount the rate is paid on; $`n`$ is the number of yearly fixings; and $`T_i`$ is the date, in years, when year $`i`$ fixes and pays.
+- $`F`$ is the **forward** year-on-year rate: what the market expects $`y_i`$ to be, read from inflation swaps. $`K`$ is the strike.
+- $`a`$ is the **shift**, slid onto rate and strike alike; the slid pair get their own letters, $`G = F + a`$ and $`L = K + a`$.
+- $`\sigma`$, say "sigma", is the volatility of the slid rate, a yearly fraction of itself, and $`w = \sigma\sqrt{T_i}`$ is one **wiggle unit** for year $`i`$.
+- $`D(T)`$ is the **discount factor**: what one dollar paid at time $`T`$ costs today, $`(1 + r_N)^{-T}`$ with $`r_N`$ the nominal yearly rate.
+- $`N(x)`$ is the bell-curve area left of $`x`$, a chance between 0 and 1. The sign $`\sum_{i=1}^{n}`$ means "add the terms for $`i = 1, 2, \ldots, n`$".
 - A **basis point** is one hundredth of a percent, 0.0001.
 
-$$P = \sum_{i=1}^{n} M\,D(T_i)\,\bigl[\,L\,N(-d_{2,i}) - G\,N(-d_{1,i})\,\bigr], \qquad C = \sum_{i=1}^{n} M\,D(T_i)\,\bigl[\,G\,N(d_{1,i}) - L\,N(d_{2,i})\,\bigr]$$
+```math
+P = \sum_{i=1}^{n} M\,D(T_i)\,\bigl[\,L\,N(-d_{2,i}) - G\,N(-d_{1,i})\,\bigr], \qquad C = \sum_{i=1}^{n} M\,D(T_i)\,\bigl[\,G\,N(d_{1,i}) - L\,N(d_{2,i})\,\bigr]
+```
 
 **Read it aloud:** the floor is a sum of Black puts, one per year, each on the slid inflation rate against the slid strike, each discounted from its own payment date; the cap is the same sum of calls.
 
-$$d_{1,i} = \frac{\ln(G/L) + \tfrac12\sigma^2 T_i}{\sigma\sqrt{T_i}}, \qquad d_{2,i} = d_{1,i} - \sigma\sqrt{T_i}$$
+```math
+d_{1,i} = \frac{\ln(G/L) + \tfrac12\sigma^2 T_i}{\sigma\sqrt{T_i}}, \qquad d_{2,i} = d_{1,i} - \sigma\sqrt{T_i}
+```
 
-$d_{1,i}$ counts how many wiggle units the slid rate sits above the slid strike, plus half a unit; $d_{2,i}$ is one unit lower. They carry the year's index $i$ because the wiggle unit grows with the wait.
+$`d_{1,i}`$ counts how many wiggle units the slid rate sits above the slid strike, plus half a unit; $`d_{2,i}`$ is one unit lower. They carry the year's index $`i`$ because the wiggle unit grows with the wait.
 
 One identity ties cap and floor together, at any single strike:
 
-$$C - P = \sum_{i=1}^{n} M\,D(T_i)\,(F - K)$$
+```math
+C - P = \sum_{i=1}^{n} M\,D(T_i)\,(F - K)
+```
 
-**Read it aloud:** owning the cap and owing the floor at the same strike pays $y_i - K$ every year, which is an inflation swap, and a swap needs no volatility at all.
+**Read it aloud:** owning the cap and owing the floor at the same strike pays $`y_i - K`$ every year, which is an inflation swap, and a swap needs no volatility at all.
 
 | Symbol | Plain meaning | In our example | Push it up and the floor… |
 | --- | --- | --- | --- |
-| $P$, $C$ | the premium of the floor and of the cap | $1,268.01 at 0 percent; $7,264.41 at 5 percent | — |
-| $y_i$, $I(t)$ | year $i$'s inflation rate, and the price index it is read from | unknown today | — |
-| $M$, $n$, $i$, $T_i$, $T$ | notional, number of yearly fixings, the year's count, year $i$'s fixing-and-payment date, a time in years | $1,000,000; 5; 1 to 5; 1 to 5 years | more fixings: dearer, each added year the dearest so far |
-| $F$, $b$ | the forward year-on-year rate, and the zero-coupon breakeven it comes from | 2.5 percent; 2.5 percent | falls by $12.15 per basis point |
-| $K$ | the strike | 0 percent for the floor, 5 percent for the cap | rises: $76.33 at −1 percent, $6,809.72 at +1 percent |
-| $a$ | the shift; the model's wall sits at $-a$ | 3 percent | with $\sigma$ held, rises: $6.96 at a 1 percent shift |
-| $G$, $L$ | the slid rate $F + a$ and slid strike $K + a$ | 5.5 percent and 3 percent | — |
-| $\sigma$, $w$ | the slid rate's volatility, and one wiggle unit $\sigma\sqrt{T_i}$ | 20 percent; 0.447214 in year 5 | rises by $283.16 per volatility point |
-| $D(T)$, $r_N$ | the nominal discount factor $(1 + r_N)^{-T}$, and the nominal yearly rate | $D(5) = 0.840957$; 3.525 percent | rises in proportion to $D$, so falls as $r_N$ rises |
-| $N(x)$, $\phi(x)$ | the bell-curve area left of $x$, and the curve's height at $x$ | $N(-d_{2,5}) = 0.128869$ | — |
-| $d_1$, $d_2$ | the two cut-offs, in wiggle units, for one year | 1.578968 and 1.131754 in year 5 | — |
-| $\rho$, $v_I$, $v_P$, $P_R$, $J$ | Step 4's correlation, the spreads of the index and of a future real bond price, that bond price, and the index at the year's start | 0.5; each $0.01\sqrt{T_{i-1}}$ | — |
+| $`P`$, $`C`$ | the premium of the floor and of the cap | $1,268.01 at 0 percent; $7,264.41 at 5 percent | — |
+| $`y_i`$, $`I(t)`$ | year $`i`$'s inflation rate, and the price index it is read from | unknown today | — |
+| $`M`$, $`n`$, $`i`$, $`T_i`$, $`T`$ | notional, number of yearly fixings, the year's count, year $`i`$'s fixing-and-payment date, a time in years | $1,000,000; 5; 1 to 5; 1 to 5 years | more fixings: dearer, each added year the dearest so far |
+| $`F`$, $`b`$ | the forward year-on-year rate, and the zero-coupon breakeven it comes from | 2.5 percent; 2.5 percent | falls by $12.15 per basis point |
+| $`K`$ | the strike | 0 percent for the floor, 5 percent for the cap | rises: $76.33 at −1 percent, $6,809.72 at +1 percent |
+| $`a`$ | the shift; the model's wall sits at $`-a`$ | 3 percent | with $`\sigma`$ held, rises: $6.96 at a 1 percent shift |
+| $`G`$, $`L`$ | the slid rate $`F + a`$ and slid strike $`K + a`$ | 5.5 percent and 3 percent | — |
+| $`\sigma`$, $`w`$ | the slid rate's volatility, and one wiggle unit $`\sigma\sqrt{T_i}`$ | 20 percent; 0.447214 in year 5 | rises by $283.16 per volatility point |
+| $`D(T)`$, $`r_N`$ | the nominal discount factor $`(1 + r_N)^{-T}`$, and the nominal yearly rate | $`D(5) = 0.840957`$; 3.525 percent | rises in proportion to $`D`$, so falls as $`r_N`$ rises |
+| $`N(x)`$, $`\phi(x)`$ | the bell-curve area left of $`x`$, and the curve's height at $`x`$ | $`N(-d_{2,5}) = 0.128869`$ | — |
+| $`d_1`$, $`d_2`$ | the two cut-offs, in wiggle units, for one year | 1.578968 and 1.131754 in year 5 | — |
+| $`\rho`$, $`v_I`$, $`v_P`$, $`P_R`$, $`J`$ | Step 4's correlation, the spreads of the index and of a future real bond price, that bond price, and the index at the year's start | 0.5; each $`0.01\sqrt{T_{i-1}}`$ | — |
 
-The nominal rate comes from the shelf's first card, the Fisher relation: $1 + r_N = 1.01 \times 1.025$, so 3.525 percent ([Real rates](01-real-rates-and-the-fisher-equation.md)).
+The nominal rate comes from the shelf's first card, the Fisher relation: $`1 + r_N = 1.01 \times 1.025`$, so 3.525 percent ([Real rates](01-real-rates-and-the-fisher-equation.md)).
 
 ### When it holds
 
-- **Each year's slid rate is lognormal with one volatility.** An assumption. Move $\sigma$ from 20 to 30 percent and the floor goes from $1,268.01 to $5,649.28; the answer is mostly volatility.
-- **The wall at $-a$ is below anything that can happen.** The model gives zero chance to inflation below −3 percent. A floor struck near the wall is priced mostly by that choice.
+- **Each year's slid rate is lognormal with one volatility.** An assumption. Move $`\sigma`$ from 20 to 30 percent and the floor goes from $1,268.01 to $5,649.28; the answer is mostly volatility.
+- **The wall at $`-a`$ is below anything that can happen.** The model gives zero chance to inflation below −3 percent. A floor struck near the wall is priced mostly by that choice.
 - **The forward is the zero-coupon breakeven, uncorrected.** Exact only if the index and future real rates move independently. Step 4 sizes the error: 2.05 basis points on year 5 here, 9.73 on year 20.
-- **Uncertainty runs to the fixing date.** Year $i$'s rate depends on the index at $T_i$, so its wiggle unit uses $T_i$. Cutting it at the start of the year halves the floor, to $638.64.
+- **Uncertainty runs to the fixing date.** Year $`i`$'s rate depends on the index at $`T_i`$, so its wiggle unit uses $`T_i`$. Cutting it at the start of the year halves the floor, to $638.64.
 - **Payment on the fixing date, discounted at the nominal rate.** The cash is dollars. Discounting at the real rate gives $1,407.47.
 
-**Conventions verified 28 Sep 2026:** US Treasury inflation-protected bonds repay the greater of the inflation-adjusted principal and the original principal (TreasuryDirect). Real contracts read the index with a publication lag of some months; this card ignores the lag and reads each fixing on its own date. Rates are yearly compounded, $T$ in years.
+**Conventions verified 28 Sep 2026:** US Treasury inflation-protected bonds repay the greater of the inflation-adjusted principal and the original principal (TreasuryDirect). Real contracts read the index with a publication lag of some months; this card ignores the lag and reads each fixing on its own date. Rates are yearly compounded, $`T`$ in years.
 
 ---
 
@@ -98,9 +104,11 @@ Each floorlet pays on one year's rate and nothing else. The price of a sum of pa
 
 ### Step 1: the forward rate comes from inflation swaps
 
-A zero-coupon inflation swap fixes today the growth $(1 + b)^{T}$ that the index is expected to show by time $T$ ([Inflation swaps](04-zero-coupon-inflation-swaps.md)). Divide the expected growth to the end of year $i$ by the growth to its start:
+A zero-coupon inflation swap fixes today the growth $`(1 + b)^{T}`$ that the index is expected to show by time $`T`$ ([Inflation swaps](04-zero-coupon-inflation-swaps.md)). Divide the expected growth to the end of year $`i`$ by the growth to its start:
 
-$$1 + F_i \approx \frac{(1 + b)^{T_i}}{(1 + b)^{T_{i-1}}}$$
+```math
+1 + F_i \approx \frac{(1 + b)^{T_i}}{(1 + b)^{T_{i-1}}}
+```
 
 On a flat 2.5 percent breakeven every year's forward is 2.5 percent. The sign is "approximately", on purpose. The ratio of two averages is not the average of a ratio; Step 4 prices the gap.
 
@@ -108,15 +116,17 @@ On a flat 2.5 percent breakeven every year's forward is 2.5 percent. The sign is
 
 Black's rule moves a quantity in percentage steps, so it stays above zero forever. Inflation does not. At a zero strike, plain Black returns $0.00 for the whole floor, while the floorlets are real insurance.
 
-The slide from [Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md) fixes it. The floorlet pays $\max(K - y_i, 0)$. Add $a$ to both: $\max\bigl(L - (y_i + a), 0\bigr)$. Same payment at every outcome, since only the gap enters. The model assumption moves onto $y_i + a$, which is taken to be lognormal and fair on average:
+The slide from [Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md) fixes it. The floorlet pays $`\max(K - y_i, 0)`$. Add $`a`$ to both: $`\max\bigl(L - (y_i + a), 0\bigr)`$. Same payment at every outcome, since only the gap enters. The model assumption moves onto $`y_i + a`$, which is taken to be lognormal and fair on average:
 
-$$y_i + a = G\,\exp\!\left(-\tfrac12 w^2 + w Z\right), \qquad Z \ \text{a standard bell-curve draw}$$
+```math
+y_i + a = G\,\exp\!\left(-\tfrac12 w^2 + w Z\right), \qquad Z \ \text{a standard bell-curve draw}
+```
 
-The $-\tfrac12 w^2$ is the drag that keeps the average at $G$, so the average of $y_i$ is $F$, the swap market's number. The smallest $y_i$ can be is $-a$: the wall.
+The $`-\tfrac12 w^2`$ is the drag that keeps the average at $`G`$, so the average of $`y_i`$ is $`F`$, the swap market's number. The smallest $`y_i`$ can be is $`-a`$: the wall.
 
 ### Step 3: average the payment, discount it, add up the years
 
-A floorlet is a put on $y_i + a$ with strike $L$. Average its payment over the bell curve and discount from $T_i$: that is Black's put on the slid pair, the bracket in the formula. The folded proof does the integral. The five years, one block per $15:
+A floorlet is a put on $`y_i + a`$ with strike $`L`$. Average its payment over the bell curve and discount from $`T_i`$: that is Black's put on the slid pair, the bracket in the formula. The folded proof does the integral. The five years, one block per $15:
 
 ```
 floorlet premiums, 0 percent strike, $1,000,000 notional, one block = $15
@@ -127,41 +137,47 @@ year 4   ███████████████████████�
 year 5   ████████████████████████████████████████▍     $606.85
 ```
 
-Year 1 is almost free: one year is little time for the slid rate to fall from 5.5 to 3 percent at a 20 percent volatility. By year 5 the wiggle unit is $\sqrt 5$ times as wide, and that outweighs the extra discounting. The sum is $1,268.01, and the last two years carry most of it.
+Year 1 is almost free: one year is little time for the slid rate to fall from 5.5 to 3 percent at a 20 percent volatility. By year 5 the wiggle unit is $`\sqrt 5`$ times as wide, and that outweighs the extra discounting. The sum is $1,268.01, and the last two years carry most of it.
 
 <details>
 <summary>Detailed proof: the floorlet integral, and parity</summary>
 
-Write $g(z) = G e^{-w^2/2 + wz}$ for the slid rate at draw $z$. The floorlet pays where $g(z) < L$, that is where $z < \left[\ln(L/G) + \tfrac12 w^2\right]/w = -d_2$. So its undiscounted value is
-$$\int_{-\infty}^{-d_2}\bigl(L - g(z)\bigr)\,\phi(z)\,\mathrm{d}z .$$
-The strike piece is $L$ times the area left of $-d_2$, which is $L\,N(-d_2)$. For the rate piece, complete the square: $e^{-w^2/2 + wz}\phi(z) = \phi(z - w)$, the same curve moved right by $w$. Substituting $u = z - w$ moves the upper limit to $-d_2 - w = -d_1$, so that piece is $G\,N(-d_1)$. Multiply by $M\,D(T_i)$ and sum over the years: that is $P$. The cap integrates above $-d_2$ and gives $C$.
+Write $`g(z) = G e^{-w^2/2 + wz}`$ for the slid rate at draw $`z`$. The floorlet pays where $`g(z) < L`$, that is where $`z < \left[\ln(L/G) + \tfrac12 w^2\right]/w = -d_2`$. So its undiscounted value is
 
-Parity: at one strike, $\max(y - K, 0) - \max(K - y, 0) = y - K$ at every outcome. Its average is $F - K$ because the drag keeps the mean of $y_i$ at $F$. Discount and sum. The check prices the cap by its own integral and lands on the swap value, $112,796.43, to the printed digit.
+$`\displaystyle \int_{-\infty}^{-d_2}\bigl(L - g(z)\bigr)\,\phi(z)\,\mathrm{d}z .`$
+
+The strike piece is $`L`$ times the area left of $`-d_2`$, which is $`L\,N(-d_2)`$. For the rate piece, complete the square: $`e^{-w^2/2 + wz}\phi(z) = \phi(z - w)`$, the same curve moved right by $`w`$. Substituting $`u = z - w`$ moves the upper limit to $`-d_2 - w = -d_1`$, so that piece is $`G\,N(-d_1)`$. Multiply by $`M\,D(T_i)`$ and sum over the years: that is $`P`$. The cap integrates above $`-d_2`$ and gives $`C`$.
+
+Parity: at one strike, $`\max(y - K, 0) - \max(K - y, 0) = y - K`$ at every outcome. Its average is $`F - K`$ because the drag keeps the mean of $`y_i`$ at $`F`$. Discount and sum. The check prices the cap by its own integral and lands on the swap value, $112,796.43, to the printed digit.
 
 </details>
 
 ### Step 4: what the outline leaves out, sized
 
-Look at what year $i$'s payment $1 + y_i$ is worth at the start of that year, $T_{i-1}$. The index at $T_{i-1}$ is known by then. A claim on the index one year later, divided by a known number, is a one-year **real bond**: a bond whose repayment rises with prices. Its price at $T_{i-1}$, written $P_R$, depends on real interest rates at that future date, which are unknown today.
+Look at what year $`i`$'s payment $`1 + y_i`$ is worth at the start of that year, $`T_{i-1}`$. The index at $`T_{i-1}`$ is known by then. A claim on the index one year later, divided by a known number, is a one-year **real bond**: a bond whose repayment rises with prices. Its price at $`T_{i-1}`$, written $`P_R`$, depends on real interest rates at that future date, which are unknown today.
 
-Zero-coupon swaps price only the product: the index at $T_{i-1}$ times that future bond price, which together make a bond maturing at $T_i$. Dividing out the index's average leaves the bond price's average only when the two are uncorrelated. If they tend to rise together, the product's average is lifted by that, and the bond price's own average is lower than the ratio says.
+Zero-coupon swaps price only the product: the index at $`T_{i-1}`$ times that future bond price, which together make a bond maturing at $`T_i`$. Dividing out the index's average leaves the bond price's average only when the two are uncorrelated. If they tend to rise together, the product's average is lifted by that, and the bond price's own average is lower than the ratio says.
 
 In a toy with the nominal rate fixed and the index and the future real bond price both lognormal, the fix is one factor:
 
-$$1 + F_i = (1 + b)\,e^{-\rho\,v_I\,v_P}$$
+```math
+1 + F_i = (1 + b)\,e^{-\rho\,v_I\,v_P}
+```
 
-Here $\rho$ is the correlation between the index at $T_{i-1}$ and the real bond price then, and $v_I$ and $v_P$ are their spreads, each $0.01\sqrt{T_{i-1}}$ at a 1 percent yearly volatility. In year 1 the start-of-year index is today's, so $v_I = 0$ and nothing changes. With $\rho = 0.5$ the year-5 forward drops to 2.479502 percent, 2.05 basis points down, and a year-20 fixing drops 9.73 basis points. Reprice the floor on the corrected forwards: $1,286.83 instead of $1,268.01. The sign follows $\rho$; a negative correlation raises the forwards instead.
+Here $`\rho`$ is the correlation between the index at $`T_{i-1}`$ and the real bond price then, and $`v_I`$ and $`v_P`$ are their spreads, each $`0.01\sqrt{T_{i-1}}`$ at a 1 percent yearly volatility. In year 1 the start-of-year index is today's, so $`v_I = 0`$ and nothing changes. With $`\rho = 0.5`$ the year-5 forward drops to 2.479502 percent, 2.05 basis points down, and a year-20 fixing drops 9.73 basis points. Reprice the floor on the corrected forwards: $1,286.83 instead of $1,268.01. The sign follows $`\rho`$; a negative correlation raises the forwards instead.
 
 <details>
 <summary>Detailed proof: the convexity factor</summary>
 
-Fix nominal rates, so the nominal discount factors are known numbers, and write $\mathbb{E}$ for the average under the pricing measure. Write $J = I(T_{i-1})$ for the index at the start of year $i$ and $P_R$ for the price then of the one-year real bond.
+Fix nominal rates, so the nominal discount factors are known numbers, and write $`\mathbb{E}`$ for the average under the pricing measure. Write $`J = I(T_{i-1})`$ for the index at the start of year $`i`$ and $`P_R`$ for the price then of the one-year real bond.
 
-Three facts. The payment $1 + y_i$ at $T_i$ is worth $P_R$ at $T_{i-1}$, so $1 + F_i = \dfrac{D(T_{i-1})}{D(T_i)}\,\mathbb{E}[P_R]$. The real bond to $T_{i-1}$ gives $D(T_{i-1})\,\mathbb{E}[J] = I(0)\,P_R(0, T_{i-1})$. The real bond to $T_i$, held to $T_{i-1}$, is worth $J P_R$ then, so $D(T_{i-1})\,\mathbb{E}[J P_R] = I(0)\,P_R(0, T_i)$.
+Three facts. The payment $`1 + y_i`$ at $`T_i`$ is worth $`P_R`$ at $`T_{i-1}`$, so $`1 + F_i = \dfrac{D(T_{i-1})}{D(T_i)}\,\mathbb{E}[P_R]`$. The real bond to $`T_{i-1}`$ gives $`D(T_{i-1})\,\mathbb{E}[J] = I(0)\,P_R(0, T_{i-1})`$. The real bond to $`T_i`$, held to $`T_{i-1}`$, is worth $`J P_R`$ then, so $`D(T_{i-1})\,\mathbb{E}[J P_R] = I(0)\,P_R(0, T_i)`$.
 
-For two lognormal quantities with log-spreads $v_I$, $v_P$ and correlation $\rho$, $\mathbb{E}[J P_R] = \mathbb{E}[J]\,\mathbb{E}[P_R]\,e^{\rho v_I v_P}$: complete the square in the joint bell curve. Solve for $\mathbb{E}[P_R]$ from the last two facts, put it in the first, and use $P_R(0,T)/D(T) = (1+b)^T$ from the swap card:
-$$1 + F_i = \frac{P_R(0,T_i)}{P_R(0,T_{i-1})}\,\frac{D(T_{i-1})}{D(T_i)}\,e^{-\rho v_I v_P} = (1 + b)\,e^{-\rho v_I v_P}.$$
-The check computes $\mathbb{E}\bigl[e^{v_I z_1 - v_I^2/2}\,e^{v_P z_2 - v_P^2/2}\bigr]$ for correlated draws by a two-dimensional Simpson sum, with no completed square, and gets 1.000950 for year 20, matching $e^{\rho v_I v_P}$.
+For two lognormal quantities with log-spreads $`v_I`$, $`v_P`$ and correlation $`\rho`$, $`\mathbb{E}[J P_R] = \mathbb{E}[J]\,\mathbb{E}[P_R]\,e^{\rho v_I v_P}`$: complete the square in the joint bell curve. Solve for $`\mathbb{E}[P_R]`$ from the last two facts, put it in the first, and use $`P_R(0,T)/D(T) = (1+b)^T`$ from the swap card:
+
+$`\displaystyle 1 + F_i = \frac{P_R(0,T_i)}{P_R(0,T_{i-1})}\,\frac{D(T_{i-1})}{D(T_i)}\,e^{-\rho v_I v_P} = (1 + b)\,e^{-\rho v_I v_P}.`$
+
+The check computes $`\mathbb{E}\bigl[e^{v_I z_1 - v_I^2/2}\,e^{v_P z_2 - v_P^2/2}\bigr]`$ for correlated draws by a two-dimensional Simpson sum, with no completed square, and gets 1.000950 for year 20, matching $`e^{\rho v_I v_P}`$.
 
 </details>
 
@@ -169,7 +185,7 @@ The check computes $\mathbb{E}\bigl[e^{v_I z_1 - v_I^2/2}\,e^{v_P z_2 - v_P^2/2}
 
 Four more things the outline takes as given.
 
-- **A volatility for each expiry and strike.** One $\sigma$ and one $a$ fit one price. Quotes at several strikes need a smile model ([SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
+- **A volatility for each expiry and strike.** One $`\sigma`$ and one $`a`$ fit one price. Quotes at several strikes need a smile model ([SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
 - **How the years move together.** The floor does not care, by Step 0. A zero-coupon floor does: the principal guarantee on an inflation-linked bond pays only if the index ends below where it started, a single option on five years of inflation combined ([Inflation-linked bonds](02-inflation-linked-bonds.md)). Its price needs the correlations between years, which year-on-year quotes never reveal.
 - **One model for both kinds of quote.** Jarrow and Yildirim (2003) model nominal rates, real rates and the index together, which produces the Step 4 correction from the full curves; Mercurio (2005) builds market models directly on year-on-year forwards.
 - **The index itself.** Monthly publication, a lag of months, and seasonal patterns within the year, none of which a flat 2.5 percent carries.
@@ -184,15 +200,15 @@ Year 5's floorlet, at a 0 percent strike, on $1,000,000: forward 2.5 percent, sh
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| discount factor $D(5)$ | $1.03525^{-5}$ | 0.840957 |
-| slid rate $G$ | $2.5 + 3$ | 5.5 percent |
-| slid strike $L$ | $0 + 3$ | 3 percent |
-| wiggle unit $w$ | $0.20 \times \sqrt 5$ | 0.447214 |
-| $d_1$ | $\bigl(\ln(5.5/3) + \tfrac12 \times 0.2^2 \times 5\bigr)/0.447214$ | 1.578968 |
-| $d_2$ | $1.578968 - 0.447214$ | 1.131754 |
-| $N(-d_2)$ | bell-curve area left of $-1.131754$ | 0.128869 |
-| $N(-d_1)$ | bell-curve area left of $-1.578968$ | 0.057172 |
-| floorlet | $1{,}000{,}000 \times 0.840957 \times (0.03 \times 0.128869 - 0.055 \times 0.057172)$ | $606.85 |
+| discount factor $`D(5)`$ | $`1.03525^{-5}`$ | 0.840957 |
+| slid rate $`G`$ | $`2.5 + 3`$ | 5.5 percent |
+| slid strike $`L`$ | $`0 + 3`$ | 3 percent |
+| wiggle unit $`w`$ | $`0.20 \times \sqrt 5`$ | 0.447214 |
+| $`d_1`$ | $`\bigl(\ln(5.5/3) + \tfrac12 \times 0.2^2 \times 5\bigr)/0.447214`$ | 1.578968 |
+| $`d_2`$ | $`1.578968 - 0.447214`$ | 1.131754 |
+| $`N(-d_2)`$ | bell-curve area left of $`-1.131754`$ | 0.128869 |
+| $`N(-d_1)`$ | bell-curve area left of $`-1.578968`$ | 0.057172 |
+| floorlet | $`1{,}000{,}000 \times 0.840957 \times (0.03 \times 0.128869 - 0.055 \times 0.057172)`$ | $606.85 |
 | four earlier years | years 1 to 4, the same way | $2.68, $61.04, $202.92, $394.52 |
 | **five-year floor** | sum of the five | **$1,268.01** |
 | the 5 percent cap, same way | calls in place of puts | **$7,264.41** |
@@ -206,7 +222,7 @@ Protection against any year of falling prices, five years long, costs $1,268.01 
 | delta | change in the floor for a 1 basis point rise in every year's forward | −$12.15 | −$12.15 |
 | vega | change in the floor for a 1 point rise in volatility | $283.16 | $283.16 |
 
-Delta is $-M D(T_i) N(-d_{1,i})$ per unit of rate, summed; vega is $M D(T_i) G \sqrt{T_i}\,\phi(d_{1,i})$, summed. A floor this far **out of the money**, its strike well below the forward, is a position in volatility more than in the forward.
+Delta is $`-M D(T_i) N(-d_{1,i})`$ per unit of rate, summed; vega is $`M D(T_i) G \sqrt{T_i}\,\phi(d_{1,i})`$, summed. A floor this far **out of the money**, its strike well below the forward, is a position in volatility more than in the forward.
 
 ### The floor by strike
 
@@ -229,7 +245,7 @@ Correct answer: $1,268.01.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Plain Black, no shift | $0.00 | The model forbids the rate from ever falling to zero, so a zero-strike floor is free |
-| Wiggle unit cut at the start of each year, $\sigma\sqrt{T_{i-1}}$ | $638.64 | Year $i$ fixes on the index at $T_i$; the first floorlet loses all its uncertainty and every later one a year of it |
+| Wiggle unit cut at the start of each year, $`\sigma\sqrt{T_{i-1}}`$ | $638.64 | Year $`i`$ fixes on the index at $`T_i`$; the first floorlet loses all its uncertainty and every later one a year of it |
 | The 20 percent quote used at a 1 percent shift | $6.96 | A shifted volatility belongs to its shift; the same 20 percent on a 3.5 percent slid rate is a far smaller wobble |
 | Strike slid, rate not: Black on 2.5 against 3 percent | $30,132.98 | The payoff changed: this is a floor struck at 3 percent on the unslid rate, far too dear |
 | Discounted at the 1 percent real rate | $1,407.47 | The floor pays dollars, not index-linked dollars; dollar cash is discounted at the nominal rate |
@@ -238,7 +254,7 @@ Correct answer: $1,268.01.
 
 ## Code, from first principles, and it actually runs
 
-The floor is priced by **three independent roads** and one identity: Black's formula on the slid pair; the payoff averaged over the bell curve by Simpson's rule, kink found by bisection, no $d_1$ or $d_2$; a 2,000-step coin-flip tree; and parity against a cap priced by its own integral. Greeks come by formula and by bumping, the Step 4 factor in closed form and by a two-dimensional Simpson sum. Python takes the bell-curve area from `math.erf`; Rust, which has no `erf`, adds up thin slices under the curve.
+The floor is priced by **three independent roads** and one identity: Black's formula on the slid pair; the payoff averaged over the bell curve by Simpson's rule, kink found by bisection, no $`d_1`$ or $`d_2`$; a 2,000-step coin-flip tree; and parity against a cap priced by its own integral. Greeks come by formula and by bumping, the Step 4 factor in closed form and by a two-dimensional Simpson sum. Python takes the bell-curve area from `math.erf`; Rust, which has no `erf`, adds up thin slices under the curve.
 
 ### Python
 
@@ -661,9 +677,9 @@ The two outputs match line for line, from different code taking different routes
 
 Lean proves the floor and cap formulas, the parity identity and Step 4's convexity factor, for every input that meets their conditions.
 
-- Take the slid rate of Step 2, with $G$, $L$, $\sigma$ and every $T_i$ above zero. Then the floorlets' averaged, discounted payments add up to $P$, and the caplets' to $C$.
-- Take any strike $K$, any shift and any volatility. Then the cap's premium minus the floor's is $\sum_{i=1}^{n} M\,D(T_i)\,(F - K)$, the swap.
-- Take two lognormal quantities with spreads $v_I$ and $v_P$, each averaging 1, and correlation $\rho$. Then the average of their product is $e^{\rho v_I v_P}$.
+- Take the slid rate of Step 2, with $`G`$, $`L`$, $`\sigma`$ and every $`T_i`$ above zero. Then the floorlets' averaged, discounted payments add up to $`P`$, and the caplets' to $`C`$.
+- Take any strike $`K`$, any shift and any volatility. Then the cap's premium minus the floor's is $`\sum_{i=1}^{n} M\,D(T_i)\,(F - K)`$, the swap.
+- Take two lognormal quantities with spreads $`v_I`$ and $`v_P`$, each averaging 1, and correlation $`\rho`$. Then the average of their product is $`e^{\rho v_I v_P}`$.
 
 Every dollar figure, the Greeks, the tree and the corrected forwards are left to the Python and Rust checks.
 
@@ -961,10 +977,10 @@ example : (101 / 100 : ℚ) * (1025 / 1000) = 103525 / 100000 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating the zero-coupon breakeven as the year-on-year forward, as if it were a market price.** It is a ratio of two averages, and year $i$'s payment is the average of a ratio. The two agree only when the index and future real bond prices move independently. In Step 4's toy the gap is 2.05 basis points on the year-5 fixing and 9.73 on a year-20 fixing, and it moves the floor from $1,268.01 to $1,286.83. Small at five years; at thirty years, or on a cap near the money, it is the difference between a price and a guess. The correction needs a model of real rates, which is the first thing the outline lacks.
+> **Treating the zero-coupon breakeven as the year-on-year forward, as if it were a market price.** It is a ratio of two averages, and year $`i`$'s payment is the average of a ratio. The two agree only when the index and future real bond prices move independently. In Step 4's toy the gap is 2.05 basis points on the year-5 fixing and 9.73 on a year-20 fixing, and it moves the floor from $1,268.01 to $1,286.83. Small at five years; at thirty years, or on a cap near the money, it is the difference between a price and a guess. The correction needs a model of real rates, which is the first thing the outline lacks.
 >
 > - **Pricing a zero strike with plain Black.** The answer is $0.00, whatever the volatility, because the model's rate cannot reach zero.
-> - **Running the volatility to the start of the year.** Year $i$'s rate is read off the index at $T_i$. Cutting at $T_{i-1}$ halves the price, to $638.64, and makes the first floorlet free.
+> - **Running the volatility to the start of the year.** Year $`i`$'s rate is read off the index at $`T_i`$. Cutting at $`T_{i-1}`$ halves the price, to $638.64, and makes the first floorlet free.
 > - **Confusing a year-on-year floor with a zero-coupon floor.** The first pays in any year prices fall; the second pays only if prices over the whole life end lower. Four years of 2.5 percent and one of −1 percent triggers the first and not the second.
 
 ---

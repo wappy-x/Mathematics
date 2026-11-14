@@ -37,46 +37,52 @@ Each arrow is one row of the tableau: it says which earlier readings build the n
 
 ## The formula
 
-Reminder: the law is $y' = f(t, y)$, read "the rate of the state y at time t is f". Here the state is $y = (H, v)$, height and speed, and the law is $H' = v$, $v' = 40 - 0.004v^2$. A step of size $h$ takes the computed state $y_n$ at time $t_n$ to $y_{n+1}$.
+Reminder: the law is $`y' = f(t, y)`$, read "the rate of the state y at time t is f". Here the state is $`y = (H, v)`$, height and speed, and the law is $`H' = v`$, $`v' = 40 - 0.004v^2`$. A step of size $`h`$ takes the computed state $`y_n`$ at time $`t_n`$ to $`y_{n+1}`$.
 
-A method with $s$ **stages** (slope readings per step) works like this, for $i = 1$ to $s$:
+A method with $`s`$ **stages** (slope readings per step) works like this, for $`i = 1`$ to $`s`$:
 
-$$Y_i = y_n + h\sum_{j<i} a_{ij}\,k_j, \qquad k_i = f\!\left(t_n + c_i h,\ Y_i\right), \qquad y_{n+1} = y_n + h\sum_{i=1}^{s} b_i\,k_i.$$
+```math
+Y_i = y_n + h\sum_{j<i} a_{ij}\,k_j, \qquad k_i = f\!\left(t_n + c_i h,\ Y_i\right), \qquad y_{n+1} = y_n + h\sum_{i=1}^{s} b_i\,k_i.
+```
 
 **Read it aloud:** build trial point i from the start plus h times a blend of the earlier slopes, read the slope there, and after the last reading step along the b-weighted blend of all the slopes.
 
-The **Butcher tableau** stores those numbers: $c_i$ down the left, the blends $a_{ij}$ in a lower triangle, the weights $b_i$ along the bottom. For RK4:
+The **Butcher tableau** stores those numbers: $`c_i`$ down the left, the blends $`a_{ij}`$ in a lower triangle, the weights $`b_i`$ along the bottom. For RK4:
 
-$$\begin{array}{c|cccc} 0 & & & & \\ \tfrac12 & \tfrac12 & & & \\ \tfrac12 & 0 & \tfrac12 & & \\ 1 & 0 & 0 & 1 & \\ \hline & \tfrac16 & \tfrac13 & \tfrac13 & \tfrac16 \end{array}$$
+```math
+\begin{array}{c|cccc} 0 & & & & \\ \tfrac12 & \tfrac12 & & & \\ \tfrac12 & 0 & \tfrac12 & & \\ 1 & 0 & 0 & 1 & \\ \hline & \tfrac16 & \tfrac13 & \tfrac13 & \tfrac16 \end{array}
+```
 
 **Read it aloud:** row two says "trial point two is the start plus half a step along slope one"; row four says "trial point four is a full step along slope three"; the bottom row says "blend the four slopes one-sixth, a third, a third, one-sixth".
 
-The method has **order** $p$ when one step from an exact start errs by a constant times $h^{p+1}$. That happens exactly when, for every rooted tree with at most $p$ nodes,
+The method has **order** $`p`$ when one step from an exact start errs by a constant times $`h^{p+1}`$. That happens exactly when, for every rooted tree with at most $`p`$ nodes,
 
-$$\sum_{i=1}^{s} b_i\,\Phi_i(\text{tree}) = \frac{1}{\gamma(\text{tree})}.$$
+```math
+\sum_{i=1}^{s} b_i\,\Phi_i(\text{tree}) = \frac{1}{\gamma(\text{tree})}.
+```
 
 **Read it aloud:** for each tree, the weighted sum of the stages' tree values must equal one over the tree's density.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $H$, $v$ | height (m) and speed (m/s) of the rocket | 0 and 0 on the pad | — |
-| $y$, $y_n$, $t_n$ | the state $(H, v)$; the computed state after n steps, at time $t_n$ | $y_0 = (0, 0)$ at $t_0 = 0$ s | — |
-| $f$ | the rate law: the slope of the state | $(v,\ 40 - 0.004v^2)$ | — |
-| $h$ | step size, in seconds | 0.1 s | one step's error grows as $h^{p+1}$ |
-| $s$ | number of stages: slope readings per step | 4 for RK4, 3 for Kutta's third-order method | cost grows; order can grow, but not past $s$ |
-| $k_i$, $Y_i$ | slope read at stage i, and the trial point where it is read | RK4 speed slopes 40, 39.984, 39.984013, 39.936051 | — |
-| $c_i$ | where in the step stage i reads, as a fraction of h | RK4: 0, ½, ½, 1 | — |
-| $a_{ij}$, $A$ | how much of slope j builds trial point i; the lower-triangle table of them | RK4: $a_{21} = a_{32} = \tfrac12$, $a_{43} = 1$ | — |
-| $b_i$ | weight of slope i in the final move | RK4: ⅙, ⅓, ⅓, ⅙ | — |
-| $p$ | order: one step errs by about $h^{p+1}$, a whole run by about $h^p$ | 4 for RK4 | each halving of h cuts the run's error about $2^p$-fold |
-| tree, $\gamma$ | a rooted tree (dots joined by lines, one dot marked as the root); its density: node count times the densities of the subtrees above the root | 8 trees up to 4 nodes; $\gamma$ from 1 to 24 | — |
-| $\Phi_i$ | stage i's value on a tree: 1 for a single dot, otherwise the product over the root's subtrees of $\sum_j a_{ij}\Phi_j(\text{subtree})$ | for the two-dot tree, $\Phi_i = c_i$ | — |
+| $`H`$, $`v`$ | height (m) and speed (m/s) of the rocket | 0 and 0 on the pad | — |
+| $`y`$, $`y_n`$, $`t_n`$ | the state $`(H, v)`$; the computed state after n steps, at time $`t_n`$ | $`y_0 = (0, 0)`$ at $`t_0 = 0`$ s | — |
+| $`f`$ | the rate law: the slope of the state | $`(v,\ 40 - 0.004v^2)`$ | — |
+| $`h`$ | step size, in seconds | 0.1 s | one step's error grows as $`h^{p+1}`$ |
+| $`s`$ | number of stages: slope readings per step | 4 for RK4, 3 for Kutta's third-order method | cost grows; order can grow, but not past $`s`$ |
+| $`k_i`$, $`Y_i`$ | slope read at stage i, and the trial point where it is read | RK4 speed slopes 40, 39.984, 39.984013, 39.936051 | — |
+| $`c_i`$ | where in the step stage i reads, as a fraction of h | RK4: 0, ½, ½, 1 | — |
+| $`a_{ij}`$, $`A`$ | how much of slope j builds trial point i; the lower-triangle table of them | RK4: $`a_{21} = a_{32} = \tfrac12`$, $`a_{43} = 1`$ | — |
+| $`b_i`$ | weight of slope i in the final move | RK4: ⅙, ⅓, ⅓, ⅙ | — |
+| $`p`$ | order: one step errs by about $`h^{p+1}`$, a whole run by about $`h^p`$ | 4 for RK4 | each halving of h cuts the run's error about $`2^p`$-fold |
+| tree, $`\gamma`$ | a rooted tree (dots joined by lines, one dot marked as the root); its density: node count times the densities of the subtrees above the root | 8 trees up to 4 nodes; $`\gamma`$ from 1 to 24 | — |
+| $`\Phi_i`$ | stage i's value on a tree: 1 for a single dot, otherwise the product over the root's subtrees of $`\sum_j a_{ij}\Phi_j(\text{subtree})`$ | for the two-dot tree, $`\Phi_i = c_i`$ | — |
 
 ### When it holds
 
-- **The law is smooth.** Order p needs p continuous derivatives of f. A motor that cuts out mid-step puts a kink in the speed. That one step then errs in proportion to h, not $h^{p+1}$. The run's error is then of size h, with a constant that depends on where in the step the cut falls, so observed orders scatter ([From local error to global error](02-convergence-of-one-step-methods.md)).
-- **Each $c_i$ equals its row sum, $\sum_j a_{ij}$.** Then the reading time matches the trial point. Break it and a law that depends on time goes wrong (What breaks, row 3).
-- **The step is small.** Order describes the limit $h \to 0$. Over the burn, RK4's observed order is 4.03 at the coarse pair of steps and 4.01 at the finer pair, nearing 4 as h shrinks. Shrinking h further helps only until rounding takes over, as [From local error to global error](02-convergence-of-one-step-methods.md) shows.
+- **The law is smooth.** Order p needs p continuous derivatives of f. A motor that cuts out mid-step puts a kink in the speed. That one step then errs in proportion to h, not $`h^{p+1}`$. The run's error is then of size h, with a constant that depends on where in the step the cut falls, so observed orders scatter ([From local error to global error](02-convergence-of-one-step-methods.md)).
+- **Each $`c_i`$ equals its row sum, $`\sum_j a_{ij}`$.** Then the reading time matches the trial point. Break it and a law that depends on time goes wrong (What breaks, row 3).
+- **The step is small.** Order describes the limit $`h \to 0`$. Over the burn, RK4's observed order is 4.03 at the coarse pair of steps and 4.01 at the finer pair, nearing 4 as h shrinks. Shrinking h further helps only until rounding takes over, as [From local error to global error](02-convergence-of-one-step-methods.md) shows.
 - **The table is strictly lower-triangular.** Then each trial point uses only slopes already read: an **explicit** method. Entries on or above the diagonal make an implicit method, which must solve equations at every step ([Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md)).
 - **The step is inside the stability region.** Order says nothing about large steps. A fast-decaying part can make any explicit tableau blow up, which is also on [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md).
 
@@ -86,23 +92,25 @@ $$\sum_{i=1}^{s} b_i\,\Phi_i(\text{tree}) = \frac{1}{\gamma(\text{tree})}.$$
 
 ### Step 0: match the true step's Taylor series, term by term
 
-The true move over one step is a power series in h: $y' h + y'' h^2/2 + \dots$ ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). The method's move is another power series in h, whose coefficients are built from the tableau. Order p means the two series agree through $h^p$. Each extra power brings new kinds of terms, and each kind becomes one equation on the tableau.
+The true move over one step is a power series in h: $`y' h + y'' h^2/2 + \dots`$ ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). The method's move is another power series in h, whose coefficients are built from the tableau. Order p means the two series agree through $`h^p`$. Each extra power brings new kinds of terms, and each kind becomes one equation on the tableau.
 
 ### Step 1: read the methods already met as tableaux
 
-Euler, midpoint and Heun are tableaux with one or two stages. Their two-stage family, $b_1 + b_2 = 1$ and $b_2 c_2 = \tfrac12$, is derived on [Midpoint and Heun](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/03-midpoint-and-heun-methods.md); here it is only written as tableaux.
+Euler, midpoint and Heun are tableaux with one or two stages. Their two-stage family, $`b_1 + b_2 = 1`$ and $`b_2 c_2 = \tfrac12`$, is derived on [Midpoint and Heun](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/03-midpoint-and-heun-methods.md); here it is only written as tableaux.
 
-$$\text{Euler: }\begin{array}{c|c} 0 & \\ \hline & 1 \end{array} \qquad \text{midpoint: }\begin{array}{c|cc} 0 & & \\ \tfrac12 & \tfrac12 & \\ \hline & 0 & 1 \end{array} \qquad \text{Heun: }\begin{array}{c|cc} 0 & & \\ 1 & 1 & \\ \hline & \tfrac12 & \tfrac12 \end{array}$$
+```math
+\text{Euler: }\begin{array}{c|c} 0 & \\ \hline & 1 \end{array} \qquad \text{midpoint: }\begin{array}{c|cc} 0 & & \\ \tfrac12 & \tfrac12 & \\ \hline & 0 & 1 \end{array} \qquad \text{Heun: }\begin{array}{c|cc} 0 & & \\ 1 & 1 & \\ \hline & \tfrac12 & \tfrac12 \end{array}
+```
 
 RK4's stages, its step and its eight order equations are on [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md). This card explains where those eight equations come from and why there are eight.
 
 ### Step 2: each term of the true series is a tree
 
-Take a law that does not depend on time, $y' = f(y)$. Differentiate it with the chain rule. Each derivative of f that appears takes other copies of f as its inputs:
+Take a law that does not depend on time, $`y' = f(y)`$. Differentiate it with the chain rule. Each derivative of f that appears takes other copies of f as its inputs:
 
-- $y' = f$: one f. Draw one dot.
-- $y'' = f'f$: f's derivative, fed by one f. Draw a dot with one dot above it.
-- $y''' = f''(f, f) + f'f'f$: the second derivative fed by two f's, and a chain of three. Two trees with three dots.
+- $`y' = f`$: one f. Draw one dot.
+- $`y'' = f'f`$: f's derivative, fed by one f. Draw a dot with one dot above it.
+- $`y''' = f''(f, f) + f'f'f`$: the second derivative fed by two f's, and a chain of three. Two trees with three dots.
 
 Draw each f as a dot, and join each dot by a line to the dots that feed it. Every term becomes a **rooted tree**, the root being the outermost f. The terms in the n-th derivative are exactly the trees with n dots. The checks build every tree and count them: 1, 1, 2, 4, 9 and 20 trees with 1 to 6 dots.
 
@@ -114,71 +122,77 @@ Schematic. Each tree is drawn with its root at the bottom and labelled with its 
 
 ### Step 3: the method's series has the same trees, with tableau weights
 
-Expand each stage slope $k_i$ in powers of h in the same way. The same trees appear. In the true series a tree's coefficient is $1/\gamma(\text{tree})$; in the method's series it is $\sum_i b_i \Phi_i(\text{tree})$. Setting them equal tree by tree gives the order conditions. The eight trees with up to four dots give:
+Expand each stage slope $`k_i`$ in powers of h in the same way. The same trees appear. In the true series a tree's coefficient is $`1/\gamma(\text{tree})`$; in the method's series it is $`\sum_i b_i \Phi_i(\text{tree})`$. Setting them equal tree by tree gives the order conditions. The eight trees with up to four dots give:
 
 | Tree | Shape | Condition | Plain reading |
 | --- | --- | --- | --- |
-| 1 | one dot | $\sum b_i = 1$ | a constant slope moves the state by exactly h times it |
-| 2 | chain of 2 | $\sum b_i c_i = \tfrac12$ | the weights integrate a straight line exactly |
-| 3 | root with 2 above | $\sum b_i c_i^2 = \tfrac13$ | the weights integrate $t^2$ exactly |
-| 4 | chain of 3 | $\sum b_i a_{ij} c_j = \tfrac16$ | trial points feed each other correctly |
-| 5 | root with 3 above | $\sum b_i c_i^3 = \tfrac14$ | the weights integrate $t^3$ exactly |
-| 6 | root with 1 and a chain of 2 above | $\sum b_i c_i a_{ij} c_j = \tfrac18$ | a mixed case |
-| 7 | chain topped by 2 | $\sum b_i a_{ij} c_j^2 = \tfrac1{12}$ | a mixed case |
-| 8 | chain of 4 | $\sum b_i a_{ij} a_{jk} c_k = \tfrac1{24}$ | three levels of feeding |
+| 1 | one dot | $`\sum b_i = 1`$ | a constant slope moves the state by exactly h times it |
+| 2 | chain of 2 | $`\sum b_i c_i = \tfrac12`$ | the weights integrate a straight line exactly |
+| 3 | root with 2 above | $`\sum b_i c_i^2 = \tfrac13`$ | the weights integrate $`t^2`$ exactly |
+| 4 | chain of 3 | $`\sum b_i a_{ij} c_j = \tfrac16`$ | trial points feed each other correctly |
+| 5 | root with 3 above | $`\sum b_i c_i^3 = \tfrac14`$ | the weights integrate $`t^3`$ exactly |
+| 6 | root with 1 and a chain of 2 above | $`\sum b_i c_i a_{ij} c_j = \tfrac18`$ | a mixed case |
+| 7 | chain topped by 2 | $`\sum b_i a_{ij} c_j^2 = \tfrac1{12}`$ | a mixed case |
+| 8 | chain of 4 | $`\sum b_i a_{ij} a_{jk} c_k = \tfrac1{24}`$ | three levels of feeding |
 
-The bushy trees, a root with dots directly above it, say only that the weights $b_i$ at the times $c_i$ form a good integration rule. The tall trees are new: they test how trial points are built from earlier slopes. A law that depends on time alone never sees them, which is why the tall trees are easy to forget.
+The bushy trees, a root with dots directly above it, say only that the weights $`b_i`$ at the times $`c_i`$ form a good integration rule. The tall trees are new: they test how trial points are built from earlier slopes. A law that depends on time alone never sees them, which is why the tall trees are easy to forget.
 
 <details>
 <summary>Detailed proof: the four conditions for order 3</summary>
 
-Take a system $y' = f(y)$, and write f, f′, f″ for f and its derivatives at $y_n$: f′ is a matrix (how each rate responds to each component), and f″ takes two vectors. A law with time in it becomes this form by adding time as an extra component with rate 1; that extra component is what forces $c_i = \sum_j a_{ij}$.
+Take a system $`y' = f(y)`$, and write f, f′, f″ for f and its derivatives at $`y_n`$: f′ is a matrix (how each rate responds to each component), and f″ takes two vectors. A law with time in it becomes this form by adding time as an extra component with rate 1; that extra component is what forces $`c_i = \sum_j a_{ij}`$.
 
-**The true step.** By the chain rule, $y'' = f'f$ and $y''' = f''(f, f) + f'f'f$. Taylor's theorem gives
+**The true step.** By the chain rule, $`y'' = f'f`$ and $`y''' = f''(f, f) + f'f'f`$. Taylor's theorem gives
 
-$$y(t_n + h) = y_n + hf + \tfrac{h^2}{2} f'f + \tfrac{h^3}{6}\left(f''(f, f) + f'f'f\right) + O(h^4).$$
+$`\displaystyle y(t_n + h) = y_n + hf + \tfrac{h^2}{2} f'f + \tfrac{h^3}{6}\left(f''(f, f) + f'f'f\right) + O(h^4).`$
 
-**The stages, to first order.** Every $k_j = f + O(h)$, so $Y_i - y_n = h c_i f + O(h^2)$ with $c_i = \sum_j a_{ij}$. Then $k_j = f + h c_j f'f + O(h^2)$.
+**The stages, to first order.** Every $`k_j = f + O(h)`$, so $`Y_i - y_n = h c_i f + O(h^2)`$ with $`c_i = \sum_j a_{ij}`$. Then $`k_j = f + h c_j f'f + O(h^2)`$.
 
-**The stages, to second order.** Put that back in: $Y_i - y_n = h c_i f + h^2 \left(\sum_j a_{ij} c_j\right) f'f + O(h^3)$. Expand $f(Y_i)$ to second order:
+**The stages, to second order.** Put that back in: $`Y_i - y_n = h c_i f + h^2 \left(\sum_j a_{ij} c_j\right) f'f + O(h^3)`$. Expand $`f(Y_i)`$ to second order:
 
-$$k_i = f + h c_i f'f + h^2\left(\textstyle\sum_j a_{ij}c_j\right) f'f'f + \tfrac{h^2}{2} c_i^2 f''(f, f) + O(h^3).$$
+$`\displaystyle k_i = f + h c_i f'f + h^2\left(\textstyle\sum_j a_{ij}c_j\right) f'f'f + \tfrac{h^2}{2} c_i^2 f''(f, f) + O(h^3).`$
 
-**The step.** Multiply by $h b_i$ and add:
+**The step.** Multiply by $`h b_i`$ and add:
 
-$$y_{n+1} = y_n + h\left(\textstyle\sum b_i\right) f + h^2 \left(\textstyle\sum b_i c_i\right) f'f + h^3\left[\left(\textstyle\sum b_i a_{ij} c_j\right) f'f'f + \tfrac12\left(\textstyle\sum b_i c_i^2\right) f''(f, f)\right] + O(h^4).$$
+$`\displaystyle y_{n+1} = y_n + h\left(\textstyle\sum b_i\right) f + h^2 \left(\textstyle\sum b_i c_i\right) f'f + h^3\left[\left(\textstyle\sum b_i a_{ij} c_j\right) f'f'f + \tfrac12\left(\textstyle\sum b_i c_i^2\right) f''(f, f)\right] + O(h^4).`$
 
-**Match.** Each power of h is matched on its own. At $h$ and $h^2$ there is one term each. At $h^3$ the two terms are independent: $f(y) = y$ at $y = 1$ has $f'f'f = 1$ but $f''(f, f) = 0$, and $f(y) = 1 + y^2$ at $y = 0$ has $f''(f, f) = 2$ but $f'f'f = 0$. So the series agree through $h^3$ exactly when $\sum b_i = 1$, $\sum b_i c_i = \tfrac12$, $\sum b_i a_{ij} c_j = \tfrac16$ and $\sum b_i c_i^2 = \tfrac13$: trees 1 to 4. One step then errs by $O(h^4)$; how that becomes a run's $O(h^3)$ is on [From local error to global error](02-convergence-of-one-step-methods.md).
+**Match.** Each power of h is matched on its own. At $`h`$ and $`h^2`$ there is one term each. At $`h^3`$ the two terms are independent: $`f(y) = y`$ at $`y = 1`$ has $`f'f'f = 1`$ but $`f''(f, f) = 0`$, and $`f(y) = 1 + y^2`$ at $`y = 0`$ has $`f''(f, f) = 2`$ but $`f'f'f = 0`$. So the series agree through $`h^3`$ exactly when $`\sum b_i = 1`$, $`\sum b_i c_i = \tfrac12`$, $`\sum b_i a_{ij} c_j = \tfrac16`$ and $`\sum b_i c_i^2 = \tfrac13`$: trees 1 to 4. One step then errs by $`O(h^4)`$; how that becomes a run's $`O(h^3)`$ is on [From local error to global error](02-convergence-of-one-step-methods.md).
 
-For systems, the same bookkeeping at every order gives one independent term per tree, with true coefficient $1/\gamma$ and method coefficient $\sum b_i \Phi_i$. That general theorem, with its proof by induction on the trees, is Butcher (1963); the proof is not repeated here.
+For systems, the same bookkeeping at every order gives one independent term per tree, with true coefficient $`1/\gamma`$ and method coefficient $`\sum b_i \Phi_i`$. That general theorem, with its proof by induction on the trees, is Butcher (1963); the proof is not repeated here.
 
 </details>
 
 ### Step 4: derive a three-stage method of order 3
 
-Three stages have six free numbers once each $c_i$ is its row sum: $c_2$, $c_3$, $a_{32}$, $b_1$, $b_2$, $b_3$. Order 3 imposes four conditions, trees 1 to 4:
+Three stages have six free numbers once each $`c_i`$ is its row sum: $`c_2`$, $`c_3`$, $`a_{32}`$, $`b_1`$, $`b_2`$, $`b_3`$. Order 3 imposes four conditions, trees 1 to 4:
 
-$$b_1 + b_2 + b_3 = 1, \quad b_2c_2 + b_3c_3 = \tfrac12, \quad b_2c_2^2 + b_3c_3^2 = \tfrac13, \quad b_3\,a_{32}\,c_2 = \tfrac16.$$
+```math
+b_1 + b_2 + b_3 = 1, \quad b_2c_2 + b_3c_3 = \tfrac12, \quad b_2c_2^2 + b_3c_3^2 = \tfrac13, \quad b_3\,a_{32}\,c_2 = \tfrac16.
+```
 
-Pick $c_2$ and $c_3$. The middle two equations are linear in $b_2$ and $b_3$:
+Pick $`c_2`$ and $`c_3`$. The middle two equations are linear in $`b_2`$ and $`b_3`$:
 
-$$b_2 = \frac{2 - 3c_3}{6c_2(c_2 - c_3)}, \qquad b_3 = \frac{2 - 3c_2}{6c_3(c_3 - c_2)}, \qquad a_{32} = \frac{1}{6\,b_3\,c_2}.$$
+```math
+b_2 = \frac{2 - 3c_3}{6c_2(c_2 - c_3)}, \qquad b_3 = \frac{2 - 3c_2}{6c_3(c_3 - c_2)}, \qquad a_{32} = \frac{1}{6\,b_3\,c_2}.
+```
 
-This needs $c_2 \ne 0$, $c_3 \ne 0$, $c_2 \ne c_3$, and $c_2 \ne \tfrac23$, where $b_3$ would be 0.
+This needs $`c_2 \ne 0`$, $`c_3 \ne 0`$, $`c_2 \ne c_3`$, and $`c_2 \ne \tfrac23`$, where $`b_3`$ would be 0.
 
-**Kutta's choice**, $c_2 = \tfrac12$ and $c_3 = 1$, by hand: $b_2/2 + b_3 = \tfrac12$ and $b_2/4 + b_3 = \tfrac13$. Subtract: $b_2/4 = \tfrac16$, so $b_2 = \tfrac23$, $b_3 = \tfrac16$ and $b_1 = \tfrac16$. Then $a_{32} = 1/(6 \cdot \tfrac16 \cdot \tfrac12) = 2$, and $a_{31} = c_3 - a_{32} = -1$:
+**Kutta's choice**, $`c_2 = \tfrac12`$ and $`c_3 = 1`$, by hand: $`b_2/2 + b_3 = \tfrac12`$ and $`b_2/4 + b_3 = \tfrac13`$. Subtract: $`b_2/4 = \tfrac16`$, so $`b_2 = \tfrac23`$, $`b_3 = \tfrac16`$ and $`b_1 = \tfrac16`$. Then $`a_{32} = 1/(6 \cdot \tfrac16 \cdot \tfrac12) = 2`$, and $`a_{31} = c_3 - a_{32} = -1`$:
 
-$$\begin{array}{c|ccc} 0 & & & \\ \tfrac12 & \tfrac12 & & \\ 1 & -1 & 2 & \\ \hline & \tfrac16 & \tfrac23 & \tfrac16 \end{array}$$
+```math
+\begin{array}{c|ccc} 0 & & & \\ \tfrac12 & \tfrac12 & & \\ 1 & -1 & 2 & \\ \hline & \tfrac16 & \tfrac23 & \tfrac16 \end{array}
+```
 
-The weights are Simpson's rule. **Heun's third-order choice**, $c_2 = \tfrac13$ and $c_3 = \tfrac23$, gives $b = (\tfrac14, 0, \tfrac34)$, $a_{31} = 0$ and $a_{32} = \tfrac23$. The checks solve both in floating point.
+The weights are Simpson's rule. **Heun's third-order choice**, $`c_2 = \tfrac13`$ and $`c_3 = \tfrac23`$, gives $`b = (\tfrac14, 0, \tfrac34)`$, $`a_{31} = 0`$ and $`a_{32} = \tfrac23`$. The checks solve both in floating point.
 
 Then the checks test all 37 tree conditions up to six dots on every tableau and report the order: Euler 1, midpoint 2, Heun 2, Kutta's 3, Heun's third-order 3, RK4 4.
 
 ### Step 5: s stages never reach order s + 1
 
-The tall tree with $s + 1$ dots, a single chain, has condition $b^{\mathsf T} A^{s-1} c = 1/(s+1)!$. Here A is the table of $a_{ij}$, c and b are the columns of $c_i$ and $b_i$, and $b^{\mathsf T}$ (b transposed) times a column means $\sum_i b_i \times$ its entry i. In an explicit method, trial point 1 uses no slopes and $c_1 = 0$, trial point 2 uses only slope 1, and so on. Each power of A pushes one more stage to zero, so the vector $A^{s-1}c$ has entries $a_{s,s-1} \cdots a_{21} c_1 = 0$ and zeros elsewhere. The left side is 0, the right side is not, so the order is at most s.
+The tall tree with $`s + 1`$ dots, a single chain, has condition $`b^{\mathsf T} A^{s-1} c = 1/(s+1)!`$. Here A is the table of $`a_{ij}`$, c and b are the columns of $`c_i`$ and $`b_i`$, and $`b^{\mathsf T}`$ (b transposed) times a column means $`\sum_i b_i \times`$ its entry i. In an explicit method, trial point 1 uses no slopes and $`c_1 = 0`$, trial point 2 uses only slope 1, and so on. Each power of A pushes one more stage to zero, so the vector $`A^{s-1}c`$ has entries $`a_{s,s-1} \cdots a_{21} c_1 = 0`$ and zeros elsewhere. The left side is 0, the right side is not, so the order is at most s.
 
-Three stages therefore cannot reach order 4: chain 8 needs $\sum b_i a_{ij} a_{jk} c_k = \tfrac1{24}$, and three stages give exactly 0.
+Three stages therefore cannot reach order 4: chain 8 needs $`\sum b_i a_{ij} a_{jk} c_k = \tfrac1{24}`$, and three stages give exactly 0.
 
 ### Step 6: why order five needs six stages
 
@@ -192,7 +206,7 @@ Through order 4, s stages give order s. Counting seems to explain where that sto
 
 With five stages, 15 free numbers face 17 conditions. But conditions can depend on each other, so the count only hints. One order later it misleads: Butcher's seven-stage method meets all 37 conditions for order 6 with 28 free numbers, as the checks confirm.
 
-The real reason is structural. Butcher (1965) proved that no explicit five-stage method has order 5. In outline, the order-5 conditions, combined, leave five stages only two ways out. Either $c_2 = 0$: stage 2 repeats stage 1, so the method really has four stages, and Step 5 caps those at order 4. Or $c_4 = c_5 = 1$: the last two stages both read at the end of the step. Then the condition $\sum b_i (1 - c_i)\, a_{ij} a_{jk} c_k = \tfrac1{24} - \tfrac1{30} = \tfrac1{120}$, which follows from two tree conditions, has a left side of exactly 0: the factor $1 - c_i$ removes stages 4 and 5, and the chain $a_{ij} a_{jk} c_k$ is 0 at stages 1 to 3. RK4 shows the gap: it misses all 9 five-dot conditions, the largest by 1.25e-2.
+The real reason is structural. Butcher (1965) proved that no explicit five-stage method has order 5. In outline, the order-5 conditions, combined, leave five stages only two ways out. Either $`c_2 = 0`$: stage 2 repeats stage 1, so the method really has four stages, and Step 5 caps those at order 4. Or $`c_4 = c_5 = 1`$: the last two stages both read at the end of the step. Then the condition $`\sum b_i (1 - c_i)\, a_{ij} a_{jk} c_k = \tfrac1{24} - \tfrac1{30} = \tfrac1{120}`$, which follows from two tree conditions, has a left side of exactly 0: the factor $`1 - c_i`$ removes stages 4 and 5, and the chain $`a_{ij} a_{jk} c_k`$ is 0 at stages 1 to 3. RK4 shows the gap: it misses all 9 five-dot conditions, the largest by 1.25e-2.
 
 ---
 
@@ -202,10 +216,10 @@ One RK4 step of 0.1 s from the pad, using the tableau row by row. Each line give
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| reading 1 at the start | $v = 0$; 40 − 0.004 × 0² | 0, 40 |
-| trial point 2: half step on reading 1 | $v$ = 0 + 0.05 × 40 = 2; 40 − 0.004 × 2² | 2, 39.984 |
-| trial point 3: half step on reading 2 | $v$ = 0.05 × 39.984 = 1.9992; 40 − 0.004 × 1.9992² | 1.9992, 39.984012797 |
-| trial point 4: full step on reading 3 | $v$ = 0.1 × 39.984012797 = 3.998401280; 40 − 0.004 × 3.998401280² | 3.998401280, 39.936051149 |
+| reading 1 at the start | $`v = 0`$; 40 − 0.004 × 0² | 0, 40 |
+| trial point 2: half step on reading 1 | $`v`$ = 0 + 0.05 × 40 = 2; 40 − 0.004 × 2² | 2, 39.984 |
+| trial point 3: half step on reading 2 | $`v`$ = 0.05 × 39.984 = 1.9992; 40 − 0.004 × 1.9992² | 1.9992, 39.984012797 |
+| trial point 4: full step on reading 3 | $`v`$ = 0.1 × 39.984012797 = 3.998401280; 40 − 0.004 × 3.998401280² | 3.998401280, 39.936051149 |
 | blend 1, 2, 2, 1 over 6 | (0 + 2×2 + 2×1.9992 + 3.998401280)/6; (40 + 2×39.984 + 2×39.984012797 + 39.936051149)/6 | 1.999466880, 39.978679457 |
 | the step | 0.1 × each blended slope | **0.199946688 m, 3.997867946 m/s** |
 | exact | 250 ln cosh(0.04); 100 tanh(0.04) | 0.199946689 m, 3.997868031 m/s |
@@ -235,9 +249,9 @@ The observed orders come from the two finest steps and agree with the orders the
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Kutta's tableau with $a_{31} = 0$, $a_{32} = 1$ | order 2.00; burn speed error 4.07e-3 at h = 0.1 s, against 2.15e-4 | Simpson's weights kept, so trees 1 to 3 hold; tree 4 gives $\tfrac1{12}$, not $\tfrac16$ |
-| Kutta's tableau with equal weights ⅓ | order 2 by the trees, 2.10 observed; one-step height error 5.34e-5 | $\sum b_i c_i = \tfrac12$ by luck, but $\sum b_i c_i^2 = \tfrac5{12}$, not $\tfrac13$ |
-| Kutta's tableau with $c_3$ = ½, not its row sum 1 | $y' = 3t^2$ gives 0.973750000, not 1 | Reading time and trial point disagree; the rocket, whose law ignores time, cannot see it |
+| Kutta's tableau with $`a_{31} = 0`$, $`a_{32} = 1`$ | order 2.00; burn speed error 4.07e-3 at h = 0.1 s, against 2.15e-4 | Simpson's weights kept, so trees 1 to 3 hold; tree 4 gives $`\tfrac1{12}`$, not $`\tfrac16`$ |
+| Kutta's tableau with equal weights ⅓ | order 2 by the trees, 2.10 observed; one-step height error 5.34e-5 | $`\sum b_i c_i = \tfrac12`$ by luck, but $`\sum b_i c_i^2 = \tfrac5{12}`$, not $`\tfrac13`$ |
+| Kutta's tableau with $`c_3`$ = ½, not its row sum 1 | $`y' = 3t^2`$ gives 0.973750000, not 1 | Reading time and trial point disagree; the rocket, whose law ignores time, cannot see it |
 ---
 
 ## Code, from first principles, and it actually runs
@@ -616,20 +630,20 @@ The two outputs match line for line. The `figure,` lines are the dot positions i
 
 ### Lean
 
-Lean proves Step 5 for every explicit tableau, Step 4's three-stage family for every allowed $c_2$ and $c_3$, and the card's tableaux exactly.
+Lean proves Step 5 for every explicit tableau, Step 4's three-stage family for every allowed $`c_2`$ and $`c_3`$, and the card's tableaux exactly.
 
-- Take any explicit tableau with s stages, each $c_i$ its row sum. Its chain tree with $s + 1$ dots fails: $b^{\mathsf T} A^{s-1} c$ never equals $1/(s+1)!$.
-- In an explicit table A, entry $(i, j)$ of $A^k$ is 0 unless stage i comes at least k stages after stage j.
-- Pick $c_2 \ne 0$ and $c_3 \ne 0$ with $c_2 \ne c_3$ and $c_2 \ne \tfrac23$. Step 4's $b_2$, $b_3$ and $a_{32}$, with $b_1 = 1 - b_2 - b_3$, then meet all four order-3 conditions.
-- Kutta's choice gives $b_2 = \tfrac23$, $b_3 = \tfrac16$, $a_{32} = 2$ and $a_{31} = -1$.
-- Heun's third-order choice gives $b_2 = 0$, $b_3 = \tfrac34$ and $a_{32} = \tfrac23$.
+- Take any explicit tableau with s stages, each $`c_i`$ its row sum. Its chain tree with $`s + 1`$ dots fails: $`b^{\mathsf T} A^{s-1} c`$ never equals $`1/(s+1)!`$.
+- In an explicit table A, entry $`(i, j)`$ of $`A^k`$ is 0 unless stage i comes at least k stages after stage j.
+- Pick $`c_2 \ne 0`$ and $`c_3 \ne 0`$ with $`c_2 \ne c_3`$ and $`c_2 \ne \tfrac23`$. Step 4's $`b_2`$, $`b_3`$ and $`a_{32}`$, with $`b_1 = 1 - b_2 - b_3`$, then meet all four order-3 conditions.
+- Kutta's choice gives $`b_2 = \tfrac23`$, $`b_3 = \tfrac16`$, $`a_{32} = 2`$ and $`a_{31} = -1`$.
+- Heun's third-order choice gives $`b_2 = 0`$, $`b_3 = \tfrac34`$ and $`a_{32} = \tfrac23`$.
 - RK4's tableau meets all eight tree conditions in Step 3's table.
-- Kutta's tableau meets trees 1 to 4, and its chain of 4 dots gives exactly 0, not $\tfrac1{24}$.
-- Kutta's tableau with $a_{31} = 0$, $a_{32} = 1$ gives tree 4 the value $\tfrac1{12}$, not $\tfrac16$.
-- Equal weights ⅓ give $\sum b_i c_i = \tfrac12$ but $\sum b_i c_i^2 = \tfrac5{12}$, not $\tfrac13$.
-- Step 6's numbers: $\tfrac1{24} - \tfrac1{30} = \tfrac1{120}$, and $s(s+1)/2$ is 1, 3, 6, 10, 15 and 21 for s = 1 to 6.
+- Kutta's tableau meets trees 1 to 4, and its chain of 4 dots gives exactly 0, not $`\tfrac1{24}`$.
+- Kutta's tableau with $`a_{31} = 0`$, $`a_{32} = 1`$ gives tree 4 the value $`\tfrac1{12}`$, not $`\tfrac16`$.
+- Equal weights ⅓ give $`\sum b_i c_i = \tfrac12`$ but $`\sum b_i c_i^2 = \tfrac5{12}`$, not $`\tfrac13`$.
+- Step 6's numbers: $`\tfrac1{24} - \tfrac1{30} = \tfrac1{120}`$, and $`s(s+1)/2`$ is 1, 3, 6, 10, 15 and 21 for s = 1 to 6.
 
-The tree count, each tableau's order, the rocket steps with their errors, and the $c_3 = \tfrac12$ mistake are left to the Python and Rust checks.
+The tree count, each tableau's order, the rocket steps with their errors, and the $`c_3 = \tfrac12`$ mistake are left to the Python and Rust checks.
 
 ```lean
 -- Runge-Kutta: an explicit tableau with s stages always fails the order condition of the chain tree with s + 1 nodes, so its order is at most s, and the card's tableaux meet exactly the tree conditions it says.
@@ -818,19 +832,19 @@ example : (List.range 6).map (fun k => (k + 1) * (k + 2) / 2) = [1, 3, 6, 10, 15
 > [!TIP]
 > **Try changing**
 >
-> - **Guess first:** does any choice of $c_2$ and $c_3$ give order 3? Change `three_stage(0.5, 1)` to `three_stage(0.5, 0.75)`. The coefficient assert stops the run, because b is no longer Kutta's. Delete that assert: the line now ends c3 = 0.7500: b = 0.222222 0.333333 0.444444, and the trees still report order 3.
+> - **Guess first:** does any choice of $`c_2`$ and $`c_3`$ give order 3? Change `three_stage(0.5, 1)` to `three_stage(0.5, 0.75)`. The coefficient assert stops the run, because b is no longer Kutta's. Delete that assert: the line now ends c3 = 0.7500: b = 0.222222 0.333333 0.444444, and the trees still report order 3.
 > - **Guess first:** what order do RK4's trial points give with the weights of the 3/8 rule? Change RK4's b to `[1 / 8, 3 / 8, 3 / 8, 1 / 8]`. The one-step assert stops the run. Delete it, and the trees report RK4 2, since tree 3 fails; the order assert then stops the run.
-> - **Guess first:** how much larger is RK4's one-step speed error if the step doubles? Set `h = 0.2`. It grows about 32-fold, that is $2^5$, the sign of a one-step error in $h^5$, and the one-step assert stops the run.
+> - **Guess first:** how much larger is RK4's one-step speed error if the step doubles? Set `h = 0.2`. It grows about 32-fold, that is $`2^5`$, the sign of a one-step error in $`h^5`$, and the one-step assert stops the run.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Treating the weights as an integration rule and stopping there.** Kutta's weights ⅙, ⅔, ⅙ at times 0, ½, 1 are Simpson's rule, exact for any cubic in t. Keep them and the times, but build trial point 3 as a full step along slope 2 only ($a_{31} = 0$, $a_{32} = 1$). The bushy trees still hold. The tall tree 4 gives $\tfrac1{12}$ instead of $\tfrac16$, and the method falls to order 2: over the burn its speed error at h = 0.1 s is 4.07e-3 m/s, against 2.15e-4 for Kutta's method.
+> **Treating the weights as an integration rule and stopping there.** Kutta's weights ⅙, ⅔, ⅙ at times 0, ½, 1 are Simpson's rule, exact for any cubic in t. Keep them and the times, but build trial point 3 as a full step along slope 2 only ($`a_{31} = 0`$, $`a_{32} = 1`$). The bushy trees still hold. The tall tree 4 gives $`\tfrac1{12}`$ instead of $`\tfrac16`$, and the method falls to order 2: over the burn its speed error at h = 0.1 s is 4.07e-3 m/s, against 2.15e-4 for Kutta's method.
 >
-> - **Testing only on a law without time in it.** The rocket's law ignores t, so a wrong $c$ column is invisible: Kutta's method with $c_3$ = ½ gives rocket heights that agree to 0.00e0. On $y' = 3t^2$ the same mistake gives 0.973750000 instead of 1.
-> - **Expecting a lucky first condition to mean more.** Equal weights pass $\sum b_i c_i = \tfrac12$ but not $\sum b_i c_i^2 = \tfrac13$; the observed order is 2.10.
+> - **Testing only on a law without time in it.** The rocket's law ignores t, so a wrong $`c`$ column is invisible: Kutta's method with $`c_3`$ = ½ gives rocket heights that agree to 0.00e0. On $`y' = 3t^2`$ the same mistake gives 0.973750000 instead of 1.
+> - **Expecting a lucky first condition to mean more.** Equal weights pass $`\sum b_i c_i = \tfrac12`$ but not $`\sum b_i c_i^2 = \tfrac13`$; the observed order is 2.10.
 > - **Expecting one more stage to buy one more order.** That holds through four stages; order 5 needs 6. Counting conditions against free numbers does not explain it: seven stages reach order 6 with 28 free numbers for 37 conditions (Step 6).
 > - **Counting steps instead of slope readings.** An RK4 step costs four readings. Compare at equal cost: at 40 readings, Euler misses by 3.27e-1 m/s, RK4 by 4.66e-5. Methods that reuse earlier steps' readings instead are [Multistep methods](04-multistep-adams-and-bdf.md).
 
@@ -856,7 +870,7 @@ example : (List.range 6).map (fun k => (k + 1) * (k + 2) / 2) = [1, 3, 6, 10, 15
 
 ## Where this goes next
 
-- [From local error to global error](02-convergence-of-one-step-methods.md): why an error of $h^{p+1}$ per step becomes $h^p$ over a whole run, for any tableau.
+- [From local error to global error](02-convergence-of-one-step-methods.md): why an error of $`h^{p+1}`$ per step becomes $`h^p`$ over a whole run, for any tableau.
 - [Two-point boundary problems](07-boundary-value-problems-shooting-and-collocation.md): Runge-Kutta steps inside shooting, and collocation, which is an implicit Runge-Kutta method on a grid.
 
 This card fixes the step size in advance. The open question is how a method can tell, from its own readings, how large its error is and how large the next step may be.

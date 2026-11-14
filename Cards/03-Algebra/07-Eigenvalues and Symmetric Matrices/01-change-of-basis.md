@@ -34,34 +34,38 @@ The three-step route translates, shears, then translates back; the single arrow 
 
 ## The formula
 
-Write $v$ for a point's old address, as a column, and $c$ for its new one. Put the two new directions down the columns of a 2 × 2 matrix called $P$: here $P$ = `[[1, −1], [1, 1]]`, its columns reading downwards as (1, 1) and (−1, 1).
+Write $`v`$ for a point's old address, as a column, and $`c`$ for its new one. Put the two new directions down the columns of a 2 × 2 matrix called $`P`$: here $`P`$ = `[[1, −1], [1, 1]]`, its columns reading downwards as (1, 1) and (−1, 1).
 
-$$v = P c \qquad \text{and} \qquad c = P^{-1} v$$
+```math
+v = P c \qquad \text{and} \qquad c = P^{-1} v
+```
 
 **Read it aloud:** an old address mixes the new directions in the amounts the new address names; undoing that mixing reads the amounts back.
 
-Let $A$ be a movement rule's matrix in the old book, and $A_B$ its matrix in the new one:
+Let $`A`$ be a movement rule's matrix in the old book, and $`A_B`$ its matrix in the new one:
 
-$$A_B = P^{-1} A P$$
+```math
+A_B = P^{-1} A P
+```
 
 **Read it aloud:** translate the address to the old book, move it there, translate the answer back — and the rightmost matrix acts first.
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
-| $b_1$, $b_2$ | the new directions, in old coordinates | (1, 1) and (−1, 1) | every address changes |
-| $P$ | those directions as columns | `[[1, −1], [1, 1]]` | — |
-| $P^{-1}$ | what undoes $P$ ([The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md)) | `[[0.5, 0.5], [−0.5, 0.5]]` | — |
-| $v$ | a point's old address | (5, 3) | a different point |
-| $c$ | that point's new address | (4, −1) | a different point |
-| $A$ | the map's matrix, old book | the shear `[[1, 1], [0, 1]]` | the move changes |
-| $A_B$ | the same map, new book | `[[1.5, 0.5], [−0.5, 0.5]]` | only the description changes |
-| $\det P$ | the area factor: how much the address change stretches area | 2 | — |
+| $`b_1`$, $`b_2`$ | the new directions, in old coordinates | (1, 1) and (−1, 1) | every address changes |
+| $`P`$ | those directions as columns | `[[1, −1], [1, 1]]` | — |
+| $`P^{-1}`$ | what undoes $`P`$ ([The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md)) | `[[0.5, 0.5], [−0.5, 0.5]]` | — |
+| $`v`$ | a point's old address | (5, 3) | a different point |
+| $`c`$ | that point's new address | (4, −1) | a different point |
+| $`A`$ | the map's matrix, old book | the shear `[[1, 1], [0, 1]]` | the move changes |
+| $`A_B`$ | the same map, new book | `[[1.5, 0.5], [−0.5, 0.5]]` | only the description changes |
+| $`\det P`$ | the area factor: how much the address change stretches area | 2 | — |
 
 ### When it holds
 
-- **The new directions must be independent.** Two on one line make $\det P$ zero: no inverse, and addresses going missing or doubling up.
-- **Both books share one origin.** A grid cornered elsewhere needs a shift as well; $P$ alone gives wrong addresses.
-- **The rule must be linear**: lines straight and evenly spaced, origin fixed; otherwise there is no matrix $A$ to rewrite.
+- **The new directions must be independent.** Two on one line make $`\det P`$ zero: no inverse, and addresses going missing or doubling up.
+- **Both books share one origin.** A grid cornered elsewhere needs a shift as well; $`P`$ alone gives wrong addresses.
+- **The rule must be linear**: lines straight and evenly spaced, origin fixed; otherwise there is no matrix $`A`$ to rewrite.
 
 ---
 
@@ -69,38 +73,38 @@ $$A_B = P^{-1} A P$$
 
 ### Step 0: coordinates are the amounts that rebuild the point
 
-The list (4, −1) is not the treasure. It is instructions: four of the first new direction, then one of the second taken away. A matrix times a column does exactly that, mixing its columns in the amounts the column names. So with the new directions as columns of $P$, $P c$ carries the instructions out: $v = P c$ is the definition of coordinates read out loud.
+The list (4, −1) is not the treasure. It is instructions: four of the first new direction, then one of the second taken away. A matrix times a column does exactly that, mixing its columns in the amounts the column names. So with the new directions as columns of $`P`$, $`P c`$ carries the instructions out: $`v = P c`$ is the definition of coordinates read out loud.
 
 ### Step 1: the return trip exists, and there is only one of it
 
-Independence makes $P$ invertible, and that makes the return trip one answer rather than none or many. Here $\det P$ = 1 × 1 − (−1) × 1 = 2, not zero, and the 2 × 2 inverse formula gives $P^{-1}$ = `[[0.5, 0.5], [−0.5, 0.5]]`. On the treasure: 0.5 × 5 + 0.5 × 3 = 4, then −0.5 × 5 + 0.5 × 3 = −1, the address (4, −1) without guessing.
+Independence makes $`P`$ invertible, and that makes the return trip one answer rather than none or many. Here $`\det P`$ = 1 × 1 − (−1) × 1 = 2, not zero, and the 2 × 2 inverse formula gives $`P^{-1}`$ = `[[0.5, 0.5], [−0.5, 0.5]]`. On the treasure: 0.5 × 5 + 0.5 × 3 = 4, then −0.5 × 5 + 0.5 × 3 = −1, the address (4, −1) without guessing.
 
-One check settles which way $P$ points. Feed it (1, 0) — the first new direction's own address in the new book — and its first column comes out, (1, 1), that direction itself in old coordinates. So $P$ runs new-to-old, never the other way.
+One check settles which way $`P`$ points. Feed it (1, 0) — the first new direction's own address in the new book — and its first column comes out, (1, 1), that direction itself in old coordinates. So $`P`$ runs new-to-old, never the other way.
 
 ### Step 2: translate in, move, translate out
 
-$A$ understands old addresses only: hand it (4, −1) and it shears some other point. So translate first. $P c$ is the point in old coordinates, $A P c$ is where the shear sends it, $P^{-1} A P c$ is that answer read back in the new book. This holds for every address $c$, so $P^{-1} A P$ is the map's matrix in the new basis.
+$`A`$ understands old addresses only: hand it (4, −1) and it shears some other point. So translate first. $`P c`$ is the point in old coordinates, $`A P c`$ is where the shear sends it, $`P^{-1} A P c`$ is that answer read back in the new book. This holds for every address $`c`$, so $`P^{-1} A P`$ is the map's matrix in the new basis.
 
-The columns say it concretely: the shear sends (1, 1) to (2, 1) and (−1, 1) to (0, 1), so $A P$ = `[[2, 0], [1, 1]]`. Read those answers back in the new book: (2, 1) is 1.5 of the first direction minus 0.5 of the second, (0, 1) is 0.5 of each. Stacked as columns, $A_B$ = `[[1.5, 0.5], [−0.5, 0.5]]`. Each column still says where one basis direction goes — now the diagonal pair, not the axis arrows.
+The columns say it concretely: the shear sends (1, 1) to (2, 1) and (−1, 1) to (0, 1), so $`A P`$ = `[[2, 0], [1, 1]]`. Read those answers back in the new book: (2, 1) is 1.5 of the first direction minus 0.5 of the second, (0, 1) is 0.5 of each. Stacked as columns, $`A_B`$ = `[[1.5, 0.5], [−0.5, 0.5]]`. Each column still says where one basis direction goes — now the diagonal pair, not the axis arrows.
 
-Two matrices related this way — $A$ and $P^{-1} A P$ for an invertible $P$ — are **similar**: one map, two address books.
+Two matrices related this way — $`A`$ and $`P^{-1} A P`$ for an invertible $`P`$ — are **similar**: one map, two address books.
 
 ### Step 3: what an address book cannot change
 
 Similar matrices agree on everything belonging to the map, not the coordinates. The **trace**, the sum of the entries down the main diagonal, is 1 + 1 = 2 for the shear and 1.5 + 0.5 = 2 for its diagonal-grid twin. The area factor is 1 for both.
 
-Why the area factor survives has the shape of the whole card: going in multiplies area by $\det P$, the move by $\det A$, coming out divides by $\det P$ again. The translation factors cancel.
+Why the area factor survives has the shape of the whole card: going in multiplies area by $`\det P`$, the move by $`\det A`$, coming out divides by $`\det P`$ again. The translation factors cancel.
 
 <details>
 <summary>Detailed proof: area factor and trace survive similarity</summary>
 
-The determinant of a product is the product of the determinants ([Determinants](../05-Solving%20Systems/04-determinants.md)), and the determinant of an inverse is one over the determinant. So the determinant of $P^{-1} A P$ is (1 / det P) × det A × det P: the outer two cancel. Here, (1 / 2) × 1 × 2 = 1.
+The determinant of a product is the product of the determinants ([Determinants](../05-Solving%20Systems/04-determinants.md)), and the determinant of an inverse is one over the determinant. So the determinant of $`P^{-1} A P`$ is (1 / det P) × det A × det P: the outer two cancel. Here, (1 / 2) × 1 × 2 = 1.
 
-The trace needs one fact: for two 2 × 2 matrices the trace of the product ignores the order. Call them M, entries m1, m2, m3, m4, and N, entries n1, n2, n3, n4, each read row by row. The trace of M N — top-left plus bottom-right — is m1 n1 + m2 n3 + m3 n2 + m4 n4, and the trace of N M is n1 m1 + n2 m3 + n3 m2 + n4 m4: the same four products, reordered. So with M = $P^{-1}$ and N = $A P$, the trace of $P^{-1} A P$ equals the trace of $A P P^{-1}$, which is the trace of $A$.
+The trace needs one fact: for two 2 × 2 matrices the trace of the product ignores the order. Call them M, entries m1, m2, m3, m4, and N, entries n1, n2, n3, n4, each read row by row. The trace of M N — top-left plus bottom-right — is m1 n1 + m2 n3 + m3 n2 + m4 n4, and the trace of N M is n1 m1 + n2 m3 + n3 m2 + n4 m4: the same four products, reordered. So with M = $`P^{-1}`$ and N = $`A P`$, the trace of $`P^{-1} A P`$ equals the trace of $`A P P^{-1}`$, which is the trace of $`A`$.
 
 </details>
 
-For a single point there is a shortcut: instead of building $P^{-1}$, solve $P c = v$ for $c$ by elimination ([Gaussian elimination](../05-Solving%20Systems/02-gaussian-elimination.md)) — the second method the code takes.
+For a single point there is a shortcut: instead of building $`P^{-1}`$, solve $`P c = v`$ for $`c`$ by elimination ([Gaussian elimination](../05-Solving%20Systems/02-gaussian-elimination.md)) — the second method the code takes.
 
 ---
 
@@ -110,10 +114,10 @@ The treasure at (5, 3), the directions (1, 1) and (−1, 1), the shear `[[1, 1],
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the new address, $P^{-1} v$ | 0.5 × 5 + 0.5 × 3; −0.5 × 5 + 0.5 × 3 | **(4, −1)** |
-| shear the new directions | (1, 1) → (2, 1); (−1, 1) → (0, 1) | $A P$ = `[[2, 0], [1, 1]]` |
-| read those columns back | $P^{-1}$ applied to each | $A_B$ = **`[[1.5, 0.5], [−0.5, 0.5]]`** |
-| road one: shear, then convert | (5, 3) → (8, 3), then $P^{-1}$ | **(5.5, −2.5)** |
+| the new address, $`P^{-1} v`$ | 0.5 × 5 + 0.5 × 3; −0.5 × 5 + 0.5 × 3 | **(4, −1)** |
+| shear the new directions | (1, 1) → (2, 1); (−1, 1) → (0, 1) | $`A P`$ = `[[2, 0], [1, 1]]` |
+| read those columns back | $`P^{-1}`$ applied to each | $`A_B`$ = **`[[1.5, 0.5], [−0.5, 0.5]]`** |
+| road one: shear, then convert | (5, 3) → (8, 3), then $`P^{-1}`$ | **(5.5, −2.5)** |
 | road two: convert, then shear | 1.5 × 4 + 0.5 × (−1); −0.5 × 4 + 0.5 × (−1) | **(5.5, −2.5)** |
 | a second treasure at (2, 6) | new address (4, 2), then shear | **(7, −1)** |
 
@@ -123,9 +127,9 @@ Both roads name the same sheared treasure.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Using $P v$ for the new address | (2, 8) | $P$ runs new-to-old, so this names another point |
+| Using $`P v`$ for the new address | (2, 8) | $`P`$ runs new-to-old, so this names another point |
 | Writing the new directions as rows | (1, 4) | Rows describe a different pair of directions |
-| Sandwiching backwards, $P A P^{-1}$ | (1.5, −3.5) | The address goes out before it ever came in |
+| Sandwiching backwards, $`P A P^{-1}`$ | (1.5, −3.5) | The address goes out before it ever came in |
 
 The code prints all three.
 
@@ -133,7 +137,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported, and two independent methods run the whole way. One method uses the 2 × 2 inverse formula: build $P^{-1}$, convert with it, form $P^{-1} A P$ by multiplication. The other builds no inverse: it solves $P c = v$ by elimination and assembles the new matrix a column at a time from the sheared directions. Both methods move both treasures, and the wrong answers are computed.
+Nothing is imported, and two independent methods run the whole way. One method uses the 2 × 2 inverse formula: build $`P^{-1}`$, convert with it, form $`P^{-1} A P`$ by multiplication. The other builds no inverse: it solves $`P c = v`$ by elimination and assembles the new matrix a column at a time from the sheared directions. Both methods move both treasures, and the wrong answers are computed.
 
 ### Python
 
@@ -332,11 +336,11 @@ The two outputs match line for line.
 
 Lean proves the card's rules for square matrices of any size, not just 2 × 2, and checks the worked numbers exactly.
 
-- If the new directions are independent, $P c = v$ exactly when $c = P^{-1} v$. So each point has exactly one new address.
-- That address, $P^{-1} v$, is the point's coordinates in the new basis.
-- A linear rule with matrix $A$ in the old book has matrix $P^{-1} A P$ in the new book.
-- Both roads agree: move then convert lands on the same address as convert then apply $P^{-1} A P$.
-- $P^{-1} A P$ has the same trace and the same area factor as $A$.
+- If the new directions are independent, $`P c = v`$ exactly when $`c = P^{-1} v`$. So each point has exactly one new address.
+- That address, $`P^{-1} v`$, is the point's coordinates in the new basis.
+- A linear rule with matrix $`A`$ in the old book has matrix $`P^{-1} A P`$ in the new book.
+- Both roads agree: move then convert lands on the same address as convert then apply $`P^{-1} A P`$.
+- $`P^{-1} A P`$ has the same trace and the same area factor as $`A`$.
 - The treasure, the rewritten shear, both roads, the second treasure and the three mistakes come out as the card says.
 
 The decimal printing and the elimination method are left to the Python and Rust checks.
@@ -536,9 +540,9 @@ example : !![(1/2 : ℚ), 1/2; -1/2, 1/2] *ᵥ ![1, 1] = ![1, 0] := by
 ## The usual mistake
 
 > [!warning]
-> **Getting the direction of $P$ backwards.** Its columns are the new directions in old coordinates, so it turns a new address into an old one. Used where $P^{-1}$ belongs it sends (5, 3) to (2, 8): another point, not a relabelling. One line settles it — $P$ applied to (1, 0) must return (1, 1).
+> **Getting the direction of $`P`$ backwards.** Its columns are the new directions in old coordinates, so it turns a new address into an old one. Used where $`P^{-1}`$ belongs it sends (5, 3) to (2, 8): another point, not a relabelling. One line settles it — $`P`$ applied to (1, 0) must return (1, 1).
 >
-> - **Reading the sandwich left to right.** The rightmost matrix acts first. Reversed as $P A P^{-1}$, the address (4, −1) goes to (1.5, −3.5), not (5.5, −2.5).
+> - **Reading the sandwich left to right.** The rightmost matrix acts first. Reversed as $`P A P^{-1}`$, the address (4, −1) goes to (1.5, −3.5), not (5.5, −2.5).
 > - **Writing the new directions as rows.** Rows describe a different pair, so the address comes out (1, 4).
 > - **Taking any two arrows as a basis.** Two on one line have area factor zero: no inverse, no unique address.
 
@@ -547,11 +551,11 @@ example : !![(1/2 : ℚ), 1/2; -1/2, 1/2] *ᵥ ![1, 1] = ![1, 0] := by
 ## Where you meet it in real life
 
 - **Graphics and games.** A model carries its own axes and the world carries others; every frame converts between them.
-- **Repeated moves.** Pick a basis of directions the map only stretches and $A_B$ comes out diagonal, with zeros off the main diagonal: [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md) finds them.
-- **Right-angled address books.** Perpendicular new directions of unit length make $P^{-1}$ simply $P$ with rows and columns exchanged: [The spectral theorem](04-spectral-theorem.md).
+- **Repeated moves.** Pick a basis of directions the map only stretches and $`A_B`$ comes out diagonal, with zeros off the main diagonal: [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md) finds them.
+- **Right-angled address books.** Perpendicular new directions of unit length make $`P^{-1}`$ simply $`P`$ with rows and columns exchanged: [The spectral theorem](04-spectral-theorem.md).
 
 > **Say it back**
-> A basis gives every point exactly one address. Put the new directions down the columns of $P$: $P$ turns a new address into an old one and $P^{-1}$ goes back, so the treasure at (5, 3) is (4, −1) on the diagonal grid. To rewrite a movement rule: translate in, move, translate out, $P^{-1} A P$. The shear `[[1, 1], [0, 1]]` becomes `[[1.5, 0.5], [−0.5, 0.5]]`, and both send the treasure to the same place, because the move never changed.
+> A basis gives every point exactly one address. Put the new directions down the columns of $`P`$: $`P`$ turns a new address into an old one and $`P^{-1}`$ goes back, so the treasure at (5, 3) is (4, −1) on the diagonal grid. To rewrite a movement rule: translate in, move, translate out, $`P^{-1} A P`$. The shear `[[1, 1], [0, 1]]` becomes `[[1.5, 0.5], [−0.5, 0.5]]`, and both send the treasure to the same place, because the move never changed.
 
 ---
 
@@ -563,11 +567,11 @@ example : !![(1/2 : ℚ), 1/2; -1/2, 1/2] *ᵥ ![1, 1] = ![1, 0] := by
 
 ## Where this goes next
 
-- [Diagonalisation](03-diagonalisation-and-matrix-powers.md): the payoff — the book that makes $A_B$ diagonal turns many moves into small multiplies.
+- [Diagonalisation](03-diagonalisation-and-matrix-powers.md): the payoff — the book that makes $`A_B`$ diagonal turns many moves into small multiplies.
 - [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): the same translation on a whole signal, samples in time becoming pure tones.
-- Representation: conjugation (the $P^{-1} A P$ sandwich) again, for matrices forming a group, a set closed under multiplying and undoing ([Groups](../08-Groups/01-groups.md)).
+- Representation: conjugation (the $`P^{-1} A P`$ sandwich) again, for matrices forming a group, a set closed under multiplying and undoing ([Groups](../08-Groups/01-groups.md)).
 
-Any invertible $P$ gives a new address book, and nothing here says which book is worth having; that is what a later card asks.
+Any invertible $`P`$ gives a new address book, and nothing here says which book is worth having; that is what a later card asks.
 
 ---
 

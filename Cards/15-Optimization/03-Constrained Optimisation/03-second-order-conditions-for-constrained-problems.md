@@ -6,13 +6,13 @@
 
 ## General Overview
 
-A pump pushes water down a long main to a town. Two numbers are chosen, neither below zero: the flow $q$, in litres a second (L/s), and the head $H$ delivered at the town end, in metres (m). Head is pressure measured as the height of water it could lift. The power delivered to the town is $P = 0.00981\,q\,H$ kilowatts (kW). The aim is to **maximise** that power.
+A pump pushes water down a long main to a town. Two numbers are chosen, neither below zero: the flow $`q`$, in litres a second (L/s), and the head $`H`$ delivered at the town end, in metres (m). Head is pressure measured as the height of water it could lift. The power delivered to the town is $`P = 0.00981\,q\,H`$ kilowatts (kW). The aim is to **maximise** that power.
 
-One limit stops the power growing forever. Friction in the main eats $0.000125\,q^2$ metres of head, so 20 m at 400 L/s. The pump must supply the delivered head plus the friction, and the pipe is rated for 60 m at the pump end. So every allowed choice obeys $H + 0.000125\,q^2 \le 60$. The edge of that region, where the main runs at its rating, is the **pipe capacity surface**.
+One limit stops the power growing forever. Friction in the main eats $`0.000125\,q^2`$ metres of head, so 20 m at 400 L/s. The pump must supply the delivered head plus the friction, and the pipe is rated for 60 m at the pump end. So every allowed choice obeys $`H + 0.000125\,q^2 \le 60`$. The edge of that region, where the main runs at its rating, is the **pipe capacity surface**.
 
 The best choice sits on that surface: 400 L/s at 40 m, delivering 156.96 kW, with one third of the rating lost to friction. The slope test of the [KKT conditions](02-kkt-conditions.md), named after Karush, Kuhn and Tucker, finds it. It also gives each constraint a multiplier: a price, here the power one more metre of rating would buy.
 
-But the slope test also passes at saddles and at worst points, so a second test is needed. Here it has a trap. The power $qH$, taken alone, curves up in some directions and down in others: a saddle, with no best point at all. Test its curvature in every direction and the verdict is "no maximum". The right test looks only along the surface, in the directions the pipe allows and the slope test cannot decide. Along the surface, a step of 10 L/s more flow and 1 m less head bends the power down with curvature 0.2943 kW. That settles it.
+But the slope test also passes at saddles and at worst points, so a second test is needed. Here it has a trap. The power $`qH`$, taken alone, curves up in some directions and down in others: a saddle, with no best point at all. Test its curvature in every direction and the verdict is "no maximum". The right test looks only along the surface, in the directions the pipe allows and the slope test cannot decide. Along the surface, a step of 10 L/s more flow and 1 m less head bends the power down with curvature 0.2943 kW. That settles it.
 
 **At a point that passes the KKT test, check the curvature of the Lagrangian, the cost plus each multiplier times its constraint, only on the critical cone: the allowed directions along which the cost does not change at first order; if that curvature is strictly positive there, the point is a strict local minimum.**
 
@@ -22,46 +22,50 @@ But the slope test also passes at saddles and at worst points, so a second test 
 
 <p align="center"><img src="../figures/second-order-conditions-for-constrained-problems.svg" alt="The pipe capacity surface, a downward curve from 60 m at zero flow to zero head at 692.8 L/s, with the allowed region shaded under it; a dashed power contour touches the surface at x* = (400 L/s, 40 m), and a dotted contour of half that power cuts through the region" width="420"></p>
 
-Drawn to scale. The solid curve is the capacity surface $H = 60 - 0.000125\,q^2$, ending at 692.8 L/s, and the shaded region below it is allowed. The dashed curve is every $(q, H)$ with $qH = 16000$, which is 156.96 kW. The dotted curve is half that power, $qH = 8000$. Power grows up and to the right. The dashed curve touches the surface at $x^*$ from outside, so no allowed point reaches it elsewhere. The short straight segment through $x^*$, from (300, 50) to (500, 30), is the tangent line: the only directions the second-order test checks.
+Drawn to scale. The solid curve is the capacity surface $`H = 60 - 0.000125\,q^2`$, ending at 692.8 L/s, and the shaded region below it is allowed. The dashed curve is every $`(q, H)`$ with $`qH = 16000`$, which is 156.96 kW. The dotted curve is half that power, $`qH = 8000`$. Power grows up and to the right. The dashed curve touches the surface at $`x^*`$ from outside, so no allowed point reaches it elsewhere. The short straight segment through $`x^*`$, from (300, 50) to (500, 30), is the tangent line: the only directions the second-order test checks.
 
 ---
 
 ## The formula
 
-This card works in the wing's standard form ([The standard convex problem](../01-Convexity/10-the-convex-problem-in-standard-form.md)): minimise $f_0(x)$ subject to $f_i(x) \le 0$ and $h_j(x) = 0$. To maximise power, minimise $f_0 = -P$. The floors $q \ge 0$ and $H \ge 0$ are constraints too, but neither is tight at the answer, so their multipliers are zero and they drop out below.
+This card works in the wing's standard form ([The standard convex problem](../01-Convexity/10-the-convex-problem-in-standard-form.md)): minimise $`f_0(x)`$ subject to $`f_i(x) \le 0`$ and $`h_j(x) = 0`$. To maximise power, minimise $`f_0 = -P`$. The floors $`q \ge 0`$ and $`H \ge 0`$ are constraints too, but neither is tight at the answer, so their multipliers are zero and they drop out below.
 
-The [KKT conditions](02-kkt-conditions.md) give multipliers $\lambda_i \ge 0$ and $\nu_j$ with a flat Lagrangian $\mathcal{L} = f_0 + \sum_i \lambda_i f_i + \sum_j \nu_j h_j$ at the point $x^*$. The new object is the **critical cone**:
+The [KKT conditions](02-kkt-conditions.md) give multipliers $`\lambda_i \ge 0`$ and $`\nu_j`$ with a flat Lagrangian $`\mathcal{L} = f_0 + \sum_i \lambda_i f_i + \sum_j \nu_j h_j`$ at the point $`x^*`$. The new object is the **critical cone**:
 
-$$\mathcal{C}(x^*) = \left\{ d \;:\; \begin{array}{ll} \nabla h_j(x^*)^{T} d = 0 & \text{for every } j \\ \nabla f_i(x^*)^{T} d = 0 & \text{for active } f_i \text{ with } \lambda_i > 0 \\ \nabla f_i(x^*)^{T} d \le 0 & \text{for active } f_i \text{ with } \lambda_i = 0 \end{array} \right\}$$
+```math
+\mathcal{C}(x^*) = \left\{ d \;:\; \begin{array}{ll} \nabla h_j(x^*)^{T} d = 0 & \text{for every } j \\ \nabla f_i(x^*)^{T} d = 0 & \text{for active } f_i \text{ with } \lambda_i > 0 \\ \nabla f_i(x^*)^{T} d \le 0 & \text{for active } f_i \text{ with } \lambda_i = 0 \end{array} \right\}
+```
 
 and the test on it:
 
-$$d^{T}\,\nabla^2 \mathcal{L}(x^*)\,d \;>\; 0 \quad \text{for every } d \ne 0 \text{ in } \mathcal{C}(x^*) \;\;\Longrightarrow\;\; x^* \text{ is a strict local minimum.}$$
+```math
+d^{T}\,\nabla^2 \mathcal{L}(x^*)\,d \;>\; 0 \quad \text{for every } d \ne 0 \text{ in } \mathcal{C}(x^*) \;\;\Longrightarrow\;\; x^* \text{ is a strict local minimum.}
+```
 
 **Read it aloud:** keep only the directions that stay on the equality constraints, stay on every inequality that charges a positive price, and do not break an active one that charges none; if the Lagrangian curves upward along every one of them, the point is a strict local minimum.
 
-An **active** constraint is one that holds with equality at $x^*$. A strict local minimum is a point lower than every other allowed point nearby.
+An **active** constraint is one that holds with equality at $`x^*`$. A strict local minimum is a point lower than every other allowed point nearby.
 
-$\nabla f$ is the gradient of $f$, the vector of its first derivatives. $\nabla f^{T} d$ is the slope of $f$ along the direction $d$: its change at first order.
+$`\nabla f`$ is the gradient of $`f`$, the vector of its first derivatives. $`\nabla f^{T} d`$ is the slope of $`f`$ along the direction $`d`$: its change at first order.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $q$, $H$; $x = (q, H)$ | the flow (L/s) and delivered head (m), the two choices | $x^* = (400, 40)$ | — |
-| $P$ | power delivered to the town, $0.00981\,qH$ kW | 156.96 kW at $x^*$ | — |
-| $r$ | friction head per (L/s)² | 0.000125 | twice as rough: $x^*$ = (282.8, 40.00), 110.99 kW |
-| $f_0$ | the cost to minimise, here $-P$ | −156.96 kW | — |
-| $f_i$, $\lambda_i$ | inequality constraints and their multipliers (prices) | $f_1 = H + r q^2 - 60$; $\lambda = 3.924$ kW per m | a rating of 80 m: $\lambda$ = 4.5310 |
-| $h_j$, $\nu_j$ | equality constraints and their multipliers | none here | — |
-| $\mathcal{L}$ | the Lagrangian, cost plus price times constraint | $-P + 3.924\,f_1$ | — |
-| $\nabla^2 \mathcal{L}$ | its Hessian (matrix of second derivatives), $W$ in the code | rows (0.000981, −0.00981), (−0.00981, 0) | — |
-| $x(t)$, $a$ | a curve of allowed points leaving $x^*$ at time $t$, and its acceleration | $a = (0, -0.025)$ m for $d = (10, -1)$ | — |
-| $d$ | a direction to move from $x^*$ | $(10, -1)$: 10 L/s more, 1 m less | — |
-| $\mathcal{C}(x^*)$ | the critical cone: allowed directions the slope test cannot decide | the tangent line, multiples of $(10, -1)$ | — |
-| $d^{T}\nabla^2\mathcal{L}\,d$ | curvature of the Lagrangian along $d$, in kW | 0.2943 | bigger: a sharper, safer peak |
+| $`q`$, $`H`$; $`x = (q, H)`$ | the flow (L/s) and delivered head (m), the two choices | $`x^* = (400, 40)`$ | — |
+| $`P`$ | power delivered to the town, $`0.00981\,qH`$ kW | 156.96 kW at $`x^*`$ | — |
+| $`r`$ | friction head per (L/s)² | 0.000125 | twice as rough: $`x^*`$ = (282.8, 40.00), 110.99 kW |
+| $`f_0`$ | the cost to minimise, here $`-P`$ | −156.96 kW | — |
+| $`f_i`$, $`\lambda_i`$ | inequality constraints and their multipliers (prices) | $`f_1 = H + r q^2 - 60`$; $`\lambda = 3.924`$ kW per m | a rating of 80 m: $`\lambda`$ = 4.5310 |
+| $`h_j`$, $`\nu_j`$ | equality constraints and their multipliers | none here | — |
+| $`\mathcal{L}`$ | the Lagrangian, cost plus price times constraint | $`-P + 3.924\,f_1`$ | — |
+| $`\nabla^2 \mathcal{L}`$ | its Hessian (matrix of second derivatives), $`W`$ in the code | rows (0.000981, −0.00981), (−0.00981, 0) | — |
+| $`x(t)`$, $`a`$ | a curve of allowed points leaving $`x^*`$ at time $`t`$, and its acceleration | $`a = (0, -0.025)`$ m for $`d = (10, -1)`$ | — |
+| $`d`$ | a direction to move from $`x^*`$ | $`(10, -1)`$: 10 L/s more, 1 m less | — |
+| $`\mathcal{C}(x^*)`$ | the critical cone: allowed directions the slope test cannot decide | the tangent line, multiples of $`(10, -1)`$ | — |
+| $`d^{T}\nabla^2\mathcal{L}\,d`$ | curvature of the Lagrangian along $`d`$, in kW | 0.2943 | bigger: a sharper, safer peak |
 
 ### When it holds
 
-- **Twice-smooth functions, and a point that passes the KKT test first.** The cost and every constraint need continuous second derivatives near $x^*$; at a kink there is no Hessian to test. The curvature test only rules on directions where the slope is zero. At 300 L/s on the surface the curvature is positive, 0.2207, yet power still rises by 0.2575 kW per L/s: not a best point.
+- **Twice-smooth functions, and a point that passes the KKT test first.** The cost and every constraint need continuous second derivatives near $`x^*`$; at a kink there is no Hessian to test. The curvature test only rules on directions where the slope is zero. At 300 L/s on the surface the curvature is positive, 0.2207, yet power still rises by 0.2575 kW per L/s: not a best point.
 - **The test is strict.** Positive on the cone proves a strict local minimum. The necessary condition is only "at least zero", and a curvature of exactly zero on some cone direction gives no verdict: higher-order terms decide.
 - **The necessary condition needs regular constraints.** The gradients of the active constraints must be linearly independent (LICQ, from the [KKT conditions](02-kkt-conditions.md)). Without it a cone direction may have no curve of allowed points behind it, and multipliers may not exist.
 - **The cone depends on the multipliers.** An active inequality with price zero keeps its inward directions in the cone, which then becomes a half-space slice, not a line. Testing only the tangent there can miss a downhill direction.
@@ -73,41 +77,45 @@ $\nabla f$ is the gradient of $f$, the vector of its first derivatives. $\nabla 
 
 ### Step 0: on the surface, the cost and the Lagrangian are the same function
 
-On the capacity surface $f_1 = 0$, so $\mathcal{L} = f_0 + \lambda f_1$ equals $f_0$ there. At $x^*$ the KKT test makes the gradient of $\mathcal{L}$ zero. So walking along the surface, the cost starts flat, and its curvature is the curvature of $\mathcal{L}$. The curvature of $f_0$ alone is the wrong number, because the surface bends. The bend has a cost, and the multiplier $\lambda$ is exactly the price of that bend.
+On the capacity surface $`f_1 = 0`$, so $`\mathcal{L} = f_0 + \lambda f_1`$ equals $`f_0`$ there. At $`x^*`$ the KKT test makes the gradient of $`\mathcal{L}`$ zero. So walking along the surface, the cost starts flat, and its curvature is the curvature of $`\mathcal{L}`$. The curvature of $`f_0`$ alone is the wrong number, because the surface bends. The bend has a cost, and the multiplier $`\lambda`$ is exactly the price of that bend.
 
 ### Step 1: the KKT point and its price
 
-Along the surface $H = 60 - r q^2$, the power is $P(q) = 0.00981\,q\,(60 - r q^2)$. Its slope is $0.00981\,(60 - 3 r q^2)$, zero at $q^2 = 60 / (3r) = 160000$, so $q = 400$ L/s and $H = 40$ m. Friction takes 20 m, one third of the rating, whatever the rating or roughness.
+Along the surface $`H = 60 - r q^2`$, the power is $`P(q) = 0.00981\,q\,(60 - r q^2)`$. Its slope is $`0.00981\,(60 - 3 r q^2)`$, zero at $`q^2 = 60 / (3r) = 160000`$, so $`q = 400`$ L/s and $`H = 40`$ m. Friction takes 20 m, one third of the rating, whatever the rating or roughness.
 
-The gradients there are $\nabla f_0 = (-0.3924, -3.9240)$ and $\nabla f_1 = (0.1, 1)$. The KKT condition $\nabla f_0 + \lambda \nabla f_1 = 0$ gives $\lambda = 3.924$ from the second entry, and the first entry checks: $-0.3924 + 3.924 \times 0.1 = 0$. The price is positive, as an inequality needs. It is also a real price: a 61 m pipe against a 59 m pipe gains 3.92395 kW per metre.
+The gradients there are $`\nabla f_0 = (-0.3924, -3.9240)`$ and $`\nabla f_1 = (0.1, 1)`$. The KKT condition $`\nabla f_0 + \lambda \nabla f_1 = 0`$ gives $`\lambda = 3.924`$ from the second entry, and the first entry checks: $`-0.3924 + 3.924 \times 0.1 = 0`$. The price is positive, as an inequality needs. It is also a real price: a 61 m pipe against a 59 m pipe gains 3.92395 kW per metre.
 
 ### Step 2: directions that leave the surface are settled at first order
 
-Take any direction $d$ from $x^*$.
+Take any direction $`d`$ from $`x^*`$.
 
-- **Outward**, $\nabla f_1^{T} d > 0$: the pump-end head rises past 60 m. Not allowed. The move $(10, 1)$ raises it by 2 m.
-- **Inward**, $\nabla f_1^{T} d < 0$: allowed. The cost changes at first order by $\nabla f_0^{T} d = -\lambda\,\nabla f_1^{T} d > 0$, because $\lambda > 0$. The move $(-10, -1)$ lowers the pump-end head by 2 m and loses $3.924 \times 2 = 7.848$ kW at first order. A second-order term this close to $x^*$ cannot undo that.
-- **Along**, $\nabla f_1^{T} d = 0$: the first-order change is zero. Only the curvature can decide.
+- **Outward**, $`\nabla f_1^{T} d > 0`$: the pump-end head rises past 60 m. Not allowed. The move $`(10, 1)`$ raises it by 2 m.
+- **Inward**, $`\nabla f_1^{T} d < 0`$: allowed. The cost changes at first order by $`\nabla f_0^{T} d = -\lambda\,\nabla f_1^{T} d > 0`$, because $`\lambda > 0`$. The move $`(-10, -1)`$ lowers the pump-end head by 2 m and loses $`3.924 \times 2 = 7.848`$ kW at first order. A second-order term this close to $`x^*`$ cannot undo that.
+- **Along**, $`\nabla f_1^{T} d = 0`$: the first-order change is zero. Only the curvature can decide.
 
-So the critical cone is the tangent line $0.1\,d_q + d_H = 0$, the multiples of $d = (10, -1)$. Had $\lambda$ been zero, the inward moves would also cost nothing at first order, and they would stay in the cone: that is the third line of the cone's definition.
+So the critical cone is the tangent line $`0.1\,d_q + d_H = 0`$, the multiples of $`d = (10, -1)`$. Had $`\lambda`$ been zero, the inward moves would also cost nothing at first order, and they would stay in the cone: that is the third line of the cone's definition.
 
-### Step 3: following the surface, the bend adds $\lambda$ times its curvature
+### Step 3: following the surface, the bend adds $`\lambda`$ times its curvature
 
-Walk along a curve of allowed points $x(t) = x^* + t\,d + \tfrac12 t^2 a + \dots$, where $a$ is the curve's acceleration. Taylor's theorem to second order:
+Walk along a curve of allowed points $`x(t) = x^* + t\,d + \tfrac12 t^2 a + \dots`$, where $`a`$ is the curve's acceleration. Taylor's theorem to second order:
 
-$$f_0(x(t)) = f_0(x^*) + t\,\nabla f_0^{T} d + \tfrac12 t^2 \left( d^{T} \nabla^2 f_0\, d + \nabla f_0^{T} a \right) + \dots$$
+```math
+f_0(x(t)) = f_0(x^*) + t\,\nabla f_0^{T} d + \tfrac12 t^2 \left( d^{T} \nabla^2 f_0\, d + \nabla f_0^{T} a \right) + \dots
+```
 
-The first-order term is zero, since $d$ is in the cone. Staying on the surface means $f_1(x(t)) = 0$ for all $t$, so its second-order term vanishes too: $d^{T}\nabla^2 f_1\,d + \nabla f_1^{T} a = 0$. Combine that with $\nabla f_0 = -\lambda \nabla f_1$:
+The first-order term is zero, since $`d`$ is in the cone. Staying on the surface means $`f_1(x(t)) = 0`$ for all $`t`$, so its second-order term vanishes too: $`d^{T}\nabla^2 f_1\,d + \nabla f_1^{T} a = 0`$. Combine that with $`\nabla f_0 = -\lambda \nabla f_1`$:
 
-$$\nabla f_0^{T} a = -\lambda\,\nabla f_1^{T} a = \lambda\, d^{T}\nabla^2 f_1\, d.$$
+```math
+\nabla f_0^{T} a = -\lambda\,\nabla f_1^{T} a = \lambda\, d^{T}\nabla^2 f_1\, d.
+```
 
-So the second-order term is $d^{T}(\nabla^2 f_0 + \lambda \nabla^2 f_1)\,d = d^{T}\nabla^2\mathcal{L}\,d$.
+So the second-order term is $`d^{T}(\nabla^2 f_0 + \lambda \nabla^2 f_1)\,d = d^{T}\nabla^2\mathcal{L}\,d`$.
 
-In numbers, the surface $H = 60 - r q^2$ bends by $a = (0, -0.025)$ m for the step $d = (10, -1)$. The cost's gradient along that bend is $\nabla f_0^{T} a = 0.0981$, exactly $\lambda\, d^{T}\nabla^2 f_1\,d = 3.924 \times (2 \times 0.000125) \times 10^2$. Add the cost's own curvature, 0.1962, and the total is 0.2943 kW. Ignoring the bend loses a third of the answer.
+In numbers, the surface $`H = 60 - r q^2`$ bends by $`a = (0, -0.025)`$ m for the step $`d = (10, -1)`$. The cost's gradient along that bend is $`\nabla f_0^{T} a = 0.0981`$, exactly $`\lambda\, d^{T}\nabla^2 f_1\,d = 3.924 \times (2 \times 0.000125) \times 10^2`$. Add the cost's own curvature, 0.1962, and the total is 0.2943 kW. Ignoring the bend loses a third of the answer.
 
 ### Step 4: the necessary condition
 
-Suppose $x^*$ is a local minimum, the active gradients are linearly independent, and some $d$ in the cone has $d^{T}\nabla^2\mathcal{L}\,d < 0$. When every active constraint has a positive price, the cone is the tangent of the active constraints. The implicit function theorem then gives a curve that stays on them and leaves $x^*$ with velocity $d$. By Step 3, $f_0$ falls along that curve at second order. That contradicts a minimum. So at a regular local minimum, $d^{T}\nabla^2\mathcal{L}\,d \ge 0$ on the cone. Active constraints with zero price need a more careful curve; Nocedal and Wright, Chapter 12, give that case in full.
+Suppose $`x^*`$ is a local minimum, the active gradients are linearly independent, and some $`d`$ in the cone has $`d^{T}\nabla^2\mathcal{L}\,d < 0`$. When every active constraint has a positive price, the cone is the tangent of the active constraints. The implicit function theorem then gives a curve that stays on them and leaves $`x^*`$ with velocity $`d`$. By Step 3, $`f_0`$ falls along that curve at second order. That contradicts a minimum. So at a regular local minimum, $`d^{T}\nabla^2\mathcal{L}\,d \ge 0`$ on the cone. Active constraints with zero price need a more careful curve; Nocedal and Wright, Chapter 12, give that case in full.
 
 ### Step 5: the sufficient condition
 
@@ -116,47 +124,47 @@ Strictly positive curvature on the cone is enough: no allowed point nearby is as
 <details>
 <summary>Detailed proof: positive curvature on the critical cone gives a strict local minimum</summary>
 
-Suppose $x^*$ satisfies the KKT conditions with multipliers $\lambda_i \ge 0$, $\nu_j$, and $d^{T}\nabla^2\mathcal{L}(x^*)\,d > 0$ for every nonzero $d \in \mathcal{C}(x^*)$, but $x^*$ is not a strict local minimum.
+Suppose $`x^*`$ satisfies the KKT conditions with multipliers $`\lambda_i \ge 0`$, $`\nu_j`$, and $`d^{T}\nabla^2\mathcal{L}(x^*)\,d > 0`$ for every nonzero $`d \in \mathcal{C}(x^*)`$, but $`x^*`$ is not a strict local minimum.
 
-Then there are allowed points $x_k \ne x^*$ with $x_k \to x^*$ and $f_0(x_k) \le f_0(x^*)$. Write $x_k = x^* + t_k d_k$ with $\|d_k\| = 1$ and $t_k \to 0$. The unit vectors $d_k$ have a convergent subsequence; call its limit $d$, with $\|d\| = 1$.
+Then there are allowed points $`x_k \ne x^*`$ with $`x_k \to x^*`$ and $`f_0(x_k) \le f_0(x^*)`$. Write $`x_k = x^* + t_k d_k`$ with $`\|d_k\| = 1`$ and $`t_k \to 0`$. The unit vectors $`d_k`$ have a convergent subsequence; call its limit $`d`$, with $`\|d\| = 1`$.
 
-**$d$ lies in the cone.** Divide $h_j(x_k) - h_j(x^*) = 0$ by $t_k$ and let $k$ grow: $\nabla h_j^{T} d = 0$. For an active $f_i$, $f_i(x_k) \le 0 = f_i(x^*)$ gives $\nabla f_i^{T} d \le 0$. And $f_0(x_k) \le f_0(x^*)$ gives $\nabla f_0^{T} d \le 0$. But stationarity says $\nabla f_0^{T} d = -\sum_i \lambda_i \nabla f_i^{T} d - \sum_j \nu_j \nabla h_j^{T} d = -\sum_i \lambda_i \nabla f_i^{T} d \ge 0$, the sum running over active constraints (inactive ones have $\lambda_i = 0$). So $\nabla f_0^{T} d = 0$, and every term $\lambda_i \nabla f_i^{T} d$ is zero: $\nabla f_i^{T} d = 0$ wherever $\lambda_i > 0$. That is the definition of $\mathcal{C}(x^*)$.
+**$`d`$ lies in the cone.** Divide $`h_j(x_k) - h_j(x^*) = 0`$ by $`t_k`$ and let $`k`$ grow: $`\nabla h_j^{T} d = 0`$. For an active $`f_i`$, $`f_i(x_k) \le 0 = f_i(x^*)`$ gives $`\nabla f_i^{T} d \le 0`$. And $`f_0(x_k) \le f_0(x^*)`$ gives $`\nabla f_0^{T} d \le 0`$. But stationarity says $`\nabla f_0^{T} d = -\sum_i \lambda_i \nabla f_i^{T} d - \sum_j \nu_j \nabla h_j^{T} d = -\sum_i \lambda_i \nabla f_i^{T} d \ge 0`$, the sum running over active constraints (inactive ones have $`\lambda_i = 0`$). So $`\nabla f_0^{T} d = 0`$, and every term $`\lambda_i \nabla f_i^{T} d`$ is zero: $`\nabla f_i^{T} d = 0`$ wherever $`\lambda_i > 0`$. That is the definition of $`\mathcal{C}(x^*)`$.
 
-**The Lagrangian cannot curve up along $d$.** At allowed points $\lambda_i f_i(x_k) \le 0$ and $h_j(x_k) = 0$, so $\mathcal{L}(x_k) \le f_0(x_k) \le f_0(x^*) = \mathcal{L}(x^*)$, the last step by complementary slackness. Expand $\mathcal{L}$ about $x^*$, where its gradient is zero:
+**The Lagrangian cannot curve up along $`d`$.** At allowed points $`\lambda_i f_i(x_k) \le 0`$ and $`h_j(x_k) = 0`$, so $`\mathcal{L}(x_k) \le f_0(x_k) \le f_0(x^*) = \mathcal{L}(x^*)`$, the last step by complementary slackness. Expand $`\mathcal{L}`$ about $`x^*`$, where its gradient is zero:
 
-$$\mathcal{L}(x_k) = \mathcal{L}(x^*) + \tfrac12 t_k^2\, d_k^{T}\nabla^2\mathcal{L}(x^*)\,d_k + o(t_k^2).$$
+$`\displaystyle \mathcal{L}(x_k) = \mathcal{L}(x^*) + \tfrac12 t_k^2\, d_k^{T}\nabla^2\mathcal{L}(x^*)\,d_k + o(t_k^2).`$
 
-Here $o(t_k^2)$ stands for terms that shrink faster than $t_k^2$, which needs the second derivatives to be continuous. So $\tfrac12 d_k^{T}\nabla^2\mathcal{L}\,d_k + o(1) \le 0$, and in the limit $d^{T}\nabla^2\mathcal{L}\,d \le 0$, with $d \ne 0$ in the cone. That contradicts the hypothesis. ∎
+Here $`o(t_k^2)`$ stands for terms that shrink faster than $`t_k^2`$, which needs the second derivatives to be continuous. So $`\tfrac12 d_k^{T}\nabla^2\mathcal{L}\,d_k + o(1) \le 0`$, and in the limit $`d^{T}\nabla^2\mathcal{L}\,d \le 0`$, with $`d \ne 0`$ in the cone. That contradicts the hypothesis. ∎
 
 </details>
 
 ### Two more roads to the same verdict
 
-- **Walk the surface itself.** Put $H = 60 - r q^2$ into $f_0$ and take a second difference at 390, 400 and 410 L/s: 0.2943 kW, the same number, with no multiplier in sight.
-- **The bordered Hessian.** Border $\nabla^2\mathcal{L}$ with the constraint's gradient: the $3 \times 3$ matrix with rows $(0, 0.1, 1)$, $(0.1, 0.000981, -0.00981)$, $(1, -0.00981, 0)$. With one constraint and two choices, its determinant is minus the cone curvature for the tangent $(1, -0.1)$: $-0.002943$. Negative means a strict minimum of $f_0$. Economists use this form for budget problems.
+- **Walk the surface itself.** Put $`H = 60 - r q^2`$ into $`f_0`$ and take a second difference at 390, 400 and 410 L/s: 0.2943 kW, the same number, with no multiplier in sight.
+- **The bordered Hessian.** Border $`\nabla^2\mathcal{L}`$ with the constraint's gradient: the $`3 \times 3`$ matrix with rows $`(0, 0.1, 1)`$, $`(0.1, 0.000981, -0.00981)`$, $`(1, -0.00981, 0)`$. With one constraint and two choices, its determinant is minus the cone curvature for the tangent $`(1, -0.1)`$: $`-0.002943`$. Negative means a strict minimum of $`f_0`$. Economists use this form for budget problems.
 
 ---
 
 ## Worked numbers, by hand
 
-The main rated for 60 m, friction $0.000125\,q^2$, power $0.00981\,qH$, maximised.
+The main rated for 60 m, friction $`0.000125\,q^2`$, power $`0.00981\,qH`$, maximised.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| slope of power along the surface is zero | $60 = 3 \times 0.000125 \times q^2$ | $q = 400$ L/s |
-| delivered head | $60 - 0.000125 \times 400^2 = 60 - 20$ | $H = 40$ m |
-| power | $0.00981 \times 400 \times 40$ | 156.96 kW |
-| gradient of the cost $f_0 = -P$ | $(-0.00981 \times 40,\ -0.00981 \times 400)$ | $(-0.3924, -3.924)$ |
-| gradient of the constraint | $(2 \times 0.000125 \times 400,\ 1)$ | $(0.1, 1)$ |
-| multiplier, from the $H$ entry | $3.924 / 1$ | $\lambda = 3.924$ kW per m |
-| critical cone | $0.1\,d_q + d_H = 0$, with $\lambda > 0$ | $d = (10, -1)$ |
-| the cost's own curvature | $2 \times (-0.00981) \times 10 \times (-1)$ | 0.1962 |
-| the bend's share | $3.924 \times (2 \times 0.000125) \times 10^2$ | 0.0981 |
-| curvature of $\mathcal{L}$ on the cone | $0.1962 + 0.0981$ | **0.2943 > 0** |
+| slope of power along the surface is zero | $`60 = 3 \times 0.000125 \times q^2`$ | $`q = 400`$ L/s |
+| delivered head | $`60 - 0.000125 \times 400^2 = 60 - 20`$ | $`H = 40`$ m |
+| power | $`0.00981 \times 400 \times 40`$ | 156.96 kW |
+| gradient of the cost $`f_0 = -P`$ | $`(-0.00981 \times 40,\ -0.00981 \times 400)`$ | $`(-0.3924, -3.924)`$ |
+| gradient of the constraint | $`(2 \times 0.000125 \times 400,\ 1)`$ | $`(0.1, 1)`$ |
+| multiplier, from the $`H`$ entry | $`3.924 / 1`$ | $`\lambda = 3.924`$ kW per m |
+| critical cone | $`0.1\,d_q + d_H = 0`$, with $`\lambda > 0`$ | $`d = (10, -1)`$ |
+| the cost's own curvature | $`2 \times (-0.00981) \times 10 \times (-1)`$ | 0.1962 |
+| the bend's share | $`3.924 \times (2 \times 0.000125) \times 10^2`$ | 0.0981 |
+| curvature of $`\mathcal{L}`$ on the cone | $`0.1962 + 0.0981`$ | **0.2943 > 0** |
 
-So $x^*$ is a strict local minimum of $f_0$: a strict local maximum of power. Run the main at 400 L/s with 40 m at the town end, for 156.96 kW. The price 3.924 kW per metre says what a higher pipe rating would buy.
+So $`x^*`$ is a strict local minimum of $`f_0`$: a strict local maximum of power. Run the main at 400 L/s with 40 m at the town end, for 156.96 kW. The price 3.924 kW per metre says what a higher pipe rating would buy.
 
-It is also the global best. Below the surface, power at the same flow is smaller, because power grows with $H$. On the surface, power is a single-hump cubic in $q$ from 0 to 692.8 L/s. The code checks every allowed point on a 1 L/s by 0.1 m grid, 277751 of them, and none beats $x^*$. The floors matter: without them, $q = H = -1000$ meets the rating with 935 m to spare and gives 9810.00 kW, so there would be no best point at all.
+It is also the global best. Below the surface, power at the same flow is smaller, because power grows with $`H`$. On the surface, power is a single-hump cubic in $`q`$ from 0 to 692.8 L/s. The code checks every allowed point on a 1 L/s by 0.1 m grid, 277751 of them, and none beats $`x^*`$. The floors matter: without them, $`q = H = -1000`$ meets the rating with 935 m to spare and gives 9810.00 kW, so there would be no best point at all.
 
 The quadratic model is honest close in: a 10 L/s slide along the surface loses 0.1484 kW against the model's 0.1472. At 50 L/s the cubic term shows, 3.8320 against 3.6787.
 
@@ -164,16 +172,16 @@ The quadratic model is honest close in: a 10 L/s slide along the surface loses 0
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Test the Hessian of $f_0$ alone, every direction | eigenvalues −0.009810 and 0.009810: "a saddle" | $qH$ is a saddle in the open plane; the constraint is what creates a best point |
-| Test $\nabla^2\mathcal{L}$ on every direction | eigenvalues −0.009332 and 0.010313: "no minimum" | the negative direction crosses the surface, where the first-order term already rules |
-| Use $\nabla^2 f_0$ on the tangent, dropping $\lambda \nabla^2 f_1$ | 0.1962, a model loss of 0.0981 kW for a 10 L/s slide (true 0.1484) | the surface bends; the bend's price is missing |
-| Run the curvature test where KKT fails, at $q$ = 300, $H$ = 48.75 | curvature 0.2207 > 0, yet power rises 0.2575 kW per L/s | the hypothesis "first-order conditions hold" is false: the slope test comes first |
+| Test the Hessian of $`f_0`$ alone, every direction | eigenvalues −0.009810 and 0.009810: "a saddle" | $`qH`$ is a saddle in the open plane; the constraint is what creates a best point |
+| Test $`\nabla^2\mathcal{L}`$ on every direction | eigenvalues −0.009332 and 0.010313: "no minimum" | the negative direction crosses the surface, where the first-order term already rules |
+| Use $`\nabla^2 f_0`$ on the tangent, dropping $`\lambda \nabla^2 f_1`$ | 0.1962, a model loss of 0.0981 kW for a 10 L/s slide (true 0.1484) | the surface bends; the bend's price is missing |
+| Run the curvature test where KKT fails, at $`q`$ = 300, $`H`$ = 48.75 | curvature 0.2207 > 0, yet power rises 0.2575 kW per L/s | the hypothesis "first-order conditions hold" is false: the slope test comes first |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code solves the KKT conditions, builds the critical cone from the active constraint's gradient, and tests the Lagrangian's Hessian on it. It reaches the verdict by three independent roads: the cone test (road 1), a second difference along the surface itself (road 2), and every allowed point on a grid (road 4). Two more checks are not independent of road 1. The bordered Hessian's determinant (road 3) is, by algebra, minus the cone curvature along the tangent $(1, -0.1)$. The multiplier recovered as the price of a higher rating (road 5) confirms the $\lambda$ that road 1 uses. It also checks both gradients against central differences, and prints the four wrong tests.
+The code solves the KKT conditions, builds the critical cone from the active constraint's gradient, and tests the Lagrangian's Hessian on it. It reaches the verdict by three independent roads: the cone test (road 1), a second difference along the surface itself (road 2), and every allowed point on a grid (road 4). Two more checks are not independent of road 1. The bordered Hessian's determinant (road 3) is, by algebra, minus the cone curvature along the tangent $`(1, -0.1)`$. The multiplier recovered as the price of a higher rating (road 5) confirms the $`\lambda`$ that road 1 uses. It also checks both gradients against central differences, and prints the four wrong tests.
 
 ### Python
 
@@ -517,7 +525,7 @@ Lean proves both second-order tests in general, the necessary one only when ever
 - At a point passing the KKT test, with twice-smooth functions, positive Lagrangian curvature on every nonzero cone direction gives a strict local minimum.
 - At a regular local minimum where every active inequality has a positive price, the Lagrangian's curvature on the critical cone is at least zero.
 - The choice 400 L/s at 40 m is allowed and delivers 156.96 kW, and no allowed choice delivers more.
-- The hand arithmetic holds exactly, from $\lambda = 3.924$ and the cone curvature 0.2943 to the bordered Hessian's determinant, $-0.002943$.
+- The hand arithmetic holds exactly, from $`\lambda = 3.924`$ and the cone curvature 0.2943 to the bordered Hessian's determinant, $`-0.002943`$.
 
 The grid search, the 61 m against 59 m price and the Try changing runs are left to the Python and Rust checks.
 
@@ -1015,8 +1023,8 @@ example : (-1000 : ℚ) + 1 / 8000 * (-1000) ^ 2 - 60 = -935 ∧
 > [!TIP]
 > **Try changing**
 > The asserts are pinned to the 60 m main, so the first two experiments stop at the first assert; every new number prints before it.
-> - Guess first: raise the rating from 60 m to 80 m. Does the friction share stay at one third? Set `RATING = 80.0`. The best point moves to 461.9 L/s and 53.33 m, 241.66 kW, $\lambda$ = 4.5310, and the friction share is still 0.3333. The cone curvature becomes 0.3398.
-> - Guess first: a pipe twice as rough. Set `R` to twice 0.000125. The best flow falls to 282.8 L/s, the head stays at 40.00 m, power falls to 110.99 kW and $\lambda$ to 2.7747. The tangent tilts more steeply, and the cone curvature rises to 0.4162.
+> - Guess first: raise the rating from 60 m to 80 m. Does the friction share stay at one third? Set `RATING = 80.0`. The best point moves to 461.9 L/s and 53.33 m, 241.66 kW, $`\lambda`$ = 4.5310, and the friction share is still 0.3333. The cone curvature becomes 0.3398.
+> - Guess first: a pipe twice as rough. Set `R` to twice 0.000125. The best flow falls to 282.8 L/s, the head stays at 40.00 m, power falls to 110.99 kW and $`\lambda`$ to 2.7747. The tangent tilts more steeply, and the cone curvature rises to 0.4162.
 > - Guess first: how far does the quadratic model stay honest? Slide 50 L/s along the surface instead of 10. True loss 3.8320 kW, model 3.6787.
 > - Guess first: test the curvature at 300 L/s instead of 400. It is positive, 0.2207, but the slope is 0.2575 kW per L/s, so the point fails the first test and the second means nothing.
 
@@ -1025,11 +1033,11 @@ example : (-1000 : ℚ) + 1 / 8000 * (-1000) ^ 2 - 60 = -935 ∧
 ## The usual mistake
 
 > [!warning]
-> **Testing the Hessian on every direction.** The unconstrained rule, "the Hessian must be positive definite", is the wrong test here. The power $qH$ has eigenvalues −0.009810 and 0.009810, a saddle, and even the Lagrangian's Hessian has a negative eigenvalue, −0.009332. Both would reject a point that is in fact the best in the whole region. The negative curvature points across the surface, and across-surface moves are settled at first order: outward is forbidden, inward costs 7.848 kW per 2 m. Only directions in the critical cone get a curvature test.
+> **Testing the Hessian on every direction.** The unconstrained rule, "the Hessian must be positive definite", is the wrong test here. The power $`qH`$ has eigenvalues −0.009810 and 0.009810, a saddle, and even the Lagrangian's Hessian has a negative eigenvalue, −0.009332. Both would reject a point that is in fact the best in the whole region. The negative curvature points across the surface, and across-surface moves are settled at first order: outward is forbidden, inward costs 7.848 kW per 2 m. Only directions in the critical cone get a curvature test.
 >
-> - **Dropping the bend term.** Using $\nabla^2 f_0$ alone on the tangent gives 0.1962 instead of 0.2943. Here the verdict survives, but on a surface curving the other way the sign can flip.
-> - **Getting the multiplier's sign wrong.** A maximisation written carelessly gives $\lambda = -3.924$, and the curvature comes out at $0.1962 - 0.0981 = 0.0981$. Turn the maximum into a minimum of $-P$ first, then use $\lambda \ge 0$.
-> - **Using the tangent when a price is zero.** An active inequality with $\lambda_i = 0$ leaves its inward half in the cone. Testing only the line misses those directions.
+> - **Dropping the bend term.** Using $`\nabla^2 f_0`$ alone on the tangent gives 0.1962 instead of 0.2943. Here the verdict survives, but on a surface curving the other way the sign can flip.
+> - **Getting the multiplier's sign wrong.** A maximisation written carelessly gives $`\lambda = -3.924`$, and the curvature comes out at $`0.1962 - 0.0981 = 0.0981`$. Turn the maximum into a minimum of $`-P`$ first, then use $`\lambda \ge 0`$.
+> - **Using the tangent when a price is zero.** An active inequality with $`\lambda_i = 0`$ leaves its inward half in the cone. Testing only the line misses those directions.
 > - **Skipping the slope test.** At 300 L/s the curvature is positive, 0.2207, but power still climbs 0.2575 kW per L/s.
 
 ---
@@ -1037,7 +1045,7 @@ example : (-1000 : ℚ) + 1 / 8000 * (-1000) ^ 2 - 60 = -935 ∧
 ## Where you meet it in real life
 
 - **Hydraulic power mains.** Cities once piped high-pressure water to drive lifts and cranes. The one-third rule for friction above is the classic design result for the most power a pipe can transmit, and the curvature along the capacity surface is what makes it a maximum and not a saddle.
-- **Constrained solvers.** [Sequential quadratic programming](09-sequential-quadratic-programming.md) builds its step from $\nabla^2\mathcal{L}$ restricted to the constraints' tangent, and [Interior point methods](08-interior-point-methods.md) check the same curvature before trusting a step. A solver that stops at a saddle has passed the KKT test and failed this one.
+- **Constrained solvers.** [Sequential quadratic programming](09-sequential-quadratic-programming.md) builds its step from $`\nabla^2\mathcal{L}`$ restricted to the constraints' tangent, and [Interior point methods](08-interior-point-methods.md) check the same curvature before trusting a step. A solver that stops at a saddle has passed the KKT test and failed this one.
 - **Economics.** A household spending a fixed budget, or a firm meeting an output target at least cost, is checked with the bordered Hessian from road 3. Textbooks in economics state it as a sign pattern of determinants.
 
 > **Say it back**
@@ -1045,22 +1053,22 @@ example : (-1000 : ℚ) + 1 / 8000 * (-1000) ^ 2 - 60 = -935 ∧
 > Directions that leave an active constraint with a positive price are settled at first order, so the curvature test looks only at the critical cone.
 > On that cone, the right curvature is the Lagrangian's Hessian, because walking along a curved constraint adds the multiplier times the constraint's curvature.
 > Strictly positive there means a strict local minimum; at least zero is what every regular local minimum must satisfy.
-> The pipe's 400 L/s at 40 m passes with 0.2943 kW, although the power $qH$ alone is a saddle.
+> The pipe's 400 L/s at 40 m passes with 0.2943 kW, although the power $`qH`$ alone is a saddle.
 
 ---
 
 ## What this builds on
 
-- [KKT conditions](02-kkt-conditions.md): the first-order test, the multipliers $\lambda_i \ge 0$ and $\nu_j$, complementary slackness and the regularity condition LICQ. This card starts from a point that passes it.
+- [KKT conditions](02-kkt-conditions.md): the first-order test, the multipliers $`\lambda_i \ge 0`$ and $`\nu_j`$, complementary slackness and the regularity condition LICQ. This card starts from a point that passes it.
 - [Optimality conditions](../02-Unconstrained%20Methods/01-optimality-conditions.md): the unconstrained version, a zero gradient and a positive definite Hessian, and the gap between the necessary and sufficient tests. This card restricts the Hessian test to the critical cone.
 
 ---
 
 ## Where this goes next
 
-- [Penalties and augmented Lagrangians](07-penalty-and-augmented-lagrangian-methods.md): adding a penalty $\rho$ times the squared constraint adds curvature across the surface, which turns the indefinite $\nabla^2\mathcal{L}$ here into a positive definite one, so an unconstrained method can find $x^*$.
-- [Sequential quadratic programming](09-sequential-quadratic-programming.md): each step minimises a quadratic model whose curvature is $\nabla^2\mathcal{L}$ on the tangent, the exact quantity tested here.
-- [Saddle points](06-saddle-points-and-minimax.md): the Lagrangian as a function of choices and prices, where $x^*$ is a saddle in a different, useful sense.
+- [Penalties and augmented Lagrangians](07-penalty-and-augmented-lagrangian-methods.md): adding a penalty $`\rho`$ times the squared constraint adds curvature across the surface, which turns the indefinite $`\nabla^2\mathcal{L}`$ here into a positive definite one, so an unconstrained method can find $`x^*`$.
+- [Sequential quadratic programming](09-sequential-quadratic-programming.md): each step minimises a quadratic model whose curvature is $`\nabla^2\mathcal{L}`$ on the tangent, the exact quantity tested here.
+- [Saddle points](06-saddle-points-and-minimax.md): the Lagrangian as a function of choices and prices, where $`x^*`$ is a saddle in a different, useful sense.
 - [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md): a global certificate, where this card's test is only local.
 
 The question left open is how to find such a point when the problem is too big to draw, and how a method keeps the curvature test true at every step.

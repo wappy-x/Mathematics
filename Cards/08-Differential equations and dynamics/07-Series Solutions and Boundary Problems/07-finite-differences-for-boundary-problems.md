@@ -26,39 +26,43 @@ Dots: the nine grid values. Curve: the exact sag x(1 − x)/2. Triangles: the pi
 
 ## The formula
 
-Notation first, in words. The two primes in $y''$ mean the rate of the rate: the curvature. A small index names a grid point: $x_i$ is mark number $i$, $y_i$ the grid's sag there, $f_i$ the load there.
+Notation first, in words. The two primes in $`y''`$ mean the rate of the rate: the curvature. A small index names a grid point: $`x_i`$ is mark number $`i`$, $`y_i`$ the grid's sag there, $`f_i`$ the load there.
 
-The shelf's equation is $y'' = f(x)$ with $y(0) = y(1) = 0$, where $f$ is minus the load over the tension, here −1 per metre. Put $N$ marks inside the span at spacing $h = 1/(N+1)$, so $x_i = ih$. The finite-difference equations are
+The shelf's equation is $`y'' = f(x)`$ with $`y(0) = y(1) = 0`$, where $`f`$ is minus the load over the tension, here −1 per metre. Put $`N`$ marks inside the span at spacing $`h = 1/(N+1)`$, so $`x_i = ih`$. The finite-difference equations are
 
-$$\frac{y_{i-1} - 2y_i + y_{i+1}}{h^2} = f_i, \qquad i = 1, \dots, N, \qquad y_0 = y_{N+1} = 0.$$
+```math
+\frac{y_{i-1} - 2y_i + y_{i+1}}{h^2} = f_i, \qquad i = 1, \dots, N, \qquad y_0 = y_{N+1} = 0.
+```
 
 **Read it aloud:** at each mark, the two neighbours minus twice the mark, over the spacing squared, equals the load there.
 
-Multiplied by $h^2$, they form one linear system whose matrix has −2 down the diagonal, 1 on either side of it, and zeros elsewhere: a tridiagonal matrix. The error $E$, the largest gap between grid and true curve at the marks, obeys
+Multiplied by $`h^2`$, they form one linear system whose matrix has −2 down the diagonal, 1 on either side of it, and zeros elsewhere: a tridiagonal matrix. The error $`E`$, the largest gap between grid and true curve at the marks, obeys
 
-$$E \le \frac{h^2 M}{96},$$
+```math
+E \le \frac{h^2 M}{96},
+```
 
-where $M$ is the largest size of the fourth derivative $y''''$ over the span.
+where $`M`$ is the largest size of the fourth derivative $`y''''`$ over the span.
 
 **Read it aloud:** halve the spacing and the error falls to a quarter.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | distance from the left pin; sag, measured down | 0 to 1 m; 0.125 m mid | — |
-| $f$ | minus load over tension | −1.0 per m | more negative: deeper sag |
-| $h$, $N$ | spacing; inside marks | 0.1 m; 9 | $h$ up: error grows like $h^2$ |
-| $x_i$, $y_i$, $f_i$, $i$ | mark $i$; grid sag there; load there | mark 5: 0.5 m, 0.125000 m | — |
-| $p_i$, $r_i$ | sweep pivot and right side, row $i$ | row 9: −1.1111, −0.0500 | — |
-| $E$, $e_i$, $\tau_i$ | largest error; error at mark $i$; truncation error there | 0.00131548 (second load, below) | — |
-| $M$, $\xi$ | largest size of $y''''$; Taylor's remainder point | $\pi^3/2$ (second load) | bound loosens |
-| $D$, $v$, $v_i$, $\phi_i$ | proof's second difference; any grid list; even sag at mark $i$ | 0.125 mid | — |
+| $`x`$, $`y`$ | distance from the left pin; sag, measured down | 0 to 1 m; 0.125 m mid | — |
+| $`f`$ | minus load over tension | −1.0 per m | more negative: deeper sag |
+| $`h`$, $`N`$ | spacing; inside marks | 0.1 m; 9 | $`h`$ up: error grows like $`h^2`$ |
+| $`x_i`$, $`y_i`$, $`f_i`$, $`i`$ | mark $`i`$; grid sag there; load there | mark 5: 0.5 m, 0.125000 m | — |
+| $`p_i`$, $`r_i`$ | sweep pivot and right side, row $`i`$ | row 9: −1.1111, −0.0500 | — |
+| $`E`$, $`e_i`$, $`\tau_i`$ | largest error; error at mark $`i`$; truncation error there | 0.00131548 (second load, below) | — |
+| $`M`$, $`\xi`$ | largest size of $`y''''`$; Taylor's remainder point | $`\pi^3/2`$ (second load) | bound loosens |
+| $`D`$, $`v`$, $`v_i`$, $`\phi_i`$ | proof's second difference; any grid list; even sag at mark $`i`$ | 0.125 mid | — |
 
 ### When it holds
 
-- **A smooth load.** The bound needs $y''''$ bounded; one heavy book at a point puts a corner in the sag and slows the error's fall.
+- **A smooth load.** The bound needs $`y''''`$ bounded; one heavy book at a point puts a corner in the sag and slows the error's fall.
 - **Even spacing.** The odd error terms cancel only when both neighbours are equally far away.
-- **A matrix that cannot be singular.** Here every pivot has size at least 1. Add a spring term, $y'' + ky = f$ with a constant k, and the matrix turns singular for k close to $\pi^2, 4\pi^2, 9\pi^2, \dots$, where the exact problem also fails ([Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md)).
-- **Spacing not absurdly small.** Dividing a difference of nearly equal numbers by $h^2$ magnifies rounding, so past some tiny spacing the error rises again.
+- **A matrix that cannot be singular.** Here every pivot has size at least 1. Add a spring term, $`y'' + ky = f`$ with a constant k, and the matrix turns singular for k close to $`\pi^2, 4\pi^2, 9\pi^2, \dots`$, where the exact problem also fails ([Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md)).
+- **Spacing not absurdly small.** Dividing a difference of nearly equal numbers by $`h^2`$ magnifies rounding, so past some tiny spacing the error rises again.
 
 ---
 
@@ -70,50 +74,56 @@ A derivative is a limit of differences. Stop before the limit: at a fixed spacin
 
 ### Step 1: the centred difference, and what it misses
 
-[Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) expands the sag one step either side of $x$:
+[Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) expands the sag one step either side of $`x`$:
 
-$$y(x \pm h) = y \pm h y' + \frac{h^2}{2} y'' \pm \frac{h^3}{6} y''' + \frac{h^4}{24} y''''(\xi_\pm).$$
+```math
+y(x \pm h) = y \pm h y' + \frac{h^2}{2} y'' \pm \frac{h^3}{6} y''' + \frac{h^4}{24} y''''(\xi_\pm).
+```
 
 Add the two. The odd terms cancel because the step is symmetric:
 
-$$\frac{y(x-h) - 2y(x) + y(x+h)}{h^2} = y''(x) + \frac{h^2}{12}\,y''''(\xi),$$
+```math
+\frac{y(x-h) - 2y(x) + y(x+h)}{h^2} = y''(x) + \frac{h^2}{12}\,y''''(\xi),
+```
 
-for some point $\xi$ within one step of $x$. The miss, called the truncation error, is proportional to $h^2$. For a parabola $y''''$ is zero, so the centred difference is exact: that is why the even shelf's grid carries no error at all.
+for some point $`\xi`$ within one step of $`x`$. The miss, called the truncation error, is proportional to $`h^2`$. For a parabola $`y''''`$ is zero, so the centred difference is exact: that is why the even shelf's grid carries no error at all.
 
 ### Step 2: the equations form a tridiagonal system
 
-Row $i$ involves only $y_{i-1}$, $y_i$ and $y_{i+1}$. The pinned ends are known zeros and drop out of the first and last rows; a nonzero end value would move to the right side.
+Row $`i`$ involves only $`y_{i-1}`$, $`y_i`$ and $`y_{i+1}`$. The pinned ends are known zeros and drop out of the first and last rows; a nonzero end value would move to the right side.
 
 ### Step 3: the Thomas sweep, Gaussian elimination on a band
 
 Gaussian elimination ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)) clears the entries below each pivot (the diagonal entry used to divide). A tridiagonal matrix has one entry below each pivot, and clearing it touches only the next row: that shortcut is the Thomas sweep.
 
-Forward: row 1 keeps $p_1 = -2$ and $r_1 = h^2 f_1$. Subtract row $i-1$, divided by its pivot, from row $i$:
+Forward: row 1 keeps $`p_1 = -2`$ and $`r_1 = h^2 f_1`$. Subtract row $`i-1`$, divided by its pivot, from row $`i`$:
 
-$$p_i = -2 - \frac{1}{p_{i-1}}, \qquad r_i = h^2 f_i - \frac{r_{i-1}}{p_{i-1}}.$$
+```math
+p_i = -2 - \frac{1}{p_{i-1}}, \qquad r_i = h^2 f_i - \frac{r_{i-1}}{p_{i-1}}.
+```
 
-Row $i$ now reads $p_i y_i + y_{i+1} = r_i$. Back: the last row has one unknown, $y_N = r_N / p_N$; then $y_i = (r_i - y_{i+1}) / p_i$, working upwards.
+Row $`i`$ now reads $`p_i y_i + y_{i+1} = r_i`$. Back: the last row has one unknown, $`y_N = r_N / p_N`$; then $`y_i = (r_i - y_{i+1}) / p_i`$, working upwards.
 
-The work grows in step with $N$, against $N^3$ for full elimination. Here $p_i = -(i+1)/i$, never below 1 in size, so no division by zero occurs.
+The work grows in step with $`N`$, against $`N^3`$ for full elimination. Here $`p_i = -(i+1)/i`$, never below 1 in size, so no division by zero occurs.
 
 ### Step 4: the error is proportional to the spacing squared
 
-Let $e_i = y_i - y(x_i)$, the error at mark $i$. Subtracting Step 1 from the grid equation shows the errors obey the same system, with the truncation error, at most $h^2 M / 12$, as the load. A load of size 1 produces a sag of at most 1/8: the even shelf's own answer. So the error is at most $\frac{h^2 M}{12} \times \frac18 = \frac{h^2 M}{96}$.
+Let $`e_i = y_i - y(x_i)`$, the error at mark $`i`$. Subtracting Step 1 from the grid equation shows the errors obey the same system, with the truncation error, at most $`h^2 M / 12`$, as the load. A load of size 1 produces a sag of at most 1/8: the even shelf's own answer. So the error is at most $`\frac{h^2 M}{12} \times \frac18 = \frac{h^2 M}{96}`$.
 
 <details>
 <summary>Detailed proof: the error is at most $h^2 M/96$</summary>
 
-Write $D v_i = (v_{i-1} - 2v_i + v_{i+1})/h^2$ for any grid list $v$ with $v_0 = v_{N+1} = 0$.
+Write $`D v_i = (v_{i-1} - 2v_i + v_{i+1})/h^2`$ for any grid list $`v`$ with $`v_0 = v_{N+1} = 0`$.
 
-**Maximum principle.** If $D v_i \le 0$ at every inside mark, then every $v_i \ge 0$. Suppose not: take the smallest value, negative, and the first mark $i$ where it occurs. Then $v_{i-1} > v_i$ (the left neighbour is an end, which is zero, or an earlier mark, which is larger) and $v_{i+1} \ge v_i$. So $D v_i > 0$, a contradiction.
+**Maximum principle.** If $`D v_i \le 0`$ at every inside mark, then every $`v_i \ge 0`$. Suppose not: take the smallest value, negative, and the first mark $`i`$ where it occurs. Then $`v_{i-1} > v_i`$ (the left neighbour is an end, which is zero, or an earlier mark, which is larger) and $`v_{i+1} \ge v_i`$. So $`D v_i > 0`$, a contradiction.
 
-**Truncation.** By Step 1 the true values satisfy $D\,y(x_i) = f_i + \tau_i$ with $\lvert\tau_i\rvert \le h^2 M/12$. The grid satisfies $D y_i = f_i$. Subtracting, $D e_i = -\tau_i$.
+**Truncation.** By Step 1 the true values satisfy $`D\,y(x_i) = f_i + \tau_i`$ with $`\lvert\tau_i\rvert \le h^2 M/12`$. The grid satisfies $`D y_i = f_i`$. Subtracting, $`D e_i = -\tau_i`$.
 
-**Comparison.** Let $\phi_i = x_i(1 - x_i)/2$, the even shelf's sag, for which $D\phi_i = -1$ exactly (Step 1, a parabola). Put $v_i = \frac{h^2 M}{12}\phi_i \pm e_i$. Then $D v_i = -\frac{h^2 M}{12} \mp \tau_i \le 0$, so $v_i \ge 0$ for both signs. Hence $\lvert e_i\rvert \le \frac{h^2 M}{12}\phi_i \le \frac{h^2 M}{12}\cdot\frac18$, since $\phi_i$ is never above 1/8.
+**Comparison.** Let $`\phi_i = x_i(1 - x_i)/2`$, the even shelf's sag, for which $`D\phi_i = -1`$ exactly (Step 1, a parabola). Put $`v_i = \frac{h^2 M}{12}\phi_i \pm e_i`$. Then $`D v_i = -\frac{h^2 M}{12} \mp \tau_i \le 0`$, so $`v_i \ge 0`$ for both signs. Hence $`\lvert e_i\rvert \le \frac{h^2 M}{12}\phi_i \le \frac{h^2 M}{12}\cdot\frac18`$, since $`\phi_i`$ is never above 1/8.
 
 </details>
 
-A second load tests this: the same total weight heaped towards the middle, $f = -(\pi/2)\sin(\pi x)$. Its exact sag is $\sin(\pi x)/(2\pi)$, 0.159155 m at the middle, with $M = \pi^3/2$. At $h$ = 0.1000 the midpoint error is 0.00131548, under the bound 0.00161491. Halving $h$ divides it by 4.01, then 4.00.
+A second load tests this: the same total weight heaped towards the middle, $`f = -(\pi/2)\sin(\pi x)`$. Its exact sag is $`\sin(\pi x)/(2\pi)`$, 0.159155 m at the middle, with $`M = \pi^3/2`$. At $`h`$ = 0.1000 the midpoint error is 0.00131548, under the bound 0.00161491. Halving $`h`$ divides it by 4.01, then 4.00.
 
 ### The picture: the heaped-load error against the spacing
 
@@ -126,7 +136,7 @@ xychart-beta
     line [0.82, 3.28, 13.15]
 ```
 
-The line is the midpoint error. Doubling the spacing multiplies it by about 4: an error proportional to $h^2$.
+The line is the midpoint error. Doubling the spacing multiplies it by about 4: an error proportional to $`h^2`$.
 
 ### Other roads
 
@@ -136,18 +146,18 @@ Shooting ([Shooting](06-the-shooting-method.md)) guesses the slope at the left p
 
 ## Worked numbers, by hand
 
-The even shelf, $N$ = 9 and $h$ = 0.1 m, so every right side starts as $h^2 f_i = -0.0100$.
+The even shelf, $`N`$ = 9 and $`h`$ = 0.1 m, so every right side starts as $`h^2 f_i = -0.0100`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| row 1 | $p_1 = -2$, $r_1 = -0.0100$ | −2.0000, −0.0100 |
-| row 2 | $p_2 = -2 - 1/(-2)$; $r_2 = -0.0100 - (-0.0100)/(-2)$ | −1.5000, −0.0150 |
-| row 3 | $p_3 = -2 - 1/(-1.5)$; $r_3 = -0.0100 - (-0.0150)/(-1.5)$ | −1.3333, −0.0200 |
-| rows 4 to 9 | same pattern, $p_i = -(i+1)/i$ | row 9: −1.1111, −0.0500 |
-| back, mark 9 | $-0.0500 / -1.1111$ | 0.045000 |
-| mark 8 | $(-0.0450 - 0.045000) / -1.1250$ | 0.080000 |
+| row 1 | $`p_1 = -2`$, $`r_1 = -0.0100`$ | −2.0000, −0.0100 |
+| row 2 | $`p_2 = -2 - 1/(-2)`$; $`r_2 = -0.0100 - (-0.0100)/(-2)`$ | −1.5000, −0.0150 |
+| row 3 | $`p_3 = -2 - 1/(-1.5)`$; $`r_3 = -0.0100 - (-0.0150)/(-1.5)`$ | −1.3333, −0.0200 |
+| rows 4 to 9 | same pattern, $`p_i = -(i+1)/i`$ | row 9: −1.1111, −0.0500 |
+| back, mark 9 | $`-0.0500 / -1.1111`$ | 0.045000 |
+| mark 8 | $`(-0.0450 - 0.045000) / -1.1250`$ | 0.080000 |
 | marks 7, 6 | same step twice | 0.105000, 0.120000 |
-| mark 5, the middle | $(-0.0300 - 0.120000) / -1.2000$ | **0.125000** |
+| mark 5, the middle | $`(-0.0300 - 0.120000) / -1.2000`$ | **0.125000** |
 
 The strap sags 0.125 m at its middle, exactly what x(1 − x)/2 gives.
 
@@ -156,14 +166,14 @@ The strap sags 0.125 m at its middle, exactly what x(1 − x)/2 gives.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Spacing 1/9 for nine inside marks | midpoint 0.154321 m | nine marks make ten gaps |
-| Dividing by $h$, not $h^2$ | midpoint 1.250000 m | a second difference needs the spacing squared |
-| Measuring the order on the even shelf | errors 0.0000000000 at $h$ = 0.1 and 0.05 | exact on a parabola: no rate to read |
+| Dividing by $`h`$, not $`h^2`$ | midpoint 1.250000 m | a second difference needs the spacing squared |
+| Measuring the order on the even shelf | errors 0.0000000000 at $`h`$ = 0.1 and 0.05 | exact on a parabola: no rate to read |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Road one runs the Thomas sweep. Road two never touches it: for the even shelf it is the parabola; for the heaped load, the sine values at the marks are an eigenvector of the matrix (the matrix only rescales them), so the grid answer is the load times $h^2 / (4\sin^2(\pi h/2))$. Asserts check that the roads agree at every mark, that the error lies between 70% of the bound and the bound, and that halving $h$ divides it by between 3.9 and 4.1.
+Road one runs the Thomas sweep. Road two never touches it: for the even shelf it is the parabola; for the heaped load, the sine values at the marks are an eigenvector of the matrix (the matrix only rescales them), so the grid answer is the load times $`h^2 / (4\sin^2(\pi h/2))`$. Asserts check that the roads agree at every mark, that the error lies between 70% of the bound and the bound, and that halving $`h`$ divides it by between 3.9 and 4.1.
 
 ### Python
 
@@ -341,12 +351,12 @@ ALL CHECKS PASS
 
 Lean proves the error bound, the centred difference and the sweep's pivots for every case that meets their conditions, plus the shelf's exact numbers.
 
-- Let the true sag $y$ solve $y'' = f$ across the span, pinned at zero at both ends. Let $y''''$ be continuous, with size at most $M$. If the grid values solve the finite-difference equations at spacing $h = 1/(N+1)$, every one is within $h^2 M/96$ of the true sag.
-- Let $y''''$ be continuous within one step of $x$, and let $h$ be above zero. Then the neighbours minus twice the middle, over $h^2$, equals $y''(x) + \frac{h^2}{12}\,y''''(\xi)$ for some $\xi$ within one step of $x$.
-- Starting from $p_1 = -2$, the sweep's pivots are $p_i = -(i+1)/i$. Each has size at least 1, so the sweep never divides by zero.
-- The even shelf, $N$ = 9 and $h$ = 0.1: the grid values $i(10 - i)/200$ meet both pins and every grid equation. The middle sags exactly 1/8 m, as $x(1 - x)/2$ gives.
-- The hand table: pivots −3/2, −4/3 and −10/9, right sides $-(i+1)/200$, then 9/200 m at mark 9 and 1/8 m at the middle.
-- Spacing 1/9 for nine inside marks puts the middle at 25/162 m. Dividing by $h$, not $h^2$, puts it at 5/4 m.
+- Let the true sag $`y`$ solve $`y'' = f`$ across the span, pinned at zero at both ends. Let $`y''''`$ be continuous, with size at most $`M`$. If the grid values solve the finite-difference equations at spacing $`h = 1/(N+1)`$, every one is within $`h^2 M/96`$ of the true sag.
+- Let $`y''''`$ be continuous within one step of $`x`$, and let $`h`$ be above zero. Then the neighbours minus twice the middle, over $`h^2`$, equals $`y''(x) + \frac{h^2}{12}\,y''''(\xi)`$ for some $`\xi`$ within one step of $`x`$.
+- Starting from $`p_1 = -2`$, the sweep's pivots are $`p_i = -(i+1)/i`$. Each has size at least 1, so the sweep never divides by zero.
+- The even shelf, $`N`$ = 9 and $`h`$ = 0.1: the grid values $`i(10 - i)/200`$ meet both pins and every grid equation. The middle sags exactly 1/8 m, as $`x(1 - x)/2`$ gives.
+- The hand table: pivots −3/2, −4/3 and −10/9, right sides $`-(i+1)/200`$, then 9/200 m at mark 9 and 1/8 m at the middle.
+- Spacing 1/9 for nine inside marks puts the middle at 25/162 m. Dividing by $`h`$, not $`h^2`$, puts it at 5/4 m.
 
 The decimals, the heaped load's errors and ratios, the eigenvector formula, mistake 3, the chart and the figure are left to the Python and Rust checks.
 
@@ -702,10 +712,10 @@ example : let v : ℕ → ℚ := fun i => i * (10 - i) / 20
 ## The usual mistake
 
 > [!warning]
-> **Testing the method on a problem it solves exactly.** The even shelf's sag is a parabola, on which the centred difference makes no error, so no rate can be read from it. The heaped load shows the real behaviour: 0.00131548 at $h$ = 0.1, a quarter of that at half the spacing.
+> **Testing the method on a problem it solves exactly.** The even shelf's sag is a parabola, on which the centred difference makes no error, so no rate can be read from it. The heaped load shows the real behaviour: 0.00131548 at $`h`$ = 0.1, a quarter of that at half the spacing.
 >
 > - **Counting gaps as marks.** Nine inside marks make ten gaps. Spacing 1/9 puts the middle at 0.154321 m instead of 0.125.
-> - **The wrong power of $h$.** Dividing by $h$ instead of $h^2$ gives a 1.250000 m sag, ten times too deep.
+> - **The wrong power of $`h`$.** Dividing by $`h`$ instead of $`h^2`$ gives a 1.250000 m sag, ten times too deep.
 > - **Forgetting a nonzero end.** A pin off the zero level puts its value on the right side of the first or last row; left out, the grid pins that end at zero.
 
 ---

@@ -35,9 +35,11 @@ Orange: the level stream at s = 0.05, levelling off toward 20,000. Teal: the gro
 
 ## The formula
 
-Notation first, in words. A signal f is a function of time t from t = 0 on. A curly L, $\mathcal{L}$, read "the Laplace transform of", turns it into a function of the discount rate s named by the capital letter: $\mathcal{L}[f] = F$. The card [The Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md) allows complex s; solving equations needs only real s.
+Notation first, in words. A signal f is a function of time t from t = 0 on. A curly L, $`\mathcal{L}`$, read "the Laplace transform of", turns it into a function of the discount rate s named by the capital letter: $`\mathcal{L}[f] = F`$. The card [The Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md) allows complex s; solving equations needs only real s.
 
-$$F(s)=\int_0^\infty e^{-st}f(t)\,dt$$
+```math
+F(s)=\int_0^\infty e^{-st}f(t)\,dt
+```
 
 **Read it aloud:** F at s is the whole signal from time zero on, each instant discounted at rate s back to time zero, added up.
 
@@ -55,20 +57,22 @@ The table an initial-value problem needs, valued at s = 0.05, with one cycle a y
 
 Linearity, the rule that lets the table be used in pieces:
 
-$$\mathcal{L}[c f + k g] = c F + k G$$
+```math
+\mathcal{L}[c f + k g] = c F + k G
+```
 
 **Read it aloud:** the transform of a weighted sum of signals is the same weighted sum of their transforms.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since the start, in years | 0 on | — |
-| $s$ | the discount rate, per year | 0.05 | every entry but the cosine's shrinks |
-| $f$, $g$; $F$, $G$ | signals; their transforms | 1000; 1000/s | — |
-| $\mathcal{L}$ | "the Laplace transform of" | turns 1 into 1/s | — |
-| $a$, $M$ | growth rate, per year; the signal stays under M e^(at) | 0.03; 1000 | the smallest usable s rises |
-| $b$ | a wave's turning rate, radians per year | 2π | the wave's transform shrinks |
-| $c$, $k$ | constant weights in a sum | 1000, 400 | the transform scales |
-| $T$ | horizon where a partial integral stops, in years | 10 to 100 | the partial integral nears F, if F exists |
+| $`t`$ | time since the start, in years | 0 on | — |
+| $`s`$ | the discount rate, per year | 0.05 | every entry but the cosine's shrinks |
+| $`f`$, $`g`$; $`F`$, $`G`$ | signals; their transforms | 1000; 1000/s | — |
+| $`\mathcal{L}`$ | "the Laplace transform of" | turns 1 into 1/s | — |
+| $`a`$, $`M`$ | growth rate, per year; the signal stays under M e^(at) | 0.03; 1000 | the smallest usable s rises |
+| $`b`$ | a wave's turning rate, radians per year | 2π | the wave's transform shrinks |
+| $`c`$, $`k`$ | constant weights in a sum | 1000, 400 | the transform scales |
+| $`T`$ | horizon where a partial integral stops, in years | 10 to 100 | the partial integral nears F, if F exists |
 
 ### When it holds
 
@@ -100,7 +104,9 @@ Integrate t e^(−st) by parts: differentiate t, integrate e^(−st). The bounda
 
 Euler's formula writes cos(bt) + i sin(bt) = e^(ibt), where i is the square root of −1. Step 2 works unchanged for a = ib, since e^(ibt) has size 1 and so the integral converges for s > 0:
 
-$$\int_0^\infty e^{ibt}e^{-st}\,dt=\frac{1}{s-ib}=\frac{s+ib}{s^2+b^2}$$
+```math
+\int_0^\infty e^{ibt}e^{-st}\,dt=\frac{1}{s-ib}=\frac{s+ib}{s^2+b^2}
+```
 
 The real part is the cosine's transform, s/(s^2 + b^2); the imaginary part is the sine's, b/(s^2 + b^2). At s = 0.05 and b = 2π the cosine gives 0.00126643, since each cycle's ups and downs nearly cancel; the sine gives 0.15914487, since its positive first half-year is discounted least.
 
@@ -112,7 +118,9 @@ Integrals and limits both respect weighted sums. So payments swinging with the s
 
 Integrate the transform of a rate f′ by parts, moving the derivative onto the discount factor. By Step 0 a factor s comes out, and the boundary term at t = 0 leaves the starting value:
 
-$$\mathcal{L}[f'](s)=sF(s)-f(0)$$
+```math
+\mathcal{L}[f'](s)=sF(s)-f(0)
+```
 
 Check it on the growing stream: f = e^(0.03t) rises at f′ = 0.03e^(0.03t), whose transform is 0.03 × 50 = 1.5. The rule gives 0.05 × 50 − 1 = 1.5. The rule turns a differential equation into algebra; the full statement and the second derivative are [Transforming a derivative](02-transforms-of-derivatives.md).
 

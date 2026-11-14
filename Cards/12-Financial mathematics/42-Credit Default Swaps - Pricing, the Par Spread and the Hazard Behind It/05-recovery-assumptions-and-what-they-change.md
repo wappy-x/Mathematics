@@ -42,45 +42,49 @@ Upper line (orange): the credit-triangle shortcut, spread divided by the fractio
 
 ## The formula
 
-Notation first, in words. The **hazard** $\lambda$ ("lambda") is the default rate: the chance per year, for a company still alive, of defaulting in the next instant ([Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md)).
+Notation first, in words. The **hazard** $`\lambda`$ ("lambda") is the default rate: the chance per year, for a company still alive, of defaulting in the next instant ([Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md)).
 
-The **recovery** $R$ is the fraction of face value bondholders get back at default; $1 - R$ is the fraction lost, which desks call loss given default.
+The **recovery** $`R`$ is the fraction of face value bondholders get back at default; $`1 - R`$ is the fraction lost, which desks call loss given default.
 
 With premiums paid at each quarter's end, the fair spread is
 
-$$s = (1 - R)\,\lambda\,F, \qquad F = \frac{e^{x} - 1}{x}, \quad x = (r + \lambda)\,\delta.$$
+```math
+s = (1 - R)\,\lambda\,F, \qquad F = \frac{e^{x} - 1}{x}, \quad x = (r + \lambda)\,\delta.
+```
 
 **Read it aloud:** the fair spread is the fraction lost times the default rate, nudged up by a factor for paying premiums late in each quarter.
 
 The five-year default chance under the hazard is
 
-$$p = 1 - e^{-\lambda T}.$$
+```math
+p = 1 - e^{-\lambda T}.
+```
 
 **Read it aloud:** the chance of defaulting by year five is one minus the chance of surviving five years at a steady default rate.
 
-Two consequences carry the card. Fix $R$ and solve for $\lambda$: one answer. Fix $\lambda$ and solve for $R$: $R = 1 - s/(\lambda F)$, one answer. Fix only $s$ and both are free, tied by the curve in the picture.
+Two consequences carry the card. Fix $`R`$ and solve for $`\lambda`$: one answer. Fix $`\lambda`$ and solve for $`R`$: $`R = 1 - s/(\lambda F)`$, one answer. Fix only $`s`$ and both are free, tied by the curve in the picture.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | the quoted spread: yearly premium as a fraction of the notional, the $10 million insured | 0.03, i.e. 300 bp | implied hazard rises in proportion, roughly |
-| $R$ | recovery: fraction of face value paid back at default | 0%, 40%, 70% | implied hazard rises, and without limit near 100% |
-| $\lambda$ | hazard: default rate per year for a surviving company | 2.97%, 4.94%, 9.82% | spread rises |
-| $r$ | riskless interest rate, continuously compounded | 5% | $F$ rises a little |
-| $\delta$ | length of one premium period, in years ("delta") | 0.25 | $F$ rises: premiums paid later |
-| $T$ | contract length, in years | 5 | default chance $p$ rises; $s$ unchanged under a flat hazard |
-| $F$ | timing factor for premiums paid at quarter end | 1.012526 at the 40% hazard | spread rises |
-| $p$ | chance of default within $T$ years | 13.8%, 21.9%, 38.8% | — |
-| $t$ | a time between now and maturity, in years | 2, in the bond example | — |
-| $\tau$ | the default time ("tau"), a random date | — | — |
-| $k$ | combined shrink rate $r + \lambda$ used on bond prices | 0.10 in the bond example | — |
-| $V_{face}$, $V_{tsy}$, $V_{mv}$ | a zero-coupon bond's price under recovery of face, of treasury, of market value | $68.52, $67.54, $67.03 per $100 | — |
+| $`s`$ | the quoted spread: yearly premium as a fraction of the notional, the $10 million insured | 0.03, i.e. 300 bp | implied hazard rises in proportion, roughly |
+| $`R`$ | recovery: fraction of face value paid back at default | 0%, 40%, 70% | implied hazard rises, and without limit near 100% |
+| $`\lambda`$ | hazard: default rate per year for a surviving company | 2.97%, 4.94%, 9.82% | spread rises |
+| $`r`$ | riskless interest rate, continuously compounded | 5% | $`F`$ rises a little |
+| $`\delta`$ | length of one premium period, in years ("delta") | 0.25 | $`F`$ rises: premiums paid later |
+| $`T`$ | contract length, in years | 5 | default chance $`p`$ rises; $`s`$ unchanged under a flat hazard |
+| $`F`$ | timing factor for premiums paid at quarter end | 1.012526 at the 40% hazard | spread rises |
+| $`p`$ | chance of default within $`T`$ years | 13.8%, 21.9%, 38.8% | — |
+| $`t`$ | a time between now and maturity, in years | 2, in the bond example | — |
+| $`\tau`$ | the default time ("tau"), a random date | — | — |
+| $`k`$ | combined shrink rate $`r + \lambda`$ used on bond prices | 0.10 in the bond example | — |
+| $`V_{face}`$, $`V_{tsy}`$, $`V_{mv}`$ | a zero-coupon bond's price under recovery of face, of treasury, of market value | $68.52, $67.54, $67.03 per $100 | — |
 
-With continuous premiums $F$ becomes 1, and the formula shrinks to the credit triangle, $s = (1 - R)\lambda$ ([The credit triangle](03-the-credit-triangle.md)). That is the upper line in the picture.
+With continuous premiums $`F`$ becomes 1, and the formula shrinks to the credit triangle, $`s = (1 - R)\lambda`$ ([The credit triangle](03-the-credit-triangle.md)). That is the upper line in the picture.
 
 ### When it holds
 
 - **One flat hazard for five years.** A term structure of quotes needs a hazard curve instead; with one quote the flat hazard is the only shape the data can fix.
-- **Recovery fixed and known to the model, not random.** If recovery tends to be low exactly when defaults cluster, a fixed $R$ misprices protection; the card's formula has no term for that link.
+- **Recovery fixed and known to the model, not random.** If recovery tends to be low exactly when defaults cluster, a fixed $`R`$ misprices protection; the card's formula has no term for that link.
 - **Recovery paid on face value, at the moment of default.** Delayed settlement or a different recovery base changes the protection leg and so every number here.
 - **A running spread with no upfront, premiums at quarter end, no accrued premium on default.** Accrued premium lowers the fair spread a few basis points ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)), which shifts every implied hazard a little.
 - **The bond section switches to continuous premiums**, so the triangle holds exactly there; it says so again where it starts.
@@ -91,7 +95,7 @@ With continuous premiums $F$ becomes 1, and the formula shrinks to the credit tr
 
 ### Step 0: the premium pays for an expected loss
 
-Insurance priced fairly charges what it expects to pay out. Per year, protection pays out at the rate "chance of default" times "size of the loss": $\lambda$ times $1 - R$. At 300 bp, Northwind's protection says that product is about 3% a year.
+Insurance priced fairly charges what it expects to pay out. Per year, protection pays out at the rate "chance of default" times "size of the loss": $`\lambda`$ times $`1 - R`$. At 300 bp, Northwind's protection says that product is about 3% a year.
 
 The price of a product does not reveal its factors: 3% is 5% times 0.6, or 10% times 0.3, or 3% times 1.
 
@@ -99,43 +103,43 @@ Everything below turns that sentence into exact numbers.
 
 ### Step 1: the par equation has only the product in it
 
-The two sides of the contract are valued on the pricing card ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)). The premium leg is the spread times the risky annuity: a quarter's premium for each of twenty dates, discounted and weighted by the chance Northwind is alive to pay. The protection leg is the loss $1 - R$, paid at the default time $\tau$, discounted and averaged.
+The two sides of the contract are valued on the pricing card ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)). The premium leg is the spread times the risky annuity: a quarter's premium for each of twenty dates, discounted and weighted by the chance Northwind is alive to pay. The protection leg is the loss $`1 - R`$, paid at the default time $`\tau`$, discounted and averaged.
 
-Recovery appears in exactly one place: as the factor $1 - R$ in front of the protection leg. Hazard appears everywhere, since it sets both the survival weights and the timing of default. Setting the legs equal and dividing gives the par equation, $s = (1 - R)\lambda F$. The contract's length cancels.
+Recovery appears in exactly one place: as the factor $`1 - R`$ in front of the protection leg. Hazard appears everywhere, since it sets both the survival weights and the timing of default. Setting the legs equal and dividing gives the par equation, $`s = (1 - R)\lambda F`$. The contract's length cancels.
 
 <details>
 <summary>The algebra behind this</summary>
 
-Write $k = r + \lambda$. The chance of surviving to time $t$ is $e^{-\lambda t}$ and the discount is $e^{-rt}$, so a premium date weighs $e^{-kt}$. The risky annuity is $\delta \sum_{j=1}^{20} e^{-k\delta j}$, a geometric series: $\delta\, e^{-k\delta}(1 - e^{-kT})/(1 - e^{-k\delta})$.
+Write $`k = r + \lambda`$. The chance of surviving to time $`t`$ is $`e^{-\lambda t}`$ and the discount is $`e^{-rt}`$, so a premium date weighs $`e^{-kt}`$. The risky annuity is $`\delta \sum_{j=1}^{20} e^{-k\delta j}`$, a geometric series: $`\delta\, e^{-k\delta}(1 - e^{-kT})/(1 - e^{-k\delta})`$.
 
-Default lands in a short interval near $t$ with chance $\lambda e^{-\lambda t}\,dt$. The protection leg is $(1 - R)\int_0^T e^{-rt}\lambda e^{-\lambda t}\,dt = (1 - R)\,\lambda\,(1 - e^{-kT})/k$.
+Default lands in a short interval near $`t`$ with chance $`\lambda e^{-\lambda t}\,dt`$. The protection leg is $`(1 - R)\int_0^T e^{-rt}\lambda e^{-\lambda t}\,dt = (1 - R)\,\lambda\,(1 - e^{-kT})/k`$.
 
-Divide protection by annuity. The factor $1 - e^{-kT}$ cancels, so $T$ drops out. What remains is $(1 - R)\,\lambda\,(e^{k\delta} - 1)/(k\delta) = (1 - R)\lambda F$.
+Divide protection by annuity. The factor $`1 - e^{-kT}`$ cancels, so $`T`$ drops out. What remains is $`(1 - R)\,\lambda\,(e^{k\delta} - 1)/(k\delta) = (1 - R)\lambda F`$.
 
 </details>
 
 ### Step 2: each recovery gives exactly one hazard
 
-For a fixed recovery below 100%, the right side $(1 - R)\lambda F$ is zero at $\lambda = 0$, rises strictly as $\lambda$ rises, and grows without bound. A strictly rising line that starts at zero and never stops meets the level 0.03 exactly once. So:
+For a fixed recovery below 100%, the right side $`(1 - R)\lambda F`$ is zero at $`\lambda = 0`$, rises strictly as $`\lambda`$ rises, and grows without bound. A strictly rising line that starts at zero and never stops meets the level 0.03 exactly once. So:
 
 - **Existence:** for any positive quote and any recovery below 100%, a hazard fits.
 - **Uniqueness:** only one does.
-- **Boundaries:** at $R = 0$ the hazard is smallest, 2.97% for Northwind. As $R$ approaches 100% the hazard runs off to infinity. At $R = 100\%$ nothing is ever lost, so no hazard fits a positive quote.
+- **Boundaries:** at $`R = 0`$ the hazard is smallest, 2.97% for Northwind. As $`R`$ approaches 100% the hazard runs off to infinity. At $`R = 100\%`$ nothing is ever lost, so no hazard fits a positive quote.
 
 Collect the answers for every recovery and they form the curve in the picture. Each point on it prices the contract at exactly 300 bp. The quote picks the curve, not the point. That is the theorem: **one quote cannot separate hazard from recovery.**
 
 <details>
 <summary>Detailed proof: the whole solution set is one rising curve</summary>
 
-For $x > 0$, $F = (e^x - 1)/x = \int_0^1 e^{xu}\,du$, which is positive and rises with $x$; and $x = (r + \lambda)\delta$ rises with $\lambda$. So $\lambda F$ is a product of two positive rising functions of the hazard. It rises strictly from 0 at $\lambda = 0$, and $\lambda F \ge \lambda$ sends it to infinity.
+For $`x > 0`$, $`F = (e^x - 1)/x = \int_0^1 e^{xu}\,du`$, which is positive and rises with $`x`$; and $`x = (r + \lambda)\delta`$ rises with $`\lambda`$. So $`\lambda F`$ is a product of two positive rising functions of the hazard. It rises strictly from 0 at $`\lambda = 0`$, and $`\lambda F \ge \lambda`$ sends it to infinity.
 
-Fix $s > 0$. Exactly one hazard has $\lambda F = s$: the zero-recovery hazard, 2.97% for Northwind. For each hazard at or above it, the par equation holds with exactly one recovery, $R = 1 - s/(\lambda F)$, which lies in $[0, 1)$. Below it the equation would need $R < 0$: bondholders paying in, which no contract allows. So the allowed pairs are exactly the hazards from the zero-recovery hazard upward, each with its own recovery: one curve. Along it $R$ rises strictly from 0 toward 1, and so does $p = 1 - e^{-\lambda T}$.
+Fix $`s > 0`$. Exactly one hazard has $`\lambda F = s`$: the zero-recovery hazard, 2.97% for Northwind. For each hazard at or above it, the par equation holds with exactly one recovery, $`R = 1 - s/(\lambda F)`$, which lies in $`[0, 1)`$. Below it the equation would need $`R < 0`$: bondholders paying in, which no contract allows. So the allowed pairs are exactly the hazards from the zero-recovery hazard upward, each with its own recovery: one curve. Along it $`R`$ rises strictly from 0 toward 1, and so does $`p = 1 - e^{-\lambda T}`$.
 
 </details>
 
 ### Step 3: the default chance moves far more than the spread suggests
 
-The five-year default chance is $1 - e^{-\lambda T}$. Across the three assumptions:
+The five-year default chance is $`1 - e^{-\lambda T}`$. Across the three assumptions:
 
 ```
 Five-year default chance, same 300 bp quote (each █ = 1 point of %)
@@ -152,15 +156,17 @@ The recovery assumption matters most when the loss and the default rate enter a 
 
 ### Step 4: recovery when the hazard is known
 
-Suppose a separate source fixes the hazard: a rating model, a bond market, a bankruptcy-prediction score. Then the par equation is one line in one unknown, and it is linear in $1 - R$:
+Suppose a separate source fixes the hazard: a rating model, a bond market, a bankruptcy-prediction score. Then the par equation is one line in one unknown, and it is linear in $`1 - R`$:
 
-$$R = 1 - \frac{s}{\lambda F}.$$
+```math
+R = 1 - \frac{s}{\lambda F}.
+```
 
-- **Existence:** a recovery between 0 and 1 exists exactly when $s \le \lambda F$. A hazard too small to cover the spread even with total loss has no answer.
-- **Uniqueness:** a straight line in $1 - R$ crosses the quote once.
-- **Boundaries:** $s = \lambda F$ gives $R = 0$. At $\lambda = 0$ a positive quote fits no recovery.
+- **Existence:** a recovery between 0 and 1 exists exactly when $`s \le \lambda F`$. A hazard too small to cover the spread even with total loss has no answer.
+- **Uniqueness:** a straight line in $`1 - R`$ crosses the quote once.
+- **Boundaries:** $`s = \lambda F`$ gives $`R = 0`$. At $`\lambda = 0`$ a positive quote fits no recovery.
 
-With the triangle, $F = 1$, this is $R = 1 - s/\lambda$. At a known hazard of 5% the triangle gives 40.00% and the quarterly formula gives 40.75%: premium timing is worth three-quarters of a point of recovery.
+With the triangle, $`F = 1`$, this is $`R = 1 - s/\lambda`$. At a known hazard of 5% the triangle gives 40.00% and the quarterly formula gives 40.75%: premium timing is worth three-quarters of a point of recovery.
 
 At a known hazard of 2.5% the triangle gives −20.00% and the quarterly formula −18.88%. No real recovery fits, which says the hazard is too low for the quote, not that bondholders pay money in.
 
@@ -169,29 +175,31 @@ At a known hazard of 2.5% the triangle gives −20.00% and the quarterly formula
 "40% recovery" is incomplete until the base is named. Three rules are standard in the models. Take a Northwind zero-coupon bond: $100 face, paying nothing until year five, with hazard 5%, recovery 40% and rate 5%. Suppose it defaults at year two.
 
 - **Recovery of face:** the holder gets 40% of face value at default: **$40.00**. This is the CDS rule, and the rule on the rest of this card.
-- **Recovery of treasury** (Jarrow and Turnbull): 40% of what a riskless bond paying the same $100 at year five is worth at default: $40 \times e^{-0.05 \times 3}$ = **$34.43**.
-- **Recovery of market value** (Duffie and Singleton): 40% of the bond's own value just before default. Under this rule that value at year two is $100 e^{-(0.05 + 0.05 \times 0.6) \times 3}$, so the holder gets **$31.47**.
+- **Recovery of treasury** (Jarrow and Turnbull): 40% of what a riskless bond paying the same $100 at year five is worth at default: $`40 \times e^{-0.05 \times 3}`$ = **$34.43**.
+- **Recovery of market value** (Duffie and Singleton): 40% of the bond's own value just before default. Under this rule that value at year two is $`100 e^{-(0.05 + 0.05 \times 0.6) \times 3}`$, so the holder gets **$31.47**.
 
 Averaging over the default time gives three prices for the same bond today:
 
-$$V_{face} = e^{-kT} + R\lambda\,\frac{1 - e^{-kT}}{k}, \qquad V_{tsy} = e^{-rT}\left[R + (1 - R)e^{-\lambda T}\right], \qquad V_{mv} = e^{-(r + \lambda(1 - R))T},$$
+```math
+V_{face} = e^{-kT} + R\lambda\,\frac{1 - e^{-kT}}{k}, \qquad V_{tsy} = e^{-rT}\left[R + (1 - R)e^{-\lambda T}\right], \qquad V_{mv} = e^{-(r + \lambda(1 - R))T},
+```
 
-with $k = r + \lambda$, per $1 of face. They come to **$68.52**, **$67.54** and **$67.03** per $100. Same hazard, same "40%", three prices. Market-value recovery behaves like discounting at the riskless rate plus the expected loss rate $\lambda(1 - R)$: only the product appears. That fact decides Step 6.
+with $`k = r + \lambda`$, per $1 of face. They come to **$68.52**, **$67.54** and **$67.03** per $100. Same hazard, same "40%", three prices. Market-value recovery behaves like discounting at the riskless rate plus the expected loss rate $`\lambda(1 - R)`$: only the product appears. That fact decides Step 6.
 
 <details>
 <summary>Detailed proof: the three bond prices</summary>
 
-**Face.** Survival to $T$ pays 1, worth $e^{-rT}e^{-\lambda T} = e^{-kT}$. Default near $t$ has chance $\lambda e^{-\lambda t}dt$ and pays $R$, worth $Re^{-rt}$. Integrate: $R\lambda(1 - e^{-kT})/k$.
+**Face.** Survival to $`T`$ pays 1, worth $`e^{-rT}e^{-\lambda T} = e^{-kT}`$. Default near $`t`$ has chance $`\lambda e^{-\lambda t}dt`$ and pays $`R`$, worth $`Re^{-rt}`$. Integrate: $`R\lambda(1 - e^{-kT})/k`$.
 
-**Treasury.** Default near $t$ pays $R e^{-r(T - t)}$, worth $R e^{-rT}$ today whatever $t$ is. Its total is $R e^{-rT}(1 - e^{-\lambda T})$. Add survival, $e^{-rT}e^{-\lambda T}$, and collect terms.
+**Treasury.** Default near $`t`$ pays $`R e^{-r(T - t)}`$, worth $`R e^{-rT}`$ today whatever $`t`$ is. Its total is $`R e^{-rT}(1 - e^{-\lambda T})`$. Add survival, $`e^{-rT}e^{-\lambda T}`$, and collect terms.
 
-**Market value.** Let $v(t)$ be the price at time $t$ before default. Over a short step of length $h > 0$, the bond survives with chance about $1 - \lambda h$ and keeps value $v(t + h)$, or defaults and pays $R\,v(t + h)$. Discount one step: $v(t) \approx e^{-rh}\left[(1 - \lambda h)v(t + h) + \lambda h R\, v(t + h)\right] \approx e^{-(r + \lambda(1 - R))h}\, v(t + h)$. So the price shrinks at the rate $r + \lambda(1 - R)$ all the way back from $v(T) = 1$. The code runs this same step-back on a grid of 20,000 steps as its second road.
+**Market value.** Let $`v(t)`$ be the price at time $`t`$ before default. Over a short step of length $`h > 0`$, the bond survives with chance about $`1 - \lambda h`$ and keeps value $`v(t + h)`$, or defaults and pays $`R\,v(t + h)`$. Discount one step: $`v(t) \approx e^{-rh}\left[(1 - \lambda h)v(t + h) + \lambda h R\, v(t + h)\right] \approx e^{-(r + \lambda(1 - R))h}\, v(t + h)`$. So the price shrinks at the rate $`r + \lambda(1 - R)`$ all the way back from $`v(T) = 1`$. The code runs this same step-back on a grid of 20,000 steps as its second road.
 
 </details>
 
 ### Step 6: a bond and a CDS together: two prices, two unknowns, weak answers
 
-A second instrument adds a second equation. Whether it pins the pair depends on the bond's recovery rule. Here premiums switch to continuous, so the triangle $s = (1 - R)\lambda$ holds exactly and every pair on the CDS curve has $R = 1 - 0.03/\lambda$. Walk along that curve and price the five-year zero at each point:
+A second instrument adds a second equation. Whether it pins the pair depends on the bond's recovery rule. Here premiums switch to continuous, so the triangle $`s = (1 - R)\lambda`$ holds exactly and every pair on the CDS curve has $`R = 1 - 0.03/\lambda`$. Walk along that curve and price the five-year zero at each point:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -210,14 +218,14 @@ Top line (orange): recovery of face. Middle (green): recovery of treasury. Botto
 
   But the slope at that point is 0.7216 per unit of hazard: about 72 cents per $100 for each percentage point. A price quoted $0.50 either side, $68.02 or $69.02, gives hazards from 4.31% to 5.70% and recoveries from 30.47% to 47.37%. Half a dollar between the bid and the ask (the prices at which dealers buy and sell) spans most of the recoveries anyone would argue for.
 - **Treasury: identified, more weakly.** Same shape, flatter slope; the same price error moves the answer further.
-- **Market value: not identified at all.** With a CDS on the same numerical $R$, the bond's price is $e^{-(r + s)T}$ = $67.03 at every point. The bond repeats the CDS's equation. Two instruments, one piece of information.
+- **Market value: not identified at all.** With a CDS on the same numerical $`R`$, the bond's price is $`e^{-(r + s)T}`$ = $67.03 at every point. The bond repeats the CDS's equation. Two instruments, one piece of information.
 
 Counting instruments against unknowns is not enough. The second price must depend on hazard and recovery in a different proportion from the first, and by enough to beat the noise in its quote.
 
 <details>
 <summary>Detailed proof: the face-bond inverse</summary>
 
-On the CDS curve, $R\lambda = \lambda - s$. Substitute into $V_{face}$: $V_{face}(\lambda) = e^{-kT} + (\lambda - s)(1 - e^{-kT})/k = 1 - (r + s)(1 - e^{-kT})/k$, with $k = r + \lambda$. Put $z = kT$. The derivative in $\lambda$ is $(r + s)\left[1 - (1 + z)e^{-z}\right]/k^2$, and $1 - (1 + z)e^{-z} > 0$ for $z > 0$ since $e^z > 1 + z$. So the price rises strictly, from $e^{-(r + s)T}$ at $\lambda = s$ toward 1, and each price strictly inside that range has exactly one hazard. At $r = 0.05$, $s = 0.03$, $\lambda = 0.05$ and $T = 5$, $z = 0.5$ and the slope is $0.08 \times (1 - 1.5e^{-0.5})/0.01 = 0.7216$.
+On the CDS curve, $`R\lambda = \lambda - s`$. Substitute into $`V_{face}`$: $`V_{face}(\lambda) = e^{-kT} + (\lambda - s)(1 - e^{-kT})/k = 1 - (r + s)(1 - e^{-kT})/k`$, with $`k = r + \lambda`$. Put $`z = kT`$. The derivative in $`\lambda`$ is $`(r + s)\left[1 - (1 + z)e^{-z}\right]/k^2`$, and $`1 - (1 + z)e^{-z} > 0`$ for $`z > 0`$ since $`e^z > 1 + z`$. So the price rises strictly, from $`e^{-(r + s)T}`$ at $`\lambda = s`$ toward 1, and each price strictly inside that range has exactly one hazard. At $`r = 0.05`$, $`s = 0.03`$, $`\lambda = 0.05`$ and $`T = 5`$, $`z = 0.5`$ and the slope is $`0.08 \times (1 - 1.5e^{-0.5})/0.01 = 0.7216`$.
 
 </details>
 
@@ -227,17 +235,17 @@ The market itself has a direct route. After a default, an auction fixes the reco
 
 ## Worked numbers, by hand
 
-Northwind at 300 bp, recovery 40%, rate 5%, quarterly premiums. The hazard is found by fixed-point steps: guess, compute $F$, divide.
+Northwind at 300 bp, recovery 40%, rate 5%, quarterly premiums. The hazard is found by fixed-point steps: guess, compute $`F`$, divide.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| loss on default | $0.6 \times \$10\text{m}$ | $6.0m |
-| triangle seed, $s/(1 - R)$ | $0.03 / 0.6$ | 0.050000 |
-| timing factor at the seed | $(e^{0.025} - 1)/0.025$ | 1.012605 |
-| better hazard | $0.05 / 1.012605$ | 0.049378 |
-| timing factor again | $(e^{x} - 1)/x$, $x = (0.05 + 0.049378) \times 0.25$ | 1.012526 |
-| hazard | $0.05 / 1.012526$ | **0.049381** |
-| five-year default chance | $1 - e^{-5 \times 0.049381}$ | **21.88%** |
+| loss on default | $`0.6 \times \$10\text{m}`$ | $6.0m |
+| triangle seed, $`s/(1 - R)`$ | $`0.03 / 0.6`$ | 0.050000 |
+| timing factor at the seed | $`(e^{0.025} - 1)/0.025`$ | 1.012605 |
+| better hazard | $`0.05 / 1.012605`$ | 0.049378 |
+| timing factor again | $`(e^{x} - 1)/x`$, $`x = (0.05 + 0.049378) \times 0.25`$ | 1.012526 |
+| hazard | $`0.05 / 1.012526`$ | **0.049381** |
+| five-year default chance | $`1 - e^{-5 \times 0.049381}`$ | **21.88%** |
 | same with recovery 0% | same steps, seed 0.03 | 2.97%, 13.80% |
 | same with recovery 70% | same steps, seed 0.10 | 9.82%, 38.79% |
 
@@ -655,16 +663,16 @@ The two outputs match line for line, simulation included: both languages run the
 
 Lean proves the card's three theorems in the flat-hazard model, for every positive quote, and checks the exact sums in the examples.
 
-- Take a quote $s > 0$ and a recovery below 100%. Then exactly one hazard at or above zero fits the quote.
-- Take two pairs that fit the same quote, the second with the higher recovery. Then the second also has the higher hazard and the higher default chance $p$.
+- Take a quote $`s > 0`$ and a recovery below 100%. Then exactly one hazard at or above zero fits the quote.
+- Take two pairs that fit the same quote, the second with the higher recovery. Then the second also has the higher hazard and the higher default chance $`p`$.
 - As recovery nears 100%, the hazard that fits the quote grows past any bound.
 - At recovery 100%, no hazard fits a positive quote.
-- Take a known hazard $\lambda > 0$. Then exactly one recovery fits the quote: $R = 1 - s/(\lambda F)$.
-- Take the same known hazard. Then a recovery from 0 up to 100% fits exactly when $s \le \lambda F$.
+- Take a known hazard $`\lambda > 0`$. Then exactly one recovery fits the quote: $`R = 1 - s/(\lambda F)`$.
+- Take the same known hazard. Then a recovery from 0 up to 100% fits exactly when $`s \le \lambda F`$.
 - At hazard 0, no recovery fits a positive quote.
-- Take continuous premiums, a maturity $T > 0$ and $r + s > 0$. Then $V_{mv} = e^{-(r + s)T}$ at every pair on the CDS curve.
-- Take the same setup. Then $V_{face}$ rises strictly along the curve, equals $e^{-(r + s)T}$ at $\lambda = s$, and tends to 1.
-- Take the same setup. Then $V_{tsy}$ also rises strictly along the curve.
+- Take continuous premiums, a maturity $`T > 0`$ and $`r + s > 0`$. Then $`V_{mv} = e^{-(r + s)T}`$ at every pair on the CDS curve.
+- Take the same setup. Then $`V_{face}`$ rises strictly along the curve, equals $`e^{-(r + s)T}`$ at $`\lambda = s`$, and tends to 1.
+- Take the same setup. Then $`V_{tsy}`$ also rises strictly along the curve.
 - Every exact sum in the worked examples checks, from the 300 bp premium to the triangle seeds.
 
 Decimal answers, the simulation and the step-back grid are left to the Python and Rust checks.
@@ -1088,6 +1096,6 @@ With recovery pinned by assumption, a single quote gives a single hazard; the op
 Verified 2026-09-28: every link below resolves to the publisher's page.
 
 - Jarrow, Robert A., and Stuart M. Turnbull. "Pricing Derivatives on Financial Securities Subject to Credit Risk." *Journal of Finance* 50, no. 1 (1995): 53–85. [doi:10.1111/j.1540-6261.1995.tb05167.x](https://doi.org/10.1111/j.1540-6261.1995.tb05167.x). Recovery as a fraction of a riskless bond's value: the treasury rule.
-- Duffie, Darrell, and Kenneth J. Singleton. "Modeling Term Structures of Defaultable Bonds." *Review of Financial Studies* 12, no. 4 (1999): 687–720. [doi:10.1093/rfs/12.4.687](https://doi.org/10.1093/rfs/12.4.687). Recovery of market value, and the discount rate $r + \lambda(1 - R)$ it produces.
+- Duffie, Darrell, and Kenneth J. Singleton. "Modeling Term Structures of Defaultable Bonds." *Review of Financial Studies* 12, no. 4 (1999): 687–720. [doi:10.1093/rfs/12.4.687](https://doi.org/10.1093/rfs/12.4.687). Recovery of market value, and the discount rate $`r + \lambda(1 - R)`$ it produces.
 - Hull, John, and Alan White. "Valuing Credit Default Swaps I: No Counterparty Default Risk." *Journal of Derivatives* 8, no. 1 (2000): 29–40. [doi:10.3905/jod.2000.319115](https://doi.org/10.3905/jod.2000.319115). The CDS legs, and the hazard backed out of a quote under an assumed recovery.
 - Bakshi, Gurdip, Dilip Madan, and Frank Zhang. "Understanding the Role of Recovery in Default Risk Models: Empirical Comparisons and Implied Recovery Rates." Federal Reserve Board, FEDS 2001-37. [Paper page](https://www.federalreserve.gov/pubs/feds/2001/200137/200137abs.html). Defines recovery of face, treasury and market value side by side and fits implied recoveries from bond prices.

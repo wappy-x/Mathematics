@@ -28,28 +28,30 @@ To scale: 100 px per metre of tank, 40 px of arrow per 0.01 m/s of water speed. 
 
 Notation first, in words. Put the tank's centre at the origin: length runs from −1 to 1 m along x, width and height from −0.5 to 0.5 m along y and z.
 
-- A solid is named $V$. Its whole skin, nothing left open, is written $\partial V$, read "the boundary of V".
-- On the skin, $\mathbf n$ is the arrow of length one pointing straight out.
-- The flow $\mathbf F$ has components $F_1$, $F_2$, $F_3$: velocities along x, y and z.
-- The dot product $\mathbf F\cdot\mathbf n$ is the part of the flow crossing the skin.
-- $dS$ is a small patch of skin, $dV$ a small piece of volume; a triple integral adds through a volume ([Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md)).
+- A solid is named $`V`$. Its whole skin, nothing left open, is written $`\partial V`$, read "the boundary of V".
+- On the skin, $`\mathbf n`$ is the arrow of length one pointing straight out.
+- The flow $`\mathbf F`$ has components $`F_1`$, $`F_2`$, $`F_3`$: velocities along x, y and z.
+- The dot product $`\mathbf F\cdot\mathbf n`$ is the part of the flow crossing the skin.
+- $`dS`$ is a small patch of skin, $`dV`$ a small piece of volume; a triple integral adds through a volume ([Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md)).
 
-$$\iint_{\partial V} \mathbf F\cdot\mathbf n\,dS \;=\; \iiint_V \operatorname{div}\mathbf F\,dV, \qquad \operatorname{div}\mathbf F = \frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} + \frac{\partial F_3}{\partial z}$$
+```math
+\iint_{\partial V} \mathbf F\cdot\mathbf n\,dS \;=\; \iiint_V \mathrm{div}\,\mathbf F\,dV, \qquad \mathrm{div}\,\mathbf F = \frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} + \frac{\partial F_3}{\partial z}
+```
 
 **Read it aloud:** outward flow across the whole skin, added over its area, equals supply per unit volume, added through the inside.
 
-In the tank, water moves at $\mathbf F = k\,(x, y, z)$, straight away from the centre, faster farther out.
+In the tank, water moves at $`\mathbf F = k\,(x, y, z)`$, straight away from the centre, faster farther out.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | the solid region | the tank, 2 m^3 of water | more supply to leave |
-| $\partial V$ | its whole closed skin | six mesh faces, 10 m^2 | — |
-| $F_1$, $F_2$, $F_3$ | the field's components, in m/s | 0.01x, 0.01y, 0.01z | faster flow, more flux |
-| $\mathbf n$ | outward arrow of length one | (1, 0, 0) on the right end | inward flips the sign |
-| $dS$, $dV$ | patch of skin, piece of volume | m^2, m^3 | — |
-| $\operatorname{div}\mathbf F$ | supply rate per unit volume, per second | 0.03 per second = 30 L/s per m^3 | more outflow |
-| $k$ | how fast the speed grows with distance | 0.01 per second | both sides scale with it |
-| $R$ | radius of a spherical tank | 1 m, then 2 m | flux grows as its cube |
+| $`V`$ | the solid region | the tank, 2 m^3 of water | more supply to leave |
+| $`\partial V`$ | its whole closed skin | six mesh faces, 10 m^2 | — |
+| $`F_1`$, $`F_2`$, $`F_3`$ | the field's components, in m/s | 0.01x, 0.01y, 0.01z | faster flow, more flux |
+| $`\mathbf n`$ | outward arrow of length one | (1, 0, 0) on the right end | inward flips the sign |
+| $`dS`$, $`dV`$ | patch of skin, piece of volume | m^2, m^3 | — |
+| $`\mathrm{div}\,\mathbf F`$ | supply rate per unit volume, per second | 0.03 per second = 30 L/s per m^3 | more outflow |
+| $`k`$ | how fast the speed grows with distance | 0.01 per second | both sides scale with it |
+| $`R`$ | radius of a spherical tank | 1 m, then 2 m | flux grows as its cube |
 
 Units: divergence is m/s per m, "per second"; flux is in m^3/s; 1 m^3 is 1,000 litres.
 
@@ -70,17 +72,19 @@ Cut the tank into small cells. Water crossing a wall between two cells leaves on
 
 ### Step 1: one pair of opposite faces is the fundamental theorem of calculus
 
-Take the end faces, x = −1 and x = 1. Only $F_1$ crosses them. The right end's normal is (1, 0, 0), so its flux is the area integral of $F_1$ at x = 1; the left end's is (−1, 0, 0), giving minus the integral at x = −1. Adding a rate over an interval gives the change between its ends ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)). For each fixed width and height, it turns the difference into an integral along the length:
+Take the end faces, x = −1 and x = 1. Only $`F_1`$ crosses them. The right end's normal is (1, 0, 0), so its flux is the area integral of $`F_1`$ at x = 1; the left end's is (−1, 0, 0), giving minus the integral at x = −1. Adding a rate over an interval gives the change between its ends ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)). For each fixed width and height, it turns the difference into an integral along the length:
 
-$$F_1(1, y, z) - F_1(-1, y, z) = \int_{-1}^{1} \frac{\partial F_1}{\partial x}\,dx$$
+```math
+F_1(1, y, z) - F_1(-1, y, z) = \int_{-1}^{1} \frac{\partial F_1}{\partial x}\,dx
+```
 
 Integrate over width and height: the end faces' flux equals the triple integral of the divergence's first term.
 
-With numbers, pack the pipes toward both ends: $F_1 = k\,(x^3 + x)$, the rest unchanged. At each end the speed is 0.02 m/s through 1 m^2: 40 L/s from the pair. Inside, the rate of $F_1$ per metre is k(3x^2 + 1); along the length 3x^2 adds to 2 and 1 adds to 2, so 0.04 m^3/s per square metre of cross-section, 40 L/s again.
+With numbers, pack the pipes toward both ends: $`F_1 = k\,(x^3 + x)`$, the rest unchanged. At each end the speed is 0.02 m/s through 1 m^2: 40 L/s from the pair. Inside, the rate of $`F_1`$ per metre is k(3x^2 + 1); along the length 3x^2 adds to 2 and 1 adds to 2, so 0.04 m^3/s per square metre of cross-section, 40 L/s again.
 
 ### Step 2: the other two pairs, then the box
 
-Width faces pair with the rate of $F_2$, height faces with that of $F_3$: 20 L/s each, both ways. The six faces pass 80 L/s; the divergence adds to 80 L/s. The algebra never used the particular field, so the theorem holds on every box, and on boxes glued face to face, since shared faces cancel.
+Width faces pair with the rate of $`F_2`$, height faces with that of $`F_3`$: 20 L/s each, both ways. The six faces pass 80 L/s; the divergence adds to 80 L/s. The algebra never used the particular field, so the theorem holds on every box, and on boxes glued face to face, since shared faces cancel.
 
 ### Step 3: curved skins
 
@@ -91,9 +95,9 @@ A ball is no stack of boxes, but the argument still runs one direction at a time
 
 Take the height part; the other two swap letters. The solid lies over a flat region D, between a floor z = g(x, y) and a ceiling z = h(x, y), both with continuous partial derivatives.
 
-Inside: for each (x, y) in D, the fundamental theorem of calculus gives $\int_g^h \partial F_3/\partial z\,dz = F_3(x, y, h) - F_3(x, y, g)$; integrate that over D.
+Inside: for each (x, y) in D, the fundamental theorem of calculus gives $`\int_g^h \partial F_3/\partial z\,dz = F_3(x, y, h) - F_3(x, y, g)`$; integrate that over D.
 
-Skin: parametrise the ceiling by (x, y). Its tangent arrows are (1, 0, h_x) and (0, 1, h_y), with h_x, h_y the partial derivatives of h. Their cross product (−h_x, −h_y, 1) points out, and its length is the area stretch, so the flux of (0, 0, F_3) through the ceiling is the integral over D of $F_3(x, y, h)$. The floor's outward arrow (g_x, g_y, −1) gives minus the integral of $F_3(x, y, g)$. Vertical side walls have no height part in their normal and pass nothing.
+Skin: parametrise the ceiling by (x, y). Its tangent arrows are (1, 0, h_x) and (0, 1, h_y), with h_x, h_y the partial derivatives of h. Their cross product (−h_x, −h_y, 1) points out, and its length is the area stretch, so the flux of (0, 0, F_3) through the ceiling is the integral over D of $`F_3(x, y, h)`$. The floor's outward arrow (g_x, g_y, −1) gives minus the integral of $`F_3(x, y, g)`$. Vertical side walls have no height part in their normal and pass nothing.
 
 The sides match; add the three parts. A ball qualifies in every direction, with the hemispheres as floor and ceiling. Their slopes blow up at the rim, so take D a disc slightly smaller than the equator and let it grow: F is bounded and the uncovered band's area and volume shrink to zero, so both sides converge. Finitely many such pieces glue by Step 0. The general smooth-skinned solid needs a limit argument, in Marsden and Tromba and in Apostol, below.
 
@@ -101,7 +105,7 @@ The sides match; add the three parts. A ball qualifies in every direction, with 
 
 ### Step 4: the ball, by hand
 
-A spherical tank of radius $R$ = 1 m, pipes spread evenly. Inside: 30 L/s per m^3 times four-thirds of pi cubic metres, 40π L/s. Skin: the outward normal is the position divided by $R$, so the crossing flow is kR = 0.01 m/s everywhere, over 4π m^2: 0.04π m^3/s, again 40π, about 125.664 L/s.
+A spherical tank of radius $`R`$ = 1 m, pipes spread evenly. Inside: 30 L/s per m^3 times four-thirds of pi cubic metres, 40π L/s. Skin: the outward normal is the position divided by $`R`$, so the crossing flow is kR = 0.01 m/s everywhere, over 4π m^2: 0.04π m^3/s, again 40π, about 125.664 L/s.
 
 ### Step 5: read it as conservation
 
@@ -332,7 +336,7 @@ ALL CHECKS PASS
 Lean proves the theorem for every box, and its height part for every solid between a floor graph and a ceiling graph.
 
 - Take any box and any field whose first partial derivatives are continuous on the box and just beyond. The flux out through all six faces, with outward normals, equals the divergence added through the box.
-- Take a solid over a closed, bounded flat region D, between a floor z = g(x, y) and a ceiling z = h(x, y). Both have continuous partial derivatives. Suppose $F_3$ and $\partial F_3/\partial z$ are continuous on the solid. Then the flux of (0, 0, $F_3$) through ceiling plus floor equals $\partial F_3/\partial z$ added through the solid.
+- Take a solid over a closed, bounded flat region D, between a floor z = g(x, y) and a ceiling z = h(x, y). Both have continuous partial derivatives. Suppose $`F_3`$ and $`\partial F_3/\partial z`$ are continuous on the solid. Then the flux of (0, 0, $`F_3`$) through ceiling plus floor equals $`\partial F_3/\partial z`$ added through the solid.
 - The hand arithmetic holds exactly: the tank's 60 L/s both ways, and the ends supply's 30, 60, 40 and 80. So do the ball's 40π and 320π, and the breaks' −60 and 50.
 
 The ball's curved skin, the hose at the centre, the Simpson sums and the figure are left to the Python and Rust checks.

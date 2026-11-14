@@ -38,44 +38,50 @@ The jumps take weight from the middle, $80 to $120, and push it into both tails,
 
 ## The formula
 
-Notation first, in words. $S$ is Acme's price today, $S_T$ its price at expiry, $T$ years away, and $K$ the strike. The wiggle has volatility $\sigma$. Jumps arrive at rate $\lambda$ (lambda) a year; $N_T$ counts those that arrive by expiry. Jump number $i$ multiplies the price by a factor $Y_i$ whose log is a bell curve with mean $\mu_J$ and spread $\delta$. $Z$ is a standard bell-curve draw. $E[\,\cdot\,]$ means "the average of" in the pricing world, where the share grows on average at the riskless rate $r$ less the dividend yield $q$.
+Notation first, in words. $`S`$ is Acme's price today, $`S_T`$ its price at expiry, $`T`$ years away, and $`K`$ the strike. The wiggle has volatility $`\sigma`$. Jumps arrive at rate $`\lambda`$ (lambda) a year; $`N_T`$ counts those that arrive by expiry. Jump number $`i`$ multiplies the price by a factor $`Y_i`$ whose log is a bell curve with mean $`\mu_J`$ and spread $`\delta`$. $`Z`$ is a standard bell-curve draw. $`E[\,\cdot\,]`$ means "the average of" in the pricing world, where the share grows on average at the riskless rate $`r`$ less the dividend yield $`q`$.
 
-$$S_T = S\,\exp\!\Big(\big(r - q - \lambda k - \tfrac12\sigma^2\big)T + \sigma\sqrt{T}\,Z\Big)\times Y_1\,Y_2\cdots Y_{N_T}, \qquad k = E[Y] - 1 = e^{\mu_J + \frac12\delta^2} - 1$$
+```math
+S_T = S\,\exp\!\Big(\big(r - q - \lambda k - \tfrac12\sigma^2\big)T + \sigma\sqrt{T}\,Z\Big)\times Y_1\,Y_2\cdots Y_{N_T}, \qquad k = E[Y] - 1 = e^{\mu_J + \frac12\delta^2} - 1
+```
 
-**Read it aloud:** the ending price is today's price moved by the Black-Scholes drift and wiggle, then multiplied by every jump that happened (by nothing if none did); the drift carries an extra $-\lambda k$ that pays for the jumps' average effect.
+**Read it aloud:** the ending price is today's price moved by the Black-Scholes drift and wiggle, then multiplied by every jump that happened (by nothing if none did); the drift carries an extra $`-\lambda k`$ that pays for the jumps' average effect.
 
-$k$ is the average jump as a fraction of the price, −0.0849: the average jump takes 8.49% off. (It is Merton's letter, not the log-moneyness of [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).) The price of the call:
+$`k`$ is the average jump as a fraction of the price, −0.0849: the average jump takes 8.49% off. (It is Merton's letter, not the log-moneyness of [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).) The price of the call:
 
-$$C = \sum_{n=0}^{\infty} w_n\; C_{\text{BS}}\big(S,\,K,\,r,\,q_n,\,\sigma_n,\,T\big), \qquad w_n = \frac{e^{-\lambda T}(\lambda T)^n}{n!}$$
+```math
+C = \sum_{n=0}^{\infty} w_n\; C_{\text{BS}}\big(S,\,K,\,r,\,q_n,\,\sigma_n,\,T\big), \qquad w_n = \frac{e^{-\lambda T}(\lambda T)^n}{n!}
+```
 
 **Read it aloud:** for every possible number of jumps, price a plain Black-Scholes call with that branch's own volatility and yield, then add the prices, each weighted by the chance of exactly that many jumps.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$, $P$, $C_{\text{BS}}$ | the Merton call and put; a Black-Scholes call with the inputs in brackets | $10.42, $7.52; $9.23 at the house inputs | is the answer |
-| $S$, $S_T$, $K$, $F$ | price today, price at expiry, strike, forward $S e^{(r-q)T}$ | $100; random; $100; $103.05 | $S$ up: dearer. $K$ up: cheaper |
-| $r$, $q$ | riskless rate and dividend yield, continuously compounded | 5%; 2% | as in Black-Scholes |
-| $\sigma$, $T$ | volatility of the wiggle alone; years to expiry | 20%; 1 | dearer |
-| $\lambda$ | jump rate: average jumps a year | 0.5 | dearer: $11.50 at one a year |
-| $\mu_J$, $\delta$ | mean and spread of one jump's log size, per jump | −0.10; 0.15 | bigger jumps either way, or more spread: dearer. The sign of $\mu_J$ picks which side of the strip (implied volatility strike by strike, Step 5) lifts |
-| $Y$, $Y_i$, $k$ | a jump's multiplier; that of jump number $i$; the average multiplier minus one | typical 0.9048; —; −0.0849 | — |
-| $Z$, $N_T$, $n$, $i$ | a standard bell-curve draw; the random jump count by expiry; one particular count; a jump's number | —; —; 0, 1, 2, …; — | — |
-| $w_n$ | Poisson weight: the chance of exactly $n$ jumps | 0.6065, 0.3033, 0.0758 | — |
-| $\sigma_n$, $q_n$ | volatility and yield of the $n$-jump branch | 20%, −2.25% at $n = 0$; 25%, 6.63% at $n = 1$ | — |
-| $r_n$, $\lambda'$ | Merton's own branch rate, and the tilted jump rate $\lambda(1+k)$ that goes with it | road 2 in the code | — |
-| $N(x)$, $d_1$, $d_2$ | bell-curve area left of $x$; the two Black-Scholes distances inside $C_{\text{BS}}$ | — | — |
+| $`C`$, $`P`$, $`C_{\text{BS}}`$ | the Merton call and put; a Black-Scholes call with the inputs in brackets | $10.42, $7.52; $9.23 at the house inputs | is the answer |
+| $`S`$, $`S_T`$, $`K`$, $`F`$ | price today, price at expiry, strike, forward $`S e^{(r-q)T}`$ | $100; random; $100; $103.05 | $`S`$ up: dearer. $`K`$ up: cheaper |
+| $`r`$, $`q`$ | riskless rate and dividend yield, continuously compounded | 5%; 2% | as in Black-Scholes |
+| $`\sigma`$, $`T`$ | volatility of the wiggle alone; years to expiry | 20%; 1 | dearer |
+| $`\lambda`$ | jump rate: average jumps a year | 0.5 | dearer: $11.50 at one a year |
+| $`\mu_J`$, $`\delta`$ | mean and spread of one jump's log size, per jump | −0.10; 0.15 | bigger jumps either way, or more spread: dearer. The sign of $`\mu_J`$ picks which side of the strip (implied volatility strike by strike, Step 5) lifts |
+| $`Y`$, $`Y_i`$, $`k`$ | a jump's multiplier; that of jump number $`i`$; the average multiplier minus one | typical 0.9048; —; −0.0849 | — |
+| $`Z`$, $`N_T`$, $`n`$, $`i`$ | a standard bell-curve draw; the random jump count by expiry; one particular count; a jump's number | —; —; 0, 1, 2, …; — | — |
+| $`w_n`$ | Poisson weight: the chance of exactly $`n`$ jumps | 0.6065, 0.3033, 0.0758 | — |
+| $`\sigma_n`$, $`q_n`$ | volatility and yield of the $`n`$-jump branch | 20%, −2.25% at $`n = 0`$; 25%, 6.63% at $`n = 1`$ | — |
+| $`r_n`$, $`\lambda'`$ | Merton's own branch rate, and the tilted jump rate $`\lambda(1+k)`$ that goes with it | road 2 in the code | — |
+| $`N(x)`$, $`d_1`$, $`d_2`$ | bell-curve area left of $`x`$; the two Black-Scholes distances inside $`C_{\text{BS}}`$ | — | — |
 
 The two helpers:
 
-$$\sigma_n = \sqrt{\sigma^2 + \frac{n\,\delta^2}{T}}, \qquad q_n = q + \lambda k - \frac{n\ln(1+k)}{T}$$
+```math
+\sigma_n = \sqrt{\sigma^2 + \frac{n\,\delta^2}{T}}, \qquad q_n = q + \lambda k - \frac{n\ln(1+k)}{T}
+```
 
-$\sigma_n$ is the branch's width: the wiggle's variance plus $n$ jumps' worth, spread over the life. $q_n$ acts as a dividend yield that slides the branch's centre: $\lambda k$ lifts every branch to pay for jumps that might happen, and $-n\ln(1+k)/T$ lowers it for the $n$ that did. Since $\ln(1+k) = \mu_J + \tfrac12\delta^2 = -0.08875$, each jump adds 0.08875 to the yield.
+$`\sigma_n`$ is the branch's width: the wiggle's variance plus $`n`$ jumps' worth, spread over the life. $`q_n`$ acts as a dividend yield that slides the branch's centre: $`\lambda k`$ lifts every branch to pay for jumps that might happen, and $`-n\ln(1+k)/T`$ lowers it for the $`n`$ that did. Since $`\ln(1+k) = \mu_J + \tfrac12\delta^2 = -0.08875`$, each jump adds 0.08875 to the yield.
 
 ### When it holds
 
-- **Jumps arrive one at a time, at a steady rate, with no memory.** That makes the count Poisson. If one crash makes the next likelier, two or three jumps are likelier than $w_n$ says, and the series underprices the far left tail.
+- **Jumps arrive one at a time, at a steady rate, with no memory.** That makes the count Poisson. If one crash makes the next likelier, two or three jumps are likelier than $`w_n`$ says, and the series underprices the far left tail.
 - **Jump sizes are lognormal, independent of each other and of the wiggle.** That keeps each branch one bell curve in the log price. Other jump laws, such as Kou's double-exponential jumps, need a different formula.
-- **Constant $\sigma$, $r$, $q$ and jump numbers,** as in Black-Scholes; if they move, the series runs on the wrong inputs.
+- **Constant $`\sigma`$, $`r`$, $`q`$ and jump numbers,** as in Black-Scholes; if they move, the series runs on the wrong inputs.
 - **Jump risk earns no premium.** No mix of shares and cash follows a gap, so no hedge forces the price. Merton assumed a stock's jumps are unrelated to the wider market, so diversified investors need no reward for them and pricing may use jump numbers measured from history. If investors do demand a reward, a price built on history is off by it.
 - **European exercise:** the call is used only at expiry.
 
@@ -85,7 +91,7 @@ $\sigma_n$ is the branch's width: the wiggle's variance plus $n$ jumps' worth, s
 
 ### Step 0: fix the number of jumps and Black-Scholes is back
 
-Suppose exactly one jump happens. The log of the ending price is then the wiggle's bell curve plus one jump's bell curve. Independent bell curves add to one bell curve, variances added: $0.04 + 0.0225$, a width of 25%. So the one-jump world is a Black-Scholes world at 25%, centred a little lower, and its call is worth $8.64.
+Suppose exactly one jump happens. The log of the ending price is then the wiggle's bell curve plus one jump's bell curve. Independent bell curves add to one bell curve, variances added: $`0.04 + 0.0225`$, a width of 25%. So the one-jump world is a Black-Scholes world at 25%, centred a little lower, and its call is worth $8.64.
 
 The same holds for every count. An average may also be taken case by case: average within each case, then average those, weighted by each case's chance. That is the law of total expectation. Split on the count and the price is a weighted sum of Black-Scholes prices. What remains is each branch's width and centre.
 
@@ -93,48 +99,54 @@ The same holds for every count. An average may also be taken case by case: avera
 
 In the pricing world the share, dividends reinvested, grows on average at the riskless rate, or buying it with borrowed money would be a free bet. So the average ending price must be the forward, $103.05.
 
-Jumps alone drag that average down. One jump multiplies the price by $1 + k$ on average, and $n$ jumps by $(1+k)^n$. Averaging over the Poisson count, with the series for $e^x$ in the middle step:
+Jumps alone drag that average down. One jump multiplies the price by $`1 + k`$ on average, and $`n`$ jumps by $`(1+k)^n`$. Averaging over the Poisson count, with the series for $`e^x`$ in the middle step:
 
-$$E\big[(1+k)^{N_T}\big] = \sum_{n=0}^{\infty} \frac{e^{-\lambda T}(\lambda T)^n}{n!}\,(1+k)^n = e^{-\lambda T}\,e^{\lambda T(1+k)} = e^{\lambda k T}$$
+```math
+E\big[(1+k)^{N_T}\big] = \sum_{n=0}^{\infty} \frac{e^{-\lambda T}(\lambda T)^n}{n!}\,(1+k)^n = e^{-\lambda T}\,e^{\lambda T(1+k)} = e^{\lambda k T}
+```
 
-Uncorrected, the average ending price would be $F e^{\lambda kT}$, $98.76. So the model adds $-\lambda k$, 4.25% a year, to the drift, and the two cancel. That is all a compensator is: a term whose only job is to undo another term's average effect.
+Uncorrected, the average ending price would be $`F e^{\lambda kT}`$, $98.76. So the model adds $`-\lambda k`$, 4.25% a year, to the drift, and the two cancel. That is all a compensator is: a term whose only job is to undo another term's average effect.
 
-One consequence surprises. The no-jump branch still has the raised drift: its yield, $q_n$ at $n = 0$, is −0.022463, a negative dividend, and its call is worth $11.94, more than the whole Merton price. A year without a gap still collects the drift that pays for gaps.
+One consequence surprises. The no-jump branch still has the raised drift: its yield, $`q_n`$ at $`n = 0`$, is −0.022463, a negative dividend, and its call is worth $11.94, more than the whole Merton price. A year without a gap still collects the drift that pays for gaps.
 
 ### Step 2: given the count, the log price is one bell curve
 
-Fix $N_T = n$. The log of the ending price is the drift, plus the wiggle $\sigma\sqrt{T}Z$, plus $n$ independent jump logs, each with mean $\mu_J$ and variance $\delta^2$. Independent bell curves add to a bell curve whose mean and variance are the sums:
+Fix $`N_T = n`$. The log of the ending price is the drift, plus the wiggle $`\sigma\sqrt{T}Z`$, plus $`n`$ independent jump logs, each with mean $`\mu_J`$ and variance $`\delta^2`$. Independent bell curves add to a bell curve whose mean and variance are the sums:
 
-$$\ln\frac{S_T}{S} \;\text{ given } n \text{ jumps: mean }\; \big(r - q - \lambda k - \tfrac12\sigma^2\big)T + n\mu_J, \;\text{ variance }\; \sigma^2 T + n\delta^2$$
+```math
+\ln\frac{S_T}{S} \;\text{ given } n \text{ jumps: mean }\; \big(r - q - \lambda k - \tfrac12\sigma^2\big)T + n\mu_J, \;\text{ variance }\; \sigma^2 T + n\delta^2
+```
 
 A lognormal ending price: exactly what Black-Scholes prices.
 
 ### Step 3: name the branch's width and centre
 
-Write the branch variance as $\sigma_n^2 T$; then $\sigma_n^2 = \sigma^2 + n\delta^2/T$. For the centre: the average of the exponential of a bell curve is the exponential of its mean plus half its variance, so
+Write the branch variance as $`\sigma_n^2 T`$; then $`\sigma_n^2 = \sigma^2 + n\delta^2/T`$. For the centre: the average of the exponential of a bell curve is the exponential of its mean plus half its variance, so
 
-$$E[S_T \mid n \text{ jumps}] = S\,e^{(r - q - \lambda k)T}\,e^{n(\mu_J + \frac12\delta^2)} = S\,e^{(r - q - \lambda k)T}(1+k)^n$$
+```math
+E[S_T \mid n \text{ jumps}] = S\,e^{(r - q - \lambda k)T}\,e^{n(\mu_J + \frac12\delta^2)} = S\,e^{(r - q - \lambda k)T}(1+k)^n
+```
 
-A stock with yield $q_n$ averages $S e^{(r - q_n)T}$. Matching the two gives $q_n = q + \lambda k - n\ln(1+k)/T$.
+A stock with yield $`q_n`$ averages $`S e^{(r - q_n)T}`$. Matching the two gives $`q_n = q + \lambda k - n\ln(1+k)/T`$.
 
 ### Step 4: price each branch and add
 
-Black-Scholes prices a call on any lognormal ending price once its variance and average are fixed. Steps 2 and 3 fix both, so branch $n$ is worth $C_{\text{BS}}(S, K, r, q_n, \sigma_n, T)$, and total expectation adds the branches with weights $w_n$.
+Black-Scholes prices a call on any lognormal ending price once its variance and average are fixed. Steps 2 and 3 fix both, so branch $`n`$ is worth $`C_{\text{BS}}(S, K, r, q_n, \sigma_n, T)`$, and total expectation adds the branches with weights $`w_n`$.
 
-The series settles fast. Each branch call is below $S e^{-q_n T}$, which with $k$ negative is at most $S e^{-(q + \lambda k)T}$. Here that ceiling is $102.27. So the terms after the sixth total less than $102.27 times the chance of more than five jumps, 0.000014: under 0.0015. The true leftover is 0.000030.
+The series settles fast. Each branch call is below $`S e^{-q_n T}`$, which with $`k`$ negative is at most $`S e^{-(q + \lambda k)T}`$. Here that ceiling is $102.27. So the terms after the sixth total less than $102.27 times the chance of more than five jumps, 0.000014: under 0.0015. The true leftover is 0.000030.
 
 <details>
 <summary>Detailed proof: the series, in full</summary>
 
-Write $\ln(S_T/S) = m + \sigma\sqrt{T}Z + (\ln Y_1 + \cdots + \ln Y_{N_T})$ with drift $m = (r - q - \lambda k - \frac12\sigma^2)T$, jump logs normal with mean $\mu_J$ and variance $\delta^2$, and all parts independent.
+Write $`\ln(S_T/S) = m + \sigma\sqrt{T}Z + (\ln Y_1 + \cdots + \ln Y_{N_T})`$ with drift $`m = (r - q - \lambda k - \frac12\sigma^2)T`$, jump logs normal with mean $`\mu_J`$ and variance $`\delta^2`$, and all parts independent.
 
-**Forward.** Completing the square in the bell-curve integral gives $E[e^{\sigma\sqrt{T}Z}] = e^{\frac12\sigma^2 T}$. By independence the jump product averages $(1+k)^n$ given $n$ jumps, and $e^{\lambda kT}$ over the count (Step 1). So $E[S_T] = S e^{m + \frac12\sigma^2T + \lambda kT} = S e^{(r-q)T}$.
+**Forward.** Completing the square in the bell-curve integral gives $`E[e^{\sigma\sqrt{T}Z}] = e^{\frac12\sigma^2 T}`$. By independence the jump product averages $`(1+k)^n`$ given $`n`$ jumps, and $`e^{\lambda kT}`$ over the count (Step 1). So $`E[S_T] = S e^{m + \frac12\sigma^2T + \lambda kT} = S e^{(r-q)T}`$.
 
-**Split.** $C = e^{-rT}E[\max(S_T - K, 0)] = \sum_n w_n\,e^{-rT}E[\max(S_T - K, 0) \mid n \text{ jumps}]$, by total expectation.
+**Split.** $`C = e^{-rT}E[\max(S_T - K, 0)] = \sum_n w_n\,e^{-rT}E[\max(S_T - K, 0) \mid n \text{ jumps}]`$, by total expectation.
 
-**Branch.** Given $n$ jumps, $\ln(S_T/S)$ is the constant drift plus $n + 1$ independent normals, so it is normal with mean $m + n\mu_J$ and variance $\sigma_n^2 T$, and $E[S_T \mid n] = S e^{(r - q_n)T}$ as in Step 3. The computation on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) uses only those two facts, so the branch term is $S e^{-q_nT}N(d_1) - K e^{-rT}N(d_2)$, with $d_1 = [\ln(S/K) + (r - q_n + \frac12\sigma_n^2)T]/(\sigma_n\sqrt{T})$ and $d_2 = d_1 - \sigma_n\sqrt{T}$: that is $C_{\text{BS}}(S, K, r, q_n, \sigma_n, T)$.
+**Branch.** Given $`n`$ jumps, $`\ln(S_T/S)`$ is the constant drift plus $`n + 1`$ independent normals, so it is normal with mean $`m + n\mu_J`$ and variance $`\sigma_n^2 T`$, and $`E[S_T \mid n] = S e^{(r - q_n)T}`$ as in Step 3. The computation on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) uses only those two facts, so the branch term is $`S e^{-q_nT}N(d_1) - K e^{-rT}N(d_2)`$, with $`d_1 = [\ln(S/K) + (r - q_n + \frac12\sigma_n^2)T]/(\sigma_n\sqrt{T})`$ and $`d_2 = d_1 - \sigma_n\sqrt{T}`$: that is $`C_{\text{BS}}(S, K, r, q_n, \sigma_n, T)`$.
 
-**Convergence.** $0 \le C_{\text{BS}} \le S e^{-q_nT} = S e^{-(q+\lambda k)T}(1+k)^n$. For $-1 < k \le 0$ the terms beyond any cut-off total at most $S e^{-(q+\lambda k)T}$ times the chance of more jumps than the cut-off, and Poisson tail chances fall faster than any power. For $k > 0$, fold $(1+k)^n$ into the weight: the bound becomes $S e^{-qT}$ times a Poisson tail at rate $\lambda(1+k)$, the regrouping below. The series converges absolutely to the price.
+**Convergence.** $`0 \le C_{\text{BS}} \le S e^{-q_nT} = S e^{-(q+\lambda k)T}(1+k)^n`$. For $`-1 < k \le 0`$ the terms beyond any cut-off total at most $`S e^{-(q+\lambda k)T}`$ times the chance of more jumps than the cut-off, and Poisson tail chances fall faster than any power. For $`k > 0`$, fold $`(1+k)^n`$ into the weight: the bound becomes $`S e^{-qT}`$ times a Poisson tail at rate $`\lambda(1+k)`$, the regrouping below. The series converges absolutely to the price.
 
 </details>
 
@@ -142,9 +154,9 @@ Write $\ln(S_T/S) = m + \sigma\sqrt{T}Z + (\ln Y_1 + \cdots + \ln Y_{N_T})$ with
 
 Run each strike's Merton price backwards through Black-Scholes to find the one volatility that reproduces it, the implied volatility ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)).
 
-The inverse exists and is unique. A Black-Scholes call rises strictly with volatility, from $e^{-rT}\max(F - K, 0)$ at zero towards $S e^{-qT}$ as volatility grows without limit.
+The inverse exists and is unique. A Black-Scholes call rises strictly with volatility, from $`e^{-rT}\max(F - K, 0)`$ at zero towards $`S e^{-qT}`$ as volatility grows without limit.
 
-Each branch price sits strictly inside its own range. The branch upper ends average to $S e^{-qT}$, by Step 1's identity. The branch lower ends average to at least $e^{-rT}\max(F - K, 0)$, since the branch forwards average to $F$ and the positive part of an average never beats the average of the positive parts.
+Each branch price sits strictly inside its own range. The branch upper ends average to $`S e^{-qT}`$, by Step 1's identity. The branch lower ends average to at least $`e^{-rT}\max(F - K, 0)`$, since the branch forwards average to $`F`$ and the positive part of an average never beats the average of the positive parts.
 
 So every Merton price sits strictly inside the Black-Scholes range. It never lands on a boundary: at the lower end the answer would be zero volatility, at the upper end there would be none. Bisection (halving a bracket that holds the answer) finds exactly one volatility.
 
@@ -167,26 +179,26 @@ At three months it is far steeper: 32.10% at $70 against 22.48% at the money, tu
 
 And the longer the life, the more independent pieces the log price sums, and such sums drift towards one bell curve, so the strip flattens as expiry lengthens.
 
-Two other routes reach the same number. Merton's 1976 paper moves the factor $e^{-\lambda kT}(1+k)^n$ from each branch into its weight, which makes Poisson weights at the tilted rate $\lambda' = \lambda(1 + k)$ and prices each branch at its own rate $r_n = r - \lambda k + n\ln(1+k)/T$: road 2 in the code.
+Two other routes reach the same number. Merton's 1976 paper moves the factor $`e^{-\lambda kT}(1+k)^n`$ from each branch into its weight, which makes Poisson weights at the tilted rate $`\lambda' = \lambda(1 + k)`$ and prices each branch at its own rate $`r_n = r - \lambda k + n\ln(1+k)/T`$: road 2 in the code.
 
-And the log price is a Lévy process (its changes over equal, separate stretches of time are independent and alike) with a closed-form characteristic function (the average of $e^{iu\ln S_T}$ for each real $u$), which a Fourier transform turns into prices at every strike: [Transform pricing](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
+And the log price is a Lévy process (its changes over equal, separate stretches of time are independent and alike) with a closed-form characteristic function (the average of $`e^{iu\ln S_T}`$ for each real $`u`$), which a Fourier transform turns into prices at every strike: [Transform pricing](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The house market plus jumps: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$; $\lambda = 0.5$, $\mu_J = -0.10$, $\delta = 0.15$.
+The house market plus jumps: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$; $`\lambda = 0.5`$, $`\mu_J = -0.10`$, $`\delta = 0.15`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average jump $k$ | $e^{-0.10 + 0.5 \times 0.15^2} - 1 = e^{-0.08875} - 1$ | −0.084926 |
-| compensator $\lambda k$ | $0.5 \times (-0.084926)$ | −0.042463 a year |
-| no jump: weight, width, yield | $e^{-0.5}$; $\sigma$; $0.02 - 0.042463$ | 0.606531; 0.20; −0.022463 |
-| no jump: call times weight | $11.944649 \times 0.606531$ | 7.244796 |
-| one jump: weight, width, yield | $0.5\,e^{-0.5}$; $\sqrt{0.04 + 0.0225}$; $-0.022463 + 0.08875$ | 0.303265; 0.25; 0.066287 |
-| one jump: call times weight | $8.637499 \times 0.303265$ | 2.619454 |
-| two jumps: weight, width, yield | $e^{-0.5} \times 0.5^2/2$; $\sqrt{0.04 + 2 \times 0.0225}$; $0.066287 + 0.08875$ | 0.075816; 0.291548; 0.155037 |
-| two jumps: call times weight | $6.399864 \times 0.075816$ | 0.485214 |
+| average jump $`k`$ | $`e^{-0.10 + 0.5 \times 0.15^2} - 1 = e^{-0.08875} - 1`$ | −0.084926 |
+| compensator $`\lambda k`$ | $`0.5 \times (-0.084926)`$ | −0.042463 a year |
+| no jump: weight, width, yield | $`e^{-0.5}`$; $`\sigma`$; $`0.02 - 0.042463`$ | 0.606531; 0.20; −0.022463 |
+| no jump: call times weight | $`11.944649 \times 0.606531`$ | 7.244796 |
+| one jump: weight, width, yield | $`0.5\,e^{-0.5}`$; $`\sqrt{0.04 + 0.0225}`$; $`-0.022463 + 0.08875`$ | 0.303265; 0.25; 0.066287 |
+| one jump: call times weight | $`8.637499 \times 0.303265`$ | 2.619454 |
+| two jumps: weight, width, yield | $`e^{-0.5} \times 0.5^2/2`$; $`\sqrt{0.04 + 2 \times 0.0225}`$; $`0.066287 + 0.08875`$ | 0.075816; 0.291548; 0.155037 |
+| two jumps: call times weight | $`6.399864 \times 0.075816`$ | 0.485214 |
 | three, four, five jumps | the same recipe | 0.060779, 0.005764, 0.000440 |
 | six terms | the six contributions added | 10.416447 |
 | everything after | 60 terms less six | 0.000030 |
@@ -199,11 +211,11 @@ With gaps possible, the call costs $10.42: $1.19 more than Black-Scholes charges
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Ignore the jumps | 9.23 | plain Black-Scholes at 20%: no gaps, no skew |
-| Drop the compensator $\lambda k$ | 8.07 | the average ending price falls to $98.76, below the $103.05 forward |
-| Keep $\sigma$ in every branch | 9.58 | $n$ jumps add $n\delta^2$ of variance; every branch with a jump is too narrow |
+| Drop the compensator $`\lambda k`$ | 8.07 | the average ending price falls to $98.76, below the $103.05 forward |
+| Keep $`\sigma`$ in every branch | 9.58 | $`n`$ jumps add $`n\delta^2`$ of variance; every branch with a jump is too narrow |
 | Keep the no-jump centre in every branch | 12.84 | branches with jumps sit lower; left at the top they are overpriced |
-| Take $k$ as $e^{\mu_J} - 1$ | 10.49 | an average of exponentials sits above the exponential of the average |
-| Plain $\lambda$ weights with Merton's branch rates $r_n$ | 10.33 | half a regrouping: new rates need weights tilted to $\lambda(1+k)$ |
+| Take $`k`$ as $`e^{\mu_J} - 1`$ | 10.49 | an average of exponentials sits above the exponential of the average |
+| Plain $`\lambda`$ weights with Merton's branch rates $`r_n`$ | 10.33 | half a regrouping: new rates need weights tilted to $`\lambda(1+k)`$ |
 | One Black-Scholes volatility of 23.72% | 10.64 | the variance matches, the shape does not |
 | Stop after the no-jump branch | 7.24 | every branch with a jump is thrown away |
 
@@ -213,7 +225,7 @@ The code prints all eight.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer. The bell-curve area comes from Marsaglia's power series, summed until a new term no longer changes it; the root finder is bisection; the integral is Simpson's rule; and the random numbers come from the recurrence of [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), turned into bell-curve draws by Box-Muller. Four roads reach the price. Road 1 is the series. Road 2 is Merton's own grouping, checked at one year and at three months. Road 3 averages each branch's payoff over its bell curve by Simpson's rule, with no Black-Scholes formula. Road 4 simulates a million years: the jump count comes from multiplying uniform numbers until the product falls below $e^{-\lambda T}$, and each jump's size is drawn separately. The same years check the compensator and each branch; the put checks parity; with no jumps the series must return the house call.
+Nothing imported knows the answer. The bell-curve area comes from Marsaglia's power series, summed until a new term no longer changes it; the root finder is bisection; the integral is Simpson's rule; and the random numbers come from the recurrence of [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), turned into bell-curve draws by Box-Muller. Four roads reach the price. Road 1 is the series. Road 2 is Merton's own grouping, checked at one year and at three months. Road 3 averages each branch's payoff over its bell curve by Simpson's rule, with no Black-Scholes formula. Road 4 simulates a million years: the jump count comes from multiplying uniform numbers until the product falls below $`e^{-\lambda T}`$, and each jump's size is drawn separately. The same years check the compensator and each branch; the put checks parity; with no jumps the series must return the house call.
 
 ### Python
 
@@ -654,12 +666,12 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the algebra behind Steps 1 and 3, the compensator and the branch centres, for any inputs with $T > 0$.
+Lean proves the algebra behind Steps 1 and 3, the compensator and the branch centres, for any inputs with $`T > 0`$.
 
-- Take any jump rate $\lambda$, years to expiry $T$ and average jump $k$. Then the Poisson weights $w_n$ times $(1+k)^n$, summed over all $n$, give exactly $e^{\lambda k T}$.
-- Take $k = e^{\mu_J + \frac12\delta^2} - 1$. Then $e^{n(\mu_J + \frac12\delta^2)} = (1+k)^n$, so Step 3's two forms of the branch average agree.
-- Take that $k$, any $T > 0$, any count $n$ and the branch yield $q_n$. Then $S e^{(r-q-\lambda k)T}(1+k)^n$ equals $S e^{(r-q_n)T}$.
-- Take the same $k$ and $T > 0$. Then the branch forwards $S e^{(r-q_n)T}$, weighted by $w_n$, add up to exactly $F$.
+- Take any jump rate $`\lambda`$, years to expiry $`T`$ and average jump $`k`$. Then the Poisson weights $`w_n`$ times $`(1+k)^n`$, summed over all $`n`$, give exactly $`e^{\lambda k T}`$.
+- Take $`k = e^{\mu_J + \frac12\delta^2} - 1`$. Then $`e^{n(\mu_J + \frac12\delta^2)} = (1+k)^n`$, so Step 3's two forms of the branch average agree.
+- Take that $`k`$, any $`T > 0`$, any count $`n`$ and the branch yield $`q_n`$. Then $`S e^{(r-q-\lambda k)T}(1+k)^n`$ equals $`S e^{(r-q_n)T}`$.
+- Take the same $`k`$ and $`T > 0`$. Then the branch forwards $`S e^{(r-q_n)T}`$, weighted by $`w_n`$, add up to exactly $`F`$.
 
 The total expectation split, the branch prices and every dollar figure are left to the Python and Rust checks.
 
@@ -761,9 +773,9 @@ example : (-1 / 10 : ℚ) + (3 / 20 : ℚ) ^ 2 / 2 = -71 / 800 := by norm_num
 > [!warning]
 > **Replacing the jumps with one bigger volatility.** A Black-Scholes volatility of 23.72% carries the same yearly variance as the wiggle plus the jumps, and still misprices. At the money it gives $10.64 against Merton's $10.42; at the $70 strike $31.85 against $31.98, too cheap; at $130, $2.25 against $1.92, too dear. Matching the width of the distribution does not match its shape. The jumps move weight into the tails, the left one most, and one volatility cannot bend that way: the strip is that bend, read strike by strike.
 >
-> - **$k$ as $e^{\mu_J} - 1$.** The average multiplier is $e^{\mu_J + \frac12\delta^2}$. The slip prices the call at $10.49 and moves the forward off $F$.
-> - **Mixing the two groupings.** Branch rates $r_n$ go with weights at $\lambda(1+k)$. Plain $\lambda$ weights give $10.33, which the simulation, at 10.397850 with standard error 0.015591, rules out.
-> - **Units.** $\lambda$ is per year; $\mu_J$ and $\delta$ are per jump, in logs, and do not scale with the square root of $T$ as $\sigma$ does. $\mu_J$ = −0.10 is a typical factor of 0.9048, not 0.90.
+> - **$`k`$ as $`e^{\mu_J} - 1`$.** The average multiplier is $`e^{\mu_J + \frac12\delta^2}`$. The slip prices the call at $10.49 and moves the forward off $`F`$.
+> - **Mixing the two groupings.** Branch rates $`r_n`$ go with weights at $`\lambda(1+k)`$. Plain $`\lambda`$ weights give $10.33, which the simulation, at 10.397850 with standard error 0.015591, rules out.
+> - **Units.** $`\lambda`$ is per year; $`\mu_J`$ and $`\delta`$ are per jump, in logs, and do not scale with the square root of $`T`$ as $`\sigma`$ does. $`\mu_J`$ = −0.10 is a typical factor of 0.9048, not 0.90.
 > - **Hedging as if Black-Scholes held.** A delta hedge follows the wiggle but not a gap: [Greeks under jumps](05-merton-greeks-hedge-error-and-calibration.md).
 
 ---
@@ -777,7 +789,7 @@ example : (-1 / 10 : ℚ) + (3 / 20 : ℚ) ^ 2 / 2 = -71 / 800 := by norm_num
 - **Jumps plus wandering volatility.** Bates put Merton's jumps on a volatility that itself moves ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)): jumps give the short-dated skew, the moving volatility keeps it steep for longer.
 
 > **Say it back**
-> Merton keeps the Black-Scholes wiggle and adds jumps that arrive at random at a steady rate, each multiplying the price by a lognormal factor. Fix the number of jumps and the log price is one bell curve again, so each case has a Black-Scholes price with its own width and centre. The call is those prices weighted by the Poisson chance of each count: $10.42 for Acme, against $9.23 without jumps. The $-\lambda k$ in the drift only cancels the jumps' average drag, so the pricing world still expects the forward. Run the prices back through Black-Scholes and a skew appears, steepest for short-dated options.
+> Merton keeps the Black-Scholes wiggle and adds jumps that arrive at random at a steady rate, each multiplying the price by a lognormal factor. Fix the number of jumps and the log price is one bell curve again, so each case has a Black-Scholes price with its own width and centre. The call is those prices weighted by the Poisson chance of each count: $10.42 for Acme, against $9.23 without jumps. The $`-\lambda k`$ in the drift only cancels the jumps' average drag, so the pricing world still expects the forward. Run the prices back through Black-Scholes and a skew appears, steepest for short-dated options.
 
 ---
 
@@ -785,7 +797,7 @@ example : (-1 / 10 : ℚ) + (3 / 20 : ℚ) ^ 2 / 2 = -71 / 800 := by norm_num
 
 - [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): implied volatility strike by strike, and the two-leg crash market this card extends to one leg per count.
 - [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula priced in every branch, and the house call the series returns without jumps.
-- [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the chance of exactly $n$ events at a steady rate, the series' weights.
+- [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the chance of exactly $`n`$ events at a steady rate, the series' weights.
 - [Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): a random number of random jumps added up, the jump part of the log price.
 - [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulated averages, the recurrence and the standard error road 4 uses.
 

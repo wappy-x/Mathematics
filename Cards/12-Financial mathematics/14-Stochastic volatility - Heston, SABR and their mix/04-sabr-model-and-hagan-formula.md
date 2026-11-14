@@ -41,50 +41,60 @@ Orange: Hagan's formula. Green: the model, simulated (road 2 of the checks). Dar
 
 ## The formula
 
-Notation first. $W_1$ and $W_2$ are Brownian motions, the random drivers of Itô calculus: over a tiny time step dt each delivers a kick with average zero and variance dt. An equation such as dF = … says how much a quantity moves over one such step, the reading [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) simulates.
+Notation first. $`W_1`$ and $`W_2`$ are Brownian motions, the random drivers of Itô calculus: over a tiny time step dt each delivers a kick with average zero and variance dt. An equation such as dF = … says how much a quantity moves over one such step, the reading [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) simulates.
 
 The model, written on the forward:
 
-$$dF_t = \alpha_t\,F_t^{\beta}\,dW_1, \qquad d\alpha_t = \nu\,\alpha_t\,dW_2, \qquad dW_1\,dW_2 = \rho\,dt,$$
+```math
+dF_t = \alpha_t\,F_t^{\beta}\,dW_1, \qquad d\alpha_t = \nu\,\alpha_t\,dW_2, \qquad dW_1\,dW_2 = \rho\,dt,
+```
 
-starting from today's forward $F$ and today's volatility level $\alpha$.
+starting from today's forward $`F`$ and today's volatility level $`\alpha`$.
 
 **Read it aloud:** each instant, the forward takes a random step sized by the current volatility times the forward to the power beta; the volatility takes a random step in proportion to itself; and the two steps lean together with correlation rho.
 
-No drift appears: in Black-76's pricing, a forward to the option's own expiry drifts nowhere. The volatility's walk is multiplicative, so it stays positive. With $\beta = 1$ the forward moves in proportions, as a share price does.
+No drift appears: in Black-76's pricing, a forward to the option's own expiry drifts nowhere. The volatility's walk is multiplicative, so it stays positive. With $`\beta = 1`$ the forward moves in proportions, as a share price does.
 
-Hagan's formula, for a European option with strike $K$ expiring in $T$ years:
+Hagan's formula, for a European option with strike $`K`$ expiring in $`T`$ years:
 
-$$\sigma_B(K) = \frac{\alpha}{(FK)^{\frac{1-\beta}{2}}\Bigl[1 + \frac{(1-\beta)^2}{24}\ln^2\frac{F}{K} + \frac{(1-\beta)^4}{1920}\ln^4\frac{F}{K}\Bigr]}\cdot\frac{z}{\chi(z)}\cdot\Bigl[1 + \Bigl(\frac{(1-\beta)^2\,\alpha^2}{24\,(FK)^{1-\beta}} + \frac{\rho\beta\nu\alpha}{4\,(FK)^{\frac{1-\beta}{2}}} + \frac{2-3\rho^2}{24}\,\nu^2\Bigr)T\Bigr]$$
+```math
+\sigma_B(K) = \frac{\alpha}{(FK)^{\frac{1-\beta}{2}}\Bigl[1 + \frac{(1-\beta)^2}{24}\ln^2\frac{F}{K} + \frac{(1-\beta)^4}{1920}\ln^4\frac{F}{K}\Bigr]}\cdot\frac{z}{\chi(z)}\cdot\Bigl[1 + \Bigl(\frac{(1-\beta)^2\,\alpha^2}{24\,(FK)^{1-\beta}} + \frac{\rho\beta\nu\alpha}{4\,(FK)^{\frac{1-\beta}{2}}} + \frac{2-3\rho^2}{24}\,\nu^2\Bigr)T\Bigr]
+```
 
 **Read it aloud:** the volatility at a strike is the volatility level rescaled for the backbone, bent by a factor set by the strike's distance from the forward, and lifted by a small factor that grows with time.
 
-With $\beta = 1$, as on this card, every term carrying $1-\beta$ vanishes:
+With $`\beta = 1`$, as on this card, every term carrying $`1-\beta`$ vanishes:
 
-$$\sigma_B(K) = \alpha\,\frac{z}{\chi(z)}\,\Bigl[1 + \Bigl(\frac{\rho\nu\alpha}{4} + \frac{2-3\rho^2}{24}\,\nu^2\Bigr)T\Bigr]$$
+```math
+\sigma_B(K) = \alpha\,\frac{z}{\chi(z)}\,\Bigl[1 + \Bigl(\frac{\rho\nu\alpha}{4} + \frac{2-3\rho^2}{24}\,\nu^2\Bigr)T\Bigr]
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$, $F_t$, $F_T$ | the forward today; at time t; at expiry | 103.045453 | at beta 1 the smile slides along |
-| $K$ | the strike | 92.15, 100, 119.93 | falls here, then turns up past 130 |
-| $T$ | years to expiry | 1 | the time factor and the error grow |
-| $\alpha$, $\alpha_t$, $\alpha_T$ | the volatility level today; at time t; at expiry | 0.198893 | lifts every strike almost one for one |
-| $\beta$ | the backbone exponent: how the forward's step scales with its level | 1 | lowering it steepens the skew |
-| $\rho$ | correlation of the forward's kicks with the volatility's (say "rho") | −0.3 | the skew flattens, then reverses |
-| $\nu$ | the vol of vol (say "nu"): how hard the volatility is kicked | 0.4 | curls both wings up |
-| $W_1$, $W_2$ | the Brownian motions driving forward and volatility | — | — |
-| $\sigma_B$ | the Black volatility the formula returns for a strike | 0.208066 at 92.15 | — |
-| $z$ | log-distance from forward to strike, scaled by the vol of vol over the level | 0.224749 at 92.15 | a bigger bend |
-| $\chi(z)$ | nu times the length of the cheapest route to the strike (say "chi"), negative above the forward | 0.216037 at 92.15 | — |
-| $V$ | variance one volatility path piles up: alpha squared summed over the life | one per path | — |
+| $`F`$, $`F_t`$, $`F_T`$ | the forward today; at time t; at expiry | 103.045453 | at beta 1 the smile slides along |
+| $`K`$ | the strike | 92.15, 100, 119.93 | falls here, then turns up past 130 |
+| $`T`$ | years to expiry | 1 | the time factor and the error grow |
+| $`\alpha`$, $`\alpha_t`$, $`\alpha_T`$ | the volatility level today; at time t; at expiry | 0.198893 | lifts every strike almost one for one |
+| $`\beta`$ | the backbone exponent: how the forward's step scales with its level | 1 | lowering it steepens the skew |
+| $`\rho`$ | correlation of the forward's kicks with the volatility's (say "rho") | −0.3 | the skew flattens, then reverses |
+| $`\nu`$ | the vol of vol (say "nu"): how hard the volatility is kicked | 0.4 | curls both wings up |
+| $`W_1`$, $`W_2`$ | the Brownian motions driving forward and volatility | — | — |
+| $`\sigma_B`$ | the Black volatility the formula returns for a strike | 0.208066 at 92.15 | — |
+| $`z`$ | log-distance from forward to strike, scaled by the vol of vol over the level | 0.224749 at 92.15 | a bigger bend |
+| $`\chi(z)`$ | nu times the length of the cheapest route to the strike (say "chi"), negative above the forward | 0.216037 at 92.15 | — |
+| $`V`$ | variance one volatility path piles up: alpha squared summed over the life | one per path | — |
 
 The two helpers:
 
-$$z = \frac{\nu}{\alpha}\,(FK)^{\frac{1-\beta}{2}}\ln\frac{F}{K}, \qquad \chi(z) = \ln\frac{\sqrt{1-2\rho z+z^2}+z-\rho}{1-\rho}.$$
+```math
+z = \frac{\nu}{\alpha}\,(FK)^{\frac{1-\beta}{2}}\ln\frac{F}{K}, \qquad \chi(z) = \ln\frac{\sqrt{1-2\rho z+z^2}+z-\rho}{1-\rho}.
+```
 
-$\chi(z)$ is close to $z$ near the money, so the bend tends to 1 there. At the money, where the strike equals the forward, only the time factor is left:
+$`\chi(z)`$ is close to $`z`$ near the money, so the bend tends to 1 there. At the money, where the strike equals the forward, only the time factor is left:
 
-$$\sigma_B(F) = \alpha\,\Bigl[1 + \Bigl(\frac{\rho\nu\alpha}{4} + \frac{2-3\rho^2}{24}\,\nu^2\Bigr)T\Bigr] \qquad (\beta = 1).$$
+```math
+\sigma_B(F) = \alpha\,\Bigl[1 + \Bigl(\frac{\rho\nu\alpha}{4} + \frac{2-3\rho^2}{24}\,\nu^2\Bigr)T\Bigr] \qquad (\beta = 1).
+```
 
 For other beta, divide the level by the forward to the power 1 − beta and put the forward squared in place of FK. Hagan's paper writes chi as x(z).
 
@@ -107,38 +117,46 @@ Over a short wait, a random walk reaches a far level almost only along its cheap
 
 In Black-76 the log-forward has one volatility, so the length from forward to strike is the log-distance divided by that volatility. Any other model has its own shortest length, and its implied volatility is the flat volatility giving the same length:
 
-$$\sigma_B(K) \;\approx\; \frac{\lvert\ln(F/K)\rvert}{\text{shortest length from today to the strike}}.$$
+```math
+\sigma_B(K) \;\approx\; \frac{\lvert\ln(F/K)\rvert}{\text{shortest length from today to the strike}}.
+```
 
-Henri Berestycki, Jérôme Busca and Igor Florent proved in 2004 that this becomes exact as the expiry shrinks to zero. Hagan's middle factor, $\alpha\,z/\chi(z)$, is this ratio worked out for SABR.
+Henri Berestycki, Jérôme Busca and Igor Florent proved in 2004 that this becomes exact as the expiry shrinks to zero. Hagan's middle factor, $`\alpha\,z/\chi(z)`$, is this ratio worked out for SABR.
 
 ### Step 1: the cheap route runs through high volatility
 
-SABR's state is two numbers, the log-forward and the volatility: a point on a map. A step in the log-forward costs its size divided by the volatility; a step in the volatility costs its size divided by $\nu$ times the volatility. Where volatility is high, moving the forward is cheap, so the cheapest route to a far strike lets the volatility rise first.
+SABR's state is two numbers, the log-forward and the volatility: a point on a map. A step in the log-forward costs its size divided by the volatility; a step in the volatility costs its size divided by $`\nu`$ times the volatility. Where volatility is high, moving the forward is cheap, so the cheapest route to a far strike lets the volatility rise first.
 
-With $\rho = 0$ this map is the hyperbolic plane, the geometry in which a triangle's angles add to less than 180 degrees. Its distances are known: the shortest route to the strike has length $\operatorname{arcsinh}(z)/\nu$, where arcsinh undoes the hyperbolic sine, $\sinh x = (e^x - e^{-x})/2$. Step 0 then gives $\alpha\,z/\operatorname{arcsinh}(z)$, and $\operatorname{arcsinh}(z) = \ln\bigl(\sqrt{1+z^2} + z\bigr)$ is $\chi(z)$ at $\rho = 0$.
+With $`\rho = 0`$ this map is the hyperbolic plane, the geometry in which a triangle's angles add to less than 180 degrees. Its distances are known: the shortest route to the strike has length $`\mathrm{arcsinh}(z)/\nu`$, where arcsinh undoes the hyperbolic sine, $`\sinh x = (e^x - e^{-x})/2`$. Step 0 then gives $`\alpha\,z/\mathrm{arcsinh}(z)`$, and $`\mathrm{arcsinh}(z) = \ln\bigl(\sqrt{1+z^2} + z\bigr)`$ is $`\chi(z)`$ at $`\rho = 0`$.
 
-Since $\operatorname{arcsinh}(z)$ is smaller than $z$ in size for every nonzero $z$, the volatility exceeds its level on both sides of the forward: a smile, symmetric in log-strike. With $\nu = 0$ the route cannot bend, and the formula returns Black-76's flat answer.
+Since $`\mathrm{arcsinh}(z)`$ is smaller than $`z`$ in size for every nonzero $`z`$, the volatility exceeds its level on both sides of the forward: a smile, symmetric in log-strike. With $`\nu = 0`$ the route cannot bend, and the formula returns Black-76's flat answer.
 
 ### Step 2: correlation tilts the map
 
-With $\rho = -0.3$ a falling forward tends to come with a rising volatility. The map shears: routes downward pass through high volatility cheaply, routes upward do not. The checks search for the cheapest routes (golden-section search, which shrinks a bracket by the golden ratio each pass). The route to 92.15 arrives with volatility 0.216543; the route to 119.93 with 0.189734. Per unit of log-distance, low strikes are nearer in this length, so their implied volatility is higher. That is the skew.
+With $`\rho = -0.3`$ a falling forward tends to come with a rising volatility. The map shears: routes downward pass through high volatility cheaply, routes upward do not. The checks search for the cheapest routes (golden-section search, which shrinks a bracket by the golden ratio each pass). The route to 92.15 arrives with volatility 0.216543; the route to 119.93 with 0.189734. Per unit of log-distance, low strikes are nearer in this length, so their implied volatility is higher. That is the skew.
 
-The route's length is $\lvert\chi(z)\rvert/\nu$, and the closed form has a plain reading:
+The route's length is $`\lvert\chi(z)\rvert/\nu`$, and the closed form has a plain reading:
 
-$$\chi(z) = \int_0^z \frac{dy}{\sqrt{1 - 2\rho y + y^2}}.$$
+```math
+\chi(z) = \int_0^z \frac{dy}{\sqrt{1 - 2\rho y + y^2}}.
+```
 
-After the forward has moved a scaled distance y toward the strike (log-distance times nu over alpha, the scaling in $z$), the formula acts as if the volatility were $\alpha\sqrt{1 - 2\rho y + y^2}$. At the far end for 92.15 that is 0.198893 × 1.088743 = 0.216543, the arrival volatility the search found. So the leading term is a harmonic average (the reciprocal of the average reciprocal) of the volatility met on the way. The checks reach $\chi(z) = 0.216037$ three ways: closed form, Simpson's rule on the integral, and $\nu$ times the searched length.
+After the forward has moved a scaled distance y toward the strike (log-distance times nu over alpha, the scaling in $`z`$), the formula acts as if the volatility were $`\alpha\sqrt{1 - 2\rho y + y^2}`$. At the far end for 92.15 that is 0.198893 × 1.088743 = 0.216543, the arrival volatility the search found. So the leading term is a harmonic average (the reciprocal of the average reciprocal) of the volatility met on the way. The checks reach $`\chi(z) = 0.216037`$ three ways: closed form, Simpson's rule on the integral, and $`\nu`$ times the searched length.
 
 <details>
 <summary>Detailed proof: the shortest length</summary>
 
-**Lengths.** Write $x$ for the log-forward. Over a time step dt its step has standard deviation $\alpha\sqrt{dt}$, the volatility's has $\nu\alpha\sqrt{dt}$, and they correlate by $\rho$. A small move, dx and dα, has length measured against that spread (the inverse covariance):
-$$ds^2 = \frac{\nu^2\,dx^2 - 2\rho\nu\,dx\,d\alpha + d\alpha^2}{\nu^2\,(1-\rho^2)\,\alpha^2}.$$
-Put $u = (\nu x - \rho\alpha)/\sqrt{1-\rho^2}$. Then $ds^2 = (du^2 + d\alpha^2)/(\nu^2\alpha^2)$: Poincaré's half-plane, the standard model of hyperbolic geometry, lengths divided by $\nu$. Its distance between two points is arccosh of 1 plus their squared straight-line gap over twice the product of their heights (arccosh undoes $\cosh x = (e^x + e^{-x})/2$), which the checks' search minimises.
+**Lengths.** Write $`x`$ for the log-forward. Over a time step dt its step has standard deviation $`\alpha\sqrt{dt}`$, the volatility's has $`\nu\alpha\sqrt{dt}`$, and they correlate by $`\rho`$. A small move, dx and dα, has length measured against that spread (the inverse covariance):
 
-**With $\rho = 0$.** Today sits at height $\alpha$ above $u = 0$, and the strike is the vertical line $u = \nu\ln(K/F)$. The shortest route to it is an arc of the circle centred where that line meets the axis, ending at the circle's top. From angle θ to the top such an arc has length |ln tan(θ/2)|, which from today's point is $\operatorname{arcsinh}\lvert z\rvert$. Divide by $\nu$ and use Step 0:
-$$\sigma_B \;\to\; \frac{\lvert\ln(F/K)\rvert}{\operatorname{arcsinh}\lvert z\rvert/\nu} \;=\; \alpha\,\frac{z}{\operatorname{arcsinh} z}.$$
-**With $\rho \neq 0$.** The strike's line leans: $u = (\nu\ln(K/F) - \rho\alpha)/\sqrt{1-\rho^2}$. A leaning line stays a fixed hyperbolic distance from the vertical line through its foot, so its distance from a point still has a closed form, $\lvert\chi(z)\rvert/\nu$.
+$`\displaystyle ds^2 = \frac{\nu^2\,dx^2 - 2\rho\nu\,dx\,d\alpha + d\alpha^2}{\nu^2\,(1-\rho^2)\,\alpha^2}.`$
+
+Put $`u = (\nu x - \rho\alpha)/\sqrt{1-\rho^2}`$. Then $`ds^2 = (du^2 + d\alpha^2)/(\nu^2\alpha^2)`$: Poincaré's half-plane, the standard model of hyperbolic geometry, lengths divided by $`\nu`$. Its distance between two points is arccosh of 1 plus their squared straight-line gap over twice the product of their heights (arccosh undoes $`\cosh x = (e^x + e^{-x})/2`$), which the checks' search minimises.
+
+**With $`\rho = 0`$.** Today sits at height $`\alpha`$ above $`u = 0`$, and the strike is the vertical line $`u = \nu\ln(K/F)`$. The shortest route to it is an arc of the circle centred where that line meets the axis, ending at the circle's top. From angle θ to the top such an arc has length |ln tan(θ/2)|, which from today's point is $`\mathrm{arcsinh}\lvert z\rvert`$. Divide by $`\nu`$ and use Step 0:
+
+$`\displaystyle \sigma_B \;\to\; \frac{\lvert\ln(F/K)\rvert}{\mathrm{arcsinh}\lvert z\rvert/\nu} \;=\; \alpha\,\frac{z}{\mathrm{arcsinh}\, z}.`$
+
+**With $`\rho \neq 0`$.** The strike's line leans: $`u = (\nu\ln(K/F) - \rho\alpha)/\sqrt{1-\rho^2}`$. A leaning line stays a fixed hyperbolic distance from the vertical line through its foot, so its distance from a point still has a closed form, $`\lvert\chi(z)\rvert/\nu`$.
 
 </details>
 
@@ -146,31 +164,37 @@ $$\sigma_B \;\to\; \frac{\lvert\ln(F/K)\rvert}{\operatorname{arcsinh}\lvert z\rv
 
 The last bracket of the formula corrects for a real year, and at the money it is all there is.
 
-With $\rho = 0$ the $\nu^2$ part is two effects pulling against each other. Given one volatility path the forward is lognormal with total variance $V$ (the other door, below), and the at-the-money price is close to the forward times $\sqrt{V/(2\pi)}$. The volatility's square averages $\alpha^2 e^{\nu^2 t}$ at time t, so $V/(\alpha^2T)$ averages $1 + \nu^2T/2$, which alone would lift the volatility by $\nu^2T/4$.
+With $`\rho = 0`$ the $`\nu^2`$ part is two effects pulling against each other. Given one volatility path the forward is lognormal with total variance $`V`$ (the other door, below), and the at-the-money price is close to the forward times $`\sqrt{V/(2\pi)}`$. The volatility's square averages $`\alpha^2 e^{\nu^2 t}`$ at time t, so $`V/(\alpha^2T)`$ averages $`1 + \nu^2T/2`$, which alone would lift the volatility by $`\nu^2T/4`$.
 
-But $V$ differs from path to path: to first order $V/(\alpha^2T)$ is 1 plus $2\nu$ times the time-average of $W_2$, whose variance is $T/3$, so it has variance $4\nu^2T/3$. A square root averages less than the root of the average (Jensen's inequality), here by an eighth of that variance, $\nu^2T/6$. The net lift is $\nu^2T/12$, the formula's $(2-3\rho^2)\nu^2T/24$ at $\rho = 0$.
+But $`V`$ differs from path to path: to first order $`V/(\alpha^2T)`$ is 1 plus $`2\nu`$ times the time-average of $`W_2`$, whose variance is $`T/3`$, so it has variance $`4\nu^2T/3`$. A square root averages less than the root of the average (Jensen's inequality), here by an eighth of that variance, $`\nu^2T/6`$. The net lift is $`\nu^2T/12`$, the formula's $`(2-3\rho^2)\nu^2T/24`$ at $`\rho = 0`$.
 
-Correlation adds $\rho\nu\alpha/4$ and removes $3\rho^2\nu^2/24$, from carrying Step 2's tilt one order further. Hagan and his co-authors got these from a singular-perturbation expansion (a systematic expansion in small volatility and small vol of vol) of the pricing equation; this card takes them from the paper and tests them by simulation. Here the bracket is 1 + (−0.005967 + 0.011533) = 1.005567: a year lifts the volatility by 0.56 percent of itself.
+Correlation adds $`\rho\nu\alpha/4`$ and removes $`3\rho^2\nu^2/24`$, from carrying Step 2's tilt one order further. Hagan and his co-authors got these from a singular-perturbation expansion (a systematic expansion in small volatility and small vol of vol) of the pricing equation; this card takes them from the paper and tests them by simulation. Here the bracket is 1 + (−0.005967 + 0.011533) = 1.005567: a year lifts the volatility by 0.56 percent of itself.
 
 ### Step 4: reading the dials, and setting alpha
 
-Near the money, leaving out the time factor, the $\beta = 1$ formula expands in powers of the log-strike (Hagan et al., equation 3.1):
+Near the money, leaving out the time factor, the $`\beta = 1`$ formula expands in powers of the log-strike (Hagan et al., equation 3.1):
 
-$$\sigma_B(K) \;\approx\; \alpha + \frac{\rho\nu}{2}\ln\frac{K}{F} + \frac{(2-3\rho^2)\,\nu^2}{12\,\alpha}\ln^2\frac{K}{F}.$$
+```math
+\sigma_B(K) \;\approx\; \alpha + \frac{\rho\nu}{2}\ln\frac{K}{F} + \frac{(2-3\rho^2)\,\nu^2}{12\,\alpha}\ln^2\frac{K}{F}.
+```
 
-Each term has one job. $\alpha$ sets the level. $\rho\nu/2$ is the slope, −0.06 here: each 1 percent drop in strike adds 0.06 vol points. $(2-3\rho^2)\nu^2/(12\alpha)$, 0.115975 here, curves both wings up. $\beta$ sets the backbone, the path the at-the-money volatility traces as the forward moves, roughly $\alpha/F^{1-\beta}$. At $\beta = 1$ the backbone is flat and the smile rides along with the forward: sticky moneyness, in the terms of [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
+Each term has one job. $`\alpha`$ sets the level. $`\rho\nu/2`$ is the slope, −0.06 here: each 1 percent drop in strike adds 0.06 vol points. $`(2-3\rho^2)\nu^2/(12\alpha)`$, 0.115975 here, curves both wings up. $`\beta`$ sets the backbone, the path the at-the-money volatility traces as the forward moves, roughly $`\alpha/F^{1-\beta}`$. At $`\beta = 1`$ the backbone is flat and the smile rides along with the forward: sticky moneyness, in the terms of [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
 
-Markets quote the at-the-money volatility, not $\alpha$. At $\beta = 1$ the at-the-money formula is a quadratic in $\alpha$:
+Markets quote the at-the-money volatility, not $`\alpha`$. At $`\beta = 1`$ the at-the-money formula is a quadratic in $`\alpha`$:
 
-$$\sigma_B(F) = \Bigl(1 + \frac{2-3\rho^2}{24}\,\nu^2 T\Bigr)\alpha + \frac{\rho\nu T}{4}\,\alpha^2.$$
+```math
+\sigma_B(F) = \Bigl(1 + \frac{2-3\rho^2}{24}\,\nu^2 T\Bigr)\alpha + \frac{\rho\nu T}{4}\,\alpha^2.
+```
 
-Existence and uniqueness first. With $\rho$ negative the right side is a hill: it rises from 0 at $\alpha = 0$ to a peak of 8.526664, an 853 percent volatility, then falls. Every quote below the peak meets the rising side exactly once; zero gives $\alpha = 0$; at the peak the two roots meet; a quote above it has no $\alpha$.
+Existence and uniqueness first. With $`\rho`$ negative the right side is a hill: it rises from 0 at $`\alpha = 0`$ to a peak of 8.526664, an 853 percent volatility, then falls. Every quote below the peak meets the rising side exactly once; zero gives $`\alpha = 0`$; at the peak the two roots meet; a quote above it has no $`\alpha`$.
 
-The other root, 33.518885, lies on the falling side, where a higher alpha would lower the quote, and is discarded. With $\rho$ zero or positive the right side rises for ever, and every positive quote has one $\alpha$. The small root, in the form that stays accurate when the square term is tiny:
+The other root, 33.518885, lies on the falling side, where a higher alpha would lower the quote, and is discarded. With $`\rho`$ zero or positive the right side rises for ever, and every positive quote has one $`\alpha`$. The small root, in the form that stays accurate when the square term is tiny:
 
-$$\alpha = \frac{2\,\sigma_B(F)}{\Bigl(1 + \frac{2-3\rho^2}{24}\nu^2T\Bigr) + \sqrt{\Bigl(1 + \frac{2-3\rho^2}{24}\nu^2T\Bigr)^2 + \rho\nu T\,\sigma_B(F)}}\,,$$
+```math
+\alpha = \frac{2\,\sigma_B(F)}{\Bigl(1 + \frac{2-3\rho^2}{24}\nu^2T\Bigr) + \sqrt{\Bigl(1 + \frac{2-3\rho^2}{24}\nu^2T\Bigr)^2 + \rho\nu T\,\sigma_B(F)}}\,,
+```
 
-0.198893 here; bisection on the full formula agrees to twelve digits. For $\beta$ below 1 the equation is a cubic; at $\beta = 0.5$ with these dials it rises throughout, so bisection finds its one root.
+0.198893 here; bisection on the full formula agrees to twelve digits. For $`\beta`$ below 1 the equation is a cubic; at $`\beta = 0.5`$ with these dials it rises throughout, so bisection finds its one root.
 
 ### The other door: price the model, not the formula
 
@@ -179,8 +203,9 @@ Given one path of the volatility, the forward at expiry is lognormal, so Black-7
 <details>
 <summary>Why one volatility path makes the forward lognormal</summary>
 
-At $\beta = 1$ the log-forward moves by $\alpha_t\,dW_1 - \tfrac12\alpha_t^2\,dt$. Split the forward's driver into $\rho\,dW_2$ plus $\sqrt{1-\rho^2}$ times a Brownian motion independent of the volatility. Since $d\alpha_t = \nu\alpha_t\,dW_2$, the sum of $\alpha_t\,dW_2$ over the life is $(\alpha_T - \alpha)/\nu$, known once the path is. The rest is normal with variance $(1-\rho^2)V$. So, given the path, the forward is lognormal with
-$$\text{forward } F\exp\Bigl(\frac{\rho}{\nu}(\alpha_T - \alpha) - \tfrac12\rho^2 V\Bigr) \quad\text{and total variance } (1-\rho^2)\,V.$$
+At $`\beta = 1`$ the log-forward moves by $`\alpha_t\,dW_1 - \tfrac12\alpha_t^2\,dt`$. Split the forward's driver into $`\rho\,dW_2`$ plus $`\sqrt{1-\rho^2}`$ times a Brownian motion independent of the volatility. Since $`d\alpha_t = \nu\alpha_t\,dW_2`$, the sum of $`\alpha_t\,dW_2`$ over the life is $`(\alpha_T - \alpha)/\nu`$, known once the path is. The rest is normal with variance $`(1-\rho^2)V`$. So, given the path, the forward is lognormal with
+
+$`\displaystyle \text{forward } F\exp\Bigl(\frac{\rho}{\nu}(\alpha_T - \alpha) - \tfrac12\rho^2 V\Bigr) \quad\text{and total variance } (1-\rho^2)\,V.`$
 
 </details>
 
@@ -192,17 +217,17 @@ The 25-delta put strike, 92.15, one year, house forward.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forward | $100 \times e^{0.05-0.02}$ | 103.045453 |
-| vol-of-vol term | $(2 - 3 \times 0.09) \times 0.16 / 24$ | 0.011533 |
-| $\alpha$ from a 20% at-the-money quote | $0.40 / (1.011533 + \sqrt{1.011533^2 - 0.12 \times 0.20})$ | 0.198893 |
-| log-distance to the strike | $\ln(103.045453 / 92.15)$ | 0.111753 |
-| $z$ | $(0.4 / 0.198893) \times 0.111753$ | 0.224749 |
-| the root inside $\chi$ | $\sqrt{1 + 0.6 \times 0.224749 + 0.224749^2}$ | 1.088743 |
-| $\chi(z)$ | $\ln\bigl((1.088743 + 0.224749 + 0.3) / 1.3\bigr)$ | 0.216037 |
-| the bend, $z/\chi(z)$ | $0.224749 / 0.216037$ | 1.040329 |
-| correlation term $\rho\nu\alpha/4$ | $-0.3 \times 0.4 \times 0.198893 / 4$ | −0.005967 |
-| time factor | $1 + (-0.005967 + 0.011533) \times 1$ | 1.005567 |
-| **Hagan's volatility at 92.15** | $0.198893 \times 1.040329 \times 1.005567$ | **0.208066, or 20.81%** |
+| forward | $`100 \times e^{0.05-0.02}`$ | 103.045453 |
+| vol-of-vol term | $`(2 - 3 \times 0.09) \times 0.16 / 24`$ | 0.011533 |
+| $`\alpha`$ from a 20% at-the-money quote | $`0.40 / (1.011533 + \sqrt{1.011533^2 - 0.12 \times 0.20})`$ | 0.198893 |
+| log-distance to the strike | $`\ln(103.045453 / 92.15)`$ | 0.111753 |
+| $`z`$ | $`(0.4 / 0.198893) \times 0.111753`$ | 0.224749 |
+| the root inside $`\chi`$ | $`\sqrt{1 + 0.6 \times 0.224749 + 0.224749^2}`$ | 1.088743 |
+| $`\chi(z)`$ | $`\ln\bigl((1.088743 + 0.224749 + 0.3) / 1.3\bigr)`$ | 0.216037 |
+| the bend, $`z/\chi(z)`$ | $`0.224749 / 0.216037`$ | 1.040329 |
+| correlation term $`\rho\nu\alpha/4`$ | $`-0.3 \times 0.4 \times 0.198893 / 4`$ | −0.005967 |
+| time factor | $`1 + (-0.005967 + 0.011533) \times 1`$ | 1.005567 |
+| **Hagan's volatility at 92.15** | $`0.198893 \times 1.040329 \times 1.005567`$ | **0.208066, or 20.81%** |
 | the model, simulated (road 2) | 200,000 path pairs | 20.76% |
 
 In money, discounted at 5 percent: the put costs $3.59 by the formula, $3.58 by simulating the model, and $3.33 at Black-76's flat 20 percent. The skew is worth 26 cents on this put; the formula's error is about one cent.
@@ -702,10 +727,10 @@ Both generators produce the same integers, so both languages draw the same paths
 
 Lean proves the exact pieces of Hagan's formula, for any correlation strictly between −1 and 1.
 
-- Take any such correlation $\rho$. Then $\chi(z)$ equals the integral $\int_0^z dy/\sqrt{1 - 2\rho y + y^2}$, for every $z$.
-- Take $\rho = 0$. Then $\chi(z) = \operatorname{arcsinh}(z)$.
-- Take $\rho = 0$ and any nonzero $z$. Then the bend $z/\chi(z)$ is above 1, and the same at $z$ and $-z$: a symmetric smile.
-- Take $\beta = 1$, a calm volatility with $\nu^2 T < 24$, and a quote from zero up to the hill's peak. Then exactly one $\alpha$ on the rising side gives that quote, and it is the small root, never negative.
+- Take any such correlation $`\rho`$. Then $`\chi(z)`$ equals the integral $`\int_0^z dy/\sqrt{1 - 2\rho y + y^2}`$, for every $`z`$.
+- Take $`\rho = 0`$. Then $`\chi(z) = \mathrm{arcsinh}(z)`$.
+- Take $`\rho = 0`$ and any nonzero $`z`$. Then the bend $`z/\chi(z)`$ is above 1, and the same at $`z`$ and $`-z`$: a symmetric smile.
+- Take $`\beta = 1`$, a calm volatility with $`\nu^2 T < 24`$, and a quote from zero up to the hill's peak. Then exactly one $`\alpha`$ on the rising side gives that quote, and it is the small root, never negative.
 
 The decimals, the time factor, the route search and both simulations of the model are left to the Python and Rust checks.
 

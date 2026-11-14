@@ -26,60 +26,68 @@ Drawn to scale, 60 pixels to the km. The bottom edge is the river bank; each sha
 
 ## The formula
 
-Notation first. From [Measures](04-measures.md), a measure space $(\Omega, \mathcal{F}, \mu)$ has three parts:
+Notation first. From [Measures](04-measures.md), a measure space $`(\Omega, \mathcal{F}, \mu)`$ has three parts:
 
-- a whole space $\Omega$;
-- a sigma-algebra $\mathcal{F}$, the collection of sets we allow ourselves to measure;
-- a measure $\mu$, which gives each set in $\mathcal{F}$ a size from 0 up to infinity, gives the empty set $\emptyset$ size 0, and is **countably additive**: the sizes of countably many sets that pairwise share no point add up to the size of their union.
+- a whole space $`\Omega`$;
+- a sigma-algebra $`\mathcal{F}`$, the collection of sets we allow ourselves to measure;
+- a measure $`\mu`$, which gives each set in $`\mathcal{F}`$ a size from 0 up to infinity, gives the empty set $`\emptyset`$ size 0, and is **countably additive**: the sizes of countably many sets that pairwise share no point add up to the size of their union.
 
-Here $\Omega$ is the valley floor and $\mu$ is area in sq km, built properly in [Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md).
+Here $`\Omega`$ is the valley floor and $`\mu`$ is area in sq km, built properly in [Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md).
 
 From [Set operations](../../01-Foundations/07-Sets/03-set-operations.md):
 
-- $B \setminus A$, read "B minus A", is the points of B not in A;
-- $\bigcup_{n=1}^{\infty} E_n$ is the points lying in at least one of the sets;
-- $\bigcap_{n=1}^{\infty} F_n$ is the points lying in all of them.
+- $`B \setminus A`$, read "B minus A", is the points of B not in A;
+- $`\bigcup_{n=1}^{\infty} E_n`$ is the points lying in at least one of the sets;
+- $`\bigcap_{n=1}^{\infty} F_n`$ is the points lying in all of them.
 
-Every set below belongs to $\mathcal{F}$. Four results:
+Every set below belongs to $`\mathcal{F}`$. Four results:
 
-$$A \subseteq B \;\Longrightarrow\; \mu(A) \le \mu(B), \quad\text{and}\quad \mu(B \setminus A) = \mu(B) - \mu(A) \text{ when } \mu(A) < \infty$$
+```math
+A \subseteq B \;\Longrightarrow\; \mu(A) \le \mu(B), \quad\text{and}\quad \mu(B \setminus A) = \mu(B) - \mu(A) \text{ when } \mu(A) < \infty
+```
 
 **Read it aloud:** a set inside another has no larger size, and when the smaller size is finite, the difference of sizes is the size of the difference.
 
-$$\mu\Big(\bigcup_{k=1}^{\infty} A_k\Big) \;\le\; \sum_{k=1}^{\infty} \mu(A_k)$$
+```math
+\mu\Big(\bigcup_{k=1}^{\infty} A_k\Big) \;\le\; \sum_{k=1}^{\infty} \mu(A_k)
+```
 
 **Read it aloud:** the size of a countable pile is at most the sizes of its pieces added up, overlaps and all. This is **countable subadditivity**.
 
-$$E_1 \subseteq E_2 \subseteq E_3 \subseteq \cdots \;\Longrightarrow\; \mu\Big(\bigcup_{n=1}^{\infty} E_n\Big) = \lim_{n\to\infty} \mu(E_n)$$
+```math
+E_1 \subseteq E_2 \subseteq E_3 \subseteq \cdots \;\Longrightarrow\; \mu\Big(\bigcup_{n=1}^{\infty} E_n\Big) = \lim_{n\to\infty} \mu(E_n)
+```
 
 **Read it aloud:** when each set lies inside the next, the sizes approach the size of everything they ever cover. This is **continuity from below**.
 
-$$F_1 \supseteq F_2 \supseteq F_3 \supseteq \cdots \text{ and } \mu(F_1) < \infty \;\Longrightarrow\; \mu\Big(\bigcap_{n=1}^{\infty} F_n\Big) = \lim_{n\to\infty} \mu(F_n)$$
+```math
+F_1 \supseteq F_2 \supseteq F_3 \supseteq \cdots \text{ and } \mu(F_1) < \infty \;\Longrightarrow\; \mu\Big(\bigcap_{n=1}^{\infty} F_n\Big) = \lim_{n\to\infty} \mu(F_n)
+```
 
 **Read it aloud:** when each set lies inside the one before and the first has finite size, the sizes approach the size of what lies in every one. This is **continuity from above**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$ | the whole space | the valley floor | — |
-| $\mathcal{F}$ | the sigma-algebra: the sets allowed a size | the regions with a well-defined area | more sets to compare, same four rules |
-| $\mu$ | the measure: a size from 0 to infinity for each set in $\mathcal{F}$ | area in sq km | — |
-| $A$, $B$ | two sets, the first inside the second | flood stages 2 and 3: 7.5 and 8.75 sq km | a bigger outer set, a size no smaller |
-| $B \setminus A$ | B minus A: the points of B not in A | the band from 1.5 to 1.75 km: 1.25 sq km | — |
-| $A_k$ | a countable list of sets, overlaps allowed | survey photograph k: 4, 2, 1, 0.5 sq km … | more overlap, a looser bound |
-| $B_k$ | the new piece of $A_k$: the part no earlier set covered | 4, 1, 0.5, 0.25 sq km … | — |
-| $E_n$ | a rising list: each set inside the next | flooded after stage n: 5, 7.5, 8.75 sq km … | later stage, closer to the union's size |
-| $D_n$ | the layer new at stage n: stage n minus stage n − 1 | 5, 2.5, 1.25 sq km … | — |
-| $F_n$ | a shrinking list: each set inside the one before | reservoir wet on day n: 6, 4.5, 3.75 sq km … | later day, closer to the pool's size |
-| $G_n$ | $F_1 \setminus F_n$: the ground dried by day n, a rising list | 6 minus the wet area: 6 − 4.5, then 6 − 3.75 sq km … | later day, closer to the area that ever dries |
-| $n$, $k$, $j$ | whole-number counters 1, 2, 3, … | stage or day; survey flight; an earlier stage | — |
-| $\nu$ | counting measure: the number of points in a set | the numbers from n onward: infinitely many | — |
-| $T_n$ | the tail from n: the whole numbers n, n + 1, n + 2, … | infinitely many members for every n | later n, a smaller tail, still infinite |
+| $`\Omega`$ | the whole space | the valley floor | — |
+| $`\mathcal{F}`$ | the sigma-algebra: the sets allowed a size | the regions with a well-defined area | more sets to compare, same four rules |
+| $`\mu`$ | the measure: a size from 0 to infinity for each set in $`\mathcal{F}`$ | area in sq km | — |
+| $`A`$, $`B`$ | two sets, the first inside the second | flood stages 2 and 3: 7.5 and 8.75 sq km | a bigger outer set, a size no smaller |
+| $`B \setminus A`$ | B minus A: the points of B not in A | the band from 1.5 to 1.75 km: 1.25 sq km | — |
+| $`A_k`$ | a countable list of sets, overlaps allowed | survey photograph k: 4, 2, 1, 0.5 sq km … | more overlap, a looser bound |
+| $`B_k`$ | the new piece of $`A_k`$: the part no earlier set covered | 4, 1, 0.5, 0.25 sq km … | — |
+| $`E_n`$ | a rising list: each set inside the next | flooded after stage n: 5, 7.5, 8.75 sq km … | later stage, closer to the union's size |
+| $`D_n`$ | the layer new at stage n: stage n minus stage n − 1 | 5, 2.5, 1.25 sq km … | — |
+| $`F_n`$ | a shrinking list: each set inside the one before | reservoir wet on day n: 6, 4.5, 3.75 sq km … | later day, closer to the pool's size |
+| $`G_n`$ | $`F_1 \setminus F_n`$: the ground dried by day n, a rising list | 6 minus the wet area: 6 − 4.5, then 6 − 3.75 sq km … | later day, closer to the area that ever dries |
+| $`n`$, $`k`$, $`j`$ | whole-number counters 1, 2, 3, … | stage or day; survey flight; an earlier stage | — |
+| $`\nu`$ | counting measure: the number of points in a set | the numbers from n onward: infinitely many | — |
+| $`T_n`$ | the tail from n: the whole numbers n, n + 1, n + 2, … | infinitely many members for every n | later n, a smaller tail, still infinite |
 
 The limits exist before anyone computes them. Sizes that never fall either have a ceiling, and settle by the monotone convergence theorem of [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md), or pass every number, and the limit is infinity. Sizes that never rise are held up by 0 and settle too.
 
 ### When it holds
 
-- **Sets inside the sigma-algebra.** Outside $\mathcal{F}$ there is no size to compare; the Vitali set has no length at all, as [Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md) shows.
+- **Sets inside the sigma-algebra.** Outside $`\mathcal{F}`$ there is no size to compare; the Vitali set has no length at all, as [Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md) shows.
 - **Countable additivity, not just finite.** A rule that adds only finitely many pieces can fail continuity from below. The "density" of a set of whole numbers, the limit of the share of 1 to N it holds as N grows (for sets where that share settles), is 0 for every finite set, yet the sets from 1 to n rise to all whole numbers, of density 1.
 - **Nesting, for both limits.** Flood the band within 1 km of the bank at odd stages and the band from 1 to 2 km at even ones: every size is 5 sq km, the union 10, the common part 0.
 - **A finite start, for continuity from above.** The proof subtracts from a finite size; Step 5 shows the failure without one.
@@ -99,7 +107,7 @@ On the flood the pieces are layers. The layer new at stage n is stage n minus st
 
 Stage 2 lies inside stage 3. Stage 3 splits into stage 2 and the band between 1.5 and 1.75 km from the bank, and the two parts share no point. Additivity gives 8.75 = 7.5 + 1.25.
 
-In general $B$ is $A$ together with $B \setminus A$, disjoint, so $\mu(B) = \mu(A) + \mu(B \setminus A)$. The second term is at least 0, so $\mu(B) \ge \mu(A)$. When $\mu(A)$ is finite, subtracting it gives the size of the difference. When $\mu(A)$ is infinite, so is $\mu(B)$, and infinity minus infinity has no value. That gap returns in Step 4.
+In general $`B`$ is $`A`$ together with $`B \setminus A`$, disjoint, so $`\mu(B) = \mu(A) + \mu(B \setminus A)`$. The second term is at least 0, so $`\mu(B) \ge \mu(A)`$. When $`\mu(A)`$ is finite, subtracting it gives the size of the difference. When $`\mu(A)`$ is infinite, so is $`\mu(B)`$, and infinity minus infinity has no value. That gap returns in Step 4.
 
 ### Step 2: overlaps only overcount
 
@@ -111,7 +119,7 @@ Cut each photograph down to its new piece: the part no earlier flight covered. T
 
 The flooded area after stage n is the sum of the first n layers: 5 + 2.5 + 1.25 + …, which is 10 − 10/2^n. The flood's whole reach is the union of all the layers, so by countable additivity its area is the infinite sum of layer areas. An infinite sum is by definition the limit of its partial sums, and the partial sums are the stage areas. So the stage areas approach the area of the union: 10 sq km.
 
-Nothing here used the shape of the flood. For any rising list, the layers are disjoint, the first n rebuild $E_n$, and all of them rebuild the union. If the sizes climb without bound, the union has infinite size and the rule still holds.
+Nothing here used the shape of the flood. For any rising list, the layers are disjoint, the first n rebuild $`E_n`$, and all of them rebuild the union. If the sizes climb without bound, the union has infinite size and the rule still holds.
 
 ### Step 4: shrinking sets, if they start finite
 
@@ -121,28 +129,28 @@ Turn the shrinking list into a rising one. The ground dried by day n grows day b
 
 ### Step 5: why the finite start cannot be dropped
 
-Counting measure $\nu$ gives a set of whole numbers its number of members. The tails, all whole numbers from n onward, shrink as n grows. Each has infinitely many members. No number lies in all of them: each whole number is missing from the tail that starts one after it. So the sizes are infinity at every stage, and the size of what lies in every tail is 0.
+Counting measure $`\nu`$ gives a set of whole numbers its number of members. The tails, all whole numbers from n onward, shrink as n grows. Each has infinitely many members. No number lies in all of them: each whole number is missing from the tail that starts one after it. So the sizes are infinity at every stage, and the size of what lies in every tail is 0.
 
-Step 4 breaks exactly where it subtracted: the first set is now infinite, and infinity minus infinity has no value. Length fails the same way. The half-lines $[n, \infty)$, all points from n onward, each have infinite length, and no point lies in all of them. The code prints the length of $[n, N]$ for N = 1,000 and 100,000: it grows with N, so no finite number is the length of a half-line.
+Step 4 breaks exactly where it subtracted: the first set is now infinite, and infinity minus infinity has no value. Length fails the same way. The half-lines $`[n, \infty)`$, all points from n onward, each have infinite length, and no point lies in all of them. The code prints the length of $`[n, N]`$ for N = 1,000 and 100,000: it grows with N, so no finite number is the length of a half-line.
 
 One finite set anywhere in the list is enough: start the list there. A probability measure gives the whole space size 1, so every shrinking list of events qualifies.
 
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, sizes lie in $[0, \infty]$, with $a + \infty = \infty$; a series of non-negative terms is the limit of its partial sums, which never fall, so it exists in $[0, \infty]$ (monotone convergence for sequences, from [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md), plus the convention that an unbounded rising list has limit infinity). Every set named is in $\mathcal{F}$: differences, finite unions and countable unions of sets in $\mathcal{F}$ are again in it ([Sigma-algebras](02-sigma-algebras.md)).
+Throughout, sizes lie in $`[0, \infty]`$, with $`a + \infty = \infty`$; a series of non-negative terms is the limit of its partial sums, which never fall, so it exists in $`[0, \infty]`$ (monotone convergence for sequences, from [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md), plus the convention that an unbounded rising list has limit infinity). Every set named is in $`\mathcal{F}`$: differences, finite unions and countable unions of sets in $`\mathcal{F}`$ are again in it ([Sigma-algebras](02-sigma-algebras.md)).
 
-**Finite additivity.** For disjoint $A$ and $B$, take the list $A, B, \emptyset, \emptyset, \dots$; the sets are pairwise disjoint, so countable additivity and $\mu(\emptyset) = 0$ give $\mu(A \cup B) = \mu(A) + \mu(B)$.
+**Finite additivity.** For disjoint $`A`$ and $`B`$, take the list $`A, B, \emptyset, \emptyset, \dots`$; the sets are pairwise disjoint, so countable additivity and $`\mu(\emptyset) = 0`$ give $`\mu(A \cup B) = \mu(A) + \mu(B)`$.
 
-**Monotonicity.** If $A \subseteq B$, then $B = A \cup (B \setminus A)$, disjoint, so $\mu(B) = \mu(A) + \mu(B \setminus A) \ge \mu(A)$. If $\mu(A) < \infty$, subtract it from both sides.
+**Monotonicity.** If $`A \subseteq B`$, then $`B = A \cup (B \setminus A)`$, disjoint, so $`\mu(B) = \mu(A) + \mu(B \setminus A) \ge \mu(A)`$. If $`\mu(A) < \infty`$, subtract it from both sides.
 
-**Countable subadditivity.** Put $B_1 = A_1$ and $B_k = A_k \setminus (A_1 \cup \dots \cup A_{k-1})$ for $k \ge 2$. Each $B_k$ excludes every earlier set in the list, and each earlier new piece lies inside its own set, so the $B_k$ are pairwise disjoint. A point of $\bigcup A_k$ has a least index $k$ with the point in $A_k$; it lies in that $B_k$. Hence $\bigcup B_k = \bigcup A_k$. Since $B_k \subseteq A_k$, monotonicity gives $\mu(B_k) \le \mu(A_k)$. Countable additivity then gives $\mu(\bigcup A_k) = \sum \mu(B_k) \le \sum \mu(A_k)$, comparing partial sums term by term and passing to the limit.
+**Countable subadditivity.** Put $`B_1 = A_1`$ and $`B_k = A_k \setminus (A_1 \cup \dots \cup A_{k-1})`$ for $`k \ge 2`$. Each $`B_k`$ excludes every earlier set in the list, and each earlier new piece lies inside its own set, so the $`B_k`$ are pairwise disjoint. A point of $`\bigcup A_k`$ has a least index $`k`$ with the point in $`A_k`$; it lies in that $`B_k`$. Hence $`\bigcup B_k = \bigcup A_k`$. Since $`B_k \subseteq A_k`$, monotonicity gives $`\mu(B_k) \le \mu(A_k)`$. Countable additivity then gives $`\mu(\bigcup A_k) = \sum \mu(B_k) \le \sum \mu(A_k)`$, comparing partial sums term by term and passing to the limit.
 
-**Continuity from below.** Put $D_1 = E_1$ and $D_n = E_n \setminus E_{n-1}$. For $j < n$, $D_n$ excludes $E_{n-1}$, which contains $E_j \supseteq D_j$, so the $D_n$ are pairwise disjoint. Because the list rises, the least index at which a point enters places it in exactly one layer, so $E_n = D_1 \cup \dots \cup D_n$ and $\bigcup E_n = \bigcup D_n$. Finite additivity gives $\mu(E_n) = \sum_{j \le n} \mu(D_j)$; countable additivity gives $\mu(\bigcup E_n) = \sum_{j=1}^{\infty} \mu(D_j)$, the limit of those partial sums.
+**Continuity from below.** Put $`D_1 = E_1`$ and $`D_n = E_n \setminus E_{n-1}`$. For $`j < n`$, $`D_n`$ excludes $`E_{n-1}`$, which contains $`E_j \supseteq D_j`$, so the $`D_n`$ are pairwise disjoint. Because the list rises, the least index at which a point enters places it in exactly one layer, so $`E_n = D_1 \cup \dots \cup D_n`$ and $`\bigcup E_n = \bigcup D_n`$. Finite additivity gives $`\mu(E_n) = \sum_{j \le n} \mu(D_j)`$; countable additivity gives $`\mu(\bigcup E_n) = \sum_{j=1}^{\infty} \mu(D_j)`$, the limit of those partial sums.
 
-**Continuity from above.** Put $G_n = F_1 \setminus F_n$. Since the $F_n$ shrink, the sets $F_1 \setminus F_n$ rise, and $\bigcup G_n = F_1 \setminus \bigcap F_n$: a point of the first set fails to be in every $F_n$ exactly when it is missing from some $F_n$. Continuity from below gives $\mu(G_n) \to \mu(F_1 \setminus \bigcap F_n)$. Each $F_n$ and $\bigcap F_n$ lie inside the first set, whose size $\mu(F_1)$ is finite, so monotonicity's subtraction applies: $\mu(F_n) = \mu(F_1) - \mu(G_n) \to \mu(F_1) - \mu(F_1 \setminus \bigcap F_n) = \mu(\bigcap F_n)$. If instead only some later set in the list has finite size, apply the same argument to the list from that set on; dropping finitely many sets changes neither the limit nor the intersection.
+**Continuity from above.** Put $`G_n = F_1 \setminus F_n`$. Since the $`F_n`$ shrink, the sets $`F_1 \setminus F_n`$ rise, and $`\bigcup G_n = F_1 \setminus \bigcap F_n`$: a point of the first set fails to be in every $`F_n`$ exactly when it is missing from some $`F_n`$. Continuity from below gives $`\mu(G_n) \to \mu(F_1 \setminus \bigcap F_n)`$. Each $`F_n`$ and $`\bigcap F_n`$ lie inside the first set, whose size $`\mu(F_1)`$ is finite, so monotonicity's subtraction applies: $`\mu(F_n) = \mu(F_1) - \mu(G_n) \to \mu(F_1) - \mu(F_1 \setminus \bigcap F_n) = \mu(\bigcap F_n)`$. If instead only some later set in the list has finite size, apply the same argument to the list from that set on; dropping finitely many sets changes neither the limit nor the intersection.
 
-**The caveat is needed.** With $\nu$ counting whole numbers and $T_n = \{n, n+1, \dots\}$, each $\nu(T_n)$ is infinite, while each whole number is missing from the tail that starts one after it, so $\bigcap T_n$ is empty and has size 0.
+**The caveat is needed.** With $`\nu`$ counting whole numbers and $`T_n = \{n, n+1, \dots\}`$, each $`\nu(T_n)`$ is infinite, while each whole number is missing from the tail that starts one after it, so $`\bigcap T_n`$ is empty and has size 0.
 
 </details>
 
@@ -521,11 +529,11 @@ The two outputs match line for line.
 
 Lean proves the four results for every measure space, and proves that the tails break continuity from above.
 
-- Take sets $A \subseteq B$ in $\mathcal{F}$. Then $\mu(A) \le \mu(B)$, and $\mu(B \setminus A) = \mu(B) - \mu(A)$ when $\mu(A)$ is finite.
-- Take any countable list of sets $A_k$ in $\mathcal{F}$. Then $\mu(\bigcup_k A_k) \le \sum_k \mu(A_k)$: countable subadditivity.
-- Take a rising list $E_1 \subseteq E_2 \subseteq \cdots$ in $\mathcal{F}$. Then $\mu(E_n)$ approaches $\mu(\bigcup_n E_n)$: continuity from below.
-- Take a shrinking list $F_1 \supseteq F_2 \supseteq \cdots$ in $\mathcal{F}$, with $\mu(F_1)$ finite. Then $\mu(F_n)$ approaches $\mu(\bigcap_n F_n)$: continuity from above.
-- Take counting measure $\nu$ on the whole numbers. Then the tails $T_n$ shrink, each $\nu(T_n)$ is infinite, and $\nu(\bigcap_n T_n) = 0$. So the sizes $\nu(T_n)$ do not approach the size of the intersection.
+- Take sets $`A \subseteq B`$ in $`\mathcal{F}`$. Then $`\mu(A) \le \mu(B)`$, and $`\mu(B \setminus A) = \mu(B) - \mu(A)`$ when $`\mu(A)`$ is finite.
+- Take any countable list of sets $`A_k`$ in $`\mathcal{F}`$. Then $`\mu(\bigcup_k A_k) \le \sum_k \mu(A_k)`$: countable subadditivity.
+- Take a rising list $`E_1 \subseteq E_2 \subseteq \cdots`$ in $`\mathcal{F}`$. Then $`\mu(E_n)`$ approaches $`\mu(\bigcup_n E_n)`$: continuity from below.
+- Take a shrinking list $`F_1 \supseteq F_2 \supseteq \cdots`$ in $`\mathcal{F}`$, with $`\mu(F_1)`$ finite. Then $`\mu(F_n)`$ approaches $`\mu(\bigcap_n F_n)`$: continuity from above.
+- Take counting measure $`\nu`$ on the whole numbers. Then the tails $`T_n`$ shrink, each $`\nu(T_n)`$ is infinite, and $`\nu(\bigcap_n T_n) = 0`$. So the sizes $`\nu(T_n)`$ do not approach the size of the intersection.
 - Every row of the worked numbers by hand holds as an exact fraction.
 
 Lean does not model the valley floor, so measuring the flood, survey and reservoir as sets is left to the Python and Rust checks.
@@ -631,7 +639,7 @@ example : (5 : ℚ) + 5 = 10 := by norm_num
 >
 > - **Reading the limit as a stage.** No stage floods 10 sq km; stage 10 floods 9.990234375. The union is not the last set, because there is no last set.
 > - **Adding overlapping sizes as if disjoint.** The survey photographs add to 8 sq km for 6 sq km of ground. Subadditivity is an inequality, and the gap is the overlap.
-> - **Subtracting infinite sizes.** $\mu(B \setminus A) = \mu(B) - \mu(A)$ needs $\mu(A)$ finite; infinity minus infinity is not 0, and treating it so proves the false version of continuity from above.
+> - **Subtracting infinite sizes.** $`\mu(B \setminus A) = \mu(B) - \mu(A)`$ needs $`\mu(A)`$ finite; infinity minus infinity is not 0, and treating it so proves the false version of continuity from above.
 
 ---
 

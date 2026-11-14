@@ -36,42 +36,50 @@ Lower line: drift 5%, equal to the bank rate; the average stays within two stand
 
 ## The formula
 
-Notation first, in words. Brownian motion $W_t$ is the random walk seen from far away ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). An Ito process moves by a drift part and a noise part, written $dX_t = a\,dt + b\,dW_t$. The symbol $dW_t$ is shorthand for an Ito integral, never a derivative, because a Brownian path has no slope ([The Ito integral](01-ito-integral.md)).
+Notation first, in words. Brownian motion $`W_t`$ is the random walk seen from far away ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). An Ito process moves by a drift part and a noise part, written $`dX_t = a\,dt + b\,dW_t`$. The symbol $`dW_t`$ is shorthand for an Ito integral, never a derivative, because a Brownian path has no slope ([The Ito integral](01-ito-integral.md)).
 
-The new notation on this card is the **covariation** $[X,Y]_t$, read "the covariation of X and Y up to time t": the limit of the sum of products of matching small steps of X and of Y, as the steps shrink. With X and Y the same process it is the quadratic variation $[X]_t$ ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)).
+The new notation on this card is the **covariation** $`[X,Y]_t`$, read "the covariation of X and Y up to time t": the limit of the sum of products of matching small steps of X and of Y, as the steps shrink. With X and Y the same process it is the quadratic variation $`[X]_t`$ ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)).
 
 Take two Ito processes driven by the same Brownian motion:
 
-$$dX_t = a\,dt + b\,dW_t, \qquad dY_t = g\,dt + h\,dW_t.$$
+```math
+dX_t = a\,dt + b\,dW_t, \qquad dY_t = g\,dt + h\,dW_t.
+```
 
 Then
 
-$$d(X_t Y_t) = X_t\,dY_t + Y_t\,dX_t + d[X,Y]_t, \qquad d[X,Y]_t = b\,h\,dt.$$
+```math
+d(X_t Y_t) = X_t\,dY_t + Y_t\,dX_t + d[X,Y]_t, \qquad d[X,Y]_t = b\,h\,dt.
+```
 
 **Read it aloud:** the product changes by the first factor times the second's change, plus the second factor times the first's change, plus the noise sizes multiplied together, per unit of time.
 
 Written as integrals from time 0 to time T, the same statement is integration by parts with one extra term:
 
-$$X_T Y_T - X_0 Y_0 = \int_0^T X_t\,dY_t + \int_0^T Y_t\,dX_t + [X,Y]_T.$$
+```math
+X_T Y_T - X_0 Y_0 = \int_0^T X_t\,dY_t + \int_0^T Y_t\,dX_t + [X,Y]_T.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_t$, $Y_t$ | two quantities moving in time, both driven by the same $W_t$ | the share price and the discount factor $e^{-rt}$ | the product moves with them |
-| $a$, $g$ | the drift parts: steady push per year | $\mu S_t$ for the share; $-r e^{-rt}$ for the discount factor | changes the product's drift, not the covariation |
-| $b$, $h$ | the noise parts: how far each moves per unit of Brownian step | $\sigma S_t$ for the share; 0 for the discount factor | the covariation grows as $b\,h$ |
-| $[X,Y]_t$ | covariation: running total of matched products of small steps | 0 for share times discount; $\sigma^2$ times the integral of the squared share for share times share | the gap between Ito's rule and the school rule grows |
-| $W_t$, $dW_t$ | Brownian motion, and its step over a short time | 0 at the start; a step has mean 0 and variance $dt$ | |
-| $t$, $T$, $dt$ | time in years; the horizon; a very short stretch of time | $T = 1$ year | more time for the covariation to build up |
-| $S_t$ | the share price | \$100 today | |
-| $\mu$ | the share's drift: average growth per year | 0.08 in the real world; 0.05 under the right drift | the discounted share drifts up at $\mu - r$ |
-| $\sigma$ | the share's volatility: size of its yearly wobble | 0.20 | the covariation of share with share grows as $\sigma^2$ |
-| $r$ | the bank rate, continuously compounded | 0.05 | lowers the discounted share's drift, $\mu - r$ |
-| $D_t$ | the discounted share, $S_t e^{-rt}$: the price in today's dollars | \$100 today | |
-| $n$, $k$, $\Delta t$, $X_k$, $Y_k$ | number of steps a year is cut into; which step; one step's length $T/n$; X and Y at the start of step k | $n$ from 16 to 4,096 | finer grid, closer to the limit |
+| $`X_t`$, $`Y_t`$ | two quantities moving in time, both driven by the same $`W_t`$ | the share price and the discount factor $`e^{-rt}`$ | the product moves with them |
+| $`a`$, $`g`$ | the drift parts: steady push per year | $`\mu S_t`$ for the share; $`-r e^{-rt}`$ for the discount factor | changes the product's drift, not the covariation |
+| $`b`$, $`h`$ | the noise parts: how far each moves per unit of Brownian step | $`\sigma S_t`$ for the share; 0 for the discount factor | the covariation grows as $`b\,h`$ |
+| $`[X,Y]_t`$ | covariation: running total of matched products of small steps | 0 for share times discount; $`\sigma^2`$ times the integral of the squared share for share times share | the gap between Ito's rule and the school rule grows |
+| $`W_t`$, $`dW_t`$ | Brownian motion, and its step over a short time | 0 at the start; a step has mean 0 and variance $`dt`$ | |
+| $`t`$, $`T`$, $`dt`$ | time in years; the horizon; a very short stretch of time | $`T = 1`$ year | more time for the covariation to build up |
+| $`S_t`$ | the share price | \$100 today | |
+| $`\mu`$ | the share's drift: average growth per year | 0.08 in the real world; 0.05 under the right drift | the discounted share drifts up at $`\mu - r`$ |
+| $`\sigma`$ | the share's volatility: size of its yearly wobble | 0.20 | the covariation of share with share grows as $`\sigma^2`$ |
+| $`r`$ | the bank rate, continuously compounded | 0.05 | lowers the discounted share's drift, $`\mu - r`$ |
+| $`D_t`$ | the discounted share, $`S_t e^{-rt}`$: the price in today's dollars | \$100 today | |
+| $`n`$, $`k`$, $`\Delta t`$, $`X_k`$, $`Y_k`$ | number of steps a year is cut into; which step; one step's length $`T/n`$; X and Y at the start of step k | $`n`$ from 16 to 4,096 | finer grid, closer to the limit |
 
 For the share, the rule gives the equation the discounted share obeys:
 
-$$dD_t = D_t\big((\mu - r)\,dt + \sigma\,dW_t\big).$$
+```math
+dD_t = D_t\big((\mu - r)\,dt + \sigma\,dW_t\big).
+```
 
 In words: the discounted share grows at the share's drift minus the bank rate, and wobbles exactly as much as the share does in percentage terms.
 
@@ -79,7 +87,7 @@ In words: the discounted share grows at the share's drift minus the bank rate, a
 
 - **Both factors are Ito processes on the same Brownian motion, with integrands known at the start of each step.** If the integrand peeks at the end of the step, the sums converge to a different integral and the rule changes; on [The Ito integral](01-ito-integral.md), that choice moves the average of the integral of W against W from 0 to T.
 - **The integrals exist:** the drift parts are integrable in time and the noise parts square-integrable (the expected integral of their square over time is finite), so every term has a meaning. Without that, the right-hand side is undefined, not wrong.
-- **Several Brownian motions:** if X and Y are driven by two Brownian motions with correlation, the covariation becomes the noise sizes times the correlation; [Several Brownian motions](06-multidimensional-ito-and-correlation.md) does it. With independent drivers the covariation is zero, and using $b\,h$ there invents a term.
+- **Several Brownian motions:** if X and Y are driven by two Brownian motions with correlation, the covariation becomes the noise sizes times the correlation; [Several Brownian motions](06-multidimensional-ito-and-correlation.md) does it. With independent drivers the covariation is zero, and using $`b\,h`$ there invents a term.
 - **No jumps.** A process that jumps adds the products of its jumps to the covariation; [Semimartingales](../09-Beyond%20Brownian/05-semimartingales-in-outline.md) states that version.
 - **If one factor has no noise part, the covariation is zero** and the school product rule is exact. The discount factor is such a factor, which is why it is safe to discount a price the school way.
 
@@ -91,105 +99,125 @@ In words: the discounted share grows at the share's drift minus the bank rate, a
 
 Picture a rectangle X wide and Y tall. Widen it by a small amount and heighten it by another. The new area is the old one plus a strip along the top, a strip down the side, and a small corner square whose sides are the two changes. In school calculus the corner is the product of two small things, far smaller than the strips, and it disappears in the limit.
 
-A Brownian step over a time $dt$ has size about the square root of $dt$, not $dt$. Two such steps multiplied give something of size $dt$: the same size as the drift terms that are kept. The corners do not disappear. Their running total is the covariation.
+A Brownian step over a time $`dt`$ has size about the square root of $`dt`$, not $`dt`$. Two such steps multiplied give something of size $`dt`$: the same size as the drift terms that are kept. The corners do not disappear. Their running total is the covariation.
 
 ### Step 1: the identity on a grid is exact
 
-Cut the time from 0 to T into $n$ steps of length $\Delta t$. Write $X_k$ for X at the start of step $k$ and $\Delta X_k = X_{k+1} - X_k$ for its change over the step; the same for Y. Multiplying out gives, with no approximation,
+Cut the time from 0 to T into $`n`$ steps of length $`\Delta t`$. Write $`X_k`$ for X at the start of step $`k`$ and $`\Delta X_k = X_{k+1} - X_k`$ for its change over the step; the same for Y. Multiplying out gives, with no approximation,
 
-$$X_{k+1}Y_{k+1} - X_k Y_k = X_k\,\Delta Y_k + Y_k\,\Delta X_k + \Delta X_k\,\Delta Y_k.$$
+```math
+X_{k+1}Y_{k+1} - X_k Y_k = X_k\,\Delta Y_k + Y_k\,\Delta X_k + \Delta X_k\,\Delta Y_k.
+```
 
 Add over all steps. The left side telescopes: each intermediate product appears once with a plus and once with a minus, leaving the end value minus the start value.
 
-$$X_T Y_T - X_0 Y_0 = \sum_k X_k\,\Delta Y_k + \sum_k Y_k\,\Delta X_k + \sum_k \Delta X_k\,\Delta Y_k.$$
+```math
+X_T Y_T - X_0 Y_0 = \sum_k X_k\,\Delta Y_k + \sum_k Y_k\,\Delta X_k + \sum_k \Delta X_k\,\Delta Y_k.
+```
 
 This holds for every path and every grid. Road B in the code checks it on one simulated path at five grid sizes; the gap is below a billionth each time.
 
 ### Step 2: the first two sums become Ito integrals
 
-In both sums the factor in front, $X_k$ or $Y_k$, is known at the start of the step, before the step's random change happens. Sums of exactly that shape converge to the Ito integrals of Y against X and of X against Y as the grid shrinks. That is the definition of the Ito integral on [The Ito integral](01-ito-integral.md).
+In both sums the factor in front, $`X_k`$ or $`Y_k`$, is known at the start of the step, before the step's random change happens. Sums of exactly that shape converge to the Ito integrals of Y against X and of X against Y as the grid shrinks. That is the definition of the Ito integral on [The Ito integral](01-ito-integral.md).
 
 ### Step 3: the third sum becomes the covariation
 
-Expand one corner, with $\Delta W_k$ the Brownian step over step $k$:
+Expand one corner, with $`\Delta W_k`$ the Brownian step over step $`k`$:
 
-$$\Delta X_k\,\Delta Y_k \approx (a\,\Delta t + b\,\Delta W_k)(g\,\Delta t + h\,\Delta W_k) = a g\,\Delta t^2 + (a h + b g)\,\Delta t\,\Delta W_k + b h\,(\Delta W_k)^2.$$
+```math
+\Delta X_k\,\Delta Y_k \approx (a\,\Delta t + b\,\Delta W_k)(g\,\Delta t + h\,\Delta W_k) = a g\,\Delta t^2 + (a h + b g)\,\Delta t\,\Delta W_k + b h\,(\Delta W_k)^2.
+```
 
-Sort the pieces by size. A $\Delta t$ squared summed over $n$ steps totals $n\,\Delta t^2 = T\,\Delta t$, which vanishes. A $\Delta t$ times a Brownian step has size $\Delta t$ to the power 1.5; the sum of $n$ of them has standard deviation of order $\Delta t$, which vanishes. The last piece survives. The squared Brownian steps add up to the elapsed time, with a spread that shrinks as the grid gets finer: that is quadratic variation, proved on [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md). So the corners add up to the integral of $b\,h$ over time, which is the covariation:
+Sort the pieces by size. A $`\Delta t`$ squared summed over $`n`$ steps totals $`n\,\Delta t^2 = T\,\Delta t`$, which vanishes. A $`\Delta t`$ times a Brownian step has size $`\Delta t`$ to the power 1.5; the sum of $`n`$ of them has standard deviation of order $`\Delta t`$, which vanishes. The last piece survives. The squared Brownian steps add up to the elapsed time, with a spread that shrinks as the grid gets finer: that is quadratic variation, proved on [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md). So the corners add up to the integral of $`b\,h`$ over time, which is the covariation:
 
-$$\sum_k \Delta X_k\,\Delta Y_k \;\to\; [X,Y]_T = \int_0^T b\,h\,dt.$$
+```math
+\sum_k \Delta X_k\,\Delta Y_k \;\to\; [X,Y]_T = \int_0^T b\,h\,dt.
+```
 
 Taking the limit of Step 1 term by term gives the product rule.
 
 ### Step 4: a short proof from Ito's lemma
 
-Steps 1 to 3 show where the term comes from. A shorter, complete route uses Ito's lemma for the square, $f(x) = x^2$, from [Ito's lemma](02-itos-lemma.md). A product is a difference of two squares divided by four:
+Steps 1 to 3 show where the term comes from. A shorter, complete route uses Ito's lemma for the square, $`f(x) = x^2`$, from [Ito's lemma](02-itos-lemma.md). A product is a difference of two squares divided by four:
 
-$$X Y = \tfrac14\big((X+Y)^2 - (X-Y)^2\big).$$
+```math
+X Y = \tfrac14\big((X+Y)^2 - (X-Y)^2\big).
+```
 
-The sum and the difference are Ito processes too, with noise parts $b + h$ and $b - h$. Ito's lemma squares each one and adds half the second derivative, half of 2, times the noise part squared. Subtract, divide by four, and the extra terms leave exactly $\tfrac14\big((b+h)^2 - (b-h)^2\big) = b\,h$.
+The sum and the difference are Ito processes too, with noise parts $`b + h`$ and $`b - h`$. Ito's lemma squares each one and adds half the second derivative, half of 2, times the noise part squared. Subtract, divide by four, and the extra terms leave exactly $`\tfrac14\big((b+h)^2 - (b-h)^2\big) = b\,h`$.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $U = X + Y$ and $V = X - Y$. They satisfy $dU = (a+g)\,dt + (b+h)\,dW_t$ and $dV = (a-g)\,dt + (b-h)\,dW_t$.
-Ito's lemma for $f(x) = x^2$, with first derivative $2x$ and second derivative 2, gives
-$$d(U^2) = 2U\,dU + (b+h)^2\,dt, \qquad d(V^2) = 2V\,dV + (b-h)^2\,dt.$$
+Let $`U = X + Y`$ and $`V = X - Y`$. They satisfy $`dU = (a+g)\,dt + (b+h)\,dW_t`$ and $`dV = (a-g)\,dt + (b-h)\,dW_t`$.
+Ito's lemma for $`f(x) = x^2`$, with first derivative $`2x`$ and second derivative 2, gives
+
+$`\displaystyle d(U^2) = 2U\,dU + (b+h)^2\,dt, \qquad d(V^2) = 2V\,dV + (b-h)^2\,dt.`$
+
 Subtract the second from the first:
-$$d(U^2 - V^2) = 2U\,dU - 2V\,dV + \big((b+h)^2 - (b-h)^2\big)\,dt.$$
-The last bracket is $4bh$. For the first two terms, write U and V and their changes back in terms of X and Y:
-$$2U\,dU - 2V\,dV = 2(X+Y)(dX+dY) - 2(X-Y)(dX-dY) = 4X\,dY + 4Y\,dX.$$
-So $d(U^2 - V^2) = 4X\,dY + 4Y\,dX + 4bh\,dt$. Since $U^2 - V^2 = 4XY$, dividing by 4 gives
-$$d(XY) = X\,dY + Y\,dX + b\,h\,dt.$$
+
+$`\displaystyle d(U^2 - V^2) = 2U\,dU - 2V\,dV + \big((b+h)^2 - (b-h)^2\big)\,dt.`$
+
+The last bracket is $`4bh`$. For the first two terms, write U and V and their changes back in terms of X and Y:
+
+$`\displaystyle 2U\,dU - 2V\,dV = 2(X+Y)(dX+dY) - 2(X-Y)(dX-dY) = 4X\,dY + 4Y\,dX.`$
+
+So $`d(U^2 - V^2) = 4X\,dY + 4Y\,dX + 4bh\,dt`$. Since $`U^2 - V^2 = 4XY`$, dividing by 4 gives
+
+$`\displaystyle d(XY) = X\,dY + Y\,dX + b\,h\,dt.`$
+
 This is complete given Ito's lemma, which [Ito's lemma](02-itos-lemma.md) derives with its key steps and a named source. The argument used one Brownian motion; with several, the same subtraction leaves the noise parts multiplied and weighted by the correlations.
 
 </details>
 
 ### Step 5: the discounted share, and why the right drift is the bank rate
 
-Take X as the share, with $a = \mu S_t$ and $b = \sigma S_t$. Take Y as the discount factor $e^{-rt}$: an ordinary smooth function of time, so $g = -r e^{-rt}$ and $h = 0$. The covariation is $\sigma S_t \times 0 = 0$. The rule gives
+Take X as the share, with $`a = \mu S_t`$ and $`b = \sigma S_t`$. Take Y as the discount factor $`e^{-rt}`$: an ordinary smooth function of time, so $`g = -r e^{-rt}`$ and $`h = 0`$. The covariation is $`\sigma S_t \times 0 = 0`$. The rule gives
 
-$$dD_t = e^{-rt}\,dS_t - r\,S_t e^{-rt}\,dt = D_t\big((\mu - r)\,dt + \sigma\,dW_t\big).$$
+```math
+dD_t = e^{-rt}\,dS_t - r\,S_t e^{-rt}\,dt = D_t\big((\mu - r)\,dt + \sigma\,dW_t\big).
+```
 
-With $\mu = r$ the drift part vanishes and $dD_t = \sigma D_t\,dW_t$: the discounted share is an Ito integral and nothing else. An Ito integral of a square-integrable integrand is a martingale, a fair game in which the best forecast of a later value, given everything known now, is the value now ([Martingales](../02-Martingales/01-martingales.md)).
+With $`\mu = r`$ the drift part vanishes and $`dD_t = \sigma D_t\,dW_t`$: the discounted share is an Ito integral and nothing else. An Ito integral of a square-integrable integrand is a martingale, a fair game in which the best forecast of a later value, given everything known now, is the value now ([Martingales](../02-Martingales/01-martingales.md)).
 
-The same fact can be checked without integrals. Solving the equation gives $D_t = 100\,e^{-\sigma^2 t/2 + \sigma W_t}$ when $\mu = r$ ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Compare the value at a time t with the value at an earlier time s. The ratio is $e^{-\sigma^2(t-s)/2 + \sigma(W_t - W_s)}$, which depends only on the Brownian step after s. That step is independent of everything known at s, and the average of $e^{\sigma(W_t - W_s)}$ is $e^{\sigma^2(t-s)/2}$, which cancels the first factor exactly. So the best forecast of the later value is the current one. This is the exponential martingale of [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md).
+The same fact can be checked without integrals. Solving the equation gives $`D_t = 100\,e^{-\sigma^2 t/2 + \sigma W_t}`$ when $`\mu = r`$ ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Compare the value at a time t with the value at an earlier time s. The ratio is $`e^{-\sigma^2(t-s)/2 + \sigma(W_t - W_s)}`$, which depends only on the Brownian step after s. That step is independent of everything known at s, and the average of $`e^{\sigma(W_t - W_s)}`$ is $`e^{\sigma^2(t-s)/2}`$, which cancels the first factor exactly. So the best forecast of the later value is the current one. This is the exponential martingale of [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md).
 
-With $\mu = 0.08$ the drift $\mu - r = 0.03$ stays, and the discounted share is not a fair game: on average it gains 3% a year in today's dollars. The real share's drift is not the bank rate. A second probability measure, Q, reweights the paths so that the share's drift becomes 5%; under Q the discounted share is a martingale. Building Q is Girsanov's theorem, on [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md). This card supplies the other half: the product rule turns "drift equals the bank rate" into "discounted price is a martingale".
+With $`\mu = 0.08`$ the drift $`\mu - r = 0.03`$ stays, and the discounted share is not a fair game: on average it gains 3% a year in today's dollars. The real share's drift is not the bank rate. A second probability measure, Q, reweights the paths so that the share's drift becomes 5%; under Q the discounted share is a martingale. Building Q is Girsanov's theorem, on [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md). This card supplies the other half: the product rule turns "drift equals the bank rate" into "discounted price is a martingale".
 
 ### The other route
 
-Ito's lemma for a function of two variables, $f(x, y) = x y$, gives the rule in one line: the cross second derivative is 1 and multiplies the covariation. That route needs the several-variable lemma, set out on [Several Brownian motions](06-multidimensional-ito-and-correlation.md).
+Ito's lemma for a function of two variables, $`f(x, y) = x y`$, gives the rule in one line: the cross second derivative is 1 and multiplies the covariation. That route needs the several-variable lemma, set out on [Several Brownian motions](06-multidimensional-ito-and-correlation.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Share at \$100, real drift $\mu = 0.08$, volatility $\sigma = 0.20$, bank rate $r = 0.05$, one year.
+Share at \$100, real drift $`\mu = 0.08`$, volatility $`\sigma = 0.20`$, bank rate $`r = 0.05`$, one year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| product rule on share times discount | $e^{-rt}\,dS_t + S_t\,d(e^{-rt}) + d[S, e^{-rt}]_t$ | three terms |
-| change in the discount factor | no noise part: $-r e^{-rt}\,dt$ | ordinary calculus |
-| covariation | $\sigma S_t \times 0$ | $0$ |
-| equation for the discounted share | $D_t\big((\mu - r)\,dt + \sigma\,dW_t\big)$ | drift $\mu - r$ |
-| drift at the real 8% | $0.08 - 0.05$ | $0.03$ |
-| average discounted share after one year | $100 \times e^{0.03} = 100 \times 1.0305$ | $\$103.05$ |
-| drift at the right 5% | $0.05 - 0.05$ | $0$ |
-| **average discounted share after one year, right drift** | $100 \times e^{0}$ | **$\$100.00$** |
+| product rule on share times discount | $`e^{-rt}\,dS_t + S_t\,d(e^{-rt}) + d[S, e^{-rt}]_t`$ | three terms |
+| change in the discount factor | no noise part: $`-r e^{-rt}\,dt`$ | ordinary calculus |
+| covariation | $`\sigma S_t \times 0`$ | $`0`$ |
+| equation for the discounted share | $`D_t\big((\mu - r)\,dt + \sigma\,dW_t\big)`$ | drift $`\mu - r`$ |
+| drift at the real 8% | $`0.08 - 0.05`$ | $`0.03`$ |
+| average discounted share after one year | $`100 \times e^{0.03} = 100 \times 1.0305`$ | $`\$103.05`$ |
+| drift at the right 5% | $`0.05 - 0.05`$ | $`0`$ |
+| **average discounted share after one year, right drift** | $`100 \times e^{0}`$ | **$`\$100.00`$** |
 
 At the real drift, a dollar in the share beats a dollar in the bank by about 3 cents a year on average. At a drift equal to the bank rate the share is, in today's dollars, a fair game.
 
-The covariation term matters as soon as both factors carry noise. Take the share times itself, at drift 0.05. The rule with $X = Y = S$ gives $d(S_t^2) = 2S_t\,dS_t + \sigma^2 S_t^2\,dt$, so the squared share grows on average at $2\mu + \sigma^2 = 0.10 + 0.04 = 0.14$ a year. Its average after one year is $10{,}000 \times e^{0.14} = 11{,}502.74$ dollars squared. The school product rule, without the term, gives $10{,}000 \times e^{0.10} = 11{,}051.71$. The 20,000 simulated paths give 11,553.25 with standard error 34.22: 1.5 standard errors from the product rule's value, and 15 from the school rule's.
+The covariation term matters as soon as both factors carry noise. Take the share times itself, at drift 0.05. The rule with $`X = Y = S`$ gives $`d(S_t^2) = 2S_t\,dS_t + \sigma^2 S_t^2\,dt`$, so the squared share grows on average at $`2\mu + \sigma^2 = 0.10 + 0.04 = 0.14`$ a year. Its average after one year is $`10{,}000 \times e^{0.14} = 11{,}502.74`$ dollars squared. The school product rule, without the term, gives $`10{,}000 \times e^{0.10} = 11{,}051.71`$. The 20,000 simulated paths give 11,553.25 with standard error 34.22: 1.5 standard errors from the product rule's value, and 15 from the school rule's.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| School product rule for $W_t$ times $W_t$ | average of the square at one year 0; true 1, simulated 1.0041 (se 0.0101) | the corners: the squared Brownian steps add to the elapsed time |
-| School product rule for the share times itself | 11,051.71 instead of 11,502.74 (simulated 11,553.25, se 34.22) | same missing term, now $\sigma^2 S_t^2\,dt$ |
-| Stepping the squared share forward without the term, 4,096 steps a year | average error 438.26 at one year, and not shrinking; predicted 442.81 | the dropped term's yearly total, $\sigma^2$ times the integral of the squared share |
-| Treating the discounted share as a fair game at the real 8% drift | average 103.05 after a year; the fair-game test reads 0.9693 (se 0.0839), not 0 | the hypothesis $\mu = r$ was dropped: the drift $\mu - r$ survives |
+| School product rule for $`W_t`$ times $`W_t`$ | average of the square at one year 0; true 1, simulated 1.0041 (se 0.0101) | the corners: the squared Brownian steps add to the elapsed time |
+| School product rule for the share times itself | 11,051.71 instead of 11,502.74 (simulated 11,553.25, se 34.22) | same missing term, now $`\sigma^2 S_t^2\,dt`$ |
+| Stepping the squared share forward without the term, 4,096 steps a year | average error 438.26 at one year, and not shrinking; predicted 442.81 | the dropped term's yearly total, $`\sigma^2`$ times the integral of the squared share |
+| Treating the discounted share as a fair game at the real 8% drift | average 103.05 after a year; the fair-game test reads 0.9693 (se 0.0839), not 0 | the hypothesis $`\mu = r`$ was dropped: the drift $`\mu - r`$ survives |
 
 Every number in this table is printed by both checks below.
 
@@ -200,7 +228,7 @@ Every number in this table is printed by both checks below.
 The code takes four independent roads.
 
 - Road A evaluates the formulas.
-- Road B simulates one path of the share on a grid of 4,096 steps a year and checks the exact grid identity of Step 1 at five step sizes: the corner sum for share times discount shrinks to zero, and the corner sum for share times share settles near $\sigma^2$ times the integral of the squared share.
+- Road B simulates one path of the share on a grid of 4,096 steps a year and checks the exact grid identity of Step 1 at five step sizes: the corner sum for share times discount shrinks to zero, and the corner sum for share times share settles near $`\sigma^2`$ times the integral of the squared share.
 - Road C simulates 20,000 paths, read every quarter year, and averages the discounted share at both drifts, with standard errors; it also runs a fair-game test, the average change of the discounted share from half a year to a year on paths where it stood above \$100 at half a year.
 - Road D steps the product-rule equations forward, Euler style (each step adds the drift part times the step length plus the noise part times the Brownian step), at five step sizes on 200 paths, and compares with the exact values.
 
@@ -618,15 +646,15 @@ Upper line: the school product rule, without the covariation term; the error sta
 
 Lean proves the exact steps behind the rule, for every path and every grid, and the card's worked arithmetic.
 
-- Take any two paths X and Y, with time cut into $n$ steps. Then the product's change is exactly the two sums plus the corner sum, as in Step 1.
-- Suppose X is a continuous path from 0 to T, and Y has no noise part, like the discount factor. Then the corner sum over $n$ equal steps tends to 0 as $n$ grows.
-- Take Ito's lemma for the squares of $X + Y$ and $X - Y$, as in the Detailed proof. Then subtracting and dividing by four gives the product rule, with extra term $b\,h\,dt$.
-- Take any noise parts $b$ and $h$. Then $(b+h)^2 - (b-h)^2 = 4bh$.
-- Take the share times the discount factor. Then the covariation is $\sigma S_t \times 0 = 0$.
-- Take the algebra of Step 5. Then the equation for the discounted share has drift $\mu - r$.
-- Take $r = 0.05$. Then the drift $\mu - r$ is 0.03 at the real 8%, and 0 at the right 5%.
-- Take the right drift. Then the average discounted share after one year is $100 \times e^0 = 100$.
-- Take drift 0.05 and volatility 0.20. Then the squared share grows on average at $2\mu + \sigma^2 = 0.14$ a year.
+- Take any two paths X and Y, with time cut into $`n`$ steps. Then the product's change is exactly the two sums plus the corner sum, as in Step 1.
+- Suppose X is a continuous path from 0 to T, and Y has no noise part, like the discount factor. Then the corner sum over $`n`$ equal steps tends to 0 as $`n`$ grows.
+- Take Ito's lemma for the squares of $`X + Y`$ and $`X - Y`$, as in the Detailed proof. Then subtracting and dividing by four gives the product rule, with extra term $`b\,h\,dt`$.
+- Take any noise parts $`b`$ and $`h`$. Then $`(b+h)^2 - (b-h)^2 = 4bh`$.
+- Take the share times the discount factor. Then the covariation is $`\sigma S_t \times 0 = 0`$.
+- Take the algebra of Step 5. Then the equation for the discounted share has drift $`\mu - r`$.
+- Take $`r = 0.05`$. Then the drift $`\mu - r`$ is 0.03 at the real 8%, and 0 at the right 5%.
+- Take the right drift. Then the average discounted share after one year is $`100 \times e^0 = 100`$.
+- Take drift 0.05 and volatility 0.20. Then the squared share grows on average at $`2\mu + \sigma^2 = 0.14`$ a year.
 
 The Ito-integral limits, the decimals and the simulations are left to the Python and Rust checks.
 
@@ -807,20 +835,20 @@ example : 2 * (5 / 100 : ℚ) + (20 / 100) ^ 2 = 14 / 100 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - **Guess first: what happens to the upper line of the first picture if the bank rate is raised to 0.08?** Set `R = 0.08`. The drift 0.08 is then the right drift: both lines of Road C stay at \$100 within their standard errors, and the assert that demands an unfair game at 0.08 fails, as it should. The drift of the discounted share is $\mu - r$, whatever the two numbers are.
-> - **Guess first: does doubling the volatility double the covariation's share of the squared share?** No. Set `SIG = 0.40`: the average squared share at one year becomes 12,969.30 against the school rule's unchanged 11,051.71. The gap grows from 451.03 to 1,917.59, more than four times, because the term grows with $\sigma^2$. The school rule never sees the volatility at all.
+> - **Guess first: what happens to the upper line of the first picture if the bank rate is raised to 0.08?** Set `R = 0.08`. The drift 0.08 is then the right drift: both lines of Road C stay at \$100 within their standard errors, and the assert that demands an unfair game at 0.08 fails, as it should. The drift of the discounted share is $`\mu - r`$, whatever the two numbers are.
+> - **Guess first: does doubling the volatility double the covariation's share of the squared share?** No. Set `SIG = 0.40`: the average squared share at one year becomes 12,969.30 against the school rule's unchanged 11,051.71. The gap grows from 451.03 to 1,917.59, more than four times, because the term grows with $`\sigma^2`$. The school rule never sees the volatility at all.
 > - **Guess first: what if the stepped discounted share forgets the bank rate?** In Road D, change `(MU - R) * h` to `MU * h`. That steps the share itself, not the discounted share, so the D column stops shrinking and sits near 5.2, about 5% of the share's price, at every step size; the assert "Euler errors shrink with the term" fails.
-> - **Guess first: is the covariation zero only because the discount factor has no noise?** In Road B, change `b = [math.exp(-R * k * T / n) for k in range(n + 1)]` to `b = p`, so the second factor carries the share's noise. The corner sum for share times discount then equals the $(dS)^2$ column, 616.91 at 4,096 steps instead of shrinking to zero, and the assert "share times discount: no covariation" fails.
+> - **Guess first: is the covariation zero only because the discount factor has no noise?** In Road B, change `b = [math.exp(-R * k * T / n) for k in range(n + 1)]` to `b = p`, so the second factor carries the share's noise. The corner sum for share times discount then equals the $`(dS)^2`$ column, 616.91 at 4,096 steps instead of shrinking to zero, and the assert "share times discount: no covariation" fails.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Using the school product rule whenever both factors are random.** The corner term is not a correction of smaller order. For a share times itself it is $\sigma^2 S_t^2\,dt$, the same size as the drift. Dropping it makes the average squared share 11,051.71 instead of 11,502.74, and a stepped simulation built that way never converges.
+> **Using the school product rule whenever both factors are random.** The corner term is not a correction of smaller order. For a share times itself it is $`\sigma^2 S_t^2\,dt`$, the same size as the drift. Dropping it makes the average squared share 11,051.71 instead of 11,502.74, and a stepped simulation built that way never converges.
 >
-> - **Adding the term when one factor has no noise.** The discount factor $e^{-rt}$ has no $dW_t$ part, so its covariation with anything is zero. Inventing a $\sigma\,r$ cross term for the discounted share gives a wrong drift.
-> - **Reading $dW_t$ as a derivative.** It is shorthand for an Ito integral. The product rule is a statement about integrals, and the Step 1 identity on a grid is what it means.
+> - **Adding the term when one factor has no noise.** The discount factor $`e^{-rt}`$ has no $`dW_t`$ part, so its covariation with anything is zero. Inventing a $`\sigma\,r`$ cross term for the discounted share gives a wrong drift.
+> - **Reading $`dW_t`$ as a derivative.** It is shorthand for an Ito integral. The product rule is a statement about integrals, and the Step 1 identity on a grid is what it means.
 > - **"Fair game" read as "cannot win".** At the right drift, the discounted share's best forecast is its current value. Single paths still end far above or below \$100: the one simulated in Road B ends with the discounted share at \$121.30 (the share at \$127.51).
 > - **Taking the real-world drift as the right drift.** At 8% the discounted share drifts up 3% a year; the fair-game test reads 0.9693, not 0. The martingale holds only after the drift is moved to the bank rate.
 
@@ -848,7 +876,7 @@ example : 2 * (5 / 100 : ℚ) + (20 / 100) ^ 2 = 14 / 100 := by norm_num
 ## Where this goes next
 
 - [Semimartingales](../09-Beyond%20Brownian/05-semimartingales-in-outline.md): the product rule for processes that can jump, where the covariation also collects the products of jumps.
-- [Stochastic differential equations](04-stochastic-differential-equations.md): equations of the form $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$, several of them solved with this rule.
+- [Stochastic differential equations](04-stochastic-differential-equations.md): equations of the form $`dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t`$, several of them solved with this rule.
 - [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md): how to build the measure under which the share's drift is the bank rate.
 
 This card showed that the discounted share is a fair game exactly when the share's drift equals the bank rate. The open question is how to make that true for a real share whose drift is 8%, and Girsanov's theorem answers it by changing the measure.

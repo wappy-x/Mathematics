@@ -30,43 +30,49 @@ Rain turns straight to sun with chance 0.2, sun straight to rain with chance 0.1
 
 ## The formula
 
-Notation first, in words. As on [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md), $X_n$ is the value at time $n$: here the weather on day $n$, with day 0 today. The states get letters: S, C, R. The chance of moving from state $i$ today to state $j$ tomorrow is written $p_{ij}$, read "p from i to j".
+Notation first, in words. As on [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md), $`X_n`$ is the value at time $`n`$: here the weather on day $`n`$, with day 0 today. The states get letters: S, C, R. The chance of moving from state $`i`$ today to state $`j`$ tomorrow is written $`p_{ij}`$, read "p from i to j".
 
-Laid out with one row per today and one column per tomorrow, the $p_{ij}$ form a square table $P$, the transition matrix. $P$ alone is the matrix; $P$ followed by brackets is a probability, as in wing 09.
+Laid out with one row per today and one column per tomorrow, the $`p_{ij}`$ form a square table $`P`$, the transition matrix. $`P`$ alone is the matrix; $`P`$ followed by brackets is a probability, as in wing 09.
 
 `P = [[0.6, 0.3, 0.1], [0.3, 0.4, 0.3], [0.2, 0.4, 0.4]]`, rows and columns in the order S, C, R.
 
 The definition of a Markov chain is one line:
 
-$$P(X_{n+1} = j \mid X_n = i,\ X_{n-1} = i_{n-1},\ \dots,\ X_0 = i_0) = p_{ij}$$
+```math
+P(X_{n+1} = j \mid X_n = i,\ X_{n-1} = i_{n-1},\ \dots,\ X_0 = i_0) = p_{ij}
+```
 
 **Read it aloud:** given any whole history with positive chance, the chance of state j tomorrow is the entry in today's row and tomorrow's column; nothing earlier enters.
 
-Write $\alpha_i$ for the chance that day 0 is in state i: the **start law**. The same fact, written for whole paths, is the **factorisation**:
+Write $`\alpha_i`$ for the chance that day 0 is in state i: the **start law**. The same fact, written for whole paths, is the **factorisation**:
 
-$$P(X_0 = i_0,\ X_1 = i_1,\ \dots,\ X_n = i_n) = \alpha_{i_0}\, p_{i_0 i_1}\, p_{i_1 i_2} \cdots p_{i_{n-1} i_n}$$
+```math
+P(X_0 = i_0,\ X_1 = i_1,\ \dots,\ X_n = i_n) = \alpha_{i_0}\, p_{i_0 i_1}\, p_{i_1 i_2} \cdots p_{i_{n-1} i_n}
+```
 
 **Read it aloud:** the chance of a whole path is the chance of its first day, times one matrix entry for each step taken.
 
 Summing the factorisation over the middle day gives the two-step chance:
 
-$$P(X_2 = j \mid X_0 = i) = \sum_k p_{ik}\, p_{kj} = (P^2)_{ij}$$
+```math
+P(X_2 = j \mid X_0 = i) = \sum_k p_{ik}\, p_{kj} = (P^2)_{ij}
+```
 
 **Read it aloud:** for each possible middle state k, multiply the two steps, then add; the sum is the (i, j) entry of P times P.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the day, counted from today as day 0 | 0, 1, 2 | more steps, more paths to sum |
-| $X_n$ | the weather on day $n$: a random state | S on day 0 | — |
-| $i$, $j$, $k$ | states: today, tomorrow, a day in between | S, C, R | — |
-| $i_0$, $i_n$ | the states on days 0 to $n$ along one path | S, S, C, C, R, R, S | — |
-| $p_{ij}$ | chance of state $j$ tomorrow given state $i$ today | sunny to rainy: 0.1 | its row's other entries must fall |
-| $P$ | the transition matrix: all the $p_{ij}$, rows summing to 1 | 3 rows of 3 | — |
-| $P^2$ | $P$ times $P$: the two-day chances | $(P^2)_{SR}$ = 0.19 | — |
-| $\alpha$, $\alpha_i$ | the start law: chance that day 0 is in state $i$ | 1 on S, or the forecast 0.5, 0.3, 0.2 | — |
-| $\mathcal{F}_n$ | what is known by day $n$: the weather of days 0 to $n$ | S S on day 1 | — |
-| $U$ | a uniform random draw between 0 and 1, used to build the chain | 0.37; the code uses a digit 0 to 9 | — |
-| $\prod$ | multiply the terms that follow, one per step | six entries for a seven-day week | — |
+| $`n`$ | the day, counted from today as day 0 | 0, 1, 2 | more steps, more paths to sum |
+| $`X_n`$ | the weather on day $`n`$: a random state | S on day 0 | — |
+| $`i`$, $`j`$, $`k`$ | states: today, tomorrow, a day in between | S, C, R | — |
+| $`i_0`$, $`i_n`$ | the states on days 0 to $`n`$ along one path | S, S, C, C, R, R, S | — |
+| $`p_{ij}`$ | chance of state $`j`$ tomorrow given state $`i`$ today | sunny to rainy: 0.1 | its row's other entries must fall |
+| $`P`$ | the transition matrix: all the $`p_{ij}`$, rows summing to 1 | 3 rows of 3 | — |
+| $`P^2`$ | $`P`$ times $`P`$: the two-day chances | $`(P^2)_{SR}`$ = 0.19 | — |
+| $`\alpha`$, $`\alpha_i`$ | the start law: chance that day 0 is in state $`i`$ | 1 on S, or the forecast 0.5, 0.3, 0.2 | — |
+| $`\mathcal{F}_n`$ | what is known by day $`n`$: the weather of days 0 to $`n`$ | S S on day 1 | — |
+| $`U`$ | a uniform random draw between 0 and 1, used to build the chain | 0.37; the code uses a digit 0 to 9 | — |
+| $`\prod`$ | multiply the terms that follow, one per step | six entries for a seven-day week | — |
 
 A matrix whose entries are at least 0 and whose rows each add to 1 is called **stochastic**. Every transition matrix is one. The columns need not add to 1; here they add to 1.1, 1.1 and 0.8.
 
@@ -75,9 +81,9 @@ A matrix whose entries are at least 0 and whose rows each add to 1 is called **s
 This is a definition: it holds for any process that meets it. Whether real weather meets it turns on four things:
 
 - **The state carries all the memory that matters.** On this card's "memory weather", rain follows rain with chance 0.7 when yesterday was rainy too and 0.4 otherwise, so no single rainy row exists. The repair is a bigger state: the pair (yesterday, today), nine states instead of three.
-- **The same matrix every day**, called **time homogeneity**. Seasons break it. The product rule survives with a different matrix each day, but $P^2$ with one $P$ is then wrong.
+- **The same matrix every day**, called **time homogeneity**. Seasons break it. The product rule survives with a different matrix each day, but $`P^2`$ with one $`P`$ is then wrong.
 - **Real chances in every row.** No negative entry, and each row adds to 1; otherwise the path chances do not add to 1.
-- **A start law.** The matrix does not say where day 0 is; a path's chance needs $\alpha$ as its first factor.
+- **A start law.** The matrix does not say where day 0 is; a path's chance needs $`\alpha`$ as its first factor.
 
 ---
 
@@ -91,34 +97,36 @@ A path's chance is built one day at a time: each day brings its chance given the
 
 A whole path's chance can be built day by day: the first day's chance, times the second given the first, times the third given the first two, and so on. For any process and any path with positive chance,
 
-$$P(X_0 = i_0, \dots, X_n = i_n) = P(X_0 = i_0) \prod_{m=1}^{n} P(X_m = i_m \mid X_0 = i_0, \dots, X_{m-1} = i_{m-1})$$
+```math
+P(X_0 = i_0, \dots, X_n = i_n) = P(X_0 = i_0) \prod_{m=1}^{n} P(X_m = i_m \mid X_0 = i_0, \dots, X_{m-1} = i_{m-1})
+```
 
-The product sign $\prod$ means multiply the terms for m = 1 up to n. This is the multiplication rule of conditional probability; each factor may still look back over the whole history.
+The product sign $`\prod`$ means multiply the terms for m = 1 up to n. This is the multiplication rule of conditional probability; each factor may still look back over the whole history.
 
 ### Step 2: the Markov property shortens every factor
 
-The definition replaces the factor for day m by $p_{i_{m-1} i_m}$: the entry in the row of the day before and the column of day m. The first factor is the start law $\alpha_{i_0}$. The product becomes the factorisation in The formula.
+The definition replaces the factor for day m by $`p_{i_{m-1} i_m}`$: the entry in the row of the day before and the column of day m. The first factor is the start law $`\alpha_{i_0}`$. The product becomes the factorisation in The formula.
 
 For the week S S C C R R S starting from a sunny Monday, that is 0.6 × 0.3 × 0.4 × 0.3 × 0.4 × 0.2 = 0.001728, about 1 in 579. Six steps, six entries.
 
 ### Step 3: the product rule gives back the next-step rule
 
-The converse holds too. If every path's chance is the product, divide the chance of a history extended by one day by the chance of the history. Every factor cancels except the last, $p_{i_n j}$. So given any history with positive chance, tomorrow's chances are today's row.
+The converse holds too. If every path's chance is the product, divide the chance of a history extended by one day by the chance of the history. Every factor cancels except the last, $`p_{i_n j}`$. So given any history with positive chance, tomorrow's chances are today's row.
 
 That is the Markov property as a factorisation: a statement about conditional chances and a statement about products are the same statement. The code checks it on all 27 three-day histories from the forecast start law: none has next-day chances that differ from today's row. On the memory weather, 3 of the 27 do: the three whose last two days are rainy.
 
 <details>
 <summary>Detailed proof: the next-step rule and the product rule are equivalent</summary>
 
-Fix a start law $\alpha$ and a stochastic matrix $P$ on a finite set of states. Call (A) the statement: for every $n$ and every history $i_0, \dots, i_n$ with positive chance, $P(X_{n+1} = j \mid X_0 = i_0, \dots, X_n = i_n) = p_{i_n j}$, and $P(X_0 = i) = \alpha_i$. Call (B) the statement: for every $n$ and every path, $P(X_0 = i_0, \dots, X_n = i_n) = \alpha_{i_0} p_{i_0 i_1} \cdots p_{i_{n-1} i_n}$.
+Fix a start law $`\alpha`$ and a stochastic matrix $`P`$ on a finite set of states. Call (A) the statement: for every $`n`$ and every history $`i_0, \dots, i_n`$ with positive chance, $`P(X_{n+1} = j \mid X_0 = i_0, \dots, X_n = i_n) = p_{i_n j}`$, and $`P(X_0 = i) = \alpha_i`$. Call (B) the statement: for every $`n`$ and every path, $`P(X_0 = i_0, \dots, X_n = i_n) = \alpha_{i_0} p_{i_0 i_1} \cdots p_{i_{n-1} i_n}`$.
 
-*(A) gives (B), by induction on n.* For n = 0 both sides are $\alpha_{i_0}$. Suppose (B) holds for paths of length n. Take a path of length n + 1. If its first n + 1 days have positive chance, the multiplication rule and (A) give its chance as (chance of the first n + 1 days) × $p_{i_n i_{n+1}}$, which is the product by the induction hypothesis. If its first n + 1 days have chance 0, the longer path lies inside that event, so its chance is 0; and the product is 0 too, since it contains the shorter product as a factor.
+*(A) gives (B), by induction on n.* For n = 0 both sides are $`\alpha_{i_0}`$. Suppose (B) holds for paths of length n. Take a path of length n + 1. If its first n + 1 days have positive chance, the multiplication rule and (A) give its chance as (chance of the first n + 1 days) × $`p_{i_n i_{n+1}}`$, which is the product by the induction hypothesis. If its first n + 1 days have chance 0, the longer path lies inside that event, so its chance is 0; and the product is 0 too, since it contains the shorter product as a factor.
 
-*(B) gives (A).* The start law is (B) at n = 0. For a history with positive chance, (B) applied to the history and to its extension gives the ratio $\alpha_{i_0} p_{i_0 i_1} \cdots p_{i_n j} / (\alpha_{i_0} p_{i_0 i_1} \cdots p_{i_{n-1} i_n}) = p_{i_n j}$.
+*(B) gives (A).* The start law is (B) at n = 0. For a history with positive chance, (B) applied to the history and to its extension gives the ratio $`\alpha_{i_0} p_{i_0 i_1} \cdots p_{i_n j} / (\alpha_{i_0} p_{i_0 i_1} \cdots p_{i_{n-1} i_n}) = p_{i_n j}`$.
 
-*The products are a probability table.* Summing the product over the last state multiplies the shorter product by a row sum, which is 1. Repeating down to day 0 leaves $\sum_i \alpha_i = 1$. So the products for different horizons agree with each other, which is what makes (B) a single consistent law rather than one table per horizon.
+*The products are a probability table.* Summing the product over the last state multiplies the shorter product by a row sum, which is 1. Repeating down to day 0 leaves $`\sum_i \alpha_i = 1`$. So the products for different horizons agree with each other, which is what makes (B) a single consistent law rather than one table per horizon.
 
-*In wing 10's language.* With $\mathcal{F}_n$ the information in days 0 to n, (A) says $E[1\{X_{n+1} = j\} \mid \mathcal{F}_n] = p_{X_n j}$ almost surely, where the indicator $1\{X_{n+1} = j\}$ is 1 when tomorrow is j and 0 otherwise. A history with chance 0 has no conditional chance, so (A) is silent there; (B) needs no such exception.
+*In wing 10's language.* With $`\mathcal{F}_n`$ the information in days 0 to n, (A) says $`E[1\{X_{n+1} = j\} \mid \mathcal{F}_n] = p_{X_n j}`$ almost surely, where the indicator $`1\{X_{n+1} = j\}`$ is 1 when tomorrow is j and 0 otherwise. A history with chance 0 has no conditional chance, so (A) is silent there; (B) needs no such exception.
 
 </details>
 
@@ -126,15 +134,17 @@ Fix a start law $\alpha$ and a stochastic matrix $P$ on a finite set of states. 
 
 From sunny today to rainy the day after tomorrow, the path passes through some state tomorrow. The paths S S R, S C R and S R R are different outcomes, so their chances add, and each is a product by Step 2:
 
-$$P(X_2 = R \mid X_0 = S) = p_{SS}\, p_{SR} + p_{SC}\, p_{CR} + p_{SR}\, p_{RR} = 0.06 + 0.09 + 0.04 = 0.19$$
+```math
+P(X_2 = R \mid X_0 = S) = p_{SS}\, p_{SR} + p_{SC}\, p_{CR} + p_{SR}\, p_{RR} = 0.06 + 0.09 + 0.04 = 0.19
+```
 
-Row times column, summed, is how [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md) defines a product, so all nine two-day chances are the entries of $P^2$. The general form, $n$ days as $P^n$, and the splitting rule behind it (Chapman-Kolmogorov) are proved on [n-step transitions](02-multi-step-transitions.md).
+Row times column, summed, is how [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md) defines a product, so all nine two-day chances are the entries of $`P^2`$. The general form, $`n`$ days as $`P^n`$, and the splitting rule behind it (Chapman-Kolmogorov) are proved on [n-step transitions](02-multi-step-transitions.md).
 
 ### Step 5: every matrix and start law has a chain
 
-Any stochastic matrix and start law have a chain, built from uniform draws. Cut the numbers from 0 to 1 into pieces as long as the entries of today's row, draw a uniform number $U$, and move to the state whose piece it hits. On a sunny day, draws below 0.6 give sunny, 0.6 to 0.9 cloudy, above 0.9 rainy.
+Any stochastic matrix and start law have a chain, built from uniform draws. Cut the numbers from 0 to 1 into pieces as long as the entries of today's row, draw a uniform number $`U`$, and move to the state whose piece it hits. On a sunny day, draws below 0.6 give sunny, 0.6 to 0.9 cloudy, above 0.9 rainy.
 
-Each day takes a fresh, independent draw, so the Markov property holds by construction. The code uses a random digit 0 to 9 for $U$, since every entry is whole tenths.
+Each day takes a fresh, independent draw, so the Markov property holds by construction. The code uses a random digit 0 to 9 for $`U`$, since every entry is whole tenths.
 
 A chain that runs forever needs its endless draws on one probability space: Kolmogorov's extension theorem, stated on [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md) and proved in Durrett's text. This card uses it and does not prove it.
 
@@ -148,13 +158,13 @@ Today is sunny. What are the chances for the day after tomorrow?
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| path S S R | $p_{SS} \times p_{SR}$ = 0.6 × 0.1 | 0.06 |
-| path S C R | $p_{SC} \times p_{CR}$ = 0.3 × 0.3 | 0.09 |
-| path S R R | $p_{SR} \times p_{RR}$ = 0.1 × 0.4 | 0.04 |
+| path S S R | $`p_{SS} \times p_{SR}`$ = 0.6 × 0.1 | 0.06 |
+| path S C R | $`p_{SC} \times p_{CR}`$ = 0.3 × 0.3 | 0.09 |
+| path S R R | $`p_{SR} \times p_{RR}`$ = 0.1 × 0.4 | 0.04 |
 | rainy on day 2 | 0.06 + 0.09 + 0.04 | **0.19** |
 | sunny on day 2 | 0.6 × 0.6 + 0.3 × 0.3 + 0.1 × 0.2 | **0.47** |
 | cloudy on day 2 | 0.6 × 0.3 + 0.3 × 0.4 + 0.1 × 0.4 | **0.34** |
-| the whole of $P^2$, row by row | same sums from C and from R | S: 0.47, 0.34, 0.19; C: 0.36, 0.37, 0.27; R: 0.32, 0.38, 0.30 |
+| the whole of $`P^2`$, row by row | same sums from C and from R | S: 0.47, 0.34, 0.19; C: 0.36, 0.37, 0.27; R: 0.32, 0.38, 0.30 |
 
 After a sunny day, the day after tomorrow is rainy about one time in five, nearly twice the one-day chance of 0.1: the middle day gives the weather time to turn. The same matrix every day does not mean the same chances every day; where they end up is [Stationary distributions](04-stationary-distributions.md).
 
@@ -168,7 +178,7 @@ xychart-beta
     line [0.4708, 0.3394, 0.1898]
 ```
 
-Bars: the exact chances, the first row of $P^2$. Line: the share of 100,000 simulated two-day runs from sunny landing in each state, 0.4708, 0.3394 and 0.1898, each within one standard error (0.0016, 0.0015, 0.0012) of the bar.
+Bars: the exact chances, the first row of $`P^2`$. Line: the share of 100,000 simulated two-day runs from sunny landing in each state, 0.4708, 0.3394 and 0.1898, each within one standard error (0.0016, 0.0015, 0.0012) of the bar.
 
 ### What breaks if you drop a piece
 
@@ -558,10 +568,10 @@ The two outputs match line for line, simulated digits included, since both draw 
 Lean proves the card's three general facts for any finite set of states, start law and stochastic matrix, plus the hand-worked numbers.
 
 - Take any process, start law and stochastic matrix. Then the next-step rule, with day 0 following the start law, holds exactly when every path's chance follows the factorisation.
-- Take a start law and a stochastic matrix. Then the products over all paths of $n$ steps add to 1, for every $n$.
-- Suppose every path's chance follows the factorisation, and state $i$ has positive chance on day 0. Then $P(X_2 = j \mid X_0 = i) = \sum_k p_{ik}\, p_{kj} = (P^2)_{ij}$.
+- Take a start law and a stochastic matrix. Then the products over all paths of $`n`$ steps add to 1, for every $`n`$.
+- Suppose every path's chance follows the factorisation, and state $`i`$ has positive chance on day 0. Then $`P(X_2 = j \mid X_0 = i) = \sum_k p_{ik}\, p_{kj} = (P^2)_{ij}`$.
 - The weather matrix's rows each add to 1, and its columns add to 1.1, 1.1 and 0.8.
-- The rows of $P^2$ are 0.47, 0.34, 0.19; then 0.36, 0.37, 0.27; then 0.32, 0.38, 0.30.
+- The rows of $`P^2`$ are 0.47, 0.34, 0.19; then 0.36, 0.37, 0.27; then 0.32, 0.38, 0.30.
 - Sunny to rainy in two days is 0.06 + 0.09 + 0.04 = 0.19.
 - The week S S C C R R S from a sunny Monday has chance 0.001728, about 1 in 579.
 - Taking the days as independent gives 0.6 × 0.47 = 0.282, not the true 0.36.
@@ -848,12 +858,12 @@ example : ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3,
 
 ## Where this goes next
 
-- [n-step transitions](02-multi-step-transitions.md): the law on day n as the start law times $P^n$.
+- [n-step transitions](02-multi-step-transitions.md): the law on day n as the start law times $`P^n`$.
 - [Hidden Markov models](08-hidden-markov-models.md): a chain that is never seen directly, only through noisy signals.
 - [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): ratings as states, default as a state never left.
 - [Markov decision processes](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/02-markov-decision-processes.md): a chain whose matrix is chosen by a decision each step.
 
-Two days was one matrix product, $P^2$; a week ahead is the seventh power, and [n-step transitions](02-multi-step-transitions.md) shows why powers give the chances for any number of days.
+Two days was one matrix product, $`P^2`$; a week ahead is the seventh power, and [n-step transitions](02-multi-step-transitions.md) shows why powers give the chances for any number of days.
 
 ---
 

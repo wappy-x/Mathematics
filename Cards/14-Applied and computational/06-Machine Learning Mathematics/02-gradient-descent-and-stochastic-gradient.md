@@ -36,44 +36,50 @@ The same 50 readings of the data, used three ways. The data is synthetic: genera
 
 ## The formula
 
-Notation first, in words. Order number i (from 1 to n) has a list of 12 numbers, written $x_i$, and a value in pounds, $y_i$. The 12 weights are one list, $w$; the bias is one number, $b$, which the loss card calls the starting amount.
+Notation first, in words. Order number i (from 1 to n) has a list of 12 numbers, written $`x_i`$, and a value in pounds, $`y_i`$. The 12 weights are one list, $`w`$; the bias is one number, $`b`$, which the loss card calls the starting amount.
 
-The prediction is $\hat y_i$ ("y hat"). The risk is $\hat R(w, b)$ ("R hat"), as on the loss card. Its gradient $\nabla \hat R$ (read "grad R hat") is the list of its rates of change, one per weight and one for the bias; it points up the steepest climb ([Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md)).
+The prediction is $`\hat y_i`$ ("y hat"). The risk is $`\hat R(w, b)`$ ("R hat"), as on the loss card. Its gradient $`\nabla \hat R`$ (read "grad R hat") is the list of its rates of change, one per weight and one for the bias; it points up the steepest climb ([Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md)).
 
-$$\hat y_i = w\cdot x_i + b, \qquad \hat R(w,b)=\frac1n\sum_{i=1}^{n}\big(\hat y_i-y_i\big)^2$$
+```math
+\hat y_i = w\cdot x_i + b, \qquad \hat R(w,b)=\frac1n\sum_{i=1}^{n}\big(\hat y_i-y_i\big)^2
+```
 
 **Read it aloud:** the prediction is the weighted sum plus the bias; the risk is the average squared miss.
 
 The **excess risk** is the risk minus its lowest possible value: how much worse the current weights do than the best ones, in pounds squared.
 
-The update, one step of size $\eta$ (the Greek letter eta), the **learning rate**:
+The update, one step of size $`\eta`$ (the Greek letter eta), the **learning rate**:
 
-$$(w,b)_{t+1} = (w,b)_t-\eta\,\nabla\hat R\big((w,b)_t\big), \qquad \nabla\hat R=\frac2n\sum_{i=1}^{n}\big(\hat y_i-y_i\big)\,(x_i,\ 1)$$
+```math
+(w,b)_{t+1} = (w,b)_t-\eta\,\nabla\hat R\big((w,b)_t\big), \qquad \nabla\hat R=\frac2n\sum_{i=1}^{n}\big(\hat y_i-y_i\big)\,(x_i,\ 1)
+```
 
 **Read it aloud:** move every weight against its slope, by the learning rate times the slope; each slope is twice the average of each order's miss times that order's number for the weight (and times 1 for the bias).
 
-The step must stay under a limit set by the steepest curvature of the risk, $\lambda_{\max}$:
+The step must stay under a limit set by the steepest curvature of the risk, $`\lambda_{\max}`$:
 
-$$0<\eta<\frac{2}{\lambda_{\max}}$$
+```math
+0<\eta<\frac{2}{\lambda_{\max}}
+```
 
 **Read it aloud:** the step must be shorter than two over the steepest bend of the bowl, or the walk overshoots and grows.
 
-**Mini-batch (stochastic) gradient descent** keeps the same update but replaces the average over all n orders by an average over a random batch of $B$ orders. **Momentum** keeps a running velocity $v$: $v \leftarrow \beta v - \eta\nabla \hat R$, then $(w,b) \leftarrow (w,b) + v$, so a fraction $\beta$ (beta) of the last move carries over.
+**Mini-batch (stochastic) gradient descent** keeps the same update but replaces the average over all n orders by an average over a random batch of $`B`$ orders. **Momentum** keeps a running velocity $`v`$: $`v \leftarrow \beta v - \eta\nabla \hat R`$, then $`(w,b) \leftarrow (w,b) + v`$, so a fraction $`\beta`$ (beta) of the last move carries over.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of orders | 20,000 | each full step costs more |
-| $x_i$, $y_i$ | order i's 12 numbers (number j of them is weight j's partner); its value in pounds | mean value £40.0056 | — |
-| $w$, $b$, $\theta$ | the 12 weights (pounds per unit); the bias (pounds); all 13 as one list, theta | best bias £39.98 | — |
-| $\hat y_i$ | the prediction for order i, pounds | £0 for every order at the start | — |
-| $\hat R$ | risk: average squared miss, pounds squared; excess risk is the part above the lowest | lowest 24.6409; excess 1622.9421 at the start | — |
-| $\nabla \hat R$ | gradient: one slope per weight and for the bias | bias slope −80.0113 at the start | bigger steps for the same η |
-| $\eta$, $t$ | learning rate: the step size; the step count | 0.2; 50 full steps, or 10,000 small ones | faster, until 0.2477, then it blows up |
-| $B$ | batch size: orders per noisy step | 100 | less noise, fewer steps per pass |
-| $\beta$, $v$ | momentum fraction; the velocity it keeps | 0.8 | faster along a valley, more early bounce |
-| $H$, $I$ | Hessian: the table of second rates of the risk; the do-nothing matrix | 13 rows by 13 | — |
-| $\lambda$, $\lambda_{\max}$, $\lambda_{\min}$ | a curvature of the bowl; the steepest; the gentlest | 8.0732 and 0.05714 | a larger ratio means a slower walk |
-| $e$, $\theta^*$ | distance from the best weights, as a list; the best weights | minus θ* at the start, since every weight begins at zero | — |
+| $`n`$ | number of orders | 20,000 | each full step costs more |
+| $`x_i`$, $`y_i`$ | order i's 12 numbers (number j of them is weight j's partner); its value in pounds | mean value £40.0056 | — |
+| $`w`$, $`b`$, $`\theta`$ | the 12 weights (pounds per unit); the bias (pounds); all 13 as one list, theta | best bias £39.98 | — |
+| $`\hat y_i`$ | the prediction for order i, pounds | £0 for every order at the start | — |
+| $`\hat R`$ | risk: average squared miss, pounds squared; excess risk is the part above the lowest | lowest 24.6409; excess 1622.9421 at the start | — |
+| $`\nabla \hat R`$ | gradient: one slope per weight and for the bias | bias slope −80.0113 at the start | bigger steps for the same η |
+| $`\eta`$, $`t`$ | learning rate: the step size; the step count | 0.2; 50 full steps, or 10,000 small ones | faster, until 0.2477, then it blows up |
+| $`B`$ | batch size: orders per noisy step | 100 | less noise, fewer steps per pass |
+| $`\beta`$, $`v`$ | momentum fraction; the velocity it keeps | 0.8 | faster along a valley, more early bounce |
+| $`H`$, $`I`$ | Hessian: the table of second rates of the risk; the do-nothing matrix | 13 rows by 13 | — |
+| $`\lambda`$, $`\lambda_{\max}`$, $`\lambda_{\min}`$ | a curvature of the bowl; the steepest; the gentlest | 8.0732 and 0.05714 | a larger ratio means a slower walk |
+| $`e`$, $`\theta^*`$ | distance from the best weights, as a list; the best weights | minus θ* at the start, since every weight begins at zero | — |
 
 The λ here are curvatures (the stretch factors of the [Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)), not the arrival rate of the queueing cards.
 
@@ -116,13 +122,13 @@ The risk counts the error squared, so late in the walk the excess risk should sh
 
 Write θ for the 13 numbers (w, b) and θ* for the best ones, where the gradient is zero. The risk is a polynomial of degree 2 in θ, so its second-order expansion about θ* has no remainder:
 
-$$\hat R(\theta)=\hat R(\theta^*)+\tfrac12(\theta-\theta^*)^{\top}H(\theta-\theta^*),\qquad H=\frac2n\sum_{i=1}^{n}(x_i,1)(x_i,1)^{\top}.$$
+$`\displaystyle \hat R(\theta)=\hat R(\theta^*)+\tfrac12(\theta-\theta^*)^{\top}H(\theta-\theta^*),\qquad H=\frac2n\sum_{i=1}^{n}(x_i,1)(x_i,1)^{\top}.`$
 
-The gradient is $H(\theta-\theta^*)$. With $e_t=\theta_t-\theta^*$ the step gives $e_{t+1}=(I-\eta H)e_t$, so $e_t=(I-\eta H)^t e_0$.
+The gradient is $`H(\theta-\theta^*)`$. With $`e_t=\theta_t-\theta^*`$ the step gives $`e_{t+1}=(I-\eta H)e_t`$, so $`e_t=(I-\eta H)^t e_0`$.
 
-H is symmetric and its curvatures are not negative, so it has perpendicular directions it only stretches ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)). Split the starting error into parts along those directions. After t steps the part along a direction of curvature λ has been multiplied by $(1-\eta\lambda)^t$. Every part tends to zero for every start exactly when $|1-\eta\lambda|<1$ for every curvature, which is $0<\eta<2/\lambda_{\max}$ when the gentlest curvature is positive.
+H is symmetric and its curvatures are not negative, so it has perpendicular directions it only stretches ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)). Split the starting error into parts along those directions. After t steps the part along a direction of curvature λ has been multiplied by $`(1-\eta\lambda)^t`$. Every part tends to zero for every start exactly when $`|1-\eta\lambda|<1`$ for every curvature, which is $`0<\eta<2/\lambda_{\max}`$ when the gentlest curvature is positive.
 
-The excess risk is half the sum, over the directions, of λ times that part squared, so each term shrinks by $(1-\eta\lambda)^2$ per step. Late in the walk the terms whose factors are nearest 1 are all that is left, and in the very long run only the gentlest. After 50 passes here, all eleven gentle terms still count.
+The excess risk is half the sum, over the directions, of λ times that part squared, so each term shrinks by $`(1-\eta\lambda)^2`$ per step. Late in the walk the terms whose factors are nearest 1 are all that is left, and in the very long run only the gentlest. After 50 passes here, all eleven gentle terms still count.
 
 </details>
 
@@ -632,11 +638,11 @@ The two outputs match line for line.
 Lean proves the three theorems for any number of orders and weights, and checks the card's small sums as exact fractions.
 
 - The slope of the risk for each weight is twice the average of each order's miss times its number for that weight.
-- Take $e = \theta - \theta^*$, the distance from the best weights. Then the risk is the lowest risk plus $\tfrac12 e^{\top} H e$, and the gradient is $H e$.
-- Suppose the walk starts along a direction $v$ of curvature $\lambda$, so $H v = \lambda v$. Then each step multiplies its error by $1 - \eta\lambda$, and its excess risk by $(1 - \eta\lambda)^2$.
-- Suppose the bowl has one bottom: every curvature is positive. Then the walk reaches the best weights from every start exactly when $0 < \eta\lambda < 2$ for every curvature $\lambda$.
-- Take every batch of $B$ orders as equally likely. Then the batch gradient, averaged over all batches, is exactly the full gradient.
-- The step limit $2/8.0732$ lies between 0.24 and 0.25. A full step costs 520,000 multiply-adds, and one pass buys 200 batch steps.
+- Take $`e = \theta - \theta^*`$, the distance from the best weights. Then the risk is the lowest risk plus $`\tfrac12 e^{\top} H e`$, and the gradient is $`H e`$.
+- Suppose the walk starts along a direction $`v`$ of curvature $`\lambda`$, so $`H v = \lambda v`$. Then each step multiplies its error by $`1 - \eta\lambda`$, and its excess risk by $`(1 - \eta\lambda)^2`$.
+- Suppose the bowl has one bottom: every curvature is positive. Then the walk reaches the best weights from every start exactly when $`0 < \eta\lambda < 2`$ for every curvature $`\lambda`$.
+- Take every batch of $`B`$ orders as equally likely. Then the batch gradient, averaged over all batches, is exactly the full gradient.
+- The step limit $`2/8.0732`$ lies between 0.24 and 0.25. A full step costs 520,000 multiply-adds, and one pass buys 200 batch steps.
 - Momentum 0.8 piles pushes up to 5 times one step. Number 1 at 100 times its size has 10,000 times the curvature.
 
 The Python and Rust checks cover the shop's own numbers: its curvatures, its three walks, the momentum bounce and the batch jitter.

@@ -32,43 +32,49 @@ Left: random points leave clumps and gaps by chance. Middle: Sobol points fill t
 
 The quasi-Monte Carlo estimate is a plain average over chosen points. The Koksma-Hlawka inequality bounds its error:
 
-$$Q_N = \frac{1}{N}\sum_{i=0}^{N-1} f(u_i), \qquad \lvert Q_N - I \rvert \;\le\; V(f)\, D^*_N, \qquad D^*_N \;\le\; c_d\,\frac{(\log N)^d}{N}$$
+```math
+Q_N = \frac{1}{N}\sum_{i=0}^{N-1} f(u_i), \qquad \lvert Q_N - I \rvert \;\le\; V(f)\, D^*_N, \qquad D^*_N \;\le\; c_d\,\frac{(\log N)^d}{N}
+```
 
 **Read it aloud:** average the function over N fixed points; the error is at most how much the function wiggles times how unevenly the points sit, and for a good sequence the unevenness falls almost like one over N.
 
 The points come from mirroring digits: write the index i in base p, then reflect its digits across the point.
 
-$$i = \sum_{r \ge 0} a_r\, p^{r} \quad\Longrightarrow\quad \phi_p(i) = \sum_{r \ge 0} a_r\, p^{-r-1}$$
+```math
+i = \sum_{r \ge 0} a_r\, p^{r} \quad\Longrightarrow\quad \phi_p(i) = \sum_{r \ge 0} a_r\, p^{-r-1}
+```
 
 **Read it aloud:** the point for index i is i's digits read backwards after the point.
 
 The sparse grid adds products of one-dimensional rules, with whole-number weights that cancel the overlap:
 
-$$A(k, d) \;=\; \sum_{k+1 \,\le\, \lvert \ell \rvert \,\le\, k+d} (-1)^{\,k+d-\lvert\ell\rvert} \binom{d-1}{k+d-\lvert\ell\rvert}\; U^{\ell_1} \otimes \cdots \otimes U^{\ell_d}$$
+```math
+A(k, d) \;=\; \sum_{k+1 \,\le\, \lvert \ell \rvert \,\le\, k+d} (-1)^{\,k+d-\lvert\ell\rvert} \binom{d-1}{k+d-\lvert\ell\rvert}\; U^{\ell_1} \otimes \cdots \otimes U^{\ell_d}
+```
 
 **Read it aloud:** take every grid built from one-dimensional rules whose levels add up to between k + 1 and k + d, give each a plus or minus count, and add them.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $I$, $\sigma$ | the integrand (the smooth basket's value at one point of the cube; the call and $g$ are two more test integrands), its true mean, and the spread of one random draw | smooth basket: $I$ = 100.300414, $\sigma$ = 7.777630; call: $I$ = 2.081597 | — |
-| $N$ | the number of points | 1,024 | every error falls; Sobol's by 4 per quadrupling |
-| $d$ | the dimension: coordinates per point | 5, one per asset | the bound's $(\log N)^d$ grows, and random points stop losing |
-| $u_i$ | point $i$: one number between 0 and 1 for each asset | Sobol point 2 is (0.25, 0.75, …) | — |
-| $Q_N$ | the estimate: the average over the points | off by −0.029315 | — |
-| $D^*_N$, $K(t)$ | the star discrepancy: the worst gap, over boxes with a corner at 0, between the share of points inside and the box's volume; $K(t)$ counts the points below $t$ in one dimension | 0.002453 for 1,000 van der Corput points | the error bound grows |
-| $V(f)$ | the variation of $f$ (in the sense of Hardy and Krause): how much it wiggles, in each coordinate and each group of coordinates | finite here; infinite for a payoff with a jump | the error bound grows |
-| $c_d$, $\log$ | a constant fixed by the sequence and $d$; the natural log | — | — |
-| $p$, $\phi_p(i)$ | a prime base, and the radical inverse: $i$'s base-$p$ digits mirrored | $\phi_2(6)$ = 0.375 | — |
-| $a_r$ | digit $r$ of $i$ in base $p$, counting from 0 at the right | 6 is 110 in base 2 | — |
-| $\ell = (\ell_1, \dots, \ell_d)$, $\lvert\ell\rvert$, $\Delta^\ell$ | a level for each coordinate, their sum, and what level $\ell$ adds to level $\ell - 1$ | levels 1 to 5 | finer grids |
-| $U^{\ell}$, $h$, $\otimes$, $A(k, d)$, $k$ | the one-dimensional rule at level $\ell$ (the midpoint at level 1, then trapezoid rules with 3, 5, 9 and 17 points) and its spacing; $\otimes$ joins one-dimensional rules into a product grid; the sparse grid in $d$ dimensions, and its level | $k$ = 4 gives 801 points | error falls by about 4 per level |
+| $`f`$, $`I`$, $`\sigma`$ | the integrand (the smooth basket's value at one point of the cube; the call and $`g`$ are two more test integrands), its true mean, and the spread of one random draw | smooth basket: $`I`$ = 100.300414, $`\sigma`$ = 7.777630; call: $`I`$ = 2.081597 | — |
+| $`N`$ | the number of points | 1,024 | every error falls; Sobol's by 4 per quadrupling |
+| $`d`$ | the dimension: coordinates per point | 5, one per asset | the bound's $`(\log N)^d`$ grows, and random points stop losing |
+| $`u_i`$ | point $`i`$: one number between 0 and 1 for each asset | Sobol point 2 is (0.25, 0.75, …) | — |
+| $`Q_N`$ | the estimate: the average over the points | off by −0.029315 | — |
+| $`D^*_N`$, $`K(t)`$ | the star discrepancy: the worst gap, over boxes with a corner at 0, between the share of points inside and the box's volume; $`K(t)`$ counts the points below $`t`$ in one dimension | 0.002453 for 1,000 van der Corput points | the error bound grows |
+| $`V(f)`$ | the variation of $`f`$ (in the sense of Hardy and Krause): how much it wiggles, in each coordinate and each group of coordinates | finite here; infinite for a payoff with a jump | the error bound grows |
+| $`c_d`$, $`\log`$ | a constant fixed by the sequence and $`d`$; the natural log | — | — |
+| $`p`$, $`\phi_p(i)`$ | a prime base, and the radical inverse: $`i`$'s base-$`p`$ digits mirrored | $`\phi_2(6)`$ = 0.375 | — |
+| $`a_r`$ | digit $`r`$ of $`i`$ in base $`p`$, counting from 0 at the right | 6 is 110 in base 2 | — |
+| $`\ell = (\ell_1, \dots, \ell_d)`$, $`\lvert\ell\rvert`$, $`\Delta^\ell`$ | a level for each coordinate, their sum, and what level $`\ell`$ adds to level $`\ell - 1`$ | levels 1 to 5 | finer grids |
+| $`U^{\ell}`$, $`h`$, $`\otimes`$, $`A(k, d)`$, $`k`$ | the one-dimensional rule at level $`\ell`$ (the midpoint at level 1, then trapezoid rules with 3, 5, 9 and 17 points) and its spacing; $`\otimes`$ joins one-dimensional rules into a product grid; the sparse grid in $`d`$ dimensions, and its level | $`k`$ = 4 gives 801 points | error falls by about 4 per level |
 
 ### When it holds
 
-- **The function has bounded variation.** A payoff with a jump across a slanted line has infinite $V(f)$, and in five dimensions so does the call's kink, so the bound says nothing. Sobol points still did well on both here, unpromised.
+- **The function has bounded variation.** A payoff with a jump across a slanted line has infinite $`V(f)`$, and in five dimensions so does the call's kink, so the bound says nothing. Sobol points still did well on both here, unpromised.
 - **A sparse grid needs bounded mixed derivatives.** The terms it drops are small only for a smooth function. On the same jump it returns −0.214844 for a probability, and on the call's kink it misses by −1.144097.
-- **The variance comes from coordinates acting one at a time, or d is small.** The smooth basket's five coordinates matter equally, yet 0.9976 of its variance comes from single coordinates. On $g$, a product of ten factors, only 0.1989 does, and plain Halton points lose: an error 6.944 times the random standard error.
-- **No error bar comes free.** The points are fixed, so $\sigma/\sqrt{N}$ does not describe them: it claims 0.243051 where Sobol's true error is 0.029315. Random shifts give an honest bar (Step 4).
+- **The variance comes from coordinates acting one at a time, or d is small.** The smooth basket's five coordinates matter equally, yet 0.9976 of its variance comes from single coordinates. On $`g`$, a product of ten factors, only 0.1989 does, and plain Halton points lose: an error 6.944 times the random standard error.
+- **No error bar comes free.** The points are fixed, so $`\sigma/\sqrt{N}`$ does not describe them: it claims 0.243051 where Sobol's true error is 0.029315. Random shifts give an honest bar (Step 4).
 - **N is a power of two, for Sobol.** At N = 1,024 each coordinate has exactly one point in each strip of width 1/1,024. Stop elsewhere and that cover is gone.
 
 ---
@@ -79,67 +85,67 @@ $$A(k, d) \;=\; \sum_{k+1 \,\le\, \lvert \ell \rvert \,\le\, k+d} (-1)^{\,k+d-\l
 
 [Quasi-Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md) already builds Sobol points, defines discrepancy and shows the Brownian bridge at work. This card adds the rate, the constructions and the sparse grid.
 
-An average of $f$ over points misses the integral only where the points over- or under-represent part of the cube. Random points do this by chance: clumps and gaps of size about $1/\sqrt{N}$. Points built to have no clumps and no gaps remove that chance.
+An average of $`f`$ over points misses the integral only where the points over- or under-represent part of the cube. Random points do this by chance: clumps and gaps of size about $`1/\sqrt{N}`$. Points built to have no clumps and no gaps remove that chance.
 
 ### Step 1: in one dimension, the error is discrepancy times variation
 
-In one dimension the bound has a short proof. Count the points below $t$, divide by $N$, and subtract $t$: that gap is the **local discrepancy**. The error of the average is exactly its integral against the slope of $f$. So the error is at most the worst gap times the total rise and fall of $f$.
+In one dimension the bound has a short proof. Count the points below $`t`$, divide by $`N`$, and subtract $`t`$: that gap is the **local discrepancy**. The error of the average is exactly its integral against the slope of $`f`$. So the error is at most the worst gap times the total rise and fall of $`f`$.
 
 <details>
 <summary>Detailed proof: the one-dimensional Koksma inequality</summary>
 
-Let $f$ have a continuous slope $f'$ on $[0, 1]$. For any point $u$, $f(u) = f(1) - \int_0^1 \mathbf{1}[t > u]\, f'(t)\, dt$, where $\mathbf{1}[t > u]$ is 1 when $t > u$ and 0 otherwise.
+Let $`f`$ have a continuous slope $`f'`$ on $`[0, 1]`$. For any point $`u`$, $`f(u) = f(1) - \int_0^1 \mathbf{1}[t > u]\, f'(t)\, dt`$, where $`\mathbf{1}[t > u]`$ is 1 when $`t > u`$ and 0 otherwise.
 
-Average this over the $N$ points. Let $K(t)$ count the points below $t$. Then $\frac{1}{N}\sum_i f(u_i) = f(1) - \int_0^1 \frac{K(t)}{N} f'(t)\, dt$.
+Average this over the $`N`$ points. Let $`K(t)`$ count the points below $`t`$. Then $`\frac{1}{N}\sum_i f(u_i) = f(1) - \int_0^1 \frac{K(t)}{N} f'(t)\, dt`$.
 
-Do the same with $u$ spread evenly over $[0, 1]$ instead of over the points. The share below $t$ is then $t$, so $\int_0^1 f = f(1) - \int_0^1 t\, f'(t)\, dt$.
+Do the same with $`u`$ spread evenly over $`[0, 1]`$ instead of over the points. The share below $`t`$ is then $`t`$, so $`\int_0^1 f = f(1) - \int_0^1 t\, f'(t)\, dt`$.
 
-Subtract: $Q_N - I = -\int_0^1 \left(\frac{K(t)}{N} - t\right) f'(t)\, dt$. The bracket is the local discrepancy, at most $D^*_N$ in size everywhere. So $\lvert Q_N - I \rvert \le D^*_N \int_0^1 \lvert f'(t) \rvert\, dt = D^*_N\, V(f)$.
+Subtract: $`Q_N - I = -\int_0^1 \left(\frac{K(t)}{N} - t\right) f'(t)\, dt`$. The bracket is the local discrepancy, at most $`D^*_N`$ in size everywhere. So $`\lvert Q_N - I \rvert \le D^*_N \int_0^1 \lvert f'(t) \rvert\, dt = D^*_N\, V(f)`$.
 
 </details>
 
-In $d$ dimensions the same integration by parts runs in every coordinate and every group of coordinates. That is Hlawka's theorem: $\lvert Q_N - I\rvert \le V(f) D^*_N$, with $V$ the Hardy-Krause variation. It is stated here, not proved; Niederreiter's book sets it out in chapter 2.
+In $`d`$ dimensions the same integration by parts runs in every coordinate and every group of coordinates. That is Hlawka's theorem: $`\lvert Q_N - I\rvert \le V(f) D^*_N`$, with $`V`$ the Hardy-Krause variation. It is stated here, not proved; Niederreiter's book sets it out in chapter 2.
 
 ### Step 2: van der Corput mirrors binary digits
 
-The van der Corput sequence is $\phi_2(i)$: write $i$ in binary and mirror it after the point. Six is 110, mirrored 0.011, which is 0.375. The first eight points are 0, 0.5, 0.25, 0.75, 0.125, 0.625, 0.375, 0.875.
+The van der Corput sequence is $`\phi_2(i)`$: write $`i`$ in binary and mirror it after the point. Six is 110, mirrored 0.011, which is 0.375. The first eight points are 0, 0.5, 0.25, 0.75, 0.125, 0.625, 0.375, 0.875.
 
-Each new point lands in the middle of one of the largest gaps left so far. The first $2^m$ points are exactly the grid $0, 1/2^m, 2/2^m, \dots$, so their discrepancy is $1/2^m$. Any other count $N$ splits, by its binary digits, into such grids, each slid a little. Each grid adds at most 1 to the miscount, so $D^*_N \le (\text{number of 1s in } N\text{'s binary digits}) / N \le (\log_2 N + 1)/N$.
+Each new point lands in the middle of one of the largest gaps left so far. The first $`2^m`$ points are exactly the grid $`0, 1/2^m, 2/2^m, \dots`$, so their discrepancy is $`1/2^m`$. Any other count $`N`$ splits, by its binary digits, into such grids, each slid a little. Each grid adds at most 1 to the miscount, so $`D^*_N \le (\text{number of 1s in } N\text{'s binary digits}) / N \le (\log_2 N + 1)/N`$.
 
 <details>
 <summary>Detailed proof: van der Corput's discrepancy is at most the 1-bits of N over N</summary>
 
-Write $N = 2^{m_1} + 2^{m_2} + \cdots$ with $m_1 > m_2 > \cdots$. Indices $0$ to $2^{m_1} - 1$ use only the low $m_1$ binary digits, so their mirrors are exactly the multiples of $2^{-m_1}$.
+Write $`N = 2^{m_1} + 2^{m_2} + \cdots`$ with $`m_1 > m_2 > \cdots`$. Indices $`0`$ to $`2^{m_1} - 1`$ use only the low $`m_1`$ binary digits, so their mirrors are exactly the multiples of $`2^{-m_1}`$.
 
-The next block is $i = 2^{m_1} + j$ with $0 \le j < 2^{m_2}$. Its mirror is $\phi_2(j) + 2^{-m_1 - 1}$: the grid of multiples of $2^{-m_2}$, slid up by $2^{-m_1-1}$, which is less than one spacing. Every later block is likewise a full grid slid by less than its spacing.
+The next block is $`i = 2^{m_1} + j`$ with $`0 \le j < 2^{m_2}`$. Its mirror is $`\phi_2(j) + 2^{-m_1 - 1}`$: the grid of multiples of $`2^{-m_2}`$, slid up by $`2^{-m_1-1}`$, which is less than one spacing. Every later block is likewise a full grid slid by less than its spacing.
 
-Take one block of $2^m$ points with spacing $h = 2^{-m}$, slid by $\delta$ with $0 \le \delta < h$. The number of its points below $t$ is $\lceil (t - \delta)/h \rceil$ (or 0), and $2^m t = t/h$. These differ by less than 1.
+Take one block of $`2^m`$ points with spacing $`h = 2^{-m}`$, slid by $`\delta`$ with $`0 \le \delta < h`$. The number of its points below $`t`$ is $`\lceil (t - \delta)/h \rceil`$ (or 0), and $`2^m t = t/h`$. These differ by less than 1.
 
-Add the blocks. The total miscount $\lvert K(t) - N t \rvert$ is less than one per block, at most the number of 1-bits in $N$. Divide by $N$ for the discrepancy.
+Add the blocks. The total miscount $`\lvert K(t) - N t \rvert`$ is less than one per block, at most the number of 1-bits in $`N`$. Divide by $`N`$ for the discrepancy.
 
 </details>
 
-The code tests the bound for every $N$ from 1 to 1,024: the worst ratio of discrepancy to bound is 1.000, so the bound is never broken and is sometimes met. At $N$ = 1,000 (six 1-bits) the discrepancy is 0.002453 against a bound of 0.006000, a ratio of 0.409. One thousand random points have 0.034412.
+The code tests the bound for every $`N`$ from 1 to 1,024: the worst ratio of discrepancy to bound is 1.000, so the bound is never broken and is sometimes met. At $`N`$ = 1,000 (six 1-bits) the discrepancy is 0.002453 against a bound of 0.006000, a ratio of 0.409. One thousand random points have 0.034412.
 
 ### Step 3: Halton uses a different prime per coordinate; Sobol mixes base 2
 
 In two or more dimensions, mirroring base 2 in every coordinate would put every point on the diagonal. Halton's fix is a different prime per coordinate: base 2, 3, 5, 7, 11 for five assets. In base 3 the sequence runs 0, 0.3333, 0.6667, 0.1111. Distinct primes keep the coordinates from moving in step.
 
-Sobol's fix keeps base 2 in every coordinate but mixes each coordinate's binary digits by its own fixed table of direction numbers, combined with XOR (adding binary digits with no carry). This card uses the published direction numbers of Joe and Kuo for coordinates 2 to 5. The code checks the result: at $N$ = 1,024 each of the five coordinates puts exactly one point in each strip of width 1/1,024.
+Sobol's fix keeps base 2 in every coordinate but mixes each coordinate's binary digits by its own fixed table of direction numbers, combined with XOR (adding binary digits with no carry). This card uses the published direction numbers of Joe and Kuo for coordinates 2 to 5. The code checks the result: at $`N`$ = 1,024 each of the five coordinates puts exactly one point in each strip of width 1/1,024.
 
-For both sequences $D^*_N \le c_d (\log N)^d / N$, proved in Niederreiter's book (chapter 3 for Halton, chapter 4 for Sobol-type sequences) and stated here.
+For both sequences $`D^*_N \le c_d (\log N)^d / N`$, proved in Niederreiter's book (chapter 3 for Halton, chapter 4 for Sobol-type sequences) and stated here.
 
 ### Step 4: when the rate actually beats random points
 
-Set the bound's shape $(\log N)^d/N$ against random sampling's $1/\sqrt{N}$. The bound wins only after $N$ is enormous:
+Set the bound's shape $`(\log N)^d/N`$ against random sampling's $`1/\sqrt{N}`$. The bound wins only after $`N`$ is enormous:
 
-| Dimension $d$ | 2 | 3 | 5 | 10 | 20 |
+| Dimension $`d`$ | 2 | 3 | 5 | 10 | 20 |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| $\log_{10} N$ where $(\log N)^d/N$ drops below $1/\sqrt{N}$ | 3.7 | 7.4 | 15.5 | 39.1 | 93.3 |
+| $`\log_{10} N`$ where $`(\log N)^d/N`$ drops below $`1/\sqrt{N}`$ | 3.7 | 7.4 | 15.5 | 39.1 | 93.3 |
 
-In five dimensions the bound favours even points only beyond about $10^{15.5}$ points. Yet at 1,024 Sobol points the smooth basket's error was 8.3 times smaller than random. The bound is a worst case. Split the basket's variance into the parts that come from single coordinates, from pairs, and from larger groups: 0.9976 of it comes from single coordinates. So the basket has a low **effective dimension** in the superposition sense: its variance comes from coordinates acting one at a time, even though all five matter equally. (The other sense, used with the Brownian bridge, counts how many leading coordinates carry the variance.)
+In five dimensions the bound favours even points only beyond about $`10^{15.5}`$ points. Yet at 1,024 Sobol points the smooth basket's error was 8.3 times smaller than random. The bound is a worst case. Split the basket's variance into the parts that come from single coordinates, from pairs, and from larger groups: 0.9976 of it comes from single coordinates. So the basket has a low **effective dimension** in the superposition sense: its variance comes from coordinates acting one at a time, even though all five matter equally. (The other sense, used with the Brownian bridge, counts how many leading coordinates carry the variance.)
 
-Five budgets show the rate. Sobol's observed order per quadrupling is 1.00 each time: one over $N$. Halton's is 0.90, 0.93, 0.86 and 0.88: near one over $N$, slowed by the logs. Random points fall at 0.5.
+Five budgets show the rate. Sobol's observed order per quadrupling is 1.00 each time: one over $`N`$. Halton's is 0.90, 0.93, 0.86 and 0.88: near one over $`N`$, slowed by the logs. Random points fall at 0.5.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -154,9 +160,9 @@ xychart-beta
 
 Orange line: the random standard error, slope one half. Teal line: Halton's true error. Dark line: Sobol's true error, slope 1. Both axes are base-10 logs, so a straight line is a power law and its slope is the order.
 
-The rescue fails when the variance comes from products of many coordinates, as in $g(u) = \prod_j \lvert 4u_j - 2 \rvert$, mean 1. Its coordinates also matter equally, but its share of variance from single coordinates falls fast as $d$ grows. At $N$ = 1,024, Halton's error against the random standard error $\sqrt{((4/3)^d - 1)/N}$:
+The rescue fails when the variance comes from products of many coordinates, as in $`g(u) = \prod_j \lvert 4u_j - 2 \rvert`$, mean 1. Its coordinates also matter equally, but its share of variance from single coordinates falls fast as $`d`$ grows. At $`N`$ = 1,024, Halton's error against the random standard error $`\sqrt{((4/3)^d - 1)/N}`$:
 
-| $d$ | Halton error | Random standard error | Ratio | Share from single coordinates |
+| $`d`$ | Halton error | Random standard error | Ratio | Share from single coordinates |
 | ---: | ---: | ---: | ---: | ---: |
 | 1 | +0.000000 | 0.018042 | 0.000 | 1.0000 |
 | 2 | +0.000436 | 0.027560 | 0.016 | 0.8571 |
@@ -164,7 +170,7 @@ The rescue fails when the variance comes from products of many coordinates, as i
 | 10 | +0.888341 | 0.127926 | 6.944 | 0.1989 |
 | 20 | +1025.270143 | 0.554048 | 1850.507 | 0.0212 |
 
-Up to five dimensions the even points win. At ten they lose by a factor of 6.944. At twenty, coordinates in the large bases 67 and 71 rise almost in step: their first points are $i/67$ beside $i/71$. The answer is useless.
+Up to five dimensions the even points win. At ten they lose by a factor of 6.944. At twenty, coordinates in the large bases 67 and 71 rise almost in step: their first points are $`i/67`$ beside $`i/71`$. The answer is useless.
 
 **An honest error bar.** Fixed points have no spread to measure. Draw one random shift, a random point of the cube, add it to every Sobol point coordinate by coordinate, and wrap round the edges by keeping only the part after the decimal point. Each shifted point is then uniform on the cube, so the average is an unbiased random estimate, and the points stay one to a strip. Repeat with fresh shifts, and the scatter of the answers is an error bar. Ten shifts of the 1,024 points give a mean error of +0.001733 with a standard error of 0.003096, against 0.243051 for 1,024 random points. This is randomised quasi-Monte Carlo.
 
@@ -172,13 +178,13 @@ Up to five dimensions the even points win. At ten they lose by a factor of 6.944
 
 A sparse grid is a full grid with most of its points removed. Its building blocks are nested one-dimensional rules ([Trapezoid, midpoint and Simpson](01-newton-cotes-and-composite-rules.md)): the midpoint at level 1, then trapezoid rules with 3, 5, 9 and 17 points at levels 2 to 5.
 
-Write $\Delta^\ell = U^\ell - U^{\ell-1}$: what level $\ell$ adds to level $\ell - 1$. For a smooth function this shrinks by about 4 per level, the $h^2$ law of the trapezoid rule ([Error bounds and Romberg](02-error-bounds-and-romberg.md)). A full grid of 17 points per side is the sum of every product $\Delta^{\ell_1} \otimes \cdots \otimes \Delta^{\ell_5}$ with each $\ell_j \le 5$.
+Write $`\Delta^\ell = U^\ell - U^{\ell-1}`$: what level $`\ell`$ adds to level $`\ell - 1`$. For a smooth function this shrinks by about 4 per level, the $`h^2`$ law of the trapezoid rule ([Error bounds and Romberg](02-error-bounds-and-romberg.md)). A full grid of 17 points per side is the sum of every product $`\Delta^{\ell_1} \otimes \cdots \otimes \Delta^{\ell_5}`$ with each $`\ell_j \le 5`$.
 
-Each product term is about $4^{-\lvert\ell\rvert}$ in size and costs about $2^{\lvert\ell\rvert}$ points, so terms with a large level sum are tiny and expensive. The sparse grid keeps only $\lvert\ell\rvert \le k + d$. Collected, those terms give the combination formula above; the code runs it and merges the weights of repeated points.
+Each product term is about $`4^{-\lvert\ell\rvert}`$ in size and costs about $`2^{\lvert\ell\rvert}`$ points, so terms with a large level sum are tiny and expensive. The sparse grid keeps only $`\lvert\ell\rvert \le k + d`$. Collected, those terms give the combination formula above; the code runs it and merges the weights of repeated points.
 
-The cost then grows like $2^k k^{d-1}$ instead of $2^{kd}$:
+The cost then grows like $`2^k k^{d-1}`$ instead of $`2^{kd}`$:
 
-| Level $k$ | 0 | 1 | 2 | 3 | 4 | 5 |
+| Level $`k`$ | 0 | 1 | 2 | 3 | 4 | 5 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Sparse grid points, 5 dimensions | 1 | 11 | 61 | 241 | 801 | 2,433 |
 | Full grid of the same fineness | 1 | 243 | 3,125 | 59,049 | 1,419,857 | 39,135,393 |
@@ -190,9 +196,9 @@ The price is negative weights: 230 of the 801. On a smooth function the plus and
 <details>
 <summary>Why the plus-and-minus counts appear, in two dimensions</summary>
 
-In two dimensions, $\Delta^{\ell_1} \otimes \Delta^{\ell_2}$ expands into four plain grids. Sum over all $\ell_1 + \ell_2 \le k + 2$ and most of them cancel along each diagonal. What survives is every grid with $\ell_1 + \ell_2 = k + 2$, counted $+1$, minus every grid with $\ell_1 + \ell_2 = k + 1$, counted $-1$. That matches the formula: for $d$ = 2 the binomial counts are both 1.
+In two dimensions, $`\Delta^{\ell_1} \otimes \Delta^{\ell_2}`$ expands into four plain grids. Sum over all $`\ell_1 + \ell_2 \le k + 2`$ and most of them cancel along each diagonal. What survives is every grid with $`\ell_1 + \ell_2 = k + 2`$, counted $`+1`$, minus every grid with $`\ell_1 + \ell_2 = k + 1`$, counted $`-1`$. That matches the formula: for $`d`$ = 2 the binomial counts are both 1.
 
-The same cancelling in $d$ dimensions gives the binomial counts in general. Gerstner and Griebel set out the general case and the error bound of order $N^{-2} (\log N)^{3(d-1)}$ for the trapezoid rule; it is stated here, not proved.
+The same cancelling in $`d`$ dimensions gives the binomial counts in general. Gerstner and Griebel set out the general case and the error bound of order $`N^{-2} (\log N)^{3(d-1)}`$ for the trapezoid rule; it is stated here, not proved.
 
 </details>
 
@@ -200,7 +206,7 @@ The same cancelling in $d$ dimensions gives the binomial counts in general. Gers
 
 ## Worked numbers, by hand
 
-The smooth basket at $N$ = 1,024, every figure from the run.
+The smooth basket at $`N`$ = 1,024, every figure from the run.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -221,10 +227,10 @@ The sparse grid prices the basket to about a quarter of a cent with 801 points; 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Plain Halton in 20 dimensions on $g$ | error +1025.270143, against a random standard error of 0.554048 | the bound's $(\log N)^{20}$ is astronomical, and the large primes move in step |
+| Plain Halton in 20 dimensions on $`g`$ | error +1025.270143, against a random standard error of 0.554048 | the bound's $`(\log N)^{20}`$ is astronomical, and the large primes move in step |
 | Sparse grid on a digital payoff: $1 if the basket ends above $102 | −0.214844, a negative probability; the true value is 0.402089 | a jump has no bounded mixed derivatives, and 230 negative weights stop cancelling; Sobol gets 0.401367 |
 | Quoting σ/√N as Sobol's error bar | 0.243051, against a true error of 0.029315 | fixed points have no sampling spread; the bar is eight times too wide |
-| A full grid for the sparse grid's accuracy | 1,419,857 points for +0.002351 | it pays for product terms of size $4^{-\lvert\ell\rvert}$ that add nothing |
+| A full grid for the sparse grid's accuracy | 1,419,857 points for +0.002351 | it pays for product terms of size $`4^{-\lvert\ell\rvert}`$ that add nothing |
 
 The code prints all four. The digital's true value comes from the closed form for a sum of uniform draws (the Irwin-Hall distribution).
 
@@ -638,13 +644,13 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves Step 1's bound and Step 2's van der Corput facts for every $N$, and checks the card's exact counts.
+Lean proves Step 1's bound and Step 2's van der Corput facts for every $`N`$, and checks the card's exact counts.
 
-- In one dimension, take any $N$ points in $[0, 1)$ and any $f$ of bounded variation on $[0, 1]$. If the local discrepancy is at most $D$ for every $t$, then $\lvert Q_N - I \rvert \le D\, V(f)$. No continuous slope is needed, unlike in the Detailed proof.
-- For the first $N$ van der Corput points, the local discrepancy at every $t$ is at most the number of 1-bits in $N$, over $N$. That is at most $(\log_2 N + 1)/N$.
-- The first $2^m$ van der Corput points are exactly the grid $0, 1/2^m, 2/2^m, \dots, (2^m - 1)/2^m$.
-- $\phi_2(6) = 3/8$, the first eight van der Corput points are as Step 2 lists them, and base 3 starts 0, 1/3, 2/3, 1/9.
-- 1,000 has six 1-bits in binary, so at $N$ = 1,000 the bound is 6/N.
+- In one dimension, take any $`N`$ points in $`[0, 1)`$ and any $`f`$ of bounded variation on $`[0, 1]`$. If the local discrepancy is at most $`D`$ for every $`t`$, then $`\lvert Q_N - I \rvert \le D\, V(f)`$. No continuous slope is needed, unlike in the Detailed proof.
+- For the first $`N`$ van der Corput points, the local discrepancy at every $`t`$ is at most the number of 1-bits in $`N`$, over $`N`$. That is at most $`(\log_2 N + 1)/N`$.
+- The first $`2^m`$ van der Corput points are exactly the grid $`0, 1/2^m, 2/2^m, \dots, (2^m - 1)/2^m`$.
+- $`\phi_2(6) = 3/8`$, the first eight van der Corput points are as Step 2 lists them, and base 3 starts 0, 1/3, 2/3, 1/9.
+- 1,000 has six 1-bits in binary, so at $`N`$ = 1,000 the bound is 6/N.
 - Adding each level's new points gives 1, 11, 61, 241, 801 and 2,433 sparse grid points in 5 dimensions, at levels 0 to 5.
 - The 2-dimensional level-4 sparse grid has 65 points, against the full grid's 289.
 - The full grids of the same fineness have 1, 243, 3,125, 59,049, 1,419,857 and 39,135,393 points.
@@ -1379,11 +1385,11 @@ example : (List.range 6).map (fun k => if k = 0 then 1 else (2 ^ k + 1) ^ 5)
 ## The usual mistake
 
 > [!warning]
-> **Reading the (log N)^d / N rate as a promise that even points beat random ones.** It is a worst case, and in five dimensions it favours even points only beyond about $10^{15.5}$ points. Even points win on the basket at 1,024 because almost all its variance comes from coordinates acting one at a time. Where it comes from products of many coordinates, as for $g$ in 10 dimensions, plain Halton loses by a factor of 6.944.
+> **Reading the (log N)^d / N rate as a promise that even points beat random ones.** It is a worst case, and in five dimensions it favours even points only beyond about $`10^{15.5}`$ points. Even points win on the basket at 1,024 because almost all its variance comes from coordinates acting one at a time. Where it comes from products of many coordinates, as for $`g`$ in 10 dimensions, plain Halton loses by a factor of 6.944.
 >
 > - **Quoting σ/√N as the error bar.** It claims 0.243051; Sobol's true error is 0.029315. For an honest bar, repeat with randomly shifted points and use the spread of the answers: ten shifts give a standard error of 0.003096.
 > - **A sparse grid on a jump or a kink.** On the $102 digital it returns −0.214844, a negative probability; the true value is 0.402089. On the call it misses by −1.144097.
-> - **Halton with large primes.** In 20 dimensions on $g$ its error is +1025.270143, against a random standard error of 0.554048.
+> - **Halton with large primes.** In 20 dimensions on $`g`$ its error is +1025.270143, against a random standard error of 0.554048.
 > - **Building the full grid.** 1,419,857 points buy +0.002351; the sparse grid gets +0.002339 from 801.
 
 ---
@@ -1404,7 +1410,7 @@ example : (List.range 6).map (fun k => if k = 0 then 1 else (2 ^ k + 1) ^ 5)
 
 - [Many dimensions](06-multidimensional-and-monte-carlo-quadrature.md): the basket call priced again here, the cost of a product grid in d dimensions, and the one-over-root-N rate of random points, which this card beats.
 - [Quasi-Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md): Sobol points, discrepancy, the Koksma-Hlawka bound and effective dimension, first met pricing an option.
-- [Trapezoid, midpoint and Simpson](01-newton-cotes-and-composite-rules.md) and [Error bounds and Romberg](02-error-bounds-and-romberg.md): the one-dimensional rule the sparse grid is built from, and its $h^2$ law.
+- [Trapezoid, midpoint and Simpson](01-newton-cotes-and-composite-rules.md) and [Error bounds and Romberg](02-error-bounds-and-romberg.md): the one-dimensional rule the sparse grid is built from, and its $`h^2`$ law.
 - [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): the standard error σ/√N of a random average.
 
 ## Where this goes next

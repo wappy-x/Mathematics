@@ -41,42 +41,48 @@ The upper line is the payoff: flat at zero while Acme finishes below $100.00, th
 
 ## The formula
 
-One piece of notation first. A raised plus sign after a bracket means *keep this if it is positive, otherwise zero*. So $(S_T - K)^+$ reads "the positive part of the price minus the strike": the gap when there is one, nothing when there is not.
+One piece of notation first. A raised plus sign after a bracket means *keep this if it is positive, otherwise zero*. So $`(S_T - K)^+`$ reads "the positive part of the price minus the strike": the gap when there is one, nothing when there is not.
 
-Write $S_T$ for Acme's price on expiry day, and $K$ for the **strike**, the price written on the ticket. Per share, the three payoffs are
+Write $`S_T`$ for Acme's price on expiry day, and $`K`$ for the **strike**, the price written on the ticket. Per share, the three payoffs are
 
-$$f(S_T) = S_T - K, \qquad c(S_T) = (S_T - K)^+, \qquad p(S_T) = (K - S_T)^+$$
+```math
+f(S_T) = S_T - K, \qquad c(S_T) = (S_T - K)^+, \qquad p(S_T) = (K - S_T)^+
+```
 
 **Read it aloud:** the forward pays the gap between the closing price and the agreed price whichever way it runs; the call keeps that gap only when it is a gain; the put keeps the opposite gap only when it is a gain.
 
-Position and cost come next. Let $a$ be the signed size: $+1$ for one contract held, $-1$ for one written, that is, sold to someone else. Let $V_0$ be what one contract costs today, per share. Profit at expiry on a call position is
+Position and cost come next. Let $`a`$ be the signed size: $`+1`$ for one contract held, $`-1`$ for one written, that is, sold to someone else. Let $`V_0`$ be what one contract costs today, per share. Profit at expiry on a call position is
 
-$$\Pi(S_T) = a\,\bigl[\,c(S_T) - V_0\,\bigr]$$
+```math
+\Pi(S_T) = a\,\bigl[\,c(S_T) - V_0\,\bigr]
+```
 
 **Read it aloud:** take what the contract pays, subtract what was paid for it, then scale by the position — sign flipped if the position was sold rather than bought.
 
-Swap $c$ for $p$ or $f$ for the other two. All three tickets carry the same strike, so their diagrams lay over one another. A forward is normally written instead at the delivery price that makes $V_0$ zero, and which price that is, is [Forward price](03-forward-price-by-cash-and-carry.md).
+Swap $`c`$ for $`p`$ or $`f`$ for the other two. All three tickets carry the same strike, so their diagrams lay over one another. A forward is normally written instead at the delivery price that makes $`V_0`$ zero, and which price that is, is [Forward price](03-forward-price-by-cash-and-carry.md).
 
 Break-even is the price at which profit is zero. A long call bought for a positive premium has exactly one, and which number it is depends on where the premium is dated:
 
-$$S_T = K + V_0 \qquad\text{or}\qquad S_T = K + V_0\,e^{rT}$$
+```math
+S_T = K + V_0 \qquad\text{or}\qquad S_T = K + V_0\,e^{rT}
+```
 
-The left leaves the premium at today's date. The right carries it to expiry at the riskless rate $r$ over $T$ years — the honest comparison, since the premium was paid a year before the payoff arrives. For the Acme call the two read $109.23 and $109.70.
+The left leaves the premium at today's date. The right carries it to expiry at the riskless rate $`r`$ over $`T`$ years — the honest comparison, since the premium was paid a year before the payoff arrives. For the Acme call the two read $109.23 and $109.70.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_T$ | Acme's price on expiry day: the one number every payoff reads | 60.00 to 140.00 in the tables | each contract slides along its line |
-| $K$ | the strike: the price written on the ticket | 100.00 | the call pays less, the put more |
-| $c$ | the call's payoff: the gain above the strike kept, the loss below dropped | 0.00 at 90.00, 10.00 at 110.00 | — |
-| $p$ | the put's payoff: the same rule the other way round | 10.00 at 90.00, 0.00 at 110.00 | — |
-| $f$ | the forward's payoff, with no choice in it | −10.00 at 90.00, 10.00 at 110.00 | — |
-| $a$ | signed size: +1 for one held, −1 for one written | +1 | the line steepens; a minus sign turns it upside down |
-| $V_0$ | what one contract costs today, per share | 9.23 call, 6.33 put | break-even moves further away |
-| $\Pi$ | profit at expiry: payoff less what was paid | −9.23 at 100.00 | — |
-| $S_0$ | Acme's price today | 100.00 | calls cost more, puts less |
-| $r$ | the riskless rate, continuously compounded | 5% | the financed break-even rises |
-| $q$ | the dividend yield the share pays out | 2% | — |
-| $T$ | time to expiry, in years | 1 | — |
+| $`S_T`$ | Acme's price on expiry day: the one number every payoff reads | 60.00 to 140.00 in the tables | each contract slides along its line |
+| $`K`$ | the strike: the price written on the ticket | 100.00 | the call pays less, the put more |
+| $`c`$ | the call's payoff: the gain above the strike kept, the loss below dropped | 0.00 at 90.00, 10.00 at 110.00 | — |
+| $`p`$ | the put's payoff: the same rule the other way round | 10.00 at 90.00, 0.00 at 110.00 | — |
+| $`f`$ | the forward's payoff, with no choice in it | −10.00 at 90.00, 10.00 at 110.00 | — |
+| $`a`$ | signed size: +1 for one held, −1 for one written | +1 | the line steepens; a minus sign turns it upside down |
+| $`V_0`$ | what one contract costs today, per share | 9.23 call, 6.33 put | break-even moves further away |
+| $`\Pi`$ | profit at expiry: payoff less what was paid | −9.23 at 100.00 | — |
+| $`S_0`$ | Acme's price today | 100.00 | calls cost more, puts less |
+| $`r`$ | the riskless rate, continuously compounded | 5% | the financed break-even rises |
+| $`q`$ | the dividend yield the share pays out | 2% | — |
+| $`T`$ | time to expiry, in years | 1 | — |
 
 ### When it holds
 
@@ -98,15 +104,15 @@ So a European contract collapses into a function of a single number, and such a 
 
 ### Step 1: the choice is arithmetic, not judgement
 
-A call holder on expiry day faces two ledgers and no third option. Use the ticket: hand over $K$, take a share worth $S_T$, sell it, and the cash is $S_T - K$. Decline, and nothing moves. Above the strike the first ledger wins, below it the second, and at the strike both are zero. The payoff is the larger of the two, which is exactly $(S_T - K)^+$.
+A call holder on expiry day faces two ledgers and no third option. Use the ticket: hand over $`K`$, take a share worth $`S_T`$, sell it, and the cash is $`S_T - K`$. Decline, and nothing moves. Above the strike the first ledger wins, below it the second, and at the strike both are zero. The payoff is the larger of the two, which is exactly $`(S_T - K)^+`$.
 
 No forecast and no preference enters. The code computes every payoff twice — from the positive-part formula, and by walking both ledgers and keeping the better one. The two agree at all 801 prices tested, quarter-dollar steps that cross the strike where the line bends.
 
-The put runs the same way reversed: buy a share for $S_T$, hand it over for $K$, keep $K - S_T$ when that is positive. The forward has no second ledger at all. That is the difference between an obligation and a right, and why a right is never free.
+The put runs the same way reversed: buy a share for $`S_T`$, hand it over for $`K`$, keep $`K - S_T`$ when that is positive. The forward has no second ledger at all. That is the difference between an obligation and a right, and why a right is never free.
 
 ### Step 2: the short side is the long side upside down
 
-Every dollar under a contract moves between two parties. The call's writer takes the premium today and must deliver a share for $K$ if asked. On expiry day the writer's cash is the call's payoff with a minus sign: zero when the holder walks away, a loss with no floor as Acme climbs. Setting $a = -1$ does that, and the code builds its short row from the writer's own ledger rather than by negating the holder's.
+Every dollar under a contract moves between two parties. The call's writer takes the premium today and must deliver a share for $`K`$ if asked. On expiry day the writer's cash is the call's payoff with a minus sign: zero when the holder walks away, a loss with no floor as Acme climbs. Setting $`a = -1`$ does that, and the code builds its short row from the writer's own ledger rather than by negating the holder's.
 
 A long call's loss is capped at the premium and its gain is not. A short call is that sentence with the two words swapped: the gain is capped, the loss is not. Selling options is not a capped-risk trade; the cap is on the good side.
 
@@ -129,20 +135,22 @@ The straight line through the middle is the forward. The flat-then-rising line i
 
 Read the chart at $90.00: the forward loses $10.00, the call pays nothing, the put pays $10.00, so call minus put is −$10.00 — the forward. At $120.00 the forward and the call both pay $20.00 and the put nothing, so call minus put is $20.00. It holds at every price:
 
-$$c(S_T) - p(S_T) = f(S_T)$$
+```math
+c(S_T) - p(S_T) = f(S_T)
+```
 
 **Read it aloud:** holding a call and having written a put at the same strike is an obligation to buy the share at that strike — a forward, assembled from two options.
 
 <details>
 <summary>Detailed proof: the three cases, and the signed version</summary>
 
-Split on the sign of $S_T - K$: above the strike, below it, or equal. That is every case.
+Split on the sign of $`S_T - K`$: above the strike, below it, or equal. That is every case.
 
-- Above: $c = S_T - K$ and $p = 0$, so $c - p = S_T - K = f$.
-- Below: $c = 0$ and $p = K - S_T$, so $c - p = -(K - S_T) = S_T - K = f$.
-- Equal: both positive parts are zero, and so is $f$.
+- Above: $`c = S_T - K`$ and $`p = 0`$, so $`c - p = S_T - K = f`$.
+- Below: $`c = 0`$ and $`p = K - S_T`$, so $`c - p = -(K - S_T) = S_T - K = f`$.
+- Equal: both positive parts are zero, and so is $`f`$.
 
-Multiplying by one signed size preserves it, since $a(c - p) = ac - ap$. With $a = 0$ every term is zero, so an empty position satisfies the identity rather than breaking it; written as a ratio it would need a division by the size and would lose that case.
+Multiplying by one signed size preserves it, since $`a(c - p) = ac - ap`$. With $`a = 0`$ every term is zero, so an empty position satisfies the identity rather than breaking it; written as a ratio it would need a division by the size and would lose that case.
 
 This is a statement about cash on expiry day, not about what the two tickets cost today. Turning it into a statement about prices is the next card.
 
@@ -173,7 +181,7 @@ Any payoff drawn as a line can be built from simple pieces, and what the pieces 
 
 ### Step 5: where the profit line crosses zero
 
-Setting $\Pi$ to zero for a long call with a positive premium gives $(S_T - K)^+ = V_0$. The right side is positive, so the flat branch cannot supply it: the live branch is the sloping one, $S_T - K = V_0$, and $S_T = K + V_0$. One crossing, not two, and it exists for every positive premium.
+Setting $`\Pi`$ to zero for a long call with a positive premium gives $`(S_T - K)^+ = V_0`$. The right side is positive, so the flat branch cannot supply it: the live branch is the sloping one, $`S_T - K = V_0`$, and $`S_T = K + V_0`$. One crossing, not two, and it exists for every positive premium.
 
 The boundary cases are the interesting part. A ticket that cost nothing breaks even at every price at or below the strike, since both sides are then zero — an interval, not a point. A position of zero size breaks even everywhere, no cash having moved. Dividing through by the size would lose both.
 
@@ -205,7 +213,7 @@ One share of Acme, strike $100.00, one year. The call cost $9.23 and the put $6.
 
 So the ticket that cost $9.23 needed Acme above $109.23 on the day to have been worth buying, and above $109.70 if the $9.23 was borrowed.
 
-The shelf's two premiums are not free-standing numbers. Carry Step 3's identity into today's money and the call's price less the put's must equal $S_0 e^{-qT} - K e^{-rT}$: $2.896925 both ways, on two lines of the output. That figure is also what the forward struck at $100.00 is worth today, since Step 3 makes that forward the call held against the put written. Why it must be so is the next card.
+The shelf's two premiums are not free-standing numbers. Carry Step 3's identity into today's money and the call's price less the put's must equal $`S_0 e^{-qT} - K e^{-rT}`$: $2.896925 both ways, on two lines of the output. That figure is also what the forward struck at $100.00 is worth today, since Step 3 makes that forward the call held against the put written. Why it must be so is the next card.
 
 ### What breaks if you drop a piece
 
@@ -625,7 +633,7 @@ The two outputs match line for line.
 Lean proves three payoff facts for every expiry price and strike that are not negative, and every positive premium.
 
 - A call's payoff minus a put's payoff, at the same strike, equals the forward's payoff at every price.
-- Take a long call bought for a positive premium $V_0$. Then its profit is zero at exactly one price, $S_T = K + V_0$.
+- Take a long call bought for a positive premium $`V_0`$. Then its profit is zero at exactly one price, $`S_T = K + V_0`$.
 - A straddle's payoff is the distance from the strike, either way.
 - Take a straddle bought for a positive total cost. Then its profit is zero only at the strike minus that cost, or the strike plus it.
 - The worked numbers' whole-dollar payoffs at strike 100 come out right: the call at 90, 110 and 140, and the put at 90.

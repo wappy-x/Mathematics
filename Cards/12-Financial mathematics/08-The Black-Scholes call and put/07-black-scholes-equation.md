@@ -43,38 +43,42 @@ The line below zero is the clock: it takes the most, $5.09 a year, when Acme sit
 
 ## The formula
 
-Two slopes and a slope of a slope, so the notation first, in words. Write $V$ for what the option is worth. It depends on two things: the share price $S$ and today's date $t$.
+Two slopes and a slope of a slope, so the notation first, in words. Write $`V`$ for what the option is worth. It depends on two things: the share price $`S`$ and today's date $`t`$.
 
-- $\partial V / \partial t$ means *hold the share price still, let the calendar run, and measure how fast the value changes* — a partial derivative, one variable moved at a time ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
-- $\partial V / \partial S$ is the same measurement against the share price, with the date held still.
-- $\partial^2 V / \partial S^2$ is the slope of that slope: how fast the first slope itself changes as the share price moves.
+- $`\partial V / \partial t`$ means *hold the share price still, let the calendar run, and measure how fast the value changes* — a partial derivative, one variable moved at a time ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
+- $`\partial V / \partial S`$ is the same measurement against the share price, with the date held still.
+- $`\partial^2 V / \partial S^2`$ is the slope of that slope: how fast the first slope itself changes as the share price moves.
 
-$$\frac{\partial V}{\partial t} \;+\; (r-q)\,S\,\frac{\partial V}{\partial S} \;+\; \tfrac12\,\sigma^2 S^2\,\frac{\partial^2 V}{\partial S^2} \;=\; r\,V$$
+```math
+\frac{\partial V}{\partial t} \;+\; (r-q)\,S\,\frac{\partial V}{\partial S} \;+\; \tfrac12\,\sigma^2 S^2\,\frac{\partial^2 V}{\partial S^2} \;=\; r\,V
+```
 
 **Read it aloud:** what the clock takes, plus what the hedge's share-and-cash mix carries, plus what the bend pays back, comes to exactly the bank rate on the option's own value.
 
 Trading desks give the three slopes Greek names and write the same line this way:
 
-$$\Theta \;+\; (r-q)\,S\,\Delta \;+\; \tfrac12\,\sigma^2 S^2\,\Gamma \;=\; r\,V$$
+```math
+\Theta \;+\; (r-q)\,S\,\Delta \;+\; \tfrac12\,\sigma^2 S^2\,\Gamma \;=\; r\,V
+```
 
-$\Theta$, $\Delta$ and $\Gamma$ are those three slopes under shorter names. This card uses them only as names; what each one does in a trading book gets its own shelf, starting at [Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md).
+$`\Theta`$, $`\Delta`$ and $`\Gamma`$ are those three slopes under shorter names. This card uses them only as names; what each one does in a trading book gets its own shelf, starting at [Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md).
 
 | Symbol | Plain meaning | In our example | Push it up and the left side… |
 | --- | --- | --- | --- |
-| $V$ | what the claim is worth today — an option, or any other claim that can be hedged this way | $9.23, the house call | the bank-rate term on the right grows with it |
-| $S$ | Acme's share price right now | $100 | moves every term: see the chart above |
-| $K$ | the **strike**, the price the option may buy at | $100 | the bend shifts to sit over the new strike |
-| $t$, $T$ | the calendar date now, and the expiry date on that same calendar | 0 and 1 year | less life left makes the clock and the bend both fiercer |
-| $r$ | the **riskless rate**: what cash earns in the bank, compounded continuously | 5% | the carry and the bank-rate term both rise |
-| $q$ | the **dividend yield**: cash the company pays shareholders, as a rate | 2% | the carry falls, since the borrowed share owes more away |
-| $\sigma$ | **volatility**: how jumpy the share is. Say "sigma". | 20% | the bend's pay-back rises with its square |
-| $\mu$ | the share's **real** expected growth. Say "mu". It is absent from the equation. | 10%, and it cancels in Step 2 | nothing: that is the point of the card |
-| $\Theta$ | **theta**: $\partial V/\partial t$, dollars gained per year of calendar time, so usually negative | −5.089319 | — |
-| $\Delta$ | **delta**: $\partial V/\partial S$, and also the shares to short per option held | 0.586851 | — |
-| $\Gamma$ | **gamma**: $\partial^2 V/\partial S^2$, how fast delta itself moves, per dollar | 0.018951 | — |
-| $d_1$, $d_2$, $N$, $n$ | the call formula's pieces: two distances to the strike, the bell curve's area and its height | 0.25 and 0.05 | — |
+| $`V`$ | what the claim is worth today — an option, or any other claim that can be hedged this way | $9.23, the house call | the bank-rate term on the right grows with it |
+| $`S`$ | Acme's share price right now | $100 | moves every term: see the chart above |
+| $`K`$ | the **strike**, the price the option may buy at | $100 | the bend shifts to sit over the new strike |
+| $`t`$, $`T`$ | the calendar date now, and the expiry date on that same calendar | 0 and 1 year | less life left makes the clock and the bend both fiercer |
+| $`r`$ | the **riskless rate**: what cash earns in the bank, compounded continuously | 5% | the carry and the bank-rate term both rise |
+| $`q`$ | the **dividend yield**: cash the company pays shareholders, as a rate | 2% | the carry falls, since the borrowed share owes more away |
+| $`\sigma`$ | **volatility**: how jumpy the share is. Say "sigma". | 20% | the bend's pay-back rises with its square |
+| $`\mu`$ | the share's **real** expected growth. Say "mu". It is absent from the equation. | 10%, and it cancels in Step 2 | nothing: that is the point of the card |
+| $`\Theta`$ | **theta**: $`\partial V/\partial t`$, dollars gained per year of calendar time, so usually negative | −5.089319 | — |
+| $`\Delta`$ | **delta**: $`\partial V/\partial S`$, and also the shares to short per option held | 0.586851 | — |
+| $`\Gamma`$ | **gamma**: $`\partial^2 V/\partial S^2`$, how fast delta itself moves, per dollar | 0.018951 | — |
+| $`d_1`$, $`d_2`$, $`N`$, $`n`$ | the call formula's pieces: two distances to the strike, the bell curve's area and its height | 0.25 and 0.05 | — |
 
-Every term is dollars per year, which is a free check on any version written down: $\sigma^2$ is per year, $S^2$ is dollars squared, $\Gamma$ is per dollar, so the bend's term is dollars a year like the rest. A term that is not dollars a year has lost an $S$.
+Every term is dollars per year, which is a free check on any version written down: $`\sigma^2`$ is per year, $`S^2`$ is dollars squared, $`\Gamma`$ is per dollar, so the bend's term is dollars a year like the rest. A term that is not dollars a year has lost an $`S`$.
 
 ### When it holds
 
@@ -100,58 +104,74 @@ A sum that does not care is riskless, and a riskless pile of money must grow at 
 
 Take the share to follow, over a slice of time written dt,
 
-$$dS \;=\; \mu S\,dt \;+\; \sigma S\,dW$$
+```math
+dS \;=\; \mu S\,dt \;+\; \sigma S\,dW
+```
 
-where dW is the random kick: average zero, and its size grows with the square root of the time slice. That last fact is the whole difficulty. The square of the kick is not a negligible second-order crumb; over a slice dt it averages $\sigma^2 S^2\,dt$, which is first order. So when the option's value is expanded, the second slope earns a place in the dt line that ordinary calculus would never give it. That is Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)):
+where dW is the random kick: average zero, and its size grows with the square root of the time slice. That last fact is the whole difficulty. The square of the kick is not a negligible second-order crumb; over a slice dt it averages $`\sigma^2 S^2\,dt`$, which is first order. So when the option's value is expanded, the second slope earns a place in the dt line that ordinary calculus would never give it. That is Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)):
 
-$$dV \;=\; \left(\frac{\partial V}{\partial t} + \mu S \frac{\partial V}{\partial S} + \tfrac12\,\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2}\right) dt \;+\; \sigma S \frac{\partial V}{\partial S}\,dW$$
+```math
+dV \;=\; \left(\frac{\partial V}{\partial t} + \mu S \frac{\partial V}{\partial S} + \tfrac12\,\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2}\right) dt \;+\; \sigma S \frac{\partial V}{\partial S}\,dW
+```
 
 ### Step 2: short delta shares, and two things leave together
 
-Hold one option and short $\Delta$ shares, keeping $\Delta$ fixed across the instant. Being short a share means owing its dividend, which costs $q S \Delta\,dt$. The hedged book is worth $V - \Delta S$, and it moves by the option's move, less the shares' move, less that dividend.
+Hold one option and short $`\Delta`$ shares, keeping $`\Delta`$ fixed across the instant. Being short a share means owing its dividend, which costs $`q S \Delta\,dt`$. The hedged book is worth $`V - \Delta S`$, and it moves by the option's move, less the shares' move, less that dividend.
 
-Look at what multiplies dW in the result: $\left(\partial V/\partial S - \Delta\right)\sigma S$. Choose
+Look at what multiplies dW in the result: $`\left(\partial V/\partial S - \Delta\right)\sigma S`$. Choose
 
-$$\Delta \;=\; \frac{\partial V}{\partial S}$$
+```math
+\Delta \;=\; \frac{\partial V}{\partial S}
+```
 
-and it is zero. The randomness is gone. **And mu goes with it:** the $\mu S\,\partial V/\partial S$ from Itô's lemma is cancelled by the $-\mu S \Delta$ the short shares contribute, because the same $\partial V/\partial S$ appears in both. One choice, two deletions.
+and it is zero. The randomness is gone. **And mu goes with it:** the $`\mu S\,\partial V/\partial S`$ from Itô's lemma is cancelled by the $`-\mu S \Delta`$ the short shares contribute, because the same $`\partial V/\partial S`$ appears in both. One choice, two deletions.
 
 What is left is certain:
 
-$$d(V - \Delta S) \;=\; \left(\frac{\partial V}{\partial t} + \tfrac12\,\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} - q S \frac{\partial V}{\partial S}\right) dt$$
+```math
+d(V - \Delta S) \;=\; \left(\frac{\partial V}{\partial t} + \tfrac12\,\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} - q S \frac{\partial V}{\partial S}\right) dt
+```
 
 ### Step 3: certain means the bank rate, with no room to argue
 
 A position whose value over the next instant is already known can be compared with cash in the bank. If it grows faster than the bank rate, borrow at the bank rate and buy the position: free money. If slower, sell it and deposit the proceeds: free money the other way. So it must grow at exactly the bank rate on its own value:
 
-$$d(V - \Delta S) \;=\; r\,(V - \Delta S)\,dt$$
+```math
+d(V - \Delta S) \;=\; r\,(V - \Delta S)\,dt
+```
 
 ### Step 4: two expressions for the same thing, so set them equal
 
-Both lines above give the change in the hedged book over dt. Equate them, cancel the dt, and move the term $-r S\,\partial V/\partial S$ across to join the dividend term:
+Both lines above give the change in the hedged book over dt. Equate them, cancel the dt, and move the term $`-r S\,\partial V/\partial S`$ across to join the dividend term:
 
-$$\frac{\partial V}{\partial t} + (r-q)\,S\,\frac{\partial V}{\partial S} + \tfrac12\,\sigma^2 S^2\,\frac{\partial^2 V}{\partial S^2} = r\,V$$
+```math
+\frac{\partial V}{\partial t} + (r-q)\,S\,\frac{\partial V}{\partial S} + \tfrac12\,\sigma^2 S^2\,\frac{\partial^2 V}{\partial S^2} = r\,V
+```
 
 Notice what the derivation never used: the option's payoff. The equation is the same for a call, a put, a prepaid share, or a bet that pays a dollar above the strike. Only the ending condition at expiry differs, which is why the card's code solves it twice, once for each of two payoffs, and gets both right.
 
 <details>
 <summary>Detailed proof, with the algebra written out</summary>
 
-Take $V(S,t)$ to have a continuous first slope in $t$ and two continuous slopes in $S$ for $t < T$, and let the share follow $dS = \mu S\,dt + \sigma S\,dW$. Step 1's expansion of dV holds, using $(dS)^2 = \sigma^2 S^2\,dt$ to order dt. Hold the book $V - \Delta S$ with $\Delta$ fixed across the instant; shorting $\Delta$ shares costs the dividend $q S \Delta\,dt$, so the book changes by $dV - \Delta\,dS - q S \Delta\,dt$, which is
-$$\left(\frac{\partial V}{\partial t} + \mu S \frac{\partial V}{\partial S} + \tfrac12\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} - \mu S \Delta - q S \Delta\right)dt \;+\; \sigma S\left(\frac{\partial V}{\partial S} - \Delta\right)dW.$$
-Set $\Delta = \partial V/\partial S$. The dW bracket vanishes, and the two mu terms cancel exactly, since the same slope stands in both. No randomness is left, so no-arbitrage forces the change to equal $r\left(V - S\,\partial V/\partial S\right)dt$. Equate the two and cancel dt:
-$$\frac{\partial V}{\partial t} + \tfrac12\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} - q S \frac{\partial V}{\partial S} = r V - r S \frac{\partial V}{\partial S}.$$
+Take $`V(S,t)`$ to have a continuous first slope in $`t`$ and two continuous slopes in $`S`$ for $`t < T`$, and let the share follow $`dS = \mu S\,dt + \sigma S\,dW`$. Step 1's expansion of dV holds, using $`(dS)^2 = \sigma^2 S^2\,dt`$ to order dt. Hold the book $`V - \Delta S`$ with $`\Delta`$ fixed across the instant; shorting $`\Delta`$ shares costs the dividend $`q S \Delta\,dt`$, so the book changes by $`dV - \Delta\,dS - q S \Delta\,dt`$, which is
+
+$`\displaystyle \left(\frac{\partial V}{\partial t} + \mu S \frac{\partial V}{\partial S} + \tfrac12\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} - \mu S \Delta - q S \Delta\right)dt \;+\; \sigma S\left(\frac{\partial V}{\partial S} - \Delta\right)dW.`$
+
+Set $`\Delta = \partial V/\partial S`$. The dW bracket vanishes, and the two mu terms cancel exactly, since the same slope stands in both. No randomness is left, so no-arbitrage forces the change to equal $`r\left(V - S\,\partial V/\partial S\right)dt`$. Equate the two and cancel dt:
+
+$`\displaystyle \frac{\partial V}{\partial t} + \tfrac12\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} - q S \frac{\partial V}{\partial S} = r V - r S \frac{\partial V}{\partial S}.`$
+
 Collecting the two share-slope terms on the left gives the claim.
 
-**The small print, honestly.** Holding $\Delta$ fixed across an instant while $\Delta$ itself depends on $S$ is the step a probabilist rewrites, replacing the frozen hedge with a trading strategy that pays for itself. The answer is identical, and the version above is the one that tells a desk what to trade. Uniqueness needs one more condition: among solutions growing no faster than the share price there is exactly one, so solving with the payoff as the ending condition gives the price and nothing else.
+**The small print, honestly.** Holding $`\Delta`$ fixed across an instant while $`\Delta`$ itself depends on $`S`$ is the step a probabilist rewrites, replacing the frozen hedge with a trading strategy that pays for itself. The answer is identical, and the version above is the one that tells a desk what to trade. Uniqueness needs one more condition: among solutions growing no faster than the share price there is exactly one, so solving with the payoff as the ending condition gives the price and nothing else.
 
 </details>
 
 ### The other door into the same room
 
-Any equation of this exact shape — one time slope, two share slopes, minus a multiple of the function itself — has a solution that can be written as an average: take the payoff, average it over where the share could end up in a pretend world where it grows at $r - q$, and discount that average back at $r$. The match between such equations and such averages is the [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md) formula, and it turns this card's equation into the formulas of [Black–Scholes call](01-black-scholes-call.md) and [Black-Scholes put](02-black-scholes-put.md).
+Any equation of this exact shape — one time slope, two share slopes, minus a multiple of the function itself — has a solution that can be written as an average: take the payoff, average it over where the share could end up in a pretend world where it grows at $`r - q`$, and discount that average back at $`r`$. The match between such equations and such averages is the [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md) formula, and it turns this card's equation into the formulas of [Black–Scholes call](01-black-scholes-call.md) and [Black-Scholes put](02-black-scholes-put.md).
 
-It also explains why the pretend world's drift is the same $r-q$ standing in front of $\partial V/\partial S$ here. That world was never a philosophy; it is this equation, read as an average.
+It also explains why the pretend world's drift is the same $`r-q`$ standing in front of $`\partial V/\partial S`$ here. That world was never a philosophy; it is this equation, read as an average.
 
 ---
 
@@ -161,21 +181,21 @@ The house market: Acme at $100, strike $100, the riskless rate 5%, the dividend 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the clock's slope, theta | dollars a year, from the call formula | $-5.089319$ |
-| the share slope, delta | shares per option | $0.586851$ |
-| the slope of that slope, gamma | per dollar | $0.018951$ |
-| A, the clock | as above | $-5.089319$ |
-| B, the carry | $0.03 \times 100 \times 0.586851$ | $1.760553$ |
-| C, the bend | $0.5 \times 0.04 \times 10000 \times 0.018951$ | $3.790116$ |
-| left side, A + B + C | $-5.089319 + 1.760553 + 3.790116$ | $0.461350$ |
-| D, the right side | $0.05 \times 9.227006$ | $0.461350$ |
-| **the leftover** | left side minus right side | **$0.000000$** |
+| the clock's slope, theta | dollars a year, from the call formula | $`-5.089319`$ |
+| the share slope, delta | shares per option | $`0.586851`$ |
+| the slope of that slope, gamma | per dollar | $`0.018951`$ |
+| A, the clock | as above | $`-5.089319`$ |
+| B, the carry | $`0.03 \times 100 \times 0.586851`$ | $`1.760553`$ |
+| C, the bend | $`0.5 \times 0.04 \times 10000 \times 0.018951`$ | $`3.790116`$ |
+| left side, A + B + C | $`-5.089319 + 1.760553 + 3.790116`$ | $`0.461350`$ |
+| D, the right side | $`0.05 \times 9.227006`$ | $`0.461350`$ |
+| **the leftover** | left side minus right side | **$`0.000000`$** |
 
 So the hedged book on this option earns 46 cents a year on an outlay of $9.23, and that is all it can earn. The leftover is zero to the last digit a computer carries: the code prints it at twelve decimals.
 
-Read the same line the way a desk does. Move the carry across: what the clock takes plus what the bend pays, $-5.089319 + 3.790116 = -1.299203$ a year, is the cost of carrying the mix that copies the option. That mix is 0.586851 shares, worth $58.69, paid for with the option's own $9.23 and a loan of $49.458109 — which is why the code prints the mix's cash as a negative number.
+Read the same line the way a desk does. Move the carry across: what the clock takes plus what the bend pays, $`-5.089319 + 3.790116 = -1.299203`$ a year, is the cost of carrying the mix that copies the option. That mix is 0.586851 shares, worth $58.69, paid for with the option's own $9.23 and a loan of $49.458109 — which is why the code prints the mix's cash as a negative number.
 
-The loan costs 5% a year; the shares hand 2% back, $1.173702. Net cost, $-1.299203$: the same number again.
+The loan costs 5% a year; the shares hand 2% back, $1.173702. Net cost, $`-1.299203`$: the same number again.
 
 ### What breaks if you drop a piece
 
@@ -183,10 +203,10 @@ Each wrong version of the equation leaves a leftover, in dollars a year, instead
 
 | Mistake | Leftover comes out at | What went wrong |
 | --- | --- | --- |
-| Clock slope taken the wrong way round | $10.178638$ | Life left shrinks as the calendar runs on, so the two slopes are opposite in sign; this is twice theta |
-| The half in front of the bend dropped | $3.790116$ | The leftover is exactly the bend's own term. The half comes from Itô's lemma and is not a convention |
-| The real growth mu = 10% used in place of $r - q$ | $4.107958$ | The hedge cancelled mu. Putting a forecast back in is the error the whole derivation exists to prevent |
-| The dividend dropped from the equation but not from the price | $1.173702$ | The leftover is the dividend owed on the borrowed shares, $q S \Delta$ |
+| Clock slope taken the wrong way round | $`10.178638`$ | Life left shrinks as the calendar runs on, so the two slopes are opposite in sign; this is twice theta |
+| The half in front of the bend dropped | $`3.790116`$ | The leftover is exactly the bend's own term. The half comes from Itô's lemma and is not a convention |
+| The real growth mu = 10% used in place of $`r - q`$ | $`4.107958`$ | The hedge cancelled mu. Putting a forecast back in is the error the whole derivation exists to prevent |
+| The dividend dropped from the equation but not from the price | $`1.173702`$ | The leftover is the dividend owed on the borrowed shares, $`q S \Delta`$ |
 
 ---
 
@@ -239,7 +259,7 @@ The line sinking to −6.04 is the clock; the one climbing to 5.46 is the bend's
 
 Here is the gap in one day of real money. The hedged book is left alone for a trading day and then revalued. If Acme has not moved, the book loses 1.51 cents: the bend's daily pay-back of 1.50 cents, never earned, plus two thousandths of a cent of higher-order arithmetic.
 
-The bend only pays when the share actually moves. The move that just covers the day's cost is volatility times the price times the square root of the day, $0.20 \times 100 \times \sqrt{1/252} = \$1.26$; move Acme by exactly that and the revalued day comes out flat to three hundredths of a cent. Road four of the code does both.
+The bend only pays when the share actually moves. The move that just covers the day's cost is volatility times the price times the square root of the day, $`0.20 \times 100 \times \sqrt{1/252} = \$1.26`$; move Acme by exactly that and the revalued day comes out flat to three hundredths of a cent. Road four of the code does both.
 
 ---
 
@@ -700,9 +720,9 @@ The two outputs agree line for line at twelve decimal places: the same arithmeti
 
 Lean proves Steps 2 to 4 and the call, put and prepaid-share cases, for every market meeting the conditions below.
 
-- Take the hedged book's change over dt from Step 2, with $S > 0$ and $\sigma > 0$. Then the book is riskless and earns the bank rate exactly when $\Delta = \partial V/\partial S$ and $V$ obeys the equation.
+- Take the hedged book's change over dt from Step 2, with $`S > 0`$ and $`\sigma > 0`$. Then the book is riskless and earns the bank rate exactly when $`\Delta = \partial V/\partial S`$ and $`V`$ obeys the equation.
 - That holds for every real growth mu, so mu drops out of the answer.
-- Take a strike $K > 0$, $\sigma > 0$, $S > 0$ and any date strictly before expiry. Then the call and the put both obey the equation.
+- Take a strike $`K > 0`$, $`\sigma > 0`$, $`S > 0`$ and any date strictly before expiry. Then the call and the put both obey the equation.
 - A prepaid share less a loan obeys the equation at every share price and date, though it has no bend at all.
 - The worked numbers also hold exactly in fractions. That covers the carry, the left side, the desk's reading, the dividend handed back, the flipped clock and the cents-a-day rows.
 
@@ -1101,8 +1121,8 @@ example (r q S VS : ℚ) : -q * S * VS + r * S * VS = (r - q) * S * VS := by rin
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it. The asserts are pinned to the house market, so expect one to stop the program.
-> - **Put your market view into the grid.** In `grid`, change `b` to `MU - 0.5 * SG * SG`, so the march uses the share's real 10% growth instead of $r - q$. The grid prices the call at $13.95 instead of $9.23, and the assert stops it. Nobody will pay $13.95, which is Step 2 in one number.
-> - **Starve the march of time steps.** Set `steps=1000`. The time step is now larger than the grid spacing squared divided by $\sigma^2$, and the march does not just lose accuracy, it explodes: the answer comes back as `nan`. Explicit marching schemes have a speed limit.
+> - **Put your market view into the grid.** In `grid`, change `b` to `MU - 0.5 * SG * SG`, so the march uses the share's real 10% growth instead of $`r - q`$. The grid prices the call at $13.95 instead of $9.23, and the assert stops it. Nobody will pay $13.95, which is Step 2 in one number.
+> - **Starve the march of time steps.** Set `steps=1000`. The time step is now larger than the grid spacing squared divided by $`\sigma^2`$, and the march does not just lose accuracy, it explodes: the answer comes back as `nan`. Explicit marching schemes have a speed limit.
 > - **Nudge too gently.** Set `DS` to `1.0e-6`. The second difference subtracts two nearly equal numbers and divides by a millionth squared, so rounding swamps it: gamma comes back as 0.0142 instead of 0.018951. A nudge has to be small enough to keep truncation down and large enough to survive rounding.
 > - **Narrow the grid.** Set `L=0.5`, which stops the grid at share prices of $61 and $165. It returns `nan`, and not because of the walls: a narrower window across the same 600 points is a finer spacing, so the speed limit above is broken again. Raise `steps` to 20000 and the call returns at $9.227, a thousandth of a cent from the formula — at a year and 20% volatility, $61 and $165 are far enough away to leave it alone.
 
@@ -1116,7 +1136,7 @@ example (r q S VS : ℚ) : -q * S * VS + r * S * VS = (r - q) * S * VS := by rin
 > Four smaller traps, each with the number it produces on the house call:
 > - **Dropping the half in front of the bend.** The term comes from Itô's lemma, not from a trader's rule of thumb. Drop it and the leftover is $3.790116 a year, which is the bend's whole contribution.
 > - **Mixing up the two clocks.** Calendar time runs forwards; life left to expiry runs backwards. Write one equation with the other's slope and the leftover is $10.178638 a year, twice theta.
-> - **Putting a forecast where $r - q$ belongs.** A 10% view of Acme's growth leaves $4.107958 a year. The hedge deleted the forecast; the equation has no slot for it.
+> - **Putting a forecast where $`r - q`$ belongs.** A 10% view of Acme's growth leaves $4.107958 a year. The hedge deleted the forecast; the equation has no slot for it.
 > - **Dropping the dividend on one side only.** Price with a 2% yield, write the equation without it, and the leftover is $1.173702 a year: precisely the dividend owed on the borrowed shares. This is the same slip that makes a dividend-paying call look too expensive on [Known cash dividends](08-known-cash-dividends.md).
 
 ---
@@ -1141,7 +1161,7 @@ example (r q S VS : ℚ) : -q * S * VS + r * S * VS = (r - q) * S * VS := by rin
 - [Black-Scholes put](02-black-scholes-put.md): the second payoff the code checks, at $6.33, and proof that the equation is not about calls.
 - [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): measuring a slope with one variable moving and the others held still, which is what all three terms are.
 - [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): why the second slope earns a place in the dt line. Without it there is no bend term, and no equation.
-- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the model of the share that supplies $\mu$, $\sigma$, and the fact that the kick's square is first order.
+- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the model of the share that supplies $`\mu`$, $`\sigma`$, and the fact that the kick's square is first order.
 
 ## Where this goes next
 
@@ -1159,6 +1179,6 @@ The equation pins the price, but not which payoffs have a closed form: most are 
 Verified 19 Sep 2026: every link below resolves to the publisher's page.
 
 - Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The hedge argument and the equation, with no dividends.
-- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). Adds the continuous dividend yield $q$; the version on this card.
+- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). Adds the continuous dividend yield $`q`$; the version on this card.
 - Wilmott, Paul, Sam Howison, and Jeff Dewynne. *The Mathematics of Financial Derivatives: A Student Introduction*. Cambridge University Press, 1995. [Publisher page](https://www.cambridge.org/core/books/mathematics-of-financial-derivatives/7121345D07C5BCE4FBEC91A8A7E6F267). The change of variables to the heat equation, and the marching grids of road three.
 - Shreve, Steven E. *Stochastic Calculus for Finance II: Continuous-Time Models*. Springer, 2004. [Publisher page](https://link.springer.com/book/9780387401010). The Feynman-Kac correspondence behind "the other door", and the uniqueness class.

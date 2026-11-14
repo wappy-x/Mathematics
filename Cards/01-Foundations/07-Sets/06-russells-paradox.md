@@ -45,24 +45,24 @@ Promised for every villager, so promised when x is Cyd:
 
 **Cyd shaves Cyd exactly when Cyd does not shave Cyd.**
 
-Membership runs the same sentence. The move that breaks names a collection $R$ with nothing to cut from:
+Membership runs the same sentence. The move that breaks names a collection $`R`$ with nothing to cut from:
 
-**$R$ = {x : x is not a member of x}**
+**$`R`$ = {x : x is not a member of x}**
 
-The safe move starts from a set $A$ already in hand:
+The safe move starts from a set $`A`$ already in hand:
 
-**the Russell cut of $A$ = {x in $A$ : x is not a member of x}**
+**the Russell cut of $`A`$ = {x in $`A`$ : x is not a member of x}**
 
-**Read it aloud:** $R$ gathers everything not in itself; the Russell cut gathers only the members of $A$ not in themselves.
+**Read it aloud:** $`R`$ gathers everything not in itself; the Russell cut gathers only the members of $`A`$ not in themselves.
 
 | Symbol | Plain meaning | In our village |
 | --- | --- | --- |
-| $R$ | the collection the rule tries to name | Cyd's customers |
-| $\in$ | "is a member of" | Ben $\in$ Cyd's list |
-| $\notin$ | "is not a member of" | Ada $\notin$ Cyd's list |
-| $A$ | the set you start from, to cut down | — |
+| $`R`$ | the collection the rule tries to name | Cyd's customers |
+| $`\in`$ | "is a member of" | Ben $`\in`$ Cyd's list |
+| $`\notin`$ | "is not a member of" | Ada $`\notin`$ Cyd's list |
+| $`A`$ | the set you start from, to cut down | — |
 | { } | braces: the members sit inside | {Ben} |
-| : | inside braces, "such that" | {x in $A$ : x is not in x} |
+| : | inside braces, "such that" | {x in $`A`$ : x is not in x} |
 
 ### When it holds
 
@@ -86,13 +86,13 @@ Put Cyd in for x. Both answers are ruled out, so the sentence is false. But the 
 
 ### Step 2: the same flip, with membership
 
-Ask whether a set belongs to itself. Most do not: the set of villagers is not a villager. Gather every set that is not a member of itself and call it $R$. Is $R$ a member of $R$? If it is, it fails its own entry test, so it is not. If it is not, it passes, so it is. Same wreck, so no such set exists.
+Ask whether a set belongs to itself. Most do not: the set of villagers is not a villager. Gather every set that is not a member of itself and call it $`R`$. Is $`R`$ a member of $`R`$? If it is, it fails its own entry test, so it is not. If it is not, it passes, so it is. Same wreck, so no such set exists.
 
 ### Step 3: cut, do not sweep
 
-The sweep has a name: unrestricted comprehension. The repair is separation, also called specification: start from a set $A$ already in hand and keep the members of $A$ that pass. It always exists, because you never reached past $A$ to get it.
+The sweep has a name: unrestricted comprehension. The repair is separation, also called specification: start from a set $`A`$ already in hand and keep the members of $`A`$ that pass. It always exists, because you never reached past $`A`$ to get it.
 
-One hole comes with it. The Russell cut of $A$ is never a member of $A$ — if it were, the flip would run again inside $A$. Every set is missing its own Russell cut, so no set holds everything.
+One hole comes with it. The Russell cut of $`A`$ is never a member of $`A`$ — if it were, the flip would run again inside $`A`$. Every set is missing its own Russell cut, so no set holds everything.
 
 ---
 
@@ -246,7 +246,7 @@ Lean proves the flip for every set and every village, and recounts the three-vil
 
 - No set holds exactly the sets that are not members of themselves.
 - In any village, with any meaning of "shaves", no barber shaves exactly the villagers who do not shave themselves.
-- For every set $A$, the Russell cut of $A$ is never a member of $A$.
+- For every set $`A`$, the Russell cut of $`A`$ is never a member of $`A`$.
 - In the village: 8 lists, 2 get Ada and Ben right, 0 keep the promise, all 8 break at Cyd, and none holds 8.
 
 Python and Rust build the eight lists as sets of sets and show the Russell set, holding all 8, is not among them.

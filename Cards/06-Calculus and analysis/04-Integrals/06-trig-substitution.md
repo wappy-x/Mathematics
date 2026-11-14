@@ -28,26 +28,30 @@ Scale: 1 m = 32 units. Centre O (180, 124), top of the bank (180, 28.00), P (228
 
 Reminder: the substitution rule, with its moved limits, is [Substitution](03-substitution.md). Here it runs right to left: the old variable x is written as a function of a new one, θ.
 
-$$\int_{-a}^{a} \sqrt{a^2 - x^2}\,dx \;=\; \int_{-\pi/2}^{\pi/2} a\cos\theta \cdot a\cos\theta\,d\theta \;=\; \frac{\pi a^2}{2}$$
+```math
+\int_{-a}^{a} \sqrt{a^2 - x^2}\,dx \;=\; \int_{-\pi/2}^{\pi/2} a\cos\theta \cdot a\cos\theta\,d\theta \;=\; \frac{\pi a^2}{2}
+```
 
 **Read it aloud:** the half circle's area is the root a cos θ times the restretched width a cos θ, accumulated over a half turn: half of pi a squared.
 
-Doubled, the pond is $A = \pi a^2 = 9\pi$ = 28.274334 m^2. Without limits, the same steps give the antiderivative
+Doubled, the pond is $`A = \pi a^2 = 9\pi`$ = 28.274334 m^2. Without limits, the same steps give the antiderivative
 
-$$\int \sqrt{a^2 - x^2}\,dx = \tfrac12\left(x\sqrt{a^2 - x^2} + a^2\,\theta\right) + C, \qquad \sin\theta = \frac{x}{a},\ -\tfrac{\pi}{2} \le \theta \le \tfrac{\pi}{2}$$
+```math
+\int \sqrt{a^2 - x^2}\,dx = \tfrac12\left(x\sqrt{a^2 - x^2} + a^2\,\theta\right) + C, \qquad \sin\theta = \frac{x}{a},\ -\tfrac{\pi}{2} \le \theta \le \tfrac{\pi}{2}
+```
 
 That θ is the inverse sine of x/a, written arcsin(x/a): the angle on the branch whose sine is x/a.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$ | the radius | 3 m | area grows as its square |
-| $x$ | position along the line | −3 m to 3 m | — |
-| $\theta$ | angle from the dashed upright, radians | −π/2 to π/2 | x moves right |
-| $dx$, $d\theta$ | strip widths on the x and θ rulers | dx = 3 cos θ dθ | — |
-| $A$ | the area enclosed | 28.274334 m^2 | — |
-| $F$, $C$ | an antiderivative; its free constant | F(1.5) − F(0) = 4.304752 m^2 | C cancels |
-| $\sin$, $\cos$, $\tan$, $\sec$ | trig functions; sec θ = 1/cos θ | root = 3 cos θ | tan, sec blow up at π/2 |
-| $\pi$ | a half turn; circumference over diameter | 3.141592653590 | — |
+| $`a`$ | the radius | 3 m | area grows as its square |
+| $`x`$ | position along the line | −3 m to 3 m | — |
+| $`\theta`$ | angle from the dashed upright, radians | −π/2 to π/2 | x moves right |
+| $`dx`$, $`d\theta`$ | strip widths on the x and θ rulers | dx = 3 cos θ dθ | — |
+| $`A`$ | the area enclosed | 28.274334 m^2 | — |
+| $`F`$, $`C`$ | an antiderivative; its free constant | F(1.5) − F(0) = 4.304752 m^2 | C cancels |
+| $`\sin`$, $`\cos`$, $`\tan`$, $`\sec`$ | trig functions; sec θ = 1/cos θ | root = 3 cos θ | tan, sec blow up at π/2 |
+| $`\pi`$ | a half turn; circumference over diameter | 3.141592653590 | — |
 
 The other two shapes, each with its own identity:
 
@@ -85,7 +89,9 @@ As θ runs from −π/2 to π/2, sine takes each value from −1 to 1 exactly on
 
 The rate of 3 sin θ is 3 cos θ ([Derivatives of sine and cosine](../02-Derivatives/04-derivatives-of-trig-functions.md)), so a strip of angle width dθ is a strip of width 3 cos θ dθ on the line. The ends move too: x = −3 is θ = −π/2, and x = 3 is θ = π/2. The half pond is
 
-$$\int_{-3}^{3}\sqrt{9 - x^2}\,dx = \int_{-\pi/2}^{\pi/2} 9\cos^2\theta\,d\theta$$
+```math
+\int_{-3}^{3}\sqrt{9 - x^2}\,dx = \int_{-\pi/2}^{\pi/2} 9\cos^2\theta\,d\theta
+```
 
 One factor 3 cos θ is the root, the other the stretch between rulers.
 

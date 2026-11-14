@@ -30,42 +30,48 @@ Caption: each district shows residents, then area. Widths are to scale, so area 
 
 ## The formula
 
-Notation first, in words. The space $\Omega$ (capital omega) is the set of all points; here the three districts. A sigma-algebra on it is written with a script letter, $\mathcal F$, read "the collection of sets we allow ourselves to measure"; here all 8 sets of districts. A measure is written $\mu$ (mu). The interval [0, ∞] means every number from 0 up, plus the value $\infty$ (infinity), with the rule that anything added to infinity is infinity. Sets that do not overlap are called **disjoint**.
+Notation first, in words. The space $`\Omega`$ (capital omega) is the set of all points; here the three districts. A sigma-algebra on it is written with a script letter, $`\mathcal F`$, read "the collection of sets we allow ourselves to measure"; here all 8 sets of districts. A measure is written $`\mu`$ (mu). The interval [0, ∞] means every number from 0 up, plus the value $`\infty`$ (infinity), with the rule that anything added to infinity is infinity. Sets that do not overlap are called **disjoint**.
 
-$$\mu:\mathcal F\to[0,\infty],\qquad \mu(\varnothing)=0,\qquad \mu\Big(\bigcup_{i=1}^{\infty}A_i\Big)=\sum_{i=1}^{\infty}\mu(A_i)\ \text{ whenever } A_1, A_2, \ldots \in\mathcal F \text{ are pairwise disjoint.}$$
+```math
+\mu:\mathcal F\to[0,\infty],\qquad \mu(\varnothing)=0,\qquad \mu\Big(\bigcup_{i=1}^{\infty}A_i\Big)=\sum_{i=1}^{\infty}\mu(A_i)\ \text{ whenever } A_1, A_2, \ldots \in\mathcal F \text{ are pairwise disjoint.}
+```
 
 **Read it aloud:** a measure takes each allowed set to a size of zero or more, maybe infinite; the empty set has size zero; and when a countable list of allowed sets never overlap, the size of their union is the sum of their sizes.
 
-The sum on the right has only non-negative terms, so its partial sums rise. Rising totals either settle at a finite limit or pass every number ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). In the second case this card takes the sum to be $\infty$. That is a convention of measure theory: [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md) calls such a series divergent, with no sum. The second rule is called **countable additivity**.
+The sum on the right has only non-negative terms, so its partial sums rise. Rising totals either settle at a finite limit or pass every number ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). In the second case this card takes the sum to be $`\infty`$. That is a convention of measure theory: [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md) calls such a series divergent, with no sum. The second rule is called **countable additivity**.
 
-The workhorse example gives each point $\omega$ (small omega) a weight $w(\omega)$ of zero or more and adds the weights of the points in a set $A$:
+The workhorse example gives each point $`\omega`$ (small omega) a weight $`w(\omega)`$ of zero or more and adds the weights of the points in a set $`A`$:
 
-$$\mu(A)=\sum_{\omega\in A} w(\omega)$$
+```math
+\mu(A)=\sum_{\omega\in A} w(\omega)
+```
 
 **Read it aloud:** the size of a set is the total weight of the points inside it.
 
-With every weight 1 this is **counting measure**. With weight 1 on one point and 0 elsewhere it is a **point mass** at that point, written $\delta_c$ for the point c: size 1 if the set holds c, 0 if not. Weights of 40,000, 25,000 and 10,000 give head count. A measure whose total $\mu(\Omega)$ is 1 is a **probability measure**, written $P$; share of residents is one. Length on the real line, written $\lambda$ (lambda), gives each interval its length.
+With every weight 1 this is **counting measure**. With weight 1 on one point and 0 elsewhere it is a **point mass** at that point, written $`\delta_c`$ for the point c: size 1 if the set holds c, 0 if not. Weights of 40,000, 25,000 and 10,000 give head count. A measure whose total $`\mu(\Omega)`$ is 1 is a **probability measure**, written $`P`$; share of residents is one. Length on the real line, written $`\lambda`$ (lambda), gives each interval its length.
 
-A measure is **finite** when $\mu(\Omega)<\infty$. It is **sigma-finite** when the space is a countable union of allowed sets of finite size:
+A measure is **finite** when $`\mu(\Omega)<\infty`$. It is **sigma-finite** when the space is a countable union of allowed sets of finite size:
 
-$$\Omega=\bigcup_{n=1}^{\infty}E_n,\qquad \mu(E_n)<\infty \text{ for every } n.$$
+```math
+\Omega=\bigcup_{n=1}^{\infty}E_n,\qquad \mu(E_n)<\infty \text{ for every } n.
+```
 
-The **measure space** is the triple $(\Omega,\mathcal F,\mu)$: the points, the sets that may be sized, and the sizing rule. When the rule is a probability measure the triple is a **probability space**.
+The **measure space** is the triple $`(\Omega,\mathcal F,\mu)`$: the points, the sets that may be sized, and the sizing rule. When the rule is a probability measure the triple is a **probability space**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$ | the space: every point under discussion | the districts N, C, S | more points, more sets to size |
-| $\mathcal F$ | the sigma-algebra: the sets that may be sized | all 8 sets of districts | a bigger collection asks more of the rule |
-| $\mu$ | a measure: the sizing rule | head count, area, share | — |
-| $A$, $B$, $A_i$ | sets in the sigma-algebra; the $A_i$ are a countable list of pieces | N,S is 50,000 residents | a larger set never has a smaller size |
-| $\omega$ | a single point of the space | the district C | — |
-| $w$ | the weight of each point, $w(\omega)$ | 40,000, 25,000, 10,000 residents | the sizes of every set holding that point rise by the same amount |
-| $\delta_c$ | point mass at c: 1 if the set holds c, else 0 | the town hall rule, c = C | — |
-| $P$ | a probability measure: total size 1 | share of residents | cannot exceed 1 on any set |
-| $\lambda$ | length on the real line | the interval [0, 1) has length 1 | — |
-| $E_n$ | the n-th piece of a cover by finite-size sets | the unit interval [n, n+1) | — |
-| $\varnothing$ | the empty set | no districts | — |
-| $\infty$ | the size "without bound" | the whole line's length | — |
+| $`\Omega`$ | the space: every point under discussion | the districts N, C, S | more points, more sets to size |
+| $`\mathcal F`$ | the sigma-algebra: the sets that may be sized | all 8 sets of districts | a bigger collection asks more of the rule |
+| $`\mu`$ | a measure: the sizing rule | head count, area, share | — |
+| $`A`$, $`B`$, $`A_i`$ | sets in the sigma-algebra; the $`A_i`$ are a countable list of pieces | N,S is 50,000 residents | a larger set never has a smaller size |
+| $`\omega`$ | a single point of the space | the district C | — |
+| $`w`$ | the weight of each point, $`w(\omega)`$ | 40,000, 25,000, 10,000 residents | the sizes of every set holding that point rise by the same amount |
+| $`\delta_c`$ | point mass at c: 1 if the set holds c, else 0 | the town hall rule, c = C | — |
+| $`P`$ | a probability measure: total size 1 | share of residents | cannot exceed 1 on any set |
+| $`\lambda`$ | length on the real line | the interval [0, 1) has length 1 | — |
+| $`E_n`$ | the n-th piece of a cover by finite-size sets | the unit interval [n, n+1) | — |
+| $`\varnothing`$ | the empty set | no districts | — |
+| $`\infty`$ | the size "without bound" | the whole line's length | — |
 
 ### When it holds
 
@@ -157,7 +163,7 @@ Sigma-finiteness matters later: swapping the order of a double integral, and wri
 
 ### Step 6: the triple, and why the sigma-algebra is part of it
 
-A measure is defined only on its sigma-algebra. Suppose a survey records only whether a resident lives in North. Its sigma-algebra is the 4 sets ∅, N, "C or S" and the whole city. Head count restricted there gives 0, 40,000, 35,000 and 75,000 and is a measure; the question "how many in Centre?" has no answer in that measure space, because C is not one of its sets. Same points, same counts, smaller triple. Keeping all three parts in view is why the measure space is written $(\Omega,\mathcal F,\mu)$ and not just $\mu$.
+A measure is defined only on its sigma-algebra. Suppose a survey records only whether a resident lives in North. Its sigma-algebra is the 4 sets ∅, N, "C or S" and the whole city. Head count restricted there gives 0, 40,000, 35,000 and 75,000 and is a measure; the question "how many in Centre?" has no answer in that measure space, because C is not one of its sets. Same points, same counts, smaller triple. Keeping all three parts in view is why the measure space is written $`(\Omega,\mathcal F,\mu)`$ and not just $`\mu`$.
 
 ---
 

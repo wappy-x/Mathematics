@@ -26,32 +26,38 @@ To scale, 1 km = 22 units. The dashed line joins the house to D. Only E's cell, 
 
 ## The formula
 
-Notation first, in words. Bars round a difference, $\lvert X - P\rvert$, mean the straight-line distance between two positions; curly braces collect the spots that pass the test after the colon; the dot is the dot product: multiply matching coordinates and add, so (a, b) · (x, y) = ax + by.
+Notation first, in words. Bars round a difference, $`\lvert X - P\rvert`$, mean the straight-line distance between two positions; curly braces collect the spots that pass the test after the colon; the dot is the dot product: multiply matching coordinates and add, so (a, b) · (x, y) = ax + by.
 
-$$V(P) = \{\, X : \lvert X - P\rvert \le \lvert X - Q\rvert \text{ for every other hospital } Q \,\}$$
+```math
+V(P) = \{\, X : \lvert X - P\rvert \le \lvert X - Q\rvert \text{ for every other hospital } Q \,\}
+```
 
 **Read it aloud:** the cell of hospital P is every spot at least as close to P as to any other hospital.
 
-$$\lvert X - P\rvert = \lvert X - Q\rvert \quad\text{exactly when}\quad 2\,(Q - P)\cdot X = \lvert Q\rvert^2 - \lvert P\rvert^2$$
+```math
+\lvert X - P\rvert = \lvert X - Q\rvert \quad\text{exactly when}\quad 2\,(Q - P)\cdot X = \lvert Q\rvert^2 - \lvert P\rvert^2
+```
 
 **Read it aloud:** the spots equally far from two hospitals form one straight line, square to the segment joining them, through its midpoint: the **perpendicular bisector**, where two cells meet.
 
-The **empty-circle property:** three hospitals form a Delaunay triangle exactly when the circle through them, of radius $r$, has no hospital strictly inside. Its centre is then a map corner.
+The **empty-circle property:** three hospitals form a Delaunay triangle exactly when the circle through them, of radius $`r`$, has no hospital strictly inside. Its centre is then a map corner.
 
-With $n$ hospitals, $h$ of them corners of the convex hull (the tightest convex shape round them all), and no four on one circle:
+With $`n`$ hospitals, $`h`$ of them corners of the convex hull (the tightest convex shape round them all), and no four on one circle:
 
-$$\text{triangles} = 2n - 2 - h, \qquad \text{edges} = 3n - 3 - h$$
+```math
+\text{triangles} = 2n - 2 - h, \qquad \text{edges} = 3n - 3 - h
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P$, $Q$ | two hospitals, as grid positions | A (1, 3), E (7, 5) | — |
-| $X$ | a house, at position (x, y) in km | (4, 5) | — |
-| $\lvert X - P\rvert$ | straight-line distance from house to hospital | 2.24 km to D | — |
-| $\lvert Q\rvert$ | a hospital's distance from the origin | E: square root of 7^2 + 5^2 | — |
-| $V(P)$ | the Voronoi cell of P | E's cell, 17.00 square km | — |
-| $r$ | radius of the circle through three hospitals | 4.47 km for A, B, E | the corner is worse served |
-| $n$ | number of hospitals | 5 | more triangles, smaller cells |
-| $h$ | hospitals on the convex hull; their cells are open-ended | 4 | fewer triangles |
+| $`P`$, $`Q`$ | two hospitals, as grid positions | A (1, 3), E (7, 5) | — |
+| $`X`$ | a house, at position (x, y) in km | (4, 5) | — |
+| $`\lvert X - P\rvert`$ | straight-line distance from house to hospital | 2.24 km to D | — |
+| $`\lvert Q\rvert`$ | a hospital's distance from the origin | E: square root of 7^2 + 5^2 | — |
+| $`V(P)`$ | the Voronoi cell of P | E's cell, 17.00 square km | — |
+| $`r`$ | radius of the circle through three hospitals | 4.47 km for A, B, E | the corner is worse served |
+| $`n`$ | number of hospitals | 5 | more triangles, smaller cells |
+| $`h`$ | hospitals on the convex hull; their cells are open-ended | 4 | fewer triangles |
 
 ### When it holds
 
@@ -68,7 +74,7 @@ $$\text{triangles} = 2n - 2 - h, \qquad \text{edges} = 3n - 3 - h$$
 
 A (1, 3) and B (9, 3) are level, so the spots equally far from both lie on x = 5.
 
-For any pair, expand with the dot product: $\lvert X - P\rvert^2 = X\cdot X - 2\,P\cdot X + P\cdot P$. Equate two such squared distances and $X\cdot X$ cancels, leaving the bisector equation of The formula. No square of X remains, so it is a straight line; Q − P is square to it, and the midpoint of P and Q satisfies it. For A and E it reads 3x + y = 16.
+For any pair, expand with the dot product: $`\lvert X - P\rvert^2 = X\cdot X - 2\,P\cdot X + P\cdot P`$. Equate two such squared distances and $`X\cdot X`$ cancels, leaving the bisector equation of The formula. No square of X remains, so it is a straight line; Q − P is square to it, and the midpoint of P and Q satisfies it. For A and E it reads 3x + y = 16.
 
 ### Step 1: a cell is convex
 
@@ -82,22 +88,22 @@ A spot on both the A–B and the A–E bisector is as far from B as from A, and 
 
 ### Step 3: a corner is the centre of an empty circle
 
-A spot at distance $r$ from three hospitals is a map corner exactly when those three are nearest to it: when no hospital lies strictly inside the circle. From (5, 1) the next hospital, D, is 6.32 km away, beyond 4.47 km, so (5, 1) is a corner. Triple A, B, D fails: its centre (5.00, 3.50) is 4.03 km from the three but 2.50 km from E.
+A spot at distance $`r`$ from three hospitals is a map corner exactly when those three are nearest to it: when no hospital lies strictly inside the circle. From (5, 1) the next hospital, D, is 6.32 km away, beyond 4.47 km, so (5, 1) is a corner. Triple A, B, D fails: its centre (5.00, 3.50) is 4.03 km from the three but 2.50 km from E.
 
 ### Step 4: neighbours make triangles, one per corner
 
 Join two hospitals whenever their cells share an edge. Three cells meet at each corner, so the joins there close the triangle whose empty circle Step 3 found; by Step 0 each join is square to its map edge. Hospitals match cells, joins match edges, triangles match corners: a **duality**, a one-for-one pairing of two pictures.
 
-The county gives triangles A B E, A D E, B C E and C D E, centred at (5, 1), (4, 4), (9, 5) and (6, 8), and eight joins: four hull sides, four spokes to E. With $n$ = 5 and $h$ = 4, that is $2n - 2 - h$ and $3n - 3 - h$.
+The county gives triangles A B E, A D E, B C E and C D E, centred at (5, 1), (4, 4), (9, 5) and (6, 8), and eight joins: four hull sides, four spokes to E. With $`n`$ = 5 and $`h`$ = 4, that is $`2n - 2 - h`$ and $`3n - 3 - h`$.
 
 <details>
 <summary>Detailed proof: the triangle and edge counts</summary>
 
 Take from de Berg and co-authors (chapter 9) that the triangles cover the hull without gaps or overlaps; assume no hospital lies partway along a hull side.
 
-Count angles two ways. Each triangle holds 180°. At each of the $n - h$ inside hospitals the angles fill 360°; at the $h$ hull corners they fill the hull's angles, $(h - 2)$ × 180° in all. So triangles × 180° = $(n - h)$ × 360° + $(h - 2)$ × 180°, and triangles = $2n - 2 - h$.
+Count angles two ways. Each triangle holds 180°. At each of the $`n - h`$ inside hospitals the angles fill 360°; at the $`h`$ hull corners they fill the hull's angles, $`(h - 2)`$ × 180° in all. So triangles × 180° = $`(n - h)`$ × 360° + $`(h - 2)`$ × 180°, and triangles = $`2n - 2 - h`$.
 
-Count sides: an inside edge serves two triangles, a hull side one. So 3 × triangles = 2 × edges − $h$, and edges = $3n - 3 - h$.
+Count sides: an inside edge serves two triangles, a hull side one. So 3 × triangles = 2 × edges − $`h`$, and edges = $`3n - 3 - h`$.
 
 </details>
 
@@ -346,7 +352,7 @@ The outputs match line for line. Counted areas miss shoelace areas by up to 0.10
 
 Lean proves the three map rules for any number of hospitals on flat ground, and checks the county's numbers exactly.
 
-- The spots equally far from two hospitals P and Q are exactly those with $2\,(Q - P)\cdot X = \lvert Q\rvert^2 - \lvert P\rvert^2$: one straight line.
+- The spots equally far from two hospitals P and Q are exactly those with $`2\,(Q - P)\cdot X = \lvert Q\rvert^2 - \lvert P\rvert^2`$: one straight line.
 - Every Voronoi cell is convex.
 - Take three hospitals not on one line. The centre of the circle through them lies in all three cells exactly when no hospital lies strictly inside that circle.
 - In the county, D is nearest the house, the A–E bisector is 3x + y = 16, and all four corner circles are empty.

@@ -20,61 +20,71 @@ The fix is to stop asking for *the* slope at the corner and ask for *every* slop
 
 <p align="center"><img src="../figures/subgradients.svg" alt="The net weekly bean cost against kilos of Kenyan bought: it falls from £1,200 at 0 kg to £1,080 at 40 kg, rises to £1,140 at 70 kg and to £1,380 at 100 kg. Three dashed lines through the corner at 40 kg, with slopes −1, 0 and +1, all stay under the graph." width="420"></p>
 
-The solid line is the net bill $F(q)$ for $q$ kilos of Kenyan. Each dashed line passes through the corner and stays under the graph, so its slope is a subgradient there. The flat one, at £1,080, certifies that 40 kg is the cheapest plan.
+The solid line is the net bill $`F(q)`$ for $`q`$ kilos of Kenyan. Each dashed line passes through the corner and stays under the graph, so its slope is a subgradient there. The flat one, at £1,080, certifies that 40 kg is the cheapest plan.
 
 ---
 
 ## The formula
 
-Notation first, in words. A **subgradient** of a function $f$ at a point $x$ is a number $g$ such that the line through $(x, f(x))$ with slope $g$ never rises above the graph. The **subdifferential** $\partial f(x)$, read "the subdifferential of f at x", is the set of all of them, and $g \in \partial f(x)$ says "g is one of them".
+Notation first, in words. A **subgradient** of a function $`f`$ at a point $`x`$ is a number $`g`$ such that the line through $`(x, f(x))`$ with slope $`g`$ never rises above the graph. The **subdifferential** $`\partial f(x)`$, read "the subdifferential of f at x", is the set of all of them, and $`g \in \partial f(x)`$ says "g is one of them".
 
-$$g \in \partial f(x) \quad\iff\quad f(y) \;\ge\; f(x) + g\,(y - x) \quad \text{for every } y$$
+```math
+g \in \partial f(x) \quad\iff\quad f(y) \;\ge\; f(x) + g\,(y - x) \quad \text{for every } y
+```
 
 **Read it aloud:** g is a subgradient at x when the straight line through the point with slope g stays on or below the graph at every other point y.
 
 For a convex function of one variable (one whose chords lie on or above its graph, [Convex functions](03-convex-functions-and-their-tests.md)), the set is the interval between the slope just to the left and the slope just to the right:
 
-$$\partial f(x) = \big[\,f'_-(x),\; f'_+(x)\,\big]$$
+```math
+\partial f(x) = \big[\,f'_-(x),\; f'_+(x)\,\big]
+```
 
-Two cases the job of this card needs. The absolute value $|x|$ has slope −1 left of 0 and +1 right of it:
+Two cases the job of this card needs. The absolute value $`|x|`$ has slope −1 left of 0 and +1 right of it:
 
-$$\partial |x| = \begin{cases} \{-1\} & x < 0 \\ [-1,\ 1] & x = 0 \\ \{+1\} & x > 0 \end{cases}$$
+```math
+\partial |x| = \begin{cases} \{-1\} & x < 0 \\ [-1,\ 1] & x = 0 \\ \{+1\} & x > 0 \end{cases}
+```
 
-A maximum of straight lines $f(x) = \max_i (a_i x + b_i)$ uses only the lines that reach the top at $x$, called the **active** lines, collected in a set $I$:
+A maximum of straight lines $`f(x) = \max_i (a_i x + b_i)`$ uses only the lines that reach the top at $`x`$, called the **active** lines, collected in a set $`I`$:
 
-$$\partial f(x) = \Big[\,\min_{i \in I} a_i,\; \max_{i \in I} a_i\,\Big]$$
+```math
+\partial f(x) = \Big[\,\min_{i \in I} a_i,\; \max_{i \in I} a_i\,\Big]
+```
 
 And the rule that makes all this pay off:
 
-$$x^* \text{ minimises } f \quad\iff\quad 0 \in \partial f(x^*)$$
+```math
+x^* \text{ minimises } f \quad\iff\quad 0 \in \partial f(x^*)
+```
 
 **Read it aloud:** a point is a lowest point exactly when a flat line through it fits under the graph.
 
-The Kenyan bill is a maximum of three lines, one per price tier: $C(q) = \max(9q,\; 14q - 200,\; 20q - 620)$ pounds. At 40 kg the first two read £360 and the third £180, so $I$ holds the £9 and £14 lines and $\partial C(40) = [9, 14]$. The week's net bill adds the Brazilian kilos, $F(q) = C(q) + 12\,(100 - q)$. Adding a straight line of slope −12 lowers every slope by 12, so $\partial F(40) = [-3, 2]$, which contains 0.
+The Kenyan bill is a maximum of three lines, one per price tier: $`C(q) = \max(9q,\; 14q - 200,\; 20q - 620)`$ pounds. At 40 kg the first two read £360 and the third £180, so $`I`$ holds the £9 and £14 lines and $`\partial C(40) = [9, 14]`$. The week's net bill adds the Brazilian kilos, $`F(q) = C(q) + 12\,(100 - q)`$. Adding a straight line of slope −12 lowers every slope by 12, so $`\partial F(40) = [-3, 2]`$, which contains 0.
 
-In several variables a subgradient is a vector $g$ and $g\,(y - x)$ becomes the dot product; [Jensen's inequality](05-jensen-and-supporting-lines.md) proves that a convex function has one at every inside point. Two functions get their own names here, beside wing 03's length $\|x\|$: $\|x\|_1$, the sum of the absolute entries, and $\|x\|_\infty$, the largest absolute entry. For a maximum of planes the interval becomes the convex hull (the set of all weighted averages) of the active planes' gradients.
+In several variables a subgradient is a vector $`g`$ and $`g\,(y - x)`$ becomes the dot product; [Jensen's inequality](05-jensen-and-supporting-lines.md) proves that a convex function has one at every inside point. Two functions get their own names here, beside wing 03's length $`\|x\|`$: $`\|x\|_1`$, the sum of the absolute entries, and $`\|x\|_\infty`$, the largest absolute entry. For a maximum of planes the interval becomes the convex hull (the set of all weighted averages) of the active planes' gradients.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $q$ | kilos of Kenyan bought a week, out of 100 | 40 kg is best | past 40 kg the net bill climbs £2 a kilo |
-| $C(q)$ | the Kenyan bill, in pounds | £360 at 40 kg | — |
-| $p$ | the Brazilian price, £ a kilo | £12 | past £14 the best buy jumps to 70 kg |
-| $F(q)$ | the net bill: $C(q) + p\,(100 - q)$ | £1,080 at 40 kg | — |
-| $f$, $x$, $y$ | any function, the point examined, any other point | $f = C$, $x = 40$ | — |
-| $g$ | a subgradient: the slope of a line under the graph, touching at $x$ | any number from 9 to 14 for $C$ at 40 kg | — |
-| $\partial f(x)$ | the subdifferential: the set of all subgradients at $x$ | $\partial C(40) = [9, 14]$, $\partial F(40) = [-3, 2]$ | a sharper kink, a wider interval |
-| $f'_-(x)$, $f'_+(x)$ | the slopes just left and just right of $x$ | 9 and 14 for $C$ at 40 kg | — |
-| $a_i$, $b_i$, $I$ | slope and intercept of the $i$-th line; the set of active lines | slopes 9, 14, 20; $I$ = the £9 and £14 lines at 40 kg | — |
-| $x^*$ | a minimiser: a point where $f$ is lowest | 40 kg | — |
-| $\lvert x \rvert$ | the absolute value: distance from 0 | $\partial\lvert x\rvert = [-1, 1]$ at 0, $\{1\}$ at 2.5 | — |
-| $\Vert x\Vert_1$, $\Vert x\Vert_\infty$ | sum of the absolute entries; the largest absolute entry | at $(3, 0)$: $g_1 = 1$, $g_2$ anywhere from −1 to 1 | — |
+| $`q`$ | kilos of Kenyan bought a week, out of 100 | 40 kg is best | past 40 kg the net bill climbs £2 a kilo |
+| $`C(q)`$ | the Kenyan bill, in pounds | £360 at 40 kg | — |
+| $`p`$ | the Brazilian price, £ a kilo | £12 | past £14 the best buy jumps to 70 kg |
+| $`F(q)`$ | the net bill: $`C(q) + p\,(100 - q)`$ | £1,080 at 40 kg | — |
+| $`f`$, $`x`$, $`y`$ | any function, the point examined, any other point | $`f = C`$, $`x = 40`$ | — |
+| $`g`$ | a subgradient: the slope of a line under the graph, touching at $`x`$ | any number from 9 to 14 for $`C`$ at 40 kg | — |
+| $`\partial f(x)`$ | the subdifferential: the set of all subgradients at $`x`$ | $`\partial C(40) = [9, 14]`$, $`\partial F(40) = [-3, 2]`$ | a sharper kink, a wider interval |
+| $`f'_-(x)`$, $`f'_+(x)`$ | the slopes just left and just right of $`x`$ | 9 and 14 for $`C`$ at 40 kg | — |
+| $`a_i`$, $`b_i`$, $`I`$ | slope and intercept of the $`i`$-th line; the set of active lines | slopes 9, 14, 20; $`I`$ = the £9 and £14 lines at 40 kg | — |
+| $`x^*`$ | a minimiser: a point where $`f`$ is lowest | 40 kg | — |
+| $`\lvert x \rvert`$ | the absolute value: distance from 0 | $`\partial\lvert x\rvert = [-1, 1]`$ at 0, $`\{1\}`$ at 2.5 | — |
+| $`\Vert x\Vert_1`$, $`\Vert x\Vert_\infty`$ | sum of the absolute entries; the largest absolute entry | at $`(3, 0)`$: $`g_1 = 1`$, $`g_2`$ anywhere from −1 to 1 | — |
 
 ### When it holds
 
 - **The function is convex around the point.** Then left and right slopes give the whole subdifferential. Turn the surcharge into a discount, £14 a kilo up to 40 kg and £9 after, and the bill bends the wrong way: the slopes run 14 then 9, and no line through the corner stays under the graph. The brute-force search finds 0 subgradients there.
-- **The point is inside the range, not at its end.** At an end the line can tilt without limit in one direction. At $q = 0$, any slope of −3 or less fits under $F$, because no plan buys less than 0 kg.
-- **Only active lines count.** A tier that is below the top at $x$ does not touch the graph there. Counting the £20 tier at 40 kg gives $[9, 20]$, an interval that is too wide.
-- **The limits are part of the function.** Here $q$ must lie between 0 and 100, and 40 kg is strictly inside, so the limits never bite. At a limit, take $F$ on the allowed range only, as at $q = 0$ above. Then $0 \in \partial F$ still certifies the minimum: with the Brazilian at £8, a flat line fits under $F$ at 0 kg, the best buy (Try changing). Treat $F$ as a formula for negative $q$ too and no flat line fits there, because the formula keeps falling below 0 kg. Multipliers, prices attached to the limits, split the same rule into a cost part and a limit part, taken up in [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md).
+- **The point is inside the range, not at its end.** At an end the line can tilt without limit in one direction. At $`q = 0`$, any slope of −3 or less fits under $`F`$, because no plan buys less than 0 kg.
+- **Only active lines count.** A tier that is below the top at $`x`$ does not touch the graph there. Counting the £20 tier at 40 kg gives $`[9, 20]`$, an interval that is too wide.
+- **The limits are part of the function.** Here $`q`$ must lie between 0 and 100, and 40 kg is strictly inside, so the limits never bite. At a limit, take $`F`$ on the allowed range only, as at $`q = 0`$ above. Then $`0 \in \partial F`$ still certifies the minimum: with the Brazilian at £8, a flat line fits under $`F`$ at 0 kg, the best buy (Try changing). Treat $`F`$ as a formula for negative $`q`$ too and no flat line fits there, because the formula keeps falling below 0 kg. Multipliers, prices attached to the limits, split the same rule into a cost part and a limit part, taken up in [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md).
 - **The bill has no jump.** A price that drops for the whole order past a break, or a one-off fee, makes total cost leap. A leap is not convex, and the interval formula fails there.
 
 ---
@@ -83,54 +93,54 @@ In several variables a subgradient is a vector $g$ and $g\,(y - x)$ becomes the 
 
 ### Step 0: a subgradient is a supporting line, and convex curves have them
 
-A **supporting line** at $x$ is a straight line that touches the graph at $x$ and lies on or below it everywhere else. Its slope is, by the definition above, a subgradient. The probability wing's [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) card already proves that a convex curve has a supporting line at every inside point, corner included, with any slope between the left and right slopes, as for a call option's payoff at its strike. This card names that set of slopes, computes it, and turns it into a test for a minimum.
+A **supporting line** at $`x`$ is a straight line that touches the graph at $`x`$ and lies on or below it everywhere else. Its slope is, by the definition above, a subgradient. The probability wing's [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) card already proves that a convex curve has a supporting line at every inside point, corner included, with any slope between the left and right slopes, as for a call option's payoff at its strike. This card names that set of slopes, computes it, and turns it into a test for a minimum.
 
 ### Step 1: for one variable, the subgradients are exactly the slopes between left and right
 
-On a convex graph, chord slopes rise as you move right ([Convex functions](03-convex-functions-and-their-tests.md)). Look at the condition $f(y) \ge f(x) + g\,(y - x)$ one side at a time.
+On a convex graph, chord slopes rise as you move right ([Convex functions](03-convex-functions-and-their-tests.md)). Look at the condition $`f(y) \ge f(x) + g\,(y - x)`$ one side at a time.
 
-For $y$ to the right of $x$, divide by the positive $y - x$: the condition says $g$ is at most the chord slope from $x$ to $y$. Those chord slopes fall as $y$ moves in toward $x$, down to the right slope $f'_+(x)$. So $g \le f'_+(x)$ covers every $y$ on the right.
+For $`y`$ to the right of $`x`$, divide by the positive $`y - x`$: the condition says $`g`$ is at most the chord slope from $`x`$ to $`y`$. Those chord slopes fall as $`y`$ moves in toward $`x`$, down to the right slope $`f'_+(x)`$. So $`g \le f'_+(x)`$ covers every $`y`$ on the right.
 
-For $y$ to the left, divide by the negative $y - x$, which flips the inequality: $g$ is at least the chord slope from $y$ to $x$. Those rise as $y$ moves in, up to the left slope $f'_-(x)$. So $g \ge f'_-(x)$ covers every $y$ on the left.
+For $`y`$ to the left, divide by the negative $`y - x`$, which flips the inequality: $`g`$ is at least the chord slope from $`y`$ to $`x`$. Those rise as $`y`$ moves in, up to the left slope $`f'_-(x)`$. So $`g \ge f'_-(x)`$ covers every $`y`$ on the left.
 
-Both together: $\partial f(x) = [f'_-(x), f'_+(x)]$. Where the graph is smooth the two slopes agree and the set is one number, the ordinary derivative.
+Both together: $`\partial f(x) = [f'_-(x), f'_+(x)]`$. Where the graph is smooth the two slopes agree and the set is one number, the ordinary derivative.
 
 <details>
 <summary>Detailed proof: why the chord slopes settle on the one-sided slopes</summary>
 
-Fix $x$ inside the interval where $f$ is convex. For $x < y_1 < y_2$, write $y_1$ as a weighted average of $x$ and $y_2$ with weight $t = (y_1 - x)/(y_2 - x)$ on $y_2$, which lies strictly between 0 and 1. The chord inequality $f(y_1) \le (1-t)f(x) + t f(y_2)$ rearranges to
+Fix $`x`$ inside the interval where $`f`$ is convex. For $`x < y_1 < y_2`$, write $`y_1`$ as a weighted average of $`x`$ and $`y_2`$ with weight $`t = (y_1 - x)/(y_2 - x)`$ on $`y_2`$, which lies strictly between 0 and 1. The chord inequality $`f(y_1) \le (1-t)f(x) + t f(y_2)`$ rearranges to
 
-$$\frac{f(y_1) - f(x)}{y_1 - x} \;\le\; \frac{f(y_2) - f(x)}{y_2 - x}.$$
+$`\displaystyle \frac{f(y_1) - f(x)}{y_1 - x} \;\le\; \frac{f(y_2) - f(x)}{y_2 - x}.`$
 
-So the right chord slope $r(y) = (f(y) - f(x))/(y - x)$ does not increase as $y$ falls toward $x$. The same rearrangement with a point $z < x$ shows every right chord slope is at least every left chord slope $\ell(z) = (f(x) - f(z))/(x - z)$, and that $\ell(z)$ does not decrease as $z$ rises toward $x$. A non-increasing quantity bounded below has a limit: $f'_+(x) = \lim_{y \downarrow x} r(y) = \inf_{y > x} r(y)$. Likewise $f'_-(x) = \sup_{z < x} \ell(z)$, and $f'_-(x) \le f'_+(x)$.
+So the right chord slope $`r(y) = (f(y) - f(x))/(y - x)`$ does not increase as $`y`$ falls toward $`x`$. The same rearrangement with a point $`z < x`$ shows every right chord slope is at least every left chord slope $`\ell(z) = (f(x) - f(z))/(x - z)`$, and that $`\ell(z)`$ does not decrease as $`z`$ rises toward $`x`$. A non-increasing quantity bounded below has a limit: $`f'_+(x) = \lim_{y \downarrow x} r(y) = \inf_{y > x} r(y)`$. Likewise $`f'_-(x) = \sup_{z < x} \ell(z)`$, and $`f'_-(x) \le f'_+(x)`$.
 
-Now $g \in \partial f(x)$ means $g \le r(y)$ for every $y > x$ and $g \ge \ell(z)$ for every $z < x$. The first holds for all $y$ exactly when $g \le \inf r = f'_+(x)$; the second exactly when $g \ge \sup \ell = f'_-(x)$. Hence $\partial f(x) = [f'_-(x), f'_+(x)]$, never empty.
+Now $`g \in \partial f(x)`$ means $`g \le r(y)`$ for every $`y > x`$ and $`g \ge \ell(z)`$ for every $`z < x`$. The first holds for all $`y`$ exactly when $`g \le \inf r = f'_+(x)`$; the second exactly when $`g \ge \sup \ell = f'_-(x)`$. Hence $`\partial f(x) = [f'_-(x), f'_+(x)]`$, never empty.
 
 </details>
 
 ### Step 2: the absolute value
 
-Left of 0, $|x| = -x$ with slope −1; right of 0, $|x| = x$ with slope +1. Step 1 gives $\partial|0| = [-1, 1]$. A direct check agrees: at $x = 0$ the definition asks $|y| \ge g\,y$ for every $y$. Try $y = 1$: it needs $g \le 1$. Try $y = -1$: it needs $g \ge -1$. Any $g$ in between passes for every $y$, since $g\,y \le |g|\,|y| \le |y|$. At $x = 2.5$ the graph is smooth, both slopes are 1, and the set is the single number 1.
+Left of 0, $`|x| = -x`$ with slope −1; right of 0, $`|x| = x`$ with slope +1. Step 1 gives $`\partial|0| = [-1, 1]`$. A direct check agrees: at $`x = 0`$ the definition asks $`|y| \ge g\,y`$ for every $`y`$. Try $`y = 1`$: it needs $`g \le 1`$. Try $`y = -1`$: it needs $`g \ge -1`$. Any $`g`$ in between passes for every $`y`$, since $`g\,y \le |g|\,|y| \le |y|`$. At $`x = 2.5`$ the graph is smooth, both slopes are 1, and the set is the single number 1.
 
 ### Step 3: a maximum of lines
 
-Near $x$, a line that is strictly below the top stays below for a short distance either side, so only the active lines shape the corner. Just right of $x$, the steepest active line climbs fastest and is on top, so $f'_+(x)$ is the largest active slope. Just left of $x$, going backwards, the line with the smallest slope falls least and is on top, so $f'_-(x)$ is the smallest active slope. Step 1 then gives $\partial f(x) = [\min_{i\in I} a_i, \max_{i \in I} a_i]$.
+Near $`x`$, a line that is strictly below the top stays below for a short distance either side, so only the active lines shape the corner. Just right of $`x`$, the steepest active line climbs fastest and is on top, so $`f'_+(x)`$ is the largest active slope. Just left of $`x`$, going backwards, the line with the smallest slope falls least and is on top, so $`f'_-(x)`$ is the smallest active slope. Step 1 then gives $`\partial f(x) = [\min_{i\in I} a_i, \max_{i \in I} a_i]`$.
 
-For the Kenyan bill at 40 kg the active slopes are 9 and 14: $\partial C(40) = [9, 14]$. At 55 kg only the £14 line is on top: $\partial C(55) = [14, 14]$, an ordinary derivative. At 70 kg the £14 and £20 lines meet: $\partial C(70) = [14, 20]$.
+For the Kenyan bill at 40 kg the active slopes are 9 and 14: $`\partial C(40) = [9, 14]`$. At 55 kg only the £14 line is on top: $`\partial C(55) = [14, 14]`$, an ordinary derivative. At 70 kg the £14 and £20 lines meet: $`\partial C(70) = [14, 20]`$.
 
-In several variables the same picture holds with planes. Each active plane's gradient is a subgradient, since that plane lies under the maximum and touches it at $x$. Any weighted average of subgradients is again one, because averaging the inequalities keeps them true. That gives the convex hull of the active gradients inside $\partial f(x)$. That nothing else is in it is the harder half; it is stated here, and proved in Hiriart-Urruty and Lemaréchal, chapter D (Sources).
+In several variables the same picture holds with planes. Each active plane's gradient is a subgradient, since that plane lies under the maximum and touches it at $`x`$. Any weighted average of subgradients is again one, because averaging the inequalities keeps them true. That gives the convex hull of the active gradients inside $`\partial f(x)`$. That nothing else is in it is the harder half; it is stated here, and proved in Hiriart-Urruty and Lemaréchal, chapter D (Sources).
 
-The two named norms follow. $\|x\|_1 = |x_1| + |x_2|$ splits into one absolute value per entry, so at $(3, 0)$ the first entry must be $g_1 = 1$ and the second can be anything in $[-1, 1]$. $\|x\|_\infty = \max(x_1, -x_1, x_2, -x_2)$ is a maximum of four planes. At $(3, -3)$ two are active, $x_1$ and $-x_2$, with gradients $(1, 0)$ and $(0, -1)$, so $\partial\|x\|_\infty$ is the segment between them.
+The two named norms follow. $`\|x\|_1 = |x_1| + |x_2|`$ splits into one absolute value per entry, so at $`(3, 0)`$ the first entry must be $`g_1 = 1`$ and the second can be anything in $`[-1, 1]`$. $`\|x\|_\infty = \max(x_1, -x_1, x_2, -x_2)`$ is a maximum of four planes. At $`(3, -3)`$ two are active, $`x_1`$ and $`-x_2`$, with gradients $`(1, 0)`$ and $`(0, -1)`$, so $`\partial\|x\|_\infty`$ is the segment between them.
 
 ### Step 4: zero in the subdifferential means a minimum
 
-Put $g = 0$ into the definition. It reads $f(y) \ge f(x^*)$ for every $y$: no point is lower. That is the whole proof, and it runs both ways. If $x^*$ is a lowest point then $f(y) \ge f(x^*) + 0\cdot(y - x^*)$, so $0 \in \partial f(x^*)$.
+Put $`g = 0`$ into the definition. It reads $`f(y) \ge f(x^*)`$ for every $`y`$: no point is lower. That is the whole proof, and it runs both ways. If $`x^*`$ is a lowest point then $`f(y) \ge f(x^*) + 0\cdot(y - x^*)`$, so $`0 \in \partial f(x^*)`$.
 
 The rule itself needs no convexity. What convexity adds is Step 1: the subdifferential can be read off from slopes near the point, so a local test certifies a global answer, the theme of [Convexity pays off](04-local-minima-are-global-when-convex.md).
 
-For the roaster, the Brazilian kilos add the straight line $12\,(100 - q)$, which shifts every slope down by 12. So $\partial F(40) = [9 - 12, 14 - 12] = [-3, 2]$. Zero is inside, so 40 kg is the cheapest plan of all, not just of the plans nearby.
+For the roaster, the Brazilian kilos add the straight line $`12\,(100 - q)`$, which shifts every slope down by 12. So $`\partial F(40) = [9 - 12, 14 - 12] = [-3, 2]`$. Zero is inside, so 40 kg is the cheapest plan of all, not just of the plans nearby.
 
-The interval says more. With the Brazilian at price $p$ the net slopes at 40 kg are $[9 - p, 14 - p]$, which contains 0 exactly when $p$ is between £9 and £14. So 40 kg stays among the cheapest plans for any Brazilian price in that range, and the subdifferential $[9, 14]$ is that range. A subgradient at a kink is a price at which the kink is the right answer.
+The interval says more. With the Brazilian at price $`p`$ the net slopes at 40 kg are $`[9 - p, 14 - p]`$, which contains 0 exactly when $`p`$ is between £9 and £14. So 40 kg stays among the cheapest plans for any Brazilian price in that range, and the subdifferential $`[9, 14]`$ is that range. A subgradient at a kink is a price at which the kink is the right answer.
 
 ---
 
@@ -143,8 +153,8 @@ The interval says more. With the Brazilian at price $p$ the net slopes at 40 kg 
 | Kenyan bill at 100 kg | 780 + 20 × 30 | £1,380 |
 | the three lines at 40 kg | 9 × 40; 14 × 40 − 200; 20 × 40 − 620 | 360, 360, 180 |
 | active slopes at 40 kg | the two lines reading 360 | 9 and 14 |
-| $\partial C(40)$ | from the smaller to the larger | [9, 14] |
-| $\partial F(40)$ | [9 − 12, 14 − 12] | [−3, 2] |
+| $`\partial C(40)`$ | from the smaller to the larger | [9, 14] |
+| $`\partial F(40)`$ | [9 − 12, 14 − 12] | [−3, 2] |
 | net bill at 0, 70 and 100 kg | 12 × 100; 780 + 12 × 30; 1,380 + 0 | £1,200, £1,140, £1,380 |
 | net bill at 40 kg | 360 + 12 × 60 = 360 + 720 | **£1,080, and 0 is in [−3, 2]** |
 
@@ -154,8 +164,8 @@ Buy 40 kg of Kenyan and 60 kg of Brazilian for £1,080 a week; the flat supporti
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Take the right-hand slope as "the derivative" at 40 kg | +2, so "move left"; 38 kg costs £1,086 | A one-sided slope is one subgradient, not a verdict. Zero is in $[-3, 2]$, so 40 kg was already best |
-| Count every tier's slope, active or not | $[9, 20]$; with Brazilian at £18 that keeps 40 kg at £1,440 | The £20 tier is below the top at 40 kg. At £18 the true best is 70 kg at £1,320 |
+| Take the right-hand slope as "the derivative" at 40 kg | +2, so "move left"; 38 kg costs £1,086 | A one-sided slope is one subgradient, not a verdict. Zero is in $`[-3, 2]`$, so 40 kg was already best |
+| Count every tier's slope, active or not | $`[9, 20]`$; with Brazilian at £18 that keeps 40 kg at £1,440 | The £20 tier is below the top at 40 kg. At £18 the true best is 70 kg at £1,320 |
 | Treat a discount tier like a surcharge | slopes 14 then 9, 0 subgradients; 40 kg costs £1,280 | Falling slopes make the bill concave: the corner is the most expensive point nearby. The best is 100 kg at £1,100 |
 
 ---
@@ -168,7 +178,7 @@ The script writes the bill as a maximum of three lines. It reaches the subdiffer
 - one-sided difference slopes with a step of 0.001 kg;
 - a brute-force test of the definition, trying 2,501 candidate slopes, one every penny, against every half kilo from 0 to 100.
 
-A fourth road, enumeration of all 201 half-kilo plans, confirms the minimum the zero rule certifies. The same brute force checks the absolute value and the two norms on a grid, one step along a subgradient of $\Vert x\Vert_1$ is taken, and each mistake in the table above is printed.
+A fourth road, enumeration of all 201 half-kilo plans, confirms the minimum the zero rule certifies. The same brute force checks the absolute value and the two norms on a grid, one step along a subgradient of $`\Vert x\Vert_1`$ is taken, and each mistake in the table above is printed.
 
 ### Python
 
@@ -645,9 +655,9 @@ example : (780 + 15 * (100 - 70) : ℤ) = 1230 ∧ (0 + 8 * (100 - 0) : ℤ) = 8
 > [!TIP]
 > **Try changing**
 > - Guess first: at what Brazilian price does Kenyan stop being worth buying at all? Change `P` to `8`. The best buy falls to 0 kg, £800, because even the cheapest tier now costs more than the substitute. The asserts pinned to 40 kg stop the run.
-> - Guess first: if the Brazilian costs £15, where does the answer move? The output already shows it: 70 kg, £1,230. Zero is now in $\partial F(70) = [14 - 15, 20 - 15] = [-1, 5]$.
-> - Guess first: with the Brazilian at exactly £9, which plans are cheapest? Change `P` to `9`. The net bill is flat at £900 from 0 to 40 kg, and $\partial F(40) = [0, 5]$ has 0 at its edge: 40 kg ties with every smaller order. The enumeration reports the first tie, 0 kg, and an assert stops the run.
-> - Guess first: move the first break to 42 kg by changing the middle tier to `(14, -210)`. At 40 kg only the £9 line is active now, so $\partial C(40)$ shrinks to the single slope 9 and $\partial F(40) = \{-3\}$ has no 0. The brute-force assert stops the run.
+> - Guess first: if the Brazilian costs £15, where does the answer move? The output already shows it: 70 kg, £1,230. Zero is now in $`\partial F(70) = [14 - 15, 20 - 15] = [-1, 5]`$.
+> - Guess first: with the Brazilian at exactly £9, which plans are cheapest? Change `P` to `9`. The net bill is flat at £900 from 0 to 40 kg, and $`\partial F(40) = [0, 5]`$ has 0 at its edge: 40 kg ties with every smaller order. The enumeration reports the first tie, 0 kg, and an assert stops the run.
+> - Guess first: move the first break to 42 kg by changing the middle tier to `(14, -210)`. At 40 kg only the £9 line is active now, so $`\partial C(40)`$ shrinks to the single slope 9 and $`\partial F(40) = \{-3\}`$ has no 0. The brute-force assert stops the run.
 
 ---
 
@@ -656,8 +666,8 @@ example : (780 + 15 * (100 - 70) : ℤ) = 1230 ∧ (0 + 8 * (100 - 0) : ℤ) = 8
 > [!warning]
 > **Setting the derivative to zero when the minimum sits on a kink.** The net bill's slope is −3 on one side of 40 kg and +2 on the other; it is never 0. A search for a zero derivative finds nothing, and a numerical derivative at 40 kg reports whichever side it looks at. The right question is whether 0 lies between the left and right slopes. It does, so 40 kg is the minimum, at £1,080.
 >
-> - **Stepping along a subgradient expecting the value to fall.** In one variable, away from a minimum, minus a subgradient does point downhill. In two it need not: (1, 1) is a subgradient of $\Vert x\Vert_1$ at (3, 0), yet a step along minus it, to (2, −1), leaves the sum at 3, though (3, 0) is not a minimum. A subgradient bounds the graph from below; it is not a downhill direction.
-> - **Counting inactive pieces.** The £20 tier is not touching the top at 40 kg. Including it gives $[9, 20]$, which would keep 40 kg with the Brazilian at £18, at £1,440, when 70 kg costs £1,320.
+> - **Stepping along a subgradient expecting the value to fall.** In one variable, away from a minimum, minus a subgradient does point downhill. In two it need not: (1, 1) is a subgradient of $`\Vert x\Vert_1`$ at (3, 0), yet a step along minus it, to (2, −1), leaves the sum at 3, though (3, 0) is not a minimum. A subgradient bounds the graph from below; it is not a downhill direction.
+> - **Counting inactive pieces.** The £20 tier is not touching the top at 40 kg. Including it gives $`[9, 20]`$, which would keep 40 kg with the Brazilian at £18, at £1,440, when 70 kg costs £1,320.
 > - **Calling a discount kink convex.** A tier that gets cheaper with volume has falling slopes. The corner then has 0 subgradients and is a local worst, £1,280; the best plan is 100 kg at £1,100.
 
 ---
@@ -666,11 +676,11 @@ example : (780 + 15 * (100 - 70) : ℤ) = 1230 ∧ (0 + 8 * (100 - 0) : ℤ) = 8
 
 - **Tiered prices and tax bands.** Any bill whose rate per unit rises at breaks is a maximum of lines. At a break the marginal rate is not one number but the interval between the two rates.
 - **The lasso.** [Regularisation](../../09-Probability%20and%20statistics/09-Regression/06-ridge-and-lasso.md) adds the absolute value of each coefficient to a fitting error. The kink at 0 is why the soft-threshold rule sets a coefficient exactly to zero: zero stays optimal while the data's pull lies inside the interval the kink allows.
-- **Support vector machines.** The hinge loss in [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md) is $\max(0, 1 - \text{margin})$, a maximum of two lines. Training methods step against one of its subgradients at the kink.
-- **The median.** The sum of the distances from $x$ to a set of data points is lowest where 0 is a subgradient: where no more than half the data lie on either side.
+- **Support vector machines.** The hinge loss in [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md) is $`\max(0, 1 - \text{margin})`$, a maximum of two lines. Training methods step against one of its subgradients at the kink.
+- **The median.** The sum of the distances from $`x`$ to a set of data points is lowest where 0 is a subgradient: where no more than half the data lie on either side.
 
 > **Say it back**
-> At a kink a convex function has no single slope, but many straight lines still touch it there and stay underneath. Their slopes form the subdifferential, which for one variable is the interval from the left slope to the right slope: $[-1, 1]$ for $|x|$ at 0, and from the smallest to the largest active slope for a maximum of lines. A point is a minimum exactly when 0 is in that interval, because a flat line underneath the whole graph means nothing is lower. The roaster's bill has slopes −3 and +2 at 40 kg, so buying 40 kg of Kenyan and 60 kg of Brazilian, for £1,080, is the cheapest plan. The interval $[9, 14]$ is also the range of Brazilian prices for which that plan stays best.
+> At a kink a convex function has no single slope, but many straight lines still touch it there and stay underneath. Their slopes form the subdifferential, which for one variable is the interval from the left slope to the right slope: $`[-1, 1]`$ for $`|x|`$ at 0, and from the smallest to the largest active slope for a maximum of lines. A point is a minimum exactly when 0 is in that interval, because a flat line underneath the whole graph means nothing is lower. The roaster's bill has slopes −3 and +2 at 40 kg, so buying 40 kg of Kenyan and 60 kg of Brazilian, for £1,080, is the cheapest plan. The interval $`[9, 14]`$ is also the range of Brazilian prices for which that plan stays best.
 
 ---
 
@@ -683,7 +693,7 @@ example : (780 + 15 * (100 - 70) : ℤ) = 1230 ∧ (0 + 8 * (100 - 0) : ℤ) = 8
 
 - [Convex conjugates](08-conjugates-and-fenchel-duality.md): describes a function by its supporting lines, one for each slope, so the subdifferential becomes the link between a point and its slopes.
 - [Lagrangian relaxation](../05-Integer%20and%20Combinatorial%20Optimisation/07-lagrangian-relaxation-and-decomposition.md): the dual function is a minimum of lines, kinked like the bill here, and subgradients are how it is climbed.
-- [Proximal gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/06-proximal-methods-ista-fista-and-the-lasso.md): a method that handles the kink of $|x|$ in one exact step instead of guessing a slope.
+- [Proximal gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/06-proximal-methods-ista-fista-and-the-lasso.md): a method that handles the kink of $`|x|`$ in one exact step instead of guessing a slope.
 - The slope transform: the same bookkeeping of left and right slopes, turned into a transform between a curve and its slopes.
 
 The zero rule checks a point once you have it; finding the kink in a function of thousands of variables, where a subgradient step need not go downhill, is the question this card leaves open.

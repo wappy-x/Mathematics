@@ -38,46 +38,54 @@ Orange: one A share. Teal: 1.3 B shares. Both fall about $35 over the year; neit
 
 ## The formula
 
-Notation first. A small $t$ under a price names the day: $A_t$ is A's closing price on day $t$. A bar means an average over the window: $\bar B$ is B's average price. A capital sigma, Σ, adds up over all days in the window. $\Delta$ means "change since yesterday". A hat marks a value fitted from data: $\hat\beta$ is the fitted ratio, $\beta$ the true one.
+Notation first. A small $`t`$ under a price names the day: $`A_t`$ is A's closing price on day $`t`$. A bar means an average over the window: $`\bar B`$ is B's average price. A capital sigma, Σ, adds up over all days in the window. $`\Delta`$ means "change since yesterday". A hat marks a value fitted from data: $`\hat\beta`$ is the fitted ratio, $`\beta`$ the true one.
 
 **Step one, the tie and the fitted ratio.** The model says
 
-$$A_t = c + \beta B_t + s_t,$$
+```math
+A_t = c + \beta B_t + s_t,
+```
 
-where the spread $s_t$ does not wander. Least squares, which picks the line with the smallest total squared miss, fits
+where the spread $`s_t`$ does not wander. Least squares, which picks the line with the smallest total squared miss, fits
 
-$$\hat\beta = \frac{\sum_t (B_t - \bar B)(A_t - \bar A)}{\sum_t (B_t - \bar B)^2}, \qquad \hat c = \bar A - \hat\beta\,\bar B, \qquad s_t = A_t - \hat c - \hat\beta B_t .$$
+```math
+\hat\beta = \frac{\sum_t (B_t - \bar B)(A_t - \bar A)}{\sum_t (B_t - \bar B)^2}, \qquad \hat c = \bar A - \hat\beta\,\bar B, \qquad s_t = A_t - \hat c - \hat\beta B_t .
+```
 
 **Read it aloud:** the hedge ratio is how far A moves together with B, divided by how far B moves on its own; the spread is what is left of A after the fitted share of B is taken away.
 
 **Step two, the test.** Regress each day's change in the spread on yesterday's spread:
 
-$$\Delta s_t = \rho\, s_{t-1} + e_t, \qquad \tau = \frac{\hat\rho}{\operatorname{se}(\hat\rho)} .$$
+```math
+\Delta s_t = \rho\, s_{t-1} + e_t, \qquad \tau = \frac{\hat\rho}{\mathrm{se}(\hat\rho)} .
+```
 
 **Read it aloud:** if yesterday's spread was above its level, does today's change push it back down, and how many standard errors is that push away from zero?
 
-The standard error, $\operatorname{se}$, is the typical size of the fitting error in $\hat\rho$. Here $m$ is the number of daily changes, $\hat e_t$ the fitted misses, and $\operatorname{se}(\hat\rho) = \sqrt{\big(\sum \hat e_t^2/(m-1)\big) \big/ \sum s_{t-1}^2}$. The claim "no tie" is rejected when $\tau$ falls below the 5% cutoff: the value that pairs with no tie fall below only 5% of the time. For two prices and a fitted ratio it is **−3.36** for about 250 days of data. The ordinary cutoff for one series, −2.87, is the wrong one.
+The standard error, $`\mathrm{se}`$, is the typical size of the fitting error in $`\hat\rho`$. Here $`m`$ is the number of daily changes, $`\hat e_t`$ the fitted misses, and $`\mathrm{se}(\hat\rho) = \sqrt{\big(\sum \hat e_t^2/(m-1)\big) \big/ \sum s_{t-1}^2}`$. The claim "no tie" is rejected when $`\tau`$ falls below the 5% cutoff: the value that pairs with no tie fall below only 5% of the time. For two prices and a fitted ratio it is **−3.36** for about 250 days of data. The ordinary cutoff for one series, −2.87, is the wrong one.
 
-**Step three, the position.** Hold $N_A$ shares of A and short $N_B = \hat\beta N_A$ shares of B:
+**Step three, the position.** Hold $`N_A`$ shares of A and short $`N_B = \hat\beta N_A`$ shares of B:
 
-$$\text{value}_t = N_A A_t - N_B B_t = N_A\,(s_t + \hat c), \qquad \text{profit from day } t_0 \text{ to day } t_1 = N_A\,(s_{t_1} - s_{t_0}).$$
+```math
+\text{value}_t = N_A A_t - N_B B_t = N_A\,(s_t + \hat c), \qquad \text{profit from day } t_0 \text{ to day } t_1 = N_A\,(s_{t_1} - s_{t_0}).
+```
 
 **Read it aloud:** the position is worth the spread times the number of A shares, so it gains exactly when the spread moves the way it was bet.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A_t$, $B_t$ | close price of one A share, one B share, on day $t$; $\bar A$, $\bar B$ their window averages | $128.00 and $100.00 on date 3 | a rise in both, in ratio, leaves the spread alone |
-| $t$, $n$, $m$ | day number; days in the window; daily changes, $n - 1$ | dates 0 to 5, $n$ = 6, $m$ = 5; the year has 251 days | more days: a sharper ratio and a fairer test |
-| $\beta$, $b$ | hedge ratio: B shares short per A share owned; $\hat\beta$ is its fitted value, $b$ any trial value | 1.3 | more B shares short per A share |
-| $c$ | intercept: the level the spread returns to, in dollars | 0 on the table, $1.30 in the year | shifts the centre, not the pull-back |
-| $s_t$ | spread: A's price less $c$ less $\beta$ B prices | −2.00 on date 3 | A is rich against B |
-| $\Delta s_t$, $e_t$ | spread change since yesterday; the part of it the pull-back does not explain | +2.00 from date 3 to 4 | — |
-| $\rho$ | fitted pull-back: share of yesterday's spread removed today, with a minus sign | −0.105 in the year | more negative: a stronger pull-back |
-| $\phi$ | share of the gap still there tomorrow, 1 + $\rho$ | built at 0.9, fitted 0.895 | towards 1: a weaker pull-back, slower return |
-| $\tau$ | test statistic: $\hat\rho$ over its standard error | −3.71 in the year | more negative: stronger evidence of a tie |
-| $\tau_{5\%}$ | the cutoff $\tau$ must fall below | −3.36, two prices, 250 days | — |
-| $N_A$, $N_B$ | shares held long of A, short of B | 100 and 130 | a bigger bet, same ratio |
-| $\eta$, $v$, $w$ | in the folded proof only: B's daily change, its variance, the spread's variance | — | — |
+| $`A_t`$, $`B_t`$ | close price of one A share, one B share, on day $`t`$; $`\bar A`$, $`\bar B`$ their window averages | $128.00 and $100.00 on date 3 | a rise in both, in ratio, leaves the spread alone |
+| $`t`$, $`n`$, $`m`$ | day number; days in the window; daily changes, $`n - 1`$ | dates 0 to 5, $`n`$ = 6, $`m`$ = 5; the year has 251 days | more days: a sharper ratio and a fairer test |
+| $`\beta`$, $`b`$ | hedge ratio: B shares short per A share owned; $`\hat\beta`$ is its fitted value, $`b`$ any trial value | 1.3 | more B shares short per A share |
+| $`c`$ | intercept: the level the spread returns to, in dollars | 0 on the table, $1.30 in the year | shifts the centre, not the pull-back |
+| $`s_t`$ | spread: A's price less $`c`$ less $`\beta`$ B prices | −2.00 on date 3 | A is rich against B |
+| $`\Delta s_t`$, $`e_t`$ | spread change since yesterday; the part of it the pull-back does not explain | +2.00 from date 3 to 4 | — |
+| $`\rho`$ | fitted pull-back: share of yesterday's spread removed today, with a minus sign | −0.105 in the year | more negative: a stronger pull-back |
+| $`\phi`$ | share of the gap still there tomorrow, 1 + $`\rho`$ | built at 0.9, fitted 0.895 | towards 1: a weaker pull-back, slower return |
+| $`\tau`$ | test statistic: $`\hat\rho`$ over its standard error | −3.71 in the year | more negative: stronger evidence of a tie |
+| $`\tau_{5\%}`$ | the cutoff $`\tau`$ must fall below | −3.36, two prices, 250 days | — |
+| $`N_A`$, $`N_B`$ | shares held long of A, short of B | 100 and 130 | a bigger bet, same ratio |
+| $`\eta`$, $`v`$, $`w`$ | in the folded proof only: B's daily change, its variance, the spread's variance | — | — |
 
 ### When it holds
 
@@ -100,11 +108,11 @@ Subtract any other number of B shares and a slice of the wander survives. Hold 1
 <details>
 <summary>Detailed proof: the ratio is unique, and least squares finds it</summary>
 
-Model B as a random walk: $B_t = B_0 + \eta_1 + \dots + \eta_t$, with independent daily changes $\eta$ of variance $v$. Then the variance of $B_t$ is $t v$, growing with $t$. Let $A_t = c + \beta B_t + s_t$, with $s_t$ steady (its variance is a fixed number $w$) and independent of the changes $\eta$.
+Model B as a random walk: $`B_t = B_0 + \eta_1 + \dots + \eta_t`$, with independent daily changes $`\eta`$ of variance $`v`$. Then the variance of $`B_t`$ is $`t v`$, growing with $`t`$. Let $`A_t = c + \beta B_t + s_t`$, with $`s_t`$ steady (its variance is a fixed number $`w`$) and independent of the changes $`\eta`$.
 
-For any trial ratio $b$: $A_t - b B_t = c + (\beta - b) B_t + s_t$. Its variance is $(\beta - b)^2 t v + w$. When $b \neq \beta$ this grows without limit, so the mix wanders. Only at $b = \beta$ is it $c + s_t$, which is steady. The ratio is unique.
+For any trial ratio $`b`$: $`A_t - b B_t = c + (\beta - b) B_t + s_t`$. Its variance is $`(\beta - b)^2 t v + w`$. When $`b \neq \beta`$ this grows without limit, so the mix wanders. Only at $`b = \beta`$ is it $`c + s_t`$, which is steady. The ratio is unique.
 
-Least squares minimises the misfit $\sum_t \big((A_t - \bar A) - b(B_t - \bar B)\big)^2$. Split each term into the wandering part, $(\beta - b)(B_t - \bar B)$, and the steady part, $s_t - \bar s$, where $\bar s$ is the spread's window average. The wandering part's sum of squares, $(\beta-b)^2 \sum_t (B_t - \bar B)^2$, grows like $n^2$, because each of $n$ terms has size growing with $n$. The steady part's grows only like $n$. A wrong $b$ is punished $n$ times harder than any noise can reward it, so, in outline (Engle and Granger give the full argument), the fitted ratio's error shrinks like $1/n$, faster than the $1/\sqrt n$ of ordinary estimates. Econometricians call this **superconsistency**. Setting the derivative of the misfit in $b$ to zero gives the formula for $\hat\beta$ above.
+Least squares minimises the misfit $`\sum_t \big((A_t - \bar A) - b(B_t - \bar B)\big)^2`$. Split each term into the wandering part, $`(\beta - b)(B_t - \bar B)`$, and the steady part, $`s_t - \bar s`$, where $`\bar s`$ is the spread's window average. The wandering part's sum of squares, $`(\beta-b)^2 \sum_t (B_t - \bar B)^2`$, grows like $`n^2`$, because each of $`n`$ terms has size growing with $`n`$. The steady part's grows only like $`n`$. A wrong $`b`$ is punished $`n`$ times harder than any noise can reward it, so, in outline (Engle and Granger give the full argument), the fitted ratio's error shrinks like $`1/n`$, faster than the $`1/\sqrt n`$ of ordinary estimates. Econometricians call this **superconsistency**. Setting the derivative of the misfit in $`b`$ to zero gives the formula for $`\hat\beta`$ above.
 
 </details>
 
@@ -112,28 +120,28 @@ Least squares minimises the misfit $\sum_t \big((A_t - \bar A) - b(B_t - \bar B)
 
 A wrong ratio leaves a wandering leftover whose squares pile up fast, so the ratio with the smallest misfit (sum of squared leftovers) is the tying ratio. The simulated year was built with 1.3; least squares returns 1.289.
 
-The formula for $\hat\beta$ has a second reading. Take every two dates, note how far B moved between them and how far A moved, and pool all those pairs of moves. The pooled slope, weighted by B's squared moves, equals $\hat\beta$. The code computes it both ways, and a third way, by searching trial ratios for the smallest misfit.
+The formula for $`\hat\beta`$ has a second reading. Take every two dates, note how far B moved between them and how far A moved, and pool all those pairs of moves. The pooled slope, weighted by B's squared moves, equals $`\hat\beta`$. The code computes it both ways, and a third way, by searching trial ratios for the smallest misfit.
 
 <details>
 <summary>Why pooling pairs of dates gives the same ratio</summary>
 
-For any numbers, $\sum_{i<j} (B_i - B_j)(A_i - A_j) = n \sum_t (B_t - \bar B)(A_t - \bar A)$, and the same with A's prices swapped for B's. The factor $n$ cancels in the ratio. On the six-date table below, both sums give 1.3 exactly.
+For any numbers, $`\sum_{i<j} (B_i - B_j)(A_i - A_j) = n \sum_t (B_t - \bar B)(A_t - \bar A)`$, and the same with A's prices swapped for B's. The factor $`n`$ cancels in the ratio. On the six-date table below, both sums give 1.3 exactly.
 
 </details>
 
 ### Step 2: test the leftover for a pull-back
 
-A steady spread is pulled back towards its level. If the spread is $2 above its level today, tomorrow's change is, on average, a fall. So regress each day's change on the day before's spread. A tie shows up as a negative slope $\rho$: a fraction of each gap is closed each day. No tie shows up as $\rho$ near zero: yesterday's gap tells nothing about today's change.
+A steady spread is pulled back towards its level. If the spread is $2 above its level today, tomorrow's change is, on average, a fall. So regress each day's change on the day before's spread. A tie shows up as a negative slope $`\rho`$: a fraction of each gap is closed each day. No tie shows up as $`\rho`$ near zero: yesterday's gap tells nothing about today's change.
 
-The simulated year was built with $\phi$ = 0.9, so 10% of each gap closes each day, and $\rho$ = −0.1. The fit returns $\hat\rho$ = −0.105, so $\phi$ = 0.895. A gap then halves in about 6.26 days, against 6.58 days if $\phi$ were exactly 0.9. The half-life is the natural clock for a trade, and the mean-reversion card turns it into entry and exit rules ([Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md)).
+The simulated year was built with $`\phi`$ = 0.9, so 10% of each gap closes each day, and $`\rho`$ = −0.1. The fit returns $`\hat\rho`$ = −0.105, so $`\phi`$ = 0.895. A gap then halves in about 6.26 days, against 6.58 days if $`\phi`$ were exactly 0.9. The half-life is the natural clock for a trade, and the mean-reversion card turns it into entry and exit rules ([Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md)).
 
-Size is judged against noise. The statistic $\tau$ divides $\hat\rho$ by its standard error. For the year, $\tau$ = −3.71.
+Size is judged against noise. The statistic $`\tau`$ divides $`\hat\rho`$ by its standard error. For the year, $`\tau`$ = −3.71.
 
 ### Step 3: why fitted spreads need their own cutoff
 
 Step one chose the ratio that makes the leftover as small and tidy as possible. It does that for any two prices, tied or not, so two unrelated walkers give a leftover that looks steadier than either walker. The test must be judged against what fitting alone produces.
 
-The code measures that directly. It generates 4,000 pairs of unrelated random walks of 251 days, runs both steps on each, and records $\tau$. The value that only 5% of them fall below is the honest 5% cutoff: −3.36 from the simulation, matching the −3.36 in MacKinnon's published table. For a single known series, which needs no fitting, the same simulation gives −2.92 with a constant (published −2.87) and −1.97 without one (published −1.94).
+The code measures that directly. It generates 4,000 pairs of unrelated random walks of 251 days, runs both steps on each, and records $`\tau`$. The value that only 5% of them fall below is the honest 5% cutoff: −3.36 from the simulation, matching the −3.36 in MacKinnon's published table. For a single known series, which needs no fitting, the same simulation gives −2.92 with a constant (published −2.87) and −1.97 without one (published −1.94).
 
 Judge the 4,000 unrelated pairs with the wrong cutoffs and the false alarms pile up:
 
@@ -144,9 +152,9 @@ one-series cutoff, constant    ██████████                   
 one-series cutoff, bare        ████████████████████████████████████ 54.95%
 ```
 
-The same fitting that fools the test also fools the eye. Regress one unrelated walk on another and least squares finds a line that seems to explain a real share of the movement. Across the 4,000 unrelated pairs, the median $R^2$ (the share of A's variation the line appears to explain) is 0.17. This is **spurious regression**, named by Granger and Newbold in 1974.
+The same fitting that fools the test also fools the eye. Regress one unrelated walk on another and least squares finds a line that seems to explain a real share of the movement. Across the 4,000 unrelated pairs, the median $`R^2`$ (the share of A's variation the line appears to explain) is 0.17. This is **spurious regression**, named by Granger and Newbold in 1974.
 
-The code's own unrelated pair shows it at its worst. Share C, a third wanderer built independently of A, explains 83% of A's movement ($R^2$ = 0.83) with a ratio of −1.76. Its $\tau$ is −3.30: past the one-series cutoff, short of the Engle–Granger one. The leftover spreads, side by side:
+The code's own unrelated pair shows it at its worst. Share C, a third wanderer built independently of A, explains 83% of A's movement ($`R^2`$ = 0.83) with a ratio of −1.76. Its $`\tau`$ is −3.30: past the one-series cutoff, short of the Engle–Granger one. The leftover spreads, side by side:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -162,9 +170,9 @@ Orange: the tied pair's spread, within $3 of zero all year. Teal: A against the 
 
 ### Step 4: build the position in the fitted ratio
 
-Buy $N_A$ A shares, short $\hat\beta N_A$ B shares. The common wander cancels in the position, as it did in the spread, so the position's value moves only with the spread: value equals $N_A$ times $(s_t + \hat c)$. Every dollar of profit or loss is $N_A$ times the spread's change.
+Buy $`N_A`$ A shares, short $`\hat\beta N_A`$ B shares. The common wander cancels in the position, as it did in the spread, so the position's value moves only with the spread: value equals $`N_A`$ times $`(s_t + \hat c)`$. Every dollar of profit or loss is $`N_A`$ times the spread's change.
 
-**Dollar neutral** means the long leg and the short leg are worth the same, so the short sale pays for the purchase. In the fitted ratio that happens exactly when $s_t + \hat c$ is zero: the spread sits at its level. A trade is entered when the spread is away from its level, so the legs differ by $N_A$ times the gap. That difference is the bet itself, and it is small: at a $2 gap on a $128 share it is under 2% of a leg. It sits in cash.
+**Dollar neutral** means the long leg and the short leg are worth the same, so the short sale pays for the purchase. In the fitted ratio that happens exactly when $`s_t + \hat c`$ is zero: the spread sits at its level. A trade is entered when the spread is away from its level, so the legs differ by $`N_A`$ times the gap. That difference is the bet itself, and it is small: at a $2 gap on a $128 share it is under 2% of a leg. It sits in cash.
 
 Forcing equal dollars by shorting fewer B shares breaks the hedge: the position then carries a slice of the common wander the pair was built to remove.
 
@@ -187,17 +195,17 @@ Six closing prices, built so the arithmetic stays visible. The spread column use
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| averages $\bar B$, $\bar A$ | 603 ÷ 6 and 783.9 ÷ 6 | 100.5 and 130.65 |
-| B's own movement, $\sum (B_t - \bar B)^2$ | 0.25 + 0.25 + 2.25 + 0.25 + 2.25 + 0.25 | 5.5 |
-| joint movement, $\sum (B_t - \bar B)(A_t - \bar A)$ | pair each B gap with its A gap, add | 7.15 |
-| hedge ratio $\hat\beta$ | 7.15 ÷ 5.5 | **1.3** |
-| intercept $\hat c$ | 130.65 − 1.3 × 100.5 | 0 |
-| spread $s_t$ | A − 1.3 B, date by date | 0, 1, 1, −2, 0, 0 |
+| averages $`\bar B`$, $`\bar A`$ | 603 ÷ 6 and 783.9 ÷ 6 | 100.5 and 130.65 |
+| B's own movement, $`\sum (B_t - \bar B)^2`$ | 0.25 + 0.25 + 2.25 + 0.25 + 2.25 + 0.25 | 5.5 |
+| joint movement, $`\sum (B_t - \bar B)(A_t - \bar A)`$ | pair each B gap with its A gap, add | 7.15 |
+| hedge ratio $`\hat\beta`$ | 7.15 ÷ 5.5 | **1.3** |
+| intercept $`\hat c`$ | 130.65 − 1.3 × 100.5 | 0 |
+| spread $`s_t`$ | A − 1.3 B, date by date | 0, 1, 1, −2, 0, 0 |
 | yesterday's spread, today's change | dates 1 to 5 | (0, 1), (1, 0), (1, −3), (−2, 2), (0, 0) |
-| $\hat\rho$ | (0 + 0 − 3 − 4 + 0) ÷ (0 + 1 + 1 + 4 + 0) | −7/6 = −1.166667 |
+| $`\hat\rho`$ | (0 + 0 − 3 − 4 + 0) ÷ (0 + 1 + 1 + 4 + 0) | −7/6 = −1.166667 |
 | unexplained changes, squared and summed | 1 + (7/6)^2 + (11/6)^2 + (1/3)^2 + 0 | 35/6 |
-| standard error of $\hat\rho$ | √((35/6 ÷ (5 − 1)) ÷ 6): 5 changes less 1 fitted slope, then ÷ Σ $s_{t-1}^2$ | √35/12 = 0.49 |
-| $\tau$ | −7/6 ÷ (√35/12) | **−2.366432** |
+| standard error of $`\hat\rho`$ | √((35/6 ÷ (5 − 1)) ÷ 6): 5 changes less 1 fitted slope, then ÷ Σ $`s_{t-1}^2`$ | √35/12 = 0.49 |
+| $`\tau`$ | −7/6 ÷ (√35/12) | **−2.366432** |
 | position at date 3 | long 100 A at $128.00, short 130 B at $100.00 | $12,800.00 against $13,000.00 |
 | profit, date 3 to 4, leg by leg | 100 × (132.6 − 128.0) − 130 × (102 − 100) | **$200.00** |
 | profit, from the spread | 100 × (0 − (−2)) | $200.00 |
@@ -212,14 +220,14 @@ Six dates are far too few to test anything. The table is for the arithmetic; the
 | --- | --- | --- |
 | Judge the fitted spread by the one-series cutoff | 14.20% of unrelated pairs pass, not 5% | Fitting already made the leftover look tidy; the cutoff must allow for that |
 | Regress B on A and turn the slope upside down | ratio 2.14 on the table, not 1.3 | Least squares minimises misses in the left-hand price only; the two directions agree only when the fit is perfect |
-| Trust a high $R^2$ | median $R^2$ of 0.17 for unrelated pairs; 0.83 for the unrelated share C | Two walkers can share a direction by chance for a year; $R^2$ does not see the tie |
+| Trust a high $`R^2`$ | median $`R^2`$ of 0.17 for unrelated pairs; 0.83 for the unrelated share C | Two walkers can share a direction by chance for a year; $`R^2`$ does not see the tie |
 | Force equal dollars: 128 B shares instead of 130 | $20.00 of profit or loss from a $10 move in B that the spread never saw | 2 B shares of the common wander are left unhedged |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts write their own random numbers (the splitmix64 generator and the Box–Muller turn to bell-curve draws), their own least squares, their own Dickey–Fuller regression and their own critical values by simulation. They take five roads. The hedge ratio on the table is found three ways: the least-squares formula, the pooled slopes between every two dates, and a golden-section search on the misfit. The hand-worked $\hat\rho$ = −7/6 and $\tau$ = −14/√35 are checked exactly. The trade's profit is found leg by leg and from the spread. A simulated year checks that the fit recovers the 1.3 and 0.9 it was built with. And 4,000 unrelated pairs produce the cutoffs, checked against MacKinnon's published values.
+The scripts write their own random numbers (the splitmix64 generator and the Box–Muller turn to bell-curve draws), their own least squares, their own Dickey–Fuller regression and their own critical values by simulation. They take five roads. The hedge ratio on the table is found three ways: the least-squares formula, the pooled slopes between every two dates, and a golden-section search on the misfit. The hand-worked $`\hat\rho`$ = −7/6 and $`\tau`$ = −14/√35 are checked exactly. The trade's profit is found leg by leg and from the spread. A simulated year checks that the fit recovers the 1.3 and 0.9 it was built with. And 4,000 unrelated pairs produce the cutoffs, checked against MacKinnon's published values.
 
 ### Python
 
@@ -638,12 +646,12 @@ The two outputs agree line for line. Same seeds and the same integer generator g
 
 Lean proves the three exact steps behind the ratio and the position, for any number of days, and checks the worked numbers.
 
-- Suppose B's price is not the same on every day of the window. Then $\hat\beta$ has a strictly smaller misfit than any other trial ratio $b$.
-- Take any prices over $n$ days. Then B's move times A's move, summed over every two dates, is $n$ times the joint movement. So the pooled slope equals $\hat\beta$.
-- Hold $N_A$ shares of A and short $\hat\beta N_A$ shares of B. Then the position is worth $N_A (s_t + \hat c)$ on day $t$.
-- With the same position, the profit from one day to another is $N_A$ times the spread's change.
-- Take the six-date table. Then $\hat\beta$ is exactly 1.3.
-- The table's other sums also check: 5.5, 7.15, $\hat\rho = -7/6$, 35/6 and $\tau^2 = 14^2/35$.
+- Suppose B's price is not the same on every day of the window. Then $`\hat\beta`$ has a strictly smaller misfit than any other trial ratio $`b`$.
+- Take any prices over $`n`$ days. Then B's move times A's move, summed over every two dates, is $`n`$ times the joint movement. So the pooled slope equals $`\hat\beta`$.
+- Hold $`N_A`$ shares of A and short $`\hat\beta N_A`$ shares of B. Then the position is worth $`N_A (s_t + \hat c)`$ on day $`t`$.
+- With the same position, the profit from one day to another is $`N_A`$ times the spread's change.
+- Take the six-date table. Then $`\hat\beta`$ is exactly 1.3.
+- The table's other sums also check: 5.5, 7.15, $`\hat\rho = -7/6`$, 35/6 and $`\tau^2 = 14^2/35`$.
 - The trade checks too: legs of 12,800 and 13,000 dollars, a 200 dollar profit both ways, and 20 dollars unhedged with 128 B shares.
 
 The pull-back test, its cutoffs, the simulated year and the 4,000 unrelated pairs are left to the Python and Rust checks.
@@ -866,8 +874,8 @@ example : (100 * (13 / 10) * 10 - 128 * 10 : ℚ) = 20 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
-> - **Weaken the pull-back.** In the "try" line, a pull-back of $\phi$ = 0.995 keeps 99.5% of each gap each day, so a gap takes months to halve. Guess: does one year still pass the test? It does not: the ratio comes out at 1.18 and $\tau$ at −2.95, above −3.36. The tie is real, but a year is too short to see it.
-> - **Another year, same recipe.** Seed 2026 builds a second year with the same 1.3 and 0.9. Guess the fitted ratio. It is 1.34, with $\tau$ = −4.60. The ratio from one year is good to a few hundredths, not exactly.
+> - **Weaken the pull-back.** In the "try" line, a pull-back of $`\phi`$ = 0.995 keeps 99.5% of each gap each day, so a gap takes months to halve. Guess: does one year still pass the test? It does not: the ratio comes out at 1.18 and $`\tau`$ at −2.95, above −3.36. The tie is real, but a year is too short to see it.
+> - **Another year, same recipe.** Seed 2026 builds a second year with the same 1.3 and 0.9. Guess the fitted ratio. It is 1.34, with $`\tau`$ = −4.60. The ratio from one year is good to a few hundredths, not exactly.
 > - **Turn the regression round.** Swap `ols(B, A)` for `ols(A, B)` on the table and invert. The ratio jumps to 2.14, the "wrong" line printed above, and the first assert fails.
 > - **Cut the referee.** Set `R = 400`. Guess how much noisier the cutoffs get. With a tenth of the draws, their sampling error grows by about √10, roughly three times: enough to move a borderline pair like share C to either side.
 
@@ -876,7 +884,7 @@ example : (100 * (13 / 10) * 10 - 128 * 10 : ℚ) = 20 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating two prices that move together as tied.** Correlation of price levels says nothing about a tie. Two unrelated walkers routinely share a direction for a year: across 4,000 simulated unrelated pairs the median $R^2$ is 0.17, and the code's share C reaches 0.83 with no tie at all. Cointegration is a claim about the leftover — that it returns — not about how well a line fits.
+> **Treating two prices that move together as tied.** Correlation of price levels says nothing about a tie. Two unrelated walkers routinely share a direction for a year: across 4,000 simulated unrelated pairs the median $`R^2`$ is 0.17, and the code's share C reaches 0.83 with no tie at all. Cointegration is a claim about the leftover — that it returns — not about how well a line fits.
 >
 > Smaller traps:
 > - **The ordinary cutoff.** Judging a fitted spread by the one-series Dickey–Fuller cutoff (−2.87 published, −2.92 simulated) passes about 14% of unrelated pairs instead of 5%. Use the Engle–Granger cutoff, −3.36 for two prices and about 250 days.
@@ -923,5 +931,5 @@ Verified 2026-09-28: every link below resolves to the publisher's page.
 - Engle, Robert F., and C. W. J. Granger. "Co-Integration and Error Correction: Representation, Estimation, and Testing." *Econometrica* 55, no. 2 (1987): 251–276. [doi:10.2307/1913236](https://doi.org/10.2307/1913236). The definition, the two-step method and the reason the residual test needs its own cutoffs.
 - MacKinnon, James G. "Critical Values for Cointegration Tests." Queen's Economics Department Working Paper No. 1227, 2010. [Working paper](https://www.econ.queensu.ca/sites/econ.queensu.ca/files/wpaper/qed_wp_1227.pdf). Table 1 gives the −3.36, −2.87 and −1.94 cutoffs the code's simulation is checked against.
 - Dickey, David A., and Wayne A. Fuller. "Distribution of the Estimators for Autoregressive Time Series with a Unit Root." *Journal of the American Statistical Association* 74, no. 366 (1979): 427–431. [doi:10.1080/01621459.1979.10482531](https://doi.org/10.1080/01621459.1979.10482531). The regression of a change on a lagged level used in step two.
-- Granger, C. W. J., and P. Newbold. "Spurious Regressions in Econometrics." *Journal of Econometrics* 2, no. 2 (1974): 111–120. [doi:10.1016/0304-4076(74)90034-7](https://doi.org/10.1016/0304-4076(74)90034-7). Why two unrelated wandering series show a high $R^2$.
+- Granger, C. W. J., and P. Newbold. "Spurious Regressions in Econometrics." *Journal of Econometrics* 2, no. 2 (1974): 111–120. [doi:10.1016/0304-4076(74)90034-7](https://doi.org/10.1016/0304-4076(74)90034-7). Why two unrelated wandering series show a high $`R^2`$.
 - Gatev, Evan, William N. Goetzmann, and K. Geert Rouwenhorst. "Pairs Trading: Performance of a Relative-Value Arbitrage Rule." *Review of Financial Studies* 19, no. 3 (2006): 797–827. [doi:10.1093/rfs/hhj020](https://doi.org/10.1093/rfs/hhj020). The long-run test of pairs trading on US shares.

@@ -37,38 +37,46 @@ Orange is the true heat loss, green the tangent plane, dark the quadratic model.
 
 Heat loss Q, in watts, depends on insulation t in cm and window area A in square metres. The solid wall, 100 − A square metres, resists heat by 0.5 plus a quarter per centimetre of insulation (in square-metre degrees per watt); glass passes 2.8 W per square metre per degree; the 20 degrees multiply everything:
 
-$$Q(t,A)=20\left(\frac{100-A}{0.5+t/4}+2.8\,A\right)$$
+```math
+Q(t,A)=20\left(\frac{100-A}{0.5+t/4}+2.8\,A\right)
+```
 
-A partial derivative is the rate of change in one input with the other held fixed ([Partial derivatives](01-partial-derivatives.md)). Here it is a subscript: $Q_t$ is the rate of Q per cm of insulation. Two subscripts mean differentiate twice, left letter first: $Q_{tA}$ is the rate at which $Q_t$ changes per square metre of glass. The gradient $\nabla Q=(Q_t,Q_A)$ lists the two slopes ([Gradient](03-gradient-and-directional-derivatives.md)).
+A partial derivative is the rate of change in one input with the other held fixed ([Partial derivatives](01-partial-derivatives.md)). Here it is a subscript: $`Q_t`$ is the rate of Q per cm of insulation. Two subscripts mean differentiate twice, left letter first: $`Q_{tA}`$ is the rate at which $`Q_t`$ changes per square metre of glass. The gradient $`\nabla Q=(Q_t,Q_A)`$ lists the two slopes ([Gradient](03-gradient-and-directional-derivatives.md)).
 
 The **Hessian** at the design p is the table of second partial derivatives:
 
-$$H(p)=\begin{pmatrix} Q_{tt}&Q_{tA}\\Q_{At}&Q_{AA} \end{pmatrix}$$
+```math
+H(p)=\begin{pmatrix} Q_{tt}&Q_{tA}\\Q_{At}&Q_{AA} \end{pmatrix}
+```
 
-The **second-order model** for a step $h=(h_t,h_A)$ away from p, written out with $Q_{tA}=Q_{At}$:
+The **second-order model** for a step $`h=(h_t,h_A)`$ away from p, written out with $`Q_{tA}=Q_{At}`$:
 
-$$Q(p+h)=Q(p)+\nabla Q(p)\cdot h+\tfrac12\,h^{\mathsf T} H(p)\,h+R_2(h)$$
+```math
+Q(p+h)=Q(p)+\nabla Q(p)\cdot h+\tfrac12\,h^{\mathsf T} H(p)\,h+R_2(h)
+```
 
-$$\tfrac12\,h^{\mathsf T} H h=\tfrac12 Q_{tt}\,h_t^2+Q_{tA}\,h_t h_A+\tfrac12 Q_{AA}\,h_A^2$$
+```math
+\tfrac12\,h^{\mathsf T} H h=\tfrac12 Q_{tt}\,h_t^2+Q_{tA}\,h_t h_A+\tfrac12 Q_{AA}\,h_A^2
+```
 
 **Read it aloud:** the new heat loss is the old one, plus each slope times its step, plus half of each bend times its step squared, plus the cross term, plus a remainder that shrinks faster than the step squared.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $Q$, $t$, $A$, $R$ | heat loss (W); insulation (cm); glass (square metres); wall resistance 0.5 + t/4 | 1653.333 W; 10; 20; 3 | insulation lowers Q, glass raises it |
-| $p$ | the current design, the anchor | (10, 20) | new slopes and bends |
-| $h$, $h_t$, $h_A$ | the step and its two parts | (1, 2) | bigger remainder |
-| $\nabla Q$, $Q_t$, $Q_A$ | gradient: the first partials | −44.444 W per cm; 49.333 W per square metre | bigger first-order change |
-| $H$, $Q_{tt}$, $Q_{AA}$ | Hessian; its straight bends | 7.4074 W per cm per cm; 0 | bigger correction |
-| $Q_{tA}$, $Q_{At}$ | mixed bends, two orders | 0.5556 W per cm per square metre | stronger coupling |
-| $R_2$ | what the quadratic model misses | −0.3704 W | — |
-| $\varphi$, $s$, $\theta$, $\xi$ | Q along the path p + s h; how far along; points in (0, 1) where a derivative is read | s = 1: new design | — |
+| $`Q`$, $`t`$, $`A`$, $`R`$ | heat loss (W); insulation (cm); glass (square metres); wall resistance 0.5 + t/4 | 1653.333 W; 10; 20; 3 | insulation lowers Q, glass raises it |
+| $`p`$ | the current design, the anchor | (10, 20) | new slopes and bends |
+| $`h`$, $`h_t`$, $`h_A`$ | the step and its two parts | (1, 2) | bigger remainder |
+| $`\nabla Q`$, $`Q_t`$, $`Q_A`$ | gradient: the first partials | −44.444 W per cm; 49.333 W per square metre | bigger first-order change |
+| $`H`$, $`Q_{tt}`$, $`Q_{AA}`$ | Hessian; its straight bends | 7.4074 W per cm per cm; 0 | bigger correction |
+| $`Q_{tA}`$, $`Q_{At}`$ | mixed bends, two orders | 0.5556 W per cm per square metre | stronger coupling |
+| $`R_2`$ | what the quadratic model misses | −0.3704 W | — |
+| $`\varphi`$, $`s`$, $`\theta`$, $`\xi`$ | Q along the path p + s h; how far along; points in (0, 1) where a derivative is read | s = 1: new design | — |
 
-The transpose $h^{\mathsf T}$ lays the step on its side so it can multiply the table from the left; $h^{\mathsf T} H h$ is the table's quadratic form ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). Each term comes out in watts.
+The transpose $`h^{\mathsf T}`$ lays the step on its side so it can multiply the table from the left; $`h^{\mathsf T} H h`$ is the table's quadratic form ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). Each term comes out in watts.
 
 ### When it holds
 
-- **Mixed partials exist near p and are continuous at p.** Then $Q_{tA}=Q_{At}$; without it the orders can give −1 and +1.
+- **Mixed partials exist near p and are continuous at p.** Then $`Q_{tA}=Q_{At}`$; without it the orders can give −1 and +1.
 - **Second partials continuous near p.** Then the remainder over the step squared heads for 0; without it, not necessarily.
 - **Third derivatives bounded along the path.** Then the remainder is at most a constant times the step cubed.
 - **Not a hypothesis: the model is local.** At s = −4 it reads 1513 W; the house loses 1552 W.
@@ -79,15 +87,17 @@ The transpose $h^{\mathsf T}$ lays the step on its side so it can multiply the t
 
 ### Step 0: a straight path turns two inputs into one
 
-Walk in a straight line from the current design to the new one: at fraction s of the way the design is p + s h. Heat loss along the walk, $\varphi(s)=Q(p+s h)$, is a function of one number, so one-variable Taylor ([Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) applies.
+Walk in a straight line from the current design to the new one: at fraction s of the way the design is p + s h. Heat loss along the walk, $`\varphi(s)=Q(p+s h)`$, is a function of one number, so one-variable Taylor ([Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) applies.
 
 ### Step 1: the path's slope is the gradient, its bend the Hessian
 
-By the chain rule in several variables ([Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md)), $\varphi'(s)=Q_t h_t+Q_A h_A$. Apply it again to each slope:
+By the chain rule in several variables ([Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md)), $`\varphi'(s)=Q_t h_t+Q_A h_A`$. Apply it again to each slope:
 
-$$\varphi''(s)=Q_{tt}h_t^2+Q_{tA}h_t h_A+Q_{At}h_A h_t+Q_{AA}h_A^2=h^{\mathsf T} H\,h$$
+```math
+\varphi''(s)=Q_{tt}h_t^2+Q_{tA}h_t h_A+Q_{At}h_A h_t+Q_{AA}h_A^2=h^{\mathsf T} H\,h
+```
 
-On the heat-loss path: 7.4074 + 2 × 0.5556 × 2 + 0 = 9.6296. A second difference of $\varphi$ alone, no formulas, also gives 9.6296.
+On the heat-loss path: 7.4074 + 2 × 0.5556 × 2 + 0 = 9.6296. A second difference of $`\varphi`$ alone, no formulas, also gives 9.6296.
 
 ### Step 2: the mixed bends agree
 
@@ -95,46 +105,50 @@ Take the rectangle from the design to 1 cm more insulation and 2 square metres m
 
 Divided by the area, 1 × 2, it is 0.5128. Shrink the rectangle tenfold: 0.5510. Again: 0.5551. The target is 0.5556.
 
-The [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) turns one reading into $Q_{tA}$ at some point of the rectangle and the other into $Q_{At}$ at another point, equal in value. As the rectangle shrinks both points close on p, so continuity there makes the values at p agree. So H is symmetric, and Step 1's two cross terms merge into $2Q_{tA}h_t h_A$.
+The [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) turns one reading into $`Q_{tA}`$ at some point of the rectangle and the other into $`Q_{At}`$ at another point, equal in value. As the rectangle shrinks both points close on p, so continuity there makes the values at p agree. So H is symmetric, and Step 1's two cross terms merge into $`2Q_{tA}h_t h_A`$.
 
 <details>
 <summary>Detailed proof: mixed partials agree</summary>
 
-Let $D(h,k)=Q(t+h,A+k)-Q(t+h,A)-Q(t,A+k)+Q(t,A)$. With $u(x)=Q(x,A+k)-Q(x,A)$, the mean value theorem gives $D=h\,u'(t+\theta h)$, and $u'(x)=Q_t(x,A+k)-Q_t(x,A)$, so again $D=hk\,Q_{tA}(t+\theta h,A+\theta' k)$, with $\theta,\theta'$ in (0, 1). With $v(y)=Q(t+h,y)-Q(t,y)$ instead, $D=hk\,Q_{At}(t+\psi h,A+\psi' k)$, with $\psi,\psi'$ in (0, 1).
+Let $`D(h,k)=Q(t+h,A+k)-Q(t+h,A)-Q(t,A+k)+Q(t,A)`$. With $`u(x)=Q(x,A+k)-Q(x,A)`$, the mean value theorem gives $`D=h\,u'(t+\theta h)`$, and $`u'(x)=Q_t(x,A+k)-Q_t(x,A)`$, so again $`D=hk\,Q_{tA}(t+\theta h,A+\theta' k)`$, with $`\theta,\theta'`$ in (0, 1). With $`v(y)=Q(t+h,y)-Q(t,y)`$ instead, $`D=hk\,Q_{At}(t+\psi h,A+\psi' k)`$, with $`\psi,\psi'`$ in (0, 1).
 
-Given $\varepsilon>0$, continuity at $(t,A)$ gives $\delta>0$ with both mixed partials within $\varepsilon$ of their values at $(t,A)$ whenever $|h|,|k|<\delta$. Then $|Q_{tA}(t,A)-Q_{At}(t,A)|<2\varepsilon$ for every $\varepsilon>0$, so they are equal. ∎
+Given $`\varepsilon>0`$, continuity at $`(t,A)`$ gives $`\delta>0`$ with both mixed partials within $`\varepsilon`$ of their values at $`(t,A)`$ whenever $`|h|,|k|<\delta`$. Then $`|Q_{tA}(t,A)-Q_{At}(t,A)|<2\varepsilon`$ for every $`\varepsilon>0`$, so they are equal. ∎
 
 </details>
 
 ### Step 3: Taylor along the path gives the model and its error
 
-Taylor with Lagrange's remainder for $\varphi$ from 0 to 1: $\varphi(1)=\varphi(0)+\varphi'(0)+\tfrac12\varphi''(\theta)$ for some $\theta$ in (0, 1). With Step 1:
+Taylor with Lagrange's remainder for $`\varphi`$ from 0 to 1: $`\varphi(1)=\varphi(0)+\varphi'(0)+\tfrac12\varphi''(\theta)`$ for some $`\theta`$ in (0, 1). With Step 1:
 
-$$Q(p+h)=Q(p)+\nabla Q(p)\cdot h+\tfrac12\,h^{\mathsf T} H(p+\theta h)\,h$$
+```math
+Q(p+h)=Q(p)+\nabla Q(p)\cdot h+\tfrac12\,h^{\mathsf T} H(p+\theta h)\,h
+```
 
-The Hessian is read somewhere along the path. Swapping in $H(p)$ leaves a remainder of half $h^{\mathsf T}(H(p+\theta h)-H(p))h$. If the entries are continuous, that difference of tables heads for zero with the step, so the remainder shrinks faster than the step squared.
+The Hessian is read somewhere along the path. Swapping in $`H(p)`$ leaves a remainder of half $`h^{\mathsf T}(H(p+\theta h)-H(p))h`$. If the entries are continuous, that difference of tables heads for zero with the step, so the remainder shrinks faster than the step squared.
 
 <details>
 <summary>Detailed proof: the remainder is small beside the step squared</summary>
 
-Given a tolerance $\eta>0$, continuity gives a radius within which each entry stays within that tolerance of its value at p. For a step inside it,
-$$|R_2(h)|\le\tfrac12\,\eta\,(|h_t|+|h_A|)^2\le\eta\,(h_t^2+h_A^2),$$
-since $(|h_t|-|h_A|)^2\ge0$. The tolerance was arbitrary, so $R_2(h)/(h_t^2+h_A^2)$ heads for 0. ∎
+Given a tolerance $`\eta>0`$, continuity gives a radius within which each entry stays within that tolerance of its value at p. For a step inside it,
+
+$`\displaystyle |R_2(h)|\le\tfrac12\,\eta\,(|h_t|+|h_A|)^2\le\eta\,(h_t^2+h_A^2),`$
+
+since $`(|h_t|-|h_A|)^2\ge0`$. The tolerance was arbitrary, so $`R_2(h)/(h_t^2+h_A^2)`$ heads for 0. ∎
 
 </details>
 
 ### Step 4: on the heat-loss path the error is pinned from both sides
 
-One derivative further, the remainder is $\varphi'''(\xi)/6$ for some $\xi$ in (0, 1). Here $\varphi'''(s)=-195/u^4$, where $u=3+s/4$ is the wall resistance along the way, running from 3 to 3.25. So the remainder lies between −0.4012 and −0.2913. The true one, 1712.000 − 1712.370, is −0.3704: inside.
+One derivative further, the remainder is $`\varphi'''(\xi)/6`$ for some $`\xi`$ in (0, 1). Here $`\varphi'''(s)=-195/u^4`$, where $`u=3+s/4`$ is the wall resistance along the way, running from 3 to 3.25. So the remainder lies between −0.4012 and −0.2913. The true one, 1712.000 − 1712.370, is −0.3704: inside.
 
 <details>
 <summary>The algebra behind the third derivative</summary>
 
-Along the path $t=10+s$ and $A=20+2s$, so $u=3+s/4$ and $100-A=104-8u$. Then $\varphi(s)=20\,(104/u-8+56+5.6\,s)$. Each s-derivative of $1/u$ brings a factor 1/4, so the third derivative is $20 \times 104 \times (-6)/u^4 \times (1/4)^3=-195/u^4$.
+Along the path $`t=10+s`$ and $`A=20+2s`$, so $`u=3+s/4`$ and $`100-A=104-8u`$. Then $`\varphi(s)=20\,(104/u-8+56+5.6\,s)`$. Each s-derivative of $`1/u`$ brings a factor 1/4, so the third derivative is $`20 \times 104 \times (-6)/u^4 \times (1/4)^3=-195/u^4`$.
 
 </details>
 
-Scaling the step by s scales that remainder by about $s^3$. Halving s twice divides the quadratic's miss by 7.69, then 7.84, and the plane's by 3.85, then 3.92, closing on 8 and 4.
+Scaling the step by s scales that remainder by about $`s^3`$. Halving s twice divides the quadratic's miss by 7.69, then 7.84, and the plane's by 3.85, then 3.92, closing on 8 and 4.
 
 ---
 
@@ -143,10 +157,10 @@ Scaling the step by s scales that remainder by about $s^3$. Halving s twice divi
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | heat loss now | 20 × (80/3 + 2.8 × 20), with R = 3 | 1653.333 W |
-| slope in t | $Q_t=-5(100-A)/R^2$ = −5 × 80 / 9 | −44.444 W per cm |
-| slope in A | $Q_A=20(2.8-1/R)$ | 49.333 W per square metre |
-| bend in t | $Q_{tt}=2.5(100-A)/R^3$ = 2.5 × 80 / 27 | 7.4074 |
-| mixed bend, both orders | $5/R^2$ = 5/9 | 0.5556 |
+| slope in t | $`Q_t=-5(100-A)/R^2`$ = −5 × 80 / 9 | −44.444 W per cm |
+| slope in A | $`Q_A=20(2.8-1/R)`$ | 49.333 W per square metre |
+| bend in t | $`Q_{tt}=2.5(100-A)/R^3`$ = 2.5 × 80 / 27 | 7.4074 |
+| mixed bend, both orders | $`5/R^2`$ = 5/9 | 0.5556 |
 | bend in A | Q is a straight line in A | 0 |
 | tangent plane | 1653.333 − 44.444 × 1 + 49.333 × 2 | 1707.556 W |
 | Hessian correction | ½ × 7.4074 × 1 + 0.5556 × 1 × 2 + 0 | 3.704 + 1.111 = 4.815 W |
@@ -170,7 +184,7 @@ There the slope in x along x = 0 is −y, rate −1 in y; the slope in y along y
 
 ## Code, from first principles, and it actually runs
 
-Three roads: derivatives by hand; second differences of Q with step 0.01, sized as in [Numerical derivatives](../03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md); the second difference along the path. The asserts check that the first two agree on every entry, that the path's bend is $h^{\mathsf T} H h$, that the remainder sits in Lagrange's window, and that halving the step divides the errors by 4 and 8, within 0.5.
+Three roads: derivatives by hand; second differences of Q with step 0.01, sized as in [Numerical derivatives](../03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md); the second difference along the path. The asserts check that the first two agree on every entry, that the path's bend is $`h^{\mathsf T} H h`$, that the remainder sits in Lagrange's window, and that halving the step divides the errors by 4 and 8, within 0.5.
 
 ### Python
 
@@ -364,7 +378,7 @@ ALL CHECKS PASS
 Lean proves both theorems for every function of two inputs, and checks the swap example and the house's numbers exactly.
 
 - Suppose the second partials exist and are continuous near p. Then the second-order model's remainder, divided by the step squared, heads for 0 as the step shrinks.
-- Suppose the mixed partials exist near p and are continuous at p. Then $Q_{tA}=Q_{At}$ at p, so the Hessian is symmetric.
+- Suppose the mixed partials exist near p and are continuous at p. Then $`Q_{tA}=Q_{At}`$ at p, so the Hessian is symmetric.
 - For xy(x^2 − y^2)/(x^2 + y^2), 0 at the origin, the mixed partial there is −1 taking x first and +1 taking y first.
 - The hand arithmetic holds exactly, in fractions. That covers heat loss now and at the new design, the slopes, the bends and the tangent plane.
 - It also covers the correction, the quadratic model, the remainder, the 0.5128 rectangle quotient, the Lagrange window and the two mistakes.
@@ -740,8 +754,8 @@ example : (15368 / 9 : ℚ) + 100 / 27 = 46204 / 27 := by norm_num
 > [!warning]
 > **Expecting the cube law from continuity alone.** Continuous second derivatives promise only an error shrinking faster than the step squared. Dividing by 8 per halving needs bounded third derivatives.
 >
-> - **Keeping only the diagonal.** The mixed term appears twice in $h^{\mathsf T} H h$; dropping it gives 1711.259 W.
-> - **Calling every Hessian a bowl.** Here $Q_{AA}=0$ and the quadratic form takes both signs; the shapes are sorted in [Extrema in several variables](06-multivariable-extrema.md).
+> - **Keeping only the diagonal.** The mixed term appears twice in $`h^{\mathsf T} H h`$; dropping it gives 1711.259 W.
+> - **Calling every Hessian a bowl.** Here $`Q_{AA}=0`$ and the quadratic form takes both signs; the shapes are sorted in [Extrema in several variables](06-multivariable-extrema.md).
 
 ---
 
@@ -759,7 +773,7 @@ example : (15368 / 9 : ℚ) + 100 / 27 = 46204 / 27 := by norm_num
 ## What this builds on
 
 - [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md): the rate along a path, used twice in Step 1.
-- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): what $h^{\mathsf T} H h$ is.
+- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): what $`h^{\mathsf T} H h`$ is.
 
 ## Where this goes next
 

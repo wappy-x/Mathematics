@@ -12,7 +12,7 @@ The scheme's search box lists matching pages best first, so it wants its pages r
 
 This card is about *computing* it, and the computation never solves an equation. Give every page the same score, 1/6. Then repeat one pass: each page hands its score out along its links, and each page adds up what arrives. Pass after pass the scores settle. Repeating one pass like this is called power iteration.
 
-After twelve passes the order is certified, not guessed: Home, Terms, Map, Prices, Join, Help. Terms comes second, though it links to nothing. The same loop computes the PageRank of a synthetic network of 5,000 people and 50,642 follows to within $10^{-6}$ in 16 passes, at 55,642 small additions a pass, where storing the full table of who-follows-whom would take 25,000,000 entries.
+After twelve passes the order is certified, not guessed: Home, Terms, Map, Prices, Join, Help. Terms comes second, though it links to nothing. The same loop computes the PageRank of a synthetic network of 5,000 people and 50,642 follows to within $`10^{-6}`$ in 16 passes, at 55,642 small additions a pass, where storing the full table of who-follows-whom would take 25,000,000 entries.
 
 **PageRank is computed by passing every page's score along its links again and again; the damping step keeps the total at 1 and makes the error shrink by at least the damping factor, 0.85, on every pass, whatever the links.**
 
@@ -41,37 +41,41 @@ Schematic. Each arrow is a link, followed one way only. Terms is a **dangling pa
 
 ## The formula
 
-One pass of power iteration takes the scores $x_k$ after $k$ passes to the scores $x_{k+1}$:
+One pass of power iteration takes the scores $`x_k`$ after $`k`$ passes to the scores $`x_{k+1}`$:
 
-$$x_{k+1}(j) \;=\; \alpha \sum_{i \to j} \frac{x_k(i)}{\operatorname{out}(i)} \;+\; \frac{\alpha D_k + (1-\alpha)}{n}, \qquad D_k = \sum_{i \text{ dangling}} x_k(i).$$
+```math
+x_{k+1}(j) \;=\; \alpha \sum_{i \to j} \frac{x_k(i)}{\mathrm{out}(i)} \;+\; \frac{\alpha D_k + (1-\alpha)}{n}, \qquad D_k = \sum_{i \text{ dangling}} x_k(i).
+```
 
 **Read it aloud:** a page's new score is 85% of the score flowing in along its links, plus an even share of everything that did not travel along a link: the 15% that jumps, and the 85% parked on pages with no links out.
 
-The **damping factor** $\alpha$ (alpha) is the chance the surfer follows a link rather than jumping; [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) writes it $d$. Two promises come with the pass, measured by the **error** $e_k$, the total size of the gaps between the scores and PageRank $\pi$, and the **change** $\delta_k$, the total size of the last pass's moves:
+The **damping factor** $`\alpha`$ (alpha) is the chance the surfer follows a link rather than jumping; [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) writes it $`d`$. Two promises come with the pass, measured by the **error** $`e_k`$, the total size of the gaps between the scores and PageRank $`\pi`$, and the **change** $`\delta_k`$, the total size of the last pass's moves:
 
-$$e_k \;\le\; \alpha^k\, e_0, \qquad\qquad e_k \;\le\; \frac{\alpha}{1-\alpha}\,\delta_k .$$
+```math
+e_k \;\le\; \alpha^k\, e_0, \qquad\qquad e_k \;\le\; \frac{\alpha}{1-\alpha}\,\delta_k .
+```
 
-The first says the error shrinks by at least 0.85 a pass. The second turns the change, which the program can see, into a bound on the error, which it cannot. The **stopping rule**: stop when that bound is smaller than $g_k$, the smallest gap between two neighbouring scores (scores next to each other in the ranking). Then no page can still overtake another.
+The first says the error shrinks by at least 0.85 a pass. The second turns the change, which the program can see, into a bound on the error, which it cannot. The **stopping rule**: stop when that bound is smaller than $`g_k`$, the smallest gap between two neighbouring scores (scores next to each other in the ranking). Then no page can still overtake another.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_k(j)$, $y(j)$ | page $j$'s score after $k$ passes; $y$ is a second list compared with it in the proof, and $v = x - y$ | Home 0.3319 after one pass | — |
-| $\pi(j)$ | PageRank: where the scores settle ($\pi$ is the Greek letter pi, here a list of shares, not the circle constant) | Home 0.2918, Terms 0.2050 | — |
-| $\alpha$ | damping factor: the chance of following a link | 0.85 | ranks follow the links more closely, and more passes are needed |
-| $n$ | number of pages | 6 | each jump share, $(1-\alpha)/n$, gets thinner |
-| $i \to j$, $\operatorname{out}(i)$ | page $i$ links to page $j$; how many links leave $i$ | Home has 3 links out | each link carries less of $i$'s score |
-| $D_k$ | score parked on dangling pages after $k$ passes | Terms' 1/6 at the start | more is spread evenly over all pages |
-| $k$ | passes so far | 12 to certify the order | the error shrinks |
-| $e_k$ | error: $\sum_j \lvert x_k(j) - \pi(j)\rvert$ | 0.3306 at the start, 0.0011 after 12 | — |
-| $\delta_k$ | change: $\sum_j \lvert x_k(j) - x_{k-1}(j)\rvert$ | 0.0028 at pass 12 | the guaranteed error grows with it |
-| $g_k$ | smallest gap between neighbouring scores | 0.0249 at pass 12 | the order is certified sooner |
-| $m$ | number of links | 11; 50,642 for the 5,000 people | a pass costs more |
-| $\lambda_2$ | second-largest eigenvalue, in size, of the walk with no damping | about 0.7541 here | convergence slows |
+| $`x_k(j)`$, $`y(j)`$ | page $`j`$'s score after $`k`$ passes; $`y`$ is a second list compared with it in the proof, and $`v = x - y`$ | Home 0.3319 after one pass | — |
+| $`\pi(j)`$ | PageRank: where the scores settle ($`\pi`$ is the Greek letter pi, here a list of shares, not the circle constant) | Home 0.2918, Terms 0.2050 | — |
+| $`\alpha`$ | damping factor: the chance of following a link | 0.85 | ranks follow the links more closely, and more passes are needed |
+| $`n`$ | number of pages | 6 | each jump share, $`(1-\alpha)/n`$, gets thinner |
+| $`i \to j`$, $`\mathrm{out}(i)`$ | page $`i`$ links to page $`j`$; how many links leave $`i`$ | Home has 3 links out | each link carries less of $`i`$'s score |
+| $`D_k`$ | score parked on dangling pages after $`k`$ passes | Terms' 1/6 at the start | more is spread evenly over all pages |
+| $`k`$ | passes so far | 12 to certify the order | the error shrinks |
+| $`e_k`$ | error: $`\sum_j \lvert x_k(j) - \pi(j)\rvert`$ | 0.3306 at the start, 0.0011 after 12 | — |
+| $`\delta_k`$ | change: $`\sum_j \lvert x_k(j) - x_{k-1}(j)\rvert`$ | 0.0028 at pass 12 | the guaranteed error grows with it |
+| $`g_k`$ | smallest gap between neighbouring scores | 0.0249 at pass 12 | the order is certified sooner |
+| $`m`$ | number of links | 11; 50,642 for the 5,000 people | a pass costs more |
+| $`\lambda_2`$ | second-largest eigenvalue, in size, of the walk with no damping | about 0.7541 here | convergence slows |
 
 ### When it holds
 
 - **Every page has somewhere to send its score.** A dangling page's score is spread evenly, as if it linked everywhere. Drop it instead and score leaks away: the six totals fall to 0.4675 after 12 passes.
-- **$\alpha$ is below 1.** At $\alpha$ = 1 two pages that link only to each other swap their scores forever and the passes never settle.
+- **$`\alpha`$ is below 1.** At $`\alpha`$ = 1 two pages that link only to each other swap their scores forever and the passes never settle.
 - **The start is a list of non-negative scores adding to 1.** Both promises compare lists of that kind; the even start, 1/6 each, is one.
 - **No two pages tie.** A tie leaves the smallest gap at 0 and the stopping rule never fires, so a program also caps the number of passes.
 - **The links stay fixed during the run.** A web that changes mid-run is a different table each pass, and the promises are about one table.
@@ -82,34 +86,38 @@ The first says the error shrinks by at least 0.85 a pass. The second turns the c
 
 ### Step 0: two lists of scores are pulled together on every pass
 
-Run the pass on two different lists of scores, both adding to 1. The jump share, $(1-\alpha)/n$, is the same for both, so it cancels from their difference. What is left of the difference is 85% of it, moved along links and spread from dangling pages. Moving amounts around can cancel some of it but cannot make it bigger. So the total difference shrinks by at least 0.85 a pass. PageRank is the list the pass leaves unchanged, so every start is pulled towards it.
+Run the pass on two different lists of scores, both adding to 1. The jump share, $`(1-\alpha)/n`$, is the same for both, so it cancels from their difference. What is left of the difference is 85% of it, moved along links and spread from dangling pages. Moving amounts around can cancel some of it but cannot make it bigger. So the total difference shrinks by at least 0.85 a pass. PageRank is the list the pass leaves unchanged, so every start is pulled towards it.
 
 ### Step 1: one pass costs one visit per link
 
-The pass reads each link once: page $i$ sends $\alpha\,x_k(i)/\operatorname{out}(i)$ along each of its links. It then adds the even share to each of the $n$ pages. That is $m + n$ additions, never the $n \times n$ table. On a sparse network (one with few links per node) the difference is enormous.
+The pass reads each link once: page $`i`$ sends $`\alpha\,x_k(i)/\mathrm{out}(i)`$ along each of its links. It then adds the even share to each of the $`n`$ pages. That is $`m + n`$ additions, never the $`n \times n`$ table. On a sparse network (one with few links per node) the difference is enormous.
 
 The synthetic network of 5,000 people (each follows between 0 and 20 others, drawn from a seeded generator, with low-numbered people more popular) has 50,642 links, and 223 people follow nobody: they are its dangling pages. One pass is 55,642 additions; the full table has 25,000,000 entries. The run took 16 passes, 890,272 additions in all, against 400,000,000 for the table done the slow way. Its three highest scores are people 0, 1 and 2, at 0.01008, 0.00480 and 0.00363, the most popular by construction.
 
-The total stays exactly 1. Pages with links send out $\alpha$ times their scores; the dangling pages' score comes back as $\alpha D_k$ spread evenly; the jump adds $1-\alpha$. That is $\alpha \times 1 + (1 - \alpha) = 1$. This is the "normalise" in the title: the general power method divides by the total after each multiply, and the damping step does it automatically. The run prints a total of 1.000000 after twelve passes.
+The total stays exactly 1. Pages with links send out $`\alpha`$ times their scores; the dangling pages' score comes back as $`\alpha D_k`$ spread evenly; the jump adds $`1-\alpha`$. That is $`\alpha \times 1 + (1 - \alpha) = 1`$. This is the "normalise" in the title: the general power method divides by the total after each multiply, and the damping step does it automatically. The run prints a total of 1.000000 after twelve passes.
 
 ### Step 2: the error shrinks by at least α a pass
 
-Write $y$ for a second list and take the difference $x_k(i) - y(i)$ on each page. After one pass, page $i$'s difference has been cut into pieces: $\alpha/\operatorname{out}(i)$ of it along each link, or $\alpha/n$ of it to every page if $i$ dangles. The pieces from page $i$ add up to $\alpha$ times its difference in size. Adding pieces of different signs at a page can only cancel, so the total size after the pass is at most $\alpha$ times the total before.
+Write $`y`$ for a second list and take the difference $`x_k(i) - y(i)`$ on each page. After one pass, page $`i`$'s difference has been cut into pieces: $`\alpha/\mathrm{out}(i)`$ of it along each link, or $`\alpha/n`$ of it to every page if $`i`$ dangles. The pieces from page $`i`$ add up to $`\alpha`$ times its difference in size. Adding pieces of different signs at a page can only cancel, so the total size after the pass is at most $`\alpha`$ times the total before.
 
-Take $y = \pi$. One pass leaves $\pi$ unchanged, so the error obeys $e_{k+1} \le \alpha\, e_k$, and after $k$ passes $e_k \le \alpha^k e_0$. Two different resting lists would have to pull together while standing still, so there is exactly one PageRank. This is the contraction argument (a map that shrinks every distance has exactly one resting point) in its simplest form.
+Take $`y = \pi`$. One pass leaves $`\pi`$ unchanged, so the error obeys $`e_{k+1} \le \alpha\, e_k`$, and after $`k`$ passes $`e_k \le \alpha^k e_0`$. Two different resting lists would have to pull together while standing still, so there is exactly one PageRank. This is the contraction argument (a map that shrinks every distance has exactly one resting point) in its simplest form.
 
 <details>
 <summary>Detailed proof: the pass shrinks every difference by α</summary>
 
-Let $v = x - y$ with $\sum_i v(i) = 0$. After one pass, page $j$ receives
-$$v'(j) = \alpha\sum_{i \to j}\frac{v(i)}{\operatorname{out}(i)} + \frac{\alpha}{n}\sum_{i\text{ dangling}} v(i),$$
-because the jump terms $(1-\alpha)/n$ cancel. Bound each term by its size and add over $j$:
-$$\sum_j \lvert v'(j)\rvert \le \alpha \sum_{i \text{ with links}} \sum_{j:\, i\to j}\frac{\lvert v(i)\rvert}{\operatorname{out}(i)} + \alpha \sum_{i\text{ dangling}} \lvert v(i)\rvert = \alpha\sum_i \lvert v(i)\rvert.$$
-Each page with links appears $\operatorname{out}(i)$ times in the first sum, and each dangling page $n$ times in the second, each copy carrying $1/\operatorname{out}(i)$ or $1/n$ of it.
+Let $`v = x - y`$ with $`\sum_i v(i) = 0`$. After one pass, page $`j`$ receives
+
+$`\displaystyle v'(j) = \alpha\sum_{i \to j}\frac{v(i)}{\mathrm{out}(i)} + \frac{\alpha}{n}\sum_{i\text{ dangling}} v(i),`$
+
+because the jump terms $`(1-\alpha)/n`$ cancel. Bound each term by its size and add over $`j`$:
+
+$`\displaystyle \sum_j \lvert v'(j)\rvert \le \alpha \sum_{i \text{ with links}} \sum_{j:\, i\to j}\frac{\lvert v(i)\rvert}{\mathrm{out}(i)} + \alpha \sum_{i\text{ dangling}} \lvert v(i)\rvert = \alpha\sum_i \lvert v(i)\rvert.`$
+
+Each page with links appears $`\mathrm{out}(i)`$ times in the first sum, and each dangling page $`n`$ times in the second, each copy carrying $`1/\mathrm{out}(i)`$ or $`1/n`$ of it.
 
 </details>
 
-The chart shows both lines for the six pages: the measured error, and the promise $0.85^k e_0$ with $e_0$ = 0.3306.
+The chart shows both lines for the six pages: the measured error, and the promise $`0.85^k e_0`$ with $`e_0`$ = 0.3306.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -121,31 +129,33 @@ xychart-beta
     line [0.1327, 0.0992, 0.0600, 0.0381, 0.0245, 0.0159, 0.0102, 0.0065, 0.0042, 0.0027, 0.0017, 0.0011]
 ```
 
-Orange: the promise, $0.85^k \times 0.3306$. Teal: the measured error. The measured line always sits under the promise, and falls faster.
+Orange: the promise, $`0.85^k \times 0.3306`$. Teal: the measured error. The measured line always sits under the promise, and falls faster.
 
 ### Step 3: the change bounds the error, and the gap certifies the order
 
-The error needs $\pi$, which the program does not have. The change $\delta_k$ it does have. Step 2 gives $e_k \le \alpha\,e_{k-1}$. The distance from the previous scores to $\pi$ is at most the distance to the new scores plus the distance on to $\pi$: $e_{k-1} \le \delta_k + e_k$. Together, $e_k \le \alpha(\delta_k + e_k)$. Rearranged:
+The error needs $`\pi`$, which the program does not have. The change $`\delta_k`$ it does have. Step 2 gives $`e_k \le \alpha\,e_{k-1}`$. The distance from the previous scores to $`\pi`$ is at most the distance to the new scores plus the distance on to $`\pi`$: $`e_{k-1} \le \delta_k + e_k`$. Together, $`e_k \le \alpha(\delta_k + e_k)`$. Rearranged:
 
-$$e_k \le \frac{\alpha}{1-\alpha}\,\delta_k = 5.67\,\delta_k .$$
+```math
+e_k \le \frac{\alpha}{1-\alpha}\,\delta_k = 5.67\,\delta_k .
+```
 
-Now take two pages with scores $x_k(i) > x_k(j)$. Their two errors together are at most $e_k$. If the gap $x_k(i) - x_k(j)$ is bigger than $e_k$, PageRank keeps $i$ above $j$. So once the bound is below the smallest gap $g_k$, the whole order is final. On the six pages that first happens at pass 12: bound 0.0160, gap 0.0249. At pass 11 the bound, 0.0249, was still above the gap, 0.0241.
+Now take two pages with scores $`x_k(i) > x_k(j)`$. Their two errors together are at most $`e_k`$. If the gap $`x_k(i) - x_k(j)`$ is bigger than $`e_k`$, PageRank keeps $`i`$ above $`j`$. So once the bound is below the smallest gap $`g_k`$, the whole order is final. On the six pages that first happens at pass 12: bound 0.0160, gap 0.0249. At pass 11 the bound, 0.0249, was still above the gap, 0.0241.
 
 ### Step 4: the real speed is α times the second eigenvalue
 
 The promise is a worst case. Here the error actually shrinks by 0.6410 a pass, not 0.85. The reason is in the eigenvalues ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the directions a table only stretches, and the stretch factors).
 
-Split the start into PageRank plus leftover patterns, as [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md) does for the two-city car fleet, where $A^n$ becomes a power of each stretch factor. Each leftover pattern adds to zero, and on a list adding to zero the jump cancels, so one pass is $\alpha$ times one click of the walk with no damping (dangling pages still spread evenly). The slowest pattern shrinks by $\alpha\lvert\lambda_2\rvert$ a pass: the damping factor times the walk's second-largest stretch factor in size.
+Split the start into PageRank plus leftover patterns, as [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md) does for the two-city car fleet, where $`A^n`$ becomes a power of each stretch factor. Each leftover pattern adds to zero, and on a list adding to zero the jump cancels, so one pass is $`\alpha`$ times one click of the walk with no damping (dangling pages still spread evenly). The slowest pattern shrinks by $`\alpha\lvert\lambda_2\rvert`$ a pass: the damping factor times the walk's second-largest stretch factor in size.
 
 The undamped walk, which on this site settles to a slightly different list (Home 0.3103), shrinks its error by 0.7541 a pass. Damped, 0.6410. Their ratio is 0.8500, the damping factor exactly.
 
-The 5,000-person network mixes much faster: its error shrank by 0.3471 on the last pass, so 16 passes did what the promise allows 90 for. The promise, $2 \times 0.85^k < 10^{-6}$ (2 is the largest possible starting error), holds on any network; the real count depends on $\lambda_2$, and [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) reads the same rate off the same eigenvalue for an undamped walk.
+The 5,000-person network mixes much faster: its error shrank by 0.3471 on the last pass, so 16 passes did what the promise allows 90 for. The promise, $`2 \times 0.85^k < 10^{-6}`$ (2 is the largest possible starting error), holds on any network; the real count depends on $`\lambda_2`$, and [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) reads the same rate off the same eigenvalue for an undamped walk.
 
 ### Step 5: why damping is needed
 
-Without damping, $\lambda_2$ can have size 1, and then nothing shrinks. Two pages that link only to each other, started with all the score on the first, give (1, 0), (0, 1), (1, 0) for ever: at pass 100 the scores are 1.0000 and 0.0000, at pass 101 0.0000 and 1.0000. Their walk has the eigenvalue $-1$: the pattern "too much here, too little there" flips each click and never fades.
+Without damping, $`\lambda_2`$ can have size 1, and then nothing shrinks. Two pages that link only to each other, started with all the score on the first, give (1, 0), (0, 1), (1, 0) for ever: at pass 100 the scores are 1.0000 and 0.0000, at pass 101 0.0000 and 1.0000. Their walk has the eigenvalue $`-1`$: the pattern "too much here, too little there" flips each click and never fades.
 
-With $\alpha$ = 0.85 that pattern is multiplied by $-0.85$ a pass, and by pass 30 the scores are 0.5038 and 0.4962. A real web has such loops, and closed groups that would swallow all the score; damping makes every one of them a pattern that shrinks by at least 0.85 a pass.
+With $`\alpha`$ = 0.85 that pattern is multiplied by $`-0.85`$ a pass, and by pass 30 the scores are 0.5038 and 0.4962. A real web has such loops, and closed groups that would swallow all the score; damping makes every one of them a pattern that shrinks by at least 0.85 a pass.
 
 ---
 
@@ -172,7 +182,7 @@ The scores after pass 12 are 0.2914, 0.2052, 0.1687, 0.1369, 0.1120, 0.0858, wit
 | --- | --- | --- |
 | Drop Terms' parked score instead of spreading it | after 12 passes the six scores total 0.4675 | 85% of Terms' score vanishes each pass; the scores stop being shares |
 | "Fix" Terms by making it link to itself | Terms 0.6322 | Terms becomes a trap that keeps 85% of what it holds |
-| No damping, two pages linking only to each other | 1.0000, 0.0000 at pass 100; 0.0000, 1.0000 at pass 101 | the eigenvalue $-1$ never shrinks |
+| No damping, two pages linking only to each other | 1.0000, 0.0000 at pass 100; 0.0000, 1.0000 at pass 101 | the eigenvalue $`-1`$ never shrinks |
 | Help drops its link to Terms, so Map and Terms tie | both 0.1723; no certificate by pass 300 | a gap of 0 can never beat the bound |
 
 ---
@@ -181,10 +191,10 @@ The scores after pass 12 are 0.2914, 0.2052, 0.1687, 0.1369, 0.1120, 0.0858, wit
 
 Both programs run power iteration on the six pages and check it against two independent roads:
 
-- the exact answer by Gaussian elimination (removing one unknown at a time) on the six equations $\pi = $ one pass of $\pi$;
+- the exact answer by Gaussian elimination (removing one unknown at a time) on the six equations $\pi = $ one pass of $`\pi`$;
 - a random surfer making 1,000,000 clicks, driven by a SplitMix64 generator written out in both languages with seed 2026.
 
-They check the two promises at every pass, measure the shrink with and without damping and confirm their ratio is $\alpha$, compute the three breaks and the experiments below, and then build the synthetic 5,000-person network (seed 7) and run the same pass on it, counting additions. Only the standard library is used in Python, nothing outside `std` in Rust.
+They check the two promises at every pass, measure the shrink with and without damping and confirm their ratio is $`\alpha`$, compute the three breaks and the experiments below, and then build the synthetic 5,000-person network (seed 7) and run the same pass on it, counting additions. Only the standard library is used in Python, nothing outside `std` in Rust.
 
 ### Python
 
@@ -593,21 +603,21 @@ The three roads agree: iteration and elimination to eleven decimals after 60 pas
 
 ### Lean
 
-Lean proves the two promises and the stopping rule, for any links and any damping factor $\alpha$ from 0 up to below 1.
+Lean proves the two promises and the stopping rule, for any links and any damping factor $`\alpha`$ from 0 up to below 1.
 
-- Take any pages and links, with dangling pages spread evenly, and $0 \le \alpha < 1$. Then exactly one list of scores is left unchanged by the pass: PageRank.
+- Take any pages and links, with dangling pages spread evenly, and $`0 \le \alpha < 1`$. Then exactly one list of scores is left unchanged by the pass: PageRank.
 - Start from a list of non-negative scores adding to 1. Then after any number of passes the total is still 1.
-- Take the same start. Then after $k$ passes the error obeys $e_k \le \alpha^k e_0$.
-- Take two lists of scores, each adding to 1. Then one pass shrinks the total size of their difference by at least $\alpha$.
-- Suppose $x_k$ comes one pass after a list of scores. Then $e_k \le \frac{\alpha}{1-\alpha}\,\delta_k$.
-- Suppose the gap $x_k(i) - x_k(j)$ is bigger than that bound. Then PageRank also ranks page $i$ above page $j$.
+- Take the same start. Then after $`k`$ passes the error obeys $`e_k \le \alpha^k e_0`$.
+- Take two lists of scores, each adding to 1. Then one pass shrinks the total size of their difference by at least $`\alpha`$.
+- Suppose $`x_k`$ comes one pass after a list of scores. Then $`e_k \le \frac{\alpha}{1-\alpha}\,\delta_k`$.
+- Suppose the gap $`x_k(i) - x_k(j)`$ is bigger than that bound. Then PageRank also ranks page $`i`$ above page $`j`$.
 - Take the six-page site. Then it has eleven links, Terms is its only dangling page, and Home after one pass is exactly 239/720.
-- Take $\alpha$ = 0.85. Then $\alpha/(1-\alpha)$ is exactly 17/3, about 5.67.
-- Take $\alpha$ = 1 and two pages that link only to each other. Then one pass turns the scores (1, 0) into (0, 1).
+- Take $`\alpha`$ = 0.85. Then $`\alpha/(1-\alpha)`$ is exactly 17/3, about 5.67.
+- Take $`\alpha`$ = 1 and two pages that link only to each other. Then one pass turns the scores (1, 0) into (0, 1).
 - The counts for the 5,000 people check: 55,642 additions a pass, 25,000,000 table entries, and 890,272 against 400,000,000 over 16 passes.
-- Take the promise $2 \times 0.85^k < 10^{-6}$. Then it first holds at $k$ = 90.
+- Take the promise $`2 \times 0.85^k < 10^{-6}`$. Then it first holds at $`k`$ = 90.
 
-The actual runs, the 0.6410 shrink, the eigenvalue $\lambda_2$, the surfer and the breaks are left to the Python and Rust checks.
+The actual runs, the 0.6410 shrink, the eigenvalue $`\lambda_2`$, the surfer and the breaks are left to the Python and Rust checks.
 
 ```lean
 -- PageRank by power iteration: for any links and any damping factor 0 ≤ α < 1, the damped pass keeps the total score at 1, has exactly one resting list (PageRank), pulls every start towards it by at least α a pass, and its stopping rule certifies the order.
@@ -932,7 +942,7 @@ end PageRankPowerIteration
 > The order happens to survive, Home > Terms > Map > Prices > Join > Help, because the lost score would have been spread evenly, just like the jumps: in the long run every score shrinks by the same factor. Spread the parked score evenly, as if the page linked everywhere, and the total stays exactly 1.
 >
 > - **Making a dangling page link to itself.** It looks like a tidy fix and turns the page into a trap: Terms jumps to 0.6322.
-> - **Reading a small change as a small error.** At $\alpha$ = 0.85 the error can be 5.67 times the change, and far more as $\alpha$ nears 1. At pass 12 the change is 0.0028 and the guarantee is 0.0160.
+> - **Reading a small change as a small error.** At $`\alpha`$ = 0.85 the error can be 5.67 times the change, and far more as $`\alpha`$ nears 1. At pass 12 the change is 0.0028 and the guarantee is 0.0160.
 > - **Taking the promise as a forecast.** The 5,000-person network needed 16 passes, not the 90 the promise allows. The promise answers "how many at most".
 > - **Storing the full table.** For 5,000 people it has 25,000,000 entries, almost all zero; the pass needs only the 50,642 links.
 
@@ -962,7 +972,7 @@ end PageRankPowerIteration
 - [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md): the next card, where other eigenvalues of a network's table count its pieces and cut it in two.
 - [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): power iteration as a general method for the largest eigenvalue of any big matrix, and its faster relatives.
 
-The promise is 0.85 a pass on any network, but the real speed is set by $\lambda_2$, and which networks keep $\lambda_2$ small as they grow is left open here.
+The promise is 0.85 a pass on any network, but the real speed is set by $`\lambda_2`$, and which networks keep $`\lambda_2`$ small as they grow is left open here.
 
 ---
 

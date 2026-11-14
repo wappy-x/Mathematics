@@ -39,38 +39,44 @@ Orange: letter. Green: parcel. Dark blue: pallet. At every weight the three heig
 
 ## The formula
 
-Classes are numbered k = 0 (letter), 1 (parcel), 2 (pallet). An order of weight $x$ kg gets one score per class, a straight line in its weight:
+Classes are numbered k = 0 (letter), 1 (parcel), 2 (pallet). An order of weight $`x`$ kg gets one score per class, a straight line in its weight:
 
-$$z_k = b_k + w_k\,x, \qquad \hat y_k = \frac{e^{z_k}}{e^{z_0} + e^{z_1} + e^{z_2}}$$
+```math
+z_k = b_k + w_k\,x, \qquad \hat y_k = \frac{e^{z_k}}{e^{z_0} + e^{z_1} + e^{z_2}}
+```
 
 **Read it aloud:** each class's score is a starting value plus a slope times the weight; the class's chance is its exponentiated score as a share of the three exponentiated scores.
 
-The loss for one order that actually went as class $c$, and the average over all $n$ orders:
+The loss for one order that actually went as class $`c`$, and the average over all $`n`$ orders:
 
-$$\ell = -\log_2 \hat y_c, \qquad \hat R = \frac{1}{n}\sum_{i=1}^{n} \ell_i$$
+```math
+\ell = -\log_2 \hat y_c, \qquad \hat R = \frac{1}{n}\sum_{i=1}^{n} \ell_i
+```
 
 **Read it aloud:** one order costs the bits of surprise at the class it really went as; the model is graded by the average cost.
 
-Written with $y_k$, which is 1 for the class that happened and 0 for the others, the same loss is $\ell = -\sum_k y_k \log_2 \hat y_k$. That is the cross-entropy $H(y, \hat y)$ between what happened and what was predicted. [KL divergence](../03-Information%20Theory/03-kl-divergence-and-cross-entropy.md) defines it and splits it, for any two lists of chances $p$ and $q$ over the same classes:
+Written with $`y_k`$, which is 1 for the class that happened and 0 for the others, the same loss is $`\ell = -\sum_k y_k \log_2 \hat y_k`$. That is the cross-entropy $`H(y, \hat y)`$ between what happened and what was predicted. [KL divergence](../03-Information%20Theory/03-kl-divergence-and-cross-entropy.md) defines it and splits it, for any two lists of chances $`p`$ and $`q`$ over the same classes:
 
-$$H(p, q) = -\sum_k p_k \log_2 q_k = H(p) + D(p\,\|\,q)$$
+```math
+H(p, q) = -\sum_k p_k \log_2 q_k = H(p) + D(p\,\|\,q)
+```
 
-**Read it aloud:** the average surprise when the truth is $p$ but you bet on $q$ is the surprise you could never avoid, the entropy $H(p)$, plus a penalty for betting wrong, the KL divergence $D(p\,\|\,q)$.
+**Read it aloud:** the average surprise when the truth is $`p`$ but you bet on $`q`$ is the surprise you could never avoid, the entropy $`H(p)`$, plus a penalty for betting wrong, the KL divergence $`D(p\,\|\,q)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the order's weight, in kg | 2 kg | the parcel, then the pallet, gains |
-| $k$, $j$, $c$ | class numbers (0 letter, 1 parcel, 2 pallet); $c$ is the class the order really went as | $c$ = 1, parcel | — |
-| $b_k$, $w_k$ | class $k$'s starting score and its score per kg; the letter's are pinned at 0 | parcel −2.9724 and 2.0214; pallet −13.3220 and 2.5412 | that class gains at every weight; more so at heavy weights |
-| $z_k$ | class $k$'s score; only differences between scores matter; $\partial/\partial z_k$ is the slope in $z_k$ with the other scores held still | (0, 1.0705, −8.2395) | that class's chance rises, the others fall |
-| $\hat y_k$ | the model's chance for class $k$, the softmax of the scores; $e$ is the base of natural logarithms | (0.2553, 0.7446, 0.0001) | the loss falls if $k$ is what happened |
-| $y_k$ | 1 for the class that happened, 0 for the others | (0, 1, 0) | — |
-| $\ell$ | one order's loss: bits of surprise at what happened, $-\log_2$ of its chance; $\log_2$ is the base-2 logarithm, $\ln$ the natural one, which counts nats | 0.4254 bits | — |
-| $\hat R$, $n$ | the average loss over $n$ orders, called the empirical risk on [Loss and empirical risk](01-loss-functions-and-empirical-risk.md); $\sum$ adds over the orders $i$ | 0.4015 bits over $n$ = 20,000 | — |
-| $p_k$, $q_k$ | two lists of chances for class $k$: $p$ the truth, from the rule that drew the synthetic orders; $q$ a prediction, such as $\hat y$ | the rule: parcel −3 + 2$x$, pallet −13 + 2.5$x$ | — |
-| $H(p)$; $H(p, q)$ | entropy: the average surprise of the truth itself, the floor no model beats on average; cross-entropy: the average surprise when the truth is $p$ and the bet is $q$ | 0.4030 bits; 0.4032 bits for $q = \hat y$; both averaged over the orders | $H(p, q)$ grows as $q$ drifts from $p$ |
-| $D(p\,\|\,q)$ | KL divergence: the extra bits paid for predicting $q$ when the truth is $p$; never negative | 0.0002 bits, fitted model against truth | — |
-| $\Lambda$ | the logistic curve $1/(1+e^{-z})$, which turns one score into one chance | Λ(1.0705) = 0.7447 | rises toward 1 |
+| $`x`$ | the order's weight, in kg | 2 kg | the parcel, then the pallet, gains |
+| $`k`$, $`j`$, $`c`$ | class numbers (0 letter, 1 parcel, 2 pallet); $`c`$ is the class the order really went as | $`c`$ = 1, parcel | — |
+| $`b_k`$, $`w_k`$ | class $`k`$'s starting score and its score per kg; the letter's are pinned at 0 | parcel −2.9724 and 2.0214; pallet −13.3220 and 2.5412 | that class gains at every weight; more so at heavy weights |
+| $`z_k`$ | class $`k`$'s score; only differences between scores matter; $`\partial/\partial z_k`$ is the slope in $`z_k`$ with the other scores held still | (0, 1.0705, −8.2395) | that class's chance rises, the others fall |
+| $`\hat y_k`$ | the model's chance for class $`k`$, the softmax of the scores; $`e`$ is the base of natural logarithms | (0.2553, 0.7446, 0.0001) | the loss falls if $`k`$ is what happened |
+| $`y_k`$ | 1 for the class that happened, 0 for the others | (0, 1, 0) | — |
+| $`\ell`$ | one order's loss: bits of surprise at what happened, $`-\log_2`$ of its chance; $`\log_2`$ is the base-2 logarithm, $`\ln`$ the natural one, which counts nats | 0.4254 bits | — |
+| $`\hat R`$, $`n`$ | the average loss over $`n`$ orders, called the empirical risk on [Loss and empirical risk](01-loss-functions-and-empirical-risk.md); $`\sum`$ adds over the orders $`i`$ | 0.4015 bits over $`n`$ = 20,000 | — |
+| $`p_k`$, $`q_k`$ | two lists of chances for class $`k`$: $`p`$ the truth, from the rule that drew the synthetic orders; $`q`$ a prediction, such as $`\hat y`$ | the rule: parcel −3 + 2$`x`$, pallet −13 + 2.5$`x`$ | — |
+| $`H(p)`$; $`H(p, q)`$ | entropy: the average surprise of the truth itself, the floor no model beats on average; cross-entropy: the average surprise when the truth is $`p`$ and the bet is $`q`$ | 0.4030 bits; 0.4032 bits for $`q = \hat y`$; both averaged over the orders | $`H(p, q)`$ grows as $`q`$ drifts from $`p`$ |
+| $`D(p\,\Vert\,q)`$ | KL divergence: the extra bits paid for predicting $`q`$ when the truth is $`p`$; never negative | 0.0002 bits, fitted model against truth | — |
+| $`\Lambda`$ | the logistic curve $`1/(1+e^{-z})`$, which turns one score into one chance | Λ(1.0705) = 0.7447 | rises toward 1 |
 
 ### When it holds
 
@@ -88,70 +94,78 @@ $$H(p, q) = -\sum_k p_k \log_2 q_k = H(p) + D(p\,\|\,q)$$
 
 A score can be any number. A chance must be positive, and the chances must add to 1. The exponential makes any number positive, and dividing by the total makes the list add to 1. The point of choosing the exponential is what it does to ratios. Divide one class's chance by another's and the total cancels:
 
-$$\frac{\hat y_j}{\hat y_k} = e^{z_j - z_k}$$
+```math
+\frac{\hat y_j}{\hat y_k} = e^{z_j - z_k}
+```
 
-So the gap between two scores is the log of the odds between those two classes. For the 2 kg order the parcel's score beats the letter's by 1.0705, so the parcel is $e^{1.0705}$ = 2.9168 times as likely. This is the same log-odds scale [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md) uses for one yes-or-no.
+So the gap between two scores is the log of the odds between those two classes. For the 2 kg order the parcel's score beats the letter's by 1.0705, so the parcel is $`e^{1.0705}`$ = 2.9168 times as likely. This is the same log-odds scale [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md) uses for one yes-or-no.
 
 ### Step 1: only differences matter, so one class is pinned
 
 Add the same number to every score. Each exponential is multiplied by the same factor, and the factor cancels in the share. The chances do not move: the check adds 100 to every score of the 2 kg order and gets 0.2553, 0.7446, 0.0001 again.
 
-Two consequences. First, the letter's score can be pinned at 0 without losing anything, leaving four numbers to fit, $b_1, w_1, b_2, w_2$. Second, a computer should subtract the largest score before exponentiating. The chances are unchanged, the biggest exponential is exactly 1, and nothing overflows. A 400 kg order has a pallet score of 1003.1766, and $e^{1000}$ is too large for a computer's numbers.
+Two consequences. First, the letter's score can be pinned at 0 without losing anything, leaving four numbers to fit, $`b_1, w_1, b_2, w_2`$. Second, a computer should subtract the largest score before exponentiating. The chances are unchanged, the biggest exponential is exactly 1, and nothing overflows. A 400 kg order has a pallet score of 1003.1766, and $`e^{1000}`$ is too large for a computer's numbers.
 
 ### Step 2: two classes give the logistic curve
 
-With only two classes, scores $z_0$ and $z_1$, divide top and bottom by $e^{z_1}$:
+With only two classes, scores $`z_0`$ and $`z_1`$, divide top and bottom by $`e^{z_1}`$:
 
-$$\hat y_1 = \frac{e^{z_1}}{e^{z_0} + e^{z_1}} = \frac{1}{1 + e^{-(z_1 - z_0)}} = \Lambda(z_1 - z_0)$$
+```math
+\hat y_1 = \frac{e^{z_1}}{e^{z_0} + e^{z_1}} = \frac{1}{1 + e^{-(z_1 - z_0)}} = \Lambda(z_1 - z_0)
+```
 
 That is the logistic curve applied to the score gap. For the 2 kg order, letter against parcel alone, both sides give 0.7447. So softmax is logistic regression with more than two outcomes, and logistic regression is softmax with two.
 
 ### Step 3: the loss is the likelihood, in bits
 
-The model's chance of the whole record is the product, over orders, of the chance it gave to what actually happened, if orders are independent. Taking −log2 turns that product into a sum of losses, and dividing by $n$ gives $\hat R$. So the smallest average loss is the largest likelihood: training by cross-entropy is maximum likelihood, as on the logistic card.
+The model's chance of the whole record is the product, over orders, of the chance it gave to what actually happened, if orders are independent. Taking −log2 turns that product into a sum of losses, and dividing by $`n`$ gives $`\hat R`$. So the smallest average loss is the largest likelihood: training by cross-entropy is maximum likelihood, as on the logistic card.
 
 The base-2 log measures the surprise in **bits**, the unit of [Entropy](../03-Information%20Theory/01-entropy.md): one bit is one fair yes-or-no answer. A chance of 0.7446 costs 0.4254 bits, a chance of 1/2 costs 1 bit, the pallet's 0.0001 costs 13.8568 bits. Natural logs measure the same surprise in **nats**; one bit is 0.6931 nats. Training code usually works in nats; the minimum is in the same place.
 
 The scale gives two plain readings of the 0.4015 bits:
 
-- **Perplexity**, $2^{\hat R}$ = 1.3209. On average the model is as unsure as a fair choice among 1.32 classes. Blind, it was a fair choice among 3.
+- **Perplexity**, $`2^{\hat R}`$ = 1.3209. On average the model is as unsure as a fair choice among 1.32 classes. Blind, it was a fair choice among 3.
 - **The baseline.** Knowing only the class shares, the best constant prediction is the shares themselves, and its loss is their entropy, 1.4539 bits. Weight brings that down to 0.4015 bits: weight is worth 1.0524 bits per order.
 
 ### Step 4: telling the truth wins
 
-Suppose an order's true chances are $p$ and the model says $q$. Over many such orders, class $k$ happens a fraction $p_k$ of the time and costs $-\log_2 q_k$ each time, so the average loss is $H(p, q)$. Split it, as the KL divergence card does:
+Suppose an order's true chances are $`p`$ and the model says $`q`$. Over many such orders, class $`k`$ happens a fraction $`p_k`$ of the time and costs $`-\log_2 q_k`$ each time, so the average loss is $`H(p, q)`$. Split it, as the KL divergence card does:
 
-$$H(p, q) = -\sum_k p_k \log_2 p_k \;+\; \sum_k p_k \log_2 \frac{p_k}{q_k} = H(p) + D(p\,\|\,q)$$
+```math
+H(p, q) = -\sum_k p_k \log_2 p_k \;+\; \sum_k p_k \log_2 \frac{p_k}{q_k} = H(p) + D(p\,\|\,q)
+```
 
-The first part depends only on the truth. The second is never negative, and is zero only when $q = p$: Gibbs' inequality, proved on [KL divergence](../03-Information%20Theory/03-kl-divergence-and-cross-entropy.md). So the expected loss is smallest exactly when the model reports the true chances. A scoring rule with this property is called **proper**: no shading of the chances up or down can beat honesty.
+The first part depends only on the truth. The second is never negative, and is zero only when $`q = p`$: Gibbs' inequality, proved on [KL divergence](../03-Information%20Theory/03-kl-divergence-and-cross-entropy.md). So the expected loss is smallest exactly when the model reports the true chances. A scoring rule with this property is called **proper**: no shading of the chances up or down can beat honesty.
 
 Accuracy, by contrast, only checks the top class, and is the same whether the model said 0.51 or 0.99.
 
-On the 20,000 orders the check computes all three averages from the true rule and the fitted model: $H(p)$ = 0.4030, $D(p\,\|\,\hat y)$ = 0.0002, and their sum $H(p, \hat y)$ = 0.4032 bits, matching the cross-entropy computed directly. The fitted model is within 0.0002 bits of the truth.
+On the 20,000 orders the check computes all three averages from the true rule and the fitted model: $`H(p)`$ = 0.4030, $`D(p\,\|\,\hat y)`$ = 0.0002, and their sum $`H(p, \hat y)`$ = 0.4032 bits, matching the cross-entropy computed directly. The fitted model is within 0.0002 bits of the truth.
 
 ### Step 5: the slope is "predicted minus actual"
 
-Measure one order's loss in nats, $-\ln \hat y_c = -z_c + \ln\left(e^{z_0} + e^{z_1} + e^{z_2}\right)$. Its slope in score $z_k$ is
+Measure one order's loss in nats, $`-\ln \hat y_c = -z_c + \ln\left(e^{z_0} + e^{z_1} + e^{z_2}\right)`$. Its slope in score $`z_k`$ is
 
-$$\frac{\partial}{\partial z_k}\left(-\ln \hat y_c\right) = \hat y_k - y_k$$
+```math
+\frac{\partial}{\partial z_k}\left(-\ln \hat y_c\right) = \hat y_k - y_k
+```
 
-The first term contributes $-1$ only for the class that happened. The second contributes $e^{z_k}$ over the total, which is $\hat y_k$. In bits the slope is the same divided by 0.6931.
+The first term contributes $`-1`$ only for the class that happened. The second contributes $`e^{z_k}`$ over the total, which is $`\hat y_k`$. In bits the slope is the same divided by 0.6931.
 
 For the 2 kg parcel: (0.2553, −0.2554, 0.0001). Push the letter's score down, push the parcel's up, leave the pallet almost alone. The check nudges each score by a millionth and gets the same three numbers. This "predicted minus actual" is the error signal that [Backpropagation](04-backpropagation.md) carries back through a network from its softmax output.
 
-Each score is $b_k + w_k x$, so by the chain rule the slope of the average loss is the average of $(\hat y_k - y_k)$ for $b_k$ and of $(\hat y_k - y_k)\,x$ for $w_k$. At the minimum both are zero. The first says the predicted chances, added over all orders, equal the observed counts: the check gets 7,883.0000, 9,151.0000 and 2,966.0000, matching the counts exactly.
+Each score is $`b_k + w_k x`$, so by the chain rule the slope of the average loss is the average of $`(\hat y_k - y_k)`$ for $`b_k`$ and of $`(\hat y_k - y_k)\,x`$ for $`w_k`$. At the minimum both are zero. The first says the predicted chances, added over all orders, equal the observed counts: the check gets 7,883.0000, 9,151.0000 and 2,966.0000, matching the counts exactly.
 
 ### Step 6: one minimum, found by Newton's method
 
-The second slopes of the loss in the scores form a table with $\hat y_k(1 - \hat y_k)$ on the diagonal and $-\hat y_j \hat y_k$ off it. Along any direction its value is the variance of the score change under the model's own chances, which is never negative. So the average loss is a bowl (convex): it has one bottom, and any point where all slopes are zero is that bottom.
+The second slopes of the loss in the scores form a table with $`\hat y_k(1 - \hat y_k)`$ on the diagonal and $`-\hat y_j \hat y_k`$ off it. Along any direction its value is the variance of the score change under the model's own chances, which is never negative. So the average loss is a bowl (convex): it has one bottom, and any point where all slopes are zero is that bottom.
 
 The check finds it by Newton's method, the climb used on the logistic card, here run downhill on four numbers. Each step fits a bowl to the loss's slopes and curvature at the current point, then jumps to that bowl's bottom. Starting from all scores 0, the loss by step:
 
 | Step | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| $\hat R$, bits | 1.5850 | 1.0271 | 0.7855 | 0.6079 | 0.4885 | 0.4250 | 0.4041 | 0.4015 |
+| $`\hat R`$, bits | 1.5850 | 1.0271 | 0.7855 | 0.6079 | 0.4885 | 0.4250 | 0.4041 | 0.4015 |
 
-After step 7 nothing changes in four decimals. The fit is parcel $b_1$ = −2.9724, $w_1$ = 2.0214, and pallet $b_2$ = −13.3220, $w_2$ = 2.5412, close to the rule that drew the orders: −3, 2, −13, 2.5, as close as chance allows by the likelihood ratio test after the Python output. As a check that this is the bottom, the code moves each of the four numbers by 0.01 either way; all eight moves raise the loss, the smallest by 1.1333 millionths of a bit. Large networks use [Gradient descent](02-gradient-descent-and-stochastic-gradient.md) instead, stepping along "predicted minus actual" a little at a time.
+After step 7 nothing changes in four decimals. The fit is parcel $`b_1`$ = −2.9724, $`w_1`$ = 2.0214, and pallet $`b_2`$ = −13.3220, $`w_2`$ = 2.5412, close to the rule that drew the orders: −3, 2, −13, 2.5, as close as chance allows by the likelihood ratio test after the Python output. As a check that this is the bottom, the code moves each of the four numbers by 0.01 either way; all eight moves raise the loss, the smallest by 1.1333 millionths of a bit. Large networks use [Gradient descent](02-gradient-descent-and-stochastic-gradient.md) instead, stepping along "predicted minus actual" a little at a time.
 
 ---
 
@@ -161,16 +175,16 @@ The 2 kg order, packed as a parcel, with the fitted numbers. Each row carries th
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| letter score $z_0$ | pinned | 0 |
-| parcel score $z_1$ | −2.9724 + 2.0214 × 2 | 1.0705 |
-| pallet score $z_2$ | −13.3220 + 2.5412 × 2 | −8.2395 |
+| letter score $`z_0`$ | pinned | 0 |
+| parcel score $`z_1`$ | −2.9724 + 2.0214 × 2 | 1.0705 |
+| pallet score $`z_2`$ | −13.3220 + 2.5412 × 2 | −8.2395 |
 | subtract the largest, 1.0705 | (0 − 1.0705, 1.0705 − 1.0705, −8.2395 − 1.0705) | (−1.0705, 0, −9.3099) |
-| exponentiate | $e^{-1.0705}$, $e^{0}$, $e^{-9.3099}$ | (0.3428, 1, 0.0001) |
+| exponentiate | $`e^{-1.0705}`$, $`e^{0}`$, $`e^{-9.3099}`$ | (0.3428, 1, 0.0001) |
 | total | 0.3428 + 1 + 0.0001 | 1.3429 |
-| chances $\hat y$ | each divided by 1.3429 | (0.2553, 0.7446, 0.0001) |
-| loss, parcel happened | $-\log_2 0.7446$ | **0.4254 bits** |
-| same loss in nats | $-\ln 0.7446$ | 0.2949 nats |
-| slope in the scores, $\hat y - y$ | (0.2553 − 0, 0.7446 − 1, 0.0001 − 0) | (0.2553, −0.2554, 0.0001) |
+| chances $`\hat y`$ | each divided by 1.3429 | (0.2553, 0.7446, 0.0001) |
+| loss, parcel happened | $`-\log_2 0.7446`$ | **0.4254 bits** |
+| same loss in nats | $`-\ln 0.7446`$ | 0.2949 nats |
+| slope in the scores, $`\hat y - y`$ | (0.2553 − 0, 0.7446 − 1, 0.0001 − 0) | (0.2553, −0.2554, 0.0001) |
 
 So this order costs the model 0.4254 bits, a little more than its average of 0.4015: the model gave the parcel about 3 in 4, and a parcel is what happened.
 
@@ -179,9 +193,9 @@ So this order costs the model 0.4254 bits, a little more than its average of 0.4
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Divide the scores by their total, no exponential | letter 0.0000, parcel −0.1493, pallet 1.1493 | A negative chance, and a pallet "certainty" above 1: raw scores can be negative, so their share is meaningless |
-| Exponentiate without subtracting the largest score, 400 kg order | overflow | The pallet score is 1003.1766; $e^{1000}$ does not fit. Shifted first, the answer is pallet 1.0000 |
+| Exponentiate without subtracting the largest score, 400 kg order | overflow | The pallet score is 1003.1766; $`e^{1000}`$ does not fit. Shifted first, the answer is pallet 1.0000 |
 | Use natural logs and call the result bits | 0.2949 "bits" | That is nats. Every loss reads 0.6931 times its true size |
-| Swap the two lists, $H(\hat y, y)$ | inf | The model's chances now weight $\log_2$ of the labels, and $\log_2 0$ is minus infinity: the order is charged without limit |
+| Swap the two lists, $`H(\hat y, y)`$ | inf | The model's chances now weight $`\log_2`$ of the labels, and $`\log_2 0`$ is minus infinity: the order is charged without limit |
 | A modelling assumption fails: one 2 kg order mislabelled as pallet | 13.8568 bits | As much as 34.5141 average orders. Cross-entropy trusts labels; a few confident mistakes in the data pull hard on the fit |
 
 ---
@@ -365,7 +379,7 @@ ALL CHECKS PASS
 
 Three lines need reading. "floor H(p)" is 0.4030 bits, yet on these orders the true rule scores 0.4017 and the fitted model 0.4015, both below the floor. That is not a contradiction: the floor is an average over fresh labels, and the 20,000 labels drawn happened to fall a little on the easy side.
 
-Against what the fitted model should score on average, $H(p, \hat y)$ = 0.4032, the gap is −0.0017 bits, well inside the standard error of 0.0057. The standard error is the typical size of the chance wobble in an average over 20,000 orders.
+Against what the fitted model should score on average, $`H(p, \hat y)`$ = 0.4032, the gap is −0.0017 bits, well inside the standard error of 0.0057. The standard error is the typical size of the chance wobble in an average over 20,000 orders.
 
 Tuning the four numbers to these orders buys only the last step, from 0.4017 to 0.4015 bits. Over all 20,000 orders that gain is a log-likelihood ratio, and twice it, in nats, is 6.0346. By Wilks' rule on [Likelihood ratio tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md), a fit of four free numbers beats the true rule by that much or more by chance alone 19.66% of the time, so the fit is as close to the rule as chance allows. The check asserts that this chance is above 1 in 1,000.
 
@@ -586,11 +600,11 @@ ALL CHECKS PASS
 Lean proves the card's general facts for any scores and any chances, on a finite set of at least one class.
 
 - Take any scores. Then softmax gives every class a chance above 0, and the chances add to 1.
-- Take any two classes $j$ and $k$. Then $\hat y_j / \hat y_k = e^{z_j - z_k}$.
+- Take any two classes $`j`$ and $`k`$. Then $`\hat y_j / \hat y_k = e^{z_j - z_k}`$.
 - Adding the same number to every score leaves the chances unchanged.
-- Take just two classes, with scores $z_0$ and $z_1$. Then $\hat y_1 = 1/(1 + e^{-(z_1 - z_0)})$, the logistic curve at the score gap.
-- Suppose an order went as class $c$, with loss $-\ln \hat y_c$ in nats. Then its slope in score $z_k$ alone is $\hat y_k - y_k$.
-- Suppose $p$ and $q$ are lists of chances adding to 1, and $q_k > 0$ wherever $p_k > 0$. Then $H(p, q) \ge H(p)$, with equality exactly when $q = p$.
+- Take just two classes, with scores $`z_0`$ and $`z_1`$. Then $`\hat y_1 = 1/(1 + e^{-(z_1 - z_0)})`$, the logistic curve at the score gap.
+- Suppose an order went as class $`c`$, with loss $`-\ln \hat y_c`$ in nats. Then its slope in score $`z_k`$ alone is $`\hat y_k - y_k`$.
+- Suppose $`p`$ and $`q`$ are lists of chances adding to 1, and $`q_k > 0`$ wherever $`p_k > 0`$. Then $`H(p, q) \ge H(p)`$, with equality exactly when $`q = p`$.
 - It also checks small numbers: a chance of 1/2 costs 1 bit, and all scores 0 give each of three classes 1/3.
 
 The 20,000 orders, the fitted numbers and Newton's method are left to the Python and Rust checks.
@@ -802,8 +816,8 @@ example : -logb 2 (1 / 3 : ℝ) = logb 2 3 := by norm_num [logb_div, logb_self_e
 > **Reading softmax outputs as calibrated chances because they add to 1.** Adding to 1 is guaranteed by the division; it says nothing about whether 0.7446 is right. The chances are honest only if the model was fitted by a proper loss such as cross-entropy, on data like the new orders, with straight-line scores that fit. A large network trained until its loss is tiny on its own data often reports 0.99 where the true rate is lower. Check calibration on orders the model never saw: do orders given a parcel chance near the 2 kg order's 0.7446 really go as parcels that often?
 >
 > - **Calling nats bits.** Most training code uses natural logs. Its 0.2949 for the 2 kg order is 0.4254 bits. Divide nats by 0.6931 to get bits.
-> - **Taking the log of a softmax computed in two steps.** If a chance underflows to 0, its log is minus infinity. Compute $-\ln\hat y_c$ directly as $-z_c + \ln\sum e^{z_k}$, with the largest score subtracted inside the log, as the check's `nll_bits` does.
-> - **Fitting all three classes' scores freely and reading the numbers.** Adding the same amount to every class leaves the chances unchanged, so the individual $b_k$ and $w_k$ are not pinned down. Only differences, such as parcel minus letter, mean anything.
+> - **Taking the log of a softmax computed in two steps.** If a chance underflows to 0, its log is minus infinity. Compute $`-\ln\hat y_c`$ directly as $`-z_c + \ln\sum e^{z_k}`$, with the largest score subtracted inside the log, as the check's `nll_bits` does.
+> - **Fitting all three classes' scores freely and reading the numbers.** Adding the same amount to every class leaves the chances unchanged, so the individual $`b_k`$ and $`w_k`$ are not pinned down. Only differences, such as parcel minus letter, mean anything.
 > - **Judging by accuracy alone.** The model's top pick for the 2 kg order is parcel whether it says 0.51 or 0.99. Accuracy cannot tell those apart; when the parcel happens, cross-entropy charges 0.9714 bits for the first and 0.0145 for the second; when a letter happens instead (and the rest of the chance sat on letter), it charges 1.0291 bits against 6.6439.
 
 ---
@@ -811,7 +825,7 @@ example : -logb 2 (1 / 3 : ℝ) = logb 2 3 := by norm_num [logb_div, logb_self_e
 ## Where you meet it in real life
 
 - **Image and speech recognisers.** The last layer of almost every classifier network is a softmax over the classes, trained by cross-entropy.
-- **Language models.** Predicting the next word is a softmax over tens of thousands of words. The training loss is cross-entropy per word, and perplexity, $2$ to the loss in bits, is the number reported.
+- **Language models.** Predicting the next word is a softmax over tens of thousands of words. The training loss is cross-entropy per word, and perplexity, $`2`$ to the loss in bits, is the number reported.
 - **Weather and sports forecasts.** Forecasts are graded by the log score, which is cross-entropy against what happened, because it rewards honest chances.
 - **Statistics packages.** Multinomial logistic regression, for outcomes with three or more categories, is exactly this card's model fitted by maximum likelihood.
 - **Physics.** The Boltzmann distribution gives each state of a gas a chance that falls exponentially with its energy divided by the temperature: a softmax of minus energy over temperature. Dividing scores by a temperature above 1 flattens a softmax; below 1 sharpens it, as doubling the scores did.
@@ -823,7 +837,7 @@ example : -logb 2 (1 / 3 : ℝ) = logb 2 3 := by norm_num [logb_div, logb_self_e
 
 ## What this builds on
 
-- [Backpropagation](04-backpropagation.md): the chain rule run backwards through a network. This card supplies its starting error at a softmax output, "predicted minus actual", $\hat y - y$.
+- [Backpropagation](04-backpropagation.md): the chain rule run backwards through a network. This card supplies its starting error at a softmax output, "predicted minus actual", $`\hat y - y`$.
 - [KL divergence](../03-Information%20Theory/03-kl-divergence-and-cross-entropy.md): the extra bits paid for betting on the wrong chances. This card uses its split, cross-entropy = entropy + KL, and its proof that the divergence is never negative.
 - [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md): one yes-or-no outcome fitted by maximum likelihood with Newton's method. This card extends it to several classes with softmax and reads its log-likelihood as cross-entropy.
 
@@ -842,6 +856,6 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Bridle, John S. "Probabilistic Interpretation of Feedforward Classification Network Outputs, with Relationships to Statistical Pattern Recognition." In *Neurocomputing*, NATO ASI Series F 68, Springer, 1990: 227–236. [doi:10.1007/978-3-642-76153-9_28](https://doi.org/10.1007/978-3-642-76153-9_28). Names softmax and reads network outputs as class chances.
 - Shannon, C. E. "A Mathematical Theory of Communication." *Bell System Technical Journal* 27, no. 3 (1948): 379–423. [doi:10.1002/j.1538-7305.1948.tb01338.x](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x). Entropy and the bit.
-- Kullback, Solomon, and Richard A. Leibler. "On Information and Sufficiency." *Annals of Mathematical Statistics* 22, no. 1 (1951): 79–86. [doi:10.1214/aoms/1177729694](https://doi.org/10.1214/aoms/1177729694). The divergence $D(p\,\|\,q)$ and why it is never negative.
+- Kullback, Solomon, and Richard A. Leibler. "On Information and Sufficiency." *Annals of Mathematical Statistics* 22, no. 1 (1951): 79–86. [doi:10.1214/aoms/1177729694](https://doi.org/10.1214/aoms/1177729694). The divergence $`D(p\,\|\,q)`$ and why it is never negative.
 - Good, I. J. "Rational Decisions." *Journal of the Royal Statistical Society, Series B* 14, no. 1 (1952): 107–114. [doi:10.1111/j.2517-6161.1952.tb00104.x](https://doi.org/10.1111/j.2517-6161.1952.tb00104.x). The logarithmic score for forecasts, and why it rewards honest chances.
 - Cover, Thomas M., and Joy A. Thomas. *Elements of Information Theory*, 2nd ed. Wiley, 2006. [Publisher page](https://www.wiley.com/en-us/Elements+of+Information+Theory%2C+2nd+Edition-p-9780471241959). Cross-entropy, relative entropy and Gibbs' inequality, chapter 2.

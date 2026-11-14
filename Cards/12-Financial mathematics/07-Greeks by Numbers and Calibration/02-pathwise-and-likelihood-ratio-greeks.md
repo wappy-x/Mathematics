@@ -42,23 +42,31 @@ The step is the payment on expiry day: flat on both sides of $100, with no slope
 
 ## The formula
 
-Notation first, in words. All the randomness sits in one number: a draw from the standard bell curve, written $Z$, centred on zero with spread one. Acme's price on expiry day is written $S_T$, an explicit formula in that draw. A payment rule is written $g$: hand it Acme's ending, it hands back dollars. The average over all draws is written $E$; $N$ and $\phi$ are the bell curve's area-to-the-left and its height.
+Notation first, in words. All the randomness sits in one number: a draw from the standard bell curve, written $`Z`$, centred on zero with spread one. Acme's price on expiry day is written $`S_T`$, an explicit formula in that draw. A payment rule is written $`g`$: hand it Acme's ending, it hands back dollars. The average over all draws is written $`E`$; $`N`$ and $`\phi`$ are the bell curve's area-to-the-left and its height.
 
 Either contract's price is its average payment, discounted:
 
-$$\text{price} \;=\; e^{-rT}\,E\big[\,g(S_T)\,\big], \qquad S_T \;=\; S\,e^{(r-q-\tfrac12\sigma^2)T \,+\, \sigma\sqrt{T}\,Z}$$
+```math
+\text{price} \;=\; e^{-rT}\,E\big[\,g(S_T)\,\big], \qquad S_T \;=\; S\,e^{(r-q-\tfrac12\sigma^2)T \,+\, \sigma\sqrt{T}\,Z}
+```
 
 **The pathwise pair.** Differentiate the payment, one drawn path at a time:
 
-$$Y^{\text{path}}_{S} \;=\; e^{-rT}\,g'(S_T)\,\frac{S_T}{S}, \qquad Y^{\text{path}}_{\sigma} \;=\; e^{-rT}\,g'(S_T)\,S_T\big(\sqrt{T}\,Z - \sigma T\big)$$
+```math
+Y^{\text{path}}_{S} \;=\; e^{-rT}\,g'(S_T)\,\frac{S_T}{S}, \qquad Y^{\text{path}}_{\sigma} \;=\; e^{-rT}\,g'(S_T)\,S_T\big(\sqrt{T}\,Z - \sigma T\big)
+```
 
 **Read it aloud:** the payment's own slope at the drawn ending, times how far that ending moves when the input moves, discounted.
 
 **The score pair.** Leave the payment alone and weight it:
 
-$$Y^{\text{score}}_{S} \;=\; e^{-rT}\,g(S_T)\,w_S, \qquad Y^{\text{score}}_{\sigma} \;=\; e^{-rT}\,g(S_T)\,w_\sigma$$
+```math
+Y^{\text{score}}_{S} \;=\; e^{-rT}\,g(S_T)\,w_S, \qquad Y^{\text{score}}_{\sigma} \;=\; e^{-rT}\,g(S_T)\,w_\sigma
+```
 
-$$w_S \;=\; \frac{Z}{S\,\sigma\sqrt{T}}, \qquad w_\sigma \;=\; \frac{Z^2 - 1}{\sigma} - \sqrt{T}\,Z$$
+```math
+w_S \;=\; \frac{Z}{S\,\sigma\sqrt{T}}, \qquad w_\sigma \;=\; \frac{Z^2 - 1}{\sigma} - \sqrt{T}\,Z
+```
 
 **Read it aloud:** the payment as it stands, times how much more likely this ending just became, discounted.
 
@@ -66,41 +74,49 @@ Each of the four is an average over the draws that priced the contract. The spot
 
 The two payment rules, and the slopes that decide everything:
 
-$$g_{\text{call}}(x) = \max(x - K,\, 0), \qquad g_{\text{dig}}(x) = 1 \text{ if } x > K, \text{ else } 0$$
+```math
+g_{\text{call}}(x) = \max(x - K,\, 0), \qquad g_{\text{dig}}(x) = 1 \text{ if } x > K, \text{ else } 0
+```
 
 The call's slope is 1 above the strike and 0 below: a switch, on only when Acme ends above the strike. The digital's slope is 0 above, 0 below, and nothing at all at the strike itself.
 
 | Symbol | Plain meaning | In our example | Push it up and the estimate… |
 | --- | --- | --- | --- |
-| $S$, $K$ | Acme's price today, called the spot, and the strike both contracts use | both $100 | raising $S$ lifts both deltas, until the call's flattens near 1 |
-| $T$ | time to expiry, in **years** | 1 | the spot weight shrinks, since it divides by $\sqrt{T}$ |
-| $r$, $q$ | the riskless rate, continuously compounded, and the dividend yield leaking out of the share | 5% and 2% | both only move drift and discount |
-| $\sigma$, $a$ | **volatility**, how jumpy Acme is (say "sigma"), and one wiggle unit $a = \sigma\sqrt{T}$ | 20% and 0.20 | the digital's delta falls, the strike mattering less |
-| $Z$ | one draw from the bell curve — a path's only randomness | one per path; −1.00 and 2.00 below | — |
-| $S_T$ | Acme's price on expiry day, built from that draw | 111.6278 when the draw is 0.5 | — |
-| $g$ | the payment rule: dollars owed, given Acme's ending | $\max(S_T-100,0)$, or one dollar if above | — |
-| $Y$ | an **estimator**: one number per path whose average is the Greek | averages to 0.586851 either way | — |
-| $w_S$, $w_\sigma$ | the **scores**: how fast this ending's likelihood grows with the input | the draw over 20, and $(Z^2-1)/0.20 - Z$ | — |
-| $N$, $\phi$, $f$ | the bell curve's area to the left, its height, and the ending's likelihood per dollar | $N(d_1) = 0.598706$, $\phi(d_2) = 0.398444$ | — |
-| $d_2$, $d_1$ | Acme's room above the strike in wiggle units, and that plus one unit | 0.05 and 0.25 | — |
-| $E$ | the average over all draws | — | — |
+| $`S`$, $`K`$ | Acme's price today, called the spot, and the strike both contracts use | both $100 | raising $`S`$ lifts both deltas, until the call's flattens near 1 |
+| $`T`$ | time to expiry, in **years** | 1 | the spot weight shrinks, since it divides by $`\sqrt{T}`$ |
+| $`r`$, $`q`$ | the riskless rate, continuously compounded, and the dividend yield leaking out of the share | 5% and 2% | both only move drift and discount |
+| $`\sigma`$, $`a`$ | **volatility**, how jumpy Acme is (say "sigma"), and one wiggle unit $`a = \sigma\sqrt{T}`$ | 20% and 0.20 | the digital's delta falls, the strike mattering less |
+| $`Z`$ | one draw from the bell curve — a path's only randomness | one per path; −1.00 and 2.00 below | — |
+| $`S_T`$ | Acme's price on expiry day, built from that draw | 111.6278 when the draw is 0.5 | — |
+| $`g`$ | the payment rule: dollars owed, given Acme's ending | $`\max(S_T-100,0)`$, or one dollar if above | — |
+| $`Y`$ | an **estimator**: one number per path whose average is the Greek | averages to 0.586851 either way | — |
+| $`w_S`$, $`w_\sigma`$ | the **scores**: how fast this ending's likelihood grows with the input | the draw over 20, and $`(Z^2-1)/0.20 - Z`$ | — |
+| $`N`$, $`\phi`$, $`f`$ | the bell curve's area to the left, its height, and the ending's likelihood per dollar | $`N(d_1) = 0.598706`$, $`\phi(d_2) = 0.398444`$ | — |
+| $`d_2`$, $`d_1`$ | Acme's room above the strike in wiggle units, and that plus one unit | 0.05 and 0.25 | — |
+| $`E`$ | the average over all draws | — | — |
 
 The two distances, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
-$$d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}$$
+```math
+d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}
+```
 
 And the four exact answers the estimators have to land on:
 
-$$\text{call delta} = e^{-qT}N(d_1), \qquad \text{call vega} = S\,e^{-qT}\phi(d_1)\sqrt{T}$$
+```math
+\text{call delta} = e^{-qT}N(d_1), \qquad \text{call vega} = S\,e^{-qT}\phi(d_1)\sqrt{T}
+```
 
-$$\text{digital delta} = \frac{e^{-rT}\phi(d_2)}{S\,\sigma\sqrt{T}}, \qquad \text{digital vega} = -\,\frac{e^{-rT}\phi(d_2)\,d_1}{\sigma}$$
+```math
+\text{digital delta} = \frac{e^{-rT}\phi(d_2)}{S\,\sigma\sqrt{T}}, \qquad \text{digital vega} = -\,\frac{e^{-rT}\phi(d_2)\,d_1}{\sigma}
+```
 
 ### When it holds
 
 - **Pathwise needs a payment that never jumps.** A bend is fine: the call's payment has a corner at the strike but a slope at every other ending. A continuous spread of endings lands on the strike itself with probability zero. The digital jumps, so its slope is zero on both sides of the strike and undefined at it. The estimator reports 0.000000 where the truth is 0.018951 — not a small delta, no delta.
-- **Pathwise needs the ending differentiable in the input, path by path.** Here it is: $S_T$ is a formula in the draw and nothing else. A pricing routine with a branch inside it — an early-exercise test, a barrier check — earns this separately or not at all.
+- **Pathwise needs the ending differentiable in the input, path by path.** Here it is: $`S_T`$ is a formula in the draw and nothing else. A pricing routine with a branch inside it — an early-exercise test, a barrier check — earns this separately or not at all.
 - **The score needs the spread of endings written down, positive and smooth in the input.** Acme's ending is lognormal — its logarithm follows the bell curve — so its likelihood is a formula. Where the spread only comes out of a simulation there is nothing to differentiate.
-- **The score dies at the boundaries.** Both weights divide by $\sigma$, and the spot weight by $\sqrt{T}$ as well. At zero volatility, or with no time left, there is no estimate at all, not a noisy one.
+- **The score dies at the boundaries.** Both weights divide by $`\sigma`$, and the spot weight by $`\sqrt{T}`$ as well. At zero volatility, or with no time left, there is no estimate at all, not a noisy one.
 - **The score costs more paths.** Where both are legal, both average to the exact Greek: they are unbiased. But the weight adds spread without adding average, so pinning the call's delta to one percent of itself costs nearly six times the paths.
 - **Both answer a question about the model.** They give the slope of a formula's output, which is not what a real hedge earns.
 
@@ -114,27 +130,33 @@ A price is an average of payments over a spread of endings, discounted. Write th
 
 Averaged over the draw, the spread is fixed — the standard bell curve, whatever Acme costs today — so today's price sits inside the ending, hence inside the payment. Averaged over the ending itself, the payment is fixed and today's price sits inside the likelihood of each ending.
 
-$$e^{-rT}\,E\big[g(S_T)\big] \;=\; e^{-rT}\int g\big(S_T(z)\big)\,\phi(z)\,dz \;=\; e^{-rT}\int g(x)\,f(x;S)\,dx$$
+```math
+e^{-rT}\,E\big[g(S_T)\big] \;=\; e^{-rT}\int g\big(S_T(z)\big)\,\phi(z)\,dz \;=\; e^{-rT}\int g(x)\,f(x;S)\,dx
+```
 
-Here $f(x;S)$ is the **density**: the likelihood, per dollar of Acme's ending, that Acme finishes near $x$ when it costs $S$ today. Both integrals are the same number. Differentiating the left gives the pathwise estimator; differentiating the right gives the score. That is the whole card.
+Here $`f(x;S)`$ is the **density**: the likelihood, per dollar of Acme's ending, that Acme finishes near $`x`$ when it costs $`S`$ today. Both integrals are the same number. Differentiating the left gives the pathwise estimator; differentiating the right gives the score. That is the whole card.
 
 ### Step 1: differentiate the payment, and the chain rule does the rest
 
-Hold the draw fixed. Then $S_T$ is an ordinary function of today's price, and the chain rule applies:
+Hold the draw fixed. Then $`S_T`$ is an ordinary function of today's price, and the chain rule applies:
 
-$$\frac{\partial}{\partial S}\,g(S_T) \;=\; g'(S_T)\cdot\frac{\partial S_T}{\partial S}.$$
+```math
+\frac{\partial}{\partial S}\,g(S_T) \;=\; g'(S_T)\cdot\frac{\partial S_T}{\partial S}.
+```
 
-The second factor is easy, because $S_T$ is $S$ multiplied by something with no $S$ in it:
+The second factor is easy, because $`S_T`$ is $`S`$ multiplied by something with no $`S`$ in it:
 
-$$\frac{\partial S_T}{\partial S} = \frac{S_T}{S}, \qquad \frac{\partial S_T}{\partial \sigma} = S_T\big(\sqrt{T}\,Z - \sigma T\big).$$
+```math
+\frac{\partial S_T}{\partial S} = \frac{S_T}{S}, \qquad \frac{\partial S_T}{\partial \sigma} = S_T\big(\sqrt{T}\,Z - \sigma T\big).
+```
 
-The first says a one percent rise in Acme today is a one percent rise in every ending. The second has two pieces pulling opposite ways: more volatility widens the spread, the $\sqrt{T}Z$ term, and drags the drift down by $\tfrac12\sigma^2$ a year, the $-\sigma T$ term. Drop the drag and the call's pathwise vega reads 49.638180 instead of 37.901158, nearly a third too high. Discount, and these are the pathwise estimators of The formula.
+The first says a one percent rise in Acme today is a one percent rise in every ending. The second has two pieces pulling opposite ways: more volatility widens the spread, the $`\sqrt{T}Z`$ term, and drags the drift down by $`\tfrac12\sigma^2`$ a year, the $`-\sigma T`$ term. Drop the drag and the call's pathwise vega reads 49.638180 instead of 37.901158, nearly a third too high. Discount, and these are the pathwise estimators of The formula.
 
 ### Step 2: the corner is harmless, the jump is fatal
 
 Averaging per-path slopes gives the price's slope only if differentiating and averaging can swap places. For the call they can. Its payment is flat below the strike and rises with slope 1 above it, so two endings never produce payments further apart than the endings themselves.
 
-Every difference quotient is therefore trapped between $-S_T/S$ and $S_T/S$, whose average is finite, and a trapped family of quotients may be averaged first and taken to the limit second. The lone ending $S_T = K$, where no slope exists, has probability zero.
+Every difference quotient is therefore trapped between $`-S_T/S`$ and $`S_T/S`$, whose average is finite, and a trapped family of quotients may be averaged first and taken to the limit second. The lone ending $`S_T = K`$, where no slope exists, has probability zero.
 
 For the digital none of that helps: the quotients are not hard to control, they are zero. The checks show it three ways.
 
@@ -146,46 +168,58 @@ The price's slope is 0.018951. The two disagree because moving Acme does not cha
 
 Take the right-hand integral of Step 0, where the payment no longer holds the input:
 
-$$\frac{\partial}{\partial S}\int g(x)\,f(x;S)\,dx \;=\; \int g(x)\,\frac{\partial f}{\partial S}\,dx \;=\; \int g(x)\,\frac{\partial \log f}{\partial S}\,f(x;S)\,dx \;=\; E\Big[g(S_T)\cdot\frac{\partial \log f}{\partial S}\Big].$$
+```math
+\frac{\partial}{\partial S}\int g(x)\,f(x;S)\,dx \;=\; \int g(x)\,\frac{\partial f}{\partial S}\,dx \;=\; \int g(x)\,\frac{\partial \log f}{\partial S}\,f(x;S)\,dx \;=\; E\Big[g(S_T)\cdot\frac{\partial \log f}{\partial S}\Big].
+```
 
-The middle step is the only trick, and it is one line: $\partial f/\partial S = f\cdot\partial(\log f)/\partial S$, so dividing by the density and multiplying it back turns a derivative of a density into an average.
+The middle step is the only trick, and it is one line: $`\partial f/\partial S = f\cdot\partial(\log f)/\partial S`$, so dividing by the density and multiplying it back turns a derivative of a density into an average.
 
 The factor that appears is the derivative of the log density in the input, called the **score**, and it is the weight from here on. The payment is never differentiated, so jumps are irrelevant. The older name, likelihood ratio, comes from writing the same thing as the ending's chance under the shifted input over its chance under the original, the shift sent to zero.
 
 ### Step 4: the two weights, worked out
 
-Acme's ending is lognormal. For a fixed ending $x$, count the wiggle units it sits from the start:
+Acme's ending is lognormal. For a fixed ending $`x`$, count the wiggle units it sits from the start:
 
-$$z(x) = \frac{\ln(x/S) - (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad f(x;S) = \frac{\phi\big(z(x)\big)}{x\,\sigma\sqrt{T}}.$$
+```math
+z(x) = \frac{\ln(x/S) - (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad f(x;S) = \frac{\phi\big(z(x)\big)}{x\,\sigma\sqrt{T}}.
+```
 
 Take logs, which turns the product into a sum:
 
-$$\log f = -\ln x - \ln\!\big(\sigma\sqrt{T}\big) - \tfrac12 z(x)^2 - \tfrac12\ln(2\pi).$$
+```math
+\log f = -\ln x - \ln\!\big(\sigma\sqrt{T}\big) - \tfrac12 z(x)^2 - \tfrac12\ln(2\pi).
+```
 
-Only the squared term and the $\ln\sigma$ carry an input. Differentiating $z$ at fixed $x$:
+Only the squared term and the $`\ln\sigma`$ carry an input. Differentiating $`z`$ at fixed $`x`$:
 
-$$\frac{\partial z}{\partial S} = -\frac{1}{S\,\sigma\sqrt{T}}, \qquad \frac{\partial z}{\partial \sigma} = \sqrt{T} - \frac{z}{\sigma}.$$
+```math
+\frac{\partial z}{\partial S} = -\frac{1}{S\,\sigma\sqrt{T}}, \qquad \frac{\partial z}{\partial \sigma} = \sqrt{T} - \frac{z}{\sigma}.
+```
 
-The second holds the same two pieces as Step 1, spread and drift drag. Chain them through $-\tfrac12 z^2$, whose derivative is $-z$ times that of $z$:
+The second holds the same two pieces as Step 1, spread and drift drag. Chain them through $`-\tfrac12 z^2`$, whose derivative is $`-z`$ times that of $`z`$:
 
-$$\frac{\partial \log f}{\partial S} = \frac{z}{S\,\sigma\sqrt{T}}, \qquad \frac{\partial \log f}{\partial \sigma} = \frac{z^2 - 1}{\sigma} - \sqrt{T}\,z.$$
+```math
+\frac{\partial \log f}{\partial S} = \frac{z}{S\,\sigma\sqrt{T}}, \qquad \frac{\partial \log f}{\partial \sigma} = \frac{z^2 - 1}{\sigma} - \sqrt{T}\,z.
+```
 
-Evaluate at the ending the simulation drew. There $z(S_T)$ is the draw itself, $Z$, and the two become $w_S$ and $w_\sigma$. For Acme $S\sigma\sqrt{T}$ is $100 \times 0.20 \times 1 = 20$, so the spot weight is the draw divided by twenty.
+Evaluate at the ending the simulation drew. There $`z(S_T)`$ is the draw itself, $`Z`$, and the two become $`w_S`$ and $`w_\sigma`$. For Acme $`S\sigma\sqrt{T}`$ is $`100 \times 0.20 \times 1 = 20`$, so the spot weight is the draw divided by twenty.
 
 <details>
 <summary>Detailed proof: the score estimator really does average to $e^{-qT}N(d_1)$</summary>
 
-Write $A = S e^{(r-q)T}$ for Acme's forward price, so $S_T = A\,e^{-a^2/2 + aZ}$ and the call pays exactly when $Z > -d_2$.
+Write $`A = S e^{(r-q)T}`$ for Acme's forward price, so $`S_T = A\,e^{-a^2/2 + aZ}`$ and the call pays exactly when $`Z > -d_2`$.
 
-One identity does the work: $S_T\,\phi(Z) = A\,\phi(Z - a)$. The exponents are $-a^2/2 + az - z^2/2$ and $-(z-a)^2/2$, which agree. In words: weighting the bell curve by Acme's ending slides the curve one wiggle unit right.
+One identity does the work: $`S_T\,\phi(Z) = A\,\phi(Z - a)`$. The exponents are $`-a^2/2 + az - z^2/2`$ and $`-(z-a)^2/2`$, which agree. In words: weighting the bell curve by Acme's ending slides the curve one wiggle unit right.
 
-The score estimator for delta is $e^{-rT}\max(S_T - K,0)\,Z/(Sa)$, so its average needs $E\big[\max(S_T-K,0)\,Z\big]$, which the switch splits into two integrals running up from $-d_2$. The share piece, substituting $u = z - a$ and using $\int_c^{\infty} u\,\phi(u)\,du = \phi(c)$:
-$$\int_{-d_2}^{\infty} z\,S_T\,\phi(z)\,dz = A\int_{-d_2}^{\infty} z\,\phi(z-a)\,dz = A\int_{-d_1}^{\infty}(u + a)\,\phi(u)\,du = A\big[\phi(d_1) + a\,N(d_1)\big].$$
-The cash piece is the same integral without the ending: $K\int_{-d_2}^{\infty} z\,\phi(z)\,dz = K\,\phi(d_2)$.
+The score estimator for delta is $`e^{-rT}\max(S_T - K,0)\,Z/(Sa)`$, so its average needs $`E\big[\max(S_T-K,0)\,Z\big]`$, which the switch splits into two integrals running up from $`-d_2`$. The share piece, substituting $`u = z - a`$ and using $`\int_c^{\infty} u\,\phi(u)\,du = \phi(c)`$:
 
-Subtract. The stray terms cancel, because $A\,\phi(d_1) = K\,\phi(d_2)$: take logs and that reduces to $\ln(A/K) = a\,d_2 + a^2/2$, the definition of $d_2$ rearranged.
+$`\displaystyle \int_{-d_2}^{\infty} z\,S_T\,\phi(z)\,dz = A\int_{-d_2}^{\infty} z\,\phi(z-a)\,dz = A\int_{-d_1}^{\infty}(u + a)\,\phi(u)\,du = A\big[\phi(d_1) + a\,N(d_1)\big].`$
 
-What survives is $A\,a\,N(d_1)$. Multiply by $e^{-rT}/(Sa)$: the $a$ cancels, $e^{-rT}A/S$ is $e^{-qT}$, and the answer is $e^{-qT}N(d_1)$, the call's delta, with the payment never differentiated. The same lines with $Z^2 - 1 - aZ$ in place of $Z$ give the vega; with the digital's payment, 0.018951 and −0.473764.
+The cash piece is the same integral without the ending: $`K\int_{-d_2}^{\infty} z\,\phi(z)\,dz = K\,\phi(d_2)`$.
+
+Subtract. The stray terms cancel, because $`A\,\phi(d_1) = K\,\phi(d_2)`$: take logs and that reduces to $`\ln(A/K) = a\,d_2 + a^2/2`$, the definition of $`d_2`$ rearranged.
+
+What survives is $`A\,a\,N(d_1)`$. Multiply by $`e^{-rT}/(Sa)`$: the $`a`$ cancels, $`e^{-rT}A/S`$ is $`e^{-qT}`$, and the answer is $`e^{-qT}N(d_1)`$, the call's delta, with the payment never differentiated. The same lines with $`Z^2 - 1 - aZ`$ in place of $`Z`$ give the vega; with the digital's payment, 0.018951 and −0.473764.
 
 </details>
 
@@ -193,7 +227,9 @@ What survives is $A\,a\,N(d_1)$. Multiply by $e^{-rT}/(Sa)$: the $a$ cancels, $e
 
 A density integrates to 1 whatever the input is, and differentiating a constant gives nothing:
 
-$$E[w_S] = \int \frac{\partial \log f}{\partial S}\,f\,dx = \frac{\partial}{\partial S}\int f\,dx = \frac{\partial}{\partial S}1 = 0.$$
+```math
+E[w_S] = \int \frac{\partial \log f}{\partial S}\,f\,dx = \frac{\partial}{\partial S}\int f\,dx = \frac{\partial}{\partial S}1 = 0.
+```
 
 Two consequences, pulling against each other. The useful one: subtracting any fixed number from the payment before weighting leaves the average untouched, since the weight has no average of its own. Subtract something near the payment's typical size and the spread falls at no cost in bias — the standard way of quietening a score estimator.
 
@@ -207,18 +243,18 @@ Malliavin integration by parts generalises the score idea, shifting the derivati
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year. The digital pays one dollar above the strike.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year. The digital pays one dollar above the strike.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_2$, the wiggle units of room | (0 + 0.05 − 0.02 − 0.02) / 0.20 | 0.050000 |
-| $d_1$, one wiggle unit further | 0.05 + 0.20 | 0.250000 |
-| the discount and the dividend drag | $e^{-rT}$, then $e^{-qT}$ | 0.951229, 0.980199 |
-| $N(d_1)$, bell-curve area to the left | a table, or the code's integrator | 0.598706 |
-| $\phi(d_2)$, bell-curve height | the same integrator's integrand | 0.398444 |
-| one wiggle in dollars, $S\sigma\sqrt{T}$ | 100 × 0.20 × 1 | 20.000000 |
-| **call delta**, $e^{-qT}N(d_1)$ | 0.980199 × 0.598706 | **0.586851** |
-| **digital delta**, $e^{-rT}\phi(d_2)/(S\sigma\sqrt{T})$ | 0.951229 × 0.398444 / 20 | **0.018951** |
+| $`d_2`$, the wiggle units of room | (0 + 0.05 − 0.02 − 0.02) / 0.20 | 0.050000 |
+| $`d_1`$, one wiggle unit further | 0.05 + 0.20 | 0.250000 |
+| the discount and the dividend drag | $`e^{-rT}`$, then $`e^{-qT}`$ | 0.951229, 0.980199 |
+| $`N(d_1)`$, bell-curve area to the left | a table, or the code's integrator | 0.598706 |
+| $`\phi(d_2)`$, bell-curve height | the same integrator's integrand | 0.398444 |
+| one wiggle in dollars, $`S\sigma\sqrt{T}`$ | 100 × 0.20 × 1 | 20.000000 |
+| **call delta**, $`e^{-qT}N(d_1)`$ | 0.980199 × 0.598706 | **0.586851** |
+| **digital delta**, $`e^{-rT}\phi(d_2)/(S\sigma\sqrt{T})`$ | 0.951229 × 0.398444 / 20 | **0.018951** |
 | the digital's pathwise average | every path's slope is zero | **0.000000** |
 
 Both deltas are per dollar of Acme. The call gains 59 cents when Acme gains a dollar; the digital gains under two cents, since a dollar of Acme only shifts the odds on a fixed one-dollar payment. Hedging the digital needs 0.018951 shares, and a route answering 0.000000 leaves the position naked.
@@ -251,7 +287,7 @@ xychart-beta
     line [0, 0, 0, 0.28, 1.11, 2.59, 4.82, 7.91, 11.99]
 ```
 
-The nearly level line is the pathwise estimator: zero below the strike crossing, then hugging 1 and reaching 1.75 at the draw $Z = 3$. The steep line is the score, zero at a zero draw because its weight is the draw over twenty, and 11.99 at $Z = 3$. Both average to 0.586851 — the second by cancelling large numbers, and cancellation is what costs paths.
+The nearly level line is the pathwise estimator: zero below the strike crossing, then hugging 1 and reaching 1.75 at the draw $`Z = 3`$. The steep line is the score, zero at a zero draw because its weight is the draw over twenty, and 11.99 at $`Z = 3`$. Both average to 0.586851 — the second by cancelling large numbers, and cancellation is what costs paths.
 
 ### What breaks if you drop a piece
 
@@ -689,11 +725,11 @@ The two outputs are identical line for line, down to the last digit of every spr
 
 Lean proves both delta estimators and the digital's failure, for every spot, volatility and time above zero.
 
-- Take a payment rule $g$, jumps allowed, that grows no faster than a straight line. Then the score average $E[e^{-rT}g(S_T)\,w_S]$ is exactly delta.
-- Take a payment rule $g$ that may bend but never jumps: two endings never pay further apart than a fixed multiple of their distance. Then the pathwise average $E[e^{-rT}g'(S_T)\,S_T/S]$ is exactly delta.
-- Take the one-dollar digital with a strike $K$ above zero. Then its pathwise average is exactly zero.
-- Take the same digital. Then its score average equals its true delta, $e^{-rT}\phi(d_2)/(S\sigma\sqrt{T})$, a number above zero.
-- Take Acme's inputs from the worked numbers. Then $d_2 = 0.05$, $d_1 = 0.25$ and $S\sigma\sqrt{T} = 20$ exactly.
+- Take a payment rule $`g`$, jumps allowed, that grows no faster than a straight line. Then the score average $`E[e^{-rT}g(S_T)\,w_S]`$ is exactly delta.
+- Take a payment rule $`g`$ that may bend but never jumps: two endings never pay further apart than a fixed multiple of their distance. Then the pathwise average $`E[e^{-rT}g'(S_T)\,S_T/S]`$ is exactly delta.
+- Take the one-dollar digital with a strike $`K`$ above zero. Then its pathwise average is exactly zero.
+- Take the same digital. Then its score average equals its true delta, $`e^{-rT}\phi(d_2)/(S\sigma\sqrt{T})`$, a number above zero.
+- Take Acme's inputs from the worked numbers. Then $`d_2 = 0.05`$, $`d_1 = 0.25`$ and $`S\sigma\sqrt{T} = 20`$ exactly.
 
 Vega, the call's delta, the spreads, the path counts and the simulation are left to the Python and Rust checks.
 
@@ -1170,8 +1206,8 @@ example : (100 : ℝ) * (1 / 5) * Real.sqrt 1 = 20 := by norm_num
 > **Reading a zero as a small answer.** The digital's pathwise delta is 0.000000 on every path, every seed and every bump size. That is not an estimate of a small number; it is the estimator reporting that it cannot see the question. A risk system printing it hedges a real exposure with nothing.
 >
 > - **Averaging per-path slopes for a payment that jumps.** Digitals, barriers, anything with a threshold: the estimator returns a confident zero.
-> - **Dropping the switch from the call's pathwise delta.** Paying a share on every path, not only those that exercise, gives 0.980199 instead of 0.586851 — suspiciously close to $e^{-qT}$, which is what it is.
-> - **Forgetting that volatility sits in the drift too.** The $-\sigma T$ in the pathwise weight and the $-\sqrt{T}Z$ in the score weight are the same correction. Drop the first and the call's vega reads 49.638180; drop the second and the digital's vega reads −0.094753 instead of −0.473764.
+> - **Dropping the switch from the call's pathwise delta.** Paying a share on every path, not only those that exercise, gives 0.980199 instead of 0.586851 — suspiciously close to $`e^{-qT}`$, which is what it is.
+> - **Forgetting that volatility sits in the drift too.** The $`-\sigma T`$ in the pathwise weight and the $`-\sqrt{T}Z`$ in the score weight are the same correction. Drop the first and the call's vega reads 49.638180; drop the second and the digital's vega reads −0.094753 instead of −0.473764.
 > - **Using the score everywhere because it never fails.** It costs 5.8 times the paths on the call's delta, 12.8 times on its vega.
 > - **Weighting the undiscounted payment.** The digital's delta then reads 0.019922 — a 5% error that looks plausible.
 
@@ -1185,7 +1221,7 @@ example : (100 : ℝ) * (1 / 5) * Real.sqrt 1 = 20 := by norm_num
 - **Calibration.** Fitting a model to quoted prices is least squares, and the solver wants derivatives of the fitted prices in the parameters — these estimators, inside the loop. See [Calibration](06-calibration-as-least-squares.md).
 
 > **Say it back**
-> A price is an average of payments over a spread of possible endings. Its slope in any input can be taken in either of two places: inside the payment, holding the draw fixed, or inside the spread, holding the payment fixed. The first is pathwise differentiation — for Acme, the payment's own slope times $S_T/S$ — cheap, but it needs the payment not to jump. The second multiplies the payment by a score, the derivative of the log density in the input, here the draw over twenty for delta; it works for any payment, at several times the paths. On a call both give 0.586851; on a one-dollar digital the pathwise route gives 0.000000 and the score route 0.018951, the right answer.
+> A price is an average of payments over a spread of possible endings. Its slope in any input can be taken in either of two places: inside the payment, holding the draw fixed, or inside the spread, holding the payment fixed. The first is pathwise differentiation — for Acme, the payment's own slope times $`S_T/S`$ — cheap, but it needs the payment not to jump. The second multiplies the payment by a score, the derivative of the log density in the input, here the draw over twenty for delta; it works for any payment, at several times the paths. On a call both give 0.586851; on a one-dollar digital the pathwise route gives 0.000000 and the score route 0.018951, the right answer.
 
 ---
 

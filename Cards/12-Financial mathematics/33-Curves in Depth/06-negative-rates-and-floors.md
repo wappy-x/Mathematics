@@ -49,52 +49,58 @@ All three cost 20.15 bp at the forward, minus 50 bp, by construction. At the zer
 
 Notation first, in words.
 
-- The loan has notional $M$, the amount interest is charged on, 10 million dollars, and three periods of length $\tau$, one year each.
-- Period $i$ pays on date $t_i$ (years 1, 2, 3) and fixes its rate at $T_i$, one year earlier (years 0, 1, 2).
-- $D$ is the **discount factor**: $D(t_i)$ is what a dollar due at $t_i$ costs today.
-- $F_i$ is the **forward rate** for period $i$, the rate the curve fixes for it today, and $L_i$ is the rate that will actually be fixed, unknown today.
-- $K$ is the floor's strike, here zero.
-- $\sigma_N$ is the **normal volatility**, how many basis points the rate typically moves in a year.
-- $w_i = \sigma_N\sqrt{T_i}$ is one **wiggle unit** for period $i$: the typical move between today and its fixing, in proper terms the **standard deviation** of $L_i$.
-- $N$ is the standard normal CDF (cumulative distribution function), the bell-curve area to the left of a point, and $\varphi$ its density, the bell curve's height there ([Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)).
+- The loan has notional $`M`$, the amount interest is charged on, 10 million dollars, and three periods of length $`\tau`$, one year each.
+- Period $`i`$ pays on date $`t_i`$ (years 1, 2, 3) and fixes its rate at $`T_i`$, one year earlier (years 0, 1, 2).
+- $`D`$ is the **discount factor**: $`D(t_i)`$ is what a dollar due at $`t_i`$ costs today.
+- $`F_i`$ is the **forward rate** for period $`i`$, the rate the curve fixes for it today, and $`L_i`$ is the rate that will actually be fixed, unknown today.
+- $`K`$ is the floor's strike, here zero.
+- $`\sigma_N`$ is the **normal volatility**, how many basis points the rate typically moves in a year.
+- $`w_i = \sigma_N\sqrt{T_i}`$ is one **wiggle unit** for period $`i`$: the typical move between today and its fixing, in proper terms the **standard deviation** of $`L_i`$.
+- $`N`$ is the standard normal CDF (cumulative distribution function), the bell-curve area to the left of a point, and $`\varphi`$ its density, the bell curve's height there ([Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)).
 
 The coupon split, true at every outcome:
 
-$$\max(L_i, K) \;=\; L_i \;+\; \max(K - L_i,\,0)$$
+```math
+\max(L_i, K) \;=\; L_i \;+\; \max(K - L_i,\,0)
+```
 
-The floored leg's value, $V$, adds the plain coupon and one floorlet $\mathrm{Fl}_i$ per period:
+The floored leg's value, $`V`$, adds the plain coupon and one floorlet $`\mathrm{Fl}_i`$ per period:
 
-$$V \;=\; \sum_{i=1}^{3} M\,\tau\,D(t_i)\,\bigl[\,F_i + \mathrm{Fl}_i\,\bigr], \qquad \mathrm{Fl}_i = (K - F_i)\,N(d_i) + w_i\,\varphi(d_i), \qquad d_i = \frac{K - F_i}{w_i}$$
+```math
+V \;=\; \sum_{i=1}^{3} M\,\tau\,D(t_i)\,\bigl[\,F_i + \mathrm{Fl}_i\,\bigr], \qquad \mathrm{Fl}_i = (K - F_i)\,N(d_i) + w_i\,\varphi(d_i), \qquad d_i = \frac{K - F_i}{w_i}
+```
 
 **Read it aloud:** each year the loan pays the forward rate plus a floorlet; the floorlet is how far the strike already sits above the forward, weighted by the chance it still does at the fixing, plus a payment for the wiggle that could yet put it there; everything is scaled to dollars and brought back to today.
 
-$d_i$ counts how many wiggle units the strike sits above the forward. For the year-2 fixing it is exactly 1. Year 1 is already fixed, so $w_1 = 0$ and $\mathrm{Fl}_1$ is simply $\max(K - F_1, 0)$.
+$`d_i`$ counts how many wiggle units the strike sits above the forward. For the year-2 fixing it is exactly 1. Year 1 is already fixed, so $`w_1 = 0`$ and $`\mathrm{Fl}_1`$ is simply $`\max(K - F_1, 0)`$.
 
-The shifted model replaces $\mathrm{Fl}_i$ with Black's put on the slid pair $F_i + a$ and $K + a$, at a volatility $\sigma_a$ that is a percentage of the slid rate ([Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)). To compare it with the normal model, $\sigma_a$ is chosen so both cost the same at the money, that is with the strike at the forward. That choice exists, and is unique, exactly when
+The shifted model replaces $`\mathrm{Fl}_i`$ with Black's put on the slid pair $`F_i + a`$ and $`K + a`$, at a volatility $`\sigma_a`$ that is a percentage of the slid rate ([Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)). To compare it with the normal model, $`\sigma_a`$ is chosen so both cost the same at the money, that is with the strike at the forward. That choice exists, and is unique, exactly when
 
-$$a \;>\; -F_i \;+\; \sigma_N\sqrt{\frac{T_i}{2\pi}}$$
+```math
+a \;>\; -F_i \;+\; \sigma_N\sqrt{\frac{T_i}{2\pi}}
+```
 
 **Read it aloud:** the shift must lift the forward above zero, and then by a margin as large as the normal model's at-the-money premium. Here that is 0.6995 percent for the year-2 fixing and 0.7821 percent for the year-3 fixing.
 
 | Symbol | Plain meaning | In our example | Push it up and the floored leg… |
 | --- | --- | --- | --- |
-| $M$, $\tau$ | the notional, and each period's length in years | $10,000,000; 1 | scales one for one |
-| $i$, $t_i$, $T_i$ | the period's number; when it pays, and when its rate fixes | 1 to 3; 1, 2, 3; 0, 1, 2 | a later fixing: more room to move, dearer |
-| $D$ | the discount factor, today's price of a dollar due later | 1.005025, 1.010076, 1.015151 | scales one for one |
-| $F_i$, $F$ | the forward rate for period $i$; $F$ when the period does not matter | −0.50 percent | rises: the coupon rises, the floor falls, the sum rises |
-| $L_i$, $L$ | the rate actually fixed for period $i$, unknown today; $L$ likewise | − | − |
-| $K$ | the floor's strike | 0 percent | rises: dearer, one for one where the floor is deep |
-| $\sigma_N$ | the normal volatility, bp per year | 50 bp | rises: dearer, $206,929.32 floor at 100 bp |
-| $w_i$, $d_i$ | one wiggle unit to period $i$'s fixing, and the strike's distance above the forward in wiggle units | 50 bp and 1 (year 2) | − |
-| $N$, $\varphi$ | the bell-curve area to the left, and the curve's height | $N(1) = 0.841345$ | − |
-| $\mathrm{Fl}_i$, $V$ | one floorlet in rate units, and the floored leg in dollars | 54.165774 bp; $14,341.05 | − |
-| $a$, $\sigma_a$ | the shift, the wall sits at $-a$; the slid rate's volatility | 2 percent; 33.49 percent (year 2) | a smaller shift: dearer, $31,350.14 at 1 percent |
+| $`M`$, $`\tau`$ | the notional, and each period's length in years | $10,000,000; 1 | scales one for one |
+| $`i`$, $`t_i`$, $`T_i`$ | the period's number; when it pays, and when its rate fixes | 1 to 3; 1, 2, 3; 0, 1, 2 | a later fixing: more room to move, dearer |
+| $`D`$ | the discount factor, today's price of a dollar due later | 1.005025, 1.010076, 1.015151 | scales one for one |
+| $`F_i`$, $`F`$ | the forward rate for period $`i`$; $`F`$ when the period does not matter | −0.50 percent | rises: the coupon rises, the floor falls, the sum rises |
+| $`L_i`$, $`L`$ | the rate actually fixed for period $`i`$, unknown today; $`L`$ likewise | − | − |
+| $`K`$ | the floor's strike | 0 percent | rises: dearer, one for one where the floor is deep |
+| $`\sigma_N`$ | the normal volatility, bp per year | 50 bp | rises: dearer, $206,929.32 floor at 100 bp |
+| $`w_i`$, $`d_i`$ | one wiggle unit to period $`i`$'s fixing, and the strike's distance above the forward in wiggle units | 50 bp and 1 (year 2) | − |
+| $`N`$, $`\varphi`$ | the bell-curve area to the left, and the curve's height | $`N(1) = 0.841345`$ | − |
+| $`\mathrm{Fl}_i`$, $`V`$ | one floorlet in rate units, and the floored leg in dollars | 54.165774 bp; $14,341.05 | − |
+| $`a`$, $`\sigma_a`$ | the shift, the wall sits at $`-a`$; the slid rate's volatility | 2 percent; 33.49 percent (year 2) | a smaller shift: dearer, $31,350.14 at 1 percent |
 
 ### When it holds
 
 - **The rate moves by a fixed absolute size, with no wall.** If rates stick near a central bank's lower limit, the normal model overprices floors struck far below zero.
 - **One volatility per fixing, no smile.** Each model is tuned at the money, 50 bp below the zero strike. The market quotes a different volatility at each strike, and a trading desk would use the zero strike's own quote.
-- **One curve.** Forwards are read from the same curve that discounts. Real euro legs project the benchmark on one curve and discount on an overnight-rate curve, and then the plain leg no longer collapses to $M(D(0) - D(3))$.
+- **One curve.** Forwards are read from the same curve that discounts. Real euro legs project the benchmark on one curve and discount on an overnight-rate curve, and then the plain leg no longer collapses to $`M(D(0) - D(3))`$.
 - **The shift is chosen, and chosen large enough.** Below the minimum shift no shifted volatility reproduces the at-the-money price.
 - **The floor applies to the benchmark alone.** A fixed margin added on top is a plain payment and changes nothing in the option.
 
@@ -106,17 +112,19 @@ $$a \;>\; -F_i \;+\; \sigma_N\sqrt{\frac{T_i}{2\pi}}$$
 
 ### Step 0: the floor only ever adds a put
 
-At every outcome, $\max(L, 0)$ is $L$ plus the amount by which $L$ fell short of zero. If $L$ fixes at minus 0.30 percent, the floored coupon is 0: the plain coupon, minus 0.30, plus the shortfall, 0.30. If $L$ fixes at plus 0.20 percent, it is 0.20: the plain coupon, plus a shortfall of nothing.
+At every outcome, $`\max(L, 0)`$ is $`L`$ plus the amount by which $`L`$ fell short of zero. If $`L`$ fixes at minus 0.30 percent, the floored coupon is 0: the plain coupon, minus 0.30, plus the shortfall, 0.30. If $`L`$ fixes at plus 0.20 percent, it is 0.20: the plain coupon, plus a shortfall of nothing.
 
-That shortfall is exactly a floorlet's payoff, $\max(K - L, 0)$ with $K = 0$. So a floored leg is a plain leg plus a strip of floorlets, one per period. The identity holds at every outcome, not on average, so it holds for prices under any model.
+That shortfall is exactly a floorlet's payoff, $`\max(K - L, 0)`$ with $`K = 0`$. So a floored leg is a plain leg plus a strip of floorlets, one per period. The identity holds at every outcome, not on average, so it holds for prices under any model.
 
-There is a second reading of the same payoff. $\max(L, 0)$ is also $\max(L - 0, 0)$: a **caplet** struck at zero, a call on the rate ([Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)). So the floored leg equals a zero-strike cap. The code prices it that way too, as a separate road, and the two agree to the cent.
+There is a second reading of the same payoff. $`\max(L, 0)`$ is also $`\max(L - 0, 0)`$: a **caplet** struck at zero, a call on the rate ([Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)). So the floored leg equals a zero-strike cap. The code prices it that way too, as a separate road, and the two agree to the cent.
 
 ### Step 1: the plain leg needs no model
 
-The forward $F_i$ is the rate a contract can lock in today at no cost. So a promise to pay $L_i$ at $t_i$ is worth the same as a promise to pay $F_i$ ([Carry and roll-down](05-carry-and-roll-down.md) reads the forwards off the same curve). With one curve, each forward is read from two discount factors, $F_i = \bigl(D(t_{i-1})/D(t_i) - 1\bigr)/\tau$, so each coupon's value $\tau F_i D(t_i)$ is $D(t_{i-1}) - D(t_i)$. The sum collapses:
+The forward $`F_i`$ is the rate a contract can lock in today at no cost. So a promise to pay $`L_i`$ at $`t_i`$ is worth the same as a promise to pay $`F_i`$ ([Carry and roll-down](05-carry-and-roll-down.md) reads the forwards off the same curve). With one curve, each forward is read from two discount factors, $`F_i = \bigl(D(t_{i-1})/D(t_i) - 1\bigr)/\tau`$, so each coupon's value $`\tau F_i D(t_i)`$ is $`D(t_{i-1}) - D(t_i)`$. The sum collapses:
 
-$$\sum_{i=1}^{3} M\,\tau\,D(t_i)\,F_i \;=\; M\,\bigl[D(0) - D(3)\bigr] \;=\; -\$151{,}512.59$$
+```math
+\sum_{i=1}^{3} M\,\tau\,D(t_i)\,F_i \;=\; M\,\bigl[D(0) - D(3)\bigr] \;=\; -\$151{,}512.59
+```
 
 The discount factors are above 1. At minus 0.50 percent, a dollar due in three years costs $1.015151 today, because holding cash for three years costs money. That is not an error in the code; it is what a negative rate means.
 
@@ -128,38 +136,42 @@ Year 1's rate was fixed this morning at minus 0.50 percent. Its floorlet is no l
 
 Black's model says the fixing is today's forward times a random growth factor that is always positive ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). Two things follow.
 
-- **A negative forward has no place in it.** A growth factor is positive, so the fixing keeps the sign of $F$. The formula makes that literal: it needs $\ln(F/K)$, and with $F = -0.50$ percent and $K = 0$ the code gets a division by zero; with $K$ nudged to plus 0.01 percent, the log of a negative number. No price.
-- **A positive forward gives the wrong price.** Nudge the forward to plus 0.01 percent, and the strike a hair above zero so the formula runs. Now $L$ is always positive, the chance of fixing below zero is exactly nothing, and the zero-strike floorlet is worth $0.00.
+- **A negative forward has no place in it.** A growth factor is positive, so the fixing keeps the sign of $`F`$. The formula makes that literal: it needs $`\ln(F/K)`$, and with $`F = -0.50`$ percent and $`K = 0`$ the code gets a division by zero; with $`K`$ nudged to plus 0.01 percent, the log of a negative number. No price.
+- **A positive forward gives the wrong price.** Nudge the forward to plus 0.01 percent, and the strike a hair above zero so the formula runs. Now $`L`$ is always positive, the chance of fixing below zero is exactly nothing, and the zero-strike floorlet is worth $0.00.
 
-That zero breaks a bound no model may cross. A floorlet minus a caplet at the same strike pays $K - L$ at every outcome, which is worth $D\,\tau\,(K - F)$ today, the plain coupon read backwards ([Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md)).
+That zero breaks a bound no model may cross. A floorlet minus a caplet at the same strike pays $`K - L`$ at every outcome, which is worth $`D\,\tau\,(K - F)`$ today, the plain coupon read backwards ([Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md)).
 
-A caplet is never worth less than nothing. So a floorlet is worth at least $D\,\tau\,\max(K - F, 0)$, its **intrinsic value**. On a minus 0.50 percent forward that is 50 bp a year, $151,512.59 over the loan. A model that prices the floor at nothing prices it below a bound anyone could exploit.
+A caplet is never worth less than nothing. So a floorlet is worth at least $`D\,\tau\,\max(K - F, 0)`$, its **intrinsic value**. On a minus 0.50 percent forward that is 50 bp a year, $151,512.59 over the loan. A model that prices the floor at nothing prices it below a bound anyone could exploit.
 
 ### Step 4: the normal model prices it
 
-The normal model says $L_i = F_i + w_i Z$, with $Z$ a standard bell-curve draw. Zero is just a number the rate passes through. Average the floorlet's payoff over $Z$ and discount once:
+The normal model says $`L_i = F_i + w_i Z`$, with $`Z`$ a standard bell-curve draw. Zero is just a number the rate passes through. Average the floorlet's payoff over $`Z`$ and discount once:
 
-$$\mathrm{Fl}_i = \mathbb{E}\bigl[\max(K - F_i - w_i Z,\,0)\bigr] = (K - F_i)\,N(d_i) + w_i\,\varphi(d_i)$$
+```math
+\mathrm{Fl}_i = \mathbb{E}\bigl[\max(K - F_i - w_i Z,\,0)\bigr] = (K - F_i)\,N(d_i) + w_i\,\varphi(d_i)
+```
 
 The first term is the 50 bp distance, weighted by the chance the rate is still below the strike at the fixing: 84.13 percent for year 2. The second is what the wiggle adds.
 
 <details>
 <summary>Detailed proof: the integral, and the bound it respects</summary>
 
-The payoff is positive where $F_i + w_i z < K$, that is where $z < d_i$. So
-$$\mathrm{Fl}_i = \int_{-\infty}^{d_i} (K - F_i - w_i z)\,\varphi(z)\,\mathrm{d}z = (K - F_i)\,N(d_i) - w_i\int_{-\infty}^{d_i} z\,\varphi(z)\,\mathrm{d}z .$$
-The bell curve's height has slope $\varphi'(z) = -z\,\varphi(z)$, so the last integral is $-\varphi(d_i)$, and $\mathrm{Fl}_i = (K - F_i)N(d_i) + w_i\,\varphi(d_i)$.
-Subtract the intrinsic value $K - F_i$: the rest is $w_i\bigl[\varphi(d_i) - d_i\,(1 - N(d_i))\bigr]$. The bracket is the average of $\max(z - d_i, 0)$ over the bell curve, an average of something never negative, so it is never negative. The normal floorlet sits on or above its intrinsic value at every strike, which Black's zero did not.
+The payoff is positive where $`F_i + w_i z < K`$, that is where $`z < d_i`$. So
+
+$`\displaystyle \mathrm{Fl}_i = \int_{-\infty}^{d_i} (K - F_i - w_i z)\,\varphi(z)\,\mathrm{d}z = (K - F_i)\,N(d_i) - w_i\int_{-\infty}^{d_i} z\,\varphi(z)\,\mathrm{d}z .`$
+
+The bell curve's height has slope $`\varphi'(z) = -z\,\varphi(z)`$, so the last integral is $`-\varphi(d_i)`$, and $`\mathrm{Fl}_i = (K - F_i)N(d_i) + w_i\,\varphi(d_i)`$.
+Subtract the intrinsic value $`K - F_i`$: the rest is $`w_i\bigl[\varphi(d_i) - d_i\,(1 - N(d_i))\bigr]`$. The bracket is the average of $`\max(z - d_i, 0)`$ over the bell curve, an average of something never negative, so it is never negative. The normal floorlet sits on or above its intrinsic value at every strike, which Black's zero did not.
 
 </details>
 
 ### Step 5: the shifted model prices it, if the shift is big enough
 
-The shifted model says $L_i + a$ is lognormal: the slid rate grows by a random percentage, so $L_i$ cannot fall below $-a$. With $a = 2$ percent the forward slides to plus 1.50 percent, Black's formula runs, and the zero strike slides to plus 2 percent.
+The shifted model says $`L_i + a`$ is lognormal: the slid rate grows by a random percentage, so $`L_i`$ cannot fall below $`-a`$. With $`a = 2`$ percent the forward slides to plus 1.50 percent, Black's formula runs, and the zero strike slides to plus 2 percent.
 
-To compare models fairly, each shifted volatility is tuned so the at-the-money floorlet, struck at the forward, costs what the normal model says: $\sigma_N\sqrt{T_i/(2\pi)}$, 20.15 bp once discounted for year 2. The shifted at-the-money premium, before discounting, is $(F_i + a)\bigl[2N(w/2) - 1\bigr]$ with $w = \sigma_a\sqrt{T_i}$.
+To compare models fairly, each shifted volatility is tuned so the at-the-money floorlet, struck at the forward, costs what the normal model says: $`\sigma_N\sqrt{T_i/(2\pi)}`$, 20.15 bp once discounted for year 2. The shifted at-the-money premium, before discounting, is $`(F_i + a)\bigl[2N(w/2) - 1\bigr]`$ with $`w = \sigma_a\sqrt{T_i}`$.
 
-As $\sigma_a$ runs from 0 upwards, $2N(w/2) - 1$ climbs strictly from 0 towards 1 and never arrives. So the shifted premium sweeps every value between nothing and $F_i + a$, each exactly once. A match exists, and is unique, exactly when the normal premium is below $F_i + a$: the bound in The formula.
+As $`\sigma_a`$ runs from 0 upwards, $`2N(w/2) - 1`$ climbs strictly from 0 towards 1 and never arrives. So the shifted premium sweeps every value between nothing and $`F_i + a`$, each exactly once. A match exists, and is unique, exactly when the normal premium is below $`F_i + a`$: the bound in The formula.
 
 For year 3 that needs a shift above 0.7821 percent. At 0.75 percent the code finds a year-2 volatility of 255.11 percent and no year-3 volatility at all.
 
@@ -177,19 +189,19 @@ The normal model, 50 bp volatility, curve flat at minus 0.50 percent. Year 2 fix
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| discount factor $D(2)$ | $1 / 0.995^2$ | 1.010076 |
-| one wiggle unit $w_i$, year 2 | $50 \times \sqrt{1}$ bp | 50 bp |
-| $d_i$, year 2: strike above forward in wiggle units | $(0 - (-50)) / 50$ | 1.000000 |
-| chance of fixing below zero, $N(1)$ | bell-curve table | 0.841345 |
-| bell-curve height $\varphi(1)$ | $e^{-1/2} / \sqrt{2\pi}$ | 0.241971 |
-| floorlet, undiscounted | $50 \times 0.841345 + 50 \times 0.241971$ | 54.165774 bp |
-| floorlet, today | $54.165774 \times 1.010076$ | 54.711521 bp |
-| year-2 floorlet in dollars | $54.711521 \times \$1{,}000$ | $54,711.52 |
-| year-3 floorlet, same steps with $w_i = 70.710678$ bp, $d_i = 0.707107$ | $59.982061 \times 1.015151$ bp | $60,890.87 |
-| year-1 floorlet, already fixed | $50 \times 1.005025$ bp | $50,251.26 |
-| **floor** | $50{,}251.26 + 54{,}711.52 + 60{,}890.87$ | **$165,853.64** |
-| plain leg | $10{,}000{,}000 \times (1 - 1.015151)$ | −$151,512.59 |
-| **floored leg** | $-151{,}512.59 + 165{,}853.64$ | **$14,341.05** |
+| discount factor $`D(2)`$ | $`1 / 0.995^2`$ | 1.010076 |
+| one wiggle unit $`w_i`$, year 2 | $`50 \times \sqrt{1}`$ bp | 50 bp |
+| $`d_i`$, year 2: strike above forward in wiggle units | $`(0 - (-50)) / 50`$ | 1.000000 |
+| chance of fixing below zero, $`N(1)`$ | bell-curve table | 0.841345 |
+| bell-curve height $`\varphi(1)`$ | $`e^{-1/2} / \sqrt{2\pi}`$ | 0.241971 |
+| floorlet, undiscounted | $`50 \times 0.841345 + 50 \times 0.241971`$ | 54.165774 bp |
+| floorlet, today | $`54.165774 \times 1.010076`$ | 54.711521 bp |
+| year-2 floorlet in dollars | $`54.711521 \times \$1{,}000`$ | $54,711.52 |
+| year-3 floorlet, same steps with $`w_i = 70.710678`$ bp, $`d_i = 0.707107`$ | $`59.982061 \times 1.015151`$ bp | $60,890.87 |
+| year-1 floorlet, already fixed | $`50 \times 1.005025`$ bp | $50,251.26 |
+| **floor** | $`50{,}251.26 + 54{,}711.52 + 60{,}890.87`$ | **$165,853.64** |
+| plain leg | $`10{,}000{,}000 \times (1 - 1.015151)`$ | −$151,512.59 |
+| **floored leg** | $`-151{,}512.59 + 165{,}853.64`$ | **$14,341.05** |
 
 The floor costs $165,853.64, of which $151,512.59 is intrinsic: the three years' 50 bp, certain if rates sit still. The model prices only the other $14,341.05, which is the whole value of the floored leg: the lender's chance that rates climb above zero before a fixing.
 
@@ -200,7 +212,7 @@ The floor costs $165,853.64, of which $151,512.59 is intrinsic: the three years'
 | Black-76 on the −0.50 percent forward | no price | division by a zero strike, or the log of a negative number |
 | Black-76 with the forward nudged to +0.01 percent | $0.00 floorlet | the model forbids negative fixings, so the floor is free, below its intrinsic value |
 | Skip year 1 because it has already fixed | $115,602.39 floor | a fixed floorlet is not worthless; it is certain, $50,251.26 |
-| Discount at 1, treating $D > 1$ as a bug | $164,147.83 floor | below zero a dollar later costs more than a dollar now |
+| Discount at 1, treating $`D > 1`$ as a bug | $164,147.83 floor | below zero a dollar later costs more than a dollar now |
 | Use the 2 percent shift's volatilities at a 1 percent shift | $152,760.98 floor (right: $182,862.74) | a shifted volatility means nothing without its shift |
 
 ---
@@ -210,7 +222,7 @@ The floor costs $165,853.64, of which $151,512.59 is intrinsic: the three years'
 The scripts build the curve from the flat rate, read the forwards back off it, and price the floor and the floored leg by **four independent roads** in the normal model:
 
 1. the formula;
-2. a brute-force average of the floorlet payoff over the bell curve by Simpson's rule, with no $N$ in it;
+2. a brute-force average of the floorlet payoff over the bell curve by Simpson's rule, with no $`N`$ in it;
 3. the zero-strike cap priced separately by the same brute force, which must equal plain leg plus floor;
 4. a Monte Carlo simulation of the loan's cash flows: 200,000 random paths of floored coupons, with its own random numbers.
 
@@ -404,7 +416,7 @@ Four roads, one floor. Formula and integral agree to the cent. The zero-strike c
 
 ### Rust
 
-Same checks, same inputs. Rust has no `erf`, so $N$ is built by adding thin slices under the bell curve. No crates.
+Same checks, same inputs. Rust has no `erf`, so $`N`$ is built by adding thin slices under the bell curve. No crates.
 
 ```rust
 // Negative rates and floors -- the same check as negative_rates_and_floors_check.py, in Rust.
@@ -608,10 +620,10 @@ The two outputs are identical line for line, Monte Carlo included: both use the 
 
 Lean proves the coupon split, the normal floorlet formula and the smallest-shift rule for every rate, and checks the worked numbers.
 
-- Take any fixing $L$ and strike $K$. Then $\max(L, K) = L + \max(K - L, 0)$: the plain coupon plus a floorlet.
-- Take the same fixing and strike. Then $\max(L, K) = K + \max(L - K, 0)$, so at a zero strike the floored leg is a zero-strike cap.
-- Take $L_i = F_i + w_i Z$, with $Z$ a standard bell-curve draw and wiggle unit $w_i > 0$. Then the average floorlet payoff is $(K - F_i) N(d_i) + w_i \varphi(d_i)$.
-- Take normal volatility $\sigma_N > 0$ and a fixing $T_i > 0$ years away. Then a shifted volatility $\sigma_a > 0$ with the normal model's at-the-money price exists, and is unique, exactly when $a > -F_i + \sigma_N\sqrt{T_i/(2\pi)}$.
+- Take any fixing $`L`$ and strike $`K`$. Then $`\max(L, K) = L + \max(K - L, 0)`$: the plain coupon plus a floorlet.
+- Take the same fixing and strike. Then $`\max(L, K) = K + \max(L - K, 0)`$, so at a zero strike the floored leg is a zero-strike cap.
+- Take $`L_i = F_i + w_i Z`$, with $`Z`$ a standard bell-curve draw and wiggle unit $`w_i > 0`$. Then the average floorlet payoff is $`(K - F_i) N(d_i) + w_i \varphi(d_i)`$.
+- Take normal volatility $`\sigma_N > 0`$ and a fixing $`T_i > 0`$ years away. Then a shifted volatility $`\sigma_a > 0`$ with the normal model's at-the-money price exists, and is unique, exactly when $`a > -F_i + \sigma_N\sqrt{T_i/(2\pi)}`$.
 - A fixing of minus 30 bp floors to 0: the plain minus 30 plus a 30 bp put.
 - A fixing of plus 20 bp floors to 20, with a put worth nothing.
 - For year 2 the strike sits exactly 1 wiggle unit above the forward.
@@ -909,7 +921,7 @@ example : (16585364 : ℤ) - 15151259 = 1434105 := by decide
 > Smaller traps, each with its number:
 > - **Quoting a shifted volatility without its shift.** The same year-2 premium reads 104.58 percent at a 1 percent shift and 33.49 percent at 2 percent. Swap them and the floor falls from $182,862.74 to $152,760.98.
 > - **Nudging the forward positive to make Black run.** The formula then prices the zero floor at $0.00, under its intrinsic value.
-> - **Correcting discount factors above 1.** At minus 0.50 percent, $D(3) = 1.015151$ is right. Forcing it to 1 moves the floor to $164,147.83.
+> - **Correcting discount factors above 1.** At minus 0.50 percent, $`D(3) = 1.015151`$ is right. Forcing it to 1 moves the floor to $164,147.83.
 > - **Hedging a floored loan with an unfloored swap.** The loan's coupon stops at zero; the swap's floating leg does not. The mismatch is the floor itself, worth $165,853.64 here.
 
 ---
@@ -929,7 +941,7 @@ example : (16585364 : ℤ) - 15151259 = 1434105 := by decide
 ## What this builds on
 
 - [Carry and roll-down](05-carry-and-roll-down.md): reading forwards and discount factors off one curve, the plain leg's whole valuation here.
-- [Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md): the shifted model, its wall at $-a$, and the at-the-money conversion that the minimum shift comes from.
+- [Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md): the shifted model, its wall at $`-a`$, and the at-the-money conversion that the minimum shift comes from.
 - [Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md): the normal model and its formula, proved there in full.
 - [Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md): floorlet minus caplet as a fixed payment, the source of the intrinsic-value bound.
 

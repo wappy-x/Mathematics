@@ -26,40 +26,44 @@ Drawn to scale, 2000 units to 1 m. The shaded ring is one slice of the integral:
 
 ## The formula
 
-Notation first, in words. The spin speed is written $\omega$ (omega), in radians per second: one turn is $2\pi$ radians, so 3000 rpm is $3000 \times 2\pi / 60 = 314.159$ rad/s. A tiny bit of the body has mass $dm$, and $r$ is its distance from the spin axis, measured square to the axis.
+Notation first, in words. The spin speed is written $`\omega`$ (omega), in radians per second: one turn is $`2\pi`$ radians, so 3000 rpm is $`3000 \times 2\pi / 60 = 314.159`$ rad/s. A tiny bit of the body has mass $`dm`$, and $`r`$ is its distance from the spin axis, measured square to the axis.
 
-$$I = \iiint_{\text{body}} r^2 \, \rho \, dV \qquad L = I\omega \qquad \tau = \frac{dL}{dt} \qquad I_P = I + m d^2$$
+```math
+I = \iiint_{\text{body}} r^2 \, \rho \, dV \qquad L = I\omega \qquad \tau = \frac{dL}{dt} \qquad I_P = I + m d^2
+```
 
-**Read it aloud:** the moment of inertia adds up each bit's mass times its distance squared; the angular momentum is that number times the spin speed; the torque on the body is how fast its angular momentum changes; and about a parallel axis a distance $d$ away, the moment of inertia grows by the whole mass times $d$ squared.
+**Read it aloud:** the moment of inertia adds up each bit's mass times its distance squared; the angular momentum is that number times the spin speed; the torque on the body is how fast its angular momentum changes; and about a parallel axis a distance $`d`$ away, the moment of inertia grows by the whole mass times $`d`$ squared.
 
 For a uniform solid disc the integral comes out (Step 3 below) as
 
-$$I = \tfrac12 m R^2 = \tfrac12 \times 12 \times 0.15^2 = 0.135 \text{ kg m}^2,$$
+```math
+I = \tfrac12 m R^2 = \tfrac12 \times 12 \times 0.15^2 = 0.135 \text{ kg m}^2,
+```
 
-and the energy stored in the spin is $E = \tfrac12 I \omega^2$. In the wing's dimension brackets, $I$ has dimensions $[M][L]^2$: a mass times a length squared.
+and the energy stored in the spin is $`E = \tfrac12 I \omega^2`$. In the wing's dimension brackets, $`I`$ has dimensions $`[M][L]^2`$: a mass times a length squared.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $m$ | the body's mass | 12 kg | $I$ rises in step |
-| $R$, $h$ | disc radius; disc thickness | 0.15 m; 0.0216 m | $I$ rises as $R^2$; $h$ only through the mass |
-| $r$, $dm$ | one bit's distance from the spin axis; that bit's mass | 0 to 0.15 m | far bits count most |
-| $\rho$, $dV$ | density, mass per cubic metre; one tiny piece's volume | 7860 kg/m^3, uniform (steel); boxes 1 mm square on the face | — |
-| $I$ | moment of inertia about the spin axis | 0.135 kg m^2 | slower spin-up, more energy stored |
-| $\omega$ | spin speed in radians per second | 314.159 rad/s (3000 rpm) | energy rises as $\omega^2$ |
-| $L$ | angular momentum, "amount of spin" | 42.412 kg m^2/s | longer to build, longer to stop |
-| $\tau$, $\alpha$ | torque, a twisting push in newton metres; angular acceleration, how fast $\omega$ rises | 5 N m; 37.037 rad/s^2 | shorter spin-up |
-| $t$, $E$ | time; kinetic energy of the spin | 8.482 s; 6662.0 J | — |
-| $d$, $I_P$, $x$, $y$ | distance from the centre to a parallel axis (the pin); moment of inertia about it; position across the face | 0.12 m; 0.307800 kg m^2 | $I_P$ rises as $d^2$ |
-| $g$, $T$, $\theta$, $\ddot\theta$ | standard gravity; time for one full swing on the pin; swing angle from straight down; its angular acceleration | 9.80665 m/s^2; 0.9276 s; 5 degrees | — |
-| $\tau_0$, $\omega_0$, $t_c$, $\tau_f$ | a real motor's torque at standstill, its top speed, and its time constant; a clutch's friction torque | 10 N m, 4000 rpm, 5.655 s; 20 N m | — |
+| $`m`$ | the body's mass | 12 kg | $`I`$ rises in step |
+| $`R`$, $`h`$ | disc radius; disc thickness | 0.15 m; 0.0216 m | $`I`$ rises as $`R^2`$; $`h`$ only through the mass |
+| $`r`$, $`dm`$ | one bit's distance from the spin axis; that bit's mass | 0 to 0.15 m | far bits count most |
+| $`\rho`$, $`dV`$ | density, mass per cubic metre; one tiny piece's volume | 7860 kg/m^3, uniform (steel); boxes 1 mm square on the face | — |
+| $`I`$ | moment of inertia about the spin axis | 0.135 kg m^2 | slower spin-up, more energy stored |
+| $`\omega`$ | spin speed in radians per second | 314.159 rad/s (3000 rpm) | energy rises as $`\omega^2`$ |
+| $`L`$ | angular momentum, "amount of spin" | 42.412 kg m^2/s | longer to build, longer to stop |
+| $`\tau`$, $`\alpha`$ | torque, a twisting push in newton metres; angular acceleration, how fast $`\omega`$ rises | 5 N m; 37.037 rad/s^2 | shorter spin-up |
+| $`t`$, $`E`$ | time; kinetic energy of the spin | 8.482 s; 6662.0 J | — |
+| $`d`$, $`I_P`$, $`x`$, $`y`$ | distance from the centre to a parallel axis (the pin); moment of inertia about it; position across the face | 0.12 m; 0.307800 kg m^2 | $`I_P`$ rises as $`d^2`$ |
+| $`g`$, $`T`$, $`\theta`$, $`\ddot\theta`$ | standard gravity; time for one full swing on the pin; swing angle from straight down; its angular acceleration | 9.80665 m/s^2; 0.9276 s; 5 degrees | — |
+| $`\tau_0`$, $`\omega_0`$, $`t_c`$, $`\tau_f`$ | a real motor's torque at standstill, its top speed, and its time constant; a clutch's friction torque | 10 N m, 4000 rpm, 5.655 s; 20 N m | — |
 
 ### When it holds
 
-- **The body is rigid: every bit keeps its distance from the axis.** A skater pulling in her arms changes $I$ while spinning; then $L = I\omega$ still holds moment by moment, but $\tau = I\alpha$ does not.
+- **The body is rigid: every bit keeps its distance from the axis.** A skater pulling in her arms changes $`I`$ while spinning; then $`L = I\omega`$ still holds moment by moment, but $`\tau = I\alpha`$ does not.
 - **The spin axis keeps its direction.** Tilt the axle of a spinning wheel and the torque turns the axis sideways instead of speeding the spin: that is [Precession](03-gyroscopes-and-precession.md).
-- **The shift rule starts from the centre of mass.** $I_P = I + md^2$ needs $I$ about the axis through the centre of mass. Shifting from one off-centre axis to another by the gap between them gives a wrong answer; go through the centre.
-- **$\tfrac12 mR^2$ needs uniform density.** A flywheel with a heavy rim and a thin web has more, up to $mR^2 = 0.270$ kg m^2 if all the mass sat on the rim.
-- **The swing formula needs small swings.** Released at 5 degrees the disc swings in 0.9281 s against the formula's 0.9276 s. Released at 60 degrees it takes 0.9955 s, and the $I$ worked back from that reads 34.6% high.
+- **The shift rule starts from the centre of mass.** $`I_P = I + md^2`$ needs $`I`$ about the axis through the centre of mass. Shifting from one off-centre axis to another by the gap between them gives a wrong answer; go through the centre.
+- **$`\tfrac12 mR^2`$ needs uniform density.** A flywheel with a heavy rim and a thin web has more, up to $`mR^2 = 0.270`$ kg m^2 if all the mass sat on the rim.
+- **The swing formula needs small swings.** Released at 5 degrees the disc swings in 0.9281 s against the formula's 0.9276 s. Released at 60 degrees it takes 0.9955 s, and the $`I`$ worked back from that reads 34.6% high.
 
 ---
 
@@ -67,19 +71,21 @@ and the energy stored in the spin is $E = \tfrac12 I \omega^2$. In the wing's di
 
 ### Step 0: a spinning body is a crowd of bits, each obeying Newton's law
 
-Nothing new is needed. Each bit of the disc moves in a circle, and [Newton's laws](01-newtons-laws-work-and-energy.md) govern each bit separately. A bit at distance $r$ from the axis moves at speed $r\omega$. When the spin speeds up at rate $\alpha$, that bit speeds up at $r\alpha$, so the push along its path must be $dm \times r\alpha$. The rest of the card is adding the crowd up.
+Nothing new is needed. Each bit of the disc moves in a circle, and [Newton's laws](01-newtons-laws-work-and-energy.md) govern each bit separately. A bit at distance $`r`$ from the axis moves at speed $`r\omega`$. When the spin speeds up at rate $`\alpha`$, that bit speeds up at $`r\alpha`$, so the push along its path must be $`dm \times r\alpha`$. The rest of the card is adding the crowd up.
 
 ### Step 1: the distance enters twice, so it is squared
 
-A push along the bit's path, at distance $r$, twists the body by push times lever arm: $r \times dm\, r\alpha = r^2\, dm\, \alpha$. One $r$ comes from the bit's speed, the other from its lever. Add over the body:
+A push along the bit's path, at distance $`r`$, twists the body by push times lever arm: $`r \times dm\, r\alpha = r^2\, dm\, \alpha`$. One $`r`$ comes from the bit's speed, the other from its lever. Add over the body:
 
-$$\tau = \left(\iiint r^2\, \rho\, dV\right)\alpha = I\alpha.$$
+```math
+\tau = \left(\iiint r^2\, \rho\, dV\right)\alpha = I\alpha.
+```
 
-The energy shows the same squaring. A bit's kinetic energy is $\tfrac12 dm (r\omega)^2$; add them and get $\tfrac12 I\omega^2$, the spinning twin of $\tfrac12 m v^2$.
+The energy shows the same squaring. A bit's kinetic energy is $`\tfrac12 dm (r\omega)^2`$; add them and get $`\tfrac12 I\omega^2`$, the spinning twin of $`\tfrac12 m v^2`$.
 
 ### Step 2: torque is the rate of change of angular momentum
 
-A bit's angular momentum (its momentum times its lever arm) is $r \times dm\, r\omega$. Added up, $L = I\omega$. For a rigid body $I$ is fixed, so $dL/dt = I\, d\omega/dt = I\alpha = \tau$.
+A bit's angular momentum (its momentum times its lever arm) is $`r \times dm\, r\omega`$. Added up, $`L = I\omega`$. For a rigid body $`I`$ is fixed, so $`dL/dt = I\, d\omega/dt = I\alpha = \tau`$.
 
 What about the forces the bits exert on each other, the forces that hold the steel together? Each pair pushes equally and oppositely along the line joining them (Newton's third law). Equal and opposite pushes on the same line have the same lever arm, so their twists cancel. Only torques from outside the body survive.
 
@@ -87,28 +93,32 @@ That cancellation is what makes the clutch problem easy. When the spinning flywh
 
 ### Step 3: the integral for a solid disc
 
-Cut the disc into thin rings, as in the picture. A ring of radius $r$ and width $dr$ has volume $2\pi r\, h\, dr$, and every bit of it sits at distance $r$. Adding rings is a [Triple integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/02-triple-integrals.md) sum done in cylindrical coordinates, with the angle and the height already added:
+Cut the disc into thin rings, as in the picture. A ring of radius $`r`$ and width $`dr`$ has volume $`2\pi r\, h\, dr`$, and every bit of it sits at distance $`r`$. Adding rings is a [Triple integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/02-triple-integrals.md) sum done in cylindrical coordinates, with the angle and the height already added:
 
-$$I = \int_0^R r^2 \, \rho \, 2\pi r h \, dr = 2\pi\rho h \frac{R^4}{4} = \tfrac12 (\rho\, \pi R^2 h) R^2 = \tfrac12 m R^2.$$
+```math
+I = \int_0^R r^2 \, \rho \, 2\pi r h \, dr = 2\pi\rho h \frac{R^4}{4} = \tfrac12 (\rho\, \pi R^2 h) R^2 = \tfrac12 m R^2.
+```
 
-The bracket $\rho \pi R^2 h$ is density times volume: the mass. So the disc behaves as if all 12 kg sat at $R/\sqrt2$ from the axis, a little over two-thirds of the way out.
+The bracket $`\rho \pi R^2 h`$ is density times volume: the mass. So the disc behaves as if all 12 kg sat at $`R/\sqrt2`$ from the axis, a little over two-thirds of the way out.
 
 ### Step 4: shifting the axis
 
-Put the pin at distance $d$ along the $x$ direction. A bit at position $(x, y)$ on the face is at squared distance $(x - d)^2 + y^2$ from the pin. Multiply out:
+Put the pin at distance $`d`$ along the $`x`$ direction. A bit at position $`(x, y)`$ on the face is at squared distance $`(x - d)^2 + y^2`$ from the pin. Multiply out:
 
-$$(x-d)^2 + y^2 = (x^2 + y^2) - 2d\,x + d^2.$$
+```math
+(x-d)^2 + y^2 = (x^2 + y^2) - 2d\,x + d^2.
+```
 
-Add over the body, each term times the bit's mass. The first term adds to $I$. The last adds to $m d^2$. The middle adds to $-2d$ times the body's first moment, $\iiint x\, \rho\, dV$, and that is zero because the centre is the centre of mass ([Centre of mass](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md)): bits to the left balance bits to the right. What is left is $I_P = I + md^2$.
+Add over the body, each term times the bit's mass. The first term adds to $`I`$. The last adds to $`m d^2`$. The middle adds to $`-2d`$ times the body's first moment, $`\iiint x\, \rho\, dV`$, and that is zero because the centre is the centre of mass ([Centre of mass](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md)): bits to the left balance bits to the right. What is left is $`I_P = I + md^2`$.
 
 <details>
 <summary>The bench swing: why the period gives the moment of inertia</summary>
 
-Hung on the pin, the disc's weight $mg$ acts at the centre, a lever arm $d \sin\theta$ from the pin. Step 2 about the pin gives $I_P\, \ddot\theta = -m g d \sin\theta$, where $\ddot\theta$ is the angular acceleration of the swing. For small swings $\sin\theta \approx \theta$, the motion is a pure oscillation, and one full swing takes
+Hung on the pin, the disc's weight $`mg`$ acts at the centre, a lever arm $`d \sin\theta`$ from the pin. Step 2 about the pin gives $`I_P\, \ddot\theta = -m g d \sin\theta`$, where $`\ddot\theta`$ is the angular acceleration of the swing. For small swings $`\sin\theta \approx \theta`$, the motion is a pure oscillation, and one full swing takes
 
-$$T = 2\pi \sqrt{\frac{I_P}{m g d}}.$$
+$`\displaystyle T = 2\pi \sqrt{\frac{I_P}{m g d}}.`$
 
-Turned round, a stopwatch gives $I_P = mgd\,(T/2\pi)^2$, and Step 4 gives $I = I_P - md^2$. That is how odd-shaped parts, such as a connecting rod, are measured. The small-swing step is the weak point: see When it holds.
+Turned round, a stopwatch gives $`I_P = mgd\,(T/2\pi)^2`$, and Step 4 gives $`I = I_P - md^2`$. That is how odd-shaped parts, such as a connecting rod, are measured. The small-swing step is the weak point: see When it holds.
 
 </details>
 
@@ -116,20 +126,20 @@ Turned round, a stopwatch gives $I_P = mgd\,(T/2\pi)^2$, and Step 4 gives $I = I
 
 ## Worked numbers, by hand
 
-The flywheel, $m = 12$ kg, $R = 0.15$ m, spun to 3000 rpm by a steady 5 N m.
+The flywheel, $`m = 12`$ kg, $`R = 0.15`$ m, spun to 3000 rpm by a steady 5 N m.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| spin speed $\omega$ | $3000 \times 2\pi / 60$ | 314.159 rad/s |
-| moment of inertia $I$ | $\tfrac12 \times 12 \times 0.15^2$ | 0.135000 kg m^2 |
-| angular momentum $L$ | $0.135 \times 314.159$ | 42.412 kg m^2/s |
-| angular acceleration $\alpha$ | $5 / 0.135$ | 37.037 rad/s^2 |
-| energy stored $E$ | $\tfrac12 \times 0.135 \times 314.159^2$ | 6662.0 J = 1.851 Wh (watt-hours; 1 Wh = 3600 J) |
-| turns during spin-up | $\tfrac12 \omega t / 2\pi$ | 212.1 |
-| work done by the motor | $5 \times$ angle turned | 6662.0 J |
-| moment of inertia about the pin $I_P$ | $0.135 + 12 \times 0.12^2$ | 0.307800 kg m^2 |
-| one swing on the pin $T$ | $2\pi\sqrt{0.3078 / (12 \times 9.80665 \times 0.12)}$ | 0.9276 s |
-| **spin-up time** $t = L/\tau$ | $42.412 / 5$ | **8.482 s** |
+| spin speed $`\omega`$ | $`3000 \times 2\pi / 60`$ | 314.159 rad/s |
+| moment of inertia $`I`$ | $`\tfrac12 \times 12 \times 0.15^2`$ | 0.135000 kg m^2 |
+| angular momentum $`L`$ | $`0.135 \times 314.159`$ | 42.412 kg m^2/s |
+| angular acceleration $`\alpha`$ | $`5 / 0.135`$ | 37.037 rad/s^2 |
+| energy stored $`E`$ | $`\tfrac12 \times 0.135 \times 314.159^2`$ | 6662.0 J = 1.851 Wh (watt-hours; 1 Wh = 3600 J) |
+| turns during spin-up | $`\tfrac12 \omega t / 2\pi`$ | 212.1 |
+| work done by the motor | $`5 \times`$ angle turned | 6662.0 J |
+| moment of inertia about the pin $`I_P`$ | $`0.135 + 12 \times 0.12^2`$ | 0.307800 kg m^2 |
+| one swing on the pin $`T`$ | $`2\pi\sqrt{0.3078 / (12 \times 9.80665 \times 0.12)}`$ | 0.9276 s |
+| **spin-up time** $`t = L/\tau`$ | $`42.412 / 5`$ | **8.482 s** |
 
 So a 5 N m motor needs 8.482 s to bring the disc to 3000 rpm, and the disc then holds 6662.0 J, the same as the work the motor put in. That is 1.851 Wh, small for storage, which is why storage flywheels spin far faster: energy grows as the square of speed.
 
@@ -137,18 +147,18 @@ So a 5 N m motor needs 8.482 s to bring the disc to 3000 rpm, and the disc then 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| rpm put in where rad/s belongs | $E$ = 607500 J (right: 6662.0 J) | rpm counts turns per minute; $\omega$ must be radians per second |
-| all the mass treated as sitting at the rim, $I = mR^2$ | $I$ = 0.270 kg m^2, spin-up 16.96 s, $E$ = 13324 J | a solid disc has most of its steel well inside the rim |
-| diameter used for radius | $I$ = 0.540 kg m^2 | $R$ is squared, so the error is squared too |
-| pin swing worked out with $I$, not $I_P$ | 0.6143 s (right: 0.9276 s) | the disc turns about the pin, not about its centre |
-| $I$ worked back from a 60-degree swing | 0.1817 kg m^2, 34.6% high | the swing formula is for small angles only |
+| rpm put in where rad/s belongs | $`E`$ = 607500 J (right: 6662.0 J) | rpm counts turns per minute; $`\omega`$ must be radians per second |
+| all the mass treated as sitting at the rim, $`I = mR^2`$ | $`I`$ = 0.270 kg m^2, spin-up 16.96 s, $`E`$ = 13324 J | a solid disc has most of its steel well inside the rim |
+| diameter used for radius | $`I`$ = 0.540 kg m^2 | $`R`$ is squared, so the error is squared too |
+| pin swing worked out with $`I`$, not $`I_P`$ | 0.6143 s (right: 0.9276 s) | the disc turns about the pin, not about its centre |
+| $`I`$ worked back from a 60-degree swing | 0.1817 kg m^2, 34.6% high | the swing formula is for small angles only |
 | clutch worked out by keeping energy | 2121.3 rpm (right: 1500.0 rpm) | the slipping clutch makes heat; only angular momentum is kept |
 
 ---
 
 ## Spinning it up with a real motor
 
-A real electric motor does not give a steady torque. It pushes hardest at standstill and its torque falls to nothing at its top speed. Take one with $\tau_0 = 10$ N m at standstill and a top speed $\omega_0$ of 4000 rpm, so its torque is $\tau = \tau_0 (1 - \omega/\omega_0)$. Does $\tau = dL/dt$ still give the spin-up time? Yes: it holds at every instant, whatever the torque is doing.
+A real electric motor does not give a steady torque. It pushes hardest at standstill and its torque falls to nothing at its top speed. Take one with $`\tau_0 = 10`$ N m at standstill and a top speed $`\omega_0`$ of 4000 rpm, so its torque is $`\tau = \tau_0 (1 - \omega/\omega_0)`$. Does $`\tau = dL/dt`$ still give the spin-up time? Yes: it holds at every instant, whatever the torque is doing.
 
 ### One spin-up, two seconds at a time
 
@@ -172,7 +182,7 @@ t 6.00 s  ██████████████                            
 t 7.84 s  ██████████                                2.50 N m
 ```
 
-The equation $I\, d\omega/dt = \tau_0 (1 - \omega/\omega_0)$ has the solution $\omega = \omega_0 (1 - e^{-t/t_c})$ with time constant $t_c = I\omega_0/\tau_0 = 5.655$ s. Setting $\omega$ to 3000 rpm gives $t = t_c \ln 4 = 7.839$ s, matching the step-by-step simulation. And the work the motor did, added up along the way, is again 6662.0 J: the energy stored depends only on the final speed, not on how the motor got there.
+The equation $`I\, d\omega/dt = \tau_0 (1 - \omega/\omega_0)`$ has the solution $`\omega = \omega_0 (1 - e^{-t/t_c})`$ with time constant $`t_c = I\omega_0/\tau_0 = 5.655`$ s. Setting $`\omega`$ to 3000 rpm gives $`t = t_c \ln 4 = 7.839`$ s, matching the step-by-step simulation. And the work the motor did, added up along the way, is again 6662.0 J: the energy stored depends only on the final speed, not on how the motor got there.
 
 ### Both motors on one chart
 
@@ -192,7 +202,7 @@ First line (orange): the steady 5 N m motor, a straight line to 3000 rpm at 8.48
 
 ## Code, from first principles, and it actually runs
 
-The script takes four roads. The moment of inertia comes from the closed form $\tfrac12 mR^2$, from 1000 thin rings added up, and from brute force: the disc filled with tiny boxes, each box's mass times its squared distance added up, at box sides from 10 mm down to 1 mm. The same boxes, measured from the pin, check the shift rule. Then an RK4 simulation (the four-stage step-by-step solver of [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) spins the disc up under both motors and adds up the motor's work, swings it on the pin at 5 and 60 degrees, and slips the clutch until the two discs lock. Every number on the card is printed below.
+The script takes four roads. The moment of inertia comes from the closed form $`\tfrac12 mR^2`$, from 1000 thin rings added up, and from brute force: the disc filled with tiny boxes, each box's mass times its squared distance added up, at box sides from 10 mm down to 1 mm. The same boxes, measured from the pin, check the shift rule. Then an RK4 simulation (the four-stage step-by-step solver of [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) spins the disc up under both motors and adds up the motor's work, swings it on the pin at 5 and 60 degrees, and slips the clutch until the two discs lock. Every number on the card is printed below.
 
 ### Python
 
@@ -565,10 +575,10 @@ The box sums wobble on the way down (0.138484, 0.135047, 0.135314, 0.135008 kg m
 
 Lean proves the shift rule, the solid-disc value and the clutch result, for every body and value meeting each bullet's conditions.
 
-- Suppose a body of any shape has its centre of mass on the spin axis, so both first moments, in $x$ and $y$, are zero. Then about a parallel axis a distance $d$ away, $I_P = I + md^2$.
-- Take a solid disc of radius $R$ and thickness $h$ with uniform density $\rho$. Then its moment of inertia about its own axis is $\tfrac12 mR^2$, where $m$ is its mass.
-- Suppose a flywheel spinning at $\omega$ locks to an identical still disc, and total angular momentum is kept. Then the pair turns at $\omega/2$, and exactly half the starting energy becomes heat.
-- Take the card's flywheel: 12 kg, radius 0.15 m, pin 0.12 m away. Then Lean's exact sums give $I$ = 0.135 kg m^2 and $I_P$ = 0.3078 kg m^2.
+- Suppose a body of any shape has its centre of mass on the spin axis, so both first moments, in $`x`$ and $`y`$, are zero. Then about a parallel axis a distance $`d`$ away, $`I_P = I + md^2`$.
+- Take a solid disc of radius $`R`$ and thickness $`h`$ with uniform density $`\rho`$. Then its moment of inertia about its own axis is $`\tfrac12 mR^2`$, where $`m`$ is its mass.
+- Suppose a flywheel spinning at $`\omega`$ locks to an identical still disc, and total angular momentum is kept. Then the pair turns at $`\omega/2`$, and exactly half the starting energy becomes heat.
+- Take the card's flywheel: 12 kg, radius 0.15 m, pin 0.12 m away. Then Lean's exact sums give $`I`$ = 0.135 kg m^2 and $`I_P`$ = 0.3078 kg m^2.
 
 The bench swing, the motor runs and the other numbers, such as 8.482 s, are left to the Python and Rust checks.
 
@@ -734,23 +744,23 @@ example : (3000 : ℚ) / 2 = 1500 := by norm_num
 > **Treating moment of inertia as a fixed property of the body, like its mass.** It is not. It belongs to a body *and an axis*. The same 12 kg disc has 0.135000 kg m^2 about its axle and 0.307800 kg m^2 about the pin 0.12 m away. Use the axle figure for the swing and the period comes out 0.6143 s instead of 0.9276 s.
 >
 > Smaller traps:
-> - **rpm in a formula that wants radians per second.** The energy comes out 607500 J instead of 6662.0 J. Convert first: multiply rpm by $2\pi/60$.
-> - **Diameter for radius.** $I$ comes out 0.540 kg m^2, four times too big, because the radius is squared.
+> - **rpm in a formula that wants radians per second.** The energy comes out 607500 J instead of 6662.0 J. Convert first: multiply rpm by $`2\pi/60`$.
+> - **Diameter for radius.** $`I`$ comes out 0.540 kg m^2, four times too big, because the radius is squared.
 > - **Keeping energy when two spinning parts lock together.** The clutch gives 2121.3 rpm that way; the right answer, from angular momentum, is 1500.0 rpm. Any slipping contact makes heat.
-> - **Trusting a big swing.** The bench formula is for small angles. A 60-degree release makes the measured $I$ 0.1817 kg m^2, 34.6% high, and the shift rule then subtracts a correct $md^2$ from a wrong $I_P$, which makes the error a bigger share of the answer, not a smaller one.
+> - **Trusting a big swing.** The bench formula is for small angles. A 60-degree release makes the measured $`I`$ 0.1817 kg m^2, 34.6% high, and the shift rule then subtracts a correct $`md^2`$ from a wrong $`I_P`$, which makes the error a bigger share of the answer, not a smaller one.
 
 ---
 
 ## Where you meet it in real life
 
-- **Flywheel energy storage.** Energy goes in as $\tfrac12 I\omega^2$ and comes back out through a motor run as a generator. Because energy rises as the square of speed, storage units use strong composite rims spun many times faster than our disc, which holds only 1.851 Wh.
+- **Flywheel energy storage.** Energy goes in as $`\tfrac12 I\omega^2`$ and comes back out through a motor run as a generator. Because energy rises as the square of speed, storage units use strong composite rims spun many times faster than our disc, which holds only 1.851 Wh.
 - **Car engines.** The pistons push in pulses; a flywheel on the crankshaft soaks up each pulse and hands it back between them, so the shaft turns smoothly.
 - **Clutches.** Every time a car pulls away, a slipping clutch brings two spinning parts to one speed, and part of the energy becomes heat in the clutch plate, as in Step 2.
 - **Satellites.** A reaction wheel inside the craft spins one way and the craft turns the other: no outside torque, so total angular momentum stays the same.
 - **The test bench.** Connecting rods, wheels and propellers are hung on a pin and swung, and the period, small swings only, gives their moment of inertia through the shift rule.
 
 > **Say it back**
-> Moment of inertia is mass weighted by distance squared from the spin axis: one factor of distance from each bit's speed, one from its lever. Torque changes angular momentum, $L = I\omega$, at exactly the rate it is applied, and twists between parts of the body cancel. For a solid disc the integral gives $\tfrac12 mR^2$: 0.135 kg m^2 for our flywheel, which a 5 N m motor brings to 3000 rpm in 8.482 s, storing 6662.0 J. About a parallel axis a distance $d$ from the centre of mass, add $md^2$. When two spinning parts lock together, angular momentum is kept and energy is not.
+> Moment of inertia is mass weighted by distance squared from the spin axis: one factor of distance from each bit's speed, one from its lever. Torque changes angular momentum, $`L = I\omega`$, at exactly the rate it is applied, and twists between parts of the body cancel. For a solid disc the integral gives $`\tfrac12 mR^2`$: 0.135 kg m^2 for our flywheel, which a 5 N m motor brings to 3000 rpm in 8.482 s, storing 6662.0 J. About a parallel axis a distance $`d`$ from the centre of mass, add $`md^2`$. When two spinning parts lock together, angular momentum is kept and energy is not.
 
 ---
 
@@ -763,7 +773,7 @@ example : (3000 : ℚ) / 2 = 1500 := by norm_num
 ## Where this goes next
 
 - [Precession](03-gyroscopes-and-precession.md): what happens when the torque is not along the spin axis. The angular momentum still changes at the rate of the torque, but now it turns sideways.
-- [Lagrangian and Hamiltonian mechanics](04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): write the energies, including $\tfrac12 I\omega^2$, and get the equations of motion without drawing every force.
+- [Lagrangian and Hamiltonian mechanics](04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): write the energies, including $`\tfrac12 I\omega^2`$, and get the equations of motion without drawing every force.
 - [Vibration modes](06-vibration-modes-and-resonance.md): the bench swing is one mass ringing at one frequency; connected masses and springs ring in several shapes at several frequencies, and a turning part enters those equations through its moment of inertia.
 
 This card spun the disc about one fixed axis. The question it leaves open is what a body does when it is free to tumble about all three directions at once.
@@ -776,5 +786,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - OpenStax. *University Physics Volume 1*, section 10.5, "Calculating Moments of Inertia". [OpenStax page](https://openstax.org/books/university-physics-volume-1/pages/10-5-calculating-moments-of-inertia). Moment of inertia as an integral, the solid disc, and the parallel-axis theorem.
 - OpenStax. *University Physics Volume 1*, section 11.2, "Angular Momentum". [OpenStax page](https://openstax.org/books/university-physics-volume-1/pages/11-2-angular-momentum). Net external torque as the rate of change of angular momentum for a system of particles.
-- Bolund, Björn, Hans Bernhoff, and Mats Leijon. "Flywheel energy and power storage systems." *Renewable and Sustainable Energy Reviews* 11, no. 2 (2007): 235–258. [doi:10.1016/j.rser.2005.01.004](https://doi.org/10.1016/j.rser.2005.01.004). How flywheels store energy as $\tfrac12 I\omega^2$, and why rim speed limits them.
+- Bolund, Björn, Hans Bernhoff, and Mats Leijon. "Flywheel energy and power storage systems." *Renewable and Sustainable Energy Reviews* 11, no. 2 (2007): 235–258. [doi:10.1016/j.rser.2005.01.004](https://doi.org/10.1016/j.rser.2005.01.004). How flywheels store energy as $`\tfrac12 I\omega^2`$, and why rim speed limits them.
 - NIST. *CODATA Value: standard acceleration of gravity*. [NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gn). The conventional value 9.80665 m/s^2 used for the bench swing.

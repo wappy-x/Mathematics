@@ -35,55 +35,63 @@ Exercise happens on exactly the same endings whichever route is taken. Only the 
 
 ## The formula
 
-Write $U_0$ for the price today of one unit of account and $U_T$ for its price on the payment date: one dollar in the bank, one share, one bond, whatever has been chosen. Textbooks call that asset the **numeraire**, French for unit of account, and give it the letter N; this card writes $U_t$, because $N$ already means the bell-curve area here. Write $E^{U}[\,\cdot\,]$ for an average taken with the unit's own weights, and $V_0$, $V_T$ for the contract's dollar price today and its dollar payoff at the end.
+Write $`U_0`$ for the price today of one unit of account and $`U_T`$ for its price on the payment date: one dollar in the bank, one share, one bond, whatever has been chosen. Textbooks call that asset the **numeraire**, French for unit of account, and give it the letter N; this card writes $`U_t`$, because $`N`$ already means the bell-curve area here. Write $`E^{U}[\,\cdot\,]`$ for an average taken with the unit's own weights, and $`V_0`$, $`V_T`$ for the contract's dollar price today and its dollar payoff at the end.
 
-$$\frac{V_0}{U_0} \;=\; E^{U}\!\left[\frac{V_T}{U_T}\right]$$
+```math
+\frac{V_0}{U_0} \;=\; E^{U}\!\left[\frac{V_T}{U_T}\right]
+```
 
 **Read it aloud:** the contract's price counted in units today is the average of its payoff counted in units at the end, weighted the unit's way.
 
 Weighted the unit's way means this. Take the bank's weight on an ending and multiply it by
 
-$$L \;=\; \frac{U_T/U_0}{B_T/B_0},$$
+```math
+L \;=\; \frac{U_T/U_0}{B_T/B_0},
+```
 
-the factor by which the unit outgrew the bank account on that ending. Call $L$ the **tilt**. Endings where the unit did well count for more; endings where it did badly count for less. Nothing else changes.
+the factor by which the unit outgrew the bank account on that ending. Call $`L`$ the **tilt**. Endings where the unit did well count for more; endings where it did badly count for less. Nothing else changes.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_t$, $S_T$ | Acme's price: today, at any date, and at the end | 100.00 today | rises: more to receive, so the call costs more |
-| $K$ | the **strike**, the price the call may buy at | 100.00 | rises: the call costs less, and both exercise chances fall |
-| $T$ | time to the payment date, in **years** | 1 | rises: the two sets of odds pull further apart |
-| $r$ | the **bank rate**, continuously compounded | 5% | rises: the bank unit grows faster, so the share's tilt shrinks |
-| $q$ | the **dividend yield** Acme pays out each year | 2% | rises: more shares must be bought to keep the share unit funded |
-| $\sigma$ | **volatility**, how jumpy Acme is. Say "sigma". | 20% | rises: the gap between 0.519939 and 0.598706 widens |
-| $N(x)$ | the **bell-curve area** to the left of x: a chance between 0 and 1 | $N(0.050000)$ is 0.519939 | rises with x |
-| $d_1$ and $d_2$ | how far Acme sits from the strike in wiggle units, counted the share's way and the bank's way | 0.250000 and 0.050000 | both rise: exercise looks likelier under either set of odds |
-| $P(t,T)$, $A(t)$ | the bond paying one dollar at the date $T$; the annuity, one such bond per coupon date | $P(0,1)$ is 0.951229, $A(0)$ is 1.765545 | — |
-| $U_t$, $U_0$, $U_T$, $B_t$, $B_T$ | the chosen unit's price, today and at the end; the bank account is one such unit | one share: 100.00 today | — |
-| $V_t$, $V_0$, $V_T$ | the contract's price in dollars, today and at the end | 9.227006 today | — |
-| $L$ | the **tilt**: how much the unit outgrew the bank on an ending, and so the multiplier on that ending's weight | 0.582267 where Acme ends at 60 | rises: that ending counts for more |
-| $F$ | the **forward price**: what Acme can be locked in at for delivery at the end | 103.045453 | the tilt equals 1.000000 exactly at $F$ |
+| $`S`$, $`S_t`$, $`S_T`$ | Acme's price: today, at any date, and at the end | 100.00 today | rises: more to receive, so the call costs more |
+| $`K`$ | the **strike**, the price the call may buy at | 100.00 | rises: the call costs less, and both exercise chances fall |
+| $`T`$ | time to the payment date, in **years** | 1 | rises: the two sets of odds pull further apart |
+| $`r`$ | the **bank rate**, continuously compounded | 5% | rises: the bank unit grows faster, so the share's tilt shrinks |
+| $`q`$ | the **dividend yield** Acme pays out each year | 2% | rises: more shares must be bought to keep the share unit funded |
+| $`\sigma`$ | **volatility**, how jumpy Acme is. Say "sigma". | 20% | rises: the gap between 0.519939 and 0.598706 widens |
+| $`N(x)`$ | the **bell-curve area** to the left of x: a chance between 0 and 1 | $`N(0.050000)`$ is 0.519939 | rises with x |
+| $`d_1`$ and $`d_2`$ | how far Acme sits from the strike in wiggle units, counted the share's way and the bank's way | 0.250000 and 0.050000 | both rise: exercise looks likelier under either set of odds |
+| $`P(t,T)`$, $`A(t)`$ | the bond paying one dollar at the date $`T`$; the annuity, one such bond per coupon date | $`P(0,1)`$ is 0.951229, $`A(0)`$ is 1.765545 | — |
+| $`U_t`$, $`U_0`$, $`U_T`$, $`B_t`$, $`B_T`$ | the chosen unit's price, today and at the end; the bank account is one such unit | one share: 100.00 today | — |
+| $`V_t`$, $`V_0`$, $`V_T`$ | the contract's price in dollars, today and at the end | 9.227006 today | — |
+| $`L`$ | the **tilt**: how much the unit outgrew the bank on an ending, and so the multiplier on that ending's weight | 0.582267 where Acme ends at 60 | rises: that ending counts for more |
+| $`F`$ | the **forward price**: what Acme can be locked in at for delivery at the end | 103.045453 | the tilt equals 1.000000 exactly at $`F`$ |
 
 Three units carry this card. Each is written out as a price:
 
-$$U_t = e^{qt}S_t, \qquad U_t = P(t,T), \qquad U_t = P(t,T_1) + \dots + P(t,T_n).$$
+```math
+U_t = e^{qt}S_t, \qquad U_t = P(t,T), \qquad U_t = P(t,T_1) + \dots + P(t,T_n).
+```
 
-The first is one Acme share with its dividends reinvested: hold $e^{qt}$ shares and the payout exactly funds the extra shares, so nothing leaks out. The second is the bond that pays one dollar at the date $T$, written $P(t,T)$; on that date it is worth exactly 1, which makes the division at the end disappear. The third is a **swap annuity**: one bond per coupon date of a swap's fixed leg, here one coupon a year, so the bundle is worth $A(t)$ and pays a dollar on each of those dates.
+The first is one Acme share with its dividends reinvested: hold $`e^{qt}`$ shares and the payout exactly funds the extra shares, so nothing leaks out. The second is the bond that pays one dollar at the date $`T`$, written $`P(t,T)`$; on that date it is worth exactly 1, which makes the division at the end disappear. The third is a **swap annuity**: one bond per coupon date of a swap's fixed leg, here one coupon a year, so the bundle is worth $`A(t)`$ and pays a dollar on each of those dates.
 
 The two distances, unchanged from [Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md):
 
-$$d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}$$
+```math
+d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}
+```
 
-One **wiggle unit** is $\sigma\sqrt{T}$, how far Acme's price typically travels over the whole wait: 20% here. So $d_2$ counts how many wiggle units of room Acme has above the strike, reckoned in the bank's world, and $d_1$ is one wiggle unit more. Step 4 explains where that extra unit comes from.
+One **wiggle unit** is $`\sigma\sqrt{T}`$, how far Acme's price typically travels over the whole wait: 20% here. So $`d_2`$ counts how many wiggle units of room Acme has above the strike, reckoned in the bank's world, and $`d_1`$ is one wiggle unit more. Step 4 explains where that extra unit comes from.
 
 ### When it holds
 
-- **The unit's price stays strictly positive on every ending, up to the payment date.** The formula divides by $U_T$. A bond is worth nothing the day after it redeems, so it can only be the unit for money paid on or before its own maturity.
+- **The unit's price stays strictly positive on every ending, up to the payment date.** The formula divides by $`U_T`$. A bond is worth nothing the day after it redeems, so it can only be the unit for money paid on or before its own maturity.
 - **The unit is traded and funded: nothing leaks out of it.** A share paying a 2% dividend leaks. Reinvest the dividends and it stops leaking; skip that and the weights add to 0.980199 instead of 1.000000, so they are not odds at all.
 - **The unit's price divided by the bank account is a genuine fair bet under the bank's odds**, not merely free of drift. The tilt has to average exactly one. Positive quantities exist that drift nowhere and still average less than they started at, and those cannot be units.
 - **There are bank odds to begin with**, which is what the no-arbitrage argument buys ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Changing units rearranges an average; it cannot conjure a price where none exists.
 - **No hedge falls out of this.** The identity moves arithmetic between the payoff and the weights. What to hold, and when, is a separate claim ([Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md)).
 
-**Conventions verified 19 Sep 2026:** $r$ and $q$ are continuously compounded, $T$ counts calendar years, and the swap in Step 6 pays one fixed coupon a year. Real quotes carry day-count and compounding conventions that differ by market and do get changed; convert before substituting.
+**Conventions verified 19 Sep 2026:** $`r`$ and $`q`$ are continuously compounded, $`T`$ counts calendar years, and the swap in Step 6 pays one fixed coupon a year. Real quotes carry day-count and compounding conventions that differ by market and do get changed; convert before substituting.
 
 ---
 
@@ -103,21 +111,25 @@ The tilt makes them. On the first ending the asset went from 3 to 2 while the ba
 
 ### Step 1: what counts as a unit
 
-Any asset whose price is strictly positive, which can actually be bought, and out of which nothing leaks before the payment date. The bank account qualifies. A share qualifies once its dividends are reinvested, which is why the share unit is $e^{qt}S_t$ and not $S_t$. A bond qualifies up to its own maturity. A fixed bundle of bonds qualifies, which is how an annuity sneaks in.
+Any asset whose price is strictly positive, which can actually be bought, and out of which nothing leaks before the payment date. The bank account qualifies. A share qualifies once its dividends are reinvested, which is why the share unit is $`e^{qt}S_t`$ and not $`S_t`$. A bond qualifies up to its own maturity. A fixed bundle of bonds qualifies, which is how an annuity sneaks in.
 
 ### Step 2: the tilt, and why it averages one
 
-Under the bank's odds, every traded asset divided by the bank account is a fair bet: that is what those odds were built to do ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Apply it to the unit itself. The average of $U_T/B_T$ is $U_0/B_0$, so the average of the tilt
+Under the bank's odds, every traded asset divided by the bank account is a fair bet: that is what those odds were built to do ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Apply it to the unit itself. The average of $`U_T/B_T`$ is $`U_0/B_0`$, so the average of the tilt
 
-$$L = \frac{U_T/U_0}{B_T/B_0}$$
+```math
+L = \frac{U_T/U_0}{B_T/B_0}
+```
 
 is exactly one. That single fact is what lets the tilted weights be odds at all: they are non-negative, and they add to one. The code checks it directly — the tilt for the share unit averages 1.000000 over the whole bell curve.
 
 ### Step 3: the theorem, in one line of algebra
 
-The bank-unit rule says the price today is the payoff divided by the bank account, averaged with the bank's odds, times the bank's price today: $V_0 = B_0\,E[V_T/B_T]$. Now put the tilt into the unit-flavoured average and cancel:
+The bank-unit rule says the price today is the payoff divided by the bank account, averaged with the bank's odds, times the bank's price today: $`V_0 = B_0\,E[V_T/B_T]`$. Now put the tilt into the unit-flavoured average and cancel:
 
-$$U_0\,E^{U}\!\left[\frac{V_T}{U_T}\right] = U_0\,E\!\left[L\,\frac{V_T}{U_T}\right] = U_0\,E\!\left[\frac{U_T B_0}{U_0 B_T}\cdot\frac{V_T}{U_T}\right] = B_0\,E\!\left[\frac{V_T}{B_T}\right] = V_0 .$$
+```math
+U_0\,E^{U}\!\left[\frac{V_T}{U_T}\right] = U_0\,E\!\left[L\,\frac{V_T}{U_T}\right] = U_0\,E\!\left[\frac{U_T B_0}{U_0 B_T}\cdot\frac{V_T}{U_T}\right] = B_0\,E\!\left[\frac{V_T}{B_T}\right] = V_0 .
+```
 
 The unit's price at the end cancels against itself. Every step is a rearrangement; no new assumption enters. That is the whole theorem.
 
@@ -126,10 +138,12 @@ The unit's price at the end cancels against itself. Every step is a rearrangemen
 
 **The tilted weights are a probability.** The tilt is non-negative because both prices are positive, and Step 2 gives average one. So assigning each ending its old weight times its tilt defines odds that sum to one. They are also *equivalent* to the bank's: because the tilt is strictly positive, an ending impossible under one set is impossible under the other, and no ending is quietly deleted. That is what keeps the two descriptions about the same market.
 
-**Averages transfer.** For any quantity X known at the end, $E^{U}[X] = E[L\,X]$. On a finite list of endings that is the definition rearranged; in general it holds for events first, then for non-negative X by increasing limits, then for signed X by splitting it in two. The last step needs $E[L\,|X|]$ finite, which for a call is just: the discounted payoff has a finite average.
+**Averages transfer.** For any quantity X known at the end, $`E^{U}[X] = E[L\,X]`$. On a finite list of endings that is the definition rearranged; in general it holds for events first, then for non-negative X by increasing limits, then for signed X by splitting it in two. The last step needs $`E[L\,|X|]`$ finite, which for a call is just: the discounted payoff has a finite average.
 
-**At a later date.** Nothing above used the starting date. At a date before the end, the tilt's average given what is known by then is $Z = (U_t/U_0)/(B_t/B_0)$, and the conditional version of the identity divides by it:
-$$E^{U}\!\left[\frac{V_T}{U_T}\,\middle|\,\text{what is known}\right] = \frac{E\left[L\,V_T/U_T \mid \text{what is known}\right]}{Z} = \frac{V_t}{U_t} .$$
+**At a later date.** Nothing above used the starting date. At a date before the end, the tilt's average given what is known by then is $`Z = (U_t/U_0)/(B_t/B_0)`$, and the conditional version of the identity divides by it:
+
+$`\displaystyle E^{U}\!\left[\frac{V_T}{U_T}\,\middle|\,\text{what is known}\right] = \frac{E\left[L\,V_T/U_T \mid \text{what is known}\right]}{Z} = \frac{V_t}{U_t} .`$
+
 The denominator is what makes the tilted odds consistent through time rather than only at the start. Its positivity is why the unit must stay positive on every ending, not just on average.
 
 </details>
@@ -138,7 +152,9 @@ The denominator is what makes the tilted odds consistent through time rather tha
 
 Take one Acme share with dividends reinvested as the unit. Its tilt works out to Acme's final price divided by the forward price:
 
-$$L = e^{-(r-q)T}\,\frac{S_T}{S} = \frac{S_T}{F} .$$
+```math
+L = e^{-(r-q)T}\,\frac{S_T}{S} = \frac{S_T}{F} .
+```
 
 Here is that multiplier, ending by ending. One block is 0.04; 1.00 means the weight does not move.
 
@@ -153,7 +169,7 @@ Acme ends at   weight multiplier under share odds
 
 The crossover is the forward price, 103.045453, not today's 100. Above it endings gain weight, below it they lose. That is the whole mechanism: a share is not a fixed number of dollars, and it is worth most in exactly the futures where the call pays off.
 
-Now count the exercise chance. Under the bank's odds Acme finishes above 100 with chance 0.519939, and that is $N(d_2)$. Multiply each ending's weight by the tilt above, add over the same endings, and the chance is 0.598706, which is $N(d_1)$. Same event, two sets of odds, and the second is bigger because the tilt favours exactly the endings where the event happens. An 801-step tree, which contains no bell curve at all, gets 0.519946 and 0.598737 — the same two numbers, coarsely.
+Now count the exercise chance. Under the bank's odds Acme finishes above 100 with chance 0.519939, and that is $`N(d_2)`$. Multiply each ending's weight by the tilt above, add over the same endings, and the chance is 0.598706, which is $`N(d_1)`$. Same event, two sets of odds, and the second is bigger because the tilt favours exactly the endings where the event happens. An 801-step tree, which contains no bell curve at all, gets 0.519946 and 0.598737 — the same two numbers, coarsely.
 
 Slide Acme's price today and both chances move, never crossing.
 
@@ -167,21 +183,25 @@ xychart-beta
     line [14.33, 22.29, 31.68, 41.82, 51.99, 61.56, 70.07, 77.30, 83.19]
 ```
 
-Upper line: share odds, which is $N(d_1)$. Lower line: bank odds, which is $N(d_2)$. The gap is widest near the strike and closes at both ends, because a call that is nearly certain to pay, or nearly certain not to, leaves the tilt nothing to move.
+Upper line: share odds, which is $`N(d_1)`$. Lower line: bank odds, which is $`N(d_2)`$. The gap is widest near the strike and closes at both ends, because a call that is nearly certain to pay, or nearly certain not to, leaves the tilt nothing to move.
 
 So the Black–Scholes call is one price written half in one unit and half in another. The cash half is the strike, 100 dollars, times the bank-odds chance, discounted by 0.951229. The share half is one share delivered at the end — which costs 0.980199 of a share today, the year's dividends being given up — times the share-odds chance. The picture of the bell curve sliding one wiggle unit to the right is this same tilt, seen as a shift of the curve instead of a reweighting of its endings ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md) carries the curve itself).
 
-The whole option can also be priced in share units in one go: 0.092270 of a share, which at 100 dollars a share is 9.227006. The code does it by brute force, with no $d_1$ and no $d_2$ anywhere in that road.
+The whole option can also be priced in share units in one go: 0.092270 of a share, which at 100 dollars a share is 9.227006. The code does it by brute force, with no $`d_1`$ and no $`d_2`$ anywhere in that road.
 
 ### Step 5: the bond unit, and why it only matters when rates move
 
 Use the bond that pays one dollar at the end. It is worth exactly 1 then, so the payoff needs no division:
 
-$$V_0 = P(0,T)\,E^{T}[V_T].$$
+```math
+V_0 = P(0,T)\,E^{T}[V_T].
+```
 
-Under the bond's own odds, written $E^{T}$ and called the **forward odds**, Acme's average final price is not 100 and not 100 grown at the bank rate. It is the forward price, 103.045453, which the code confirms by integration. The call therefore reads
+Under the bond's own odds, written $`E^{T}`$ and called the **forward odds**, Acme's average final price is not 100 and not 100 grown at the bank rate. It is the forward price, 103.045453, which the code confirms by integration. The call therefore reads
 
-$$V_0 = P(0,T)\bigl[F\,N(d_1) - K\,N(d_2)\bigr],$$
+```math
+V_0 = P(0,T)\bigl[F\,N(d_1) - K\,N(d_2)\bigr],
+```
 
 and it comes out at 9.227006 again. That is the shape the market actually quotes in, and the sibling card takes it up ([Black-76](06-black-76-and-forward-level-pricing.md)).
 
@@ -199,21 +219,21 @@ Use the annuity as the unit. The fixed leg becomes just the rate, with no discou
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year. The unit is one share with dividends reinvested.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year. The unit is one share with dividends reinvested.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | the unit today | one Acme share | 100.00 |
-| the unit at the end | $e^{qT}$ shares, dividends reinvested | 1.020201 shares |
-| the forward price | $100 \times e^{0.05 - 0.02}$ | 103.045453 |
+| the unit at the end | $`e^{qT}`$ shares, dividends reinvested | 1.020201 shares |
+| the forward price | $`100 \times e^{0.05 - 0.02}`$ | 103.045453 |
 | the tilt on an ending | Acme's final price ÷ 103.045453 | 0.582267 at 60, 1.358624 at 140 |
 | the tilt's average | over the whole bell curve | 1.000000 |
-| exercise chance, bank odds | area right of $-d_2$ | 0.519939 |
+| exercise chance, bank odds | area right of $`-d_2`$ | 0.519939 |
 | exercise chance, share odds | the same area, tilted | 0.598706 |
-| $N(d_1)$ for comparison | bell-curve table at 0.250000 | 0.598706 |
+| $`N(d_1)`$ for comparison | bell-curve table at 0.250000 | 0.598706 |
 | the option, counted in share units | tilted average of the payoff in units | 0.092270 |
-| **back to dollars** | $0.092270 \times 100$ | **9.227006** |
-| the same option in bonds | $9.227006 \div 0.951229$ | 9.700084 |
+| **back to dollars** | $`0.092270 \times 100`$ | **9.227006** |
+| the same option in bonds | $`9.227006 \div 0.951229`$ | 9.700084 |
 
 The call is worth 0.0923 of a share, 9.70 bonds, or 9.227006 dollars: one contract, three rulers, and a buyer indifferent between paying in any of them.
 
@@ -222,7 +242,7 @@ The call is worth 0.0923 of a share, 9.70 bonds, or 9.227006 dollars: one contra
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Count in share units, keep the bank's odds | 7.364290 | The endings where the share is expensive are exactly the endings that matter, and they were left underweighted |
-| Read $N(d_1)$ as the chance of exercise in dollars, and use it for both halves | 1.734407 | 0.598706 is the share-odds chance. The dollar-odds chance is 0.519939 |
+| Read $`N(d_1)`$ as the chance of exercise in dollars, and use it for both halves | 1.734407 | 0.598706 is the share-odds chance. The dollar-odds chance is 0.519939 |
 | Leave the tilt unnormalised: divide by today's price instead of the forward | 9.508010 | The weights no longer add to 1.000000, so they are not odds |
 | Discount the share-unit answer a second time | 8.776999 | The unit's price today already is a present value. Nothing is left to discount |
 
@@ -679,12 +699,12 @@ The two outputs match line for line.
 
 Lean proves the theorem, that the tilted weights are odds, and the bond form, on any set of endings.
 
-- Take a strictly positive unit that is a fair bet against the bank, and a contract priced by the bank-unit rule. Then $V_0/U_0 = E^{U}[V_T/U_T]$, where each bank weight is multiplied by the tilt.
+- Take a strictly positive unit that is a fair bet against the bank, and a contract priced by the bank-unit rule. Then $`V_0/U_0 = E^{U}[V_T/U_T]`$, where each bank weight is multiplied by the tilt.
 - Take the same unit. Then the tilted weights add to one, and they rule out exactly the endings the bank's weights rule out.
-- Take as unit the bond worth $P(0,T)$ today and 1 at the end, a fair bet against the bank. Then $V_0 = P(0,T)\,E^{T}[V_T]$.
+- Take as unit the bond worth $`P(0,T)`$ today and 1 at the end, a fair bet against the bank. Then $`V_0 = P(0,T)\,E^{T}[V_T]`$.
 - Exact fractions also confirm Step 0's toy: the bill of 6, the hedge, both tilts, and the wrong bill of 4.5.
 
-The Acme call's numbers, the tree, $N(d_1)$, the swap and the moving curve are left to the Python and Rust checks.
+The Acme call's numbers, the tree, $`N(d_1)`$, the swap and the moving curve are left to the Python and Rust checks.
 
 ```lean
 -- Changing the unit of account: a price counted in any strictly positive unit whose ratio to the bank account is a fair bet equals the average of the payoff in that unit under the bank's odds multiplied by the tilt, and those tilted odds are a probability equivalent to the bank's.
@@ -839,7 +859,7 @@ example : (3 : ℚ) * ((1 / 2) * (0 / 2) + (1 / 2) * (12 / 4)) = 9 / 2 := by nor
 > [!warning]
 > **Changing the unit and keeping the odds.** This is the whole trap, and it is silent: the arithmetic still runs, the answer still looks like a price. Counting the Acme call in share units with the bank's weights gives 7.364290 instead of 9.227006. The unit and the odds are a matched pair. Swap one, swap both.
 >
-> - **Reading $N(d_1)$ as the chance the option finishes in the money.** It is 0.598706, the chance under *share* odds. The dollar-odds chance is 0.519939, and even that is a chance in a pricing world, not a forecast.
+> - **Reading $`N(d_1)`$ as the chance the option finishes in the money.** It is 0.598706, the chance under *share* odds. The dollar-odds chance is 0.519939, and even that is a chance in a pricing world, not a forecast.
 > - **Discounting twice.** In bond units the price is the bond's price today times an undiscounted average. Multiply by a discount factor as well and the Acme call drops to 8.776999.
 > - **Calling the new odds a forecast.** Neither set describes what Acme will do. They are weights that make traded prices come out right, one set per unit.
 > - **Using a unit that pays money out.** The ex-dividend share fails quietly, by the 0.980199 that looks too small to matter. A bond past its maturity, or an annuity past its last coupon, is worth nothing at all, and nothing cannot be a unit.
@@ -857,7 +877,7 @@ example : (3 : ℚ) * ((1 / 2) * (0 / 2) + (1 / 2) * (12 / 4)) = 9 / 2 := by nor
 - **Model families.** Whether the fair-bet quantity is then modelled as lognormal, normal or shifted is a later choice ([Bachelier](07-bachelier-model.md), [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md)).
 
 > **Say it back**
-> A price is a ratio, so the dollar is only one possible unit of account: any strictly positive traded asset that leaks nothing can be the unit. Divide the payoff by the unit's price at the end, average, multiply by the unit's price today — but the average must use that unit's own weights, which are the bank's weights times how much the unit outgrew the bank. They add to one precisely because the unit, measured against the bank, is a fair bet. With one share as the unit the exercise chance is 0.598706, not 0.519939, and that is $N(d_1)$; with the one-year bond Acme's average final price becomes the forward, 103.045453; with an annuity a swap rate becomes a fair bet. The contract never changed; only the ruler did.
+> A price is a ratio, so the dollar is only one possible unit of account: any strictly positive traded asset that leaks nothing can be the unit. Divide the payoff by the unit's price at the end, average, multiply by the unit's price today — but the average must use that unit's own weights, which are the bank's weights times how much the unit outgrew the bank. They add to one precisely because the unit, measured against the bank, is a fair bet. With one share as the unit the exercise chance is 0.598706, not 0.519939, and that is $`N(d_1)`$; with the one-year bond Acme's average final price becomes the forward, 103.045453; with an annuity a swap rate becomes a fair bet. The contract never changed; only the ruler did.
 
 ---
 

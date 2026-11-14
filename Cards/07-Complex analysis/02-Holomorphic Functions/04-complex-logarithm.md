@@ -26,31 +26,37 @@ To scale: 80 units per 1, 0 at (180, 120); 1 at (260.00, 120.00), −1 at (100.0
 
 ## The formula
 
-Notation first, in words. Lower-case $\log z$ is the whole list of logarithms of z, one per floor. $\arg z$ is any angle of z; $\operatorname{Arg} z$, capital A, is the **principal argument**, the one angle in (−π, π]. The real natural log stays $\ln$.
+Notation first, in words. Lower-case $`\log z`$ is the whole list of logarithms of z, one per floor. $`\arg z`$ is any angle of z; $`\mathrm{Arg}\, z`$, capital A, is the **principal argument**, the one angle in (−π, π]. The real natural log stays $`\ln`$.
 
-$$\log z = \ln\lvert z\rvert + i\,(\operatorname{Arg} z + 2\pi k), \qquad k = 0, \pm 1, \pm 2, \dots$$
+```math
+\log z = \ln\lvert z\rvert + i\,(\mathrm{Arg}\, z + 2\pi k), \qquad k = 0, \pm 1, \pm 2, \dots
+```
 
 **Read it aloud:** a logarithm of z is the real log of its length, plus i times its angle, plus any whole number of full turns.
 
-$$\operatorname{Log} z = \ln\lvert z\rvert + i\,\operatorname{Arg} z, \qquad \frac{d}{dz}\operatorname{Log} z = \frac{1}{z}$$
+```math
+\mathrm{Log}\, z = \ln\lvert z\rvert + i\,\mathrm{Arg}\, z, \qquad \frac{d}{dz}\mathrm{Log}\, z = \frac{1}{z}
+```
 
 **Read it aloud:** the principal logarithm takes the ground floor, and off the cut its slope at z is one over z.
 
-$$\operatorname{Log}(zw) = \operatorname{Log} z + \operatorname{Log} w + 2\pi i N, \qquad N \in \{-1, 0, 1\}$$
+```math
+\mathrm{Log}(zw) = \mathrm{Log}\, z + \mathrm{Log}\, w + 2\pi i N, \qquad N \in \{-1, 0, 1\}
+```
 
 **Read it aloud:** the log of a product is the sum of the logs, corrected by at most one full turn.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$, $w$ | points in the plane; two factors. In $e^w$, w = u + iv is an exponent | −1 and −1 | — |
-| $x$, $y$ | real and imaginary parts of z, so z = x + iy | −1 and 0 | — |
-| $u$, $v$ | real and imaginary parts of a logarithm | 0 and π | u stretches, v turns |
-| $\lvert z\rvert$, $\ln$ | length of z; the real natural log | 1; ln 1 = 0 | real part grows |
-| $\arg z$, $\operatorname{Arg} z$ | any angle of z; the one in (−π, π] | π, 3π, −π; π | — |
-| $k$, $N$ | the floor; turns the product law loses | −1, 0, 1; −1 | each step adds 2πi |
-| $\log z$, $\operatorname{Log} z$ | all the logarithms; the principal one | −iπ, iπ, 3iπ; iπ | — |
-| $e$, $i$, $\pi$ | base of natural logs; the quarter turn, i^2 = −1; half a turn | e^(iπ) = −1 | — |
-| $h$ | a small step | 0.001 | quotients drift from their limits |
+| $`z`$, $`w`$ | points in the plane; two factors. In $`e^w`$, w = u + iv is an exponent | −1 and −1 | — |
+| $`x`$, $`y`$ | real and imaginary parts of z, so z = x + iy | −1 and 0 | — |
+| $`u`$, $`v`$ | real and imaginary parts of a logarithm | 0 and π | u stretches, v turns |
+| $`\lvert z\rvert`$, $`\ln`$ | length of z; the real natural log | 1; ln 1 = 0 | real part grows |
+| $`\arg z`$, $`\mathrm{Arg}\, z`$ | any angle of z; the one in (−π, π] | π, 3π, −π; π | — |
+| $`k`$, $`N`$ | the floor; turns the product law loses | −1, 0, 1; −1 | each step adds 2πi |
+| $`\log z`$, $`\mathrm{Log}\, z`$ | all the logarithms; the principal one | −iπ, iπ, 3iπ; iπ | — |
+| $`e`$, $`i`$, $`\pi`$ | base of natural logs; the quarter turn, i^2 = −1; half a turn | e^(iπ) = −1 | — |
+| $`h`$ | a small step | 0.001 | quotients drift from their limits |
 
 ### When it holds
 
@@ -64,13 +70,13 @@ $$\operatorname{Log}(zw) = \operatorname{Log} z + \operatorname{Log} w + 2\pi i 
 
 ### Step 0: the exponential forgets full turns
 
-$e^{w + 2\pi i} = e^w$ for every w. A function sending two inputs to one output has no single undo ([Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)). So undoing $e^w$ gives a list, and a single-valued logarithm must pick one member.
+$`e^{w + 2\pi i} = e^w`$ for every w. A function sending two inputs to one output has no single undo ([Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)). So undoing $`e^w`$ gives a list, and a single-valued logarithm must pick one member.
 
 ### Step 1: solve e^w = z, length and angle separately
 
-Write w = u + iv, with u and v real. Then $e^w = e^u e^{iv}$: length $e^u$, angle v. Two arrows are equal when lengths match and angles differ by whole turns.
+Write w = u + iv, with u and v real. Then $`e^w = e^u e^{iv}`$: length $`e^u`$, angle v. Two arrows are equal when lengths match and angles differ by whole turns.
 
-- **Length:** $e^u = \lvert z\rvert$. The real exponential takes each positive value once, so u = ln |z| ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+- **Length:** $`e^u = \lvert z\rvert`$. The real exponential takes each positive value once, so u = ln |z| ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 - **Angle:** v is any angle of z: Arg z + 2πk, one for each whole number k.
 
 At z = −1: u = ln 1 = 0 and v = π + 2πk. The floors k = −1, 0, 1 give −iπ, iπ, 3iπ.
@@ -95,11 +101,13 @@ To scale: 15 units per 1, 0 at (180, 180). The dots at (180.00, 227.12), (180.00
 
 ### Step 4: the slope of Log is 1/z
 
-Off the cut, Log is continuous and $e^{\operatorname{Log} z} = z$. With a = Log z and b = Log(z + h), the slope quotient is
+Off the cut, Log is continuous and $`e^{\mathrm{Log}\, z} = z`$. With a = Log z and b = Log(z + h), the slope quotient is
 
-$$\frac{\operatorname{Log}(z+h) - \operatorname{Log} z}{h} = \frac{b - a}{e^b - e^a}.$$
+```math
+\frac{\mathrm{Log}(z+h) - \mathrm{Log}\, z}{h} = \frac{b - a}{e^b - e^a}.
+```
 
-As h shrinks, b tends to a by continuity, and the right side tends to one over the slope of $e^w$ at a. That slope is $e^a$ ([The elementary functions](03-exponential-sine-and-cosine-in-the-plane.md)), and $e^a = z$. So the slope is 1/z from every direction: Log is **holomorphic** (it has a complex derivative at every point) on the plane with the cut removed.
+As h shrinks, b tends to a by continuity, and the right side tends to one over the slope of $`e^w`$ at a. That slope is $`e^a`$ ([The elementary functions](03-exponential-sine-and-cosine-in-the-plane.md)), and $`e^a = z`$. So the slope is 1/z from every direction: Log is **holomorphic** (it has a complex derivative at every point) on the plane with the cut removed.
 
 At z = i, Log i = 1.570796i, and the slope quotients with a real step and an imaginary step both give −i, which is 1/i.
 
@@ -108,15 +116,15 @@ At z = i, Log i = 1.570796i, and the slope quotients with a real step and an ima
 
 Off the cut write z = x + iy. Log has real part U = (1/2) ln(x^2 + y^2) and imaginary part V, the principal angle. V is a smooth function with tan V = y/x (or cot V = x/y where x = 0).
 
-Differentiating: $U_x = x/\lvert z\rvert^2$, $U_y = y/\lvert z\rvert^2$, $V_x = -y/\lvert z\rvert^2$, $V_y = x/\lvert z\rvert^2$.
+Differentiating: $`U_x = x/\lvert z\rvert^2`$, $`U_y = y/\lvert z\rvert^2`$, $`V_x = -y/\lvert z\rvert^2`$, $`V_y = x/\lvert z\rvert^2`$.
 
-So $U_x = V_y$ and $U_y = -V_x$: the Cauchy-Riemann equations of [The complex derivative](01-complex-derivative-and-cauchy-riemann.md) hold, with all four partial derivatives continuous. The derivative is $U_x + iV_x = (x - iy)/\lvert z\rvert^2$, which is 1/z.
+So $`U_x = V_y`$ and $`U_y = -V_x`$: the Cauchy-Riemann equations of [The complex derivative](01-complex-derivative-and-cauchy-riemann.md) hold, with all four partial derivatives continuous. The derivative is $`U_x + iV_x = (x - iy)/\lvert z\rvert^2`$, which is 1/z.
 
 </details>
 
 ### Step 5: the product law slips by whole turns
 
-Since $e^{a+b} = e^a e^b$, any logarithm of z plus any logarithm of w is a logarithm of zw. Only the floor goes wrong. Arg z + Arg w lies in (−2π, 2π]; if it leaves (−π, π], Log(zw) pulls it back one full turn, so N is −1 or 1.
+Since $`e^{a+b} = e^a e^b`$, any logarithm of z plus any logarithm of w is a logarithm of zw. Only the floor goes wrong. Arg z + Arg w lies in (−2π, 2π]; if it leaves (−π, π], Log(zw) pulls it back one full turn, so N is −1 or 1.
 
 At z = w = −1 the angles add to 2π. Log 1 = 0, but 2 Log(−1) = 2πi: N = −1. On the ramp, driving once round collects 6.283185i, one floor.
 

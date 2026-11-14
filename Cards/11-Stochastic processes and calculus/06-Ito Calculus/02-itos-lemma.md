@@ -34,54 +34,62 @@ The upper line is the average price, growing at 10 percent a year. The lower lin
 
 ## The formula
 
-Reminders first. $W_t$ is Brownian motion, "the random walk seen from far away", with time $t$ in years; $X_t$ is the value at time $t$ of a moving process. The rule $dX_t = a\,dt + b\,dW_t$ says: in each short slice of time, drift by $a$ times the slice and take a kick of $b$ times the Brownian step. Here $dW_t$ is shorthand for an Ito integral ([The Ito integral](01-ito-integral.md)), never a derivative: the Brownian path has no slope anywhere.
+Reminders first. $`W_t`$ is Brownian motion, "the random walk seen from far away", with time $`t`$ in years; $`X_t`$ is the value at time $`t`$ of a moving process. The rule $`dX_t = a\,dt + b\,dW_t`$ says: in each short slice of time, drift by $`a`$ times the slice and take a kick of $`b`$ times the Brownian step. Here $`dW_t`$ is shorthand for an Ito integral ([The Ito integral](01-ito-integral.md)), never a derivative: the Brownian path has no slope anywhere.
 
-New notation, for a function $f(t, x)$: $f_t$ is its slope in time with $x$ held still, $f_x$ its slope in $x$ with time held still, and $f_{xx}$ the slope of $f_x$ in $x$, the curvature.
+New notation, for a function $`f(t, x)`$: $`f_t`$ is its slope in time with $`x`$ held still, $`f_x`$ its slope in $`x`$ with time held still, and $`f_{xx}`$ the slope of $`f_x`$ in $`x`$, the curvature.
 
-$$df(t, X_t) = \Big(f_t + a\, f_x + \tfrac12\,b^2 f_{xx}\Big)\,dt \;+\; b\, f_x\, dW_t$$
+```math
+df(t, X_t) = \Big(f_t + a\, f_x + \tfrac12\,b^2 f_{xx}\Big)\,dt \;+\; b\, f_x\, dW_t
+```
 
 **Read it aloud:** the function drifts by its time slope, plus its slope times the drift, plus half its curvature times the squared kick size; and it is kicked by its slope times the kick.
 
 In integral form, which is what the shorthand means:
 
-$$f(T, X_T) = f(0, X_0) + \int_0^T \Big(f_t + a f_x + \tfrac12 b^2 f_{xx}\Big)\,dt + \int_0^T b f_x\, dW_t$$
+```math
+f(T, X_T) = f(0, X_0) + \int_0^T \Big(f_t + a f_x + \tfrac12 b^2 f_{xx}\Big)\,dt + \int_0^T b f_x\, dW_t
+```
 
-The quick way to use it: expand to second order, $df = f_t\,dt + f_x\,dX + \tfrac12 f_{xx}\,(dX)^2$, and multiply out $(dX)^2$ with the table $dt \cdot dt = 0$, $dt \cdot dW = 0$, $dW \cdot dW = dt$. The last rule is the quadratic variation of Brownian motion, $[W]_t = t$ ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)), in shorthand.
+The quick way to use it: expand to second order, $`df = f_t\,dt + f_x\,dX + \tfrac12 f_{xx}\,(dX)^2`$, and multiply out $`(dX)^2`$ with the table $`dt \cdot dt = 0`$, $`dt \cdot dW = 0`$, $`dW \cdot dW = dt`$. The last rule is the quadratic variation of Brownian motion, $`[W]_t = t`$ ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)), in shorthand.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_t$, $S_0$ | the share price at time $t$; at the start | $S_0$ = $100 | — |
-| $\mu$ | the share's drift: growth rate of its average, per year | 0.10 | log drift rises one for one |
-| $\sigma$ | the share's volatility: size of its kicks, per square-root year | 0.40 | log drift falls by $\sigma$ times the rise |
-| $t$, $T$, $dt$ | time in years; the horizon; a short slice of time | $T$ = 1 year | middle and average part further |
-| $W_t$, $W_T$, $W_k$, $dW_t$, $dW$ | Brownian motion; at the horizon; at grid point k; its step, shorthand inside an Ito integral | $W_T$ squared is 2.234316 on path 1 | — |
-| $X_t$, $X$, $dX$ | a general Ito process, $dX_t = a\,dt + b\,dW_t$, and its step | $W_t$ ($a = 0$, $b = 1$); the share, with drift $0.10\,S_t$ and kick $0.40\,S_t$ | — |
-| $a$, $b$ | the general process's drift and kick sizes; they may change with time and the path | for the share, $a = \mu S_t$ and $b = \sigma S_t$ | the correction grows with $b^2$ |
-| $f$ | the smooth function applied to the process | $\log x$, or $x^2$ | — |
-| $f_t$, $f_x$, $f_{xx}$ | time slope, space slope, curvature; written $f'$, $f''$ (and $f'''$ for the next slope) when $f$ has no time argument | for $\log x$: 0, $1/x$, $-1/x^2$ | bigger curvature, bigger correction |
-| $[X]_t$ | quadratic variation: the sum of squared steps up to $t$ | $[W]_1$ = 1 | — |
-| $n$, $k$, $\Delta t$, $\Delta W_k$, $y$ | grid steps in a year; which step; one step's length; Brownian step k; one Euler step's relative move | 1024 steps, $\Delta t$ = 1/1024 | smaller error |
-| $R_k$, $M$, $A_n$, $Y_j$, $K$ | proof bookkeeping: Taylor remainder, derivative bound, wobble sum, one wobble, cut-off level | — | — |
-| $N(x)$ | bell-curve area to the left of $x$ | $N(-0.05)$ = 0.480061 | — |
+| $`S_t`$, $`S_0`$ | the share price at time $`t`$; at the start | $`S_0`$ = $100 | — |
+| $`\mu`$ | the share's drift: growth rate of its average, per year | 0.10 | log drift rises one for one |
+| $`\sigma`$ | the share's volatility: size of its kicks, per square-root year | 0.40 | log drift falls by $`\sigma`$ times the rise |
+| $`t`$, $`T`$, $`dt`$ | time in years; the horizon; a short slice of time | $`T`$ = 1 year | middle and average part further |
+| $`W_t`$, $`W_T`$, $`W_k`$, $`dW_t`$, $`dW`$ | Brownian motion; at the horizon; at grid point k; its step, shorthand inside an Ito integral | $`W_T`$ squared is 2.234316 on path 1 | — |
+| $`X_t`$, $`X`$, $`dX`$ | a general Ito process, $`dX_t = a\,dt + b\,dW_t`$, and its step | $`W_t`$ ($`a = 0`$, $`b = 1`$); the share, with drift $`0.10\,S_t`$ and kick $`0.40\,S_t`$ | — |
+| $`a`$, $`b`$ | the general process's drift and kick sizes; they may change with time and the path | for the share, $`a = \mu S_t`$ and $`b = \sigma S_t`$ | the correction grows with $`b^2`$ |
+| $`f`$ | the smooth function applied to the process | $`\log x`$, or $`x^2`$ | — |
+| $`f_t`$, $`f_x`$, $`f_{xx}`$ | time slope, space slope, curvature; written $`f'`$, $`f''`$ (and $`f'''`$ for the next slope) when $`f`$ has no time argument | for $`\log x`$: 0, $`1/x`$, $`-1/x^2`$ | bigger curvature, bigger correction |
+| $`[X]_t`$ | quadratic variation: the sum of squared steps up to $`t`$ | $`[W]_1`$ = 1 | — |
+| $`n`$, $`k`$, $`\Delta t`$, $`\Delta W_k`$, $`y`$ | grid steps in a year; which step; one step's length; Brownian step k; one Euler step's relative move | 1024 steps, $`\Delta t`$ = 1/1024 | smaller error |
+| $`R_k`$, $`M`$, $`A_n`$, $`Y_j`$, $`K`$ | proof bookkeeping: Taylor remainder, derivative bound, wobble sum, one wobble, cut-off level | — | — |
+| $`N(x)`$ | bell-curve area to the left of $`x`$ | $`N(-0.05)`$ = 0.480061 | — |
 
 Two worked uses carry the card.
 
-For $f(x) = x^2$ on $X_t = W_t$ (so $a = 0$, $b = 1$): $f_x = 2x$, $f_{xx} = 2$, and
+For $`f(x) = x^2`$ on $`X_t = W_t`$ (so $`a = 0`$, $`b = 1`$): $`f_x = 2x`$, $`f_{xx} = 2`$, and
 
-$$d(W_t^2) = 2W_t\,dW_t + dt, \qquad W_T^2 = 2\int_0^T W_t\,dW_t + T.$$
+```math
+d(W_t^2) = 2W_t\,dW_t + dt, \qquad W_T^2 = 2\int_0^T W_t\,dW_t + T.
+```
 
-For $f(x) = \log x$ on the share, $dS_t = \mu S_t\,dt + \sigma S_t\,dW_t$: the drift size is $a = \mu S_t$ and the kick size is $b = \sigma S_t$, so $(dS_t)^2 = \sigma^2 S_t^2\,dt$, and
+For $`f(x) = \log x`$ on the share, $`dS_t = \mu S_t\,dt + \sigma S_t\,dW_t`$: the drift size is $`a = \mu S_t`$ and the kick size is $`b = \sigma S_t`$, so $`(dS_t)^2 = \sigma^2 S_t^2\,dt`$, and
 
-$$d(\log S_t) = \frac{dS_t}{S_t} - \frac12\,\frac{\sigma^2 S_t^2}{S_t^2}\,dt = \Big(\mu - \tfrac12\sigma^2\Big)\,dt + \sigma\,dW_t.$$
+```math
+d(\log S_t) = \frac{dS_t}{S_t} - \frac12\,\frac{\sigma^2 S_t^2}{S_t^2}\,dt = \Big(\mu - \tfrac12\sigma^2\Big)\,dt + \sigma\,dW_t.
+```
 
-Integrating gives the share's price in closed form: $S_T = S_0 \exp\big((\mu - \tfrac12\sigma^2)T + \sigma W_T\big)$.
+Integrating gives the share's price in closed form: $`S_T = S_0 \exp\big((\mu - \tfrac12\sigma^2)T + \sigma W_T\big)`$.
 
 ### When it holds
 
-- **$f$ has a continuous curvature in $x$ and a continuous time slope.** At a kink the curvature is a spike: for $f(x) = |x|$ the formula needs an extra term, local time, which measures how long the path lingers at the kink.
-- **The path is continuous.** A jump's square arrives in one instant, not spread over $dt$, so the dW-times-dW rule fails. Jump paths need their own version: [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
-- **The integral is Ito's, built from left-end sums.** From right ends, the sum for $\int W\,dW$ averages +0.9993 (standard error 0.0111) instead of zero (code below). A standard error (se) is the typical size of the chance error in a simulated average. Midpoints (Stratonovich's integral) keep the ordinary chain rule but lose the fair-game property.
-- **The drift and kick sizes use only the past.** They may depend on time and the path so far, with $\int|a|\,dt$ and $\int b^2\,dt$ finite. A coefficient that peeks at the future breaks the left-end construction.
+- **$`f`$ has a continuous curvature in $`x`$ and a continuous time slope.** At a kink the curvature is a spike: for $`f(x) = |x|`$ the formula needs an extra term, local time, which measures how long the path lingers at the kink.
+- **The path is continuous.** A jump's square arrives in one instant, not spread over $`dt`$, so the dW-times-dW rule fails. Jump paths need their own version: [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
+- **The integral is Ito's, built from left-end sums.** From right ends, the sum for $`\int W\,dW`$ averages +0.9993 (standard error 0.0111) instead of zero (code below). A standard error (se) is the typical size of the chance error in a simulated average. Midpoints (Stratonovich's integral) keep the ordinary chain rule but lose the fair-game property.
+- **The drift and kick sizes use only the past.** They may depend on time and the path so far, with $`\int|a|\,dt`$ and $`\int b^2\,dt`$ finite. A coefficient that peeks at the future breaks the left-end construction.
 - **One Brownian motion.** Several correlated ones bring cross terms: [Several Brownian motions](06-multidimensional-ito-and-correlation.md).
 
 ---
@@ -90,9 +98,9 @@ Integrating gives the share's price in closed form: $S_T = S_0 \exp\big((\mu - \
 
 ### Step 0: Taylor to second order, and the second order refuses to vanish
 
-For a smooth path, a small step $\Delta x$ changes $f$ by $f'\,\Delta x + \tfrac12 f''\,(\Delta x)^2 + \dots$ ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). Cut a year into $n$ steps. Each step is about $1/n$ in size, its square about $1/n^2$, and $n$ of those squares add to about $1/n$: nothing, as $n$ grows. That is why ordinary calculus stops at the first derivative.
+For a smooth path, a small step $`\Delta x`$ changes $`f`$ by $`f'\,\Delta x + \tfrac12 f''\,(\Delta x)^2 + \dots`$ ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). Cut a year into $`n`$ steps. Each step is about $`1/n`$ in size, its square about $`1/n^2`$, and $`n`$ of those squares add to about $`1/n`$: nothing, as $`n`$ grows. That is why ordinary calculus stops at the first derivative.
 
-A Brownian step over time $\Delta t$ has size about $\sqrt{\Delta t}$, so its square is about $\Delta t$. Then $n$ squares add up to about $n \cdot \Delta t = T$. The second-order term survives. Everything else on this card is that sentence made exact.
+A Brownian step over time $`\Delta t`$ has size about $`\sqrt{\Delta t}`$, so its square is about $`\Delta t`$. Then $`n`$ squares add up to about $`n \cdot \Delta t = T`$. The second-order term survives. Everything else on this card is that sentence made exact.
 
 ### The picture: why the log falls below its tangent
 
@@ -104,67 +112,71 @@ Drawn to scale: 3 units across per dollar, 160 up per unit of log. Dashed: the t
 
 ### Step 1: write the change as a sum of small changes
 
-Cut the year into $n$ steps of length $\Delta t = T/n$, and let $W_k$ be the Brownian path at the end of step $k$, with $\Delta W_k = W_{k+1} - W_k$. The total change of $f(W)$ is the sum of the changes over the steps, because the middle values cancel in pairs:
+Cut the year into $`n`$ steps of length $`\Delta t = T/n`$, and let $`W_k`$ be the Brownian path at the end of step $`k`$, with $`\Delta W_k = W_{k+1} - W_k`$. The total change of $`f(W)`$ is the sum of the changes over the steps, because the middle values cancel in pairs:
 
-$$f(W_T) - f(W_0) = \sum_{k} \big(f(W_{k+1}) - f(W_k)\big).$$
+```math
+f(W_T) - f(W_0) = \sum_{k} \big(f(W_{k+1}) - f(W_k)\big).
+```
 
 ### Step 2: expand each small change
 
-By Taylor's theorem, each term is $f'(W_k)\,\Delta W_k + \tfrac12 f''(W_k)\,(\Delta W_k)^2 + R_k$, where the remainder $R_k$ is at most a constant times $\lvert\Delta W_k\rvert^3$. Three sums appear: slopes times steps, curvatures times squared steps, and remainders.
+By Taylor's theorem, each term is $`f'(W_k)\,\Delta W_k + \tfrac12 f''(W_k)\,(\Delta W_k)^2 + R_k`$, where the remainder $`R_k`$ is at most a constant times $`\lvert\Delta W_k\rvert^3`$. Three sums appear: slopes times steps, curvatures times squared steps, and remainders.
 
 ### Step 3: the slope sum becomes the Ito integral
 
-$\sum f'(W_k)\,\Delta W_k$ evaluates the slope at the left end of each step, before the step is known. That is exactly the sum that defines the Ito integral $\int f'(W_t)\,dW_t$ on [The Ito integral](01-ito-integral.md), and it converges to it as the steps shrink. Each term has average zero, because the step ahead is independent of the slope already fixed.
+$`\sum f'(W_k)\,\Delta W_k`$ evaluates the slope at the left end of each step, before the step is known. That is exactly the sum that defines the Ito integral $`\int f'(W_t)\,dW_t`$ on [The Ito integral](01-ito-integral.md), and it converges to it as the steps shrink. Each term has average zero, because the step ahead is independent of the slope already fixed.
 
 ### Step 4: the squared steps become time
 
-Split each squared step into its average and a wobble: $(\Delta W_k)^2 = \Delta t + \big((\Delta W_k)^2 - \Delta t\big)$. The averages give $\sum \tfrac12 f''(W_k)\,\Delta t$, an ordinary sum of rectangles, which tends to $\tfrac12\int f''(W_t)\,dt$. The wobbles each average zero and are uncorrelated across steps; each has variance $2\,\Delta t^2$, so their total variance is about $n \cdot 2\Delta t^2 = 2T\Delta t$, which goes to zero. The squared steps behave, in the limit, as if they were $dt$ exactly. This is the quadratic variation $[W]_T = T$, proved on [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md), doing its work.
+Split each squared step into its average and a wobble: $`(\Delta W_k)^2 = \Delta t + \big((\Delta W_k)^2 - \Delta t\big)`$. The averages give $`\sum \tfrac12 f''(W_k)\,\Delta t`$, an ordinary sum of rectangles, which tends to $`\tfrac12\int f''(W_t)\,dt`$. The wobbles each average zero and are uncorrelated across steps; each has variance $`2\,\Delta t^2`$, so their total variance is about $`n \cdot 2\Delta t^2 = 2T\Delta t`$, which goes to zero. The squared steps behave, in the limit, as if they were $`dt`$ exactly. This is the quadratic variation $`[W]_T = T`$, proved on [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md), doing its work.
 
 ### Step 5: the remainders vanish
 
-The average of $\lvert\Delta W_k\rvert^3$ is a constant times $\Delta t^{3/2}$, so the $n$ remainders add up to a constant times $T\sqrt{\Delta t}$, which goes to zero. Third order dies, as it does in ordinary calculus. What changed from ordinary calculus is only Step 4.
+The average of $`\lvert\Delta W_k\rvert^3`$ is a constant times $`\Delta t^{3/2}`$, so the $`n`$ remainders add up to a constant times $`T\sqrt{\Delta t}`$, which goes to zero. Third order dies, as it does in ordinary calculus. What changed from ordinary calculus is only Step 4.
 
-Together: $f(W_T) = f(W_0) + \int_0^T f'(W_t)\,dW_t + \tfrac12\int_0^T f''(W_t)\,dt$.
+Together: $`f(W_T) = f(W_0) + \int_0^T f'(W_t)\,dW_t + \tfrac12\int_0^T f''(W_t)\,dt`$.
 
 <details>
 <summary>Detailed proof, for f with bounded first, second and third derivatives</summary>
 
-Fix $T$ and $n$; write $\Delta t = T/n$, $W_k = W_{k\Delta t}$ and $\Delta W_k = W_{k+1} - W_k$. Let $M$ bound $\lvert f'\rvert$, $\lvert f''\rvert$ and $\lvert f'''\rvert$. Taylor's theorem with the Lagrange remainder gives, for each $k$,
-$f(W_{k+1}) - f(W_k) = f'(W_k)\Delta W_k + \tfrac12 f''(W_k)(\Delta W_k)^2 + R_k$ with $\lvert R_k\rvert \le \tfrac16 M \lvert\Delta W_k\rvert^3$. Sum over $k$ from 0 to $n-1$; the left side telescopes to $f(W_T) - f(W_0)$.
+Fix $`T`$ and $`n`$; write $`\Delta t = T/n`$, $`W_k = W_{k\Delta t}`$ and $`\Delta W_k = W_{k+1} - W_k`$. Let $`M`$ bound $`\lvert f'\rvert`$, $`\lvert f''\rvert`$ and $`\lvert f'''\rvert`$. Taylor's theorem with the Lagrange remainder gives, for each $`k`$,
+$`f(W_{k+1}) - f(W_k) = f'(W_k)\Delta W_k + \tfrac12 f''(W_k)(\Delta W_k)^2 + R_k`$ with $`\lvert R_k\rvert \le \tfrac16 M \lvert\Delta W_k\rvert^3`$. Sum over $`k`$ from 0 to $`n-1`$; the left side telescopes to $`f(W_T) - f(W_0)`$.
 
-**Slope sum.** $I_n = \sum f'(W_k)\Delta W_k$. The integrand $f'(W_t)$ is continuous, adapted (fixed by what is known at time $t$) and bounded, so by the construction on [The Ito integral](01-ito-integral.md) $I_n \to \int_0^T f'(W_t)\,dW_t$ in mean square.
+**Slope sum.** $`I_n = \sum f'(W_k)\Delta W_k`$. The integrand $`f'(W_t)`$ is continuous, adapted (fixed by what is known at time $`t`$) and bounded, so by the construction on [The Ito integral](01-ito-integral.md) $`I_n \to \int_0^T f'(W_t)\,dW_t`$ in mean square.
 
-**Curvature sum.** Write $\tfrac12\sum f''(W_k)(\Delta W_k)^2 = \tfrac12\sum f''(W_k)\Delta t + \tfrac12 A_n$ with $A_n = \sum f''(W_k)\big((\Delta W_k)^2 - \Delta t\big)$. The first part is a Riemann sum of the continuous function $t \mapsto f''(W_t)$, so it tends to $\tfrac12\int_0^T f''(W_t)\,dt$ for every path. For $A_n$, let $Y_k = f''(W_k)((\Delta W_k)^2 - \Delta t)$. For $j < k$, $Y_j$ and $f''(W_k)$ are known at step $k$ while $\Delta W_k$ is independent of that knowledge with $E[(\Delta W_k)^2 - \Delta t] = 0$, so $E[Y_j Y_k] = 0$. Hence $E[A_n^2] = \sum E[f''(W_k)^2]\,E[((\Delta W_k)^2 - \Delta t)^2] \le M^2 \cdot n \cdot 2\Delta t^2 = 2M^2 T\Delta t \to 0$, using $E[Z^4] = 3$ for a standard normal $Z$, so that $\mathrm{Var}((\Delta W_k)^2) = 2\Delta t^2$.
+**Curvature sum.** Write $`\tfrac12\sum f''(W_k)(\Delta W_k)^2 = \tfrac12\sum f''(W_k)\Delta t + \tfrac12 A_n`$ with $`A_n = \sum f''(W_k)\big((\Delta W_k)^2 - \Delta t\big)`$. The first part is a Riemann sum of the continuous function $`t \mapsto f''(W_t)`$, so it tends to $`\tfrac12\int_0^T f''(W_t)\,dt`$ for every path. For $`A_n`$, let $`Y_k = f''(W_k)((\Delta W_k)^2 - \Delta t)`$. For $`j < k`$, $`Y_j`$ and $`f''(W_k)`$ are known at step $`k`$ while $`\Delta W_k`$ is independent of that knowledge with $`E[(\Delta W_k)^2 - \Delta t] = 0`$, so $`E[Y_j Y_k] = 0`$. Hence $`E[A_n^2] = \sum E[f''(W_k)^2]\,E[((\Delta W_k)^2 - \Delta t)^2] \le M^2 \cdot n \cdot 2\Delta t^2 = 2M^2 T\Delta t \to 0`$, using $`E[Z^4] = 3`$ for a standard normal $`Z`$, so that $`\mathrm{Var}((\Delta W_k)^2) = 2\Delta t^2`$.
 
-**Remainders.** $E\sum\lvert R_k\rvert \le \tfrac16 M \cdot n \cdot E\lvert Z\rvert^3 \Delta t^{3/2} = \tfrac16 M\,E\lvert Z\rvert^3\,T\sqrt{\Delta t} \to 0$, with $E\lvert Z\rvert^3 = 2\sqrt{2/\pi}$.
+**Remainders.** $`E\sum\lvert R_k\rvert \le \tfrac16 M \cdot n \cdot E\lvert Z\rvert^3 \Delta t^{3/2} = \tfrac16 M\,E\lvert Z\rvert^3\,T\sqrt{\Delta t} \to 0`$, with $`E\lvert Z\rvert^3 = 2\sqrt{2/\pi}`$.
 
-**Assembling.** Each piece converges in mean square or in mean, hence in probability; along a subsequence of $n$ all converge almost surely, and the left side does not depend on $n$. So $f(W_T) = f(W_0) + \int_0^T f'(W_t)\,dW_t + \tfrac12\int_0^T f''(W_t)\,dt$ almost surely for each $T$. Both sides are continuous in $T$, so the identity holds for all $T$ at once, almost surely.
+**Assembling.** Each piece converges in mean square or in mean, hence in probability; along a subsequence of $`n`$ all converge almost surely, and the left side does not depend on $`n`$. So $`f(W_T) = f(W_0) + \int_0^T f'(W_t)\,dW_t + \tfrac12\int_0^T f''(W_t)\,dt`$ almost surely for each $`T`$. Both sides are continuous in $`T`$, so the identity holds for all $`T`$ at once, almost surely.
 
-**What this card does not prove.** The general statement on this card's formula: $f(t, x)$ with only continuous $f_t$, $f_x$, $f_{xx}$, and $X$ a general Ito process. The proof has the same three sums. Time enters through an ordinary Riemann sum; the squared steps of $X$ are $b^2 (\Delta W)^2$ plus terms of order $\Delta t^{3/2}$ and $\Delta t^2$, which vanish; and bounded derivatives are not needed, because one stops the path when it first leaves a large interval $[-K, K]$ and lets $K$ grow (localisation). The complete argument is in Øksendal, Chapter 4, and in Karatzas and Shreve, Section 3.3, both in Sources.
+**What this card does not prove.** The general statement on this card's formula: $`f(t, x)`$ with only continuous $`f_t`$, $`f_x`$, $`f_{xx}`$, and $`X`$ a general Ito process. The proof has the same three sums. Time enters through an ordinary Riemann sum; the squared steps of $`X`$ are $`b^2 (\Delta W)^2`$ plus terms of order $`\Delta t^{3/2}`$ and $`\Delta t^2`$, which vanish; and bounded derivatives are not needed, because one stops the path when it first leaves a large interval $`[-K, K]`$ and lets $`K`$ grow (localisation). The complete argument is in Øksendal, Chapter 4, and in Karatzas and Shreve, Section 3.3, both in Sources.
 
 </details>
 
 ### Step 6: from W to any Ito process, and the multiplication table
 
-For a general Ito process each step is $\Delta X = a\Delta t + b\Delta W$, with square $a^2\Delta t^2 + 2ab\,\Delta t\,\Delta W + b^2(\Delta W)^2$. Summed over a year the first part is about $T\Delta t$ and the second about $T\sqrt{\Delta t}$: both vanish. Only $b^2(\Delta W)^2$ survives, and Step 4 turns it into $b^2\,dt$. That is the multiplication table. A time slope adds $f_t\,dt$ through an ordinary sum of rectangles, and the formula follows.
+For a general Ito process each step is $`\Delta X = a\Delta t + b\Delta W`$, with square $`a^2\Delta t^2 + 2ab\,\Delta t\,\Delta W + b^2(\Delta W)^2`$. Summed over a year the first part is about $`T\Delta t`$ and the second about $`T\sqrt{\Delta t}`$: both vanish. Only $`b^2(\Delta W)^2`$ survives, and Step 4 turns it into $`b^2\,dt`$. That is the multiplication table. A time slope adds $`f_t\,dt`$ through an ordinary sum of rectangles, and the formula follows.
 
 ### Step 7: the two uses, and what they say
 
-**W squared.** For $f(x) = x^2$ the expansion is exact with no remainder: $(W_k + \Delta W_k)^2 - W_k^2 = 2W_k\Delta W_k + (\Delta W_k)^2$. Summing,
+**W squared.** For $`f(x) = x^2`$ the expansion is exact with no remainder: $`(W_k + \Delta W_k)^2 - W_k^2 = 2W_k\Delta W_k + (\Delta W_k)^2`$. Summing,
 
-$$W_T^2 = 2\sum W_k\,\Delta W_k + \sum (\Delta W_k)^2$$
+```math
+W_T^2 = 2\sum W_k\,\Delta W_k + \sum (\Delta W_k)^2
+```
 
-holds exactly on every grid and every path. On the first simulated path $W_T^2$ = 2.234316: with 16 steps the Ito sum gives 1.333728 and the squares 0.900587; with 1024 steps, 1.163931 and 1.070385. The squares tend to $T$ = 1, with spread $\sqrt{2/n}$: 0.3536 at 16 steps, 0.0442 at 1024. The ordinary chain rule keeps only $2\int W\,dW$, whose average is zero. But a square that is not always zero cannot average zero: the dt term makes $E[W_T^2] = T$.
+holds exactly on every grid and every path. On the first simulated path $`W_T^2`$ = 2.234316: with 16 steps the Ito sum gives 1.333728 and the squares 0.900587; with 1024 steps, 1.163931 and 1.070385. The squares tend to $`T`$ = 1, with spread $`\sqrt{2/n}`$: 0.3536 at 16 steps, 0.0442 at 1024. The ordinary chain rule keeps only $`2\int W\,dW`$, whose average is zero. But a square that is not always zero cannot average zero: the dt term makes $`E[W_T^2] = T`$.
 
-**The share's log.** The log's curvature is negative, so the Ito term subtracts: $\tfrac12 \cdot (-1/S^2) \cdot \sigma^2 S^2$ = $-0.08$, and the log drifts at 0.02 a year. Since $\sigma W_T$ is symmetric about zero, the middle price is $100\,e^{0.02}$ = \$102.02, and the chance of ending below \$100 is $N(-0.02/0.40) = N(-0.05)$ = 0.480061. The average price is still \$110.52, because $E[e^{\sigma W_T}] = e^{\sigma^2 T/2}$ puts the 0.08 back.
+**The share's log.** The log's curvature is negative, so the Ito term subtracts: $`\tfrac12 \cdot (-1/S^2) \cdot \sigma^2 S^2`$ = $`-0.08`$, and the log drifts at 0.02 a year. Since $`\sigma W_T`$ is symmetric about zero, the middle price is $`100\,e^{0.02}`$ = \$102.02, and the chance of ending below \$100 is $`N(-0.02/0.40) = N(-0.05)`$ = 0.480061. The average price is still \$110.52, because $`E[e^{\sigma W_T}] = e^{\sigma^2 T/2}`$ puts the 0.08 back.
 
-A second road to 0.02 avoids Ito. Euler's step rule moves the share by $S_{k+1} = S_k(1 + \mu\Delta t + \sigma\Delta W_k)$, so each step adds the log of the bracket to the log price. Taylor's $\log(1 + y) \approx y - \tfrac12 y^2$, where $y$ is the step's relative move, already shows the half: $y$ averages $\mu\Delta t$ and $y^2$ about $\sigma^2\Delta t$. The code averages the exact log over the bell curve and watches it close on 0.02 as the steps shrink.
+A second road to 0.02 avoids Ito. Euler's step rule moves the share by $`S_{k+1} = S_k(1 + \mu\Delta t + \sigma\Delta W_k)`$, so each step adds the log of the bracket to the log price. Taylor's $`\log(1 + y) \approx y - \tfrac12 y^2`$, where $`y`$ is the step's relative move, already shows the half: $`y`$ averages $`\mu\Delta t`$ and $`y^2`$ about $`\sigma^2\Delta t`$. The code averages the exact log over the bell curve and watches it close on 0.02 as the steps shrink.
 
 ---
 
 ## Worked numbers, by hand
 
-The share: $S_0$ = \$100, $\mu$ = 0.10 and $\sigma$ = 0.40 a year, $T$ = 1 year.
+The share: $`S_0`$ = \$100, $`\mu`$ = 0.10 and $`\sigma`$ = 0.40 a year, $`T`$ = 1 year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -183,16 +195,16 @@ In about 48 runs out of 100 the share ends below where it started, although its 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Ordinary chain rule on $W^2$: $d(W^2) = 2W\,dW$ | average $W_T^2$ of 2 × (−0.0018), essentially 0; the true average is 1, simulated 0.9975 (se 0.0222) | the squared steps add up to $T$, not to nothing |
-| Ordinary chain rule on $\log S$: drift $\mu$ | middle price $110.52, chance below $100 of 0.4013 | the middle and the average are confused; the right values are $102.02 and 0.4801 |
-| Right-end sums instead of left-end sums | the sum for $\int W\,dW$ averages +0.9993, not 0 | the integrand peeked at the step it multiplies |
+| Ordinary chain rule on $`W^2`$: $`d(W^2) = 2W\,dW`$ | average $`W_T^2`$ of 2 × (−0.0018), essentially 0; the true average is 1, simulated 0.9975 (se 0.0222) | the squared steps add up to $`T`$, not to nothing |
+| Ordinary chain rule on $`\log S`$: drift $`\mu`$ | middle price $110.52, chance below $100 of 0.4013 | the middle and the average are confused; the right values are $102.02 and 0.4801 |
+| Right-end sums instead of left-end sums | the sum for $`\int W\,dW`$ averages +0.9993, not 0 | the integrand peeked at the step it multiplies |
 | Plus sign on the correction | log drift 0.1800, middle price $119.72 | the log curves down, so its correction is negative |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code takes four roads to the log drift of 0.02. Road 1 is the formula. Road 2 averages Euler's step rule exactly over the bell curve by Simpson's rule, with no Ito in it, at 16 to 1024 steps a year. Road 3 runs 4000 seeded one-year paths (SplitMix64, normals by Box-Muller) on nested grids, the coarse grids adding up the same fine Brownian steps, with every mean printed beside its standard error. Road 4 compares each path with Ito's closed form for that same path, $\log S_T = \log S_0 + 0.02 + 0.40\,W_T$, and with the ordinary version. The same paths check $W^2$.
+The code takes four roads to the log drift of 0.02. Road 1 is the formula. Road 2 averages Euler's step rule exactly over the bell curve by Simpson's rule, with no Ito in it, at 16 to 1024 steps a year. Road 3 runs 4000 seeded one-year paths (SplitMix64, normals by Box-Muller) on nested grids, the coarse grids adding up the same fine Brownian steps, with every mean printed beside its standard error. Road 4 compares each path with Ito's closed form for that same path, $`\log S_T = \log S_0 + 0.02 + 0.40\,W_T`$, and with the ordinary version. The same paths check $`W^2`$.
 
 ### Python
 
@@ -379,7 +391,7 @@ figure, tangent 40,190.0 340,30.0; at 60 tangent 174.0 curve 191.7; at 140 tange
 ALL CHECKS PASS
 ```
 
-Road 2 closes on 0.02, the error falling fourfold each time the steps are cut by four: 0.000532 short at 16 steps, 0.000008 at 1024. Road 3's mean log drift, 0.0192 with standard error 0.0063, sits within one standard error of 0.02 and more than eight from 0.10. Path by path, Euler's log misses Ito's closed form by 0.0227 on average at 16 steps and 0.0028 at 1024; the ordinary formula misses by about 0.080 on every grid, with standard errors below 0.0005 throughout. The simulated chance of ending below \$100, 0.4823 with standard error 0.0079, matches $N(-0.05)$ = 0.4801.
+Road 2 closes on 0.02, the error falling fourfold each time the steps are cut by four: 0.000532 short at 16 steps, 0.000008 at 1024. Road 3's mean log drift, 0.0192 with standard error 0.0063, sits within one standard error of 0.02 and more than eight from 0.10. Path by path, Euler's log misses Ito's closed form by 0.0227 on average at 16 steps and 0.0028 at 1024; the ordinary formula misses by about 0.080 on every grid, with standard errors below 0.0005 throughout. The simulated chance of ending below \$100, 0.4823 with standard error 0.0079, matches $`N(-0.05)`$ = 0.4801.
 
 ### Rust
 
@@ -606,19 +618,19 @@ xychart-beta
     line [0.0227, 0.0113, 0.0056, 0.0028]
 ```
 
-The flat upper line is the ordinary chain rule's formula, $\log S_0 + 0.10 + 0.40\,W_T$: it stays 0.08 off however fine the grid. The falling lower line is Ito's, $\log S_0 + 0.02 + 0.40\,W_T$: the gap is only Euler's step error, and it halves each time the steps are cut by four. Each point is an average over the same 4000 sampled paths, not a single path.
+The flat upper line is the ordinary chain rule's formula, $`\log S_0 + 0.10 + 0.40\,W_T`$: it stays 0.08 off however fine the grid. The falling lower line is Ito's, $`\log S_0 + 0.02 + 0.40\,W_T`$: the gap is only Euler's step error, and it halves each time the steps are cut by four. Each point is an average over the same 4000 sampled paths, not a single path.
 
 ### Lean
 
 Lean proves Steps 1, 2 and 7 of Why it works, on every grid and every path, and checks the worked numbers.
 
-- Take a function $f$ with a continuous $f'''$ of size at most $M$ everywhere, and one step $\Delta W_k$. Then its Taylor remainder $R_k$ has size at most $\tfrac16 M \lvert\Delta W_k\rvert^3$.
-- Take the same $f$ and any path cut into $n$ steps. Then the change in $f$ is the slope sum plus the curvature sum, within $M/6$ times the summed cubed step sizes.
-- Take any path cut into $n$ steps. Then $W_n^2 - W_0^2$ is exactly $2\sum W_k\,\Delta W_k + \sum (\Delta W_k)^2$.
-- Suppose a positive price $S$ has drift size $a = \mu S$ and kick size $b = \sigma S$, and take $f = \log$. Then the $dt$ part, $a f' + \tfrac12 b^2 f''$, equals $\mu - \tfrac12\sigma^2$.
-- Take $\mu$ = 0.10 and $\sigma$ = 0.40. Then the kick size squared is 0.16, the Ito term −0.08, and the log drift 0.02.
+- Take a function $`f`$ with a continuous $`f'''`$ of size at most $`M`$ everywhere, and one step $`\Delta W_k`$. Then its Taylor remainder $`R_k`$ has size at most $`\tfrac16 M \lvert\Delta W_k\rvert^3`$.
+- Take the same $`f`$ and any path cut into $`n`$ steps. Then the change in $`f`$ is the slope sum plus the curvature sum, within $`M/6`$ times the summed cubed step sizes.
+- Take any path cut into $`n`$ steps. Then $`W_n^2 - W_0^2`$ is exactly $`2\sum W_k\,\Delta W_k + \sum (\Delta W_k)^2`$.
+- Suppose a positive price $`S`$ has drift size $`a = \mu S`$ and kick size $`b = \sigma S`$, and take $`f = \log`$. Then the $`dt`$ part, $`a f' + \tfrac12 b^2 f''`$, equals $`\mu - \tfrac12\sigma^2`$.
+- Take $`\mu`$ = 0.10 and $`\sigma`$ = 0.40. Then the kick size squared is 0.16, the Ito term −0.08, and the log drift 0.02.
 - The same numbers put \$100 at −0.05 spreads from the middle, and the plus-sign mistake at a log drift of 0.18.
-- Take 1024 steps in one year. Then the wobbles' total variance, $n \cdot 2\Delta t^2$, equals $2T\Delta t$.
+- Take 1024 steps in one year. Then the wobbles' total variance, $`n \cdot 2\Delta t^2`$, equals $`2T\Delta t`$.
 
 Lean has no Ito integral yet, so the limits in Steps 3 to 6 and every simulation are left to the Python and Rust checks.
 
@@ -751,32 +763,32 @@ example : (1024 : ℚ) * (2 * (1 / 1024) ^ 2) = 2 * 1 * (1 / 1024) := by norm_nu
 ## The usual mistake
 
 > [!warning]
-> **Treating $dW_t$ as a small number, like $dt$.** It is shorthand for an integral, and a Brownian step over a short time is of size the square root of the time, far larger than the time. Its square is the size of $dt$ and survives the sum. Ordinary calculus on a random path makes this mistake silently; on the share it puts the middle price after a year at $110.52 instead of $102.02.
+> **Treating $`dW_t`$ as a small number, like $`dt`$.** It is shorthand for an integral, and a Brownian step over a short time is of size the square root of the time, far larger than the time. Its square is the size of $`dt`$ and survives the sum. Ordinary calculus on a random path makes this mistake silently; on the share it puts the middle price after a year at $110.52 instead of $102.02.
 >
-> - **Confusing the average's growth with the typical path's growth.** $\mu$ = 0.10 is the growth rate of the average price; the middle price grows at 0.02. Both are right; they answer different questions.
-> - **Forgetting that the kick size can carry the state.** For the share, the kick is $\sigma S_t$, not $\sigma$, so $(dS)^2 = \sigma^2 S^2\,dt$. Using $\sigma^2$ alone in the log's correction gives $-\tfrac12\sigma^2/S^2$, too small by a factor of the price squared.
+> - **Confusing the average's growth with the typical path's growth.** $`\mu`$ = 0.10 is the growth rate of the average price; the middle price grows at 0.02. Both are right; they answer different questions.
+> - **Forgetting that the kick size can carry the state.** For the share, the kick is $`\sigma S_t`$, not $`\sigma`$, so $`(dS)^2 = \sigma^2 S^2\,dt`$. Using $`\sigma^2`$ alone in the log's correction gives $`-\tfrac12\sigma^2/S^2`$, too small by a factor of the price squared.
 > - **Mixing Ito and Stratonovich.** The midpoint integral keeps the ordinary chain rule. A formula derived one way and simulated the other is off by the Ito term.
-> - **Using the lemma across a jump.** A jump's square is not $dt$; the lemma as stated misses it entirely.
+> - **Using the lemma across a jump.** A jump's square is not $`dt`$; the lemma as stated misses it entirely.
 
 ---
 
 ## Where you meet it in real life
 
-- **The closed-form share price.** Every simulation of geometric Brownian motion that draws $S_T = S_0\exp((\mu - \tfrac12\sigma^2)T + \sigma W_T)$ in one step uses this card. See [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md).
+- **The closed-form share price.** Every simulation of geometric Brownian motion that draws $`S_T = S_0\exp((\mu - \tfrac12\sigma^2)T + \sigma W_T)`$ in one step uses this card. See [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md).
 - **Volatility drag in investing.** A portfolio's long-run compound growth rate is its average return minus half its variance, so of two funds with equal average returns the jumpier one grows slower.
-- **The Black-Scholes equation.** Ito's lemma applied to the option price $V(t, S_t)$ produces the term $\tfrac12\sigma^2 S^2 V_{SS}$, and hedging away the $dW$ term leaves the equation: [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md).
-- **Variance swaps.** The gap between $dS/S$ and $d\log S$ is exactly $\tfrac12\sigma^2\,dt$, so a position in the log of the price, hedged with shares, collects realised variance: [The variance swap](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/03-variance-swap-fair-strike.md).
+- **The Black-Scholes equation.** Ito's lemma applied to the option price $`V(t, S_t)`$ produces the term $`\tfrac12\sigma^2 S^2 V_{SS}`$, and hedging away the $`dW`$ term leaves the equation: [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md).
+- **Variance swaps.** The gap between $`dS/S`$ and $`d\log S`$ is exactly $`\tfrac12\sigma^2\,dt`$, so a position in the log of the price, hedged with shares, collects realised variance: [The variance swap](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/03-variance-swap-fair-strike.md).
 - **A company's assets seen through its shares.** The equity of a firm is a function of its asset value; Ito's lemma ties the equity's volatility to the assets' volatility: [Backing out the unobservable](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md).
 
 > **Say it back**
-> A random path's steps are of size the square root of the time step, so their squares add up to time instead of vanishing. A function of the path changes by its slope times the step plus half its curvature times the squared kick size. For $W^2$ that term is $dt$, so $W_T^2$ averages $T$. For the log of a share it is $-\tfrac12\sigma^2$, so a share whose average grows at 0.10 a year has a middle price growing at 0.02. The proof is Taylor's theorem plus Brownian motion's squared steps adding up to time.
+> A random path's steps are of size the square root of the time step, so their squares add up to time instead of vanishing. A function of the path changes by its slope times the step plus half its curvature times the squared kick size. For $`W^2`$ that term is $`dt`$, so $`W_T^2`$ averages $`T`$. For the log of a share it is $`-\tfrac12\sigma^2`$, so a share whose average grows at 0.10 a year has a middle price growing at 0.02. The proof is Taylor's theorem plus Brownian motion's squared steps adding up to time.
 
 ---
 
 ## What this builds on
 
 - [The Ito integral](01-ito-integral.md): the integral built from left-end sums, which the slope sum in Step 3 becomes.
-- [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): the squared Brownian steps add up to the elapsed time, $[W]_t = t$, the fact Step 4 turns into the dt term.
+- [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): the squared Brownian steps add up to the elapsed time, $`[W]_t = t`$, the fact Step 4 turns into the dt term.
 - [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the second-order expansion with a bounded remainder, applied once per step.
 
 ## Where this goes next
@@ -786,9 +798,9 @@ example : (1024 : ℚ) * (2 * (1 / 1024) ^ 2) = 2 * 1 * (1 / 1024) := by norm_nu
 - [Several Brownian motions](06-multidimensional-ito-and-correlation.md): several Brownian motions and the cross terms between them.
 - [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md): Ito's lemma on the exponential of a Brownian motion gives the density process that changes the measure.
 - [Feynman-Kac](../07-Changing%20Measure/06-feynman-kac-formula.md): Ito's lemma on a function of time and the path turns averages into equations.
-- [The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md): the dt part of this card's formula, $a f_x + \tfrac12 b^2 f_{xx}$, named as an operator.
+- [The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md): the dt part of this card's formula, $`a f_x + \tfrac12 b^2 f_{xx}`$, named as an operator.
 - [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md): the lemma with jumps added.
-- [Black-Scholes by hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): the lemma applied to an option, with the $dW$ term hedged away.
+- [Black-Scholes by hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): the lemma applied to an option, with the $`dW`$ term hedged away.
 - [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): the equation that hedge produces.
 - [The variance swap](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/03-variance-swap-fair-strike.md): the log's Ito term, sold as a contract.
 - [The quanto adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a product of two prices, and the drift its cross term adds.

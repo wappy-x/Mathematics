@@ -38,30 +38,38 @@ Reminder from [Digital filters](04-digital-filters-fir-and-iir.md): an FIR filte
 
 New here is how to pick the taps of a low-pass. The ideal low-pass passes every frequency below the cutoff f_c at full strength and nothing above it. Adding up the cosines of all those frequencies, equally weighted, gives its taps, h[j] = sin(2π f_c j / f_s) / (π j), a **sinc** curve (a sine divided by its own angle). It runs on forever; tapering it to a finite length with a window from [Windows](03-windows-and-spectral-leakage.md) gives a real filter, the **windowed sinc**.
 
-$$f_{\text{alias}} = \bigl|\,f - R\cdot\operatorname{round}(f/R)\,\bigr|$$
+```math
+f_{\text{alias}} = \bigl|\,f - R\cdot\mathrm{round}(f/R)\,\bigr|
+```
 
-$$\text{decimate by } M:\quad y[n] = \sum_j h[j]\,x[nM - j],\qquad f_c \le \frac{f_s}{2M}$$
+```math
+\text{decimate by } M:\quad y[n] = \sum_j h[j]\,x[nM - j],\qquad f_c \le \frac{f_s}{2M}
+```
 
-$$\text{interpolate by } L:\quad v[i] = \begin{cases} x[i/L] & L \text{ divides } i\\ 0 & \text{otherwise}\end{cases},\qquad y[i] = L\sum_j h[j]\,v[i - j],\qquad f_c \le \frac{f_s}{2}$$
+```math
+\text{interpolate by } L:\quad v[i] = \begin{cases} x[i/L] & L \text{ divides } i\\ 0 & \text{otherwise}\end{cases},\qquad y[i] = L\sum_j h[j]\,v[i - j],\qquad f_c \le \frac{f_s}{2}
+```
 
-$$\text{change by } L/M:\quad y[n] = \sum_k x[k]\;h[nM - kL],\qquad f_c \le \min\Bigl(\frac{f_s}{2},\ \frac{L f_s}{2M}\Bigr),\quad \text{gain } L$$
+```math
+\text{change by } L/M:\quad y[n] = \sum_k x[k]\;h[nM - kL],\qquad f_c \le \min\Bigl(\frac{f_s}{2},\ \frac{L f_s}{2M}\Bigr),\quad \text{gain } L
+```
 
 **Read it aloud:** each output sample is a weighted sum of the input samples near it in time, the weights read off one low-pass curve at the time gap between them, with the curve cut off below the smaller of the two Nyquist frequencies.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x[k]$ | the input: sample number k of the studio file | four tones at 48 kHz | the output scales with it |
-| $y[n]$ | the output: sample number n at the new rate | the 16 kHz file, or the CD file | — |
-| $v[i],\ c[i]$ | the zero-padded stream, and the comb that is 1 in every L-th slot and 0 elsewhere | 0.0833 at 3, 13 and 19 kHz | — |
-| $k,\ n,\ i,\ j,\ r$ | counters: input sample, output sample, in-between slot, filter tap, and copy number (the fold under Step 1, and Step 3); on this card j is only a counter, not the square root of −1 | — | — |
-| $f_s$ | the input rate, samples a second | 48,000; 16,000 for the trip back up | every Nyquist frequency rises |
-| $M$ | the drop factor: keep one sample in M | 3, then 160 | the new rate falls, more tones must be removed |
-| $L$ | the stuff factor: L slots per old sample, L − 1 of them zeros | 3, then 147 | more copies appear, all removed by the same filter |
-| $L f_s$ | the in-between rate, imagined, never stored | 7,056,000 Hz | the filter needs more taps |
-| $h[j]$ | the low-pass filter's taps, centred on j = 0 | 265 taps; 18,963 taps | more taps give a sharper cut |
-| $f_c$ | the filter's cutoff frequency | 7,500 Hz; 21,025 Hz | above the limit, aliases leak in |
-| $R,\ f,\ a,\ f_{\text{alias}}$ | a sampling rate, a tone's true frequency, its amplitude (Step 3), and where the tone shows at that rate | 44,100; 23,000 → 21,100 Hz; 0.1 | tones fold to different places |
-| $X(\omega),\ Y(\omega),\ \omega$ | in the fold under Step 1: the spectra of input and output, and frequency in radians per sample | — | — |
+| $`x[k]`$ | the input: sample number k of the studio file | four tones at 48 kHz | the output scales with it |
+| $`y[n]`$ | the output: sample number n at the new rate | the 16 kHz file, or the CD file | — |
+| $`v[i],\ c[i]`$ | the zero-padded stream, and the comb that is 1 in every L-th slot and 0 elsewhere | 0.0833 at 3, 13 and 19 kHz | — |
+| $`k,\ n,\ i,\ j,\ r`$ | counters: input sample, output sample, in-between slot, filter tap, and copy number (the fold under Step 1, and Step 3); on this card j is only a counter, not the square root of −1 | — | — |
+| $`f_s`$ | the input rate, samples a second | 48,000; 16,000 for the trip back up | every Nyquist frequency rises |
+| $`M`$ | the drop factor: keep one sample in M | 3, then 160 | the new rate falls, more tones must be removed |
+| $`L`$ | the stuff factor: L slots per old sample, L − 1 of them zeros | 3, then 147 | more copies appear, all removed by the same filter |
+| $`L f_s`$ | the in-between rate, imagined, never stored | 7,056,000 Hz | the filter needs more taps |
+| $`h[j]`$ | the low-pass filter's taps, centred on j = 0 | 265 taps; 18,963 taps | more taps give a sharper cut |
+| $`f_c`$ | the filter's cutoff frequency | 7,500 Hz; 21,025 Hz | above the limit, aliases leak in |
+| $`R,\ f,\ a,\ f_{\text{alias}}`$ | a sampling rate, a tone's true frequency, its amplitude (Step 3), and where the tone shows at that rate | 44,100; 23,000 → 21,100 Hz; 0.1 | tones fold to different places |
+| $`X(\omega),\ Y(\omega),\ \omega`$ | in the fold under Step 1: the spectra of input and output, and frequency in radians per sample | — | — |
 
 ### When it holds
 
@@ -90,7 +98,7 @@ The check scans every 10 Hz step of the dropped file and finds exactly four tone
 
 Write the input as a sum of tones. Dropping to every M-th sample keeps each tone's amplitude and replaces its frequency by its folded frequency at the rate f_s/M. In the language of [The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md), the spectrum of y[n] = x[nM] is the average of M shifted copies of the stretched spectrum of x:
 
-$$Y(\omega) = \frac{1}{M}\sum_{r=0}^{M-1} X\!\left(\frac{\omega - 2\pi r}{M}\right),$$
+$`\displaystyle Y(\omega) = \frac{1}{M}\sum_{r=0}^{M-1} X\!\left(\frac{\omega - 2\pi r}{M}\right),`$
 
 where ω is frequency in radians per sample. The copies with r ≠ 0 are the aliases; they overlap the wanted copy unless X is zero above π/M, which is what the filter arranges.
 
@@ -110,13 +118,17 @@ Filtering every 48 kHz sample and then throwing two in three away wastes two thi
 
 Now go back up from 16 kHz to 48 kHz. Put two zeros after every sample. The padded stream is the full-rate signal multiplied by a comb that is 1 in every third slot and 0 elsewhere. That comb is itself a constant plus one 16 kHz cosine:
 
-$$c[i] = \tfrac13\bigl(1 + 2\cos(2\pi \cdot 16{,}000\, i / 48{,}000)\bigr),$$
+```math
+c[i] = \tfrac13\bigl(1 + 2\cos(2\pi \cdot 16{,}000\, i / 48{,}000)\bigr),
+```
 
 which is 1 when 3 divides i and 0 otherwise. Multiplying a tone of amplitude a at frequency f by c[i] gives, by the product-to-sum rule, a/3 at f and a/3 at each of 16,000 − f and 16,000 + f. Those extra tones are the **images**: spectral copies made by the padding.
 
 The same holds for any L. The comb is
 
-$$c[i] = \frac1L\sum_{r=0}^{L-1}\cos(2\pi r i/L).$$
+```math
+c[i] = \frac1L\sum_{r=0}^{L-1}\cos(2\pi r i/L).
+```
 
 When L divides i every cosine is 1, and the sum is 1. Otherwise the angles 2πri/L fall evenly round a circle, so the cosines balance out to 0. Each cosine runs at r times the old rate f_s, so a tone of amplitude a at f keeps a/L at f and gains images of a/L at r f_s − f and r f_s + f, for r = 1, 2, …, counted below the padded Nyquist frequency L f_s/2.
 
@@ -575,15 +587,15 @@ The two outputs match line for line.
 
 Lean proves the folding rule, the comb and the images exactly, for any tone and any whole-number factor, and checks the worked numbers.
 
-- Take a tone of amplitude $a$ at $f$, sampled at rate $f_s$, and keep one sample in $M$. Then the kept samples are a tone of amplitude $a$ at its folded frequency for the rate $f_s/M$, perhaps with every sign flipped.
-- Take any whole number $L$ of at least 1. Then the comb $c[i]$ is 1 when $L$ divides $i$, and 0 otherwise.
-- Take a tone of amplitude $a$ at $f$, sampled at $f_s$, and put $L - 1$ zeros after every sample. Then the padded stream is exactly the tone at $f$, amplitude $a/L$, plus images at $r f_s \pm f$. Each copy $r$ from 1 to $L - 1$ gives $a/(2L)$, and copies $r$ and $L - r$ land on the same pair.
-- The greatest common divisor of 48,000 and 44,100 is 300, so $L = 147$ and $M = 160$. The in-between rate is 7,056,000 Hz.
+- Take a tone of amplitude $`a`$ at $`f`$, sampled at rate $`f_s`$, and keep one sample in $`M`$. Then the kept samples are a tone of amplitude $`a`$ at its folded frequency for the rate $`f_s/M`$, perhaps with every sign flipped.
+- Take any whole number $`L`$ of at least 1. Then the comb $`c[i]`$ is 1 when $`L`$ divides $`i`$, and 0 otherwise.
+- Take a tone of amplitude $`a`$ at $`f`$, sampled at $`f_s`$, and put $`L - 1`$ zeros after every sample. Then the padded stream is exactly the tone at $`f`$, amplitude $`a/L`$, plus images at $`r f_s \pm f`$. Each copy $`r`$ from 1 to $`L - 1`$ gives $`a/(2L)`$, and copies $`r`$ and $`L - r`$ land on the same pair.
+- The greatest common divisor of 48,000 and 44,100 is 300, so $`L = 147`$ and $`M = 160`$. The in-between rate is 7,056,000 Hz.
 - At 44.1 kHz the new Nyquist frequency is 22,050 Hz, and 23,000 Hz folds to 21,100 Hz.
 - At 16 kHz, 15,000 Hz folds to 1,000 Hz and 23,000 Hz folds to 7,000 Hz.
 - The filter has 129 × 147 = 18,963 taps, 129 per output. The literal route costs 3,034,080 multiplies per CD sample.
 - Filtering every 48 kHz sample with 265 taps, then dropping two in three, costs 795 multiplies per 16 kHz sample.
-- Take output $n$ at 44.1 kHz and input $k$ at 48 kHz. Then their time gap, in ticks of 1/7,056,000 s, is exactly $nM - kL$.
+- Take output $`n`$ at 44.1 kHz and input $`k`$ at 48 kHz. Then their time gap, in ticks of 1/7,056,000 s, is exactly $`nM - kL`$.
 
 Lean does not touch the filter's taps, so its gains, the decibel figures and the measured tones are left to the Python and Rust checks.
 

@@ -36,48 +36,56 @@ First line (orange): each week's measured typical daily move, the square root of
 
 ## The formula
 
-Notation first, in words. Trading days are counted by $t$. $r_t$ is day t's return in percent. $h_t$ is the variance of that return as it stands the evening before: the expected squared move, given everything known up to day t − 1. Its square root is the day's **volatility**, the size of a typical move. $z_t$ is a fresh draw from the standard normal law, independent of everything that came before.
+Notation first, in words. Trading days are counted by $`t`$. $`r_t`$ is day t's return in percent. $`h_t`$ is the variance of that return as it stands the evening before: the expected squared move, given everything known up to day t − 1. Its square root is the day's **volatility**, the size of a typical move. $`z_t`$ is a fresh draw from the standard normal law, independent of everything that came before.
 
-The model has three settings: $\omega$ (omega), a small constant; $\alpha$ (alpha), the weight on today's squared return; and $\beta$ (beta), the weight on today's variance.
+The model has three settings: $`\omega`$ (omega), a small constant; $`\alpha`$ (alpha), the weight on today's squared return; and $`\beta`$ (beta), the weight on today's variance.
 
-$$r_t = \sqrt{h_t}\; z_t, \qquad h_{t+1} = \omega + \alpha\, r_t^2 + \beta\, h_t$$
+```math
+r_t = \sqrt{h_t}\; z_t, \qquad h_{t+1} = \omega + \alpha\, r_t^2 + \beta\, h_t
+```
 
 **Read it aloud:** each day's return is a normal draw scaled by that day's volatility; tomorrow's variance is a small constant, plus alpha times today's squared return, plus beta times today's variance.
 
 The name spells out the idea: generalised autoregressive conditional heteroskedasticity. Heteroskedastic means of unequal spread; conditional, given the past; autoregressive, built from its own past, as on [Autoregression](02-ar-models.md); generalised, because yesterday's variance enters as well as yesterday's squared return. The full name is GARCH(1,1): the (1,1) counts one day back of each.
 
-The sum $\phi = \alpha + \beta$ is the **persistence**: the share of today's variance above its long-run level that survives to tomorrow. When it is below 1, the variance has a long-run level, and the forecast k days ahead drifts towards it:
+The sum $`\phi = \alpha + \beta`$ is the **persistence**: the share of today's variance above its long-run level that survives to tomorrow. When it is below 1, the variance has a long-run level, and the forecast k days ahead drifts towards it:
 
-$$\bar h = \frac{\omega}{1 - \phi}, \qquad E\left[h_{t+k} \mid \text{day } t\right] = \bar h + \phi^{\,k-1}\left(h_{t+1} - \bar h\right)$$
+```math
+\bar h = \frac{\omega}{1 - \phi}, \qquad E\left[h_{t+k} \mid \text{day } t\right] = \bar h + \phi^{\,k-1}\left(h_{t+1} - \bar h\right)
+```
 
 **Read it aloud:** the long-run variance is the constant divided by one minus the persistence; k days ahead, the forecast is the long-run level plus the persistence to the power k − 1 times tomorrow's gap from it.
 
-The simpler rival is **EWMA**, the exponentially weighted moving average, with one setting $\lambda$ (lambda):
+The simpler rival is **EWMA**, the exponentially weighted moving average, with one setting $`\lambda`$ (lambda):
 
-$$h_{t+1} = \lambda\, h_t + (1 - \lambda)\, r_t^2$$
+```math
+h_{t+1} = \lambda\, h_t + (1 - \lambda)\, r_t^2
+```
 
-It is GARCH with the constant removed and the persistence set to exactly 1: $\omega = 0$, $\alpha = 1 - \lambda$, $\beta = \lambda$. It has no long-run level to return to.
+It is GARCH with the constant removed and the persistence set to exactly 1: $`\omega = 0`$, $`\alpha = 1 - \lambda`$, $`\beta = \lambda`$. It has no long-run level to return to.
 
-The settings are fitted by maximum likelihood ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)). Over $n$ days, the log-likelihood $\ell$ is
+The settings are fitted by maximum likelihood ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)). Over $`n`$ days, the log-likelihood $`\ell`$ is
 
-$$\ell(\omega, \alpha, \beta) = -\frac{1}{2} \sum_{t=1}^{n} \left[ \ln\left(2\pi h_t\right) + \frac{r_t^2}{h_t} \right]$$
+```math
+\ell(\omega, \alpha, \beta) = -\frac{1}{2} \sum_{t=1}^{n} \left[ \ln\left(2\pi h_t\right) + \frac{r_t^2}{h_t} \right]
+```
 
 **Read it aloud:** for each day, penalise a large forecast variance through its logarithm, and a large squared return relative to that forecast; add up the penalties and take minus a half. The best settings make the total least negative.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r_t$ | day t's return, in percent | the ten years' daily moves; typical size 1.53% | a larger squared return raises tomorrow's variance |
-| $h_t$ | day t's variance, as forecast the evening before, in percent-squared | 11.0400 on the stormiest evening | wider likely moves |
-| $z_t$ | the day's fresh standard normal draw: its surprise, in units of volatility | one draw per day from the seeded generator | — |
-| $\omega$ | the constant: variance added every day | true 0.05; fitted 0.0638 | a higher long-run level |
-| $\alpha$ | the weight on today's squared return | true 0.08; fitted 0.0834 | sharper jumps after a big day |
-| $\beta$ | the weight on today's variance | true 0.90; fitted 0.8896 | a smoother, longer memory |
-| $\phi$, $\bar h$ | persistence α + β, and the long-run variance ω / (1 − φ) | 0.9730 and 2.3620 fitted | φ up: storms fade more slowly |
-| $\lambda$ | EWMA's carry: the share of today's variance kept | fitted 0.9285 | slower reaction, longer memory |
-| $t$, $k$ | the day counter, and days ahead of a forecast | k from 1 to 120 | — |
-| $n$, $\ell$ | the number of days fitted, and the log-likelihood; a hat, as in $\hat\alpha$, marks a fitted value | 2,500 days; −4488.21 at the peak | more days: tighter estimates |
-| $u_t$ | the surprise in the square, $r_t^2 - h_t$: zero on average | used in Step 4 | — |
-| $\rho_k$, $\rho_1$ | the correlation of squared returns k days apart (lag 1 for $\rho_1$) | 0.15 measured at lag 1 | stronger clustering |
+| $`r_t`$ | day t's return, in percent | the ten years' daily moves; typical size 1.53% | a larger squared return raises tomorrow's variance |
+| $`h_t`$ | day t's variance, as forecast the evening before, in percent-squared | 11.0400 on the stormiest evening | wider likely moves |
+| $`z_t`$ | the day's fresh standard normal draw: its surprise, in units of volatility | one draw per day from the seeded generator | — |
+| $`\omega`$ | the constant: variance added every day | true 0.05; fitted 0.0638 | a higher long-run level |
+| $`\alpha`$ | the weight on today's squared return | true 0.08; fitted 0.0834 | sharper jumps after a big day |
+| $`\beta`$ | the weight on today's variance | true 0.90; fitted 0.8896 | a smoother, longer memory |
+| $`\phi`$, $`\bar h`$ | persistence α + β, and the long-run variance ω / (1 − φ) | 0.9730 and 2.3620 fitted | φ up: storms fade more slowly |
+| $`\lambda`$ | EWMA's carry: the share of today's variance kept | fitted 0.9285 | slower reaction, longer memory |
+| $`t`$, $`k`$ | the day counter, and days ahead of a forecast | k from 1 to 120 | — |
+| $`n`$, $`\ell`$ | the number of days fitted, and the log-likelihood; a hat, as in $`\hat\alpha`$, marks a fitted value | 2,500 days; −4488.21 at the peak | more days: tighter estimates |
+| $`u_t`$ | the surprise in the square, $`r_t^2 - h_t`$: zero on average | used in Step 4 | — |
+| $`\rho_k`$, $`\rho_1`$ | the correlation of squared returns k days apart (lag 1 for $`\rho_1`$) | 0.15 measured at lag 1 | stronger clustering |
 
 ### When it holds
 
@@ -101,7 +109,7 @@ Take today's return and one from k days earlier. Given last evening's informatio
 
 On the share the measured correlations run from −0.05 to 0.03. Pure noise over 2,500 days stays inside ±0.04 about 19 times in 20; nine of the ten lags do, and one stray at lag 3 is what noise gives. That band is for independent noise. Returns that cluster are uncorrelated but not independent, and their measured correlations spread wider still, so the stray is even less remarkable.
 
-The squares are not. Given last evening, today's squared return averages $h_t$, which contains yesterday's squared return with weight α: a large move yesterday raises the expected square today. That correlation is the clustering. It is measured by the **autocorrelation**, the correlation of a series with itself k days earlier ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)).
+The squares are not. Given last evening, today's squared return averages $`h_t`$, which contains yesterday's squared return with weight α: a large move yesterday raises the expected square today. That correlation is the clustering. It is measured by the **autocorrelation**, the correlation of a series with itself k days earlier ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -114,21 +122,21 @@ xychart-beta
     line [0.19, 0.18, 0.18, 0.17, 0.17, 0.16, 0.16, 0.15, 0.15, 0.15]
 ```
 
-First line (orange): the returns, flat at zero. Second line (green): the squared returns, measured, all well above zero. Third line (dark): what the fitted model says the squares' autocorrelation should be, $\rho_k$ from Step 4. The measured squares sit a little below the model's line: sample autocorrelations of squares are noisy, and tend to run low, in samples of this size.
+First line (orange): the returns, flat at zero. Second line (green): the squared returns, measured, all well above zero. Third line (dark): what the fitted model says the squares' autocorrelation should be, $`\rho_k`$ from Step 4. The measured squares sit a little below the model's line: sample autocorrelations of squares are noisy, and tend to run low, in samples of this size.
 
 ### Step 2: the variance has a long-run level
 
-Average both sides of the rule for tomorrow's variance over all possible histories. The average squared return equals the average variance, because each day's squared return averages to that day's variance. So the average variance obeys one line of arithmetic: tomorrow's average is ω plus φ times today's. If the average has settled, tomorrow's equals today's, and solving gives $\bar h = \omega / (1 - \phi)$.
+Average both sides of the rule for tomorrow's variance over all possible histories. The average squared return equals the average variance, because each day's squared return averages to that day's variance. So the average variance obeys one line of arithmetic: tomorrow's average is ω plus φ times today's. If the average has settled, tomorrow's equals today's, and solving gives $`\bar h = \omega / (1 - \phi)`$.
 
 For the true settings, 0.05 / (1 − 0.98) is 2.5. The fitted settings give 2.3620, with standard error 0.3005; the plain average of the squared returns is 2.3449. The two estimates agree, and the truth sits well inside the fitted value's error.
 
 ### Step 3: the forecast is pulled home geometrically
 
-Stand at the close of day t. Tomorrow's variance $h_{t+1}$ is already fixed by the rule. Call the average forecast k days ahead m(k), so m(1) is that known value. The same averaging as Step 2, done from the evening of day t rather than over all history, gives
+Stand at the close of day t. Tomorrow's variance $`h_{t+1}`$ is already fixed by the rule. Call the average forecast k days ahead m(k), so m(1) is that known value. The same averaging as Step 2, done from the evening of day t rather than over all history, gives
 
 m(k + 1) = ω + φ · m(k).
 
-Subtract the long-run level, which satisfies the same equation with m replaced by $\bar h$: the gap m(k) − $\bar h$ is multiplied by φ each day. After k − 1 days it has been multiplied by φ to the power k − 1, which is the forecast formula. The gap halves after ln(1/2) / ln φ days, the **half-life**: 25.3 days for the fitted persistence 0.9730, and 34.3 days for the true 0.98.
+Subtract the long-run level, which satisfies the same equation with m replaced by $`\bar h`$: the gap m(k) − $`\bar h`$ is multiplied by φ each day. After k − 1 days it has been multiplied by φ to the power k − 1, which is the forecast formula. The gap halves after ln(1/2) / ln φ days, the **half-life**: 25.3 days for the fitted persistence 0.9730, and 34.3 days for the true 0.98.
 
 EWMA is the case φ = 1 with no constant. Its gap is multiplied by 1 each day: the forecast for every future day equals tomorrow's.
 
@@ -149,36 +157,40 @@ The code checks the formula a second way, by simulating the future: 20,000 paths
 
 ### Step 4: the squares follow an ARMA(1,1)
 
-Write the squared return as its forecast plus a surprise: $r_t^2 = h_t + u_t$, where $u_t$ averages zero given the past. Put that into the variance rule, replacing yesterday's variance by yesterday's square minus yesterday's surprise:
+Write the squared return as its forecast plus a surprise: $`r_t^2 = h_t + u_t`$, where $`u_t`$ averages zero given the past. Put that into the variance rule, replacing yesterday's variance by yesterday's square minus yesterday's surprise:
 
-$$r_t^2 = \omega + \phi\, r_{t-1}^2 + u_t - \beta\, u_{t-1}$$
+```math
+r_t^2 = \omega + \phi\, r_{t-1}^2 + u_t - \beta\, u_{t-1}
+```
 
 The squares follow an autoregression with coefficient φ, plus a one-day moving average of the surprises: an ARMA(1,1) ([Moving average and ARMA](03-ma-and-arma.md)). Its autocorrelations decay by φ per day after the first:
 
-$$\rho_1 = \frac{\alpha\,(1 - \alpha\beta - \beta^2)}{1 - 2\alpha\beta - \beta^2}, \qquad \rho_k = \phi^{\,k-1}\,\rho_1$$
+```math
+\rho_1 = \frac{\alpha\,(1 - \alpha\beta - \beta^2)}{1 - 2\alpha\beta - \beta^2}, \qquad \rho_k = \phi^{\,k-1}\,\rho_1
+```
 
-For the fitted settings $\rho_1$ is 0.186200, about 0.19. The code reaches the same 0.186200 a second way, by unrolling the ARMA(1,1) into weights on past surprises (1, then φ − β, then φ times the last) and dividing the sum of neighbouring products by the sum of squares. The formula needs the squares to have a finite variance, which for normal surprises holds when $3\alpha^2 + 2\alpha\beta + \beta^2 < 1$; the true settings meet it, narrowly.
+For the fitted settings $`\rho_1`$ is 0.186200, about 0.19. The code reaches the same 0.186200 a second way, by unrolling the ARMA(1,1) into weights on past surprises (1, then φ − β, then φ times the last) and dividing the sum of neighbouring products by the sum of squares. The formula needs the squares to have a finite variance, which for normal surprises holds when $`3\alpha^2 + 2\alpha\beta + \beta^2 < 1`$; the true settings meet it, narrowly.
 
 <details>
 <summary>Detailed proof: the autocorrelation of the squares</summary>
 
-Centre the squares: let y(t) be $r_t^2$ minus its long-run average $\bar h$. Step 2's averaging turns the equation above into y(t) = φ y(t−1) + $u_t$ − β u(t−1). The surprises are uncorrelated with each other and with everything earlier; call their common variance s. Assume the squares have a finite, settled variance, the condition in the body.
+Centre the squares: let y(t) be $`r_t^2`$ minus its long-run average $`\bar h`$. Step 2's averaging turns the equation above into y(t) = φ y(t−1) + $`u_t`$ − β u(t−1). The surprises are uncorrelated with each other and with everything earlier; call their common variance s. Assume the squares have a finite, settled variance, the condition in the body.
 
-**Covariance of y with the surprises.** y(t) contains $u_t$ once, so Cov(y(t), $u_t$) = s. And Cov(y(t), u(t−1)) = φ Cov(y(t−1), u(t−1)) − β s = (φ − β) s = α s.
+**Covariance of y with the surprises.** y(t) contains $`u_t`$ once, so Cov(y(t), $`u_t`$) = s. And Cov(y(t), u(t−1)) = φ Cov(y(t−1), u(t−1)) − β s = (φ − β) s = α s.
 
-**The variance.** Write g0 for Var y and g1 for Cov(y(t), y(t−1)). Taking the variance of both sides, $g_0 = \phi^2 g_0 + s + \beta^2 s - 2\phi\beta s$, so $g_0 = s\,(1 + \beta^2 - 2\phi\beta) / (1 - \phi^2)$.
+**The variance.** Write g0 for Var y and g1 for Cov(y(t), y(t−1)). Taking the variance of both sides, $`g_0 = \phi^2 g_0 + s + \beta^2 s - 2\phi\beta s`$, so $`g_0 = s\,(1 + \beta^2 - 2\phi\beta) / (1 - \phi^2)`$.
 
 **Lag one.** Multiply the equation by y(t−1) and average: g1 = φ g0 − β Cov(u(t−1), y(t−1)) = φ g0 − β s.
 
-**Divide.** $\rho_1 = g_1 / g_0 = \phi - \beta(1 - \phi^2)/(1 + \beta^2 - 2\phi\beta)$. Over the common bottom the top is $\phi + \phi\beta^2 - \phi^2\beta - \beta = (\phi - \beta)(1 - \phi\beta)$. With φ − β = α and φ = α + β, the top is $\alpha(1 - \alpha\beta - \beta^2)$ and the bottom is $1 - 2\alpha\beta - \beta^2$, the formula in the body.
+**Divide.** $`\rho_1 = g_1 / g_0 = \phi - \beta(1 - \phi^2)/(1 + \beta^2 - 2\phi\beta)`$. Over the common bottom the top is $`\phi + \phi\beta^2 - \phi^2\beta - \beta = (\phi - \beta)(1 - \phi\beta)`$. With φ − β = α and φ = α + β, the top is $`\alpha(1 - \alpha\beta - \beta^2)`$ and the bottom is $`1 - 2\alpha\beta - \beta^2`$, the formula in the body.
 
-**Later lags.** For k of 2 or more, multiply by y(t−k) and average. Both surprises, $u_t$ and u(t−1), are uncorrelated with y(t−k), so the k-lag covariance is φ times the (k−1)-lag one. Divide by g0: $\rho_k$ = φ to the power k − 1, times $\rho_1$.
+**Later lags.** For k of 2 or more, multiply by y(t−k) and average. Both surprises, $`u_t`$ and u(t−1), are uncorrelated with y(t−k), so the k-lag covariance is φ times the (k−1)-lag one. Divide by g0: $`\rho_k`$ = φ to the power k − 1, times $`\rho_1`$.
 
 </details>
 
 ### Step 5: the likelihood splits into one-day pieces
 
-The chance of the whole record factors day by day: the density of day 1, times that of day 2 given day 1, and so on, the chain rule for conditional densities. Given the past, day t's return is normal with centre zero and variance $h_t$, and the logarithm of that normal density is −½ [ln(2π $h_t$) + $r_t^2$ / $h_t$]. Adding the days gives $\ell$. The first day's variance has no past; the code starts it at the plain average of the squared returns.
+The chance of the whole record factors day by day: the density of day 1, times that of day 2 given day 1, and so on, the chain rule for conditional densities. Given the past, day t's return is normal with centre zero and variance $`h_t`$, and the logarithm of that normal density is −½ [ln(2π $`h_t`$) + $`r_t^2`$ / $`h_t`$]. Adding the days gives $`\ell`$. The first day's variance has no past; the code starts it at the plain average of the squared returns.
 
 The two terms pull against each other: the squared-return term rewards a large forecast variance and the logarithm term charges for it. For one day alone the best variance is that day's squared return; three settings must serve all 2,500 days, and the peak is the best compromise.
 
@@ -244,7 +256,7 @@ The code prints all four.
 
 Nothing imported knows the answer. The scripts simulate the share from the true rule, using a SplitMix64 generator (seed 2026) and Box–Muller normal draws ([Rejection sampling and Box-Muller](../11-Simulation/03-rejection-sampling-and-box-muller.md)). They fit both rules with searches written out here.
 
-Three roads meet. The fit is checked against the known truth and against a grid search with the long-run level pinned to the plain variance. The forecast formula is checked against 20,000 simulated futures ([Monte Carlo](../11-Simulation/04-monte-carlo-estimates-and-error.md)), with four standard errors allowed. The clustering is checked against the same days shuffled and, loosely, against the model's $\rho_1$; the $\rho_1$ formula itself is checked tightly against the ARMA(1,1)'s own weights, summed 4,000 days back.
+Three roads meet. The fit is checked against the known truth and against a grid search with the long-run level pinned to the plain variance. The forecast formula is checked against 20,000 simulated futures ([Monte Carlo](../11-Simulation/04-monte-carlo-estimates-and-error.md)), with four standard errors allowed. The clustering is checked against the same days shuffled and, loosely, against the model's $`\rho_1`$; the $`\rho_1`$ formula itself is checked tightly against the ARMA(1,1)'s own weights, summed 4,000 days back.
 
 ### Python
 
@@ -645,10 +657,10 @@ The two outputs match line for line: the same generator, the same climb and the 
 Lean proves Steps 2, 3 and 4 inside the model, for any positive constant and non-negative weights with persistence below 1.
 
 - **The forecast is pulled home.** Suppose each variance is the expected next squared return, given the past, and follows the rule. Then the forecast k days ahead is the long-run level plus the persistence to the power k − 1, times tomorrow's gap from it.
-- **The average variance settles.** Take the same model. Then the average variance over all histories approaches the long-run level $\bar h$ as the days go by.
-- **The squares' autocorrelation.** Suppose $3\alpha^2 + 2\alpha\beta + \beta^2 < 1$, and the squares' covariances obey the equations in Step 4's detailed proof. Then $\rho_k = \phi^{\,k-1}\,\rho_1$ for every k of 1 or more, with $\rho_1$ as in Step 4.
+- **The average variance settles.** Take the same model. Then the average variance over all histories approaches the long-run level $`\bar h`$ as the days go by.
+- **The squares' autocorrelation.** Suppose $`3\alpha^2 + 2\alpha\beta + \beta^2 < 1`$, and the squares' covariances obey the equations in Step 4's detailed proof. Then $`\rho_k = \phi^{\,k-1}\,\rho_1`$ for every k of 1 or more, with $`\rho_1`$ as in Step 4.
 - **The worked numbers.** The hand table checks out: long-run variance 2.5, tomorrow's variance 5.18, persistence 0.98, and 4.7344 ten days ahead.
-- **The finite-variance condition.** Take the true settings, α = 0.08 and β = 0.90. Then $3\alpha^2 + 2\alpha\beta + \beta^2$ is 0.9732, just below 1.
+- **The finite-variance condition.** Take the true settings, α = 0.08 and β = 0.90. Then $`3\alpha^2 + 2\alpha\beta + \beta^2`$ is 0.9732, just below 1.
 
 The Python and Rust checks cover the rest: the fit by maximum likelihood, the covariance equations themselves, and the measured clustering.
 

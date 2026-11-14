@@ -24,32 +24,38 @@ A complex number s = σ + iω holds a damping rate σ and a frequency ω. A tran
 
 The **two-sided Laplace transform** is the Laplace transform ([The Laplace transform](05-laplace-transform.md)) run over all time, past as well as future.
 
-$$F(s) = \int_{-\infty}^{\infty} f(t)\, e^{-st}\, dt, \qquad \alpha < \operatorname{Re} s < \beta$$
+```math
+F(s) = \int_{-\infty}^{\infty} f(t)\, e^{-st}\, dt, \qquad \alpha < \mathrm{Re}\, s < \beta
+```
 
 **Read it aloud:** F at s is the signal, damped at rate Re s and spun at rate Im s, summed over all time, for s between the edges α and β.
 
 The inverse runs up a vertical line:
 
-$$f(t) = \frac{1}{2\pi i}\int_{\sigma - i\infty}^{\sigma + i\infty} F(s)\, e^{st}\, ds \quad \text{for every } \sigma \text{ with } \alpha < \sigma < \beta$$
+```math
+f(t) = \frac{1}{2\pi i}\int_{\sigma - i\infty}^{\sigma + i\infty} F(s)\, e^{st}\, ds \quad \text{for every } \sigma \text{ with } \alpha < \sigma < \beta
+```
 
 **Read it aloud:** the signal at t is the transform, spun forward to t, integrated up any vertical line in the strip.
 
 On the line s = a + iω, e^(−st) is e^(−at) times e^(−iωt), so:
 
-$$\int_{-\infty}^{\infty} e^{-at} f(t)\, e^{-i\omega t}\, dt = F(a + i\omega)$$
+```math
+\int_{-\infty}^{\infty} e^{-at} f(t)\, e^{-i\omega t}\, dt = F(a + i\omega)
+```
 
 **Read it aloud:** the Fourier transform of the signal damped by e^(−at) is F along the line Re s = a.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time in years; today is 0 | 5, and −10 | — |
-| $s$ | a complex rate σ + iω; i is the quarter turn, i^2 = −1 | 0.10, 0.1i | — |
-| $\sigma$, $\omega$ | Re s, the damping rate; Im s, the frequency, radians per year | 0.10, 0.05 | more damping, smaller transform |
-| $f$, $F$ | the balance e^(0.05t) from today on; its transform | F(0.10) = 20 | — |
-| $h$, $H$ | the balance grown then drawn down; its transform | H(0) = 25 | — |
-| $a$ | a damping rate | 0.10 | must exceed 0.05 |
-| $\alpha$, $\beta$ | the strip's left and right edges | −0.20, 0.05 for h | further apart: more lines to choose from |
-| $R$, $\operatorname{Res}$ | half-height of a rectangle; the residue at a pole | 0.1, 1, 10; −e^(0.05t) | the rectangle's ends fade |
+| $`t`$ | time in years; today is 0 | 5, and −10 | — |
+| $`s`$ | a complex rate σ + iω; i is the quarter turn, i^2 = −1 | 0.10, 0.1i | — |
+| $`\sigma`$, $`\omega`$ | Re s, the damping rate; Im s, the frequency, radians per year | 0.10, 0.05 | more damping, smaller transform |
+| $`f`$, $`F`$ | the balance e^(0.05t) from today on; its transform | F(0.10) = 20 | — |
+| $`h`$, $`H`$ | the balance grown then drawn down; its transform | H(0) = 25 | — |
+| $`a`$ | a damping rate | 0.10 | must exceed 0.05 |
+| $`\alpha`$, $`\beta`$ | the strip's left and right edges | −0.20, 0.05 for h | further apart: more lines to choose from |
+| $`R`$, $`\mathrm{Res}`$ | half-height of a rectangle; the residue at a pole | 0.1, 1, 10; −e^(0.05t) | the rectangle's ends fade |
 
 ### When it holds
 
@@ -71,7 +77,9 @@ The factor e^(−st) is e^(−σt) times e^(−iωt), and the second part has si
 
 Take f(t) = e^(0.05t) for t ≥ 0 and 0 before. Summed to T years:
 
-$$\int_0^T e^{(0.05 - s)t}\, dt = \frac{1 - e^{(0.05 - s)T}}{s - 0.05}.$$
+```math
+\int_0^T e^{(0.05 - s)t}\, dt = \frac{1 - e^{(0.05 - s)T}}{s - 0.05}.
+```
 
 The leftover term has size e^((0.05 − σ)T), which dies exactly when σ > 0.05. At s = 0.10 the sums read 19.865241 at 100 years and 19.999092 at 200, heading for 20. At s = 0.03 they read 319.452805 and 2679.907502. So F(s) = 1/(s − 0.05) on Re s > 0.05, and the edge is the growth rate, where F has its pole.
 
@@ -81,7 +89,9 @@ Let the balance grow at 5 percent up to today, then be drawn down at 20 percent 
 
 The past half needs σ < 0.05; the future half needs σ > −0.20. Both hold on the strip −0.20 < Re s < 0.05, where
 
-$$H(s) = \frac{1}{0.05 - s} + \frac{1}{s + 0.20}.$$
+```math
+H(s) = \frac{1}{0.05 - s} + \frac{1}{s + 0.20}.
+```
 
 The strip holds the imaginary axis, so h has a Fourier transform undamped: at s = 0.1i both H and the summed integral give 8 + 6i. H(0) = 25 is the area under h.
 

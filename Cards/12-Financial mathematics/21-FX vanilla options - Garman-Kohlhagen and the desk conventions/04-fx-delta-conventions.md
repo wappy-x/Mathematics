@@ -30,38 +30,44 @@ The number matters beyond hedging. Currency dealers quote options by delta, not 
 
 ## The formula
 
-Notation first, in words. The Greek capital delta, $\Delta$, is the hedge ratio: euros to hold per euro of notional. A subscript says what the hedge is made of, S for spot (euros for delivery now) and F for forward (euros for delivery on the expiry date). The superscript "pa" marks the premium-adjusted versions.
+Notation first, in words. The Greek capital delta, $`\Delta`$, is the hedge ratio: euros to hold per euro of notional. A subscript says what the hedge is made of, S for spot (euros for delivery now) and F for forward (euros for delivery on the expiry date). The superscript "pa" marks the premium-adjusted versions.
 
-$$\Delta_S = e^{-r_f T}N(d_1), \qquad \Delta_F = N(d_1)$$
+```math
+\Delta_S = e^{-r_f T}N(d_1), \qquad \Delta_F = N(d_1)
+```
 
-$$\Delta_S^{\text{pa}} = \Delta_S - \frac{C}{S} = \frac{K}{S}\,e^{-r_d T}N(d_2), \qquad \Delta_F^{\text{pa}} = \frac{K}{F}\,N(d_2)$$
+```math
+\Delta_S^{\text{pa}} = \Delta_S - \frac{C}{S} = \frac{K}{S}\,e^{-r_d T}N(d_2), \qquad \Delta_F^{\text{pa}} = \frac{K}{F}\,N(d_2)
+```
 
-**Read it aloud:** the spot delta is $N(d_1)$ euros, shrunk by a year of euro interest; the forward delta drops the shrinking; the premium-adjusted delta takes away the premium, counted in euros, and what remains is the cash leg of the option measured in euros.
+**Read it aloud:** the spot delta is $`N(d_1)`$ euros, shrunk by a year of euro interest; the forward delta drops the shrinking; the premium-adjusted delta takes away the premium, counted in euros, and what remains is the cash leg of the option measured in euros.
 
-For a put (the right to sell euros at the strike) replace $N(d_1)$ by $-N(-d_1)$ and $N(d_2)$ by $-N(-d_2)$. The formulas are otherwise unchanged.
+For a put (the right to sell euros at the strike) replace $`N(d_1)`$ by $`-N(-d_1)`$ and $`N(d_2)`$ by $`-N(-d_2)`$. The formulas are otherwise unchanged.
 
 A call is *out of the money* when its strike is above today's rate, so exercising now would lose money; a put is out of the money when its strike is below. The opposite is *in the money*.
 
 | Symbol | Plain meaning | In our example | Push it up and the deltas… |
 | --- | --- | --- | --- |
-| $S$ | spot rate: dollars per euro today | 1.1000 | rise on the out-of-the-money side, where quotes live |
-| $K$ | strike: the dollars per euro the buyer may pay | 1.1000 | fall (the premium-adjusted call delta only right of its peak, Step 5) |
-| $T$ | time to expiry, in years | 1 | spot and forward drift apart; the premium gap widens |
-| $r_d$, $r_f$ | domestic (dollar) and foreign (euro) interest rates, continuously compounded | 5%, 3% | $r_f$ up lowers $\Delta_S$ through $e^{-r_f T}$ |
-| $\sigma$ | volatility of the exchange rate, per year | 10% | here all four fall; the premium-adjusted ones fall fastest |
-| $F$, $F_0$ | forward rate: $S\,e^{(r_d - r_f)T}$, the rate agreed today for exchange at $T$ ($F_0$: one fixed in an existing contract) | 1.122221 | |
-| $d_1$, $d_2$ | distance to the strike in volatility units, $d_2 = d_1 - \sigma\sqrt{T}$ | 0.25, 0.15 | |
-| $N(x)$, $n(x)$ | bell-curve area left of $x$, and the bell-curve height at $x$ | $N(d_1) = 0.598706$ | |
-| $C$, $P$ | call and put premium, dollars per euro of notional | 0.053556, 0.032418 | |
-| $e^{-r_f T}$, $e^{-r_d T}$ | euro and dollar discount factors: what one unit due at $T$ is worth today | 0.970446, 0.951229 | |
-| $\Delta$, $\Delta_S$, $\Delta_F$ | delta in general; spot delta and forward delta, euros per euro of notional | 0.581012, 0.598706 | |
-| $\Delta_S^{\text{pa}}$, $\Delta_F^{\text{pa}}$ | the same two, premium-adjusted | 0.532325, 0.548537 | |
+| $`S`$ | spot rate: dollars per euro today | 1.1000 | rise on the out-of-the-money side, where quotes live |
+| $`K`$ | strike: the dollars per euro the buyer may pay | 1.1000 | fall (the premium-adjusted call delta only right of its peak, Step 5) |
+| $`T`$ | time to expiry, in years | 1 | spot and forward drift apart; the premium gap widens |
+| $`r_d`$, $`r_f`$ | domestic (dollar) and foreign (euro) interest rates, continuously compounded | 5%, 3% | $`r_f`$ up lowers $`\Delta_S`$ through $`e^{-r_f T}`$ |
+| $`\sigma`$ | volatility of the exchange rate, per year | 10% | here all four fall; the premium-adjusted ones fall fastest |
+| $`F`$, $`F_0`$ | forward rate: $`S\,e^{(r_d - r_f)T}`$, the rate agreed today for exchange at $`T`$ ($`F_0`$: one fixed in an existing contract) | 1.122221 | |
+| $`d_1`$, $`d_2`$ | distance to the strike in volatility units, $`d_2 = d_1 - \sigma\sqrt{T}`$ | 0.25, 0.15 | |
+| $`N(x)`$, $`n(x)`$ | bell-curve area left of $`x`$, and the bell-curve height at $`x`$ | $`N(d_1) = 0.598706`$ | |
+| $`C`$, $`P`$ | call and put premium, dollars per euro of notional | 0.053556, 0.032418 | |
+| $`e^{-r_f T}`$, $`e^{-r_d T}`$ | euro and dollar discount factors: what one unit due at $`T`$ is worth today | 0.970446, 0.951229 | |
+| $`\Delta`$, $`\Delta_S`$, $`\Delta_F`$ | delta in general; spot delta and forward delta, euros per euro of notional | 0.581012, 0.598706 | |
+| $`\Delta_S^{\text{pa}}`$, $`\Delta_F^{\text{pa}}`$ | the same two, premium-adjusted | 0.532325, 0.548537 | |
 
 The helper numbers, as on the Garman-Kohlhagen card:
 
-$$d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}.$$
+```math
+d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}.
+```
 
-In words: $d_2$ is how many volatility units the forward sits above the strike, after the drag that volatility puts on the typical outcome; $d_1$ is one volatility unit further.
+In words: $`d_2`$ is how many volatility units the forward sits above the strike, after the drag that volatility puts on the typical outcome; $`d_1`$ is one volatility unit further.
 
 ### When it holds
 
@@ -82,43 +88,53 @@ The option's price moves when the exchange rate moves. The dealer who sold it wa
 
 ### Step 1: spot delta is the slope of the price
 
-Buy one euro today and hold it. Its dollar value moves one-for-one with the rate, and the euro earns euro interest, so a euro due at expiry costs $e^{-r_f T}$ euros today. The slope of the call's price in the spot rate is (from [The Greeks of a currency option](03-garman-kohlhagen-greeks.md)):
+Buy one euro today and hold it. Its dollar value moves one-for-one with the rate, and the euro earns euro interest, so a euro due at expiry costs $`e^{-r_f T}`$ euros today. The slope of the call's price in the spot rate is (from [The Greeks of a currency option](03-garman-kohlhagen-greeks.md)):
 
-$$\frac{\partial C}{\partial S} = e^{-r_f T}N(d_1) = 0.970446 \times 0.598706 = 0.581012.$$
+```math
+\frac{\partial C}{\partial S} = e^{-r_f T}N(d_1) = 0.970446 \times 0.598706 = 0.581012.
+```
 
-The dealer buys 0.581012 euros per euro of notional: EUR 5,810,119. That is $\Delta_S$, the spot delta.
+The dealer buys 0.581012 euros per euro of notional: EUR 5,810,119. That is $`\Delta_S`$, the spot delta.
 
 ### Step 2: forward delta counts forward contracts instead
 
-A forward contract to buy one euro at $T$ for a fixed $F_0$ dollars is worth $S\,e^{-r_f T} - F_0\,e^{-r_d T}$ dollars today. Move the spot a little and its value moves by $e^{-r_f T}$ times as much: less than a euro held today, because the euro arrives a year late and misses a year of euro interest. To match the option's slope with forward contracts takes
+A forward contract to buy one euro at $`T`$ for a fixed $`F_0`$ dollars is worth $`S\,e^{-r_f T} - F_0\,e^{-r_d T}`$ dollars today. Move the spot a little and its value moves by $`e^{-r_f T}`$ times as much: less than a euro held today, because the euro arrives a year late and misses a year of euro interest. To match the option's slope with forward contracts takes
 
-$$\Delta_F = \frac{e^{-r_f T}N(d_1)}{e^{-r_f T}} = N(d_1) = 0.598706$$
+```math
+\Delta_F = \frac{e^{-r_f T}N(d_1)}{e^{-r_f T}} = N(d_1) = 0.598706
+```
 
 contracts per euro of notional. Same exposure, a bigger number, because each contract moves less than a euro in hand.
 
-The forward delta has a tidy property. For a call and a put at the same strike, $N(d_1) - (-N(-d_1)) = 1$: the call's forward delta and the put's add to one in size. So a 25-delta call has the same strike as a 75-delta put, and a smile quoted in forward deltas uses one volatility for both. Spot deltas add to $e^{-r_f T}$ instead, which breaks the pairing slightly.
+The forward delta has a tidy property. For a call and a put at the same strike, $`N(d_1) - (-N(-d_1)) = 1`$: the call's forward delta and the put's add to one in size. So a 25-delta call has the same strike as a 75-delta put, and a smile quoted in forward deltas uses one volatility for both. Spot deltas add to $`e^{-r_f T}`$ instead, which breaks the pairing slightly.
 
 ### Step 3: a premium paid in euros is already part of the hedge
 
-Suppose the buyer pays the premium in euros: $C/S = 0.053556/1.1000 = 0.048687$ euros per euro of notional, EUR 486,871 in all. The dealer now holds those euros. Their dollar value moves with the rate exactly as bought euros would. They are already a hedge of 0.048687, so the dealer buys only
+Suppose the buyer pays the premium in euros: $`C/S = 0.053556/1.1000 = 0.048687`$ euros per euro of notional, EUR 486,871 in all. The dealer now holds those euros. Their dollar value moves with the rate exactly as bought euros would. They are already a hedge of 0.048687, so the dealer buys only
 
-$$\Delta_S^{\text{pa}} = \Delta_S - \frac{C}{S} = 0.581012 - 0.048687 = 0.532325.$$
+```math
+\Delta_S^{\text{pa}} = \Delta_S - \frac{C}{S} = 0.581012 - 0.048687 = 0.532325.
+```
 
-The same result comes from measuring the whole book in euros. The option is worth $C/S$ euros. Keeping its euro value flat, per euro of notional, needs $S$ times the slope of $C/S$:
+The same result comes from measuring the whole book in euros. The option is worth $`C/S`$ euros. Keeping its euro value flat, per euro of notional, needs $`S`$ times the slope of $`C/S`$:
 
-$$S\,\frac{\partial}{\partial S}\!\left(\frac{C}{S}\right) = \frac{\partial C}{\partial S} - \frac{C}{S}.$$
+```math
+S\,\frac{\partial}{\partial S}\!\left(\frac{C}{S}\right) = \frac{\partial C}{\partial S} - \frac{C}{S}.
+```
 
 This is the reason the adjustment exists: a hedge quoted in euros, for a premium paid in euros, must leave the euro account flat, not the dollar account.
 
 ### Step 4: the share half cancels, leaving the cash leg
 
-Write out $C$ and subtract:
+Write out $`C`$ and subtract:
 
-$$e^{-r_f T}N(d_1) - \frac{S e^{-r_f T}N(d_1) - K e^{-r_d T}N(d_2)}{S} = \frac{K}{S}\,e^{-r_d T}N(d_2).$$
+```math
+e^{-r_f T}N(d_1) - \frac{S e^{-r_f T}N(d_1) - K e^{-r_d T}N(d_2)}{S} = \frac{K}{S}\,e^{-r_d T}N(d_2).
+```
 
-The euro-leg term cancels exactly. What is left is the dollar strike the buyer pays, $K\,e^{-r_d T}N(d_2)$, turned into euros at today's rate. For the house call: $1 \times 0.951229 \times 0.559618 = 0.532325$, matching Step 3. Dividing by $e^{-r_f T}$, as in Step 2, gives the forward version $\frac{K}{F}N(d_2) = 0.548537$.
+The euro-leg term cancels exactly. What is left is the dollar strike the buyer pays, $`K\,e^{-r_d T}N(d_2)`$, turned into euros at today's rate. For the house call: $`1 \times 0.951229 \times 0.559618 = 0.532325`$, matching Step 3. Dividing by $`e^{-r_f T}`$, as in Step 2, gives the forward version $`\frac{K}{F}N(d_2) = 0.548537`$.
 
-The adjustment always shrinks a call's delta, because $C/S$ is positive. For a put it makes the negative delta more negative: the spot delta $-0.389434$ less the put premium in euros is $-0.418905$.
+The adjustment always shrinks a call's delta, because $`C/S`$ is positive. For a put it makes the negative delta more negative: the spot delta $`-0.389434`$ less the put premium in euros is $`-0.418905`$.
 
 ### Step 5: the premium-adjusted call delta turns round
 
@@ -127,9 +143,11 @@ The unadjusted call delta falls steadily as the strike rises, so each delta name
 <details>
 <summary>Detailed proof: where the peak sits</summary>
 
-Hold everything but $K$ fixed. The adjusted spot delta is $\frac{e^{-r_d T}}{S}\,K N(d_2)$, so it peaks where $K N(d_2)$ does. Since $d_2$ contains $-\ln K/(\sigma\sqrt{T})$, its slope in $K$ is $-1/(K\sigma\sqrt{T})$. Then
-$$\frac{d}{dK}\big(K N(d_2)\big) = N(d_2) + K\,n(d_2)\cdot\frac{-1}{K\sigma\sqrt{T}} = N(d_2) - \frac{n(d_2)}{\sigma\sqrt{T}}.$$
-Setting this to zero gives $\sigma\sqrt{T}\,N(d_2) = n(d_2)$, the condition in Reiswich and Wystup. Left of the peak the slope is positive; right of it, negative, because $N(d_2)$ falls and $n(d_2)/N(d_2)$ rises as $d_2$ falls. The forward version is the spot version divided by the constant $e^{-r_f T}$, so it peaks at the same strike. The check solves the condition for $d_2$ by bisection, turns it into a strike, and separately searches the delta itself by golden section; both land on 0.94288.
+Hold everything but $`K`$ fixed. The adjusted spot delta is $`\frac{e^{-r_d T}}{S}\,K N(d_2)`$, so it peaks where $`K N(d_2)`$ does. Since $`d_2`$ contains $`-\ln K/(\sigma\sqrt{T})`$, its slope in $`K`$ is $`-1/(K\sigma\sqrt{T})`$. Then
+
+$`\displaystyle \frac{d}{dK}\big(K N(d_2)\big) = N(d_2) + K\,n(d_2)\cdot\frac{-1}{K\sigma\sqrt{T}} = N(d_2) - \frac{n(d_2)}{\sigma\sqrt{T}}.`$
+
+Setting this to zero gives $`\sigma\sqrt{T}\,N(d_2) = n(d_2)`$, the condition in Reiswich and Wystup. Left of the peak the slope is positive; right of it, negative, because $`N(d_2)`$ falls and $`n(d_2)/N(d_2)`$ rises as $`d_2`$ falls. The forward version is the spot version divided by the constant $`e^{-r_f T}`$, so it peaks at the same strike. The check solves the condition for $`d_2`$ by bisection, turns it into a strike, and separately searches the delta itself by golden section; both land on 0.94288.
 
 </details>
 
@@ -141,19 +159,19 @@ The inversion itself, and its bracket, belong to [Strike from delta](06-fx-strik
 
 ## Worked numbers, by hand
 
-House market: $S = K = 1.1000$, $r_d = 5\%$, $r_f = 3\%$, $\sigma = 10\%$, $T = 1$.
+House market: $`S = K = 1.1000`$, $`r_d = 5\%`$, $`r_f = 3\%`$, $`\sigma = 10\%`$, $`T = 1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$ | $(0 + 0.05 - 0.03 + 0.005)/0.10$ | 0.25 |
-| $d_2$ | $0.25 - 0.10$ | 0.15 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.598706, 0.559618 |
-| $F$ | $1.1 \times e^{0.02}$ | 1.122221 |
-| $\Delta_F$ | $N(d_1)$ | 0.598706 |
-| $\Delta_S$ | $0.970446 \times 0.598706$ | 0.581012 |
-| premium in euros, $C/S$ | $0.053556 / 1.1$ | 0.048687 |
-| $\Delta_S^{\text{pa}}$ | $0.581012 - 0.048687$, or $0.951229 \times 0.559618$ | 0.532325 |
-| $\Delta_F^{\text{pa}}$ | $(1.1/1.122221) \times 0.559618$ | **0.548537** |
+| $`d_1`$ | $`(0 + 0.05 - 0.03 + 0.005)/0.10`$ | 0.25 |
+| $`d_2`$ | $`0.25 - 0.10`$ | 0.15 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.598706, 0.559618 |
+| $`F`$ | $`1.1 \times e^{0.02}`$ | 1.122221 |
+| $`\Delta_F`$ | $`N(d_1)`$ | 0.598706 |
+| $`\Delta_S`$ | $`0.970446 \times 0.598706`$ | 0.581012 |
+| premium in euros, $`C/S`$ | $`0.053556 / 1.1`$ | 0.048687 |
+| $`\Delta_S^{\text{pa}}`$ | $`0.581012 - 0.048687`$, or $`0.951229 \times 0.559618`$ | 0.532325 |
+| $`\Delta_F^{\text{pa}}`$ | $`(1.1/1.122221) \times 0.559618`$ | **0.548537** |
 
 On EUR 10,000,000 the dealer buys EUR 5,810,119 spot, or 5,987,063 forward, or, with the premium received in euros, 5,323,248 spot or 5,485,365 forward.
 
@@ -174,16 +192,16 @@ The adjustment always pulls strikes down. A call's adjusted delta is smaller, so
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| hedge a spot book with the forward delta | 176,944 euros too many on EUR 10,000,000 | $N(d_1)$ counts forward contracts, not euros today |
-| discount $N(d_1)$ at the dollar rate | 0.569507 instead of 0.581012 | the euro leg earns euro interest; $e^{-r_f T}$ belongs there |
-| subtract the premium in dollars, $\Delta_S - C$ | 0.527456 instead of 0.532325 | the premium must be converted to euros first: $C/S$ |
+| hedge a spot book with the forward delta | 176,944 euros too many on EUR 10,000,000 | $`N(d_1)`$ counts forward contracts, not euros today |
+| discount $`N(d_1)`$ at the dollar rate | 0.569507 instead of 0.581012 | the euro leg earns euro interest; $`e^{-r_f T}`$ belongs there |
+| subtract the premium in dollars, $`\Delta_S - C`$ | 0.527456 instead of 0.532325 | the premium must be converted to euros first: $`C/S`$ |
 | read a premium-adjusted 25-delta quote as spot delta | strike 58.6 pips too high | the wrong strike gets the quoted volatility |
 
 ### Why maturity decides the convention
 
-The gap between spot and forward delta is the factor $e^{-r_f T}$, and the premium gap grows with $\sigma\sqrt{T}$. At the at-the-money-forward strike ($K = F$ for each maturity):
+The gap between spot and forward delta is the factor $`e^{-r_f T}`$, and the premium gap grows with $`\sigma\sqrt{T}`$. At the at-the-money-forward strike ($`K = F`$ for each maturity):
 
-| Maturity | $\Delta_S$ | $\Delta_F$ | $\Delta_S^{\text{pa}}$ | $\Delta_F^{\text{pa}}$ |
+| Maturity | $`\Delta_S`$ | $`\Delta_F`$ | $`\Delta_S^{\text{pa}}`$ | $`\Delta_F^{\text{pa}}`$ |
 | --- | --- | --- | --- | --- |
 | 1 month | 0.5045 | 0.5058 | 0.4930 | 0.4942 |
 | 1 year | 0.5046 | 0.5199 | 0.4659 | 0.4801 |
@@ -591,14 +609,14 @@ Orange: spot delta. Green: forward delta, which starts at 1.00 for deep in-the-m
 
 Lean proves the four delta formulas and the rules of Steps 2 and 3, for every positive spot, strike, volatility and time.
 
-- Suppose $S$, $K$, $\sigma$ and $T$ are all positive, and $r_d$, $r_f$ are any fixed rates. Then $\Delta_F = \Delta_S / e^{-r_f T} = N(d_1)$, the spot delta counted in forward contracts.
-- Take the same conditions. Then the premium-adjusted spot delta, $\Delta_S - C/S$, equals $\frac{K}{S}e^{-r_d T}N(d_2)$.
-- Take the same conditions. Then dividing by $e^{-r_f T}$ gives the premium-adjusted forward delta, $\frac{K}{F}N(d_2)$.
-- Take the same conditions, for a put. Then its spot delta less $P/S$ equals $-\frac{K}{S}e^{-r_d T}N(-d_2)$.
-- Take any $d_1$. Then $N(d_1) - (-N(-d_1)) = 1$: a call's and a put's forward deltas add to one in size.
-- Take any premium $C$ that has a slope in the spot at $S$, with $S$ not zero. Then $S\,\frac{\partial}{\partial S}(C/S) = \frac{\partial C}{\partial S} - \frac{C}{S}$.
-- At the house inputs, exact arithmetic gives $d_1 = 0.25$ and $d_2 = 0.15$.
-- Step 3's subtraction checks: $0.581012 - 0.048687 = 0.532325$.
+- Suppose $`S`$, $`K`$, $`\sigma`$ and $`T`$ are all positive, and $`r_d`$, $`r_f`$ are any fixed rates. Then $`\Delta_F = \Delta_S / e^{-r_f T} = N(d_1)`$, the spot delta counted in forward contracts.
+- Take the same conditions. Then the premium-adjusted spot delta, $`\Delta_S - C/S`$, equals $`\frac{K}{S}e^{-r_d T}N(d_2)`$.
+- Take the same conditions. Then dividing by $`e^{-r_f T}`$ gives the premium-adjusted forward delta, $`\frac{K}{F}N(d_2)`$.
+- Take the same conditions, for a put. Then its spot delta less $`P/S`$ equals $`-\frac{K}{S}e^{-r_d T}N(-d_2)`$.
+- Take any $`d_1`$. Then $`N(d_1) - (-N(-d_1)) = 1`$: a call's and a put's forward deltas add to one in size.
+- Take any premium $`C`$ that has a slope in the spot at $`S`$, with $`S`$ not zero. Then $`S\,\frac{\partial}{\partial S}(C/S) = \frac{\partial C}{\partial S} - \frac{C}{S}`$.
+- At the house inputs, exact arithmetic gives $`d_1 = 0.25`$ and $`d_2 = 0.15`$.
+- Step 3's subtraction checks: $`0.581012 - 0.048687 = 0.532325`$.
 - The hedge gaps check: 486,871 euros of premium, and 176,944 euros too many with the forward delta.
 - The pip gaps of the 25-delta call strikes check, and those of the first two put strikes.
 
@@ -759,9 +777,9 @@ example : (105428 : ℤ) - 105679 = -251 ∧ (105179 : ℤ) - 105679 = -500 := b
 > **Treating "delta" as one number.** A delta figure without its convention is not a hedge and not a strike. The same EURUSD call has spot delta 0.5810, forward delta 0.5987 and premium-adjusted spot delta 0.5323; a 25-delta call strike moves 58.6 pips between the spot and adjusted readings. Ask two questions before using any delta: hedged with what, and premium paid in which currency.
 >
 > Smaller traps:
-> - **Using $N(d_1)$ as the spot hedge.** That is the forward delta. On EUR 10,000,000 it over-hedges by 176,944 euros.
-> - **Discounting the euro leg at the dollar rate.** $e^{-r_d T}N(d_1) = 0.569507$ is no delta at all. The euro leg earns euro interest.
-> - **Subtracting the premium in dollars.** $\Delta_S - C = 0.527456$ mixes units. The premium must be in euros, $C/S$, before it comes off a hedge counted in euros.
+> - **Using $`N(d_1)`$ as the spot hedge.** That is the forward delta. On EUR 10,000,000 it over-hedges by 176,944 euros.
+> - **Discounting the euro leg at the dollar rate.** $`e^{-r_d T}N(d_1) = 0.569507`$ is no delta at all. The euro leg earns euro interest.
+> - **Subtracting the premium in dollars.** $`\Delta_S - C = 0.527456`$ mixes units. The premium must be in euros, $`C/S`$, before it comes off a hedge counted in euros.
 > - **Taking the wrong strike for an adjusted call delta.** Below 0.778348 two strikes share each adjusted delta. The quote means the out-of-the-money one, right of the peak at 0.94288.
 
 ---
@@ -788,13 +806,13 @@ flowchart TB
 ```
 
 > **Say it back**
-> A delta is the number of euros that hedges the option, and a currency option has four of them. Hedging with forward contracts instead of euros today divides out the euro discount factor, so the forward delta is $N(d_1)$. If the premium arrives in euros it is already part of the hedge, so it comes off: what remains is the option's dollar leg counted in euros. The adjusted call delta rises then falls in the strike, so it names two strikes, and quotes mean the out-of-the-money one. Which delta a "25 delta" quote means is a market default set by pair and maturity, and the choice moves the strike by tens of pips.
+> A delta is the number of euros that hedges the option, and a currency option has four of them. Hedging with forward contracts instead of euros today divides out the euro discount factor, so the forward delta is $`N(d_1)`$. If the premium arrives in euros it is already part of the hedge, so it comes off: what remains is the option's dollar leg counted in euros. The adjusted call delta rises then falls in the strike, so it names two strikes, and quotes mean the out-of-the-money one. Which delta a "25 delta" quote means is a market default set by pair and maturity, and the choice moves the strike by tens of pips.
 
 ---
 
 ## What this builds on
 
-- [The Greeks of a currency option](03-garman-kohlhagen-greeks.md): the spot delta $e^{-r_f T}N(d_1)$ as the slope of the Garman-Kohlhagen price, which Step 1 takes as given and every other delta here rescales or adjusts.
+- [The Greeks of a currency option](03-garman-kohlhagen-greeks.md): the spot delta $`e^{-r_f T}N(d_1)`$ as the slope of the Garman-Kohlhagen price, which Step 1 takes as given and every other delta here rescales or adjusts.
 
 ## Where this goes next
 

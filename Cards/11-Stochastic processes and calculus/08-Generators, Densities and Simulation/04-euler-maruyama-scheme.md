@@ -35,39 +35,45 @@ Orange: Euler-Maruyama with 13 steps of 4 weeks. Green: Euler-Maruyama with 52 w
 
 ## The formula
 
-Reminder from [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md): time $t$ is in years, $W_t$ is Brownian motion, and an SDE $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$ is shorthand for an integral equation, never a derivative, since a Brownian path has no slope. Split the horizon $T$ into $n$ steps of length $\Delta t = T/n$, at grid times $t_k = k\,\Delta t$. The scheme builds numbers $Y_0, Y_1, \dots, Y_n$, one per grid time:
+Reminder from [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md): time $`t`$ is in years, $`W_t`$ is Brownian motion, and an SDE $`dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t`$ is shorthand for an integral equation, never a derivative, since a Brownian path has no slope. Split the horizon $`T`$ into $`n`$ steps of length $`\Delta t = T/n`$, at grid times $`t_k = k\,\Delta t`$. The scheme builds numbers $`Y_0, Y_1, \dots, Y_n`$, one per grid time:
 
-$$Y_{k+1} = Y_k + \mu(Y_k, t_k)\,\Delta t + \sigma(Y_k, t_k)\,\Delta W_k, \qquad \Delta W_k = W_{t_{k+1}} - W_{t_k} = \sqrt{\Delta t}\,Z_k .$$
+```math
+Y_{k+1} = Y_k + \mu(Y_k, t_k)\,\Delta t + \sigma(Y_k, t_k)\,\Delta W_k, \qquad \Delta W_k = W_{t_{k+1}} - W_{t_k} = \sqrt{\Delta t}\,Z_k .
+```
 
-Each $Z_k$ is a fresh standard normal draw, so $\Delta W_k$ has mean 0 and variance $\Delta t$.
+Each $`Z_k`$ is a fresh standard normal draw, so $`\Delta W_k`$ has mean 0 and variance $`\Delta t`$.
 
 **Read it aloud:** the next value is the current value, plus the drift read now times the step, plus the noise size read now times a fresh Brownian step.
 
-For the share, $\mu(x, t) = 0.08x$ and $\sigma(x, t) = 0.40x$, written with the constants $\mu$ = 0.08 and $\sigma$ = 0.40. The scheme multiplies the price each step:
+For the share, $`\mu(x, t) = 0.08x`$ and $`\sigma(x, t) = 0.40x`$, written with the constants $`\mu`$ = 0.08 and $`\sigma`$ = 0.40. The scheme multiplies the price each step:
 
-$$Y_{k+1} = Y_k\,\big(1 + \mu\,\Delta t + \sigma\,\Delta W_k\big), \qquad S_T = S_0 \exp\!\big((\mu - \tfrac12\sigma^2)T + \sigma W_T\big).$$
+```math
+Y_{k+1} = Y_k\,\big(1 + \mu\,\Delta t + \sigma\,\Delta W_k\big), \qquad S_T = S_0 \exp\!\big((\mu - \tfrac12\sigma^2)T + \sigma W_T\big).
+```
 
 The right-hand formula is the exact price on the same Brownian path. This card measures the **strong error**, the average size of the gap on a shared path:
 
-$$\varepsilon(\Delta t) = E\,\big|Y_n - S_T\big| \;\le\; C\sqrt{\Delta t}, \qquad \varepsilon(\Delta t) \approx \sigma^2 \sqrt{T\Delta t/\pi}\;S_0 e^{\mu T} \text{ for the share.}$$
+```math
+\varepsilon(\Delta t) = E\,\big|Y_n - S_T\big| \;\le\; C\sqrt{\Delta t}, \qquad \varepsilon(\Delta t) \approx \sigma^2 \sqrt{T\Delta t/\pi}\;S_0 e^{\mu T} \text{ for the share.}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $T$ | time from today, in years; the horizon | $T$ = 1 year | the error grows |
-| $S_t$, $S_0$, $S_T$ | the exact share price at time $t$, today, at the horizon | $S_0$ = $50; mean of $S_T$ $54.1644 | the error grows in proportion |
-| $X_t$, $X$ | the quantity a general SDE describes; its whole path | the share | — |
-| $\mu$ | the drift: average growth per year, as a fraction of the price | 0.08 | the error grows a little, through the mean price |
-| $\sigma$ | the noise size, called volatility: the spread of yearly moves | 0.40 | the error grows like $\sigma^2$ |
-| $\mu(x,t)$, $\sigma(x,t)$ | the drift function and noise-size function of a general SDE | 0.08x and 0.40x | — |
-| $W_t$, $W_T$, $W$, $\Delta W_k$, $Z_k$ | Brownian motion at time t, at the horizon, as a path; its change over step k; the normal draw behind it | $\Delta W_k$ is normal with variance $\Delta t$ | — |
-| $n$, $\Delta t$, $t_k$, $k$ | number of steps; step length; the k-th grid time; the step counter | $n$ = 1 to 256, $\Delta t$ = 1 to 1/256 year | more steps, smaller error, more work |
-| $Y_k$, $Y_n$ | the scheme's price after k steps; its answer at the horizon | $Y_n$ = $84.71 on the pictured path, 13 steps | — |
-| $\varepsilon$ | the strong error: average size of $Y_n - S_T$ on a shared path | 0.3059 at 256 steps | — |
-| $R$ | the sum over all steps of $\Delta W_k^2 - \Delta t$ | mean 0, variance $2T\Delta t$ | the error grows with it |
-| $u$ | in Step 2, the exact one-step change in the log price, $(\mu - \tfrac12\sigma^2)\Delta t + \sigma\Delta W$; in the proof, a time | 0.4 for the quarter-year step with $Z$ = 2 | the exact factor $e^u$ grows |
-| $\Phi(x)$ | the chance a standard normal draw falls below x | $\Phi(-2.70)$ = 0.0035, the formula's chance that one step for the year goes below 0 | the chance grows |
-| $C$, $L$, $K$, $m$, $s$ | the error bound's constant; the Lipschitz constant, a cap on how fast the coefficients change with x; in the proof, a growth constant, the worst mean-square gap so far, and a time | $L$ = μ + σ for the share | a larger $L$ gives a larger $C$ |
-| $M$, $c_1$, $e(t)$, $A$, $B$, $r$, $x_0$, $\bar Y_s$, $\tilde Y_t$ | in the proof: a cap on the solution's mean square; the constant in the within-step movement; the mean-square gap at time t; the two Gronwall constants; a time inside an integral; the start; the scheme held flat over each step; the scheme joined up between grid times by integrals | — | a larger $A$ or $B$ gives a larger $C$ |
+| $`t`$, $`T`$ | time from today, in years; the horizon | $`T`$ = 1 year | the error grows |
+| $`S_t`$, $`S_0`$, $`S_T`$ | the exact share price at time $`t`$, today, at the horizon | $`S_0`$ = $50; mean of $`S_T`$ $54.1644 | the error grows in proportion |
+| $`X_t`$, $`X`$ | the quantity a general SDE describes; its whole path | the share | — |
+| $`\mu`$ | the drift: average growth per year, as a fraction of the price | 0.08 | the error grows a little, through the mean price |
+| $`\sigma`$ | the noise size, called volatility: the spread of yearly moves | 0.40 | the error grows like $`\sigma^2`$ |
+| $`\mu(x,t)`$, $`\sigma(x,t)`$ | the drift function and noise-size function of a general SDE | 0.08x and 0.40x | — |
+| $`W_t`$, $`W_T`$, $`W`$, $`\Delta W_k`$, $`Z_k`$ | Brownian motion at time t, at the horizon, as a path; its change over step k; the normal draw behind it | $`\Delta W_k`$ is normal with variance $`\Delta t`$ | — |
+| $`n`$, $`\Delta t`$, $`t_k`$, $`k`$ | number of steps; step length; the k-th grid time; the step counter | $`n`$ = 1 to 256, $`\Delta t`$ = 1 to 1/256 year | more steps, smaller error, more work |
+| $`Y_k`$, $`Y_n`$ | the scheme's price after k steps; its answer at the horizon | $`Y_n`$ = $84.71 on the pictured path, 13 steps | — |
+| $`\varepsilon`$ | the strong error: average size of $`Y_n - S_T`$ on a shared path | 0.3059 at 256 steps | — |
+| $`R`$ | the sum over all steps of $`\Delta W_k^2 - \Delta t`$ | mean 0, variance $`2T\Delta t`$ | the error grows with it |
+| $`u`$ | in Step 2, the exact one-step change in the log price, $`(\mu - \tfrac12\sigma^2)\Delta t + \sigma\Delta W`$; in the proof, a time | 0.4 for the quarter-year step with $`Z`$ = 2 | the exact factor $`e^u`$ grows |
+| $`\Phi(x)`$ | the chance a standard normal draw falls below x | $`\Phi(-2.70)`$ = 0.0035, the formula's chance that one step for the year goes below 0 | the chance grows |
+| $`C`$, $`L`$, $`K`$, $`m`$, $`s`$ | the error bound's constant; the Lipschitz constant, a cap on how fast the coefficients change with x; in the proof, a growth constant, the worst mean-square gap so far, and a time | $`L`$ = μ + σ for the share | a larger $`L`$ gives a larger $`C`$ |
+| $`M`$, $`c_1`$, $`e(t)`$, $`A`$, $`B`$, $`r`$, $`x_0`$, $`\bar Y_s`$, $`\tilde Y_t`$ | in the proof: a cap on the solution's mean square; the constant in the within-step movement; the mean-square gap at time t; the two Gronwall constants; a time inside an integral; the start; the scheme held flat over each step; the scheme joined up between grid times by integrals | — | a larger $`A`$ or $`B`$ gives a larger $`C`$ |
 
 ### When it holds
 
@@ -83,47 +89,55 @@ $$\varepsilon(\Delta t) = E\,\big|Y_n - S_T\big| \;\le\; C\sqrt{\Delta t}, \qqua
 
 ### Step 0: a zero-average error per step adds up like a random walk
 
-Euler's method for a rate equation makes an error of order $\Delta t^2$ in each step, all pushing the same way ([Euler's method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md)). There are $T/\Delta t$ steps, so the errors add to order $\Delta t$. Euler-Maruyama makes an error of order $\Delta t$ in each step, one power of $\Delta t$ larger, but each averages to zero and they are independent. Independent zero-average errors add like a random walk: $n$ of them, each of size $\Delta t$, total about $\sqrt{n}\,\Delta t = \sqrt{T\Delta t}$. The steps below find the dropped term, measure it, and add it up.
+Euler's method for a rate equation makes an error of order $`\Delta t^2`$ in each step, all pushing the same way ([Euler's method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md)). There are $`T/\Delta t`$ steps, so the errors add to order $`\Delta t`$. Euler-Maruyama makes an error of order $`\Delta t`$ in each step, one power of $`\Delta t`$ larger, but each averages to zero and they are independent. Independent zero-average errors add like a random walk: $`n`$ of them, each of size $`\Delta t`$, total about $`\sqrt{n}\,\Delta t = \sqrt{T\Delta t}`$. The steps below find the dropped term, measure it, and add it up.
 
 ### Step 1: where the scheme comes from
 
 Over one step, the SDE's integral equation reads
 
-$$X_{t_{k+1}} = X_{t_k} + \int_{t_k}^{t_{k+1}} \mu(X_s, s)\,ds + \int_{t_k}^{t_{k+1}} \sigma(X_s, s)\,dW_s .$$
+```math
+X_{t_{k+1}} = X_{t_k} + \int_{t_k}^{t_{k+1}} \mu(X_s, s)\,ds + \int_{t_k}^{t_{k+1}} \sigma(X_s, s)\,dW_s .
+```
 
-Freeze both integrands at the left end of the step. The first integral becomes $\mu(X_{t_k}, t_k)\,\Delta t$. The second becomes $\sigma(X_{t_k}, t_k)$ times the Brownian change over the step. That is the scheme. Freezing at the left end is not a choice of convenience: the Ito integral itself is the limit of left-end sums ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). With $\sigma = 0$ the scheme is Euler's method, term for term.
+Freeze both integrands at the left end of the step. The first integral becomes $`\mu(X_{t_k}, t_k)\,\Delta t`$. The second becomes $`\sigma(X_{t_k}, t_k)`$ times the Brownian change over the step. That is the scheme. Freezing at the left end is not a choice of convenience: the Ito integral itself is the limit of left-end sums ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). With $`\sigma = 0`$ the scheme is Euler's method, term for term.
 
-The code draws $Z_k$ and multiplies by $\sqrt{\Delta t}$, not by $\Delta t$: Brownian variance grows with time, so its size grows with the square root.
+The code draws $`Z_k`$ and multiplies by $`\sqrt{\Delta t}`$, not by $`\Delta t`$: Brownian variance grows with time, so its size grows with the square root.
 
 ### Step 2: one step by hand, and what the scheme leaves out
 
-Take one step of a quarter year from $50, with $Z$ = 2, so $\Delta W$ = 1.0. The drift adds 0.08 × 50 × 0.25 = $1. The noise adds 0.40 × 50 × 1.0 = $20. The scheme lands at $71. The exact solution on the same Brownian step is 50 × e^(0 × 0.25 + 0.4 × 1.0) = $74.5912, since $\mu - \tfrac12\sigma^2$ = 0.08 − 0.08 = 0 for this share. The scheme is $3.5912 short.
+Take one step of a quarter year from $50, with $`Z`$ = 2, so $`\Delta W`$ = 1.0. The drift adds 0.08 × 50 × 0.25 = $1. The noise adds 0.40 × 50 × 1.0 = $20. The scheme lands at $71. The exact solution on the same Brownian step is 50 × e^(0 × 0.25 + 0.4 × 1.0) = $74.5912, since $`\mu - \tfrac12\sigma^2`$ = 0.08 − 0.08 = 0 for this share. The scheme is $3.5912 short.
 
-To see which term is missing, expand the exact one-step factor. Write $u = (\mu - \tfrac12\sigma^2)\Delta t + \sigma\Delta W$, so the exact factor is $e^u = 1 + u + \tfrac12 u^2 + \dots$. The square $u^2$ is $\sigma^2\Delta W^2$ plus pieces of order $\Delta t^{3/2}$, because $\Delta W$ is of size $\sqrt{\Delta t}$. Keeping everything down to order $\Delta t$:
+To see which term is missing, expand the exact one-step factor. Write $`u = (\mu - \tfrac12\sigma^2)\Delta t + \sigma\Delta W`$, so the exact factor is $`e^u = 1 + u + \tfrac12 u^2 + \dots`$. The square $`u^2`$ is $`\sigma^2\Delta W^2`$ plus pieces of order $`\Delta t^{3/2}`$, because $`\Delta W`$ is of size $`\sqrt{\Delta t}`$. Keeping everything down to order $`\Delta t`$:
 
-$$e^u = 1 + \mu\,\Delta t + \sigma\,\Delta W + \tfrac12\sigma^2\big(\Delta W^2 - \Delta t\big) + \text{(order } \Delta t^{3/2}).$$
+```math
+e^u = 1 + \mu\,\Delta t + \sigma\,\Delta W + \tfrac12\sigma^2\big(\Delta W^2 - \Delta t\big) + \text{(order } \Delta t^{3/2}).
+```
 
-The first three terms are the scheme. The fourth is what it drops: $\tfrac12\sigma^2 S\,(\Delta W^2 - \Delta t)$ dollars. In the quarter-year step it is 0.08 × 50 × (1 − 0.25) = $3.0000 of the $3.5912 gap; the rest is the higher-order pieces, large here because a quarter year is a long step.
+The first three terms are the scheme. The fourth is what it drops: $`\tfrac12\sigma^2 S\,(\Delta W^2 - \Delta t)`$ dollars. In the quarter-year step it is 0.08 × 50 × (1 − 0.25) = $3.0000 of the $3.5912 gap; the rest is the higher-order pieces, large here because a quarter year is a long step.
 
-The same step with $Z$ = 1 has $\Delta W^2 = \Delta t$ exactly. The dropped term is $0.0000 and the gap shrinks to $0.0701, the higher-order pieces alone.
+The same step with $`Z`$ = 1 has $`\Delta W^2 = \Delta t`$ exactly. The dropped term is $0.0000 and the gap shrinks to $0.0701, the higher-order pieces alone.
 
 ### Step 3: the dropped term is the size of the step, and zero on average
 
-The Brownian step squared has average $E[\Delta W^2] = \Delta t$. So the dropped term has average zero. Its spread is not zero: $\Delta W^2 = \Delta t\,Z^2$, and $Z^2$ has variance 2, so $\Delta W^2 - \Delta t$ has standard deviation $\sqrt2\,\Delta t$. One step's error is of order $\Delta t$, with random sign.
+The Brownian step squared has average $`E[\Delta W^2] = \Delta t`$. So the dropped term has average zero. Its spread is not zero: $`\Delta W^2 = \Delta t\,Z^2`$, and $`Z^2`$ has variance 2, so $`\Delta W^2 - \Delta t`$ has standard deviation $`\sqrt2\,\Delta t`$. One step's error is of order $`\Delta t`$, with random sign.
 
-Compare Euler's method on the noise-free share, $dx/dt = 0.08x$. Its dropped term is $\tfrac12\mu^2 x\,\Delta t^2$, always positive. The code prints its error at the horizon for 1 to 256 steps: 0.1644, 0.0844, 0.0427, …, 0.0007. Halving the step divides the error by 1.9996, and 256 times the error at 256 steps is 0.1733, the predicted $S_0 e^{\mu T}\mu^2T^2/2$ = 0.1733. That is order one: error proportional to the step.
+Compare Euler's method on the noise-free share, $`dx/dt = 0.08x`$. Its dropped term is $`\tfrac12\mu^2 x\,\Delta t^2`$, always positive. The code prints its error at the horizon for 1 to 256 steps: 0.1644, 0.0844, 0.0427, …, 0.0007. Halving the step divides the error by 1.9996, and 256 times the error at 256 steps is 0.1733, the predicted $`S_0 e^{\mu T}\mu^2T^2/2`$ = 0.1733. That is order one: error proportional to the step.
 
 ### Step 4: adding up the dropped terms
 
-The scheme multiplies the price by one factor per step. Each factor is short by its dropped term, relative to the exact factor: by $\tfrac12\sigma^2(\Delta W_k^2 - \Delta t)$, to leading order. Multiplying many factors that are each short by a small fraction leaves a product short by the sum of the fractions. So, at the horizon,
+The scheme multiplies the price by one factor per step. Each factor is short by its dropped term, relative to the exact factor: by $`\tfrac12\sigma^2(\Delta W_k^2 - \Delta t)`$, to leading order. Multiplying many factors that are each short by a small fraction leaves a product short by the sum of the fractions. So, at the horizon,
 
-$$Y_n - S_T \approx -\tfrac12\sigma^2\,S_T\,R, \qquad R = \sum_{k=0}^{n-1}\big(\Delta W_k^2 - \Delta t\big).$$
+```math
+Y_n - S_T \approx -\tfrac12\sigma^2\,S_T\,R, \qquad R = \sum_{k=0}^{n-1}\big(\Delta W_k^2 - \Delta t\big).
+```
 
-$R$ is a sum of $n$ independent terms, each of mean 0 and variance $2\Delta t^2$. Its variance is $2n\Delta t^2 = 2T\Delta t$. Its size is $\sqrt{2T\Delta t}$, the square root of the step.
+$`R`$ is a sum of $`n`$ independent terms, each of mean 0 and variance $`2\Delta t^2`$. Its variance is $`2n\Delta t^2 = 2T\Delta t`$. Its size is $`\sqrt{2T\Delta t}`$, the square root of the step.
 
-To turn this into the average gap: $R$ is nearly independent of $W_T$, because each $\Delta W_k$ and $\Delta W_k^2 - \Delta t$ are uncorrelated (an odd power of a symmetric draw averages to zero). For many steps $R$ is close to normal, and the average size of a normal draw is $\sqrt{2/\pi}$ times its standard deviation. Then
+To turn this into the average gap: $`R`$ is nearly independent of $`W_T`$, because each $`\Delta W_k`$ and $`\Delta W_k^2 - \Delta t`$ are uncorrelated (an odd power of a symmetric draw averages to zero). For many steps $`R`$ is close to normal, and the average size of a normal draw is $`\sqrt{2/\pi}`$ times its standard deviation. Then
 
-$$E\,|Y_n - S_T| \approx \tfrac12\sigma^2\,E[S_T]\,\sqrt{2T\Delta t}\,\sqrt{2/\pi} = \sigma^2\sqrt{T\Delta t/\pi}\;S_0 e^{\mu T}.$$
+```math
+E\,|Y_n - S_T| \approx \tfrac12\sigma^2\,E[S_T]\,\sqrt{2T\Delta t}\,\sqrt{2/\pi} = \sigma^2\sqrt{T\Delta t/\pi}\;S_0 e^{\mu T}.
+```
 
 At 256 steps this predicts $0.3056. Over 5000 simulated years, every step size running on the same Brownian path, the measured strong error is $0.3059 ± 0.0039.
 
@@ -141,53 +155,53 @@ Orange: measured, the average of |scheme − exact| at year end, each with a sta
 
 Each doubling of the steps divides the measured error by 1.304, 1.346, 1.350, 1.365, 1.437, 1.404, 1.433 and 1.415: settling near the square root of 2, against the 1.9996 of Euler's method. A straight-line fit of log error against log step, from 16 to 256 steps, has slope 0.5072. The rate at which error falls with the step is called the **order**; for the strong error of Euler-Maruyama it is one half.
 
-Put the dropped term back: add $\tfrac12\sigma^2 S_T R$ to each path's gap at 256 steps. The average leftover is $0.0105 ± 0.0002, against $0.3059 before. Almost all of the error is the term that Step 2 found by hand.
+Put the dropped term back: add $`\tfrac12\sigma^2 S_T R`$ to each path's gap at 256 steps. The average leftover is $0.0105 ± 0.0002, against $0.3059 before. Almost all of the error is the term that Step 2 found by hand.
 
 ### Step 5: the general theorem
 
-The bound holds for every SDE whose drift and noise size are Lipschitz (they change at most $L$ times as fast as x): $E|Y_n - X_T| \le C\sqrt{\Delta t}$, with $C$ set by $L$, $T$ and the start. In words: the solution moves only about $\sqrt{\Delta t}$ within a step, so freezing the coefficients costs about $\Delta t$ in mean square; Ito's isometry and Gronwall's lemma carry that to the horizon.
+The bound holds for every SDE whose drift and noise size are Lipschitz (they change at most $`L`$ times as fast as x): $`E|Y_n - X_T| \le C\sqrt{\Delta t}`$, with $`C`$ set by $`L`$, $`T`$ and the start. In words: the solution moves only about $`\sqrt{\Delta t}`$ within a step, so freezing the coefficients costs about $`\Delta t`$ in mean square; Ito's isometry and Gronwall's lemma carry that to the horizon.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** Let $\mu(x)$, $\sigma(x)$ satisfy $|\mu(x) - \mu(y)| + |\sigma(x) - \sigma(y)| \le L|x - y|$ (time-independent, for brevity). Let $X$ solve $dX = \mu(X)\,dt + \sigma(X)\,dW$ with $X_0 = x_0$, and let $Y_k$ be the Euler-Maruyama values with $Y_0 = x_0$. Then $E|Y_n - X_T| \le C\sqrt{\Delta t}$ with $C$ independent of $n$.
+**Claim.** Let $`\mu(x)`$, $`\sigma(x)`$ satisfy $`|\mu(x) - \mu(y)| + |\sigma(x) - \sigma(y)| \le L|x - y|`$ (time-independent, for brevity). Let $`X`$ solve $`dX = \mu(X)\,dt + \sigma(X)\,dW`$ with $`X_0 = x_0`$, and let $`Y_k`$ be the Euler-Maruyama values with $`Y_0 = x_0`$. Then $`E|Y_n - X_T| \le C\sqrt{\Delta t}`$ with $`C`$ independent of $`n`$.
 
-**0. The interpolated scheme.** For $s$ in $[t_k, t_{k+1})$ write $\bar Y_s = Y_k$. Define $\tilde Y_t = x_0 + \int_0^t \mu(\bar Y_s)\,ds + \int_0^t \sigma(\bar Y_s)\,dW_s$. On each step the integrands are constant, so $\tilde Y_{t_k} = Y_k$ at every grid time. Each $Y_k$ has a finite second moment, by induction on k under linear growth.
+**0. The interpolated scheme.** For $`s`$ in $`[t_k, t_{k+1})`$ write $`\bar Y_s = Y_k`$. Define $`\tilde Y_t = x_0 + \int_0^t \mu(\bar Y_s)\,ds + \int_0^t \sigma(\bar Y_s)\,dW_s`$. On each step the integrands are constant, so $`\tilde Y_{t_k} = Y_k`$ at every grid time. Each $`Y_k`$ has a finite second moment, by induction on k under linear growth.
 
-**1. The solution barely moves within a step.** Lipschitz implies linear growth, $|\mu(x)|^2 + |\sigma(x)|^2 \le K(1 + x^2)$ for some $K$, and the existence theorem gives $\sup_{t \le T} E X_t^2 \le M$ ([When an SDE has one solution](../06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md)). For $s$ in $[t_k, t_{k+1})$, using $(a+b)^2 \le 2a^2 + 2b^2$, Cauchy-Schwarz on the time integral and Ito's isometry on the Brownian integral,
-$E|X_s - X_{t_k}|^2 \le 2\Delta t\int_{t_k}^{s} E\mu(X_r)^2\,dr + 2\int_{t_k}^{s} E\sigma(X_r)^2\,dr \le 2K(1+M)(\Delta t^2 + \Delta t) \le c_1\Delta t$, with $c_1 = 2K(1+M)(T+1)$.
+**1. The solution barely moves within a step.** Lipschitz implies linear growth, $`|\mu(x)|^2 + |\sigma(x)|^2 \le K(1 + x^2)`$ for some $`K`$, and the existence theorem gives $`\sup_{t \le T} E X_t^2 \le M`$ ([When an SDE has one solution](../06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md)). For $`s`$ in $`[t_k, t_{k+1})`$, using $`(a+b)^2 \le 2a^2 + 2b^2`$, Cauchy-Schwarz on the time integral and Ito's isometry on the Brownian integral,
+$`E|X_s - X_{t_k}|^2 \le 2\Delta t\int_{t_k}^{s} E\mu(X_r)^2\,dr + 2\int_{t_k}^{s} E\sigma(X_r)^2\,dr \le 2K(1+M)(\Delta t^2 + \Delta t) \le c_1\Delta t`$, with $`c_1 = 2K(1+M)(T+1)`$.
 
-**2. The gap as two integrals.** $X_t - \tilde Y_t = \int_0^t (\mu(X_s) - \mu(\bar Y_s))\,ds + \int_0^t (\sigma(X_s) - \sigma(\bar Y_s))\,dW_s$. The same three tools and the Lipschitz bound give, with $e(t) = E|X_t - \tilde Y_t|^2$,
-$e(t) \le 2tL^2\int_0^t E|X_s - \bar Y_s|^2\,ds + 2L^2\int_0^t E|X_s - \bar Y_s|^2\,ds \le 2(T+1)L^2\int_0^t E|X_s - \bar Y_s|^2\,ds.$
+**2. The gap as two integrals.** $`X_t - \tilde Y_t = \int_0^t (\mu(X_s) - \mu(\bar Y_s))\,ds + \int_0^t (\sigma(X_s) - \sigma(\bar Y_s))\,dW_s`$. The same three tools and the Lipschitz bound give, with $`e(t) = E|X_t - \tilde Y_t|^2`$,
+$`e(t) \le 2tL^2\int_0^t E|X_s - \bar Y_s|^2\,ds + 2L^2\int_0^t E|X_s - \bar Y_s|^2\,ds \le 2(T+1)L^2\int_0^t E|X_s - \bar Y_s|^2\,ds.`$
 
-**3. Split the integrand at the grid.** For $s$ in $[t_k, t_{k+1})$, $X_s - \bar Y_s = (X_s - X_{t_k}) + (X_{t_k} - \tilde Y_{t_k})$, so $E|X_s - \bar Y_s|^2 \le 2c_1\Delta t + 2e(t_k)$.
+**3. Split the integrand at the grid.** For $`s`$ in $`[t_k, t_{k+1})`$, $`X_s - \bar Y_s = (X_s - X_{t_k}) + (X_{t_k} - \tilde Y_{t_k})`$, so $`E|X_s - \bar Y_s|^2 \le 2c_1\Delta t + 2e(t_k)`$.
 
-**4. Gronwall.** Let $m(t) = \sup_{u \le t} e(u)$, finite by step 0. Steps 2 and 3 give $m(t) \le A\,\Delta t + B\int_0^t m(s)\,ds$ with $A = 4(T+1)L^2 c_1 T$ and $B = 4(T+1)L^2$. Gronwall's lemma: a bounded function with $m(t) \le A\Delta t + B\int_0^t m$ satisfies $m(t) \le A\Delta t\,e^{Bt}$ (substitute the inequality into itself repeatedly; the k-th term is $A\Delta t\,(Bt)^k/k!$, and the remainder tends to 0 because $m$ is bounded).
+**4. Gronwall.** Let $`m(t) = \sup_{u \le t} e(u)`$, finite by step 0. Steps 2 and 3 give $`m(t) \le A\,\Delta t + B\int_0^t m(s)\,ds`$ with $`A = 4(T+1)L^2 c_1 T`$ and $`B = 4(T+1)L^2`$. Gronwall's lemma: a bounded function with $`m(t) \le A\Delta t + B\int_0^t m`$ satisfies $`m(t) \le A\Delta t\,e^{Bt}`$ (substitute the inequality into itself repeatedly; the k-th term is $`A\Delta t\,(Bt)^k/k!`$, and the remainder tends to 0 because $`m`$ is bounded).
 
-**5. Conclude.** $E|Y_n - X_T| \le \sqrt{E|Y_n - X_T|^2} = \sqrt{e(T)} \le \sqrt{A e^{BT}}\,\sqrt{\Delta t}$, by Cauchy-Schwarz. Take $C = \sqrt{A e^{BT}}$. The share is Lipschitz with $L = \mu + \sigma$, so the theorem covers it.
+**5. Conclude.** $`E|Y_n - X_T| \le \sqrt{E|Y_n - X_T|^2} = \sqrt{e(T)} \le \sqrt{A e^{BT}}\,\sqrt{\Delta t}`$, by Cauchy-Schwarz. Take $`C = \sqrt{A e^{BT}}`$. The share is Lipschitz with $`L = \mu + \sigma`$, so the theorem covers it.
 
-**Why the rate is not better.** For the share the error is $\tfrac12\sigma^2 S_T R$ to leading order (Step 4), and $R$ has standard deviation exactly $\sqrt{2T\Delta t}$, so the square root is the true rate. Kloeden and Platen (1992, chapter 10) give the general statement.
+**Why the rate is not better.** For the share the error is $`\tfrac12\sigma^2 S_T R`$ to leading order (Step 4), and $`R`$ has standard deviation exactly $`\sqrt{2T\Delta t}`$, so the square root is the true rate. Kloeden and Platen (1992, chapter 10) give the general statement.
 
 </details>
 
-**Another road.** Put the dropped term into the scheme, with $\Delta W^2 - \Delta t$ multiplied by $\tfrac12\sigma\,\partial\sigma/\partial x$ in general. The result is the Milstein scheme, whose strong error falls like the step itself: [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md). For the share, the dropped term can be avoided entirely by stepping the logarithm, which has constant coefficients: [Exact simulation](06-exact-simulation-of-gbm-and-ou.md).
+**Another road.** Put the dropped term into the scheme, with $`\Delta W^2 - \Delta t`$ multiplied by $`\tfrac12\sigma\,\partial\sigma/\partial x`$ in general. The result is the Milstein scheme, whose strong error falls like the step itself: [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md). For the share, the dropped term can be avoided entirely by stepping the logarithm, which has constant coefficients: [Exact simulation](06-exact-simulation-of-gbm-and-ou.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The share: $S_0$ = $50, $\mu$ = 0.08, $\sigma$ = 0.40 a year, one quarter-year step, then the year.
+The share: $`S_0`$ = $50, $`\mu`$ = 0.08, $`\sigma`$ = 0.40 a year, one quarter-year step, then the year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| log drift $\mu - \tfrac12\sigma^2$ | 0.08 − 0.5 × 0.16 | 0 |
-| Brownian step, $Z$ = 2 | 2 × √0.25 | 1.0 |
+| log drift $`\mu - \tfrac12\sigma^2`$ | 0.08 − 0.5 × 0.16 | 0 |
+| Brownian step, $`Z`$ = 2 | 2 × √0.25 | 1.0 |
 | drift over the step | 0.08 × 50 × 0.25 | $1.0000 |
 | noise over the step | 0.40 × 50 × 1.0 | $20.0000 |
 | Euler-Maruyama | 50 + 1 + 20 | $71.0000 |
 | exact, same Brownian step | 50 × e^(0.4 × 1.0) | $74.5912 |
 | gap | 74.5912 − 71.0000 | $3.5912 |
-| dropped term $\tfrac12\sigma^2 S(\Delta W^2 - \Delta t)$ | 0.08 × 50 × (1.0 − 0.25) | $3.0000 |
+| dropped term $`\tfrac12\sigma^2 S(\Delta W^2 - \Delta t)`$ | 0.08 × 50 × (1.0 − 0.25) | $3.0000 |
 | mean price at the year end | 50 × e^0.08 | $54.1644 |
 | predicted strong error, 256 steps | 0.16 × √(1/(256π)) × 54.1644 | **$0.3056** |
 
@@ -197,7 +211,7 @@ A grid of 256 steps, about one a trading day, puts the simulated year-end price 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Noise scaled by $\Delta t$ instead of its square root, 256 steps | sd of ln(price ratio) 0.0251 ± 0.0003 (right: 0.4018 ± 0.0040 simulated, 0.4000 exact) | the noise all but vanishes as the grid refines; Brownian size grows like the square root of time |
+| Noise scaled by $`\Delta t`$ instead of its square root, 256 steps | sd of ln(price ratio) 0.0251 ± 0.0003 (right: 0.4018 ± 0.0040 simulated, 0.4000 exact) | the noise all but vanishes as the grid refines; Brownian size grows like the square root of time |
 | Scheme and exact price on different paths, 256 steps | average gap $24.2785 ± 0.2940, not $0.3059 | that gap is the spread between two independent years; strong error needs a shared path |
 | One step for the whole year | price below 0 with chance 0.0032 ± 0.0002 (formula Φ(−2.70) = 0.0035) | the step is long against the noise |
 
@@ -579,17 +593,17 @@ mistake, one step for the year: P(price < 0) 0.0032 +- 0.0002; Phi(-2.70) = 0.00
 ALL CHECKS PASS
 ```
 
-The two outputs agree line for line. The weak line shows the other kind of error in passing: the scheme's own mean, $S_0(1 + \mu\Delta t)^n$ = $54.1637, against the true $54.1644, is off by an amount proportional to the step; the simulated $54.5351 ± 0.3183 is too noisy to see it.
+The two outputs agree line for line. The weak line shows the other kind of error in passing: the scheme's own mean, $`S_0(1 + \mu\Delta t)^n`$ = $54.1637, against the true $54.1644, is off by an amount proportional to the step; the simulated $54.5351 ± 0.3183 is too noisy to see it.
 
 ### Lean
 
 Lean proves the dropped-term facts of Steps 3 and 4 and the order of Euler's method, for any step, and checks the worked numbers.
 
-- Take a step $\Delta t > 0$ and $\Delta W = \sqrt{\Delta t}\,Z$, with $Z$ a standard normal draw. Then $\Delta W^2 - \Delta t$ has mean 0 and variance $2\Delta t^2$.
-- Take $n$ steps of length $\Delta t = T/n$, with independent standard normal draws $Z_k$. Then $R$ has mean 0 and variance $2T\Delta t$.
-- Take Euler's method on the noise-free share $dx/dt = \mu x$, with $n$ steps up to time $T$. Then $n$ times its error at $T$ tends to $S_0 e^{\mu T}\mu^2T^2/2$.
-- The quarter-year step from \$50 with $Z$ = 2 has drift \$1, noise \$20, scheme value \$71 and dropped term \$3.
-- The log drift of the share is 0. With $Z$ = 1 the dropped term is \$0.
+- Take a step $`\Delta t > 0`$ and $`\Delta W = \sqrt{\Delta t}\,Z`$, with $`Z`$ a standard normal draw. Then $`\Delta W^2 - \Delta t`$ has mean 0 and variance $`2\Delta t^2`$.
+- Take $`n`$ steps of length $`\Delta t = T/n`$, with independent standard normal draws $`Z_k`$. Then $`R`$ has mean 0 and variance $`2T\Delta t`$.
+- Take Euler's method on the noise-free share $`dx/dt = \mu x`$, with $`n`$ steps up to time $`T`$. Then $`n`$ times its error at $`T`$ tends to $`S_0 e^{\mu T}\mu^2T^2/2`$.
+- The quarter-year step from \$50 with $`Z`$ = 2 has drift \$1, noise \$20, scheme value \$71 and dropped term \$3.
+- The log drift of the share is 0. With $`Z`$ = 1 the dropped term is \$0.
 
 Lean has no Ito integral, so Step 5's bound, Step 4's approximations and every simulation are left to the Python and Rust checks.
 
@@ -968,7 +982,7 @@ example : (2 : ℚ) * 256 * (1 / 256) ^ 2 = 2 * 1 * (1 / 256) ∧ (2 : ℚ) * 1 
 > **Expecting the step to buy accuracy at Euler's rate.** On a rate equation, halving the step halves the error. With noise it divides the error by 1.415 at 256 steps, because the dropped term is as large as the step and only its average cancels. A simulation that is "good to 30 cents at 256 steps" needs 1024 steps to be good to 15 cents.
 >
 > Smaller traps:
-> - **Scaling the Brownian step by $\Delta t$.** The spread of the log price comes out at 0.0251 instead of 0.40.
+> - **Scaling the Brownian step by $`\Delta t`$.** The spread of the log price comes out at 0.0251 instead of 0.40.
 > - **Measuring strong error on two different paths.** The gap is then the share's own spread, $24.28, and never shrinks.
 > - **Trusting long steps on a positive quantity.** With one step for the year the share goes negative about 1 time in 300 (0.32 percent). Prices, interest rates under some models and variances need short steps or a scheme that respects the sign.
 > - **Confusing the two errors.** The error in averages, such as an option's price, falls like the step; quoting the strong order for a pricing run overstates the steps needed.
@@ -983,7 +997,7 @@ example : (2 : ℚ) * 256 * (1 / 256) ^ 2 = 2 * 1 * (1 / 256) ∧ (2 : ℚ) * 1 
 - **Checking densities.** A histogram of simulated endpoints roughly pictures the density that [Fokker-Planck](03-fokker-planck-forward-equation.md) computes exactly.
 
 > **Say it back**
-> Euler-Maruyama steps an SDE like Euler's method steps a rate equation, plus a Brownian step with variance equal to the time step. Each step drops a term of the size of the step, $\tfrac12\sigma^2 S(\Delta W^2 - \Delta t)$, which averages to zero. Zero-average errors add like a random walk, so the path-by-path error at the horizon shrinks like the square root of the step. For the share it is $\sigma^2\sqrt{T\Delta t/\pi}$ times the mean price: 31 cents at 256 steps, and halving it takes four times the work. The error must be measured against the exact solution on the same Brownian path.
+> Euler-Maruyama steps an SDE like Euler's method steps a rate equation, plus a Brownian step with variance equal to the time step. Each step drops a term of the size of the step, $`\tfrac12\sigma^2 S(\Delta W^2 - \Delta t)`$, which averages to zero. Zero-average errors add like a random walk, so the path-by-path error at the horizon shrinks like the square root of the step. For the share it is $`\sigma^2\sqrt{T\Delta t/\pi}`$ times the mean price: 31 cents at 256 steps, and halving it takes four times the work. The error must be measured against the exact solution on the same Brownian path.
 
 ---
 
@@ -991,7 +1005,7 @@ example : (2 : ℚ) * 256 * (1 / 256) ^ 2 = 2 * 1 * (1 / 256) ∧ (2 : ℚ) * 1 
 
 - [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md): the Ito integral as a limit of left-end sums, which is why the scheme freezes its coefficients at the start of each step, and Ito's isometry, used in the Detailed proof.
 - [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md): what an SDE says, its integral form with left-end Ito integrals, and the share's exact solution used here as the yardstick.
-- [When an SDE has one solution](../06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md): the solution exists and its mean square stays bounded, the bound $M$ that step 1 of the Detailed proof starts from.
+- [When an SDE has one solution](../06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md): the solution exists and its mean square stays bounded, the bound $`M`$ that step 1 of the Detailed proof starts from.
 - [Euler's method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md): stepping along the slope, with error proportional to the step; this card adds the random increment and shows why the rate halves.
 
 ## Where this goes next

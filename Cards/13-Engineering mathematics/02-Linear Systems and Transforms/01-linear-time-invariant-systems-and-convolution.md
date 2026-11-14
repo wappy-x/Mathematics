@@ -45,44 +45,54 @@ The **unit pulse** δ[n] is 1 at n = 0 and 0 at every other n: the sampled form 
 
 The two properties, as tests a system can pass or fail:
 
-$$\text{linear:}\quad S(\alpha u_1 + \beta u_2) = \alpha\,S(u_1) + \beta\,S(u_2)$$
+```math
+\text{linear:}\quad S(\alpha u_1 + \beta u_2) = \alpha\,S(u_1) + \beta\,S(u_2)
+```
 
-$$\text{time-invariant:}\quad \text{if } S(u) = y, \text{ then the input } u[n - n_0] \text{ gives the output } y[n - n_0]$$
+```math
+\text{time-invariant:}\quad \text{if } S(u) = y, \text{ then the input } u[n - n_0] \text{ gives the output } y[n - n_0]
+```
 
 **Read it aloud:** scaling and adding inputs scales and adds outputs; delaying the input delays the output and changes nothing else.
 
 The theorem they give:
 
-$$y[n] = (h * u)[n] = \sum_{k=0}^{n} h[k]\,u[n-k], \qquad h = S(\delta)$$
+```math
+y[n] = (h * u)[n] = \sum_{k=0}^{n} h[k]\,u[n-k], \qquad h = S(\delta)
+```
 
 **Read it aloud:** the output now is a sum over every earlier second; the throttle applied k seconds ago is weighted by the pulse response at age k.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | the system: whole input record in, whole output record out | the car, throttle record to speed record | — |
-| $u[n]$, $\theta$ | throttle above its cruise setting through second n, in %; $\theta$ is the throttle itself | +10 % for 15 s, then −5 % for 15 s | the speed change grows in step, near cruise |
-| $y[n]$, $v$ | speed above cruise at time n, in m/s; $v$ is the speed itself | 2.2386 m/s at n = 15 | — |
-| $n$, $t$ | time in whole seconds; t is time in seconds when it runs continuously | 0 to 300 s | — |
-| $k$, $j$ | in the formula, the age of a pulse: seconds since it was applied; Steps 0 to 3 and the proof use k for the second the pulse came and j = n − k for its age | 0 to n | h[k] fades with age |
-| $N$ | in the proof, the last second of an input record that ends | 2, for the hand-worked record | — |
-| $g(\lambda)$, $\lambda$ | the continuous-time impulse response, read at age λ, in s | the car's speed after an instant throttle kick | — |
-| $h[k]$ | the pulse response: speed above cruise k seconds after +1 % for one second | 0.016542 m/s at k = 1, 10.71 mm/s at k = 30 | — |
-| $\delta[n]$, $\delta_k$ | the unit pulse: 1 at n = 0, 0 elsewhere; $\delta_k$ is the same pulse moved to second k | +1 % in the first second | — |
-| $\alpha$, $\beta$ | any two numbers that scale inputs | 5 and 10 | — |
-| $u_1$, $u_2$ | two input records | two 10 s blocks of +5 % | — |
-| $n_0$ | a delay, in whole seconds | 40 s | — |
-| $K$, $\tau$ | the linearised car's steady gain, in (m/s) per %, and its time constant, in s | 1.1111 and 66.667 s | a heavier car raises $\tau$ |
-| $a$ | share of a speed bump left after one second, e^(−1/τ) | 0.985112 | slower fading |
+| $`S`$ | the system: whole input record in, whole output record out | the car, throttle record to speed record | — |
+| $`u[n]`$, $`\theta`$ | throttle above its cruise setting through second n, in %; $`\theta`$ is the throttle itself | +10 % for 15 s, then −5 % for 15 s | the speed change grows in step, near cruise |
+| $`y[n]`$, $`v`$ | speed above cruise at time n, in m/s; $`v`$ is the speed itself | 2.2386 m/s at n = 15 | — |
+| $`n`$, $`t`$ | time in whole seconds; t is time in seconds when it runs continuously | 0 to 300 s | — |
+| $`k`$, $`j`$ | in the formula, the age of a pulse: seconds since it was applied; Steps 0 to 3 and the proof use k for the second the pulse came and j = n − k for its age | 0 to n | h[k] fades with age |
+| $`N`$ | in the proof, the last second of an input record that ends | 2, for the hand-worked record | — |
+| $`g(\lambda)`$, $`\lambda`$ | the continuous-time impulse response, read at age λ, in s | the car's speed after an instant throttle kick | — |
+| $`h[k]`$ | the pulse response: speed above cruise k seconds after +1 % for one second | 0.016542 m/s at k = 1, 10.71 mm/s at k = 30 | — |
+| $`\delta[n]`$, $`\delta_k`$ | the unit pulse: 1 at n = 0, 0 elsewhere; $`\delta_k`$ is the same pulse moved to second k | +1 % in the first second | — |
+| $`\alpha`$, $`\beta`$ | any two numbers that scale inputs | 5 and 10 | — |
+| $`u_1`$, $`u_2`$ | two input records | two 10 s blocks of +5 % | — |
+| $`n_0`$ | a delay, in whole seconds | 40 s | — |
+| $`K`$, $`\tau`$ | the linearised car's steady gain, in (m/s) per %, and its time constant, in s | 1.1111 and 66.667 s | a heavier car raises $`\tau`$ |
+| $`a`$ | share of a speed bump left after one second, e^(−1/τ) | 0.985112 | slower fading |
 
 The car behind the box, used only to run the experiments:
 
-$$1500\,\frac{dv}{dt} = 25\,\theta - 0.45\,v^2 - 150$$
+```math
+1500\,\frac{dv}{dt} = 25\,\theta - 0.45\,v^2 - 150
+```
 
 Mass 1,500 kg; 25 N of drive per % of throttle; air drag 0.45 v^2 N, from an air density taken as 1.2 kg/m^3 (the International Standard Atmosphere gives 1.225 kg/m^3 at sea level, 15 °C) and a drag area of 0.75 m^2; rolling resistance 150 N. At 25 m/s the drag is 281.25 N, so cruise needs 17.25 %.
 
 Near cruise the drag curve's slope is 2 × 0.45 × 25 = 22.5 N s/m. Replacing the curve by its slope gives 1500 dy/dt = 25 u − 22.5 y, a linear equation with a time constant τ = 1500/22.5 = 66.667 s and a steady gain K = 25/22.5 = 1.1111 (m/s) per %. Its pulse response is h[0] = 0 and
 
-$$h[k] = K\,(1 - a)\,a^{k-1} \quad (k \ge 1)$$
+```math
+h[k] = K\,(1 - a)\,a^{k-1} \quad (k \ge 1)
+```
 
 in words: the first second's push leaves K(1 − a) = 0.016542 m/s, and each later second keeps a share a of what was there.
 
@@ -102,7 +112,9 @@ in words: the first second's push leaves K(1 − a) = 0.016542 m/s, and each lat
 
 A throttle record of +10, +10 and −5 % in seconds 0, 1 and 2 is 10 copies of the unit pulse at second 0, plus 10 copies of it delayed to second 1, plus −5 copies delayed to second 2. In general
 
-$$u[n] = \sum_{k} u[k]\,\delta[n - k],$$
+```math
+u[n] = \sum_{k} u[k]\,\delta[n - k],
+```
 
 since at each n only the term with k = n survives. This is bookkeeping and needs nothing from the system. The two properties then act on each term.
 
@@ -118,7 +130,9 @@ Scaling the input scales the output, so u[k] δ[n − k] gives u[k] h[n − k]. 
 
 The output for a sum of inputs is the sum of their outputs, so
 
-$$y[n] = \sum_{k} u[k]\,h[n - k].$$
+```math
+y[n] = \sum_{k} u[k]\,h[n - k].
+```
 
 Here k is the second the pulse came. Write its age as j = n − k and the sum becomes Σ h[j] u[n − j]: the formula, with j for the age the formula calls k. That renaming is the **flip**: walking forward through the input means walking backward through the response. The newest throttle meets the youngest part of h.
 
@@ -133,17 +147,17 @@ Any rule of the form y = h * u is linear, since each output is a weighted sum of
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** Records are real sequences indexed by whole numbers n ≥ 0, zero before 0. S is linear and time-invariant on records that are zero after some finite time. Write $\delta_k$ for the pulse at k, so $\delta_k[n] = \delta[n-k]$.
+**Setting.** Records are real sequences indexed by whole numbers n ≥ 0, zero before 0. S is linear and time-invariant on records that are zero after some finite time. Write $`\delta_k`$ for the pulse at k, so $`\delta_k[n] = \delta[n-k]`$.
 
 **Zero in, zero out.** Linearity with α = β = 0 gives S(0) = 0 · S(u) + 0 · S(u) = 0. A record that is zero gives a response that is zero; the car's test 1 checks this.
 
-**Decomposition.** A record u that is zero after time N equals the finite sum $\sum_{k=0}^{N} u[k]\,\delta_k$: at each n both sides equal u[n].
+**Decomposition.** A record u that is zero after time N equals the finite sum $`\sum_{k=0}^{N} u[k]\,\delta_k`$: at each n both sides equal u[n].
 
-**Response.** By linearity applied N times, $S(u) = \sum_{k=0}^{N} u[k]\, S(\delta_k)$. By time-invariance with $n_0 = k$, $S(\delta_k)[n] = h[n-k]$. So $S(u)[n] = \sum_{k=0}^{N} u[k]\,h[n-k]$.
+**Response.** By linearity applied N times, $`S(u) = \sum_{k=0}^{N} u[k]\, S(\delta_k)`$. By time-invariance with $`n_0 = k`$, $`S(\delta_k)[n] = h[n-k]`$. So $`S(u)[n] = \sum_{k=0}^{N} u[k]\,h[n-k]`$.
 
-**Causality.** If S is causal, h[m] = 0 for m < 0, so terms with k > n vanish and the sum stops at k = n. Substituting j = n − k gives $\sum_{j=0}^{n} h[j]\,u[n-j]$.
+**Causality.** If S is causal, h[m] = 0 for m < 0, so terms with k > n vanish and the sum stops at k = n. Substituting j = n − k gives $`\sum_{j=0}^{n} h[j]\,u[n-j]`$.
 
-**Converse.** For y = h * u: $(h * (\alpha u_1 + \beta u_2))[n] = \alpha (h*u_1)[n] + \beta (h*u_2)[n]$, term by term. For a delay, $(h * u[\cdot - n_0])[n] = \sum_j h[j]\,u[n - n_0 - j] = (h*u)[n-n_0]$.
+**Converse.** For y = h * u: $`(h * (\alpha u_1 + \beta u_2))[n] = \alpha (h*u_1)[n] + \beta (h*u_2)[n]`$, term by term. For a delay, $`(h * u[\cdot - n_0])[n] = \sum_j h[j]\,u[n - n_0 - j] = (h*u)[n-n_0]`$.
 
 **Inputs that never stop.** The finite sum is exact for every record that ends. If S is causal, y[n] depends only on u[0], …, u[n], so a record that never ends, such as a held step, gives y[n] by the same sum of n + 1 terms. Every bounded input gives a bounded output exactly when the sum of |h[k]| over all k is finite, which for the car is K = 1.1111.
 
@@ -153,7 +167,7 @@ Any rule of the form y = h * u is linear, since each output is a weighted sum of
 
 Steps 1 to 3 use the two properties for every input; a test runs a few. So a test can refute linearity, never prove it. The car's scaling ratio of 1.9985 refutes exact linearity and shows only that the error is small at that input size. Engineers test at the sizes and speeds the system will meet, and quote the model's range.
 
-The continuous version, $y(t) = \int_0^t g(\lambda)\,u(t - \lambda)\,d\lambda$ with g the impulse response, is proved for linear constant-coefficient equations in [Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md); the argument above is its sampled form, needing no equation at all. Turning the sum into a single multiplication per frequency is the work of [Transfer functions](02-impulse-response-and-transfer-functions.md).
+The continuous version, $`y(t) = \int_0^t g(\lambda)\,u(t - \lambda)\,d\lambda`$ with g the impulse response, is proved for linear constant-coefficient equations in [Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md); the argument above is its sampled form, needing no equation at all. Turning the sum into a single multiplication per frequency is the work of [Transfer functions](02-impulse-response-and-transfer-functions.md).
 
 ---
 
@@ -611,11 +625,11 @@ The two outputs are identical.
 
 Lean proves the theorem and its converse for every record that ends, and the bounded-input rule for records that never stop.
 
-- Take a linear, time-invariant, causal system $S$ acting on records that end. Then its output is the input convolved with its pulse response $h = S(\delta)$, summed over ages 0 to $n$.
-- Take any record $h$. Then the rule $y = h * u$ is linear, time-invariant and causal, and its pulse response is $h$ itself.
-- Take any record $h$, and inputs that never stop. Then every bounded input gives a bounded output exactly when the $\lvert h[k]\rvert$ add to a finite total.
+- Take a linear, time-invariant, causal system $`S`$ acting on records that end. Then its output is the input convolved with its pulse response $`h = S(\delta)`$, summed over ages 0 to $`n`$.
+- Take any record $`h`$. Then the rule $`y = h * u`$ is linear, time-invariant and causal, and its pulse response is $`h`$ itself.
+- Take any record $`h`$, and inputs that never stop. Then every bounded input gives a bounded output exactly when the $`\lvert h[k]\rvert`$ add to a finite total.
 - The record +10, +10 and −5 % in seconds 0, 1 and 2 is 10 unit pulses, plus 10 delayed by 1 s, plus −5 delayed by 2 s.
-- Suppose $h[0] = 0$. Then the sum at 3 s lines up by age: $y[3] = h[1]u[2] + h[2]u[1] + h[3]u[0]$.
+- Suppose $`h[0] = 0`$. Then the sum at 3 s lines up by age: $`y[3] = h[1]u[2] + h[2]u[1] + h[3]u[0]`$.
 
 Lean has no car, so the four tests, the measured pulse response and every number are left to the Python and Rust checks.
 

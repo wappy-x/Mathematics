@@ -43,45 +43,51 @@ Orange: the true curve. Teal: the cubic spline, which lies on top of it at this 
 
 ## The formula
 
-Notation first, in words. The quoted maturities $t_0 < t_1 < \dots < t_n$ are the **knots**; here $n$ = 7 gaps and eight knots. The quote at $t_i$ is $y_i$. Gap $i$ runs from $t_i$ to $t_{i+1}$ and has width $h_i = t_{i+1} - t_i$. The unknowns are the **moments** $M_i = s''(t_i)$: the spline's curvature at each knot.
+Notation first, in words. The quoted maturities $`t_0 < t_1 < \dots < t_n`$ are the **knots**; here $`n`$ = 7 gaps and eight knots. The quote at $`t_i`$ is $`y_i`$. Gap $`i`$ runs from $`t_i`$ to $`t_{i+1}`$ and has width $`h_i = t_{i+1} - t_i`$. The unknowns are the **moments** $`M_i = s''(t_i)`$: the spline's curvature at each knot.
 
-On gap $i$, for $t_i \le t \le t_{i+1}$, the spline is
+On gap $`i`$, for $`t_i \le t \le t_{i+1}`$, the spline is
 
-$$s(t) = M_i\frac{(t_{i+1}-t)^3}{6h_i} + M_{i+1}\frac{(t-t_i)^3}{6h_i} + \Big(y_i - \frac{M_i h_i^2}{6}\Big)\frac{t_{i+1}-t}{h_i} + \Big(y_{i+1} - \frac{M_{i+1} h_i^2}{6}\Big)\frac{t-t_i}{h_i}.$$
+```math
+s(t) = M_i\frac{(t_{i+1}-t)^3}{6h_i} + M_{i+1}\frac{(t-t_i)^3}{6h_i} + \Big(y_i - \frac{M_i h_i^2}{6}\Big)\frac{t_{i+1}-t}{h_i} + \Big(y_{i+1} - \frac{M_{i+1} h_i^2}{6}\Big)\frac{t-t_i}{h_i}.
+```
 
-The moments solve one equation for each inside knot, $i = 1, \dots, n-1$:
+The moments solve one equation for each inside knot, $`i = 1, \dots, n-1`$:
 
-$$h_{i-1}M_{i-1} + 2(h_{i-1}+h_i)\,M_i + h_i M_{i+1} = 6\,(g_i - g_{i-1}), \qquad g_i = \frac{y_{i+1}-y_i}{h_i},$$
+```math
+h_{i-1}M_{i-1} + 2(h_{i-1}+h_i)\,M_i + h_i M_{i+1} = 6\,(g_i - g_{i-1}), \qquad g_i = \frac{y_{i+1}-y_i}{h_i},
+```
 
-with the **natural** ends $M_0 = M_n = 0$.
+with the **natural** ends $`M_0 = M_n = 0`$.
 
 **Read it aloud:** on each gap, the curve is the straight chord between the two quotes plus a cubic correction set by the curvatures at the two ends; and at each inside knot, a weighted sum of three neighbouring curvatures equals six times the change in chord slope there.
 
 At the middle of a gap the formula shrinks to one line, which the worked numbers use:
 
-$$s\Big(\tfrac{t_i+t_{i+1}}{2}\Big) = \frac{y_i+y_{i+1}}{2} - \frac{h_i^2}{16}\,(M_i + M_{i+1}).$$
+```math
+s\Big(\tfrac{t_i+t_{i+1}}{2}\Big) = \frac{y_i+y_{i+1}}{2} - \frac{h_i^2}{16}\,(M_i + M_{i+1}).
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $t_i$ | maturity in years; the $i$-th quoted maturity (a knot) | $t$ = 15; $t_0$ = 0.25 … $t_7$ = 30 | — |
-| $y_i$ | quoted zero rate at $t_i$, % a year | $y_5$ = 4.0764, $y_6$ = 4.2801 | the curve rises through it |
-| $n$ | number of gaps, one cubic each | 7 | more pieces, smaller error |
-| $h_i$, $h$ | width of gap $i$; the widest gap, when all gaps are halved together | 0.25, 0.5, 1, 3, 5, 10, 10; $h$ = 10 down to 0.3125 | wider gap, larger error: like $h^4$ inside, $h^2$ near the ends |
-| $g_i$ | slope of the chord across gap $i$ | $g_5$ = 0.020366 | — |
-| $s$, $s'$, $s''$, $s'''$ | the spline; its slope, curvature and third derivative | $s(15)$ = 4.211993 | — |
-| $M_i$ | moment: the curvature $s''(t_i)$ | $M_5$ = −0.004586, $M_6$ = −0.000810 | positive bends up, negative bends down |
-| $A$, $B$ | distance from $t$ to the right and left ends of its gap | at 15: $A$ = 5, $B$ = 5 | — |
-| $p_i$ | pivot left on the diagonal by the Thomas sweep | 1.5000 … 36.4681 | larger is safer |
-| $z(t)$ | the true curve the quotes were read from | $z(15)$ = 4.207935 | — |
+| $`t`$, $`t_i`$ | maturity in years; the $`i`$-th quoted maturity (a knot) | $`t`$ = 15; $`t_0`$ = 0.25 … $`t_7`$ = 30 | — |
+| $`y_i`$ | quoted zero rate at $`t_i`$, % a year | $`y_5`$ = 4.0764, $`y_6`$ = 4.2801 | the curve rises through it |
+| $`n`$ | number of gaps, one cubic each | 7 | more pieces, smaller error |
+| $`h_i`$, $`h`$ | width of gap $`i`$; the widest gap, when all gaps are halved together | 0.25, 0.5, 1, 3, 5, 10, 10; $`h`$ = 10 down to 0.3125 | wider gap, larger error: like $`h^4`$ inside, $`h^2`$ near the ends |
+| $`g_i`$ | slope of the chord across gap $`i`$ | $`g_5`$ = 0.020366 | — |
+| $`s`$, $`s'`$, $`s''`$, $`s'''`$ | the spline; its slope, curvature and third derivative | $`s(15)`$ = 4.211993 | — |
+| $`M_i`$ | moment: the curvature $`s''(t_i)`$ | $`M_5`$ = −0.004586, $`M_6`$ = −0.000810 | positive bends up, negative bends down |
+| $`A`$, $`B`$ | distance from $`t`$ to the right and left ends of its gap | at 15: $`A`$ = 5, $`B`$ = 5 | — |
+| $`p_i`$ | pivot left on the diagonal by the Thomas sweep | 1.5000 … 36.4681 | larger is safer |
+| $`z(t)`$ | the true curve the quotes were read from | $`z(15)`$ = 4.207935 | — |
 | bp | basis point, 0.01 percentage point | spline error 0.406 bp | — |
-| $f$, $e$, $c_i$ | in the Holladay proof: any rival curve through the quotes; the difference $e = f - s$ (not the number e); the constant value of $s'''$ on gap $i$ | — | — |
+| $`f`$, $`e`$, $`c_i`$ | in the Holladay proof: any rival curve through the quotes; the difference $`e = f - s`$ (not the number e); the constant value of $`s'''`$ on gap $`i`$ | — | — |
 
 ### When it holds
 
-- **Well-separated knots and consistent data.** Every $h_i > 0$, so each gap holds a cubic. Knots that nearly repeat are safe only if their quotes agree: two quotes 0.05 years apart that disagree by 1 bp force a sharp bend, and the 15-year rate ends up 27.08 bp off the truth.
+- **Well-separated knots and consistent data.** Every $`h_i > 0`$, so each gap holds a cubic. Knots that nearly repeat are safe only if their quotes agree: two quotes 0.05 years apart that disagree by 1 bp force a sharp bend, and the 15-year rate ends up 27.08 bp off the truth.
 - **Exact data.** A spline passes through every quote, noise included. Noisy data needs a fit instead of an interpolant (a curve forced through every point): [Fitting instead of passing through](07-least-squares-and-orthogonal-polynomials.md).
-- **An end condition.** The $n - 1$ equations have $n + 1$ unknowns, so two more conditions are needed. "Natural" sets the end curvatures to zero. The true curve here bends at its short end, so the error near the ends falls only like $h^2$, against $h^4$ inside. Other choices are on [Ends and shape](06-spline-end-conditions-and-shape.md).
-- **A smooth truth.** The $h^4$ rate needs a curve with four continuous derivatives. On a kinked curve, the spline still interpolates but converges more slowly.
+- **An end condition.** The $`n - 1`$ equations have $`n + 1`$ unknowns, so two more conditions are needed. "Natural" sets the end curvatures to zero. The true curve here bends at its short end, so the error near the ends falls only like $`h^2`$, against $`h^4`$ inside. Other choices are on [Ends and shape](06-spline-end-conditions-and-shape.md).
+- **A smooth truth.** The $`h^4`$ rate needs a curve with four continuous derivatives. On a kinked curve, the spline still interpolates but converges more slowly.
 
 ---
 
@@ -91,53 +97,55 @@ $$s\Big(\tfrac{t_i+t_{i+1}}{2}\Big) = \frac{y_i+y_{i+1}}{2} - \frac{h_i^2}{16}\,
 
 If the slope at each quote were known, each gap's cubic would be fixed on its own: two heights and two slopes fix a cubic. That is cubic Hermite interpolation. The spline does not know the slopes. It chooses them.
 
-The trick is to make the curvatures the unknowns instead. A cubic has a straight-line second derivative. So if the curvature at each knot is $M_i$, the curvature between knots is the straight line joining $M_i$ to $M_{i+1}$. Integrate that twice and fit the two constants to the two quotes. The result already matches height and curvature at every knot. Only slope is left, and slope matching gives one linear equation per inside knot.
+The trick is to make the curvatures the unknowns instead. A cubic has a straight-line second derivative. So if the curvature at each knot is $`M_i`$, the curvature between knots is the straight line joining $`M_i`$ to $`M_{i+1}`$. Integrate that twice and fit the two constants to the two quotes. The result already matches height and curvature at every knot. Only slope is left, and slope matching gives one linear equation per inside knot.
 
 ### Step 1: build each piece from its two curvatures
 
-Write $A = t_{i+1} - t$ and $B = t - t_i$ for the distances to the gap's ends, so $A + B = h_i$.
+Write $`A = t_{i+1} - t`$ and $`B = t - t_i`$ for the distances to the gap's ends, so $`A + B = h_i`$.
 
-- **Curvature.** Differentiate the formula twice: $s''(t) = (M_i A + M_{i+1} B)/h_i$. That is the straight line from $M_i$ at $t_i$ to $M_{i+1}$ at $t_{i+1}$.
-- **Height.** At $t = t_i$, $A = h_i$ and $B = 0$. The cubic terms leave $M_i h_i^2/6$, and the next term leaves $y_i - M_i h_i^2/6$. They add to $y_i$. The right end gives $y_{i+1}$ the same way.
+- **Curvature.** Differentiate the formula twice: $`s''(t) = (M_i A + M_{i+1} B)/h_i`$. That is the straight line from $`M_i`$ at $`t_i`$ to $`M_{i+1}`$ at $`t_{i+1}`$.
+- **Height.** At $`t = t_i`$, $`A = h_i`$ and $`B = 0`$. The cubic terms leave $`M_i h_i^2/6`$, and the next term leaves $`y_i - M_i h_i^2/6`$. They add to $`y_i`$. The right end gives $`y_{i+1}`$ the same way.
 
-So, whatever the moments are, the pieces meet in height ($s$ is continuous) and in curvature ($s''$ is continuous, since both pieces read $M_i$ at $t_i$).
+So, whatever the moments are, the pieces meet in height ($`s`$ is continuous) and in curvature ($`s''`$ is continuous, since both pieces read $`M_i`$ at $`t_i`$).
 
 ### Step 2: matching slopes gives one tridiagonal row per knot
 
-Differentiate once. At the right end of gap $i-1$ and the left end of gap $i$, the slopes are
+Differentiate once. At the right end of gap $`i-1`$ and the left end of gap $`i`$, the slopes are
 
-$$s'(t_i^-) = g_{i-1} + \frac{h_{i-1}}{6}(M_{i-1} + 2M_i), \qquad s'(t_i^+) = g_i - \frac{h_i}{6}(2M_i + M_{i+1}).$$
+```math
+s'(t_i^-) = g_{i-1} + \frac{h_{i-1}}{6}(M_{i-1} + 2M_i), \qquad s'(t_i^+) = g_i - \frac{h_i}{6}(2M_i + M_{i+1}).
+```
 
-Set them equal and multiply by 6. Collecting terms gives the row in The formula. Each row holds only $M_{i-1}$, $M_i$ and $M_{i+1}$, so the system is **tridiagonal**: nonzero entries only on the main diagonal and the two beside it.
+Set them equal and multiply by 6. Collecting terms gives the row in The formula. Each row holds only $`M_{i-1}`$, $`M_i`$ and $`M_{i+1}`$, so the system is **tridiagonal**: nonzero entries only on the main diagonal and the two beside it.
 
 <details>
 <summary>Detailed proof: the slope of each piece, and the row</summary>
 
-On gap $i$, with $A = t_{i+1} - t$ and $B = t - t_i$, we have $dA/dt = -1$ and $dB/dt = 1$. Differentiating the formula term by term:
+On gap $`i`$, with $`A = t_{i+1} - t`$ and $`B = t - t_i`$, we have $`dA/dt = -1`$ and $`dB/dt = 1`$. Differentiating the formula term by term:
 
-$$s'(t) = \frac{-M_i A^2 + M_{i+1} B^2}{2h_i} - \frac{y_i}{h_i} + \frac{M_i h_i}{6} + \frac{y_{i+1}}{h_i} - \frac{M_{i+1} h_i}{6} = \frac{M_{i+1}B^2 - M_i A^2}{2h_i} + g_i - \frac{(M_{i+1}-M_i)h_i}{6}.$$
+$`\displaystyle s'(t) = \frac{-M_i A^2 + M_{i+1} B^2}{2h_i} - \frac{y_i}{h_i} + \frac{M_i h_i}{6} + \frac{y_{i+1}}{h_i} - \frac{M_{i+1} h_i}{6} = \frac{M_{i+1}B^2 - M_i A^2}{2h_i} + g_i - \frac{(M_{i+1}-M_i)h_i}{6}.`$
 
-At the left end, $A = h_i$ and $B = 0$:
+At the left end, $`A = h_i`$ and $`B = 0`$:
 
-$$s'(t_i^+) = -\frac{M_i h_i}{2} + g_i - \frac{(M_{i+1}-M_i)h_i}{6} = g_i - \frac{h_i}{6}(2M_i + M_{i+1}).$$
+$`\displaystyle s'(t_i^+) = -\frac{M_i h_i}{2} + g_i - \frac{(M_{i+1}-M_i)h_i}{6} = g_i - \frac{h_i}{6}(2M_i + M_{i+1}).`$
 
-On gap $i-1$, at its right end $t_i$, $A = 0$ and $B = h_{i-1}$:
+On gap $`i-1`$, at its right end $`t_i`$, $`A = 0`$ and $`B = h_{i-1}`$:
 
-$$s'(t_i^-) = \frac{M_i h_{i-1}}{2} + g_{i-1} - \frac{(M_i - M_{i-1})h_{i-1}}{6} = g_{i-1} + \frac{h_{i-1}}{6}(M_{i-1} + 2M_i).$$
+$`\displaystyle s'(t_i^-) = \frac{M_i h_{i-1}}{2} + g_{i-1} - \frac{(M_i - M_{i-1})h_{i-1}}{6} = g_{i-1} + \frac{h_{i-1}}{6}(M_{i-1} + 2M_i).`$
 
-Setting $s'(t_i^-) = s'(t_i^+)$ and multiplying by 6:
+Setting $`s'(t_i^-) = s'(t_i^+)`$ and multiplying by 6:
 
-$$h_{i-1}M_{i-1} + 2(h_{i-1} + h_i)M_i + h_iM_{i+1} = 6(g_i - g_{i-1}).$$
+$`\displaystyle h_{i-1}M_{i-1} + 2(h_{i-1} + h_i)M_i + h_iM_{i+1} = 6(g_i - g_{i-1}).`$
 
-**Existence and uniqueness.** With $M_0 = M_n = 0$ there are $n-1$ rows in $n-1$ unknowns. In row $i$ the diagonal $2(h_{i-1}+h_i)$ exceeds the sum of its neighbours, $h_{i-1} + h_i$, by $h_{i-1} + h_i > 0$. A strictly diagonally dominant matrix is invertible: the Thomas sweep's pivots all stay above that margin, so it never divides by zero ([The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md) proves the pivot bound). So exactly one set of moments exists.
+**Existence and uniqueness.** With $`M_0 = M_n = 0`$ there are $`n-1`$ rows in $`n-1`$ unknowns. In row $`i`$ the diagonal $`2(h_{i-1}+h_i)`$ exceeds the sum of its neighbours, $`h_{i-1} + h_i`$, by $`h_{i-1} + h_i > 0`$. A strictly diagonally dominant matrix is invertible: the Thomas sweep's pivots all stay above that margin, so it never divides by zero ([The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md) proves the pivot bound). So exactly one set of moments exists.
 
-**Twice differentiable.** Inside a gap, $s$ is a polynomial, so it has every derivative. At a knot, Step 1 gave equal heights and equal curvatures from both sides, and the solved row gives equal slopes. So $s$, $s'$ and $s''$ are all continuous on $[t_0, t_n]$. The third derivative is $(M_{i+1} - M_i)/h_i$ on gap $i$, a different constant on each gap, so $s'''$ generally jumps.
+**Twice differentiable.** Inside a gap, $`s`$ is a polynomial, so it has every derivative. At a knot, Step 1 gave equal heights and equal curvatures from both sides, and the solved row gives equal slopes. So $`s`$, $`s'`$ and $`s''`$ are all continuous on $`[t_0, t_n]`$. The third derivative is $`(M_{i+1} - M_i)/h_i`$ on gap $`i`$, a different constant on each gap, so $`s'''`$ generally jumps.
 
 </details>
 
-The check measures each join. Across the six inside knots, the largest jump in $s$ is 4.4e-16, in $s'$ 1.4e-17, and in $s''$ 0.0e+00: rounding only. The largest jump in $s'''$ is 1.368489. So the curve is twice differentiable but not three times, exactly as proved.
+The check measures each join. Across the six inside knots, the largest jump in $`s`$ is 4.4e-16, in $`s'`$ 1.4e-17, and in $`s''`$ 0.0e+00: rounding only. The largest jump in $`s'''`$ is 1.368489. So the curve is twice differentiable but not three times, exactly as proved.
 
-An outside test of the curvature: a second difference straddling the 10-year knot, $(s(10.001) - 2s(10) + s(9.999))/0.001^2$, reads −0.004585. The moment says $M_5$ = −0.004586. [Second derivatives](../../06-Calculus%20and%20analysis/02-Derivatives/08-higher-derivatives-and-concavity.md) gives the meaning of the sign: negative means the curve bends down there, as a yield curve flattening out at the long end does.
+An outside test of the curvature: a second difference straddling the 10-year knot, $`(s(10.001) - 2s(10) + s(9.999))/0.001^2`$, reads −0.004585. The moment says $`M_5`$ = −0.004586. [Second derivatives](../../06-Calculus%20and%20analysis/02-Derivatives/08-higher-derivatives-and-concavity.md) gives the meaning of the sign: negative means the curve bends down there, as a yield curve flattening out at the long end does.
 
 ### Step 3: the chain is cheap and safe to solve
 
@@ -147,30 +155,30 @@ The cost, counting each flop (one add, subtract, multiply or divide):
 
 | Part | Flops |
 | --- | --- |
-| gap widths $h_i$ | $n$ |
-| chord slopes $g_i$ | $2n$ |
-| diagonals and right sides | $4(n-1)$ |
-| Thomas sweep on $n-1$ unknowns | $8(n-1) - 7$ |
-| total | $15n - 19$ |
+| gap widths $`h_i`$ | $`n`$ |
+| chord slopes $`g_i`$ | $`2n`$ |
+| diagonals and right sides | $`4(n-1)`$ |
+| Thomas sweep on $`n-1`$ unknowns | $`8(n-1) - 7`$ |
+| total | $`15n - 19`$ |
 
 For seven gaps that is 86 flops. Writing all 28 raw conditions (heights, slopes, curvatures, ends) as one dense 28 by 28 system costs 15778 flops. The check solves both ways. They give the same 15-year rate, 4.211993%, with a gap of 0.0e+00 between them.
 
 ### Step 4: the natural spline bends least
 
-A thin wooden strip, bent through pins on a drawing board, settles where its bending energy is smallest. That energy is roughly $\int s''(t)^2\,dt$. The natural spline is the exact answer to that problem: of all twice-differentiable curves through the quotes, it has the smallest $\int s''^2$.
+A thin wooden strip, bent through pins on a drawing board, settles where its bending energy is smallest. That energy is roughly $`\int s''(t)^2\,dt`$. The natural spline is the exact answer to that problem: of all twice-differentiable curves through the quotes, it has the smallest $`\int s''^2`$.
 
 <details>
 <summary>Detailed proof: Holladay's least-bending property</summary>
 
-Let $f$ be any curve through the same quotes with a square-integrable second derivative, and put $e = f - s$. Then $e(t_i) = 0$ at every knot, and
+Let $`f`$ be any curve through the same quotes with a square-integrable second derivative, and put $`e = f - s`$. Then $`e(t_i) = 0`$ at every knot, and
 
-$$\int f''^2 = \int s''^2 + 2\int s''e'' + \int e''^2.$$
+$`\displaystyle \int f''^2 = \int s''^2 + 2\int s''e'' + \int e''^2.`$
 
 Integrate the middle term by parts on each gap:
 
-$$\int_{t_i}^{t_{i+1}} s''e'' = \big[s''e'\big]_{t_i}^{t_{i+1}} - \int_{t_i}^{t_{i+1}} s'''e'.$$
+$`\displaystyle \int_{t_i}^{t_{i+1}} s''e'' = \big[s''e'\big]_{t_i}^{t_{i+1}} - \int_{t_i}^{t_{i+1}} s'''e'.`$
 
-Summed over the gaps, the bracket terms cancel at each inside knot, because $s''$ and $e'$ are continuous there. At the two ends they vanish, because $M_0 = M_n = 0$. On gap $i$, $s'''$ is a constant $c_i$, so the last integral is $c_i\,(e(t_{i+1}) - e(t_i)) = 0$. So the middle term is zero, and $\int f''^2 = \int s''^2 + \int e''^2 \ge \int s''^2$. Equality needs $e'' = 0$: then $e$ is a straight line that is zero at the knots, so $e = 0$.
+Summed over the gaps, the bracket terms cancel at each inside knot, because $`s''`$ and $`e'`$ are continuous there. At the two ends they vanish, because $`M_0 = M_n = 0`$. On gap $`i`$, $`s'''`$ is a constant $`c_i`$, so the last integral is $`c_i\,(e(t_{i+1}) - e(t_i)) = 0`$. So the middle term is zero, and $`\int f''^2 = \int s''^2 + \int e''^2 \ge \int s''^2`$. Equality needs $`e'' = 0`$: then $`e`$ is a straight line that is zero at the knots, so $`e = 0`$.
 
 </details>
 
@@ -180,7 +188,7 @@ The check computes the bending of three curves through the same eight quotes. Th
 
 At 15 years the spline is off by 0.406 bp. Its worst true error from 0.25 to 30 years is 0.58 bp. To see the rate, halve every gap five times, re-read the quotes from the true curve, and track the worst error.
 
-| Halvings | Knots | Widest gap $h$ | Worst error, all (% points) | Worst error, 1 to 20 years | Order, all | Order, inside |
+| Halvings | Knots | Widest gap $`h`$ | Worst error, all (% points) | Worst error, 1 to 20 years | Order, all | Order, inside |
 | --- | --- | --- | --- | --- | --- | --- |
 | 0 | 8 | 10.0000 | 5.83e-03 | 5.83e-03 | — | — |
 | 1 | 15 | 5.0000 | 5.69e-04 | 5.69e-04 | 3.36 | 3.36 |
@@ -189,10 +197,10 @@ At 15 years the spline is off by 0.406 bp. Its worst true error from 0.25 to 30 
 | 4 | 113 | 0.6250 | 6.24e-06 | 2.12e-07 | 2.00 | 3.92 |
 | 5 | 225 | 0.3125 | 1.56e-06 | 1.35e-08 | 2.00 | 3.97 |
 
-The **observed order** is $\log_2$ of the ratio of successive errors: each halving of $h$ divides the error by $2^{\text{order}}$.
+The **observed order** is $`\log_2`$ of the ratio of successive errors: each halving of $`h`$ divides the error by $`2^{\text{order}}`$.
 
-- **Inside, order 4.** Between 1 and 20 years the order climbs to 3.97, toward the theorem's 4. For a spline with the true end slopes, Hall and Meyer prove the sharp bound $\lvert f - s\rvert \le \tfrac{5}{384}h^4 \max\lvert f''''\rvert$ (Sources).
-- **Near the ends, order 2.** The natural condition forces $s'' = 0$ at 0.25 years, but the true curve bends there. That wrong curvature costs an $h^2$ error near the end, and it dies away within a few knots of the end, so the inside keeps order 4.
+- **Inside, order 4.** Between 1 and 20 years the order climbs to 3.97, toward the theorem's 4. For a spline with the true end slopes, Hall and Meyer prove the sharp bound $`\lvert f - s\rvert \le \tfrac{5}{384}h^4 \max\lvert f''''\rvert`$ (Sources).
+- **Near the ends, order 2.** The natural condition forces $`s'' = 0`$ at 0.25 years, but the true curve bends there. That wrong curvature costs an $`h^2`$ error near the end, and it dies away within a few knots of the end, so the inside keeps order 4.
 
 ### The picture: error against gap width
 
@@ -216,16 +224,16 @@ The 15-year rate, which sits at the middle of the 10-to-20-year gap.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| gap widths | $h_i = t_{i+1} - t_i$ | 0.25, 0.5, 1, 3, 5, 10, 10 |
-| chord slopes | $g_5 = (4.2801 - 4.0764)/10$, $g_6 = (4.3533 - 4.2801)/10$ | 0.020366, 0.007323 |
-| last row's right side | $6 \times (0.007323 - 0.020366)$ | −0.078256 |
-| last row's diagonal | $2 \times (10 + 10)$ | 40 |
+| gap widths | $`h_i = t_{i+1} - t_i`$ | 0.25, 0.5, 1, 3, 5, 10, 10 |
+| chord slopes | $`g_5 = (4.2801 - 4.0764)/10`$, $`g_6 = (4.3533 - 4.2801)/10`$ | 0.020366, 0.007323 |
+| last row's right side | $`6 \times (0.007323 - 0.020366)`$ | −0.078256 |
+| last row's diagonal | $`2 \times (10 + 10)`$ | 40 |
 | Thomas pivots | sweep down the six rows | 1.5000, 2.8333, 7.6471, 14.8231, 28.3134, 36.4681 |
-| moments | sweep back | $M_5$ = −0.004586, $M_6$ = −0.000810 |
-| check the last row | $10 \times (-0.004586) + 40 \times (-0.000810) + 10 \times 0$ | −0.078260, the right side to rounding |
-| straight line at 15 years | $(4.0764 + 4.2801)/2$ | 4.178271 |
-| bend term | $-\tfrac{10^2}{16}(M_5 + M_6) = -6.25 \times (-0.004586 - 0.000810)$ | 0.033723 |
-| spline at 15 years | $4.178271 + 0.033723$, to rounding | **4.211993%** |
+| moments | sweep back | $`M_5`$ = −0.004586, $`M_6`$ = −0.000810 |
+| check the last row | $`10 \times (-0.004586) + 40 \times (-0.000810) + 10 \times 0`$ | −0.078260, the right side to rounding |
+| straight line at 15 years | $`(4.0764 + 4.2801)/2`$ | 4.178271 |
+| bend term | $`-\tfrac{10^2}{16}(M_5 + M_6) = -6.25 \times (-0.004586 - 0.000810)`$ | 0.033723 |
+| spline at 15 years | $`4.178271 + 0.033723`$, to rounding | **4.211993%** |
 
 Each value is rounded to six decimals, so the hand sums can miss in the last digit: −0.078260 for −0.078256, and 4.211994 for 4.211993.
 
@@ -236,8 +244,8 @@ Both curvatures are negative, so the curve bows above its chord, and the spline 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | One degree-7 polynomial through all eight quotes | 3.636036% at 15 years, off −57.19 bp; worst 967.3 bp | one high-degree polynomial swings in the wide gaps |
-| No curvature: all $M_i = 0$ | 4.178271% at 15 years, off −2.966 bp | that is straight lines, with a kink at every quote |
-| Equal-spacing rows $M_{i-1} + 4M_i + M_{i+1}$ with $h$ = 4.2500 | 4.258996% at 15 years, off 5.11 bp | the maturities are not evenly spaced |
+| No curvature: all $`M_i = 0`$ | 4.178271% at 15 years, off −2.966 bp | that is straight lines, with a kink at every quote |
+| Equal-spacing rows $`M_{i-1} + 4M_i + M_{i+1}`$ with $`h`$ = 4.2500 | 4.258996% at 15 years, off 5.11 bp | the maturities are not evenly spaced |
 | A 10.05-year quote 1 bp above the 10-year | 4.478701% at 15 years, off 27.08 bp; worst 28.9 bp | knots nearly repeat with disagreeing data |
 
 The last row breaks the "well-separated knots and consistent data" hypothesis. A 1 bp disagreement over only 0.05 years makes a steep chord. The spline must bend hard to pass through both quotes, and because every moment is tied to every other through the chain, the bend spreads 10 years away.
@@ -653,14 +661,14 @@ ALL CHECKS PASS
 
 Lean proves that the natural spline exists, is unique, solves the moment rows and bends least, for any quotes and any positive gap widths.
 
-- Through any quotes there is a natural cubic spline: one cubic per gap, through every quote, with $s$, $s'$ and $s''$ continuous and $M_0 = M_n = 0$.
+- Through any quotes there is a natural cubic spline: one cubic per gap, through every quote, with $`s`$, $`s'`$ and $`s''`$ continuous and $`M_0 = M_n = 0`$.
 - Two natural cubic splines through the same quotes are the same curve.
-- The moments of a natural spline solve the tridiagonal rows in The formula, with $M_0 = M_n = 0$.
-- Of all curves through the quotes whose second derivative is continuous, the natural spline has the smallest $\int s''^2$: Holladay's least-bending property.
-- The card's whole-number arithmetic checks out: diagonals 8, 16, 30 and 40, and row $M_6$'s diagonal beating its neighbours by 20.
-- So does the cost: $15n - 19 = 86$ flops for 7 gaps, and 28 unknowns on the dense road.
+- The moments of a natural spline solve the tridiagonal rows in The formula, with $`M_0 = M_n = 0`$.
+- Of all curves through the quotes whose second derivative is continuous, the natural spline has the smallest $`\int s''^2`$: Holladay's least-bending property.
+- The card's whole-number arithmetic checks out: diagonals 8, 16, 30 and 40, and row $`M_6`$'s diagonal beating its neighbours by 20.
+- So does the cost: $`15n - 19 = 86`$ flops for 7 gaps, and 28 unknowns on the dense road.
 
-The yield-curve numbers, Thomas pivots, $s'''$ jumps, error orders and What breaks rows are left to the Python and Rust checks.
+The yield-curve numbers, Thomas pivots, $`s'''`$ jumps, error orders and What breaks rows are left to the Python and Rust checks.
 
 ```lean
 -- Cubic splines: the natural cubic spline through any data at strictly increasing knots exists, is unique and twice continuously differentiable, its knot curvatures solve the tridiagonal moment system, and it bends least.
@@ -1402,22 +1410,22 @@ example : 4 * 7 = 28 := by decide
 > [!warning]
 > **Treating a spline as local.** A straight line between two quotes depends on those two quotes only. A spline does not: every moment is tied to every other through the chain, so each quote moves the whole curve. A 1 bp disagreement between quotes at 10 and 10.05 years leaves the 15-year rate 27.08 bp off the truth. Before interpolating, clean or merge quotes that nearly repeat. When a quote is bumped to measure risk, expect the response to spread across the curve.
 >
-> - **Using the equal-spacing rows on uneven data.** $M_{i-1} + 4M_i + M_{i+1}$ holds only when every gap is the same. With the average gap, 4.2500, the 15-year rate is off by 5.11 bp.
+> - **Using the equal-spacing rows on uneven data.** $`M_{i-1} + 4M_i + M_{i+1}`$ holds only when every gap is the same. With the average gap, 4.2500, the 15-year rate is off by 5.11 bp.
 > - **Reaching for one polynomial instead.** Through the same eight quotes it is off by −57.19 bp at 15 years and by 967.3 bp at worst.
-> - **Reading "twice differentiable" as "smooth in every way".** The third derivative jumps by up to 1.368489 at a knot. Anything built on $s'''$ inherits that jump.
-> - **Trusting the natural ends.** Zero curvature at the ends is an assumption, not a fact about the curve. Here it makes the error near the ends fall only like $h^2$.
+> - **Reading "twice differentiable" as "smooth in every way".** The third derivative jumps by up to 1.368489 at a knot. Anything built on $`s'''`$ inherits that jump.
+> - **Trusting the natural ends.** Zero curvature at the ends is an assumption, not a fact about the curve. Here it makes the error near the ends fall only like $`h^2`$.
 
 ---
 
 ## Where you meet it in real life
 
-- **Rates desks.** Splines fill curves between quoted maturities. Because a forward rate is a derivative of the curve, a spline through zero rates can make the forwards ripple. The chain is the cause: move one quote and the moments answer with bends of alternating sign along it, and the slope $s'$ swings with them. A tension spline adds a pull that straightens each piece toward its chord; turned up high, it damps the swings until the curve is nearly the straight-line one. [Ends and shape](06-spline-end-conditions-and-shape.md) traces the same chain pushing a slope the wrong way, and gives a local slope rule that cannot dip. [Between the pillars](../../12-Financial%20mathematics/02-Curves/05-curve-interpolation-and-shape.md) shows the ripples and the schemes desks use instead.
+- **Rates desks.** Splines fill curves between quoted maturities. Because a forward rate is a derivative of the curve, a spline through zero rates can make the forwards ripple. The chain is the cause: move one quote and the moments answer with bends of alternating sign along it, and the slope $`s'`$ swings with them. A tension spline adds a pull that straightens each piece toward its chord; turned up high, it damps the swings until the curve is nearly the straight-line one. [Ends and shape](06-spline-end-conditions-and-shape.md) traces the same chain pushing a slope the wrong way, and gives a local slope rule that cannot dip. [Between the pillars](../../12-Financial%20mathematics/02-Curves/05-curve-interpolation-and-shape.md) shows the ripples and the schemes desks use instead.
 - **Ship and car design.** The name comes from the draftsman's spline: a thin strip bent through pins to draw a hull. Step 4 shows that the natural cubic spline is that strip's shape, for small bending.
 - **Machine tool and robot paths.** A path with continuous curvature has continuous acceleration, so the motors see no sudden jolt at each waypoint.
 - **Tables of measured data.** Engineering tables, calibration curves and lookup tables in software are read between their entries with splines.
 
 > **Say it back**
-> A cubic spline puts one cubic in each gap between data points. Making the curvatures at the knots the unknowns means height and curvature match for free. Matching slopes then gives one equation per inside knot, a diagonally dominant tridiagonal system that the Thomas sweep solves in $15n - 19$ flops. The result is twice differentiable everywhere, and of all such curves through the data it bends least. Its error falls like $h^4$ inside and like $h^2$ near natural ends, and because the system is a chain, every data point moves the whole curve.
+> A cubic spline puts one cubic in each gap between data points. Making the curvatures at the knots the unknowns means height and curvature match for free. Matching slopes then gives one equation per inside knot, a diagonally dominant tridiagonal system that the Thomas sweep solves in $`15n - 19`$ flops. The result is twice differentiable everywhere, and of all such curves through the data it bends least. Its error falls like $`h^4`$ inside and like $`h^2`$ near natural ends, and because the system is a chain, every data point moves the whole curve.
 
 ---
 
@@ -1443,6 +1451,6 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Schoenberg, I. J. "Contributions to the problem of approximation of equidistant data by analytic functions. Part A." *Quarterly of Applied Mathematics* 4 (1946): 45–99. [DOI](https://doi.org/10.1090/qam/15914). The paper that named and defined splines.
 - Holladay, John C. "A smoothest curve approximation." *Mathematics of Computation* 11 (1957): 233–243. [DOI](https://doi.org/10.1090/S0025-5718-1957-0093894-6). The least-bending property proved in Step 4.
-- Hall, Charles A., and W. Weston Meyer. "Optimal error bounds for cubic spline interpolation." *Journal of Approximation Theory* 16 (1976): 105–122. [DOI](https://doi.org/10.1016/0021-9045(76)90040-X). The sharp $\tfrac{5}{384}h^4$ error bound quoted in Step 5.
+- Hall, Charles A., and W. Weston Meyer. "Optimal error bounds for cubic spline interpolation." *Journal of Approximation Theory* 16 (1976): 105–122. [DOI](https://doi.org/10.1016/0021-9045(76)90040-X). The sharp $`\tfrac{5}{384}h^4`$ error bound quoted in Step 5.
 - de Boor, Carl. *A Practical Guide to Splines*. Springer, 1978. [Publisher page](https://doi.org/10.1007/978-1-4612-6333-3). The moment system, end conditions, and the error of natural ends.
 - Nelson, Charles R., and Andrew F. Siegel. "Parsimonious modeling of yield curves." *The Journal of Business* 60 (1987): 473–489. [DOI](https://doi.org/10.1086/296409). The smooth model curve the illustrative quotes were read from.

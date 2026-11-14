@@ -32,36 +32,42 @@ Shaded pairs keep every variance at zero or more; the edge is y = 2x² − 1, an
 
 The repair, written as an SDP. X is the matrix chosen, C the broken one, and X ⪰ 0 means X is positive semidefinite:
 
-$$\min_{X}\ \lVert X - C\rVert_F \quad \text{subject to}\quad X_{ii} = 1 \ \text{for each asset } i,\qquad X \succeq 0.$$
+```math
+\min_{X}\ \lVert X - C\rVert_F \quad \text{subject to}\quad X_{ii} = 1 \ \text{for each asset } i,\qquad X \succeq 0.
+```
 
 **Read it aloud:** find the symmetric matrix closest to the desk's estimate whose diagonal is all ones, as a correlation matrix's must be, and under which no mix has a negative variance.
 
 The Schur complement, the tool that turns ratios into matrix conditions. For a number a, a column b and a positive definite block D (every nonzero mix gives it a variance above zero):
 
-$$\begin{pmatrix} a & b^T \\ b & D \end{pmatrix} \succeq 0 \iff a - b^T D^{-1} b \ \ge\ 0, \qquad\text{so}\qquad \begin{pmatrix} s & r^T \\ r & t\,I \end{pmatrix} \succeq 0 \iff s \ \ge\ \frac{\lVert r\rVert^2}{t} \quad (t > 0).$$
+```math
+\begin{pmatrix} a & b^T \\ b & D \end{pmatrix} \succeq 0 \iff a - b^T D^{-1} b \ \ge\ 0, \qquad\text{so}\qquad \begin{pmatrix} s & r^T \\ r & t\,I \end{pmatrix} \succeq 0 \iff s \ \ge\ \frac{\lVert r\rVert^2}{t} \quad (t > 0).
+```
 
-**Read it aloud:** a matrix with a positive definite block is positive semidefinite exactly when the other corner is at least the ratio $b^T D^{-1} b$, which for a single entry d is just b²/d; so a ratio limit like $s \ge \lVert r\rVert^2/t$ becomes a matrix rule.
+**Read it aloud:** a matrix with a positive definite block is positive semidefinite exactly when the other corner is at least the ratio $`b^T D^{-1} b`$, which for a single entry d is just b²/d; so a ratio limit like $`s \ge \lVert r\rVert^2/t`$ becomes a matrix rule.
 
 The max-cut relaxation, for a network whose links make the list E:
 
-$$\max_{X}\ \sum_{(i,j) \in E} \tfrac12\,(1 - X_{ij}) \quad \text{subject to}\quad X_{ii} = 1,\quad X \succeq 0 .$$
+```math
+\max_{X}\ \sum_{(i,j) \in E} \tfrac12\,(1 - X_{ij}) \quad \text{subject to}\quad X_{ii} = 1,\quad X \succeq 0 .
+```
 
 **Read it aloud:** over the same correlation-shaped matrices, make the links' correlations as negative as possible; the best value bounds every way of splitting the network in two.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$ | the broken estimate, a symmetric matrix | rows (1, 0.9, 0.2), (0.9, 1, 0.9), (0.2, 0.9, 1) | a further-off estimate needs a bigger repair |
-| $X$, $X^*$, $X_{ij}$ | the matrix chosen; $X^*$ the minimiser, the repair; $X_{ij}$ its entry in row $i$, column $j$ | $X^*$ has 0.795511 and 0.265674 off the diagonal | — |
-| $X \succeq 0$, $w$ | positive semidefinite: $w^T X w \ge 0$ for every mix $w$ | the mix $w$ = (1, −1, 1) scores −0.200000 under $C$ | — |
-| $x$, $y$ | in the picture: UK–Europe = Europe–property, and UK–property | (0.9, 0.2) broken, (0.795511, 0.265674) repaired | a larger $x$ forces $y \ge 2x^2 - 1$ higher |
-| $\lVert X - C\rVert_F$ | the Frobenius distance: square every entry's change, add, take the root | 0.228688 | — |
-| $s$, $r$, $t$, $I$ | a bound, a vector, a positive divisor in the ratio $\lVert r\rVert^2/t$; $I$ the identity matrix | $s$ bounds the squared distance, with $t = 1$ | a larger $t$ loosens the limit |
-| $a$, $b$, $D$, $d$; $p$, $h$, $\varphi$ | the blocks of a matrix split after one row and column: corner, column, the rest, written $d$ when it is a single number; a test vector split the same way (number $p$, vector $h$) and its quadratic form $\varphi$ | pivot on Europe: Schur complement entries 0.19 and −0.61 | — |
-| $(\cdot)_+$ | the PSD (positive semidefinite) part: the same matrix with negative eigenvalues clipped to zero | clipping $C$ puts 1.095278 on Europe's diagonal | — |
-| $\nu_i$, $q(\nu)$, $\operatorname{Diag}$, $\operatorname{diag}$ | the price on asset $i$'s rule $X_{ii} = 1$; the dual function, a floor under every repair; a list turned into a diagonal matrix, and back | $\nu$ = −0.065674 for UK and property, −0.166245 for Europe | — |
-| $E$, $z_i$, $v_i$ | a network's links; node $i$'s side, +1 or −1; its unit vector, with $X_{ij} = v_i \cdot v_j$ | a ring of five; best split cuts 4 links; neighbours meet at −0.809017 | — |
-| $L$, $u_i$ | the network's Laplacian (links per node on the diagonal, −1 per link off it), not the smoothness constant $L$ of other cards; dual prices per node | the $u_i$ add to 4.522542 | — |
-| $\theta$, $\alpha$ | the angle between two nodes' vectors; the rounding guarantee | neighbours at $4\pi/5$; $\alpha$ = 0.878567 | — |
+| $`C`$ | the broken estimate, a symmetric matrix | rows (1, 0.9, 0.2), (0.9, 1, 0.9), (0.2, 0.9, 1) | a further-off estimate needs a bigger repair |
+| $`X`$, $`X^*`$, $`X_{ij}`$ | the matrix chosen; $`X^*`$ the minimiser, the repair; $`X_{ij}`$ its entry in row $`i`$, column $`j`$ | $`X^*`$ has 0.795511 and 0.265674 off the diagonal | — |
+| $`X \succeq 0`$, $`w`$ | positive semidefinite: $`w^T X w \ge 0`$ for every mix $`w`$ | the mix $`w`$ = (1, −1, 1) scores −0.200000 under $`C`$ | — |
+| $`x`$, $`y`$ | in the picture: UK–Europe = Europe–property, and UK–property | (0.9, 0.2) broken, (0.795511, 0.265674) repaired | a larger $`x`$ forces $`y \ge 2x^2 - 1`$ higher |
+| $`\lVert X - C\rVert_F`$ | the Frobenius distance: square every entry's change, add, take the root | 0.228688 | — |
+| $`s`$, $`r`$, $`t`$, $`I`$ | a bound, a vector, a positive divisor in the ratio $`\lVert r\rVert^2/t`$; $`I`$ the identity matrix | $`s`$ bounds the squared distance, with $`t = 1`$ | a larger $`t`$ loosens the limit |
+| $`a`$, $`b`$, $`D`$, $`d`$; $`p`$, $`h`$, $`\varphi`$ | the blocks of a matrix split after one row and column: corner, column, the rest, written $`d`$ when it is a single number; a test vector split the same way (number $`p`$, vector $`h`$) and its quadratic form $`\varphi`$ | pivot on Europe: Schur complement entries 0.19 and −0.61 | — |
+| $`(\cdot)_+`$ | the PSD (positive semidefinite) part: the same matrix with negative eigenvalues clipped to zero | clipping $`C`$ puts 1.095278 on Europe's diagonal | — |
+| $`\nu_i`$, $`q(\nu)`$, $`\mathrm{Diag}`$, $`\mathrm{diag}`$ | the price on asset $`i`$'s rule $`X_{ii} = 1`$; the dual function, a floor under every repair; a list turned into a diagonal matrix, and back | $`\nu`$ = −0.065674 for UK and property, −0.166245 for Europe | — |
+| $`E`$, $`z_i`$, $`v_i`$ | a network's links; node $`i`$'s side, +1 or −1; its unit vector, with $`X_{ij} = v_i \cdot v_j`$ | a ring of five; best split cuts 4 links; neighbours meet at −0.809017 | — |
+| $`L`$, $`u_i`$ | the network's Laplacian (links per node on the diagonal, −1 per link off it), not the smoothness constant $`L`$ of other cards; dual prices per node | the $`u_i`$ add to 4.522542 | — |
+| $`\theta`$, $`\alpha`$ | the angle between two nodes' vectors; the rounding guarantee | neighbours at $`4\pi/5`$; $`\alpha`$ = 0.878567 | — |
 
 ### When it holds
 
@@ -77,7 +83,7 @@ $$\max_{X}\ \sum_{(i,j) \in E} \tfrac12\,(1 - X_{ij}) \quad \text{subject to}\qu
 
 ### Step 0: one variance rule per mix, and every one of them is straight
 
-For a fixed mix w, the variance $w^T X w$ is a sum of entries of X, each times a fixed number. So "this mix has variance zero or more" is a linear inequality in the entries of X: a flat wall with the allowed side marked. Positive semidefinite asks this for every mix at once, an infinite pile of flat walls. Any shape cut out by flat walls has no dents ([Convex sets](../01-Convexity/02-convex-sets.md)). So the allowed matrices form a convex set, and the curved edge in the picture is the envelope of infinitely many straight ones.
+For a fixed mix w, the variance $`w^T X w`$ is a sum of entries of X, each times a fixed number. So "this mix has variance zero or more" is a linear inequality in the entries of X: a flat wall with the allowed side marked. Positive semidefinite asks this for every mix at once, an infinite pile of flat walls. Any shape cut out by flat walls has no dents ([Convex sets](../01-Convexity/02-convex-sets.md)). So the allowed matrices form a convex set, and the curved edge in the picture is the envelope of infinitely many straight ones.
 
 The repair is then a convex bowl, the distance to C, over a convex set, with no false bottoms ([Convexity pays off](../01-Convexity/04-local-minima-are-global-when-convex.md)). The cone of [Second-order cone programs](04-second-order-cone-programs.md) is the special case of an arrow-shaped matrix, so every second-order cone program (SOCP) is an SDP.
 
@@ -85,24 +91,26 @@ The repair is then a convex bowl, the distance to C, over a convex set, with no 
 
 Take the matrix with corner a, column b and block D. Feed it a vector split the same way, a number p on top and a vector h below. The quadratic form ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)) is
 
-$$a p^2 + 2p\, b^T h + h^T D h .$$
+```math
+a p^2 + 2p\, b^T h + h^T D h .
+```
 
-For a fixed p, choose h to make this as small as possible. Because D is positive definite, the bowl in h has one bottom, at $h = -p D^{-1} b$, and the value there is $p^2\,(a - b^T D^{-1} b)$. Every other h gives more. So the whole form is never negative exactly when $a - b^T D^{-1} b \ge 0$.
+For a fixed p, choose h to make this as small as possible. Because D is positive definite, the bowl in h has one bottom, at $`h = -p D^{-1} b`$, and the value there is $`p^2\,(a - b^T D^{-1} b)`$. Every other h gives more. So the whole form is never negative exactly when $`a - b^T D^{-1} b \ge 0`$.
 
-That leftover, $a - b^T D^{-1} b$, is the Schur complement. Its use is the ratio.
+That leftover, $`a - b^T D^{-1} b`$, is the Schur complement. Its use is the ratio.
 
-The condition $s \ge \lVert r\rVert^2 / t$, with t above zero, is not linear in s, r and t. The matrix with corner s, column r and block $t I$ is linear in them, and by the test it is positive semidefinite exactly when the ratio condition holds. A ratio has become a matrix rule a solver accepts. With t = 1 it turns the squared distance in the repair into a linear objective: minimise s with the matrix of s and the changes $X - C$ kept positive semidefinite.
+The condition $`s \ge \lVert r\rVert^2 / t`$, with t above zero, is not linear in s, r and t. The matrix with corner s, column r and block $`t I`$ is linear in them, and by the test it is positive semidefinite exactly when the ratio condition holds. A ratio has become a matrix rule a solver accepts. With t = 1 it turns the squared distance in the repair into a linear objective: minimise s with the matrix of s and the changes $`X - C`$ kept positive semidefinite.
 
 <details>
 <summary>Detailed proof: the Schur complement test, both directions</summary>
 
-Write $\varphi(p, h) = ap^2 + 2p\, b^T h + h^T D h$ with D positive definite.
+Write $`\varphi(p, h) = ap^2 + 2p\, b^T h + h^T D h`$ with D positive definite.
 
-Complete the square in h: $\varphi = (h + p D^{-1} b)^T D\, (h + p D^{-1} b) + p^2 (a - b^T D^{-1} b)$. Multiply out the first term to check: it gives $h^T D h + 2p\, b^T h + p^2 b^T D^{-1} b$, and the second term supplies the rest.
+Complete the square in h: $`\varphi = (h + p D^{-1} b)^T D\, (h + p D^{-1} b) + p^2 (a - b^T D^{-1} b)`$. Multiply out the first term to check: it gives $`h^T D h + 2p\, b^T h + p^2 b^T D^{-1} b`$, and the second term supplies the rest.
 
 **If the complement is zero or more:** the first term is never negative, since D is positive definite, and the second is a square times a number at least zero. So φ is never negative, and the matrix is positive semidefinite.
 
-**If the complement is negative:** take p = 1 and $h = -D^{-1} b$. The first term vanishes and φ equals the complement, below zero. So the matrix is not positive semidefinite.
+**If the complement is negative:** take p = 1 and $`h = -D^{-1} b`$. The first term vanishes and φ equals the complement, below zero. So the matrix is not positive semidefinite.
 
 The proof used D's positivity to say the first term is never negative. With a negative pivot that step fails, which is the `[[-1, 1], [1, 0]]` case under When it holds.
 
@@ -110,13 +118,17 @@ The proof used D's positivity to say the first term is never negative. With a ne
 
 ### Step 2: the Schur complement draws the allowed region
 
-The test works with either block as the pivot. With the single corner a above zero as the pivot, the matrix is positive semidefinite exactly when $D - b\,b^T/a$ is; the same completing of the square proves it. Put Europe first: a = 1, b = (x, x), and D is the 2 by 2 of UK and property, with 1 on its diagonal and y off it. Then
+The test works with either block as the pivot. With the single corner a above zero as the pivot, the matrix is positive semidefinite exactly when $`D - b\,b^T/a`$ is; the same completing of the square proves it. Put Europe first: a = 1, b = (x, x), and D is the 2 by 2 of UK and property, with 1 on its diagonal and y off it. Then
 
-$$D - b\,b^T = \begin{pmatrix} 1 - x^2 & y - x^2 \\ y - x^2 & 1 - x^2 \end{pmatrix}.$$
+```math
+D - b\,b^T = \begin{pmatrix} 1 - x^2 & y - x^2 \\ y - x^2 & 1 - x^2 \end{pmatrix}.
+```
 
-A 2 by 2 is positive semidefinite when its diagonal is zero or more and its determinant is too. That gives $\lvert y - x^2\rvert \le 1 - x^2$, which unpacks to
+A 2 by 2 is positive semidefinite when its diagonal is zero or more and its determinant is too. That gives $`\lvert y - x^2\rvert \le 1 - x^2`$, which unpacks to
 
-$$2x^2 - 1 \ \le\ y \ \le\ 1 .$$
+```math
+2x^2 - 1 \ \le\ y \ \le\ 1 .
+```
 
 That is the shaded region in the picture. In plain words: if UK moves with Europe at 0.9, and Europe with property at 0.9, then UK must move with property at 0.62 at least. The desk's 0.2 is outside. For the desk's numbers the complement has 0.19 on the diagonal and −0.61 off it, determinant −0.336, so C fails. The determinant of C by cofactors, and the product of its eigenvalues, are the same −0.336.
 
@@ -127,17 +139,21 @@ Two facts do the work.
 1. **The nearest positive semidefinite matrix to any symmetric matrix**, in Frobenius distance, keeps its eigenvectors and clips every negative eigenvalue to zero. The spectral theorem writes the matrix as stretches along perpendicular axes, and the Frobenius distance is the same along any perpendicular axes, so measure along these. Along them the matrix is just its eigenvalues on the diagonal. A candidate's off-diagonal entries only add distance, and its diagonal entries are variances, so zero or more. The nearest candidate is therefore diagonal too: each eigenvalue kept if zero or more, zero otherwise. Call the clipped matrix the PSD part, written with a subscript +.
 2. **Clipping alone breaks the diagonal.** Clip C and its diagonal reads 1.040718 for UK and 1.095278 for Europe. It is no longer a correlation matrix.
 
-So put a price $\nu_i$ on each diagonal rule $X_{ii} = 1$, the equality multiplier of the [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md). Shift C's diagonal by the prices, clip, and look at the diagonal. Where it is above 1, lower that price; where below, raise it:
+So put a price $`\nu_i`$ on each diagonal rule $`X_{ii} = 1`$, the equality multiplier of the [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md). Shift C's diagonal by the prices, clip, and look at the diagonal. Where it is above 1, lower that price; where below, raise it:
 
-$$\nu \ \leftarrow\ \nu + \bigl(1 - \operatorname{diag}\,(C + \operatorname{Diag}\nu)_+\bigr), \qquad \nu = 0 \text{ at the start}.$$
+```math
+\nu \ \leftarrow\ \nu + \bigl(1 - \mathrm{diag}\,(C + \mathrm{Diag}\,\nu)_+\bigr), \qquad \nu = 0 \text{ at the start}.
+```
 
 This is gradient ascent on the dual function. That function is
 
-$$q(\nu) = \tfrac12 \lVert C\rVert_F^2 + \sum_i \nu_i - \tfrac12 \lVert (C + \operatorname{Diag}\nu)_+\rVert_F^2 ,$$
+```math
+q(\nu) = \tfrac12 \lVert C\rVert_F^2 + \sum_i \nu_i - \tfrac12 \lVert (C + \mathrm{Diag}\,\nu)_+\rVert_F^2 ,
+```
 
 and for any prices at all it sits at or below half the squared distance of every allowed repair. Here is why.
 
-Add the priced rules $\sum_i \nu_i (1 - X_{ii})$ to half the squared distance and minimise over every $X \succeq 0$, diagonal rule dropped. Completing the square leaves half the squared distance from X to $C + \operatorname{Diag}\nu$, plus terms free of X, so by fact 1 the best X is $(C + \operatorname{Diag}\nu)_+$, with value q(ν).
+Add the priced rules $`\sum_i \nu_i (1 - X_{ii})`$ to half the squared distance and minimise over every $`X \succeq 0`$, diagonal rule dropped. Completing the square leaves half the squared distance from X to $`C + \mathrm{Diag}\,\nu`$, plus terms free of X, so by fact 1 the best X is $`(C + \mathrm{Diag}\,\nu)_+`$, with value q(ν).
 
 An allowed repair pays nothing for the rules and was among the X tried, so q(ν) is at most its half squared distance: weak duality, from [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md). The identity matrix, strictly inside, meets [Slater's condition](../03-Constrained%20Optimisation/05-slaters-condition-and-duality-gaps.md), which lets the best floor reach the repair.
 
@@ -149,21 +165,21 @@ The certificate: half the squared distance of the repair, minus q at the final p
 
 Five assets sit in a ring: each strongly linked to the next, the fifth to the first. Two traders split the book, and a linked pair inside one book concentrates that trader's risk, so split linked pairs as often as possible. Counting the links split across the two sides is **max-cut**. For large networks it is NP-hard: no fast method is known that always finds the best split.
 
-Give each asset a side $z_i$, +1 or −1. A link is cut when its two signs differ, and then $(1 - z_i z_j)/2$ is 1; otherwise it is 0. Now build the matrix $X = z z^T$, with entries $z_i z_j$. Its diagonal is all ones, and every mix w scores $(w \cdot z)^2$, never negative. So **every split is a correlation matrix**, one whose entries are all ±1 and whose rank is one: built from the single vector z.
+Give each asset a side $`z_i`$, +1 or −1. A link is cut when its two signs differ, and then $`(1 - z_i z_j)/2`$ is 1; otherwise it is 0. Now build the matrix $`X = z z^T`$, with entries $`z_i z_j`$. Its diagonal is all ones, and every mix w scores $`(w \cdot z)^2`$, never negative. So **every split is a correlation matrix**, one whose entries are all ±1 and whose rank is one: built from the single vector z.
 
 Drop the demand that the entries be ±1 and keep only "diagonal ones, positive semidefinite". That is the relaxation in the formula. The relaxed problem allows every split and more, so its best value is at least the best cut. On the ring it is 4.522542; the best cut, from listing all 32 sign patterns, is 4.
 
-To solve the relaxation, write $X_{ij} = v_i \cdot v_j$ with one unit vector per asset in three dimensions. The **mixing method** visits each asset in turn and points its vector straight away from the sum of its neighbours' vectors, the best direction for it with the others held still. From fixed starting vectors, stopping when no vector moves more than 10⁻¹², it takes 30 sweeps. The neighbours settle at an inner product of −0.809017, which is $\cos(4\pi/5)$, a five-pointed star.
+To solve the relaxation, write $`X_{ij} = v_i \cdot v_j`$ with one unit vector per asset in three dimensions. The **mixing method** visits each asset in turn and points its vector straight away from the sum of its neighbours' vectors, the best direction for it with the others held still. From fixed starting vectors, stopping when no vector moves more than 10⁻¹², it takes 30 sweeps. The neighbours settle at an inner product of −0.809017, which is $`\cos(4\pi/5)`$, a five-pointed star.
 
-The certificate uses the network's Laplacian L: links per node on the diagonal, −1 per link off it. The objective equals $\tfrac14\langle L, X\rangle$, the entries of L times those of X, added. Give each asset the dual price $u_i = \tfrac14(2 - X_{i,i-1} - X_{i,i+1})$ from the mixing answer; by construction these add to its value, 4.522542, so the sum alone proves nothing.
+The certificate uses the network's Laplacian L: links per node on the diagonal, −1 per link off it. The objective equals $`\tfrac14\langle L, X\rangle`$, the entries of L times those of X, added. Give each asset the dual price $`u_i = \tfrac14(2 - X_{i,i-1} - X_{i,i+1})`$ from the mixing answer; by construction these add to its value, 4.522542, so the sum alone proves nothing.
 
-For any allowed X the objective is $\sum_i u_i$ minus the entry-by-entry product of $\operatorname{Diag}(u) - L/4$ with X. If $\operatorname{Diag}(u) - L/4$ is positive semidefinite, that product of two positive semidefinite matrices is never negative, so no allowed X scores above $\sum_i u_i$. That test is the certificate, and it passes (smallest eigenvalue 0.000000): the relaxation is solved.
+For any allowed X the objective is $`\sum_i u_i`$ minus the entry-by-entry product of $`\mathrm{Diag}(u) - L/4`$ with X. If $`\mathrm{Diag}(u) - L/4`$ is positive semidefinite, that product of two positive semidefinite matrices is never negative, so no allowed X scores above $`\sum_i u_i`$. That test is the certificate, and it passes (smallest eigenvalue 0.000000): the relaxation is solved.
 
 ### Step 5: rounding back to a split
 
 A bound is not a split. Goemans and Williamson's rounding draws a random flat plane through the origin and puts each asset on the side its vector falls. A link whose vectors meet at angle θ is cut with chance θ/π, because the plane separates the two vectors exactly when it passes between them. Add over links: the expected cut on the ring is 4.000000, which is the best cut. A plane with normal (1, 0.5, 0.25) cuts 4 links.
 
-The guarantee compares the chance θ/π with the link's share in the relaxation, $(1 - \cos\theta)/2$. Their ratio is never below α = 0.878567, the minimum of $2\theta / (\pi (1 - \cos\theta))$ over angles θ. So on any network with weights zero or more, the expected cut is at least 0.878567 times the relaxation, and so at least 0.878567 times the best cut. On the ring the true ratio of best cut to bound is 0.884458, just above α.
+The guarantee compares the chance θ/π with the link's share in the relaxation, $`(1 - \cos\theta)/2`$. Their ratio is never below α = 0.878567, the minimum of $`2\theta / (\pi (1 - \cos\theta))`$ over angles θ. So on any network with weights zero or more, the expected cut is at least 0.878567 times the relaxation, and so at least 0.878567 times the best cut. On the ring the true ratio of best cut to bound is 0.884458, just above α.
 
 ---
 
@@ -624,7 +640,7 @@ The two outputs agree line for line.
 
 Lean proves the Schur test, the max-cut bound and the convex shape of the allowed matrices, for every matrix size and every network.
 
-- Take a number a, a column b and a positive definite block D. The matrix with corner a, column b and block D is positive semidefinite exactly when $a - b^T D^{-1} b \ge 0$.
+- Take a number a, a column b and a positive definite block D. The matrix with corner a, column b and block D is positive semidefinite exactly when $`a - b^T D^{-1} b \ge 0`$.
 - On any network, no split cuts more links than the best value of the max-cut relaxation.
 - The symmetric matrices that are positive semidefinite and obey any list of linear limits form a convex set.
 - The hand arithmetic holds exactly: the mix's variance of −0.2, or −80,000,000 pounds squared, the Schur complement on Europe and its determinant −0.336.
@@ -824,7 +840,7 @@ example : ((Finset.univ : Finset (Finset (Fin 5))).filter
 
 - [Second-order cone programs](04-second-order-cone-programs.md): the cone that an SDP generalises; every SOCP is an SDP with an arrow-shaped matrix.
 - [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): a symmetric matrix is stretches along perpendicular axes, which is why clipping eigenvalues gives the nearest positive semidefinite matrix.
-- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): $w^T X w$ as the variance of a mix, and what positive definite means.
+- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): $`w^T X w`$ as the variance of a mix, and what positive definite means.
 
 ## Where this goes next
 

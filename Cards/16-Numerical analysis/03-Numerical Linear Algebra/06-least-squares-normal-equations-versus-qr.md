@@ -38,42 +38,48 @@ The orange line is the normal equations. The green line is Householder QR. Both 
 
 The data are 20 equations in 3 unknowns, one per lap:
 
-$$A x \approx b$$
+```math
+A x \approx b
+```
 
-Here $A$ is a 20 × 3 matrix whose row for lap $L$ is (1, $L$, $L^2$), $b$ holds the 20 lap times, and $x$ = (x0, x1, x2) holds the coefficients. Least squares picks the $x$ that makes the sum of squared misses as small as possible. The two routes to it are
+Here $`A`$ is a 20 × 3 matrix whose row for lap $`L`$ is (1, $`L`$, $`L^2`$), $`b`$ holds the 20 lap times, and $`x`$ = (x0, x1, x2) holds the coefficients. Least squares picks the $`x`$ that makes the sum of squared misses as small as possible. The two routes to it are
 
-$$\text{normal equations: } A^T A\,x = A^T b \qquad\qquad \text{QR: } A = QR,\quad R\,x = Q^T b$$
+```math
+\text{normal equations: } A^T A\,x = A^T b \qquad\qquad \text{QR: } A = QR,\quad R\,x = Q^T b
+```
 
 and their errors, in a computer that rounds every operation, are
 
-$$\kappa(A^TA) = \kappa(A)^2, \qquad \frac{\lVert\hat x_{NE} - x\rVert}{\lVert x\rVert} \approx \kappa^2 u, \qquad \frac{\lVert\hat x_{QR} - x\rVert}{\lVert x\rVert} \lesssim (\kappa + \kappa^2 \tan\theta)\, u$$
+```math
+\kappa(A^TA) = \kappa(A)^2, \qquad \frac{\lVert\hat x_{NE} - x\rVert}{\lVert x\rVert} \approx \kappa^2 u, \qquad \frac{\lVert\hat x_{QR} - x\rVert}{\lVert x\rVert} \lesssim (\kappa + \kappa^2 \tan\theta)\, u
+```
 
 **Read it aloud:** multiplying A by its transpose squares its condition number, so the normal equations can lose about κ² times the rounding unit, while QR loses about κ times the rounding unit plus a κ² term that is shrunk by how badly the curve misses the data.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$ | lap number, from the race timing sheet | 301 to 320 | further from zero means nearly parallel columns: κ grows |
-| $m$, $n$ | number of data rows, number of unknowns | 20 laps, 3 coefficients | more rows add work, not conditioning |
-| $A$ | the design matrix: one row (1, $L$, $L^2$) per lap | 20 × 3 | — |
-| $b$ | the measured lap times, in seconds | 61.318, 61.418, … | — |
-| $x$ | the coefficients x0, x1, x2 of the fitted curve | x2 = 3.619617224880e-03 s per lap² | — |
-| $\hat x$ | "x-hat", the computed $x$, with its rounding errors | $\hat x_{NE}$, $\hat x_{QR}$ | — |
-| $A^TA$ | the 3 × 3 matrix of dot products of A's columns | κ = 190,657,122.4 | its κ is the square of A's |
-| $Q$, $R$ | $Q$: columns at right angles, each of length 1; $R$: an upper triangle | from Householder reflections | — |
-| $\kappa$ | condition number: largest stretch of $A$ over smallest, columns scaled to length 1 | 13,807.9 | every error estimate grows with it |
-| $u$ | unit roundoff, $2^{-53}$: the largest relative error of one rounding | 1.110e-16 | — |
-| $\theta$ | the angle between $b$ and the best fit $Ax$; $\tan\theta$ = misfit length ÷ fit length | $\tan\theta$ = 1.250e-03 | QR's κ² term grows |
+| $`L`$ | lap number, from the race timing sheet | 301 to 320 | further from zero means nearly parallel columns: κ grows |
+| $`m`$, $`n`$ | number of data rows, number of unknowns | 20 laps, 3 coefficients | more rows add work, not conditioning |
+| $`A`$ | the design matrix: one row (1, $`L`$, $`L^2`$) per lap | 20 × 3 | — |
+| $`b`$ | the measured lap times, in seconds | 61.318, 61.418, … | — |
+| $`x`$ | the coefficients x0, x1, x2 of the fitted curve | x2 = 3.619617224880e-03 s per lap² | — |
+| $`\hat x`$ | "x-hat", the computed $`x`$, with its rounding errors | $`\hat x_{NE}`$, $`\hat x_{QR}`$ | — |
+| $`A^TA`$ | the 3 × 3 matrix of dot products of A's columns | κ = 190,657,122.4 | its κ is the square of A's |
+| $`Q`$, $`R`$ | $`Q`$: columns at right angles, each of length 1; $`R`$: an upper triangle | from Householder reflections | — |
+| $`\kappa`$ | condition number: largest stretch of $`A`$ over smallest, columns scaled to length 1 | 13,807.9 | every error estimate grows with it |
+| $`u`$ | unit roundoff, $`2^{-53}`$: the largest relative error of one rounding | 1.110e-16 | — |
+| $`\theta`$ | the angle between $`b`$ and the best fit $`Ax`$; $`\tan\theta`$ = misfit length ÷ fit length | $`\tan\theta`$ = 1.250e-03 | QR's κ² term grows |
 
-Three symbols come from earlier cards. The hat for a computed value and $u$ are from [Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md). κ is from [Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md) and, for matrices, [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md).
+Three symbols come from earlier cards. The hat for a computed value and $`u`$ are from [Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md). κ is from [Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md) and, for matrices, [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md).
 
-κ here is measured after each column of $A$ is scaled to length 1. Units alone can inflate an unscaled κ: counting laps in hundreds would change it. Both methods are almost blind to column scaling (exactly blind for scaling by powers of 2), so the scaled κ is the one that predicts their errors.
+κ here is measured after each column of $`A`$ is scaled to length 1. Units alone can inflate an unscaled κ: counting laps in hundreds would change it. Both methods are almost blind to column scaling (exactly blind for scaling by powers of 2), so the scaled κ is the one that predicts their errors.
 
 ### When it holds
 
 - **The columns of A are independent.** If two columns were exact copies, κ would be infinite and neither method would give one answer; that case needs [Singular value decomposition](08-svd-and-the-pseudoinverse.md).
 - **The rounding is the only error counted.** The estimates say what the computer adds. They say nothing about errors already in the data; here a 1 ms timing error moves x2 by a relative 8.97e-04, far more than either method's rounding.
 - **κ² u is below 1.** Past that, the normal equations can return no correct digits at all, or Cholesky can meet a negative number under a square root and stop.
-- **QR is done by an orthogonal method.** Householder reflections keep $Q$ orthogonal to rounding level. Classical Gram–Schmidt does not, and its answer here is off by 2.80e-10, closer to the normal equations than to Householder.
+- **QR is done by an orthogonal method.** Householder reflections keep $`Q`$ orthogonal to rounding level. Classical Gram–Schmidt does not, and its answer here is off by 2.80e-10, closer to the normal equations than to Householder.
 - **The estimates are estimates.** They show the size of the error, not a guarantee. On this stint the measured errors are 0.273 and 0.012 of them.
 
 ---
@@ -84,60 +90,62 @@ Three symbols come from earlier cards. The hat for a computed value and $u$ are 
 
 A stable method gives the exact answer to a problem whose data are off by a few rounding units ([Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md)). The answer then moves by up to κ times that data error. So the whole question is: which problem does each method end up solving, and what is its κ?
 
-The normal equations replace the fitting problem by the square system $A^TA\,x = A^Tb$. QR replaces it by the triangle $Rx = Q^Tb$. The next two steps show that the first has κ², the second keeps κ.
+The normal equations replace the fitting problem by the square system $`A^TA\,x = A^Tb`$. QR replaces it by the triangle $`Rx = Q^Tb`$. The next two steps show that the first has κ², the second keeps κ.
 
 ### Step 1: multiplying A by its transpose squares its condition number
 
-Take any direction $v$ of length 1. Its stretch under $A$ is the length $\lVert Av\rVert$. Squaring that length gives
+Take any direction $`v`$ of length 1. Its stretch under $`A`$ is the length $`\lVert Av\rVert`$. Squaring that length gives
 
-$$\lVert Av\rVert^2 = (Av)^T(Av) = v^T (A^TA)\, v.$$
+```math
+\lVert Av\rVert^2 = (Av)^T(Av) = v^T (A^TA)\, v.
+```
 
-The largest and smallest values of $v^T(A^TA)v$ over all such $v$ are the largest and smallest stretches of the symmetric matrix $A^TA$. So $A^TA$ stretches by exactly the squares of what $A$ stretches by, and the ratio κ is squared. The fold has the full argument.
+The largest and smallest values of $`v^T(A^TA)v`$ over all such $`v`$ are the largest and smallest stretches of the symmetric matrix $`A^TA`$. So $`A^TA`$ stretches by exactly the squares of what $`A`$ stretches by, and the ratio κ is squared. The fold has the full argument.
 
-The code checks this two independent ways. Rotating the scaled columns of $A$ until they are at right angles gives κ(A) = 13,807.9. Doing the same to $A^TA$ gives 190,657,122.4. The square of the first is 190,657,125.2: the same to seven digits. The small difference is rounding in the second computation.
+The code checks this two independent ways. Rotating the scaled columns of $`A`$ until they are at right angles gives κ(A) = 13,807.9. Doing the same to $`A^TA`$ gives 190,657,122.4. The square of the first is 190,657,125.2: the same to seven digits. The small difference is rounding in the second computation.
 
 <details>
 <summary>Detailed proof: the stretches of AᵀA are the squares of the stretches of A</summary>
 
-Write $G = A^TA$. It is symmetric, so it has perpendicular unit eigenvectors $q_1, q_2, q_3$ with eigenvalues $\lambda_1 \ge \lambda_2 \ge \lambda_3$ (the spectral theorem from the algebra wing). Each $\lambda_i = q_i^T G q_i = \lVert Aq_i\rVert^2 \ge 0$, and it is above 0 when the columns of $A$ are independent.
+Write $`G = A^TA`$. It is symmetric, so it has perpendicular unit eigenvectors $`q_1, q_2, q_3`$ with eigenvalues $`\lambda_1 \ge \lambda_2 \ge \lambda_3`$ (the spectral theorem from the algebra wing). Each $`\lambda_i = q_i^T G q_i = \lVert Aq_i\rVert^2 \ge 0`$, and it is above 0 when the columns of $`A`$ are independent.
 
-Any unit vector is $v = c_1 q_1 + c_2 q_2 + c_3 q_3$ with $c_1^2 + c_2^2 + c_3^2 = 1$. Then
+Any unit vector is $`v = c_1 q_1 + c_2 q_2 + c_3 q_3`$ with $`c_1^2 + c_2^2 + c_3^2 = 1`$. Then
 
-$$\lVert Av\rVert^2 = v^T G v = \lambda_1 c_1^2 + \lambda_2 c_2^2 + \lambda_3 c_3^2,$$
+$`\displaystyle \lVert Av\rVert^2 = v^T G v = \lambda_1 c_1^2 + \lambda_2 c_2^2 + \lambda_3 c_3^2,`$
 
-which lies between $\lambda_3$ and $\lambda_1$ and reaches both ends at $v = q_3$ and $v = q_1$. So the largest stretch of $A$ is $\sigma_{\max} = \sqrt{\lambda_1}$ and the smallest is $\sigma_{\min} = \sqrt{\lambda_3}$.
+which lies between $`\lambda_3`$ and $`\lambda_1`$ and reaches both ends at $`v = q_3`$ and $`v = q_1`$. So the largest stretch of $`A`$ is $`\sigma_{\max} = \sqrt{\lambda_1}`$ and the smallest is $`\sigma_{\min} = \sqrt{\lambda_3}`$.
 
-$G$ itself stretches $q_i$ by $\lambda_i$ and any unit $v$ by $\sqrt{\lambda_1^2c_1^2+\lambda_2^2c_2^2+\lambda_3^2c_3^2}$, which lies between $\lambda_3$ and $\lambda_1$. So
+$`G`$ itself stretches $`q_i`$ by $`\lambda_i`$ and any unit $`v`$ by $`\sqrt{\lambda_1^2c_1^2+\lambda_2^2c_2^2+\lambda_3^2c_3^2}`$, which lies between $`\lambda_3`$ and $`\lambda_1`$. So
 
-$$\kappa(G) = \frac{\lambda_1}{\lambda_3} = \left(\frac{\sigma_{\max}}{\sigma_{\min}}\right)^2 = \kappa(A)^2. \qquad\blacksquare$$
+$`\displaystyle \kappa(G) = \frac{\lambda_1}{\lambda_3} = \left(\frac{\sigma_{\max}}{\sigma_{\min}}\right)^2 = \kappa(A)^2. \qquad\blacksquare`$
 
 </details>
 
 ### Step 2: the normal equations therefore lose about κ² u
 
-Even a perfect solver for $A^TAx = A^Tb$ starts from stored numbers. Here every entry of $A^TA$ is a whole number below $2^{53}$, so it is stored exactly. The three entries of $A^Tb$ are sums of products of lap times, and each of those operations rounds. Cholesky ([Cholesky](04-cholesky-decomposition.md)) then solves the system stably: its answer is exact for a matrix and right-hand side off by a few rounding units.
+Even a perfect solver for $`A^TAx = A^Tb`$ starts from stored numbers. Here every entry of $`A^TA`$ is a whole number below $`2^{53}`$, so it is stored exactly. The three entries of $`A^Tb`$ are sums of products of lap times, and each of those operations rounds. Cholesky ([Cholesky](04-cholesky-decomposition.md)) then solves the system stably: its answer is exact for a matrix and right-hand side off by a few rounding units.
 
-So the computed $\hat x_{NE}$ is the exact answer to a problem whose data moved by about $u$, and that problem has condition number κ². The relative error is about κ²u:
+So the computed $`\hat x_{NE}`$ is the exact answer to a problem whose data moved by about $`u`$, and that problem has condition number κ². The relative error is about κ²u:
 
 - estimate: 13,807.9² × 1.110e-16 = 2.12e-08;
 - measured, on x2: 5.78e-09, a ratio of 0.273.
 
-The loss happens before any clever solver could help. Once the problem is written as $A^TA$, κ² is built in.
+The loss happens before any clever solver could help. Once the problem is written as $`A^TA`$, κ² is built in.
 
 ### Step 3: QR keeps κ, apart from a term shrunk by the misfit
 
-QR writes $A = QR$, where $Q$ has three columns at right angles, each of length 1, and $R$ is a 3 × 3 upper triangle ([QR](05-qr-householder-and-gram-schmidt.md)). Multiplying by $Q^T$ does not change lengths in the directions $Q$ spans, so the squared miss becomes $\lVert Q^Tb - Rx\rVert^2$ plus a part $x$ cannot touch. The best $x$ solves the triangle $Rx = Q^Tb$.
+QR writes $`A = QR`$, where $`Q`$ has three columns at right angles, each of length 1, and $`R`$ is a 3 × 3 upper triangle ([QR](05-qr-householder-and-gram-schmidt.md)). Multiplying by $`Q^T`$ does not change lengths in the directions $`Q`$ spans, so the squared miss becomes $`\lVert Q^Tb - Rx\rVert^2`$ plus a part $`x`$ cannot touch. The best $`x`$ solves the triangle $`Rx = Q^Tb`$.
 
 Two facts make this safe:
 
-1. **$R$ has the same stretches as $A$.** For any $v$, $\lVert Av\rVert = \lVert QRv\rVert = \lVert Rv\rVert$, because $Q$ keeps lengths. So κ(R) = κ(A): nothing is squared.
-2. **Householder QR is backward stable.** Its $\hat x_{QR}$ is the exact least-squares answer for data $A + \delta A$, $b + \delta b$, each off by a small multiple of $u$ (Higham, chapter 20).
+1. **$`R`$ has the same stretches as $`A`$.** For any $`v`$, $`\lVert Av\rVert = \lVert QRv\rVert = \lVert Rv\rVert`$, because $`Q`$ keeps lengths. So κ(R) = κ(A): nothing is squared.
+2. **Householder QR is backward stable.** Its $`\hat x_{QR}`$ is the exact least-squares answer for data $`A + \delta A`$, $`b + \delta b`$, each off by a small multiple of $`u`$ (Higham, chapter 20).
 
-The least-squares problem itself then turns a data error of size $u$ into an answer error of about $(\kappa + \kappa^2 \tan\theta)u$. This was shown by Golub and Wilkinson in 1966; it is stated here, not proved. The key step: tilting the columns of $A$ slightly tilts the flat sheet the fit lives on. The leftover misfit, of relative length $\tan\theta$, then swings with the sheet, and solving back through $R$ amplifies that swing by κ again.
+The least-squares problem itself then turns a data error of size $`u`$ into an answer error of about $`(\kappa + \kappa^2 \tan\theta)u`$. This was shown by Golub and Wilkinson in 1966; it is stated here, not proved. The key step: tilting the columns of $`A`$ slightly tilts the flat sheet the fit lives on. The leftover misfit, of relative length $`\tan\theta`$, then swings with the sheet, and solving back through $`R`$ amplifies that swing by κ again.
 
-So QR also meets κ², but multiplied by $\tan\theta$, which is small when the curve fits well. Here:
+So QR also meets κ², but multiplied by $`\tan\theta`$, which is small when the curve fits well. Here:
 
-- $\tan\theta$ = 1.250e-03, because the misses are tiny next to 61-second lap times;
+- $`\tan\theta`$ = 1.250e-03, because the misses are tiny next to 61-second lap times;
 - estimate: (13,807.9 + 13,807.9² × 1.250e-03) × 1.110e-16 = 2.80e-11;
 - measured, on x2: 3.26e-13, a ratio of 0.012.
 
@@ -145,7 +153,7 @@ The normal equations pay κ² even when the fit is perfect. QR pays κ² only in
 
 ### Step 4: κ depends on how spread out the data are, so choose by that
 
-Why is κ so large here? Over laps 301 to 320, the columns 1, $L$ and $L^2$ hardly change in shape: each just rises a little across the stint. Three nearly parallel columns make a nearly flat matrix, and the fit has to balance huge coefficients that cancel. The intercept x0 = 4.114391447710e+02 s is the lap time the curve predicts for lap 0, an extrapolation no one would read.
+Why is κ so large here? Over laps 301 to 320, the columns 1, $`L`$ and $`L^2`$ hardly change in shape: each just rises a little across the stint. Three nearly parallel columns make a nearly flat matrix, and the fit has to balance huge coefficients that cancel. The intercept x0 = 4.114391447710e+02 s is the lap time the curve predicts for lap 0, an extrapolation no one would read.
 
 The ratio that matters is where the data sit compared with how wide they spread: the centre of the lap numbers divided by their half-width. Renumbering the same stint changes only this ratio:
 
@@ -167,7 +175,7 @@ The rule that follows:
 2. If κ²u is far below the accuracy you need, and far below the data's own error, the normal equations are fine and cheaper.
 3. Otherwise use QR, or centre the data first, which shrinks κ for both.
 
-The cost difference is a factor of about two. For $m$ rows and $n$ unknowns, the normal equations take about $mn^2 + n^3/3$ flops and Householder QR about $2mn^2 - 2n^3/3$ ([Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md)). For this stint that is 189 against 342. For a million rows of telemetry with three unknowns, 9,000,009 against 17,999,982.
+The cost difference is a factor of about two. For $`m`$ rows and $`n`$ unknowns, the normal equations take about $`mn^2 + n^3/3`$ flops and Householder QR about $`2mn^2 - 2n^3/3`$ ([Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md)). For this stint that is 189 against 342. For a million rows of telemetry with three unknowns, 9,000,009 against 17,999,982.
 
 ---
 
@@ -196,7 +204,7 @@ The normal equations agree with the exact x2 to 8 digits and QR to 12. Squaring 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Normal equations on the raw lap numbers 301 to 320 | x2 error 5.78e-09, against 3.26e-13 for QR | Forming AᵀA squared κ to 190,657,122.4 |
-| QR by classical Gram–Schmidt instead of Householder | x2 error 2.80e-10 | The computed Q is no longer orthogonal, so $Q^Tb$ carries some κ² error back in |
+| QR by classical Gram–Schmidt instead of Householder | x2 error 2.80e-10 | The computed Q is no longer orthogonal, so $`Q^Tb`$ carries some κ² error back in |
 | Trusting the normal equations because the residual is small | sum of squared misses, summed exactly, 0.117022316609705: the same as the exact fit's to all 15 printed digits | The residual cannot see that x2 is wrong in its 9th digit; a small residual is a small backward error, not a small forward error |
 
 ---
@@ -909,10 +917,10 @@ example : 2 * 1000000 * 3 ^ 2 - 2 * 3 ^ 3 / 3 = 17999982 := by norm_num
 
 ## What this builds on
 
-- [QR](05-qr-householder-and-gram-schmidt.md): how Householder reflections build $Q$ and $R$, and why classical Gram–Schmidt loses orthogonality.
+- [QR](05-qr-householder-and-gram-schmidt.md): how Householder reflections build $`Q`$ and $`R`$, and why classical Gram–Schmidt loses orthogonality.
 - [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations as a projection, with the misfit perpendicular to the columns. This card asks how accurately a computer solves them.
 - [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the fitted line with noise in the data, the error that dwarfs rounding here.
-- [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): the normal equations for several predictors, $X^TX\beta = X^Ty$, the same system in statistics notation.
+- [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): the normal equations for several predictors, $`X^TX\beta = X^Ty`$, the same system in statistics notation.
 
 ## Where this goes next
 

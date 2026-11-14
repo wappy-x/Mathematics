@@ -26,17 +26,21 @@ To scale: 40 units per 1, 0 at (180, 150). Segment from (100.00, 150.00) to (260
 
 ## The formula
 
-A reminder: the residue of f at a pole a, written $\operatorname{Res}(f, a)$, is the coefficient of 1/(z − a) in f's expansion near a, and a loop integral equals 2πi times the residues inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
+A reminder: the residue of f at a pole a, written $`\mathrm{Res}(f, a)`$, is the coefficient of 1/(z − a) in f's expansion near a, and a loop integral equals 2πi times the residues inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
 
-Let $f = p/q$ be a ratio of polynomials, q never zero on the real line, and the degree of q at least that of p plus 2. Then
+Let $`f = p/q`$ be a ratio of polynomials, q never zero on the real line, and the degree of q at least that of p plus 2. Then
 
-$$\int_{-\infty}^{\infty} f(x)\,dx = 2\pi i \sum_{\operatorname{Im} a > 0} \operatorname{Res}(f, a).$$
+```math
+\int_{-\infty}^{\infty} f(x)\,dx = 2\pi i \sum_{\mathrm{Im}\, a > 0} \mathrm{Res}(f, a).
+```
 
 **Read it aloud:** the area under f along the whole real line is 2πi times its residues above the axis.
 
 The engine is one exact equation, true once R exceeds every pole's distance from 0:
 
-$$\int_{-R}^{R} f(x)\,dx + \int_{C_R} f(z)\,dz = 2\pi i \sum_{\operatorname{Im} a > 0} \operatorname{Res}(f, a).$$
+```math
+\int_{-R}^{R} f(x)\,dx + \int_{C_R} f(z)\,dz = 2\pi i \sum_{\mathrm{Im}\, a > 0} \mathrm{Res}(f, a).
+```
 
 **Read it aloud:** segment plus arc equals the residue sum, at every finite radius.
 
@@ -44,14 +48,14 @@ The **ML bound** kills the arc: a path integral's size is at most M, the functio
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $z$ | a point on the shore, in km; a point of the plane | x = 1 | — |
-| $f$, $p$, $q$ | the function integrated; its top and bottom polynomials | 1/(1 + z^2), and its square | a bigger bottom degree: faster fall-off |
-| $i$, $\pi$ | the quarter turn, with i^2 = −1; a half turn in radians | pole at i | — |
-| $a$, $\operatorname{Im} a$ | a pole: a zero of q, where f blows up; its imaginary part, the pole's height above the real axis | i and −i | only those above the axis count |
-| $R$ | the radius of the half-circle, and how far along the shore | 2, 4, 8, 16 | the arc's share shrinks |
-| $C_R$, $t$ | the upper arc $z = Re^{it}$, t running from 0 to π | length 2π at R = 2 | longer arc, far smaller f |
-| $M$, $L$ | the largest size of f on the arc; the arc's length πR | M ≤ 1/(R^2 − 1) | bound tends to 0 |
-| $\theta$ | the beam's angle from the line to the foot, with x = tan θ | 0 at the foot | the spot runs faster |
+| $`x`$, $`z`$ | a point on the shore, in km; a point of the plane | x = 1 | — |
+| $`f`$, $`p`$, $`q`$ | the function integrated; its top and bottom polynomials | 1/(1 + z^2), and its square | a bigger bottom degree: faster fall-off |
+| $`i`$, $`\pi`$ | the quarter turn, with i^2 = −1; a half turn in radians | pole at i | — |
+| $`a`$, $`\mathrm{Im}\, a`$ | a pole: a zero of q, where f blows up; its imaginary part, the pole's height above the real axis | i and −i | only those above the axis count |
+| $`R`$ | the radius of the half-circle, and how far along the shore | 2, 4, 8, 16 | the arc's share shrinks |
+| $`C_R`$, $`t`$ | the upper arc $`z = Re^{it}`$, t running from 0 to π | length 2π at R = 2 | longer arc, far smaller f |
+| $`M`$, $`L`$ | the largest size of f on the arc; the arc's length πR | M ≤ 1/(R^2 − 1) | bound tends to 0 |
+| $`\theta`$ | the beam's angle from the line to the foot, with x = tan θ | 0 at the foot | the spot runs faster |
 
 ### When it holds
 
@@ -70,36 +74,40 @@ The real line is not a loop, so the residue theorem cannot touch it. Close it wi
 
 ### Step 1: close the path
 
-Fix R larger than every pole's distance from 0. Walk the real axis from −R to R, then the arc $z = Re^{it}$ for t from 0 to π. This anticlockwise loop encloses the half-disc above the axis: poles above are inside, poles below outside. For the lighthouse, 1 + z^2 = (z − i)(z + i), so the poles are i and −i, and only i is inside once R > 1.
+Fix R larger than every pole's distance from 0. Walk the real axis from −R to R, then the arc $`z = Re^{it}`$ for t from 0 to π. This anticlockwise loop encloses the half-disc above the axis: poles above are inside, poles below outside. For the lighthouse, 1 + z^2 = (z − i)(z + i), so the poles are i and −i, and only i is inside once R > 1.
 
 ### Step 2: price the loop by residues
 
-Near i, $f(z) = \frac{1}{z - i}\cdot\frac{1}{z + i}$, and the second factor is smooth there. So the residue is 1/(z + i) at z = i: 1/(2i) = −i/2. The loop is worth 2πi × (−i/2) = π for every R > 1.
+Near i, $`f(z) = \frac{1}{z - i}\cdot\frac{1}{z + i}`$, and the second factor is smooth there. So the residue is 1/(z + i) at z = i: 1/(2i) = −i/2. The loop is worth 2πi × (−i/2) = π for every R > 1.
 
-For $1/(1 + z^2)^2$ the pole at i is double: $f(z) = \frac{1}{(z - i)^2}\cdot\frac{1}{(z + i)^2}$. The coefficient of 1/(z − i) is the first derivative of $(z + i)^{-2}$ at i, which is $-2/(2i)^3 = -i/4$. The loop is worth 2πi × (−i/4) = π/2.
+For $`1/(1 + z^2)^2`$ the pole at i is double: $`f(z) = \frac{1}{(z - i)^2}\cdot\frac{1}{(z + i)^2}`$. The coefficient of 1/(z − i) is the first derivative of $`(z + i)^{-2}`$ at i, which is $`-2/(2i)^3 = -i/4`$. The loop is worth 2πi × (−i/4) = π/2.
 
 ### Step 3: bound the arc by ML
 
 Why ML holds: a path integral is a limit of sums of f(z) times small steps Δz. Each term's size is at most M times the step's length, and the lengths add up to L.
 
-On the arc |z| = R. The reverse triangle inequality, |u + v| ≥ |u| − |v|, gives $|1 + z^2| \ge R^2 - 1$. So M ≤ 1/(R^2 − 1), L = πR, and
+On the arc |z| = R. The reverse triangle inequality, |u + v| ≥ |u| − |v|, gives $`|1 + z^2| \ge R^2 - 1`$. So M ≤ 1/(R^2 − 1), L = πR, and
 
-$$\left|\int_{C_R} \frac{dz}{1 + z^2}\right| \le \frac{\pi R}{R^2 - 1}.$$
+```math
+\left|\int_{C_R} \frac{dz}{1 + z^2}\right| \le \frac{\pi R}{R^2 - 1}.
+```
 
-At R = 2 the bound is 2.094395 and the arc 0.927295; at R = 16, 0.197120 and 0.124838. The bound falls like π/R, the arc like 2/R. For the square the bound is $\pi R/(R^2 - 1)^2$.
+At R = 2 the bound is 2.094395 and the arc 0.927295; at R = 16, 0.197120 and 0.124838. The bound falls like π/R, the arc like 2/R. For the square the bound is $`\pi R/(R^2 - 1)^2`$.
 
 ### Step 4: let R grow
 
 The loop's value stays fixed while the arc tends to 0, so the segment tends to the loop's value. The degree gap makes each tail finite ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)), so the symmetric limit is the improper integral:
 
-$$\int_{-\infty}^{\infty} \frac{dx}{1 + x^2} = \pi, \qquad \int_{-\infty}^{\infty} \frac{dx}{(1 + x^2)^2} = \frac{\pi}{2}.$$
+```math
+\int_{-\infty}^{\infty} \frac{dx}{1 + x^2} = \pi, \qquad \int_{-\infty}^{\infty} \frac{dx}{(1 + x^2)^2} = \frac{\pi}{2}.
+```
 
 <details>
 <summary>Detailed proof: the general degree-gap case</summary>
 
 Let p have degree m, with P the sum of the sizes of its coefficients. Let q have degree n ≥ m + 2, top coefficient b, and Q the sum of the sizes of its other coefficients. For |z| ≥ 1 the triangle inequality gives |p(z)| ≤ P|z|^m and |q(z)| ≥ |b||z|^n − Q|z|^(n−1), which is at least |b||z|^n/2 once |z| ≥ 2Q/|b|. So for large |z|
 
-$$|f(z)| \le \frac{2P}{|b|}\,|z|^{m-n} \le \frac{C}{|z|^{2}}, \qquad C = \frac{2P}{|b|}.$$
+$`\displaystyle |f(z)| \le \frac{2P}{|b|}\,|z|^{m-n} \le \frac{C}{|z|^{2}}, \qquad C = \frac{2P}{|b|}.`$
 
 Arc: ML gives at most πR × C/R^2 = πC/R, which tends to 0. Tails: each is at most C/R, so both converge on their own. For large R, Step 1's loop encloses exactly the poles with Im a > 0, the residue theorem fixes its value, and letting R grow gives the formula.
 
@@ -1235,7 +1243,7 @@ end SemicircleContours
 > **Dropping the arc because it "looks small".** The arc is zero only in the limit. At R = 2 it carries 0.927295 of the 3.141593. It may be dropped only once a bound such as ML shows it tends to 0, and that bound needs the degree gap of 2.
 >
 > - **Counting every pole.** Adding the residue at −i too gives 0; that pole is outside the loop.
-> - **Using the simple-pole rule at a double pole.** Evaluating $1/(z + i)^2$ at i gives −1.570796i, not π/2.
+> - **Using the simple-pole rule at a double pole.** Evaluating $`1/(z + i)^2`$ at i gives −1.570796i, not π/2.
 > - **Taking the symmetric limit as the integral.** For x/(1 + x^2) it is 0, though the integral diverges.
 
 ---

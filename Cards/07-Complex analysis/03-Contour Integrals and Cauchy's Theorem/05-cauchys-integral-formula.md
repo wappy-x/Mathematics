@@ -26,28 +26,32 @@ To scale: 40 units per 1, centre 0 at (150, 120), so the rim has radius 80, the 
 
 ## The formula
 
-Notation first, in words. The loop integral sign $\oint_C$ means: walk once round the loop C, anticlockwise, adding up the function times each small step dz along the way ([Contour integrals](01-contour-integrals.md)).
+Notation first, in words. The loop integral sign $`\oint_C`$ means: walk once round the loop C, anticlockwise, adding up the function times each small step dz along the way ([Contour integrals](01-contour-integrals.md)).
 
-$$f(a) = \frac{1}{2\pi i}\oint_C \frac{f(z)}{z-a}\,dz$$
+```math
+f(a) = \frac{1}{2\pi i}\oint_C \frac{f(z)}{z-a}\,dz
+```
 
 **Read it aloud:** the value of f at the inside point a is one over two-pi-i times the loop integral of f of z over z minus a.
 
-On a circle of radius r centred at a itself, write each rim point as $z = a + re^{i\theta}$, with θ the angle ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The formula becomes:
+On a circle of radius r centred at a itself, write each rim point as $`z = a + re^{i\theta}`$, with θ the angle ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The formula becomes:
 
-$$f(a) = \frac{1}{2\pi}\int_0^{2\pi} f(a + re^{i\theta})\,d\theta$$
+```math
+f(a) = \frac{1}{2\pi}\int_0^{2\pi} f(a + re^{i\theta})\,d\theta
+```
 
 **Read it aloud:** the value at the centre is the average of the values round the rim.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the function, holomorphic on and inside the loop | e^z | — |
-| $a$ | the inside point whose value is wanted | 0, then 0.5 | e^a grows; past 2 it leaves the loop and the integral drops to 0 |
-| $z$ | a point walking round the loop | a point with \|z\| = 2 | — |
-| $C$, $\oint_C$ | the loop, and the integral once round it anticlockwise | the rim \|z\| = 2 | a second lap doubles it |
-| $i$, $\pi$ | the square root of −1; a half turn in radians | 2πi = one full turn's worth | — |
-| $r$, $\theta$ | radius and angle of a circle round a | radii 1.5, 0.5 and 0.1 | no change: every radius gives 1.648721 |
-| $n$ | points in the trapezoid sum (equal steps) round the loop | 64 | error falls fast: 6.7e-3 at 8, 3.6e-9 at 16 |
-| $\bar z$ | z-bar, the conjugate: z reflected in the real axis | the function that breaks the formula | — |
+| $`f`$ | the function, holomorphic on and inside the loop | e^z | — |
+| $`a`$ | the inside point whose value is wanted | 0, then 0.5 | e^a grows; past 2 it leaves the loop and the integral drops to 0 |
+| $`z`$ | a point walking round the loop | a point with \|z\| = 2 | — |
+| $`C`$, $`\oint_C`$ | the loop, and the integral once round it anticlockwise | the rim \|z\| = 2 | a second lap doubles it |
+| $`i`$, $`\pi`$ | the square root of −1; a half turn in radians | 2πi = one full turn's worth | — |
+| $`r`$, $`\theta`$ | radius and angle of a circle round a | radii 1.5, 0.5 and 0.1 | no change: every radius gives 1.648721 |
+| $`n`$ | points in the trapezoid sum (equal steps) round the loop | 64 | error falls fast: 6.7e-3 at 8, 3.6e-9 at 16 |
+| $`\bar z`$ | z-bar, the conjugate: z reflected in the real axis | the function that breaks the formula | — |
 
 ### When it holds
 
@@ -70,9 +74,11 @@ A loop may be deformed without crossing a bad point, and the integral stays the 
 
 ### Step 2: on that circle, the r cancels
 
-On the small circle, $z = a + re^{i\theta}$. Then z − a is $re^{i\theta}$, and a small step is $dz = ire^{i\theta}\,d\theta$. Divide:
+On the small circle, $`z = a + re^{i\theta}`$. Then z − a is $`re^{i\theta}`$, and a small step is $`dz = ire^{i\theta}\,d\theta`$. Divide:
 
-$$\frac{f(z)}{z-a}\,dz = \frac{f(a + re^{i\theta})}{re^{i\theta}}\; ire^{i\theta}\,d\theta = i\,f(a + re^{i\theta})\,d\theta$$
+```math
+\frac{f(z)}{z-a}\,dz = \frac{f(a + re^{i\theta})}{re^{i\theta}}\; ire^{i\theta}\,d\theta = i\,f(a + re^{i\theta})\,d\theta
+```
 
 So the loop integral is i times the integral of f over the angle, from 0 to 2π. That is 2πi times the average of f on the small circle. Dividing by 2πi leaves the plain average.
 
@@ -83,11 +89,11 @@ By Step 1, the loop integral does not depend on r. So the average of f on the ci
 <details>
 <summary>Detailed proof: the average tends to f(a)</summary>
 
-Let $M(r)$ be the largest value of $|f(a + re^{i\theta}) - f(a)|$ over the angle. Continuity of f at a means: for every tolerance ε > 0 there is a δ > 0 with $|f(z) - f(a)| < ε$ whenever $|z - a| < δ$. So $M(r) < ε$ once r < δ.
+Let $`M(r)`$ be the largest value of $`|f(a + re^{i\theta}) - f(a)|`$ over the angle. Continuity of f at a means: for every tolerance ε > 0 there is a δ > 0 with $`|f(z) - f(a)| < ε`$ whenever $`|z - a| < δ`$. So $`M(r) < ε`$ once r < δ.
 
-The average minus f(a) is $\frac{1}{2\pi}\int_0^{2\pi} \big(f(a + re^{i\theta}) - f(a)\big)\,d\theta$, whose size is at most $M(r)$. So the average is within ε of f(a) for every r < δ. But the average does not depend on r (Step 1). A number within every ε of f(a) equals f(a). Multiply back by 2πi:
+The average minus f(a) is $`\frac{1}{2\pi}\int_0^{2\pi} \big(f(a + re^{i\theta}) - f(a)\big)\,d\theta`$, whose size is at most $`M(r)`$. So the average is within ε of f(a) for every r < δ. But the average does not depend on r (Step 1). A number within every ε of f(a) equals f(a). Multiply back by 2πi:
 
-$$\oint_C \frac{f(z)}{z-a}\,dz = 2\pi i\, f(a).$$
+$`\displaystyle \oint_C \frac{f(z)}{z-a}\,dz = 2\pi i\, f(a).`$
 
 </details>
 
@@ -103,7 +109,9 @@ Outside, the integrand has no bad point inside, and Cauchy's theorem gives 0.
 
 A simple pole is a point where the integrand blows up like 1/(z − a). Any integrand of the form g(z)/(z − a), with g holomorphic inside and a inside, is Cauchy's formula read backwards:
 
-$$\oint_C \frac{g(z)}{z-a}\,dz = 2\pi i\, g(a)$$
+```math
+\oint_C \frac{g(z)}{z-a}\,dz = 2\pi i\, g(a)
+```
 
 Take e^z/(z(z − 3)) round the rim. The point 3 lies outside, so write it as g(z)/(z − 0) with g(z) = e^z/(z − 3), holomorphic inside. The answer is 2πi × e^0/(0 − 3) = −2.094395i. The loop sum with 128 points prints the same.
 

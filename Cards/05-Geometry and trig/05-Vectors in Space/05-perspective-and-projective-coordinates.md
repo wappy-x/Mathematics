@@ -24,37 +24,41 @@ Drawn at 1 mm = 10 units on a 36 mm by 24 mm sensor (the rectangle behind the le
 
 ## The formula
 
-Notation first. [Moving shapes with matrices](04-transformations-with-matrices.md) gave each point an extra coordinate, 1 for a point and 0 for a direction. Now any nonzero multiple names the same point: $(s, t, w)$ and $(\lambda s, \lambda t, \lambda w)$ are one point, written $(s : t : w)$. These are **homogeneous coordinates**; all such points together make the **projective plane**.
+Notation first. [Moving shapes with matrices](04-transformations-with-matrices.md) gave each point an extra coordinate, 1 for a point and 0 for a direction. Now any nonzero multiple names the same point: $`(s, t, w)`$ and $`(\lambda s, \lambda t, \lambda w)`$ are one point, written $`(s : t : w)`$. These are **homogeneous coordinates**; all such points together make the **projective plane**.
 
-A camera with its lens at the origin, looking along the $Z$ axis, takes a scene point $(X, Y, Z)$ to the sensor:
+A camera with its lens at the origin, looking along the $`Z`$ axis, takes a scene point $`(X, Y, Z)`$ to the sensor:
 
-$$\begin{pmatrix}s\\ t\\ w\end{pmatrix}=\begin{pmatrix}f&0&0&0\\ 0&f&0&0\\ 0&0&1&0\end{pmatrix}\begin{pmatrix}X\\ Y\\ Z\\ 1\end{pmatrix},\qquad u=\frac{s}{w}=\frac{fX}{Z},\quad v=\frac{t}{w}=\frac{fY}{Z}$$
+```math
+\begin{pmatrix}s\\ t\\ w\end{pmatrix}=\begin{pmatrix}f&0&0&0\\ 0&f&0&0\\ 0&0&1&0\end{pmatrix}\begin{pmatrix}X\\ Y\\ Z\\ 1\end{pmatrix},\qquad u=\frac{s}{w}=\frac{fX}{Z},\quad v=\frac{t}{w}=\frac{fY}{Z}
+```
 
 **Read it aloud:** multiply by the camera matrix, then divide by the last entry; dividing by distance is the whole of perspective.
 
-A photo line $au + bv + c = 0$ is stored as the triple $\ell = (a, b, c)$; a point $p$ lies on it when the dot product $\ell \cdot p$ is zero. Joining and meeting are cross products ([Cross product](01-cross-product-and-oriented-area.md)):
+A photo line $`au + bv + c = 0`$ is stored as the triple $`\ell = (a, b, c)`$; a point $`p`$ lies on it when the dot product $`\ell \cdot p`$ is zero. Joining and meeting are cross products ([Cross product](01-cross-product-and-oriented-area.md)):
 
-$$\ell = p_1 \times p_2,\qquad p = \ell_1 \times \ell_2,\qquad \text{vanishing point of direction } d:\ P\begin{pmatrix}d_X\\ d_Y\\ d_Z\\ 0\end{pmatrix}=\begin{pmatrix}f d_X\\ f d_Y\\ d_Z\end{pmatrix}$$
+```math
+\ell = p_1 \times p_2,\qquad p = \ell_1 \times \ell_2,\qquad \text{vanishing point of direction } d:\ P\begin{pmatrix}d_X\\ d_Y\\ d_Z\\ 0\end{pmatrix}=\begin{pmatrix}f d_X\\ f d_Y\\ d_Z\end{pmatrix}
+```
 
 **Read it aloud:** the line through two points is their cross product, the point on two lines is theirs, and a direction, last entry 0, goes through the camera like any point.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $Y$, $Z$ | a scene point, metres right, up from the lens, ahead | left rail, 10 m: (−0.5, −1.5, 10) | larger $Z$: nearer V |
-| $h$ | lens height; the ground is $Y = -h$ | 1.5 m | rails steeper; V stays |
-| $f$ | focal length, lens to sensor, mm | 50 mm | the picture spreads out |
-| $u$, $v$ | sensor position, mm right of and above centre | left rail 10 m out: (−2.5, −7.5) | — |
-| $s$, $t$, $w$, $\lambda$ | a photo point's homogeneous triple; $\lambda$ a nonzero scale | (−25, −75, 10); λ = 1/10 gives (−2.5, −7.5, 1) | changing λ changes nothing |
-| $P$, $G$ | camera matrix, 3 by 4; ground-to-photo matrix, 3 by 3 | $f$ = 50 on the diagonal; $G$ in Step 4 | — |
-| $d$ | the direction parallel lines share | rails (0, 0, 1); branch line (1, 0, 4) | V slides along the horizon |
-| $\ell$, $\ell_1$, $\ell_2$, $a$, $b$, $c$, $p$ | a photo line as a triple; $p$ a photo point | left rail's image: (−3.75, 1.25, 0) | — |
+| $`X`$, $`Y`$, $`Z`$ | a scene point, metres right, up from the lens, ahead | left rail, 10 m: (−0.5, −1.5, 10) | larger $`Z`$: nearer V |
+| $`h`$ | lens height; the ground is $`Y = -h`$ | 1.5 m | rails steeper; V stays |
+| $`f`$ | focal length, lens to sensor, mm | 50 mm | the picture spreads out |
+| $`u`$, $`v`$ | sensor position, mm right of and above centre | left rail 10 m out: (−2.5, −7.5) | — |
+| $`s`$, $`t`$, $`w`$, $`\lambda`$ | a photo point's homogeneous triple; $`\lambda`$ a nonzero scale | (−25, −75, 10); λ = 1/10 gives (−2.5, −7.5, 1) | changing λ changes nothing |
+| $`P`$, $`G`$ | camera matrix, 3 by 4; ground-to-photo matrix, 3 by 3 | $`f`$ = 50 on the diagonal; $`G`$ in Step 4 | — |
+| $`d`$ | the direction parallel lines share | rails (0, 0, 1); branch line (1, 0, 4) | V slides along the horizon |
+| $`\ell`$, $`\ell_1`$, $`\ell_2`$, $`a`$, $`b`$, $`c`$, $`p`$ | a photo line as a triple; $`p`$ a photo point | left rail's image: (−3.75, 1.25, 0) | — |
 
 ### When it holds
 
 - **A pinhole camera.** Real lenses bow straight lines near the frame's edge, and the cross products miss slightly.
 - **A level camera, for the horizon claim.** Tilted down, the horizon rises above the centre; the method still holds.
-- **A direction not parallel to the sensor.** If $d_Z = 0$, lines across the view stay parallel on the photo.
-- **Points in front of the lens, $Z > 0$.** At $Z = 0$ the division fails; behind the lens the formula still gives a spot that no camera records.
+- **A direction not parallel to the sensor.** If $`d_Z = 0`$, lines across the view stay parallel on the photo.
+- **Points in front of the lens, $`Z > 0`$.** At $`Z = 0`$ the division fails; behind the lens the formula still gives a spot that no camera records.
 - **Never (0, 0, 0).** It names no point.
 
 ---
@@ -65,11 +69,11 @@ $$\ell = p_1 \times p_2,\qquad p = \ell_1 \times \ell_2,\qquad \text{vanishing p
 
 Every point on one ray through the lens lands on the same spot. The left rail 10 m out, (−0.5, −1.5, 10), goes to (−25, −75, 10); the point twice as far along its ray, (−1, −3, 20), to (−50, −150, 20). Both divide to (−2.5, −7.5).
 
-A spot on a photo is a ray, three numbers up to scale. A negative multiple turns the ray round and names the same point, so the projective plane is the set of whole lines through the lens. The photo is one flat slice, and rays parallel to the sensor, with $w = 0$, miss it.
+A spot on a photo is a ray, three numbers up to scale. A negative multiple turns the ray round and names the same point, so the projective plane is the set of whole lines through the lens. The photo is one flat slice, and rays parallel to the sensor, with $`w = 0`$, miss it.
 
 ### Step 1: similar triangles give the division
 
-From the side, the image sits on a small right triangle with legs $f$ and $v$, the scene point on a large one with legs $Z$ and $Y$, sharing the angle at the lens. So $v / f = Y / Z$, and likewise $u / f = X / Z$: the matrix's division.
+From the side, the image sits on a small right triangle with legs $`f`$ and $`v`$, the scene point on a large one with legs $`Z`$ and $`Y`$, sharing the angle at the lens. So $`v / f = Y / Z`$, and likewise $`u / f = X / Z`$: the matrix's division.
 
 ### Step 2: parallel lines share one point at infinity
 
@@ -86,9 +90,9 @@ Parallel photo lines u = 1 and u = 2, stored as (1, 0, −1) and (1, 0, −2), m
 <details>
 <summary>Detailed proof: two distinct lines meet in exactly one point</summary>
 
-Let $\ell_1$ and $\ell_2$ be triples, neither a multiple of the other. A point on both solves $\ell_1 \cdot p = 0$ and $\ell_2 \cdot p = 0$.
+Let $`\ell_1`$ and $`\ell_2`$ be triples, neither a multiple of the other. A point on both solves $`\ell_1 \cdot p = 0`$ and $`\ell_2 \cdot p = 0`$.
 
-**Existence.** Put $p = \ell_1 \times \ell_2$. Then $\ell_1 \cdot (\ell_1 \times \ell_2)$ is a determinant with two equal rows, so it is 0 ([Triple product](03-triple-product-and-volume.md)); likewise for $\ell_2$. Its length is the area of the parallelogram on the two triples, zero only when one is a multiple of the other, so $p$ is not (0, 0, 0).
+**Existence.** Put $`p = \ell_1 \times \ell_2`$. Then $`\ell_1 \cdot (\ell_1 \times \ell_2)`$ is a determinant with two equal rows, so it is 0 ([Triple product](03-triple-product-and-volume.md)); likewise for $`\ell_2`$. Its length is the area of the parallelogram on the two triples, zero only when one is a multiple of the other, so $`p`$ is not (0, 0, 0).
 
 **Uniqueness.** Two independent equations in three unknowns leave one free choice: every solution is a multiple of one, and all multiples name one point.
 
@@ -98,11 +102,11 @@ Let $\ell_1$ and $\ell_2$ be triples, neither a multiple of the other. A point o
 
 ### Step 4: the ground, made legal, and the horizon
 
-On the ground, $X$ across and $Z$ ahead, the rails X = −0.5 and X = 0.5 are the triples (1, 0, 0.5) and (1, 0, −0.5). Their cross product is (0, 1, 0), the ground's point at infinity straight ahead: the rails meet on the ground itself.
+On the ground, $`X`$ across and $`Z`$ ahead, the rails X = −0.5 and X = 0.5 are the triples (1, 0, 0.5) and (1, 0, −0.5). Their cross product is (0, 1, 0), the ground's point at infinity straight ahead: the rails meet on the ground itself.
 
-Ground points have $Y = -h$, so the camera shrinks to a 3 by 3 map $G$ from ground triples $(X : Z : w)$ to the photo, rows `(50, 0, 0)`, `(0, 0, −75)`, `(0, 1, 0)` (the −75 is −f times h). It sends (0, 1, 0) to (0, 0, 1), the centre: a third route to V.
+Ground points have $`Y = -h`$, so the camera shrinks to a 3 by 3 map $`G`$ from ground triples $`(X : Z : w)`$ to the photo, rows `(50, 0, 0)`, `(0, 0, −75)`, `(0, 1, 0)` (the −75 is −f times h). It sends (0, 1, 0) to (0, 0, 1), the centre: a third route to V.
 
-A level direction $(d_X : d_Z : 0)$ goes to $(f d_X, 0, d_Z)$: every one vanishes on the line v = 0, at lens height. The branch line's goes to (50, 0, 4), the point (12.5, 0). The line through both vanishing points is (0, 0, 1) × (12.5, 0, 1) = (0, 12.5, 0), again v = 0: the **horizon**, image of the ground's line at infinity.
+A level direction $`(d_X : d_Z : 0)`$ goes to $`(f d_X, 0, d_Z)`$: every one vanishes on the line v = 0, at lens height. The branch line's goes to (50, 0, 4), the point (12.5, 0). The line through both vanishing points is (0, 0, 1) × (12.5, 0, 1) = (0, 12.5, 0), again v = 0: the **horizon**, image of the ground's line at infinity.
 
 ---
 
@@ -110,13 +114,13 @@ A level direction $(d_X : d_Z : 0)$ goes to $(f d_X, 0, d_Z)$: every one vanishe
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| left rail, 10 m and 20 m | $P$ times (−0.5, −1.5, 10, 1) = (−25, −75, 10), over 10; then −25/20, −75/20 | (−2.5, −7.5), (−1.25, −3.75) |
+| left rail, 10 m and 20 m | $`P`$ times (−0.5, −1.5, 10, 1) = (−25, −75, 10), over 10; then −25/20, −75/20 | (−2.5, −7.5), (−1.25, −3.75) |
 | left rail's image line | (−2.5, −7.5, 1) × (−1.25, −3.75, 1) | (−3.75, 1.25, 0) |
 | right rail's image line | (2.5, −7.5, 1) × (1.25, −3.75, 1) | (−3.75, −1.25, 0) |
 | road 1: meet the lines | last slot (−3.75)(−1.25) − (1.25)(−3.75) | (0, 0, 9.375) → **(0, 0)** |
-| road 2: the direction | $P$ times (0, 0, 1, 0) | (0, 0, 1) → **(0, 0)** |
-| road 3: the ground | $G$ times (0, 1, 0), the rails' ground meet | (0, 0, 1) → **(0, 0)** |
-| branch line | $P$ times (1, 0, 4, 0) = (50, 0, 4) | **(12.5, 0)** |
+| road 2: the direction | $`P`$ times (0, 0, 1, 0) | (0, 0, 1) → **(0, 0)** |
+| road 3: the ground | $`G`$ times (0, 1, 0), the rails' ground meet | (0, 0, 1) → **(0, 0)** |
+| branch line | $`P`$ times (1, 0, 4, 0) = (50, 0, 4) | **(12.5, 0)** |
 | horizon | (0, 0, 1) × (12.5, 0, 1) | (0, 12.5, 0): v = 0 |
 
 The rails vanish at the photo's centre; every level direction vanishes on the horizon through it.
@@ -135,7 +139,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads sharing no step reach the vanishing point: the meet of the rails' image lines, the camera matrix on their direction, and $G$ on their ground meet. A march along the left rail closes on it. The branch line is found from its direction and from its rails' image lines.
+Nothing is imported. Three roads sharing no step reach the vanishing point: the meet of the rails' image lines, the camera matrix on their direction, and $`G`$ on their ground meet. A march along the left rail closes on it. The branch line is found from its direction and from its rails' image lines.
 
 ### Python
 
@@ -332,7 +336,7 @@ Lean proves the card's three facts for every pair of lines and every camera, and
 
 - Any two distinct lines of the projective plane meet in exactly one point.
 - For two line triples, neither a multiple of the other, the cross product is never (0, 0, 0). It lies on both lines, and every triple on both is a multiple of it.
-- Walk out along any scene line with direction $d$ and $d_Z \neq 0$. Its photo point closes on $(f d_X / d_Z,\ f d_Y / d_Z)$, whatever the start point. So every line parallel to $d$ heads for one vanishing point.
+- Walk out along any scene line with direction $`d`$ and $`d_Z \neq 0`$. Its photo point closes on $`(f d_X / d_Z,\ f d_Y / d_Z)`$, whatever the start point. So every line parallel to $`d`$ heads for one vanishing point.
 - Exact railway numbers: the rail points, both image lines, all three roads to (0, 0), the branch line's (12.5, 0) and the horizon.
 - Photo lines u = 1 and u = 2 meet at (0, 1, 0). Joining a point to itself gives (0, 0, 0). The sleeper 15 m out sits at v = −5, not −5.625.
 

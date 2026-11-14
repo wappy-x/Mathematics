@@ -38,46 +38,52 @@ The orange line is the caplet's payment: flat at zero up to 5 percent, then \$12
 
 ## The formula
 
-Notation first, in words. The quarters are numbered $i$ = 0 to 7. Quarter $i$ runs from its reset date $T_i$ to the next date, and its rate is fixed at the start and paid at the end. A symbol like $D_{i+1}$ means "the discount factor for the end of quarter $i$". A big sigma, Σ, means "add the terms for every $i$ in the range shown".
+Notation first, in words. The quarters are numbered $`i`$ = 0 to 7. Quarter $`i`$ runs from its reset date $`T_i`$ to the next date, and its rate is fixed at the start and paid at the end. A symbol like $`D_{i+1}`$ means "the discount factor for the end of quarter $`i`$". A big sigma, Σ, means "add the terms for every $`i`$ in the range shown".
 
-$\tau$ = 0.25 is one quarter in years, $F_i$ is quarter $i$'s forward rate, $K$ is the strike, and $N$ is the normal CDF (cumulative distribution function); the table below gives each one. Values are per \$1 of notional; multiply by \$10 million for dollars.
+$`\tau`$ = 0.25 is one quarter in years, $`F_i`$ is quarter $`i`$'s forward rate, $`K`$ is the strike, and $`N`$ is the normal CDF (cumulative distribution function); the table below gives each one. Values are per \$1 of notional; multiply by \$10 million for dollars.
 
-$$\text{Cap} = \sum_{i=1}^{7} \tau\, D_{i+1}\,\Big[F_i\,N(d_{1,i}) - K\,N(d_{2,i})\Big], \qquad \text{Floor} = \sum_{i=1}^{7} \tau\, D_{i+1}\,\Big[K\,N(-d_{2,i}) - F_i\,N(-d_{1,i})\Big]$$
+```math
+\text{Cap} = \sum_{i=1}^{7} \tau\, D_{i+1}\,\Big[F_i\,N(d_{1,i}) - K\,N(d_{2,i})\Big], \qquad \text{Floor} = \sum_{i=1}^{7} \tau\, D_{i+1}\,\Big[K\,N(-d_{2,i}) - F_i\,N(-d_{1,i})\Big]
+```
 
 **Read it aloud:** the cap is the sum over the seven unknown quarters of each caplet's Black price, and each caplet's price is a quarter of a year, discounted from its payment date, times the forward rate weighted by one chance minus the strike weighted by another.
 
-$$d_{1,i} = \frac{\ln(F_i/K) + \tfrac12\sigma^2 T_i}{\sigma\sqrt{T_i}}, \qquad d_{2,i} = d_{1,i} - \sigma\sqrt{T_i}$$
+```math
+d_{1,i} = \frac{\ln(F_i/K) + \tfrac12\sigma^2 T_i}{\sigma\sqrt{T_i}}, \qquad d_{2,i} = d_{1,i} - \sigma\sqrt{T_i}
+```
 
-These are the two standardised distances of the forward from the strike, exactly as on the Black caplet ([Caplets and floorlets](01-caplets-and-floorlets.md)); $d_{2,i}$ is one standard deviation of the log rate below $d_{1,i}$.
+These are the two standardised distances of the forward from the strike, exactly as on the Black caplet ([Caplets and floorlets](01-caplets-and-floorlets.md)); $`d_{2,i}`$ is one standard deviation of the log rate below $`d_{1,i}`$.
 
 The parity needs two more quantities, both read from discount factors alone:
 
-$$A = \sum_{i=1}^{7}\tau\,D_{i+1}, \qquad S = \frac{D_1 - D_8}{A}, \qquad \text{Cap} - \text{Floor} = D_1 - D_8 - K\,A = A\,(S - K)$$
+```math
+A = \sum_{i=1}^{7}\tau\,D_{i+1}, \qquad S = \frac{D_1 - D_8}{A}, \qquad \text{Cap} - \text{Floor} = D_1 - D_8 - K\,A = A\,(S - K)
+```
 
 **Read it aloud:** cap minus floor is the annuity times the gap between the forward swap rate and the strike.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$ | the quarter's number; quarter 0 is fixed today | 1 to 7 carry caplets | later quarters carry dearer caplets here |
-| $T_i$ | reset date of quarter $i$, in years from today | 0.25, 0.50, …, 1.75 | more time to wander: dearer caplet |
-| $\tau$ | length of one quarter as a fraction of a year | 0.25 | payments scale with it |
-| $L_i$ | the rate that will actually fix at $T_i$ | unknown today | the cap pays more, the floor less |
-| $F_i$ | forward rate for quarter $i$, read from today's curve | 4.45% to 4.75% | cap up, floor down |
-| $K$ | the strike: the cap's ceiling, the floor's floor | 5% | cap down, floor up |
-| $D_i$ (so $D_1$, $D_8$) | discount factor: today's price of \$1 paid at $T_i$ | 0.978237 down to 0.913036 for payment dates | every price scales with it |
-| $\sigma$ | volatility: the yearly spread of the log of the rate | 30% | cap and floor both up, by the same amount |
-| $d_1$, $d_2$ | standardised distances $d_{1,i}$, $d_{2,i}$ of forward from strike | 0.069184 and −0.327678 for quarter 7 | — |
-| $N(x)$ | the normal CDF: the chance a standard bell-curve draw lands below $x$ | N(0.069184) = 0.527579 | — |
-| $A$ | the annuity: today's value of 1 a year paid quarterly over quarters 1 to 7 | 1.654828 | parity gap scales with it |
-| $S$ | the forward swap rate: the fixed rate that makes the swap worth zero | 4.597701% | cap up, floor down |
+| $`i`$ | the quarter's number; quarter 0 is fixed today | 1 to 7 carry caplets | later quarters carry dearer caplets here |
+| $`T_i`$ | reset date of quarter $`i`$, in years from today | 0.25, 0.50, …, 1.75 | more time to wander: dearer caplet |
+| $`\tau`$ | length of one quarter as a fraction of a year | 0.25 | payments scale with it |
+| $`L_i`$ | the rate that will actually fix at $`T_i`$ | unknown today | the cap pays more, the floor less |
+| $`F_i`$ | forward rate for quarter $`i`$, read from today's curve | 4.45% to 4.75% | cap up, floor down |
+| $`K`$ | the strike: the cap's ceiling, the floor's floor | 5% | cap down, floor up |
+| $`D_i`$ (so $`D_1`$, $`D_8`$) | discount factor: today's price of \$1 paid at $`T_i`$ | 0.978237 down to 0.913036 for payment dates | every price scales with it |
+| $`\sigma`$ | volatility: the yearly spread of the log of the rate | 30% | cap and floor both up, by the same amount |
+| $`d_1`$, $`d_2`$ | standardised distances $`d_{1,i}`$, $`d_{2,i}`$ of forward from strike | 0.069184 and −0.327678 for quarter 7 | — |
+| $`N(x)`$ | the normal CDF: the chance a standard bell-curve draw lands below $`x`$ | N(0.069184) = 0.527579 | — |
+| $`A`$ | the annuity: today's value of 1 a year paid quarterly over quarters 1 to 7 | 1.654828 | parity gap scales with it |
+| $`S`$ | the forward swap rate: the fixed rate that makes the swap worth zero | 4.597701% | cap up, floor down |
 
-The forward rates come from a curve built for this shelf: $F_i$ = 4.40% + 0.05% × $i$, so 4.40% for the quarter already fixed and 4.45% to 4.75% for the seven with caplets. Each discount factor follows from the one before: $D_{i+1} = D_i / (1 + \tau F_i)$, starting from 1 for today.
+The forward rates come from a curve built for this shelf: $`F_i`$ = 4.40% + 0.05% × $`i`$, so 4.40% for the quarter already fixed and 4.45% to 4.75% for the seven with caplets. Each discount factor follows from the one before: $`D_{i+1} = D_i / (1 + \tau F_i)`$, starting from 1 for today.
 
 ### When it holds
 
 - **The sum rule needs only that the payments are separate.** Each caplet pays on its own date on its own fixing, so the bundle's price is the sum of the pieces. It fails only if the cap has a feature that links quarters, such as a total payout limit; that contract is no longer a strip.
 - **The parity needs only a curve that can be traded.** It uses discount factors and the fact that a deposit rolled for one quarter earns that quarter's rate. It fails if the rate the contract fixes on is not the rate the deposit earns, as when a cap references one index and the funding runs on another; the gap is the spread between the two.
-- **The price needs Black's model for each caplet.** Each rate is taken as lognormal around its forward with a stated volatility. If the market prices each strike with its own volatility (a smile), a single $\sigma$ misprices away from the money; the parity survives unchanged.
+- **The price needs Black's model for each caplet.** Each rate is taken as lognormal around its forward with a stated volatility. If the market prices each strike with its own volatility (a smile), a single $`\sigma`$ misprices away from the money; the parity survives unchanged.
 - **Same strike, same dates, same notional on both sides.** Parity compares a cap and a floor with identical terms. Change any one and the difference is no longer a swap.
 
 ---
@@ -86,7 +92,7 @@ The forward rates come from a curve built for this shelf: $F_i$ = 4.40% + 0.05% 
 
 ### Step 0: one quarter's cap minus floor is a fixed rule, whatever the rate
 
-For any fixing $L_i$, one of the two payments is zero and the other is the gap: max(L_i − K, 0) − max(K − L_i, 0) = L_i − K. At a fixing of 6 percent the caplet pays \$25,000 on \$10 million and the floorlet pays nothing; at 4 percent the caplet pays nothing and the floorlet takes \$25,000 the other way. Both give the same rule: receive the rate, pay 5 percent. No probabilities enter: this is why the parity is model-free.
+For any fixing $`L_i`$, one of the two payments is zero and the other is the gap: max(L_i − K, 0) − max(K − L_i, 0) = L_i − K. At a fixing of 6 percent the caplet pays \$25,000 on \$10 million and the floorlet pays nothing; at 4 percent the caplet pays nothing and the floorlet takes \$25,000 the other way. Both give the same rule: receive the rate, pay 5 percent. No probabilities enter: this is why the parity is model-free.
 
 ### Step 1: a bundle of separate payments is worth the sum of their prices
 
@@ -94,50 +100,54 @@ A cap is seven payments on seven dates, each settled by its own fixing. Suppose 
 
 ### Step 2: price each caplet with Black's formula
 
-Each caplet is a call option on one forward rate, fixed at $T_i$, paid at $T_{i+1}$. Its Black price is $\tau D_{i+1}[F_i N(d_{1,i}) - K N(d_{2,i})]$, derived on [Caplets and floorlets](01-caplets-and-floorlets.md). Two dates, two jobs: volatility runs to the reset date $T_i$, discounting to the payment date $T_{i+1}$. Seven prices, one sum: the cap formula above.
+Each caplet is a call option on one forward rate, fixed at $`T_i`$, paid at $`T_{i+1}`$. Its Black price is $`\tau D_{i+1}[F_i N(d_{1,i}) - K N(d_{2,i})]`$, derived on [Caplets and floorlets](01-caplets-and-floorlets.md). Two dates, two jobs: volatility runs to the reset date $`T_i`$, discounting to the payment date $`T_{i+1}`$. Seven prices, one sum: the cap formula above.
 
 ### Step 3: the floating payments are worth a difference of discount factors
 
-Now value the swap from Step 0 without any model. Pay $D_i$ today for a bond that pays one dollar at $T_i$. Roll that dollar for one quarter at the rate then fixed, $L_i$. At $T_{i+1}$ it has become $(1 + \tau L_i)$ dollars. Now subtract the dollar of principal, whose value today is $D_{i+1}$.
+Now value the swap from Step 0 without any model. Pay $`D_i`$ today for a bond that pays one dollar at $`T_i`$. Roll that dollar for one quarter at the rate then fixed, $`L_i`$. At $`T_{i+1}`$ it has become $`(1 + \tau L_i)`$ dollars. Now subtract the dollar of principal, whose value today is $`D_{i+1}`$.
 
-What is left is exactly $\tau L_i$ paid at $T_{i+1}$, and it cost $D_i - D_{i+1}$ today. So receiving quarter $i$'s floating interest is worth $D_i - D_{i+1}$, whatever $L_i$ turns out to be. Paying the fixed 5 percent for the quarter is worth $K \tau D_{i+1}$.
+What is left is exactly $`\tau L_i`$ paid at $`T_{i+1}`$, and it cost $`D_i - D_{i+1}`$ today. So receiving quarter $`i`$'s floating interest is worth $`D_i - D_{i+1}`$, whatever $`L_i`$ turns out to be. Paying the fixed 5 percent for the quarter is worth $`K \tau D_{i+1}`$.
 
 ### Step 4: add the quarters; the floating side telescopes
 
-Add $(D_i - D_{i+1})$ for $i$ = 1 to 7. Each middle factor appears once with a plus and once with a minus, so only the ends survive: $D_1 - D_8$. The fixed side adds to $K$ times the annuity $A$. Hence
+Add $`(D_i - D_{i+1})`$ for $`i`$ = 1 to 7. Each middle factor appears once with a plus and once with a minus, so only the ends survive: $`D_1 - D_8`$. The fixed side adds to $`K`$ times the annuity $`A`$. Hence
 
-$$\text{Cap} - \text{Floor} = D_1 - D_8 - K A = A(S - K).$$
+```math
+\text{Cap} - \text{Floor} = D_1 - D_8 - K A = A(S - K).
+```
 
-The second form defines $S$: the one fixed rate at which the swap costs nothing to enter.
+The second form defines $`S`$: the one fixed rate at which the swap costs nothing to enter.
 
 A swap that pays the fixed rate and receives the floating rate is a payer swap; the reverse is a receiver swap. Long means holding a contract and short means having sold it, so long cap, short floor is the payer swap.
 
-Here $S$ = 4.597701%, below the 5 percent strike, so the swap that pays 5 percent is worth −\$66,573.49 on \$10 million, and the floor (\$129,222.22) is dearer than the cap (\$62,648.73) by exactly that amount.
+Here $`S`$ = 4.597701%, below the 5 percent strike, so the swap that pays 5 percent is worth −\$66,573.49 on \$10 million, and the floor (\$129,222.22) is dearer than the cap (\$62,648.73) by exactly that amount.
 
 <details>
 <summary>Detailed proof: cap minus floor equals the payer swap, in any model</summary>
 
-Fix a strike $K$ and quarters $i$ = 1 to 7. Portfolio P: long the cap, short the floor. Portfolio Q: for each $i$, hold $D_i$ worth of a bond paying \$1 at $T_i$, short one bond paying \$1 at $T_{i+1}$, and short $K\tau$ bonds paying \$1 at $T_{i+1}$.
+Fix a strike $`K`$ and quarters $`i`$ = 1 to 7. Portfolio P: long the cap, short the floor. Portfolio Q: for each $`i`$, hold $`D_i`$ worth of a bond paying \$1 at $`T_i`$, short one bond paying \$1 at $`T_{i+1}`$, and short $`K\tau`$ bonds paying \$1 at $`T_{i+1}`$.
 
-Cash flows of Q for quarter $i$: at $T_i$ it receives \$1, which it deposits at the fixing $L_i$ for one quarter. At $T_{i+1}$ the deposit returns $(1 + \tau L_i)$ dollars; the two short bond positions take $(1 + K\tau)$ dollars. Net at $T_{i+1}$: $\tau(L_i - K)$. Q costs $\sum_i (D_i - D_{i+1} - K\tau D_{i+1})$ today.
+Cash flows of Q for quarter $`i`$: at $`T_i`$ it receives \$1, which it deposits at the fixing $`L_i`$ for one quarter. At $`T_{i+1}`$ the deposit returns $`(1 + \tau L_i)`$ dollars; the two short bond positions take $`(1 + K\tau)`$ dollars. Net at $`T_{i+1}`$: $`\tau(L_i - K)`$. Q costs $`\sum_i (D_i - D_{i+1} - K\tau D_{i+1})`$ today.
 
-Cash flows of P for quarter $i$, by Step 0: $\tau(\max(L_i - K,0) - \max(K - L_i,0)) = \tau(L_i - K)$ at $T_{i+1}$.
+Cash flows of P for quarter $`i`$, by Step 0: $`\tau(\max(L_i - K,0) - \max(K - L_i,0)) = \tau(L_i - K)`$ at $`T_{i+1}`$.
 
 P and Q pay the same amount on the same date in every state of the world. If their prices differed, buying the cheaper and selling the dearer would lock in the difference today with nothing owed later. So they cost the same:
-$$\text{Cap} - \text{Floor} = \sum_{i=1}^{7}(D_i - D_{i+1}) - K\sum_{i=1}^{7}\tau D_{i+1} = D_1 - D_8 - K A.$$
-No step used a distribution for $L_i$. The only assumptions are that bonds for each date trade at $D_i$ and that the deposit earns the same rate the contracts fix on.
+
+$`\displaystyle \text{Cap} - \text{Floor} = \sum_{i=1}^{7}(D_i - D_{i+1}) - K\sum_{i=1}^{7}\tau D_{i+1} = D_1 - D_8 - K A.`$
+
+No step used a distribution for $`L_i`$. The only assumptions are that bonds for each date trade at $`D_i`$ and that the deposit earns the same rate the contracts fix on.
 
 </details>
 
 ### Step 5: three consequences read straight off the parity
 
-- **At strike $S$, cap equals floor.** Set $K$ = $S$ and the right side is zero. In the example both are \$87,300.19. An at-the-money cap (strike at the swap rate) costs the same as the at-the-money floor.
-- **Their rate sensitivities differ by the annuity.** Raise every forward by one basis point (0.01 percent), holding discount factors fixed. The swap gains $A$ × 1bp × \$10 million = \$1,654.83, so the cap's change minus the floor's change (their deltas) must equal that, in any model.
-- **Their volatility sensitivities are equal.** The swap does not depend on $\sigma$, so any rise in volatility adds the same dollars to the cap and to the floor.
+- **At strike $`S`$, cap equals floor.** Set $`K`$ = $`S`$ and the right side is zero. In the example both are \$87,300.19. An at-the-money cap (strike at the swap rate) costs the same as the at-the-money floor.
+- **Their rate sensitivities differ by the annuity.** Raise every forward by one basis point (0.01 percent), holding discount factors fixed. The swap gains $`A`$ × 1bp × \$10 million = \$1,654.83, so the cap's change minus the floor's change (their deltas) must equal that, in any model.
+- **Their volatility sensitivities are equal.** The swap does not depend on $`\sigma`$, so any rise in volatility adds the same dollars to the cap and to the floor.
 
 ### Step 6: the cap read as insurance
 
-The company pays $L_i$ on its loan and receives max($L_i$ − 5%, 0) from the cap. The net is the smaller of $L_i$ and 5 percent: the rate is capped. The premium, \$62,648.73 paid today, can be turned into a running cost by dividing by the annuity, the value of 1 a year paid quarterly: 0.378582 percent a year. So the company's worst all-in borrowing rate over quarters 1 to 7 is 5.378582 percent, and when rates stay low it pays the market rate plus that running cost.
+The company pays $`L_i`$ on its loan and receives max($`L_i`$ − 5%, 0) from the cap. The net is the smaller of $`L_i`$ and 5 percent: the rate is capped. The premium, \$62,648.73 paid today, can be turned into a running cost by dividing by the annuity, the value of 1 a year paid quarterly: 0.378582 percent a year. So the company's worst all-in borrowing rate over quarters 1 to 7 is 5.378582 percent, and when rates stay low it pays the market rate plus that running cost.
 
 A second road reaches a lower number and shows why a cap is a strip. A **payer swaption** (sibling [Swaptions](04-swaptions-payer-and-receiver.md)) is one option, exercised once, to enter the whole swap. A cap is seven options, exercised quarter by quarter. In every quarter a caplet pays at least what the exercised swap would pay that quarter, and never less than zero, so the strip is worth at least the single option. At 30 percent volatility the swaption exercising at the first reset is worth \$21,407.39, about a third of the cap.
 
@@ -150,10 +160,10 @@ The last caplet, fixed at 1.75 years and paid at 2 years, then the sum.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | forward for quarter 7 | 4.40% + 0.05% × 7 | 4.75% |
-| discount to payment date | $D_8$ | 0.913036 |
+| discount to payment date | $`D_8`$ | 0.913036 |
 | spread to the reset date | 0.30 × √1.75 | 0.396863 |
-| $d_{1,7}$ | (ln(4.75/5) + ½ × 0.396863^2) / 0.396863 | 0.069184 |
-| $d_{2,7}$ | 0.069184 − 0.396863 | −0.327678 |
+| $`d_{1,7}`$ | (ln(4.75/5) + ½ × 0.396863^2) / 0.396863 | 0.069184 |
+| $`d_{2,7}`$ | 0.069184 − 0.396863 | −0.327678 |
 | the two chances | N(0.069184), N(−0.327678) | 0.527579, 0.371577 |
 | bracket | 4.75% × 0.527579 − 5% × 0.371577 | 0.648111% |
 | caplet 7 in dollars | \$10,000,000 × 0.25 × 0.913036 × 0.648111% | \$14,793.71 |
@@ -162,7 +172,7 @@ The last caplet, fixed at 1.75 years and paid at 2 years, then the sum.
 | the seven floorlets | 15,613.29 + … + 20,500.18, added before rounding | \$129,222.22 |
 | annuity | 0.25 × (0.978237 + … + 0.913036) | 1.654828 |
 | cap − floor | 62,648.73 − 129,222.22 | **−\$66,573.49** |
-| payer swap at 5% | \$10,000,000 × ($D_1$ − $D_8$ − 5% × 1.654828) | **−\$66,573.49** |
+| payer swap at 5% | \$10,000,000 × ($`D_1`$ − $`D_8`$ − 5% × 1.654828) | **−\$66,573.49** |
 
 Cap minus floor matches the swap to the cent, with the swap computed from discount factors alone.
 
@@ -202,7 +212,7 @@ xychart-beta
     line [0.18, 0.41, 0.78, 1.29, 1.91, 2.60]
 ```
 
-The orange line is the cap, falling as the ceiling rises; the green line is the floor, rising with its strike. They cross between 4.5 and 5.0 percent, at the forward swap rate 4.597701%, where both cost \$87,300.19. At every strike the vertical gap between them is the swap's value, $A(S - K)$.
+The orange line is the cap, falling as the ceiling rises; the green line is the floor, rising with its strike. They cross between 4.5 and 5.0 percent, at the forward swap rate 4.597701%, where both cost \$87,300.19. At every strike the vertical gap between them is the swap's value, $`A(S - K)`$.
 
 ### The Greeks
 
@@ -213,14 +223,14 @@ Sensitivities of the whole strip, \$10 million notional, from the check scripts:
 | delta: change for every forward up 1 basis point | \$696.52 | −\$958.31 | difference \$1,654.83 = annuity × 1bp × notional |
 | vega: change for 1 point more volatility, around 30% | \$2,835.48 | \$2,835.48 | equal, since the swap has no volatility |
 
-Cap delta by the formula (sum of $\tau D_{i+1} N(d_{1,i})$ per basis point) and by bumping the forwards both give \$696.52.
+Cap delta by the formula (sum of $`\tau D_{i+1} N(d_{1,i})`$ per basis point) and by bumping the forwards both give \$696.52.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| discount each caplet to its reset date $T_i$ | \$63,376.50 | the money arrives a quarter later than that; every caplet is too dear |
-| run volatility to the payment date $T_{i+1}$ | \$73,991.43 | credits each rate with a quarter of wandering after it is already fixed |
+| discount each caplet to its reset date $`T_i`$ | \$63,376.50 | the money arrives a quarter later than that; every caplet is too dear |
+| run volatility to the payment date $`T_{i+1}`$ | \$73,991.43 | credits each rate with a quarter of wandering after it is already fixed |
 | price the cap as one option on the swap rate | \$21,407.39 | one joint choice is worth less than seven separate ones |
 | read cap minus floor as a receiver swap | +\$66,573.49 | wrong sign: long cap, short floor receives floating and pays fixed |
 
@@ -629,9 +639,9 @@ The two outputs agree line for line.
 
 Lean proves cap-floor parity in every model and for any number of quarters, plus the one-quarter rules from Steps 0 and 6.
 
-- Suppose prices add over separate payments, bonds trade at the discount factors, and a one-quarter deposit earns the fixing. Then cap minus floor equals $D_1 - D_8 - K A$, for seven quarters or any other number.
-- Take any fixing $L_i$ and strike $K$. Then $\max(L_i - K, 0) - \max(K - L_i, 0) = L_i - K$: caplet minus floorlet pays the swap.
-- Take a borrower who pays the fixing $L_i$ and receives the caplet's payment. Then the net rate paid is the smaller of $L_i$ and the strike $K$.
+- Suppose prices add over separate payments, bonds trade at the discount factors, and a one-quarter deposit earns the fixing. Then cap minus floor equals $`D_1 - D_8 - K A`$, for seven quarters or any other number.
+- Take any fixing $`L_i`$ and strike $`K`$. Then $`\max(L_i - K, 0) - \max(K - L_i, 0) = L_i - K`$: caplet minus floorlet pays the swap.
+- Take a borrower who pays the fixing $`L_i`$ and receives the caplet's payment. Then the net rate paid is the smaller of $`L_i`$ and the strike $`K`$.
 - At 5.5, 6 and 7 percent the caplet pays \$12,500, \$25,000 and \$50,000; at 4 percent the floorlet pays \$25,000.
 
 Black's prices, the Greeks and every dollar figure for the cap and floor are left to the Python and Rust checks.
@@ -750,8 +760,8 @@ example : (10000000 : ℚ) * (1 / 4) * max (7 / 100 - 5 / 100) 0 = 50000 := by n
 > **A cap is not one option on the two-year rate.** It is seven options, each on its own quarter's rate, each exercised on its own. Pricing it as a single option on the swap rate gives \$21,407.39 against the true \$62,648.73. A single option can only be exercised once for all quarters together; the strip lets the holder collect in a bad quarter even when the average quarter is fine. That extra freedom is worth money, so a cap always costs at least the matching swaption.
 >
 > - **Getting the parity's sign backwards.** Long cap, short floor receives floating and pays fixed: a payer swap. Reading it as a receiver swap gives +\$66,573.49 instead of −\$66,573.49.
-> - **Discounting to the reset date.** The rate fixes at $T_i$; the cash moves at $T_{i+1}$. Discounting too early prices the cap at \$63,376.50, too dear in every caplet.
-> - **Running volatility to the payment date.** The rate stops wandering when it fixes. Using $T_{i+1}$ gives \$73,991.43.
+> - **Discounting to the reset date.** The rate fixes at $`T_i`$; the cash moves at $`T_{i+1}`$. Discounting too early prices the cap at \$63,376.50, too dear in every caplet.
+> - **Running volatility to the payment date.** The rate stops wandering when it fixes. Using $`T_{i+1}`$ gives \$73,991.43.
 > - **Counting today's quarter as an option.** Its rate, 4.40 percent, is already known; a spot-starting cap leaves it out. If it were above the strike it would be a known payment, not an option.
 
 ---

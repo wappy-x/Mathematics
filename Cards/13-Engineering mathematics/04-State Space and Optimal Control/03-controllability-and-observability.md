@@ -38,13 +38,17 @@ Arrows from the motor reach all four boxes, so the motor at least touches every 
 
 ## The formula
 
-The state $x$ is the list of four numbers ([State space](01-state-space-models-and-the-matrix-exponential.md)): cart position $p$, cart speed $v$, lean $\theta$ (theta) and lean rate $\omega$ (omega). Near upright ([Linearisation](02-linearisation-about-an-equilibrium.md)) the model is $x' = Ax + Bu$ with the reading $y = Cx$: here $p'' = u$ and $\theta'' = 16\,\theta - u/l$.
+The state $`x`$ is the list of four numbers ([State space](01-state-space-models-and-the-matrix-exponential.md)): cart position $`p`$, cart speed $`v`$, lean $`\theta`$ (theta) and lean rate $`\omega`$ (omega). Near upright ([Linearisation](02-linearisation-about-an-equilibrium.md)) the model is $`x' = Ax + Bu`$ with the reading $`y = Cx`$: here $`p'' = u`$ and $`\theta'' = 16\,\theta - u/l`$.
 
-The plant is the machine being controlled, here the cart and rod. A prime marks a rate of change, so $p''$ is the cart's acceleration. A raised $\top$ turns a column into a row (the transpose). With $n = 4$ states:
+The plant is the machine being controlled, here the cart and rod. A prime marks a rate of change, so $`p''`$ is the cart's acceleration. A raised $`\top`$ turns a column into a row (the transpose). With $`n = 4`$ states:
 
-$$\mathcal{C} = \big[\,B \;\; AB \;\; A^2B \;\; A^3B\,\big], \qquad \mathcal{O} = \begin{bmatrix} C \\ CA \\ CA^2 \\ CA^3 \end{bmatrix}, \qquad \text{steerable} \iff \operatorname{rank}\mathcal{C} = n, \quad \text{seeable} \iff \operatorname{rank}\mathcal{O} = n$$
+```math
+\mathcal{C} = \big[\,B \;\; AB \;\; A^2B \;\; A^3B\,\big], \qquad \mathcal{O} = \begin{bmatrix} C \\ CA \\ CA^2 \\ CA^3 \end{bmatrix}, \qquad \text{steerable} \iff \mathrm{rank}\,\mathcal{C} = n, \quad \text{seeable} \iff \mathrm{rank}\,\mathcal{O} = n
+```
 
-$$W_c(T) = \int_0^T e^{At}BB^\top e^{A^\top t}\,dt, \qquad E = x_f^\top W_c(T)^{-1}x_f, \qquad W_o(T) = \int_0^T e^{A^\top t}C^\top C\,e^{At}\,dt = W_c(T)\big|_{A \to A^\top,\; B \to C^\top}$$
+```math
+W_c(T) = \int_0^T e^{At}BB^\top e^{A^\top t}\,dt, \qquad E = x_f^\top W_c(T)^{-1}x_f, \qquad W_o(T) = \int_0^T e^{A^\top t}C^\top C\,e^{At}\,dt = W_c(T)\big|_{A \to A^\top,\; B \to C^\top}
+```
 
 **Read it aloud:** the motor can steer every state when its push directions, and what the plant does to them, fill all four directions; the sensor can see every state when its reading and its rates of change do; the cheapest push to a target state costs that state against the inverse Gramian, and the seeing Gramian is the steering Gramian of the transposed plant.
 
@@ -52,22 +56,22 @@ The words for these are **controllable** (steerable) and **observable** (seeable
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$; $p, v, \theta, \omega$; $x_f$, $x_0$ | state: cart position (m), speed (m/s), lean (rad), lean rate (rad/s); $x_f$ the target state, $x_0$ the starting state | $x_f = (1, 0, 0, 0)$: cart 1 m along, rod upright and still | price grows as its square |
-| $u$, $E$; $u_0$, $\delta$ | push: commanded cart acceleration (m/s²); $E$ the least total of $u^2$ over the window, in m²/s³; $u_0$ the cheapest push, $\delta$ any change to it | $E$ = 9.950 for the 1 m move in 2 s | — |
-| $y$, $C$ | the sensor's reading; the row that picks it out of $x$ | cart encoder $C = (1, 0, 0, 0)$; tip sensor $(1, 0, l, 0)$ | — |
-| $A$, $B$, $I$ | how the state drifts; how the push enters; the identity matrix | `B = (0, 1, 0, −1.6310)` | — |
-| $16$, $l$, $g$ | gravity over rod length, per s²; rod length; gravity 9.81 m/s² (NIST CODATA standard gravity, rounded) | 16; 0.613125 m | the 1 m move gets cheaper: gravity does more of the leaning |
-| $n$ | number of states | 4 | one more column and row to fill |
-| $\mathcal{C}$, $\mathcal{O}$ | controllability matrix (push directions); observability matrix (reading directions) | rank 4; rank 2 from the cart encoder | — |
-| $W_c(T)$, $W_o(T)$ | steering and seeing Gramians over a window of $T$ seconds | $W_c$ smallest eigenvalue 4.231e-3 at $T$ = 2 s | bigger means cheaper to steer, easier to see |
-| $T$, $t$ | window length, s; time, s | $T$ = 2 s steering, 0.5 s watching | longer windows are cheaper |
-| $\lambda$ | an eigenvalue of $A$, one natural motion of the plant | 0, 0, +4, −4 per s | — |
-| $w$, $\mu$ | a direction in the state (a row of weights on $p, v, \theta, \omega$); an eigenvalue of $W_c$, the price factor of one direction | hardest direction mostly lean; $\mu$ from 4.231e-3 to 7.849e5 | bigger $\mu$, cheaper direction |
-| $s$, $G(s)$ | Laplace variable; transfer function from push to reading ([Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)); a pole is a value of $s$ where $G$ blows up, one motion the reading shows, and a zero is a value where $G$ is 0 ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)) | cart encoder $G(s) = 1/s^2$ | — |
+| $`x`$; $`p, v, \theta, \omega`$; $`x_f`$, $`x_0`$ | state: cart position (m), speed (m/s), lean (rad), lean rate (rad/s); $`x_f`$ the target state, $`x_0`$ the starting state | $`x_f = (1, 0, 0, 0)`$: cart 1 m along, rod upright and still | price grows as its square |
+| $`u`$, $`E`$; $`u_0`$, $`\delta`$ | push: commanded cart acceleration (m/s²); $`E`$ the least total of $`u^2`$ over the window, in m²/s³; $`u_0`$ the cheapest push, $`\delta`$ any change to it | $`E`$ = 9.950 for the 1 m move in 2 s | — |
+| $`y`$, $`C`$ | the sensor's reading; the row that picks it out of $`x`$ | cart encoder $`C = (1, 0, 0, 0)`$; tip sensor $`(1, 0, l, 0)`$ | — |
+| $`A`$, $`B`$, $`I`$ | how the state drifts; how the push enters; the identity matrix | `B = (0, 1, 0, −1.6310)` | — |
+| $`16`$, $`l`$, $`g`$ | gravity over rod length, per s²; rod length; gravity 9.81 m/s² (NIST CODATA standard gravity, rounded) | 16; 0.613125 m | the 1 m move gets cheaper: gravity does more of the leaning |
+| $`n`$ | number of states | 4 | one more column and row to fill |
+| $`\mathcal{C}`$, $`\mathcal{O}`$ | controllability matrix (push directions); observability matrix (reading directions) | rank 4; rank 2 from the cart encoder | — |
+| $`W_c(T)`$, $`W_o(T)`$ | steering and seeing Gramians over a window of $`T`$ seconds | $`W_c`$ smallest eigenvalue 4.231e-3 at $`T`$ = 2 s | bigger means cheaper to steer, easier to see |
+| $`T`$, $`t`$ | window length, s; time, s | $`T`$ = 2 s steering, 0.5 s watching | longer windows are cheaper |
+| $`\lambda`$ | an eigenvalue of $`A`$, one natural motion of the plant | 0, 0, +4, −4 per s | — |
+| $`w`$, $`\mu`$ | a direction in the state (a row of weights on $`p, v, \theta, \omega`$); an eigenvalue of $`W_c`$, the price factor of one direction | hardest direction mostly lean; $`\mu`$ from 4.231e-3 to 7.849e5 | bigger $`\mu`$, cheaper direction |
+| $`s`$, $`G(s)`$ | Laplace variable; transfer function from push to reading ([Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)); a pole is a value of $`s`$ where $`G`$ blows up, one motion the reading shows, and a zero is a value where $`G`$ is 0 ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)) | cart encoder $`G(s) = 1/s^2`$ | — |
 
 ### When it holds
 
-- **The model is linear.** The tests are about $x' = Ax + Bu$, which holds near upright. Ask for the 1 m move in 1 s and the cheapest plan leans the rod 0.7475 rad (42.8°), where sin θ is already 9.1% below θ: the plan no longer describes the real rod.
+- **The model is linear.** The tests are about $`x' = Ax + Bu`$, which holds near upright. Ask for the 1 m move in 1 s and the cheapest plan leans the rod 0.7475 rad (42.8°), where sin θ is already 9.1% below θ: the plan no longer describes the real rod.
 - **The motor sets acceleration.** A stiff servo hides the rod from the cart. Drive a light cart by force instead (a 1 kg cart, a 0.1 kg weight at the rod's tip) and the rod pushes back: a 0.05 rad lean moves the cart −8.74 mm in 0.5 s, and the cart encoder's rank becomes 4.
 - **A, B, C stay fixed.** With matrices that change in time, the rank test can miss things; the Gramian, computed with the true transition, still answers.
 - **The push is unlimited.** Rank 4 means some push gets there, not that the motor can deliver it. The Gramian's price says how large the push must be.
@@ -79,39 +83,39 @@ The words for these are **controllable** (steerable) and **observable** (seeable
 
 ### Step 0: everything the motor does is built from B, AB, A²B, …
 
-Start at rest and give a short kick. The state jumps along $B$. Then the plant carries that jump along: after time $t$ it is $e^{At}B = B + tAB + \tfrac{t^2}{2}A^2B + \dots$ ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)). Any push is a string of kicks, so every state the motor reaches is a mix of $B, AB, A^2B, \dots$. If those cannot fill four directions, some direction is out of reach forever.
+Start at rest and give a short kick. The state jumps along $`B`$. Then the plant carries that jump along: after time $`t`$ it is $`e^{At}B = B + tAB + \tfrac{t^2}{2}A^2B + \dots`$ ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)). Any push is a string of kicks, so every state the motor reaches is a mix of $`B, AB, A^2B, \dots`$. If those cannot fill four directions, some direction is out of reach forever.
 
 ### Step 1: four columns are enough
 
-The Cayley–Hamilton theorem says $A$ satisfies its own characteristic polynomial (the polynomial whose roots are the eigenvalues of $A$). Here that polynomial is $s^2(s^2 - 16)$, so $A^4 = 16A^2$ and $A^4B = 16A^2B$. Every higher power folds back onto the first four, so $\mathcal{C} = [B\;AB\;A^2B\;A^3B]$ holds every direction the motor will ever reach. If its rank is below 4, a row $w^\top$ with $w^\top\mathcal{C} = 0$ exists, and $w^\top x(t) = 0$ for every push: that combination of states can never be moved.
+The Cayley–Hamilton theorem says $`A`$ satisfies its own characteristic polynomial (the polynomial whose roots are the eigenvalues of $`A`$). Here that polynomial is $`s^2(s^2 - 16)`$, so $`A^4 = 16A^2`$ and $`A^4B = 16A^2B`$. Every higher power folds back onto the first four, so $`\mathcal{C} = [B\;AB\;A^2B\;A^3B]`$ holds every direction the motor will ever reach. If its rank is below 4, a row $`w^\top`$ with $`w^\top\mathcal{C} = 0`$ exists, and $`w^\top x(t) = 0`$ for every push: that combination of states can never be moved.
 
 ### Step 2: if the rank is 4, the Gramian gives the cheapest push
 
-Try the push $u(t) = B^\top e^{A^\top(T-t)}\,W_c(T)^{-1}x_f$. The response to a push from rest is $x(T) = \int_0^T e^{A(T-t)}B\,u(t)\,dt$ ([Forced systems](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md)). Substituting, the integral becomes $W_c(T)$ times $W_c(T)^{-1}x_f$, which is $x_f$. The push lands exactly.
+Try the push $`u(t) = B^\top e^{A^\top(T-t)}\,W_c(T)^{-1}x_f`$. The response to a push from rest is $`x(T) = \int_0^T e^{A(T-t)}B\,u(t)\,dt`$ ([Forced systems](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md)). Substituting, the integral becomes $`W_c(T)`$ times $`W_c(T)^{-1}x_f`$, which is $`x_f`$. The push lands exactly.
 
-It needs $W_c(T)$ to be invertible. For any direction $w$, $w^\top W_c w = \int_0^T (w^\top e^{At}B)^2\,dt$. That is zero only if $w^\top e^{At}B = 0$ for all $t$, which (taking derivatives at 0) means $w^\top A^kB = 0$ for every $k$, which rank 4 forbids. So rank 4 makes $W_c$ positive definite (every nonzero direction gets a price above zero), and invertible.
+It needs $`W_c(T)`$ to be invertible. For any direction $`w`$, $`w^\top W_c w = \int_0^T (w^\top e^{At}B)^2\,dt`$. That is zero only if $`w^\top e^{At}B = 0`$ for all $`t`$, which (taking derivatives at 0) means $`w^\top A^kB = 0`$ for every $`k`$, which rank 4 forbids. So rank 4 makes $`W_c`$ positive definite (every nonzero direction gets a price above zero), and invertible.
 
 <details>
 <summary>Detailed proof: no other push that lands at x_f is cheaper</summary>
 
-Let $u_0$ be the push above and $u = u_0 + \delta$ any other push that also lands at $x_f$. Both land, so $\int_0^T e^{A(T-t)}B\,\delta(t)\,dt = 0$. Now
-$\int u_0\delta\,dt = \int (W_c^{-1}x_f)^\top e^{A(T-t)}B\,\delta\,dt = (W_c^{-1}x_f)^\top \cdot 0 = 0$.
-So $\int u^2 = \int u_0^2 + 2\int u_0\delta + \int\delta^2 = \int u_0^2 + \int \delta^2 \ge \int u_0^2$. The cheapest cost is
-$\int u_0^2\,dt = x_f^\top W_c^{-1}\Big(\int e^{A(T-t)}BB^\top e^{A^\top(T-t)}dt\Big)W_c^{-1}x_f = x_f^\top W_c^{-1}x_f$.
+Let $`u_0`$ be the push above and $`u = u_0 + \delta`$ any other push that also lands at $`x_f`$. Both land, so $`\int_0^T e^{A(T-t)}B\,\delta(t)\,dt = 0`$. Now
+$`\int u_0\delta\,dt = \int (W_c^{-1}x_f)^\top e^{A(T-t)}B\,\delta\,dt = (W_c^{-1}x_f)^\top \cdot 0 = 0`$.
+So $`\int u^2 = \int u_0^2 + 2\int u_0\delta + \int\delta^2 = \int u_0^2 + \int \delta^2 \ge \int u_0^2`$. The cheapest cost is
+$`\int u_0^2\,dt = x_f^\top W_c^{-1}\Big(\int e^{A(T-t)}BB^\top e^{A^\top(T-t)}dt\Big)W_c^{-1}x_f = x_f^\top W_c^{-1}x_f`$.
 
 </details>
 
-The eigenvalues of $W_c$ (its stretch factors, since $W_c$ is symmetric, [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)) price the directions. A target along the eigenvector with eigenvalue $\mu$ costs $1/\mu$ per unit squared. The smallest eigenvalue marks the hardest direction.
+The eigenvalues of $`W_c`$ (its stretch factors, since $`W_c`$ is symmetric, [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)) price the directions. A target along the eigenvector with eigenvalue $`\mu`$ costs $`1/\mu`$ per unit squared. The smallest eigenvalue marks the hardest direction.
 
 ### Step 3: seeing is steering, transposed
 
-With no push, the reading is $y(t) = Ce^{At}x_0$, where $x_0$ is the starting state. A start $x_0$ is invisible when $y(t) = 0$ for all $t$. Taking derivatives at 0, that means $Cx_0 = CAx_0 = CA^2x_0 = \dots = 0$, so $x_0$ lies in the null space of $\mathcal{O}$ (the directions it sends to zero). By rank and nullity, the invisible directions number $4 - \operatorname{rank}\mathcal{O}$. The energy the sensor collects is $\int y^2\,dt = x_0^\top W_o(T)x_0$.
+With no push, the reading is $`y(t) = Ce^{At}x_0`$, where $`x_0`$ is the starting state. A start $`x_0`$ is invisible when $`y(t) = 0`$ for all $`t`$. Taking derivatives at 0, that means $`Cx_0 = CAx_0 = CA^2x_0 = \dots = 0`$, so $`x_0`$ lies in the null space of $`\mathcal{O}`$ (the directions it sends to zero). By rank and nullity, the invisible directions number $`4 - \mathrm{rank}\,\mathcal{O}`$. The energy the sensor collects is $`\int y^2\,dt = x_0^\top W_o(T)x_0`$.
 
-Now transpose. The rows $C, CA, CA^2, CA^3$ are the columns $C^\top, A^\top C^\top, (A^\top)^2C^\top, (A^\top)^3C^\top$ laid on their sides. So $\mathcal{O}$ for $(A, C)$ is $\mathcal{C}$ for $(A^\top, C^\top)$, transposed, and $W_o$ for $(A, C)$ is $W_c$ for $(A^\top, C^\top)$. This is **duality**: every fact about steering is a fact about seeing, run on the transposed plant. The code uses it once: it computes $\mathcal{O}$ and $W_o$ with the steering functions, fed $A^\top$ and $C^\top$.
+Now transpose. The rows $`C, CA, CA^2, CA^3`$ are the columns $`C^\top, A^\top C^\top, (A^\top)^2C^\top, (A^\top)^3C^\top`$ laid on their sides. So $`\mathcal{O}`$ for $`(A, C)`$ is $`\mathcal{C}`$ for $`(A^\top, C^\top)`$, transposed, and $`W_o`$ for $`(A, C)`$ is $`W_c`$ for $`(A^\top, C^\top)`$. This is **duality**: every fact about steering is a fact about seeing, run on the transposed plant. The code uses it once: it computes $`\mathcal{O}`$ and $`W_o`$ with the steering functions, fed $`A^\top`$ and $`C^\top`$.
 
 ### Step 4: mode by mode, and which failures matter
 
-The PBH test (named from the initials of the three people who found it) checks one natural motion at a time. A motion with eigenvalue $\lambda$ is invisible exactly when $\big[\begin{smallmatrix}\lambda I - A \\ C\end{smallmatrix}\big]$ has rank below 4, and unsteerable exactly when $[\lambda I - A \;\; B]$ does. For the cart encoder the motions at +4 and −4 fail: those are the rod falling away and the rod's motion that dies out by itself.
+The PBH test (named from the initials of the three people who found it) checks one natural motion at a time. A motion with eigenvalue $`\lambda`$ is invisible exactly when $`\big[\begin{smallmatrix}\lambda I - A \\ C\end{smallmatrix}\big]`$ has rank below 4, and unsteerable exactly when $`[\lambda I - A \;\; B]`$ does. For the cart encoder the motions at +4 and −4 fail: those are the rod falling away and the rod's motion that dies out by itself.
 
 A blind motion is harmless if it dies out by itself. A plant whose unseen motions all decay is called **detectable**; one whose unsteerable motions all decay is **stabilisable**. The cart encoder misses the motion at +4, which grows. So the cart encoder alone is not even detectable: no estimator (a program that rebuilds the state from the readings) fed only by it can track the rod, and no controller fed only by it can balance the rod.
 
@@ -121,17 +125,17 @@ A blind motion is harmless if it dies out by itself. A plant whose unseen motion
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| 1. Push direction | $B$: speed up by 1, lean rate down by $1/l = 1/0.613125$ | `(0, 1, 0, −1.6310)` |
-| 2. Carried once | $AB$: speed becomes position, lean rate becomes lean | `(1, 0, −1.6310, 0)` |
-| 3. Carried twice | $A^2B$: gravity turns lean into lean rate, times 16 | `(0, 0, 0, −26.0958)` |
-| 4. Carried three times | $A^3B$ | `(0, 0, −26.0958, 0)` |
-| 5. Rank of $\mathcal{C}$ | column 4 is lean alone, column 3 lean rate alone; subtract them out of columns 1 and 2, leaving speed alone and position alone | **4: controllable** |
-| 6. Cart encoder rows | $C = (1,0,0,0)$, $CA = (0,1,0,0)$, $CA^2 = CA^3 = 0$ | **rank 2: blind to the rod** |
-| 7. Tip sensor rows | $(1,0,l,0)$, $(0,1,0,l)$, $(0,0,16l,0)$, $(0,0,0,16l)$ with $16l = g$ = 9.81 | **rank 4: sees everything** |
-| 8. Bare cart Gramian, 2 s | entries $\int t^2 = 8/3$, $\int t = 2$, $\int 1 = 2$; determinant 16/3 − 4 = 4/3 | `[[2.6667, 2], [2, 2]]` |
-| 9. Bare cart price | top-left of the inverse: 2 ÷ (4/3), the same as $12/T^3$ | 1.500 |
-| 10. Rod's lean entry of $W_c$ | $\tfrac{1}{16 l^2}\big(\sinh(16)/16 - 1\big)$ = 0.16626 × 277690 | 46168.1149 |
-| 11. Rod and cart price | top-left of $W_c(2)^{-1}$, by elimination in the code | **9.950 m²/s³** |
+| 1. Push direction | $`B`$: speed up by 1, lean rate down by $`1/l = 1/0.613125`$ | `(0, 1, 0, −1.6310)` |
+| 2. Carried once | $`AB`$: speed becomes position, lean rate becomes lean | `(1, 0, −1.6310, 0)` |
+| 3. Carried twice | $`A^2B`$: gravity turns lean into lean rate, times 16 | `(0, 0, 0, −26.0958)` |
+| 4. Carried three times | $`A^3B`$ | `(0, 0, −26.0958, 0)` |
+| 5. Rank of $`\mathcal{C}`$ | column 4 is lean alone, column 3 lean rate alone; subtract them out of columns 1 and 2, leaving speed alone and position alone | **4: controllable** |
+| 6. Cart encoder rows | $`C = (1,0,0,0)`$, $`CA = (0,1,0,0)`$, $`CA^2 = CA^3 = 0`$ | **rank 2: blind to the rod** |
+| 7. Tip sensor rows | $`(1,0,l,0)`$, $`(0,1,0,l)`$, $`(0,0,16l,0)`$, $`(0,0,0,16l)`$ with $`16l = g`$ = 9.81 | **rank 4: sees everything** |
+| 8. Bare cart Gramian, 2 s | entries $`\int t^2 = 8/3`$, $`\int t = 2`$, $`\int 1 = 2`$; determinant 16/3 − 4 = 4/3 | `[[2.6667, 2], [2, 2]]` |
+| 9. Bare cart price | top-left of the inverse: 2 ÷ (4/3), the same as $`12/T^3`$ | 1.500 |
+| 10. Rod's lean entry of $`W_c`$ | $`\tfrac{1}{16 l^2}\big(\sinh(16)/16 - 1\big)`$ = 0.16626 × 277690 | 46168.1149 |
+| 11. Rod and cart price | top-left of $`W_c(2)^{-1}`$, by elimination in the code | **9.950 m²/s³** |
 
 The rod makes the same 1 m move cost 6.63 times as much push, because the motor must first pull back to lean the rod forward, carry it, then catch it.
 
@@ -149,24 +153,24 @@ xychart-beta
 
 Orange: cart carrying the upright rod (price 9.950). Green: bare cart (price 1.500), a straight ramp from push to brake.
 
-The price list. $W_c(2)$ has eigenvalues 4.231e-3, 1.899e-1, 2.461e0 and 7.849e5. The largest belongs to the rod already falling, with lean rate four times the lean: gravity does that work for free. The smallest, the hardest direction, is mostly lean (0.938) with a lean rate of −0.234 against it and a little cart motion. Reaching the 0.05 rad lean alone in 2 s costs 0.5203; setting the cart moving at 1 m/s costs 10.9444.
+The price list. $`W_c(2)`$ has eigenvalues 4.231e-3, 1.899e-1, 2.461e0 and 7.849e5. The largest belongs to the rod already falling, with lean rate four times the lean: gravity does that work for free. The smallest, the hardest direction, is mostly lean (0.938) with a lean rate of −0.234 against it and a little cart motion. Reaching the 0.05 rad lean alone in 2 s costs 0.5203; setting the cart moving at 1 m/s costs 10.9444.
 
-Seeing, over a 0.5 s window. From the cart encoder, $W_o$ has eigenvalues 0, 0, 9.792e-3 and 5.319e-1: two directions return no signal at all, and the 0.05 rad lean gives an output energy of 0. From the tip sensor every eigenvalue is positive (smallest 2.787e-6), and the same lean returns 1.838e-3 m²·s.
+Seeing, over a 0.5 s window. From the cart encoder, $`W_o`$ has eigenvalues 0, 0, 9.792e-3 and 5.319e-1: two directions return no signal at all, and the 0.05 rad lean gives an output energy of 0. From the tip sensor every eigenvalue is positive (smallest 2.787e-6), and the same lean returns 1.838e-3 m²·s.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Trust the cart encoder's transfer function | $G(1)$ = 1.0000, exactly $1/s^2$: poles at 0 and 0 only | the zeros at ±4 cancel the rod's poles; the falling motion is hidden, not gone. The tip sensor's $G(1)$ = 1.0667 = $-16/(s^2(s^2-16))$ keeps all four |
+| Trust the cart encoder's transfer function | $`G(1)`$ = 1.0000, exactly $`1/s^2`$: poles at 0 and 0 only | the zeros at ±4 cancel the rod's poles; the falling motion is hidden, not gone. The tip sensor's $`G(1)`$ = 1.0667 = $`-16/(s^2(s^2-16))`$ keeps all four |
 | Use the pivot encoder alone | cart 0.2000 m off after 2 s at 0.1 m/s, reading unchanged | rank 2 again; its blind motions sit at eigenvalue 0, so a drifting cart never shows, and the plant is not detectable |
 | Ask the linear model for 1 m in 1 s | price 554.747 (46.23 times the bare cart), peak lean 0.7475 rad | outside the small-angle range: sin θ is 9.1% below θ at the peak |
-| Let the window run to infinity | lean entry of $W_c$: 4.617e4 at 2 s, 4.103e11 at 4 s | the plant is unstable, so the infinite Gramian does not exist; use a finite window |
+| Let the window run to infinity | lean entry of $`W_c`$: 4.617e4 at 2 s, 4.103e11 at 4 s | the plant is unstable, so the infinite Gramian does not exist; use a finite window |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts build every tool they use: a matrix exponential (scale down, Taylor series, square back), Gaussian elimination, Jacobi's rotation method for the eigenvalues of a symmetric matrix, and Simpson's rule. They reach the answers by **three independent roads**. Ranks come from elimination and again from counting nonzero singular values, and both must match the hand counts of Worked numbers. The Gramian's price comes from inverting the Gramian, and again from flying the cheapest push through the plant with a Runge–Kutta (RK4) integrator, which must land on the target and spend exactly that price. Closed forms by hand check the rest: the rod's lean $0.05\cosh 4t$, the Gramian's lean entry, the bare cart's $12/T^3$, both transfer functions, and the tip sensor's output energy. Observability is computed through duality, and row $CA^3$ is checked directly from $A$.
+The scripts build every tool they use: a matrix exponential (scale down, Taylor series, square back), Gaussian elimination, Jacobi's rotation method for the eigenvalues of a symmetric matrix, and Simpson's rule. They reach the answers by **three independent roads**. Ranks come from elimination and again from counting nonzero singular values, and both must match the hand counts of Worked numbers. The Gramian's price comes from inverting the Gramian, and again from flying the cheapest push through the plant with a Runge–Kutta (RK4) integrator, which must land on the target and spend exactly that price. Closed forms by hand check the rest: the rod's lean $`0.05\cosh 4t`$, the Gramian's lean entry, the bare cart's $`12/T^3`$, both transfer functions, and the tip sensor's output energy. Observability is computed through duality, and row $`CA^3`$ is checked directly from $`A`$.
 
 ### Python
 
@@ -560,14 +564,14 @@ ALL CHECKS PASS
 
 Lean proves both rank tests and the duality for any fixed plant, and checks the cart-and-rod numbers exactly.
 
-- Take any fixed $A$ and $B$ with $n$ states. Then $\operatorname{rank}\mathcal{C} = n$ exactly when, for every window $T > 0$, some push without jumps steers every start to every target.
-- Take any fixed $A$ and $C$, with no push. Then $\operatorname{rank}\mathcal{O} = n$ exactly when the only start whose reading stays 0 for all $t \ge 0$ is $x_0 = 0$.
-- Take any $A$ and $C$. Then $\mathcal{O}$ for $(A, C)$ is $\mathcal{C}$ for $(A^\top, C^\top)$, transposed: seeing is steering on the transposed plant.
-- Take the cart and rod, with $l$ = 981/1600 m. Then $A^4 = 16A^2$, and $AB$, $A^2B$, $A^3B$ match Worked numbers exactly.
-- Take the cart's one motor. Then $\operatorname{rank}\mathcal{C} = 4$: it can steer all four numbers.
-- Take the cart encoder. Then its rows are $(1, 0, 0, 0)$, $(0, 1, 0, 0)$, 0 and 0, and $\operatorname{rank}\mathcal{O} = 2$.
-- Take the tip sensor. Then rows $CA^2$ and $CA^3$ carry $16l$ = 9.81, and $\operatorname{rank}\mathcal{O} = 4$.
-- Take the bare cart's 2 s Gramian as `[[8/3, 2], [2, 2]]`. Then its determinant is 4/3, and its price 3/2 equals $12/T^3$.
+- Take any fixed $`A`$ and $`B`$ with $`n`$ states. Then $`\mathrm{rank}\,\mathcal{C} = n`$ exactly when, for every window $`T > 0`$, some push without jumps steers every start to every target.
+- Take any fixed $`A`$ and $`C`$, with no push. Then $`\mathrm{rank}\,\mathcal{O} = n`$ exactly when the only start whose reading stays 0 for all $`t \ge 0`$ is $`x_0 = 0`$.
+- Take any $`A`$ and $`C`$. Then $`\mathcal{O}`$ for $`(A, C)`$ is $`\mathcal{C}`$ for $`(A^\top, C^\top)`$, transposed: seeing is steering on the transposed plant.
+- Take the cart and rod, with $`l`$ = 981/1600 m. Then $`A^4 = 16A^2`$, and $`AB`$, $`A^2B`$, $`A^3B`$ match Worked numbers exactly.
+- Take the cart's one motor. Then $`\mathrm{rank}\,\mathcal{C} = 4`$: it can steer all four numbers.
+- Take the cart encoder. Then its rows are $`(1, 0, 0, 0)`$, $`(0, 1, 0, 0)`$, 0 and 0, and $`\mathrm{rank}\,\mathcal{O} = 2`$.
+- Take the tip sensor. Then rows $`CA^2`$ and $`CA^3`$ carry $`16l`$ = 9.81, and $`\mathrm{rank}\,\mathcal{O} = 4`$.
+- Take the bare cart's 2 s Gramian as `[[8/3, 2], [2, 2]]`. Then its determinant is 4/3, and its price 3/2 equals $`12/T^3`$.
 
 The Gramian integrals, the 9.950 price, the mode-by-mode test and the decimal numbers are left to the Python and Rust checks.
 
@@ -1127,7 +1131,7 @@ example : (!![8 / 3, 2; 2, 2] : Matrix (Fin 2) (Fin 2) ℚ)⁻¹ 0 0 = 3 / 2 ∧
 ## The usual mistake
 
 > [!warning]
-> **Reading the transfer function and believing it shows every state.** From push to cart encoder the transfer function is $1/s^2$, the same as a bare cart: $G(1)$ = 1.0000 and $G(2)$ = 0.2500. The rod's falling pole at +4 is cancelled by a zero and vanishes from the formula. It has not left the plant. Any controller fed only by the cart encoder lets the rod fall, at 0.1881 rad half a second after a 0.05 rad tip, while the encoder reads 0.0000 m.
+> **Reading the transfer function and believing it shows every state.** From push to cart encoder the transfer function is $`1/s^2`$, the same as a bare cart: $`G(1)`$ = 1.0000 and $`G(2)`$ = 0.2500. The rod's falling pole at +4 is cancelled by a zero and vanishes from the formula. It has not left the plant. Any controller fed only by the cart encoder lets the rod fall, at 0.1881 rad half a second after a 0.05 rad tip, while the encoder reads 0.0000 m.
 >
 > Smaller traps:
 > - **"It sees the rod, so it sees enough."** The pivot encoder sees the rod but not the cart: rank 2, and a cart drifting at 0.1 m/s ends 0.2000 m off after 2 s with no change in the reading.
@@ -1151,7 +1155,7 @@ example : (!![8 / 3, 2; 2, 2] : Matrix (Fin 2) (Fin 2) ℚ)⁻¹ 0 0 = 3 / 2 ∧
 
 ## What this builds on
 
-- [Linearisation](02-linearisation-about-an-equilibrium.md): the straight model $p'' = u$, $\theta'' = 16\theta - u/l$ that both tests are run on.
+- [Linearisation](02-linearisation-about-an-equilibrium.md): the straight model $`p'' = u`$, $`\theta'' = 16\theta - u/l`$ that both tests are run on.
 - [Rank and nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md): rank counts the directions kept, nullity the directions lost; here nullity is the number of states a sensor cannot see.
 - [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): the stretch factors that turn a yes-or-no rank into a price per direction, and the second road to every rank in the code.
 

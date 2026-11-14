@@ -38,46 +38,50 @@ Orange: the theorem's share for an endless network, zero up to one friend each, 
 
 ## The formula
 
-The model, in words first. There are $n$ people. Each pair is a friendship with chance $p$, independently of every other pair. This is the model G(n, p) of the random-graphs card. The average number of friends is then $c$ = (n − 1)p, since each person has n − 1 possible partners; that card calls it lambda, and the letter c is the usual one in the giant-component literature. The theorem is a statement about $n$ growing while $c$ stays fixed.
+The model, in words first. There are $`n`$ people. Each pair is a friendship with chance $`p`$, independently of every other pair. This is the model G(n, p) of the random-graphs card. The average number of friends is then $`c`$ = (n − 1)p, since each person has n − 1 possible partners; that card calls it lambda, and the letter c is the usual one in the giant-component literature. The theorem is a statement about $`n`$ growing while $`c`$ stays fixed.
 
-The share of people in the giant component is the number $\zeta$ (the Greek letter zeta) that solves
+The share of people in the giant component is the number $`\zeta`$ (the Greek letter zeta) that solves
 
-$$\zeta = 1 - e^{-c\,\zeta}.$$
+```math
+\zeta = 1 - e^{-c\,\zeta}.
+```
 
 **Read it aloud:** the share in the giant equals one minus the chance that none of a person's friends leads into the giant.
 
 The number zero always solves it. The theorem is about the other root:
 
-- **Below the switch,** $c$ < 1: zero is the only root in 0 to 1. Write I = c − 1 − ln c, a positive rate. With chance close to 1, the largest component holds about (1 / I) × ln n people for large n, a slow-growing count. The proof on this card gives the cruder bound (2 / I) × ln n, with failure chance at most 1/n.
-- **Above the switch,** $c$ > 1: there is exactly one root $\zeta$ between 0 and 1. The largest component holds about $\zeta$ n people; every other component holds at most a constant times ln n.
-- **At the switch,** $c$ = 1: the largest component holds roughly $n^{2/3}$ people, a count between the two.
+- **Below the switch,** $`c`$ < 1: zero is the only root in 0 to 1. Write I = c − 1 − ln c, a positive rate. With chance close to 1, the largest component holds about (1 / I) × ln n people for large n, a slow-growing count. The proof on this card gives the cruder bound (2 / I) × ln n, with failure chance at most 1/n.
+- **Above the switch,** $`c`$ > 1: there is exactly one root $`\zeta`$ between 0 and 1. The largest component holds about $`\zeta`$ n people; every other component holds at most a constant times ln n.
+- **At the switch,** $`c`$ = 1: the largest component holds roughly $`n^{2/3}`$ people, a count between the two.
 
-The same share arrives from a family tree. Write $q$ for the chance that a family line dies out when every member has a Poisson number of children with average $c$ (X ~ Poisson(c), read "X follows the Poisson law with mean c", from [Poisson](../03-Discrete%20Distributions/04-poisson.md)). Then
+The same share arrives from a family tree. Write $`q`$ for the chance that a family line dies out when every member has a Poisson number of children with average $`c`$ (X ~ Poisson(c), read "X follows the Poisson law with mean c", from [Poisson](../03-Discrete%20Distributions/04-poisson.md)). Then
 
-$$q = e^{c\,(q - 1)}, \qquad \zeta = 1 - q.$$
+```math
+q = e^{c\,(q - 1)}, \qquad \zeta = 1 - q.
+```
 
 **Read it aloud:** a line dies out exactly when every child's line dies out, and the share in the giant is the chance a line runs on for ever.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | people in the network | 1,000 | islands below the switch grow only like ln n; the giant's share stays put |
-| $p$ | chance a given pair are friends | 0.001502 at c = 1.5 | more friendships, larger $c$ |
-| $c$ | average number of friends, (n − 1)p | 1.5 | crossing 1 creates the giant; beyond, it grows |
-| $\zeta$ | share of people in the giant | 0.5828 | — |
-| $q$ | chance a family line dies out; 1 − ζ | 0.4172 | — |
-| $q_k$ | chance the line is dead by generation k | 0.2231, 0.3118, 0.3562 for k = 1, 2, 3 | — |
-| $X$ | new friends one explored person brings, about Poisson(c) | average 1.5 | — |
-| $f$ | the family-tree rule $f(s) = e^{c(s-1)}$, whose smallest fixed point is q | f(0) = 0.2231 | — |
-| $v$ | one chosen person; C(v) is that person's component | any of the 1,000 | — |
-| $I$ | decay rate below the switch, c − 1 − ln c | 0.1931 at c = 0.5 | a steeper drop in island sizes |
-| $k$ | a size cut-off (or a generation count) | 72 people at c = 0.5 | — |
+| $`n`$ | people in the network | 1,000 | islands below the switch grow only like ln n; the giant's share stays put |
+| $`p`$ | chance a given pair are friends | 0.001502 at c = 1.5 | more friendships, larger $`c`$ |
+| $`c`$ | average number of friends, (n − 1)p | 1.5 | crossing 1 creates the giant; beyond, it grows |
+| $`\zeta`$ | share of people in the giant | 0.5828 | — |
+| $`q`$ | chance a family line dies out; 1 − ζ | 0.4172 | — |
+| $`q_k`$ | chance the line is dead by generation k | 0.2231, 0.3118, 0.3562 for k = 1, 2, 3 | — |
+| $`X`$ | new friends one explored person brings, about Poisson(c) | average 1.5 | — |
+| $`f`$ | the family-tree rule $`f(s) = e^{c(s-1)}`$, whose smallest fixed point is q | f(0) = 0.2231 | — |
+| $`v`$ | one chosen person; C(v) is that person's component | any of the 1,000 | — |
+| $`I`$ | decay rate below the switch, c − 1 − ln c | 0.1931 at c = 0.5 | a steeper drop in island sizes |
+| $`k`$ | a size cut-off (or a generation count) | 72 people at c = 0.5 | — |
 
 ### When it holds
 
 - **Friendships independent, all with the same chance.** Group friendships into tight foursomes and the average reaches 3 with no island above 4 people.
 - **Average friends of a friend near the plain average.** Poisson counts make these equal. With uneven friend counts they are not: 300 people with 3 friends each and 700 with none average 0.9 friends, yet 300 people form one component.
 - **A large network.** The switch is sharp only as n grows. At 1,000 people and c = 1 the largest component averages 84.2 people, not zero.
-- **Fixed average as n grows.** If $c$ grows like ln n instead, the giant swallows everyone and the network becomes connected: that is a different threshold.
+- **Fixed average as n grows.** If $`c`$ grows like ln n instead, the giant swallows everyone and the network becomes connected: that is a different threshold.
 
 ---
 
@@ -85,7 +89,7 @@ $$q = e^{c\,(q - 1)}, \qquad \zeta = 1 - q.$$
 
 ### Step 0: an island is a family tree that died out
 
-Find the component of one person $v$ by breadth-first search: list $v$'s friends, then their friends not yet seen, generation by generation. The search stops when a generation brings no one new. The component is everyone found.
+Find the component of one person $`v`$ by breadth-first search: list $`v`$'s friends, then their friends not yet seen, generation by generation. The search stops when a generation brings no one new. The component is everyone found.
 
 While few people have been found, almost everyone is unseen, so each explored person brings new people at the same rate. That is a **family tree**, or **branching process**: every member independently has a random number of children. A small component is a tree that died out. The giant is where trees that do not die out end up.
 
@@ -101,77 +105,81 @@ flowchart TB
 
 ### Step 1: each explored person brings about Poisson(c) new people
 
-An explored person has 999 possible partners, minus those already found. Each is a friend with chance $p$, independently. So the count of new friends, $X$, is binomial with just under 999 trials and chance $p$, and its average is at most (n − 1)p, which is $c$.
+An explored person has 999 possible partners, minus those already found. Each is a friend with chance $`p`$, independently. So the count of new friends, $`X`$, is binomial with just under 999 trials and chance $`p`$, and its average is at most (n − 1)p, which is $`c`$.
 
-Many trials each with a small chance give the Poisson law with the same average: $X$ is close to Poisson(c) ([Poisson](../03-Discrete%20Distributions/04-poisson.md)). At c = 1.5, $p$ is 0.001502.
+Many trials each with a small chance give the Poisson law with the same average: $`X`$ is close to Poisson(c) ([Poisson](../03-Discrete%20Distributions/04-poisson.md)). At c = 1.5, $`p`$ is 0.001502.
 
 ### Step 2: the dying-out chance obeys one equation
 
-Let $q$ be the chance that a family line dies out. The founder has $X$ children. The whole line dies exactly when each child's line dies, and those lines are independent copies of the whole, each dying with chance $q$. Given $X$ = j children, the chance is $q$ to the power j. Averaging over j:
+Let $`q`$ be the chance that a family line dies out. The founder has $`X`$ children. The whole line dies exactly when each child's line dies, and those lines are independent copies of the whole, each dying with chance $`q`$. Given $`X`$ = j children, the chance is $`q`$ to the power j. Averaging over j:
 
-$$q = \sum_{j \ge 0} P(X = j)\, q^j = e^{c\,(q-1)} = f(q).$$
+```math
+q = \sum_{j \ge 0} P(X = j)\, q^j = e^{c\,(q-1)} = f(q).
+```
 
 <details>
 <summary>The algebra behind this</summary>
 
-For Poisson(c), $P(X = j) = e^{-c} c^j / j!$. So the sum is $e^{-c} \sum_j (cq)^j / j!$, and the second factor is the series for $e^{cq}$. The product is $e^{cq - c} = e^{c(q-1)}$.
+For Poisson(c), $`P(X = j) = e^{-c} c^j / j!`$. So the sum is $`e^{-c} \sum_j (cq)^j / j!`$, and the second factor is the series for $`e^{cq}`$. The product is $`e^{cq - c} = e^{c(q-1)}`$.
 
 </details>
 
 ### Step 3: the right root is the smallest one, and it drops below 1 only when c > 1
 
-Let $q_k$ be the chance the line is dead by generation k. By the same argument, $q_k = f(q_{k-1})$, starting from zero at generation 0. At c = 1.5 the values are 0.2231, 0.3118, 0.3562, 0.3807, 0.3950, climbing to 0.4172.
+Let $`q_k`$ be the chance the line is dead by generation k. By the same argument, $`q_k = f(q_{k-1})`$, starting from zero at generation 0. At c = 1.5 the values are 0.2231, 0.3118, 0.3562, 0.3807, 0.3950, climbing to 0.4172.
 
-The sequence climbs and can never pass a root of q = f(q): f is increasing, so if $q_{k-1}$ sits below a root r, then $q_k = f(q_{k-1})$ sits below f(r) = r. It therefore settles on the smallest root in 0 to 1 ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)).
+The sequence climbs and can never pass a root of q = f(q): f is increasing, so if $`q_{k-1}`$ sits below a root r, then $`q_k = f(q_{k-1})`$ sits below f(r) = r. It therefore settles on the smallest root in 0 to 1 ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)).
 
-Now the shape of f. It passes through (1, 1), since $e^0 = 1$. Its slope there is $c$. It curves upward everywhere, since its second derivative, $c^2 e^{c(s-1)}$, is positive.
+Now the shape of f. It passes through (1, 1), since $`e^0 = 1`$. Its slope there is $`c`$. It curves upward everywhere, since its second derivative, $`c^2 e^{c(s-1)}`$, is positive.
 
 - If c ≤ 1, a curve bending up with slope at most 1 at the point (1, 1) lies above the diagonal everywhere to the left of it. The only root is q = 1: every line dies.
-- If c > 1, the curve arrives at (1, 1) steeper than the diagonal, so just left of 1 it lies below. At 0 it lies above, since $f(0) = e^{-c} > 0$. It crosses the diagonal once in between: that crossing is $q$, and $\zeta$ = 1 − q > 0.
+- If c > 1, the curve arrives at (1, 1) steeper than the diagonal, so just left of 1 it lies below. At 0 it lies above, since $`f(0) = e^{-c} > 0`$. It crosses the diagonal once in between: that crossing is $`q`$, and $`\zeta`$ = 1 − q > 0.
 
-Put q = 1 − ζ and the equation becomes $1 - \zeta = e^{-c\zeta}$, the formula. At c = 1.5 the root is 0.5828: about 583 of 1,000 people.
+Put q = 1 − ζ and the equation becomes $`1 - \zeta = e^{-c\zeta}`$, the formula. At c = 1.5 the root is 0.5828: about 583 of 1,000 people.
 
 ### Step 4: below the switch, a person's island averages at most 1/(1 − c)
 
-Each generation's expected size is at most $c$ times the one before, since every member brings at most $c$ new people on average. So the expected island size, counted from $v$, is at most
+Each generation's expected size is at most $`c`$ times the one before, since every member brings at most $`c`$ new people on average. So the expected island size, counted from $`v`$, is at most
 
-$$1 + c + c^2 + c^3 + \dots = \frac{1}{1 - c}.$$
+```math
+1 + c + c^2 + c^3 + \dots = \frac{1}{1 - c}.
+```
 
 At c = 0.5 that bound is 2. The simulated networks give 2.0209 with standard error 0.0323, within one standard error of the bound. The argument uses only averages, so the bound holds for every n, not just in the limit.
 
 ### Step 5: below the switch, no island is large
 
-An average of 2 still allows one big island somewhere among 1,000 people. Ruling that out needs a tail bound on the size of $C(v)$ and a union over all 1,000 starting people. The bound is exponential: the chance that one person's island tops k people is at most $e^{-kI}$. At c = 0.5, I = 0.1931, and k = 72 makes the chance that any island tops 72 people at most 0.000913. The largest island in 40 simulated networks was 26 people; the average largest was 12.2.
+An average of 2 still allows one big island somewhere among 1,000 people. Ruling that out needs a tail bound on the size of $`C(v)`$ and a union over all 1,000 starting people. The bound is exponential: the chance that one person's island tops k people is at most $`e^{-kI}`$. At c = 0.5, I = 0.1931, and k = 72 makes the chance that any island tops 72 people at most 0.000913. The largest island in 40 simulated networks was 26 people; the average largest was 12.2.
 
 <details>
 <summary>Detailed proof: the small-island half</summary>
 
-If the island of $v$ holds more than k people, the search is still running after exploring k people. They have then found at least k new people between them, besides $v$. Each exploration draws from fresh pairs, each a friendship with chance $p$, and at most n − 1 pairs per explored person. So the total found is at most a binomial count, call it B, with k(n − 1) trials and chance $p$, whose average is kc.
+If the island of $`v`$ holds more than k people, the search is still running after exploring k people. They have then found at least k new people between them, besides $`v`$. Each exploration draws from fresh pairs, each a friendship with chance $`p`$, and at most n − 1 pairs per explored person. So the total found is at most a binomial count, call it B, with k(n − 1) trials and chance $`p`$, whose average is kc.
 
-Chernoff's trick bounds P(B ≥ k). For any t > 0, Markov's inequality applied to $e^{tB}$ gives $P(B \ge k) \le e^{-tk}\, E[e^{tB}]$ ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)). The moment generating function of the binomial is $(1 - p + pe^t)^{k(n-1)}$, which is at most $e^{kc(e^t - 1)}$ since $1 + x \le e^x$ ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)). So
+Chernoff's trick bounds P(B ≥ k). For any t > 0, Markov's inequality applied to $`e^{tB}`$ gives $`P(B \ge k) \le e^{-tk}\, E[e^{tB}]`$ ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)). The moment generating function of the binomial is $`(1 - p + pe^t)^{k(n-1)}`$, which is at most $`e^{kc(e^t - 1)}`$ since $`1 + x \le e^x`$ ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)). So
 
-$$P(\lvert C(v)\rvert > k) \le e^{\,k\,(c(e^t - 1) - t)}.$$
+$`\displaystyle P(\lvert C(v)\rvert > k) \le e^{\,k\,(c(e^t - 1) - t)}.`$
 
 Choose t = ln(1/c), positive because c < 1. The exponent becomes k(1 − c + ln c) = −kI, and I = c − 1 − ln c is positive for every c ≠ 1.
 
-The largest island tops k only if some person's island does. There are n people, so the chance is at most $n\,e^{-kI}$. With k above 2 ln n / I this is at most 1/n. At n = 1,000 and c = 0.5, ln n = 6.9078, 2 ln n / I = 71.53, so k = 72 and the bound is 0.000913.
+The largest island tops k only if some person's island does. There are n people, so the chance is at most $`n\,e^{-kI}`$. With k above 2 ln n / I this is at most 1/n. At n = 1,000 and c = 0.5, ln n = 6.9078, 2 ln n / I = 71.53, so k = 72 and the bound is 0.000913.
 
 </details>
 
 ### Step 6: above the switch, every runaway tree joins one giant
 
-The family tree predicts that a share $\zeta$ of people start searches that do not die young. The proof in outline has three parts.
+The family tree predicts that a share $`\zeta`$ of people start searches that do not die young. The proof in outline has three parts.
 
-1. **Early deaths match the tree.** While fewer than about ln n people are found, the new-friend counts are Poisson(c) to within a vanishing error, so a search dies young with chance close to $q$.
-2. **Survivors grow large.** A search that has not died by then keeps finding people at a rate above one per explored person, and reaches a size of order $n^{2/3}$ with chance close to 1.
-3. **Large searches meet.** Two groups of that size have about $n^{4/3}$ pairs between them, each a friendship with chance c / (n − 1). The chance that none is a friendship is about $e^{-c\,n^{1/3}}$, which vanishes. So all large searches belong to one component.
+1. **Early deaths match the tree.** While fewer than about ln n people are found, the new-friend counts are Poisson(c) to within a vanishing error, so a search dies young with chance close to $`q`$.
+2. **Survivors grow large.** A search that has not died by then keeps finding people at a rate above one per explored person, and reaches a size of order $`n^{2/3}`$ with chance close to 1.
+3. **Large searches meet.** Two groups of that size have about $`n^{4/3}`$ pairs between them, each a friendship with chance c / (n − 1). The chance that none is a friendship is about $`e^{-c\,n^{1/3}}`$, which vanishes. So all large searches belong to one component.
 
 Every person whose search survives is in the giant, so its size is about ζ n. The second moment method of [First and second moments](04-first-and-second-moment-methods.md), applied to the count of people in small components rather than to triangles, shows that count is concentrated near its average, so the giant's size is too. The full proof is in the evolution chapters of Frieze and Karoński and of van der Hofstad, listed under Sources.
 
 <details>
 <summary>The same equation without a tree</summary>
 
-A person is outside the giant when none of their friends is inside it. Each of the other n − 1 people is a friend and inside the giant with chance about p ζ. The chance none is: $(1 - p\zeta)^{n-1}$, which for large n is $e^{-c\zeta}$. So $1 - \zeta = e^{-c\zeta}$, the formula again, read from the person's side.
+A person is outside the giant when none of their friends is inside it. Each of the other n − 1 people is a friend and inside the giant with chance about p ζ. The chance none is: $`(1 - p\zeta)^{n-1}`$, which for large n is $`e^{-c\zeta}`$. So $`1 - \zeta = e^{-c\zeta}`$, the formula again, read from the person's side.
 
 </details>
 
@@ -186,13 +194,13 @@ A second route follows the search as a walk. Keep a count of people found but no
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | chance a pair are friends | 1.5 ÷ 999 | 0.001502 |
-| dead by generation 1 | $e^{1.5\,(0 - 1)} = e^{-1.5}$ | 0.2231 |
-| dead by generation 2 | $e^{1.5\,(0.2231 - 1)}$ | 0.3118 |
-| dead by generation 3 | $e^{1.5\,(0.3118 - 1)}$ | 0.3562 |
+| dead by generation 1 | $`e^{1.5\,(0 - 1)} = e^{-1.5}`$ | 0.2231 |
+| dead by generation 2 | $`e^{1.5\,(0.2231 - 1)}`$ | 0.3118 |
+| dead by generation 3 | $`e^{1.5\,(0.3118 - 1)}`$ | 0.3562 |
 | dead by generations 4, 5 | the same step twice more | 0.3807, 0.3950 |
 | the limit | keep going | q = 0.4172 |
 | share in the giant | 1 − 0.4172 | **ζ = 0.5828** |
-| check in the formula | 1.5 × 0.5828 = 0.8742; $1 - e^{-0.8742}$ | 0.5828 |
+| check in the formula | 1.5 × 0.5828 = 0.8742; $`1 - e^{-0.8742}`$ | 0.5828 |
 | people in the giant | 0.5828 × 1,000 | **about 583** |
 
 About 583 of the 1,000 people can reach each other through friends of friends; the other 417 sit on islands, the largest of which averages 13 people.
@@ -212,7 +220,7 @@ The code prints every one of these.
 
 ## Code, from first principles, and it actually runs
 
-Only math primitives are imported; every random draw comes from a SplitMix64 generator with seed 2026, written out in both languages ([Random numbers from a computer](../11-Simulation/01-pseudo-random-numbers.md)). The giant's share at c = 1.5 is reached four ways: bisection (halving, again and again, an interval that holds the root) on $\zeta = 1 - e^{-c\zeta}$; the dying-out chance generation by generation; 10,000 simulated family lines with Poisson children; and 40 simulated networks of 1,000 people, with components found by merging friends into groups (union-find). Networks are built by jumping from one friendship to the next with geometric gaps, never testing all 499,500 pairs one by one. Below the switch, the code checks the two proven bounds. The three breaks are built and measured.
+Only math primitives are imported; every random draw comes from a SplitMix64 generator with seed 2026, written out in both languages ([Random numbers from a computer](../11-Simulation/01-pseudo-random-numbers.md)). The giant's share at c = 1.5 is reached four ways: bisection (halving, again and again, an interval that holds the root) on $`\zeta = 1 - e^{-c\zeta}`$; the dying-out chance generation by generation; 10,000 simulated family lines with Poisson children; and 40 simulated networks of 1,000 people, with components found by merging friends into groups (union-find). Networks are built by jumping from one friendship to the next with geometric gaps, never testing all 499,500 pairs one by one. Below the switch, the code checks the two proven bounds. The three breaks are built and measured.
 
 ### Python
 
@@ -595,11 +603,11 @@ The two outputs are identical: both languages draw the same numbers from the sam
 
 Lean proves the card's facts about the two equations and the rate I, for every average c, not just the sampled ones.
 
-- Suppose c ≤ 1. Then zero is the only root of $\zeta = 1 - e^{-c\,\zeta}$ in 0 to 1: no giant.
-- Suppose c > 1. Then exactly one root $\zeta$ lies strictly between 0 and 1: the giant's share.
-- Take any c of zero or more, and start from $q_0 = 0$. Then $q_k$ climbs to the smallest root $q$ of $q = e^{c\,(q-1)}$ in 0 to 1.
-- That root $q$ is below 1, so a family line can survive, exactly when c > 1.
-- Take c between 0 and 1, and t = ln(1/c). Then the exponent in Chernoff's trick, $c(e^t - 1) - t$, equals −I, and I is positive.
+- Suppose c ≤ 1. Then zero is the only root of $`\zeta = 1 - e^{-c\,\zeta}`$ in 0 to 1: no giant.
+- Suppose c > 1. Then exactly one root $`\zeta`$ lies strictly between 0 and 1: the giant's share.
+- Take any c of zero or more, and start from $`q_0 = 0`$. Then $`q_k`$ climbs to the smallest root $`q`$ of $`q = e^{c\,(q-1)}`$ in 0 to 1.
+- That root $`q`$ is below 1, so a family line can survive, exactly when c > 1.
+- Take c between 0 and 1, and t = ln(1/c). Then the exponent in Chernoff's trick, $`c(e^t - 1) - t`$, equals −I, and I is positive.
 - The hand counts hold exactly: 499,500 pairs among 1,000 people, and 3 friends each in the 250 foursomes.
 - For 300 people with 3 friends and 700 with none, the average is 0.9, and a friend's new friends average 2.
 - Take c = 0.5. Then the island bound 1/(1 − c) equals 2.
@@ -817,8 +825,8 @@ example : (1 : ℚ) / (1 - 1 / 2) = 2 := by norm_num
 > **Try changing**
 > - **Guess first: at 2 friends each, what share is in the giant?** The first `try:` line prints it: the share is 0.7968; at c = 3 it is 0.9405. Change the 2 in that line's `zeta_bisect` call to any other average to read its share.
 > - **Guess first: among the people left outside the giant at c = 1.5, how many friends does each have among themselves?** The second `try:` line prints it: c q = 1.5 × 0.4172 = 0.6258, below one. The leftover network looks like one below the switch, which is why its islands stay small.
-> - **Guess first: at what average does the giant take in everyone?** A person has no friends with chance about $e^{-c}$, so the expected number of loners is $n\,e^{-c}$. At c = 6.9, close to ln 1,000, it is 1.0078: about one loner left. Connecting everyone needs ln n friends each, not 1.
-> - **Guess first: does a larger network make the corner at c = 1 sharper?** Set `n` to 4000. Yes: the largest component at c = 1 averages 215.8 people, against 84.2 at n = 1,000. Each is the same order as $n^{2/3}$, 252.0 and 100.0, a count that grows more slowly than n, so the share falls from 8.42% to 5.40% and shrinks towards zero.
+> - **Guess first: at what average does the giant take in everyone?** A person has no friends with chance about $`e^{-c}`$, so the expected number of loners is $`n\,e^{-c}`$. At c = 6.9, close to ln 1,000, it is 1.0078: about one loner left. Connecting everyone needs ln n friends each, not 1.
+> - **Guess first: does a larger network make the corner at c = 1 sharper?** Set `n` to 4000. Yes: the largest component at c = 1 averages 215.8 people, against 84.2 at n = 1,000. Each is the same order as $`n^{2/3}`$, 252.0 and 100.0, a count that grows more slowly than n, so the share falls from 8.42% to 5.40% and shrinks towards zero.
 
 ---
 
@@ -827,7 +835,7 @@ example : (1 : ℚ) / (1 - 1 / 2) = 2 := by norm_num
 > [!warning]
 > **Above one friend each, the network is not connected.** The giant is a share, not everyone. At 1.5 friends, 417 of 1,000 people sit outside it. Reaching every person needs about ln n friends each, 6.9 for 1,000 people, where the expected number of loners falls to about one.
 >
-> - **Counting friends instead of friends of friends.** The switch is at one *new* person per explored person. For Poisson counts that equals the average, $c$. With uneven friend counts it does not: an average of 0.9 still gives a component of 300 people.
+> - **Counting friends instead of friends of friends.** The switch is at one *new* person per explored person. For Poisson counts that equals the average, $`c`$. With uneven friend counts it does not: an average of 0.9 still gives a component of 300 people.
 > - **Expecting a sharp corner in a finite network.** At 1,000 people and c = 1, the largest component averages 84.2 people, and at c = 1.25 the simulated share is 35.53% against the theorem's 37.14%. The kink is a statement about large n.
 > - **Reading ζ as the chance that a giant exists.** Above the switch a giant exists with chance near 1; ζ is the share of people inside it, and the chance that one given person is inside.
 > - **Picking the wrong root.** ζ = 0 solves the equation at every c. Above the switch the meaningful root is the positive one: 0.5828 at c = 1.5, not zero.
@@ -836,13 +844,13 @@ example : (1 : ℚ) / (1 - 1 / 2) = 2 := by norm_num
 
 ## Where you meet it in real life
 
-- **Epidemics.** Each case infects on average R0 others, the reproduction number. Below 1 an outbreak fizzles; above it, a share of the population is infected that solves the same equation, $z = 1 - e^{-R_0 z}$, with R0 in place of c ([The SIR model](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/07-the-sir-epidemic-model.md)). Vaccination aims to push the average below one.
+- **Epidemics.** Each case infects on average R0 others, the reproduction number. Below 1 an outbreak fizzles; above it, a share of the population is infected that solves the same equation, $`z = 1 - e^{-R_0 z}`$, with R0 in place of c ([The SIR model](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/07-the-sir-epidemic-model.md)). Vaccination aims to push the average below one.
 - **Nuclear chain reactions.** Each fission releases neutrons that cause, on average, a number of further fissions. At 1 the reaction is critical; above, it runs away. The family tree of Step 0 is the reactor engineer's model.
 - **Polymer gels.** Small molecules with several bonding sites link at random. When each bond leads on average to more than one further bond, one molecule spans the container and the liquid sets into a gel: the setting of glue or jelly.
 - **Networks under attack.** Remove routers from a communications network at random. The network holds together while each surviving router links to more than one further router on average, and breaks into islands below. That breaking is percolation (Percolation).
 
 > **Say it back**
-> In a random network with a fixed average number of friends, a person's component is found by exploring friends generation by generation, and that search behaves like a family tree with Poisson-many children. A family tree whose members average at most one child dies out, so below one friend each every island is small: a dozen or so people in a network of 1,000. Above one, a tree survives with chance ζ, the positive root of $\zeta = 1 - e^{-c\zeta}$. All surviving searches meet, so one giant component holds about ζ n people. At 1.5 friends each, that is about 583 of 1,000.
+> In a random network with a fixed average number of friends, a person's component is found by exploring friends generation by generation, and that search behaves like a family tree with Poisson-many children. A family tree whose members average at most one child dies out, so below one friend each every island is small: a dozen or so people in a network of 1,000. Above one, a tree survives with chance ζ, the positive root of $`\zeta = 1 - e^{-c\zeta}`$. All surviving searches meet, so one giant component holds about ζ n people. At 1.5 friends each, that is about 583 of 1,000.
 
 ---
 
@@ -855,7 +863,7 @@ example : (1 : ℚ) / (1 - 1 / 2) = 2 := by norm_num
 
 ## Where this goes next
 
-- Percolation: the same switch on grids and real networks, and what happens exactly at the threshold, where the largest component grows like $n^{2/3}$ and sizes follow power laws.
+- Percolation: the same switch on grids and real networks, and what happens exactly at the threshold, where the largest component grows like $`n^{2/3}`$ and sizes follow power laws.
 
 This card settles both sides of one friend each; what happens exactly at one, and on grids, where each person can befriend only near neighbours, is the question Percolation takes up.
 

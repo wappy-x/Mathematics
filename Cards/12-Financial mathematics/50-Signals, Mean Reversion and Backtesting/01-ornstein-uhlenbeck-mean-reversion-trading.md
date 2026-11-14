@@ -37,42 +37,48 @@ Middle line (teal): the expected spread. It falls from $14 to $12 at day 12 and 
 
 ## The formula
 
-Notation first, in words. The model is written as a stochastic differential equation ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)): $\mathrm{d}X_t$ is the spread's change over a sliver of time $\mathrm{d}t$, and $\mathrm{d}W_t$ is a random kick from Brownian motion over that sliver. Time runs in trading days. A hat over a letter marks a value fitted from data. "sd" is standard deviation.
+Notation first, in words. The model is written as a stochastic differential equation ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)): $`\mathrm{d}X_t`$ is the spread's change over a sliver of time $`\mathrm{d}t`$, and $`\mathrm{d}W_t`$ is a random kick from Brownian motion over that sliver. Time runs in trading days. A hat over a letter marks a value fitted from data. "sd" is standard deviation.
 
-$$\mathrm{d}X_t = \kappa\,(\theta - X_t)\,\mathrm{d}t + \sigma\,\mathrm{d}W_t$$
+```math
+\mathrm{d}X_t = \kappa\,(\theta - X_t)\,\mathrm{d}t + \sigma\,\mathrm{d}W_t
+```
 
 **Read it aloud:** each instant, the spread is nudged toward its level by the pull speed times the gap, and kicked at random by a fixed amount of noise.
 
 This is the Ornstein-Uhlenbeck (OU) process. Sampled once a day, it becomes a straight line plus noise:
 
-$$X_{t+1} = \alpha + \beta\,X_t + \varepsilon_{t+1}, \qquad \beta = e^{-\kappa}, \qquad \alpha = (1-\beta)\,\theta$$
+```math
+X_{t+1} = \alpha + \beta\,X_t + \varepsilon_{t+1}, \qquad \beta = e^{-\kappa}, \qquad \alpha = (1-\beta)\,\theta
+```
 
 **Read it aloud:** tomorrow's spread is a fixed amount, plus a fixed share of today's spread, plus fresh noise.
 
 Fit that line by least squares, the line that makes the sum of squared misses smallest ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)), and run the map backwards:
 
-$$\kappa = -\ln\beta, \qquad h = \frac{\ln 2}{\kappa}, \qquad \theta = \frac{\alpha}{1-\beta}, \qquad s = \frac{\operatorname{sd}(\varepsilon)}{\sqrt{1-\beta^2}}, \qquad z_t = \frac{X_t - \theta}{s}$$
+```math
+\kappa = -\ln\beta, \qquad h = \frac{\ln 2}{\kappa}, \qquad \theta = \frac{\alpha}{1-\beta}, \qquad s = \frac{\mathrm{sd}(\varepsilon)}{\sqrt{1-\beta^2}}, \qquad z_t = \frac{X_t - \theta}{s}
+```
 
 **Read it aloud:** the pull speed is minus the log of the slope. The half-life is log 2 over the pull speed. The level is the intercept over one minus the slope. The long-run scatter is the daily noise stretched by one over the root of one minus the slope squared. The z-score is today's gap in scatters.
 
-The trading rule: short the spread when $z$ reaches +2, buy it when $z$ reaches −2, close either position when $z$ crosses 0.
+The trading rule: short the spread when $`z`$ reaches +2, buy it when $`z`$ reaches −2, close either position when $`z`$ crosses 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the trade… |
 | --- | --- | --- | --- |
-| $X_t$ | the spread on day t: North's share price minus South's | $14 today | a bigger gap, a bigger z |
-| $t$ | time, in trading days | 0 is today | the expected gap shrinks |
-| $\theta$ | "theta": the level the spread is pulled toward | $10.00 | entry and exit levels shift up with it |
-| $\kappa$ | "kappa": pull speed, the share of the gap closed per day, compounding continuously | 0.057762 per day | shorter waits, more trades |
-| $\sigma$ | "sigma": the noise per square-root day | 0.679778 | wider scatter, bigger gains per trade |
-| $W_t$ | Brownian motion: the source of the random kicks | — | — |
-| $\beta$ | "beta": the share of today's gap still there tomorrow; the fitted slope | 0.943874 | slower pull, longer half-life |
-| $\alpha$ | "alpha": the fitted intercept | 0.561257 | a higher level |
-| $\varepsilon$ | "epsilon": one day's fresh noise, the fit's leftover | sd $0.660610 | wider scatter |
-| $s$ | the spread's long-run standard deviation, its usual distance from the level | $2.00 | a given gap reads as a smaller z |
-| $h$ | the half-life: days for the expected gap to halve | 12 days | trades take longer |
-| $z$ | the z-score: today's gap measured in units of s | 2 today | nearer an entry |
+| $`X_t`$ | the spread on day t: North's share price minus South's | $14 today | a bigger gap, a bigger z |
+| $`t`$ | time, in trading days | 0 is today | the expected gap shrinks |
+| $`\theta`$ | "theta": the level the spread is pulled toward | $10.00 | entry and exit levels shift up with it |
+| $`\kappa`$ | "kappa": pull speed, the share of the gap closed per day, compounding continuously | 0.057762 per day | shorter waits, more trades |
+| $`\sigma`$ | "sigma": the noise per square-root day | 0.679778 | wider scatter, bigger gains per trade |
+| $`W_t`$ | Brownian motion: the source of the random kicks | — | — |
+| $`\beta`$ | "beta": the share of today's gap still there tomorrow; the fitted slope | 0.943874 | slower pull, longer half-life |
+| $`\alpha`$ | "alpha": the fitted intercept | 0.561257 | a higher level |
+| $`\varepsilon`$ | "epsilon": one day's fresh noise, the fit's leftover | sd $0.660610 | wider scatter |
+| $`s`$ | the spread's long-run standard deviation, its usual distance from the level | $2.00 | a given gap reads as a smaller z |
+| $`h`$ | the half-life: days for the expected gap to halve | 12 days | trades take longer |
+| $`z`$ | the z-score: today's gap measured in units of s | 2 today | nearer an entry |
 
-One helper fact: $\ln 2 = 0.693147$, so the half-life is 0.693147 divided by the pull speed.
+One helper fact: $`\ln 2 = 0.693147`$, so the half-life is 0.693147 divided by the pull speed.
 
 ### When it holds
 
@@ -94,57 +100,65 @@ Ignore the noise for a moment. If the spread is $4 above its level and the pull 
 
 The OU card solves the equation ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). One day after any reading, the spread is
 
-$$X_{t+1} = \theta + e^{-\kappa}(X_t - \theta) + \varepsilon_{t+1},$$
+```math
+X_{t+1} = \theta + e^{-\kappa}(X_t - \theta) + \varepsilon_{t+1},
+```
 
-where $\varepsilon$ is bell-shaped, centred on zero, independent of everything before, with variance $\sigma^2(1 - e^{-2\kappa})/(2\kappa)$. Multiply out: the slope is $\beta = e^{-\kappa}$ and the intercept is $\alpha = (1-\beta)\theta$. This is a first-order autoregression, AR(1), a series where each value is a fixed share of the last plus fresh noise ([Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md)). It is exact, not an approximation: no small-time-step shortcut was taken.
+where $`\varepsilon`$ is bell-shaped, centred on zero, independent of everything before, with variance $`\sigma^2(1 - e^{-2\kappa})/(2\kappa)`$. Multiply out: the slope is $`\beta = e^{-\kappa}`$ and the intercept is $`\alpha = (1-\beta)\theta`$. This is a first-order autoregression, AR(1), a series where each value is a fixed share of the last plus fresh noise ([Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md)). It is exact, not an approximation: no small-time-step shortcut was taken.
 
 ### Step 2: least squares recovers the line, and the line maps back to the model
 
-Pair each day with the next: (today, tomorrow). Least squares picks the slope as the co-movement of today and tomorrow divided by the scatter of today, and the intercept so the line passes through the two averages. Then invert Step 1: $\beta = e^{-\kappa}$ gives $\kappa = -\ln\beta$, and $\alpha = (1-\beta)\theta$ gives $\theta = \alpha/(1-\beta)$.
+Pair each day with the next: (today, tomorrow). Least squares picks the slope as the co-movement of today and tomorrow divided by the scatter of today, and the intercept so the line passes through the two averages. Then invert Step 1: $`\beta = e^{-\kappa}`$ gives $`\kappa = -\ln\beta`$, and $`\alpha = (1-\beta)\theta`$ gives $`\theta = \alpha/(1-\beta)`$.
 
 The inverse exists and is unique only when the fitted slope lies strictly between 0 and 1. Boundary cases:
 
-- **Slope 1 or above.** No pull: the spread is a random walk or drifts away. $-\ln\beta$ is zero or negative, the half-life is infinite or meaningless, and at exactly 1 the level divides by zero. The right conclusion is "no mean reversion", not "a very long half-life".
+- **Slope 1 or above.** No pull: the spread is a random walk or drifts away. $`-\ln\beta`$ is zero or negative, the half-life is infinite or meaningless, and at exactly 1 the level divides by zero. The right conclusion is "no mean reversion", not "a very long half-life".
 - **Slope 0 or below.** At 0, today says nothing about tomorrow; below 0, the gap flips side of the level each day. No finite positive pull speed produces either, so no OU fits it at this sampling.
-- **Slope near 1.** The level $\alpha/(1-\beta)$ divides by a small, noisy number, so the fitted level wanders badly between samples.
+- **Slope near 1.** The level $`\alpha/(1-\beta)`$ divides by a small, noisy number, so the fitted level wanders badly between samples.
 
 <details>
 <summary>The algebra behind the fit</summary>
 
-Write the pairs as $(a_i, b_i)$, today then tomorrow, with averages $\bar a$ and $\bar b$. Least squares minimises the sum of squared misses $\sum (b_i - \alpha - \beta a_i)^2$. Setting the derivative in $\alpha$ to zero gives $\alpha = \bar b - \beta\bar a$. Substituting and setting the derivative in $\beta$ to zero gives
-$$\hat\beta = \frac{\sum (a_i - \bar a)(b_i - \bar b)}{\sum (a_i - \bar a)^2}.$$
-The leftover misses $b_i - \hat\alpha - \hat\beta a_i$ estimate the daily noise; their mean square estimates its variance. With bell-shaped noise, these are also the maximum-likelihood values given the first reading: the likelihood's log is minus half the sum of squared misses over the variance, plus terms free of the line.
+Write the pairs as $`(a_i, b_i)`$, today then tomorrow, with averages $`\bar a`$ and $`\bar b`$. Least squares minimises the sum of squared misses $`\sum (b_i - \alpha - \beta a_i)^2`$. Setting the derivative in $`\alpha`$ to zero gives $`\alpha = \bar b - \beta\bar a`$. Substituting and setting the derivative in $`\beta`$ to zero gives
+
+$`\displaystyle \hat\beta = \frac{\sum (a_i - \bar a)(b_i - \bar b)}{\sum (a_i - \bar a)^2}.`$
+
+The leftover misses $`b_i - \hat\alpha - \hat\beta a_i`$ estimate the daily noise; their mean square estimates its variance. With bell-shaped noise, these are also the maximum-likelihood values given the first reading: the likelihood's log is minus half the sum of squared misses over the variance, plus terms free of the line.
 
 </details>
 
 ### Step 3: the half-life is where the expected gap halves
 
-Take expectations in Step 1 and repeat for t days: the noise averages to zero each day, so the expected gap is the starting gap times $e^{-\kappa t}$. Set that factor to one half: $e^{-\kappa h} = 1/2$, so $h = \ln 2/\kappa$. In terms of the fitted slope, $h = \ln 2 / (-\ln\beta)$. With a slope of 0.943874, $-\ln\beta = 0.057762$ and the half-life is 0.693147/0.057762 = 12.0000 days.
+Take expectations in Step 1 and repeat for t days: the noise averages to zero each day, so the expected gap is the starting gap times $`e^{-\kappa t}`$. Set that factor to one half: $`e^{-\kappa h} = 1/2`$, so $`h = \ln 2/\kappa`$. In terms of the fitted slope, $`h = \ln 2 / (-\ln\beta)`$. With a slope of 0.943874, $`-\ln\beta = 0.057762`$ and the half-life is 0.693147/0.057762 = 12.0000 days.
 
 ### Step 4: the long-run scatter balances shrinkage against fresh noise
 
-If the spread has settled into a steady scatter, its variance is the same today and tomorrow. Tomorrow's variance is today's times $\beta^2$, since only a share $\beta$ of today's gap survives, plus the variance of the fresh noise, which is independent. So $s^2 = \beta^2 s^2 + \operatorname{sd}(\varepsilon)^2$, which gives $s = \operatorname{sd}(\varepsilon)/\sqrt{1-\beta^2}$. Here 0.660610 over the root of 0.109101 is $2.0000.
+If the spread has settled into a steady scatter, its variance is the same today and tomorrow. Tomorrow's variance is today's times $`\beta^2`$, since only a share $`\beta`$ of today's gap survives, plus the variance of the fresh noise, which is independent. So $`s^2 = \beta^2 s^2 + \mathrm{sd}(\varepsilon)^2`$, which gives $`s = \mathrm{sd}(\varepsilon)/\sqrt{1-\beta^2}`$. Here 0.660610 over the root of 0.109101 is $2.0000.
 
-Putting the noise variance from Step 1 into the same balance gives $s^2 = \sigma^2/(2\kappa)$: noise pumps scatter in, the pull drains it, and the level where they balance is the long-run spread. In that steady state the spread is bell-shaped with centre $\theta$ and standard deviation $s$, so $z$ is a standard bell-curve draw.
+Putting the noise variance from Step 1 into the same balance gives $`s^2 = \sigma^2/(2\kappa)`$: noise pumps scatter in, the pull drains it, and the level where they balance is the long-run spread. In that steady state the spread is bell-shaped with centre $`\theta`$ and standard deviation $`s`$, so $`z`$ is a standard bell-curve draw.
 
 ### Step 5: a z-score threshold is a bell-curve tail, and the exit takes longer than the half-life
 
-Since $z$ is a standard bell-curve draw in the steady state, the share of days with $z$ beyond ±2 is twice the tail beyond 2, or $2(1 - N(2)) = 4.55\%$, where $N(x)$ is the bell-curve area to the left of $x$. An entry at 2 fires rarely, and when it does the spread sits $4 from its level. If it reaches the level, the trade gains $4 per share pair before costs.
+Since $`z`$ is a standard bell-curve draw in the steady state, the share of days with $`z`$ beyond ±2 is twice the tail beyond 2, or $`2(1 - N(2)) = 4.55\%`$, where $`N(x)`$ is the bell-curve area to the left of $`x`$. An entry at 2 fires rarely, and when it does the spread sits $4 from its level. If it reaches the level, the trade gains $4 per share pair before costs.
 
 How long until it gets there? Not 12 days. The half-life follows the *average* path, which halves its gap every 12 days and never actually reaches $10. The trade closes when the *real* path first touches $10, and that is a first-passage time (the first moment a random path hits a level). Its average, starting from a z-score of 2, is
 
-$$\frac{1}{\kappa}\int_0^{2} \frac{1 - N(u)}{\varphi(u)}\,du,$$
+```math
+\frac{1}{\kappa}\int_0^{2} \frac{1 - N(u)}{\varphi(u)}\,du,
+```
 
-where $\varphi(u)$ is the bell curve's height at $u$. The ratio inside is the Mills ratio (the tail area over the height). The integral gives 24.67 days: two half-lives, not one. A trader who only checks closing prices waits longer still, 29.60 days on average in the simulation below, because paths that dip under $10 during the day and bounce back are missed.
+where $`\varphi(u)`$ is the bell curve's height at $`u`$. The ratio inside is the Mills ratio (the tail area over the height). The integral gives 24.67 days: two half-lives, not one. A trader who only checks closing prices waits longer still, 29.60 days on average in the simulation below, because paths that dip under $10 during the day and bounce back are missed.
 
 <details>
 <summary>Detailed proof: the mean wait from z to 0</summary>
 
-Work in z units, where the model reads $\mathrm{d}z = -\kappa z\,\mathrm{d}t + \sqrt{2\kappa}\,\mathrm{d}W_t$. Let $T(z)$ be the mean wait to reach 0 from $z > 0$. Over a sliver of time, the wait is that sliver plus the mean wait from wherever the path lands. Expanding to second order ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) gives $\kappa\,T''(z) - \kappa z\,T'(z) = -1$, with $T(0) = 0$.
+Work in z units, where the model reads $`\mathrm{d}z = -\kappa z\,\mathrm{d}t + \sqrt{2\kappa}\,\mathrm{d}W_t`$. Let $`T(z)`$ be the mean wait to reach 0 from $`z > 0`$. Over a sliver of time, the wait is that sliver plus the mean wait from wherever the path lands. Expanding to second order ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) gives $`\kappa\,T''(z) - \kappa z\,T'(z) = -1`$, with $`T(0) = 0`$.
 
-Put $g = T'$. Then $g' - z g = -1/\kappa$. Multiply by $e^{-z^2/2}$: the left side becomes the derivative of $g\,e^{-z^2/2}$. Integrate from $z$ to infinity, choosing the solution that does not blow up far from the level, where the pull is strong:
-$$T'(z) = \frac{1}{\kappa}\,e^{z^2/2}\int_z^\infty e^{-u^2/2}\,du = \frac{1}{\kappa}\,\frac{1 - N(z)}{\varphi(z)}.$$
-Integrate from 0 to the starting z-score with $T(0) = 0$ to get the formula in the body, with 2 as the upper limit. Ricciardi and Sato (1988) derive this and the higher moments of the same wait.
+Put $`g = T'`$. Then $`g' - z g = -1/\kappa`$. Multiply by $`e^{-z^2/2}`$: the left side becomes the derivative of $`g\,e^{-z^2/2}`$. Integrate from $`z`$ to infinity, choosing the solution that does not blow up far from the level, where the pull is strong:
+
+$`\displaystyle T'(z) = \frac{1}{\kappa}\,e^{z^2/2}\int_z^\infty e^{-u^2/2}\,du = \frac{1}{\kappa}\,\frac{1 - N(z)}{\varphi(z)}.`$
+
+Integrate from 0 to the starting z-score with $`T(0) = 0`$ to get the formula in the body, with 2 as the upper limit. Ricciardi and Sato (1988) derive this and the higher moments of the same wait.
 
 </details>
 
@@ -158,18 +172,18 @@ Suppose the regression of tomorrow's spread on today's returned slope 0.943874, 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| pull speed, $-\ln\beta$ | $-\ln 0.943874$ | 0.057762 per day |
-| half-life, $\ln 2/\kappa$ | $0.693147 / 0.057762$ | **12.0000 days** |
-| level, $\alpha/(1-\beta)$ | $0.561257 / 0.056126$ | **$10.0000** |
-| $1-\beta^2$ | $1 - 0.943874^2$ | 0.109101 |
-| long-run scatter, $s$ | $0.660610 / \sqrt{0.109101}$ | **$2.0000** |
-| noise per root day, $\sigma = s\sqrt{2\kappa}$ | $2 \times \sqrt{2 \times 0.057762}$ | 0.679778 |
-| short entry, $\theta + 2s$ | $10 + 2 \times 2$ | $14.00 |
-| long entry, $\theta - 2s$ | $10 - 2 \times 2$ | $6.00 |
+| pull speed, $`-\ln\beta`$ | $`-\ln 0.943874`$ | 0.057762 per day |
+| half-life, $`\ln 2/\kappa`$ | $`0.693147 / 0.057762`$ | **12.0000 days** |
+| level, $`\alpha/(1-\beta)`$ | $`0.561257 / 0.056126`$ | **$10.0000** |
+| $`1-\beta^2`$ | $`1 - 0.943874^2`$ | 0.109101 |
+| long-run scatter, $`s`$ | $`0.660610 / \sqrt{0.109101}`$ | **$2.0000** |
+| noise per root day, $`\sigma = s\sqrt{2\kappa}`$ | $`2 \times \sqrt{2 \times 0.057762}`$ | 0.679778 |
+| short entry, $`\theta + 2s`$ | $`10 + 2 \times 2`$ | $14.00 |
+| long entry, $`\theta - 2s`$ | $`10 - 2 \times 2`$ | $6.00 |
 | exit | the level | $10.00 |
-| expected spread 12 days after $14 | $10 + 4 \times 0.5$ | $12.0000 |
-| its standard deviation | $2 \times \sqrt{1 - 0.5^2}$ | $1.7321 |
-| gain if it reaches the level | $14 - 10$ | **$4.00 per share pair** |
+| expected spread 12 days after $14 | $`10 + 4 \times 0.5`$ | $12.0000 |
+| its standard deviation | $`2 \times \sqrt{1 - 0.5^2}`$ | $1.7321 |
+| gain if it reaches the level | $`14 - 10`$ | **$4.00 per share pair** |
 
 At $14 the spread is 2 scatters rich. Twelve days on, the model expects $12, give or take $1.7321: most of the gap is still there, and the trade is a wait measured in weeks, not days.
 
@@ -200,7 +214,7 @@ Inside a perfect OU world, a lower entry wins: more trades, each still expected 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Half-life from the differencing slope, $\ln 2/(1-\beta)$ | 12.35 days, right 12 | $-\ln\beta$ was replaced by its first-order stand-in $1-\beta$ |
+| Half-life from the differencing slope, $`\ln 2/(1-\beta)`$ | 12.35 days, right 12 | $`-\ln\beta`$ was replaced by its first-order stand-in $`1-\beta`$ |
 | z-score scaled by one day's noise | a $4 gap reads 6.06, right 2 | 0.6606 is one day's kick, not the long-run scatter of $2 |
 | Half-life read as the holding period | 12 days; the mean wait is 24.67, or 29.60 checked at each close | the half-life tracks the average path, not the first touch |
 | One five-year fit taken as the truth | 12.51 days by road 1, 10.95 by road 2 | 90% of five-year records give between 8.89 and 14.82 days |
@@ -602,12 +616,12 @@ The two outputs match line for line. Roads 1 and 2 give 12.51 and 10.95 days bec
 
 Lean proves the conversions of Steps 2, 3 and 4 for every slope, pull speed and level, and checks the worked trade numbers.
 
-- Take a fitted slope $\beta$ and intercept $\alpha$. Then a pull speed $\kappa > 0$ and a level $\theta$ produce them exactly when $0 < \beta < 1$.
-- Suppose $0 < \beta < 1$. Then the only pull speed and level are $\kappa = -\ln\beta$ and $\theta = \alpha/(1-\beta)$.
-- Suppose each day's fresh noise averages zero. Then after $n$ days the expected gap is the starting expected gap times $e^{-\kappa n}$.
-- Take a pull speed $\kappa > 0$. Then $e^{-\kappa h} = 1/2$ exactly when $h = \ln 2/\kappa$.
-- Suppose $0 < \beta < 1$, today's spread and tomorrow's noise are independent, and the spread has settled. Then $s = \operatorname{sd}(\varepsilon)/\sqrt{1-\beta^2}$.
-- Suppose also that $\beta = e^{-\kappa}$ and the noise has the variance from Step 1. Then $s^2 = \sigma^2/(2\kappa)$.
+- Take a fitted slope $`\beta`$ and intercept $`\alpha`$. Then a pull speed $`\kappa > 0`$ and a level $`\theta`$ produce them exactly when $`0 < \beta < 1`$.
+- Suppose $`0 < \beta < 1`$. Then the only pull speed and level are $`\kappa = -\ln\beta`$ and $`\theta = \alpha/(1-\beta)`$.
+- Suppose each day's fresh noise averages zero. Then after $`n`$ days the expected gap is the starting expected gap times $`e^{-\kappa n}`$.
+- Take a pull speed $`\kappa > 0`$. Then $`e^{-\kappa h} = 1/2`$ exactly when $`h = \ln 2/\kappa`$.
+- Suppose $`0 < \beta < 1`$, today's spread and tomorrow's noise are independent, and the spread has settled. Then $`s = \mathrm{sd}(\varepsilon)/\sqrt{1-\beta^2}`$.
+- Suppose also that $`\beta = e^{-\kappa}`$ and the noise has the variance from Step 1. Then $`s^2 = \sigma^2/(2\kappa)`$.
 - The entries at $14 and $6, the z-score of 2 at $14 and the $4 gain also check.
 - So do the expected $12 at day 12, its variance of 3, and the expected $11 at day 24.
 
@@ -778,7 +792,7 @@ example : (10 : ℚ) + 4 * (1 / 2) ^ 2 = 11 := by norm_num
 > [!warning]
 > **Reading the half-life as the holding period.** A 12-day half-life means the *expected* gap halves in 12 days. It does not say the trade closes in 12 days, or ever. Starting from z = 2, the mean wait to touch the level is 24.67 days, and 29.60 when only closing prices count. Size positions and funding for the wait, not the half-life.
 >
-> - **The differencing shortcut.** Regressing the day's *change* on yesterday's level gives slope $\beta - 1$, and $\ln 2/(1-\beta)$ is the common shortcut. It reports 12.35 days for a true 12, and the error grows as the pull strengthens.
+> - **The differencing shortcut.** Regressing the day's *change* on yesterday's level gives slope $`\beta - 1`$, and $`\ln 2/(1-\beta)`$ is the common shortcut. It reports 12.35 days for a true 12, and the error grows as the pull strengthens.
 > - **The wrong yardstick.** Dividing the gap by the daily noise, 0.6606, instead of the long-run scatter, $2, makes a z of 2 read 6.06: every ordinary day looks like a signal.
 > - **Fitting on the days being traded.** The level and scatter must come from earlier data. Fitting on the whole record, then trading it, uses tomorrow's prices to decide today: [Backtesting](05-backtesting-pitfalls.md).
 > - **Trusting one half-life.** Five years of daily data put the fitted half-life anywhere from 8.89 to 14.82 days for a true 12. Quote a range, and treat a fitted slope near 1 as "no reversion found".

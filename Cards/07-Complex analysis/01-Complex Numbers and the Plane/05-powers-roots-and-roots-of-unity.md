@@ -30,34 +30,40 @@ Drawn to scale at 90 units per 1, centre at 0. Point k is ω multiplied by itsel
 
 ## The formula
 
-Reminder: polar form writes a nonzero number as $r(\cos\theta + i\sin\theta)$, length (modulus) $r$, angle (argument) $\theta$ in radians ([Polar form](03-polar-form-and-argument.md)). Euler's formula writes that point as $e^{i\theta}$ ([Euler's formula](04-eulers-formula.md)).
+Reminder: polar form writes a nonzero number as $`r(\cos\theta + i\sin\theta)`$, length (modulus) $`r`$, angle (argument) $`\theta`$ in radians ([Polar form](03-polar-form-and-argument.md)). Euler's formula writes that point as $`e^{i\theta}`$ ([Euler's formula](04-eulers-formula.md)).
 
-$$\bigl(r(\cos\theta + i\sin\theta)\bigr)^n = r^n(\cos n\theta + i\sin n\theta)$$
+```math
+\bigl(r(\cos\theta + i\sin\theta)\bigr)^n = r^n(\cos n\theta + i\sin n\theta)
+```
 
 **Read it aloud:** to raise a number to the n-th power, raise its length to the n-th power and multiply its angle by n.
 
-The n-th roots of a nonzero number $c$, of length $r$ and angle $\theta$, run it backwards:
+The n-th roots of a nonzero number $`c`$, of length $`r`$ and angle $`\theta`$, run it backwards:
 
-$$z_k = r^{1/n}\Bigl(\cos\frac{\theta + 2\pi k}{n} + i\sin\frac{\theta + 2\pi k}{n}\Bigr), \qquad k = 0, 1, \dots, n-1$$
+```math
+z_k = r^{1/n}\Bigl(\cos\frac{\theta + 2\pi k}{n} + i\sin\frac{\theta + 2\pi k}{n}\Bigr), \qquad k = 0, 1, \dots, n-1
+```
 
 **Read it aloud:** take the ordinary n-th root of the length, and share the angle, plus any whole turns, out n ways.
 
-With $c = 1$ the roots are the powers of one click:
+With $`c = 1`$ the roots are the powers of one click:
 
-$$\omega = \cos\frac{2\pi}{n} + i\sin\frac{2\pi}{n}, \qquad 1 + \omega + \omega^2 + \dots + \omega^{n-1} = 0 \quad (n \ge 2)$$
+```math
+\omega = \cos\frac{2\pi}{n} + i\sin\frac{2\pi}{n}, \qquad 1 + \omega + \omega^2 + \dots + \omega^{n-1} = 0 \quad (n \ge 2)
+```
 
 **Read it aloud:** one click turns an n-th of a circle, and its n powers add to zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $c$ | the number being rooted | 8, −16, 1 | a wider circle of roots |
-| $r$ | length of the number powered or rooted | 8; 16 for −16 | — |
-| $\theta$ | angle, radians anticlockwise from east | 0 for 8; π (180°) for −16 | each root turns an n-th as much |
-| $n$ | the power, or how many roots | 3; 8 sectors | more roots, closer together |
-| $k$ | which root, counting from 0 | 0 to 7 on the spinner | one n-th of a turn further on |
-| $z_k$ | the k-th root | −1 + 1.732051i, k = 1 for 8 | — |
-| $\omega$ | one click: the first n-th root of unity | 0.707107 + 0.707107i | a smaller turn |
-| $\rho$, $\varphi$ | length and angle of an unknown root | 2 and 120° | — |
+| $`c`$ | the number being rooted | 8, −16, 1 | a wider circle of roots |
+| $`r`$ | length of the number powered or rooted | 8; 16 for −16 | — |
+| $`\theta`$ | angle, radians anticlockwise from east | 0 for 8; π (180°) for −16 | each root turns an n-th as much |
+| $`n`$ | the power, or how many roots | 3; 8 sectors | more roots, closer together |
+| $`k`$ | which root, counting from 0 | 0 to 7 on the spinner | one n-th of a turn further on |
+| $`z_k`$ | the k-th root | −1 + 1.732051i, k = 1 for 8 | — |
+| $`\omega`$ | one click: the first n-th root of unity | 0.707107 + 0.707107i | a smaller turn |
+| $`\rho`$, $`\varphi`$ | length and angle of an unknown root | 2 and 120° | — |
 
 ### When it holds
 
@@ -72,23 +78,23 @@ $$\omega = \cos\frac{2\pi}{n} + i\sin\frac{2\pi}{n}, \qquad 1 + \omega + \omega^
 
 ### Step 0: multiplying adds angles and multiplies lengths
 
-Multiply two numbers in polar form and the addition rules for sine and cosine give lengths multiplied, angles added; Euler writes it $e^{ia}e^{ib} = e^{i(a+b)}$. The rest is this, n times, or undone.
+Multiply two numbers in polar form and the addition rules for sine and cosine give lengths multiplied, angles added; Euler writes it $`e^{ia}e^{ib} = e^{i(a+b)}`$. The rest is this, n times, or undone.
 
 ### Step 1: n equal factors multiply the angle by n
 
-n equal factors give length $r^n$ and angle $n\theta$: de Moivre's formula, one extra angle per extra factor.
+n equal factors give length $`r^n`$ and angle $`n\theta`$: de Moivre's formula, one extra angle per extra factor.
 
 The number −1 + 1.732051i is −1 + √3 i: length 2, since 1 + 3 = 4, angle 120°. Cubed: length 8, angle 360°, due east. The cube is exactly 8. Bigger powers show the saving: 1 + i has length √2 and angle 45°, so (1 + i)^10 has length 32 and angle 450°, a whole turn plus 90°: 32i, no brackets expanded.
 
 ### Step 2: roots are angles shared out, plus whole turns
 
-To solve $z^n = c$, give the unknown length $\rho$ (rho) and angle $\varphi$ (phi). By Step 1, $\rho^n = r$ and $n\varphi$ must point where $\theta$ points. Lengths are positive numbers, so $\rho = r^{1/n}$, one answer. But angles differing by a whole turn point the same way, so $n\varphi = \theta + 2\pi k$ for any whole $k$, and $\varphi = (\theta + 2\pi k)/n$.
+To solve $`z^n = c`$, give the unknown length $`\rho`$ (rho) and angle $`\varphi`$ (phi). By Step 1, $`\rho^n = r`$ and $`n\varphi`$ must point where $`\theta`$ points. Lengths are positive numbers, so $`\rho = r^{1/n}`$, one answer. But angles differing by a whole turn point the same way, so $`n\varphi = \theta + 2\pi k`$ for any whole $`k`$, and $`\varphi = (\theta + 2\pi k)/n`$.
 
-Each step in $k$ turns the root by 2π/n. After n steps that is a full circle and the roots repeat. So $k = 0$ to $n - 1$ gives exactly n points, evenly spaced.
+Each step in $`k`$ turns the root by 2π/n. After n steps that is a full circle and the roots repeat. So $`k = 0`$ to $`n - 1`$ gives exactly n points, evenly spaced.
 
 For 8: length 2, angles 0°, 120°, 240°. For −16, at 180°: length 2, angles 45°, 135°, 225°, 315°.
 
-The factor theorem ([Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md)) checks this without angles: $z^3 - 8 = (z - 2)(z^2 + 2z + 4)$, and the quadratic formula gives $-1 \pm \sqrt{3}\,i$. It also caps a degree-n polynomial at n roots, so these are all.
+The factor theorem ([Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md)) checks this without angles: $`z^3 - 8 = (z - 2)(z^2 + 2z + 4)`$, and the quadratic formula gives $`-1 \pm \sqrt{3}\,i`$. It also caps a degree-n polynomial at n roots, so these are all.
 
 ### The picture: two equations, one circle of radius 2
 
@@ -98,7 +104,7 @@ Drawn to scale at 45 units per 1, centre at 0. Filled dots, solid triangle: the 
 
 ### Step 3: the roots of unity are the powers of one click
 
-With $c = 1$ the roots sit at angles $2\pi k/n$, and by Step 1 the k-th is ω multiplied by itself k times. Another click can also visit every sector: ω^3 reaches all 8, while ω^2 reaches only 4. A root whose powers reach all n is **primitive**: ω^m is primitive exactly when m and n share no factor above 1.
+With $`c = 1`$ the roots sit at angles $`2\pi k/n`$, and by Step 1 the k-th is ω multiplied by itself k times. Another click can also visit every sector: ω^3 reaches all 8, while ω^2 reaches only 4. A root whose powers reach all n is **primitive**: ω^m is primitive exactly when m and n share no factor above 1.
 
 ### Step 4: the roots of unity add to zero
 
@@ -111,15 +117,15 @@ Other root sets are one root times the roots of unity, so they sum to zero too: 
 <details>
 <summary>Detailed proof: all whole powers, and exactly n roots</summary>
 
-**De Moivre for every whole n.** With $u = \cos\theta + i\sin\theta$, the addition rules give $(\cos a + i\sin a)(\cos b + i\sin b) = \cos(a + b) + i\sin(a + b)$, so induction from $u^0 = 1$ gives $u^n = \cos n\theta + i\sin n\theta$. Since $u(\cos\theta - i\sin\theta) = 1$, the inverse is the point at angle $-\theta$, and the same induction covers negative n. Lengths multiply separately ([Conjugate and modulus](02-conjugate-and-modulus.md)), giving $r^n$.
+**De Moivre for every whole n.** With $`u = \cos\theta + i\sin\theta`$, the addition rules give $`(\cos a + i\sin a)(\cos b + i\sin b) = \cos(a + b) + i\sin(a + b)`$, so induction from $`u^0 = 1`$ gives $`u^n = \cos n\theta + i\sin n\theta`$. Since $`u(\cos\theta - i\sin\theta) = 1`$, the inverse is the point at angle $`-\theta`$, and the same induction covers negative n. Lengths multiply separately ([Conjugate and modulus](02-conjugate-and-modulus.md)), giving $`r^n`$.
 
-**Every root is on the list.** If $z^n = c \ne 0$, write $z = \rho(\cos\varphi + i\sin\varphi)$. De Moivre gives $\rho^n = r$, so $\rho = r^{1/n}$, and $n\varphi = \theta + 2\pi m$ for some whole m. Dividing m by n with remainder, $m = qn + k$ with $0 \le k \le n - 1$, makes $\varphi$ the angle of $z_k$ plus q whole turns.
+**Every root is on the list.** If $`z^n = c \ne 0`$, write $`z = \rho(\cos\varphi + i\sin\varphi)`$. De Moivre gives $`\rho^n = r`$, so $`\rho = r^{1/n}`$, and $`n\varphi = \theta + 2\pi m`$ for some whole m. Dividing m by n with remainder, $`m = qn + k`$ with $`0 \le k \le n - 1`$, makes $`\varphi`$ the angle of $`z_k`$ plus q whole turns.
 
 **No two coincide.** Two angles on the list differ by more than 0 and less than a full turn.
 
 </details>
 
-A second road uses no angles: Newton's method improves a guess z by subtracting $(z^n - c)/(n z^{n-1})$, the tangent line's correction, and from scattered starts it lands on each root. The code takes it.
+A second road uses no angles: Newton's method improves a guess z by subtracting $`(z^n - c)/(n z^{n-1})`$, the tangent line's correction, and from scattered starts it lands on each root. The code takes it.
 
 ---
 
@@ -350,10 +356,10 @@ The two outputs match line for line.
 
 Lean proves de Moivre's formula, the n roots and the zero sum for every n, plus the card's worked values.
 
-- De Moivre's formula, $\bigl(r(\cos\theta + i\sin\theta)\bigr)^n = r^n(\cos n\theta + i\sin n\theta)$, holds for every r, θ and whole n. Negative n needs r not 0.
-- Take n at least 1 and a nonzero c of length r at any angle θ. The n roots $z_k$, k = 0 to n − 1, are all different.
-- They are exactly the solutions of $z^n = c$, so $z^n = c$ has exactly n solutions.
-- For n at least 2 and one click $\omega = \cos\frac{2\pi}{n} + i\sin\frac{2\pi}{n}$, the sum $1 + \omega + \dots + \omega^{n-1}$ is 0.
+- De Moivre's formula, $`\bigl(r(\cos\theta + i\sin\theta)\bigr)^n = r^n(\cos n\theta + i\sin n\theta)`$, holds for every r, θ and whole n. Negative n needs r not 0.
+- Take n at least 1 and a nonzero c of length r at any angle θ. The n roots $`z_k`$, k = 0 to n − 1, are all different.
+- They are exactly the solutions of $`z^n = c`$, so $`z^n = c`$ has exactly n solutions.
+- For n at least 2 and one click $`\omega = \cos\frac{2\pi}{n} + i\sin\frac{2\pi}{n}`$, the sum $`1 + \omega + \dots + \omega^{n-1}`$ is 0.
 - The spinner's click is exactly √2/2 + (√2/2)i. Two clicks give i, and eight give 1.
 - (−1 + √3 i)^3 = 8. The cube roots of 8 are 2 and −1 ± √3 i, no others, and they add to 0.
 - The roots of z^4 = −16 are exactly ±√2 ± √2 i.
@@ -595,7 +601,7 @@ example : (2 : ℂ) ^ 4 = 16 ∧ (2 : ℂ) ^ 4 ≠ -16 := by
 
 ## What this builds on
 
-- [Euler's formula](04-eulers-formula.md): the point at angle θ as $e^{i\theta}$, which turns powers into multiplying the angle.
+- [Euler's formula](04-eulers-formula.md): the point at angle θ as $`e^{i\theta}`$, which turns powers into multiplying the angle.
 - [Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): at most n roots for a degree-n polynomial, and the angle-free road to the cube roots of 8.
 
 ## Where this goes next

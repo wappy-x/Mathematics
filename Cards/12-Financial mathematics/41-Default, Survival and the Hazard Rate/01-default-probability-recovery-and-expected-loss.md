@@ -40,41 +40,47 @@ Two outcomes, each with its chance and its loss. The expected loss is their weig
 
 ## The formula
 
-$$\text{EL} = \text{PD} \times \text{LGD} \times \text{EAD}, \qquad \text{LGD} = 1 - R$$
+```math
+\text{EL} = \text{PD} \times \text{LGD} \times \text{EAD}, \qquad \text{LGD} = 1 - R
+```
 
 **Read it aloud:** the average loss is the chance of default, times the fraction lost if it happens, times the money at stake when it happens.
 
-Divide both sides by the exposure and the loss becomes a rate, the **expected-loss rate** $\ell$:
+Divide both sides by the exposure and the loss becomes a rate, the **expected-loss rate** $`\ell`$:
 
-$$\ell = \frac{\text{EL}}{\text{EAD}} = \text{PD} \times \text{LGD}$$
+```math
+\ell = \frac{\text{EL}}{\text{EAD}} = \text{PD} \times \text{LGD}
+```
 
-A one-year loan that charges an interest rate $y$ must, on average, return what a riskless loan at rate $r$ returns. The fair loan rate and the extra interest it carries, the **credit spread** $s$, are
+A one-year loan that charges an interest rate $`y`$ must, on average, return what a riskless loan at rate $`r`$ returns. The fair loan rate and the extra interest it carries, the **credit spread** $`s`$, are
 
-$$(1 + y)(1 - \ell) = 1 + r, \qquad s = y - r = \frac{(1 + r)\,\ell}{1 - \ell} \approx \ell .$$
+```math
+(1 + y)(1 - \ell) = 1 + r, \qquad s = y - r = \frac{(1 + r)\,\ell}{1 - \ell} \approx \ell .
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\text{PD}$ | probability of default: the chance the borrower fails to pay within the year | 5% | EL rises in proportion |
-| $R$ | recovery rate: the fraction of what is owed that the lender gets back after a default | 40% | EL falls |
-| $\text{LGD}$ | loss given default, $1 - R$: the fraction lost after a default | 60% | EL rises in proportion |
-| $\text{EAD}$ | exposure at default: the money owed at the moment of default | $10,000 | EL rises in proportion |
-| $\text{EL}$ | expected loss: the average loss per loan, in dollars | $300 | |
-| $\ell$ | expected-loss rate, EL as a fraction of EAD | 3% | the fair spread rises |
-| $I$ | default switch: 1 if the borrower defaults, 0 if not | 0 or 1 | |
-| $G$, $G_k$ | the fraction lost in a particular default (in state $k$); LGD is its average over defaults | 30% to 90% in the simulation | |
-| $k$, $w_k$ | a possible state of the world at year end, and its chance (used in the Detailed proof) | good year 80%, bad year 20% | |
-| $r$ | riskless rate for the year, paid by a borrower who cannot default | 5% | the fair loan rate rises slightly more than one for one, and the spread a little |
-| $y$ | the fair loan rate the cafe pays | 8.25% | |
-| $s$ | credit spread, $y - r$: the extra interest for the risk of default | 3.25% | |
+| $`\text{PD}`$ | probability of default: the chance the borrower fails to pay within the year | 5% | EL rises in proportion |
+| $`R`$ | recovery rate: the fraction of what is owed that the lender gets back after a default | 40% | EL falls |
+| $`\text{LGD}`$ | loss given default, $`1 - R`$: the fraction lost after a default | 60% | EL rises in proportion |
+| $`\text{EAD}`$ | exposure at default: the money owed at the moment of default | $10,000 | EL rises in proportion |
+| $`\text{EL}`$ | expected loss: the average loss per loan, in dollars | $300 | |
+| $`\ell`$ | expected-loss rate, EL as a fraction of EAD | 3% | the fair spread rises |
+| $`I`$ | default switch: 1 if the borrower defaults, 0 if not | 0 or 1 | |
+| $`G`$, $`G_k`$ | the fraction lost in a particular default (in state $`k`$); LGD is its average over defaults | 30% to 90% in the simulation | |
+| $`k`$, $`w_k`$ | a possible state of the world at year end, and its chance (used in the Detailed proof) | good year 80%, bad year 20% | |
+| $`r`$ | riskless rate for the year, paid by a borrower who cannot default | 5% | the fair loan rate rises slightly more than one for one, and the spread a little |
+| $`y`$ | the fair loan rate the cafe pays | 8.25% | |
+| $`s`$ | credit spread, $`y - r`$: the extra interest for the risk of default | 3.25% | |
 
-Here $r$ and $y$ are simple annual rates, since the loan lasts exactly one year and pays once.
+Here $`r`$ and $`y`$ are simple annual rates, since the loan lasts exactly one year and pays once.
 
 ### When it holds
 
-- **LGD is the average loss among the loans that default.** Then $\text{EL} = \text{PD} \times \text{LGD} \times \text{EAD}$ is exact, with no further assumption. If LGD is instead averaged over good and bad years alike while bad years bring both more defaults and poorer recoveries, the product understates the loss: $250 instead of $300 in the two-kind-of-year example below.
+- **LGD is the average loss among the loans that default.** Then $`\text{EL} = \text{PD} \times \text{LGD} \times \text{EAD}`$ is exact, with no further assumption. If LGD is instead averaged over good and bad years alike while bad years bring both more defaults and poorer recoveries, the product understates the loss: $250 instead of $300 in the two-kind-of-year example below.
 - **EAD is one known number.** A term loan fixes it. A credit line the cafe draws down as trouble builds does not: exposure rises just before default, and a fixed EAD taken from a calm month is too low. The exposure path is the business of [Counterparty exposure](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md).
 - **One period.** PD here is the chance of default within the year. Over several years the chance piles up, and when default happens starts to matter for discounting; [The hazard rate](02-hazard-rate-and-survival-probability.md) handles that.
-- **The fair-rate step assumes a lender who asks only to break even on average.** Real lenders also charge for the swings around the average, for funding and for costs, so market spreads sit above $\ell$. The swings are the subject of [Expected and unexpected loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md).
+- **The fair-rate step assumes a lender who asks only to break even on average.** Real lenders also charge for the swings around the average, for funding and for costs, so market spreads sit above $`\ell`$. The swings are the subject of [Expected and unexpected loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md).
 - **Recovery is a fraction of everything owed, interest included.** If recovery applies only to the $10,000 principal, the fair-rate formula shifts slightly; the expected-loss formula does not change.
 
 ---
@@ -87,42 +93,52 @@ A loan's loss this year is zero if the borrower pays, and some amount if not. Wr
 
 ### Step 1: write the loss down
 
-Let $I$ be the default switch: $I = 1$ if the cafe defaults, $I = 0$ if not. Let $G$ be the fraction lost in that default: 60% on average, but it varies from one failed cafe to another. The dollar loss is
+Let $`I`$ be the default switch: $`I = 1`$ if the cafe defaults, $`I = 0`$ if not. Let $`G`$ be the fraction lost in that default: 60% on average, but it varies from one failed cafe to another. The dollar loss is
 
-$$\text{Loss} = I \times G \times \text{EAD}.$$
+```math
+\text{Loss} = I \times G \times \text{EAD}.
+```
 
-When the cafe pays, $I = 0$ and the loss is zero, whatever $G$ would have been. When it defaults, the loss is $G \times \$10{,}000$.
+When the cafe pays, $`I = 0`$ and the loss is zero, whatever $`G`$ would have been. When it defaults, the loss is $`G \times \$10{,}000`$.
 
 ### Step 2: take the average
 
-An average, or **expectation** (the probability-weighted mean of all outcomes), is taken over the two cases. In the no-default case the loss is 0, with chance 0.95. In the default case it is $G \times \text{EAD}$, with chance 0.05, and $G$ averages to LGD across those defaults. So
+An average, or **expectation** (the probability-weighted mean of all outcomes), is taken over the two cases. In the no-default case the loss is 0, with chance 0.95. In the default case it is $`G \times \text{EAD}`$, with chance 0.05, and $`G`$ averages to LGD across those defaults. So
 
-$$\text{EL} = 0.95 \times 0 + 0.05 \times \text{LGD} \times \text{EAD} = \text{PD} \times \text{LGD} \times \text{EAD}.$$
+```math
+\text{EL} = 0.95 \times 0 + 0.05 \times \text{LGD} \times \text{EAD} = \text{PD} \times \text{LGD} \times \text{EAD}.
+```
 
-For the cafe: $0.05 \times 0.60 \times 10{,}000 = 300$.
+For the cafe: $`0.05 \times 0.60 \times 10{,}000 = 300`$.
 
-The only care needed is in the phrase "averages to LGD across those defaults". LGD must be the average of $G$ over the defaults, not over all years or all borrowers. When defaults and poor recoveries arrive together, those two averages differ, and only the first gives the right answer.
+The only care needed is in the phrase "averages to LGD across those defaults". LGD must be the average of $`G`$ over the defaults, not over all years or all borrowers. When defaults and poor recoveries arrive together, those two averages differ, and only the first gives the right answer.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let the world end the year in one of finitely many states $k$, with chances $w_k$ summing to 1. In state $k$ the borrower defaults ($I_k = 1$) or not ($I_k = 0$), and loses a fraction $G_k$ if it does. The loss in state $k$ is $I_k G_k \,\text{EAD}$, so
-$$\text{EL} = \text{EAD} \sum_k w_k I_k G_k .$$
-Define $\text{PD} = \sum_k w_k I_k$, the total chance of the default states, and $\text{LGD} = \sum_k w_k I_k G_k \,/\, \text{PD}$, the average of $G$ over the default states, each weighted by its chance. Substituting, $\text{EL} = \text{PD} \times \text{LGD} \times \text{EAD}$, exactly. No independence is needed. Independence of $I$ and $G$ is what makes the default-weighted average of $G$ equal to its plain average; without it the two can differ. The same argument with integrals in place of sums covers a smoothly varying $G$.
+Let the world end the year in one of finitely many states $`k`$, with chances $`w_k`$ summing to 1. In state $`k`$ the borrower defaults ($`I_k = 1`$) or not ($`I_k = 0`$), and loses a fraction $`G_k`$ if it does. The loss in state $`k`$ is $`I_k G_k \,\text{EAD}`$, so
+
+$`\displaystyle \text{EL} = \text{EAD} \sum_k w_k I_k G_k .`$
+
+Define $`\text{PD} = \sum_k w_k I_k`$, the total chance of the default states, and $`\text{LGD} = \sum_k w_k I_k G_k \,/\, \text{PD}`$, the average of $`G`$ over the default states, each weighted by its chance. Substituting, $`\text{EL} = \text{PD} \times \text{LGD} \times \text{EAD}`$, exactly. No independence is needed. Independence of $`I`$ and $`G`$ is what makes the default-weighted average of $`G`$ equal to its plain average; without it the two can differ. The same argument with integrals in place of sums covers a smoothly varying $`G`$.
 
 </details>
 
 ### Step 3: turn the loss into interest
 
-The cafe owes $(1 + y) \times \$10{,}000$ at year end. With chance $1 - \text{PD}$ it pays all of it. With chance PD the bank recovers $R$ of it. The bank's average receipt is
+The cafe owes $`(1 + y) \times \$10{,}000`$ at year end. With chance $`1 - \text{PD}`$ it pays all of it. With chance PD the bank recovers $`R`$ of it. The bank's average receipt is
 
-$$(1 + y)\,\text{EAD}\,\big[(1 - \text{PD}) + \text{PD}\,R\big] = (1 + y)\,\text{EAD}\,(1 - \text{PD}\times\text{LGD}) = (1 + y)\,\text{EAD}\,(1 - \ell).$$
+```math
+(1 + y)\,\text{EAD}\,\big[(1 - \text{PD}) + \text{PD}\,R\big] = (1 + y)\,\text{EAD}\,(1 - \text{PD}\times\text{LGD}) = (1 + y)\,\text{EAD}\,(1 - \ell).
+```
 
-A lender who wants only to match a riskless loan sets that equal to $(1 + r)\,\text{EAD}$. Dividing out the exposure gives $(1 + y)(1 - \ell) = 1 + r$. Solve for the spread:
+A lender who wants only to match a riskless loan sets that equal to $`(1 + r)\,\text{EAD}`$. Dividing out the exposure gives $`(1 + y)(1 - \ell) = 1 + r`$. Solve for the spread:
 
-$$s = y - r = \frac{1 + r}{1 - \ell} - 1 - r = \frac{(1 + r)\,\ell}{1 - \ell}.$$
+```math
+s = y - r = \frac{1 + r}{1 - \ell} - 1 - r = \frac{(1 + r)\,\ell}{1 - \ell}.
+```
 
-When $\ell$ and $r$ are small, the fraction is close to $\ell$ itself. That is why the spread is "about the expected-loss rate". For the cafe the exact spread is 3.25%, a little above 3%, for two reasons: default also destroys part of the interest, and the lost money would have earned $r$.
+When $`\ell`$ and $`r`$ are small, the fraction is close to $`\ell`$ itself. That is why the spread is "about the expected-loss rate". For the cafe the exact spread is 3.25%, a little above 3%, for two reasons: default also destroys part of the interest, and the lost money would have earned $`r`$.
 
 ### Step 4: run it backwards
 
@@ -130,9 +146,9 @@ The formula is a product, so it is **linear** in each of the three numbers: doub
 
 - **Existence and uniqueness.** Given EL and any two of PD, LGD, EAD, the third is EL divided by the product of the other two. One division, one answer, whenever the other two are nonzero.
 - **Boundary: a zero factor.** If PD is 0, EL is 0 for every LGD: a zero EL fits every LGD, a positive EL fits none. The same holds for any zero factor.
-- **Boundary: an answer outside the possible range.** PD and LGD are fractions, so they must land between 0 and 1. A 9% expected-loss rate at 95% recovery asks for $\text{PD} = 0.09 / 0.05 = 1.8$: a 180% chance of default. No such loan exists; the inputs contradict each other.
+- **Boundary: an answer outside the possible range.** PD and LGD are fractions, so they must land between 0 and 1. A 9% expected-loss rate at 95% recovery asks for $`\text{PD} = 0.09 / 0.05 = 1.8`$: a 180% chance of default. No such loan exists; the inputs contradict each other.
 
-Inside those limits, the 9% loss rate at 40% recovery gives $\text{PD} = 0.09 / 0.60 = 0.15$. The picture below shows why the answer is unique: each line is straight and never flat, so it crosses any height at most once.
+Inside those limits, the 9% loss rate at 40% recovery gives $`\text{PD} = 0.09 / 0.60 = 0.15`$. The picture below shows why the answer is unique: each line is straight and never flat, so it crosses any height at most once.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -155,21 +171,21 @@ Here the chance of default is handed over as one number for one year. Markets us
 
 ## Worked numbers, by hand
 
-The cafe: $\text{EAD} = \$10{,}000$, $\text{PD} = 5\%$, $R = 40\%$, riskless rate $r = 5\%$.
+The cafe: $`\text{EAD} = \$10{,}000`$, $`\text{PD} = 5\%`$, $`R = 40\%`$, riskless rate $`r = 5\%`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| loss given default | $1 - 0.40$ | $0.60$ |
-| loss if the cafe defaults | $0.60 \times 10{,}000$ | $\$6{,}000$ |
-| recovered if it defaults | $0.40 \times 10{,}000$ | $\$4{,}000$ |
-| expected-loss rate $\ell$ | $0.05 \times 0.60$ | $0.03$ |
-| **expected loss** | $0.03 \times 10{,}000$ | **$\$300$** |
-| fair loan rate $y$ | $1.05 / 0.97 - 1$ | $8.25\%$ |
-| **credit spread** $s$ | $8.25\% - 5\%$ | **$3.25\%$** |
-| spread if the riskless rate were 0 | $1 / 0.97 - 1$ | $3.09\%$ |
-| back-solve: PD from a 9% loss rate at $R = 40\%$ | $0.09 / 0.60$ | $15\%$ |
-| back-solve: LGD from EL $\$300$ | $300 / (0.05 \times 10{,}000)$ | $60\%$ |
-| back-solve: EAD from EL $\$300$ | $300 / (0.05 \times 0.60)$ | $\$10{,}000$ |
+| loss given default | $`1 - 0.40`$ | $`0.60`$ |
+| loss if the cafe defaults | $`0.60 \times 10{,}000`$ | $`\$6{,}000`$ |
+| recovered if it defaults | $`0.40 \times 10{,}000`$ | $`\$4{,}000`$ |
+| expected-loss rate $`\ell`$ | $`0.05 \times 0.60`$ | $`0.03`$ |
+| **expected loss** | $`0.03 \times 10{,}000`$ | **$`\$300`$** |
+| fair loan rate $`y`$ | $`1.05 / 0.97 - 1`$ | $`8.25\%`$ |
+| **credit spread** $`s`$ | $`8.25\% - 5\%`$ | **$`3.25\%`$** |
+| spread if the riskless rate were 0 | $`1 / 0.97 - 1`$ | $`3.09\%`$ |
+| back-solve: PD from a 9% loss rate at $`R = 40\%`$ | $`0.09 / 0.60`$ | $`15\%`$ |
+| back-solve: LGD from EL $`\$300`$ | $`300 / (0.05 \times 10{,}000)`$ | $`60\%`$ |
+| back-solve: EAD from EL $`\$300`$ | $`300 / (0.05 \times 0.60)`$ | $`\$10{,}000`$ |
 
 A bank with many loans like this one expects to write off $300 per loan per year on average. It covers that by charging each cafe 3.25 percentage points above the riskless rate.
 
@@ -177,10 +193,10 @@ A bank with many loans like this one expects to write off $300 per loan per year
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Recovery used as the loss: $0.05 \times 0.40 \times 10{,}000$ | $200 | 40% is what comes back. The loss is the other 60%. |
+| Recovery used as the loss: $`0.05 \times 0.40 \times 10{,}000`$ | $200 | 40% is what comes back. The loss is the other 60%. |
 | Chance of default left out | $6,000 | That is the loss if default is certain. It is the size of one bad outcome, not the average. |
 | Recovery averaged over years, not over defaults | $250 (right: $300) | Bad years bring more defaults and worse recoveries together. Averaging over years gives recovery 50%; over defaults, 40%. |
-| Spread set to $\ell$: charge 5% + 3% = 8% | $22.86 short per loan, in today's money | The spread must also cover the interest lost in default. The exact answer is 8.25%. |
+| Spread set to $`\ell`$: charge 5% + 3% = 8% | $22.86 short per loan, in today's money | The spread must also cover the interest lost in default. The exact answer is 8.25%. |
 
 The third row uses two kinds of year. Good years come 80% of the time, with a 2.5% default chance and 55% recovery. Bad years come 20% of the time, with a 15% default chance and 30% recovery.
 
@@ -533,8 +549,8 @@ The two outputs agree line for line, including the simulated loss, because both 
 
 Lean proves the card's three facts in general, and checks every cafe figure exactly.
 
-- Take finitely many year-end states $k$ with chances $w_k$ summing to 1, a switch $I_k$ of 0 or 1, and any $G_k$. Then EL = PD × LGD × EAD exactly, with LGD the average of $G$ over the default states.
-- Suppose the lender asks only to break even on average, and the expected-loss rate $\ell$ is below 1. Then the credit spread is exactly $s = (1 + r)\ell / (1 - \ell)$.
+- Take finitely many year-end states $`k`$ with chances $`w_k`$ summing to 1, a switch $`I_k`$ of 0 or 1, and any $`G_k`$. Then EL = PD × LGD × EAD exactly, with LGD the average of $`G`$ over the default states.
+- Suppose the lender asks only to break even on average, and the expected-loss rate $`\ell`$ is below 1. Then the credit spread is exactly $`s = (1 + r)\ell / (1 - \ell)`$.
 - Suppose LGD and EAD are not zero. Then PD × LGD × EAD = EL holds exactly when PD = EL / (LGD × EAD).
 - Take the cafe loan. Then EL is $300, the fair loan rate is 8/97 and the spread 63/1940, about 8.25% and 3.25%.
 - Take the two kinds of year. Then PD is 5%, the default-weighted recovery is 40%, and the year-averaged recovery gives $250, not $300.
@@ -663,7 +679,7 @@ example : [0, 20, 40, 60, 80, 100].map (fun x : ℚ => 15 / 100 * (1 - x / 100) 
 > Guess first, then run.
 > - **Double the default chance.** Set `PD` to 0.10 in the `try` row. Guess: the loss doubles. It does: **$600**. Linear in PD.
 > - **Recover nothing.** Set recovery to 0. The loss rises from $300 to **$500**, not to $10,000: the 5% chance still stands in front.
-> - **A much riskier cafe.** At a 20% default chance the fair loan rate is **19.32%**, well above 5% plus the loss rate. The gap between $\ell$ and the exact spread grows as $\ell$ grows.
+> - **A much riskier cafe.** At a 20% default chance the fair loan rate is **19.32%**, well above 5% plus the loss rate. The gap between $`\ell`$ and the exact spread grows as $`\ell`$ grows.
 > - **Change the seed.** Replace 20260928 with any other number. The simulated loss moves by a few dollars and stays within four standard errors of $300; the other roads do not move at all.
 
 ---
@@ -671,7 +687,7 @@ example : [0, 20, 40, 60, 80, 100].map (fun x : ℚ => 15 / 100 * (1 - x / 100) 
 ## The usual mistake
 
 > [!warning]
-> **Mixing up recovery and loss.** Recovery R is what comes back; loss given default is $1 - R$. A 40% recovery is a 60% loss. Plugging R where LGD belongs gives $200 for the cafe instead of $300, and the error grows as recovery falls.
+> **Mixing up recovery and loss.** Recovery R is what comes back; loss given default is $`1 - R`$. A 40% recovery is a 60% loss. Plugging R where LGD belongs gives $200 for the cafe instead of $300, and the error grows as recovery falls.
 >
 > Smaller traps:
 > - **Averaging recovery over the wrong population.** LGD is the average loss among defaulted loans. Averaged over all years it gives $250 instead of $300 in the two-kind-of-year example, because poor recoveries cluster in the years when defaults cluster.
@@ -687,7 +703,7 @@ example : [0, 20, 40, 60, 80, 100].map (fun x : ℚ => 15 / 100 * (1 - x / 100) 
 - **Loss provisions.** Accounting rules for expected credit losses (IFRS 9, the international standard, and CECL, the US "current expected credit loss" standard) ask lenders to set money aside in advance for losses computed from PD, LGD and EAD.
 - **Bank capital.** The Basel rules let large banks supply their own PD, LGD and EAD estimates. Expected loss is covered by provisions and pricing; capital covers the swings above it, as [Expected and unexpected loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md) explains.
 - **Bond spreads and default insurance.** A corporate bond yields more than a government bond partly because of its expected loss. A credit default swap, a contract that pays the lost fraction of a bond if its issuer defaults, is priced on exactly PD times LGD, spread over time: [The credit default swap](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/01-credit-default-swap-contract.md).
-- **The shelf's shipping company.** Northwind Lines has $100m of bonds, a five-year default chance of 9.52% and 40% recovery. Its five-year expected loss, before discounting, is $0.0952 \times 0.60 \times \$100\text{m} = \$5.71\text{m}$. Where the 9.52% comes from is the hazard-rate card's job.
+- **The shelf's shipping company.** Northwind Lines has $100m of bonds, a five-year default chance of 9.52% and 40% recovery. Its five-year expected loss, before discounting, is $`0.0952 \times 0.60 \times \$100\text{m} = \$5.71\text{m}`$. Where the 9.52% comes from is the hazard-rate card's job.
 - **Ratings.** Agencies grade borrowers by default risk; [Rating transition matrices](04-rating-transition-matrix-and-cumulative-default-rates.md) turns grade-to-grade moves into a PD for each horizon.
 
 > **Say it back**
@@ -698,7 +714,7 @@ example : [0, 20, 40, 60, 80, 100].map (fun x : ℚ => 15 / 100 * (1 - x / 100) 
 ## What this builds on
 
 - [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): a recovery of 40 cents on the dollar, a 5% chance, a 3% rate. Every input on this card is a percentage of something.
-- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): why the lender compares the loan's average repayment with $1 + r$, and why the 8% loan is $22.86 short in today's money.
+- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): why the lender compares the loan's average repayment with $`1 + r`$, and why the 8% loan is $22.86 short in today's money.
 - [Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md): the probability-weighted average that Step 2 takes of the loss.
 
 ## Where this goes next

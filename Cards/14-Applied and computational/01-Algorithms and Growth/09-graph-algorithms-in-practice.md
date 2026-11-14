@@ -43,39 +43,43 @@ flowchart LR
 
 ## The formula
 
-Notation first, in words. $V$ counts the stations (vertices) and $E$ the streets (edges). $O(g)$ means "grows at most like $g$, up to a constant, for large inputs", from [Big-O](01-big-o-and-growth-rates.md); $\Theta(g)$ means exactly like $g$. Each cost below is a worst case unless it says otherwise ([Which case are you quoting? Worst, average and amortised cost](02-worst-case-average-case-and-amortised.md)).
+Notation first, in words. $`V`$ counts the stations (vertices) and $`E`$ the streets (edges). $`O(g)`$ means "grows at most like $`g`$, up to a constant, for large inputs", from [Big-O](01-big-o-and-growth-rates.md); $`\Theta(g)`$ means exactly like $`g`$. Each cost below is a worst case unless it says otherwise ([Which case are you quoting? Worst, average and amortised cost](02-worst-case-average-case-and-amortised.md)).
 
-$$\underbrace{\Theta(V+E)}_{\text{BFS, Tarjan}} \qquad \underbrace{O\big((V+E)\log V\big)}_{\text{Dijkstra, A* with a heap}} \qquad \underbrace{O(E\log E)}_{\text{Kruskal}} \qquad \underbrace{O(V^2E)}_{\text{Dinic}}$$
+```math
+\underbrace{\Theta(V+E)}_{\text{BFS, Tarjan}} \qquad \underbrace{O\big((V+E)\log V\big)}_{\text{Dijkstra, A* with a heap}} \qquad \underbrace{O(E\log E)}_{\text{Kruskal}} \qquad \underbrace{O(V^2E)}_{\text{Dinic}}
+```
 
 **Read it aloud:** looking at every street a fixed number of times costs stations plus streets; a heap adds a factor of log V; sorting the streets dominates the lane plan; and a flow needs at most V rounds of work that is at most V times E each.
 
-A* adds one new quantity. Each station $v$ carries a **heuristic** $h(v)$: a guess, never too high, at the time still needed to reach the target. A* settles stations in order of
+A* adds one new quantity. Each station $`v`$ carries a **heuristic** $`h(v)`$: a guess, never too high, at the time still needed to reach the target. A* settles stations in order of
 
-$$\text{key}(v) = d[v] + h(v).$$
+```math
+\text{key}(v) = d[v] + h(v).
+```
 
 **Read it aloud:** time already ridden to v, plus a safe guess at the time still to go.
 
-Here $h(v)$ is 60 seconds times the blocks still to cross. It is not the heap height $h$ of [Data structures](06-data-structures-heaps-hashes-and-trees.md).
+Here $`h(v)`$ is 60 seconds times the blocks still to cross. It is not the heap height $`h`$ of [Data structures](06-data-structures-heaps-hashes-and-trees.md).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | stations (vertices) | 1,200 | every cost grows |
-| $E$ | streets (edges) | 2,330 | every cost grows; BFS looks at 2E street ends |
-| $s$, $t$ | the start and target stations | rail station (8, 20), university (26, 10) | — |
-| $w(u,v)$, $w'(u,v)$ | seconds to ride the street from u to v; A*'s shifted time $w - h(u) + h(v)$ | 60 to 120 | rides get slower |
-| $d[v]$ | best riding time found so far from the start to v | 2,124 s at the university | — |
-| $h(v)$, $\text{key}(v)$ | A*'s heuristic: a never-too-high guess at seconds still to ride; the heap's sort value $d[v] + h(v)$ | 60 × blocks to go | fewer stations settled, until it overshoots and the route goes wrong |
-| $p(v)$, rank $r$ | union-find: v's parent pointer, and a root's height bound | top rank 5 | rank never passes $\log_2 V$ |
-| $\text{num}[v]$, $\text{low}[v]$ | Tarjan: v's visit number, and the smallest number v's search can reach back to | — | — |
-| $c(u,v)$ | bikes an hour a street can carry | 100 to 600 | more bikes can cross |
-| $\ell(v)$, $k$ | Dinic's level: fewest streets with room left from the source to v; $k$ names one level | — | — |
-| $F$ | bikes an hour from the west edge to the east edge | 7,000 | — |
-| $\alpha(V)$ | inverse Ackermann: a slowly growing function, at most 4 for any input that fits in a computer; not the load factor of Data structures | — | — |
+| $`V`$ | stations (vertices) | 1,200 | every cost grows |
+| $`E`$ | streets (edges) | 2,330 | every cost grows; BFS looks at 2E street ends |
+| $`s`$, $`t`$ | the start and target stations | rail station (8, 20), university (26, 10) | — |
+| $`w(u,v)`$, $`w'(u,v)`$ | seconds to ride the street from u to v; A*'s shifted time $`w - h(u) + h(v)`$ | 60 to 120 | rides get slower |
+| $`d[v]`$ | best riding time found so far from the start to v | 2,124 s at the university | — |
+| $`h(v)`$, $`\text{key}(v)`$ | A*'s heuristic: a never-too-high guess at seconds still to ride; the heap's sort value $`d[v] + h(v)`$ | 60 × blocks to go | fewer stations settled, until it overshoots and the route goes wrong |
+| $`p(v)`$, rank $`r`$ | union-find: v's parent pointer, and a root's height bound | top rank 5 | rank never passes $`\log_2 V`$ |
+| $`\text{num}[v]`$, $`\text{low}[v]`$ | Tarjan: v's visit number, and the smallest number v's search can reach back to | — | — |
+| $`c(u,v)`$ | bikes an hour a street can carry | 100 to 600 | more bikes can cross |
+| $`\ell(v)`$, $`k`$ | Dinic's level: fewest streets with room left from the source to v; $`k`$ names one level | — | — |
+| $`F`$ | bikes an hour from the west edge to the east edge | 7,000 | — |
+| $`\alpha(V)`$ | inverse Ackermann: a slowly growing function, at most 4 for any input that fits in a computer; not the load factor of Data structures | — | — |
 
 ### When it holds
 
 - **No street takes negative time.** Dijkstra and A* settle a station once and never revisit it. A negative street breaks that, as the [Dijkstra's algorithm](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md) card shows.
-- **The heuristic never drops by more than a street's time.** Formally, $h(u) \le w(u,v) + h(v)$ and $h(\text{target}) = 0$. This is called **consistent**. Triple it to 180 × blocks and A* returns a 2,379-second ride when 2,124 is possible.
+- **The heuristic never drops by more than a street's time.** Formally, $`h(u) \le w(u,v) + h(v)`$ and $`h(\text{target}) = 0`$. This is called **consistent**. Triple it to 180 × blocks and A* returns a 2,379-second ride when 2,124 is possible.
 - **The graph is stored as adjacency lists.** Each station keeps a list of its own streets. A V by V table of every pair would make BFS read 1,200 × 1,200 cells instead of 4,660 street ends.
 - **Capacities are fixed and not negative.** Dinic's round count rests on the residual graph (the room left on each street, each way, after the pushes so far) changing only through its own pushes.
 - **These are worst-case costs.** A*'s saving depends on the map and the guess. A maze can force it to settle everything.
@@ -94,65 +98,67 @@ Every method on wing 04 loops.
 - Tarjan asks "has this search come back round?".
 - Dinic asks "is there still a shortest route with room?".
 
-Most proofs that the loops give right answers are on wing 04; this card adds A*'s in Step 3 and Tarjan's in Step 5. The running time is the number of questions times the cost of one answer. So the work is to find a structure that answers in constant time or in $\log V$, and to bound how often the question is asked.
+Most proofs that the loops give right answers are on wing 04; this card adds A*'s in Step 3 and Tarjan's in Step 5. The running time is the number of questions times the cost of one answer. So the work is to find a structure that answers in constant time or in $`\log V`$, and to bound how often the question is asked.
 
 ### Step 1: breadth-first search, a queue
 
-The flood of [Connected or not](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md) numbers stations ring by ring. As code, it is a queue: a list read from the front and added to at the back. A station is marked the moment it joins the queue, so it joins once. Each station leaves the queue once, and its street list is read once. Each street has two ends, so the reads come to $2E$.
+The flood of [Connected or not](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md) numbers stations ring by ring. As code, it is a queue: a list read from the front and added to at the back. A station is marked the moment it joins the queue, so it joins once. Each station leaves the queue once, and its street list is read once. Each street has two ends, so the reads come to $`2E`$.
 
-Total: $V$ removals plus $2E$ street looks, 1,200 + 4,660 = 5,860. That is $\Theta(V+E)$. On the full grid, the fewest streets to any station equals its block count, and the code checks this for all 1,200.
+Total: $`V`$ removals plus $`2E`$ street looks, 1,200 + 4,660 = 5,860. That is $`\Theta(V+E)`$. On the full grid, the fewest streets to any station equals its block count, and the code checks this for all 1,200.
 
 ### Step 2: Dijkstra, a binary heap with stale entries
 
-[Dijkstra's algorithm](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md) settles the cheapest unsettled station, then relaxes its streets: it lowers a neighbour's time if the street gives a quicker way. Finding the cheapest by scanning every unsettled station costs about $V$ per settlement, or $V^2$ in all.
+[Dijkstra's algorithm](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md) settles the cheapest unsettled station, then relaxes its streets: it lowers a neighbour's time if the street gives a quicker way. Finding the cheapest by scanning every unsettled station costs about $`V`$ per settlement, or $`V^2`$ in all.
 
-A **binary heap** ([Data structures](06-data-structures-heaps-hashes-and-trees.md)) keeps the smallest key on top. Adding or removing an entry moves it at most one level per swap, so it costs at most $\log_2$ of the heap's size.
+A **binary heap** ([Data structures](06-data-structures-heaps-hashes-and-trees.md)) keeps the smallest key on top. Adding or removing an entry moves it at most one level per swap, so it costs at most $`\log_2`$ of the heap's size.
 
 One shortcut keeps the heap simple. When a station's time drops, the code does not search the heap for its old entry. It pushes a new entry, and the old one becomes **stale**. A stale entry is skipped when it reaches the top, because its station is already settled.
 
-Each street end is relaxed once, when its station settles, so it adds at most one entry. Pushes are at most $1 + 2E$, removals the same, each costing $O(\log V)$. The total is $O((V+E)\log V)$.
+Each street end is relaxed once, when its station settles, so it adds at most one entry. Pushes are at most $`1 + 2E`$, removals the same, each costing $`O(\log V)`$. The total is $`O((V+E)\log V)`$.
 
 From the rail station to every station, the run made 1,441 pushes and 6,238 swaps. Its answers match Bellman-Ford, a slower method with no heap, at all 1,200 stations.
 
 ### Step 3: A*, Dijkstra on shifted street times
 
-Give each street a new time, $w'(u,v) = w(u,v) - h(u) + h(v)$. Consistency says this is never negative. Add it along any route from start $s$ to target $t$ and the middle $h$ terms cancel:
+Give each street a new time, $`w'(u,v) = w(u,v) - h(u) + h(v)`$. Consistency says this is never negative. Add it along any route from start $`s`$ to target $`t`$ and the middle $`h`$ terms cancel:
 
-$$\sum w' = \sum w - h(s) + h(t) = \sum w - h(s).$$
+```math
+\sum w' = \sum w - h(s) + h(t) = \sum w - h(s).
+```
 
-Every route is shifted by the same amount, so the fastest route is unchanged. Run Dijkstra on $w'$. The shifted time to $v$ is $d[v] - h(s) + h(v)$, so Dijkstra settles in order of $d[v] + h(v)$. That is exactly A*'s key. So A* is Dijkstra on non-negative times. It is correct for the same reason, and it costs the same in the worst case.
+Every route is shifted by the same amount, so the fastest route is unchanged. Run Dijkstra on $`w'`$. The shifted time to $`v`$ is $`d[v] - h(s) + h(v)`$, so Dijkstra settles in order of $`d[v] + h(v)`$. That is exactly A*'s key. So A* is Dijkstra on non-negative times. It is correct for the same reason, and it costs the same in the worst case.
 
 The saving comes from where it stops. Dijkstra settles every station closer than the target. A* settles only stations whose key is below the target's time, which is a band around the straight line.
 
-Here $h$ is 60 seconds per block. Every street crosses one block and takes at least 60 seconds, so $h$ is consistent. The run settled 254 stations instead of 804, 3.2 times fewer, for the same 2,124 seconds.
+Here $`h`$ is 60 seconds per block. Every street crosses one block and takes at least 60 seconds, so $`h`$ is consistent. The run settled 254 stations instead of 804, 3.2 times fewer, for the same 2,124 seconds.
 
 ### Step 4: Kruskal, a heap sort and union-find
 
 [The cheapest skeleton](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md) proves Kruskal's walk right by the cut property, and [Greedy](08-greedy-algorithms-and-matroids.md) explains why greed is safe there. The walk takes streets cheapest first and keeps one when its two stations are in different pieces.
 
-To get the streets in order, the code pushes all 2,330 into the heap and pops them back out. That is a heap sort, $O(E\log E)$.
+To get the streets in order, the code pushes all 2,330 into the heap and pops them back out. That is a heap sort, $`O(E\log E)`$.
 
 "Different pieces?" is answered by **union-find**. Each station points to a parent. A **root** is a station that points to itself, and two stations are in one piece when they lead to the same root. Joining two pieces points one root at the other. Two rules keep the trees short:
 
-- **Union by rank.** Hang the shorter tree under the taller. A root of rank $r$ has at least $2^r$ stations in its tree, by induction: the rank rises to $r + 1$ only when two trees of rank $r$ merge, giving at least $2^r + 2^r$ stations. So no path is longer than $\log_2 V$.
+- **Union by rank.** Hang the shorter tree under the taller. A root of rank $`r`$ has at least $`2^r`$ stations in its tree, by induction: the rank rises to $`r + 1`$ only when two trees of rank $`r`$ merge, giving at least $`2^r + 2^r`$ stations. So no path is longer than $`\log_2 V`$.
 - **Path compression.** After a lookup, point every station on its path straight at the root.
 
-Together, a long run of lookups costs $O(\alpha(V))$ each on average (amortised), which is constant in practice ([Tarjan, 1975](#sources)). The 2,330 streets needed 4,474 parent steps against 22,890 heap swaps, and no single lookup climbed more than 4 parents, within the top rank of 5. The sort dominates.
+Together, a long run of lookups costs $`O(\alpha(V))`$ each on average (amortised), which is constant in practice ([Tarjan, 1975](#sources)). The 2,330 streets needed 4,474 parent steps against 22,890 heap swaps, and no single lookup climbed more than 4 parents, within the top rank of 5. The sort dominates.
 
 ### Step 5: Tarjan, one depth-first pass
 
 [Directed graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md) defines **strongly connected pieces**: groups of stations where each can reach every other along one-way arrows. A station outside the big piece is a trap. A rider can get there but not back, or the other way round.
 
-Tarjan's method makes one **depth-first search**: follow an arrow to a new station whenever possible, and back up only when none is left. It numbers stations in the order it reaches them, $\text{num}[v]$, and pushes each onto a stack. $\text{low}[v]$ is the smallest number reachable from v's part of the search by search arrows plus one arrow to a station still on the stack.
+Tarjan's method makes one **depth-first search**: follow an arrow to a new station whenever possible, and back up only when none is left. It numbers stations in the order it reaches them, $`\text{num}[v]`$, and pushes each onto a stack. $`\text{low}[v]`$ is the smallest number reachable from v's part of the search by search arrows plus one arrow to a station still on the stack.
 
-When v's search finishes with $\text{low}[v] = \text{num}[v]$, nothing below v reaches anything older that is still open. So v was the first station reached in its piece, and the piece is everything above v on the stack. Each station is pushed and popped once, and each arrow is followed once. The cost is $\Theta(V+E)$: one pass over 3,704 arrows.
+When v's search finishes with $`\text{low}[v] = \text{num}[v]`$, nothing below v reaches anything older that is still open. So v was the first station reached in its piece, and the piece is everything above v on the stack. Each station is pushed and popped once, and each arrow is followed once. The cost is $`\Theta(V+E)`$: one pass over 3,704 arrows.
 
 <details>
 <summary>Why "low equals num" marks exactly one piece</summary>
 
-Take the first station r of a strongly connected piece that the search reaches. Every station of the piece is reachable from r. None has been visited yet, so all are reached inside r's search and sit above r on the stack. None of them can reach a station older than r that is still on the stack. If it could, that older station would reach r and r would reach it, putting it in the piece, which contradicts r being first. So $\text{low}[r] = \text{num}[r]$.
+Take the first station r of a strongly connected piece that the search reaches. Every station of the piece is reachable from r. None has been visited yet, so all are reached inside r's search and sit above r on the stack. None of them can reach a station older than r that is still on the stack. If it could, that older station would reach r and r would reach it, putting it in the piece, which contradicts r being first. So $`\text{low}[r] = \text{num}[r]`$.
 
-Now take any other station v of the piece. It reaches r, and r is older and still on the stack. So $\text{low}[v] < \text{num}[v]$, and v never pops a piece early. Pieces found later, inside r's search, have already been popped. What is left above r is exactly r's piece.
+Now take any other station v of the piece. It reaches r, and r is older and still on the stack. So $`\text{low}[v] < \text{num}[v]`$, and v never pops a piece early. Pieces found later, inside r's search, have already been popped. What is left above r is exactly r's piece.
 
 </details>
 
@@ -164,15 +170,15 @@ The code checks Tarjan against a second road: a station's piece is everything it
 
 The code adds two extra stations. The **source** feeds every station on the west edge, and the **sink** drains every station on the east edge. Each street becomes two **arcs**, one each way, and each arc has room for the street's bikes an hour.
 
-1. Search outward from the source and give each station its level $\ell(v)$: the fewest streets with room left from the source to v.
-2. Keep only the arcs from level $k$ to level $k + 1$. Push bikes along source-to-sink routes in this level graph until every such route has a full arc. This is a **blocking flow**. A pointer per station skips arcs found dead, so each arc is given up at most once per round.
+1. Search outward from the source and give each station its level $`\ell(v)`$: the fewest streets with room left from the source to v.
+2. Keep only the arcs from level $`k`$ to level $`k + 1`$. Push bikes along source-to-sink routes in this level graph until every such route has a full arc. This is a **blocking flow**. A pointer per station skips arcs found dead, so each arc is given up at most once per round.
 3. Repeat until the sink cannot be reached.
 
-After a round, every new arc with room points from level $k + 1$ back to $k$: the undo of a push. Levels are fewest-street distances, so no old arc with room climbs more than one level, and an undo arc falls one. So every arc with room climbs at most one level.
+After a round, every new arc with room points from level $`k + 1`$ back to $`k`$: the undo of a push. Levels are fewest-street distances, so no old arc with room climbs more than one level, and an undo arc falls one. So every arc with room climbs at most one level.
 
-A route as short as before would have to climb one level on every arc, so it would lie wholly in the old level graph, and the blocking flow filled one of its arcs. So any route that survives uses an arc that climbs no level (one outside the level graph, or a new undo arc), and it is longer. The source-to-sink distance rises every round. It cannot pass $V - 1$, so there are at most $V - 1$ rounds.
+A route as short as before would have to climb one level on every arc, so it would lie wholly in the old level graph, and the blocking flow filled one of its arcs. So any route that survives uses an arc that climbs no level (one outside the level graph, or a new undo arc), and it is longer. The source-to-sink distance rises every round. It cannot pass $`V - 1`$, so there are at most $`V - 1`$ rounds.
 
-Each round finds at most $E$ routes. Each route is at most $V$ long and kills at least one arc, giving $O(VE)$ per round and $O(V^2E)$ in all. On a matching-shaped network, where every station has room for just one unit coming in or going out, the bound falls to $O(E\sqrt V)$. On a matching problem, that is the Hopcroft-Karp method.
+Each round finds at most $`E`$ routes. Each route is at most $`V`$ long and kills at least one arc, giving $`O(VE)`$ per round and $`O(V^2E)`$ in all. On a matching-shaped network, where every station has room for just one unit coming in or going out, the bound falls to $`O(E\sqrt V)`$. On a matching problem, that is the Hopcroft-Karp method.
 
 Here Dinic took 26 rounds. Edmonds-Karp needed 70 single routes for the same 7,000 bikes an hour. The streets crossing the boundary of what the source can still reach carry exactly 7,000. No flow can beat a cut, so 7,000 is the maximum.
 
@@ -180,7 +186,7 @@ Here Dinic took 26 rounds. Edmonds-Karp needed 70 single routes for the same 7,0
 
 A cost claim is checked by counting at several sizes. The code builds the same kind of city at 300, 1,200 and 4,800 stations.
 
-BFS looks are exactly $2E$ each time: 1,130, 4,660, 18,920. Heap work for a full Dijkstra run counts pushes, pops and swaps, then divides by $(V+E)\log_2 V$. The ratio barely moves: 0.245, 0.235, 0.227. That steady ratio is what $O((V+E)\log V)$ promises.
+BFS looks are exactly $`2E`$ each time: 1,130, 4,660, 18,920. Heap work for a full Dijkstra run counts pushes, pops and swaps, then divides by $`(V+E)\log_2 V`$. The ratio barely moves: 0.245, 0.235, 0.227. That steady ratio is what $`O((V+E)\log V)`$ promises.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -192,7 +198,7 @@ xychart-beta
     line [1746, 8471, 39668]
 ```
 
-Lower line: BFS street looks. Upper line: Dijkstra's heap work. Each size is four times the last. The BFS count grows a little over four times each step, as E does. The heap work grows a little faster, which is the extra $\log V$.
+Lower line: BFS street looks. Upper line: Dijkstra's heap work. Each size is four times the last. The BFS count grows a little over four times each step, as E does. The heap work grows a little faster, which is the extra $`\log V`$.
 
 ---
 
@@ -202,7 +208,7 @@ Lower line: BFS street looks. Upper line: Dijkstra's heap work. Each size is fou
 | --- | --- | --- |
 | BFS work | 1,200 removals + 2 × 2,330 street looks | 5,860 |
 | Dijkstra, rail station to university | settles 804, pushes 1,003 | 2,124 s = 35.4 min |
-| A*, $h$ = 60 s × blocks | settles 254, pushes 418 | 2,124 s |
+| A*, $`h`$ = 60 s × blocks | settles 254, pushes 418 | 2,124 s |
 | A*'s saving | 804 ÷ 254 | 3.2 times fewer settled |
 | Kruskal's lanes | 1,199 streets kept, at 5 m/s | 92,026 s of riding = 460.1 km |
 | Union-find work | 4,474 parent steps against 22,890 heap swaps | the sort dominates |
@@ -218,7 +224,7 @@ The heap work in Step 7 starts from station (0, 0), so it differs from the rail-
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | BFS used for the fastest ride | 28 streets, 2,435 s = 40.6 min | Fewest streets is not fewest seconds |
-| A* with $h$ = 180 s × blocks | 2,379 s = 39.6 min, after settling only 29 | The guess overshoots, so the true best route is never opened |
+| A* with $`h`$ = 180 s × blocks | 2,379 s = 39.6 min, after settling only 29 | The guess overshoots, so the true best route is never opened |
 | Union-find without rank or compression | same 92,026 s, but 112,139 parent steps, 25.1 times more | Trees grow into long chains |
 | Flow without the undo arcs | 6,900 bikes an hour | Early pushes cannot be cancelled, so the method stalls short |
 
@@ -604,14 +610,14 @@ ALL CHECKS PASS
 
 Lean proves the A* facts of Step 3 and the BFS count of Step 1, for any map, and checks the worked numbers.
 
-- Suppose the heuristic is consistent. Then no shifted time $w'(u,v)$ is negative.
-- Take any route from $s$ to a station $v$. Then its shifted time is its true time minus $h(s)$ plus $h(v)$. So Dijkstra on $w'$ settles in A*'s key order.
-- Suppose the heuristic is consistent. Then every route from $s$ to the target is shifted down by the same $h(s)$. So the fastest route is unchanged.
-- Suppose the heuristic is consistent. Then $h(v)$ is at most the riding time of any route from $v$ to the target: it is never too high.
-- Take any graph stored as adjacency lists. Then one removal per station plus one look per street end comes to $V + 2E$.
-- The grid has 1,200 stations and 2,330 streets, so BFS does 5,860 steps. Street looks are exactly $2E$ at all three sizes.
+- Suppose the heuristic is consistent. Then no shifted time $`w'(u,v)`$ is negative.
+- Take any route from $`s`$ to a station $`v`$. Then its shifted time is its true time minus $`h(s)`$ plus $`h(v)`$. So Dijkstra on $`w'`$ settles in A*'s key order.
+- Suppose the heuristic is consistent. Then every route from $`s`$ to the target is shifted down by the same $`h(s)`$. So the fastest route is unchanged.
+- Suppose the heuristic is consistent. Then $`h(v)`$ is at most the riding time of any route from $`v`$ to the target: it is never too high.
+- Take any graph stored as adjacency lists. Then one removal per station plus one look per street end comes to $`V + 2E`$.
+- The grid has 1,200 stations and 2,330 streets, so BFS does 5,860 steps. Street looks are exactly $`2E`$ at all three sizes.
 - The start guess is 1,680 s at 60 s a block, and 5,040 s at 180 s a block. The true ride is 2,124 s.
-- The lane plan keeps 1,199 streets, 460,130 m of lane. Top rank 5 means at least 32 stations, within $\log_2 V$, between 10 and 11.
+- The lane plan keeps 1,199 streets, 460,130 m of lane. Top rank 5 means at least 32 stations, within $`\log_2 V`$, between 10 and 11.
 - The one-way plan leaves 3,704 arrows, and its pieces of 1,195, 2, 1, 1 and 1 stations add to 1,200.
 
 Lean does not run the methods, so every counted run is left to the Python and Rust checks.
@@ -722,20 +728,20 @@ example : 2 * 2330 - 956 = 3704 ∧ 1195 + 2 + 1 + 1 + 1 = 1200 := by decide
 
 > [!TIP]
 > **Try changing**
-> - Guess first: does A* still settle fewer stations with $h$ = 0? Set the A* line's `60 * blocks(v, t)` to `0`. It becomes Dijkstra: 804 settled, and the assert `sa < sk` fails.
+> - Guess first: does A* still settle fewer stations with $`h`$ = 0? Set the A* line's `60 * blocks(v, t)` to `0`. It becomes Dijkstra: 804 settled, and the assert `sa < sk` fails.
 > - Guess first: is a bit more than 60 × blocks still safe? Try `90 * blocks(v, t)`. The guess now overshoots 60-second streets: A* settles only 35 stations and returns 2,340 s, so the assert on the ride fails.
 > - Guess first: with every street two-way, how many pieces does Tarjan find? Change `< 40` to `< 0` in `city`. One piece of 1,200, over 4,660 arrows.
-> - Guess first: does Dinic's round count grow with the flow? Change `100 * (1 + ...)` to `1000 * (1 + ...)` in `city`. The flow becomes 70,000 bikes an hour, still in 26 rounds: scaling every capacity scales every push, so the run is the same, and the bound of $V - 1$ rounds never mentions capacities.
+> - Guess first: does Dinic's round count grow with the flow? Change `100 * (1 + ...)` to `1000 * (1 + ...)` in `city`. The flow becomes 70,000 bikes an hour, still in 26 rounds: scaling every capacity scales every push, so the run is the same, and the bound of $`V - 1`$ rounds never mentions capacities.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **A heuristic that overshoots.** A* is only right when $h$ never claims more time than the remaining ride needs. Triple the guess to 180 seconds a block and A* finishes after 29 stations with a 2,379-second ride, while 2,124 is possible. It looks faster and is wrong, with no error message. A safe guess comes from a fact that holds on every street: here, no street crossing one block takes under 60 seconds.
+> **A heuristic that overshoots.** A* is only right when $`h`$ never claims more time than the remaining ride needs. Triple the guess to 180 seconds a block and A* finishes after 29 stations with a 2,379-second ride, while 2,124 is possible. It looks faster and is wrong, with no error message. A safe guess comes from a fact that holds on every street: here, no street crossing one block takes under 60 seconds.
 >
 > - **Fewest streets for the fastest ride.** BFS gives 28 streets and 2,435 seconds. Seconds need Dijkstra.
-> - **Union-find without its two rules.** The answer stays right, so nothing looks broken, but the work is 112,139 parent steps instead of 4,474. On a long chain of stations, it grows like $V^2$.
+> - **Union-find without its two rules.** The answer stays right, so nothing looks broken, but the work is 112,139 parent steps instead of 4,474. On a long chain of stations, it grows like $`V^2`$.
 > - **Flow without undo.** 6,900 bikes an hour instead of 7,000. The method cannot take back an early push that blocks a better plan.
 > - **Recursion on a large map.** Tarjan and Dinic search depth-first. A search 1,200 stations deep passes Python's default recursion limit, so the script raises it. Production code often uses an explicit stack instead.
 
@@ -756,7 +762,7 @@ example : 2 * 2330 - 956 = 3704 ∧ 1195 + 2 + 1 + 1 + 1 = 1200 := by decide
 
 ## What this builds on
 
-- [Data structures](06-data-structures-heaps-hashes-and-trees.md): the binary heap, and why its operations cost $\log_2$ of its size.
+- [Data structures](06-data-structures-heaps-hashes-and-trees.md): the binary heap, and why its operations cost $`\log_2`$ of its size.
 - [Greedy](08-greedy-algorithms-and-matroids.md): why taking the cheapest safe street is right for Kruskal.
 - [Dijkstra's algorithm](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md): the settle-the-cheapest rule and its proof. This card gives it a heap.
 - [The cheapest skeleton](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md): Kruskal's walk and the cut property. This card adds union-find.

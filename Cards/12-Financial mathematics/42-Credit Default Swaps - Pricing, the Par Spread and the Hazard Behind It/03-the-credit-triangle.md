@@ -35,7 +35,9 @@ Spread comes from the other two by one multiplication. Each of the others comes 
 
 ## The formula
 
-$$s \;\approx\; (1-R)\,\lambda$$
+```math
+s \;\approx\; (1-R)\,\lambda
+```
 
 **Read it aloud:** the yearly premium rate is about the yearly default rate times the fraction of the debt lost when default comes.
 
@@ -43,19 +45,25 @@ The rate λ is the **hazard rate**: the chance per year of default in the next s
 
 The triangle read in its three directions:
 
-$$s \approx (1-R)\,\lambda, \qquad \lambda \approx \frac{s}{1-R}, \qquad R \approx 1 - \frac{s}{\lambda}$$
+```math
+s \approx (1-R)\,\lambda, \qquad \lambda \approx \frac{s}{1-R}, \qquad R \approx 1 - \frac{s}{\lambda}
+```
 
 The exact spread for a flat hazard, with premiums paid at the end of each period of length δ years and money discounted at the riskless rate r:
 
-$$s_q \;=\; (1-R)\,\lambda\;\frac{e^{x}-1}{x}, \qquad x = (r+\lambda)\,\delta$$
+```math
+s_q \;=\; (1-R)\,\lambda\;\frac{e^{x}-1}{x}, \qquad x = (r+\lambda)\,\delta
+```
 
 **Read it aloud:** the dated spread is the triangle times a timing factor slightly above one, set by how fast money is discounted and survival decays over one period.
 
-For small $x$ the factor is about $1 + x/2$. So quarter-end payments push the spread up by about half of (r + λ)δ, in relative terms.
+For small $`x`$ the factor is about $`1 + x/2`$. So quarter-end payments push the spread up by about half of (r + λ)δ, in relative terms.
 
 With a hazard λ(t) that changes over time, and premiums paid continuously, the exact spread is
 
-$$s_c \;=\; (1-R)\,\frac{\int_0^T \lambda(t)\,w(t)\,dt}{\int_0^T w(t)\,dt}, \qquad w(t) = D(t)\,S(t) = e^{-rt}\,S(t)$$
+```math
+s_c \;=\; (1-R)\,\frac{\int_0^T \lambda(t)\,w(t)\,dt}{\int_0^T w(t)\,dt}, \qquad w(t) = D(t)\,S(t) = e^{-rt}\,S(t)
+```
 
 Here T is the tenor in years, D(t) the discount factor and S(t) the chance of surviving to date t.
 
@@ -63,18 +71,18 @@ Here T is the tenor in years, D(t) the discount factor and S(t) the chance of su
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $s_c$, $s_q$ | spread: yearly premium as a fraction of notional; $s_c$ with continuous premiums, $s_q$ with dated ones | 120 bp; 121.06 bp dated | — |
-| $R$ | recovery: fraction of face value got back after default | 0.40 | spread falls; implied hazard rises |
-| $1-R$ | loss given default | 0.60 | spread rises in proportion |
-| $\lambda$ | flat hazard rate, per year ("lambda") | 0.02 | spread rises in proportion |
-| $\lambda(t)$, $\bar\lambda$ | hazard at date t when it changes; its plain calendar average over the five years | 1% then 3%; 2.2% | — |
-| $r$ | riskless rate, continuously compounded | 0.05 | timing gap widens a little |
-| $\delta$ | premium period in years ("delta") | 0.25 | timing gap widens |
-| $T$ | tenor: years the protection lasts | 5 | flat hazard: no change to the dated spread |
-| $t$, $t_j$, $\tau$ | a date in years; $t_j = j\delta$ the j-th premium date; $\tau$ the default date ("tau") | 0.25, 0.5, …, 5 | — |
-| $D(t)$, $S(t)$, $w(t)$ | discount factor $e^{-rt}$; survival chance to t; their product, the weight | $e^{-0.05t}$, $e^{-0.02t}$ | — |
-| $A$ | risky annuity: today's value of 1 a year of premium, paid on dates Northwind survives to | 4.1819 | spread falls for a given protection value |
-| $x$ | timing term $(r+\lambda)\delta$ | 0.0175 | timing gap widens |
+| $`s`$, $`s_c`$, $`s_q`$ | spread: yearly premium as a fraction of notional; $`s_c`$ with continuous premiums, $`s_q`$ with dated ones | 120 bp; 121.06 bp dated | — |
+| $`R`$ | recovery: fraction of face value got back after default | 0.40 | spread falls; implied hazard rises |
+| $`1-R`$ | loss given default | 0.60 | spread rises in proportion |
+| $`\lambda`$ | flat hazard rate, per year ("lambda") | 0.02 | spread rises in proportion |
+| $`\lambda(t)`$, $`\bar\lambda`$ | hazard at date t when it changes; its plain calendar average over the five years | 1% then 3%; 2.2% | — |
+| $`r`$ | riskless rate, continuously compounded | 0.05 | timing gap widens a little |
+| $`\delta`$ | premium period in years ("delta") | 0.25 | timing gap widens |
+| $`T`$ | tenor: years the protection lasts | 5 | flat hazard: no change to the dated spread |
+| $`t`$, $`t_j`$, $`\tau`$ | a date in years; $`t_j = j\delta`$ the j-th premium date; $`\tau`$ the default date ("tau") | 0.25, 0.5, …, 5 | — |
+| $`D(t)`$, $`S(t)`$, $`w(t)`$ | discount factor $`e^{-rt}`$; survival chance to t; their product, the weight | $`e^{-0.05t}`$, $`e^{-0.02t}`$ | — |
+| $`A`$ | risky annuity: today's value of 1 a year of premium, paid on dates Northwind survives to | 4.1819 | spread falls for a given protection value |
+| $`x`$ | timing term $`(r+\lambda)\delta`$ | 0.0175 | timing gap widens |
 
 ### When it holds
 
@@ -100,32 +108,36 @@ Both payments happen only on dates Northwind survives to. Both are shrunk to tod
 
 A dollar of premium paid continuously at rate s is worth, today,
 
-$$\text{premium leg} = s \int_0^T D(t)\,S(t)\,dt$$
+```math
+\text{premium leg} = s \int_0^T D(t)\,S(t)\,dt
+```
 
 The protection leg adds the seller's expected payment over the same slices:
 
-$$\text{protection leg} = (1-R) \int_0^T \lambda\,D(t)\,S(t)\,dt = (1-R)\,\lambda \int_0^T D(t)\,S(t)\,dt$$
+```math
+\text{protection leg} = (1-R) \int_0^T \lambda\,D(t)\,S(t)\,dt = (1-R)\,\lambda \int_0^T D(t)\,S(t)\,dt
+```
 
-A flat λ comes outside the integral. The integral left behind is the same positive number on both sides. Set the legs equal and divide it out: $s_c = (1-R)\lambda$, exactly. For Northwind, the check adds up both legs by Simpson's rule (a numerical integration) and gets 120.0000 bp.
+A flat λ comes outside the integral. The integral left behind is the same positive number on both sides. Set the legs equal and divide it out: $`s_c = (1-R)\lambda`$, exactly. For Northwind, the check adds up both legs by Simpson's rule (a numerical integration) and gets 120.0000 bp.
 
 ### Step 2: quarter-end premiums arrive late, so the dated spread is higher
 
-A real contract pays the quarter's premium, s × δ, at the quarter's end, and only if Northwind is alive then. A continuous payer would have spread that money across the quarter. The dated payment arrives on average half a quarter later. Over that delay, money is discounted at rate r and survival decays at rate λ, so each dated payment is worth less than its continuous twin. Protection is unchanged. To keep the legs equal, the spread rises by the ratio of the two premium values, which is exactly $(e^x - 1)/x$.
+A real contract pays the quarter's premium, s × δ, at the quarter's end, and only if Northwind is alive then. A continuous payer would have spread that money across the quarter. The dated payment arrives on average half a quarter later. Over that delay, money is discounted at rate r and survival decays at rate λ, so each dated payment is worth less than its continuous twin. Protection is unchanged. To keep the legs equal, the spread rises by the ratio of the two premium values, which is exactly $`(e^x - 1)/x`$.
 
 For Northwind, x = (0.05 + 0.02) × 0.25 = 0.0175. The factor is about 1 + x/2 = 1.00875, which moves 120 bp to 121.05 bp. The exact factor gives 121.0562 bp. The ratio is the same in every quarter, so it does not depend on the tenor: with a flat hazard, a one-year and a ten-year contract have the same dated spread.
 
 <details>
 <summary>Detailed proof: the timing factor and its error</summary>
 
-Write the combined decay rate as r + λ, so that $w(t) = e^{-(r+\lambda)t}$. Quarter j runs from $t_j - \delta$ to $t_j$.
+Write the combined decay rate as r + λ, so that $`w(t) = e^{-(r+\lambda)t}`$. Quarter j runs from $`t_j - \delta`$ to $`t_j`$.
 
-Continuous premium over quarter j, per unit spread: $\int_{t_j-\delta}^{t_j} e^{-(r+\lambda)t}\,dt = e^{-(r+\lambda)t_j}\,\dfrac{e^{x}-1}{r+\lambda}$, with $x = (r+\lambda)\delta$.
+Continuous premium over quarter j, per unit spread: $`\int_{t_j-\delta}^{t_j} e^{-(r+\lambda)t}\,dt = e^{-(r+\lambda)t_j}\,\dfrac{e^{x}-1}{r+\lambda}`$, with $`x = (r+\lambda)\delta`$.
 
-Dated premium for quarter j, per unit spread: $\delta\,e^{-(r+\lambda)t_j}$.
+Dated premium for quarter j, per unit spread: $`\delta\,e^{-(r+\lambda)t_j}`$.
 
-The ratio, continuous over dated, is $\dfrac{e^x-1}{(r+\lambda)\delta} = \dfrac{e^x-1}{x}$, the same for every j. Summing over the quarters, the continuous annuity is the risky annuity A times that ratio. Protection is the same in both contracts, so $s_q = s_c \times \dfrac{e^x-1}{x} = (1-R)\lambda\,\dfrac{e^x-1}{x}$.
+The ratio, continuous over dated, is $`\dfrac{e^x-1}{(r+\lambda)\delta} = \dfrac{e^x-1}{x}`$, the same for every j. Summing over the quarters, the continuous annuity is the risky annuity A times that ratio. Protection is the same in both contracts, so $`s_q = s_c \times \dfrac{e^x-1}{x} = (1-R)\lambda\,\dfrac{e^x-1}{x}`$.
 
-The factor equals $\int_0^1 e^{xu}\,du$, which is above 1 whenever x > 0. Its series is $1 + x/2 + x^2/6 + \dots$. For x > 0 every term after $x/2$ is positive and their sum is below $x^2 e^x/6$, so $0 < \frac{e^x-1}{x} - 1 - \frac{x}{2} < \frac{x^2 e^x}{6}$. On Northwind the rule of thumb misses by 121.0562 − 121.0500 bp, inside that bound; the check asserts it.
+The factor equals $`\int_0^1 e^{xu}\,du`$, which is above 1 whenever x > 0. Its series is $`1 + x/2 + x^2/6 + \dots`$. For x > 0 every term after $`x/2`$ is positive and their sum is below $`x^2 e^x/6`$, so $`0 < \frac{e^x-1}{x} - 1 - \frac{x}{2} < \frac{x^2 e^x}{6}`$. On Northwind the rule of thumb misses by 121.0562 − 121.0500 bp, inside that bound; the check asserts it.
 
 </details>
 
@@ -133,7 +145,7 @@ The factor equals $\int_0^1 e^{xu}\,du$, which is above 1 whenever x > 0. Its se
 
 Let the hazard change over time: 1% a year for two years, then 3% a year for three. Its plain calendar average is (2 × 1% + 3 × 3%) ÷ 5 = 2.2%, and the triangle on that average says 0.6 × 2.2% = 132 bp.
 
-Redo Step 1 with λ(t) in place of λ. It no longer comes outside the integral. The spread becomes $s_c$ from The formula: (1 − R) times an average of the hazard, weighted by w(t). The weight falls with time, because later dollars are discounted more and are less likely to be reached. A rising curve puts its high hazards on the dates with the least weight. The weighted average sits below the calendar average: 126.79 bp against 132 bp.
+Redo Step 1 with λ(t) in place of λ. It no longer comes outside the integral. The spread becomes $`s_c`$ from The formula: (1 − R) times an average of the hazard, weighted by w(t). The weight falls with time, because later dollars are discounted more and are less likely to be reached. A rising curve puts its high hazards on the dates with the least weight. The weighted average sits below the calendar average: 126.79 bp against 132 bp.
 
 A falling curve does the reverse. At 3% for two years then 1%, the calendar triangle says 108 bp and the continuous-premium spread is 112.96 bp.
 
@@ -142,9 +154,11 @@ Quarter-end payment then adds its own push upward: 127.92 bp on the rising curve
 <details>
 <summary>Detailed proof: a rising hazard gives a spread at or below the calendar triangle</summary>
 
-Suppose λ(t) never falls on the interval from 0 to T, and $r \ge 0$. Then $w(t) = e^{-rt}S(t)$ never rises, since both factors fall. For any two dates t and u, $(\lambda(t) - \lambda(u))(w(t) - w(u)) \le 0$: the hazard and the weight move in opposite directions. Integrate over both dates:
-$$\int_0^T\!\!\int_0^T (\lambda(t)-\lambda(u))(w(t)-w(u))\,dt\,du = 2T\int_0^T \lambda w\,dt - 2\int_0^T \lambda\,dt \int_0^T w\,dt \;\le\; 0.$$
-Divide by $2T\int_0^T w\,dt > 0$: the w-weighted average of λ is at most the calendar average $\bar\lambda = \frac1T\int_0^T \lambda\,dt$. Multiply by 1 − R: $s_c \le (1-R)\bar\lambda$. A falling hazard reverses every inequality. This is Chebyshev's integral inequality. It compares continuous-premium spreads only; the dated spread adds Step 2's upward factor on top.
+Suppose λ(t) never falls on the interval from 0 to T, and $`r \ge 0`$. Then $`w(t) = e^{-rt}S(t)`$ never rises, since both factors fall. For any two dates t and u, $`(\lambda(t) - \lambda(u))(w(t) - w(u)) \le 0`$: the hazard and the weight move in opposite directions. Integrate over both dates:
+
+$`\displaystyle \int_0^T\!\!\int_0^T (\lambda(t)-\lambda(u))(w(t)-w(u))\,dt\,du = 2T\int_0^T \lambda w\,dt - 2\int_0^T \lambda\,dt \int_0^T w\,dt \;\le\; 0.`$
+
+Divide by $`2T\int_0^T w\,dt > 0`$: the w-weighted average of λ is at most the calendar average $`\bar\lambda = \frac1T\int_0^T \lambda\,dt`$. Multiply by 1 − R: $`s_c \le (1-R)\bar\lambda`$. A falling hazard reverses every inequality. This is Chebyshev's integral inequality. It compares continuous-premium spreads only; the dated spread adds Step 2's upward factor on top.
 
 </details>
 
@@ -152,7 +166,7 @@ Divide by $2T\int_0^T w\,dt > 0$: the w-weighted average of λ is at most the ca
 
 The quote-to-hazard direction is an inverse problem: find the λ whose dated spread equals the quote. Before solving, three facts.
 
-- **Existence and uniqueness.** With R below 1 and r at least 0, the dated spread $(1-R)\lambda(e^x-1)/x$ starts at 0 when λ = 0 and rises without limit and without turning back, since both λ and the timing factor grow with λ. So every positive quote has exactly one hazard.
+- **Existence and uniqueness.** With R below 1 and r at least 0, the dated spread $`(1-R)\lambda(e^x-1)/x`$ starts at 0 when λ = 0 and rises without limit and without turning back, since both λ and the timing factor grow with λ. So every positive quote has exactly one hazard.
 - **Boundary cases.** A zero quote gives a zero hazard. At R = 1 no hazard gives a positive spread, so there is no answer. The recovery direction needs λ > 0 and s ≤ λ to return a recovery between 0 and 1.
 - **The seed is always too high.** The timing factor is above 1, so the dated spread at λ = s/(1 − R) is above the quote. The true hazard sits just below the triangle's guess.
 
@@ -663,9 +677,9 @@ The two outputs agree line for line, including the Monte Carlo row, because both
 
 Lean proves the triangle, the timing factor and the rising-curve bound in general, and checks the worked numbers exactly.
 
-- The triangle is exact with a flat hazard and continuous premiums. Take any tenor $T > 0$ and recovery $R < 1$. Then the two legs are equal exactly when $s = (1-R)\lambda$.
-- Quarter-end premiums multiply the triangle by the timing factor. Suppose $\lambda > 0$, $r \ge 0$ and $R < 1$, with $s\delta$ paid at each period's end. Then $s_q = (1-R)\lambda\,(e^x - 1)/x$, with $x = (r+\lambda)\delta$. The rule of thumb $(1-R)\lambda\,(1 + x/2)$ reads low, by less than $(1-R)\lambda\,x^2 e^x/6$.
-- A rising hazard puts the continuous-premium spread at or below the calendar triangle. Suppose $\lambda(t)$ is never negative and never falls over the tenor, with $r \ge 0$ and $R < 1$. Then $s_c \le (1-R)\,\bar\lambda$.
+- The triangle is exact with a flat hazard and continuous premiums. Take any tenor $`T > 0`$ and recovery $`R < 1`$. Then the two legs are equal exactly when $`s = (1-R)\lambda`$.
+- Quarter-end premiums multiply the triangle by the timing factor. Suppose $`\lambda > 0`$, $`r \ge 0`$ and $`R < 1`$, with $`s\delta`$ paid at each period's end. Then $`s_q = (1-R)\lambda\,(e^x - 1)/x`$, with $`x = (r+\lambda)\delta`$. The rule of thumb $`(1-R)\lambda\,(1 + x/2)`$ reads low, by less than $`(1-R)\lambda\,x^2 e^x/6`$.
+- A rising hazard puts the continuous-premium spread at or below the calendar triangle. Suppose $`\lambda(t)`$ is never negative and never falls over the tenor, with $`r \ge 0`$ and $`R < 1`$. Then $`s_c \le (1-R)\,\bar\lambda`$.
 - The worked numbers hold exactly, as fractions: the 120 bp triangle, the yearly premium, the 300 bp seed, both calendar triangles and the what-breaks values.
 
 The 121.06 bp and 4.94% figures, the error curve, the hazard-curve spreads and the Monte Carlo are left to the Python and Rust checks.

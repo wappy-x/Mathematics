@@ -37,49 +37,55 @@ A positive result keeps two of the four end boxes, 90 and 495, and discards the 
 
 ## The formula
 
-Notation first, in words. $P(A)$ is the chance of the event $A$, as on [Probability](01-what-probability-means.md). The new notation is $P(A \mid B)$, read "the chance of $A$ given $B$": the chance of $A$ once $B$ is known to have happened. The upright bar means "given"; it is not division. $A \cap B$, read "$A$ and $B$", is the event that both happen.
+Notation first, in words. $`P(A)`$ is the chance of the event $`A`$, as on [Probability](01-what-probability-means.md). The new notation is $`P(A \mid B)`$, read "the chance of $`A`$ given $`B`$": the chance of $`A`$ once $`B`$ is known to have happened. The upright bar means "given"; it is not division. $`A \cap B`$, read "$`A`$ and $`B`$", is the event that both happen.
 
-$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \qquad \text{defined only when } P(B) > 0$$
+```math
+P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \qquad \text{defined only when } P(B) > 0
+```
 
-**Read it aloud:** the chance of $A$ given $B$ is the chance that both happen, divided by the chance of $B$.
+**Read it aloud:** the chance of $`A`$ given $`B`$ is the chance that both happen, divided by the chance of $`B`$.
 
-Two rules come straight out of it. Multiply both sides by $P(B)$ and the **multiplication rule** appears:
+Two rules come straight out of it. Multiply both sides by $`P(B)`$ and the **multiplication rule** appears:
 
-$$P(A \cap B) = P(B)\,P(A \mid B)$$
+```math
+P(A \cap B) = P(B)\,P(A \mid B)
+```
 
 **Read it aloud:** the chance of both is the chance of the first, times the chance of the second once the first has happened.
 
-Split the world into pieces $B_1, B_2, \dots, B_n$ that do not overlap and together cover every outcome. Such a split is a **partition**. The **law of total probability** says
+Split the world into pieces $`B_1, B_2, \dots, B_n`$ that do not overlap and together cover every outcome. Such a split is a **partition**. The **law of total probability** says
 
-$$P(A) = P(B_1)\,P(A \mid B_1) + P(B_2)\,P(A \mid B_2) + \dots + P(B_n)\,P(A \mid B_n)$$
+```math
+P(A) = P(B_1)\,P(A \mid B_1) + P(B_2)\,P(A \mid B_2) + \dots + P(B_n)\,P(A \mid B_n)
+```
 
-**Read it aloud:** the chance of $A$ is its rate in each piece, weighted by the size of that piece, added up.
+**Read it aloud:** the chance of $`A`$ is its rate in each piece, weighted by the size of that piece, added up.
 
-In the town, $D$ is "has the disease" and $T$ is "tests positive". The pieces are $D$ and $D^c$, read "not $D$" as on [The rules](03-probability-rules-and-complements.md).
+In the town, $`D`$ is "has the disease" and $`T`$ is "tests positive". The pieces are $`D`$ and $`D^c`$, read "not $`D`$" as on [The rules](03-probability-rules-and-complements.md).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P$ | the chance of whatever is in the brackets | P(D) = 0.01 | — |
-| $A$, $B$, $C$, $A_1$, $A_2$ | events: the question, and what is known; numbered when there are several | A = sick, B = positive | — |
-| $D$ | the resident has the disease | 100 of 10,000 | a commoner disease raises the chance of disease given a positive |
-| $D^c$ | the resident does not: "not D" | 9,900 of 10,000 | more healthy people means more false alarms among the positives |
-| $T$ | the test comes back positive | 585 of 10,000 | — |
-| $\cap$ | "and": both events happen | P(D ∩ T) = 0.009 | — |
-| $P(A \mid B)$ | the chance of A once B is known | P(D given T) = 0.153846 | rises with P(A ∩ B), falls with P(B) |
-| $P(T \mid D)$ | the test's hit rate on the sick | 0.90 | raises the answer, but less than it looks |
-| $P(T \mid D^c)$ | the false-alarm rate on the healthy | 0.05 | lowers the answer sharply |
-| $B_i$, $i$ | one piece of a partition, and its number | B_1 = D, B_2 = D^c | — |
-| $S$, $Q$ | the whole sample space; the chances given B, used in the proof | all 10,000 residents; Q(D) = 0.153846 | — |
-| $n$ | how many pieces | 2 | — |
+| $`P`$ | the chance of whatever is in the brackets | P(D) = 0.01 | — |
+| $`A`$, $`B`$, $`C`$, $`A_1`$, $`A_2`$ | events: the question, and what is known; numbered when there are several | A = sick, B = positive | — |
+| $`D`$ | the resident has the disease | 100 of 10,000 | a commoner disease raises the chance of disease given a positive |
+| $`D^c`$ | the resident does not: "not D" | 9,900 of 10,000 | more healthy people means more false alarms among the positives |
+| $`T`$ | the test comes back positive | 585 of 10,000 | — |
+| $`\cap`$ | "and": both events happen | P(D ∩ T) = 0.009 | — |
+| $`P(A \mid B)`$ | the chance of A once B is known | P(D given T) = 0.153846 | rises with P(A ∩ B), falls with P(B) |
+| $`P(T \mid D)`$ | the test's hit rate on the sick | 0.90 | raises the answer, but less than it looks |
+| $`P(T \mid D^c)`$ | the false-alarm rate on the healthy | 0.05 | lowers the answer sharply |
+| $`B_i`$, $`i`$ | one piece of a partition, and its number | B_1 = D, B_2 = D^c | — |
+| $`S`$, $`Q`$ | the whole sample space; the chances given B, used in the proof | all 10,000 residents; Q(D) = 0.153846 | — |
+| $`n`$ | how many pieces | 2 | — |
 
 ### When it holds
 
 It is a definition, so it needs no proof, only one condition. The two rules drawn from it carry their own conditions.
 
-- **The known event must be possible: $P(B) > 0$.** Divide by zero and the ratio means nothing. Conditioning on an event of probability zero needs the heavier machinery of [Conditioning on a partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md) and the cards after it.
+- **The known event must be possible: $`P(B) > 0`$.** Divide by zero and the ratio means nothing. Conditioning on an event of probability zero needs the heavier machinery of [Conditioning on a partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md) and the cards after it.
 - **The pieces of a partition must cover everything.** Leave out the healthy and the town's chance of a positive drops from 0.0585 to 0.009; the answer then comes out at 1, as if every positive were sick.
 - **The pieces must not overlap.** An outcome in two pieces is counted twice, and the total can pass 1.
-- **Each piece must be possible: $P(B_i) > 0$.** Otherwise $P(A \mid B_i)$ is undefined. A piece of chance zero adds nothing to $P(A)$, so it is left out of the sum.
+- **Each piece must be possible: $`P(B_i) > 0`$.** Otherwise $`P(A \mid B_i)`$ is undefined. A piece of chance zero adds nothing to $`P(A)`$, so it is left out of the sum.
 - **Rates and weights must describe one population.** A test's hit rate measured in a hospital ward, weighted by the prevalence in a whole town, answers no real question.
 
 ---
@@ -88,7 +94,7 @@ It is a definition, so it needs no proof, only one condition. The two rules draw
 
 ### Step 0: knowing B happened deletes everything outside B
 
-Before the result, all 10,000 people are possible. After a positive, only the 585 positives are; the rest are ruled out. The survivors keep their relative sizes but now make up everything that can happen, so their chances must be scaled up to total 1. Dividing by $P(B)$ does exactly that.
+Before the result, all 10,000 people are possible. After a positive, only the 585 positives are; the rest are ruled out. The survivors keep their relative sizes but now make up everything that can happen, so their chances must be scaled up to total 1. Dividing by $`P(B)`$ does exactly that.
 
 ### Step 1: with equally likely outcomes, the formula is a count
 
@@ -96,52 +102,58 @@ When all outcomes are equally likely, a chance is a count divided by the total (
 
 90 / 585 = (90 / 10,000) / (585 / 10,000) = 0.009 / 0.0585 = 0.153846.
 
-The middle step divides top and bottom by the same 10,000. The top is now $P(D \cap T)$ and the bottom is $P(T)$. The count and the formula are one calculation written two ways. For outcomes that are not equally likely the definition keeps the same shape: overlap over what is known.
+The middle step divides top and bottom by the same 10,000. The top is now $`P(D \cap T)`$ and the bottom is $`P(T)`$. The count and the formula are one calculation written two ways. For outcomes that are not equally likely the definition keeps the same shape: overlap over what is known.
 
 ### Step 2: the result is a genuine probability
 
-Given $B$, the new chances obey every rule on [The rules](03-probability-rules-and-complements.md). None is negative. $B$ itself now has chance 1. Chances of events that cannot happen together add. So the complement rule works inside the smaller world: the chance of being healthy given a positive is 1 − 0.153846 = 0.846154, and the count agrees, 495 / 585.
+Given $`B`$, the new chances obey every rule on [The rules](03-probability-rules-and-complements.md). None is negative. $`B`$ itself now has chance 1. Chances of events that cannot happen together add. So the complement rule works inside the smaller world: the chance of being healthy given a positive is 1 − 0.153846 = 0.846154, and the count agrees, 495 / 585.
 
 <details>
 <summary>Detailed proof: conditioning on B gives a probability</summary>
 
-Fix $B$ with $P(B) > 0$ and write $Q(A)$ for $P(A \mid B)$.
+Fix $`B`$ with $`P(B) > 0`$ and write $`Q(A)`$ for $`P(A \mid B)`$.
 
-**Never negative.** $P(A \cap B) \ge 0$ and $P(B) > 0$, so the ratio is at least 0.
+**Never negative.** $`P(A \cap B) \ge 0`$ and $`P(B) > 0`$, so the ratio is at least 0.
 
-**The whole world has chance 1.** Every outcome is in the whole sample space $S$ ([Sample spaces and events](02-sample-spaces-and-events.md)), so $S \cap B = B$ and $Q(S) = P(B) / P(B) = 1$.
+**The whole world has chance 1.** Every outcome is in the whole sample space $`S`$ ([Sample spaces and events](02-sample-spaces-and-events.md)), so $`S \cap B = B`$ and $`Q(S) = P(B) / P(B) = 1`$.
 
-**Separate events add.** Let $A_1$ and $A_2$ share no outcome. Then $A_1 \cap B$ and $A_2 \cap B$ share none either, and together they make $(A_1 \text{ or } A_2) \cap B$. The addition rule for $P$ gives $P((A_1 \text{ or } A_2) \cap B) = P(A_1 \cap B) + P(A_2 \cap B)$. Divide both sides by $P(B)$: $Q(A_1 \text{ or } A_2) = Q(A_1) + Q(A_2)$. The same step works for any list of events, one pair at a time, and for an endless list because dividing a convergent sum by a fixed number divides each term.
+**Separate events add.** Let $`A_1`$ and $`A_2`$ share no outcome. Then $`A_1 \cap B`$ and $`A_2 \cap B`$ share none either, and together they make $`(A_1 \text{ or } A_2) \cap B`$. The addition rule for $`P`$ gives $`P((A_1 \text{ or } A_2) \cap B) = P(A_1 \cap B) + P(A_2 \cap B)`$. Divide both sides by $`P(B)`$: $`Q(A_1 \text{ or } A_2) = Q(A_1) + Q(A_2)`$. The same step works for any list of events, one pair at a time, and for an endless list because dividing a convergent sum by a fixed number divides each term.
 
-These are the three rules every probability obeys, so every consequence of them, including the complement rule $Q(A^c) = 1 - Q(A)$, holds for $Q$ too.
+These are the three rules every probability obeys, so every consequence of them, including the complement rule $`Q(A^c) = 1 - Q(A)`$, holds for $`Q`$ too.
 
 </details>
 
 ### Step 3: the multiplication rule is the definition turned round
 
-Multiply both sides of the definition by $P(B)$:
+Multiply both sides of the definition by $`P(B)`$:
 
-$$P(A \cap B) = P(B)\,P(A \mid B).$$
+```math
+P(A \cap B) = P(B)\,P(A \mid B).
+```
 
 In the town: the chance of being sick and positive is 0.01 × 0.90 = 0.009, which is 90 out of 10,000. This is how a chance of "both" is usually found, because the rate inside a group is what gets measured: a test's makers measure its hit rate on patients known to be sick.
 
-The rule chains. For three events, $P(A \cap B \cap C) = P(A)\,P(B \mid A)\,P(C \mid A \cap B)$: each factor is the next event's chance given everything before it. A probability tree like the town's picture is this chain drawn out: multiply along a path to get the chance of its end box.
+The rule chains. For three events, $`P(A \cap B \cap C) = P(A)\,P(B \mid A)\,P(C \mid A \cap B)`$: each factor is the next event's chance given everything before it. A probability tree like the town's picture is this chain drawn out: multiply along a path to get the chance of its end box.
 
 ### Step 4: total probability adds the pieces
 
-Every positive is either sick or healthy, never both. So the event $T$ splits into two parts that do not overlap: $T \cap D$ and $T \cap D^c$. Chances of non-overlapping events add:
+Every positive is either sick or healthy, never both. So the event $`T`$ splits into two parts that do not overlap: $`T \cap D`$ and $`T \cap D^c`$. Chances of non-overlapping events add:
 
-$$P(T) = P(T \cap D) + P(T \cap D^c).$$
+```math
+P(T) = P(T \cap D) + P(T \cap D^c).
+```
 
 Replace each part by the multiplication rule:
 
-$$P(T) = P(D)\,P(T \mid D) + P(D^c)\,P(T \mid D^c) = 0.01 \times 0.90 + 0.99 \times 0.05 = 0.009 + 0.0495 = 0.0585.$$
+```math
+P(T) = P(D)\,P(T \mid D) + P(D^c)\,P(T \mid D^c) = 0.01 \times 0.90 + 0.99 \times 0.05 = 0.009 + 0.0495 = 0.0585.
+```
 
-With $n$ pieces the argument is the same, one term per piece, and the rule is exact.
+With $`n`$ pieces the argument is the same, one term per piece, and the rule is exact.
 
 ### Step 5: put the three tools together
 
-The question was the chance of disease given a positive. The definition asks for $P(D \cap T) / P(T)$. The multiplication rule gave the top, 0.009. Total probability gave the bottom, 0.0585. Divide: 0.153846.
+The question was the chance of disease given a positive. The definition asks for $`P(D \cap T) / P(T)`$. The multiplication rule gave the top, 0.009. Total probability gave the bottom, 0.0585. Divide: 0.153846.
 
 Written as one line, that calculation is Bayes' rule: it turns "positive given sick" into "sick given positive". It gets its own card: [Bayes' rule](06-bayes-rule.md).
 
@@ -573,9 +585,9 @@ The simulation found 58,399 positives, 9,056 of them sick: an estimate of 0.1550
 
 Lean proves the three tools for every probability and all events that meet their conditions, plus the town's numbers.
 
-- Take events $A$ and $B$ with $P(B) > 0$. Then $P(A \mid B) = P(A \cap B) / P(B)$.
-- Take events $A$ and $B$ with $P(B) > 0$. Then $P(A \cap B) = P(B)\,P(A \mid B)$.
-- Take a partition $B_1, \dots, B_n$ with $P(B_i) > 0$ for every piece. Then $P(A)$ is the sum of $P(B_i)\,P(A \mid B_i)$ over all the pieces.
+- Take events $`A`$ and $`B`$ with $`P(B) > 0`$. Then $`P(A \mid B) = P(A \cap B) / P(B)`$.
+- Take events $`A`$ and $`B`$ with $`P(B) > 0`$. Then $`P(A \cap B) = P(B)\,P(A \mid B)`$.
+- Take a partition $`B_1, \dots, B_n`$ with $`P(B_i) > 0`$ for every piece. Then $`P(A)`$ is the sum of $`P(B_i)\,P(A \mid B_i)`$ over all the pieces.
 - In the town, 90 sick positives plus 495 healthy positives make 585.
 - Sick given positive is 90 / 585 = 2 / 13. Healthy given positive is 495 / 585 = 1 − 2 / 13.
 - The multiplication rule gives 0.01 × 0.90 = 90 out of 10,000.

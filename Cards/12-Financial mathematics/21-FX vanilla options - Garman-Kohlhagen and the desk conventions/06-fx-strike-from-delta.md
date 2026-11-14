@@ -39,13 +39,15 @@ Orange: spot delta, falling all the way from its ceiling, 0.970446, to zero. It 
 
 ## The formula
 
-Notation first, in words. $S$ is the exchange rate today, dollars per euro. $F$ is the forward rate: the rate agreed today for delivery in one year, $F = S\,e^{(r_d - r_f)T}$ ([Garman-Kohlhagen](01-garman-kohlhagen.md)). $r_d$ is the dollar (domestic) interest rate, $r_f$ the euro (foreign) rate, both continuously compounded. $\sigma$ (sigma) is the volatility attached to the quote. $N(x)$ is the area under the standard bell curve left of $x$; $N^{-1}(p)$ runs it backwards, the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+Notation first, in words. $`S`$ is the exchange rate today, dollars per euro. $`F`$ is the forward rate: the rate agreed today for delivery in one year, $`F = S\,e^{(r_d - r_f)T}`$ ([Garman-Kohlhagen](01-garman-kohlhagen.md)). $`r_d`$ is the dollar (domestic) interest rate, $`r_f`$ the euro (foreign) rate, both continuously compounded. $`\sigma`$ (sigma) is the volatility attached to the quote. $`N(x)`$ is the area under the standard bell curve left of $`x`$; $`N^{-1}(p)`$ runs it backwards, the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
 
 The helpers, as on the Garman-Kohlhagen card:
 
-$$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: the log-distance from strike to forward, nudged by half the variance, counted in units of $\sigma\sqrt{T}$.
+In words: the log-distance from strike to forward, nudged by half the variance, counted in units of $`\sigma\sqrt{T}`$.
 
 The four call deltas, and the puts beside them:
 
@@ -56,44 +58,50 @@ The four call deltas, and the puts beside them:
 | premium-adjusted spot | `e^{-rf T} (K/F) N(d2)` | `-e^{-rf T} (K/F) N(-d2)` |
 | premium-adjusted forward | `(K/F) N(d2)` | `-(K/F) N(-d2)` |
 
-**Spot and forward: one line.** Set the delta to its quote $\Delta$ and undo it:
+**Spot and forward: one line.** Set the delta to its quote $`\Delta`$ and undo it:
 
-$$K = F\,\exp\!\Big(-d_1^{*}\,\sigma\sqrt{T} + \tfrac12\sigma^2 T\Big)$$
+```math
+K = F\,\exp\!\Big(-d_1^{*}\,\sigma\sqrt{T} + \tfrac12\sigma^2 T\Big)
+```
 
-$$d_1^{*} = N^{-1}\!\big(\Delta\,e^{r_f T}\big)\ \text{(spot call)}, \qquad d_1^{*} = N^{-1}(\Delta)\ \text{(forward call)}$$
+```math
+d_1^{*} = N^{-1}\!\big(\Delta\,e^{r_f T}\big)\ \text{(spot call)}, \qquad d_1^{*} = N^{-1}(\Delta)\ \text{(forward call)}
+```
 
-For a put, $d_1^{*}$ is minus the quantile of $\lvert\Delta\rvert e^{r_f T}$ (spot) or of $\lvert\Delta\rvert$ (forward).
+For a put, $`d_1^{*}`$ is minus the quantile of $`\lvert\Delta\rvert e^{r_f T}`$ (spot) or of $`\lvert\Delta\rvert`$ (forward).
 
 **Read it aloud:** undo the euro-rate drag on the delta, find where that area sits on the bell curve, turn that point into a log-distance from the forward, and step that far.
 
-**Premium-adjusted: a root-find.** Solve $e^{-r_f T}(K/F)N(d_2) = \Delta$ for $K$ (drop $e^{-r_f T}$ for the forward version). $K$ appears both outside and inside $N$, so no quantile frees it. For a call the root is sought only above the peak strike $K_{\text{peak}}$, where
+**Premium-adjusted: a root-find.** Solve $`e^{-r_f T}(K/F)N(d_2) = \Delta`$ for $`K`$ (drop $`e^{-r_f T}`$ for the forward version). $`K`$ appears both outside and inside $`N`$, so no quantile frees it. For a call the root is sought only above the peak strike $`K_{\text{peak}}`$, where
 
-$$\sigma\sqrt{T}\;N(d_2) = \varphi(d_2)$$
+```math
+\sigma\sqrt{T}\;N(d_2) = \varphi(d_2)
+```
 
-with $\varphi$ the bell curve's height.
+with $`\varphi`$ the bell curve's height.
 
 **Read it aloud:** the premium-adjusted call delta stops rising exactly where the strike's pull on the premium outweighs its pull on the chance of exercise.
 
 | Symbol | Plain meaning | In our example | Push it up and the strike… |
 | --- | --- | --- | --- |
-| $S$ | exchange rate today, USD per EUR | 1.1000 | rises in proportion |
-| $F$ | forward rate for one year | 1.122221 | rises in proportion |
-| $K$, $K_{\text{peak}}$ | strike; the strike where the premium-adjusted call delta peaks | spot 25-delta call 1.201425; peak 0.945813 | (the answer) |
-| $T$ | years to expiry | 1 | call strike moves further out |
-| $r_d$ | dollar interest rate | 5% | rises, through $F$ |
-| $r_f$ | euro interest rate; $e^{-r_f T}$ is the drag on spot delta | 3%; drag 0.970446 | falls through $F$; the spot ceiling drops |
-| $\sigma$ | volatility attached to the quote | 10.75% put, 9.75% call | the two wings (the put strike and the call strike) spread apart |
-| $\Delta$, $d_1^{*}$ | the quoted delta; the $d_1$ that produces it | 0.25 and −0.25; −0.650720 | a call strike moves toward the forward |
-| $N$, $N^{-1}$, $\varphi$ | bell-curve area left of a point; the point with a given area; the curve's height | $N(d_1) = 0.257614$ | |
-| $V$ | the option's premium, dollars per euro | house call 0.053556 | the premium-adjusted call delta falls further below spot delta |
-| $d_1$, $d_2$ | log-distance from strike to forward in units of $\sigma\sqrt{T}$; $d_2$ one unit lower | $d_1 = -0.650720$ at the spot 25-delta call | |
+| $`S`$ | exchange rate today, USD per EUR | 1.1000 | rises in proportion |
+| $`F`$ | forward rate for one year | 1.122221 | rises in proportion |
+| $`K`$, $`K_{\text{peak}}`$ | strike; the strike where the premium-adjusted call delta peaks | spot 25-delta call 1.201425; peak 0.945813 | (the answer) |
+| $`T`$ | years to expiry | 1 | call strike moves further out |
+| $`r_d`$ | dollar interest rate | 5% | rises, through $`F`$ |
+| $`r_f`$ | euro interest rate; $`e^{-r_f T}`$ is the drag on spot delta | 3%; drag 0.970446 | falls through $`F`$; the spot ceiling drops |
+| $`\sigma`$ | volatility attached to the quote | 10.75% put, 9.75% call | the two wings (the put strike and the call strike) spread apart |
+| $`\Delta`$, $`d_1^{*}`$ | the quoted delta; the $`d_1`$ that produces it | 0.25 and −0.25; −0.650720 | a call strike moves toward the forward |
+| $`N`$, $`N^{-1}`$, $`\varphi`$ | bell-curve area left of a point; the point with a given area; the curve's height | $`N(d_1) = 0.257614`$ | |
+| $`V`$ | the option's premium, dollars per euro | house call 0.053556 | the premium-adjusted call delta falls further below spot delta |
+| $`d_1`$, $`d_2`$ | log-distance from strike to forward in units of $`\sigma\sqrt{T}`$; $`d_2`$ one unit lower | $`d_1 = -0.650720`$ at the spot 25-delta call | |
 
 ### When it holds
 
-- **The volatility belongs to the strike being found.** A smile (a different volatility at each strike) makes $\sigma$ depend on $K$. Quotes sidestep this by attaching the volatility to the delta itself, as the screen above does. A volatility read off a fitted smile instead turns the one-liner into a repeat-until-settled loop.
+- **The volatility belongs to the strike being found.** A smile (a different volatility at each strike) makes $`\sigma`$ depend on $`K`$. Quotes sidestep this by attaching the volatility to the delta itself, as the screen above does. A volatility read off a fitted smile instead turns the one-liner into a repeat-until-settled loop.
 - **The quote's convention is known.** The same "25" names four strikes. Solving with the wrong convention moves the strike, as What breaks shows.
 - **Garman-Kohlhagen dynamics.** Rates constant, the exchange rate a geometric Brownian motion (its logarithm moves as a random walk with fixed drift and volatility). The delta is the model's; the quoting convention uses it even where the model is wrong.
-- **The delta is inside its range.** Spot call deltas lie strictly between 0 and $e^{-r_f T} = 0.970446$, spot puts between $-0.970446$ and 0; forward calls between 0 and 1, forward puts between $-1$ and 0. Premium-adjusted calls reach only up to the peak, 0.781852 spot and 0.805663 forward; premium-adjusted puts take any negative value. At the open ends (0, the ceiling) and above the peak, no strike exists; exactly at the peak there is one.
+- **The delta is inside its range.** Spot call deltas lie strictly between 0 and $`e^{-r_f T} = 0.970446`$, spot puts between $`-0.970446`$ and 0; forward calls between 0 and 1, forward puts between $`-1`$ and 0. Premium-adjusted calls reach only up to the peak, 0.781852 spot and 0.805663 forward; premium-adjusted puts take any negative value. At the open ends (0, the ceiling) and above the peak, no strike exists; exactly at the peak there is one.
 
 Conventions verified 2026-09-27 against Reiswich and Wystup (2010): EURUSD, premium paid in dollars, quotes spot delta without premium adjustment for expiries up to one year and forward delta beyond; pairs whose premium is paid in the first-named currency, such as USDJPY, quote premium-adjusted deltas.
 
@@ -107,34 +115,34 @@ Running a formula backwards is safe only where no two strikes share a delta. So 
 
 ### Step 1: spot and forward deltas fall as the strike rises
 
-Raise $K$ and $\ln(F/K)$ falls, so $d_1$ falls, at rate $-1/(K\sigma\sqrt{T})$. The area $N$ rises with its argument, because the bell curve's height is positive everywhere. So $N(d_1)$ falls strictly, and so does any positive multiple of it. The put's delta is the call's minus a constant ($N(-x) = 1 - N(x)$), so it falls too.
+Raise $`K`$ and $`\ln(F/K)`$ falls, so $`d_1`$ falls, at rate $`-1/(K\sigma\sqrt{T})`$. The area $`N`$ rises with its argument, because the bell curve's height is positive everywhere. So $`N(d_1)`$ falls strictly, and so does any positive multiple of it. The put's delta is the call's minus a constant ($`N(-x) = 1 - N(x)`$), so it falls too.
 
-At the ends: $K \to 0$ sends $d_1$ to plus infinity and the spot call delta up toward $e^{-r_f T}$; $K \to \infty$ sends it to 0. The delta moves without jumps, so by the intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)) every value strictly between is hit, and because the delta only falls, exactly once.
+At the ends: $`K \to 0`$ sends $`d_1`$ to plus infinity and the spot call delta up toward $`e^{-r_f T}`$; $`K \to \infty`$ sends it to 0. The delta moves without jumps, so by the intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)) every value strictly between is hit, and because the delta only falls, exactly once.
 
 ### Step 2: peel the formula
 
-Undo the layers from the outside. Divide by the drag: $N(d_1) = \Delta e^{r_f T}$. Apply the quantile: $d_1 = N^{-1}(\Delta e^{r_f T})$. Solve the definition of $d_1$ for $K$: $\ln(K/F) = -d_1\sigma\sqrt{T} + \tfrac12\sigma^2 T$. That is the formula. For a forward delta the first step has no drag to undo.
+Undo the layers from the outside. Divide by the drag: $`N(d_1) = \Delta e^{r_f T}`$. Apply the quantile: $`d_1 = N^{-1}(\Delta e^{r_f T})`$. Solve the definition of $`d_1`$ for $`K`$: $`\ln(K/F) = -d_1\sigma\sqrt{T} + \tfrac12\sigma^2 T`$. That is the formula. For a forward delta the first step has no drag to undo.
 
 ### Step 3: the premium changes the hedge
 
-Why subtract the premium at all? The Garman-Kohlhagen price $V$ is in dollars. If it is paid in euros instead, the seller receives $V/S$ euros up front. Those euros are already part of the hedge, so the extra euros still needed are the spot delta minus $V/S$. Written out, $e^{-r_f T}N(d_1) - V/S$ collapses to $e^{-r_f T}(K/F)N(d_2)$ ([One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md)).
+Why subtract the premium at all? The Garman-Kohlhagen price $`V`$ is in dollars. If it is paid in euros instead, the seller receives $`V/S`$ euros up front. Those euros are already part of the hedge, so the extra euros still needed are the spot delta minus $`V/S`$. Written out, $`e^{-r_f T}N(d_1) - V/S`$ collapses to $`e^{-r_f T}(K/F)N(d_2)`$ ([One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md)).
 
-That factor $K/F$ breaks monotonicity for the call. At a tiny strike the call is almost certain to pay, $N(d_2)$ is near 1, but the premium is nearly the whole euro, so the leftover hedge $K/F$ is tiny. At a huge strike $N(d_2)$ is near 0. Zero at both ends and positive between: the delta must rise and then fall.
+That factor $`K/F`$ breaks monotonicity for the call. At a tiny strike the call is almost certain to pay, $`N(d_2)`$ is near 1, but the premium is nearly the whole euro, so the leftover hedge $`K/F`$ is tiny. At a huge strike $`N(d_2)`$ is near 0. Zero at both ends and positive between: the delta must rise and then fall.
 
 ### Step 4: exactly one peak, so at most two roots
 
-Differentiate $(K/F)N(d_2)$ in $K$: the result is $\big(N(d_2) - \varphi(d_2)/(\sigma\sqrt{T})\big)/F$. It is zero exactly where $\sigma\sqrt{T}N(d_2) = \varphi(d_2)$, and that equation has one solution, so the delta has one peak. For the call at 9.75 percent the peak sits at $K_{\text{peak}} = 0.945813$, with premium-adjusted spot delta 0.781852 (forward: 0.805663).
+Differentiate $`(K/F)N(d_2)`$ in $`K`$: the result is $`\big(N(d_2) - \varphi(d_2)/(\sigma\sqrt{T})\big)/F`$. It is zero exactly where $`\sigma\sqrt{T}N(d_2) = \varphi(d_2)`$, and that equation has one solution, so the delta has one peak. For the call at 9.75 percent the peak sits at $`K_{\text{peak}} = 0.945813`$, with premium-adjusted spot delta 0.781852 (forward: 0.805663).
 
 So a premium-adjusted call delta below the peak value has two strikes, one each side. At the peak it has one. Above it has none. The 25-delta quote has two: **1.195870** and **0.289100**. The lower one is a call so deep in the money (struck far below today's rate) that its premium, paid in euros, cancels almost all of its hedge. Nobody quoting a smile means that option. The desk rule is to take the root above the peak.
 
 <details>
 <summary>Detailed proof: one peak, and the put has none</summary>
 
-Write $v = \sigma\sqrt{T} > 0$ and $g(x) = vN(x) - \varphi(x)$. Since $\varphi'(x) = -x\varphi(x)$, $g'(x) = \varphi(x)(v + x)$: negative for $x < -v$, positive for $x > -v$. As $x \to -\infty$, $N(x)/\varphi(x) \to 0$ (the Mills ratio: $N(x) < \varphi(x)/\lvert x\rvert$ for $x < 0$), so $g(x) < 0$ far left; $g(x)$ falls while $x < -v$, so stays negative there; then rises strictly to the limit $v > 0$. By continuity it crosses zero exactly once, at some $x^{*} > -v$.
+Write $`v = \sigma\sqrt{T} > 0`$ and $`g(x) = vN(x) - \varphi(x)`$. Since $`\varphi'(x) = -x\varphi(x)`$, $`g'(x) = \varphi(x)(v + x)`$: negative for $`x < -v`$, positive for $`x > -v`$. As $`x \to -\infty`$, $`N(x)/\varphi(x) \to 0`$ (the Mills ratio: $`N(x) < \varphi(x)/\lvert x\rvert`$ for $`x < 0`$), so $`g(x) < 0`$ far left; $`g(x)`$ falls while $`x < -v`$, so stays negative there; then rises strictly to the limit $`v > 0`$. By continuity it crosses zero exactly once, at some $`x^{*} > -v`$.
 
-The call's premium-adjusted delta is $D(K) = c\,(K/F)N(d_2)$ with $c > 0$, and $D'(K) = (c/F)\,g(d_2)/v$. $d_2$ falls strictly as $K$ rises. For small $K$, $d_2 > x^{*}$, $g(d_2) > 0$, $D(K)$ rises; for large $K$, $d_2 < x^{*}$, $D(K)$ falls. $D(K) \to 0$ at both ends (at $K \to 0$ because $K/F \to 0$ and $N \le 1$; at $K \to \infty$ because $K N(d_2) \le K e^{-d_2^2/2}$ decays in $\ln K$ faster than $K$ grows). By the intermediate value theorem on each side of the peak, each value in $(0, D_{\max})$ is taken exactly twice.
+The call's premium-adjusted delta is $`D(K) = c\,(K/F)N(d_2)`$ with $`c > 0`$, and $`D'(K) = (c/F)\,g(d_2)/v`$. $`d_2`$ falls strictly as $`K`$ rises. For small $`K`$, $`d_2 > x^{*}`$, $`g(d_2) > 0`$, $`D(K)`$ rises; for large $`K`$, $`d_2 < x^{*}`$, $`D(K)`$ falls. $`D(K) \to 0`$ at both ends (at $`K \to 0`$ because $`K/F \to 0`$ and $`N \le 1`$; at $`K \to \infty`$ because $`K N(d_2) \le K e^{-d_2^2/2}`$ decays in $`\ln K`$ faster than $`K`$ grows). By the intermediate value theorem on each side of the peak, each value in $`(0, D_{\max})`$ is taken exactly twice.
 
-The put: $\lvert D_p(K)\rvert = c\,(K/F)N(-d_2)$. Both factors rise strictly with $K$, so it rises strictly from 0 (as $K \to 0$) to infinity (as $K \to \infty$, $N(-d_2) \to 1$). Every negative delta has exactly one strike. A premium-adjusted put delta can pass −1: a deep put's euro premium adds to its hedge.
+The put: $`\lvert D_p(K)\rvert = c\,(K/F)N(-d_2)`$. Both factors rise strictly with $`K`$, so it rises strictly from 0 (as $`K \to 0`$) to infinity (as $`K \to \infty`$, $`N(-d_2) \to 1`$). Every negative delta has exactly one strike. A premium-adjusted put delta can pass −1: a deep put's euro premium adds to its hedge.
 
 </details>
 
@@ -142,27 +150,27 @@ The put: $\lvert D_p(K)\rvert = c\,(K/F)N(-d_2)$. Both factors rise strictly wit
 
 With no closed form, the root comes from Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)): start at a guess, follow the tangent line of the delta curve down to the target, repeat. The derivative is the one in Step 4.
 
-A good start is the spot-delta strike, 1.201425: the premium only lowers a call's delta, so the premium-adjusted root lies below it, and above the peak. That gives the bracket from $K_{\text{peak}}$ to the unadjusted strike, which bisection (halving the bracket until it is tiny) also uses; the code runs both.
+A good start is the spot-delta strike, 1.201425: the premium only lowers a call's delta, so the premium-adjusted root lies below it, and above the peak. That gives the bracket from $`K_{\text{peak}}`$ to the unadjusted strike, which bisection (halving the bracket until it is tiny) also uses; the code runs both.
 
-The equity version of this inverse, with a dividend yield where $r_f$ sits, is [Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
+The equity version of this inverse, with a dividend yield where $`r_f`$ sits, is [Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
 
 ---
 
 ## Worked numbers, by hand
 
-EURUSD 1.1000, $r_d = 5\%$, $r_f = 3\%$, $T = 1$. Target: the spot 25-delta call at 9.75 percent.
+EURUSD 1.1000, $`r_d = 5\%`$, $`r_f = 3\%`$, $`T = 1`$. Target: the spot 25-delta call at 9.75 percent.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forward $F$ | $1.1 \times e^{0.02}$ | 1.122221 |
-| ceiling $e^{-r_f T}$ | $e^{-0.03}$ | 0.970446 |
-| is 0.25 inside $(0, 0.970446)$? | yes | one strike |
-| target area $N(d_1)$ | $0.25 \times e^{0.03}$ | 0.257614 |
-| $d_1^{*} = N^{-1}(0.257614)$ | bell-curve table, backwards | −0.650720 |
-| $d_1^{*}\sigma\sqrt{T}$ | $-0.650720 \times 0.0975$ | −0.063445 |
-| $\tfrac12\sigma^2 T$ | $0.5 \times 0.0975^2$ | 0.004753 |
-| $\ln(K/F)$ | $0.063445 + 0.004753$ | 0.068198 |
-| **strike** | $1.122221 \times e^{0.068198}$ | **1.201425** |
+| forward $`F`$ | $`1.1 \times e^{0.02}`$ | 1.122221 |
+| ceiling $`e^{-r_f T}`$ | $`e^{-0.03}`$ | 0.970446 |
+| is 0.25 inside $`(0, 0.970446)`$? | yes | one strike |
+| target area $`N(d_1)`$ | $`0.25 \times e^{0.03}`$ | 0.257614 |
+| $`d_1^{*} = N^{-1}(0.257614)`$ | bell-curve table, backwards | −0.650720 |
+| $`d_1^{*}\sigma\sqrt{T}`$ | $`-0.650720 \times 0.0975`$ | −0.063445 |
+| $`\tfrac12\sigma^2 T`$ | $`0.5 \times 0.0975^2`$ | 0.004753 |
+| $`\ln(K/F)`$ | $`0.063445 + 0.004753`$ | 0.068198 |
+| **strike** | $`1.122221 \times e^{0.068198}`$ | **1.201425** |
 
 The spot 25-delta put runs the same table at 10.75 percent with the quantile's sign flipped and lands at 1.052466. A buyer of the 25-delta call holds the right to buy euros at 1.201425 dollars, well above today's 1.1000, and the dealer hedges it with a quarter of a euro per euro of notional (the contract's size in euros).
 
@@ -185,8 +193,8 @@ Right answer, spot 25-delta call: 1.201425.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Forget the drag, solve $N(d_1) = 0.25$ | 1.204213 | That is the forward-delta strike: the quote was read in the wrong convention. |
-| Use $e^{r_d T}$ where $e^{r_f T}$ belongs | 1.199548 | The drag is the euro rate, because the hedge is held in euros. |
+| Forget the drag, solve $`N(d_1) = 0.25`$ | 1.204213 | That is the forward-delta strike: the quote was read in the wrong convention. |
+| Use $`e^{r_d T}`$ where $`e^{r_f T}`$ belongs | 1.199548 | The drag is the euro rate, because the hedge is held in euros. |
 | Spot formula on a premium-adjusted quote | 1.201425, not 1.195870 | The premium, paid in euros, was left out of the hedge. |
 | Premium-adjusted call, the lower root | 0.289100 | A deep in-the-money call; the smile means the root above the peak. |
 
@@ -198,9 +206,9 @@ The code solves all eight strikes by two independent roads and then checks what 
 
 - **Road 1** is the closed form for spot and forward deltas, and Newton's method with the analytic slope for the premium-adjusted ones.
 - **Road 2** is bisection on the forward map, strike in and delta out, with the premium-adjusted call confined to the bracket above its peak.
-- **Road 3** never touches $N(d_1)$ or $N(d_2)$: it prices the option at the found strike by Simpson's rule (adding thin slices of payoff times bell curve), nudges the exchange rate each way, reads the spot delta off the change in price, subtracts the premium in euros where the convention asks, and scales by $e^{r_f T}$ for a forward delta.
+- **Road 3** never touches $`N(d_1)`$ or $`N(d_2)`$: it prices the option at the found strike by Simpson's rule (adding thin slices of payoff times bell curve), nudges the exchange rate each way, reads the spot delta off the change in price, subtracts the premium in euros where the convention asks, and scales by $`e^{r_f T}`$ for a forward delta.
 
-Every strike comes back with delta ±0.25. Python's bell-curve area is the error function's Taylor series written out; Rust's is Simpson's rule under the bell curve, so the two languages share no $N$.
+Every strike comes back with delta ±0.25. Python's bell-curve area is the error function's Taylor series written out; Rust's is Simpson's rule under the bell curve, so the two languages share no $`N`$.
 
 ### Python
 
@@ -591,10 +599,10 @@ Lean proves the card's theorem and the one-line formula, for spot and forward ve
 - Suppose a spot or forward call delta lies strictly between 0 and its ceiling. Then exactly one positive strike has it, and the one-line formula gives that strike.
 - Suppose a spot or forward put delta lies strictly between minus the ceiling and 0. Then the same holds, with the quantile's sign flipped.
 - The premium-adjusted put delta falls strictly as the strike rises. Every negative value is the delta of exactly one positive strike.
-- The premium-adjusted call delta rises strictly up to one peak strike, $K_{\text{peak}}$, and falls strictly after it.
-- Take $d_2$ at that peak strike. Then $\sigma\sqrt{T}\,N(d_2) = \varphi(d_2)$.
+- The premium-adjusted call delta rises strictly up to one peak strike, $`K_{\text{peak}}`$, and falls strictly after it.
+- Take $`d_2`$ at that peak strike. Then $`\sigma\sqrt{T}\,N(d_2) = \varphi(d_2)`$.
 - A premium-adjusted call delta strictly between 0 and the peak value has exactly two positive strikes. Exactly one of them lies above the peak.
-- The peak value belongs to $K_{\text{peak}}$ alone, and a delta above the peak value has no strike.
+- The peak value belongs to $`K_{\text{peak}}`$ alone, and a delta above the peak value has no strike.
 
 Every number on the card, and the empty answer for a spot delta above its ceiling, is left to the Python and Rust checks.
 
@@ -1325,7 +1333,7 @@ theorem premium_adjusted_call_one_peak_two_roots
 > - **One volatility for both wings.** Solving both strikes at a flat 10 percent gives 1.203678 and 1.056792, not 1.201425 and 1.052466: the risk reversal (the gap between the wings' volatilities) moves each strike.
 > - **Starting Newton at the forward on a premium-adjusted call.** The forward sits above the peak here, but a longer or more volatile option puts the peak above the forward; Newton started below the peak can slide to the lower root. Start at the unadjusted strike, which is always above both.
 > - **Asking for a delta out of range.** A spot call delta of 0.98 against a ceiling of 0.970446 has no strike; a solver that skips the range check returns garbage or crashes.
-> - **The domestic rate in the drag.** Using $e^{r_d T}$ gives 1.199548.
+> - **The domestic rate in the drag.** Using $`e^{r_d T}`$ gives 1.199548.
 
 ---
 

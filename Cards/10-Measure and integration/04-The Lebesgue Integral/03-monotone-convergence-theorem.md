@@ -32,52 +32,58 @@ Drawn to scale: 300 pixels to the km along the river, 160 pixels to the metre of
 
 ## The formula
 
-Notation first. From [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): a measure space $(\Omega, \mathcal{F}, \mu)$ is a whole space $\Omega$, a sigma-algebra $\mathcal{F}$ (the collection of sets we allow ourselves to measure) and a measure $\mu$. A function f is measurable when every set $\{f > a\}$ is in $\mathcal{F}$.
+Notation first. From [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): a measure space $`(\Omega, \mathcal{F}, \mu)`$ is a whole space $`\Omega`$, a sigma-algebra $`\mathcal{F}`$ (the collection of sets we allow ourselves to measure) and a measure $`\mu`$. A function f is measurable when every set $`\{f > a\}`$ is in $`\mathcal{F}`$.
 
-For measurable f with values in $[0, \infty]$, the integral $\int_\Omega f\,d\mu$, read "the integral of f against μ", is the supremum of the integrals of simple s with $0 \le s \le f$. On the river, $\Omega$ is the stretch $[0, 1]$ in km and $\mu$ is Lebesgue measure $\lambda$, which is length.
+For measurable f with values in $`[0, \infty]`$, the integral $`\int_\Omega f\,d\mu`$, read "the integral of f against μ", is the supremum of the integrals of simple s with $`0 \le s \le f`$. On the river, $`\Omega`$ is the stretch $`[0, 1]`$ in km and $`\mu`$ is Lebesgue measure $`\lambda`$, which is length.
 
-One new piece of notation: $f_n \uparrow f$, read "f_n rises to f", means $f_1(x) \le f_2(x) \le \cdots$ and $f_n(x) \to f(x)$ at every point x. Infinity is allowed as a value throughout.
+One new piece of notation: $`f_n \uparrow f`$, read "f_n rises to f", means $`f_1(x) \le f_2(x) \le \cdots`$ and $`f_n(x) \to f(x)`$ at every point x. Infinity is allowed as a value throughout.
 
-$$0 \le f_1 \le f_2 \le \cdots, \quad f_n \uparrow f \quad\Longrightarrow\quad \int_\Omega f\,d\mu = \lim_{n\to\infty} \int_\Omega f_n\,d\mu$$
+```math
+0 \le f_1 \le f_2 \le \cdots, \quad f_n \uparrow f \quad\Longrightarrow\quad \int_\Omega f\,d\mu = \lim_{n\to\infty} \int_\Omega f_n\,d\mu
+```
 
 **Read it aloud:** when non-negative measurable functions rise at every point to a limit, the integral of the limit is the limit of the integrals.
 
-Three consequences are proved below. The first is the **staircase formula**. The staircase $\varphi_n$ is f rounded down to the last mark, with marks $2^{-n}$ apart, capped at height n: $\varphi_n = \min\big(n, \lfloor 2^n f \rfloor / 2^n\big)$, where $\lfloor y \rfloor$ is y rounded down to a whole number.
+Three consequences are proved below. The first is the **staircase formula**. The staircase $`\varphi_n`$ is f rounded down to the last mark, with marks $`2^{-n}`$ apart, capped at height n: $`\varphi_n = \min\big(n, \lfloor 2^n f \rfloor / 2^n\big)`$, where $`\lfloor y \rfloor`$ is y rounded down to a whole number.
 
-$$\int_\Omega f\,d\mu = \lim_{n\to\infty} \sum_{k=1}^{n 2^n} \frac{1}{2^n}\, \mu\big(\{f \ge k/2^n\}\big)$$
+```math
+\int_\Omega f\,d\mu = \lim_{n\to\infty} \sum_{k=1}^{n 2^n} \frac{1}{2^n}\, \mu\big(\{f \ge k/2^n\}\big)
+```
 
-**Read it aloud:** slice the graph horizontally every $2^{-n}$, weigh each slice by the size of the set where f reaches it, add, and refine.
+**Read it aloud:** slice the graph horizontally every $`2^{-n}`$, weigh each slice by the size of the set where f reaches it, add, and refine.
 
-The second is **additivity**: for non-negative measurable f and $r$, $\int (f + r)\,d\mu = \int f\,d\mu + \int r\,d\mu$. The third is **term-by-term integration**: for non-negative measurable $g_k$,
+The second is **additivity**: for non-negative measurable f and $`r`$, $`\int (f + r)\,d\mu = \int f\,d\mu + \int r\,d\mu`$. The third is **term-by-term integration**: for non-negative measurable $`g_k`$,
 
-$$\int_\Omega \sum_{k=0}^{\infty} g_k \,d\mu = \sum_{k=0}^{\infty} \int_\Omega g_k\,d\mu$$
+```math
+\int_\Omega \sum_{k=0}^{\infty} g_k \,d\mu = \sum_{k=0}^{\infty} \int_\Omega g_k\,d\mu
+```
 
 **Read it aloud:** a series of non-negative functions may be integrated one term at a time, and the two sides agree even when both are infinite.
 
-On the river, $4x(1-x) \ge t$ exactly when x lies within $\sqrt{1-t}/2$ of the middle, so $\lambda(\{d \ge t\}) = \sqrt{1 - t}$ for a depth $t$ between 0 and 1. The staircase integral at stage n is therefore $2^{-n} \sum_{k=1}^{2^n} \sqrt{1 - k/2^n}$.
+On the river, $`4x(1-x) \ge t`$ exactly when x lies within $`\sqrt{1-t}/2`$ of the middle, so $`\lambda(\{d \ge t\}) = \sqrt{1 - t}`$ for a depth $`t`$ between 0 and 1. The staircase integral at stage n is therefore $`2^{-n} \sum_{k=1}^{2^n} \sqrt{1 - k/2^n}`$.
 
-The second crew's step function has integral $L_n$, and on this river $L_n = 2/3 - 2^{-n} - \tfrac{2}{3} 4^{-n}$. The shallowest point of each cell is its end nearer a bank, so by symmetry $L_n$ is twice $2^{-n}$ times the sum of the depths $d(j/2^n)$ for whole numbers j from 0 to $2^{n-1} - 1$; with $d(x) = 4x(1 - x)$, the formulas for the sums of j and of $j^2$ give the closed form.
+The second crew's step function has integral $`L_n`$, and on this river $`L_n = 2/3 - 2^{-n} - \tfrac{2}{3} 4^{-n}`$. The shallowest point of each cell is its end nearer a bank, so by symmetry $`L_n`$ is twice $`2^{-n}`$ times the sum of the depths $`d(j/2^n)`$ for whole numbers j from 0 to $`2^{n-1} - 1`$; with $`d(x) = 4x(1 - x)`$, the formulas for the sums of j and of $`j^2`$ give the closed form.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$, $\mu$, $\lambda$ | measure space: whole space, sets allowed a size, the measure; λ is length | the stretch [0, 1] km, its Borel sets (the sets built from intervals), length | — |
-| $f$ | the limit: a non-negative measurable function | depth d(x) = 4x(1 − x) m | a deeper river, a larger integral |
-| $f_n$ | the n-th function of a rising sequence | the n-th staircase | later n, larger integral, never past the limit's |
-| $\varphi_n$, $\psi_n$ | the staircase: f (or r) rounded down to marks $2^{-n}$ apart, capped at n | integrals 0.3536, 0.5183, 0.5956 … | finer marks, closer to 2/3 |
-| $L_n$ | integral of the shallowest depth on each of $2^n$ equal cells | 0, 0.375, 0.53125 … | more cells, closer to 2/3 |
-| $t$ | a depth level | 0.25, 0.5, 0.75 m | higher level, shorter set $\{d \ge t\}$ |
-| $s$, $A_j$ | a simple function under f, the test in the proof; its level sets | 0.95 m on [0.4, 0.6] km | — |
-| $c$ | shrink factor in the proof, between 0 and 1 | 0.99 | nearer 1, the test sets fill later |
-| $E_n$ | the set where $f_n$ has reached c times s | length 0.8 up to n = 4, then 0.9768, then 1 | — |
-| $r$ | a second non-negative function, to add to f | a flood adding x/2 m | — |
-| $g_k$ | the k-th term of a series of non-negative functions | $x^k$ on [0, 1/2] km | — |
-| $n$, $k$, $m$, $j$ | whole-number counters | stage, level, term, cell or level set | — |
+| $`\Omega`$, $`\mathcal{F}`$, $`\mu`$, $`\lambda`$ | measure space: whole space, sets allowed a size, the measure; λ is length | the stretch [0, 1] km, its Borel sets (the sets built from intervals), length | — |
+| $`f`$ | the limit: a non-negative measurable function | depth d(x) = 4x(1 − x) m | a deeper river, a larger integral |
+| $`f_n`$ | the n-th function of a rising sequence | the n-th staircase | later n, larger integral, never past the limit's |
+| $`\varphi_n`$, $`\psi_n`$ | the staircase: f (or r) rounded down to marks $`2^{-n}`$ apart, capped at n | integrals 0.3536, 0.5183, 0.5956 … | finer marks, closer to 2/3 |
+| $`L_n`$ | integral of the shallowest depth on each of $`2^n`$ equal cells | 0, 0.375, 0.53125 … | more cells, closer to 2/3 |
+| $`t`$ | a depth level | 0.25, 0.5, 0.75 m | higher level, shorter set $`\{d \ge t\}`$ |
+| $`s`$, $`A_j`$ | a simple function under f, the test in the proof; its level sets | 0.95 m on [0.4, 0.6] km | — |
+| $`c`$ | shrink factor in the proof, between 0 and 1 | 0.99 | nearer 1, the test sets fill later |
+| $`E_n`$ | the set where $`f_n`$ has reached c times s | length 0.8 up to n = 4, then 0.9768, then 1 | — |
+| $`r`$ | a second non-negative function, to add to f | a flood adding x/2 m | — |
+| $`g_k`$ | the k-th term of a series of non-negative functions | $`x^k`$ on [0, 1/2] km | — |
+| $`n`$, $`k`$, $`m`$, $`j`$ | whole-number counters | stage, level, term, cell or level set | — |
 
 ### When it holds
 
 - **Rising at every point.** The spike of height n on (0, 1/n) converges to 0 everywhere, yet each spike has integral 1: at x = 0.3 its values go 1, 2, 3, then 0 from n = 4 on. Rising almost everywhere (a.e., except on a set of size zero) is enough, since a null set changes no integral.
 - **Non-negative.** On the real line, the function −1 on [n, ∞) rises to 0, yet each has an infinite negative part and no integral. Both signs wait for [Integrable functions](04-integrable-functions-and-l1.md).
-- **Measurable, with respect to $\mathcal{F}$.** Each $f_n$ must be measurable; the limit then is too, by [Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md).
+- **Measurable, with respect to $`\mathcal{F}`$.** Each $`f_n`$ must be measurable; the limit then is too, by [Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md).
 - **Nothing else.** No bound on the functions, no finite total, no uniform convergence (every point getting close at the same rate). Infinite integrals are allowed on both sides.
 - **Rising, not falling.** The function 1 on [n, ∞) falls to 0 with infinite length at every n.
 
@@ -91,25 +97,25 @@ The functions sit under their limit, so their integrals sit under its integral. 
 
 ### Step 1: the limit is measurable, and the integrals rise to at most its integral
 
-At each point the numbers $f_n(x)$ never fall, so they settle on their least upper bound, possibly infinity. The limit exceeds a number exactly when some $f_n$ does, a countable union of measurable sets, so the limit is measurable. A simple function under $f_n$ is under $f_{n+1}$ and under f, so the integrals rise and stay at most $\int f\,d\mu$.
+At each point the numbers $`f_n(x)`$ never fall, so they settle on their least upper bound, possibly infinity. The limit exceeds a number exactly when some $`f_n`$ does, a countable union of measurable sets, so the limit is measurable. A simple function under $`f_n`$ is under $`f_{n+1}`$ and under f, so the integrals rise and stay at most $`\int f\,d\mu`$.
 
 ### Step 2: the hard inequality, on the river
 
-Test the river staircases against a simple function s: 0.95 m on [0.4, 0.6] km, zero elsewhere. It sits under the bed, since the depth is at least 0.96 m there. Take c = 0.99, so c times s is 0.9405 m. Let $E_n$ be the set where the n-th staircase has reached c times s.
+Test the river staircases against a simple function s: 0.95 m on [0.4, 0.6] km, zero elsewhere. It sits under the bed, since the depth is at least 0.96 m there. Take c = 0.99, so c times s is 0.9405 m. Let $`E_n`$ be the set where the n-th staircase has reached c times s.
 
-Off [0.4, 0.6] the test is zero, so those points are in $E_n$ from the start: length 0.8. On [0.4, 0.6] the staircase must show 0.9405 m. Up to n = 4 the first mark at or above 0.9405 is 1, reached only at the middle point. At n = 5 that mark is 0.96875, and $E_n$ has length 0.9768. At n = 6 it is 0.953125, which the depth passes everywhere on [0.4, 0.6], and $E_n$ is the whole stretch.
+Off [0.4, 0.6] the test is zero, so those points are in $`E_n`$ from the start: length 0.8. On [0.4, 0.6] the staircase must show 0.9405 m. Up to n = 4 the first mark at or above 0.9405 is 1, reached only at the middle point. At n = 5 that mark is 0.96875, and $`E_n`$ has length 0.9768. At n = 6 it is 0.953125, which the depth passes everywhere on [0.4, 0.6], and $`E_n`$ is the whole stretch.
 
-The staircase is at least c times s on $E_n$, so its integral is at least 0.9405 times the length of $E_n$ inside [0.4, 0.6]: 0 up to n = 4, then 0.1663, then 0.1881, which is c times the integral of s. The staircase integrals, 0.6499 and 0.6585 at those stages, clear it.
+The staircase is at least c times s on $`E_n`$, so its integral is at least 0.9405 times the length of $`E_n`$ inside [0.4, 0.6]: 0 up to n = 4, then 0.1663, then 0.1881, which is c times the integral of s. The staircase integrals, 0.6499 and 0.6585 at those stages, clear it.
 
-In general, s has finitely many levels, each on a measurable set, and the part of each level set inside $E_n$ rises to the whole of it. Continuity from below moves the sizes up, so the limit of $\int f_n\,d\mu$ is at least c times $\int s\,d\mu$. Let c rise to 1 and take the supremum over s: that supremum is $\int f\,d\mu$ by definition.
+In general, s has finitely many levels, each on a measurable set, and the part of each level set inside $`E_n`$ rises to the whole of it. Continuity from below moves the sizes up, so the limit of $`\int f_n\,d\mu`$ is at least c times $`\int s\,d\mu`$. Let c rise to 1 and take the supremum over s: that supremum is $`\int f\,d\mu`$ by definition.
 
 ### Step 3: why c must be below 1
 
-Let $f_n$ be $(1 - 1/n)$ times the quarter-metre staircase; these rise to that staircase. Test with s equal to it and c = 1. Wherever the staircase is positive, $f_n$ stays strictly below it, so $E_n$ is only the shallows where it is zero: length 0.1340 at n = 2, 10 and 100. With c below 1, every point enters once $1 - 1/n \ge c$.
+Let $`f_n`$ be $`(1 - 1/n)`$ times the quarter-metre staircase; these rise to that staircase. Test with s equal to it and c = 1. Wherever the staircase is positive, $`f_n`$ stays strictly below it, so $`E_n`$ is only the shallows where it is zero: length 0.1340 at n = 2, 10 and 100. With c below 1, every point enters once $`1 - 1/n \ge c`$.
 
 ### Step 4: the staircase formula
 
-The staircase at stage n is $2^{-n}$ times the number of marks the function reaches, so it is simple and its integral is the sum in the formula. Halving the gap between marks can only keep or raise the last mark below a depth, so the staircases rise. Where f is finite they come within $2^{-n}$ of it once n passes f; where f is infinite they equal n. Both facts are proved on [Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md).
+The staircase at stage n is $`2^{-n}`$ times the number of marks the function reaches, so it is simple and its integral is the sum in the formula. Halving the gap between marks can only keep or raise the last mark below a depth, so the staircases rise. Where f is finite they come within $`2^{-n}`$ of it once n passes f; where f is infinite they equal n. Both facts are proved on [Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md).
 
 They rise to f, and the theorem gives the formula. On the river, stage 10 is within 1/1024 m of the depth everywhere and misses 0.000495 of the integral.
 
@@ -125,26 +131,26 @@ A flood adds x/2 m of water at x km, so r has integral 1/4 and the flooded river
 
 The partial sums of non-negative terms rise, additivity integrates each one, and the theorem moves the limit inside.
 
-On [0, 1/2] the geometric series $1 + x + x^2 + \cdots$ sums to 1/(1 − x), every term non-negative. The integral of $x^k$ over [0, 1/2] is $(1/2)^{k+1}/(k+1)$, the calculus value, as the two integrals agree for continuous functions on a closed interval ([Riemann meets Lebesgue](05-riemann-meets-lebesgue.md); that later card uses this theorem, but only this example leans on it, never the proof above). With m = k + 1 the terms are 1/(m 2^m): 1/2, 1/8, 1/24, 1/64, 1/160. The integral of 1/(1 − x) over [0, 1/2] is ln 2, so the sum is ln 2.
+On [0, 1/2] the geometric series $`1 + x + x^2 + \cdots`$ sums to 1/(1 − x), every term non-negative. The integral of $`x^k`$ over [0, 1/2] is $`(1/2)^{k+1}/(k+1)`$, the calculus value, as the two integrals agree for continuous functions on a closed interval ([Riemann meets Lebesgue](05-riemann-meets-lebesgue.md); that later card uses this theorem, but only this example leans on it, never the proof above). With m = k + 1 the terms are 1/(m 2^m): 1/2, 1/8, 1/24, 1/64, 1/160. The integral of 1/(1 − x) over [0, 1/2] is ln 2, so the sum is ln 2.
 
-No uniform convergence is needed. On [0, 1) the leftover after N terms, $x^{N+1}/(1 - x)$, is unbounded near 1, yet the swap holds: the integrals 1/(k + 1) form the harmonic series, which diverges ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)), so the integral of 1/(1 − x) over [0, 1) is infinite.
+No uniform convergence is needed. On [0, 1) the leftover after N terms, $`x^{N+1}/(1 - x)`$, is unbounded near 1, yet the swap holds: the integrals 1/(k + 1) form the harmonic series, which diverges ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)), so the integral of 1/(1 − x) over [0, 1) is infinite.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space. Each $f_n$ maps $\Omega$ to $[0, \infty]$, is measurable with respect to $\mathcal{F}$, and $f_n(x) \le f_{n+1}(x)$ at every x. Arithmetic in $[0, \infty]$ uses $a + \infty = \infty$ and $0 \cdot \infty = 0$. From [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): a simple $s = \sum_j a_j 1_{A_j}$ with disjoint sets $A_j \in \mathcal{F}$ and levels $a_j \ge 0$ (the indicator $1_A$ is 1 on A and 0 off it) has $\int s\,d\mu = \sum_j a_j \mu(A_j)$; the integral of f is the supremum of $\int s\,d\mu$ over simple $0 \le s \le f$; and if $f \le g$ pointwise then $\int f\,d\mu \le \int g\,d\mu$, because every simple function under f is under g.
+**Setting.** $`(\Omega, \mathcal{F}, \mu)`$ is a measure space. Each $`f_n`$ maps $`\Omega`$ to $`[0, \infty]`$, is measurable with respect to $`\mathcal{F}`$, and $`f_n(x) \le f_{n+1}(x)`$ at every x. Arithmetic in $`[0, \infty]`$ uses $`a + \infty = \infty`$ and $`0 \cdot \infty = 0`$. From [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): a simple $`s = \sum_j a_j 1_{A_j}`$ with disjoint sets $`A_j \in \mathcal{F}`$ and levels $`a_j \ge 0`$ (the indicator $`1_A`$ is 1 on A and 0 off it) has $`\int s\,d\mu = \sum_j a_j \mu(A_j)`$; the integral of f is the supremum of $`\int s\,d\mu`$ over simple $`0 \le s \le f`$; and if $`f \le g`$ pointwise then $`\int f\,d\mu \le \int g\,d\mu`$, because every simple function under f is under g.
 
-**1. The limit is measurable.** Each list $f_n(x)$ never falls, so it converges in $[0, \infty]$ to its supremum f(x). For real a, $\{f > a\} = \bigcup_n \{f_n > a\}$, since f(x) > a exactly when a is not an upper bound of the list. A countable union of sets in $\mathcal{F}$ is in $\mathcal{F}$, so f is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
+**1. The limit is measurable.** Each list $`f_n(x)`$ never falls, so it converges in $`[0, \infty]`$ to its supremum f(x). For real a, $`\{f > a\} = \bigcup_n \{f_n > a\}`$, since f(x) > a exactly when a is not an upper bound of the list. A countable union of sets in $`\mathcal{F}`$ is in $`\mathcal{F}`$, so f is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
 
-**2. The easy inequality.** From $f_n \le f_{n+1} \le f$ and monotonicity of the integral, $\int f_n\,d\mu \le \int f_{n+1}\,d\mu \le \int f\,d\mu$. A list in $[0, \infty]$ that never falls converges to its supremum, so $\lim_n \int f_n\,d\mu$ exists and is at most $\int f\,d\mu$.
+**2. The easy inequality.** From $`f_n \le f_{n+1} \le f`$ and monotonicity of the integral, $`\int f_n\,d\mu \le \int f_{n+1}\,d\mu \le \int f\,d\mu`$. A list in $`[0, \infty]`$ that never falls converges to its supremum, so $`\lim_n \int f_n\,d\mu`$ exists and is at most $`\int f\,d\mu`$.
 
-**3. The hard inequality.** Fix a simple $s = \sum_{j=1}^{J} a_j 1_{A_j}$ with $0 \le s \le f$ and $A_1, \dots, A_J$ disjoint and covering $\Omega$, and fix $0 < c < 1$. Put $E_n = \{x : f_n(x) \ge c\,s(x)\} = \bigcup_j \big(A_j \cap \{f_n \ge c\,a_j\}\big)$, a finite union of sets in $\mathcal{F}$. Since $f_n \le f_{n+1}$, $E_n \subseteq E_{n+1}$. Their union is $\Omega$: if s(x) = 0 then x is in every $E_n$; if s(x) > 0 then $f(x) \ge s(x) > c\,s(x)$, and since $f_n(x)$ converges to f(x), or grows without bound when f(x) is infinite, some $f_n(x)$ exceeds $c\,s(x)$. The function $\sum_j c\,a_j 1_{A_j \cap E_n}$ is simple and at most $f_n$, so $\int f_n\,d\mu \ge c \sum_j a_j\, \mu(A_j \cap E_n)$. For each j the sets $A_j \cap E_n$ rise with union $A_j$, so $\mu(A_j \cap E_n) \to \mu(A_j)$ by continuity from below ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)). A finite sum of rising lists in $[0, \infty]$ converges to the sum of their limits, so $\lim_n \int f_n\,d\mu \ge c \int s\,d\mu$. If $\int s\,d\mu$ is infinite, c = 1/2 already makes the left side infinite. Otherwise the inequality for every c below 1 gives $\lim_n \int f_n\,d\mu \ge \int s\,d\mu$. Taking the supremum over s gives $\lim_n \int f_n\,d\mu \ge \int f\,d\mu$, and with step 2 the two are equal.
+**3. The hard inequality.** Fix a simple $`s = \sum_{j=1}^{J} a_j 1_{A_j}`$ with $`0 \le s \le f`$ and $`A_1, \dots, A_J`$ disjoint and covering $`\Omega`$, and fix $`0 < c < 1`$. Put $`E_n = \{x : f_n(x) \ge c\,s(x)\} = \bigcup_j \big(A_j \cap \{f_n \ge c\,a_j\}\big)`$, a finite union of sets in $`\mathcal{F}`$. Since $`f_n \le f_{n+1}`$, $`E_n \subseteq E_{n+1}`$. Their union is $`\Omega`$: if s(x) = 0 then x is in every $`E_n`$; if s(x) > 0 then $`f(x) \ge s(x) > c\,s(x)`$, and since $`f_n(x)`$ converges to f(x), or grows without bound when f(x) is infinite, some $`f_n(x)`$ exceeds $`c\,s(x)`$. The function $`\sum_j c\,a_j 1_{A_j \cap E_n}`$ is simple and at most $`f_n`$, so $`\int f_n\,d\mu \ge c \sum_j a_j\, \mu(A_j \cap E_n)`$. For each j the sets $`A_j \cap E_n`$ rise with union $`A_j`$, so $`\mu(A_j \cap E_n) \to \mu(A_j)`$ by continuity from below ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)). A finite sum of rising lists in $`[0, \infty]`$ converges to the sum of their limits, so $`\lim_n \int f_n\,d\mu \ge c \int s\,d\mu`$. If $`\int s\,d\mu`$ is infinite, c = 1/2 already makes the left side infinite. Otherwise the inequality for every c below 1 gives $`\lim_n \int f_n\,d\mu \ge \int s\,d\mu`$. Taking the supremum over s gives $`\lim_n \int f_n\,d\mu \ge \int f\,d\mu`$, and with step 2 the two are equal.
 
-**4. The staircase formula.** Put $\varphi_n(x) = \min(n, \lfloor 2^n f(x) \rfloor / 2^n)$, and $\varphi_n(x) = n$ where f(x) is infinite. The number of k from 1 to $n 2^n$ with $k/2^n \le f(x)$ is $\min(n 2^n, \lfloor 2^n f(x) \rfloor)$, so $\varphi_n = \sum_{k=1}^{n 2^n} 2^{-n} 1_{\{f \ge k/2^n\}}$. Each set $\{f \ge k/2^n\}$ is in $\mathcal{F}$, so $\varphi_n$ is simple, and linearity of the simple integral ([The integral of a simple function](01-integral-of-a-simple-function.md)) gives $\int \varphi_n\,d\mu = \sum_{k=1}^{n 2^n} 2^{-n} \mu(\{f \ge k/2^n\})$. They rise, as Lemma 2 and part (b) on [Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md) prove: $\lfloor 2y \rfloor \ge 2 \lfloor y \rfloor$ for real y, and the cap grows. They converge to f, by parts (c) and (d) there: where f(x) < n, $0 \le f(x) - \varphi_n(x) < 2^{-n}$; where f(x) is infinite, $\varphi_n(x) = n$. Steps 1 to 3 applied to $\varphi_n \uparrow f$ give the formula.
+**4. The staircase formula.** Put $`\varphi_n(x) = \min(n, \lfloor 2^n f(x) \rfloor / 2^n)`$, and $`\varphi_n(x) = n`$ where f(x) is infinite. The number of k from 1 to $`n 2^n`$ with $`k/2^n \le f(x)`$ is $`\min(n 2^n, \lfloor 2^n f(x) \rfloor)`$, so $`\varphi_n = \sum_{k=1}^{n 2^n} 2^{-n} 1_{\{f \ge k/2^n\}}`$. Each set $`\{f \ge k/2^n\}`$ is in $`\mathcal{F}`$, so $`\varphi_n`$ is simple, and linearity of the simple integral ([The integral of a simple function](01-integral-of-a-simple-function.md)) gives $`\int \varphi_n\,d\mu = \sum_{k=1}^{n 2^n} 2^{-n} \mu(\{f \ge k/2^n\})`$. They rise, as Lemma 2 and part (b) on [Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md) prove: $`\lfloor 2y \rfloor \ge 2 \lfloor y \rfloor`$ for real y, and the cap grows. They converge to f, by parts (c) and (d) there: where f(x) < n, $`0 \le f(x) - \varphi_n(x) < 2^{-n}`$; where f(x) is infinite, $`\varphi_n(x) = n`$. Steps 1 to 3 applied to $`\varphi_n \uparrow f`$ give the formula.
 
-**5. Additivity.** Let f and r be non-negative and measurable, with staircases $\varphi_n$ and $\psi_n$. The sums $\varphi_n + \psi_n$ are simple, rise, and converge to f + r at every point, so f + r is measurable by step 1. Simple integrals add, so $\int (\varphi_n + \psi_n)\,d\mu = \int \varphi_n\,d\mu + \int \psi_n\,d\mu$. Apply the theorem to all three sequences; in $[0, \infty]$ the limit of a sum of two rising lists is the sum of their limits. The same argument with $a\varphi_n \uparrow a f$ gives $\int a f\,d\mu = a \int f\,d\mu$ for a number $a \ge 0$.
+**5. Additivity.** Let f and r be non-negative and measurable, with staircases $`\varphi_n`$ and $`\psi_n`$. The sums $`\varphi_n + \psi_n`$ are simple, rise, and converge to f + r at every point, so f + r is measurable by step 1. Simple integrals add, so $`\int (\varphi_n + \psi_n)\,d\mu = \int \varphi_n\,d\mu + \int \psi_n\,d\mu`$. Apply the theorem to all three sequences; in $`[0, \infty]`$ the limit of a sum of two rising lists is the sum of their limits. The same argument with $`a\varphi_n \uparrow a f`$ gives $`\int a f\,d\mu = a \int f\,d\mu`$ for a number $`a \ge 0`$.
 
-**6. Term by term.** Let each $g_k$ be non-negative and measurable. The partial sums $S_N = \sum_{k=0}^{N} g_k$ are measurable, and step 5 with induction on N gives $\int S_N\,d\mu = \sum_{k=0}^{N} \int g_k\,d\mu$. The partial sums rise, and at each x they converge in $[0, \infty]$ to $\sum_k g_k(x)$, a series of non-negative terms ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). The theorem gives $\int \sum_k g_k\,d\mu = \lim_N \int S_N\,d\mu = \sum_k \int g_k\,d\mu$.
+**6. Term by term.** Let each $`g_k`$ be non-negative and measurable. The partial sums $`S_N = \sum_{k=0}^{N} g_k`$ are measurable, and step 5 with induction on N gives $`\int S_N\,d\mu = \sum_{k=0}^{N} \int g_k\,d\mu`$. The partial sums rise, and at each x they converge in $`[0, \infty]`$ to $`\sum_k g_k(x)`$, a series of non-negative terms ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). The theorem gives $`\int \sum_k g_k\,d\mu = \lim_N \int S_N\,d\mu = \sum_k \int g_k\,d\mu`$.
 
 </details>
 
@@ -156,17 +162,17 @@ Some texts prove Fatou's lemma first and deduce this theorem from it; this libra
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| staircase, marks every 0.5 m | the depth reaches 0.5 m on a length $\sqrt{0.5}$; times 0.5 | 0.3536 |
-| staircase, marks every 0.25 m | $(\sqrt{0.75} + \sqrt{0.5} + \sqrt{0.25} + 0)/4 = (0.8660 + 0.7071 + 0.5 + 0)/4$ | 0.5183 |
-| staircase, stage 10 | the sum of $\sqrt{1 - k/1024}$ for k = 1 to 1024, divided by 1024 | 0.6661720810 |
+| staircase, marks every 0.5 m | the depth reaches 0.5 m on a length $`\sqrt{0.5}`$; times 0.5 | 0.3536 |
+| staircase, marks every 0.25 m | $`(\sqrt{0.75} + \sqrt{0.5} + \sqrt{0.25} + 0)/4 = (0.8660 + 0.7071 + 0.5 + 0)/4`$ | 0.5183 |
+| staircase, stage 10 | the sum of $`\sqrt{1 - k/1024}`$ for k = 1 to 1024, divided by 1024 | 0.6661720810 |
 | shallowest per cell, 4 cells | depths at the cell ends 0, 0.75, 1, 0.75, 0; lowest per cell 0, 0.75, 0.75, 0; times 1/4 | 0.375 |
-| shallowest per cell, stage 10 | $2/3 - 1/1024 - (2/3)/1024^2$ | 0.6656894684 |
-| both limits | $\int_0^1 4x(1-x)\,dx = 2 - 4/3$ | **2/3 = 0.6667** |
+| shallowest per cell, stage 10 | $`2/3 - 1/1024 - (2/3)/1024^2`$ | 0.6656894684 |
+| both limits | $`\int_0^1 4x(1-x)\,dx = 2 - 4/3`$ | **2/3 = 0.6667** |
 | first five series terms | 1/2 + 1/8 + 1/24 + 1/64 + 1/160 = 661/960 | 0.688541666667 |
 | thirty terms | the sum of 1/(m 2^m) for m = 1 to 30 | 0.693147180531 |
-| the closed form | $\int_0^{1/2} dx/(1 - x) = \ln 2$ | **0.693147180560** |
+| the closed form | $`\int_0^{1/2} dx/(1 - x) = \ln 2`$ | **0.693147180560** |
 
-The river's average depth is 2/3 m whichever rising record is used, and the integrals of $x^k$ over [0, 1/2], added one at a time, land on ln 2.
+The river's average depth is 2/3 m whichever rising record is used, and the integrals of $`x^k`$ over [0, 1/2], added one at a time, land on ln 2.
 
 ### The picture: two rising records of the same river
 
@@ -180,7 +186,7 @@ xychart-beta
     line [0.00, 0.38, 0.53, 0.60, 0.63, 0.65, 0.66, 0.66]
 ```
 
-The upper line is the staircase, marks $2^{-n}$ m apart. The lower line is the shallowest depth on each of $2^n$ equal cells. Both climb towards 2/3 = 0.6667, the integral of the depth.
+The upper line is the staircase, marks $`2^{-n}`$ m apart. The lower line is the shallowest depth on each of $`2^n`$ equal cells. Both climb towards 2/3 = 0.6667, the integral of the depth.
 
 ### What breaks if you drop a piece
 
@@ -189,15 +195,15 @@ The upper line is the staircase, marks $2^{-n}$ m apart. The lower line is the s
 | Drop "rising": the spike n on (0, 1/n) | integral 1 at n = 1, 2, 4, 8, 16; limit 0, integral 0 | at x = 0.3 the values go 1, 2, 3, then 0: area escapes towards 0 |
 | Falling, not rising: 1 on [n, ∞) | length 999, 990, 900 inside [0, 1000] for n = 1, 10, 100, unbounded as the window grows; limit 0 | every integral is infinite |
 | Drop non-negativity: −1 on [n, ∞) | the same lengths, negative; no integral at any n | an infinite negative part |
-| Test with c = 1 in the proof | $E_n$ stuck at length 0.1340 for n = 2, 10, 100 | $f_n$ never reaches s where s is positive |
+| Test with c = 1 in the proof | $`E_n`$ stuck at length 0.1340 for n = 2, 10, 100 | $`f_n`$ never reaches s where s is positive |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Three roads lead to the river's integral. The first sums the staircase through its level sets, $\lambda(\{d \ge t\}) = \sqrt{1 - t}$. The second samples the same staircase at 65536 midpoints; the two must agree within 2/65536, the most sampling can lose on a step function that climbs to at most 1 and back. The third is the shallowest depth per cell, summed exactly and matched against $2/3 - 2^{-n} - \tfrac{2}{3}4^{-n}$. The code then replays the proof's test sets, the c = 1 failure and the flood.
+Three roads lead to the river's integral. The first sums the staircase through its level sets, $`\lambda(\{d \ge t\}) = \sqrt{1 - t}`$. The second samples the same staircase at 65536 midpoints; the two must agree within 2/65536, the most sampling can lose on a step function that climbs to at most 1 and back. The third is the shallowest depth per cell, summed exactly and matched against $`2/3 - 2^{-n} - \tfrac{2}{3}4^{-n}`$. The code then replays the proof's test sets, the c = 1 failure and the flood.
 
-The series sums are checked against ln 2 found by Simpson's rule on 1/(1 − x) and by the series for $2\,\mathrm{atanh}(1/3)$, where atanh is the inverse hyperbolic tangent. Python uses exact fractions for the per-cell sums and the series; Rust uses whole numbers over $2^{3n}$ for the first and floating point for the second. The code checks finite stages; that every rising sequence reaches the limit's integral is the proof's work.
+The series sums are checked against ln 2 found by Simpson's rule on 1/(1 − x) and by the series for $`2\,\mathrm{atanh}(1/3)`$, where atanh is the inverse hyperbolic tangent. Python uses exact fractions for the per-cell sums and the series; Rust uses whole numbers over $`2^{3n}`$ for the first and floating point for the second. The code checks finite stages; that every rising sequence reaches the limit's integral is the proof's work.
 
 ### Python
 
@@ -589,9 +595,9 @@ The two outputs match line for line.
 
 Lean proves the theorem, additivity and term-by-term integration on every measure space, with infinite values and integrals allowed.
 
-- Suppose non-negative measurable functions $f_n$ rise at every point to a limit f. Then their integrals rise, and they converge to the integral of f.
-- Suppose f and r are non-negative and measurable. Then $\int (f + r)\,d\mu = \int f\,d\mu + \int r\,d\mu$.
-- Suppose each $g_k$ is non-negative and measurable. Then the series of the $g_k$ may be integrated one term at a time, even when both sides are infinite.
+- Suppose non-negative measurable functions $`f_n`$ rise at every point to a limit f. Then their integrals rise, and they converge to the integral of f.
+- Suppose f and r are non-negative and measurable. Then $`\int (f + r)\,d\mu = \int f\,d\mu + \int r\,d\mu`$.
+- Suppose each $`g_k`$ is non-negative and measurable. Then the series of the $`g_k`$ may be integrated one term at a time, even when both sides are infinite.
 - The hand arithmetic holds exactly, as fractions: the first five series terms add to 661/960, four cells give 3/8, and 2 − 4/3 = 2/3.
 
 The staircase formula, the decimals, the river and flood sequences, the series sums and the four breaks are left to the Python and Rust checks.
@@ -665,14 +671,14 @@ example : (2 : ℚ) - 4 / 3 = 2 / 3 := by
 > Guess first, then run the Python.
 > - **Round to the nearest mark.** In `stair`, change `floor(v * 2 ** n)` to `floor(v * 2 ** n + 0.5)`. Guess: the record now pokes below the bed, so it is not the staircase of the formula; the grid road leaves the level-set road and the first assert stops the run.
 > - **Let c be 1.** Change `c` from 0.99 to 1.0. Guess: the test sets still fill by n = 6, since the depth is 0.96 m or more where s is 0.95 m. c = 1 fails only where f and s touch.
-> - **Make s touch the bed.** Set `s_top` to 0.96 and `c` to 1.0. Guess: the depth equals s at x = 0.4 and 0.6, 0.96 is never a mark, and those two points never enter $E_n$. The printed lengths reach 0.9768 at n = 5 and stay there at n = 6; later stages approach 1, since two points have length zero.
+> - **Make s touch the bed.** Set `s_top` to 0.96 and `c` to 1.0. Guess: the depth equals s at x = 0.4 and 0.6, 0.96 is never a mark, and those two points never enter $`E_n`$. The printed lengths reach 0.9768 at n = 5 and stay there at n = 6; later stages approach 1, since two points have length zero.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Believing that convergence at every point is enough.** The spike of height n on (0, 1/n) goes to 0 at every point and keeps integral 1. The theorem needs the functions to rise, so no area can leave: whatever is under $f_n$ stays under $f_{n+1}$.
+> **Believing that convergence at every point is enough.** The spike of height n on (0, 1/n) goes to 0 at every point and keeps integral 1. The theorem needs the functions to rise, so no area can leave: whatever is under $`f_n`$ stays under $`f_{n+1}`$.
 >
 > - **Applying it to falling functions.** The function 1 on [n, ∞) falls to 0 with infinite length at every n. Falling needs a finite first integral and the tools of [Fatou's lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md).
 > - **Treating the staircase as the definition.** The definition is the supremum over all simple functions below; the staircase formula is a theorem, and the shallowest-per-cell record, 0.375 at four cells, is another rising sequence with the same limit.

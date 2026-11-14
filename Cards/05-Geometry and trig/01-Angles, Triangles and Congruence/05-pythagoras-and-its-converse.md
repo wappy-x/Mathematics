@@ -26,30 +26,34 @@ Drawn at 1 m = 60 units. The ridge C sits 3.2 m along the tie beam from A and 2.
 
 ## The formula
 
-Reminder: corners are A, B, C, and each side carries the lower-case letter of the corner opposite it ([Angles](01-angles-and-parallel-lines.md)). Put the right angle at C. The sides meeting there, $a$ and $b$, are the **legs**; the side opposite, $c$, is the **hypotenuse**, always the longest.
+Reminder: corners are A, B, C, and each side carries the lower-case letter of the corner opposite it ([Angles](01-angles-and-parallel-lines.md)). Put the right angle at C. The sides meeting there, $`a`$ and $`b`$, are the **legs**; the side opposite, $`c`$, is the **hypotenuse**, always the longest.
 
-$$a^2 + b^2 = c^2$$
+```math
+a^2 + b^2 = c^2
+```
 
 **Read it aloud:** the square on one leg plus the square on the other leg equals the square on the hypotenuse.
 
-$a^2$ is $a$ times $a$: the area of a square with side $a$. For the truss, 9 + 16 = 25 m^2. The positive square root gives a length back ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)):
+$`a^2`$ is $`a`$ times $`a`$: the area of a square with side $`a`$. For the truss, 9 + 16 = 25 m^2. The positive square root gives a length back ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)):
 
-$$c = \sqrt{a^2 + b^2}, \qquad b = \sqrt{c^2 - a^2}$$
+```math
+c = \sqrt{a^2 + b^2}, \qquad b = \sqrt{c^2 - a^2}
+```
 
 **Read it aloud:** the hypotenuse is the root of the leg squares added; a missing leg is the root of the hypotenuse square minus the other leg's.
 
-The **converse**: if three positive lengths satisfy $a^2 + b^2 = c^2$, their triangle has a right angle between $a$ and $b$. The test is the **residual** $a^2 + b^2 - c^2$: zero means square.
+The **converse**: if three positive lengths satisfy $`a^2 + b^2 = c^2`$, their triangle has a right angle between $`a`$ and $`b`$. The test is the **residual** $`a^2 + b^2 - c^2`$: zero means square.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $B$, $C$ | the corners: rafter feet A and B, ridge C | A to B is 5 m | — |
-| $a$ | the leg opposite A: rafter BC | 3 m | the span grows, but by less than the rafter grew |
-| $b$ | the leg opposite B: rafter CA | 4 m | the same |
-| $c$ | the hypotenuse, opposite C: the tie beam | 5 m | with legs fixed, the corner opens past square |
-| $a^2$, $b^2$, $c^2$ | areas of squares on each side | 9, 16, 25 m^2 | — |
-| $\sqrt{\ }$ | the positive square root: the length whose square is given | the root of 25 is 5 | — |
-| $d$ | the converse proof's built third side | 5 m | — |
-| $a^2 + b^2 - c^2$ | the residual: zero exactly when the corner is square | 0; −1.01 for a 5.1 m diagonal | negative: opened; positive: closed |
+| $`A`$, $`B`$, $`C`$ | the corners: rafter feet A and B, ridge C | A to B is 5 m | — |
+| $`a`$ | the leg opposite A: rafter BC | 3 m | the span grows, but by less than the rafter grew |
+| $`b`$ | the leg opposite B: rafter CA | 4 m | the same |
+| $`c`$ | the hypotenuse, opposite C: the tie beam | 5 m | with legs fixed, the corner opens past square |
+| $`a^2`$, $`b^2`$, $`c^2`$ | areas of squares on each side | 9, 16, 25 m^2 | — |
+| $`\sqrt{\ }`$ | the positive square root: the length whose square is given | the root of 25 is 5 | — |
+| $`d`$ | the converse proof's built third side | 5 m | — |
+| $`a^2 + b^2 - c^2`$ | the residual: zero exactly when the corner is square | 0; −1.01 for a 5.1 m diagonal | negative: opened; positive: closed |
 
 ### When it holds
 
@@ -73,38 +77,40 @@ Drawn at 1 m = 30 units. Each side of the outer square is one 3 m leg and one 4 
 
 ### Step 1: pack four copies of the triangle into a square
 
-Put a copy of the truss triangle in each corner of a square of side $a + b$, 7 m here, right angle in the corner. Turn the copies so every side of the big square is one leg $a$ followed by one leg $b$. The four hypotenuses enclose a middle region with four sides of length $c$.
+Put a copy of the truss triangle in each corner of a square of side $`a + b`$, 7 m here, right angle in the corner. Turn the copies so every side of the big square is one leg $`a`$ followed by one leg $`b`$. The four hypotenuses enclose a middle region with four sides of length $`c`$.
 
 ### Step 2: the middle is a square
 
-Four equal sides alone make only a diamond; the corners must be right angles too. Where two hypotenuses meet the outer edge, three angles sit along a straight line, so they add to 180°. Two are the triangle's two sharp angles, one from each copy, and they add to 90°, since a triangle's angles total 180° and the right angle has used 90° ([Triangles](02-triangle-angle-sum-and-inequality.md)). The third, the middle's corner, is 90°. So the middle is a square of area $c^2$.
+Four equal sides alone make only a diamond; the corners must be right angles too. Where two hypotenuses meet the outer edge, three angles sit along a straight line, so they add to 180°. Two are the triangle's two sharp angles, one from each copy, and they add to 90°, since a triangle's angles total 180° and the right angle has used 90° ([Triangles](02-triangle-angle-sum-and-inequality.md)). The third, the middle's corner, is 90°. So the middle is a square of area $`c^2`$.
 
 ### Step 3: subtract
 
-Each corner triangle is half an $a$ by $b$ rectangle cut along its diagonal, so its area is $ab/2$: 6 m^2 here. From the big square's $(a + b)^2$, take the four triangles away:
+Each corner triangle is half an $`a`$ by $`b`$ rectangle cut along its diagonal, so its area is $`ab/2`$: 6 m^2 here. From the big square's $`(a + b)^2`$, take the four triangles away:
 
-$$c^2 = (a + b)^2 - 4 \cdot \tfrac{ab}{2} = a^2 + 2ab + b^2 - 2ab = a^2 + b^2$$
+```math
+c^2 = (a + b)^2 - 4 \cdot \tfrac{ab}{2} = a^2 + 2ab + b^2 - 2ab = a^2 + b^2
+```
 
-The mixed $2ab$ terms cancel. Nothing used 3 and 4, so the rule holds for every right triangle. For the truss: 49 − 24 = 25.
+The mixed $`2ab`$ terms cancel. Nothing used 3 and 4, so the rule holds for every right triangle. For the truss: 49 − 24 = 25.
 
 ### Step 4: the converse, by building a second triangle
 
-Now start from three lengths $a$, $b$, $c$ with $a^2 + b^2 = c^2$, and no angle known. Build a separate triangle with a right angle between legs $a$ and $b$; call its hypotenuse $d$. Steps 1 to 3 give $d^2 = a^2 + b^2 = c^2$. Two positive lengths with equal squares are equal, so $d = c$.
+Now start from three lengths $`a`$, $`b`$, $`c`$ with $`a^2 + b^2 = c^2`$, and no angle known. Build a separate triangle with a right angle between legs $`a`$ and $`b`$; call its hypotenuse $`d`$. Steps 1 to 3 give $`d^2 = a^2 + b^2 = c^2`$. Two positive lengths with equal squares are equal, so $`d = c`$.
 
-The two triangles now match side for side, and three matching sides force matching angles (the side-side-side test, [Congruent triangles](03-congruent-triangles.md)). The built triangle is right-angled between $a$ and $b$, so the original is too. That is the carpenter's 3-4-5 check, proved.
+The two triangles now match side for side, and three matching sides force matching angles (the side-side-side test, [Congruent triangles](03-congruent-triangles.md)). The built triangle is right-angled between $`a`$ and $`b`$, so the original is too. That is the carpenter's 3-4-5 check, proved.
 
 <details>
 <summary>Detailed proof: the points the steps pass over</summary>
 
-**No gaps, no overlaps.** Each side reads $a$ then $b$, total $a + b$, so neighbouring copies meet exactly on the edge. The middle lies inside all four hypotenuses, so the areas add: $(a + b)^2 = 4 \cdot ab/2 + c^2$.
+**No gaps, no overlaps.** Each side reads $`a`$ then $`b`$, total $`a + b`$, so neighbouring copies meet exactly on the edge. The middle lies inside all four hypotenuses, so the areas add: $`(a + b)^2 = 4 \cdot ab/2 + c^2`$.
 
-**Equal squares give equal lengths.** If $d$ were longer than $c$, then $d^2$ would exceed $c^2$; if shorter, fall short. Only $d = c$ fits.
+**Equal squares give equal lengths.** If $`d`$ were longer than $`c`$, then $`d^2`$ would exceed $`c^2`$; if shorter, fall short. Only $`d = c`$ fits.
 
 **No distance formula.** The grid distance formula is built from this theorem ([Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md)), so proving the theorem with it would argue in a circle.
 
 </details>
 
-A second road: drop a line from the ridge square onto the tie beam. It cuts the truss into two smaller right triangles, each the same shape as the whole. Matching side ratios make $a^2$ and $b^2$ the hypotenuse times each piece it was cut into; added, they give $c$ times $c$. The ratios are the work of [Similar triangles](04-similar-triangles-and-scale.md). For the truss the pieces are 1.8 m and 3.2 m: 5 × 1.8 = 9 and 5 × 3.2 = 16.
+A second road: drop a line from the ridge square onto the tie beam. It cuts the truss into two smaller right triangles, each the same shape as the whole. Matching side ratios make $`a^2`$ and $`b^2`$ the hypotenuse times each piece it was cut into; added, they give $`c`$ times $`c`$. The ratios are the work of [Similar triangles](04-similar-triangles-and-scale.md). For the truss the pieces are 1.8 m and 3.2 m: 5 × 1.8 = 9 and 5 × 3.2 = 16.
 
 ---
 
@@ -138,7 +144,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported; the square root is found by halving an interval. The area $c^2$ is reached three ways: the rule, the dissection's subtraction, and the shoelace formula, which finds a polygon's area from the grid positions of its corners and never measures a slanted side. For the converse, the program lays rafter $a$ along the ground, swings rafter $b$ round a circle, and searches for the point where the diagonal reads the tape's value. That point's sideways shift from the square position must equal the residual divided by twice $a$; [Law of cosines](../03-Trigonometry/06-law-of-cosines.md), this rule with a correction for any corner angle, says why. A second truss, rafters 3 m and 3 m, runs the same roads.
+Nothing is imported; the square root is found by halving an interval. The area $`c^2`$ is reached three ways: the rule, the dissection's subtraction, and the shoelace formula, which finds a polygon's area from the grid positions of its corners and never measures a slanted side. For the converse, the program lays rafter $`a`$ along the ground, swings rafter $`b`$ round a circle, and searches for the point where the diagonal reads the tape's value. That point's sideways shift from the square position must equal the residual divided by twice $`a`$; [Law of cosines](../03-Trigonometry/06-law-of-cosines.md), this rule with a correction for any corner angle, says why. A second truss, rafters 3 m and 3 m, runs the same roads.
 
 ### Python
 
@@ -335,7 +341,7 @@ ALL CHECKS PASS
 Lean proves both claims for every flat triangle, not just the 3-4-5 truss.
 
 - The corner at C is square exactly when the leg squares add up to the hypotenuse square. So the tie beam is the root of their sum.
-- The dissection's subtraction leaves $a^2 + b^2$ for any $a$ and $b$.
+- The dissection's subtraction leaves $`a^2 + b^2`$ for any $`a`$ and $`b`$.
 
 It also checks the card's whole-number sums exactly: the truss, the dissection, the missing rafter, the 6-8-10 and 5-12-13 trusses, and the mistakes. The decimal roots, the shoelace area and the search round the circle are left to the Python and Rust checks.
 
@@ -415,7 +421,7 @@ example : (3 : ℤ) ^ 2 + 5 ^ 2 - 4 ^ 2 = 18 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Using the rule where there is no right angle.** The equation belongs to the right angle, with $c$ opposite it. Rafters of 3 m and 4 m meeting wider than square span more than 5 m, yet the rule still says 5 m. The converse checks the corner before the rule is trusted.
+> **Using the rule where there is no right angle.** The equation belongs to the right angle, with $`c`$ opposite it. Rafters of 3 m and 4 m meeting wider than square span more than 5 m, yet the rule still says 5 m. The converse checks the corner before the rule is trusted.
 >
 > - **Stopping at the square.** 25 is the tie beam's square in m^2; the length is its root, 5 m.
 > - **Testing with the longest side out of place.** Lengths 3, 5, 4 tried in that order leave a residual of 18, though the corner is square; the longest side always goes alone on the right.

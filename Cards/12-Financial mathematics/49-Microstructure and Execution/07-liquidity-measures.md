@@ -43,60 +43,72 @@ Bottom line (orange), Acme: 3 bp for a $1 million sale. Middle line (green), Bea
 
 ## The formula
 
-Notation first, in words. A subscript names which trade or day a quantity belongs to: $p_j$ is the price of trade number $j$. The large sigma in $\sum_j q_j$ adds up that quantity over every trade, or every day. Bars, as in $\lvert r_d \rvert$, drop the sign of a number, so a fall of 150 bp counts as 150.
+Notation first, in words. A subscript names which trade or day a quantity belongs to: $`p_j`$ is the price of trade number $`j`$. The large sigma in $`\sum_j q_j`$ adds up that quantity over every trade, or every day. Bars, as in $`\lvert r_d \rvert`$, drop the sign of a number, so a fall of 150 bp counts as 150.
 
 The effective spread of one trade, in basis points:
 
-$$E_j = 2\, s_j\, \frac{p_j - m_j}{m_j} \times 10{,}000$$
+```math
+E_j = 2\, s_j\, \frac{p_j - m_j}{m_j} \times 10{,}000
+```
 
 **Read it aloud:** twice the distance from the trade price to the midpoint, as a fraction of the midpoint, in basis points. The sign makes paying up count as a cost for a buyer and selling down count as a cost for a seller.
 
 For a stock over many trades, weight each trade by its shares:
 
-$$E = \frac{\sum_j q_j E_j}{\sum_j q_j}$$
+```math
+E = \frac{\sum_j q_j E_j}{\sum_j q_j}
+```
 
 **Read it aloud:** the share-weighted average effective spread.
 
 Amihud's illiquidity ratio over a window of days:
 
-$$I = \frac{1}{D} \sum_{d=1}^{D} \frac{\lvert r_d \rvert}{V_d}$$
+```math
+I = \frac{1}{D} \sum_{d=1}^{D} \frac{\lvert r_d \rvert}{V_d}
+```
 
 **Read it aloud:** on each day, the size of the price move divided by the dollars traded; then the plain average of those daily ratios.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s_j$, $s_k$, $j$, $\rho_1$ | sign of a trade: +1 for a buy, −1 for a sale; $j$ counts trades; $\rho_1$ is the correlation of consecutive signs | Acme's first trade, a buy: +1 | flips which side of the midpoint counts as cost |
-| $q_j$ | shares in trade $j$ | 500 | that trade weighs more in the average |
-| $p_j$ | trade price | $100.01 | a buyer's spread grows, a seller's shrinks |
-| $m_j$ | quote midpoint when the order arrived: halfway between best bid and best ask | $100.00 | same move in cents is fewer bp |
-| $E$ | effective spread, bp, share-weighted | Acme 1.6, Cobble 16 | the stock is costlier to trade in small size |
-| $r_d$, $d$ | close-to-close return on day $d$, bp | Acme day 1: +80 | $I$ rises |
-| $V_d$ | dollars traded on day $d$, $ millions | Acme day 1: 100 | $I$ falls |
-| $I$, $D$ | Amihud ratio, bp per $1 million; $D$ days in the window | Acme 1.0, Cobble 10.0; 5 days | the price is more fragile per dollar |
-| $h$ | half-spread: in Roll's model, what each trade pays beyond the fair price; in a book walk, the best bid's distance below the midpoint | Roll: Acme 0.8 bp of the price; book walk: Acme 1 cent | Roll's estimate rises with it |
-| $\Delta p_k$, $u_k$, $k$ | change in trade price from trade $k-1$ to trade $k$; $u_k$ is the fair price's own step; in a book walk, $k$ counts levels down from the best bid | cents, either sign | — |
-| $\delta$, $n$ | shares shown at each one-cent level; levels a sale walks | Acme 2,000; 5 levels for $1 million | deeper book, cheaper large sale |
-| $\kappa$, $t$ | refill rate of missing depth, per minute; minutes since the sale | Acme 0.7, Cobble 0.07 | the book heals faster |
+| $`s_j`$, $`s_k`$, $`j`$, $`\rho_1`$ | sign of a trade: +1 for a buy, −1 for a sale; $`j`$ counts trades; $`\rho_1`$ is the correlation of consecutive signs | Acme's first trade, a buy: +1 | flips which side of the midpoint counts as cost |
+| $`q_j`$ | shares in trade $`j`$ | 500 | that trade weighs more in the average |
+| $`p_j`$ | trade price | $100.01 | a buyer's spread grows, a seller's shrinks |
+| $`m_j`$ | quote midpoint when the order arrived: halfway between best bid and best ask | $100.00 | same move in cents is fewer bp |
+| $`E`$ | effective spread, bp, share-weighted | Acme 1.6, Cobble 16 | the stock is costlier to trade in small size |
+| $`r_d`$, $`d`$ | close-to-close return on day $`d`$, bp | Acme day 1: +80 | $`I`$ rises |
+| $`V_d`$ | dollars traded on day $`d`$, $ millions | Acme day 1: 100 | $`I`$ falls |
+| $`I`$, $`D`$ | Amihud ratio, bp per $1 million; $`D`$ days in the window | Acme 1.0, Cobble 10.0; 5 days | the price is more fragile per dollar |
+| $`h`$ | half-spread: in Roll's model, what each trade pays beyond the fair price; in a book walk, the best bid's distance below the midpoint | Roll: Acme 0.8 bp of the price; book walk: Acme 1 cent | Roll's estimate rises with it |
+| $`\Delta p_k`$, $`u_k`$, $`k`$ | change in trade price from trade $`k-1`$ to trade $`k`$; $`u_k`$ is the fair price's own step; in a book walk, $`k`$ counts levels down from the best bid | cents, either sign | — |
+| $`\delta`$, $`n`$ | shares shown at each one-cent level; levels a sale walks | Acme 2,000; 5 levels for $1 million | deeper book, cheaper large sale |
+| $`\kappa`$, $`t`$ | refill rate of missing depth, per minute; minutes since the sale | Acme 0.7, Cobble 0.07 | the book heals faster |
 
 Three helper results, each proved below.
 
 Roll's estimate of the spread from trade prices alone, with no quotes:
 
-$$2h = 2\sqrt{-\operatorname{Cov}(\Delta p_k,\ \Delta p_{k-1})}$$
+```math
+2h = 2\sqrt{-\mathrm{Cov}(\Delta p_k,\ \Delta p_{k-1})}
+```
 
-Here $\operatorname{Cov}$ is the covariance of each price change with the one before it: the average of their product, after subtracting each one's mean. It is negative when moves tend to reverse.
+Here $`\mathrm{Cov}`$ is the covariance of each price change with the one before it: the average of their product, after subtracting each one's mean. It is negative when moves tend to reverse.
 
 In words: the price bounces between bid side and ask side, so each move tends to reverse the last one; the size of that reversal reveals the spread.
 
-The cost of selling $n$ full levels of $\delta$ shares, the first level $h$ cents below the midpoint and each later level one cent lower:
+The cost of selling $`n`$ full levels of $`\delta`$ shares, the first level $`h`$ cents below the midpoint and each later level one cent lower:
 
-$$\text{average cents below the midpoint} = h + \frac{n-1}{2}$$
+```math
+\text{average cents below the midpoint} = h + \frac{n-1}{2}
+```
 
-In words: the first share gets the best bid, the last gets the bid $n-1$ cents lower, and the average sits halfway.
+In words: the first share gets the best bid, the last gets the bid $`n-1`$ cents lower, and the average sits halfway.
 
-The half-life of the book after a sale, with depth refilling at rate $\kappa$:
+The half-life of the book after a sale, with depth refilling at rate $`\kappa`$:
 
-$$t_{1/2} = \frac{\ln 2}{\kappa}$$
+```math
+t_{1/2} = \frac{\ln 2}{\kappa}
+```
 
 In words: the missing depth shrinks by the same fraction every minute, and the half-life is the time to halve it.
 
@@ -126,7 +138,7 @@ Albert Kyle named these three in 1985 ([Kyle's model](03-kyle-model-and-price-im
 
 Buy one Acme share at the ask of $100.01 and sell it at once at the bid of $99.99. The round trip loses 2 cents, twice the 1-cent gap between each trade and the $100.00 midpoint. The effective spread states one trade's cost on that round-trip scale, so it compares directly with the quoted spread, the ask minus the bid.
 
-The sign makes both sides count as cost. A buy at $100.01 gives $+1 \times (100.01 - 100.00)$, a sale at $99.99 gives $-1 \times (99.99 - 100.00)$: both are +1 cent. A trade at the midpoint costs zero. A buy below the midpoint, an improvement on the quote, gives a negative number, which the sign keeps honest.
+The sign makes both sides count as cost. A buy at $100.01 gives $`+1 \times (100.01 - 100.00)`$, a sale at $99.99 gives $`-1 \times (99.99 - 100.00)`$: both are +1 cent. A trade at the midpoint costs zero. A buy below the midpoint, an improvement on the quote, gives a negative number, which the sign keeps honest.
 
 Dividing by the midpoint turns cents into a fraction of the price. That is what lets a $100 stock and a $10 stock be compared at all: a cent is 1 bp of Acme and 10 bp of Cobble.
 
@@ -140,22 +152,22 @@ On Acme's tape, 800 of 1,000 shares paid the full 2 bp and 200 paid nothing, so 
 
 Richard Roll showed in 1984 that trade prices carry the spread in their bounce.
 
-Model the fair price as a random walk: each trade it moves by an independent step with average zero. Each trade is a buy or a sale with equal chance, independent of everything else. It trades at the fair price plus $h$ for a buy, or minus $h$ for a sale.
+Model the fair price as a random walk: each trade it moves by an independent step with average zero. Each trade is a buy or a sale with equal chance, independent of everything else. It trades at the fair price plus $`h`$ for a buy, or minus $`h`$ for a sale.
 
-Then a price change is a fair-price step plus a bounce term. Two consecutive changes both contain the sign of the trade between them, once with a minus and once with a plus, and nothing else in them is related. So consecutive price changes move against each other on average, by exactly $h^2$.
+Then a price change is a fair-price step plus a bounce term. Two consecutive changes both contain the sign of the trade between them, once with a minus and once with a plus, and nothing else in them is related. So consecutive price changes move against each other on average, by exactly $`h^2`$.
 
 <details>
 <summary>Detailed proof: Roll's covariance</summary>
 
-Write the fair price as $m_k = m_{k-1} + u_k$, with the steps $u_k$ independent, average zero. Write the trade price as $p_k = m_k + h s_k$, with each sign $s_k$ equal to +1 or −1 with chance one half, independent of the steps and of the other signs. Then
+Write the fair price as $`m_k = m_{k-1} + u_k`$, with the steps $`u_k`$ independent, average zero. Write the trade price as $`p_k = m_k + h s_k`$, with each sign $`s_k`$ equal to +1 or −1 with chance one half, independent of the steps and of the other signs. Then
 
-$\Delta p_k = u_k + h s_k - h s_{k-1}$ and $\Delta p_{k-1} = u_{k-1} + h s_{k-1} - h s_{k-2}$.
+$`\Delta p_k = u_k + h s_k - h s_{k-1}`$ and $`\Delta p_{k-1} = u_{k-1} + h s_{k-1} - h s_{k-2}`$.
 
-Covariance is linear in each argument, and any two independent terms have covariance zero. The only pair that is not independent is $-h s_{k-1}$ with $+h s_{k-1}$, which contributes $-h^2$ times the variance of $s_{k-1}$. A sign that is +1 or −1 with equal chance has average zero and variance 1. So
+Covariance is linear in each argument, and any two independent terms have covariance zero. The only pair that is not independent is $`-h s_{k-1}`$ with $`+h s_{k-1}`$, which contributes $`-h^2`$ times the variance of $`s_{k-1}`$. A sign that is +1 or −1 with equal chance has average zero and variance 1. So
 
-$\operatorname{Cov}(\Delta p_k, \Delta p_{k-1}) = -h^2$, and $2h = 2\sqrt{-\operatorname{Cov}}$.
+$`\mathrm{Cov}(\Delta p_k, \Delta p_{k-1}) = -h^2`$, and $`2h = 2\sqrt{-\mathrm{Cov}}`$.
 
-Now let each sign repeat the last one with chance 0.8 instead of one half, as when a large order is split. Consecutive signs then have correlation $\rho_1$, signs two apart $\rho_1^2$, with $\rho_1 = 2 \times 0.8 - 1$. The same bookkeeping gives $\operatorname{Cov} = h^2(2\rho_1 - \rho_1^2 - 1) = -h^2(1-\rho_1)^2$, so Roll reads $2h(1-\rho_1)$: four tenths of the true spread. The code finds a ratio of 0.40.
+Now let each sign repeat the last one with chance 0.8 instead of one half, as when a large order is split. Consecutive signs then have correlation $`\rho_1`$, signs two apart $`\rho_1^2`$, with $`\rho_1 = 2 \times 0.8 - 1`$. The same bookkeeping gives $`\mathrm{Cov} = h^2(2\rho_1 - \rho_1^2 - 1) = -h^2(1-\rho_1)^2`$, so Roll reads $`2h(1-\rho_1)`$: four tenths of the true spread. The code finds a ratio of 0.40.
 
 </details>
 
@@ -173,19 +185,21 @@ The ratio scales inversely with dollars. Divide every day's volume by ten and ev
 
 ### Step 5: depth, walking the book
 
-A sale sold straight into the book takes the best bid first, then the next level down, and so on. With $\delta$ shares at each one-cent level and the best bid $h$ cents under the midpoint, level $k$ (counting from zero) sits $h + k$ cents below it. Selling $n$ full levels collects
+A sale sold straight into the book takes the best bid first, then the next level down, and so on. With $`\delta`$ shares at each one-cent level and the best bid $`h`$ cents under the midpoint, level $`k`$ (counting from zero) sits $`h + k`$ cents below it. Selling $`n`$ full levels collects
 
-$$\delta\left(nh + (0 + 1 + \dots + (n-1))\right) = \delta\left(nh + \frac{n(n-1)}{2}\right)$$
+```math
+\delta\left(nh + (0 + 1 + \dots + (n-1))\right) = \delta\left(nh + \frac{n(n-1)}{2}\right)
+```
 
-cents below the midpoint in total. Dividing by the $n\delta$ shares sold gives the average, $h + (n-1)/2$ cents. The code walks the book level by level as one road and uses this series as the second. They agree to the share, including a sale of 99,999 shares that ends partway into a level.
+cents below the midpoint in total. Dividing by the $`n\delta`$ shares sold gives the average, $`h + (n-1)/2`$ cents. The code walks the book level by level as one road and uses this series as the second. They agree to the share, including a sale of 99,999 shares that ends partway into a level.
 
 The cost grows with the number of levels, and the number of levels grows with size. That is why the picture's lines bend apart.
 
 ### Step 6: resilience, the half-life of the book
 
-After a sale empties some levels, new orders arrive to refill them. The simplest model, used by Anna Obizhaeva and Jiang Wang, has the missing depth shrink at rate $\kappa$: each minute a fixed fraction of what is still missing comes back. Then the missing part after $t$ minutes is $e^{-\kappa t}$ of what was taken, and it halves when $e^{-\kappa t} = 1/2$, that is $t_{1/2} = \ln 2 / \kappa$.
+After a sale empties some levels, new orders arrive to refill them. The simplest model, used by Anna Obizhaeva and Jiang Wang, has the missing depth shrink at rate $`\kappa`$: each minute a fixed fraction of what is still missing comes back. Then the missing part after $`t`$ minutes is $`e^{-\kappa t}`$ of what was taken, and it halves when $`e^{-\kappa t} = 1/2`$, that is $`t_{1/2} = \ln 2 / \kappa`$.
 
-The second road looks at single orders. If each missing order returns after its own random waiting time, with a constant chance per minute of $\kappa$, then the fraction not yet back after $t$ minutes is again $e^{-\kappa t}$.
+The second road looks at single orders. If each missing order returns after its own random waiting time, with a constant chance per minute of $`\kappa`$, then the fraction not yet back after $`t`$ minutes is again $`e^{-\kappa t}`$.
 
 The half-life is the median waiting time. The code draws 20,001 waiting times per stock and takes their median: 0.98 minutes for Acme against 0.99 from the formula, 9.87 for Cobble against 9.90.
 
@@ -199,18 +213,18 @@ Each stock has a three-trade tape and five days of daily data. Acme's quotes are
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Acme buy at the ask | $2 \times (+1) \times 0.01 / 100 \times 10{,}000$ | 2 bp |
-| Acme sale at the bid | $2 \times (-1) \times (-0.01) / 100 \times 10{,}000$ | 2 bp |
+| Acme buy at the ask | $`2 \times (+1) \times 0.01 / 100 \times 10{,}000`$ | 2 bp |
+| Acme sale at the bid | $`2 \times (-1) \times (-0.01) / 100 \times 10{,}000`$ | 2 bp |
 | Acme buy at the midpoint | zero distance | 0 bp |
-| Acme effective spread | $(500 \times 2 + 300 \times 2 + 200 \times 0) / 1{,}000$ | **1.6 bp** |
-| Cobble, same pattern | each full-spread trade is $2 \times 0.01 / 10 \times 10{,}000$ = 20 bp | **16 bp** |
+| Acme effective spread | $`(500 \times 2 + 300 \times 2 + 200 \times 0) / 1{,}000`$ | **1.6 bp** |
+| Cobble, same pattern | each full-spread trade is $`2 \times 0.01 / 10 \times 10{,}000`$ = 20 bp | **16 bp** |
 | Acme daily ratios, bp per $1 million | 80/100, 150/120, 60/100, 100/100, 135/100 | 0.8, 1.25, 0.6, 1.0, 1.35 |
-| Acme Amihud | $(0.8 + 1.25 + 0.6 + 1.0 + 1.35) / 5$ | **1.0** |
+| Acme Amihud | $`(0.8 + 1.25 + 0.6 + 1.0 + 1.35) / 5`$ | **1.0** |
 | Cobble daily ratios | 120/10, 200/16, 70/10, 90/12, 110/10 | 12, 12.5, 7, 7.5, 11 |
-| Cobble Amihud | $(12 + 12.5 + 7 + 7.5 + 11) / 5$ | **10.0** |
-| Acme, $1 million sale | 10,000 shares = 5 levels of 2,000; $1 + (5-1)/2$ cents on $100 | **3 bp** |
-| Cobble, $1 million sale | 100,000 shares = 20 levels of 5,000; $1 + (20-1)/2$ cents on $10 | **105 bp** |
-| half-lives | $\ln 2 / 0.7$ and $\ln 2 / 0.07$ minutes | **0.99 and 9.90** |
+| Cobble Amihud | $`(12 + 12.5 + 7 + 7.5 + 11) / 5`$ | **10.0** |
+| Acme, $1 million sale | 10,000 shares = 5 levels of 2,000; $`1 + (5-1)/2`$ cents on $100 | **3 bp** |
+| Cobble, $1 million sale | 100,000 shares = 20 levels of 5,000; $`1 + (20-1)/2`$ cents on $10 | **105 bp** |
+| half-lives | $`\ln 2 / 0.7`$ and $`\ln 2 / 0.07`$ minutes | **0.99 and 9.90** |
 
 Beacon lands between on every row: 8 bp effective spread, Amihud 4.0, 16.25 bp for a $1 million sale, a half-life of 2.77 minutes. The ranking, most liquid first, is Acme, Beacon, Cobble on every measure.
 
@@ -706,11 +720,11 @@ The two outputs agree line for line. The simulated rows agree too, because both 
 
 Lean proves Roll's covariance, the book-walk average and the half-life in their models, and checks the hand table exactly.
 
-- Take Roll's model from Step 3: independent fair-price steps of average zero, and independent signs, +1 or −1 with equal chance. Then each price change has covariance $-h^2$ with the one before it.
-- Suppose also $h \ge 0$. Then Roll's estimate $2\sqrt{-\operatorname{Cov}}$ equals the spread $2h$.
-- Take $n$ full levels of $\delta$ shares, the first $h$ cents below the midpoint and each later level one cent lower. Then selling them collects $\delta\left(nh + n(n-1)/2\right)$ cents below the midpoint in total.
-- Suppose also $n$ and $\delta$ are both at least 1. Then the average is $h + (n-1)/2$ cents a share.
-- Take a refill rate $\kappa > 0$, with $e^{-\kappa t}$ of the depth still missing after $t$ minutes. Then the missing part is exactly half at $t = \ln 2 / \kappa$, and at no other time.
+- Take Roll's model from Step 3: independent fair-price steps of average zero, and independent signs, +1 or −1 with equal chance. Then each price change has covariance $`-h^2`$ with the one before it.
+- Suppose also $`h \ge 0`$. Then Roll's estimate $`2\sqrt{-\mathrm{Cov}}`$ equals the spread $`2h`$.
+- Take $`n`$ full levels of $`\delta`$ shares, the first $`h`$ cents below the midpoint and each later level one cent lower. Then selling them collects $`\delta\left(nh + n(n-1)/2\right)`$ cents below the midpoint in total.
+- Suppose also $`n`$ and $`\delta`$ are both at least 1. Then the average is $`h + (n-1)/2`$ cents a share.
+- Take a refill rate $`\kappa > 0`$, with $`e^{-\kappa t}`$ of the depth still missing after $`t`$ minutes. Then the missing part is exactly half at $`t = \ln 2 / \kappa`$, and at no other time.
 - The hand table's effective spreads come out at 1.6, 8 and 16 bp, and its Amihud ratios at 1.0, 4.0 and 10.0.
 - The $1 million sale costs come out at 3, 16.25 and 105 bp, and Beacon's signed-return Amihud reads 0.0.
 - The house order of 100,000 Acme shares gives up 2,550,000 cents below the midpoint.

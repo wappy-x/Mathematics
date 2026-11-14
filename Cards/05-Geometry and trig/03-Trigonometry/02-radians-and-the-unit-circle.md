@@ -24,33 +24,37 @@ Drawn at 1 m = 3.2 units, north up. Long arc: the 210° swing. Short arc: the 30
 
 ## The formula
 
-Notation first, in words. A position on the plan is a pair (x, y): x is how far east of the mast, y how far north, with west and south negative. The Greek letter theta, $\theta$, names the angle turned. Reminder: a radian is the angle whose arc equals the radius, so 210° is 7π/6 radians ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)).
+Notation first, in words. A position on the plan is a pair (x, y): x is how far east of the mast, y how far north, with west and south negative. The Greek letter theta, $`\theta`$, names the angle turned. Reminder: a radian is the angle whose arc equals the radius, so 210° is 7π/6 radians ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)).
 
-The **unit circle** has radius 1 and centre (0, 0), the mast; on it, distances are counted in radii. Start at (1, 0) and turn through $\theta$, anticlockwise positive and clockwise negative, to end at (x, y).
+The **unit circle** has radius 1 and centre (0, 0), the mast; on it, distances are counted in radii. Start at (1, 0) and turn through $`\theta`$, anticlockwise positive and clockwise negative, to end at (x, y).
 
-$$\cos\theta = x, \qquad \sin\theta = y$$
+```math
+\cos\theta = x, \qquad \sin\theta = y
+```
 
 **Read it aloud:** cosine is how far east a unit arm's tip ends after the turn; sine is how far north.
 
-The tip never leaves the circle, so neither passes 1 or −1. An arm of length $r$ is the unit arm scaled up by $r$, so it ends at $(r\cos\theta,\ r\sin\theta)$: for the jib, 30 × (−0.866025, −0.5) = (−25.98, −15.00) in metres. Four more ratios come from the same two positions:
+The tip never leaves the circle, so neither passes 1 or −1. An arm of length $`r`$ is the unit arm scaled up by $`r`$, so it ends at $`(r\cos\theta,\ r\sin\theta)`$: for the jib, 30 × (−0.866025, −0.5) = (−25.98, −15.00) in metres. Four more ratios come from the same two positions:
 
-$$\tan\theta = \frac{y}{x}, \qquad \sec\theta = \frac{1}{x}, \qquad \csc\theta = \frac{1}{y}, \qquad \cot\theta = \frac{x}{y}$$
+```math
+\tan\theta = \frac{y}{x}, \qquad \sec\theta = \frac{1}{x}, \qquad \csc\theta = \frac{1}{y}, \qquad \cot\theta = \frac{x}{y}
+```
 
 **Read it aloud:** tangent is north over east, secant one over east, cosecant one over north, cotangent east over north.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | angle turned from due east | 210° = 3.665191 rad | tip moves on anticlockwise |
-| $x$, $y$ | tip's east and north positions, in radii: $\cos\theta$ and $\sin\theta$ | −√3/2 ≈ −0.866025, −1/2 | — |
-| $r$ | the arm's real length | 30 m | offsets grow; ratios stay |
-| $\tan\theta$ | tangent, $y$/$x$: slope of the jib's line | 0.577350 | — |
-| $\sec\theta$, $\csc\theta$, $\cot\theta$ | 1/$x$, 1/$y$, $x$/$y$ | −1.154701, −2, 1.732051 | — |
-| $\alpha$ | reference angle: sharp angle to the east–west line | 30° | — |
-| $\pi$ | circumference over diameter | half a turn is π rad | — |
+| $`\theta`$ | angle turned from due east | 210° = 3.665191 rad | tip moves on anticlockwise |
+| $`x`$, $`y`$ | tip's east and north positions, in radii: $`\cos\theta`$ and $`\sin\theta`$ | −√3/2 ≈ −0.866025, −1/2 | — |
+| $`r`$ | the arm's real length | 30 m | offsets grow; ratios stay |
+| $`\tan\theta`$ | tangent, $`y`$/$`x`$: slope of the jib's line | 0.577350 | — |
+| $`\sec\theta`$, $`\csc\theta`$, $`\cot\theta`$ | 1/$`x`$, 1/$`y`$, $`x`$/$`y`$ | −1.154701, −2, 1.732051 | — |
+| $`\alpha`$ | reference angle: sharp angle to the east–west line | 30° | — |
+| $`\pi`$ | circumference over diameter | half a turn is π rad | — |
 
 ### When it holds
 
-A definition cannot fail, but it fixes a convention: angles run from due east, anticlockwise positive, not from north like a compass bearing. Tangent and secant need $x$ ≠ 0: none at 90°, 270° or angles whole turns from them. Cotangent and cosecant need $y$ ≠ 0: none at 0°, 180° or their whole-turn partners.
+A definition cannot fail, but it fixes a convention: angles run from due east, anticlockwise positive, not from north like a compass bearing. Tangent and secant need $`x`$ ≠ 0: none at 90°, 270° or angles whole turns from them. Cotangent and cosecant need $`y`$ ≠ 0: none at 0°, 180° or their whole-turn partners.
 
 ---
 
@@ -62,36 +66,36 @@ Sine and cosine divide a side by the hypotenuse. Make the hypotenuse the unit ar
 
 ### Step 1: between 0° and 90°, nothing changes
 
-Below 90°, drop a line from the tip square onto the east–west line: a right triangle with hypotenuse 1, adjacent side $x$, opposite side $y$. Its cosine is $x$ ÷ 1 and its sine $y$ ÷ 1, so the triangle card's values stand.
+Below 90°, drop a line from the tip square onto the east–west line: a right triangle with hypotenuse 1, adjacent side $`x`$, opposite side $`y`$. Its cosine is $`x`$ ÷ 1 and its sine $`y`$ ÷ 1, so the triangle card's values stand.
 
 Half an equilateral triangle of side 1 has a 30° corner, the short side 1/2 opposite it and, by Pythagoras, height √(1 − 1/4) = √3/2. So the 30° point is (√3/2, 1/2), about (0.866025, 0.5). Equal legs under a hypotenuse of 1 give the 45° point, (0.707107, 0.707107).
 
 ### Step 2: the reference angle gives the sizes, the quadrant the signs
 
-The east–west and north–south lines through the mast, the **axes**, cut the plane into four **quadrants**, numbered anticlockwise from north-east: I (east, north), II (west, north), III (west, south), IV (east, south). The **reference angle** $\alpha$ (Greek alpha) is the sharp angle between the arm and the east–west line: at 210°, in quadrant III, 210° − 180° = 30°.
+The east–west and north–south lines through the mast, the **axes**, cut the plane into four **quadrants**, numbered anticlockwise from north-east: I (east, north), II (west, north), III (west, south), IV (east, south). The **reference angle** $`\alpha`$ (Greek alpha) is the sharp angle between the arm and the east–west line: at 210°, in quadrant III, 210° − 180° = 30°.
 
 A half turn about the mast carries the 30° arm onto the 210° arm and sends (x, y) to (−x, −y), so cos 210° = −0.866025 and sin 210° = −0.5. The mirror in the north–south line sends 30° to 150° and (x, y) to (−x, y), here (−0.8660, 0.5000); the mirror in the east–west line sends it to 330° and (x, y) to (x, −y), here (0.8660, −0.5000). Tangent, north over east, is positive where the two signs match: quadrants I and III.
 
 <details>
 <summary>Detailed proof: the half turn and the mirrors only flip signs</summary>
 
-Let the arm at $\alpha$ end at P = (x, y) in quadrant I, mast O. Drop P square to the east–west line at F: OP = 1, OF = x, FP = y.
+Let the arm at $`\alpha`$ end at P = (x, y) in quadrant I, mast O. Drop P square to the east–west line at F: OP = 1, OF = x, FP = y.
 
-Extend PO beyond O by its own length to P′ and drop P′ to the line at F′. Angles FOP and F′OP′ are vertical angles, so equal ([Angles](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)). Triangles OFP and OF′P′ each have a right angle, an angle $\alpha$ and hypotenuse 1, so they are congruent by AAS, two angles and a side ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)): OF′ = x, F′P′ = y. P′ is west and south of O: (−x, −y), at 180° + $\alpha$.
+Extend PO beyond O by its own length to P′ and drop P′ to the line at F′. Angles FOP and F′OP′ are vertical angles, so equal ([Angles](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)). Triangles OFP and OF′P′ each have a right angle, an angle $`\alpha`$ and hypotenuse 1, so they are congruent by AAS, two angles and a side ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)): OF′ = x, F′P′ = y. P′ is west and south of O: (−x, −y), at 180° + $`\alpha`$.
 
-Reflecting P in either axis gives a congruent triangle across it: (−x, y) at 180° − $\alpha$, or (x, −y) at −$\alpha$, the same point as 360° − $\alpha$. Every $\theta$ strictly inside quadrant II, III or IV is one of these for one $\alpha$ strictly between 0° and 90°, where Step 1 applies. Other angles first shed whole turns (Step 3).
+Reflecting P in either axis gives a congruent triangle across it: (−x, y) at 180° − $`\alpha`$, or (x, −y) at −$`\alpha`$, the same point as 360° − $`\alpha`$. Every $`\theta`$ strictly inside quadrant II, III or IV is one of these for one $`\alpha`$ strictly between 0° and 90°, where Step 1 applies. Other angles first shed whole turns (Step 3).
 
 </details>
 
 ### Step 3: in radians, the angle is the distance walked
 
-With radius 1, an arc is as long as its angle in radians, so $\cos\theta$ and $\sin\theta$ are where a walk of that length round the unit circle from (1, 0) ends: anticlockwise, or clockwise for a negative angle. The hook walks 30 × 3.665191 = 109.955743 m; the code walks it in 1.5 mm steps, with no triangle or sign rule, and lands at (−25.980762, −15.000000).
+With radius 1, an arc is as long as its angle in radians, so $`\cos\theta`$ and $`\sin\theta`$ are where a walk of that length round the unit circle from (1, 0) ends: anticlockwise, or clockwise for a negative angle. The hook walks 30 × 3.665191 = 109.955743 m; the code walks it in 1.5 mm steps, with no triangle or sign rule, and lands at (−25.980762, −15.000000).
 
 Whole turns change nothing: 150° clockwise ends at the 210° spot, and so does 570°. Sine and cosine have **period** 2π: the smallest shift that brings every value back.
 
 ### Step 4: the other four, and where their names come from
 
-The north–south line through (1, 0), where every point has $x$ = 1, touches the circle there: the **tangent line**, from Latin *tangens*, touching. Scaling the tip (x, y) by 1/x slides it along the jib's line, through the mast when x is negative, to (1, y/x) on the tangent line. So tan θ = y/x is a height on the tangent line: hence the name. The tip is 1 from the mast, so $x^2 + y^2 = 1$ (Pythagoras). The meeting point's distance from the mast, a hypotenuse over legs 1 and y/x, is $\sqrt{1 + (y/x)^2} = \sqrt{(x^2 + y^2)/x^2}$ = 1/|x|, |x| being x without its sign: the secant's size, from *secans*, cutting.
+The north–south line through (1, 0), where every point has $`x`$ = 1, touches the circle there: the **tangent line**, from Latin *tangens*, touching. Scaling the tip (x, y) by 1/x slides it along the jib's line, through the mast when x is negative, to (1, y/x) on the tangent line. So tan θ = y/x is a height on the tangent line: hence the name. The tip is 1 from the mast, so $`x^2 + y^2 = 1`$ (Pythagoras). The meeting point's distance from the mast, a hypotenuse over legs 1 and y/x, is $`\sqrt{1 + (y/x)^2} = \sqrt{(x^2 + y^2)/x^2}`$ = 1/|x|, |x| being x without its sign: the secant's size, from *secans*, cutting.
 
 ### The picture: tangent and secant at 210°
 
@@ -503,7 +507,7 @@ example : 33 * (2 * π) < 210 ∧ 210 < 34 * (2 * π) := by
 
 ## Where this goes next
 
-- [Trig identities](03-trig-identities.md): $x^2 + y^2 = 1$, and two turns in a row.
+- [Trig identities](03-trig-identities.md): $`x^2 + y^2 = 1`$, and two turns in a row.
 - [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md): sine plotted against the angle.
 - [Small angles](08-small-angles-and-the-sine-bound.md): a short arc against its height.
 - [Polar coordinates](../04-Coordinates%20and%20Curves/03-polar-coordinates.md): from a point back to its angle.

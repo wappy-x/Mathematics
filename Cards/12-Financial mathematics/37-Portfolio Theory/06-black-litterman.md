@@ -36,46 +36,52 @@ Gold gains exactly what bonds lose: 10.40 points each. That is the first opinion
 
 ## The formula
 
-Notation first. A list of three numbers, one per asset, is a **vector**. A table of numbers is a **matrix**; multiplying a matrix by a vector gives weighted sums, row by row. A raised ⊤, as in $P^\top$, turns rows into columns (the **transpose**). A raised $-1$ undoes multiplication by a matrix (the **inverse**), the way dividing undoes multiplying. [The efficient frontier](02-efficient-frontier-and-minimum-variance.md) card uses the same notation.
+Notation first. A list of three numbers, one per asset, is a **vector**. A table of numbers is a **matrix**; multiplying a matrix by a vector gives weighted sums, row by row. A raised ⊤, as in $`P^\top`$, turns rows into columns (the **transpose**). A raised $`-1`$ undoes multiplication by a matrix (the **inverse**), the way dividing undoes multiplying. [The efficient frontier](02-efficient-frontier-and-minimum-variance.md) card uses the same notation.
 
 Three lines, one per stage:
 
-$$\pi = \delta\,\Sigma\,w_m$$
+```math
+\pi = \delta\,\Sigma\,w_m
+```
 
-$$\mu_{BL} = \pi + \tau\Sigma P^\top\left(P\,\tau\Sigma\,P^\top + \Omega\right)^{-1}\left(q - P\pi\right)$$
+```math
+\mu_{BL} = \pi + \tau\Sigma P^\top\left(P\,\tau\Sigma\,P^\top + \Omega\right)^{-1}\left(q - P\pi\right)
+```
 
-$$w_{BL} = (\delta\Sigma)^{-1}\mu_{BL} = w_m + P^\top\lambda, \qquad \lambda = \frac{\tau}{\delta}\left(P\,\tau\Sigma\,P^\top + \Omega\right)^{-1}\left(q - P\pi\right)$$
+```math
+w_{BL} = (\delta\Sigma)^{-1}\mu_{BL} = w_m + P^\top\lambda, \qquad \lambda = \frac{\tau}{\delta}\left(P\,\tau\Sigma\,P^\top + \Omega\right)^{-1}\left(q - P\pi\right)
+```
 
 **Read it aloud:** the market's weights, pushed through the risk table, give the returns the market must expect; move those returns toward each opinion by the opinion's surprise, scaled by how precise it is; buy the market plus a slice of each opinion's own portfolio.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $w_m$ | the market's weights: each asset's share of all the money invested in the three | 55, 30, 15 percent | the implied returns follow the weights |
-| $\Sigma$ | the covariance matrix: each asset's variance on the diagonal, how pairs move together off it. Say "sigma". | shares 0.04, bonds 0.0036, gold 0.0225 on the diagonal | implied returns rise in proportion |
-| $\delta$ | risk aversion: how much expected return one unit of variance must pay. Say "delta". | 2.5 | implied returns rise in proportion |
-| $\pi$ | implied returns: the expected returns above cash that make $w_m$ the best portfolio. Say "pi". | 5.7925, 0.6000, 1.2563 percent | |
-| $\tau$ | how uncertain $\pi$ is, as a fraction of $\Sigma$. Say "tau". | 0.05 | opinions count for more |
-| $P$, $p$ | the pick matrix: one row per opinion, saying which portfolio the opinion is about; $p$ is one row | rows `(0, -1, 1)` and `(1, 0, 0)` | |
-| $q$ | the opinions: the return above cash each row's portfolio will earn | 2 and 4 percent | the tilt toward that opinion grows |
-| $\Omega$, $\omega$ | the opinions' uncertainty: their variances on a diagonal; $\omega$ is one opinion's variance. Say "omega". | 0.001305 and 0.002 | opinions count for less |
-| $S$, $z$ | the bracket $P\,\tau\Sigma\,P^\top + \Omega$, total doubt about each opinion; $z$ solves $S z = q - P\pi$ | diagonal 0.00261, 0.004; $z$ = 5.2004, −4.5203 | |
-| $\mu$, $\mu_{BL}$ | the true expected returns above cash, unknown; and the blend, the best guess at them after the opinions. Say "mu". | blend 4.9041, 0.4521, 1.7735 percent | |
-| $w$, $w_{BL}$ | any portfolio's weights; the Black-Litterman weights, what the optimiser buys with the blend | 45.96, 19.60, 25.40 percent | |
-| $\lambda$ | how much of each opinion's portfolio is added to the market. Say "lambda". | 10.40 and -9.04 percent | |
-| $c$ | confidence in one opinion: the fraction of its surprise the blend accepts, between 0 and 1 | 0.5 | the blend moves nearer the opinion |
-| $A$, $I$, $m$ | used only in the folded proof: $A = C^{-1} + P^\top\Omega^{-1}P$ with $C = \tau\Sigma$; $I$ the identity matrix; $m$ the blend written as on this card | — | |
+| $`w_m`$ | the market's weights: each asset's share of all the money invested in the three | 55, 30, 15 percent | the implied returns follow the weights |
+| $`\Sigma`$ | the covariance matrix: each asset's variance on the diagonal, how pairs move together off it. Say "sigma". | shares 0.04, bonds 0.0036, gold 0.0225 on the diagonal | implied returns rise in proportion |
+| $`\delta`$ | risk aversion: how much expected return one unit of variance must pay. Say "delta". | 2.5 | implied returns rise in proportion |
+| $`\pi`$ | implied returns: the expected returns above cash that make $`w_m`$ the best portfolio. Say "pi". | 5.7925, 0.6000, 1.2563 percent | |
+| $`\tau`$ | how uncertain $`\pi`$ is, as a fraction of $`\Sigma`$. Say "tau". | 0.05 | opinions count for more |
+| $`P`$, $`p`$ | the pick matrix: one row per opinion, saying which portfolio the opinion is about; $`p`$ is one row | rows `(0, -1, 1)` and `(1, 0, 0)` | |
+| $`q`$ | the opinions: the return above cash each row's portfolio will earn | 2 and 4 percent | the tilt toward that opinion grows |
+| $`\Omega`$, $`\omega`$ | the opinions' uncertainty: their variances on a diagonal; $`\omega`$ is one opinion's variance. Say "omega". | 0.001305 and 0.002 | opinions count for less |
+| $`S`$, $`z`$ | the bracket $`P\,\tau\Sigma\,P^\top + \Omega`$, total doubt about each opinion; $`z`$ solves $`S z = q - P\pi`$ | diagonal 0.00261, 0.004; $`z`$ = 5.2004, −4.5203 | |
+| $`\mu`$, $`\mu_{BL}`$ | the true expected returns above cash, unknown; and the blend, the best guess at them after the opinions. Say "mu". | blend 4.9041, 0.4521, 1.7735 percent | |
+| $`w`$, $`w_{BL}`$ | any portfolio's weights; the Black-Litterman weights, what the optimiser buys with the blend | 45.96, 19.60, 25.40 percent | |
+| $`\lambda`$ | how much of each opinion's portfolio is added to the market. Say "lambda". | 10.40 and -9.04 percent | |
+| $`c`$ | confidence in one opinion: the fraction of its surprise the blend accepts, between 0 and 1 | 0.5 | the blend moves nearer the opinion |
+| $`A`$, $`I`$, $`m`$ | used only in the folded proof: $`A = C^{-1} + P^\top\Omega^{-1}P`$ with $`C = \tau\Sigma`$; $`I`$ the identity matrix; $`m`$ the blend written as on this card | — | |
 
-The prior is the market's reading of the returns before any opinion: centred on $\pi$, with doubt $\tau\Sigma$. The posterior is the reading after the opinions are blended in; its centre is $\mu_{BL}$.
+The prior is the market's reading of the returns before any opinion: centred on $`\pi`$, with doubt $`\tau\Sigma`$. The posterior is the reading after the opinions are blended in; its centre is $`\mu_{BL}`$.
 
-The surprise is $q - P\pi$: each opinion minus what the market already implies for the same portfolio. The bracket $P\,\tau\Sigma\,P^\top + \Omega$ is the total uncertainty about each opinion: the prior's doubt about that portfolio plus the opinion's own doubt. Confidence sets each opinion's variance by one rule, used throughout this card: the opinion's variance equals the prior's variance for that portfolio times $(1 - c)/c$.
+The surprise is $`q - P\pi`$: each opinion minus what the market already implies for the same portfolio. The bracket $`P\,\tau\Sigma\,P^\top + \Omega`$ is the total uncertainty about each opinion: the prior's doubt about that portfolio plus the opinion's own doubt. Confidence sets each opinion's variance by one rule, used throughout this card: the opinion's variance equals the prior's variance for that portfolio times $`(1 - c)/c`$.
 
 ### When it holds
 
-- **The market's weights are an optimum.** Reverse optimisation assumes some investor with risk aversion $\delta$ and covariance $\Sigma$ would choose $w_m$, which is what [CAPM](04-capm-and-beta.md) argues. If the market is not such an optimum, $\pi$ is only a sensible centre, not an equilibrium.
-- **The covariance is known.** Any error in $\Sigma$ passes straight into $\pi$, since $\pi$ is $\Sigma$ times a fixed vector.
+- **The market's weights are an optimum.** Reverse optimisation assumes some investor with risk aversion $`\delta`$ and covariance $`\Sigma`$ would choose $`w_m`$, which is what [CAPM](04-capm-and-beta.md) argues. If the market is not such an optimum, $`\pi`$ is only a sensible centre, not an equilibrium.
+- **The covariance is known.** Any error in $`\Sigma`$ passes straight into $`\pi`$, since $`\pi`$ is $`\Sigma`$ times a fixed vector.
 - **Normal doubt.** The prior and the opinions' errors are taken as normal. Otherwise the blend is still the best straight-line combination of the two, but no longer the full posterior.
 - **No weight limits.** The optimiser may short and borrow at the cash rate. With a no-shorting rule the flipped opinion below, which asks for minus 5.25 percent gold, would be cut off, and the neat market-plus-slices shape breaks.
-- **Two dials, one ratio.** Only $\tau$ against $\Omega$ matters for the blend. Scaling both together changes nothing; raising $\tau$ alone gives the opinions more weight.
+- **Two dials, one ratio.** Only $`\tau`$ against $`\Omega`$ matters for the blend. Scaling both together changes nothing; raising $`\tau`$ alone gives the opinions more weight.
 
 ---
 
@@ -97,72 +103,76 @@ The chart runs left to right: weights to returns, returns and opinions to a blen
 
 ### Step 1: reverse the optimiser
 
-A mean-variance investor with weights $w$ earns expected return above cash $w^\top\mu$ (each weight times its asset's return, summed) and suffers variance $w^\top\Sigma w$. She maximises
+A mean-variance investor with weights $`w`$ earns expected return above cash $`w^\top\mu`$ (each weight times its asset's return, summed) and suffers variance $`w^\top\Sigma w`$. She maximises
 
-$$w^\top\mu - \frac{\delta}{2}\,w^\top\Sigma w.$$
+```math
+w^\top\mu - \frac{\delta}{2}\,w^\top\Sigma w.
+```
 
-This is a bowl turned upside down, so its top is where the slope is zero. The slope in $w$ is $\mu - \delta\Sigma w$. Setting it to zero gives $\mu = \delta\Sigma w$.
+This is a bowl turned upside down, so its top is where the slope is zero. The slope in $`w`$ is $`\mu - \delta\Sigma w`$. Setting it to zero gives $`\mu = \delta\Sigma w`$.
 
-The usual problem goes from returns to weights. Run it backwards. The weights are known: $w_m$. So the returns that make them optimal are $\pi = \delta\Sigma w_m$. For shares that is 2.5 times the covariance of shares with the market portfolio, which gives 5.7925 percent.
+The usual problem goes from returns to weights. Run it backwards. The weights are known: $`w_m`$. So the returns that make them optimal are $`\pi = \delta\Sigma w_m`$. For shares that is 2.5 times the covariance of shares with the market portfolio, which gives 5.7925 percent.
 
-**Existence, uniqueness, boundaries.** $\pi$ always exists: it is a multiplication. It is unique for a given $\delta$ and $\Sigma$. Going back from $\pi$ to weights needs $\Sigma$ invertible, which holds when no portfolio has zero variance (the house $\Sigma$ qualifies). If one asset were an exact copy of a mix of others, $\pi$ would still exist, but many weight vectors would share it. The check feeds $\pi$ to the optimiser and gets 55, 30, 15 back.
+**Existence, uniqueness, boundaries.** $`\pi`$ always exists: it is a multiplication. It is unique for a given $`\delta`$ and $`\Sigma`$. Going back from $`\pi`$ to weights needs $`\Sigma`$ invertible, which holds when no portfolio has zero variance (the house $`\Sigma`$ qualifies). If one asset were an exact copy of a mix of others, $`\pi`$ would still exist, but many weight vectors would share it. The check feeds $`\pi`$ to the optimiser and gets 55, 30, 15 back.
 
-The scale comes from $\delta$. Multiplying $\pi = \delta\Sigma w_m$ by $w_m$ gives the market's premium over cash: $\delta$ times the market's variance. With the market's volatility at 11.9236 percent, $\delta = 2.5$ gives a premium of 3.5543 percent. Choosing $\delta$ is choosing that premium.
+The scale comes from $`\delta`$. Multiplying $`\pi = \delta\Sigma w_m`$ by $`w_m`$ gives the market's premium over cash: $`\delta`$ times the market's variance. With the market's volatility at 11.9236 percent, $`\delta = 2.5`$ gives a premium of 3.5543 percent. Choosing $`\delta`$ is choosing that premium.
 
 ### Step 2: the market reading, with doubt
 
-The model says the true $\mu$ is normal, centred on $\pi$, with covariance $\tau\Sigma$. The shape of the doubt copies $\Sigma$: assets that move together have means that are uncertain together. The size is small: $\tau = 0.05$ says the doubt about a year's average return is a twentieth of the spread of a single year's return, roughly what twenty years of data would give.
+The model says the true $`\mu`$ is normal, centred on $`\pi`$, with covariance $`\tau\Sigma`$. The shape of the doubt copies $`\Sigma`$: assets that move together have means that are uncertain together. The size is small: $`\tau = 0.05`$ says the doubt about a year's average return is a twentieth of the spread of a single year's return, roughly what twenty years of data would give.
 
 ### Step 3: opinions as readings of portfolios
 
-Each opinion is about a portfolio. "Gold beats bonds by 2 percent" is about the portfolio long one unit of gold and short one unit of bonds: the row `(0, -1, 1)` of $P$. "Shares beat cash by 4 percent" is the row `(1, 0, 0)`. A row that sums to zero is relative; a row that sums to one is absolute.
+Each opinion is about a portfolio. "Gold beats bonds by 2 percent" is about the portfolio long one unit of gold and short one unit of bonds: the row `(0, -1, 1)` of $`P`$. "Shares beat cash by 4 percent" is the row `(1, 0, 0)`. A row that sums to zero is relative; a row that sums to one is absolute.
 
-The model says each opinion is the truth plus a normal error: $q = P\mu + \varepsilon$, where the errors have covariance $\Omega$. Independent opinions give a diagonal $\Omega$.
+The model says each opinion is the truth plus a normal error: $`q = P\mu + \varepsilon`$, where the errors have covariance $`\Omega`$. Independent opinions give a diagonal $`\Omega`$.
 
-Before any opinion, the market already implies a value for each portfolio: $P\pi$. For gold minus bonds that is 1.2563 minus 0.6000, which is 0.6563 percent. The opinion says 2. The surprise is the gap.
+Before any opinion, the market already implies a value for each portfolio: $`P\pi`$. For gold minus bonds that is 1.2563 minus 0.6000, which is 0.6563 percent. The opinion says 2. The surprise is the gap.
 
 ### Step 4: blend by precision
 
 Add the two readings' precisions and weight their centres. That gives the precision form:
 
-$$\mu_{BL} = \left[(\tau\Sigma)^{-1} + P^\top\Omega^{-1}P\right]^{-1}\left[(\tau\Sigma)^{-1}\pi + P^\top\Omega^{-1}q\right].$$
+```math
+\mu_{BL} = \left[(\tau\Sigma)^{-1} + P^\top\Omega^{-1}P\right]^{-1}\left[(\tau\Sigma)^{-1}\pi + P^\top\Omega^{-1}q\right].
+```
 
-The first bracket is total precision; the second is each reading's centre times its precision. The formula on this card is the same thing rearranged: start at $\pi$ and add a correction proportional to the surprise. The rearranged form needs one small inverse per opinion instead of one per asset, and it still works when an opinion is certain ($\Omega$ has a zero), where the precision form would divide by zero.
+The first bracket is total precision; the second is each reading's centre times its precision. The formula on this card is the same thing rearranged: start at $`\pi`$ and add a correction proportional to the surprise. The rearranged form needs one small inverse per opinion instead of one per asset, and it still works when an opinion is certain ($`\Omega`$ has a zero), where the precision form would divide by zero.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write $C = \tau\Sigma$. The prior density is proportional to $\exp[-\tfrac12(\mu-\pi)^\top C^{-1}(\mu-\pi)]$. Given $\mu$, the opinions have density proportional to $\exp[-\tfrac12(q-P\mu)^\top\Omega^{-1}(q-P\mu)]$. By Bayes' rule the posterior is proportional to their product.
+Write $`C = \tau\Sigma`$. The prior density is proportional to $`\exp[-\tfrac12(\mu-\pi)^\top C^{-1}(\mu-\pi)]`$. Given $`\mu`$, the opinions have density proportional to $`\exp[-\tfrac12(q-P\mu)^\top\Omega^{-1}(q-P\mu)]`$. By Bayes' rule the posterior is proportional to their product.
 
-Expand the two exponents and keep the terms in $\mu$: $-\tfrac12\mu^\top A\mu + \mu^\top b$, with $A = C^{-1} + P^\top\Omega^{-1}P$ and $b = C^{-1}\pi + P^\top\Omega^{-1}q$. Completing the square turns this into $-\tfrac12(\mu - A^{-1}b)^\top A(\mu - A^{-1}b)$ plus a constant. So the posterior is normal with mean $A^{-1}b$ and covariance $A^{-1}$. That is the precision form.
+Expand the two exponents and keep the terms in $`\mu`$: $`-\tfrac12\mu^\top A\mu + \mu^\top b`$, with $`A = C^{-1} + P^\top\Omega^{-1}P`$ and $`b = C^{-1}\pi + P^\top\Omega^{-1}q`$. Completing the square turns this into $`-\tfrac12(\mu - A^{-1}b)^\top A(\mu - A^{-1}b)`$ plus a constant. So the posterior is normal with mean $`A^{-1}b`$ and covariance $`A^{-1}`$. That is the precision form.
 
-Now show the card's form gives the same mean. Let $S = PCP^\top + \Omega$ and $m = \pi + CP^\top S^{-1}(q - P\pi)$. Multiply $m$ by $A$:
+Now show the card's form gives the same mean. Let $`S = PCP^\top + \Omega`$ and $`m = \pi + CP^\top S^{-1}(q - P\pi)`$. Multiply $`m`$ by $`A`$:
 
-$Am = C^{-1}\pi + P^\top\Omega^{-1}P\pi + (C^{-1} + P^\top\Omega^{-1}P)CP^\top S^{-1}(q - P\pi)$.
+$`Am = C^{-1}\pi + P^\top\Omega^{-1}P\pi + (C^{-1} + P^\top\Omega^{-1}P)CP^\top S^{-1}(q - P\pi)`$.
 
-The last term is $P^\top(I + \Omega^{-1}PCP^\top)S^{-1}(q-P\pi)$, where $I$ is the identity matrix. The bracket equals $\Omega^{-1}(\Omega + PCP^\top) = \Omega^{-1}S$, so the term collapses to $P^\top\Omega^{-1}(q - P\pi)$. Adding up, $Am = C^{-1}\pi + P^\top\Omega^{-1}q = b$. So $m = A^{-1}b$: the two forms agree. The code checks it to twelve decimal places.
+The last term is $`P^\top(I + \Omega^{-1}PCP^\top)S^{-1}(q-P\pi)`$, where $`I`$ is the identity matrix. The bracket equals $`\Omega^{-1}(\Omega + PCP^\top) = \Omega^{-1}S`$, so the term collapses to $`P^\top\Omega^{-1}(q - P\pi)`$. Adding up, $`Am = C^{-1}\pi + P^\top\Omega^{-1}q = b`$. So $`m = A^{-1}b`$: the two forms agree. The code checks it to twelve decimal places.
 
 </details>
 
 ### Step 5: one opinion alone moves a fixed fraction of the way
 
-Take one opinion, row $p$, with variance $\omega$. Multiply the card's formula by $p$. The blended value of that portfolio is the market's value plus the fraction $p\tau\Sigma p^\top / (p\tau\Sigma p^\top + \omega)$ of the surprise: the prior's doubt over total doubt. Setting $\omega$ to the prior's doubt times $(1-c)/c$ makes that fraction exactly $c$. So $c$ is a confidence dial with a meaning: the share of the surprise accepted. At $c = 1$ the opinion is certain and holds exactly. At $c = 0$ it is ignored.
+Take one opinion, row $`p`$, with variance $`\omega`$. Multiply the card's formula by $`p`$. The blended value of that portfolio is the market's value plus the fraction $`p\tau\Sigma p^\top / (p\tau\Sigma p^\top + \omega)`$ of the surprise: the prior's doubt over total doubt. Setting $`\omega`$ to the prior's doubt times $`(1-c)/c`$ makes that fraction exactly $`c`$. So $`c`$ is a confidence dial with a meaning: the share of the surprise accepted. At $`c = 1`$ the opinion is certain and holds exactly. At $`c = 0`$ it is ignored.
 
 With two opinions the fractions interact slightly, because each opinion's portfolio moves with the other's. Here the interaction is small: the two portfolios share no asset.
 
 ### Step 6: back to weights, and why only the opinions move
 
-Feed $\mu_{BL}$ to the optimiser: $w_{BL} = (\delta\Sigma)^{-1}\mu_{BL}$. Split $\mu_{BL}$ into $\pi$ plus the correction. The $\pi$ part returns $w_m$, by Step 1. In the correction, $(\delta\Sigma)^{-1}$ meets $\tau\Sigma$, and the two $\Sigma$'s cancel, leaving $P^\top\lambda$ with $\lambda = (\tau/\delta)(P\tau\Sigma P^\top + \Omega)^{-1}(q - P\pi)$.
+Feed $`\mu_{BL}`$ to the optimiser: $`w_{BL} = (\delta\Sigma)^{-1}\mu_{BL}`$. Split $`\mu_{BL}`$ into $`\pi`$ plus the correction. The $`\pi`$ part returns $`w_m`$, by Step 1. In the correction, $`(\delta\Sigma)^{-1}`$ meets $`\tau\Sigma`$, and the two $`\Sigma`$'s cancel, leaving $`P^\top\lambda`$ with $`\lambda = (\tau/\delta)(P\tau\Sigma P^\top + \Omega)^{-1}(q - P\pi)`$.
 
-So the new portfolio is the market plus $\lambda$ units of each opinion's portfolio. No other direction can appear. An opinion about gold and bonds never touches shares directly. An asset nobody has an opinion about keeps its market weight, unless an opinion's portfolio contains it.
+So the new portfolio is the market plus $`\lambda`$ units of each opinion's portfolio. No other direction can appear. An opinion about gold and bonds never touches shares directly. An asset nobody has an opinion about keeps its market weight, unless an opinion's portfolio contains it.
 
-The same blend can be reached as a regression: stack the market reading and the opinions as data, and solve by weighted least squares. That is Theil's mixed estimation, and it pulls the estimate toward $\pi$ the way [Estimation error](07-estimation-error-and-shrinkage.md) pulls a noisy covariance toward a target.
+The same blend can be reached as a regression: stack the market reading and the opinions as data, and solve by weighted least squares. That is Theil's mixed estimation, and it pulls the estimate toward $`\pi`$ the way [Estimation error](07-estimation-error-and-shrinkage.md) pulls a noisy covariance toward a target.
 
 ---
 
 ## Worked numbers, by hand
 
-Covariances from the shelf's house market: volatility 20 percent for shares, 6 for bonds, 15 for gold; correlation 0.2 between shares and bonds, 0.1 between shares and gold, 0 between bonds and gold. Opinions at confidence $c = 0.5$.
+Covariances from the shelf's house market: volatility 20 percent for shares, 6 for bonds, 15 for gold; correlation 0.2 between shares and bonds, 0.1 between shares and gold, 0 between bonds and gold. Opinions at confidence $`c = 0.5`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -177,12 +187,12 @@ Covariances from the shelf's house market: volatility 20 percent for shares, 6 f
 | opinion 2 variance at c = 0.5 | 0.05 × 0.04 × 1 | 0.002 |
 | surprises | 2 − 0.6563 and 4 − 5.7925 | 1.3437 %, −1.7925 % |
 | prior doubt shared by the two opinions | 0.05 × (0.003 − 0.0024) | 0.00003 |
-| total doubt $S$, each opinion | 0.001305 + 0.001305 and 0.002 + 0.002 | 0.00261, 0.004 |
-| solve $S z$ = surprises | 0.00261 z₁ + 0.00003 z₂ = 0.013437; 0.00003 z₁ + 0.004 z₂ = −0.017925 | z = 5.2004, −4.5203 |
+| total doubt $`S`$, each opinion | 0.001305 + 0.001305 and 0.002 + 0.002 | 0.00261, 0.004 |
+| solve $`S z`$ = surprises | 0.00261 z₁ + 0.00003 z₂ = 0.013437; 0.00003 z₁ + 0.004 z₂ = −0.017925 | z = 5.2004, −4.5203 |
 | blend, shares | 0.057925 + 0.05 × (0.0006 × 5.2004 + 0.04 × (−4.5203)) | 4.9041 % |
-| blend, all three | $\pi + \tau\Sigma P^\top z$ | 4.9041, 0.4521, 1.7735 % |
+| blend, all three | $`\pi + \tau\Sigma P^\top z`$ | 4.9041, 0.4521, 1.7735 % |
 | blended gold minus bonds | 1.7735 − 0.4521 | 1.3213 % |
-| slices of each opinion's portfolio | $\lambda$ = (0.05 / 2.5) × z | 10.4008 %, −9.0405 % |
+| slices of each opinion's portfolio | $`\lambda`$ = (0.05 / 2.5) × z | 10.4008 %, −9.0405 % |
 | weights | 55 − 9.0405, 30 − 10.4008, 15 + 10.4008 | **45.96, 19.60, 25.40 %** |
 | cash | 100 − 45.96 − 19.60 − 25.40 | **9.04 %** |
 
@@ -209,16 +219,16 @@ Orange: gold. Green: bonds. Dark blue: shares. Gold and bonds move as mirror ima
 
 | Mistake | Comes out at (shares, bonds, gold) | What went wrong |
 | --- | --- | --- |
-| $\tau = 1$, opinions' variances unchanged | 37.64, 10.01, 34.99 % | the market reading is treated as twenty times less certain, so the opinions take over |
-| Row written bonds minus gold, $q$ still 2 | 46.19, 50.25, −5.25 % | the opinion now says bonds beat gold: the fund shorts gold |
+| $`\tau = 1`$, opinions' variances unchanged | 37.64, 10.01, 34.99 % | the market reading is treated as twenty times less certain, so the opinions take over |
+| Row written bonds minus gold, $`q`$ still 2 | 46.19, 50.25, −5.25 % | the opinion now says bonds beat gold: the fund shorts gold |
 | "Gold beats bonds" read as "gold beats cash by 2" | 45.77, 30.00, 22.23 % | an absolute opinion on gold alone: bonds are never sold |
-| Both opinions certain, $\Omega = 0$ | 36.76, 8.99, 36.01 % | the blend obeys both opinions exactly; nothing is left of the doubt |
+| Both opinions certain, $`\Omega = 0`$ | 36.76, 8.99, 36.01 % | the blend obeys both opinions exactly; nothing is left of the doubt |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds $\Sigma$ from the house volatilities and correlations, reverses the optimiser, and checks that feeding $\pi$ forward returns 55, 30, 15. It then reaches the blend by three independent roads:
+The code builds $`\Sigma`$ from the house volatilities and correlations, reverses the optimiser, and checks that feeding $`\pi`$ forward returns 55, 30, 15. It then reaches the blend by three independent roads:
 
 - The view-space formula solves a two-by-two system.
 - The precision form solves a three-by-three system and never forms the surprise.
@@ -232,7 +242,7 @@ The weights are reached twice: by the optimiser, and as market plus slices. It a
 4. optimiser against market-plus-slices;
 5. a certain opinion holds exactly;
 6. no surprise means no move;
-7. one opinion alone at $c = 0.25$ moves a quarter of the way.
+7. one opinion alone at $`c = 0.25`$ moves a quarter of the way.
 
 ### Python
 
@@ -623,12 +633,12 @@ The two outputs are identical to the last digit, Monte Carlo included: both prog
 
 Lean proves the three matrix facts behind the blend, for any number of assets and opinions, and the exact hand numbers.
 
-- Suppose no portfolio and no opinion has zero variance, and $\tau$ is positive. Then the card's formula for $\mu_{BL}$ equals the precision form of Step 4.
-- Suppose no portfolio has zero variance, $\delta$ is positive, and $\pi = \delta\Sigma w_m$. Then $w_{BL} = w_m + P^\top\lambda$, with $\lambda$ as in the formula.
-- Take $\tau > 0$, no portfolio with zero variance, and one opinion $p \neq 0$ at confidence $0 < c \le 1$. Then the blend moves that portfolio's value exactly the fraction $c$ of the way from $p\pi$ to $q$.
-- Take the house market and $c = 0.5$. Then the hand table's covariances, two implied returns, prior doubts, opinion variances and the factor $\tau/\delta$ check exactly.
+- Suppose no portfolio and no opinion has zero variance, and $`\tau`$ is positive. Then the card's formula for $`\mu_{BL}`$ equals the precision form of Step 4.
+- Suppose no portfolio has zero variance, $`\delta`$ is positive, and $`\pi = \delta\Sigma w_m`$. Then $`w_{BL} = w_m + P^\top\lambda`$, with $`\lambda`$ as in the formula.
+- Take $`\tau > 0`$, no portfolio with zero variance, and one opinion $`p \neq 0`$ at confidence $`0 < c \le 1`$. Then the blend moves that portfolio's value exactly the fraction $`c`$ of the way from $`p\pi`$ to $`q`$.
+- Take the house market and $`c = 0.5`$. Then the hand table's covariances, two implied returns, prior doubts, opinion variances and the factor $`\tau/\delta`$ check exactly.
 
-The solve for $z$, the blended returns, the weights and the Monte Carlo road are left to the Python and Rust checks.
+The solve for $`z`$, the blended returns, the weights and the Monte Carlo road are left to the Python and Rust checks.
 
 ```lean
 -- Black-Litterman: the card's blend formula equals the precision-weighted (Bayes) blend, its weights are the market plus a slice of each opinion's portfolio, and one opinion at confidence c moves its portfolio's return the fraction c of the way.
@@ -794,7 +804,7 @@ example : (5 / 100 : ℚ) / (5 / 2) = 1 / 50 := by norm_num
 > [!TIP]
 > **Try changing**
 > - **Set the gold opinion's confidence to 100 percent.** Guess first: does gold go to 2 percent, or does its weight double? Answer: the blended gold-over-bonds return becomes exactly 2.00 percent, and gold's weight rises to 35.80 percent. The check's sweep prints it.
-> - **Set both opinions equal to what the market implies** (`q = P pi`). Guess first. Answer: no surprise, no move. The blend equals $\pi$ and the weights are 55, 30, 15; the sixth assert checks it.
+> - **Set both opinions equal to what the market implies** (`q = P pi`). Guess first. Answer: no surprise, no move. The blend equals $`\pi`$ and the weights are 55, 30, 15; the sixth assert checks it.
 > - **Set `tau` to 1 and leave the opinions' variances alone.** Guess first: more or less tilt? Answer: more. Weights 37.64, 10.01, 34.99 percent: the market reading is now looser than the opinions.
 > - **Drop the gold opinion (confidence 0).** Guess first: do bonds and gold move? Answer: no. They stay at 30 and 15, because the shares opinion's portfolio holds only shares.
 
@@ -806,18 +816,18 @@ example : (5 / 100 : ℚ) / (5 / 2) = 1 / 50 := by norm_num
 > **Thinking Black-Litterman finds better returns.** It finds returns consistent with the market's weights plus the stated opinions, nothing more. With no opinions it hands back the market portfolio exactly. Every departure from the market is an opinion someone typed in. If the opinions are wrong, the tilt is wrong, just smaller and better behaved than a raw optimiser's.
 >
 > - **Relative read as absolute.** "Gold beats bonds by 2" is a row summing to zero. Written as gold alone at 2 percent, bonds never move and gold lands at 22.23 percent instead of 25.40.
-> - **Sign of the row.** `(0, 1, -1)` with $q$ = 2 says bonds beat gold. The fund shorts gold: −5.25 percent.
-> - **Changing $\tau$ without $\Omega$.** Only their ratio matters. Raising $\tau$ to 1 while keeping the opinions' variances gives 37.64 percent shares instead of 45.96.
+> - **Sign of the row.** `(0, 1, -1)` with $`q`$ = 2 says bonds beat gold. The fund shorts gold: −5.25 percent.
+> - **Changing $`\tau`$ without $`\Omega`$.** Only their ratio matters. Raising $`\tau`$ to 1 while keeping the opinions' variances gives 37.64 percent shares instead of 45.96.
 > - **Expecting the weights to add to 100 percent.** The shares opinion is a view about shares against cash, so 9.04 percent of the fund goes to cash. A relative opinion alone would leave the total unchanged.
 
 ---
 
 ## Where you meet it in real life
 
-- **Asset allocation committees.** Pension funds and multi-asset managers start from market weights and write each house view as a row of $P$ with a confidence. The output is a tilt they can explain line by line.
+- **Asset allocation committees.** Pension funds and multi-asset managers start from market weights and write each house view as a row of $`P`$ with a confidence. The output is a tilt they can explain line by line.
 - **Global bond and currency allocation.** The model's first setting: Black and Litterman built it for global bond, equity and currency portfolios at Goldman Sachs, where raw optimisers gave extreme weights.
 - **Combining analysts.** Several analysts' forecasts become several rows; conflicting opinions pull against each other in proportion to their confidence instead of the last one winning.
-- **Covariance from factors.** The $\Sigma$ that drives everything is often built from a factor model, as in [Factor models](05-factor-models-and-apt.md).
+- **Covariance from factors.** The $`\Sigma`$ that drives everything is often built from a factor model, as in [Factor models](05-factor-models-and-apt.md).
 - **Risk budgeting.** Some desks feed the blended returns to a risk-budget optimiser instead of plain mean-variance; [Risk parity](08-risk-parity-and-alternative-weightings.md) gives that other way of weighting.
 
 > **Say it back**
@@ -834,7 +844,7 @@ example : (5 / 100 : ℚ) / (5 / 2) = 1 / 50 := by norm_num
 
 ## Where this goes next
 
-- [Estimation error](07-estimation-error-and-shrinkage.md): why an optimiser fed raw estimates chases noise, and how shrinking the covariance toward a target calms it, as Black-Litterman shrinks the returns toward $\pi$.
+- [Estimation error](07-estimation-error-and-shrinkage.md): why an optimiser fed raw estimates chases noise, and how shrinking the covariance toward a target calms it, as Black-Litterman shrinks the returns toward $`\pi`$.
 - [Risk parity](08-risk-parity-and-alternative-weightings.md): a way to weight assets that needs no expected returns at all.
 
 Black-Litterman calms the expected returns but trusts the covariance completely; the open question is what to do when the covariance itself is a noisy estimate.

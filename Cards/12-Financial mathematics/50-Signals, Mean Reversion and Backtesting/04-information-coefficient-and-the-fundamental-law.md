@@ -36,47 +36,55 @@ Lower line: IC 0.05. Upper line: IC 0.10. Doubling skill doubles the ratio. Quad
 
 ## The formula
 
-$$\mathrm{IR} \;\approx\; \mathrm{IC}\times\sqrt{\mathrm{BR}}$$
+```math
+\mathrm{IR} \;\approx\; \mathrm{IC}\times\sqrt{\mathrm{BR}}
+```
 
 **Read it aloud:** the information ratio is the information coefficient times the square root of the breadth.
 
-The information coefficient is a correlation, measured on one date across the stocks. Number the stocks i = 1 to 500. Line up stock i's score $z_i$ and its later residual return $\theta_i$. Subtract each list's average. Then
+The information coefficient is a correlation, measured on one date across the stocks. Number the stocks i = 1 to 500. Line up stock i's score $`z_i`$ and its later residual return $`\theta_i`$. Subtract each list's average. Then
 
-$$\mathrm{IC} \;=\; \frac{\sum_i (z_i-\bar z)(\theta_i-\bar\theta)}{\sqrt{\sum_i (z_i-\bar z)^2}\;\sqrt{\sum_i (\theta_i-\bar\theta)^2}}$$
+```math
+\mathrm{IC} \;=\; \frac{\sum_i (z_i-\bar z)(\theta_i-\bar\theta)}{\sqrt{\sum_i (z_i-\bar z)^2}\;\sqrt{\sum_i (\theta_i-\bar\theta)^2}}
+```
 
-In words: add up score times return, after centring both, and divide by the size of each list so the answer has no units. The sign $\sum_i$ means "add over every stock". A bar, as in $\bar z$, means the average across stocks. If either list is constant, IC is undefined.
+In words: add up score times return, after centring both, and divide by the size of each list so the answer has no units. The sign $`\sum_i`$ means "add over every stock". A bar, as in $`\bar z`$, means the average across stocks. If either list is constant, IC is undefined.
 
 A score is a forecast in its own units. Grinold's rule turns it into a forecast in percent, the stock's expected residual return:
 
-$$\alpha_i \;=\; \mathrm{IC}\times\omega\times z_i$$
+```math
+\alpha_i \;=\; \mathrm{IC}\times\omega\times z_i
+```
 
-Here the scores are rescaled to average 0 and standard deviation 1, and $\omega$ is the **residual volatility**: the standard deviation of $\theta_i$. In words: forecast equals skill times the stock's own wobble times its score. With IC 0.05 and ω of 25 percent a year, a stock scored one standard deviation above average is forecast to beat the index by 1.25 percent.
+Here the scores are rescaled to average 0 and standard deviation 1, and $`\omega`$ is the **residual volatility**: the standard deviation of $`\theta_i`$. In words: forecast equals skill times the stock's own wobble times its score. With IC 0.05 and ω of 25 percent a year, a stock scored one standard deviation above average is forecast to beat the index by 1.25 percent.
 
-The information ratio grades a whole portfolio. Its **active return** $A$ is its return minus the index's. Its **active risk** $\sigma_A$ (also called tracking error) is the standard deviation of that difference:
+The information ratio grades a whole portfolio. Its **active return** $`A`$ is its return minus the index's. Its **active risk** $`\sigma_A`$ (also called tracking error) is the standard deviation of that difference:
 
-$$\mathrm{IR} \;=\; \frac{\mathrm{E}[A]}{\sigma_A}$$
+```math
+\mathrm{IR} \;=\; \frac{\mathrm{E}[A]}{\sigma_A}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mathrm{IC}$ | information coefficient: correlation of scores with later residual returns | 0.05 | IR rises in proportion |
-| $\mathrm{BR}$ | breadth: independent bets per year | 500 | IR rises with its square root |
-| $\mathrm{IR}$ | information ratio: expected active return per unit of active risk, per year | 1.118 | — |
-| $z_i$ | stock i's score, rescaled so the scores average 0 with spread 1 | +1 for a stock one spread above average | bigger bet on that stock |
-| $\theta_i$ | stock i's residual return over the year: its return with the market's part removed | toy list −2, 0, 1, −1, 2 percent | — |
-| $\sum_i$, $\bar z$, $\bar\theta$ | add over every stock; averages across the stocks | both averages 0 in the toy | — |
-| $\omega$, $s$, $s_i$ | residual volatility, the standard deviation of $\theta_i$; $s$ is what is left after the forecast, $\omega\sqrt{1-\mathrm{IC}^2}$ | 25% a year | forecasts grow in percent, IR unchanged |
-| $\alpha_i$ | the forecast of $\theta_i$ in percent | 1.25% for a score of +1 | — |
-| $h_i$ | active weight: the fund's weight in stock i minus the index's | in proportion to $\alpha_i$ | — |
-| $A$, $\sigma_A$ | active return, and its standard deviation (active risk) | 4.47% expected at 4% risk | — |
-| $\mathrm{TC}$ | transfer coefficient: how faithfully the weights follow the forecasts | 1 unconstrained, 0.80 for a half-and-half sort | IR rises in proportion |
-| $\mathrm{E}[\cdot]$, $\mathrm{Var}(\cdot)$ | expected value and variance, as on [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md) | — | — |
+| $`\mathrm{IC}`$ | information coefficient: correlation of scores with later residual returns | 0.05 | IR rises in proportion |
+| $`\mathrm{BR}`$ | breadth: independent bets per year | 500 | IR rises with its square root |
+| $`\mathrm{IR}`$ | information ratio: expected active return per unit of active risk, per year | 1.118 | — |
+| $`z_i`$ | stock i's score, rescaled so the scores average 0 with spread 1 | +1 for a stock one spread above average | bigger bet on that stock |
+| $`\theta_i`$ | stock i's residual return over the year: its return with the market's part removed | toy list −2, 0, 1, −1, 2 percent | — |
+| $`\sum_i`$, $`\bar z`$, $`\bar\theta`$ | add over every stock; averages across the stocks | both averages 0 in the toy | — |
+| $`\omega`$, $`s`$, $`s_i`$ | residual volatility, the standard deviation of $`\theta_i`$; $`s`$ is what is left after the forecast, $`\omega\sqrt{1-\mathrm{IC}^2}`$ | 25% a year | forecasts grow in percent, IR unchanged |
+| $`\alpha_i`$ | the forecast of $`\theta_i`$ in percent | 1.25% for a score of +1 | — |
+| $`h_i`$ | active weight: the fund's weight in stock i minus the index's | in proportion to $`\alpha_i`$ | — |
+| $`A`$, $`\sigma_A`$ | active return, and its standard deviation (active risk) | 4.47% expected at 4% risk | — |
+| $`\mathrm{TC}`$ | transfer coefficient: how faithfully the weights follow the forecasts | 1 unconstrained, 0.80 for a half-and-half sort | IR rises in proportion |
+| $`\mathrm{E}[\cdot]`$, $`\mathrm{Var}(\cdot)`$ | expected value and variance, as on [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md) | — | — |
 
 ### When it holds
 
 - **Bets are independent.** The law counts bets whose surprises are unrelated. If the 500 stocks move in 50 lockstep groups of 10, and the scores follow the groups, there are 50 bets, not 500, and IR falls to 0.354.
 - **Weights follow the forecasts.** A fund that cannot short, or caps its positions, holds weights that only partly match the forecasts. The law then gains a factor, IR ≈ TC × IC × √BR. Sorting stocks into a top half held long and a bottom half held short has TC 0.80, and IR drops from 1.118 to about 0.89.
 - **Skill is steady.** The law treats IC as the same every year and on every stock. Real IC wanders; the wander adds risk the formula leaves out, and it can matter more than breadth.
-- **Skill is small.** The exact model answer is the law divided by $\sqrt{1-\mathrm{IC}^2}$. At IC 0.05 that moves 1.1180 to 1.1194. The gap grows with IC, but stays small for any IC a stock forecaster reaches.
+- **Skill is small.** The exact model answer is the law divided by $`\sqrt{1-\mathrm{IC}^2}`$. At IC 0.05 that moves 1.1180 to 1.1194. The gap grows with IC, but stays small for any IC a stock forecaster reaches.
 - **Before costs, before the fact.** The IR is an expectation about next year, before trading costs. A realised IR from one year of history is a noisy estimate of it.
 
 ---
@@ -85,7 +93,7 @@ $$\mathrm{IR} \;=\; \frac{\mathrm{E}[A]}{\sigma_A}$$
 
 ### Step 0: gains add, independent noise adds in squares
 
-Take 500 bets. Each has a small expected gain and a lot of noise. Put the same stake on each. The expected gains add: 500 of them. The noises do not add. Independent risks add their **variances** (squared standard deviations), so the total standard deviation grows only like the square root of 500. Expected gain over standard deviation therefore grows like $500/\sqrt{500} = \sqrt{500}$. That is the whole idea. The rest of this section turns "a small expected gain" into IC and checks that no better way of placing the stakes exists.
+Take 500 bets. Each has a small expected gain and a lot of noise. Put the same stake on each. The expected gains add: 500 of them. The noises do not add. Independent risks add their **variances** (squared standard deviations), so the total standard deviation grows only like the square root of 500. Expected gain over standard deviation therefore grows like $`500/\sqrt{500} = \sqrt{500}`$. That is the whole idea. The rest of this section turns "a small expected gain" into IC and checks that no better way of placing the stakes exists.
 
 ### Step 1: turn a score into a forecast
 
@@ -93,38 +101,48 @@ A score says "better" or "worse". A portfolio needs a forecast in percent. The b
 
 A correlation is a covariance divided by both standard deviations. So the covariance of score and residual return is IC × 1 × ω, the score's spread being 1. The score's variance is 1. The slope is IC × ω, and the forecast is
 
-$$\alpha_i = \mathrm{IC}\,\omega\,z_i .$$
+```math
+\alpha_i = \mathrm{IC}\,\omega\,z_i .
+```
 
-The forecast explains a share $\mathrm{IC}^2$ of the return's variance: 0.25 percent here. What it cannot explain has standard deviation $\omega\sqrt{1-\mathrm{IC}^2}$. That leftover is the risk of each bet.
+The forecast explains a share $`\mathrm{IC}^2`$ of the return's variance: 0.25 percent here. What it cannot explain has standard deviation $`\omega\sqrt{1-\mathrm{IC}^2}`$. That leftover is the risk of each bet.
 
 ### Step 2: one stock is a tiny portfolio with its own ratio
 
-Hold stock i alone, against the index. Expected active return: $\alpha_i$. Risk: $\omega\sqrt{1-\mathrm{IC}^2}$. Its own information ratio is
+Hold stock i alone, against the index. Expected active return: $`\alpha_i`$. Risk: $`\omega\sqrt{1-\mathrm{IC}^2}`$. Its own information ratio is
 
-$$\frac{\alpha_i}{\omega\sqrt{1-\mathrm{IC}^2}} = \frac{\mathrm{IC}\,z_i}{\sqrt{1-\mathrm{IC}^2}} \approx \mathrm{IC}\,z_i .$$
+```math
+\frac{\alpha_i}{\omega\sqrt{1-\mathrm{IC}^2}} = \frac{\mathrm{IC}\,z_i}{\sqrt{1-\mathrm{IC}^2}} \approx \mathrm{IC}\,z_i .
+```
 
 A stock scored +1 has a ratio of about 0.05. Alone, that is worthless.
 
 ### Step 3: the best combination adds the ratios in squares
 
-Now hold all 500 with active weights $h_i$. Write $s = \omega\sqrt{1-\mathrm{IC}^2}$ for each bet's leftover risk. With independent surprises,
+Now hold all 500 with active weights $`h_i`$. Write $`s = \omega\sqrt{1-\mathrm{IC}^2}`$ for each bet's leftover risk. With independent surprises,
 
-$$\mathrm{E}[A] = \sum_i h_i\alpha_i, \qquad \mathrm{Var}(A) = \sum_i h_i^2 s^2 .$$
+```math
+\mathrm{E}[A] = \sum_i h_i\alpha_i, \qquad \mathrm{Var}(A) = \sum_i h_i^2 s^2 .
+```
 
-The best ratio of the first to the square root of the second comes from weights in proportion to the forecasts, $h_i \propto \alpha_i$, and equals
+The best ratio of the first to the square root of the second comes from weights in proportion to the forecasts, $`h_i \propto \alpha_i`$, and equals
 
-$$\mathrm{IR}^2 = \sum_i \left(\frac{\alpha_i}{s}\right)^2 .$$
+```math
+\mathrm{IR}^2 = \sum_i \left(\frac{\alpha_i}{s}\right)^2 .
+```
 
 The portfolio's squared ratio is the sum of the stocks' squared ratios. Independent bets combine like the sides of a right-angled triangle: the long side is the square root of the sum of squares.
 
 <details>
 <summary>Detailed proof: no other weights do better</summary>
 
-The Cauchy–Schwarz inequality says that for any two lists, $\left(\sum_i a_ib_i\right)^2 \le \sum_i a_i^2 \sum_i b_i^2$, with equality exactly when one list is a multiple of the other. Take $a_i = h_i s$ and $b_i = \alpha_i/s$. Then $\sum_i a_ib_i = \sum_i h_i\alpha_i = \mathrm{E}[A]$ and $\sum_i a_i^2 = \mathrm{Var}(A)$. So
-$$\mathrm{E}[A]^2 \le \mathrm{Var}(A)\sum_i \left(\frac{\alpha_i}{s}\right)^2 ,$$
-and dividing by $\mathrm{Var}(A)$ gives $\mathrm{IR}^2 \le \sum_i (\alpha_i/s)^2$. Equality needs $h_i s$ to be a multiple of $\alpha_i/s$: $h_i = c\,\alpha_i/s^2$ for some positive number c. Any positive c works, because doubling every weight doubles both expected return and risk. The fund picks c to hit its risk budget: at 4 percent active risk, expected active return is 1.118 × 4 percent, 4.47 percent.
+The Cauchy–Schwarz inequality says that for any two lists, $`\left(\sum_i a_ib_i\right)^2 \le \sum_i a_i^2 \sum_i b_i^2`$, with equality exactly when one list is a multiple of the other. Take $`a_i = h_i s`$ and $`b_i = \alpha_i/s`$. Then $`\sum_i a_ib_i = \sum_i h_i\alpha_i = \mathrm{E}[A]`$ and $`\sum_i a_i^2 = \mathrm{Var}(A)`$. So
 
-Where the stocks have different leftover risks $s_i$, the same proof gives $\mathrm{IR}^2 = \sum_i (\alpha_i/s_i)^2$ and weights $h_i \propto \alpha_i/s_i^2$: bet more where the forecast is big and the stock is calm.
+$`\displaystyle \mathrm{E}[A]^2 \le \mathrm{Var}(A)\sum_i \left(\frac{\alpha_i}{s}\right)^2 ,`$
+
+and dividing by $`\mathrm{Var}(A)`$ gives $`\mathrm{IR}^2 \le \sum_i (\alpha_i/s)^2`$. Equality needs $`h_i s`$ to be a multiple of $`\alpha_i/s`$: $`h_i = c\,\alpha_i/s^2`$ for some positive number c. Any positive c works, because doubling every weight doubles both expected return and risk. The fund picks c to hit its risk budget: at 4 percent active risk, expected active return is 1.118 × 4 percent, 4.47 percent.
+
+Where the stocks have different leftover risks $`s_i`$, the same proof gives $`\mathrm{IR}^2 = \sum_i (\alpha_i/s_i)^2`$ and weights $`h_i \propto \alpha_i/s_i^2`$: bet more where the forecast is big and the stock is calm.
 
 </details>
 
@@ -132,19 +150,23 @@ Where the stocks have different leftover risks $s_i$, the same proof gives $\mat
 
 Put Step 1's forecast into Step 3:
 
-$$\mathrm{IR}^2 = \sum_i \frac{\mathrm{IC}^2\,\omega^2 z_i^2}{\omega^2(1-\mathrm{IC}^2)} = \frac{\mathrm{IC}^2}{1-\mathrm{IC}^2}\sum_i z_i^2 .$$
+```math
+\mathrm{IR}^2 = \sum_i \frac{\mathrm{IC}^2\,\omega^2 z_i^2}{\omega^2(1-\mathrm{IC}^2)} = \frac{\mathrm{IC}^2}{1-\mathrm{IC}^2}\sum_i z_i^2 .
+```
 
-The scores were rescaled to average 0 with spread 1, so their squares add to the number of stocks. With one independent bet per stock a year, $\sum_i z_i^2 = \mathrm{BR} = 500$. Take the square root:
+The scores were rescaled to average 0 with spread 1, so their squares add to the number of stocks. With one independent bet per stock a year, $`\sum_i z_i^2 = \mathrm{BR} = 500`$. Take the square root:
 
-$$\mathrm{IR} = \frac{\mathrm{IC}\sqrt{\mathrm{BR}}}{\sqrt{1-\mathrm{IC}^2}} \;\approx\; \mathrm{IC}\sqrt{\mathrm{BR}} .$$
+```math
+\mathrm{IR} = \frac{\mathrm{IC}\sqrt{\mathrm{BR}}}{\sqrt{1-\mathrm{IC}^2}} \;\approx\; \mathrm{IC}\sqrt{\mathrm{BR}} .
+```
 
-The left form is exact inside the model: 1.119434. Grinold's law measures risk with the full wobble ω instead of the leftover $\omega\sqrt{1-\mathrm{IC}^2}$, and gets the right form: 1.118034. They differ by a factor $1/\sqrt{1-\mathrm{IC}^2}$: 0.13 percent at IC 0.05, 0.5 percent at IC 0.10 (2.236 against 2.247).
+The left form is exact inside the model: 1.119434. Grinold's law measures risk with the full wobble ω instead of the leftover $`\omega\sqrt{1-\mathrm{IC}^2}`$, and gets the right form: 1.118034. They differ by a factor $`1/\sqrt{1-\mathrm{IC}^2}`$: 0.13 percent at IC 0.05, 0.5 percent at IC 0.10 (2.236 against 2.247).
 
 ### Step 5: bell curves are not needed
 
-Nothing above used a bell curve. To see that, rebuild the model from coins. Each stock's score is +1 or −1, half of each. Each stock's surprise is an independent fair coin, +1 or −1. Its standardised residual return is IC × score plus $\sqrt{1-\mathrm{IC}^2}$ × surprise; the correlation of score with return is then exactly IC.
+Nothing above used a bell curve. To see that, rebuild the model from coins. Each stock's score is +1 or −1, half of each. Each stock's surprise is an independent fair coin, +1 or −1. Its standardised residual return is IC × score plus $`\sqrt{1-\mathrm{IC}^2}`$ × surprise; the correlation of score with return is then exactly IC.
 
-With weights equal to the scores, the active return is IC × 500 plus $\sqrt{1-\mathrm{IC}^2}$ times a sum of 500 fair coins. That sum takes 501 possible values, with binomial chances: the chances of each count of heads in 500 fair tosses, as on [Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md). The check adds up all 501, exactly, and lands on 1.119434, the exact model value. It also counts the chance that the active return comes out negative: 13.2 percent. A fund with this skill loses to its index in about 13 years out of 100.
+With weights equal to the scores, the active return is IC × 500 plus $`\sqrt{1-\mathrm{IC}^2}`$ times a sum of 500 fair coins. That sum takes 501 possible values, with binomial chances: the chances of each count of heads in 500 fair tosses, as on [Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md). The check adds up all 501, exactly, and lands on 1.119434, the exact model value. It also counts the chance that the active return comes out negative: 13.2 percent. A fund with this skill loses to its index in about 13 years out of 100.
 
 Grinold's own route, and its extensions to many factors and to skill that changes over time, are in the sources. What the law hides when IC itself is estimated from a backtest is the job of [Backtesting](05-backtesting-pitfalls.md) and [Trying many strategies](06-deflated-sharpe-and-multiple-testing.md).
 
@@ -189,7 +211,7 @@ xychart-beta
 
 Each bar counts the years whose realised IC fell in a band 0.025 wide, starting at the value shown. The average realised IC was 0.0508, close to the true 0.05.
 
-The spread from year to year was 0.045, matching $1/\sqrt{500}$ = 0.0447: a correlation measured on 500 pairs wobbles by about one over the square root of 500.
+The spread from year to year was 0.045, matching $`1/\sqrt{500}`$ = 0.0447: a correlation measured on 500 pairs wobbles by about one over the square root of 500.
 
 The years left of zero are the years the fund lost to its index; one of them fell off the chart's left edge. They are 12.65 percent of years in the simulation, against 13.2 percent counted exactly in the coin model and 13.1 percent from the bell curve. A year's IC and a year's active return always share their sign, because both are driven by the same sum of score times return.
 
@@ -382,7 +404,7 @@ histogram, years        10     40    130    325    635    829    837    643    3
 ALL CHECKS PASS
 ```
 
-The exact model and the coin count agree to six decimals, 1.119434. The simulation lands at 1.129, well inside its own sampling noise; the assert allows four standard errors. The hit rate, the share of stocks whose direction the score calls right, agrees with the bell-curve formula $1/2 + \arcsin(\mathrm{IC})/\pi$, Sheppard's formula, to within a thousandth.
+The exact model and the coin count agree to six decimals, 1.119434. The simulation lands at 1.129, well inside its own sampling noise; the assert allows four standard errors. The hit rate, the share of stocks whose direction the score calls right, agrees with the bell-curve formula $`1/2 + \arcsin(\mathrm{IC})/\pi`$, Sheppard's formula, to within a thousandth.
 
 ### Rust
 
@@ -595,8 +617,8 @@ The two outputs agree line for line, the simulated rows included, since both pro
 
 Lean proves the exact model answer, the best-weights rule and the range of IC in general, and the card's toy and fund arithmetic exactly.
 
-- Suppose there are BR independent bets, at least one, the squared scores add to BR, $\omega$ is positive and IC lies strictly between −1 and 1. Then no nonzero active weights beat an IR of $\mathrm{IC}\sqrt{\mathrm{BR}}/\sqrt{1-\mathrm{IC}^2}$, with a negative IC's minus sign dropped. Weights equal to the forecasts $\alpha_i$ reach it whenever IC is not zero.
-- Take any forecasts $\alpha_i$ and positive leftover risks $s_i$ on at least one bet. Then no nonzero active weights beat an IR of $\sqrt{\sum_i (\alpha_i/s_i)^2}$. If some forecast is not zero, weights $h_i = c\,\alpha_i/s_i^2$ reach it for every positive c.
+- Suppose there are BR independent bets, at least one, the squared scores add to BR, $`\omega`$ is positive and IC lies strictly between −1 and 1. Then no nonzero active weights beat an IR of $`\mathrm{IC}\sqrt{\mathrm{BR}}/\sqrt{1-\mathrm{IC}^2}`$, with a negative IC's minus sign dropped. Weights equal to the forecasts $`\alpha_i`$ reach it whenever IC is not zero.
+- Take any forecasts $`\alpha_i`$ and positive leftover risks $`s_i`$ on at least one bet. Then no nonzero active weights beat an IR of $`\sqrt{\sum_i (\alpha_i/s_i)^2}`$. If some forecast is not zero, weights $`h_i = c\,\alpha_i/s_i^2`$ reach it for every positive c.
 - IC always lies between −1 and +1, whatever the scores and returns. Where the card calls IC undefined, Lean's IC is 0.
 - The toy's sums are 7, 10 and 10, and both its IC and its rank IC are exactly 0.70.
 - The squared ratios are exact: 5/4 for the law and 500/399 for the exact model, at IC 0.05 on 500 bets.

@@ -28,28 +28,32 @@ To scale: 28 px per minute across, 8 px per litre per minute up. Shaded rectangl
 
 Notation first, in words. The **integral sign** is a stretched S, for "sum", with the start a below and the end b above. After it comes what is added; the closing dt names the variable sliced, here time.
 
-Write $f(t)$ for the rate at time t. Cut the interval from a to b at points $a = t_0 < t_1 < \dots < t_n = b$. That list of cuts is a **partition**, named $P$. Slice k runs from $t_{k-1}$ to $t_k$ and has width $\Delta t_k = t_k - t_{k-1}$. On it, $m_k$ is the rate's **infimum** $\inf$ (the greatest number it never drops below) and $M_k$ its supremum $\sup$ (the least number it never rises above). For a rising rate these are the rates at the slice's two ends.
+Write $`f(t)`$ for the rate at time t. Cut the interval from a to b at points $`a = t_0 < t_1 < \dots < t_n = b`$. That list of cuts is a **partition**, named $`P`$. Slice k runs from $`t_{k-1}`$ to $`t_k`$ and has width $`\Delta t_k = t_k - t_{k-1}`$. On it, $`m_k`$ is the rate's **infimum** $`\inf`$ (the greatest number it never drops below) and $`M_k`$ its supremum $`\sup`$ (the least number it never rises above). For a rising rate these are the rates at the slice's two ends.
 
-$$L(P) = \sum_{k=1}^{n} m_k\,\Delta t_k \qquad U(P) = \sum_{k=1}^{n} M_k\,\Delta t_k$$
+```math
+L(P) = \sum_{k=1}^{n} m_k\,\Delta t_k \qquad U(P) = \sum_{k=1}^{n} M_k\,\Delta t_k
+```
 
 **Read it aloud:** the lower sum adds each slice's lowest rate times its width; the upper sum uses the highest rate.
 
 The rate is **integrable** when exactly one number lies between every lower sum and every upper sum. That number is the integral:
 
-$$\int_a^b f(t)\,dt = \sup_P L(P) = \inf_P U(P)$$
+```math
+\int_a^b f(t)\,dt = \sup_P L(P) = \inf_P U(P)
+```
 
 **Read it aloud:** the integral of f from a to b is the best lower sum, which equals the best upper sum.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the rate being added up | 3 + 2t litres per minute | more water |
-| $t$, $a$, $b$ | time, and the start and end of the interval | minutes 0 and 10 | a later end adds water |
-| $n$, $k$ | number of slices, and a slice's counter | 5 slices, k = 1 to 5 | the bracket narrows |
-| $P$, $t_k$ | the partition, and its k-th cut | cuts 0, 2, 4, 6, 8, 10 | more cuts never loosen it |
-| $\Delta t_k$ | width of slice k | 2 minutes | wider slices, looser bracket |
-| $m_k$, $M_k$, $\inf$, $\sup$ | lowest and highest rate on slice k | 3 and 7 on the first slice | — |
-| $L$, $U$ | lower and upper sums | 110 and 150 litres | — |
-| $\int_a^b f(t)\,dt$ | the integral | 130 litres | — |
+| $`f`$ | the rate being added up | 3 + 2t litres per minute | more water |
+| $`t`$, $`a`$, $`b`$ | time, and the start and end of the interval | minutes 0 and 10 | a later end adds water |
+| $`n`$, $`k`$ | number of slices, and a slice's counter | 5 slices, k = 1 to 5 | the bracket narrows |
+| $`P`$, $`t_k`$ | the partition, and its k-th cut | cuts 0, 2, 4, 6, 8, 10 | more cuts never loosen it |
+| $`\Delta t_k`$ | width of slice k | 2 minutes | wider slices, looser bracket |
+| $`m_k`$, $`M_k`$, $`\inf`$, $`\sup`$ | lowest and highest rate on slice k | 3 and 7 on the first slice | — |
+| $`L`$, $`U`$ | lower and upper sums | 110 and 150 litres | — |
+| $`\int_a^b f(t)\,dt`$ | the integral | 130 litres | — |
 
 Units multiply: litres per minute times minutes gives litres.
 
@@ -82,7 +86,9 @@ If every tolerance has a slicing whose upper minus lower is smaller, the best lo
 
 Cut a rising rate into n equal slices. Upper minus lower is, slice by slice, right-end rate minus left-end rate, times the width. Each slice's right end is the next one's left end, so the differences cancel in a chain and leave f(b) − f(a). A falling rate swaps the ends:
 
-$$U - L = \frac{b - a}{n}\,\bigl|f(b) - f(a)\bigr|$$
+```math
+U - L = \frac{b - a}{n}\,\bigl|f(b) - f(a)\bigr|
+```
 
 For the tank: 10/n times 23 − 3, or 200/n litres. No formula for the rate was used, so jumps are fine: the code's second case opens the valve wider at minute 4, from 3 to 8 litres per minute, and its gap is 50/n.
 
@@ -107,7 +113,9 @@ Write ε (epsilon) for a tolerance and δ (delta) for a width.
 
 The tank's cuts are t_k = 10k/n. The lower sum uses left ends:
 
-$$L = \sum_{k=0}^{n-1}\Bigl(3 + 2\cdot\tfrac{10k}{n}\Bigr)\tfrac{10}{n} = 30 + \tfrac{200}{n^2}\sum_{k=0}^{n-1} k$$
+```math
+L = \sum_{k=0}^{n-1}\Bigl(3 + 2\cdot\tfrac{10k}{n}\Bigr)\tfrac{10}{n} = 30 + \tfrac{200}{n^2}\sum_{k=0}^{n-1} k
+```
 
 The count 0 + 1 + … + (n − 1) is n(n − 1)/2, by induction. So L = 130 − 100/n, and right ends give U = 130 + 100/n. Both close on 130 litres. Geometry agrees: a 3-by-10 rectangle holds 30, the triangle above it (base 10, height 20) holds 100.
 

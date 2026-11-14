@@ -34,36 +34,36 @@ At 40 litres the corner reaches 40 tables and no chairs, the lower hollow dot. A
 
 ## The formula
 
-Notation from [Linear programs](01-linear-programs-and-polyhedra.md) and [The simplex method](03-simplex-method.md): maximise $c^T x$ (the total profit) subject to $Ax + s = b$, $x \ge 0$, $s \ge 0$, with $x$ the plan and $s$ the slacks. $B$ is the columns of the basic variables (the ones the corner solves for; the rest sit at zero) at the final corner, and $c_B$ their margins (profit per item). The dual prices $y$ are those of [LP duality](04-lp-duality-and-complementary-slackness.md).
+Notation from [Linear programs](01-linear-programs-and-polyhedra.md) and [The simplex method](03-simplex-method.md): maximise $`c^T x`$ (the total profit) subject to $`Ax + s = b`$, $`x \ge 0`$, $`s \ge 0`$, with $`x`$ the plan and $`s`$ the slacks. $`B`$ is the columns of the basic variables (the ones the corner solves for; the rest sit at zero) at the final corner, and $`c_B`$ their margins (profit per item). The dual prices $`y`$ are those of [LP duality](04-lp-duality-and-complementary-slackness.md).
 
 This card adds four symbols:
 
-- $z^*(b)$, the best profit as a function of the limits;
-- $\delta$, a change in one limit;
-- $\ell_i$ and $u_i$, the ends of its range;
-- $r_j$, the profit-row entry of column $j$.
+- $`z^*(b)`$, the best profit as a function of the limits;
+- $`\delta`$, a change in one limit;
+- $`\ell_i`$ and $`u_i`$, the ends of its range;
+- $`r_j`$, the profit-row entry of column $`j`$.
 
-$$
+```math
 y^T = c_B^T B^{-1}, \qquad r_j = y^T a_j - c_j, \qquad z^*(b_i + \delta) = z^*(b) + y_i\,\delta \ \text{ while } \ B^{-1}(b + \delta e_i) \ge 0
-$$
+```
 
-**Read it aloud:** the shadow prices are the final corner's margins pushed back through its equations; a column's profit-row entry is the value, at those prices, of what one unit uses, minus what it earns; and moving limit $i$ by $\delta$ moves the best profit by its price times $\delta$, for as long as the corner's recomputed amounts stay zero or more. Here $e_i$ is a column of zeros with a 1 in row $i$, and $a_j$ is column $j$ of $A$.
+**Read it aloud:** the shadow prices are the final corner's margins pushed back through its equations; a column's profit-row entry is the value, at those prices, of what one unit uses, minus what it earns; and moving limit $`i`$ by $`\delta`$ moves the best profit by its price times $`\delta`$, for as long as the corner's recomputed amounts stay zero or more. Here $`e_i`$ is a column of zeros with a 1 in row $`i`$, and $`a_j`$ is column $`j`$ of $`A`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_1,\ x_2$ | tables and chairs made a week | 32 and 16 | — (chosen) |
-| $c_j$ | profit per item of product $j$, in pounds | £19, £20 | the plan holds inside its margin range |
-| $A,\ a_j,\ e_i$ | what one item uses of each stock; $a_j$ is product $j$'s column; $e_i$ is zeros with a 1 in row $i$ | table (4 m, 3 h, 1 l) | stocks run out sooner |
-| $b_i$ | stock $i$ for the week | 160 m, 120 h, 64 l | profit rises by $y_i$ a unit, inside the range |
-| $s_1,\ s_2,\ s_3$ | slack: unused timber, labour, finish | 0, 8 h, 0 | profit falls by $y_i$ per unit left unused |
-| $B,\ x_B,\ c_B,\ N$ | the final corner's basic columns, their amounts and margins; $N$ the zero variables' columns | basic $x_1$, $x_2$, $s_2$ = 32, 16, 8 | — |
-| $y_i,\ y^{(k)}$ | shadow price of stock $i$, pounds a unit, the dual variable; $y^{(k)}$ one corner of the dual | £3, £0, £7 | — |
-| $r_j$ | profit-row entry: value used at prices $y$, minus margin; the **reduced cost** | 0 for $x_1$, $x_2$; $r = y$ under the slacks | each unit of $j$ forced into the plan costs $r_j$ |
-| $z,\ z^*(b)$ | profit of the current plan; best profit the stocks $b$ allow | £928 | rises by $y_i$ per unit of stock $i$ |
-| $\delta,\ \varepsilon$ | change in one stock, in its own units; change in one margin, in pounds | +1 litre | profit moves by $y_i \delta$ |
-| $\ell_i,\ u_i$ | ends of the range where $y_i$ holds | finish 40 to 160 l | — |
+| $`x_1,\ x_2`$ | tables and chairs made a week | 32 and 16 | — (chosen) |
+| $`c_j`$ | profit per item of product $`j`$, in pounds | £19, £20 | the plan holds inside its margin range |
+| $`A,\ a_j,\ e_i`$ | what one item uses of each stock; $`a_j`$ is product $`j`$'s column; $`e_i`$ is zeros with a 1 in row $`i`$ | table (4 m, 3 h, 1 l) | stocks run out sooner |
+| $`b_i`$ | stock $`i`$ for the week | 160 m, 120 h, 64 l | profit rises by $`y_i`$ a unit, inside the range |
+| $`s_1,\ s_2,\ s_3`$ | slack: unused timber, labour, finish | 0, 8 h, 0 | profit falls by $`y_i`$ per unit left unused |
+| $`B,\ x_B,\ c_B,\ N`$ | the final corner's basic columns, their amounts and margins; $`N`$ the zero variables' columns | basic $`x_1`$, $`x_2`$, $`s_2`$ = 32, 16, 8 | — |
+| $`y_i,\ y^{(k)}`$ | shadow price of stock $`i`$, pounds a unit, the dual variable; $`y^{(k)}`$ one corner of the dual | £3, £0, £7 | — |
+| $`r_j`$ | profit-row entry: value used at prices $`y`$, minus margin; the **reduced cost** | 0 for $`x_1`$, $`x_2`$; $`r = y`$ under the slacks | each unit of $`j`$ forced into the plan costs $`r_j`$ |
+| $`z,\ z^*(b)`$ | profit of the current plan; best profit the stocks $`b`$ allow | £928 | rises by $`y_i`$ per unit of stock $`i`$ |
+| $`\delta,\ \varepsilon`$ | change in one stock, in its own units; change in one margin, in pounds | +1 litre | profit moves by $`y_i \delta`$ |
+| $`\ell_i,\ u_i`$ | ends of the range where $`y_i`$ holds | finish 40 to 160 l | — |
 
-Some texts quote the reduced cost with the opposite sign, $c_j - y^T a_j$: what one unit adds rather than what it costs. This card keeps the simplex card's sign, so a negative $r_j$ means "bring $j$ in".
+Some texts quote the reduced cost with the opposite sign, $`c_j - y^T a_j`$: what one unit adds rather than what it costs. This card keeps the simplex card's sign, so a negative $`r_j`$ means "bring $`j`$ in".
 
 ### When it holds
 
@@ -78,54 +78,60 @@ Some texts quote the reduced cost with the opposite sign, $c_j - y^T a_j$: what 
 
 ### Step 0: the final tableau is the problem rewritten at the best corner
 
-The simplex method ends with the limits solved for the basic variables in terms of the zero ones. At the best corner, the zero ones are $s_1$ (timber slack) and $s_3$ (finish slack), and profit reads
+The simplex method ends with the limits solved for the basic variables in terms of the zero ones. At the best corner, the zero ones are $`s_1`$ (timber slack) and $`s_3`$ (finish slack), and profit reads
 
-$$z = 928 - 3s_1 - 7s_3.$$
+```math
+z = 928 - 3s_1 - 7s_3.
+```
 
-Read it as a deal. Leaving one metre of timber unused ($s_1 = 1$) costs £3. Leaving one litre of finish unused costs £7. Leaving a unit unused is the same as having one unit less. So one unit *more* is worth £3 or £7, for as long as this same rewriting stays valid. Everything else is making that precise.
+Read it as a deal. Leaving one metre of timber unused ($`s_1 = 1`$) costs £3. Leaving one litre of finish unused costs £7. Leaving a unit unused is the same as having one unit less. So one unit *more* is worth £3 or £7, for as long as this same rewriting stays valid. Everything else is making that precise.
 
 ### Step 1: the profit row holds the dual prices
 
-The basic variables solve $Bx_B + Nx_N = b$, where $N$ holds the zero variables' columns, so $x_B = B^{-1}b - B^{-1}N x_N$. Put that into the profit $c_B^T x_B + c_N^T x_N$:
+The basic variables solve $`Bx_B + Nx_N = b`$, where $`N`$ holds the zero variables' columns, so $`x_B = B^{-1}b - B^{-1}N x_N`$. Put that into the profit $`c_B^T x_B + c_N^T x_N`$:
 
-$$z = y^T b - \sum_{j \text{ zero}} r_j \cdot (\text{variable } j), \qquad y^T = c_B^T B^{-1}, \quad r_j = y^T a_j - c_j.$$
+```math
+z = y^T b - \sum_{j \text{ zero}} r_j \cdot (\text{variable } j), \qquad y^T = c_B^T B^{-1}, \quad r_j = y^T a_j - c_j.
+```
 
-A slack's column $a_j$ is a single 1 in its stock's row and its margin is 0, so under slack $i$ the profit row shows exactly $y_i$: £3, £0 and £7.
+A slack's column $`a_j`$ is a single 1 in its stock's row and its margin is 0, so under slack $`i`$ the profit row shows exactly $`y_i`$: £3, £0 and £7.
 
-[LP duality](04-lp-duality-and-complementary-slackness.md) proves, from this same final table, that these $y$ are the dual's best prices. The profit row's non-negative entries say every product is covered and every price is at least zero. And $y^T b = 3 \times 160 + 0 \times 120 + 7 \times 64 = 928$ equals the plan's profit. So the numbers in Step 0's deal are the dual variables. What follows is new: how far the deal stretches.
+[LP duality](04-lp-duality-and-complementary-slackness.md) proves, from this same final table, that these $`y`$ are the dual's best prices. The profit row's non-negative entries say every product is covered and every price is at least zero. And $`y^T b = 3 \times 160 + 0 \times 120 + 7 \times 64 = 928`$ equals the plan's profit. So the numbers in Step 0's deal are the dual variables. What follows is new: how far the deal stretches.
 
 ### Step 2: move one stock, and the corner moves in a straight line
 
-Change stock $i$ by $\delta$. The basis $B$ stays the same, so its equations still have one answer: $x_B = B^{-1}(b + \delta e_i) = B^{-1}b + \delta\, B^{-1}e_i$. And $B^{-1}e_i$ is the slack's column in the final tableau. The corner slides in a straight line, one slack column per stock.
+Change stock $`i`$ by $`\delta`$. The basis $`B`$ stays the same, so its equations still have one answer: $`x_B = B^{-1}(b + \delta e_i) = B^{-1}b + \delta\, B^{-1}e_i`$. And $`B^{-1}e_i`$ is the slack's column in the final tableau. The corner slides in a straight line, one slack column per stock.
 
-The profit row does not involve $b$ at all, so $y$ stays a feasible dual: weak duality still caps every plan at $y^T b$. As long as the moved corner is still allowed, $x_B \ge 0$, the moved plan and the same prices have equal value, so both are best:
+The profit row does not involve $`b`$ at all, so $`y`$ stays a feasible dual: weak duality still caps every plan at $`y^T b`$. As long as the moved corner is still allowed, $`x_B \ge 0`$, the moved plan and the same prices have equal value, so both are best:
 
-$$z^*(b + \delta e_i) = y^T(b + \delta e_i) = z^*(b) + y_i\,\delta.$$
+```math
+z^*(b + \delta e_i) = y^T(b + \delta e_i) = z^*(b) + y_i\,\delta.
+```
 
 That is the formula. The shadow price is the slope.
 
 ### Step 3: the range is a ratio test on the slack column
 
-The range ends at the first basic amount to reach zero. For finish, the slack column is $(-\tfrac13, \tfrac13, \tfrac23)$ in the rows of $x_1$, $s_2$, $x_2$. So with $\delta$ more litres, tables are $32 - \delta/3$, spare labour is $8 + \delta/3$ and chairs are $16 + 2\delta/3$. Tables hit zero when the finish reaches 160 litres; spare labour and chairs both hit zero when it falls to 40 litres. The range is **40 to 160 litres**.
+The range ends at the first basic amount to reach zero. For finish, the slack column is $`(-\tfrac13, \tfrac13, \tfrac23)`$ in the rows of $`x_1`$, $`s_2`$, $`x_2`$. So with $`\delta`$ more litres, tables are $`32 - \delta/3`$, spare labour is $`8 + \delta/3`$ and chairs are $`16 + 2\delta/3`$. Tables hit zero when the finish reaches 160 litres; spare labour and chairs both hit zero when it falls to 40 litres. The range is **40 to 160 litres**.
 
 A stock with spare has its slack basic. That slack's own row just says the spare amount shrinks one for one, so its price, 0, holds down to the point where the spare runs out (labour: 112 hours) and upward without limit.
 
 ### Step 4: the same trick ranges the margins
 
-Raise a basic product's margin by $\varepsilon$ (pounds). Now $c_B$ changes, and by Step 1's formula the profit row gains $\varepsilon$ times that product's tableau row (its own column stays 0). The plan stays best while no profit-row entry turns negative.
+Raise a basic product's margin by $`\varepsilon`$ (pounds). Now $`c_B`$ changes, and by Step 1's formula the profit row gains $`\varepsilon`$ times that product's tableau row (its own column stays 0). The plan stays best while no profit-row entry turns negative.
 
-For tables, the row of $x_1$ has $\tfrac13$ under $s_1$ and $-\tfrac13$ under $s_3$, so the entries become $3 + \varepsilon/3$ and $7 - \varepsilon/3$. The first turns negative below a table margin of £10 and the second above £40, so the plan stays best for **a table margin of £10 to £40**. For chairs, the same reading gives £9.50 to £38.
+For tables, the row of $`x_1`$ has $`\tfrac13`$ under $`s_1`$ and $`-\tfrac13`$ under $`s_3`$, so the entries become $`3 + \varepsilon/3`$ and $`7 - \varepsilon/3`$. The first turns negative below a table margin of £10 and the second above £40, so the plan stays best for **a table margin of £10 to £40**. For chairs, the same reading gives £9.50 to £38.
 
-The profit-row entry of a product not in the plan prices it out. Suppose the workshop could also make a stool from 1 m of timber, 1 hour and 1 litre of finish, earning £9. At the current prices that stock is worth $3 + 0 + 7 = £10$, so $r = 10 - 9 = 1$: every stool forced into the plan costs £1. Raise the stool's margin to £11 and $r = -1$, so stools enter.
+The profit-row entry of a product not in the plan prices it out. Suppose the workshop could also make a stool from 1 m of timber, 1 hour and 1 litre of finish, earning £9. At the current prices that stock is worth $`3 + 0 + 7 = £10`$, so $`r = 10 - 9 = 1`$: every stool forced into the plan costs £1. Raise the stool's margin to £11 and $`r = -1`$, so stools enter.
 
 <details>
 <summary>Detailed proof: beyond its range the price steps down, never up</summary>
 
-The dual is: minimise $b^T y$ subject to $A^T y \ge c$, $y \ge 0$. Its limits do not involve $b$, so the stocks only tilt its objective. Strong duality, proved on [LP duality](04-lp-duality-and-complementary-slackness.md), says $z^*(b)$ equals the dual's best value whenever the workshop's problem has a plan. The dual's best value is reached at one of its corners, and the dual has finitely many corners $y^{(1)}, \dots, y^{(K)}$. So
+The dual is: minimise $`b^T y`$ subject to $`A^T y \ge c`$, $`y \ge 0`$. Its limits do not involve $`b`$, so the stocks only tilt its objective. Strong duality, proved on [LP duality](04-lp-duality-and-complementary-slackness.md), says $`z^*(b)`$ equals the dual's best value whenever the workshop's problem has a plan. The dual's best value is reached at one of its corners, and the dual has finitely many corners $`y^{(1)}, \dots, y^{(K)}`$. So
 
-$$z^*(b) = \min_k\, b^T y^{(k)}.$$
+$`\displaystyle z^*(b) = \min_k\, b^T y^{(k)}.`$
 
-Each $b^T y^{(k)}$ is a straight line in any one stock $b_i$, with slope $y^{(k)}_i$. The smallest of several straight lines is a broken line that bends downward (concave): as $b_i$ grows, the line in charge can only hand over to one with a smaller slope. So a stock's price can only fall as more of it is added.
+Each $`b^T y^{(k)}`$ is a straight line in any one stock $`b_i`$, with slope $`y^{(k)}_i`$. The smallest of several straight lines is a broken line that bends downward (concave): as $`b_i`$ grows, the line in charge can only hand over to one with a smaller slope. So a stock's price can only fall as more of it is added.
 
 The bends sit where two dual corners tie, which is where the workshop's best corner is degenerate. At a bend the slope on the left and on the right differ: that is the one-sided price.
 
@@ -141,21 +147,21 @@ The two tight stocks, timber and finish, fix the corner. Subtract the finish row
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| timber, finish rows | $4x_1 + 2x_2 + s_1 = 160$; $x_1 + 2x_2 + s_3 = 64$ | |
-| subtract | $3x_1 + s_1 - s_3 = 96$ | $x_1 = 32 - \tfrac13 s_1 + \tfrac13 s_3$ |
-| chairs | $x_2 = (64 - x_1 - s_3)/2$ | $16 + \tfrac16 s_1 - \tfrac23 s_3$ |
-| spare labour | $s_2 = 120 - 3x_1 - x_2$ | $8 + \tfrac56 s_1 - \tfrac13 s_3$ |
-| profit | $19x_1 + 20x_2 = 608 + 320 + (-\tfrac{19}{3} + \tfrac{20}{6})s_1 + (\tfrac{19}{3} - \tfrac{40}{3})s_3$ | $928 - 3s_1 - 7s_3$ |
-| shadow prices | read under $s_1, s_2, s_3$ | **£3, £0, £7** |
-| dual check | $3 \times 160 + 0 \times 120 + 7 \times 64$ | 928 |
-| finish range | tables $32 - \delta/3 \ge 0$; labour $8 + \delta/3 \ge 0$; chairs $16 + 2\delta/3 \ge 0$ | **40 to 160 litres** |
-| timber range | tables $32 + \delta/3 \ge 0$; labour $8 - 5\delta/6 \ge 0$; chairs $16 - \delta/6 \ge 0$ | **64 to 169.6 m** |
+| timber, finish rows | $`4x_1 + 2x_2 + s_1 = 160`$; $`x_1 + 2x_2 + s_3 = 64`$ | |
+| subtract | $`3x_1 + s_1 - s_3 = 96`$ | $`x_1 = 32 - \tfrac13 s_1 + \tfrac13 s_3`$ |
+| chairs | $`x_2 = (64 - x_1 - s_3)/2`$ | $`16 + \tfrac16 s_1 - \tfrac23 s_3`$ |
+| spare labour | $`s_2 = 120 - 3x_1 - x_2`$ | $`8 + \tfrac56 s_1 - \tfrac13 s_3`$ |
+| profit | $`19x_1 + 20x_2 = 608 + 320 + (-\tfrac{19}{3} + \tfrac{20}{6})s_1 + (\tfrac{19}{3} - \tfrac{40}{3})s_3`$ | $`928 - 3s_1 - 7s_3`$ |
+| shadow prices | read under $`s_1, s_2, s_3`$ | **£3, £0, £7** |
+| dual check | $`3 \times 160 + 0 \times 120 + 7 \times 64`$ | 928 |
+| finish range | tables $`32 - \delta/3 \ge 0`$; labour $`8 + \delta/3 \ge 0`$; chairs $`16 + 2\delta/3 \ge 0`$ | **40 to 160 litres** |
+| timber range | tables $`32 + \delta/3 \ge 0`$; labour $`8 - 5\delta/6 \ge 0`$; chairs $`16 - \delta/6 \ge 0`$ | **64 to 169.6 m** |
 | labour range | spare 8 hours | 112 h upward |
-| stool | $3 \times 1 + 0 \times 1 + 7 \times 1 - 9$ | $r = 1$: leave it out |
+| stool | $`3 \times 1 + 0 \times 1 + 7 \times 1 - 9`$ | $`r = 1`$: leave it out |
 
 One more litre of finish adds £7 a week, and keeps doing so up to 160 litres; one more hour of labour adds nothing.
 
-Re-solving the whole problem at shifted stocks confirms every number. Finish at 40 litres gives £760 and at 160 litres £1,600, a straight line at £7 a litre between them. Timber at 169.6 m gives £956.80. Labour at 111 hours gives £924.40, the £3.60 an hour that labour earns below 112 hours. With the stool at £11 the plan becomes 32 tables, 8 chairs and 16 stools for £944, which is 16 stools times the £1 its $r = -1$ promised.
+Re-solving the whole problem at shifted stocks confirms every number. Finish at 40 litres gives £760 and at 160 litres £1,600, a straight line at £7 a litre between them. Timber at 169.6 m gives £956.80. Labour at 111 hours gives £924.40, the £3.60 an hour that labour earns below 112 hours. With the stool at £11 the plan becomes 32 tables, 8 chairs and 16 stools for £944, which is 16 stools times the £1 its $`r = -1`$ promised.
 
 ### What breaks if you drop a piece
 
@@ -187,7 +193,7 @@ xychart-beta
     line [0, 380, 760, 900, 1040, 1180, 1320, 1460, 1600, 1600, 1600]
 ```
 
-The one line is the best profit $z^*$ with the finish moved and all else fixed. It climbs £380 per 20 litres up to 40, then £140 per 20 litres up to 160, then goes flat. Each bend is a degenerate corner, and each slope is a shadow price. The slopes only fall, as the fold in Why it works proves.
+The one line is the best profit $`z^*`$ with the finish moved and all else fixed. It climbs £380 per 20 litres up to 40, then £140 per 20 litres up to 160, then goes flat. Each bend is a degenerate corner, and each slope is a shadow price. The slopes only fall, as the fold in Why it works proves.
 
 ---
 
@@ -578,11 +584,11 @@ The two outputs match line for line.
 
 Lean proves the price formula and its range for any linear program's final simplex tableau, and checks the workshop's arithmetic.
 
-- Move one stock by $\delta$. While the corner's recomputed amounts stay zero or more, the best profit moves by exactly $y_i\,\delta$.
-- Under slack $i$, the profit row shows exactly the shadow price $y_i$.
+- Move one stock by $`\delta`$. While the corner's recomputed amounts stay zero or more, the best profit moves by exactly $`y_i\,\delta`$.
+- Under slack $`i`$, the profit row shows exactly the shadow price $`y_i`$.
 - The prices are a feasible dual: none is negative, and each product's stock is worth at least its profit.
 - The stocks' value at those prices equals the best profit, and no feasible dual is cheaper.
-- At a non-degenerate best corner, the best profit has slope exactly $y_i$ in stock $i$, for small rises and small falls alike.
+- At a non-degenerate best corner, the best profit has slope exactly $`y_i`$ in stock $`i`$, for small rises and small falls alike.
 - The plan of 32 tables and 16 chairs uses 160 m, 112 h and 64 l, and earns £928.
 - The prices £3, £0 and £7 value the stocks at £928, and price each table at £19 and each chair at £20.
 - The stool's profit-row entry is 1 at £9 and −1 at £11. At £11, 32 tables, 8 chairs and 16 stools fit and earn £944.
@@ -879,6 +885,6 @@ When many stocks change together, by amounts too big for every single range, wha
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Kantorovich, L. V. "Mathematical Methods of Organizing and Planning Production." *Management Science* 6, no. 4 (1960): 366–422. [doi:10.1287/mnsc.6.4.366](https://doi.org/10.1287/mnsc.6.4.366). The 1939 report in translation: production planning as a linear program, with resource prices that come from the plan.
-- Bertsimas, Dimitris, and John N. Tsitsiklis. *Introduction to Linear Optimization*. Athena Scientific, 1997. [Publisher page](http://www.athenasc.com/linoptbook.html). Chapter 5, sensitivity analysis: the dual prices from the final basis, the ranges on the right-hand side and the costs, and $z^*(b)$ as a concave broken line.
+- Bertsimas, Dimitris, and John N. Tsitsiklis. *Introduction to Linear Optimization*. Athena Scientific, 1997. [Publisher page](http://www.athenasc.com/linoptbook.html). Chapter 5, sensitivity analysis: the dual prices from the final basis, the ranges on the right-hand side and the costs, and $`z^*(b)`$ as a concave broken line.
 - Wendell, Richard E. "The Tolerance Approach to Sensitivity Analysis in Linear Programming." *Management Science* 31, no. 5 (1985): 564–578. [doi:10.1287/mnsc.31.5.564](https://doi.org/10.1287/mnsc.31.5.564). How far several margins or stocks can move at once while the plan stays best: the joint-change question this card leaves open.
 - Jansen, B., J. J. de Jong, C. Roos, and T. Terlaky. "Sensitivity Analysis in Linear Programming: Just Be Careful!" *European Journal of Operational Research* 101, no. 1 (1997): 15–28. [doi:10.1016/S0377-2217(96)00172-5](https://doi.org/10.1016/S0377-2217(96)00172-5). Why a degenerate corner gives one-sided prices, and how solvers' printed ranges can mislead.

@@ -36,15 +36,19 @@ First line: the 504-bit LDPC code, 100 simulated frames per point (synthetic, se
 
 ## The formula
 
-Notation first, in words. A code sends $n$ bits carrying $k$ data bits, at **rate** $R = k/n$. Its **parity-check matrix** $H$ has one row per check, a set of bits whose sum must be even. The channel flips each bit with chance $p$; its capacity $C$ is the largest reliable rate ([Channel capacity](07-channel-capacity-and-the-noisy-channel-theorem.md)).
+Notation first, in words. A code sends $`n`$ bits carrying $`k`$ data bits, at **rate** $`R = k/n`$. Its **parity-check matrix** $`H`$ has one row per check, a set of bits whose sum must be even. The channel flips each bit with chance $`p`$; its capacity $`C`$ is the largest reliable rate ([Channel capacity](07-channel-capacity-and-the-noisy-channel-theorem.md)).
 
-A **Tanner graph** draws $H$: a circle for each bit $v$, a square for each check $c$, an edge where $c$ contains $v$. On this card $c$ is a check, not card 08's codeword. The starting confidence in bit $v$ is
+A **Tanner graph** draws $`H`$: a circle for each bit $`v`$, a square for each check $`c`$, an edge where $`c`$ contains $`v`$. On this card $`c`$ is a check, not card 08's codeword. The starting confidence in bit $`v`$ is
 
-$$L_v = \ln \frac{\Pr(\text{bit } v \text{ was } 0 \mid \text{what was heard})}{\Pr(\text{bit } v \text{ was } 1 \mid \text{what was heard})}.$$
+```math
+L_v = \ln \frac{\Pr(\text{bit } v \text{ was } 0 \mid \text{what was heard})}{\Pr(\text{bit } v \text{ was } 1 \mid \text{what was heard})}.
+```
 
-Positive means "probably 0"; the size says how sure. Belief propagation sends messages along every edge, both ways, and repeats. Below, $c' \ni v$ reads "the checks $c'$ that contain bit $v$", and $v' \in c$ reads "the bits $v'$ in check $c$":
+Positive means "probably 0"; the size says how sure. Belief propagation sends messages along every edge, both ways, and repeats. Below, $`c' \ni v`$ reads "the checks $`c'`$ that contain bit $`v`$", and $`v' \in c`$ reads "the bits $`v'`$ in check $`c`$":
 
-$$m_{v\to c} = L_v + \sum_{c' \ni v,\ c' \ne c} m_{c'\to v}, \qquad \tanh\frac{m_{c\to v}}{2} = \prod_{v' \in c,\ v' \ne v} \tanh\frac{m_{v'\to c}}{2}, \qquad T_v = L_v + \sum_{c \ni v} m_{c\to v}.$$
+```math
+m_{v\to c} = L_v + \sum_{c' \ni v,\ c' \ne c} m_{c'\to v}, \qquad \tanh\frac{m_{c\to v}}{2} = \prod_{v' \in c,\ v' \ne v} \tanh\frac{m_{v'\to c}}{2}, \qquad T_v = L_v + \sum_{c \ni v} m_{c\to v}.
+```
 
 **Read it aloud:** a bit tells each check what it heard plus what every other check told it. A check tells each bit how sure the other bits make it, by a product of their certainties. A bit's verdict is the sign of its total.
 
@@ -52,25 +56,25 @@ Hardware decoders mostly use **min-sum** in place of the product: the other sign
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $k$, $R$ | bits sent, data bits, rate $k/n$ | Hamming 7, 4; LDPC 504, 254, rate 0.5040 | less room to repair |
-| $H$ | parity-check matrix: one row per check | 3 checks on 7 bits; 252 on 504 | more protection, lower rate |
-| $p$ | chance the channel flips a bit | 0.02 to 0.12 | more frames lost |
-| $C$ | capacity, $1 - h(p)$ bits per bit sent, with $h(p) = -p\log_2 p - (1-p)\log_2(1-p)$ the binary entropy, the bits of uncertainty in one flip-or-not ([Entropy](01-entropy.md)) | 0.7577 at $p$ = 0.04 | more room for data |
-| $v$, $c$, $x$ | a bit node, a check node; a bit's value, 0 or 1 | bits 1 to 7, checks A, B, C | — |
-| $L_v$ | starting confidence in bit $v$ | +4, −5, +1, +3, −1, −4, −6 | surer of 0 |
-| $m_{v\to c}$ | bit-to-check message | first round: $L_v$ | — |
-| $m_{c\to v}$ | check-to-bit message | check B to bit 3: −4 | the check pushes the bit harder |
-| $T_v$ | total confidence; its sign is the decision | bit 3: −2, so 1 | — |
-| $M_t(S)$, $d_t$ | Viterbi: fewest disagreements on a path into state $S$ after step $t$; one step's disagreements | 2 at the end | — |
-| $\varepsilon$, $z$ | erasure chance of a channel; of one polar sub-channel | 0.5; from 1 to 255 in 256 at $N$ = 8 | more channels useless |
-| $N$, $u_i$ | number of polar sub-channels; the bit sent on sub-channel $i$ | $N$ = 8, 1024, $2^{20}$; data on $u_4, u_6, u_7, u_8$ | sharper split |
+| $`n`$, $`k`$, $`R`$ | bits sent, data bits, rate $`k/n`$ | Hamming 7, 4; LDPC 504, 254, rate 0.5040 | less room to repair |
+| $`H`$ | parity-check matrix: one row per check | 3 checks on 7 bits; 252 on 504 | more protection, lower rate |
+| $`p`$ | chance the channel flips a bit | 0.02 to 0.12 | more frames lost |
+| $`C`$ | capacity, $`1 - h(p)`$ bits per bit sent, with $`h(p) = -p\log_2 p - (1-p)\log_2(1-p)`$ the binary entropy, the bits of uncertainty in one flip-or-not ([Entropy](01-entropy.md)) | 0.7577 at $`p`$ = 0.04 | more room for data |
+| $`v`$, $`c`$, $`x`$ | a bit node, a check node; a bit's value, 0 or 1 | bits 1 to 7, checks A, B, C | — |
+| $`L_v`$ | starting confidence in bit $`v`$ | +4, −5, +1, +3, −1, −4, −6 | surer of 0 |
+| $`m_{v\to c}`$ | bit-to-check message | first round: $`L_v`$ | — |
+| $`m_{c\to v}`$ | check-to-bit message | check B to bit 3: −4 | the check pushes the bit harder |
+| $`T_v`$ | total confidence; its sign is the decision | bit 3: −2, so 1 | — |
+| $`M_t(S)`$, $`d_t`$ | Viterbi: fewest disagreements on a path into state $`S`$ after step $`t`$; one step's disagreements | 2 at the end | — |
+| $`\varepsilon`$, $`z`$ | erasure chance of a channel; of one polar sub-channel | 0.5; from 1 to 255 in 256 at $`N`$ = 8 | more channels useless |
+| $`N`$, $`u_i`$ | number of polar sub-channels; the bit sent on sub-channel $`i`$ | $`N`$ = 8, 1024, $`2^{20}`$; data on $`u_4, u_6, u_7, u_8`$ | sharper split |
 
 ### When it holds
 
 - **Each heard bit depends only on its own sent bit.** A lightning burst that flips neighbours together breaks this. Real links shuffle bits before sending (interleaving), so a burst lands on scattered bits.
 - **No short loops near each bit.** The product rule assumes the other bits' messages are independent. On the Hamming graph bits 3 and 7 share checks A and B, a loop of four edges. After 5 rounds bit 5's total is +4.56 against the exact +1.96.
-- **Honest confidences.** Min-sum overstates them. Without its offset, 52 of 100 LDPC frames fail at $p$ = 0.04, against 0 with it.
-- **A rate below capacity.** At $p$ = 0.12 capacity is 0.4706, below the rate 0.5040, and 99 frames in 100 fail.
+- **Honest confidences.** Min-sum overstates them. Without its offset, 52 of 100 LDPC frames fail at $`p`$ = 0.04, against 0 with it.
+- **A rate below capacity.** At $`p`$ = 0.12 capacity is 0.4706, below the rate 0.5040, and 99 frames in 100 fail.
 - **For the simulation, a linear code.** Sending the all-zero word stands for every word because the code is linear and the channel and decoder treat 0 and 1 alike.
 
 ---
@@ -87,11 +91,11 @@ Schematic: the Hamming (7,4) code as a Tanner graph, 12 edges. The LDPC code is 
 
 ### Step 1: why a check multiplies tanh and a bit adds
 
-For one bit with confidence $L$, the chances are $\Pr(0) = e^{L}/(1 + e^{L})$ and $\Pr(1) = 1/(1 + e^{L})$. Their difference is $(e^{L} - 1)/(e^{L} + 1) = \tanh(L/2)$: a number from −1 (surely 1) to +1 (surely 0).
+For one bit with confidence $`L`$, the chances are $`\Pr(0) = e^{L}/(1 + e^{L})`$ and $`\Pr(1) = 1/(1 + e^{L})`$. Their difference is $`(e^{L} - 1)/(e^{L} + 1) = \tanh(L/2)`$: a number from −1 (surely 1) to +1 (surely 0).
 
-Now take independent bits and their sum modulo 2. Give each bit the sign $(-1)^{x}$: +1 for a 0, −1 for a 1. The sum is even exactly when the product of signs is +1. The average of a product of independent things is the product of their averages, and each sign's average is $\Pr(0) - \Pr(1)$. So for the sum, that difference is the product of the separate $\tanh(L/2)$ values. The check's message about bit $v$ is this sum over the other bits: the middle formula.
+Now take independent bits and their sum modulo 2. Give each bit the sign $`(-1)^{x}`$: +1 for a 0, −1 for a 1. The sum is even exactly when the product of signs is +1. The average of a product of independent things is the product of their averages, and each sign's average is $`\Pr(0) - \Pr(1)`$. So for the sum, that difference is the product of the separate $`\tanh(L/2)`$ values. The check's message about bit $`v`$ is this sum over the other bits: the middle formula.
 
-On the bit side, independent pieces of evidence multiply likelihood ratios, and logarithms turn that into a sum. A bit leaves out check $c$'s message when replying to $c$, so no check hears its own echo.
+On the bit side, independent pieces of evidence multiply likelihood ratios, and logarithms turn that into a sum. A bit leaves out check $`c`$'s message when replying to $`c`$, so no check hears its own echo.
 
 ### Step 2: min-sum, and why it needs an offset
 
@@ -107,41 +111,47 @@ Hamming's graph has loops of four, so its totals drift from the exact values, wh
 
 A **convolutional code** feeds the data through a short memory. The (7,5) code remembers the last two data bits, a state from 00 to 11. It sends two sums per data bit: data plus both remembered bits, and data plus the older one. The 8 bits of 23 °C, plus two 0s to empty the memory, become 20 bits. Drawn as the 4 states against time, the possible paths form a **trellis**.
 
-Decoding is the Viterbi recursion of the [Hidden Markov models](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/08-hidden-markov-models.md) card, with "fewest disagreements" in place of "largest chance". That card's forward-backward pass, a chance for each step, is what turbo decoders use. With $d_t$ the received bits that disagree with the step from $S$ to $S'$,
+Decoding is the Viterbi recursion of the [Hidden Markov models](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/08-hidden-markov-models.md) card, with "fewest disagreements" in place of "largest chance". That card's forward-backward pass, a chance for each step, is what turbo decoders use. With $`d_t`$ the received bits that disagree with the step from $`S`$ to $`S'`$,
 
-$$M_t(S') = \min_{S \to S'} \big[ M_{t-1}(S) + d_t(S \to S') \big].$$
+```math
+M_t(S') = \min_{S \to S'} \big[ M_{t-1}(S) + d_t(S \to S') \big].
+```
 
-Flip bits 4 and 13. Step 1 receives 00. From state 00, data 0 sends 00: $M_1(00) = 0$. Data 1 sends 11, two disagreements: $M_1(10) = 2$. Nine more steps, keeping the best path into each state, end at state 00 with 2 disagreements: the two flips, undone. The 256-message search agrees. Every nonzero message gives a codeword with at least 5 ones (the free distance), so any 2 errors are corrected.
+Flip bits 4 and 13. Step 1 receives 00. From state 00, data 0 sends 00: $`M_1(00) = 0`$. Data 1 sends 11, two disagreements: $`M_1(10) = 2`$. Nine more steps, keeping the best path into each state, end at state 00 with 2 disagreements: the two flips, undone. The 256-message search agrees. Every nonzero message gives a codeword with at least 5 ones (the free distance), so any 2 errors are corrected.
 
 ### Step 5: turbo codes, in outline
 
-A **turbo code** sends the data plus check bits from two convolutional encoders, the second reading the data in shuffled order. Each decoder runs the forward-backward pass on its own trellis and passes the other only what its own check bits added, which becomes the other's better starting $L_v$. A few rounds came within a fraction of a decibel of capacity. A decibel compares signal power with noise power; a fraction of one means only a little more power than the limit needs. The exchange was later shown to be belief propagation on the combined graph.
+A **turbo code** sends the data plus check bits from two convolutional encoders, the second reading the data in shuffled order. Each decoder runs the forward-backward pass on its own trellis and passes the other only what its own check bits added, which becomes the other's better starting $`L_v`$. A few rounds came within a fraction of a decibel of capacity. A decibel compares signal power with noise power; a fraction of one means only a little more power than the limit needs. The exchange was later shown to be belief propagation on the combined graph.
 
 ### Step 6: polar codes split one channel into good and bad
 
-Take two copies of an **erasure channel**: each bit arrives intact, or as "?" with chance $\varepsilon$. Send $u_1 + u_2$ (mod 2) on one and $u_2$ on the other. Decode $u_1$ first: it needs both outputs, so it is lost unless both arrive:
+Take two copies of an **erasure channel**: each bit arrives intact, or as "?" with chance $`\varepsilon`$. Send $`u_1 + u_2`$ (mod 2) on one and $`u_2`$ on the other. Decode $`u_1`$ first: it needs both outputs, so it is lost unless both arrive:
 
-$$z^- = 1 - (1 - \varepsilon)^2 = 2\varepsilon - \varepsilon^2.$$
+```math
+z^- = 1 - (1 - \varepsilon)^2 = 2\varepsilon - \varepsilon^2.
+```
 
-Then $u_2$, with $u_1$ known: either output gives it, so it is lost only if both are:
+Then $`u_2`$, with $`u_1`$ known: either output gives it, so it is lost only if both are:
 
-$$z^+ = \varepsilon^2.$$
+```math
+z^+ = \varepsilon^2.
+```
 
-Their average is $\varepsilon$: nothing lost, only redistributed. Repeat on each new channel, ten times for $N = 1024$, and the erasure chances drift to 0 or 1. Arıkan proved that the share near 0 tends to $1 - \varepsilon$, the capacity.
+Their average is $`\varepsilon`$: nothing lost, only redistributed. Repeat on each new channel, ten times for $`N = 1024`$, and the erasure chances drift to 0 or 1. Arıkan proved that the share near 0 tends to $`1 - \varepsilon`$, the capacity.
 
-A polar code sends data on the best sub-channels and fixes the rest to 0. At $N = 8$ and $\varepsilon = 0.5$ the best four are $u_4, u_6, u_7, u_8$, lost 81, 49, 31 and 1 time in 256; the code checks all 8 values against all 256 erasure patterns.
+A polar code sends data on the best sub-channels and fixes the rest to 0. At $`N = 8`$ and $`\varepsilon = 0.5`$ the best four are $`u_4, u_6, u_7, u_8`$, lost 81, 49, 31 and 1 time in 256; the code checks all 8 values against all 256 erasure patterns.
 
-The split is slow. At $N = 1024$ a share of 0.3281 is still in between; at $N = 2^{20}$, 0.0507, with 0.4747 nearly perfect against the limit 0.5.
+The split is slow. At $`N = 1024`$ a share of 0.3281 is still in between; at $`N = 2^{20}`$, 0.0507, with 0.4747 nearly perfect against the limit 0.5.
 
 ---
 
 ## Worked numbers, by hand
 
-The station sends the data bits 1011 as the Hamming word 0110011 (data in positions 3, 5, 6 and 7). The receiver hears it with confidences $L$ = +4, −5, +1, +3, −1, −4, −6. Bits 3 and 5 lean the wrong way, both weakly.
+The station sends the data bits 1011 as the Hamming word 0110011 (data in positions 3, 5, 6 and 7). The receiver hears it with confidences $`L`$ = +4, −5, +1, +3, −1, −4, −6. Bits 3 and 5 lean the wrong way, both weakly.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Hard decisions | signs of $L$ | 0100111: bits 3 and 5 wrong |
+| Hard decisions | signs of $`L`$ | 0100111: bits 3 and 5 wrong |
 | Hamming's repair | checks A, B, C give 0, 1, 1, pointing at bit 6 | 0100101: 3 bits wrong |
 | Check A to bit 3 | min-sum, no offset: others +4, −1, −6; signs give +, smallest size 1 | +1 |
 | Check A to bit 5 | others +4, +1, −6: −, smallest 1 | −1 |
@@ -149,7 +159,7 @@ The station sends the data bits 1011 as the Hamming word 0110011 (data in positi
 | Check C to bit 5 | others +3, −4, −6: +, smallest 3 | +3 |
 | Total, bit 3 | +1 + 1 − 4 | −2, so 1 |
 | Total, bit 5 | −1 − 1 + 3 | +1, so 0 |
-| All seven totals | each $L_v$ plus its checks' messages | +5, −4, −2, +2, +1, −2, −5 |
+| All seven totals | each $`L_v`$ plus its checks' messages | +5, −4, −2, +2, +1, −2, −5 |
 | Decision | signs | **0110011, 0 bits wrong** |
 
 One round of min-sum fixes both errors. Check B's other bits are all firmly 1s, so it tells bit 3, with size 4, to be 1. Hamming used the same checks but threw the sizes away, and made things worse.
@@ -160,8 +170,8 @@ One round of min-sum fixes both errors. Check B's other bits are all firmly 1s, 
 | --- | --- | --- |
 | Decide each bit first, then repair | 0100101, 3 bits wrong | The sizes, saying bits 3 and 5 were doubtful, were thrown away |
 | Flip coded bits 7, 8, 9 of the convolutional code | Viterbi decodes 7, not 23 | Free distance 5 guarantees 2 repairs, not 3 |
-| Min-sum without the offset, LDPC at $p$ = 0.04 | 52 of 100 frames lost, against 0 | Overstated messages reinforce errors round after round |
-| Send at rate 0.5040 when $p$ = 0.12 | 99 of 100 frames lost | Capacity there is 0.4706, below the rate |
+| Min-sum without the offset, LDPC at $`p`$ = 0.04 | 52 of 100 frames lost, against 0 | Overstated messages reinforce errors round after round |
+| Send at rate 0.5040 when $`p`$ = 0.12 | 99 of 100 frames lost | Capacity there is 0.4706, below the rate |
 
 The code prints all four.
 
@@ -169,9 +179,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Four parts, each by two roads. Belief propagation on the Hamming graph meets all 16 codewords, enumerated, and one sum-product check message meets its 8 parity cases. On the graph cut down to a tree, the totals meet the exact values. Viterbi meets all 256 messages. The polar recursion meets all 256 erasure patterns. Simulated Hamming frames meet the exact formula $1 - \big((1-p)^7 + 7p(1-p)^6\big)^{63}$.
+Four parts, each by two roads. Belief propagation on the Hamming graph meets all 16 codewords, enumerated, and one sum-product check message meets its 8 parity cases. On the graph cut down to a tree, the totals meet the exact values. Viterbi meets all 256 messages. The polar recursion meets all 256 erasure patterns. Simulated Hamming frames meet the exact formula $`1 - \big((1-p)^7 + 7p(1-p)^6\big)^{63}`$.
 
-The LDPC run has no formula; it is held against capacity, with the rate-1/2 limit found by bisection (halving an interval until it pins the answer) on $1 - h(p) = 1/2$. Every heard bit in that run is equally sure, $L = \pm 4$, so it shows what a long sparse code gains, not what unequal confidences add; the worked example shows that. Its code follows Gallager's recipe: three bands of checks, each a shuffle of the 504 bits cut into groups of 6. Randomness is SplitMix64, a small random-number generator, seed 2026, written out in both languages.
+The LDPC run has no formula; it is held against capacity, with the rate-1/2 limit found by bisection (halving an interval until it pins the answer) on $`1 - h(p) = 1/2`$. Every heard bit in that run is equally sure, $`L = \pm 4`$, so it shows what a long sparse code gains, not what unequal confidences add; the worked example shows that. Its code follows Gallager's recipe: three bands of checks, each a shuffle of the 504 bits cut into groups of 6. Randomness is SplitMix64, a small random-number generator, seed 2026, written out in both languages.
 
 ### Python
 
@@ -568,14 +578,14 @@ The two outputs match line for line. The simulated Hamming shares sit inside the
 
 ### Lean
 
-Lean proves the tanh rules for every confidence and one polar step for every $\varepsilon$, then checks the worked numbers.
+Lean proves the tanh rules for every confidence and one polar step for every $`\varepsilon`$, then checks the worked numbers.
 
-- Take one bit with confidence $L$. Then $\Pr(0) + \Pr(1) = 1$, $\ln(\Pr(0)/\Pr(1)) = L$, and $\Pr(0) - \Pr(1) = \tanh(L/2)$.
-- Take any number of independent bits, each with its own confidence $L$. Then the chance their sum is even, minus the chance it is odd, is the product of their $\tanh(L/2)$ values.
-- Take two copies of an erasure channel, each erasing with chance $\varepsilon$. Then at least one output is erased with chance $1 - (1-\varepsilon)^2 = 2\varepsilon - \varepsilon^2$, which is $z^-$.
-- Take the same two copies. Then both outputs are erased with chance $z^+ = \varepsilon^2$, and $z^-$ and $z^+$ average to $\varepsilon$.
+- Take one bit with confidence $`L`$. Then $`\Pr(0) + \Pr(1) = 1`$, $`\ln(\Pr(0)/\Pr(1)) = L`$, and $`\Pr(0) - \Pr(1) = \tanh(L/2)`$.
+- Take any number of independent bits, each with its own confidence $`L`$. Then the chance their sum is even, minus the chance it is odd, is the product of their $`\tanh(L/2)`$ values.
+- Take two copies of an erasure channel, each erasing with chance $`\varepsilon`$. Then at least one output is erased with chance $`1 - (1-\varepsilon)^2 = 2\varepsilon - \varepsilon^2`$, which is $`z^-`$.
+- Take the same two copies. Then both outputs are erased with chance $`z^+ = \varepsilon^2`$, and $`z^-`$ and $`z^+`$ average to $`\varepsilon`$.
 - Hamming's repair of the worked example leaves 3 bits wrong. One round of min-sum gives totals +5, −4, −2, +2, +1, −2, −5.
-- The 8 bits of 23 °C become the 20-bit codeword 00000011100001100111. The polar recursion gives all eight chances of Step 6 at $N$ = 8.
+- The 8 bits of 23 °C become the 20-bit codeword 00000011100001100111. The polar recursion gives all eight chances of Step 6 at $`N`$ = 8.
 - 504 bits with 3 checks each make 252 checks of 6 bits. The rate 254/504 is above 1/2.
 
 Running belief propagation and Viterbi, the enumerations of codewords and patterns, and the frame simulations are left to the Python and Rust checks.
@@ -758,8 +768,8 @@ example : 63 * 7 = 441 ∧ 63 * 4 = 252 := by decide
 > Guess first, then run it.
 > - **A confident wrong reading.** Set bit 5's confidence from −1 to −4. The search over all 16 codewords now picks 0100101: the misreading has become the most likely codeword. One round of min-sum gives 0101101, not even a codeword. The first assert stops the run.
 > - **Two errors side by side.** Change the Viterbi errors `[4, 13]` to `[4, 5]`. Viterbi still returns 23: free distance 5 covers any two.
-> - **A better erasure channel.** Set the polar erasure chance to 0.3. At $N = 2^{20}$ the nearly perfect share becomes 0.6768, heading for 0.7.
-> - **Too big an offset.** Use `minsum(2)` for the LDPC run. At $p$ = 0.08, frames lost rise from 55 to 87 of 100.
+> - **A better erasure channel.** Set the polar erasure chance to 0.3. At $`N = 2^{20}`$ the nearly perfect share becomes 0.6768, heading for 0.7.
+> - **Too big an offset.** Use `minsum(2)` for the LDPC run. At $`p`$ = 0.08, frames lost rise from 55 to 87 of 100.
 
 ---
 
@@ -770,8 +780,8 @@ example : 63 * 7 = 441 ∧ 63 * 4 = 252 := by decide
 >
 > - **Reading belief propagation's totals as exact chances.** With short loops they inflate: bit 5 reaches +4.56 after 5 rounds; the exact value is +1.96.
 > - **Reading "free distance 5" as "fixes 5 errors".** It fixes any 2. Three neighbouring errors turn 23 into 7.
-> - **Blaming the gap on size alone.** The rate-1/2 limit is $p$ = 0.1100, yet the 504-bit code loses 55 frames in 100 at 0.08. A longer code built the same way would steepen that cliff but not carry it to 0.11. With every bit in 3 checks and every check on 6 bits, belief propagation stops short of capacity at any length. Codes that come very close to capacity give different bits different numbers of checks, a pattern chosen by the calculation this card leaves open.
-> - **Calling 1024 polar channels polarised.** At $N$ = 1024 a share of 0.3281 is still in between.
+> - **Blaming the gap on size alone.** The rate-1/2 limit is $`p`$ = 0.1100, yet the 504-bit code loses 55 frames in 100 at 0.08. A longer code built the same way would steepen that cliff but not carry it to 0.11. With every bit in 3 checks and every check on 6 bits, belief propagation stops short of capacity at any length. Codes that come very close to capacity give different bits different numbers of checks, a pattern chosen by the calculation this card leaves open.
+> - **Calling 1024 polar channels polarised.** At $`N`$ = 1024 a share of 0.3281 is still in between.
 
 ---
 

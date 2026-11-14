@@ -34,37 +34,41 @@ Orange: the rumour, from 10 pupils. Green: the same law from 1,500, impossible i
 
 ## The formula
 
-Notation from [A differential equation](01-what-a-differential-equation-says.md): $P'$ is the rate of $P$, read "the rate of P at time t is …". The logistic law and its starting value are
+Notation from [A differential equation](01-what-a-differential-equation-says.md): $`P'`$ is the rate of $`P`$, read "the rate of P at time t is …". The logistic law and its starting value are
 
-$$P' = rP\left(1 - \frac{P}{K}\right), \qquad P(0) = P_0 .$$
+```math
+P' = rP\left(1 - \frac{P}{K}\right), \qquad P(0) = P_0 .
+```
 
 **Read it aloud:** the count grows at a fixed rate, times the count, times the fraction of room left.
 
 Its solution, derived below, is
 
-$$P(t) = \frac{K}{1 + A\,e^{-rt}}, \qquad A = \frac{K}{P_0} - 1 .$$
+```math
+P(t) = \frac{K}{1 + A\,e^{-rt}}, \qquad A = \frac{K}{P_0} - 1 .
+```
 
 **Read it aloud:** the count is the ceiling divided by one plus a starting gap that fades exponentially.
 
-For the rumour, $A$ = 1000/10 − 1 = 99, so the count is 1000/(1 + 99e^(−0.8t)).
+For the rumour, $`A`$ = 1000/10 − 1 = 99, so the count is 1000/(1 + 99e^(−0.8t)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since Monday morning, in days | day 0 to 12 | closer to the ceiling |
-| $P$ | pupils who have heard the rumour | 10 at the start | the empty fraction shrinks |
-| $P'$ | rate of spread, pupils per day | 7.92 on day 0, 200 at the peak | the curve climbs faster |
-| $r$ | growth rate while almost nobody knows | 0.8 per day | every date comes sooner |
-| $K$ | carrying capacity: the ceiling the count settles on | 1,000 pupils | the curve flattens higher |
-| $P_0$ | the count at time 0 | 10 pupils | the half-way day comes sooner |
-| $A$ | starting gap: $K/P_0 - 1$ | 99 | the S shifts later |
-| $f$, $f'$ | the rate law as a rule on $P$, and its slope | $f'$ = +0.8 at 0, −0.8 at 1,000 per day | above zero at a rest, the rest repels |
+| $`t`$ | time since Monday morning, in days | day 0 to 12 | closer to the ceiling |
+| $`P`$ | pupils who have heard the rumour | 10 at the start | the empty fraction shrinks |
+| $`P'`$ | rate of spread, pupils per day | 7.92 on day 0, 200 at the peak | the curve climbs faster |
+| $`r`$ | growth rate while almost nobody knows | 0.8 per day | every date comes sooner |
+| $`K`$ | carrying capacity: the ceiling the count settles on | 1,000 pupils | the curve flattens higher |
+| $`P_0`$ | the count at time 0 | 10 pupils | the half-way day comes sooner |
+| $`A`$ | starting gap: $`K/P_0 - 1`$ | 99 | the S shifts later |
+| $`f`$, $`f'`$ | the rate law as a rule on $`P`$, and its slope | $`f'`$ = +0.8 at 0, −0.8 at 1,000 per day | above zero at a rest, the rest repels |
 
-The factor $1 - P/K$ is the fraction still to hear. **Carrying capacity** is ecology's name: the population a habitat can carry.
+The factor $`1 - P/K`$ is the fraction still to hear. **Carrying capacity** is ecology's name: the population a habitat can carry.
 
 ### When it holds
 
 - **The school is well mixed.** Every knower is as likely to meet every non-knower. If friendships cluster in classes, the rumour stalls at class edges and runs slower.
-- **The rate and the ceiling stay fixed.** A half-term week cuts meetings, so $r$ falls and every date slides later.
+- **The rate and the ceiling stay fixed.** A half-term week cuts meetings, so $`r`$ falls and every date slides later.
 - **Nobody forgets.** If knowers drop out steadily, the law gains a subtracted term and the count settles below 1,000.
 - **Counts are large enough to treat as smooth.** "Never quite everyone" is the smooth model speaking; in a real school the last pupil does hear.
 
@@ -74,29 +78,37 @@ The factor $1 - P/K$ is the fraction still to hear. **Carrying capacity** is eco
 
 ### Step 0: spread needs a knower to meet someone who does not know
 
-A new hearer is made when a knower meets a non-knower. Such meetings grow with the knowers, $P$, and with the share still to hear, $1 - P/K$. Their product, scaled by $r$, is the logistic law. For small $P$ the share is almost 1 and the law is plain exponential growth, $P' \approx rP$; near $K$ the share, and the growth, vanish.
+A new hearer is made when a knower meets a non-knower. Such meetings grow with the knowers, $`P`$, and with the share still to hear, $`1 - P/K`$. Their product, scaled by $`r`$, is the logistic law. For small $`P`$ the share is almost 1 and the law is plain exponential growth, $`P' \approx rP`$; near $`K`$ the share, and the growth, vanish.
 
 ### Step 1: separate the variables
 
-The law ignores the clock, so it separates, by the method of [Separable equations](03-separable-equations.md). Divide both sides by $P(1 - P/K)$, which is not zero while $P$ sits strictly between 0 and $K$:
+The law ignores the clock, so it separates, by the method of [Separable equations](03-separable-equations.md). Divide both sides by $`P(1 - P/K)`$, which is not zero while $`P`$ sits strictly between 0 and $`K`$:
 
-$$\frac{1}{P\,(1 - P/K)}\,\frac{dP}{dt} = r .$$
+```math
+\frac{1}{P\,(1 - P/K)}\,\frac{dP}{dt} = r .
+```
 
 ### Step 2: split the fraction by partial fractions
 
-Rewrite $1/(P(1 - P/K))$ as $K/(P(K - P))$ and split it, by [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md), into two easy ones:
+Rewrite $`1/(P(1 - P/K))`$ as $`K/(P(K - P))`$ and split it, by [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md), into two easy ones:
 
-$$\frac{K}{P\,(K - P)} = \frac{1}{P} + \frac{1}{K - P} .$$
+```math
+\frac{K}{P\,(K - P)} = \frac{1}{P} + \frac{1}{K - P} .
+```
 
-Over one denominator the tops add to $(K - P) + P = K$, as they should. Integrating each piece gives a logarithm:
+Over one denominator the tops add to $`(K - P) + P = K`$, as they should. Integrating each piece gives a logarithm:
 
-$$\ln\lvert P\rvert - \ln\lvert K - P\rvert = rt + \text{constant} .$$
+```math
+\ln\lvert P\rvert - \ln\lvert K - P\rvert = rt + \text{constant} .
+```
 
 ### Step 3: undo the logarithm and fix the constant
 
-Exponentiate: $P/(K - P)$ is a constant times $e^{rt}$, and at time 0 it is $P_0/(K - P_0)$, which is $1/A$. So
+Exponentiate: $`P/(K - P)`$ is a constant times $`e^{rt}`$, and at time 0 it is $`P_0/(K - P_0)`$, which is $`1/A`$. So
 
-$$\frac{P}{K - P} = \frac{e^{rt}}{A}, \qquad\text{hence}\qquad P = \frac{K}{1 + A\,e^{-rt}} .$$
+```math
+\frac{P}{K - P} = \frac{e^{rt}}{A}, \qquad\text{hence}\qquad P = \frac{K}{1 + A\,e^{-rt}} .
+```
 
 For the rumour, 10/990 = 1/99, and the denominator at time 0 is 1 + 99 = 100, so the curve starts at 10.
 
@@ -111,9 +123,9 @@ Uniqueness: on any bounded range of counts the law's slope, r(1 − 2P/K), is bo
 
 ### Step 4: the phase line, without the formula
 
-Write $f(P)$ for $rP(1 - P/K)$. By [Slope fields and the phase line](02-slope-fields-and-the-phase-line.md), the rests are where $f$ is zero: $P = 0$ and $P = K$. Between them $f$ is positive and the count rises; above $K$ it is negative and the count falls.
+Write $`f(P)`$ for $`rP(1 - P/K)`$. By [Slope fields and the phase line](02-slope-fields-and-the-phase-line.md), the rests are where $`f`$ is zero: $`P = 0`$ and $`P = K`$. Between them $`f`$ is positive and the count rises; above $`K`$ it is negative and the count falls.
 
-The slope test agrees. Here $f'(P) = r(1 - 2P/K)$. At 0 it is $+r$ = +0.8 per day: arrows point away, so zero **repels**. At $K$ it is $-r$ = −0.8 per day: arrows point in, so the ceiling **attracts**.
+The slope test agrees. Here $`f'(P) = r(1 - 2P/K)`$. At 0 it is $`+r`$ = +0.8 per day: arrows point away, so zero **repels**. At $`K`$ it is $`-r`$ = −0.8 per day: arrows point in, so the ceiling **attracts**.
 
 ### The picture: the rate against the count, and the phase line under it
 
@@ -123,15 +135,15 @@ Scale: 0.24 units per pupil across, 0.4 units per pupil/day up, plotted every 12
 
 ### Step 5: a start above the ceiling
 
-If $P_0 > K$, the same algebra holds, but $K - P$ is negative: that is why the logarithms carry absolute values. Now $A$ is negative: from 1,500, $A$ = 1000/1500 − 1 = −1/3. The denominator 1 − e^(−0.8t)/3 rises from 2/3 toward 1, so the count falls from 1,500 toward 1,000 without crossing it: 1,176 after one day, 1,072 after two.
+If $`P_0 > K`$, the same algebra holds, but $`K - P`$ is negative: that is why the logarithms carry absolute values. Now $`A`$ is negative: from 1,500, $`A`$ = 1000/1500 − 1 = −1/3. The denominator 1 − e^(−0.8t)/3 rises from 2/3 toward 1, so the count falls from 1,500 toward 1,000 without crossing it: 1,176 after one day, 1,072 after two.
 
 ### Step 6: the fastest day is the half-way day
 
-Set the count to half the ceiling: 1 + $A$e^(−rt) = 2, so e^(−rt) = 1/$A$ and $t = \ln A / r$, a positive time when the start is below $K/2$, so that $A > 1$. For the rumour that is ln 99 ÷ 0.8 = 5.74 days.
+Set the count to half the ceiling: 1 + $`A`$e^(−rt) = 2, so e^(−rt) = 1/$`A`$ and $`t = \ln A / r`$, a positive time when the start is below $`K/2`$, so that $`A > 1`$. For the rumour that is ln 99 ÷ 0.8 = 5.74 days.
 
-The rate $f(P)$ is a hump in $P$ with its top at $P = K/2$, where it equals $rK/4$ = 200 pupils per day. So the half-way day is the fastest day.
+The rate $`f(P)`$ is a hump in $`P`$ with its top at $`P = K/2`$, where it equals $`rK/4`$ = 200 pupils per day. So the half-way day is the fastest day.
 
-Write $P''$ for the rate of $P'$. By the chain rule $P'' = f'(P)\,P'$, positive below $K/2$ and negative above: the curve bends up, then down. That bend is the S.
+Write $`P''`$ for the rate of $`P'`$. By the chain rule $`P'' = f'(P)\,P'`$, positive below $`K/2`$ and negative above: the curve bends up, then down. That bend is the S.
 
 ---
 
@@ -139,13 +151,13 @@ Write $P''$ for the rate of $P'$. By the chain rule $P'' = f'(P)\,P'$, positive 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| starting gap | $A$ = 1000/10 − 1 | 99 |
+| starting gap | $`A`$ = 1000/10 − 1 | 99 |
 | rate on day 0 | 0.8 × 10 × (1 − 10/1000) | 7.92 pupils/day |
 | half the school | 1 + 99e^(−0.8t) = 2, so t = ln 99 ÷ 0.8 = 4.595120 ÷ 0.8 | **5.74 days** |
 | fastest spread | 0.8 × 500 × (1 − 500/1000) | 200 pupils/day |
 | count on day 6 | 99 × e^(−4.8) = 0.8147, then 1000 ÷ 1.8147 | 551.04 pupils |
 | 999 pupils | 99e^(−0.8t) = 1/999, so t = ln(99 × 999) ÷ 0.8 | 14.38 days |
-| start above | $A$ = 1000/1500 − 1 = −0.3333; after 2 days | 1,072.15 |
+| start above | $`A`$ = 1000/1500 − 1 = −0.3333; after 2 days | 1,072.15 |
 
 Half the school has heard by day 5.74, when the rumour moves fastest. By day 20 the model reaches 999.989: never all.
 
@@ -154,7 +166,7 @@ Half the school has heard by day 5.74, when the rumour moves fastest. By day 20 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Dropping the crowding factor, 10e^(0.8t) | 990 pupils at day 5.74; 2,704.26 by day 7, in a school of 1,000 | It ignores wasted conversations |
-| Dropping the sign of $A$ for a start at 1,500 | the curve starts at 750, not 1,500 | Above the ceiling $K - P$ is negative; the logarithm's absolute value matters |
+| Dropping the sign of $`A`$ for a start at 1,500 | the curve starts at 750, not 1,500 | Above the ceiling $`K - P`$ is negative; the logarithm's absolute value matters |
 | Stepping along the slope with 3-day steps | 10, 33.76, 112.05, 350.83, 897.43, 1,118.35, 800.70 | Near 1,000 each step multiplies the gap by 1 − 2.4 = −1.4: it jumps across the ceiling, which the true solution never does |
 
 ---
@@ -165,9 +177,9 @@ Three roads reach the half-way day:
 
 - Road one is the closed form, ln 99 ÷ 0.8.
 - Road two walks the slope by Euler's rule: from the current count, move for a short time h along the slope there. Its error on day 6 halves as the step halves, the mark of a first-order rule. [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md) has its own card.
-- Road three is the separated equation with no partial fractions: the time is the area under $1/f(P)$ from 10 to 500, measured by Simpson's rule (parabolas through groups of three points).
+- Road three is the separated equation with no partial fractions: the time is the area under $`1/f(P)`$ from 10 to 500, measured by Simpson's rule (parabolas through groups of three points).
 
-The checks also measure the slope of $f$ at both rests and follow the start at 1,500.
+The checks also measure the slope of $`f`$ at both rests and follow the start at 1,500.
 
 ### Python
 
@@ -358,13 +370,13 @@ The two outputs match line for line.
 Lean proves the S-curve, the pull toward the ceiling and the fastest rate, for every positive rate, ceiling and start.
 
 - For any positive rate, ceiling and start, a count obeys the logistic law from time 0 exactly when it follows the S-curve.
-- So the formula $K/(1 + A\,e^{-rt})$ solves the law, and nothing else does, from below or above the ceiling.
-- Every count that starts above zero closes in on the ceiling $K$ as time runs on.
+- So the formula $`K/(1 + A\,e^{-rt})`$ solves the law, and nothing else does, from below or above the ceiling.
+- Every count that starts above zero closes in on the ceiling $`K`$ as time runs on.
 - A start below the ceiling stays below it, and a start above the ceiling stays above it.
-- The rate $rP(1 - P/K)$ is never more than $rK/4$, and it reaches $rK/4$ only at half the ceiling.
-- The rumour's hand arithmetic holds exactly: $A$ = 99, the start of 10, 7.92 and 200 pupils per day.
-- The start above holds too: $A$ = −1/3 from 1,500, and mistake 2's start of 750.
-- The split $K/(P(K - P)) = 1/P + 1/(K - P)$ holds for every count between 0 and $K$.
+- The rate $`rP(1 - P/K)`$ is never more than $`rK/4`$, and it reaches $`rK/4`$ only at half the ceiling.
+- The rumour's hand arithmetic holds exactly: $`A`$ = 99, the start of 10, 7.92 and 200 pupils per day.
+- The start above holds too: $`A`$ = −1/3 from 1,500, and mistake 2's start of 750.
+- The split $`K/(P(K - P)) = 1/P + 1/(K - P)`$ holds for every count between 0 and $`K`$.
 
 Decimals, the half-way day, the slopes at the rests, Euler's steps and the area under 1/rate are left to the Python and Rust checks.
 
@@ -597,7 +609,7 @@ example (K P : ℝ) (hP : 0 < P) (hPK : P < K) :
 > Guess first, then run it.
 > - **Double the rate.** Set `R` to `1.6`. Every date halves: the half-way lines print 2.871950 days, then the first assert, pinned to 0.8, stops the run.
 > - **One-day steps.** In the mistake-3 loop change `3 * rate` to `1 * rate`. Near the ceiling each step now multiplies the gap by 1 − 0.8 = 0.2, so nothing overshoots: 10.00, 17.92, 32.00 and on.
-> - **Start on the ceiling.** In the second chart line, change `closed(1500, t)` to `closed(1000, t)`. Now $A$ is 0 and the line prints 1000 every day.
+> - **Start on the ceiling.** In the second chart line, change `closed(1500, t)` to `closed(1000, t)`. Now $`A`$ is 0 and the line prints 1000 every day.
 
 ---
 
@@ -614,7 +626,7 @@ example (K P : ℝ) (hP : 0 < P) (hPK : P < K) :
 
 - **New products.** Adoption often runs slow, fast, saturated; sales peak at the half-way point.
 - **Epidemics in a closed group.** The simplest infection model has this shape while nobody recovers.
-- **Fish stocks.** Fisheries aim to hold a stock near $K/2$, where the logistic rate, and so the sustainable catch, is largest.
+- **Fish stocks.** Fisheries aim to hold a stock near $`K/2`$, where the logistic rate, and so the sustainable catch, is largest.
 
 > **Say it back**
 > Logistic growth multiplies the count by the fraction of room left, so small counts grow exponentially and large ones stall. Separating the variables and splitting 1/(P(K − P)) into two logarithms gives the S-curve K/(1 + Ae^(−rt)). Zero repels and the ceiling attracts, so every positive start, below or above, closes in on K. The fastest growth is at half the ceiling: day 5.74 for the rumour.
@@ -624,7 +636,7 @@ example (K P : ℝ) (hP : 0 < P) (hPK : P < K) :
 ## What this builds on
 
 - [Slope fields and the phase line](02-slope-fields-and-the-phase-line.md): rests, arrows and the slope test that sort 0 and K.
-- [Separable equations](03-separable-equations.md): moving every $P$ to one side and every $t$ to the other.
+- [Separable equations](03-separable-equations.md): moving every $`P`$ to one side and every $`t`$ to the other.
 - [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md): splitting 1/(P(K − P)) into two logarithms.
 
 ## Where this goes next

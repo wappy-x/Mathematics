@@ -28,36 +28,42 @@ To scale: 160 units per metre; plate (100, 50) to (260, 210), centre (180, 130),
 
 ## The formula
 
-Reminder from [A partial differential equation](01-what-a-pde-says.md): $u_{xx}$ is the second derivative of $u$ in $x$ with $y$ held still: its bend across the plate. New here: the sum of the two bends, $u_{xx} + u_{yy}$, is the **Laplacian**, written $\Delta u$.
+Reminder from [A partial differential equation](01-what-a-pde-says.md): $`u_{xx}`$ is the second derivative of $`u`$ in $`x`$ with $`y`$ held still: its bend across the plate. New here: the sum of the two bends, $`u_{xx} + u_{yy}`$, is the **Laplacian**, written $`\Delta u`$.
 
-$$u_{xx} + u_{yy} = 0 \qquad\text{(Laplace: no sources)}$$
+```math
+u_{xx} + u_{yy} = 0 \qquad\text{(Laplace: no sources)}
+```
 
-$$u_{xx} + u_{yy} = -f \qquad\text{(Poisson: a source of strength } f\text{)}$$
+```math
+u_{xx} + u_{yy} = -f \qquad\text{(Poisson: a source of strength } f\text{)}
+```
 
 **Read it aloud:** the bend of the temperature across the plate plus its bend up the plate is zero; with a heater, it is minus the heater's strength.
 
-The averaging rule is the same equation in another form. On a circle of radius $r$ round a point $(x_0, y_0)$ inside the plate:
+The averaging rule is the same equation in another form. On a circle of radius $`r`$ round a point $`(x_0, y_0)`$ inside the plate:
 
-$$u(x_0, y_0) = \frac{1}{2\pi}\int_0^{2\pi} u(x_0 + r\cos\theta,\ y_0 + r\sin\theta)\,d\theta$$
+```math
+u(x_0, y_0) = \frac{1}{2\pi}\int_0^{2\pi} u(x_0 + r\cos\theta,\ y_0 + r\sin\theta)\,d\theta
+```
 
 **Read it aloud:** a point's temperature is the average round any circle centred there that stays inside the plate.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $w$, $v$ | temperature, °C; $w$ the gap between two patterns; $v$ a proof helper | 25 °C at the centre | — |
-| $x$, $y$, $x_0$, $y_0$ | position across and up, m; a chosen point | centre (0.5, 0.5) | $y$ up: nearer the bar, warmer |
-| $u_{xx}$, $u_{yy}$ | bend across and up, °C per square metre | cancel inside | one up forces the other down |
-| $\Delta u$ | the Laplacian: $u_{xx} + u_{yy}$ | 0 on the plain plate | positive means a local dip |
-| $u_t$, $\kappa$ | rate of change in time; spreading speed, square metres per second | 0 once settled | same final pattern |
-| $f$ | source strength, °C per square metre (heating over conductivity) | 0; heated plate 100 | centre rises |
-| $r$, $\theta$ | averaging circle's radius, m; angle round it | 0.25 m | same average |
-| $h$ | grid spacing, m | 1/40 m | grid error grows as $h^2$ |
+| $`u`$, $`w`$, $`v`$ | temperature, °C; $`w`$ the gap between two patterns; $`v`$ a proof helper | 25 °C at the centre | — |
+| $`x`$, $`y`$, $`x_0`$, $`y_0`$ | position across and up, m; a chosen point | centre (0.5, 0.5) | $`y`$ up: nearer the bar, warmer |
+| $`u_{xx}`$, $`u_{yy}`$ | bend across and up, °C per square metre | cancel inside | one up forces the other down |
+| $`\Delta u`$ | the Laplacian: $`u_{xx} + u_{yy}`$ | 0 on the plain plate | positive means a local dip |
+| $`u_t`$, $`\kappa`$ | rate of change in time; spreading speed, square metres per second | 0 once settled | same final pattern |
+| $`f`$ | source strength, °C per square metre (heating over conductivity) | 0; heated plate 100 | centre rises |
+| $`r`$, $`\theta`$ | averaging circle's radius, m; angle round it | 0.25 m | same average |
+| $`h`$ | grid spacing, m | 1/40 m | grid error grows as $`h^2`$ |
 
 ### When it holds
 
-- **Settled:** while the plate still warms, $u_t$ is not zero and [The heat equation](03-the-heat-equation.md) governs.
+- **Settled:** while the plate still warms, $`u_t`$ is not zero and [The heat equation](03-the-heat-equation.md) governs.
 - **No sources inside:** with a heater the centre can beat every edge: 7.37 °C against four edges at 0 °C.
-- **A bounded plate, every edge held:** on the endless half-plane above an edge at 0 °C, both $u = y$ and $u = 0$ fit.
+- **A bounded plate, every edge held:** on the endless half-plane above an edge at 0 °C, both $`u = y`$ and $`u = 0`$ fit.
 - **Uniform material:** varying conductivity makes each point a weighted average; the maximum principle survives, the circle average does not.
 
 ---
@@ -66,23 +72,23 @@ $$u(x_0, y_0) = \frac{1}{2\pi}\int_0^{2\pi} u(x_0 + r\cos\theta,\ y_0 + r\sin\th
 
 ### Step 0: settled heat is Laplace's equation
 
-On a plate the rod's heat law from [The heat equation](03-the-heat-equation.md) gains a second direction: $u_t = \kappa\,(u_{xx} + u_{yy})$. Settled means zero rate, so the bends cancel. A heater adds a rate, giving $u_{xx} + u_{yy} = -f$.
+On a plate the rod's heat law from [The heat equation](03-the-heat-equation.md) gains a second direction: $`u_t = \kappa\,(u_{xx} + u_{yy})`$. Settled means zero rate, so the bends cancel. A heater adds a rate, giving $`u_{xx} + u_{yy} = -f`$.
 
 ### Step 1: a grid turns the equation into averaging
 
-Step $h$ east and west. Adding the two Taylor expansions (each value written as a polynomial in $h$: [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) cancels odd powers of $h$: east + west = 2 × centre + $h^2 u_{xx}$, up to terms in $h^4$. North and south give $u_{yy}$. So the four neighbours sum to 4 × centre + $h^2 \Delta u$. With $\Delta u = -f$:
+Step $`h`$ east and west. Adding the two Taylor expansions (each value written as a polynomial in $`h`$: [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) cancels odd powers of $`h`$: east + west = 2 × centre + $`h^2 u_{xx}`$, up to terms in $`h^4`$. North and south give $`u_{yy}`$. So the four neighbours sum to 4 × centre + $`h^2 \Delta u`$. With $`\Delta u = -f`$:
 
-centre = (east + west + north + south) / 4 + $h^2 f / 4$.
+centre = (east + west + north + south) / 4 + $`h^2 f / 4`$.
 
 With no source, each grid point is its neighbours' average. The coarsest grid has one interior point, the centre: (100 + 0 + 0 + 0) / 4 = 25 °C.
 
 ### Step 2: the average holds on every circle
 
-The grid rule is the discrete shadow of the circle average. As the radius grows, the ring average changes at the average outward slope of $u$ across the ring.
+The grid rule is the discrete shadow of the circle average. As the radius grows, the ring average changes at the average outward slope of $`u`$ across the ring.
 
-By [Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md), that slope summed round the ring is the total of $\Delta u$ over the disc inside: zero. So the average ignores the radius; shrunk to nothing, it is the centre value.
+By [Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md), that slope summed round the ring is the total of $`\Delta u`$ over the disc inside: zero. So the average ignores the radius; shrunk to nothing, it is the centre value.
 
-The full proof is on [Mean value and maximum principle](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md). With a source, the ring average falls short of the centre by exactly $f r^2 / 4$.
+The full proof is on [Mean value and maximum principle](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md). With a source, the ring average falls short of the centre by exactly $`f r^2 / 4`$.
 
 ### Step 3: no hot spot inside
 
@@ -93,19 +99,19 @@ Repeating from each circle point spreads it everywhere. So either the plate is u
 <details>
 <summary>Detailed proof: the maximum principle without circles</summary>
 
-Let $u$ be harmonic in a bounded region and continuous up to its edge, with $x^2 + y^2 \le R^2$ on the region ($R^2 = 2$ for the unit square). For small $\varepsilon > 0$ set $v = u + \varepsilon(x^2 + y^2)$, so $\Delta v = 4\varepsilon > 0$.
+Let $`u`$ be harmonic in a bounded region and continuous up to its edge, with $`x^2 + y^2 \le R^2`$ on the region ($`R^2 = 2`$ for the unit square). For small $`\varepsilon > 0`$ set $`v = u + \varepsilon(x^2 + y^2)`$, so $`\Delta v = 4\varepsilon > 0`$.
 
-A continuous function on a closed bounded region reaches a maximum. At an interior maximum the second-derivative test gives $v_{xx} \le 0$ and $v_{yy} \le 0$, so $\Delta v \le 0$: a contradiction. So $v$ peaks on the edge.
+A continuous function on a closed bounded region reaches a maximum. At an interior maximum the second-derivative test gives $`v_{xx} \le 0`$ and $`v_{yy} \le 0`$, so $`\Delta v \le 0`$: a contradiction. So $`v`$ peaks on the edge.
 
-Inside, $u \le v \le \max_{\text{edge}} v \le \max_{\text{edge}} u + \varepsilon R^2$. Let $\varepsilon$ shrink to 0. Applying this to $-u$ bounds the minimum. Only the sign of $\Delta v$ was used, so for Poisson's equation with $f \ge 0$ the minimum still sits on the edge.
+Inside, $`u \le v \le \max_{\text{edge}} v \le \max_{\text{edge}} u + \varepsilon R^2`$. Let $`\varepsilon`$ shrink to 0. Applying this to $`-u`$ bounds the minimum. Only the sign of $`\Delta v`$ was used, so for Poisson's equation with $`f \ge 0`$ the minimum still sits on the edge.
 
 </details>
 
 ### Step 4: the edge fixes everything inside
 
-Suppose two settled patterns share their edge temperatures. Their gap $w$ is harmonic, because the equation is linear: its bends are differences of zeros.
+Suppose two settled patterns share their edge temperatures. Their gap $`w`$ is harmonic, because the equation is linear: its bends are differences of zeros.
 
-On the edge $w$ is 0, so by Step 3 it is 0 inside too. This is uniqueness for the boundary problem, called the **Dirichlet problem**. The code starts grids at 0 °C and at 100 °C; both settle to one pattern.
+On the edge $`w`$ is 0, so by Step 3 it is 0 inside too. This is uniqueness for the boundary problem, called the **Dirichlet problem**. The code starts grids at 0 °C and at 100 °C; both settle to one pattern.
 
 ### Step 5: the 25 °C, now proved
 
@@ -115,7 +121,7 @@ A quarter turn carries each pattern to the next and fixes the centre, so the val
 
 ### Step 6: a source breaks the no-peak rule
 
-With a heater, the grid rule adds $h^2 f / 4$ to the neighbour average, so a point can sit above all its neighbours. Heat the plate uniformly at $f$ = 100 °C per square metre with all edges at 0 °C: the centre settles at 7.37 °C, hotter than every edge.
+With a heater, the grid rule adds $`h^2 f / 4`$ to the neighbour average, so a point can sit above all its neighbours. Heat the plate uniformly at $`f`$ = 100 °C per square metre with all edges at 0 °C: the centre settles at 7.37 °C, hotter than every edge.
 
 Two other roads build the patterns themselves: the Poisson integral formula on a disc ([The Poisson formula](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/06-poisson-integral-formula.md)), and a sine series on a rectangle ([Laplace on a rectangle](08-laplace-on-a-rectangle.md)), which the code uses as its second road.
 
@@ -125,7 +131,7 @@ Two other roads build the patterns themselves: the Poisson integral formula on a
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| one interior point, $h$ = 0.5 m | (100 + 0 + 0 + 0) / 4 | 25 °C |
+| one interior point, $`h`$ = 0.5 m | (100 + 0 + 0 + 0) / 4 | 25 °C |
 | four turns | 4 × centre = 100 | **25 °C** |
 | ring of radius 0.25 m round the centre | 256-point average | 25.000000 °C |
 | point 0.75 m up the middle | series; its ring of radius 0.2 m | 54.05 °C both |
@@ -152,8 +158,8 @@ The line is the series solution; the grid agrees within 0.03 °C at every point.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| A heater inside, $f$ = 100 | centre 7.37 °C, every edge 0 °C | the centre sits above its neighbour average |
-| An endless half-plane, edge at 0 °C | $u = y$ and $u = 0$ both fit; at 2 m they read 2.0 and 0 | no far edge pins the answer |
+| A heater inside, $`f`$ = 100 | centre 7.37 °C, every edge 0 °C | the centre sits above its neighbour average |
+| An endless half-plane, edge at 0 °C | $`u = y`$ and $`u = 0`$ both fit; at 2 m they read 2.0 and 0 | no far edge pins the answer |
 | Averaging the four edges for any point | 25.00 °C at (0.5, 0.75); true 54.05 °C | the average is round the point, not over the edges |
 
 The code prints all three.
@@ -503,7 +509,7 @@ example : ((2 : ℚ) + 2 + 21 / 10 + 19 / 10) / 4 = 2 := by norm_num
 > - **Heat the bar to 200 °C** (100.0 → 200.0 in the grid calls, 400 → 800 in `plate`). Guess first. The centre reads 50 °C: the equation is linear. The asserts pinned to 25 then fail.
 > - **Widen the centre's ring to 0.4 m.** Guess first. Still 25 °C: the radius does not matter while the circle stays inside.
 > - **Set `F` to −100**, a cooler inside. Guess first. The centre reads −7.37 °C: now the minimum sits inside, and the maximum stays on the edge.
-> - **Grid spacing 1/80 m for the heated plate.** Guess first. The error falls about fourfold again, to under 0.001 °C: it shrinks as $h^2$.
+> - **Grid spacing 1/80 m for the heated plate.** Guess first. The error falls about fourfold again, to under 0.001 °C: it shrinks as $`h^2`$.
 
 ---
 
@@ -514,7 +520,7 @@ example : ((2 : ℚ) + 2 + 21 / 10 + 19 / 10) / 4 = 2 := by norm_num
 >
 > - **Expecting the inside to reach the edge maximum.** The warmest grid point, 2.5 cm below the bar, reads 94.96 °C.
 > - **The maximum principle with a heater inside.** The heated centre reads 7.37 °C against edges at 0 °C; only the minimum stays on the edge.
-> - **The sign in Poisson's equation.** Writing $+f$ for a heater turns the 7.37 °C bump into a −7.37 °C dip.
+> - **The sign in Poisson's equation.** Writing $`+f`$ for a heater turns the 7.37 °C bump into a −7.37 °C dip.
 
 ---
 

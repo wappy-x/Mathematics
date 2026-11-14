@@ -28,42 +28,46 @@ The faint circle is the rim, drawn to scale; positions run clockwise from the ti
 
 ## The formula
 
-Notation first, in words. $\lambda$ is Lebesgue measure: the length of a Lebesgue-measurable set ([Lebesgue measure](03-lebesgue-measure.md)). $\lambda^*$ is outer measure: the smallest total length of countably many intervals that cover a set, defined for every set ([Outer measure](01-lebesgue-outer-measure.md)). For a set $E$ and a number $t$, $E + t$ is every point of $E$ moved $t$ to the right: "E slid by t". For a number $c$, $cE$ is every point of $E$ multiplied by $c$: "E stretched by c".
+Notation first, in words. $`\lambda`$ is Lebesgue measure: the length of a Lebesgue-measurable set ([Lebesgue measure](03-lebesgue-measure.md)). $`\lambda^*`$ is outer measure: the smallest total length of countably many intervals that cover a set, defined for every set ([Outer measure](01-lebesgue-outer-measure.md)). For a set $`E`$ and a number $`t`$, $`E + t`$ is every point of $`E`$ moved $`t`$ to the right: "E slid by t". For a number $`c`$, $`cE`$ is every point of $`E`$ multiplied by $`c`$: "E stretched by c".
 
-$$\lambda(E + t) = \lambda(E), \qquad \lambda(cE) = |c|\,\lambda(E)$$
+```math
+\lambda(E + t) = \lambda(E), \qquad \lambda(cE) = |c|\,\lambda(E)
+```
 
 **Read it aloud:** sliding a set leaves its length alone; stretching it by c multiplies its length by the size of c, sign ignored.
 
-Both rules also hold for $\lambda^*$ on every set, measurable or not.
+Both rules also hold for $`\lambda^*`$ on every set, measurable or not.
 
-On the wheel, $E \oplus q$ means $E$ turned by $q$: add $q$ to each point and drop a whole turn if the sum reaches 1. $\mathbb{Q}$ is the set of rational numbers, the fractions. Write $x \sim y$, "x and y are in the same group", when $x - y$ is rational. The **Vitali set** $V$ holds exactly one point of each group. Then
+On the wheel, $`E \oplus q`$ means $`E`$ turned by $`q`$: add $`q`$ to each point and drop a whole turn if the sum reaches 1. $`\mathbb{Q}`$ is the set of rational numbers, the fractions. Write $`x \sim y`$, "x and y are in the same group", when $`x - y`$ is rational. The **Vitali set** $`V`$ holds exactly one point of each group. Then
 
-$$[0,1) = \bigcup_{q \in \mathbb{Q} \cap [0,1)} (V \oplus q), \quad \text{the copies pairwise disjoint}, \quad\text{so}\quad 1 = \sum_{q \in \mathbb{Q} \cap [0,1)} \lambda(V) \ \text{ if } V \text{ were measurable.}$$
+```math
+[0,1) = \bigcup_{q \in \mathbb{Q} \cap [0,1)} (V \oplus q), \quad \text{the copies pairwise disjoint}, \quad\text{so}\quad 1 = \sum_{q \in \mathbb{Q} \cap [0,1)} \lambda(V) \ \text{ if } V \text{ were measurable.}
+```
 
 **Read it aloud:** the chosen set, turned by every fraction, fills the wheel without overlap, so its length added to itself infinitely often would have to make 1.
 
-That last sum is 0 when $\lambda(V) = 0$ and infinite when $\lambda(V) > 0$. It is never 1. So $V$ has no length.
+That last sum is 0 when $`\lambda(V) = 0`$ and infinite when $`\lambda(V) > 0`$. It is never 1. So $`V`$ has no length.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\lambda$, $\mu$ | Lebesgue measure, length for measurable sets; $\mu$ a general measure in the fold "Why length is the only slide-proof candidate" | 0.6 for the painted set | — |
-| $\lambda^*$, $\ell$ | outer measure: cheapest cover by intervals, for any set; $\ell$ an interval's length | positive for $V$ (Step 6) | — |
-| $E$, $A$, $T$, $E_1$, $E_2$ | sets of points: $A$ painted, $T$ a test set, $E_1$ and $E_2$ the parts of $E$ before and after the cut at $1 - q$ | $A$ = 0.1 to 0.3 with 0.5 to 0.9 | more points, more length |
-| $t$ | slide amount | 0.25 | length unchanged |
-| $c$ | stretch factor, any nonzero number | 3 and −2 | length grows with the size of $c$ |
-| $E + t$, $cE$ | the slid set, the stretched set | $A$ stretched by 3 has length 1.8 | — |
-| $E \oplus q$ | $E$ turned round the wheel by $q$ | $A \oplus 0.25$, length 0.6 | length unchanged |
-| $q$, $\mathbb{Q}$, $Q_1$ | a rational turn; all fractions; the fractions in [0, 1) | $q$ = 0.25 | — |
-| $x \sim y$, $y$ | x and y differ by a fraction: same group | 0.1 and 0.35 | — |
-| $V$, $v$ | the Vitali set: one chosen point per group; $v$ one of its points | not computable; described only | — |
-| $K(n)$, $n$, $m$ | how many distinct fractions in [0, 1) have denominator at most n; $m$ a whole number of copies | $K(10)$ = 32 | bound $1/K(n)$ on $\lambda(V)$ falls |
+| $`\lambda`$, $`\mu`$ | Lebesgue measure, length for measurable sets; $`\mu`$ a general measure in the fold "Why length is the only slide-proof candidate" | 0.6 for the painted set | — |
+| $`\lambda^*`$, $`\ell`$ | outer measure: cheapest cover by intervals, for any set; $`\ell`$ an interval's length | positive for $`V`$ (Step 6) | — |
+| $`E`$, $`A`$, $`T`$, $`E_1`$, $`E_2`$ | sets of points: $`A`$ painted, $`T`$ a test set, $`E_1`$ and $`E_2`$ the parts of $`E`$ before and after the cut at $`1 - q`$ | $`A`$ = 0.1 to 0.3 with 0.5 to 0.9 | more points, more length |
+| $`t`$ | slide amount | 0.25 | length unchanged |
+| $`c`$ | stretch factor, any nonzero number | 3 and −2 | length grows with the size of $`c`$ |
+| $`E + t`$, $`cE`$ | the slid set, the stretched set | $`A`$ stretched by 3 has length 1.8 | — |
+| $`E \oplus q`$ | $`E`$ turned round the wheel by $`q`$ | $`A \oplus 0.25`$, length 0.6 | length unchanged |
+| $`q`$, $`\mathbb{Q}`$, $`Q_1`$ | a rational turn; all fractions; the fractions in [0, 1) | $`q`$ = 0.25 | — |
+| $`x \sim y`$, $`y`$ | x and y differ by a fraction: same group | 0.1 and 0.35 | — |
+| $`V`$, $`v`$ | the Vitali set: one chosen point per group; $`v`$ one of its points | not computable; described only | — |
+| $`K(n)`$, $`n`$, $`m`$ | how many distinct fractions in [0, 1) have denominator at most n; $`m`$ a whole number of copies | $`K(10)`$ = 32 | bound $`1/K(n)`$ on $`\lambda(V)`$ falls |
 
 ### When it holds
 
-- **The slide and stretch rules** hold for every set's outer measure and every measurable set, with $c$ any nonzero number. At $c = 0$ a non-empty set collapses to the point 0, of length 0.
+- **The slide and stretch rules** hold for every set's outer measure and every measurable set, with $`c`$ any nonzero number. At $`c = 0`$ a non-empty set collapses to the point 0, of length 0.
 - **Countable additivity.** The Vitali argument adds infinitely many copies. With only finite additivity (lengths add for finitely many separate pieces), Stefan Banach showed in 1923 that a slide-proof length exists on every subset of the line. No contradiction then.
 - **The sliding rule itself.** Drop it and every set can be measured: the point mass at 0 gives a set size 1 if it contains 0, and 0 if not. It is a measure, but it is not length.
-- **The axiom of choice.** $V$ needs one point picked from each of uncountably many groups with no rule to pick by. Robert Solovay showed in 1970 that, keeping only a weaker form of choice and assuming it is consistent that an inaccessible cardinal exists (a size of infinity too large for the usual axioms to reach), no such set can be proved to exist.
+- **The axiom of choice.** $`V`$ needs one point picked from each of uncountably many groups with no rule to pick by. Robert Solovay showed in 1970 that, keeping only a weaker form of choice and assuming it is consistent that an inaccessible cardinal exists (a size of infinity too large for the usual axioms to reach), no such set can be proved to exist.
 - **A wheel of positive, finite length.** The zero measure (every set has size 0) measures everything and ignores sliding; the argument needs the whole wheel to have length 1.
 
 ---
@@ -72,66 +76,66 @@ That last sum is 0 when $\lambda(V) = 0$ and infinite when $\lambda(V) > 0$. It 
 
 ### Step 0: covers slide with the set
 
-Outer measure is built from covers: countably many intervals whose union contains the set. Slide a cover with its set and it still covers, at the same cost; stretch it and the cost scales by $|c|$. That gives the two rules. Vitali's argument then turns the sliding rule against countable additivity, using a set that tiles the wheel with countably many equal copies.
+Outer measure is built from covers: countably many intervals whose union contains the set. Slide a cover with its set and it still covers, at the same cost; stretch it and the cost scales by $`|c|`$. That gives the two rules. Vitali's argument then turns the sliding rule against countable additivity, using a set that tiles the wheel with countably many equal copies.
 
 ### Step 1: outer measure ignores slides and scales with stretches
 
-A cover of $E$, slid by $t$, covers $E + t$ at the same cost, so $\lambda^*(E + t) \le \lambda^*(E)$. Sliding back by $-t$ gives the reverse. A stretch by $c$ multiplies every interval's length by $|c|$, and stretching back by $1/c$ gives the reverse inequality.
+A cover of $`E`$, slid by $`t`$, covers $`E + t`$ at the same cost, so $`\lambda^*(E + t) \le \lambda^*(E)`$. Sliding back by $`-t`$ gives the reverse. A stretch by $`c`$ multiplies every interval's length by $`|c|`$, and stretching back by $`1/c`$ gives the reverse inequality.
 
 ### Step 2: measurable sets stay measurable
 
-Carathéodory's test asks that every test set $T$ split cleanly across $E$: the outer measures of its part inside $E$ and its part outside add back to $\lambda^*(T)$. To test $E + t$, slide the test set back by $t$, test it against $E$, and slide the two pieces forward; Step 1 says no slide changes their outer measures. Stretches work the same way.
+Carathéodory's test asks that every test set $`T`$ split cleanly across $`E`$: the outer measures of its part inside $`E`$ and its part outside add back to $`\lambda^*(T)`$. To test $`E + t`$, slide the test set back by $`t`$, test it against $`E`$, and slide the two pieces forward; Step 1 says no slide changes their outer measures. Stretches work the same way.
 
 ### Step 3: turning the wheel keeps length
 
-Turning by $q$ is a slide with one cut. The part of $E$ before position $1 - q$ slides forward by $q$. The part from $1 - q$ on slides by $q - 1$, past the mark to the start of the wheel. The two slid parts land in $[q, 1)$ and $[0, q)$, so they do not overlap. Each keeps its length, and the lengths add back to $\lambda(E)$. The painted set shows it: 0.2 + 0.25 + 0.15 = 0.6. The same holds for outer measure of any set, because $[0, 1 - q)$ passes Carathéodory's test.
+Turning by $`q`$ is a slide with one cut. The part of $`E`$ before position $`1 - q`$ slides forward by $`q`$. The part from $`1 - q`$ on slides by $`q - 1`$, past the mark to the start of the wheel. The two slid parts land in $`[q, 1)`$ and $`[0, q)`$, so they do not overlap. Each keeps its length, and the lengths add back to $`\lambda(E)`$. The painted set shows it: 0.2 + 0.25 + 0.15 = 0.6. The same holds for outer measure of any set, because $`[0, 1 - q)`$ passes Carathéodory's test.
 
 ### Step 4: the groups
 
-The relation $x \sim y$ is reflexive ($x - x = 0$), symmetric and transitive (a sum of two fractions is a fraction). So the groups partition the wheel ([Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)). The group of $x$ is $x$ turned by every rational amount, so each group is countable. The wheel is uncountable, and countably many countable groups would make it countable ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). So there are uncountably many groups.
+The relation $`x \sim y`$ is reflexive ($`x - x = 0`$), symmetric and transitive (a sum of two fractions is a fraction). So the groups partition the wheel ([Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)). The group of $`x`$ is $`x`$ turned by every rational amount, so each group is countable. The wheel is uncountable, and countably many countable groups would make it countable ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). So there are uncountably many groups.
 
 ### Step 5: choose one point per group, then turn
 
-The axiom of choice supplies a set $V$ with exactly one point from each group ([The axiom of choice](../../01-Foundations/09-Sizes%20of%20Infinity/05-axiom-of-choice.md)); no formula names the points. Turn $V$ by each rational $q$ in $[0, 1)$. Every point of the wheel lands in some copy: its group's chosen point differs from it by a fraction. No point lands in two copies: two chosen points reaching it would differ by a fraction, so share a group, so be the same point.
+The axiom of choice supplies a set $`V`$ with exactly one point from each group ([The axiom of choice](../../01-Foundations/09-Sizes%20of%20Infinity/05-axiom-of-choice.md)); no formula names the points. Turn $`V`$ by each rational $`q`$ in $`[0, 1)`$. Every point of the wheel lands in some copy: its group's chosen point differs from it by a fraction. No point lands in two copies: two chosen points reaching it would differ by a fraction, so share a group, so be the same point.
 
 ### Step 6: no length fits
 
-Suppose $V$ were measurable. By Step 3 every copy has length $\lambda(V)$. Countable additivity then says $1 = \lambda(V) + \lambda(V) + \dots$, countably infinitely many terms. If $\lambda(V) = 0$ the right side is 0. If $\lambda(V) > 0$ it is infinite. Either way it is not 1. So $V$ is not measurable. It is not small, either: the copies cover the wheel, so $1 \le \lambda^*(V) + \lambda^*(V) + \dots$, which forces $\lambda^*(V) > 0$.
+Suppose $`V`$ were measurable. By Step 3 every copy has length $`\lambda(V)`$. Countable additivity then says $`1 = \lambda(V) + \lambda(V) + \dots`$, countably infinitely many terms. If $`\lambda(V) = 0`$ the right side is 0. If $`\lambda(V) > 0`$ it is infinite. Either way it is not 1. So $`V`$ is not measurable. It is not small, either: the copies cover the wheel, so $`1 \le \lambda^*(V) + \lambda^*(V) + \dots`$, which forces $`\lambda^*(V) > 0`$.
 
-A second road to $\lambda(V) = 0$, the one the code prints: the fractions in $[0, 1)$ with denominator at most $n$ are $K(n)$ in number, and turning $V$ by each gives $K(n)$ disjoint copies inside the wheel. So $K(n)\,\lambda(V) \le 1$. At $n = 10$, $K(10)$ = 32 and $\lambda(V) \le 0.03125$. At $n = 100$, 3044 copies force $\lambda(V) \le 0.000329$. $K(n)$ grows without bound, so $\lambda(V) = 0$, and the full countable union then has length 0, not 1.
+A second road to $`\lambda(V) = 0`$, the one the code prints: the fractions in $`[0, 1)`$ with denominator at most $`n`$ are $`K(n)`$ in number, and turning $`V`$ by each gives $`K(n)`$ disjoint copies inside the wheel. So $`K(n)\,\lambda(V) \le 1`$. At $`n = 10`$, $`K(10)`$ = 32 and $`\lambda(V) \le 0.03125`$. At $`n = 100`$, 3044 copies force $`\lambda(V) \le 0.000329`$. $`K(n)`$ grows without bound, so $`\lambda(V) = 0`$, and the full countable union then has length 0, not 1.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Theorem 1.** For every $E \subseteq \mathbb{R}$, every real $t$ and every $c \ne 0$: $\lambda^*(E+t) = \lambda^*(E)$ and $\lambda^*(cE) = |c|\,\lambda^*(E)$. If $E$ is Lebesgue measurable, so are $E + t$ and $cE$, and the same equalities hold for $\lambda$.
+**Theorem 1.** For every $`E \subseteq \mathbb{R}`$, every real $`t`$ and every $`c \ne 0`$: $`\lambda^*(E+t) = \lambda^*(E)`$ and $`\lambda^*(cE) = |c|\,\lambda^*(E)`$. If $`E`$ is Lebesgue measurable, so are $`E + t`$ and $`cE`$, and the same equalities hold for $`\lambda`$.
 
-*Proof.* (1) By definition $\lambda^*(E) = \inf \{ \sum_k \ell(I_k) : E \subseteq \bigcup_k I_k \}$ over countable families of open intervals, $\ell$ the length. If $E \subseteq \bigcup_k I_k$ then $E + t \subseteq \bigcup_k (I_k + t)$ and $\ell(I_k + t) = \ell(I_k)$, since $(a,b) + t = (a+t, b+t)$. Taking the infimum, $\lambda^*(E+t) \le \lambda^*(E)$. Applied to $E + t$ and $-t$: $\lambda^*(E) \le \lambda^*(E+t)$.
-(2) For $c \ne 0$, $c \cdot I_k$ is an open interval of length $|c|\,\ell(I_k)$, and $cE \subseteq \bigcup_k c \cdot I_k$. So $\lambda^*(cE) \le |c|\,\lambda^*(E)$. Applied to $cE$ and $1/c$: $\lambda^*(E) \le |1/c|\,\lambda^*(cE)$. Multiply by $|c|$.
-(3) Let $E$ satisfy Carathéodory's criterion and $T$ be any set. Then $T \cap (E + t) = ((T - t) \cap E) + t$ and $T \setminus (E+t) = ((T - t) \setminus E) + t$. By (1) and the criterion for $E$ with test set $T - t$: $\lambda^*(T \cap (E+t)) + \lambda^*(T \setminus (E+t)) = \lambda^*((T-t) \cap E) + \lambda^*((T-t) \setminus E) = \lambda^*(T - t) = \lambda^*(T)$. The same computation with $T/c$ in place of $T - t$ and (2) handles $cE$; the factor $|c|$ appears on both sides and cancels. ∎
+*Proof.* (1) By definition $`\lambda^*(E) = \inf \{ \sum_k \ell(I_k) : E \subseteq \bigcup_k I_k \}`$ over countable families of open intervals, $`\ell`$ the length. If $`E \subseteq \bigcup_k I_k`$ then $`E + t \subseteq \bigcup_k (I_k + t)`$ and $`\ell(I_k + t) = \ell(I_k)`$, since $`(a,b) + t = (a+t, b+t)`$. Taking the infimum, $`\lambda^*(E+t) \le \lambda^*(E)`$. Applied to $`E + t`$ and $`-t`$: $`\lambda^*(E) \le \lambda^*(E+t)`$.
+(2) For $`c \ne 0`$, $`c \cdot I_k`$ is an open interval of length $`|c|\,\ell(I_k)`$, and $`cE \subseteq \bigcup_k c \cdot I_k`$. So $`\lambda^*(cE) \le |c|\,\lambda^*(E)`$. Applied to $`cE`$ and $`1/c`$: $`\lambda^*(E) \le |1/c|\,\lambda^*(cE)`$. Multiply by $`|c|`$.
+(3) Let $`E`$ satisfy Carathéodory's criterion and $`T`$ be any set. Then $`T \cap (E + t) = ((T - t) \cap E) + t`$ and $`T \setminus (E+t) = ((T - t) \setminus E) + t`$. By (1) and the criterion for $`E`$ with test set $`T - t`$: $`\lambda^*(T \cap (E+t)) + \lambda^*(T \setminus (E+t)) = \lambda^*((T-t) \cap E) + \lambda^*((T-t) \setminus E) = \lambda^*(T - t) = \lambda^*(T)`$. The same computation with $`T/c`$ in place of $`T - t`$ and (2) handles $`cE`$; the factor $`|c|`$ appears on both sides and cancels. ∎
 
-**Lemma (rotation).** For $E \subseteq [0,1)$ and $q \in [0,1)$ let $E \oplus q = \{ x + q - \lfloor x + q \rfloor : x \in E \}$. Then $\lambda^*(E \oplus q) = \lambda^*(E)$, and $E \oplus q$ is measurable when $E$ is.
+**Lemma (rotation).** For $`E \subseteq [0,1)`$ and $`q \in [0,1)`$ let $`E \oplus q = \{ x + q - \lfloor x + q \rfloor : x \in E \}`$. Then $`\lambda^*(E \oplus q) = \lambda^*(E)`$, and $`E \oplus q`$ is measurable when $`E`$ is.
 
-*Proof.* Put $E_1 = E \cap [0, 1-q)$ and $E_2 = E \cap [1-q, 1)$. Then $E \oplus q = (E_1 + q) \cup (E_2 + q - 1)$, with $E_1 + q \subseteq [q, 1)$ and $E_2 + q - 1 \subseteq [0, q)$. Intervals are measurable, so Carathéodory's criterion with test set $E$ and the measurable set $[0, 1-q)$ gives $\lambda^*(E) = \lambda^*(E_1) + \lambda^*(E_2)$. With test set $E \oplus q$ and the measurable set $[q, 1)$ it gives $\lambda^*(E \oplus q) = \lambda^*(E_1 + q) + \lambda^*(E_2 + q - 1)$. By Theorem 1 the right sides agree. If $E$ is measurable, $E_1$, $E_2$ are, so their slides are (Theorem 1), and so is their union. ∎
+*Proof.* Put $`E_1 = E \cap [0, 1-q)`$ and $`E_2 = E \cap [1-q, 1)`$. Then $`E \oplus q = (E_1 + q) \cup (E_2 + q - 1)`$, with $`E_1 + q \subseteq [q, 1)`$ and $`E_2 + q - 1 \subseteq [0, q)`$. Intervals are measurable, so Carathéodory's criterion with test set $`E`$ and the measurable set $`[0, 1-q)`$ gives $`\lambda^*(E) = \lambda^*(E_1) + \lambda^*(E_2)`$. With test set $`E \oplus q`$ and the measurable set $`[q, 1)`$ it gives $`\lambda^*(E \oplus q) = \lambda^*(E_1 + q) + \lambda^*(E_2 + q - 1)`$. By Theorem 1 the right sides agree. If $`E`$ is measurable, $`E_1`$, $`E_2`$ are, so their slides are (Theorem 1), and so is their union. ∎
 
-**Theorem 2 (Vitali).** Assume the axiom of choice. There is a set $V \subseteq [0,1)$ that is not Lebesgue measurable, and $\lambda^*(V) > 0$.
+**Theorem 2 (Vitali).** Assume the axiom of choice. There is a set $`V \subseteq [0,1)`$ that is not Lebesgue measurable, and $`\lambda^*(V) > 0`$.
 
-*Proof.* (1) The relation $x \sim y \iff x - y \in \mathbb{Q}$ on $[0,1)$ is reflexive, symmetric and transitive, since $\mathbb{Q}$ contains 0 and is closed under negation and addition. Its classes partition $[0,1)$.
-(2) By the axiom of choice there is a function picking one member from each class; let $V$ be its set of values. Let $Q_1 = \mathbb{Q} \cap [0,1)$, a countable set.
-(3) Cover: for $y \in [0,1)$ let $v \in V$ be the chosen member of its class. Then $y - v \in \mathbb{Q} \cap (-1, 1)$; put $q = y - v$ if this is $\ge 0$ and $q = y - v + 1$ otherwise. Then $q \in Q_1$ and $y = v \oplus q$.
-(4) Disjoint: if $v \oplus q = w \oplus r$ with $v, w \in V$ and $q, r \in Q_1$, then $v - w - (r - q)$ is an integer, so $v - w \in \mathbb{Q}$, so $v \sim w$; one member per class gives $v = w$; then $q - r$ is an integer in $(-1,1)$, so $q = r$.
-(5) Suppose $V$ measurable. By the Lemma each $V \oplus q$ is measurable with $\lambda(V \oplus q) = \lambda(V)$. By (3), (4) and countable additivity, $1 = \lambda([0,1)) = \sum_{q \in Q_1} \lambda(V)$. $Q_1$ is infinite, so the sum is $0$ if $\lambda(V) = 0$ and $+\infty$ if $\lambda(V) > 0$. Contradiction.
-(6) By (3), countable subadditivity of $\lambda^*$ and the Lemma, $1 \le \sum_{q \in Q_1} \lambda^*(V \oplus q) = \sum_{q \in Q_1} \lambda^*(V)$, so $\lambda^*(V) > 0$. ∎
+*Proof.* (1) The relation $`x \sim y \iff x - y \in \mathbb{Q}`$ on $`[0,1)`$ is reflexive, symmetric and transitive, since $`\mathbb{Q}`$ contains 0 and is closed under negation and addition. Its classes partition $`[0,1)`$.
+(2) By the axiom of choice there is a function picking one member from each class; let $`V`$ be its set of values. Let $`Q_1 = \mathbb{Q} \cap [0,1)`$, a countable set.
+(3) Cover: for $`y \in [0,1)`$ let $`v \in V`$ be the chosen member of its class. Then $`y - v \in \mathbb{Q} \cap (-1, 1)`$; put $`q = y - v`$ if this is $`\ge 0`$ and $`q = y - v + 1`$ otherwise. Then $`q \in Q_1`$ and $`y = v \oplus q`$.
+(4) Disjoint: if $`v \oplus q = w \oplus r`$ with $`v, w \in V`$ and $`q, r \in Q_1`$, then $`v - w - (r - q)`$ is an integer, so $`v - w \in \mathbb{Q}`$, so $`v \sim w`$; one member per class gives $`v = w`$; then $`q - r`$ is an integer in $`(-1,1)`$, so $`q = r`$.
+(5) Suppose $`V`$ measurable. By the Lemma each $`V \oplus q`$ is measurable with $`\lambda(V \oplus q) = \lambda(V)`$. By (3), (4) and countable additivity, $`1 = \lambda([0,1)) = \sum_{q \in Q_1} \lambda(V)`$. $`Q_1`$ is infinite, so the sum is $`0`$ if $`\lambda(V) = 0`$ and $`+\infty`$ if $`\lambda(V) > 0`$. Contradiction.
+(6) By (3), countable subadditivity of $`\lambda^*`$ and the Lemma, $`1 \le \sum_{q \in Q_1} \lambda^*(V \oplus q) = \sum_{q \in Q_1} \lambda^*(V)`$, so $`\lambda^*(V) > 0`$. ∎
 
 </details>
 
 <details>
 <summary>Why length is the only slide-proof candidate</summary>
 
-Suppose a measure $\mu$ on the Borel sets (the sets built from intervals by countable unions, intersections and complements) ignores slides and gives $[0,1)$ the value 1. The interval $[0,1)$ is $n$ slid copies of $[0, 1/n)$ laid end to end, so $\mu([0,1/n)) = 1/n$. Then $m$ copies give $\mu([0, m/n)) = m/n$, and any interval $[a, b)$ is squeezed between intervals with rational ends, so $\mu([a,b)) = b - a$. The line is countably many slid copies of $[0,1)$, each of size 1. On each copy, $\mu$ and $\lambda$ have the same finite total and agree on the half-open intervals inside it, a family closed under overlaps, so they agree on every Borel set in that copy ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)); adding over the copies, they agree on every Borel set. So the sliding rule does not merely hold for length; it pins length down.
+Suppose a measure $`\mu`$ on the Borel sets (the sets built from intervals by countable unions, intersections and complements) ignores slides and gives $`[0,1)`$ the value 1. The interval $`[0,1)`$ is $`n`$ slid copies of $`[0, 1/n)`$ laid end to end, so $`\mu([0,1/n)) = 1/n`$. Then $`m`$ copies give $`\mu([0, m/n)) = m/n`$, and any interval $`[a, b)`$ is squeezed between intervals with rational ends, so $`\mu([a,b)) = b - a`$. The line is countably many slid copies of $`[0,1)`$, each of size 1. On each copy, $`\mu`$ and $`\lambda`$ have the same finite total and agree on the half-open intervals inside it, a family closed under overlaps, so they agree on every Borel set in that copy ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)); adding over the copies, they agree on every Borel set. So the sliding rule does not merely hold for length; it pins length down.
 
 </details>
 
-Another road, on the line instead of the wheel: slide $V$ by every rational in $[-1, 1]$. The copies are disjoint, they all lie in $[-1, 2)$, and they cover $[0, 1)$. A measurable $V$ would give $1 \le \lambda(V) + \lambda(V) + \dots \le 3$, again impossible.
+Another road, on the line instead of the wheel: slide $`V`$ by every rational in $`[-1, 1]`$. The copies are disjoint, they all lie in $`[-1, 2)`$, and they cover $`[0, 1)`$. A measurable $`V`$ would give $`1 \le \lambda(V) + \lambda(V) + \dots \le 3`$, again impossible.
 
 ---
 
@@ -139,28 +143,28 @@ Another road, on the line instead of the wheel: slide $V$ by every rational in $
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| 1. Length of the painted set $A$ | (0.3 − 0.1) + (0.9 − 0.5) = 0.2 + 0.4 | 0.6 |
+| 1. Length of the painted set $`A`$ | (0.3 − 0.1) + (0.9 − 0.5) = 0.2 + 0.4 | 0.6 |
 | 2. Turn by 0.25: first arc | 0.1 to 0.3 becomes 0.35 to 0.55 | 0.2 |
 | 3. Second arc crosses the mark | 0.5 to 0.9 becomes 0.75 to 1, then 0 to 0.15 | 0.25 + 0.15 |
 | 4. Length after turning | 0.2 + 0.25 + 0.15 | 0.6 |
 | 5. Stretch by 3 | 0.3 to 0.9 and 1.5 to 2.7: 0.6 + 1.2 | 1.8 = 3 × 0.6 |
 | 6. Stretch by −2 | −0.6 to −0.2 and −1.8 to −1: 0.4 + 0.8 | 1.2 = 2 × 0.6, the size of −2 times the length |
-| 7. Fractions in [0, 1) with denominator at most 10 | 1 + 1 + 2 + 2 + 4 + 2 + 6 + 4 + 6 + 4 | 32 copies of $V$ fit |
-| 8. Most length $V$ could have | 1 / 32 | 0.03125 |
+| 7. Fractions in [0, 1) with denominator at most 10 | 1 + 1 + 2 + 2 + 4 + 2 + 6 + 4 + 6 + 4 | 32 copies of $`V`$ fit |
+| 8. Most length $`V`$ could have | 1 / 32 | 0.03125 |
 | 9. Denominators up to 100 | 3044 copies fit; 1 / 3044 | 0.000329 |
-| 10. The bound keeps falling | measurable $V$ would need length 0; its copies then add to 0 | **0, not 1: $V$ has no length** |
+| 10. The bound keeps falling | measurable $`V`$ would need length 0; its copies then add to 0 | **0, not 1: $`V`$ has no length** |
 
-Row 7 adds, for each denominator 1 to 10, the numerators that share no factor with it (Euler's totient). On the wheel: a fair spin has no probability of stopping in $V$. The question "how likely" has no answer for that set.
+Row 7 adds, for each denominator 1 to 10, the numerators that share no factor with it (Euler's totient). On the wheel: a fair spin has no probability of stopping in $`V`$. The question "how likely" has no answer for that set.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Only finitely many turns: a 360-position wheel turned in steps of 30 | a choice set of 30 points, size 0.0833; 12 copies total exactly 1 | nothing breaks, because 12 copies of 1/12 make 1; Vitali's contradiction needs infinitely many copies |
-| A measure that ignores the sliding rule: point mass at 0 | $V$ gets 1, $V$ turned by 30 gets 0; the copies total 1 | every set gets a size, but it is not length |
-| Give $V$ the size 0.001 | the copies pass 1 after 1001 of them, then grow without bound | any positive size times infinitely many copies is infinite |
-| Give $V$ the size 0 | the copies total 0 after one million of them | 0 + 0 + … never reaches 1 |
-| Stretch by −2 using $c$ instead of its size | −1.2 | a length cannot be negative; the true value is 1.2 |
+| A measure that ignores the sliding rule: point mass at 0 | $`V`$ gets 1, $`V`$ turned by 30 gets 0; the copies total 1 | every set gets a size, but it is not length |
+| Give $`V`$ the size 0.001 | the copies pass 1 after 1001 of them, then grow without bound | any positive size times infinitely many copies is infinite |
+| Give $`V`$ the size 0 | the copies total 0 after one million of them | 0 + 0 + … never reaches 1 |
+| Stretch by −2 using $`c`$ instead of its size | −1.2 | a length cannot be negative; the true value is 1.2 |
 
 The finite wheel mirrors Vitali's construction: 30 groups of 12 points, one chosen per group, and two different choices both tile it. The contradiction needs infinitely many turns.
 
@@ -168,7 +172,7 @@ The finite wheel mirrors Vitali's construction: 30 groups of 12 points, one chos
 
 ## Code, from first principles, and it actually runs
 
-The scripts measure the painted set before and after turning and stretching by two roads (merging exact intervals; counting grid cells of width 1/400), tile a finite 360-position wheel with two choice sets, count the fractions with denominator at most 10 and 100 by two roads (listing distinct fractions; summing Euler's totient from a sieve), and print what sizes 0.1, 0.01, 0.001 and 0 would add to. Python uses exact fractions; Rust works in whole twentieths. **What the code shows:** instances, a finite analogue and a shrinking bound. **What only the proof shows:** the rules for every set, and that $V$ has no length; $V$ itself cannot be listed by any program, so the code never pretends to build it.
+The scripts measure the painted set before and after turning and stretching by two roads (merging exact intervals; counting grid cells of width 1/400), tile a finite 360-position wheel with two choice sets, count the fractions with denominator at most 10 and 100 by two roads (listing distinct fractions; summing Euler's totient from a sieve), and print what sizes 0.1, 0.01, 0.001 and 0 would add to. Python uses exact fractions; Rust works in whole twentieths. **What the code shows:** instances, a finite analogue and a shrinking bound. **What only the proof shows:** the rules for every set, and that $`V`$ has no length; $`V`$ itself cannot be listed by any program, so the code never pretends to build it.
 
 ### Python
 
@@ -465,18 +469,18 @@ xychart-beta
     line [1, 2, 4, 6, 10, 12, 18, 22, 28, 32]
 ```
 
-The one line is $K(n)$, the number of distinct fractions in [0, 1) with denominator at most $n$. A measurable $V$ would have length at most $1/K(n)$, so the climb of this line is the fall of that bound.
+The one line is $`K(n)`$, the number of distinct fractions in [0, 1) with denominator at most $`n`$. A measurable $`V`$ would have length at most $`1/K(n)`$, so the climb of this line is the fall of that bound.
 
 ### Lean
 
 Lean proves the slide and stretch rules for every set, and Vitali's theorem for every choice set on the wheel.
 
-- Take any set $E$ of reals, any slide $t$ and any nonzero stretch $c$. Then $\lambda^*(E + t) = \lambda^*(E)$ and $\lambda^*(cE) = |c|\,\lambda^*(E)$.
-- Suppose $E$ is measurable. Then $E + t$ and $cE$ are measurable, so the same rules hold for $\lambda$.
-- Take any set $V$ inside the wheel $[0, 1)$ with exactly one point from each group. Then $V$ is not measurable, and $\lambda^*(V) > 0$.
-- The axiom of choice gives such a set $V$.
+- Take any set $`E`$ of reals, any slide $`t`$ and any nonzero stretch $`c`$. Then $`\lambda^*(E + t) = \lambda^*(E)`$ and $`\lambda^*(cE) = |c|\,\lambda^*(E)`$.
+- Suppose $`E`$ is measurable. Then $`E + t`$ and $`cE`$ are measurable, so the same rules hold for $`\lambda`$.
+- Take any set $`V`$ inside the wheel $`[0, 1)`$ with exactly one point from each group. Then $`V`$ is not measurable, and $`\lambda^*(V) > 0`$.
+- The axiom of choice gives such a set $`V`$.
 - The hand arithmetic holds exactly: the stretches in rows 5 and 6, Euler's totient in row 7, and the counts 32 and 3044.
-- Giving $V$ the size 0.001, 1000 copies reach only 1, and the 1001st copy passes it.
+- Giving $`V`$ the size 0.001, 1000 copies reach only 1, and the 1001st copy passes it.
 - On the finite wheel of 360 positions, the smallest and the scrambled choice sets each cover every position exactly once.
 
 The painted set, the grid counts, the decimal bounds and the point mass are left to the Python and Rust checks.
@@ -677,7 +681,7 @@ example : ∀ x ∈ Finset.range 360,
 
 > [!TIP]
 > **Try changing**
-> - **Turn by a different amount.** Guess first: does any turn $k/20$ change the length? Change the range in the `spread` line. Answer: the line reports 1 distinct length, 0.6, for all twenty turns.
+> - **Turn by a different amount.** Guess first: does any turn $`k/20`$ change the length? Change the range in the `spread` line. Answer: the line reports 1 distinct length, 0.6, for all twenty turns.
 > - **Choose differently.** Guess first: does a stranger choice still tile the finite wheel? Replace the 7 in the scrambled choice by any whole number. Answer: every position is still covered exactly once, because any choice of one point per group works.
 > - **Forget the seam.** Guess first: what happens if `rotate` keeps only the first piece of an arc that crosses the mark? Delete the second piece. Answer: the grid assert fails, because the turned set has lost length 0.15.
 
@@ -686,10 +690,10 @@ example : ∀ x ∈ Finset.range 360,
 ## The usual mistake
 
 > [!warning]
-> **Reading "not measurable" as "length zero".** $V$ is not a thin set. Its outer measure is positive (Step 6), and yet no single number can serve as its length. Countable additivity breaks on its copies: their outer measures add to infinity while their union has length 1. The Cantor set ([The Cantor set](07-the-cantor-set.md)) is the opposite case: uncountable, measurable, length 0.
+> **Reading "not measurable" as "length zero".** $`V`$ is not a thin set. Its outer measure is positive (Step 6), and yet no single number can serve as its length. Countable additivity breaks on its copies: their outer measures add to infinity while their union has length 1. The Cantor set ([The Cantor set](07-the-cantor-set.md)) is the opposite case: uncountable, measurable, length 0.
 >
 > - **Blaming the rationals.** The fractions in [0, 1) form a measurable set of length 0. The trouble is the chosen set, not the fractions used to turn it.
-> - **Expecting to compute $V$.** No program lists it and no formula defines it; the axiom of choice guarantees it exists and says nothing more.
+> - **Expecting to compute $`V`$.** No program lists it and no formula defines it; the axiom of choice guarantees it exists and says nothing more.
 > - **Stretching with a sign.** Stretching by −2 flips the set; its length is 1.2, not −1.2.
 > - **Taking the sigma-algebra for paperwork.** Measuring every set is not a convenience given up for tidiness. It is impossible, and this card is the proof.
 
@@ -697,9 +701,9 @@ example : ∀ x ∈ Finset.range 360,
 
 ## Where you meet it in real life
 
-- **Probability on a spinner.** A fair spin of the wheel is Lebesgue measure on [0, 1). The event "the spin stops in $V$" has no probability, which is why every probability model states which events it measures: a sigma-algebra, the collection of sets it allows itself to measure ([Caratheodory's criterion](02-caratheodory-measurable-sets.md)).
-- **The Banach–Tarski paradox.** A solid ball can be cut into five pieces and reassembled, by rotations and slides alone, into two balls of the original size. The pieces are chosen with the axiom of choice and have no volume, exactly as $V$ has no length.
-- **Foundations of mathematics.** Analysts keep the axiom of choice and pay with sets like $V$; in Solovay's model, without full choice, every set of reals is measurable.
+- **Probability on a spinner.** A fair spin of the wheel is Lebesgue measure on [0, 1). The event "the spin stops in $`V`$" has no probability, which is why every probability model states which events it measures: a sigma-algebra, the collection of sets it allows itself to measure ([Caratheodory's criterion](02-caratheodory-measurable-sets.md)).
+- **The Banach–Tarski paradox.** A solid ball can be cut into five pieces and reassembled, by rotations and slides alone, into two balls of the original size. The pieces are chosen with the axiom of choice and have no volume, exactly as $`V`$ has no length.
+- **Foundations of mathematics.** Analysts keep the axiom of choice and pay with sets like $`V`$; in Solovay's model, without full choice, every set of reals is measurable.
 
 > **Say it back**
 > Sliding a set leaves its length unchanged, and stretching multiplies its length by the size of the stretch. On a wheel of circumference 1, group points that differ by a fraction and choose one from each group. The chosen set, turned by every fraction, covers the wheel with countably many non-overlapping copies of equal length. Their lengths would have to add to 1, but equal lengths added infinitely often give 0 or infinity. So some sets have no length, and measure must be restricted to a sigma-algebra.

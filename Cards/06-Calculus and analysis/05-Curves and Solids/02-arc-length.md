@@ -16,7 +16,7 @@ Calculus reaches it without chords. Each tiny piece of cable is almost straight,
 
 Drawn to scale at 0.8 units per metre; chord points every 100 m. The deck line marks the span only, not its height.
 
-**The length of a curve is the limit of the lengths of ever finer chord chains, and for a smooth curve that limit is the integral of $\sqrt{1 + f'(x)^2}$, or, for a moving point, the integral of its speed.**
+**The length of a curve is the limit of the lengths of ever finer chord chains, and for a smooth curve that limit is the integral of $`\sqrt{1 + f'(x)^2}`$, or, for a moving point, the integral of its speed.**
 
 **What kind of fact this is:** a theorem. Length is defined by chords; that it equals the integral is proved on this card in Why it works.
 
@@ -24,32 +24,36 @@ Drawn to scale at 0.8 units per metre; chord points every 100 m. The deck line m
 
 ## The formula
 
-A reminder: $f'(x)$ is the derivative, "the rate of height per unit of x", here the cable's slope.
+A reminder: $`f'(x)`$ is the derivative, "the rate of height per unit of x", here the cable's slope.
 
-For a graph, height $f(x)$ over the stretch from $a$ to $b$:
+For a graph, height $`f(x)`$ over the stretch from $`a`$ to $`b`$:
 
-$$L = \int_a^b \sqrt{1 + f'(x)^2}\, dx$$
+```math
+L = \int_a^b \sqrt{1 + f'(x)^2}\, dx
+```
 
 **Read it aloud:** the length adds each tiny width, stretched by the square root of one plus the slope squared.
 
-For a point moving along a curve, its position at clock time $t$ is $(x(t), y(t))$, as on [Parametric motion](01-parametric-motion.md). Its speed is $\sqrt{x'(t)^2 + y'(t)^2}$, and
+For a point moving along a curve, its position at clock time $`t`$ is $`(x(t), y(t))`$, as on [Parametric motion](01-parametric-motion.md). Its speed is $`\sqrt{x'(t)^2 + y'(t)^2}`$, and
 
-$$L = \int_{t_0}^{t_1} \sqrt{x'(t)^2 + y'(t)^2}\, dt$$
+```math
+L = \int_{t_0}^{t_1} \sqrt{x'(t)^2 + y'(t)^2}\, dt
+```
 
 **Read it aloud:** the length is the integral of speed over the time the trip takes.
 
-The graph formula is the second one with the clock set to $x$ itself: then $x'(t) = 1$ and $y'(t) = f'(x)$.
+The graph formula is the second one with the clock set to $`x`$ itself: then $`x'(t) = 1`$ and $`y'(t) = f'(x)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | horizontal position, metres from midspan | −200 to 200 | a wider stretch is longer |
-| $f(x)$ | cable height above its lowest point, metres | x^2/1000, so 40 at a tower | a deeper sag lengthens the cable |
-| $f'(x)$ | slope: metres of rise per metre across | x/500, so 0.4 at a tower | steeper stretches count for more |
-| $a$, $b$ | the two ends of the stretch | −200 and 200 m | — |
-| $L$ | the length along the curve, metres | 410.424 m | — |
-| $t$, $t_0$, $t_1$ | a clock for the moving point, its start and end | −1 to 1 | a faster clock changes speed, not length |
-| $x(t)$, $y(t)$ | position at time t; primes are their rates | 200t and 40t^2 | — |
-| $n$, $\Delta x$ | number of chords, and the width of each | 4 chords, 100 m wide | more chords, closer total |
+| $`x`$ | horizontal position, metres from midspan | −200 to 200 | a wider stretch is longer |
+| $`f(x)`$ | cable height above its lowest point, metres | x^2/1000, so 40 at a tower | a deeper sag lengthens the cable |
+| $`f'(x)`$ | slope: metres of rise per metre across | x/500, so 0.4 at a tower | steeper stretches count for more |
+| $`a`$, $`b`$ | the two ends of the stretch | −200 and 200 m | — |
+| $`L`$ | the length along the curve, metres | 410.424 m | — |
+| $`t`$, $`t_0`$, $`t_1`$ | a clock for the moving point, its start and end | −1 to 1 | a faster clock changes speed, not length |
+| $`x(t)`$, $`y(t)`$ | position at time t; primes are their rates | 200t and 40t^2 | — |
+| $`n`$, $`\Delta x`$ | number of chords, and the width of each | 4 chords, 100 m wide | more chords, closer total |
 
 The slope is metres per metre, so the square root is a pure stretch factor and the length is in metres.
 
@@ -72,11 +76,13 @@ So the **length** of a curve is defined as the least upper bound (written sup: t
 
 ### Step 1: one chord is a width times a stretch factor
 
-Cut the stretch from a to b into $n$ strips of width $\Delta x$. Over one strip the height changes by an amount called the rise. By Pythagoras the chord is
+Cut the stretch from a to b into $`n`$ strips of width $`\Delta x`$. Over one strip the height changes by an amount called the rise. By Pythagoras the chord is
 
-$$\sqrt{\Delta x^2 + \text{rise}^2} = \Delta x \sqrt{1 + (\text{rise}/\Delta x)^2}$$
+```math
+\sqrt{\Delta x^2 + \text{rise}^2} = \Delta x \sqrt{1 + (\text{rise}/\Delta x)^2}
+```
 
-Rise over width is the chord's slope. The **mean value theorem** (on a smooth stretch, some point inside has slope equal to the chord's: [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)) puts a point in the strip where $f'(x)$ is exactly that ratio. So each chord is its width times $\sqrt{1 + f'(x)^2}$ at some point of its own strip.
+Rise over width is the chord's slope. The **mean value theorem** (on a smooth stretch, some point inside has slope equal to the chord's: [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)) puts a point in the strip where $`f'(x)`$ is exactly that ratio. So each chord is its width times $`\sqrt{1 + f'(x)^2}`$ at some point of its own strip.
 
 ### Step 2: the chord total is a Riemann sum
 
@@ -102,20 +108,22 @@ Orange: the chord total. Green: the integral, 410.424 m. Orange climbs to green 
 
 ### Step 4: a moving point, and why the graph is a special case
 
-For a moving point, cut the clock into short steps. In one step the point moves about $x'(t)$ times the step across and $y'(t)$ times it up, so each chord is about speed times step. One catch: the mean value theorem, applied to each coordinate, may pick two different instants in a step; because the rates have no jumps, the mismatch vanishes as steps shrink.
+For a moving point, cut the clock into short steps. In one step the point moves about $`x'(t)`$ times the step across and $`y'(t)`$ times it up, so each chord is about speed times step. One catch: the mean value theorem, applied to each coordinate, may pick two different instants in a step; because the rates have no jumps, the mismatch vanishes as steps shrink.
 
-The cable as a moving point, $x(t) = 200t$ and $y(t) = 40t^2$ for t from −1 to 1, traces the same parabola; its speed integral gives 410.424252 m. A new clock changes speed, not length.
+The cable as a moving point, $`x(t) = 200t`$ and $`y(t) = 40t^2`$ for t from −1 to 1, traces the same parabola; its speed integral gives 410.424252 m. A new clock changes speed, not length.
 
 <details>
 <summary>Detailed proof: chord totals close in on the speed integral</summary>
 
-Let $x(t)$ and $y(t)$ have continuous rates from $t_0$ to $t_1$, and let L be the speed integral. Cut the clock at $t_0 < s_1 < \dots < s_n = t_1$, widest step h.
+Let $`x(t)`$ and $`y(t)`$ have continuous rates from $`t_0`$ to $`t_1`$, and let L be the speed integral. Cut the clock at $`t_0 < s_1 < \dots < s_n = t_1`$, widest step h.
 
-On each step, the mean value theorem gives instants c_i and d_i in that step with $\Delta x_i = x'(c_i)\,\Delta s_i$ and $\Delta y_i = y'(d_i)\,\Delta s_i$. So that step's chord has length $\sqrt{x'(c_i)^2 + y'(d_i)^2}\,\Delta s_i$.
+On each step, the mean value theorem gives instants c_i and d_i in that step with $`\Delta x_i = x'(c_i)\,\Delta s_i`$ and $`\Delta y_i = y'(d_i)\,\Delta s_i`$. So that step's chord has length $`\sqrt{x'(c_i)^2 + y'(d_i)^2}\,\Delta s_i`$.
 
 A rate continuous on a closed interval is uniformly continuous: for every ε > 0 there is a δ > 0 such that instants less than δ apart have rates less than ε apart. Take h < δ. The reverse triangle inequality in the plane (the lengths of two arrows differ by at most the length of their difference) gives
-$$\left|\sqrt{x'(c_i)^2 + y'(d_i)^2} - \sqrt{x'(c_i)^2 + y'(c_i)^2}\right| \le |y'(d_i) - y'(c_i)| < \varepsilon.$$
-So the chord total is within ε times the clock's length of the Riemann sum $\sum \sqrt{x'(c_i)^2 + y'(c_i)^2}\,\Delta s_i$, which is within ε of L once h is small, since speed is continuous. The chord totals tend to L.
+
+$`\displaystyle \left|\sqrt{x'(c_i)^2 + y'(d_i)^2} - \sqrt{x'(c_i)^2 + y'(c_i)^2}\right| \le |y'(d_i) - y'(c_i)| < \varepsilon.`$
+
+So the chord total is within ε times the clock's length of the Riemann sum $`\sum \sqrt{x'(c_i)^2 + y'(c_i)^2}\,\Delta s_i`$, which is within ε of L once h is small, since speed is continuous. The chord totals tend to L.
 
 Refining never shortens a total, and any cutting refines to fine ones, so every total is at most L while fine ones come within any ε of it: L is the least upper bound.
 
@@ -123,16 +131,18 @@ Refining never shortens a total, and any cutting refines to fine ones, so every 
 
 ### Step 5: the cable's integral in closed form
 
-For the cable, $f'(x) = x/500$. The hyperbolic sine and cosine are $\sinh w = (e^w - e^{-w})/2$ and $\cosh w = (e^w + e^{-w})/2$, for any number $w$ ([Hyperbolic functions](../02-Derivatives/07-hyperbolic-functions.md)). Substituting $x = 500 \sinh w$ turns $\sqrt{1 + (x/500)^2}$ into a cosh, since $\cosh^2 w - \sinh^2 w = 1$. The result is
+For the cable, $`f'(x) = x/500`$. The hyperbolic sine and cosine are $`\sinh w = (e^w - e^{-w})/2`$ and $`\cosh w = (e^w + e^{-w})/2`$, for any number $`w`$ ([Hyperbolic functions](../02-Derivatives/07-hyperbolic-functions.md)). Substituting $`x = 500 \sinh w`$ turns $`\sqrt{1 + (x/500)^2}`$ into a cosh, since $`\cosh^2 w - \sinh^2 w = 1`$. The result is
 
-$$L = 500\left(0.4\sqrt{1.16} + \operatorname{asinh} 0.4\right)$$
+```math
+L = 500\left(0.4\sqrt{1.16} + \mathrm{asinh}\, 0.4\right)
+```
 
-where asinh is the inverse of sinh, and $\operatorname{asinh} u = \ln\left(u + \sqrt{1 + u^2}\right)$.
+where asinh is the inverse of sinh, and $`\mathrm{asinh}\, u = \ln\left(u + \sqrt{1 + u^2}\right)`$.
 
 <details>
 <summary>The algebra behind this</summary>
 
-With $x = 500 \sinh w$, the width element is $500 \cosh w$ times the step in w, and the integrand becomes $500 \cosh^2 w$. Since $\cosh^2 w = (1 + \cosh 2w)/2$, an antiderivative is $250\,(w + \sinh w \cosh w)$. The ends are $\sinh w = \pm 0.4$, where $\cosh w = \sqrt{1.16}$; both ends contribute equally.
+With $`x = 500 \sinh w`$, the width element is $`500 \cosh w`$ times the step in w, and the integrand becomes $`500 \cosh^2 w`$. Since $`\cosh^2 w = (1 + \cosh 2w)/2`$, an antiderivative is $`250\,(w + \sinh w \cosh w)`$. The ends are $`\sinh w = \pm 0.4`$, where $`\cosh w = \sqrt{1.16}`$; both ends contribute equally.
 
 </details>
 
@@ -142,7 +152,7 @@ Most curves have no such closed form, so engineers integrate numerically, as the
 
 ## Worked numbers, by hand
 
-The cable: span 400 m, sag 40 m, height $f(x) = x^2/1000$ from −200 to 200 m.
+The cable: span 400 m, sag 40 m, height $`f(x) = x^2/1000`$ from −200 to 200 m.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -357,8 +367,8 @@ The outputs match line for line.
 Lean proves both length formulas for every curve whose slope has no jumps, and the cable's exact length.
 
 - For a moving point whose rates have no jumps, the least upper bound of its chord totals equals the integral of its speed. Each pass counts.
-- For a graph whose height and slope have no jumps, the length is the integral of $\sqrt{1 + f'(x)^2}$.
-- The cable, height x^2/1000 from −200 to 200 m, is exactly $500\left(0.4\sqrt{1.16} + \operatorname{asinh} 0.4\right)$ m long. That is Step 5's closed form.
+- For a graph whose height and slope have no jumps, the length is the integral of $`\sqrt{1 + f'(x)^2}`$.
+- The cable, height x^2/1000 from −200 to 200 m, is exactly $`500\left(0.4\sqrt{1.16} + \mathrm{asinh}\, 0.4\right)`$ m long. That is Step 5's closed form.
 - The moving point x = 200t, y = 40t^2 traces the same parabola, tower to tower.
 - The hand arithmetic holds exactly, as fractions: the 40 m sag, the 0.4 slope at a tower, 1.16 and the 80 m vertical travel.
 - Dropping the square root gives exactly 1264/3 m, and the rule of thumb gives 1232/3 m.
@@ -760,7 +770,7 @@ example : (340 : ℚ) - 20 = 4 / 5 * 400 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating the integral of the slope as the length.** The integral of $f'(x)$ is the change in height, 0 m tower to tower; the integral of its size is the vertical travel, 80 m. Length joins both directions by Pythagoras: hence the 1 and the square root.
+> **Treating the integral of the slope as the length.** The integral of $`f'(x)`$ is the change in height, 0 m tower to tower; the integral of its size is the vertical travel, 80 m. Length joins both directions by Pythagoras: hence the 1 and the square root.
 >
 > - **Dropping the square root.** 421.333 m against the true 410.424 m.
 > - **Trusting a coarse chain.** Two chords give 407.92 m, 2.5027 m short.

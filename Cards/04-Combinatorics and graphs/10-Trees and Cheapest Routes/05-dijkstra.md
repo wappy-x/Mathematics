@@ -39,30 +39,34 @@ Each road runs both ways.
 
 ## The formula
 
-Notation first, in words. Each point carries its **tentative cost** $d[v]$, the fewest minutes from the depot to v so far, and its **predecessor** $p[v]$, the point just before v on that route. Write $w(u,v)$ for the minutes on the road joining u to v, $\infty$ for a cost with no route behind it yet, and u and v for points.
+Notation first, in words. Each point carries its **tentative cost** $`d[v]`$, the fewest minutes from the depot to v so far, and its **predecessor** $`p[v]`$, the point just before v on that route. Write $`w(u,v)`$ for the minutes on the road joining u to v, $`\infty`$ for a cost with no route behind it yet, and u and v for points.
 
 Relaxing one road is one comparison. The arrow means *becomes*, and min is the smaller of the two numbers in the brackets:
 
-$$d[v] \leftarrow \min\big(d[v],\ d[u] + w(u,v)\big)$$
+```math
+d[v] \leftarrow \min\big(d[v],\ d[u] + w(u,v)\big)
+```
 
 **Read it aloud:** v's cheapest known cost is either what it was, or the cost of reaching u plus the road from u to v, whichever is smaller.
 
 Settling is one choice:
 
-$$\text{settle the unsettled } u \text{ of smallest } d[u]\text{: that } d[u] \text{ is final}$$
+```math
+\text{settle the unsettled } u \text{ of smallest } d[u]\text{: that } d[u] \text{ is final}
+```
 
 **Read it aloud:** the smallest guess among the unfinished points is already the truth.
 
-Start with 0 at the depot, $\infty$ elsewhere, nothing settled; then settle, relax, and repeat until nothing is unsettled.
+Start with 0 at the depot, $`\infty`$ elsewhere, nothing settled; then settle, relax, and repeat until nothing is unsettled.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $d[v]$ | tentative cost, minutes from the depot | d[A] is 4, then 3 | — |
-| $p[v]$ | predecessor, the point just before v | p[S] is E | — |
-| $w(u,v)$ | minutes on the road joining u and v | w(B,A) = 1 | routes using it cost more |
-| $u$ | the point settled this round | D, then B, then A | — |
-| $v$ | a neighbour of u being tested | A, C, E when B settles | — |
-| $\infty$ | no route found yet | the stadium, until C settles | more points unreached |
+| $`d[v]`$ | tentative cost, minutes from the depot | d[A] is 4, then 3 | — |
+| $`p[v]`$ | predecessor, the point just before v | p[S] is E | — |
+| $`w(u,v)`$ | minutes on the road joining u and v | w(B,A) = 1 | routes using it cost more |
+| $`u`$ | the point settled this round | D, then B, then A | — |
+| $`v`$ | a neighbour of u being tested | A, C, E when B settles | — |
+| $`\infty`$ | no route found yet | the stadium, until C settles | more points unreached |
 
 ### When it holds
 
@@ -81,15 +85,15 @@ Walk any route from the depot to an unsettled point and meet a first point on it
 
 ### Step 1: a guess is the best route through settled points
 
-What a guess means, at every moment: $d[v]$ is the cost of the cheapest route from the depot to v whose earlier points are all settled, and $\infty$ if there is none.
+What a guess means, at every moment: $`d[v]`$ is the cost of the cheapest route from the depot to v whose earlier points are all settled, and $`\infty`$ if there is none.
 
-Settling u adds one kind of candidate, a route through settled points arriving by a road out of u; relaxing every road out of u tests exactly those, at $d[u] + w(u,v)$. So the meaning survives the round: settling B at 2 drops A's guess from 4 to 3 and gives C and E their first numbers, 10 and 12.
+Settling u adds one kind of candidate, a route through settled points arriving by a road out of u; relaxing every road out of u tests exactly those, at $`d[u] + w(u,v)`$. So the meaning survives the round: settling B at 2 drops A's guess from 4 to 3 and gives C and E their first numbers, 10 and 12.
 
 ### Step 2: the smallest unsettled guess is already the truth
 
-Let u be the unsettled point with the smallest guess, and take any route from the depot to u. By Step 0 it has a first unsettled point x; by Step 1 its front to x costs at least $d[x]$; and $d[x] \ge d[u]$.
+Let u be the unsettled point with the smallest guess, and take any route from the depot to u. By Step 0 it has a first unsettled point x; by Step 1 its front to x costs at least $`d[x]`$; and $`d[x] \ge d[u]`$.
 
-The rest is roads costing zero or more, so it cannot subtract. The route costs at least $d[u]$, itself a real route's cost. Nothing beats it, so settling is safe.
+The rest is roads costing zero or more, so it cannot subtract. The route costs at least $`d[u]`$, itself a real route's cost. Nothing beats it, so settling is safe.
 
 When A settles at 3, the settled points are D and B; any route to A must leave that pair, and the cheapest guess outside it is A's own 3.
 
@@ -363,7 +367,7 @@ The two outputs match line for line.
 
 Lean proves the method right on every map with finitely many points and no cost below zero, and checks this card's two maps.
 
-- When every point is settled, each guess is the cheapest cost of a route from the start, or $\infty$ if no route reaches it. Ties may be broken any way.
+- When every point is settled, each guess is the cheapest cost of a route from the start, or $`\infty`$ if no route reaches it. Ties may be broken any way.
 - At every moment, the smallest guess among the unsettled points is already the cheapest cost to that point, as Step 2 says.
 - On the rebate map, every run ends with B at 2, yet the route D-A-B costs 4 − 3 = 1.
 - On the van's map, the guesses after each settlement match the worked table, and D-B-A-C-E-S costs 13 minutes against 15 for D-A-C-S.

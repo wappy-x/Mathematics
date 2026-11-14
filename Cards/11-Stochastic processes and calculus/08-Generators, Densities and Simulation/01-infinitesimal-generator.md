@@ -41,61 +41,73 @@ The green line touches the orange curve at the start and then leaves it. The gen
 
 ## The formula
 
-Reminders first. $X_t$ is the value at time $t$ of a process, here the rate $r_t$. $W_t$ is Brownian motion, the random walk seen from far away. The process obeys a stochastic differential equation, $dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t$: in each short slice of time, drift by $\mu$ times the slice and take a shove of $\sigma$ times the Brownian step. The symbol $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none ([Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)).
+Reminders first. $`X_t`$ is the value at time $`t`$ of a process, here the rate $`r_t`$. $`W_t`$ is Brownian motion, the random walk seen from far away. The process obeys a stochastic differential equation, $`dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t`$: in each short slice of time, drift by $`\mu`$ times the slice and take a shove of $`\sigma`$ times the Brownian step. The symbol $`dW_t`$ is shorthand for an Ito integral, never a derivative, because the path has none ([Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)).
 
-New notation. $E_x$ means an average over all paths that start at $x$. $f'$ and $f''$ are the slope and the curvature of a function $f$, as on [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md). The generator is written $L$; $Lf$ is the new function it makes from $f$, read "L applied to f".
+New notation. $`E_x`$ means an average over all paths that start at $`x`$. $`f'`$ and $`f''`$ are the slope and the curvature of a function $`f`$, as on [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md). The generator is written $`L`$; $`Lf`$ is the new function it makes from $`f`$, read "L applied to f".
 
-The definition: start at $x$, wait a short time $h$, and measure how much the average of $f$ has moved, per unit time.
+The definition: start at $`x`$, wait a short time $`h`$, and measure how much the average of $`f`$ has moved, per unit time.
 
-$$Lf(x) = \lim_{h \to 0} \frac{E_x\big[f(X_h)\big] - f(x)}{h}$$
+```math
+Lf(x) = \lim_{h \to 0} \frac{E_x\big[f(X_h)\big] - f(x)}{h}
+```
 
 **Read it aloud:** the generator of f at x is the expected rate of change of f, at the instant the process leaves x.
 
-The theorem that makes it usable: for the equation above and any $f$ with two continuous slopes,
+The theorem that makes it usable: for the equation above and any $`f`$ with two continuous slopes,
 
-$$Lf(x) = \mu(x)\,f'(x) + \tfrac12\,\sigma(x)^2\,f''(x).$$
+```math
+Lf(x) = \mu(x)\,f'(x) + \tfrac12\,\sigma(x)^2\,f''(x).
+```
 
 **Read it aloud:** drift times slope, plus half the squared noise times curvature.
 
-For the two processes of this wing: the Ornstein-Uhlenbeck (OU) rate $r$, pulled toward the level $\theta$ = 0.04 at pull speed $\kappa$ = 0.5 a year, with constant noise; and a share price $S$ in geometric Brownian motion (GBM), whose drift $\mu S$ and noise $\sigma S$ grow with the price, the constants being $\mu$ = 0.05 a year and $\sigma$ = 0.20 per square-root year.
+For the two processes of this wing: the Ornstein-Uhlenbeck (OU) rate $`r`$, pulled toward the level $`\theta`$ = 0.04 at pull speed $`\kappa`$ = 0.5 a year, with constant noise; and a share price $`S`$ in geometric Brownian motion (GBM), whose drift $`\mu S`$ and noise $`\sigma S`$ grow with the price, the constants being $`\mu`$ = 0.05 a year and $`\sigma`$ = 0.20 per square-root year.
 
-$$\text{Ornstein-Uhlenbeck:}\quad Lf(r) = \kappa(\theta - r)\,f'(r) + \tfrac12\sigma^2 f''(r)$$
+```math
+\text{Ornstein-Uhlenbeck:}\quad Lf(r) = \kappa(\theta - r)\,f'(r) + \tfrac12\sigma^2 f''(r)
+```
 
-$$\text{geometric Brownian motion:}\quad Lf(S) = \mu S\,f'(S) + \tfrac12\sigma^2 S^2 f''(S)$$
+```math
+\text{geometric Brownian motion:}\quad Lf(S) = \mu S\,f'(S) + \tfrac12\sigma^2 S^2 f''(S)
+```
 
-**Dynkin's formula.** For a stopping time $\tau$ with finite average,
+**Dynkin's formula.** For a stopping time $`\tau`$ with finite average,
 
-$$E_x\big[f(X_\tau)\big] = f(x) + E_x\Big[\int_0^\tau Lf(X_u)\,du\Big].$$
+```math
+E_x\big[f(X_\tau)\big] = f(x) + E_x\Big[\int_0^\tau Lf(X_u)\,du\Big].
+```
 
 **Read it aloud:** the average of f where the path stops is where it started, plus the average of the generator's rates added up along the way.
 
-Two choices of $f$ turn Dynkin's formula into answers about the band from $a$ = 4 percent to $b$ = 8 percent. A function with $Lp = 0$, $p(a) = 0$, $p(b) = 1$ is the chance $p(x)$ of reaching $b$ first. A function with $Lg = -1$, $g(a) = g(b) = 0$ is the mean exit time $g(x)$. For the Ornstein-Uhlenbeck rate the first one integrates in closed form, with $c = \kappa/\sigma^2$:
+Two choices of $`f`$ turn Dynkin's formula into answers about the band from $`a`$ = 4 percent to $`b`$ = 8 percent. A function with $`Lp = 0`$, $`p(a) = 0`$, $`p(b) = 1`$ is the chance $`p(x)`$ of reaching $`b`$ first. A function with $`Lg = -1`$, $`g(a) = g(b) = 0`$ is the mean exit time $`g(x)`$. For the Ornstein-Uhlenbeck rate the first one integrates in closed form, with $`c = \kappa/\sigma^2`$:
 
-$$p(x) = \frac{\int_a^x e^{\,c(y-\theta)^2}\,dy}{\int_a^b e^{\,c(y-\theta)^2}\,dy}.$$
+```math
+p(x) = \frac{\int_a^x e^{\,c(y-\theta)^2}\,dy}{\int_a^b e^{\,c(y-\theta)^2}\,dy}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $h$, $dt$ | time in years; one short step of time; a slice of time inside an equation | $h$ = 0.1 down to 0.0001 | a smaller $h$ brings the ratio closer to $Lf$ |
-| $X_t$, $X$, $r_t$, $r$, $x$, $S$ | the process at time $t$, or as a whole; the OU rate, at time $t$ and as a variable; the starting state; the GBM share price | the rate from $x$ = 0.06; the share from $100 | — |
-| $W_t$, $dW_t$ | Brownian motion; its step, shorthand for an Ito integral | one fresh normal draw per step | — |
-| $\mu$ | drift: the steady part of each step, per year | OU: $\kappa(\theta - r)$ = −0.01 at 6 percent; GBM: $\mu S$, with the constant $\mu$ = 0.05, so 5 at $100 | $Lf$ moves by $f'$ per unit of drift |
-| $\sigma$ | noise size, per square-root year | OU 0.02; GBM: $\sigma S$, with the constant $\sigma$ = 0.20 | $Lf$ rises where $f$ curves upward |
-| $f$, $f'$, $f''$ | a measurement of the state; its slope; its curvature | $r^2$: slope 0.12, curvature 2 at 6 percent | — |
-| $L$, $Lf$ | the generator; the expected rate of change it returns | $L[r^2]$ = −0.0008 per year at 6 percent | — |
-| $E_x$ | average over all paths started at $x$ | 4,000 simulated paths stand in for it | — |
-| $\tau$ | a stopping time: the first exit from the band | mean 1.083540 years | — |
-| $\kappa$, $\theta$, $c$ | OU pull speed per year; long-run level; $\kappa/\sigma^2$ | 0.5; 0.04; 1250 | faster pull, faster fall of the average |
-| $m$, $n$, $\lambda$, $C$, $M$, $K$, $q$, $\tau_n$, $G$ | inside Why it works and its folded proofs: the average squared gap; a power, or a counter; an eigenvalue; a constant of integration; bounds; a test function; the stop capped at time $n$; and, under real life, a chain's rate matrix | $m$ stays at 0.0004; $\lambda$ = 0.14 for $n$ = 2 | — |
-| $k$, $s$, $I$ | in the folded callouts: the drift piece as one function; the factor $e^{c(y-\theta)^2}$; a running integral | $k$ = −0.0008 at 6 percent for $f = r^2$ | — |
-| $a$, $b$, $p$, $g$ | band edges; chance of reaching $b$ first; mean exit time | 0.04, 0.08; 0.252692; 1.083540 years | a wider band, a longer wait |
+| $`t`$, $`h`$, $`dt`$ | time in years; one short step of time; a slice of time inside an equation | $`h`$ = 0.1 down to 0.0001 | a smaller $`h`$ brings the ratio closer to $`Lf`$ |
+| $`X_t`$, $`X`$, $`r_t`$, $`r`$, $`x`$, $`S`$ | the process at time $`t`$, or as a whole; the OU rate, at time $`t`$ and as a variable; the starting state; the GBM share price | the rate from $`x`$ = 0.06; the share from $100 | — |
+| $`W_t`$, $`dW_t`$ | Brownian motion; its step, shorthand for an Ito integral | one fresh normal draw per step | — |
+| $`\mu`$ | drift: the steady part of each step, per year | OU: $`\kappa(\theta - r)`$ = −0.01 at 6 percent; GBM: $`\mu S`$, with the constant $`\mu`$ = 0.05, so 5 at $100 | $`Lf`$ moves by $`f'`$ per unit of drift |
+| $`\sigma`$ | noise size, per square-root year | OU 0.02; GBM: $`\sigma S`$, with the constant $`\sigma`$ = 0.20 | $`Lf`$ rises where $`f`$ curves upward |
+| $`f`$, $`f'`$, $`f''`$ | a measurement of the state; its slope; its curvature | $`r^2`$: slope 0.12, curvature 2 at 6 percent | — |
+| $`L`$, $`Lf`$ | the generator; the expected rate of change it returns | $`L[r^2]`$ = −0.0008 per year at 6 percent | — |
+| $`E_x`$ | average over all paths started at $`x`$ | 4,000 simulated paths stand in for it | — |
+| $`\tau`$ | a stopping time: the first exit from the band | mean 1.083540 years | — |
+| $`\kappa`$, $`\theta`$, $`c`$ | OU pull speed per year; long-run level; $`\kappa/\sigma^2`$ | 0.5; 0.04; 1250 | faster pull, faster fall of the average |
+| $`m`$, $`n`$, $`\lambda`$, $`C`$, $`M`$, $`K`$, $`q`$, $`\tau_n`$, $`G`$ | inside Why it works and its folded proofs: the average squared gap; a power, or a counter; an eigenvalue; a constant of integration; bounds; a test function; the stop capped at time $`n`$; and, under real life, a chain's rate matrix | $`m`$ stays at 0.0004; $`\lambda`$ = 0.14 for $`n`$ = 2 | — |
+| $`k`$, $`s`$, $`I`$ | in the folded callouts: the drift piece as one function; the factor $`e^{c(y-\theta)^2}`$; a running integral | $`k`$ = −0.0008 at 6 percent for $`f = r^2`$ | — |
+| $`a`$, $`b`$, $`p`$, $`g`$ | band edges; chance of reaching $`b`$ first; mean exit time | 0.04, 0.08; 0.252692; 1.083540 years | a wider band, a longer wait |
 
 ### When it holds
 
-- **Two continuous slopes in f.** The formula needs a curvature. A kink breaks it: the measurement $|r - \theta|$ has no curvature at 4 percent, and its expected change there grows like the square root of $h$, so the ratio in the definition has no limit.
-- **An equation with one solution.** Drift and noise whose change between two states is at most a fixed multiple of the distance between them (the Lipschitz condition of [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)) give each start one law of paths, so $E_x$ means one thing.
-- **Drift and noise that do not depend on the clock.** If they do, the generator carries the time as well; for a measurement that depends on time too, $\partial f/\partial t$, its slope in time, is added to $Lf$.
-- **For Dynkin, a stopping time with finite average, and f and Lf bounded where the path lives before it.** In the band both hold. Drop them and the formula fails outright: Brownian motion stopped at its first visit to 1, measured by $f(x) = x$, ends at 1, while Dynkin would predict 0.
-- **Averages that exist.** On the whole line, $f$ must not grow so fast that $E_x f(X_h)$ is infinite; for GBM, powers $S^n$ are fine, while $e^{S}$ is not, since the lognormal law's right tail is too heavy.
+- **Two continuous slopes in f.** The formula needs a curvature. A kink breaks it: the measurement $`|r - \theta|`$ has no curvature at 4 percent, and its expected change there grows like the square root of $`h`$, so the ratio in the definition has no limit.
+- **An equation with one solution.** Drift and noise whose change between two states is at most a fixed multiple of the distance between them (the Lipschitz condition of [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)) give each start one law of paths, so $`E_x`$ means one thing.
+- **Drift and noise that do not depend on the clock.** If they do, the generator carries the time as well; for a measurement that depends on time too, $`\partial f/\partial t`$, its slope in time, is added to $`Lf`$.
+- **For Dynkin, a stopping time with finite average, and f and Lf bounded where the path lives before it.** In the band both hold. Drop them and the formula fails outright: Brownian motion stopped at its first visit to 1, measured by $`f(x) = x`$, ends at 1, while Dynkin would predict 0.
+- **Averages that exist.** On the whole line, $`f`$ must not grow so fast that $`E_x f(X_h)`$ is infinite; for GBM, powers $`S^n`$ are fine, while $`e^{S}`$ is not, since the lognormal law's right tail is too heavy.
 
 ---
 
@@ -103,76 +115,84 @@ $$p(x) = \frac{\int_a^x e^{\,c(y-\theta)^2}\,dy}{\int_a^b e^{\,c(y-\theta)^2}\,d
 
 ### Step 0: averaging removes the fair-game part
 
-Ito's lemma splits every small change of $f(X_t)$ into two pieces: a drift piece of size $dt$, and a shove of size $dW_t$. The shove is a fair game: its average is zero. Averaging over paths deletes it and leaves the drift piece. That drift piece is the generator.
+Ito's lemma splits every small change of $`f(X_t)`$ into two pieces: a drift piece of size $`dt`$, and a shove of size $`dW_t`$. The shove is a fair game: its average is zero. Averaging over paths deletes it and leaves the drift piece. That drift piece is the generator.
 
 ### Step 1: the formula, from Ito's lemma
 
 By [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md), in integral form,
 
-$$f(X_h) = f(x) + \int_0^h \Big(\mu f' + \tfrac12\sigma^2 f''\Big)(X_u)\,du + \int_0^h \sigma f'(X_u)\,dW_u.$$
+```math
+f(X_h) = f(x) + \int_0^h \Big(\mu f' + \tfrac12\sigma^2 f''\Big)(X_u)\,du + \int_0^h \sigma f'(X_u)\,dW_u.
+```
 
-The last integral has mean zero: it is an Ito integral, and Ito integrals of a bounded integrand are martingales started at zero. Take $E_x$ of both sides and divide by $h$:
+The last integral has mean zero: it is an Ito integral, and Ito integrals of a bounded integrand are martingales started at zero. Take $`E_x`$ of both sides and divide by $`h`$:
 
-$$\frac{E_x[f(X_h)] - f(x)}{h} = \frac1h\int_0^h E_x\Big[\big(\mu f' + \tfrac12\sigma^2 f''\big)(X_u)\Big]\,du.$$
+```math
+\frac{E_x[f(X_h)] - f(x)}{h} = \frac1h\int_0^h E_x\Big[\big(\mu f' + \tfrac12\sigma^2 f''\big)(X_u)\Big]\,du.
+```
 
-The right side is the average over the first $h$ years of the drift piece. As $h$ shrinks, the path has had no time to move, so that average tends to its value at the start, $\mu(x) f'(x) + \tfrac12\sigma(x)^2 f''(x)$.
+The right side is the average over the first $`h`$ years of the drift piece. As $`h`$ shrinks, the path has had no time to move, so that average tends to its value at the start, $`\mu(x) f'(x) + \tfrac12\sigma(x)^2 f''(x)`$.
 
 <details>
 <summary>Detailed proof: the limit, with its hypotheses</summary>
 
-Take $f$ with two continuous slopes, and suppose $f$, $f'$ and $f''$ are bounded and vanish outside a bounded interval, and that $\mu$ and $\sigma$ are continuous. Then the integrand $\sigma f'$ is bounded, so $\int_0^t \sigma f'(X_u)\,dW_u$ is a martingale with mean zero ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Write $k(y) = \mu(y)f'(y) + \tfrac12\sigma(y)^2f''(y)$; it is continuous and bounded, by a number $M$ say. Paths of $X$ are continuous, so $k(X_u) \to k(x)$ as $u \to 0$, path by path. The average $\frac1h\int_0^h k(X_u)\,du$ therefore tends to $k(x)$ on every path, and it is bounded by $M$. Dominated convergence (wing 10) moves the limit through $E_x$: the ratio tends to $k(x)$. A function that does not vanish outside an interval, such as $r^2$, is handled by stopping the process when it first leaves a large interval and letting the interval grow; for the OU rate the code checks the answer directly against the exact law.
+Take $`f`$ with two continuous slopes, and suppose $`f`$, $`f'`$ and $`f''`$ are bounded and vanish outside a bounded interval, and that $`\mu`$ and $`\sigma`$ are continuous. Then the integrand $`\sigma f'`$ is bounded, so $`\int_0^t \sigma f'(X_u)\,dW_u`$ is a martingale with mean zero ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Write $`k(y) = \mu(y)f'(y) + \tfrac12\sigma(y)^2f''(y)`$; it is continuous and bounded, by a number $`M`$ say. Paths of $`X`$ are continuous, so $`k(X_u) \to k(x)`$ as $`u \to 0`$, path by path. The average $`\frac1h\int_0^h k(X_u)\,du`$ therefore tends to $`k(x)`$ on every path, and it is bounded by $`M`$. Dominated convergence (wing 10) moves the limit through $`E_x`$: the ratio tends to $`k(x)`$. A function that does not vanish outside an interval, such as $`r^2`$, is handled by stopping the process when it first leaves a large interval and letting the interval grow; for the OU rate the code checks the answer directly against the exact law.
 
 </details>
 
 ### Step 2: the Ornstein-Uhlenbeck rate, three measurements
 
-The drift at 6 percent is $\kappa(\theta - r) = 0.5 \times (0.04 - 0.06) = -0.01$. The squared noise is $0.02^2 = 0.0004$.
+The drift at 6 percent is $`\kappa(\theta - r) = 0.5 \times (0.04 - 0.06) = -0.01`$. The squared noise is $`0.02^2 = 0.0004`$.
 
-- **The rate itself, $f(r) = r$.** Slope 1, curvature 0. $L[r] = -0.01$: the average rate falls one percentage point a year, right now. Noise does nothing to a straight line.
-- **The squared rate, $f(r) = r^2$.** Slope 0.12, curvature 2. $L[r^2] = -0.01 \times 0.12 + \tfrac12 \times 0.0004 \times 2 = -0.0012 + 0.0004 = -0.0008$. The pull lowers $r^2$; the noise raises it, because a bowl-shaped measurement gains on average from any wobble.
-- **The squared gap, $f(r) = (r - \theta)^2$.** Slope $2 \times 0.02 = 0.04$, curvature 2. $L f = -0.01 \times 0.04 + 0.0004 = 0$. The squared gap is $0.0004$, which is exactly the long-run variance $\sigma^2/(2\kappa)$.
+- **The rate itself, $`f(r) = r`$.** Slope 1, curvature 0. $`L[r] = -0.01`$: the average rate falls one percentage point a year, right now. Noise does nothing to a straight line.
+- **The squared rate, $`f(r) = r^2`$.** Slope 0.12, curvature 2. $`L[r^2] = -0.01 \times 0.12 + \tfrac12 \times 0.0004 \times 2 = -0.0012 + 0.0004 = -0.0008`$. The pull lowers $`r^2`$; the noise raises it, because a bowl-shaped measurement gains on average from any wobble.
+- **The squared gap, $`f(r) = (r - \theta)^2`$.** Slope $`2 \times 0.02 = 0.04`$, curvature 2. $`L f = -0.01 \times 0.04 + 0.0004 = 0`$. The squared gap is $`0.0004`$, which is exactly the long-run variance $`\sigma^2/(2\kappa)`$.
 
-The third line has a consequence. In general $L[(r-\theta)^2] = -2\kappa(r-\theta)^2 + \sigma^2$, and averaging that along the path gives an ordinary equation for $m(t) = E[(r_t - \theta)^2]$: $m' = -2\kappa m + \sigma^2$. Started at $m = \sigma^2/(2\kappa)$, it never moves. The simulation finds $0.00041658 \pm 0.00000949$ at two years.
+The third line has a consequence. In general $`L[(r-\theta)^2] = -2\kappa(r-\theta)^2 + \sigma^2`$, and averaging that along the path gives an ordinary equation for $`m(t) = E[(r_t - \theta)^2]`$: $`m' = -2\kappa m + \sigma^2`$. Started at $`m = \sigma^2/(2\kappa)`$, it never moves. The simulation finds $`0.00041658 \pm 0.00000949`$ at two years.
 
 ### Step 3: geometric Brownian motion, and its natural measurements
 
 A share at $100 with drift 0.05 and noise 0.20 a year:
 
-- $L[S] = \mu S = 5$: the average price climbs $5 a year, now.
-- $L[\log S] = \mu S \cdot \tfrac1S + \tfrac12\sigma^2 S^2 \cdot (-\tfrac1{S^2}) = \mu - \tfrac12\sigma^2 = 0.03$: the log price drifts 3 percent a year, the Ito correction of [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md) seen as one evaluation of $L$.
-- $L[S^2] = 2\mu S^2 + \sigma^2 S^2 = 0.14 \times 10000 = 1400$.
+- $`L[S] = \mu S = 5`$: the average price climbs $5 a year, now.
+- $`L[\log S] = \mu S \cdot \tfrac1S + \tfrac12\sigma^2 S^2 \cdot (-\tfrac1{S^2}) = \mu - \tfrac12\sigma^2 = 0.03`$: the log price drifts 3 percent a year, the Ito correction of [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md) seen as one evaluation of $`L`$.
+- $`L[S^2] = 2\mu S^2 + \sigma^2 S^2 = 0.14 \times 10000 = 1400`$.
 
-Powers are special for GBM. $L[S^n] = \big(n\mu + \tfrac12 n(n-1)\sigma^2\big) S^n$: the generator returns the same function times a number. A function with that property is an **eigenfunction** of $L$, and its number the eigenvalue. Averaging gives $\frac{d}{dt}E[S_t^n] = \lambda E[S_t^n]$ with that number $\lambda$, so $E[S_t^n] = S_0^n e^{\lambda t}$: the moments of the lognormal law, read off the generator without its density.
+Powers are special for GBM. $`L[S^n] = \big(n\mu + \tfrac12 n(n-1)\sigma^2\big) S^n`$: the generator returns the same function times a number. A function with that property is an **eigenfunction** of $`L`$, and its number the eigenvalue. Averaging gives $`\frac{d}{dt}E[S_t^n] = \lambda E[S_t^n]`$ with that number $`\lambda`$, so $`E[S_t^n] = S_0^n e^{\lambda t}`$: the moments of the lognormal law, read off the generator without its density.
 
 ### Step 4: Dynkin's formula, from the same split at a stopping time
 
-Run Step 1's identity up to a stopping time $\tau$ instead of a fixed $h$:
+Run Step 1's identity up to a stopping time $`\tau`$ instead of a fixed $`h`$:
 
-$$f(X_\tau) = f(x) + \int_0^\tau Lf(X_u)\,du + \int_0^\tau \sigma f'(X_u)\,dW_u.$$
+```math
+f(X_\tau) = f(x) + \int_0^\tau Lf(X_u)\,du + \int_0^\tau \sigma f'(X_u)\,dW_u.
+```
 
-The last term is a martingale stopped at $\tau$. When $\tau$ is bounded, optional stopping ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)) keeps its mean at zero, and averaging gives Dynkin's formula. For an unbounded $\tau$ with finite average, apply it to the bounded time $\min(\tau, n)$ and let $n$ grow.
+The last term is a martingale stopped at $`\tau`$. When $`\tau`$ is bounded, optional stopping ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)) keeps its mean at zero, and averaging gives Dynkin's formula. For an unbounded $`\tau`$ with finite average, apply it to the bounded time $`\min(\tau, n)`$ and let $`n`$ grow.
 
 <details>
 <summary>Detailed proof: from bounded times to a finite average</summary>
 
-Fix the band $[a, b]$ and let $\tau$ be the first exit. Change $f$ outside a slightly wider band so that it vanishes far away, keeping it the same on $[a, b]$; nothing before $\tau$ notices. Now $f$, $f'$, $f''$ and $Lf$ are bounded, by $M$ say. For each whole number $n$, $\tau_n = \min(\tau, n)$ is a bounded stopping time. The stochastic integral $\int_0^{t} \sigma f'(X_u)\,dW_u$ is a martingale with bounded integrand, so optional stopping at the bounded time $\tau_n$ gives it mean zero, and
-$$E_x[f(X_{\tau_n})] = f(x) + E_x\Big[\int_0^{\tau_n} Lf(X_u)\,du\Big].$$
-Let $n \to \infty$. Since $E_x\tau$ is finite, $\tau$ is finite almost surely and $\tau_n = \tau$ for all large $n$, so $f(X_{\tau_n}) \to f(X_\tau)$; these values are bounded by $M$. The integrals tend to $\int_0^\tau Lf\,du$ and are bounded by $M\tau$, whose average is finite. Dominated convergence (wing 10) passes both limits through $E_x$. That $E_x\tau$ is finite for the band follows from the same identity. Take $q(y) = -K e^{\lambda y}$, with $\lambda$ so large that $\tfrac12\sigma^2\lambda^2 > \lvert\mu\rvert\lambda + 1$ everywhere on the band and then $K$ large: $Lq \le -1$ there. Dynkin at $\tau_n$ gives $E_x\tau_n \le q(x) - E_x q(X_{\tau_n})$, which is at most twice the largest size of $q$ on the band, for every $n$. Monotone convergence (wing 10) makes $E_x\tau$ finite.
+Fix the band $`[a, b]`$ and let $`\tau`$ be the first exit. Change $`f`$ outside a slightly wider band so that it vanishes far away, keeping it the same on $`[a, b]`$; nothing before $`\tau`$ notices. Now $`f`$, $`f'`$, $`f''`$ and $`Lf`$ are bounded, by $`M`$ say. For each whole number $`n`$, $`\tau_n = \min(\tau, n)`$ is a bounded stopping time. The stochastic integral $`\int_0^{t} \sigma f'(X_u)\,dW_u`$ is a martingale with bounded integrand, so optional stopping at the bounded time $`\tau_n`$ gives it mean zero, and
+
+$`\displaystyle E_x[f(X_{\tau_n})] = f(x) + E_x\Big[\int_0^{\tau_n} Lf(X_u)\,du\Big].`$
+
+Let $`n \to \infty`$. Since $`E_x\tau`$ is finite, $`\tau`$ is finite almost surely and $`\tau_n = \tau`$ for all large $`n`$, so $`f(X_{\tau_n}) \to f(X_\tau)`$; these values are bounded by $`M`$. The integrals tend to $`\int_0^\tau Lf\,du`$ and are bounded by $`M\tau`$, whose average is finite. Dominated convergence (wing 10) passes both limits through $`E_x`$. That $`E_x\tau`$ is finite for the band follows from the same identity. Take $`q(y) = -K e^{\lambda y}`$, with $`\lambda`$ so large that $`\tfrac12\sigma^2\lambda^2 > \lvert\mu\rvert\lambda + 1`$ everywhere on the band and then $`K`$ large: $`Lq \le -1`$ there. Dynkin at $`\tau_n`$ gives $`E_x\tau_n \le q(x) - E_x q(X_{\tau_n})`$, which is at most twice the largest size of $`q`$ on the band, for every $`n`$. Monotone convergence (wing 10) makes $`E_x\tau`$ finite.
 
 </details>
 
 ### Step 5: two questions, two equations
 
-Take $f = p$ with $Lp = 0$. Dynkin says $E_x[p(X_\tau)] = p(x)$. At the exit, $p$ is 1 at $b$ and 0 at $a$, so the left side is the chance of leaving at $b$. That chance is $p(x)$.
+Take $`f = p`$ with $`Lp = 0`$. Dynkin says $`E_x[p(X_\tau)] = p(x)`$. At the exit, $`p`$ is 1 at $`b`$ and 0 at $`a`$, so the left side is the chance of leaving at $`b`$. That chance is $`p(x)`$.
 
-Take $f = g$ with $Lg = -1$ and $g = 0$ at both edges. Dynkin says $0 = g(x) - E_x\tau$. So $g(x)$ is the mean exit time.
+Take $`f = g`$ with $`Lg = -1`$ and $`g = 0`$ at both edges. Dynkin says $`0 = g(x) - E_x\tau`$. So $`g(x)`$ is the mean exit time.
 
-Each is an ordinary second-order equation, solved by two integrations (the callout below). For the band from 4 to 8 percent, from 6 percent: $p$ = 0.252692 and $g$ = 1.083540 years.
+Each is an ordinary second-order equation, solved by two integrations (the callout below). For the band from 4 to 8 percent, from 6 percent: $`p`$ = 0.252692 and $`g`$ = 1.083540 years.
 
 <details>
 <summary>The two integrations</summary>
 
-$Lp = 0$ reads $\tfrac12\sigma^2 p'' + \kappa(\theta - x)p' = 0$, a first-order equation for $p'$: $p''/p' = 2\kappa(x - \theta)/\sigma^2$, so $p'(x) = C e^{c(x-\theta)^2}$ with $c = \kappa/\sigma^2$. Integrate from $a$ and fix $C$ by $p(b) = 1$: that is the formula for $p$ in The formula. Write $s(y) = e^{c(y-\theta)^2}$. For $Lg = -1$ the same factor gives $(g'/s)' = -2/(\sigma^2 s)$, so $g'(y) = s(y)\big[C - I(y)\big]$ with $I(y) = \int_a^y 2/(\sigma^2 s(z))\,dz$. Then $g(x) = C\int_a^x s - \int_a^x s\,I$, and $g(b) = 0$ fixes $C$.
+$`Lp = 0`$ reads $`\tfrac12\sigma^2 p'' + \kappa(\theta - x)p' = 0`$, a first-order equation for $`p'`$: $`p''/p' = 2\kappa(x - \theta)/\sigma^2`$, so $`p'(x) = C e^{c(x-\theta)^2}`$ with $`c = \kappa/\sigma^2`$. Integrate from $`a`$ and fix $`C`$ by $`p(b) = 1`$: that is the formula for $`p`$ in The formula. Write $`s(y) = e^{c(y-\theta)^2}`$. For $`Lg = -1`$ the same factor gives $`(g'/s)' = -2/(\sigma^2 s)`$, so $`g'(y) = s(y)\big[C - I(y)\big]`$ with $`I(y) = \int_a^y 2/(\sigma^2 s(z))\,dz`$. Then $`g(x) = C\int_a^x s - \int_a^x s\,I`$, and $`g(b) = 0`$ fixes $`C`$.
 
 </details>
 
@@ -184,15 +204,15 @@ The rate at 6 percent, pull speed 0.5 a year toward 4 percent, noise 0.02. The m
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| drift at 6 percent | $0.5 \times (0.04 - 0.06)$ | −0.01 |
-| slope of $r^2$ | $2 \times 0.06$ | 0.12 |
-| drift times slope | $-0.01 \times 0.12$ | −0.0012 |
-| squared noise | $0.02 \times 0.02$ | 0.0004 |
-| half squared noise times curvature | $\tfrac12 \times 0.0004 \times 2$ | 0.0004 |
-| **the generator, $L[r^2]$ at 6 percent** | $-0.0012 + 0.0004$ | **−0.0008 per year** |
-| the definition at $h$ = 0.1, 0.01, 0.001, 0.0001 | exact law, from the code | −0.00078033, −0.00079800, −0.00079980, −0.00079998 |
+| drift at 6 percent | $`0.5 \times (0.04 - 0.06)`$ | −0.01 |
+| slope of $`r^2`$ | $`2 \times 0.06`$ | 0.12 |
+| drift times slope | $`-0.01 \times 0.12`$ | −0.0012 |
+| squared noise | $`0.02 \times 0.02`$ | 0.0004 |
+| half squared noise times curvature | $`\tfrac12 \times 0.0004 \times 2`$ | 0.0004 |
+| **the generator, $`L[r^2]`$ at 6 percent** | $`-0.0012 + 0.0004`$ | **−0.0008 per year** |
+| the definition at $`h`$ = 0.1, 0.01, 0.001, 0.0001 | exact law, from the code | −0.00078033, −0.00079800, −0.00079980, −0.00079998 |
 
-In the world: the average squared rate, 36 in percent squared today, is falling at 8 a year. The tangent line in the picture reaches 28.00 after one year, while the true average is 29.70: the slope eases as the rate nears 4 percent. The definition's ratio closes on −0.0008, and its gap shrinks about tenfold each time $h$ does.
+In the world: the average squared rate, 36 in percent squared today, is falling at 8 a year. The tangent line in the picture reaches 28.00 after one year, while the true average is 29.70: the slope eases as the rate nears 4 percent. The definition's ratio closes on −0.0008, and its gap shrinks about tenfold each time $`h`$ does.
 
 Dynkin's formula on the band (Step 5): the chance of reaching 8 percent first is 0.252692, and the mean wait is 1.083540 years. Most paths exit at the bottom, because the pull points there; the wait is over a year because the 2-point distance to either edge is one full year's worth of noise.
 
@@ -200,8 +220,8 @@ Dynkin's formula on the band (Step 5): the chance of reaching 8 percent first is
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the curvature term: ordinary calculus | $L[r^2]$ = −0.0012; $L[(r-\theta)^2]$ = −0.0004 | Predicts the squared gap shrinking. The simulation finds it still at 0.00041658 ± 0.00000949 after two years. |
-| Keep the curvature, forget the half | $L[r^2]$ = −0.0004 | Counts the noise twice; the average squared rate would fall at half the true speed |
+| Drop the curvature term: ordinary calculus | $`L[r^2]`$ = −0.0012; $`L[(r-\theta)^2]`$ = −0.0004 | Predicts the squared gap shrinking. The simulation finds it still at 0.00041658 ± 0.00000949 after two years. |
+| Keep the curvature, forget the half | $`L[r^2]`$ = −0.0004 | Counts the noise twice; the average squared rate would fall at half the true speed |
 | Apply Dynkin to a stopping time with infinite average | Brownian motion from 0, stopped at 1: Dynkin predicts 0, the truth is 1 | The time to reach 1 is finite on almost every path but infinite on average: P(stopped by 1 year) = 0.3173, by 100 years 0.9203, by 10,000 years 0.9920 |
 | Check the exit on a coarse time grid | mean exit 1.173154 ± 0.015217 years at step 0.004 | Paths that cross an edge between grid points are missed, so exits look late; the error falls to +0.042 at step 0.001, and at 0.00025 to +0.004, inside its noise of 0.014 |
 
@@ -209,7 +229,7 @@ Dynkin's formula on the band (Step 5): the chance of reaching 8 percent first is
 
 ## Code, from first principles, and it actually runs
 
-Both programs take four roads to the same generator. First, the formula, drift times slope plus half squared noise times curvature. Second, the definition itself: the ratio $(E_x f(X_h) - f(x))/h$ with the average taken under the exact law (normal for the OU rate, lognormal for the share), by Simpson's rule against the bell curve, at four shrinking steps. Third, Dynkin's formula on the house example, 4,000 rate paths of 1,000 Euler steps of 0.002 years from a SplitMix64 generator with Box-Muller normals ([Euler-Maruyama](04-euler-maruyama-scheme.md) studies that scheme's own error). Fourth, for the band, the exit chance and mean exit time by the two integrations, by finite differences with a tridiagonal solve, and by simulation at three step sizes. Every simulated number carries its standard error.
+Both programs take four roads to the same generator. First, the formula, drift times slope plus half squared noise times curvature. Second, the definition itself: the ratio $`(E_x f(X_h) - f(x))/h`$ with the average taken under the exact law (normal for the OU rate, lognormal for the share), by Simpson's rule against the bell curve, at four shrinking steps. Third, Dynkin's formula on the house example, 4,000 rate paths of 1,000 Euler steps of 0.002 years from a SplitMix64 generator with Box-Muller normals ([Euler-Maruyama](04-euler-maruyama-scheme.md) studies that scheme's own error). Fourth, for the band, the exit chance and mean exit time by the two integrations, by finite differences with a tridiagonal solve, and by simulation at three step sizes. Every simulated number carries its standard error.
 
 ### Python
 
@@ -400,7 +420,7 @@ unbounded stopping: W from 0, tau = first hit of 1; E[W_tau] = 1, not 0
 ALL CHECKS PASS
 ```
 
-At the smallest step the definition and the formula agree to four significant figures on every row. The compensated squared rate, $r_T^2 - r_0^2$ minus the added-up generator, averages $-0.00000444 \pm 0.00005028$: zero to well within its noise, which is Dynkin's formula at the fixed time of two years. The integrals and the finite differences agree to six decimals; the simulation at the finest step lands within its standard error of both.
+At the smallest step the definition and the formula agree to four significant figures on every row. The compensated squared rate, $`r_T^2 - r_0^2`$ minus the added-up generator, averages $`-0.00000444 \pm 0.00005028`$: zero to well within its noise, which is Dynkin's formula at the fixed time of two years. The integrals and the finite differences agree to six decimals; the simulation at the finest step lands within its standard error of both.
 
 ### Rust
 
@@ -623,14 +643,14 @@ The two outputs agree line for line, including every simulated digit: both progr
 
 Lean proves three exact parts of the card, with averages under the rate's exact bell-curve law, and checks the worked numbers.
 
-- Take the OU rate with pull speed $\kappa > 0$, and $f$ with two continuous slopes, growing at most like a power. Then, from any start $x$, the ratio in the definition tends to drift times slope plus half the squared noise times curvature as $h$ shrinks.
-- Take a share in geometric Brownian motion, with any drift $\mu$ and noise $\sigma$, and any whole number $n$. Then $L[S^n] = (n\mu + \tfrac12 n(n-1)\sigma^2) S^n$ at every price $S$.
-- Take any pull speed and level, noise $\sigma \ne 0$, a band from $a$ to $b > a$, and $p$ from The formula. Then $p(a) = 0$, $p(b) = 1$ and $Lp = 0$ at every point.
-- Take the rate at 6 percent, with the card's numbers. Then $L[r]$ = −0.01, $L[r^2]$ = −0.0008 and $L[(r-\theta)^2]$ = 0, exactly.
-- The squared gap 0.0004 equals the long-run variance $\sigma^2/(2\kappa)$, and $c$ = 1250.
+- Take the OU rate with pull speed $`\kappa > 0`$, and $`f`$ with two continuous slopes, growing at most like a power. Then, from any start $`x`$, the ratio in the definition tends to drift times slope plus half the squared noise times curvature as $`h`$ shrinks.
+- Take a share in geometric Brownian motion, with any drift $`\mu`$ and noise $`\sigma`$, and any whole number $`n`$. Then $`L[S^n] = (n\mu + \tfrac12 n(n-1)\sigma^2) S^n`$ at every price $`S`$.
+- Take any pull speed and level, noise $`\sigma \ne 0`$, a band from $`a`$ to $`b > a`$, and $`p`$ from The formula. Then $`p(a) = 0`$, $`p(b) = 1`$ and $`Lp = 0`$ at every point.
+- Take the rate at 6 percent, with the card's numbers. Then $`L[r]`$ = −0.01, $`L[r^2]`$ = −0.0008 and $`L[(r-\theta)^2]`$ = 0, exactly.
+- The squared gap 0.0004 equals the long-run variance $`\sigma^2/(2\kappa)`$, and $`c`$ = 1250.
 - The two mistakes check too: no curvature term gives −0.0012 and −0.0004, and losing the half gives −0.0004.
 - The tangent line in the picture reaches 28 after one year and 20 after two.
-- Take the share at 100 dollars. Then $L[S]$ = 5, $L[\log S]$ = 0.03, $L[S^2]$ = 1400, and the eigenvalue for $n$ = 2 is 0.14.
+- Take the share at 100 dollars. Then $`L[S]`$ = 5, $`L[\log S]`$ = 0.03, $`L[S^2]`$ = 1400, and the eigenvalue for $`n`$ = 2 is 0.14.
 
 Lean has no Ito integral, so the general formula, Dynkin's formula, the exit time and simulations are left to the Python and Rust checks.
 
@@ -1142,10 +1162,10 @@ end InfinitesimalGenerator
 ## The usual mistake
 
 > [!warning]
-> **Reading $Lf$ as what f does along a path.** It is the rate of change of the *average*. One path's squared rate moves each instant by a shove of size $\sigma f'$ times the Brownian step, which over a short time $h$ is of order the square root of $h$ and dwarfs the drift piece of order $h$.
+> **Reading $`Lf`$ as what f does along a path.** It is the rate of change of the *average*. One path's squared rate moves each instant by a shove of size $`\sigma f'`$ times the Brownian step, which over a short time $`h`$ is of order the square root of $`h`$ and dwarfs the drift piece of order $`h`$.
 >
 > Smaller traps:
-> - **Ordinary calculus.** Dropping $\tfrac12\sigma^2 f''$ gives $L[r^2]$ = −0.0012 instead of −0.0008.
+> - **Ordinary calculus.** Dropping $`\tfrac12\sigma^2 f''`$ gives $`L[r^2]`$ = −0.0012 instead of −0.0008.
 > - **Losing the half.** It gives −0.0004, and the average squared rate falls at half its true speed.
 > - **Dynkin with an infinite average wait.** Brownian motion stopped at 1 breaks it: 1 against a predicted 0.
 > - **Confusing L with its mirror image.** The generator acts on measurements, functions of the state. The operator that moves the density of the state forward in time is its adjoint, a different formula with the drift and noise inside the derivatives: [Fokker-Planck](03-fokker-planck-forward-equation.md).
@@ -1155,10 +1175,10 @@ end InfinitesimalGenerator
 ## Where you meet it in real life
 
 - **Pricing a bond on a mean-reverting rate.** A bond's price as a function of today's rate solves "its slope in time, plus the generator of the rate applied to it, minus the rate times the price, equals zero", the term-structure equation of [A short-rate model](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md); Vasicek's model is this card's OU rate.
-- **Continuous-time chains.** For a chain on finitely many states, the generator is a matrix: the rate matrix $G$ of [Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md), and $Lf$ is $G$ times the column of values of $f$. Same definition, same Dynkin formula.
+- **Continuous-time chains.** For a chain on finitely many states, the generator is a matrix: the rate matrix $`G`$ of [Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md), and $`Lf`$ is $`G`$ times the column of values of $`f`$. Same definition, same Dynkin formula.
 - **Exit problems.** How long until a reservoir level, an inventory or a price leaves a band, and through which side: Step 5's two equations.
-- **Stopping problems.** The value, the best expected payoff over all stopping rules, lies on or above the payoff everywhere. Where waiting is right, $L$ applied to the value is zero; where stopping is right, the value equals the payoff and $L$ applied to the payoff is zero or negative. So, with no discounting, waiting is right wherever $L$ applied to the payoff is positive. Discrete time: [Optimal stopping](07-optimal-stopping-and-snell-envelope.md); the continuous problem in full: An American option.
-- **Simulation error.** The weak error of a time-stepping scheme, how far its averages sit from the true ones, is computed by expanding in powers of $L$: [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md).
+- **Stopping problems.** The value, the best expected payoff over all stopping rules, lies on or above the payoff everywhere. Where waiting is right, $`L`$ applied to the value is zero; where stopping is right, the value equals the payoff and $`L`$ applied to the payoff is zero or negative. So, with no discounting, waiting is right wherever $`L`$ applied to the payoff is positive. Discrete time: [Optimal stopping](07-optimal-stopping-and-snell-envelope.md); the continuous problem in full: An American option.
+- **Simulation error.** The weak error of a time-stepping scheme, how far its averages sit from the true ones, is computed by expanding in powers of $`L`$: [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md).
 
 > **Say it back**
 > The generator takes a smooth measurement of a diffusion and returns its expected rate of change from each state. It is defined as a limit and computed as drift times slope plus half the squared noise times curvature, because averaging deletes the fair-game shove in Ito's lemma. For the OU rate at 6 percent it gives −0.01 for the rate, −0.0008 for the squared rate and zero for the squared gap. Dynkin's formula adds those rates up to a stopping time with finite average wait. Solving Lp = 0 and Lg = −1 then gives the chance of each exit and the mean time to it.
@@ -1167,13 +1187,13 @@ end InfinitesimalGenerator
 
 ## What this builds on
 
-- [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md): the split of $df(X_t)$ into a drift piece and a shove. The generator is the drift piece.
+- [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md): the split of $`df(X_t)`$ into a drift piece and a shove. The generator is the drift piece.
 - [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the rate, its exact normal law, and the long-run variance that makes the squared gap stand still.
 - [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md): why a stopped martingale keeps its mean at a bounded stopping time, the step that turns Ito's lemma into Dynkin's formula.
 
 ## Where this goes next
 
-- [Kolmogorov backward equation](02-kolmogorov-backward-equation.md): the generator's slope at the start, extended to every time: $E_x f(X_t)$ solves $\partial u/\partial t = Lu$.
+- [Kolmogorov backward equation](02-kolmogorov-backward-equation.md): the generator's slope at the start, extended to every time: $`E_x f(X_t)`$ solves $`\partial u/\partial t = Lu`$.
 - [Stochastic control](../09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): a controller who can turn the drift and noise dials picks the generator that does best; the HJB equation is a maximum over generators.
 - Hille-Yosida: the generator as the derivative at zero of the family of averaging operators, and which operators arise this way.
 - Feller semigroups: the general theory, where a Markov process is built from its generator rather than from an SDE.

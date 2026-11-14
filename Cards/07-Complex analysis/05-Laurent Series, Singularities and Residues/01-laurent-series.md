@@ -32,32 +32,36 @@ To scale: 50 units per 1, with 0 at (150, 120) and the hole 1 at (200, 120). Sha
 
 ## The formula
 
-Notation first, in words. A sum from −∞ to ∞ means two sums, over the powers 0, 1, 2, … and over −1, −2, …, each converging on its own. The loop sign $\oint$ is the contour integral round a closed path, anticlockwise ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)).
+Notation first, in words. A sum from −∞ to ∞ means two sums, over the powers 0, 1, 2, … and over −1, −2, …, each converging on its own. The loop sign $`\oint`$ is the contour integral round a closed path, anticlockwise ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)).
 
-If $f$ is holomorphic (has a complex derivative) at every point of the ring $r < |z - a| < R$, then on that ring
+If $`f`$ is holomorphic (has a complex derivative) at every point of the ring $`r < |z - a| < R`$, then on that ring
 
-$$f(z)=\sum_{n=-\infty}^{\infty}c_n(z-a)^n=\cdots+\frac{c_{-2}}{(z-a)^2}+\frac{c_{-1}}{z-a}+c_0+c_1(z-a)+\cdots$$
+```math
+f(z)=\sum_{n=-\infty}^{\infty}c_n(z-a)^n=\cdots+\frac{c_{-2}}{(z-a)^2}+\frac{c_{-1}}{z-a}+c_0+c_1(z-a)+\cdots
+```
 
 **Read it aloud:** on the ring, the function is a sum of whole-number powers of z minus the centre, negative ones included.
 
 The coefficients, for any circle radius between r and R:
 
-$$c_n=\frac{1}{2\pi i}\oint_{|\zeta-a|=\rho}\frac{f(\zeta)}{(\zeta-a)^{n+1}}\,d\zeta,\qquad r<\rho<R$$
+```math
+c_n=\frac{1}{2\pi i}\oint_{|\zeta-a|=\rho}\frac{f(\zeta)}{(\zeta-a)^{n+1}}\,d\zeta,\qquad r<\rho<R
+```
 
 **Read it aloud:** for the n-th coefficient, divide by one power more, go once round any circle in the ring, and divide by 2πi.
 
-Walking the circle as $\zeta = a + \rho e^{it}$ turns this into an average: $c_n$ is the mean of $f(\zeta)(\zeta - a)^{-n}$ round the circle, which the code takes at $m$ equally spaced points. The negative-power terms together are the **principal part**.
+Walking the circle as $`\zeta = a + \rho e^{it}`$ turns this into an average: $`c_n`$ is the mean of $`f(\zeta)(\zeta - a)^{-n}`$ round the circle, which the code takes at $`m`$ equally spaced points. The negative-power terms together are the **principal part**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $z$ | the function; a point in the plane | 1/(z(z − 1)); also e^z/z^3 | — |
-| $a$ | the centre of the rings | 0 | the rings move with it |
-| $r$, $R$ | inner and outer radius of the ring | 0 and 1 inside; 1 and ∞ outside | a new ring can mean new coefficients |
-| $c_n$, $n$ | coefficient of the n-th power; n any whole number | inside −1 from n = −1 up; outside 1 from n = −2 down | — |
-| $\rho$ | radius of the reading circle | 0.5, 0.75 inside; 1.5, 2 outside | same answer until it crosses a hole |
-| $\zeta$, $t$ | a point walking the circle; its angle in radians | ζ = 0.5e^{it} | — |
-| $m$ | points in the average | 128; with 4, error 0.066667 | error shrinks like 0.5^m |
-| $\oint$, $i$ | loop integral, anticlockwise; i^2 = −1 | loop of 1/z is 2πi | — |
+| $`f`$, $`z`$ | the function; a point in the plane | 1/(z(z − 1)); also e^z/z^3 | — |
+| $`a`$ | the centre of the rings | 0 | the rings move with it |
+| $`r`$, $`R`$ | inner and outer radius of the ring | 0 and 1 inside; 1 and ∞ outside | a new ring can mean new coefficients |
+| $`c_n`$, $`n`$ | coefficient of the n-th power; n any whole number | inside −1 from n = −1 up; outside 1 from n = −2 down | — |
+| $`\rho`$ | radius of the reading circle | 0.5, 0.75 inside; 1.5, 2 outside | same answer until it crosses a hole |
+| $`\zeta`$, $`t`$ | a point walking the circle; its angle in radians | ζ = 0.5e^{it} | — |
+| $`m`$ | points in the average | 128; with 4, error 0.066667 | error shrinks like 0.5^m |
+| $`\oint`$, $`i`$ | loop integral, anticlockwise; i^2 = −1 | loop of 1/z is 2πi | — |
 
 ### When it holds
 
@@ -77,15 +81,15 @@ The geometric series 1/(1 − w) = 1 + w + w^2 + … converges when |w| < 1. For
 
 Split the fraction ([Rational functions](03-rational-functions-and-partial-fractions.md)): 1/(z(z − 1)) = 1/(z − 1) − 1/z; at z = 2, 1 − 0.5 = 0.5. Only 1/(z − 1) needs expanding.
 
-Inside, |z| < 1, use ratio z: 1/(z − 1) = −1/(1 − z) = −1 − z − z^2 − …. So f = −1/z − 1 − z − z^2 − …, and every coefficient from $c_{-1}$ up is −1.
+Inside, |z| < 1, use ratio z: 1/(z − 1) = −1/(1 − z) = −1 − z − z^2 − …. So f = −1/z − 1 − z − z^2 − …, and every coefficient from $`c_{-1}`$ up is −1.
 
-Outside, |z| > 1, use ratio 1/z: 1/(z − 1) = (1/z) · 1/(1 − 1/z) = 1/z + 1/z^2 + 1/z^3 + …. Adding −1/z cancels the first term. So f = 1/z^2 + 1/z^3 + …, and $c_{-1} = 0$.
+Outside, |z| > 1, use ratio 1/z: 1/(z − 1) = (1/z) · 1/(1 − 1/z) = 1/z + 1/z^2 + 1/z^3 + …. Adding −1/z cancels the first term. So f = 1/z^2 + 1/z^3 + …, and $`c_{-1} = 0`$.
 
 ### Step 2: the exponential example by shifting
 
-The series $e^z = 1 + z + z^2/2! + z^3/3! + \cdots$ converges for every z ([Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)). Dividing by z^3 lowers every power by 3.
+The series $`e^z = 1 + z + z^2/2! + z^3/3! + \cdots`$ converges for every z ([Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)). Dividing by z^3 lowers every power by 3.
 
-The coefficient of z^n becomes 1/(n + 3)! for n ≥ −3. The 1/z term comes from z^2/2!, so $c_{-1} = 1/2$. The only hole is 0, so the ring is 0 < |z| < ∞.
+The coefficient of z^n becomes 1/(n + 3)! for n ≥ −3. The 1/z term comes from z^2/2!, so $`c_{-1} = 1/2`$. The only hole is 0, so the ring is 0 < |z| < ∞.
 
 ### Step 3: every holomorphic function on a ring has such a series
 
@@ -96,9 +100,11 @@ That is Step 0 inside an integral.
 <details>
 <summary>Detailed proof</summary>
 
-Take $a = 0$ and z with ρ1 < |z| < ρ2, both radii inside the ring. Cut a small disc round z from the region between the circles. The function $f(\zeta)/(\zeta - z)$ is holomorphic on what remains, so by the deformation theorem the outer loop integral equals the inner one plus the small loop's, and shrinking the small loop gives $2\pi i f(z)$. So
-$$f(z)=\frac{1}{2\pi i}\oint_{|\zeta|=\rho_2}\frac{f(\zeta)}{\zeta-z}\,d\zeta-\frac{1}{2\pi i}\oint_{|\zeta|=\rho_1}\frac{f(\zeta)}{\zeta-z}\,d\zeta.$$
-On the outer circle $1/(\zeta-z)=\sum_{n\ge0}z^n/\zeta^{n+1}$, ratio |z|/ρ2 < 1. On the inner circle $-1/(\zeta-z)=\sum_{k\ge0}\zeta^k/z^{k+1}$, ratio ρ1/|z| < 1.
+Take $`a = 0`$ and z with ρ1 < |z| < ρ2, both radii inside the ring. Cut a small disc round z from the region between the circles. The function $`f(\zeta)/(\zeta - z)`$ is holomorphic on what remains, so by the deformation theorem the outer loop integral equals the inner one plus the small loop's, and shrinking the small loop gives $`2\pi i f(z)`$. So
+
+$`\displaystyle f(z)=\frac{1}{2\pi i}\oint_{|\zeta|=\rho_2}\frac{f(\zeta)}{\zeta-z}\,d\zeta-\frac{1}{2\pi i}\oint_{|\zeta|=\rho_1}\frac{f(\zeta)}{\zeta-z}\,d\zeta.`$
+
+On the outer circle $`1/(\zeta-z)=\sum_{n\ge0}z^n/\zeta^{n+1}`$, ratio |z|/ρ2 < 1. On the inner circle $`-1/(\zeta-z)=\sum_{k\ge0}\zeta^k/z^{k+1}`$, ratio ρ1/|z| < 1.
 
 Each ratio has a fixed size below 1 on its circle and f is bounded there, so each series converges uniformly and integrates term by term. The two integrals give the non-negative and the negative powers, with the coefficients above. The coefficient integral is the same on every circle in the ring (Step 4), so one series serves the whole ring.
 
@@ -112,13 +118,13 @@ Suppose f equals some series in positive and negative powers on the ring. Divide
 
 Every term dies except the power k, leaving 2πi times the coefficient of z^k. So each coefficient is the loop integral in the formula, fixed by f and the ring, and every method gives the same numbers.
 
-By [Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md), the loop integral stays put as the circle moves within the ring: radii 0.5 and 0.75 give $c_{-1} = -1$, radii 1.5 and 2 give 0. Crossing the hole at 1 changes it.
+By [Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md), the loop integral stays put as the circle moves within the ring: radii 0.5 and 0.75 give $`c_{-1} = -1`$, radii 1.5 and 2 give 0. Crossing the hole at 1 changes it.
 
 ### Step 5: reading the annulus
 
 The widest rings round a centre are bounded by circles through the bad points. In the example, each geometric ratio reaches size 1 exactly there. For 1/(z(z − 1)) about 0 the bad points lie at distances 0 and 1: rings 0 < |z| < 1 and 1 < |z| < ∞.
 
-The code's second road is this formula, as an average round a circle. Faster rules for $c_{-1}$ alone are in [Residues](04-residues.md).
+The code's second road is this formula, as an average round a circle. Faster rules for $`c_{-1}`$ alone are in [Residues](04-residues.md).
 
 ---
 
@@ -130,9 +136,9 @@ The code's second road is this formula, as an average round a circle. Faster rul
 | size of its gap | tail −z^4/(1 − z) = −(1/16)/(1/2) = −0.125 | 0.125 |
 | outer series at 2, five terms | 1/4 + 1/8 + 1/16 + 1/32 + 1/64 | 0.484375 |
 | size of its gap | tail 2^(−7)/(1 − 1/2) | 0.015625 |
-| inner $c_{-1}$ | coefficient of 1/z in −1/z − 1 − z − … | **−1** |
-| outer $c_{-1}$ | the 1/z terms cancel | **0** |
-| $c_{-1}$ of e^z/z^3 | the z^2 term of e^z, 1/2! | **1/2** |
+| inner $`c_{-1}`$ | coefficient of 1/z in −1/z − 1 − z − … | **−1** |
+| outer $`c_{-1}`$ | the 1/z terms cancel | **0** |
+| $`c_{-1}`$ of e^z/z^3 | the z^2 term of e^z, 1/2! | **1/2** |
 
 ### What breaks if you drop a piece
 
@@ -140,8 +146,8 @@ The code's second road is this formula, as an average round a circle. Faster rul
 | --- | --- | --- |
 | Inner series used at z = 2 | −15.5, not 0.5 | its ratio z has size 2 |
 | Outer series used at z = 0.5 | 124, not −4 | its ratio 1/z has size 2 |
-| $c_{-1}$ of e^z/z^3 read as 1/3! | 0.166667, not 0.5 | z^2/2!, not z^3/3!, lands on 1/z |
-| $c_{-1}$ read on radius 2 for the inner ring | 0, not −1 | the circle crossed the hole at 1 |
+| $`c_{-1}`$ of e^z/z^3 read as 1/3! | 0.166667, not 0.5 | z^2/2!, not z^3/3!, lands on 1/z |
+| $`c_{-1}`$ read on radius 2 for the inner ring | 0, not −1 | the circle crossed the hole at 1 |
 
 The code prints all four.
 
@@ -353,9 +359,9 @@ Lean proves the Laurent series theorem for every ring round any centre, and both
 
 - A function holomorphic on the open ring r < |z − a| < R equals exactly one series in powers of z − a there.
 - That series allows negative powers, and the ring may have r = 0 or R = ∞.
-- Each coefficient $c_n$ is the loop integral in the formula, on every circle radius ρ between r and R.
-- Inside, where 0 < |z| < 1, 1/(z(z − 1)) equals −1/z − 1 − z − z^2 − …, so $c_{-1}$ = −1.
-- Outside, where |z| > 1, it equals 1/z^2 + 1/z^3 + …, so $c_{-1}$ = 0.
+- Each coefficient $`c_n`$ is the loop integral in the formula, on every circle radius ρ between r and R.
+- Inside, where 0 < |z| < 1, 1/(z(z − 1)) equals −1/z − 1 − z − z^2 − …, so $`c_{-1}`$ = −1.
+- Outside, where |z| > 1, it equals 1/z^2 + 1/z^3 + …, so $`c_{-1}`$ = 0.
 - The hand arithmetic holds exactly: f at 0.5 and 2, the five-term sums and tails, the first two mistakes, and 1/2! against 1/3!.
 
 The decimals, the circle averages and their error, and the series of e^z/z^3 are left to the Python and Rust checks.
@@ -797,7 +803,7 @@ example : (1 : ℚ) / (Nat.factorial 3) = 1 / 6 := by norm_num [Nat.factorial]
 ## Where you meet it in real life
 
 - **Digital filters.** A sampled signal's z-transform is a Laurent series, and its ring decides the signal: 1/(z − 1) outside and inside the unit circle are two different signals ([The z-transform](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md)).
-- **Contour integrals.** A loop integral sees only $c_{-1}$: e^z/z^3 round the unit circle gives 2πi times 1/2, or 3.141593i ([The residue theorem](05-the-residue-theorem.md)).
+- **Contour integrals.** A loop integral sees only $`c_{-1}`$: e^z/z^3 round the unit circle gives 2πi times 1/2, or 3.141593i ([The residue theorem](05-the-residue-theorem.md)).
 - **Matrices.** For large z, the inverse of z − A is 1/z + A/z^2 + A^2/z^3 + …, the outer series with a matrix A in place of 1 (Spectrum).
 
 > **Say it back**

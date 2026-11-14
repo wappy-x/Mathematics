@@ -42,27 +42,31 @@ deg counts the streets at a junction. The corners A, C, G and I are on two, the 
 
 ## The formula
 
-Symbols first. $w(e)$ is the length of the street named in the brackets, 100 m across this estate. $d(u,v)$ is the length of the shortest walk between two junctions ([Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)). The odd junctions are collected as $O$, and a **pairing** $M$ splits $O$ into pairs, every odd junction in one.
+Symbols first. $`w(e)`$ is the length of the street named in the brackets, 100 m across this estate. $`d(u,v)`$ is the length of the shortest walk between two junctions ([Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)). The odd junctions are collected as $`O`$, and a **pairing** $`M`$ splits $`O`$ into pairs, every odd junction in one.
 
-A capital sigma says "add one term per item listed underneath"; "min over $M$" says "work the sum out for every pairing, keep the smallest".
+A capital sigma says "add one term per item listed underneath"; "min over $`M`$" says "work the sum out for every pairing, keep the smallest".
 
-$$L = \sum_{e \in E} w(e) \;+\; \min_{M} \sum_{\{u,v\} \in M} d(u,v)$$
+```math
+L = \sum_{e \in E} w(e) \;+\; \min_{M} \sum_{\{u,v\} \in M} d(u,v)
+```
 
 **Read it aloud:** the shortest round is every street's length added up, plus the cheapest total of shortest walks pairing the odd junctions off.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $E$ | the streets, as pairs of junctions | twelve | a longer round |
-| $w(e)$ | one street's length | 100 m | a longer round |
-| $\deg(v)$ | streets at a junction | 3 at B, D, F, H | odd counts force repeats |
-| $O$ | the odd junctions | B, D, F, H | more repeats |
-| $d(u,v)$ | the shortest walk between two | 200 m, every pair in $O$ | dearer repeats |
-| $M$ | one pairing of $O$ | B with F, D with H | — |
-| $L$ | the shortest closed round | 1,600 m | — |
+| $`E`$ | the streets, as pairs of junctions | twelve | a longer round |
+| $`w(e)`$ | one street's length | 100 m | a longer round |
+| $`\deg(v)`$ | streets at a junction | 3 at B, D, F, H | odd counts force repeats |
+| $`O`$ | the odd junctions | B, D, F, H | more repeats |
+| $`d(u,v)`$ | the shortest walk between two | 200 m, every pair in $`O`$ | dearer repeats |
+| $`M`$ | one pairing of $`O`$ | B with F, D with H | — |
+| $`L`$ | the shortest closed round | 1,600 m | — |
 
 The pairings are easy to count. Write 2k for the number of odd junctions, a count the handshaking sum forces to be even ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)): the first takes any of the other 2k − 1, the rest pair the same way, so there are
 
-$$1 \times 3 \times 5 \times \cdots \times (2k-1)$$
+```math
+1 \times 3 \times 5 \times \cdots \times (2k-1)
+```
 
 of them: three for four odd junctions, 945 for ten.
 
@@ -86,7 +90,7 @@ A copy adds one to the count at each of its two ends, and Euler's test wants eve
 
 ### Step 2: a pair's cheapest repeat is a shortest walk
 
-Such a map breaks into walks joining those four two by two, plus closed loops. The loops can go: deleting one leaves every junction as odd or even as it was — its parity — and saves metres. A walk from B to F is at least $d(B,F)$ long, so nothing beats a shortest walk, and no street is walked three times: two copies of one street delete together.
+Such a map breaks into walks joining those four two by two, plus closed loops. The loops can go: deleting one leaves every junction as odd or even as it was — its parity — and saves metres. A walk from B to F is at least $`d(B,F)`$ long, so nothing beats a shortest walk, and no street is walked three times: two copies of one street delete together.
 
 ### Step 3: add the two pieces
 
@@ -373,7 +377,7 @@ Lean proves the method for every map in one piece with every street a positive l
 - Some pairing of the odd junctions is cheapest, each pair charged the shortest walk between its two.
 - No closed round covering every street is shorter than the street total plus that cheapest pairing.
 - Some closed round reaches that length exactly, starting and ending at whichever junction you choose.
-- With 2k odd junctions there are $1 \times 3 \times 5 \times \cdots \times (2k-1)$ pairings.
+- With 2k odd junctions there are $`1 \times 3 \times 5 \times \cdots \times (2k-1)`$ pairings.
 - On both maps: the streets, the counts at each junction, the odd junctions, and both rounds walked covering every street.
 
 The maps' shortest walks, the search over sets of streets and the open round stay with the Python and Rust checks.

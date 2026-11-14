@@ -28,7 +28,7 @@ On the Acme tape the forward pass is 26 operations and the sweep 42 multiply-and
 
 ### The picture: four steps, walked both ways
 
-The smallest useful tape here is the forward price $F$: what one share costs for delivery in a year, agreed today. Four operations, four inputs, one answer.
+The smallest useful tape here is the forward price $`F`$: what one share costs for delivery in a year, agreed today. Four operations, four inputs, one answer.
 
 ```mermaid
 flowchart LR
@@ -41,17 +41,19 @@ flowchart LR
     E --> P
 ```
 
-Left to right is the forward pass: each box turns the values on its incoming arrows into one value, ending at $F = 103.045453$. Right to left is the sweep. It starts at the answer holding the number 1 and sends a number back along every arrow, multiplied by that step's slope. The numbers left in the four input boxes are the four derivatives.
+Left to right is the forward pass: each box turns the values on its incoming arrows into one value, ending at $`F = 103.045453`$. Right to left is the sweep. It starts at the answer holding the number 1 and sends a number back along every arrow, multiplied by that step's slope. The numbers left in the four input boxes are the four derivatives.
 
 ---
 
 ## The formula
 
-Notation first, in words. Every value on the tape gets a companion number: the derivative of the final answer with respect to that value. That companion is the value's **adjoint**, written with an overbar, so the adjoint of a value u is $\bar{u}$, read "u-bar". The answer's own adjoint is 1: a dollar on the price is a dollar on the price.
+Notation first, in words. Every value on the tape gets a companion number: the derivative of the final answer with respect to that value. That companion is the value's **adjoint**, written with an overbar, so the adjoint of a value u is $`\bar{u}`$, read "u-bar". The answer's own adjoint is 1: a dollar on the price is a dollar on the price.
 
-$$\bar{u} \;=\; \sum_{\text{steps that use } u} \bar{v}\;\frac{\partial v}{\partial u}$$
+```math
+\bar{u} \;=\; \sum_{\text{steps that use } u} \bar{v}\;\frac{\partial v}{\partial u}
+```
 
-The sum runs over every later step that takes u as an input. There $\bar{v}$ is the step's own adjoint, and the fraction is that step's slope with respect to u, its other input held still.
+The sum runs over every later step that takes u as an input. There $`\bar{v}`$ is the step's own adjoint, and the fraction is that step's slope with respect to u, its other input held still.
 
 **Read it aloud:** the adjoint of a value is the sum, over every later step that uses it, of that step's adjoint times the slope of that step.
 
@@ -65,16 +67,16 @@ At the top, each input's adjoint is its derivative.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$ | the option's price: the tape's last value | 9.227006 | every adjoint here is a derivative of this |
-| $S$, $K$ | Acme today, and the strike | 100 and 100 | up with $S$, down with $K$ |
-| $r$, $q$ | the risk-free rate, and the dividend yield | 5% and 2% | up with $r$, down with $q$ |
-| $\sigma$ | volatility, how jumpy Acme is; say "sigma" | 20% | up, by 37.901158 per whole unit |
-| $T$ | years until expiry | 1 | up, by 5.089319 a year here |
-| $F$ | the forward price $S e^{(r-q)T}$: a share delivered at $T$ | 103.045453 | the toy tape's answer |
-| $d_1$, $d_2$ | Acme's distance from the strike in wiggle units of $\sigma\sqrt{T}$, one apart | 0.25 and 0.05 | both areas rise |
-| $N$, $\phi$ | the bell curve's area left of a point, and its height there | areas 0.598706 and 0.519939; heights 0.386668 and 0.398444 | — |
-| $\bar{u}$ | the adjoint of a value u: how much $C$ moves per unit of u | 1 at the price itself | — |
-| $\Gamma$ | gamma: how the price's slope against Acme moves | 0.018951 | — |
+| $`C`$ | the option's price: the tape's last value | 9.227006 | every adjoint here is a derivative of this |
+| $`S`$, $`K`$ | Acme today, and the strike | 100 and 100 | up with $`S`$, down with $`K`$ |
+| $`r`$, $`q`$ | the risk-free rate, and the dividend yield | 5% and 2% | up with $`r`$, down with $`q`$ |
+| $`\sigma`$ | volatility, how jumpy Acme is; say "sigma" | 20% | up, by 37.901158 per whole unit |
+| $`T`$ | years until expiry | 1 | up, by 5.089319 a year here |
+| $`F`$ | the forward price $`S e^{(r-q)T}`$: a share delivered at $`T`$ | 103.045453 | the toy tape's answer |
+| $`d_1`$, $`d_2`$ | Acme's distance from the strike in wiggle units of $`\sigma\sqrt{T}`$, one apart | 0.25 and 0.05 | both areas rise |
+| $`N`$, $`\phi`$ | the bell curve's area left of a point, and its height there | areas 0.598706 and 0.519939; heights 0.386668 and 0.398444 | — |
+| $`\bar{u}`$ | the adjoint of a value u: how much $`C`$ moves per unit of u | 1 at the price itself | — |
+| $`\Gamma`$ | gamma: how the price's slope against Acme moves | 0.018951 | — |
 
 One slope per kind of step, nine kinds in all. Here `c` is a fixed number, `phi` the bell curve's height, `a` and `b` a step's first and second inputs.
 
@@ -131,33 +133,33 @@ Two properties matter. Every line is one operation, so its slopes come from the 
 
 ### Step 2: the sweep, by hand, on four steps
 
-Seed the answer: $\bar{n_7} = 1$.
+Seed the answer: $`\bar{n_7} = 1`$.
 
-`n7 = n0 x n6`: the slope on `n0` is `n6`, on `n6` it is `n0`. Send 1 times each backwards for $\bar{n_0} = 1.030455$ and $\bar{n_6} = 100$. The first is already an answer — a dollar on Acme adds $1.030455 to the forward price.
+`n7 = n0 x n6`: the slope on `n0` is `n6`, on `n6` it is `n0`. Send 1 times each backwards for $`\bar{n_0} = 1.030455`$ and $`\bar{n_6} = 100`$. The first is already an answer — a dollar on Acme adds $1.030455 to the forward price.
 
-`n6 = e^(n5)`, slope `n6`, so $\bar{n_5} = 100 \times 1.030455 = 103.045453$.
+`n6 = e^(n5)`, slope `n6`, so $`\bar{n_5} = 100 \times 1.030455 = 103.045453`$.
 
-`n5 = n4 x n3`, slopes `n3` and `n4`, so $\bar{n_4} = 103.045453$ and $\bar{n_3} = 103.045453 \times 0.03 = 3.091364$, the answer for $T$.
+`n5 = n4 x n3`, slopes `n3` and `n4`, so $`\bar{n_4} = 103.045453`$ and $`\bar{n_3} = 103.045453 \times 0.03 = 3.091364`$, the answer for $`T`$.
 
-`n4 = n1 - n2`, slopes `1` and `-1`, so $\bar{n_1} = 103.045453$ and $\bar{n_2} = -103.045453$.
+`n4 = n1 - n2`, slopes `1` and `-1`, so $`\bar{n_1} = 103.045453`$ and $`\bar{n_2} = -103.045453`$.
 
 Four derivatives, seven multiply-and-adds, one walk, matching hand-differentiated formulas to twelve decimals.
 
 ### Step 3: a value used twice collects a contribution from each use
 
-On the toy tape every value fed exactly one later step. Real tapes are untidier. On the Black-Scholes tape $T$ feeds four steps — the square root, the drift times $T$, the dividend exponent, the rate exponent — and sigma feeds three, since `sigma x sigma` uses it twice over.
+On the toy tape every value fed exactly one later step. Real tapes are untidier. On the Black-Scholes tape $`T`$ feeds four steps — the square root, the drift times $`T`$, the dividend exponent, the rate exponent — and sigma feeds three, since `sigma x sigma` uses it twice over.
 
 Each use sends its own number back and the numbers add. That is the multivariable chain rule ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)): when a value reaches the answer by several routes, the total slope is the sum along the routes, and the sweep does that sum by accumulating. Get it wrong and the last route swept overwrites the others. The code runs that mistake on purpose: vega lands on 47.376447 instead of 37.901158, a quarter too big.
 
 ### Step 4: the Black-Scholes tape, and the zero hiding in it
 
-The price is 26 operations on six inputs: one wiggle unit `sigma x sqrt(T)`, the log of `S/K`, the drift, the distances $d_1$ and $d_2$, their bell-curve areas, the two discount factors, the share leg, the cash leg, one subtraction. The code lists it line by line.
+The price is 26 operations on six inputs: one wiggle unit `sigma x sqrt(T)`, the log of `S/K`, the drift, the distances $`d_1`$ and $`d_2`$, their bell-curve areas, the two discount factors, the share leg, the cash leg, one subtraction. The code lists it line by line.
 
-Sweeping it, the price's adjoint is 1, so the share leg's is 1 and the cash leg's is $-1$. Push those through their multiplications and the areas pick up theirs: $N(d_1)$ gets $S e^{-qT} = 98.019867$, $N(d_2)$ gets $-K e^{-rT} = -95.122942$.
+Sweeping it, the price's adjoint is 1, so the share leg's is 1 and the cash leg's is $`-1`$. Push those through their multiplications and the areas pick up theirs: $`N(d_1)`$ gets $`S e^{-qT} = 98.019867`$, $`N(d_2)`$ gets $`-K e^{-rT} = -95.122942`$.
 
-Now $d_2$, which feeds only its own area: $-95.122942 \times 0.398444 = -37.901158$. Then $d_1$, which feeds two steps, its own area and the subtraction that made $d_2$: $98.019867 \times 0.386668 - 37.901158 = 0$.
+Now $`d_2`$, which feeds only its own area: $`-95.122942 \times 0.398444 = -37.901158`$. Then $`d_1`$, which feeds two steps, its own area and the subtraction that made $`d_2`$: $`98.019867 \times 0.386668 - 37.901158 = 0`$.
 
-Zero. Not rounding — exactly zero, because $S e^{-qT}\phi(d_1) = K e^{-rT}\phi(d_2)$ is an identity of the formula, which the sweep finds without being told. So no route through $d_1$ contributes, and vega arrives through the wiggle unit, which $d_2$ subtracts directly: that adjoint is 37.901158, and $\sqrt{T} = 1$ makes it vega itself.
+Zero. Not rounding — exactly zero, because $`S e^{-qT}\phi(d_1) = K e^{-rT}\phi(d_2)`$ is an identity of the formula, which the sweep finds without being told. So no route through $`d_1`$ contributes, and vega arrives through the wiggle unit, which $`d_2`$ subtracts directly: that adjoint is 37.901158, and $`\sqrt{T} = 1`$ makes it vega itself.
 
 ### Step 5: why the bill is flat, and what it costs instead
 
@@ -189,7 +191,9 @@ Number the lines `0` to `m`, line `m` being the answer, each built only from ear
 **Base case.** Nothing is processed and slot `m` holds 1, the answer's derivative with itself.
 
 **Inductive step.** Take a line `k` below `m` and suppose the claim holds above it. Every line using line `k` sits above `k`, so by the time the sweep reads slot `k` each of them has added its contribution and none ever will again. Slot `k` therefore holds each such line's slot times that line's local slope with respect to line `k`, summed — and by the claim each slot in the sum is the answer's derivative with respect to that line:
-$$\sum_{\text{lines that use } k} \frac{\partial(\text{answer})}{\partial(\text{that line})} \times \frac{\partial(\text{that line})}{\partial(\text{line } k)}.$$
+
+$`\displaystyle \sum_{\text{lines that use } k} \frac{\partial(\text{answer})}{\partial(\text{that line})} \times \frac{\partial(\text{that line})}{\partial(\text{line } k)}.`$
+
 Those lines are every route by which a change in line `k` reaches the answer, so the multivariable chain rule makes that sum the answer's derivative with respect to line `k`.
 
 At the input lines the claim reads: slot `k` holds the derivative of the answer with respect to input `k`. That is the gradient, with no approximation anywhere; the only error is the rounding the forward pass already carried.
@@ -211,18 +215,18 @@ Two other routes reach the same six numbers. Differentiating the formula on pape
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, so $d_1 = 0.25$, $d_2 = 0.05$. The forward pass gives 9.227006, the option price from the General Overview. Then the sweep, lines in reverse:
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year, so $`d_1 = 0.25`$, $`d_2 = 0.05`$. The forward pass gives 9.227006, the option price from the General Overview. Then the sweep, lines in reverse:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| seed the price; then its two legs | share minus cash | $1$; $1$ and $-1$ |
-| adjoint of $N(d_1)$, then $N(d_2)$ | $S e^{-qT}$, and $-K e^{-rT}$ | $98.019867$, $-95.122942$ |
-| adjoint of $d_2$, then $d_1$ | $-95.122942 \times 0.398444$; then $98.019867 \times 0.386668$ plus that | $-37.901158$, then $0$ |
-| adjoint of one wiggle unit | nothing from $d_1$, minus the $d_2$ route | $37.901158$ |
-| **slope on $\sigma$, vega** | that, times $\sqrt{T}$; the $\sigma^2$ route dies with $d_1$ | **$37.901158$** |
-| **slope on $S$, delta**, then **$K$** | each leg's own route; the $S/K$ route dies with $d_1$ | **$0.586851$**, **$-0.494581$** |
-| **slope on $r$**, then **$q$** | through the two discounts; the drift route dies too | **$49.458109$**, **$-58.685115$** |
-| **slope on $T$** | three live uses of $T$: the wiggle unit and the two discounts | **$5.089319$** |
+| seed the price; then its two legs | share minus cash | $`1`$; $`1`$ and $`-1`$ |
+| adjoint of $`N(d_1)`$, then $`N(d_2)`$ | $`S e^{-qT}`$, and $`-K e^{-rT}`$ | $`98.019867`$, $`-95.122942`$ |
+| adjoint of $`d_2`$, then $`d_1`$ | $`-95.122942 \times 0.398444`$; then $`98.019867 \times 0.386668`$ plus that | $`-37.901158`$, then $`0`$ |
+| adjoint of one wiggle unit | nothing from $`d_1`$, minus the $`d_2`$ route | $`37.901158`$ |
+| **slope on $`\sigma`$, vega** | that, times $`\sqrt{T}`$; the $`\sigma^2`$ route dies with $`d_1`$ | **$`37.901158`$** |
+| **slope on $`S`$, delta**, then **$`K`$** | each leg's own route; the $`S/K`$ route dies with $`d_1`$ | **$`0.586851`$**, **$`-0.494581`$** |
+| **slope on $`r`$**, then **$`q`$** | through the two discounts; the drift route dies too | **$`49.458109`$**, **$`-58.685115`$** |
+| **slope on $`T`$** | three live uses of $`T`$: the wiggle unit and the two discounts | **$`5.089319`$** |
 
 Six derivatives from one walk down 42 arrows. Delta is 0.5869, the delta this shelf uses throughout, and what the nudging and forward-mode roads give too. Desks rescale them, since nobody moves a rate by a whole 100%:
 
@@ -235,13 +239,15 @@ Six derivatives from one walk down 42 arrows. Delta is 0.5869, the delta this sh
 | theta | one day passes | −5.089319 a year | −0.013943 a day |
 | strike slope | the strike is $1 higher | −0.494581 | −0.494581 per $1 |
 
-**Conventions verified 19 Sep 2026:** the right-hand column is quoting habit, not mathematics. A volatility point is 0.01 of $\sigma$, a basis point 0.0001 of a rate, and the day one of 365 calendar days; a desk counting business days divides by about 252 instead. The sweep's own numbers, per year and per whole unit, do not change.
+**Conventions verified 19 Sep 2026:** the right-hand column is quoting habit, not mathematics. A volatility point is 0.01 of $`\sigma`$, a basis point 0.0001 of a rate, and the day one of 365 calendar days; a desk counting business days divides by about 252 instead. The sweep's own numbers, per year and per whole unit, do not change.
 
-Two identities test the six together rather than one at a time. Doubling $S$ and $K$ doubles the price, which forces $S$ times delta plus $K$ times the strike slope back to the price: $58.685115 - 49.458109 = 9.227006$ — the same two numerals as psi and rho above, signs swapped, because $T$ is one year. And the slopes must satisfy the equation the price obeys ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)),
+Two identities test the six together rather than one at a time. Doubling $`S`$ and $`K`$ doubles the price, which forces $`S`$ times delta plus $`K`$ times the strike slope back to the price: $`58.685115 - 49.458109 = 9.227006`$ — the same two numerals as psi and rho above, signs swapped, because $`T`$ is one year. And the slopes must satisfy the equation the price obeys ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)),
 
-$$\frac{\partial C}{\partial t} + (r-q)\,S\,\frac{\partial C}{\partial S} + \tfrac{1}{2}\sigma^2 S^2\,\Gamma - rC = 0,$$
+```math
+\frac{\partial C}{\partial t} + (r-q)\,S\,\frac{\partial C}{\partial S} + \tfrac{1}{2}\sigma^2 S^2\,\Gamma - rC = 0,
+```
 
-with $t$ the calendar date, so theta $-5.089319$ is the first term, and $\Gamma$ = 0.018951 from two sweeps a bump apart. The four terms cancel to zero at six decimals, and neither identity built the sweep, so neither holds by accident.
+with $`t`$ the calendar date, so theta $`-5.089319`$ is the first term, and $`\Gamma`$ = 0.018951 from two sweeps a bump apart. The four terms cancel to zero at six decimals, and neither identity built the sweep, so neither holds by accident.
 
 ### What breaks if you drop a piece
 
@@ -249,7 +255,7 @@ with $t$ the calendar date, so theta $-5.089319$ is the first term, and $\Gamma$
 | --- | --- | --- |
 | Writing a contribution in instead of adding it | vega 47.376447, not 37.901158 | Sigma is used three times; only the last route survived |
 | Sweeping the lines in tape order | every derivative 0.000000 | Each line's adjoint was spent before its users filled it |
-| Reading the slope on $T$ as theta | +5.089319 a year, not −5.089319 | $T$ is time left; theta runs with the clock, the other way |
+| Reading the slope on $`T`$ as theta | +5.089319 a year, not −5.089319 | $`T`$ is time left; theta runs with the clock, the other way |
 | Nudging Acme by $10 instead of sweeping | delta 0.580072, not 0.586851 | A $10 chord is not the slope at $100; the curve bends between |
 
 The code prints all four.
@@ -699,11 +705,11 @@ The two outputs match line for line at six decimals, from different bell-curve a
 
 ### Lean
 
-Lean proves the sweep's claim for every tape whose steps have slopes, the cost count, and the zero at $d_1$.
+Lean proves the sweep's claim for every tape whose steps have slopes, the cost count, and the zero at $`d_1`$.
 
 - Suppose every step of a tape has a slope at the values the forward pass found. Then one backward sweep, adding wherever a value is reused, leaves each input's adjoint equal to its derivative.
 - Suppose no step has more than two inputs. Then the arrows into the steps number at most twice the steps.
-- Take $S$, $K$, $\sigma$ and $T$ positive, with $d_1$ and $d_2$ from the call formula. Then $S e^{-qT}\phi(d_1) - K e^{-rT}\phi(d_2)$, the adjoint of $d_1$, is exactly zero.
+- Take $`S`$, $`K`$, $`\sigma`$ and $`T`$ positive, with $`d_1`$ and $`d_2`$ from the call formula. Then $`S e^{-qT}\phi(d_1) - K e^{-rT}\phi(d_2)`$, the adjoint of $`d_1`$, is exactly zero.
 - The toy tape's steps take 2, 2, 1 and 2 inputs: 4 steps and 7 arrows.
 - The Black-Scholes tape's 26 steps carry 42 arrows, within the bound of 52.
 - Nudging each way costs 13 pricings for the price and six slopes.
@@ -1086,7 +1092,7 @@ example : 1 + 2 * 6 = 13 := by norm_num
 >
 > - **Overwriting where a value is reused.** Sigma appears three times on the Acme tape; assign instead of add and vega reads 47.376447 against the true 37.901158, with no error message.
 > - **Expecting second derivatives.** Gamma, 0.018951 here, takes a second pass; "all the Greeks in one pass" oversells it.
-> - **Losing the sign of theta.** The tape carries $T$, the time remaining, whose slope is $+5.089319$ a year. Theta runs with the clock: $-5.089319$ a year, $-0.013943$ a day.
+> - **Losing the sign of theta.** The tape carries $`T`$, the time remaining, whose slope is $`+5.089319`$ a year. Theta runs with the clock: $`-5.089319`$ a year, $`-0.013943`$ a day.
 > - **Sweeping through a kink.** Where a payoff bends or jumps there is no slope to record, and the sweep returns a one-sided number or a zero without complaint: [Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md).
 
 ---

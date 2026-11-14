@@ -40,46 +40,56 @@ First line, the best-of call: a floor of $10 from Bolt, whatever Acme does, then
 
 ## The formula
 
-Notation first. Write $S_1$ and $S_2$ for today's prices of Acme and Bolt, and $\rho$ (say "rho") for the correlation of their log returns. Write $M(a, b; \rho)$ for the chance that two standard bell-curve draws with correlation $\rho$ land below a and below b at the same time. It is the two-share version of $N(x)$, the chance that one draw lands below x, and it is built on [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md).
+Notation first. Write $`S_1`$ and $`S_2`$ for today's prices of Acme and Bolt, and $`\rho`$ (say "rho") for the correlation of their log returns. Write $`M(a, b; \rho)`$ for the chance that two standard bell-curve draws with correlation $`\rho`$ land below a and below b at the same time. It is the two-share version of $`N(x)`$, the chance that one draw lands below x, and it is built on [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md).
 
 Stulz's best-of call, the call on the maximum:
 
-$$C_{\max} = S_1 e^{-q_1 T} M(d_1^+, d_{12}; \rho_1) + S_2 e^{-q_2 T} M(d_2^+, d_{21}; \rho_2) - K e^{-rT}\big[1 - M(-d_1^-, -d_2^-; \rho)\big]$$
+```math
+C_{\max} = S_1 e^{-q_1 T} M(d_1^+, d_{12}; \rho_1) + S_2 e^{-q_2 T} M(d_2^+, d_{21}; \rho_2) - K e^{-rT}\big[1 - M(-d_1^-, -d_2^-; \rho)\big]
+```
 
 **Read it aloud:** Acme, counted with the chance it is both the winner and above the strike; plus Bolt, counted the same way; minus the strike, counted with the chance that at least one share clears it.
 
 The worst-of call, the call on the minimum:
 
-$$C_{\min} = S_1 e^{-q_1 T} M(d_1^+, -d_{12}; -\rho_1) + S_2 e^{-q_2 T} M(d_2^+, -d_{21}; -\rho_2) - K e^{-rT} M(d_1^-, d_2^-; \rho)$$
+```math
+C_{\min} = S_1 e^{-q_1 T} M(d_1^+, -d_{12}; -\rho_1) + S_2 e^{-q_2 T} M(d_2^+, -d_{21}; -\rho_2) - K e^{-rT} M(d_1^-, d_2^-; \rho)
+```
 
 **Read it aloud:** each share, counted with the chance it is the loser and still above the strike, minus the strike, counted with the chance that both shares clear it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C_{\max}$, $C_{\min}$ | price today of the best-of call and of the worst-of call | $13.88; $4.57 | is the answer |
-| $S_1$, $S_2$ | today's prices of Acme and Bolt | $100 each | best-of and worst-of both rise |
-| $K$ | the strike the chosen share is compared with | $100 | both fall |
-| $T$ | life of the contract, in years | 1 | both rise |
-| $r$ | the bank rate, continuously compounded; $e^{-rT}$ discounts a dollar due at T | 5% | both rise, a little |
-| $q_1$, $q_2$ | dividend yields of the two shares; $e^{-qT}$ is the dividend drag | 2% each | both fall |
-| $\sigma_1$, $\sigma_2$ | volatilities: the spread of each share's yearly log return | 20% each | best-of rises strongly; worst-of rises less |
-| $\rho$ | correlation of the two log returns, between −1 and 1 | 0.5 | best-of falls; worst-of rises |
-| $\sigma_X$ | volatility of the ratio of the two prices, $\sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2}$ | 0.20 | — |
-| $d_1^+$, $d_1^-$, $d_2^+$, $d_2^-$ | each share's Black-Scholes distances from the strike, counted in share and in cash | 0.25; 0.05 | — |
-| $d_{12}$, $d_{21}$, $\rho_1$, $\rho_2$ | the distances for "Acme beats Bolt" and "Bolt beats Acme", and the correlations between winning and clearing the strike | 0.10; 0.5 | — |
-| $M$, $N$, $Z_1$, $Z_2$ | chance two correlated bell-curve draws both land low; chance one draw lands low; the two standardised draws | M values below | — |
+| $`C_{\max}`$, $`C_{\min}`$ | price today of the best-of call and of the worst-of call | $13.88; $4.57 | is the answer |
+| $`S_1`$, $`S_2`$ | today's prices of Acme and Bolt | $100 each | best-of and worst-of both rise |
+| $`K`$ | the strike the chosen share is compared with | $100 | both fall |
+| $`T`$ | life of the contract, in years | 1 | both rise |
+| $`r`$ | the bank rate, continuously compounded; $`e^{-rT}`$ discounts a dollar due at T | 5% | both rise, a little |
+| $`q_1`$, $`q_2`$ | dividend yields of the two shares; $`e^{-qT}`$ is the dividend drag | 2% each | both fall |
+| $`\sigma_1`$, $`\sigma_2`$ | volatilities: the spread of each share's yearly log return | 20% each | best-of rises strongly; worst-of rises less |
+| $`\rho`$ | correlation of the two log returns, between −1 and 1 | 0.5 | best-of falls; worst-of rises |
+| $`\sigma_X`$ | volatility of the ratio of the two prices, $`\sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2}`$ | 0.20 | — |
+| $`d_1^+`$, $`d_1^-`$, $`d_2^+`$, $`d_2^-`$ | each share's Black-Scholes distances from the strike, counted in share and in cash | 0.25; 0.05 | — |
+| $`d_{12}`$, $`d_{21}`$, $`\rho_1`$, $`\rho_2`$ | the distances for "Acme beats Bolt" and "Bolt beats Acme", and the correlations between winning and clearing the strike | 0.10; 0.5 | — |
+| $`M`$, $`N`$, $`Z_1`$, $`Z_2`$ | chance two correlated bell-curve draws both land low; chance one draw lands low; the two standardised draws | M values below | — |
 
 The helper quantities, each one line of plain words:
 
-$$d_i^+ = \frac{\ln(S_i/K) + (r - q_i + \tfrac12\sigma_i^2)T}{\sigma_i\sqrt{T}}, \qquad d_i^- = d_i^+ - \sigma_i\sqrt{T}$$
+```math
+d_i^+ = \frac{\ln(S_i/K) + (r - q_i + \tfrac12\sigma_i^2)T}{\sigma_i\sqrt{T}}, \qquad d_i^- = d_i^+ - \sigma_i\sqrt{T}
+```
 
-These are each share's own $d_1$ and $d_2$ from the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card, with i standing for 1 or 2: how far the share must travel to clear the strike, counted in its own wiggles. One wiggle is $\sigma_i\sqrt{T}$, the standard deviation of the share's log return over the contract's life.
+These are each share's own $`d_1`$ and $`d_2`$ from the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card, with i standing for 1 or 2: how far the share must travel to clear the strike, counted in its own wiggles. One wiggle is $`\sigma_i\sqrt{T}`$, the standard deviation of the share's log return over the contract's life.
 
-$$d_{12} = \frac{\ln(S_1/S_2) + (q_2 - q_1 + \tfrac12\sigma_X^2)T}{\sigma_X\sqrt{T}}, \qquad d_{21} = \frac{\ln(S_2/S_1) + (q_1 - q_2 + \tfrac12\sigma_X^2)T}{\sigma_X\sqrt{T}}$$
+```math
+d_{12} = \frac{\ln(S_1/S_2) + (q_2 - q_1 + \tfrac12\sigma_X^2)T}{\sigma_X\sqrt{T}}, \qquad d_{21} = \frac{\ln(S_2/S_1) + (q_1 - q_2 + \tfrac12\sigma_X^2)T}{\sigma_X\sqrt{T}}
+```
 
 These are the distances from the [The exchange option](01-exchange-option-margrabe.md) card: how far Acme must travel to beat Bolt, counted in wiggles of the ratio between them.
 
-$$\rho_1 = \frac{\sigma_1 - \rho\,\sigma_2}{\sigma_X}, \qquad \rho_2 = \frac{\sigma_2 - \rho\,\sigma_1}{\sigma_X}$$
+```math
+\rho_1 = \frac{\sigma_1 - \rho\,\sigma_2}{\sigma_X}, \qquad \rho_2 = \frac{\sigma_2 - \rho\,\sigma_1}{\sigma_X}
+```
 
 These are the correlations between "this share clears the strike" and "this share is the winner". They are high when the other share is calm or closely tied, because then clearing the strike and winning tend to happen together.
 
@@ -97,62 +107,64 @@ These are the correlations between "this share clears the strike" and "this shar
 
 ### Step 0: split the payoff by who wins, then price each piece in its own units
 
-At expiry the best-of pays $\max(\max(S_{1,T}, S_{2,T}) - K, 0)$, where $S_{1,T}$ and $S_{2,T}$ are the two prices on the last day. Break it into three pieces with light switches, brackets that are 1 when a statement is true and 0 when not:
+At expiry the best-of pays $`\max(\max(S_{1,T}, S_{2,T}) - K, 0)`$, where $`S_{1,T}`$ and $`S_{2,T}`$ are the two prices on the last day. Break it into three pieces with light switches, brackets that are 1 when a statement is true and 0 when not:
 
 - receive Acme, in the endings where Acme is the winner and above K;
 - receive Bolt, in the endings where Bolt is the winner and above K;
 - hand over K, in the endings where at least one share is above K.
 
-Each piece is priced the way the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card priced its two halves. Work in the pretend world where every asset grows at the bank rate: each log price is bell-curved, and the two bell curves are tied by the correlation $\rho$. A cash piece is the discounted chance of its event. A share piece is the discounted share times the chance of its event, counted in units of that share, which slides the bell curves before the chance is taken. Only the volatilities and the correlation enter; nothing predicts the market.
+Each piece is priced the way the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card priced its two halves. Work in the pretend world where every asset grows at the bank rate: each log price is bell-curved, and the two bell curves are tied by the correlation $`\rho`$. A cash piece is the discounted chance of its event. A share piece is the discounted share times the chance of its event, counted in units of that share, which slides the bell curves before the chance is taken. Only the volatilities and the correlation enter; nothing predicts the market.
 
 ### Step 1: the cash piece
 
-In the pretend world, Acme finishes above K exactly when a standard bell-curve draw $Z_1$ lands above $-d_1^-$. Likewise Bolt with $Z_2$ and $-d_2^-$. The two draws have correlation $\rho$, because they are the standardised log returns.
+In the pretend world, Acme finishes above K exactly when a standard bell-curve draw $`Z_1`$ lands above $`-d_1^-`$. Likewise Bolt with $`Z_2`$ and $`-d_2^-`$. The two draws have correlation $`\rho`$, because they are the standardised log returns.
 
-"At least one above K" is the opposite of "both below K". Both below K means $Z_1 < -d_1^-$ and $Z_2 < -d_2^-$ together, which has chance $M(-d_1^-, -d_2^-; \rho)$. For Acme and Bolt that is 0.3136. So the best-of's cash piece is $K e^{-rT}[1 - M(-d_1^-, -d_2^-; \rho)]$.
+"At least one above K" is the opposite of "both below K". Both below K means $`Z_1 < -d_1^-`$ and $`Z_2 < -d_2^-`$ together, which has chance $`M(-d_1^-, -d_2^-; \rho)`$. For Acme and Bolt that is 0.3136. So the best-of's cash piece is $`K e^{-rT}[1 - M(-d_1^-, -d_2^-; \rho)]`$.
 
-The worst-of hands over K only when the worse share clears it, which means both do: chance $M(d_1^-, d_2^-; \rho)$, 0.3535 here.
+The worst-of hands over K only when the worse share clears it, which means both do: chance $`M(d_1^-, d_2^-; \rho)`$, 0.3535 here.
 
 ### Step 2: the Acme piece, counted in Acme shares
 
-The holder receives Acme in the endings where two things hold: Acme is above K, and Acme beats Bolt. Counting in units of Acme shares weights each ending by what Acme is worth there. As on the Black-Scholes card, that slides every bell curve tied to Acme by one wiggle of Acme, $\sigma_1\sqrt{T}$.
+The holder receives Acme in the endings where two things hold: Acme is above K, and Acme beats Bolt. Counting in units of Acme shares weights each ending by what Acme is worth there. As on the Black-Scholes card, that slides every bell curve tied to Acme by one wiggle of Acme, $`\sigma_1\sqrt{T}`$.
 
 Under that weighting:
 
-- Acme above K has chance $N(d_1^+)$, exactly as in the one-share formula.
-- Acme beats Bolt means the ratio $S_{1,T}/S_{2,T}$ ends above 1. That ratio is itself lognormal with volatility $\sigma_X$, and counted in Acme shares its chance of ending above 1 is $N(d_{12})$. This is the exchange option's event, and it is why the exchange card's distance appears here.
-- The two events are correlated. The log of Acme and the log of the ratio share Acme's own randomness, and their correlation works out to $\rho_1 = (\sigma_1 - \rho\sigma_2)/\sigma_X$.
+- Acme above K has chance $`N(d_1^+)`$, exactly as in the one-share formula.
+- Acme beats Bolt means the ratio $`S_{1,T}/S_{2,T}`$ ends above 1. That ratio is itself lognormal with volatility $`\sigma_X`$, and counted in Acme shares its chance of ending above 1 is $`N(d_{12})`$. This is the exchange option's event, and it is why the exchange card's distance appears here.
+- The two events are correlated. The log of Acme and the log of the ratio share Acme's own randomness, and their correlation works out to $`\rho_1 = (\sigma_1 - \rho\sigma_2)/\sigma_X`$.
 
-So the chance of both is $M(d_1^+, d_{12}; \rho_1)$, and the Acme piece is $S_1 e^{-q_1 T} M(d_1^+, d_{12}; \rho_1)$. Bolt's piece is the same with the labels swapped.
+So the chance of both is $`M(d_1^+, d_{12}; \rho_1)`$, and the Acme piece is $`S_1 e^{-q_1 T} M(d_1^+, d_{12}; \rho_1)`$. Bolt's piece is the same with the labels swapped.
 
 <details>
 <summary>Detailed proof: the share-counted chance and the correlation ρ1</summary>
 
-Write the pretend-world logs as $\ln S_{i,T} = \ln S_i + (r - q_i - \tfrac12\sigma_i^2)T + \sigma_i\sqrt{T}\,Z_i$, with $Z_1, Z_2$ standard normal and correlation $\rho$.
+Write the pretend-world logs as $`\ln S_{i,T} = \ln S_i + (r - q_i - \tfrac12\sigma_i^2)T + \sigma_i\sqrt{T}\,Z_i`$, with $`Z_1, Z_2`$ standard normal and correlation $`\rho`$.
 
-**Counting in Acme.** Write $E[\cdot]$ for the pretend-world average and $1_A$ for the light switch of event A: 1 when A happens, 0 when not. The value of the claim "receive Acme on event A" is $e^{-rT}E[S_{1,T}\,1_A]$. Since $S_{1,T} = S_1 e^{(r-q_1)T} e^{\sigma_1\sqrt{T}Z_1 - \frac12\sigma_1^2 T}$, this is $S_1 e^{-q_1T}\,E[e^{\sigma_1\sqrt{T}Z_1 - \frac12\sigma_1^2T}\,1_A]$. The factor inside is a likelihood ratio: under the weighted measure, $Z_1$ has mean $\sigma_1\sqrt{T}$, and any variable correlated with $Z_1$ has its mean moved by (its covariance with $Z_1$) times $\sigma_1\sqrt{T}$. Variances and correlations do not change. So the value is $S_1 e^{-q_1T}\,P^{(1)}(A)$, the chance of A in the Acme-counted world.
+**Counting in Acme.** Write $`E[\cdot]`$ for the pretend-world average and $`1_A`$ for the light switch of event A: 1 when A happens, 0 when not. The value of the claim "receive Acme on event A" is $`e^{-rT}E[S_{1,T}\,1_A]`$. Since $`S_{1,T} = S_1 e^{(r-q_1)T} e^{\sigma_1\sqrt{T}Z_1 - \frac12\sigma_1^2 T}`$, this is $`S_1 e^{-q_1T}\,E[e^{\sigma_1\sqrt{T}Z_1 - \frac12\sigma_1^2T}\,1_A]`$. The factor inside is a likelihood ratio: under the weighted measure, $`Z_1`$ has mean $`\sigma_1\sqrt{T}`$, and any variable correlated with $`Z_1`$ has its mean moved by (its covariance with $`Z_1`$) times $`\sigma_1\sqrt{T}`$. Variances and correlations do not change. So the value is $`S_1 e^{-q_1T}\,P^{(1)}(A)`$, the chance of A in the Acme-counted world.
 
-**Acme above K.** $\ln S_{1,T} > \ln K$ becomes, with the shifted mean, $Z_1' > -d_1^+$, where $Z_1'$ is standard normal in the new world. Chance $N(d_1^+)$.
+**Acme above K.** $`\ln S_{1,T} > \ln K`$ becomes, with the shifted mean, $`Z_1' > -d_1^+`$, where $`Z_1'`$ is standard normal in the new world. Chance $`N(d_1^+)`$.
 
-**Acme beats Bolt.** Let $Y = \ln(S_{1,T}/S_{2,T})$. Its random part is $\sqrt{T}(\sigma_1 Z_1 - \sigma_2 Z_2)$, with variance $\sigma_X^2 T$. In the pretend world its mean is $\ln(S_1/S_2) + (q_2 - q_1 - \tfrac12\sigma_1^2 + \tfrac12\sigma_2^2)T$. Its covariance with $\sigma_1\sqrt{T}Z_1$ is $(\sigma_1^2 - \rho\sigma_1\sigma_2)T$, so counting in Acme raises the mean by that amount. The new mean is $\ln(S_1/S_2) + (q_2 - q_1 + \tfrac12\sigma_1^2 + \tfrac12\sigma_2^2 - \rho\sigma_1\sigma_2)T = \ln(S_1/S_2) + (q_2 - q_1 + \tfrac12\sigma_X^2)T$. Standardising, $Y > 0$ has chance $N(d_{12})$.
+**Acme beats Bolt.** Let $`Y = \ln(S_{1,T}/S_{2,T})`$. Its random part is $`\sqrt{T}(\sigma_1 Z_1 - \sigma_2 Z_2)`$, with variance $`\sigma_X^2 T`$. In the pretend world its mean is $`\ln(S_1/S_2) + (q_2 - q_1 - \tfrac12\sigma_1^2 + \tfrac12\sigma_2^2)T`$. Its covariance with $`\sigma_1\sqrt{T}Z_1`$ is $`(\sigma_1^2 - \rho\sigma_1\sigma_2)T`$, so counting in Acme raises the mean by that amount. The new mean is $`\ln(S_1/S_2) + (q_2 - q_1 + \tfrac12\sigma_1^2 + \tfrac12\sigma_2^2 - \rho\sigma_1\sigma_2)T = \ln(S_1/S_2) + (q_2 - q_1 + \tfrac12\sigma_X^2)T`$. Standardising, $`Y > 0`$ has chance $`N(d_{12})`$.
 
-**Their correlation.** The correlation of $Z_1$ with $(\sigma_1 Z_1 - \sigma_2 Z_2)/\sigma_X$ is $(\sigma_1 - \rho\sigma_2)/\sigma_X = \rho_1$, and it survives the change of weighting. So $P^{(1)}(\text{Acme above K and Acme beats Bolt}) = M(d_1^+, d_{12}; \rho_1)$.
+**Their correlation.** The correlation of $`Z_1`$ with $`(\sigma_1 Z_1 - \sigma_2 Z_2)/\sigma_X`$ is $`(\sigma_1 - \rho\sigma_2)/\sigma_X = \rho_1`$, and it survives the change of weighting. So $`P^{(1)}(\text{Acme above K and Acme beats Bolt}) = M(d_1^+, d_{12}; \rho_1)`$.
 
-**The worst-of pieces.** Receiving Acme as the loser means $Y < 0$: flip the sign of the second standardised variable. Its bound becomes $-d_{12}$ and its correlation with the first becomes $-\rho_1$, giving $M(d_1^+, -d_{12}; -\rho_1)$. The cash piece of Step 1 completes both formulas.
+**The worst-of pieces.** Receiving Acme as the loser means $`Y < 0`$: flip the sign of the second standardised variable. Its bound becomes $`-d_{12}`$ and its correlation with the first becomes $`-\rho_1`$, giving $`M(d_1^+, -d_{12}; -\rho_1)`$. The cash piece of Step 1 completes both formulas.
 
 </details>
 
 ### Step 3: the worst-of by the same rules
 
-The worst-of pays Acme when Acme is the loser and still above K, pays Bolt in the mirror case, and takes K when both clear it. Losing is winning with the sign flipped, so the bound $d_{12}$ becomes $-d_{12}$ and the correlation $\rho_1$ becomes $-\rho_1$. The cash chance is $M(d_1^-, d_2^-; \rho)$ from Step 1. Adding the three pieces gives the formula for $C_{\min}$.
+The worst-of pays Acme when Acme is the loser and still above K, pays Bolt in the mirror case, and takes K when both clear it. Losing is winning with the sign flipped, so the bound $`d_{12}`$ becomes $`-d_{12}`$ and the correlation $`\rho_1`$ becomes $`-\rho_1`$. The cash chance is $`M(d_1^-, d_2^-; \rho)`$ from Step 1. Adding the three pieces gives the formula for $`C_{\min}`$.
 
 ### Step 4: the two contracts add up to two vanilla calls
 
 On every ending, the pair (best, worst) is the pair (Acme, Bolt) in some order. So
 
-$$\max(\text{best} - K, 0) + \max(\text{worst} - K, 0) = \max(S_{1,T} - K, 0) + \max(S_{2,T} - K, 0)$$
+```math
+\max(\text{best} - K, 0) + \max(\text{worst} - K, 0) = \max(S_{1,T} - K, 0) + \max(S_{2,T} - K, 0)
+```
 
-ending by ending. Prices are averages of payoffs, so the prices add too: $C_{\max} + C_{\min}$ is the price of a vanilla call on Acme plus one on Bolt, $18.45 here, whatever the correlation. Only one of the two formulas is needed; the other is two vanilla calls minus it. The code checks this identity against the two formulas separately.
+ending by ending. Prices are averages of payoffs, so the prices add too: $`C_{\max} + C_{\min}`$ is the price of a vanilla call on Acme plus one on Bolt, $18.45 here, whatever the correlation. Only one of the two formulas is needed; the other is two vanilla calls minus it. The code checks this identity against the two formulas separately.
 
 So a best-of sits between one call and two: above $9.23, because it picks the better share with hindsight; below $18.45, because it pays only the larger gain. The $4.57 gap to two calls is exactly the worst-of.
 
@@ -173,23 +185,23 @@ xychart-beta
 
 First line, the best-of call, falling from $18.18 at correlation −0.9 to $9.23 at 1. Second line, the worst-of, rising from $0.28 to $9.23. Third line, one vanilla call. The two curves mirror each other about it, because they always add to $18.45.
 
-The shape follows from $\sigma_X$, the volatility of the ratio. It is 0 at correlation 1 and grows as the correlation falls. The more the ratio wiggles, the further apart the two shares end, and the more the hindsight choice is worth. So a buyer of a best-of is **short correlation**, meaning the position loses value when correlation rises, and a buyer of a worst-of is **long correlation**, gaining when it rises.
+The shape follows from $`\sigma_X`$, the volatility of the ratio. It is 0 at correlation 1 and grows as the correlation falls. The more the ratio wiggles, the further apart the two shares end, and the more the hindsight choice is worth. So a buyer of a best-of is **short correlation**, meaning the position loses value when correlation rises, and a buyer of a worst-of is **long correlation**, gaining when it rises.
 
-Two routes check the formula without using it. At a strike near zero the best-of pays the larger share outright, and the larger of two is one share plus the option to swap it for the other: $\max(S_{1,T}, S_{2,T}) = S_{2,T} + \max(S_{1,T} - S_{2,T}, 0)$. So the best-of at zero strike must equal Bolt's discounted price, $98.02, plus the Margrabe exchange option, $7.81: $105.83, which the formula reproduces. And simulation, as on [Basket options](03-basket-options.md), draws the two correlated prices directly and averages the payoffs. The code takes both.
+Two routes check the formula without using it. At a strike near zero the best-of pays the larger share outright, and the larger of two is one share plus the option to swap it for the other: $`\max(S_{1,T}, S_{2,T}) = S_{2,T} + \max(S_{1,T} - S_{2,T}, 0)`$. So the best-of at zero strike must equal Bolt's discounted price, $98.02, plus the Margrabe exchange option, $7.81: $105.83, which the formula reproduces. And simulation, as on [Basket options](03-basket-options.md), draws the two correlated prices directly and averages the payoffs. The code takes both.
 
 ---
 
 ## Worked numbers, by hand
 
-Acme and Bolt: $S_1 = S_2 = 100$, K = 100, r = 5%, $q_1 = q_2 = 2\%$, $\sigma_1 = \sigma_2 = 20\%$, $\rho = 0.5$, T = 1 year. The M values come from a two-dimensional bell-curve table or from the code.
+Acme and Bolt: $`S_1 = S_2 = 100`$, K = 100, r = 5%, $`q_1 = q_2 = 2\%`$, $`\sigma_1 = \sigma_2 = 20\%`$, $`\rho = 0.5`$, T = 1 year. The M values come from a two-dimensional bell-curve table or from the code.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| ratio volatility, $\sigma_X$ | √(0.04 + 0.04 − 2 × 0.5 × 0.04) | 0.20 |
-| $d_1^+ = d_2^+$ | (0 + (0.05 − 0.02 + 0.02) × 1) / 0.20 | 0.25 |
-| $d_1^- = d_2^-$ | 0.25 − 0.20 | 0.05 |
-| $d_{12} = d_{21}$ | (0 + (0 + 0.02) × 1) / 0.20 | 0.10 |
-| $\rho_1 = \rho_2$ | (0.20 − 0.5 × 0.20) / 0.20 | 0.5 |
+| ratio volatility, $`\sigma_X`$ | √(0.04 + 0.04 − 2 × 0.5 × 0.04) | 0.20 |
+| $`d_1^+ = d_2^+`$ | (0 + (0.05 − 0.02 + 0.02) × 1) / 0.20 | 0.25 |
+| $`d_1^- = d_2^-`$ | 0.25 − 0.20 | 0.05 |
+| $`d_{12} = d_{21}`$ | (0 + (0 + 0.02) × 1) / 0.20 | 0.10 |
+| $`\rho_1 = \rho_2`$ | (0.20 − 0.5 × 0.20) / 0.20 | 0.5 |
 | Acme wins and clears K, counted in Acme | M(0.25, 0.10; 0.5) | 0.4039 |
 | neither share clears K | M(−0.05, −0.05; 0.5) | 0.3136 |
 | discounted share and strike | 100 × e^−0.02; 100 × e^−0.05 | $98.02; $95.12 |
@@ -218,7 +230,7 @@ Same contracts, right answers $13.88 and $4.57. Every wrong number below is prin
 
 ### The Greeks
 
-Sensitivities by bumping the formula; each delta is checked against its closed form, $e^{-q_1T}$ times the share-counted chance. By symmetry Bolt's numbers equal Acme's.
+Sensitivities by bumping the formula; each delta is checked against its closed form, $`e^{-q_1T}`$ times the share-counted chance. By symmetry Bolt's numbers equal Acme's.
 
 | Greek | Plain meaning | Best-of | Worst-of |
 | --- | --- | --- | --- |
@@ -232,7 +244,7 @@ The two deltas to Acme add to the vanilla call's delta, as Step 4 says they must
 
 ## Code, from first principles, and it actually runs
 
-Both programs price the two contracts five ways. Road 1 is Stulz's formula, with the two-share chance $M$ computed by Simpson's rule: integrate the bell-curve height of the first draw times the one-share chance of the second, given the first. Road 2 simulates 200,000 pairs of correlated prices and averages the payoffs, with a standard error. Road 3 integrates the payoffs directly over a 601 by 601 grid of the two-share bell surface, with no M and no d anywhere; it also prices the correlation sweep, including correlation 1, where the formula's ratio volatility is zero. Road 4 checks best plus worst against two vanilla calls. Road 5 checks the best-of at a near-zero strike against one share plus the Margrabe exchange option. The one-share bell-curve area is a written-out series; the random numbers come from splitmix64 with the Box-Muller transform. Six asserts. Each of three deliberate breaks trips at least one: dropping the minus sign on $\rho_1$ in the worst-of, dropping the "1 −" from the cash chance, or setting the both-clear correlation to zero.
+Both programs price the two contracts five ways. Road 1 is Stulz's formula, with the two-share chance $`M`$ computed by Simpson's rule: integrate the bell-curve height of the first draw times the one-share chance of the second, given the first. Road 2 simulates 200,000 pairs of correlated prices and averages the payoffs, with a standard error. Road 3 integrates the payoffs directly over a 601 by 601 grid of the two-share bell surface, with no M and no d anywhere; it also prices the correlation sweep, including correlation 1, where the formula's ratio volatility is zero. Road 4 checks best plus worst against two vanilla calls. Road 5 checks the best-of at a near-zero strike against one share plus the Margrabe exchange option. The one-share bell-curve area is a written-out series; the random numbers come from splitmix64 with the Box-Muller transform. Six asserts. Each of three deliberate breaks trips at least one: dropping the minus sign on $`\rho_1`$ in the worst-of, dropping the "1 −" from the cash chance, or setting the both-clear correlation to zero.
 
 ### Python
 
@@ -771,9 +783,9 @@ example : max (max (130 : ℤ) 110 - 100) 0 = 30 ∧ max (min (130 : ℤ) 110 - 
 >
 > Smaller traps:
 > - **Adding the two calls for a best-of.** Two vanilla calls cost $18.45; the best-of costs $13.88. The difference, $4.57, is the second-best gain that the best-of never pays.
-> - **Using the input correlation where $\rho_1$ belongs.** The share pieces need the correlation between clearing the strike and winning, $(\sigma_1 - \rho\sigma_2)/\sigma_X$, not $\rho$. With equal volatilities at correlation 0.5 the two happen to coincide, which hides the mistake until the volatilities differ.
-> - **Flipping the cash event.** The best-of pays the strike when at least one share clears it, chance $1 - M(-d_1^-, -d_2^-; \rho)$. Using M itself gives $49.34.
-> - **Plugging in correlation 1 directly.** At correlation 1 with equal volatilities $\sigma_X$ is zero and $d_{12}$ divides by zero. The limit is the vanilla call, $9.23; take it by the limit or by the payoff, not by the formula.
+> - **Using the input correlation where $`\rho_1`$ belongs.** The share pieces need the correlation between clearing the strike and winning, $`(\sigma_1 - \rho\sigma_2)/\sigma_X`$, not $`\rho`$. With equal volatilities at correlation 0.5 the two happen to coincide, which hides the mistake until the volatilities differ.
+> - **Flipping the cash event.** The best-of pays the strike when at least one share clears it, chance $`1 - M(-d_1^-, -d_2^-; \rho)`$. Using M itself gives $49.34.
+> - **Plugging in correlation 1 directly.** At correlation 1 with equal volatilities $`\sigma_X`$ is zero and $`d_{12}`$ divides by zero. The limit is the vanilla call, $9.23; take it by the limit or by the payoff, not by the formula.
 
 ---
 
@@ -809,4 +821,4 @@ Verified 2026-09-24: every link below resolves to the publisher's page.
 
 - Stulz, René M. "Options on the Minimum or the Maximum of Two Risky Assets: Analysis and Applications." *Journal of Financial Economics* 10, no. 2 (1982): 161–185. [doi:10.1016/0304-405X(82)90011-3](https://doi.org/10.1016/0304-405X(82)90011-3). The two-share formulas on this card and their applications to currency debt, option bonds and compensation.
 - Johnson, Herb. "Options on the Maximum or the Minimum of Several Assets." *Journal of Financial and Quantitative Analysis* 22, no. 3 (1987): 277–283. [doi:10.2307/2330963](https://doi.org/10.2307/2330963). The extension to many shares, and the share-counted reading of each term used in Why it works.
-- Margrabe, William. "The Value of an Option to Exchange One Asset for Another." *Journal of Finance* 33, no. 1 (1978): 177–186. [doi:10.1111/j.1540-6261.1978.tb03397.x](https://doi.org/10.1111/j.1540-6261.1978.tb03397.x). The exchange option, the best-of at zero strike, and the ratio volatility $\sigma_X$.
+- Margrabe, William. "The Value of an Option to Exchange One Asset for Another." *Journal of Finance* 33, no. 1 (1978): 177–186. [doi:10.1111/j.1540-6261.1978.tb03397.x](https://doi.org/10.1111/j.1540-6261.1978.tb03397.x). The exchange option, the best-of at zero strike, and the ratio volatility $`\sigma_X`$.

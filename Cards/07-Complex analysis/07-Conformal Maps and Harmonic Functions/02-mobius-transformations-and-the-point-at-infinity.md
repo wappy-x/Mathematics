@@ -26,15 +26,19 @@ To scale: on the left 40 units per 1, origin at (90, 170); on the right 70 units
 
 ## The formula
 
-Reminder: z̄ (read "z-bar") is z mirrored in the real axis, |z| its distance from 0, Re z and Im z its real and imaginary parts ([Conjugate and modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). New: $\infty$ names one extra point, reached by going far out in any direction.
+Reminder: z̄ (read "z-bar") is z mirrored in the real axis, |z| its distance from 0, Re z and Im z its real and imaginary parts ([Conjugate and modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). New: $`\infty`$ names one extra point, reached by going far out in any direction.
 
-$$T(z) = \frac{az + b}{cz + d}, \qquad ad - bc \neq 0, \qquad T\!\left(-\tfrac{d}{c}\right) = \infty, \quad T(\infty) = \frac{a}{c}$$
+```math
+T(z) = \frac{az + b}{cz + d}, \qquad ad - bc \neq 0, \qquad T\!\left(-\tfrac{d}{c}\right) = \infty, \quad T(\infty) = \frac{a}{c}
+```
 
 **Read it aloud:** a first-degree expression over another, not proportional; the point zeroing the bottom, called the pole, goes to infinity, and infinity to a/c. When c = 0, infinity stays put.
 
 The matrix does the bookkeeping:
 
-$$T \leftrightarrow \begin{pmatrix} a & b \\ c & d \end{pmatrix}, \qquad T^{-1}(w) = \frac{dw - b}{-cw + a}$$
+```math
+T \leftrightarrow \begin{pmatrix} a & b \\ c & d \end{pmatrix}, \qquad T^{-1}(w) = \frac{dw - b}{-cw + a}
+```
 
 **Read it aloud:** composing two maps multiplies their matrices, and the undo swaps a with d and negates b and c.
 
@@ -42,14 +46,14 @@ For the Cayley map a = 1, b = −i, c = 1, d = i, so ad − bc = i + i = 2i.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$, $w$ | a point, and its image | 1 + i, 0.2 − 0.4i | — |
-| $a$, $b$, $c$, $d$ | the map's four numbers, its matrix | 1, −i, 1, i | scaling all four changes nothing |
-| $ad - bc$ | the determinant; zero collapses the map | 2i | — |
-| $\infty$ | the one point at infinity | C(−i) = ∞, C(∞) = 1 | — |
-| $T$, $T^{-1}$ | any Mobius map, and its undo | C and i(1 + w)/(1 − w) | — |
-| $C$ | the Cayley map (z − i)/(z + i) | i to 0, 0 to −1, ∞ to 1 | — |
-| $\alpha$, $\beta$, $\gamma$ | a circle's equation numbers, α, γ real | Im z = 1: 0, −i/2, −1 | α = 0 makes a line |
-| $z_1$, $z_2$, $z_3$ | three points with chosen targets | i, 0, ∞ to 0, −1, 1 | — |
+| $`z`$, $`w`$ | a point, and its image | 1 + i, 0.2 − 0.4i | — |
+| $`a`$, $`b`$, $`c`$, $`d`$ | the map's four numbers, its matrix | 1, −i, 1, i | scaling all four changes nothing |
+| $`ad - bc`$ | the determinant; zero collapses the map | 2i | — |
+| $`\infty`$ | the one point at infinity | C(−i) = ∞, C(∞) = 1 | — |
+| $`T`$, $`T^{-1}`$ | any Mobius map, and its undo | C and i(1 + w)/(1 − w) | — |
+| $`C`$ | the Cayley map (z − i)/(z + i) | i to 0, 0 to −1, ∞ to 1 | — |
+| $`\alpha`$, $`\beta`$, $`\gamma`$ | a circle's equation numbers, α, γ real | Im z = 1: 0, −i/2, −1 | α = 0 makes a line |
+| $`z_1`$, $`z_2`$, $`z_3`$ | three points with chosen targets | i, 0, ∞ to 0, −1, 1 | — |
 
 ### When it holds
 
@@ -78,7 +82,9 @@ The swapped matrix, called the **adjugate**, times the original is (ad − bc) t
 
 If c = 0 the map is a turn-and-stretch then a shift. If c is not zero, divide out:
 
-$$T(z) = \frac{a}{c} - \frac{ad - bc}{c^2}\cdot\frac{1}{z + d/c}$$
+```math
+T(z) = \frac{a}{c} - \frac{ad - bc}{c^2}\cdot\frac{1}{z + d/c}
+```
 
 Shift, take 1/z, turn-and-stretch, shift. Only 1/z can bend a line, so only 1/z needs a proof.
 
@@ -86,11 +92,15 @@ Shift, take 1/z, turn-and-stretch, shift. Only 1/z can bend a line, so only 1/z 
 
 Every circle and every line is one equation:
 
-$$\alpha\,|z|^2 + \beta z + \bar\beta\,\bar z + \gamma = 0, \qquad \alpha, \gamma \text{ real}$$
+```math
+\alpha\,|z|^2 + \beta z + \bar\beta\,\bar z + \gamma = 0, \qquad \alpha, \gamma \text{ real}
+```
 
 A circle |z − p|^2 = r^2, centre p and radius r, expands to α = 1, β = −p̄, γ = |p|^2 − r^2; a line has α = 0. Put z = 1/w and multiply through by |w|^2:
 
-$$\gamma\,|w|^2 + \bar\beta\,w + \beta\,\bar w + \alpha = 0$$
+```math
+\gamma\,|w|^2 + \bar\beta\,w + \beta\,\bar w + \alpha = 0
+```
 
 The same kind of equation, α and γ swapped: 1/z keeps the family, so by Step 3 every Mobius map does. A circle through 0 has γ = 0 and becomes a line.
 
@@ -111,7 +121,9 @@ Hence the cube: C sends ∞ to 1, 1 to −i, −i to ∞, so C three times fixes
 <summary>The cross-ratio, and the map through three points</summary>
 
 For distinct z1, z2, z3, the map
-$$S(z) = \frac{(z - z_1)(z_2 - z_3)}{(z - z_3)(z_2 - z_1)}$$
+
+$`\displaystyle S(z) = \frac{(z - z_1)(z_2 - z_3)}{(z - z_3)(z_2 - z_1)}`$
+
 sends z1 to 0, z2 to 1, z3 to ∞ (drop factors holding ∞); its value at a fourth point is the cross-ratio. For i, 0, ∞: S(z) = 1 + iz. For 0, −1, 1: R(w) = 2w/(w − 1). S then the undo of R has matrix proportional to (1, −i, 1, i): the Cayley map, from three points alone. The cross-ratio survives: S(2i) = −1 and R(C(2i)) = R(1/3) = −1.
 
 </details>
@@ -120,7 +132,9 @@ sends z1 to 0, z2 to 1, z3 to ∞ (drop factors holding ∞); its value at a fou
 
 For z = x + iy, compare the distances from i and from −i:
 
-$$1 - |C(z)|^2 = \frac{|z + i|^2 - |z - i|^2}{|z + i|^2} = \frac{4y}{|z + i|^2}$$
+```math
+1 - |C(z)|^2 = \frac{|z + i|^2 - |z - i|^2}{|z + i|^2} = \frac{4y}{|z + i|^2}
+```
 
 Positive y gives |C(z)| < 1; at 1 + i both sides are 0.8. The undo has imaginary part (1 − |w|^2)/|1 − w|^2, positive on the disc, so the half plane fills it exactly.
 

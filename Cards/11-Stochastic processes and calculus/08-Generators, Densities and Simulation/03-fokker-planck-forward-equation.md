@@ -37,48 +37,54 @@ Orange: after 0.5 seconds, peak 0.5642 per µm. Teal: after 1 second, peak 0.398
 
 ## The formula
 
-Notation first, in words. As on [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md), the process solves $dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t$, with drift $\mu$, the average velocity at a point, and noise size $\sigma$; $dW_t$ is shorthand for an Ito integral against Brownian motion, never a derivative, because the path has none. The **transition density** $p(t, y)$ is the probability per unit length of finding $X_t$ near the point $y$, given that it started at $x$; the start is held fixed and left out of the notation. The curly symbol in $\partial/\partial y$ means a rate of change along $y$ with $t$ held still; the wing-08 cards write it as a subscript, so $p_t$ is the rate of change of the density in time and $p_{yy}$ its bend along $y$, the rate of change of the slope.
+Notation first, in words. As on [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md), the process solves $`dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t`$, with drift $`\mu`$, the average velocity at a point, and noise size $`\sigma`$; $`dW_t`$ is shorthand for an Ito integral against Brownian motion, never a derivative, because the path has none. The **transition density** $`p(t, y)`$ is the probability per unit length of finding $`X_t`$ near the point $`y`$, given that it started at $`x`$; the start is held fixed and left out of the notation. The curly symbol in $`\partial/\partial y`$ means a rate of change along $`y`$ with $`t`$ held still; the wing-08 cards write it as a subscript, so $`p_t`$ is the rate of change of the density in time and $`p_{yy}`$ its bend along $`y`$, the rate of change of the slope.
 
-$$\frac{\partial p}{\partial t}(t, y) \;=\; -\frac{\partial}{\partial y}\Big[\mu(y)\,p(t, y)\Big] \;+\; \frac12\,\frac{\partial^2}{\partial y^2}\Big[\sigma(y)^2\,p(t, y)\Big]$$
+```math
+\frac{\partial p}{\partial t}(t, y) \;=\; -\frac{\partial}{\partial y}\Big[\mu(y)\,p(t, y)\Big] \;+\; \frac12\,\frac{\partial^2}{\partial y^2}\Big[\sigma(y)^2\,p(t, y)\Big]
+```
 
 **Read it aloud:** the density at a point loses whatever the drift carries away from it, and gains half the bend of the noise-weighted density there.
 
-The right side has a name. The generator ([The generator](01-infinitesimal-generator.md)) acts on a payoff $f$:
+The right side has a name. The generator ([The generator](01-infinitesimal-generator.md)) acts on a payoff $`f`$:
 
-$$L f(y) = \mu(y)\, f'(y) + \tfrac12\,\sigma(y)^2 f''(y).$$
+```math
+L f(y) = \mu(y)\, f'(y) + \tfrac12\,\sigma(y)^2 f''(y).
+```
 
-The forward operator, written $L^*$ and read "L-star", is its **adjoint**: the operator that gives the same integral when the derivatives are moved from the payoff onto the density,
+The forward operator, written $`L^*`$ and read "L-star", is its **adjoint**: the operator that gives the same integral when the derivatives are moved from the payoff onto the density,
 
-$$\int (Lf)(y)\,p(y)\,dy \;=\; \int f(y)\,(L^* p)(y)\,dy, \qquad L^* p = -(\mu p)' + \tfrac12(\sigma^2 p)''.$$
+```math
+\int (Lf)(y)\,p(y)\,dy \;=\; \int f(y)\,(L^* p)(y)\,dy, \qquad L^* p = -(\mu p)' + \tfrac12(\sigma^2 p)''.
+```
 
-So the forward equation is $\partial p / \partial t = L^* p$, and the backward equation, written in the time left $\tau$, is $\partial u / \partial \tau = L u$ for the expected payoff $u$. Same pieces; the derivatives sit on opposite sides.
+So the forward equation is $`\partial p / \partial t = L^* p`$, and the backward equation, written in the time left $`\tau`$, is $`\partial u / \partial \tau = L u`$ for the expected payoff $`u`$. Same pieces; the derivatives sit on opposite sides.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_t$, $X_0$ | the process at time $t$, and at the start | the speck's position; the rate | — |
-| $t$, $\tau$ | time, in the stated unit; time left until a payoff | seconds for the speck, years for the rate | the cloud spreads further |
-| $x$, $y$ | the start point, and a point where the density is read | speck: 0 µm; rate: 6 points | — |
-| $p(t, y)$, $p_t$, $p_{yy}$ | the density of $X_t$ at $y$, per unit length; its rate of change in time; its bend along $y$ | 0.3989 per µm at the centre after 1 s | — |
-| $\mu$ | the drift: average velocity at a point | speck: 0; rate: 0.5 × (4 − y) points per year | the cloud slides faster |
-| $\sigma$ | the noise size at a point | speck: 1 µm per root second; rate: 2 points per root year | the cloud widens faster |
-| $L$, $L^*$ | the generator, acting on payoffs; its adjoint, acting on densities | equal for the speck, different for the rate | — |
-| $f$ | a payoff or test function of the position | the square of the rate | — |
-| $J$ | the probability current: net probability flowing rightward past a point per unit time | zero everywhere once the rate's cloud settles | — |
-| $W_t$, $dW_t$ | Brownian motion; its shorthand increment inside an Ito integral | drives both examples | — |
-| $\kappa$, $\theta$ | the rate's pull speed and its long-run level | 0.5 per year, 4 points | faster settling; the cloud's centre moves |
-| $m$, $v$ | mean and variance of the rate's bell at time $t$ | 5.21306 and 2.52848 at one year | — |
-| $h$, $z$ | a short step: of time in the Chapman-Kolmogorov route, of the finite differences in the code; the distance $y - m$ from the bell's mean, in the algebra callout | $h$ = 0.1, 0.05, 0.025 in the residual check | a smaller difference step, a smaller leftover |
+| $`X_t`$, $`X_0`$ | the process at time $`t`$, and at the start | the speck's position; the rate | — |
+| $`t`$, $`\tau`$ | time, in the stated unit; time left until a payoff | seconds for the speck, years for the rate | the cloud spreads further |
+| $`x`$, $`y`$ | the start point, and a point where the density is read | speck: 0 µm; rate: 6 points | — |
+| $`p(t, y)`$, $`p_t`$, $`p_{yy}`$ | the density of $`X_t`$ at $`y`$, per unit length; its rate of change in time; its bend along $`y`$ | 0.3989 per µm at the centre after 1 s | — |
+| $`\mu`$ | the drift: average velocity at a point | speck: 0; rate: 0.5 × (4 − y) points per year | the cloud slides faster |
+| $`\sigma`$ | the noise size at a point | speck: 1 µm per root second; rate: 2 points per root year | the cloud widens faster |
+| $`L`$, $`L^*`$ | the generator, acting on payoffs; its adjoint, acting on densities | equal for the speck, different for the rate | — |
+| $`f`$ | a payoff or test function of the position | the square of the rate | — |
+| $`J`$ | the probability current: net probability flowing rightward past a point per unit time | zero everywhere once the rate's cloud settles | — |
+| $`W_t`$, $`dW_t`$ | Brownian motion; its shorthand increment inside an Ito integral | drives both examples | — |
+| $`\kappa`$, $`\theta`$ | the rate's pull speed and its long-run level | 0.5 per year, 4 points | faster settling; the cloud's centre moves |
+| $`m`$, $`v`$ | mean and variance of the rate's bell at time $`t`$ | 5.21306 and 2.52848 at one year | — |
+| $`h`$, $`z`$ | a short step: of time in the Chapman-Kolmogorov route, of the finite differences in the code; the distance $`y - m`$ from the bell's mean, in the algebra callout | $`h`$ = 0.1, 0.05, 0.025 in the residual check | a smaller difference step, a smaller leftover |
 
 Two cases to keep in view:
 
-- **The speck.** $\mu = 0$ and $\sigma = 1$ give $p_t = \tfrac12 p_{yy}$: the heat equation ([The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md)) with diffusivity one half.
-- **The rate.** $\mu(y) = \kappa(\theta - y)$, with pull speed $\kappa$ = 0.5 a year and long-run level $\theta$ = 4 points, and constant $\sigma$, so $p_t = \partial[\kappa(y - \theta)p]/\partial y + \tfrac12\sigma^2 p_{yy}$. The first term is new: it moves the bell toward $\theta$.
+- **The speck.** $`\mu = 0`$ and $`\sigma = 1`$ give $`p_t = \tfrac12 p_{yy}`$: the heat equation ([The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md)) with diffusivity one half.
+- **The rate.** $`\mu(y) = \kappa(\theta - y)`$, with pull speed $`\kappa`$ = 0.5 a year and long-run level $`\theta`$ = 4 points, and constant $`\sigma`$, so $`p_t = \partial[\kappa(y - \theta)p]/\partial y + \tfrac12\sigma^2 p_{yy}`$. The first term is new: it moves the bell toward $`\theta`$.
 
-The **probability current** turns the equation into bookkeeping. Write $J = \mu p - \tfrac12(\sigma^2 p)'$. Then the forward equation reads $p_t = -J'$: the density at a point rises exactly when more probability flows in from the left than leaves to the right. Nothing is created or lost.
+The **probability current** turns the equation into bookkeeping. Write $`J = \mu p - \tfrac12(\sigma^2 p)'`$. Then the forward equation reads $`p_t = -J'`$: the density at a point rises exactly when more probability flows in from the left than leaves to the right. Nothing is created or lost.
 
 ### When it holds
 
-- **An Ito equation with smooth coefficients.** The drift and noise must be smooth functions of position (time-dependent ones work the same way). If $\sigma$ is meant in the other, Stratonovich, convention, the drift changes by half of $\sigma$ times its slope; using one convention's equation with the other's coefficients moves the cloud to the wrong place.
+- **An Ito equation with smooth coefficients.** The drift and noise must be smooth functions of position (time-dependent ones work the same way). If $`\sigma`$ is meant in the other, Stratonovich, convention, the drift changes by half of $`\sigma`$ times its slope; using one convention's equation with the other's coefficients moves the cloud to the wrong place.
 - **A smooth density exists.** When the noise is never zero and the coefficients are smooth and bounded, it does (Friedman, in Sources). With no noise at all the "cloud" is a single point carried along an ordinary differential equation, and the equation holds only after integrating against payoffs.
 - **Probability stays on the line.** The derivation drops boundary terms because the density and its slope die away far out. A wall that swallows the speck keeps them: the free bell then claims all of the probability is still in the water, when after 1 second only 0.6827 of it is (What breaks).
 - **One dimension.** In several dimensions the same holds with a sum over directions and the noise square replaced by a matrix of covariances; this card stays on the line.
@@ -89,17 +95,21 @@ The **probability current** turns the equation into bookkeeping. Write $J = \mu 
 
 ### Step 0: one average, two ways of writing it
 
-Take any payoff $f$ of the position, such as the square of the rate. Its expected value at time $t$ can be written two ways: average $f$ over the paths, or integrate $f$ against the density:
+Take any payoff $`f`$ of the position, such as the square of the rate. Its expected value at time $`t`$ can be written two ways: average $`f`$ over the paths, or integrate $`f`$ against the density:
 
-$$E[f(X_t)] = \int f(y)\,p(t, y)\,dy.$$
+```math
+E[f(X_t)] = \int f(y)\,p(t, y)\,dy.
+```
 
 The backward equation already knows how the left side changes in time. The forward equation is that same change, read off on the right side. Everything below is moving one derivative across an integral sign.
 
 ### Step 1: how an average changes
 
-By Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)), $df(X_t) = (Lf)(X_t)\,dt + f'(X_t)\,\sigma(X_t)\,dW_t$. The last piece is an Ito integral, a fair game with average zero. Averaging and differentiating in time,
+By Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)), $`df(X_t) = (Lf)(X_t)\,dt + f'(X_t)\,\sigma(X_t)\,dW_t`$. The last piece is an Ito integral, a fair game with average zero. Averaging and differentiating in time,
 
-$$\frac{d}{dt}E[f(X_t)] = E[(Lf)(X_t)] = \int (Lf)(y)\,p(t, y)\,dy.$$
+```math
+\frac{d}{dt}E[f(X_t)] = E[(Lf)(X_t)] = \int (Lf)(y)\,p(t, y)\,dy.
+```
 
 This is the generator card's statement: the generator is the rate at which averages change.
 
@@ -107,80 +117,86 @@ This is the generator card's statement: the generator is the rate at which avera
 
 Integrate by parts once in the drift term and twice in the noise term:
 
-$$\int \mu f'\,p\,dy = -\int f\,(\mu p)'\,dy, \qquad \int \tfrac12\sigma^2 f''\,p\,dy = \int f\,\tfrac12(\sigma^2 p)''\,dy.$$
+```math
+\int \mu f'\,p\,dy = -\int f\,(\mu p)'\,dy, \qquad \int \tfrac12\sigma^2 f''\,p\,dy = \int f\,\tfrac12(\sigma^2 p)''\,dy.
+```
 
-Each move leaves a boundary term, a product evaluated at the two far ends. Far out the density and its slope are zero, so the boundary terms vanish. What remains is $\int f\,(L^* p)\,dy$. The minus sign in front of the drift term comes from moving one derivative; the noise term keeps its sign because two moves cancel.
+Each move leaves a boundary term, a product evaluated at the two far ends. Far out the density and its slope are zero, so the boundary terms vanish. What remains is $`\int f\,(L^* p)\,dy`$. The minus sign in front of the drift term comes from moving one derivative; the noise term keeps its sign because two moves cancel.
 
 ### Step 3: read off the equation
 
-The left side of Step 1 is also $\int f\,p_t\,dy$, by differentiating Step 0 under the integral. So
+The left side of Step 1 is also $`\int f\,p_t\,dy`$, by differentiating Step 0 under the integral. So
 
-$$\int f(y)\,\big[\,p_t - L^* p\,\big](t, y)\,dy = 0$$
+```math
+\int f(y)\,\big[\,p_t - L^* p\,\big](t, y)\,dy = 0
+```
 
-for every smooth payoff $f$. Choose $f$ as a narrow bump at any point: the bracket must be zero there. That is the forward equation, $p_t = L^* p$.
+for every smooth payoff $`f`$. Choose $`f`$ as a narrow bump at any point: the bracket must be zero there. That is the forward equation, $`p_t = L^* p`$.
 
 <details>
 <summary>Detailed proof</summary>
 
-Assume $\mu$ and $\sigma$ are smooth, and $p(t, y)$ is smooth in both variables, with $p$, its first two derivatives in $y$, and $p_t$ tending to zero faster than any power of the distance as the distance from the start grows. Take $f$ smooth and zero outside a bounded interval, so that $f$ and its slope are zero at both ends of the interval.
+Assume $`\mu`$ and $`\sigma`$ are smooth, and $`p(t, y)`$ is smooth in both variables, with $`p`$, its first two derivatives in $`y`$, and $`p_t`$ tending to zero faster than any power of the distance as the distance from the start grows. Take $`f`$ smooth and zero outside a bounded interval, so that $`f`$ and its slope are zero at both ends of the interval.
 
-*Averages.* Ito's lemma gives $f(X_t) = f(X_0) + \int_0^t (Lf)(X_s)\,ds + \int_0^t f'(X_s)\sigma(X_s)\,dW_s$. The integrand of the Ito integral is bounded, because $f'$ is zero outside the interval and $\sigma$ is continuous on it; so the Ito integral has mean zero. Taking expectations, $E f(X_t) = f(x) + \int_0^t E[(Lf)(X_s)]\,ds$, and the integrand is continuous in time, so $\tfrac{d}{dt} E f(X_t) = E[(Lf)(X_t)]$.
+*Averages.* Ito's lemma gives $`f(X_t) = f(X_0) + \int_0^t (Lf)(X_s)\,ds + \int_0^t f'(X_s)\sigma(X_s)\,dW_s`$. The integrand of the Ito integral is bounded, because $`f'`$ is zero outside the interval and $`\sigma`$ is continuous on it; so the Ito integral has mean zero. Taking expectations, $`E f(X_t) = f(x) + \int_0^t E[(Lf)(X_s)]\,ds`$, and the integrand is continuous in time, so $`\tfrac{d}{dt} E f(X_t) = E[(Lf)(X_t)]`$.
 
-*Parts.* Over the interval, $\int \mu f' p = [\mu f p] - \int f(\mu p)'$, and the bracket is zero because $f$ is zero at both ends. Twice for the second term: $\int \sigma^2 f'' p = [\sigma^2 f' p] - \int f'(\sigma^2 p)' = [\sigma^2 f' p] - [f(\sigma^2 p)'] + \int f (\sigma^2 p)''$, and both brackets are zero. So $E[(Lf)(X_t)] = \int f\,L^*p\,dy$.
+*Parts.* Over the interval, $`\int \mu f' p = [\mu f p] - \int f(\mu p)'`$, and the bracket is zero because $`f`$ is zero at both ends. Twice for the second term: $`\int \sigma^2 f'' p = [\sigma^2 f' p] - \int f'(\sigma^2 p)' = [\sigma^2 f' p] - [f(\sigma^2 p)'] + \int f (\sigma^2 p)''`$, and both brackets are zero. So $`E[(Lf)(X_t)] = \int f\,L^*p\,dy`$.
 
-*Time.* The decay of $p_t$ lets the time derivative pass inside the integral (dominated convergence, from wing 10), so $\tfrac{d}{dt}\int f p\,dy = \int f\,p_t\,dy$.
+*Time.* The decay of $`p_t`$ lets the time derivative pass inside the integral (dominated convergence, from wing 10), so $`\tfrac{d}{dt}\int f p\,dy = \int f\,p_t\,dy`$.
 
-*Conclusion.* The continuous function $p_t - L^*p$ integrates to zero against every such $f$. If it were positive at some point, it would be positive on a small interval around it, and a bump $f$ supported there would give a positive integral. So it is zero everywhere. Only the existence and smoothness of $p$ were assumed; for smooth bounded coefficients with $\sigma$ bounded away from zero, Friedman (chapter 1) proves both by constructing the fundamental solution of the parabolic equation.
+*Conclusion.* The continuous function $`p_t - L^*p`$ integrates to zero against every such $`f`$. If it were positive at some point, it would be positive on a small interval around it, and a bump $`f`$ supported there would give a positive integral. So it is zero everywhere. Only the existence and smoothness of $`p`$ were assumed; for smooth bounded coefficients with $`\sigma`$ bounded away from zero, Friedman (chapter 1) proves both by constructing the fundamental solution of the parabolic equation.
 
 </details>
 
 ### Step 4: the speck obeys the heat equation
 
-For the speck, $\mu = 0$ and $\sigma = 1$, so $L^* p = \tfrac12 p_{yy}$: the forward and backward operators coincide. The bell $p = e^{-y^2/(2t)}/\sqrt{2\pi t}$ satisfies it. Differentiating, $p_t = p\,\big(y^2/(2t^2) - 1/(2t)\big)$ and $p_{yy} = p\,\big(y^2/t^2 - 1/t\big)$, so $p_t = \tfrac12 p_{yy}$ exactly. The heat kernel's width $\sqrt{2 \times \text{diffusivity} \times t}$ is $\sqrt{t}$ here, matching variance $t$. The code checks this by putting the formula into the equation with finite differences: the leftover at 1 µm after 1 second shrinks from 0.0010154 to 0.0000630 as the difference step falls from 0.1 to 0.025, a factor of 16 for a step four times smaller.
+For the speck, $`\mu = 0`$ and $`\sigma = 1`$, so $`L^* p = \tfrac12 p_{yy}`$: the forward and backward operators coincide. The bell $`p = e^{-y^2/(2t)}/\sqrt{2\pi t}`$ satisfies it. Differentiating, $`p_t = p\,\big(y^2/(2t^2) - 1/(2t)\big)`$ and $`p_{yy} = p\,\big(y^2/t^2 - 1/t\big)`$, so $`p_t = \tfrac12 p_{yy}`$ exactly. The heat kernel's width $`\sqrt{2 \times \text{diffusivity} \times t}`$ is $`\sqrt{t}`$ here, matching variance $`t`$. The code checks this by putting the formula into the equation with finite differences: the leftover at 1 µm after 1 second shrinks from 0.0010154 to 0.0000630 as the difference step falls from 0.1 to 0.025, a factor of 16 for a step four times smaller.
 
 ### Step 5: the rate's bell slides and stops widening
 
-For the rate, try a bell with moving mean $m(t)$ and variance $v(t)$. Put it into the forward equation and collect the terms with the square of the distance from the mean, the distance itself, and neither. Each must balance separately, and they force two ordinary differential equations:
+For the rate, try a bell with moving mean $`m(t)`$ and variance $`v(t)`$. Put it into the forward equation and collect the terms with the square of the distance from the mean, the distance itself, and neither. Each must balance separately, and they force two ordinary differential equations:
 
-$$m' = \kappa(\theta - m), \qquad v' = \sigma^2 - 2\kappa v.$$
+```math
+m' = \kappa(\theta - m), \qquad v' = \sigma^2 - 2\kappa v.
+```
 
-The first is the pull, acting on the centre. The second says noise pumps variance in at rate $\sigma^2$ while the pull drains it at rate $2\kappa v$. Started from a point, $v(0) = 0$, they give the Ornstein-Uhlenbeck card's mean and variance: at one year, mean 5.21306 points and variance 2.52848, standard deviation 1.5901.
+The first is the pull, acting on the centre. The second says noise pumps variance in at rate $`\sigma^2`$ while the pull drains it at rate $`2\kappa v`$. Started from a point, $`v(0) = 0`$, they give the Ornstein-Uhlenbeck card's mean and variance: at one year, mean 5.21306 points and variance 2.52848, standard deviation 1.5901.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-Write $z = y - m$ for the distance from the mean. For the bell, $p_t / p = z m'/v + z^2 v'/(2v^2) - v'/(2v)$, $p_y/p = -z/v$, and $p_{yy}/p = z^2/v^2 - 1/v$. The right side of the forward equation, divided by $p$, is $\kappa + \kappa(y - \theta)(p_y/p) + \tfrac12\sigma^2(p_{yy}/p)$. Put $y - \theta = z + (m - \theta)$: it becomes $\kappa - \kappa z^2/v - \kappa(m - \theta) z/v + \sigma^2 z^2/(2v^2) - \sigma^2/(2v)$. Matching the $z^2$ terms gives $v' = \sigma^2 - 2\kappa v$; matching the $z$ terms gives $m' = \kappa(\theta - m)$; the constant terms give $v' = \sigma^2 - 2\kappa v$ again, a consistency check that passes.
+Write $`z = y - m`$ for the distance from the mean. For the bell, $`p_t / p = z m'/v + z^2 v'/(2v^2) - v'/(2v)`$, $`p_y/p = -z/v`$, and $`p_{yy}/p = z^2/v^2 - 1/v`$. The right side of the forward equation, divided by $`p`$, is $`\kappa + \kappa(y - \theta)(p_y/p) + \tfrac12\sigma^2(p_{yy}/p)`$. Put $`y - \theta = z + (m - \theta)`$: it becomes $`\kappa - \kappa z^2/v - \kappa(m - \theta) z/v + \sigma^2 z^2/(2v^2) - \sigma^2/(2v)`$. Matching the $`z^2`$ terms gives $`v' = \sigma^2 - 2\kappa v`$; matching the $`z`$ terms gives $`m' = \kappa(\theta - m)`$; the constant terms give $`v' = \sigma^2 - 2\kappa v`$ again, a consistency check that passes.
 
 </details>
 
-Here the generator alone fails. Put the same bell into $p_t = Lp$ and the leftover at rate 5 after one year is 0.14525, and it does not shrink as the step falls: no finite-difference error, a wrong equation.
+Here the generator alone fails. Put the same bell into $`p_t = Lp`$ and the leftover at rate 5 after one year is 0.14525, and it does not shrink as the step falls: no finite-difference error, a wrong equation.
 
 ### Step 6: where the cloud settles
 
-A **stationary density** ([Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md) for chains) is one with $p_t = 0$. Then $J' = 0$, so the current is the same everywhere; it is zero far out, so it is zero everywhere: $\mu p = \tfrac12(\sigma^2 p)'$. With constant noise, $(\ln p)' = 2\mu/\sigma^2 = -2\kappa(y - \theta)/\sigma^2$, so $\ln p$ is a downward parabola centred at $\theta$. That is a bell with variance $\sigma^2/(2\kappa) = 4$, standard deviation 2 points. The code integrates the zero-current equation numerically, without assuming a bell, and finds standard deviation 2.0000 and a 0.0228 chance, 2.28 percent, of a negative rate in the long run.
+A **stationary density** ([Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md) for chains) is one with $`p_t = 0`$. Then $`J' = 0`$, so the current is the same everywhere; it is zero far out, so it is zero everywhere: $`\mu p = \tfrac12(\sigma^2 p)'`$. With constant noise, $`(\ln p)' = 2\mu/\sigma^2 = -2\kappa(y - \theta)/\sigma^2`$, so $`\ln p`$ is a downward parabola centred at $`\theta`$. That is a bell with variance $`\sigma^2/(2\kappa) = 4`$, standard deviation 2 points. The code integrates the zero-current equation numerically, without assuming a bell, and finds standard deviation 2.0000 and a 0.0228 chance, 2.28 percent, of a negative rate in the long run.
 
 Stationary does not mean standing still. Each path keeps moving forever; only the cloud stops changing, because as much probability crosses each point leftward as rightward.
 
-A second road to the same equation starts from the Chapman-Kolmogorov rule, that the law at time $t + h$ is the law at $t$ moved by one more short step, and expands the short step in its moments: the mean of a step gives the drift term, its variance the noise term, and higher moments vanish for a diffusion. That route, and the boundary conditions it needs, are on Fokker-Planck, the planned card in the Partial differential equations wing.
+A second road to the same equation starts from the Chapman-Kolmogorov rule, that the law at time $`t + h`$ is the law at $`t`$ moved by one more short step, and expands the short step in its moments: the mean of a step gives the drift term, its variance the noise term, and higher moments vanish for a diffusion. That route, and the boundary conditions it needs, are on Fokker-Planck, the planned card in the Partial differential equations wing.
 
 ---
 
 ## Worked numbers, by hand
 
-The adjoint identity at one year, on the house example: $\kappa = 0.5$ per year, $\theta = 4$, $\sigma = 2$ points per root year, start 6 points, payoff $f(y) = y^2$. The forward side differentiates the bell's moments. The backward side averages $Lf(y) = 2\kappa(\theta - y)y + \sigma^2$.
+The adjoint identity at one year, on the house example: $`\kappa = 0.5`$ per year, $`\theta = 4`$, $`\sigma = 2`$ points per root year, start 6 points, payoff $`f(y) = y^2`$. The forward side differentiates the bell's moments. The backward side averages $`Lf(y) = 2\kappa(\theta - y)y + \sigma^2`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| decay of the gap, $e^{-\kappa t}$ | $e^{-0.5}$ | 0.60653 |
-| mean $m$ | 4 + 2 × 0.60653 | 5.21306 |
-| slope of the mean, $m'$ | 0.5 × (4 − 5.21306) | −0.60653 |
-| variance $v$ | 4 × (1 − 0.60653 × 0.60653) | 2.52848 |
-| slope of the variance, $v'$ | 4 − 2 × 0.5 × 2.52848 | +1.47152 |
+| decay of the gap, $`e^{-\kappa t}`$ | $`e^{-0.5}`$ | 0.60653 |
+| mean $`m`$ | 4 + 2 × 0.60653 | 5.21306 |
+| slope of the mean, $`m'`$ | 0.5 × (4 − 5.21306) | −0.60653 |
+| variance $`v`$ | 4 × (1 − 0.60653 × 0.60653) | 2.52848 |
+| slope of the variance, $`v'`$ | 4 − 2 × 0.5 × 2.52848 | +1.47152 |
 | forward: twice mean times its slope | 2 × 5.21306 × (−0.60653) | −6.32376 |
-| forward: rate of change of $E[X_t^2]$ | 1.47152 − 6.32376 | **−4.85225** |
-| backward: $E[X_t^2] = v + m^2$ | 2.52848 + 5.21306 × 5.21306 | 29.70449 |
-| backward: $2\kappa\theta m$ | 2 × 0.5 × 4 × 5.21306 | 20.85225 |
-| backward: $E[Lf] = 2\kappa\theta m - 2\kappa E[X_t^2] + \sigma^2$ | 20.85225 − 1 × 29.70449 + 4 (here 2κ = 1) | **−4.85225** |
+| forward: rate of change of $`E[X_t^2]`$ | 1.47152 − 6.32376 | **−4.85225** |
+| backward: $`E[X_t^2] = v + m^2`$ | 2.52848 + 5.21306 × 5.21306 | 29.70449 |
+| backward: $`2\kappa\theta m`$ | 2 × 0.5 × 4 × 5.21306 | 20.85225 |
+| backward: $`E[Lf] = 2\kappa\theta m - 2\kappa E[X_t^2] + \sigma^2`$ | 20.85225 − 1 × 29.70449 + 4 (here 2κ = 1) | **−4.85225** |
 
 Entries are rounded to five places, so sums of them can miss the last digit by one; the code, at full precision, gets −4.85225 four ways. In the world: one year out, the expected square of the rate is falling at 4.85 square points per year, because the pull is dragging the centre down faster than the noise is widening the bell.
 
@@ -188,7 +204,7 @@ Entries are rounded to five places, so sums of them can miss the last digit by o
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Generator $L$ on the density, rate started from its bell at 0.1 years | total probability 1.5677 at one year (theory e to the 0.9κ, 1.5683) | probability is created from nothing: $L$ is not the adjoint |
+| Generator $`L`$ on the density, rate started from its bell at 0.1 years | total probability 1.5677 at one year (theory e to the 0.9κ, 1.5683) | probability is created from nothing: $`L`$ is not the adjoint |
 | Drift term with the wrong sign | mean 6.9835 at one year, not 5.2131 | the cloud is pushed away from 4: the drift was undone instead of carried |
 | Drop the one half on the speck | peak 0.2821 per µm after 1 s, not 0.3989 | the cloud spreads at twice the rate: variance 2t, not t |
 | Ignore an absorbing wall 1 µm left of the start, one that holds any speck touching it (a hypothesis dropped) | free bell keeps 1.0000 of the probability; truth 0.6827 by images, 0.6826 on a grid | boundary terms in Step 2 no longer vanish: probability leaves through the wall |
@@ -615,12 +631,12 @@ Bars: the percent of the 10,000 simulated paths ending in each 1-point bin, one 
 
 Lean proves Steps 2 and 3 for any smooth drift and noise, and the two bells of Steps 4 and 5.
 
-- Suppose $\mu$, $\sigma$ and the density $p$ are smooth, and Step 1 holds for every smooth payoff that is zero far out. Then $p_t = -(\mu p)' + \tfrac12(\sigma^2 p)''$ at every time $t > 0$ and every point $y$.
-- Take the speck's bell, $p = e^{-y^2/(2t)}/\sqrt{2\pi t}$. Then $p_t = \tfrac12 p_{yy}$ at every time $t > 0$ and every point $y$: the heat equation.
-- Take the rate's bell from Step 5, started from $x$, with pull speed $\kappa > 0$ and noise size $\sigma \ne 0$. Then $p_t = [\kappa(y - \theta)p]' + \tfrac12\sigma^2 p_{yy}$ at every time $t > 0$ and every point $y$.
-- Take $\kappa$ = 0.5, $\theta$ = 4, $\sigma$ = 2 and $f(y) = y^2$. Then $Lf(y) = 2\kappa(\theta - y)y + \sigma^2$, as in the worked table.
-- Take the same numbers. Then the forward and backward rates of change of $E[X_t^2]$ agree for every mean $m$ and variance $v$.
-- Take the same numbers. Then the stationary variance $\sigma^2/(2\kappa)$ is 4: a standard deviation of 2 points.
+- Suppose $`\mu`$, $`\sigma`$ and the density $`p`$ are smooth, and Step 1 holds for every smooth payoff that is zero far out. Then $`p_t = -(\mu p)' + \tfrac12(\sigma^2 p)''`$ at every time $`t > 0`$ and every point $`y`$.
+- Take the speck's bell, $`p = e^{-y^2/(2t)}/\sqrt{2\pi t}`$. Then $`p_t = \tfrac12 p_{yy}`$ at every time $`t > 0`$ and every point $`y`$: the heat equation.
+- Take the rate's bell from Step 5, started from $`x`$, with pull speed $`\kappa > 0`$ and noise size $`\sigma \ne 0`$. Then $`p_t = [\kappa(y - \theta)p]' + \tfrac12\sigma^2 p_{yy}`$ at every time $`t > 0`$ and every point $`y`$.
+- Take $`\kappa`$ = 0.5, $`\theta`$ = 4, $`\sigma`$ = 2 and $`f(y) = y^2`$. Then $`Lf(y) = 2\kappa(\theta - y)y + \sigma^2`$, as in the worked table.
+- Take the same numbers. Then the forward and backward rates of change of $`E[X_t^2]`$ agree for every mean $`m`$ and variance $`v`$.
+- Take the same numbers. Then the stationary variance $`\sigma^2/(2\kappa)`$ is 4: a standard deviation of 2 points.
 
 Lean has no Ito integral, so Step 1 is assumed; Step 6, the wall and the simulation stay with the Python and Rust checks.
 
@@ -966,11 +982,11 @@ example : (2 : ℚ) ^ 2 / (2 * (1 / 2)) = 4 ∧ (2 : ℚ) ^ 2 = 4 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Running the density with the generator.** The backward and forward equations use the same three ingredients, so it is tempting to write $p_t = Lp$. For the speck that happens to be right, because with no drift and constant noise the generator equals its adjoint. The mistake hides only when there is no drift. With a constant drift the cloud runs the wrong way, and once the drift depends on position probability is also created from nothing: for the rate, starting from the true bell at 0.1 years, total probability reaches 1.5677 at one year. The generator moves payoffs, indexed by the start. Its adjoint moves densities, indexed by the end.
+> **Running the density with the generator.** The backward and forward equations use the same three ingredients, so it is tempting to write $`p_t = Lp`$. For the speck that happens to be right, because with no drift and constant noise the generator equals its adjoint. The mistake hides only when there is no drift. With a constant drift the cloud runs the wrong way, and once the drift depends on position probability is also created from nothing: for the rate, starting from the true bell at 0.1 years, total probability reaches 1.5677 at one year. The generator moves payoffs, indexed by the start. Its adjoint moves densities, indexed by the end.
 >
 > Four smaller traps:
-> - **Noise outside the derivative.** When $\sigma$ varies with position, the noise term is half the second derivative of $\sigma^2 p$, not $\sigma^2$ times half the second derivative of $p$. The wrong version does not conserve probability.
-> - **Reading the density as a probability.** The rate's density peaks at 0.2509 per point after one year and the speck's at 0.5642 per µm after half a second; early enough, either peak passes 1, the speck's at any time under $1/(2\pi)$ seconds. Probability is area under the curve, never its height.
+> - **Noise outside the derivative.** When $`\sigma`$ varies with position, the noise term is half the second derivative of $`\sigma^2 p`$, not $`\sigma^2`$ times half the second derivative of $`p`$. The wrong version does not conserve probability.
+> - **Reading the density as a probability.** The rate's density peaks at 0.2509 per point after one year and the speck's at 0.5642 per µm after half a second; early enough, either peak passes 1, the speck's at any time under $`1/(2\pi)`$ seconds. Probability is area under the curve, never its height.
 > - **"Stationary" as "standing still".** The rate's long-run bell, standard deviation 2.0000 points, is a cloud that has stopped changing, with zero net current. Every path inside it keeps moving.
 > - **Trusting one histogram.** A simulation is one sample on a grid with a stated step. The simulated spread here is 1.6183, about two and a half standard errors from 1.5901: a sample, not a disagreement.
 

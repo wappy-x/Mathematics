@@ -30,52 +30,56 @@ flowchart LR
     A -->|"down factor 0.818731"| D["81.873075<br/>the call pays 0.000000"]
 ```
 
-The two factors, 1.221403 up and 0.818731 down, are $e^{\sigma\sqrt{T}}$ and its reciprocal. Sigma ($\sigma$) is Acme's volatility, how jumpy the share is: 20 percent a year here. $T$ is the years to delivery.
+The two factors, 1.221403 up and 0.818731 down, are $`e^{\sigma\sqrt{T}}`$ and its reciprocal. Sigma ($`\sigma`$) is Acme's volatility, how jumpy the share is: 20 percent a year here. $`T`$ is the years to delivery.
 
-Why that pair and not another is the business of [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md); here they are handed over. So is the rest of the house market: a riskless rate of 5 percent, a dividend yield of 2 percent, and one year to delivery. Both rates are continuously compounded: a year at 5 percent grows a dollar to $e^{0.05}$, which is 1.051271.
+Why that pair and not another is the business of [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md); here they are handed over. So is the rest of the house market: a riskless rate of 5 percent, a dividend yield of 2 percent, and one year to delivery. Both rates are continuously compounded: a year at 5 percent grows a dollar to $`e^{0.05}`$, which is 1.051271.
 
 ---
 
 ## The formula
 
-Notation first, in words. A capital Greek D, written $\Delta$ and said "delta", counts shares: it is a difference between payments divided by a difference between prices, which is why the letter for difference names it. A letter carrying a small letter below it names a state: $H_u$ is the payment to copy in the up state, $H_d$ the payment in the down state. $B$ is the cash in the bank today, negative when the copy borrows.
+Notation first, in words. A capital Greek D, written $`\Delta`$ and said "delta", counts shares: it is a difference between payments divided by a difference between prices, which is why the letter for difference names it. A letter carrying a small letter below it names a state: $`H_u`$ is the payment to copy in the up state, $`H_d`$ the payment in the down state. $`B`$ is the cash in the bank today, negative when the copy borrows.
 
-$$\Delta = \frac{H_u - H_d}{S(u - d)}, \qquad B = e^{-rT}\,\frac{u H_d - d H_u}{u - d}$$
+```math
+\Delta = \frac{H_u - H_d}{S(u - d)}, \qquad B = e^{-rT}\,\frac{u H_d - d H_u}{u - d}
+```
 
 **Read it aloud:** the share holding is the gap between the two payments divided by the gap between the two share prices; the bank balance is then whatever it takes to land on either payment exactly.
 
 Those holdings cost
 
-$$V = \Delta\,S\,e^{-qT} + B.$$
+```math
+V = \Delta\,S\,e^{-qT} + B.
+```
 
 **Read it aloud:** the copy's cost today is the shares it needs, made cheaper by the dividends they pay before delivery, plus the cash left in the bank.
 
-The two delivery prices are today's price multiplied by each factor, $S u$ and $S d$. The call's two payments are $\max(S u - K, 0)$ and $\max(S d - K, 0)$: whatever the share is worth above the strike, or nothing.
+The two delivery prices are today's price multiplied by each factor, $`S u`$ and $`S d`$. The call's two payments are $`\max(S u - K, 0)`$ and $`\max(S d - K, 0)`$: whatever the share is worth above the strike, or nothing.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's share price today, in dollars | 100.00 | rises: more to copy, so a dearer call |
-| $K$ | the strike, the price the call may buy at | 100.00 | rises: less to copy, so a cheaper call |
-| $u$, $d$ | the up and down factors | 1.221403 and 0.818731 | the wider the gap, the dearer the call |
-| $H_u$, $H_d$ | the payments to copy, up state and down state | 22.140276 and 0.000000 | the copy costs more, in proportion |
-| $\Delta$ | shares held at delivery per contract: the hedge ratio | 0.549834 | more of the copy rides on Acme |
-| $B$ | cash in the bank today, negative when borrowing | −42.821115 | less borrowed, so a dearer copy |
-| $V$ | what the copy costs, and so what the contract is worth | 11.073541 | — |
-| $r$ | the riskless rate, continuously compounded | 5 percent | rises: the same debt raises less today, so a dearer call |
-| $q$ | the dividend yield leaking out of the share each year | 2 percent | rises: fewer shares to buy today, so a cheaper call |
-| $T$ | time to delivery, in years | 1 | — |
-| $\sigma$ | volatility: how jumpy the share is, per year | 20 percent | rises: the futures spread apart, and the call is dearer |
-| $e^{-rT}$, $e^{-qT}$ | the discount, and the dividend drag | 0.951229 and 0.980199 | — |
+| $`S`$ | Acme's share price today, in dollars | 100.00 | rises: more to copy, so a dearer call |
+| $`K`$ | the strike, the price the call may buy at | 100.00 | rises: less to copy, so a cheaper call |
+| $`u`$, $`d`$ | the up and down factors | 1.221403 and 0.818731 | the wider the gap, the dearer the call |
+| $`H_u`$, $`H_d`$ | the payments to copy, up state and down state | 22.140276 and 0.000000 | the copy costs more, in proportion |
+| $`\Delta`$ | shares held at delivery per contract: the hedge ratio | 0.549834 | more of the copy rides on Acme |
+| $`B`$ | cash in the bank today, negative when borrowing | −42.821115 | less borrowed, so a dearer copy |
+| $`V`$ | what the copy costs, and so what the contract is worth | 11.073541 | — |
+| $`r`$ | the riskless rate, continuously compounded | 5 percent | rises: the same debt raises less today, so a dearer call |
+| $`q`$ | the dividend yield leaking out of the share each year | 2 percent | rises: fewer shares to buy today, so a cheaper call |
+| $`T`$ | time to delivery, in years | 1 | — |
+| $`\sigma`$ | volatility: how jumpy the share is, per year | 20 percent | rises: the futures spread apart, and the call is dearer |
+| $`e^{-rT}`$, $`e^{-qT}`$ | the discount, and the dividend drag | 0.951229 and 0.980199 | — |
 
-$\Delta$ counts shares held **at delivery**, which is not the number to buy now. A share paying a dividend yield of $q$, each dividend spent on more shares, breeds shares at that rate, so $\Delta e^{-qT}$ shares today grow into $\Delta$ by delivery: 0.538947 become 0.549834.
+$`\Delta`$ counts shares held **at delivery**, which is not the number to buy now. A share paying a dividend yield of $`q`$, each dividend spent on more shares, breeds shares at that rate, so $`\Delta e^{-qT}`$ shares today grow into $`\Delta`$ by delivery: 0.538947 become 0.549834.
 
 ### When it holds
 
 - **Exactly two delivery prices, both possible.** Two instruments pin down two numbers and no more: let a third price into the model and the copy is short in the state it never saw. What three states need is [Trinomial trees](06-trinomial-trees-and-the-grid-connection.md).
-- **The two states differ, $u > d$.** With one price in both futures the two equations have identical left-hand sides: unequal payments then have no copy at all, and the division by $S(u-d)$ is a division by zero.
-- **The forward growth factor lands strictly between the two: $d < e^{(r-q)T} < u$.** The forward growth factor $e^{(r-q)T}$ is the bank's growth with the dividend yield taken off. Acme's is 1.030455, inside 0.818731 and 1.221403. Break it and the market itself is broken: the folded proof below builds a trade that costs nothing, never loses and sometimes wins. Such a trade is an arbitrage ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). A copy's cost is a price only where such trades are absent.
+- **The two states differ, $`u > d`$.** With one price in both futures the two equations have identical left-hand sides: unequal payments then have no copy at all, and the division by $`S(u-d)`$ is a division by zero.
+- **The forward growth factor lands strictly between the two: $`d < e^{(r-q)T} < u`$.** The forward growth factor $`e^{(r-q)T}`$ is the bank's growth with the dividend yield taken off. Acme's is 1.030455, inside 0.818731 and 1.221403. Break it and the market itself is broken: the folded proof below builds a trade that costs nothing, never loses and sometimes wins. Such a trade is an arbitrage ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). A copy's cost is a price only where such trades are absent.
 - **Trading is frictionless.** Fractional shares, borrowing and lending at the same 5 percent, no fees, no spread, no default, holdings untouched until delivery. Every friction widens the price from a point to a band: a bid-ask spread of 20 cents on Acme moves the copy's cost by 0.107789.
-- **The dividend yield is known and leaks out steadily.** That is what makes $e^{-qT}$ the right shrink on the share leg. A lump dividend on a known date needs its present value subtracted instead; charging the yield twice prices this call at 10.619190 rather than 11.073541.
+- **The dividend yield is known and leaks out steadily.** That is what makes $`e^{-qT}`$ the right shrink on the share leg. A lump dividend on a known date needs its present value subtracted instead; charging the yield twice prices this call at 10.619190 rather than 11.073541.
 
 ---
 
@@ -87,25 +91,31 @@ The idea underneath everything else: in a model with two states, a contract's pa
 
 ### Step 1: write down what the copy must pay in each state
 
-Let $\Delta$ be the shares held at delivery and $B$ the cash in the bank today, which grows to $Be^{rT}$ by delivery whatever happens. The shares are worth $\Delta S u$ in the up state and $\Delta S d$ in the down state. Matching the call in both:
+Let $`\Delta`$ be the shares held at delivery and $`B`$ the cash in the bank today, which grows to $`Be^{rT}`$ by delivery whatever happens. The shares are worth $`\Delta S u`$ in the up state and $`\Delta S d`$ in the down state. Matching the call in both:
 
-$$\Delta S u + B e^{rT} = H_u, \qquad \Delta S d + B e^{rT} = H_d.$$
+```math
+\Delta S u + B e^{rT} = H_u, \qquad \Delta S d + B e^{rT} = H_d.
+```
 
-With Acme's numbers: $\Delta \times 122.140276 + B \times 1.051271 = 22.140276$ up, and $\Delta \times 81.873075 + B \times 1.051271 = 0$ down.
+With Acme's numbers: $`\Delta \times 122.140276 + B \times 1.051271 = 22.140276`$ up, and $`\Delta \times 81.873075 + B \times 1.051271 = 0`$ down.
 
 ### Step 2: subtract, and the bank disappears
 
-The bank pays the same in both states, so subtracting one equation from the other removes $B$ entirely:
+The bank pays the same in both states, so subtracting one equation from the other removes $`B`$ entirely:
 
-$$\Delta\,S(u - d) = H_u - H_d \quad\Longrightarrow\quad \Delta = \frac{H_u - H_d}{S(u-d)}.$$
+```math
+\Delta\,S(u - d) = H_u - H_d \quad\Longrightarrow\quad \Delta = \frac{H_u - H_d}{S(u-d)}.
+```
 
 For Acme, 22.140276 divided by 40.267201 is 0.549834 shares. Read it as an exchange rate between the two futures: across the gap the share gains $40.27 and the call gains $22.14, so the call moves like 0.5498 of a share. A desk short one call and long 0.549834 shares at delivery ends with the same money in either state, and so has no stake in which arrives.
 
 ### Step 3: put the share holding back, and the bank balance falls out
 
-The down equation now carries one unknown. The debt due at delivery is whatever the shares overshoot by: $-0.549834 \times 81.873075 = -45.016600$. Discounted one year at 5 percent, $-45.016600 \times 0.951229 = -42.821115$: the copy borrows $42.82 today and owes $45.02 at delivery. In symbols, with $H_d$ kept general:
+The down equation now carries one unknown. The debt due at delivery is whatever the shares overshoot by: $`-0.549834 \times 81.873075 = -45.016600`$. Discounted one year at 5 percent, $`-45.016600 \times 0.951229 = -42.821115`$: the copy borrows $42.82 today and owes $45.02 at delivery. In symbols, with $`H_d`$ kept general:
 
-$$B = e^{-rT}\,\frac{u H_d - d H_u}{u - d}.$$
+```math
+B = e^{-rT}\,\frac{u H_d - d H_u}{u - d}.
+```
 
 Borrowing $45.02 today instead leaves a different debt at delivery, and the copy misses both states.
 
@@ -133,22 +143,24 @@ Suppose the call traded at $11.50 instead. Sell one call, build the copy for 11.
 
 Collecting the cost around the two payments instead of the two holdings gives one line:
 
-$$V = e^{-rT}\left[\frac{e^{(r-q)T} - d}{u - d}\,H_u \;+\; \frac{u - e^{(r-q)T}}{u - d}\,H_d\right].$$
+```math
+V = e^{-rT}\left[\frac{e^{(r-q)T} - d}{u - d}\,H_u \;+\; \frac{u - e^{(r-q)T}}{u - d}\,H_d\right].
+```
 
-For Acme the two brackets are 0.525797 and 0.474203. They add to exactly 1, and both are positive exactly when the forward factor sits between $d$ and $u$ — the band from When it holds. The cost then reads a second way: weigh the two payments, add, discount once. Multiplied by the discount 0.951229, those weights become the tree's one-period state prices ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). Why 0.525797 looks so much like a chance of an up move, and what follows from treating it as one, is the next card: [The risk-neutral probability](02-risk-neutral-probability.md). None of the algebra above needed it.
+For Acme the two brackets are 0.525797 and 0.474203. They add to exactly 1, and both are positive exactly when the forward factor sits between $`d`$ and $`u`$ — the band from When it holds. The cost then reads a second way: weigh the two payments, add, discount once. Multiplied by the discount 0.951229, those weights become the tree's one-period state prices ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). Why 0.525797 looks so much like a chance of an up move, and what follows from treating it as one, is the next card: [The risk-neutral probability](02-risk-neutral-probability.md). None of the algebra above needed it.
 
 <details>
 <summary>Detailed proof: a copy exists, only one exists, and the band is exactly right</summary>
 
-**Existence and uniqueness.** Subtracting the two delivery equations gives $\Delta S(u-d) = H_u - H_d$. Since $S > 0$ and $u > d$, the factor $S(u-d)$ is not zero, so $\Delta$ is forced; substituting it into the down equation and dividing by $e^{rT} > 0$ forces $B$. Both put back confirm they work: the up value is $[u(H_u-H_d) + uH_d - dH_u]/(u-d) = H_u$, the down value $[d(H_u-H_d) + uH_d - dH_u]/(u-d) = H_d$.
+**Existence and uniqueness.** Subtracting the two delivery equations gives $`\Delta S(u-d) = H_u - H_d`$. Since $`S > 0`$ and $`u > d`$, the factor $`S(u-d)`$ is not zero, so $`\Delta`$ is forced; substituting it into the down equation and dividing by $`e^{rT} > 0`$ forces $`B`$. Both put back confirm they work: the up value is $`[u(H_u-H_d) + uH_d - dH_u]/(u-d) = H_u`$, the down value $`[d(H_u-H_d) + uH_d - dH_u]/(u-d) = H_d`$.
 
-Uniqueness needs no search. If two pairs of holdings both copy the same payments, subtracting their up and down equations gives $(\Delta - \Delta')S(u-d) = 0$, so $\Delta = \Delta'$, and then $e^{rT}(B - B') = 0$ forces $B = B'$. That covers every real pair of holdings at once.
+Uniqueness needs no search. If two pairs of holdings both copy the same payments, subtracting their up and down equations gives $`(\Delta - \Delta')S(u-d) = 0`$, so $`\Delta = \Delta'`$, and then $`e^{rT}(B - B') = 0`$ forces $`B = B'`$. That covers every real pair of holdings at once.
 
-**The band.** Buying $e^{-qT}$ shares today costs $Se^{-qT}$ and delivers one share, worth $S u$ or $S d$, so a dollar in shares returns $ue^{qT}$ or $de^{qT}$ while a dollar in the bank returns $e^{rT}$ either way. If $e^{rT} \le de^{qT}$, borrow $Se^{-qT}$ and buy the shares: the position costs nothing, the debt at delivery is $Se^{(r-q)T}$, and the shares are worth at least that in the down state and strictly more in the up state. If $e^{rT} \ge ue^{qT}$, reverse it: sell the shares short, bank the proceeds. Either way money appears from nothing, so no-arbitrage forces $d < e^{(r-q)T} < u$.
+**The band.** Buying $`e^{-qT}`$ shares today costs $`Se^{-qT}`$ and delivers one share, worth $`S u`$ or $`S d`$, so a dollar in shares returns $`ue^{qT}`$ or $`de^{qT}`$ while a dollar in the bank returns $`e^{rT}`$ either way. If $`e^{rT} \le de^{qT}`$, borrow $`Se^{-qT}`$ and buy the shares: the position costs nothing, the debt at delivery is $`Se^{(r-q)T}`$, and the shares are worth at least that in the down state and strictly more in the up state. If $`e^{rT} \ge ue^{qT}`$, reverse it: sell the shares short, bank the proceeds. Either way money appears from nothing, so no-arbitrage forces $`d < e^{(r-q)T} < u`$.
 
 Inside the band both weights of Step 6 are positive, and Step 6 holds for any pair of payments, so it returns the cost of every share-and-cash position. One that never pays less than zero and sometimes more must then cost something strictly positive: it cannot be had for nothing. The band is necessary and sufficient.
 
-**Price equals cost.** Let the contract also trade, at a quote above its copy's cost $V$. Sell the contract, build the copy, deposit the difference: the copy meets the obligation in both states and the deposit grows at the bank rate, a certain gain from a position that cost nothing. A quote below $V$ gives the same trade with every leg reversed. Only $V$ itself leaves nothing on the table, and the contract added at that price creates no new arbitrage, since any use of it rewrites as copies.
+**Price equals cost.** Let the contract also trade, at a quote above its copy's cost $`V`$. Sell the contract, build the copy, deposit the difference: the copy meets the obligation in both states and the deposit grows at the bank rate, a certain gain from a position that cost nothing. A quote below $`V`$ gives the same trade with every leg reversed. Only $`V`$ itself leaves nothing on the table, and the contract added at that price creates no new arbitrage, since any use of it rewrites as copies.
 
 </details>
 
@@ -156,19 +168,19 @@ Inside the band both weights of Step 6 are positive, and Step 6 holds for any pa
 
 ## Worked numbers, by hand
 
-Acme on the house tree: $S = 100.00$, $K = 100.00$, $u = 1.221403$, $d = 0.818731$, $r = 5$ percent, $q = 2$ percent, $T = 1$ year.
+Acme on the house tree: $`S = 100.00`$, $`K = 100.00`$, $`u = 1.221403`$, $`d = 0.818731`$, $`r = 5`$ percent, $`q = 2`$ percent, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the two delivery prices | $100.00 \times 1.221403$ and $\times 0.818731$ | 122.140276 and 81.873075 |
-| the call's two payments | $\max(122.140276 - 100, 0)$, $\max(81.873075 - 100, 0)$ | 22.140276 and 0.000000 |
-| the price gap | $122.140276 - 81.873075$ | 40.267201 |
-| the hedge ratio | $22.140276 \div 40.267201$ | **0.549834 shares** |
-| the debt at delivery | $-0.549834 \times 81.873075$ | −45.016600 |
-| the bank balance today | $-45.016600 \times 0.951229$ | **−42.821115** |
-| shares to buy today | $0.549834 \times 0.980199$ | 0.538947 |
-| the share leg's cost | $0.538947 \times 100.00$ | 53.894655 |
-| **the copy's cost** | $53.894655 - 42.821115$ | **11.073541** |
+| the two delivery prices | $`100.00 \times 1.221403`$ and $`\times 0.818731`$ | 122.140276 and 81.873075 |
+| the call's two payments | $`\max(122.140276 - 100, 0)`$, $`\max(81.873075 - 100, 0)`$ | 22.140276 and 0.000000 |
+| the price gap | $`122.140276 - 81.873075`$ | 40.267201 |
+| the hedge ratio | $`22.140276 \div 40.267201`$ | **0.549834 shares** |
+| the debt at delivery | $`-0.549834 \times 81.873075`$ | −45.016600 |
+| the bank balance today | $`-45.016600 \times 0.951229`$ | **−42.821115** |
+| shares to buy today | $`0.549834 \times 0.980199`$ | 0.538947 |
+| the share leg's cost | $`0.538947 \times 100.00`$ | 53.894655 |
+| **the copy's cost** | $`53.894655 - 42.821115`$ | **11.073541** |
 
 Manufacturing that call out of Acme shares and a bank loan costs $11.07, so that is what the call is worth. That is about 11 percent of the share price, for a year of upside with the downside cut off.
 
@@ -191,7 +203,7 @@ At a strike of $80 both futures finish above it: the call is a share with a fixe
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | The payoff gap divided by the factor gap | 54.983400 shares | The gap between the futures is $40.27, in dollars; today's price belongs in the denominator |
-| Buying $\Delta$ whole shares today | 12.162285 | Reinvested dividends breed shares: only 0.538947 need buying to hold 0.549834 |
+| Buying $`\Delta`$ whole shares today | 12.162285 | Reinvested dividends breed shares: only 0.538947 need buying to hold 0.549834 |
 | Borrowing the debt's face value, 45.016600 | 8.878055 | The loan is repaid at delivery, so today it raises 42.821115 |
 | Taking the 2 percent dividend out twice | 10.619190 | Shrinking the share price and then the answer charges one leak twice |
 | Weighing the two payments with a fair coin | 10.530241 | Nothing in the solve ever asked how likely the up state is |
@@ -205,7 +217,7 @@ Every one of those five numbers is printed by the code below.
 Nothing is imported that already knows an option price. The code takes four independent roads to the answer:
 
 - Road 1 eliminates and substitutes, the algebra of Steps 2 and 3.
-- Road 2 never divides by $u - d$. It fixes the bank balance to match the down state, then hunts the share count that closes the up state by bisection, the root finder written out: it halves the range of possible share counts 200 times.
+- Road 2 never divides by $`u - d`$. It fixes the bank balance to match the down state, then hunts the share count that closes the up state by bisection, the root finder written out: it halves the range of possible share counts 200 times.
 - Road 3 uses the regrouped weights of Step 6.
 - Road 4 repeats the solve in whole-number fractions on a toy market. There the share moves by a fifth and the bank multiplies cash by 21/20, so the exact answers — half a share, −800/21 of cash, 250/21 of cost — carry no rounding at all.
 
@@ -629,12 +641,12 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the copy, the price and the band for every one-step market with $S > 0$ and $u > d$.
+Lean proves the copy, the price and the band for every one-step market with $`S > 0`$ and $`u > d`$.
 
-- Suppose $S > 0$, $u > d$, and the forward growth factor lies strictly between $d$ and $u$. Then exactly one share holding and bank balance copy the contract: the $\Delta$ and $B$ of The formula.
-- Take that same market, with the contract also trading at a price $P$. Then no trade in shares, cash and the contract is an arbitrage exactly when $P$ equals the copy's cost $V$.
-- Suppose $S > 0$ and $u > d$. Then shares and the bank alone allow no arbitrage exactly when the forward growth factor lies strictly between $d$ and $u$.
-- Suppose $S > 0$ and $u > d$. Then the copy's cost $V$ equals the regrouped line of Step 6, for any two payments.
+- Suppose $`S > 0`$, $`u > d`$, and the forward growth factor lies strictly between $`d`$ and $`u`$. Then exactly one share holding and bank balance copy the contract: the $`\Delta`$ and $`B`$ of The formula.
+- Take that same market, with the contract also trading at a price $`P`$. Then no trade in shares, cash and the contract is an arbitrage exactly when $`P`$ equals the copy's cost $`V`$.
+- Suppose $`S > 0`$ and $`u > d`$. Then shares and the bank alone allow no arbitrage exactly when the forward growth factor lies strictly between $`d`$ and $`u`$.
+- Suppose $`S > 0`$ and $`u > d`$. Then the copy's cost $`V`$ equals the regrouped line of Step 6, for any two payments.
 - Take the toy market of Road 4, with a strike of 100. Then the call pays 20 or 0, and the copy, half a share and −800/21 of cash, costs 250/21.
 
 Acme's numbers, the bisection, the mispricing trade, the strike table and the wrong answers are left to the Python and Rust checks.
@@ -961,7 +973,7 @@ end OneStepBinomial
 ## What this builds on
 
 - [Replication](../03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md): what it means for shares and cash to copy a contract, and why a copy left untouched between two dates needs no cash injected. This card builds the smallest copy there is.
-- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the price of a dollar paid in one named state. The brackets of Step 6, multiplied by the discount $e^{-rT}$, are those prices, read off a tree.
+- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the price of a dollar paid in one named state. The brackets of Step 6, multiplied by the discount $`e^{-rT}`$, are those prices, read off a tree.
 - [Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): eliminate one unknown by subtraction, substitute back for the other, and know when the solution is the only one. The derivation is that method applied to money.
 
 ## Where this goes next
@@ -978,6 +990,6 @@ Verified 14 Sep 2026: every link below resolves to the publisher's page.
 
 - Cox, John C., Stephen A. Ross, and Mark Rubinstein. "Option Pricing: A Simplified Approach." *Journal of Financial Economics* 7, no. 3 (1979): 229–263. [doi:10.1016/0304-405X(79)90015-1](https://doi.org/10.1016/0304-405X(79)90015-1). Option pricing built out of one-step hedges like this one, then stacked.
 - Rendleman, Richard J., and Brit J. Bartter. "Two-State Option Pricing." *Journal of Finance* 34, no. 5 (1979): 1093–1110. [doi:10.1111/j.1540-6261.1979.tb00058.x](https://doi.org/10.1111/j.1540-6261.1979.tb00058.x). The same year, the same two-state solve, reached independently.
-- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). Where the continuous dividend yield, and so the $e^{-qT}$ on the share leg, comes from.
+- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). Where the continuous dividend yield, and so the $`e^{-qT}`$ on the share leg, comes from.
 - Shreve, Steven E. *Stochastic Calculus for Finance I: The Binomial Asset Pricing Model*. Springer, 2004. [Publisher page](https://link.springer.com/book/9780387401003). Chapter 1 is this card, at full length.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The standard textbook treatment of the one-step tree and the hedge ratio.

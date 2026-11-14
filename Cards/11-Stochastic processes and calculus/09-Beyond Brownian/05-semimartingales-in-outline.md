@@ -37,69 +37,83 @@ One sample path, simulated on a grid of 4,096 steps a year with seed 20260930 an
 
 Notation first, in words.
 
-- A process is written $X_t$, read "the value at time t".
-- Its paths are **càdlàg**: right-continuous with left limits, so at each time the path has a value just before, written $X_{t-}$, and a value at, $X_t$.
-- The **jump** at time t is $\Delta X_t = X_t - X_{t-}$, zero except at the crash instants.
+- A process is written $`X_t`$, read "the value at time t".
+- Its paths are **càdlàg**: right-continuous with left limits, so at each time the path has a value just before, written $`X_{t-}`$, and a value at, $`X_t`$.
+- The **jump** at time t is $`\Delta X_t = X_t - X_{t-}`$, zero except at the crash instants.
 - A **stopping time** is a random time whose arrival can be recognized using only the past ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)).
 - A **local martingale** is a process that becomes a fair game (a martingale: best forecast of later is now, [Martingales](../02-Martingales/01-martingales.md)) once it is stopped at each of a sequence of stopping times running off to infinity.
 - A path of **finite variation** has finite total up-and-down travel over every bounded stretch of time, like the path of a function with a continuous slope.
 
 **Definition.** A càdlàg process, adapted (its value at t is known by time t), is a semimartingale when it can be written
 
-$$X_t = X_0 + M_t + A_t,$$
+```math
+X_t = X_0 + M_t + A_t,
+```
 
-with $M_t$ a local martingale and $A_t$ an adapted process of finite variation, both starting at 0.
+with $`M_t`$ a local martingale and $`A_t`$ an adapted process of finite variation, both starting at 0.
 
 **Read it aloud:** the process is where it started, plus a fair-game part, plus a part whose path travels a finite distance.
 
 The **quadratic covariation** of two semimartingales is the limit, as the grid of times gets finer, of the sum of matched products of their changes:
 
-$$[X,Y]_t = \lim \sum_k \big(X_{t_{k+1}} - X_{t_k}\big)\big(Y_{t_{k+1}} - Y_{t_k}\big).$$
+```math
+[X,Y]_t = \lim \sum_k \big(X_{t_{k+1}} - X_{t_k}\big)\big(Y_{t_{k+1}} - Y_{t_k}\big).
+```
 
-The limit is in probability, over grids from 0 to t whose longest step shrinks to zero. With $Y = X$ it is the quadratic variation $[X]_t$. It splits into a continuous part and the squared jumps:
+The limit is in probability, over grids from 0 to t whose longest step shrinks to zero. With $`Y = X`$ it is the quadratic variation $`[X]_t`$. It splits into a continuous part and the squared jumps:
 
-$$[X]_t = [X]^c_t + \sum_{0 < s \le t} (\Delta X_s)^2.$$
+```math
+[X]_t = [X]^c_t + \sum_{0 < s \le t} (\Delta X_s)^2.
+```
 
 **Ito's formula for semimartingales.** For a function f with two continuous derivatives,
 
-$$f(X_t) = f(X_0) + \int_0^t f'(X_{s-})\,dX_s + \tfrac12 \int_0^t f''(X_{s-})\,d[X]^c_s + \sum_{0 < s \le t}\Big(f(X_s) - f(X_{s-}) - f'(X_{s-})\,\Delta X_s\Big).$$
+```math
+f(X_t) = f(X_0) + \int_0^t f'(X_{s-})\,dX_s + \tfrac12 \int_0^t f''(X_{s-})\,d[X]^c_s + \sum_{0 < s \le t}\Big(f(X_s) - f(X_{s-}) - f'(X_{s-})\,\Delta X_s\Big).
+```
 
 **Read it aloud:** the function's change is the integral of its slope against the process, plus half its curvature against the continuous wobble, plus, at each jump, the exact change minus the part the slope already counted.
 
-Taking $f(x) = x^2$ and then splitting a product into squares gives **integration by parts**:
+Taking $`f(x) = x^2`$ and then splitting a product into squares gives **integration by parts**:
 
-$$X_t Y_t = X_0 Y_0 + \int_0^t X_{s-}\,dY_s + \int_0^t Y_{s-}\,dX_s + [X,Y]_t.$$
+```math
+X_t Y_t = X_0 Y_0 + \int_0^t X_{s-}\,dY_s + \int_0^t Y_{s-}\,dX_s + [X,Y]_t.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_t$, $Y_t$ | semimartingales in general | the share price, or the price and a second asset | — |
-| $M_t$, $M$ | the local martingale part: fair-game noise | the wobble plus the crashes, with their average loss added back | more noise, larger quadratic variation |
-| $A_t$ | the finite-variation part: steady drift | $\mu S_{t-}$ per year, \$5 a year at \$100 | the price grows faster on average |
-| $S_t$, $S_{t-}$, $S_1$ | the share price at t, just before t, and at one year | \$100 at the start, \$124.60 on the path at one year | — |
-| $\Delta S_t$ | the jump at t: value at minus value just before | $j\,S_{t-}$ at a crash, 0 otherwise | — |
-| $[X,Y]_t$, $[X]_t$, $[X]^c_t$ | covariation, quadratic variation, and its continuous part | $[S]_1$ is 1,842.28 on the path | Ito's correction terms grow |
-| $W_t$, $dW_t$, $N_t$ | Brownian motion and its step; the number of crashes by time t | $N_1 = 1$ on the path | — |
-| $\mu$, $\sigma$ | average growth rate; volatility | 0.05 and 0.20 a year | $E[S_1^2]$ rises through $2\mu + \sigma^2$ |
-| $\lambda$, $j$ | crash rate; crash size as a fraction of the price | 1 a year; $-0.20$ | jump part of $[S]$ grows as $\lambda j^2$ |
-| $c$ | growth rate of $E[S_t^2]$: $2\mu + \sigma^2 + \lambda j^2$ | 0.18 a year | $E[S_1^2]$ rises as $S_0^2 e^{c}$ |
-| $H_t$, $h_k$, $t_k$ | the integrand: shares held, decided just before t; a simple holding from grid time $t_k$ | $S_{t-}$ for the by-parts integral | — |
-| $b$, $D_k$, $I$, $\epsilon$ | in the Detailed proof: the bound on the holdings; the martingale's change over step k; the simple gain $\sum_k h_k D_k$; a fixed small size of gain | — | smaller $b$: the chance that $I$ exceeds $\epsilon$ falls |
-| $f$, $f'$, $f''$ | a smooth function and its first and second derivatives | $x^2$ and $\ln x$ | — |
-| $t$, $T$, $n$, $k$, $G$ | time in years; horizon; grid steps; step number; log-drift between crashes | $T = 1$; $n$ from 16 to 4,096; $G = 0.23$ | finer grid, closer to the limit |
+| $`X_t`$, $`Y_t`$ | semimartingales in general | the share price, or the price and a second asset | — |
+| $`M_t`$, $`M`$ | the local martingale part: fair-game noise | the wobble plus the crashes, with their average loss added back | more noise, larger quadratic variation |
+| $`A_t`$ | the finite-variation part: steady drift | $`\mu S_{t-}`$ per year, \$5 a year at \$100 | the price grows faster on average |
+| $`S_t`$, $`S_{t-}`$, $`S_1`$ | the share price at t, just before t, and at one year | \$100 at the start, \$124.60 on the path at one year | — |
+| $`\Delta S_t`$ | the jump at t: value at minus value just before | $`j\,S_{t-}`$ at a crash, 0 otherwise | — |
+| $`[X,Y]_t`$, $`[X]_t`$, $`[X]^c_t`$ | covariation, quadratic variation, and its continuous part | $`[S]_1`$ is 1,842.28 on the path | Ito's correction terms grow |
+| $`W_t`$, $`dW_t`$, $`N_t`$ | Brownian motion and its step; the number of crashes by time t | $`N_1 = 1`$ on the path | — |
+| $`\mu`$, $`\sigma`$ | average growth rate; volatility | 0.05 and 0.20 a year | $`E[S_1^2]`$ rises through $`2\mu + \sigma^2`$ |
+| $`\lambda`$, $`j`$ | crash rate; crash size as a fraction of the price | 1 a year; $`-0.20`$ | jump part of $`[S]`$ grows as $`\lambda j^2`$ |
+| $`c`$ | growth rate of $`E[S_t^2]`$: $`2\mu + \sigma^2 + \lambda j^2`$ | 0.18 a year | $`E[S_1^2]`$ rises as $`S_0^2 e^{c}`$ |
+| $`H_t`$, $`h_k`$, $`t_k`$ | the integrand: shares held, decided just before t; a simple holding from grid time $`t_k`$ | $`S_{t-}`$ for the by-parts integral | — |
+| $`b`$, $`D_k`$, $`I`$, $`\epsilon`$ | in the Detailed proof: the bound on the holdings; the martingale's change over step k; the simple gain $`\sum_k h_k D_k`$; a fixed small size of gain | — | smaller $`b`$: the chance that $`I`$ exceeds $`\epsilon`$ falls |
+| $`f`$, $`f'`$, $`f''`$ | a smooth function and its first and second derivatives | $`x^2`$ and $`\ln x`$ | — |
+| $`t`$, $`T`$, $`n`$, $`k`$, $`G`$ | time in years; horizon; grid steps; step number; log-drift between crashes | $`T = 1`$; $`n`$ from 16 to 4,096; $`G = 0.23`$ | finer grid, closer to the limit |
 
 The share's own equation, written as a semimartingale:
 
-$$dS_t = S_{t-}\big(\mu\,dt + \sigma\,dW_t + j\,(dN_t - \lambda\,dt)\big).$$
+```math
+dS_t = S_{t-}\big(\mu\,dt + \sigma\,dW_t + j\,(dN_t - \lambda\,dt)\big).
+```
 
-As on [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md), $dW_t$ is shorthand for an integral, never a derivative. The finite-variation part is $dA_t = \mu S_{t-}\,dt$. The local martingale part is everything else: the Brownian wobble, and the crash count minus its average, $N_t - \lambda t$, which is a fair game ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)).
+As on [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md), $`dW_t`$ is shorthand for an integral, never a derivative. The finite-variation part is $`dA_t = \mu S_{t-}\,dt`$. The local martingale part is everything else: the Brownian wobble, and the crash count minus its average, $`N_t - \lambda t`$, which is a fair game ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)).
 
-Between crashes the price climbs at $\mu - \lambda j = 0.25$ a year; the crashes take that back down to 0.05 on average. Solved, the path is
+Between crashes the price climbs at $`\mu - \lambda j = 0.25`$ a year; the crashes take that back down to 0.05 on average. Solved, the path is
 
-$$S_t = 100\, e^{G t + \sigma W_t}\,(1 + j)^{N_t}, \qquad G = \mu - \lambda j - \tfrac12\sigma^2 = 0.23.$$
+```math
+S_t = 100\, e^{G t + \sigma W_t}\,(1 + j)^{N_t}, \qquad G = \mu - \lambda j - \tfrac12\sigma^2 = 0.23.
+```
 
 ### When it holds
 
-- **The integrand is predictable: decided just before each instant.** That is why every integral above uses $X_{s-}$. Use the value at the instant instead and a crash is known before it is traded: on the path, the by-parts integral moves from 1,841.03 to 2,938.49. That 2,938.49 is $\int S_{s-}\,dS_s$ plus the squared crash, 1,097.46, because the value at an instant differs from the value just before only at a crash. A right-point grid sum peeks further, at every step's wobble too, and adds the whole of $[S]_1$.
+- **The integrand is predictable: decided just before each instant.** That is why every integral above uses $`X_{s-}`$. Use the value at the instant instead and a crash is known before it is traded: on the path, the by-parts integral moves from 1,841.03 to 2,938.49. That 2,938.49 is $`\int S_{s-}\,dS_s`$ plus the squared crash, 1,097.46, because the value at an instant differs from the value just before only at a crash. A right-point grid sum peeks further, at every step's wobble too, and adds the whole of $`[S]_1`$.
 - **The function has two continuous derivatives.** Ito's formula needs the curvature term. A function with a kink, such as a call payoff, needs a further local-time term, which this card does not treat.
 - **The process is a semimartingale.** A price driven by fractional Brownian motion with a Hurst exponent (its roughness index) other than one half is not one; ordinary Ito calculus fails for it ([Rougher than Brownian](06-rough-paths-and-fractional-brownian-motion-in-outline.md)).
 
@@ -109,7 +123,7 @@ $$S_t = 100\, e^{G t + \sigma W_t}\,(1 + j)^{N_t}, \qquad G = \mu - \lambda j - 
 
 ### Step 0: an integrator must make trading gains behave
 
-Gains on a grid are holding times price change, added up. Write a **simple** holding: hold $h_k$ shares from grid time $t_k$ to $t_{k+1}$, with $h_k$ decided at $t_k$. The gain is $\sum_k h_k\,(X_{t_{k+1}} - X_{t_k})$.
+Gains on a grid are holding times price change, added up. Write a **simple** holding: hold $`h_k`$ shares from grid time $`t_k`$ to $`t_{k+1}`$, with $`h_k`$ decided at $`t_k`$. The gain is $`\sum_k h_k\,(X_{t_{k+1}} - X_{t_k})`$.
 
 To pass from these sums to an integral, small holdings must give small gains: if the holdings shrink to zero uniformly, the gains must shrink to zero in probability. A process with that property is a **good integrator**. Everything else on this card is built for this one property.
 
@@ -123,18 +137,18 @@ A local martingale needs one more step. Stopped, it is a martingale, but not alw
 
 Both pieces are covered, and stopping changes nothing before the stopping time. The sum of two good integrators is a good integrator. So every semimartingale is a good integrator.
 
-The integral $\int H\,dX$ for a predictable, locally bounded $H_t$ (bounded once stopped at suitable stopping times) is then the limit of the simple gains, and it splits as $\int H\,dM + \int H\,dA$.
+The integral $`\int H\,dX`$ for a predictable, locally bounded $`H_t`$ (bounded once stopped at suitable stopping times) is then the limit of the simple gains, and it splits as $`\int H\,dM + \int H\,dA`$.
 
 <details>
 <summary>Detailed proof: a martingale is a good integrator for simple holdings</summary>
 
-Let $M$ be a martingale with $E[M_t^2]$ finite, grid times $0 = t_0 < \dots < t_n = t$, and holdings $h_k$ known at $t_k$ with $|h_k| \le b$. Write $D_k = M_{t_{k+1}} - M_{t_k}$ and $I = \sum_k h_k D_k$.
+Let $`M`$ be a martingale with $`E[M_t^2]`$ finite, grid times $`0 = t_0 < \dots < t_n = t`$, and holdings $`h_k`$ known at $`t_k`$ with $`|h_k| \le b`$. Write $`D_k = M_{t_{k+1}} - M_{t_k}`$ and $`I = \sum_k h_k D_k`$.
 
-Expand $E[I^2] = \sum_k E[h_k^2 D_k^2] + 2\sum_{k < l} E[h_k D_k h_l D_l]$. In a cross term with k before l, every factor except the later change is known at the start of step l. Conditioning on what is known then (the tower rule: averaging in two stages gives the same as averaging once, [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)) gives $E\big[h_k D_k h_l\,E[D_l \mid F_{t_l}]\big] = 0$, because the martingale's best forecast of its own change is zero. So $E[I^2] = \sum_k E[h_k^2 D_k^2] \le b^2 \sum_k E[D_k^2]$.
+Expand $`E[I^2] = \sum_k E[h_k^2 D_k^2] + 2\sum_{k < l} E[h_k D_k h_l D_l]`$. In a cross term with k before l, every factor except the later change is known at the start of step l. Conditioning on what is known then (the tower rule: averaging in two stages gives the same as averaging once, [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)) gives $`E\big[h_k D_k h_l\,E[D_l \mid F_{t_l}]\big] = 0`$, because the martingale's best forecast of its own change is zero. So $`E[I^2] = \sum_k E[h_k^2 D_k^2] \le b^2 \sum_k E[D_k^2]`$.
 
-The same orthogonality with every $h_k = 1$ gives $\sum_k E[D_k^2] = E[(M_t - M_0)^2]$. So $E[I^2] \le b^2\,E[(M_t - M_0)^2]$. By Chebyshev's inequality, $P(|I| > \epsilon) \le b^2\,E[(M_t - M_0)^2]/\epsilon^2$, which goes to zero as the bound b on the holdings does. That is the good-integrator property.
+The same orthogonality with every $`h_k = 1`$ gives $`\sum_k E[D_k^2] = E[(M_t - M_0)^2]`$. So $`E[I^2] \le b^2\,E[(M_t - M_0)^2]`$. By Chebyshev's inequality, $`P(|I| > \epsilon) \le b^2\,E[(M_t - M_0)^2]/\epsilon^2`$, which goes to zero as the bound b on the holdings does. That is the good-integrator property.
 
-For a finite-variation part, $|\sum_k h_k (A_{t_{k+1}} - A_{t_k})| \le b \times$ (total variation of A up to t), path by path. Adding the two bounds covers $M + A$. For a local martingale, first split it, by the Doléans-Dade–Meyer theorem quoted in Step 1, into a locally square-integrable martingale plus finite variation. Apply the two bounds to the stopped pieces; the stopping times run off to infinity, so the event where stopping matters has probability going to zero.
+For a finite-variation part, $`|\sum_k h_k (A_{t_{k+1}} - A_{t_k})| \le b \times`$ (total variation of A up to t), path by path. Adding the two bounds covers $`M + A`$. For a local martingale, first split it, by the Doléans-Dade–Meyer theorem quoted in Step 1, into a locally square-integrable martingale plus finite variation. Apply the two bounds to the stopped pieces; the stopping times run off to infinity, so the event where stopping matters has probability going to zero.
 
 </details>
 
@@ -144,36 +158,38 @@ The opposite direction is deep. **Bichteler–Dellacherie theorem:** an adapted 
 
 ### Step 3: the jumps enter the quadratic variation one square at a time
 
-Cut the year into $n$ steps and add the squared price changes. A step with no crash behaves as on [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): its squared change is about $\sigma^2 S_t^2$ times the step length, and those add up to the continuous part $\sigma^2 \int_0^1 S_t^2\,dt$. A step containing a crash has a change close to the crash itself, $j\,S_{t-}$. Its square does not shrink as the step shrinks. It stays, one squared jump per crash:
+Cut the year into $`n`$ steps and add the squared price changes. A step with no crash behaves as on [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): its squared change is about $`\sigma^2 S_t^2`$ times the step length, and those add up to the continuous part $`\sigma^2 \int_0^1 S_t^2\,dt`$. A step containing a crash has a change close to the crash itself, $`j\,S_{t-}`$. Its square does not shrink as the step shrinks. It stays, one squared jump per crash:
 
-$$[S]_1 = \sigma^2 \int_0^1 S_t^2\,dt + \sum_{\text{crashes}} (j\,S_{t-})^2.$$
+```math
+[S]_1 = \sigma^2 \int_0^1 S_t^2\,dt + \sum_{\text{crashes}} (j\,S_{t-})^2.
+```
 
 On the plotted path the jump part is 1,097.46 and the total is 1,842.28. From 64 steps on, the grid sums range between 1,741.90 and 1,959.48, and at 4,096 steps read 1,910.00: one sample path's scatter around the target. Over 400 paths the average distance to the target falls from 217.18 at 16 steps to 13.42 at 4,096, halving each time the grid gets four times finer.
 
 ### Step 4: Ito's formula, from a Taylor expansion on the grid
 
-Write $f(X_1) - f(X_0)$ as the sum of its changes over the grid steps. On a step with no jump, Taylor's theorem gives slope times change plus half the curvature times change squared, with an error smaller than the change squared. The slope terms build $\int f'(X_{s-})\,dX_s$. The curvature terms build $\tfrac12\int f''\,d[X]^c$, by the same convergence as Brownian quadratic variation. The errors vanish.
+Write $`f(X_1) - f(X_0)`$ as the sum of its changes over the grid steps. On a step with no jump, Taylor's theorem gives slope times change plus half the curvature times change squared, with an error smaller than the change squared. The slope terms build $`\int f'(X_{s-})\,dX_s`$. The curvature terms build $`\tfrac12\int f''\,d[X]^c`$, by the same convergence as Brownian quadratic variation. The errors vanish.
 
-On a step that contains a jump, the change does not shrink, and a second-order Taylor expansion is not accurate. The formula uses the exact change $f(X_s) - f(X_{s-})$ there. The slope term $f'(X_{s-})\,\Delta X_s$ is already inside the integral, so it is subtracted. That gives the jump sum.
+On a step that contains a jump, the change does not shrink, and a second-order Taylor expansion is not accurate. The formula uses the exact change $`f(X_s) - f(X_{s-})`$ there. The slope term $`f'(X_{s-})\,\Delta X_s`$ is already inside the integral, so it is subtracted. That gives the jump sum.
 
-It converges because each term is at most a constant times $(\Delta X_s)^2$, and those add to a finite total: over any bounded time the squared jumps of a semimartingale add to at most $[X]_t$, automatically from the definition.
+It converges because each term is at most a constant times $`(\Delta X_s)^2`$, and those add to a finite total: over any bounded time the squared jumps of a semimartingale add to at most $`[X]_t`$, automatically from the definition.
 
-The same bound covers infinitely many jumps. Over a bounded time a càdlàg path has only finitely many jumps larger than any fixed size, but it may have infinitely many small ones, as many Lévy processes do ([Levy processes](01-levy-processes.md)). Then the jumps themselves need not add up to anything finite, and neither need the exact changes $f(X_s) - f(X_{s-})$. The bracketed differences still do, which is why the slope term is subtracted inside the sum.
+The same bound covers infinitely many jumps. Over a bounded time a càdlàg path has only finitely many jumps larger than any fixed size, but it may have infinitely many small ones, as many Lévy processes do ([Levy processes](01-levy-processes.md)). Then the jumps themselves need not add up to anything finite, and neither need the exact changes $`f(X_s) - f(X_{s-})`$. The bracketed differences still do, which is why the slope term is subtracted inside the sum.
 
-The integral $\int f'(X_{s-})\,dX_s$ still exists, because the small jumps can be placed, with their average taken out, inside the fair-game part $M$. The proof treats the finitely many large jumps exactly, as above, and lets the size cut-off shrink to zero.
+The integral $`\int f'(X_{s-})\,dX_s`$ still exists, because the small jumps can be placed, with their average taken out, inside the fair-game part $`M`$. The proof treats the finitely many large jumps exactly, as above, and lets the size cut-off shrink to zero.
 
 That is the shape of the proof; the full argument is in Protter, chapter II.
 
-Check it on the path with $f(x) = \ln x$, whose derivatives are $1/x$ and $-1/x^2$. Then $\int dS/S_{s-}$ is the running return, the curvature term is $-\tfrac12\sigma^2$, and each crash adds $\ln(1 + j) - j = -0.0231$. The exact value of $\ln S_1$ on the path is 4.8251. The formula, with the integral as a left-point sum on 4,096 steps, gives 4.8266. Drop the jump sum and it gives 4.8498: one crash's correction, missed.
+Check it on the path with $`f(x) = \ln x`$, whose derivatives are $`1/x`$ and $`-1/x^2`$. Then $`\int dS/S_{s-}`$ is the running return, the curvature term is $`-\tfrac12\sigma^2`$, and each crash adds $`\ln(1 + j) - j = -0.0231`$. The exact value of $`\ln S_1`$ on the path is 4.8251. The formula, with the integral as a left-point sum on 4,096 steps, gives 4.8266. Drop the jump sum and it gives 4.8498: one crash's correction, missed.
 
 ### Step 5: why the class is closed
 
 Each closure property is one of the facts above, read the right way.
 
 - **Sums.** Fair-game parts add to a fair-game part; finite-travel parts add to a finite-travel part.
-- **Integrals.** $\int H\,dX = \int H\,dM + \int H\,dA$. The first is a local martingale when $H_t$ is predictable and locally bounded, by the martingale transform of [Betting on a martingale](../02-Martingales/02-predictable-bets-and-the-martingale-transform.md) passed to the limit; the second has finite travel. Trading gains in a semimartingale price are semimartingales.
-- **Smooth functions.** Ito's formula writes $f(X_t)$ as an integral against X (a semimartingale, by the last bullet), plus an integral against $[X]^c$ (increasing, so finite travel), plus a jump sum (absolutely summable, so finite travel). That is a semimartingale decomposition, written out.
-- **Products.** $XY = \tfrac14\big((X+Y)^2 - (X-Y)^2\big)$, a smooth function of two semimartingales. Integration by parts is the decomposition. The covariation is $[X,Y] = \tfrac14\big([X+Y] - [X-Y]\big)$, which is how its jump part comes out as the sum of the products of matched jumps.
+- **Integrals.** $`\int H\,dX = \int H\,dM + \int H\,dA`$. The first is a local martingale when $`H_t`$ is predictable and locally bounded, by the martingale transform of [Betting on a martingale](../02-Martingales/02-predictable-bets-and-the-martingale-transform.md) passed to the limit; the second has finite travel. Trading gains in a semimartingale price are semimartingales.
+- **Smooth functions.** Ito's formula writes $`f(X_t)`$ as an integral against X (a semimartingale, by the last bullet), plus an integral against $`[X]^c`$ (increasing, so finite travel), plus a jump sum (absolutely summable, so finite travel). That is a semimartingale decomposition, written out.
+- **Products.** $`XY = \tfrac14\big((X+Y)^2 - (X-Y)^2\big)`$, a smooth function of two semimartingales. Integration by parts is the decomposition. The covariation is $`[X,Y] = \tfrac14\big([X+Y] - [X-Y]\big)`$, which is how its jump part comes out as the sum of the products of matched jumps.
 - **Stopping.** A process stopped at a stopping time keeps both parts.
 - **A second probability measure.** Under a measure Q that agrees with P on which events are impossible, a P-semimartingale is still a Q-semimartingale. The split changes, and the class does not. This is the Girsanov–Meyer theorem, stated here and proved in Protter, chapter III; the Brownian case is on [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md).
 
@@ -183,32 +199,32 @@ For continuous processes, [Ito's product rule](../06-Ito%20Calculus/03-ito-produ
 
 ## Worked numbers, by hand
 
-The share: $S_0 = 100$, $\mu = 0.05$, $\sigma = 0.20$, $\lambda = 1$, $j = -0.20$, one year. The question: what is the average of the squared price at one year, and how much of the quadratic variation comes from crashes?
+The share: $`S_0 = 100`$, $`\mu = 0.05`$, $`\sigma = 0.20`$, $`\lambda = 1`$, $`j = -0.20`$, one year. The question: what is the average of the squared price at one year, and how much of the quadratic variation comes from crashes?
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| by parts with $X = Y = S$ | $S_1^2 = S_0^2 + 2\int S_{t-}\,dS_t + [S]_1$ | three terms |
-| average rate of $[S]$, per unit $S^2$ | $\sigma^2 + \lambda j^2 = 0.04 + 1 \times 0.04$ | $0.08$ |
-| average rate of $2\int S_{t-}\,dS_t$, per unit $S^2$ | $2\mu$ | $0.10$ |
-| growth rate of $E[S_t^2]$ | $0.10 + 0.08$ | $c = 0.18$ |
-| $E[S_1^2]$ | $10{,}000 \times e^{0.18} = 10{,}000 \times 1.197217$ | **11,972.17** |
-| $\int_0^1 E[S_t^2]\,dt$ | $10{,}000 \times (e^{0.18} - 1)/0.18 = 10{,}000 \times 1.095652$ | 10,956.52 |
-| continuous part of $E[[S]_1]$ | $0.04 \times 10{,}956.52$ | 438.26 |
-| jump part of $E[[S]_1]$ | $1 \times 0.04 \times 10{,}956.52$ | **438.26** |
-| $E\big[\int_0^1 S_{t-}\,dS_t\big]$ | $0.05 \times 10{,}956.52$ | 547.83 |
-| log, jump term per crash | $\ln(1 + j) - j = \ln 0.8 + 0.2$ | $-0.0231$ |
-| $E[\ln S_1]$ | $\ln 100 + 0.05 - 0.02 + 1 \times (-0.0231)$ | 4.6120 |
+| by parts with $`X = Y = S`$ | $`S_1^2 = S_0^2 + 2\int S_{t-}\,dS_t + [S]_1`$ | three terms |
+| average rate of $`[S]`$, per unit $`S^2`$ | $`\sigma^2 + \lambda j^2 = 0.04 + 1 \times 0.04`$ | $`0.08`$ |
+| average rate of $`2\int S_{t-}\,dS_t`$, per unit $`S^2`$ | $`2\mu`$ | $`0.10`$ |
+| growth rate of $`E[S_t^2]`$ | $`0.10 + 0.08`$ | $`c = 0.18`$ |
+| $`E[S_1^2]`$ | $`10{,}000 \times e^{0.18} = 10{,}000 \times 1.197217`$ | **11,972.17** |
+| $`\int_0^1 E[S_t^2]\,dt`$ | $`10{,}000 \times (e^{0.18} - 1)/0.18 = 10{,}000 \times 1.095652`$ | 10,956.52 |
+| continuous part of $`E[[S]_1]`$ | $`0.04 \times 10{,}956.52`$ | 438.26 |
+| jump part of $`E[[S]_1]`$ | $`1 \times 0.04 \times 10{,}956.52`$ | **438.26** |
+| $`E\big[\int_0^1 S_{t-}\,dS_t\big]`$ | $`0.05 \times 10{,}956.52`$ | 547.83 |
+| log, jump term per crash | $`\ln(1 + j) - j = \ln 0.8 + 0.2`$ | $`-0.0231`$ |
+| $`E[\ln S_1]`$ | $`\ln 100 + 0.05 - 0.02 + 1 \times (-0.0231)`$ | 4.6120 |
 
-The squared price averages 11,972.17 dollars squared at one year, and exactly half the average quadratic variation comes from crashes: $\sigma^2$ and $\lambda j^2$ are both 0.04. A crash once a year moves the variance as much as a whole year of wobble.
+The squared price averages 11,972.17 dollars squared at one year, and exactly half the average quadratic variation comes from crashes: $`\sigma^2`$ and $`\lambda j^2`$ are both 0.04. A crash once a year moves the variance as much as a whole year of wobble.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Ordinary chain rule for $S_1^2$ | 11,051.71 instead of 11,972.17 (simulated 11,953.83, se 48.76) | no quadratic variation at all |
-| Brownian Ito's lemma for $S_1^2$, jumps left out of $[S]$ | 11,502.74, far outside four standard errors of the simulation | the jump part, $\lambda j^2$, of the growth rate is missing |
-| Integrand $S_t$ instead of $S_{t-}$ in the by-parts integral | 2,938.49 instead of 1,841.03 on the path | a holding that sees the crash: the gap is the squared crash, 1,097.46; on average 438.26 |
-| Ito's formula for $\ln S_1$ without the jump sum | 4.8498 instead of 4.8251 on the path | the per-crash correction $-0.0231$, never subtracted |
+| Ordinary chain rule for $`S_1^2`$ | 11,051.71 instead of 11,972.17 (simulated 11,953.83, se 48.76) | no quadratic variation at all |
+| Brownian Ito's lemma for $`S_1^2`$, jumps left out of $`[S]`$ | 11,502.74, far outside four standard errors of the simulation | the jump part, $`\lambda j^2`$, of the growth rate is missing |
+| Integrand $`S_t`$ instead of $`S_{t-}`$ in the by-parts integral | 2,938.49 instead of 1,841.03 on the path | a holding that sees the crash: the gap is the squared crash, 1,097.46; on average 438.26 |
+| Ito's formula for $`\ln S_1`$ without the jump sum | 4.8498 instead of 4.8251 on the path | the per-crash correction $`-0.0231`$, never subtracted |
 
 Every number in this table is printed by both checks below.
 
@@ -218,10 +234,10 @@ Every number in this table is printed by both checks below.
 
 The checks take four roads.
 
-- Road A evaluates the formulas. It prints $E[\int S_{t-}\,dS_t]$ both as $\mu$ times the integral of $E[S_t^2]$ and by integration by parts, and $E[\ln S_1]$ both from the solved path and from Ito's formula with its jump sum; each pair agrees by algebra alone, so neither pair is a check.
-- Road B simulates the plotted path on 4,096 steps a year, with crash times drawn exactly and placed on the grid, and computes grid sums at five step sizes: the sum of squared changes, the left-point sum of $S\,dS$, and the exact grid identity $S_1^2 - S_0^2 = 2\sum S_k\,\Delta S_k + \sum (\Delta S_k)^2$.
+- Road A evaluates the formulas. It prints $`E[\int S_{t-}\,dS_t]`$ both as $`\mu`$ times the integral of $`E[S_t^2]`$ and by integration by parts, and $`E[\ln S_1]`$ both from the solved path and from Ito's formula with its jump sum; each pair agrees by algebra alone, so neither pair is a check.
+- Road B simulates the plotted path on 4,096 steps a year, with crash times drawn exactly and placed on the grid, and computes grid sums at five step sizes: the sum of squared changes, the left-point sum of $`S\,dS`$, and the exact grid identity $`S_1^2 - S_0^2 = 2\sum S_k\,\Delta S_k + \sum (\Delta S_k)^2`$.
 - Road D repeats the grid on 400 paths, printing the shrinking error and the path averages with standard errors.
-- Road C draws 20,000 values of $S_1$ exactly, without a grid, and compares their averages with Road A.
+- Road C draws 20,000 values of $`S_1`$ exactly, without a grid, and compares their averages with Road A.
 
 The asserts test Road A against Roads C and D, and Road B's grid sums against the path's exact values. Random numbers come from SplitMix64 with seed 20260930, normals from Box-Muller, crash gaps from the exponential law written out.
 
@@ -420,7 +436,7 @@ C  20000 exact draws at t = 1
 ALL CHECKS PASS
 ```
 
-Road B: the grid identity holds to the ninth decimal, as algebra says it must; the squared-change sum swings at 16 steps, where one step swallows the crash and the climb before it, then settles near 1,842.28. Road D: the 400-path average of $[S]_1$ is 874.55 (se 18.99) against two formula halves of 438.26; the jump part averages 425.91 (se 20.15). Road C: the averages of $S_1$, $S_1^2$ and $\ln S_1$ sit within two standard errors of Road A.
+Road B: the grid identity holds to the ninth decimal, as algebra says it must; the squared-change sum swings at 16 steps, where one step swallows the crash and the climb before it, then settles near 1,842.28. Road D: the 400-path average of $`[S]_1`$ is 874.55 (se 18.99) against two formula halves of 438.26; the jump part averages 425.91 (se 20.15). Road C: the averages of $`S_1`$, $`S_1^2`$ and $`\ln S_1`$ sit within two standard errors of Road A.
 
 ### Rust
 
@@ -651,14 +667,14 @@ The two outputs are identical, line for line.
 
 Lean proves the card's grid steps and its jump-term bound, for any grid, and checks the worked numbers.
 
-- Take a martingale $M$ with $E[M_t^2]$ finite, and holdings with $|h_k| \le b$, each known at its grid time. Then the simple gain $I$ has $E[I^2] \le b^2 E[(M_t - M_0)^2]$.
-- With the same martingale and holdings, take $\epsilon > 0$. Then $P(|I| > \epsilon) \le b^2 E[(M_t - M_0)^2] / \epsilon^2$.
-- Take any two paths $x$ and $y$ on a grid of $n$ steps. Then $x_n y_n$ is the start product, plus both left-point sums, plus the sum of matched products of changes.
-- With $x = y = S$, that is Road B's exact grid identity.
-- Take a function $f$ with two continuous derivatives, and a jump from $x$ to $y$ with $|x| \le K$ and $|y| \le K$. Then $|f(y) - f(x) - f'(x)(y - x)| \le C (y - x)^2$, with one constant $C$ for all such jumps.
-- Lean checks the worked numbers: the average rate of $[S]$ is 0.08, and $\sigma^2$ and $\lambda j^2$ are both 0.04.
-- It also checks $c = 0.18$, the climb of 0.25 a year between crashes, and $G = 0.23$.
-- Four crashes of 10% give the same $\lambda j^2$ as one crash of 20%, as in Try changing.
+- Take a martingale $`M`$ with $`E[M_t^2]`$ finite, and holdings with $`|h_k| \le b`$, each known at its grid time. Then the simple gain $`I`$ has $`E[I^2] \le b^2 E[(M_t - M_0)^2]`$.
+- With the same martingale and holdings, take $`\epsilon > 0`$. Then $`P(|I| > \epsilon) \le b^2 E[(M_t - M_0)^2] / \epsilon^2`$.
+- Take any two paths $`x`$ and $`y`$ on a grid of $`n`$ steps. Then $`x_n y_n`$ is the start product, plus both left-point sums, plus the sum of matched products of changes.
+- With $`x = y = S`$, that is Road B's exact grid identity.
+- Take a function $`f`$ with two continuous derivatives, and a jump from $`x`$ to $`y`$ with $`|x| \le K`$ and $`|y| \le K`$. Then $`|f(y) - f(x) - f'(x)(y - x)| \le C (y - x)^2`$, with one constant $`C`$ for all such jumps.
+- Lean checks the worked numbers: the average rate of $`[S]`$ is 0.08, and $`\sigma^2`$ and $`\lambda j^2`$ are both 0.04.
+- It also checks $`c = 0.18`$, the climb of 0.25 a year between crashes, and $`G = 0.23`$.
+- Four crashes of 10% give the same $`\lambda j^2`$ as one crash of 20%, as in Try changing.
 
 Lean has no stochastic integral, so the grid limits, Ito's formula and every simulation are left to the Python and Rust checks.
 
@@ -920,7 +936,7 @@ example : (4 : ℚ) * (-1 / 10) ^ 2 = 1 * (-1 / 5) ^ 2 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - **Four crashes a year of 10% each**, `LAM = 4.0` and `J = -0.10`. Guess first: more crashes, more variance? The answer: $E[S_1^2]$ is unchanged at 11,972.17, the `try` row, because $\lambda j^2$ is 0.04 either way. Quadratic variation sees rate times squared size, nothing else.
+> - **Four crashes a year of 10% each**, `LAM = 4.0` and `J = -0.10`. Guess first: more crashes, more variance? The answer: $`E[S_1^2]`$ is unchanged at 11,972.17, the `try` row, because $`\lambda j^2`$ is 0.04 either way. Quadratic variation sees rate times squared size, nothing else.
 > - **No crashes**, `J = 0.0`. Guess first: which formula wins? The answer: the Brownian-only value 11,502.74 becomes correct, the jump part prints 0, and the log-drift G drops to 0.03. The run then stops at the assert that the Brownian-only formula is too low, as it should: with no crashes there is nothing for it to miss.
 > - **Peek at the crash**: change `left += p[k] * ds` to `left += p[k + 1] * ds`. Guess first: by how much does the average move? The answer: a right-point grid sum peeks at the wobble as well as the crash, so it moves by the whole quadratic variation, about 876.52 on average, not only the jump part; the by-parts assert fails.
 > - **Another seed.** The plotted path changes, perhaps with no crash at all, in which case the log assert has nothing to detect and fails; the averages in Roads C and D move by about a standard error.
@@ -932,9 +948,9 @@ example : (4 : ℚ) * (-1 / 10) ^ 2 = 1 * (-1 / 5) ^ 2 := by norm_num
 > [!warning]
 > **Using Ito's lemma from the Brownian cards on a price that jumps.** That lemma assumes continuous paths. Its curvature term counts only the wobble, so every crash goes missing: for the squared price it gives 11,502.74 where the truth is 11,972.17. The fix is not a bigger curvature term. A crash is not small, so a second-order expansion does not describe it; the jump sum replaces it with the exact change.
 >
-> - **The integrand at the instant, not just before.** $\int S_t\,dS_t$ and $\int S_{t-}\,dS_t$ differ by the sum of squared jumps: 1,097.46 on the path. A holding that uses $S_t$ has seen the crash.
+> - **The integrand at the instant, not just before.** $`\int S_t\,dS_t`$ and $`\int S_{t-}\,dS_t`$ differ by the sum of squared jumps: 1,097.46 on the path. A holding that uses $`S_t`$ has seen the crash.
 > - **Calling the visible climb the drift.** Between crashes the price climbs at 0.25 a year. The finite-variation part grows at only 0.05: the rest is the average crash loss, added back to make the crash count a fair game.
-> - **Dropping the jump sum in the log.** Realised log returns then miss $-0.0231$ per crash: 4.8498 instead of 4.8251 on the path.
+> - **Dropping the jump sum in the log.** Realised log returns then miss $`-0.0231`$ per crash: 4.8498 instead of 4.8251 on the path.
 > - **Thinking every random process is a semimartingale.** Fractional Brownian motion with a Hurst exponent other than one half is not, and the Bichteler–Dellacherie theorem says no stochastic integral with the Step 0 continuity exists against it.
 
 ---
@@ -942,7 +958,7 @@ example : (4 : ℚ) * (-1 / 10) ^ 2 = 1 * (-1 / 5) ^ 2 := by norm_num
 ## Where you meet it in real life
 
 - **Jump models of share prices.** Merton's model is the price on this card with random crash sizes; its pricing rests on the semimartingale Ito formula ([Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)).
-- **Variance swaps.** Realised variance is a grid sum of squared log returns, and it converges to the quadratic variation, jumps included. The hedged log contract collects each crash too, but as $-2\big(\ln(1+j) - j\big)$, minus twice Step 4's jump term, where realised variance collects $\big(\ln(1+j)\big)^2$; the gap between the two, led by $-\tfrac13\big(\ln(1+j)\big)^3$, is the jump bias ([The volatility swap and the jump bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md)).
+- **Variance swaps.** Realised variance is a grid sum of squared log returns, and it converges to the quadratic variation, jumps included. The hedged log contract collects each crash too, but as $`-2\big(\ln(1+j) - j\big)`$, minus twice Step 4's jump term, where realised variance collects $`\big(\ln(1+j)\big)^2`$; the gap between the two, led by $`-\tfrac13\big(\ln(1+j)\big)^3`$, is the jump bias ([The volatility swap and the jump bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md)).
 - **No-arbitrage theory.** Delbaen and Schachermayer showed that a locally bounded price process admitting no free lunch with simple trades must be a semimartingale. Prices are modelled as semimartingales because the alternative allows a free lunch with vanishing risk: a run of trades whose possible loss shrinks to zero while a fixed gain stays possible.
 - **Insurance surplus.** Premiums flow in steadily and claims arrive as jumps: a finite-variation drift plus a compensated compound Poisson martingale, meaning total claims minus their average, a fair game ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)).
 - **Electricity prices with spikes, and filtering.** Spiking prices ([Jump diffusions](02-jump-diffusions.md)), every Lévy process ([Levy processes](01-levy-processes.md)) and the observation process of a filter ([Filtering](04-filtering-and-the-kalman-bucy-filter.md)) are all semimartingales.

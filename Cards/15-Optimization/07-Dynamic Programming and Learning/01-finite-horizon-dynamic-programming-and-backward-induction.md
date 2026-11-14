@@ -41,33 +41,35 @@ The general fact comes from an earlier card, [Dynamic programming](../../08-Diff
 
 Count water in blocks of 10 million m³, so storage runs 0 to 4 blocks and the turbine passes at most 2. Money is in thousands of pounds.
 
-$$V_k(x) = \max_{0 \,\le\, u \,\le\, \min(x,\,2)} \Big( c_k\,u \;+\; \sum_{w=0}^{2} P_k(w)\; V_{k+1}\big(\min(x - u + w,\ 4)\big) \Big), \qquad V_{12}(x) = 100\,x$$
+```math
+V_k(x) = \max_{0 \,\le\, u \,\le\, \min(x,\,2)} \Big( c_k\,u \;+\; \sum_{w=0}^{2} P_k(w)\; V_{k+1}\big(\min(x - u + w,\ 4)\big) \Big), \qquad V_{12}(x) = 100\,x
+```
 
-**Read it aloud:** the best this month can do from storage $x$ is the largest, over the releases allowed, of this month's income plus the average, over the rain, of the best next month can do from wherever the water ends up.
+**Read it aloud:** the best this month can do from storage $`x`$ is the largest, over the releases allowed, of this month's income plus the average, over the rain, of the best next month can do from wherever the water ends up.
 
-The release $u$ that wins the maximum is the rule, written $u_k^*(x)$. Solving from $k = 11$ (December) down to $k = 0$ (January) is **backward induction**.
+The release $`u`$ that wins the maximum is the rule, written $`u_k^*(x)`$. Solving from $`k = 11`$ (December) down to $`k = 0`$ (January) is **backward induction**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $k$ | the month, counted from 0 (January) to 11 (December); $k = 12$ is 31 December | 0 to 12 | fewer months left, smaller $V_k$ |
-| $x$ | storage on the 1st of the month, in blocks of 10 million m³ | 0 to 4; 2 on 1 January | more to sell or keep: $V_k$ rises |
-| $u$ | release this month, in blocks, chosen before the rain | 0, 1 or 2, never more than $x$ | more income now, less water later |
-| $w$ | rain inflow this month, in blocks, unknown when $u$ is chosen | 0, 1 or 2 | — |
-| $P_k(w)$ | chance of $w$ blocks of rain in month $k$ | wet months 0.2, 0.5, 0.3; dry months 0.5, 0.4, 0.1 | more weight on wet: $V_k$ rises |
-| $c_k$ | price of one block released in month $k$, thousand pounds | 150 in January, 80 in June | releases shift towards that month |
-| $\min(x - u + w,\ 4)$ | next month's storage; anything above 4 blocks spills | from 4, release 0, rain 2: back to 4, 2 spilled | — |
-| $V_k(x)$ | value function: the best average earnings from month $k$ to 31 December, starting at storage $x$, thousand pounds | $V_0(2)$ = 1549.34 | — |
-| $V_{12}(x) = 100\,x$ | the end value: water left on 31 December, £100,000 a block | $V_{12}(3)$ = 300 | holding water late pays more |
-| $u_k^*(x)$ | the rule: the best release in month $k$ at storage $x$ | $u_{11}^*(2)$ = 2 | — |
-| $h$ | the history: every storage level, release and rain seen before month $k$'s release (used in the proof) | Jan to Oct of the traced year below | — |
-| $J_k(h)$ | the average earnings from month $k$ to 31 December under some other rule, given history $h$, thousand pounds (used in the proof) | at most $V_k(x)$ | — |
+| $`k`$ | the month, counted from 0 (January) to 11 (December); $`k = 12`$ is 31 December | 0 to 12 | fewer months left, smaller $`V_k`$ |
+| $`x`$ | storage on the 1st of the month, in blocks of 10 million m³ | 0 to 4; 2 on 1 January | more to sell or keep: $`V_k`$ rises |
+| $`u`$ | release this month, in blocks, chosen before the rain | 0, 1 or 2, never more than $`x`$ | more income now, less water later |
+| $`w`$ | rain inflow this month, in blocks, unknown when $`u`$ is chosen | 0, 1 or 2 | — |
+| $`P_k(w)`$ | chance of $`w`$ blocks of rain in month $`k`$ | wet months 0.2, 0.5, 0.3; dry months 0.5, 0.4, 0.1 | more weight on wet: $`V_k`$ rises |
+| $`c_k`$ | price of one block released in month $`k`$, thousand pounds | 150 in January, 80 in June | releases shift towards that month |
+| $`\min(x - u + w,\ 4)`$ | next month's storage; anything above 4 blocks spills | from 4, release 0, rain 2: back to 4, 2 spilled | — |
+| $`V_k(x)`$ | value function: the best average earnings from month $`k`$ to 31 December, starting at storage $`x`$, thousand pounds | $`V_0(2)`$ = 1549.34 | — |
+| $`V_{12}(x) = 100\,x`$ | the end value: water left on 31 December, £100,000 a block | $`V_{12}(3)`$ = 300 | holding water late pays more |
+| $`u_k^*(x)`$ | the rule: the best release in month $`k`$ at storage $`x`$ | $`u_{11}^*(2)`$ = 2 | — |
+| $`h`$ | the history: every storage level, release and rain seen before month $`k`$'s release (used in the proof) | Jan to Oct of the traced year below | — |
+| $`J_k(h)`$ | the average earnings from month $`k`$ to 31 December under some other rule, given history $`h`$, thousand pounds (used in the proof) | at most $`V_k(x)`$ | — |
 
 ### When it holds
 
 - **The release is chosen before the rain falls.** That is why the maximum sits outside the average. Choose after seeing the month's rain and the maximum moves inside, a different problem with a bigger number (What breaks shows 1574.70).
 - **This month's rain does not depend on last month's.** Then storage alone says everything that matters about the future. If wet months tend to follow wet months, the state must also carry "is this a wet spell", or the table is wrong.
 - **Income adds month by month, and the year's end is given a value.** Leave out the end value and the rule treats water left on 31 December as worthless and lets too much go in autumn.
-- **Finitely many months, levels and releases.** Then every maximum exists and the table is finite. Continuous storage needs a grid, as here, or a formula for $V_k$.
+- **Finitely many months, levels and releases.** Then every maximum exists and the table is finite. Continuous storage needs a grid, as here, or a formula for $`V_k`$.
 - **The target is the average.** An operator who must avoid a disastrous dry year needs a different objective, and a different table.
 
 ---
@@ -76,38 +78,38 @@ The release $u$ that wins the maximum is the rule, written $u_k^*(x)$. Solving f
 
 ### Step 0: the future depends on the storage, not on how it got there
 
-On 1 November with 20 million m³ in store, the rest of the year looks the same whether January was wet or dry: future rain ignores past rain, and prices are fixed. So the best average from here is one number, $V_{10}(2)$, and the whole problem is a table of such numbers, twelve months by five levels.
+On 1 November with 20 million m³ in store, the rest of the year looks the same whether January was wet or dry: future rain ignores past rain, and prices are fixed. So the best average from here is one number, $`V_{10}(2)`$, and the whole problem is a table of such numbers, twelve months by five levels.
 
 ### Step 1: December is a one-month problem
 
-With one month left there is no future to plan, only 31 December's value. From 2 blocks, releasing 2 earns 300 now and leaves only the rain, worth on average 100 × (0.5 × 1 + 0.3 × 2) = 110 more. Releasing 1 or 0 keeps water worth 100 a block, but December's price of 150 beats that. So $V_{11}(2) = 410$ and $u_{11}^*(2) = 2$. Every December cell is this small sum.
+With one month left there is no future to plan, only 31 December's value. From 2 blocks, releasing 2 earns 300 now and leaves only the rain, worth on average 100 × (0.5 × 1 + 0.3 × 2) = 110 more. Releasing 1 or 0 keeps water worth 100 a block, but December's price of 150 beats that. So $`V_{11}(2) = 410`$ and $`u_{11}^*(2) = 2`$. Every December cell is this small sum.
 
 ### Step 2: one month earlier, average then maximise
 
-In November, the choice $u$ earns $c_{10}\,u$ now. Then the rain sends the reservoir to one of three December levels, each already solved. The rain is not chosen, so the operator gets the average of those three values, weighted by their chances. The best November release has the largest income-plus-average.
+In November, the choice $`u`$ earns $`c_{10}\,u`$ now. Then the rain sends the reservoir to one of three December levels, each already solved. The rain is not chosen, so the operator gets the average of those three values, weighted by their chances. The best November release has the largest income-plus-average.
 
 The order matters. The operator **maximises over releases, then nature averages over rain**, so the average sits inside the maximum. Peeking at the rain first would swap them.
 
 ### Step 3: the principle of optimality, with chance
 
-Any rule, even one that remembers every past month, picks a release now and then follows some plan for each rain outcome. Whatever storage next month brings, that plan cannot average more than next month's table value $V_{k+1}$ at that storage. So the rule averages at most this month's income plus the average of $V_{k+1}$, which is at most $V_k(x)$. The table's own rule reaches that bound exactly. The fold writes this out.
+Any rule, even one that remembers every past month, picks a release now and then follows some plan for each rain outcome. Whatever storage next month brings, that plan cannot average more than next month's table value $`V_{k+1}`$ at that storage. So the rule averages at most this month's income plus the average of $`V_{k+1}`$, which is at most $`V_k(x)`$. The table's own rule reaches that bound exactly. The fold writes this out.
 
 <details>
 <summary>Detailed proof: no rule, however much it remembers, beats the table</summary>
 
-A rule may choose the release in month $k$ from everything seen so far: all past storage levels, releases and rain. Call that record the history $h$. It may not see this month's rain, which has not fallen. Write $J_k(h)$ for the average earnings from month $k$ to 31 December under the rule, given history $h$ that ends at storage $x$.
+A rule may choose the release in month $`k`$ from everything seen so far: all past storage levels, releases and rain. Call that record the history $`h`$. It may not see this month's rain, which has not fallen. Write $`J_k(h)`$ for the average earnings from month $`k`$ to 31 December under the rule, given history $`h`$ that ends at storage $`x`$.
 
-Claim: $J_k(h) \le V_k(x)$ for every rule, every $k$ from 12 down to 0, and every history.
+Claim: $`J_k(h) \le V_k(x)`$ for every rule, every $`k`$ from 12 down to 0, and every history.
 
-Base, $k = 12$: nothing is left but the end value, so $J_{12}(h) = 100\,x = V_{12}(x)$.
+Base, $`k = 12`$: nothing is left but the end value, so $`J_{12}(h) = 100\,x = V_{12}(x)`$.
 
-Step: assume the claim at $k + 1$. The rule releases some $u$ at history $h$, allowed at storage $x$. Rain $w$ then arrives with chance $P_k(w)$, whatever the history, because rain does not depend on the past. The new history ends at storage $\min(x - u + w, 4)$. Income adds, so
+Step: assume the claim at $`k + 1`$. The rule releases some $`u`$ at history $`h`$, allowed at storage $`x`$. Rain $`w`$ then arrives with chance $`P_k(w)`$, whatever the history, because rain does not depend on the past. The new history ends at storage $`\min(x - u + w, 4)`$. Income adds, so
 
-$$J_k(h) = c_k\,u + \sum_w P_k(w)\, J_{k+1}(h, u, w) \;\le\; c_k\,u + \sum_w P_k(w)\, V_{k+1}\big(\min(x - u + w, 4)\big) \;\le\; V_k(x).$$
+$`\displaystyle J_k(h) = c_k\,u + \sum_w P_k(w)\, J_{k+1}(h, u, w) \;\le\; c_k\,u + \sum_w P_k(w)\, V_{k+1}\big(\min(x - u + w, 4)\big) \;\le\; V_k(x).`$
 
-The first inequality uses the claim at $k + 1$ and the fact that every $P_k(w) \ge 0$. The second holds because $V_k(x)$ is the maximum of that expression over all allowed $u$. Induction downward ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)) gives the claim at $k = 0$.
+The first inequality uses the claim at $`k + 1`$ and the fact that every $`P_k(w) \ge 0`$. The second holds because $`V_k(x)`$ is the maximum of that expression over all allowed $`u`$. Induction downward ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)) gives the claim at $`k = 0`$.
 
-Equality: the table's rule picks, at each step, a $u$ that attains the maximum. With that rule both inequalities are equalities at every step, so its average is exactly $V_0(x)$. It is a best rule, and it needs only the current month and storage, not the history.
+Equality: the table's rule picks, at each step, a $`u`$ that attains the maximum. With that rule both inequalities are equalities at every step, so its average is exactly $`V_0(x)`$. It is a best rule, and it needs only the current month and storage, not the history.
 
 </details>
 
@@ -121,21 +123,21 @@ The algorithmic side of this saving, solving each small subproblem once and stor
 
 ## Worked numbers, by hand
 
-Water in blocks of 10 million m³, money in thousands of pounds. December first, from $V_{12}(x) = 100\,x$.
+Water in blocks of 10 million m³, money in thousands of pounds. December first, from $`V_{12}(x) = 100\,x`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | December, storage 2, release 0 | 0 + 100 × (0.2 × 2 + 0.5 × 3 + 0.3 × 4) | 310.00 |
 | December, storage 2, release 1 | 150 + 100 × (0.2 × 1 + 0.5 × 2 + 0.3 × 3) | 360.00 |
-| December, storage 2, release 2 | 300 + 100 × (0.2 × 0 + 0.5 × 1 + 0.3 × 2) | 410.00: $V_{11}(2)$, release 2 |
+| December, storage 2, release 2 | 300 + 100 × (0.2 × 0 + 0.5 × 1 + 0.3 × 2) | 410.00: $`V_{11}(2)`$, release 2 |
 | December, storage 4, release 0 | 400; every drop of rain spills | 400.00 |
-| December, storage 4, release 2 | 300 + 100 × (0.2 × 2 + 0.5 × 3 + 0.3 × 4) | 610.00: $V_{11}(4)$, release 2 |
+| December, storage 4, release 2 | 300 + 100 × (0.2 × 2 + 0.5 × 3 + 0.3 × 4) | 610.00: $`V_{11}(4)`$, release 2 |
 | December, storage 0, 1, 3 | the same sums | 110.00, 260.00, 510.00 |
 | November, storage 2, release 0 | 0 + 0.2 × 410 + 0.5 × 510 + 0.3 × 610 | 520.00 |
 | November, storage 2, release 1 | 140 + 0.2 × 260 + 0.5 × 410 + 0.3 × 510 | 550.00 |
-| November, storage 2, release 2 | 280 + 0.2 × 110 + 0.5 × 260 + 0.3 × 410 | 555.00: $V_{10}(2)$, release 2 |
+| November, storage 2, release 2 | 280 + 0.2 × 110 + 0.5 × 260 + 0.3 × 410 | 555.00: $`V_{10}(2)`$, release 2 |
 | October back to January | the same step, ten more times | see the table below |
-| **1 January, storage 2** | $V_0(2)$ | **1549.34** |
+| **1 January, storage 2** | $`V_0(2)`$ | **1549.34** |
 
 Starting the year with 20 million m³ and following the rule, the dam earns on average £1,549,340, counting the water left on 31 December.
 
@@ -191,8 +193,8 @@ This year earned 1280 from sales and ended with 3 blocks, worth 300. The rule ne
 
 The script fills the table from December back and reads the rule off it: road 1. Three more roads share none of its maximising:
 
-- Road 2 runs the rule forward from 1 January, carrying the chance of each storage level month by month, and must land on $V_0(2)$.
-- Road 3 scores every rule table for October to December, 157464 of them, and checks the best equals the table's $V_9$ at every level.
+- Road 2 runs the rule forward from 1 January, carrying the chance of each storage level month by month, and must land on $`V_0(2)`$.
+- Road 3 scores every rule table for October to December, 157464 of them, and checks the best equals the table's $`V_9`$ at every level.
 - Road 4 covers the whole year: for every month and storage level it tries each allowed release, follows the rule afterwards, and scores the result by running forward. No such change gains: the largest gain is 0.0000. That is the certificate.
 
 The rule's own values then obey the formula month by month from 31 December, so they are the table, and the proof shows no rule beats the table. Two hand-computed December values, one where all the rain spills, and the four mistakes are checked too. Both languages add in the same order, so their outputs match to the last digit.
@@ -600,14 +602,14 @@ ALL CHECKS PASS
 
 Lean proves the theorem for every problem that meets When it holds, with any number of months, levels, releases and rain amounts.
 
-- No rule, even one that remembers every past month, averages more than the table value $V_k(x)$, from any month and any storage.
-- Some rule that looks only at the month and the storage averages exactly $V_k(x)$, from every month and storage.
-- Any rule read off the table, a release that wins the maximum at every month and level, earns exactly $V_k(x)$, whatever happened before.
+- No rule, even one that remembers every past month, averages more than the table value $`V_k(x)`$, from any month and any storage.
+- Some rule that looks only at the month and the storage averages exactly $`V_k(x)`$, from every month and storage.
+- Any rule read off the table, a release that wins the maximum at every month and level, earns exactly $`V_k(x)`$, whatever happened before.
 - Choosing each release after seeing that month's rain never gives a smaller number than the table.
 - The hand arithmetic holds exactly: the December and November cells, 54 rules a month, and 157464 rule tables for October to December.
 - The traced year, run through the rule table, ends with 3 blocks in store and 1280 from sales.
 
-The reservoir's own table, including $V_0(2)$ = 1549.34, the rule table's correctness and the four mistakes, is left to the Python and Rust checks.
+The reservoir's own table, including $`V_0(2)`$ = 1549.34, the rule table's correctness and the four mistakes, is left to the Python and Rust checks.
 
 ```lean
 -- Backward induction: in a finite-horizon problem where each choice comes before the chance outcome, the table solved from the last stage back is the best average any rule can earn, even one that remembers the whole past, and the table's own rule earns it.

@@ -38,28 +38,34 @@ The arc is the height 20t - 5t^2; the flat line is the 25 metre target.
 
 A **complex number** is an ordinary number — a **real number** — plus some multiple of i, written a + bi, where a and b are real and i obeys one rule:
 
-$$i \times i = -1$$
+```math
+i \times i = -1
+```
 
 They add and multiply by the ordinary bracket rules, with i × i replaced by -1. A real number is the case b = 0.
 
-Now the theorem, for a polynomial of degree $n$ — the highest power of its unknown — with any complex coefficients:
+Now the theorem, for a polynomial of degree $`n`$ — the highest power of its unknown — with any complex coefficients:
 
-$$P(x) = a_n x^n + \ldots + a_1 x + a_0, \qquad a_n \ne 0, \qquad n \ge 1$$
+```math
+P(x) = a_n x^n + \ldots + a_1 x + a_0, \qquad a_n \ne 0, \qquad n \ge 1
+```
 
-Then there are complex numbers $r_1$, $r_2$ up to $r_n$, repeats allowed, with
+Then there are complex numbers $`r_1`$, $`r_2`$ up to $`r_n`$, repeats allowed, with
 
-$$P(x) = a_n (x - r_1)(x - r_2) \ldots (x - r_n)$$
+```math
+P(x) = a_n (x - r_1)(x - r_2) \ldots (x - r_n)
+```
 
-**Read it aloud:** P(x), the polynomial's value at x, is its **leading coefficient** $a_n$ times one bracket per root, the dots standing for one bracket at a time.
+**Read it aloud:** P(x), the polynomial's value at x, is its **leading coefficient** $`a_n`$ times one bracket per root, the dots standing for one bracket at a time.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$ | the new number: i × i = -1 | 10i is a square root of -100 | fixed by definition |
-| $x$ | the unknown the polynomial is written in | t, the seconds since the kick | P(x) changes, the roots do not |
-| $n$ | the degree: highest power present | 2, the ball | one more root, one more bracket |
-| $a_n$ | the number on the highest power, never 0 | 5 | values scale, roots hold |
-| $a_0$ to $a_{n-1}$ | the numbers on the lower powers, $a_0$ the constant term | 25 and -20 | the roots move |
-| $r_1$, $r_2$ to $r_n$ | the n roots, repeats included | 2 + i, 2 - i | — |
+| $`i`$ | the new number: i × i = -1 | 10i is a square root of -100 | fixed by definition |
+| $`x`$ | the unknown the polynomial is written in | t, the seconds since the kick | P(x) changes, the roots do not |
+| $`n`$ | the degree: highest power present | 2, the ball | one more root, one more bracket |
+| $`a_n`$ | the number on the highest power, never 0 | 5 | values scale, roots hold |
+| $`a_0`$ to $`a_{n-1}`$ | the numbers on the lower powers, $`a_0`$ the constant term | 25 and -20 | the roots move |
+| $`r_1`$, $`r_2`$ to $`r_n`$ | the n roots, repeats included | 2 + i, 2 - i | — |
 
 ### When it holds
 
@@ -86,7 +92,7 @@ If r is a root, x - r divides the polynomial exactly and leaves a degree one low
 
 ### Step 2: peel until nothing is left
 
-Degree n, one root, one bracket, degree n - 1 left. If that is still 1 or more, Step 0 applies again and another bracket comes off. Each pass drops the degree by one, so after n passes the leftover is a single number, and it must be $a_n$, since n brackets give x^n and nothing larger.
+Degree n, one root, one bracket, degree n - 1 left. If that is still 1 or more, Step 0 applies again and another bracket comes off. Each pass drops the degree by one, so after n passes the leftover is a single number, and it must be $`a_n`$, since n brackets give x^n and nothing larger.
 
 <details>
 <summary>Detailed proof</summary>
@@ -109,11 +115,15 @@ The factor theorem gives at most n: every root is on the list. Step 0 gives at l
 
 Divide 5t^2 - 20t + 25 = 0 by 5 and complete the square, as the quadratic formula does:
 
-$$t^2 - 4t + 5 = (t - 2)^2 + 1$$
+```math
+t^2 - 4t + 5 = (t - 2)^2 + 1
+```
 
 So (t - 2)^2 = -1. Anything whose square is -1 is i or -i, so t = 2 + i or 2 - i. Multiply back:
 
-$$(t - 2 - i)(t - 2 + i) = (t - 2)^2 - i \times i = (t - 2)^2 + 1$$
+```math
+(t - 2 - i)(t - 2 + i) = (t - 2)^2 - i \times i = (t - 2)^2 + 1
+```
 
 The two i terms cancel and -i × i becomes +1. Restore the 5: 5(t - 2 - i)(t - 2 + i).
 
@@ -483,7 +493,7 @@ example : (5 * 1 ^ 2 - 20 * 1 + 25 : ℤ) = 10 ∧ (5 * 3 ^ 2 - 20 * 3 + 25 : �
 >
 > - **Reading it as a fact about real numbers.** On the real line 5t^2 - 20t + 25 has no roots; its lowest value over 41 candidate times is 5.00.
 > - **Turning a root into a measurement.** 2 + i seconds is no moment in the flight: the peak is 20.00 metres against a target of 25.
-> - **Losing the leading coefficient.** (t - 2 - i)(t - 2 + i) is t^2 - 4t + 5, constant term 5, not 25. Only $a_n$ sets the scale.
+> - **Losing the leading coefficient.** (t - 2 - i)(t - 2 + i) is t^2 - 4t + 5, constant term 5, not 25. Only $`a_n`$ sets the scale.
 
 ---
 

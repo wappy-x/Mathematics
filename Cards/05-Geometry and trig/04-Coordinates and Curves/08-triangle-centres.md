@@ -24,30 +24,36 @@ Drawn at 1 km = 22 units. Dashed: the circle through the farms, centre O. Solid:
 
 ## The formula
 
-Notation first, in words. Adding points, or multiplying one by a number, acts on each coordinate separately, as with vectors. Bars, as in $\lvert O - A\rvert$, mean the straight-line distance between two points ([Distance and midpoint](01-distance-and-midpoint.md)). Each road takes the small letter of the farm it faces: road $a$ runs from B to C.
+Notation first, in words. Adding points, or multiplying one by a number, acts on each coordinate separately, as with vectors. Bars, as in $`\lvert O - A\rvert`$, mean the straight-line distance between two points ([Distance and midpoint](01-distance-and-midpoint.md)). Each road takes the small letter of the farm it faces: road $`a`$ runs from B to C.
 
-$$G = \frac{A + B + C}{3}$$
+```math
+G = \frac{A + B + C}{3}
+```
 
 **Read it aloud:** the centroid is the plain average of the three corners.
 
-$$\lvert O - A\rvert = \lvert O - B\rvert = \lvert O - C\rvert = R$$
+```math
+\lvert O - A\rvert = \lvert O - B\rvert = \lvert O - C\rvert = R
+```
 
 **Read it aloud:** the circumcentre is the one point equally far from all three corners, the circumradius away.
 
-$$I = \frac{aA + bB + cC}{a + b + c}, \qquad r = \frac{K}{s}$$
+```math
+I = \frac{aA + bB + cC}{a + b + c}, \qquad r = \frac{K}{s}
+```
 
 **Read it aloud:** the incentre averages the corners, each counted by the road facing it; its distance to every road, the inradius, is the area over half the perimeter.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $B$, $C$; $x_A$, $y_A$ | the farms as grid points; A's two coordinates | (0, 0), (8, 0), (2, 6) km | every centre moves |
-| $a$, $b$, $c$ | each road's length, named for the farm it faces | 8.49, 6.32, 8.00 km | pulls I towards the farm it faces |
-| $G$ | centroid: the average of the corners | (3.33, 2.00) | — |
-| $O$ | circumcentre: equally far from the corners | (4.00, 2.00) | — |
-| $R$ | the circumradius: the common pipe length | 4.47 km | longer pipes |
-| $I$ | incentre: equally far from the roads | (2.92, 2.10) | — |
-| $r$ | the inradius: the pond's radius | 2.1044 km | a bigger pond |
-| $K$, $s$ | the area, and half the perimeter | 24.00 km^2 and 11.4049 km | K up: bigger pond; s up: smaller |
+| $`A`$, $`B`$, $`C`$; $`x_A`$, $`y_A`$ | the farms as grid points; A's two coordinates | (0, 0), (8, 0), (2, 6) km | every centre moves |
+| $`a`$, $`b`$, $`c`$ | each road's length, named for the farm it faces | 8.49, 6.32, 8.00 km | pulls I towards the farm it faces |
+| $`G`$ | centroid: the average of the corners | (3.33, 2.00) | — |
+| $`O`$ | circumcentre: equally far from the corners | (4.00, 2.00) | — |
+| $`R`$ | the circumradius: the common pipe length | 4.47 km | longer pipes |
+| $`I`$ | incentre: equally far from the roads | (2.92, 2.10) | — |
+| $`r`$ | the inradius: the pond's radius | 2.1044 km | a bigger pond |
+| $`K`$, $`s`$ | the area, and half the perimeter | 24.00 km^2 and 11.4049 km | K up: bigger pond; s up: smaller |
 
 ### When it holds
 
@@ -68,14 +74,14 @@ The circumcentre is equally far from three farms, the incentre from three roads.
 
 A **median** runs from a corner to the midpoint of the opposite side. From farm A it reaches (5, 3); two-thirds of the way is (3.33, 2.00). In general A + (2/3)((B + C)/2 − A) works out to (A + B + C)/3, the same from every corner, so G lies on all three medians.
 
-Equal weights at the corners balance at their average position. An evenly thick sheet, cut into strips parallel to road $a$, balances strip by strip on the median from A, so on every median: at G. G also has the least total of squared distances to the corners: 58.67, against 60.00 at O.
+Equal weights at the corners balance at their average position. An evenly thick sheet, cut into strips parallel to road $`a`$, balances strip by strip on the median from A, so on every median: at G. G also has the least total of squared distances to the corners: 58.67, against 60.00 at O.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
 Write each corner's gap from a point P as (P − G) + (G − V), for V in A, B, C, square with the dot product, and add:
 
-$$\lvert P - A\rvert^2 + \lvert P - B\rvert^2 + \lvert P - C\rvert^2 = 3\lvert P - G\rvert^2 + \bigl(\text{the same total at } G\bigr),$$
+$`\displaystyle \lvert P - A\rvert^2 + \lvert P - B\rvert^2 + \lvert P - C\rvert^2 = 3\lvert P - G\rvert^2 + \bigl(\text{the same total at } G\bigr),`$
 
 because the cross terms carry 2(P − G) · ((G − A) + (G − B) + (G − C)), and that sum is 3G − (A + B + C) = 0. The total is smallest at P = G.
 
@@ -85,9 +91,11 @@ because the cross terms carry 2(P − G) · ((G − A) + (G − B) + (G − C)),
 
 A well at (x, y) is equally far from A and B when the squared distances match. Both contain x^2 + y^2, which cancels, leaving
 
-$$2(x_B - x_A)\,x + 2(y_B - y_A)\,y = x_B^2 + y_B^2 - x_A^2 - y_A^2,$$
+```math
+2(x_B - x_A)\,x + 2(y_B - y_A)\,y = x_B^2 + y_B^2 - x_A^2 - y_A^2,
+```
 
-with $x_A$ and $y_A$ farm A's coordinates, likewise for B. That is a straight line, through the midpoint of road AB at right angles to it: the **perpendicular bisector**.
+with $`x_A`$ and $`y_A`$ farm A's coordinates, likewise for B. That is a straight line, through the midpoint of road AB at right angles to it: the **perpendicular bisector**.
 
 For the farms, A and B give 16x = 64, so x = 4; A and C give 4x + 12y = 40, so y = 2. The lines cross at O = (4.00, 2.00), where the third bisector passes too. The circle of radius 4.47 km about O, through all three farms, is the **circumcircle**. Nothing keeps O inside the triangle.
 
@@ -95,12 +103,12 @@ For the farms, A and B give 16x = 64, so x = 4; A and C give 4x + 12y = 40, so y
 
 Distance to a road means the shortest distance, at right angles to it. From a point inside the triangle, equally far from the two roads at farm A, drop those two shortest lines. The two right triangles share their hypotenuse and have another side equal, so they are congruent by RHS (right angle, hypotenuse, side; [Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)): the point lies on the **angle bisector**, halving angle A. Run backwards, the same congruence shows every point of that bisector is equally far from both roads. Two bisectors cross at I, the third passes too, and every road is 2.10 km away.
 
-The weights come from the point D where the bisector from A meets road $a$: it splits that road in the ratio c to b.
+The weights come from the point D where the bisector from A meets road $`a`$: it splits that road in the ratio c to b.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The split.** Triangles ABD and ACD share the height from A to road $a$, so their areas are as BD to DC. D, on the bisector, is equally far from roads $c$ and $b$, so the same areas are as c to b. Hence BD : DC = c : b, D = (bB + cC)/(b + c), and BD = ac/(b + c).
+**The split.** Triangles ABD and ACD share the height from A to road $`a`$, so their areas are as BD to DC. D, on the bisector, is equally far from roads $`c`$ and $`b`$, so the same areas are as c to b. Hence BD : DC = c : b, D = (bB + cC)/(b + c), and BD = ac/(b + c).
 
 **Where I sits on AD.** The bisector from B crosses AD at I, so by the same fact in triangle ABD, AI : ID = c : ac/(b + c) = (b + c) : a.
 
@@ -341,10 +349,10 @@ The two outputs match line for line.
 Lean proves each centre's main facts for any farms not in a row, not just the three on the map.
 
 - The three perpendicular bisectors meet at exactly one point: the one point equally far from all three farms.
-- The incentre, $I = (aA + bB + cC)/(a + b + c)$, lies inside the triangle and on all three angle bisectors.
+- The incentre, $`I = (aA + bB + cC)/(a + b + c)`$, lies inside the triangle and on all three angle bisectors.
 - I is K/s from every road, and no point of the triangle is more than K/s from its nearest road. So the largest pond has radius K over s.
 - For any three corners, even in a row, G is two-thirds of the way along every median.
-- For every point P, the total of squared distances to the corners is $3\lvert P - G\rvert^2$ plus the same total at G. So that total is least at G.
+- For every point P, the total of squared distances to the corners is $`3\lvert P - G\rvert^2`$ plus the same total at G. So that total is least at G.
 - The farms' numbers come out exactly: G = (10/3, 2), O = (4, 2) with squared distance 20 to each farm, and area 24 km^2. The totals of squared distances are 176/3 at G and 60 at O.
 - For the obtuse farms, O = (4, −2) is equally far from all three. A well at the midpoint of road AB needs at most 4 km.
 
@@ -762,7 +770,7 @@ example : ((4 : ℤ) - 0) ^ 2 + 0 ^ 2 = 16 ∧ ((4 : ℤ) - 8) ^ 2 + 0 ^ 2 = 16 
 > **Calling one point "the centre" before naming the question.** The average of the farms is the natural guess for a fair well, and gives pipes of 3.89, 5.08 and 4.22 km. Balance, equal distance to the corners and equal distance to the sides are different demands, met by one point only when all three sides are equal.
 >
 > - **Equal pipes read as short pipes.** For the obtuse farms, O's pipes are all 4.47 km, but a well at the midpoint of road AB, (4.00, 0.00), needs at most 4.00 km.
-> - **Averaging the corners for the pond.** The centroid clears road $a$ by 1.89 km, less than the 2.1044 km pond at I.
+> - **Averaging the corners for the pond.** The centroid clears road $`a`$ by 1.89 km, less than the 2.1044 km pond at I.
 
 ---
 

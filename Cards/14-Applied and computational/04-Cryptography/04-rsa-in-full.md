@@ -42,7 +42,9 @@ flowchart LR
 
 Making the key, then using it:
 
-$$n = pq, \qquad e\,d \equiv 1 \pmod{\varphi(n)}, \qquad c = \mathrm{EM}^{\,e} \bmod n, \qquad \mathrm{EM} = \mathrm{CRT}\big(c^{d_p} \bmod p,\; c^{d_q} \bmod q\big)$$
+```math
+n = pq, \qquad e\,d \equiv 1 \pmod{\varphi(n)}, \qquad c = \mathrm{EM}^{\,e} \bmod n, \qquad \mathrm{EM} = \mathrm{CRT}\big(c^{d_p} \bmod p,\; c^{d_q} \bmod q\big)
+```
 
 **Read it aloud:** multiply two secret primes to get the public modulus; pick d to undo e on the clock of size phi(n); encrypt the padded block by raising it to e; decrypt it by raising to the two halves of d on the two prime clocks and gluing the answers.
 
@@ -50,26 +52,26 @@ Here mod n means "keep the remainder after dividing by n", and phi(n), Euler's t
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p, q$ | the two secret primes | 1024 bits each: cf8ab650…50560399 and ff72ba87…17e95c4b | n grows; splitting it gets harder |
-| $n$ | the public modulus, $p \times q$ | cf182e97…77bf09d3: 2048 bits, 617 digits | each multiply costs more; factoring costs far more |
-| $\varphi(n)$ | phi of n: $(p-1)(q-1)$, the clock the exponents live on | just below n | (fixed by $p, q$) |
-| $e$ | the public exponent | 65537 | encryption slows; nothing gets safer |
-| $d$ | the private exponent: what undoes $e$ on the phi(n) clock | 31a8a7cb…820be7d1, 2046 bits | (fixed by $e$ and phi(n)) |
-| $m$ | the message, read as a number | the 32-byte AES key cb75f112…149a08ed; the amount 500 in the textbook breaks | OAEP takes at most 190 bytes |
-| $r$ | OAEP's fresh random seed | 32 bytes: d6d87f83…388ac86a | a fresh seed gives a fresh ciphertext |
-| EM | the encoded message: $m$ after OAEP padding | 256 bytes: 001caf98…9bdc6a82 | (set by $m$ and $r$) |
-| $c$ | the ciphertext, $\mathrm{EM}^e \bmod n$ | b48cfbb3…fb06ac30 | (set by EM) |
-| $d_p, d_q$ | $d$ cut down to the clocks $p-1$ and $q-1$ | each smaller than its prime | (set by $d$) |
-| CRT | the Chinese remainder theorem's glue: one number from its remainders mod $p$ and mod $q$ | gives back EM | (exact, no error) |
-| $a, x$ | Step 5 only: a base, and the square root of 1 it turns up | $a = 2$; its $x$ splits off $p$ | most bases work; a few give only 1 or −1 |
+| $`p, q`$ | the two secret primes | 1024 bits each: cf8ab650…50560399 and ff72ba87…17e95c4b | n grows; splitting it gets harder |
+| $`n`$ | the public modulus, $`p \times q`$ | cf182e97…77bf09d3: 2048 bits, 617 digits | each multiply costs more; factoring costs far more |
+| $`\varphi(n)`$ | phi of n: $`(p-1)(q-1)`$, the clock the exponents live on | just below n | (fixed by $`p, q`$) |
+| $`e`$ | the public exponent | 65537 | encryption slows; nothing gets safer |
+| $`d`$ | the private exponent: what undoes $`e`$ on the phi(n) clock | 31a8a7cb…820be7d1, 2046 bits | (fixed by $`e`$ and phi(n)) |
+| $`m`$ | the message, read as a number | the 32-byte AES key cb75f112…149a08ed; the amount 500 in the textbook breaks | OAEP takes at most 190 bytes |
+| $`r`$ | OAEP's fresh random seed | 32 bytes: d6d87f83…388ac86a | a fresh seed gives a fresh ciphertext |
+| EM | the encoded message: $`m`$ after OAEP padding | 256 bytes: 001caf98…9bdc6a82 | (set by $`m`$ and $`r`$) |
+| $`c`$ | the ciphertext, $`\mathrm{EM}^e \bmod n`$ | b48cfbb3…fb06ac30 | (set by EM) |
+| $`d_p, d_q`$ | $`d`$ cut down to the clocks $`p-1`$ and $`q-1`$ | each smaller than its prime | (set by $`d`$) |
+| CRT | the Chinese remainder theorem's glue: one number from its remainders mod $`p`$ and mod $`q`$ | gives back EM | (exact, no error) |
+| $`a, x`$ | Step 5 only: a base, and the square root of 1 it turns up | $`a = 2`$; its $`x`$ splits off $`p`$ | most bases work; a few give only 1 or −1 |
 
 ### When it holds
 
 - **p and q are random, secret and distinct.** If two keys share a prime, one gcd (greatest common divisor) splits both: break 4 below.
 - **e shares no factor with phi(n).** Otherwise nothing undoes e. Key generation redraws a prime whenever p − 1 is a multiple of e.
-- **The message is padded.** Raw "textbook" RSA, $m^e \bmod n$ with no padding, can be guessed and edited: breaks 1 and 2.
+- **The message is padded.** Raw "textbook" RSA, $`m^e \bmod n`$ with no padding, can be guessed and edited: breaks 1 and 2.
 - **Both CRT halves are computed correctly.** One wrong bit in one half hands out a prime: break 3.
-- **Splitting n is hard.** At 2048 bits the best known method needs about $2^{112}$ operations (NIST SP 800-57; NIST is the US National Institute of Standards and Technology). A large quantum computer would change this; see [Lattices](09-lattices-and-post-quantum-cryptography.md).
+- **Splitting n is hard.** At 2048 bits the best known method needs about $`2^{112}`$ operations (NIST SP 800-57; NIST is the US National Institute of Standards and Technology). A large quantum computer would change this; see [Lattices](09-lattices-and-post-quantum-cryptography.md).
 
 ---
 
@@ -77,7 +79,7 @@ Here mod n means "keep the remainder after dividing by n", and phi(n), Euler's t
 
 ### Step 0: the trapdoor is the factorisation
 
-Every private number on this card, phi(n), d, $d_p$, $d_q$, is a few lines of arithmetic once you hold p and q. Every public number, n and e, hides them. So the design has one job: make primes easy to find and their product hard to split.
+Every private number on this card, phi(n), d, $`d_p`$, $`d_q`$, is a few lines of arithmetic once you hold p and q. Every public number, n and e, hides them. So the design has one job: make primes easy to find and their product hard to split.
 
 ### Step 1: finding a 1024-bit prime
 
@@ -91,7 +93,7 @@ The run's p took 399 odd draws and its q took 188, either side of that average. 
 
 phi(n) = (p − 1)(q − 1). Then d is the number that undoes e on a clock of size phi(n). The Python check finds it with the extended Euclidean algorithm: Euclid's gcd steps, run backwards to give the inverse ([Bezout's identity](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)).
 
-The Rust check has no big-number division, so it finds the k below 65537 that makes 1 + k × phi(n) a multiple of e, and divides by e. Both get the same 2046-bit d, and e × d mod phi(n) = 1. Why $m^{ed}$ comes back to m is [Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md), shown in full on RSA in outline.
+The Rust check has no big-number division, so it finds the k below 65537 that makes 1 + k × phi(n) a multiple of e, and divides by e. Both get the same 2046-bit d, and e × d mod phi(n) = 1. Why $`m^{ed}`$ comes back to m is [Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md), shown in full on RSA in outline.
 
 The original 1978 paper gives a test vector: p = 47, q = 59, e = 17. Its d is 157, and the block 920 encrypts to 948. The checks rebuild both.
 
@@ -100,7 +102,7 @@ The original 1978 paper gives a test vector: p = 47, q = 59, e = 17. Its d is 15
 Textbook RSA has two leaks.
 
 - **It is deterministic.** 500 always encrypts to the same c. Anyone who can guess the message can encrypt each guess and compare.
-- **It is multiplicative.** $(a^e)(b^e) = (ab)^e$. Multiply a ciphertext by $2^e$ and the hidden message doubles, without anyone touching the key.
+- **It is multiplicative.** $`(a^e)(b^e) = (ab)^e`$. Multiply a ciphertext by $`2^e`$ and the hidden message doubles, without anyone touching the key.
 
 OAEP (Optimal Asymmetric Encryption Padding, RFC 8017) fixes both. Before encrypting, it builds a 256-byte block EM in two masking rounds:
 
@@ -121,8 +123,8 @@ How strong is this? RFC 8017 records a proof: if RSA is hard to invert, OAEP res
 
 Decryption means raising c to d, an exponent of about 2048 bits (2046 here), on a 2048-bit clock. The bank can do better, because it knows p and q.
 
-1. Cut the exponent: $d_p = d \bmod (p-1)$ and $d_q = d \bmod (q-1)$. On a prime clock, exponents run on a clock of size one less ([Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md)).
-2. Compute $c^{d_p} \bmod p$ and $c^{d_q} \bmod q$: two jobs with half-size numbers and half-size exponents.
+1. Cut the exponent: $`d_p = d \bmod (p-1)`$ and $`d_q = d \bmod (q-1)`$. On a prime clock, exponents run on a clock of size one less ([Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md)).
+2. Compute $`c^{d_p} \bmod p`$ and $`c^{d_q} \bmod q`$: two jobs with half-size numbers and half-size exponents.
 3. Glue the two remainders into one number below n with [The Chinese remainder theorem](../../02-Number%20theory/03-Clock%20Arithmetic/06-chinese-remainder-theorem.md).
 
 Why about 4 times faster? Count multiplications. Square-and-multiply (the fast power method of [Powers on the clock](../../02-Number%20theory/04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): one squaring per bit of the exponent after the first, one extra multiply per further 1 bit) on this d made **3067** multiplications of 2048-bit numbers.
@@ -137,7 +139,7 @@ Encryption is cheap by comparison: raising to e = 65537 took 17 multiplications.
 
 So the checks run it on a toy key, 3516228229 × 4270626263, a 64-bit n. It split the toy n in 74725 steps; the square root of p is 59297. Single runs scatter widely around that square root, and only the average grows with it. The d rebuilt from that factor matches the toy key's d.
 
-**d gives the factors.** This is the surprising half. Since $ed - 1$ is a multiple of phi(n), raising any base a that shares no factor with n to the power $ed - 1$ gives 1. (A base that does share a factor splits n at once: gcd(a, n) is a prime.)
+**d gives the factors.** This is the surprising half. Since $`ed - 1`$ is a multiple of phi(n), raising any base a that shares no factor with n to the power $`ed - 1`$ gives 1. (A base that does share a factor splits n at once: gcd(a, n) is a prime.)
 
 Halve that exponent until it is odd, raise a to it, then square step by step until 1 appears. The value just before the 1 is a square root of 1.
 
@@ -147,9 +149,9 @@ So **knowing d and knowing the factors are the same knowledge**. Leaking d means
 
 One gap remains open. Decrypting a single ciphertext without d (the "RSA problem") is not proved to be as hard as factoring. No faster route is known.
 
-**What factoring costs.** For a 2048-bit n, trial division by every odd number up to the square root takes about $2^{1023}$ steps. Pollard's rho takes about $2^{512}$.
+**What factoring costs.** For a 2048-bit n, trial division by every odd number up to the square root takes about $`2^{1023}`$ steps. Pollard's rho takes about $`2^{512}`$.
 
-The general number field sieve (GNFS), the best known method, grows more slowly than any power of n but faster than any power of its digit count. Its formula, without the small correction term, gives $2^{116.9}$. NIST rates a 2048-bit key at 112 bits of security: about $2^{112}$ operations, if no better method exists.
+The general number field sieve (GNFS), the best known method, grows more slowly than any power of n but faster than any power of its digit count. Its formula, without the small correction term, gives $`2^{116.9}`$. NIST rates a 2048-bit key at 112 bits of security: about $`2^{112}`$ operations, if no better method exists.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -189,8 +191,8 @@ The bank recovers the laptop's AES key, and the two prime clocks do it for about
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Textbook RSA, attacker guesses amounts 1, 2, 3… | 500 found after 500 encryptions | Encryption is deterministic: encrypt each guess and compare |
-| Textbook RSA, attacker multiplies c by $2^e$ | the bank reads 1000 | Encryption multiplies: the amount doubled without the key |
-| The same tampering against OAEP | 0 of 200 tampered copies (c times $s^e$, for 200 values of s) accepted | The check bytes fail; a random block passes with chance below 1 in $2^{256}$, since the 32-byte label hash alone must match |
+| Textbook RSA, attacker multiplies c by $`2^e`$ | the bank reads 1000 | Encryption multiplies: the amount doubled without the key |
+| The same tampering against OAEP | 0 of 200 tampered copies (c times $`s^e`$, for 200 values of s) accepted | The check bytes fail; a random block passes with chance below 1 in $`2^{256}`$, since the 32-byte label hash alone must match |
 | CRT decryption with one bit wrong in the mod-q half | the faulty result, bad, gives gcd(bad^e − c, n) = cf8ab650…50560399 = p | The wrong answer is still right mod p, so p divides (answer to the e) − c |
 | Two keys sharing the prime p | gcd(n, p × q2) = cf8ab650…50560399 = p | One gcd, no factoring needed |
 | The private d leaks | base 2 splits n: cf8ab650…50560399 = p | d and the factors are the same secret |
@@ -615,11 +617,11 @@ The two outputs match line for line.
 
 Lean proves the round trip on two prime clocks and two ways to split n, for any distinct primes p and q.
 
-- Take distinct odd primes p and q, d undoing e on the phi(n) clock, and m below n encrypted to c. Then the CRT glue of $c^{d_p} \bmod p$ and $c^{d_q} \bmod q$ is m again.
+- Take distinct odd primes p and q, d undoing e on the phi(n) clock, and m below n encrypted to c. Then the CRT glue of $`c^{d_p} \bmod p`$ and $`c^{d_q} \bmod q`$ is m again.
 - Take distinct primes p and q, and x a square root of 1 on the n clock, neither 1 nor −1. Then gcd(x − 1, n) is p or q.
-- Take distinct primes p and q, d undoing e on the phi(n) clock, and bad agreeing with m mod p only. Then $\gcd(\mathrm{bad}^e - c, n) = p$, where c encrypts m.
+- Take distinct primes p and q, d undoing e on the phi(n) clock, and bad agreeing with m mod p only. Then $`\gcd(\mathrm{bad}^e - c, n) = p`$, where c encrypts m.
 - The 1978 test vector holds: 47 and 59 are prime, d = 157, and 920 encrypts to 948 and decrypts back.
-- On the two prime clocks, $d_p = 19$ and $d_q = 41$, and both halves give back 920.
+- On the two prime clocks, $`d_p = 19`$ and $`d_q = 41`$, and both halves give back 920.
 - The toy primes 3516228229 and 4270626263 are prime, and their product has 64 bits.
 - The doubled textbook amount is 1000, and OAEP's longest message at 2048 bits is 190 bytes.
 
@@ -844,7 +846,7 @@ example : 256 - 2 * 32 - 2 = 190 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Treating "RSA" as raising the message to e.** Raw $m^e \bmod n$ is textbook RSA, and it is broken as an encryption scheme: the same message always gives the same ciphertext, and ciphertexts can be multiplied. Here that found the amount after 500 guesses and turned 500 into 1000, under a full 2048-bit key. Real RSA encryption is RSA with OAEP padding.
+> **Treating "RSA" as raising the message to e.** Raw $`m^e \bmod n`$ is textbook RSA, and it is broken as an encryption scheme: the same message always gives the same ciphertext, and ciphertexts can be multiplied. Here that found the amount after 500 guesses and turned 500 into 1000, under a full 2048-bit key. Real RSA encryption is RSA with OAEP padding.
 >
 > Smaller traps:
 > - **Old padding.** RFC 8017 keeps the older PKCS #1 v1.5 encryption padding only for compatibility and asks new systems to use OAEP. The old padding's error messages have been used to decrypt ciphertexts one query at a time.
@@ -871,7 +873,7 @@ example : 256 - 2 * 32 - 2 = 190 := by decide
 
 - [Hashes and MACs](03-hash-functions-and-macs.md): SHA-256, which makes OAEP's masks and its label hash.
 - [RSA in outline](../../02-Number%20theory/06-Codes%20and%20Secrets/03-rsa-in-outline.md): the encrypt-and-decrypt round trip on the toy clock 3233.
-- [Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md): why $m^{ed}$ comes back to m, and why exponents can be cut mod p − 1.
+- [Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md): why $`m^{ed}`$ comes back to m, and why exponents can be cut mod p − 1.
 - [The Miller-Rabin test](../../02-Number%20theory/06-Codes%20and%20Secrets/05-miller-rabin.md): the prime test inside key generation, and the extra square roots of 1 that let d split n.
 - [The Chinese remainder theorem](../../02-Number%20theory/03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): gluing the mod-p and mod-q answers into one.
 

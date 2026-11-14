@@ -28,49 +28,55 @@ Drawn to scale, 6.5 units per kilo across and 0.4 per pound up. Take a line of s
 
 ## The formula
 
-Notation first, in words. For a cost $f$ of an amount $x$, its **conjugate** $f^*$ (read "f star") is a new function of a price $y$: the largest value of revenue $y\,x$ minus cost $f(x)$, over every amount $x$. The star never means a conjugate transpose on this wing.
+Notation first, in words. For a cost $`f`$ of an amount $`x`$, its **conjugate** $`f^*`$ (read "f star") is a new function of a price $`y`$: the largest value of revenue $`y\,x`$ minus cost $`f(x)`$, over every amount $`x`$. The star never means a conjugate transpose on this wing.
 
-$$f^*(y) = \sup_{x}\,\big(\,y\,x - f(x)\,\big)$$
+```math
+f^*(y) = \sup_{x}\,\big(\,y\,x - f(x)\,\big)
+```
 
-**Read it aloud:** at price $y$, sell whatever amount makes revenue minus cost largest; that largest profit is the conjugate. ("sup" is the smallest number nothing exceeds; it is the maximum when a best amount exists, and it may be $+\infty$ when profit has no ceiling.)
+**Read it aloud:** at price $`y`$, sell whatever amount makes revenue minus cost largest; that largest profit is the conjugate. ("sup" is the smallest number nothing exceeds; it is the maximum when a best amount exists, and it may be $`+\infty`$ when profit has no ceiling.)
 
-Two conjugates this card computes, for a cost with base price $c$ and climb $q$, and for a fine of $k$ per unit off a target $D$:
+Two conjugates this card computes, for a cost with base price $`c`$ and climb $`q`$, and for a fine of $`k`$ per unit off a target $`D`$:
 
-$$f(x) = c\,x + \tfrac{q}{2}\,x^2 \;\Rightarrow\; f^*(y) = \frac{(y - c)^2}{2q}, \qquad g(z) = k\,\lvert z - D\rvert \;\Rightarrow\; g^*(w) = \begin{cases} D\,w & \lvert w\rvert \le k \\ +\infty & \lvert w\rvert > k\end{cases}$$
+```math
+f(x) = c\,x + \tfrac{q}{2}\,x^2 \;\Rightarrow\; f^*(y) = \frac{(y - c)^2}{2q}, \qquad g(z) = k\,\lvert z - D\rvert \;\Rightarrow\; g^*(w) = \begin{cases} D\,w & \lvert w\rvert \le k \\ +\infty & \lvert w\rvert > k\end{cases}
+```
 
 **Read it aloud:** a quadratic cost has a quadratic conjugate; a kinked fine has a conjugate that is a straight line on a band of prices and infinite outside it.
 
-For several amounts $x = (x_1, x_2, x_3)$ and a list of prices $v = (v_1, v_2, v_3)$, one per amount, the definition is the same with revenue $v_1x_1 + v_2x_2 + v_3x_3$, written $v^{\mathsf T}x$: $f^*(v) = \sup_x \big(v^{\mathsf T}x - f(x)\big)$. When the cost is a sum of separate costs, $f(x) = f_1(x_1) + f_2(x_2) + f_3(x_3)$, each estate's profit is made largest on its own, so $f^*(v) = f_1^*(v_1) + f_2^*(v_2) + f_3^*(v_3)$: the sum rule.
+For several amounts $`x = (x_1, x_2, x_3)`$ and a list of prices $`v = (v_1, v_2, v_3)`$, one per amount, the definition is the same with revenue $`v_1x_1 + v_2x_2 + v_3x_3`$, written $`v^{\mathsf T}x`$: $`f^*(v) = \sup_x \big(v^{\mathsf T}x - f(x)\big)`$. When the cost is a sum of separate costs, $`f(x) = f_1(x_1) + f_2(x_2) + f_3(x_3)`$, each estate's profit is made largest on its own, so $`f^*(v) = f_1^*(v_1) + f_2^*(v_2) + f_3^*(v_3)`$: the sum rule.
 
-Fenchel-Young and Fenchel duality, for convex $f$ and $g$ and a matrix $A$:
+Fenchel-Young and Fenchel duality, for convex $`f`$ and $`g`$ and a matrix $`A`$:
 
-$$f(x) + f^*(y) \ge y\,x, \qquad p^* = \min_x \big(f(x) + g(Ax)\big) \;\ge\; d^* = \max_y \big(-f^*(A^{\mathsf T} y) - g^*(-y)\big)$$
+```math
+f(x) + f^*(y) \ge y\,x, \qquad p^* = \min_x \big(f(x) + g(Ax)\big) \;\ge\; d^* = \max_y \big(-f^*(A^{\mathsf T} y) - g^*(-y)\big)
+```
 
 **Read it aloud:** a cost plus its conjugate is never below price times amount; the cheapest plan is never below the best price bound, and with convex costs and a plan inside where both are finite, the two are equal.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_i$ | kilos bought; $x_i$ from estate $i$ | 30, 40, 30 kg | cost rises |
-| $y$ | a price per kilo: a slope of the cost | £11 | each estate offers more |
-| $f$, $f_i$ | a cost in pounds: the whole order's is $f = f_1 + f_2 + f_3$, estate $i$'s for $x$ kg is $f_i$ | Brazil: $f_1(30)$ = £285 | — |
-| $c_i$, $q_i$ | base price (£/kg) and its climb (£/kg per kg) | Brazil 8, 0.1; Colombia 9, 0.05; Robusta 5, 0.2 | dearer, smaller order |
-| $f^*$ | the conjugate: best profit at price $y$ | $f_1^*(11)$ = £45 | — |
-| $\partial f(x)$ | the slopes of all lines touching $f$ at $x$ from below ([Subgradients](07-subgradients.md)) | $\partial g(100)$ = [−12, 12] | — |
-| $g$, $k$, $D$ | the contract fine, £ per kg off, and the target | $k$ = £12, $D$ = 100 kg | larger $k$: price may rise higher |
-| $z$, $w$, $A$ | kilos delivered; a price on delivered kilos; the row (1, 1, 1) that adds the three orders | $z = Ax$ = 100 kg; $w = -y$ | — |
-| $v$, $A^{\mathsf T}y$ | a list of prices, one per estate; the one that posts the same price $y$ to each: $(y, y, y)$ | (11, 11, 11) | — |
-| $p^*$, $d^*$ | cheapest total bill; best price bound (the wing's names, set out on [The standard convex problem](10-the-convex-problem-in-standard-form.md) and [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md)) | £925, £925 | — |
-| $f^{**}$ | the conjugate of the conjugate | $f_1^{**}(30)$ = £285 | — |
-| $x_0$, $x'$, $t$, $b$, $\ell$ | a point, another amount, a height, a crossing and a line, used inside proofs only | — | — |
+| $`x`$, $`x_i`$ | kilos bought; $`x_i`$ from estate $`i`$ | 30, 40, 30 kg | cost rises |
+| $`y`$ | a price per kilo: a slope of the cost | £11 | each estate offers more |
+| $`f`$, $`f_i`$ | a cost in pounds: the whole order's is $`f = f_1 + f_2 + f_3`$, estate $`i`$'s for $`x`$ kg is $`f_i`$ | Brazil: $`f_1(30)`$ = £285 | — |
+| $`c_i`$, $`q_i`$ | base price (£/kg) and its climb (£/kg per kg) | Brazil 8, 0.1; Colombia 9, 0.05; Robusta 5, 0.2 | dearer, smaller order |
+| $`f^*`$ | the conjugate: best profit at price $`y`$ | $`f_1^*(11)`$ = £45 | — |
+| $`\partial f(x)`$ | the slopes of all lines touching $`f`$ at $`x`$ from below ([Subgradients](07-subgradients.md)) | $`\partial g(100)`$ = [−12, 12] | — |
+| $`g`$, $`k`$, $`D`$ | the contract fine, £ per kg off, and the target | $`k`$ = £12, $`D`$ = 100 kg | larger $`k`$: price may rise higher |
+| $`z`$, $`w`$, $`A`$ | kilos delivered; a price on delivered kilos; the row (1, 1, 1) that adds the three orders | $`z = Ax`$ = 100 kg; $`w = -y`$ | — |
+| $`v`$, $`A^{\mathsf T}y`$ | a list of prices, one per estate; the one that posts the same price $`y`$ to each: $`(y, y, y)`$ | (11, 11, 11) | — |
+| $`p^*`$, $`d^*`$ | cheapest total bill; best price bound (the wing's names, set out on [The standard convex problem](10-the-convex-problem-in-standard-form.md) and [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md)) | £925, £925 | — |
+| $`f^{**}`$ | the conjugate of the conjugate | $`f_1^{**}(30)`$ = £285 | — |
+| $`x_0`$, $`x'`$, $`t`$, $`b`$, $`\ell`$ | a point, another amount, a height, a crossing and a line, used inside proofs only | — | — |
 
-The full problem: minimise $f_1(x_1) + f_2(x_2) + f_3(x_3) + 12\,\lvert x_1 + x_2 + x_3 - 100\rvert$ over the three orders.
+The full problem: minimise $`f_1(x_1) + f_2(x_2) + f_3(x_3) + 12\,\lvert x_1 + x_2 + x_3 - 100\rvert`$ over the three orders.
 
 ### When it holds
 
-- **Convex costs.** The conjugate exists for any cost, but $f^{**}$ gives back $f$ only when $f$ is convex and closed. Closed means the region on or above the graph includes its edge: at no point does the cost jump above the values just beside it. If Robusta comes only in whole 60 kg sacks, the cost is not convex and the best price bound is £1,015 against a true £1,030.
-- **A price inside the band of the fine.** $g^*(-y)$ is infinite unless $\lvert y\rvert \le k$. Forget that and at $k$ = £10 the "bound" reads £925, above the true cheapest bill of £907.50.
-- **Amounts allowed to be any real number.** The quadratic formula takes the best $x$ as $(y - c)/q$, negative when $y < c$. With orders that cannot be negative, the conjugate is zero below the base price; here every price used is at least £9, so no estate is asked to sell back.
-- **A point inside both domains, for the strong half.** Fenchel duality has no gap when some plan lies inside where $f$ and $g$ are finite. Both are finite everywhere here, so it holds.
+- **Convex costs.** The conjugate exists for any cost, but $`f^{**}`$ gives back $`f`$ only when $`f`$ is convex and closed. Closed means the region on or above the graph includes its edge: at no point does the cost jump above the values just beside it. If Robusta comes only in whole 60 kg sacks, the cost is not convex and the best price bound is £1,015 against a true £1,030.
+- **A price inside the band of the fine.** $`g^*(-y)`$ is infinite unless $`\lvert y\rvert \le k`$. Forget that and at $`k`$ = £10 the "bound" reads £925, above the true cheapest bill of £907.50.
+- **Amounts allowed to be any real number.** The quadratic formula takes the best $`x`$ as $`(y - c)/q`$, negative when $`y < c`$. With orders that cannot be negative, the conjugate is zero below the base price; here every price used is at least £9, so no estate is asked to sell back.
+- **A point inside both domains, for the strong half.** Fenchel duality has no gap when some plan lies inside where $`f`$ and $`g`$ are finite. Both are finite everywhere here, so it holds.
 
 ---
 
@@ -78,74 +84,84 @@ The full problem: minimise $f_1(x_1) + f_2(x_2) + f_3(x_3) + 12\,\lvert x_1 + x_
 
 ### Step 0: a convex curve is the top edge of its touching lines
 
-A convex cost bends upward. So it sits above each of its touching lines and is the highest of them at every point. A line is fixed by two numbers, a slope and where it crosses the vertical axis. Record, for every slope $y$, how far down the touching line crosses, and the whole curve can be rebuilt. That record is $f^*$: the line of slope $y$ touching $f$ crosses at $-f^*(y)$, because $y\,x - f(x)$ is how far the curve's point at $x$ sits above or below the line $y\,x$.
+A convex cost bends upward. So it sits above each of its touching lines and is the highest of them at every point. A line is fixed by two numbers, a slope and where it crosses the vertical axis. Record, for every slope $`y`$, how far down the touching line crosses, and the whole curve can be rebuilt. That record is $`f^*`$: the line of slope $`y`$ touching $`f`$ crosses at $`-f^*(y)`$, because $`y\,x - f(x)`$ is how far the curve's point at $`x`$ sits above or below the line $`y\,x`$.
 
 The Legendre transform on [Hamilton's equations](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md) built the swing's Hamiltonian this way: the largest value of momentum times velocity minus the Lagrangian, for a smooth bowl in the velocity. The conjugate is the same recipe for any cost, kinks and walls included.
 
 ### Step 1: the conjugate of a quadratic cost
 
-Brazil's profit at price $y$ is $y\,x - 8x - 0.05x^2$. It rises while the price beats the marginal cost $8 + 0.1x$ and falls after, so the best amount is where they are equal: $x = (y - 8)/0.1$. In general $x = (y - c)/q$, and putting it back:
+Brazil's profit at price $`y`$ is $`y\,x - 8x - 0.05x^2`$. It rises while the price beats the marginal cost $`8 + 0.1x`$ and falls after, so the best amount is where they are equal: $`x = (y - 8)/0.1`$. In general $`x = (y - c)/q`$, and putting it back:
 
-$$f^*(y) = y\,\frac{y-c}{q} - c\,\frac{y-c}{q} - \frac{q}{2}\Big(\frac{y-c}{q}\Big)^2 = \frac{(y-c)^2}{q} - \frac{(y-c)^2}{2q} = \frac{(y-c)^2}{2q}.$$
+```math
+f^*(y) = y\,\frac{y-c}{q} - c\,\frac{y-c}{q} - \frac{q}{2}\Big(\frac{y-c}{q}\Big)^2 = \frac{(y-c)^2}{q} - \frac{(y-c)^2}{2q} = \frac{(y-c)^2}{2q}.
+```
 
 At £11, Brazil sells 30 kg and makes 9 / 0.2 = £45. Colombia sells 40 kg and makes 4 / 0.1 = £40; Robusta sells 30 kg and makes 36 / 0.4 = £90.
 
-The conjugate's own slope, $(y - c)/q$, is the amount sold. A cost's slopes are prices; its conjugate's slopes are amounts. The code checks this by nudging the price: 30, 40 and 30 kg. That swap of roles is why a conjugate "describes a function by its slopes".
+The conjugate's own slope, $`(y - c)/q`$, is the amount sold. A cost's slopes are prices; its conjugate's slopes are amounts. The code checks this by nudging the price: 30, 40 and 30 kg. That swap of roles is why a conjugate "describes a function by its slopes".
 
 ### Step 2: the conjugate of a kinked fine
 
-Start with $k\,\lvert x\rvert$. If $\lvert y\rvert \le k$, then $y\,x \le k\,\lvert x\rvert$ for every $x$, so the profit is never positive and the best is 0, at $x = 0$. If $\lvert y\rvert > k$, pushing $x$ far in the direction of the price's sign earns $\lvert y\rvert - k$ per unit without end: the conjugate is $+\infty$. So the conjugate of $k\,\lvert x\rvert$ is 0 on the band $[-k, k]$ and infinite outside.
+Start with $`k\,\lvert x\rvert`$. If $`\lvert y\rvert \le k`$, then $`y\,x \le k\,\lvert x\rvert`$ for every $`x`$, so the profit is never positive and the best is 0, at $`x = 0`$. If $`\lvert y\rvert > k`$, pushing $`x`$ far in the direction of the price's sign earns $`\lvert y\rvert - k`$ per unit without end: the conjugate is $`+\infty`$. So the conjugate of $`k\,\lvert x\rvert`$ is 0 on the band $`[-k, k]`$ and infinite outside.
 
-Shifting the kink to $D$ adds $D\,w$: $g^*(w) = D\,w$ for $\lvert w\rvert \le k$. At $w$ = −11 that is −£1,100. At $w$ = 13, beyond the £12 band, searching deliveries up to 1,100 kg gives £2,300 and up to 2,100 kg gives £3,300: it keeps growing, which is what $+\infty$ means.
+Shifting the kink to $`D`$ adds $`D\,w`$: $`g^*(w) = D\,w`$ for $`\lvert w\rvert \le k`$. At $`w`$ = −11 that is −£1,100. At $`w`$ = 13, beyond the £12 band, searching deliveries up to 1,100 kg gives £2,300 and up to 2,100 kg gives £3,300: it keeps growing, which is what $`+\infty`$ means.
 
 In plain terms: a fine of £12 a kilo caps the value of a kilo at £12. No price above the fine can ever be worth paying.
 
 ### Step 3: Fenchel-Young, and when it is tight
 
-The definition says $f^*(y)$ is at least $y\,x - f(x)$ for every $x$. Rearranged:
+The definition says $`f^*(y)`$ is at least $`y\,x - f(x)`$ for every $`x`$. Rearranged:
 
-$$f(x) + f^*(y) \ge y\,x.$$
+```math
+f(x) + f^*(y) \ge y\,x.
+```
 
-Equality holds exactly when $x$ is a best amount at price $y$. That means $y\,x - f(x) \ge y\,x' - f(x')$ for every other $x'$, which rearranges to $f(x') \ge f(x) + y\,(x' - x)$: the line of slope $y$ through the curve at $x$ stays below it. That is the definition of a subgradient, so equality holds exactly when $y \in \partial f(x)$.
+Equality holds exactly when $`x`$ is a best amount at price $`y`$. That means $`y\,x - f(x) \ge y\,x' - f(x')`$ for every other $`x'`$, which rearranges to $`f(x') \ge f(x) + y\,(x' - x)`$: the line of slope $`y`$ through the curve at $`x`$ stays below it. That is the definition of a subgradient, so equality holds exactly when $`y \in \partial f(x)`$.
 
-Brazil at 30 kg: with price 11, £285 + £45 = £330 = 30 × 11, a tie, since 11 is the slope at 30. With price 12: £285 + £80 = £365, which is £5 more than 360. The code tries 117 amount and price pairs; none goes below zero, and the ties fall exactly where the price equals $8 + 0.1x$.
+Brazil at 30 kg: with price 11, £285 + £45 = £330 = 30 × 11, a tie, since 11 is the slope at 30. With price 12: £285 + £80 = £365, which is £5 more than 360. The code tries 117 amount and price pairs; none goes below zero, and the ties fall exactly where the price equals $`8 + 0.1x`$.
 
 ### Step 4: Fenchel duality, the weak half
 
-Take any plan $x$ and any price $y$. Apply Step 3 twice (its proof reads the same with $v^{\mathsf T}x$ in place of $y\,x$): to $f$ at $x$ with price $A^{\mathsf T}y$, and to $g$ at $z = Ax$ with price $-y$:
+Take any plan $`x`$ and any price $`y`$. Apply Step 3 twice (its proof reads the same with $`v^{\mathsf T}x`$ in place of $`y\,x`$): to $`f`$ at $`x`$ with price $`A^{\mathsf T}y`$, and to $`g`$ at $`z = Ax`$ with price $`-y`$:
 
-$$f(x) \ge (A^{\mathsf T}y)^{\mathsf T}x - f^*(A^{\mathsf T}y), \qquad g(Ax) \ge -y^{\mathsf T}Ax - g^*(-y).$$
+```math
+f(x) \ge (A^{\mathsf T}y)^{\mathsf T}x - f^*(A^{\mathsf T}y), \qquad g(Ax) \ge -y^{\mathsf T}Ax - g^*(-y).
+```
 
-Add them. The terms with $x$ cancel, since $(A^{\mathsf T}y)^{\mathsf T}x = y^{\mathsf T}Ax$:
+Add them. The terms with $`x`$ cancel, since $`(A^{\mathsf T}y)^{\mathsf T}x = y^{\mathsf T}Ax`$:
 
-$$f(x) + g(Ax) \ge -f^*(A^{\mathsf T}y) - g^*(-y).$$
+```math
+f(x) + g(Ax) \ge -f^*(A^{\mathsf T}y) - g^*(-y).
+```
 
-The left side does not depend on $y$ and the right side does not depend on $x$. So every price bounds every plan: $p^* \ge d^*$. The gap between a plan and a price is the sum of the two Fenchel-Young gaps, zero only when both ties hold.
+The left side does not depend on $`y`$ and the right side does not depend on $`x`$. So every price bounds every plan: $`p^* \ge d^*`$. The gap between a plan and a price is the sum of the two Fenchel-Young gaps, zero only when both ties hold.
 
-For the roaster, $A^{\mathsf T}y$ posts the price $y$ to all three estates, so the sum rule gives $f^*(A^{\mathsf T}y) = f_1^*(y) + f_2^*(y) + f_3^*(y)$, and $g^*(-y) = -100y$ inside the band. The dual reads:
+For the roaster, $`A^{\mathsf T}y`$ posts the price $`y`$ to all three estates, so the sum rule gives $`f^*(A^{\mathsf T}y) = f_1^*(y) + f_2^*(y) + f_3^*(y)`$, and $`g^*(-y) = -100y`$ inside the band. The dual reads:
 
-$$\text{maximise } 100\,y - f_1^*(y) - f_2^*(y) - f_3^*(y) \quad\text{over } -12 \le y \le 12.$$
+```math
+\text{maximise } 100\,y - f_1^*(y) - f_2^*(y) - f_3^*(y) \quad\text{over } -12 \le y \le 12.
+```
 
 In words: pay £y for each of 100 kilos, then take back the profit each estate would have made at that price. At the clearing price, what is left is exactly what the coffee cost to grow.
 
 ### Step 5: Fenchel duality, the strong half (stated)
 
-**Theorem (Fenchel duality).** Let $f$ and $g$ be convex and closed, and suppose some plan $x$ has $f(x)$ finite with $g$ finite near $Ax$ (more generally, a point in the relative interior of both domains: a cost's domain is where it is finite, and the relative interior is the inside of that domain, measured within the smallest line, plane or flat space that holds it). Then $p^* = d^*$, and the dual maximum is reached by some $y$. A plan $x$ and price $y$ are both optimal exactly when $A^{\mathsf T}y \in \partial f(x)$ and $-y \in \partial g(Ax)$.
+**Theorem (Fenchel duality).** Let $`f`$ and $`g`$ be convex and closed, and suppose some plan $`x`$ has $`f(x)`$ finite with $`g`$ finite near $`Ax`$ (more generally, a point in the relative interior of both domains: a cost's domain is where it is finite, and the relative interior is the inside of that domain, measured within the smallest line, plane or flat space that holds it). Then $`p^* = d^*`$, and the dual maximum is reached by some $`y`$. A plan $`x`$ and price $`y`$ are both optimal exactly when $`A^{\mathsf T}y \in \partial f(x)`$ and $`-y \in \partial g(Ax)`$.
 
 This card states it and does not prove it. The proof separates two convex sets by a flat wall, as in [Separating hyperplanes](06-separating-hyperplanes.md); it is Theorem 3.3.5 in Borwein and Lewis and Theorem 31.1 in Rockafellar (Sources).
 
-The last sentence is the certificate. At 30, 40, 30 kg, each estate's marginal cost is 8 + 3 = 9 + 2 = 5 + 6 = £11, so $(11, 11, 11) \in \partial f(x)$. The delivery is exactly 100 kg, at the fine's kink, where $\partial g(100) = [-12, 12]$ contains −11. Both ties hold, so £925 is proved cheapest.
+The last sentence is the certificate. At 30, 40, 30 kg, each estate's marginal cost is 8 + 3 = 9 + 2 = 5 + 6 = £11, so $`(11, 11, 11) \in \partial f(x)`$. The delivery is exactly 100 kg, at the fine's kink, where $`\partial g(100) = [-12, 12]`$ contains −11. Both ties hold, so £925 is proved cheapest.
 
 <details>
 <summary>Detailed proof: the conjugate of a closed convex cost gives the cost back</summary>
 
-Fenchel-Moreau theorem: if $f$ is convex, closed and somewhere finite, then $f^{**} = f$.
+Fenchel-Moreau theorem: if $`f`$ is convex, closed and somewhere finite, then $`f^{**} = f`$.
 
-One direction is Step 3: $f^*(y) \ge y\,x - f(x)$ gives $f(x) \ge y\,x - f^*(y)$ for every $y$, so $f(x) \ge f^{**}(x)$.
+One direction is Step 3: $`f^*(y) \ge y\,x - f(x)`$ gives $`f(x) \ge y\,x - f^*(y)`$ for every $`y`$, so $`f(x) \ge f^{**}(x)`$.
 
-For the other, suppose $f^{**}(x_0) < t < f(x_0)$ for some $t$. The point $(x_0, t)$ lies outside the region on or above the graph, which is convex and closed. A flat wall separates them ([Separating hyperplanes](06-separating-hyperplanes.md)). When $f$ is finite near $x_0$ the wall is not vertical, so it is the graph of a line $\ell(x) = y\,x - b$ with $\ell \le f$ everywhere and $\ell(x_0) > t$. Since $\ell \le f$, $b \ge \sup_x (y\,x - f(x)) = f^*(y)$, and then $f^{**}(x_0) \ge y\,x_0 - f^*(y) \ge y\,x_0 - b = \ell(x_0) > t$, a contradiction. (A vertical wall at the edge of the domain is tilted slightly using any non-vertical touching line; Rockafellar, Theorem 12.2.)
+For the other, suppose $`f^{**}(x_0) < t < f(x_0)`$ for some $`t`$. The point $`(x_0, t)`$ lies outside the region on or above the graph, which is convex and closed. A flat wall separates them ([Separating hyperplanes](06-separating-hyperplanes.md)). When $`f`$ is finite near $`x_0`$ the wall is not vertical, so it is the graph of a line $`\ell(x) = y\,x - b`$ with $`\ell \le f`$ everywhere and $`\ell(x_0) > t`$. Since $`\ell \le f`$, $`b \ge \sup_x (y\,x - f(x)) = f^*(y)`$, and then $`f^{**}(x_0) \ge y\,x_0 - f^*(y) \ge y\,x_0 - b = \ell(x_0) > t`$, a contradiction. (A vertical wall at the edge of the domain is tilted slightly using any non-vertical touching line; Rockafellar, Theorem 12.2.)
 
-For Brazil the code maximises $30\,y - f_1^*(y)$ over prices and finds £285 at $y$ = 11: the cost at 30 kg, rebuilt from slopes alone.
+For Brazil the code maximises $`30\,y - f_1^*(y)`$ over prices and finds £285 at $`y`$ = 11: the cost at 30 kg, rebuilt from slopes alone.
 
 </details>
 
@@ -163,7 +179,7 @@ xychart-beta
     line [925, 925, 925, 925, 925, 925, 925]
 ```
 
-Orange: the dual value $100\,y - \sum f_i^*(y)$ at each price. Teal: the cheapest bill, £925. They meet only at £11. The dual is a downward bowl here, $925 - 17.5\,(y - 11)^2$, because each conjugate is an upward bowl.
+Orange: the dual value $`100\,y - \sum f_i^*(y)`$ at each price. Teal: the cheapest bill, £925. They meet only at £11. The dual is a downward bowl here, $`925 - 17.5\,(y - 11)^2`$, because each conjugate is an upward bowl.
 
 ---
 
@@ -171,12 +187,12 @@ Orange: the dual value $100\,y - \sum f_i^*(y)$ at each price. Teal: the cheapes
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| price that clears 100 kg | $\sum (y - c_i)/q_i = 100$: $35y - 285 = 100$, using $1/q_i$ = 10, 20, 5 | $y$ = £11 |
+| price that clears 100 kg | $`\sum (y - c_i)/q_i = 100`$: $`35y - 285 = 100`$, using $`1/q_i`$ = 10, 20, 5 | $`y`$ = £11 |
 | amounts offered | (11 − 8)/0.1, (11 − 9)/0.05, (11 − 5)/0.2 | 30, 40, 30 kg |
 | costs | 240 + 45; 360 + 40; 150 + 90 | £285, £400, £240 |
-| cheapest bill $p^*$ | 285 + 400 + 240, fine 0 | **£925** |
+| cheapest bill $`p^*`$ | 285 + 400 + 240, fine 0 | **£925** |
 | conjugates at £11 | 9/0.2, 4/0.1, 36/0.4 | £45, £40, £90 |
-| dual value $d^*$ | 100 × 11 − (45 + 40 + 90) | **£925** |
+| dual value $`d^*`$ | 100 × 11 − (45 + 40 + 90) | **£925** |
 | certificate | marginal costs 11, 11, 11; −11 in [−12, 12] | gap 0 |
 
 The order 30, 40 and 30 kg costs £925, £9.25 a kilo on average, and the posted price of £11 proves nothing cheaper exists. Brute force over all 1,030,301 whole-kilo orders agrees.
@@ -185,17 +201,17 @@ The order 30, 40 and 30 kg costs £925, £9.25 a kilo on average, and the posted
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No ½ in the quadratic conjugate | Brazil £90; dual at £11 is £750 | $(y - c)^2/q$ counts the profit twice over |
-| Fine of £10 a kilo, but $-g^*(-y)$ taken as $100\,y$ at every price | "bound" £925, above the true £907.50 | Prices above £10 are infinite in $g^*$; the cap was dropped |
-| Robusta only in whole 60 kg sacks, duality trusted | dual £1,015, true cheapest £1,030 | Not convex: the dual sees the half-sack mix $f_3^{**}(30)$ = £330 that cannot be bought |
+| No ½ in the quadratic conjugate | Brazil £90; dual at £11 is £750 | $`(y - c)^2/q`$ counts the profit twice over |
+| Fine of £10 a kilo, but $`-g^*(-y)`$ taken as $`100\,y`$ at every price | "bound" £925, above the true £907.50 | Prices above £10 are infinite in $`g^*`$; the cap was dropped |
+| Robusta only in whole 60 kg sacks, duality trusted | dual £1,015, true cheapest £1,030 | Not convex: the dual sees the half-sack mix $`f_3^{**}(30)`$ = £330 that cannot be bought |
 
-With the £10 fine the honest answer is to stop buying where the marginal cost reaches £10: 20, 20 and 25 kg, 35 kg short, £907.50 in all, and the dual meets it at $y$ = £10. With sacks, two plans tie as cheapest at £1,030: one 60 kg sack with 20 kg each from Brazil and Colombia, or no Robusta with 40 and 60 kg. The £15 gap to the dual is the price of nonconvexity.
+With the £10 fine the honest answer is to stop buying where the marginal cost reaches £10: 20, 20 and 25 kg, 35 kg short, £907.50 in all, and the dual meets it at $`y`$ = £10. With sacks, two plans tie as cheapest at £1,030: one 60 kg sack with 20 kg each from Brazil and Colombia, or no Robusta with 40 and 60 kg. The £15 gap to the dual is the price of nonconvexity.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts take three independent roads to £925: the equal-slope formula, brute force over every whole-kilo order from 0 to 100 kg of each bean, and the Fenchel dual maximised by search over prices. They also find each conjugate by searching over amounts and compare it with Step 1's formula, and check the certificate's condition that $-y$ lies in $\partial g$; the marginal costs they print equal the price by construction. They repeat the run with a £10 fine, test Fenchel-Young on a grid, rebuild Brazil's cost from its conjugate, run the sack case and print every wrong answer above. Nothing imported knows the answer: the searches are ternary searches written out (narrowing an interval by thirds on a function with one peak).
+The scripts take three independent roads to £925: the equal-slope formula, brute force over every whole-kilo order from 0 to 100 kg of each bean, and the Fenchel dual maximised by search over prices. They also find each conjugate by searching over amounts and compare it with Step 1's formula, and check the certificate's condition that $`-y`$ lies in $`\partial g`$; the marginal costs they print equal the price by construction. They repeat the run with a £10 fine, test Fenchel-Young on a grid, rebuild Brazil's cost from its conjugate, run the sack case and print every wrong answer above. Nothing imported knows the answer: the searches are ternary searches written out (narrowing an interval by thirds on a function with one peak).
 
 ### Python
 
@@ -504,13 +520,13 @@ Lean proves Fenchel-Young for any cost, both conjugate formulas, and Fenchel dua
 
 - Cost plus conjugate is never below price times amount, for any cost, convex or not.
 - The tie holds exactly when the price is a slope of a line touching the cost from below there.
-- A quadratic cost with climb $q > 0$ has conjugate $(y - c)^2/(2q)$ at every price $y$.
-- A fine of $k$ per unit off $D$ has conjugate $D\,w$ on the band $\lvert w\rvert \le k$ and $+\infty$ outside it.
-- For convex costs finite everywhere and any matrix $A$, the cheapest bill $p^*$ equals the best price bound $d^*$.
+- A quadratic cost with climb $`q > 0`$ has conjugate $`(y - c)^2/(2q)`$ at every price $`y`$.
+- A fine of $`k`$ per unit off $`D`$ has conjugate $`D\,w`$ on the band $`\lvert w\rvert \le k`$ and $`+\infty`$ outside it.
+- For convex costs finite everywhere and any matrix $`A`$, the cheapest bill $`p^*`$ equals the best price bound $`d^*`$.
 - Some price reaches that best bound.
 - The hand sums check too: the £11 price, the £925 bill and dual, the chart, the certificate, the £10 fine, sacks and wrong answers.
 
-The sum rule, the rebuilt cost $f^{**}$ and the searches over orders and prices are left to the Python and Rust checks.
+The sum rule, the rebuilt cost $`f^{**}`$ and the searches over orders and prices are left to the Python and Rust checks.
 
 ```lean
 -- Convex conjugates: for convex real-valued costs the cheapest plan equals the best price bound (Fenchel duality), cost plus conjugate never falls below price times amount with a tie exactly at a slope (Fenchel-Young), the card's quadratic and kinked-fine conjugates are exact, and the roaster's numbers check out.
@@ -897,9 +913,9 @@ example : 101 ^ 3 = 1030301 := by norm_num
 > [!warning]
 > **Treating the conjugate as a formula valid at every price.** The conjugate of a fine, a cap or a limit is infinite outside a band, and that infinity is what keeps the dual honest. Drop it and the dual stops being a bound: with a £10 fine it claims £925, while the true cheapest bill is £907.50.
 >
-> - **Losing the ½.** $(y - c)^2/q$ instead of $(y - c)^2/(2q)$ gives Brazil £90 at £11, not £45, and a dual of £750.
-> - **Feeding kilos to the conjugate.** $f^*$ takes a price. $f_1^*(30)$ = £2,420 is Brazil's profit at £30 a kilo, not anything about 30 kg.
-> - **Trusting duality on a nonconvex cost.** With 60 kg sacks the best price bound is £1,015 and the true cheapest bill £1,030. The dual only ever sees $f^{**}$, the convex shadow of the cost.
+> - **Losing the ½.** $`(y - c)^2/q`$ instead of $`(y - c)^2/(2q)`$ gives Brazil £90 at £11, not £45, and a dual of £750.
+> - **Feeding kilos to the conjugate.** $`f^*`$ takes a price. $`f_1^*(30)`$ = £2,420 is Brazil's profit at £30 a kilo, not anything about 30 kg.
+> - **Trusting duality on a nonconvex cost.** With 60 kg sacks the best price bound is £1,015 and the true cheapest bill £1,030. The dual only ever sees $`f^{**}`$, the convex shadow of the cost.
 
 ---
 
@@ -911,7 +927,7 @@ example : 101 ^ 3 = 1030301 := by norm_num
 - **Machine learning.** The dual of a support vector machine and the step that handles the lasso's absolute value both use conjugates of kinked functions like Step 2's. A support vector machine separates two groups of points by the widest gap ([Support vector machines](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/03-support-vector-machines-as-a-quadratic-program.md)); the lasso is a regression that charges for the absolute size of each coefficient ([Proximal gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/06-proximal-methods-ista-fista-and-the-lasso.md)).
 
 > **Say it back**
-> The conjugate of a cost records, for every price, the best profit a price-taker could make; for a quadratic cost it is $(y - c)^2/(2q)$, and for a fine of $k$ per unit it is a straight line on prices from $-k$ to $k$ and infinite outside. Cost plus conjugate is never below price times amount, with a tie exactly when the price is a slope of the cost there. Adding two such inequalities shows that every price bounds the cheapest plan from below. For convex costs, with some plan inside where both halves are finite, the best price meets the cheapest plan: £11 a kilo proves the £925 order. A nonconvex cost, such as whole sacks, leaves a gap.
+> The conjugate of a cost records, for every price, the best profit a price-taker could make; for a quadratic cost it is $`(y - c)^2/(2q)`$, and for a fine of $`k`$ per unit it is a straight line on prices from $`-k`$ to $`k`$ and infinite outside. Cost plus conjugate is never below price times amount, with a tie exactly when the price is a slope of the cost there. Adding two such inequalities shows that every price bounds the cheapest plan from below. For convex costs, with some plan inside where both halves are finite, the best price meets the cheapest plan: £11 a kilo proves the £925 order. A nonconvex cost, such as whole sacks, leaves a gap.
 
 ---
 
@@ -936,5 +952,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page; DOIs che
 
 - Fenchel, Werner. "On conjugate convex functions." *Canadian Journal of Mathematics* 1 (1949). [doi:10.4153/CJM-1949-007-x](https://doi.org/10.4153/CJM-1949-007-x). The paper that defined the conjugate and its duality.
 - Rockafellar, R. Tyrrell. *Convex Analysis*. Princeton University Press, 1970. [Publisher's page](https://press.princeton.edu/books/paperback/9780691015866/convex-analysis); [doi:10.1515/9781400873173](https://doi.org/10.1515/9781400873173). Theorem 12.2 (a closed convex function equals its biconjugate) and Theorem 31.1 (Fenchel's duality theorem).
-- Borwein, Jonathan, and Adrian Lewis. *Convex Analysis and Nonlinear Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-31256-9](https://doi.org/10.1007/978-0-387-31256-9). Chapter 3, Fenchel duality, in the form $\min f + g(A\,\cdot)$ used here (Theorem 3.3.5).
+- Borwein, Jonathan, and Adrian Lewis. *Convex Analysis and Nonlinear Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-31256-9](https://doi.org/10.1007/978-0-387-31256-9). Chapter 3, Fenchel duality, in the form $`\min f + g(A\,\cdot)`$ used here (Theorem 3.3.5).
 - Boyd, Stephen, and Lieven Vandenberghe. *Convex Optimization*. Cambridge University Press, 2004. [doi:10.1017/CBO9780511804441](https://doi.org/10.1017/CBO9780511804441). Section 3.3: conjugates of quadratics and norms, Fenchel's inequality, with worked examples.

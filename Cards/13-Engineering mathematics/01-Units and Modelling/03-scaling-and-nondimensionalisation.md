@@ -46,37 +46,39 @@ Orange: the fast pipe, Re 200,000. Flat at 1.00 out to r/R = 0.80, then a thin d
 
 The pipe-start equation, after rescaling:
 
-$$\frac{\partial u^*}{\partial \tau} \;=\; 1 \;+\; \varepsilon\,\frac{1}{r^*}\frac{\partial}{\partial r^*}\!\left(r^*\,\frac{\partial u^*}{\partial r^*}\right), \qquad \varepsilon = \frac{\mu U}{G R^2} = \frac{8}{f\,\mathrm{Re}}$$
+```math
+\frac{\partial u^*}{\partial \tau} \;=\; 1 \;+\; \varepsilon\,\frac{1}{r^*}\frac{\partial}{\partial r^*}\!\left(r^*\,\frac{\partial u^*}{\partial r^*}\right), \qquad \varepsilon = \frac{\mu U}{G R^2} = \frac{8}{f\,\mathrm{Re}}
+```
 
-with $u^* = 0$ at the wall $r^* = 1$ and $u^* = 0$ when the pump starts. The starred letters are the rescaled ones: $u^* = u/U$, $r^* = r/R$, $\tau = t/T$ with $T = \rho U / G$.
+with $`u^* = 0`$ at the wall $`r^* = 1`$ and $`u^* = 0`$ when the pump starts. The starred letters are the rescaled ones: $`u^* = u/U`$, $`r^* = r/R`$, $`\tau = t/T`$ with $`T = \rho U / G`$.
 
 **Read it aloud:** "the rate the rescaled speed grows equals one unit of push, plus a small number times the viscous drag; when that number is small, the water accelerates as a slug."
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $\bar u$ | water speed along the pipe at a given radius; its average over the cross-section | 0 at the start | — |
-| $r$, $R$, $D$ | distance from the centreline; pipe radius; diameter | $R$ = 0.05 m, $D$ = 0.1 m | bigger pipe, smaller $\varepsilon$ |
-| $t$, $T$ | time since the pump started; the natural time $\rho U/G$, in which the push alone would reach design speed | $T$ = 312.50 s and 6.39 s | — |
-| $U$ | the design mean speed | 0.02 m/s and 2.00 m/s | higher $\mathrm{Re}$ |
-| $G$ | the pressure drop per metre the pump holds, in Pa/m | 0.064 and 312.79 Pa/m | smaller $\varepsilon$, more slug-like |
-| $\rho$, $\mu$, $\nu$ | water's density, its viscosity, and $\nu = \mu/\rho$ | 1000 kg/m^3, 1.0 × 10^-3 Pa·s, 1.0 × 10^-6 m^2/s | more viscosity, larger $\varepsilon$ |
-| $\mathrm{Re}$ | Reynolds number $UD/\nu$ | 2,000 and 200,000 | smaller $\varepsilon$ |
-| $f$ | Darcy friction factor: $G$ measured in units of $\rho U^2/(2D)$ | 0.03200 and 0.01564 | — |
-| $\varepsilon$ | the small parameter: drag term over push term, after rescaling | 0.12500 and 0.00256 | drag matters more |
-| $u^*$, $r^*$, $\tau$ | the rescaled speed, radius and time, each about one | $\tau$ = 1 at time $T$ | — |
-| $\delta$, $y$, $y^*$, $K$, $w$, $g$, $s$ | thickness of the slowed layer at the wall; distance in from the wall, and the same in radii, $y/R$; the layer's constant $8/(3\sqrt\pi)$; in the proof, the shortfall below the plug, its value at the wall, and an earlier rescaled time | $\delta$ = 2.53 mm (fast pipe), $K$ = 1.5045 | — |
-| $\lambda_n$, $\lambda_1$, $J_0$, $J_1$ | the zeros of the Bessel function $J_0$, and the Bessel functions used by the exact solution | $\lambda_1$ = 2.40483 | — |
+| $`u`$, $`\bar u`$ | water speed along the pipe at a given radius; its average over the cross-section | 0 at the start | — |
+| $`r`$, $`R`$, $`D`$ | distance from the centreline; pipe radius; diameter | $`R`$ = 0.05 m, $`D`$ = 0.1 m | bigger pipe, smaller $`\varepsilon`$ |
+| $`t`$, $`T`$ | time since the pump started; the natural time $`\rho U/G`$, in which the push alone would reach design speed | $`T`$ = 312.50 s and 6.39 s | — |
+| $`U`$ | the design mean speed | 0.02 m/s and 2.00 m/s | higher $`\mathrm{Re}`$ |
+| $`G`$ | the pressure drop per metre the pump holds, in Pa/m | 0.064 and 312.79 Pa/m | smaller $`\varepsilon`$, more slug-like |
+| $`\rho`$, $`\mu`$, $`\nu`$ | water's density, its viscosity, and $`\nu = \mu/\rho`$ | 1000 kg/m^3, 1.0 × 10^-3 Pa·s, 1.0 × 10^-6 m^2/s | more viscosity, larger $`\varepsilon`$ |
+| $`\mathrm{Re}`$ | Reynolds number $`UD/\nu`$ | 2,000 and 200,000 | smaller $`\varepsilon`$ |
+| $`f`$ | Darcy friction factor: $`G`$ measured in units of $`\rho U^2/(2D)`$ | 0.03200 and 0.01564 | — |
+| $`\varepsilon`$ | the small parameter: drag term over push term, after rescaling | 0.12500 and 0.00256 | drag matters more |
+| $`u^*`$, $`r^*`$, $`\tau`$ | the rescaled speed, radius and time, each about one | $`\tau`$ = 1 at time $`T`$ | — |
+| $`\delta`$, $`y`$, $`y^*`$, $`K`$, $`w`$, $`g`$, $`s`$ | thickness of the slowed layer at the wall; distance in from the wall, and the same in radii, $`y/R`$; the layer's constant $`8/(3\sqrt\pi)`$; in the proof, the shortfall below the plug, its value at the wall, and an earlier rescaled time | $`\delta`$ = 2.53 mm (fast pipe), $`K`$ = 1.5045 | — |
+| $`\lambda_n`$, $`\lambda_1`$, $`J_0`$, $`J_1`$ | the zeros of the Bessel function $`J_0`$, and the Bessel functions used by the exact solution | $`\lambda_1`$ = 2.40483 | — |
 
-The dimension check, in square brackets ([M] mass, [L] length, [T] the dimension of time, not the time $T$, as on [Units and dimensions](01-si-units-and-dimensional-homogeneity.md)): viscosity times speed has dimensions [M][L]^-1[T]^-1 times [L][T]^-1, which is [M][T]^-2; push times radius squared has [M][L]^-2[T]^-2 times [L]^2, also [M][T]^-2. They cancel, so $\varepsilon$ is a pure number.
+The dimension check, in square brackets ([M] mass, [L] length, [T] the dimension of time, not the time $`T`$, as on [Units and dimensions](01-si-units-and-dimensional-homogeneity.md)): viscosity times speed has dimensions [M][L]^-1[T]^-1 times [L][T]^-1, which is [M][T]^-2; push times radius squared has [M][L]^-2[T]^-2 times [L]^2, also [M][T]^-2. They cancel, so $`\varepsilon`$ is a pure number.
 
-The second form, $8/(f\,\mathrm{Re})$, comes from writing the push through the friction factor, $G = f\rho U^2/(2D)$, which is how a pump is sized.
+The second form, $`8/(f\,\mathrm{Re})`$, comes from writing the push through the friction factor, $`G = f\rho U^2/(2D)`$, which is how a pump is sized.
 
 ### When it holds
 
 - **A long straight pipe, far from its ends.** The water's speed then depends on radius and time only, so the term for speed changing along the pipe is exactly zero. Near the inlet it is not, and the equation gains a term.
-- **Laminar flow.** Ordinary pipe flow is laminar below about Re 2,300. The drag term is the viscous law for smooth layers. Turbulent eddies carry extra momentum that it leaves out. At Re 200,000, the laminar steady formula asks for 6.40 Pa/m where the real pipe needs 312.79 Pa/m, 48.9 times more. The card uses the equation for the fast pipe only through the start, up to time $T$; when its wall layer turns turbulent is an experimental question this card does not settle.
-- **A push switched on at once and held constant.** A pump that ramps up slowly has its own time scale, and $T$ must be replaced by it.
-- **Water of fixed density and viscosity.** Warmer water is less viscous, and $\varepsilon$ moves in proportion to the viscosity.
+- **Laminar flow.** Ordinary pipe flow is laminar below about Re 2,300. The drag term is the viscous law for smooth layers. Turbulent eddies carry extra momentum that it leaves out. At Re 200,000, the laminar steady formula asks for 6.40 Pa/m where the real pipe needs 312.79 Pa/m, 48.9 times more. The card uses the equation for the fast pipe only through the start, up to time $`T`$; when its wall layer turns turbulent is an experimental question this card does not settle.
+- **A push switched on at once and held constant.** A pump that ramps up slowly has its own time scale, and $`T`$ must be replaced by it.
+- **Water of fixed density and viscosity.** Warmer water is less viscous, and $`\varepsilon`$ moves in proportion to the viscosity.
 - **A rigid pipe.** A valve slammed shut sends pressure waves along the pipe (water hammer); this equation has no such waves in it.
 
 ---
@@ -85,90 +87,98 @@ The second form, $8/(f\,\mathrm{Re})$, comes from writing the push through the f
 
 ### Step 0: every term is a scale times a number near one
 
-A term like $\rho\,\partial u/\partial t$ is a size, set by how large speed and time actually get, times a pure number that stays near one if the sizes were chosen honestly. Choose the sizes from the problem itself and divide by the biggest term. The coefficients left compare the terms directly. One far below one marks a term that may be dropped wherever its starred part really is near one.
+A term like $`\rho\,\partial u/\partial t`$ is a size, set by how large speed and time actually get, times a pure number that stays near one if the sizes were chosen honestly. Choose the sizes from the problem itself and divide by the biggest term. The coefficients left compare the terms directly. One far below one marks a term that may be dropped wherever its starred part really is near one.
 
 ### Step 1: the equation, from a force balance on a thin shell of water
 
-Take a thin cylindrical shell of water at radius $r$, of small thickness dr, one metre long. Its mass is $\rho$ × 2π r dr. The pump's push on it is $G$ × 2π r dr. The water just inside and just outside drags on it with the viscous stress $\mu\,\partial u/\partial r$ (viscosity times the rate speed changes with radius), acting on faces of area 2π r per metre, and the shell feels the difference between its two faces. Divide by the shell's volume, 2π r dr:
+Take a thin cylindrical shell of water at radius $`r`$, of small thickness dr, one metre long. Its mass is $`\rho`$ × 2π r dr. The pump's push on it is $`G`$ × 2π r dr. The water just inside and just outside drags on it with the viscous stress $`\mu\,\partial u/\partial r`$ (viscosity times the rate speed changes with radius), acting on faces of area 2π r per metre, and the shell feels the difference between its two faces. Divide by the shell's volume, 2π r dr:
 
-$$\rho\,\frac{\partial u}{\partial t} \;=\; G \;+\; \mu\,\frac{1}{r}\frac{\partial}{\partial r}\!\left(r\,\frac{\partial u}{\partial r}\right).$$
+```math
+\rho\,\frac{\partial u}{\partial t} \;=\; G \;+\; \mu\,\frac{1}{r}\frac{\partial}{\partial r}\!\left(r\,\frac{\partial u}{\partial r}\right).
+```
 
 Acceleration, push, drag. This is a heat equation in a cylinder with a steady source, the kind met on [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md).
 
 ### Step 2: choose the scales, substitute, divide
 
-Speed reaches the design speed $U$, so set $u = U u^*$. Radius runs to the wall, so set $r = R\,r^*$. For time, ask how long the push alone would take to bring still water to $U$: speed gained per second is $G/\rho$, so $T = \rho U / G$. Set $t = T\tau$.
+Speed reaches the design speed $`U`$, so set $`u = U u^*`$. Radius runs to the wall, so set $`r = R\,r^*`$. For time, ask how long the push alone would take to bring still water to $`U`$: speed gained per second is $`G/\rho`$, so $`T = \rho U / G`$. Set $`t = T\tau`$.
 
-Substitute. The acceleration term becomes $(\rho U/T)\,\partial u^*/\partial\tau = G\,\partial u^*/\partial\tau$. The drag term becomes $(\mu U/R^2)$ times the starred drag. Divide every term by $G$:
+Substitute. The acceleration term becomes $`(\rho U/T)\,\partial u^*/\partial\tau = G\,\partial u^*/\partial\tau`$. The drag term becomes $`(\mu U/R^2)`$ times the starred drag. Divide every term by $`G`$:
 
-$$\frac{\partial u^*}{\partial \tau} = 1 + \frac{\mu U}{G R^2}\,(\text{starred drag}).$$
+```math
+\frac{\partial u^*}{\partial \tau} = 1 + \frac{\mu U}{G R^2}\,(\text{starred drag}).
+```
 
-The coefficient is $\varepsilon$. Nothing else survived; the pipe's size, the water and the pump are all inside that one number.
+The coefficient is $`\varepsilon`$. Nothing else survived; the pipe's size, the water and the pump are all inside that one number.
 
 ### Step 3: the small parameter, through the Reynolds number
 
-A pump is sized from the steady flow it must hold, $G = f\rho U^2/(2D)$, with $R = D/2$. Put that into $\varepsilon$:
+A pump is sized from the steady flow it must hold, $`G = f\rho U^2/(2D)`$, with $`R = D/2`$. Put that into $`\varepsilon`$:
 
-$$\varepsilon = \frac{\mu U}{G R^2} = \frac{8\nu}{f U D} = \frac{8}{f\,\mathrm{Re}}.$$
+```math
+\varepsilon = \frac{\mu U}{G R^2} = \frac{8\nu}{f U D} = \frac{8}{f\,\mathrm{Re}}.
+```
 
-**Slow pipe.** Laminar steady flow has $f = 64/\mathrm{Re}$ = 0.03200, so $\varepsilon = 8/64$ = 0.12500. Every laminar design gives exactly one eighth, whatever its size: the push was chosen to balance the drag, so the drag can never be small next to it.
+**Slow pipe.** Laminar steady flow has $`f = 64/\mathrm{Re}`$ = 0.03200, so $`\varepsilon = 8/64`$ = 0.12500. Every laminar design gives exactly one eighth, whatever its size: the push was chosen to balance the drag, so the drag can never be small next to it.
 
-**Fast pipe.** Turbulent steady flow in a smooth pipe follows Prandtl's law, $1/\sqrt{f} = 2\log_{10}(\mathrm{Re}\sqrt{f}) - 0.8$ (White and Xue, below), which gives $f$ = 0.01564 at Re 200,000. So $G$ = 312.79 Pa/m and $\varepsilon$ = 0.00256. The push is strong because turbulence demands it, and next to that push the laminar drag is tiny.
+**Fast pipe.** Turbulent steady flow in a smooth pipe follows Prandtl's law, $`1/\sqrt{f} = 2\log_{10}(\mathrm{Re}\sqrt{f}) - 0.8`$ (White and Xue, below), which gives $`f`$ = 0.01564 at Re 200,000. So $`G`$ = 312.79 Pa/m and $`\varepsilon`$ = 0.00256. The push is strong because turbulence demands it, and next to that push the laminar drag is tiny.
 
 ### Step 4: drop the small term
 
-Set $\varepsilon = 0$ in the fast pipe. The equation becomes $\partial u^*/\partial\tau = 1$, so $u^* = \tau$: every layer gains speed together, a plug. At $\tau = 1$ the plug is at design speed, 2.00 m/s, after 6.39 s. The exact solution at the centreline gives 1.00000 to five decimals. Dropping the term was safe there.
+Set $`\varepsilon = 0`$ in the fast pipe. The equation becomes $`\partial u^*/\partial\tau = 1`$, so $`u^* = \tau`$: every layer gains speed together, a plug. At $`\tau = 1`$ the plug is at design speed, 2.00 m/s, after 6.39 s. The exact solution at the centreline gives 1.00000 to five decimals. Dropping the term was safe there.
 
 ### Step 5: where the dropped term fights back
 
-At the wall the water must be still. A plug cannot satisfy that, so near the wall the speed changes over a short distance, the starred drag is no longer near one, and the dropped term matters. Rescale again, this time measuring distance in from the wall, $y = R - r$, by a new size $\delta$. The drag term grows by $(R/\delta)^2$. It balances the acceleration when $\varepsilon (R/\delta)^2 = 1$, so $\delta = R\sqrt{\varepsilon} = \sqrt{\nu T}$.
+At the wall the water must be still. A plug cannot satisfy that, so near the wall the speed changes over a short distance, the starred drag is no longer near one, and the dropped term matters. Rescale again, this time measuring distance in from the wall, $`y = R - r`$, by a new size $`\delta`$. The drag term grows by $`(R/\delta)^2`$. It balances the acceleration when $`\varepsilon (R/\delta)^2 = 1`$, so $`\delta = R\sqrt{\varepsilon} = \sqrt{\nu T}`$.
 
-Fast pipe: $\delta$ = 2.53 mm, 0.0506 of the radius. A skin. Slow pipe: $\delta$ = 17.68 mm, 0.3536 of the radius. Not a skin: over a third of the radius, so no part of the slow pipe is free of drag, which is what $\varepsilon$ = 0.125 already said. This second rescaling is the first step of the [Boundary layers](06-boundary-layers-and-singular-perturbation.md) card, which takes it further.
+Fast pipe: $`\delta`$ = 2.53 mm, 0.0506 of the radius. A skin. Slow pipe: $`\delta`$ = 17.68 mm, 0.3536 of the radius. Not a skin: over a third of the radius, so no part of the slow pipe is free of drag, which is what $`\varepsilon`$ = 0.125 already said. This second rescaling is the first step of the [Boundary layers](06-boundary-layers-and-singular-perturbation.md) card, which takes it further.
 
-The skin costs flow. The slowed layer, spread over the perimeter, cuts the mean speed below the plug's by a fraction $K\sqrt{\varepsilon\tau}$, with $K = 8/(3\sqrt\pi)$ = 1.5045. At $\tau = 1$ in the fast pipe that is 1 − 1.5045 × 0.0506, a mean of 0.92391 of design speed, against an exact 0.92520.
+The skin costs flow. The slowed layer, spread over the perimeter, cuts the mean speed below the plug's by a fraction $`K\sqrt{\varepsilon\tau}`$, with $`K = 8/(3\sqrt\pi)`$ = 1.5045. At $`\tau = 1`$ in the fast pipe that is 1 − 1.5045 × 0.0506, a mean of 0.92391 of design speed, against an exact 0.92520.
 
 <details>
 <summary>Detailed proof: the wall layer's constant $K = 8/(3\sqrt\pi)$</summary>
 
-Inside the layer the wall looks flat, since $\delta$ is 0.0506 of $R$. Write the shortfall below the plug as $w = \tau - u^*$. It obeys the flat heat equation $\partial w/\partial\tau = \varepsilon\,\partial^2 w/\partial y^{*2}$, where $y^* = y/R$ is the distance in from the wall measured in radii, with $w = \tau$ at the wall (the plug's speed, removed) and $w \to 0$ far from it.
+Inside the layer the wall looks flat, since $`\delta`$ is 0.0506 of $`R`$. Write the shortfall below the plug as $`w = \tau - u^*`$. It obeys the flat heat equation $`\partial w/\partial\tau = \varepsilon\,\partial^2 w/\partial y^{*2}`$, where $`y^* = y/R`$ is the distance in from the wall measured in radii, with $`w = \tau`$ at the wall (the plug's speed, removed) and $`w \to 0`$ far from it.
 
-A wall held at 1 from time zero pushes a flux (shortfall entering through the wall per unit time) of $\sqrt{\varepsilon/(\pi\tau)}$ into a half-line obeying this heat equation, read off the error-function solution built from [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md). A wall value $g$ that rises in steps adds one such response per step (the equation is linear), so the flux is $\sqrt{\varepsilon/\pi}\int_0^\tau g'(s)\,(\tau - s)^{-1/2}\,ds$, where $s$ is an earlier rescaled time at which a step was taken. Here $g' = 1$, so the flux is $2\sqrt{\varepsilon\tau/\pi}$.
+A wall held at 1 from time zero pushes a flux (shortfall entering through the wall per unit time) of $`\sqrt{\varepsilon/(\pi\tau)}`$ into a half-line obeying this heat equation, read off the error-function solution built from [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md). A wall value $`g`$ that rises in steps adds one such response per step (the equation is linear), so the flux is $`\sqrt{\varepsilon/\pi}\int_0^\tau g'(s)\,(\tau - s)^{-1/2}\,ds`$, where $`s`$ is an earlier rescaled time at which a step was taken. Here $`g' = 1`$, so the flux is $`2\sqrt{\varepsilon\tau/\pi}`$.
 
-The total shortfall per unit of wall, the integral of $w$ across the layer, grows at the rate of that flux, so it equals $(4/3)\sqrt{\varepsilon/\pi}\,\tau^{3/2}$. The pipe's perimeter is 2π in rescaled units and its area is π, so the mean shortfall is twice that integral: $(8/3)\sqrt{\varepsilon/\pi}\,\tau^{3/2}$. Divide by the plug speed $\tau$: the fractional shortfall is $(8/(3\sqrt\pi))\sqrt{\varepsilon\tau}$.
+The total shortfall per unit of wall, the integral of $`w`$ across the layer, grows at the rate of that flux, so it equals $`(4/3)\sqrt{\varepsilon/\pi}\,\tau^{3/2}`$. The pipe's perimeter is 2π in rescaled units and its area is π, so the mean shortfall is twice that integral: $`(8/3)\sqrt{\varepsilon/\pi}\,\tau^{3/2}`$. Divide by the plug speed $`\tau`$: the fractional shortfall is $`(8/(3\sqrt\pi))\sqrt{\varepsilon\tau}`$.
 
-The flat-wall step ignores the wall's curve, an error of order $\varepsilon\tau$ next to the $\sqrt{\varepsilon\tau}$ kept. At Re 200,000 the code measures shortfall over $\sqrt\varepsilon$ as 1.4790, against $K$ = 1.5045; at Re 2,000,000, 1.4947. The gap shrinks with $\varepsilon$, as an error of order $\sqrt\varepsilon$ in the ratio should.
+The flat-wall step ignores the wall's curve, an error of order $`\varepsilon\tau`$ next to the $`\sqrt{\varepsilon\tau}`$ kept. At Re 200,000 the code measures shortfall over $`\sqrt\varepsilon`$ as 1.4790, against $`K`$ = 1.5045; at Re 2,000,000, 1.4947. The gap shrinks with $`\varepsilon`$, as an error of order $`\sqrt\varepsilon`$ in the ratio should.
 
 </details>
 
 ### The other door: solve the full equation exactly
 
-The rescaled equation is linear, so separation of variables solves it with no term dropped ([Separation of variables](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md)). The shapes across the pipe are Bessel functions $J_0(\lambda_n r^*)$, zero at the wall when $\lambda_n$ is a zero of $J_0$ ([Bessel's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/03-bessels-equation-and-the-drum.md)). Each shape fades at the rate $\varepsilon\lambda_n^2$:
+The rescaled equation is linear, so separation of variables solves it with no term dropped ([Separation of variables](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md)). The shapes across the pipe are Bessel functions $`J_0(\lambda_n r^*)`$, zero at the wall when $`\lambda_n`$ is a zero of $`J_0`$ ([Bessel's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/03-bessels-equation-and-the-drum.md)). Each shape fades at the rate $`\varepsilon\lambda_n^2`$:
 
-$$\bar u^* = \frac{1}{8\varepsilon} - \sum_{n\ge1}\frac{4}{\varepsilon\lambda_n^4}\,e^{-\varepsilon\lambda_n^2\tau}.$$
+```math
+\bar u^* = \frac{1}{8\varepsilon} - \sum_{n\ge1}\frac{4}{\varepsilon\lambda_n^4}\,e^{-\varepsilon\lambda_n^2\tau}.
+```
 
-The first term is the steady laminar answer; the sum is the start-up still to come. This series is the exact road in the code, which sums 150 terms, because at small $\varepsilon$ the plug is built from many fine shapes. The rescaled picture gets 0.92391 against the series' 0.92520 from one line.
+The first term is the steady laminar answer; the sum is the start-up still to come. This series is the exact road in the code, which sums 150 terms, because at small $`\varepsilon`$ the plug is built from many fine shapes. The rescaled picture gets 0.92391 against the series' 0.92520 from one line.
 
 ---
 
 ## Worked numbers, by hand
 
-Water rounded to $\rho$ = 1000 kg/m^3 and $\nu$ = 1.0 × 10^-6 m^2/s; the NIST WebBook gives 998.21 kg/m^3 and 1.0016 × 10^-3 Pa·s at 20 °C, so $\nu$ = 1.0034 × 10^-6 m^2/s against the round 1.0 × 10^-6. Pipe $D$ = 0.1 m.
+Water rounded to $`\rho`$ = 1000 kg/m^3 and $`\nu`$ = 1.0 × 10^-6 m^2/s; the NIST WebBook gives 998.21 kg/m^3 and 1.0016 × 10^-3 Pa·s at 20 °C, so $`\nu`$ = 1.0034 × 10^-6 m^2/s against the round 1.0 × 10^-6. Pipe $`D`$ = 0.1 m.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| design speeds, $U = \mathrm{Re}\,\nu/D$ | 2000 × 10^-6 / 0.1 and 200000 × 10^-6 / 0.1 | 0.02 and 2.00 m/s |
+| design speeds, $`U = \mathrm{Re}\,\nu/D`$ | 2000 × 10^-6 / 0.1 and 200000 × 10^-6 / 0.1 | 0.02 and 2.00 m/s |
 | friction factors | 64/2000, and Prandtl's law at 200,000 | 0.03200 and 0.01564 |
-| push, $G = f\rho U^2/(2D)$ | 0.032 × 1000 × 0.0004 / 0.2, and 0.01564 × 1000 × 4 / 0.2 | 0.064 and 312.79 Pa/m |
-| natural time, $T = \rho U/G$ | 1000 × 0.02 / 0.064, and 1000 × 2 / 312.79 | 312.50 s and 6.39 s |
-| small parameter, $8/(f\,\mathrm{Re})$ | 8 / 64, and 8 / (0.01564 × 200000) | 0.12500 and 0.00256 |
-| wall layer, $\sqrt{\nu T}$ | √(10^-6 × 312.5), and √(10^-6 × 6.39) | 17.68 mm and 2.53 mm |
-| fast pipe, mean at $T$, plug minus layer | 1 − 1.5045 × √0.00256 | 0.92391 |
-| fast pipe, mean at $T$, exact | the Bessel series | **0.92520 of U, 1.8504 m/s** |
-| slow pipe, mean at $T$, exact | the Bessel series | **0.53486 of U, 0.0107 m/s** |
+| push, $`G = f\rho U^2/(2D)`$ | 0.032 × 1000 × 0.0004 / 0.2, and 0.01564 × 1000 × 4 / 0.2 | 0.064 and 312.79 Pa/m |
+| natural time, $`T = \rho U/G`$ | 1000 × 0.02 / 0.064, and 1000 × 2 / 312.79 | 312.50 s and 6.39 s |
+| small parameter, $`8/(f\,\mathrm{Re})`$ | 8 / 64, and 8 / (0.01564 × 200000) | 0.12500 and 0.00256 |
+| wall layer, $`\sqrt{\nu T}`$ | √(10^-6 × 312.5), and √(10^-6 × 6.39) | 17.68 mm and 2.53 mm |
+| fast pipe, mean at $`T`$, plug minus layer | 1 − 1.5045 × √0.00256 | 0.92391 |
+| fast pipe, mean at $`T`$, exact | the Bessel series | **0.92520 of U, 1.8504 m/s** |
+| slow pipe, mean at $`T`$, exact | the Bessel series | **0.53486 of U, 0.0107 m/s** |
 
 At 6.39 s after the pump starts, the fast pipe's water is moving at 1.85 m/s on average and 2.00 m/s in the core. The slug model, corrected for one 2.53 mm skin, gives 0.92391 of design speed against the exact 0.92520.
 
-The slow pipe, at its own natural time of 312.50 s, has reached only 0.0107 m/s, about half its design speed. It reaches 99% of design speed at $\tau$ = 6.3093, which is 1972 s. That time is set by viscous spreading across the pipe, $R^2/\nu$ = 2500 s, not by the push.
+The slow pipe, at its own natural time of 312.50 s, has reached only 0.0107 m/s, about half its design speed. It reaches 99% of design speed at $`\tau`$ = 6.3093, which is 1972 s. That time is set by viscous spreading across the pipe, $`R^2/\nu`$ = 2500 s, not by the push.
 
 ### What breaks if you drop a piece
 
@@ -176,7 +186,7 @@ The slow pipe, at its own natural time of 312.50 s, has reached only 0.0107 m/s,
 | --- | --- | --- |
 | Take 1/Re = 0.000500 as the small parameter in the slow pipe and drop the drag | mean 1.00 of U at 312.50 s; truth 0.53486 | 1/Re compares inertia with drag over one diameter of travel; this equation's coefficient is 8/(f Re) = 0.125 |
 | Use the laminar steady formula for the fast pipe's push | 6.40 Pa/m; the pipe needs 312.79 | Re 200,000 is outside the laminar range; 48.9 times too little |
-| Rescale time by the viscous time $R^2/\nu$ and drop the acceleration in the fast pipe | steady laminar mean 97.75 m/s | the time scale chosen was not the one the flow reaches; the dropped term was the biggest |
+| Rescale time by the viscous time $`R^2/\nu`$ and drop the acceleration in the fast pipe | steady laminar mean 97.75 m/s | the time scale chosen was not the one the flow reaches; the dropped term was the biggest |
 | Apply the wall-layer correction to the slow pipe | 0.4681 of U; truth 0.5349 | a layer 0.3536 of the radius is not thin, so the flat-wall step fails |
 
 ---
@@ -185,11 +195,11 @@ The slow pipe, at its own natural time of 312.50 s, has reached only 0.0107 m/s,
 
 The scripts solve the rescaled equation three independent ways.
 
-- Road 1 is the exact Bessel series, with $J_0$ and $J_1$ built from their integral formula and their zeros found by Newton's method.
+- Road 1 is the exact Bessel series, with $`J_0`$ and $`J_1`$ built from their integral formula and their zeros found by Newton's method.
 - Road 2 is a finite-difference simulation (Crank–Nicolson steps on 400 rings, [Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)) that never mentions a Bessel function.
 - Road 3 is the rescaled answer: the plug, plus its wall-layer correction.
 
-The asserts tie road 1 to road 2 at both Reynolds numbers, road 3 to road 1 in the fast pipe, the bisected settling time to the one-mode formula, the two forms of $\varepsilon$ to each other, and Prandtl's friction factor to Haaland's explicit fit, a second published formula, within 2%.
+The asserts tie road 1 to road 2 at both Reynolds numbers, road 3 to road 1 in the fast pipe, the bisected settling time to the one-mode formula, the two forms of $`\varepsilon`$ to each other, and Prandtl's friction factor to Haaland's explicit fit, a second published formula, within 2%.
 
 ### Python
 
@@ -554,12 +564,12 @@ The two outputs match line for line.
 
 Lean proves the rescaled equation and both forms of the small parameter for any positive sizes, and checks the slow pipe's numbers.
 
-- Take positive $\rho$, $\mu$, $U$, $G$, $R$, and a speed $u$ obeying the pipe-start equation, zero at the wall and at the start. Then $u^*$ obeys the rescaled equation, zero at the wall $r^* = 1$ and at $\tau = 0$.
-- Take $G = f\rho U^2/(2D)$ and $R = D/2$. Then $\varepsilon = \mu U/(G R^2) = 8/(f\,\mathrm{Re})$.
-- Take laminar flow, $f = 64/\mathrm{Re}$, with the same push. Then $\varepsilon = 1/8$, whatever the pipe, speed or water.
-- Take the slow pipe, Re 2,000. Then $U$ = 0.02 m/s, $f$ = 0.032 and $G$ = 0.064 Pa/m, exactly.
-- Take the same pipe. Then $T$ = 312.50 s, and $\varepsilon$ = 0.125 by both of its forms.
-- Take the same pipe. Then $R^2/\nu$ = 2500 s, and $R^2/(8\nu)$ = 312.50 s, which is $T$.
+- Take positive $`\rho`$, $`\mu`$, $`U`$, $`G`$, $`R`$, and a speed $`u`$ obeying the pipe-start equation, zero at the wall and at the start. Then $`u^*`$ obeys the rescaled equation, zero at the wall $`r^* = 1`$ and at $`\tau = 0`$.
+- Take $`G = f\rho U^2/(2D)`$ and $`R = D/2`$. Then $`\varepsilon = \mu U/(G R^2) = 8/(f\,\mathrm{Re})`$.
+- Take laminar flow, $`f = 64/\mathrm{Re}`$, with the same push. Then $`\varepsilon = 1/8`$, whatever the pipe, speed or water.
+- Take the slow pipe, Re 2,000. Then $`U`$ = 0.02 m/s, $`f`$ = 0.032 and $`G`$ = 0.064 Pa/m, exactly.
+- Take the same pipe. Then $`T`$ = 312.50 s, and $`\varepsilon`$ = 0.125 by both of its forms.
+- Take the same pipe. Then $`R^2/\nu`$ = 2500 s, and $`R^2/(8\nu)`$ = 312.50 s, which is $`T`$.
 
 The wall layer, the Bessel series, the simulation, the fast pipe and Prandtl's law are left to the Python and Rust checks.
 
@@ -692,7 +702,7 @@ example : ((1 / 20 : ℚ) ^ 2) / (8 * (1 / 10 ^ 6)) = 625 / 2 := by norm_num
 
 ### The picture: mean speed against rescaled time
 
-The rescaled clock lets both pipes share one chart: $\tau$ = 1 is 6.39 s for the fast pipe and 312.50 s for the slow one.
+The rescaled clock lets both pipes share one chart: $`\tau`$ = 1 is 6.39 s for the fast pipe and 312.50 s for the slow one.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -705,13 +715,13 @@ xychart-beta
     line [0.00, 0.08, 0.15, 0.22, 0.28, 0.33, 0.38, 0.42, 0.46, 0.50, 0.53]
 ```
 
-Orange: the plug, $\bar u^* = \tau$, the answer with the small term dropped. Green: the fast pipe, which hugs the plug and ends at 0.93. Dark blue: the slow pipe, which falls away from the plug from the start, ending at 0.53.
+Orange: the plug, $`\bar u^* = \tau`$, the answer with the small term dropped. Green: the fast pipe, which hugs the plug and ends at 0.93. Dark blue: the slow pipe, which falls away from the plug from the start, ending at 0.53.
 
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Ten times faster again.** At Re 2,000,000, Prandtl gives $f$ = 0.01037 and $\varepsilon$ = 0.00039. Guess the mean at $\tau$ = 1. It is 0.9707: the skin thins as $\sqrt\varepsilon$, and shortfall over $\sqrt\varepsilon$ is 1.4947, closer to $K$ = 1.5045.
-> - **Just past transition.** At Re 4,000, $f$ = 0.03992 and $\varepsilon$ = 0.05011. The mean at $\tau$ = 1 is 0.6893. A small parameter of 0.05 is small enough to name and too big to drop.
+> - **Ten times faster again.** At Re 2,000,000, Prandtl gives $`f`$ = 0.01037 and $`\varepsilon`$ = 0.00039. Guess the mean at $`\tau`$ = 1. It is 0.9707: the skin thins as $`\sqrt\varepsilon`$, and shortfall over $`\sqrt\varepsilon`$ is 1.4947, closer to $`K`$ = 1.5045.
+> - **Just past transition.** At Re 4,000, $`f`$ = 0.03992 and $`\varepsilon`$ = 0.05011. The mean at $`\tau`$ = 1 is 0.6893. A small parameter of 0.05 is small enough to name and too big to drop.
 > - **Starve the grid.** Run `simulate(epsB, 1.0, n=25, steps=200)`. Twenty-five rings put one point inside the 2.53 mm skin, and the mean comes out at 0.9165 instead of 0.9252. Resolving a layer needs points inside it, and the rescaling says how thin to make them.
 
 ---
@@ -719,9 +729,9 @@ Orange: the plug, $\bar u^* = \tau$, the answer with the small term dropped. Gre
 ## The usual mistake
 
 > [!warning]
-> **Reading 1/Re as the small parameter of every pipe problem.** The Reynolds number compares inertia with drag when the flow changes over one diameter of travel. In a long straight pipe the flow does not change along the pipe at all, so that comparison is not in the equation. The coefficient that is there, $\varepsilon = 8/(f\,\mathrm{Re})$, carries the friction factor, and in laminar flow the two cancel to 1/8. At Re 2,000, 1/Re is 0.000500 and $\varepsilon$ is 0.12500, and only the second describes this pipe.
+> **Reading 1/Re as the small parameter of every pipe problem.** The Reynolds number compares inertia with drag when the flow changes over one diameter of travel. In a long straight pipe the flow does not change along the pipe at all, so that comparison is not in the equation. The coefficient that is there, $`\varepsilon = 8/(f\,\mathrm{Re})`$, carries the friction factor, and in laminar flow the two cancel to 1/8. At Re 2,000, 1/Re is 0.000500 and $`\varepsilon`$ is 0.12500, and only the second describes this pipe.
 >
-> - **Scales that the flow never reaches.** In the fast pipe, rescaling time by the transit time $D/U$ (0.05 s) or the viscous time $R^2/\nu$ (2500 s) puts a large or small number in front of some term, but the variables are then not near one, and the reading is wrong: the viscous clock drops acceleration and predicts 97.75 m/s. In the slow pipe the viscous clock is the right one, since there $T = R^2/(8\nu)$.
+> - **Scales that the flow never reaches.** In the fast pipe, rescaling time by the transit time $`D/U`$ (0.05 s) or the viscous time $`R^2/\nu`$ (2500 s) puts a large or small number in front of some term, but the variables are then not near one, and the reading is wrong: the viscous clock drops acceleration and predicts 97.75 m/s. In the slow pipe the viscous clock is the right one, since there $`T = R^2/(8\nu)`$.
 > - **Dropping a term everywhere because it is small somewhere.** The drag is negligible in the fast pipe's core and decisive in its 2.53 mm skin. A small coefficient licenses a drop only where the starred part is near one.
 > - **A small parameter that is not small.** 0.125 is below one, and the wall-layer correction built on it gives 0.4681 of design speed where the truth is 0.5349.
 
@@ -729,14 +739,14 @@ Orange: the plug, $\bar u^* = \tau$, the answer with the small term dropped. Gre
 
 ## Where you meet it in real life
 
-- **Pump and valve start-up in water mains and oil lines.** A heavy crude oil line runs laminar, so its $\varepsilon$ is 1/8 and its start-up is set by the viscous time $R^2/\nu$; a water main's push is large next to laminar drag, so the core moves as a slug.
-- **Blood in arteries.** Womersley rescaled the same equation with a pulsing push. His number, the radius times the square root of the pulse's angular frequency (rad/s) over $\nu$, decides whether the flow in an artery is a plug with a skin (the aorta) or a parabola at every instant (small vessels).
+- **Pump and valve start-up in water mains and oil lines.** A heavy crude oil line runs laminar, so its $`\varepsilon`$ is 1/8 and its start-up is set by the viscous time $`R^2/\nu`$; a water main's push is large next to laminar drag, so the core moves as a slug.
+- **Blood in arteries.** Womersley rescaled the same equation with a pulsing push. His number, the radius times the square root of the pulse's angular frequency (rad/s) over $`\nu`$, decides whether the flow in an artery is a plug with a skin (the aorta) or a parabola at every instant (small vessels).
 - **The Navier–Stokes equations.** Rescaling them with one length and one speed leaves 1/Re in front of the viscous term. When that is the right reading, and when the flow's own lengths are different, is the subject of [Navier-Stokes](../08-Fluids%20and%20Heat/03-navier-stokes-and-the-reynolds-number.md).
 - **Wind-tunnel and water-tank models.** Two flows whose rescaled equations carry the same coefficients behave the same, which is what lets a model stand in for the real thing: [Similarity](04-similarity-and-model-testing.md).
-- **Measurement uncertainty.** An error in the viscosity moves $\varepsilon$ in proportion; how such errors travel through a model is [Error propagation](07-error-propagation-and-sensitivity.md).
+- **Measurement uncertainty.** An error in the viscosity moves $`\varepsilon`$ in proportion; how such errors travel through a model is [Error propagation](07-error-propagation-and-sensitivity.md).
 
 > **Say it back**
-> Write each variable as its natural size times a number near one, then divide the equation by its biggest term. The pure numbers left in front of the other terms say how much each matters. For water starting in a pipe, that number is $\varepsilon = 8/(f\,\mathrm{Re})$: 0.00256 in the fast pipe, which starts as a slug with a 2.53 mm skin, and 1/8 in any laminar pipe, where drag rules from the start. A small coefficient lets a term be dropped only where its rescaled part stays near one, which fails at the wall.
+> Write each variable as its natural size times a number near one, then divide the equation by its biggest term. The pure numbers left in front of the other terms say how much each matters. For water starting in a pipe, that number is $`\varepsilon = 8/(f\,\mathrm{Re})`$: 0.00256 in the fast pipe, which starts as a slug with a 2.53 mm skin, and 1/8 in any laminar pipe, where drag rules from the start. A small coefficient lets a term be dropped only where its rescaled part stays near one, which fails at the wall.
 
 ---
 
@@ -762,5 +772,5 @@ Verified 2026-10-06: every link below resolves to the publisher's page or the pa
 - Reynolds, Osborne. "An Experimental Investigation of the Circumstances Which Determine Whether the Motion of Water Shall Be Direct or Sinuous, and of the Law of Resistance in Parallel Channels." *Philosophical Transactions of the Royal Society of London* 174 (1883): 935–982. [doi:10.1098/rstl.1883.0029](https://doi.org/10.1098/rstl.1883.0029). The pipe experiments behind the Reynolds number.
 - Womersley, J. R. "Method for the Calculation of Velocity, Rate of Flow and Viscous Drag in Arteries When the Pressure Gradient Is Known." *Journal of Physiology* 127, no. 3 (1955): 553–563. [doi:10.1113/jphysiol.1955.sp005276](https://doi.org/10.1113/jphysiol.1955.sp005276). The same pipe equation with a pulsing push, solved with Bessel functions and read through one rescaled number.
 - Lin, C. C., and L. A. Segel. *Mathematics Applied to Deterministic Problems in the Natural Sciences*. SIAM Classics in Applied Mathematics, 1988. [doi:10.1137/1.9781611971347](https://doi.org/10.1137/1.9781611971347). The method of this card, scaling, set out as a discipline.
-- White, Frank M., and Henry Xue. *Fluid Mechanics*, 9th ed. McGraw Hill, 2021. [Publisher page](https://www.mheducation.com/highered/product/fluid-mechanics-white/M9781260258318.html). Laminar $f = 64/\mathrm{Re}$, Prandtl's smooth-pipe friction law and Haaland's explicit fit.
+- White, Frank M., and Henry Xue. *Fluid Mechanics*, 9th ed. McGraw Hill, 2021. [Publisher page](https://www.mheducation.com/highered/product/fluid-mechanics-white/M9781260258318.html). Laminar $`f = 64/\mathrm{Re}`$, Prandtl's smooth-pipe friction law and Haaland's explicit fit.
 - National Institute of Standards and Technology. *NIST Chemistry WebBook*, Thermophysical Properties of Fluid Systems. [Database page](https://webbook.nist.gov/chemistry/fluid/). Density and viscosity of water at 20 °C and 1 atm.

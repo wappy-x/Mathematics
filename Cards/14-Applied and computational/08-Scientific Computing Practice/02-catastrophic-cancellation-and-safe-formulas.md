@@ -42,52 +42,60 @@ Orange: the school formula. It loses about two digits each time B grows tenfold,
 
 ## The formula
 
-Three pieces. First, the measure of how badly a subtraction can go. Write $u$ and $v$ for the two numbers being subtracted. (Here $u$ is a number; the unit roundoff that [Floating point](01-floating-point-in-practice.md) calls $u$ is written $\varepsilon/2$ on this card.)
+Three pieces. First, the measure of how badly a subtraction can go. Write $`u`$ and $`v`$ for the two numbers being subtracted. (Here $`u`$ is a number; the unit roundoff that [Floating point](01-floating-point-in-practice.md) calls $`u`$ is written $`\varepsilon/2`$ on this card.)
 
-$$\kappa = \frac{|u| + |v|}{|u - v|}, \qquad \text{relative error of } u - v \;\le\; \kappa \times \text{relative error of the inputs}$$
+```math
+\kappa = \frac{|u| + |v|}{|u - v|}, \qquad \text{relative error of } u - v \;\le\; \kappa \times \text{relative error of the inputs}
+```
 
 **Read it aloud:** kappa is the size of the two numbers over the size of their difference, and the subtraction multiplies the inputs' relative error by up to kappa.
 
-Kappa, written $\kappa$, is the **condition number** of the subtraction: how much it magnifies errors already in its inputs. A relative error is an error divided by the size of the true value.
+Kappa, written $`\kappa`$, is the **condition number** of the subtraction: how much it magnifies errors already in its inputs. A relative error is an error divided by the size of the true value.
 
-Second, the safe quadratic. For $ax^2 + bx + c = 0$ with $a$ not zero ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)):
+Second, the safe quadratic. For $`ax^2 + bx + c = 0`$ with $`a`$ not zero ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)):
 
-$$q = -\tfrac12\left(b + \operatorname{sign}(b)\,\sqrt{b^2 - 4ac}\right), \qquad x_1 = \frac{q}{a}, \qquad x_2 = \frac{c}{q}$$
+```math
+q = -\tfrac12\left(b + \mathrm{sign}(b)\,\sqrt{b^2 - 4ac}\right), \qquad x_1 = \frac{q}{a}, \qquad x_2 = \frac{c}{q}
+```
 
-**Read it aloud:** add the square root to $b$ with $b$'s own sign, so the two never cancel; that gives the big root, and the small root is $c$ divided by the same number.
+**Read it aloud:** add the square root to $`b`$ with $`b`$'s own sign, so the two never cancel; that gives the big root, and the small root is $`c`$ divided by the same number.
 
-Third, two safe recipes for long lists. Welford's update finds the variance in one pass. For the $k$-th reading $x_k$:
+Third, two safe recipes for long lists. Welford's update finds the variance in one pass. For the $`k`$-th reading $`x_k`$:
 
-$$\mu_k = \mu_{k-1} + \frac{x_k - \mu_{k-1}}{k}, \qquad M_k = M_{k-1} + (x_k - \mu_{k-1})(x_k - \mu_k), \qquad \text{variance} = \frac{M_n}{n}$$
+```math
+\mu_k = \mu_{k-1} + \frac{x_k - \mu_{k-1}}{k}, \qquad M_k = M_{k-1} + (x_k - \mu_{k-1})(x_k - \mu_k), \qquad \text{variance} = \frac{M_n}{n}
+```
 
 **Read it aloud:** nudge the running mean toward each new reading, add the product of the reading's distance from the old mean and from the new mean, and divide the final total by the count.
 
-Kahan's summation adds the list $x_1, x_2, \ldots$ into a running total $t$, carrying the error $e$ lost so far:
+Kahan's summation adds the list $`x_1, x_2, \ldots`$ into a running total $`t`$, carrying the error $`e`$ lost so far:
 
-$$y = x_i - e, \qquad t' = t + y, \qquad e = (t' - t) - y, \qquad t = t'$$
+```math
+y = x_i - e, \qquad t' = t + y, \qquad e = (t' - t) - y, \qquad t = t'
+```
 
 **Read it aloud:** take back what was lost last time, add, then measure what just fell off the end and carry it to the next step.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$, $b$, $c$; $B$ | the quadratic's three numbers: in front of $x^2$, in front of $x$, and alone; $B = -b$, the size of the middle number, for $x^2 - Bx + 1$ | 1, −100000000, 1; $B$ = 100000000 | a bigger $B$ pulls the roots apart and makes the school formula worse |
-| $x$; $x_1$, $x_2$ | the unknown; the big and the small root | 100000000.0 and 1.000000000000000e-8 | — |
-| $D$ | the discriminant $b^2 - 4ac$, under the square root | 9999999999999996.0 | — |
-| $q$ | the big root times $a$, built with no cancellation | 100000000.0 | — |
-| $u$, $v$ | the two numbers in a subtraction | 100000000 and the true $\sqrt{D}$, 2.000000000000000e-8 below it | closer together, worse answer |
-| $\kappa$ | condition number: how much a subtraction magnifies input error | 1.000e16 for the quadratic, 8.889e16 for the variance | more digits lost, about $\log_{10}\kappa$ |
-| $\varepsilon$; $\delta$, $\delta_1$, $\delta_2$ | machine epsilon, $2^{-52}$, the gap from 1 to the next stored number; the inputs' relative errors, $\delta$ the larger in size | $\varepsilon/2$ for one rounding; up to $4 \times \varepsilon/2$ for the mean of squares | bigger input errors, bigger output error |
-| $x_k$, $x_i$; $k$, $i$; $n$, $N$ | one reading or one term, its position in the list, and how many there are | four weighings, $n = 4$; a million 0.1s, $N$ = 1000000 | a longer plain sum loses more |
-| $\mu_k$, $\mu$, $E[X^2]$ | the mean (average) of the first $k$ readings; the mean of all; the mean of the squares | $\mu$ = 1000000010.0 mg | — |
-| $M_k$, $d$ | the running sum of squared distances from the mean; the newest reading's distance from the old mean | $M_4 / 4$ = 22.5 mg² | — |
-| $t$, $t'$ | the running total, before and after one addition | Kahan's ends at 100000.00000000000 | — |
-| $e$, $y$ | minus the part lost so far, and the next term with that part taken back | — | — |
+| $`a`$, $`b`$, $`c`$; $`B`$ | the quadratic's three numbers: in front of $`x^2`$, in front of $`x`$, and alone; $`B = -b`$, the size of the middle number, for $`x^2 - Bx + 1`$ | 1, −100000000, 1; $`B`$ = 100000000 | a bigger $`B`$ pulls the roots apart and makes the school formula worse |
+| $`x`$; $`x_1`$, $`x_2`$ | the unknown; the big and the small root | 100000000.0 and 1.000000000000000e-8 | — |
+| $`D`$ | the discriminant $`b^2 - 4ac`$, under the square root | 9999999999999996.0 | — |
+| $`q`$ | the big root times $`a`$, built with no cancellation | 100000000.0 | — |
+| $`u`$, $`v`$ | the two numbers in a subtraction | 100000000 and the true $`\sqrt{D}`$, 2.000000000000000e-8 below it | closer together, worse answer |
+| $`\kappa`$ | condition number: how much a subtraction magnifies input error | 1.000e16 for the quadratic, 8.889e16 for the variance | more digits lost, about $`\log_{10}\kappa`$ |
+| $`\varepsilon`$; $`\delta`$, $`\delta_1`$, $`\delta_2`$ | machine epsilon, $`2^{-52}`$, the gap from 1 to the next stored number; the inputs' relative errors, $`\delta`$ the larger in size | $`\varepsilon/2`$ for one rounding; up to $`4 \times \varepsilon/2`$ for the mean of squares | bigger input errors, bigger output error |
+| $`x_k`$, $`x_i`$; $`k`$, $`i`$; $`n`$, $`N`$ | one reading or one term, its position in the list, and how many there are | four weighings, $`n = 4`$; a million 0.1s, $`N`$ = 1000000 | a longer plain sum loses more |
+| $`\mu_k`$, $`\mu`$, $`E[X^2]`$ | the mean (average) of the first $`k`$ readings; the mean of all; the mean of the squares | $`\mu`$ = 1000000010.0 mg | — |
+| $`M_k`$, $`d`$ | the running sum of squared distances from the mean; the newest reading's distance from the old mean | $`M_4 / 4`$ = 22.5 mg² | — |
+| $`t`$, $`t'`$ | the running total, before and after one addition | Kahan's ends at 100000.00000000000 | — |
+| $`e`$, $`y`$ | minus the part lost so far, and the next term with that part taken back | — | — |
 
 ### When it holds
 
-- **The inputs carry error.** If $u$ and $v$ are exact and within a factor of 2 of each other, so is $u - v$ (Step 0), and nothing is lost. Cancellation bites only on numbers that were computed, rounded or measured.
-- **The rewrite is the same mathematics.** Each safe formula equals the unsafe one in exact arithmetic. Get the rewrite wrong and it cancels again: flip the sign inside $q$ and the big root comes out at 134217728.0.
-- **Kahan needs the order kept.** The step $e = (t' - t) - y$ is zero in exact arithmetic, so a compiler allowed to reorder sums (a "fast maths" switch in C) deletes it, and the total falls back to the plain 100000.00000133288.
+- **The inputs carry error.** If $`u`$ and $`v`$ are exact and within a factor of 2 of each other, so is $`u - v`$ (Step 0), and nothing is lost. Cancellation bites only on numbers that were computed, rounded or measured.
+- **The rewrite is the same mathematics.** Each safe formula equals the unsafe one in exact arithmetic. Get the rewrite wrong and it cancels again: flip the sign inside $`q`$ and the big root comes out at 134217728.0.
+- **Kahan needs the order kept.** The step $`e = (t' - t) - y`$ is zero in exact arithmetic, so a compiler allowed to reorder sums (a "fast maths" switch in C) deletes it, and the total falls back to the plain 100000.00000133288.
 - **Welford and two-pass fix the formula, not the data.** Readings rounded on the way in stay rounded.
 
 ---
@@ -96,102 +104,108 @@ $$y = x_i - e, \qquad t' = t + y, \qquad e = (t' - t) - y, \qquad t = t'$$
 
 ### Step 0: the subtraction is innocent; it exposes old errors
 
-A computer stores each number to about 16 significant digits, and each operation rounds its result to the nearest stored number, a relative error of at most $\varepsilon/2$ ([Floating point](01-floating-point-in-practice.md)).
+A computer stores each number to about 16 significant digits, and each operation rounds its result to the nearest stored number, a relative error of at most $`\varepsilon/2`$ ([Floating point](01-floating-point-in-practice.md)).
 
-Subtracting two stored numbers within a factor of 2 of each other is exact. (This is Sterbenz's lemma: the difference has no more significant bits than the inputs, so nothing needs rounding.) So the loss never happens in the subtraction itself. It happens earlier, when $u$ and $v$ were rounded. Those errors were in the 16th digit. After the shared digits are stripped away they sit in the first.
+Subtracting two stored numbers within a factor of 2 of each other is exact. (This is Sterbenz's lemma: the difference has no more significant bits than the inputs, so nothing needs rounding.) So the loss never happens in the subtraction itself. It happens earlier, when $`u`$ and $`v`$ were rounded. Those errors were in the 16th digit. After the shared digits are stripped away they sit in the first.
 
-[Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) met this already: a bump below a millionth of a dollar made the delta worse, because two nearly equal prices were subtracted. That was cancellation. (The delta there is the rate at which an option's price changes with the stock price, not this card's relative error $\delta$.)
+[Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) met this already: a bump below a millionth of a dollar made the delta worse, because two nearly equal prices were subtracted. That was cancellation. (The delta there is the rate at which an option's price changes with the stock price, not this card's relative error $`\delta`$.)
 
 ### Step 1: the magnification is at most kappa
 
-Suppose the stored values are $u(1 + \delta_1)$ and $v(1 + \delta_2)$, where $\delta_1$ and $\delta_2$ are small relative errors, each at most $\delta$ in size. Their exact difference is
+Suppose the stored values are $`u(1 + \delta_1)`$ and $`v(1 + \delta_2)`$, where $`\delta_1`$ and $`\delta_2`$ are small relative errors, each at most $`\delta`$ in size. Their exact difference is
 
-$$u(1 + \delta_1) - v(1 + \delta_2) = (u - v) + u\delta_1 - v\delta_2.$$
+```math
+u(1 + \delta_1) - v(1 + \delta_2) = (u - v) + u\delta_1 - v\delta_2.
+```
 
-The error is $u\delta_1 - v\delta_2$, at most $(|u| + |v|)\,\delta$ in size. Divide by the true answer $|u - v|$ to get the relative error:
+The error is $`u\delta_1 - v\delta_2`$, at most $`(|u| + |v|)\,\delta`$ in size. Divide by the true answer $`|u - v|`$ to get the relative error:
 
-$$\frac{|u\delta_1 - v\delta_2|}{|u - v|} \le \frac{|u| + |v|}{|u - v|}\,\delta = \kappa\,\delta.$$
+```math
+\frac{|u\delta_1 - v\delta_2|}{|u - v|} \le \frac{|u| + |v|}{|u - v|}\,\delta = \kappa\,\delta.
+```
 
-When $u$ and $v$ are nearly equal, the bottom is tiny and $\kappa$ is huge: about $\log_{10}\kappa$ decimal digits are lost. Adding two numbers of the same sign is the opposite case. The same algebra for $u + v$ gives $(|u| + |v|)/|u + v| = 1$, so it is always safe. That fact is the whole trick behind the safe quadratic.
+When $`u`$ and $`v`$ are nearly equal, the bottom is tiny and $`\kappa`$ is huge: about $`\log_{10}\kappa`$ decimal digits are lost. Adding two numbers of the same sign is the opposite case. The same algebra for $`u + v`$ gives $`(|u| + |v|)/|u + v| = 1`$, so it is always safe. That fact is the whole trick behind the safe quadratic.
 
 ### Step 2: the quadratic, done by hand at full size
 
-For $x^2 - 100000000x + 1$, the discriminant is $10^{16} - 4$ = 9999999999999996.0, stored exactly. Its true square root is 2.000000000000000e-8 below 100,000,000. But near 100,000,000 the stored numbers are 1.490116119384766e-8 apart. The square root rounds to the stored neighbour just below, 99999999.9999999851.
+For $`x^2 - 100000000x + 1`$, the discriminant is $`10^{16} - 4`$ = 9999999999999996.0, stored exactly. Its true square root is 2.000000000000000e-8 below 100,000,000. But near 100,000,000 the stored numbers are 1.490116119384766e-8 apart. The square root rounds to the stored neighbour just below, 99999999.9999999851.
 
-The small root is $(100000000 - \sqrt{D})/2$. The subtraction is exact and returns 1.490116119384766e-8, one spacing, where the truth is 2.000000000000000e-8. Halved: 7.450580596923828e-9, an error of 25.49%.
+The small root is $`(100000000 - \sqrt{D})/2`$. The subtraction is exact and returns 1.490116119384766e-8, one spacing, where the truth is 2.000000000000000e-8. Halved: 7.450580596923828e-9, an error of 25.49%.
 
-Kappa for this subtraction uses the true difference: $(10^8 + 10^8)/(2 \times 10^{-8})$ = 1.000e16. The square root had a relative error of at most $\varepsilon/2$, so Step 1 allows an error up to $\kappa\varepsilon/2$ = 1.11, that is 111%. The run lost 25.49%, inside the bound.
+Kappa for this subtraction uses the true difference: $`(10^8 + 10^8)/(2 \times 10^{-8})`$ = 1.000e16. The square root had a relative error of at most $`\varepsilon/2`$, so Step 1 allows an error up to $`\kappa\varepsilon/2`$ = 1.11, that is 111%. The run lost 25.49%, inside the bound.
 
 ### Step 3: the safe quadratic, from the product of the roots
 
-Any quadratic with roots $x_1$ and $x_2$ factors as $a(x - x_1)(x - x_2)$. Multiply out: the constant term is $a x_1 x_2$. Matching it to $c$ gives
+Any quadratic with roots $`x_1`$ and $`x_2`$ factors as $`a(x - x_1)(x - x_2)`$. Multiply out: the constant term is $`a x_1 x_2`$. Matching it to $`c`$ gives
 
-$$x_1 x_2 = \frac{c}{a}.$$
+```math
+x_1 x_2 = \frac{c}{a}.
+```
 
-So only one root needs the formula. Pick the one where $b$ and the square root add with like signs: $q = -\tfrac12(b + \operatorname{sign}(b)\sqrt{D})$. Here $b$ is negative, so $q = \tfrac12(100000000 + 99999999.9999999851)$ = 100000000.0. Kappa is 1, and the rounding in the root stays in the 16th digit.
+So only one root needs the formula. Pick the one where $`b`$ and the square root add with like signs: $`q = -\tfrac12(b + \mathrm{sign}(b)\sqrt{D})`$. Here $`b`$ is negative, so $`q = \tfrac12(100000000 + 99999999.9999999851)`$ = 100000000.0. Kappa is 1, and the rounding in the root stays in the 16th digit.
 
-Then the big root is $x_1 = q/a$ and the small one is $x_2 = c/q$ = 1/100000000.0 = 1.000000000000000e-8. A division has no cancellation, so it keeps all the digits.
+Then the big root is $`x_1 = q/a`$ and the small one is $`x_2 = c/q`$ = 1/100000000.0 = 1.000000000000000e-8. A division has no cancellation, so it keeps all the digits.
 
 ### Step 4: the variance shortcut cancels; subtract the mean first
 
-The probability wing proves that variance equals the mean of the squares minus the square of the mean, $E[X^2] - \mu^2$ ([Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md)). In exact arithmetic it is true. In floating point it is the worst formula available.
+The probability wing proves that variance equals the mean of the squares minus the square of the mean, $`E[X^2] - \mu^2`$ ([Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md)). In exact arithmetic it is true. In floating point it is the worst formula available.
 
 Take four weighings of a 1-tonne calibration mass, in milligrams: 1,000,000,004; 1,000,000,007; 1,000,000,013; 1,000,000,016. The mean is 1000000010.0 mg. The true variance is 22.5 mg², a standard deviation of 4.743 mg.
 
-Each square is about $10^{18}$. Near $10^{18}$ the stored numbers are 128 apart, so each square is rounded by up to 64. The shortcut then subtracts two numbers near $10^{18}$ to find 22.5.
+Each square is about $`10^{18}`$. Near $`10^{18}`$ the stored numbers are 128 apart, so each square is rounded by up to 64. The shortcut then subtracts two numbers near $`10^{18}`$ to find 22.5.
 
-Kappa is 8.889e16. With one rounding per input, Step 1's bound would be $\kappa\varepsilon/2$ = 9.87. But the mean of squares went through seven roundings: four squares, then three additions.
+Kappa is 8.889e16. With one rounding per input, Step 1's bound would be $`\kappa\varepsilon/2`$ = 9.87. But the mean of squares went through seven roundings: four squares, then three additions.
 
-The squares cost up to $\varepsilon/2$ each. By the sum bound on [Floating point](01-floating-point-in-practice.md), the additions cost up to $3 \times \varepsilon/2$ more. So its relative error is at most about $4 \times \varepsilon/2$. The bound is therefore $\kappa \times 4 \times \varepsilon/2$ = 39.47: the error may be forty times the answer.
+The squares cost up to $`\varepsilon/2`$ each. By the sum bound on [Floating point](01-floating-point-in-practice.md), the additions cost up to $`3 \times \varepsilon/2`$ more. So its relative error is at most about $`4 \times \varepsilon/2`$. The bound is therefore $`\kappa \times 4 \times \varepsilon/2`$ = 39.47: the error may be forty times the answer.
 
 The run returns **−128.0000 mg²**, a negative variance, which no set of numbers can have.
 
-The **two-pass** fix finds the mean first, then squares the distances 6, 3, 3 and 6 from it. Those distances are small and exact, every term added is positive, and positive terms add with $\kappa = 1$. It returns 22.5000.
+The **two-pass** fix finds the mean first, then squares the distances 6, 3, 3 and 6 from it. Those distances are small and exact, every term added is positive, and positive terms add with $`\kappa = 1`$. It returns 22.5000.
 
 **Welford's update** gets the same answer in one pass, for readings that stream past and cannot be stored. It too squares only distances from a mean, never raw readings. It returns 22.5000.
 
 <details>
 <summary>Detailed proof: Welford's update gives the sum of squared distances</summary>
 
-Let $M_k = \sum_{i \le k} (x_i - \mu_k)^2$ and write $d = x_k - \mu_{k-1}$. Then $\mu_k = \mu_{k-1} + d/k$, so $x_k - \mu_k = d(k-1)/k$.
+Let $`M_k = \sum_{i \le k} (x_i - \mu_k)^2`$ and write $`d = x_k - \mu_{k-1}`$. Then $`\mu_k = \mu_{k-1} + d/k`$, so $`x_k - \mu_k = d(k-1)/k`$.
 
-Split $M_k$ into the old readings and the new one. For the old ones, $x_i - \mu_k = (x_i - \mu_{k-1}) - d/k$. Squaring and adding over $i < k$, the cross term is $-2(d/k)\sum_{i<k}(x_i - \mu_{k-1})$, which is zero because distances from a mean add to zero. That leaves $M_{k-1} + (k-1)d^2/k^2$.
+Split $`M_k`$ into the old readings and the new one. For the old ones, $`x_i - \mu_k = (x_i - \mu_{k-1}) - d/k`$. Squaring and adding over $`i < k`$, the cross term is $`-2(d/k)\sum_{i<k}(x_i - \mu_{k-1})`$, which is zero because distances from a mean add to zero. That leaves $`M_{k-1} + (k-1)d^2/k^2`$.
 
-The new reading adds $(x_k - \mu_k)^2 = d^2(k-1)^2/k^2$.
+The new reading adds $`(x_k - \mu_k)^2 = d^2(k-1)^2/k^2`$.
 
-Together: $M_k = M_{k-1} + d^2 \frac{k-1}{k^2}\big(1 + (k - 1)\big) = M_{k-1} + d^2\frac{k-1}{k}$. And $d^2(k-1)/k = (x_k - \mu_{k-1})(x_k - \mu_k)$, the update on the card.
+Together: $`M_k = M_{k-1} + d^2 \frac{k-1}{k^2}\big(1 + (k - 1)\big) = M_{k-1} + d^2\frac{k-1}{k}`$. And $`d^2(k-1)/k = (x_k - \mu_{k-1})(x_k - \mu_k)`$, the update on the card.
 
 </details>
 
 ### Step 5: a long total loses the small end of each term; Kahan carries it
 
-A plain running total of a million copies of 0.1 has no cancellation: every term is positive. It loses digits another way. Once the total is near 100,000, each new 0.1 is rounded to the spacing of numbers near 100,000, and its last digits fall off. A million small losses add up. Rounding errors in a sum of $N$ terms can grow to about $N \times \varepsilon/2 \times$ the total, here 1.110e-5. The run's error is 1.333e-6.
+A plain running total of a million copies of 0.1 has no cancellation: every term is positive. It loses digits another way. Once the total is near 100,000, each new 0.1 is rounded to the spacing of numbers near 100,000, and its last digits fall off. A million small losses add up. Rounding errors in a sum of $`N`$ terms can grow to about $`N \times \varepsilon/2 \times`$ the total, here 1.110e-5. The run's error is 1.333e-6.
 
-Kahan's method catches what fell off, using a deliberate cancellation. After $t' = t + y$, the difference $t' - t$ is computed exactly (Step 0), and it is the part of $y$ that actually got in. Subtract $y$ and what remains, $e$, is minus the part that was lost. The next step takes it back.
+Kahan's method catches what fell off, using a deliberate cancellation. After $`t' = t + y`$, the difference $`t' - t`$ is computed exactly (Step 0), and it is the part of $`y`$ that actually got in. Subtract $`y`$ and what remains, $`e`$, is minus the part that was lost. The next step takes it back.
 
-The error no longer grows with $N$. Its bound is about $2 \times \varepsilon/2 \times$ the total, here 2.220e-11, and the run is off by −5.551e-12. That is no more than rounding the exact answer once.
+The error no longer grows with $`N`$. Its bound is about $`2 \times \varepsilon/2 \times`$ the total, here 2.220e-11, and the run is off by −5.551e-12. That is no more than rounding the exact answer once.
 
-The exact answer is known because the stored 0.1 is exactly 3602879701896397 divided by $2^{55}$. A million of them total 100,000 plus 5.551e-12, found in whole numbers with no rounding. Kahan's bound is proved in Higham's book (Sources); this card states it and checks the run against it.
+The exact answer is known because the stored 0.1 is exactly 3602879701896397 divided by $`2^{55}`$. A million of them total 100,000 plus 5.551e-12, found in whole numbers with no rounding. Kahan's bound is proved in Higham's book (Sources); this card states it and checks the run against it.
 
 ---
 
 ## Worked numbers, by hand
 
-The quadratic $x^2 - 100000000x + 1 = 0$, both ways.
+The quadratic $`x^2 - 100000000x + 1 = 0`$, both ways.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| discriminant | $10^{16} - 4 \times 1 \times 1$ | 9999999999999996.0 |
-| stored square root | nearest stored number to $\sqrt{D}$ | 99999999.9999999851 |
+| discriminant | $`10^{16} - 4 \times 1 \times 1`$ | 9999999999999996.0 |
+| stored square root | nearest stored number to $`\sqrt{D}`$ | 99999999.9999999851 |
 | school: the cancelling subtraction | 100000000 − 99999999.9999999851 | 1.490116119384766e-8 (truth 2.000000000000000e-8) |
 | school: small root | that, divided by 2 | 7.450580596923828e-9 |
 | school: relative error | (1e-8 − 7.45e-9) / 1e-8 | 25.49% |
 | kappa of the subtraction | (1e8 + 1e8) / 2e-8, the true gap | 1.000e16 |
-| safe: $q$, like signs added | (100000000 + 99999999.9999999851) / 2 | 100000000.0 |
-| safe: big root | $q / a$ | 100000000.0 |
-| safe: small root | $c / q$ = 1 / 100000000.0 | **1.000000000000000e-8** |
-| check by bisection | halve [0, 2e-8] 200 times on $x(x - 10^8) + 1$ | 1.000000000000000e-8 |
-| check by series | $(1/B)(1 + 1/B^2)$, with $B$ = 100000000 | 1.000000000000000e-8 |
+| safe: $`q`$, like signs added | (100000000 + 99999999.9999999851) / 2 | 100000000.0 |
+| safe: big root | $`q / a`$ | 100000000.0 |
+| safe: small root | $`c / q`$ = 1 / 100000000.0 | **1.000000000000000e-8** |
+| check by bisection | halve [0, 2e-8] 200 times on $`x(x - 10^8) + 1`$ | 1.000000000000000e-8 |
+| check by series | $`(1/B)(1 + 1/B^2)`$, with $`B`$ = 100000000 | 1.000000000000000e-8 |
 
 The safe small root is right to all sixteen digits, where the school formula kept none of them reliably.
 
@@ -200,16 +214,16 @@ The safe small root is right to all sixteen digits, where the school formula kep
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | School formula for the small root | 7.450580596923828e-9, not 1e-8 | Subtracted the stored square root from a number almost equal to it |
-| Safe recipe with the sign flipped | big root 134217728.0, not 100000000.0 | $q$ became the cancelling difference, and $c/q$ magnified it |
-| Shortcut variance on the four weighings | −128.0000 mg², not 22.5 | Two numbers near $10^{18}$ subtracted to find 22.5 |
+| Safe recipe with the sign flipped | big root 134217728.0, not 100000000.0 | $`q`$ became the cancelling difference, and $`c/q`$ magnified it |
+| Shortcut variance on the four weighings | −128.0000 mg², not 22.5 | Two numbers near $`10^{18}`$ subtracted to find 22.5 |
 | Plain running total of a million 0.1s | 100000.00000133288, error 1.333e-6 | The small end of each 0.1 rounded away against a big total |
-| $1 - \cos x$ at $x$ = 1e-8 | 0.000e0, not 5.000e-17 | cos(1e-8) rounds to exactly 1; use $2\sin^2(x/2)$ |
+| $`1 - \cos x`$ at $`x`$ = 1e-8 | 0.000e0, not 5.000e-17 | cos(1e-8) rounds to exactly 1; use $`2\sin^2(x/2)`$ |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts run three jobs, each the unsafe way and the safe way, against roads that share none of the arithmetic. The safe quadratic meets bisection on the equation and a series for the small root: three roads. The digit chart scores both formulas against a fourth, the small root $2/(B + \sqrt{B^2 - 4})$ worked out in whole numbers and rounded once at the end. The variance recipes face the exact answer in whole numbers. The sums face the exact total, counted in whole units of $2^{-55}$. Python's built-in `sum` is avoided on decimals: since Python 3.12 it compensates its own rounding, which would hide the plain total's error.
+The scripts run three jobs, each the unsafe way and the safe way, against roads that share none of the arithmetic. The safe quadratic meets bisection on the equation and a series for the small root: three roads. The digit chart scores both formulas against a fourth, the small root $`2/(B + \sqrt{B^2 - 4})`$ worked out in whole numbers and rounded once at the end. The variance recipes face the exact answer in whole numbers. The sums face the exact total, counted in whole units of $`2^{-55}`$. Python's built-in `sum` is avoided on decimals: since Python 3.12 it compensates its own rounding, which would hide the plain total's error.
 
 ### Python
 
@@ -621,9 +635,9 @@ ALL CHECKS PASS
 
 Lean proves Step 1's bound and the two safe rewrites for all real numbers, and redoes the worked numbers in exact arithmetic.
 
-- Suppose the stored values carry relative errors $\delta_1$ and $\delta_2$, each at most $\delta$ in size, and $u \ne v$. Then the relative error of $u - v$ is at most $\kappa\,\delta$.
-- Suppose $a$ is not zero and $b^2 - 4ac$ is at least 0. Then $x_1 = q/a$ and $x_2 = c/q$ are exactly the two roots.
-- Take any list of readings and any $k$ of at least 1. Then Welford's update rules give exactly $\mu_k$ and $M_k$ from $\mu_{k-1}$ and $M_{k-1}$.
+- Suppose the stored values carry relative errors $`\delta_1`$ and $`\delta_2`$, each at most $`\delta`$ in size, and $`u \ne v`$. Then the relative error of $`u - v`$ is at most $`\kappa\,\delta`$.
+- Suppose $`a`$ is not zero and $`b^2 - 4ac`$ is at least 0. Then $`x_1 = q/a`$ and $`x_2 = c/q`$ are exactly the two roots.
+- Take any list of readings and any $`k`$ of at least 1. Then Welford's update rules give exactly $`\mu_k`$ and $`M_k`$ from $`\mu_{k-1}`$ and $`M_{k-1}`$.
 - In exact arithmetic the shortcut variance also gives 22.5 mg² on the four weighings; only rounding breaks it.
 - The discriminant, kappa of 1.000e16, the mean 1000000010 and the million 0.1s' exact total are all right.
 
@@ -780,7 +794,7 @@ example : (1000000 : ℚ) * (3602879701896397 / 2 ^ 55) = 100000 + 200000 / 2 ^ 
 > **Try changing**
 > - Guess first: how many correct digits does the school formula keep at B = 1e9? Read the last `digits` line: 0.0. The discriminant 1e18 − 4 rounds to 1e18, its square root to exactly 1000000000, and the subtraction returns 0. The safe root scores 16.0. Set `b = -1e9` in the main block and neither script reaches `ALL CHECKS PASS`. The cancelling difference is now exactly 0: the Python stops with a division by zero on the flipped-sign line, and the Rust at the assert that a quarter of the small root is lost.
 > - Guess first: does a smaller offset save the shortcut variance? Read the `shortcut at offset` lines. Near 1e8 it returns 22.0000, close but wrong; near 1e7, 22.5000. The two-pass answer is 22.5000 at every offset.
-> - Guess first: what does the safe recipe give with its sign flipped? Change `-(b - r) / 2` to `-(b + r) / 2`. The `safe roots` line prints 0.0 and 1.342177280000000e8: $q$ is now the cancelling difference, and 1 divided by it gives 134217728.0 as the big answer. The assert against bisection fails.
+> - Guess first: what does the safe recipe give with its sign flipped? Change `-(b - r) / 2` to `-(b + r) / 2`. The `safe roots` line prints 0.0 and 1.342177280000000e8: $`q`$ is now the cancelling difference, and 1 divided by it gives 134217728.0 as the big answer. The assert against bisection fails.
 > - Guess first: what is Kahan's method without its correction? Replace `comp = (t - kahan) - y` with `comp = 0.0`. Kahan's total becomes the plain 100000.00000133288, and an assert fails.
 
 ---
@@ -788,21 +802,21 @@ example : (1000000 : ℚ) * (3602879701896397 / 2 ^ 55) = 100000 + 200000 / 2 ^ 
 ## The usual mistake
 
 > [!warning]
-> **Trusting a result because it prints many digits.** The school formula printed 7.450580596923828e-9: sixteen digits, no warning, a quarter wrong. A floating-point number always prints its full width. Only an error estimate, such as $\kappa$, or a second road says how many of those digits are real.
+> **Trusting a result because it prints many digits.** The school formula printed 7.450580596923828e-9: sixteen digits, no warning, a quarter wrong. A floating-point number always prints its full width. Only an error estimate, such as $`\kappa`$, or a second road says how many of those digits are real.
 >
 > Smaller traps:
-> - **Adding precision instead of rewriting.** The school formula loses two digits per tenfold step in $B$, so any fixed precision runs out at some $B$. The rewrite works at every $B$.
-> - **The shortcut variance in a one-pass loop.** Summing $x$ and $x^2$ as data streams past is the tempting way to save memory. On the four weighings it gives −128.0000 mg². Welford's update is just as one-pass and gives 22.5000.
-> - **Flipping the sign in the safe formula.** The sign of $b$ must match the sign put on the square root. The wrong one turns the safe recipe into the cancelling one and gives 134217728.0 for the big root.
-> - **Tiny angles in $1 - \cos x$.** At $x$ = 1e-8 it gives 0.000e0. The identity $1 - \cos x = 2\sin^2(x/2)$ gives 5.000e-17 with no subtraction at all.
+> - **Adding precision instead of rewriting.** The school formula loses two digits per tenfold step in $`B`$, so any fixed precision runs out at some $`B`$. The rewrite works at every $`B`$.
+> - **The shortcut variance in a one-pass loop.** Summing $`x`$ and $`x^2`$ as data streams past is the tempting way to save memory. On the four weighings it gives −128.0000 mg². Welford's update is just as one-pass and gives 22.5000.
+> - **Flipping the sign in the safe formula.** The sign of $`b`$ must match the sign put on the square root. The wrong one turns the safe recipe into the cancelling one and gives 134217728.0 for the big root.
+> - **Tiny angles in $`1 - \cos x`$.** At $`x`$ = 1e-8 it gives 0.000e0. The identity $`1 - \cos x = 2\sin^2(x/2)`$ gives 5.000e-17 with no subtraction at all.
 
 ---
 
 ## Where you meet it in real life
 
-- **Distance between two nearby points on a map.** The haversine formula for great-circle distance uses $\sin^2$ of half the angle instead of $1 - \cos$, for exactly the reason in the last trap: with $1 - \cos$, two points close enough together come out exactly 0 metres apart.
+- **Distance between two nearby points on a map.** The haversine formula for great-circle distance uses $`\sin^2`$ of half the angle instead of $`1 - \cos`$, for exactly the reason in the last trap: with $`1 - \cos`$, two points close enough together come out exactly 0 metres apart.
 - **Statistics software.** Spreadsheets and statistics libraries compute variances by two passes or by Welford-style updates. Code that uses the shortcut returns wrong, sometimes negative, variances on data with a large offset, such as dates or serial numbers, as the weighings showed.
-- **Maths libraries.** Functions named `log1p` and `expm1` compute $\ln(1 + x)$ and $e^x - 1$ for small $x$ without forming $1 + x$ or subtracting 1. They exist only because of cancellation.
+- **Maths libraries.** Functions named `log1p` and `expm1` compute $`\ln(1 + x)`$ and $`e^x - 1`$ for small $`x`$ without forming $`1 + x`$ or subtracting 1. They exist only because of cancellation.
 - **This library's check scripts.** Every long total on a card risks a plain-sum error, and every difference of two computed prices risks cancellation. Two independent roads catch both.
 
 > **Say it back**
@@ -812,9 +826,9 @@ example : (1000000 : ℚ) * (3602879701896397 / 2 ^ 55) = 100000 + 200000 / 2 ^ 
 
 ## What this builds on
 
-- [Floating point](01-floating-point-in-practice.md): how numbers are stored to about 16 digits, machine epsilon, and why each operation's result is within $\varepsilon/2$ of the truth.
+- [Floating point](01-floating-point-in-practice.md): how numbers are stored to about 16 digits, machine epsilon, and why each operation's result is within $`\varepsilon/2`$ of the truth.
 - [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the school formula this card rewrites, and where the discriminant comes from.
-- [Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md): the definition and the shortcut $E[X^2] - \mu^2$, proved there and shown here to cancel.
+- [Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md): the definition and the shortcut $`E[X^2] - \mu^2`$, proved there and shown here to cancel.
 - [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md): the first place this library met cancellation, as the rounding error that grows when the bump shrinks.
 
 ## Where this goes next

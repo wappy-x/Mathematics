@@ -39,45 +39,49 @@ The loop never consults the chances of rain. They act only through the months th
 
 ## The formula
 
-The shelf's notation comes from [Markov decision processes](02-markov-decision-processes.md): state $s$, action $a$, reward $r$, discount $\gamma$, rule (policy) $\pi$. This card introduces one new object, in words first.
+The shelf's notation comes from [Markov decision processes](02-markov-decision-processes.md): state $`s`$, action $`a`$, reward $`r`$, discount $`\gamma`$, rule (policy) $`\pi`$. This card introduces one new object, in words first.
 
-The **Q-value** $Q^{*}(s, a)$ is the money, counted in today's pounds, that you can expect if you take action $a$ in state $s$ now and then follow the best rule ever after. The learning table holds a running estimate of it, written $Q(s, a)$. Money on this card is in thousands of pounds, written £k.
+The **Q-value** $`Q^{*}(s, a)`$ is the money, counted in today's pounds, that you can expect if you take action $`a`$ in state $`s`$ now and then follow the best rule ever after. The learning table holds a running estimate of it, written $`Q(s, a)`$. Money on this card is in thousands of pounds, written £k.
 
-In the reservoir a unit is 10 million m³. The level $s$ is 0 to 4 units, the release $a$ is 0, 1 or 2 units and never more than $s$, and the rain $w$ is 0, 1 or 2 units with chances 30%, 40% and 30%. The next level is $s' = \min(s - a + w,\ 4)$, and anything above 4 spills.
+In the reservoir a unit is 10 million m³. The level $`s`$ is 0 to 4 units, the release $`a`$ is 0, 1 or 2 units and never more than $`s`$, and the rain $`w`$ is 0, 1 or 2 units with chances 30%, 40% and 30%. The next level is $`s' = \min(s - a + w,\ 4)`$, and anything above 4 spills.
 
-The Q-learning update, after one month that started at $s$, released $a$, earned $r$ and ended at $s'$:
+The Q-learning update, after one month that started at $`s`$, released $`a`$, earned $`r`$ and ended at $`s'`$:
 
-$$Q(s, a) \;\leftarrow\; Q(s, a) + \alpha_n \Big[\, \underbrace{r + \gamma \max_{a'} Q(s', a')}_{\text{target}} \;-\; Q(s, a) \Big]$$
+```math
+Q(s, a) \;\leftarrow\; Q(s, a) + \alpha_n \Big[\, \underbrace{r + \gamma \max_{a'} Q(s', a')}_{\text{target}} \;-\; Q(s, a) \Big]
+```
 
-**Read it aloud:** take the money just earned, add 0.9 times the best value available from the new level, and move the old estimate a fraction $\alpha_n$ of the way towards that.
+**Read it aloud:** take the money just earned, add 0.9 times the best value available from the new level, and move the old estimate a fraction $`\alpha_n`$ of the way towards that.
 
-The bracket is the **temporal difference** (TD) error, written $\delta$: the gap between what the table said this month was worth and what one month of experience suggests. Here $\max_{a'}$ means "the largest over all releases $a'$ allowed at $s'$". The same update with a fixed rule $\pi$ and one value per state is **TD(0)**, which judges a rule instead of improving it:
+The bracket is the **temporal difference** (TD) error, written $`\delta`$: the gap between what the table said this month was worth and what one month of experience suggests. Here $`\max_{a'}`$ means "the largest over all releases $`a'`$ allowed at $`s'`$". The same update with a fixed rule $`\pi`$ and one value per state is **TD(0)**, which judges a rule instead of improving it:
 
-$$V^{\pi}(s) \;\leftarrow\; V^{\pi}(s) + \alpha_n \big[\, r + \gamma V^{\pi}(s') - V^{\pi}(s) \big]$$
+```math
+V^{\pi}(s) \;\leftarrow\; V^{\pi}(s) + \alpha_n \big[\, r + \gamma V^{\pi}(s') - V^{\pi}(s) \big]
+```
 
-The step size used throughout is $\alpha_n = 10/(9 + n)$, where $n$ counts the visits to that cell, this one included: 1 on the first visit, 0.909 on the second, then slowly shrinking.
+The step size used throughout is $`\alpha_n = 10/(9 + n)`$, where $`n`$ counts the visits to that cell, this one included: 1 on the first visit, 0.909 on the second, then slowly shrinking.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $s'$ | water level now, and at the end of the month | 2 units (20 million m³), then 1, 2 or 3 | more water is worth more: best value 533.20 when empty, 811.31 when full |
-| $a$, $a'$ | the release: the action chosen; $a'$, a release allowed at the new level | 1 unit at level 2 | — |
-| $w$, $p(w)$ | the month's rain and its chance | 0, 1, 2 units at 30%, 40%, 30% | — |
-| $r$ | the month's money: revenue minus spill and empty penalties | £80k for releasing 1 unit | — |
-| $\gamma$ | the discount: next month's pound is worth 0.9 today | 0.9 | the rule looks further ahead; at 0.5 it releases more |
-| $\pi$, $\pi^{*}$ | a rule giving the release at each level; the best rule | `[0, 0, 1, 1, 2]` for levels 0 to 4 | — |
-| $Q(s, a)$ | the learned table entry: the running estimate of $Q^{*}(s, a)$ | 711.28 for level 2, release 1 | — |
-| $Q^{*}(s, a)$, $e$ | the true value of doing $a$ at $s$, then playing best; $e$, the table's largest gap from it | 720.69 for level 2, release 1; $e$ = 30.36 after 20,000 months | — |
-| $\alpha_n$, $n$, $m_n$, $x_n$ | step size, and the number of visits to the cell; in Step 3, the mean of the first $n$ targets, and the $n$-th target | 10/(9 + n): 1, then 0.909, … | faster reaction, more noise |
-| $\varepsilon$ | exploration rate: the chance of a random release | 10% | a trade: too low and the table locks in wrong values; too high and money is lost while learning |
-| $\delta$ | the TD error: target minus current estimate | −64.07, 7.93 or 53.49 at $Q^{*}$ | — |
-| $V^{\pi}(s)$, $V^{*}(s)$ | value of following rule $\pi$ from level $s$; the best value, the largest $Q^{*}(s, a)$ in the row | 601.09 at level 2 for "release 1 if you can"; 720.69 for the best rule | — |
+| $`s`$, $`s'`$ | water level now, and at the end of the month | 2 units (20 million m³), then 1, 2 or 3 | more water is worth more: best value 533.20 when empty, 811.31 when full |
+| $`a`$, $`a'`$ | the release: the action chosen; $`a'`$, a release allowed at the new level | 1 unit at level 2 | — |
+| $`w`$, $`p(w)`$ | the month's rain and its chance | 0, 1, 2 units at 30%, 40%, 30% | — |
+| $`r`$ | the month's money: revenue minus spill and empty penalties | £80k for releasing 1 unit | — |
+| $`\gamma`$ | the discount: next month's pound is worth 0.9 today | 0.9 | the rule looks further ahead; at 0.5 it releases more |
+| $`\pi`$, $`\pi^{*}`$ | a rule giving the release at each level; the best rule | `[0, 0, 1, 1, 2]` for levels 0 to 4 | — |
+| $`Q(s, a)`$ | the learned table entry: the running estimate of $`Q^{*}(s, a)`$ | 711.28 for level 2, release 1 | — |
+| $`Q^{*}(s, a)`$, $`e`$ | the true value of doing $`a`$ at $`s`$, then playing best; $`e`$, the table's largest gap from it | 720.69 for level 2, release 1; $`e`$ = 30.36 after 20,000 months | — |
+| $`\alpha_n`$, $`n`$, $`m_n`$, $`x_n`$ | step size, and the number of visits to the cell; in Step 3, the mean of the first $`n`$ targets, and the $`n`$-th target | 10/(9 + n): 1, then 0.909, … | faster reaction, more noise |
+| $`\varepsilon`$ | exploration rate: the chance of a random release | 10% | a trade: too low and the table locks in wrong values; too high and money is lost while learning |
+| $`\delta`$ | the TD error: target minus current estimate | −64.07, 7.93 or 53.49 at $`Q^{*}`$ | — |
+| $`V^{\pi}(s)`$, $`V^{*}(s)`$ | value of following rule $`\pi`$ from level $`s`$; the best value, the largest $`Q^{*}(s, a)`$ in the row | 601.09 at level 2 for "release 1 if you can"; 720.69 for the best rule | — |
 
 ### When it holds
 
 - **The level is the whole state.** The update assumes next month depends only on this month's level and release. If rain followed the seasons, one table cell would average wet and dry months, and the learned rule would suit neither.
 - **Every pair is tried again and again.** A cell that is never revisited keeps its first, possibly unlucky, value. With no exploring, the code's table ends £789.38k wrong in one cell and picks the wrong release at two levels.
-- **Steps shrink, but not too fast.** The steps for each cell must add up to infinity (so the table can travel any distance) while their squares add up to a finite number (so the noise dies out). A constant step never stops jittering. The plain average, $\alpha_n = 1/n$, meets both conditions but is so slow here that after 20,000 months the table is still £363.28k out.
-- **Discount below 1, money bounded.** At $\gamma = 1$ the Bellman operator (one sweep of value iteration) no longer shrinks distances ([The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md)), and the guarantee goes.
+- **Steps shrink, but not too fast.** The steps for each cell must add up to infinity (so the table can travel any distance) while their squares add up to a finite number (so the noise dies out). A constant step never stops jittering. The plain average, $`\alpha_n = 1/n`$, meets both conditions but is so slow here that after 20,000 months the table is still £363.28k out.
+- **Discount below 1, money bounded.** At $`\gamma = 1`$ the Bellman operator (one sweep of value iteration) no longer shrinks distances ([The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md)), and the guarantee goes.
 - **The table fits in memory.** Here it has 12 cells. A problem with millions of states needs a fitted function in place of the table, and then the convergence theorem no longer applies.
 
 ---
@@ -86,52 +90,56 @@ The step size used throughout is $\alpha_n = 10/(9 + n)$, where $n$ counts the v
 
 ### Step 0: a value is an average, and averages can be learned by sampling
 
-The true value $Q^{*}(2, 1)$ is an average over the rain: each kind of month weighted by its chance. An average can be estimated without knowing the chances, by collecting many samples and averaging them ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)). Q-learning applies that idea to the Bellman equation. The single twist is that each sample contains the table itself.
+The true value $`Q^{*}(2, 1)`$ is an average over the rain: each kind of month weighted by its chance. An average can be estimated without knowing the chances, by collecting many samples and averaging them ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)). Q-learning applies that idea to the Bellman equation. The single twist is that each sample contains the table itself.
 
 ### Step 1: the Bellman equation, written for Q
 
-[Value and policy iteration](03-value-and-policy-iteration.md) finds the best values $V^{*}(s)$ from the model. Write the same equation one action at a time. Doing $a$ at $s$ earns this month's money, then lands at $s'$, where the best you can do is $\max_{a'} Q^{*}(s', a')$:
+[Value and policy iteration](03-value-and-policy-iteration.md) finds the best values $`V^{*}(s)`$ from the model. Write the same equation one action at a time. Doing $`a`$ at $`s`$ earns this month's money, then lands at $`s'`$, where the best you can do is $`\max_{a'} Q^{*}(s', a')`$:
 
-$$Q^{*}(s, a) = \sum_{w} p(w)\,\Big[\, r(s, a, w) + \gamma \max_{a'} Q^{*}(s', a') \Big]$$
+```math
+Q^{*}(s, a) = \sum_{w} p(w)\,\Big[\, r(s, a, w) + \gamma \max_{a'} Q^{*}(s', a') \Big]
+```
 
-Here $r(s, a, w)$ is the money in a month with rain $w$. The best rule reads straight off the table: at each level, pick the release with the largest $Q^{*}$. That is why the method learns Q and not V. Choosing the best action from V needs the chances, $\sum_w p(w)[\dots]$, in every decision. Choosing from Q needs only a comparison along one row.
+Here $`r(s, a, w)`$ is the money in a month with rain $`w`$. The best rule reads straight off the table: at each level, pick the release with the largest $`Q^{*}`$. That is why the method learns Q and not V. Choosing the best action from V needs the chances, $`\sum_w p(w)[\dots]`$, in every decision. Choosing from Q needs only a comparison along one row.
 
 ### Step 2: at the true values, the TD error averages to zero
 
-Put $Q^{*}$ into the target. The target becomes one sample from inside the sum of Step 1, so its average is $Q^{*}(s, a)$ itself. At level 2 with a release of 1 unit, the three kinds of month give TD errors of −64.07, +7.93 and +53.49 (worked below), and weighted by 30%, 40% and 30% they cancel. So $Q^{*}$ is the one table where the updates stop pushing on average. Any other table gets pushed.
+Put $`Q^{*}`$ into the target. The target becomes one sample from inside the sum of Step 1, so its average is $`Q^{*}(s, a)`$ itself. At level 2 with a release of 1 unit, the three kinds of month give TD errors of −64.07, +7.93 and +53.49 (worked below), and weighted by 30%, 40% and 30% they cancel. So $`Q^{*}`$ is the one table where the updates stop pushing on average. Any other table gets pushed.
 
 ### Step 3: the update is a running average
 
-With $\alpha_n = 1/n$ the update is exactly the running mean. If $m_{n-1}$ is the mean of the first $n - 1$ targets $x_1, \dots, x_{n-1}$, then
+With $`\alpha_n = 1/n`$ the update is exactly the running mean. If $`m_{n-1}`$ is the mean of the first $`n - 1`$ targets $`x_1, \dots, x_{n-1}`$, then
 
-$$m_{n-1} + \tfrac{1}{n}\,(x_n - m_{n-1}) = \tfrac{1}{n}\,\big((n-1)\,m_{n-1} + x_n\big) = m_n .$$
+```math
+m_{n-1} + \tfrac{1}{n}\,(x_n - m_{n-1}) = \tfrac{1}{n}\,\big((n-1)\,m_{n-1} + x_n\big) = m_n .
+```
 
 If the targets were fresh draws from a fixed law, the law of large numbers would finish the proof. They are not fixed: each target uses the current table, which is still wrong.
 
-Two facts rescue the method. The Bellman operator shrinks the table's largest error by the factor $\gamma = 0.9$ ([The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md)), so targets built from a table that is $e$ out are on average at most $0.9e$ out. The noise, meanwhile, is averaged away by the shrinking steps. Error contracts, noise averages, and the two together drive the table to $Q^{*}$.
+Two facts rescue the method. The Bellman operator shrinks the table's largest error by the factor $`\gamma = 0.9`$ ([The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md)), so targets built from a table that is $`e`$ out are on average at most $`0.9e`$ out. The noise, meanwhile, is averaged away by the shrinking steps. Error contracts, noise averages, and the two together drive the table to $`Q^{*}`$.
 
 ### Step 4: the convergence theorem, stated
 
 The theorem (Watkins and Dayan, 1992; Tsitsiklis, 1994; Jaakkola, Jordan and Singh, 1994) is stated here and not proved. Suppose:
 
 - the states and actions are finite, and the money each month is bounded;
-- $\gamma < 1$;
-- every pair $(s, a)$ is updated infinitely often;
-- for each pair, the steps satisfy $\sum_n \alpha_n = \infty$ and $\sum_n \alpha_n^2 < \infty$.
+- $`\gamma < 1`$;
+- every pair $`(s, a)`$ is updated infinitely often;
+- for each pair, the steps satisfy $`\sum_n \alpha_n = \infty`$ and $`\sum_n \alpha_n^2 < \infty`$.
 
-Then the table converges to $Q^{*}$ with probability 1, whatever the starting table. The step conditions are those of the Robbins–Monro method for finding where an average is zero (1951). The card's $\alpha_n = 10/(9 + n)$ meets them: it shrinks like $10/n$, whose sum grows like a logarithm without limit, while the sum of its squares stays finite.
+Then the table converges to $`Q^{*}`$ with probability 1, whatever the starting table. The step conditions are those of the Robbins–Monro method for finding where an average is zero (1951). The card's $`\alpha_n = 10/(9 + n)`$ meets them: it shrinks like $`10/n`$, whose sum grows like a logarithm without limit, while the sum of its squares stays finite.
 
 The theorem promises nothing about speed. The code therefore prints the error at six checkpoints. And it says nothing about how the actions are chosen, only that every pair keeps being tried.
 
 ### Step 5: exploring, and learning one rule while following another
 
-The target always uses the best next action, $\max_{a'}$, whatever the operator actually does next month. So the table learns the values of the best rule, even while the operator behaves differently. This is called **off-policy** learning. It means the operator is free to explore. The rule used here is **ε-greedy**: in 90% of months take the greedy release, the one with the largest Q, and in 10% take a random allowed release. Every pair keeps being tried, which is the third condition of Step 4.
+The target always uses the best next action, $`\max_{a'}`$, whatever the operator actually does next month. So the table learns the values of the best rule, even while the operator behaves differently. This is called **off-policy** learning. It means the operator is free to explore. The rule used here is **ε-greedy**: in 90% of months take the greedy release, the one with the largest Q, and in 10% take a random allowed release. Every pair keeps being tried, which is the third condition of Step 4.
 
 Exploring has a cost, paid in money while learning. Exploiting (using the current best guess) has a cost too: wrong guesses are never corrected. The table at the end of "How the table fills in, month by month" puts numbers on both.
 
 ### Step 6: TD(0) is the same idea for a fixed rule
 
-Fix a rule $\pi$ and drop the max. The value of following $\pi$ solves $V^{\pi}(s) = \sum_w p(w)\,[\,r + \gamma V^{\pi}(s')\,]$, which is five linear equations in five unknowns. TD(0) samples it, exactly as Q-learning samples Step 1. The code judges the rule "release 1 unit whenever you can" both ways. Solving the equations by elimination gives 601.09 at level 2. TD(0) gives 609.00 after 20,000 months, and the worst gap over the five levels is 14.50.
+Fix a rule $`\pi`$ and drop the max. The value of following $`\pi`$ solves $`V^{\pi}(s) = \sum_w p(w)\,[\,r + \gamma V^{\pi}(s')\,]`$, which is five linear equations in five unknowns. TD(0) samples it, exactly as Q-learning samples Step 1. The code judges the rule "release 1 unit whenever you can" both ways. Solving the equations by elimination gives 601.09 at level 2. TD(0) gives 609.00 after 20,000 months, and the worst gap over the five levels is 14.50.
 
 ---
 
@@ -149,15 +157,15 @@ The table at the true values, level 2, release 1 unit. Each kind of month earns 
 
 Starting at 20 million m³, releasing 10 million m³ this month and playing the best rule afterwards is worth £720.69k in today's money. Holding is worth only 691.31, and releasing 20 million m³ only 653.20.
 
-One real update from the learning run. In month 2 the reservoir was full, the table was all zeros, and the greedy choice was to hold. One unit of rain spilled: $r = -100$. Target $= -100 + 0.9 \times 0 = -100$. First visit, so $\alpha = 1$, and $Q(4, 0)$ became −100.00.
+One real update from the learning run. In month 2 the reservoir was full, the table was all zeros, and the greedy choice was to hold. One unit of rain spilled: $`r = -100`$. Target $`= -100 + 0.9 \times 0 = -100`$. First visit, so $`\alpha = 1`$, and $`Q(4, 0)`$ became −100.00.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Never explore ($\varepsilon = 0$) | rule `[0, 0, 0, 0, 2]`, wrong at levels 2 and 3; worst cell £789.38k out | Whichever release paid first at a level is never challenged, so the untried ones stay at 0 |
-| Plain average, $\alpha_n = 1/n$ | worst cell still £363.28k out after 20,000 months | Early targets, built on an all-zero table, keep weight $1/n$ forever and are forgotten too slowly |
-| Drop the future: target $= r$ only | rule `[0, 1, 2, 2, 2]`, worth £372.00k from level 2 against £720.69k | It learns this month's money and drains the reservoir, then pays the £120k empty penalty again and again |
+| Never explore ($`\varepsilon = 0`$) | rule `[0, 0, 0, 0, 2]`, wrong at levels 2 and 3; worst cell £789.38k out | Whichever release paid first at a level is never challenged, so the untried ones stay at 0 |
+| Plain average, $`\alpha_n = 1/n`$ | worst cell still £363.28k out after 20,000 months | Early targets, built on an all-zero table, keep weight $`1/n`$ forever and are forgotten too slowly |
+| Drop the future: target $`= r`$ only | rule `[0, 1, 2, 2, 2]`, worth £372.00k from level 2 against £720.69k | It learns this month's money and drains the reservoir, then pays the £120k empty penalty again and again |
 
 The first row is the hypothesis "every pair tried infinitely often" failing. The second satisfies the theorem and still fails in practice: a guarantee of convergence is not a guarantee of speed.
 
@@ -180,7 +188,7 @@ The puzzle: the table starts at zero, and each month changes only one of its 12 
 
 Ties go to the smaller release, so at first the greedy operator holds. A spill in month 2 makes holding at full look bad. A smaller spill in month 3 makes releasing 1 unit look bad too, at −20. Month 4 releases 2 units and earns £120k.
 
-From then on, release 2 is the greedy choice at full, and the −20 for release 1 sticks until exploring revisits it. That single unlucky month is the £789.38k error in the no-exploring run: there $Q(4, 1)$ stays at −20 against a true 769.38.
+From then on, release 2 is the greedy choice at full, and the −20 for release 1 sticks until exploring revisits it. That single unlucky month is the £789.38k error in the no-exploring run: there $`Q(4, 1)`$ stays at −20 against a true 769.38.
 
 ### Where the 20,000 months went
 
@@ -236,7 +244,7 @@ Never exploring is the worst of both worlds: the operator earns little and learn
 
 The code builds the reservoir model and takes four roads.
 
-- Road 1 is value iteration on the known model; it gives $Q^{*}$ and its Bellman residual, the largest amount by which $Q^{*}$ misses the equation of Step 1.
+- Road 1 is value iteration on the known model; it gives $`Q^{*}`$ and its Bellman residual, the largest amount by which $`Q^{*}`$ misses the equation of Step 1.
 - Road 2 lists all 54 rules, solves each one's five linear equations by elimination, and confirms that one rule is best at every level and matches road 1: that is the certificate of optimality.
 - Road 3 is Q-learning on 20,000 simulated months. It never reads the chances of rain, only the simulator's draws, and it must find the same rule.
 - Road 4 is TD(0) on the rule "release 1 if you can", checked against road 2's exact solve.
@@ -842,8 +850,8 @@ example : 202 + 3459 + 228 + 273 + 6617 + 257 + 242 + 4854 + 1411 + 77 + 90 + 22
 > **Try changing**
 > - Guess first: with exploring at 30% instead of 10%, is the table more or less accurate, and does the operator earn more or less? The `explore 30%` line says: worst error 8.47 against 30.36, but £62.96k a month against £68.81k.
 > - Guess first: does the 20,000-month result depend on the luck of seed 1? The `seeds 2 and 3` line reruns it: worst errors 36.19 and 15.92, the same size as seed 1's 30.36.
-> - Guess first: if the operator cared less about the future, $\gamma = 0.5$, would it release more or less? More: the best rule becomes `[0, 1, 1, 2, 2]`. At $\gamma = 0.99$ it stays `[0, 0, 1, 1, 2]`.
-> - Guess first: set `c=0` in the main `learn` call, which switches to the plain average $1/n$. The worst error is 363.28 after 20,000 months, and the assert on road 3 stops the program.
+> - Guess first: if the operator cared less about the future, $`\gamma = 0.5`$, would it release more or less? More: the best rule becomes `[0, 1, 1, 2, 2]`. At $`\gamma = 0.99`$ it stays `[0, 0, 1, 1, 2]`.
+> - Guess first: set `c=0` in the main `learn` call, which switches to the plain average $`1/n`$. The worst error is 363.28 after 20,000 months, and the assert on road 3 stops the program.
 
 ---
 
@@ -853,7 +861,7 @@ example : 202 + 3459 + 228 + 273 + 6617 + 257 + 242 + 4854 + 1411 + 77 + 90 + 22
 > **Trusting the greedy choice from day one.** A table that starts at zero and always takes its current best release locks in whatever paid first. In the code, holding at level 2 was tried first and its value turned positive, so the releases there, still at zero, were never tried. The run ends holding water at 20 and 30 million m³, the worst cell £789.38k out, and earns £42.74k a month against the best rule's £74.00k. Learning needs exploring, because the table can only correct the cells it visits.
 >
 > - **Dropping the future from the target.** Using only this month's money learns a rule that drains the reservoir, `[0, 1, 2, 2, 2]`, worth £372.00k from level 2 against £720.69k.
-> - **Reading "converges" as "converges fast".** The plain average $1/n$ satisfies the theorem and is still £363.28k out after 20,000 months.
+> - **Reading "converges" as "converges fast".** The plain average $`1/n`$ satisfies the theorem and is still £363.28k out after 20,000 months.
 > - **Judging the table by its worst cell.** Rarely tried cells, like level 4 with release 1 (90 visits), stay rough longest. The decision needs only the right ordering in each row, and the best rule's own cells were within £9.40k.
 > - **Calling the learned rule optimal on its own evidence.** Learning gives the best rule found. Here it is certified only because road 2 checked all 54 rules against the full model, which a real operator without the model cannot do.
 
@@ -864,7 +872,7 @@ example : 202 + 3459 + 228 + 273 + 6617 + 257 + 242 + 4854 + 1411 + 77 + 90 + 22
 - **Reservoirs, batteries and storage.** Where a simulator of inflows or prices exists but its probabilities are not written down, the same update learns a release or charge rule from simulated months, as this card does.
 - **Board games.** A backgammon program trained only by temporal differences, playing against itself, came close to the best human players in the early 1990s.
 - **Video games from the screen.** Q-learning with a neural network in place of the table learned dozens of classic arcade games from raw pixels in 2015. The table had to go, because the screens have far too many states.
-- **The brain's reward signal.** Dopamine neurons in monkeys fire in a pattern that matches the TD error $\delta$: a burst for an unexpected reward, and a dip when an expected one fails to come.
+- **The brain's reward signal.** Dopamine neurons in monkeys fire in a pattern that matches the TD error $`\delta`$: a burst for an unexpected reward, and a dip when an expected one fails to come.
 - **Lifts and traffic lights.** Dispatching a bank of lifts, or timing a junction, has been learned this way from simulated traffic.
 
 > **Say it back**
@@ -895,4 +903,4 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Sutton, R. S. "Learning to predict by the methods of temporal differences." *Machine Learning* 3 (1988), 9–44. [doi:10.1007/BF00115009](https://doi.org/10.1007/BF00115009). The TD error and TD(0), used here as road 4.
 - Tsitsiklis, J. N. "Asynchronous stochastic approximation and Q-learning." *Machine Learning* 16 (1994), 185–202. [doi:10.1007/BF00993306](https://doi.org/10.1007/BF00993306). The convergence theorem in the form stated in Step 4, through the contraction of the Bellman operator.
 - Jaakkola, T., Jordan, M. I. and Singh, S. P. "On the convergence of stochastic iterative dynamic programming algorithms." *Neural Computation* 6, no. 6 (1994), 1185–1201. [doi:10.1162/neco.1994.6.6.1185](https://doi.org/10.1162/neco.1994.6.6.1185). An independent proof of the same theorem for Q-learning and TD.
-- Robbins, H. and Monro, S. "A stochastic approximation method." *Annals of Mathematical Statistics* 22, no. 3 (1951), 400–407. [doi:10.1214/aoms/1177729586](https://doi.org/10.1214/aoms/1177729586). The step-size conditions, $\sum \alpha_n = \infty$ and $\sum \alpha_n^2 < \infty$, for finding where an average is zero from noisy samples.
+- Robbins, H. and Monro, S. "A stochastic approximation method." *Annals of Mathematical Statistics* 22, no. 3 (1951), 400–407. [doi:10.1214/aoms/1177729586](https://doi.org/10.1214/aoms/1177729586). The step-size conditions, $`\sum \alpha_n = \infty`$ and $`\sum \alpha_n^2 < \infty`$, for finding where an average is zero from noisy samples.

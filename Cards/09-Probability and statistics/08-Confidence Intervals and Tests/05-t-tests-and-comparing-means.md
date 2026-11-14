@@ -26,54 +26,62 @@ Each circle is one patient: pressure before across, after up, both to the same s
 
 ## The formula
 
-Notation first, in words. Write $n$ for the number of patients and $d_i$ for patient i's drop, before minus after. A bar means an average: $\bar d$ is the average drop. The spread of the drops, their standard deviation estimated from the sample with n − 1 in the divisor as on [Confidence intervals](01-confidence-intervals.md), is $s_d$. The true mean drop of every patient who could take the drug is $\mu_d$ (mu), fixed and unknown. The claim under test, the **null hypothesis** of [Hypothesis tests](03-hypothesis-tests-and-p-values.md), says $\mu_d$ equals a stated number $\mu_0$ (mu-nought): 0 for "no average change".
+Notation first, in words. Write $`n`$ for the number of patients and $`d_i`$ for patient i's drop, before minus after. A bar means an average: $`\bar d`$ is the average drop. The spread of the drops, their standard deviation estimated from the sample with n − 1 in the divisor as on [Confidence intervals](01-confidence-intervals.md), is $`s_d`$. The true mean drop of every patient who could take the drug is $`\mu_d`$ (mu), fixed and unknown. The claim under test, the **null hypothesis** of [Hypothesis tests](03-hypothesis-tests-and-p-values.md), says $`\mu_d`$ equals a stated number $`\mu_0`$ (mu-nought): 0 for "no average change".
 
 **One sample and paired.** The paired test is the one-sample test run on the differences:
 
-$$T = \frac{\bar d - \mu_0}{s_d/\sqrt n}, \qquad \text{degrees of freedom } n - 1$$
+```math
+T = \frac{\bar d - \mu_0}{s_d/\sqrt n}, \qquad \text{degrees of freedom } n - 1
+```
 
 **Read it aloud:** the average drop's distance from the claimed value, counted in standard errors of the average.
 
-**Two samples.** Group 1 (men) has $n_1$ patients, average $\bar x_1$ and spread $s_1$; group 2 (women) has $n_2$, $\bar x_2$ and $s_2$. Welch's statistic, the default:
+**Two samples.** Group 1 (men) has $`n_1`$ patients, average $`\bar x_1`$ and spread $`s_1`$; group 2 (women) has $`n_2`$, $`\bar x_2`$ and $`s_2`$. Welch's statistic, the default:
 
-$$T_W = \frac{\bar x_1 - \bar x_2}{\sqrt{s_1^2/n_1 + s_2^2/n_2}}, \qquad \nu = \frac{\left(s_1^2/n_1 + s_2^2/n_2\right)^2}{\dfrac{(s_1^2/n_1)^2}{n_1 - 1} + \dfrac{(s_2^2/n_2)^2}{n_2 - 1}}$$
+```math
+T_W = \frac{\bar x_1 - \bar x_2}{\sqrt{s_1^2/n_1 + s_2^2/n_2}}, \qquad \nu = \frac{\left(s_1^2/n_1 + s_2^2/n_2\right)^2}{\dfrac{(s_1^2/n_1)^2}{n_1 - 1} + \dfrac{(s_2^2/n_2)^2}{n_2 - 1}}
+```
 
-**Read it aloud:** the gap between the two averages over the root of the two squared standard errors added, looked up in the t law with $\nu$ (nu) degrees of freedom, a number the data choose.
+**Read it aloud:** the gap between the two averages over the root of the two squared standard errors added, looked up in the t law with $`\nu`$ (nu) degrees of freedom, a number the data choose.
 
-The older **pooled** test assumes the two groups share one spread and estimates it by $s_p$, a weighted blend of the two:
+The older **pooled** test assumes the two groups share one spread and estimates it by $`s_p`$, a weighted blend of the two:
 
-$$s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}, \qquad T_P = \frac{\bar x_1 - \bar x_2}{s_p\sqrt{1/n_1 + 1/n_2}}, \qquad \text{degrees of freedom } n_1 + n_2 - 2$$
+```math
+s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}, \qquad T_P = \frac{\bar x_1 - \bar x_2}{s_p\sqrt{1/n_1 + 1/n_2}}, \qquad \text{degrees of freedom } n_1 + n_2 - 2
+```
 
 **The p-value**, two-sided: the chance under the claim of a ratio at least this far from 0 either way:
 
-$$p = 2\,\bigl(1 - F_{\nu}(|t|)\bigr)$$
+```math
+p = 2\,\bigl(1 - F_{\nu}(|t|)\bigr)
+```
 
-where $F_\nu$ is the t law's cumulative area with $\nu$ degrees of freedom and $t$ is the observed ratio.
+where $`F_\nu`$ is the t law's cumulative area with $`\nu`$ degrees of freedom and $`t`$ is the observed ratio.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of patients, or pairs | 30 | shrinks the standard error like 1/√n |
-| $d_i$ | patient i's drop, before minus after | 7, 2, 14, −3, −18, … mmHg | moves the average |
-| $\bar d$ | average drop | 6.0 mmHg | pushes $T$ up |
-| $s_d$ | spread of the drops, estimating their true spread σ | 8.1621 mmHg | pulls $T$ down |
-| $\mu_d$, $\mu_0$ | true mean drop over all patients (fixed, unknown); the value claimed for it | unknown; 0, or the maker's 10 | a higher claim moves $T$ down |
-| $T$, $t$, $T_W$, $T_P$ | the ratio before the data arrive; its value on these data; Welch's and the pooled two-sample ratios | 4.0263; 0.6646 for both two-sample ratios | further from 0 lowers the p-value |
-| $n_1$, $n_2$ | sizes of the two groups | 15 men, 15 women | shrink the standard error |
-| $\bar x_1$, $\bar x_2$ | the two groups' average drops | 7.0 and 5.0 mmHg | their gap drives $T_W$ |
-| $s_1$, $s_2$ | the two groups' spreads | 6.4918 and 9.6806 mmHg | pull $T_W$ down |
-| $s_p$ | pooled spread, assuming one shared spread | root of the blend above | pulls $T_P$ down |
-| $r$ | correlation of before with after, from −1 to 1 | 0.8723 | shrinks the spread of the drops |
-| $\nu$ | degrees of freedom of the t law used | 29 paired; 24.4735 Welch | thins the tails toward the bell's |
-| $F_\nu$ | the t law's cumulative area left of a point | p = 0.000372 at $t$ = 4.0263, $\nu$ = 29 | — |
-| $\alpha$, $t^*$ | chosen false-alarm rate; the t law's cutoff with α/2 beyond it | 0.05; 2.045230 | larger α: smaller $t^*$, narrower interval |
-| $s_{\text{before}}$, $s_{\text{after}}$ | spreads of the before and after columns | 14.2444 and 16.6797 mmHg | widen the unpaired standard error |
-| $\sigma$; $\sigma_1$, $\sigma_2$ | true spreads, unknown: of the drops; of the two groups | estimated by 8.1621; by 6.4918 and 9.6806 | widen every standard error |
-| $Z$, $V$ | in the proof: the average in units of its true standard error; $(n-1)S^2/\sigma^2$ | standard normal; chi-square, 29 degrees of freedom | — |
-| $D_i$, $\bar D$, $S$, $\bar X_k$, $S_k$, $S_p$, $n_k$ | in the proof: capital letters for drops, averages and spreads before the data arrive, k for the group | random versions of $d_i$, $\bar d$, $s_d$, … | — |
+| $`n`$ | number of patients, or pairs | 30 | shrinks the standard error like 1/√n |
+| $`d_i`$ | patient i's drop, before minus after | 7, 2, 14, −3, −18, … mmHg | moves the average |
+| $`\bar d`$ | average drop | 6.0 mmHg | pushes $`T`$ up |
+| $`s_d`$ | spread of the drops, estimating their true spread σ | 8.1621 mmHg | pulls $`T`$ down |
+| $`\mu_d`$, $`\mu_0`$ | true mean drop over all patients (fixed, unknown); the value claimed for it | unknown; 0, or the maker's 10 | a higher claim moves $`T`$ down |
+| $`T`$, $`t`$, $`T_W`$, $`T_P`$ | the ratio before the data arrive; its value on these data; Welch's and the pooled two-sample ratios | 4.0263; 0.6646 for both two-sample ratios | further from 0 lowers the p-value |
+| $`n_1`$, $`n_2`$ | sizes of the two groups | 15 men, 15 women | shrink the standard error |
+| $`\bar x_1`$, $`\bar x_2`$ | the two groups' average drops | 7.0 and 5.0 mmHg | their gap drives $`T_W`$ |
+| $`s_1`$, $`s_2`$ | the two groups' spreads | 6.4918 and 9.6806 mmHg | pull $`T_W`$ down |
+| $`s_p`$ | pooled spread, assuming one shared spread | root of the blend above | pulls $`T_P`$ down |
+| $`r`$ | correlation of before with after, from −1 to 1 | 0.8723 | shrinks the spread of the drops |
+| $`\nu`$ | degrees of freedom of the t law used | 29 paired; 24.4735 Welch | thins the tails toward the bell's |
+| $`F_\nu`$ | the t law's cumulative area left of a point | p = 0.000372 at $`t`$ = 4.0263, $`\nu`$ = 29 | — |
+| $`\alpha`$, $`t^*`$ | chosen false-alarm rate; the t law's cutoff with α/2 beyond it | 0.05; 2.045230 | larger α: smaller $`t^*`$, narrower interval |
+| $`s_{\text{before}}`$, $`s_{\text{after}}`$ | spreads of the before and after columns | 14.2444 and 16.6797 mmHg | widen the unpaired standard error |
+| $`\sigma`$; $`\sigma_1`$, $`\sigma_2`$ | true spreads, unknown: of the drops; of the two groups | estimated by 8.1621; by 6.4918 and 9.6806 | widen every standard error |
+| $`Z`$, $`V`$ | in the proof: the average in units of its true standard error; $`(n-1)S^2/\sigma^2`$ | standard normal; chi-square, 29 degrees of freedom | — |
+| $`D_i`$, $`\bar D`$, $`S`$, $`\bar X_k`$, $`S_k`$, $`S_p`$, $`n_k`$ | in the proof: capital letters for drops, averages and spreads before the data arrive, k for the group | random versions of $`d_i`$, $`\bar d`$, $`s_d`$, … | — |
 
 ### When it holds
 
-- **Independent patients.** Thirty readings from one clinic's faulty cuff act like fewer than thirty: the true standard error exceeds $s_d/\sqrt n$ and the p-value comes out too small.
+- **Independent patients.** Thirty readings from one clinic's faulty cuff act like fewer than thirty: the true standard error exceeds $`s_d/\sqrt n`$ and the p-value comes out too small.
 - **The right shape for the data.** Two readings on one patient are tied together: here the before and after readings have correlation 0.8723. Analysed as two unrelated groups, the p-value rises from 0.000372 to 0.139621.
 - **Normal readings, or enough of them.** The exact 5 percent needs normal differences (paired) or normal groups (two-sample). With thirty patients the [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md) (an average of many independent readings is close to normal) makes the test close to right for most shapes. The far tail, where p is below 0.001, leans on normality hardest: an exact sign-flip test with no normal assumption gives 0.000543 here, against the t test's 0.000372.
 - **Equal spreads, only for the pooled test.** With 5 patients spread 24 mmHg against 25 spread 8, the pooled test raises false alarms about 29 times in 100 at the 5 percent level (simulated, ± 0.7). Welch's test keeps about 5.6 in 100 (± 0.4).
@@ -89,42 +97,46 @@ Whether a 6 mmHg drop is large depends on the unknown spread of drops: ordinary 
 
 ### Step 1: the one-sample ratio follows the t law
 
-Suppose the drops are independent draws from one normal law with mean $\mu_d$ and spread σ (sigma). Three facts are proved on [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md). The average $\bar d$ is normal, centred at $\mu_d$, with spread $\sigma/\sqrt n$. The scaled spread $(n-1)s_d^2/\sigma^2$ follows the chi-square law with n − 1 degrees of freedom. The two are independent. A standard normal divided by the root of an independent chi-square over its degrees of freedom is t. Here σ cancels:
+Suppose the drops are independent draws from one normal law with mean $`\mu_d`$ and spread σ (sigma). Three facts are proved on [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md). The average $`\bar d`$ is normal, centred at $`\mu_d`$, with spread $`\sigma/\sqrt n`$. The scaled spread $`(n-1)s_d^2/\sigma^2`$ follows the chi-square law with n − 1 degrees of freedom. The two are independent. A standard normal divided by the root of an independent chi-square over its degrees of freedom is t. Here σ cancels:
 
-$$T = \frac{(\bar d - \mu_d)/(\sigma/\sqrt n)}{\sqrt{s_d^2/\sigma^2}} = \frac{\bar d - \mu_d}{s_d/\sqrt n}$$
+```math
+T = \frac{(\bar d - \mu_d)/(\sigma/\sqrt n)}{\sqrt{s_d^2/\sigma^2}} = \frac{\bar d - \mu_d}{s_d/\sqrt n}
+```
 
-So when the claim $\mu_d = \mu_0$ holds, $T$ follows the t law with n − 1 degrees of freedom. Here $T$ = 6.0 / 1.4902 = 4.0263 with 29 degrees of freedom, and the t law puts 0.000372 of its area beyond ±4.0263. If the true average change were zero, a ratio this far out would turn up in about 4 samples in 10,000.
+So when the claim $`\mu_d = \mu_0`$ holds, $`T`$ follows the t law with n − 1 degrees of freedom. Here $`T`$ = 6.0 / 1.4902 = 4.0263 with 29 degrees of freedom, and the t law puts 0.000372 of its area beyond ±4.0263. If the true average change were zero, a ratio this far out would turn up in about 4 samples in 10,000.
 
-The same ratio tests any claim. The maker says the mean drop is 10 mmHg. Then $T$ = (6.0 − 10)/1.4902 = −2.6842 and p = 0.011890: these patients do not support a mean drop of 10.
+The same ratio tests any claim. The maker says the mean drop is 10 mmHg. Then $`T`$ = (6.0 − 10)/1.4902 = −2.6842 and p = 0.011890: these patients do not support a mean drop of 10.
 
 ### Step 2: pairing cancels what the patients share
 
 Each reading carries the patient's own level, high for one and low for another, plus the day's wobble. Subtracting after from before removes the patient's level. The spread of a difference obeys
 
-$$s_d^2 = s_{\text{before}}^2 + s_{\text{after}}^2 - 2\,r\,s_{\text{before}}\,s_{\text{after}}$$
+```math
+s_d^2 = s_{\text{before}}^2 + s_{\text{after}}^2 - 2\,r\,s_{\text{before}}\,s_{\text{after}}
+```
 
-where $r$ is the correlation of the two columns, a number from −1 to 1 measuring how closely they rise and fall together. Here the before readings spread 14.2444 mmHg and the after readings 16.6797, and r = 0.8723. The formula gives 66.6207, which is 8.1621 squared: the spread of the drops, computed straight from them. The −2 r term removes most of the between-patient spread. That is the whole gain from pairing.
+where $`r`$ is the correlation of the two columns, a number from −1 to 1 measuring how closely they rise and fall together. Here the before readings spread 14.2444 mmHg and the after readings 16.6797, and r = 0.8723. The formula gives 66.6207, which is 8.1621 squared: the spread of the drops, computed straight from them. The −2 r term removes most of the between-patient spread. That is the whole gain from pairing.
 
 Ignore the pairing and the standard error of the gap between the two column averages is the root of 14.2444 squared over 30 plus 16.6797 squared over 30: 4.0046 mmHg, not 1.4902. The same 6.0 mmHg gap becomes a ratio of 1.4983 and a p-value of 0.139621.
 
 ### Step 3: two separate groups
 
-Men and women are different patients, so no pairing exists. The estimate is the gap between the groups' average drops, 7.0 − 5.0 = 2.0 mmHg. Averages of independent groups have variances that add, so the gap's standard error is the root of $s_1^2/n_1 + s_2^2/n_2$: 3.0095 mmHg. The ratio is 2.0 / 3.0095 = 0.6646.
+Men and women are different patients, so no pairing exists. The estimate is the gap between the groups' average drops, 7.0 − 5.0 = 2.0 mmHg. Averages of independent groups have variances that add, so the gap's standard error is the root of $`s_1^2/n_1 + s_2^2/n_2`$: 3.0095 mmHg. The ratio is 2.0 / 3.0095 = 0.6646.
 
-Which t law? If both groups share one true spread, the pooled ratio $T_P$ follows the t law with $n_1 + n_2 - 2$ = 28 degrees of freedom exactly (proof below). If the spreads differ, no exact t law exists (the Behrens-Fisher problem). Welch matches the mean and variance of the estimated squared standard error to a scaled chi-square law, which yields the formula for $\nu$. Here the spreads are 6.4918 (men) and 9.6806 (women), $\nu$ = 24.4735, and p = 0.512545; the pooled test gives 0.511768. With equal group sizes the two ratios coincide and only the degrees of freedom differ. A 2 mmHg gap is well within what chance produces with 15 per group.
+Which t law? If both groups share one true spread, the pooled ratio $`T_P`$ follows the t law with $`n_1 + n_2 - 2`$ = 28 degrees of freedom exactly (proof below). If the spreads differ, no exact t law exists (the Behrens-Fisher problem). Welch matches the mean and variance of the estimated squared standard error to a scaled chi-square law, which yields the formula for $`\nu`$. Here the spreads are 6.4918 (men) and 9.6806 (women), $`\nu`$ = 24.4735, and p = 0.512545; the pooled test gives 0.511768. With equal group sizes the two ratios coincide and only the degrees of freedom differ. A 2 mmHg gap is well within what chance produces with 15 per group.
 
 <details>
 <summary>Detailed proof: the one-sample and pooled tests have size exactly α</summary>
 
-Write α (alpha) for the chosen false-alarm rate, such as 0.05; a test's **size** is its actual false-alarm rate when the claim is true. Write $t^*$ for the t law's point with 1 − α/2 of its area to the left.
+Write α (alpha) for the chosen false-alarm rate, such as 0.05; a test's **size** is its actual false-alarm rate when the claim is true. Write $`t^*`$ for the t law's point with 1 − α/2 of its area to the left.
 
-**One sample.** Let $D_1, \dots, D_n$, n ≥ 2, be independent normal with mean $\mu_0$ and spread σ > 0. By the chi-square-t-and-f card, $Z = (\bar D - \mu_0)/(\sigma/\sqrt n)$ is standard normal, $V = (n-1)S^2/\sigma^2$ is chi-square with n − 1 degrees of freedom, and Z and V are independent. Then $T = Z/\sqrt{V/(n-1)}$ follows the t law with n − 1 degrees of freedom, by that card's definition of the t law. The t law is continuous and symmetric, so $P(|T| > t^*) = 2 \cdot \alpha/2 = \alpha$. Nothing in this used σ, so the size is α at every σ > 0.
+**One sample.** Let $`D_1, \dots, D_n`$, n ≥ 2, be independent normal with mean $`\mu_0`$ and spread σ > 0. By the chi-square-t-and-f card, $`Z = (\bar D - \mu_0)/(\sigma/\sqrt n)`$ is standard normal, $`V = (n-1)S^2/\sigma^2`$ is chi-square with n − 1 degrees of freedom, and Z and V are independent. Then $`T = Z/\sqrt{V/(n-1)}`$ follows the t law with n − 1 degrees of freedom, by that card's definition of the t law. The t law is continuous and symmetric, so $`P(|T| > t^*) = 2 \cdot \alpha/2 = \alpha`$. Nothing in this used σ, so the size is α at every σ > 0.
 
-**Pooled two-sample.** Let group 1 be $n_1$ independent normal readings and group 2 be $n_2$ more, independent of group 1, all with one common mean and one common spread σ. The gap $\bar X_1 - \bar X_2$ is normal with mean 0 and variance $\sigma^2(1/n_1 + 1/n_2)$, since variances of independent quantities add. Each group gives $(n_k - 1)S_k^2/\sigma^2$, chi-square with $n_k - 1$ degrees of freedom, independent of its own average and of the other group. A sum of independent chi-squares is chi-square with the degrees of freedom added, so $(n_1 + n_2 - 2)S_p^2/\sigma^2$ is chi-square with $n_1 + n_2 - 2$ degrees of freedom and independent of the gap. Dividing the standardised gap by the root of that chi-square over its degrees of freedom, σ cancels and leaves $T_P$, which is therefore t with $n_1 + n_2 - 2$ degrees of freedom. The size is α by the same symmetry argument.
+**Pooled two-sample.** Let group 1 be $`n_1`$ independent normal readings and group 2 be $`n_2`$ more, independent of group 1, all with one common mean and one common spread σ. The gap $`\bar X_1 - \bar X_2`$ is normal with mean 0 and variance $`\sigma^2(1/n_1 + 1/n_2)`$, since variances of independent quantities add. Each group gives $`(n_k - 1)S_k^2/\sigma^2`$, chi-square with $`n_k - 1`$ degrees of freedom, independent of its own average and of the other group. A sum of independent chi-squares is chi-square with the degrees of freedom added, so $`(n_1 + n_2 - 2)S_p^2/\sigma^2`$ is chi-square with $`n_1 + n_2 - 2`$ degrees of freedom and independent of the gap. Dividing the standardised gap by the root of that chi-square over its degrees of freedom, σ cancels and leaves $`T_P`$, which is therefore t with $`n_1 + n_2 - 2`$ degrees of freedom. The size is α by the same symmetry argument.
 
 **Paired.** When each patient's two readings are jointly normal, their difference is normal, and independent across patients when the patients are. So the paired test is the one-sample test and inherits its exact size.
 
-**Welch.** Write σ1 and σ2 for the two groups' true spreads. When they differ, $s_1^2/n_1 + s_2^2/n_2$ is a weighted sum of two independent chi-squares, not a scaled chi-square. Welch and Satterthwaite replace it by the scaled chi-square with the same mean and variance. Its variance, $2\sigma_1^4/(n_1^2(n_1-1)) + 2\sigma_2^4/(n_2^2(n_2-1))$, matched to $2(\sigma_1^2/n_1 + \sigma_2^2/n_2)^2/\nu$, gives the formula for $\nu$ with the sample spreads put in. The result is an approximation; When it holds gives its simulated size, about 5.6 percent.
+**Welch.** Write σ1 and σ2 for the two groups' true spreads. When they differ, $`s_1^2/n_1 + s_2^2/n_2`$ is a weighted sum of two independent chi-squares, not a scaled chi-square. Welch and Satterthwaite replace it by the scaled chi-square with the same mean and variance. Its variance, $`2\sigma_1^4/(n_1^2(n_1-1)) + 2\sigma_2^4/(n_2^2(n_2-1))`$, matched to $`2(\sigma_1^2/n_1 + \sigma_2^2/n_2)^2/\nu`$, gives the formula for $`\nu`$ with the sample spreads put in. The result is an approximation; When it holds gives its simulated size, about 5.6 percent.
 
 </details>
 
@@ -132,7 +144,7 @@ Write α (alpha) for the chosen false-alarm rate, such as 0.05; a test's **size*
 
 The p-value is the t law's area beyond the observed ratio on both sides: the chance, if the claim were true, of a ratio at least this extreme. It is not the chance that the claim is true.
 
-The test at the 5 percent level rejects a claimed $\mu_0$ exactly when $|T|$ exceeds the cutoff 2.045230, which is exactly when $\mu_0$ lies outside the 95 percent t interval for the mean drop, 6.0 ± 2.045230 × 1.4902, or 2.9522 to 9.0478 mmHg. Zero and ten are outside: both rejected. Any claim from 3 to 9 mmHg survives. The interval says more than the p-value: it gives the size of the drop.
+The test at the 5 percent level rejects a claimed $`\mu_0`$ exactly when $`|T|`$ exceeds the cutoff 2.045230, which is exactly when $`\mu_0`$ lies outside the 95 percent t interval for the mean drop, 6.0 ± 2.045230 × 1.4902, or 2.9522 to 9.0478 mmHg. Zero and ten are outside: both rejected. Any claim from 3 to 9 mmHg survives. The interval says more than the p-value: it gives the size of the drop.
 
 The same ratio says how many patients a repeat trial needs. **Power** is the chance the test catches a real effect of a stated size; [Power](04-power-and-sample-size.md) builds the rule for rates, and the same argument works for averages.
 
@@ -160,11 +172,11 @@ The paired test on the thirty patients:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| drops $d_i$ | before minus after, patient by patient | 7, 2, 14, −3, −18, 13, … |
-| average $\bar d$ | add the thirty drops, divide by 30 | 6.0 mmHg |
-| spread $s_d$ | root of (squared distances from 6.0, added, over 29) | 8.1621 mmHg |
+| drops $`d_i`$ | before minus after, patient by patient | 7, 2, 14, −3, −18, 13, … |
+| average $`\bar d`$ | add the thirty drops, divide by 30 | 6.0 mmHg |
+| spread $`s_d`$ | root of (squared distances from 6.0, added, over 29) | 8.1621 mmHg |
 | standard error | 8.1621 / root of 30 | 1.4902 mmHg |
-| ratio $t$ | (6.0 − 0) / 1.4902 | 4.0263 |
+| ratio $`t`$ | (6.0 − 0) / 1.4902 | 4.0263 |
 | degrees of freedom | 30 − 1 | 29 |
 | p-value | 2 × t-law area beyond 4.0263 | 0.000372 |
 | 95 percent interval | 6.0 ± 2.045230 × 1.4902 | 2.9522 to 9.0478 mmHg |
@@ -597,10 +609,10 @@ The two outputs match line for line, simulations included: both languages draw t
 Lean proves the one-sample and pooled t laws exactly for independent normal readings, and the pairing identity for any two columns.
 
 - Lean builds the t law as the card defines it, from a standard normal and an independent chi-square.
-- Suppose $n \ge 2$ readings are independent and normal, with mean $\mu_0$ and any spread $\sigma > 0$. Then $T$ follows the t law with n − 1 degrees of freedom.
+- Suppose $`n \ge 2`$ readings are independent and normal, with mean $`\mu_0`$ and any spread $`\sigma > 0`$. Then $`T`$ follows the t law with n − 1 degrees of freedom.
 - So the paired test, run on independent normal drops, has that same t law.
-- Suppose two independent groups of normal readings, none empty and 3 or more in all, share one mean and one spread $\sigma > 0$. Then $T_P$ follows the t law with $n_1 + n_2 - 2$ degrees of freedom.
-- Take any two columns measured on the same patients. Then $s_d^2$ is their squared spreads added, minus 2r times the two spreads.
+- Suppose two independent groups of normal readings, none empty and 3 or more in all, share one mean and one spread $`\sigma > 0`$. Then $`T_P`$ follows the t law with $`n_1 + n_2 - 2`$ degrees of freedom.
+- Take any two columns measured on the same patients. Then $`s_d^2`$ is their squared spreads added, minus 2r times the two spreads.
 - The whole numbers hold exactly: the drops, their sum 180, squared distances 1932, the histogram and 25 of 30 below the line.
 - The group sums 75 and 105, the 1,073,741,824 sign patterns and the 155,117,520 splits also check exactly.
 

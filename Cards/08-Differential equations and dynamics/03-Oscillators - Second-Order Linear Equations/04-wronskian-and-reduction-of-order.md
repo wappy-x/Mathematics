@@ -37,36 +37,44 @@ Orange: e^t. Teal: t e^t, crossing zero at 0 s. Dark blue: their Wronskian e^(2t
 
 Reminder: y' is the rate of y, and y'' the rate of that rate. A second-order linear equation in **standard form** has the acceleration term with coefficient 1:
 
-$$y'' + p(t)\,y' + q(t)\,y = 0$$
+```math
+y'' + p(t)\,y' + q(t)\,y = 0
+```
 
 For the spring, p = −2 per second and q = 1 per second squared. The **Wronskian** of two solutions y1 and y2 is the determinant of their values stacked over their slopes:
 
-$$W(t) = \det\begin{pmatrix} y_1 & y_2 \\ y_1' & y_2' \end{pmatrix} = y_1\,y_2' - y_1'\,y_2$$
+```math
+W(t) = \det\begin{pmatrix} y_1 & y_2 \\ y_1' & y_2' \end{pmatrix} = y_1\,y_2' - y_1'\,y_2
+```
 
 **Read it aloud:** the first solution times the second's slope, minus the first's slope times the second.
 
 **Abel's identity** says how W moves, without knowing either solution:
 
-$$W(t) = W(t_0)\,e^{-\int_{t_0}^{t} p(u)\,du}$$
+```math
+W(t) = W(t_0)\,e^{-\int_{t_0}^{t} p(u)\,du}
+```
 
 **Read it aloud:** the Wronskian now is its starting value times e to the minus the accumulated coefficient p.
 
 **Reduction of order** turns one known solution into a second:
 
-$$y_2 = v\,y_1, \qquad v' = \frac{W}{y_1^{\,2}} = \frac{e^{-\int p\,dt}}{y_1^{\,2}}$$
+```math
+y_2 = v\,y_1, \qquad v' = \frac{W}{y_1^{\,2}} = \frac{e^{-\int p\,dt}}{y_1^{\,2}}
+```
 
 **Read it aloud:** the ratio v of the new solution to the old one has slope equal to the Wronskian divided by the old solution squared.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $u$ | time in s; u is time inside the integral | −2 to 1 s | — |
-| $t_0$ | the anchor time | 0 s | — |
-| $y$, $y'$, $y''$ | displacement in cm, velocity in cm/s, acceleration in cm/s^2 | start 2 cm at −1 cm/s | — |
-| $p$, $q$ | coefficients in standard form, per s and per s^2 | −2 and 1 | larger p: W shrinks faster |
-| $y_1$, $y_2$ | two solutions of the same equation | e^t and t e^t | — |
-| $W$ | the Wronskian | e^(2t) | — |
-| $v$ | the ratio y2 / y1 that reduction of order finds | t | — |
-| $c_1$, $c_2$ | the constants in y = c1 y1 + c2 y2 | 2 and −3 | — |
+| $`t`$, $`u`$ | time in s; u is time inside the integral | −2 to 1 s | — |
+| $`t_0`$ | the anchor time | 0 s | — |
+| $`y`$, $`y'`$, $`y''`$ | displacement in cm, velocity in cm/s, acceleration in cm/s^2 | start 2 cm at −1 cm/s | — |
+| $`p`$, $`q`$ | coefficients in standard form, per s and per s^2 | −2 and 1 | larger p: W shrinks faster |
+| $`y_1`$, $`y_2`$ | two solutions of the same equation | e^t and t e^t | — |
+| $`W`$ | the Wronskian | e^(2t) | — |
+| $`v`$ | the ratio y2 / y1 that reduction of order finds | t | — |
+| $`c_1`$, $`c_2`$ | the constants in y = c1 y1 + c2 y2 | 2 and −3 | — |
 
 ### When it holds
 
@@ -93,7 +101,9 @@ To scale, 80 units per cm and per cm/s, origin at (60, 200). t e^t's arrow runs 
 
 Differentiate W = y1 y2' − y1' y2 by the product rule. The two y1' y2' terms cancel:
 
-$$W' = y_1\,y_2'' - y_1''\,y_2$$
+```math
+W' = y_1\,y_2'' - y_1''\,y_2
+```
 
 Substitute y'' = −p y' − q y for both. The q terms cancel, because both solve the same equation, leaving W' = −p W. That is a first-order linear rule, solved by [The integrating factor](../01-Rate%20Equations/05-integrating-factor.md): Abel's identity. For the spring, W' = 2W and W(0) = 1, so W = e^(2t).
 
@@ -120,7 +130,9 @@ Put d = z − c1 y1 − c2 y2. By superposition it solves the equation, with d(t
 
 Write the unknown second solution as y2 = v y1, with v to be found. Then y2' = v' y1 + v y1', and
 
-$$W = y_1\,(v' y_1 + v\,y_1') - y_1'\,v\,y_1 = y_1^{\,2}\,v'$$
+```math
+W = y_1\,(v' y_1 + v\,y_1') - y_1'\,v\,y_1 = y_1^{\,2}\,v'
+```
 
 The v terms cancel. Abel gives W = e^(−∫p) up to a constant, so v' = W / y1^2; integrate once for v. Only y1 and p were needed. Substituted into the equation, y = v y1 leaves only v' and v'': a first-order equation for v', hence the name.
 

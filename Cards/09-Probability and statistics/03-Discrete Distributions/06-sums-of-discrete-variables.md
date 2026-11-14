@@ -36,36 +36,42 @@ Bars: the merged count when the desks are independent, which is Poisson with rat
 
 ## The formula
 
-Notation first, in words. A capital letter is a random count and $P(X = k)$ is the chance it equals $k$. "$X$ ~ Poisson($\lambda$)" reads "$X$ follows the Poisson law with average $\lambda$". The sign $\sum_{k=0}^{s}$ means "add up the following, for $k$ = 0, 1, and so on up to $s$".
+Notation first, in words. A capital letter is a random count and $`P(X = k)`$ is the chance it equals $`k`$. "$`X`$ ~ Poisson($`\lambda`$)" reads "$`X`$ follows the Poisson law with average $`\lambda`$". The sign $`\sum_{k=0}^{s}`$ means "add up the following, for $`k`$ = 0, 1, and so on up to $`s`$".
 
-$$P(X + Y = s) \;=\; \sum_{k=0}^{s} P(X = k)\,P(Y = s - k) \qquad \text{for independent counts } X, Y \ge 0$$
+```math
+P(X + Y = s) \;=\; \sum_{k=0}^{s} P(X = k)\,P(Y = s - k) \qquad \text{for independent counts } X, Y \ge 0
+```
 
-**Read it aloud:** the chance the two counts total $s$ is found by letting the first count take each possible value $k$, letting the second supply the rest, multiplying those two chances, and adding over all $k$.
+**Read it aloud:** the chance the two counts total $`s`$ is found by letting the first count take each possible value $`k`$, letting the second supply the rest, multiplying those two chances, and adding over all $`k`$.
 
 The two closure results follow from it:
 
-$$X \sim \text{Poisson}(\lambda),\; Y \sim \text{Poisson}(\mu) \;\Longrightarrow\; X + Y \sim \text{Poisson}(\lambda + \mu)$$
+```math
+X \sim \text{Poisson}(\lambda),\; Y \sim \text{Poisson}(\mu) \;\Longrightarrow\; X + Y \sim \text{Poisson}(\lambda + \mu)
+```
 
-$$X \sim \text{Binomial}(n, p),\; Y \sim \text{Binomial}(m, p) \;\Longrightarrow\; X + Y \sim \text{Binomial}(n + m, p)$$
+```math
+X \sim \text{Binomial}(n, p),\; Y \sim \text{Binomial}(m, p) \;\Longrightarrow\; X + Y \sim \text{Binomial}(n + m, p)
+```
 
 **Read them aloud:** independent Poisson counts add to a Poisson count whose average is the sum of the averages; independent binomial counts with the same chance of success add to a binomial count over all the tries together.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the first count | billing emails in an hour | — |
-| $Y$ | the second count, independent of the first | technical emails in the same hour | — |
-| $S$ | the total, $X + Y$ | merged inbox, one hour | — |
-| $s$ | one value the total might take | 12 | the list of splits grows by one |
-| $k$ | the first count's share of the total, running over every split | 0 to 12 | — |
-| $\lambda$ | average of the first Poisson count. Say "lambda". | 5 an hour | the merged average rises with it |
-| $\mu$ | average of the second Poisson count. Say "mu". | 7 an hour | the same |
-| $n$ | tries behind the first binomial count | 20 Monday replies | more tries, more successes |
-| $m$ | tries behind the second binomial count | 30 Tuesday replies | the same |
-| $p$ | the shared chance of success on each try | 0.7, a reply that resolves the case | the merged count shifts up |
-| $t$ | a dial for the moment generating function, any real number | 0.5 | — |
-| $M_X(t)$ | the moment generating function $E[e^{tX}]$: the long-run average of e raised to $t$ times the count | 2403.437416 for the merged count at 0.5 | grows with $t$ |
+| $`X`$ | the first count | billing emails in an hour | — |
+| $`Y`$ | the second count, independent of the first | technical emails in the same hour | — |
+| $`S`$ | the total, $`X + Y`$ | merged inbox, one hour | — |
+| $`s`$ | one value the total might take | 12 | the list of splits grows by one |
+| $`k`$ | the first count's share of the total, running over every split | 0 to 12 | — |
+| $`\lambda`$ | average of the first Poisson count. Say "lambda". | 5 an hour | the merged average rises with it |
+| $`\mu`$ | average of the second Poisson count. Say "mu". | 7 an hour | the same |
+| $`n`$ | tries behind the first binomial count | 20 Monday replies | more tries, more successes |
+| $`m`$ | tries behind the second binomial count | 30 Tuesday replies | the same |
+| $`p`$ | the shared chance of success on each try | 0.7, a reply that resolves the case | the merged count shifts up |
+| $`t`$ | a dial for the moment generating function, any real number | 0.5 | — |
+| $`M_X(t)`$ | the moment generating function $`E[e^{tX}]`$: the long-run average of e raised to $`t`$ times the count | 2403.437416 for the merged count at 0.5 | grows with $`t`$ |
 
-Two helper facts carry the proofs. The Poisson mass is $P(X = k) = e^{-\lambda}\lambda^k/k!$, where e is about 2.718 and $k!$ is 1 × 2 × … × $k$. The binomial mass is $P(X = k) = C(n,k)\,p^k(1-p)^{n-k}$, where $C(n,k)$ counts the ways to choose $k$ of $n$ tries.
+Two helper facts carry the proofs. The Poisson mass is $`P(X = k) = e^{-\lambda}\lambda^k/k!`$, where e is about 2.718 and $`k!`$ is 1 × 2 × … × $`k`$. The binomial mass is $`P(X = k) = C(n,k)\,p^k(1-p)^{n-k}`$, where $`C(n,k)`$ counts the ways to choose $`k`$ of $`n`$ tries.
 
 ### When it holds
 
@@ -84,61 +90,73 @@ The event "the total is 12" is the same as "billing got 0 and technical got 12, 
 
 ### Step 1: the convolution formula
 
-For any whole number $s$, the event $X + Y = s$ splits into the pieces $X = k$ and $Y = s - k$, for $k$ from 0 to $s$. Adding the non-overlapping pieces:
+For any whole number $`s`$, the event $`X + Y = s`$ splits into the pieces $`X = k`$ and $`Y = s - k`$, for $`k`$ from 0 to $`s`$. Adding the non-overlapping pieces:
 
-$$P(X + Y = s) = \sum_{k=0}^{s} P(X = k \text{ and } Y = s-k).$$
+```math
+P(X + Y = s) = \sum_{k=0}^{s} P(X = k \text{ and } Y = s-k).
+```
 
-Independence means the chance of both is the product of the chances. Substituting gives the formula. For $s$ = 12 on the help desks, the thirteen products appear in Worked numbers below and add to 0.114368.
+Independence means the chance of both is the product of the chances. Substituting gives the formula. For $`s`$ = 12 on the help desks, the thirteen products appear in Worked numbers below and add to 0.114368.
 
 ### Step 2: two Poisson counts make a Poisson count
 
 Put the Poisson masses into the formula. Each term is
 
-$$e^{-\lambda}\frac{\lambda^k}{k!}\; e^{-\mu}\frac{\mu^{s-k}}{(s-k)!}.$$
+```math
+e^{-\lambda}\frac{\lambda^k}{k!}\; e^{-\mu}\frac{\mu^{s-k}}{(s-k)!}.
+```
 
-Pull out what does not depend on $k$, and multiply and divide by $s!$:
+Pull out what does not depend on $`k`$, and multiply and divide by $`s!`$:
 
-$$P(X+Y=s) = \frac{e^{-(\lambda+\mu)}}{s!}\sum_{k=0}^{s} \frac{s!}{k!\,(s-k)!}\lambda^k\mu^{s-k}.$$
+```math
+P(X+Y=s) = \frac{e^{-(\lambda+\mu)}}{s!}\sum_{k=0}^{s} \frac{s!}{k!\,(s-k)!}\lambda^k\mu^{s-k}.
+```
 
-The fraction inside is $C(s,k)$. The sum is then the binomial theorem, the expansion of $(\lambda + \mu)^s$ term by term. So
+The fraction inside is $`C(s,k)`$. The sum is then the binomial theorem, the expansion of $`(\lambda + \mu)^s`$ term by term. So
 
-$$P(X+Y=s) = e^{-(\lambda+\mu)}\frac{(\lambda+\mu)^s}{s!},$$
+```math
+P(X+Y=s) = e^{-(\lambda+\mu)}\frac{(\lambda+\mu)^s}{s!},
+```
 
-the Poisson mass with average $\lambda + \mu$. For the desks: rate 12, and at 12 emails the same 0.114368.
+the Poisson mass with average $`\lambda + \mu`$. For the desks: rate 12, and at 12 emails the same 0.114368.
 
 ### Step 3: two binomial counts with one chance make a binomial count
 
 The plain-words proof is shorter than the algebra. Monday's 20 replies and Tuesday's 30 replies are 50 independent tries, each resolving with chance 0.7. The count of resolved cases over all 50 is binomial with 50 tries by the definition of the binomial law. Splitting the 50 into two days changes nothing.
 
-The algebra agrees. Every term of the convolution carries the same factor $p^s(1-p)^{n+m-s}$, and what remains is a count: the ways to pick $k$ successes from $n$ tries and $s-k$ from $m$ tries, added over $k$. That is every way to pick $s$ from $n + m$, so it equals $C(n+m, s)$. The folded proof below writes it out.
+The algebra agrees. Every term of the convolution carries the same factor $`p^s(1-p)^{n+m-s}`$, and what remains is a count: the ways to pick $`k`$ successes from $`n`$ tries and $`s-k`$ from $`m`$ tries, added over $`k`$. That is every way to pick $`s`$ from $`n + m`$, so it equals $`C(n+m, s)`$. The folded proof below writes it out.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The convolution of two laws is a law.** Every product is at least zero. Adding over every total $s$ and every split $k$ visits each pair of values, one for $X$ and one for $Y$, exactly once, so the grand total is (sum of the chances of $X$) times (sum of the chances of $Y$), which is 1 × 1 = 1.
+**The convolution of two laws is a law.** Every product is at least zero. Adding over every total $`s`$ and every split $`k`$ visits each pair of values, one for $`X`$ and one for $`Y`$, exactly once, so the grand total is (sum of the chances of $`X`$) times (sum of the chances of $`Y`$), which is 1 × 1 = 1.
 
-**Vandermonde's count.** Put $n$ red tries and $m$ blue tries in a row. A choice of $s$ tries from all $n+m$ takes some number $k$ of reds and the rest, $s-k$, from the blues. For a fixed $k$ there are $C(n,k)\,C(m,s-k)$ such choices. Every choice has exactly one $k$. So $\sum_k C(n,k)\,C(m,s-k) = C(n+m,s)$, where $k$ runs over the values with $0 \le k \le n$ and $0 \le s-k \le m$.
+**Vandermonde's count.** Put $`n`$ red tries and $`m`$ blue tries in a row. A choice of $`s`$ tries from all $`n+m`$ takes some number $`k`$ of reds and the rest, $`s-k`$, from the blues. For a fixed $`k`$ there are $`C(n,k)\,C(m,s-k)`$ such choices. Every choice has exactly one $`k`$. So $`\sum_k C(n,k)\,C(m,s-k) = C(n+m,s)`$, where $`k`$ runs over the values with $`0 \le k \le n`$ and $`0 \le s-k \le m`$.
 
-**Binomial closure.** For $0 \le s \le n+m$,
-$$P(X+Y=s) = \sum_k C(n,k)p^k(1-p)^{n-k}\,C(m,s-k)p^{s-k}(1-p)^{m-s+k} = p^s(1-p)^{n+m-s}\sum_k C(n,k)C(m,s-k),$$
-and the count above turns the sum into $C(n+m,s)$. This is the binomial mass with $n+m$ tries. At $p$ = 0 or 1 both counts are fixed numbers and the claim holds directly.
+**Binomial closure.** For $`0 \le s \le n+m`$,
 
-**Poisson closure at the edges.** Step 2 holds at $s = 0$ and when an average is 0, with the usual reading that any number to the power 0 is 1.
+$`\displaystyle P(X+Y=s) = \sum_k C(n,k)p^k(1-p)^{n-k}\,C(m,s-k)p^{s-k}(1-p)^{m-s+k} = p^s(1-p)^{n+m-s}\sum_k C(n,k)C(m,s-k),`$
+
+and the count above turns the sum into $`C(n+m,s)`$. This is the binomial mass with $`n+m`$ tries. At $`p`$ = 0 or 1 both counts are fixed numbers and the claim holds directly.
+
+**Poisson closure at the edges.** Step 2 holds at $`s = 0`$ and when an average is 0, with the usual reading that any number to the power 0 is 1.
 
 </details>
 
 ### Step 4: the second road, through moment generating functions
 
-The moment generating function of a count is $M_X(t) = E[e^{tX}]$, the long-run average of e raised to $t$ times the count ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)). For a sum, $e^{t(X+Y)} = e^{tX}e^{tY}$, and the average of a product of independent quantities is the product of their averages. So
+The moment generating function of a count is $`M_X(t) = E[e^{tX}]`$, the long-run average of e raised to $`t`$ times the count ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)). For a sum, $`e^{t(X+Y)} = e^{tX}e^{tY}`$, and the average of a product of independent quantities is the product of their averages. So
 
-$$M_{X+Y}(t) = M_X(t)\,M_Y(t).$$
+```math
+M_{X+Y}(t) = M_X(t)\,M_Y(t).
+```
 
-Convolution of laws becomes multiplication of generating functions. For a Poisson count, summing the series gives $M_X(t) = e^{\lambda(e^t - 1)}$. Multiply two of them and the exponents add: $e^{(\lambda+\mu)(e^t-1)}$, the Poisson generating function with average $\lambda + \mu$. The binomial generating function is $(1 - p + pe^t)^n$; two with the same $p$ multiply to the power $n + m$. Since a generating function that exists near $t$ = 0 pins down its law (stated on the moment-generating-functions card, proved in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)), both closure results follow a second time. At $t$ = 0.5 the code finds 2403.437416 three ways: the product of the two desks' series, the series of the merged law, and the closed form.
+Convolution of laws becomes multiplication of generating functions. For a Poisson count, summing the series gives $`M_X(t) = e^{\lambda(e^t - 1)}`$. Multiply two of them and the exponents add: $`e^{(\lambda+\mu)(e^t-1)}`$, the Poisson generating function with average $`\lambda + \mu`$. The binomial generating function is $`(1 - p + pe^t)^n`$; two with the same $`p`$ multiply to the power $`n + m`$. Since a generating function that exists near $`t`$ = 0 pins down its law (stated on the moment-generating-functions card, proved in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)), both closure results follow a second time. At $`t`$ = 0.5 the code finds 2403.437416 three ways: the product of the two desks' series, the series of the merged law, and the closed form.
 
 <details>
 <summary>Why most families are not closed</summary>
 
-Closure needs the generating function to have a special shape: a fixed pattern raised to a power set by the parameter. Poisson has $e^{\lambda(\ldots)}$; binomial has $(\ldots)^n$. Change the chance of success between the two days and the patterns differ, so the product is not one of the family. Adding a count of 1 to 6 on a die to another die gives a triangle, not a die. Convolution always works; closure is the exception.
+Closure needs the generating function to have a special shape: a fixed pattern raised to a power set by the parameter. Poisson has $`e^{\lambda(\ldots)}`$; binomial has $`(\ldots)^n`$. Change the chance of success between the two days and the patterns differ, so the product is not one of the family. Adding a count of 1 to 6 on a die to another die gives a triangle, not a die. Convolution always works; closure is the exception.
 
 </details>
 
@@ -146,27 +164,27 @@ Closure needs the generating function to have a special shape: a fixed pattern r
 
 ## Worked numbers, by hand
 
-Billing averages 5, technical 7. The chance the merged inbox gets exactly 12 in an hour, split by billing's share $k$:
+Billing averages 5, technical 7. The chance the merged inbox gets exactly 12 in an hour, split by billing's share $`k`$:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $k$ = 0 | 0.006738 × 0.026350 | 0.000178 |
-| $k$ = 1 | 0.033690 × 0.045171 | 0.001522 |
-| $k$ = 2 | 0.084224 × 0.070983 | 0.005979 |
-| $k$ = 3 | 0.140374 × 0.101405 | 0.014235 |
-| $k$ = 4 | 0.175467 × 0.130377 | 0.022877 |
-| $k$ = 5 | 0.175467 × 0.149003 | 0.026145 |
-| $k$ = 6 | 0.146223 × 0.149003 | 0.021788 |
-| $k$ = 7 | 0.104445 × 0.127717 | 0.013339 |
-| $k$ = 8 | 0.065278 × 0.091226 | 0.005955 |
-| $k$ = 9 | 0.036266 × 0.052129 | 0.001890 |
-| $k$ = 10 | 0.018133 × 0.022341 | 0.000405 |
-| $k$ = 11 | 0.008242 × 0.006383 | 0.000053 |
-| $k$ = 12 | 0.003434 × 0.000912 | 0.000003 |
+| $`k`$ = 0 | 0.006738 × 0.026350 | 0.000178 |
+| $`k`$ = 1 | 0.033690 × 0.045171 | 0.001522 |
+| $`k`$ = 2 | 0.084224 × 0.070983 | 0.005979 |
+| $`k`$ = 3 | 0.140374 × 0.101405 | 0.014235 |
+| $`k`$ = 4 | 0.175467 × 0.130377 | 0.022877 |
+| $`k`$ = 5 | 0.175467 × 0.149003 | 0.026145 |
+| $`k`$ = 6 | 0.146223 × 0.149003 | 0.021788 |
+| $`k`$ = 7 | 0.104445 × 0.127717 | 0.013339 |
+| $`k`$ = 8 | 0.065278 × 0.091226 | 0.005955 |
+| $`k`$ = 9 | 0.036266 × 0.052129 | 0.001890 |
+| $`k`$ = 10 | 0.018133 × 0.022341 | 0.000405 |
+| $`k`$ = 11 | 0.008242 × 0.006383 | 0.000053 |
+| $`k`$ = 12 | 0.003434 × 0.000912 | 0.000003 |
 | sum of the thirteen | add the column | **0.114368** |
-| closed form, Poisson with rate 12 | $e^{-12}\,12^{12}/12!$ | **0.114368** |
+| closed form, Poisson with rate 12 | $`e^{-12}\,12^{12}/12!`$ | **0.114368** |
 
-The first column is billing's chance of $k$, the second technical's chance of $12 - k$. The biggest terms sit near $k$ = 5, billing's own average. About 1 hour in 9, the merged inbox gets exactly 12 emails.
+The first column is billing's chance of $`k`$, the second technical's chance of $`12 - k`$. The biggest terms sit near $`k`$ = 5, billing's own average. About 1 hour in 9, the merged inbox gets exactly 12 emails.
 
 The staffing number follows the same way. Adding the merged law from 0 to 15 and subtracting from 1 gives the chance of 16 or more: 0.155584, about 1 hour in 6 or 7. The team falls behind in roughly 16% of hours.
 
@@ -189,7 +207,7 @@ The copied-email row is the theorem's hypothesis failing. Write the billing coun
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the merged law four independent ways: convolution of the two desks' masses, the Poisson closed form computed through logarithms, moment generating functions summed term by term, and a seeded simulation of 200,000 hours. The simulation draws each desk's count by Knuth's method, multiplying uniform random numbers until the product falls below $e^{-\lambda}$, with the uniforms from SplitMix64 written out in both languages, so Python and Rust draw identical numbers. The binomial result is checked by convolving the two days, and again by convolving fifty one-email laws one at a time, against the binomial formula with Pascal's rule for $C(n,k)$. The what-breaks rows are computed, including the copied-email law, which is itself a convolution of independent pieces.
+Both programs build the merged law four independent ways: convolution of the two desks' masses, the Poisson closed form computed through logarithms, moment generating functions summed term by term, and a seeded simulation of 200,000 hours. The simulation draws each desk's count by Knuth's method, multiplying uniform random numbers until the product falls below $`e^{-\lambda}`$, with the uniforms from SplitMix64 written out in both languages, so Python and Rust draw identical numbers. The binomial result is checked by convolving the two days, and again by convolving fifty one-email laws one at a time, against the binomial formula with Pascal's rule for $`C(n,k)`$. The what-breaks rows are computed, including the copied-email law, which is itself a convolution of independent pieces.
 
 ### Python
 
@@ -578,9 +596,9 @@ The two outputs are identical line for line. A standard error is the typical siz
 
 Lean proves the convolution formula for any two independent counts, and both closure results for every average and chance.
 
-- Take two independent whole-number counts and any total $s$. Then the chance they add to $s$ is the convolution sum over every split.
-- Take independent Poisson counts with averages $\lambda$ and $\mu$. Then their sum is Poisson with average $\lambda + \mu$.
-- Take independent binomial counts with $n$ and $m$ tries and one shared chance $p$. Then their sum is binomial with $n + m$ tries and chance $p$.
+- Take two independent whole-number counts and any total $`s`$. Then the chance they add to $`s`$ is the convolution sum over every split.
+- Take independent Poisson counts with averages $`\lambda`$ and $`\mu`$. Then their sum is Poisson with average $`\lambda + \mu`$.
+- Take independent binomial counts with $`n`$ and $`m`$ tries and one shared chance $`p`$. Then their sum is binomial with $`n + m`$ tries and chance $`p`$.
 - The hand counts hold exactly: the help-desk binomial theorem sum, Vandermonde's count at 35, the copied-email variance 16, and the two-dice counts.
 
 The decimals, the moment generating functions, the simulation and the copied-email law are left to the Python and Rust checks.
@@ -758,14 +776,14 @@ example : ((Finset.Icc 1 6 ×ˢ Finset.Icc 1 6).filter (fun q : ℕ × ℕ => q.
 - **Dice games.** Two dice total 7 with chance 6/36: six of the 36 equally likely splits. The same convolution, with a law that is not closed.
 
 > **Say it back**
-> The chance that two counts total $s$ is found by splitting $s$ every possible way, multiplying the two counts' chances for each split, and adding. The multiplication needs independence; without it, the sum's law can change even when each count's own law does not. Independent Poisson counts add to a Poisson count with the summed average, and binomial counts with one shared chance of success add to a binomial count over all the tries. Moment generating functions give the same results, because the generating function of a sum is the product of the parts' generating functions.
+> The chance that two counts total $`s`$ is found by splitting $`s`$ every possible way, multiplying the two counts' chances for each split, and adding. The multiplication needs independence; without it, the sum's law can change even when each count's own law does not. Independent Poisson counts add to a Poisson count with the summed average, and binomial counts with one shared chance of success add to a binomial count over all the tries. Moment generating functions give the same results, because the generating function of a sum is the product of the parts' generating functions.
 
 ---
 
 ## What this builds on
 
-- [Poisson](04-poisson.md): the Poisson law and its mass $e^{-\lambda}\lambda^k/k!$, the building block convolved here.
-- [Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md): $M_X(t)$, the product rule for independent sums, and the fact that a generating function pins down its law, which gives the second road in Step 4.
+- [Poisson](04-poisson.md): the Poisson law and its mass $`e^{-\lambda}\lambda^k/k!`$, the building block convolved here.
+- [Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md): $`M_X(t)`$, the product rule for independent sums, and the fact that a generating function pins down its law, which gives the second road in Step 4.
 
 ## Where this goes next
 

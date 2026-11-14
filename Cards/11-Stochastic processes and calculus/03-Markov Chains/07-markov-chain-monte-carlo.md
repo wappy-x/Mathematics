@@ -26,46 +26,52 @@ Drawn to scale: 100 units per cm of a across, 200 units per cm a week of b up. T
 
 ## The formula
 
-Notation first, in words. A **state** $x$ is one candidate pair (a, b); $y$ is another. $\pi(x)$ (pi) is the wanted law, here the posterior density, as in [Stationary distributions](04-stationary-distributions.md). $f(x)$ is the same thing up to an unknown constant $Z$, so $\pi = f/Z$. $P(x, y)$ is the chain's transition rule: the chance, or density, of moving from $x$ to $y$ in one step. The chain's position after step $t$ is $x_t$; time on this card is counted in steps.
+Notation first, in words. A **state** $`x`$ is one candidate pair (a, b); $`y`$ is another. $`\pi(x)`$ (pi) is the wanted law, here the posterior density, as in [Stationary distributions](04-stationary-distributions.md). $`f(x)`$ is the same thing up to an unknown constant $`Z`$, so $`\pi = f/Z`$. $`P(x, y)`$ is the chain's transition rule: the chance, or density, of moving from $`x`$ to $`y`$ in one step. The chain's position after step $`t`$ is $`x_t`$; time on this card is counted in steps.
 
 The design rule is **detailed balance**:
 
-$$\pi(x)\,P(x,y) = \pi(y)\,P(y,x) \quad \text{for every pair of states } x \ne y$$
+```math
+\pi(x)\,P(x,y) = \pi(y)\,P(y,x) \quad \text{for every pair of states } x \ne y
+```
 
 **Read it aloud:** with the chain in equilibrium, the probability flowing from x to y in one step equals the probability flowing back.
 
-**Metropolis–Hastings** builds such a chain from any proposal rule. From $x$, propose $y$ with density $q(x, y)$. Accept it with chance
+**Metropolis–Hastings** builds such a chain from any proposal rule. From $`x`$, propose $`y`$ with density $`q(x, y)`$. Accept it with chance
 
-$$\alpha(x,y) = \min\!\left(1,\; r\right), \qquad r = \frac{f(y)\,q(y,x)}{f(x)\,q(x,y)}$$
+```math
+\alpha(x,y) = \min\!\left(1,\; r\right), \qquad r = \frac{f(y)\,q(y,x)}{f(x)\,q(x,y)}
+```
 
-and otherwise stay at $x$, recording $x$ again.
+and otherwise stay at $`x`$, recording $`x`$ again.
 
-**Gibbs sampling** needs no acceptance step. It redraws one coordinate at a time from its law given the others: a new a from $\pi(a \mid b)$, then a new b from $\pi(b \mid a)$. One of each is a **sweep**.
+**Gibbs sampling** needs no acceptance step. It redraws one coordinate at a time from its law given the others: a new a from $`\pi(a \mid b)`$, then a new b from $`\pi(b \mid a)`$. One of each is a **sweep**.
 
-The price of correlated steps: if a quantity $g$ has posterior variance $v$, the average $\bar g_N$ of $N$ steps of a chain in equilibrium has, for large $N$,
+The price of correlated steps: if a quantity $`g`$ has posterior variance $`v`$, the average $`\bar g_N`$ of $`N`$ steps of a chain in equilibrium has, for large $`N`$,
 
-$$\operatorname{Var}(\bar g_N) \approx \frac{v\,\tau}{N}, \qquad \tau = 1 + 2\sum_{k=1}^{\infty} \rho_k, \qquad N_{\text{eff}} = \frac{N}{\tau}$$
+```math
+\mathrm{Var}(\bar g_N) \approx \frac{v\,\tau}{N}, \qquad \tau = 1 + 2\sum_{k=1}^{\infty} \rho_k, \qquad N_{\text{eff}} = \frac{N}{\tau}
+```
 
-Here $\rho_k$ is the correlation between steps k apart. For g = b under the Gibbs sampler, $\rho_k = \rho^{2k}$, so $\tau = (1 + \rho^2)/(1 - \rho^2) = 10$.
+Here $`\rho_k`$ is the correlation between steps k apart. For g = b under the Gibbs sampler, $`\rho_k = \rho^{2k}`$, so $`\tau = (1 + \rho^2)/(1 - \rho^2) = 10`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $w_i$, $h_i$, $n$, $S_w$, $S_{ww}$, $S_h$, $S_{wh}$ | week and height of reading i; number of readings; sums of weeks, squared weeks, heights, week times height | 5 readings; sums 15, 55, 20.0, 69.7 | more weeks: a narrower cloud |
-| $D$ | how spread out the weeks are: $n S_{ww} - S_w^2$, n times the summed squared distances of the weeks from their average | 50 | a narrower cloud |
-| $\sigma$ | spread of the ruler's error | 0.5 cm | a wider cloud, same tilt |
-| $a$, $b$ | start height at week 0; growth per week | means 1.0900 cm, 0.9700 cm a week | — |
-| $x$, $y$ | states: candidate pairs (a, b) | (1.09, 0.97) is the centre | — |
-| $\pi$, $f$, $Z$ | posterior density; the same without its constant; the constant | $f = e^{-\sum (h_i - a - b w_i)^2 / (2\sigma^2)}$ | — |
-| $q$ | proposal density: where a step is suggested | normal steps, sd 0.3 in a, 0.09 in b | fewer accepted |
-| $z$, $z_1$, $z_2$ | standard normal draws: average 0, spread 1 | made by Box–Muller in the code | — |
-| $r$, $\alpha$ | the Hastings ratio; the chance of accepting | 0.4962 accepted | more moves |
-| $P$ | the chain's transition rule | from $q$ and $\alpha$, or the conditionals | — |
-| $\rho$, $\phi$ | correlation of a and b; the Gibbs forgetting rate $\rho^2$ | −0.9045; 0.8182 | stronger tilt, slower mixing |
-| $t$, $x_t$, $b_t$ | steps or sweeps done; the state and its b then | $b_0 = 0$ in the chart | — |
-| $g$, $\bar g_N$, $v$, $N$ | a quantity; its chain average; its posterior variance; steps kept | g = b, v = 0.0250, N = 100,000 | smaller error |
-| $\rho_k$, $\tau$, $N_{\text{eff}}$ | correlation at lag k; the inflation factor; effective sample size (ESS) | Gibbs: $\rho_1 = 0.8182$, τ = 10, ESS 10,000 | fewer effective draws |
-| $\Phi$ | the standard normal cumulative probability: the chance a standard normal draw falls below a given value | $1 - \Phi((1 - 0.97)/0.1581) = 0.4248$ | a larger chance |
-| $e_t$, $s^2$, $V$, $m$ | in the folded proof: one sweep's fresh noise in b; its variance; the equilibrium variance of b; the long-run mean of b | V = 0.0250, m = 0.9700 | — |
+| $`w_i`$, $`h_i`$, $`n`$, $`S_w`$, $`S_{ww}`$, $`S_h`$, $`S_{wh}`$ | week and height of reading i; number of readings; sums of weeks, squared weeks, heights, week times height | 5 readings; sums 15, 55, 20.0, 69.7 | more weeks: a narrower cloud |
+| $`D`$ | how spread out the weeks are: $`n S_{ww} - S_w^2`$, n times the summed squared distances of the weeks from their average | 50 | a narrower cloud |
+| $`\sigma`$ | spread of the ruler's error | 0.5 cm | a wider cloud, same tilt |
+| $`a`$, $`b`$ | start height at week 0; growth per week | means 1.0900 cm, 0.9700 cm a week | — |
+| $`x`$, $`y`$ | states: candidate pairs (a, b) | (1.09, 0.97) is the centre | — |
+| $`\pi`$, $`f`$, $`Z`$ | posterior density; the same without its constant; the constant | $`f = e^{-\sum (h_i - a - b w_i)^2 / (2\sigma^2)}`$ | — |
+| $`q`$ | proposal density: where a step is suggested | normal steps, sd 0.3 in a, 0.09 in b | fewer accepted |
+| $`z`$, $`z_1`$, $`z_2`$ | standard normal draws: average 0, spread 1 | made by Box–Muller in the code | — |
+| $`r`$, $`\alpha`$ | the Hastings ratio; the chance of accepting | 0.4962 accepted | more moves |
+| $`P`$ | the chain's transition rule | from $`q`$ and $`\alpha`$, or the conditionals | — |
+| $`\rho`$, $`\phi`$ | correlation of a and b; the Gibbs forgetting rate $`\rho^2`$ | −0.9045; 0.8182 | stronger tilt, slower mixing |
+| $`t`$, $`x_t`$, $`b_t`$ | steps or sweeps done; the state and its b then | $`b_0 = 0`$ in the chart | — |
+| $`g`$, $`\bar g_N`$, $`v`$, $`N`$ | a quantity; its chain average; its posterior variance; steps kept | g = b, v = 0.0250, N = 100,000 | smaller error |
+| $`\rho_k`$, $`\tau`$, $`N_{\text{eff}}`$ | correlation at lag k; the inflation factor; effective sample size (ESS) | Gibbs: $`\rho_1 = 0.8182`$, τ = 10, ESS 10,000 | fewer effective draws |
+| $`\Phi`$ | the standard normal cumulative probability: the chance a standard normal draw falls below a given value | $`1 - \Phi((1 - 0.97)/0.1581) = 0.4248`$ | a larger chance |
+| $`e_t`$, $`s^2`$, $`V`$, $`m`$ | in the folded proof: one sweep's fresh noise in b; its variance; the equilibrium variance of b; the long-run mean of b | V = 0.0250, m = 0.9700 | — |
 
 ### When it holds
 
@@ -81,37 +87,43 @@ Here $\rho_k$ is the correlation between steps k apart. For g = b under the Gibb
 
 ### Step 0: turn the usual question round
 
-A **Markov chain** moves by a rule that looks only at the current state ([Markov chains](01-markov-chains.md)). The shelf so far takes a rule $P$ and finds its equilibrium $\pi$. MCMC takes $\pi$ and must invent $P$. Checking the equilibrium equation directly means a sum over every state. Detailed balance is a shortcut: a condition on one pair of states at a time, easy to arrange, that forces the equilibrium.
+A **Markov chain** moves by a rule that looks only at the current state ([Markov chains](01-markov-chains.md)). The shelf so far takes a rule $`P`$ and finds its equilibrium $`\pi`$. MCMC takes $`\pi`$ and must invent $`P`$. Checking the equilibrium equation directly means a sum over every state. Detailed balance is a shortcut: a condition on one pair of states at a time, easy to arrange, that forces the equilibrium.
 
 ### Step 1: balanced pairs mean the law stays put
 
-Suppose the chain starts in law $\pi$. The chance of being at $y$ after one step is the sum, over all states $x$, of $\pi(x)P(x, y)$. Detailed balance swaps each term for $\pi(y)P(y, x)$. Summing $P(y, x)$ over $x$ gives 1, since from $y$ the chain must go somewhere, including staying put. So the answer is $\pi(y)$: one step leaves the law unchanged, and $\pi$ is stationary.
+Suppose the chain starts in law $`\pi`$. The chance of being at $`y`$ after one step is the sum, over all states $`x`$, of $`\pi(x)P(x, y)`$. Detailed balance swaps each term for $`\pi(y)P(y, x)`$. Summing $`P(y, x)`$ over $`x`$ gives 1, since from $`y`$ the chain must go somewhere, including staying put. So the answer is $`\pi(y)`$: one step leaves the law unchanged, and $`\pi`$ is stationary.
 
-$$\sum_x \pi(x)\,P(x,y) \;=\; \sum_x \pi(y)\,P(y,x) \;=\; \pi(y)$$
+```math
+\sum_x \pi(x)\,P(x,y) \;=\; \sum_x \pi(y)\,P(y,x) \;=\; \pi(y)
+```
 
 For a continuous state the sum is an integral. The check puts the seedling posterior on a grid of 141 by 121 pairs and runs a Metropolis chain on it with 24 neighbouring proposals. The largest gap between the two sides of detailed balance, over every pair, is below 1e-15. One step applied to the exact posterior changes no grid probability by more than 1e-15.
 
 ### Step 2: deriving Metropolis–Hastings
 
-Propose $y$ from $q(x, y)$, accept with some chance $\alpha(x, y)$. For $y \ne x$, a move needs both, so $P(x, y) = q(x, y)\,\alpha(x, y)$. Detailed balance then asks
+Propose $`y`$ from $`q(x, y)`$, accept with some chance $`\alpha(x, y)`$. For $`y \ne x`$, a move needs both, so $`P(x, y) = q(x, y)\,\alpha(x, y)`$. Detailed balance then asks
 
-$$\pi(x)\,q(x,y)\,\alpha(x,y) = \pi(y)\,q(y,x)\,\alpha(y,x), \qquad \text{that is} \qquad \frac{\alpha(x,y)}{\alpha(y,x)} = r.$$
+```math
+\pi(x)\,q(x,y)\,\alpha(x,y) = \pi(y)\,q(y,x)\,\alpha(y,x), \qquad \text{that is} \qquad \frac{\alpha(x,y)}{\alpha(y,x)} = r.
+```
 
-Any pair of acceptance chances with that ratio works. Accepting as often as possible means setting the larger of the two to 1. If $r \le 1$, that is $\alpha(x, y) = r$ and $\alpha(y, x) = 1$; if $r > 1$, the reverse. Both cases are $\alpha = \min(1, r)$, the formula above. Since $r$ is a ratio of $\pi$ values, $Z$ cancels: the chain never needs the constant that makes the posterior a probability.
+Any pair of acceptance chances with that ratio works. Accepting as often as possible means setting the larger of the two to 1. If $`r \le 1`$, that is $`\alpha(x, y) = r`$ and $`\alpha(y, x) = 1`$; if $`r > 1`$, the reverse. Both cases are $`\alpha = \min(1, r)`$, the formula above. Since $`r`$ is a ratio of $`\pi`$ values, $`Z`$ cancels: the chain never needs the constant that makes the posterior a probability.
 
-When the proposal is symmetric, $q(x, y) = q(y, x)$, the $q$ factors cancel and $r = f(y)/f(x)$: the Metropolis rule of the outline card. The Metropolis run here proposes a normal step of spread 0.3 in a and 0.09 in b. It accepts 0.4962 of proposals (standard error, SE, 0.0016) and, over 100,000 steps after a burn-in of 1,000, averages b = 0.9701 with a standard error of 0.0032, against the exact 0.9700.
+When the proposal is symmetric, $`q(x, y) = q(y, x)`$, the $`q`$ factors cancel and $`r = f(y)/f(x)`$: the Metropolis rule of the outline card. The Metropolis run here proposes a normal step of spread 0.3 in a and 0.09 in b. It accepts 0.4962 of proposals (standard error, SE, 0.0016) and, over 100,000 steps after a burn-in of 1,000, averages b = 0.9701 with a standard error of 0.0032, against the exact 0.9700.
 
-The $q$ factors matter once the proposal is lopsided. Propose the new growth as the old one times $e^{0.1 z}$, with $z$ a standard normal draw. The density of proposing $b'$ from $b$ is then proportional to $1/b'$, so $q(b', b)/q(b, b') = b'/b$, and that factor belongs in $r$. With it, the chain averages 0.9679 (SE 0.0038), within one standard error of 0.9700. Without it, the chain settles on the posterior divided by b, whose exact mean on the grid is 0.9426; the chain gives 0.9403 (SE 0.0038). Running longer never removes the error.
+The $`q`$ factors matter once the proposal is lopsided. Propose the new growth as the old one times $`e^{0.1 z}`$, with $`z`$ a standard normal draw. The density of proposing $`b'`$ from $`b`$ is then proportional to $`1/b'`$, so $`q(b', b)/q(b, b') = b'/b`$, and that factor belongs in $`r`$. With it, the chain averages 0.9679 (SE 0.0038), within one standard error of 0.9700. Without it, the chain settles on the posterior divided by b, whose exact mean on the grid is 0.9426; the chain gives 0.9403 (SE 0.0038). Running longer never removes the error.
 
 ### Step 3: Gibbs sampling is Metropolis–Hastings that always accepts
 
-Take as proposal: keep b, redraw a from its law given b, $\pi(a' \mid b)$. Write the joint law as $\pi(a, b) = \pi(b)\,\pi(a \mid b)$. Then
+Take as proposal: keep b, redraw a from its law given b, $`\pi(a' \mid b)`$. Write the joint law as $`\pi(a, b) = \pi(b)\,\pi(a \mid b)`$. Then
 
-$$r = \frac{\pi(a', b)\;\pi(a \mid b)}{\pi(a, b)\;\pi(a' \mid b)} = \frac{\pi(b)\,\pi(a' \mid b)\,\pi(a \mid b)}{\pi(b)\,\pi(a \mid b)\,\pi(a' \mid b)} = 1.$$
+```math
+r = \frac{\pi(a', b)\;\pi(a \mid b)}{\pi(a, b)\;\pi(a' \mid b)} = \frac{\pi(b)\,\pi(a' \mid b)\,\pi(a \mid b)}{\pi(b)\,\pi(a \mid b)\,\pi(a' \mid b)} = 1.
+```
 
-Every proposal is accepted, and by Step 2 the half-step keeps $\pi$; so does redrawing b given a, and so a sweep keeps $\pi$. The sweep itself is not balanced, since a then b is not the reverse of b then a. On the grid, one exact Gibbs sweep changes no probability by more than 1e-15. That holds by construction; the sweep code is tested in Step 4, where it reproduces the formula's average.
+Every proposal is accepted, and by Step 2 the half-step keeps $`\pi`$; so does redrawing b given a, and so a sweep keeps $`\pi`$. The sweep itself is not balanced, since a then b is not the reverse of b then a. On the grid, one exact Gibbs sweep changes no probability by more than 1e-15. That holds by construction; the sweep code is tested in Step 4, where it reproduces the formula's average.
 
-For the seedling the conditionals come straight from the likelihood, how probable the readings are for each a and b. With b held, the heights minus b times the week are five noisy readings of a, so a given b is normal about their average, $(20.0 - 15b)/5 = 4 - 3b$, with spread $0.5/\sqrt{5} = 0.2236$. With a held, b given a is the slope through the origin of the heights minus a: normal about $(69.7 - 15a)/55$ with spread $0.5/\sqrt{55} = 0.0674$. These are the staircase's step sizes, against the cloud's spreads of 0.5244 in a and 0.1581 in b: the steps crawl.
+For the seedling the conditionals come straight from the likelihood, how probable the readings are for each a and b. With b held, the heights minus b times the week are five noisy readings of a, so a given b is normal about their average, $`(20.0 - 15b)/5 = 4 - 3b`$, with spread $`0.5/\sqrt{5} = 0.2236`$. With a held, b given a is the slope through the origin of the heights minus a: normal about $`(69.7 - 15a)/55`$ with spread $`0.5/\sqrt{55} = 0.0674`$. These are the staircase's step sizes, against the cloud's spreads of 0.5244 in a and 0.1581 in b: the steps crawl.
 
 ### Step 4: the chain forgets its start, and how fast
 
@@ -129,9 +141,11 @@ Start the grid chain at b = 0 and push its law forward exactly, sweep by sweep, 
 
 The formula column chains the two conditional averages of Step 3:
 
-$$E[b_t] - 0.97 = \tfrac{9}{11}\,\bigl(E[b_{t-1}] - 0.97\bigr), \qquad \text{so} \qquad E[b_t] = 0.97\,\bigl(1 - (9/11)^t\bigr) \text{ from } b_0 = 0.$$
+```math
+E[b_t] - 0.97 = \tfrac{9}{11}\,\bigl(E[b_{t-1}] - 0.97\bigr), \qquad \text{so} \qquad E[b_t] = 0.97\,\bigl(1 - (9/11)^t\bigr) \text{ from } b_0 = 0.
+```
 
-The gap shrinks by $\rho^2$ = 9/11 = 0.8182 per sweep: the tighter the tilt, the slower the forgetting. A simulation agrees: 4,000 fresh chains from b = 0, ten sweeps each, average 0.8396 (SE 0.0025).
+The gap shrinks by $`\rho^2`$ = 9/11 = 0.8182 per sweep: the tighter the tilt, the slower the forgetting. A simulation agrees: 4,000 fresh chains from b = 0, ten sweeps each, average 0.8396 (SE 0.0025).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -148,32 +162,38 @@ First line (jagged): one seeded sample path, plotted every second sweep. Second 
 <details>
 <summary>Detailed proof: the b-chain is a first-order autoregression with coefficient ρ^2</summary>
 
-Write $S_w = \sum w_i$, $S_{ww} = \sum w_i^2$, $S_h = \sum h_i$ and $S_{wh} = \sum w_i h_i$ for the four sums. A Gibbs sweep draws $a_t = (S_h - b_{t-1} S_w)/n + (\sigma/\sqrt n)\,z_1$, then $b_t = (S_{wh} - a_t S_w)/S_{ww} + (\sigma/\sqrt{S_{ww}})\,z_2$, with $z_1, z_2$ independent standard normals. Substituting,
-$$b_t = \frac{S_{wh} - S_w S_h / n}{S_{ww}} + \phi\, b_{t-1} + e_t, \qquad \phi = \frac{S_w^2}{n\, S_{ww}}, \qquad e_t = \frac{\sigma}{\sqrt{S_{ww}}}\Bigl(z_2 - \frac{S_w}{\sqrt{n S_{ww}}}\,z_1\Bigr).$$
-The noise term is independent of the past with variance $s^2 = (\sigma^2/S_{ww})(1 + \phi)$. So $b_t$ is a first-order autoregression: tomorrow is a fixed fraction $\phi$ of today plus fresh noise.
+Write $`S_w = \sum w_i`$, $`S_{ww} = \sum w_i^2`$, $`S_h = \sum h_i`$ and $`S_{wh} = \sum w_i h_i`$ for the four sums. A Gibbs sweep draws $`a_t = (S_h - b_{t-1} S_w)/n + (\sigma/\sqrt n)\,z_1`$, then $`b_t = (S_{wh} - a_t S_w)/S_{ww} + (\sigma/\sqrt{S_{ww}})\,z_2`$, with $`z_1, z_2`$ independent standard normals. Substituting,
 
-**Coefficient.** The posterior variances of a and b are $\sigma^2 S_{ww}/D$ and $\sigma^2 n/D$ and their covariance is $-\sigma^2 S_w/D$, as in the worked numbers. So $\rho^2 = S_w^2 / (n S_{ww}) = \phi$. Here $\phi = 225/275 = 9/11$.
+$`\displaystyle b_t = \frac{S_{wh} - S_w S_h / n}{S_{ww}} + \phi\, b_{t-1} + e_t, \qquad \phi = \frac{S_w^2}{n\, S_{ww}}, \qquad e_t = \frac{\sigma}{\sqrt{S_{ww}}}\Bigl(z_2 - \frac{S_w}{\sqrt{n S_{ww}}}\,z_1\Bigr).`$
 
-**Mean.** The fixed point of the average is $m = (n S_{wh} - S_w S_h)/(n S_{ww} - S_w^2)$, the least-squares slope 0.97, and $E[b_t] - m = \phi\,(E[b_{t-1}] - m)$: after $t$ sweeps the gap is $\phi^t$ times the first.
+The noise term is independent of the past with variance $`s^2 = (\sigma^2/S_{ww})(1 + \phi)`$. So $`b_t`$ is a first-order autoregression: tomorrow is a fixed fraction $`\phi`$ of today plus fresh noise.
 
-**Variance.** The equilibrium variance V solves $V = \phi^2 V + s^2$, so $V = s^2/(1 - \phi^2) = \sigma^2 / (S_{ww}(1 - \phi))$. The posterior variance of b is $\sigma^2 n/(n S_{ww} - S_w^2)$, which is the same expression. So the law of $b_t$ converges to the posterior marginal of b, both its centre and its spread, geometrically at rate $\phi = \rho^2$ per sweep.
+**Coefficient.** The posterior variances of a and b are $`\sigma^2 S_{ww}/D`$ and $`\sigma^2 n/D`$ and their covariance is $`-\sigma^2 S_w/D`$, as in the worked numbers. So $`\rho^2 = S_w^2 / (n S_{ww}) = \phi`$. Here $`\phi = 225/275 = 9/11`$.
 
-**Autocorrelation.** In equilibrium $\operatorname{Cov}(b_t, b_{t+k}) = \phi^k V$, so $\rho_k = \phi^k$.
+**Mean.** The fixed point of the average is $`m = (n S_{wh} - S_w S_h)/(n S_{ww} - S_w^2)`$, the least-squares slope 0.97, and $`E[b_t] - m = \phi\,(E[b_{t-1}] - m)`$: after $`t`$ sweeps the gap is $`\phi^t`$ times the first.
+
+**Variance.** The equilibrium variance V solves $`V = \phi^2 V + s^2`$, so $`V = s^2/(1 - \phi^2) = \sigma^2 / (S_{ww}(1 - \phi))`$. The posterior variance of b is $`\sigma^2 n/(n S_{ww} - S_w^2)`$, which is the same expression. So the law of $`b_t`$ converges to the posterior marginal of b, both its centre and its spread, geometrically at rate $`\phi = \rho^2`$ per sweep.
+
+**Autocorrelation.** In equilibrium $`\mathrm{Cov}(b_t, b_{t+k}) = \phi^k V`$, so $`\rho_k = \phi^k`$.
 
 </details>
 
 ### Step 5: the error of a correlated average
 
-Along one run of an irreducible chain the average converges to the posterior average. For the grid chain this is the time-average theorem of [Stationary distributions](04-stationary-distributions.md), proved there for finite chains; it needs no aperiodicity. The 100,000-step runs are on the continuous posterior, where the same result also needs Harris recurrence (from any start, every region of positive probability is visited again and again). That version is stated here without proof, from Tierney (1994), whose conditions the Metropolis and Gibbs chains here meet. What changes is the error: neighbouring steps overlap in information, so the variance of the average exceeds $v/N$ by the factor $\tau$.
+Along one run of an irreducible chain the average converges to the posterior average. For the grid chain this is the time-average theorem of [Stationary distributions](04-stationary-distributions.md), proved there for finite chains; it needs no aperiodicity. The 100,000-step runs are on the continuous posterior, where the same result also needs Harris recurrence (from any start, every region of positive probability is visited again and again). That version is stated here without proof, from Tierney (1994), whose conditions the Metropolis and Gibbs chains here meet. What changes is the error: neighbouring steps overlap in information, so the variance of the average exceeds $`v/N`$ by the factor $`\tau`$.
 
 <details>
 <summary>Detailed proof: the variance of a correlated average</summary>
 
-Let $g_1, \dots, g_N$ be the chain's values in equilibrium, each with variance $v$ and lag-k correlation $\rho_k$. The variance of a sum is the sum of all covariances:
-$$\operatorname{Var}\Bigl(\sum_{t=1}^{N} g_t\Bigr) = \sum_{s=1}^{N}\sum_{t=1}^{N} v\,\rho_{|s-t|} = N v + 2 v \sum_{k=1}^{N-1} (N - k)\,\rho_k,$$
-since lag k occurs for $N - k$ ordered pairs, twice. Divide by $N^2$:
-$$\operatorname{Var}(\bar g_N) = \frac{v}{N}\Bigl[1 + 2\sum_{k=1}^{N-1}\bigl(1 - \tfrac{k}{N}\bigr)\rho_k\Bigr].$$
-When $\sum_k |\rho_k|$ is finite, the bracket tends to $\tau = 1 + 2\sum_{k \ge 1} \rho_k$ by dominated convergence (wing 10), which is the formula. For the Gibbs b-chain, $\rho_k = \phi^k$ and the geometric series gives $\tau = 1 + 2\phi/(1 - \phi) = (1 + \phi)/(1 - \phi) = (20/11)/(2/11) = 10$.
+Let $`g_1, \dots, g_N`$ be the chain's values in equilibrium, each with variance $`v`$ and lag-k correlation $`\rho_k`$. The variance of a sum is the sum of all covariances:
+
+$`\displaystyle \mathrm{Var}\Bigl(\sum_{t=1}^{N} g_t\Bigr) = \sum_{s=1}^{N}\sum_{t=1}^{N} v\,\rho_{|s-t|} = N v + 2 v \sum_{k=1}^{N-1} (N - k)\,\rho_k,`$
+
+since lag k occurs for $`N - k`$ ordered pairs, twice. Divide by $`N^2`$:
+
+$`\displaystyle \mathrm{Var}(\bar g_N) = \frac{v}{N}\Bigl[1 + 2\sum_{k=1}^{N-1}\bigl(1 - \tfrac{k}{N}\bigr)\rho_k\Bigr].`$
+
+When $`\sum_k |\rho_k|`$ is finite, the bracket tends to $`\tau = 1 + 2\sum_{k \ge 1} \rho_k`$ by dominated convergence (wing 10), which is the formula. For the Gibbs b-chain, $`\rho_k = \phi^k`$ and the geometric series gives $`\tau = 1 + 2\phi/(1 - \phi) = (1 + \phi)/(1 - \phi) = (20/11)/(2/11) = 10`$.
 
 </details>
 
@@ -671,9 +691,9 @@ The two outputs are identical line for line.
 
 Lean proves Steps 1, 2 and 3 for every finite set of states, and checks the worked numbers exactly.
 
-- Suppose each row of $P$ sums to 1 and detailed balance holds. Then one step leaves $\pi$ unchanged, so $\pi$ is stationary.
-- Take any target $f \ge 0$, any proposal $q \ge 0$, and any $Z > 0$. Then Metropolis–Hastings with $\alpha = \min(1, r)$ is in detailed balance with $\pi = f/Z$.
-- Take any law $\pi \ge 0$ on a finite grid of pairs (a, b). Then redrawing a given b keeps $\pi$, so does redrawing b given a, and so does a whole sweep.
+- Suppose each row of $`P`$ sums to 1 and detailed balance holds. Then one step leaves $`\pi`$ unchanged, so $`\pi`$ is stationary.
+- Take any target $`f \ge 0`$, any proposal $`q \ge 0`$, and any $`Z > 0`$. Then Metropolis–Hastings with $`\alpha = \min(1, r)`$ is in detailed balance with $`\pi = f/Z`$.
+- Take any law $`\pi \ge 0`$ on a finite grid of pairs (a, b). Then redrawing a given b keeps $`\pi`$, so does redrawing b given a, and so does a whole sweep.
 - The sums of weeks, squared weeks, heights and week times height are 15, 55, 20.0 and 69.7. The spread of the weeks, D, is 50.
 - The posterior means are 1.09 cm for a and 0.97 cm a week for b.
 - The variances of a and b are 0.2750 and 0.0250, and their covariance is −0.0750.
@@ -863,7 +883,7 @@ end MarkovChainMonteCarlo
 > [!warning]
 > **Trusting the chain's output to say it has explored.** The a-only sampler, stuck at b = 0.5, reports mean a = 2.5027 with standard error 0.0016 and a steady trace of a. The truth is 1.0900. Diagnostics measure how well the chain covered where it went, never where it did not go. Irreducibility is proved from the design, before the run.
 >
-> - **Dropping the Hastings factor.** A lopsided proposal needs $q(y, x)/q(x, y)$ in the ratio; without it, 0.9426 instead of 0.9700, however long the run.
+> - **Dropping the Hastings factor.** A lopsided proposal needs $`q(y, x)/q(x, y)`$ in the ratio; without it, 0.9426 instead of 0.9700, however long the run.
 > - **Quoting the naive standard error.** 0.0005 where the honest figure is 0.0014.
 > - **Keeping the burn-in.** From b = 0, the average at sweep 10 is 0.8396, not 0.9700.
 > - **Reading high acceptance as health.** Gibbs accepts every proposal and still needs ten sweeps per effective draw.

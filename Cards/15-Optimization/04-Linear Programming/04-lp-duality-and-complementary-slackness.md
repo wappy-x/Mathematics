@@ -32,46 +32,44 @@ The profit direction (19, 20), drawn to (51, 36), is 3 times the timber arrow (t
 
 ## The formula
 
-Unlike the standard form on [Linear programs](01-linear-programs-and-polyhedra.md), which minimises with equations and slacks, this card keeps the workshop as "maximise $c^T x$ subject to $Ax \le b$, $x \ge 0$". The inequalities hold entry by entry. The symbols keep their roles: the plan is $x$, the profit per item $c$, the usage table $A$ and the stocks $b$. $A^T$ is $A$ with rows and columns swapped.
+Unlike the standard form on [Linear programs](01-linear-programs-and-polyhedra.md), which minimises with equations and slacks, this card keeps the workshop as "maximise $`c^T x`$ subject to $`Ax \le b`$, $`x \ge 0`$". The inequalities hold entry by entry. The symbols keep their roles: the plan is $`x`$, the profit per item $`c`$, the usage table $`A`$ and the stocks $`b`$. $`A^T`$ is $`A`$ with rows and columns swapped.
 
-This card introduces $y$, the **dual prices**: one price per resource, in pounds per unit. The original problem is called the **primal**, and a plan or price list is **feasible** when it meets all its rules.
+This card introduces $`y`$, the **dual prices**: one price per resource, in pounds per unit. The original problem is called the **primal**, and a plan or price list is **feasible** when it meets all its rules.
 
-$$
-\textbf{primal: } \max_{x}\ c^T x \ \text{ subject to } Ax \le b,\ x \ge 0
-\qquad\qquad
-\textbf{dual: } \min_{y}\ b^T y \ \text{ subject to } A^T y \ge c,\ y \ge 0
-$$
+```math
+\textbf{primal: } \max_{x}\ c^T x \ \text{ subject to } Ax \le b,\ x \ge 0 \qquad\qquad \textbf{dual: } \min_{y}\ b^T y \ \text{ subject to } A^T y \ge c,\ y \ge 0
+```
 
-$$
+```math
 \text{weak duality: } c^T x \le b^T y, \qquad \text{the gap: } b^T y - c^T x = \sum_i y_i s_i + \sum_j x_j r_j, \qquad s = b - Ax,\quad r = A^T y - c
-$$
+```
 
 **Read it aloud:** the dual looks for the cheapest prices on the resources that value each product's inputs at least at its profit; any such price list's stock value is at least any plan's profit, and the gap between them is the price of every spare unit plus the over-valuation of every item made.
 
-For the workshop, with $x_1$ tables and $x_2$ chairs:
+For the workshop, with $`x_1`$ tables and $`x_2`$ chairs:
 
-$$
+```math
 \max\ 19x_1 + 20x_2 \quad\text{subject to}\quad 4x_1 + 2x_2 \le 160,\ \ 3x_1 + x_2 \le 120,\ \ x_1 + 2x_2 \le 64,\ \ x \ge 0
-$$
+```
 
-$$
+```math
 \min\ 160y_1 + 120y_2 + 64y_3 \quad\text{subject to}\quad 4y_1 + 3y_2 + y_3 \ge 19,\ \ 2y_1 + y_2 + 2y_3 \ge 20,\ \ y \ge 0
-$$
+```
 
 Each primal row (a resource) becomes a dual variable (its price). Each primal column (a product) becomes a dual row (its break-even rule). The dual of the dual is the primal again.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (x_1, x_2)$ | the plan: tables and chairs made | (32, 16) at the best | — |
-| $c$ | profit per item, £ | (19, 20) | chairs to 40: the plan jumps to (0, 32), £1,280 |
-| $A$, $A^T$ | usage table: row $i$ is a resource, column $j$ a product; $A^T$ swaps them | table (4, 3, 1), chair (2, 1, 2) | — |
-| $b$ | stocks: metres, hours, litres | (160, 120, 64) | finish to 65: profit £935, up £7 |
-| $y = (y_1, y_2, y_3)$, $y_i$ | dual prices on timber, labour, finish, £ per unit | (3, 0, 7) | — |
-| $s = b - Ax$, $s_i$ | slack: unused stock of resource $i$ | (0, 8, 0) | — |
-| $r = A^T y - c$, $r_j$ | surplus: how far product $j$'s inputs, at the prices, exceed its profit | (0, 0) | — |
-| $p^\star$, $d^\star$ | best profit; cheapest stock value | both £928 | — |
-| $B$, $c_B$ | at the simplex method's last corner: the columns of the variables in the solution, and their profits | tables, chairs, spare labour; (19, 20, 0) | — |
-| $w$, $k$ | a direction of price change that proves no plan exists, and how far to move along it | (0, 0, 1, 2); $k = 10$ and $100$ | the dual value falls £16 per step |
+| $`x = (x_1, x_2)`$ | the plan: tables and chairs made | (32, 16) at the best | — |
+| $`c`$ | profit per item, £ | (19, 20) | chairs to 40: the plan jumps to (0, 32), £1,280 |
+| $`A`$, $`A^T`$ | usage table: row $`i`$ is a resource, column $`j`$ a product; $`A^T`$ swaps them | table (4, 3, 1), chair (2, 1, 2) | — |
+| $`b`$ | stocks: metres, hours, litres | (160, 120, 64) | finish to 65: profit £935, up £7 |
+| $`y = (y_1, y_2, y_3)`$, $`y_i`$ | dual prices on timber, labour, finish, £ per unit | (3, 0, 7) | — |
+| $`s = b - Ax`$, $`s_i`$ | slack: unused stock of resource $`i`$ | (0, 8, 0) | — |
+| $`r = A^T y - c`$, $`r_j`$ | surplus: how far product $`j`$'s inputs, at the prices, exceed its profit | (0, 0) | — |
+| $`p^\star`$, $`d^\star`$ | best profit; cheapest stock value | both £928 | — |
+| $`B`$, $`c_B`$ | at the simplex method's last corner: the columns of the variables in the solution, and their profits | tables, chairs, spare labour; (19, 20, 0) | — |
+| $`w`$, $`k`$ | a direction of price change that proves no plan exists, and how far to move along it | (0, 0, 1, 2); $`k = 10`$ and $`100`$ | the dual value falls £16 per step |
 
 ### When it holds
 
@@ -93,13 +91,13 @@ The excess of ceiling over profit is two kinds of waste at those prices: priced 
 
 ### Step 1: weak duality, in one chain
 
-Take any plan $x$ with $Ax \le b$, $x \ge 0$ and any prices $y$ with $A^T y \ge c$, $y \ge 0$. Then
+Take any plan $`x`$ with $`Ax \le b`$, $`x \ge 0`$ and any prices $`y`$ with $`A^T y \ge c`$, $`y \ge 0`$. Then
 
-$$
+```math
 c^T x \;\le\; (A^T y)^T x \;=\; y^T (Ax) \;\le\; y^T b .
-$$
+```
 
-The first step holds because $c \le A^T y$ entry by entry and every $x_j \ge 0$. The second step just regroups the same sum. The third holds because $Ax \le b$ entry by entry and every $y_i \ge 0$. Both sign conditions are used, once each, which is why the two broken price lists in What breaks fail.
+The first step holds because $`c \le A^T y`$ entry by entry and every $`x_j \ge 0`$. The second step just regroups the same sum. The third holds because $`Ax \le b`$ entry by entry and every $`y_i \ge 0`$. Both sign conditions are used, once each, which is why the two broken price lists in What breaks fail.
 
 The code tests the chain on every whole-number plan (881 of them) against every price list with whole-pound prices from £0 to £10 that covers both products (933 of them). The smallest gap is 0, and it is reached by exactly 1 pair: 32 tables and 16 chairs, with prices (3, 0, 7).
 
@@ -107,23 +105,23 @@ Two consequences follow at once. If the primal is unbounded (profit grows withou
 
 ### Step 2: the gap identity
 
-Write the slack $s = b - Ax$ and the surplus $r = A^T y - c$. Both are $\ge 0$ for feasible $x$ and $y$. Expand:
+Write the slack $`s = b - Ax`$ and the surplus $`r = A^T y - c`$. Both are $`\ge 0`$ for feasible $`x`$ and $`y`$. Expand:
 
-$$
+```math
 b^T y - c^T x = (Ax + s)^T y - (A^T y - r)^T x = y^T s + x^T r .
-$$
+```
 
-The terms $y^T Ax$ and $x^T A^T y$ are the same number and cancel. What remains is a sum of products of non-negative numbers.
+The terms $`y^T Ax`$ and $`x^T A^T y`$ are the same number and cancel. What remains is a sum of products of non-negative numbers.
 
-Try the prices (3, 1, 7), a list that also charges £1 an hour for labour. The stock is then worth £1,048, and the gap to £928 is £120. The identity splits it: £1 times the 8 spare hours, plus 32 tables each over-valued by £3, plus 16 chairs each over-valued by £1, that is $1 \times 8 + 32 \times 3 + 16 \times 1 = 120$.
+Try the prices (3, 1, 7), a list that also charges £1 an hour for labour. The stock is then worth £1,048, and the gap to £928 is £120. The identity splits it: £1 times the 8 spare hours, plus 32 tables each over-valued by £3, plus 16 chairs each over-valued by £1, that is $`1 \times 8 + 32 \times 3 + 16 \times 1 = 120`$.
 
 ### Step 3: complementary slackness
 
 The gap is a sum of non-negative terms, so it is zero exactly when every term is zero:
 
-$$
+```math
 y_i\, s_i = 0 \ \text{ for every resource } i, \qquad x_j\, r_j = 0 \ \text{ for every product } j .
-$$
+```
 
 In words:
 
@@ -132,50 +130,50 @@ In words:
 - a product that is made breaks even exactly at the prices;
 - a product whose inputs are worth more than its profit is not made.
 
-**Theorem:** feasible $x$ and $y$ are both optimal if and only if these hold. If they hold, the gap is zero, so by weak duality no plan beats $x$ and no price list beats $y$. If the gap is not zero, then by strong duality (next step) a better plan or better prices exist.
+**Theorem:** feasible $`x`$ and $`y`$ are both optimal if and only if these hold. If they hold, the gap is zero, so by weak duality no plan beats $`x`$ and no price list beats $`y`$. If the gap is not zero, then by strong duality (next step) a better plan or better prices exist.
 
 At the workshop: labour has slack 8 and price 0; timber and finish have slack 0 and prices 3 and 7; tables and chairs have surplus 0 and are made. Every product in the table of the code's output is zero.
 
-Slackness also finds the prices from the plan. Labour is slack, so $y_2 = 0$. Tables and chairs are made, so their rules hold with equality: $4y_1 + y_3 = 19$ and $2y_1 + 2y_3 = 20$. The second gives $y_1 + y_3 = 10$; subtract from the first and $3y_1 = 9$, so $y_1 = 3$ and $y_3 = 7$. Both are $\ge 0$, so the list is fair, and it certifies the plan.
+Slackness also finds the prices from the plan. Labour is slack, so $`y_2 = 0`$. Tables and chairs are made, so their rules hold with equality: $`4y_1 + y_3 = 19`$ and $`2y_1 + 2y_3 = 20`$. The second gives $`y_1 + y_3 = 10`$; subtract from the first and $`3y_1 = 9`$, so $`y_1 = 3`$ and $`y_3 = 7`$. Both are $`\ge 0`$, so the list is fair, and it certifies the plan.
 
 ### Step 4: strong duality, from the simplex method's last table
 
-**Strong duality theorem.** If the primal has a best plan, the dual has a best price list, and $p^\star = d^\star$. If either problem is unbounded, the other is infeasible. (Both can be infeasible.)
+**Strong duality theorem.** If the primal has a best plan, the dual has a best price list, and $`p^\star = d^\star`$. If either problem is unbounded, the other is infeasible. (Both can be infeasible.)
 
 The proof in words: the simplex method stops only when no column's **reduced cost** (its usage valued at the current prices, minus its profit) is negative. Under a product column, that stopping test says the product is covered; under a slack column, it says the price is at least zero. So the prices in the final table are a fair list, and their stock value equals the plan's profit.
 
 <details>
 <summary>Detailed proof: strong duality for linear programs</summary>
 
-Write the primal in equality form, maximise $c^T x$ subject to $Ax + s = b$, $x \ge 0$, $s \ge 0$, and first suppose $b \ge 0$, so the origin is a starting corner. The columns are those of $A$, one per product, followed by one unit column per slack, each slack earning 0.
+Write the primal in equality form, maximise $`c^T x`$ subject to $`Ax + s = b`$, $`x \ge 0`$, $`s \ge 0`$, and first suppose $`b \ge 0`$, so the origin is a starting corner. The columns are those of $`A`$, one per product, followed by one unit column per slack, each slack earning 0.
 
-Run the simplex method with an anti-cycling rule (Bland's rule, on [The simplex method](03-simplex-method.md)). There are finitely many bases (sets of columns that pin down a corner), and the rule never repeats one, so it stops. Since the primal has a best plan, it does not stop on an unbounded column; it stops at a basis: one column per resource, together forming an invertible matrix $B$, whose variables take the values $B^{-1} b \ge 0$ while the rest are zero.
+Run the simplex method with an anti-cycling rule (Bland's rule, on [The simplex method](03-simplex-method.md)). There are finitely many bases (sets of columns that pin down a corner), and the rule never repeats one, so it stops. Since the primal has a best plan, it does not stop on an unbounded column; it stops at a basis: one column per resource, together forming an invertible matrix $`B`$, whose variables take the values $`B^{-1} b \ge 0`$ while the rest are zero.
 
-Define $y^T = c_B^T B^{-1}$. The reduced cost of any column is its usage valued at the prices $y$, minus its profit. The stopping rule says it is $\ge 0$ for every column. For product column $j$ this reads $(A^T y)_j \ge c_j$. For slack column $i$, whose column is the $i$-th unit vector and whose profit is 0, it reads $y_i \ge 0$. So $y$ is dual feasible.
+Define $`y^T = c_B^T B^{-1}`$. The reduced cost of any column is its usage valued at the prices $`y`$, minus its profit. The stopping rule says it is $`\ge 0`$ for every column. For product column $`j`$ this reads $`(A^T y)_j \ge c_j`$. For slack column $`i`$, whose column is the $`i`$-th unit vector and whose profit is 0, it reads $`y_i \ge 0`$. So $`y`$ is dual feasible.
 
-The plan's profit is $c_B^T B^{-1} b = y^T b$. So $c^T x = b^T y$, and by weak duality $x$ is a best plan and $y$ a best price list, with $p^\star = d^\star$.
+The plan's profit is $`c_B^T B^{-1} b = y^T b`$. So $`c^T x = b^T y`$, and by weak duality $`x`$ is a best plan and $`y`$ a best price list, with $`p^\star = d^\star`$.
 
 If instead the dual has a best price list, write it as a maximising LP of the same form and run the argument on it: its dual is the primal, so the primal has a best plan with the same value.
 
-If some stock entry of $b$ is negative, phase one of the simplex method (same card) either finds a starting corner, after which the argument above runs unchanged, or proves the primal infeasible. The statements about unbounded problems are Step 1's consequences of weak duality.
+If some stock entry of $`b`$ is negative, phase one of the simplex method (same card) either finds a starting corner, after which the argument above runs unchanged, or proves the primal infeasible. The statements about unbounded problems are Step 1's consequences of weak duality.
 
-For the workshop, the last basis holds tables, chairs and spare labour. Its columns, in the order timber, labour, finish, are (4, 3, 1), (2, 1, 2) and (0, 1, 0), with profits (19, 20, 0). Solving $y^T B = c_B^T$ is the three equations of Step 3: $y = (3, 0, 7)$, and the code reads the same numbers off the final table's slack columns.
+For the workshop, the last basis holds tables, chairs and spare labour. Its columns, in the order timber, labour, finish, are (4, 3, 1), (2, 1, 2) and (0, 1, 0), with profits (19, 20, 0). Solving $`y^T B = c_B^T`$ is the three equations of Step 3: $`y = (3, 0, 7)`$, and the code reads the same numbers off the final table's slack columns.
 
 </details>
 
-The LP dual is the [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md) bound: price the stock rules with $y \ge 0$, and the best priced profit over $x \ge 0$ is $b^T y$ when $A^T y \ge c$, unlimited otherwise. For linear programs no strictly feasible point (one that meets every rule with room to spare) is needed.
+The LP dual is the [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md) bound: price the stock rules with $`y \ge 0`$, and the best priced profit over $`x \ge 0`$ is $`b^T y`$ when $`A^T y \ge c`$, unlimited otherwise. For linear programs no strictly feasible point (one that meets every rule with room to spare) is needed.
 
 ### Step 5: when no plan exists, the dual says why
 
-An order for at least 40 chairs adds the rule $-x_2 \le -40$. Add the finish rule once and the order rule twice:
+An order for at least 40 chairs adds the rule $`-x_2 \le -40`$. Add the finish rule once and the order rule twice:
 
-$$
+```math
 (x_1 + 2x_2) + 2(-x_2) \le 64 + 2(-40) \quad\Longrightarrow\quad x_1 \le -16 ,
-$$
+```
 
-which no plan with $x_1 \ge 0$ can meet. The weights $w = (0, 0, 1, 2)$ on the four rules are a **certificate of infeasibility**.
+which no plan with $`x_1 \ge 0`$ can meet. The weights $`w = (0, 0, 1, 2)`$ on the four rules are a **certificate of infeasibility**.
 
-They are also a direction in which the dual's prices can move forever: from (3, 0, 7, 0), each step $k$ along $w$ keeps every product covered and lowers the stock value by £16. The value runs 928, then £768 at $k = 10$, then −£672 at $k = 100$. That such weights always exist when no plan does is **Farkas' lemma**, the alternative form of strong duality (Bertsimas and Tsitsiklis, section 4.6).
+They are also a direction in which the dual's prices can move forever: from (3, 0, 7, 0), each step $`k`$ along $`w`$ keeps every product covered and lowers the stock value by £16. The value runs 928, then £768 at $`k = 10`$, then −£672 at $`k = 100`$. That such weights always exist when no plan does is **Farkas' lemma**, the alternative form of strong duality (Bertsimas and Tsitsiklis, section 4.6).
 
 ---
 
@@ -185,16 +183,16 @@ The plan (32, 16) and the prices (3, 0, 7).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| timber used | $4 \times 32 + 2 \times 16$ | 160 of 160 m, slack 0 |
-| labour used | $3 \times 32 + 16$ | 112 of 120 h, slack 8 |
-| finish used | $32 + 2 \times 16$ | 64 of 64 litres, slack 0 |
-| profit | $19 \times 32 + 20 \times 16$ | £928 |
-| a table's inputs at the prices | $4 \times 3 + 3 \times 0 + 1 \times 7$ | £19, surplus 0 |
-| a chair's inputs at the prices | $2 \times 3 + 1 \times 0 + 2 \times 7$ | £20, surplus 0 |
-| stock value | $160 \times 3 + 120 \times 0 + 64 \times 7$ | £928 |
-| price times slack | $3 \times 0,\ 0 \times 8,\ 7 \times 0$ | 0, 0, 0 |
-| made times surplus | $32 \times 0,\ 16 \times 0$ | 0, 0 |
-| gap | $928 - 928$ | **£0** |
+| timber used | $`4 \times 32 + 2 \times 16`$ | 160 of 160 m, slack 0 |
+| labour used | $`3 \times 32 + 16`$ | 112 of 120 h, slack 8 |
+| finish used | $`32 + 2 \times 16`$ | 64 of 64 litres, slack 0 |
+| profit | $`19 \times 32 + 20 \times 16`$ | £928 |
+| a table's inputs at the prices | $`4 \times 3 + 3 \times 0 + 1 \times 7`$ | £19, surplus 0 |
+| a chair's inputs at the prices | $`2 \times 3 + 1 \times 0 + 2 \times 7`$ | £20, surplus 0 |
+| stock value | $`160 \times 3 + 120 \times 0 + 64 \times 7`$ | £928 |
+| price times slack | $`3 \times 0,\ 0 \times 8,\ 7 \times 0`$ | 0, 0, 0 |
+| made times surplus | $`32 \times 0,\ 16 \times 0`$ | 0, 0 |
+| gap | $`928 - 928`$ | **£0** |
 
 The plan earns £928 and a fair price list values the stock at £928, so no plan earns more and no fair price list is cheaper: 32 tables and 16 chairs is proved best.
 
@@ -204,11 +202,11 @@ Charge £1 an hour for labour too: prices (3, 1, 7).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| a table's inputs | $4 \times 3 + 3 \times 1 + 1 \times 7$ | £22, surplus 3 |
-| a chair's inputs | $2 \times 3 + 1 \times 1 + 2 \times 7$ | £21, surplus 1 |
-| stock value | $160 \times 3 + 120 \times 1 + 64 \times 7$ | £1,048 |
-| gap | $1048 - 928$ | £120 |
-| gap, by the identity | $1 \times 8 + 32 \times 3 + 16 \times 1$ | **£120** |
+| a table's inputs | $`4 \times 3 + 3 \times 1 + 1 \times 7`$ | £22, surplus 3 |
+| a chair's inputs | $`2 \times 3 + 1 \times 1 + 2 \times 7`$ | £21, surplus 1 |
+| stock value | $`160 \times 3 + 120 \times 1 + 64 \times 7`$ | £1,048 |
+| gap | $`1048 - 928`$ | £120 |
+| gap, by the identity | $`1 \times 8 + 32 \times 3 + 16 \times 1`$ | **£120** |
 
 Still a valid ceiling, but £120 too high, and the identity names the cause: a price on 8 spare hours, and both products over-valued.
 
@@ -218,7 +216,7 @@ Still a valid ceiling, but £120 too high, and the identity names the cause: a p
 | --- | --- | --- |
 | Prices (2, 0, 7): a table's inputs worth £15 and a chair's £18, under their £19 and £20 profits | a "ceiling" of £768, £160 below a plan that really earns £928 | The list does not cover every product, so the first step of the chain fails |
 | Prices (8, −6, 5): both products covered, labour priced negative | a "ceiling" of £880, £48 below the truth | A negative price on a slack resource: −6 × 8 spare hours = −£48, exactly the shortfall |
-| An order for 40 chairs, finish still 64 litres | no plan at all; dual value £768 at $k = 10$ and −£672 at $k = 100$ | Strong duality needs a best plan to exist; here the dual is unbounded instead |
+| An order for 40 chairs, finish still 64 litres | no plan at all; dual value £768 at $`k = 10`$ and −£672 at $`k = 100`$ | Strong duality needs a best plan to exist; here the dual is unbounded instead |
 | At the chairs-only corner (0, 32), solving slackness for prices | prices (0, 0, 10), total £640; a table's inputs worth £10, under £19 | Slackness holds at every corner the simplex method visits; without fair prices it proves nothing |
 
 ---
@@ -588,7 +586,7 @@ ALL CHECKS PASS
 
 Lean proves the gap identity, weak duality, strong duality and complementary slackness for every linear program, plus the workshop's numbers.
 
-- Any plan and any price list: the gap $b^T y - c^T x$ is the price of the spare stock plus the over-valuation of the items made.
+- Any plan and any price list: the gap $`b^T y - c^T x`$ is the price of the spare stock plus the over-valuation of the items made.
 - Every feasible plan earns at most every fair price list's stock value.
 - When the primal or the dual has a best answer, both do, and the best profit equals the cheapest stock value.
 - Lean reaches strong duality through Farkas' lemma, not the simplex method's last table.

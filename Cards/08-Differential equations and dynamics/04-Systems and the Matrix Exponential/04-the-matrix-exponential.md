@@ -34,30 +34,36 @@ Orange: room 1. Teal: room 2. Room 2 first warms: at the start its rate is 30 �
 
 Reminder: x' = Ax reads "the rate of the state x is the matrix A times the state" ([From one equation to a system](01-from-one-equation-to-a-system.md)). For the rooms, with rates per hour:
 
-$$T_1' = -2T_1 + T_2, \qquad T_2' = T_1 - 2T_2, \qquad A = \begin{pmatrix} -2 & 1 \\ 1 & -2 \end{pmatrix}$$
+```math
+T_1' = -2T_1 + T_2, \qquad T_2' = T_1 - 2T_2, \qquad A = \begin{pmatrix} -2 & 1 \\ 1 & -2 \end{pmatrix}
+```
 
 The −2 is two leaks at 1 per hour, outdoors and through the wall; the 1 is heat arriving from the other room.
 
-New notation, in words first: e^(At), written $e^{At}$ and read "e to the A t", is the matrix the series below builds, not e of each entry.
+New notation, in words first: e^(At), written $`e^{At}`$ and read "e to the A t", is the matrix the series below builds, not e of each entry.
 
-$$e^{At} = I + At + \frac{(At)^2}{2!} + \frac{(At)^3}{3!} + \cdots, \qquad x(t) = e^{At}\,x_0$$
+```math
+e^{At} = I + At + \frac{(At)^2}{2!} + \frac{(At)^3}{3!} + \cdots, \qquad x(t) = e^{At}\,x_0
+```
 
 **Read it aloud:** add the identity, A times t, A squared times t squared over two, and so on; the sum times the start is the state at time t.
 
 For the rooms the sum has a closed form (Why it works, Step 2):
 
-$$e^{At} = \tfrac12\begin{pmatrix} e^{-t} + e^{-3t} & e^{-t} - e^{-3t} \\ e^{-t} - e^{-3t} & e^{-t} + e^{-3t} \end{pmatrix}$$
+```math
+e^{At} = \tfrac12\begin{pmatrix} e^{-t} + e^{-3t} & e^{-t} - e^{-3t} \\ e^{-t} - e^{-3t} & e^{-t} + e^{-3t} \end{pmatrix}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_0$ | the state: both temperatures above outside, in °C; $x_0$ at the start | $x_0$ = (30, 10) | the answer scales in proportion |
-| $A$ | the rate matrix, entries per hour | diagonal −2, off-diagonal 1 | faster cooling |
-| $t$, $s$ | times since the heating went off, in hours | $t$ = 1 h | rooms nearer outside |
-| $e^{At}$ | the matrix that carries a start to time $t$ | entries 0.208833 and 0.159046 at 1 h | — |
-| $I$ | the identity matrix, which changes nothing | `[[1, 0], [0, 1]]` | — |
-| $k$ | the term number in the series, with $k!$ = 1 × 2 × … × $k$ | 0 to 59 in the code | more terms, a closer sum |
-| $\lambda$ | an eigenvalue: a pattern's own shrink rate | −1 and −3 per hour | — |
-| $J$, $N$ | the heater system's matrix, and its part N = J + I | `[[-1, 1], [0, -1]]`, `[[0, 1], [0, 0]]` | — |
+| $`x`$, $`x_0`$ | the state: both temperatures above outside, in °C; $`x_0`$ at the start | $`x_0`$ = (30, 10) | the answer scales in proportion |
+| $`A`$ | the rate matrix, entries per hour | diagonal −2, off-diagonal 1 | faster cooling |
+| $`t`$, $`s`$ | times since the heating went off, in hours | $`t`$ = 1 h | rooms nearer outside |
+| $`e^{At}`$ | the matrix that carries a start to time $`t`$ | entries 0.208833 and 0.159046 at 1 h | — |
+| $`I`$ | the identity matrix, which changes nothing | `[[1, 0], [0, 1]]` | — |
+| $`k`$ | the term number in the series, with $`k!`$ = 1 × 2 × … × $`k`$ | 0 to 59 in the code | more terms, a closer sum |
+| $`\lambda`$ | an eigenvalue: a pattern's own shrink rate | −1 and −3 per hour | — |
+| $`J`$, $`N`$ | the heater system's matrix, and its part N = J + I | `[[-1, 1], [0, -1]]`, `[[0, 1], [0, 0]]` | — |
 
 ### When it holds
 
@@ -90,13 +96,17 @@ A matrix whose columns are solutions from independent starts is a fundamental ma
 
 A storage heater 10 °C above outside warms a room starting at outdoor temperature. The heater loses its excess at 1 per hour, all into the room; the room leaks at 1 per hour and passes nothing back. With x = (room, heater):
 
-$$R' = -R + H, \qquad H' = -H, \qquad J = \begin{pmatrix} -1 & 1 \\ 0 & -1 \end{pmatrix}$$
+```math
+R' = -R + H, \qquad H' = -H, \qquad J = \begin{pmatrix} -1 & 1 \\ 0 & -1 \end{pmatrix}
+```
 
 The eigenvalue −1 is repeated with one eigenvector, (1, 0), so Step 2 cannot split the start (0, 10).
 
 The series still sums. Write J = −I + N with N = `[[0, 1], [0, 0]]`. N times N is zero and −I commutes with everything, so the binomial expansion keeps two terms: J^k = (−1)^k I + k(−1)^(k−1) N. The diagonal sums to e^(−t); the top-right corner gives
 
-$$\sum_{k\ge1} \frac{k(-1)^{k-1}t^k}{k!} = t\sum_{k\ge1}\frac{(-t)^{k-1}}{(k-1)!} = t\,e^{-t}, \qquad e^{Jt} = e^{-t}\begin{pmatrix} 1 & t \\ 0 & 1 \end{pmatrix}$$
+```math
+\sum_{k\ge1} \frac{k(-1)^{k-1}t^k}{k!} = t\sum_{k\ge1}\frac{(-t)^{k-1}}{(k-1)!} = t\,e^{-t}, \qquad e^{Jt} = e^{-t}\begin{pmatrix} 1 & t \\ 0 & 1 \end{pmatrix}
+```
 
 The factor t marks the missing eigenvector. Its stand-in, (0, 1), is a generalised eigenvector: N sends it to the true eigenvector (1, 0). The room follows R = 10te^(−t): up to 3.68 °C above outside at 1 h, then down.
 

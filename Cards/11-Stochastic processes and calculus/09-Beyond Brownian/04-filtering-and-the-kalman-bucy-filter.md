@@ -39,63 +39,75 @@ Orange: that day's average quote, every third trading day, jumping between 3.28 
 
 ## The formula
 
-Notation first, in words. Time $t$ is in years, with 250 trading days a year, so one day is $\Delta$ = 1/250 = 0.004 years. The hidden rate at time $t$ is $X_t$, in percentage points. It follows the Ornstein-Uhlenbeck equation of [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md):
+Notation first, in words. Time $`t`$ is in years, with 250 trading days a year, so one day is $`\Delta`$ = 1/250 = 0.004 years. The hidden rate at time $`t`$ is $`X_t`$, in percentage points. It follows the Ornstein-Uhlenbeck equation of [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md):
 
-$$dX_t = -a\,(X_t - \theta)\,dt + \sigma\,dW_t .$$
+```math
+dX_t = -a\,(X_t - \theta)\,dt + \sigma\,dW_t .
+```
 
-Here $a$ = 2 a year is the pull's speed, $\theta$ = 4 percent the long-run level, and $\sigma$ = 1 point per root-year the size of the news shocks. $W_t$ is Brownian motion, the random walk seen from far away; $dW_t$ is shorthand for an Ito integral ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)), never a derivative, because the path has none.
+Here $`a`$ = 2 a year is the pull's speed, $`\theta`$ = 4 percent the long-run level, and $`\sigma`$ = 1 point per root-year the size of the news shocks. $`W_t`$ is Brownian motion, the random walk seen from far away; $`dW_t`$ is shorthand for an Ito integral ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)), never a derivative, because the path has none.
 
-The quotes form a running total $Y_t$, each quote weighted by the time it covered:
+The quotes form a running total $`Y_t`$, each quote weighted by the time it covered:
 
-$$dY_t = X_t\,dt + \rho\,dB_t .$$
+```math
+dY_t = X_t\,dt + \rho\,dB_t .
+```
 
-**Read it aloud:** over the next instant, the quote total grows by the true rate times the instant, plus noise. $B_t$ is a second Brownian motion, independent of $W_t$, and $\rho$ sets the size of the quote noise. One day's average quote is the day's average rate plus an error of standard deviation $\rho/\sqrt{\Delta}$, here $s$ = 0.5 points, so $\rho^2 = s^2\Delta$ = 0.001.
+**Read it aloud:** over the next instant, the quote total grows by the true rate times the instant, plus noise. $`B_t`$ is a second Brownian motion, independent of $`W_t`$, and $`\rho`$ sets the size of the quote noise. One day's average quote is the day's average rate plus an error of standard deviation $`\rho/\sqrt{\Delta}`$, here $`s`$ = 0.5 points, so $`\rho^2 = s^2\Delta`$ = 0.001.
 
-"What the quotes have shown by time $t$" is the filtration of the quotes, $\mathcal{F}^Y_t$ ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). The filter is the conditional mean and variance given it:
+"What the quotes have shown by time $`t`$" is the filtration of the quotes, $`\mathcal{F}^Y_t`$ ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). The filter is the conditional mean and variance given it:
 
-$$m_t = E[X_t \mid \mathcal{F}^Y_t], \qquad P_t = E[(X_t - m_t)^2] .$$
+```math
+m_t = E[X_t \mid \mathcal{F}^Y_t], \qquad P_t = E[(X_t - m_t)^2] .
+```
 
 The **Kalman-Bucy filter** says they obey
 
-$$dm_t = -a\,(m_t - \theta)\,dt + K_t\,(dY_t - m_t\,dt), \qquad K_t = \frac{P_t}{\rho^2},$$
+```math
+dm_t = -a\,(m_t - \theta)\,dt + K_t\,(dY_t - m_t\,dt), \qquad K_t = \frac{P_t}{\rho^2},
+```
 
-$$\frac{dP_t}{dt} = -2a\,P_t + \sigma^2 - \frac{P_t^2}{\rho^2} .$$
+```math
+\frac{dP_t}{dt} = -2a\,P_t + \sigma^2 - \frac{P_t^2}{\rho^2} .
+```
 
 **Read it aloud:** the estimate drifts as the rate would, nudged by the gain times the surprise, the new quote minus what was expected; the uncertainty is drained by the pull, filled by the rate's noise, and drained again by the quotes.
 
-The second is the **Riccati equation**: a differential equation whose right side is quadratic in the unknown. That right side is zero at two roots, $P_+$ and $P_-$, and the solution from $P_0$ is
+The second is the **Riccati equation**: a differential equation whose right side is quadratic in the unknown. That right side is zero at two roots, $`P_+`$ and $`P_-`$, and the solution from $`P_0`$ is
 
-$$P_t = \frac{P_+ - P_-\,c\,e^{-2\lambda t}}{1 - c\,e^{-2\lambda t}}, \qquad \lambda = \sqrt{a^2 + \sigma^2/\rho^2}, \quad P_\pm = \rho^2(\pm\lambda - a), \quad c = \frac{P_0 - P_+}{P_0 - P_-} .$$
+```math
+P_t = \frac{P_+ - P_-\,c\,e^{-2\lambda t}}{1 - c\,e^{-2\lambda t}}, \qquad \lambda = \sqrt{a^2 + \sigma^2/\rho^2}, \quad P_\pm = \rho^2(\pm\lambda - a), \quad c = \frac{P_0 - P_+}{P_0 - P_-} .
+```
 
-In the long run $P_t$ settles at $P_\infty = P_+$ = 0.029686, a standard deviation of 0.1723 points, and the gain at $K_\infty = \lambda - a$ = 29.685959 a year.
+In the long run $`P_t`$ settles at $`P_\infty = P_+`$ = 0.029686, a standard deviation of 0.1723 points, and the gain at $`K_\infty = \lambda - a`$ = 29.685959 a year.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $\Delta$ | time in years; one trading day | $\Delta$ = 0.004 | — |
-| $X_t$, $X$, $X_0$ | the hidden rate, percentage points; at the start | starts near 4 | — |
-| $a$, $\theta$, $\sigma$ | pull speed per year; long-run level; the rate's noise, points per root-year | 2; 4; 1 | larger $\sigma$: larger $P_\infty$ and gain |
-| $W_t$, $dW_t$, $B_t$, $W$, $B$ | independent Brownian motions: rate shocks, quote noise | one draw each per grid step | — |
-| $Y_t$, $dY_t$, $Y$ | the running quote total; its increment | — | — |
-| $s$, $\rho$ | one day's quote error; quote noise per root-year, $\rho = s\sqrt{\Delta}$ | 0.5; $\rho^2$ = 0.001 | larger: smaller gain, larger $P_\infty$ |
-| $\mathcal{F}^Y_t$ | what the quotes have shown by time $t$ | — | — |
-| $m_t$, $m_0$, $m$ | the estimate, the conditional mean; at the start; at one step | $m_0$ = 4 | — |
-| $P_t$, $P_0$, $P_\infty$, $P$ | its error variance; at the start; long run; at one step | 0.25 falling to 0.029686 | — |
-| $K_t$, $K$ | the gain $P_t/\rho^2$, per year; any gain | 250 at the start, then 29.685959 | too large or too small raises the error |
-| $\lambda$, $P_+$, $P_-$, $c$ | forgetting rate; the Riccati roots; the start's distance from them | 31.685959; 0.029686, −0.033686; 0.776612 | — |
-| $h$, $R$ | the step between quotes, in years; the error variance of one step's average quote, $\rho^2/h$ | $h$ = 0.004 (one a day), $R$ = 0.25 | smaller $h$: larger $R$, the same information per year |
-| $\varphi$, $q_h$ | one step's shrink of the gap to $\theta$, $e^{-ah}$; the variance that step's news adds | — | — |
-| $k$, $y$ | the discrete gain $P/(P+R)$; one step's average quote | — | — |
-| $u$, $f$ | Step 4's ratio $(P - P_+)/(P - P_-)$; the Riccati right side as a function of $P$ | $u$ starts at $c$ = 0.776612 | — |
-| $e_t$, $v$ | a filter's error $X_t - m_t$; a fixed gain's long-run error variance | $v$ = 0.029686 at the best fixed gain | — |
-| $r$ | a quote's age, in years | — | older: less weight |
-| $n$, $t_j$, $\mathcal{G}_n$, $\Pi_n$ | the Detailed proof's number of grid steps; the grid times; what the grid's quote increments show; the variance left given them | — | larger $n$: $\Pi_n$ falls toward $P_t$ |
+| $`t`$, $`\Delta`$ | time in years; one trading day | $`\Delta`$ = 0.004 | — |
+| $`X_t`$, $`X`$, $`X_0`$ | the hidden rate, percentage points; at the start | starts near 4 | — |
+| $`a`$, $`\theta`$, $`\sigma`$ | pull speed per year; long-run level; the rate's noise, points per root-year | 2; 4; 1 | larger $`\sigma`$: larger $`P_\infty`$ and gain |
+| $`W_t`$, $`dW_t`$, $`B_t`$, $`W`$, $`B`$ | independent Brownian motions: rate shocks, quote noise | one draw each per grid step | — |
+| $`Y_t`$, $`dY_t`$, $`Y`$ | the running quote total; its increment | — | — |
+| $`s`$, $`\rho`$ | one day's quote error; quote noise per root-year, $`\rho = s\sqrt{\Delta}`$ | 0.5; $`\rho^2`$ = 0.001 | larger: smaller gain, larger $`P_\infty`$ |
+| $`\mathcal{F}^Y_t`$ | what the quotes have shown by time $`t`$ | — | — |
+| $`m_t`$, $`m_0`$, $`m`$ | the estimate, the conditional mean; at the start; at one step | $`m_0`$ = 4 | — |
+| $`P_t`$, $`P_0`$, $`P_\infty`$, $`P`$ | its error variance; at the start; long run; at one step | 0.25 falling to 0.029686 | — |
+| $`K_t`$, $`K`$ | the gain $`P_t/\rho^2`$, per year; any gain | 250 at the start, then 29.685959 | too large or too small raises the error |
+| $`\lambda`$, $`P_+`$, $`P_-`$, $`c`$ | forgetting rate; the Riccati roots; the start's distance from them | 31.685959; 0.029686, −0.033686; 0.776612 | — |
+| $`h`$, $`R`$ | the step between quotes, in years; the error variance of one step's average quote, $`\rho^2/h`$ | $`h`$ = 0.004 (one a day), $`R`$ = 0.25 | smaller $`h`$: larger $`R`$, the same information per year |
+| $`\varphi`$, $`q_h`$ | one step's shrink of the gap to $`\theta`$, $`e^{-ah}`$; the variance that step's news adds | — | — |
+| $`k`$, $`y`$ | the discrete gain $`P/(P+R)`$; one step's average quote | — | — |
+| $`u`$, $`f`$ | Step 4's ratio $`(P - P_+)/(P - P_-)`$; the Riccati right side as a function of $`P`$ | $`u`$ starts at $`c`$ = 0.776612 | — |
+| $`e_t`$, $`v`$ | a filter's error $`X_t - m_t`$; a fixed gain's long-run error variance | $`v`$ = 0.029686 at the best fixed gain | — |
+| $`r`$ | a quote's age, in years | — | older: less weight |
+| $`n`$, $`t_j`$, $`\mathcal{G}_n`$, $`\Pi_n`$ | the Detailed proof's number of grid steps; the grid times; what the grid's quote increments show; the variance left given them | — | larger $`n`$: $`\Pi_n`$ falls toward $`P_t`$ |
 
 ### When it holds
 
-- **A linear state equation.** A pull like $-a(X_t-\theta)^3$ makes the conditional law not normal, so no two-number summary is exact; the extended Kalman filter linearises and accepts an error.
+- **A linear state equation.** A pull like $`-a(X_t-\theta)^3`$ makes the conditional law not normal, so no two-number summary is exact; the extended Kalman filter linearises and accepts an error.
 - **Normal noise in both equations.** That lets a mean and a variance carry the whole conditional law. With jumpy noise this is still the best *linear* filter, not the best filter.
-- **Observations linear in the state, with noise that never vanishes.** At $\rho = 0$ the gain is infinite: the rate is read off exactly.
-- **The model's numbers are right.** The gain is fixed by $a$, $\sigma$ and $\rho$ before any quote arrives; a wrong model gives a wrong gain and a false error band, as the usual mistake below shows.
+- **Observations linear in the state, with noise that never vanishes.** At $`\rho = 0`$ the gain is infinite: the rate is read off exactly.
+- **The model's numbers are right.** The gain is fixed by $`a`$, $`\sigma`$ and $`\rho`$ before any quote arrives; a wrong model gives a wrong gain and a false error band, as the usual mistake below shows.
 
 ---
 
@@ -103,84 +115,94 @@ In the long run $P_t$ settles at $P_\infty = P_+$ = 0.029686, a standard deviati
 
 ### Step 0: normal in, normal out
 
-The rate is linear in its normal shocks and the quotes are linear in the rate plus normal noise, so rate and quotes are jointly normal. The rate given the quotes is then normal, fixed by its mean and variance: filtering reduces to tracking $m_t$ and $P_t$. The plan: build the discrete Kalman filter one quote at a time, then shrink the time between quotes to zero.
+The rate is linear in its normal shocks and the quotes are linear in the rate plus normal noise, so rate and quotes are jointly normal. The rate given the quotes is then normal, fixed by its mean and variance: filtering reduces to tracking $`m_t`$ and $`P_t`$. The plan: build the discrete Kalman filter one quote at a time, then shrink the time between quotes to zero.
 
 ### Step 1: one quote is a regression
 
-Before a quote, the rate has mean $m$ and variance $P$. A quote $y = X + \text{error}$ arrives, with error variance $R$, independent of the rate. The best guess of $X$ given $y$ is a straight line in $y$ with slope $k = \operatorname{Cov}(X, y)/\operatorname{Var}(y)$, exactly as in least squares ([Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md)): the filter's gain is a regression coefficient. Here $\operatorname{Cov}(X, y) = P$ and $\operatorname{Var}(y) = P + R$, so
+Before a quote, the rate has mean $`m`$ and variance $`P`$. A quote $`y = X + \text{error}`$ arrives, with error variance $`R`$, independent of the rate. The best guess of $`X`$ given $`y`$ is a straight line in $`y`$ with slope $`k = \mathrm{Cov}(X, y)/\mathrm{Var}(y)`$, exactly as in least squares ([Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md)): the filter's gain is a regression coefficient. Here $`\mathrm{Cov}(X, y) = P`$ and $`\mathrm{Var}(y) = P + R`$, so
 
-$$m^{\text{new}} = m + k\,(y - m), \qquad k = \frac{P}{P+R}, \qquad P^{\text{new}} = (1-k)\,P = \frac{PR}{P+R} .$$
+```math
+m^{\text{new}} = m + k\,(y - m), \qquad k = \frac{P}{P+R}, \qquad P^{\text{new}} = (1-k)\,P = \frac{PR}{P+R} .
+```
 
-Why this is the conditional mean, not just the best straight line: the leftover $X - m - k(y - m)$ has zero correlation with $y$ by the choice of $k$, and jointly normal variables with zero correlation are independent ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)), so the quote says nothing more about the leftover. Its variance is $P - P^2/(P+R)$, which does not depend on $y$: the uncertainty after a quote is known before the quote is seen.
+Why this is the conditional mean, not just the best straight line: the leftover $`X - m - k(y - m)`$ has zero correlation with $`y`$ by the choice of $`k`$, and jointly normal variables with zero correlation are independent ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)), so the quote says nothing more about the leftover. Its variance is $`P - P^2/(P+R)`$, which does not depend on $`y`$: the uncertainty after a quote is known before the quote is seen.
 
 ### Step 2: time passes between quotes
 
-Over a step $h$ the Ornstein-Uhlenbeck card gives the rate's exact move: the gap to $\theta$ shrinks by $\varphi = e^{-ah}$, and fresh noise adds variance $q_h = \sigma^2(1-\varphi^2)/(2a)$. So the prediction is
+Over a step $`h`$ the Ornstein-Uhlenbeck card gives the rate's exact move: the gap to $`\theta`$ shrinks by $`\varphi = e^{-ah}`$, and fresh noise adds variance $`q_h = \sigma^2(1-\varphi^2)/(2a)`$. So the prediction is
 
-$$m \to \theta + \varphi\,(m - \theta), \qquad P \to \varphi^2 P + q_h .$$
+```math
+m \to \theta + \varphi\,(m - \theta), \qquad P \to \varphi^2 P + q_h .
+```
 
 Predict, update, predict again: that is the discrete Kalman filter. It is the forward algorithm of [Hidden Markov models](../03-Markov%20Chains/08-hidden-markov-models.md) with a normal law in place of a table of chances.
 
 ### Step 3: shrink the step
 
-Now quote more often. With a quote every $h$ years, the step's average quote is $y = X + \text{error}$ with error variance $R = \rho^2/h$: half the step, twice the noise variance per quote, the same information per unit of time. To first order in $h$:
+Now quote more often. With a quote every $`h`$ years, the step's average quote is $`y = X + \text{error}`$ with error variance $`R = \rho^2/h`$: half the step, twice the noise variance per quote, the same information per unit of time. To first order in $`h`$:
 
-- the update: $PR/(P+R) = P - P^2/(P+R)$, and $P + R = \rho^2/h + P$, so the update removes $P^2 h/\rho^2$;
-- the prediction: $\varphi^2 = 1 - 2ah + \dots$ and $q_h = \sigma^2 h + \dots$, so it adds $(\sigma^2 - 2aP)\,h$.
+- the update: $`PR/(P+R) = P - P^2/(P+R)`$, and $`P + R = \rho^2/h + P`$, so the update removes $`P^2 h/\rho^2`$;
+- the prediction: $`\varphi^2 = 1 - 2ah + \dots`$ and $`q_h = \sigma^2 h + \dots`$, so it adds $`(\sigma^2 - 2aP)\,h`$.
 
-Divide the net change by $h$ and let $h \to 0$:
+Divide the net change by $`h`$ and let $`h \to 0`$:
 
-$$\frac{dP_t}{dt} = -2aP_t + \sigma^2 - \frac{P_t^2}{\rho^2} .$$
+```math
+\frac{dP_t}{dt} = -2aP_t + \sigma^2 - \frac{P_t^2}{\rho^2} .
+```
 
-The mean works the same way. The discrete gain is $k = P/(P + \rho^2/h) = (P/\rho^2)\,h + \dots$, and $y\,h$ is the increment $dY_t$. So $k(y - m) \approx (P/\rho^2)(dY_t - m\,dt)$; add the prediction's $-a(m-\theta)\,dt$ and that is the filter equation.
+The mean works the same way. The discrete gain is $`k = P/(P + \rho^2/h) = (P/\rho^2)\,h + \dots`$, and $`y\,h`$ is the increment $`dY_t`$. So $`k(y - m) \approx (P/\rho^2)(dY_t - m\,dt)`$; add the prediction's $`-a(m-\theta)\,dt`$ and that is the filter equation.
 
 At 1, 10, 100 and 1000 quotes a day, the discrete variance at day 5 misses the Riccati value by 0.00152736, 0.00016114, 0.00001620, 0.00000162: ten times closer for ten times the quotes, a first-order limit.
 
 ### Step 4: solve the Riccati equation
 
-The right side is $-\tfrac{1}{\rho^2}(P - P_+)(P - P_-)$, with roots $P_\pm = \rho^2(\pm\lambda - a)$. Then the ratio $u = (P - P_+)/(P - P_-)$ obeys $u' = -2\lambda\,u$, because the two factors' rates differ by $(P_+ - P_-)/\rho^2 = 2\lambda$. So $u$ decays like $e^{-2\lambda t}$, which solved for $P$ is the formula on this card. As $t$ grows, $P_t \to P_+$: 0.029686 here.
+The right side is $`-\tfrac{1}{\rho^2}(P - P_+)(P - P_-)`$, with roots $`P_\pm = \rho^2(\pm\lambda - a)`$. Then the ratio $`u = (P - P_+)/(P - P_-)`$ obeys $`u' = -2\lambda\,u`$, because the two factors' rates differ by $`(P_+ - P_-)/\rho^2 = 2\lambda`$. So $`u`$ decays like $`e^{-2\lambda t}`$, which solved for $`P`$ is the formula on this card. As $`t`$ grows, $`P_t \to P_+`$: 0.029686 here.
 
 <details>
 <summary>The algebra behind Step 4</summary>
 
-With $f(P) = -\tfrac{1}{\rho^2}(P-P_+)(P-P_-)$: $u' = \dfrac{P'(P-P_-) - (P-P_+)P'}{(P-P_-)^2} = \dfrac{(P_+ - P_-)\,P'}{(P-P_-)^2} = -\dfrac{P_+ - P_-}{\rho^2}\,u = -2\lambda u$. So $u_t = c\,e^{-2\lambda t}$ with $c = u_0$, and $P = (P_+ - P_- u)/(1 - u)$. Expanding the product checks the roots: $(P-P_+)(P-P_-) = P^2 - (P_+ + P_-)P + P_+P_- = P^2 + 2a\rho^2 P - \sigma^2\rho^2$, since $P_+ + P_- = -2a\rho^2$ and $P_+P_- = \rho^4(a^2 - \lambda^2) = -\sigma^2\rho^2$.
+With $`f(P) = -\tfrac{1}{\rho^2}(P-P_+)(P-P_-)`$: $`u' = \dfrac{P'(P-P_-) - (P-P_+)P'}{(P-P_-)^2} = \dfrac{(P_+ - P_-)\,P'}{(P-P_-)^2} = -\dfrac{P_+ - P_-}{\rho^2}\,u = -2\lambda u`$. So $`u_t = c\,e^{-2\lambda t}`$ with $`c = u_0`$, and $`P = (P_+ - P_- u)/(1 - u)`$. Expanding the product checks the roots: $`(P-P_+)(P-P_-) = P^2 - (P_+ + P_-)P + P_+P_- = P^2 + 2a\rho^2 P - \sigma^2\rho^2`$, since $`P_+ + P_- = -2a\rho^2`$ and $`P_+P_- = \rho^4(a^2 - \lambda^2) = -\sigma^2\rho^2`$.
 
 </details>
 
 ### Step 5: why this gain and no other
 
-A second road, with no limits taken. Take any filter of the same shape with gain $K_t$, and write $e_t = X_t - m_t$ for its error. Subtracting the filter equation from the state equation:
+A second road, with no limits taken. Take any filter of the same shape with gain $`K_t`$, and write $`e_t = X_t - m_t`$ for its error. Subtracting the filter equation from the state equation:
 
-$$de_t = -(a + K_t)\,e_t\,dt + \sigma\,dW_t - K_t\,\rho\,dB_t .$$
+```math
+de_t = -(a + K_t)\,e_t\,dt + \sigma\,dW_t - K_t\,\rho\,dB_t .
+```
 
-Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) on $e_t^2$ adds the squared noise sizes, $\sigma^2 + K_t^2\rho^2$, because the two Brownian motions are independent. Take expectations, where the Ito integrals have mean zero:
+Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) on $`e_t^2`$ adds the squared noise sizes, $`\sigma^2 + K_t^2\rho^2`$, because the two Brownian motions are independent. Take expectations, where the Ito integrals have mean zero:
 
-$$\frac{d}{dt}E[e_t^2] = -2(a + K_t)\,E[e_t^2] + \sigma^2 + K_t^2\rho^2 .$$
+```math
+\frac{d}{dt}E[e_t^2] = -2(a + K_t)\,E[e_t^2] + \sigma^2 + K_t^2\rho^2 .
+```
 
-The gain drains error at rate $2K_t$ and pours in quote noise $K_t^2\rho^2$. The right side is a parabola in $K_t$, smallest at $K_t = E[e_t^2]/\rho^2$; put that in and it is the Riccati equation again. So the Kalman-Bucy gain makes the error variance fall as fast as any gain can, at every instant.
+The gain drains error at rate $`2K_t`$ and pours in quote noise $`K_t^2\rho^2`$. The right side is a parabola in $`K_t`$, smallest at $`K_t = E[e_t^2]/\rho^2`$; put that in and it is the Riccati equation again. So the Kalman-Bucy gain makes the error variance fall as fast as any gain can, at every instant.
 
-That is a statement about one instant; the whole path follows by comparing two differential equations. Both variances start at $P_0$. For any gain, the rate of change of $E[e_t^2]$ is at least the Riccati right side evaluated at $E[e_t^2]$; for $P_t$ it is exactly the right side at $P_t$.
+That is a statement about one instant; the whole path follows by comparing two differential equations. Both variances start at $`P_0`$. For any gain, the rate of change of $`E[e_t^2]`$ is at least the Riccati right side evaluated at $`E[e_t^2]`$; for $`P_t`$ it is exactly the right side at $`P_t`$.
 
-Subtracting, the gap $E[e_t^2] - P_t$ starts at zero, and its rate of change is at least $-\big(2a + (E[e_t^2] + P_t)/\rho^2\big)$ times the gap itself. So the gap, multiplied by a positive factor that grows over time, never decreases: it stays at or above zero. No fixed or time-varying gain of this shape ever beats $P_t$.
+Subtracting, the gap $`E[e_t^2] - P_t`$ starts at zero, and its rate of change is at least $`-\big(2a + (E[e_t^2] + P_t)/\rho^2\big)`$ times the gap itself. So the gap, multiplied by a positive factor that grows over time, never decreases: it stays at or above zero. No fixed or time-varying gain of this shape ever beats $`P_t`$.
 
-A fixed gain $K$ settles where the right side is zero: $v(K) = (\sigma^2 + K^2\rho^2)/(2(a+K))$. A golden-section search, which shrinks an interval around the minimum by a fixed ratio each round, lands on 29.685959 a year, which is $\lambda - a$, with $v$ = 0.029686 = $P_\infty$. Gain 0, ignoring the quotes, gives 0.250000; gain 1000 a year gives 0.499501, because it chases quote noise.
+A fixed gain $`K`$ settles where the right side is zero: $`v(K) = (\sigma^2 + K^2\rho^2)/(2(a+K))`$. A golden-section search, which shrinks an interval around the minimum by a fixed ratio each round, lands on 29.685959 a year, which is $`\lambda - a`$, with $`v`$ = 0.029686 = $`P_\infty`$. Gain 0, ignoring the quotes, gives 0.250000; gain 1000 a year gives 0.499501, because it chases quote noise.
 
 ### Step 6: what the filter remembers
 
-In the long run the estimate's own pull is $a + K_\infty = \lambda$, so $m_t$ is an exponentially weighted average of past quotes and $\theta$: a quote $r$ years old carries weight proportional to $e^{-\lambda r}$. The memory $1/\lambda$ is 7.8899 trading days; longer would average away more noise but lag the rate. The surprise $dY_t - m_t\,dt$ is the **innovation**: the part of each quote the past could not predict.
+In the long run the estimate's own pull is $`a + K_\infty = \lambda`$, so $`m_t`$ is an exponentially weighted average of past quotes and $`\theta`$: a quote $`r`$ years old carries weight proportional to $`e^{-\lambda r}`$. The memory $`1/\lambda`$ is 7.8899 trading days; longer would average away more noise but lag the rate. The surprise $`dY_t - m_t\,dt`$ is the **innovation**: the part of each quote the past could not predict.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** Under the two equations of The formula, with $X_0$ normal (mean $m_0$, variance $P_0$) and independent of $W$ and $B$, the conditional mean $E[X_t \mid \mathcal{F}^Y_t]$ solves the filter equation and the conditional variance is the deterministic $P_t$ of the Riccati equation.
+**Claim.** Under the two equations of The formula, with $`X_0`$ normal (mean $`m_0`$, variance $`P_0`$) and independent of $`W`$ and $`B`$, the conditional mean $`E[X_t \mid \mathcal{F}^Y_t]`$ solves the filter equation and the conditional variance is the deterministic $`P_t`$ of the Riccati equation.
 
-**1. Finite grids give exact linear conditioning.** Fix $t$ and a grid $0 = t_0 < \dots < t_n = t$. $X_t$ and the increments $Y_{t_{j+1}} - Y_{t_j}$ are jointly normal, being linear in the normal start and the two Brownian motions. Let $\mathcal{G}_n$ be the sigma-algebra the increments generate. By Step 1's argument in many dimensions, $E[X_t \mid \mathcal{G}_n]$ is linear in them and the conditional variance $\Pi_n$ is a number, not random.
+**1. Finite grids give exact linear conditioning.** Fix $`t`$ and a grid $`0 = t_0 < \dots < t_n = t`$. $`X_t`$ and the increments $`Y_{t_{j+1}} - Y_{t_j}`$ are jointly normal, being linear in the normal start and the two Brownian motions. Let $`\mathcal{G}_n`$ be the sigma-algebra the increments generate. By Step 1's argument in many dimensions, $`E[X_t \mid \mathcal{G}_n]`$ is linear in them and the conditional variance $`\Pi_n`$ is a number, not random.
 
-**2. Finer grids, more information.** On dyadic grids, each halving the last one's step, $\mathcal{G}_n$ grows with $n$. $Y$ has continuous paths, so its dyadic values fix the path on $[0, t]$, and the $\mathcal{G}_n$ together generate $\mathcal{F}^Y_t$. The sequence $E[X_t \mid \mathcal{G}_n]$ is a martingale bounded in mean square, so by martingale convergence ([Martingale convergence](../02-Martingales/04-martingale-convergence.md)) it converges in mean square to $E[X_t \mid \mathcal{F}^Y_t]$, and $\Pi_n$ decreases to the conditional variance given $\mathcal{F}^Y_t$, again a number.
+**2. Finer grids, more information.** On dyadic grids, each halving the last one's step, $`\mathcal{G}_n`$ grows with $`n`$. $`Y`$ has continuous paths, so its dyadic values fix the path on $`[0, t]`$, and the $`\mathcal{G}_n`$ together generate $`\mathcal{F}^Y_t`$. The sequence $`E[X_t \mid \mathcal{G}_n]`$ is a martingale bounded in mean square, so by martingale convergence ([Martingale convergence](../02-Martingales/04-martingale-convergence.md)) it converges in mean square to $`E[X_t \mid \mathcal{F}^Y_t]`$, and $`\Pi_n`$ decreases to the conditional variance given $`\mathcal{F}^Y_t`$, again a number.
 
-**3. The limit is the filter.** On each grid, Steps 1 and 2 compute the conditional law, up to a term of order $h$ from the gap between a step's average rate and its end rate. Step 3 shows the recursions converge to the two filter equations as $h \to 0$, and Step 5 shows no filter of that shape beats $P_t$.
+**3. The limit is the filter.** On each grid, Steps 1 and 2 compute the conditional law, up to a term of order $`h`$ from the gap between a step's average rate and its end rate. Step 3 shows the recursions converge to the two filter equations as $`h \to 0`$, and Step 5 shows no filter of that shape beats $`P_t`$.
 
-**Left to the source.** Bounding the order-$h$ terms uniformly, and showing the innovation $(Y_t - \int_0^t m_u\,du)/\rho$ is a Brownian motion for $\mathcal{F}^Y_t$: Øksendal, Chapter 6, proves the one-dimensional filter in full; Bain and Crisan, Chapter 6, the many-dimensional one. $\blacksquare$
+**Left to the source.** Bounding the order-$`h`$ terms uniformly, and showing the innovation $`(Y_t - \int_0^t m_u\,du)/\rho`$ is a Brownian motion for $`\mathcal{F}^Y_t`$: Øksendal, Chapter 6, proves the one-dimensional filter in full; Bain and Crisan, Chapter 6, the many-dimensional one. $`\blacksquare`$
 
 </details>
 
@@ -188,21 +210,21 @@ In the long run the estimate's own pull is $a + K_\infty = \lambda$, so $m_t$ is
 
 ## Worked numbers, by hand
 
-The rate: $a$ = 2 a year, $\theta$ = 4 percent, $\sigma$ = 1 point per root-year, long-run variance $\sigma^2/(2a)$ = 0.25. The quotes: $s$ = 0.5, $\Delta$ = 0.004, $\rho^2$ = 0.001. The filter starts at $m_0$ = 4, $P_0$ = 0.25: before any quote, only the long-run spread is known.
+The rate: $`a`$ = 2 a year, $`\theta`$ = 4 percent, $`\sigma`$ = 1 point per root-year, long-run variance $`\sigma^2/(2a)`$ = 0.25. The quotes: $`s`$ = 0.5, $`\Delta`$ = 0.004, $`\rho^2`$ = 0.001. The filter starts at $`m_0`$ = 4, $`P_0`$ = 0.25: before any quote, only the long-run spread is known.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| noise ratio | $\sigma^2/\rho^2$ = 1 / 0.001 | 1000.0 |
-| forgetting rate $\lambda$ | square root of 2 × 2 + 1000 = square root of 1004.0 | 31.685959 a year |
+| noise ratio | $`\sigma^2/\rho^2`$ = 1 / 0.001 | 1000.0 |
+| forgetting rate $`\lambda`$ | square root of 2 × 2 + 1000 = square root of 1004.0 | 31.685959 a year |
 | memory in trading days | 250 / 31.685959 | 7.8899 |
-| **steady variance $P_\infty$** | 0.001 × (31.685959 − 2) | **0.029686** |
+| **steady variance $`P_\infty`$** | 0.001 × (31.685959 − 2) | **0.029686** |
 | steady standard deviation | square root of 0.029686 | 0.1723 points |
-| steady gain $K_\infty$ | 31.685959 − 2 | 29.685959 a year |
-| lower root $P_-$ | −0.001 × (31.685959 + 2) | −0.033686 |
-| start's distance, $c$ | (0.25 − 0.029686) / (0.25 + 0.033686) = 0.220314 / 0.283686 | 0.776612 |
-| day 5: $2\lambda t$ | 2 × 31.685959 × 0.02 | 1.267438 |
-| day 5: $c\,e^{-2\lambda t}$ | 0.776612 × 0.281552 | 0.218657 |
-| **day 5: $P_t$** | (0.029686 + 0.033686 × 0.218657) / (1 − 0.218657) | **0.047420, sd 0.2178 points** |
+| steady gain $`K_\infty`$ | 31.685959 − 2 | 29.685959 a year |
+| lower root $`P_-`$ | −0.001 × (31.685959 + 2) | −0.033686 |
+| start's distance, $`c`$ | (0.25 − 0.029686) / (0.25 + 0.033686) = 0.220314 / 0.283686 | 0.776612 |
+| day 5: $`2\lambda t`$ | 2 × 31.685959 × 0.02 | 1.267438 |
+| day 5: $`c\,e^{-2\lambda t}`$ | 0.776612 × 0.281552 | 0.218657 |
+| **day 5: $`P_t`$** | (0.029686 + 0.033686 × 0.218657) / (1 − 0.218657) | **0.047420, sd 0.2178 points** |
 
 After five trading days the estimate is within about 0.22 points of the true rate, two times in three. After a month it is within 0.17 points and gets no better: the rate moves on as fast as the quotes pin it down. The steady variance is one day's quote variance, 0.25, divided by 8.4215: worth 8.4 days of quotes on a rate that never moved.
 
@@ -210,8 +232,8 @@ After five trading days the estimate is within about 0.22 points of the true rat
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $s^2$ = 0.25 in place of $\rho^2$ = 0.001 | gain 0.828427 a year, error variance 0.176898 | $\rho^2 = s^2\Delta$ is per unit time; the quotes get far too little trust |
-| Filter told the rate has no shocks ($\sigma$ = 0) | claims 0.000073 after a year; truly 0.221714 | Its gain falls to nearly zero while the rate moves on |
+| $`s^2`$ = 0.25 in place of $`\rho^2`$ = 0.001 | gain 0.828427 a year, error variance 0.176898 | $`\rho^2 = s^2\Delta`$ is per unit time; the quotes get far too little trust |
+| Filter told the rate has no shocks ($`\sigma`$ = 0) | claims 0.000073 after a year; truly 0.221714 | Its gain falls to nearly zero while the rate moves on |
 | Trusting the latest day's quotes | 0.253259 ± 0.008292, simulated | One day's noise, 0.25, plus the rate's move within the day |
 | Fixed gain 1000 a year | 0.499501 | Chases quote noise: worse than ignoring the quotes, 0.250000 |
 
@@ -221,9 +243,9 @@ The code prints every row.
 
 ## How the uncertainty settles
 
-The mystery: the error band does not depend on the quotes. $P_t$ comes from the Riccati equation, which holds $a$, $\sigma$ and $\rho$ and no data. Two desks running the same model on different quote streams report the same band every day.
+The mystery: the error band does not depend on the quotes. $`P_t`$ comes from the Riccati equation, which holds $`a`$, $`\sigma`$ and $`\rho`$ and no data. Two desks running the same model on different quote streams report the same band every day.
 
-The first day of quotes halves the variance, from 0.250000 to 0.125829. Day 10 reaches 0.033843 and day 20 0.029997, within a hair of the steady 0.029686: the ratio $u$ of Step 4 falls by the same factor, $e^{-2\lambda\Delta}$, every day.
+The first day of quotes halves the variance, from 0.250000 to 0.125829. Day 10 reaches 0.033843 and day 20 0.029997, within a hair of the steady 0.029686: the ratio $`u`$ of Step 4 falls by the same factor, $`e^{-2\lambda\Delta}`$, every day.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -234,9 +256,9 @@ xychart-beta
     line [50.00, 35.47, 29.22, 25.65, 23.35, 21.78, 20.65, 19.82, 19.21, 18.75, 18.40, 18.13, 17.92, 17.77, 17.64, 17.55, 17.48, 17.42, 17.38, 17.35, 17.32]
 ```
 
-Orange: the square root of $P_t$ from the closed form, in basis points (hundredths of a percentage point), falling from 50.00 to 17.32. The same curve serves every quote stream.
+Orange: the square root of $`P_t`$ from the closed form, in basis points (hundredths of a percentage point), falling from 50.00 to 17.32. The same curve serves every quote stream.
 
-A desk reading one point-in-time quote at each close, error 0.5, runs Steps 1 and 2 with $h = \Delta$: its steady variance saw-tooths between 0.027973 after each quote and 0.031497 before the next, around the continuous 0.029686.
+A desk reading one point-in-time quote at each close, error 0.5, runs Steps 1 and 2 with $`h = \Delta`$: its steady variance saw-tooths between 0.027973 after each quote and 0.031497 before the next, around the continuous 0.029686.
 
 ---
 
@@ -244,13 +266,13 @@ A desk reading one point-in-time quote at each close, error 0.5, runs Steps 1 an
 
 Five roads:
 
-1. The closed form for $P_t$.
+1. The closed form for $`P_t`$.
 2. The Riccati equation solved by a Runge-Kutta stepper, a standard step-by-step numerical solver, with no solution formula.
 3. The discrete Kalman filter at 1, 10, 100 and 1000 quotes a day, its error printed shrinking.
 4. A golden-section search for the best fixed gain, using only Step 5's error equation.
 5. 2000 simulated years, ten grid steps per trading day, from a SplitMix64 generator (seed 20260930) and Box-Muller normals, each error variance with its standard error.
 
-The asserts match roads one and two to twelve decimals on every day after the start, the discrete error falling about tenfold per step, the daily filter's saw-tooth as a fixed point, the golden-section gain to $\lambda - a$, and each simulated number to its formula within 4 standard errors, including the extra error of a filter run at 1.5 times the gain on the same draws.
+The asserts match roads one and two to twelve decimals on every day after the start, the discrete error falling about tenfold per step, the daily filter's saw-tooth as a fixed point, the golden-section gain to $`\lambda - a`$, and each simulated number to its formula within 4 standard errors, including the extra error of a filter run at 1.5 times the gain on the same draws.
 
 ### Python
 
@@ -662,15 +684,15 @@ The two outputs agree line for line: both draw the same SplitMix64 stream and do
 
 ### Lean
 
-Lean proves Step 4 and Step 5 for any $a$, any $\sigma > 0$ and $\rho > 0$, and any $P_0 \ge 0$.
+Lean proves Step 4 and Step 5 for any $`a`$, any $`\sigma > 0`$ and $`\rho > 0`$, and any $`P_0 \ge 0`$.
 
-- Take $\sigma > 0$, $\rho > 0$ and $P_0 \ge 0$, as in every bullet below. Then the card's formula for $P_t$ equals $P_0$ at the start and solves the Riccati equation at every $t \ge 0$.
-- Take any solution of the Riccati equation for $t > 0$ that starts at $P_0$ and is continuous at the start. Then it equals the card's formula at every $t \ge 0$.
-- Take $t$ larger and larger. Then $P_t$ settles at $P_+ = \rho^2(\lambda - a)$.
-- Take any gain $K_t$ whose error variance $E[e_t^2]$ starts at $P_0$ and follows Step 5's equation. Then $E[e_t^2] \ge P_t$ at every $t \ge 0$: no gain beats the Kalman-Bucy gain.
-- Take a fixed gain $K$ with $a + K > 0$. Then $v(K) \ge P_+$, with equality only at $K = \lambda - a$. That gain, $\lambda - a$, meets the condition too.
-- Take the card's example. Then $\rho^2$ = 0.001, $\lambda^2$ = 1004 and the gain at the start is 250 a year.
-- Take the fixed gains 0, 10, 100 and 1000 a year. Then $v$ is exactly 1/4, 11/240, 11/204 and 1001/2004.
+- Take $`\sigma > 0`$, $`\rho > 0`$ and $`P_0 \ge 0`$, as in every bullet below. Then the card's formula for $`P_t`$ equals $`P_0`$ at the start and solves the Riccati equation at every $`t \ge 0`$.
+- Take any solution of the Riccati equation for $`t > 0`$ that starts at $`P_0`$ and is continuous at the start. Then it equals the card's formula at every $`t \ge 0`$.
+- Take $`t`$ larger and larger. Then $`P_t`$ settles at $`P_+ = \rho^2(\lambda - a)`$.
+- Take any gain $`K_t`$ whose error variance $`E[e_t^2]`$ starts at $`P_0`$ and follows Step 5's equation. Then $`E[e_t^2] \ge P_t`$ at every $`t \ge 0`$: no gain beats the Kalman-Bucy gain.
+- Take a fixed gain $`K`$ with $`a + K > 0`$. Then $`v(K) \ge P_+`$, with equality only at $`K = \lambda - a`$. That gain, $`\lambda - a`$, meets the condition too.
+- Take the card's example. Then $`\rho^2`$ = 0.001, $`\lambda^2`$ = 1004 and the gain at the start is 250 a year.
+- Take the fixed gains 0, 10, 100 and 1000 a year. Then $`v`$ is exactly 1/4, 11/240, 11/204 and 1001/2004.
 - The sum and product of the roots in Step 4 also check. So does the latest daily quote's error variance, 377/1500, about 0.251333.
 
 The discrete filter's limit, the golden-section search and the simulations are left to the Python and Rust checks.
@@ -1044,21 +1066,21 @@ example : ((1 : ℚ) / 2) ^ 2 + 1 ^ 2 * (1 / 250) / 3 = 377 / 1500 := by norm_nu
 
 > [!TIP]
 > **Try changing**
-> - **Noisier quotes.** Guess first: does doubling the quote error double the steady error? Set `S_Q = 1.0`. The first `try` line: $P_\infty$ = 0.055750, a standard deviation of 0.2361 points against 0.1723. Not double: the memory stretches from 7.89 to 15.69 days, averaging more quotes.
+> - **Noisier quotes.** Guess first: does doubling the quote error double the steady error? Set `S_Q = 1.0`. The first `try` line: $`P_\infty`$ = 0.055750, a standard deviation of 0.2361 points against 0.1723. Not double: the memory stretches from 7.89 to 15.69 days, averaging more quotes.
 > - **A livelier rate.** Guess first: more trust in the quotes or less? Set `SIG = 2.0`. The second `try` line: the gain rises from 29.685959 to 61.2772 a year and the memory falls to 3.95 days, because old quotes go stale sooner; the error rises to 0.2475 points.
-> - **Wrong units.** Guess first. The `mistake` line: the per-quote variance 0.25 in place of $\rho^2$ gives gain 0.828427 a year and error variance 0.176898, against 0.029686.
+> - **Wrong units.** Guess first. The `mistake` line: the per-quote variance 0.25 in place of $`\rho^2`$ gives gain 0.828427 a year and error variance 0.176898, against 0.029686.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Believing the filter learns its own accuracy from the data.** $P_t$ comes from the model: the Riccati equation contains no data. A wrong model reports a confidence it does not have. Told the rate has no shocks, the filter claims an error variance of 0.000073 after a year; its true error variance is 0.221714. Checking that the innovations look like pure noise is how a wrong model is caught.
+> **Believing the filter learns its own accuracy from the data.** $`P_t`$ comes from the model: the Riccati equation contains no data. A wrong model reports a confidence it does not have. Told the rate has no shocks, the filter claims an error variance of 0.000073 after a year; its true error variance is 0.221714. Checking that the innovations look like pure noise is how a wrong model is caught.
 >
 > Smaller traps:
-> - **Per-quote noise in place of noise per unit time.** $\rho^2$ is $s^2\Delta$, 0.001, not $s^2$ = 0.25. The wrong one gives a gain of 0.828427 a year instead of 29.685959.
-> - **Reading $dY_t/dt$ as an instantaneous quote.** It does not exist: $B_t$ has no derivative, and $dY_t$ is shorthand for an integral. Only averages over a stretch of time carry finite noise.
-> - **Dropping the Ito term in Step 5.** Ordinary calculus misses the $\sigma^2 + K_t^2\rho^2$ term, leaves the error variance draining to zero, and finds no best gain at all.
+> - **Per-quote noise in place of noise per unit time.** $`\rho^2`$ is $`s^2\Delta`$, 0.001, not $`s^2`$ = 0.25. The wrong one gives a gain of 0.828427 a year instead of 29.685959.
+> - **Reading $`dY_t/dt`$ as an instantaneous quote.** It does not exist: $`B_t`$ has no derivative, and $`dY_t`$ is shorthand for an integral. Only averages over a stretch of time carry finite noise.
+> - **Dropping the Ito term in Step 5.** Ordinary calculus misses the $`\sigma^2 + K_t^2\rho^2`$ term, leaves the error variance draining to zero, and finds no best gain at all.
 > - **Filter and smoother confused.** The filter uses quotes up to now; looking back with later quotes too gives a better, smoothed estimate.
 
 ---

@@ -37,51 +37,57 @@ Orange: Euler's method, slope 1. Green: Heun's two-slope method, slope 2. Dark: 
 
 ## The formula
 
-Notation first, in words. The **state** $x = (y, v)$ is the rocket's height $y$ and speed $v$. The **rate law** $x' = f(t, x)$ says how fast the state changes: here $y' = v$ and $v' = -g - kv$. The step is $h$, the $n$-th step ends at time $t_n = nh$, and the run ends at $T = Nh$.
+Notation first, in words. The **state** $`x = (y, v)`$ is the rocket's height $`y`$ and speed $`v`$. The **rate law** $`x' = f(t, x)`$ says how fast the state changes: here $`y' = v`$ and $`v' = -g - kv`$. The step is $`h`$, the $`n`$-th step ends at time $`t_n = nh`$, and the run ends at $`T = Nh`$.
 
 A **one-step method** computes the next state from the current one alone:
 
-$$x_{n+1} = x_n + h\,\Phi(t_n, x_n, h).$$
+```math
+x_{n+1} = x_n + h\,\Phi(t_n, x_n, h).
+```
 
-Here $x_n$ is the computed state after $n$ steps and $x(t_n)$ is the exact one. The **increment function** $\Phi$ is the average slope the method uses for the step. For Euler it is $f$ itself; for RK4 it is the weighted mix of four slopes. (This $\Phi$ is not the tree value $\Phi_i$ of [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md).)
+Here $`x_n`$ is the computed state after $`n`$ steps and $`x(t_n)`$ is the exact one. The **increment function** $`\Phi`$ is the average slope the method uses for the step. For Euler it is $`f`$ itself; for RK4 it is the weighted mix of four slopes. (This $`\Phi`$ is not the tree value $`\Phi_i`$ of [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md).)
 
-The **local truncation error** $\tau_n$ is how far the exact solution fails to obey the method, per unit of time:
+The **local truncation error** $`\tau_n`$ is how far the exact solution fails to obey the method, per unit of time:
 
-$$\tau_n = \frac{x(t_{n+1}) - x(t_n)}{h} - \Phi\big(t_n, x(t_n), h\big).$$
+```math
+\tau_n = \frac{x(t_{n+1}) - x(t_n)}{h} - \Phi\big(t_n, x(t_n), h\big).
+```
 
-So $h\tau_n$ is what one step misses when it starts from the exact state: the "local error" of [Order of a method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/02-local-and-global-error-and-order.md).
+So $`h\tau_n`$ is what one step misses when it starts from the exact state: the "local error" of [Order of a method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/02-local-and-global-error-and-order.md).
 
-**The theorem.** Suppose $\lVert\Phi(t, a, h) - \Phi(t, b, h)\rVert \le \Lambda\,\lVert a - b\rVert$ for all states $a$, $b$, and $\lVert\tau_n\rVert \le C h^p$ at every step, and the run starts from the exact value, $e_0 = 0$. Then the **global error** $e_n = x(t_n) - x_n$ obeys
+**The theorem.** Suppose $`\lVert\Phi(t, a, h) - \Phi(t, b, h)\rVert \le \Lambda\,\lVert a - b\rVert`$ for all states $`a`$, $`b`$, and $`\lVert\tau_n\rVert \le C h^p`$ at every step, and the run starts from the exact value, $`e_0 = 0`$. Then the **global error** $`e_n = x(t_n) - x_n`$ obeys
 
-$$\lVert e_n\rVert \;\le\; C\,h^{p}\;\frac{e^{\Lambda t_n} - 1}{\Lambda}\quad\text{for every } n \le N.$$
+```math
+\lVert e_n\rVert \;\le\; C\,h^{p}\;\frac{e^{\Lambda t_n} - 1}{\Lambda}\quad\text{for every } n \le N.
+```
 
 **Read it aloud:** if each step misses by at most C h to the p, per unit time, and the method never stretches a gap by more than Λ per unit time, then the error at any time is at most C h to the p times the growth factor (e to the Λt, minus 1) over Λ.
 
-The size $\lVert\cdot\rVert$ needs one choice, because height and speed have different units. This card measures an error in metres: the larger of the height error and the speed error times $1/k = 20$ s. That is the most extra height a speed error can ever add, since drag fades it over about 20 s.
+The size $`\lVert\cdot\rVert`$ needs one choice, because height and speed have different units. This card measures an error in metres: the larger of the height error and the speed error times $`1/k = 20`$ s. That is the most extra height a speed error can ever add, since drag fades it over about 20 s.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (y, v)$ | the state: height and speed | 40 m and 180 m/s at burnout | — |
-| $f$ | the rate law, $x' = f(t, x)$ | $(v,\ -g - kv)$ | — |
-| $g$, $k$ | gravity; drag rate | 9.8 m/s²; 0.05 per s | $k$ up: the bound gets looser |
-| $h$, $t_n$, $N$, $T$ | step; time after $n$ steps; number of steps; end time | 1 s; $n$ s; 30; 30 s | $h$ up: error grows like $h^p$ |
-| $x_n$, $x(t_n)$ | computed state; exact state | 2.0612 m, −112.1031 m/s exact at 30 s | — |
-| $\Phi$ | increment function: the method's average slope for a step | RK4's four weighted slopes | — |
-| $\tau_n$ | local truncation error: the exact solution's miss per unit time | 1.942e-5 m/s on the first 1 s step | the bound grows in proportion |
-| $e_n$, $E$ | global error after $n$ steps; its size at $T$ | $E$ = 1.367e-4 m at $h$ = 1 s | — |
-| $\lVert\cdot\rVert$ | size of an error, in metres | larger of height error and 20 s × speed error | — |
-| $L$, $\Lambda$ | Lipschitz constants of $f$ and of $\Phi$: the most they stretch a gap, per unit time | 0.05 per s; 0.051271 per s | the bound grows like $e^{\Lambda T}$ |
-| $p$, $C$ | order; the constant in $\lVert\tau_n\rVert \le C h^p$ | 4; about 1.942e-5 m/s per s⁴ | $p$ up: error falls faster as $h$ shrinks |
-| $a_n$, $B$ | shorthand in the proof: $\lVert e_n\rVert$; $Ch^p$ | $a_{30}$ = 1.367e-4 m; $B$ = 1.942e-5 m/s at $h$ = 1 s | $B$ up: the bound grows in proportion |
+| $`x = (y, v)`$ | the state: height and speed | 40 m and 180 m/s at burnout | — |
+| $`f`$ | the rate law, $`x' = f(t, x)`$ | $`(v,\ -g - kv)`$ | — |
+| $`g`$, $`k`$ | gravity; drag rate | 9.8 m/s²; 0.05 per s | $`k`$ up: the bound gets looser |
+| $`h`$, $`t_n`$, $`N`$, $`T`$ | step; time after $`n`$ steps; number of steps; end time | 1 s; $`n`$ s; 30; 30 s | $`h`$ up: error grows like $`h^p`$ |
+| $`x_n`$, $`x(t_n)`$ | computed state; exact state | 2.0612 m, −112.1031 m/s exact at 30 s | — |
+| $`\Phi`$ | increment function: the method's average slope for a step | RK4's four weighted slopes | — |
+| $`\tau_n`$ | local truncation error: the exact solution's miss per unit time | 1.942e-5 m/s on the first 1 s step | the bound grows in proportion |
+| $`e_n`$, $`E`$ | global error after $`n`$ steps; its size at $`T`$ | $`E`$ = 1.367e-4 m at $`h`$ = 1 s | — |
+| $`\lVert\cdot\rVert`$ | size of an error, in metres | larger of height error and 20 s × speed error | — |
+| $`L`$, $`\Lambda`$ | Lipschitz constants of $`f`$ and of $`\Phi`$: the most they stretch a gap, per unit time | 0.05 per s; 0.051271 per s | the bound grows like $`e^{\Lambda T}`$ |
+| $`p`$, $`C`$ | order; the constant in $`\lVert\tau_n\rVert \le C h^p`$ | 4; about 1.942e-5 m/s per s⁴ | $`p`$ up: error falls faster as $`h`$ shrinks |
+| $`a_n`$, $`B`$ | shorthand in the proof: $`\lVert e_n\rVert`$; $`Ch^p`$ | $`a_{30}`$ = 1.367e-4 m; $`B`$ = 1.942e-5 m/s at $`h`$ = 1 s | $`B`$ up: the bound grows in proportion |
 
-A **Lipschitz constant** (from [The Picard-Lindelof theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)) is a number $L$ with $\lVert f(t, a) - f(t, b)\rVert \le L\lVert a - b\rVert$: the rate law never pulls two states apart faster than $L$ times their gap.
+A **Lipschitz constant** (from [The Picard-Lindelof theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)) is a number $`L`$ with $`\lVert f(t, a) - f(t, b)\rVert \le L\lVert a - b\rVert`$: the rate law never pulls two states apart faster than $`L`$ times their gap.
 
 ### When it holds
 
-- **The rate law is Lipschitz.** Without it, $\Phi$ has no $\Lambda$ and a carried error can grow without limit. With a huge $L$, as in a stiff problem, the bound holds but is useless ([Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md)).
-- **The solution is smooth across every step.** $\lVert\tau_n\rVert \le Ch^p$ comes from Taylor's theorem, which needs $p + 1$ derivatives. A motor burning out partway through a step breaks it: RK4's observed orders become 0.19, 3.81 and −1.80.
+- **The rate law is Lipschitz.** Without it, $`\Phi`$ has no $`\Lambda`$ and a carried error can grow without limit. With a huge $`L`$, as in a stiff problem, the bound holds but is useless ([Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md)).
+- **The solution is smooth across every step.** $`\lVert\tau_n\rVert \le Ch^p`$ comes from Taylor's theorem, which needs $`p + 1`$ derivatives. A motor burning out partway through a step breaks it: RK4's observed orders become 0.19, 3.81 and −1.80.
 - **The method is consistent with order p.** The method's weights must meet the order conditions of [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md). Two swapped RK4 weights leave order 1. Weights that do not add to 1 give no convergence at all.
-- **Exact arithmetic.** Each step also rounds. Below a step of about 1/128 s, the rounding errors outweigh $Ch^p$ and the total error rises again.
+- **Exact arithmetic.** Each step also rounds. Below a step of about 1/128 s, the rounding errors outweigh $`Ch^p`$ and the total error rises again.
 
 ---
 
@@ -89,74 +95,84 @@ A **Lipschitz constant** (from [The Picard-Lindelof theorem](../../08-Differenti
 
 ### Step 0: errors made, errors carried
 
-The global error at 30 s is a sum. Each step makes a fresh local error, and each earlier error is carried forward by the later steps. The fresh errors are about $h^{p+1}$ each, and there are $T/h$ of them, so they add to about $h^p$. Carrying can only multiply an error by $1 + h\Lambda$ per step, which compounds to at most $e^{\Lambda T}$ over the run. That factor does not depend on $h$, so the power $h^p$ survives.
+The global error at 30 s is a sum. Each step makes a fresh local error, and each earlier error is carried forward by the later steps. The fresh errors are about $`h^{p+1}`$ each, and there are $`T/h`$ of them, so they add to about $`h^p`$. Carrying can only multiply an error by $`1 + h\Lambda`$ per step, which compounds to at most $`e^{\Lambda T}`$ over the run. That factor does not depend on $`h`$, so the power $`h^p`$ survives.
 
 ### Step 1: the exact solution almost obeys the method
 
-Rearrange the definition of $\tau_n$:
+Rearrange the definition of $`\tau_n`$:
 
-$$x(t_{n+1}) = x(t_n) + h\,\Phi\big(t_n, x(t_n), h\big) + h\,\tau_n.$$
+```math
+x(t_{n+1}) = x(t_n) + h\,\Phi\big(t_n, x(t_n), h\big) + h\,\tau_n.
+```
 
-The exact solution takes a method step, plus a small extra $h\tau_n$. For RK4 the four slopes are weighted so that Taylor's series matches through $h^4$ ([Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md)). So $h\tau_n$ is of size $h^5$, and $\tau_n$ of size $h^4$.
+The exact solution takes a method step, plus a small extra $`h\tau_n`$. For RK4 the four slopes are weighted so that Taylor's series matches through $`h^4`$ ([Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md)). So $`h\tau_n`$ is of size $`h^5`$, and $`\tau_n`$ of size $`h^4`$.
 
-The rocket confirms it. The first step from burnout misses by 1.942e-5 m with $h$ = 1 s and by 6.094e-7 m with $h$ = 0.5 s. The ratio is 31.87, close to $2^5 = 32$.
+The rocket confirms it. The first step from burnout misses by 1.942e-5 m with $`h`$ = 1 s and by 6.094e-7 m with $`h`$ = 0.5 s. The ratio is 31.87, close to $`2^5 = 32`$.
 
 ### Step 2: subtract, and the error obeys its own step rule
 
-Subtract the method's step, $x_{n+1} = x_n + h\Phi(t_n, x_n, h)$, from the exact one:
+Subtract the method's step, $`x_{n+1} = x_n + h\Phi(t_n, x_n, h)`$, from the exact one:
 
-$$e_{n+1} = e_n + h\Big[\Phi\big(t_n, x(t_n), h\big) - \Phi(t_n, x_n, h)\Big] + h\,\tau_n.$$
+```math
+e_{n+1} = e_n + h\Big[\Phi\big(t_n, x(t_n), h\big) - \Phi(t_n, x_n, h)\Big] + h\,\tau_n.
+```
 
-The bracket compares the method's slope at two states $e_n$ apart, so its size is at most $\Lambda\lVert e_n\rVert$. Take sizes:
+The bracket compares the method's slope at two states $`e_n`$ apart, so its size is at most $`\Lambda\lVert e_n\rVert`$. Take sizes:
 
-$$\lVert e_{n+1}\rVert \le (1 + h\Lambda)\,\lVert e_n\rVert + h\,\lVert\tau_n\rVert.$$
+```math
+\lVert e_{n+1}\rVert \le (1 + h\Lambda)\,\lVert e_n\rVert + h\,\lVert\tau_n\rVert.
+```
 
-This is the whole mechanism: carry the old error with growth $1 + h\Lambda$, then add the new one.
+This is the whole mechanism: carry the old error with growth $`1 + h\Lambda`$, then add the new one.
 
-The check runs the mechanism with equality. For the rocket the rate law is linear, so the bracket is exactly the method's step applied to $e_n$ with gravity removed. Starting from $e_0 = 0$ and adding each $h\tau_n$, the carried sum reaches 1.366698e-4 m at 30 s. Running RK4 and taking the size of exact minus run gives 1.366698e-4 m. Two different computations, one number.
+The check runs the mechanism with equality. For the rocket the rate law is linear, so the bracket is exactly the method's step applied to $`e_n`$ with gravity removed. Starting from $`e_0 = 0`$ and adding each $`h\tau_n`$, the carried sum reaches 1.366698e-4 m at 30 s. Running RK4 and taking the size of exact minus run gives 1.366698e-4 m. Two different computations, one number.
 
 ### Step 3: the discrete Gronwall step
 
-Write $a_n = \lVert e_n\rVert$ and $B = Ch^p$. Step 2 says $a_{n+1} \le (1 + h\Lambda)a_n + hB$, with $a_0 = 0$. Unroll it: the error made at step $j$ is carried by $n - 1 - j$ later steps, so
+Write $`a_n = \lVert e_n\rVert`$ and $`B = Ch^p`$. Step 2 says $`a_{n+1} \le (1 + h\Lambda)a_n + hB`$, with $`a_0 = 0`$. Unroll it: the error made at step $`j`$ is carried by $`n - 1 - j`$ later steps, so
 
-$$a_n \le hB\sum_{j=0}^{n-1}(1 + h\Lambda)^j = B\,\frac{(1 + h\Lambda)^n - 1}{\Lambda} \le B\,\frac{e^{\Lambda t_n} - 1}{\Lambda}.$$
+```math
+a_n \le hB\sum_{j=0}^{n-1}(1 + h\Lambda)^j = B\,\frac{(1 + h\Lambda)^n - 1}{\Lambda} \le B\,\frac{e^{\Lambda t_n} - 1}{\Lambda}.
+```
 
-The last step uses $1 + z \le e^z$, so $(1 + h\Lambda)^n \le e^{\Lambda nh}$. This is the step-by-step twin of [Gronwall's inequality](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md), which bounds a gap growing at rate $L$ by $e^{Lt}$.
+The last step uses $`1 + z \le e^z`$, so $`(1 + h\Lambda)^n \le e^{\Lambda nh}`$. This is the step-by-step twin of [Gronwall's inequality](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md), which bounds a gap growing at rate $`L`$ by $`e^{Lt}`$.
 
 <details>
 <summary>Detailed proof: the discrete Gronwall lemma by induction</summary>
 
-Claim: if $a_0 = 0$ and $a_{m+1} \le (1 + h\Lambda)a_m + hB$ for every $m$, with $h, \Lambda, B > 0$, then $a_n \le B\big((1 + h\Lambda)^n - 1\big)/\Lambda$.
+Claim: if $`a_0 = 0`$ and $`a_{m+1} \le (1 + h\Lambda)a_m + hB`$ for every $`m`$, with $`h, \Lambda, B > 0`$, then $`a_n \le B\big((1 + h\Lambda)^n - 1\big)/\Lambda`$.
 
-For $n = 0$ both sides are 0. Suppose it holds for $n$. Then
+For $`n = 0`$ both sides are 0. Suppose it holds for $`n`$. Then
 
-$$a_{n+1} \le (1 + h\Lambda)\,\frac{B\big((1 + h\Lambda)^n - 1\big)}{\Lambda} + hB = \frac{B\big((1 + h\Lambda)^{n+1} - 1 - h\Lambda\big) + h\Lambda B}{\Lambda} = \frac{B\big((1 + h\Lambda)^{n+1} - 1\big)}{\Lambda}.$$
+$`\displaystyle a_{n+1} \le (1 + h\Lambda)\,\frac{B\big((1 + h\Lambda)^n - 1\big)}{\Lambda} + hB = \frac{B\big((1 + h\Lambda)^{n+1} - 1 - h\Lambda\big) + h\Lambda B}{\Lambda} = \frac{B\big((1 + h\Lambda)^{n+1} - 1\big)}{\Lambda}.`$
 
-So it holds for $n + 1$. Finally $1 + h\Lambda \le e^{h\Lambda}$, because $e^z = 1 + z + z^2/2 + \dots$ with every term non-negative for $z \ge 0$.
+So it holds for $`n + 1`$. Finally $`1 + h\Lambda \le e^{h\Lambda}`$, because $`e^z = 1 + z + z^2/2 + \dots`$ with every term non-negative for $`z \ge 0`$.
 
 </details>
 
 ### Step 4: the method inherits a Lipschitz constant from the rate law
 
-$\Lambda$ comes from $L$. Euler's $\Phi$ is $f$, so $\Lambda = L$. Each RK4 slope is $f$ read at a point nudged by earlier slopes, so each can stretch a gap a little more than $f$ does. Chaining the four readings gives
+$`\Lambda`$ comes from $`L`$. Euler's $`\Phi`$ is $`f`$, so $`\Lambda = L`$. Each RK4 slope is $`f`$ read at a point nudged by earlier slopes, so each can stretch a gap a little more than $`f`$ does. Chaining the four readings gives
 
-$$\Lambda = L\left(1 + \frac{hL}{2} + \frac{(hL)^2}{6} + \frac{(hL)^3}{24}\right).$$
+```math
+\Lambda = L\left(1 + \frac{hL}{2} + \frac{(hL)^2}{6} + \frac{(hL)^3}{24}\right).
+```
 
-For the rocket, two states that differ by $\Delta v$ in speed have rates that differ by $\Delta v$ in height and $k\Delta v$ in speed. In the metre size both are $\lvert\Delta v\rvert$, which is at most $k$ times the states' gap. So $L = k$ = 0.05 per s, and with $h$ = 1 s, $\Lambda$ = 0.051271 per s.
+For the rocket, two states that differ by $`\Delta v`$ in speed have rates that differ by $`\Delta v`$ in height and $`k\Delta v`$ in speed. In the metre size both are $`\lvert\Delta v\rvert`$, which is at most $`k`$ times the states' gap. So $`L = k`$ = 0.05 per s, and with $`h`$ = 1 s, $`\Lambda`$ = 0.051271 per s.
 
 <details>
 <summary>Detailed proof: RK4's increment is Lipschitz with this Λ</summary>
 
-Take two states $a$, $b$ with gap $d = \lVert a - b\rVert$, and let $k_1, \dots, k_4$ and $k_1', \dots, k_4'$ be RK4's slopes from each. Each slope is $f$ at a nudged point, and $f$ stretches gaps by at most $L$:
+Take two states $`a`$, $`b`$ with gap $`d = \lVert a - b\rVert`$, and let $`k_1, \dots, k_4`$ and $`k_1', \dots, k_4'`$ be RK4's slopes from each. Each slope is $`f`$ at a nudged point, and $`f`$ stretches gaps by at most $`L`$:
 
-- $\lVert k_1 - k_1'\rVert \le Ld$.
-- $k_2$ reads $f$ at $a + \tfrac{h}{2}k_1$, so $\lVert k_2 - k_2'\rVert \le L\big(d + \tfrac{h}{2}Ld\big) = Ld\,(1 + \tfrac{hL}{2})$.
-- $k_3$ reads $f$ at $a + \tfrac{h}{2}k_2$, so $\lVert k_3 - k_3'\rVert \le Ld\,\big(1 + \tfrac{hL}{2} + \tfrac{(hL)^2}{4}\big)$.
-- $k_4$ reads $f$ at $a + hk_3$, so $\lVert k_4 - k_4'\rVert \le Ld\,\big(1 + hL + \tfrac{(hL)^2}{2} + \tfrac{(hL)^3}{4}\big)$.
+- $`\lVert k_1 - k_1'\rVert \le Ld`$.
+- $`k_2`$ reads $`f`$ at $`a + \tfrac{h}{2}k_1`$, so $`\lVert k_2 - k_2'\rVert \le L\big(d + \tfrac{h}{2}Ld\big) = Ld\,(1 + \tfrac{hL}{2})`$.
+- $`k_3`$ reads $`f`$ at $`a + \tfrac{h}{2}k_2`$, so $`\lVert k_3 - k_3'\rVert \le Ld\,\big(1 + \tfrac{hL}{2} + \tfrac{(hL)^2}{4}\big)`$.
+- $`k_4`$ reads $`f`$ at $`a + hk_3`$, so $`\lVert k_4 - k_4'\rVert \le Ld\,\big(1 + hL + \tfrac{(hL)^2}{2} + \tfrac{(hL)^3}{4}\big)`$.
 
-$\Phi = (k_1 + 2k_2 + 2k_3 + k_4)/6$. Add the bounds with these weights:
+$`\Phi = (k_1 + 2k_2 + 2k_3 + k_4)/6`$. Add the bounds with these weights:
 
-$$\frac{Ld}{6}\Big(6 + 3hL + (hL)^2 + \tfrac{(hL)^3}{4}\Big) = Ld\left(1 + \frac{hL}{2} + \frac{(hL)^2}{6} + \frac{(hL)^3}{24}\right).$$
+$`\displaystyle \frac{Ld}{6}\Big(6 + 3hL + (hL)^2 + \tfrac{(hL)^3}{4}\Big) = Ld\left(1 + \frac{hL}{2} + \frac{(hL)^2}{6} + \frac{(hL)^3}{24}\right).`$
 
 The same chaining works for any explicit Runge-Kutta method, with the tableau's entries in place of RK4's.
 
@@ -166,19 +182,21 @@ The same chaining works for any explicit Runge-Kutta method, with the tableau's 
 
 Steps 1 to 4 give, at the end of the run,
 
-$$E = \lVert e_N\rVert \le C h^p\,\frac{e^{\Lambda T} - 1}{\Lambda}.$$
+```math
+E = \lVert e_N\rVert \le C h^p\,\frac{e^{\Lambda T} - 1}{\Lambda}.
+```
 
-$\Lambda$ shrinks as $h$ shrinks, so the factor after $h^p$ stays below its value at the largest step. The error is at most a fixed number times $h^p$: order $p$ overall. One power is lost from the local miss $h^{p+1}$, because $T/h$ steps each make one.
+$`\Lambda`$ shrinks as $`h`$ shrinks, so the factor after $`h^p`$ stays below its value at the largest step. The error is at most a fixed number times $`h^p`$: order $`p`$ overall. One power is lost from the local miss $`h^{p+1}`$, because $`T/h`$ steps each make one.
 
-With 1 s steps the check takes the largest $\lVert\tau_n\rVert$ met in the run, 1.942e-5 m/s, as $Ch^p$. The bound is 1.385e-3 m; the true error is 1.367e-4 m; the ratio is 10.13. At 2 s steps the ratio is 9.88, and at 0.5 s it is 10.27. The bound has the right order and a loose constant.
+With 1 s steps the check takes the largest $`\lVert\tau_n\rVert`$ met in the run, 1.942e-5 m/s, as $`Ch^p`$. The bound is 1.385e-3 m; the true error is 1.367e-4 m; the ratio is 10.13. At 2 s steps the ratio is 9.88, and at 0.5 s it is 10.27. The bound has the right order and a loose constant.
 
-[Order of a method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/02-local-and-global-error-and-order.md) already proves the Euler case, with bound $(M/2L)(e^{LT} - 1)h$. The theorem here is the same argument for any $\Phi$.
+[Order of a method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/02-local-and-global-error-and-order.md) already proves the Euler case, with bound $`(M/2L)(e^{LT} - 1)h`$. The theorem here is the same argument for any $`\Phi`$.
 
 ### Step 6: why the bound is pessimistic when errors decay
 
 The bound assumes the worst at every step. Followed along the flight with 1 s steps:
 
-| Time | True error $E$ | Bound | Bound / true |
+| Time | True error $`E`$ | Bound | Bound / true |
 | --- | --- | --- | --- |
 | 6 s | 9.075e-5 m | 1.364e-4 m | 1.50 |
 | 12 s | 1.345e-4 m | 3.220e-4 m | 2.39 |
@@ -188,35 +206,35 @@ The bound assumes the worst at every step. Followed along the flight with 1 s st
 
 The true error stops growing after about 18 s; the bound keeps climbing. Two assumptions cause the gap:
 
-1. **Growth instead of decay.** The bound lets every carried error grow by up to $e^{\Lambda T}$ = 4.66 over the run. Drag does the opposite: it shrinks a speed error by $e^{-kT}$ = 0.223 over 30 s.
-2. **The worst step, every time.** The bound charges every step the largest $\lVert\tau_n\rVert$, 1.942e-5 m/s. The last step's is only 4.556e-6 m/s, because the drag term fades.
+1. **Growth instead of decay.** The bound lets every carried error grow by up to $`e^{\Lambda T}`$ = 4.66 over the run. Drag does the opposite: it shrinks a speed error by $`e^{-kT}`$ = 0.223 over 30 s.
+2. **The worst step, every time.** The bound charges every step the largest $`\lVert\tau_n\rVert`$, 1.942e-5 m/s. The last step's is only 4.556e-6 m/s, because the drag term fades.
 
-A Lipschitz constant can only say "at most this much stretching". It cannot see shrinking. Stronger drag makes this worse: with $k$ = 0.1 per s, the ratio is 129.35.
+A Lipschitz constant can only say "at most this much stretching". It cannot see shrinking. Stronger drag makes this worse: with $`k`$ = 0.1 per s, the ratio is 129.35.
 
-The choice of size matters too. Counting a speed error of 1 m/s as 1 m, instead of 20 m, makes $L$ = 1 per s, so $\Lambda$ = 1.708333 per s. The bound becomes 2.057e17 m, 1.505e21 times the true error: still true, but useless.
+The choice of size matters too. Counting a speed error of 1 m/s as 1 m, instead of 20 m, makes $`L`$ = 1 per s, so $`\Lambda`$ = 1.708333 per s. The bound becomes 2.057e17 m, 1.505e21 times the true error: still true, but useless.
 
 ### Step 7: rounding, run in floating point
 
-The proof assumed exact arithmetic. In floating point each step also rounds the state, which acts like an extra $\tau_n$ of size (rounding)/$h$. So the total behaves like $Ch^p$ plus a rounding term that grows with the number of steps.
+The proof assumed exact arithmetic. In floating point each step also rounds the state, which acts like an extra $`\tau_n`$ of size (rounding)/$`h`$. So the total behaves like $`Ch^p`$ plus a rounding term that grows with the number of steps.
 
-On the chart, RK4 falls with slope 4 down to 1.7e-12 m at $h$ = 1/128 s. Below that the step count wins: at $h$ = 1/2048 s the error is back up to 2.3e-11 m. Smaller steps past the floor buy nothing.
+On the chart, RK4 falls with slope 4 down to 1.7e-12 m at $`h`$ = 1/128 s. Below that the step count wins: at $`h`$ = 1/2048 s the error is back up to 2.3e-11 m. Smaller steps past the floor buy nothing.
 
 ---
 
 ## Worked numbers, by hand
 
-RK4 on the rocket: $y_0$ = 40 m, $v_0$ = 180 m/s, $g$ = 9.8 m/s², $k$ = 0.05 per s, $T$ = 30 s, $L = k$.
+RK4 on the rocket: $`y_0`$ = 40 m, $`v_0`$ = 180 m/s, $`g`$ = 9.8 m/s², $`k`$ = 0.05 per s, $`T`$ = 30 s, $`L = k`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| first step's miss, $h$ = 1 s and 0.5 s | exact minus RK4, in metres | 1.942e-5 m; 6.094e-7 m |
-| local ratio | $1.942\text{e-}5 \div 6.094\text{e-}7$ | 31.87, near $2^5$ |
-| $\Lambda$ at $h$ = 1 s, with $hL$ = 0.05 | $0.05\,\big(1 + hL/2 + (hL)^2/6 + (hL)^3/24\big)$ | 0.051271 per s |
-| bound at 30 s | $1.942\text{e-}5 \times (e^{0.051271 \times 30} - 1) / 0.051271$ | 1.385e-3 m |
-| true error, $h$ = 2 s | size of exact minus run | 2.280e-3 m |
-| true error, $h$ = 1 s | size of exact minus run | 1.367e-4 m |
-| ratio per halving | $2.280\text{e-}3 \div 1.367\text{e-}4$ | 16.68 |
-| observed order | $\log_2 16.68$ | **4.06** |
+| first step's miss, $`h`$ = 1 s and 0.5 s | exact minus RK4, in metres | 1.942e-5 m; 6.094e-7 m |
+| local ratio | $`1.942\text{e-}5 \div 6.094\text{e-}7`$ | 31.87, near $`2^5`$ |
+| $`\Lambda`$ at $`h`$ = 1 s, with $`hL`$ = 0.05 | $`0.05\,\big(1 + hL/2 + (hL)^2/6 + (hL)^3/24\big)`$ | 0.051271 per s |
+| bound at 30 s | $`1.942\text{e-}5 \times (e^{0.051271 \times 30} - 1) / 0.051271`$ | 1.385e-3 m |
+| true error, $`h`$ = 2 s | size of exact minus run | 2.280e-3 m |
+| true error, $`h`$ = 1 s | size of exact minus run | 1.367e-4 m |
+| ratio per halving | $`2.280\text{e-}3 \div 1.367\text{e-}4`$ | 16.68 |
+| observed order | $`\log_2 16.68`$ | **4.06** |
 
 Halving the rocket's step divides its height error at 30 s by about 16, not 32: order 4 overall from order 5 per step.
 
@@ -224,10 +242,10 @@ Halving the rocket's step divides its height error at 30 s by about 16, not 32: 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| A separate flight from the pad, with a 1.7 s burn at 110 m/s² inside the run; steps of 1, 0.5, 0.25, 0.125 s | errors 222.2, 194.4, 13.9, 48.6 m; orders 0.19, 3.81, −1.80 | the rate jumps inside a step, so $\tau_n$ there is not of size $h^4$ |
-| RK4 weights 2 and 4 swapped: 1/6, 1/6, 1/3, 1/3 | errors 10.52, 5.25, 2.62 m; orders 1.00, 1.00 | the weights still add to 1, but the higher order conditions fail, so $p$ = 1 |
-| RK4 weights adding to 7/6 | errors 607.48, 608.16, 608.50 m | $\tau_n$ does not shrink with $h$, so there is no convergence |
-| The 32-fold local gain used as the global one | guesses 4.271e-6 m at $h$ = 0.5 s; actual 8.366e-6 m | twice as many steps each add their miss |
+| A separate flight from the pad, with a 1.7 s burn at 110 m/s² inside the run; steps of 1, 0.5, 0.25, 0.125 s | errors 222.2, 194.4, 13.9, 48.6 m; orders 0.19, 3.81, −1.80 | the rate jumps inside a step, so $`\tau_n`$ there is not of size $`h^4`$ |
+| RK4 weights 2 and 4 swapped: 1/6, 1/6, 1/3, 1/3 | errors 10.52, 5.25, 2.62 m; orders 1.00, 1.00 | the weights still add to 1, but the higher order conditions fail, so $`p`$ = 1 |
+| RK4 weights adding to 7/6 | errors 607.48, 608.16, 608.50 m | $`\tau_n`$ does not shrink with $`h`$, so there is no convergence |
+| The 32-fold local gain used as the global one | guesses 4.271e-6 m at $`h`$ = 0.5 s; actual 8.366e-6 m | twice as many steps each add their miss |
 
 The fix for the burn is to end a step exactly at burnout and restart from there. Then every step sees a smooth rate law.
 
@@ -235,7 +253,7 @@ The fix for the burn is to end a step exactly at burnout and restart from there.
 
 ## Code, from first principles, and it actually runs
 
-The code writes one explicit Runge-Kutta step from a tableau and runs Euler, Heun and RK4 on the rocket, by three roads. Road one runs the method and subtracts the closed-form flight. Road two carries each step's local error forward with the method's own step and adds them up. Road three is the theorem's bound, which must sit above both. Asserts check that roads one and two agree to the rounding floor, that the bound holds and sits about 10 times above the true error, that $\Lambda$ bounds the measured stretch of RK4's increment, that the observed orders are 1, 2 and 4, that one step has order 5, and that rounding stops the fall.
+The code writes one explicit Runge-Kutta step from a tableau and runs Euler, Heun and RK4 on the rocket, by three roads. Road one runs the method and subtracts the closed-form flight. Road two carries each step's local error forward with the method's own step and adds them up. Road three is the theorem's bound, which must sit above both. Asserts check that roads one and two agree to the rounding floor, that the bound holds and sits about 10 times above the true error, that $`\Lambda`$ bounds the measured stretch of RK4's increment, that the observed orders are 1, 2 and 4, that one step has order 5, and that rounding stops the fall.
 
 ### Python
 
@@ -594,14 +612,14 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the theorem for every one-step method, the discrete Gronwall lemma and RK4's $\Lambda$, for every step $h > 0$.
+Lean proves the theorem for every one-step method, the discrete Gronwall lemma and RK4's $`\Lambda`$, for every step $`h > 0`$.
 
-- Suppose the increment function $\Phi$ stretches gaps by at most $\Lambda > 0$, and $\lVert\tau_n\rVert \le Ch^p$ at every step of the run. Then a run started from the exact value has $\lVert e_n\rVert \le Ch^p(e^{\Lambda t_n} - 1)/\Lambda$ for every $n \le N$.
-- If $a_0 = 0$ and $a_{m+1} \le (1 + h\Lambda)a_m + hB$ for every $m$, with $h, \Lambda, B > 0$, then $a_n \le B\big((1 + h\Lambda)^n - 1\big)/\Lambda$.
-- That bound is at most $B(e^{\Lambda nh} - 1)/\Lambda$, because $(1 + h\Lambda)^n \le e^{\Lambda nh}$.
-- If the rate law $f$ has Lipschitz constant $L$, RK4's increment stretches gaps by at most $\Lambda = L\big(1 + hL/2 + (hL)^2/6 + (hL)^3/24\big)$.
+- Suppose the increment function $`\Phi`$ stretches gaps by at most $`\Lambda > 0`$, and $`\lVert\tau_n\rVert \le Ch^p`$ at every step of the run. Then a run started from the exact value has $`\lVert e_n\rVert \le Ch^p(e^{\Lambda t_n} - 1)/\Lambda`$ for every $`n \le N`$.
+- If $`a_0 = 0`$ and $`a_{m+1} \le (1 + h\Lambda)a_m + hB`$ for every $`m`$, with $`h, \Lambda, B > 0`$, then $`a_n \le B\big((1 + h\Lambda)^n - 1\big)/\Lambda`$.
+- That bound is at most $`B(e^{\Lambda nh} - 1)/\Lambda`$, because $`(1 + h\Lambda)^n \le e^{\Lambda nh}`$.
+- If the rate law $`f`$ has Lipschitz constant $`L`$, RK4's increment stretches gaps by at most $`\Lambda = L\big(1 + hL/2 + (hL)^2/6 + (hL)^3/24\big)`$.
 - The four slope bounds of the RK4 proof, weighted 1, 2, 2, 1 over 6, add up to that factor.
-- The halving factors are right: $2^4 = 16$ for the global error and $2^5 = 32$ for one step.
+- The halving factors are right: $`2^4 = 16`$ for the global error and $`2^5 = 32`$ for one step.
 - RK4's weights add to 1, and the faulty weights 1/6, 1/3, 1/3, 1/3 add to 7/6.
 
 The rocket's numbers, RK4's observed order 4, the bound's ratio to the true error and rounding are left to the Python and Rust checks.
@@ -847,30 +865,30 @@ example (z : ℚ) : (1 + 2 * (1 + z / 2) + 2 * (1 + z / 2 + z ^ 2 / 4)
 
 ## Where you meet it in real life
 
-- **Testing a solver.** Run one problem at $h$, $h/2$ and $h/4$ and compare the observed order with the method's claim. A mismatch, like the 1.00 from two swapped weights, points to a bug.
+- **Testing a solver.** Run one problem at $`h`$, $`h/2`$ and $`h/4`$ and compare the observed order with the method's claim. A mismatch, like the 1.00 from two swapped weights, points to a bug.
 - **Flight and orbit simulation.** Simulators stop the step at events such as burnout or a parachute opening, so every step sees a smooth rate law and keeps its order.
-- **Choosing a step.** Because the global error scales like $h^p$, one run at a known step predicts the step needed for a target accuracy. With order 4, twice the steps buy about 16 times the accuracy.
+- **Choosing a step.** Because the global error scales like $`h^p`$, one run at a known step predicts the step needed for a target accuracy. With order 4, twice the steps buy about 16 times the accuracy.
 - **Shooting for boundary problems.** Shooting calls an initial-value solver many times; this card's bound limits how well the aim can be set ([Two-point boundary problems](07-boundary-value-problems-shooting-and-collocation.md)).
 
 > **Say it back**
-> A one-step method's increment function gives its average slope for a step. The exact solution misses that step by $h\tau_n$, a fresh error of size $h^{p+1}$. Each later step carries the old error with growth at most $1 + h\Lambda$, where $\Lambda$ comes from the rate law's Lipschitz constant. Adding the $T/h$ fresh errors, each grown by at most $e^{\Lambda T}$, gives a global error of at most a constant times $h^p$. The bound is safe but pessimistic, because it cannot see errors that decay.
+> A one-step method's increment function gives its average slope for a step. The exact solution misses that step by $`h\tau_n`$, a fresh error of size $`h^{p+1}`$. Each later step carries the old error with growth at most $`1 + h\Lambda`$, where $`\Lambda`$ comes from the rate law's Lipschitz constant. Adding the $`T/h`$ fresh errors, each grown by at most $`e^{\Lambda T}`$, gives a global error of at most a constant times $`h^p`$. The bound is safe but pessimistic, because it cannot see errors that decay.
 
 ---
 
 ## What this builds on
 
-- [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md): the tableau and order conditions that make $\tau_n$ of size $h^p$.
+- [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md): the tableau and order conditions that make $`\tau_n`$ of size $`h^p`$.
 - [Order of a method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/02-local-and-global-error-and-order.md): local and global error, and the Euler case of this theorem.
 - [Gronwall's inequality](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md): the continuous growth bound whose step-by-step twin carries the proof.
 - [The Picard-Lindelof theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): the Lipschitz condition, which also guarantees one exact solution to converge to.
 
 ## Where this goes next
 
-- [Embedded pairs](03-embedded-pairs-and-adaptive-steps.md): estimate each step's local error as you go and choose $h$ to keep it below a tolerance.
+- [Embedded pairs](03-embedded-pairs-and-adaptive-steps.md): estimate each step's local error as you go and choose $`h`$ to keep it below a tolerance.
 - [Multistep methods](04-multistep-adams-and-bdf.md): methods that reuse old steps, where small local errors need an extra condition, zero-stability, to give convergence.
-- [Symplectic steps](06-symplectic-integrators.md): methods whose structure keeps long-run errors growing slowly where this bound grows like $e^{\Lambda T}$.
+- [Symplectic steps](06-symplectic-integrators.md): methods whose structure keeps long-run errors growing slowly where this bound grows like $`e^{\Lambda T}`$.
 
-The bound here grows like $e^{\Lambda T}$ even when the true error does not: what property of a problem lets errors stay small over very long runs?
+The bound here grows like $`e^{\Lambda T}`$ even when the true error does not: what property of a problem lets errors stay small over very long runs?
 
 ---
 

@@ -12,11 +12,11 @@ Now film faster: every quarter second, every sixteenth, down to every 1/4096 of 
 
 Two facts sit behind that. **Scaling**: distances grow like the square root of time, so 4 times as long means about 2 times as far. **Roughness**: the average speed read off the film depends on the film. With frames 1 second apart it reads 0.76 micrometres per second; with frames 1/4096 s apart, 51.18. Halve the gap and the reading grows by the square root of 2, forever. The path has no slope at any time.
 
-The model is Brownian motion $W_t$, read "the position at time $t$" ([Brownian motion](01-brownian-motion.md)). It has four properties:
+The model is Brownian motion $`W_t`$, read "the position at time $`t`$" ([Brownian motion](01-brownian-motion.md)). It has four properties:
 
 - it starts at 0;
 - its moves over separate stretches of time are independent;
-- the move over a stretch of length $h$ is normal with mean 0 and variance $h$;
+- the move over a stretch of length $`h`$ is normal with mean 0 and variance $`h`$;
 - its path is continuous.
 
 **Stretch time by a factor c-squared and position by c, and Brownian motion turns into Brownian motion again; so typical distances grow like root t, every zoom looks as rough as the whole, and with probability one the path has a slope at no time at all.**
@@ -38,52 +38,60 @@ xychart-beta
     line [0.00, -0.10, -0.20, -0.29, -0.39, -0.49, -0.59, -0.69, -0.78, -0.88, -0.98, -1.08, -1.17, -1.27, -1.37, -1.46, -1.56, -1.66, -1.75, -1.85, -1.94, -2.04, -2.13, -2.23, -2.32, -2.42, -2.51, -2.60, -2.70, -2.79, -2.88, -2.97, -3.06]
 ```
 
-Orange: the whole 16 seconds, read every half second. Green: the stretch from second 8 to second 9, its time multiplied by 16 and its moves by 4, read every 1/32 s of real time. Dark: a smooth curve, $g$, given the same stretch: nearly a straight line. The green line is as ragged as the orange; it drifts further, which one sample is free to do. Four is the square root of 16: that is the root rule.
+Orange: the whole 16 seconds, read every half second. Green: the stretch from second 8 to second 9, its time multiplied by 16 and its moves by 4, read every 1/32 s of real time. Dark: a smooth curve, $`g`$, given the same stretch: nearly a straight line. The green line is as ragged as the orange; it drifts further, which one sample is free to do. Four is the square root of 16: that is the root rule.
 
 ---
 
 ## The formula
 
-Notation first, in words. A process built from $W_t$ by zooming is written $V_t$. The zoom factor is $c$, any positive number. The sampling step is $h$, in seconds. $Z$ stands for a standard normal number: mean 0, variance 1. $\Phi$ is its cumulative chance, $\Phi(x) = P(Z \le x)$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). "Has the same law as" is written with the letter d over an equals sign: two random objects with identical chances for every event.
+Notation first, in words. A process built from $`W_t`$ by zooming is written $`V_t`$. The zoom factor is $`c`$, any positive number. The sampling step is $`h`$, in seconds. $`Z`$ stands for a standard normal number: mean 0, variance 1. $`\Phi`$ is its cumulative chance, $`\Phi(x) = P(Z \le x)`$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). "Has the same law as" is written with the letter d over an equals sign: two random objects with identical chances for every event.
 
 The scaling law:
 
-$$V_t = \frac{1}{c}\,W_{c^2 t} \quad\text{is again a Brownian motion, for every } c > 0.$$
+```math
+V_t = \frac{1}{c}\,W_{c^2 t} \quad\text{is again a Brownian motion, for every } c > 0.
+```
 
 **Read it aloud:** run the clock c-squared times as fast and shrink every distance by c, and the result cannot be told apart from the original.
 
-Taking a single time and $c = \sqrt{t}$ gives the root-t rule:
+Taking a single time and $`c = \sqrt{t}`$ gives the root-t rule:
 
-$$W_t \overset{d}{=} \sqrt{t}\,Z, \qquad E\,\lvert W_t\rvert = \sqrt{2t/\pi}.$$
+```math
+W_t \overset{d}{=} \sqrt{t}\,Z, \qquad E\,\lvert W_t\rvert = \sqrt{2t/\pi}.
+```
 
 **Read it aloud:** the position after t seconds is a standard normal number times root t, so the mean distance from the start grows like root t.
 
-The slope of the chord, the straight line joining the path at time $t$ to the path a step $h$ later, has a law that blows up as the step shrinks:
+The slope of the chord, the straight line joining the path at time $`t`$ to the path a step $`h`$ later, has a law that blows up as the step shrinks:
 
-$$\frac{W_{t+h} - W_t}{h} \overset{d}{=} \frac{Z}{\sqrt{h}}, \qquad P\!\left(\left\lvert \frac{W_{t+h} - W_t}{h}\right\rvert > K\right) = 2\big(1 - \Phi(K\sqrt{h})\big) \to 1 \text{ as } h \to 0.$$
+```math
+\frac{W_{t+h} - W_t}{h} \overset{d}{=} \frac{Z}{\sqrt{h}}, \qquad P\!\left(\left\lvert \frac{W_{t+h} - W_t}{h}\right\rvert > K\right) = 2\big(1 - \Phi(K\sqrt{h})\big) \to 1 \text{ as } h \to 0.
+```
 
 **Read it aloud:** the chord's slope is a normal number divided by root h, so for any speed limit K the chance of breaking it climbs to certainty as the frames get closer.
 
 The theorem the card ends on:
 
-$$P\big(\text{the path } t \mapsto W_t \text{ has a finite slope at some time } s\big) = 0.$$
+```math
+P\big(\text{the path } t \mapsto W_t \text{ has a finite slope at some time } s\big) = 0.
+```
 
 **Read it aloud:** with probability one, there is no time at all at which the path has a slope.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $W_t$, $W_s$ | Brownian motion: the position at time $t$ or $s$ | grain's sideways position, micrometres | — |
-| $t$, $s$ | times, in seconds | up to 16 s; $s$ is a time picked out | the spread grows like root t |
-| $c$ | zoom factor | 2 (watch 4 s, shrink by 2); 1/4 for the blow-up | — the law is unchanged, that is the theorem |
-| $V_t$, $V_1$ | the zoomed process $W_{c^2t}/c$, and its value at 1 s | $W_{4t}/2$, and $W_4/2$ | — |
-| $h$ | step between frames, seconds | 1 down to 1/4096 | chords get flatter; shrink it and they get steeper |
-| $Z$ | a standard normal number | — | — |
-| $\Phi$ | standard normal cumulative chance | $\Phi(1)$ = 0.841344746 | — |
-| $K$ | a speed limit, micrometres per second | 10 in the tables; any whole number in the proof | fewer chords break it |
-| $n$ | frames per second in the proof | 4096 up to 16,777,216 | the proof's bound shrinks like one over root n |
-| $D$ | a slope the path might have at $s$ | none exists | — |
-| $g$ | a smooth curve for contrast, $2\sin(\pi t/8)$ micrometres | slope at 8 s is $-\pi/4$ | — |
-| $u$, $j$, $m$, $i$, $B_{n,K}$, $E_{m,K}$ | used only in the proofs: u the stretched clock of Step 2; j and m count events in Step 3; i numbers a frame; $B_{n,K}$ the event that three neighbouring moves are all at most 7K/n; $E_{m,K}$ the event that $B_{n,K}$ happens for every n from m on | u from 0 to 16 s | — |
+| $`W_t`$, $`W_s`$ | Brownian motion: the position at time $`t`$ or $`s`$ | grain's sideways position, micrometres | — |
+| $`t`$, $`s`$ | times, in seconds | up to 16 s; $`s`$ is a time picked out | the spread grows like root t |
+| $`c`$ | zoom factor | 2 (watch 4 s, shrink by 2); 1/4 for the blow-up | — the law is unchanged, that is the theorem |
+| $`V_t`$, $`V_1`$ | the zoomed process $`W_{c^2t}/c`$, and its value at 1 s | $`W_{4t}/2`$, and $`W_4/2`$ | — |
+| $`h`$ | step between frames, seconds | 1 down to 1/4096 | chords get flatter; shrink it and they get steeper |
+| $`Z`$ | a standard normal number | — | — |
+| $`\Phi`$ | standard normal cumulative chance | $`\Phi(1)`$ = 0.841344746 | — |
+| $`K`$ | a speed limit, micrometres per second | 10 in the tables; any whole number in the proof | fewer chords break it |
+| $`n`$ | frames per second in the proof | 4096 up to 16,777,216 | the proof's bound shrinks like one over root n |
+| $`D`$ | a slope the path might have at $`s`$ | none exists | — |
+| $`g`$ | a smooth curve for contrast, $`2\sin(\pi t/8)`$ micrometres | slope at 8 s is $`-\pi/4`$ | — |
+| $`u`$, $`j`$, $`m`$, $`i`$, $`B_{n,K}`$, $`E_{m,K}`$ | used only in the proofs: u the stretched clock of Step 2; j and m count events in Step 3; i numbers a frame; $`B_{n,K}`$ the event that three neighbouring moves are all at most 7K/n; $`E_{m,K}`$ the event that $`B_{n,K}`$ happens for every n from m on | u from 0 to 16 s | — |
 
 ### When it holds
 
@@ -104,32 +112,32 @@ So the zoomed path has the same law at every magnification and never settles int
 
 ### Step 1: the scaling law, proved
 
-Fix $c > 0$ and set $V_t = W_{c^2t}/c$. Check the four properties that define Brownian motion.
+Fix $`c > 0`$ and set $`V_t = W_{c^2t}/c`$. Check the four properties that define Brownian motion.
 
-1. **Start.** $V_0 = W_0/c = 0$.
-2. **Independent moves.** For times $0 \le t_0 < t_1 < \dots < t_k$, the moves of the zoomed process are the moves of $W_t$ over the stretches from $c^2 t_{i-1}$ to $c^2 t_i$, each divided by c. Those stretches do not overlap, so those moves are independent, and dividing by a fixed number keeps them so.
-3. **Normal moves of the right size.** For $s < t$, the move $V_t - V_s$ is $(W_{c^2t} - W_{c^2s})/c$. The top is normal with mean 0 and variance $c^2(t - s)$. Dividing by c divides the variance by c-squared: mean 0, variance $t - s$.
-4. **Continuity.** A continuous path, run on the clock $c^2t$ and divided by c, is still continuous.
+1. **Start.** $`V_0 = W_0/c = 0`$.
+2. **Independent moves.** For times $`0 \le t_0 < t_1 < \dots < t_k`$, the moves of the zoomed process are the moves of $`W_t`$ over the stretches from $`c^2 t_{i-1}`$ to $`c^2 t_i`$, each divided by c. Those stretches do not overlap, so those moves are independent, and dividing by a fixed number keeps them so.
+3. **Normal moves of the right size.** For $`s < t`$, the move $`V_t - V_s`$ is $`(W_{c^2t} - W_{c^2s})/c`$. The top is normal with mean 0 and variance $`c^2(t - s)`$. Dividing by c divides the variance by c-squared: mean 0, variance $`t - s`$.
+4. **Continuity.** A continuous path, run on the clock $`c^2t`$ and divided by c, is still continuous.
 
-All four hold, so $V_t$ is a Brownian motion. The chances of any event about finitely many times are fixed by properties 1 to 3, so the zoomed process and the original share them all. That is the whole proof.
+All four hold, so $`V_t`$ is a Brownian motion. The chances of any event about finitely many times are fixed by properties 1 to 3, so the zoomed process and the original share them all. That is the whole proof.
 
-For the grain, take $c = 2$: watch for 4 seconds and halve the distances. The position at 4 s has variance 4; halving divides it by 4, back to 1, so $V_1$ is standard normal. The mean distance after 1, 4 and 16 seconds is 0.7979, 1.5958 and 3.1915 micrometres: each 4 times longer, 2 times further.
+For the grain, take $`c = 2`$: watch for 4 seconds and halve the distances. The position at 4 s has variance 4; halving divides it by 4, back to 1, so $`V_1`$ is standard normal. The mean distance after 1, 4 and 16 seconds is 0.7979, 1.5958 and 3.1915 micrometres: each 4 times longer, 2 times further.
 
 ### Step 2: the zoom works at any time, not only at the start
 
-The film from second 8 on, measured from where the grain was then, is $W_{8+t} - W_8$. It passes the same four checks: it starts at 0, its moves are moves of the original over later stretches, and its path is continuous. So it is a fresh Brownian motion, and Step 1 applies to it. With $c = 1/4$, the stretched piece $4(W_{8 + u/16} - W_8)$ for u from 0 to 16 is a Brownian motion on 16 seconds. That is the green line: the law of the orange line, cut from another stretch of the same path.
+The film from second 8 on, measured from where the grain was then, is $`W_{8+t} - W_8`$. It passes the same four checks: it starts at 0, its moves are moves of the original over later stretches, and its path is continuous. So it is a fresh Brownian motion, and Step 1 applies to it. With $`c = 1/4`$, the stretched piece $`4(W_{8 + u/16} - W_8)`$ for u from 0 to 16 is a Brownian motion on 16 seconds. That is the green line: the law of the orange line, cut from another stretch of the same path.
 
 ### Step 3: at any time named in advance, there is no slope
 
-Fix a time t, say 8 seconds. The chord's slope over a step h is $(W_{t+h} - W_t)/h$. The top is normal with variance h, so the slope is $Z/\sqrt{h}$: a standard normal number blown up by $1/\sqrt{h}$. Its mean size is $\sqrt{2/(\pi h)}$, which is 0.7979 micrometres per second at h = 1 and 51.0646 at h = 1/4096.
+Fix a time t, say 8 seconds. The chord's slope over a step h is $`(W_{t+h} - W_t)/h`$. The top is normal with variance h, so the slope is $`Z/\sqrt{h}`$: a standard normal number blown up by $`1/\sqrt{h}`$. Its mean size is $`\sqrt{2/(\pi h)}`$, which is 0.7979 micrometres per second at h = 1 and 51.0646 at h = 1/4096.
 
-Now fix a speed limit K. The chance that a chord breaks it is $P(\lvert Z\rvert > K\sqrt{h}) = 2(1 - \Phi(K\sqrt{h}))$. As h shrinks, $K\sqrt{h}$ falls to 0 and the chance climbs to 1.
+Now fix a speed limit K. The chance that a chord breaks it is $`P(\lvert Z\rvert > K\sqrt{h}) = 2(1 - \Phi(K\sqrt{h}))`$. As h shrinks, $`K\sqrt{h}`$ falls to 0 and the chance climbs to 1.
 
 That gives a proof. Take the steps 1/4, 1/16, 1/64 and so on, and call event j "the chord over step 4 to the power −j breaks the limit K". The chance of event j tends to 1.
 
 The chance that infinitely many of the events happen is the limit, as m grows, of the chance that at least one from event m on happens ([Continuity and subadditivity](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): continuity from above). Each of those chances is at least the chance of event m alone, which tends to 1. So with probability one, chords break the limit K at arbitrarily small steps.
 
-Do that for K = 1, 2, 3 and so on. Countably many events of probability one happen together with probability one. So with probability one the chords at time t are unbounded as h shrinks. A slope $D$ would force them to settle near D. There is none.
+Do that for K = 1, 2, 3 and so on. Countably many events of probability one happen together with probability one. So with probability one the chords at time t are unbounded as h shrinks. A slope $`D`$ would force them to settle near D. There is none.
 
 ### Step 4: almost every time is a time without slope
 
@@ -141,22 +149,22 @@ That is not yet the theorem. A set of no length can still hold points, and those
 
 Raymond Paley, Norbert Wiener and Antoni Zygmund proved the full statement in 1933. A shorter argument, due to Dvoretzky, Erdős and Kakutani, needs only the normal law.
 
-The shape in words. Suppose the path had a slope at some time $s$ within the first second. Then near s it moves no faster than some whole number K of micrometres per second. Cut the second into n equal frames. Just after s sit three consecutive frames, each within 4/n of s. On each, the path moves at most 7K/n.
+The shape in words. Suppose the path had a slope at some time $`s`$ within the first second. Then near s it moves no faster than some whole number K of micrometres per second. Cut the second into n equal frames. Just after s sit three consecutive frames, each within 4/n of s. On each, the path moves at most 7K/n.
 
-Each move is normal with variance 1/n, so each lands that close to 0 with chance at most $7K/\sqrt{n}$. The three moves are independent, so all three do with chance at most $(7K/\sqrt{n})^3$. There are n places the trio could sit. Adding over them gives at most $343K^3/\sqrt{n}$, which tends to 0 as the frames shrink.
+Each move is normal with variance 1/n, so each lands that close to 0 with chance at most $`7K/\sqrt{n}`$. The three moves are independent, so all three do with chance at most $`(7K/\sqrt{n})^3`$. There are n places the trio could sit. Adding over them gives at most $`343K^3/\sqrt{n}`$, which tends to 0 as the frames shrink.
 
 For K = 1 micrometre per second the bound is 5.3594 at 4096 frames a second and 0.0837 at 16,777,216. The exact three-frame chance, summed over places, is about half: 2.7061 and 0.0425. Both halve each time n is multiplied by 4.
 
 <details>
 <summary>Detailed proof: with probability one, no slope at any time</summary>
 
-Extend the path to two seconds so that every frame below exists. For whole numbers K and n, let $B_{n,K}$ be the event that for some i from 1 to n, the three moves of the path over the frames starting at $i/n$, $(i+1)/n$ and $(i+2)/n$ all have size at most $7K/n$.
+Extend the path to two seconds so that every frame below exists. For whole numbers K and n, let $`B_{n,K}`$ be the event that for some i from 1 to n, the three moves of the path over the frames starting at $`i/n`$, $`(i+1)/n`$ and $`(i+2)/n`$ all have size at most $`7K/n`$.
 
-**Chance of one such event.** Each move is normal with variance $1/n$, so it equals $Z/\sqrt{n}$ in law. Its chance of having size at most $7K/n$ is $P(\lvert Z\rvert \le 7K/\sqrt{n})$. That is an interval of width $14K/\sqrt{n}$ for $Z$, whose density never exceeds $1/\sqrt{2\pi}$, below one half, so the chance is at most $7K/\sqrt{n}$. The three frames do not overlap, so their moves are independent, and all three are small with chance at most $343K^3/n^{3/2}$. Adding over the n starting places: $P(B_{n,K}) \le 343K^3/\sqrt{n}$.
+**Chance of one such event.** Each move is normal with variance $`1/n`$, so it equals $`Z/\sqrt{n}`$ in law. Its chance of having size at most $`7K/n`$ is $`P(\lvert Z\rvert \le 7K/\sqrt{n})`$. That is an interval of width $`14K/\sqrt{n}`$ for $`Z`$, whose density never exceeds $`1/\sqrt{2\pi}`$, below one half, so the chance is at most $`7K/\sqrt{n}`$. The three frames do not overlap, so their moves are independent, and all three are small with chance at most $`343K^3/n^{3/2}`$. Adding over the n starting places: $`P(B_{n,K}) \le 343K^3/\sqrt{n}`$.
 
-**A slope forces the event.** Suppose the path has a finite slope D at some time s from 0 up to, but not including, 1. Pick a whole number K above $\lvert D\rvert + 1$. Near enough to s, the chord slopes stay within 1 of D, so there is a window to the right of s in which $\lvert W_u - W_s\rvert \le K(u - s)$, for every time u in it. Let n be large enough that $4/n$ lies inside that window, and let i be the first whole number above n times s, so $s < i/n \le s + 1/n$ and $i \le n$. The four grid points $i/n$ up to $(i+3)/n$ lie within $4/n$ to the right of s. For each of the three frames, the move is at most the distance of its far end from $W_s$ plus that of its near end: at most $K \cdot 4/n + K \cdot 3/n = 7K/n$. So $B_{n,K}$ happens for every n large enough.
+**A slope forces the event.** Suppose the path has a finite slope D at some time s from 0 up to, but not including, 1. Pick a whole number K above $`\lvert D\rvert + 1`$. Near enough to s, the chord slopes stay within 1 of D, so there is a window to the right of s in which $`\lvert W_u - W_s\rvert \le K(u - s)`$, for every time u in it. Let n be large enough that $`4/n`$ lies inside that window, and let i be the first whole number above n times s, so $`s < i/n \le s + 1/n`$ and $`i \le n`$. The four grid points $`i/n`$ up to $`(i+3)/n`$ lie within $`4/n`$ to the right of s. For each of the three frames, the move is at most the distance of its far end from $`W_s`$ plus that of its near end: at most $`K \cdot 4/n + K \cdot 3/n = 7K/n`$. So $`B_{n,K}`$ happens for every n large enough.
 
-**The chance is zero.** Let $E_{m,K}$ be the event that $B_{n,K}$ happens for every n from m on. For each n at least m, $E_{m,K}$ sits inside $B_{n,K}$, so its chance is at most $343K^3/\sqrt{n}$ for every such n, which forces it to be 0. The paths with a slope somewhere in the first second sit inside the union of the $E_{m,K}$ over all whole m and K: countably many events of chance 0. That union has chance 0. Running the same argument on each second, s up to 1, 2, 3 and so on, covers every time.
+**The chance is zero.** Let $`E_{m,K}`$ be the event that $`B_{n,K}`$ happens for every n from m on. For each n at least m, $`E_{m,K}`$ sits inside $`B_{n,K}`$, so its chance is at most $`343K^3/\sqrt{n}`$ for every such n, which forces it to be 0. The paths with a slope somewhere in the first second sit inside the union of the $`E_{m,K}`$ over all whole m and K: countably many events of chance 0. That union has chance 0. Running the same argument on each second, s up to 1, 2, 3 and so on, covers every time.
 
 The argument never uses the left side of s and needs only a speed limit near s, so it shows more: no time at which the path is held to a finite speed even from the right.
 
@@ -178,11 +186,11 @@ A second road to the missing slope adds up squared moves instead of chords. The 
 | --- | --- | --- |
 | variance after 4 s | 4 seconds × 1 square micrometre per second | 4 |
 | zoom with c = 2 | divide the move by 2, so the variance by 4 | 1, the variance after 1 s |
-| mean distance after 1 s | $\sqrt{2/\pi}$ | 0.7979 μm |
+| mean distance after 1 s | $`\sqrt{2/\pi}`$ | 0.7979 μm |
 | after 4 s, then 16 s | 0.7979 × 2, then × 4 | 1.5958 and 3.1915 μm |
-| mean chord speed, 1 s frames | $\sqrt{2/(\pi \cdot 1)}$ | 0.7979 μm per s |
-| mean chord speed, 1/4096 s frames | $\sqrt{2 \cdot 4096/\pi}$, 64 times the 1-second value | **51.0646 μm per s** |
-| chance a 1/4096 s chord beats 10 μm per s | $K\sqrt{h}$ = 10/64 = 0.15625; then 2(1 − Φ(0.15625)) | **0.8758** |
+| mean chord speed, 1 s frames | $`\sqrt{2/(\pi \cdot 1)}`$ | 0.7979 μm per s |
+| mean chord speed, 1/4096 s frames | $`\sqrt{2 \cdot 4096/\pi}`$, 64 times the 1-second value | **51.0646 μm per s** |
+| chance a 1/4096 s chord beats 10 μm per s | $`K\sqrt{h}`$ = 10/64 = 0.15625; then 2(1 − Φ(0.15625)) | **0.8758** |
 
 At camera speed the grain seems to drift at under a micrometre a second. Film it 4096 times faster and the "speed" reads 64 times higher, and about 7 chords in 8 beat 10 micrometres per second. The number measures the camera.
 
@@ -204,7 +212,7 @@ The code prints every one of them.
 Random numbers come from SplitMix64, seed 20260930, made normal by Box-Muller, both written out. Three roads:
 
 - **Formulas:** the root-t laws, the normal cumulative chance written twice (Simpson's rule and a Taylor series), and the proof's bound.
-- **Exact enumeration:** a coin-flip walk's mean distance, summed over every path, closing on $\sqrt{2/\pi}$ ([Simple random walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md)).
+- **Exact enumeration:** a coin-flip walk's mean distance, summed over every path, closing on $`\sqrt{2/\pi}`$ ([Simple random walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md)).
 - **Simulation:** one 16-second path by Lévy's midpoint refinement, from 1-second frames to 1/4096 s; each new midpoint is its neighbours' average plus a normal move with a quarter of the old frame's variance. Earlier points never move, so each level is the same path filmed faster. Then 20,000 paths on a 1/8 s grid over 4 seconds test the scaling law; a sum of normal moves is exactly normal at every grid time, so the grid adds no bias.
 
 Simulated numbers carry standard errors, and asserts on them allow four.
@@ -623,7 +631,7 @@ ALL CHECKS PASS
 
 The two outputs match line for line. Python's `sum` adds floats with a compensated method and Rust's plainly; they agree at the printed precision.
 
-In the first table the mean chord speed sits within three standard errors of $\sqrt{2/(\pi h)}$ at every level, while the smooth curve's stays at 0.5000. In the second, the share of chords beating 10 micrometres per second follows $2(1 - \Phi(10\sqrt{h}))$ up to 0.8758. The chord at 8 s runs away to −105.1943; multiplied by root h it stays the size of a normal number, the scaling law on a single path. The smooth chord settles on −0.7854, its slope $-\pi/4$.
+In the first table the mean chord speed sits within three standard errors of $`\sqrt{2/(\pi h)}`$ at every level, while the smooth curve's stays at 0.5000. In the second, the share of chords beating 10 micrometres per second follows $`2(1 - \Phi(10\sqrt{h}))`$ up to 0.8758. The chord at 8 s runs away to −105.1943; multiplied by root h it stays the size of a normal number, the scaling law on a single path. The smooth chord settles on −0.7854, its slope $`-\pi/4`$.
 
 ### The picture: mean chord speed against frame step
 
@@ -638,18 +646,18 @@ xychart-beta
     line [0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50]
 ```
 
-Orange: the simulated path, one sample. Green: the formula $\sqrt{2/(\pi h)}$. Dark: the smooth curve $g$, flat at 0.50. Each step right divides the frame by 4 and doubles the Brownian readings.
+Orange: the simulated path, one sample. Green: the formula $`\sqrt{2/(\pi h)}`$. Dark: the smooth curve $`g`$, flat at 0.50. Each step right divides the frame by 4 and doubles the Brownian readings.
 
 ### Lean
 
 Lean proves the card's three theorems for every Brownian motion, and checks the worked arithmetic.
 
-- Take any zoom factor $c > 0$. Then $V_t = W_{c^2 t}/c$ is again a Brownian motion.
-- Take any time $t$. Then $W_t \overset{d}{=} \sqrt{t}\,Z$ and $E\,\lvert W_t\rvert = \sqrt{2t/\pi}$.
+- Take any zoom factor $`c > 0`$. Then $`V_t = W_{c^2 t}/c`$ is again a Brownian motion.
+- Take any time $`t`$. Then $`W_t \overset{d}{=} \sqrt{t}\,Z`$ and $`E\,\lvert W_t\rvert = \sqrt{2t/\pi}`$.
 - With probability one, the path has a slope at no time at all. That holds even for a slope read only from the right of each time.
-- Take the worked numbers. Then $\sqrt{4} = 2$, $\sqrt{4096} = 64$, $10\sqrt{1/4096} = 0.15625$ and $7^3 = 343$.
+- Take the worked numbers. Then $`\sqrt{4} = 2`$, $`\sqrt{4096} = 64`$, $`10\sqrt{1/4096} = 0.15625`$ and $`7^3 = 343`$.
 
-The simulations, the coin-flip walk and the values of $\Phi$ are left to the Python and Rust checks.
+The simulations, the coin-flip walk and the values of $`\Phi`$ are left to the Python and Rust checks.
 
 ```lean
 -- Brownian paths: stretching time by c squared and position by c turns a Brownian motion into a Brownian motion again, its position at time t is root t times a standard normal number with mean distance root (2t/pi), and with probability one its path has a slope at no time at all.
@@ -1003,9 +1011,9 @@ example : √((4 : ℝ) * 4096) = 2 * √4096 := by norm_num
 > **Try changing**
 > Guess first, then run it.
 > - **The wrong midpoint spread.** In the refinement, change the divisor `2.0` in the line that sets `sd` to `1.5`. Guess: the finer levels get too rough, and the mean-speed assert stops the run at level 6.
-> - **The wrong zoom.** Change `x / 2` in `v_one` to `x / 1.8`. Guess: the variance of $V_1$ moves well past four standard errors and the "Var V_1" assert fires.
+> - **The wrong zoom.** Change `x / 2` in `v_one` to `x / 1.8`. Guess: the variance of $`V_1`$ moves well past four standard errors and the "Var V_1" assert fires.
 > - **Another seed.** Change 20260930 to any other number. Guess: simulated numbers move by about their standard errors, formula columns stay put, and the chord at 8 s still runs away.
-> - **A rougher smooth curve.** Add `0.3 * sin(40 * pi * t)` to `g`. Guess: its mean chord speed rises once the frames resolve the wiggle, then settles near 24 as they shrink below it; a smooth curve's readings always settle, however wiggly it is. The last assert then fires: the slope at 8 s is now $12\pi - \pi/4$.
+> - **A rougher smooth curve.** Add `0.3 * sin(40 * pi * t)` to `g`. Guess: its mean chord speed rises once the frames resolve the wiggle, then settles near 24 as they shrink below it; a smooth curve's readings always settle, however wiggly it is. The last assert then fires: the slope at 8 s is now $`12\pi - \pi/4`$.
 
 ---
 

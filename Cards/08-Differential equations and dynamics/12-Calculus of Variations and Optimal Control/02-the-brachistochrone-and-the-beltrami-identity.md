@@ -32,30 +32,36 @@ A reminder from [The Euler-Lagrange equation](01-functionals-and-the-euler-lagra
 
 Depth y is measured **downward**.
 
-$$T[y] = \int_0^{2} \sqrt{\frac{1 + y'^2}{2 g\, y}}\; dx$$
+```math
+T[y] = \int_0^{2} \sqrt{\frac{1 + y'^2}{2 g\, y}}\; dx
+```
 
 **Read it aloud:** the descent time is the sum, over every sliver of the slide, of the sliver's length divided by the rider's speed there.
 
 Drop the constant factor 1/sqrt(2g) and call what is left F(y, y') = sqrt((1 + y'^2)/y). It contains the depth and the slope but not x. For every such cost the **Beltrami identity** holds along the best curve:
 
-$$F - y'\,\frac{\partial F}{\partial y'} = \text{constant} \quad\Longrightarrow\quad y\,(1 + y'^2) = C$$
+```math
+F - y'\,\frac{\partial F}{\partial y'} = \text{constant} \quad\Longrightarrow\quad y\,(1 + y'^2) = C
+```
 
 **Read it aloud:** depth times one-plus-slope-squared stays the same all the way down the fastest slide.
 
 Its solutions, with wheel angle θ as the parameter (as in [Parametric curves](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/06-parametric-curves.md)), are cycloids from the platform:
 
-$$x = R(\theta - \sin\theta), \qquad y = R(1 - \cos\theta), \qquad T = \theta_1\sqrt{R/g}$$
+```math
+x = R(\theta - \sin\theta), \qquad y = R(1 - \cos\theta), \qquad T = \theta_1\sqrt{R/g}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$ | descent time, a functional of the whole shape | 0.8056 s on the cycloid | — |
-| $x$ | distance across from the platform, m | 0 to 2 | a farther exit: the cycloid dips deeper |
-| $y$, $y'$ | depth below the platform, m, and slope dy/dx | exit at depth 1 | a deeper exit: faster per metre across |
-| $g$ | gravity's pull, m/s^2 | 9.81 | every time shrinks as 1 over its square root |
-| $F$ | the cost per unit across, the integrand without its 1/sqrt(2g) | sqrt((1 + y'^2)/y) | — |
-| $C$ | the Beltrami constant, m | 1.0344 | a bigger wheel |
-| $R$ | radius of the rolling wheel, C/2, m | 0.5172 | a deeper dip |
-| $\theta$, $\theta_1$ | angle the wheel has turned, rad; its value at the exit | 0 to 3.5084 | past π means past the lowest point |
+| $`T`$ | descent time, a functional of the whole shape | 0.8056 s on the cycloid | — |
+| $`x`$ | distance across from the platform, m | 0 to 2 | a farther exit: the cycloid dips deeper |
+| $`y`$, $`y'`$ | depth below the platform, m, and slope dy/dx | exit at depth 1 | a deeper exit: faster per metre across |
+| $`g`$ | gravity's pull, m/s^2 | 9.81 | every time shrinks as 1 over its square root |
+| $`F`$ | the cost per unit across, the integrand without its 1/sqrt(2g) | sqrt((1 + y'^2)/y) | — |
+| $`C`$ | the Beltrami constant, m | 1.0344 | a bigger wheel |
+| $`R`$ | radius of the rolling wheel, C/2, m | 0.5172 | a deeper dip |
+| $`\theta`$, $`\theta_1`$ | angle the wheel has turned, rad; its value at the exit | 0 to 3.5084 | past π means past the lowest point |
 
 ### When it holds
 
@@ -80,7 +86,9 @@ A rider who has dropped y metres from rest has speed sqrt(2 g y): half the speed
 
 Take any F(y, y') without x, and let y solve Euler-Lagrange, ∂F/∂y = d/dx (∂F/∂y'). Differentiate Beltrami's left side by the chain rule:
 
-$$\frac{d}{dx}\Big(F - y'\frac{\partial F}{\partial y'}\Big) = y'\frac{\partial F}{\partial y} + y''\frac{\partial F}{\partial y'} - y''\frac{\partial F}{\partial y'} - y'\frac{d}{dx}\frac{\partial F}{\partial y'} = y'\Big(\frac{\partial F}{\partial y} - \frac{d}{dx}\frac{\partial F}{\partial y'}\Big) = 0.$$
+```math
+\frac{d}{dx}\Big(F - y'\frac{\partial F}{\partial y'}\Big) = y'\frac{\partial F}{\partial y} + y''\frac{\partial F}{\partial y'} - y''\frac{\partial F}{\partial y'} - y'\frac{d}{dx}\frac{\partial F}{\partial y'} = y'\Big(\frac{\partial F}{\partial y} - \frac{d}{dx}\frac{\partial F}{\partial y'}\Big) = 0.
+```
 
 The y'' terms cancel and the bracket is zero by Euler-Lagrange, so the combination is constant: second order has become first order.
 
@@ -354,10 +362,10 @@ The two outputs match line for line.
 
 Lean proves the Beltrami identity for every cost free of x, then the slide's rule, and the cycloid's rule and timing for every wheel.
 
-- Take any cost F of depth and slope only, and a curve solving the Euler-Lagrange equation, both with continuous second derivatives. Then $F - y'\,\partial F/\partial y'$ stays constant along the curve.
-- Take the cost $F = \sqrt{(1 + y'^2)/y}$ and a slide at positive depth solving Euler-Lagrange, with continuous second derivatives. Then $y(1 + y'^2)$ stays constant along it.
+- Take any cost F of depth and slope only, and a curve solving the Euler-Lagrange equation, both with continuous second derivatives. Then $`F - y'\,\partial F/\partial y'`$ stays constant along the curve.
+- Take the cost $`F = \sqrt{(1 + y'^2)/y}`$ and a slide at positive depth solving Euler-Lagrange, with continuous second derivatives. Then $`y(1 + y'^2)`$ stays constant along it.
 - Take a wheel of radius R and any wheel angle θ strictly between 0 and 2π. Then the cycloid's depth times (1 + slope squared) equals 2R.
-- Take any wheel radius R, any gravity g, and an end angle $\theta_1$ above 0, at most 2π. Then the cycloid's descent time, sliver length over speed, is exactly $\theta_1\sqrt{R/g}$.
+- Take any wheel radius R, any gravity g, and an end angle $`\theta_1`$ above 0, at most 2π. Then the cycloid's descent time, sliver length over speed, is exactly $`\theta_1\sqrt{R/g}`$.
 - The hand arithmetic holds exactly: the exit ratio, the arc's centre, and where the level-ending cycloid bottoms out.
 
 The end angle, the decimal times and the test that no chute slide beats the cycloid are left to the Python and Rust checks.

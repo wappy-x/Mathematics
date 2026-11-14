@@ -35,52 +35,60 @@ Orange: the true rate, peaking at 7.9 rad/s through the bottom and swinging back
 
 ## The formula
 
-Notation first, in words. The state is the angle $\theta$ (theta), measured from upright in radians, and the rate $\omega$ (omega), in radians per second. Step $k$ is the $k$-th tick of the 100 hertz clock, $\Delta t = 0.01$ s apart. As on [The Kalman filter](07-kalman-filter.md), a hat means "the filter's estimate of", a raised minus means "before this step's reading", $P$ is the covariance (the matrix of variances and co-variances) of the estimate's error, and a raised T turns rows into columns. $E[\,\cdot\,]$ is an average over the belief.
+Notation first, in words. The state is the angle $`\theta`$ (theta), measured from upright in radians, and the rate $`\omega`$ (omega), in radians per second. Step $`k`$ is the $`k`$-th tick of the 100 hertz clock, $`\Delta t = 0.01`$ s apart. As on [The Kalman filter](07-kalman-filter.md), a hat means "the filter's estimate of", a raised minus means "before this step's reading", $`P`$ is the covariance (the matrix of variances and co-variances) of the estimate's error, and a raised T turns rows into columns. $`E[\,\cdot\,]`$ is an average over the belief.
 
 A normal law is the bell-shaped spread of random errors. The sd (standard deviation) is a spread's typical error size. The rms (root mean square) is the typical size of actual errors: the square root of their average square.
 
-The model is the full pendulum, with gravity's pull growing as the sine of the angle, plus a random push $w$. Here $\ddot\theta$ is the angle's acceleration, the rate of change of $\omega$:
+The model is the full pendulum, with gravity's pull growing as the sine of the angle, plus a random push $`w`$. Here $`\ddot\theta`$ is the angle's acceleration, the rate of change of $`\omega`$:
 
-$$\ddot\theta = \frac{g}{l}\sin\theta + w, \qquad \frac{g}{l} = 16\ \text{s}^{-2}.$$
+```math
+\ddot\theta = \frac{g}{l}\sin\theta + w, \qquad \frac{g}{l} = 16\ \text{s}^{-2}.
+```
 
-Write $f$ for one 0.01 s step of this equation without the push, computed by RK4 (the fourth-order Runge–Kutta method, from [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)). The encoder reads $y_k = \theta_k + v_k$: still linear in the state.
+Write $`f`$ for one 0.01 s step of this equation without the push, computed by RK4 (the fourth-order Runge–Kutta method, from [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)). The encoder reads $`y_k = \theta_k + v_k`$: still linear in the state.
 
 **Extended filter, predict:**
 
-$$\hat x_k^- = f(\hat x_{k-1}), \qquad P_k^- = F_k\,P_{k-1}\,F_k^T + Q, \qquad F_k = e^{A\,\Delta t},\quad A = \begin{pmatrix} 0 & 1 \\ \kappa_k & 0 \end{pmatrix},\quad \kappa_k = 16\cos\hat\theta_{k-1}.$$
+```math
+\hat x_k^- = f(\hat x_{k-1}), \qquad P_k^- = F_k\,P_{k-1}\,F_k^T + Q, \qquad F_k = e^{A\,\Delta t},\quad A = \begin{pmatrix} 0 & 1 \\ \kappa_k & 0 \end{pmatrix},\quad \kappa_k = 16\cos\hat\theta_{k-1}.
+```
 
-**Unscented filter, predict.** With $n = 2$ states, take $2n+1 = 5$ sigma points (sample points matching the belief): the centre, and the centre plus and minus $\sqrt{3}$ times each column $L_i$ of a square root of $P$ (a matrix $L$ with $L L^T = P$):
+**Unscented filter, predict.** With $`n = 2`$ states, take $`2n+1 = 5`$ sigma points (sample points matching the belief): the centre, and the centre plus and minus $`\sqrt{3}`$ times each column $`L_i`$ of a square root of $`P`$ (a matrix $`L`$ with $`L L^T = P`$):
 
-$$\chi_0 = \hat x_{k-1}, \qquad \chi_{\pm i} = \hat x_{k-1} \pm \sqrt{3}\,L_i, \qquad W_0 = \tfrac13,\quad W_{\pm i} = \tfrac16,$$
+```math
+\chi_0 = \hat x_{k-1}, \qquad \chi_{\pm i} = \hat x_{k-1} \pm \sqrt{3}\,L_i, \qquad W_0 = \tfrac13,\quad W_{\pm i} = \tfrac16,
+```
 
-$$\hat x_k^- = \sum_m W_m\, f(\chi_m), \qquad P_k^- = \sum_m W_m\,\big(f(\chi_m) - \hat x_k^-\big)\big(f(\chi_m) - \hat x_k^-\big)^T + Q ,$$
+```math
+\hat x_k^- = \sum_m W_m\, f(\chi_m), \qquad P_k^- = \sum_m W_m\,\big(f(\chi_m) - \hat x_k^-\big)\big(f(\chi_m) - \hat x_k^-\big)^T + Q ,
+```
 
-the sums running over all five points $m$.
+the sums running over all five points $`m`$.
 
-**Both, correct:** the last card's correction, unchanged: surprise $\nu_k = y_k - \hat\theta_k^-$, its variance $S_k = P^-_{k,\theta\theta} + R$ (the predicted angle variance plus the encoder's), gain $K_k$ = first column of $P_k^-$ over $S_k$, then $\hat x_k = \hat x_k^- + K_k \nu_k$ and $P_k = (I - K_k H) P_k^-$, where `H = [1, 0]` picks out the angle and $I$ is the identity matrix.
+**Both, correct:** the last card's correction, unchanged: surprise $`\nu_k = y_k - \hat\theta_k^-`$, its variance $`S_k = P^-_{k,\theta\theta} + R`$ (the predicted angle variance plus the encoder's), gain $`K_k`$ = first column of $`P_k^-`$ over $`S_k`$, then $`\hat x_k = \hat x_k^- + K_k \nu_k`$ and $`P_k = (I - K_k H) P_k^-`$, where `H = [1, 0]` picks out the angle and $`I`$ is the identity matrix.
 
 **Read it aloud:** move the centre with the true model; move the spread either by the model's slope at the centre (extended) or by running five well-placed points through the model and measuring their spread (unscented); then correct by the surprise as before.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$, $\omega$ | angle from upright (rad); its rate (rad/s), never measured | let go at 0.3 rad, rate 0 | — |
-| $g/l$, $g$, $l$ | gravity over pole length; gravity; length | 16 s⁻²; 9.81 m/s²; 0.613125 m | a faster, wilder swing |
-| $f$, $\Delta t$, $k$ | one step of the full nonlinear model; the step length; the step count | RK4 in four slices; 0.01 s; step 1 is the first reading | — |
-| $\hat x$, $P$ | estimate of $(\theta, \omega)$ and the covariance of its error; a raised minus means before the reading | settled rate sd 0.0310 rad/s | — |
-| $F_k$, $A$, $\kappa_k$, $c$, $s$ | slope matrix of one step at the estimate; slope of the continuous model; gravity's slope $16\cos\hat\theta$; the two series inside $F_k$ | κ = 15.285384 s⁻² at the start | larger κ: errors grow faster in a step |
-| $Q$, $w$ | covariance of one step's random push; the push | push sd 1 rad/s² held for a step | the gain rises: readings count more |
-| $y_k$, $R$, $v$ | the encoder reading; its noise variance; the noise | $y_1$ = 0.287734 rad; 0.005 squared | the gain falls: readings count less |
-| $\nu_k$, $S_k$ | surprise: reading minus predicted angle; its predicted variance | ν²/S averages 0.998 | — |
-| $K_k$, $H$, $I$ | gain; `H = [1, 0]` picks the angle out of the state; the matrix that changes nothing | step 1: 0.990211 on angle | — |
-| $\chi_m$, $W_m$, $L$, $L_i$ | sigma points; their weights; a square root of $P$; its column $i$ | five points, weights 1/3 and 1/6 | — |
-| $n$ | number of states; the spread factor is 3 whatever $n$ is, and equals $n + 1$ only because $n = 2$ | 2 | — |
-| $\mu$, $\sigma_\theta$, $z$, $E$ | a belief's centre angle and its standard deviation, in the wide-belief test; the offset $\theta - \mu$; an average over the belief | π/2; 0.5 rad (28.647890°) | larger $\sigma_\theta$: the tangent's mean drifts further off |
+| $`\theta`$, $`\omega`$ | angle from upright (rad); its rate (rad/s), never measured | let go at 0.3 rad, rate 0 | — |
+| $`g/l`$, $`g`$, $`l`$ | gravity over pole length; gravity; length | 16 s⁻²; 9.81 m/s²; 0.613125 m | a faster, wilder swing |
+| $`f`$, $`\Delta t`$, $`k`$ | one step of the full nonlinear model; the step length; the step count | RK4 in four slices; 0.01 s; step 1 is the first reading | — |
+| $`\hat x`$, $`P`$ | estimate of $`(\theta, \omega)`$ and the covariance of its error; a raised minus means before the reading | settled rate sd 0.0310 rad/s | — |
+| $`F_k`$, $`A`$, $`\kappa_k`$, $`c`$, $`s`$ | slope matrix of one step at the estimate; slope of the continuous model; gravity's slope $`16\cos\hat\theta`$; the two series inside $`F_k`$ | κ = 15.285384 s⁻² at the start | larger κ: errors grow faster in a step |
+| $`Q`$, $`w`$ | covariance of one step's random push; the push | push sd 1 rad/s² held for a step | the gain rises: readings count more |
+| $`y_k`$, $`R`$, $`v`$ | the encoder reading; its noise variance; the noise | $`y_1`$ = 0.287734 rad; 0.005 squared | the gain falls: readings count less |
+| $`\nu_k`$, $`S_k`$ | surprise: reading minus predicted angle; its predicted variance | ν²/S averages 0.998 | — |
+| $`K_k`$, $`H`$, $`I`$ | gain; `H = [1, 0]` picks the angle out of the state; the matrix that changes nothing | step 1: 0.990211 on angle | — |
+| $`\chi_m`$, $`W_m`$, $`L`$, $`L_i`$ | sigma points; their weights; a square root of $`P`$; its column $`i`$ | five points, weights 1/3 and 1/6 | — |
+| $`n`$ | number of states; the spread factor is 3 whatever $`n`$ is, and equals $`n + 1`$ only because $`n = 2`$ | 2 | — |
+| $`\mu`$, $`\sigma_\theta`$, $`z`$, $`E`$ | a belief's centre angle and its standard deviation, in the wide-belief test; the offset $`\theta - \mu`$; an average over the belief | π/2; 0.5 rad (28.647890°) | larger $`\sigma_\theta`$: the tangent's mean drifts further off |
 
 ### When it holds
 
-- **The belief is narrow compared with the model's bend.** Gravity's slope $16\cos\theta$ changes over about a radian. At 100 readings a second the angle estimate is good to 0.0021 rad and both filters are excellent. After 2.5 s blind it is radians wide. Even on the 274 runs where the pole fell back, the extended filter claims 0.342 rad while missing by 0.810 rad, and 0.091 of its returns land beyond 3 claimed sd.
+- **The belief is narrow compared with the model's bend.** Gravity's slope $`16\cos\theta`$ changes over about a radian. At 100 readings a second the angle estimate is good to 0.0021 rad and both filters are excellent. After 2.5 s blind it is radians wide. Even on the 274 runs where the pole fell back, the extended filter claims 0.342 rad while missing by 0.810 rad, and 0.091 of its returns land beyond 3 claimed sd.
 - **One bell curve can describe the belief.** If some possible poles tip over the top and others fall back, the belief has two humps. Neither filter can say that: both miss the 26 runs of 300 that tipped, by about 10 rad.
-- **$Q$ covers what the model leaves out:** the random pushes and the approximation's own error. Set 100 times too small, the filter's squared surprises average 2.295 times their claimed variance.
+- **$`Q`$ covers what the model leaves out:** the random pushes and the approximation's own error. Set 100 times too small, the filter's squared surprises average 2.295 times their claimed variance.
 - **The step is integrated accurately.** The code's RK4 conserves the swing's energy to six decimals over 3 s. A crude step would make the model itself drift.
 
 ---
@@ -91,15 +99,15 @@ the sums running over all five points $m$.
 
 The exact filter is the forward recursion of [Hidden Markov models](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/08-hidden-markov-models.md): carry the whole belief curve, push it through the model, weight it by the reading. With a few hidden states that is a sum. With two real numbers it is an integral over a curved model, too costly at 100 hertz.
 
-The Kalman filter carries just a centre and a covariance, exact for a linear model. The correction here is linear (the encoder reads $\theta$ plus noise), so it stays. Only the prediction through $\sin\theta$ must be approximated, and the two filters are two ways to do it.
+The Kalman filter carries just a centre and a covariance, exact for a linear model. The correction here is linear (the encoder reads $`\theta`$ plus noise), so it stays. Only the prediction through $`\sin\theta`$ must be approximated, and the two filters are two ways to do it.
 
 ### Step 1: the extended filter redraws the tangent at every step
 
-Linearising ([Linearisation](02-linearisation-about-an-equilibrium.md)) replaces a model by its tangent: a small input error moves the output by $F$ times that error, $F$ being the matrix of slopes. An error with covariance $P$ then has covariance $F P F^T$ after the step. The extended filter linearises at the current estimate, every step, not once at an equilibrium. The centre still moves by the true $f$.
+Linearising ([Linearisation](02-linearisation-about-an-equilibrium.md)) replaces a model by its tangent: a small input error moves the output by $`F`$ times that error, $`F`$ being the matrix of slopes. An error with covariance $`P`$ then has covariance $`F P F^T`$ after the step. The extended filter linearises at the current estimate, every step, not once at an equilibrium. The centre still moves by the true $`f`$.
 
-The slope of the continuous model at angle $\hat\theta$ is $A = $ `[[0, 1], [κ, 0]]` with $\kappa = 16\cos\hat\theta$. The matrix exponential $e^{A\Delta t}$ carries the linear model forward by $\Delta t$ ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)). Because $A^2 = \kappa I$, it splits into two short series, $c = 1 + \kappa\Delta t^2/2 + \dots$ and $s = \Delta t + \kappa\Delta t^3/6 + \dots$, with $F = $ `[[c, s], [κ s, c]]`. Along one swing the slope matrix changes completely:
+The slope of the continuous model at angle $`\hat\theta`$ is $A = $ `[[0, 1], [κ, 0]]` with $`\kappa = 16\cos\hat\theta`$. The matrix exponential $`e^{A\Delta t}`$ carries the linear model forward by $`\Delta t`$ ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)). Because $`A^2 = \kappa I`$, it splits into two short series, $`c = 1 + \kappa\Delta t^2/2 + \dots`$ and $`s = \Delta t + \kappa\Delta t^3/6 + \dots`$, with $F = $ `[[c, s], [κ s, c]]`. Along one swing the slope matrix changes completely:
 
-| Where the pole is | κ (s⁻²) | Slope matrix $F$ over 0.01 s | What it says about errors |
+| Where the pole is | κ (s⁻²) | Slope matrix $`F`$ over 0.01 s | What it says about errors |
 | --- | --- | --- | --- |
 | upright | +16 | `[[1.000800, …], [0.160043, 1.000800]]` (cosh and sinh of 0.04) | they grow: the last card's matrix |
 | horizontal | 0 | `[[1, 0.010000], [0.000000, 1]]` | they coast: an angle error does not change the rate |
@@ -111,25 +119,27 @@ The extended filter takes κ at the start of each step. The code checks that aga
 
 ### Step 2: what any tangent misses
 
-The average of a curved function is not the function of the average. For an angle with a normal spread $\sigma_\theta$ about $\mu$,
+The average of a curved function is not the function of the average. For an angle with a normal spread $`\sigma_\theta`$ about $`\mu`$,
 
-$$E[\sin\theta] = e^{-\sigma_\theta^2/2}\,\sin\mu .$$
+```math
+E[\sin\theta] = e^{-\sigma_\theta^2/2}\,\sin\mu .
+```
 
-To see it, write $\theta = \mu + z$ with $z$ normal, centre 0, spread $\sigma_\theta$. Then $\sin\theta = \sin\mu\cos z + \cos\mu\sin z$. The average of $\sin z$ is 0 by symmetry, and the average of $\cos z$ is $e^{-\sigma_\theta^2/2}$, a standard normal integral (complete the square). The tangent gives $\sin\mu$: right to first order, wrong by a term in $\sigma_\theta^2$.
+To see it, write $`\theta = \mu + z`$ with $`z`$ normal, centre 0, spread $`\sigma_\theta`$. Then $`\sin\theta = \sin\mu\cos z + \cos\mu\sin z`$. The average of $`\sin z`$ is 0 by symmetry, and the average of $`\cos z`$ is $`e^{-\sigma_\theta^2/2}`$, a standard normal integral (complete the square). The tangent gives $`\sin\mu`$: right to first order, wrong by a term in $`\sigma_\theta^2`$.
 
-Take the pole horizontal, $\mu = \pi/2$, with $\sigma_\theta = 0.5$ rad. Gravity's push $16\sin\theta$ averages 14.119950 rad/s²; 200,000 random draws give 14.118600. The tangent says 16.000000, with spread 0.000000, because the sine is flat at its peak. The true spread is 2.502583.
+Take the pole horizontal, $`\mu = \pi/2`$, with $`\sigma_\theta = 0.5`$ rad. Gravity's push $`16\sin\theta`$ averages 14.119950 rad/s²; 200,000 random draws give 14.118600. The tangent says 16.000000, with spread 0.000000, because the sine is flat at its peak. The true spread is 2.502583.
 
 ### Step 3: the unscented filter pushes points instead
 
-The five points have exactly the belief's centre and covariance. The weights sum to 1, the $\pm$ pairs cancel in the mean, and each pair adds $2 \times \tfrac16 \times 3\,L_i L_i^T = L_i L_i^T$ to the spread, which sums to $L L^T = P$. So for a linear $f$ the unscented filter is the Kalman filter.
+The five points have exactly the belief's centre and covariance. The weights sum to 1, the $`\pm`$ pairs cancel in the mean, and each pair adds $`2 \times \tfrac16 \times 3\,L_i L_i^T = L_i L_i^T`$ to the spread, which sums to $`L L^T = P`$. So for a linear $`f`$ the unscented filter is the Kalman filter.
 
-For a curved $f$, expand it in a Taylor series about the centre: a sum of powers of the offset from the centre. The mean picks up each power of the offsets, weighted by the points' moments (weighted averages of the offset's powers). Along the angle the points' second moment is $2 \times \tfrac16 \times 3\sigma_\theta^2 = \sigma_\theta^2$ and their fourth is $2 \times \tfrac16 \times 9\sigma_\theta^4 = 3\sigma_\theta^4$, both a normal law's.
+For a curved $`f`$, expand it in a Taylor series about the centre: a sum of powers of the offset from the centre. The mean picks up each power of the offsets, weighted by the points' moments (weighted averages of the offset's powers). Along the angle the points' second moment is $`2 \times \tfrac16 \times 3\sigma_\theta^2 = \sigma_\theta^2`$ and their fourth is $`2 \times \tfrac16 \times 9\sigma_\theta^4 = 3\sigma_\theta^4`$, both a normal law's.
 
-In general the fourth moment is the spread factor times $\sigma_\theta^4$, so matching a normal law needs a spread factor of exactly 3 whatever the number of states; it equals $n + 1$ here only because $n = 2$. For a function of the angle alone the mean is then right through the fourth-order term; the tangent stops at the first.
+In general the fourth moment is the spread factor times $`\sigma_\theta^4`$, so matching a normal law needs a spread factor of exactly 3 whatever the number of states; it equals $`n + 1`$ here only because $`n = 2`$. For a function of the angle alone the mean is then right through the fourth-order term; the tangent stops at the first.
 
 The horizontal pole, by hand:
 
-| Point | Angle | Push $16\sin\theta$ (rad/s²) | Weight |
+| Point | Angle | Push $`16\sin\theta`$ (rad/s²) | Weight |
 | --- | --- | --- | --- |
 | centre | π/2 | 16 | 1/3 |
 | angle ± √3 × 0.5 | π/2 ± 0.866025 | 10.365750 each | 1/6 each |
@@ -140,34 +150,34 @@ Exact: 14.119950. The spread comes out 2.656011 against 2.502583, close but not 
 
 ### Step 4: the surprises still test the filter
 
-A right filter's surprises, each divided by $\sqrt{S}$, square to 1 on average and are uncorrelated step to step ([The Kalman filter](07-kalman-filter.md)). The test needs no truth. For a nonlinear filter it is the main tool, because $P$ is only the approximation's claim.
+A right filter's surprises, each divided by $`\sqrt{S}`$, square to 1 on average and are uncorrelated step to step ([The Kalman filter](07-kalman-filter.md)). The test needs no truth. For a nonlinear filter it is the main tool, because $`P`$ is only the approximation's claim.
 
 **Divergence** is that claim parting from the real error, and it shows as squared surprises far above 1. The lag-1 correlation (each surprise against the one before) says which way the tuning is off:
 
-- **Positive correlation, squared surprises above 1:** the filter is sluggish and overconfident. Raise $Q$.
-- **Positive correlation, squared surprises far below 1:** sluggish and too humble about its readings. Lower $R$.
-- **Negative correlation:** the filter chases noise and overshoots. Lower $Q$.
+- **Positive correlation, squared surprises above 1:** the filter is sluggish and overconfident. Raise $`Q`$.
+- **Positive correlation, squared surprises far below 1:** sluggish and too humble about its readings. Lower $`R`$.
+- **Negative correlation:** the filter chases noise and overshoots. Lower $`Q`$.
 
 ---
 
 ## Worked numbers, by hand
 
-Step 1 of the extended filter, from the belief "angle 0.3 rad give or take 0.05, rate 0 give or take 0.5 rad/s", uncorrelated, with the last card's $Q$.
+Step 1 of the extended filter, from the belief "angle 0.3 rad give or take 0.05, rate 0 give or take 0.5 rad/s", uncorrelated, with the last card's $`Q`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | gravity's slope κ | 16 cos 0.3 | 15.285384 s⁻² |
-| slope matrix, diagonal $c$ | 1 + 15.285384 × 0.01² / 2 | 1.000764 |
-| slope matrix, angle per rate $s$ | 0.01 + 15.285384 × 0.01³ / 6 | 0.010003 s |
+| slope matrix, diagonal $`c`$ | 1 + 15.285384 × 0.01² / 2 | 1.000764 |
+| slope matrix, angle per rate $`s`$ | 0.01 + 15.285384 × 0.01³ / 6 | 0.010003 s |
 | slope matrix, rate per angle | 15.285384 × 0.010003 | 0.152893 s⁻¹ |
 | predicted angle | 0.3 + ½ × 16 sin 0.3 × 0.01² (RK4 agrees) | 0.300236 rad |
 | predicted rate | RK4: about 0.01 × 16 sin 0.3, a hair more as the pole leans | 0.047295 rad/s |
 | predicted angle variance | 1.000764² × 0.05² + 0.010003² × 0.5² + (0.00005)² | 0.002529 |
 | predicted angle-rate covariance | 1.000764 × 0.152893 × 0.05² + 0.010003 × 1.000764 × 0.5² + 0.00005 × 0.01 | 0.002886 |
-| surprise variance $S$ | 0.002529 + 0.005² | 0.002554 |
+| surprise variance $`S`$ | 0.002529 + 0.005² | 0.002554 |
 | gain on angle | 0.002529 / 0.002554 | 0.990211 |
 | gain on rate | 0.002886 / 0.002554 | 1.129896 s⁻¹ |
-| reading $y_1$ | from the run (seed 1) | 0.287734 rad |
+| reading $`y_1`$ | from the run (seed 1) | 0.287734 rad |
 | angle estimate | 0.300236 + 0.990211 × (0.287734 − 0.300236) | 0.287857 rad |
 | **rate estimate** | 0.047295 + 1.129896 × (0.287734 − 0.300236) | **0.033169 rad/s** |
 
@@ -180,13 +190,13 @@ Each row runs on the same 300 simulated swings of 3 s, scored from 0.5 s on. The
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Use the last card's filter, linear about upright | rate error 7.8751 rad/s, claiming 0.0314; surprises 6260.062, correlated +0.999 | Its gravity grows without limit: it diverges |
-| Tell the filter $Q$ is 100 times smaller | 0.0470, claiming 0.0063; surprises 2.295, correlated +0.562 | Overconfident in its model, it lags |
-| Tell the filter $R$ is 100 times larger | 0.0470, claiming 0.0634; surprises 0.023, correlated +0.563 | Distrusts the encoder: the same lag |
-| Tell the filter $Q$ is 100 times larger | 0.0896, claiming 0.1644; surprises 0.843, correlated −0.174 | Chases each noisy reading and overshoots |
+| Tell the filter $`Q`$ is 100 times smaller | 0.0470, claiming 0.0063; surprises 2.295, correlated +0.562 | Overconfident in its model, it lags |
+| Tell the filter $`R`$ is 100 times larger | 0.0470, claiming 0.0634; surprises 0.023, correlated +0.563 | Distrusts the encoder: the same lag |
+| Tell the filter $`Q`$ is 100 times larger | 0.0896, claiming 0.1644; surprises 0.843, correlated −0.174 | Chases each noisy reading and overshoots |
 
-Rows two and three have the same error and correlation because they have the same ratio of $Q$ to $R$. Once the start belief is forgotten, the gain depends only on that ratio, so the estimates are the same. The overall scale changes only how large $P$ claims the error is: 10 times apart in claimed sd, about 100 times in squared surprise. That is why only the size of the surprises tells them apart.
+Rows two and three have the same error and correlation because they have the same ratio of $`Q`$ to $`R`$. Once the start belief is forgotten, the gain depends only on that ratio, so the estimates are the same. The overall scale changes only how large $`P`$ claims the error is: 10 times apart in claimed sd, about 100 times in squared surprise. That is why only the size of the surprises tells them apart.
 
-Retuning row two shows the rule of Step 4 at work. Its surprises are too big and positively correlated, so raise $Q$. Tenfold, to $Q$/10: squared surprises 1.240, correlation +0.192, rate error 0.0361 rad/s. Tenfold again, back to the true $Q$: 0.998, −0.002 and 0.0308 rad/s.
+Retuning row two shows the rule of Step 4 at work. Its surprises are too big and positively correlated, so raise $`Q`$. Tenfold, to $`Q`$/10: squared surprises 1.240, correlation +0.192, rate error 0.0361 rad/s. Tenfold again, back to the true $`Q`$: 0.998, −0.002 and 0.0308 rad/s.
 
 ---
 
@@ -233,7 +243,7 @@ Both filters miss the 26 tipped runs by about 10 rad, and neither claim marks th
 
 ## Code, from first principles, and it actually runs
 
-The script steps the pendulum by RK4 and checks it conserves energy. It checks the slope matrix's series against cosh and sinh at upright, cos and sin at the bottom, and finite differences of the actual step. It checks the unscented push against the exact $16e^{-\sigma_\theta^2/2}$ and 200,000 random draws, and works step 1. Then it simulates 300 swings (SplitMix64 bits, Box–Muller normals) and scores seven filter settings and two dropouts, splitting the long dropout by whether the pole tipped over. Five roads: series against closed forms and finite differences; unscented against exact and random; actual errors against $P$; the surprise test; the two filters against each other.
+The script steps the pendulum by RK4 and checks it conserves energy. It checks the slope matrix's series against cosh and sinh at upright, cos and sin at the bottom, and finite differences of the actual step. It checks the unscented push against the exact $`16e^{-\sigma_\theta^2/2}`$ and 200,000 random draws, and works step 1. Then it simulates 300 swings (SplitMix64 bits, Box–Muller normals) and scores seven filter settings and two dropouts, splitting the long dropout by whether the pole tipped over. Five roads: series against closed forms and finite differences; unscented against exact and random; actual errors against $`P`$; the surprise test; the two filters against each other.
 
 ### Python
 
@@ -679,9 +689,9 @@ The two outputs match line for line, random runs included: both programs draw th
 
 Lean proves the exact facts behind Steps 2 and 3, for every centre and every spread.
 
-- Take an angle with a normal law, centre $\mu$ and sd $\sigma_\theta$. Then $E[\sin\theta] = e^{-\sigma_\theta^2/2}\sin\mu$, not the tangent's $\sin\mu$.
-- Suppose a step is linear: $F$ times the state, plus a fixed shift, with $L L^T = P$. Then the five sigma points give exactly the Kalman filter's new centre and covariance $F P F^T$.
-- Take any sum of powers of $\theta$ up to the fourth, with the points' angles laid out as in Step 3's table. Then their weighted mean equals its average over the normal law with centre $\mu$ and sd $\sigma_\theta$.
+- Take an angle with a normal law, centre $`\mu`$ and sd $`\sigma_\theta`$. Then $`E[\sin\theta] = e^{-\sigma_\theta^2/2}\sin\mu`$, not the tangent's $`\sin\mu`$.
+- Suppose a step is linear: $`F`$ times the state, plus a fixed shift, with $`L L^T = P`$. Then the five sigma points give exactly the Kalman filter's new centre and covariance $`F P F^T`$.
+- Take any sum of powers of $`\theta`$ up to the fourth, with the points' angles laid out as in Step 3's table. Then their weighted mean equals its average over the normal law with centre $`\mu`$ and sd $`\sigma_\theta`$.
 
 The simulated runs, the slope matrices' numbers, the RK4 step and every filter's accuracy are left to the Python and Rust checks.
 
@@ -905,10 +915,10 @@ example : !![(0 : ℤ), 1; -16, 0] * !![(0 : ℤ), 1; -16, 0] = !![(-16 : ℤ), 
 ## The usual mistake
 
 > [!warning]
-> **Trusting $P$ because the estimate looks smooth.** In a nonlinear filter $P$ is the approximation's claim, and nothing forces it to be true. After 2.5 s blind, on the runs where the pole fell back, the extended filter claims 0.342 rad and misses by 0.810 rad; on the runs that tipped it still claims 0.351 rad and misses by 10.389 rad. The unscented filter's claim, about 2.9 rad on every run, is right only on average. Anything that reads $P$, a controller or a fault alarm, acts on a number that does not describe this run. Check the surprises instead.
+> **Trusting $`P`$ because the estimate looks smooth.** In a nonlinear filter $`P`$ is the approximation's claim, and nothing forces it to be true. After 2.5 s blind, on the runs where the pole fell back, the extended filter claims 0.342 rad and misses by 0.810 rad; on the runs that tipped it still claims 0.351 rad and misses by 10.389 rad. The unscented filter's claim, about 2.9 rad on every run, is right only on average. Anything that reads $`P`$, a controller or a fault alarm, acts on a number that does not describe this run. Check the surprises instead.
 >
 > - **Reusing the last card's matrices.** Frozen at upright, the rate is off by 7.8751 rad/s while the filter claims 0.0314.
-> - **Fixing lag by guessing.** $Q$ too small and $R$ too large both lag (+0.562, +0.563); the surprises' size, 2.295 or 0.023, says which knob.
+> - **Fixing lag by guessing.** $`Q`$ too small and $`R`$ too large both lag (+0.562, +0.563); the surprises' size, 2.295 or 0.023, says which knob.
 > - **Assuming the unscented filter is always better.** At 100 readings a second both give 0.0308 rad/s.
 > - **Expecting either to handle two possibilities.** After 2.5 s blind both miss the 26 tipped runs by about 10 rad, and 0.654 of the unscented filter's returns on those runs land beyond 3 claimed sd.
 
@@ -937,7 +947,7 @@ example : !![(0 : ℤ), 1; -16, 0] * !![(0 : ℤ), 1; -16, 0] = !![(-16 : ℤ), 
 - [LQG](09-lqg-and-the-separation-principle.md): a regulator fed a filter's estimate; with a nonlinear plant an extended filter takes the Kalman filter's place, and the separation guarantee is no longer exact.
 - [Predictive control](10-model-predictive-control.md): plans over a horizon from the current estimate, which on a swinging pole comes from a filter like these.
 
-This card set $Q$ and $R$ by hand and checked them by the surprises; it leaves open how to estimate them, and the pole's length, from the readings while the filter runs, and how to carry a two-humped belief like the 2.5 s dropout's, which takes many weighted samples (a particle filter) instead of one bell curve.
+This card set $`Q`$ and $`R`$ by hand and checked them by the surprises; it leaves open how to estimate them, and the pole's length, from the readings while the filter runs, and how to carry a two-humped belief like the 2.5 s dropout's, which takes many weighted samples (a particle filter) instead of one bell curve.
 
 ---
 
@@ -947,6 +957,6 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Julier, S. J., J. K. Uhlmann, and H. F. Durrant-Whyte. "A New Method for the Nonlinear Transformation of Means and Covariances in Filters and Estimators." *IEEE Transactions on Automatic Control* 45, no. 3 (2000): 477–482. [doi:10.1109/9.847726](https://doi.org/10.1109/9.847726). The sigma points, the weights, and the spread factor 3 that matches a normal law's fourth moment.
 - Julier, S. J., and J. K. Uhlmann. "Unscented Filtering and Nonlinear Estimation." *Proceedings of the IEEE* 92, no. 3 (2004): 401–422. [doi:10.1109/JPROC.2003.823141](https://doi.org/10.1109/JPROC.2003.823141). The unscented filter against the extended one, with Step 3's Taylor-series argument.
-- Fitzgerald, R. J. "Divergence of the Kalman Filter." *IEEE Transactions on Automatic Control* 16, no. 6 (1971): 736–747. [doi:10.1109/TAC.1971.1099836](https://doi.org/10.1109/TAC.1971.1099836). How a filter's covariance parts from its real error, and how too small a $Q$ causes it.
-- Bar-Shalom, Y., X.-R. Li, and T. Kirubarajan. *Estimation with Applications to Tracking and Navigation*. Wiley, 2001. [doi:10.1002/0471221279](https://doi.org/10.1002/0471221279). The extended filter in practice, and the normalised-surprise tests used to tune $Q$ and $R$.
+- Fitzgerald, R. J. "Divergence of the Kalman Filter." *IEEE Transactions on Automatic Control* 16, no. 6 (1971): 736–747. [doi:10.1109/TAC.1971.1099836](https://doi.org/10.1109/TAC.1971.1099836). How a filter's covariance parts from its real error, and how too small a $`Q`$ causes it.
+- Bar-Shalom, Y., X.-R. Li, and T. Kirubarajan. *Estimation with Applications to Tracking and Navigation*. Wiley, 2001. [doi:10.1002/0471221279](https://doi.org/10.1002/0471221279). The extended filter in practice, and the normalised-surprise tests used to tune $`Q`$ and $`R`$.
 - Simon, D. *Optimal State Estimation: Kalman, H Infinity, and Nonlinear Approaches*. Wiley, 2006. [doi:10.1002/0470045345](https://doi.org/10.1002/0470045345). A textbook route through the extended, unscented and particle filters.

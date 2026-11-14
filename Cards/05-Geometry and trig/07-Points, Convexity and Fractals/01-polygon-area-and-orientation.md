@@ -28,28 +28,32 @@ Drawn to scale, 100 m = 26 units, north up: peg (30, 222), A (82, 196), B (290, 
 
 ## The formula
 
-Notation first, in words. Corners are numbered 1 to $n$ in walking order; corner $i$ sits at $(x_i, y_i)$, east then north. The corner after the last is the first again, so the fence F to A counts. The capital sigma, Σ, means "add the bracket for every $i$ from 1 to $n$". A reminder from [Cross product](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): for two arrows in the plane, $u \times v$ is east of u times north of v, minus north of u times east of v. It is the signed area of the parallelogram they span, positive when v lies anticlockwise from u.
+Notation first, in words. Corners are numbered 1 to $`n`$ in walking order; corner $`i`$ sits at $`(x_i, y_i)`$, east then north. The corner after the last is the first again, so the fence F to A counts. The capital sigma, Σ, means "add the bracket for every $`i`$ from 1 to $`n`$". A reminder from [Cross product](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): for two arrows in the plane, $`u \times v`$ is east of u times north of v, minus north of u times east of v. It is the signed area of the parallelogram they span, positive when v lies anticlockwise from u.
 
-$$S = \frac{1}{2}\sum_{i=1}^{n}\left(x_i\,y_{i+1} - y_i\,x_{i+1}\right), \qquad x_{n+1} = x_1,\ \ y_{n+1} = y_1$$
+```math
+S = \frac{1}{2}\sum_{i=1}^{n}\left(x_i\,y_{i+1} - y_i\,x_{i+1}\right), \qquad x_{n+1} = x_1,\ \ y_{n+1} = y_1
+```
 
 **Read it aloud:** for each fence, this post's east times the next post's north, minus this post's north times the next post's east; add them all and halve.
 
-Each bracket is $P_i \times P_{i+1}$, the cross product of two position arrows from the peg. The field's area is $\lvert S\rvert$, the size of $S$ without its sign. The turn test applies the same cross product to three points:
+Each bracket is $`P_i \times P_{i+1}`$, the cross product of two position arrows from the peg. The field's area is $`\lvert S\rvert`$, the size of $`S`$ without its sign. The turn test applies the same cross product to three points:
 
-$$\mathrm{turn}(a, b, c) = (b_x - a_x)(c_y - a_y) - (b_y - a_y)(c_x - a_x)$$
+```math
+\mathrm{turn}(a, b, c) = (b_x - a_x)(c_y - a_y) - (b_y - a_y)(c_x - a_x)
+```
 
 **Read it aloud:** the arrow from a to b crossed with the arrow from a to c; positive means walking a, b, c turns left at b, negative right, zero a straight line.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of corners | 6 | one more term |
-| $i$ | a corner's place in the walk | 1 for A, 6 for F | — |
-| $x_i$, $y_i$ | corner $i$'s east and north, in hundreds of metres | D is (7, 4) | a post moved outward grows the area |
-| $P_i$ | corner $i$ as an arrow from the peg | D is (7, 4) | — |
-| $u \times v$ | cross product: signed parallelogram area | $P_1 \times P_2 = -8$ | flips sign when u and v swap |
-| $S$ | signed area, hectares | +41.5 | reversing the walk gives −41.5 |
-| $\lvert S\rvert$ | the area, sign dropped | 41.5 ha, 415,000 square metres | — |
-| $a$, $b$, $c$ | three points for the turn test | C, D, E gives −20 | positive left, negative right |
+| $`n`$ | number of corners | 6 | one more term |
+| $`i`$ | a corner's place in the walk | 1 for A, 6 for F | — |
+| $`x_i`$, $`y_i`$ | corner $`i`$'s east and north, in hundreds of metres | D is (7, 4) | a post moved outward grows the area |
+| $`P_i`$ | corner $`i`$ as an arrow from the peg | D is (7, 4) | — |
+| $`u \times v`$ | cross product: signed parallelogram area | $`P_1 \times P_2 = -8`$ | flips sign when u and v swap |
+| $`S`$ | signed area, hectares | +41.5 | reversing the walk gives −41.5 |
+| $`\lvert S\rvert`$ | the area, sign dropped | 41.5 ha, 415,000 square metres | — |
+| $`a`$, $`b`$, $`c`$ | three points for the turn test | C, D, E gives −20 | positive left, negative right |
 
 ### When it holds
 
@@ -69,26 +73,28 @@ Each fence, with the peg, makes a triangle: plus when the fence runs anticlockwi
 
 ### Step 1: one fence gives one signed triangle
 
-Fence AB is the arrow pair $P_1 = (2, 1)$ and $P_2 = (10, 1)$. Their cross product is 2 × 1 − 1 × 10 = −8, negative because B lies clockwise from A as seen from the peg. The triangle peg-A-B is half that parallelogram. Every bracket in the formula is twice one such signed triangle.
+Fence AB is the arrow pair $`P_1 = (2, 1)`$ and $`P_2 = (10, 1)`$. Their cross product is 2 × 1 − 1 × 10 = −8, negative because B lies clockwise from A as seen from the peg. The triangle peg-A-B is half that parallelogram. Every bracket in the formula is twice one such signed triangle.
 
 ### Step 2: a triangle's area from its three fences
 
 A triangle a, b, c, anywhere relative to the peg, has signed area half its turn test. The cross product multiplies out like ordinary brackets, flips sign when its arrows swap, and is 0 for an arrow with itself. Multiplying out:
 
-$$\mathrm{turn}(a, b, c) = a \times b + b \times c + c \times a$$
+```math
+\mathrm{turn}(a, b, c) = a \times b + b \times c + c \times a
+```
 
 That is the shoelace sum for three corners, so the formula holds for every triangle, wherever the peg sits.
 
 <details>
 <summary>The algebra behind this</summary>
 
-$(b - a) \times (c - a) = b \times c - b \times a - a \times c + a \times a$. The last term is 0, and swapping arrows flips sign, so $-b \times a = a \times b$ and $-a \times c = c \times a$.
+$`(b - a) \times (c - a) = b \times c - b \times a - a \times c + a \times a`$. The last term is 0, and swapping arrows flips sign, so $`-b \times a = a \times b`$ and $`-a \times c = c \times a`$.
 
 </details>
 
 ### Step 3: cut the field into triangles; inside cuts cancel
 
-A diagonal is a segment joining two corners. Diagonals from D to F, A and B cut the field into triangles DEF, DFA, DAB, DBC, of 8.0, 12.5, 12.0 and 9.0 hectares: total 41.5. Write each as its three-fence sum from Step 2, all walked anticlockwise. Diagonal DF appears as $D \times F$ in one triangle and $F \times D$ in the next, and they cancel; so does every inside diagonal. Only the six outer fences survive, in walking order: the shoelace sum.
+A diagonal is a segment joining two corners. Diagonals from D to F, A and B cut the field into triangles DEF, DFA, DAB, DBC, of 8.0, 12.5, 12.0 and 9.0 hectares: total 41.5. Write each as its three-fence sum from Step 2, all walked anticlockwise. Diagonal DF appears as $`D \times F`$ in one triangle and $`F \times D`$ in the next, and they cancel; so does every inside diagonal. Only the six outer fences survive, in walking order: the shoelace sum.
 
 This rests on one fact: every simple polygon splits into triangles by inside diagonals. With a reflex corner, some diagonals leave the field, so it needs proof.
 
@@ -105,7 +111,7 @@ Either diagonal cuts the polygon into two simple polygons with fewer corners, wh
 
 ### Step 4: direction, turns, and the peg
 
-Walk backwards and each $P_i \times P_{i+1}$ becomes $P_{i+1} \times P_i$: same size, opposite sign. So −41.5.
+Walk backwards and each $`P_i \times P_{i+1}`$ becomes $`P_{i+1} \times P_i`$: same size, opposite sign. So −41.5.
 
 An anticlockwise walk keeps the inside on its left. Ordinary corners turn left; a reflex corner turns right. The turn tests at A to F are 40, 40, 18, −20, 16, 15: one right turn, at D. The −20 is twice triangle CDE, the notch at D; filling it adds 10 hectares.
 
@@ -334,13 +340,13 @@ The two outputs are identical line for line.
 
 Lean proves the shoelace formula for every polygon with a simple boundary, the backwards and three-point rules for any corners, and the field's numbers.
 
-- Take at least three different corners in walking order, joined by straight fences into one loop that never crosses itself. The area inside is $\lvert S\rvert$.
-- If the walk is anticlockwise, keeping the inside on its left, then $S$ is the area.
-- If the walk is clockwise, keeping the inside on its right, then $S$ is minus the area.
-- For any list of corners, walking backwards turns $S$ into $-S$.
-- For any three points, $\mathrm{turn}(a, b, c) = a \times b + b \times c + c \times a$, twice the shoelace sum for triangle a, b, c.
-- The field's six terms are −8, 49, 2, 36, 14, −10, and $S$ is 41.5 forwards and −41.5 backwards.
-- With the peg on A, $S$ is still 41.5; with B and C swapped, it reads 12.5.
+- Take at least three different corners in walking order, joined by straight fences into one loop that never crosses itself. The area inside is $`\lvert S\rvert`$.
+- If the walk is anticlockwise, keeping the inside on its left, then $`S`$ is the area.
+- If the walk is clockwise, keeping the inside on its right, then $`S`$ is minus the area.
+- For any list of corners, walking backwards turns $`S`$ into $`-S`$.
+- For any three points, $`\mathrm{turn}(a, b, c) = a \times b + b \times c + c \times a`$, twice the shoelace sum for triangle a, b, c.
+- The field's six terms are −8, 49, 2, 36, 14, −10, and $`S`$ is 41.5 forwards and −41.5 backwards.
+- With the peg on A, $`S`$ is still 41.5; with B and C swapped, it reads 12.5.
 - The turn tests at A to F are 40, 40, 18, −20, 16, 15: one right turn, at D.
 - The fan from D gives triangles of 8.0, 12.5, 12.0 and 9.0 hectares, total 41.5.
 

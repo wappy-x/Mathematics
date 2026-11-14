@@ -30,64 +30,74 @@ xychart-beta
     line [5.46, 12.59, 18.54, 19.73, 16.49, 11.50, 6.98, 3.81]
 ```
 
-The first line is the research desk's odds, Acme drifting up at 8 percent. The second is the pricing odds, drifting up at 3 percent: more weight on the cheap endings, less on the dear ones. Reweighting slides the curve in logs and does not reshape it: the spread of the logarithm, $\sigma\sqrt{T}$ (the volatility $\sigma$ times the square root of the time $T$, both defined in the table below), is the same under both. The drift can be reweighted away and the jumpiness cannot, which is the crux of the shelf.
+The first line is the research desk's odds, Acme drifting up at 8 percent. The second is the pricing odds, drifting up at 3 percent: more weight on the cheap endings, less on the dear ones. Reweighting slides the curve in logs and does not reshape it: the spread of the logarithm, $`\sigma\sqrt{T}`$ (the volatility $`\sigma`$ times the square root of the time $`T`$, both defined in the table below), is the same under both. The drift can be reweighted away and the jumpiness cannot, which is the crux of the shelf.
 
 ---
 
 ## The formula
 
-Notation first. A **measure** is a list of weights on the possible futures, one each, adding to one — the arithmetic of probability, with no claim that anyone believes the numbers. Two appear here: the real-world measure $P$, holding what people expect, and the pricing measure $Q$, which the theorems produce with every weight strictly above zero. The weight $Q$ puts on a future is written $\pi_j$, said "pi sub j"; $q$ is already the dividend yield.
+Notation first. A **measure** is a list of weights on the possible futures, one each, adding to one — the arithmetic of probability, with no claim that anyone believes the numbers. Two appear here: the real-world measure $`P`$, holding what people expect, and the pricing measure $`Q`$, which the theorems produce with every weight strictly above zero. The weight $`Q`$ puts on a future is written $`\pi_j`$, said "pi sub j"; $`q`$ is already the dividend yield.
 
 The first theorem, for a market with a bank account and finitely many futures, is an "exactly when":
 
-$$\text{no free money}\quad\Longleftrightarrow\quad\text{some } Q \text{ prices every traded asset by}\quad \text{price today} = e^{-rT}\sum_j \pi_j \times (\text{payoff in future } j)$$
+```math
+\text{no free money}\quad\Longleftrightarrow\quad\text{some } Q \text{ prices every traded asset by}\quad \text{price today} = e^{-rT}\sum_j \pi_j \times (\text{payoff in future } j)
+```
 
 **Read it aloud:** today's price of anything is its payoff averaged over the pricing weights, then pulled back to today at the bank rate.
 
 Apply it to Acme itself, dividends reinvested into more shares, and it pins down one number:
 
-$$\sum_j \pi_j\,S_T(j) \;=\; S\,e^{(r-q)T} \;=\; F$$
+```math
+\sum_j \pi_j\,S_T(j) \;=\; S\,e^{(r-q)T} \;=\; F
+```
 
 **Under the pricing measure Acme's average end price is the forward price, $103.05 — not the $108.33 the research desk expects.** The rest of the shelf follows from it.
 
-The second theorem, assuming the first has already supplied at least one $Q$:
+The second theorem, assuming the first has already supplied at least one $`Q`$:
 
-$$\text{every payoff can be copied by trading}\quad\Longleftrightarrow\quad\text{exactly one such } Q$$
+```math
+\text{every payoff can be copied by trading}\quad\Longleftrightarrow\quad\text{exactly one such } Q
+```
 
 A market where every payoff can be copied is called **complete**. There the copy's cost and the discounted average agree, and that shared number is the price.
 
-In continuous time Acme follows geometric Brownian motion ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md)): a steady drift plus random kicks, with $W$ the running total of the kicks. That card calls the drift $\mu$; here it is $m$, the desk's forecast. Infinitely many futures means no finite list of weights, so Girsanov's theorem ([Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) builds $Q$ by shifting the kicks instead:
+In continuous time Acme follows geometric Brownian motion ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md)): a steady drift plus random kicks, with $`W`$ the running total of the kicks. That card calls the drift $`\mu`$; here it is $`m`$, the desk's forecast. Infinitely many futures means no finite list of weights, so Girsanov's theorem ([Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) builds $`Q`$ by shifting the kicks instead:
 
-$$\frac{dS}{S} = m\,dt + \sigma\,dW \;\;\text{under } P \qquad\longrightarrow\qquad \frac{dS}{S} = (r-q)\,dt + \sigma\,dW^Q \;\;\text{under } Q$$
+```math
+\frac{dS}{S} = m\,dt + \sigma\,dW \;\;\text{under } P \qquad\longrightarrow\qquad \frac{dS}{S} = (r-q)\,dt + \sigma\,dW^Q \;\;\text{under } Q
+```
 
-The kicks are re-centred, not resized: $dW^Q = dW + \theta\,dt$. The shift required, and the factor it puts on a path, are
+The kicks are re-centred, not resized: $`dW^Q = dW + \theta\,dt`$. The shift required, and the factor it puts on a path, are
 
-$$\theta = \frac{m + q - r}{\sigma}, \qquad \frac{dQ}{dP} = e^{-\theta W_T - \frac{1}{2}\theta^2 T}$$
+```math
+\theta = \frac{m + q - r}{\sigma}, \qquad \frac{dQ}{dP} = e^{-\theta W_T - \frac{1}{2}\theta^2 T}
+```
 
-So $\theta$ is Acme's reward for risk: total return above the bank rate, divided by jumpiness. The second line is what each future gets multiplied by on the way to the pricing odds.
+So $`\theta`$ is Acme's reward for risk: total return above the bank rate, divided by jumpiness. The second line is what each future gets multiplied by on the way to the pricing odds.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_T$ | Acme's price today, and its unknown price at the end | $100 today; 80, 100 or 125 in the small market | rises: everything built on the shares is worth more |
-| $K$ | the **strike**, the price a **call** may buy at. A call is the right, but not the duty, to buy Acme at the end for $K$ | $100 | falls: the call has further to climb |
-| $r$ | the bank rate, continuously compounded | 5% | rises: the forward rises and cash due later is worth less |
-| $q$ | the **dividend yield**, cash paid to shareholders each year | 2% | falls: dividends leak out of the price the measure drifts toward |
-| $\sigma$ | **volatility**, how jumpy the shares are. Say "sigma". | 20% | rises: no reweighting can undo it, so option prices rise |
-| $T$ | time to the end, in years | 1 | rises: more room for the drift and the kicks |
-| $e^{-rT}$ | the **discount factor**: what a dollar paid at the end is worth today | $e^{-0.05}$ | falls: money due later is worth less |
-| $F$ | the **forward**, $S e^{(r-q)T}$: the average end price under $Q$ | $103.05 | rises: claims paying more when Acme is high get dearer |
-| $m$, and $\mu$ on the previous card | Acme's real-world price drift: the forecast | 8% | rises: the forecast changes and no price does |
-| $\theta$ | the **price of risk**: reward above the bank rate per unit of jumpiness | 0.25 | rises: the two sets of odds pull further apart |
-| $\pi_j$ | the pricing weight on one future, all above zero, adding to one | 0.5121 and 0.4879 in the two-future market | rises: everything paying in that future gets dearer |
-| $Q$, $P$ | the pricing measure, and the real-world measure | drift 3% and drift 8% | — |
-| $W$ | the running total of the random kicks, in wiggle units: one wiggle is the spread of that total after one year. Under $Q$ it is written $W^Q$ | the two differ by 0.25 a year | — |
+| $`S`$, $`S_T`$ | Acme's price today, and its unknown price at the end | $100 today; 80, 100 or 125 in the small market | rises: everything built on the shares is worth more |
+| $`K`$ | the **strike**, the price a **call** may buy at. A call is the right, but not the duty, to buy Acme at the end for $`K`$ | $100 | falls: the call has further to climb |
+| $`r`$ | the bank rate, continuously compounded | 5% | rises: the forward rises and cash due later is worth less |
+| $`q`$ | the **dividend yield**, cash paid to shareholders each year | 2% | falls: dividends leak out of the price the measure drifts toward |
+| $`\sigma`$ | **volatility**, how jumpy the shares are. Say "sigma". | 20% | rises: no reweighting can undo it, so option prices rise |
+| $`T`$ | time to the end, in years | 1 | rises: more room for the drift and the kicks |
+| $`e^{-rT}`$ | the **discount factor**: what a dollar paid at the end is worth today | $`e^{-0.05}`$ | falls: money due later is worth less |
+| $`F`$ | the **forward**, $`S e^{(r-q)T}`$: the average end price under $`Q`$ | $103.05 | rises: claims paying more when Acme is high get dearer |
+| $`m`$, and $`\mu`$ on the previous card | Acme's real-world price drift: the forecast | 8% | rises: the forecast changes and no price does |
+| $`\theta`$ | the **price of risk**: reward above the bank rate per unit of jumpiness | 0.25 | rises: the two sets of odds pull further apart |
+| $`\pi_j`$ | the pricing weight on one future, all above zero, adding to one | 0.5121 and 0.4879 in the two-future market | rises: everything paying in that future gets dearer |
+| $`Q`$, $`P`$ | the pricing measure, and the real-world measure | drift 3% and drift 8% | — |
+| $`W`$ | the running total of the random kicks, in wiggle units: one wiggle is the spread of that total after one year. Under $`Q`$ it is written $`W^Q`$ | the two differ by 0.25 a year | — |
 
 ### When it holds
 
 - **Finitely many futures, or continuous time with a stronger condition.** The proofs below are finite. In continuous time "no free money" is too weak: the working condition, from Delbaen and Schachermayer, is no free lunch with vanishing risk — no run of trades whose worst loss shrinks to nothing may creep up on a sure profit.
 - **Every weight strictly above zero.** A weight of zero prices a ticket on a possible future at nothing, and a free ticket that sometimes pays is itself free money. The code prices such a claim at $0.00 beside a $10 payout.
 - **Trading with no friction.** No fees, no spread, no limit on borrowing or short selling (selling shares you have borrowed), one price to buy and to sell. Real costs turn the single price into a range as wide as the costs.
-- **For Girsanov, a known volatility.** The shift moves drifts only. If $\sigma$ is itself uncertain the market is incomplete and uniqueness goes, as Step 5 shows.
+- **For Girsanov, a known volatility.** The shift moves drifts only. If $`\sigma`$ is itself uncertain the market is incomplete and uniqueness goes, as Step 5 shows.
 
 ---
 
@@ -116,11 +126,11 @@ The general finite argument is geometric. Put each future on its own axis, so a 
 <details>
 <summary>Detailed proof: why a positive direction exists</summary>
 
-Write the zero-cost payoffs as a linear space $\mathcal{Z}$, and let the **weight set** be the lists with entries zero or more adding to one. No arbitrage says no member of the weight set lies in $\mathcal{Z}$.
+Write the zero-cost payoffs as a linear space $`\mathcal{Z}`$, and let the **weight set** be the lists with entries zero or more adding to one. No arbitrage says no member of the weight set lies in $`\mathcal{Z}`$.
 
-Take an orthogonal basis of $\mathcal{Z}$ by Gram–Schmidt, call a list's part along it that list's **shadow**, and minimise the squared length of list minus shadow over the weight set. A minimum is reached: the quantity is a continuous polynomial and every coordinate lies between 0 and 1, so convergent subsequences can be taken one coordinate at a time. Call the minimising list the **base** and its leftover the **normal**.
+Take an orthogonal basis of $`\mathcal{Z}`$ by Gram–Schmidt, call a list's part along it that list's **shadow**, and minimise the squared length of list minus shadow over the weight set. A minimum is reached: the quantity is a continuous polynomial and every coordinate lies between 0 and 1, so convergent subsequences can be taken one coordinate at a time. Call the minimising list the **base** and its leftover the **normal**.
 
-The normal is not zero, or the base would sit inside $\mathcal{Z}$ — an arbitrage. Mixing the base with a list putting all its weight on one future stays in the weight set, so minimality makes the normal value that one-future list at least as high as it values the base; and being at right angles to $\mathcal{Z}$, it values the base at its own squared length, which is positive. Every entry of the normal is therefore strictly positive. Divide by their sum for the pricing measure, which values every zero-cost payoff at nothing. That is the separating-plane argument, also reachable through Stiemke's lemma.
+The normal is not zero, or the base would sit inside $`\mathcal{Z}`$ — an arbitrage. Mixing the base with a list putting all its weight on one future stays in the weight set, so minimality makes the normal value that one-future list at least as high as it values the base; and being at right angles to $`\mathcal{Z}`$, it values the base at its own squared length, which is positive. Every entry of the normal is therefore strictly positive. Divide by their sum for the pricing measure, which values every zero-cost payoff at nothing. That is the separating-plane argument, also reachable through Stiemke's lemma.
 
 </details>
 
@@ -141,23 +151,25 @@ Write the payoffs as a matrix, one row per traded asset, one column per future. 
 
 The pricing measures solve one linear equation per traded asset. Given one solution, the whole solution set is that solution plus the matrix's kernel — the nudges the matrix sends to zero. Rank plus nullity says the rank is full exactly when the kernel holds nothing but zero, so there is one measure exactly when the kernel is trivial exactly when every payoff can be copied.
 
-And if the kernel holds a nonzero nudge while some measure is strictly positive, that measure plus a small enough multiple of the nudge, and the same measure minus it, are both still positive and both still price every asset: the alternative to one measure is never two, it is infinitely many. Here the kernel is spanned by $(5, -9, 4)$.
+And if the kernel holds a nonzero nudge while some measure is strictly positive, that measure plus a small enough multiple of the nudge, and the same measure minus it, are both still positive and both still price every asset: the alternative to one measure is never two, it is infinitely many. Here the kernel is spanned by $`(5, -9, 4)`$.
 
 </details>
 
 ### Step 4: Girsanov moves the drift and leaves the jumpiness alone
 
-Acme's price does not really have three endings. It has a continuum, and the weights form a curve rather than a list. Girsanov's theorem does the same job there: it shifts the running total of the kicks by a steady $\theta$ a year, which moves every drift and leaves every volatility untouched.
+Acme's price does not really have three endings. It has a continuum, and the weights form a curve rather than a list. Girsanov's theorem does the same job there: it shifts the running total of the kicks by a steady $`\theta`$ a year, which moves every drift and leaves every volatility untouched.
 
 Choose the shift that lands the drift where the pricing rule demands. Acme's total return under the forecast is the 8 percent price rise plus the 2 percent dividend; the bank pays 5 percent; the excess is 5 percent for 20 percent of jumpiness, so
 
-$$\theta = \frac{m + q - r}{\sigma} = \frac{0.08 + 0.02 - 0.05}{0.20} = 0.25.$$
+```math
+\theta = \frac{m + q - r}{\sigma} = \frac{0.08 + 0.02 - 0.05}{0.20} = 0.25.
+```
 
-Every drift falls by $\sigma\theta$, which is 5 percent here, so Acme's becomes 8 − 5 = 3 percent, which is $r - q$, and the average end price becomes the forward. The checks find the same 0.25 a second way, solving numerically for the shift that lands the average end price on $103.05 without using the formula.
+Every drift falls by $`\sigma\theta`$, which is 5 percent here, so Acme's becomes 8 − 5 = 3 percent, which is $`r - q`$, and the average end price becomes the forward. The checks find the same 0.25 a second way, solving numerically for the shift that lands the average end price on $103.05 without using the formula.
 
-The shift is chosen to cancel $m$, so whatever the research desk believes goes in and comes straight back out. It never touches $\sigma$: relabelling which paths are likely cannot change how far apart they are, which is why volatility is the one input a desk must estimate rather than look up.
+The shift is chosen to cancel $`m`$, so whatever the research desk believes goes in and comes straight back out. It never touches $`\sigma`$: relabelling which paths are likely cannot change how far apart they are, which is why volatility is the one input a desk must estimate rather than look up.
 
-The reweighting factor is 0.7548 one wiggle up ($W_T = +1$) and 1.2445 one wiggle down ($W_T = -1$): good endings marked down by a quarter, bad ones up. Averaging the call's payoff under the forecast odds with that factor gives $9.23 — the same as averaging under the pricing odds with no factor at all.
+The reweighting factor is 0.7548 one wiggle up ($`W_T = +1`$) and 1.2445 one wiggle down ($`W_T = -1`$): good endings marked down by a quarter, bad ones up. Averaging the call's payoff under the forecast odds with that factor gives $9.23 — the same as averaging under the pricing odds with no factor at all.
 
 Why this prices a claim rather than merely averaging it is the martingale representation theorem ([Martingale representation](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/04-martingale-representation-theorem.md)): where one source of kicks drives everything, any martingale under the pricing measure — any quantity whose average next value is its value now — is the running gain on some holding of shares. That is completeness in continuous form, and what makes this measure the only one.
 
@@ -185,19 +197,19 @@ A second road to the same measure never mentions weights: hold enough shares aga
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, forecast price drift $m = 8\%$.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year, forecast price drift $`m = 8\%`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the forecast price drift, $m$ | from the research desk | $8\%$ |
-| the pricing drift, $r - q$ | $0.05 - 0.02$ | $3\%$ |
-| the price of risk, $\theta$ | $(0.08 + 0.02 - 0.05)/0.20$ | $0.25$ |
-| the forward, $F$ | $100 \times e^{0.03}$ | $\$103.05$ |
-| average end price under $P$, then under $Q$ | $100 \times e^{0.08}$, then $100 \times e^{0.03}$ | $\$108.33$, $\$103.05$ |
-| reweighting factor, one wiggle up and down | $e^{-0.25-0.03125}$ and $e^{+0.25-0.03125}$ | $0.7548$, $1.2445$ |
-| the call, averaged under $Q$ | discounted at $5\%$ | $\$9.23$ |
-| the call, averaged under $P$ with the factor | discounted at $5\%$ | **$\$9.23$** |
-| the same call on a 2,000-step tree | pricing odds, and forecast odds reweighted | $\$9.2260$ |
+| the forecast price drift, $`m`$ | from the research desk | $`8\%`$ |
+| the pricing drift, $`r - q`$ | $`0.05 - 0.02`$ | $`3\%`$ |
+| the price of risk, $`\theta`$ | $`(0.08 + 0.02 - 0.05)/0.20`$ | $`0.25`$ |
+| the forward, $`F`$ | $`100 \times e^{0.03}`$ | $`\$103.05`$ |
+| average end price under $`P`$, then under $`Q`$ | $`100 \times e^{0.08}`$, then $`100 \times e^{0.03}`$ | $`\$108.33`$, $`\$103.05`$ |
+| reweighting factor, one wiggle up and down | $`e^{-0.25-0.03125}`$ and $`e^{+0.25-0.03125}`$ | $`0.7548`$, $`1.2445`$ |
+| the call, averaged under $`Q`$ | discounted at $`5\%`$ | $`\$9.23`$ |
+| the call, averaged under $`P`$ with the factor | discounted at $`5\%`$ | **$`\$9.23`$** |
+| the same call on a 2,000-step tree | pricing odds, and forecast odds reweighted | $`\$9.2260`$ |
 
 Both roads land on the shelf's one-year call price, $9.227006, pinned by the asserts to within a billionth of it: the pricing measure is not a shortcut to a different answer, it is the reason the answer exists. The tree is a tenth of a cent away because 2,000 coin flips are not quite a bell curve.
 
@@ -207,7 +219,7 @@ Both roads land on the shelf's one-year call price, $9.227006, pinned by the ass
 | --- | --- | --- |
 | Average under the forecast's 8% drift, discount at the bank rate | $12.47 | A forecast used as a price: $12.47 against the $9.23 a copy costs. |
 | Average under the pricing drift, discount at Acme's 10% total return | $8.78 | Only the bank rate discounts a pricing average; the shift already removed the share's reward. |
-| Use the bank rate as the pricing drift, forgetting the dividend | $10.45 | Dividends leak out, so the drift is $r - q$. The same $10.45 is the forgotten-dividend row on the Black-Scholes card. |
+| Use the bank rate as the pricing drift, forgetting the dividend | $10.45 | Dividends leak out, so the drift is $`r - q`$. The same $10.45 is the forgotten-dividend row on the Black-Scholes card. |
 | Let a possible ending carry weight zero | claim at $0.00, pays $10 | A free ticket that sometimes pays is free money. Weights must be strictly positive, not merely non-negative. |
 
 Every number in that table is printed by the code below.
@@ -988,7 +1000,7 @@ end FundamentalTheorems
 > **Reading the pricing measure as a forecast.** Acme is not expected to rise 3 percent. It is expected to rise 8 percent and the options desk agrees. The 3 percent is what survives once the share's reward for risk is hedged away, and it is the only drift under which today's prices are consistent with each other. Under the forecast odds the call comes out at $12.47, and nobody pays that when a copy costs $9.23.
 >
 > Four smaller traps:
-> - **Believing the change of measure changes the jumpiness.** It moves drifts by $\sigma\theta$ and leaves $\sigma$ alone, which is why the two curves in the first picture have the same log spread. Adjusting volatility to fix a drift problem fixes the wrong number.
+> - **Believing the change of measure changes the jumpiness.** It moves drifts by $`\sigma\theta`$ and leaves $`\sigma`$ alone, which is why the two curves in the first picture have the same log spread. Adjusting volatility to fix a drift problem fixes the wrong number.
 > - **Expecting one price from an incomplete market.** Where a payoff cannot be copied the theorems answer a band: $0.00 to $8.35 for the middle-ending claim. Every published price for such a payoff chooses one measure from a family.
 > - **Treating a weight of zero as positive enough.** At the top of the band the middle weight is exactly zero: the list still adds to one and still reprices the shares and the bank, and free money is still available. A traded price must sit strictly inside its band.
 > - **Carrying the finite theorem into continuous time unchanged.** With infinitely many futures, no arbitrage alone is too weak.
@@ -999,7 +1011,7 @@ end FundamentalTheorems
 
 - **Every model price on a derivatives desk.** A model price is a discounted average under some pricing measure. Which measure, and whether it was forced or chosen, is what a risk officer asks first.
 - **Binomial trees.** A tree's up-chance forecasts nothing: it is the pricing weight for that branch, which is why the tree in the code reaches the same $9.23.
-- **Monte Carlo.** Paths are drawn with the pricing drift, $r - q$, never the forecast drift; drawing them with the forecast gives the $12.47 above.
+- **Monte Carlo.** Paths are drawn with the pricing drift, $`r - q`$, never the forecast drift; drawing them with the forecast gives the $12.47 above.
 - **Implied volatility and the smile.** Quoted volatility differing by strike is the market saying the weights it really uses are not the model's.
 - **Insurance, credit and anything that jumps.** Incomplete markets in the sense of Step 5: prices live inside a band, and choosing a point in it is judgement, charged as a margin.
 - **Counting in something other than dollars.** Swap the bank account for the shares as the unit of account and a different, equally valid measure appears: [Changing the unit of account](05-change-of-numeraire-in-pricing.md).
@@ -1020,7 +1032,7 @@ end FundamentalTheorems
 
 - [Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md): the same price reached with no measure at all, by holding shares against the contract until the position cannot move.
 
-This card says the call is worth a discounted average under $Q$ and never says how many shares to hold to make that true; the next card builds the copy, day after day, and reaches $9.23 from the other side.
+This card says the call is worth a discounted average under $`Q`$ and never says how many shares to hold to make that true; the next card builds the copy, day after day, and reaches $9.23 from the other side.
 
 ---
 

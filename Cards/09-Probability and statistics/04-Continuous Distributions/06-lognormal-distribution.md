@@ -36,17 +36,21 @@ Orange: the lognormal price, climbing steeply from zero, peaking near $50 at 2.5
 
 ## The formula
 
-Notation first, in words. $S_0$ is today's price; $S$ is the price in a year, and $s$ one value of it; $X$ is the year's log return, ln(S/S_0). As on [Normal](04-normal-distribution.md), X ~ N(μ, σ^2) means "X follows the normal law with centre μ and variance σ^2", $Z$ is the standard normal, $\varphi$ its height and $\Phi$ its area to the left.
+Notation first, in words. $`S_0`$ is today's price; $`S`$ is the price in a year, and $`s`$ one value of it; $`X`$ is the year's log return, ln(S/S_0). As on [Normal](04-normal-distribution.md), X ~ N(μ, σ^2) means "X follows the normal law with centre μ and variance σ^2", $`Z`$ is the standard normal, $`\varphi`$ its height and $`\Phi`$ its area to the left.
 
 Saying S is **lognormal with parameters μ and σ** means ln(S/S_0) ~ N(μ, σ^2): the two parameters are the centre and spread of the logarithm, not of the price.
 
-$$S = S_0\, e^{X} = S_0\, e^{\mu + \sigma Z}$$
+```math
+S = S_0\, e^{X} = S_0\, e^{\mu + \sigma Z}
+```
 
 **Read it aloud:** next year's price is today's price times e raised to a normal log return.
 
 Its cumulative distribution and density, for a price s above zero, are
 
-$$F(s) = P(S \le s) = \Phi\!\left(\frac{\ln(s/S_0) - \mu}{\sigma}\right), \qquad f(s) = \frac{1}{s\,\sigma\sqrt{2\pi}}\; e^{-(\ln(s/S_0) - \mu)^2/(2\sigma^2)}$$
+```math
+F(s) = P(S \le s) = \Phi\!\left(\frac{\ln(s/S_0) - \mu}{\sigma}\right), \qquad f(s) = \frac{1}{s\,\sigma\sqrt{2\pi}}\; e^{-(\ln(s/S_0) - \mu)^2/(2\sigma^2)}
+```
 
 and both are zero for s at or below zero.
 
@@ -54,27 +58,31 @@ and both are zero for s at or below zero.
 
 The three centres and the spread:
 
-$$\text{mode} = S_0\,e^{\mu - \sigma^2}, \qquad \text{median} = S_0\,e^{\mu}, \qquad E[S] = S_0\,e^{\mu + \sigma^2/2}, \qquad \mathrm{Var}(S) = E[S]^2\left(e^{\sigma^2} - 1\right)$$
+```math
+\text{mode} = S_0\,e^{\mu - \sigma^2}, \qquad \text{median} = S_0\,e^{\mu}, \qquad E[S] = S_0\,e^{\mu + \sigma^2/2}, \qquad \mathrm{Var}(S) = E[S]^2\left(e^{\sigma^2} - 1\right)
+```
 
 **Read it aloud:** the median is today's price grown at the average log return; the mean adds half the variance to the exponent; the mode, where the density peaks, takes a whole variance away.
 
 All three come from one formula for any power k of the price:
 
-$$E[S^k] = S_0^{\,k}\; e^{k\mu + k^2\sigma^2/2}$$
+```math
+E[S^k] = S_0^{\,k}\; e^{k\mu + k^2\sigma^2/2}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_0$ | today's price | $50 | every price scales with it |
-| $S$, $s$ | the price in a year, and one value of it | median $54.16 | larger s: more area to its left |
-| $X$ | the year's log return, ln(S/S_0) | normal, centre 0.08, spread 0.30 | — |
-| $\mu$ | centre of the log return, E[X] | 0.08 | mode, median and mean all rise by the same factor |
-| $\sigma$ | spread of the log return; σ^2 is its variance | 0.30; 0.09 | mean rises, mode falls, median stays |
-| $Z$, $z$ | the standard normal, and a count of spreads | z = −0.2667 for $50 | — |
-| $f$, $F$ | the price's density and cumulative chance | peak f = 0.025681 per dollar | — |
-| $\varphi$, $\Phi$ | standard bell height and left area | Φ(−0.2667) = 0.3949 | — |
+| $`S_0`$ | today's price | $50 | every price scales with it |
+| $`S`$, $`s`$ | the price in a year, and one value of it | median $54.16 | larger s: more area to its left |
+| $`X`$ | the year's log return, ln(S/S_0) | normal, centre 0.08, spread 0.30 | — |
+| $`\mu`$ | centre of the log return, E[X] | 0.08 | mode, median and mean all rise by the same factor |
+| $`\sigma`$ | spread of the log return; σ^2 is its variance | 0.30; 0.09 | mean rises, mode falls, median stays |
+| $`Z`$, $`z`$ | the standard normal, and a count of spreads | z = −0.2667 for $50 | — |
+| $`f`$, $`F`$ | the price's density and cumulative chance | peak f = 0.025681 per dollar | — |
+| $`\varphi`$, $`\Phi`$ | standard bell height and left area | Φ(−0.2667) = 0.3949 | — |
 | E[S], Var(S) | the long-run average price and its variance | $56.66; 302.3054 | — |
-| $k$ | a power of the price inside E[S^k] | 1 for the mean, 2 for the variance | — |
-| $e$, ln | the constant 2.71828… and the natural logarithm | e^0.08 = 1.0833 | — |
+| $`k`$ | a power of the price inside E[S^k] | 1 for the mean, 2 for the variance | — |
+| $`e`$, ln | the constant 2.71828… and the natural logarithm | e^0.08 = 1.0833 | — |
 
 ### When it holds
 
@@ -115,7 +123,9 @@ The 1/s has a plain meaning. A small log step is the same percentage move at eve
 <summary>Detailed proof: the density integrates to 1</summary>
 
 Substitute s = S_0 e^{μ + σz}. Then ds = σ s dz, and the density's 1/(sσ) cancels it exactly:
-$$\int_0^\infty f(s)\,ds = \int_{-\infty}^{\infty} \varphi(z)\,dz = 1.$$
+
+$`\displaystyle \int_0^\infty f(s)\,ds = \int_{-\infty}^{\infty} \varphi(z)\,dz = 1.`$
+
 Each price above zero matches exactly one z, so no chance is lost or counted twice.
 
 </details>
@@ -133,11 +143,15 @@ Any m above 0 and v above 0 give exactly one pair with σ above 0. At v = 0 the 
 <details>
 <summary>Detailed proof: completing the square</summary>
 
-$$E[S^k] = \int_{-\infty}^{\infty} S_0^{\,k}\, e^{k\mu + k\sigma z}\, \frac{e^{-z^2/2}}{\sqrt{2\pi}}\, dz.$$
-In the exponent, $k\sigma z - z^2/2 = k^2\sigma^2/2 - (z - k\sigma)^2/2$: expand the square to check. So
-$$E[S^k] = S_0^{\,k}\, e^{k\mu + k^2\sigma^2/2} \int_{-\infty}^{\infty} \frac{e^{-(z - k\sigma)^2/2}}{\sqrt{2\pi}}\, dz = S_0^{\,k}\, e^{k\mu + k^2\sigma^2/2},$$
+$`\displaystyle E[S^k] = \int_{-\infty}^{\infty} S_0^{\,k}\, e^{k\mu + k\sigma z}\, \frac{e^{-z^2/2}}{\sqrt{2\pi}}\, dz.`$
+
+In the exponent, $`k\sigma z - z^2/2 = k^2\sigma^2/2 - (z - k\sigma)^2/2`$: expand the square to check. So
+
+$`\displaystyle E[S^k] = S_0^{\,k}\, e^{k\mu + k^2\sigma^2/2} \int_{-\infty}^{\infty} \frac{e^{-(z - k\sigma)^2/2}}{\sqrt{2\pi}}\, dz = S_0^{\,k}\, e^{k\mu + k^2\sigma^2/2},`$
+
 since the last integral is a whole bell moved sideways. The argument works for every real k, negative and fractional included. Then
-$$\mathrm{Var}(S) = S_0^2 e^{2\mu + 2\sigma^2} - S_0^2 e^{2\mu + \sigma^2} = E[S]^2\,(e^{\sigma^2} - 1).$$
+
+$`\displaystyle \mathrm{Var}(S) = S_0^2 e^{2\mu + 2\sigma^2} - S_0^2 e^{2\mu + \sigma^2} = E[S]^2\,(e^{\sigma^2} - 1).`$
 
 </details>
 

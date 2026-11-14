@@ -35,13 +35,17 @@ Orange: e^(−t) cos 2t, from (s + 1)/((s + 1)^2 + 4). Teal: 0.5 e^(−t) sin 2t
 
 ## The formula
 
-Notation first, in words. The inverse transform, written $\mathcal{L}^{-1}$ and read "the signal whose transform is", undoes the Laplace transform: y = $\mathcal{L}^{-1}$[Y].
+Notation first, in words. The inverse transform, written $`\mathcal{L}^{-1}`$ and read "the signal whose transform is", undoes the Laplace transform: y = $`\mathcal{L}^{-1}`$[Y].
 
 The rows read backwards, from [The Laplace transform](01-the-laplace-transform.md) and Step 1 below:
 
-$$\frac{A}{s-c}\ \text{ is the transform of }\ A\,e^{ct}$$
+```math
+\frac{A}{s-c}\ \text{ is the transform of }\ A\,e^{ct}
+```
 
-$$\frac{C\,(s+a) + D\,\omega}{(s+a)^2+\omega^2}\ \text{ is the transform of }\ e^{-at}\bigl(C\cos\omega t + D\sin\omega t\bigr)$$
+```math
+\frac{C\,(s+a) + D\,\omega}{(s+a)^2+\omega^2}\ \text{ is the transform of }\ e^{-at}\bigl(C\cos\omega t + D\sin\omega t\bigr)
+```
 
 **Read it aloud:** a fraction over s − c comes from an exponential with rate c; a fraction over a completed square comes from a cosine and a sine of angular frequency ω, fading at rate a, weighted by the top's two coefficients.
 
@@ -49,15 +53,15 @@ The job is to put a transform into these shapes. For the car, s + 2 = 1 · (s + 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since release, in s | 0 to 4 s | — |
-| $s$ | the transform variable, per s | 2 in the forward check | — |
-| $y$, $Y$ | height in cm; its transform, in cm·s | Y(2) = 0.307692 | — |
-| $P$, $Q$ | the bottom's coefficients, in s^2 + Ps + Q | 2 and 5 | P: faster fade; Q: quicker swings |
-| $a$ | the shift, a decay rate per s | 1 | faster fade |
-| $\omega$ | angular frequency, rad/s | 2 | quicker swings |
-| $C$, $D$ | cosine and sine weights, in cm | 1 and 0.5 | taller swing |
-| $A$, $c$ | weight and place of a real pole (a real root of the bottom) | A = 1 at c = 0 | higher settled level |
-| $p$, $r$ | a complex root; its cover-up value, a residue | −1 + 2i; 0.5 − 0.25i | — |
+| $`t`$ | time since release, in s | 0 to 4 s | — |
+| $`s`$ | the transform variable, per s | 2 in the forward check | — |
+| $`y`$, $`Y`$ | height in cm; its transform, in cm·s | Y(2) = 0.307692 | — |
+| $`P`$, $`Q`$ | the bottom's coefficients, in s^2 + Ps + Q | 2 and 5 | P: faster fade; Q: quicker swings |
+| $`a`$ | the shift, a decay rate per s | 1 | faster fade |
+| $`\omega`$ | angular frequency, rad/s | 2 | quicker swings |
+| $`C`$, $`D`$ | cosine and sine weights, in cm | 1 and 0.5 | taller swing |
+| $`A`$, $`c`$ | weight and place of a real pole (a real root of the bottom) | A = 1 at c = 0 | higher settled level |
+| $`p`$, $`r`$ | a complex root; its cover-up value, a residue | −1 + 2i; 0.5 − 0.25i | — |
 
 ### When it holds
 
@@ -78,7 +82,9 @@ The transform of a sum is the sum of the transforms, so the signals of the piece
 
 Multiply a signal f, with transform F, by e^(−at). The two weights merge into e^(−(s + a)t), so s is replaced by s + a:
 
-$$\int_0^\infty e^{-st}\,e^{-at}f(t)\,dt = F(s+a)$$
+```math
+\int_0^\infty e^{-st}\,e^{-at}f(t)\,dt = F(s+a)
+```
 
 Applied to the cosine row s/(s^2 + ω^2) and the sine row ω/(s^2 + ω^2), it gives (s + a)/((s + a)^2 + ω^2) and ω/((s + a)^2 + ω^2). Weighted by C and D and added, that is the second formula.
 
@@ -94,7 +100,9 @@ s + 2 = 1 · (s + 1) + 1, and 1 = 0.5 · 2.
 
 So C = 1 and D = 0.5, and
 
-$$\frac{s+2}{s^2+2s+5} = \frac{s+1}{(s+1)^2+4} + 0.5\cdot\frac{2}{(s+1)^2+4}$$
+```math
+\frac{s+2}{s^2+2s+5} = \frac{s+1}{(s+1)^2+4} + 0.5\cdot\frac{2}{(s+1)^2+4}
+```
 
 reads back as y(t) = e^(−t)(cos 2t + 0.5 sin 2t). At t = 0 it gives 1 cm, the release height.
 
@@ -102,7 +110,9 @@ reads back as y(t) = e^(−t)(cos 2t + 0.5 sin 2t). At t = 0 it gives 1 cm, the 
 
 Now push the car from rest at level with a steady force worth 5 cm/s^2 of acceleration: y'' + 2y' + 5y = 5 with y(0) = y'(0) = 0. The constant 5 transforms to 5/s, so Y = 5/(s(s^2 + 2s + 5)). Partial fractions ([Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md)) give one fraction per factor of the bottom:
 
-$$\frac{5}{s\,(s^2+2s+5)} = \frac{A}{s} + \frac{\text{linear top}}{s^2+2s+5}$$
+```math
+\frac{5}{s\,(s^2+2s+5)} = \frac{A}{s} + \frac{\text{linear top}}{s^2+2s+5}
+```
 
 Cover-up finds A: multiply by s and set s = 0, which erases the other fraction and leaves 5/5, so A = 1. Subtract 1/s: the leftover top is (5 − (s^2 + 2s + 5))/s = −s − 2, minus the released car's transform. So
 

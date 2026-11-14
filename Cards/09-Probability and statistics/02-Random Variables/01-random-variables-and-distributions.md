@@ -33,43 +33,51 @@ One bar per payout value: 0.99 at $0 and 0.01 at $100, a bar one ninety-ninth th
 
 ## The formula
 
-Notation first, in words. $P(A)$ is the chance of the event A, as on [Sample spaces and events](../01-Chance%20and%20Events/02-sample-spaces-and-events.md). A random variable gets a capital letter, $X$; a value it might take gets the lower-case letter, $x$. So $P(X = x)$ is read "the chance that X comes out equal to x", and $P(X = 100)$ is "the chance the ticket pays $100". The outcomes form the sample space $\Omega$ (capital omega); one outcome is $\omega$ (small omega), here the number drawn.
+Notation first, in words. $`P(A)`$ is the chance of the event A, as on [Sample spaces and events](../01-Chance%20and%20Events/02-sample-spaces-and-events.md). A random variable gets a capital letter, $`X`$; a value it might take gets the lower-case letter, $`x`$. So $`P(X = x)`$ is read "the chance that X comes out equal to x", and $`P(X = 100)`$ is "the chance the ticket pays $100". The outcomes form the sample space $`\Omega`$ (capital omega); one outcome is $`\omega`$ (small omega), here the number drawn.
 
-The random variable is a function from outcomes to numbers. $\mathbb{R}$ stands for the real numbers, every number on the number line:
+The random variable is a function from outcomes to numbers. $`\mathbb{R}`$ stands for the real numbers, every number on the number line:
 
-$$X : \Omega \to \mathbb{R}, \qquad X(\omega) = \begin{cases} 100 & \text{if } \omega = 37 \\ 0 & \text{otherwise} \end{cases}$$
+```math
+X : \Omega \to \mathbb{R}, \qquad X(\omega) = \begin{cases} 100 & \text{if } \omega = 37 \\ 0 & \text{otherwise} \end{cases}
+```
 
 Its **probability mass function**, the table, gives each value its chance by adding up the outcomes that produce it:
 
-$$p(x) = P(X = x) = \sum_{\omega \,:\, X(\omega) = x} P(\{\omega\})$$
+```math
+p(x) = P(X = x) = \sum_{\omega \,:\, X(\omega) = x} P(\{\omega\})
+```
 
 **Read it aloud:** the chance of the value x is the total chance of every outcome the rule sends to x.
 
 Its **cumulative distribution function**, the running total, adds the table up to a threshold:
 
-$$F(x) = P(X \le x) = \sum_{v \,\le\, x} p(v)$$
+```math
+F(x) = P(X \le x) = \sum_{v \,\le\, x} p(v)
+```
 
 **Read it aloud:** the chance that X comes out at x or below is the sum of the table's entries for every value v up to and including x.
 
 Two readings follow at once. The chance of landing in a window with its right edge included:
 
-$$P(a < X \le b) = F(b) - F(a)$$
+```math
+P(a < X \le b) = F(b) - F(a)
+```
 
-And the chance of one exact value is the height of the step the running total climbs there: $p(x)$ equals $F(x)$ minus the value of $F$ just below $x$.
+And the chance of one exact value is the height of the step the running total climbs there: $`p(x)`$ equals $`F(x)`$ minus the value of $`F`$ just below $`x`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$ | the sample space: every way the draw can go | the numbers 1 to 100 | more outcomes, usually thinner chances each |
-| $\omega$ | one outcome | the number drawn, say 37 | — |
-| $X$ | the random variable: the rule outcome → number | payout of the held ticket | — |
-| $x$ | a value X might take, or a threshold | 0 or 100; any number for F | F never falls as x rises |
-| $v$ | a value of X being added into the running total | 0, then 100 | — |
-| $P$ | the chance of an event | P(draw is 37) = 0.01 | — |
-| $p$ | the table: p(x) is the chance X equals x | p(0) = 0.99, p(100) = 0.01 | more entries share the same total of 1 |
-| $F$ | the running total: F(x) is the chance X is at most x | F(0) = 0.99, F(100) = 1 | climbs in steps, never down |
-| $a$, $b$ | the left and right edges of a window of values | 0 and 100 | a wider window never holds less chance |
-| $Y$ | a second random variable, the net gain X − 2 for a $2 ticket | −2 or 98 | — |
-| $T$ | total payout from three separate raffles, one ticket in each | 0, 100, 200 or 300 | — |
+| $`\Omega`$ | the sample space: every way the draw can go | the numbers 1 to 100 | more outcomes, usually thinner chances each |
+| $`\omega`$ | one outcome | the number drawn, say 37 | — |
+| $`X`$ | the random variable: the rule outcome → number | payout of the held ticket | — |
+| $`x`$ | a value X might take, or a threshold | 0 or 100; any number for F | F never falls as x rises |
+| $`v`$ | a value of X being added into the running total | 0, then 100 | — |
+| $`P`$ | the chance of an event | P(draw is 37) = 0.01 | — |
+| $`p`$ | the table: p(x) is the chance X equals x | p(0) = 0.99, p(100) = 0.01 | more entries share the same total of 1 |
+| $`F`$ | the running total: F(x) is the chance X is at most x | F(0) = 0.99, F(100) = 1 | climbs in steps, never down |
+| $`a`$, $`b`$ | the left and right edges of a window of values | 0 and 100 | a wider window never holds less chance |
+| $`Y`$ | a second random variable, the net gain X − 2 for a $2 ticket | −2 or 98 | — |
+| $`T`$ | total payout from three separate raffles, one ticket in each | 0, 100, 200 or 300 | — |
 
 ### When it holds
 
@@ -91,7 +99,9 @@ All the uncertainty lives in the sample space and its chances. The random variab
 
 Group the outcomes by the number the rule gives them. Each outcome lands in exactly one group, because a function gives each input one output. So the groups do not overlap and together they are the whole sample space. The chances of non-overlapping events add, and the whole space has chance 1. Therefore
 
-$$\sum_{x} p(x) = 1.$$
+```math
+\sum_{x} p(x) = 1.
+```
 
 On the ticket: 99 outcomes pool into the value 0, one into the value 100, and 0.99 + 0.01 = 1. Nothing is lost and nothing is counted twice.
 
@@ -120,13 +130,15 @@ One line, the running total F at seven thresholds. The thresholds −1 and 99 st
 
 The event "X is at most b" splits into two pieces that do not overlap: "X is at most a" and "X is above a but at most b". Their chances add, so
 
-$$P(a < X \le b) = F(b) - F(a).$$
+```math
+P(a < X \le b) = F(b) - F(a).
+```
 
 ### Step 5: the table forgets the outcomes
 
 Two random variables on different sample spaces can share a table. Take a bet that pays $100 if the last two digits of tomorrow's three-digit lottery number, 000 to 999, are 77. That space has 1,000 outcomes; 10 of them pay. The table is 0.99 at $0 and 0.01 at $100, identical to the raffle ticket's. Any question asked about the payout alone gets the same answer for both. That is why the distribution, not the sample space, is what later cards work with.
 
-A function of a random variable is another random variable. If the ticket cost $2, the net gain is $Y$ = X − 2, a rule applied after the first rule. Its table moves each value down by 2: −2 with chance 0.99, 98 with chance 0.01.
+A function of a random variable is another random variable. If the ticket cost $2, the net gain is $`Y`$ = X − 2, a rule applied after the first rule. Its table moves each value down by 2: −2 with chance 0.99, 98 with chance 0.01.
 
 <details>
 <summary>Detailed proof</summary>
@@ -510,8 +522,8 @@ Lean proves the facts in Why it works for every random variable, on finite and i
 
 - **The table adds to 1.** Suppose every outcome gets one number, the values can be listed, and every set of outcomes asked about has a chance. Then the chances p(x) add to 1.
 - **The running total never falls.** F climbs or stays level as x rises. It tends to 0 far to the left and to 1 far to the right.
-- **Jumps are table entries.** Take any number $x$. Then F just below $x$ equals $F(x) - p(x)$, and F from the right equals $F(x)$.
-- **Windows are differences.** Take edges $a \le b$. Then $P(a < X \le b) = F(b) - F(a)$.
+- **Jumps are table entries.** Take any number $`x`$. Then F just below $`x`$ equals $`F(x) - p(x)`$, and F from the right equals $`F(x)`$.
+- **Windows are differences.** Take edges $`a \le b`$. Then $`P(a < X \le b) = F(b) - F(a)`$.
 - **The worked counts.** 99 of the 100 draws pay $0, and 10 of the 1,000 lottery numbers end in 77. The three-raffle counts add to 1,000,000.
 
 The simulation, the net gain Y, and the printed decimals are left to the Python and Rust checks.

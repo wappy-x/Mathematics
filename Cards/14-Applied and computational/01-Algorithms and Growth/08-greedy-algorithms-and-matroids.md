@@ -28,21 +28,25 @@ Each bar is one talk, drawn to scale. The filled bars are the six the earliest-f
 
 ## The formula
 
-Notation first, in words. Talk $i$ starts at time $s_i$ and finishes at $f_i$. Two talks **clash** when they overlap: $s_i < f_j$ and $s_j < f_i$. A talk that starts the minute another ends does not clash with it. A **schedule** is a set of talks with no clashes.
+Notation first, in words. Talk $`i`$ starts at time $`s_i`$ and finishes at $`f_i`$. Two talks **clash** when they overlap: $`s_i < f_j`$ and $`s_j < f_i`$. A talk that starts the minute another ends does not clash with it. A **schedule** is a set of talks with no clashes.
 
 **The earliest-finish rule.** Sort the talks so that finishing times rise. Walk down the list. Keep a talk if it starts no earlier than the last kept talk ends; otherwise skip it.
 
-Call the kept talks $g_1, g_2, \dots, g_k$, in the order kept: $g$ for greedy, $k$ for how many. Take any other schedule and list its talks in time order, $o_1, o_2, \dots, o_m$: $o$ for other, $m$ for how many. The proof rests on one inequality:
+Call the kept talks $`g_1, g_2, \dots, g_k`$, in the order kept: $`g`$ for greedy, $`k`$ for how many. Take any other schedule and list its talks in time order, $`o_1, o_2, \dots, o_m`$: $`o`$ for other, $`m`$ for how many. The proof rests on one inequality:
 
-$$f_{g_j} \le f_{o_j} \quad \text{for every } j \text{ up to the smaller of } k \text{ and } m, \qquad \text{so} \qquad k \ge m.$$
+```math
+f_{g_j} \le f_{o_j} \quad \text{for every } j \text{ up to the smaller of } k \text{ and } m, \qquad \text{so} \qquad k \ge m.
+```
 
 **Read it aloud:** greedy's first talk ends no later than the other schedule's first talk, its second no later than the other's second, and so on; so greedy runs out of room no sooner, and keeps at least as many talks.
 
 For weighted choices the card needs one more idea. A family of **allowed sets** is a list of the sets one may pick: here, the schedules. It is **hereditary** when every part of an allowed set is allowed too: drop a talk from a schedule and it is still a schedule.
 
-Each item $x$ has a **weight** $w(x)$ that is zero or more, here an audience $a_x$. **Heaviest-first greed** walks the items from heaviest to lightest and keeps each one that still leaves an allowed set. The family has the **exchange property** when:
+Each item $`x`$ has a **weight** $`w(x)`$ that is zero or more, here an audience $`a_x`$. **Heaviest-first greed** walks the items from heaviest to lightest and keeps each one that still leaves an allowed set. The family has the **exchange property** when:
 
-$$I, J \text{ allowed and } |J| > |I| \;\Longrightarrow\; \text{some } x \text{ in } J \text{ but not in } I \text{ makes } I \cup \{x\} \text{ allowed.}$$
+```math
+I, J \text{ allowed and } |J| > |I| \;\Longrightarrow\; \text{some } x \text{ in } J \text{ but not in } I \text{ makes } I \cup \{x\} \text{ allowed.}
+```
 
 **Read it aloud:** whenever one allowed set is bigger than another, the smaller one can borrow an item from the bigger and stay allowed.
 
@@ -50,17 +54,17 @@ A hereditary family with the exchange property is a **matroid**. The theorem of 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many talks are proposed | 12 | brute force doubles per talk; greedy adds one comparison |
-| $s_i$, $f_i$ | start and finish of talk $i$ | B: 9:30 and 10:30 | a later finish pushes the talk down greedy's list |
-| $g_j$ | the $j$-th talk greedy keeps; $j$ counts steps | $g_1$ is B | — |
-| $o_j$ | the $j$-th talk of any other schedule | earliest start's $o_1$ is A | — |
-| $k$, $m$ | how many talks greedy and the other schedule keep | 6 and 4 | $m$ can never pass $k$ |
-| $I$, $J$ | two allowed sets | $I$ is A alone, $J$ is B and D | — |
-| $\lvert J \rvert$ | how many items $J$ holds | 2 | — |
-| $x$ | one item: a talk, or one run of fibre trench (Step 6) | D | — |
-| $x_j$, $y_j$ | the $j$-th item greedy keeps, and of any other allowed set, heaviest first | $x_1$ is A, $y_1$ is K | — |
-| $p$ | the smaller set's size, in the converse proof | 1 | the weights used rise with it |
-| $w(x)$, $a_x$ | an item's weight; a talk's audience | $a_A$ is 120 | heavier items come earlier in the walk |
+| $`n`$ | how many talks are proposed | 12 | brute force doubles per talk; greedy adds one comparison |
+| $`s_i`$, $`f_i`$ | start and finish of talk $`i`$ | B: 9:30 and 10:30 | a later finish pushes the talk down greedy's list |
+| $`g_j`$ | the $`j`$-th talk greedy keeps; $`j`$ counts steps | $`g_1`$ is B | — |
+| $`o_j`$ | the $`j`$-th talk of any other schedule | earliest start's $`o_1`$ is A | — |
+| $`k`$, $`m`$ | how many talks greedy and the other schedule keep | 6 and 4 | $`m`$ can never pass $`k`$ |
+| $`I`$, $`J`$ | two allowed sets | $`I`$ is A alone, $`J`$ is B and D | — |
+| $`\lvert J \rvert`$ | how many items $`J`$ holds | 2 | — |
+| $`x`$ | one item: a talk, or one run of fibre trench (Step 6) | D | — |
+| $`x_j`$, $`y_j`$ | the $`j`$-th item greedy keeps, and of any other allowed set, heaviest first | $`x_1`$ is A, $`y_1`$ is K | — |
+| $`p`$ | the smaller set's size, in the converse proof | 1 | the weights used rise with it |
+| $`w(x)`$, $`a_x`$ | an item's weight; a talk's audience | $`a_A`$ is 120 | heavier items come earlier in the walk |
 
 ### When it holds
 
@@ -84,16 +88,16 @@ The model exchange argument is the cut property in [The cheapest skeleton](../..
 
 ### Step 1: earliest finish stays ahead
 
-Let greedy keep $g_1, \dots, g_k$ and let any other schedule hold $o_1, \dots, o_m$, both in time order.
+Let greedy keep $`g_1, \dots, g_k`$ and let any other schedule hold $`o_1, \dots, o_m`$, both in time order.
 
-- **First talk.** Greedy's first talk, B, finishes at 10:30, earliest of all twelve. So $f_{g_1} \le f_{o_1}$ for any schedule at all.
-- **Each later talk.** Suppose $f_{g_{j-1}} \le f_{o_{j-1}}$. The talk $o_j$ starts after $o_{j-1}$ ends, so it starts after $g_{j-1}$ ends. So $o_j$ was still free when greedy chose its $j$-th talk. Greedy took the free talk that ends earliest, so $f_{g_j} \le f_{o_j}$.
+- **First talk.** Greedy's first talk, B, finishes at 10:30, earliest of all twelve. So $`f_{g_1} \le f_{o_1}`$ for any schedule at all.
+- **Each later talk.** Suppose $`f_{g_{j-1}} \le f_{o_{j-1}}`$. The talk $`o_j`$ starts after $`o_{j-1}`$ ends, so it starts after $`g_{j-1}`$ ends. So $`o_j`$ was still free when greedy chose its $`j`$-th talk. Greedy took the free talk that ends earliest, so $`f_{g_j} \le f_{o_j}`$.
 
 Check it against the earliest-start schedule A, G, I, K, which ends its talks at 13:00, 14:00, 15:30 and 17:30. Greedy's first four end at 10:30, 12:00, 13:30 and 14:40: earlier every time. The check script tests the inequality on all 254 schedules the room allows, and it never fails.
 
 ### Step 2: staying ahead means keeping the most
 
-Suppose some schedule had more talks than greedy: $m > k$. Its talk $o_{k+1}$ starts after $o_k$ ends, which is no earlier than $g_k$ ends, by Step 1. So $o_{k+1}$ was free when greedy finished its walk, and greedy would have kept it. That contradicts greedy stopping at $k$. So $k \ge m$ for every schedule, and earliest finish keeps the most talks: 6.
+Suppose some schedule had more talks than greedy: $`m > k`$. Its talk $`o_{k+1}`$ starts after $`o_k`$ ends, which is no earlier than $`g_k`$ ends, by Step 1. So $`o_{k+1}`$ was free when greedy finished its walk, and greedy would have kept it. That contradicts greedy stopping at $`k`$. So $`k \ge m`$ for every schedule, and earliest finish keeps the most talks: 6.
 
 ### Step 3: the same result by exchange
 
@@ -103,24 +107,24 @@ Take any best schedule. Swap its first talk for B. B ends at 10:30, no later tha
 
 Now each talk has an expected audience: A 120, B 60, C 50, D 70, E 55, F 40, G 80, H 30, I 75, J 65, K 90, L 35. Biggest-first greed keeps A, the 120-person workshop, first. That blocks B, D and every other morning talk. It ends with A, G, I, K: 365 people. The best schedule is B, D, G, I, K: 375.
 
-The exchange property fails exactly here. Take $I$ as A alone and $J$ as B and D. $J$ is bigger, yet neither B nor D can join A, because A clashes with both. Greed grabbed one heavy item that shut out two medium ones worth more together: 60 + 70 = 130 against 120.
+The exchange property fails exactly here. Take $`I`$ as A alone and $`J`$ as B and D. $`J`$ is bigger, yet neither B nor D can join A, because A clashes with both. Greed grabbed one heavy item that shut out two medium ones worth more together: 60 + 70 = 130 against 120.
 
 Counting talks is safe anyway, by Steps 1 and 2. That argument used the shape of time, not the exchange property, so it does not carry over to weights. Weighted talks need a table, the method of [Dynamic programming](07-dynamic-programming.md): walk the talks in finishing order, and for each, keep the better of "skip it" or "take it, plus the best answer among talks that end before it starts".
 
 ### Step 5: on a matroid, heaviest-first greed is always right
 
-Say the allowed sets are hereditary and have the exchange property. Greedy keeps $x_1, x_2, \dots$, heaviest first. Take any allowed set and list its items heaviest first, $y_1, y_2, \dots$. The claim is staying ahead again, now in weight: $w(x_j) \ge w(y_j)$ for every $j$. Summing over $j$ then gives greedy the heaviest total.
+Say the allowed sets are hereditary and have the exchange property. Greedy keeps $`x_1, x_2, \dots`$, heaviest first. Take any allowed set and list its items heaviest first, $`y_1, y_2, \dots`$. The claim is staying ahead again, now in weight: $`w(x_j) \ge w(y_j)`$ for every $`j`$. Summing over $`j`$ then gives greedy the heaviest total.
 
-Suppose it fails first at step $j$: $w(y_j) > w(x_j)$, or greedy has fewer than $j$ items. Compare $y_1, \dots, y_j$, which has $j$ items, with $x_1, \dots, x_{j-1}$, which has $j - 1$.
+Suppose it fails first at step $`j`$: $`w(y_j) > w(x_j)`$, or greedy has fewer than $`j`$ items. Compare $`y_1, \dots, y_j`$, which has $`j`$ items, with $`x_1, \dots, x_{j-1}`$, which has $`j - 1`$.
 
-The exchange property gives some $y_i$ with $i \le j$, not among greedy's first $j - 1$, that can join them. Its weight is at least $w(y_j)$, so the walk reached it before $x_j$. At that moment the kept set was part of $x_1, \dots, x_{j-1}$, so by heredity $y_i$ fitted, and greedy would have kept it. But $y_i$ is not among greedy's first $j - 1$ items, and it came before $x_j$: a contradiction. The case where greedy has fewer than $j$ items goes the same way, with $y_i$ joining all of greedy's set.
+The exchange property gives some $`y_i`$ with $`i \le j`$, not among greedy's first $`j - 1`$, that can join them. Its weight is at least $`w(y_j)`$, so the walk reached it before $`x_j`$. At that moment the kept set was part of $`x_1, \dots, x_{j-1}`$, so by heredity $`y_i`$ fitted, and greedy would have kept it. But $`y_i`$ is not among greedy's first $`j - 1`$ items, and it came before $`x_j`$: a contradiction. The case where greedy has fewer than $`j`$ items goes the same way, with $`y_i`$ joining all of greedy's set.
 
 <details>
 <summary>Detailed proof: the converse, and why every maximal set has one size</summary>
 
-**Same size.** On a matroid, take two allowed sets that nothing can join, $I$ and $J$. If $J$ were bigger, the exchange property would let an item of $J$ join $I$, so they have the same size. On the campus runs every such loop-free set has 6 runs; on the talks, the schedules nothing can join have 3, 4, 5 or 6 talks.
+**Same size.** On a matroid, take two allowed sets that nothing can join, $`I`$ and $`J`$. If $`J`$ were bigger, the exchange property would let an item of $`J`$ join $`I`$, so they have the same size. On the campus runs every such loop-free set has 6 runs; on the talks, the schedules nothing can join have 3, 4, 5 or 6 talks.
 
-**The converse.** Suppose a hereditary family fails the exchange property: $I$ and $J$ are allowed, $I$ has $p$ items, $J$ has more, and no item of $J$ outside $I$ can join $I$. By heredity, drop items of $J$ until it has exactly $p + 1$; it is still allowed, and the items left outside $I$ still cannot join $I$. Give each item of $I$ weight $p + 2$, each item of $J$ outside $I$ weight $p + 1$, and everything else weight 0. Heaviest-first greed takes all of $I$ first, since every part of $I$ is allowed. Then no item of $J$ outside $I$ fits. Its total is $p(p + 2) = p^2 + 2p$. But $J$ weighs at least $(p + 1)(p + 1) = p^2 + 2p + 1$, which is more. So some weighting defeats greed. On the talks, $p$ is 1, $I$ is A and $J$ is B and D.
+**The converse.** Suppose a hereditary family fails the exchange property: $`I`$ and $`J`$ are allowed, $`I`$ has $`p`$ items, $`J`$ has more, and no item of $`J`$ outside $`I`$ can join $`I`$. By heredity, drop items of $`J`$ until it has exactly $`p + 1`$; it is still allowed, and the items left outside $`I`$ still cannot join $`I`$. Give each item of $`I`$ weight $`p + 2`$, each item of $`J`$ outside $`I`$ weight $`p + 1`$, and everything else weight 0. Heaviest-first greed takes all of $`I`$ first, since every part of $`I`$ is allowed. Then no item of $`J`$ outside $`I`$ fits. Its total is $`p(p + 2) = p^2 + 2p`$. But $`J`$ weighs at least $`(p + 1)(p + 1) = p^2 + 2p + 1`$, which is more. So some weighting defeats greed. On the talks, $`p`$ is 1, $`I`$ is A and $`J`$ is B and D.
 
 </details>
 
@@ -158,7 +162,7 @@ The earliest-finish walk. The talks are sorted by finishing time; "last end" is 
 
 So six talks fill the room, and no schedule of the 4096 subsets does better. Twelve comparisons replaced a search over every subset.
 
-For audiences, the table from [Dynamic programming](07-dynamic-programming.md) runs over the same order, B to L. Each entry is the best audience using the first $j$ talks: 0, 60, 60, 130, 130, 130, 170, 210, 210, 285, 285, 375, 375. The step from 130 to 170 is F: its 40 people plus the 130 of B and D, which both end before F starts at 12:15. G then adds its 80 to the same 130, giving 210. The last entry, 375, matches brute force: B, D, G, I, K.
+For audiences, the table from [Dynamic programming](07-dynamic-programming.md) runs over the same order, B to L. Each entry is the best audience using the first $`j`$ talks: 0, 60, 60, 130, 130, 130, 170, 210, 210, 285, 285, 375, 375. The step from 130 to 170 is F: its 40 people plus the 130 of B and D, which both end before F starts at 12:15. G then adds its 80 to the same 130, giving 210. The last entry, 375, matches brute force: B, D, G, I, K.
 
 ### What breaks if you drop a piece
 
@@ -507,7 +511,7 @@ The two outputs match line for line.
 Lean proves both theorems of the card for any talks and any hereditary family, and checks the twelve talks' numbers.
 
 - Suppose each talk finishes after it starts, and the talks are sorted so finishing times rise, ties in any order. Then the earliest-finish rule keeps a schedule, and no schedule holds more talks.
-- Take the same sorted talks and any other schedule $o_1, \dots, o_m$ in time order. Then $f_{g_j} \le f_{o_j}$ for every $j$ up to the smaller of $k$ and $m$, so $k \ge m$.
+- Take the same sorted talks and any other schedule $`o_1, \dots, o_m`$ in time order. Then $`f_{g_j} \le f_{o_j}`$ for every $`j`$ up to the smaller of $`k`$ and $`m`$, so $`k \ge m`$.
 - Take a hereditary family of allowed sets on a finite set of items, and walk ties in any order. Then heaviest-first greed finds a heaviest allowed set for every weighting of zero or more exactly when the family is a matroid.
 - For the twelve talks, earliest finish keeps B, D, F, H, J and L. Of the 254 schedules, that is the only one with 6, and none holds more.
 - "Start earliest", "shortest first" and "fewest clashes" keep 4, 5 and 5 talks.

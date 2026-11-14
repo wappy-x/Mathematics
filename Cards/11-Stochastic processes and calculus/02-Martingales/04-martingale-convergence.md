@@ -35,49 +35,55 @@ Orange, green and dark blue: the first three urns of a seeded simulation (SplitM
 
 ## The formula
 
-Notation first, in words. After n draws the urn holds $R_n$ red balls, and the fraction red is $M_n$. The filtration $\mathcal F_n$ is what is known after n draws: the colours so far ([Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md)). $E[\cdot]$ is the average over all runs, and $E[\cdot \mid \mathcal F_n]$ is the forecast given what is known after n draws. A martingale is a fair game: the best forecast of tomorrow, given today, is today ([Martingales](01-martingales.md)).
+Notation first, in words. After n draws the urn holds $`R_n`$ red balls, and the fraction red is $`M_n`$. The filtration $`\mathcal F_n`$ is what is known after n draws: the colours so far ([Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md)). $`E[\cdot]`$ is the average over all runs, and $`E[\cdot \mid \mathcal F_n]`$ is the forecast given what is known after n draws. A martingale is a fair game: the best forecast of tomorrow, given today, is today ([Martingales](01-martingales.md)).
 
-$$M_n = \frac{R_n}{n+2}, \qquad E[M_{n+1} \mid \mathcal F_n] = M_n$$
+```math
+M_n = \frac{R_n}{n+2}, \qquad E[M_{n+1} \mid \mathcal F_n] = M_n
+```
 
 **Read it aloud:** the fraction red is reds over balls, and its forecast for the next draw is its value now.
 
-Now take any martingale $X_n$ and a band from a low level $a$ to a high level $b$. An **upcrossing** is one completed trip from at or below a to at or above b; $U_n[a,b]$ counts those completed by time n. The **negative part** $x^-$ of a number x is how far it falls below zero: $-x$ if x < 0, else 0.
+Now take any martingale $`X_n`$ and a band from a low level $`a`$ to a high level $`b`$. An **upcrossing** is one completed trip from at or below a to at or above b; $`U_n[a,b]`$ counts those completed by time n. The **negative part** $`x^-`$ of a number x is how far it falls below zero: $`-x`$ if x < 0, else 0.
 
 **The upcrossing inequality** (Doob, 1953):
 
-$$(b - a)\, E\big[U_n[a,b]\big] \;\le\; E\big[(X_n - a)^-\big]$$
+```math
+(b - a)\, E\big[U_n[a,b]\big] \;\le\; E\big[(X_n - a)^-\big]
+```
 
 **Read it aloud:** the band's width times the expected number of upcrossings is at most the expected shortfall below the low level at the end.
 
-**The convergence theorem.** Write $\sup_n E|X_n|$ for the smallest number at least as big as every $E|X_n|$: the ceiling on the average size. A martingale with a finite ceiling is **bounded in mean** (also called bounded in L1).
+**The convergence theorem.** Write $`\sup_n E|X_n|`$ for the smallest number at least as big as every $`E|X_n|`$: the ceiling on the average size. A martingale with a finite ceiling is **bounded in mean** (also called bounded in L1).
 
-$$\sup_n E|X_n| = K < \infty \quad\Longrightarrow\quad X_n \to X_\infty \text{ almost surely, with } E|X_\infty| \le K$$
+```math
+\sup_n E|X_n| = K < \infty \quad\Longrightarrow\quad X_n \to X_\infty \text{ almost surely, with } E|X_\infty| \le K
+```
 
 **Read it aloud:** if a martingale's average size never exceeds K, then with probability 1 its path settles to a limit whose average size is at most K too.
 
-For the urn K is 1/2: the fraction is never negative, so its average size is its average, which stays at 1/2 (Step 1). The limit $M_\infty$ turns out to be spread evenly over 0 to 1.
+For the urn K is 1/2: the fraction is never negative, so its average size is its average, which stays at 1/2 (Step 1). The limit $`M_\infty`$ turns out to be spread evenly over 0 to 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $m$, $k$ | draws (or rounds) so far, and a later draw count; a step, or a count of reds | 0 to 1000 | less movement still to come |
-| $R_n$ | red balls after $n$ draws | 1 at the start | — |
-| $M_n$, $M_\infty$ | fraction red, $R_n/(n+2)$; the level it settles to | 1/2 at the start; 0.14 for urn 1 | — |
-| $\mathcal F_n$ | what is known after $n$ draws | the colours so far | sharper forecasts |
-| $X_n$, $X_\infty$, $x_n$ | any martingale; its limit; a plain sequence of numbers | the urn fraction, a gambler's fortune | — |
-| $\liminf x_n$, $\limsup x_n$ | the lowest and highest levels a sequence keeps coming back near, in the long run | equal on every urn path, since each settles | — |
-| $(\Omega, \mathcal F, P)$ | the probability space: every possible run, the events, and their chances | all infinite sequences of urn draws | — |
-| $a$, $b$ | the band's low and high levels | 0.4 and 0.6 | a wider band, fewer upcrossings |
-| $U_n[a,b]$ | upcrossings completed by time $n$ | on average 0.154096 by draw 16 | grows with $n$, its average stays capped |
-| $(x)^-$ | negative part: $-x$ if $x < 0$, else 0 | $(M_n - 0.4)^-$ averages 0.073203 at draw 16 | — |
-| $K$ | the ceiling $\sup_n E\lvert X_n\rvert$ | 1/2 for the urn | a looser cap on upcrossings |
-| $H_k$, $G_n$ | the stake on step $k$, fixed before it; total gain | hold 1 unit from 0.4 up to 0.6 | — |
-| $\sigma_j$, $\tau_j$ | the j-th buy time and sell time | buy at or below 0.4, sell at or above 0.6 | — |
-| $S_n$ | a fair $1 game's total, with unlimited credit | $E\lvert S_n\rvert$ = 7.9589 after 100 rounds | — |
+| $`n`$, $`m`$, $`k`$ | draws (or rounds) so far, and a later draw count; a step, or a count of reds | 0 to 1000 | less movement still to come |
+| $`R_n`$ | red balls after $`n`$ draws | 1 at the start | — |
+| $`M_n`$, $`M_\infty`$ | fraction red, $`R_n/(n+2)`$; the level it settles to | 1/2 at the start; 0.14 for urn 1 | — |
+| $`\mathcal F_n`$ | what is known after $`n`$ draws | the colours so far | sharper forecasts |
+| $`X_n`$, $`X_\infty`$, $`x_n`$ | any martingale; its limit; a plain sequence of numbers | the urn fraction, a gambler's fortune | — |
+| $`\liminf x_n`$, $`\limsup x_n`$ | the lowest and highest levels a sequence keeps coming back near, in the long run | equal on every urn path, since each settles | — |
+| $`(\Omega, \mathcal F, P)`$ | the probability space: every possible run, the events, and their chances | all infinite sequences of urn draws | — |
+| $`a`$, $`b`$ | the band's low and high levels | 0.4 and 0.6 | a wider band, fewer upcrossings |
+| $`U_n[a,b]`$ | upcrossings completed by time $`n`$ | on average 0.154096 by draw 16 | grows with $`n`$, its average stays capped |
+| $`(x)^-`$ | negative part: $`-x`$ if $`x < 0`$, else 0 | $`(M_n - 0.4)^-`$ averages 0.073203 at draw 16 | — |
+| $`K`$ | the ceiling $`\sup_n E\lvert X_n\rvert`$ | 1/2 for the urn | a looser cap on upcrossings |
+| $`H_k`$, $`G_n`$ | the stake on step $`k`$, fixed before it; total gain | hold 1 unit from 0.4 up to 0.6 | — |
+| $`\sigma_j`$, $`\tau_j`$ | the j-th buy time and sell time | buy at or below 0.4, sell at or above 0.6 | — |
+| $`S_n`$ | a fair $1 game's total, with unlimited credit | $`E\lvert S_n\rvert`$ = 7.9589 after 100 rounds | — |
 
 ### When it holds
 
 - **A martingale or a supermartingale** (a game fair or tilted against the player). Without fairness, boundedness is not enough: a sequence alternating between 0.4 and 0.6 never settles.
-- **A ceiling on the average size.** A fair $1 game with unlimited credit has $E|S_n|$ = 7.9589 after 100 rounds and 25.2250 after 1,000, and moves a dollar every round: it settles nowhere.
+- **A ceiling on the average size.** A fair $1 game with unlimited credit has $`E|S_n|`$ = 7.9589 after 100 rounds and 25.2250 after 1,000, and moves a dollar every round: it settles nowhere.
 - **Discrete time.** The continuous-time version needs right-continuous paths; this card does not prove it.
 - **Convergence of paths, not of averages.** The doubling strategy has average 0 at every round and still settles at +1 on almost every path.
 
@@ -93,21 +99,25 @@ If a sequence does not settle at a finite level, either it runs off to infinity,
 
 With r red balls out of n + 2, the next draw is red with chance r/(n + 2), making the fraction (r + 1)/(n + 3); otherwise it becomes r/(n + 3). The forecast is
 
-$$\frac{r}{n+2}\cdot\frac{r+1}{n+3} + \frac{n+2-r}{n+2}\cdot\frac{r}{n+3} \;=\; \frac{r\,(n+3)}{(n+2)(n+3)} \;=\; \frac{r}{n+2}.$$
+```math
+\frac{r}{n+2}\cdot\frac{r+1}{n+3} + \frac{n+2-r}{n+2}\cdot\frac{r}{n+3} \;=\; \frac{r\,(n+3)}{(n+2)(n+3)} \;=\; \frac{r}{n+2}.
+```
 
-So $M_n$ is a martingale, and its average stays at 1/2. The code checks this exactly for every n up to 20.
+So $`M_n`$ is a martingale, and its average stays at 1/2. The code checks this exactly for every n up to 20.
 
 ### Step 2: buy low, sell high
 
-Treat the martingale as a price. Wait until it is at or below a; buy one unit; hold until it is at or above b; sell; repeat. The stake $H_k$ is 1 while holding and 0 while waiting, decided by prices up to step k − 1; the buy and sell moments are stopping times, moments decided by the path so far ([Stopping times](03-stopping-times-and-optional-stopping.md)).
+Treat the martingale as a price. Wait until it is at or below a; buy one unit; hold until it is at or above b; sell; repeat. The stake $`H_k`$ is 1 while holding and 0 while waiting, decided by prices up to step k − 1; the buy and sell moments are stopping times, moments decided by the path so far ([Stopping times](03-stopping-times-and-optional-stopping.md)).
 
-Each completed round trip gained at least b − a. A unit still held at time n was bought at a or lower, so it has lost at most $(X_n - a)^-$. So the total gain $G_n$ satisfies
+Each completed round trip gained at least b − a. A unit still held at time n was bought at a or lower, so it has lost at most $`(X_n - a)^-`$. So the total gain $`G_n`$ satisfies
 
-$$G_n \;\ge\; (b - a)\,U_n[a,b] \;-\; (X_n - a)^-.$$
+```math
+G_n \;\ge\; (b - a)\,U_n[a,b] \;-\; (X_n - a)^-.
+```
 
 ### Step 3: a fair game gives no profit on average
 
-Stakes fixed in advance, between 0 and 1, applied to a martingale give gains that form a martingale starting at 0 ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)). So $E[G_n] = 0$. Averaging Step 2 gives the upcrossing inequality.
+Stakes fixed in advance, between 0 and 1, applied to a martingale give gains that form a martingale starting at 0 ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)). So $`E[G_n] = 0`$. Averaging Step 2 gives the upcrossing inequality.
 
 For the urn at draw 16 and the band 0.4 to 0.6, the right side is 0.073203, so the bound on expected upcrossings is 0.366013. The true value, found two ways in the code, is 0.154096. The bound only has to be finite.
 
@@ -128,19 +138,19 @@ Orange: one sample path, the first of 10,000 simulated urns to finish two upcros
 
 ### Step 4: a ceiling on the average size caps the upcrossings
 
-The shortfall below a is at most $|a| + |X_n|$, so the inequality gives an average of at most $(|a| + K)/(b - a)$ upcrossings by every time n. The count only grows with n, so by monotone convergence ([The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) the total number ever has the same finite average. A count with a finite average is finite with probability 1, as in the first Borel-Cantelli lemma ([The Borel-Cantelli lemmas](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md)).
+The shortfall below a is at most $`|a| + |X_n|`$, so the inequality gives an average of at most $`(|a| + K)/(b - a)`$ upcrossings by every time n. The count only grows with n, so by monotone convergence ([The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) the total number ever has the same finite average. A count with a finite average is finite with probability 1, as in the first Borel-Cantelli lemma ([The Borel-Cantelli lemmas](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md)).
 
-For the urn and the band 0.4 to 0.6, the ceiling K = 1/2 caps the average at (0.4 + 0.5)/0.2 = 4.5 upcrossings. The urn's own shortfall does better. It is a bowl-shaped function of a fair game, so by Jensen's inequality its average only rises with n, toward $0.4^2/2$ = 0.08 for the even limit of Step 6. The cap over all time is 0.08/0.2 = 0.4000. The exact average by draw 1,000 is 0.1893; the simulation gives 0.1857 ± 0.0040.
+For the urn and the band 0.4 to 0.6, the ceiling K = 1/2 caps the average at (0.4 + 0.5)/0.2 = 4.5 upcrossings. The urn's own shortfall does better. It is a bowl-shaped function of a fair game, so by Jensen's inequality its average only rises with n, toward $`0.4^2/2`$ = 0.08 for the even limit of Step 6. The cap over all time is 0.08/0.2 = 0.4000. The exact average by draw 1,000 is 0.1893; the simulation gives 0.1857 ± 0.0040.
 
 ### Step 5: countably many bands, and a finite limit
 
-A band with rational ends fits between any two different levels, and there are countably many. Each is crossed infinitely often only on a set of probability 0, and countably many such sets together have probability 0. So the path settles with probability 1. Fatou's lemma ([Fatou's lemma](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md)) says the average of a limit of non-negative quantities is at most the lowest long-run level of their averages. Applied to $|X_n|$, it gives $E|X_\infty| \le K$, so the limit is finite with probability 1.
+A band with rational ends fits between any two different levels, and there are countably many. Each is crossed infinitely often only on a set of probability 0, and countably many such sets together have probability 0. So the path settles with probability 1. Fatou's lemma ([Fatou's lemma](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md)) says the average of a limit of non-negative quantities is at most the lowest long-run level of their averages. Applied to $`|X_n|`$, it gives $`E|X_\infty| \le K`$, so the limit is finite with probability 1.
 
 ### Step 6: where the urn settles
 
 The theorem says the urn settles, not where. One order of draws with k reds and n − k blues has chance k!(n − k)!/(n + 1)!, whatever the order: the i-th red drawn meets i reds, the i-th blue meets i blues, and the t-th draw meets t + 1 balls. Times the "n choose k" orders, every count of reds from 0 to n has chance exactly 1/(n + 1): each of the n + 1 levels is equally likely.
 
-The paths converge, so their law, the chance of each level, converges too ([Modes of convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)), and evenly spaced levels become the even spread on 0 to 1: the chance that $M_\infty$ lands below a level x is x. Among 10,000 simulated urns, each tenth of the range holds between 0.097 and 0.105 of them at draw 1,000, against an exact 0.100 or 0.101.
+The paths converge, so their law, the chance of each level, converges too ([Modes of convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)), and evenly spaced levels become the even spread on 0 to 1: the chance that $`M_\infty`$ lands below a level x is x. Among 10,000 simulated urns, each tenth of the range holds between 0.097 and 0.105 of them at draw 1,000, against an exact 0.100 or 0.101.
 
 ### The picture: where 10,000 urns stand after 1,000 draws
 
@@ -159,24 +169,24 @@ Bars: simulated shares, each within four standard errors of the exact value, as 
 <details>
 <summary>How much movement is left after n draws</summary>
 
-A martingale's future steps are uncorrelated with its present, so the average squared move from draw n to a later draw m is $E[M_m^2] - E[M_n^2]$. The even law gives $E[M_n^2] = (2n+3)/(6(n+2))$, rising to 1/3, so the average squared travel left after n draws is $1/(6(n+2))$. Its square root is 0.2887 at the start, 0.1179 after 10 draws, 0.0404 after 100 and 0.0129 after 1,000. From draw 100 to draw 1,000 the average squared move is 1/612 − 1/6012 = 0.001468; the simulation gives 0.001461 ± 0.000024.
+A martingale's future steps are uncorrelated with its present, so the average squared move from draw n to a later draw m is $`E[M_m^2] - E[M_n^2]`$. The even law gives $`E[M_n^2] = (2n+3)/(6(n+2))`$, rising to 1/3, so the average squared travel left after n draws is $`1/(6(n+2))`$. Its square root is 0.2887 at the start, 0.1179 after 10 draws, 0.0404 after 100 and 0.0129 after 1,000. From draw 100 to draw 1,000 the average squared move is 1/612 − 1/6012 = 0.001468; the simulation gives 0.001461 ± 0.000024.
 
 </details>
 
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, $(\Omega, \mathcal{F}, P)$ is a probability space with a filtration $\mathcal F_0 \subseteq \mathcal F_1 \subseteq \dots$, and $X_n$ is a martingale: $X_n$ is known at time n, $E|X_n| < \infty$, and $E[X_{n+1} \mid \mathcal F_n] = X_n$.
+Throughout, $`(\Omega, \mathcal{F}, P)`$ is a probability space with a filtration $`\mathcal F_0 \subseteq \mathcal F_1 \subseteq \dots`$, and $`X_n`$ is a martingale: $`X_n`$ is known at time n, $`E|X_n| < \infty`$, and $`E[X_{n+1} \mid \mathcal F_n] = X_n`$.
 
-**Lemma 1 (non-convergence means infinitely many upcrossings).** If real numbers $x_n$ have $\liminf x_n < \limsup x_n$, choose rationals $a < b$ strictly between. Then $x_n < a$ for infinitely many n and $x_n > b$ for infinitely many n, so the sequence completes infinitely many upcrossings of $[a, b]$.
+**Lemma 1 (non-convergence means infinitely many upcrossings).** If real numbers $`x_n`$ have $`\liminf x_n < \limsup x_n`$, choose rationals $`a < b`$ strictly between. Then $`x_n < a`$ for infinitely many n and $`x_n > b`$ for infinitely many n, so the sequence completes infinitely many upcrossings of $`[a, b]`$.
 
-**Lemma 2 (upcrossing inequality).** Fix $a < b$. Let $\sigma_1 = \min\{k \ge 0 : X_k \le a\}$, $\tau_1 = \min\{k > \sigma_1 : X_k \ge b\}$, and in turn $\sigma_{j+1} = \min\{k > \tau_j : X_k \le a\}$, $\tau_{j+1} = \min\{k > \sigma_{j+1} : X_k \ge b\}$, the minimum of an empty set being infinity. These are stopping times, and $U_n[a,b]$ is the number of j with $\tau_j \le n$. Put $H_k = 1$ if $\sigma_j < k \le \tau_j$ for some j, else 0, decided by $X_0, \dots, X_{k-1}$. Let $G_n = \sum_{k=1}^{n} H_k (X_k - X_{k-1})$. Each completed block from $\sigma_j$ to $\tau_j \le n$ contributes $X_{\tau_j} - X_{\sigma_j} \ge b - a$. At most one block is open at time n, from some $\sigma_j < n$; it contributes $X_n - X_{\sigma_j} \ge X_n - a \ge -(X_n - a)^-$. So $G_n \ge (b-a)\,U_n[a,b] - (X_n - a)^-$. Taking out what is known, $E[H_k (X_k - X_{k-1}) \mid \mathcal F_{k-1}] = H_k\,(E[X_k \mid \mathcal F_{k-1}] - X_{k-1}) = 0$, and the tower rule gives $E[G_n] = 0$. Averaging, $(b-a)\,E[U_n[a,b]] \le E[(X_n - a)^-]$. For a supermartingale $E[G_n] \le 0$ and the same inequality follows.
+**Lemma 2 (upcrossing inequality).** Fix $`a < b`$. Let $`\sigma_1 = \min\{k \ge 0 : X_k \le a\}`$, $`\tau_1 = \min\{k > \sigma_1 : X_k \ge b\}`$, and in turn $`\sigma_{j+1} = \min\{k > \tau_j : X_k \le a\}`$, $`\tau_{j+1} = \min\{k > \sigma_{j+1} : X_k \ge b\}`$, the minimum of an empty set being infinity. These are stopping times, and $`U_n[a,b]`$ is the number of j with $`\tau_j \le n`$. Put $`H_k = 1`$ if $`\sigma_j < k \le \tau_j`$ for some j, else 0, decided by $`X_0, \dots, X_{k-1}`$. Let $`G_n = \sum_{k=1}^{n} H_k (X_k - X_{k-1})`$. Each completed block from $`\sigma_j`$ to $`\tau_j \le n`$ contributes $`X_{\tau_j} - X_{\sigma_j} \ge b - a`$. At most one block is open at time n, from some $`\sigma_j < n`$; it contributes $`X_n - X_{\sigma_j} \ge X_n - a \ge -(X_n - a)^-`$. So $`G_n \ge (b-a)\,U_n[a,b] - (X_n - a)^-`$. Taking out what is known, $`E[H_k (X_k - X_{k-1}) \mid \mathcal F_{k-1}] = H_k\,(E[X_k \mid \mathcal F_{k-1}] - X_{k-1}) = 0`$, and the tower rule gives $`E[G_n] = 0`$. Averaging, $`(b-a)\,E[U_n[a,b]] \le E[(X_n - a)^-]`$. For a supermartingale $`E[G_n] \le 0`$ and the same inequality follows.
 
-**Theorem 3 (convergence).** Suppose $\sup_n E|X_n| = K < \infty$. For rationals $a < b$, since $(X_n - a)^- \le |X_n| + |a|$, Lemma 2 gives $E[U_n[a,b]] \le (K + |a|)/(b-a)$ for all n. The counts rise with n to $U_\infty[a,b]$, and monotone convergence gives $E[U_\infty[a,b]] \le (K + |a|)/(b-a)$, so $P(U_\infty[a,b] = \infty) = 0$. By Lemma 1, $\{\liminf X_n < \limsup X_n\}$ lies inside the union over rational $a < b$ of $\{U_\infty[a,b] = \infty\}$, a countable union of null sets, so it is null. Off it, $X_n$ has a limit $X_\infty$ in $[-\infty, \infty]$. Fatou's lemma applied to $|X_n|$ gives $E|X_\infty| \le \liminf E|X_n| \le K$, so $X_\infty$ is finite almost surely and integrable.
+**Theorem 3 (convergence).** Suppose $`\sup_n E|X_n| = K < \infty`$. For rationals $`a < b`$, since $`(X_n - a)^- \le |X_n| + |a|`$, Lemma 2 gives $`E[U_n[a,b]] \le (K + |a|)/(b-a)`$ for all n. The counts rise with n to $`U_\infty[a,b]`$, and monotone convergence gives $`E[U_\infty[a,b]] \le (K + |a|)/(b-a)`$, so $`P(U_\infty[a,b] = \infty) = 0`$. By Lemma 1, $`\{\liminf X_n < \limsup X_n\}`$ lies inside the union over rational $`a < b`$ of $`\{U_\infty[a,b] = \infty\}`$, a countable union of null sets, so it is null. Off it, $`X_n`$ has a limit $`X_\infty`$ in $`[-\infty, \infty]`$. Fatou's lemma applied to $`|X_n|`$ gives $`E|X_\infty| \le \liminf E|X_n| \le K`$, so $`X_\infty`$ is finite almost surely and integrable.
 
-**Corollary 4 (non-negative martingales).** If $X_n \ge 0$ then $E|X_n| = E[X_n] = E[X_0]$, so Theorem 3 applies with $K = E[X_0]$.
+**Corollary 4 (non-negative martingales).** If $`X_n \ge 0`$ then $`E|X_n| = E[X_n] = E[X_0]`$, so Theorem 3 applies with $`K = E[X_0]`$.
 
-**Proposition 5 (the urn).** By Step 1 and $0 \le M_n \le 1$, Corollary 4 applies with $K = E[M_0] = 1/2$, so $M_n \to M_\infty$ almost surely. By Step 6, $P(M_n \le x)$ is the number of levels $j/(n+2)$, $1 \le j \le n+1$, at or below x, divided by n + 1; that number is within 1 of $x(n+2)$, so $P(M_n \le x) \to x$. Almost sure convergence implies convergence in law at continuity points of the limit, so $P(M_\infty \le x) = x$: the limit is uniform on [0, 1]. Dominated convergence, with $|M_n| \le 1$, gives $E[M_\infty] = 1/2$.
+**Proposition 5 (the urn).** By Step 1 and $`0 \le M_n \le 1`$, Corollary 4 applies with $`K = E[M_0] = 1/2`$, so $`M_n \to M_\infty`$ almost surely. By Step 6, $`P(M_n \le x)`$ is the number of levels $`j/(n+2)`$, $`1 \le j \le n+1`$, at or below x, divided by n + 1; that number is within 1 of $`x(n+2)`$, so $`P(M_n \le x) \to x`$. Almost sure convergence implies convergence in law at continuity points of the limit, so $`P(M_\infty \le x) = x`$: the limit is uniform on [0, 1]. Dominated convergence, with $`|M_n| \le 1`$, gives $`E[M_\infty] = 1/2`$.
 
 </details>
 
@@ -205,8 +215,8 @@ The fraction is fair at every step, equally likely to stand at any level, and cr
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the ceiling: a fair $1 game with credit, $S_n$ | $E\lvert S_n\rvert$ = 7.9589 at 100 rounds, 25.2250 at 1,000; the path never settles | the average size is unbounded, and so is the upcrossing bound |
-| Convergence taken for convergence of averages: doubling | settles at +1 (won by round 10 with chance 0.999023), averages 0 every round; $E\lvert X_n\rvert$ = 1.998047 | paths converge; averages need more |
+| Drop the ceiling: a fair $1 game with credit, $`S_n`$ | $`E\lvert S_n\rvert`$ = 7.9589 at 100 rounds, 25.2250 at 1,000; the path never settles | the average size is unbounded, and so is the upcrossing bound |
+| Convergence taken for convergence of averages: doubling | settles at +1 (won by round 10 with chance 0.999023), averages 0 every round; $`E\lvert X_n\rvert`$ = 1.998047 | paths converge; averages need more |
 | Expect the limit to be the start, 1/2 | 0.098 of urns sit below 0.1 at draw 1,000; each tenth holds about 0.100 | the limit is random and evenly spread |
 | Read the bound as an estimate | bound 0.366013, true 0.154096 at draw 16 | an inequality, used only to show finiteness |
 
@@ -608,9 +618,9 @@ The two outputs agree line for line.
 
 Lean proves the convergence theorem and the upcrossing inequality for every martingale or supermartingale, and the urn's fairness at every draw.
 
-- Suppose $X_n$ is a martingale or supermartingale in discrete time, and $E|X_n| \le K$ for every n. Then with probability 1 each path settles to a finite limit $X_\infty$, and $E|X_\infty| \le K$.
-- Suppose $X_n$ is a martingale or supermartingale, $a < b$, and n is any time. Then $(b - a)\, E[U_n[a,b]] \le E[(X_n - a)^-]$.
-- Take r red balls out of n + 2 after n draws. Then the forecast of the next fraction red is $r/(n+2)$, the fraction now.
+- Suppose $`X_n`$ is a martingale or supermartingale in discrete time, and $`E|X_n| \le K`$ for every n. Then with probability 1 each path settles to a finite limit $`X_\infty`$, and $`E|X_\infty| \le K`$.
+- Suppose $`X_n`$ is a martingale or supermartingale, $`a < b`$, and n is any time. Then $`(b - a)\, E[U_n[a,b]] \le E[(X_n - a)^-]`$.
+- Take r red balls out of n + 2 after n draws. Then the forecast of the next fraction red is $`r/(n+2)`$, the fraction now.
 - After one draw the forecast is 1/2. Each order of two reds and one blue has chance 1/12, and every count after 3 draws has chance 1/4.
 - At draw 16 the average shortfall below 0.4 is 56/765, so the upcrossing bound is 56/153, or 0.366013.
 - The ceiling K = 1/2 caps the average upcrossings at 4.5, and the urn's own cap is 0.4.
@@ -917,7 +927,7 @@ example : (1 : ℚ) - 1 / 2 ^ 10 = 1023 / 1024 ∧ (2 : ℚ) - 2 / 2 ^ 10 = 1023
 > - **Start with 2 red balls and 1 blue** (on paper: the code's law asserts test the flat law, so `w = {2: 1}` in `law` stops the run). Guess first: flat again? No: the limit leans red, with average two-thirds, the starting fraction, and the fraction still settles.
 > - **Add two balls of the drawn colour instead of one.** Guess first: does it still settle? Yes: the fraction is still a fair game between 0 and 1; only the limit's law changes.
 > - **Narrow the band to 0.45 to 0.55.** Guess first: more or fewer upcrossings? More, since b − a shrinks, but the average stays finite.
-> - **Give the gambler credit.** Guess first: does the fortune settle? No: the ceiling is gone, $E|S_n|$ grows like the square root of n, and the path moves a dollar a round.
+> - **Give the gambler credit.** Guess first: does the fortune settle? No: the ceiling is gone, $`E|S_n|`$ grows like the square root of n, and the path moves a dollar a round.
 
 ---
 
@@ -926,7 +936,7 @@ example : (1 : ℚ) - 1 / 2 ^ 10 = 1023 / 1024 ∧ (2 : ℚ) - 2 / 2 ^ 10 = 1023
 > [!warning]
 > **"The martingale converges, so its average converges to the limit's average."** A gambler with $10, no credit and a fair $1 game has a non-negative fortune, so it converges; moving a dollar a round, it can settle only at $0. Yet the average fortune is 10.0000 at rounds 100 and 1,000. After 1,000 rounds the gambler still plays with chance 0.2480, and that shrinking group carries the whole average. Carrying averages to the limit needs the condition in [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md).
 >
-> - **Small steps taken for a ceiling.** The fair game with credit moves exactly $1 a round, yet $E|S_n|$ reaches 25.2250 by round 1,000.
+> - **Small steps taken for a ceiling.** The fair game with credit moves exactly $1 a round, yet $`E|S_n|`$ reaches 25.2250 by round 1,000.
 > - **The limit taken as a fixed number.** The urn's limit is random: 0.14 for one urn, 0.54 for another. Only its average is fixed.
 > - **"Fair game" read as "cannot win".** The doubler wins $1 on almost every path; the average of 0 is held up by rare losses of 2^n − 1 dollars.
 > - **Convergence read as a speed.** The theorem gives no rate. The urn's remaining travel is 0.0404 after 100 draws and 0.0129 after 1,000, shrinking like one over the square root of n.

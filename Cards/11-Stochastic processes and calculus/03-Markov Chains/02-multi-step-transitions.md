@@ -35,34 +35,38 @@ Orange: sunny. Green: cloudy. Dark blue: rainy. On day 0 all the chance sits on 
 
 ## The formula
 
-Notation first, in words. As on [Markov chains](01-markov-chains.md), $X_n$ is the weather on day $n$, with day 0 today; $P$ is the transition matrix, whose entry $p_{ij}$ is the chance of state $j$ tomorrow after state $i$ today; and $\alpha$ is the start law, the chances for day 0. With the states in the order sunny, cloudy, rainy:
+Notation first, in words. As on [Markov chains](01-markov-chains.md), $`X_n`$ is the weather on day $`n`$, with day 0 today; $`P`$ is the transition matrix, whose entry $`p_{ij}`$ is the chance of state $`j`$ tomorrow after state $`i`$ today; and $`\alpha`$ is the start law, the chances for day 0. With the states in the order sunny, cloudy, rainy:
 
-$$P = \begin{pmatrix} 0.6 & 0.3 & 0.1 \\ 0.3 & 0.4 & 0.3 \\ 0.2 & 0.4 & 0.4 \end{pmatrix}, \qquad \alpha = (1,\ 0,\ 0).$$
+```math
+P = \begin{pmatrix} 0.6 & 0.3 & 0.1 \\ 0.3 & 0.4 & 0.3 \\ 0.2 & 0.4 & 0.4 \end{pmatrix}, \qquad \alpha = (1,\ 0,\ 0).
+```
 
-New here. $P^n$ is $P$ multiplied by itself $n$ times, and $P^0 = I$, the identity matrix (1 on the diagonal, 0 elsewhere: zero days leave the weather where it is). The **n-step transition probability** $p^{(n)}_{ij}$ is the chance of state $j$ exactly $n$ days after state $i$. The **law on day n**, $\mu_n$, is the row of three chances for day $n$, one per kind of weather, adding to 1; its entry for state $j$ is $\mu_n(j)$, and $\mu_0 = \alpha$.
+New here. $`P^n`$ is $`P`$ multiplied by itself $`n`$ times, and $`P^0 = I`$, the identity matrix (1 on the diagonal, 0 elsewhere: zero days leave the weather where it is). The **n-step transition probability** $`p^{(n)}_{ij}`$ is the chance of state $`j`$ exactly $`n`$ days after state $`i`$. The **law on day n**, $`\mu_n`$, is the row of three chances for day $`n`$, one per kind of weather, adding to 1; its entry for state $`j`$ is $`\mu_n(j)`$, and $`\mu_0 = \alpha`$.
 
 The three results:
 
-$$p^{(n)}_{ij} = \left(P^n\right)_{ij}, \qquad \mu_n = \alpha\,P^n, \qquad p^{(m+n)}_{ij} = \sum_{k} p^{(m)}_{ik}\,p^{(n)}_{kj}.$$
+```math
+p^{(n)}_{ij} = \left(P^n\right)_{ij}, \qquad \mu_n = \alpha\,P^n, \qquad p^{(m+n)}_{ij} = \sum_{k} p^{(m)}_{ik}\,p^{(n)}_{kj}.
+```
 
 **Read it aloud:** the chance of getting from i to j in n days is the (i, j) entry of the n-th power of the one-day matrix; the law on day n is the start law times that power; and the chance of an (m + n)-day trip is the sum, over every state k the weather could be in on day m, of the chance of the first leg times the chance of the second.
 
-The third is the **Chapman-Kolmogorov equation**. In matrix form it reads $P^{m+n} = P^m P^n$. That looks like the law of exponents, and it is proved below by summing paths, not assumed from the notation.
+The third is the **Chapman-Kolmogorov equation**. In matrix form it reads $`P^{m+n} = P^m P^n`$. That looks like the law of exponents, and it is proved below by summing paths, not assumed from the notation.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_n$ | the weather on day n | sunny on day 0 | — |
-| $n$, $m$ | numbers of days; m is where a trip is split | 7; split 3 + 4 | $\mu_n$ drifts toward the long-run mix |
-| $i$, $j$, $k$ | states: where a trip starts, where it ends, where it is in between | sunny, rainy, any of the three | — |
-| $P$, $p_{ij}$ | the transition matrix, rows adding to 1; one entry of it | sunny to rainy: 0.1 | shifting chance within a row reweights every route through that step |
-| $\alpha$ | the start law: chances for day 0 | (1, 0, 0), certainly sunny | — |
-| $P^n$, $I$ | $P$ multiplied by itself n times; $P^0 = I$, the identity | $P^7$ | — |
-| $p^{(n)}_{ij}$ | chance of j exactly n days after i: the (i, j) entry of $P^n$ | sunny to rainy in 7 days: 0.2454961 | — |
-| $\mu_n$ | the law on day n, a row of three chances; entry $\mu_n(j)$ | day 7: (0.3939966, 0.3605073, 0.2454961) | — |
-| $\pi$ | the long-run mix the law settles toward | (24, 22, 15)/61 = (0.3934426, 0.3606557, 0.2459016) | — |
-| $\lambda$, $v$ | an eigenvalue of $P$, and its row $v$ with $vP = \lambda v$: one part of the law, shrinking by $\lambda$ each day | 1, 0.3732051, 0.0267949 | bigger means slower forgetting |
-| $\mathcal F_m$ | what is known by day m: the weather on days 0 to m | $\mathcal F_3$: the weather on days 0 to 3 | — |
-| $S$, $H$, $i_n$ | Detailed proof only: the set of states; one history of days 0 to m; the state on day n along one path | — | — |
+| $`X_n`$ | the weather on day n | sunny on day 0 | — |
+| $`n`$, $`m`$ | numbers of days; m is where a trip is split | 7; split 3 + 4 | $`\mu_n`$ drifts toward the long-run mix |
+| $`i`$, $`j`$, $`k`$ | states: where a trip starts, where it ends, where it is in between | sunny, rainy, any of the three | — |
+| $`P`$, $`p_{ij}`$ | the transition matrix, rows adding to 1; one entry of it | sunny to rainy: 0.1 | shifting chance within a row reweights every route through that step |
+| $`\alpha`$ | the start law: chances for day 0 | (1, 0, 0), certainly sunny | — |
+| $`P^n`$, $`I`$ | $`P`$ multiplied by itself n times; $`P^0 = I`$, the identity | $`P^7`$ | — |
+| $`p^{(n)}_{ij}`$ | chance of j exactly n days after i: the (i, j) entry of $`P^n`$ | sunny to rainy in 7 days: 0.2454961 | — |
+| $`\mu_n`$ | the law on day n, a row of three chances; entry $`\mu_n(j)`$ | day 7: (0.3939966, 0.3605073, 0.2454961) | — |
+| $`\pi`$ | the long-run mix the law settles toward | (24, 22, 15)/61 = (0.3934426, 0.3606557, 0.2459016) | — |
+| $`\lambda`$, $`v`$ | an eigenvalue of $`P`$, and its row $`v`$ with $`vP = \lambda v`$: one part of the law, shrinking by $`\lambda`$ each day | 1, 0.3732051, 0.0267949 | bigger means slower forgetting |
+| $`\mathcal F_m`$ | what is known by day m: the weather on days 0 to m | $`\mathcal F_3`$: the weather on days 0 to 3 | — |
+| $`S`$, $`H`$, $`i_n`$ | Detailed proof only: the set of states; one history of days 0 to m; the state on day n along one path | — | — |
 
 ### When it holds
 
@@ -77,70 +81,84 @@ The third is the **Chapman-Kolmogorov equation**. In matrix form it reads $P^{m+
 
 ### Step 0: split the event by its route
 
-"Rain on day 7" is one event, but it happens along many routes. Two different routes cannot both happen, so their chances add. Along one route the Markov property makes the chance a product, one entry of $P$ per day, as [Markov chains](01-markov-chains.md) proved. So every n-day chance is a sum of products. A matrix product is exactly a sum of products: row i of the first matrix against column j of the second. That is why powers of $P$ appear.
+"Rain on day 7" is one event, but it happens along many routes. Two different routes cannot both happen, so their chances add. Along one route the Markov property makes the chance a product, one entry of $`P`$ per day, as [Markov chains](01-markov-chains.md) proved. So every n-day chance is a sum of products. A matrix product is exactly a sum of products: row i of the first matrix against column j of the second. That is why powers of $`P`$ appear.
 
 ### Step 1: one more day at a time
 
 To reach j on day n + 1, the weather is at some k on day n, then steps to j. Group the routes by that k:
 
-$$p^{(n+1)}_{ij} = \sum_k p^{(n)}_{ik}\,p_{kj}.$$
+```math
+p^{(n+1)}_{ij} = \sum_k p^{(n)}_{ik}\,p_{kj}.
+```
 
-That is the matrix statement $P^{n+1} = P^n P$, entry by entry. It holds at n = 0 because $P^0 = I$ and $p^{(1)}_{ij} = p_{ij}$. Each further day adds one factor of $P$, so by induction $p^{(n)}_{ij} = (P^n)_{ij}$ for every n. At n = 2 this is the 0.19 of markov-chains.
+That is the matrix statement $`P^{n+1} = P^n P`$, entry by entry. It holds at n = 0 because $`P^0 = I`$ and $`p^{(1)}_{ij} = p_{ij}`$. Each further day adds one factor of $`P`$, so by induction $`p^{(n)}_{ij} = (P^n)_{ij}`$ for every n. At n = 2 this is the 0.19 of markov-chains.
 
-Unrolled, the same argument says $(P^n)_{ij}$ is the sum, over every sequence of in-between states, of the product of one-day chances along it: for the week, the 2187 paths of the code's second road. The power gets the same total far more cheaply, because routes that meet at the same state on the same day are merged into one number before the next day is added.
+Unrolled, the same argument says $`(P^n)_{ij}`$ is the sum, over every sequence of in-between states, of the product of one-day chances along it: for the week, the 2187 paths of the code's second road. The power gets the same total far more cheaply, because routes that meet at the same state on the same day are merged into one number before the next day is added.
 
 ### Step 2: Chapman-Kolmogorov, split anywhere
 
-Any trip of m + n days is in some state k on day m. Group all the paths by that k. Each path is a first leg of m days glued to a second leg of n days, and its chance is the first leg's product times the second leg's product. Summing the first legs gives $p^{(m)}_{ik}$, the second legs $p^{(n)}_{kj}$, and the grouping gives
+Any trip of m + n days is in some state k on day m. Group all the paths by that k. Each path is a first leg of m days glued to a second leg of n days, and its chance is the first leg's product times the second leg's product. Summing the first legs gives $`p^{(m)}_{ik}`$, the second legs $`p^{(n)}_{kj}`$, and the grouping gives
 
-$$p^{(m+n)}_{ij} = \sum_k p^{(m)}_{ik}\,p^{(n)}_{kj}, \qquad P^{m+n} = P^m P^n.$$
+```math
+p^{(m+n)}_{ij} = \sum_k p^{(m)}_{ik}\,p^{(n)}_{kj}, \qquad P^{m+n} = P^m P^n.
+```
 
 For the week, split at day 3. From sunny, day 3 is sunny, cloudy or rainy with chances 0.422, 0.353, 0.225. From each of those, the chance of rain four days later is 0.2381, 0.2493, 0.2534. Row against column: **0.2454961**, the same as seven one-day steps. The code checks all eight splits, from day 0 to day 7.
 
-The split is also what "the chain restarts" means. Whatever happened before day m, the chance of j on day m + n, given everything known by day m, is $p^{(n)}_{X_m j}$: only the state on day m matters. The Detailed proof states this with $\mathcal F_m$, the filtration: what is known by day m.
+The split is also what "the chain restarts" means. Whatever happened before day m, the chance of j on day m + n, given everything known by day m, is $`p^{(n)}_{X_m j}`$: only the state on day m matters. The Detailed proof states this with $`\mathcal F_m`$, the filtration: what is known by day m.
 
 ### Step 3: from a start law
 
-If today is uncertain, $\alpha$ gives today's chances. By the law of total probability, the chance of j on day n averages the rows of $P^n$, weighted by today's chances:
+If today is uncertain, $`\alpha`$ gives today's chances. By the law of total probability, the chance of j on day n averages the rows of $`P^n`$, weighted by today's chances:
 
-$$\mu_n(j) = \sum_i \alpha(i)\,p^{(n)}_{ij}, \qquad \mu_n = \alpha P^n, \qquad \mu_{n+1} = \mu_n P.$$
+```math
+\mu_n(j) = \sum_i \alpha(i)\,p^{(n)}_{ij}, \qquad \mu_n = \alpha P^n, \qquad \mu_{n+1} = \mu_n P.
+```
 
-The law is a row and multiplies from the left. With $\alpha$ = (1, 0, 0), $\mu_n$ is the sunny row of $P^n$. The last form is the practical one: carry three numbers forward, one day at a time.
+The law is a row and multiplies from the left. With $`\alpha`$ = (1, 0, 0), $`\mu_n`$ is the sunny row of $`P^n`$. The last form is the practical one: carry three numbers forward, one day at a time.
 
 ### Step 4: what the powers settle to
 
-Powers of a matrix are read most easily through its eigenvalues ([Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)). The law multiplies from the left, so the useful eigenvectors are rows $v$ with $vP = \lambda v$: one day scales them by $\lambda$ and leaves their shape alone.
+Powers of a matrix are read most easily through its eigenvalues ([Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)). The law multiplies from the left, so the useful eigenvectors are rows $`v`$ with $`vP = \lambda v`$: one day scales them by $`\lambda`$ and leaves their shape alone.
 
-Every row of $P$ adds to 1, so the eigenvalue 1 is always there. Its row is the long-run mix $\pi$ = (24, 22, 15)/61, and the code checks $\pi P = \pi$ in whole numbers. The other two eigenvalues are the roots of $\lambda^2 - 0.4\lambda + 0.01 = 0$, because the three eigenvalues add to the diagonal sum of $P$, 1.4, and multiply to its determinant, 0.01. The roots are 0.3732051 and 0.0267949.
+Every row of $`P`$ adds to 1, so the eigenvalue 1 is always there. Its row is the long-run mix $`\pi`$ = (24, 22, 15)/61, and the code checks $`\pi P = \pi`$ in whole numbers. The other two eigenvalues are the roots of $`\lambda^2 - 0.4\lambda + 0.01 = 0`$, because the three eigenvalues add to the diagonal sum of $`P`$, 1.4, and multiply to its determinant, 0.01. The roots are 0.3732051 and 0.0267949.
 
 Today's law splits into three pieces, one along each eigenvector. Each day multiplies each piece by its own eigenvalue. So the rain chance on day n is
 
-$$\mu_n(\text{rainy}) = 0.2459016 - 0.4021612 \times 0.3732051^n + 0.1562596 \times 0.0267949^n.$$
+```math
+\mu_n(\text{rainy}) = 0.2459016 - 0.4021612 \times 0.3732051^n + 0.1562596 \times 0.0267949^n.
+```
 
 At n = 0 the three terms cancel to 0; as n grows, the last two die away. The gap to the long-run value shrinks by the factor 0.3732051 each day: 0.0010866 on day 6, 0.0004055 on day 7, a ratio of 0.3732. That is why the chart flattens by day 4. Whether every chain settles like this, and how fast, belongs to [Stationary distributions](04-stationary-distributions.md) and [Convergence to equilibrium](05-convergence-to-equilibrium.md).
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $S$ is a finite set of states. $(X_n)_{n \ge 0}$ is a Markov chain with transition matrix $P$ and start law $\alpha$, which by the markov-chains card means that for every $n$ and states $i_0, \dots, i_n$,
-$$P(X_0 = i_0, X_1 = i_1, \dots, X_n = i_n) = \alpha(i_0)\,p_{i_0 i_1}\,p_{i_1 i_2} \cdots p_{i_{n-1} i_n}.$$
-Define $P^0 = I$ and $P^{n+1} = P^n P$, with $(AB)_{ij} = \sum_k A_{ik} B_{kj}$. Finite sums may be reordered, so matrix products are associative.
+**Setting.** $`S`$ is a finite set of states. $`(X_n)_{n \ge 0}`$ is a Markov chain with transition matrix $`P`$ and start law $`\alpha`$, which by the markov-chains card means that for every $`n`$ and states $`i_0, \dots, i_n`$,
 
-**1. Paths.** For $n \ge 1$, $(P^n)_{ij} = \sum_{i_1, \dots, i_{n-1}} p_{i i_1} p_{i_1 i_2} \cdots p_{i_{n-1} j}$. At $n = 1$ the sum has the single term $p_{ij}$. If it holds for $n$, then $(P^{n+1})_{ij} = \sum_k (P^n)_{ik} p_{kj}$; substituting the sum for $(P^n)_{ik}$, with $k$ renamed $i_n$, gives the sum over all paths of length $n + 1$, each exactly once.
+$`\displaystyle P(X_0 = i_0, X_1 = i_1, \dots, X_n = i_n) = \alpha(i_0)\,p_{i_0 i_1}\,p_{i_1 i_2} \cdots p_{i_{n-1} i_n}.`$
 
-**2. n-step chances.** Suppose $\alpha(i) > 0$. The event $\{X_0 = i, X_n = j\}$ is the disjoint union, over in-between states $i_1, \dots, i_{n-1}$, of path events. By the path formula and part 1 its probability is $\alpha(i) (P^n)_{ij}$. Dividing by $\alpha(i)$ gives $P(X_n = j \mid X_0 = i) = (P^n)_{ij}$. At $n = 0$ both sides are 1 if $i = j$ and 0 otherwise. (For a start of chance 0, row $i$ of $P^n$ is still the law of $X_n$ for the chain started at $i$, by the same computation with $\alpha$ replaced by the point mass at $i$.)
+Define $`P^0 = I`$ and $`P^{n+1} = P^n P`$, with $`(AB)_{ij} = \sum_k A_{ik} B_{kj}`$. Finite sums may be reordered, so matrix products are associative.
 
-**3. The law.** $P(X_n = j) = \sum_i P(X_0 = i, X_n = j) = \sum_i \alpha(i) (P^n)_{ij} = (\alpha P^n)_j$, by part 2; starts of chance 0 contribute 0 on both sides.
+**1. Paths.** For $`n \ge 1`$, $`(P^n)_{ij} = \sum_{i_1, \dots, i_{n-1}} p_{i i_1} p_{i_1 i_2} \cdots p_{i_{n-1} j}`$. At $`n = 1`$ the sum has the single term $`p_{ij}`$. If it holds for $`n`$, then $`(P^{n+1})_{ij} = \sum_k (P^n)_{ik} p_{kj}`$; substituting the sum for $`(P^n)_{ik}`$, with $`k`$ renamed $`i_n`$, gives the sum over all paths of length $`n + 1`$, each exactly once.
 
-**4. Chapman-Kolmogorov.** For $m, n \ge 1$, split each path of length $m + n$ from $i$ to $j$ at its state $k = i_m$. Its product factors as a product over the first $m$ steps times a product over the last $n$. By distributivity and part 1,
-$$(P^{m+n})_{ij} = \sum_k \Big(\sum_{\text{first legs } i \to k} \cdots\Big)\Big(\sum_{\text{second legs } k \to j} \cdots\Big) = \sum_k (P^m)_{ik} (P^n)_{kj}.$$
-If $m = 0$ or $n = 0$ the identity reads $P^n = I P^n$ or $P^m = P^m I$. With part 2, $p^{(m+n)}_{ij} = \sum_k p^{(m)}_{ik} p^{(n)}_{kj}$.
+**2. n-step chances.** Suppose $`\alpha(i) > 0`$. The event $`\{X_0 = i, X_n = j\}`$ is the disjoint union, over in-between states $`i_1, \dots, i_{n-1}`$, of path events. By the path formula and part 1 its probability is $`\alpha(i) (P^n)_{ij}`$. Dividing by $`\alpha(i)`$ gives $`P(X_n = j \mid X_0 = i) = (P^n)_{ij}`$. At $`n = 0`$ both sides are 1 if $`i = j`$ and 0 otherwise. (For a start of chance 0, row $`i`$ of $`P^n`$ is still the law of $`X_n`$ for the chain started at $`i`$, by the same computation with $`\alpha`$ replaced by the point mass at $`i`$.)
 
-**5. Rows stay laws.** Every entry of $P^n$ is a sum of products of non-negative numbers, so it is non-negative. By induction, $\sum_j (P^{n+1})_{ij} = \sum_k (P^n)_{ik} \sum_j p_{kj} = \sum_k (P^n)_{ik} = 1$. So each row of $P^n$, and each $\mu_n$, is a law.
+**3. The law.** $`P(X_n = j) = \sum_i P(X_0 = i, X_n = j) = \sum_i \alpha(i) (P^n)_{ij} = (\alpha P^n)_j`$, by part 2; starts of chance 0 contribute 0 on both sides.
 
-**6. Restarting at a fixed day.** Let $\mathcal F_m$ be the sigma-algebra generated by $X_0, \dots, X_m$. It is generated by the finite partition into histories $H = \{X_0 = i_0, \dots, X_m = i_m\}$. Summing the path formula over the extensions of $H$ by $n$ steps that end at $j$ factors out the prefix: $P(H \cap \{X_{m+n} = j\}) = P(H)\,(P^n)_{i_m j}$. So $E[\mathbf 1_H \mathbf 1_{\{X_{m+n} = j\}}] = E[\mathbf 1_H\,(P^n)_{X_m j}]$ for every history, and by finite unions for every event of $\mathcal F_m$. Since $(P^n)_{X_m j}$ is $\mathcal F_m$-measurable, the defining property of conditional expectation gives
-$$P(X_{m+n} = j \mid \mathcal F_m) = (P^n)_{X_m j} \quad \text{almost surely}.$$
-The day $m$ is fixed. At a random day the same statement needs that day to be a stopping time; that is the strong Markov property.
+**4. Chapman-Kolmogorov.** For $`m, n \ge 1`$, split each path of length $`m + n`$ from $`i`$ to $`j`$ at its state $`k = i_m`$. Its product factors as a product over the first $`m`$ steps times a product over the last $`n`$. By distributivity and part 1,
+
+$`\displaystyle (P^{m+n})_{ij} = \sum_k \Big(\sum_{\text{first legs } i \to k} \cdots\Big)\Big(\sum_{\text{second legs } k \to j} \cdots\Big) = \sum_k (P^m)_{ik} (P^n)_{kj}.`$
+
+If $`m = 0`$ or $`n = 0`$ the identity reads $`P^n = I P^n`$ or $`P^m = P^m I`$. With part 2, $`p^{(m+n)}_{ij} = \sum_k p^{(m)}_{ik} p^{(n)}_{kj}`$.
+
+**5. Rows stay laws.** Every entry of $`P^n`$ is a sum of products of non-negative numbers, so it is non-negative. By induction, $`\sum_j (P^{n+1})_{ij} = \sum_k (P^n)_{ik} \sum_j p_{kj} = \sum_k (P^n)_{ik} = 1`$. So each row of $`P^n`$, and each $`\mu_n`$, is a law.
+
+**6. Restarting at a fixed day.** Let $`\mathcal F_m`$ be the sigma-algebra generated by $`X_0, \dots, X_m`$. It is generated by the finite partition into histories $`H = \{X_0 = i_0, \dots, X_m = i_m\}`$. Summing the path formula over the extensions of $`H`$ by $`n`$ steps that end at $`j`$ factors out the prefix: $`P(H \cap \{X_{m+n} = j\}) = P(H)\,(P^n)_{i_m j}`$. So $`E[\mathbf 1_H \mathbf 1_{\{X_{m+n} = j\}}] = E[\mathbf 1_H\,(P^n)_{X_m j}]`$ for every history, and by finite unions for every event of $`\mathcal F_m`$. Since $`(P^n)_{X_m j}`$ is $`\mathcal F_m`$-measurable, the defining property of conditional expectation gives
+
+$`\displaystyle P(X_{m+n} = j \mid \mathcal F_m) = (P^n)_{X_m j} \quad \text{almost surely}.`$
+
+The day $`m`$ is fixed. At a random day the same statement needs that day to be a stopping time; that is the strong Markov property.
 
 </details>
 
@@ -150,11 +168,11 @@ The day $m$ is fixed. At a random day the same statement needs that day to be a 
 
 ## Worked numbers, by hand
 
-Carry the law forward one day at a time with $\mu_{n+1} = \mu_n P$. Each new rain chance is 0.1 × (sunny) + 0.3 × (cloudy) + 0.4 × (rainy): the rainy column of $P$ against the day before. The sunny and cloudy chances come the same way from the other two columns.
+Carry the law forward one day at a time with $`\mu_{n+1} = \mu_n P`$. Each new rain chance is 0.1 × (sunny) + 0.3 × (cloudy) + 0.4 × (rainy): the rainy column of $`P`$ against the day before. The sunny and cloudy chances come the same way from the other two columns.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| day 1, from today (1, 0, 0) | the sunny row of $P$ | (0.6, 0.3, 0.1) |
+| day 1, from today (1, 0, 0) | the sunny row of $`P`$ | (0.6, 0.3, 0.1) |
 | day 2, rainy | 0.1 × 0.6 + 0.3 × 0.3 + 0.4 × 0.1 | 0.19; law (0.47, 0.34, 0.19) |
 | day 3, rainy | 0.1 × 0.47 + 0.3 × 0.34 + 0.4 × 0.19 | 0.225; law (0.422, 0.353, 0.225) |
 | day 4, rainy | 0.1 × 0.422 + 0.3 × 0.353 + 0.4 × 0.225 | 0.2381; law (0.4041, 0.3578, 0.2381) |
@@ -163,7 +181,7 @@ Carry the law forward one day at a time with $\mu_{n+1} = \mu_n P$. Each new rai
 | day 7, rainy | 0.1 × 0.394927 + 0.3 × 0.360258 + 0.4 × 0.244815 | **0.2454961** |
 | day 7, whole law | the three columns | **(0.3939966, 0.3605073, 0.2454961)** |
 | check: split at day 3 | (0.422, 0.353, 0.225) against (0.2381, 0.2493, 0.2534) | 0.2454961 |
-| uncertain start (0.5, 0.3, 0.2), rainy on day 7 | 0.5 × 0.2454961 + 0.3 × 0.2460783 + 0.2 × 0.2462914: the rain chances of the three rows of $P^7$, averaged | 0.2458298 |
+| uncertain start (0.5, 0.3, 0.2), rainy on day 7 | 0.5 × 0.2454961 + 0.3 × 0.2460783 + 0.2 × 0.2462914: the rain chances of the three rows of $`P^7`$, averaged | 0.2458298 |
 
 From a sunny day, rain a week later comes about 25 times in 100, already close to the long-run rate 0.2459016: after seven days today's sunshine has almost no say.
 
@@ -171,9 +189,9 @@ From a sunny day, rain a week later comes about 25 times in 100, already close t
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Apply $P^7$ to today's law as a column | (0.3939966, 0.3932013, 0.3929102), adding to 1.1801081 | That is the sunny column: the chance of sun on day 7 from each start, not a law |
+| Apply $`P^7`$ to today's law as a column | (0.3939966, 0.3932013, 0.3929102), adding to 1.1801081 | That is the sunny column: the chance of sun on day 7 from each start, not a law |
 | Same matrix all week when a wetter season starts after day 3 | 0.2454961, against 0.4478788; seasons swapped, 0.2538128 | Time-homogeneity dropped: the ordered product of the daily tables is the answer, and order matters |
-| Memory dropped: weather in fixed two-day spells | fitted $P^2$ says 0.5000, truth 0.0000 | Not a Markov chain: yesterday matters as well as today, so squaring the fitted matrix answers the wrong question |
+| Memory dropped: weather in fixed two-day spells | fitted $`P^2`$ says 0.5000, truth 0.0000 | Not a Markov chain: yesterday matters as well as today, so squaring the fitted matrix answers the wrong question |
 
 The code prints every row. The wet table is `[[0.4, 0.4, 0.2], [0.2, 0.4, 0.4], [0.1, 0.3, 0.6]]`. The spells run sunny, sunny, rainy, rainy, repeating, from a random start: half of all sunny days are followed by sun, so the fitted matrix is 0.5 everywhere, yet two days after any sunny day it rains.
 
@@ -181,7 +199,7 @@ The code prints every row. The wet table is `[[0.4, 0.4, 0.2], [0.2, 0.4, 0.4], 
 
 ## Code, from first principles, and it actually runs
 
-The code takes five roads to the law on day 7 from a sunny start. Road 1 builds exact powers as $P$ times $P^{n-1}$ and, separately, carries the law forward as $\mu_{n-1} P$; the two orders must agree. It also carries the forecast start (0.5, 0.3, 0.2) forward and checks the result against that start times $P^7$. Road 2 lists all 2187 seven-day paths and adds their products, never forming a matrix. Road 3 checks Chapman-Kolmogorov for every split $P^m P^{7-m}$. Road 4 checks the long-run mix exactly, finds the other two eigenvalues from the quadratic and their eigenvectors by cross products, and evaluates the closed form on days 0 to 7. Road 5 simulates 100000 weeks with a SplitMix64 generator written out, seed 20260929, and prints each chance with its standard error. The exact roads use whole numbers over powers of 10, so they agree digit for digit. The asserts compare road 1 against roads 2 and 3 exactly, against road 4 within 1e-12, and against road 5 within 4 standard errors.
+The code takes five roads to the law on day 7 from a sunny start. Road 1 builds exact powers as $`P`$ times $`P^{n-1}`$ and, separately, carries the law forward as $`\mu_{n-1} P`$; the two orders must agree. It also carries the forecast start (0.5, 0.3, 0.2) forward and checks the result against that start times $`P^7`$. Road 2 lists all 2187 seven-day paths and adds their products, never forming a matrix. Road 3 checks Chapman-Kolmogorov for every split $`P^m P^{7-m}`$. Road 4 checks the long-run mix exactly, finds the other two eigenvalues from the quadratic and their eigenvectors by cross products, and evaluates the closed form on days 0 to 7. Road 5 simulates 100000 weeks with a SplitMix64 generator written out, seed 20260929, and prints each chance with its standard error. The exact roads use whole numbers over powers of 10, so they agree digit for digit. The asserts compare road 1 against roads 2 and 3 exactly, against road 4 within 1e-12, and against road 5 within 4 standard errors.
 
 ### Python
 
@@ -581,17 +599,17 @@ The simulation is one run: rain on day 7 at 0.2465 ± 0.0014, within one standar
 
 Lean proves the three results for every time-homogeneous Markov chain on finitely many states, and the weather chain's numbers exactly.
 
-- Suppose the chain starts in state i with positive chance. Then the chance of state j exactly n days later is the (i, j) entry of $P^n$.
-- Take any start law $\alpha$ and any day n. Then the law on day n is $\mu_n = \alpha P^n$.
-- Take any days m and n. Then $P^{m+n} = P^m P^n$, entry by entry: the Chapman-Kolmogorov equation.
+- Suppose the chain starts in state i with positive chance. Then the chance of state j exactly n days later is the (i, j) entry of $`P^n`$.
+- Take any start law $`\alpha`$ and any day n. Then the law on day n is $`\mu_n = \alpha P^n`$.
+- Take any days m and n. Then $`P^{m+n} = P^m P^n`$, entry by entry: the Chapman-Kolmogorov equation.
 - From sunny, rain in two days is 0.19. The law on day 3 is (0.422, 0.353, 0.225), and on day 4 (0.4041, 0.3578, 0.2381).
-- The whole of $P^7$ matches the code. From sunny, rain a week out is 0.2454961, and each row adds to 1.
+- The whole of $`P^7`$ matches the code. From sunny, rain a week out is 0.2454961, and each row adds to 1.
 - There are 2187 seven-day paths from a sunny start.
 - Splitting the week at day 3 gives 0.2454961, the same as seven one-day steps.
 - Take the uncertain start (0.5, 0.3, 0.2). Then rain on day 7 is 0.24582982 exactly, printed as 0.2458298.
-- The long-run mix $\pi$ = (24, 22, 15)/61 satisfies $\pi P = \pi$. The diagonal sum of $P$ is 1.4, and its determinant is 0.01.
-- Applying $P^7$ to (1, 0, 0) as a column gives the sunny column, adding to 1.1801081: not a law.
-- Three days of $P$ then four of the wet table give rain on day 7 at 0.4478788. The wrong order gives 0.2538128.
+- The long-run mix $`\pi`$ = (24, 22, 15)/61 satisfies $`\pi P = \pi`$. The diagonal sum of $`P`$ is 1.4, and its determinant is 0.01.
+- Applying $`P^7`$ to (1, 0, 0) as a column gives the sunny column, adding to 1.1801081: not a law.
+- Three days of $`P`$ then four of the wet table give rain on day 7 at 0.4478788. The wrong order gives 0.2538128.
 
 The 2187-path sum, the eigenvalues 0.3732051 and 0.0267949, the simulation and the two-day spells are left to the Python and Rust checks.
 
@@ -868,9 +886,9 @@ example : ((!![4, 4, 2; 2, 4, 4; 1, 3, 6] : Matrix (Fin 3) (Fin 3) ℕ) ^ 4 *
 ## The usual mistake
 
 > [!warning]
-> **Trusting the power more than the matrix.** Chapman-Kolmogorov holds for every Markov chain, so the arithmetic of $P^n$ is never wrong. But a matrix estimated from data is only as good as the assumption that tomorrow depends on today alone. For weather in two-day spells, the fitted matrix squared says 0.5000 and the truth is 0.0000. Passing the identity does not prove the assumption either: Feller gives a process that satisfies Chapman-Kolmogorov without being Markov.
+> **Trusting the power more than the matrix.** Chapman-Kolmogorov holds for every Markov chain, so the arithmetic of $`P^n`$ is never wrong. But a matrix estimated from data is only as good as the assumption that tomorrow depends on today alone. For weather in two-day spells, the fitted matrix squared says 0.5000 and the truth is 0.0000. Passing the identity does not prove the assumption either: Feller gives a process that satisfies Chapman-Kolmogorov without being Markov.
 >
-> - **Multiplying on the wrong side.** The law is a row and goes on the left: $\alpha P^n$. As a column on the right, (1, 0, 0) picks out the sunny column, which adds to 1.1801081.
+> - **Multiplying on the wrong side.** The law is a row and goes on the left: $`\alpha P^n`$. As a column on the right, (1, 0, 0) picks out the sunny column, which adds to 1.1801081.
 > - **One matrix for changing conditions.** With a wetter table from day 4, rain on day 7 is 0.4478788, not 0.2454961.
 > - **Reading "settles" as "stops".** By day 7 the chances barely move, but the weather itself still changes every day; only the forecast has stopped changing.
 
@@ -879,10 +897,10 @@ example : ((!![4, 4, 2; 2, 4, 4; 1, 3, 6] : Matrix (Fin 3) (Fin 3) ℕ) ^ 4 *
 ## Where you meet it in real life
 
 - **Credit ratings.** Rating agencies publish one-year tables of how often a company moves between grades. Multi-year default chances are read off powers of that table, under exactly the time-homogeneous Markov assumption named in When it holds ([Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md)).
-- **Web ranking.** PageRank is the law of a random surfer after many clicks, computed as $\alpha P^n$ for large n; the powers settle toward the long-run mix of [Stationary distributions](04-stationary-distributions.md).
-- **Board games.** The chance of standing on each square after n turns is a row of $P^n$; the expected length of the game needs [Absorption](06-absorption-and-first-step-analysis.md).
-- **Speech and DNA.** The forward pass of [Hidden Markov models](08-hidden-markov-models.md) is one day's step $\mu_n P$, corrected by each observation.
-- **Sampling.** [MCMC](07-markov-chain-monte-carlo.md) runs a chain for many steps so that the law of $X_n$ is close to the target.
+- **Web ranking.** PageRank is the law of a random surfer after many clicks, computed as $`\alpha P^n`$ for large n; the powers settle toward the long-run mix of [Stationary distributions](04-stationary-distributions.md).
+- **Board games.** The chance of standing on each square after n turns is a row of $`P^n`$; the expected length of the game needs [Absorption](06-absorption-and-first-step-analysis.md).
+- **Speech and DNA.** The forward pass of [Hidden Markov models](08-hidden-markov-models.md) is one day's step $`\mu_n P`$, corrected by each observation.
+- **Sampling.** [MCMC](07-markov-chain-monte-carlo.md) runs a chain for many steps so that the law of $`X_n`$ is close to the target.
 
 > **Say it back**
 > A chance over several days is a sum over routes, and each route's chance is a product of one-day chances. A matrix product is exactly that sum of products, so the n-day table is the n-th power of the one-day table, and the law on day n is the start law times it. Chapman-Kolmogorov says a trip can be split at any fixed day by summing over where the weather is on that day. From a sunny day, rain a week out has chance 0.2454961 by every road. The eigenvalues say how fast the forecast forgets today.
@@ -896,8 +914,8 @@ example : ((!![4, 4, 2; 2, 4, 4; 1, 3, 6] : Matrix (Fin 3) (Fin 3) ℕ) ^ 4 *
 
 ## Where this goes next
 
-- [Classifying states](03-classifying-states.md): which entries of $P^n$ are ever positive, read as which states can reach which, and the periods that stop the powers settling.
-- [Stationary distributions](04-stationary-distributions.md) and [Convergence to equilibrium](05-convergence-to-equilibrium.md): the long-run mix $\pi$, and when $\alpha P^n$ reaches it from any start.
+- [Classifying states](03-classifying-states.md): which entries of $`P^n`$ are ever positive, read as which states can reach which, and the periods that stop the powers settling.
+- [Stationary distributions](04-stationary-distributions.md) and [Convergence to equilibrium](05-convergence-to-equilibrium.md): the long-run mix $`\pi`$, and when $`\alpha P^n`$ reaches it from any start.
 
 Here the powers settled, with a gap shrinking by 0.3732051 a day; whether they settle for every chain depends first on which states can reach which, and that is [Classifying states](03-classifying-states.md).
 

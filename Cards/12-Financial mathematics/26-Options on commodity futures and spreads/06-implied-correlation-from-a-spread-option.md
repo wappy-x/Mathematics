@@ -37,38 +37,46 @@ Falling curve: the option's price at each correlation. Middle flat line: the quo
 
 The option is priced by Margrabe's formula, taught on [Spread options](04-margrabe-and-kirk-spread-options.md). It is Black's futures-option formula with gasoline as the asset, crude as the strike, and one volatility for the gap:
 
-$$C(\rho) = D\,\big[F_1\,N(d_1) - F_2\,N(d_2)\big], \qquad \sigma(\rho)^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2 .$$
+```math
+C(\rho) = D\,\big[F_1\,N(d_1) - F_2\,N(d_2)\big], \qquad \sigma(\rho)^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2 .
+```
 
-Implied correlation, written $\rho_{\text{imp}}$, is defined by one equation, and has a solution exactly inside one range:
+Implied correlation, written $`\rho_{\text{imp}}`$, is defined by one equation, and has a solution exactly inside one range:
 
-$$C(\rho_{\text{imp}}) = C_{\text{mkt}}, \qquad C(+1) \;\le\; C_{\text{mkt}} \;\le\; C(-1).$$
+```math
+C(\rho_{\text{imp}}) = C_{\text{mkt}}, \qquad C(+1) \;\le\; C_{\text{mkt}} \;\le\; C(-1).
+```
 
 **Read it aloud:** the implied correlation is the setting of the correlation dial at which Margrabe's formula matches the screen, and such a setting exists, once only, when the quote sits between the price at perfect co-movement and the price at perfect opposition.
 
-Because correlation reaches the price only through $\sigma$, the inverse can also be done in two steps. First read the gap's volatility, $\sigma_{\text{imp}}$, off the quote. Then undo the second equation:
+Because correlation reaches the price only through $`\sigma`$, the inverse can also be done in two steps. First read the gap's volatility, $`\sigma_{\text{imp}}`$, off the quote. Then undo the second equation:
 
-$$\rho_{\text{imp}} = \frac{\sigma_1^2 + \sigma_2^2 - \sigma_{\text{imp}}^2}{2\,\sigma_1\sigma_2}.$$
+```math
+\rho_{\text{imp}} = \frac{\sigma_1^2 + \sigma_2^2 - \sigma_{\text{imp}}^2}{2\,\sigma_1\sigma_2}.
+```
 
 **Read it aloud:** the correlation is how much of the two legs' combined variance the quote says has cancelled, as a share of the most that could cancel.
 
-The realised correlation of a price history is the sample version, over daily log returns $x_i$ of gasoline and $y_i$ of crude (a log return is the natural log of today's price over yesterday's):
+The realised correlation of a price history is the sample version, over daily log returns $`x_i`$ of gasoline and $`y_i`$ of crude (a log return is the natural log of today's price over yesterday's):
 
-$$\hat\rho = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i - \bar x)^2\;\sum_i (y_i - \bar y)^2}} .$$
+```math
+\hat\rho = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i - \bar x)^2\;\sum_i (y_i - \bar y)^2}} .
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C_{\text{mkt}}$, $C$, $B$ | the quoted price, in dollars a barrel; Margrabe's price at a given correlation; the same price as a function of the gap's total swing $w = \sigma\sqrt T$ | 13.153109 | implied correlation falls |
-| $F_1$, $F_2$ | gasoline and crude futures prices for the delivery month | 100 and 90 | move the range; the quote's correlation shifts |
-| $\sigma_1$, $\sigma_2$ | each leg's volatility: yearly spread of its log price, a decimal | 0.30 and 0.25 | the same quote implies a higher correlation |
-| $\rho$, $\rho_{\text{imp}}$ | correlation of the two legs' daily moves, from −1 to 1; the one that matches the quote | 0.50 | price falls |
-| $\sigma$, $\sigma_{\text{imp}}$, $g$ | volatility of the ratio gasoline over crude, called the gap's volatility; the one the quote implies; $g(\rho) = \sigma^2$, the gap's variance | 0.278388; $g(0.5)$ = 0.077500 | price rises |
-| $D$, $r$ | discount factor $e^{-rT}$; bank rate, continuously compounded | 0.975310; 5% | raise $r$ (so $D$ falls): the same quote implies a lower correlation |
-| $T$ | time to expiry in years | 0.5 | |
-| $d_1$, $d_2$ | Black's two distances, $d_1 = \frac{\ln(F_1/F_2) + \frac12\sigma^2T}{\sigma\sqrt T}$, $d_2 = d_1 - \sigma\sqrt T$ | 0.633657, 0.436807 | |
-| $N$, $\varphi$ | bell-curve area left of a point; the bell curve's height | $N(d_1)$ = 0.736848 | |
-| $\partial C/\partial\rho$ | correlation vega: dollars per unit of correlation, $-D F_1 \varphi(d_1)\sqrt T\,\sigma_1\sigma_2/\sigma$ | −6.063996 | |
-| $\hat\rho$, $x_i$, $y_i$, $i$, $n$ | realised correlation; day $i$'s log returns of gasoline and crude; the day's number; the number of days | 0.6675 over 126 days | |
-| $K$, $b$ | a cash strike added to crude; Kirk's weight $F_2/(F_2 + K)$ on crude's volatility | 10 | |
+| $`C_{\text{mkt}}`$, $`C`$, $`B`$ | the quoted price, in dollars a barrel; Margrabe's price at a given correlation; the same price as a function of the gap's total swing $`w = \sigma\sqrt T`$ | 13.153109 | implied correlation falls |
+| $`F_1`$, $`F_2`$ | gasoline and crude futures prices for the delivery month | 100 and 90 | move the range; the quote's correlation shifts |
+| $`\sigma_1`$, $`\sigma_2`$ | each leg's volatility: yearly spread of its log price, a decimal | 0.30 and 0.25 | the same quote implies a higher correlation |
+| $`\rho`$, $`\rho_{\text{imp}}`$ | correlation of the two legs' daily moves, from −1 to 1; the one that matches the quote | 0.50 | price falls |
+| $`\sigma`$, $`\sigma_{\text{imp}}`$, $`g`$ | volatility of the ratio gasoline over crude, called the gap's volatility; the one the quote implies; $`g(\rho) = \sigma^2`$, the gap's variance | 0.278388; $`g(0.5)`$ = 0.077500 | price rises |
+| $`D`$, $`r`$ | discount factor $`e^{-rT}`$; bank rate, continuously compounded | 0.975310; 5% | raise $`r`$ (so $`D`$ falls): the same quote implies a lower correlation |
+| $`T`$ | time to expiry in years | 0.5 | |
+| $`d_1`$, $`d_2`$ | Black's two distances, $`d_1 = \frac{\ln(F_1/F_2) + \frac12\sigma^2T}{\sigma\sqrt T}`$, $`d_2 = d_1 - \sigma\sqrt T`$ | 0.633657, 0.436807 | |
+| $`N`$, $`\varphi`$ | bell-curve area left of a point; the bell curve's height | $`N(d_1)`$ = 0.736848 | |
+| $`\partial C/\partial\rho`$ | correlation vega: dollars per unit of correlation, $`-D F_1 \varphi(d_1)\sqrt T\,\sigma_1\sigma_2/\sigma`$ | −6.063996 | |
+| $`\hat\rho`$, $`x_i`$, $`y_i`$, $`i`$, $`n`$ | realised correlation; day $`i`$'s log returns of gasoline and crude; the day's number; the number of days | 0.6675 over 126 days | |
+| $`K`$, $`b`$ | a cash strike added to crude; Kirk's weight $`F_2/(F_2 + K)`$ on crude's volatility | 10 | |
 
 ### When it holds
 
@@ -89,38 +97,40 @@ As the correlation dial turns from −1 to +1, the option's price falls steadily
 
 The option pays gasoline minus crude when positive. Divide by crude: it pays crude times (gasoline over crude, minus one). So it is a call on the ratio of the two prices, struck at one, counted in barrels of crude. The ratio's log is gasoline's log return minus crude's. Its variance is a sum of the two variances minus twice the shared part:
 
-$$\sigma^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2.$$
+```math
+\sigma^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2.
+```
 
-That is the second equation of the formula. Correlation appears nowhere else. When the two move together ($\rho$ near 1), their gap barely moves; when they move against each other ($\rho$ near −1), the gap swings with both at once. The proof that the price is Black's formula on this ratio, by counting in crude barrels instead of dollars, is on [Spread options](04-margrabe-and-kirk-spread-options.md).
+That is the second equation of the formula. Correlation appears nowhere else. When the two move together ($`\rho`$ near 1), their gap barely moves; when they move against each other ($`\rho`$ near −1), the gap swings with both at once. The proof that the price is Black's formula on this ratio, by counting in crude barrels instead of dollars, is on [Spread options](04-margrabe-and-kirk-spread-options.md).
 
 ### Step 2: the floor and the ceiling
 
-$\sigma^2$ is a straight line in $\rho$ with slope $-2\sigma_1\sigma_2$, negative. At $\rho = +1$ it is $(\sigma_1 - \sigma_2)^2$, so $\sigma = |\sigma_1 - \sigma_2|$ = 0.05. At $\rho = -1$ it is $(\sigma_1 + \sigma_2)^2$, so $\sigma$ = 0.55. The gap's volatility can run only between those two.
+$`\sigma^2`$ is a straight line in $`\rho`$ with slope $`-2\sigma_1\sigma_2`$, negative. At $`\rho = +1`$ it is $`(\sigma_1 - \sigma_2)^2`$, so $`\sigma = |\sigma_1 - \sigma_2|`$ = 0.05. At $`\rho = -1`$ it is $`(\sigma_1 + \sigma_2)^2`$, so $`\sigma`$ = 0.55. The gap's volatility can run only between those two.
 
-Priced at 0.05, the crack option is worth 9.754440, a hair above the zero-volatility floor $D\,(F_1 - F_2)$ = 9.753099. The legs' vols differ, so even perfect co-movement leaves the gap some swing. Priced at 0.55 it is worth 19.675922. A quote of 20 lies above; a quote of 9.70 lies below. Neither has a correlation.
+Priced at 0.05, the crack option is worth 9.754440, a hair above the zero-volatility floor $`D\,(F_1 - F_2)`$ = 9.753099. The legs' vols differ, so even perfect co-movement leaves the gap some swing. Priced at 0.55 it is worth 19.675922. A quote of 20 lies above; a quote of 9.70 lies below. Neither has a correlation.
 
-A quote of 20 is not an arbitrage. The model-free limits are wider: the option is worth at least $D\,(F_1 - F_2)$ and at most $D\,F_1$, the cost of the gasoline itself. A quote of 20 means that with gasoline at 30 percent and crude at 25 percent, no correlation fits. Raise either vol and it may fit.
+A quote of 20 is not an arbitrage. The model-free limits are wider: the option is worth at least $`D\,(F_1 - F_2)`$ and at most $`D\,F_1`$, the cost of the gasoline itself. A quote of 20 means that with gasoline at 30 percent and crude at 25 percent, no correlation fits. Raise either vol and it may fit.
 
 ### Step 3: the price always falls, so the answer is unique
 
-Chain two slopes. The price rises with $\sigma$: its slope in $\sigma$ is vega, $D F_1 \varphi(d_1)\sqrt T$, positive. The gap's volatility falls with $\rho$: its slope is $-\sigma_1\sigma_2/\sigma$, negative. Multiply: the correlation vega, $\partial C/\partial \rho = -D F_1 \varphi(d_1)\sqrt T\,\sigma_1\sigma_2/\sigma$, is negative at every correlation. At 0.50 it is −6.063996 dollars per unit of correlation, as [Greeks of a spread option](05-spread-option-greeks.md) computes.
+Chain two slopes. The price rises with $`\sigma`$: its slope in $`\sigma`$ is vega, $`D F_1 \varphi(d_1)\sqrt T`$, positive. The gap's volatility falls with $`\rho`$: its slope is $`-\sigma_1\sigma_2/\sigma`$, negative. Multiply: the correlation vega, $`\partial C/\partial \rho = -D F_1 \varphi(d_1)\sqrt T\,\sigma_1\sigma_2/\sigma`$, is negative at every correlation. At 0.50 it is −6.063996 dollars per unit of correlation, as [Greeks of a spread option](05-spread-option-greeks.md) computes.
 
 <details>
 <summary>Detailed proof: existence, uniqueness and the boundary cases</summary>
 
-Fix $\sigma_1, \sigma_2 > 0$ and $T > 0$. Write $g(\rho) = \sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2$ for $\rho \in [-1, 1]$.
+Fix $`\sigma_1, \sigma_2 > 0`$ and $`T > 0`$. Write $`g(\rho) = \sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2`$ for $`\rho \in [-1, 1]`$.
 
-**The variance is positive except in one corner.** $g(\rho) \ge g(1) = (\sigma_1 - \sigma_2)^2 \ge 0$, with $g(\rho) = 0$ only when $\rho = 1$ and $\sigma_1 = \sigma_2$. So $\sigma(\rho) = \sqrt{g(\rho)}$ is continuous on $[-1, 1]$ and strictly decreasing, since $g$ is.
+**The variance is positive except in one corner.** $`g(\rho) \ge g(1) = (\sigma_1 - \sigma_2)^2 \ge 0`$, with $`g(\rho) = 0`$ only when $`\rho = 1`$ and $`\sigma_1 = \sigma_2`$. So $`\sigma(\rho) = \sqrt{g(\rho)}`$ is continuous on $`[-1, 1]`$ and strictly decreasing, since $`g`$ is.
 
-**The price is strictly increasing in the gap's volatility.** Let $B(w) = D\,[F_1 N(d_1) - F_2 N(d_2)]$ with $w = \sigma\sqrt T > 0$, $d_1 = \ln(F_1/F_2)/w + w/2$, $d_2 = d_1 - w$. The identity $F_1\varphi(d_1) = F_2\varphi(d_2)$ (from $d_1^2 - d_2^2 = 2\ln(F_1/F_2)$) collapses the slope to $B'(w) = D F_1 \varphi(d_1) > 0$. As $w \to 0$, $B(w) \to D\,(F_1 - F_2)^+$, so defining $B(0)$ that way makes $B$ continuous and strictly increasing on $[0, \infty)$.
+**The price is strictly increasing in the gap's volatility.** Let $`B(w) = D\,[F_1 N(d_1) - F_2 N(d_2)]`$ with $`w = \sigma\sqrt T > 0`$, $`d_1 = \ln(F_1/F_2)/w + w/2`$, $`d_2 = d_1 - w`$. The identity $`F_1\varphi(d_1) = F_2\varphi(d_2)`$ (from $`d_1^2 - d_2^2 = 2\ln(F_1/F_2)`$) collapses the slope to $`B'(w) = D F_1 \varphi(d_1) > 0`$. As $`w \to 0`$, $`B(w) \to D\,(F_1 - F_2)^+`$, so defining $`B(0)`$ that way makes $`B`$ continuous and strictly increasing on $`[0, \infty)`$.
 
-**The composition.** $C(\rho) = B(\sigma(\rho)\sqrt T)$ is continuous on $[-1, 1]$, and strictly decreasing: a strictly increasing function of a strictly decreasing one.
+**The composition.** $`C(\rho) = B(\sigma(\rho)\sqrt T)`$ is continuous on $`[-1, 1]`$, and strictly decreasing: a strictly increasing function of a strictly decreasing one.
 
-**Existence.** If $C(1) \le C_{\text{mkt}} \le C(-1)$, the intermediate value theorem gives a $\rho$ in $[-1, 1]$ with $C(\rho) = C_{\text{mkt}}$.
+**Existence.** If $`C(1) \le C_{\text{mkt}} \le C(-1)`$, the intermediate value theorem gives a $`\rho`$ in $`[-1, 1]`$ with $`C(\rho) = C_{\text{mkt}}`$.
 
 **Uniqueness.** Two different roots would give two equal values of a strictly decreasing function. Impossible.
 
-**Boundary cases.** A quote equal to $C(1)$ gives $\rho = 1$; equal to $C(-1)$ gives $\rho = -1$. A quote strictly inside gives a $\rho$ strictly inside $(-1, 1)$. A quote outside $[C(1), C(-1)]$ has no correlation: every $\rho$ in range gives a price on the wrong side of it. The two-step route agrees: $\sigma_{\text{imp}}$ exists for any quote at least $D\,(F_1 - F_2)^+$ and below $D\,F_1$ (which no finite volatility reaches), and the formula for $\rho_{\text{imp}}$ lands in $[-1, 1]$ exactly when $|\sigma_1 - \sigma_2| \le \sigma_{\text{imp}} \le \sigma_1 + \sigma_2$.
+**Boundary cases.** A quote equal to $`C(1)`$ gives $`\rho = 1`$; equal to $`C(-1)`$ gives $`\rho = -1`$. A quote strictly inside gives a $`\rho`$ strictly inside $`(-1, 1)`$. A quote outside $`[C(1), C(-1)]`$ has no correlation: every $`\rho`$ in range gives a price on the wrong side of it. The two-step route agrees: $`\sigma_{\text{imp}}`$ exists for any quote at least $`D\,(F_1 - F_2)^+`$ and below $`D\,F_1`$ (which no finite volatility reaches), and the formula for $`\rho_{\text{imp}}`$ lands in $`[-1, 1]`$ exactly when $`|\sigma_1 - \sigma_2| \le \sigma_{\text{imp}} \le \sigma_1 + \sigma_2`$.
 
 </details>
 
@@ -128,17 +138,17 @@ Fix $\sigma_1, \sigma_2 > 0$ and $T > 0$. Write $g(\rho) = \sigma_1^2 + \sigma_2
 
 Halving always works inside the range. Start with the whole interval from −1 to +1. Price the midpoint. The price falls with correlation, so if the midpoint's price is above the quote, the answer lies to the right; keep that half. Fifty halvings land on 0.500000.
 
-The two-step route gives the same number with no search in correlation. Halving on Black's formula finds the gap's volatility the quote implies, 0.278388. Then $\rho = (0.1525 - 0.0775)/0.15$ = 0.500000.
+The two-step route gives the same number with no search in correlation. Halving on Black's formula finds the gap's volatility the quote implies, 0.278388. Then $`\rho = (0.1525 - 0.0775)/0.15`$ = 0.500000.
 
 Newton's method steps along the slope: new guess = old guess minus (price minus quote) divided by the correlation vega. From a start of 0 it reaches 0.500000 in 6 steps.
 
-The fourth road never uses Margrabe's formula. Fix crude's random shock at expiry. Crude's price is then known. Gasoline, given that shock, is still lognormal, with its volatility cut by $\sqrt{1 - \rho^2}$ and its centre moved by the shared part. So the option's value, given crude, is Black's formula on gasoline with crude as a known strike. Averaging that over crude's bell curve by Simpson's rule (a standard way to add up an area from evenly spaced points) gives the price. Halving on this price returns 0.500000. The same integral gives the floor and ceiling, 9.754440 and 19.675922, to six decimals.
+The fourth road never uses Margrabe's formula. Fix crude's random shock at expiry. Crude's price is then known. Gasoline, given that shock, is still lognormal, with its volatility cut by $`\sqrt{1 - \rho^2}`$ and its centre moved by the shared part. So the option's value, given crude, is Black's formula on gasoline with crude as a known strike. Averaging that over crude's bell curve by Simpson's rule (a standard way to add up an area from evenly spaced points) gives the price. Halving on this price returns 0.500000. The same integral gives the floor and ceiling, 9.754440 and 19.675922, to six decimals.
 
 ### Step 5: compare with realised correlation
 
-A history of daily moves gives its own correlation. On this card the history is simulated: 126 trading days, about six months, drawn with the legs' vols and a true correlation of 0.70. Its sample correlation $\hat\rho$ is 0.6675. The history's own vols come out at 0.2797 and 0.2445, close to the 30 and 25 percent it was drawn with.
+A history of daily moves gives its own correlation. On this card the history is simulated: 126 trading days, about six months, drawn with the legs' vols and a true correlation of 0.70. Its sample correlation $`\hat\rho`$ is 0.6675. The history's own vols come out at 0.2797 and 0.2445, close to the 30 and 25 percent it was drawn with.
 
-A sample of 126 days pins correlation only loosely. Fisher's transformation, $\tfrac12\ln\frac{1+\hat\rho}{1-\hat\rho}$, turns a sample correlation into a number that is close to bell-shaped, with standard error $1/\sqrt{n - 3}$. Going 1.96 standard errors each side and transforming back gives a 95 percent band: 0.5577 to 0.7543. It covers the true 0.70, as such a band does in 19 samples out of 20.
+A sample of 126 days pins correlation only loosely. Fisher's transformation, $`\tfrac12\ln\frac{1+\hat\rho}{1-\hat\rho}`$, turns a sample correlation into a number that is close to bell-shaped, with standard error $`1/\sqrt{n - 3}`$. Going 1.96 standard errors each side and transforming back gives a 95 percent band: 0.5577 to 0.7543. It covers the true 0.70, as such a band does in 19 samples out of 20.
 
 The market's 0.50 lies below the band. The quote prices more swing in the crack than history showed. At the realised 0.6675 the option would be worth 12.071238. The quote is 1.081871 dollars a barrel higher. Two readings are possible. Sellers may be charging for the risk that correlation breaks down, which happens in refinery outages and export bans. Or the history is not the future. The comparison says how much is being paid for the difference; it does not say who is right.
 
@@ -155,7 +165,7 @@ gasoline 32%   █████████████████████�
 gasoline 34%   ██████████████████████████████ 0.5918
 ```
 
-Two vol points either side of 30 percent on gasoline move the correlation from 0.4529 to 0.5462. At gasoline 55 percent the formula asks for 1.0455, which is not a correlation: the gap's implied volatility, 0.278388, is below the smallest the two legs allow, $0.55 - 0.25$. The solver refuses it.
+Two vol points either side of 30 percent on gasoline move the correlation from 0.4529 to 0.5462. At gasoline 55 percent the formula asks for 1.0455, which is not a correlation: the gap's implied volatility, 0.278388, is below the smallest the two legs allow, $`0.55 - 0.25`$. The solver refuses it.
 
 The printed grid in the code also varies crude's vol. With crude at 23 percent and gasoline at 26 the quote implies 0.3595; with crude at 27 and gasoline at 34 it implies 0.6046. A desk that quotes correlation always quotes the vols beside it.
 
@@ -165,21 +175,21 @@ The printed grid in the code also varies crude's vol. With crude at 23 percent a
 
 Conventions verified 2026-09-28: RBOB gasoline futures on NYMEX (the New York Mercantile Exchange) are quoted in dollars per gallon. RBOB is the exchange's standard gasoline blend. Brent and WTI (West Texas Intermediate) crude are quoted in dollars per barrel. Crack spreads convert gasoline at 42 gallons a barrel. The 100 here is gasoline already in dollars per barrel.
 
-House crack: $F_1$ = 100, $F_2$ = 90, $\sigma_1$ = 0.30, $\sigma_2$ = 0.25, $T$ = 0.5, $r$ = 5%, zero strike, quote $C_{\text{mkt}}$ = 13.153109, shown on screen as 13.15.
+House crack: $`F_1`$ = 100, $`F_2`$ = 90, $`\sigma_1`$ = 0.30, $`\sigma_2`$ = 0.25, $`T`$ = 0.5, $`r`$ = 5%, zero strike, quote $`C_{\text{mkt}}`$ = 13.153109, shown on screen as 13.15.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| discount $D$ | $e^{-0.05 \times 0.5}$ | 0.975310 |
-| lowest price, $\rho = +1$, $\sigma = 0.05$ | Margrabe at 0.05 | 9.754440 |
-| highest price, $\rho = -1$, $\sigma = 0.55$ | Margrabe at 0.55 | 19.675922 |
-| inside? | $9.754440 \le 13.153109 \le 19.675922$ | yes: one answer |
-| gap's implied vol $\sigma_{\text{imp}}$ | halving on Black's formula | 0.278388 |
-| check: $d_1$, $d_2$ | $\frac{\ln(100/90) + \frac12 (0.077500)(0.5)}{0.278388\sqrt{0.5}}$, then minus $0.278388\sqrt{0.5}$ | 0.633657, 0.436807 |
-| check: price | $0.975310 \times (100 \times 0.736848 - 90 \times 0.668874)$ | 13.153109 |
-| $\sigma_1^2 + \sigma_2^2$ | $0.09 + 0.0625$ | 0.152500 |
-| $\sigma_{\text{imp}}^2$ | $0.278388^2$ | 0.077500 |
-| $2\sigma_1\sigma_2$ | $2 \times 0.30 \times 0.25$ | 0.150000 |
-| **implied correlation** | $(0.1525 - 0.0775)/0.15$ | **0.500000** |
+| discount $`D`$ | $`e^{-0.05 \times 0.5}`$ | 0.975310 |
+| lowest price, $`\rho = +1`$, $`\sigma = 0.05`$ | Margrabe at 0.05 | 9.754440 |
+| highest price, $`\rho = -1`$, $`\sigma = 0.55`$ | Margrabe at 0.55 | 19.675922 |
+| inside? | $`9.754440 \le 13.153109 \le 19.675922`$ | yes: one answer |
+| gap's implied vol $`\sigma_{\text{imp}}`$ | halving on Black's formula | 0.278388 |
+| check: $`d_1`$, $`d_2`$ | $`\frac{\ln(100/90) + \frac12 (0.077500)(0.5)}{0.278388\sqrt{0.5}}`$, then minus $`0.278388\sqrt{0.5}`$ | 0.633657, 0.436807 |
+| check: price | $`0.975310 \times (100 \times 0.736848 - 90 \times 0.668874)`$ | 13.153109 |
+| $`\sigma_1^2 + \sigma_2^2`$ | $`0.09 + 0.0625`$ | 0.152500 |
+| $`\sigma_{\text{imp}}^2`$ | $`0.278388^2`$ | 0.077500 |
+| $`2\sigma_1\sigma_2`$ | $`2 \times 0.30 \times 0.25`$ | 0.150000 |
+| **implied correlation** | $`(0.1525 - 0.0775)/0.15`$ | **0.500000** |
 
 A quote of 20: it is above 19.675922, so there is no answer. The gap would need a volatility above 0.55, and two legs at 30 and 25 percent cannot produce one.
 
@@ -191,11 +201,11 @@ The same inversion works with a strike. With a strike of 10 dollars, the Kirk pr
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the 2 in $2\rho\sigma_1\sigma_2$ when solving | 1.000000 | The formula then returns twice the correlation; here it reads as perfect co-movement |
-| Write $+2\rho\sigma_1\sigma_2$ | −0.500000 | The sign turns co-movement into opposition |
-| Forget the discount $D$ | 0.552555 | An undiscounted formula needs less gap swing to reach the same quote |
+| Drop the 2 in $`2\rho\sigma_1\sigma_2`$ when solving | 1.000000 | The formula then returns twice the correlation; here it reads as perfect co-movement |
+| Write $`+2\rho\sigma_1\sigma_2`$ | −0.500000 | The sign turns co-movement into opposition |
+| Forget the discount $`D`$ | 0.552555 | An undiscounted formula needs less gap swing to reach the same quote |
 | Quote 20.00, no range check | −1.000000 | Above the ceiling 19.675922: the solver stops at its edge and reports a number that is not an answer |
-| Assume gasoline vol 55% | 1.0455, refused | The quote's gap vol 0.278388 is below $0.55 - 0.25$: the legs cannot move together closely enough |
+| Assume gasoline vol 55% | 1.0455, refused | The quote's gap vol 0.278388 is below $`0.55 - 0.25`$: the legs cannot move together closely enough |
 
 ---
 
@@ -611,11 +621,11 @@ The two outputs agree line for line, including the simulation and the simulated 
 
 Lean proves when an implied correlation exists and is unique, and the two-step formula, for all positive prices, vols and expiry.
 
-- Take positive futures prices $F_1$, $F_2$, positive vols $\sigma_1$, $\sigma_2$, $T > 0$ and any bank rate $r$. Then a quote is matched by exactly one correlation from −1 to 1 when it lies from $C(+1)$ up to $C(-1)$. A quote outside that range is matched by none.
-- Take the same model. Then the price $C(\rho)$ falls strictly as the correlation rises from −1 to 1.
-- Take positive leg vols and a gap's volatility $\sigma_{\text{imp}} \ge 0$. Then a correlation from −1 to 1 gives that gap's volatility exactly when it is $\rho_{\text{imp}}$ from the two-step formula.
-- Take the same numbers. Then such a correlation exists exactly when $|\sigma_1 - \sigma_2| \le \sigma_{\text{imp}} \le \sigma_1 + \sigma_2$.
-- Exact fractions confirm the gap's variance 0.0775, its floor $0.05^2$ and ceiling $0.55^2$, and the answer 0.50.
+- Take positive futures prices $`F_1`$, $`F_2`$, positive vols $`\sigma_1`$, $`\sigma_2`$, $`T > 0`$ and any bank rate $`r`$. Then a quote is matched by exactly one correlation from −1 to 1 when it lies from $`C(+1)`$ up to $`C(-1)`$. A quote outside that range is matched by none.
+- Take the same model. Then the price $`C(\rho)`$ falls strictly as the correlation rises from −1 to 1.
+- Take positive leg vols and a gap's volatility $`\sigma_{\text{imp}} \ge 0`$. Then a correlation from −1 to 1 gives that gap's volatility exactly when it is $`\rho_{\text{imp}}`$ from the two-step formula.
+- Take the same numbers. Then such a correlation exists exactly when $`|\sigma_1 - \sigma_2| \le \sigma_{\text{imp}} \le \sigma_1 + \sigma_2`$.
+- Exact fractions confirm the gap's variance 0.0775, its floor $`0.05^2`$ and ceiling $`0.55^2`$, and the answer 0.50.
 - They also confirm the two mistakes, 1 and −0.5, and the implied correlations for gasoline vols from 26 to 34 percent.
 - They also confirm that gasoline at 55 percent asks for 23/22, about 1.0455, which is above 1.
 
@@ -969,7 +979,7 @@ end SpreadImpliedCorrelation
 > **Quoting implied correlation without its vols.** The number 0.50 belongs to the pair 30 and 25 percent. Change gasoline's vol by two points and the same quote says 0.4529 or 0.5462. Comparing an implied correlation with a realised one, or with another desk's, is meaningless unless the vols match. Correlation is solved last, so it soaks up every error made before it.
 >
 > Smaller traps:
-> - **Reading a quote outside the range as an arbitrage.** A quote of 20 fits no correlation at these vols, but it is below the model-free ceiling $D\,F_1$. It says the vols are wrong, not that money is free.
+> - **Reading a quote outside the range as an arbitrage.** A quote of 20 fits no correlation at these vols, but it is below the model-free ceiling $`D\,F_1`$. It says the vols are wrong, not that money is free.
 > - **Skipping the range check.** A bare solver returns −1.000000 for 20.00, a number that prices the option at 19.675922, not 20.
 > - **Trusting a short history.** 126 days of data put the realised correlation somewhere from 0.5577 to 0.7543. The gap between the implied 0.50 and the realised 0.6675 is partly noise.
 > - **Dropping the 2 in the cross term.** The inversion then returns twice the correlation: 1.000000 here.

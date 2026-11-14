@@ -36,49 +36,57 @@ Orange: recovery of face, 40% of the \$100 face paid at default, the card's main
 
 ## The formula
 
-Notation first, in words. The coupon dates are $t_i$, read "t sub i": years 1 to 5. A capital sigma, Σ, means "add up over the coupon dates". $D(t)$, the discount factor, is today's value of \$1 due at date $t$. $Q(t)$ is the chance Northwind survives to $t$. $\lambda(t)$ ("lambda") is the hazard in force at $t$. The integral $\int_0^T$ is the area under a curve from today to maturity $T$.
+Notation first, in words. The coupon dates are $`t_i`$, read "t sub i": years 1 to 5. A capital sigma, Σ, means "add up over the coupon dates". $`D(t)`$, the discount factor, is today's value of \$1 due at date $`t`$. $`Q(t)`$ is the chance Northwind survives to $`t`$. $`\lambda(t)`$ ("lambda") is the hazard in force at $`t`$. The integral $`\int_0^T`$ is the area under a curve from today to maturity $`T`$.
 
-$$P \;=\; \sum_{i=1}^{n} c\,D(t_i)\,Q(t_i) \;+\; F\,D(T)\,Q(T) \;+\; R\,F\int_0^T D(t)\,\lambda(t)\,Q(t)\,dt$$
+```math
+P \;=\; \sum_{i=1}^{n} c\,D(t_i)\,Q(t_i) \;+\; F\,D(T)\,Q(T) \;+\; R\,F\int_0^T D(t)\,\lambda(t)\,Q(t)\,dt
+```
 
 **Read it aloud:** each coupon, discounted and weighted by the chance Northwind is alive to pay it; the face, the same way; and the recovered 40% of face, discounted from each instant default could happen and weighted by the chance it happens then.
 
-With flat curves, $D(t) = e^{-rt}$ and $Q(t) = e^{-\lambda t}$, the two shrink factors merge into one rate, $k = r + \lambda$, and the integral has a closed form:
+With flat curves, $`D(t) = e^{-rt}`$ and $`Q(t) = e^{-\lambda t}`$, the two shrink factors merge into one rate, $`k = r + \lambda`$, and the integral has a closed form:
 
-$$P \;=\; \sum_{i=1}^{n} c\,e^{-k t_i} \;+\; F\,e^{-kT} \;+\; R\,F\,\lambda\,\frac{1 - e^{-kT}}{k}$$
+```math
+P \;=\; \sum_{i=1}^{n} c\,e^{-k t_i} \;+\; F\,e^{-kT} \;+\; R\,F\,\lambda\,\frac{1 - e^{-kT}}{k}
+```
 
 **Read it aloud:** the promises discounted at the riskless rate plus the hazard, plus the recovery.
 
 Under recovery of market value the recovery term disappears into the discount rate:
 
-$$P_{\text{RMV}} \;=\; \sum_{i=1}^{n} c\,e^{-(r + \lambda(1-R))\,t_i} \;+\; F\,e^{-(r + \lambda(1-R))\,T}$$
+```math
+P_{\text{RMV}} \;=\; \sum_{i=1}^{n} c\,e^{-(r + \lambda(1-R))\,t_i} \;+\; F\,e^{-(r + \lambda(1-R))\,T}
+```
 
 **Read it aloud:** discount the promises at the riskless rate plus the loss rate, the hazard times the fraction lost.
 
-The yield $y$ is the one rate that reprices the bond with every payment treated as certain, compounded continuously so it compares directly with $r$ and $\lambda$; the spread $s$ is its excess over $r$:
+The yield $`y`$ is the one rate that reprices the bond with every payment treated as certain, compounded continuously so it compares directly with $`r`$ and $`\lambda`$; the spread $`s`$ is its excess over $`r`$:
 
-$$P = \sum_{i=1}^{n} c\,e^{-y t_i} + F\,e^{-yT}, \qquad s = y - r.$$
+```math
+P = \sum_{i=1}^{n} c\,e^{-y t_i} + F\,e^{-yT}, \qquad s = y - r.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the price… |
 | --- | --- | --- | --- |
-| $P$, $P_{\text{RMV}}$ | the bond's price today per \$100 of face, under recovery of face; under recovery of market value | \$98.28; \$98.35 | — |
-| $F$, $c$ | the face repaid at maturity; the yearly coupon | \$100; \$6 | rises |
-| $t$, $dt$, $t_i$, $n$, $T$ | a date; a short stretch of time; the coupon dates; how many; the last one, maturity | coupons at 1 to 5 years; n = 5; T = 5 | — |
-| $r$, $D(t)$ | riskless rate, continuously compounded; discount factor $e^{-rt}$ | 5%; D(5) = 0.778801 | falls |
-| $\lambda$, $\lambda(t)$ | the hazard: chance of default per year among survivors | 2%, flat | falls, 2.6 cents per bp |
-| $Q(t)$ | survival: chance of no default by $t$, $e^{-\lambda t}$ when flat | Q(5) = 0.904837 | — |
-| $\tau$ | the default date, random ("tau") | inside five years with chance 9.52% | — |
-| $R$ | recovery: fraction of face paid at default | 40% | rises, 84 cents per 10 points |
-| $k$ | the merged shrink rate $r + \lambda$ for flat curves | 7% | — |
-| $y$ | the bond's yield, continuously compounded | 6.2155% | — |
-| $s$ | the credit spread, yield minus riskless rate | 121.55 bp | — |
-| $V(t)$, $B$ | riskless value at $t$ of what is still owed (Step 3); the bond's own value at a date (Step 4) | V(0) = \$103.77 | — |
+| $`P`$, $`P_{\text{RMV}}`$ | the bond's price today per \$100 of face, under recovery of face; under recovery of market value | \$98.28; \$98.35 | — |
+| $`F`$, $`c`$ | the face repaid at maturity; the yearly coupon | \$100; \$6 | rises |
+| $`t`$, $`dt`$, $`t_i`$, $`n`$, $`T`$ | a date; a short stretch of time; the coupon dates; how many; the last one, maturity | coupons at 1 to 5 years; n = 5; T = 5 | — |
+| $`r`$, $`D(t)`$ | riskless rate, continuously compounded; discount factor $`e^{-rt}`$ | 5%; D(5) = 0.778801 | falls |
+| $`\lambda`$, $`\lambda(t)`$ | the hazard: chance of default per year among survivors | 2%, flat | falls, 2.6 cents per bp |
+| $`Q(t)`$ | survival: chance of no default by $`t`$, $`e^{-\lambda t}`$ when flat | Q(5) = 0.904837 | — |
+| $`\tau`$ | the default date, random ("tau") | inside five years with chance 9.52% | — |
+| $`R`$ | recovery: fraction of face paid at default | 40% | rises, 84 cents per 10 points |
+| $`k`$ | the merged shrink rate $`r + \lambda`$ for flat curves | 7% | — |
+| $`y`$ | the bond's yield, continuously compounded | 6.2155% | — |
+| $`s`$ | the credit spread, yield minus riskless rate | 121.55 bp | — |
+| $`V(t)`$, $`B`$ | riskless value at $`t`$ of what is still owed (Step 3); the bond's own value at a date (Step 4) | V(0) = \$103.77 | — |
 
-Survival is $S(t)$ on the hazard-rate cards and $Q(t)$ here, because $s$ is the spread.
+Survival is $`S(t)`$ on the hazard-rate cards and $`Q(t)`$ here, because $`s`$ is the spread.
 
 ### When it holds
 
 - **The hazard is a known curve.** If it moves at random, survival becomes an average over its paths: [A random hazard](03-stochastic-hazard-cox-process.md).
-- **Default and interest rates are unrelated.** The formula multiplies $D(t)$ by $Q(t)$. If companies fail more often when rates fall, the average of the product is not the product of the averages, and every term shifts.
+- **Default and interest rates are unrelated.** The formula multiplies $`D(t)`$ by $`Q(t)`$. If companies fail more often when rates fall, the average of the product is not the product of the averages, and every term shifts.
 - **Recovery is a fixed fraction of face, paid at default.** A random recovery unrelated to everything else can be replaced by its average; one that falls in bad years, when defaults cluster, cannot. Paid months later, it is worth less.
 - **The hazard is the market's, not history's.** A hazard read from prices includes the premium investors demand for bearing default risk; historical default rates are usually lower, and pricing with them overprices the bond ([Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md)).
 - **Only default is priced.** A real spread also pays for how hard the bond is to sell, which is one reason bond and default-swap spreads on one company disagree. A default swap (CDS, credit default swap) pays the loss if the company defaults, in return for a yearly premium; these two payment streams are its legs. See [Implied hazard from a bond price, and why the CDS disagrees](02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md).
@@ -91,13 +99,13 @@ Survival is $S(t)$ on the hazard-rate cards and $Q(t)$ here, because $s$ is the 
 
 A promise of \$1 in five years is worth \$0.778801 today at 5%. A promise of \$1 in five years *if Northwind is still alive* is worth that times the chance Northwind is alive. Every cash flow on a risky bond is of this kind: a known amount, on a date, paid only if something happens. Its value today is amount × chance × discount factor, and the price is the sum of those values. The same idea priced both legs of a default swap on [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md).
 
-The chances come from the hazard. The chance of surviving to $t$ is e to the minus the area under the hazard up to $t$, which for a flat 2% is $e^{-0.02t}$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)).
+The chances come from the hazard. The chance of surviving to $`t`$ is e to the minus the area under the hazard up to $`t`$, which for a flat 2% is $`e^{-0.02t}`$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)).
 
 ### Step 1: the promises, weighted by survival
 
-The coupon due at $t_i$ arrives only if default comes later than $t_i$, which has chance $Q(t_i)$. Discounting and survival are independent, so the expected value today is $c\,D(t_i)\,Q(t_i)$. The face works the same way at $T$.
+The coupon due at $`t_i`$ arrives only if default comes later than $`t_i`$, which has chance $`Q(t_i)`$. Discounting and survival are independent, so the expected value today is $`c\,D(t_i)\,Q(t_i)`$. The face works the same way at $`T`$.
 
-For Northwind the combined weights $D(t)Q(t) = e^{-0.07t}$ run 0.932394, 0.869358, 0.810584, 0.755784, 0.704688 for years one to five. Without survival they would be the riskless 0.951229 down to 0.778801. Six dollars on each of the five dates gives \$24.44 of coupons; \$100 at year five gives \$70.47. The riskless bond has \$25.89 and \$77.88.
+For Northwind the combined weights $`D(t)Q(t) = e^{-0.07t}`$ run 0.932394, 0.869358, 0.810584, 0.755784, 0.704688 for years one to five. Without survival they would be the riskless 0.951229 down to 0.778801. Six dollars on each of the five dates gives \$24.44 of coupons; \$100 at year five gives \$70.47. The riskless bond has \$25.89 and \$77.88.
 
 ```
 value today of each part, dollars per $100 face
@@ -112,47 +120,55 @@ The risky bond loses a little on coupons and far more on face, the largest and l
 
 ### Step 2: the recovery, an integral over the default date
 
-Recovery is paid once, at the default date $\tau$, and default can land on any day. Slice the five years into short stretches, each $dt$ years long. For default to land in the stretch that starts at $t$, Northwind must survive to $t$, chance $Q(t)$, and then fail inside the stretch, chance about $\lambda(t)\,dt$ among survivors. So
+Recovery is paid once, at the default date $`\tau`$, and default can land on any day. Slice the five years into short stretches, each $`dt`$ years long. For default to land in the stretch that starts at $`t`$, Northwind must survive to $`t`$, chance $`Q(t)`$, and then fail inside the stretch, chance about $`\lambda(t)\,dt`$ among survivors. So
 
-$$\text{chance default lands in } [t,\, t + dt] \;\approx\; \lambda(t)\,Q(t)\,dt.$$
+```math
+\text{chance default lands in } [t,\, t + dt] \;\approx\; \lambda(t)\,Q(t)\,dt.
+```
 
-The product $\lambda(t)Q(t)$ is the **default density**: how fast the chance of default piles up at date $t$. The recovery of $R \times F = \$40$ paid in that stretch is worth $R\,F\,D(t)\,\lambda(t)\,Q(t)\,dt$ today. Add over the stretches, let them shrink, and the sum becomes the integral in the formula. For Northwind it is \$3.37.
+The product $`\lambda(t)Q(t)`$ is the **default density**: how fast the chance of default piles up at date $`t`$. The recovery of $`R \times F = \$40`$ paid in that stretch is worth $`R\,F\,D(t)\,\lambda(t)\,Q(t)\,dt`$ today. Add over the stretches, let them shrink, and the sum becomes the integral in the formula. For Northwind it is \$3.37.
 
 The area under the default density from 0 to 5 is the chance of default inside the bond's life: 1 − Q(5) = 9.52%.
 
 <details>
 <summary>Detailed proof: the flat-curve closed form</summary>
 
-With $D(t) = e^{-rt}$ and $Q(t) = e^{-\lambda t}$, every weight $D(t)Q(t)$ is $e^{-(r+\lambda)t} = e^{-kt}$. The coupon and face terms are that weight at each date. For the recovery, the hazard is the constant $\lambda$, so
-$$R\,F\int_0^T e^{-rt}\,\lambda\,e^{-\lambda t}\,dt \;=\; R\,F\,\lambda\int_0^T e^{-kt}\,dt \;=\; R\,F\,\lambda\,\frac{1 - e^{-kT}}{k},$$
-because $e^{-kt}$ is the rate of change of $-e^{-kt}/k$, so the area from 0 to $T$ is $-e^{-kT}/k + 1/k$. For Northwind: 40 × 0.02 × (1 − 0.704688) / 0.07 = 3.374993.
+With $`D(t) = e^{-rt}`$ and $`Q(t) = e^{-\lambda t}`$, every weight $`D(t)Q(t)`$ is $`e^{-(r+\lambda)t} = e^{-kt}`$. The coupon and face terms are that weight at each date. For the recovery, the hazard is the constant $`\lambda`$, so
 
-A coupon paid "if alive at $t_i$" is $c$ times a switch that reads 1 when $\tau > t_i$ and 0 otherwise. The average of a switch is the chance it is on, $Q(t_i)$, and the known discount factor comes out of the average.
+$`\displaystyle R\,F\int_0^T e^{-rt}\,\lambda\,e^{-\lambda t}\,dt \;=\; R\,F\,\lambda\int_0^T e^{-kt}\,dt \;=\; R\,F\,\lambda\,\frac{1 - e^{-kT}}{k},`$
+
+because $`e^{-kt}`$ is the rate of change of $`-e^{-kt}/k`$, so the area from 0 to $`T`$ is $`-e^{-kT}/k + 1/k`$. For Northwind: 40 × 0.02 × (1 − 0.704688) / 0.07 = 3.374993.
+
+A coupon paid "if alive at $`t_i`$" is $`c`$ times a switch that reads 1 when $`\tau > t_i`$ and 0 otherwise. The average of a switch is the chance it is on, $`Q(t_i)`$, and the known discount factor comes out of the average.
 
 </details>
 
 ### Step 3: the same price, read as riskless minus expected loss
 
-A second road reaches the same number without ever weighting a coupon. Start from the riskless price, \$103.77. Default at date $t$ takes away everything still owed and hands back \$40. What is still owed at $t$ is the rest of the coupons and the face, valued at $t$ at the riskless rate. Call that $V(t)$. The loss at default is $V(t) - R F$. Weight it by the default density, discount it, add over dates:
+A second road reaches the same number without ever weighting a coupon. Start from the riskless price, \$103.77. Default at date $`t`$ takes away everything still owed and hands back \$40. What is still owed at $`t`$ is the rest of the coupons and the face, valued at $`t`$ at the riskless rate. Call that $`V(t)`$. The loss at default is $`V(t) - R F`$. Weight it by the default density, discount it, add over dates:
 
-$$P \;=\; P_{\text{riskless}} \;-\; \int_0^T D(t)\,\lambda(t)\,Q(t)\,\big(V(t) - R\,F\big)\,dt.$$
+```math
+P \;=\; P_{\text{riskless}} \;-\; \int_0^T D(t)\,\lambda(t)\,Q(t)\,\big(V(t) - R\,F\big)\,dt.
+```
 
-For Northwind the expected discounted loss is 5.485265 dollars, and 103.765916 − 5.485265 = 98.280651: the same price to the last printed digit. $V(t)$ drops by \$6 on each coupon date, so the checks integrate one year at a time. The two roads add up the same expected cash in a different order.
+For Northwind the expected discounted loss is 5.485265 dollars, and 103.765916 − 5.485265 = 98.280651: the same price to the last printed digit. $`V(t)`$ drops by \$6 on each coupon date, so the checks integrate one year at a time. The two roads add up the same expected cash in a different order.
 
-### Step 4: recovery of market value adds $\lambda(1-R)$ to the discount rate
+### Step 4: recovery of market value adds $`\lambda(1-R)`$ to the discount rate
 
 Recovery of face pays a fixed \$40. **Recovery of market value** (RMV) pays 40% of what the bond was worth the instant before default. Darrell Duffie and Kenneth Singleton showed in 1999 that this rule turns a risky bond into a riskless one discounted at a higher rate.
 
-Take the bond's value $B$ at some date between coupons, and look one short stretch $dt$ ahead. With chance $(1 - \lambda\,dt)$ Northwind survives and the bond is worth $B + dB$. With chance $\lambda\,dt$ it defaults and pays $R\,B$. The price today is the discounted average:
+Take the bond's value $`B`$ at some date between coupons, and look one short stretch $`dt`$ ahead. With chance $`(1 - \lambda\,dt)`$ Northwind survives and the bond is worth $`B + dB`$. With chance $`\lambda\,dt`$ it defaults and pays $`R\,B`$. The price today is the discounted average:
 
-$$B \;=\; e^{-r\,dt}\,\big[(1 - \lambda\,dt)(B + dB) + \lambda\,dt\;R\,B\big].$$
+```math
+B \;=\; e^{-r\,dt}\,\big[(1 - \lambda\,dt)(B + dB) + \lambda\,dt\;R\,B\big].
+```
 
-Keep only the terms of size $dt$: $dB = \big(r + \lambda(1-R)\big)\,B\,dt$. Between coupons the bond grows at the riskless rate plus the **loss rate**, $\lambda(1-R)$; read backwards from each payment, that is discounting at $r + \lambda(1 - R)$. Default has vanished; only the higher rate remembers it.
+Keep only the terms of size $`dt`$: $`dB = \big(r + \lambda(1-R)\big)\,B\,dt`$. Between coupons the bond grows at the riskless rate plus the **loss rate**, $`\lambda(1-R)`$; read backwards from each payment, that is discounting at $`r + \lambda(1 - R)`$. Default has vanished; only the higher rate remembers it.
 
 <details>
 <summary>The algebra behind the expansion</summary>
 
-$e^{-r\,dt} = 1 - r\,dt$ plus terms of size $dt^2$. Multiply out: $(1 - r\,dt)\,[B + dB - \lambda B\,dt + \lambda R B\,dt]$, dropping $dB \cdot dt$ and $dt^2$, which vanish faster than $dt$. That is $B + dB - rB\,dt - \lambda B\,dt + \lambda R B\,dt$. Set it equal to $B$ and $dB = (r + \lambda - \lambda R)\,B\,dt$. Recovery of face does not fold in the same way, because its payment, $R F$, does not scale with $B$.
+$`e^{-r\,dt} = 1 - r\,dt`$ plus terms of size $`dt^2`$. Multiply out: $`(1 - r\,dt)\,[B + dB - \lambda B\,dt + \lambda R B\,dt]`$, dropping $`dB \cdot dt`$ and $`dt^2`$, which vanish faster than $`dt`$. That is $`B + dB - rB\,dt - \lambda B\,dt + \lambda R B\,dt`$. Set it equal to $`B`$ and $`dB = (r + \lambda - \lambda R)\,B\,dt`$. Recovery of face does not fold in the same way, because its payment, $`R F`$, does not scale with $`B`$.
 
 </details>
 
@@ -170,19 +186,19 @@ xychart-beta
     line [200.00, 180.00, 160.00, 140.00, 120.00, 100.00, 80.00, 60.00, 40.00]
 ```
 
-Orange: recovery of face, a yield solved from each price. Green: recovery of market value, the straight line $\lambda(1 - R)$. Both start at 200 bp, the hazard itself; at 80% recovery they read 45.93 and 40 bp.
+Orange: recovery of face, a yield solved from each price. Green: recovery of market value, the straight line $`\lambda(1 - R)`$. Both start at 200 bp, the hazard itself; at 80% recovery they read 45.93 and 40 bp.
 
-The checks test the rule rather than trust it: on the same 100,000 simulated default dates as the fourth road below, they pay $R$ times the pre-default value instead of \$40. The switch adds \$0.0679, against \$0.0681 from the two formulas, with a standard error of \$0.0009. Separate draws, each with a standard error of \$0.05, could not tell a gap that small from noise; shared draws cancel the noise.
+The checks test the rule rather than trust it: on the same 100,000 simulated default dates as the fourth road below, they pay $`R`$ times the pre-default value instead of \$40. The switch adds \$0.0679, against \$0.0681 from the two formulas, with a standard error of \$0.0009. Separate draws, each with a standard error of \$0.05, could not tell a gap that small from noise; shared draws cancel the noise.
 
 ### Step 5: price to yield, and yield to spread
 
-The yield solves one equation in one unknown: the price at one flat rate $y$, every payment treated as certain, equals \$98.28.
+The yield solves one equation in one unknown: the price at one flat rate $`y`$, every payment treated as certain, equals \$98.28.
 
-- **Existence.** At $y = 0$ the price is the cash added up, \$130; at very high rates it falls toward zero. Every price in between is reached.
-- **Uniqueness.** Every payment is positive, so the price falls strictly as $y$ rises and meets each level once.
+- **Existence.** At $`y = 0`$ the price is the cash added up, \$130; at very high rates it falls toward zero. Every price in between is reached.
+- **Uniqueness.** Every payment is positive, so the price falls strictly as $`y`$ rises and meets each level once.
 - **Boundaries.** A price at or above \$130 has no positive yield; a price of zero has no finite one.
 
-Bisection (halving an interval that brackets the root until it is tiny) gives $y = 6.2155\%$. The riskless bond yields exactly 5%, its curve being flat, so the spread is 121.55 bp. The quick rule, spread ≈ hazard × (1 − recovery) = 120 bp, is the bond's version of the credit triangle ([The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md)). It is exact under recovery of market value and close under recovery of face.
+Bisection (halving an interval that brackets the root until it is tiny) gives $`y = 6.2155\%`$. The riskless bond yields exactly 5%, its curve being flat, so the spread is 121.55 bp. The quick rule, spread ≈ hazard × (1 − recovery) = 120 bp, is the bond's version of the credit triangle ([The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md)). It is exact under recovery of market value and close under recovery of face.
 
 Conventions verified 2026-09-28: US corporate bonds quote yields compounded twice a year, euro corporates once a year, and spreads in basis points over a government or swap curve. [Yield from price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md) converts. Continuous compounding keeps the spread in the hazard's units.
 
@@ -202,15 +218,15 @@ Northwind: face \$100, coupon \$6 a year for five years, riskless rate 5%, hazar
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| merged rate $k$ | 0.05 + 0.02 | 0.07 |
-| weights $e^{-0.07 t}$, years 1 to 5 | table of $e^{-x}$ | 0.932394, 0.869358, 0.810584, 0.755784, 0.704688 |
+| merged rate $`k`$ | 0.05 + 0.02 | 0.07 |
+| weights $`e^{-0.07 t}`$, years 1 to 5 | table of $`e^{-x}`$ | 0.932394, 0.869358, 0.810584, 0.755784, 0.704688 |
 | coupons | 6 × (0.932394 + … + 0.704688) | \$24.44 |
 | face | 100 × 0.704688 | \$70.47 |
 | recovery | 40 × 0.02 × (1 − 0.704688) / 0.07 | \$3.37 |
 | **price** | 24.44 + 70.47 + 3.37 | **\$98.28** |
 | riskless price | 6 × (0.951229 + … + 0.778801) + 100 × 0.778801 | \$103.77 |
 | cost of default risk | 103.77 − 98.28 | \$5.49 |
-| yield, by bisection | solve price at one rate $= 98.28$ | 6.2155% |
+| yield, by bisection | solve price at one rate $`= 98.28`$ | 6.2155% |
 | **spread** | 6.2155% − 5% | **121.55 bp** |
 | recovery of market value | discount at 0.05 + 0.02 × 0.6 = 0.062 | \$98.35, spread 120 bp |
 
@@ -220,15 +236,15 @@ At \$98.28 the bond's average return across defaults and survivals, counted with
 
 | Sensitivity | Formula | Bump and reprice | In dollars |
 | --- | --- | --- | --- |
-| to the hazard, $\partial P / \partial \lambda$ | −261.437311 | −261.437311 | −2.6 cents per 1 bp of hazard |
-| to recovery, $\partial P / \partial R$ | 8.437483 | 8.437483 | +84 cents per 10 points of recovery |
+| to the hazard, $`\partial P / \partial \lambda`$ | −261.437311 | −261.437311 | −2.6 cents per 1 bp of hazard |
+| to recovery, $`\partial P / \partial R`$ | 8.437483 | 8.437483 | +84 cents per 10 points of recovery |
 
-The formula column differentiates the closed form. The bump column reprices with the hazard nudged up and down by a thousandth of a basis point, or recovery by a point, and divides. The price is a straight line in recovery, whose slope is the recovery leg divided by $R$: 3.374993 / 0.4. In the hazard it is a curve that flattens as the hazard rises, as in the first chart.
+The formula column differentiates the closed form. The bump column reprices with the hazard nudged up and down by a thousandth of a basis point, or recovery by a point, and divides. The price is a straight line in recovery, whose slope is the recovery leg divided by $`R`$: 3.374993 / 0.4. In the hazard it is a curve that flattens as the hazard rises, as in the first chart.
 
 <details>
 <summary>The hazard slope, written out</summary>
 
-Differentiate each term of the closed form in $\lambda$, with $k = r + \lambda$. A coupon term $c\,e^{-kt}$ gives $-t\,c\,e^{-kt}$. The face gives $-T F e^{-kT}$. The recovery term $R F \lambda (1 - e^{-kT})/k$ is a product, so its slope is $R F\,[(1 - e^{-kT})/k + \lambda\,(T e^{-kT}/k - (1 - e^{-kT})/k^2)]$. Add the three: the promises decaying faster dominate; more recovery arriving offsets a small part.
+Differentiate each term of the closed form in $`\lambda`$, with $`k = r + \lambda`$. A coupon term $`c\,e^{-kt}`$ gives $`-t\,c\,e^{-kt}`$. The face gives $`-T F e^{-kT}`$. The recovery term $`R F \lambda (1 - e^{-kT})/k`$ is a product, so its slope is $`R F\,[(1 - e^{-kT})/k + \lambda\,(T e^{-kT}/k - (1 - e^{-kT})/k^2)]`$. Add the three: the promises decaying faster dominate; more recovery arriving offsets a small part.
 
 </details>
 
@@ -241,7 +257,7 @@ Same bond, correct answer \$98.28.
 | Ignore default | \$103.77 | Prices Northwind as the government: pays \$5.49 too much |
 | Weight the promises by survival, forget recovery | \$94.91 | Treats default as a total loss; the \$40 is worth \$3.37 today |
 | Pay recovery at year five instead of at default | \$97.87 | Recovery is paid when default happens, not when the bond would have matured |
-| Use 60% recovery where 40% was meant | \$99.97 | Swapped $R$ and one minus $R$: the fraction recovered and the fraction lost |
+| Use 60% recovery where 40% was meant | \$99.97 | Swapped $`R`$ and one minus $`R`$: the fraction recovered and the fraction lost |
 
 Every number in that table is printed by the checks.
 
@@ -687,9 +703,9 @@ The two outputs agree line for line. The random draws are the same bits in both 
 
 For any coupon, face and dates, Lean proves the flat-curve closed form, the one yield, and the exact spread under recovery of market value.
 
-- Take flat curves, $D(t) = e^{-rt}$ and $Q(t) = e^{-\lambda t}$, with $k = r + \lambda$ not zero. Then the formula's price equals the closed form above.
-- Suppose every payment is positive and after today, and $0 < P < nc + F$, the cash added up. Then exactly one positive yield $y$ reprices the bond at $P$.
-- Suppose every payment is positive and after today, and $y$ reprices the bond discounted at $r + \lambda(1-R)$. Then the spread $y - r$ is exactly the loss rate $\lambda(1-R)$.
+- Take flat curves, $`D(t) = e^{-rt}`$ and $`Q(t) = e^{-\lambda t}`$, with $`k = r + \lambda`$ not zero. Then the formula's price equals the closed form above.
+- Suppose every payment is positive and after today, and $`0 < P < nc + F`$, the cash added up. Then exactly one positive yield $`y`$ reprices the bond at $`P`$.
+- Suppose every payment is positive and after today, and $`y`$ reprices the bond discounted at $`r + \lambda(1-R)`$. Then the spread $`y - r`$ is exactly the loss rate $`\lambda(1-R)`$.
 - Take Northwind's bond at yield zero. Then its price is the cash added up, exactly \$130.
 - Take a 2% hazard and 40% recovery of market value. Then the spread is exactly 120 bp, and the discount rate exactly 6.2%.
 
@@ -849,7 +865,7 @@ example : (2 / 100 : ℚ) * (1 - 40 / 100) * 10000 = 120 ∧
 >
 > Four smaller traps:
 > - **Dropping recovery.** Weighting coupons and face by survival and stopping there gives \$94.91, \$3.37 too cheap.
-> - **Mixing the recovery rules.** Discounting at $r + \lambda(1-R)$ and then adding a recovery term counts recovery twice. The adjusted rate already contains it.
+> - **Mixing the recovery rules.** Discounting at $`r + \lambda(1-R)`$ and then adding a recovery term counts recovery twice. The adjusted rate already contains it.
 > - **Paying recovery at maturity.** Bondholders are paid out of the bankruptcy, not at the old maturity. Deferring the \$40 to year five gives \$97.87.
 > - **Mixing compounding.** The 6.2155% here is continuously compounded; a yield compounded annually reads higher for the same price. Subtract yields in two conventions and the spread is off by several basis points.
 
@@ -888,7 +904,7 @@ This card turns a hazard into a price; the open question is what hazard a quoted
 Verified 2026-09-28: every link below resolves to the publisher's page.
 
 - Jarrow, Robert A., and Stuart M. Turnbull. "Pricing Derivatives on Financial Securities Subject to Credit Risk." *Journal of Finance* 50, no. 1 (1995): 53–85. [doi:10.1111/j.1540-6261.1995.tb05167.x](https://doi.org/10.1111/j.1540-6261.1995.tb05167.x). The reduced-form model: default as a random arrival at a hazard rate, priced with a fixed recovery fraction.
-- Duffie, Darrell, and Kenneth J. Singleton. "Modeling Term Structures of Defaultable Bonds." *Review of Financial Studies* 12, no. 4 (1999): 687–720. [doi:10.1093/rfs/12.4.687](https://doi.org/10.1093/rfs/12.4.687). Recovery of market value and the adjusted discount rate $r + \lambda(1-R)$ of Step 4.
+- Duffie, Darrell, and Kenneth J. Singleton. "Modeling Term Structures of Defaultable Bonds." *Review of Financial Studies* 12, no. 4 (1999): 687–720. [doi:10.1093/rfs/12.4.687](https://doi.org/10.1093/rfs/12.4.687). Recovery of market value and the adjusted discount rate $`r + \lambda(1-R)`$ of Step 4.
 - Lando, David. "On Cox Processes and Credit Risky Securities." *Review of Derivatives Research* 2 (1998): 99–120. [doi:10.1007/BF01531332](https://doi.org/10.1007/BF01531332). The survival-weighted pricing formula and the recovery integral, for hazards that may themselves be random.
 - Duffie, Darrell, and Kenneth J. Singleton. *Credit Risk: Pricing, Measurement, and Management*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691090467/credit-risk). Recovery of face, of treasury and of market value compared.
 - O'Kane, Dominic. *Modelling Single-name and Multi-name Credit Derivatives*. Wiley, 2008. [Publisher page](https://www.wiley.com/en-us/Modelling+Single-name+and+Multi-name+Credit+Derivatives-p-9780470519288). Risky bonds valued off a survival curve built from default-swap quotes, as desks do.

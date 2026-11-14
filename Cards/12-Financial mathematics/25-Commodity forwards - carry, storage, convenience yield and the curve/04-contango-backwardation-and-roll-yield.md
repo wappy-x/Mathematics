@@ -35,44 +35,50 @@ The one line is today's crude strip, spot at month 0 and the twelve monthly cont
 
 ## The formula
 
-Notation first, in words. The Greek letter $\tau$ ("tau") is the time left until a contract's delivery, in years. $F(\tau)$ is today's futures price for delivery $\tau$ years away. The carry model of the earlier cards prices every point on the strip the same way:
+Notation first, in words. The Greek letter $`\tau`$ ("tau") is the time left until a contract's delivery, in years. $`F(\tau)`$ is today's futures price for delivery $`\tau`$ years away. The carry model of the earlier cards prices every point on the strip the same way:
 
-$$F(\tau) = S\,e^{(r+u-y)\,\tau} = S\,e^{c\,\tau}, \qquad c = r + u - y$$
+```math
+F(\tau) = S\,e^{(r+u-y)\,\tau} = S\,e^{c\,\tau}, \qquad c = r + u - y
+```
 
 **Read it aloud:** the future for any delivery date is spot, grown at the net cost of holding the commodity until then.
 
-The sign of $c$ names the strip:
+The sign of $`c`$ names the strip:
 
-$$c > 0:\ \text{contango (rising strip)}, \qquad c < 0:\ \text{backwardation (falling strip)}$$
+```math
+c > 0:\ \text{contango (rising strip)}, \qquad c < 0:\ \text{backwardation (falling strip)}
+```
 
-Hold one contract for a stretch of time $\Delta$ while the strip keeps its shape. Its price changes by the spot move and one more piece:
+Hold one contract for a stretch of time $`\Delta`$ while the strip keeps its shape. Its price changes by the spot move and one more piece:
 
-$$\ln\frac{F_{\text{end}}}{F_{\text{start}}} \;=\; \ln\frac{S_{\text{end}}}{S_{\text{start}}} \;-\; c\,\Delta$$
+```math
+\ln\frac{F_{\text{end}}}{F_{\text{start}}} \;=\; \ln\frac{S_{\text{end}}}{S_{\text{start}}} \;-\; c\,\Delta
+```
 
 **Read it aloud:** the future's return is the spot's return plus the roll yield, and the roll yield is minus the slope of the strip times the time held.
 
-The natural log, $\ln$, turns a ratio into a return that adds across months ([Growth factors](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/01-growth-factors.md) multiplies the same ratios). As a plain percentage, one month of roll is $e^{-c\Delta} - 1$.
+The natural log, $`\ln`$, turns a ratio into a return that adds across months ([Growth factors](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/01-growth-factors.md) multiplies the same ratios). As a plain percentage, one month of roll is $`e^{-c\Delta} - 1`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the roll… |
 | --- | --- | --- | --- |
-| $S$ | spot: the price for delivery now | $80.00 a barrel | no effect: the roll is a percentage of price |
-| $\tau$ | time left until a contract's delivery, in years | 0 to 1 | — |
-| $F(\tau)$ | today's futures price for delivery $\tau$ years away | $80.33 at one month, $84.00 at twelve | — |
-| $r$ | the riskless rate: what cash earns in the bank | 5% | bleeds more: financing a barrel costs more |
-| $u$ | storage cost, as a fraction of the price per year | 2% | bleeds more: the tank rent sits in the strip |
-| $y$ | convenience yield: the benefit of holding the physical barrel, read off the strip | 2.12% | pays more: the strip tilts down |
-| $c$ | the carry, $r + u - y$: the slope of the strip in log terms, per year | 4.88% | bleeds more; below zero it pays |
-| $\Delta$ | the time a contract is held before rolling, in years | one month, $1/12$ | a bigger bite per roll, the same bite per year |
-| $F_{\text{start}}$, $F_{\text{end}}$ | one contract's price when bought and when sold | $80.33, $80.00 | — |
-| $S_{\text{start}}$, $S_{\text{end}}$ | spot at the same two moments | $80.00, $80.00 | a spot rise lifts the roller one for one |
-| $T$ | total time spent rolling, in years | 1 | the bite grows in step |
-| $n$, $S_d$ | in the detailed proof: days in one holding, and spot on day $d$ | 30 days a month, $80.00 | — |
-| $e^{c\tau}$ | the growth factor from spot to the future | 1.050000 at one year | — |
+| $`S`$ | spot: the price for delivery now | $80.00 a barrel | no effect: the roll is a percentage of price |
+| $`\tau`$ | time left until a contract's delivery, in years | 0 to 1 | — |
+| $`F(\tau)`$ | today's futures price for delivery $`\tau`$ years away | $80.33 at one month, $84.00 at twelve | — |
+| $`r`$ | the riskless rate: what cash earns in the bank | 5% | bleeds more: financing a barrel costs more |
+| $`u`$ | storage cost, as a fraction of the price per year | 2% | bleeds more: the tank rent sits in the strip |
+| $`y`$ | convenience yield: the benefit of holding the physical barrel, read off the strip | 2.12% | pays more: the strip tilts down |
+| $`c`$ | the carry, $`r + u - y`$: the slope of the strip in log terms, per year | 4.88% | bleeds more; below zero it pays |
+| $`\Delta`$ | the time a contract is held before rolling, in years | one month, $`1/12`$ | a bigger bite per roll, the same bite per year |
+| $`F_{\text{start}}`$, $`F_{\text{end}}`$ | one contract's price when bought and when sold | $80.33, $80.00 | — |
+| $`S_{\text{start}}`$, $`S_{\text{end}}`$ | spot at the same two moments | $80.00, $80.00 | a spot rise lifts the roller one for one |
+| $`T`$ | total time spent rolling, in years | 1 | the bite grows in step |
+| $`n`$, $`S_d`$ | in the detailed proof: days in one holding, and spot on day $`d`$ | 30 days a month, $80.00 | — |
+| $`e^{c\tau}`$ | the growth factor from spot to the future | 1.050000 at one year | — |
 
 ### When it holds
 
-- **The strip keeps its shape.** The identity assumes $c$ is the same when the contract is sold as when it was bought. If the strip steepens while the front contract is held, that contract gains the change in $c$ times its time left, a third term the spot and the roll do not capture.
-- **One slope for the whole strip.** A single $c$ makes the strip a smooth curve. Real strips kink: gas is dear in winter and cheap in summer ([Seasonal curves](05-seasonality-and-the-gas-curve.md)). Then the roll is the local slope between the first two contracts, not the twelve-month average.
+- **The strip keeps its shape.** The identity assumes $`c`$ is the same when the contract is sold as when it was bought. If the strip steepens while the front contract is held, that contract gains the change in $`c`$ times its time left, a third term the spot and the roll do not capture.
+- **One slope for the whole strip.** A single $`c`$ makes the strip a smooth curve. Real strips kink: gas is dear in winter and cheap in summer ([Seasonal curves](05-seasonality-and-the-gas-curve.md)). Then the roll is the local slope between the first two contracts, not the twelve-month average.
 - **Rolled at delivery.** The card rolls on the delivery day, when the front contract equals spot. Funds roll days earlier, so they earn the gap between the first and second contracts instead; with a smooth strip it is the same slope.
 - **Futures treated as forwards.** Futures settle gains and losses daily through margin. With a fixed interest rate the two prices are equal; when rates move, the gap is too small to see at these horizons.
 - **Cash counted apart.** The roll yield is a return on the contract's value, with no cash held. A fund that keeps the contract's full value in the bank earns the bank rate on top (Step 4).
@@ -89,50 +95,58 @@ Convergence is the whole story of the roll. A contract bought above spot, on a d
 
 ### Step 1: the slope of the strip is the carry
 
-The earlier cards on this shelf price a future by the cost of the alternative: buy the barrel now, borrow the money at the bank rate $r$, pay the tank rent $u$, and give up the convenience yield $y$ that a physical barrel offers and a paper contract does not ([Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md), [Convenience yield](03-convenience-yield-implied-by-the-forward.md)). Every point on the strip is spot times $e^{c\tau}$ with the same $c$.
+The earlier cards on this shelf price a future by the cost of the alternative: buy the barrel now, borrow the money at the bank rate $`r`$, pay the tank rent $`u`$, and give up the convenience yield $`y`$ that a physical barrel offers and a paper contract does not ([Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md), [Convenience yield](03-convenience-yield-implied-by-the-forward.md)). Every point on the strip is spot times $`e^{c\tau}`$ with the same $`c`$.
 
-So $\ln F(\tau)$ is a straight line in $\tau$ with slope $c$. Contango and backwardation are the sign of that slope. For crude, $c = \ln(84/80) = 4.88\%$ a year. With $r = 5\%$ and $u = 2\%$, the market is saying $y = 2.12\%$: the same crude, and the same answer, as the convenience-yield card. For copper, $c = \ln(8{,}700/9{,}000) = -3.39\%$: the convenience of holding copper now beats the bank rate plus storage, so the strip falls.
+So $`\ln F(\tau)`$ is a straight line in $`\tau`$ with slope $`c`$. Contango and backwardation are the sign of that slope. For crude, $`c = \ln(84/80) = 4.88\%`$ a year. With $`r = 5\%`$ and $`u = 2\%`$, the market is saying $`y = 2.12\%`$: the same crude, and the same answer, as the convenience-yield card. For copper, $`c = \ln(8{,}700/9{,}000) = -3.39\%`$: the convenience of holding copper now beats the bank rate plus storage, so the strip falls.
 
-Contango has a ceiling and backwardation has no floor. With no convenience at all the strip rises at the full carry $r + u = 7\%$, which caps the crude twelve-month at $85.80; above that, buying spot and storing it beats buying the future. Nothing stops $y$ from being large when a commodity is scarce, so a strip can fall as steeply as scarcity makes it.
+Contango has a ceiling and backwardation has no floor. With no convenience at all the strip rises at the full carry $`r + u = 7\%`$, which caps the crude twelve-month at $85.80; above that, buying spot and storing it beats buying the future. Nothing stops $`y`$ from being large when a commodity is scarce, so a strip can fall as steeply as scarcity makes it.
 
 ### Step 2: hold one contract for a month
 
-Buy the one-month contract. Its price is $S_{\text{start}}\,e^{c\Delta}$. A month later it is the delivery day, and the contract is worth $S_{\text{end}}$. Divide:
+Buy the one-month contract. Its price is $`S_{\text{start}}\,e^{c\Delta}`$. A month later it is the delivery day, and the contract is worth $`S_{\text{end}}`$. Divide:
 
-$$\frac{F_{\text{end}}}{F_{\text{start}}} = \frac{S_{\text{end}}}{S_{\text{start}}}\;e^{-c\Delta}$$
+```math
+\frac{F_{\text{end}}}{F_{\text{start}}} = \frac{S_{\text{end}}}{S_{\text{start}}}\;e^{-c\Delta}
+```
 
-Take logs and the ratio splits into a sum: the spot return, plus $-c\Delta$. That second piece is the **roll yield**. It is not a payment from anyone. It is the drift of convergence: the contract started $c\Delta$ above spot, in log terms, and ended level with it.
+Take logs and the ratio splits into a sum: the spot return, plus $`-c\Delta`$. That second piece is the **roll yield**. It is not a payment from anyone. It is the drift of convergence: the contract started $`c\Delta`$ above spot, in log terms, and ended level with it.
 
-For crude, $\Delta = 1/12$: the log roll is $-0.004066$, and $e^{-0.004066} - 1 = -0.41\%$. The contract bought at $80.33 finishes at $80.00.
+For crude, $`\Delta = 1/12`$: the log roll is $`-0.004066`$, and $`e^{-0.004066} - 1 = -0.41\%`$. The contract bought at $80.33 finishes at $80.00.
 
 ### Step 3: roll, and the months chain
 
 On delivery day the roller sells the old contract, at spot, and buys the new front month. Entering a future costs nothing, so no cash changes hands at the roll beyond settling the old contract's gain or loss. At each roll the fund buys new contracts worth what it is now worth. So the monthly returns multiply, as growth factors do, and the logs add.
 
-After rolling for a total time $T$, in years:
+After rolling for a total time $`T`$, in years:
 
-$$\ln(\text{roller's growth}) = \ln\frac{S_{\text{end}}}{S_{\text{start}}} - c\,T$$
+```math
+\ln(\text{roller's growth}) = \ln\frac{S_{\text{end}}}{S_{\text{start}}} - c\,T
+```
 
-Over a year, $T = 1$, and the roller's growth is $S_{\text{end}}/(S_{\text{start}}\,e^{c}) = S_{\text{end}}/F(1)$. **Twelve monthly rolls earn exactly what buying the twelve-month contract earns.** For crude, if spot is still $80.00 in a year, $80/84 - 1 = -4.76\%$. How often the roller rolls does not matter while the shape holds: monthly or quarterly, the year costs $c$.
+Over a year, $`T = 1`$, and the roller's growth is $`S_{\text{end}}/(S_{\text{start}}\,e^{c}) = S_{\text{end}}/F(1)`$. **Twelve monthly rolls earn exactly what buying the twelve-month contract earns.** For crude, if spot is still $80.00 in a year, $`80/84 - 1 = -4.76\%`$. How often the roller rolls does not matter while the shape holds: monthly or quarterly, the year costs $`c`$.
 
 <details>
 <summary>Detailed proof: the daily ledger telescopes</summary>
 
-Mark the held contract every day. On day $d$ of a holding of length $\Delta$ split into $n$ days, it has $\tau_d = \Delta(1 - d/n)$ left and is worth $S_d\,e^{c\tau_d}$, where $S_d$ is spot that day. One day's growth is
-$$\frac{S_{d+1}\,e^{c\tau_{d+1}}}{S_d\,e^{c\tau_d}} = \frac{S_{d+1}}{S_d}\,e^{-c\Delta/n}.$$
-Multiply the $n$ days together. The spot ratios cancel in a chain, leaving $S_n/S_0$; the $n$ copies of $e^{-c\Delta/n}$ give $e^{-c\Delta}$. At each roll the new contract's first mark is its purchase price, so the chain carries straight across. Over any number of rolls the product is (last spot / first spot) times $e^{-c \times \text{total time}}$, whatever path spot takes in between and however the time is cut into holdings. The code builds this ledger day by day on a flat spot and on a random spot path and gets $-c$ both times.
+Mark the held contract every day. On day $`d`$ of a holding of length $`\Delta`$ split into $`n`$ days, it has $`\tau_d = \Delta(1 - d/n)`$ left and is worth $`S_d\,e^{c\tau_d}`$, where $`S_d`$ is spot that day. One day's growth is
+
+$`\displaystyle \frac{S_{d+1}\,e^{c\tau_{d+1}}}{S_d\,e^{c\tau_d}} = \frac{S_{d+1}}{S_d}\,e^{-c\Delta/n}.`$
+
+Multiply the $`n`$ days together. The spot ratios cancel in a chain, leaving $`S_n/S_0`$; the $`n`$ copies of $`e^{-c\Delta/n}`$ give $`e^{-c\Delta}`$. At each roll the new contract's first mark is its purchase price, so the chain carries straight across. Over any number of rolls the product is (last spot / first spot) times $`e^{-c \times \text{total time}}`$, whatever path spot takes in between and however the time is cut into holdings. The code builds this ledger day by day on a flat spot and on a random spot path and gets $`-c`$ both times.
 
 </details>
 
 ### Step 4: where the bleed goes
 
-A fund that buys futures does not spend the contract's value; it leaves it in the bank, earning $r$. Add that interest to the roller's return:
+A fund that buys futures does not spend the contract's value; it leaves it in the bank, earning $`r`$. Add that interest to the roller's return:
 
-$$\text{spot return} - c + r \;=\; \text{spot return} + y - u$$
+```math
+\text{spot return} - c + r \;=\; \text{spot return} + y - u
+```
 
-That right-hand side is what a barrel in a tank earns: the spot move, plus the convenience of having it, minus the rent. For crude, $+0.12\%$ a year with spot flat, by either road. So contango's bleed is mostly the interest a barrel holder gives up, and the funded roller already earns that interest on its cash. Roll yield is not a cost of futures; it is the carry, shown on the futures side of the ledger.
+That right-hand side is what a barrel in a tank earns: the spot move, plus the convenience of having it, minus the rent. For crude, $`+0.12\%`$ a year with spot flat, by either road. So contango's bleed is mostly the interest a barrel holder gives up, and the funded roller already earns that interest on its cash. Roll yield is not a cost of futures; it is the carry, shown on the futures side of the ledger.
 
-The market has a second habit of quoting the roll: on roll day, (price of the contract sold − price of the contract bought) / price of the contract bought. For crude that is $(80.00 - 80.33)/80.33 = -0.41\%$, the same number, because with a steady shape the contract sold is at spot. When the strip changes shape, the two readings part, and the gap is the shape change.
+The market has a second habit of quoting the roll: on roll day, (price of the contract sold − price of the contract bought) / price of the contract bought. For crude that is $`(80.00 - 80.33)/80.33 = -0.41\%`$, the same number, because with a steady shape the contract sold is at spot. When the strip changes shape, the two readings part, and the gap is the shape change.
 
 **Conventions verified 27 Sep 2026:** NYMEX (New York Mercantile Exchange) crude futures are quoted in US dollars a barrel, LME (London Metal Exchange) copper in US dollars a tonne. Commodity indices such as the S&P GSCI publish an excess-return version (rolled futures alone) and a total-return version (plus interest on the cash). Exchanges could change contract terms; the arithmetic needs only prices for each delivery month.
 
@@ -142,19 +156,19 @@ How a spot price that drifts back toward a normal level shapes the strip is [A s
 
 ## Worked numbers, by hand
 
-Crude: spot $80.00, twelve-month $84.00, $r = 5\%$, $u = 2\%$. Copper: spot $9,000.00, twelve-month $8,700.00.
+Crude: spot $80.00, twelve-month $84.00, $`r = 5\%`$, $`u = 2\%`$. Copper: spot $9,000.00, twelve-month $8,700.00.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| crude carry $c$ | $\ln(84/80) = \ln 1.05$ | 0.048790 (4.88%) |
-| implied convenience yield $y$ | $0.05 + 0.02 - 0.048790$ | 0.021210 (2.12%) |
-| front contract, one month | $80 \times e^{0.048790/12}$ | $80.33 |
-| one month's roll, spot flat | $80.00/80.33 - 1$ | **−0.41%** |
-| twelve months of rolls | $80/84 - 1$ | **−4.76%** |
-| plus a year's cash interest | $e^{0.05 - 0.048790} - 1$ | +0.12% |
-| copper carry $c$ | $\ln(8{,}700/9{,}000)$ | −0.033902 (−3.39%) |
-| copper, one month | $e^{0.033902/12} - 1$ | **+0.28%** |
-| copper, twelve months | $9{,}000/8{,}700 - 1$ | **+3.45%** |
+| crude carry $`c`$ | $`\ln(84/80) = \ln 1.05`$ | 0.048790 (4.88%) |
+| implied convenience yield $`y`$ | $`0.05 + 0.02 - 0.048790`$ | 0.021210 (2.12%) |
+| front contract, one month | $`80 \times e^{0.048790/12}`$ | $80.33 |
+| one month's roll, spot flat | $`80.00/80.33 - 1`$ | **−0.41%** |
+| twelve months of rolls | $`80/84 - 1`$ | **−4.76%** |
+| plus a year's cash interest | $`e^{0.05 - 0.048790} - 1`$ | +0.12% |
+| copper carry $`c`$ | $`\ln(8{,}700/9{,}000)`$ | −0.033902 (−3.39%) |
+| copper, one month | $`e^{0.033902/12} - 1`$ | **+0.28%** |
+| copper, twelve months | $`9{,}000/8{,}700 - 1`$ | **+3.45%** |
 
 A crude roller who is right that oil will hold at $80.00 still loses 4.76% a year on the contracts; a copper roller who is right that copper will hold at $9,000.00 gains 3.45%.
 
@@ -238,7 +252,7 @@ Orange, falling: the crude roller in contango. Green, rising: the copper roller 
 
 ## Code, from first principles, and it actually runs
 
-The check reaches the roll by four roads. Road 1 is the formula $e^{-c\Delta} - 1$. Road 2 is a daily ledger: it marks the held contract from the strip every day, sells at delivery and buys the new front, on a spot that never moves. Road 3 runs the same ledger on a random spot path from a hand-written random number generator and subtracts spot's own return; what is left is $-c$, whatever the path. Road 4 fits a straight line through the logs of the strip as a screen quotes it, to the cent, and reads $c$ off the slope. The roll-date spread, the funded roller and every number on the card are printed too.
+The check reaches the roll by four roads. Road 1 is the formula $`e^{-c\Delta} - 1`$. Road 2 is a daily ledger: it marks the held contract from the strip every day, sells at delivery and buys the new front, on a spot that never moves. Road 3 runs the same ledger on a random spot path from a hand-written random number generator and subtracts spot's own return; what is left is $`-c`$, whatever the path. Road 4 fits a straight line through the logs of the strip as a screen quotes it, to the cent, and reads $`c`$ off the slope. The roll-date spread, the funded roller and every number on the card are printed too.
 
 ### Python
 
@@ -583,18 +597,18 @@ The two outputs match line for line, the random path included, because both prog
 
 ### Lean
 
-Lean proves the roll yield split, the months chain and the sign of the roll, for any carry $c$ and any positive spot.
+Lean proves the roll yield split, the months chain and the sign of the roll, for any carry $`c`$ and any positive spot.
 
-- Suppose every future is spot times $e^{c\tau}$, with one $c$ for all time. Then $\ln(F_{\text{end}}/F_{\text{start}}) = \ln(S_{\text{end}}/S_{\text{start}}) - c\Delta$, for any hold $\Delta$.
-- Take any roll dates, each contract rolled on its delivery day. Then the log of the roller's growth is $\ln(S_{\text{end}}/S_{\text{start}}) - cT$, whatever path spot takes.
-- Take the same rolls over a total time $T$. Then the roller's growth is $S_{\text{end}}/F(T)$, with $F(T)$ priced on the first day.
+- Suppose every future is spot times $`e^{c\tau}`$, with one $`c`$ for all time. Then $`\ln(F_{\text{end}}/F_{\text{start}}) = \ln(S_{\text{end}}/S_{\text{start}}) - c\Delta`$, for any hold $`\Delta`$.
+- Take any roll dates, each contract rolled on its delivery day. Then the log of the roller's growth is $`\ln(S_{\text{end}}/S_{\text{start}}) - cT`$, whatever path spot takes.
+- Take the same rolls over a total time $`T`$. Then the roller's growth is $`S_{\text{end}}/F(T)`$, with $`F(T)`$ priced on the first day.
 - So a chain of rolls earns exactly what buying the one contract delivering at the end earns.
-- Suppose spot ends where it started, and the contract is held for a time $\Delta > 0$. Then it loses exactly when $c > 0$, and gains exactly when $c < 0$.
-- Take crude flat at $80.00 against the $84.00 twelve-month. Then a year of rolls returns $80/84 - 1 = -1/21$, about −4.76%.
-- Take copper flat at $9,000.00 against $8,700.00. Then a year of rolls returns $9{,}000/8{,}700 - 1 = 1/29$, about +3.45%.
+- Suppose spot ends where it started, and the contract is held for a time $`\Delta > 0`$. Then it loses exactly when $`c > 0`$, and gains exactly when $`c < 0`$.
+- Take crude flat at $80.00 against the $84.00 twelve-month. Then a year of rolls returns $`80/84 - 1 = -1/21`$, about −4.76%.
+- Take copper flat at $9,000.00 against $8,700.00. Then a year of rolls returns $`9{,}000/8{,}700 - 1 = 1/29`$, about +3.45%.
 - Take crude spot ending at $76, $80, $84 or $88. Then the roller's year is −2/21, −1/21, 0 or +1/21, so break-even is exactly $84.
-- Spot up 5% and a year of crude roll cancel exactly: $(84/80)(80/84) = 1$.
-- Take $r = 5\%$ and $u = 2\%$. Then the full carry $r + u$ is exactly 7%.
+- Spot up 5% and a year of crude roll cancel exactly: $`(84/80)(80/84) = 1`$.
+- Take $`r = 5\%`$ and $`u = 2\%`$. Then the full carry $`r + u`$ is exactly 7%.
 
 The decimal values, the daily ledger, the random path, the strip fit and the funded roller are left to the Python and Rust checks.
 
@@ -726,8 +740,8 @@ example : (5 : ℚ) / 100 + 2 / 100 = 7 / 100 := by norm_num
 > **Try changing**
 > Guess first, then look at the answer, which the check prints on its `try:` lines.
 > - **A steeper strip.** Make the twelve-month crude contract $88.00 instead of $84.00. Does the monthly bleed double? Nearly: −0.7911% a month, against −0.4058%.
-> - **A tight market.** Keep $r = 5\%$ and $u = 2\%$ but let the convenience yield rise to $y = 7\%$. The carry is 0.000000, the strip is flat, and the roll is +0.0000%.
-> - **Roll less often.** Roll every three months instead of every month. Is the year cheaper? No: −4.7619%, the same as monthly, because the year's cost is $c$ however the year is cut.
+> - **A tight market.** Keep $`r = 5\%`$ and $`u = 2\%`$ but let the convenience yield rise to $`y = 7\%`$. The carry is 0.000000, the strip is flat, and the roll is +0.0000%.
+> - **Roll less often.** Roll every three months instead of every month. Is the year cheaper? No: −4.7619%, the same as monthly, because the year's cost is $`c`$ however the year is cut.
 > - **Spot rises past the twelve-month price.** Let spot drift to $88.00 over the year. Spot is up 10%, the roller only +4.7619%: the first 5% of the rise pays for the roll.
 
 ---
@@ -748,19 +762,19 @@ example : (5 : ℚ) / 100 + 2 / 100 = 7 / 100 := by norm_num
 
 - **Commodity index funds.** A fund that tracks oil by holding front-month futures reports two returns: the futures return, which includes the roll, and the spot move people see on the news. In a steep contango the fund can lag spot for months on end.
 - **Excess return and total return.** Commodity indices publish both: the excess return is the rolled futures alone, the total return adds interest on the cash. Step 4 is the difference between the two.
-- **Storage filling up.** When tanks fill, storage turns dear and $y$ falls toward nothing, so crude strips steepen toward full carry ([Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md)). Rollers bleed fastest exactly then.
+- **Storage filling up.** When tanks fill, storage turns dear and $`y`$ falls toward nothing, so crude strips steepen toward full carry ([Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md)). Rollers bleed fastest exactly then.
 - **Tight metals markets.** Copper, when warehouse stocks run low, trades in backwardation: users pay up for metal now. Rollers are paid for holding the risk that stocks come back.
-- **Gold.** Gold's strip almost always sits in mild contango, with the lease rate playing the part of $y$ ([Gold forward](01-gold-forward-and-the-lease-rate.md)).
+- **Gold.** Gold's strip almost always sits in mild contango, with the lease rate playing the part of $`y`$ ([Gold forward](01-gold-forward-and-the-lease-rate.md)).
 - **Options on futures.** A crude option usually settles into a futures contract, so it is priced off that contract's point on the strip, not off spot: [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md).
 
 > **Say it back**
-> A futures strip lists the price of a commodity for each delivery month. Its slope in log terms is the carry, $r + u - y$: rising is contango, falling is backwardation. Each contract meets spot on its delivery day, so a front-month holder earns spot's move plus the drift down (or up) to spot, which is minus the slope times the time held. A year of monthly rolls earns what the twelve-month contract earns, and with the cash interest added the roller earns what a barrel in a tank earns. The roll is carry, not a forecast and not a fee.
+> A futures strip lists the price of a commodity for each delivery month. Its slope in log terms is the carry, $`r + u - y`$: rising is contango, falling is backwardation. Each contract meets spot on its delivery day, so a front-month holder earns spot's move plus the drift down (or up) to spot, which is minus the slope times the time held. A year of monthly rolls earns what the twelve-month contract earns, and with the cash interest added the roller earns what a barrel in a tank earns. The roll is carry, not a forecast and not a fee.
 
 ---
 
 ## What this builds on
 
-- [Convenience yield](03-convenience-yield-implied-by-the-forward.md): the $y$ read backwards from a market forward, and the same crude at $80.00 and $84.00 with $y = 2.12\%$.
+- [Convenience yield](03-convenience-yield-implied-by-the-forward.md): the $`y`$ read backwards from a market forward, and the same crude at $80.00 and $84.00 with $`y = 2.12\%`$.
 - [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): returns as percentages of a price, and why −0.41% of $80.33 is the 33 cents lost.
 - [Growth factors](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/01-growth-factors.md): why twelve monthly rolls multiply rather than add, and why the log slope, not the spread over twelve, gives the month.
 

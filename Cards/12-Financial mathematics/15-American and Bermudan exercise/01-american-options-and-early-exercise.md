@@ -41,52 +41,60 @@ Each bar is the price of one plan. A low level waits too long. A high level sell
 
 ## The formula
 
-Notation first, in words. A stopping rule picks a date, and the date depends on how Acme moves, so it is a random date; its letter is $\tau$, said "tau".
+Notation first, in words. A stopping rule picks a date, and the date depends on how Acme moves, so it is a random date; its letter is $`\tau`$, said "tau".
 
-$\mathbb{E}^{\mathbb{Q}}$ is the **risk-neutral average**: the average over Acme's futures in the pricing world where every asset grows at the riskless rate, as on [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md).
+$`\mathbb{E}^{\mathbb{Q}}`$ is the **risk-neutral average**: the average over Acme's futures in the pricing world where every asset grows at the riskless rate, as on [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md).
 
-The word $\sup$, "supremum", means the best value over a whole family, here every stopping rule; it equals the largest value when a largest exists.
+The word $`\sup`$, "supremum", means the best value over a whole family, here every stopping rule; it equals the largest value when a largest exists.
 
-$$V_0 \;=\; \sup_{\tau\ \text{a stopping rule},\ 0 \le \tau \le T}\; \mathbb{E}^{\mathbb{Q}}\!\left[\,e^{-r\tau}\,g(S_\tau)\,\right]$$
+```math
+V_0 \;=\; \sup_{\tau\ \text{a stopping rule},\ 0 \le \tau \le T}\; \mathbb{E}^{\mathbb{Q}}\!\left[\,e^{-r\tau}\,g(S_\tau)\,\right]
+```
 
 **Read it aloud:** the American option is worth the best, over every rule for picking the day, of the average discounted payoff that rule collects.
 
-For the put the payoff is $g(S) = \max(K - S,\,0)$: the strike minus the share price when that is positive, zero otherwise. For the call it is $\max(S - K,\,0)$.
+For the put the payoff is $`g(S) = \max(K - S,\,0)`$: the strike minus the share price when that is positive, zero otherwise. For the call it is $`\max(S - K,\,0)`$.
 
-A node is one point on a tree: one possible Acme price on one date. On a tree of $N$ steps the supremum becomes a backward walk, the method of [Early exercise](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md):
+A node is one point on a tree: one possible Acme price on one date. On a tree of $`N`$ steps the supremum becomes a backward walk, the method of [Early exercise](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md):
 
-$$V_{\text{node}} \;=\; \max\Big(\,g(S_{\text{node}}),\;\; e^{-r\Delta t}\big[\,p\,V_{\text{up}} + (1-p)\,V_{\text{down}}\,\big]\Big)$$
+```math
+V_{\text{node}} \;=\; \max\Big(\,g(S_{\text{node}}),\;\; e^{-r\Delta t}\big[\,p\,V_{\text{up}} + (1-p)\,V_{\text{down}}\,\big]\Big)
+```
 
 **Read it aloud:** at every node, take the larger of the payoff now and the discounted average of the two values one step ahead.
 
 The American call and put are tied by a band, not an equation:
 
-$$S e^{-qT} - K \;\le\; C_A - P_A \;\le\; S - K e^{-rT}$$
+```math
+S e^{-qT} - K \;\le\; C_A - P_A \;\le\; S - K e^{-rT}
+```
 
 **Read it aloud:** the American call minus the American put lies between the dividend-shrunk share minus the full strike and the full share minus the discounted strike.
 
 The proof of the band's left half also gives a cap on what the right to choose the day can be worth:
 
-$$P_A - P_E \;\le\; K\,(1 - e^{-rT})$$
+```math
+P_A - P_E \;\le\; K\,(1 - e^{-rT})
+```
 
 **Read it aloud:** the early-exercise premium is at most the strike less its discounted value: the interest the strike earns over the option's life, in today's money.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_t$ | Acme's price today; its price at time $t$ | $100.00 | put cheaper, call dearer |
-| $K$ | the strike: the price the put may sell at | $100.00 | put dearer |
-| $r$, $e^{-rT}$ | the riskless rate, continuously compounded; the discount on a dollar due at $T$ | 5% | early exercise pays more for a put: premium 0.897825 at 10% (500 steps) |
-| $q$ | the dividend yield Acme pays out, per year | 2% | put dearer; at 0 the American put is 6.088810 (500 steps) |
-| $\sigma$ | volatility: how jumpy Acme is. Say "sigma". | 20% | both prices rise |
-| $T$, $t$ | the option's life in years; a moment within it | 1 year | more time: more rules to choose among |
-| $N$, $n$, $\Delta t$, $u$, $p$ | tree steps; a date on the tree; one step's length $T/N$; the up factor $e^{\sigma\sqrt{\Delta t}}$; the risk-neutral weight on up | 2,000 steps; see Worked numbers | more steps: closer to the true price |
-| $g$ | the payoff function: what exercising pays at a given price | $\max(K - S, 0)$ for the put | — |
-| $\tau$, $L$ | a stopping rule's random date; a fixed selling level in a simple rule | "first time at or below $82" | — |
-| $\mathbb{E}^{\mathbb{Q}}$ | the risk-neutral average over Acme's futures | — | — |
-| $V_0$, $V_n$, $W_n$, $\sup$ | the price today; the backward-walk value and the best-rule value on date $n$; the best value over all rules | 6.660226 | — |
-| $P_A$, $C_A$, $P_E$, $C_E$ | American put and call; European put and call | 6.660226, 9.226034; 6.330081, 9.227006 | — |
+| $`S`$, $`S_t`$ | Acme's price today; its price at time $`t`$ | $100.00 | put cheaper, call dearer |
+| $`K`$ | the strike: the price the put may sell at | $100.00 | put dearer |
+| $`r`$, $`e^{-rT}`$ | the riskless rate, continuously compounded; the discount on a dollar due at $`T`$ | 5% | early exercise pays more for a put: premium 0.897825 at 10% (500 steps) |
+| $`q`$ | the dividend yield Acme pays out, per year | 2% | put dearer; at 0 the American put is 6.088810 (500 steps) |
+| $`\sigma`$ | volatility: how jumpy Acme is. Say "sigma". | 20% | both prices rise |
+| $`T`$, $`t`$ | the option's life in years; a moment within it | 1 year | more time: more rules to choose among |
+| $`N`$, $`n`$, $`\Delta t`$, $`u`$, $`p`$ | tree steps; a date on the tree; one step's length $`T/N`$; the up factor $`e^{\sigma\sqrt{\Delta t}}`$; the risk-neutral weight on up | 2,000 steps; see Worked numbers | more steps: closer to the true price |
+| $`g`$ | the payoff function: what exercising pays at a given price | $`\max(K - S, 0)`$ for the put | — |
+| $`\tau`$, $`L`$ | a stopping rule's random date; a fixed selling level in a simple rule | "first time at or below $82" | — |
+| $`\mathbb{E}^{\mathbb{Q}}`$ | the risk-neutral average over Acme's futures | — | — |
+| $`V_0`$, $`V_n`$, $`W_n`$, $`\sup`$ | the price today; the backward-walk value and the best-rule value on date $`n`$; the best value over all rules | 6.660226 | — |
+| $`P_A`$, $`C_A`$, $`P_E`$, $`C_E`$ | American put and call; European put and call | 6.660226, 9.226034; 6.330081, 9.227006 | — |
 
-$\Delta t = T/N$, $u = e^{\sigma\sqrt{\Delta t}}$, down factor $1/u$, and $p = (e^{(r-q)\Delta t} - 1/u)/(u - 1/u)$ are the Cox–Ross–Rubinstein settings of [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md), used unchanged.
+$`\Delta t = T/N`$, $`u = e^{\sigma\sqrt{\Delta t}}`$, down factor $`1/u`$, and $`p = (e^{(r-q)\Delta t} - 1/u)/(u - 1/u)`$ are the Cox–Ross–Rubinstein settings of [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md), used unchanged.
 
 ### When it holds
 
@@ -125,19 +133,19 @@ So no rule beats the larger of those two numbers, and the rule "take the larger 
 <details>
 <summary>Detailed proof: backward induction equals the supremum on a tree</summary>
 
-Number the dates $0, 1, \dots, N$. Write $W_n$ for the best value, at a node on date $n$, over rules that have not yet stopped: the supremum over rules taking values in dates $n$ to $N$. Claim: $W_n$ equals the backward-walk value $V_n$ at every node.
+Number the dates $`0, 1, \dots, N`$. Write $`W_n`$ for the best value, at a node on date $`n`$, over rules that have not yet stopped: the supremum over rules taking values in dates $`n`$ to $`N`$. Claim: $`W_n`$ equals the backward-walk value $`V_n`$ at every node.
 
-Date $N$: every rule stops at $N$, so $W_N = g(S_N) = V_N$.
+Date $`N`$: every rule stops at $`N`$, so $`W_N = g(S_N) = V_N`$.
 
-Suppose $W_{n+1} = V_{n+1}$ at every node of date $n+1$. Take any rule $\tau$ with $\tau \ge n$. On the event $\tau = n$ it collects $g(S_n)$. On the event $\tau > n$ it is a rule starting from date $n+1$, so from each next node it collects at most $W_{n+1} = V_{n+1}$; its value at date $n$ is at most $e^{-r\Delta t}[\,p V_{\text{up}} + (1-p) V_{\text{down}}\,]$. The decision "stop at $n$ or not" is known at date $n$, so the value of $\tau$ is at most the larger of the two numbers, $V_n$. Hence $W_n \le V_n$.
+Suppose $`W_{n+1} = V_{n+1}`$ at every node of date $`n+1`$. Take any rule $`\tau`$ with $`\tau \ge n`$. On the event $`\tau = n`$ it collects $`g(S_n)`$. On the event $`\tau > n`$ it is a rule starting from date $`n+1`$, so from each next node it collects at most $`W_{n+1} = V_{n+1}`$; its value at date $`n`$ is at most $`e^{-r\Delta t}[\,p V_{\text{up}} + (1-p) V_{\text{down}}\,]`$. The decision "stop at $`n`$ or not" is known at date $`n`$, so the value of $`\tau`$ is at most the larger of the two numbers, $`V_n`$. Hence $`W_n \le V_n`$.
 
-The rule "stop at $n$ if $g(S_n)$ is the larger, otherwise follow the best rule from $n+1$" collects exactly $V_n$. Hence $W_n \ge V_n$, and $W_n = V_n$. At $n = 0$ this is the claim of the card.
+The rule "stop at $`n`$ if $`g(S_n)`$ is the larger, otherwise follow the best rule from $`n+1`$" collects exactly $`V_n`$. Hence $`W_n \ge V_n`$, and $`W_n = V_n`$. At $`n = 0`$ this is the claim of the card.
 
 </details>
 
 ### Step 3: two rules give two floors
 
-"Never sell early" is one of the rules, so the American put is worth at least the European put, and the **early-exercise premium** $P_A - P_E$ is never negative. "Sell now" is another rule, so the American put is worth at least its payoff today. A European put can fall below its payoff: its holder may not cash in.
+"Never sell early" is one of the rules, so the American put is worth at least the European put, and the **early-exercise premium** $`P_A - P_E`$ is never negative. "Sell now" is another rule, so the American put is worth at least its payoff today. A European put can fall below its payoff: its holder may not cash in.
 
 ### Step 4: why a put ever wants the cash early
 
@@ -149,26 +157,26 @@ For a call the logic runs the other way: exercising pays the strike early and gi
 
 ### Step 5: the parity band
 
-Put–call parity, $C_E - P_E = S e^{-qT} - K e^{-rT}$, is an equation for European options ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Its proof holds both options to the end. Once either side may exercise early, the proof fails and only a band survives.
+Put–call parity, $`C_E - P_E = S e^{-qT} - K e^{-rT}`$, is an equation for European options ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Its proof holds both options to the end. Once either side may exercise early, the proof fails and only a band survives.
 
 Each half compares two portfolios, one never worth less than the other on whatever day an exercise happens: an American put plus a share against an American call plus discounted cash for the upper half, a European call plus the full strike in cash against an American put plus a dividend-shrunk share for the lower. The folded proof runs both.
 
-The lower half, rearranged with parity for the European options, says $P_A - P_E \le K(1 - e^{-rT})$. That is Step 4 in one line: the right to choose the day is worth at most a year's interest on the strike, $4.88 here. The house put collects $0.33 of it.
+The lower half, rearranged with parity for the European options, says $`P_A - P_E \le K(1 - e^{-rT})`$. That is Step 4 in one line: the right to choose the day is worth at most a year's interest on the strike, $4.88 here. The house put collects $0.33 of it.
 
 <details>
 <summary>Detailed proof: the two halves of the band</summary>
 
-**Upper half, $C_A - P_A \le S - K e^{-rT}$.** Portfolio I: one American put and one share, dividends kept as cash. Portfolio II: one American call and $K e^{-rT}$ in the bank. Let the holder of II exercise the call at any date $t$. Then II is worth $(S_t - K) + K e^{-r(T-t)} \le S_t$, since $K e^{-r(T-t)} \le K$. Portfolio I is worth at least $S_t$ at that moment, since the put is worth at least zero. If the call is never exercised, at $T$ II is worth $\max(S_T - K, 0) + K = \max(S_T, K)$ and I is worth at least $\max(K - S_T, 0) + S_T = \max(K, S_T)$. So I is worth at least II in every case, and today $P_A + S \ge C_A + K e^{-rT}$.
+**Upper half, $`C_A - P_A \le S - K e^{-rT}`$.** Portfolio I: one American put and one share, dividends kept as cash. Portfolio II: one American call and $`K e^{-rT}`$ in the bank. Let the holder of II exercise the call at any date $`t`$. Then II is worth $`(S_t - K) + K e^{-r(T-t)} \le S_t`$, since $`K e^{-r(T-t)} \le K`$. Portfolio I is worth at least $`S_t`$ at that moment, since the put is worth at least zero. If the call is never exercised, at $`T`$ II is worth $`\max(S_T - K, 0) + K = \max(S_T, K)`$ and I is worth at least $`\max(K - S_T, 0) + S_T = \max(K, S_T)`$. So I is worth at least II in every case, and today $`P_A + S \ge C_A + K e^{-rT}`$.
 
-**Lower half, $C_A - P_A \ge S e^{-qT} - K$.** Portfolio III: one European call and $K$ in the bank. Portfolio IV: one American put and $e^{-qT}$ shares, dividends reinvested so the holding grows to one share at $T$. Let IV's put be exercised at date $t$. Then IV is worth $(K - S_t) + e^{-q(T-t)} S_t \le K$, and III is worth at least $K e^{rt} \ge K$. If the put is never exercised, at $T$ IV is worth $\max(K - S_T, 0) + S_T = \max(K, S_T)$ and III is worth $\max(S_T - K, 0) + K e^{rT} \ge \max(S_T, K)$. So $C_E + K \ge P_A + S e^{-qT}$. With $C_A \ge C_E$ (Step 3, for the call) this gives $C_A - P_A \ge S e^{-qT} - K$.
+**Lower half, $`C_A - P_A \ge S e^{-qT} - K`$.** Portfolio III: one European call and $`K`$ in the bank. Portfolio IV: one American put and $`e^{-qT}`$ shares, dividends reinvested so the holding grows to one share at $`T`$. Let IV's put be exercised at date $`t`$. Then IV is worth $`(K - S_t) + e^{-q(T-t)} S_t \le K`$, and III is worth at least $`K e^{rt} \ge K`$. If the put is never exercised, at $`T`$ IV is worth $`\max(K - S_T, 0) + S_T = \max(K, S_T)`$ and III is worth $`\max(S_T - K, 0) + K e^{rT} \ge \max(S_T, K)`$. So $`C_E + K \ge P_A + S e^{-qT}`$. With $`C_A \ge C_E`$ (Step 3, for the call) this gives $`C_A - P_A \ge S e^{-qT} - K`$.
 
-**The premium cap.** From $C_E + K \ge P_A + S e^{-qT}$ and European parity $C_E = P_E + S e^{-qT} - K e^{-rT}$: $P_E + K - K e^{-rT} \ge P_A$, so $P_A - P_E \le K(1 - e^{-rT})$.
+**The premium cap.** From $`C_E + K \ge P_A + S e^{-qT}`$ and European parity $`C_E = P_E + S e^{-qT} - K e^{-rT}`$: $`P_E + K - K e^{-rT} \ge P_A`$, so $`P_A - P_E \le K(1 - e^{-rT})`$.
 
 </details>
 
 ### Step 6: more steps, more rules, a higher price
 
-A tree of $N$ steps lets the holder exercise on $N + 1$ dates, not on any day. That makes it a Bermudan option ([Bermudan options](03-bermudan-options.md)). Doubling the steps keeps every old date and adds new ones, so every old rule is still available and the best can only improve.
+A tree of $`N`$ steps lets the holder exercise on $`N + 1`$ dates, not on any day. That makes it a Bermudan option ([Bermudan options](03-bermudan-options.md)). Doubling the steps keeps every old date and adds new ones, so every old rule is still available and the best can only improve.
 
 The tree also refines its picture of Acme at the same time, which wiggles the price by the tree's own error. On the sequence 50, 100, 200, 500, 1,000, 2,000 steps the American price climbs every time: 6.641549 to 6.660226.
 
@@ -180,20 +188,20 @@ A second machine, a grid that solves [The Black-Scholes equation](../08-The%20Bl
 
 ## Worked numbers, by hand
 
-A two-step tree for the house put: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$, $N = 2$, so $\Delta t = 0.5$. Every rule is priced by hand.
+A two-step tree for the house put: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$, $`N = 2`$, so $`\Delta t = 0.5`$. Every rule is priced by hand.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| up factor $u$ | $e^{0.20 \times \sqrt{0.5}}$ | 1.151910 |
-| weight on up, $p$ | $(e^{0.03 \times 0.5} - 1/u)/(u - 1/u)$ | 0.517959 |
-| one-step discount | $e^{-0.05 \times 0.5}$ | 0.975310 |
-| Acme after a fall | $100 / 1.151910$ | 86.812345 |
-| Acme after two falls | $86.812345 / 1.151910$ | 75.363832 |
-| payoff after two falls | $100 - 75.363832$ | 24.636168 |
-| after a fall: wait | $0.975310 \times (1 - 0.517959) \times 24.636168$ | 11.582444 |
-| after a fall: sell now | $100 - 86.812345$ | 13.187655 |
-| rule "never sell early" | $0.975310 \times (1 - 0.517959) \times 11.582444$ | 5.445368 |
-| rule "sell after a fall" | $0.975310 \times (1 - 0.517959) \times 13.187655$ | 6.200042 |
+| up factor $`u`$ | $`e^{0.20 \times \sqrt{0.5}}`$ | 1.151910 |
+| weight on up, $`p`$ | $`(e^{0.03 \times 0.5} - 1/u)/(u - 1/u)`$ | 0.517959 |
+| one-step discount | $`e^{-0.05 \times 0.5}`$ | 0.975310 |
+| Acme after a fall | $`100 / 1.151910`$ | 86.812345 |
+| Acme after two falls | $`86.812345 / 1.151910`$ | 75.363832 |
+| payoff after two falls | $`100 - 75.363832`$ | 24.636168 |
+| after a fall: wait | $`0.975310 \times (1 - 0.517959) \times 24.636168`$ | 11.582444 |
+| after a fall: sell now | $`100 - 86.812345`$ | 13.187655 |
+| rule "never sell early" | $`0.975310 \times (1 - 0.517959) \times 11.582444`$ | 5.445368 |
+| rule "sell after a fall" | $`0.975310 \times (1 - 0.517959) \times 13.187655`$ | 6.200042 |
 | **best rule = tree with max** | larger of the two | **6.200042** |
 
 After a rise every later node pays nothing, so the up branch contributes zero to every line. The backward walk makes one comparison, after a fall: selling, 13.187655, beats waiting, 11.582444. The tree price is the "sell after a fall" rule, as Step 2 promised. Two steps is crude; 2,000 steps give 6.660226.
@@ -202,17 +210,17 @@ The house numbers, from the 2,000-step tree and the closed forms:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| American put $P_A$ | tree, 2,000 steps | 6.660226 |
-| European put $P_E$ | closed form | 6.330081 |
-| **premium** | $6.660226 - 6.330081$ | **0.330145** |
-| premium cap | $100 \times (1 - e^{-0.05})$ | 4.877058 |
-| American call $C_A$ | tree, 2,000 steps | 9.226034 |
-| band, lower | $100 e^{-0.02} - 100$ | −1.980133 |
-| $C_A - P_A$ | $9.226034 - 6.660226$ | 2.565808 |
-| band, upper | $100 - 100 e^{-0.05}$ | 4.877058 |
-| European $C - P$, for comparison | $9.227006 - 6.330081$ | 2.896925 |
+| American put $`P_A`$ | tree, 2,000 steps | 6.660226 |
+| European put $`P_E`$ | closed form | 6.330081 |
+| **premium** | $`6.660226 - 6.330081`$ | **0.330145** |
+| premium cap | $`100 \times (1 - e^{-0.05})`$ | 4.877058 |
+| American call $`C_A`$ | tree, 2,000 steps | 9.226034 |
+| band, lower | $`100 e^{-0.02} - 100`$ | −1.980133 |
+| $`C_A - P_A`$ | $`9.226034 - 6.660226`$ | 2.565808 |
+| band, upper | $`100 - 100 e^{-0.05}`$ | 4.877058 |
+| European $`C - P`$, for comparison | $`9.227006 - 6.330081`$ | 2.896925 |
 
-The right to choose the day adds 33 cents to a $6.33 put, about 5%, against a ceiling of $4.88. The American difference, 2.565808, sits inside the band and below the European 2.896925: the put gains from early exercise and the call barely does. The band's upper edge equals the premium cap here only because $S = K$.
+The right to choose the day adds 33 cents to a $6.33 put, about 5%, against a ceiling of $4.88. The American difference, 2.565808, sits inside the band and below the European 2.896925: the put gains from early exercise and the call barely does. The band's upper edge equals the premium cap here only because $`S = K`$.
 
 ### What breaks if you drop a piece
 
@@ -624,9 +632,9 @@ The two outputs are byte-identical.
 
 Lean proves Step 2, the parity band and the premium bounds, on a tree of any number of steps.
 
-- Take any payoff $g$ and a weight $p$ between 0 and 1. Then the backward walk's value is the price of some stopping rule, and no stopping rule is worth more.
-- Take the Cox–Ross–Rubinstein tree, with $r$, $q$, $S$ and $K$ not negative and $p$ between 0 and 1. Then $S e^{-qT} - K \le C_A - P_A \le S - K e^{-rT}$.
-- Take the same tree, with $P_E$ the European put on it. Then $0 \le P_A - P_E \le K(1 - e^{-rT})$.
+- Take any payoff $`g`$ and a weight $`p`$ between 0 and 1. Then the backward walk's value is the price of some stopping rule, and no stopping rule is worth more.
+- Take the Cox–Ross–Rubinstein tree, with $`r`$, $`q`$, $`S`$ and $`K`$ not negative and $`p`$ between 0 and 1. Then $`S e^{-qT} - K \le C_A - P_A \le S - K e^{-rT}`$.
+- Take the same tree, with $`P_E`$ the European put on it. Then $`0 \le P_A - P_E \le K(1 - e^{-rT})`$.
 
 Every dollar figure, the climb as steps grow, and the agreement of tree and grid are left to the Python and Rust checks.
 
@@ -1231,9 +1239,9 @@ end AmericanOption
 > **Treating early exercise as a forecast.** Selling early is not a bet that Acme will rebound. The best rule sells deep down because the interest on the strike outweighs the value of waiting for a further fall, a comparison of two prices made on the day. The American price rests on that comparison at every node, not on any view of where Acme is going.
 >
 > Smaller traps:
-> - **Using parity as an equation for American options.** $C_A - P_A$ is 2.565808, not the European 2.896925. Backing the American put out of the American call by European parity returns the European put's value and misses the premium.
+> - **Using parity as an equation for American options.** $`C_A - P_A`$ is 2.565808, not the European 2.896925. Backing the American put out of the American call by European parity returns the European put's value and misses the premium.
 > - **Exercising the moment the put pays.** Worth $0.44 as a rule, against $6.66. A put barely in the money is worth far more alive.
-> - **Reading a tree's price as the American price.** An $N$-step tree prices $N + 1$ exercise dates. At 50 steps it is 6.641549, 1.9 cents short of 2,000 steps; the limit is near 6.6606.
+> - **Reading a tree's price as the American price.** An $`N`$-step tree prices $`N + 1`$ exercise dates. At 50 steps it is 6.641549, 1.9 cents short of 2,000 steps; the limit is near 6.6606.
 > - **Measuring the premium against a different machine.** Tree American minus closed-form European is 0.330145; minus the same tree's European it is 0.331117. The second is like for like; the first mixes in the tree's error.
 
 ---

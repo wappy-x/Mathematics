@@ -38,11 +38,13 @@ Orange: a six at roll N or later, chance 1 for every N (within the 60 rolls afte
 
 ## The formula
 
-Notation first, in words. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the collection of sets we allow ourselves to measure, and a probability on them. Here one outcome $\omega$ is one endless record of rolls. The probability is the product law that makes the rolls independent fair dice ([Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md)). An event is a measurable set of outcomes: $A_n$ is "roll n is a six", $B_n$ is "rolls n to 2n − 1 are all sixes". $A_n^c$, the complement, is "$A_n$ does not happen".
+Notation first, in words. A probability space $`(\Omega, \mathcal{F}, P)`$ is a set of outcomes, the collection of sets we allow ourselves to measure, and a probability on them. Here one outcome $`\omega`$ is one endless record of rolls. The probability is the product law that makes the rolls independent fair dice ([Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md)). An event is a measurable set of outcomes: $`A_n`$ is "roll n is a six", $`B_n`$ is "rolls n to 2n − 1 are all sixes". $`A_n^c`$, the complement, is "$`A_n`$ does not happen".
 
 **Infinitely often**, written i.o., is a new set built from the events: the outcomes that land in infinitely many of them. It is also called the **lim sup of the sets**, read "infinitely many of them happen".
 
-$$\{A_n \text{ i.o.}\} \;=\; \limsup_{n\to\infty} A_n \;=\; \bigcap_{N=1}^{\infty}\ \bigcup_{n=N}^{\infty} A_n$$
+```math
+\{A_n \text{ i.o.}\} \;=\; \limsup_{n\to\infty} A_n \;=\; \bigcap_{N=1}^{\infty}\ \bigcup_{n=N}^{\infty} A_n
+```
 
 **Read it aloud:** for every cut-off N, at least one of the events at N or later happens.
 
@@ -50,42 +52,48 @@ An outcome with a last six fails the test at the cut-off just past it.
 
 **The first lemma**, for any events at all:
 
-$$\sum_{n=1}^{\infty} P(A_n) < \infty \quad\Longrightarrow\quad P\big(\limsup_{n\to\infty} A_n\big) = 0$$
+```math
+\sum_{n=1}^{\infty} P(A_n) < \infty \quad\Longrightarrow\quad P\big(\limsup_{n\to\infty} A_n\big) = 0
+```
 
 **Read it aloud:** if the chances add up to a finite number, the chance that infinitely many of the events happen is zero.
 
 **The second lemma**, for independent events:
 
-$$A_1, A_2, \dots \text{ independent and } \sum_{n=1}^{\infty} P(A_n) = \infty \quad\Longrightarrow\quad P\big(\limsup_{n\to\infty} A_n\big) = 1$$
+```math
+A_1, A_2, \dots \text{ independent and } \sum_{n=1}^{\infty} P(A_n) = \infty \quad\Longrightarrow\quad P\big(\limsup_{n\to\infty} A_n\big) = 1
+```
 
 **Read it aloud:** if the events are independent and their chances add up to infinity, then with probability 1 infinitely many happen.
 
 The second lemma runs on one inequality about numbers:
 
-$$1 - x \le e^{-x} \quad \text{for every real } x$$
+```math
+1 - x \le e^{-x} \quad \text{for every real } x
+```
 
 **Read it aloud:** a chance of missing is at most e to the minus the chance of hitting.
 
-**The corollary.** If $X_n$ converges to $X$ in probability, some subsequence $X_{n_k}$ converges to $X$ almost surely, that is, except on a set of probability zero.
+**The corollary.** If $`X_n`$ converges to $`X`$ in probability, some subsequence $`X_{n_k}`$ converges to $`X`$ almost surely, that is, except on a set of probability zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$, $P$, $\omega$ | outcomes, the sets we may measure, the probability; one outcome | endless roll records; the product law of fair dice; one record | — |
-| $A_n$, $A_i$ | the n-th (or i-th) event of a list | roll n is a six, chance 1/6 | — |
-| $B_n$ | the run-start event | rolls n to 2n − 1 all sixes, chance 6^(−n) | longer runs, smaller chances |
-| $A_n^c$ | the complement: $A_n$ fails | roll n is not a six, chance 5/6 | — |
-| $\limsup$, i.o. | the outcomes in infinitely many of the events | infinitely many sixes | — |
-| $T_N$, $D_N$, $D_{N,K}$, $E_k$ | some event at N or later; no event at N or later; no event from N to K; the k-th subsequence miss | T_3: a run-start at roll 3 or later | a later N, a smaller $T_N$ |
-| $\mathbf{1}_A$, $S$ | the indicator of A, one on A and zero off it; the count $S = \sum_n \mathbf{1}_{A_n}$ | the number of run-starts in a record, mean 0.2 | — |
-| $n$, $N$, $K$, $m$ | roll numbers; a cut-off; a later roll; a stretch length | N = 3; m = 60 rolls | a later cut-off, a smaller tail |
-| $x$ | a real number, here a chance in [0, 1] | 1/6 | the bound $e^{-x}$ falls |
-| $f$ | the gap $e^{-x} - (1 - x)$ in Lemma 2 | zero at x = 0, positive elsewhere | — |
-| $I$, $C$ | a finite set of indices; the overlap of the other events in it | I = {1, 2, 3}: rolls 1 to 3 all sixes, chance 1/216 | — |
-| $X_n$, $X$ | random variables and a proposed limit | the share of sixes in the first n rolls; 1/6 | — |
-| $\varepsilon$ | a tolerance | 0.05 | fewer misses |
-| $j$ | a counter for the tolerances 1/j | j = 20: tolerance 0.05 | a finer tolerance |
-| $K(\omega)$ | the index from which record ω has no more subsequence misses | — | — |
-| $n_k$, $k$, $X_{n_k}$ | a subsequence of indices, its counter, and the variables along it | n_k = k^2: 1, 4, 9, …, 10000 | sparser, easier to sum |
+| $`\Omega`$, $`\mathcal{F}`$, $`P`$, $`\omega`$ | outcomes, the sets we may measure, the probability; one outcome | endless roll records; the product law of fair dice; one record | — |
+| $`A_n`$, $`A_i`$ | the n-th (or i-th) event of a list | roll n is a six, chance 1/6 | — |
+| $`B_n`$ | the run-start event | rolls n to 2n − 1 all sixes, chance 6^(−n) | longer runs, smaller chances |
+| $`A_n^c`$ | the complement: $`A_n`$ fails | roll n is not a six, chance 5/6 | — |
+| $`\limsup`$, i.o. | the outcomes in infinitely many of the events | infinitely many sixes | — |
+| $`T_N`$, $`D_N`$, $`D_{N,K}`$, $`E_k`$ | some event at N or later; no event at N or later; no event from N to K; the k-th subsequence miss | T_3: a run-start at roll 3 or later | a later N, a smaller $`T_N`$ |
+| $`\mathbf{1}_A`$, $`S`$ | the indicator of A, one on A and zero off it; the count $`S = \sum_n \mathbf{1}_{A_n}`$ | the number of run-starts in a record, mean 0.2 | — |
+| $`n`$, $`N`$, $`K`$, $`m`$ | roll numbers; a cut-off; a later roll; a stretch length | N = 3; m = 60 rolls | a later cut-off, a smaller tail |
+| $`x`$ | a real number, here a chance in [0, 1] | 1/6 | the bound $`e^{-x}`$ falls |
+| $`f`$ | the gap $`e^{-x} - (1 - x)`$ in Lemma 2 | zero at x = 0, positive elsewhere | — |
+| $`I`$, $`C`$ | a finite set of indices; the overlap of the other events in it | I = {1, 2, 3}: rolls 1 to 3 all sixes, chance 1/216 | — |
+| $`X_n`$, $`X`$ | random variables and a proposed limit | the share of sixes in the first n rolls; 1/6 | — |
+| $`\varepsilon`$ | a tolerance | 0.05 | fewer misses |
+| $`j`$ | a counter for the tolerances 1/j | j = 20: tolerance 0.05 | a finer tolerance |
+| $`K(\omega)`$ | the index from which record ω has no more subsequence misses | — | — |
+| $`n_k`$, $`k`$, $`X_{n_k}`$ | a subsequence of indices, its counter, and the variables along it | n_k = k^2: 1, 4, 9, …, 10000 | sparser, easier to sum |
 
 ### When it holds
 
@@ -101,19 +109,23 @@ $$1 - x \le e^{-x} \quad \text{for every real } x$$
 
 ### Step 0: "infinitely often" is the end of a shrinking list of tails
 
-Write $T_N$ for the event from N on, "some event at N or later happens". Moving the cut-off later can only remove candidates, so $T_1 \supseteq T_2 \supseteq T_3 \dots$ The lim sup is what all the tails share. Continuity from above ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) says the chances of shrinking sets fall to the chance of what they share, when the first chance is finite, which a probability always is. So
+Write $`T_N`$ for the event from N on, "some event at N or later happens". Moving the cut-off later can only remove candidates, so $`T_1 \supseteq T_2 \supseteq T_3 \dots`$ The lim sup is what all the tails share. Continuity from above ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) says the chances of shrinking sets fall to the chance of what they share, when the first chance is finite, which a probability always is. So
 
-$$P\big(\limsup_{n\to\infty} A_n\big) \;=\; \lim_{N\to\infty} P\Big(\bigcup_{n=N}^{\infty} A_n\Big)$$
+```math
+P\big(\limsup_{n\to\infty} A_n\big) \;=\; \lim_{N\to\infty} P\Big(\bigcup_{n=N}^{\infty} A_n\Big)
+```
 
 Both lemmas are then statements about tail chances. The first shows they fall to 0. The second shows they stay at 1. The chart above shows the tail chance for sixes and an upper bound on it for run-starts.
 
 ### Step 1: the event is measurable, and its complement has a name
 
-The tail $T_N$ is a countable union of events, and the lim sup a countable intersection of tails. The sets we may measure are closed under both, so the lim sup is an event.
+The tail $`T_N`$ is a countable union of events, and the lim sup a countable intersection of tails. The sets we may measure are closed under both, so the lim sup is an event.
 
 Its complement is "eventually never": some cut-off after which none of the events happens.
 
-$$\Big(\limsup_{n\to\infty} A_n\Big)^c \;=\; \bigcup_{N=1}^{\infty}\ \bigcap_{n=N}^{\infty} A_n^c$$
+```math
+\Big(\limsup_{n\to\infty} A_n\Big)^c \;=\; \bigcup_{N=1}^{\infty}\ \bigcap_{n=N}^{\infty} A_n^c
+```
 
 A record with its last six at roll 40 lies in the piece for N = 41. The second lemma works on this form.
 
@@ -121,23 +133,27 @@ A record with its last six at roll 40 lies in the piece for N = 41. The second l
 
 The chance of a union is at most the sum of the chances, even for countably many overlapping events. That is countable subadditivity. So
 
-$$P\Big(\bigcup_{n=N}^{\infty} A_n\Big) \;\le\; \sum_{n=N}^{\infty} P(A_n)$$
+```math
+P\Big(\bigcup_{n=N}^{\infty} A_n\Big) \;\le\; \sum_{n=N}^{\infty} P(A_n)
+```
 
-The right side is the tail of a convergent series, which goes to 0. The lim sup sits inside every $T_N$, so its chance is at most every one of these numbers: zero.
+The right side is the tail of a convergent series, which goes to 0. The lim sup sits inside every $`T_N`$, so its chance is at most every one of these numbers: zero.
 
 On the die: the run-start chances from N = 3 on add to 1/216 + 1/1296 + … = 0.0056. From N = 6 on, 0.0000 to four places. The run-starts are not independent, since B_2 and B_3 both read roll 3. The argument never asked.
 
 "Finitely often" is not "never". The chance of at least one run-start, ever, lies between 0.193667 and 0.193671, and the rest see none.
 
-A second road counts. Let $S$ be the number of events that happen. Monotone convergence ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) lets the mean pass through the infinite sum of indicators, so the mean count is the sum of the chances: 0.2 for run-starts, against 0.1981 simulated. A count with a finite mean is finite with probability 1.
+A second road counts. Let $`S`$ be the number of events that happen. Monotone convergence ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) lets the mean pass through the infinite sum of indicators, so the mean count is the sum of the chances: 0.2 for run-starts, against 0.1981 simulated. A count with a finite mean is finite with probability 1.
 
 ### Step 3: the second lemma, independent misses multiply and the product dies
 
 Fix a cut-off N. Missing every event from N to a later roll K is an intersection of complements. The complements of independent events are independent too, so its chance is a product:
 
-$$P\Big(\bigcap_{n=N}^{K} A_n^c\Big) \;=\; \prod_{n=N}^{K} \big(1 - P(A_n)\big) \;\le\; \exp\Big(-\sum_{n=N}^{K} P(A_n)\Big)$$
+```math
+P\Big(\bigcap_{n=N}^{K} A_n^c\Big) \;=\; \prod_{n=N}^{K} \big(1 - P(A_n)\big) \;\le\; \exp\Big(-\sum_{n=N}^{K} P(A_n)\Big)
+```
 
-The inequality is $1 - x \le e^{-x}$, used once per factor. The sum of the chances diverges, and throwing away the first N − 1 finite terms leaves it divergent. So as K grows, the right side goes to 0, and the chance of never hitting again after N is 0.
+The inequality is $`1 - x \le e^{-x}`$, used once per factor. The sum of the chances diverges, and throwing away the first N − 1 finite terms leaves it divergent. So as K grows, the right side goes to 0, and the chance of never hitting again after N is 0.
 
 Every piece of "eventually never" is null, chance 0, and there are countably many pieces, one per N. A countable union of null sets is null, so "infinitely often" has chance 1.
 
@@ -146,7 +162,7 @@ On the die: 60 rolls in a row without a six has chance (5/6)^60 = 0.00001775, un
 <details>
 <summary>Why 1 − x ≤ e^(−x)</summary>
 
-The curve $y = e^{-x}$ bends upward everywhere: its slope $-e^{-x}$ is always increasing. A curve that bends upward lies above each of its tangent lines. Its tangent at 0 passes through (0, 1) with slope −1, and that line is $y = 1 - x$. Equality holds only at 0. The code checks four cases: 0.33489798 under 0.36787944 at m = 6, and three more.
+The curve $`y = e^{-x}`$ bends upward everywhere: its slope $`-e^{-x}`$ is always increasing. A curve that bends upward lies above each of its tangent lines. Its tangent at 0 passes through (0, 1) with slope −1, and that line is $`y = 1 - x`$. Equality holds only at 0. The code checks four cases: 0.33489798 under 0.36787944 at m = 6, and three more.
 
 </details>
 
@@ -156,40 +172,40 @@ For independent events the two lemmas cover every case: a finite sum gives chanc
 
 ### Step 5: from in probability to almost surely, along a subsequence
 
-Converging **in probability** means that for every tolerance $\varepsilon$, the chance that $X_n$ is more than $\varepsilon$ from $X$ goes to 0. It says nothing about any one record. The first lemma buys a statement about records, at the price of a subsequence.
+Converging **in probability** means that for every tolerance $`\varepsilon`$, the chance that $`X_n`$ is more than $`\varepsilon`$ from $`X`$ goes to 0. It says nothing about any one record. The first lemma buys a statement about records, at the price of a subsequence.
 
-Pick indices $n_k$, rising, where the chance of missing by more than $2^{-k}$ at step $n_k$ is at most $2^{-k}$. These chances add up to at most 1. By the first lemma, only finitely many of those misses happen, with probability 1, so $X_{n_k}$ converges to $X$ on almost every record. The modes card proved this as Riesz's theorem; here it is the first lemma at work.
+Pick indices $`n_k`$, rising, where the chance of missing by more than $`2^{-k}`$ at step $`n_k`$ is at most $`2^{-k}`$. These chances add up to at most 1. By the first lemma, only finitely many of those misses happen, with probability 1, so $`X_{n_k}`$ converges to $`X`$ on almost every record. The modes card proved this as Riesz's theorem; here it is the first lemma at work.
 
-On the die, let $X_n$ be the share of sixes in the first n rolls. Chebyshev's inequality (the chance of landing more than a tolerance from the mean is at most the variance divided by the tolerance squared) bounds the chance of missing 1/6 by more than 0.05 by 500/(9n). The weak law is this bound going to 0 ([The weak law of large numbers](03-weak-law-of-large-numbers.md)).
+On the die, let $`X_n`$ be the share of sixes in the first n rolls. Chebyshev's inequality (the chance of landing more than a tolerance from the mean is at most the variance divided by the tolerance squared) bounds the chance of missing 1/6 by more than 0.05 by 500/(9n). The weak law is this bound going to 0 ([The weak law of large numbers](03-weak-law-of-large-numbers.md)).
 
 Summed over every n, the bounds diverge like the harmonic series: 543.7559 by n = 10000, and growing. The first lemma is silent.
 
 Summed over the squares, n = k^2, they converge: the part beyond k = K is at most 500/(9K), which is 0.5556 at K = 100 and 0.0556 at K = 1000. So along the squares, misses by more than 0.05 happen only finitely often, with probability 1.
 
-Doing this for the tolerances 1, 1/2, 1/3, …, countably many, gives $X_{k^2} \to 1/6$ almost surely. On the simulated record the misses stop at k = 12; to k = 100 there are none after it.
+Doing this for the tolerances 1, 1/2, 1/3, …, countably many, gives $`X_{k^2} \to 1/6`$ almost surely. On the simulated record the misses stop at k = 12; to k = 100 there are none after it.
 
 Summable bounds along a sparse subsequence, then filling the gaps, is the shape of Etemadi's proof on [The strong law of large numbers](04-strong-law-of-large-numbers.md), with geometric checkpoints in place of the squares. Its main proof makes the bounds summable over every n with a fourth moment (a finite mean of the fourth power of each variable).
 
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, $(\Omega, \mathcal{F}, P)$ is a probability space and $A_1, A_2, \dots$ are events in $\mathcal{F}$. Put $T_N = \bigcup_{n \ge N} A_n$.
+Throughout, $`(\Omega, \mathcal{F}, P)`$ is a probability space and $`A_1, A_2, \dots`$ are events in $`\mathcal{F}`$. Put $`T_N = \bigcup_{n \ge N} A_n`$.
 
-**Lemma 0 (what the lim sup is).** $\omega \in \bigcap_N T_N$ exactly when $\omega$ lies in infinitely many $A_n$. If it lies in only finitely many, take N past the largest such n; then $\omega \notin T_N$. If it lies in infinitely many, then for every N one of them has index at least N, so $\omega \in T_N$. Each $T_N$ is a countable union of events and $\bigcap_N T_N$ a countable intersection, so the lim sup lies in $\mathcal{F}$. By De Morgan's laws (the complement of a union is the intersection of the complements, and the other way round) its complement is $\bigcup_N \bigcap_{n \ge N} A_n^c$.
+**Lemma 0 (what the lim sup is).** $`\omega \in \bigcap_N T_N`$ exactly when $`\omega`$ lies in infinitely many $`A_n`$. If it lies in only finitely many, take N past the largest such n; then $`\omega \notin T_N`$. If it lies in infinitely many, then for every N one of them has index at least N, so $`\omega \in T_N`$. Each $`T_N`$ is a countable union of events and $`\bigcap_N T_N`$ a countable intersection, so the lim sup lies in $`\mathcal{F}`$. By De Morgan's laws (the complement of a union is the intersection of the complements, and the other way round) its complement is $`\bigcup_N \bigcap_{n \ge N} A_n^c`$.
 
-**Theorem 1 (first lemma).** Suppose $\sum_n P(A_n) < \infty$. For each N, $\limsup A_n \subseteq T_N$, so by monotonicity and countable subadditivity $P(\limsup A_n) \le P(T_N) \le \sum_{n \ge N} P(A_n)$. The tails of a convergent series of non-negative terms tend to 0, so $P(\limsup A_n) = 0$. Only monotonicity and subadditivity were used, so the same proof works for any measure in place of $P$.
+**Theorem 1 (first lemma).** Suppose $`\sum_n P(A_n) < \infty`$. For each N, $`\limsup A_n \subseteq T_N`$, so by monotonicity and countable subadditivity $`P(\limsup A_n) \le P(T_N) \le \sum_{n \ge N} P(A_n)`$. The tails of a convergent series of non-negative terms tend to 0, so $`P(\limsup A_n) = 0`$. Only monotonicity and subadditivity were used, so the same proof works for any measure in place of $`P`$.
 
-**Lemma 2 (the inequality).** Let $f(x) = e^{-x} - (1 - x)$. Then $f(0) = 0$ and $f'(x) = 1 - e^{-x}$, which is negative for $x < 0$ and positive for $x > 0$. So f falls to its value at 0 and rises after it: f is never negative, that is, $1 - x \le e^{-x}$.
+**Lemma 2 (the inequality).** Let $`f(x) = e^{-x} - (1 - x)`$. Then $`f(0) = 0`$ and $`f'(x) = 1 - e^{-x}`$, which is negative for $`x < 0`$ and positive for $`x > 0`$. So f falls to its value at 0 and rises after it: f is never negative, that is, $`1 - x \le e^{-x}`$.
 
-**Lemma 3 (complements stay independent).** Events are independent when for every finite set I of indices, $P(\bigcap_{i \in I} A_i) = \prod_{i \in I} P(A_i)$. Replace one event $A_i$ in the list by its complement, and let C be the intersection of the others. Then $P(A_i^c \cap C) = P(C) - P(A_i \cap C) = P(C)\,(1 - P(A_i))$, and P(C) is itself a product, so the product rule holds again. Repeating this one index at a time replaces any number of events by complements. Equivalently, the sigma-algebras $\{\emptyset, A_n, A_n^c, \Omega\}$ are independent ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)).
+**Lemma 3 (complements stay independent).** Events are independent when for every finite set I of indices, $`P(\bigcap_{i \in I} A_i) = \prod_{i \in I} P(A_i)`$. Replace one event $`A_i`$ in the list by its complement, and let C be the intersection of the others. Then $`P(A_i^c \cap C) = P(C) - P(A_i \cap C) = P(C)\,(1 - P(A_i))`$, and P(C) is itself a product, so the product rule holds again. Repeating this one index at a time replaces any number of events by complements. Equivalently, the sigma-algebras $`\{\emptyset, A_n, A_n^c, \Omega\}`$ are independent ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)).
 
-**Theorem 4 (second lemma).** Suppose the $A_n$ are independent and $\sum_n P(A_n) = \infty$. Fix N and put $D_{N,K} = \bigcap_{n=N}^{K} A_n^c$ for $K \ge N$. By Lemma 3, $P(D_{N,K}) = \prod_{n=N}^{K} (1 - P(A_n))$. Each factor lies in [0, 1] and by Lemma 2 is at most $e^{-P(A_n)}$; multiplying inequalities between non-negative numbers keeps them, so $P(D_{N,K}) \le \exp(-\sum_{n=N}^{K} P(A_n))$. The first N − 1 terms of the series add to at most N − 1, so $\sum_{n=N}^{K} P(A_n) \to \infty$ as $K \to \infty$ and the bound tends to 0. The set $D_N = \bigcap_{n \ge N} A_n^c$ lies inside every $D_{N,K}$, so $P(D_N) = 0$. By Lemma 0 the complement of the lim sup is $\bigcup_N D_N$, whose chance is at most $\sum_N P(D_N) = 0$ by countable subadditivity. Hence $P(\limsup A_n) = 1$.
+**Theorem 4 (second lemma).** Suppose the $`A_n`$ are independent and $`\sum_n P(A_n) = \infty`$. Fix N and put $`D_{N,K} = \bigcap_{n=N}^{K} A_n^c`$ for $`K \ge N`$. By Lemma 3, $`P(D_{N,K}) = \prod_{n=N}^{K} (1 - P(A_n))`$. Each factor lies in [0, 1] and by Lemma 2 is at most $`e^{-P(A_n)}`$; multiplying inequalities between non-negative numbers keeps them, so $`P(D_{N,K}) \le \exp(-\sum_{n=N}^{K} P(A_n))`$. The first N − 1 terms of the series add to at most N − 1, so $`\sum_{n=N}^{K} P(A_n) \to \infty`$ as $`K \to \infty`$ and the bound tends to 0. The set $`D_N = \bigcap_{n \ge N} A_n^c`$ lies inside every $`D_{N,K}`$, so $`P(D_N) = 0`$. By Lemma 0 the complement of the lim sup is $`\bigcup_N D_N`$, whose chance is at most $`\sum_N P(D_N) = 0`$ by countable subadditivity. Hence $`P(\limsup A_n) = 1`$.
 
-**Theorem 5 (a test for almost sure convergence).** Let $X_n$, $X$ be random variables. The set where $X_n(\omega) \not\to X(\omega)$ is $\bigcup_{j \ge 1} \{|X_n - X| > 1/j \text{ i.o.}\}$: failing to converge means some tolerance 1/j is exceeded at infinitely many n. So $X_n \to X$ almost surely exactly when $P(|X_n - X| > \varepsilon \text{ i.o.}) = 0$ for every $\varepsilon > 0$. In particular, if $\sum_n P(|X_n - X| > \varepsilon) < \infty$ for every $\varepsilon > 0$, Theorem 1 gives almost sure convergence.
+**Theorem 5 (a test for almost sure convergence).** Let $`X_n`$, $`X`$ be random variables. The set where $`X_n(\omega) \not\to X(\omega)`$ is $`\bigcup_{j \ge 1} \{|X_n - X| > 1/j \text{ i.o.}\}`$: failing to converge means some tolerance 1/j is exceeded at infinitely many n. So $`X_n \to X`$ almost surely exactly when $`P(|X_n - X| > \varepsilon \text{ i.o.}) = 0`$ for every $`\varepsilon > 0`$. In particular, if $`\sum_n P(|X_n - X| > \varepsilon) < \infty`$ for every $`\varepsilon > 0`$, Theorem 1 gives almost sure convergence.
 
-**Corollary 6 (a subsequence converges almost surely).** Suppose $P(|X_n - X| > \varepsilon) \to 0$ for every $\varepsilon > 0$. Choose rising indices, each $n_k$ past the one before, with $P(|X_{n_k} - X| > 2^{-k}) \le 2^{-k}$; each choice exists because the chances tend to 0. Let $E_k = \{|X_{n_k} - X| > 2^{-k}\}$. Then $\sum_k P(E_k) \le 1$, so by Theorem 1 almost every $\omega$ lies in only finitely many $E_k$. For such $\omega$ there is $K(\omega)$ with $|X_{n_k}(\omega) - X(\omega)| \le 2^{-k}$ for all $k \ge K(\omega)$, so $X_{n_k}(\omega) \to X(\omega)$.
+**Corollary 6 (a subsequence converges almost surely).** Suppose $`P(|X_n - X| > \varepsilon) \to 0`$ for every $`\varepsilon > 0`$. Choose rising indices, each $`n_k`$ past the one before, with $`P(|X_{n_k} - X| > 2^{-k}) \le 2^{-k}`$; each choice exists because the chances tend to 0. Let $`E_k = \{|X_{n_k} - X| > 2^{-k}\}`$. Then $`\sum_k P(E_k) \le 1`$, so by Theorem 1 almost every $`\omega`$ lies in only finitely many $`E_k`$. For such $`\omega`$ there is $`K(\omega)`$ with $`|X_{n_k}(\omega) - X(\omega)| \le 2^{-k}`$ for all $`k \ge K(\omega)`$, so $`X_{n_k}(\omega) \to X(\omega)`$.
 
-**The die.** Under the product law the $A_n$ are independent with $P(A_n) = 1/6$, so Theorem 4 gives infinitely many sixes. $P(B_n) = 6^{-n}$, since n named rolls must all be sixes, and these add to 1/5, so Theorem 1 gives finitely many run-starts, though the $B_n$ are not independent. The share of sixes has variance $5/(36n)$, so Chebyshev bounds its miss chance by $5/(36 n \varepsilon^2)$; along $n = k^2$ this is summable for every $\varepsilon$, and Theorem 5 gives $X_{k^2} \to 1/6$ almost surely.
+**The die.** Under the product law the $`A_n`$ are independent with $`P(A_n) = 1/6`$, so Theorem 4 gives infinitely many sixes. $`P(B_n) = 6^{-n}`$, since n named rolls must all be sixes, and these add to 1/5, so Theorem 1 gives finitely many run-starts, though the $`B_n`$ are not independent. The share of sixes has variance $`5/(36n)`$, so Chebyshev bounds its miss chance by $`5/(36 n \varepsilon^2)`$; along $`n = k^2`$ this is summable for every $`\varepsilon`$, and Theorem 5 gives $`X_{k^2} \to 1/6`$ almost surely.
 
 </details>
 
@@ -623,11 +639,11 @@ Lean proves both lemmas and the corollary, for every probability space and every
 - Take any list of events on a probability space. Suppose their chances add up to a finite number. Then the chance that infinitely many happen is 0.
 - Suppose the events are independent and their chances add up to infinity. Then the chance that infinitely many happen is 1.
 - The first lemma holds for any measure, not only probabilities, and needs no independence.
-- Suppose $X_n$ converges to $X$ in probability. Then some subsequence $X_{n_k}$, with rising indices, converges to $X$ almost surely.
+- Suppose $`X_n`$ converges to $`X`$ in probability. Then some subsequence $`X_{n_k}`$, with rising indices, converges to $`X`$ almost surely.
 - The hand arithmetic holds exactly as fractions: the run-start sum 1/5, the overlap 41/216, and Chebyshev's bound 500/(9n).
 - The subsequence miss chances, 1/2, 1/4, 1/8 and on, add up to at most 1.
 
-The decimals, the bound $1 - x \le e^{-x}$, the simulations and the four breaks are left to the Python and Rust checks.
+The decimals, the bound $`1 - x \le e^{-x}`$, the simulations and the four breaks are left to the Python and Rust checks.
 
 ```lean
 -- The Borel-Cantelli lemmas: if the chances of a list of events add up to a finite number then with probability 1 only finitely many of them happen, if the events are independent and their chances add up to infinity then with probability 1 infinitely many happen, and convergence in probability gives almost sure convergence along a subsequence.

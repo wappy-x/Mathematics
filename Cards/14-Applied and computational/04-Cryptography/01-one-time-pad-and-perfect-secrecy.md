@@ -37,36 +37,42 @@ Schematic. The solid arrows carry the order. The dotted arrows show who holds wh
 
 Notation first, in words. The order is the **plaintext** m (the message as written). The pad is the **key** k. What travels is the **ciphertext** c. The sign ⊕, read "XOR" (exclusive or), compares two bits: the answer is 1 when they differ and 0 when they match. On whole bytes it works bit by bit. So ⊕ is addition mod 2 in each bit, the clock arithmetic of [Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md) with a clock of size 2.
 
-$$c = m \oplus k, \qquad m = c \oplus k$$
+```math
+c = m \oplus k, \qquad m = c \oplus k
+```
 
 **Read it aloud:** to lock, flip the bits of the message wherever the pad has a 1; to unlock, flip the same bits back.
 
 Secrecy is a statement about chances. Write M, K and C in capitals for the message, key and ciphertext *as chosen by chance*, and lower-case m, k, c for particular values. The pad gives **perfect secrecy**:
 
-$$P(M = m \mid C = c) = P(M = m) \quad \text{for every message } m \text{ and every ciphertext } c$$
+```math
+P(M = m \mid C = c) = P(M = m) \quad \text{for every message } m \text{ and every ciphertext } c
+```
 
 **Read it aloud:** the eavesdropper's odds for each message after seeing the ciphertext equal the odds they had before.
 
 In the language of [Entropy](../03-Information%20Theory/01-entropy.md), this says the ciphertext carries zero bits about the message: I(M; C) = 0, and H(M | C) = H(M) ([Conditional entropy and mutual information](../03-Information%20Theory/02-conditional-entropy-and-mutual-information.md)).
 
-The price, proved below. If $n_k$ is the number of possible keys and $n_m$ the number of possible messages, perfect secrecy forces
+The price, proved below. If $`n_k`$ is the number of possible keys and $`n_m`$ the number of possible messages, perfect secrecy forces
 
-$$n_k \ge n_m$$
+```math
+n_k \ge n_m
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $m$, $m_2$ | the plaintext, the message as written; $m_2$ a second order | `TRANSFER 750 TO BOB.`, 20 bytes | a longer message needs a longer pad |
-| $k$ | the key: the pad, random bytes shared in advance (in the phrase "k-bit security", k instead counts bits) | `23 5D 8E F2 …`, 20 bytes | must keep pace with m, byte for byte |
-| $c$, $c_2$ | the ciphertext, what travels; $c_2$ the second order's | `77 0F CF BC …`, 20 bytes | — |
-| $\oplus$ | XOR: 1 where two bits differ, 0 where they match; addition mod 2 | `0x37 ⊕ 0x42 = 0x75` | — |
-| $M, K, C$ | message, key and ciphertext as chosen by chance | M is 750 or 950 with chance 0.5 each | — |
-| $P(M = m)$ | the eavesdropper's odds before seeing c (the prior) | 0.5 for the 750 order | — |
-| $P(M = m \mid C = c)$ | the odds after seeing c (the posterior) | still 0.5 | equal to the prior: that is perfect secrecy |
-| $n_k$ | how many keys are possible | 256^20 = 2^160 | more keys, more messages it can hide |
-| $n_m$ | how many messages are possible | 256^20 strings of 20 bytes | needs at least as many keys |
-| $H(M)$, $H(K)$, $H(C)$ | entropy of the message, key or ciphertext: bits of uncertainty about it | H(M) = 1.75 bits in the toy below | — |
-| $H(M \mid C)$, $H(C \mid M)$ | uncertainty left about one after seeing the other | H(M \| C) = 1.75 bits with a proper pad | falls when the pad leaks |
-| $I(M; C)$ | bits the ciphertext gives away: H(M) − H(M \| C) | 0 with a proper pad | rises as the pad is weakened |
+| $`m`$, $`m_2`$ | the plaintext, the message as written; $`m_2`$ a second order | `TRANSFER 750 TO BOB.`, 20 bytes | a longer message needs a longer pad |
+| $`k`$ | the key: the pad, random bytes shared in advance (in the phrase "k-bit security", k instead counts bits) | `23 5D 8E F2 …`, 20 bytes | must keep pace with m, byte for byte |
+| $`c`$, $`c_2`$ | the ciphertext, what travels; $`c_2`$ the second order's | `77 0F CF BC …`, 20 bytes | — |
+| $`\oplus`$ | XOR: 1 where two bits differ, 0 where they match; addition mod 2 | `0x37 ⊕ 0x42 = 0x75` | — |
+| $`M, K, C`$ | message, key and ciphertext as chosen by chance | M is 750 or 950 with chance 0.5 each | — |
+| $`P(M = m)`$ | the eavesdropper's odds before seeing c (the prior) | 0.5 for the 750 order | — |
+| $`P(M = m \mid C = c)`$ | the odds after seeing c (the posterior) | still 0.5 | equal to the prior: that is perfect secrecy |
+| $`n_k`$ | how many keys are possible | 256^20 = 2^160 | more keys, more messages it can hide |
+| $`n_m`$ | how many messages are possible | 256^20 strings of 20 bytes | needs at least as many keys |
+| $`H(M)`$, $`H(K)`$, $`H(C)`$ | entropy of the message, key or ciphertext: bits of uncertainty about it | H(M) = 1.75 bits in the toy below | — |
+| $`H(M \mid C)`$, $`H(C \mid M)`$ | uncertainty left about one after seeing the other | H(M \| C) = 1.75 bits with a proper pad | falls when the pad leaks |
+| $`I(M; C)`$ | bits the ciphertext gives away: H(M) − H(M \| C) | 0 with a proper pad | rises as the pad is weakened |
 
 ### When it holds
 
@@ -100,9 +106,11 @@ XOR the key back on and 0x75 returns to 0x37. The code checks that this bitwise 
 
 ### Step 2: the ciphertext is uniform, whatever was sent
 
-Suppose the key K is chosen uniformly from all $n_k$ = 256^20 pads, independently of the message. Given the message m, the ciphertext equals c exactly when the key is m ⊕ c. So
+Suppose the key K is chosen uniformly from all $`n_k`$ = 256^20 pads, independently of the message. Given the message m, the ciphertext equals c exactly when the key is m ⊕ c. So
 
-$$P(C = c \mid M = m) = P(K = m \oplus c) = \frac{1}{256^{20}}$$
+```math
+P(C = c \mid M = m) = P(K = m \oplus c) = \frac{1}{256^{20}}
+```
 
 The right-hand side does not mention m. Whether the laptop sent the 750 order or the 950 order, every 20-byte ciphertext has the same chance, 1 in 2^160.
 
@@ -110,7 +118,9 @@ The right-hand side does not mention m. Whether the laptop sent the 750 order or
 
 [Bayes' rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md) turns the chance of the evidence into the chance of the cause:
 
-$$P(M = m \mid C = c) = \frac{P(C = c \mid M = m)\, P(M = m)}{P(C = c)}$$
+```math
+P(M = m \mid C = c) = \frac{P(C = c \mid M = m)\, P(M = m)}{P(C = c)}
+```
 
 The top has 1/256^20 by Step 2. The bottom averages that same 1/256^20 over all messages, so it is also 1/256^20. They cancel, and the posterior equals the prior. In the words of [Independence](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/07-independence.md), M and C are independent: knowing c says nothing about m.
 
@@ -122,7 +132,7 @@ The code checks this exactly on a toy: four short bank replies, coded 00 to 11, 
 
 Shannon proved the converse in 1949: no cipher, however clever, is perfectly secret with fewer keys than messages.
 
-The argument is short. Fix one ciphertext c that can occur. Each key unlocks c to exactly one message, so at most $n_k$ different messages can lie behind c. If $n_k < n_m$, some message m with a chance above zero cannot lie behind c. For that m, the posterior P(M = m | C = c) is 0 while the prior is not. The eavesdropper has learned something: "not m". Perfect secrecy fails.
+The argument is short. Fix one ciphertext c that can occur. Each key unlocks c to exactly one message, so at most $`n_k`$ different messages can lie behind c. If $`n_k < n_m`$, some message m with a chance above zero cannot lie behind c. For that m, the posterior P(M = m | C = c) is 0 while the prior is not. The eavesdropper has learned something: "not m". Perfect secrecy fails.
 
 The toy shows it. Give it 3 keys for 4 messages, each key with chance 1/3. Now 4 of the 16 cells are impossible, and the ciphertext leaks 0.3828 bits. With 1 key, the cipher is a fixed code book: 12 cells impossible, and the full 1.75 bits leak.
 
@@ -143,7 +153,9 @@ Only the uniform key, with as many keys as messages, gives zero.
 
 Send a second order, `TRANSFER 200 TO ANN.`, under the same pad. Its ciphertext is c2 = m2 ⊕ k. The eavesdropper XORs the two ciphertexts, and the key cancels:
 
-$$c \oplus c_2 = (m \oplus k) \oplus (m_2 \oplus k) = m \oplus m_2$$
+```math
+c \oplus c_2 = (m \oplus k) \oplus (m_2 \oplus k) = m \oplus m_2
+```
 
 No key is left in that line. What remains is the XOR of two English orders, and that is far from random. Wherever the orders agree, the byte is 00. Here 15 of the 20 bytes are 00, which already shows the orders share their shape and differ only in the amount and the name. If the eavesdropper knows or guesses one order, XORing it on recovers the other in full: `TRANSFER 200 TO ANN.`
 
@@ -590,12 +602,12 @@ ALL CHECKS PASS
 
 Lean proves the pad's secrecy for messages of any length, Shannon's bound for any cipher, and the card's worked numbers.
 
-- Take any message m and a key k of the same length. Then $(m \oplus k) \oplus k = m$, so unlocking gives the message back.
+- Take any message m and a key k of the same length. Then $`(m \oplus k) \oplus k = m`$, so unlocking gives the message back.
 - Take a uniformly random key as long as the message. Then every ciphertext is equally likely, whatever message was sent.
-- Take any prior for the message, and a uniformly random key as long as it, chosen independently. Then $P(M = m \mid C = c) = P(M = m)$ for every m and c.
-- Take any cipher whose unlocking works, where every message has a chance above zero and the key has any chances. Then perfect secrecy forces $n_k \ge n_m$.
+- Take any prior for the message, and a uniformly random key as long as it, chosen independently. Then $`P(M = m \mid C = c) = P(M = m)`$ for every m and c.
+- Take any cipher whose unlocking works, where every message has a chance above zero and the key has any chances. Then perfect secrecy forces $`n_k \ge n_m`$.
 - The bytes of the worked example: character 10 locks to 0x75 and unlocks to 0x37, and the 950 order's key is 0x4C.
-- Suppose one pad locks both the 750 order and the 200 order. Then 15 of the 20 bytes of $c \oplus c_2$ are 00, and the known order reveals the other.
+- Suppose one pad locks both the 750 order and the 200 order. Then 15 of the 20 bytes of $`c \oplus c_2`$ are 00, and the known order reveals the other.
 - The toy's counts. With 4 keys, the posterior equals the prior in all 16 cells. With 3 keys, 4 cells are impossible; with 1 key, 12 are.
 - Tampering: flipping byte 10 of c by 0x0E makes the bank read `TRANSFER 950 TO BOB.`.
 

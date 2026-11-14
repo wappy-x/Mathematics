@@ -39,46 +39,54 @@ The orange curve is correlation 0: a shallow smile, both ends above the middle. 
 
 ## The formula
 
-Notation first. Over a short step of length dt, a d in front of a quantity is its change over the step. $W^1_t$ and $W^2_t$ are Brownian motions: each step adds an independent normal shove with mean zero and variance dt. Two shoves have correlation ρ when their product averages ρ dt.
+Notation first. Over a short step of length dt, a d in front of a quantity is its change over the step. $`W^1_t`$ and $`W^2_t`$ are Brownian motions: each step adds an independent normal shove with mean zero and variance dt. Two shoves have correlation ρ when their product averages ρ dt.
 
 The first line is the geometric Brownian motion of Black-Scholes ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)) with its fixed variance replaced by a moving one. Both lines describe the pricing world, where Acme grows on average at the riskless rate less its dividend yield.
 
-$$dS_t = (r - q)\,S_t\,dt + \sqrt{v_t}\,S_t\,dW^1_t$$
+```math
+dS_t = (r - q)\,S_t\,dt + \sqrt{v_t}\,S_t\,dW^1_t
+```
 
-$$dv_t = \kappa\,(\theta - v_t)\,dt + \xi\sqrt{v_t}\;dW^2_t, \qquad dW^1_t\,dW^2_t = \rho\,dt$$
+```math
+dv_t = \kappa\,(\theta - v_t)\,dt + \xi\sqrt{v_t}\;dW^2_t, \qquad dW^1_t\,dW^2_t = \rho\,dt
+```
 
 **Read it aloud:** Acme's price grows at the riskless rate less the dividend and shakes by the square root of its variance; the variance is pulled toward its long-run level and shakes in proportion to its own square root; the two shakes are correlated.
 
-The second line is the square-root process that Cox, Ingersoll and Ross wrote for interest rates ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). The whole model is these two lines and five numbers: today's variance $v_0$, the long-run variance $\theta$ (theta), the pull speed $\kappa$ (kappa), the vol of vol $\xi$ (xi) and the correlation $\rho$ (rho).
+The second line is the square-root process that Cox, Ingersoll and Ross wrote for interest rates ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). The whole model is these two lines and five numbers: today's variance $`v_0`$, the long-run variance $`\theta`$ (theta), the pull speed $`\kappa`$ (kappa), the vol of vol $`\xi`$ (xi) and the correlation $`\rho`$ (rho).
 
 When the shakes are independent, ρ = 0, the price has a second form, the **mixing formula**:
 
-$$C = \mathbb{E}\big[\,C_{\text{BS}}(I)\,\big], \qquad I = \int_0^T v_t\,dt = \bar v\,T$$
+```math
+C = \mathbb{E}\big[\,C_{\text{BS}}(I)\,\big], \qquad I = \int_0^T v_t\,dt = \bar v\,T
+```
 
 **Read it aloud:** the option is worth the Black-Scholes price at the year's total variance I, the average variance times the years, averaged over every way the variance can move.
 
 The variance stays off zero under the **Feller condition**:
 
-$$2\kappa\theta \;\ge\; \xi^2$$
+```math
+2\kappa\theta \;\ge\; \xi^2
+```
 
 **Read it aloud:** twice the pull speed times the long-run variance must be at least the square of the vol of vol. Here 0.1600 against 0.0900, so it holds.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_t$, $S$ | Acme's price at time t; today | $100 | calls rise, puts fall |
-| $K$, $T$ | strike; years to expiry | $70 to $130; 1 | K: calls fall, puts rise; T: the pull has longer to act |
-| $r$, $q$, $F$ | riskless rate; dividend yield; forward $S e^{(r-q)T}$ | 5%, 2%, $103.05 | moves the smile's centre |
-| $v_t$ | variance at time t: volatility squared | starts at 0.04 | — |
-| $v_0$ | today's variance | 0.04, a 20% volatility | lifts short expiries most |
-| $\theta$ | long-run variance, where the pull points | 0.04 | lifts long expiries most |
-| $\kappa$ | pull speed: a gap to θ halves every ln 2/κ years | 2; half-life 0.3466 years | gets home sooner; shallower smile |
-| $\xi$ | vol of vol: size of the variance's shake | 0.3 | bends the smile: middle down, wings up |
-| $\rho$ | correlation of the two shakes | 0, then −0.7 | tilts: negative lifts low strikes |
-| $W^1_t$, $W^2_t$, $W^\perp_t$ | the Brownian motions driving Acme and its variance; a third, independent of the variance (Step 5) | — | — |
-| $\bar v$, $I$, $J$ | average variance over the life; total $I = \bar v\,T$; the variance's summed shake (Step 5) | $\bar v$: mean 0.040000, spread 0.018512 | a wider spread deepens the smile |
-| $\mathrm{Var}(I)$ | the variance of I across paths: the square of its spread | 0.00034268 | a deeper smile |
-| $C$, $w$, $C_{\text{BS}}(w)$, $\mathbb{E}$ | the option's price; a total variance; the Black-Scholes call at it; the average over paths in the pricing world | 9.2270 at w = 0.04 | — |
-| $d_1$, $d_2$, $\phi$ | Black-Scholes' two distances, as on the call card; the bell curve's height | 0.2500, 0.0500; φ(0.25) = 0.3867 | — |
+| $`S_t`$, $`S`$ | Acme's price at time t; today | $100 | calls rise, puts fall |
+| $`K`$, $`T`$ | strike; years to expiry | $70 to $130; 1 | K: calls fall, puts rise; T: the pull has longer to act |
+| $`r`$, $`q`$, $`F`$ | riskless rate; dividend yield; forward $`S e^{(r-q)T}`$ | 5%, 2%, $103.05 | moves the smile's centre |
+| $`v_t`$ | variance at time t: volatility squared | starts at 0.04 | — |
+| $`v_0`$ | today's variance | 0.04, a 20% volatility | lifts short expiries most |
+| $`\theta`$ | long-run variance, where the pull points | 0.04 | lifts long expiries most |
+| $`\kappa`$ | pull speed: a gap to θ halves every ln 2/κ years | 2; half-life 0.3466 years | gets home sooner; shallower smile |
+| $`\xi`$ | vol of vol: size of the variance's shake | 0.3 | bends the smile: middle down, wings up |
+| $`\rho`$ | correlation of the two shakes | 0, then −0.7 | tilts: negative lifts low strikes |
+| $`W^1_t`$, $`W^2_t`$, $`W^\perp_t`$ | the Brownian motions driving Acme and its variance; a third, independent of the variance (Step 5) | — | — |
+| $`\bar v`$, $`I`$, $`J`$ | average variance over the life; total $`I = \bar v\,T`$; the variance's summed shake (Step 5) | $`\bar v`$: mean 0.040000, spread 0.018512 | a wider spread deepens the smile |
+| $`\mathrm{Var}(I)`$ | the variance of I across paths: the square of its spread | 0.00034268 | a deeper smile |
+| $`C`$, $`w`$, $`C_{\text{BS}}(w)`$, $`\mathbb{E}`$ | the option's price; a total variance; the Black-Scholes call at it; the average over paths in the pricing world | 9.2270 at w = 0.04 | — |
+| $`d_1`$, $`d_2`$, $`\phi`$ | Black-Scholes' two distances, as on the call card; the bell curve's height | 0.2500, 0.0500; φ(0.25) = 0.3867 | — |
 
 ### When it holds
 
@@ -100,13 +108,15 @@ So price with Black-Scholes path by path, then average over the paths the varian
 
 ### Step 1: the pull sets the level and the term structure
 
-Average the variance equation over all paths. The shake averages to zero, so only the pull survives: the average variance changes at the rate κ(θ − average), and the gap to θ shrinks by the factor $e^{-\kappa t}$. Averaging over the life:
+Average the variance equation over all paths. The shake averages to zero, so only the pull survives: the average variance changes at the rate κ(θ − average), and the gap to θ shrinks by the factor $`e^{-\kappa t}`$. Averaging over the life:
 
-$$\mathbb{E}[v_t] = \theta + (v_0 - \theta)\,e^{-\kappa t}, \qquad \mathbb{E}[\bar v] = \theta + (v_0 - \theta)\,\frac{1 - e^{-\kappa T}}{\kappa T}$$
+```math
+\mathbb{E}[v_t] = \theta + (v_0 - \theta)\,e^{-\kappa t}, \qquad \mathbb{E}[\bar v] = \theta + (v_0 - \theta)\,\frac{1 - e^{-\kappa T}}{\kappa T}
+```
 
-With $v_0 = \theta = 0.04$ this is 0.040000; the simulation gives 0.040085, standard error 0.000059.
+With $`v_0 = \theta = 0.04`$ this is 0.040000; the simulation gives 0.040085, standard error 0.000059.
 
-So κ and θ set the **term structure**, how at-the-money volatility (strike at today's price) changes with expiry. Start the variance away from θ and the square root of $\mathbb{E}[\bar v]$ travels from $\sqrt{v_0}$ toward $\sqrt{\theta}$:
+So κ and θ set the **term structure**, how at-the-money volatility (strike at today's price) changes with expiry. Start the variance away from θ and the square root of $`\mathbb{E}[\bar v]`$ travels from $`\sqrt{v_0}`$ toward $`\sqrt{\theta}`$:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -121,20 +131,24 @@ xychart-beta
 
 Orange: start at variance 0.09, pull speed 2. Green: the same start, pull speed 0.5. Dark: start at 0.01, pull speed 2. All head for the long-run level; θ sets where, κ how fast. Stepping the averaged equation forward in 100,000 small steps, instead of solving it, lands within 0.00000009 of the formula at every point.
 
-At-the-money implied volatility sits a little below these curves, because the vol of vol shaves the smile's middle (Step 4): with $v_0 = \theta$ the curve is flat at 20%, and the simulated $100 strike reads 19.52%.
+At-the-money implied volatility sits a little below these curves, because the vol of vol shaves the smile's middle (Step 4): with $`v_0 = \theta`$ the curve is flat at 20%, and the simulated $100 strike reads 19.52%.
 
 ### Step 2: the square root keeps variance off zero
 
-As the variance nears zero, its shake, sized by $\sqrt{v_t}$, shrinks toward nothing, while the pull toward θ stays near its full strength κθ. Near zero the push upward wins. Whether it wins completely is the Feller condition: when $2\kappa\theta \ge \xi^2$, zero is never reached; when it fails, the variance touches zero and bounces off.
+As the variance nears zero, its shake, sized by $`\sqrt{v_t}`$, shrinks toward nothing, while the pull toward θ stays near its full strength κθ. Near zero the push upward wins. Whether it wins completely is the Feller condition: when $`2\kappa\theta \ge \xi^2`$, zero is never reached; when it fails, the variance touches zero and bounces off.
 
 <details>
 <summary>Detailed proof: when zero is out of reach</summary>
 
-Look for a function s that turns the variance into a process with no drift. By Itô's lemma (the chain rule for random paths), s(v) changes by $s'\,dv + \tfrac12 s''\,\xi^2 v\,dt$, whose drift is $s'\kappa(\theta - v) + \tfrac12 s''\xi^2 v$. Setting that to zero gives $s''/s' = -2\kappa(\theta - v)/(\xi^2 v)$, so
-$$s'(v) = v^{-a}\,e^{2\kappa v/\xi^2}, \qquad a = \frac{2\kappa\theta}{\xi^2}.$$
+Look for a function s that turns the variance into a process with no drift. By Itô's lemma (the chain rule for random paths), s(v) changes by $`s'\,dv + \tfrac12 s''\,\xi^2 v\,dt`$, whose drift is $`s'\kappa(\theta - v) + \tfrac12 s''\xi^2 v`$. Setting that to zero gives $`s''/s' = -2\kappa(\theta - v)/(\xi^2 v)`$, so
+
+$`\displaystyle s'(v) = v^{-a}\,e^{2\kappa v/\xi^2}, \qquad a = \frac{2\kappa\theta}{\xi^2}.`$
+
 Take a small level ε below today's variance and a large level b above it. Until the variance touches either, s of the variance has no drift and stays bounded, so its average keeps its starting value, which pins the chance of touching ε first:
-$$\Pr(\varepsilon \text{ before } b) = \frac{s(b) - s(v_0)}{s(b) - s(\varepsilon)}.$$
-Near zero, s′ behaves like $v^{-a}$, and its integral up from ε grows without limit as ε shrinks exactly when a ≥ 1. Then s(ε) runs off to minus infinity and the chance falls to zero, for every b. A continuous path stays bounded over a finite time, so a path that reaches zero does so before some level b; each such chance is zero, so reaching zero has chance zero. When a < 1, s(0) is finite and the chance is positive. Here a = 0.1600 / 0.0900, comfortably above 1.
+
+$`\displaystyle \Pr(\varepsilon \text{ before } b) = \frac{s(b) - s(v_0)}{s(b) - s(\varepsilon)}.`$
+
+Near zero, s′ behaves like $`v^{-a}`$, and its integral up from ε grows without limit as ε shrinks exactly when a ≥ 1. Then s(ε) runs off to minus infinity and the chance falls to zero, for every b. A continuous path stays bounded over a finite time, so a path that reaches zero does so before some level b; each such chance is zero, so reaching zero has chance zero. When a < 1, s(0) is finite and the chance is positive. Here a = 0.1600 / 0.0900, comfortably above 1.
 
 </details>
 
@@ -142,15 +156,17 @@ The condition governs the model, not the simulation: a simulated step adds a nor
 
 ### Step 3: with independent shakes, the price is an average of Black-Scholes prices
 
-By Itô's lemma, the chain rule for random paths, the log of Acme's price moves by (r − q − ½$v_t$) dt + $\sqrt{v_t}$ d$W^1_t$ in each step. Add the steps over the life:
+By Itô's lemma, the chain rule for random paths, the log of Acme's price moves by (r − q − ½$`v_t`$) dt + $`\sqrt{v_t}`$ d$`W^1_t`$ in each step. Add the steps over the life:
 
-$$\ln S_T = \ln S + (r - q)\,T - \tfrac12 I + \int_0^T \sqrt{v_t}\;dW^1_t$$
+```math
+\ln S_T = \ln S + (r - q)\,T - \tfrac12 I + \int_0^T \sqrt{v_t}\;dW^1_t
+```
 
-Fix the variance path. With ρ = 0 the shoves d$W^1_t$ are independent of it, so the last term is a sum of independent normal pieces with variances $v_t$ dt: normal, with mean zero and variance I. Given the path, the log price is normal with total variance I, which is Black-Scholes, so the price given the path is $C_{\text{BS}}(I)$.
+Fix the variance path. With ρ = 0 the shoves d$`W^1_t`$ are independent of it, so the last term is a sum of independent normal pieces with variances $`v_t`$ dt: normal, with mean zero and variance I. Given the path, the log price is normal with total variance I, which is Black-Scholes, so the price given the path is $`C_{\text{BS}}(I)`$.
 
 Averaging first given the path and then over paths gives the same answer as averaging at once. That is the mixing formula, published by Hull and White in 1987.
 
-What the simulation averages over: the year's average volatility, the square root of $\bar v$, across 100,000 simulated years.
+What the simulation averages over: the year's average volatility, the square root of $`\bar v`$, across 100,000 simulated years.
 
 ```
 average volatility over the year, % of simulated years   (one █ = 1%)
@@ -163,7 +179,7 @@ average volatility over the year, % of simulated years   (one █ = 1%)
   25% and up  ████████████        11.84
 ```
 
-Each year contributes its own Black-Scholes price. The spread of $\bar v$ is 0.018512 by formula (Step 4), 0.018636 simulated.
+Each year contributes its own Black-Scholes price. The spread of $`\bar v`$ is 0.018512 by formula (Step 4), 0.018636 simulated.
 
 The plain road simulates Acme's price too and averages discounted payoffs. Both price the $100 call alike: 9.0470 (standard error 0.0053) by mixing, 9.0145 (standard error 0.0444) plain. Mixing is far less noisy because the formula averages the share's own shake exactly.
 
@@ -171,24 +187,30 @@ The plain road simulates Acme's price too and averages discounted payoffs. Both 
 
 Why is $9.05 below $9.23? The Black-Scholes price curves as total variance grows. With φ the bell curve's height, and d1 and d2 as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), its slope and bend in w are
 
-$$\frac{\partial C_{\text{BS}}}{\partial w} = \frac{S e^{-qT}\,\phi(d_1)}{2\sqrt{w}}, \qquad \frac{\partial^2 C_{\text{BS}}}{\partial w^2} = \frac{\partial C_{\text{BS}}}{\partial w}\cdot\frac{d_1 d_2 - 1}{2w}.$$
+```math
+\frac{\partial C_{\text{BS}}}{\partial w} = \frac{S e^{-qT}\,\phi(d_1)}{2\sqrt{w}}, \qquad \frac{\partial^2 C_{\text{BS}}}{\partial w^2} = \frac{\partial C_{\text{BS}}}{\partial w}\cdot\frac{d_1 d_2 - 1}{2w}.
+```
 
-Near the money d1 times d2 is small and the bend is negative, so averaging over a spread of variances gives less than the price at the average. Far out in either wing d1 times d2 exceeds 1, the bend is positive, and averaging gives more. Down in the middle, up at the ends: a smile, deeper as the spread of $\bar v$ grows with ξ.
+Near the money d1 times d2 is small and the bend is negative, so averaging over a spread of variances gives less than the price at the average. Far out in either wing d1 times d2 exceeds 1, the bend is positive, and averaging gives more. Down in the middle, up at the ends: a smile, deeper as the spread of $`\bar v`$ grows with ξ.
 
 A Taylor expansion (the price replaced by its value, slope and bend at the mean) turns this into a third road, the **Hull-White expansion**:
 
-$$C \approx C_{\text{BS}}\big(\mathbb{E}[I]\big) + \tfrac12\,\frac{\partial^2 C_{\text{BS}}}{\partial w^2}\,\mathrm{Var}(I), \qquad \mathrm{Var}(I) = \frac{\theta\xi^2}{\kappa^2}\Big[T - \frac{1 - e^{-2\kappa T}}{2\kappa} - \frac{1 - e^{-\kappa T}}{\kappa} + \frac{e^{-\kappa T}(1 - e^{-\kappa T})}{\kappa}\Big]$$
+```math
+C \approx C_{\text{BS}}\big(\mathbb{E}[I]\big) + \tfrac12\,\frac{\partial^2 C_{\text{BS}}}{\partial w^2}\,\mathrm{Var}(I), \qquad \mathrm{Var}(I) = \frac{\theta\xi^2}{\kappa^2}\Big[T - \frac{1 - e^{-2\kappa T}}{2\kappa} - \frac{1 - e^{-\kappa T}}{\kappa} + \frac{e^{-\kappa T}(1 - e^{-\kappa T})}{\kappa}\Big]
+```
 
-The variance formula holds when $v_0 = \theta$, the house case. Across the strip of strikes the expansion tracks the mixing road: 20.31% against 20.30% at $80, 19.47% against 19.52% at $100, 20.18% against 20.19% at $130. The terms it drops grow quickly with the spread (see Try changing).
+The variance formula holds when $`v_0 = \theta`$, the house case. Across the strip of strikes the expansion tracks the mixing road: 20.31% against 20.30% at $80, 19.47% against 19.52% at $100, 20.18% against 20.19% at $130. The terms it drops grow quickly with the spread (see Try changing).
 
 <details>
 <summary>The algebra behind the Hull-White road</summary>
 
-**The spread of I.** With $v_0 = \theta$ the average variance stays θ at every time. Itô's lemma on $(v - \theta)^2$ shows its average m(s) changes at the rate $-2\kappa m + \xi^2\theta$, so $m(s) = \theta\xi^2(1 - e^{-2\kappa s})/(2\kappa)$. Given the path up to time s, the variance at a later time t averages $\theta + (v_s - \theta)e^{-\kappa(t-s)}$, so the covariance of the two is $m(s)\,e^{-\kappa(t-s)}$. Var(I) is that covariance integrated over both times, which is twice the integral over s < t:
-$$\mathrm{Var}(I) = 2\int_0^T m(s)\,\frac{1 - e^{-\kappa(T-s)}}{\kappa}\,ds,$$
+**The spread of I.** With $`v_0 = \theta`$ the average variance stays θ at every time. Itô's lemma on $`(v - \theta)^2`$ shows its average m(s) changes at the rate $`-2\kappa m + \xi^2\theta`$, so $`m(s) = \theta\xi^2(1 - e^{-2\kappa s})/(2\kappa)`$. Given the path up to time s, the variance at a later time t averages $`\theta + (v_s - \theta)e^{-\kappa(t-s)}`$, so the covariance of the two is $`m(s)\,e^{-\kappa(t-s)}`$. Var(I) is that covariance integrated over both times, which is twice the integral over s < t:
+
+$`\displaystyle \mathrm{Var}(I) = 2\int_0^T m(s)\,\frac{1 - e^{-\kappa(T-s)}}{\kappa}\,ds,`$
+
 and multiplying out the two brackets gives the four terms above.
 
-**The bend.** With F the forward, $d_1 = \ln(F/K)/\sqrt{w} + \sqrt{w}/2$, so the rate of change of d1 in w is $-d_2/(2w)$. Differentiating the slope, and using $\phi'(x) = -x\,\phi(x)$, gives the bend: the slope times $(d_1 d_2 - 1)/(2w)$.
+**The bend.** With F the forward, $`d_1 = \ln(F/K)/\sqrt{w} + \sqrt{w}/2`$, so the rate of change of d1 in w is $`-d_2/(2w)`$. Differentiating the slope, and using $`\phi'(x) = -x\,\phi(x)`$, gives the bend: the slope times $`(d_1 d_2 - 1)/(2w)`$.
 
 **The expansion.** Averaged, the slope term vanishes, since I minus its mean averages zero, leaving half the bend times Var(I). The first dropped term carries the lopsidedness of I, which grows with ξ.
 
@@ -196,13 +218,17 @@ and multiplying out the two brackets gives the four terms above.
 
 ### Step 5: the correlation tilts the smile
 
-Split the share's shove into the part it shares with the variance and the rest: d$W^1_t$ = ρ d$W^2_t$ + $\sqrt{1-\rho^2}$ d$W^\perp_t$, with $W^\perp$ a third Brownian motion independent of the variance. The shared part is fixed by the variance path; rearranging the variance equation reads it off:
+Split the share's shove into the part it shares with the variance and the rest: d$`W^1_t`$ = ρ d$`W^2_t`$ + $`\sqrt{1-\rho^2}`$ d$`W^\perp_t`$, with $`W^\perp`$ a third Brownian motion independent of the variance. The shared part is fixed by the variance path; rearranging the variance equation reads it off:
 
-$$J = \int_0^T \sqrt{v_t}\;dW^2_t = \frac{v_T - v_0 - \kappa\theta T + \kappa I}{\xi}$$
+```math
+J = \int_0^T \sqrt{v_t}\;dW^2_t = \frac{v_T - v_0 - \kappa\theta T + \kappa I}{\xi}
+```
 
-Given the path, the log price is still normal, now with its centre moved by $\rho J - \tfrac12\rho^2 I$ and its variance cut to $(1-\rho^2)\,I$. That is Black-Scholes again, at a shifted spot:
+Given the path, the log price is still normal, now with its centre moved by $`\rho J - \tfrac12\rho^2 I`$ and its variance cut to $`(1-\rho^2)\,I`$. That is Black-Scholes again, at a shifted spot:
 
-$$C = \mathbb{E}\Big[\,C_{\text{BS}}\big(S\,e^{\rho J - \frac12\rho^2 I},\;(1-\rho^2)\,I\big)\Big]$$
+```math
+C = \mathbb{E}\Big[\,C_{\text{BS}}\big(S\,e^{\rho J - \frac12\rho^2 I},\;(1-\rho^2)\,I\big)\Big]
+```
 
 With ρ = −0.7, a year in which the variance rose has J above zero and so a lower effective spot: high variance and low prices arrive together. Low-strike puts grow dear, 22.78% at $80 against 20.30% at ρ = 0; high-strike calls lose their stormy years' upside, 16.96% at $120 against 19.82%. The plain simulation, which never uses this formula, agrees at every strike within its error.
 
@@ -210,8 +236,10 @@ With ρ = −0.7, a year in which the variance rose has J above zero and so a lo
 <summary>The algebra behind the shifted spot</summary>
 
 Substitute the split shove into the sum from Step 3:
-$$\ln S_T = \ln S + (r - q)T - \tfrac12 I + \rho J + \sqrt{1-\rho^2}\int_0^T \sqrt{v_t}\;dW^\perp_t.$$
-Given the variance path, the last term is normal with variance $(1-\rho^2)\,I$. Since $-\tfrac12 I = -\tfrac12\rho^2 I - \tfrac12(1-\rho^2)\,I$, the rest regroups as $\ln\big(S e^{\rho J - \frac12\rho^2 I}\big) + (r - q)T - \tfrac12(1-\rho^2)\,I$: the Black-Scholes log price for the shifted spot. The $-\tfrac12\rho^2 I$ keeps that spot's average at S. In the simulation the J identity holds step for step, clamp included.
+
+$`\displaystyle \ln S_T = \ln S + (r - q)T - \tfrac12 I + \rho J + \sqrt{1-\rho^2}\int_0^T \sqrt{v_t}\;dW^\perp_t.`$
+
+Given the variance path, the last term is normal with variance $`(1-\rho^2)\,I`$. Since $`-\tfrac12 I = -\tfrac12\rho^2 I - \tfrac12(1-\rho^2)\,I`$, the rest regroups as $`\ln\big(S e^{\rho J - \frac12\rho^2 I}\big) + (r - q)T - \tfrac12(1-\rho^2)\,I`$: the Black-Scholes log price for the shifted spot. The $`-\tfrac12\rho^2 I`$ keeps that spot's average at S. In the simulation the J identity holds step for step, clamp included.
 
 </details>
 
@@ -225,15 +253,15 @@ The $100 call at ρ = 0, by the Hull-White expansion.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| expected average variance | $\theta + (v_0 - \theta)(1 - e^{-2})/2$, with $v_0 = \theta$ | 0.040000 |
+| expected average variance | $`\theta + (v_0 - \theta)(1 - e^{-2})/2`$, with $`v_0 = \theta`$ | 0.040000 |
 | Black-Scholes at it | the house call | 9.2270 |
 | d1 and d2 | at 20% for one year | 0.2500 and 0.0500 |
-| bell height at d1 | $\phi(0.25)$ | 0.3867 |
-| slope in total variance | $100 \times e^{-0.02} \times 0.3867 / (2 \times 0.20)$ | 94.75 |
-| bend | $94.75 \times (0.25 \times 0.05 - 1) / (2 \times 0.04)$ | −1169.6 |
-| bracket | $1 - (1 - e^{-4})/4 - (1 - e^{-2})/2 + e^{-2}(1 - e^{-2})/2$ | 0.380756 |
-| Var(I) | $0.04 \times 0.09 / 4 \times 0.380756$ | 0.00034268 |
-| correction | $\tfrac12 \times (-1169.6) \times 0.00034268$ | −0.2004 |
+| bell height at d1 | $`\phi(0.25)`$ | 0.3867 |
+| slope in total variance | $`100 \times e^{-0.02} \times 0.3867 / (2 \times 0.20)`$ | 94.75 |
+| bend | $`94.75 \times (0.25 \times 0.05 - 1) / (2 \times 0.04)`$ | −1169.6 |
+| bracket | $`1 - (1 - e^{-4})/4 - (1 - e^{-2})/2 + e^{-2}(1 - e^{-2})/2`$ | 0.380756 |
+| Var(I) | $`0.04 \times 0.09 / 4 \times 0.380756`$ | 0.00034268 |
+| correction | $`\tfrac12 \times (-1169.6) \times 0.00034268`$ | −0.2004 |
 | **Hull-White price** | 9.2270 − 0.2004 | **9.0266** |
 | mixing road, for comparison | 100,000 simulated years | 9.0470, standard error 0.0053 |
 
@@ -687,17 +715,17 @@ The two outputs match line for line: both programs draw the same random numbers 
 
 Lean proves the formulas behind Steps 1, 2 and 4 of Why it works, under the conditions below, and checks the worked numbers.
 
-- Take $\kappa > 0$ and an average variance $m(t)$ that starts at $v_0$ and changes at rate $\kappa(\theta - m)$. Then $m(t) = \theta + (v_0 - \theta)e^{-\kappa t}$ for every $t \ge 0$.
-- Take the same $m(t)$. Then its gap to $\theta$ halves every $\ln 2/\kappa$ years.
-- Take the same $m(t)$ and an expiry $T > 0$. Then its average over the life is $\theta + (v_0 - \theta)(1 - e^{-\kappa T})/(\kappa T)$.
-- Take $S > 0$, $K > 0$ and total variance $w > 0$. Then the Black-Scholes call's slope in $w$ is $S e^{-qT}\phi(d_1)/(2\sqrt{w})$.
-- Take the same $S$, $K$ and $w$. Then the bend in $w$ is that slope times $(d_1 d_2 - 1)/(2w)$.
-- Take the same $S$, $K$ and $w$. Then the bend is negative exactly when $d_1 d_2 < 1$, and positive exactly when $d_1 d_2 > 1$.
-- Take positive $\kappa$, $\theta$ and $\xi$, and Step 2's slope $s'(v) = v^{-a}e^{2\kappa v/\xi^2}$. Then at every $v > 0$ the drift $s'\kappa(\theta - v) + \tfrac12 s''\xi^2 v$ is zero.
-- Take the same $s'$ and any level $b > 0$. Then its integral from $\varepsilon$ to $b$ grows without limit as $\varepsilon$ shrinks exactly when $2\kappa\theta \ge \xi^2$.
-- Take $\kappa = 2$, $\theta = 0.04$ and $\xi = 0.3$. Then $2\kappa\theta = 0.16$ is at least $\xi^2 = 0.09$, $a = 16/9$, and $\theta\xi^2/\kappa^2 = 0.0009$.
-- Take $v_0 = \theta = 0.04$, $\kappa = 2$ and $T = 1$. Then the expected average variance is 0.04.
-- Take the house call at 20% for one year. Then $d_1 = 0.25$, and $0.25 \times 0.05 - 1 = -79/80$.
+- Take $`\kappa > 0`$ and an average variance $`m(t)`$ that starts at $`v_0`$ and changes at rate $`\kappa(\theta - m)`$. Then $`m(t) = \theta + (v_0 - \theta)e^{-\kappa t}`$ for every $`t \ge 0`$.
+- Take the same $`m(t)`$. Then its gap to $`\theta`$ halves every $`\ln 2/\kappa`$ years.
+- Take the same $`m(t)`$ and an expiry $`T > 0`$. Then its average over the life is $`\theta + (v_0 - \theta)(1 - e^{-\kappa T})/(\kappa T)`$.
+- Take $`S > 0`$, $`K > 0`$ and total variance $`w > 0`$. Then the Black-Scholes call's slope in $`w`$ is $`S e^{-qT}\phi(d_1)/(2\sqrt{w})`$.
+- Take the same $`S`$, $`K`$ and $`w`$. Then the bend in $`w`$ is that slope times $`(d_1 d_2 - 1)/(2w)`$.
+- Take the same $`S`$, $`K`$ and $`w`$. Then the bend is negative exactly when $`d_1 d_2 < 1`$, and positive exactly when $`d_1 d_2 > 1`$.
+- Take positive $`\kappa`$, $`\theta`$ and $`\xi`$, and Step 2's slope $`s'(v) = v^{-a}e^{2\kappa v/\xi^2}`$. Then at every $`v > 0`$ the drift $`s'\kappa(\theta - v) + \tfrac12 s''\xi^2 v`$ is zero.
+- Take the same $`s'`$ and any level $`b > 0`$. Then its integral from $`\varepsilon`$ to $`b`$ grows without limit as $`\varepsilon`$ shrinks exactly when $`2\kappa\theta \ge \xi^2`$.
+- Take $`\kappa = 2`$, $`\theta = 0.04`$ and $`\xi = 0.3`$. Then $`2\kappa\theta = 0.16`$ is at least $`\xi^2 = 0.09`$, $`a = 16/9`$, and $`\theta\xi^2/\kappa^2 = 0.0009`$.
+- Take $`v_0 = \theta = 0.04`$, $`\kappa = 2`$ and $`T = 1`$. Then the expected average variance is 0.04.
+- Take the house call at 20% for one year. Then $`d_1 = 0.25`$, and $`0.25 \times 0.05 - 1 = -79/80`$.
 
 Random paths are beyond Lean here, so the mixing formula, the shifted spot and every simulated price are left to the Python and Rust checks.
 
@@ -1048,17 +1076,17 @@ end HestonModel
 > **Try changing**
 > Guess first, then run. The asserts are pinned to this market, so expect one to stop the run.
 > - **Flip the correlation.** Set `RHO` to `0.7`. Which end of the strip rises? The first try line runs this case on the same paths: 16.28% at $80, 22.01% at $120, the tilt reversed. The tilt assert stops the run.
-> - **Break the Feller condition.** Set `XI` to `0.5`, so $\xi^2$ exceeds 2κθ = 0.1600. How often does the clamp fire? The truncated-steps line has already run this case on 20,000 years, in its second column: 5.4012% of steps, against 0.1707%. The Hull-White assert stops the run.
-> - **Double the vol of vol.** Set `XI` to `0.6`. The last try line has already run this case on 20,000 years. The spread of $\bar v$ doubles, from 0.018512 to 0.037023, and the mixing road drops to 8.6644 (standard error 0.0212). The Hull-White expansion says 8.4254: the terms it drops no longer vanish, and its assert stops the run.
+> - **Break the Feller condition.** Set `XI` to `0.5`, so $`\xi^2`$ exceeds 2κθ = 0.1600. How often does the clamp fire? The truncated-steps line has already run this case on 20,000 years, in its second column: 5.4012% of steps, against 0.1707%. The Hull-White assert stops the run.
+> - **Double the vol of vol.** Set `XI` to `0.6`. The last try line has already run this case on 20,000 years. The spread of $`\bar v`$ doubles, from 0.018512 to 0.037023, and the mixing road drops to 8.6644 (standard error 0.0212). The Hull-White expansion says 8.4254: the terms it drops no longer vanish, and its assert stops the run.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Pricing at the average variance.** Heston with $v_0 = \theta = 0.04$ is not Black-Scholes at 20%. The price is the average of Black-Scholes prices, 9.0470, not the price at the average variance, 9.2270. The price curves in variance, and that curvature, fed by the vol of vol, is the smile.
+> **Pricing at the average variance.** Heston with $`v_0 = \theta = 0.04`$ is not Black-Scholes at 20%. The price is the average of Black-Scholes prices, 9.0470, not the price at the average variance, 9.2270. The price curves in variance, and that curvature, fed by the vol of vol, is the smile.
 >
-> - **Variance for volatility.** $v_0 = 0.04$ is a variance; fed in as a volatility it prices the call at 3.4035.
+> - **Variance for volatility.** $`v_0 = 0.04`$ is a variance; fed in as a volatility it prices the call at 3.4035.
 > - **The variance at expiry for the life's average.** The share feels every step's variance; using where the variance ends gives 8.7226.
 > - **Trusting Feller to protect a simulation.** It holds here, and 0.1707% of steps still needed the clamp; without the clamp the code takes the square root of a negative number.
 

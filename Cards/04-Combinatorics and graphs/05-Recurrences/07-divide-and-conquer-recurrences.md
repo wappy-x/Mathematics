@@ -39,41 +39,45 @@ However finely the cards are cut up, a level still holds all 1,024.
 
 ## The formula
 
-Three quantities, in words first. How many smaller jobs one call makes: two piles here. How much smaller each is: half, a shrink factor of 2. What the call costs on top of its children: n comparisons per merge. Call them $a$, $b$ and $f$.
+Three quantities, in words first. How many smaller jobs one call makes: two piles here. How much smaller each is: half, a shrink factor of 2. What the call costs on top of its children: n comparisons per merge. Call them $`a`$, $`b`$ and $`f`$.
 
-$$T(n) = a\,T(n/b) + f(n)$$
+```math
+T(n) = a\,T(n/b) + f(n)
+```
 
 **Read it aloud:** the cost on n items is the cost of a smaller copies of size n divided by b, plus the splitting and joining here.
 
-Splitting stops after $k$ levels, $k$ being the number of divisions by b needed to reach 1 — the logarithm of n to base b ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). By then the job is in $a^k$ pieces, which a log law rewrites as a power of n ([Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)):
+Splitting stops after $`k`$ levels, $`k`$ being the number of divisions by b needed to reach 1 — the logarithm of n to base b ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). By then the job is in $`a^k`$ pieces, which a log law rewrites as a power of n ([Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)):
 
-$$a^{\log_b n} = n^{\log_b a}$$
+```math
+a^{\log_b n} = n^{\log_b a}
+```
 
-That power counts the pieces at the bottom; $f(n)$ is the cost at the top. Write $f(n) = n^d$, so $d$ says how steeply joining costs grow: 1 merging, 0 looking. The theorem compares $d$ with $\log_b a$, nothing else.
+That power counts the pieces at the bottom; $`f(n)`$ is the cost at the top. Write $`f(n) = n^d`$, so $`d`$ says how steeply joining costs grow: 1 merging, 0 looking. The theorem compares $`d`$ with $`\log_b a`$, nothing else.
 
 | Comparison | Work sits | T(n) grows like |
 | --- | --- | --- |
-| $d < \log_b a$ | bottom | $n^{\log_b a}$ |
-| $d = \log_b a$ | evenly | $n^{d}\log_b n$ |
-| $d > \log_b a$ | top | $n^{d}$ |
+| $`d < \log_b a`$ | bottom | $`n^{\log_b a}`$ |
+| $`d = \log_b a`$ | evenly | $`n^{d}\log_b n`$ |
+| $`d > \log_b a`$ | top | $`n^{d}`$ |
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$ | cost of the job | 10,240 | — |
-| $n$ | items to start | 1,024 cards | all cases rise |
-| $a$ | jobs per call | 2 piles | bottom swells |
-| $b$ | how much smaller each is | 2 | fewer levels |
-| $f$ | joining cost per call | n per merge | top swells |
-| $d$ | the power in $f(n) = n^d$ | 1 merging, 0 looking | top takes over |
-| $k$ | levels, $\log_b n$ | 10 | one level more, twice the deck |
-| $\log_b a$ | the watershed power | 1; 1.584963 on three pieces | bottom takes over |
-| $r$ | level multiplier, $a/b^d$ | 1 merging, 3/2 on three | levels grow downwards |
+| $`T`$ | cost of the job | 10,240 | — |
+| $`n`$ | items to start | 1,024 cards | all cases rise |
+| $`a`$ | jobs per call | 2 piles | bottom swells |
+| $`b`$ | how much smaller each is | 2 | fewer levels |
+| $`f`$ | joining cost per call | n per merge | top swells |
+| $`d`$ | the power in $`f(n) = n^d`$ | 1 merging, 0 looking | top takes over |
+| $`k`$ | levels, $`\log_b n`$ | 10 | one level more, twice the deck |
+| $`\log_b a`$ | the watershed power | 1; 1.584963 on three pieces | bottom takes over |
+| $`r`$ | level multiplier, $`a/b^d`$ | 1 merging, 3/2 on three | levels grow downwards |
 
 ### When it holds
 
 - **n is an exact power of b**, so every piece is whole — the case proved below. Other sizes give pieces differing by one, and the same answers hold with rounding.
-- **a and b are fixed.** If the number of pieces changes with n, there is no single a, and the count $a^k$ is wrong.
-- **f is a power of n.** A joining cost between two powers — n times $\log_2 n$, where the watershed power is 1 — is in no case at all.
+- **a and b are fixed.** If the number of pieces changes with n, there is no single a, and the count $`a^k`$ is wrong.
+- **f is a power of n.** A joining cost between two powers — n times $`\log_2 n`$, where the watershed power is 1 — is in no case at all.
 - **The answer is a growth class.** Fixed multiples and extras are dropped: ten halvings plus a last look at the survivor still counts as ten.
 
 ---
@@ -86,15 +90,17 @@ The splitting draws a tree: the deck at the top, single cards at the bottom. Bra
 
 ### Step 1: count the pieces and their sizes
 
-Level 0 is one job of 1,024 cards, level 1 is 2 jobs of 512, level 2 is 4 of 256. Level j — the j-th row down, the top being row 0 — holds $a^j$ jobs of size $n/b^j$.
+Level 0 is one job of 1,024 cards, level 1 is 2 jobs of 512, level 2 is 4 of 256. Level j — the j-th row down, the top being row 0 — holds $`a^j`$ jobs of size $`n/b^j`$.
 
 ### Step 2: cost one level, and meet the number that decides everything
 
-Level j costs $a^j$ copies of the joining cost on a piece of size $n/b^j$. With $f(n) = n^d$:
+Level j costs $`a^j`$ copies of the joining cost on a piece of size $`n/b^j`$. With $`f(n) = n^d`$:
 
-$$a^j\left(\frac{n}{b^j}\right)^d = n^d\left(\frac{a}{b^d}\right)^j$$
+```math
+a^j\left(\frac{n}{b^j}\right)^d = n^d\left(\frac{a}{b^d}\right)^j
+```
 
-So each level costs $r = a/b^d$ times the one above, the same multiplier all the way down. Everything turns on a against $b^d$. Merging: both are 2, so every level costs 1,024. Three half-sized pieces: 3 against 2, each level half again as much as the last.
+So each level costs $`r = a/b^d`$ times the one above, the same multiplier all the way down. Everything turns on a against $`b^d`$. Merging: both are 2, so every level costs 1,024. Three half-sized pieces: 3 against 2, each level half again as much as the last.
 
 One █ is 1,000 comparisons, nearest thousand, for T(n) = 3 T(n/2) + n on 1,024 cards:
 
@@ -120,17 +126,17 @@ Level costs that are each a fixed multiple of the one before make a geometric su
 <details>
 <summary>Detailed proof: the exact-power case</summary>
 
-Take $n = b^k$ and $T(1) = 0$: one card needs no work. Unroll k times and apply Step 2 to each term, with r the level multiplier $a/b^d$:
+Take $`n = b^k`$ and $`T(1) = 0`$: one card needs no work. Unroll k times and apply Step 2 to each term, with r the level multiplier $`a/b^d`$:
 
-$$T(n) = f(n) + a\,f(n/b) + \dots + a^{k-1} f(n/b^{k-1}) = n^d\left(1 + r + \dots + r^{k-1}\right)$$
+$`\displaystyle T(n) = f(n) + a\,f(n/b) + \dots + a^{k-1} f(n/b^{k-1}) = n^d\left(1 + r + \dots + r^{k-1}\right)`$
 
-Multiply the bracket by $r - 1$ and all cancels but two terms, so the bracket is $(r^k - 1)/(r - 1)$ when $r \ne 1$, and k when $r = 1$.
+Multiply the bracket by $`r - 1`$ and all cancels but two terms, so the bracket is $`(r^k - 1)/(r - 1)`$ when $`r \ne 1`$, and k when $`r = 1`$.
 
-**r = 1**, that is $d = \log_b a$: the bracket is k, and $T(n) = n^d \log_b n$.
+**r = 1**, that is $`d = \log_b a`$: the bracket is k, and $`T(n) = n^d \log_b n`$.
 
-**r < 1**, that is $d > \log_b a$: the bracket is $(1 - r^k)/(1 - r)$, between 1 and $1/(1-r)$ for every k, since $r^k$ is between 0 and 1. So $T(n)$ is between $n^d$ and a multiple of $n^d$.
+**r < 1**, that is $`d > \log_b a`$: the bracket is $`(1 - r^k)/(1 - r)`$, between 1 and $`1/(1-r)`$ for every k, since $`r^k`$ is between 0 and 1. So $`T(n)`$ is between $`n^d`$ and a multiple of $`n^d`$.
 
-**r > 1**, that is $d < \log_b a$: the bracket is between $r^{k-1}$ and $r^k/(r-1)$, and $n^d r^k = n^d a^k/b^{dk} = a^k$, since $b^k = n$ makes $b^{dk} = n^d$. So $T(n)$ is between two multiples of $a^k$, which is $n^{\log_b a}$. ∎
+**r > 1**, that is $`d < \log_b a`$: the bracket is between $`r^{k-1}`$ and $`r^k/(r-1)`$, and $`n^d r^k = n^d a^k/b^{dk} = a^k`$, since $`b^k = n`$ makes $`b^{dk} = n^d`$. So $`T(n)`$ is between two multiples of $`a^k`$, which is $`n^{\log_b a}`$. ∎
 
 </details>
 
@@ -142,7 +148,7 @@ Multiply the bracket by $r - 1$ and all cancels but two terms, so the bracket is
 | T(n) = 3 T(n/2) + n | 1,024 | 39,366 | **116,050** |
 | T(n) = 2 T(n/2) + n^2 | 1,048,576 | 2,048 | **2,095,104** |
 
-Flat, growing, shrinking: one deck, totals two hundred times apart. A second route reaches the same place — substituting $n = b^m$ turns a halving rule into one stepping down by one, which first-order methods solve outright ([First-order recurrences](03-first-order-recurrences-and-loans.md)), driving terms and all ([Recurrences with a driving term](05-nonhomogeneous-recurrences.md)).
+Flat, growing, shrinking: one deck, totals two hundred times apart. A second route reaches the same place — substituting $`n = b^m`$ turns a halving rule into one stepping down by one, which first-order methods solve outright ([First-order recurrences](03-first-order-recurrences-and-loans.md)), driving terms and all ([Recurrences with a driving term](05-nonhomogeneous-recurrences.md)).
 
 ---
 
@@ -150,7 +156,7 @@ Flat, growing, shrinking: one deck, totals two hundred times apart. A second rou
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| one level of merging | $2^j$ piles × $1024/2^j$ cards | 1,024 |
+| one level of merging | $`2^j`$ piles × $`1024/2^j`$ cards | 1,024 |
 | the ceiling | 10 × 1,024 | **10,240** |
 | the deck merged | comparisons counted | **8,946** |
 | the deck searched | one look × 10 levels | **10** |
@@ -173,7 +179,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported but a logarithm, for printing. Each rule is totalled twice by roads sharing no arithmetic: level by level from the piece counts and sizes, and by the closed form the proof gives. The deck is then actually sorted and searched, on a shuffle written out here so both languages deal the same cards. Each case is decided twice too: a against $b^d$, and the total against ten equal levels.
+Nothing is imported but a logarithm, for printing. Each rule is totalled twice by roads sharing no arithmetic: level by level from the piece counts and sizes, and by the closed form the proof gives. The deck is then actually sorted and searched, on a shuffle written out here so both languages deal the same cards. Each case is decided twice too: a against $`b^d`$, and the total against ten equal levels.
 
 ### Python
 
@@ -374,11 +380,11 @@ The two outputs match line for line.
 
 Lean proves the three cases for every rule of this shape, on sizes that are exact powers of b, with T(1) = 0.
 
-- When d is below the watershed power, T(n) grows like $n^{\log_b a}$: the bottom wins.
-- When d equals the watershed power, T(n) is exactly $n^d \log_b n$.
-- When d is above the watershed power, T(n) grows like $n^d$: the top wins.
-- The total is the sum of the levels, and also $n^d(1 + r + \dots + r^{k-1})$, with r the level multiplier.
-- The log law $a^{\log_b n} = n^{\log_b a}$ holds for every positive a and n.
+- When d is below the watershed power, T(n) grows like $`n^{\log_b a}`$: the bottom wins.
+- When d equals the watershed power, T(n) is exactly $`n^d \log_b n`$.
+- When d is above the watershed power, T(n) grows like $`n^d`$: the top wins.
+- The total is the sum of the levels, and also $`n^d(1 + r + \dots + r^{k-1})`$, with r the level multiplier.
+- The log law $`a^{\log_b n} = n^{\log_b a}`$ holds for every positive a and n.
 - The deck's numbers are exact: 10 halvings, 10,240 for merging, 10 looks, 116,050 for three pieces, 2,095,104 for the quadratic join, and the mistakes.
 
 The shuffled deck's 8,946 comparisons, the searches and the decimal watershed powers are left to the Python and Rust checks.

@@ -44,39 +44,43 @@ Notation first, in words. The **log-likelihood** ℓ(p), from [Maximum likelihoo
 
 The **Fisher information** I(p) is the average of the squared score over all the flip records the coin could produce. An **estimator** T is any rule that turns the flips into a guess; it is **unbiased** when its average guess equals p, for every p.
 
-$$S = \frac{d}{dp}\,\ell(p), \qquad I(p) = E\!\left[S^2\right], \qquad \operatorname{Var}(T) \;\ge\; \frac{1}{I(p)}$$
+```math
+S = \frac{d}{dp}\,\ell(p), \qquad I(p) = E\!\left[S^2\right], \qquad \mathrm{Var}(T) \;\ge\; \frac{1}{I(p)}
+```
 
 **Read it aloud:** the score is how steeply the log-likelihood rises; the information is the average squared score; any unbiased estimator's variance is at least one over the information.
 
 For a coin flipped n times, with K heads:
 
-$$S = \frac{K - np}{p(1-p)}, \qquad I(p) = \frac{n}{p(1-p)}, \qquad \operatorname{Var}(T) \;\ge\; \frac{p(1-p)}{n}$$
+```math
+S = \frac{K - np}{p(1-p)}, \qquad I(p) = \frac{n}{p(1-p)}, \qquad \mathrm{Var}(T) \;\ge\; \frac{p(1-p)}{n}
+```
 
 **Read it aloud:** the coin's score is the surplus of heads over the expected count, divided by p(1-p); the information is n over p(1-p); no unbiased guess has variance below p(1-p) over n.
 
-The plain fraction $\hat p = K/n$ has variance exactly $p(1-p)/n$, so it meets the floor.
+The plain fraction $`\hat p = K/n`$ has variance exactly $`p(1-p)/n`$, so it meets the floor.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the true chance of heads, the unknown | 0.25 | the floor rises until p = 0.5, then falls |
-| $n$ | the number of flips | 4 | information grows in proportion; the floor shrinks |
-| $x$ | one flip's result: 1 for heads, 0 for tails | 1, 0, 0, 0 | — |
-| $K$ | the number of heads in the n flips | 1 in the record above | the score rises |
-| $\hat p$ | the plain fraction K/n, read "p-hat" | 0.25 | — |
-| $T$ | any estimator: a rule from flips to a guess | the first flip alone | — |
-| $\ell$ | the log-likelihood ℓ(p) of the flips seen | ln(p) + 3 ln(1-p) | — |
-| $S$ | the score: the slope of ℓ in p | 0 when K = 1 | positive: a larger p fits better |
-| $I$, $I_1$ | the Fisher information of all n flips; of a single flip | 21.333333; 5.333333 | the floor 1/I falls |
-| $\theta$ | the unknown in a general model (theta) | p here; the width of a uniform range later | — |
-| $b$ | an estimator's bias, average guess minus p; $b'$ its slope in p | 0 for $\hat p$ | a slope $b'$ between −2 and 0 lowers the floor |
-| $E$, $\operatorname{Var}$, $\operatorname{Cov}$ | average, variance, covariance, as on earlier cards | $E[S] = 0$ | — |
+| $`p`$ | the true chance of heads, the unknown | 0.25 | the floor rises until p = 0.5, then falls |
+| $`n`$ | the number of flips | 4 | information grows in proportion; the floor shrinks |
+| $`x`$ | one flip's result: 1 for heads, 0 for tails | 1, 0, 0, 0 | — |
+| $`K`$ | the number of heads in the n flips | 1 in the record above | the score rises |
+| $`\hat p`$ | the plain fraction K/n, read "p-hat" | 0.25 | — |
+| $`T`$ | any estimator: a rule from flips to a guess | the first flip alone | — |
+| $`\ell`$ | the log-likelihood ℓ(p) of the flips seen | ln(p) + 3 ln(1-p) | — |
+| $`S`$ | the score: the slope of ℓ in p | 0 when K = 1 | positive: a larger p fits better |
+| $`I`$, $`I_1`$ | the Fisher information of all n flips; of a single flip | 21.333333; 5.333333 | the floor 1/I falls |
+| $`\theta`$ | the unknown in a general model (theta) | p here; the width of a uniform range later | — |
+| $`b`$ | an estimator's bias, average guess minus p; $`b'`$ its slope in p | 0 for $`\hat p`$ | a slope $`b'`$ between −2 and 0 lowers the floor |
+| $`E`$, $`\mathrm{Var}`$, $`\mathrm{Cov}`$ | average, variance, covariance, as on earlier cards | $`E[S] = 0`$ | — |
 
 The floor is a variance; its square root, 0.216506 here, is the smallest possible standard deviation of an unbiased guess.
 
 ### When it holds
 
 - **Unbiased at every value of p, not just one.** The proof differentiates "the average guess equals p" in p, which needs it on a whole stretch of values. The stopped clock, which always answers 0.25, is unbiased at p = 0.25 only and has variance 0 there; at p = 0.6 its mean squared error (the average squared miss from the true p) is 0.1225, about twice the floor of 0.06.
-- **The rule is unbiased; biased rules have a different floor.** A rule with bias $b(p)$ obeys $\operatorname{Var}(T) \ge (1 + b'(p))^2 / I(p)$. Laplace's rule (K+1)/(n+2) pulls towards 0.5; its floor is 0.020833 and it sits on that, well under 0.046875.
+- **The rule is unbiased; biased rules have a different floor.** A rule with bias $`b(p)`$ obeys $`\mathrm{Var}(T) \ge (1 + b'(p))^2 / I(p)`$. Laplace's rule (K+1)/(n+2) pulls towards 0.5; its floor is 0.020833 and it sits on that, well under 0.046875.
 - **The set of possible records does not move with the unknown.** Every head-tail string is possible for every p strictly between 0 and 1. For a quantity spread evenly between 0 and θ, the possible values stretch as θ grows; the score no longer averages zero and the floor fails (What breaks, below).
 - **The chance of each record has a slope in p.** The coin's does; at p = 0 or 1 the score divides by zero, and the theorem is stated for p strictly inside.
 - **Finite, positive information.** For the coin, I(p) is finite for every p strictly between 0 and 1. Where the information is 0, the data cannot tell nearby values of the unknown apart: the floor 1/I is infinite, and no unbiased rule with finite variance exists.
@@ -95,15 +99,19 @@ So the rule has to lean with the score. How far a quantity can lean with another
 
 Write P(r) for the chance of one flip record r under p, and P′(r) for its slope in p. The score of r is the slope of ln P(r), which is P′(r)/P(r). Averaging over records weights each by P(r), which cancels the division:
 
-$$E[S] = \sum_r P(r)\,\frac{P'(r)}{P(r)} = \sum_r P'(r) = \frac{d}{dp}\sum_r P(r) = \frac{d}{dp}\,1 = 0.$$
+```math
+E[S] = \sum_r P(r)\,\frac{P'(r)}{P(r)} = \sum_r P'(r) = \frac{d}{dp}\sum_r P(r) = \frac{d}{dp}\,1 = 0.
+```
 
 The chances always add to 1, so their slopes add to 0. For four flips at p = 0.25 the scores by head count are −5.333333, 0, 5.333333, 10.666667 and 16; weighted by their chances they average 0.000000. The record with one head scores 0 because 1/4 is exactly its best-fitting p.
 
 ### Step 2: unbiasedness makes the rule move one-for-one with the score
 
-An unbiased T satisfies $\sum_r T(r)\,P(r) = p$ for every p. Differentiate both sides in p:
+An unbiased T satisfies $`\sum_r T(r)\,P(r) = p`$ for every p. Differentiate both sides in p:
 
-$$\sum_r T(r)\,P'(r) = 1, \quad\text{that is}\quad E[T\,S] = 1.$$
+```math
+\sum_r T(r)\,P'(r) = 1, \quad\text{that is}\quad E[T\,S] = 1.
+```
 
 Since E[S] = 0, this product average is the covariance: Cov(T, S) = 1. Every unbiased rule has covariance exactly 1 with the score, whatever else it does. For the plain fraction the code enumerates all 16 records and gets 1.000000.
 
@@ -111,15 +119,19 @@ Since E[S] = 0, this product average is the covariance: Cov(T, S) = 1. Every unb
 
 The covariance of two quantities is at most the product of their standard deviations (the Cauchy–Schwarz inequality, proved in the folded note below). So
 
-$$1 = \operatorname{Cov}(T, S)^2 \le \operatorname{Var}(T)\,\operatorname{Var}(S) = \operatorname{Var}(T)\,I(p).$$
+```math
+1 = \mathrm{Cov}(T, S)^2 \le \mathrm{Var}(T)\,\mathrm{Var}(S) = \mathrm{Var}(T)\,I(p).
+```
 
 The variance of S is its average square, because its average is 0: that is the information. Divide by I(p) and the bound is proved.
 
 ### Step 4: the coin's information is n over p(1-p)
 
-One flip has chance $p^x (1-p)^{1-x}$, so its log-likelihood is $x \ln p + (1 - x)\ln(1-p)$ and its score is $x/p - (1-x)/(1-p) = (x - p)/(p(1-p))$. Across n independent flips the log-likelihoods add, so the scores add: $S = (K - np)/(p(1-p))$. The count K has variance np(1-p), so
+One flip has chance $`p^x (1-p)^{1-x}`$, so its log-likelihood is $`x \ln p + (1 - x)\ln(1-p)`$ and its score is $`x/p - (1-x)/(1-p) = (x - p)/(p(1-p))`$. Across n independent flips the log-likelihoods add, so the scores add: $`S = (K - np)/(p(1-p))`$. The count K has variance np(1-p), so
 
-$$I(p) = \frac{\operatorname{Var}(K)}{p^2(1-p)^2} = \frac{np(1-p)}{p^2(1-p)^2} = \frac{n}{p(1-p)}.$$
+```math
+I(p) = \frac{\mathrm{Var}(K)}{p^2(1-p)^2} = \frac{np(1-p)}{p^2(1-p)^2} = \frac{n}{p(1-p)}.
+```
 
 Information adds over independent flips: one flip gives 5.333333 at p = 0.25, four give 21.333333. The floor is 0.1875 / 4 = 0.046875.
 
@@ -127,7 +139,9 @@ Information adds over independent flips: one flip gives 5.333333 at p = 0.25, fo
 
 Cauchy–Schwarz is an equality exactly when one quantity is a fixed multiple of the other plus a constant. The plain fraction is:
 
-$$\hat p - p = \frac{K - np}{n} = \frac{p(1-p)}{n}\,S.$$
+```math
+\hat p - p = \frac{K - np}{n} = \frac{p(1-p)}{n}\,S.
+```
 
 So its variance equals the floor, at every p: 0.046875 at p = 0.25, and variance times information is 1.000000. No unbiased rule does better, at any p. The theorem does not say every model has a rule that meets its floor; the coin happens to.
 
@@ -135,24 +149,28 @@ So its variance equals the floor, at every p: 0.046875 at p = 0.25, and variance
 <summary>Detailed proof: Cauchy–Schwarz for covariance, and the curvature form</summary>
 
 **Cauchy–Schwarz.** Let U = T − E[T] and V = S − E[S]. For any number c, the variance of U − cV is an average of squares, so it is at least 0:
-$$0 \le E[(U - cV)^2] = \operatorname{Var}(T) - 2c\,\operatorname{Cov}(T, S) + c^2\,\operatorname{Var}(S).$$
-Take $c = \operatorname{Cov}(T, S)/\operatorname{Var}(S)$ (the information is positive, so this is allowed). The right side becomes $\operatorname{Var}(T) - \operatorname{Cov}(T,S)^2/\operatorname{Var}(S)$, which is therefore at least 0. Rearranged: $\operatorname{Cov}(T,S)^2 \le \operatorname{Var}(T)\operatorname{Var}(S)$. Equality holds exactly when $E[(U - cV)^2] = 0$, that is, when U = cV on every record with positive chance: T is a constant plus a multiple of S.
+
+$`\displaystyle 0 \le E[(U - cV)^2] = \mathrm{Var}(T) - 2c\,\mathrm{Cov}(T, S) + c^2\,\mathrm{Var}(S).`$
+
+Take $`c = \mathrm{Cov}(T, S)/\mathrm{Var}(S)`$ (the information is positive, so this is allowed). The right side becomes $`\mathrm{Var}(T) - \mathrm{Cov}(T,S)^2/\mathrm{Var}(S)`$, which is therefore at least 0. Rearranged: $`\mathrm{Cov}(T,S)^2 \le \mathrm{Var}(T)\mathrm{Var}(S)`$. Equality holds exactly when $`E[(U - cV)^2] = 0`$, that is, when U = cV on every record with positive chance: T is a constant plus a multiple of S.
 
 **Why the differentiations are allowed.** For n flips there are 2^n records, a finite list, and each P(r) is a polynomial in p. The slope of a finite sum is the sum of the slopes, so Steps 1 and 2 need nothing more. For a continuous quantity the sums become integrals, and passing the slope inside the integral is guaranteed by a bound on the density's slope that does not depend on θ and whose integral is finite. The moving-edge example in What breaks is exactly a case where no such bound exists.
 
-**The curvature form.** Differentiate $\sum_r P(r) S(r) = 0$ once more. The slope of $P(r) S(r)$ is $P'(r) S(r) + P(r) S'(r) = P(r)\,(S(r)^2 + S'(r))$, using $P' = P S$. Summing to 0 gives
-$$I(p) = E[S^2] = -E[S'] = -E\!\left[\frac{d^2}{dp^2}\,\ell(p)\right].$$
+**The curvature form.** Differentiate $`\sum_r P(r) S(r) = 0`$ once more. The slope of $`P(r) S(r)`$ is $`P'(r) S(r) + P(r) S'(r) = P(r)\,(S(r)^2 + S'(r))`$, using $`P' = P S`$. Summing to 0 gives
+
+$`\displaystyle I(p) = E[S^2] = -E[S'] = -E\!\left[\frac{d^2}{dp^2}\,\ell(p)\right].`$
+
 The information is the average downward curvature of the log-likelihood: the sharpness of the peak in the overview's chart. The code computes it both ways: 21.333333 from squared slopes, 21.333335 from numerical second slopes.
 
 </details>
 
 ### The other door
 
-For the coin a direct count reaches the same conclusion without calculus. The average of any rule is $\sum_k p^k (1-p)^{n-k} \times$ (the rule's total over the records with k heads), a polynomial in p. For it to equal p at every p, each of those totals is forced: it must equal the plain fraction's total, since the plain fraction is unbiased too.
+For the coin a direct count reaches the same conclusion without calculus. The average of any rule is $`\sum_k p^k (1-p)^{n-k} \times`$ (the rule's total over the records with k heads), a polynomial in p. For it to equal p at every p, each of those totals is forced: it must equal the plain fraction's total, since the plain fraction is unbiased too.
 
-Dividing both averages by $(1-p)^n$ turns each into a polynomial in the odds p/(1-p), with those totals as its coefficients; the odds take every positive value, and two polynomials that agree at every positive value have the same coefficients.
+Dividing both averages by $`(1-p)^n`$ turns each into a polynomial in the odds p/(1-p), with those totals as its coefficients; the odds take every positive value, and two polynomials that agree at every positive value have the same coefficients.
 
-So every unbiased rule is $\hat p$ plus a "noise" term that sums to zero inside each head-count group, and that noise is uncorrelated with $\hat p$. Its variance is Var($\hat p$) plus the noise's average square, never less.
+So every unbiased rule is $`\hat p`$ plus a "noise" term that sums to zero inside each head-count group, and that noise is uncorrelated with $`\hat p`$. Its variance is Var($`\hat p`$) plus the noise's average square, never less.
 
 This is the coin's case of the Rao–Blackwell and Lehmann–Scheffé theorems. The code draws 2,000 such rules at random: the smallest variance found is 0.046875, the floor, and none is biased at p = 0.1, 0.25 or 0.7.
 
@@ -180,7 +198,7 @@ The shelf's house poll gives the same floor at scale: 1,000 voters with 52 perce
 
 No unbiased way of reading those 1,000 answers does better. The information is 1,000/(0.52 × 0.48) = 4,006.4, one over that floor, and it is the curvature of about 4,006 that [Maximum likelihood](04-maximum-likelihood.md) measured at the poll's peak.
 
-The match is exact: at the peak $K = n\hat p$, so the curvature $K/\hat p^2 + (n-K)/(1-\hat p)^2$ is $n/\hat p + n/(1-\hat p) = n/(\hat p(1-\hat p))$, the information at $\hat p$.
+The match is exact: at the peak $`K = n\hat p`$, so the curvature $`K/\hat p^2 + (n-K)/(1-\hat p)^2`$ is $`n/\hat p + n/(1-\hat p) = n/(\hat p(1-\hat p))`$, the information at $`\hat p`$.
 
 ### What breaks if you drop a piece
 

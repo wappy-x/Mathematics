@@ -41,34 +41,38 @@ Heights are in percent per minute, so the area under each line is 100 percent. T
 
 ## The formula
 
-A reminder of the notation. $X$ and $Y$ are random variables, values written in lower case; a density $f(x)$ gives chance per unit, so area under it is chance ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). N(μ, σ^2) is the normal law with centre μ and variance σ^2, and $\Phi$ is the standard bell's area to the left of a point. New on this card: the name $h$ for the density of a sum.
+A reminder of the notation. $`X`$ and $`Y`$ are random variables, values written in lower case; a density $`f(x)`$ gives chance per unit, so area under it is chance ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). N(μ, σ^2) is the normal law with centre μ and variance σ^2, and $`\Phi`$ is the standard bell's area to the left of a point. New on this card: the name $`h`$ for the density of a sum.
 
-$$h(s) \;=\; \int_{-\infty}^{\infty} f(x)\,g(s - x)\,dx \qquad \text{for independent } X, Y \text{ with densities } f, g,\ S = X + Y$$
+```math
+h(s) \;=\; \int_{-\infty}^{\infty} f(x)\,g(s - x)\,dx \qquad \text{for independent } X, Y \text{ with densities } f, g,\ S = X + Y
+```
 
-**Read it aloud:** the density of the total at $s$ is found by letting the first quantity take each value $x$, asking the second to supply the rest, $s - x$, multiplying the two densities, and adding over every $x$.
+**Read it aloud:** the density of the total at $`s`$ is found by letting the first quantity take each value $`x`$, asking the second to supply the rest, $`s - x`$, multiplying the two densities, and adding over every $`x`$.
 
 The closure result follows from it:
 
-$$X \sim N(\mu_1, \sigma_1^2),\; Y \sim N(\mu_2, \sigma_2^2) \text{ independent} \;\Longrightarrow\; X + Y \sim N(\mu_1 + \mu_2,\; \sigma_1^2 + \sigma_2^2)$$
+```math
+X \sim N(\mu_1, \sigma_1^2),\; Y \sim N(\mu_2, \sigma_2^2) \text{ independent} \;\Longrightarrow\; X + Y \sim N(\mu_1 + \mu_2,\; \sigma_1^2 + \sigma_2^2)
+```
 
 **Read it aloud:** two independent normal quantities add to a normal quantity whose centre is the sum of the centres and whose variance is the sum of the variances.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $Y$ | the two independent quantities | bus leg and train leg, in minutes | — |
-| $S$ | the total, $X + Y$ | door to door | — |
-| $s$, $v$ | one value the total might take; $v$ is the same, running over all values up to $s$ | 60 minutes | the slide moves right |
-| $x$, $y$ | values of $X$ and $Y$; $x$ runs over every split of $s$ | 21.8 minutes of bus at the busiest split | — |
-| $f$, $g$ | the densities of $X$ and $Y$ | the bus bell and the train bell | — |
-| $h$ | the density of $S$, the convolution of $f$ and $g$ | 0.048394 per minute at 60 | — |
-| $\mu_1$, $\mu_2$ | the centres of the two normal laws. Say "mu". | 20 and 35 minutes | the total's centre rises by the same amount |
-| $\sigma_1$, $\sigma_2$ | the spreads (standard deviations). Say "sigma". | 3 and 4 minutes | the total widens, but by less than the push |
-| $\mu$, $\sigma$ | the total's centre and spread | 55 and 5 minutes | the on-time chance falls |
-| $m_s$ | the busiest split: the first quantity's most likely value, given the total is $s$ | 21.8 minutes when $s$ = 60 | — |
-| $\Phi$ | the standard bell's area to the left of a point | Φ(1) = 0.841345 | rises from 0 to 1 |
-| $t$, $M_X$, $M_Y$, $M_S$ | the input of a moment generating function, and the moment generating functions of $X$, $Y$ and $S$ | at 0.1, $M_S$ = 277.2723 | grows with $t$ |
+| $`X`$, $`Y`$ | the two independent quantities | bus leg and train leg, in minutes | — |
+| $`S`$ | the total, $`X + Y`$ | door to door | — |
+| $`s`$, $`v`$ | one value the total might take; $`v`$ is the same, running over all values up to $`s`$ | 60 minutes | the slide moves right |
+| $`x`$, $`y`$ | values of $`X`$ and $`Y`$; $`x`$ runs over every split of $`s`$ | 21.8 minutes of bus at the busiest split | — |
+| $`f`$, $`g`$ | the densities of $`X`$ and $`Y`$ | the bus bell and the train bell | — |
+| $`h`$ | the density of $`S`$, the convolution of $`f`$ and $`g`$ | 0.048394 per minute at 60 | — |
+| $`\mu_1`$, $`\mu_2`$ | the centres of the two normal laws. Say "mu". | 20 and 35 minutes | the total's centre rises by the same amount |
+| $`\sigma_1`$, $`\sigma_2`$ | the spreads (standard deviations). Say "sigma". | 3 and 4 minutes | the total widens, but by less than the push |
+| $`\mu`$, $`\sigma`$ | the total's centre and spread | 55 and 5 minutes | the on-time chance falls |
+| $`m_s`$ | the busiest split: the first quantity's most likely value, given the total is $`s`$ | 21.8 minutes when $`s`$ = 60 | — |
+| $`\Phi`$ | the standard bell's area to the left of a point | Φ(1) = 0.841345 | rises from 0 to 1 |
+| $`t`$, $`M_X`$, $`M_Y`$, $`M_S`$ | the input of a moment generating function, and the moment generating functions of $`X`$, $`Y`$ and $`S`$ | at 0.1, $`M_S`$ = 277.2723 | grows with $`t`$ |
 
-Two helper formulas carry the numbers. The total's spread is $\sigma = \sqrt{\sigma_1^2 + \sigma_2^2}$: here √(9 + 16) = 5. The chance of arriving by a deadline $s$ is $P(S \le s) = \Phi((s - \mu)/\sigma)$: here Φ((60 − 55)/5) = Φ(1).
+Two helper formulas carry the numbers. The total's spread is $`\sigma = \sqrt{\sigma_1^2 + \sigma_2^2}`$: here √(9 + 16) = 5. The chance of arriving by a deadline $`s`$ is $`P(S \le s) = \Phi((s - \mu)/\sigma)`$: here Φ((60 − 55)/5) = Φ(1).
 
 ### When it holds
 
@@ -83,25 +87,29 @@ Two helper formulas carry the numbers. The total's spread is $\sigma = \sqrt{\si
 
 ### Step 0: split the total by its first part
 
-A total of 60 minutes is the bus taking some time $x$ and the train taking the rest, $60 - x$. Different splits are different days: they never happen together. So their chances add. With independent legs, each split's chance is a product of two chances already known.
+A total of 60 minutes is the bus taking some time $`x`$ and the train taking the rest, $`60 - x`$. Different splits are different days: they never happen together. So their chances add. With independent legs, each split's chance is a product of two chances already known.
 
 That is the whole idea, and it is the same one behind adding counts ([Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md)). The one change: time is continuous, so a single split has chance zero, densities replace chances, and an integral replaces the sum.
 
 ### Step 1: the density of a sum
 
-Independence gives the pair of legs a joint density, the product $f(x)\,g(y)$: the chance per square minute that the bus takes about $x$ and the train about $y$ ([Joint densities](02-joint-densities-and-marginals.md)). The chance of arriving by $s$ is the volume under that product over the region where the two times add to $s$ or less:
+Independence gives the pair of legs a joint density, the product $`f(x)\,g(y)`$: the chance per square minute that the bus takes about $`x`$ and the train about $`y`$ ([Joint densities](02-joint-densities-and-marginals.md)). The chance of arriving by $`s`$ is the volume under that product over the region where the two times add to $`s`$ or less:
 
-$$P(S \le s) = \int_{-\infty}^{\infty} f(x) \left( \int_{-\infty}^{s - x} g(y)\,dy \right) dx.$$
+```math
+P(S \le s) = \int_{-\infty}^{\infty} f(x) \left( \int_{-\infty}^{s - x} g(y)\,dy \right) dx.
+```
 
-Inside the bracket, rename the train's time through the total it makes: write $y = v - x$, so $v$ is the total, running up to $s$. The inner integral becomes an integral of $g(v - x)$ over $v$ up to $s$. Every quantity in sight is zero or positive, so the two integrals can be taken in either order (the double-integral rule for positive integrands). Swapping them:
+Inside the bracket, rename the train's time through the total it makes: write $`y = v - x`$, so $`v`$ is the total, running up to $`s`$. The inner integral becomes an integral of $`g(v - x)`$ over $`v`$ up to $`s`$. Every quantity in sight is zero or positive, so the two integrals can be taken in either order (the double-integral rule for positive integrands). Swapping them:
 
-$$P(S \le s) = \int_{-\infty}^{s} \left( \int_{-\infty}^{\infty} f(x)\,g(v - x)\,dx \right) dv.$$
+```math
+P(S \le s) = \int_{-\infty}^{s} \left( \int_{-\infty}^{\infty} f(x)\,g(v - x)\,dx \right) dv.
+```
 
-The chance of arriving by $s$ is the area, up to $s$, under the bracket. A function whose area up to every point gives the chance is the density. So the bracket, read at $v = s$, is $h(s)$. That is the convolution formula, and nothing about normal laws was used.
+The chance of arriving by $`s`$ is the area, up to $`s`$, under the bracket. A function whose area up to every point gives the chance is the density. So the bracket, read at $`v = s`$, is $`h(s)`$. That is the convolution formula, and nothing about normal laws was used.
 
 ### Step 2: see it on the commute
 
-Fix the total at 60 minutes and plot the product $f(x)\,g(60 - x)$ against the bus time $x$. The bus bell sits where it always does. The train bell is flipped, since $60 - x$ runs backwards, and shifted so that a 25-minute bus pairs with a 35-minute train. The product is large only where both are large.
+Fix the total at 60 minutes and plot the product $`f(x)\,g(60 - x)`$ against the bus time $`x`$. The bus bell sits where it always does. The train bell is flipped, since $`60 - x`$ runs backwards, and shifted so that a 25-minute bus pairs with a 35-minute train. The product is large only where both are large.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -112,54 +120,68 @@ xychart-beta
     line [0.00, 0.01, 0.04, 0.15, 0.43, 1.09, 2.30, 4.07, 6.07, 7.61, 8.02, 7.10, 5.28, 3.31, 1.74, 0.77, 0.29, 0.09, 0.02, 0.01, 0.00]
 ```
 
-The one line is 1000 times $f(x)\,g(60 - x)$ at each whole minute of bus time. The area under it, divided by 1000, is $h(60)$ = 0.048394.
+The one line is 1000 times $`f(x)\,g(60 - x)`$ at each whole minute of bus time. The area under it, divided by 1000, is $`h(60)`$ = 0.048394.
 
-Its peak sits at a bus time of 21.8 minutes, not 20. A 60-minute day runs 5 minutes over the average, and the likeliest way to run over spreads the delay over both legs. The bus takes 1.8 of the extra minutes and the train 3.2, in proportion to their variances, 9 and 16. Slide the total to another value and the flipped train bell slides with it; each position gives one value of $h$.
+Its peak sits at a bus time of 21.8 minutes, not 20. A 60-minute day runs 5 minutes over the average, and the likeliest way to run over spreads the delay over both legs. The bus takes 1.8 of the extra minutes and the train 3.2, in proportion to their variances, 9 and 16. Slide the total to another value and the flipped train bell slides with it; each position gives one value of $`h`$.
 
 ### Step 3: normal plus normal is normal
 
 Write the two bells out. Each is a constant times e raised to minus half a squared distance, measured in spreads. Multiplying two of them adds the exponents:
 
-$$f(x)\,g(s - x) = \frac{1}{2\pi\sigma_1\sigma_2} \exp\!\left( -\frac12 \left[ \frac{(x - \mu_1)^2}{\sigma_1^2} + \frac{(s - x - \mu_2)^2}{\sigma_2^2} \right] \right).$$
+```math
+f(x)\,g(s - x) = \frac{1}{2\pi\sigma_1\sigma_2} \exp\!\left( -\frac12 \left[ \frac{(x - \mu_1)^2}{\sigma_1^2} + \frac{(s - x - \mu_2)^2}{\sigma_2^2} \right] \right).
+```
 
-The bracket is a quadratic in $x$. Completing the square splits it into two pieces: one square that holds $x$, centred on the busiest split $m_s$, and one that holds only the total:
+The bracket is a quadratic in $`x`$. Completing the square splits it into two pieces: one square that holds $`x`$, centred on the busiest split $`m_s`$, and one that holds only the total:
 
-$$\frac{(x - \mu_1)^2}{\sigma_1^2} + \frac{(s - x - \mu_2)^2}{\sigma_2^2} = \frac{\sigma^2}{\sigma_1^2\sigma_2^2}\,(x - m_s)^2 + \frac{(s - \mu)^2}{\sigma^2}, \qquad m_s = \mu_1 + \frac{\sigma_1^2}{\sigma^2}(s - \mu).$$
+```math
+\frac{(x - \mu_1)^2}{\sigma_1^2} + \frac{(s - x - \mu_2)^2}{\sigma_2^2} = \frac{\sigma^2}{\sigma_1^2\sigma_2^2}\,(x - m_s)^2 + \frac{(s - \mu)^2}{\sigma^2}, \qquad m_s = \mu_1 + \frac{\sigma_1^2}{\sigma^2}(s - \mu).
+```
 
-Integrating over $x$ sweeps up the first piece: it is a bell in $x$, and its area is a known constant from the Gaussian integral. The second piece does not depend on $x$, so it passes through untouched. What is left is a constant times $\exp(-(s - \mu)^2 / (2\sigma^2))$: a normal density in $s$, centre $\mu$, spread $\sigma$.
+Integrating over $`x`$ sweeps up the first piece: it is a bell in $`x`$, and its area is a known constant from the Gaussian integral. The second piece does not depend on $`x`$, so it passes through untouched. What is left is a constant times $`\exp(-(s - \mu)^2 / (2\sigma^2))`$: a normal density in $`s`$, centre $`\mu`$, spread $`\sigma`$.
 
-The constants come out exactly right, as the folded proof shows. For the commute at $s$ = 60, $m_s$ = 20 + (9/25) × 5 = 21.8, the peak in the chart above.
+The constants come out exactly right, as the folded proof shows. For the commute at $`s`$ = 60, $`m_s`$ = 20 + (9/25) × 5 = 21.8, the peak in the chart above.
 
 <details>
 <summary>Detailed proof: completing the square, and the constant</summary>
 
-Write $u = x - \mu_1$ for the bus's distance from its centre and $d = s - \mu$ for the total's distance from its centre. Then $s - x - \mu_2 = d - u$, and the bracket is
-$$\frac{u^2}{\sigma_1^2} + \frac{(d - u)^2}{\sigma_2^2} = u^2\left(\frac{1}{\sigma_1^2} + \frac{1}{\sigma_2^2}\right) - \frac{2ud}{\sigma_2^2} + \frac{d^2}{\sigma_2^2}.$$
-The coefficient of $u^2$ is $\sigma^2/(\sigma_1^2\sigma_2^2)$, since $\sigma^2 = \sigma_1^2 + \sigma_2^2$. Factor it out of the first two terms and complete the square:
-$$\frac{\sigma^2}{\sigma_1^2\sigma_2^2}\left(u - \frac{\sigma_1^2}{\sigma^2}d\right)^2 - \frac{\sigma_1^2 d^2}{\sigma^2\sigma_2^2} + \frac{d^2}{\sigma_2^2}.$$
-The last two terms combine: $\frac{d^2}{\sigma_2^2}\left(1 - \frac{\sigma_1^2}{\sigma^2}\right) = \frac{d^2}{\sigma_2^2}\cdot\frac{\sigma_2^2}{\sigma^2} = \frac{d^2}{\sigma^2}$. And $u - (\sigma_1^2/\sigma^2)d = x - m_s$. That is the identity in Step 3.
+Write $`u = x - \mu_1`$ for the bus's distance from its centre and $`d = s - \mu`$ for the total's distance from its centre. Then $`s - x - \mu_2 = d - u`$, and the bracket is
 
-Now integrate over $x$. The Gaussian integral gives $\int \exp(-c(x - m)^2/2)\,dx = \sqrt{2\pi/c}$ for any $c > 0$, wherever the bell is centred ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). Here $c = \sigma^2/(\sigma_1^2\sigma_2^2)$, so the integral is $\sqrt{2\pi}\,\sigma_1\sigma_2/\sigma$. Then
-$$h(s) = \frac{1}{2\pi\sigma_1\sigma_2}\cdot\frac{\sqrt{2\pi}\,\sigma_1\sigma_2}{\sigma}\cdot e^{-(s - \mu)^2/(2\sigma^2)} = \frac{1}{\sigma\sqrt{2\pi}}\,e^{-(s - \mu)^2/(2\sigma^2)},$$
+$`\displaystyle \frac{u^2}{\sigma_1^2} + \frac{(d - u)^2}{\sigma_2^2} = u^2\left(\frac{1}{\sigma_1^2} + \frac{1}{\sigma_2^2}\right) - \frac{2ud}{\sigma_2^2} + \frac{d^2}{\sigma_2^2}.`$
+
+The coefficient of $`u^2`$ is $`\sigma^2/(\sigma_1^2\sigma_2^2)`$, since $`\sigma^2 = \sigma_1^2 + \sigma_2^2`$. Factor it out of the first two terms and complete the square:
+
+$`\displaystyle \frac{\sigma^2}{\sigma_1^2\sigma_2^2}\left(u - \frac{\sigma_1^2}{\sigma^2}d\right)^2 - \frac{\sigma_1^2 d^2}{\sigma^2\sigma_2^2} + \frac{d^2}{\sigma_2^2}.`$
+
+The last two terms combine: $`\frac{d^2}{\sigma_2^2}\left(1 - \frac{\sigma_1^2}{\sigma^2}\right) = \frac{d^2}{\sigma_2^2}\cdot\frac{\sigma_2^2}{\sigma^2} = \frac{d^2}{\sigma^2}`$. And $`u - (\sigma_1^2/\sigma^2)d = x - m_s`$. That is the identity in Step 3.
+
+Now integrate over $`x`$. The Gaussian integral gives $`\int \exp(-c(x - m)^2/2)\,dx = \sqrt{2\pi/c}`$ for any $`c > 0`$, wherever the bell is centred ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). Here $`c = \sigma^2/(\sigma_1^2\sigma_2^2)`$, so the integral is $`\sqrt{2\pi}\,\sigma_1\sigma_2/\sigma`$. Then
+
+$`\displaystyle h(s) = \frac{1}{2\pi\sigma_1\sigma_2}\cdot\frac{\sqrt{2\pi}\,\sigma_1\sigma_2}{\sigma}\cdot e^{-(s - \mu)^2/(2\sigma^2)} = \frac{1}{\sigma\sqrt{2\pi}}\,e^{-(s - \mu)^2/(2\sigma^2)},`$
+
 the N(μ, σ^2) density, exactly. The proof identifies the whole density, not just its centre and spread; no limit theorem and no generating function was used. It needs both spreads above zero: a leg with spread 0 is a constant, which shifts the other law instead.
 
 </details>
 
 ### Step 4: the second road, through moment generating functions
 
-The moment generating function of $X$ is $M_X(t) = E[e^{tX}]$, the long-run average of e raised to $t$ times the quantity ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)). For independent quantities, $M_S(t) = M_X(t)\,M_Y(t)$: convolution of densities becomes multiplication of generating functions. A normal law with centre μ and variance σ^2 has generating function $e^{\mu t + \sigma^2 t^2/2}$. Multiply two and the exponents add:
+The moment generating function of $`X`$ is $`M_X(t) = E[e^{tX}]`$, the long-run average of e raised to $`t`$ times the quantity ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)). For independent quantities, $`M_S(t) = M_X(t)\,M_Y(t)`$: convolution of densities becomes multiplication of generating functions. A normal law with centre μ and variance σ^2 has generating function $`e^{\mu t + \sigma^2 t^2/2}`$. Multiply two and the exponents add:
 
-$$M_S(t) = e^{\mu_1 t + \sigma_1^2 t^2/2}\, e^{\mu_2 t + \sigma_2^2 t^2/2} = e^{(\mu_1 + \mu_2) t + (\sigma_1^2 + \sigma_2^2) t^2/2}.$$
+```math
+M_S(t) = e^{\mu_1 t + \sigma_1^2 t^2/2}\, e^{\mu_2 t + \sigma_2^2 t^2/2} = e^{(\mu_1 + \mu_2) t + (\sigma_1^2 + \sigma_2^2) t^2/2}.
+```
 
-That is the generating function of N(μ1 + μ2, σ1^2 + σ2^2). A generating function that exists near $t$ = 0 fixes its law (stated on the moment-generating-functions card, proved in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)), so the sum is normal a second time. At $t$ = 0.1 the code finds 277.2723 three ways: the product of the two legs' integrals, the integral against the convolved density, and the formula.
+That is the generating function of N(μ1 + μ2, σ1^2 + σ2^2). A generating function that exists near $`t`$ = 0 fixes its law (stated on the moment-generating-functions card, proved in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)), so the sum is normal a second time. At $`t`$ = 0.1 the code finds 277.2723 three ways: the product of the two legs' integrals, the integral against the convolved density, and the formula.
 
 ### Step 5: what closure adds, and where it stops
 
 Variances of independent quantities always add, bell or not ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)). So the 25 was never in doubt. What the normal theorem adds is the shape: without it, a centre of 55 and a spread of 5 do not give a chance for 60 minutes.
 
-Replace the train with a platform wait, spread evenly from 0 to 10 minutes. The convolution still works. The wait's density is 1/10 on that stretch, so $h(s)$ is one tenth of the bus's chance of landing between $s - 10$ and $s$:
+Replace the train with a platform wait, spread evenly from 0 to 10 minutes. The convolution still works. The wait's density is 1/10 on that stretch, so $`h(s)`$ is one tenth of the bus's chance of landing between $`s - 10`$ and $`s`$:
 
-$$h(s) = \frac{1}{10}\left[ \Phi\!\left(\frac{s - 20}{3}\right) - \Phi\!\left(\frac{s - 30}{3}\right) \right].$$
+```math
+h(s) = \frac{1}{10}\left[ \Phi\!\left(\frac{s - 20}{3}\right) - \Phi\!\left(\frac{s - 30}{3}\right) \right].
+```
 
 At 25 minutes this is 0.090442, where a bell with the same centre, 25, and spread, 4.1633, would stand at 0.095823. The total is flatter on top and falls off faster: most families do not reproduce under convolution, and the normal family does.
 
@@ -180,9 +202,9 @@ Bus N(20, 3^2), train N(35, 4^2), independent. The deadline is 60 minutes.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| centre of the total, $\mu$ | 20 + 35 | 55 minutes |
+| centre of the total, $`\mu`$ | 20 + 35 | 55 minutes |
 | variance of the total | 3^2 + 4^2 = 9 + 16 | 25 |
-| spread of the total, $\sigma$ | √25 | 5 minutes |
+| spread of the total, $`\sigma`$ | √25 | 5 minutes |
 | deadline in spreads | (60 − 55) / 5 | 1 |
 | on-time chance | Φ(1) | **0.841345** |
 | density of the total at 60 | e^(−1/2) / (5 √(2π)) | 0.048394 per minute |
@@ -548,9 +570,9 @@ The two outputs match line for line.
 
 Lean proves both parts of the theorem in general, not just for the commute, and checks the worked arithmetic exactly.
 
-- Suppose $X$ and $Y$ are independent, with densities $f$ and $g$. Then $X + Y$ has density $h(s) = \int f(x)\,g(s - x)\,dx$.
+- Suppose $`X`$ and $`Y`$ are independent, with densities $`f`$ and $`g`$. Then $`X + Y`$ has density $`h(s) = \int f(x)\,g(s - x)\,dx`$.
 - Take two normal densities with centres μ1 and μ2, and spreads σ1 and σ2 above 0. Then their convolution is exactly the N(μ1 + μ2, σ1^2 + σ2^2) density.
-- Suppose $X$ ~ N(μ1, σ1^2) and $Y$ ~ N(μ2, σ2^2) are independent. Then $X + Y$ ~ N(μ1 + μ2, σ1^2 + σ2^2).
+- Suppose $`X`$ ~ N(μ1, σ1^2) and $`Y`$ ~ N(μ2, σ2^2) are independent. Then $`X + Y`$ ~ N(μ1 + μ2, σ1^2 + σ2^2).
 - The worked arithmetic: centre 55, variance 25, spread 5 not 7, the busiest split 21.8, and the variances in What breaks and Try changing.
 
 The decimals of Φ, Simpson's rule, the generating-function integrals, the simulation and the charts are left to the Python and Rust checks.
@@ -703,10 +725,10 @@ example : (55 : ℚ) * (1 / 10) + 25 * (1 / 10) ^ 2 / 2 = 45 / 8 ∧
 > [!warning]
 > **Adding the spreads.** Spreads of 3 and 4 minutes do not make a spread of 7. Variances add, 9 + 16 = 25, and the spread is its square root, 5. Adding spreads assumes a bad bus day is always a bad train day too; with independent legs, delays partly cancel. For the hour's deadline the error moves the on-time chance from 0.841345 down to 0.762475, and a timetable planned on it builds in slack that is not needed.
 >
-> - **Adding the densities.** The curve $f + g$ has two humps, at 20 and 35, and area 2. It describes neither leg nor the total. The total's density comes from multiplying at each split and integrating, not from adding curves.
+> - **Adding the densities.** The curve $`f + g`$ has two humps, at 20 and 35, and area 2. It describes neither leg nor the total. The total's density comes from multiplying at each split and integrating, not from adding curves.
 > - **Convolving dependent legs.** Two margins, the laws of each leg on its own, do not fix the law of their sum; even margins plus a correlation do not, unless the pair is jointly normal. For jointly normal legs with correlation 0.5 the true on-time chance is 0.794460, not 0.841345.
 > - **Assuming every total is a bell.** A bus plus an evenly spread platform wait is not normal. A bell with matched centre and spread puts 0.000897 on a trip over 38 minutes; the truth is 0.000354.
-> - **Reading the density as a chance.** $h(60)$ = 0.048394 is chance per minute. The chance of a trip of exactly 60 minutes, to the last instant, is zero.
+> - **Reading the density as a chance.** $`h(60)`$ = 0.048394 is chance per minute. The chance of a trip of exactly 60 minutes, to the last instant, is zero.
 
 ---
 

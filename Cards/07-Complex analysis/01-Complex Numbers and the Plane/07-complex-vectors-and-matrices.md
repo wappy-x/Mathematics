@@ -26,31 +26,33 @@ To scale, 60 units per 1; each panel is a copy of the complex plane. Solid arrow
 
 ## The formula
 
-Notation first, in words. A complex vector is a column of complex numbers. Its **transpose**, $v^T$, is the same entries as a row. Its **conjugate transpose**, $v^*$, read "v-star", is that row with every entry conjugated. For a matrix, $A^T$ swaps rows for columns, and $A^*$ also conjugates every entry. A bar, $\bar z$, is the conjugate of a number z, and $\lvert z\rvert$ is its modulus: its distance from 0.
+Notation first, in words. A complex vector is a column of complex numbers. Its **transpose**, $`v^T`$, is the same entries as a row. Its **conjugate transpose**, $`v^*`$, read "v-star", is that row with every entry conjugated. For a matrix, $`A^T`$ swaps rows for columns, and $`A^*`$ also conjugates every entry. A bar, $`\bar z`$, is the conjugate of a number z, and $`\lvert z\rvert`$ is its modulus: its distance from 0.
 
-$$v^* w = \sum_{j=1}^{n} \bar v_j\, w_j, \qquad \lVert v\rVert = \sqrt{v^* v} = \sqrt{\lvert v_1\rvert^2 + \dots + \lvert v_n\rvert^2}$$
+```math
+v^* w = \sum_{j=1}^{n} \bar v_j\, w_j, \qquad \lVert v\rVert = \sqrt{v^* v} = \sqrt{\lvert v_1\rvert^2 + \dots + \lvert v_n\rvert^2}
+```
 
 **Read it aloud:** conjugate each entry of v, multiply by the matching entry of w, and add; the length of v is the square root of v-star v.
 
-A square matrix $H$ is **Hermitian** when $H^* = H$: flipped across its diagonal and conjugated, it comes back. A square matrix $U$ is **unitary** when $U^* U = I$: its conjugate transpose undoes it. Eigenvalues still mean $A v = \lambda v$ with $v$ not zero.
+A square matrix $`H`$ is **Hermitian** when $`H^* = H`$: flipped across its diagonal and conjugated, it comes back. A square matrix $`U`$ is **unitary** when $`U^* U = I`$: its conjugate transpose undoes it. Eigenvalues still mean $`A v = \lambda v`$ with $`v`$ not zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $v$, $w$, $x$ | complex columns; $x$ pairs a drone with a beacon | (1, i), (1, −i), (3 + 4i, 1 + 2i) | longer vector |
-| $n$, $j$ | how many entries, and which one | n = 2 | more terms added |
-| $A$, $B$, $A^*$ | square matrices; a conjugate transpose | — | — |
-| $I$ | the identity matrix: changes nothing | `[[1, 0], [0, 1]]` | — |
-| $R$ | the sprite's quarter turn | `[[0, -1], [1, 0]]` | a half turn gives −1 twice |
-| $H$, $S$ | Hermitian, and a look-alike that is not | `[[2, i], [-i, 2]]`, `[[0, i], [i, 0]]` | — |
-| $U$, $Q$ | unitary matrices: they keep lengths | R itself | — |
-| $\lambda$, $\mu$, $t$ | eigenvalues; a real trial value | i and −i for R; t from −3 to 3 | — |
+| $`v`$, $`w`$, $`x`$ | complex columns; $`x`$ pairs a drone with a beacon | (1, i), (1, −i), (3 + 4i, 1 + 2i) | longer vector |
+| $`n`$, $`j`$ | how many entries, and which one | n = 2 | more terms added |
+| $`A`$, $`B`$, $`A^*`$ | square matrices; a conjugate transpose | — | — |
+| $`I`$ | the identity matrix: changes nothing | `[[1, 0], [0, 1]]` | — |
+| $`R`$ | the sprite's quarter turn | `[[0, -1], [1, 0]]` | a half turn gives −1 twice |
+| $`H`$, $`S`$ | Hermitian, and a look-alike that is not | `[[2, i], [-i, 2]]`, `[[0, i], [i, 0]]` | — |
+| $`U`$, $`Q`$ | unitary matrices: they keep lengths | R itself | — |
+| $`\lambda`$, $`\mu`$, $`t`$ | eigenvalues; a real trial value | i and −i for R; t from −3 to 3 | — |
 
 ### When it holds
 
 - **Definitions hold everywhere;** Hermitian and unitary need square matrices.
 - **The first vector is conjugated here.** Many books conjugate the second; lengths and "perpendicular" agree either way.
-- **The eigenvector is non-zero.** The zero vector satisfies $A v = \lambda v$ for every $\lambda$.
-- **Complex symmetric is not enough.** $S$ equals its plain transpose, yet has eigenvalues i and −i; the real-eigenvalue guarantee comes from Hermitian.
+- **The eigenvector is non-zero.** The zero vector satisfies $`A v = \lambda v`$ for every $`\lambda`$.
+- **Complex symmetric is not enough.** $`S`$ equals its plain transpose, yet has eigenvalues i and −i; the real-eigenvalue guarantee comes from Hermitian.
 
 ---
 
@@ -62,54 +64,56 @@ Complex squares can cancel: i × i = −1 undoes 1 × 1. A number times its conj
 
 ### Step 1: the length is real, and zero only for the zero vector
 
-Each term of $v^* v$ is $\bar v_j v_j = \lvert v_j\rvert^2$. With $v_j = a_j + b_j i$ the sum is $a_1^2 + b_1^2 + \dots + a_n^2 + b_n^2$: the squared length of a real vector with 2n coordinates ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). For v = (1, i) those four coordinates are 1, 0, 0, 1: squared length 2.
+Each term of $`v^* v`$ is $`\bar v_j v_j = \lvert v_j\rvert^2`$. With $`v_j = a_j + b_j i`$ the sum is $`a_1^2 + b_1^2 + \dots + a_n^2 + b_n^2`$: the squared length of a real vector with 2n coordinates ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). For v = (1, i) those four coordinates are 1, 0, 0, 1: squared length 2.
 
-Columns are **perpendicular** when $w^* v = 0$: for w = (1, −i) and v = (1, i), 1 × 1 + i × i = 0.
+Columns are **perpendicular** when $`w^* v = 0`$: for w = (1, −i) and v = (1, i), 1 × 1 + i × i = 0.
 
 ### Step 2: the star moves a matrix across the dot product
 
 Expanding the sums entry by entry gives
 
-$$(A x)^* y = x^* (A^* y)$$
+```math
+(A x)^* y = x^* (A^* y)
+```
 
-for any columns x and y: the conjugate transpose is the new dot product's partner. Applied twice, it gives $(AB)^* = B^* A^*$.
+for any columns x and y: the conjugate transpose is the new dot product's partner. Applied twice, it gives $`(AB)^* = B^* A^*`$.
 
 ### Step 3: Hermitian matrices have real eigenvalues
 
-Take $H v = \lambda v$ with v non-zero, so $v^* H v = \lambda\, v^* v$. A single number's star is its conjugate, so by Step 2 the conjugate of $v^* H v$ is $v^* H^* v$, which is $v^* H v$ again: a number equal to its conjugate is real. So $\lambda$ is a real number over the positive real $v^* v$.
+Take $`H v = \lambda v`$ with v non-zero, so $`v^* H v = \lambda\, v^* v`$. A single number's star is its conjugate, so by Step 2 the conjugate of $`v^* H v`$ is $`v^* H^* v`$, which is $`v^* H v`$ again: a number equal to its conjugate is real. So $`\lambda`$ is a real number over the positive real $`v^* v`$.
 
 ### Step 4: unitary matrices keep lengths, and their eigenvalues sit on the unit circle
 
-By Step 2, $(U x)^* (U x) = x^* U^* U x = x^* x$. Pair the shelf's drone at 3 + 4i with a beacon at 1 + 2i: $x^* x$ = 25 + 5 = 30, and $R x$ = (−1 − 2i, 3 + 4i) has squared length 5 + 25 = 30 too.
+By Step 2, $`(U x)^* (U x) = x^* U^* U x = x^* x`$. Pair the shelf's drone at 3 + 4i with a beacon at 1 + 2i: $`x^* x`$ = 25 + 5 = 30, and $`R x`$ = (−1 − 2i, 3 + 4i) has squared length 5 + 25 = 30 too.
 
-If $U v = \lambda v$ with v non-zero, lengths give $\lvert\lambda\rvert\,\lVert v\rVert = \lVert v\rVert$, so $\lvert\lambda\rvert = 1$. It lies on the unit circle, not necessarily on the real line.
+If $`U v = \lambda v`$ with v non-zero, lengths give $`\lvert\lambda\rvert\,\lVert v\rVert = \lVert v\rVert`$, so $`\lvert\lambda\rvert = 1`$. It lies on the unit circle, not necessarily on the real line.
 
 ### Step 5: the quarter turn's eigenvalues come home
 
-$R$ is real, so $R^* = R^T$ = `[[0, 1], [-1, 0]]`, and $R^* R = I$: $R$ is unitary, and by Step 4 its eigenvalues have modulus 1.
+$`R`$ is real, so $`R^* = R^T`$ = `[[0, 1], [-1, 0]]`, and $`R^* R = I`$: $`R`$ is unitary, and by Step 4 its eigenvalues have modulus 1.
 
-An eigenvalue makes the determinant of $R - \lambda I$ zero. Trace 0 (the sum of the diagonal entries) and determinant 1 give $\lambda^2 + 1 = 0$, discriminant −4, so $\lambda = \pm i$ ([Powers and roots](05-powers-roots-and-roots-of-unity.md)).
+An eigenvalue makes the determinant of $`R - \lambda I`$ zero. Trace 0 (the sum of the diagonal entries) and determinant 1 give $`\lambda^2 + 1 = 0`$, discriminant −4, so $`\lambda = \pm i`$ ([Powers and roots](05-powers-roots-and-roots-of-unity.md)).
 
-A second road needs no quadratic. Four quarter turns are no turn, $R^4 = I$, so $\lambda^4 = 1$: a fourth root of unity, 1, i, −1 or −i. The top row of $R v = \lambda v$ makes the second entry −λ times the first, so test (1, −λ) for each. Only i and −i pass. For $\lambda = i$ the vector is (1, −i), and $R$(1, −i) = (i, 1) = i(1, −i), as drawn above.
+A second road needs no quadratic. Four quarter turns are no turn, $`R^4 = I`$, so $`\lambda^4 = 1`$: a fourth root of unity, 1, i, −1 or −i. The top row of $`R v = \lambda v`$ makes the second entry −λ times the first, so test (1, −λ) for each. Only i and −i pass. For $`\lambda = i`$ the vector is (1, −i), and $`R`$(1, −i) = (i, 1) = i(1, −i), as drawn above.
 
 That is the homecoming: the quarter turn keeps two complex directions, and on them it is multiplication by i or −i, itself a quarter turn.
 
 ### Step 6: a Hermitian matrix built from the rotation
 
-Since $R^* = -R$, $(-iR)^* = i R^* = -iR$: so $H = 2I - iR$ = `[[2, i], [-i, 2]]` is Hermitian. On an eigenvector of $R$, $H v = 2v - i\lambda v$: same eigenvectors, eigenvalues $2 - i\lambda$: 2 − i × i = 3 and 2 − i × (−i) = 1. Both are real, as Step 3 promised; trace 4 and determinant 3 give the same pair by the quadratic formula.
+Since $`R^* = -R`$, $`(-iR)^* = i R^* = -iR`$: so $`H = 2I - iR`$ = `[[2, i], [-i, 2]]` is Hermitian. On an eigenvector of $`R`$, $`H v = 2v - i\lambda v`$: same eigenvectors, eigenvalues $`2 - i\lambda`$: 2 − i × i = 3 and 2 − i × (−i) = 1. Both are real, as Step 3 promised; trace 4 and determinant 3 give the same pair by the quadratic formula.
 
 <details>
 <summary>Detailed proof: the star rule, perpendicular eigenvectors, and the complex spectral theorem</summary>
 
-**The star rule.** Entry k of $A x$ is $\sum_j A_{kj} x_j$, so $(A x)^* y = \sum_j \bar x_j \bigl(\sum_k \bar A_{kj}\, y_k\bigr)$. The bracket is entry j of $A^* y$, since row j, column k of $A^*$ is $\bar A_{kj}$. Applying the rule to $A B$ at once, then to each factor, gives $(AB)^* = B^* A^*$.
+**The star rule.** Entry k of $`A x`$ is $`\sum_j A_{kj} x_j`$, so $`(A x)^* y = \sum_j \bar x_j \bigl(\sum_k \bar A_{kj}\, y_k\bigr)`$. The bracket is entry j of $`A^* y`$, since row j, column k of $`A^*`$ is $`\bar A_{kj}`$. Applying the rule to $`A B`$ at once, then to each factor, gives $`(AB)^* = B^* A^*`$.
 
-**Perpendicular eigenvectors.** Let $H v = \lambda v$ and $H w = \mu w$ with $\lambda \ne \mu$, both real by Step 3. Then $\mu\, w^* v = (H w)^* v = w^* H v = \lambda\, w^* v$, so $w^* v = 0$, as for (1, −i) and (1, i).
+**Perpendicular eigenvectors.** Let $`H v = \lambda v`$ and $`H w = \mu w`$ with $`\lambda \ne \mu`$, both real by Step 3. Then $`\mu\, w^* v = (H w)^* v = w^* H v = \lambda\, w^* v`$, so $`w^* v = 0`$, as for (1, −i) and (1, i).
 
-**The complex spectral theorem, stated.** Every Hermitian matrix is $Q$ times a real diagonal matrix times $Q^*$, with $Q$ unitary: its columns are perpendicular unit eigenvectors. The proof on [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md) carries over with every transpose starred; the general version is on Adjoints.
+**The complex spectral theorem, stated.** Every Hermitian matrix is $`Q`$ times a real diagonal matrix times $`Q^*`$, with $`Q`$ unitary: its columns are perpendicular unit eigenvectors. The proof on [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md) carries over with every transpose starred; the general version is on Adjoints.
 
 </details>
 
-A third road to H's eigenvalues is Step 3's ratio $v^* H v / v^* v$: 3 on (1, −i), 1 on (1, i).
+A third road to H's eigenvalues is Step 3's ratio $`v^* H v / v^* v`$: 3 on (1, −i), 1 on (1, i).
 
 ---
 
@@ -132,7 +136,7 @@ The quarter turn keeps the drone pair's length, and on (1, −i) it is multiplic
 | --- | --- | --- |
 | Transpose for the length of v | 0, not 2 | i × i cancels 1 × 1 |
 | Transpose to test perpendicular | w^T v = 2, not 0 | H's eigenvectors wrongly look non-perpendicular |
-| Symmetric taken as Hermitian | S has eigenvalues i and −i | $S^T = S$ but $S^* \ne S$ |
+| Symmetric taken as Hermitian | S has eigenvalues i and −i | $`S^T = S`$ but $`S^* \ne S`$ |
 | Hunting a real eigenvalue of R | det(R − tI) never below 1 | t^2 + 1 has no real root |
 
 ---
@@ -508,7 +512,7 @@ example : star (![-1 - 2 * I, 3 + 4 * I] : Fin 2 → ℂ) ⬝ᵥ ![-1 - 2 * I, 3
 > [!warning]
 > **Carrying the real dot product over unchanged.** For real vectors the two transposes agree, so the habit is never tested. For v = (1, i) the plain square is 0: a non-zero vector with no length. Every result on this card rests on the conjugate.
 >
-> - **Complex symmetric is not Hermitian.** $S$ = `[[0, i], [i, 0]]` equals its transpose, yet its eigenvalues are i and −i.
+> - **Complex symmetric is not Hermitian.** $`S`$ = `[[0, i], [i, 0]]` equals its transpose, yet its eigenvalues are i and −i.
 > - **Unitary eigenvalues need not be real.** R is unitary with eigenvalues ±i; unitary promises modulus 1.
 
 ---

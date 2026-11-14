@@ -14,7 +14,7 @@ Nobody books 0.6 of a band. The best whole booking is 4 and 4, for 26,000 ticket
 
 [Branch and bound](03-branch-and-bound.md) attacks that ceiling by splitting into cases. A cutting plane attacks it differently. It adds one new limit that every whole booking already obeys and the 7.4-act corner breaks.
 
-Here the limit is $3x_1 + x_2 \le 16$, with $x_1$ headliners and $x_2$ smaller acts: score a headliner 3 and a smaller act 1, and keep the score at 16 or less. All 45 whole bookings pass. The corner scores 16.6 and is gone. Nothing is guessed: the limit is read off the simplex method's final table.
+Here the limit is $`3x_1 + x_2 \le 16`$, with $`x_1`$ headliners and $`x_2`$ smaller acts: score a headliner 3 and a smaller act 1, and keep the score at 16 or less. All 45 whole bookings pass. The corner scores 16.6 and is gone. Nothing is guessed: the limit is read off the simplex method's final table.
 
 **A cutting plane is a new inequality that every whole-number plan obeys and the fractional corner breaks, so adding it lowers the ceiling without losing a single real plan.**
 
@@ -32,36 +32,40 @@ The shaded region holds every booking the budget and the hours allow, fractions 
 
 Notation first, in words. [The simplex method](../04-Linear%20Programming/03-simplex-method.md) ends with a **tableau**: one equation per limit, each solved for one **basic** variable (allowed to be non-zero at the corner) in terms of the **non-basic** ones (held at zero there). Write one such row as
 
-$$x_B + \sum_{j} \bar a_j\, x_j = \bar b ,$$
+```math
+x_B + \sum_{j} \bar a_j\, x_j = \bar b ,
+```
 
-where the sum runs over the non-basic variables $x_j$. The **fractional part** of a number is what is left after rounding down: $f(v) = v - \lfloor v \rfloor$. So $f(4.6) = 0.6$, and $f(-0.1) = 0.9$, because rounding −0.1 down gives −1.
+where the sum runs over the non-basic variables $`x_j`$. The **fractional part** of a number is what is left after rounding down: $`f(v) = v - \lfloor v \rfloor`$. So $`f(4.6) = 0.6`$, and $`f(-0.1) = 0.9`$, because rounding −0.1 down gives −1.
 
 The **Gomory fractional cut** from that row is
 
-$$\sum_{j} f(\bar a_j)\, x_j \;\ge\; f(\bar b).$$
+```math
+\sum_{j} f(\bar a_j)\, x_j \;\ge\; f(\bar b).
+```
 
 **Read it aloud:** weight each non-basic variable by the fractional part of its coefficient; together they must reach at least the fractional part of the right side.
 
-To keep every number whole, money is counted in £5k units and time in 2-hour slots. The budget becomes $12x_1 + x_2 \le 58$ and the stage $2x_1 + x_2 \le 12$.
+To keep every number whole, money is counted in £5k units and time in 2-hour slots. The budget becomes $`12x_1 + x_2 \le 58`$ and the stage $`2x_1 + x_2 \le 12`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_1$ | headliners booked | 4.6 at the corner, 4 in the answer | +5,500 tickets each, but £60k and 4 hours |
-| $x_2$ | smaller acts booked | 2.8 at the corner, 4 in the answer | +1,000 tickets each, £5k and 2 hours |
-| $s_1$ | budget slack: £5k units left unspent | $58 - 12x_1 - x_2$ | — |
-| $s_2$ | stage slack: 2-hour slots left empty | $12 - 2x_1 - x_2$ | — |
-| $x_B$ | the basic variable a tableau row is solved for | $x_1$ | — |
-| $x_j$ | a non-basic variable, zero at the corner | $s_1$ and $s_2$ | — |
-| $\bar a_j$ | its coefficient in that row | 0.1 for $s_1$, −0.1 for $s_2$ | — |
-| $\bar b$ | the row's right side: $x_B$ at the corner | 4.6 | a bigger fractional part, a deeper cut |
-| $\lfloor v \rfloor$ | $v$ rounded down to a whole number | $\lfloor -0.1 \rfloor = -1$ | — |
-| $f(v)$ | fractional part $v - \lfloor v \rfloor$, from 0 up to but not including 1 | $f(-0.1) = 0.9$ | — |
+| $`x_1`$ | headliners booked | 4.6 at the corner, 4 in the answer | +5,500 tickets each, but £60k and 4 hours |
+| $`x_2`$ | smaller acts booked | 2.8 at the corner, 4 in the answer | +1,000 tickets each, £5k and 2 hours |
+| $`s_1`$ | budget slack: £5k units left unspent | $`58 - 12x_1 - x_2`$ | — |
+| $`s_2`$ | stage slack: 2-hour slots left empty | $`12 - 2x_1 - x_2`$ | — |
+| $`x_B`$ | the basic variable a tableau row is solved for | $`x_1`$ | — |
+| $`x_j`$ | a non-basic variable, zero at the corner | $`s_1`$ and $`s_2`$ | — |
+| $`\bar a_j`$ | its coefficient in that row | 0.1 for $`s_1`$, −0.1 for $`s_2`$ | — |
+| $`\bar b`$ | the row's right side: $`x_B`$ at the corner | 4.6 | a bigger fractional part, a deeper cut |
+| $`\lfloor v \rfloor`$ | $`v`$ rounded down to a whole number | $`\lfloor -0.1 \rfloor = -1`$ | — |
+| $`f(v)`$ | fractional part $`v - \lfloor v \rfloor`$, from 0 up to but not including 1 | $`f(-0.1) = 0.9`$ | — |
 
 ### When it holds
 
-- **Every variable, slacks included, must be a whole number at a whole plan.** That needs whole coefficients and whole limits. Write the budget in millions of pounds, $0.06x_1 + 0.005x_2 \le 0.29$, and the slack can be 0.005; the same recipe then throws out the best booking (see What breaks).
+- **Every variable, slacks included, must be a whole number at a whole plan.** That needs whole coefficients and whole limits. Write the budget in millions of pounds, $`0.06x_1 + 0.005x_2 \le 0.29`$, and the slack can be 0.005; the same recipe then throws out the best booking (see What breaks).
 - **The row must come from a corner.** The corner breaks the cut because its non-basic variables are zero. A point inside the region need not break it.
-- **The right side must be fractional.** If $f(\bar b) = 0$ the cut says "something non-negative is at least 0", which removes nothing.
+- **The right side must be fractional.** If $`f(\bar b) = 0`$ the cut says "something non-negative is at least 0", which removes nothing.
 - **One cut rarely finishes.** Here the new corner is still fractional. Pure cutting repeats; branch and cut mixes cuts with branching.
 
 ---
@@ -76,60 +80,70 @@ Split each of those into a whole part and a fractional part. The whole parts giv
 
 There is a second way to see the same cut. Mix the two limits, 0.1 of the budget row plus 0.9 of the stage row:
 
-$$0.1\,(12x_1 + x_2) + 0.9\,(2x_1 + x_2) \le 0.1 \times 58 + 0.9 \times 12, \quad\text{that is}\quad 3x_1 + x_2 \le 16.6 .$$
+```math
+0.1\,(12x_1 + x_2) + 0.9\,(2x_1 + x_2) \le 0.1 \times 58 + 0.9 \times 12, \quad\text{that is}\quad 3x_1 + x_2 \le 16.6 .
+```
 
 At a whole booking the left side is a whole number. A whole number no bigger than 16.6 is no bigger than 16. Rounding down the right side is the whole trick.
 
 ### Step 1: the tableau row at the 7.4-act corner
 
-Two simplex pivots (steps from one corner to the next) reach the corner (4.6, 2.8). The row solved for $x_1$ reads
+Two simplex pivots (steps from one corner to the next) reach the corner (4.6, 2.8). The row solved for $`x_1`$ reads
 
-$$x_1 + 0.1\,s_1 - 0.1\,s_2 = 4.6 .$$
+```math
+x_1 + 0.1\,s_1 - 0.1\,s_2 = 4.6 .
+```
 
-At the corner both slacks are zero (money and stage are used up) and $x_1 = 4.6$.
+At the corner both slacks are zero (money and stage are used up) and $`x_1 = 4.6`$.
 
 ### Step 2: split and round
 
-Write $0.1 = 0 + 0.1$, $-0.1 = -1 + 0.9$ and $4.6 = 4 + 0.6$. Whole parts to the left, fractional parts to the right:
+Write $`0.1 = 0 + 0.1`$, $`-0.1 = -1 + 0.9`$ and $`4.6 = 4 + 0.6`$. Whole parts to the left, fractional parts to the right:
 
-$$x_1 - s_2 - 4 = 0.6 - 0.1\,s_1 - 0.9\,s_2 .$$
+```math
+x_1 - s_2 - 4 = 0.6 - 0.1\,s_1 - 0.9\,s_2 .
+```
 
 At a whole booking the left side is a whole number. The right side is at most 0.6, because slacks are never negative. A whole number that is at most 0.6 is at most 0. So the right side is at most 0:
 
-$$0.1\,s_1 + 0.9\,s_2 \ge 0.6 .$$
+```math
+0.1\,s_1 + 0.9\,s_2 \ge 0.6 .
+```
 
-That is the formula, with $f(0.1) = 0.1$, $f(-0.1) = 0.9$ and $f(4.6) = 0.6$.
+That is the formula, with $`f(0.1) = 0.1`$, $`f(-0.1) = 0.9`$ and $`f(4.6) = 0.6`$.
 
 <details>
 <summary>Detailed proof: the Gomory cut keeps every whole-number point and removes the corner</summary>
 
-Take a row $x_B + \sum_j \bar a_j x_j = \bar b$ of the final tableau of a problem whose limits have whole coefficients and whole right sides. Take any point where every variable, slacks included, is a whole number and none is negative. The row holds at that point, because the tableau is the original limits combined.
+Take a row $`x_B + \sum_j \bar a_j x_j = \bar b`$ of the final tableau of a problem whose limits have whole coefficients and whole right sides. Take any point where every variable, slacks included, is a whole number and none is negative. The row holds at that point, because the tableau is the original limits combined.
 
-Split $\bar a_j = \lfloor \bar a_j \rfloor + f(\bar a_j)$ and $\bar b = \lfloor \bar b \rfloor + f(\bar b)$. The row becomes
+Split $`\bar a_j = \lfloor \bar a_j \rfloor + f(\bar a_j)`$ and $`\bar b = \lfloor \bar b \rfloor + f(\bar b)`$. The row becomes
 
-$$x_B + \sum_j \lfloor \bar a_j \rfloor x_j - \lfloor \bar b \rfloor = f(\bar b) - \sum_j f(\bar a_j)\, x_j .$$
+$`\displaystyle x_B + \sum_j \lfloor \bar a_j \rfloor x_j - \lfloor \bar b \rfloor = f(\bar b) - \sum_j f(\bar a_j)\, x_j .`$
 
-The left side is built from whole numbers, so it is a whole number. On the right each $f(\bar a_j) \ge 0$ and each $x_j \ge 0$, so the right side is at most $f(\bar b)$, which is below 1. A whole number below 1 is at most 0. Hence $f(\bar b) - \sum_j f(\bar a_j) x_j \le 0$, which is the cut.
+The left side is built from whole numbers, so it is a whole number. On the right each $`f(\bar a_j) \ge 0`$ and each $`x_j \ge 0`$, so the right side is at most $`f(\bar b)`$, which is below 1. A whole number below 1 is at most 0. Hence $`f(\bar b) - \sum_j f(\bar a_j) x_j \le 0`$, which is the cut.
 
-At the corner each non-basic $x_j$ is 0, so the cut's left side is 0. When $\bar b$ is fractional, $f(\bar b) > 0$ and the corner breaks the cut.
+At the corner each non-basic $`x_j`$ is 0, so the cut's left side is 0. When $`\bar b`$ is fractional, $`f(\bar b) > 0`$ and the corner breaks the cut.
 
 </details>
 
 ### Step 3: the corner breaks it
 
-At the corner $s_1 = s_2 = 0$, so the left side is 0, short of 0.6. This is no accident: non-basic variables are zero at every corner, so any row with a fractional right side gives a cut that its corner breaks.
+At the corner $`s_1 = s_2 = 0`$, so the left side is 0, short of 0.6. This is no accident: non-basic variables are zero at every corner, so any row with a fractional right side gives a cut that its corner breaks.
 
 ### Step 4: back into acts
 
-Replace the slacks by what they measure, $s_1 = 58 - 12x_1 - x_2$ and $s_2 = 12 - 2x_1 - x_2$. The cut becomes $16.6 - 3x_1 - x_2 \ge 0.6$, which is
+Replace the slacks by what they measure, $`s_1 = 58 - 12x_1 - x_2`$ and $`s_2 = 12 - 2x_1 - x_2`$. The cut becomes $`16.6 - 3x_1 - x_2 \ge 0.6`$, which is
 
-$$3x_1 + x_2 \le 16 .$$
+```math
+3x_1 + x_2 \le 16 .
+```
 
 The same cut as the mixture in Step 0. The corner scores 16.6; all 45 whole bookings score 16 or less, and (4, 4) scores exactly 16.
 
 Re-solve with the new limit and the best corner moves to (4.67, 2), worth 27,666.67 tickets. The ceiling has dropped from 28,100 and the gap to the best whole booking from 2,100 to 1,666.67 tickets. The corner is still fractional, so the work is not done.
 
-The row solved for $x_2$, $x_2 - 0.2\,s_1 + 1.2\,s_2 = 2.8$, gives a second valid cut, $0.8\,s_1 + 0.2\,s_2 \ge 0.8$, or $10x_1 + x_2 \le 48$. It also removes the corner (which scores 48.8) but leaves a higher ceiling, 27,750 tickets at (4.5, 3). Rows differ in how deep they cut.
+The row solved for $`x_2`$, $`x_2 - 0.2\,s_1 + 1.2\,s_2 = 2.8`$, gives a second valid cut, $`0.8\,s_1 + 0.2\,s_2 \ge 0.8`$, or $`10x_1 + x_2 \le 48`$. It also removes the corner (which scores 48.8) but leaves a higher ceiling, 27,750 tickets at (4.5, 3). Rows differ in how deep they cut.
 
 ### Step 5: cut again, and again
 
@@ -138,10 +152,10 @@ Pure cutting repeats Steps 1 to 4 on the new corner, each time from the row of t
 | Round | Cut | New best corner | Ceiling, tickets |
 | --- | --- | --- | --- |
 | 0 | none | (4.6, 2.8) | 28,100 |
-| 1 | $3x_1 + x_2 \le 16$ | (4.67, 2) | 27,666.67 |
-| 2 | $4x_1 + x_2 \le 20$ | (4.75, 1) | 27,125 |
-| 3 | $5x_1 + x_2 \le 24$ | (4.8, 0) | 26,400 |
-| 4 | $x_1 \le 4$ | **(4, 4)** | **26,000** |
+| 1 | $`3x_1 + x_2 \le 16`$ | (4.67, 2) | 27,666.67 |
+| 2 | $`4x_1 + x_2 \le 20`$ | (4.75, 1) | 27,125 |
+| 3 | $`5x_1 + x_2 \le 24`$ | (4.8, 0) | 26,400 |
+| 4 | $`x_1 \le 4`$ | **(4, 4)** | **26,000** |
 
 After four rounds the best corner is whole, and the ceiling equals a real booking. That equality is the certificate: no booking can beat the ceiling, and (4, 4) reaches it. The fourth cut, "at most 4 headliners", is the very limit that [Integer programs](01-integer-programs-and-relaxations.md) adds by hand to close the gap.
 
@@ -153,8 +167,8 @@ Gomory announced in 1958 that, with a careful choice of rows and of pivoting rul
 
 On the festival:
 
-- **Branch and bound alone:** the root (4.6, 2.8) splits on $x_1$. The branch $x_1 \le 4$ lands on (4, 4), 26,000 tickets, a whole booking. The branch $x_1 \ge 5$ is empty: five headliners break the budget. Three nodes.
-- **One cut, then branch:** the root becomes (4.67, 2), ceiling 27,666.67. One split on $x_1$ gives the same two children. Three nodes.
+- **Branch and bound alone:** the root (4.6, 2.8) splits on $`x_1`$. The branch $`x_1 \le 4`$ lands on (4, 4), 26,000 tickets, a whole booking. The branch $`x_1 \ge 5`$ is empty: five headliners break the budget. Three nodes.
+- **One cut, then branch:** the root becomes (4.67, 2), ceiling 27,666.67. One split on $`x_1`$ gives the same two children. Three nodes.
 
 One cut does not shrink this tree (four cuts would, to a single node), so the cut's gain here is the root ceiling: 1,666.67 tickets above the answer instead of 2,100.
 
@@ -166,11 +180,11 @@ On problems with thousands of variables that gap decides how many nodes survive 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| relaxed corner | budget $12x_1 + x_2 = 58$ meets stage $2x_1 + x_2 = 12$ | (4.6, 2.8): 7.4 acts, 28,100 tickets |
-| tableau row for $x_1$ | from the simplex, 2 pivots | $x_1 + 0.1 s_1 - 0.1 s_2 = 4.6$ |
-| fractional parts | $f(0.1)$, $f(-0.1)$, $f(4.6)$ | 0.1, 0.9, 0.6 |
-| the cut in slacks | $0.1 s_1 + 0.9 s_2 \ge 0.6$ | the corner gives 0, so it breaks |
-| the cut in acts | substitute the slacks: $16.6 - 3x_1 - x_2 \ge 0.6$ | $3x_1 + x_2 \le 16$ |
+| relaxed corner | budget $`12x_1 + x_2 = 58`$ meets stage $`2x_1 + x_2 = 12`$ | (4.6, 2.8): 7.4 acts, 28,100 tickets |
+| tableau row for $`x_1`$ | from the simplex, 2 pivots | $`x_1 + 0.1 s_1 - 0.1 s_2 = 4.6`$ |
+| fractional parts | $`f(0.1)`$, $`f(-0.1)`$, $`f(4.6)`$ | 0.1, 0.9, 0.6 |
+| the cut in slacks | $`0.1 s_1 + 0.9 s_2 \ge 0.6`$ | the corner gives 0, so it breaks |
+| the cut in acts | substitute the slacks: $`16.6 - 3x_1 - x_2 \ge 0.6`$ | $`3x_1 + x_2 \le 16`$ |
 | corner against the cut | 3 × 4.6 + 2.8 | 16.6 > 16 |
 | whole bookings kept | all 45 checked one by one | 45 of 45 |
 | re-solved ceiling | new best corner (4.67, 2) | **27,666.67 tickets** |
@@ -183,7 +197,7 @@ One cut lowers the ceiling from 28,100 to 27,666.67 tickets and keeps every whol
 | --- | --- | --- |
 | Round the corner to (5, 3) | £315k > £290k and 26 hours > 24 | Rounding ignores the limits |
 | Round down to (4, 2) | 24,000 tickets, 2,000 short | Rounding down is allowed but wastes a slot |
-| Budget in millions, $0.06x_1 + 0.005x_2 \le 0.29$ | cut $38x_1 + 19x_2 \le 222$ throws out (0, 12), (1, 10), (2, 8), (3, 6) and (4, 4); best left (4, 3), 25,000 tickets | The budget slack can be 0.005, not whole, so Step 2's "whole number" fails and the cut deletes the true answer |
+| Budget in millions, $`0.06x_1 + 0.005x_2 \le 0.29`$ | cut $`38x_1 + 19x_2 \le 222`$ throws out (0, 12), (1, 10), (2, 8), (3, 6) and (4, 4); best left (4, 3), 25,000 tickets | The budget slack can be 0.005, not whole, so Step 2's "whole number" fails and the cut deletes the true answer |
 
 The code prints all three. The last row is the hypothesis failing: the arithmetic of the recipe runs without complaint and quietly cuts away every booking that fills all 24 hours.
 
@@ -589,10 +603,10 @@ Lean proves the Gomory cut is valid for every tableau row, and checks the festiv
 
 - Take any tableau row and any point that satisfies it. If its variables are whole numbers and the non-basic ones are not negative, the point obeys the Gomory fractional cut.
 - At a corner every non-basic variable is zero. If the row's right side is fractional, that corner breaks the cut.
-- Every whole booking inside the budget and the stage limits obeys $3x_1 + x_2 \le 16$.
+- Every whole booking inside the budget and the stage limits obeys $`3x_1 + x_2 \le 16`$.
 - The hand arithmetic holds exactly: the 45 whole bookings, the best booking (4, 4) at 26,000 tickets, and the corner's score of 16.6.
-- So do the tableau row for $x_1$, the fractional parts, the second cut and the re-solved corner.
-- With the budget in millions, the recipe's cut $38x_1 + 19x_2 \le 222$ throws out (4, 4).
+- So do the tableau row for $`x_1`$, the fractional parts, the second cut and the re-solved corner.
+- With the budget in millions, the recipe's cut $`38x_1 + 19x_2 \le 222`$ throws out (4, 4).
 
 The simplex pivots, the branch and bound searches and the four rounds of pure cutting are left to the Python and Rust checks.
 
@@ -721,9 +735,9 @@ example : 38 * 4 + 19 * 4 = 228 ∧ 222 < 228 := by norm_num
 > **Try changing**
 > Guess first, then run the Python. The final asserts are pinned to this festival, so a change of data may stop the run there, after everything has printed.
 > - **£10k more budget.** Set `B` to `[60, 12]` (£300k). Guess the best booking. It flips to 5 headliners and no smaller acts, 27,500 tickets; the corner moves to (4.8, 2.4) and pure cutting needs only 2 rounds. The pinned asserts then stop the run.
-> - **Smaller acts draw 1,500.** Set `C` to `[55, 15]`. Guess whether the cut changes. It does not: the corner, the tableau and $3x_1 + x_2 \le 16$ are the same, because the limits are. The ceiling is 29,500, the answer (4, 4) at 28,000, and pure cutting needs 2 rounds.
+> - **Smaller acts draw 1,500.** Set `C` to `[55, 15]`. Guess whether the cut changes. It does not: the corner, the tableau and $`3x_1 + x_2 \le 16`$ are the same, because the limits are. The ceiling is 29,500, the answer (4, 4) at 28,000, and pure cutting needs 2 rounds.
 > - **Cut from the other row.** In the pure-cutting loop, change `0 if cur[0].denominator > 1 else 1` to `1 if cur[1].denominator > 1 else 0`. Guess the rounds. Seven instead of four, ending at (4, 4); every cut keeps all 45 bookings, and only the assert pinned to four rounds stops the run: the row you cut from matters.
-> - **Two more hours of stage.** Set `B` to `[58, 13]`. Guess what the $x_2$ row gives. The corner is (4.5, 4); the $x_2$ row's right side is the whole number 4, its cut removes nothing, and the assert that it must remove the corner stops the run.
+> - **Two more hours of stage.** Set `B` to `[58, 13]`. Guess what the $`x_2`$ row gives. The corner is (4.5, 4); the $`x_2`$ row's right side is the whole number 4, its cut removes nothing, and the assert that it must remove the corner stops the run.
 
 ---
 
@@ -733,7 +747,7 @@ example : 38 * 4 + 19 * 4 = 228 ∧ 222 < 228 := by norm_num
 > **Rounding the relaxed answer instead of cutting.** The corner (4.6, 2.8) rounds to (5, 3), which costs £315k and needs 26 hours: neither fits. A cut never rounds the plan. It rounds an inequality that every whole plan obeys, then re-solves.
 >
 > - **Rounding down and stopping.** (4, 2) fits but sells 24,000 tickets, 2,000 short of the best.
-> - **Cutting with fractional data.** With the budget in millions of pounds the recipe produces $38x_1 + 19x_2 \le 222$, which deletes (4, 4) and leaves a best of 25,000 tickets. Scale every limit to whole coefficients first.
+> - **Cutting with fractional data.** With the budget in millions of pounds the recipe produces $`38x_1 + 19x_2 \le 222`$, which deletes (4, 4) and leaves a best of 25,000 tickets. Scale every limit to whole coefficients first.
 > - **Expecting one cut to finish.** One cut leaves the ceiling at 27,666.67 tickets; this festival needs four rounds of pure cutting, or one branch.
 > - **Calling a cut's corner optimal.** (4.67, 2) is not a booking. Only when the ceiling equals a whole booking, 26,000 at (4, 4), is the answer proved.
 
@@ -747,7 +761,7 @@ example : 38 * 4 + 19 * 4 = 228 ∧ 222 < 228 := by norm_num
 - **When no cut is needed.** For assignment and network-flow problems every corner of the relaxation is already whole, so there is nothing to cut: [Total unimodularity](05-total-unimodularity.md).
 
 > **Say it back**
-> The relaxed festival's best corner, 4.6 headliners and 2.8 smaller acts, is not a booking. Every whole booking makes each tableau row an equation among whole numbers, so splitting the row into whole and fractional parts gives an inequality every whole booking obeys and the corner breaks: here $3x_1 + x_2 \le 16$. Adding it lowers the ceiling from 28,100 to 27,666.67 tickets without losing a booking. Repeated cuts reach the proved answer, (4, 4) at 26,000 tickets, in four rounds; branch and cut mixes cuts with branching so that neither has to do all the work.
+> The relaxed festival's best corner, 4.6 headliners and 2.8 smaller acts, is not a booking. Every whole booking makes each tableau row an equation among whole numbers, so splitting the row into whole and fractional parts gives an inequality every whole booking obeys and the corner breaks: here $`3x_1 + x_2 \le 16`$. Adding it lowers the ceiling from 28,100 to 27,666.67 tickets without losing a booking. Repeated cuts reach the proved answer, (4, 4) at 26,000 tickets, in four rounds; branch and cut mixes cuts with branching so that neither has to do all the work.
 
 ---
 

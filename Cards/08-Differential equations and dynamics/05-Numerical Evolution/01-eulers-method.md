@@ -35,30 +35,32 @@ From the top: Euler with 2 s steps (orange), with 1 s steps (green), and the exa
 
 ## The formula
 
-Reminder: $y' = f(t, y)$ says the rate of the unknown $y$ at time $t$ is the rule $f$ applied to $t$ and $y$ ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). New here: the **step size** $h$, the time one step covers, and a small number written low after a letter to count steps: $y_n$ is the estimate after $n$ steps, at time $t_n$.
+Reminder: $`y' = f(t, y)`$ says the rate of the unknown $`y`$ at time $`t`$ is the rule $`f`$ applied to $`t`$ and $`y`$ ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). New here: the **step size** $`h`$, the time one step covers, and a small number written low after a letter to count steps: $`y_n`$ is the estimate after $`n`$ steps, at time $`t_n`$.
 
-$$y_{n+1} = y_n + h\,f(t_n, y_n), \qquad t_{n+1} = t_n + h$$
+```math
+y_{n+1} = y_n + h\,f(t_n, y_n), \qquad t_{n+1} = t_n + h
+```
 
 **Read it aloud:** the next estimate is the present one plus the step length times the rate the rule gives right here.
 
-For the skydiver the rule is $v' = 9.8 - 0.2v$, from $v = 0$ at $t = 0$, so each step reads $v_{n+1} = v_n + h\,(9.8 - 0.2\,v_n)$.
+For the skydiver the rule is $`v' = 9.8 - 0.2v`$, from $`v = 0`$ at $`t = 0`$, so each step reads $`v_{n+1} = v_n + h\,(9.8 - 0.2\,v_n)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since the jump, s | 0 to 10 | — |
-| $v$, $v'$ | speed, m/s, and its rate, m/s per s | 0 and 9.8 at the jump | drag grows, rate falls |
-| $y$, $f$ | any unknown, and the rule giving its rate | $v$ and 9.8 − 0.2$v$ | — |
-| $h$ | step size: time covered by one step, s | 2, then 1 | error at 10 s grows in proportion |
-| $n$ | number of steps taken | 0 to 5 at $h$ = 2 | — |
-| $t_n$, $y_n$, $v_n$ | time and estimate after $n$ steps | 10 s and 45.19 m/s after 5 steps | — |
-| $E$, $E_n$ | error: Euler minus exact, at the end or after $n$ steps | 2.82 m/s at $h$ = 2 | — |
-| $L$, $M$ | how sharply the rule reacts to $y$; the true curve's largest bend | 0.2 per s; 1.96 m/s per s per s | the proved bound loosens |
+| $`t`$ | time since the jump, s | 0 to 10 | — |
+| $`v`$, $`v'`$ | speed, m/s, and its rate, m/s per s | 0 and 9.8 at the jump | drag grows, rate falls |
+| $`y`$, $`f`$ | any unknown, and the rule giving its rate | $`v`$ and 9.8 − 0.2$`v`$ | — |
+| $`h`$ | step size: time covered by one step, s | 2, then 1 | error at 10 s grows in proportion |
+| $`n`$ | number of steps taken | 0 to 5 at $`h`$ = 2 | — |
+| $`t_n`$, $`y_n`$, $`v_n`$ | time and estimate after $`n`$ steps | 10 s and 45.19 m/s after 5 steps | — |
+| $`E`$, $`E_n`$ | error: Euler minus exact, at the end or after $`n`$ steps | 2.82 m/s at $`h`$ = 2 | — |
+| $`L`$, $`M`$ | how sharply the rule reacts to $`y`$; the true curve's largest bend | 0.2 per s; 1.96 m/s per s per s | the proved bound loosens |
 
 ### When it holds
 
-- **The true curve bends a bounded amount $M$.** If the rule jumps, say when the parachute opens, the step across the jump loses accuracy.
-- **The rule reacts to $y$ at a bounded rate $L$.** Then each step grows earlier error by at most a factor $1 + hL$. A leaking bucket whose rate is minus the square root of its height fails this near empty.
-- **The step is short against the equation's own pace.** Each skydiver step multiplies the gap to 49 m/s by $1 - 0.2h$; past $h$ = 10 s that factor is below −1 and the steps swing and grow. See [Stiff equations](06-stiff-equations-and-backward-euler.md).
+- **The true curve bends a bounded amount $`M`$.** If the rule jumps, say when the parachute opens, the step across the jump loses accuracy.
+- **The rule reacts to $`y`$ at a bounded rate $`L`$.** Then each step grows earlier error by at most a factor $`1 + hL`$. A leaking bucket whose rate is minus the square root of its height fails this near empty.
+- **The step is short against the equation's own pace.** Each skydiver step multiplies the gap to 49 m/s by $`1 - 0.2h`$; past $`h`$ = 10 s that factor is below −1 and the steps swing and grow. See [Stiff equations](06-stiff-equations-and-backward-euler.md).
 - **The step is not so short that rounding takes over.** Millions of tiny steps add millions of tiny rounding errors, so the error eventually stops falling.
 
 ---
@@ -81,32 +83,34 @@ To scale: 140 units per second across, 8 units per m/s up. The upright bar at 2 
 
 ### Step 2: the misses add up to an error of order h
 
-Reaching 10 s takes $10/h$ steps, each adding a miss of order $h^2$, so the total is of order $(10/h) \times h^2$: proportional to $h$. Halving the step halves the error at 10 s: 2.82, 1.37, 0.67, 0.33 m/s for steps of 2, 1, 0.5 and 0.25 s. Error proportional to $h$ makes a method **first order**; [Order of a method](02-local-and-global-error-and-order.md) makes the two kinds of error precise.
+Reaching 10 s takes $`10/h`$ steps, each adding a miss of order $`h^2`$, so the total is of order $`(10/h) \times h^2`$: proportional to $`h`$. Halving the step halves the error at 10 s: 2.82, 1.37, 0.67, 0.33 m/s for steps of 2, 1, 0.5 and 0.25 s. Error proportional to $`h`$ makes a method **first order**; [Order of a method](02-local-and-global-error-and-order.md) makes the two kinds of error precise.
 
 ### Step 3: for the skydiver the steps have a closed form
 
-Track the gap to terminal speed, $49 - v$. The step rule gives $49 - v_{n+1} = (1 - 0.2h)(49 - v_n)$: every step multiplies the gap by the same factor. From a gap of 49 at the jump,
+Track the gap to terminal speed, $`49 - v`$. The step rule gives $`49 - v_{n+1} = (1 - 0.2h)(49 - v_n)`$: every step multiplies the gap by the same factor. From a gap of 49 at the jump,
 
-$$v_n = 49\bigl(1 - (1 - 0.2h)^n\bigr), \qquad v(t) = 49\bigl(1 - e^{-0.2t}\bigr).$$
+```math
+v_n = 49\bigl(1 - (1 - 0.2h)^n\bigr), \qquad v(t) = 49\bigl(1 - e^{-0.2t}\bigr).
+```
 
-The left is Euler, the right the exact speed. Euler shrinks the gap once per step, as a bank compounds once per period; the exact curve is the limit of compounding ever more often. At $h$ = 2 the closed form gives 45.1898, the loop's value.
+The left is Euler, the right the exact speed. Euler shrinks the gap once per step, as a bank compounds once per period; the exact curve is the limit of compounding ever more often. At $`h`$ = 2 the closed form gives 45.1898, the loop's value.
 
 ### Step 4: the error's size, not just its order
 
-With $n = 10/h$ and $\ln(1 - x) \approx -x - x^2/2$ for small $x$, taking logarithms gives $(1 - 0.2h)^{10/h} \approx e^{-2}(1 - 0.2h)$ for small $h$. So the error at 10 s is close to $9.8\,e^{-2}\,h$, which is 1.3263 m/s per second of step. The measured error per second of step is 1.4106 at $h$ = 2 and 1.3373 at $h$ = 0.25, closing on that constant.
+With $`n = 10/h`$ and $`\ln(1 - x) \approx -x - x^2/2`$ for small $`x`$, taking logarithms gives $`(1 - 0.2h)^{10/h} \approx e^{-2}(1 - 0.2h)`$ for small $`h`$. So the error at 10 s is close to $`9.8\,e^{-2}\,h`$, which is 1.3263 m/s per second of step. The measured error per second of step is 1.4106 at $`h`$ = 2 and 1.3373 at $`h`$ = 0.25, closing on that constant.
 
 <details>
 <summary>Detailed proof: the error bound for any rule</summary>
 
-Let $y$ be the true solution on $0 \le t \le T$, with $|y''| \le M$ there and $|f(t, a) - f(t, b)| \le L\,|a - b|$ for any two values a and b. Write $E_n = y_n - y(t_n)$, Euler minus exact.
+Let $`y`$ be the true solution on $`0 \le t \le T`$, with $`|y''| \le M`$ there and $`|f(t, a) - f(t, b)| \le L\,|a - b|`$ for any two values a and b. Write $`E_n = y_n - y(t_n)`$, Euler minus exact.
 
-By Taylor's theorem with remainder, $y(t_{n+1}) = y(t_n) + h\,f(t_n, y(t_n)) + \tfrac{1}{2}h^2 y''(\xi)$ for some time ξ inside the step. Subtract it from the Euler step $y_{n+1} = y_n + h\,f(t_n, y_n)$:
+By Taylor's theorem with remainder, $`y(t_{n+1}) = y(t_n) + h\,f(t_n, y(t_n)) + \tfrac{1}{2}h^2 y''(\xi)`$ for some time ξ inside the step. Subtract it from the Euler step $`y_{n+1} = y_n + h\,f(t_n, y_n)`$:
 
-$E_{n+1} = E_n + h\bigl(f(t_n, y_n) - f(t_n, y(t_n))\bigr) - \tfrac{1}{2}h^2 y''(\xi)$, so $|E_{n+1}| \le (1 + hL)|E_n| + \tfrac{1}{2}Mh^2$.
+$`E_{n+1} = E_n + h\bigl(f(t_n, y_n) - f(t_n, y(t_n))\bigr) - \tfrac{1}{2}h^2 y''(\xi)`$, so $`|E_{n+1}| \le (1 + hL)|E_n| + \tfrac{1}{2}Mh^2`$.
 
-With $E_0 = 0$, unrolling gives $|E_n| \le \tfrac{1}{2}Mh^2 \bigl((1 + hL)^n - 1\bigr)/(hL)$. Since $1 + hL \le e^{hL}$ and $nh = t_n \le T$, this is at most $\dfrac{M}{2L}\bigl(e^{LT} - 1\bigr)\,h$.
+With $`E_0 = 0`$, unrolling gives $`|E_n| \le \tfrac{1}{2}Mh^2 \bigl((1 + hL)^n - 1\bigr)/(hL)`$. Since $`1 + hL \le e^{hL}`$ and $`nh = t_n \le T`$, this is at most $`\dfrac{M}{2L}\bigl(e^{LT} - 1\bigr)\,h`$.
 
-For the skydiver, $L = 0.2$ and $v'' = -0.2\,v'$, largest at the jump: $M = 1.96$. The bound is 31.31 $h$ m/s against a true error near 1.33 $h$: loose, but proportional to $h$, for every rule meeting the two conditions.
+For the skydiver, $`L = 0.2`$ and $`v'' = -0.2\,v'`$, largest at the jump: $`M = 1.96`$. The bound is 31.31 $`h`$ m/s against a true error near 1.33 $`h`$: loose, but proportional to $`h`$, for every rule meeting the two conditions.
 
 </details>
 
@@ -116,18 +120,18 @@ The other road improves the slope instead of shrinking the step: reading the rat
 
 ## Worked numbers, by hand
 
-Steps of 2 s, rule $v' = 9.8 - 0.2v$. The bracket is gravity minus drag, 0.2 times the current speed.
+Steps of 2 s, rule $`v' = 9.8 - 0.2v`$. The bracket is gravity minus drag, 0.2 times the current speed.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $t$ = 2 | 0 + 2 × (9.8 − 0) | 19.60 |
-| $t$ = 4 | 19.60 + 2 × (9.8 − 3.92) | 31.36 |
-| $t$ = 6 | 31.36 + 2 × (9.8 − 6.272) | 38.42 |
-| $t$ = 8 | 38.42 + 2 × (9.8 − 7.683) | 42.65 |
-| $t$ = 10 | 42.65 + 2 × (9.8 − 8.530) | **45.19** |
+| $`t`$ = 2 | 0 + 2 × (9.8 − 0) | 19.60 |
+| $`t`$ = 4 | 19.60 + 2 × (9.8 − 3.92) | 31.36 |
+| $`t`$ = 6 | 31.36 + 2 × (9.8 − 6.272) | 38.42 |
+| $`t`$ = 8 | 38.42 + 2 × (9.8 − 7.683) | 42.65 |
+| $`t`$ = 10 | 42.65 + 2 × (9.8 − 8.530) | **45.19** |
 | exact at 10 s | 49 × (1 − e^(−2)) | 42.37 |
-| error, $h$ = 2 | 45.19 − 42.37 | **2.82** |
-| error, $h$ = 1 | 43.74 − 42.37 | **1.37** |
+| error, $`h`$ = 2 | 45.19 − 42.37 | **2.82** |
+| error, $`h`$ = 1 | 43.74 − 42.37 | **1.37** |
 
 Ten seconds in, the skydiver is doing 42.37 m/s; 2 s steps say 45.19, and 1 s steps close half the gap.
 
@@ -135,7 +139,7 @@ Ten seconds in, the skydiver is doing 42.37 m/s; 2 s steps say 45.19, and 1 s st
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Leave out $h$: five steps of $v + f$ | 32.94 m/s "at 10 s" | Each step moved one second's worth, not two |
+| Leave out $`h`$: five steps of $`v + f`$ | 32.94 m/s "at 10 s" | Each step moved one second's worth, not two |
 | Never update the slope | 9.8 × 10 = 98.00 m/s | Drag is ignored; the speed passes terminal |
 | Step of 15 s, past the limit of 10 s | −735.00 m/s at 60 s, exact 49.00 | Each step flips and doubles the gap to 49 |
 
@@ -145,7 +149,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Three roads: Euler's loop from rest; the exact speed $49(1 - e^{-0.2t})$, found by separating variables; and the loop's closed form from Step 3, which must match the loop to rounding. The asserts check that the error halves with the step, that the error per second of step closes on $9.8\,e^{-2}$, and that every error sits inside the proved bound. Chart points, figure coordinates and mistakes are all printed.
+Three roads: Euler's loop from rest; the exact speed $`49(1 - e^{-0.2t})`$, found by separating variables; and the loop's closed form from Step 3, which must match the loop to rounding. The asserts check that the error halves with the step, that the error per second of step closes on $`9.8\,e^{-2}`$, and that every error sits inside the proved bound. Chart points, figure coordinates and mistakes are all printed.
 
 ### Python
 
@@ -342,10 +346,10 @@ The two outputs match line for line.
 
 Lean proves the error bound for every rule meeting the two conditions, and the skydiver's closed form for every step size.
 
-- One step from the true curve misses by at most $\tfrac{1}{2}M$ times the step squared.
-- Take a true curve that bends at most $M$, and a rule that reacts to $y$ at a rate at most $L$. Then, starting from the true value, Euler's error at every step up to time $T$ is at most $\dfrac{M}{2L}\bigl(e^{LT} - 1\bigr)\,h$.
-- For the skydiver, every step size $h$ gives $v_n = 49\bigl(1 - (1 - 0.2h)^n\bigr)$.
-- Reaching a fixed time in more and more equal steps, the skydiver's Euler speed tends to the exact speed $49\bigl(1 - e^{-0.2t}\bigr)$.
+- One step from the true curve misses by at most $`\tfrac{1}{2}M`$ times the step squared.
+- Take a true curve that bends at most $`M`$, and a rule that reacts to $`y`$ at a rate at most $`L`$. Then, starting from the true value, Euler's error at every step up to time $`T`$ is at most $`\dfrac{M}{2L}\bigl(e^{LT} - 1\bigr)\,h`$.
+- For the skydiver, every step size $`h`$ gives $`v_n = 49\bigl(1 - (1 - 0.2h)^n\bigr)`$.
+- Reaching a fixed time in more and more equal steps, the skydiver's Euler speed tends to the exact speed $`49\bigl(1 - e^{-0.2t}\bigr)`$.
 - Steps of 2 s give 19.60, 31.36, 38.416, 42.6496 and 45.18976 m/s exactly, and ten 1 s steps give 43.7387 m/s.
 - The three mistakes come out exactly at 32.94 m/s, 98 m/s and −735 m/s.
 
@@ -543,7 +547,7 @@ example : (1 : ℚ) - 10 / 5 = -1 ∧ (1 : ℚ) - 5 / 5 = 0 := by norm_num
 > [!TIP]
 > **Try changing**
 > - **Add 0.125 to the end of `hs`.** Guess the error at 10 s first. About half of 0.3343 m/s.
-> - **Put 5 at the front of `hs`.** Guess first. The factor $1 - 0.2h$ is zero, so the first step lands on 49 m/s and stays. The error is more than twice the 2 s error, and the ratio assert stops the run.
+> - **Put 5 at the front of `hs`.** Guess first. The factor $`1 - 0.2h`$ is zero, so the first step lands on 49 m/s and stays. The error is more than twice the 2 s error, and the ratio assert stops the run.
 > - **Read the rate at the end of the step instead**: in `euler`, replace `rule(t, v)` with `rule(t, v + h * rule(t, v))`. Guess the sign of the error. Negative: the later slope is too shallow. The first assert stops the run.
 
 ---
@@ -551,7 +555,7 @@ example : (1 : ℚ) - 10 / 5 = -1 ∧ (1 : ℚ) - 5 / 5 = 0 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Expecting a quarter of the error when the step halves.** One step's miss does fall to about a quarter, but twice as many steps are needed, so the error at 10 s only halves: 2.82 to 1.37 m/s. Ten times the accuracy costs ten times the steps. The other slips, a missing $h$, a frozen slope and a step past 10 s, are in the table above.
+> **Expecting a quarter of the error when the step halves.** One step's miss does fall to about a quarter, but twice as many steps are needed, so the error at 10 s only halves: 2.82 to 1.37 m/s. Ten times the accuracy costs ten times the steps. The other slips, a missing $`h`$, a frozen slope and a step past 10 s, are in the table above.
 
 ---
 
@@ -591,5 +595,5 @@ Euler's method gets one digit more accuracy only for ten times the work; how to 
 Verified 2026-11-12: every link below resolves to the publisher's page.
 
 - Euler, Leonhard. *Institutionum calculi integralis volumen primum*, 1768 (E342). [Euler Archive, University of the Pacific](https://scholarlycommons.pacific.edu/euler-works/342/). The method's first appearance.
-- Hairer, Ernst, Syvert P. Nørsett and Gerhard Wanner. *Solving Ordinary Differential Equations I: Nonstiff Problems*, 2nd ed. Springer, 1993. [DOI](https://doi.org/10.1007/978-3-540-78862-1). The error bound built from $L$ and $M$, and the method's history.
+- Hairer, Ernst, Syvert P. Nørsett and Gerhard Wanner. *Solving Ordinary Differential Equations I: Nonstiff Problems*, 2nd ed. Springer, 1993. [DOI](https://doi.org/10.1007/978-3-540-78862-1). The error bound built from $`L`$ and $`M`$, and the method's history.
 - Butcher, John C. *Numerical Methods for Ordinary Differential Equations*, 3rd ed. Wiley, 2016. [Publisher page](https://www.wiley.com/en-us/Numerical+Methods+for+Ordinary+Differential+Equations%2C+3rd+Edition-p-9781119121503). One-step methods, their convergence and stability.

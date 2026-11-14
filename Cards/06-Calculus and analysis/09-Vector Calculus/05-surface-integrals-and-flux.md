@@ -20,44 +20,48 @@ So a sheet carries two measures. **Surface area** counts how much sheet there is
 
 <p align="center"><img src="../figures/surface-integrals-and-flux.svg" alt="Side view from the east: the taut tarp rising 2.25 m over 3 m, its normal arrow, rain slanting north, and the tarp&#x27;s shadow cast along the rain onto the ground" width="420"></p>
 
-To scale, 60 px per metre, north to the right. Dashed: rain through the tarp's two edges. Every drop crossing the tarp lands in the shaded shadow, 4.125 m deep, so the tarp catches what 16.5 m^2 of open ground would. The arrow $N$ stands square to the top face.
+To scale, 60 px per metre, north to the right. Dashed: rain through the tarp's two edges. Every drop crossing the tarp lands in the shaded shadow, 4.125 m deep, so the tarp catches what 16.5 m^2 of open ground would. The arrow $`N`$ stands square to the top face.
 
 ---
 
 ## The formula
 
-Notation first, in words. $x$, $y$, $z$ are metres east, north and up from the south-west peg. Two grid numbers $u$ and $v$, here the ground position, name a point of the sheet, $r(u, v)$. The taut tarp is $r(u, v) = (u, v, 0.75v)$ over the ground rectangle $D$.
+Notation first, in words. $`x`$, $`y`$, $`z`$ are metres east, north and up from the south-west peg. Two grid numbers $`u`$ and $`v`$, here the ground position, name a point of the sheet, $`r(u, v)`$. The taut tarp is $`r(u, v) = (u, v, 0.75v)`$ over the ground rectangle $`D`$.
 
-The tangent arrow $r_u$ is the partial derivative of $r$ in $u$: how far and which way the point moves per metre of $u$, with $v$ held still. $r_v$ is the same in $v$.
+The tangent arrow $`r_u`$ is the partial derivative of $`r`$ in $`u`$: how far and which way the point moves per metre of $`u`$, with $`v`$ held still. $`r_v`$ is the same in $`v`$.
 
-Their cross product is the **area vector** $N = r_u \times r_v$. A cross product is an arrow square to both arrows, whose length is the area of their parallelogram ([Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)).
+Their cross product is the **area vector** $`N = r_u \times r_v`$. A cross product is an arrow square to both arrows, whose length is the area of their parallelogram ([Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)).
 
-$F$ is the rain's flow: at each point, the arrow of water that passes in one hour, in metres per hour. $\Phi$ (phi) is the flux. $F \cdot N$ is a dot product: multiply matching entries and add ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
+$`F`$ is the rain's flow: at each point, the arrow of water that passes in one hour, in metres per hour. $`\Phi`$ (phi) is the flux. $`F \cdot N`$ is a dot product: multiply matching entries and add ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
 
-$$\text{Area}(S) = \iint_D \lVert r_u \times r_v \rVert \, du\, dv$$
+```math
+\text{Area}(S) = \iint_D \lVert r_u \times r_v \rVert \, du\, dv
+```
 
 **Read it aloud:** stretch each ground cell onto the sheet, measure the stretch by the length of the cross product, and add up. Weight each piece by kilograms per m^2 and the sum is the sheet's mass.
 
-$$\Phi = \iint_S F \cdot n \, dS = \iint_D F(r(u,v)) \cdot (r_u \times r_v)\, du\, dv$$
+```math
+\Phi = \iint_S F \cdot n \, dS = \iint_D F(r(u,v)) \cdot (r_u \times r_v)\, du\, dv
+```
 
 **Read it aloud:** keep only the part of the flow that crosses square-on, weight it by each piece's area, and add up.
 
-Here $dS = \lVert N \rVert\,du\,dv$ is the area of one small piece of sheet and $n = N/\lVert N\rVert$ is the unit normal: length 1, square to the sheet. In the second form, $N$'s length supplies $dS$ and its direction supplies $n$.
+Here $`dS = \lVert N \rVert\,du\,dv`$ is the area of one small piece of sheet and $`n = N/\lVert N\rVert`$ is the unit normal: length 1, square to the sheet. In the second form, $`N`$'s length supplies $`dS`$ and its direction supplies $`n`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$, $z$; $u$, $v$ | metres east, north, up; grid numbers | $u$ to 4, $v$ to 3 | — |
-| $D$ | the grid's region | 4 m by 3 m, 12 m^2 | more area and more flux |
-| $r$, $S$ | a point of the sheet; the whole sheet | $(u, v, 0.75v)$ | — |
-| $r_u$, $r_v$ | tangent arrows, metres of sheet per metre of grid | (1, 0, 0), (0, 1, 0.75) | steeper sheet, longer arrow |
-| $N$, $n$ | area vector; unit normal | (0, −0.75, 1), length 1.25 | 1.25 m^2 of fabric per m^2 of ground |
-| $dS$ | area of one small piece | 1.25 times the ground cell | — |
-| $F$, $w$ | rain's flow, metres of water per hour; its drift north | (0, $w$, −0.01), $w$ = 0.005 | more catch |
-| $\Phi$ | flux, positive up through the top face | −165 L/h blown north | flips sign with the chosen side |
+| $`x`$, $`y`$, $`z`$; $`u`$, $`v`$ | metres east, north, up; grid numbers | $`u`$ to 4, $`v`$ to 3 | — |
+| $`D`$ | the grid's region | 4 m by 3 m, 12 m^2 | more area and more flux |
+| $`r`$, $`S`$ | a point of the sheet; the whole sheet | $`(u, v, 0.75v)`$ | — |
+| $`r_u`$, $`r_v`$ | tangent arrows, metres of sheet per metre of grid | (1, 0, 0), (0, 1, 0.75) | steeper sheet, longer arrow |
+| $`N`$, $`n`$ | area vector; unit normal | (0, −0.75, 1), length 1.25 | 1.25 m^2 of fabric per m^2 of ground |
+| $`dS`$ | area of one small piece | 1.25 times the ground cell | — |
+| $`F`$, $`w`$ | rain's flow, metres of water per hour; its drift north | (0, $`w`$, −0.01), $`w`$ = 0.005 | more catch |
+| $`\Phi`$ | flux, positive up through the top face | −165 L/h blown north | flips sign with the chosen side |
 
 ### When it holds
 
-- **$N$ is never zero.** Where the tangent arrows line up or one shrinks to nothing, as at a cone's tip, a cell flattens to a line and has no normal.
+- **$`N`$ is never zero.** Where the tangent arrows line up or one shrinks to nothing, as at a cone's tip, a cell flattens to a line and has no normal.
 - **Each point counted once.** A grid that covers the tarp twice reports twice the fabric.
 - **Two sides.** Flux needs one side chosen throughout. A Möbius strip (a band with a half-twist) has one side, so flux through it means nothing; its area still does.
 - **Smooth, apart from seams.** The tangent arrows vary continuously except along a few edges, which carry no area.
@@ -68,23 +72,23 @@ Here $dS = \lVert N \rVert\,du\,dv$ is the area of one small piece of sheet and 
 
 ### Step 0: a small grid cell lifts to a small parallelogram
 
-A ground cell $\Delta u$ by $\Delta v$ lifts to a patch whose edges are about $r_u \Delta u$ and $r_v \Delta v$. So the patch is nearly the parallelogram on those two edges.
+A ground cell $`\Delta u`$ by $`\Delta v`$ lifts to a patch whose edges are about $`r_u \Delta u`$ and $`r_v \Delta v`$. So the patch is nearly the parallelogram on those two edges.
 
 ### Step 1: its area is the length of a cross product
 
-The parallelogram on two arrows has area equal to the length of their cross product ([Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)), so the patch has area about $\lVert r_u \times r_v \rVert\, \Delta u\, \Delta v$.
+The parallelogram on two arrows has area equal to the length of their cross product ([Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)), so the patch has area about $`\lVert r_u \times r_v \rVert\, \Delta u\, \Delta v`$.
 
-For the tarp, $(1, 0, 0) \times (0, 1, 0.75) = (0, -0.75, 1)$, of length $\sqrt{0.75^2 + 1} = 1.25$. So 12 m^2 of ground lifts to 15 m^2 of tarp. Pythagoras agrees: the slope is $\sqrt{3^2 + 2.25^2} = 3.75$ m, times 4 m.
+For the tarp, $`(1, 0, 0) \times (0, 1, 0.75) = (0, -0.75, 1)`$, of length $`\sqrt{0.75^2 + 1} = 1.25`$. So 12 m^2 of ground lifts to 15 m^2 of tarp. Pythagoras agrees: the slope is $`\sqrt{3^2 + 2.25^2} = 3.75`$ m, times 4 m.
 
-On a curved sheet the parallelogram is only nearly right, and the error fades as the cells shrink. Test it: let the middle sag 0.45 m, edges fixed, $z = 0.75y - 0.05\,x(4 - x)\,y(3 - y)$. The cross-product sum gives 15.370631 m^2. A second road: pin flat triangles to the sheet and measure each from its three sides (Heron's formula). With 10, 40 and 160 cells per side the mesh gives 15.366882, 15.370407, 15.370626 m^2, closing on the first road.
+On a curved sheet the parallelogram is only nearly right, and the error fades as the cells shrink. Test it: let the middle sag 0.45 m, edges fixed, $`z = 0.75y - 0.05\,x(4 - x)\,y(3 - y)`$. The cross-product sum gives 15.370631 m^2. A second road: pin flat triangles to the sheet and measure each from its three sides (Heron's formula). With 10, 40 and 160 cells per side the mesh gives 15.366882, 15.370407, 15.370626 m^2, closing on the first road.
 
 ### Step 2: flow through a flat piece fills a slanted box
 
-In one hour, the water crossing a flat piece of area A fills a slanted box: base the piece, slanted edge $F$. Its volume is base times height, and the height is the part of $F$ square to the piece, $F \cdot n$ ([Triple product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md)). Rain sliding along the fabric crosses nothing.
+In one hour, the water crossing a flat piece of area A fills a slanted box: base the piece, slanted edge $`F`$. Its volume is base times height, and the height is the part of $`F`$ square to the piece, $`F \cdot n`$ ([Triple product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md)). Rain sliding along the fabric crosses nothing.
 
-On a lifted cell the area is $\lVert N \rVert \Delta u \Delta v$ and $n = N / \lVert N \rVert$. The lengths cancel, leaving $F \cdot N\, \Delta u \Delta v$. Summed, that is the flux formula.
+On a lifted cell the area is $`\lVert N \rVert \Delta u \Delta v`$ and $`n = N / \lVert N \rVert`$. The lengths cancel, leaving $`F \cdot N\, \Delta u \Delta v`$. Summed, that is the flux formula.
 
-For the tarp in still air, $F \cdot N$ is −10 mm an hour, so −120 litres an hour over 12 m^2. The minus sign says the water goes down through the top face, against $N$. Blown south, −6.25 and −75.
+For the tarp in still air, $`F \cdot N`$ is −10 mm an hour, so −120 litres an hour over 12 m^2. The minus sign says the water goes down through the top face, against $`N`$. Blown south, −6.25 and −75.
 
 ### Step 3: the shadow gives the same answer
 
@@ -94,20 +98,20 @@ The sagging tarp has the same edges, so the same shadow and the same flux in eve
 
 ### Step 4: a different grid gives the same answers
 
-Grid the tarp by metres of slope: $r(u, s) = (u, 0.8s, 0.6s)$ with s from 0 to 3.75. Now $N = (0, -0.6, 0.8)$, of length 1, on a 4 by 3.75 rectangle: still 15 m^2, still −120 L/h. In general a grid change stretches the cells by its Jacobian and $N$ by the same factor, and the two cancel. The Jacobian is the local area stretch of a grid change ([Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)).
+Grid the tarp by metres of slope: $`r(u, s) = (u, 0.8s, 0.6s)`$ with s from 0 to 3.75. Now $`N = (0, -0.6, 0.8)`$, of length 1, on a 4 by 3.75 rectangle: still 15 m^2, still −120 L/h. In general a grid change stretches the cells by its Jacobian and $`N`$ by the same factor, and the two cancel. The Jacobian is the local area stretch of a grid change ([Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)).
 
 <details>
 <summary>Detailed proof: area and flux do not depend on the grid</summary>
 
-Let a second grid be $u = u(s, t)$, $v = v(s, t)$, a smooth one-to-one map from a region E onto $D$ with smooth inverse, and $\rho(s, t) = r(u(s,t), v(s,t))$.
+Let a second grid be $`u = u(s, t)`$, $`v = v(s, t)`$, a smooth one-to-one map from a region E onto $`D`$ with smooth inverse, and $`\rho(s, t) = r(u(s,t), v(s,t))`$.
 
-By the chain rule, $\rho_s = r_u u_s + r_v v_s$ and $\rho_t = r_u u_t + r_v v_t$. The cross product is linear in each slot, with $r_u \times r_u = 0$ and $r_v \times r_u = -\,r_u \times r_v$, so $\rho_s \times \rho_t = J\,N$, where J, the bracket $u_s v_t - u_t v_s$, is the Jacobian determinant.
+By the chain rule, $`\rho_s = r_u u_s + r_v v_s`$ and $`\rho_t = r_u u_t + r_v v_t`$. The cross product is linear in each slot, with $`r_u \times r_u = 0`$ and $`r_v \times r_u = -\,r_u \times r_v`$, so $`\rho_s \times \rho_t = J\,N`$, where J, the bracket $`u_s v_t - u_t v_s`$, is the Jacobian determinant.
 
-Area: the integrand becomes $\lVert N \rVert$ times the size of J; the change-of-variables theorem ([Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)) turns its integral over E into $\iint_D \lVert N \rVert\, du\, dv$.
+Area: the integrand becomes $`\lVert N \rVert`$ times the size of J; the change-of-variables theorem ([Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)) turns its integral over E into $`\iint_D \lVert N \rVert\, du\, dv`$.
 
-Flux: the new integrand is $F \cdot N$ times J. On a connected region J, continuous and never zero, keeps one sign. Positive, the theorem returns the old flux; negative, the normal has switched sides and the flux flips.
+Flux: the new integrand is $`F \cdot N`$ times J. On a connected region J, continuous and never zero, keeps one sign. Positive, the theorem returns the old flux; negative, the normal has switched sides and the flux flips.
 
-In the slant grid $v = 0.8s$, so J = 0.8 and the new length is 0.8 × 1.25 = 1.
+In the slant grid $`v = 0.8s`$, so J = 0.8 and the new length is 0.8 × 1.25 = 1.
 
 </details>
 
@@ -119,9 +123,9 @@ The curve versions are [Line integrals of a function](01-scalar-line-integrals.m
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| tangent arrows | from $(u, v, 0.75v)$ | (1, 0, 0), (0, 1, 0.75) |
+| tangent arrows | from $`(u, v, 0.75v)`$ | (1, 0, 0), (0, 1, 0.75) |
 | area vector | their cross product | (0, −0.75, 1) |
-| stretch | $\sqrt{0.75^2 + 1^2}$ | 1.25 |
+| stretch | $`\sqrt{0.75^2 + 1^2}`$ | 1.25 |
 | tarp area | 1.25 × 12 m^2 | **15 m^2** |
 | rain dotted with area vector, blown north | 0.005 × (−0.75) + (−0.01) × 1 | −13.75 mm/h |
 | flux | −13.75 mm/h × 12 m^2 | **−165 L/h** |
@@ -134,8 +138,8 @@ Rain driven north puts 165 litres an hour through the tarp, against 120 falling 
 | --- | --- | --- |
 | Ground area for tarp area | 12 m^2, not 15 | The stretch 1.25 was left out |
 | Rain rate × tarp area, still air | 150 L/h, not 120 | Only the square-on part of the flow crosses |
-| Unit normal with ground cells | 96 L/h, not 120 | $n$ has length 1, so the stretch went missing |
-| $r_v \times r_u$ for $r_u \times r_v$ | +120 L/h, not −120 | The normal points down: same water, other side |
+| Unit normal with ground cells | 96 L/h, not 120 | $`n`$ has length 1, so the stretch went missing |
+| $`r_v \times r_u`$ for $`r_u \times r_v`$ | +120 L/h, not −120 | The normal points down: same water, other side |
 
 The code prints all four.
 
@@ -143,7 +147,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Road one: tangent arrows from difference quotients, then midpoint sums of $\lVert N \rVert$ and $F \cdot N$ on a 200 by 200 grid. Road two forms no cross product: Pythagoras and Heron for area; for flux, the shadow's area by the shoelace formula (half the sum of cross-multiplied corner coordinates). The asserts check the roads meet.
+Road one: tangent arrows from difference quotients, then midpoint sums of $`\lVert N \rVert`$ and $`F \cdot N`$ on a 200 by 200 grid. Road two forms no cross product: Pythagoras and Heron for area; for flux, the shadow's area by the shoelace formula (half the sum of cross-multiplied corner coordinates). The asserts check the roads meet.
 
 ### Python
 
@@ -343,7 +347,7 @@ Lean proves that area and flux do not depend on the grid, for any smooth sheet, 
 - If the Jacobian is negative everywhere, the normal has switched sides and the flux flips sign.
 - Under a grid change, the area vector is multiplied by the Jacobian.
 - The taut tarp has 15 m^2 of fabric.
-- Rain drifting $w$ north crosses it at −(0.12 + 9$w$) cubic metres an hour: −120 L/h in still air, −165 blown north, −75 blown south.
+- Rain drifting $`w`$ north crosses it at −(0.12 + 9$`w`$) cubic metres an hour: −120 L/h in still air, −165 blown north, −75 blown south.
 - The hand numbers hold: area vector (0, −0.75, 1), stretch 1.25, shadows 16.5 and 7.5 m^2, and the slant grid's (0, −0.6, 0.8).
 - The two mistakes come out at 96 L/h and +120 L/h.
 
@@ -576,8 +580,8 @@ example : (![0, 0, -1/100] : Fin 3 → ℚ) ⬝ᵥ ![0, 3/4, -1] * 12 * 1000 = 1
 > [!warning]
 > **Flux as area times flow.** Only the square-on part crosses. The 15 m^2 tarp catches 120 L/h in still air, not 150: the slope that adds fabric turns it away from the rain, and the two cancel.
 >
-> - **Forgetting the stretch.** Integrating over the ground with no $\lVert N \rVert$ gives 12 m^2 of tarp, not 15.
-> - **Mixing the forms.** $F \cdot n$ goes with $dS$; $F \cdot N$ goes with $du\,dv$. Crossing them gives 96 L/h.
+> - **Forgetting the stretch.** Integrating over the ground with no $`\lVert N \rVert`$ gives 12 m^2 of tarp, not 15.
+> - **Mixing the forms.** $`F \cdot n`$ goes with $`dS`$; $`F \cdot N`$ goes with $`du\,dv`$. Crossing them gives 96 L/h.
 > - **Ignoring the side.** Reversing the cross product turns −120 into +120.
 
 ---
@@ -585,7 +589,7 @@ example : (![0, 0, -1/100] : Fin 3 → ℚ) ⬝ᵥ ![0, 3/4, -1] * 12 * 1000 = 1
 ## Where you meet it in real life
 
 - **Roof drainage.** Gutters are sized from a roof's plan area, its shadow under vertical rain, plus an allowance for wind-driven rain.
-- **Solar panels.** Collected sunlight is a flux; tilting toward the sun raises $F \cdot n$ without adding glass.
+- **Solar panels.** Collected sunlight is a flux; tilting toward the sun raises $`F \cdot n`$ without adding glass.
 - **Electric fields.** Gauss's law counts electric flux through a closed surface.
 - **Heat and fabric.** Heat through a curved wall is a flux; sailcloth is ordered by area.
 

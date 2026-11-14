@@ -10,7 +10,7 @@ A raffle sells tickets numbered 1 to 1,000. Draw two ticket numbers, repeats all
 
 The π comes from adding one over each whole number squared: 1 + 1/4 + 1/9 + … = 1.6449 = π^2/6. The share is one over that total, which is also a product with one factor per prime.
 
-Let the power 2 be any complex number $s$ and the sum becomes the **zeta function**, written ζ(s), "zeta of s".
+Let the power 2 be any complex number $`s`$ and the sum becomes the **zeta function**, written ζ(s), "zeta of s".
 
 **For complex s with real part above 1, the sum of 1/n^s converges to a holomorphic function, zeta, equal to the product over the primes of 1/(1 − 1/p^s); at s = 2 it is π^2/6, and one over it is the share of coprime pairs.**
 
@@ -26,24 +26,28 @@ To scale: 60 units per 1, 0 at (60, 150). The dashed line Re s = 1 passes the cr
 
 ## The formula
 
-Notation first, in words. For a whole number $n$ and complex $s$, the power $n^{-s}$ means $e^{-s\ln n}$, with $\ln n$ the ordinary real logarithm. The sign ∏ means "multiply over", as Σ means "add over".
+Notation first, in words. For a whole number $`n`$ and complex $`s`$, the power $`n^{-s}`$ means $`e^{-s\ln n}`$, with $`\ln n`$ the ordinary real logarithm. The sign ∏ means "multiply over", as Σ means "add over".
 
-$$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^{s}} = \prod_{p \text{ prime}} \frac{1}{1 - p^{-s}}, \qquad \operatorname{Re} s > 1$$
+```math
+\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^{s}} = \prod_{p \text{ prime}} \frac{1}{1 - p^{-s}}, \qquad \mathrm{Re}\, s > 1
+```
 
 **Read it aloud:** zeta of s is one over n to the s, added over every whole number, and also one over one-minus-p-to-the-minus-s, multiplied over every prime.
 
-$$\zeta(2) = \frac{\pi^2}{6} = 1.64493407, \qquad \frac{C(M)}{M^2} \to \frac{1}{\zeta(2)} = \frac{6}{\pi^2} = 0.607927$$
+```math
+\zeta(2) = \frac{\pi^2}{6} = 1.64493407, \qquad \frac{C(M)}{M^2} \to \frac{1}{\zeta(2)} = \frac{6}{\pi^2} = 0.607927
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $\sigma$, $t$ | complex input; its real part; its imaginary part | s = 2 + i: σ = 2, t = 1 | faster convergence |
-| $n$, $N$ | a whole number; how many terms are kept | N = 1000 | narrower bracket |
-| $p$, $P$ | a prime; the largest prime kept | P = 1000, 168 primes | closer to zeta |
-| $\zeta$ | the full sum | ζ(2) = 1.6449 | — |
-| $E_P$, $S_P$ | product over primes up to P; the numbers it lists | 1.64472519 at s = 2 | rises towards ζ(2) |
-| $C(M)$, $M$ | coprime ordered pairs among tickets 1 to M | 608,383 at M = 1000 | share tends to 0.607927 |
-| $a$, $b$, $g$ | two ticket numbers; their greatest common divisor | g = 3 for 6 and 15 | — |
-| $x$ | the sine product's variable | x = 1/2 | — |
+| $`s`$, $`\sigma`$, $`t`$ | complex input; its real part; its imaginary part | s = 2 + i: σ = 2, t = 1 | faster convergence |
+| $`n`$, $`N`$ | a whole number; how many terms are kept | N = 1000 | narrower bracket |
+| $`p`$, $`P`$ | a prime; the largest prime kept | P = 1000, 168 primes | closer to zeta |
+| $`\zeta`$ | the full sum | ζ(2) = 1.6449 | — |
+| $`E_P`$, $`S_P`$ | product over primes up to P; the numbers it lists | 1.64472519 at s = 2 | rises towards ζ(2) |
+| $`C(M)`$, $`M`$ | coprime ordered pairs among tickets 1 to M | 608,383 at M = 1000 | share tends to 0.607927 |
+| $`a`$, $`b`$, $`g`$ | two ticket numbers; their greatest common divisor | g = 3 for 6 and 15 | — |
+| $`x`$ | the sine product's variable | x = 1/2 | — |
 
 ### When it holds
 
@@ -61,47 +65,55 @@ Every whole number is built from primes in exactly one way ([Why the factorisati
 
 ### Step 1: complex powers of whole numbers
 
-Write $s = \sigma + it$. Then $n^{-s} = n^{-\sigma}e^{-it\ln n}$: size $n^{-\sigma}$, turned by the angle $-t\ln n$. At s = 2 + i, $5^{-s}$ has size 0.040000 = 1/5^2. Since $\ln(mn) = \ln m + \ln n$, $(mn)^{-s} = m^{-s}n^{-s}$. Only the real $\ln n$ is used, so the branch trouble of [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md) never arises.
+Write $`s = \sigma + it`$. Then $`n^{-s} = n^{-\sigma}e^{-it\ln n}`$: size $`n^{-\sigma}`$, turned by the angle $`-t\ln n`$. At s = 2 + i, $`5^{-s}`$ has size 0.040000 = 1/5^2. Since $`\ln(mn) = \ln m + \ln n`$, $`(mn)^{-s} = m^{-s}n^{-s}`$. Only the real $`\ln n`$ is used, so the branch trouble of [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md) never arises.
 
 ### Step 2: the sum converges, and zeta is holomorphic
 
-For σ > 1 the tail past N is at most the area under $x^{-\sigma}$ from N on, $N^{1-\sigma}/(\sigma - 1)$: 1/N at σ = 2. Sharper at s = 2: $1/n^2$ lies between $1/(n(n+1))$ and $1/((n-1)n)$, which telescope, so the tail lies between 1/(N+1) and 1/N.
+For σ > 1 the tail past N is at most the area under $`x^{-\sigma}`$ from N on, $`N^{1-\sigma}/(\sigma - 1)`$: 1/N at σ = 2. Sharper at s = 2: $`1/n^2`$ lies between $`1/(n(n+1))`$ and $`1/((n-1)n)`$, which telescope, so the tail lies between 1/(N+1) and 1/N.
 
-Fix a number $a > 1$. On the half-plane Re s ≥ a, term n never exceeds the fixed number $n^{-a}$, and those add up. By the Weierstrass M-test (terms bounded by a convergent sum of numbers converge uniformly) the sum converges uniformly there. Each term is holomorphic, so the limit is too ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
+Fix a number $`a > 1`$. On the half-plane Re s ≥ a, term n never exceeds the fixed number $`n^{-a}`$, and those add up. By the Weierstrass M-test (terms bounded by a convergent sum of numbers converge uniformly) the sum converges uniformly there. Each term is holomorphic, so the limit is too ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
 
 ### Step 3: the product over primes equals the sum
 
-Since $|p^{-s}| < 1$, the geometric series gives $1/(1 - p^{-s}) = 1 + p^{-s} + p^{-2s} + \cdots$. Multiply these for the primes up to P and call the result $E_P(s)$. Each term of the expansion picks one power of each prime, so by Step 0 the product lists $n^{-s}$ once for each n in $S_P$, the numbers with no prime factor above P: for P = 3, 1, 2, 3, 4, 6, 8, 9, 12, … but not 5.
+Since $`|p^{-s}| < 1`$, the geometric series gives $`1/(1 - p^{-s}) = 1 + p^{-s} + p^{-2s} + \cdots`$. Multiply these for the primes up to P and call the result $`E_P(s)`$. Each term of the expansion picks one power of each prime, so by Step 0 the product lists $`n^{-s}`$ once for each n in $`S_P`$, the numbers with no prime factor above P: for P = 3, 1, 2, 3, 4, 6, 8, 9, 12, … but not 5.
 
 Every missing n has a prime factor above P, so it exceeds P:
 
-$$|\zeta(s) - E_P(s)| \le \sum_{n > P} n^{-\sigma} \le \frac{P^{1-\sigma}}{\sigma - 1}$$
+```math
+|\zeta(s) - E_P(s)| \le \sum_{n > P} n^{-\sigma} \le \frac{P^{1-\sigma}}{\sigma - 1}
+```
 
-At s = 2 and P = 1000 the bound is 1/1000; the gap is 0.00020888. Letting P grow gives the Euler product. No factor $1 - p^{-s}$ is 0 and the sizes $|p^{-s}|$ add up, so the factors multiply to a nonzero limit ([Infinite products](01-infinite-products.md)), so ζ(s) is never 0 on Re s > 1.
+At s = 2 and P = 1000 the bound is 1/1000; the gap is 0.00020888. Letting P grow gives the Euler product. No factor $`1 - p^{-s}`$ is 0 and the sizes $`|p^{-s}|`$ add up, so the factors multiply to a nonzero limit ([Infinite products](01-infinite-products.md)), so ζ(s) is never 0 on Re s > 1.
 
 ### Step 4: zeta of 2 from the sine product
 
-The sine factors over its zeros: $\sin(\pi x)/(\pi x) = \prod_{n \ge 1}(1 - x^2/n^2)$. At x = 1/2 this is 2/π = 0.636620; 100,000 factors give 0.636621. The left side's Taylor series starts $1 - \pi^2x^2/6$. On the right, an $x^2$ comes only from $-x^2/n^2$ in one factor times 1 from the rest, so its coefficient is $-\sum 1/n^2$. Matching:
+The sine factors over its zeros: $`\sin(\pi x)/(\pi x) = \prod_{n \ge 1}(1 - x^2/n^2)`$. At x = 1/2 this is 2/π = 0.636620; 100,000 factors give 0.636621. The left side's Taylor series starts $`1 - \pi^2x^2/6`$. On the right, an $`x^2`$ comes only from $`-x^2/n^2`$ in one factor times 1 from the rest, so its coefficient is $`-\sum 1/n^2`$. Matching:
 
-$$\zeta(2) = \sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}$$
+```math
+\zeta(2) = \sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
+```
 
 The partial products converge uniformly near 0, so their second derivatives at 0 converge too (Step 2's theorem); that licenses the matching.
 
 ### Step 5: the coprime share is one over zeta of 2
 
-Prime by prime first: both tickets are multiples of p in one pair in p^2, so a share $1 - 1/p^2$ escapes p, and the product over primes is $1/\zeta(2)$. That guess assumes the primes do not interfere with one another; a count proves it.
+Prime by prime first: both tickets are multiples of p in one pair in p^2, so a share $`1 - 1/p^2`$ escapes p, and the product over primes is $`1/\zeta(2)`$. That guess assumes the primes do not interfere with one another; a count proves it.
 
-If $a$ and $b$ have greatest common divisor $g$, then $a/g$ and $b/g$ are coprime and at most $M/g$. So every pair is counted once in
+If $`a`$ and $`b`$ have greatest common divisor $`g`$, then $`a/g`$ and $`b/g`$ are coprime and at most $`M/g`$. So every pair is counted once in
 
-$$M^2 = \sum_{g=1}^{M} C(\lfloor M/g \rfloor)$$
+```math
+M^2 = \sum_{g=1}^{M} C(\lfloor M/g \rfloor)
+```
 
-with the brackets meaning "round down". At M = 1000 both sides are 1,000,000. Divide by $M^2$: if the share settles at c, term g is near $c/g^2$ and the equation becomes $1 = c\,\zeta(2)$, so c = 6/π^2. The folded proof shows the share settles, using only ζ(2) < 2.
+with the brackets meaning "round down". At M = 1000 both sides are 1,000,000. Divide by $`M^2`$: if the share settles at c, term g is near $`c/g^2`$ and the equation becomes $`1 = c\,\zeta(2)`$, so c = 6/π^2. The folded proof shows the share settles, using only ζ(2) < 2.
 
 ### Step 6: the primes' reciprocals add up to infinity
 
-$E_P(1)$ is the sum of 1/n over $S_P$, which contains every n up to P. So $E_P(1) \ge 1 + 1/2 + \cdots + 1/P \ge \ln(P + 1)$; at P = 1000, 12.350976 against 7.485471. Taking logs, with $-\ln(1 - u) \le u + u^2/(1 - u)$ and u = 1/p, the extra pieces $1/(p(p-1))$ total below 1:
+$`E_P(1)`$ is the sum of 1/n over $`S_P`$, which contains every n up to P. So $`E_P(1) \ge 1 + 1/2 + \cdots + 1/P \ge \ln(P + 1)`$; at P = 1000, 12.350976 against 7.485471. Taking logs, with $`-\ln(1 - u) \le u + u^2/(1 - u)`$ and u = 1/p, the extra pieces $`1/(p(p-1))`$ total below 1:
 
-$$\sum_{p \le P} \frac{1}{p} \ge \ln\ln(P + 1) - 1$$
+```math
+\sum_{p \le P} \frac{1}{p} \ge \ln\ln(P + 1) - 1
+```
 
 The right side is unbounded, so the sum of 1/p diverges: a stronger fact than [There are infinitely many primes](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md).
 
@@ -120,9 +132,9 @@ Orange: the sum of 1/p up to x. Green: ln ln x. The total never levels off, and 
 <details>
 <summary>Detailed proof</summary>
 
-**The share settles.** Let $r(M) = C(M)/M^2$, with largest limit point L and smallest l. Fix G. For g ≤ G, $\lfloor M/g\rfloor^2/M^2 \to 1/g^2$; terms with g > G total under 1/G. Along M with r(M) near L, the identity gives $1 \ge L + l(\zeta(2) - 1) - 2/G$; along M with r(M) near l, $1 \le l + L(\zeta(2) - 1) + 2/G$. Let G grow and subtract: $0 \le (l - L)(2 - \zeta(2))$. Since ζ(2) < 1 + (1 − 1/2) + (1/2 − 1/3) + ⋯ = 2, L = l = c, and $1 = c\,\zeta(2)$.
+**The share settles.** Let $`r(M) = C(M)/M^2`$, with largest limit point L and smallest l. Fix G. For g ≤ G, $`\lfloor M/g\rfloor^2/M^2 \to 1/g^2`$; terms with g > G total under 1/G. Along M with r(M) near L, the identity gives $`1 \ge L + l(\zeta(2) - 1) - 2/G`$; along M with r(M) near l, $`1 \le l + L(\zeta(2) - 1) + 2/G`$. Let G grow and subtract: $`0 \le (l - L)(2 - \zeta(2))`$. Since ζ(2) < 1 + (1 − 1/2) + (1/2 − 1/3) + ⋯ = 2, L = l = c, and $`1 = c\,\zeta(2)`$.
 
-**Reciprocals of primes.** $\ln E_P(1) = \sum_{p \le P} -\ln(1 - 1/p) \le \sum_{p\le P} 1/p + \sum_{n \ge 2} 1/(n(n-1))$, and the last sum is 1.
+**Reciprocals of primes.** $`\ln E_P(1) = \sum_{p \le P} -\ln(1 - 1/p) \le \sum_{p\le P} 1/p + \sum_{n \ge 2} 1/(n(n-1))`$, and the last sum is 1.
 
 </details>
 
@@ -745,7 +757,7 @@ example : (1 / (1 - 1/2^2 : ℚ)) * (1 / (1 - 1/3^2)) * (1 / (1 - 1/5^2)) = 25/1
 > [!warning]
 > **Reading the sum where it does not converge.** The sum defines zeta only on Re s > 1. Values at negative s belong to the continued function of [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md); 1 + 2 + 3 + ⋯ still has no total.
 >
-> - **A finite product read as a finite sum.** $E_3(s)$ is not $1 + 2^{-s} + 3^{-s}$: it holds 4, 6, 8, 9, 12, … and never 5.
+> - **A finite product read as a finite sum.** $`E_3(s)`$ is not $`1 + 2^{-s} + 3^{-s}`$: it holds 4, 6, 8, 9, 12, … and never 5.
 > - **The finite count as the limit.** 0.608383 is not 0.607927.
 
 ---

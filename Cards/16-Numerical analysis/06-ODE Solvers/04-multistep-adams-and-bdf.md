@@ -20,7 +20,7 @@ With 400 steps per lap, AB4 brings the satellite back 23.0 m from perigee, using
 
 ### The picture: a cubic through four stored slopes, pushed one step ahead
 
-The step here is stretched to an eighth of a lap, 13.1 minutes, so the bend shows. The stored slopes are the satellite's velocity along the perigee line (the line from Earth's centre through the perigee), $v_1$, at minutes 0, 13.1, 26.3 and 39.4.
+The step here is stretched to an eighth of a lap, 13.1 minutes, so the bend shows. The stored slopes are the satellite's velocity along the perigee line (the line from Earth's centre through the perigee), $`v_1`$, at minutes 0, 13.1, 26.3 and 39.4.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -40,65 +40,75 @@ AB4's step is the area under the teal line over the last stretch. It moves the s
 
 ## The formula
 
-Notation first, in words. The **state** $y$ is the list of four numbers that fixes the satellite: two position coordinates $x_1, x_2$ and two velocities $v_1, v_2$. The **slope** $f(y)$ is how fast each number changes. The step $h$ moves time from $t_n$ to $t_{n+1} = t_n + h$, and $y_n$ is the computed state at $t_n$. The stored slope is $f_n = f(y_n)$.
+Notation first, in words. The **state** $`y`$ is the list of four numbers that fixes the satellite: two position coordinates $`x_1, x_2`$ and two velocities $`v_1, v_2`$. The **slope** $`f(y)`$ is how fast each number changes. The step $`h`$ moves time from $`t_n`$ to $`t_{n+1} = t_n + h`$, and $`y_n`$ is the computed state at $`t_n`$. The stored slope is $`f_n = f(y_n)`$.
 
-The ODE (ordinary differential equation) for the satellite, with $r = \sqrt{x_1^2 + x_2^2}$ its distance from Earth's centre:
+The ODE (ordinary differential equation) for the satellite, with $`r = \sqrt{x_1^2 + x_2^2}`$ its distance from Earth's centre:
 
-$$y' = f(y) = \Bigl(v_1,\; v_2,\; -\frac{\mu\,x_1}{r^3},\; -\frac{\mu\,x_2}{r^3}\Bigr)$$
+```math
+y' = f(y) = \Bigl(v_1,\; v_2,\; -\frac{\mu\,x_1}{r^3},\; -\frac{\mu\,x_2}{r^3}\Bigr)
+```
 
 **Read it aloud:** position changes at the velocity, and velocity changes at gravity's pull, which points at Earth's centre and weakens as one over distance squared.
 
 The two Adams formulas of order 4:
 
-$$\text{AB4:}\quad y_{n+1} = y_n + \frac{h}{24}\bigl(55 f_n - 59 f_{n-1} + 37 f_{n-2} - 9 f_{n-3}\bigr)$$
+```math
+\text{AB4:}\quad y_{n+1} = y_n + \frac{h}{24}\bigl(55 f_n - 59 f_{n-1} + 37 f_{n-2} - 9 f_{n-3}\bigr)
+```
 
-$$\text{AM4:}\quad y_{n+1} = y_n + \frac{h}{24}\bigl(9 f_{n+1} + 19 f_n - 5 f_{n-1} + f_{n-2}\bigr)$$
+```math
+\text{AM4:}\quad y_{n+1} = y_n + \frac{h}{24}\bigl(9 f_{n+1} + 19 f_n - 5 f_{n-1} + f_{n-2}\bigr)
+```
 
 **Read it aloud:** the new state is the old state plus the step times a weighted average of slopes; Adams-Bashforth uses four old slopes, Adams-Moulton three old ones and the new one.
 
-AB4 is **explicit**: everything on the right is known. AM4 is **implicit**: $f_{n+1} = f(y_{n+1})$ needs the answer. The **predictor-corrector** pair PECE breaks the circle in four moves:
+AB4 is **explicit**: everything on the right is known. AM4 is **implicit**: $`f_{n+1} = f(y_{n+1})`$ needs the answer. The **predictor-corrector** pair PECE breaks the circle in four moves:
 
-1. **Predict** $y^{P}_{n+1}$ with AB4.
-2. **Evaluate** $f(y^{P}_{n+1})$.
-3. **Correct**: run AM4 with that slope standing in for $f_{n+1}$, giving $y^{C}_{n+1}$.
-4. **Evaluate** $f(y^{C}_{n+1})$ and store it as $f_{n+1}$.
+1. **Predict** $`y^{P}_{n+1}`$ with AB4.
+2. **Evaluate** $`f(y^{P}_{n+1})`$.
+3. **Correct**: run AM4 with that slope standing in for $`f_{n+1}`$, giving $`y^{C}_{n+1}`$.
+4. **Evaluate** $`f(y^{C}_{n+1})`$ and store it as $`f_{n+1}`$.
 
-Every one of these formulas is a **linear multistep method**: a fixed mix of the last $k$ states and slopes,
+Every one of these formulas is a **linear multistep method**: a fixed mix of the last $`k`$ states and slopes,
 
-$$\sum_{j=0}^{k} \alpha_j\, y_{n+1-j} = h \sum_{j=0}^{k} \beta_j\, f_{n+1-j}, \qquad \rho(\zeta) = \sum_{j=0}^{k} \alpha_j\, \zeta^{\,k-j}$$
+```math
+\sum_{j=0}^{k} \alpha_j\, y_{n+1-j} = h \sum_{j=0}^{k} \beta_j\, f_{n+1-j}, \qquad \rho(\zeta) = \sum_{j=0}^{k} \alpha_j\, \zeta^{\,k-j}
+```
 
-**Read it aloud:** a weighted sum of states equals the step times a weighted sum of slopes; the state weights, read as polynomial coefficients, make the method's characteristic polynomial $\rho$.
+**Read it aloud:** a weighted sum of states equals the step times a weighted sum of slopes; the state weights, read as polynomial coefficients, make the method's characteristic polynomial $`\rho`$.
 
-Every Adams method has $\alpha_0 = 1$, $\alpha_1 = -1$ and the rest zero, so $\rho(\zeta) = \zeta^k - \zeta^{k-1}$. A method is **zero-stable** when every root of $\rho$ has size at most 1, and the roots of size exactly 1 are not repeated. This is the **root condition**.
+Every Adams method has $`\alpha_0 = 1`$, $`\alpha_1 = -1`$ and the rest zero, so $`\rho(\zeta) = \zeta^k - \zeta^{k-1}`$. A method is **zero-stable** when every root of $`\rho`$ has size at most 1, and the roots of size exactly 1 are not repeated. This is the **root condition**.
 
 The **backward differentiation formulas** (BDF) take the other route: all the weight is on states, and one slope, the new one. BDF2 is
 
-$$\tfrac32\, y_{n+1} - 2\, y_n + \tfrac12\, y_{n-1} = h\, f_{n+1}$$
+```math
+\tfrac32\, y_{n+1} - 2\, y_n + \tfrac12\, y_{n-1} = h\, f_{n+1}
+```
 
 **Read it aloud:** the slope of the parabola through the last three states, taken at the new point, must equal the new slope.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y_n$; $y^{P}$, $y^{C}$; $x_1, x_2, v_1, v_2$ | the computed state at step $n$; the predicted and corrected states; the state's four numbers | $(x_1, x_2, v_1, v_2)$, starting at $(6778, 0, 0, 7.9744)$ in km and km/s | — |
-| $f$, $f_n$ | the slope function; the stored slope at step $n$ | velocity, then gravity's pull | — |
-| $h$, $N$, $T$; $t_n$, $s$ | the step; steps per lap, $h = T/N$; the lap time; the time at step $n$; time counted in steps from $t_n$ (not the stage count of [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md)) | $T$ = 6306.9 s; $N$ = 400 gives $h$ = 15.77 s; $s = 1$ is one step on | larger $h$: error grows like $h^4$ |
-| $k$ | how many past steps the method uses | 4 for AB4, 3 for AM4 | higher order for the same one slope per step |
-| $\beta_j$, $c_j$ | the slope weights; where stored point $j$ sits, in steps | AB4: 55, −59, 37, −9 over 24, at $c_j$ = 0, −1, −2, −3 | — |
-| $\alpha_j$ | the state weights | Adams: 1, −1; BDF2: 3/2, −2, 1/2 | — |
-| $\ell_j(s)$ | the Lagrange basis polynomial: 1 at stored point $j$, 0 at the others | $\ell_0(s) = (s+1)(s+2)(s+3)/6$ | — |
-| $\rho$, $\zeta$ | the characteristic polynomial of the state weights; its variable | AB4: $\zeta^4 - \zeta^3$ | a root outside size 1: blow-up |
-| $C$ | the error constant: local error is $C h^{5} y^{(5)}$, with $y^{(5)}$ the fifth derivative | AB4: 251/720; AM4: −19/720 | larger miss at the same order |
-| $p$ | the order: global error shrinks like $h^p$ | 4 | errors fall faster as $h$ shrinks |
-| $\mu$, $r$, $a$ | Earth's gravitational parameter; distance from Earth's centre; the average of perigee and apogee radii | 398,600.4418 km³/s², the conventional value; 6,778 to 7,978 km; their average | — |
-| $e_n$, $E_n$, $\tau_n$, $L$, $B$, $q$ | proof helpers: the true error at step $n$; the largest of the last $k$ errors; the local truncation error per unit time, as on [From local error to global error](02-convergence-of-one-step-methods.md), so one step's miss is $h\tau_n$; a Lipschitz constant of $f$; the sum of the weights' sizes; a power from 0 to 3 | — | — |
+| $`y_n`$; $`y^{P}`$, $`y^{C}`$; $`x_1, x_2, v_1, v_2`$ | the computed state at step $`n`$; the predicted and corrected states; the state's four numbers | $`(x_1, x_2, v_1, v_2)`$, starting at $`(6778, 0, 0, 7.9744)`$ in km and km/s | — |
+| $`f`$, $`f_n`$ | the slope function; the stored slope at step $`n`$ | velocity, then gravity's pull | — |
+| $`h`$, $`N`$, $`T`$; $`t_n`$, $`s`$ | the step; steps per lap, $`h = T/N`$; the lap time; the time at step $`n`$; time counted in steps from $`t_n`$ (not the stage count of [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md)) | $`T`$ = 6306.9 s; $`N`$ = 400 gives $`h`$ = 15.77 s; $`s = 1`$ is one step on | larger $`h`$: error grows like $`h^4`$ |
+| $`k`$ | how many past steps the method uses | 4 for AB4, 3 for AM4 | higher order for the same one slope per step |
+| $`\beta_j`$, $`c_j`$ | the slope weights; where stored point $`j`$ sits, in steps | AB4: 55, −59, 37, −9 over 24, at $`c_j`$ = 0, −1, −2, −3 | — |
+| $`\alpha_j`$ | the state weights | Adams: 1, −1; BDF2: 3/2, −2, 1/2 | — |
+| $`\ell_j(s)`$ | the Lagrange basis polynomial: 1 at stored point $`j`$, 0 at the others | $`\ell_0(s) = (s+1)(s+2)(s+3)/6`$ | — |
+| $`\rho`$, $`\zeta`$ | the characteristic polynomial of the state weights; its variable | AB4: $`\zeta^4 - \zeta^3`$ | a root outside size 1: blow-up |
+| $`C`$ | the error constant: local error is $`C h^{5} y^{(5)}`$, with $`y^{(5)}`$ the fifth derivative | AB4: 251/720; AM4: −19/720 | larger miss at the same order |
+| $`p`$ | the order: global error shrinks like $`h^p`$ | 4 | errors fall faster as $`h`$ shrinks |
+| $`\mu`$, $`r`$, $`a`$ | Earth's gravitational parameter; distance from Earth's centre; the average of perigee and apogee radii | 398,600.4418 km³/s², the conventional value; 6,778 to 7,978 km; their average | — |
+| $`e_n`$, $`E_n`$, $`\tau_n`$, $`L`$, $`B`$, $`q`$ | proof helpers: the true error at step $`n`$; the largest of the last $`k`$ errors; the local truncation error per unit time, as on [From local error to global error](02-convergence-of-one-step-methods.md), so one step's miss is $`h\tau_n`$; a Lipschitz constant of $`f`$; the sum of the weights' sizes; a power from 0 to 3 | — | — |
 
 ### When it holds
 
 - **A smooth slope.** The order-4 claim needs five derivatives of the solution. Where the force jumps, such as an engine burn, the fitted polynomial straddles the jump; restart the method at the burn.
 - **Accurate starting values.** AB4 needs four states before it can take its first step. Start them with Euler's method instead of RK4 and AB4 falls to order 2 (What breaks, row 2).
-- **The root condition.** The two-step formula $y_{n+1} = -4y_n + 5y_{n-1} + h(4f_n + 2f_{n-1})$ has order 3 and $\rho$ roots 1 and −5. It blows up, and faster the smaller the step (Step 5).
-- **A fixed step.** The weights assume equally spaced stored slopes. Change $h$ and the weights must be rebuilt for the new spacing, or the stored slopes resampled.
-- **A step small enough for the method's stability.** Explicit Adams formulas fail on stiff problems (fast decaying parts) unless $h$ is tiny. That limit is on [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md).
+- **The root condition.** The two-step formula $`y_{n+1} = -4y_n + 5y_{n-1} + h(4f_n + 2f_{n-1})`$ has order 3 and $`\rho`$ roots 1 and −5. It blows up, and faster the smaller the step (Step 5).
+- **A fixed step.** The weights assume equally spaced stored slopes. Change $`h`$ and the weights must be rebuilt for the new spacing, or the stored slopes resampled.
+- **A step small enough for the method's stability.** Explicit Adams formulas fail on stiff problems (fast decaying parts) unless $`h`$ is tiny. That limit is on [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md).
 
 ---
 
@@ -108,108 +118,116 @@ $$\tfrac32\, y_{n+1} - 2\, y_n + \tfrac12\, y_{n-1} = h\, f_{n+1}$$
 
 The state after one step is the state now plus the area under the slope curve:
 
-$$y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f\bigl(y(t)\bigr)\,dt$$
+```math
+y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f\bigl(y(t)\bigr)\,dt
+```
 
 The slope curve is unknown, but four samples of it are already stored. Fit a polynomial through them and integrate that instead. Each Adams method is one choice of which samples to fit; BDF (Step 6) fits states instead.
 
 ### Step 1: integrate the fitted polynomial to get the weights
 
-Measure time in steps, $t = t_n + s h$. The stored slopes sit at $s = 0, -1, -2, -3$. The **Lagrange basis** polynomial $\ell_j(s)$ is the cubic that equals 1 at stored point $j$ and 0 at the other three. The fitted cubic is $\sum_j f_{n-j}\,\ell_j(s)$, and integrating it over the next step, $s$ from 0 to 1, gives
+Measure time in steps, $`t = t_n + s h`$. The stored slopes sit at $`s = 0, -1, -2, -3`$. The **Lagrange basis** polynomial $`\ell_j(s)`$ is the cubic that equals 1 at stored point $`j`$ and 0 at the other three. The fitted cubic is $`\sum_j f_{n-j}\,\ell_j(s)`$, and integrating it over the next step, $`s`$ from 0 to 1, gives
 
-$$y_{n+1} = y_n + h \sum_{j=0}^{3} \beta_j\, f_{n-j}, \qquad \beta_j = \int_0^1 \ell_j(s)\,ds$$
+```math
+y_{n+1} = y_n + h \sum_{j=0}^{3} \beta_j\, f_{n-j}, \qquad \beta_j = \int_0^1 \ell_j(s)\,ds
+```
 
-For $j = 0$: $\ell_0(s) = (s+1)(s+2)(s+3)/6$, and its integral is 55/24. The code does all four in exact fractions and gets 55, −59, 37, −9 over 24.
+For $`j = 0`$: $`\ell_0(s) = (s+1)(s+2)(s+3)/6`$, and its integral is 55/24. The code does all four in exact fractions and gets 55, −59, 37, −9 over 24.
 
-The area runs over $s$ from 0 to 1, outside the stored points. That is **extrapolation**, as the picture showed, and it is why AB4's error constant is large.
+The area runs over $`s`$ from 0 to 1, outside the stored points. That is **extrapolation**, as the picture showed, and it is why AB4's error constant is large.
 
 ### Step 2: put the new slope in the fit, and the formula becomes implicit
 
-Fit the cubic through $s = 1, 0, -1, -2$ instead: the unknown new slope and three stored ones. Now the integral runs inside the fitted points, which is **interpolation**. The weights come out 9, 19, −5, 1 over 24: AM4.
+Fit the cubic through $`s = 1, 0, -1, -2`$ instead: the unknown new slope and three stored ones. Now the integral runs inside the fitted points, which is **interpolation**. The weights come out 9, 19, −5, 1 over 24: AM4.
 
 Interpolation is far more accurate than extrapolation. The error constants are 251/720 for AB4 and −19/720 for AM4: AM4's is 13.21 times smaller. Measured on the orbit at 400 steps, PECE misses by 1.58 m and AB4 by 23.0 m, a ratio of 14.5.
 
-The price is the unknown $f_{n+1}$. PECE pays it with one extra slope per step. The predictor's error is $O(h^5)$, and the corrector multiplies it by $h$ times a weight, so the shortcut adds only $O(h^6)$ and keeps order 4.
+The price is the unknown $`f_{n+1}`$. PECE pays it with one extra slope per step. The predictor's error is $`O(h^5)`$, and the corrector multiplies it by $`h`$ times a weight, so the shortcut adds only $`O(h^6)`$ and keeps order 4.
 
 ### Step 3: order 4 means exact for every cubic slope
 
-A rule built by integrating a cubic fit is exact when the true slope is a cubic. So it is exact for slopes $1, s, s^2, s^3$, which gives four **order conditions**:
+A rule built by integrating a cubic fit is exact when the true slope is a cubic. So it is exact for slopes $`1, s, s^2, s^3`$, which gives four **order conditions**:
 
-$$\sum_j \beta_j\, c_j^{\,q} = \frac{1}{q+1}, \qquad q = 0, 1, 2, 3$$
+```math
+\sum_j \beta_j\, c_j^{\,q} = \frac{1}{q+1}, \qquad q = 0, 1, 2, 3
+```
 
-Here $c_j$ is the position of stored point $j$ in steps ($0, -1, -2, -3$ for AB4). The code checks all four for both formulas, exactly, as a second road to the same weights.
+Here $`c_j`$ is the position of stored point $`j`$ in steps ($`0, -1, -2, -3`$ for AB4). The code checks all four for both formulas, exactly, as a second road to the same weights.
 
-The first slope the rule cannot follow is $s^4$. A Taylor expansion then leaves the **local error**, the miss of one step started from exact values, as $C h^5 y^{(5)}$ with
+The first slope the rule cannot follow is $`s^4`$. A Taylor expansion then leaves the **local error**, the miss of one step started from exact values, as $`C h^5 y^{(5)}`$ with
 
-$$C = \frac{1}{5!} - \frac{1}{4!}\sum_j \beta_j\, c_j^{\,4}$$
+```math
+C = \frac{1}{5!} - \frac{1}{4!}\sum_j \beta_j\, c_j^{\,4}
+```
 
-For AB4 this is $1/120 + 49/144 = 251/720$.
+For AB4 this is $`1/120 + 49/144 = 251/720`$.
 
 ### Step 4: Adams methods add their local errors without amplifying them
 
-The [From local error to global error](02-convergence-of-one-step-methods.md) card shows that $N$ local errors of size $h^{p+1}$, passed on by a stable method, add to a global error of size $h^p$. For Adams methods the same argument goes through with one change: the error at step $n+1$ depends on the last $k$ errors, not just one.
+The [From local error to global error](02-convergence-of-one-step-methods.md) card shows that $`N`$ local errors of size $`h^{p+1}`$, passed on by a stable method, add to a global error of size $`h^p`$. For Adams methods the same argument goes through with one change: the error at step $`n+1`$ depends on the last $`k`$ errors, not just one.
 
 <details>
 <summary>Detailed proof: every Adams method with local error O(h^(p+1)) converges with order p</summary>
 
-**Assume** $f$ has a Lipschitz constant $L$: $\lvert f(a) - f(b)\rvert \le L\lvert a - b\rvert$. Let $e_n = y(t_n) - y_n$, let $h\tau_n$ be the local error at step $n$, and let $B = \sum_j \lvert\beta_j\rvert$.
+**Assume** $`f`$ has a Lipschitz constant $`L`$: $`\lvert f(a) - f(b)\rvert \le L\lvert a - b\rvert`$. Let $`e_n = y(t_n) - y_n`$, let $`h\tau_n`$ be the local error at step $`n`$, and let $`B = \sum_j \lvert\beta_j\rvert`$.
 
 **One step.** Subtract the method from the true solution's version of it:
 
-$$e_{n+1} = e_n + h\sum_j \beta_j\bigl(f(y(t_{n-j})) - f(y_{n-j})\bigr) + h\tau_n$$
+$`\displaystyle e_{n+1} = e_n + h\sum_j \beta_j\bigl(f(y(t_{n-j})) - f(y_{n-j})\bigr) + h\tau_n`$
 
-**Bound it.** Let $E_n$ be the largest of $\lvert e_n\rvert, \dots, \lvert e_{n-k+1}\rvert$. Then $\lvert e_{n+1}\rvert \le E_n + hLB\,E_n + h\lvert\tau_n\rvert$, so
+**Bound it.** Let $`E_n`$ be the largest of $`\lvert e_n\rvert, \dots, \lvert e_{n-k+1}\rvert`$. Then $`\lvert e_{n+1}\rvert \le E_n + hLB\,E_n + h\lvert\tau_n\rvert`$, so
 
-$$E_{n+1} \le (1 + hLB)\,E_n + h\tau, \qquad \tau = \max_n \lvert\tau_n\rvert$$
+$`\displaystyle E_{n+1} \le (1 + hLB)\,E_n + h\tau, \qquad \tau = \max_n \lvert\tau_n\rvert`$
 
-**Unroll.** Since $1 + x \le e^x$ and $N h = T$,
+**Unroll.** Since $`1 + x \le e^x`$ and $`N h = T`$,
 
-$$E_N \le e^{LBT}\bigl(E_{k-1} + T\tau\bigr)$$
+$`\displaystyle E_N \le e^{LBT}\bigl(E_{k-1} + T\tau\bigr)`$
 
-With $\tau$ at most a fixed constant times $h^{p}$, the second term is that constant times $T h^{p}$. The first is the starting error. So the global error is $O(h^p)$ provided the starting values are accurate to $O(h^p)$. $\blacksquare$
+With $`\tau`$ at most a fixed constant times $`h^{p}`$, the second term is that constant times $`T h^{p}`$. The first is the starting error. So the global error is $`O(h^p)`$ provided the starting values are accurate to $`O(h^p)`$. $`\blacksquare`$
 
-For an implicit method such as AM4 the sum also holds the new error $e_{n+1}$. Move that term to the left: once $hL$ times the new slope's weight (9/24 for AM4) is at most 1/2, this at most doubles the constants, and the conclusion stands.
+For an implicit method such as AM4 the sum also holds the new error $`e_{n+1}`$. Move that term to the left: once $`hL`$ times the new slope's weight (9/24 for AM4) is at most 1/2, this at most doubles the constants, and the conclusion stands.
 
-The only feature of Adams methods used is $\rho(\zeta) = \zeta^k - \zeta^{k-1}$: each step adds to $y_n$ alone. Its roots are 1 and zeros, so nothing in the recurrence grows.
+The only feature of Adams methods used is $`\rho(\zeta) = \zeta^k - \zeta^{k-1}`$: each step adds to $`y_n`$ alone. Its roots are 1 and zeros, so nothing in the recurrence grows.
 
 </details>
 
-The proof also explains the Euler-start failure. Three Euler steps leave a starting error of size $h^2$. The bound carries it to the end, multiplied by at most the fixed factor $e^{LBT}$, so the run has order 2, not 4 (What breaks, row 2).
+The proof also explains the Euler-start failure. Three Euler steps leave a starting error of size $`h^2`$. The bound carries it to the end, multiplied by at most the fixed factor $`e^{LBT}`$, so the run has order 2, not 4 (What breaks, row 2).
 
 ### Step 5: zero-stability, and why higher order alone is a trap
 
-Set the slope to zero. A multistep method then reduces to $\sum_j \alpha_j y_{n+1-j} = 0$, whose solutions are combinations of $\zeta^n$ for the roots $\zeta$ of $\rho$. Root 1 keeps a constant solution constant, as it should. Every other root multiplies some leftover error by $\zeta$ each step.
+Set the slope to zero. A multistep method then reduces to $`\sum_j \alpha_j y_{n+1-j} = 0`$, whose solutions are combinations of $`\zeta^n`$ for the roots $`\zeta`$ of $`\rho`$. Root 1 keeps a constant solution constant, as it should. Every other root multiplies some leftover error by $`\zeta`$ each step.
 
 - **Adams:** roots 1, 0, 0, 0. Leftovers vanish at once.
 - **BDF2:** roots 1 and 1/3. Leftovers shrink by a third each step.
 - **The order-3 two-step formula:** roots 1 and −5. A rounding error multiplies by −5 each step.
 
-Reaching a fixed time takes $t/h$ steps, so the growth is $5^{t/h}$. Halving $h$ squares it. On the orbit, after 630.7 s, the miss is 1.21e4 km at $h$ = 63.07 s, 7.51e9 km at 31.53 s, 4.45e22 km at 15.77 s and 2.49e49 km at 7.88 s. A smaller step makes the answer worse, which is the signature of zero-instability.
+Reaching a fixed time takes $`t/h`$ steps, so the growth is $`5^{t/h}`$. Halving $`h`$ squares it. On the orbit, after 630.7 s, the miss is 1.21e4 km at $`h`$ = 63.07 s, 7.51e9 km at 31.53 s, 4.45e22 km at 15.77 s and 2.49e49 km at 7.88 s. A smaller step makes the answer worse, which is the signature of zero-instability.
 
-**Dahlquist's equivalence theorem** (1956): a linear multistep method with accurate starting values converges if and only if it is **consistent** (order at least 1: $\rho(1) = 0$ and $\rho'(1) = \sum_j \beta_j$) and zero-stable. The argument above shows why a root outside size 1 rules out convergence; a repeated root of size 1 fails more slowly, by growth like $n$. The sufficiency half generalises the Adams proof: it bounds the recurrence's powers using the root condition. It is too long for this card; it is in Hairer, Nørsett and Wanner, chapter III.4.
+**Dahlquist's equivalence theorem** (1956): a linear multistep method with accurate starting values converges if and only if it is **consistent** (order at least 1: $`\rho(1) = 0`$ and $`\rho'(1) = \sum_j \beta_j`$) and zero-stable. The argument above shows why a root outside size 1 rules out convergence; a repeated root of size 1 fails more slowly, by growth like $`n`$. The sufficiency half generalises the Adams proof: it bounds the recurrence's powers using the root condition. It is too long for this card; it is in Hairer, Nørsett and Wanner, chapter III.4.
 
-The same 1956 paper also caps the order. A zero-stable $k$-step method has order at most $k+1$ for odd $k$ and $k+2$ for even $k$, and an explicit one at most $k$. That is Dahlquist's first barrier, on [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md). The formula with root −5 has order 3 from two steps, above the explicit limit of 2, and pays for it with instability.
+The same 1956 paper also caps the order. A zero-stable $`k`$-step method has order at most $`k+1`$ for odd $`k`$ and $`k+2`$ for even $`k`$, and an explicit one at most $`k`$. That is Dahlquist's first barrier, on [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md). The formula with root −5 has order 3 from two steps, above the explicit limit of 2, and pays for it with instability.
 
 ### Step 6: BDF differentiates instead of integrating
 
-Adams fits the slopes and integrates. BDF fits the **states** $y_{n+1}, y_n, \dots$ with a polynomial, differentiates it at the new point, and sets that equal to $f_{n+1}$. For two steps the fit is a parabola through $s = 1, 0, -1$, and its slope at $s = 1$ gives the weights 3/2, −2, 1/2, which the code computes exactly.
+Adams fits the slopes and integrates. BDF fits the **states** $`y_{n+1}, y_n, \dots`$ with a polynomial, differentiates it at the new point, and sets that equal to $`f_{n+1}`$. For two steps the fit is a parabola through $`s = 1, 0, -1`$, and its slope at $`s = 1`$ gives the weights 3/2, −2, 1/2, which the code computes exactly.
 
-BDF formulas are implicit and only modestly accurate, but they stay stable on stiff problems where Adams needs tiny steps. They are zero-stable for $k = 1$ to 6 and unstable from $k = 7$; this card computes the BDF2 roots and states the rest from the source. The orbit is not stiff, so BDF is not run on it here.
+BDF formulas are implicit and only modestly accurate, but they stay stable on stiff problems where Adams needs tiny steps. They are zero-stable for $`k = 1`$ to 6 and unstable from $`k = 7`$; this card computes the BDF2 roots and states the rest from the source. The orbit is not stiff, so BDF is not run on it here.
 
 ---
 
 ## Worked numbers, by hand
 
-The satellite, with 400 steps per lap, $h$ = 15.77 s.
+The satellite, with 400 steps per lap, $`h`$ = 15.77 s.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| AB4 weight on $f_n$ | $\tfrac16\int_0^1 (s^3 + 6s^2 + 11s + 6)\,ds = \tfrac16\bigl(\tfrac14 + 2 + \tfrac{11}2 + 6\bigr)$ | 55/24 |
-| weights sum to 1 | $(55 - 59 + 37 - 9)/24$ | 1 |
-| AB4 error constant | $\tfrac1{120} - \tfrac1{24}\cdot\tfrac{-59 + 37\cdot 16 - 9\cdot 81}{24} = \tfrac1{120} + \tfrac{49}{144}$ | 251/720 |
-| AM4 error constant | $\tfrac1{120} - \tfrac1{24}\cdot\tfrac{9 - 5 + 16}{24}$ | −19/720 |
-| constants' size ratio | $251/19$ | 13.21 |
+| AB4 weight on $`f_n`$ | $`\tfrac16\int_0^1 (s^3 + 6s^2 + 11s + 6)\,ds = \tfrac16\bigl(\tfrac14 + 2 + \tfrac{11}2 + 6\bigr)`$ | 55/24 |
+| weights sum to 1 | $`(55 - 59 + 37 - 9)/24`$ | 1 |
+| AB4 error constant | $`\tfrac1{120} - \tfrac1{24}\cdot\tfrac{-59 + 37\cdot 16 - 9\cdot 81}{24} = \tfrac1{120} + \tfrac{49}{144}`$ | 251/720 |
+| AM4 error constant | $`\tfrac1{120} - \tfrac1{24}\cdot\tfrac{9 - 5 + 16}{24}`$ | −19/720 |
+| constants' size ratio | $`251/19`$ | 13.21 |
 | measured miss, 400 steps | AB4 against PECE | 23.0 m against 1.58 m: ratio 14.5 |
-| order 4 predicts 800 steps | $23.0\text{ m} / 2^4$ | 1.44 m |
+| order 4 predicts 800 steps | $`23.0\text{ m} / 2^4`$ | 1.44 m |
 | measured miss, 800 steps | AB4 | **1.46 m** |
 
 Halving the step cut AB4's miss almost exactly by the 16 that order 4 promises. The error constants predicted PECE's advantage at the same step: 13.21, against 14.5 measured.
@@ -218,15 +236,15 @@ Halving the step cut AB4's miss almost exactly by the 16 that order 4 promises. 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Use the order-3 two-step formula with $\rho$ roots 1, −5 | 1.21e4 km after 630.7 s at $h$ = 63.07 s; 7.51e9 km at half the step | Not zero-stable: errors multiply by −5 each step, and more steps make it worse |
-| Start AB4 with three Euler steps | 164 km at 400 steps, 40.8 km at 800: order 2.00 | The starting error is $O(h^2)$ and the recurrence carries it to the end |
+| Use the order-3 two-step formula with $`\rho`$ roots 1, −5 | 1.21e4 km after 630.7 s at $`h`$ = 63.07 s; 7.51e9 km at half the step | Not zero-stable: errors multiply by −5 each step, and more steps make it worse |
+| Start AB4 with three Euler steps | 164 km at 400 steps, 40.8 km at 800: order 2.00 | The starting error is $`O(h^2)`$ and the recurrence carries it to the end |
 | Judge PECE by steps | 14.5 times better than AB4 at 400 steps | Per slope computation it is level: AB4 with 800 steps misses by 1.46 m using 813, PECE with 400 by 1.58 m using 810 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds every weight from Lagrange polynomials in exact fractions, checks them against the published values, and checks them a second way through the order conditions. It then flies the satellite one lap with AB4, PECE and RK4 at five step sizes, and at six finer ones down to where rounding stops the fall. The true answer needs no solver: by Kepler's third law the lap time is $T = 2\pi\sqrt{a^3/\mu}$ with $a$ the average of the two radii, and after time $T$ the satellite is back at perigee.
+The code builds every weight from Lagrange polynomials in exact fractions, checks them against the published values, and checks them a second way through the order conditions. It then flies the satellite one lap with AB4, PECE and RK4 at five step sizes, and at six finer ones down to where rounding stops the fall. The true answer needs no solver: by Kepler's third law the lap time is $`T = 2\pi\sqrt{a^3/\mu}`$ with $`a`$ the average of the two radii, and after time $`T`$ the satellite is back at perigee.
 
 That gives three roads: a known answer, three methods agreeing at order 4, and observed orders from five step sizes. The picture's reference run is checked a fourth way: at half a lap it sits at apogee to within 1.05e-9 km. The unstable formula's miss is measured against a second fine RK4 run, to 630.7 s. The Rust carries its own fraction type.
 
@@ -656,11 +674,11 @@ Orange: AB4. Teal: PECE. Dark blue: RK4. All three are straight lines of slope 4
 
 Lean proves Step 4's error bound for every explicit Adams method, and the weights and order conditions of Steps 1 to 3.
 
-- Take a method $y_{n+1} = y_n + h\sum_j \beta_j f_{n-j}$ with $k$ stored slopes, and $f$ with Lipschitz constant $L$. The state may have any number of components. Suppose that in a run of $N$ steps every $\lvert\tau_n\rvert$ is at most $K h^p$, and every starting value is within $K_0 h^p$. Then every error up to step $N$ is at most $e^{LBT}(K_0 + TK)\,h^p$, with $T = Nh$.
-- For any $k$ distinct nodes $c_j$, let $\beta_j$ be the area under $\ell_j$ from $s = 0$ to 1. Then $\sum_j \beta_j P(c_j)$ is the exact area under every polynomial $P$ of degree below $k$.
-- The areas under the four Lagrange basis cubics through $s = 0, -1, -2, -3$ are exactly AB4's weights 55, −59, 37, −9 over 24.
-- Through $s = 1, 0, -1, -2$ they are exactly AM4's weights 9, 19, −5, 1 over 24.
-- The card's hand arithmetic holds in exact fractions: the order conditions, the error constants, the Milne factor and the roots of $\rho$. Lean checks only this arithmetic.
+- Take a method $`y_{n+1} = y_n + h\sum_j \beta_j f_{n-j}`$ with $`k`$ stored slopes, and $`f`$ with Lipschitz constant $`L`$. The state may have any number of components. Suppose that in a run of $`N`$ steps every $`\lvert\tau_n\rvert`$ is at most $`K h^p`$, and every starting value is within $`K_0 h^p`$. Then every error up to step $`N`$ is at most $`e^{LBT}(K_0 + TK)\,h^p`$, with $`T = Nh`$.
+- For any $`k`$ distinct nodes $`c_j`$, let $`\beta_j`$ be the area under $`\ell_j`$ from $`s = 0`$ to 1. Then $`\sum_j \beta_j P(c_j)`$ is the exact area under every polynomial $`P`$ of degree below $`k`$.
+- The areas under the four Lagrange basis cubics through $`s = 0, -1, -2, -3`$ are exactly AB4's weights 55, −59, 37, −9 over 24.
+- Through $`s = 1, 0, -1, -2`$ they are exactly AM4's weights 9, 19, −5, 1 over 24.
+- The card's hand arithmetic holds in exact fractions: the order conditions, the error constants, the Milne factor and the roots of $`\rho`$. Lean checks only this arithmetic.
 
 AM4 and PECE's convergence, the root −5 formula's blow-up and every orbit number are left to the Python and Rust checks.
 
@@ -948,7 +966,7 @@ example : (2 : ℕ) ^ 4 = 16 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Buying order with an unstable formula.** The two-step formula of When it holds is consistent and has order 3, one more than any stable explicit two-step method. Its $\rho$ has the root −5, so every error multiplies by −5 each step. On the orbit it misses by 1.21e4 km after 630.7 s, and halving the step makes it 7.51e9 km. Check the roots of $\rho$ before trusting any order count.
+> **Buying order with an unstable formula.** The two-step formula of When it holds is consistent and has order 3, one more than any stable explicit two-step method. Its $`\rho`$ has the root −5, so every error multiplies by −5 each step. On the orbit it misses by 1.21e4 km after 630.7 s, and halving the step makes it 7.51e9 km. Check the roots of $`\rho`$ before trusting any order count.
 >
 > - **Starting a multistep method carelessly.** Euler starting values turn an order-4 method into an order-2 one: 164 km at 400 steps instead of 23.0 m.
 > - **Counting steps, not slope computations.** PECE's 14.5-fold lead per step vanishes per slope computation (What breaks, row 3).
@@ -971,7 +989,7 @@ example : (2 : ℕ) ^ 4 = 16 := by decide
 
 ## What this builds on
 
-- [From local error to global error](02-convergence-of-one-step-methods.md): why $N$ local errors of size $h^{p+1}$ add to a global error of size $h^p$; the Adams proof here is that argument with a $k$-step memory.
+- [From local error to global error](02-convergence-of-one-step-methods.md): why $`N`$ local errors of size $`h^{p+1}`$ add to a global error of size $`h^p`$; the Adams proof here is that argument with a $`k`$-step memory.
 - [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md): RK4 supplies the three starting states, and it is the cost benchmark at four slopes per step.
 
 ## Where this goes next
@@ -989,7 +1007,7 @@ Left open: a zero-stable method still needs small steps on problems with fast de
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Hairer, Ernst, Syvert P. Nørsett, and Gerhard Wanner. *Solving Ordinary Differential Equations I: Nonstiff Problems*. 2nd ed. Springer, 1993. [doi:10.1007/978-3-540-78862-1](https://doi.org/10.1007/978-3-540-78862-1). Chapter III, "Multistep Methods and General Linear Methods": Adams and BDF formulas, predictor-corrector modes, the root condition, the full proof of Dahlquist's equivalence theorem and BDF's zero-stability up to $k = 6$.
+- Hairer, Ernst, Syvert P. Nørsett, and Gerhard Wanner. *Solving Ordinary Differential Equations I: Nonstiff Problems*. 2nd ed. Springer, 1993. [doi:10.1007/978-3-540-78862-1](https://doi.org/10.1007/978-3-540-78862-1). Chapter III, "Multistep Methods and General Linear Methods": Adams and BDF formulas, predictor-corrector modes, the root condition, the full proof of Dahlquist's equivalence theorem and BDF's zero-stability up to $`k = 6`$.
 - Dahlquist, Germund. "Convergence and stability in the numerical integration of ordinary differential equations." *Mathematica Scandinavica* 4 (1956): 33–53. [doi:10.7146/math.scand.a-10454](https://doi.org/10.7146/math.scand.a-10454). The original equivalence theorem and the first order barrier.
 - Curtiss, C. F., and J. O. Hirschfelder. "Integration of Stiff Equations." *Proceedings of the National Academy of Sciences* 38, no. 3 (1952): 235–243. [doi:10.1073/pnas.38.3.235](https://doi.org/10.1073/pnas.38.3.235). The backward differentiation formulas, introduced for stiff chemical equations.
 - Süli, Endre, and David F. Mayers. *An Introduction to Numerical Analysis*. Cambridge University Press, 2003. [Publisher page](https://www.cambridge.org/core/books/an-introduction-to-numerical-analysis/FD8BCAD7FE68002E2179DFF68B8B7237). Chapter 12, "Initial value problems for ODEs", gives a textbook treatment of one-step and multistep methods at this card's level.

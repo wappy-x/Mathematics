@@ -26,39 +26,47 @@ Each circle is a square the token can stand on after a turn, and each arrow carr
 
 ## The formula
 
-Notation first, in words. The square after turn n is $X_n$, with time counted in turns. The chance of moving from square i to square j in one turn is $p_{ij}$; the table of them is the transition matrix $P$ ([Markov chains](01-markov-chains.md)), and $(P^n)_{ij}$ is the chance of going from i to j in exactly n turns ([n-step transitions](02-multi-step-transitions.md)). A chance or an average for a token started on i is written $P_i$ or $E_i$. Four definitions follow, each bringing its own notation.
+Notation first, in words. The square after turn n is $`X_n`$, with time counted in turns. The chance of moving from square i to square j in one turn is $`p_{ij}`$; the table of them is the transition matrix $`P`$ ([Markov chains](01-markov-chains.md)), and $`(P^n)_{ij}`$ is the chance of going from i to j in exactly n turns ([n-step transitions](02-multi-step-transitions.md)). A chance or an average for a token started on i is written $`P_i`$ or $`E_i`$. Four definitions follow, each bringing its own notation.
 
-$$i \to j \iff (P^n)_{ij} > 0 \text{ for some } n \ge 0, \qquad i \leftrightarrow j \iff i \to j \text{ and } j \to i.$$
+```math
+i \to j \iff (P^n)_{ij} > 0 \text{ for some } n \ge 0, \qquad i \leftrightarrow j \iff i \to j \text{ and } j \to i.
+```
 
 **Read it aloud:** i leads to j when some number of turns, possibly none, gives a positive chance of getting from i to j; i and j communicate when each leads to the other. A largest group of states that all communicate is a **communicating class**; a chain that is one class is **irreducible**.
 
-$$K \text{ is closed} \iff p_{ij} = 0 \text{ whenever } i \text{ is in } K \text{ and } j \text{ is not.}$$
+```math
+K \text{ is closed} \iff p_{ij} = 0 \text{ whenever } i \text{ is in } K \text{ and } j \text{ is not.}
+```
 
 **Read it aloud:** a set of states is closed when no arrow leaves it, so a token inside stays inside for ever. This is the precise meaning of "trapped".
 
-$$d(i) = \gcd\{\, n \ge 1 : (P^n)_{ii} > 0 \,\}.$$
+```math
+d(i) = \gcd\{\, n \ge 1 : (P^n)_{ii} > 0 \,\}.
+```
 
 **Read it aloud:** the period of i is the greatest common divisor, the largest whole number dividing them all, of the turn counts in which a return to i is possible. Period 1 is called **aperiodic**; a state with no possible return has no period.
 
-$$f_i = P_i(T_i < \infty), \qquad E_i[N_i] = \sum_{n \ge 0} (P^n)_{ii} = \frac{1}{1 - f_i}.$$
+```math
+f_i = P_i(T_i < \infty), \qquad E_i[N_i] = \sum_{n \ge 0} (P^n)_{ii} = \frac{1}{1 - f_i}.
+```
 
 **Read it aloud:** the return chance of i is the chance that a token started there ever comes back; i is **recurrent** when it is 1 and **transient** when it is less. The average number of visits, the start included, is the sum of the chances of standing on i at each turn, and equals one over the chance of never returning: infinite for a recurrent state.
 
-Here $T_i$ is the first turn n ≥ 1 with the token on i, infinite if there is none: a stopping time, recognised when it arrives.
+Here $`T_i`$ is the first turn n ≥ 1 with the token on i, infinite if there is none: a stopping time, recognised when it arrives.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_n$, $n$, $a$, $b$, $r$ | the square after turn n; counts of turns | $X_0 = S$ | — |
-| $i$, $j$, $k$, $m$ | states: squares the token can stand on | S, A, B, C, J | — |
-| $P$, $p_{ij}$ | the table of one-turn chances; one entry | $p_{SA} = 1/6$ | a positive entry adds an arrow; its size never changes a class |
-| $P^n$ | the n-turn chances | $(P^2)_{AA}$ = 0.33 | — |
-| $P_i$, $E_i$ | chance and average for a token started on i | started on S, or on A | — |
-| $i \to j$, $i \leftrightarrow j$ | leads to; communicate | S → A, not A → S | — |
-| $K$ | a set of states; a class | the ring and jail, A, B, C, J | — |
-| $d(i)$ | the period of i | 1 on the ring | 2 if the jail releases at once |
-| $T_i$, $R_k$ | the first return turn to i; the turn of the k-th return | $T_S = 1$ with chance 5/6 | — |
-| $f_i$ | return chance of i | $f_S = 5/6$, $f_A = 1$ | 1 makes i recurrent |
-| $N_i$ | visits to i, the start included | 6 on average for S | infinite once $f_i$ = 1 |
+| $`X_n`$, $`n`$, $`a`$, $`b`$, $`r`$ | the square after turn n; counts of turns | $`X_0 = S`$ | — |
+| $`i`$, $`j`$, $`k`$, $`m`$ | states: squares the token can stand on | S, A, B, C, J | — |
+| $`P`$, $`p_{ij}`$ | the table of one-turn chances; one entry | $`p_{SA} = 1/6`$ | a positive entry adds an arrow; its size never changes a class |
+| $`P^n`$ | the n-turn chances | $`(P^2)_{AA}`$ = 0.33 | — |
+| $`P_i`$, $`E_i`$ | chance and average for a token started on i | started on S, or on A | — |
+| $`i \to j`$, $`i \leftrightarrow j`$ | leads to; communicate | S → A, not A → S | — |
+| $`K`$ | a set of states; a class | the ring and jail, A, B, C, J | — |
+| $`d(i)`$ | the period of i | 1 on the ring | 2 if the jail releases at once |
+| $`T_i`$, $`R_k`$ | the first return turn to i; the turn of the k-th return | $`T_S = 1`$ with chance 5/6 | — |
+| $`f_i`$ | return chance of i | $`f_S = 5/6`$, $`f_A = 1`$ | 1 makes i recurrent |
+| $`N_i`$ | visits to i, the start included | 6 on average for S | infinite once $`f_i`$ = 1 |
 
 The theorems, for a chain with finitely many states: **all states of a class share one period, and are all recurrent or all transient; a class is recurrent exactly when it is closed; and at least one class is closed.**
 
@@ -79,7 +87,7 @@ Replace every positive chance by an arrow and forget the numbers. Whether i lead
 
 ### Step 1: communicating splits the states into classes
 
-A positive entry of $(P^n)_{ij}$ is a route of n arrows from i to j, each with positive chance ([n-step transitions](02-multi-step-transitions.md)). Routes join end to end, so if i leads to j and j to k, then i leads to k. Every state leads to itself in zero turns. So communicating is an equivalence relation (every state to itself, both ways round, and passed along a chain), and such a relation splits the states into classes that do not overlap. They are the strongly connected pieces of the arrow diagram ([Directed graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
+A positive entry of $`(P^n)_{ij}`$ is a route of n arrows from i to j, each with positive chance ([n-step transitions](02-multi-step-transitions.md)). Routes join end to end, so if i leads to j and j to k, then i leads to k. Every state leads to itself in zero turns. So communicating is an equivalence relation (every state to itself, both ways round, and passed along a chain), and such a relation splits the states into classes that do not overlap. They are the strongly connected pieces of the arrow diagram ([Directed graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
 
 On the board, A → B → C → J → A is a round trip, so A, B, C and J communicate. S leads to A, but no arrow points into S except its own loop: S is a class by itself. The chain has two classes and is not irreducible.
 
@@ -120,11 +128,11 @@ Fix a state o of the class and give each state its level: the fewest arrows from
 
 ### Step 4: each return starts the game afresh
 
-Every time the token comes back to i, the future looks as it did at the start, because a chain remembers nothing but the square. So each return is followed by another with the same chance $f_i$, whatever came before, and at least k returns happen with chance $f_i^k$. If $f_i$ = 1 the returns never stop. If $f_i$ < 1 the visits are finitely many, $1/(1 - f_i)$ on average.
+Every time the token comes back to i, the future looks as it did at the start, because a chain remembers nothing but the square. So each return is followed by another with the same chance $`f_i`$, whatever came before, and at least k returns happen with chance $`f_i^k`$. If $`f_i`$ = 1 the returns never stop. If $`f_i`$ < 1 the visits are finitely many, $`1/(1 - f_i)`$ on average.
 
-At S the token is back next turn with chance 5/6, and once on A it can never return, so $f_S = 5/6$ and the average number of turns on S is 1/(1 − 5/6) = 6.
+At S the token is back next turn with chance 5/6, and once on A it can never return, so $`f_S = 5/6`$ and the average number of turns on S is 1/(1 − 5/6) = 6.
 
-A second count: the token stands on i at turn n with chance $(P^n)_{ii}$, so the sum of these chances is the average number of visits, finite exactly when i is transient. Up to 1000 turns the sum is 6.0000 at S, where it has stopped growing, and 167.6296 at A, where it still gains about 1/6 a turn.
+A second count: the token stands on i at turn n with chance $`(P^n)_{ii}`$, so the sum of these chances is the average number of visits, finite exactly when i is transient. Up to 1000 turns the sum is 6.0000 at S, where it has stopped growing, and 167.6296 at A, where it still gains about 1/6 a turn.
 
 ### Step 5: in a finite chain, closed means recurrent
 
@@ -137,19 +145,19 @@ Some class is closed: leave a class by an exit, then the next, and so on. No cla
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** A chain on a finite set E with transition matrix $P$. For a fixed state i, let $T_i$ be the first n ≥ 1 with $X_n$ = i, infinite if none, and $N_i$ the number of n ≥ 0 with $X_n$ = i.
+**Setting.** A chain on a finite set E with transition matrix $`P`$. For a fixed state i, let $`T_i`$ be the first n ≥ 1 with $`X_n`$ = i, infinite if none, and $`N_i`$ the number of n ≥ 0 with $`X_n`$ = i.
 
-**1. Classes.** Reachability is reflexive ($P^0$ is the identity) and transitive, since $(P^{a+b})_{ik} \ge (P^a)_{ij}(P^b)_{jk}$ by the multiplication rule for powers. Communication is also symmetric by definition, so it is an equivalence relation and its classes partition E.
+**1. Classes.** Reachability is reflexive ($`P^0`$ is the identity) and transitive, since $`(P^{a+b})_{ik} \ge (P^a)_{ij}(P^b)_{jk}`$ by the multiplication rule for powers. Communication is also symmetric by definition, so it is an equivalence relation and its classes partition E.
 
-**2. Period.** Let i ↔ j with i ≠ j, and $(P^a)_{ij} > 0$, $(P^b)_{ji} > 0$. For any r with $(P^r)_{jj} > 0$, $(P^{a+r+b})_{ii} \ge (P^a)_{ij}(P^r)_{jj}(P^b)_{ji} > 0$, and also $(P^{a+b})_{ii} > 0$. So d(i) divides a + b and a + r + b, hence r. Thus d(i) divides d(j); by symmetry they are equal.
+**2. Period.** Let i ↔ j with i ≠ j, and $`(P^a)_{ij} > 0`$, $`(P^b)_{ji} > 0`$. For any r with $`(P^r)_{jj} > 0`$, $`(P^{a+r+b})_{ii} \ge (P^a)_{ij}(P^r)_{jj}(P^b)_{ji} > 0`$, and also $`(P^{a+b})_{ii} > 0`$. So d(i) divides a + b and a + r + b, hence r. Thus d(i) divides d(j); by symmetry they are equal.
 
-**3. Visits.** Let $R_k$ be the turn of the k-th return to i, infinite if there are fewer than k; $R_1 = T_i$. The event $\{R_k = n\}$ is decided by $X_0, \dots, X_n$, and on it $X_n$ = i. By the Markov property at the fixed time n, the chain after n is then a fresh copy started at i, independent of the past, and it returns with chance $f_i$. Summing over n, $P_i(R_{k+1} < \infty) = f_i \, P_i(R_k < \infty)$, so $P_i(N_i \ge k + 1) = P_i(R_k < \infty) = f_i^k$. Hence $E_i[N_i] = \sum_{k \ge 0} f_i^k$, which is $1/(1 - f_i)$ if $f_i$ < 1 and infinite if $f_i$ = 1. Also $N_i$ is the sum over n of the indicator of $\{X_n = i\}$, so by monotone convergence $E_i[N_i] = \sum_n (P^n)_{ii}$. So i is recurrent exactly when that sum is infinite.
+**3. Visits.** Let $`R_k`$ be the turn of the k-th return to i, infinite if there are fewer than k; $`R_1 = T_i`$. The event $`\{R_k = n\}`$ is decided by $`X_0, \dots, X_n`$, and on it $`X_n`$ = i. By the Markov property at the fixed time n, the chain after n is then a fresh copy started at i, independent of the past, and it returns with chance $`f_i`$. Summing over n, $`P_i(R_{k+1} < \infty) = f_i \, P_i(R_k < \infty)`$, so $`P_i(N_i \ge k + 1) = P_i(R_k < \infty) = f_i^k`$. Hence $`E_i[N_i] = \sum_{k \ge 0} f_i^k`$, which is $`1/(1 - f_i)`$ if $`f_i`$ < 1 and infinite if $`f_i`$ = 1. Also $`N_i`$ is the sum over n of the indicator of $`\{X_n = i\}`$, so by monotone convergence $`E_i[N_i] = \sum_n (P^n)_{ii}`$. So i is recurrent exactly when that sum is infinite.
 
-**4. Recurrence is shared.** With i ↔ j as in part 2, $(P^{b+n+a})_{jj} \ge (P^b)_{ji}(P^n)_{ii}(P^a)_{ij}$. Summing over n, if the sum for i is infinite, so is the sum for j.
+**4. Recurrence is shared.** With i ↔ j as in part 2, $`(P^{b+n+a})_{jj} \ge (P^b)_{ji}(P^n)_{ii}(P^a)_{ij}`$. Summing over n, if the sum for i is infinite, so is the sum for j.
 
-**5. An open class is transient.** Let the class K contain m with $p_{mk} > 0$ and k outside K. If k led to any state of K it would lead to m, and then k ↔ m would put k in K; so from k no state of K can be reached. For i in K take a shortest route of positive arrows from i to m; being shortest, it visits i only at its start. With positive chance a token from i follows that route and then steps to k, without returning to i on the way, and afterwards it never returns. So $1 - f_i > 0$.
+**5. An open class is transient.** Let the class K contain m with $`p_{mk} > 0`$ and k outside K. If k led to any state of K it would lead to m, and then k ↔ m would put k in K; so from k no state of K can be reached. For i in K take a shortest route of positive arrows from i to m; being shortest, it visits i only at its start. With positive chance a token from i follows that route and then steps to k, without returning to i on the way, and afterwards it never returns. So $`1 - f_i > 0`$.
 
-**6. A closed class is recurrent.** Let K be closed and finite, i in K. The row sums over K of every power are 1, so the double sum $\sum_{j \in K} \sum_n (P^n)_{ij}$ is infinite and some j in K has $\sum_n (P^n)_{ij}$ infinite. That sum is the average number of visits to j from i, which is the chance of ever reaching j times $E_j[N_j]$, so $E_j[N_j]$ is infinite: j is recurrent by part 3, and every state of K by part 4.
+**6. A closed class is recurrent.** Let K be closed and finite, i in K. The row sums over K of every power are 1, so the double sum $`\sum_{j \in K} \sum_n (P^n)_{ij}`$ is infinite and some j in K has $`\sum_n (P^n)_{ij}`$ infinite. That sum is the average number of visits to j from i, which is the chance of ever reaching j times $`E_j[N_j]`$, so $`E_j[N_j]`$ is infinite: j is recurrent by part 3, and every state of K by part 4.
 
 **7. A closed class exists.** Draw an arrow from class to class wherever a transition joins them. These arrows form no cycle, since classes on a cycle would communicate and be one class. A finite diagram with no cycle has a class with no arrow leaving it: that class is closed.
 
@@ -181,8 +189,8 @@ On the real board the start square is a waiting room left after 6 turns on avera
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Jail releases at once (the wait dropped) | period 2; chance of standing on A after 200 turns 0.7500, after 201 turns 0.0000 | The self-loop was the only move that kept a square's colour; without it the chain never settles |
-| Jail with no key | ring squares transient: $f_A = 1/3$, $f_B = 1/2$; J alone closed | The trap moved from the board into the jail |
-| Sticky read as trapped | S holds the token 5/6 a turn, like the jail, yet $f_S = 5/6$ and 6 turns in all | Trapped means no exit, whatever the chance of staying |
+| Jail with no key | ring squares transient: $`f_A = 1/3`$, $`f_B = 1/2`$; J alone closed | The trap moved from the board into the jail |
+| Sticky read as trapped | S holds the token 5/6 a turn, like the jail, yet $`f_S = 5/6`$ and 6 turns in all | Trapped means no exit, whatever the chance of staying |
 | Period read off one return | A → B → A takes 2 turns, so "period 2"; true period 1 | A 3-turn return exists; the period is the gcd of all of them |
 
 The code prints each row.
@@ -1112,7 +1120,7 @@ example : (1 : ℚ) / (1 - 1 / 3) = 3 / 2 := by norm_num
 > **Try changing**
 > Guess first, then run it.
 > - **A rarer key.** In `RULES`, set the doubles rule to `[F(1, 100), F(99, 100)]`. What happens to the classification? Nothing: same classes, same periods, the ring still recurrent. Only the numbers move: A's visit sum falls well below 167.6296, and J's climbs toward 1000.
-> - **No wait at the start.** Make the first row of `chain` `[z, F(1), z, z, z]`. S then has no return at all: period none, $f_S = 0$, one visit.
+> - **No wait at the start.** Make the first row of `chain` `[z, F(1), z, z, z]`. S then has no return at all: period none, $`f_S = 0`$, one visit.
 > - **Drop the stay from the return chance.** In `return_chance`, delete `p[i][i] +`. The start square's exact chance becomes 0 while the simulation still returns 0.8323 of the time, and the simulation assert stops the run.
 > - **Search every square.** In `reach_search`, drop the test `p[u][v] > 0`. Every square then leads everywhere, and the first assert stops the run.
 
@@ -1150,7 +1158,7 @@ example : (1 : ℚ) / (1 - 1 / 3) = 3 / 2 := by norm_num
 ## Where this goes next
 
 - [Stationary distributions](04-stationary-distributions.md): the long-run share of turns on each square of a closed class, such as the 0.6667 in jail.
-- [Absorption](06-absorption-and-first-step-analysis.md): which closed class a token ends in, and how long it takes, from first-step equations like the ones behind $f_A = 1/3$.
+- [Absorption](06-absorption-and-first-step-analysis.md): which closed class a token ends in, and how long it takes, from first-step equations like the ones behind $`f_A = 1/3`$.
 
 The next question, how often a recurrent state is visited in the long run, has a number for an answer: after 200 turns the token stands in jail with chance 0.6667. That number, and why it exists, is [Stationary distributions](04-stationary-distributions.md).
 

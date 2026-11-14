@@ -34,30 +34,34 @@ The top row builds. The bottom row undoes: the same two steps, in reverse order,
 
 ## The formula
 
-Write $F$ for the Fahrenheit number and $C$ for the Celsius one — letters standing for numbers nobody has told you yet, as on [Letters for numbers](01-letters-for-numbers.md). The rule is:
+Write $`F`$ for the Fahrenheit number and $`C`$ for the Celsius one — letters standing for numbers nobody has told you yet, as on [Letters for numbers](01-letters-for-numbers.md). The rule is:
 
-$$F = 1.8C + 32$$
+```math
+F = 1.8C + 32
+```
 
 **Read it aloud:** every Celsius degree is worth 1.8 Fahrenheit degrees, and the two scales start 32 apart, so multiply then add.
 
-The last two rows of the table are this shelf's taxi: $3 to start (the flagfall) plus $2 a mile, so the fare is 3 + 2m, where $m$ is the miles.
+The last two rows of the table are this shelf's taxi: $3 to start (the flagfall) plus $2 a mile, so the fare is 3 + 2m, where $`m`$ is the miles.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | the temperature in degrees Fahrenheit | 77 | the Celsius answer rises with it |
-| $C$ | the same temperature in degrees Celsius | 25 | the Fahrenheit answer rises 1.8 times as fast |
-| $1.8$ | Fahrenheit degrees per Celsius degree, a rate ([Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md)) | 1.8, always | the two scales pull apart faster |
-| $32$ | how far apart the scales start: 0 degrees C is 32 degrees F | 32, always | every Fahrenheit reading shifts up by the same amount |
-| $m$ | miles travelled in the taxi | 5 | the fare rises $2 a mile |
+| $`F`$ | the temperature in degrees Fahrenheit | 77 | the Celsius answer rises with it |
+| $`C`$ | the same temperature in degrees Celsius | 25 | the Fahrenheit answer rises 1.8 times as fast |
+| $`1.8`$ | Fahrenheit degrees per Celsius degree, a rate ([Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md)) | 1.8, always | the two scales pull apart faster |
+| $`32`$ | how far apart the scales start: 0 degrees C is 32 degrees F | 32, always | every Fahrenheit reading shifts up by the same amount |
+| $`m`$ | miles travelled in the taxi | 5 | the fare rises $2 a mile |
 | fare | what the taxi charges for the trip | $13.00 | the mileage it stands for rises |
 
 Rearranged, with Celsius as the subject:
 
-$$C = (F - 32) / 1.8$$
+```math
+C = (F - 32) / 1.8
+```
 
 **Read it aloud:** take off the 32 the scales start apart, then share what is left out at 1.8 Fahrenheit degrees per Celsius degree.
 
-The taxi behaves the same way. Make $m$ the subject and the meter reads backwards: m = (fare − 3) / 2. A $13.00 fare is 5 miles.
+The taxi behaves the same way. Make $`m`$ the subject and the meter reads backwards: m = (fare − 3) / 2. A $13.00 fare is 5 miles.
 
 ### When it holds
 
@@ -72,40 +76,44 @@ The taxi behaves the same way. Make $m$ the subject and the meter reads backward
 
 ### Step 0: an equals sign is a promise, and both sides must keep it
 
-$F = 1.8C + 32$ says the left side and the right side are the same number. Do the identical thing to both sides — take 32 off both, halve both, divide both by 1.8 — and they are still the same number. The promise holds. That is the entire permission slip, and [Linear equations](02-linear-equations.md) is where it gets earned. Nothing about it changes when the other side has letters in it instead of numbers.
+$`F = 1.8C + 32`$ says the left side and the right side are the same number. Do the identical thing to both sides — take 32 off both, halve both, divide both by 1.8 — and they are still the same number. The promise holds. That is the entire permission slip, and [Linear equations](02-linear-equations.md) is where it gets earned. Nothing about it changes when the other side has letters in it instead of numbers.
 
 ### Step 1: read the steps that built the formula, in order
 
-Start with $C$. Multiply by 1.8. Add 32. Two steps, in that order, because multiplying comes before adding when you work a formula out.
+Start with $`C`$. Multiply by 1.8. Add 32. Two steps, in that order, because multiplying comes before adding when you work a formula out.
 
 ### Step 2: undo them in reverse order, last step first
 
-Socks then shoes going on; shoes then socks coming off. The last thing done to $C$ was adding 32, so it is the first thing undone.
+Socks then shoes going on; shoes then socks coming off. The last thing done to $`C`$ was adding 32, so it is the first thing undone.
 
 Take 32 off both sides:
 
-$$F - 32 = 1.8C$$
+```math
+F - 32 = 1.8C
+```
 
 Divide both sides by 1.8:
 
-$$(F - 32) / 1.8 = C$$
+```math
+(F - 32) / 1.8 = C
+```
 
 ### Step 3: the lone letter is the subject
 
-$C$ now stands by itself, so write it on the left: $C = (F - 32) / 1.8$. The brackets are load-bearing. They say the subtraction finishes before the division starts, because that is the order the undoing has to happen in.
+$`C`$ now stands by itself, so write it on the left: $`C = (F - 32) / 1.8`$. The brackets are load-bearing. They say the subtraction finishes before the division starts, because that is the order the undoing has to happen in.
 
 <details>
 <summary>The same three lines, with the move named each time</summary>
 
-$F = 1.8C + 32$ — the formula as given.
+$`F = 1.8C + 32`$ — the formula as given.
 
-$F - 32 = 1.8C + 32 - 32$ — take 32 off **both** sides. On the right, $+32 - 32$ is nothing, so the 32 goes.
+$`F - 32 = 1.8C + 32 - 32`$ — take 32 off **both** sides. On the right, $`+32 - 32`$ is nothing, so the 32 goes.
 
-$F - 32 = 1.8C$ — tidy.
+$`F - 32 = 1.8C`$ — tidy.
 
-$(F - 32) / 1.8 = 1.8C / 1.8$ — divide **both** sides by 1.8. On the right, multiplying by 1.8 and then dividing by 1.8 leaves $C$ alone.
+$`(F - 32) / 1.8 = 1.8C / 1.8`$ — divide **both** sides by 1.8. On the right, multiplying by 1.8 and then dividing by 1.8 leaves $`C`$ alone.
 
-$(F - 32) / 1.8 = C$ — done. Flip the sides to read it forwards.
+$`(F - 32) / 1.8 = C`$ — done. Flip the sides to read it forwards.
 
 </details>
 

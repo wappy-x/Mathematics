@@ -44,30 +44,32 @@ Bars: the exact binomial chance of each head count from 40 to 64. Line: the bell
 
 Notation first, in words. X ~ Binomial(n, p) is read "X follows the binomial law with n trials and chance p", as on [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md). The standard bell's area to the left of z is written Φ(z), capital phi, as on [Normal](../04-Continuous%20Distributions/04-normal-distribution.md). For a count X of n tries with success chance p, and a whole number j:
 
-$$P(X \ge j) \;\approx\; 1 - \Phi\!\left(\frac{j - \tfrac12 - np}{\sqrt{np(1-p)}}\right)$$
+```math
+P(X \ge j) \;\approx\; 1 - \Phi\!\left(\frac{j - \tfrac12 - np}{\sqrt{np(1-p)}}\right)
+```
 
 **Read it aloud:** the chance of j or more successes is about the bell's area above the point half a step below j, measured in spreads from the average.
 
-The same rule, cut by cut: $P(X \le j)$ uses $j + \tfrac12$; $P(X = j)$ uses the area between $j - \tfrac12$ and $j + \tfrac12$. Every cut moves half a step outward, so that the bars being counted are counted whole.
+The same rule, cut by cut: $`P(X \le j)`$ uses $`j + \tfrac12`$; $`P(X = j)`$ uses the area between $`j - \tfrac12`$ and $`j + \tfrac12`$. Every cut moves half a step outward, so that the bars being counted are counted whole.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the count of successes, a random variable | heads in 100 flips | — |
-| $n$ | the number of tries | 100 | the bell widens like the square root of n, and the approximation improves |
-| $p$ | the chance of success on each try | 0.5 | the centre moves right and the tail chance rises |
-| $j$ | the whole-number threshold | 60 | the tail chance falls |
-| $k$ | a count of successes: the bar being looked at | 60 heads | — |
-| $q$ | the chance of failure on each try, $1 - p$ | 0.5 | — |
-| $s$, $t$ | distances from the centre, in successes: $s$ for one step of the proof's sum, $t$ for where the sum stops | 60 heads is t = 10 | — |
-| $h$ | the bell's height at its centre, the peak | 0.0798 | — |
-| $c$ | a number of spreads, in Chebyshev's bound $1/c^2$ | — | — |
-| $\mu$ | the average count, np (mu) | 50 | the tail chance rises |
-| $\sigma$ | the spread, $\sqrt{np(1-p)}$ (sigma), the standard deviation of X | 5 | a threshold above the centre gets likelier |
-| $\sigma^2$ | the variance, $np(1-p)$; also the safety number | 25 | the approximation gets safer |
-| $\Phi$ | the standard bell's area to the left of z | Φ(1.9) = 0.971283 | rises from 0 to 1 |
-| $\varphi$ | the standard bell's height, $e^{-z^2/2}/\sqrt{2\pi}$ (small phi) | φ(2) / 5 = 0.010798 | — |
-| $E_t$ | the leftover error in the proof's sum of logarithms | shrinks like 1/σ | — |
-| $\tfrac12$ | the half step, the continuity correction | cut at 59.5 | — |
+| $`X`$ | the count of successes, a random variable | heads in 100 flips | — |
+| $`n`$ | the number of tries | 100 | the bell widens like the square root of n, and the approximation improves |
+| $`p`$ | the chance of success on each try | 0.5 | the centre moves right and the tail chance rises |
+| $`j`$ | the whole-number threshold | 60 | the tail chance falls |
+| $`k`$ | a count of successes: the bar being looked at | 60 heads | — |
+| $`q`$ | the chance of failure on each try, $`1 - p`$ | 0.5 | — |
+| $`s`$, $`t`$ | distances from the centre, in successes: $`s`$ for one step of the proof's sum, $`t`$ for where the sum stops | 60 heads is t = 10 | — |
+| $`h`$ | the bell's height at its centre, the peak | 0.0798 | — |
+| $`c`$ | a number of spreads, in Chebyshev's bound $`1/c^2`$ | — | — |
+| $`\mu`$ | the average count, np (mu) | 50 | the tail chance rises |
+| $`\sigma`$ | the spread, $`\sqrt{np(1-p)}`$ (sigma), the standard deviation of X | 5 | a threshold above the centre gets likelier |
+| $`\sigma^2`$ | the variance, $`np(1-p)`$; also the safety number | 25 | the approximation gets safer |
+| $`\Phi`$ | the standard bell's area to the left of z | Φ(1.9) = 0.971283 | rises from 0 to 1 |
+| $`\varphi`$ | the standard bell's height, $`e^{-z^2/2}/\sqrt{2\pi}`$ (small phi) | φ(2) / 5 = 0.010798 | — |
+| $`E_t`$ | the leftover error in the proof's sum of logarithms | shrinks like 1/σ | — |
+| $`\tfrac12`$ | the half step, the continuity correction | cut at 59.5 | — |
 
 The quantity inside Φ is a **z-score**: how many spreads the cut sits from the centre. Here z = (59.5 − 50) / 5 = 1.9.
 
@@ -90,9 +92,11 @@ Once bar heights match bell heights, adding bars is adding thin slices of the be
 
 ### Step 1: neighbouring bars shrink by a fixed factor
 
-From the binomial formula $P(X=k) = C(n,k)\,p^k(1-p)^{n-k}$, one bar over the next is
+From the binomial formula $`P(X=k) = C(n,k)\,p^k(1-p)^{n-k}`$, one bar over the next is
 
-$$\frac{P(X=k+1)}{P(X=k)} = \frac{(n-k)\,p}{(k+1)(1-p)}.$$
+```math
+\frac{P(X=k+1)}{P(X=k)} = \frac{(n-k)\,p}{(k+1)(1-p)}.
+```
 
 At 100 fair flips, going from 50 to 51 heads multiplies the chance by 50/51. From 59 to 60 it multiplies by 41/60. The farther from the centre, the steeper the fall.
 
@@ -100,7 +104,9 @@ At 100 fair flips, going from 50 to 51 heads multiplies the chance by 50/51. Fro
 
 Measure the count from the centre: k = μ + s, where s is the distance in heads. Substitute into Step 1 and take logarithms. For s small beside np and n(1-p), each of the two factors is close to 1, and ln(1 + x) ≈ x. The result, in the folded algebra below:
 
-$$\ln P(X = \mu + s + 1) - \ln P(X = \mu + s) \;\approx\; -\frac{s}{\sigma^2}.$$
+```math
+\ln P(X = \mu + s + 1) - \ln P(X = \mu + s) \;\approx\; -\frac{s}{\sigma^2}.
+```
 
 The logarithm of the bar heights drops by an amount that grows in a straight line with the distance from the centre.
 
@@ -108,11 +114,15 @@ The logarithm of the bar heights drops by an amount that grows in a straight lin
 
 Adding the drops from the centre out to distance t adds 0 + 1 + … + (t − 1), which is about t^2/2, each divided by σ^2. So
 
-$$P(X = \mu + t) \;\approx\; P(X = \mu)\; e^{-t^2/(2\sigma^2)}.$$
+```math
+P(X = \mu + t) \;\approx\; P(X = \mu)\; e^{-t^2/(2\sigma^2)}.
+```
 
-That is a bell curve's shape, with spread σ. The height at the centre is fixed by the total: the bars add to 1, and a bell of spread σ with peak height h has area $h\,\sigma\sqrt{2\pi}$ (the Gaussian integral). So the peak is $1/(\sigma\sqrt{2\pi})$, and
+That is a bell curve's shape, with spread σ. The height at the centre is fixed by the total: the bars add to 1, and a bell of spread σ with peak height h has area $`h\,\sigma\sqrt{2\pi}`$ (the Gaussian integral). So the peak is $`1/(\sigma\sqrt{2\pi})`$, and
 
-$$P(X = k) \;\approx\; \frac{1}{\sigma}\,\varphi\!\left(\frac{k - \mu}{\sigma}\right).$$
+```math
+P(X = k) \;\approx\; \frac{1}{\sigma}\,\varphi\!\left(\frac{k - \mu}{\sigma}\right).
+```
 
 This is the **local de Moivre–Laplace theorem**: each bar's height is the bell's height at that count, divided by the spread. At 60 heads: exact 0.010844, bell height 0.010798.
 
@@ -120,7 +130,9 @@ This is the **local de Moivre–Laplace theorem**: each bar's height is the bell
 
 The chance of 60 or more is the sum of the bars 60, 61, 62, and so on. Each bar has width 1, so its height is also its area, and by Step 3 it matches the slice of the bell from k − ½ to k + ½: a slice one unit wide has area close to its height at the middle, k. Stack those slices from 60 upward and they cover the bell from 59.5 upward:
 
-$$P(X \ge 60) \approx 1 - \Phi\!\left(\frac{59.5 - 50}{5}\right) = 1 - \Phi(1.9) = 0.028717.$$
+```math
+P(X \ge 60) \approx 1 - \Phi\!\left(\frac{59.5 - 50}{5}\right) = 1 - \Phi(1.9) = 0.028717.
+```
 
 Cutting at 60 instead drops half of bar 60 and gives 0.022750. At the single bar, the bell's slice from 59.5 to 60.5 is 0.010852, against the exact 0.010844: the slice matches the bar better than the height does.
 
@@ -128,14 +140,20 @@ Cutting at 60 instead drops half of bar 60 and gives 0.022750. At the single bar
 <summary>Detailed proof: the straight-line drop in Step 2</summary>
 
 Write q = 1 − p, σ^2 = npq, and k = np + s, taking np a whole number (as 50 is here). Then n − k = nq − s and k + 1 = np + s + 1, so
-$$\frac{P(X=k+1)}{P(X=k)} = \frac{(nq - s)\,p}{(np + s + 1)\,q} = \frac{1 - s/(nq)}{1 + (s+1)/(np)}.$$
+
+$`\displaystyle \frac{P(X=k+1)}{P(X=k)} = \frac{(nq - s)\,p}{(np + s + 1)\,q} = \frac{1 - s/(nq)}{1 + (s+1)/(np)}.`$
+
 Take logarithms and use ln(1 + x) = x + (error at most x^2 when |x| ≤ ½):
-$$\ln\frac{P(X=k+1)}{P(X=k)} = -\frac{s}{nq} - \frac{s+1}{np} + \text{error} = -\frac{s(p+q) + q}{npq} + \text{error} = -\frac{s + q}{\sigma^2} + \text{error}.$$
+
+$`\displaystyle \ln\frac{P(X=k+1)}{P(X=k)} = -\frac{s}{nq} - \frac{s+1}{np} + \text{error} = -\frac{s(p+q) + q}{npq} + \text{error} = -\frac{s + q}{\sigma^2} + \text{error}.`$
+
 The error term is at most (s/(nq))^2 + ((s+1)/(np))^2, of size s^2/σ^4 times a constant.
 Sum from s = 0 to t − 1:
-$$\ln P(X = np + t) - \ln P(X = np) = -\frac{t(t-1)/2 + qt}{\sigma^2} + E_t = -\frac{t^2}{2\sigma^2} + \frac{(\tfrac12 - q)\,t}{\sigma^2} + E_t,$$
-where $|E_t|$ is at most a constant times $t^3/\sigma^4$. For t up to a few spreads (t of order σ), the middle term is of order 1/σ and $E_t$ is of order 1/σ: both vanish as n grows, which gives Step 3's shape. For a fair coin, ½ − q = 0 and the middle term is zero, which is why the fair coin's bell fits so well. The left side of the centre is the same argument with p and q swapped: count tails instead of heads.
-The peak height: the bars within a few spreads of the centre carry nearly all the chance (Chebyshev's inequality bounds the rest by 1/c^2 beyond c spreads), and their sum is a Riemann sum (heights times widths, added up, which approaches an area) of $P(X=\mu)\,e^{-t^2/(2\sigma^2)}$ with step 1, which tends to $P(X=\mu)\,\sigma\sqrt{2\pi}$. Setting that equal to 1 gives $P(X=\mu) \approx 1/(\sigma\sqrt{2\pi})$. Stirling's formula ([Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md)) gives the same peak directly from C(n, n/2), which is de Moivre's 1733 route.
+
+$`\displaystyle \ln P(X = np + t) - \ln P(X = np) = -\frac{t(t-1)/2 + qt}{\sigma^2} + E_t = -\frac{t^2}{2\sigma^2} + \frac{(\tfrac12 - q)\,t}{\sigma^2} + E_t,`$
+
+where $`|E_t|`$ is at most a constant times $`t^3/\sigma^4`$. For t up to a few spreads (t of order σ), the middle term is of order 1/σ and $`E_t`$ is of order 1/σ: both vanish as n grows, which gives Step 3's shape. For a fair coin, ½ − q = 0 and the middle term is zero, which is why the fair coin's bell fits so well. The left side of the centre is the same argument with p and q swapped: count tails instead of heads.
+The peak height: the bars within a few spreads of the centre carry nearly all the chance (Chebyshev's inequality bounds the rest by 1/c^2 beyond c spreads), and their sum is a Riemann sum (heights times widths, added up, which approaches an area) of $`P(X=\mu)\,e^{-t^2/(2\sigma^2)}`$ with step 1, which tends to $`P(X=\mu)\,\sigma\sqrt{2\pi}`$. Setting that equal to 1 gives $`P(X=\mu) \approx 1/(\sigma\sqrt{2\pi})`$. Stirling's formula ([Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md)) gives the same peak directly from C(n, n/2), which is de Moivre's 1733 route.
 Step 4 then follows: the sum of the bars from j upward is a Riemann sum of the bell's density over unit cells centred on the counts, and those cells start at j − ½.
 
 </details>

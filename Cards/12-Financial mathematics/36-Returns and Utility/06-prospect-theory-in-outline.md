@@ -42,34 +42,40 @@ The curve bends at zero, the starting point. On the gain side it flattens: each 
 
 Two curves, then a rule for combining them.
 
-$$v(x)=\begin{cases} x^{\alpha} & x \ge 0 \\ -\lambda\,(-x)^{\alpha} & x < 0 \end{cases} \qquad\qquad w(p)=\frac{p^{\gamma}}{\left(p^{\gamma}+(1-p)^{\gamma}\right)^{1/\gamma}}$$
+```math
+v(x)=\begin{cases} x^{\alpha} & x \ge 0 \\ -\lambda\,(-x)^{\alpha} & x < 0 \end{cases} \qquad\qquad w(p)=\frac{p^{\gamma}}{\left(p^{\gamma}+(1-p)^{\gamma}\right)^{1/\gamma}}
+```
 
-**Read it aloud:** a gain of $x$ dollars is worth $x$ to a power a little below one. A loss is worth the same, turned negative and multiplied by the loss multiplier. A chance $p$ is replaced by a decision weight that bends it. Gains use $w^{+}$ with bend $\gamma$; losses use $w^{-}$, the same formula with $\delta$ in place of $\gamma$.
+**Read it aloud:** a gain of $`x`$ dollars is worth $`x`$ to a power a little below one. A loss is worth the same, turned negative and multiplied by the loss multiplier. A chance $`p`$ is replaced by a decision weight that bends it. Gains use $`w^{+}`$ with bend $`\gamma`$; losses use $`w^{-}`$, the same formula with $`\delta`$ in place of $`\gamma`$.
 
-For a prospect that pays $x$ with chance $p$ and nothing otherwise, the score is one product:
+For a prospect that pays $`x`$ with chance $`p`$ and nothing otherwise, the score is one product:
 
-$$V = w(p)\,v(x)$$
+```math
+V = w(p)\,v(x)
+```
 
 For a prospect with many outcomes, rank the outcomes first. Then
 
-$$V=\sum_i \pi_i\, v(x_i)$$
+```math
+V=\sum_i \pi_i\, v(x_i)
+```
 
-where each gain's **decision weight** $\pi_i$ is the weight of the chance of doing at least this well, minus the weight of the chance of doing strictly better. Each loss is handled the same way from the bottom: the weight of the chance of doing at most this badly, minus the weight of doing strictly worse. This ranked version is **cumulative prospect theory**, from 1992.
+where each gain's **decision weight** $`\pi_i`$ is the weight of the chance of doing at least this well, minus the weight of the chance of doing strictly better. Each loss is handled the same way from the bottom: the weight of the chance of doing at most this badly, minus the weight of doing strictly worse. This ranked version is **cumulative prospect theory**, from 1992.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the change in dollars from the starting point (the **reference point**) | +$3,000, −$4,000 | the value rises, ever more slowly |
-| $v(x)$, $u$ | the **value** of that change: a score in value units, not dollars; $u$ is expected utility's curve, for contrast | $v(3000)$ = 1,147.80 | — |
-| $\alpha$ | **curvature**: how fast extra dollars stop mattering. Say "alpha". | 0.88 | nearer 1, closer to plain dollars |
-| $\lambda$ | the **loss multiplier** (loss aversion). Say "lambda". | 2.25 | losses loom larger; mixed bets need a bigger win |
-| $p$ | the stated chance of an outcome | 0.80 | — |
-| $w(p)$ | the **decision weight** a chance gets; written $w^{+}$ for gains, $w^{-}$ for losses | $w^{+}(0.80)$ = 0.6074 | — |
-| $\gamma$, $\delta$ | bend of the gain and the loss weighting curves. Say "gamma", "delta". | 0.61 and 0.69 | nearer 1, weights nearer the true chances |
-| $V$ | the prospect's **score**; higher is chosen | 898.08 for 80% of +$4,000 | — |
-| $x_i$, $p_i$, $i$ | the $i$-th outcome after ranking, and its chance; $i$ counts from the best gain | +$4,000 and 0.80 | — |
-| $\pi_i$, $G_i$ | its decision weight, from the ranked chances; $G_i$ is the chance of doing at least as well as $x_i$ | 0.6074; 0.80 | — |
-| $X$ | the coin toss's winning amount | $274.07 needed | the bet becomes worth taking |
-| $y$, $a$, $b$ | a value level, run over from zero upward in the integral form; $a$ and $b$ are two chances that split one ticket in the detailed proof | — | — |
+| $`x`$ | the change in dollars from the starting point (the **reference point**) | +$3,000, −$4,000 | the value rises, ever more slowly |
+| $`v(x)`$, $`u`$ | the **value** of that change: a score in value units, not dollars; $`u`$ is expected utility's curve, for contrast | $`v(3000)`$ = 1,147.80 | — |
+| $`\alpha`$ | **curvature**: how fast extra dollars stop mattering. Say "alpha". | 0.88 | nearer 1, closer to plain dollars |
+| $`\lambda`$ | the **loss multiplier** (loss aversion). Say "lambda". | 2.25 | losses loom larger; mixed bets need a bigger win |
+| $`p`$ | the stated chance of an outcome | 0.80 | — |
+| $`w(p)`$ | the **decision weight** a chance gets; written $`w^{+}`$ for gains, $`w^{-}`$ for losses | $`w^{+}(0.80)`$ = 0.6074 | — |
+| $`\gamma`$, $`\delta`$ | bend of the gain and the loss weighting curves. Say "gamma", "delta". | 0.61 and 0.69 | nearer 1, weights nearer the true chances |
+| $`V`$ | the prospect's **score**; higher is chosen | 898.08 for 80% of +$4,000 | — |
+| $`x_i`$, $`p_i`$, $`i`$ | the $`i`$-th outcome after ranking, and its chance; $`i`$ counts from the best gain | +$4,000 and 0.80 | — |
+| $`\pi_i`$, $`G_i`$ | its decision weight, from the ranked chances; $`G_i`$ is the chance of doing at least as well as $`x_i`$ | 0.6074; 0.80 | — |
+| $`X`$ | the coin toss's winning amount | $274.07 needed | the bet becomes worth taking |
+| $`y`$, $`a`$, $`b`$ | a value level, run over from zero upward in the integral form; $`a`$ and $`b`$ are two chances that split one ticket in the detailed proof | — | — |
 
 The four numbers 0.88, 2.25, 0.61 and 0.69 are the **median estimates** from Tversky and Kahneman's 1992 experiments: the middle value across their subjects. They are not constants of nature.
 
@@ -97,17 +103,21 @@ The 1979 paper put two questions to 95 people. The amounts were in Israeli pound
 - **Problem 3.** A: 80% chance of $4,000, else nothing. B: $3,000 for sure. 80% chose B.
 - **Problem 4.** C: 20% chance of $4,000. D: 25% chance of $3,000. 65% chose C.
 
-Problem 4 is Problem 3 with every chance divided by four. Under expected utility, with $u$ a utility curve and $u(0)=0$, choosing B means $u(3000) > 0.8\,u(4000)$. Divide both sides by four: $0.25\,u(3000) > 0.2\,u(4000)$, which means choosing D. So expected utility forces B-with-D or A-with-C. The majority chose B-with-C. No utility curve, however bent, fits that pair, because straight chances scale both sides by the same factor.
+Problem 4 is Problem 3 with every chance divided by four. Under expected utility, with $`u`$ a utility curve and $`u(0)=0`$, choosing B means $`u(3000) > 0.8\,u(4000)`$. Divide both sides by four: $`0.25\,u(3000) > 0.2\,u(4000)`$, which means choosing D. So expected utility forces B-with-D or A-with-C. The majority chose B-with-C. No utility curve, however bent, fits that pair, because straight chances scale both sides by the same factor.
 
 ### Step 2: the weighting curve breaks the proportion
 
-Prospect theory scores B as $v(3000)$ and A as $w^{+}(0.8)\,v(4000)$. So B wins exactly when
+Prospect theory scores B as $`v(3000)`$ and A as $`w^{+}(0.8)\,v(4000)`$. So B wins exactly when
 
-$$\frac{v(3000)}{v(4000)} = \left(\tfrac34\right)^{\alpha} > w^{+}(0.8).$$
+```math
+\frac{v(3000)}{v(4000)} = \left(\tfrac34\right)^{\alpha} > w^{+}(0.8).
+```
 
-And C beats D exactly when $w^{+}(0.2)\,v(4000) > w^{+}(0.25)\,v(3000)$, that is when
+And C beats D exactly when $`w^{+}(0.2)\,v(4000) > w^{+}(0.25)\,v(3000)`$, that is when
 
-$$\left(\tfrac34\right)^{\alpha} < \frac{w^{+}(0.2)}{w^{+}(0.25)}.$$
+```math
+\left(\tfrac34\right)^{\alpha} < \frac{w^{+}(0.2)}{w^{+}(0.25)}.
+```
 
 Both choices hold together when the value ratio sits between the two weight numbers. With the 1992 parameters: 0.6074 < 0.7763 < 0.8969. It does.
 
@@ -119,48 +129,54 @@ The gap between them is what Kahneman and Tversky called the **certainty effect*
 
 Put a minus sign on every amount. **Problem 3′**: an 80% chance of losing $4,000, or a sure loss of $3,000. **Problem 4′**: a 20% chance of losing $4,000, or a 25% chance of losing $3,000. In 1979, 92% took the gamble in 3′, and 58% took the 25% chance in 4′. Each majority is the mirror of its gain problem. This is the **reflection effect**: cautious with gains, gambling with losses.
 
-The value curve explains the mirror. For a loss of size $x > 0$, $v(-x) = -\lambda\,v(x)$: the gain curve flipped and stretched. Multiplying an inequality by a negative number reverses it, so every all-loss comparison runs the other way. The multiplier $\lambda$ scales both sides and cancels.
+The value curve explains the mirror. For a loss of size $`x > 0`$, $`v(-x) = -\lambda\,v(x)`$: the gain curve flipped and stretched. Multiplying an inequality by a negative number reverses it, so every all-loss comparison runs the other way. The multiplier $`\lambda`$ scales both sides and cancels.
 
-The gamble in 3′ wins exactly when $w^{-}(0.8) < (3/4)^{\alpha}$: 0.6690 < 0.7763. The 25% chance in 4′ wins exactly when $(3/4)^{\alpha} < w^{-}(0.2)/w^{-}(0.25)$: 0.7763 < 0.8757. The model reproduces all four majorities.
+The gamble in 3′ wins exactly when $`w^{-}(0.8) < (3/4)^{\alpha}`$: 0.6690 < 0.7763. The 25% chance in 4′ wins exactly when $`(3/4)^{\alpha} < w^{-}(0.2)/w^{-}(0.25)`$: 0.7763 < 0.8757. The model reproduces all four majorities.
 
 ### Step 4: the loss multiplier acts only when gains and losses meet
 
-In an all-gain or all-loss menu, $\lambda$ cancels. It matters in a **mixed** prospect, such as the coin toss. Heads pays $X$ with chance one half; tails costs $100. The score is
+In an all-gain or all-loss menu, $`\lambda`$ cancels. It matters in a **mixed** prospect, such as the coin toss. Heads pays $`X`$ with chance one half; tails costs $100. The score is
 
-$$V = w^{+}(0.5)\,X^{\alpha} - \lambda\, w^{-}(0.5)\,100^{\alpha}.$$
+```math
+V = w^{+}(0.5)\,X^{\alpha} - \lambda\, w^{-}(0.5)\,100^{\alpha}.
+```
 
 Set it to zero and solve: the win must be at least
 
-$$X = 100\left(\frac{\lambda\, w^{-}(0.5)}{w^{+}(0.5)}\right)^{1/\alpha}.$$
+```math
+X = 100\left(\frac{\lambda\, w^{-}(0.5)}{w^{+}(0.5)}\right)^{1/\alpha}.
+```
 
-With the parameters, $w^{+}(0.5)$ = 0.4206 and $w^{-}(0.5)$ = 0.4540, so X = $274.07. Three pieces stack up. Loss aversion alone, on straight lines, asks for $225. Adding the curvature raises it to $251.31. Adding the weights, which make the losing half feel likelier than the winning half, raises it to $274.07.
+With the parameters, $`w^{+}(0.5)`$ = 0.4206 and $`w^{-}(0.5)`$ = 0.4540, so X = $274.07. Three pieces stack up. Loss aversion alone, on straight lines, asks for $225. Adding the curvature raises it to $251.31. Adding the weights, which make the losing half feel likelier than the winning half, raises it to $274.07.
 
 ### Step 5: many outcomes need ranked weights
 
 The 1979 version weighted each outcome's chance on its own. That breaks when an outcome is split in two. Take the 80% chance of $4,000 and write it as sixteen tickets, each a 5% chance of $4,000.
 
-Weighting each ticket separately gives sixteen times $w^{+}(0.05)$ = 0.13, a total weight of 2.11. The split gamble would then outscore a sure $4,000, though it can never pay more than $4,000. That is a violation of **first-order stochastic dominance**: preferring a prospect that is worse or equal in every outcome.
+Weighting each ticket separately gives sixteen times $`w^{+}(0.05)`$ = 0.13, a total weight of 2.11. The split gamble would then outscore a sure $4,000, though it can never pay more than $4,000. That is a violation of **first-order stochastic dominance**: preferring a prospect that is worse or equal in every outcome.
 
 The 1992 fix weights **cumulative** chances. Rank the gains from best down. The best outcome gets the weight of its own chance. The next gets the weight of "this or better" minus the weight of "strictly better", and so on. The weights then telescope: they add up to the weight of the total chance of a gain. Splitting a ticket leaves every "this or better" chance unchanged, so it leaves the score unchanged.
 
 <details>
 <summary>Detailed proof: ranked weights are split-proof and respect dominance</summary>
 
-Rank the distinct gains $x_1 > x_2 > \dots > x_n > 0$ with chances $p_i$, and let $G_i = p_1 + \dots + p_i$ be the chance of doing at least as well as $x_i$, with $G_0 = 0$. The gain weights are $\pi_i = w^{+}(G_i) - w^{+}(G_{i-1})$.
+Rank the distinct gains $`x_1 > x_2 > \dots > x_n > 0`$ with chances $`p_i`$, and let $`G_i = p_1 + \dots + p_i`$ be the chance of doing at least as well as $`x_i`$, with $`G_0 = 0`$. The gain weights are $`\pi_i = w^{+}(G_i) - w^{+}(G_{i-1})`$.
 
-**Non-negative.** $w^{+}$ increases and $G_i \ge G_{i-1}$, so each $\pi_i \ge 0$.
+**Non-negative.** $`w^{+}`$ increases and $`G_i \ge G_{i-1}`$, so each $`\pi_i \ge 0`$.
 
-**They telescope.** $\pi_1 + \dots + \pi_n = w^{+}(G_n) - w^{+}(G_0) = w^{+}(\text{chance of any gain})$, never more than 1.
+**They telescope.** $`\pi_1 + \dots + \pi_n = w^{+}(G_n) - w^{+}(G_0) = w^{+}(\text{chance of any gain})`$, never more than 1.
 
-**Split-proof.** Splitting $x_i$ into two tickets of chances $a$ and $b$ with $a + b = p_i$ inserts one extra cumulative point between $G_{i-1}$ and $G_i$. The two new weights are $w^{+}(G_{i-1}+a) - w^{+}(G_{i-1})$ and $w^{+}(G_i) - w^{+}(G_{i-1}+a)$. Both multiply the same $v(x_i)$, and they add to the old $\pi_i$.
+**Split-proof.** Splitting $`x_i`$ into two tickets of chances $`a`$ and $`b`$ with $`a + b = p_i`$ inserts one extra cumulative point between $`G_{i-1}`$ and $`G_i`$. The two new weights are $`w^{+}(G_{i-1}+a) - w^{+}(G_{i-1})`$ and $`w^{+}(G_i) - w^{+}(G_{i-1}+a)`$. Both multiply the same $`v(x_i)`$, and they add to the old $`\pi_i`$.
 
-**Dominance.** Regroup the sum by the steps between neighbouring outcomes (summation by parts, with $x_{n+1} = 0$): $\sum_i \pi_i v(x_i) = \sum_i w^{+}(G_i)\,[v(x_i) - v(x_{i+1})]$. Each bracket is non-negative because $v$ increases. Put prospects X and Y on one common list of outcome levels, giving a level a prospect lacks chance zero. If X dominates Y, then at every level X's chance of doing at least that well is no smaller, so each $w^{+}(G_i)$ is no smaller, and X's gain score is no smaller. Losses run the same argument from the bottom with $w^{-}$. The sum of the two sides gives $V(X) \ge V(Y)$.
+**Dominance.** Regroup the sum by the steps between neighbouring outcomes (summation by parts, with $`x_{n+1} = 0`$): $`\sum_i \pi_i v(x_i) = \sum_i w^{+}(G_i)\,[v(x_i) - v(x_{i+1})]`$. Each bracket is non-negative because $`v`$ increases. Put prospects X and Y on one common list of outcome levels, giving a level a prospect lacks chance zero. If X dominates Y, then at every level X's chance of doing at least that well is no smaller, so each $`w^{+}(G_i)`$ is no smaller, and X's gain score is no smaller. Losses run the same argument from the bottom with $`w^{-}`$. The sum of the two sides gives $`V(X) \ge V(Y)`$.
 
 </details>
 
 For a continuous prospect, such as a fund whose return follows a bell curve, the sum becomes an integral over value levels:
 
-$$V=\int_0^\infty w^{+}\!\big(\text{chance that } v(\text{outcome}) > y\big)\,dy \;-\; \int_0^\infty w^{-}\!\big(\text{chance that } v(\text{outcome}) < -y\big)\,dy.$$
+```math
+V=\int_0^\infty w^{+}\!\big(\text{chance that } v(\text{outcome}) > y\big)\,dy \;-\; \int_0^\infty w^{-}\!\big(\text{chance that } v(\text{outcome}) < -y\big)\,dy.
+```
 
 This is road 1 in the code. The dominance argument itself, without weights, is on [Stochastic dominance](04-stochastic-dominance.md).
 
@@ -168,13 +184,13 @@ This is road 1 in the code. The dominance argument itself, without weights, is o
 
 ## Worked numbers, by hand
 
-Problems 3 and 4, then their mirrors, with $\alpha$ = 0.88, $\lambda$ = 2.25, $\gamma$ = 0.61, $\delta$ = 0.69.
+Problems 3 and 4, then their mirrors, with $`\alpha`$ = 0.88, $`\lambda`$ = 2.25, $`\gamma`$ = 0.61, $`\delta`$ = 0.69.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $v(3000)$ | 3000 to the power 0.88 | 1,147.80 |
-| $v(4000)$ | 4000 to the power 0.88 | 1,478.47 |
-| $w^{+}(0.8)$ | 0.8^0.61 / (0.8^0.61 + 0.2^0.61)^(1/0.61) | 0.6074 |
+| $`v(3000)`$ | 3000 to the power 0.88 | 1,147.80 |
+| $`v(4000)`$ | 4000 to the power 0.88 | 1,478.47 |
+| $`w^{+}(0.8)`$ | 0.8^0.61 / (0.8^0.61 + 0.2^0.61)^(1/0.61) | 0.6074 |
 | A: 80% of +$4,000 | 0.6074 × 1,478.47 | 898.08 |
 | B: sure +$3,000 | 1 × 1,147.80 | **1,147.80: B chosen** |
 | C: 20% of +$4,000 | 0.2608 × 1,478.47 | **385.53: C chosen** |
@@ -190,7 +206,7 @@ All four majorities from 1979 come out of one set of four numbers. In Problem 3 
 
 The shelf's saver has $10,000 and a choice. A deposit pays 4%: a sure gain of $400. A fund returns 8% on average with a spread (standard deviation) of 15%: a gain of $800 on average, spread $1,500, following a bell curve. The fund loses money in 29.7% of years.
 
-The deposit scores $v(400)$ = 194.90. The fund's score needs the integral from Step 5, done numerically: 41.81. The sure-dollar amount with that same value, the prospect-theory **certainty equivalent** (see [Risk premium](03-certainty-equivalent-and-risk-premium.md)), is $69.57. The model's saver prefers the $400 deposit to a fund that pays $800 on average. Loss aversion does most of the work: set $\lambda$ to 1 and the fund's certainty equivalent jumps to $584.08, above the deposit.
+The deposit scores $`v(400)`$ = 194.90. The fund's score needs the integral from Step 5, done numerically: 41.81. The sure-dollar amount with that same value, the prospect-theory **certainty equivalent** (see [Risk premium](03-certainty-equivalent-and-risk-premium.md)), is $69.57. The model's saver prefers the $400 deposit to a fund that pays $800 on average. Loss aversion does most of the work: set $`\lambda`$ to 1 and the fund's certainty equivalent jumps to $584.08, above the deposit.
 
 ### What breaks if you drop a piece
 
@@ -204,7 +220,7 @@ The deposit scores $v(400)$ = 194.90. The fund's score needs the integral from S
 
 ## Code, from first principles, and it actually runs
 
-The code scores the four 1979 menus two ways: by the one-line formula $w(p)\,v(x)$, and by cutting each prospect into twenty equal tickets and running the ranked cumulative sum. It solves the coin toss by bisection and checks the answer against the closed form from Step 4.
+The code scores the four 1979 menus two ways: by the one-line formula $`w(p)\,v(x)`$, and by cutting each prospect into twenty equal tickets and running the ranked cumulative sum. It solves the coin toss by bisection and checks the answer against the closed form from Step 4.
 
 It values the saver's fund two independent ways. Road 1 integrates the weighted tail chances with Simpson's rule. Road 2 cuts the bell curve into 20,000 equally likely tickets, finds each ticket's return by inverting a hand-built normal CDF (cumulative distribution function: the chance that a bell-curve draw falls below a given value), and runs the ranked sum.
 
@@ -596,9 +612,9 @@ The two outputs agree byte for byte. The fund's two roads differ by 0.03 value u
 
 Lean proves Steps 1 and 3 and the ranked-weight facts, for any curves and chances, and checks some worked arithmetic.
 
-- Suppose A pays $x$ with chance $p$, B pays $y$ surely, and C and D are them with every chance times $k > 0$. Then no utility curve $u$ lets expected utility prefer B to A and also C to D.
-- Take any curvature $\alpha$, a loss multiplier $\lambda > 0$, and losses of sizes $a, b > 0$. Then $v(-a) = -\lambda\,v(a)$, and comparing weight times value for two losses runs opposite to the mirror gains.
-- Take an increasing weighting curve $w$ and ranked outcomes with chances $p_i \ge 0$. Then each $\pi_i \ge 0$, and $\pi_1 + \dots + \pi_n = w(G_n) - w(G_0)$.
+- Suppose A pays $`x`$ with chance $`p`$, B pays $`y`$ surely, and C and D are them with every chance times $`k > 0`$. Then no utility curve $`u`$ lets expected utility prefer B to A and also C to D.
+- Take any curvature $`\alpha`$, a loss multiplier $`\lambda > 0`$, and losses of sizes $`a, b > 0`$. Then $`v(-a) = -\lambda\,v(a)`$, and comparing weight times value for two losses runs opposite to the mirror gains.
+- Take an increasing weighting curve $`w`$ and ranked outcomes with chances $`p_i \ge 0`$. Then each $`\pi_i \ge 0`$, and $`\pi_1 + \dots + \pi_n = w(G_n) - w(G_0)`$.
 - The arithmetic checks cover Problem 3's expected payout, the chances divided by four, the straight-line coin toss, the sixteen tickets and the saver's amounts.
 
 Every score with the 1992 parameters, the coin toss and the saver's fund are left to the Python and Rust checks.
@@ -717,7 +733,7 @@ xychart-beta
     line [0.00, 0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00]
 ```
 
-Orange is the gain weight $w^{+}$, green the loss weight $w^{-}$, dark blue the true chance. Both curves sit above the true chance up to 0.3 and below it from 0.4 upward. On the gain side a 5% chance weighs as 13% and a 95% chance as 79%. The jumps at each end are the certainty effect and the long-shot effect.
+Orange is the gain weight $`w^{+}`$, green the loss weight $`w^{-}`$, dark blue the true chance. Both curves sit above the true chance up to 0.3 and below it from 0.4 upward. On the gain side a 5% chance weighs as 13% and a 95% chance as 79%. The jumps at each end are the certainty effect and the long-shot effect.
 
 > [!TIP]
 > **Try changing**
@@ -735,7 +751,7 @@ Orange is the gain weight $w^{+}$, green the loss weight $w^{-}$, dark blue the 
 > **Treating prospect theory as advice.** The model describes what people do; it does not say they are right to do it. The saver who takes a sure $400 over a fund worth $800 on average, because 29.7% of years show a loss, is described by the model, not endorsed by it. For choosing well, the normative tools are on [Expected utility](02-expected-utility-and-risk-aversion.md) and [Kelly](05-kelly-criterion-and-growth.md).
 >
 > Smaller traps:
-> - **Reading weights as beliefs.** $w^{+}(0.05)$ = 0.13 does not mean the person thinks the chance is 13%. It is how heavily a known 5% chance counts in the choice.
+> - **Reading weights as beliefs.** $`w^{+}(0.05)`$ = 0.13 does not mean the person thinks the chance is 13%. It is how heavily a known 5% chance counts in the choice.
 > - **Weighting outcomes one at a time.** With three or more outcomes, weight the ranked cumulative chances. Weighting each ticket alone scores a split $4,000 gamble at 3,113.68, above a sure $4,000.
 > - **Forgetting where the reference is.** The same fund scores a certainty equivalent of $69.57 against zero and −$125.45 against the deposit. State the reference before scoring anything.
 > - **Quoting 2.25 as a law.** It is a median of one set of experiments. The slogan "losses hurt twice as much" is a rounding of it, and individual values spread widely.

@@ -36,34 +36,40 @@ The lower line is the value of the $100. The upper line is its **high-water mark
 
 ## The formula
 
-Three kinds of monthly return feed the scores. The fund's return in month t is $r_t$; the benchmark's is $b_t$; cash pays $f$ each month. Subtracting gives the two series the ratios are built from: the **excess return** $x_t = r_t - f$, what the fund earned above cash, and the **active return** $a_t = r_t - b_t$, what it earned above its benchmark. A bar over a letter means the average over all $n$ months; an s with a letter below it means the **sample spread**, the standard deviation computed with $n - 1$ in the divisor.
+Three kinds of monthly return feed the scores. The fund's return in month t is $`r_t`$; the benchmark's is $`b_t`$; cash pays $`f`$ each month. Subtracting gives the two series the ratios are built from: the **excess return** $`x_t = r_t - f`$, what the fund earned above cash, and the **active return** $`a_t = r_t - b_t`$, what it earned above its benchmark. A bar over a letter means the average over all $`n`$ months; an s with a letter below it means the **sample spread**, the standard deviation computed with $`n - 1`$ in the divisor.
 
-$$S = \frac{\bar{x}}{s_x}, \qquad S_A = \sqrt{12}\,S, \qquad IR = \sqrt{12}\,\frac{\bar{a}}{s_a}$$
+```math
+S = \frac{\bar{x}}{s_x}, \qquad S_A = \sqrt{12}\,S, \qquad IR = \sqrt{12}\,\frac{\bar{a}}{s_a}
+```
 
 **Read it aloud:** the Sharpe ratio is the average monthly return above cash divided by the spread of those same monthly returns, scaled to a year by the square root of twelve; the information ratio is the same thing with the benchmark in place of cash.
 
-$$\mathrm{MDD} = \max_{t}\left(1 - \frac{W_t}{H_t}\right), \qquad H_t = \max_{j \le t} W_j$$
+```math
+\mathrm{MDD} = \max_{t}\left(1 - \frac{W_t}{H_t}\right), \qquad H_t = \max_{j \le t} W_j
+```
 
 **Read it aloud:** at each month, compare the holding's value with its best value so far; the maximum drawdown is the largest percentage gap ever seen.
 
-$$\mathrm{SE}(S) \approx \sqrt{\frac{1 + S^2/2}{n}}, \qquad \mathrm{SE}(S_A) = \sqrt{12}\,\mathrm{SE}(S)$$
+```math
+\mathrm{SE}(S) \approx \sqrt{\frac{1 + S^2/2}{n}}, \qquad \mathrm{SE}(S_A) = \sqrt{12}\,\mathrm{SE}(S)
+```
 
 **Read it aloud:** the error bar on a monthly Sharpe ratio is the square root of one plus half its square, over the number of months; a year's error bar is the square root of twelve times that.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of monthly returns in the record | 120 | error bars shrink, as one over its square root |
-| $r_t$, $b_t$, $f$ | the fund's and the benchmark's simple return in month t; cash return per month | 120 of each; 0.20% | a higher $f$ lowers the Sharpe ratio: less is left above cash |
-| $x_t$, $a_t$ | excess return over cash; active return over the benchmark | built month by month | — |
-| $\bar{x}$, $s_x$ | average and sample spread of the excess returns | 0.5872% and 2.2622% a month | a higher average raises $S$; a wider spread lowers it |
-| $\bar{a}$, $s_a$ | average active return, and its spread, the **tracking error** | 0.1806% and 1.1001% a month | same pattern for $IR$ |
-| $S$, $S_A$ | Sharpe ratio per month, and scaled to a year | 0.2596 and 0.8991 | — |
-| $IR$ | information ratio, scaled to a year | 0.5688 | — |
-| $W_t$, $H_t$ | value of $100 invested, after month t; its best value so far | $248.65 at the end; $242.81 at month 83 | — |
-| $\mathrm{MDD}$ | maximum drawdown: worst fall from a high, as a fraction of that high | 12.2160% | — |
-| $\mathrm{SE}$ | standard error: the typical miss of a score measured from one sample | 0.3215 on $S_A$ | a bigger Sharpe ratio carries a slightly bigger error bar |
-| $\mu$, $\sigma$ | the true mean and spread of monthly excess returns, which the record only estimates | unknown; estimated by 0.5872% and 2.2622% | a higher $\mu$ raises the true Sharpe ratio |
-| $\gamma_3$, $\gamma_4$ | **skew** (lopsidedness) and **kurtosis** (tail weight; 3 for a bell curve) of the excess returns | −0.0571 and 3.0001 | negative skew and heavy tails widen the error bar |
+| $`n`$ | number of monthly returns in the record | 120 | error bars shrink, as one over its square root |
+| $`r_t`$, $`b_t`$, $`f`$ | the fund's and the benchmark's simple return in month t; cash return per month | 120 of each; 0.20% | a higher $`f`$ lowers the Sharpe ratio: less is left above cash |
+| $`x_t`$, $`a_t`$ | excess return over cash; active return over the benchmark | built month by month | — |
+| $`\bar{x}`$, $`s_x`$ | average and sample spread of the excess returns | 0.5872% and 2.2622% a month | a higher average raises $`S`$; a wider spread lowers it |
+| $`\bar{a}`$, $`s_a`$ | average active return, and its spread, the **tracking error** | 0.1806% and 1.1001% a month | same pattern for $`IR`$ |
+| $`S`$, $`S_A`$ | Sharpe ratio per month, and scaled to a year | 0.2596 and 0.8991 | — |
+| $`IR`$ | information ratio, scaled to a year | 0.5688 | — |
+| $`W_t`$, $`H_t`$ | value of $100 invested, after month t; its best value so far | $248.65 at the end; $242.81 at month 83 | — |
+| $`\mathrm{MDD}`$ | maximum drawdown: worst fall from a high, as a fraction of that high | 12.2160% | — |
+| $`\mathrm{SE}`$ | standard error: the typical miss of a score measured from one sample | 0.3215 on $`S_A`$ | a bigger Sharpe ratio carries a slightly bigger error bar |
+| $`\mu`$, $`\sigma`$ | the true mean and spread of monthly excess returns, which the record only estimates | unknown; estimated by 0.5872% and 2.2622% | a higher $`\mu`$ raises the true Sharpe ratio |
+| $`\gamma_3`$, $`\gamma_4`$ | **skew** (lopsidedness) and **kurtosis** (tail weight; 3 for a bell curve) of the excess returns | −0.0571 and 3.0001 | negative skew and heavy tails widen the error bar |
 
 The ratios have no units: the percent on top cancels the percent below. The drawdown is a fraction of the earlier high, not of the first $100.
 
@@ -101,7 +107,7 @@ A year's ratio is then twelve times the monthly average over 3.4641 times the mo
 
 ### Step 3: the information ratio is the same idea with a different yardstick
 
-A manager paid to beat a stock index should not be praised for the index's gains. Subtract the index month by month and what remains is the active return $a_t$: the manager's own bets. Its spread, the tracking error, is the risk of straying from the index.
+A manager paid to beat a stock index should not be praised for the index's gains. Subtract the index month by month and what remains is the active return $`a_t`$: the manager's own bets. Its spread, the tracking error, is the risk of straying from the index.
 
 The information ratio is the average active return over the tracking error. This fund beat its index by 0.1806% a month with a tracking error of 1.1001%, a monthly ratio of 0.1642 and a yearly one of 0.5688. The fund's Sharpe ratio is higher than its information ratio because most of its excess over cash came from the index, which anyone could have bought.
 
@@ -117,26 +123,28 @@ Drawdown answers what the ratios cannot: how bad did it get along the way? The s
 
 The idea is that the Sharpe ratio is built from two estimates, and each one wobbles.
 
-The average $\bar{x}$ is uncertain by $s_x/\sqrt{n}$: the standard error of a mean ([Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)). Divided by the spread, that alone contributes one over $n$ to the ratio's variance. That is the "1" in the formula.
+The average $`\bar{x}`$ is uncertain by $`s_x/\sqrt{n}`$: the standard error of a mean ([Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)). Divided by the spread, that alone contributes one over $`n`$ to the ratio's variance. That is the "1" in the formula.
 
-The spread $s_x$ is also estimated, and it wobbles too. When returns follow a bell curve, the sample variance has variance twice the true variance squared over $n$. A small change in the spread moves the ratio in proportion to the ratio itself, so this wobble contributes $S^2/2$ over $n$. That is the second term.
+The spread $`s_x`$ is also estimated, and it wobbles too. When returns follow a bell curve, the sample variance has variance twice the true variance squared over $`n`$. A small change in the spread moves the ratio in proportion to the ratio itself, so this wobble contributes $`S^2/2`$ over $`n`$. That is the second term.
 
-For bell-curve returns the average and the spread of a sample are independent, so the two contributions add. The ratio's variance is $(1 + S^2/2)/n$, and its standard error is the square root.
+For bell-curve returns the average and the spread of a sample are independent, so the two contributions add. The ratio's variance is $`(1 + S^2/2)/n`$, and its standard error is the square root.
 
 <details>
 <summary>Detailed proof: the error bar by the delta method</summary>
 
-Let the monthly excess returns be independent, each from a bell curve with true mean $\mu$ and true spread $\sigma$, so the true monthly Sharpe ratio is $\mu/\sigma$.
+Let the monthly excess returns be independent, each from a bell curve with true mean $`\mu`$ and true spread $`\sigma`$, so the true monthly Sharpe ratio is $`\mu/\sigma`$.
 
-Two facts about bell-curve samples do the work. The sample mean has variance $\sigma^2/n$. The quantity $(n-1)s_x^2/\sigma^2$ is a sum of $n - 1$ squared independent standard bell-curve draws; each square has variance 2, so the sample variance $s_x^2$ has variance $2\sigma^4/(n-1)$. And for a bell-curve sample, the mean and the variance are independent, so their covariance is zero.
+Two facts about bell-curve samples do the work. The sample mean has variance $`\sigma^2/n`$. The quantity $`(n-1)s_x^2/\sigma^2`$ is a sum of $`n - 1`$ squared independent standard bell-curve draws; each square has variance 2, so the sample variance $`s_x^2`$ has variance $`2\sigma^4/(n-1)`$. And for a bell-curve sample, the mean and the variance are independent, so their covariance is zero.
 
-The ratio is the sample mean divided by the square root of the sample variance. Near the true values, a small change in each input moves the ratio by the input's change times the slope in that direction (the **delta method**: a first-order Taylor expansion). The slopes at $(\mu, \sigma^2)$ are $1/\sigma$ for the mean and $-\mu/(2\sigma^3)$ for the variance. With zero covariance, the variance of the ratio is the sum of each slope squared times each input's variance:
-$$\frac{1}{\sigma^2}\cdot\frac{\sigma^2}{n} + \frac{\mu^2}{4\sigma^6}\cdot\frac{2\sigma^4}{n-1} = \frac{1}{n} + \frac{(\mu/\sigma)^2}{2(n-1)}.$$
-Replacing $n - 1$ by $n$ changes only a smaller-order term and gives $(1 + S^2/2)/n$. The central limit theorem makes the ratio's error bell-shaped as $n$ grows, which is what licenses reading one standard error as a band holding about two samples in three. Plugging the measured $S$ in for the true one gives the working formula.
+The ratio is the sample mean divided by the square root of the sample variance. Near the true values, a small change in each input moves the ratio by the input's change times the slope in that direction (the **delta method**: a first-order Taylor expansion). The slopes at $`(\mu, \sigma^2)`$ are $`1/\sigma`$ for the mean and $`-\mu/(2\sigma^3)`$ for the variance. With zero covariance, the variance of the ratio is the sum of each slope squared times each input's variance:
 
-The annual version is a rescaling. Multiplying an estimate by a constant multiplies its standard error by the same constant, so $\mathrm{SE}(S_A) = \sqrt{12}\,\mathrm{SE}(S)$, which equals $\sqrt{(12 + S_A^2/2)/n}$.
+$`\displaystyle \frac{1}{\sigma^2}\cdot\frac{\sigma^2}{n} + \frac{\mu^2}{4\sigma^6}\cdot\frac{2\sigma^4}{n-1} = \frac{1}{n} + \frac{(\mu/\sigma)^2}{2(n-1)}.`$
 
-Without the bell curve, the covariance between mean and variance is no longer zero and the variance of $s_x^2$ picks up the tail weight. The same expansion gives $(1 + S^2/2 - \gamma_3 S + (\gamma_4 - 3)S^2/4)/n$: negative skew and fat tails both widen the bar.
+Replacing $`n - 1`$ by $`n`$ changes only a smaller-order term and gives $`(1 + S^2/2)/n`$. The central limit theorem makes the ratio's error bell-shaped as $`n`$ grows, which is what licenses reading one standard error as a band holding about two samples in three. Plugging the measured $`S`$ in for the true one gives the working formula.
+
+The annual version is a rescaling. Multiplying an estimate by a constant multiplies its standard error by the same constant, so $`\mathrm{SE}(S_A) = \sqrt{12}\,\mathrm{SE}(S)`$, which equals $`\sqrt{(12 + S_A^2/2)/n}`$.
+
+Without the bell curve, the covariance between mean and variance is no longer zero and the variance of $`s_x^2`$ picks up the tail weight. The same expansion gives $`(1 + S^2/2 - \gamma_3 S + (\gamma_4 - 3)S^2/4)/n`$: negative skew and fat tails both widen the bar.
 
 </details>
 
@@ -161,9 +169,9 @@ measured Sharpe over ten years   number of simulated histories, one block per 40
   1.8 to  2.0                                    19
 ```
 
-The spread of those 5,000 measurements is 0.3299, close to the formula's 0.3215. The $S^2/2$ term barely shows at this Sharpe ratio, so the code repeats the test at a monthly Sharpe ratio of 1.0: 4,000 histories give 0.1138 against the formula's 0.1118. A share of 0.6698 land within one standard error of the truth: about two in three, as a bell curve predicts. Nine land between −0.2 and zero: a genuinely skilled manager can look worse than cash for a decade.
+The spread of those 5,000 measurements is 0.3299, close to the formula's 0.3215. The $`S^2/2`$ term barely shows at this Sharpe ratio, so the code repeats the test at a monthly Sharpe ratio of 1.0: 4,000 histories give 0.1138 against the formula's 0.1118. A share of 0.6698 land within one standard error of the truth: about two in three, as a bell curve predicts. Nine land between −0.2 and zero: a genuinely skilled manager can look worse than cash for a decade.
 
-The formula has a striking consequence. The yearly error bar is $\sqrt{(12 + S_A^2/2)/n}$, and $n$ is twelve times the number of years. The twelves nearly cancel. What is left is close to one over the square root of the number of years:
+The formula has a striking consequence. The yearly error bar is $`\sqrt{(12 + S_A^2/2)/n}`$, and $`n`$ is twelve times the number of years. The twelves nearly cancel. What is left is close to one over the square root of the number of years:
 
 ```
 years of monthly data   standard error of an annual Sharpe near 0.9, one block per 0.02
@@ -189,13 +197,13 @@ The fund's 120 monthly returns, summarised; every value below is printed by both
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average excess return, $\bar{x}$ | mean of fund return minus 0.20%, over 120 months | 0.5872% a month |
-| spread of excess return, $s_x$ | sample standard deviation, divisor 119 | 2.2622% a month |
-| monthly Sharpe ratio, $S$ | 0.5872 / 2.2622 | 0.2596 |
-| annual Sharpe ratio, $S_A$ | 0.2596 × 3.4641 | **0.8991** |
-| average active return, $\bar{a}$ | mean of fund minus benchmark | 0.1806% a month |
-| tracking error, $s_a$ | its sample standard deviation | 1.1001% a month |
-| information ratio, $IR$ | 0.1806 / 1.1001 = 0.1642, × 3.4641 | **0.5688** |
+| average excess return, $`\bar{x}`$ | mean of fund return minus 0.20%, over 120 months | 0.5872% a month |
+| spread of excess return, $`s_x`$ | sample standard deviation, divisor 119 | 2.2622% a month |
+| monthly Sharpe ratio, $`S`$ | 0.5872 / 2.2622 | 0.2596 |
+| annual Sharpe ratio, $`S_A`$ | 0.2596 × 3.4641 | **0.8991** |
+| average active return, $`\bar{a}`$ | mean of fund minus benchmark | 0.1806% a month |
+| tracking error, $`s_a`$ | its sample standard deviation | 1.1001% a month |
+| information ratio, $`IR`$ | 0.1806 / 1.1001 = 0.1642, × 3.4641 | **0.5688** |
 | high-water mark and low | month 83, then month 103 | $242.81, then $213.15 |
 | maximum drawdown | 1 − 213.1491 / 242.8109 | **12.2160%** |
 | error-bar core | 1 + 0.2596^2 / 2 | 1.0337 |
@@ -665,9 +673,9 @@ The two outputs match line for line.
 
 Lean proves the card's three exact steps for every record, not just this fund's 120 months.
 
-- Take excess returns that are not all equal, and any number $c > 0$. Then borrowing at cash to multiply every excess return by $c$ leaves the Sharpe ratio unchanged.
-- Take any positive holding values $W_t$. Then the largest fall below the high-water mark equals the largest fall over every earlier and later pair of months.
-- Suppose the sample mean has variance $\sigma^2/n$, the sample variance has $2\sigma^4/(n-1)$, and the two are independent. Then the delta method gives the Sharpe ratio a variance of exactly $1/n + (\mu/\sigma)^2/(2(n-1))$.
+- Take excess returns that are not all equal, and any number $`c > 0`$. Then borrowing at cash to multiply every excess return by $`c`$ leaves the Sharpe ratio unchanged.
+- Take any positive holding values $`W_t`$. Then the largest fall below the high-water mark equals the largest fall over every earlier and later pair of months.
+- Suppose the sample mean has variance $`\sigma^2/n`$, the sample variance has $`2\sigma^4/(n-1)`$, and the two are independent. Then the delta method gives the Sharpe ratio a variance of exactly $`1/n + (\mu/\sigma)^2/(2(n-1))`$.
 
 The simulated fund, the bootstrap and the 5,000 histories are left to the Python and Rust checks.
 
@@ -798,7 +806,7 @@ theorem max_drawdown_running_peak_eq_every_pair (W : ℕ → ℝ) (hW : ∀ t, 0
 ## Where you meet it in real life
 
 - **Fund fact sheets.** Mutual funds and hedge funds report a Sharpe ratio, usually over three or five years. By the table above, a five-year figure carries an error bar near 0.45.
-- **Active managers and their benchmarks.** Pension funds hire managers to beat an index and judge them by information ratio and tracking error. A tracking-error budget is a limit on $s_a$.
+- **Active managers and their benchmarks.** Pension funds hire managers to beat an index and judge them by information ratio and tracking error. A tracking-error budget is a limit on $`s_a`$.
 - **Hedge fund fees.** Performance fees are usually paid only on gains above the previous high: the drawdown chart's high-water mark.
 - **Risk limits.** Trading desks and lenders to leveraged funds set drawdown limits; breaching one can force the fund to sell.
 - **Performance attribution.** Once the information ratio says the manager added value, [Attribution](02-performance-attribution.md) splits the active return into where it came from.
@@ -812,7 +820,7 @@ theorem max_drawdown_running_peak_eq_every_pair (W : ℕ → ℝ) (hW : ∀ t, 0
 ## What this builds on
 
 - [Returns](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md): monthly returns, compounding them into wealth, and why averages scale with time and spreads with its square root.
-- [Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md): the sample spread with $n - 1$, and the standard error of a mean, the first term of the Sharpe error bar.
+- [Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md): the sample spread with $`n - 1`$, and the standard error of a mean, the first term of the Sharpe error bar.
 
 ## Where this goes next
 
@@ -827,7 +835,7 @@ The information ratio says whether a manager beat the benchmark and how reliably
 Verified 2026-11-14: every link below resolves to the publisher's page.
 
 - Sharpe, William F. "The Sharpe Ratio." *Journal of Portfolio Management* 21, no. 1 (1994): 49–58. [doi:10.3905/jpm.1994.409501](https://doi.org/10.3905/jpm.1994.409501) ([author's reprint](https://web.stanford.edu/~wfsharpe/art/sr/sr.htm)). The ratio defined on differential returns, and the warning about scaling it across time.
-- Lo, Andrew W. "The Statistics of Sharpe Ratios." *Financial Analysts Journal* 58, no. 4 (2002): 36–52. [doi:10.2469/faj.v58.n4.2453](https://doi.org/10.2469/faj.v58.n4.2453). The standard error $\sqrt{(1 + S^2/2)/n}$, and how serial correlation distorts the annual figure.
+- Lo, Andrew W. "The Statistics of Sharpe Ratios." *Financial Analysts Journal* 58, no. 4 (2002): 36–52. [doi:10.2469/faj.v58.n4.2453](https://doi.org/10.2469/faj.v58.n4.2453). The standard error $`\sqrt{(1 + S^2/2)/n}`$, and how serial correlation distorts the annual figure.
 - Opdyke, J. D. "Comparing Sharpe Ratios: So Where Are the p-Values?" *Journal of Asset Management* 8, no. 5 (2007): 308–336. [doi:10.1057/palgrave.jam.2250084](https://doi.org/10.1057/palgrave.jam.2250084). The error bar with skew and kurtosis, without assuming a bell curve.
 - Goodwin, Thomas H. "The Information Ratio." *Financial Analysts Journal* 54, no. 4 (1998): 34–43. [doi:10.2469/faj.v54.n4.2196](https://doi.org/10.2469/faj.v54.n4.2196). Definitions and practical conventions for the information ratio and tracking error.
 - Magdon-Ismail, Malik, Amir F. Atiya, Amrit Pratap, and Yaser S. Abu-Mostafa. "On the Maximum Drawdown of a Brownian Motion." *Journal of Applied Probability* 41, no. 1 (2004): 147–161. [doi:10.1239/jap/1077134674](https://doi.org/10.1239/jap/1077134674). The distribution of maximum drawdown for a continuously wandering price, and how it grows with the horizon.

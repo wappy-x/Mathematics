@@ -8,7 +8,7 @@
 
 A water tank is a cube that must hold exactly 2 cubic metres. Its side is the cube root of 2 metres. In double precision that is 1.2599210498948732 m. A builder needs only millimetres. The target here is far tighter, an error under 10^−9 m, because a cube-root routine is written once and reused by callers who need many more digits, and it may use only addition, subtraction, multiplication and division.
 
-Both methods on this card solve the same equation, $x^3 - 2 = 0$. Both replace the curve $y = x^3 - 2$ by a straight line and take the line's zero as the next guess.
+Both methods on this card solve the same equation, $`x^3 - 2 = 0`$. Both replace the curve $`y = x^3 - 2`$ by a straight line and take the line's zero as the next guess.
 
 - **Newton's method** uses the tangent line (the line touching the curve with the same slope). It needs the slope, so each step costs one value of the function and one of its derivative. From 1 it needs **4 steps**.
 - **The secant method** uses the chord (the straight line through the last two points on the curve). It needs no slope, so each step costs one new function value. From 1 and 2 it needs **6 steps**.
@@ -31,54 +31,62 @@ Drawn to scale from the coordinates on the checks' `figure,` line, with the x di
 
 ## The formula
 
-Notation first, in words. This card introduces it for the wing. The **root** $x^*$ is the number that solves $f(x) = 0$; the code calls it `r`. The **iterates** $x_k$ are the guesses, with $k$ counting steps from $x_0$. The **error** $e_k = x_k - x^*$ is how far guess $k$ is from the root. A method has **order** $p$ when, near the root,
+Notation first, in words. This card introduces it for the wing. The **root** $`x^*`$ is the number that solves $`f(x) = 0`$; the code calls it `r`. The **iterates** $`x_k`$ are the guesses, with $`k`$ counting steps from $`x_0`$. The **error** $`e_k = x_k - x^*`$ is how far guess $`k`$ is from the root. A method has **order** $`p`$ when, near the root,
 
-$$|e_{k+1}| \approx C\,|e_k|^{p}$$
+```math
+|e_{k+1}| \approx C\,|e_k|^{p}
+```
 
-**Read it aloud:** the next error is about a fixed constant times the current error raised to the power $p$.
+**Read it aloud:** the next error is about a fixed constant times the current error raised to the power $`p`$.
 
-Order 1 with $C < 1$ is linear, and order 2 is quadratic, as on the [Convergence rates](../../15-Optimization/02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md) card. In correct digits, $d_k = -\log_{10}|e_k|$, order $p$ means each step multiplies the digit count by about $p$.
+Order 1 with $`C < 1`$ is linear, and order 2 is quadratic, as on the [Convergence rates](../../15-Optimization/02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md) card. In correct digits, $`d_k = -\log_{10}|e_k|`$, order $`p`$ means each step multiplies the digit count by about $`p`$.
 
-The two steps, for a function $f$ with slope $f'$:
+The two steps, for a function $`f`$ with slope $`f'`$:
 
-$$\text{Newton:}\quad x_{k+1} = x_k - \frac{f(x_k)}{f'(x_k)} \qquad\qquad \text{secant:}\quad x_{k+1} = x_k - f(x_k)\,\frac{x_k - x_{k-1}}{f(x_k) - f(x_{k-1})}$$
+```math
+\text{Newton:}\quad x_{k+1} = x_k - \frac{f(x_k)}{f'(x_k)} \qquad\qquad \text{secant:}\quad x_{k+1} = x_k - f(x_k)\,\frac{x_k - x_{k-1}}{f(x_k) - f(x_{k-1})}
+```
 
 **Read it aloud:** Newton divides the miss by the slope of the tangent; the secant divides it by the slope of the chord through the last two guesses.
 
-Their error laws, near a simple root (one where $f'(x^*) \neq 0$), share one constant:
+Their error laws, near a simple root (one where $`f'(x^*) \neq 0`$), share one constant:
 
-$$|e_{k+1}| \approx C\,|e_k|^2 \;\;\text{(Newton)}, \qquad |e_{k+1}| \approx C\,|e_k|\,|e_{k-1}| \;\;\text{(secant)}, \qquad C = \frac{|f''(x^*)|}{2\,|f'(x^*)|}$$
+```math
+|e_{k+1}| \approx C\,|e_k|^2 \;\;\text{(Newton)}, \qquad |e_{k+1}| \approx C\,|e_k|\,|e_{k-1}| \;\;\text{(secant)}, \qquad C = \frac{|f''(x^*)|}{2\,|f'(x^*)|}
+```
 
 **Read it aloud:** Newton's next error is the constant times the current error squared; the secant's is the constant times the current error and the one before it.
 
-From the secant's law follows its order, the golden ratio $\varphi$:
+From the secant's law follows its order, the golden ratio $`\varphi`$:
 
-$$|e_{k+1}| \approx C^{\varphi - 1}\,|e_k|^{\varphi}, \qquad \varphi = \frac{1 + \sqrt{5}}{2} = 1.618$$
+```math
+|e_{k+1}| \approx C^{\varphi - 1}\,|e_k|^{\varphi}, \qquad \varphi = \frac{1 + \sqrt{5}}{2} = 1.618
+```
 
 **Read it aloud:** the secant's next error is about a constant times the current error to the power 1.618.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $f'$, $f''$ | the miss, its slope, and the rate that slope changes | $x^3 - 2$ cubic metres; $3x^2$; $6x$ | — |
-| $x^*$ | the root, `r` in the code | 1.2599210498948732 m | — |
-| $x_k$, $k$ | the guess after $k$ steps | Newton $x_0 = 1$; secant $x_0 = 1$, $x_1 = 2$ | — |
-| $e_k$ | the error $x_k - x^*$; $\lvert e_k \rvert$ its size | Newton $\lvert e_4 \rvert$ = 1.23e-10 | — |
-| $d_k$, $D_k$ | correct digits, $-\log_{10}\lvert e_k\rvert$; and the same shifted by the constant $-\log_{10} C$ | $d_4$ = 9.91 for Newton | — |
-| $C$, $c_k$ | the error constant $\lvert f''\rvert / (2\lvert f'\rvert)$ at the root; $c_k$ the exact factor at step $k$, which tends to it | $1/x^* = 0.7937$ | larger next errors, same order |
-| $p$ | the order | 2 for Newton, 1.618 for the secant | digits multiply faster |
-| $\varphi$ | the golden ratio, $(1 + \sqrt 5)/2$ | 1.6180 | — |
-| $q_k$ | the secant's ratio $\lvert e_{k+1}\rvert / \lvert e_k\rvert^{\varphi}$ | swings toward $C^{\varphi-1} = 0.8669$ | — |
-| $g$ | the slope of the line from the root to the curve point, $f(x)/(x - x^*)$ | $x^2 + x x^* + (x^*)^2$ | — |
-| $t$ | the cost of one $f'$, in evaluations of $f$ | 1 if a slope costs as much as a value | Newton gains less per evaluation |
-| $\xi$, $\eta_k$, $\zeta_k$, $s$, $\delta$, $K$, $y$, $\rho$ | proof helpers: points that Taylor's theorem or the mean value theorem says exist; an averaging variable from 0 to 1; a closeness radius and a bound on $c_k$; the unknown limit of $\log q_k$; a steady error ratio | $\rho$ = 0.6180 on the double root | — |
+| $`f`$, $`f'`$, $`f''`$ | the miss, its slope, and the rate that slope changes | $`x^3 - 2`$ cubic metres; $`3x^2`$; $`6x`$ | — |
+| $`x^*`$ | the root, `r` in the code | 1.2599210498948732 m | — |
+| $`x_k`$, $`k`$ | the guess after $`k`$ steps | Newton $`x_0 = 1`$; secant $`x_0 = 1`$, $`x_1 = 2`$ | — |
+| $`e_k`$ | the error $`x_k - x^*`$; $`\lvert e_k \rvert`$ its size | Newton $`\lvert e_4 \rvert`$ = 1.23e-10 | — |
+| $`d_k`$, $`D_k`$ | correct digits, $`-\log_{10}\lvert e_k\rvert`$; and the same shifted by the constant $`-\log_{10} C`$ | $`d_4`$ = 9.91 for Newton | — |
+| $`C`$, $`c_k`$ | the error constant $`\lvert f''\rvert / (2\lvert f'\rvert)`$ at the root; $`c_k`$ the exact factor at step $`k`$, which tends to it | $`1/x^* = 0.7937`$ | larger next errors, same order |
+| $`p`$ | the order | 2 for Newton, 1.618 for the secant | digits multiply faster |
+| $`\varphi`$ | the golden ratio, $`(1 + \sqrt 5)/2`$ | 1.6180 | — |
+| $`q_k`$ | the secant's ratio $`\lvert e_{k+1}\rvert / \lvert e_k\rvert^{\varphi}`$ | swings toward $`C^{\varphi-1} = 0.8669`$ | — |
+| $`g`$ | the slope of the line from the root to the curve point, $`f(x)/(x - x^*)`$ | $`x^2 + x x^* + (x^*)^2`$ | — |
+| $`t`$ | the cost of one $`f'`$, in evaluations of $`f`$ | 1 if a slope costs as much as a value | Newton gains less per evaluation |
+| $`\xi`$, $`\eta_k`$, $`\zeta_k`$, $`s`$, $`\delta`$, $`K`$, $`y`$, $`\rho`$ | proof helpers: points that Taylor's theorem or the mean value theorem says exist; an averaging variable from 0 to 1; a closeness radius and a bound on $`c_k`$; the unknown limit of $`\log q_k`$; a steady error ratio | $`\rho`$ = 0.6180 on the double root | — |
 
 ### When it holds
 
-- **A simple root.** If the slope is zero at the root, both methods slow to linear. On $(x^3 - 2)^2$, which has a double root at the same place, Newton's error ratio is 0.5000 and it needs 28 steps to an error under 10^−9; the secant's is 0.6180 and it needs 42.
-- **A smooth $f$ near the root.** The proofs need a continuous second derivative there, so that $C$ exists. Where $f''$ jumps or blows up, no constant $C$ is promised.
+- **A simple root.** If the slope is zero at the root, both methods slow to linear. On $`(x^3 - 2)^2`$, which has a double root at the same place, Newton's error ratio is 0.5000 and it needs 28 steps to an error under 10^−9; the secant's is 0.6180 and it needs 42.
+- **A smooth $`f`$ near the root.** The proofs need a continuous second derivative there, so that $`C`$ exists. Where $`f''`$ jumps or blows up, no constant $`C`$ is promised.
 - **A start close enough.** The laws describe the end of the run. The secant's second start, 2, is far off (error 7.40e-1), and the orders measured from the first steps (−1.762, 0.459) are meaningless. Far starts and their cures are on [Newton's bad days](04-when-newton-fails.md).
 - **The secant uses the two newest points.** Keep one old point for ever, as the false-position rule does, and the order falls to 1. Kept at 2, the error ratio settles at 0.4126 and the run takes 23 steps.
-- **Errors well above rounding.** A double carries a fixed number of digits. Newton's $x_5$ and the secant's $x_8$ land on the root to the last bit. Then $x_9 = x_8$, the secant's chord is flat, and the step to $x_{10}$ is 0/0.
+- **Errors well above rounding.** A double carries a fixed number of digits. Newton's $`x_5`$ and the secant's $`x_8`$ land on the root to the last bit. Then $`x_9 = x_8`$, the secant's chord is flat, and the step to $`x_{10}`$ is 0/0.
 
 ---
 
@@ -92,104 +100,116 @@ The step jumps to the line's zero, so the new error is that miss divided by the 
 
 ### Step 1: Newton squares its error
 
-The [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) card proves, from [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md), that $e_{k+1} = \dfrac{f''(\xi)}{2f'(x_k)}\,e_k^2$ for some point $\xi$ between $x_k$ and the root. As $x_k$ closes in, the factor tends to $C$ (keeping its sign).
+The [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) card proves, from [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md), that $`e_{k+1} = \dfrac{f''(\xi)}{2f'(x_k)}\,e_k^2`$ for some point $`\xi`$ between $`x_k`$ and the root. As $`x_k`$ closes in, the factor tends to $`C`$ (keeping its sign).
 
-For the cube the law is exact. Write $2 = (x^*)^3$ in the Newton step and factor:
+For the cube the law is exact. Write $`2 = (x^*)^3`$ in the Newton step and factor:
 
-$$e_{k+1} = e_k^2\,\frac{2x_k + x^*}{3x_k^2}$$
+```math
+e_{k+1} = e_k^2\,\frac{2x_k + x^*}{3x_k^2}
+```
 
-At the root the factor is $3x^*/(3(x^*)^2) = 1/x^* = 0.7937$. The code's ratio column reads 0.7362, 0.7904, 0.7937 for steps 2 to 4.
+At the root the factor is $`3x^*/(3(x^*)^2) = 1/x^* = 0.7937`$. The code's ratio column reads 0.7362, 0.7904, 0.7937 for steps 2 to 4.
 
-In digits: squaring the error doubles $d_k$, apart from the small shift from $C$. Newton's digits run 1.13, 2.40, 4.91, 9.91, each about twice the last.
+In digits: squaring the error doubles $`d_k`$, apart from the small shift from $`C`$. Newton's digits run 1.13, 2.40, 4.91, 9.91, each about twice the last.
 
 ### Step 2: the secant multiplies its last two errors
 
-Write the secant step in errors. Subtracting $x^*$ from both sides gives
+Write the secant step in errors. Subtracting $`x^*`$ from both sides gives
 
-$$e_{k+1} = \frac{e_{k-1}f(x_k) - e_k f(x_{k-1})}{f(x_k) - f(x_{k-1})}$$
+```math
+e_{k+1} = \frac{e_{k-1}f(x_k) - e_k f(x_{k-1})}{f(x_k) - f(x_{k-1})}
+```
 
-Now use $g(x) = f(x)/(x - x^*)$: the slope of the line from the root to the point on the curve. Then $f(x_k) = e_k\,g(x_k)$, and the top becomes $e_k e_{k-1}\,(g(x_k) - g(x_{k-1}))$. Divide top and bottom by $x_k - x_{k-1}$:
+Now use $`g(x) = f(x)/(x - x^*)`$: the slope of the line from the root to the point on the curve. Then $`f(x_k) = e_k\,g(x_k)`$, and the top becomes $`e_k e_{k-1}\,(g(x_k) - g(x_{k-1}))`$. Divide top and bottom by $`x_k - x_{k-1}`$:
 
-$$e_{k+1} = e_k\,e_{k-1}\cdot\frac{\text{slope of } g \text{ between the two guesses}}{\text{slope of } f \text{ between the two guesses}}$$
+```math
+e_{k+1} = e_k\,e_{k-1}\cdot\frac{\text{slope of } g \text{ between the two guesses}}{\text{slope of } f \text{ between the two guesses}}
+```
 
-As both guesses close in, the top slope tends to $g'(x^*) = f''(x^*)/2$ and the bottom to $f'(x^*)$. Their ratio tends to $C$, with its sign.
+As both guesses close in, the top slope tends to $`g'(x^*) = f''(x^*)/2`$ and the bottom to $`f'(x^*)`$. Their ratio tends to $`C`$, with its sign.
 
-For the cube, $g(x) = x^2 + x x^* + (x^*)^2$ exactly, and the law is exact:
+For the cube, $`g(x) = x^2 + x x^* + (x^*)^2`$ exactly, and the law is exact:
 
-$$e_{k+1} = e_k\,e_{k-1}\,\frac{x_k + x_{k-1} + x^*}{x_k^2 + x_k x_{k-1} + x_{k-1}^2}$$
+```math
+e_{k+1} = e_k\,e_{k-1}\,\frac{x_k + x_{k-1} + x^*}{x_k^2 + x_k x_{k-1} + x_{k-1}^2}
+```
 
-At the root the factor is again $3x^*/(3(x^*)^2) = 0.7937$. The code's column reads 0.8130, 0.7916, 0.7938 for $x_5$ to $x_7$. Both exact laws match the measured errors at every step, in floating point, to 1 part in 10,000.
+At the root the factor is again $`3x^*/(3(x^*)^2) = 0.7937`$. The code's column reads 0.8130, 0.7916, 0.7938 for $`x_5`$ to $`x_7`$. Both exact laws match the measured errors at every step, in floating point, to 1 part in 10,000.
 
 ### Step 3: multiplied errors make Fibonacci digits
 
-Take $-\log_{10}$ of the secant's law $|e_{k+1}| = C|e_k||e_{k-1}|$. Write $D_k = -\log_{10}(C\,|e_k|)$, the correct digits shifted by a constant. The law becomes
+Take $`-\log_{10}`$ of the secant's law $`|e_{k+1}| = C|e_k||e_{k-1}|`$. Write $`D_k = -\log_{10}(C\,|e_k|)`$, the correct digits shifted by a constant. The law becomes
 
-$$D_{k+1} = D_k + D_{k-1}$$
+```math
+D_{k+1} = D_k + D_{k-1}
+```
 
-That is the Fibonacci rule: each term is the sum of the two before. Its terms grow by a factor that tends to the root of $p^2 = p + 1$, which is $\varphi = 1.618$ ([The characteristic equation](../../04-Combinatorics%20and%20graphs/05-Recurrences/04-characteristic-equation-and-binet.md) shows why). So the digits multiply by $\varphi$ each step: order $\varphi$.
+That is the Fibonacci rule: each term is the sum of the two before. Its terms grow by a factor that tends to the root of $`p^2 = p + 1`$, which is $`\varphi = 1.618`$ ([The characteristic equation](../../04-Combinatorics%20and%20graphs/05-Recurrences/04-characteristic-equation-and-binet.md) shows why). So the digits multiply by $`\varphi`$ each step: order $`\varphi`$.
 
 The secant's digits run 2.29, 3.68, 6.07, 9.85: each is about the sum of the two before. Run the law alone for 30 more steps in logs, with no rounding to stop it, and the measured order is 1.618034.
 
-The same view for Newton gives $D_{k+1} = 2D_k$: order 2.
+The same view for Newton gives $`D_{k+1} = 2D_k`$: order 2.
 
 <details>
 <summary>Detailed proof: near a simple root, the secant's order is exactly the golden ratio</summary>
 
-**Assume** $f$ has a continuous second derivative near $x^*$, with $f(x^*) = 0$, $f'(x^*) \neq 0$ and $f''(x^*) \neq 0$. Assume the iterates are distinct, never equal $x^*$, and tend to $x^*$.
+**Assume** $`f`$ has a continuous second derivative near $`x^*`$, with $`f(x^*) = 0`$, $`f'(x^*) \neq 0`$ and $`f''(x^*) \neq 0`$. Assume the iterates are distinct, never equal $`x^*`$, and tend to $`x^*`$.
 
-**The error law.** Set $g(x) = f(x)/(x - x^*)$ for $x \neq x^*$ and $g(x^*) = f'(x^*)$. Writing $f(x) = \int_0^1 f'(x^* + s(x - x^*))\,ds\,(x - x^*)$ shows $g(x) = \int_0^1 f'(x^* + s(x - x^*))\,ds$. So $g$ has a continuous derivative, and $g'(x^*) = \int_0^1 s\,f''(x^*)\,ds = f''(x^*)/2$. Step 2's algebra and the mean value theorem (a chord's slope equals the curve's slope at some point between its ends) give points $\eta_k$ and $\zeta_k$ between $x_{k-1}$ and $x_k$ with
+**The error law.** Set $`g(x) = f(x)/(x - x^*)`$ for $`x \neq x^*`$ and $`g(x^*) = f'(x^*)`$. Writing $`f(x) = \int_0^1 f'(x^* + s(x - x^*))\,ds\,(x - x^*)`$ shows $`g(x) = \int_0^1 f'(x^* + s(x - x^*))\,ds`$. So $`g`$ has a continuous derivative, and $`g'(x^*) = \int_0^1 s\,f''(x^*)\,ds = f''(x^*)/2`$. Step 2's algebra and the mean value theorem (a chord's slope equals the curve's slope at some point between its ends) give points $`\eta_k`$ and $`\zeta_k`$ between $`x_{k-1}`$ and $`x_k`$ with
 
-$$e_{k+1} = c_k\,e_k\,e_{k-1}, \qquad c_k = \frac{g'(\eta_k)}{f'(\zeta_k)} \to \frac{f''(x^*)}{2f'(x^*)}, \qquad |c_k| \to C.$$
+$`\displaystyle e_{k+1} = c_k\,e_k\,e_{k-1}, \qquad c_k = \frac{g'(\eta_k)}{f'(\zeta_k)} \to \frac{f''(x^*)}{2f'(x^*)}, \qquad |c_k| \to C.`$
 
-**Convergence from a close start.** By continuity there is a $\delta > 0$ and a $K$ with $|c_k| \le K$ while both guesses lie within $\delta$ of the root. Shrink $\delta$ so that $K\delta \le 1/2$. If $|e_{k-1}|, |e_k| \le \delta$, then $|e_{k+1}| \le K\delta\,|e_k| \le |e_k|/2$. By induction the guesses stay inside and the errors at least halve each step.
+**Convergence from a close start.** By continuity there is a $`\delta > 0`$ and a $`K`$ with $`|c_k| \le K`$ while both guesses lie within $`\delta`$ of the root. Shrink $`\delta`$ so that $`K\delta \le 1/2`$. If $`|e_{k-1}|, |e_k| \le \delta`$, then $`|e_{k+1}| \le K\delta\,|e_k| \le |e_k|/2`$. By induction the guesses stay inside and the errors at least halve each step.
 
-**The order.** Let $q_k = |e_{k+1}|/|e_k|^{\varphi}$. Since $\varphi^2 = \varphi + 1$, we have $\varphi(1 - \varphi) = -1$, so $|e_{k-1}| = (|e_k|/|e_{k-1}|^{\varphi})^{1-\varphi}\,|e_k|^{\varphi - 1}$. Substituting into the error law,
+**The order.** Let $`q_k = |e_{k+1}|/|e_k|^{\varphi}`$. Since $`\varphi^2 = \varphi + 1`$, we have $`\varphi(1 - \varphi) = -1`$, so $`|e_{k-1}| = (|e_k|/|e_{k-1}|^{\varphi})^{1-\varphi}\,|e_k|^{\varphi - 1}`$. Substituting into the error law,
 
-$$q_k = |c_k|\,q_{k-1}^{\,1 - \varphi}, \qquad \log q_k = \log|c_k| + (1 - \varphi)\log q_{k-1}.$$
+$`\displaystyle q_k = |c_k|\,q_{k-1}^{\,1 - \varphi}, \qquad \log q_k = \log|c_k| + (1 - \varphi)\log q_{k-1}.`$
 
-The multiplier $1 - \varphi = -0.618$ has size below 1, and $\log|c_k| \to \log C$. A sequence that obeys such a rule tends to the number that the rule maps to itself: the solution of $y = \log C + (1 - \varphi)y$, which is $y = \log C/\varphi = (\varphi - 1)\log C$. So $q_k \to C^{\varphi - 1}$: the order is exactly $\varphi$. $\blacksquare$
+The multiplier $`1 - \varphi = -0.618`$ has size below 1, and $`\log|c_k| \to \log C`$. A sequence that obeys such a rule tends to the number that the rule maps to itself: the solution of $`y = \log C + (1 - \varphi)y`$, which is $`y = \log C/\varphi = (\varphi - 1)\log C`$. So $`q_k \to C^{\varphi - 1}`$: the order is exactly $`\varphi`$. $`\blacksquare`$
 
-**Newton, in the same terms.** Newton's step gives $e_{k+1} = e_k\,(f'(x_k) - g(x_k))/f'(x_k)$. Taylor's theorem gives $f'(x_k) - g(x_k) = \tfrac{1}{2}f''(x^*)\,e_k$ plus a term that shrinks faster than $e_k$. So $e_{k+1}/e_k^2 \to f''(x^*)/(2f'(x^*))$: order 2.
+**Newton, in the same terms.** Newton's step gives $`e_{k+1} = e_k\,(f'(x_k) - g(x_k))/f'(x_k)`$. Taylor's theorem gives $`f'(x_k) - g(x_k) = \tfrac{1}{2}f''(x^*)\,e_k`$ plus a term that shrinks faster than $`e_k`$. So $`e_{k+1}/e_k^2 \to f''(x^*)/(2f'(x^*))`$: order 2.
 
 </details>
 
 ### Step 4: the observed order swings, as the proof predicts
 
-The proof's multiplier is negative, $1 - \varphi = -0.618$. So $q_k$ overshoots its limit, then undershoots, by a gap that shrinks by 0.618 each time. The code's column $e_k/e^{\varphi}$ shows it: 0.6468, 1.0642, 0.7618, 0.9392, closing in on 0.8669 from both sides.
+The proof's multiplier is negative, $`1 - \varphi = -0.618`$. So $`q_k`$ overshoots its limit, then undershoots, by a gap that shrinks by 0.618 each time. The code's column $`e_k/e^{\varphi}`$ shows it: 0.6468, 1.0642, 0.7618, 0.9392, closing in on 0.8669 from both sides.
 
 The measured order swings too: 2.701, 1.400, 1.723, 1.580 around 1.618. Newton's needs no second error, so it settles without swinging: 2.308, 1.976, 1.999.
 
 ### Step 5: the cost per digit decides between them
 
-A Newton step costs one $f$ and one $f'$, which is $1 + t$ evaluations, and multiplies the digits by 2. A secant step costs one $f$ and multiplies them by $\varphi$. Per evaluation, the digits multiply by
+A Newton step costs one $`f`$ and one $`f'`$, which is $`1 + t`$ evaluations, and multiplies the digits by 2. A secant step costs one $`f`$ and multiplies them by $`\varphi`$. Per evaluation, the digits multiply by
 
-$$\text{Newton: } 2^{1/(1+t)}, \qquad \text{secant: } \varphi = 1.6180$$
+```math
+\text{Newton: } 2^{1/(1+t)}, \qquad \text{secant: } \varphi = 1.6180
+```
 
-| Cost of one slope, $t$ | Newton's multiplier per evaluation | Better buy |
+| Cost of one slope, $`t`$ | Newton's multiplier per evaluation | Better buy |
 | --- | --- | --- |
 | 0 (free) | 2.0000 | Newton |
 | 0.5 | 1.5874 | secant |
-| 1 (as dear as $f$) | 1.4142 | secant |
+| 1 (as dear as $`f`$) | 1.4142 | secant |
 | 2 | 1.2599 | secant |
 
-The two are equal at $t = \log 2/\log\varphi - 1 = 0.4404$, found by the code both by bisection and by the formula. From 1 correct digit to 16, Newton takes 4.00 steps and the secant 5.76. With $t = 1$, that is 8 evaluations against fewer than 6.
+The two are equal at $`t = \log 2/\log\varphi - 1 = 0.4404`$, found by the code both by bisection and by the formula. From 1 correct digit to 16, Newton takes 4.00 steps and the secant 5.76. With $`t = 1`$, that is 8 evaluations against fewer than 6.
 
 ---
 
 ## Worked numbers, by hand
 
-The cube root of 2, with $f(x) = x^3 - 2$ and $f'(x) = 3x^2$.
+The cube root of 2, with $`f(x) = x^3 - 2`$ and $`f'(x) = 3x^2`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Newton step 1 | $1 - (1 - 2)/(3 \times 1)$ | 1.3333333333333333 |
-| Newton step 2 | $4/3 - (64/27 - 2)/(3 \times 16/9)$ | 1.2638888888888888 |
-| Newton step 3 error | $1.2599334934499771 - 1.2599210498948732$ | 1.24e-5 |
-| Newton step 4 error | $1.2599210500177698 - 1.2599210498948732$ | **1.23e-10** |
-| secant $x_2$ | $2 - 6 \times (2 - 1)/(6 - (-1))$ | 1.1428571428571428 |
-| secant $x_3$ | $8/7 - f(8/7)\,(8/7 - 2)/(f(8/7) - 6)$ | 1.2096774193548387 |
-| secant $x_7$ error, by the law | $0.7938 \times 8.47\text{e-}7 \times 2.09\text{e-}4$ | **1.41e-10** |
-| evaluations | Newton $4 + 4$; secant $2 + 5$ | **8 against 7** |
+| Newton step 1 | $`1 - (1 - 2)/(3 \times 1)`$ | 1.3333333333333333 |
+| Newton step 2 | $`4/3 - (64/27 - 2)/(3 \times 16/9)`$ | 1.2638888888888888 |
+| Newton step 3 error | $`1.2599334934499771 - 1.2599210498948732`$ | 1.24e-5 |
+| Newton step 4 error | $`1.2599210500177698 - 1.2599210498948732`$ | **1.23e-10** |
+| secant $`x_2`$ | $`2 - 6 \times (2 - 1)/(6 - (-1))`$ | 1.1428571428571428 |
+| secant $`x_3`$ | $`8/7 - f(8/7)\,(8/7 - 2)/(f(8/7) - 6)`$ | 1.2096774193548387 |
+| secant $`x_7`$ error, by the law | $`0.7938 \times 8.47\text{e-}7 \times 2.09\text{e-}4`$ | **1.41e-10** |
+| evaluations | Newton $`4 + 4`$; secant $`2 + 5`$ | **8 against 7** |
 
 Both errors are true errors, measured against the bisection root; the secant row also checks the error law by hand. Both land under 10^−9 m. The secant gets there with one evaluation fewer, while Newton takes two steps fewer.
 
@@ -197,18 +217,18 @@ Both errors are true errors, measured against the bisection root; the secant row
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| A double root: solve $(x^3 - 2)^2 = 0$ | Newton 28 steps, ratio 0.5000; secant 42 steps, ratio 0.6180 | The slope at the root is zero, so both drop to order 1 |
+| A double root: solve $`(x^3 - 2)^2 = 0`$ | Newton 28 steps, ratio 0.5000; secant 42 steps, ratio 0.6180 | The slope at the root is zero, so both drop to order 1 |
 | Keep the chord's end fixed at 2 | 23 steps, ratio 0.4126 | One error in the product stops shrinking, so the order is 1 |
-| Run the secant with no stop | $x_9 = x_8$, then the step to $x_{10}$ is 0/0 | Once two guesses are equal, the chord has no slope |
+| Run the secant with no stop | $`x_9 = x_8`$, then the step to $`x_{10}`$ is 0/0 | Once two guesses are equal, the chord has no slope |
 | Compare steps, not evaluations | Newton 4 against 6 looks better | In evaluations it is 8 against 7 |
 
-The code prints all four. On the double root, the miss near the root is about a constant times $e_k^2$. Newton then halves the error each step. The secant's errors obey $e_{k+1} = e_k e_{k-1}/(e_k + e_{k-1})$, so a steady ratio $\rho$ solves $\rho = 1/(1 + \rho)$, which gives $\rho = \varphi - 1 = 0.6180$.
+The code prints all four. On the double root, the miss near the root is about a constant times $`e_k^2`$. Newton then halves the error each step. The secant's errors obey $`e_{k+1} = e_k e_{k-1}/(e_k + e_{k-1})`$, so a steady ratio $`\rho`$ solves $`\rho = 1/(1 + \rho)`$, which gives $`\rho = \varphi - 1 = 0.6180`$.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code solves $x^3 = 2$ with Newton from 1 and the secant from 1 and 2. It measures each error against a root found by a different road: bisection by signs only, run to the last bit. Three roads then agree. The exact error laws predict every measured error. The ratio columns settle on $C = 1/x^* = 0.7937$, computed separately as $(x^*)^2/2$. The observed orders approach 2 and 1.618, and the law run alone in logs gives 1.618034. The break-even slope cost is found by bisection and by its formula. Then the three failures run.
+The code solves $`x^3 = 2`$ with Newton from 1 and the secant from 1 and 2. It measures each error against a root found by a different road: bisection by signs only, run to the last bit. Three roads then agree. The exact error laws predict every measured error. The ratio columns settle on $`C = 1/x^* = 0.7937`$, computed separately as $`(x^*)^2/2`$. The observed orders approach 2 and 1.618, and the law run alone in logs gives 1.618034. The break-even slope cost is found by bisection and by its formula. Then the three failures run.
 
 ### Python
 
@@ -524,13 +544,13 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves both order theorems near any simple root of a smooth $f$, the break-even slope cost, and the first hand-worked steps.
+Lean proves both order theorems near any simple root of a smooth $`f`$, the break-even slope cost, and the first hand-worked steps.
 
-- The secant's order is the golden ratio. Let $f$ have a continuous second derivative near the root, with $f'(x^*) \neq 0$ and $f''(x^*) \neq 0$. Let the guesses be distinct, never equal the root, and tend to it. Then $|e_{k+1}|/|e_k|^{\varphi}$ tends to $C^{\varphi-1}$.
-- Newton's order is 2. With the same smoothness and $f'(x^*) \neq 0$, let the guesses never equal the root and tend to it. Then $e_{k+1}/e_k^2$ tends to $f''(x^*)/(2f'(x^*))$.
-- Let one slope cost $t \ge 0$ evaluations of $f$. The secant gains more digits per evaluation exactly when $t > \log 2/\log\varphi - 1$.
-- On $x^3 - 2$, Newton from 1 gives 4/3, then 91/72. The secant from 1 and 2 gives 8/7, then 75/62.
-- Bisection from width 1 needs 29 halvings to a half-width under $10^{-9}$. The sums 4 + 4 = 8, 2 + 5 = 7 and 2 + 29 = 31 also check.
+- The secant's order is the golden ratio. Let $`f`$ have a continuous second derivative near the root, with $`f'(x^*) \neq 0`$ and $`f''(x^*) \neq 0`$. Let the guesses be distinct, never equal the root, and tend to it. Then $`|e_{k+1}|/|e_k|^{\varphi}`$ tends to $`C^{\varphi-1}`$.
+- Newton's order is 2. With the same smoothness and $`f'(x^*) \neq 0`$, let the guesses never equal the root and tend to it. Then $`e_{k+1}/e_k^2`$ tends to $`f''(x^*)/(2f'(x^*))`$.
+- Let one slope cost $`t \ge 0`$ evaluations of $`f`$. The secant gains more digits per evaluation exactly when $`t > \log 2/\log\varphi - 1`$.
+- On $`x^3 - 2`$, Newton from 1 gives 4/3, then 91/72. The secant from 1 and 2 gives 8/7, then 75/62.
+- Bisection from width 1 needs 29 halvings to a half-width under $`10^{-9}`$. The sums 4 + 4 = 8, 2 + 5 = 7 and 2 + 29 = 31 also check.
 
 Both theorems take a close enough start as given. The floating-point runs, error tables, measured orders and the three breaks are left to the Python and Rust checks.
 
@@ -970,7 +990,7 @@ example : 4 + 4 = 8 ∧ 2 + 5 = 7 ∧ 2 + 29 = 31 := by decide
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this card's numbers, so each change below stops the run at an assert.
-> - **Start the secant from 1 and 1.5.** Guess first: more steps or fewer? Change `secant(f, 1.0, 2.0, 6)` to `secant(f, 1.0, 1.5, 6)`. The error is under 10^−9 after 5 steps, at 6.38e-10, so the run stops at an assert. $x_7$ has reached the rounding floor, and the exact error-law assert fails there first.
+> - **Start the secant from 1 and 1.5.** Guess first: more steps or fewer? Change `secant(f, 1.0, 2.0, 6)` to `secant(f, 1.0, 1.5, 6)`. The error is under 10^−9 after 5 steps, at 6.38e-10, so the run stops at an assert. $`x_7`$ has reached the rounding floor, and the exact error-law assert fails there first.
 > - **Start Newton from 2.** Guess first: does a start further away cost one step or several? Change `newton(f, df, 1.0, 5)` to `newton(f, df, 2.0, 5)`. Step 4's error is 8.11e-7, so Newton needs a fifth step, and the step-count assert stops it.
 > - **Double Newton's step on the double root.** Guess first: does the order come back? In `df2`, change `6 * x * x` to `3 * x * x`, which doubles each step. Newton now lands in 4 steps instead of 28, and the ratio-0.5 assert stops it.
 
@@ -981,7 +1001,7 @@ example : 4 + 4 = 8 ∧ 2 + 5 = 7 ∧ 2 + 29 = 31 := by decide
 > [!warning]
 > **Judging a method by its step count.** Newton reaches the cube root in 4 steps and the secant in 6, so Newton looks faster. But a Newton step needs the slope as well as the value. Counted in function evaluations, the secant wins, 7 against 8. The fair measure is digits gained per evaluation: 1.6180 for the secant, 1.4142 for Newton when a slope costs as much as a value.
 >
-> - **Reading the order off the first steps.** The secant's measured order at its $x_2$ is −1.762, and at $x_4$ it is 2.701. Only the late steps mean anything.
+> - **Reading the order off the first steps.** The secant's measured order at its $`x_2`$ is −1.762, and at $`x_4`$ it is 2.701. Only the late steps mean anything.
 > - **Expecting the observed order to settle smoothly.** For the secant it swings, 1.400, 1.723, 1.580, around 1.618.
 > - **Keeping an old point because it brackets the root.** The order drops to 1, with ratio 0.4126 here. [Brent's method](05-brent-and-safeguarded-methods.md) keeps a bracket without that cost.
 > - **Iterating past the rounding floor.** Two equal guesses make the chord flat, and the next secant step is 0/0.
@@ -992,7 +1012,7 @@ example : 4 + 4 = 8 ∧ 2 + 5 = 7 ∧ 2 + 29 = 31 := by decide
 
 - **Loan and bond rates.** The rate that makes a mortgage's payments match the loan has no closed form, so it is found as a root. The finance wing runs the guarded versions on [Solving backwards](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md) and [NPV and IRR](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/04-net-present-value-and-irr.md).
 - **Library root finders.** General-purpose routines combine secant-type steps with a bracket, because users supply a function but rarely its derivative. That design is [Brent's method](05-brent-and-safeguarded-methods.md).
-- **Simulations as functions.** When one value of $f$ is a whole simulation, such as a trajectory's miss distance, a slope costs at least one more run. The secant step then wins, as in the planned card Two-point boundary problems.
+- **Simulations as functions.** When one value of $`f`$ is a whole simulation, such as a trajectory's miss distance, a slope costs at least one more run. The secant step then wins, as in the planned card Two-point boundary problems.
 - **Many unknowns at once.** In several variables a slope becomes a whole matrix of slopes, and the secant idea becomes Broyden's method ([Newton in several unknowns, and Broyden when a Jacobian is too expensive](07-newton-for-systems-and-broyden.md)).
 
 > **Say it back**
@@ -1012,7 +1032,7 @@ example : 4 + 4 = 8 ∧ 2 + 5 = 7 ∧ 2 + 29 = 31 := by decide
 - [When to stop](03-stopping-criteria-and-error-estimates.md): this card measured errors against a known root; that card stops without one.
 - [Newton's bad days](04-when-newton-fails.md): double roots, overshoot, and starts that never settle, where the laws above do not apply.
 - [Fixed points](06-fixed-point-iteration-and-contraction.md): Newton and the secant as rules of the form "next guess = rule(current guess)", and the contraction that makes such rules converge.
-- [Every root at once](08-polynomial-roots-and-companion-matrices.md): every root of a polynomial together, complex ones included; $x^3 - 2$ has two more roots, both complex.
+- [Every root at once](08-polynomial-roots-and-companion-matrices.md): every root of a polynomial together, complex ones included; $`x^3 - 2`$ has two more roots, both complex.
 - [Two-point boundary problems](../06-ODE%20Solvers/07-boundary-value-problems-shooting-and-collocation.md): the secant step on a launch angle, where each function value is a whole simulation.
 
 Left open: neither law says how close the start must be, so how can a method keep this speed without the risk of running away?

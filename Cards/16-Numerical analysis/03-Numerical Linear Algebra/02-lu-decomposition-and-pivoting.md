@@ -35,42 +35,48 @@ The water reaches J2 two ways: straight down pipe 3, or round through J1 and pip
 
 ## The formula
 
-$$PA = LU, \qquad Ly = Pb, \qquad Ux = y$$
+```math
+PA = LU, \qquad Ly = Pb, \qquad Ux = y
+```
 
 **Read it aloud:** reorder the rows of A, and it splits into a lower triangle times an upper triangle; to solve, reorder b the same way, sweep down L to get y, then sweep up U to get x.
 
 The cost, at size n, counted exactly ([Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md) counts the same loops):
 
-$$\text{factor: } \tfrac{1}{6}(4n^3 - 3n^2 - n) \approx \tfrac{2}{3}n^3 \text{ flops}, \qquad \text{each solve: } 2n^2 - n \text{ flops}$$
+```math
+\text{factor: } \tfrac{1}{6}(4n^3 - 3n^2 - n) \approx \tfrac{2}{3}n^3 \text{ flops}, \qquad \text{each solve: } 2n^2 - n \text{ flops}
+```
 
-What pivoting buys, as a theorem about the computed answer $\hat x$ (read "x hat", the x the computer returns):
+What pivoting buys, as a theorem about the computed answer $`\hat x`$ (read "x hat", the x the computer returns):
 
-$$(A + \Delta A)\,\hat x = b, \qquad \frac{\|\Delta A\|_\infty}{\|A\|_\infty} \le \gamma_{3n}\, n^2\, g, \qquad \gamma_{3n} = \frac{3nu}{1 - 3nu}$$
+```math
+(A + \Delta A)\,\hat x = b, \qquad \frac{\|\Delta A\|_\infty}{\|A\|_\infty} \le \gamma_{3n}\, n^2\, g, \qquad \gamma_{3n} = \frac{3nu}{1 - 3nu}
+```
 
-**Read it aloud:** the computed answer is the exact answer for a matrix nudged by at most about $3n^3 g u$ of its size, so the method is safe whenever the growth factor g stays small, and partial pivoting is what keeps it small in practice.
+**Read it aloud:** the computed answer is the exact answer for a matrix nudged by at most about $`3n^3 g u`$ of its size, so the method is safe whenever the growth factor g stays small, and partial pivoting is what keeps it small in practice.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the network matrix: one row per equation, one column per unknown | 5 by 5; rows J1, J2, pipe 1, pipe 2, pipe 3 | — |
-| $x = (h_1, h_2, q_1, q_2, q_3)$ | the unknowns: junction heads in m, pipe flows in L/s; $\hat x$ is the computed x | morning: 56.75, 53.00, 32.50, 12.50, 17.50 | — |
-| $b = (d_1, d_2, H, 0, H)$ | the right side: demands $d_1$, $d_2$ in L/s, reservoir head H = 60 m | morning: (20, 30, 60, 0, 60) | higher demand, lower heads |
-| $r_1, r_2, r_3$ | pipe resistances: m of head lost per L/s | 0.1, 0.3, 0.4 | heads at the junctions fall |
-| $P$ | the row order pivoting chose, as a matrix that reorders rows | pipe 1, pipe 2, J1, J2, pipe 3 | — |
-| $L$, $\ell_{ik}$ | lower triangle, 1s on its diagonal; $\ell_{ik}$ is the multiplier that cleared row i using pivot row k | largest $\lvert\ell_{ik}\rvert$ is 1 | with pivoting, never above 1 |
-| $U$ | upper triangle: what elimination leaves; its diagonal holds the pivots | pivots 1, 1, 1, 1, 0.8 | — |
-| $y$ | the halfway vector: $Ux$, found by the sweep down L | morning: (60, 60, 20, 30, 14) | — |
-| $n$ | the number of unknowns | 5 here; 500 for illustration (500 pipes would give more: one per pipe plus one per junction) | cost grows like $n^3$ to factor, $n^2$ to solve |
-| $\lambda$ | a leak: L/s lost per m of head at each junction, illustrative | 0, then 1e-14 in What breaks | a tiny λ makes a tiny pivot without pivoting |
-| $g$ | **growth factor**: the largest entry met during elimination, divided by the largest entry of A | 1.00 with pivoting; 2.00e14 without, at λ = 1e-14 | the error bound grows with it |
-| $u$, $\gamma_{3n}$, $\kappa$, $\Delta A$ | unit roundoff $2^{-53}$; $\gamma_{3n}$, the rounding allowance for 3n roundings in a row, about $3nu$; condition number $\kappa_\infty(A) = \|A\|_\infty \|A^{-1}\|_\infty$; the nudge to A that the computed answer solves exactly | $u = 2^{-53}$; $\gamma_{15}$ about 15u; κ = 11.79 | larger κ turns a small nudge into a larger error in x |
+| $`A`$ | the network matrix: one row per equation, one column per unknown | 5 by 5; rows J1, J2, pipe 1, pipe 2, pipe 3 | — |
+| $`x = (h_1, h_2, q_1, q_2, q_3)`$ | the unknowns: junction heads in m, pipe flows in L/s; $`\hat x`$ is the computed x | morning: 56.75, 53.00, 32.50, 12.50, 17.50 | — |
+| $`b = (d_1, d_2, H, 0, H)`$ | the right side: demands $`d_1`$, $`d_2`$ in L/s, reservoir head H = 60 m | morning: (20, 30, 60, 0, 60) | higher demand, lower heads |
+| $`r_1, r_2, r_3`$ | pipe resistances: m of head lost per L/s | 0.1, 0.3, 0.4 | heads at the junctions fall |
+| $`P`$ | the row order pivoting chose, as a matrix that reorders rows | pipe 1, pipe 2, J1, J2, pipe 3 | — |
+| $`L`$, $`\ell_{ik}`$ | lower triangle, 1s on its diagonal; $`\ell_{ik}`$ is the multiplier that cleared row i using pivot row k | largest $`\lvert\ell_{ik}\rvert`$ is 1 | with pivoting, never above 1 |
+| $`U`$ | upper triangle: what elimination leaves; its diagonal holds the pivots | pivots 1, 1, 1, 1, 0.8 | — |
+| $`y`$ | the halfway vector: $`Ux`$, found by the sweep down L | morning: (60, 60, 20, 30, 14) | — |
+| $`n`$ | the number of unknowns | 5 here; 500 for illustration (500 pipes would give more: one per pipe plus one per junction) | cost grows like $`n^3`$ to factor, $`n^2`$ to solve |
+| $`\lambda`$ | a leak: L/s lost per m of head at each junction, illustrative | 0, then 1e-14 in What breaks | a tiny λ makes a tiny pivot without pivoting |
+| $`g`$ | **growth factor**: the largest entry met during elimination, divided by the largest entry of A | 1.00 with pivoting; 2.00e14 without, at λ = 1e-14 | the error bound grows with it |
+| $`u`$, $`\gamma_{3n}`$, $`\kappa`$, $`\Delta A`$ | unit roundoff $`2^{-53}`$; $`\gamma_{3n}`$, the rounding allowance for 3n roundings in a row, about $`3nu`$; condition number $`\kappa_\infty(A) = \Vert A\Vert_\infty \Vert A^{-1}\Vert_\infty`$; the nudge to A that the computed answer solves exactly | $`u = 2^{-53}`$; $`\gamma_{15}`$ about 15u; κ = 11.79 | larger κ turns a small nudge into a larger error in x |
 
-The **unit roundoff** u is the largest relative error of one rounding ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)). The norm $\|A\|_\infty$ is the largest row sum of absolute values, from [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md).
+The **unit roundoff** u is the largest relative error of one rounding ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)). The norm $`\|A\|_\infty`$ is the largest row sum of absolute values, from [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md).
 
 ### When it holds
 
 - **A is square and not singular** (its determinant is not zero). If a whole column is zero on and below the pivot seat, no swap helps, and U gets a zero on its diagonal. The network with no reservoir pipe would be singular: heads would be fixed only up to a constant.
 - **The matrix stays the same across right-hand sides.** The saving comes from reusing L and U. Real pipe losses grow faster than in proportion to the flow, so a full hydraulic solver linearises and gets a new matrix at each step. Reuse holds for every demand pattern solved on one linearisation, as here.
-- **The growth factor stays small.** Partial pivoting bounds g only by $2^{n-1}$. A matrix built to reach that bound defeats it: at n = 60 the error is 0.80 in an answer whose entries lie between −0.5 and 0.5 (What breaks). Such matrices almost never arise in practice.
+- **The growth factor stays small.** Partial pivoting bounds g only by $`2^{n-1}`$. A matrix built to reach that bound defeats it: at n = 60 the error is 0.80 in an answer whose entries lie between −0.5 and 0.5 (What breaks). Such matrices almost never arise in practice.
 - **The matrix is dense, or treated as dense.** A city network has only a few nonzeros per row. Dense LU at n = 500 spends most of its 83,208,250 flops on zeros, and elimination fills in zeros that sparse storage would keep empty ([Sparse storage and Krylov methods](10-sparse-matrices-and-krylov-methods.md)).
 
 ---
@@ -79,13 +85,15 @@ The **unit roundoff** u is the largest relative error of one rounding ([Machine 
 
 ### Step 0: elimination already computes L; it just throws it away
 
-[Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md) clears each column by taking a multiple $\ell_{ik}$ of a pivot row from the rows below. Run on the left side alone, it leaves the triangle U. The multipliers are the full record of what was done. Keep them, and you can replay the same moves on any new right-hand side without touching A again. Kept in a lower triangle, they are L.
+[Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md) clears each column by taking a multiple $`\ell_{ik}`$ of a pivot row from the rows below. Run on the left side alone, it leaves the triangle U. The multipliers are the full record of what was done. Keep them, and you can replay the same moves on any new right-hand side without touching A again. Kept in a lower triangle, they are L.
 
 ### Step 1: without swaps, A = LU exactly
 
-When row k serves as the pivot row, it is final: later steps never change it. So it is row k of U. Every other row i gets $\ell_{ik}$ times row k of U taken away, for each $k < i$, and ends as row i of U. Add those amounts back:
+When row k serves as the pivot row, it is final: later steps never change it. So it is row k of U. Every other row i gets $`\ell_{ik}`$ times row k of U taken away, for each $`k < i`$, and ends as row i of U. Add those amounts back:
 
-$$\text{row } i \text{ of } A = \text{row } i \text{ of } U + \sum_{k<i} \ell_{ik} \cdot (\text{row } k \text{ of } U).$$
+```math
+\text{row } i \text{ of } A = \text{row } i \text{ of } U + \sum_{k<i} \ell_{ik} \cdot (\text{row } k \text{ of } U).
+```
 
 That is exactly row i of the product LU, where L has the multipliers below its diagonal and 1s on it.
 
@@ -102,34 +110,36 @@ If every entry on and below the diagonal in column k is zero, there is nothing t
 
 </details>
 
-Because the pivot is the largest entry in its column, every multiplier is (an entry) ÷ (the largest entry), so $|\ell_{ik}| \le 1$. That one fact is what pivoting controls.
+Because the pivot is the largest entry in its column, every multiplier is (an entry) ÷ (the largest entry), so $`|\ell_{ik}| \le 1`$. That one fact is what pivoting controls.
 
 ### Step 3: solve in two triangle sweeps
 
-$Ax = b$ is the same as $PAx = Pb$, which is $L(Ux) = Pb$. Call $Ux = y$.
+$`Ax = b`$ is the same as $`PAx = Pb`$, which is $`L(Ux) = Pb`$. Call $`Ux = y`$.
 
-- **Forward substitution** solves $Ly = Pb$ from the top. Row i of L gives $y_i$ = (entry i of Pb) minus the earlier y's times their multipliers. L has 1s on its diagonal, so there is nothing to divide: $n(n-1)$ flops.
-- **Back substitution** solves $Ux = y$ from the bottom, as on the Gaussian elimination card: $n^2$ flops.
+- **Forward substitution** solves $`Ly = Pb`$ from the top. Row i of L gives $`y_i`$ = (entry i of Pb) minus the earlier y's times their multipliers. L has 1s on its diagonal, so there is nothing to divide: $`n(n-1)`$ flops.
+- **Back substitution** solves $`Ux = y`$ from the bottom, as on the Gaussian elimination card: $`n^2`$ flops.
 
-Total $2n^2 - n$. The factorisation is $\tfrac{1}{6}(4n^3 - 3n^2 - n)$: one division per multiplier, one multiply and one subtract per updated entry. At n = 2,000 the factorisation costs as much as 666 solves. That ratio, about n/3, is the whole argument for factoring once.
+Total $`2n^2 - n`$. The factorisation is $`\tfrac{1}{6}(4n^3 - 3n^2 - n)`$: one division per multiplier, one multiply and one subtract per updated entry. At n = 2,000 the factorisation costs as much as 666 solves. That ratio, about n/3, is the whole argument for factoring once.
 
-The determinant comes free. A swap flips its sign, and a triangle's determinant is the product of its diagonal ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). So $\det A = (-1)^{\text{swaps}} \times$ (product of the pivots).
+The determinant comes free. A swap flips its sign, and a triangle's determinant is the product of its diagonal ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). So $`\det A = (-1)^{\text{swaps}} \times`$ (product of the pivots).
 
 ### Step 4: what the multipliers control, and what they do not
 
-Every flop rounds, with relative error at most u. Wilkinson's backward error analysis moves those roundings back onto A. The computed $\hat x$ exactly solves $(A + \Delta A)\hat x = b$, with, entry by entry,
+Every flop rounds, with relative error at most u. Wilkinson's backward error analysis moves those roundings back onto A. The computed $`\hat x`$ exactly solves $`(A + \Delta A)\hat x = b`$, with, entry by entry,
 
-$$|\Delta A| \le \gamma_{3n}\, |\hat L|\,|\hat U|.$$
+```math
+|\Delta A| \le \gamma_{3n}\, |\hat L|\,|\hat U|.
+```
 
-This is the main theorem of chapter 9 in Higham (Sources). It is stated here with its key step, not proved line by line: each entry of $\hat L \hat U$ is built by at most n roundings, and each sweep adds at most n more.
+This is the main theorem of chapter 9 in Higham (Sources). It is stated here with its key step, not proved line by line: each entry of $`\hat L \hat U`$ is built by at most n roundings, and each sweep adds at most n more.
 
-So the size of $\Delta A$ is set by $|\hat L|\,|\hat U|$, not by A. Pivoting keeps $|\ell_{ik}| \le 1$, and by the definition of g every entry of U is at most g times the largest entry of A. So each entry of $|\hat L||\hat U|$ is at most $n g \max|a_{ij}|$, and each row sum at most $n^2 g \|A\|_\infty$. That gives the bound in The formula.
+So the size of $`\Delta A`$ is set by $`|\hat L|\,|\hat U|`$, not by A. Pivoting keeps $`|\ell_{ik}| \le 1`$, and by the definition of g every entry of U is at most g times the largest entry of A. So each entry of $`|\hat L||\hat U|`$ is at most $`n g \max|a_{ij}|`$, and each row sum at most $`n^2 g \|A\|_\infty`$. That gives the bound in The formula.
 
-Without pivoting, a tiny pivot makes huge multipliers, and $|L||U|$ can be enormous even when A is tame. That is a **stability** failure: the method is at fault, not the problem ([Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md)). The network's κ is 11.79, so the problem is well conditioned. The relative error in x is then at most about κ times the relative nudge to A, to first order in the nudge ([Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md)).
+Without pivoting, a tiny pivot makes huge multipliers, and $`|L||U|`$ can be enormous even when A is tame. That is a **stability** failure: the method is at fault, not the problem ([Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md)). The network's κ is 11.79, so the problem is well conditioned. The relative error in x is then at most about κ times the relative nudge to A, to first order in the nudge ([Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md)).
 
 ### The picture: error against the leak, with and without pivoting
 
-Give each junction a leak λ (L/s lost per m of head). Physically it changes almost nothing. Numerically, without pivoting, $-\lambda$ sits in the pivot seat.
+Give each junction a leak λ (L/s lost per m of head). Physically it changes almost nothing. Numerically, without pivoting, $`-\lambda`$ sits in the pivot seat.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -147,42 +157,42 @@ Each point is the gap between the LU answer and the independent nodal answer, wh
 
 ## Worked numbers, by hand
 
-Unknowns in the order $(h_1, h_2, q_1, q_2, q_3)$. Junction rows say flow in = flow out + demand. Pipe rows say head lost = r × flow.
+Unknowns in the order $`(h_1, h_2, q_1, q_2, q_3)`$. Junction rows say flow in = flow out + demand. Pipe rows say head lost = r × flow.
 
-| Row | $h_1$ | $h_2$ | $q_1$ | $q_2$ | $q_3$ | right side |
+| Row | $`h_1`$ | $`h_2`$ | $`q_1`$ | $`q_2`$ | $`q_3`$ | right side |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| J1: $q_1 - q_2 = d_1$ | 0 | 0 | 1 | −1 | 0 | $d_1$ |
-| J2: $q_2 + q_3 = d_2$ | 0 | 0 | 0 | 1 | 1 | $d_2$ |
-| pipe 1: $h_1 + r_1 q_1 = H$ | 1 | 0 | 0.1 | 0 | 0 | 60 |
-| pipe 2: $-h_1 + h_2 + r_2 q_2 = 0$ | −1 | 1 | 0 | 0.3 | 0 | 0 |
-| pipe 3: $h_2 + r_3 q_3 = H$ | 0 | 1 | 0 | 0 | 0.4 | 60 |
+| J1: $`q_1 - q_2 = d_1`$ | 0 | 0 | 1 | −1 | 0 | $`d_1`$ |
+| J2: $`q_2 + q_3 = d_2`$ | 0 | 0 | 0 | 1 | 1 | $`d_2`$ |
+| pipe 1: $`h_1 + r_1 q_1 = H`$ | 1 | 0 | 0.1 | 0 | 0 | 60 |
+| pipe 2: $`-h_1 + h_2 + r_2 q_2 = 0`$ | −1 | 1 | 0 | 0.3 | 0 | 0 |
+| pipe 3: $`h_2 + r_3 q_3 = H`$ | 0 | 1 | 0 | 0 | 0.4 | 60 |
 
 The top-left entry is 0. Junction balances never contain a head, so plain elimination divides by zero at step 1.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| 1. pivot in column $h_1$ | entries 0, 0, 1, −1, 0; first largest is pipe 1's 1 | swap pipe 1 to the top |
-| 1. clear column $h_1$ | pipe 2's multiplier −1 ÷ 1 = −1; pipe 2 + pipe 1 | pipe 2 becomes (0, 1, 0.1, 0.3, 0) |
-| 2. pivot in column $h_2$ | remaining 0, 0, 1, 1; first largest is pipe 2's 1 | swap pipe 2 into row 2 |
-| 2. clear column $h_2$ | pipe 3's multiplier 1; pipe 3 − pipe 2 | pipe 3 becomes (0, 0, −0.1, −0.3, 0.4) |
-| 3. pivot in column $q_1$ | J1's 1 against pipe 3's −0.1 | no swap |
-| 3. clear column $q_1$ | multiplier −0.1 ÷ 1 = −0.1; pipe 3 + 0.1 × J1 | pipe 3 becomes (0, 0, 0, −0.4, 0.4) |
-| 4. clear column $q_2$ | J2's 1 is the pivot; multiplier −0.4; pipe 3 + 0.4 × J2 | pipe 3 becomes (0, 0, 0, 0, 0.8) |
+| 1. pivot in column $`h_1`$ | entries 0, 0, 1, −1, 0; first largest is pipe 1's 1 | swap pipe 1 to the top |
+| 1. clear column $`h_1`$ | pipe 2's multiplier −1 ÷ 1 = −1; pipe 2 + pipe 1 | pipe 2 becomes (0, 1, 0.1, 0.3, 0) |
+| 2. pivot in column $`h_2`$ | remaining 0, 0, 1, 1; first largest is pipe 2's 1 | swap pipe 2 into row 2 |
+| 2. clear column $`h_2`$ | pipe 3's multiplier 1; pipe 3 − pipe 2 | pipe 3 becomes (0, 0, −0.1, −0.3, 0.4) |
+| 3. pivot in column $`q_1`$ | J1's 1 against pipe 3's −0.1 | no swap |
+| 3. clear column $`q_1`$ | multiplier −0.1 ÷ 1 = −0.1; pipe 3 + 0.1 × J1 | pipe 3 becomes (0, 0, 0, −0.4, 0.4) |
+| 4. clear column $`q_2`$ | J2's 1 is the pivot; multiplier −0.4; pipe 3 + 0.4 × J2 | pipe 3 becomes (0, 0, 0, 0, 0.8) |
 | row order, swaps | pipe 1, pipe 2, J1, J2, pipe 3 | 2 swaps |
 | last pivot | 0.1 + 0.3 + 0.4 | 0.8: the loop's total resistance |
-| determinant | $(-1)^2 \times 1 \times 1 \times 1 \times 1 \times 0.8$ | 0.8, same as cofactor expansion |
+| determinant | $`(-1)^2 \times 1 \times 1 \times 1 \times 1 \times 0.8`$ | 0.8, same as cofactor expansion |
 | factor cost | n = 5 | 70 flops |
-| forward sweep, morning | $Pb$ = (60, 0, 20, 30, 60); $y_2 = 0 + 60$; $y_5 = 60 - (60 - 0.1 \times 20 - 0.4 \times 30)$ | y = (60, 60, 20, 30, 14) |
-| back sweep | $q_3 = 14 \div 0.8$; $q_2 = 30 - 17.5$; $q_1 = 20 + 12.5$ | 17.50, 12.50, 32.50 L/s |
-| back sweep | $h_2 = 60 - 0.1 \times 32.5 - 0.3 \times 12.5$; $h_1 = 60 - 0.1 \times 32.5$ | 53.00, 56.75 m |
-| solve cost | $2 \times 25 - 5$ | 45 flops |
+| forward sweep, morning | $`Pb`$ = (60, 0, 20, 30, 60); $`y_2 = 0 + 60`$; $`y_5 = 60 - (60 - 0.1 \times 20 - 0.4 \times 30)`$ | y = (60, 60, 20, 30, 14) |
+| back sweep | $`q_3 = 14 \div 0.8`$; $`q_2 = 30 - 17.5`$; $`q_1 = 20 + 12.5`$ | 17.50, 12.50, 32.50 L/s |
+| back sweep | $`h_2 = 60 - 0.1 \times 32.5 - 0.3 \times 12.5`$; $`h_1 = 60 - 0.1 \times 32.5`$ | 53.00, 56.75 m |
+| solve cost | $`2 \times 25 - 5`$ | 45 flops |
 | **six patterns** | **70 + 6 × 45, against 6 × (70 + 45) refactoring** | **340 flops against 690** |
 
-The morning peak sends 32.50 L/s down pipe 1, 12.50 L/s round the loop through pipe 2 and 17.50 L/s down pipe 3, and J2 sits at 53.00 m of head. The last row of $Ux = y$, 0.8 × q3 = 14, is the loop equation: head lost on the long way round equals head lost on the short way.
+The morning peak sends 32.50 L/s down pipe 1, 12.50 L/s round the loop through pipe 2 and 17.50 L/s down pipe 3, and J2 sits at 53.00 m of head. The last row of $`Ux = y`$, 0.8 × q3 = 14, is the loop equation: head lost on the long way round equals head lost on the short way.
 
 The other five patterns reuse the same L and U:
 
-| Pattern | $d_1$ | $d_2$ | $h_1$ (m) | $h_2$ (m) | $q_1$ | $q_2$ | $q_3$ (L/s) |
+| Pattern | $`d_1`$ | $`d_2`$ | $`h_1`$ (m) | $`h_2`$ (m) | $`q_1`$ | $`q_2`$ | $`q_3`$ (L/s) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | night | 8 | 12 | 58.70 | 57.20 | 13.00 | 5.00 | 7.00 |
 | morning | 20 | 30 | 56.75 | 53.00 | 32.50 | 12.50 | 17.50 |
@@ -200,7 +210,7 @@ Every answer agrees with two independent roads to within 4.26e-14. The fire hydr
 | No pivoting, no leak | zero pivot at step 1: the program stops | The junction row has no head in it, so its first entry is 0 |
 | No pivoting, leak λ = 1e-14 | q1 = 32.153846 instead of 32.500000; 3.46e-1 off the nodal answer, growth 2.00e14 | A pivot of −1e-14 makes multipliers of 1e14; the bound, 8.33e0, is useless |
 | Pivoting done, b not reordered | h1 = 16.00 instead of 56.75; q2 = −20.00 instead of 12.50 | L and U belong to PA, so the right side must be Pb |
-| Pivoting on Wilkinson's matrix, n = 60 | growth 5.76e17 = $2^{59}$; error 0.80 in an answer whose entries lie between −0.5 and 0.5 | Partial pivoting bounds g only by $2^{n-1}$; this matrix (1 on the diagonal, −1 below it, 1 down the last column) reaches it with no swaps |
+| Pivoting on Wilkinson's matrix, n = 60 | growth 5.76e17 = $`2^{59}`$; error 0.80 in an answer whose entries lie between −0.5 and 0.5 | Partial pivoting bounds g only by $`2^{n-1}`$; this matrix (1 on the diagonal, −1 below it, 1 down the last column) reaches it with no swaps |
 
 With the leak, the unpivoted answer's relative error, 6.13e-3, sits under κ times its backward error, 2.69e-2: the bound is 4.4 times the true error. With pivoting the backward error is 2.72e-17, and the theorem's bound of 4.16e-14 is 1530 times larger: a safe ceiling, not a forecast.
 
@@ -208,7 +218,7 @@ With the leak, the unpivoted answer's relative error, 6.13e-3, sits under κ tim
 
 ## Code, from first principles, and it actually runs
 
-The code factors the network matrix with partial pivoting, counting every flop, and solves all six patterns from that one factorisation. It takes three roads to each answer. Road one is LU. Road two, the nodal method, writes each flow as head drop ÷ r and solves a 2 by 2 system for the heads by Cramer's rule. Road three, with no leak, balances head loss round the loop, which gives $q_2$ in closed form. The code also checks the pivot rule on `[[1, 2], [-3, 4]]`, where choosing by sign instead of size would pick the wrong row, rebuilds PA from L times U, checks the determinant by cofactor expansion, checks the flop counts against the formulas, and measures backward error from the **residual** $b - A\hat x$, which needs no reference answer.
+The code factors the network matrix with partial pivoting, counting every flop, and solves all six patterns from that one factorisation. It takes three roads to each answer. Road one is LU. Road two, the nodal method, writes each flow as head drop ÷ r and solves a 2 by 2 system for the heads by Cramer's rule. Road three, with no leak, balances head loss round the loop, which gives $`q_2`$ in closed form. The code also checks the pivot rule on `[[1, 2], [-3, 4]]`, where choosing by sign instead of size would pick the wrong row, rebuilds PA from L times U, checks the determinant by cofactor expansion, checks the flop counts against the formulas, and measures backward error from the **residual** $`b - A\hat x`$, which needs no reference answer.
 
 ### Python
 
@@ -610,11 +620,11 @@ The two outputs are identical. Every multiplier in L is at most 1 in size and th
 
 Lean proves Steps 2 and 3 for every size n, and checks the network's numbers in exact fractions.
 
-- Every square matrix that is not singular has a row order P with $PA = LU$. L has 1s on its diagonal and every multiplier at most 1 in size; U has no zero pivot.
-- If $PA = LU$, then x solves $Ax = b$ exactly when some y has $Ly = Pb$ and $Ux = y$.
-- If $PA = LU$, with L and U triangles and 1s on the diagonal of L, then $\det A = (-1)^{\text{swaps}}$ times the product of the pivots.
-- For the network, the row order pipe 1, pipe 2, J1, J2, pipe 3 gives $PA = LU$ with the L and U above.
-- Every multiplier in that L is at most 1 in size, and $\det A = 0.8$, the loop's total resistance.
+- Every square matrix that is not singular has a row order P with $`PA = LU`$. L has 1s on its diagonal and every multiplier at most 1 in size; U has no zero pivot.
+- If $`PA = LU`$, then x solves $`Ax = b`$ exactly when some y has $`Ly = Pb`$ and $`Ux = y`$.
+- If $`PA = LU`$, with L and U triangles and 1s on the diagonal of L, then $`\det A = (-1)^{\text{swaps}}`$ times the product of the pivots.
+- For the network, the row order pipe 1, pipe 2, J1, J2, pipe 3 gives $`PA = LU`$ with the L and U above.
+- Every multiplier in that L is at most 1 in size, and $`\det A = 0.8`$, the loop's total resistance.
 - The morning sweeps give y = (60, 60, 20, 30, 14), and all six patterns' heads and flows solve their systems exactly.
 - Sweeping with b not reordered gives h1 = 16.00 m, which does not solve the morning system.
 - The flop formulas give the card's counts at n = 5, 500 and 2,000.
@@ -969,7 +979,7 @@ example : (4 * 2000 ^ 3 - 3 * 2000 ^ 2 - 2000) / 6 = 5331333000 ∧
 >
 > Smaller traps:
 > - **Forgetting to reorder b.** L and U factor PA, not A. Solving with b in its original order gives h1 = 16.00 m instead of 56.75, and reverses the flow in pipe 2 to −20.00 L/s.
-> - **Computing the inverse to reuse it.** Forming $A^{-1}$ at n = 500 costs 332,958,250 flops, 4.00 times the factorisation, and each pattern then costs the same 499,500 flops as a solve. Keep L and U instead; they are also more accurate.
+> - **Computing the inverse to reuse it.** Forming $`A^{-1}`$ at n = 500 costs 332,958,250 flops, 4.00 times the factorisation, and each pattern then costs the same 499,500 flops as a solve. Keep L and U instead; they are also more accurate.
 > - **Trusting partial pivoting blindly.** Its guarantee rests on a small growth factor. Wilkinson's matrix at n = 60 reaches 5.76e17 and returns an error of 0.80. Tracking g during the factorisation costs no flops and shows when this has happened.
 
 ---
@@ -983,13 +993,13 @@ example : (4 * 2000 ^ 3 - 3 * 2000 ^ 2 - 2000) / 6 = 5331333000 ∧
 - **Stiff differential equations.** Implicit solvers keep the LU of one Jacobian matrix across several steps and many Newton iterations, refactoring only when convergence slows.
 
 > **Say it back**
-> LU factorisation is Gaussian elimination with its multipliers kept in L and its result kept in U. With the row order P that pivoting chose, PA = LU. Each new right-hand side then costs one sweep down L and one up U, about $2n^2$ flops against $\tfrac{2}{3}n^3$ for the factorisation. Partial pivoting puts the largest entry of each column in the pivot seat, so no multiplier exceeds 1. That keeps rounding errors from being blown up, unless the entries of U themselves grow, which is rare but possible.
+> LU factorisation is Gaussian elimination with its multipliers kept in L and its result kept in U. With the row order P that pivoting chose, PA = LU. Each new right-hand side then costs one sweep down L and one up U, about $`2n^2`$ flops against $`\tfrac{2}{3}n^3`$ for the factorisation. Partial pivoting puts the largest entry of each column in the pivot seat, so no multiplier exceeds 1. That keeps rounding errors from being blown up, unless the entries of U themselves grow, which is rare but possible.
 
 ---
 
 ## What this builds on
 
-- [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md): the norm $\|A\|_\infty$ and κ(A), which turn the backward error of this card into a bound on the error in x.
+- [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md): the norm $`\|A\|_\infty`$ and κ(A), which turn the backward error of this card into a bound on the error in x.
 - [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): the row moves, the pivot and back substitution, which this card records as P, L and U.
 - [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): a triangle's determinant is its diagonal product and a swap flips the sign, so LU gives the determinant for free.
 
@@ -997,12 +1007,12 @@ example : (4 * 2000 ^ 3 - 3 * 2000 ^ 2 - 2000) / 6 = 5331333000 ∧
 
 ## Where this goes next
 
-- [The Thomas algorithm](03-tridiagonal-systems-and-the-thomas-algorithm.md): LU on a matrix with only three diagonals, where the work grows like n instead of $n^3$.
-- [Cholesky](04-cholesky-decomposition.md): for a symmetric positive definite matrix, $A = LL^T$ needs no pivoting and half the flops.
+- [The Thomas algorithm](03-tridiagonal-systems-and-the-thomas-algorithm.md): LU on a matrix with only three diagonals, where the work grows like n instead of $`n^3`$.
+- [Cholesky](04-cholesky-decomposition.md): for a symmetric positive definite matrix, $`A = LL^T`$ needs no pivoting and half the flops.
 
 Later on this shelf, [QR](05-qr-householder-and-gram-schmidt.md) factors by reflections, which keep every column's length, so no entry grows. [Iterating instead of factoring](09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md) avoids factoring a large sparse matrix at all.
 
-The question this card leaves open: when a matrix has special structure, such as only three diagonals or symmetry, how much of the $\tfrac{2}{3}n^3$ work and of the pivoting can be skipped?
+The question this card leaves open: when a matrix has special structure, such as only three diagonals or symmetry, how much of the $`\tfrac{2}{3}n^3`$ work and of the pivoting can be skipped?
 
 ---
 
@@ -1010,8 +1020,8 @@ The question this card leaves open: when a matrix has special structure, such as
 
 Verified 2026-11-11: every link below resolves to the publisher's page. Each DOI's title and first author were checked against Crossref.
 
-- Higham, Nicholas J. *Accuracy and Stability of Numerical Algorithms*, 2nd ed. SIAM, 2002. [doi:10.1137/1.9780898718027](https://doi.org/10.1137/1.9780898718027). Chapter 9: the backward error bound $|\Delta A| \le \gamma_{3n}|\hat L||\hat U|$, the growth factor and Wilkinson's matrix.
+- Higham, Nicholas J. *Accuracy and Stability of Numerical Algorithms*, 2nd ed. SIAM, 2002. [doi:10.1137/1.9780898718027](https://doi.org/10.1137/1.9780898718027). Chapter 9: the backward error bound $`|\Delta A| \le \gamma_{3n}|\hat L||\hat U|`$, the growth factor and Wilkinson's matrix.
 - Trefethen, Lloyd N., and David Bau III. *Numerical Linear Algebra*. SIAM, 1997. [doi:10.1137/1.9780898719574](https://doi.org/10.1137/1.9780898719574). Lectures on LU, pivoting and the stability of elimination, with PA = LU derived from elimination.
-- Wilkinson, J. H. "Error Analysis of Direct Methods of Matrix Inversion." *Journal of the ACM* 8, no. 3 (1961): 281–330. [doi:10.1145/321075.321076](https://doi.org/10.1145/321075.321076). Backward error analysis of elimination and the bound $2^{n-1}$ on growth with partial pivoting.
+- Wilkinson, J. H. "Error Analysis of Direct Methods of Matrix Inversion." *Journal of the ACM* 8, no. 3 (1961): 281–330. [doi:10.1145/321075.321076](https://doi.org/10.1145/321075.321076). Backward error analysis of elimination and the bound $`2^{n-1}`$ on growth with partial pivoting.
 - Trefethen, Lloyd N., and Robert S. Schreiber. "Average-Case Stability of Gaussian Elimination." *SIAM Journal on Matrix Analysis and Applications* 11, no. 3 (1990): 335–360. [doi:10.1137/0611023](https://doi.org/10.1137/0611023). Why large growth almost never happens on matrices met in practice.
 - Todini, Ezio, and Lewis A. Rossman. "Unified Framework for Deriving Simultaneous Equation Algorithms for Water Distribution Networks." *Journal of Hydraulic Engineering* 139, no. 5 (2013): 511–526. [doi:10.1061/(ASCE)HY.1943-7900.0000703](https://doi.org/10.1061/(ASCE)HY.1943-7900.0000703). Network equations written in flows and heads together, and the linear systems that solvers build from them.

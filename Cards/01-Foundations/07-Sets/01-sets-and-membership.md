@@ -46,10 +46,10 @@ Or state the test instead. This is **set-builder shorthand**:
 
 | Symbol | Plain meaning | In our party |
 | --- | --- | --- |
-| $G$ | a name for one set: the guest list | Ana, Cleo, Eli |
-| $\in$ | "is on it", the one question a set answers | Ana $\in$ G |
-| $\notin$ | "is not on it" | Ben $\notin$ G |
-| $\emptyset$ | the empty set: nobody on it | the office under-20s |
+| $`G`$ | a name for one set: the guest list | Ana, Cleo, Eli |
+| $`\in`$ | "is on it", the one question a set answers | Ana $`\in`$ G |
+| $`\notin`$ | "is not on it" | Ben $`\notin`$ G |
+| $`\emptyset`$ | the empty set: nobody on it | the office under-20s |
 | { } | braces: the members are what sits inside | {Ana, Cleo, Eli} |
 | : | inside braces, "such that" | {x in the office : x is under 30} |
 
@@ -78,7 +78,7 @@ Nothing could tell the two apart. One set, three members, not four. The rule has
 
 ### The list with nobody on it
 
-Ask for everyone in the office under 20. Nobody. Everyone over 60. Nobody. Two rules, no members. Same members — none — so the same set. There is exactly one such set: the **empty set**, written $\emptyset$ or as empty braces { }.
+Ask for everyone in the office under 20. Nobody. Everyone over 60. Nobody. Two rules, no members. Same members — none — so the same set. There is exactly one such set: the **empty set**, written $`\emptyset`$ or as empty braces { }.
 
 It is a thing, not the absence of one: an envelope with no invitation is still an envelope. And a list with the empty list written on it is not empty — it has one entry.
 

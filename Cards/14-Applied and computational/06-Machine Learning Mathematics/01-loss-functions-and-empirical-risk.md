@@ -40,38 +40,46 @@ Orange: root-mean-square miss, lowest near £95; its exact bottom is the mean, �
 
 ## The formula
 
-Notation first. The orders used for fitting are numbered $i = 1$ to $n$. Order $i$ has value $y_i$ in pounds and twelve numbers $x_{i1}, \dots, x_{i,12}$. A rule turns those into a prediction $\hat y_i$; the hat marks a value the rule produces, as on [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md). The rule here is a weighted sum,
+Notation first. The orders used for fitting are numbered $`i = 1`$ to $`n`$. Order $`i`$ has value $`y_i`$ in pounds and twelve numbers $`x_{i1}, \dots, x_{i,12}`$. A rule turns those into a prediction $`\hat y_i`$; the hat marks a value the rule produces, as on [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md). The rule here is a weighted sum,
 
-$$\hat y_i = w_0 + w_1 x_{i1} + w_2 x_{i2} + \dots + w_{12}\,x_{i,12},$$
+```math
+\hat y_i = w_0 + w_1 x_{i1} + w_2 x_{i2} + \dots + w_{12}\,x_{i,12},
+```
 
-whose 13 adjustable numbers $w = (w_0, \dots, w_{12})$ are its **weights**; $w_0$ is the starting amount every prediction gets. A **loss** $\ell(y, \hat y)$ (a script l) scores one prediction. The **empirical risk** of the weights is the average loss:
+whose 13 adjustable numbers $`w = (w_0, \dots, w_{12})`$ are its **weights**; $`w_0`$ is the starting amount every prediction gets. A **loss** $`\ell(y, \hat y)`$ (a script l) scores one prediction. The **empirical risk** of the weights is the average loss:
 
-$$\hat R(w) = \frac{1}{n}\sum_{i=1}^{n} \ell\big(y_i,\ \hat y_i\big)$$
+```math
+\hat R(w) = \frac{1}{n}\sum_{i=1}^{n} \ell\big(y_i,\ \hat y_i\big)
+```
 
-**Read it aloud:** the empirical risk of a set of weights is the loss of each of its predictions, averaged over the $n$ orders on file.
+**Read it aloud:** the empirical risk of a set of weights is the loss of each of its predictions, averaged over the $`n`$ orders on file.
 
 Four losses cover most practice. For amounts, such as an order's value:
 
-$$\text{squared: } (y - \hat y)^2 \qquad\qquad \text{absolute: } |y - \hat y|$$
+```math
+\text{squared: } (y - \hat y)^2 \qquad\qquad \text{absolute: } |y - \hat y|
+```
 
-For yes-or-no questions, such as "will this order be sent back?", the answer is coded $y = +1$ (returned) or $y = -1$ (kept), and the rule outputs a **score** $s$, positive for "returned". The product $m = y\,s$ is the **margin**: positive when the score points the right way, and larger the more room it leaves.
+For yes-or-no questions, such as "will this order be sent back?", the answer is coded $`y = +1`$ (returned) or $`y = -1`$ (kept), and the rule outputs a **score** $`s`$, positive for "returned". The product $`m = y\,s`$ is the **margin**: positive when the score points the right way, and larger the more room it leaves.
 
-$$\text{hinge: } \max(0,\ 1 - m) \qquad\qquad \text{log: } \ln\big(1 + e^{-m}\big)$$
+```math
+\text{hinge: } \max(0,\ 1 - m) \qquad\qquad \text{log: } \ln\big(1 + e^{-m}\big)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | orders used for fitting | 16,000 | the average settles nearer the true risk |
-| $i$, $j$ | which order; which of its 12 numbers | order 1; number 1 is items in the basket | — |
-| $y_i$ | the value of order $i$, in pounds | £14 to £102 in the five-order sample below | the mean rises by $1/n$ of the rise; the median may not move |
-| $x_{ij}$ | the $j$-th of order $i$'s 12 numbers | items in the basket: 1 to 8 | the prediction moves by $w_j$ per unit |
-| $w$, $w_0$, $w_j$ | the weights; the starting amount; the weight on number $j$ | fitted: £34.77 to start, £5.95 per item | — |
-| $\hat y_i$ | the rule's prediction for order $i$ | the weighted sum above | — |
-| $c$, $\bar y$ | one fixed guess used for every order, the simplest rule; the mean order value | both £96.04 at the squared-loss best | squared risk grows by $(c - \bar y)^2$ |
-| $\ell(y, \hat y)$ | the loss: the score for one prediction | squared, $(y - \hat y)^2$ | — |
-| $\hat R(w)$ | empirical risk: average loss on the orders used for fitting | 901.09 square pounds, 12-number rule | — |
-| $R(w)$ | true risk: average loss over all orders to come, estimated on 4,000 orders kept aside | 908.25 square pounds | — |
-| $s$, $m$ | a yes-or-no rule's score; the margin $m = y\,s$ | $m = 1$: hinge loss 0, log loss 0.3133 | both losses fall |
-| $q$, $p$ | the true chance an order like this is returned; the rule's forecast of it | $q = 0.1$, 1 in 10 | — |
+| $`n`$ | orders used for fitting | 16,000 | the average settles nearer the true risk |
+| $`i`$, $`j`$ | which order; which of its 12 numbers | order 1; number 1 is items in the basket | — |
+| $`y_i`$ | the value of order $`i`$, in pounds | £14 to £102 in the five-order sample below | the mean rises by $`1/n`$ of the rise; the median may not move |
+| $`x_{ij}`$ | the $`j`$-th of order $`i`$'s 12 numbers | items in the basket: 1 to 8 | the prediction moves by $`w_j`$ per unit |
+| $`w`$, $`w_0`$, $`w_j`$ | the weights; the starting amount; the weight on number $`j`$ | fitted: £34.77 to start, £5.95 per item | — |
+| $`\hat y_i`$ | the rule's prediction for order $`i`$ | the weighted sum above | — |
+| $`c`$, $`\bar y`$ | one fixed guess used for every order, the simplest rule; the mean order value | both £96.04 at the squared-loss best | squared risk grows by $`(c - \bar y)^2`$ |
+| $`\ell(y, \hat y)`$ | the loss: the score for one prediction | squared, $`(y - \hat y)^2`$ | — |
+| $`\hat R(w)`$ | empirical risk: average loss on the orders used for fitting | 901.09 square pounds, 12-number rule | — |
+| $`R(w)`$ | true risk: average loss over all orders to come, estimated on 4,000 orders kept aside | 908.25 square pounds | — |
+| $`s`$, $`m`$ | a yes-or-no rule's score; the margin $`m = y\,s`$ | $`m = 1`$: hinge loss 0, log loss 0.3133 | both losses fall |
+| $`q`$, $`p`$ | the true chance an order like this is returned; the rule's forecast of it | $`q = 0.1`$, 1 in 10 | — |
 
 ### When it holds
 
@@ -87,17 +95,19 @@ $$\text{hinge: } \max(0,\ 1 - m) \qquad\qquad \text{log: } \ln\big(1 + e^{-m}\bi
 
 ### Step 0: an average over the orders in hand stands in for the orders to come
 
-The shop cares about the true risk $R(w)$: the average loss on every order it will ever take. That cannot be measured. But it is an average over orders drawn the same way as the ones on file, and an average over many such orders lands near it, by the law of large numbers. So the shop minimises the average it can measure, $\hat R(w)$.
+The shop cares about the true risk $`R(w)`$: the average loss on every order it will ever take. That cannot be measured. But it is an average over orders drawn the same way as the ones on file, and an average over many such orders lands near it, by the law of large numbers. So the shop minimises the average it can measure, $`\hat R(w)`$.
 
-Two consequences follow, and the rest of the card is about them. The loss decides which answer counts as best. And the rule picked to make $\hat R$ small was picked partly for the noise in these particular rows, so its own $\hat R$ is optimistic.
+Two consequences follow, and the rest of the card is about them. The loss decides which answer counts as best. And the rule picked to make $`\hat R`$ small was picked partly for the noise in these particular rows, so its own $`\hat R`$ is optimistic.
 
 ### Step 1: squared loss is minimised by the mean
 
-Try one fixed guess $c$ for every order. Write the mean of the values as $\bar y$. Each miss splits into the order's distance from the mean plus the mean's distance from the guess: $y_i - c = (y_i - \bar y) + (\bar y - c)$. Square and average. The cross term is $2(\bar y - c)$ times the average of $y_i - \bar y$, and distances from a mean average to zero. What is left is
+Try one fixed guess $`c`$ for every order. Write the mean of the values as $`\bar y`$. Each miss splits into the order's distance from the mean plus the mean's distance from the guess: $`y_i - c = (y_i - \bar y) + (\bar y - c)`$. Square and average. The cross term is $`2(\bar y - c)`$ times the average of $`y_i - \bar y`$, and distances from a mean average to zero. What is left is
 
-$$\hat R(c) = \hat R(\bar y) + (c - \bar y)^2.$$
+```math
+\hat R(c) = \hat R(\bar y) + (c - \bar y)^2.
+```
 
-The first term does not depend on $c$. The second is a square, zero only at $c = \bar y$. So the mean is the one best guess, and every other guess pays exactly its squared distance from the mean.
+The first term does not depend on $`c`$. The second is a square, zero only at $`c = \bar y`$. So the mean is the one best guess, and every other guess pays exactly its squared distance from the mean.
 
 On the 16,000 orders: the mean £96.04 scores 1,262.24 square pounds. The median £91.07 scores 1,286.99. The gap is 24.75. The code squares the distance from median to mean, using the unrounded values, and gets 24.75 too, as the identity says. (Squaring the rounded pounds-and-pence figures gives slightly less.)
 
@@ -111,7 +121,7 @@ Why the two answers differ: squared loss pays the square of a miss, so one very 
 
 ### Step 3: with 12 numbers, squared loss is least squares
 
-Swap the fixed guess for the weighted sum. With squared loss, $\hat R(w)$ is the least-squares score of [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md) with 12 inputs instead of one, and its bottom is where the risk has no slope in any direction: thirteen equations, one per weight, called the normal equations. The code solves them by elimination, then measures the slope of $\hat R$ at the answer directly. The largest slope is 0.00.
+Swap the fixed guess for the weighted sum. With squared loss, $`\hat R(w)`$ is the least-squares score of [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md) with 12 inputs instead of one, and its bottom is where the risk has no slope in any direction: thirteen equations, one per weight, called the normal equations. The code solves them by elimination, then measures the slope of $`\hat R`$ at the answer directly. The largest slope is 0.00.
 
 The fitted weights land near the hidden rule that made the data: £5.95 per item (true: £6), £1.07 per pound of average price (true: £1.10), £0.03 per hour of day (true: 0). The starting amount is £34.77, not the hidden rule's £4, and Step 1 says why. The hidden rule adds a random extra spend that averages £30, and squared loss aims at the average. With 12 numbers it predicts the average value of orders with those numbers.
 
@@ -138,13 +148,15 @@ Orange: zero-one loss, a step at 0 (the chart joins its points with a straight s
 
 ### Step 5: log loss rewards an honest chance; hinge loss does not
 
-Suppose 1 in 10 orders like this one comes back, so $q = 0.1$. A rule that forecasts a chance $p$ pays $-\ln p$ when the order is returned and $-\ln(1 - p)$ when it is kept. This is the log loss above: with $p = 1/(1 + e^{-s})$, the logistic curve of [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md), $-\ln p$ for a returned order equals $\ln(1 + e^{-s})$. Averaged over many such orders, the forecast $p$ pays
+Suppose 1 in 10 orders like this one comes back, so $`q = 0.1`$. A rule that forecasts a chance $`p`$ pays $`-\ln p`$ when the order is returned and $`-\ln(1 - p)`$ when it is kept. This is the log loss above: with $`p = 1/(1 + e^{-s})`$, the logistic curve of [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md), $`-\ln p`$ for a returned order equals $`\ln(1 + e^{-s})`$. Averaged over many such orders, the forecast $`p`$ pays
 
-$$-\big(q \ln p + (1 - q)\ln(1 - p)\big).$$
+```math
+-\big(q \ln p + (1 - q)\ln(1 - p)\big).
+```
 
-Its slope in $p$ is $-q/p + (1 - q)/(1 - p)$, which is zero only at $p = q$; below $q$ the slope is negative and above it positive. So the honest forecast scores best: 0.3251 at $p = 0.1$, against 0.4414 at 0.3 and 0.6931 at 0.5. A loss whose average is lowest at the true chance is called **proper**.
+Its slope in $`p`$ is $`-q/p + (1 - q)/(1 - p)`$, which is zero only at $`p = q`$; below $`q`$ the slope is negative and above it positive. So the honest forecast scores best: 0.3251 at $`p = 0.1`$, against 0.4414 at 0.3 and 0.6931 at 0.5. A loss whose average is lowest at the true chance is called **proper**.
 
-Hinge loss on a score $s$ averages $q\max(0, 1 - s) + (1 - q)\max(0, 1 + s)$. For any $q$ below one half this is lowest at $s = -1$, "kept", with the value $2q$: 0.2000 when $q = 0.1$, 0.8000 when $q = 0.4$. The best score is the same −1 whether 1 in 10 or 4 in 10 orders come back. Hinge loss buys a decision; log loss buys a chance. [Support vector machines](09-kernels-and-support-vector-machines.md) use the first and [Softmax and cross-entropy](05-softmax-and-cross-entropy-for-classification.md) the second.
+Hinge loss on a score $`s`$ averages $`q\max(0, 1 - s) + (1 - q)\max(0, 1 + s)`$. For any $`q`$ below one half this is lowest at $`s = -1`$, "kept", with the value $`2q`$: 0.2000 when $`q = 0.1`$, 0.8000 when $`q = 0.4`$. The best score is the same −1 whether 1 in 10 or 4 in 10 orders come back. Hinge loss buys a decision; log loss buys a chance. [Support vector machines](09-kernels-and-support-vector-machines.md) use the first and [Softmax and cross-entropy](05-softmax-and-cross-entropy-for-classification.md) the second.
 
 ---
 
@@ -176,7 +188,7 @@ The £102 order alone supplies 3,844 of the 5,038: squared loss lets one big bas
 | Forecast revenue from the absolute-loss guess | £364,271.87 for 4,000 orders that came to £383,756.51: £19,484.64 short | The median ignores how big the big orders are. A sum needs the mean: £416.86 over, or the 12-number rule, £928.44 under |
 | Fit 13 weights on 20 orders and trust the training risk | 209.25 on the 20; 2,520.14 on the 4,000 kept aside | Few rows per weight: the weights copied the noise |
 | Keep squared loss when 100 of 16,000 orders were keyed in pence | mean £152.73 instead of £96.04; median £91.33 | Squaring gives a wild row a huge vote; the mean moved by exactly 99 × (their total) / 16,000 = £56.69 |
-| Use hinge loss to estimate the chance of a return | best score −1 at $q = 0.1$ and at $q = 0.4$ | Hinge loss is not proper: it returns a side, not a chance |
+| Use hinge loss to estimate the chance of a return | best score −1 at $`q = 0.1`$ and at $`q = 0.4`$ | Hinge loss is not proper: it returns a side, not a chance |
 
 ---
 
@@ -590,12 +602,12 @@ ALL CHECKS PASS
 
 Lean proves Steps 1, 2 and 5 for every list of values and every chance, and checks the five-order sums.
 
-- Take any $n \ge 1$ values and any fixed guess $c$. Then $\hat R(c) = \hat R(\bar y) + (c - \bar y)^2$ under squared loss. So every other guess scores strictly worse than the mean.
+- Take any $`n \ge 1`$ values and any fixed guess $`c`$. Then $`\hat R(c) = \hat R(\bar y) + (c - \bar y)^2`$ under squared loss. So every other guess scores strictly worse than the mean.
 - Take any list of values and any median: at least half lie at or below it, and at least half at or above it. Then no fixed guess has a smaller average absolute loss.
-- Take a true chance $q$ and a forecast $p \ne q$, both strictly between 0 and 1. Then $p$ pays a strictly larger average log loss than $q$. So log loss is proper.
+- Take a true chance $`q`$ and a forecast $`p \ne q`$, both strictly between 0 and 1. Then $`p`$ pays a strictly larger average log loss than $`q`$. So log loss is proper.
 - Take the five made-up orders. Then the mean is £40, and £27 is a median.
 - Take the same five orders. Then the squared losses total 5,038 at £40 and 5,883 at £27, and the absolute losses 124 and 101.
-- As arithmetic, $1007.60 + (27 - 40)^2 = 1176.60$. Hinge loss at score −1 averages 0.2 when $q = 0.1$ and 0.8 when $q = 0.4$.
+- As arithmetic, $`1007.60 + (27 - 40)^2 = 1176.60`$. Hinge loss at score −1 averages 0.2 when $`q = 0.1`$ and 0.8 when $`q = 0.4`$.
 
 The 20,000 synthetic orders, the 12-number fit, and hinge loss's best score of −1 are left to the Python and Rust checks.
 

@@ -38,21 +38,25 @@ Five rows, two columns: a 5 by 2 matrix, `[[2, 1], [1, 1], [3, 2], [2, 1], [4, 3
 
 Notation first, in words: a matrix A with m rows and n columns is m by n, and the number in row i, column j is its **entry**, written a_ij. Row number first. Always.
 
-$$(A + B)_{ij} = a_{ij} + b_{ij}, \qquad (cA)_{ij} = c\,a_{ij}, \qquad (A^{T})_{ij} = a_{ji}$$
+```math
+(A + B)_{ij} = a_{ij} + b_{ij}, \qquad (cA)_{ij} = c\,a_{ij}, \qquad (A^{T})_{ij} = a_{ji}
+```
 
-$$\operatorname{tr}(A) = a_{11} + a_{22} + \cdots + a_{nn}$$
+```math
+\mathrm{tr}(A) = a_{11} + a_{22} + \cdots + a_{nn}
+```
 
 **Read it aloud:** same-size tables add entry by matching entry; scaling multiplies every entry by one number; transposing swaps each entry's row and column numbers; the trace adds the diagonal entries.
 
 | Symbol | Plain meaning | In the cafe's table | Change it and… |
 | --- | --- | --- | --- |
-| $A$, $B$ | two matrices of the same size | `[[2, 1], [1, 1]]` the two days, `[[3, 2], [2, 1]]` week two | — |
-| $m$, $n$ | how many rows, how many columns | 5 and 2 for the week | a taller or wider table |
-| $a_{ij}$, $b_{ij}$ | their entries in row i, column j; both count from 1 | a_21 is 1: Tuesday's coffees | another slot is read |
-| $c$ | a plain number to scale by | 2, for days that doubled | every entry scales with it |
-| $A^{T}$ | $A$ transposed: rows become columns | the week tipped: 2 by 5, not 5 by 2 | the size flips too |
-| $I$ | the identity: 1s down the diagonal, 0s elsewhere | `[[1, 0], [0, 1]]` | — |
-| $\operatorname{tr}(A)$ | the trace: the diagonal entries added | 2 + 1 = 3 | it rises with a diagonal entry |
+| $`A`$, $`B`$ | two matrices of the same size | `[[2, 1], [1, 1]]` the two days, `[[3, 2], [2, 1]]` week two | — |
+| $`m`$, $`n`$ | how many rows, how many columns | 5 and 2 for the week | a taller or wider table |
+| $`a_{ij}`$, $`b_{ij}`$ | their entries in row i, column j; both count from 1 | a_21 is 1: Tuesday's coffees | another slot is read |
+| $`c`$ | a plain number to scale by | 2, for days that doubled | every entry scales with it |
+| $`A^{T}`$ | $`A`$ transposed: rows become columns | the week tipped: 2 by 5, not 5 by 2 | the size flips too |
+| $`I`$ | the identity: 1s down the diagonal, 0s elsewhere | `[[1, 0], [0, 1]]` | — |
+| $`\mathrm{tr}(A)`$ | the trace: the diagonal entries added | 2 + 1 = 3 | it rises with a diagonal entry |
 
 The **main diagonal** is the entries whose row number equals their column number: a_11, a_22, on down. Only a **square** table — as many rows as columns — has one reaching the bottom-right corner.
 
@@ -85,7 +89,7 @@ Scaling is the same with one multiplier: a pair of days that sold exactly double
 
 ### Step 3: the transpose asks the same question the other way
 
-The week table is days by products: pick a day, read across. Tip it over and it is products by days: pick a product, read across. That is the **transpose**, written $A^{T}$.
+The week table is days by products: pick a day, read across. Tip it over and it is products by days: pick a product, read across. That is the **transpose**, written $`A^{T}`$.
 
 |  | Mon | Tue | Wed | Thu | Fri |
 | --- | --- | --- | --- | --- | --- |
@@ -101,9 +105,9 @@ Four patterns come up constantly, all of them square, and one table can earn sev
 | Name | What is special | Example |
 | --- | --- | --- |
 | **diagonal** | every entry off the diagonal is 0 | `[[4, 0], [0, 3]]` — the cafe's prices, $4 a coffee, $3 a pastry |
-| **identity** | diagonal, with 1s on it; written $I$ | `[[1, 0], [0, 1]]` |
+| **identity** | diagonal, with 1s on it; written $`I`$ | `[[1, 0], [0, 1]]` |
 | **triangular** | one side of the diagonal is all 0: upper if the zeros are below, lower if above | `[[2, 1], [0, 1]]`, upper triangular |
-| **symmetric** | the flip does nothing: $A^{T}$ equals $A$, so a_ij equals a_ji | `[[2, 1], [1, 1]]` — the two-day table, by coincidence |
+| **symmetric** | the flip does nothing: $`A^{T}`$ equals $`A`$, so a_ij equals a_ji | `[[2, 1], [1, 1]]` — the two-day table, by coincidence |
 
 The identity is the do-nothing one: it keeps each number with weight 1 and none of the others, so whatever it is applied to comes back unchanged. Applying a matrix is the next card.
 

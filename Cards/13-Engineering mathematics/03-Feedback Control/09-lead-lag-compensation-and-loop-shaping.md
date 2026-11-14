@@ -39,51 +39,57 @@ Orange: gain only, flat at −180°, no margin anywhere. Green: with the lead, a
 
 Four pieces of notation from earlier cards, in one line each.
 
-- $G(s)$ is the transfer function, what the system does to each exponential $e^{st}$; $s = j\omega$ reads off the response to a sine of angular frequency $\omega$, with $j$ the square root of −1 as engineers write it (the rest of the library writes i).
-- The loop gain $L(s)$ is controller times plant, the round trip a signal makes ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)).
-- The sensitivity $S = 1/(1+L)$ is the factor by which feedback shrinks a disturbance's effect at each frequency ([Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)).
-- The phase margin is 180° plus the loop's phase at the crossover frequency $\omega_c$, where $|L| = 1$ ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
+- $`G(s)`$ is the transfer function, what the system does to each exponential $`e^{st}`$; $`s = j\omega`$ reads off the response to a sine of angular frequency $`\omega`$, with $`j`$ the square root of −1 as engineers write it (the rest of the library writes i).
+- The loop gain $`L(s)`$ is controller times plant, the round trip a signal makes ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)).
+- The sensitivity $`S = 1/(1+L)`$ is the factor by which feedback shrinks a disturbance's effect at each frequency ([Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)).
+- The phase margin is 180° plus the loop's phase at the crossover frequency $`\omega_c`$, where $`|L| = 1`$ ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
 
 The gimbal, the two sections and the loop:
 
-$$G(s) = \frac{1}{J s^2}, \qquad C_1(s) = K_c\,\frac{T s + 1}{\alpha T s + 1}\ (\alpha < 1), \qquad C_2(s) = \beta\,\frac{T_l s + 1}{\beta T_l s + 1}\ (\beta > 1), \qquad L = C_1 C_2 G$$
+```math
+G(s) = \frac{1}{J s^2}, \qquad C_1(s) = K_c\,\frac{T s + 1}{\alpha T s + 1}\ (\alpha < 1), \qquad C_2(s) = \beta\,\frac{T_l s + 1}{\beta T_l s + 1}\ (\beta > 1), \qquad L = C_1 C_2 G
+```
 
-The lead's phase peaks at the geometric mean of its zero $1/T$ and its pole $1/(\alpha T)$:
+The lead's phase peaks at the geometric mean of its zero $`1/T`$ and its pole $`1/(\alpha T)`$:
 
-$$\omega_m = \frac{1}{T\sqrt{\alpha}}, \qquad \sin\varphi_m = \frac{1-\alpha}{1+\alpha} \quad\Longleftrightarrow\quad \alpha = \frac{1 - \sin\varphi_m}{1 + \sin\varphi_m}, \qquad \lvert C_1(j\omega_m)\rvert = \frac{K_c}{\sqrt{\alpha}}$$
+```math
+\omega_m = \frac{1}{T\sqrt{\alpha}}, \qquad \sin\varphi_m = \frac{1-\alpha}{1+\alpha} \quad\Longleftrightarrow\quad \alpha = \frac{1 - \sin\varphi_m}{1 + \sin\varphi_m}, \qquad \lvert C_1(j\omega_m)\rvert = \frac{K_c}{\sqrt{\alpha}}
+```
 
 **Read it aloud:** the lead's phase peaks halfway between its zero and its pole on a log scale; the peak is set by alpha alone, and there the lead's gain is one over root alpha times its low-frequency gain.
 
-The waterbed, for a loop that is stable once closed and whose gain falls at least as fast as $1/\omega^2$:
+The waterbed, for a loop that is stable once closed and whose gain falls at least as fast as $`1/\omega^2`$:
 
-$$\int_0^\infty \ln\lvert S(j\omega)\rvert\,d\omega = \pi \sum_k \operatorname{Re} p_k$$
+```math
+\int_0^\infty \ln\lvert S(j\omega)\rvert\,d\omega = \pi \sum_k \mathrm{Re}\, p_k
+```
 
 **Read it aloud:** the area under the log of the sensitivity, over all frequencies, is pi times the sum of the real parts of the loop's unstable poles; for a loop with none, it is zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G(s)$, $s$, $j$ | plant transfer function; Laplace variable, set to $j\omega$; square root of −1 | $1/(J s^2)$: torque in N m to angle in rad | — |
-| $J$ | moment of inertia of camera and cradle | 0.01 kg m^2 | needs more torque: $K_c$ grows in proportion |
-| $\theta$, $u$ | tilt angle in rad; motor torque in N m | — | — |
-| $C_1$, $K_c$ | the lead section; its low-frequency gain, torque per radian of error | $K_c$ = 0.414214 N m/rad | crossover moves up |
-| $T$, $\alpha$ | the lead's time constant; pole-to-zero ratio, below 1 | 0.241421 s; 0.171573 | smaller $\alpha$: more phase, more noise gain $1/\alpha$ |
-| $\omega$, $\omega_m$ | angular frequency in rad/s; where the lead's phase peaks | $\omega_m$ = 10 rad/s | — |
-| $\varphi_m$ | the lead's peak phase | 45° | needs smaller $\alpha$ |
-| $\omega_c$ | crossover: where $\lvert L\rvert = 1$, roughly the bandwidth | 10.0379 rad/s with both sections | faster loop, less margin from the plant |
-| $C_2$, $\beta$, $T_l$ | the lag section; its low-frequency gain boost; its time constant | $\beta$ = 10, $T_l$ = 1 s | bigger $\beta$: smaller error, more phase lost |
-| $L$, $S$ | loop gain; sensitivity $1/(1+L)$ | $\lvert S\rvert$ peaks at 3.81 dB (decibels: 20 times the base-10 log of a gain) | — |
-| $p_k$ | an unstable pole of $L$, real part in rad/s | none; +3 rad/s for a top-heavy camera | the area under $\ln\lvert S\rvert$ grows by $\pi p_k$ |
-| $\tau_d$, $e$ | steady imbalance torque; pointing error | 0.02 N m; 0.2766° | error grows in proportion |
+| $`G(s)`$, $`s`$, $`j`$ | plant transfer function; Laplace variable, set to $`j\omega`$; square root of −1 | $`1/(J s^2)`$: torque in N m to angle in rad | — |
+| $`J`$ | moment of inertia of camera and cradle | 0.01 kg m^2 | needs more torque: $`K_c`$ grows in proportion |
+| $`\theta`$, $`u`$ | tilt angle in rad; motor torque in N m | — | — |
+| $`C_1`$, $`K_c`$ | the lead section; its low-frequency gain, torque per radian of error | $`K_c`$ = 0.414214 N m/rad | crossover moves up |
+| $`T`$, $`\alpha`$ | the lead's time constant; pole-to-zero ratio, below 1 | 0.241421 s; 0.171573 | smaller $`\alpha`$: more phase, more noise gain $`1/\alpha`$ |
+| $`\omega`$, $`\omega_m`$ | angular frequency in rad/s; where the lead's phase peaks | $`\omega_m`$ = 10 rad/s | — |
+| $`\varphi_m`$ | the lead's peak phase | 45° | needs smaller $`\alpha`$ |
+| $`\omega_c`$ | crossover: where $`\lvert L\rvert = 1`$, roughly the bandwidth | 10.0379 rad/s with both sections | faster loop, less margin from the plant |
+| $`C_2`$, $`\beta`$, $`T_l`$ | the lag section; its low-frequency gain boost; its time constant | $`\beta`$ = 10, $`T_l`$ = 1 s | bigger $`\beta`$: smaller error, more phase lost |
+| $`L`$, $`S`$ | loop gain; sensitivity $`1/(1+L)`$ | $`\lvert S\rvert`$ peaks at 3.81 dB (decibels: 20 times the base-10 log of a gain) | — |
+| $`p_k`$ | an unstable pole of $`L`$, real part in rad/s | none; +3 rad/s for a top-heavy camera | the area under $`\ln\lvert S\rvert`$ grows by $`\pi p_k`$ |
+| $`\tau_d`$, $`e`$ | steady imbalance torque; pointing error | 0.02 N m; 0.2766° | error grows in proportion |
 
-The design follows from three lines. A pure inertia has phase −180° at every frequency, so a 45° margin at 10 rad/s needs $\varphi_m$ = 45° placed at $\omega_m$ = 10 rad/s. The gain $K_c$ is then chosen so that $\lvert C_1 G\rvert = 1$ there: $K_c = J\omega_c^2\sqrt{\alpha}$. The lag's corner $1/T_l$ goes a decade below crossover, at 1 rad/s.
+The design follows from three lines. A pure inertia has phase −180° at every frequency, so a 45° margin at 10 rad/s needs $`\varphi_m`$ = 45° placed at $`\omega_m`$ = 10 rad/s. The gain $`K_c`$ is then chosen so that $`\lvert C_1 G\rvert = 1`$ there: $`K_c = J\omega_c^2\sqrt{\alpha}`$. The lag's corner $`1/T_l`$ goes a decade below crossover, at 1 rad/s.
 
 ### When it holds
 
-- **Linear plant and actuator.** The motor must deliver whatever torque the controller asks. The lead's high-frequency gain is $K_c/\alpha$, so a 0.5 rad step command asks for 1.21 N m at once, more than a small gimbal motor gives; a saturated motor is not this loop, and the margins no longer describe it.
+- **Linear plant and actuator.** The motor must deliver whatever torque the controller asks. The lead's high-frequency gain is $`K_c/\alpha`$, so a 0.5 rad step command asks for 1.21 N m at once, more than a small gimbal motor gives; a saturated motor is not this loop, and the margins no longer describe it.
 - **A plant model that is right near crossover.** The margins are read at 10 rad/s, so that is where the model must be good. An unmodelled 20 ms sensing delay costs phase the design never saw: 39.88° of margin falls to 28.38°.
 - **Stable closed loop, judged as a whole.** Margins describe a loop that the Nyquist test already passes. The lead-lag loop is *conditionally* stable: its phase dips below −180° at 2.1465 rad/s, where its gain is 11.115. Cut the gain below 9.0% of design, as a weak battery might, and it goes unstable. The lead alone has no such floor.
-- **Noise the sensor can live with.** A lead amplifies high frequencies by $1/\alpha$ = 5.8284 times, 15.31 dB, relative to low ones. Gyro noise reaches the motor that much louder.
-- **Relative degree at least two for the waterbed.** The integral as written needs $\lvert L\rvert$ to fall at least as fast as $1/\omega^2$. Here it does: the lead flattens out and the inertia supplies $1/\omega^2$.
+- **Noise the sensor can live with.** A lead amplifies high frequencies by $`1/\alpha`$ = 5.8284 times, 15.31 dB, relative to low ones. Gyro noise reaches the motor that much louder.
+- **Relative degree at least two for the waterbed.** The integral as written needs $`\lvert L\rvert`$ to fall at least as fast as $`1/\omega^2`$. Here it does: the lead flattens out and the inertia supplies $`1/\omega^2`$.
 
 ---
 
@@ -91,36 +97,36 @@ The design follows from three lines. A pure inertia has phase −180° at every 
 
 ### Step 0: phases of factors add, and a zero adds phase before its pole takes it away
 
-At $s = j\omega$, the loop gain is a product of complex numbers, so its phase is a sum ([Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). A factor $T s + 1$, a zero, adds up to +90° of phase as $\omega$ climbs past $1/T$. A factor $1/(\alpha T s + 1)$, a pole, takes up to 90° away as $\omega$ climbs past $1/(\alpha T)$. Put the zero first and, in the band between them, the zero has given more than the pole has taken. That band is where the lead earns its keep. Swap the order and the same pair is a lag.
+At $`s = j\omega`$, the loop gain is a product of complex numbers, so its phase is a sum ([Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). A factor $`T s + 1`$, a zero, adds up to +90° of phase as $`\omega`$ climbs past $`1/T`$. A factor $`1/(\alpha T s + 1)`$, a pole, takes up to 90° away as $`\omega`$ climbs past $`1/(\alpha T)`$. Put the zero first and, in the band between them, the zero has given more than the pole has taken. That band is where the lead earns its keep. Swap the order and the same pair is a lag.
 
 ### Step 1: the peak sits at the geometric mean, and its height depends on alpha alone
 
-The lead's phase is $\arctan(\omega T) - \arctan(\alpha\omega T)$. Write $x = \omega T$. The tangent of a difference gives $\tan\varphi = (1-\alpha)x/(1+\alpha x^2)$. That is largest where $x/(1+\alpha x^2)$ is, at $x = 1/\sqrt{\alpha}$. So the peak frequency is $\omega_m = 1/(T\sqrt{\alpha})$: on a log scale, halfway between the zero at $1/T$ and the pole at $1/(\alpha T)$. At the peak, $\tan\varphi_m = (1-\alpha)/(2\sqrt{\alpha})$. A right triangle with legs $1-\alpha$ and $2\sqrt{\alpha}$ has hypotenuse $1+\alpha$, which gives the sine formula.
+The lead's phase is $`\arctan(\omega T) - \arctan(\alpha\omega T)`$. Write $`x = \omega T`$. The tangent of a difference gives $`\tan\varphi = (1-\alpha)x/(1+\alpha x^2)`$. That is largest where $`x/(1+\alpha x^2)`$ is, at $`x = 1/\sqrt{\alpha}`$. So the peak frequency is $`\omega_m = 1/(T\sqrt{\alpha})`$: on a log scale, halfway between the zero at $`1/T`$ and the pole at $`1/(\alpha T)`$. At the peak, $`\tan\varphi_m = (1-\alpha)/(2\sqrt{\alpha})`$. A right triangle with legs $`1-\alpha`$ and $`2\sqrt{\alpha}`$ has hypotenuse $`1+\alpha`$, which gives the sine formula.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $f(x) = x/(1+\alpha x^2)$ for $x > 0$. Then $f'(x) = (1 - \alpha x^2)/(1+\alpha x^2)^2$, positive for $x < 1/\sqrt{\alpha}$ and negative beyond, so $f(x)$ has its single maximum at $x = 1/\sqrt{\alpha}$, where $f = 1/(2\sqrt{\alpha})$. The phase lies between 0° and 90° when $0 < \alpha < 1$, and on that range the tangent is increasing, so the phase peaks where $\tan\varphi = (1-\alpha) f(x)$ does. Hence $\tan\varphi_m = (1-\alpha)/(2\sqrt{\alpha})$.
+Let $`f(x) = x/(1+\alpha x^2)`$ for $`x > 0`$. Then $`f'(x) = (1 - \alpha x^2)/(1+\alpha x^2)^2`$, positive for $`x < 1/\sqrt{\alpha}`$ and negative beyond, so $`f(x)`$ has its single maximum at $`x = 1/\sqrt{\alpha}`$, where $`f = 1/(2\sqrt{\alpha})`$. The phase lies between 0° and 90° when $`0 < \alpha < 1`$, and on that range the tangent is increasing, so the phase peaks where $`\tan\varphi = (1-\alpha) f(x)`$ does. Hence $`\tan\varphi_m = (1-\alpha)/(2\sqrt{\alpha})`$.
 
-Now $(1-\alpha)^2 + (2\sqrt{\alpha})^2 = 1 - 2\alpha + \alpha^2 + 4\alpha = (1+\alpha)^2$. So $\sin\varphi_m = (1-\alpha)/(1+\alpha)$. Solving for $\alpha$: $\alpha(1 + \sin\varphi_m) = 1 - \sin\varphi_m$.
+Now $`(1-\alpha)^2 + (2\sqrt{\alpha})^2 = 1 - 2\alpha + \alpha^2 + 4\alpha = (1+\alpha)^2`$. So $`\sin\varphi_m = (1-\alpha)/(1+\alpha)`$. Solving for $`\alpha`$: $`\alpha(1 + \sin\varphi_m) = 1 - \sin\varphi_m`$.
 
-The gain at the peak: $\lvert C_1(j\omega_m)\rvert / K_c = \sqrt{1 + x^2}/\sqrt{1 + \alpha^2 x^2}$ with $x^2 = 1/\alpha$, which is $\sqrt{(1 + 1/\alpha)/(1+\alpha)} = 1/\sqrt{\alpha}$.
+The gain at the peak: $`\lvert C_1(j\omega_m)\rvert / K_c = \sqrt{1 + x^2}/\sqrt{1 + \alpha^2 x^2}`$ with $`x^2 = 1/\alpha`$, which is $`\sqrt{(1 + 1/\alpha)/(1+\alpha)} = 1/\sqrt{\alpha}`$.
 
 </details>
 
-For 45°, $\sin\varphi_m = \sqrt 2/2$ and $\alpha = 3 - 2\sqrt 2$ = 0.171573. No lead gives 90°: $\alpha$ would have to be 0, an infinite noise gain. Engineers stop at about 60° per section, where $\alpha$ is already 0.0718 and the noise gain 13.93.
+For 45°, $`\sin\varphi_m = \sqrt 2/2`$ and $`\alpha = 3 - 2\sqrt 2`$ = 0.171573. No lead gives 90°: $`\alpha`$ would have to be 0, an infinite noise gain. Engineers stop at about 60° per section, where $`\alpha`$ is already 0.0718 and the noise gain 13.93.
 
 ### Step 2: the lead's gain lifts the crossover, so the gain must be set after the lead
 
-At its peak the lead multiplies the loop's gain by $1/\sqrt{\alpha}$ = 2.4142. Put the peak at the old crossover and leave the gain alone, and the crossover walks right, to 19.29 rad/s, where the bump has faded: the margin is 39.25°, not 45°, and the bandwidth has nearly doubled. The design avoids this by choosing $K_c$ last: $K_c/\sqrt{\alpha} \cdot 1/(J\omega_c^2) = 1$ gives $K_c$ = 0.414214 N m/rad, and the code's bisection on $\lvert L\rvert = 1$ finds the crossover at 10.0000 rad/s with 45.00° of margin.
+At its peak the lead multiplies the loop's gain by $`1/\sqrt{\alpha}`$ = 2.4142. Put the peak at the old crossover and leave the gain alone, and the crossover walks right, to 19.29 rad/s, where the bump has faded: the margin is 39.25°, not 45°, and the bandwidth has nearly doubled. The design avoids this by choosing $`K_c`$ last: $`K_c/\sqrt{\alpha} \cdot 1/(J\omega_c^2) = 1`$ gives $`K_c`$ = 0.414214 N m/rad, and the code's bisection on $`\lvert L\rvert = 1`$ finds the crossover at 10.0000 rad/s with 45.00° of margin.
 
 ### Step 3: a lag a decade below crossover costs a few degrees and buys a factor of beta
 
-The lag $C_2 = \beta (T_l s + 1)/(\beta T_l s + 1)$ has gain $\beta$ at low frequency and 1 at high frequency. At steady state the controller's torque must cancel the imbalance: $C(0)\,e = -\tau_d$, so the camera sits off by $\lvert e\rvert = \tau_d/(\beta K_c)$, ten times smaller with $\beta$ = 10. Its price is phase near crossover. Using $\arctan x \approx \pi/2 - 1/x$ (radians) for large $x$, the lag's phase at $\omega_c$ is about $-(1 - 1/\beta)/(\omega_c T_l)$ radians: −5.16° by the rule, −5.14° exactly. Its gain there is 1.0049, so the crossover barely moves, to 10.0379 rad/s, and the margin is 39.88°. Move the lag's zero up to 5 rad/s and the margin collapses to 22.68°: the lag must live well below crossover.
+The lag $`C_2 = \beta (T_l s + 1)/(\beta T_l s + 1)`$ has gain $`\beta`$ at low frequency and 1 at high frequency. At steady state the controller's torque must cancel the imbalance: $`C(0)\,e = -\tau_d`$, so the camera sits off by $`\lvert e\rvert = \tau_d/(\beta K_c)`$, ten times smaller with $`\beta`$ = 10. Its price is phase near crossover. Using $`\arctan x \approx \pi/2 - 1/x`$ (radians) for large $`x`$, the lag's phase at $`\omega_c`$ is about $`-(1 - 1/\beta)/(\omega_c T_l)`$ radians: −5.16° by the rule, −5.14° exactly. Its gain there is 1.0049, so the crossover barely moves, to 10.0379 rad/s, and the margin is 39.88°. Move the lag's zero up to 5 rad/s and the margin collapses to 22.68°: the lag must live well below crossover.
 
 ### Step 4: the waterbed: log sensitivity has zero net area
 
-Feedback works where $\lvert S\rvert < 1$: a disturbance at that frequency is shrunk. Bode's sensitivity integral says the area of $\ln\lvert S\rvert$ against $\omega$ cannot be negative overall. For the gimbal, with no unstable pole, it is exactly zero. The code integrates it: the lead loop has −13.4154 rad/s of area below zero and 13.4154 above; the lead-lag loop, which pushes harder at low frequency, has −14.4668 below and 14.4669 above. Pushing $\lvert S\rvert$ down at low frequency raised it near crossover: the peak of $\lvert S\rvert$ rose from 3.20 dB at 14.03 rad/s to 3.81 dB at 12.59 rad/s.
+Feedback works where $`\lvert S\rvert < 1`$: a disturbance at that frequency is shrunk. Bode's sensitivity integral says the area of $`\ln\lvert S\rvert`$ against $`\omega`$ cannot be negative overall. For the gimbal, with no unstable pole, it is exactly zero. The code integrates it: the lead loop has −13.4154 rad/s of area below zero and 13.4154 above; the lead-lag loop, which pushes harder at low frequency, has −14.4668 below and 14.4669 above. Pushing $`\lvert S\rvert`$ down at low frequency raised it near crossover: the peak of $`\lvert S\rvert`$ rose from 3.20 dB at 14.03 rad/s to 3.81 dB at 12.59 rad/s.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -132,16 +138,16 @@ xychart-beta
     line [-89.38, -76.29, -62.36, -48.46, -35.42, -23.69, -12.97, -3.11, 3.31, 3.20, 1.57, 0.60, 0.20]
 ```
 
-Orange: lead only. Green: lead and lag. Below 0 dB feedback helps; above it, feedback makes disturbances worse. The log axis hides the balance: the integral is over $\omega$ itself, so the thin positive sliver from 10 to 100 rad/s and beyond weighs as much as the deep trough below 5 rad/s.
+Orange: lead only. Green: lead and lag. Below 0 dB feedback helps; above it, feedback makes disturbances worse. The log axis hides the balance: the integral is over $`\omega`$ itself, so the thin positive sliver from 10 to 100 rad/s and beyond weighs as much as the deep trough below 5 rad/s.
 
 <details>
 <summary>Detailed proof</summary>
 
-Assume the closed loop is stable, so $S = 1/(1+L)$ has no poles with $\operatorname{Re} s \ge 0$ (apart from what follows), and assume $sL(s) \to 0$ as $\lvert s\rvert \to \infty$ in the right half plane, which holds when $L$ falls like $1/s^2$. The zeros of $S$ in the open right half plane are the unstable poles $p_k$ of $L$. Remove them with the factor $B(s) = \prod_k (s - p_k)/(s + \bar p_k)$, which has $\lvert B(j\omega)\rvert = 1$ on the imaginary axis. Then $S/B$ has no zeros and no poles in the right half plane, so $\ln(S/B)$ is analytic there.
+Assume the closed loop is stable, so $`S = 1/(1+L)`$ has no poles with $`\mathrm{Re}\, s \ge 0`$ (apart from what follows), and assume $`sL(s) \to 0`$ as $`\lvert s\rvert \to \infty`$ in the right half plane, which holds when $`L`$ falls like $`1/s^2`$. The zeros of $`S`$ in the open right half plane are the unstable poles $`p_k`$ of $`L`$. Remove them with the factor $`B(s) = \prod_k (s - p_k)/(s + \bar p_k)`$, which has $`\lvert B(j\omega)\rvert = 1`$ on the imaginary axis. Then $`S/B`$ has no zeros and no poles in the right half plane, so $`\ln(S/B)`$ is analytic there.
 
-Integrate $\ln(S/B)$ anticlockwise around the half disc of radius $R > 0$: down the imaginary axis from $s = jR$ to $s = -jR$, then along the semicircle $s = Re^{j\psi}$ with $-\pi/2 \le \psi \le \pi/2$. Cauchy's theorem makes the total zero. On the semicircle, $\ln S = -\ln(1+L) \approx -L$, and $R \cdot \lvert L\rvert \to 0$, so that part vanishes. Also $\ln(1/B) = \sum_k \ln\big((1 + \bar p_k/s)/(1 - p_k/s)\big) \approx \sum_k 2\operatorname{Re}p_k / s$, whose integral over the semicircle tends to $j\pi \sum_k 2\operatorname{Re} p_k$. Along the axis, $ds = j\,d\omega$ and the real part of $\ln(S/B)$ is $\ln\lvert S\rvert$. Taking the part multiplying $j$: $-\int_{-R}^{R} \ln\lvert S(j\omega)\rvert\,d\omega + 2\pi\sum_k \operatorname{Re}p_k \to 0$. Since $\lvert S(-j\omega)\rvert = \lvert S(j\omega)\rvert$, the integral over $(-R, R)$ is twice the one over $(0, R)$, which gives the formula.
+Integrate $`\ln(S/B)`$ anticlockwise around the half disc of radius $`R > 0`$: down the imaginary axis from $`s = jR`$ to $`s = -jR`$, then along the semicircle $`s = Re^{j\psi}`$ with $`-\pi/2 \le \psi \le \pi/2`$. Cauchy's theorem makes the total zero. On the semicircle, $`\ln S = -\ln(1+L) \approx -L`$, and $`R \cdot \lvert L\rvert \to 0`$, so that part vanishes. Also $`\ln(1/B) = \sum_k \ln\big((1 + \bar p_k/s)/(1 - p_k/s)\big) \approx \sum_k 2\mathrm{Re}\,p_k / s`$, whose integral over the semicircle tends to $`j\pi \sum_k 2\mathrm{Re}\, p_k`$. Along the axis, $`ds = j\,d\omega`$ and the real part of $`\ln(S/B)`$ is $`\ln\lvert S\rvert`$. Taking the part multiplying $`j`$: $`-\int_{-R}^{R} \ln\lvert S(j\omega)\rvert\,d\omega + 2\pi\sum_k \mathrm{Re}\,p_k \to 0`$. Since $`\lvert S(-j\omega)\rvert = \lvert S(j\omega)\rvert`$, the integral over $`(-R, R)`$ is twice the one over $`(0, R)`$, which gives the formula.
 
-Poles of $L$ on the imaginary axis, such as the gimbal's double pole at 0, are zeros of $S$ there. Indent the contour around them with small half circles; $\ln\lvert S\rvert$ grows only like $2\ln\omega$ near 0, which is integrable, and the indentations contribute nothing in the limit. Bode stated the stable case in 1945; Freudenberg and Looze gave the unstable-pole form in 1985.
+Poles of $`L`$ on the imaginary axis, such as the gimbal's double pole at 0, are zeros of $`S`$ there. Indent the contour around them with small half circles; $`\ln\lvert S\rvert`$ grows only like $`2\ln\omega`$ near 0, which is integrable, and the indentations contribute nothing in the limit. Bode stated the stable case in 1945; Freudenberg and Looze gave the unstable-pole form in 1985.
 
 </details>
 
@@ -149,7 +155,7 @@ Poles of $L$ on the imaginary axis, such as the gimbal's double pole at 0, are z
 
 Three things follow.
 
-1. No controller makes $\lvert S\rvert < 1$ at every frequency: the area must balance.
+1. No controller makes $`\lvert S\rvert < 1`$ at every frequency: the area must balance.
 2. An unstable plant pays extra. A top-heavy camera, its centre of mass above the axis, has gravity torque 0.09 N m/rad pushing it over, an unstable pole at +3 rad/s. The same lead still stabilises it (the Routh test, [Routh-Hurwitz](04-routh-hurwitz-criterion.md), gives 0.000828 > 0), but the integral is now 9.4248 rad/s, π times 3: net amplification is compulsory.
 3. The balance can only be spread thin over frequencies where the loop gain is small, and those are limited by noise, by the motor and by delays. A delay caps how high crossover can go; that limit is the subject of [Time delays](10-smith-predictor-and-time-delays.md). A right-half-plane zero (a zero with positive real part) caps it too, holding crossover well below the zero's frequency (Freudenberg and Looze, in Sources).
 
@@ -164,13 +170,13 @@ Target: crossover 10 rad/s, margin at least 35°, error under 0.5° for 0.02 N m
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | margin the plant gives at 10 rad/s | 180° − 180° | 0° |
-| lead needed | 45° at 10 rad/s, leaving room for the lag | $\varphi_m$ = 45° |
-| $\alpha$ | (1 − 0.70711) / (1 + 0.70711) | 0.171573 |
-| $T$ | 1 / (10 × √0.171573) = 1 / (10 × 0.414214) | 0.241421 s |
+| lead needed | 45° at 10 rad/s, leaving room for the lag | $`\varphi_m`$ = 45° |
+| $`\alpha`$ | (1 − 0.70711) / (1 + 0.70711) | 0.171573 |
+| $`T`$ | 1 / (10 × √0.171573) = 1 / (10 × 0.414214) | 0.241421 s |
 | zero and pole | 1/0.241421 and 1/(0.171573 × 0.241421) | 4.1421 rad/s and 24.1421 rad/s |
-| $K_c$ | 0.01 × 10^2 × 0.414214 | 0.414214 N m/rad |
+| $`K_c`$ | 0.01 × 10^2 × 0.414214 | 0.414214 N m/rad |
 | error, lead only | 0.02 / 0.414214 = 0.048284 rad | 2.7665°: fails |
-| lag | $\beta$ = 10, zero 1 rad/s, pole 0.1 rad/s | — |
+| lag | $`\beta`$ = 10, zero 1 rad/s, pole 0.1 rad/s | — |
 | lag's phase at 10 rad/s | arctan 10 − arctan 100 = 84.289° − 89.427° | −5.14° |
 | margin with both | 45° − 5.14° = 39.86° at 10 rad/s; crossover moves to 10.0379 rad/s | 39.88° |
 | **error, lead and lag** | 2.7665° / 10 | **0.2766°: passes** |
@@ -195,16 +201,16 @@ Orange: lead only, settling at 2.77° within half a second. Green: lead and lag,
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Keep the plain gain, $K_c$ = 1.00 N m/rad | crossover 19.29 rad/s, margin 39.25° (designed 10 rad/s, 45°) | The lead's gain of 2.4142 at its peak moved the crossover past the peak |
-| Flip $\alpha$ to 5.8284 | margin −45.00°; Routh test −0.004828 < 0: unstable | Pole before zero is a lag: it subtracts 45° from a loop that had none |
+| Keep the plain gain, $`K_c`$ = 1.00 N m/rad | crossover 19.29 rad/s, margin 39.25° (designed 10 rad/s, 45°) | The lead's gain of 2.4142 at its peak moved the crossover past the peak |
+| Flip $`\alpha`$ to 5.8284 | margin −45.00°; Routh test −0.004828 < 0: unstable | Pole before zero is a lag: it subtracts 45° from a loop that had none |
 | Lag zero at 5 rad/s, not 1 rad/s | margin 22.68° (crossover 10.77 rad/s) | The lag's phase dip landed on crossover |
-| Ignore a 20 ms sensing delay | margin 28.38°, not 39.88° | A delay subtracts $\omega$ times the delay, 11.46° at 10 rad/s; the delay margin was only 69.3 ms |
+| Ignore a 20 ms sensing delay | margin 28.38°, not 39.88° | A delay subtracts $`\omega`$ times the delay, 11.46° at 10 rad/s; the delay margin was only 69.3 ms |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code designs the lead from its formulas, then reaches the same numbers by other roads. A golden-section search (shrinking a bracket by a fixed ratio each step) over frequency finds the lead's phase peak without the formula. An RK4 simulation (fourth-order Runge-Kutta, a time-stepping method) pushes a 10 rad/s sine through the lead's differential equation and measures how much bigger and earlier it comes out. A bisection on $\lvert L\rvert = 1$, with complex arithmetic written out, finds each crossover and margin. A second RK4 simulation runs the whole closed loop against the imbalance torque and a step command, and checks both Routh verdicts: the top-heavy camera settles at the angle the formula predicts, the flipped lead runs away. Finally Simpson's rule (a weighted sum of samples) integrates $\ln\lvert S\rvert$ from $10^{-6}$ to $10^{7}$ rad/s to test the waterbed, for the stable gimbal and the top-heavy one. Every number on the card is printed, including every chart point.
+The code designs the lead from its formulas, then reaches the same numbers by other roads. A golden-section search (shrinking a bracket by a fixed ratio each step) over frequency finds the lead's phase peak without the formula. An RK4 simulation (fourth-order Runge-Kutta, a time-stepping method) pushes a 10 rad/s sine through the lead's differential equation and measures how much bigger and earlier it comes out. A bisection on $`\lvert L\rvert = 1`$, with complex arithmetic written out, finds each crossover and margin. A second RK4 simulation runs the whole closed loop against the imbalance torque and a step command, and checks both Routh verdicts: the top-heavy camera settles at the angle the formula predicts, the flipped lead runs away. Finally Simpson's rule (a weighted sum of samples) integrates $`\ln\lvert S\rvert`$ from $`10^{-6}`$ to $`10^{7}`$ rad/s to test the waterbed, for the stable gimbal and the top-heavy one. Every number on the card is printed, including every chart point.
 
 ### Python
 
@@ -608,14 +614,14 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the lead's peak formulas for every lead with $K_c > 0$, $T > 0$ and $0 < \alpha < 1$.
+Lean proves the lead's peak formulas for every lead with $`K_c > 0`$, $`T > 0`$ and $`0 < \alpha < 1`$.
 
-- Take such a lead. Then over $\omega > 0$, its phase at $s = j\omega$ is largest at $\omega_m = 1/(T\sqrt{\alpha})$, and nowhere else.
-- That $\omega_m$ is the geometric mean of the zero $1/T$ and the pole $1/(\alpha T)$.
-- Take the same lead. Then its peak phase $\varphi_m$ has $\sin\varphi_m = (1-\alpha)/(1+\alpha)$.
-- Take the same lead. Then $\alpha = (1 - \sin\varphi_m)/(1 + \sin\varphi_m)$, the design formula.
-- Take the same lead. Then its gain at the peak is $\lvert C_1(j\omega_m)\rvert = K_c/\sqrt{\alpha}$.
-- Take $\varphi_m$ = 45°. Then $\alpha = (1 - \sin 45°)/(1 + \sin 45°) = 3 - 2\sqrt 2$.
+- Take such a lead. Then over $`\omega > 0`$, its phase at $`s = j\omega`$ is largest at $`\omega_m = 1/(T\sqrt{\alpha})`$, and nowhere else.
+- That $`\omega_m`$ is the geometric mean of the zero $`1/T`$ and the pole $`1/(\alpha T)`$.
+- Take the same lead. Then its peak phase $`\varphi_m`$ has $`\sin\varphi_m = (1-\alpha)/(1+\alpha)`$.
+- Take the same lead. Then $`\alpha = (1 - \sin\varphi_m)/(1 + \sin\varphi_m)`$, the design formula.
+- Take the same lead. Then its gain at the peak is $`\lvert C_1(j\omega_m)\rvert = K_c/\sqrt{\alpha}`$.
+- Take $`\varphi_m`$ = 45°. Then $`\alpha = (1 - \sin 45°)/(1 + \sin 45°) = 3 - 2\sqrt 2`$.
 
 The decimals, the crossover and margins, the lag, the simulations and the waterbed are left to the Python and Rust checks.
 
@@ -745,21 +751,21 @@ theorem lead_alpha_for_45_degrees :
 
 > [!TIP]
 > **Try changing**
-> - **A bigger lag, $\beta$ = 30.** Guess first: does the margin fall by three times 5°? It does not: the error drops to 0.0922° and the margin only to 39.50°, because the lag's phase at crossover depends mostly on how far below crossover its zero sits, not on $\beta$.
-> - **A 60° lead.** Set `PHI = radians(60.0)`. Guess first: what does the extra 15° cost? $\alpha$ falls to 0.0718 and the noise gain rises to 13.93 times, more than double the 5.8284 of the 45° design. The 45° asserts then fail, as they should.
+> - **A bigger lag, $`\beta`$ = 30.** Guess first: does the margin fall by three times 5°? It does not: the error drops to 0.0922° and the margin only to 39.50°, because the lag's phase at crossover depends mostly on how far below crossover its zero sits, not on $`\beta`$.
+> - **A 60° lead.** Set `PHI = radians(60.0)`. Guess first: what does the extra 15° cost? $`\alpha`$ falls to 0.0718 and the noise gain rises to 13.93 times, more than double the 5.8284 of the 45° design. The 45° asserts then fail, as they should.
 > - **Crowd the lag.** Set `TL = 0.2`, a lag zero at 5 rad/s. Guess first: how much of the 39.88° survives? Only 22.68°, at a crossover of 10.77 rad/s.
-> - **Mutation test.** Change `(BETA - 1)` to `BETA` in the simulated lag. The simulated error no longer matches $\tau_d/(\beta K_c)$ and an assert fails.
+> - **Mutation test.** Change `(BETA - 1)` to `BETA` in the simulated lag. The simulated error no longer matches $`\tau_d/(\beta K_c)`$ and an assert fails.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Placing the lead's peak at the old crossover and keeping the old gain.** The lead lifts the loop's gain by $1/\sqrt{\alpha}$ at its peak, so the crossover moves right, past the peak, into frequencies where the plant is later and the bump has faded. The gimbal ends up at 19.29 rad/s with 39.25° instead of 10 rad/s with 45°, and the motor sees noise at twice the bandwidth. Choose $\omega_m$ as the *new* crossover and set $K_c$ last.
+> **Placing the lead's peak at the old crossover and keeping the old gain.** The lead lifts the loop's gain by $`1/\sqrt{\alpha}`$ at its peak, so the crossover moves right, past the peak, into frequencies where the plant is later and the bump has faded. The gimbal ends up at 19.29 rad/s with 39.25° instead of 10 rad/s with 45°, and the motor sees noise at twice the bandwidth. Choose $`\omega_m`$ as the *new* crossover and set $`K_c`$ last.
 >
-> - **Calling $\alpha > 1$ a lead.** With 5.8284 in place of 0.171573 the same formula is a lag: margin −45.00°, and the Routh test fails.
+> - **Calling $`\alpha > 1`$ a lead.** With 5.8284 in place of 0.171573 the same formula is a lag: margin −45.00°, and the Routh test fails.
 > - **A lag near crossover.** Its zero at 5 rad/s instead of 1 rad/s leaves 22.68° of margin.
-> - **Believing the waterbed can be beaten.** Any controller that pushes $\lvert S\rvert$ down further at low frequency raises it somewhere else: the lag raised the peak from 3.20 dB to 3.81 dB.
+> - **Believing the waterbed can be beaten.** Any controller that pushes $`\lvert S\rvert`$ down further at low frequency raises it somewhere else: the lag raised the peak from 3.20 dB to 3.81 dB.
 > - **Margins without the delay.** 20 ms of sensing delay turns 39.88° into 28.38°.
 
 ---
@@ -767,13 +773,13 @@ theorem lead_alpha_for_45_degrees :
 ## Where you meet it in real life
 
 - **Camera gimbals, drones and telescopes.** Pointing loops on nearly pure inertias are the classic lead job; a lag or an integral term then fixes the steady pull of imbalance or wind.
-- **Hard-disk and optical-drive heads.** The arm is close to a double integrator; designers shape a lead around crossover and notch out structural resonances above it, watching $\lvert S\rvert$'s peak.
+- **Hard-disk and optical-drive heads.** The arm is close to a double integrator; designers shape a lead around crossover and notch out structural resonances above it, watching $`\lvert S\rvert`$'s peak.
 - **Power supplies.** A switching converter's feedback "type II" and "type III" compensators are lag and lead-lag networks of resistors and capacitors, tuned for crossover and phase margin.
 - **PID in disguise.** A PID controller with a filtered derivative is a lead and a lag in series: [PID control](07-pid-control-and-tuning.md) and [PID in practice](08-pid-on-real-hardware.md).
-- **Unstable machines.** Balancing robots and rockets carry the $\pi p$ penalty: the faster the unstable pole, the larger the amplification they must accept somewhere.
+- **Unstable machines.** Balancing robots and rockets carry the $`\pi p`$ penalty: the faster the unstable pole, the larger the amplification they must accept somewhere.
 
 > **Say it back**
-> A pure inertia lags by 180° at every frequency, so a proportional loop has no phase margin. A lead, a zero below a pole, adds phase that peaks at their geometric mean, with $\sin\varphi_m = (1-\alpha)/(1+\alpha)$; put the peak at the wanted crossover and set the gain last. A lag, a pole below a zero a decade under crossover, multiplies the low-frequency gain by $\beta$ for a few degrees of phase. For the gimbal that gives 39.88° of margin at 10.0379 rad/s and 0.2766° of error. Bode's integral says the area of $\ln\lvert S\rvert$ is zero, or π times the unstable poles, so suppression in one band is always paid for in another.
+> A pure inertia lags by 180° at every frequency, so a proportional loop has no phase margin. A lead, a zero below a pole, adds phase that peaks at their geometric mean, with $`\sin\varphi_m = (1-\alpha)/(1+\alpha)`$; put the peak at the wanted crossover and set the gain last. A lag, a pole below a zero a decade under crossover, multiplies the low-frequency gain by $`\beta`$ for a few degrees of phase. For the gimbal that gives 39.88° of margin at 10.0379 rad/s and 0.2766° of error. Bode's integral says the area of $`\ln\lvert S\rvert`$ is zero, or π times the unstable poles, so suppression in one band is always paid for in another.
 
 ---
 
@@ -785,7 +791,7 @@ theorem lead_alpha_for_45_degrees :
 ## Where this goes next
 
 - [Time delays](10-smith-predictor-and-time-delays.md): a delay adds phase lag that no lead can repay at high frequency, and the Smith predictor's way around it.
-- [H-infinity design](../10-Robustness%20and%20Adaptation/03-h-infinity-control-in-outline.md): loop shaping made systematic, with weights on $S$ and its partners and the largest peak minimised directly.
+- [H-infinity design](../10-Robustness%20and%20Adaptation/03-h-infinity-control-in-outline.md): loop shaping made systematic, with weights on $`S`$ and its partners and the largest peak minimised directly.
 
 Hand shaping hits a margin and an error target but leaves the time delay as a fixed cost in phase; how far a predictor can remove that cost is the question the Smith predictor card answers.
 

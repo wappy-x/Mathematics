@@ -37,44 +37,50 @@ Orange: Bayesian optimisation with expected improvement. Green: random settings,
 
 ## The formula
 
-Notation first, in words. A setting is a point $x$ = (gate, blade, air), each part scaled to run from 0 to 1 (gate 0 to 100 percent, blade 10 to 30 degrees, air 0 to 4 litres a second). The true efficiency at $x$ is $f(x)$, in percent; nobody knows it until a trial is run. After $n$ trials we hold settings $x_1, \dots, x_n$ and readings $y_1, \dots, y_n$.
+Notation first, in words. A setting is a point $`x`$ = (gate, blade, air), each part scaled to run from 0 to 1 (gate 0 to 100 percent, blade 10 to 30 degrees, air 0 to 4 litres a second). The true efficiency at $`x`$ is $`f(x)`$, in percent; nobody knows it until a trial is run. After $`n`$ trials we hold settings $`x_1, \dots, x_n`$ and readings $`y_1, \dots, y_n`$.
 
-A **kernel** $k(x, x')$ is a number saying how strongly the efficiencies at two settings move together: large when the settings are close, near zero when they are far apart. This card uses
+A **kernel** $`k(x, x')`$ is a number saying how strongly the efficiencies at two settings move together: large when the settings are close, near zero when they are far apart. This card uses
 
-$$k(x, x') = \sigma^2 \exp\!\Big(-\frac{\lVert x - x' \rVert^2}{2\ell^2}\Big),$$
+```math
+k(x, x') = \sigma^2 \exp\!\Big(-\frac{\lVert x - x' \rVert^2}{2\ell^2}\Big),
+```
 
-where $\lVert x - x' \rVert$ is the ordinary straight-line distance. Gather the kernel between every pair of trials into the $n \times n$ table $K$. Gather it between a new setting and each trial into the column $k_n(x)$. $I$ is the identity table and $y - m$ the column of readings minus the prior mean.
+where $`\lVert x - x' \rVert`$ is the ordinary straight-line distance. Gather the kernel between every pair of trials into the $`n \times n`$ table $`K`$. Gather it between a new setting and each trial into the column $`k_n(x)`$. $`I`$ is the identity table and $`y - m`$ the column of readings minus the prior mean.
 
 The **surrogate** (a Gaussian process: a random function whose values at any finite set of settings are jointly normal) gives at every setting a mean and a spread:
 
-$$\mu_n(x) = m + k_n(x)^T (K + \tau^2 I)^{-1} (y - m), \qquad \sigma_n^2(x) = \sigma^2 - k_n(x)^T (K + \tau^2 I)^{-1} k_n(x)$$
+```math
+\mu_n(x) = m + k_n(x)^T (K + \tau^2 I)^{-1} (y - m), \qquad \sigma_n^2(x) = \sigma^2 - k_n(x)^T (K + \tau^2 I)^{-1} k_n(x)
+```
 
-Here $\mu$ is a mean, not shelf 01's strong-convexity constant. With $f^+ = \max_i y_i$ the best reading so far and $z = (\mu_n(x) - f^+)/\sigma_n(x)$, the **expected improvement** is
+Here $`\mu`$ is a mean, not shelf 01's strong-convexity constant. With $`f^+ = \max_i y_i`$ the best reading so far and $`z = (\mu_n(x) - f^+)/\sigma_n(x)`$, the **expected improvement** is
 
-$$\mathrm{EI}_n(x) = \big(\mu_n(x) - f^+\big)\,\Phi(z) + \sigma_n(x)\,\varphi(z), \qquad x_{n+1} = \operatorname{argmax}_x \mathrm{EI}_n(x)$$
+```math
+\mathrm{EI}_n(x) = \big(\mu_n(x) - f^+\big)\,\Phi(z) + \sigma_n(x)\,\varphi(z), \qquad x_{n+1} = \mathrm{argmax}_x \mathrm{EI}_n(x)
+```
 
 **Read it aloud:** the expected gain at a setting is how far its predicted efficiency beats the best so far, weighted by the chance it does, plus its spread times the bell-curve height at that gap; the next trial goes where that is largest.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | a setting: gate, blade, air, each scaled 0 to 1 | best found (0.70, 0.35, 0.60) | — |
-| $f(x)$ | true efficiency at $x$, percent, unknown until tested | 94.01 at the best found | — |
-| $x_i, y_i, n$, $Y$ | trial $i$'s setting and reading; number of trials so far; the unknown true efficiency at the next trial's setting | $y_5$ = 86.93; $n$ runs 5 to 14 | more trials, smaller error bars |
-| $m$ | prior mean: the efficiency guessed before any trial, percent | 85 | the surrogate is more hopeful far from the data |
-| $\sigma^2$ | prior variance: how far from $m$ the surface may stray, percent squared | 25 (spread 5 points) | wider error bars, more exploring |
-| $\ell$ | length scale: how far apart two settings must be before they stop telling about each other | 0.2 | a smoother, more confident surrogate |
-| $\tau^2$ | measurement noise variance of one trial, percent squared | 0.01 (rig repeats to 0.1 points) | the surrogate trusts readings less |
-| $k$, $K$, $k_n(x)$, $I$ | kernel; its table between trials; its column from $x$ to the trials; the identity table, which adds the noise on the diagonal | $k$ = 25 × 0.6065 at distance 0.2 | — |
-| $\mu_n(x)$, $\sigma_n(x)$ | surrogate's mean and spread at $x$ after $n$ trials | 85.7769 and 4.6000 at trial 6's setting | — |
-| $f^+$ | best reading so far | 86.93 after five trials | a higher bar, smaller EI everywhere |
-| $z$, $Z$, $\Phi$, $\varphi$ | standard score of the gap; a standard normal variable; normal CDF (chance below); normal density (bell height) | $z$ = −0.2501, $\Phi$ = 0.401259, $\varphi$ = 0.386659 | — |
-| $\mathrm{EI}_n(x)$, $x_{n+1}$ | expected improvement: average gain over $f^+$ if $x$ is tested; the next trial's setting, the argmax (the $x$ where EI is largest) | 1.3170 at trial 6's setting, (1.00, 0.35, 0.95) | that setting gets picked |
+| $`x`$ | a setting: gate, blade, air, each scaled 0 to 1 | best found (0.70, 0.35, 0.60) | — |
+| $`f(x)`$ | true efficiency at $`x`$, percent, unknown until tested | 94.01 at the best found | — |
+| $`x_i, y_i, n`$, $`Y`$ | trial $`i`$'s setting and reading; number of trials so far; the unknown true efficiency at the next trial's setting | $`y_5`$ = 86.93; $`n`$ runs 5 to 14 | more trials, smaller error bars |
+| $`m`$ | prior mean: the efficiency guessed before any trial, percent | 85 | the surrogate is more hopeful far from the data |
+| $`\sigma^2`$ | prior variance: how far from $`m`$ the surface may stray, percent squared | 25 (spread 5 points) | wider error bars, more exploring |
+| $`\ell`$ | length scale: how far apart two settings must be before they stop telling about each other | 0.2 | a smoother, more confident surrogate |
+| $`\tau^2`$ | measurement noise variance of one trial, percent squared | 0.01 (rig repeats to 0.1 points) | the surrogate trusts readings less |
+| $`k`$, $`K`$, $`k_n(x)`$, $`I`$ | kernel; its table between trials; its column from $`x`$ to the trials; the identity table, which adds the noise on the diagonal | $`k`$ = 25 × 0.6065 at distance 0.2 | — |
+| $`\mu_n(x)`$, $`\sigma_n(x)`$ | surrogate's mean and spread at $`x`$ after $`n`$ trials | 85.7769 and 4.6000 at trial 6's setting | — |
+| $`f^+`$ | best reading so far | 86.93 after five trials | a higher bar, smaller EI everywhere |
+| $`z`$, $`Z`$, $`\Phi`$, $`\varphi`$ | standard score of the gap; a standard normal variable; normal CDF (chance below); normal density (bell height) | $`z`$ = −0.2501, $`\Phi`$ = 0.401259, $`\varphi`$ = 0.386659 | — |
+| $`\mathrm{EI}_n(x)`$, $`x_{n+1}`$ | expected improvement: average gain over $`f^+`$ if $`x`$ is tested; the next trial's setting, the argmax (the $`x`$ where EI is largest) | 1.3170 at trial 6's setting, (1.00, 0.35, 0.95) | that setting gets picked |
 
 ### When it holds
 
 - **The surface is about as smooth as the kernel says.** The length scale 0.2 claims settings 0.2 apart still share most of their behaviour. If the true peak is narrower than that, the surrogate cannot see it between trials; What breaks shows a 0.1-wide peak missed entirely, 87.67 against 94.01.
-- **The surrogate's error bars are honest.** Expected improvement trusts $\sigma_n(x)$. Set the prior spread or length scale badly and it explores the wrong amount, too much or too little.
-- **Trials are expensive and few.** Each step solves an $n \times n$ system and scores thousands of candidates. That is cheap beside a £20,000 trial, absurd beside a function that takes a microsecond: then just evaluate it, or use a gradient method.
+- **The surrogate's error bars are honest.** Expected improvement trusts $`\sigma_n(x)`$. Set the prior spread or length scale badly and it explores the wrong amount, too much or too little.
+- **Trials are expensive and few.** Each step solves an $`n \times n`$ system and scores thousands of candidates. That is cheap beside a £20,000 trial, absurd beside a function that takes a microsecond: then just evaluate it, or use a gradient method.
 - **A few settings, a bounded box.** With three settings, scoring a 9,261-point candidate grid is easy. In 50 dimensions both the surrogate and the search for the best candidate struggle.
 - **Only "best found" is promised.** No finite set of trials can certify a global maximum of an arbitrary surface: a narrow spike can always hide between them. The certificate on this card exists only because the stand-in rig is cheap to evaluate at all 9,261 grid settings, and it covers only those: the rig's true peak, 94.09, sits between them.
 
@@ -88,34 +94,36 @@ Global optimisation is hard because nothing local tells you about the far side o
 
 ### Step 1: the surrogate is a multivariate normal
 
-Pick any finite set of settings. The surrogate says their efficiencies are jointly normal, each with mean $m$ and variance $\sigma^2$, with covariance $k(x, x')$ between any two. That is exactly a [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md) with covariance table built from the kernel. Close settings get covariance near $\sigma^2$, so they move together; settings far apart get nearly zero, so they are nearly independent.
+Pick any finite set of settings. The surrogate says their efficiencies are jointly normal, each with mean $`m`$ and variance $`\sigma^2`$, with covariance $`k(x, x')`$ between any two. That is exactly a [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md) with covariance table built from the kernel. Close settings get covariance near $`\sigma^2`$, so they move together; settings far apart get nearly zero, so they are nearly independent.
 
-The length scale $\ell$ sets what "close" means. The kernel table is a valid covariance (positive semidefinite) for every choice of points, which is what lets one formula describe a whole surface.
+The length scale $`\ell`$ sets what "close" means. The kernel table is a valid covariance (positive semidefinite) for every choice of points, which is what lets one formula describe a whole surface.
 
 ### Step 2: conditioning on the trials
 
-A trial's reading is the true value plus small noise of variance $\tau^2$. Once the readings are in, the efficiency at any untried setting, given the readings, is still normal. Its mean and variance are the formulas above: the same conditioning rule as for two variables on [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md), with a table in place of a single correlation. The mean moves towards nearby readings; the spread shrinks near trials and stays at $\sigma$ far from them.
+A trial's reading is the true value plus small noise of variance $`\tau^2`$. Once the readings are in, the efficiency at any untried setting, given the readings, is still normal. Its mean and variance are the formulas above: the same conditioning rule as for two variables on [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md), with a table in place of a single correlation. The mean moves towards nearby readings; the spread shrinks near trials and stays at $`\sigma`$ far from them.
 
-With one trial the table is one number, and the rule is the bivariate one. Trial 5 read $y_5$ = 86.9273 at (0.90, 0.30, 0.70). At the candidate (0.70, 0.30, 0.70), distance 0.2 away, the correlation is $\exp(-0.5)$ = 0.6065, so
+With one trial the table is one number, and the rule is the bivariate one. Trial 5 read $`y_5`$ = 86.9273 at (0.90, 0.30, 0.70). At the candidate (0.70, 0.30, 0.70), distance 0.2 away, the correlation is $`\exp(-0.5)`$ = 0.6065, so
 
-$$\mu_1 = m + \frac{0.6065\,\sigma^2}{\sigma^2 + \tau^2}(y_5 - m), \qquad \sigma_1^2 = \sigma^2 - 0.6065^2\,\frac{\sigma^4}{\sigma^2 + \tau^2}.$$
+```math
+\mu_1 = m + \frac{0.6065\,\sigma^2}{\sigma^2 + \tau^2}(y_5 - m), \qquad \sigma_1^2 = \sigma^2 - 0.6065^2\,\frac{\sigma^4}{\sigma^2 + \tau^2}.
+```
 
 The mean slides 0.6063 of the way from 85 to the reading; the variance falls from 25 to 15.8067. The code checks both against this two-variable rule.
 
 ### Step 3: the expected improvement has a closed form
 
-Let $Y = f(x)$ be the true efficiency at the next trial's setting. The improvement is $\max(Y - f^+, 0)$: the amount it beats the best so far, or nothing. Under the surrogate $Y$ is normal with mean $\mu$ and spread $\sigma$ (dropping the $n$ and $x$). The improvement is measured on $f$ itself; the reading adds noise of variance $\tau^2$, which with $\tau = 0.1$ is negligible. Its average works out to $(\mu - f^+)\Phi(z) + \sigma\varphi(z)$. The proof is one substitution and one exact integral.
+Let $`Y = f(x)`$ be the true efficiency at the next trial's setting. The improvement is $`\max(Y - f^+, 0)`$: the amount it beats the best so far, or nothing. Under the surrogate $`Y`$ is normal with mean $`\mu`$ and spread $`\sigma`$ (dropping the $`n`$ and $`x`$). The improvement is measured on $`f`$ itself; the reading adds noise of variance $`\tau^2`$, which with $`\tau = 0.1`$ is negligible. Its average works out to $`(\mu - f^+)\Phi(z) + \sigma\varphi(z)`$. The proof is one substitution and one exact integral.
 
 <details>
 <summary>Detailed proof: the expected improvement of a normal reading</summary>
 
-Write $Y = \mu + \sigma Z$ with $Z$ standard normal, and $z = (\mu - f^+)/\sigma$. Then $Y - f^+ = \sigma(Z + z)$, which is positive exactly when $Z > -z$. So
+Write $`Y = \mu + \sigma Z`$ with $`Z`$ standard normal, and $`z = (\mu - f^+)/\sigma`$. Then $`Y - f^+ = \sigma(Z + z)`$, which is positive exactly when $`Z > -z`$. So
 
-$$E[\max(Y - f^+, 0)] = \int_{-z}^{\infty} \sigma (t + z)\, \varphi(t)\, dt = \sigma z \int_{-z}^{\infty} \varphi(t)\,dt + \sigma \int_{-z}^{\infty} t\, \varphi(t)\, dt.$$
+$`\displaystyle E[\max(Y - f^+, 0)] = \int_{-z}^{\infty} \sigma (t + z)\, \varphi(t)\, dt = \sigma z \int_{-z}^{\infty} \varphi(t)\,dt + \sigma \int_{-z}^{\infty} t\, \varphi(t)\, dt.`$
 
-The first integral is the chance $Z > -z$, which by the bell's symmetry is $\Phi(z)$. For the second, $\varphi(t) = e^{-t^2/2}/\sqrt{2\pi}$ has derivative $-t\,\varphi(t)$, so $\int_{-z}^{\infty} t\,\varphi(t)\,dt = \big[-\varphi(t)\big]_{-z}^{\infty} = \varphi(-z) = \varphi(z)$. Putting these together, with $\sigma z = \mu - f^+$:
+The first integral is the chance $`Z > -z`$, which by the bell's symmetry is $`\Phi(z)`$. For the second, $`\varphi(t) = e^{-t^2/2}/\sqrt{2\pi}`$ has derivative $`-t\,\varphi(t)`$, so $`\int_{-z}^{\infty} t\,\varphi(t)\,dt = \big[-\varphi(t)\big]_{-z}^{\infty} = \varphi(-z) = \varphi(z)`$. Putting these together, with $`\sigma z = \mu - f^+`$:
 
-$$E[\max(Y - f^+, 0)] = (\mu - f^+)\,\Phi(z) + \sigma\,\varphi(z).$$
+$`\displaystyle E[\max(Y - f^+, 0)] = (\mu - f^+)\,\Phi(z) + \sigma\,\varphi(z).`$
 
 </details>
 
@@ -123,7 +131,7 @@ The code checks this formula against Simpson's rule (a numerical way to add up a
 
 ### Step 4: one score balances guessing well and learning
 
-Differentiate the formula. Its slope with respect to $\mu$ is $\Phi(z)$ and with respect to $\sigma$ is $\varphi(z)$, both positive (the other terms cancel because $\varphi'(z) = -z\varphi(z)$). So expected improvement **rises with a higher predicted efficiency and with a wider error bar**. A setting predicted slightly worse than the best but very uncertain can win; a setting predicted well but already measured cannot.
+Differentiate the formula. Its slope with respect to $`\mu`$ is $`\Phi(z)`$ and with respect to $`\sigma`$ is $`\varphi(z)`$, both positive (the other terms cancel because $`\varphi'(z) = -z\varphi(z)`$). So expected improvement **rises with a higher predicted efficiency and with a wider error bar**. A setting predicted slightly worse than the best but very uncertain can win; a setting predicted well but already measured cannot.
 
 At trial 5's own setting the mean is 86.9265 and the spread only 0.1000, so EI is 0.0395. At the candidate 0.2 away the mean is lower, 86.1685, but the spread is 3.9758, and EI is 1.2355, far more.
 
@@ -131,7 +139,7 @@ This is the **exploration–exploitation trade-off** (exploit: test where the gu
 
 ### Step 5: what it costs, and what it promises
 
-Each step factors the $n \times n$ table once by the Cholesky method (rewriting it as a triangular table times its own mirror image across the diagonal): about $n^3/6$ multiplications. Then it scores every candidate with about $n^2/2$ more: here 9,261 candidates at $n \le 14$, every step. That is the price of thinking hard before spending £20,000.
+Each step factors the $`n \times n`$ table once by the Cholesky method (rewriting it as a triangular table times its own mirror image across the diagonal): about $`n^3/6`$ multiplications. Then it scores every candidate with about $`n^2/2`$ more: here 9,261 candidates at $`n \le 14`$, every step. That is the price of thinking hard before spending £20,000.
 
 The promise is modest, and it does not cover this run. Vazquez and Bect proved that expected improvement's trial points eventually fill the whole box, for every surface in the space the kernel describes, so its best found tends to the true maximum. Their theorem needs three things:
 
@@ -151,17 +159,17 @@ The one-trial case of Step 2, then the real first pick. Efficiencies in percent.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Correlation, trial 5 to candidate 0.2 away | $\exp(-0.2^2 / (2 \times 0.2^2)) = \exp(-0.5)$ | 0.6065 |
+| Correlation, trial 5 to candidate 0.2 away | $`\exp(-0.2^2 / (2 \times 0.2^2)) = \exp(-0.5)`$ | 0.6065 |
 | Weight on the reading | 0.6065 × 25 / (25 + 0.01) | 0.6063 |
 | Mean at the candidate | 85 + 0.6063 × (86.9273 − 85) | 86.1685 |
 | Variance, then spread | 25 − 0.6065 × 0.6063 × 25; square root | 15.8067; 3.9758 |
 | Standard score of the gap | (86.1685 − 86.9273) / 3.9758 | −0.1909 |
-| Chance below, bell height | $\Phi(-0.1909)$, $\varphi(-0.1909)$ | 0.424319, 0.391742 |
+| Chance below, bell height | $`\Phi(-0.1909)`$, $`\varphi(-0.1909)`$ | 0.424319, 0.391742 |
 | Expected improvement | −0.7588 × 0.424319 + 3.9758 × 0.391742 = −0.3220 + 1.5575 | 1.2355 |
 | Same, at trial 5's own setting | mean 86.9265, spread 0.1000 | 0.0395 |
 | All five trials: mean and spread at (1.00, 0.35, 0.95) | from the formula, by the code | 85.7769, 4.6000 |
 | Its standard score | (85.7769 − 86.9273) / 4.6000 | −0.2501 |
-| $\Phi$ and $\varphi$ there | normal CDF and density | 0.401259, 0.386659 |
+| $`\Phi`$ and $`\varphi`$ there | normal CDF and density | 0.401259, 0.386659 |
 | **Trial 6's expected improvement** | −0.4616 + 1.7786 | **1.3170** |
 
 The sixth trial goes to a corner the first five never touched, predicted *worse* than the best so far but with a spread of 4.6000 points: it is the setting with the most to teach. It reads 80.94, a miss, and the miss is useful: it pulls the surrogate down there and sends trials 7 and 8 back towards the middle, where trial 8 finds 91.71.
@@ -620,11 +628,11 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the formula of Step 3 and the slopes of Step 4, for every mean $\mu$, best so far $f^+$ and spread $\sigma > 0$.
+Lean proves the formula of Step 3 and the slopes of Step 4, for every mean $`\mu`$, best so far $`f^+`$ and spread $`\sigma > 0`$.
 
-- Let $Y$ be normal with mean $\mu$ and spread $\sigma > 0$, and let $z = (\mu - f^+)/\sigma$. Then the average of $\max(Y - f^+, 0)$ is exactly $(\mu - f^+)\Phi(z) + \sigma\varphi(z)$.
-- The slope of expected improvement with respect to $\mu$ is $\Phi(z)$, and with respect to $\sigma$ it is $\varphi(z)$. Both slopes are above zero.
-- So expected improvement always rises when $\mu$ rises, and always rises when the spread $\sigma$ widens.
+- Let $`Y`$ be normal with mean $`\mu`$ and spread $`\sigma > 0`$, and let $`z = (\mu - f^+)/\sigma`$. Then the average of $`\max(Y - f^+, 0)`$ is exactly $`(\mu - f^+)\Phi(z) + \sigma\varphi(z)`$.
+- The slope of expected improvement with respect to $`\mu`$ is $`\Phi(z)`$, and with respect to $`\sigma`$ it is $`\varphi(z)`$. Both slopes are above zero.
+- So expected improvement always rises when $`\mu`$ rises, and always rises when the spread $`\sigma`$ widens.
 - The whole-number facts hold exactly: 9,261 grid settings, £185,220,000 to test them all, £300,000 for 15 trials, and 64,000 cells in Road 4.
 
 The surrogate, the 15-trial run, the decimals, the grid search and the random-search comparison are left to the Python and Rust checks.

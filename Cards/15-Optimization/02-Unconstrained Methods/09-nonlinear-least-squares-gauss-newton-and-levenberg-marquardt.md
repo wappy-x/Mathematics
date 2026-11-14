@@ -30,37 +30,41 @@ To scale, minutes across and °C up. The solid curve is the fit, through the dot
 
 ## The formula
 
-This card writes the three numbers as one triple, $\theta = (c, a, b)$, read "theta": room temperature $c$, starting excess $a$ and cooling rate $b$. Reading $i$ is taken at time $t_i$ minutes and shows $y_i$ °C. The miss on reading $i$ is the model's temperature minus the reading:
+This card writes the three numbers as one triple, $`\theta = (c, a, b)`$, read "theta": room temperature $`c`$, starting excess $`a`$ and cooling rate $`b`$. Reading $`i`$ is taken at time $`t_i`$ minutes and shows $`y_i`$ °C. The miss on reading $`i`$ is the model's temperature minus the reading:
 
-$$r_i(\theta) = c + a\,e^{-b t_i} - y_i, \qquad F(\theta) = \tfrac12 \sum_{i=1}^{40} r_i(\theta)^2$$
+```math
+r_i(\theta) = c + a\,e^{-b t_i} - y_i, \qquad F(\theta) = \tfrac12 \sum_{i=1}^{40} r_i(\theta)^2
+```
 
-The slope table $J$ (the Jacobian) has one row per reading and one column per number, the rate of change of that miss in that number: the row for reading $i$ is $\left(1,\; e^{-b t_i},\; -a\,t_i\,e^{-b t_i}\right)$. One damped step $d$ solves
+The slope table $`J`$ (the Jacobian) has one row per reading and one column per number, the rate of change of that miss in that number: the row for reading $`i`$ is $`\left(1,\; e^{-b t_i},\; -a\,t_i\,e^{-b t_i}\right)`$. One damped step $`d`$ solves
 
-$$\left(J^{\mathsf T}J + \lambda D\right) d = -\,J^{\mathsf T} r, \qquad D = \operatorname{diag}\left(J^{\mathsf T}J\right)$$
+```math
+\left(J^{\mathsf T}J + \lambda D\right) d = -\,J^{\mathsf T} r, \qquad D = \mathrm{diag}\left(J^{\mathsf T}J\right)
+```
 
 **Read it aloud:** use the slopes to find the change in the three numbers that would make the squared misses smallest if every miss were a straight line, and shorten it as much as the damping insists.
 
-At $\lambda = 0$ this is the Gauss-Newton step. [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md) derives it, adds the damping with the rule "triple $\lambda$ after a refused step, divide by three after an accepted one", and proves the damped step exists and goes downhill. This card adds what $J^{\mathsf T}J$ leaves out of the true curvature, and what the damping does geometrically.
+At $`\lambda = 0`$ this is the Gauss-Newton step. [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md) derives it, adds the damping with the rule "triple $`\lambda`$ after a refused step, divide by three after an accepted one", and proves the damped step exists and goes downhill. This card adds what $`J^{\mathsf T}J`$ leaves out of the true curvature, and what the damping does geometrically.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t_i$, $y_i$ | time and temperature of reading $i$ (i runs 1 to 40) | 0.5 min and 190.18 °C for the first | — |
-| $c$ | room temperature, where the pan settles, °C | 21.661398 fitted | the whole curve lifts |
-| $a$ | starting excess over room, °C | 180.911890 fitted | the curve starts higher |
-| $b$ | cooling rate, per minute | 0.152744 fitted; 0.6 at the start | the curve falls faster |
-| $\theta$, $\theta_k$, $\theta^*$ | the triple $(c, a, b)$; its value after step $k$, from $\theta_0$ = (30, 160, 0.6); the fit, a minimiser of $F$ | $\theta^*$ = (21.661398, 180.911890, 0.152744) | — |
-| $r_i$ | the miss: model minus reading, °C | root-mean-square (rms) 1.4789 °C at the fit | — |
-| $F$, $\nabla F$, $\nabla^2 F$ | half the sum of squared misses, its gradient and its Hessian (the table of second derivatives) | $F$ = 43.742655 at the fit | the fit is worse |
-| $J$ | the slope table (Jacobian), 40 rows by 3 columns | — | — |
-| $S$ | the curvature Gauss-Newton leaves out: $\sum_i r_i \nabla^2 r_i$ | small when misses are small | Gauss-Newton slows |
-| $d$ | the step added to $\theta$ | — | — |
-| $\lambda$, $D$; $\lVert d\rVert_D$, $\langle u, v\rangle_D$ | the damping, and the diagonal of $J^{\mathsf T}J$ that scales it; a step's length, and the sum of entry-by-entry products of two steps, each entry weighted by that diagonal | λ from 0.001; accepted at 0.729 on the first step; undamped $\lVert d\rVert_D$ = 279.952 °C | shorter steps |
-| $m(d)$, $\Delta$, $\rho_k$ | the straight-line model of $F$; the radius it is trusted to; actual over predicted drop | ρ = 1.15 on the first accepted step | — |
+| $`t_i`$, $`y_i`$ | time and temperature of reading $`i`$ (i runs 1 to 40) | 0.5 min and 190.18 °C for the first | — |
+| $`c`$ | room temperature, where the pan settles, °C | 21.661398 fitted | the whole curve lifts |
+| $`a`$ | starting excess over room, °C | 180.911890 fitted | the curve starts higher |
+| $`b`$ | cooling rate, per minute | 0.152744 fitted; 0.6 at the start | the curve falls faster |
+| $`\theta`$, $`\theta_k`$, $`\theta^*`$ | the triple $`(c, a, b)`$; its value after step $`k`$, from $`\theta_0`$ = (30, 160, 0.6); the fit, a minimiser of $`F`$ | $`\theta^*`$ = (21.661398, 180.911890, 0.152744) | — |
+| $`r_i`$ | the miss: model minus reading, °C | root-mean-square (rms) 1.4789 °C at the fit | — |
+| $`F`$, $`\nabla F`$, $`\nabla^2 F`$ | half the sum of squared misses, its gradient and its Hessian (the table of second derivatives) | $`F`$ = 43.742655 at the fit | the fit is worse |
+| $`J`$ | the slope table (Jacobian), 40 rows by 3 columns | — | — |
+| $`S`$ | the curvature Gauss-Newton leaves out: $`\sum_i r_i \nabla^2 r_i`$ | small when misses are small | Gauss-Newton slows |
+| $`d`$ | the step added to $`\theta`$ | — | — |
+| $`\lambda`$, $`D`$; $`\lVert d\rVert_D`$, $`\langle u, v\rangle_D`$ | the damping, and the diagonal of $`J^{\mathsf T}J`$ that scales it; a step's length, and the sum of entry-by-entry products of two steps, each entry weighted by that diagonal | λ from 0.001; accepted at 0.729 on the first step; undamped $`\lVert d\rVert_D`$ = 279.952 °C | shorter steps |
+| $`m(d)`$, $`\Delta`$, $`\rho_k`$ | the straight-line model of $`F`$; the radius it is trusted to; actual over predicted drop | ρ = 1.15 on the first accepted step | — |
 
 ### When it holds
 
 - **Misses that are smooth in the numbers.** Exponentials are. At a kink or a jump the slopes mislead, and the step chases them.
-- **Columns of $J$ that point different ways.** Here they do: a constant, a decay, and a decay times time. If two numbers moved the curve the same way (a fourth "room offset" added to $c$), $J^{\mathsf T}J$ could not be inverted: the undamped step would not be unique, and the solve would break down.
+- **Columns of $`J`$ that point different ways.** Here they do: a constant, a decay, and a decay times time. If two numbers moved the curve the same way (a fourth "room offset" added to $`c`$), $`J^{\mathsf T}J`$ could not be inverted: the undamped step would not be unique, and the solve would break down.
 - **Small misses at the answer, for speed.** With misses near 1.5 °C, the error shrinks by a factor 0.0102 per step. With misses near 30 °C it shrinks by only 0.1544. With zero misses the convergence is Newton's.
 - **A start in the right valley.** Damping makes every accepted step go downhill; it does not choose the valley. The answer is a local minimum unless something more is shown.
 
@@ -70,25 +74,29 @@ At $\lambda = 0$ this is the Gauss-Newton step. [Calibration](../../12-Financial
 
 ### Step 0: curved misses, straightened one step at a time
 
-A sum of squares of straight lines is a bowl, and a bowl's lowest point comes from one linear solve. The misses here are curved in $b$. Near any guess, though, each miss is almost a straight line, $r(\theta + d) \approx r + J d$. Gauss-Newton fits that straight-line version exactly, moves, rebuilds the lines at the new point, and repeats.
+A sum of squares of straight lines is a bowl, and a bowl's lowest point comes from one linear solve. The misses here are curved in $`b`$. Near any guess, though, each miss is almost a straight line, $`r(\theta + d) \approx r + J d`$. Gauss-Newton fits that straight-line version exactly, moves, rebuilds the lines at the new point, and repeats.
 
-### Step 1: what $J^{\mathsf T}J$ leaves out of the Hessian
+### Step 1: what $`J^{\mathsf T}J`$ leaves out of the Hessian
 
-Differentiate $F = \tfrac12 \sum r_i^2$ once and twice:
+Differentiate $`F = \tfrac12 \sum r_i^2`$ once and twice:
 
-$$\nabla F = J^{\mathsf T} r, \qquad \nabla^2 F = J^{\mathsf T}J + S, \qquad S = \sum_{i} r_i\, \nabla^2 r_i$$
+```math
+\nabla F = J^{\mathsf T} r, \qquad \nabla^2 F = J^{\mathsf T}J + S, \qquad S = \sum_{i} r_i\, \nabla^2 r_i
+```
 
-$J^{\mathsf T}J$ needs only the slopes already in hand. $S$ needs every miss's own curvature, each multiplied by the miss itself. Newton's method ([Newton and BFGS](05-newton-and-quasi-newton-bfgs.md)) solves with the full $\nabla^2 F$; Gauss-Newton drops $S$ and solves with $J^{\mathsf T}J$.
+$`J^{\mathsf T}J`$ needs only the slopes already in hand. $`S`$ needs every miss's own curvature, each multiplied by the miss itself. Newton's method ([Newton and BFGS](05-newton-and-quasi-newton-bfgs.md)) solves with the full $`\nabla^2 F`$; Gauss-Newton drops $`S`$ and solves with $`J^{\mathsf T}J`$.
 
-So the stand-in is good exactly when the misses are small. Here only $b$ sits inside the exponential, so $S$ has entries only in the $a$ and $b$ rows: $-\sum r_i t_i e^{-b t_i}$ off the diagonal and $\sum r_i a t_i^2 e^{-b t_i}$ in the corner. With 1.5 °C misses of mixed sign they nearly cancel.
+So the stand-in is good exactly when the misses are small. Here only $`b`$ sits inside the exponential, so $`S`$ has entries only in the $`a`$ and $`b`$ rows: $`-\sum r_i t_i e^{-b t_i}`$ off the diagonal and $`\sum r_i a t_i^2 e^{-b t_i}`$ in the corner. With 1.5 °C misses of mixed sign they nearly cancel.
 
 ### Step 2: small misses mean fast, large misses mean slow
 
-Near the answer $\theta^*$, the error after a Gauss-Newton step is, to first order, the error before it multiplied by one fixed matrix:
+Near the answer $`\theta^*`$, the error after a Gauss-Newton step is, to first order, the error before it multiplied by one fixed matrix:
 
-$$\theta_{k+1} - \theta^* \approx -\left(J^{\mathsf T}J\right)^{-1} S\,\left(\theta_k - \theta^*\right)$$
+```math
+\theta_{k+1} - \theta^* \approx -\left(J^{\mathsf T}J\right)^{-1} S\,\left(\theta_k - \theta^*\right)
+```
 
-That matrix's largest eigenvalue, in magnitude, is the factor the error shrinks by each step. An eigenvalue is a factor by which the matrix stretches a direction it does not turn. The checks compute it by power iteration (multiplying a vector by the matrix again and again until its direction settles), then measure it by starting 0.001 off in $b$ and taking two steps:
+That matrix's largest eigenvalue, in magnitude, is the factor the error shrinks by each step. An eigenvalue is a factor by which the matrix stretches a direction it does not turn. The checks compute it by power iteration (multiplying a vector by the matrix again and again until its direction settles), then measure it by starting 0.001 off in $`b`$ and taking two steps:
 
 | Probe noise | rms miss at the fit | predicted factor | measured factor |
 | --- | ---: | ---: | ---: |
@@ -98,36 +106,38 @@ That matrix's largest eigenvalue, in magnitude, is the factor the error shrinks 
 
 The factor grows with the misses. At every noise level the convergence is linear, the error shrinking by a fixed factor per step, and the factor sets the speed. If the factor passes 1, Gauss-Newton fails to converge even from starts next to the answer.
 
-With zero misses at the answer, $S$ vanishes there and the step is Newton's own, with Newton's quadratic rate: the number of correct digits roughly doubles each step. The shelf's banana valley is such a problem. Write Rosenbrock's function as two misses, $10(y - x^2)$ and $1 - x$; half their squared sum is half the function. From $(-1.2, 1)$, Gauss-Newton lands at $(1, -3.84)$, then at the minimum $(1, 1)$: two steps, because the second miss is a straight line and the first becomes one once $x$ is fixed.
+With zero misses at the answer, $`S`$ vanishes there and the step is Newton's own, with Newton's quadratic rate: the number of correct digits roughly doubles each step. The shelf's banana valley is such a problem. Write Rosenbrock's function as two misses, $`10(y - x^2)`$ and $`1 - x`$; half their squared sum is half the function. From $`(-1.2, 1)`$, Gauss-Newton lands at $`(1, -3.84)`$, then at the minimum $`(1, 1)`$: two steps, because the second miss is a straight line and the first becomes one once $`x`$ is fixed.
 
 <details>
 <summary>Detailed proof: the error map near the answer</summary>
 
-Write one Gauss-Newton step as a map, $G(\theta) = \theta - (J^{\mathsf T}J)^{-1} J^{\mathsf T} r$, with $J$ and $r$ taken at $\theta$. At a minimum $\theta^*$ the gradient $J^{\mathsf T} r$ is zero, so $G(\theta^*) = \theta^*$.
+Write one Gauss-Newton step as a map, $`G(\theta) = \theta - (J^{\mathsf T}J)^{-1} J^{\mathsf T} r`$, with $`J`$ and $`r`$ taken at $`\theta`$. At a minimum $`\theta^*`$ the gradient $`J^{\mathsf T} r`$ is zero, so $`G(\theta^*) = \theta^*`$.
 
-Differentiate $G$ at $\theta^*$. The product rule on $(J^{\mathsf T}J)^{-1} \cdot J^{\mathsf T} r$ gives two terms. The one that differentiates $(J^{\mathsf T}J)^{-1}$ is multiplied by $J^{\mathsf T}r = 0$ and vanishes. The other differentiates $J^{\mathsf T} r = \nabla F$, giving $\nabla^2 F = J^{\mathsf T}J + S$. So
+Differentiate $`G`$ at $`\theta^*`$. The product rule on $`(J^{\mathsf T}J)^{-1} \cdot J^{\mathsf T} r`$ gives two terms. The one that differentiates $`(J^{\mathsf T}J)^{-1}`$ is multiplied by $`J^{\mathsf T}r = 0`$ and vanishes. The other differentiates $`J^{\mathsf T} r = \nabla F`$, giving $`\nabla^2 F = J^{\mathsf T}J + S`$. So
 
-$$G'(\theta^*) = I - (J^{\mathsf T}J)^{-1}\left(J^{\mathsf T}J + S\right) = -(J^{\mathsf T}J)^{-1} S.$$
+$`\displaystyle G'(\theta^*) = I - (J^{\mathsf T}J)^{-1}\left(J^{\mathsf T}J + S\right) = -(J^{\mathsf T}J)^{-1} S.`$
 
-Taylor's theorem then gives $\theta_{k+1} - \theta^* = G'(\theta^*)(\theta_k - \theta^*) + O(\lVert \theta_k - \theta^* \rVert^2)$, when the misses are three times continuously differentiable, as exponentials are.
+Taylor's theorem then gives $`\theta_{k+1} - \theta^* = G'(\theta^*)(\theta_k - \theta^*) + O(\lVert \theta_k - \theta^* \rVert^2)`$, when the misses are three times continuously differentiable, as exponentials are.
 
-The matrix $(J^{\mathsf T}J)^{-1}S$ has real eigenvalues: with $P = J^{\mathsf T}J$ positive definite, it equals $P^{-1/2}\left(P^{-1/2} S P^{-1/2}\right)P^{1/2}$, a symmetric matrix in disguise. If its largest eigenvalue magnitude is below 1, errors near $\theta^*$ shrink by that factor per step in the long run. If it is above 1, a start a hair from $\theta^*$ along that eigenvector is pushed away. If $S = 0$ at $\theta^*$, the linear term vanishes and only the quadratic remainder is left: Newton's rate.
+The matrix $`(J^{\mathsf T}J)^{-1}S`$ has real eigenvalues: with $`P = J^{\mathsf T}J`$ positive definite, it equals $`P^{-1/2}\left(P^{-1/2} S P^{-1/2}\right)P^{1/2}`$, a symmetric matrix in disguise. If its largest eigenvalue magnitude is below 1, errors near $`\theta^*`$ shrink by that factor per step in the long run. If it is above 1, a start a hair from $`\theta^*`$ along that eigenvector is pushed away. If $`S = 0`$ at $`\theta^*`$, the linear term vanishes and only the quadratic remainder is left: Newton's rate.
 
 </details>
 
 ### Step 3: far from the answer the straight lines lie
 
-From the start $\theta_0$ = (30, 160, 0.6), the undamped step trusts the straight lines across a huge distance. Measure each number's move by how far it alone shifts the 40 predicted temperatures, then combine the three as a root-sum-square. That **scaled length** is 279.952 °C:
+From the start $`\theta_0`$ = (30, 160, 0.6), the undamped step trusts the straight lines across a huge distance. Measure each number's move by how far it alone shifts the 40 predicted temperatures, then combine the three as a root-sum-square. That **scaled length** is 279.952 °C:
 
-$$\lVert d \rVert_D = \sqrt{\textstyle\sum_j D_{jj}\, d_j^2}$$
+```math
+\lVert d \rVert_D = \sqrt{\textstyle\sum_j D_{jj}\, d_j^2}
+```
 
-The straight-line model $m(d) = \tfrac12 \lVert r + J d\rVert^2$ promised a drop of 3.5285e+04 in $F$; the real $F$ rose to 1.0414e+11. The ratio of actual to predicted drop, $\rho_k$ from [Trust regions](08-trust-region-methods.md), is −2951383.096.
+The straight-line model $`m(d) = \tfrac12 \lVert r + J d\rVert^2`$ promised a drop of 3.5285e+04 in $`F`$; the real $`F`$ rose to 1.0414e+11. The ratio of actual to predicted drop, $`\rho_k`$ from [Trust regions](08-trust-region-methods.md), is −2951383.096.
 
 ### Step 4: the damping is a trust region in disguise
 
-Raise $\lambda$ and the step shrinks. From the same start:
+Raise $`\lambda`$ and the step shrinks. From the same start:
 
-| $\lambda$ | scaled length (°C) | new rate $b$ | $\rho$ |
+| $`\lambda`$ | scaled length (°C) | new rate $`b`$ | $`\rho`$ |
 | ---: | ---: | ---: | ---: |
 | 0 | 279.952 | −0.40071 | −2951383.096 |
 | 0.01 | 270.480 | −0.36415 | −860922.379 |
@@ -135,36 +145,36 @@ Raise $\lambda$ and the step shrinks. From the same start:
 | 1 | 120.732 | 0.24176 | 1.287 |
 | 10 | 29.991 | 0.51699 | 1.097 |
 
-The theorem behind the table: **the damped step is the best step of its own length.** Of every step $d'$ with $\lVert d' \rVert_D \le \lVert d \rVert_D$, none gives the straight-line model a lower value than $d$ does.
+The theorem behind the table: **the damped step is the best step of its own length.** Of every step $`d'`$ with $`\lVert d' \rVert_D \le \lVert d \rVert_D`$, none gives the straight-line model a lower value than $`d`$ does.
 
-So choosing $\lambda$ is choosing a trust radius $\Delta = \lVert d \rVert_D$, and the triple-or-divide-by-three rule is a trust-region update: grow the region after a success, shrink it after a failure. Here a success means only that $F$ fell, $\rho > 0$; the size of $\rho$ is printed but not used, unlike the quarter and three-quarter thresholds of [Trust regions](08-trust-region-methods.md).
+So choosing $`\lambda`$ is choosing a trust radius $`\Delta = \lVert d \rVert_D`$, and the triple-or-divide-by-three rule is a trust-region update: grow the region after a success, shrink it after a failure. Here a success means only that $`F`$ fell, $`\rho > 0`$; the size of $`\rho`$ is printed but not used, unlike the quarter and three-quarter thresholds of [Trust regions](08-trust-region-methods.md).
 
-The checks test the claim at $\lambda = 1$: the model is 9567.5777 at the damped step, and the best of 29280 points spread through the same ball is 9572.1061.
+The checks test the claim at $`\lambda = 1`$: the model is 9567.5777 at the damped step, and the best of 29280 points spread through the same ball is 9572.1061.
 
-Marquardt's $D$ makes "length" mean something: it measures each number's move by how much it shifts the predicted temperatures, so a change in the rate (per minute) is not weighed like a change in the room (°C).
+Marquardt's $`D`$ makes "length" mean something: it measures each number's move by how much it shifts the predicted temperatures, so a change in the rate (per minute) is not weighed like a change in the room (°C).
 
 <details>
 <summary>Detailed proof: the damped step is best inside its ball</summary>
 
-Let $d$ solve $(J^{\mathsf T}J + \lambda D)\,d = -J^{\mathsf T} r$ with $\lambda \ge 0$, and let $d'$ be any step with $\lVert d' \rVert_D \le \lVert d \rVert_D$. Write $\langle u, v \rangle_D = \sum_j D_{jj} u_j v_j$. Expanding the square, for $e = d' - d$:
+Let $`d`$ solve $`(J^{\mathsf T}J + \lambda D)\,d = -J^{\mathsf T} r`$ with $`\lambda \ge 0`$, and let $`d'`$ be any step with $`\lVert d' \rVert_D \le \lVert d \rVert_D`$. Write $`\langle u, v \rangle_D = \sum_j D_{jj} u_j v_j`$. Expanding the square, for $`e = d' - d`$:
 
-$$m(d') - m(d) = \tfrac12 \lVert J e \rVert^2 + e^{\mathsf T}\left(J^{\mathsf T}J\,d + J^{\mathsf T} r\right) = \tfrac12 \lVert J e \rVert^2 - \lambda \langle e, d \rangle_D.$$
+$`\displaystyle m(d') - m(d) = \tfrac12 \lVert J e \rVert^2 + e^{\mathsf T}\left(J^{\mathsf T}J\,d + J^{\mathsf T} r\right) = \tfrac12 \lVert J e \rVert^2 - \lambda \langle e, d \rangle_D.`$
 
-The last step used the step equation, $J^{\mathsf T}J\,d + J^{\mathsf T} r = -\lambda D d$. Now
+The last step used the step equation, $`J^{\mathsf T}J\,d + J^{\mathsf T} r = -\lambda D d`$. Now
 
-$$-\langle e, d\rangle_D = \lVert d \rVert_D^2 - \langle d', d \rangle_D \ge \lVert d \rVert_D^2 - \lVert d' \rVert_D \lVert d \rVert_D \ge 0,$$
+$`\displaystyle -\langle e, d\rangle_D = \lVert d \rVert_D^2 - \langle d', d \rangle_D \ge \lVert d \rVert_D^2 - \lVert d' \rVert_D \lVert d \rVert_D \ge 0,`$
 
-by Cauchy-Schwarz and then $\lVert d' \rVert_D \le \lVert d \rVert_D$. Both terms are non-negative, so $m(d') \ge m(d)$.
+by Cauchy-Schwarz and then $`\lVert d' \rVert_D \le \lVert d \rVert_D`$. Both terms are non-negative, so $`m(d') \ge m(d)`$.
 
-The step equation is also the Lagrange condition for "minimise $m$ subject to $\lVert d \rVert_D \le \Delta$", with $\lambda$ as the multiplier, so the two problems are one problem.
+The step equation is also the Lagrange condition for "minimise $`m`$ subject to $`\lVert d \rVert_D \le \Delta`$", with $`\lambda`$ as the multiplier, so the two problems are one problem.
 
 </details>
 
 ### Step 5: two roads to the same fit, and a certificate
 
-The room $c$ and excess $a$ enter the model as straight lines. Fix the rate $b$, and the best $c$ and $a$ come from one straight-line fit. That leaves a search over $b$ alone, done by golden-section search (a bracket on $b$ that shrinks by the same ratio, 0.618, each round), which never touches the slope table. It lands on room 21.661398 °C, excess 180.911890 °C, rate 0.152744, $F$ = 43.742655: the Levenberg-Marquardt fit to six decimals. Of the 100 rates 0.01, 0.02, … 1.00, the lowest profile value is at 0.15.
+The room $`c`$ and excess $`a`$ enter the model as straight lines. Fix the rate $`b`$, and the best $`c`$ and $`a`$ come from one straight-line fit. That leaves a search over $`b`$ alone, done by golden-section search (a bracket on $`b`$ that shrinks by the same ratio, 0.618, each round), which never touches the slope table. It lands on room 21.661398 °C, excess 180.911890 °C, rate 0.152744, $`F`$ = 43.742655: the Levenberg-Marquardt fit to six decimals. Of the 100 rates 0.01, 0.02, … 1.00, the lowest profile value is at 0.15.
 
-At the fit the gradient is −7.2e−10, −5.4e−10 and 5.5e−06, flat to rounding and the stopping tolerance. The full Hessian, $J^{\mathsf T}J + S$, has leading minors (the determinants of its top-left 1×1, 2×2 and 3×3 blocks) 40, 97.694 and 3.5582e+07, all positive, so it is positive definite ([Optimality conditions](01-optimality-conditions.md)). Together these certify a **local minimum**. The scan over rates makes it the best found on 0.01 to 1.00, not a proved global minimum.
+At the fit the gradient is −7.2e−10, −5.4e−10 and 5.5e−06, flat to rounding and the stopping tolerance. The full Hessian, $`J^{\mathsf T}J + S`$, has leading minors (the determinants of its top-left 1×1, 2×2 and 3×3 blocks) 40, 97.694 and 3.5582e+07, all positive, so it is positive definite ([Optimality conditions](01-optimality-conditions.md)). Together these certify a **local minimum**. The scan over rates makes it the best found on 0.01 to 1.00, not a proved global minimum.
 
 ---
 
@@ -174,13 +184,13 @@ The three-by-three solves come from the run. The arithmetic between them is by h
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| start | $\theta_0$ = (30, 160, 0.6) | $F$ = 38332.6665 |
-| undamped step | solve $J^{\mathsf T}J\,d = -J^{\mathsf T}r$ | $b$ = −0.40071, $F$ = 1.0414e+11 |
+| start | $`\theta_0`$ = (30, 160, 0.6) | $`F`$ = 38332.6665 |
+| undamped step | solve $`J^{\mathsf T}J\,d = -J^{\mathsf T}r`$ | $`b`$ = −0.40071, $`F`$ = 1.0414e+11 |
 | its ratio | (38332.6665 − 1.0414e+11) ÷ 3.5285e+04 | ρ = −2951383.096: refuse |
 | damping ladder | 0.001 tripled six times | λ = 0.729000 |
-| first accepted step | damped solve at λ = 0.729 | $b$ = 0.19175, $F$ = 3407.959303 |
-| eight more steps | λ divided by 3 after each | $F$ = 43.742655 |
-| fit | stop when the scaled step is below 1e−7 °C | $c$ = 21.661398, $a$ = 180.911890, $b$ = 0.152744 |
+| first accepted step | damped solve at λ = 0.729 | $`b`$ = 0.19175, $`F`$ = 3407.959303 |
+| eight more steps | λ divided by 3 after each | $`F`$ = 43.742655 |
+| fit | stop when the scaled step is below 1e−7 °C | $`c`$ = 21.661398, $`a`$ = 180.911890, $`b`$ = 0.152744 |
 | typical miss | √(2 × 43.742655 ÷ 40) | 1.4789 °C |
 | half-life of the heat above room | ln 2 ÷ 0.152744 | **4.5380 minutes** |
 
@@ -190,10 +200,10 @@ The pan settles towards 21.661398 °C and loses half its remaining excess heat e
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No damping from the poor start | rate −0.40071, $F$ = 1.0414e+11 | straight lines trusted 279.952 °C away |
-| Slope in $b$ written without the factor $a$ | one step from 0.001 off the fit: rate −0.02923, $F$ = 889322.1 | the slope is too small by the factor $a$, so the step in $b$ is that many times too big |
+| No damping from the poor start | rate −0.40071, $`F`$ = 1.0414e+11 | straight lines trusted 279.952 °C away |
+| Slope in $`b`$ written without the factor $`a`$ | one step from 0.001 off the fit: rate −0.02923, $`F`$ = 889322.1 | the slope is too small by the factor $`a`$, so the step in $`b`$ is that many times too big |
 | Logs and a straight line, room guessed 30 °C | rate 0.22600, excess 239.5648 °C | the wrong room temperature bends the log plot, and the line through it is not the fit |
-| Gauss-Newton on 30 °C misses | error factor 0.1544 per step | $S$ is no longer small, so $J^{\mathsf T}J$ is a poor Hessian |
+| Gauss-Newton on 30 °C misses | error factor 0.1544 per step | $`S`$ is no longer small, so $`J^{\mathsf T}J`$ is a poor Hessian |
 
 ---
 
@@ -601,15 +611,15 @@ The two outputs match line for line.
 
 Lean proves the damped-step theorem and the gradient and Hessian formulas for any set of misses, and checks the Rosenbrock and damping arithmetic.
 
-- Take any slope table $J$, misses $r$ and damping $\lambda \ge 0$, and let $d$ solve the damped step equation with Marquardt's $D$.
-- Then no step $d'$ with $\lVert d' \rVert_D \le \lVert d \rVert_D$ gives the straight-line model a lower value than $d$ does.
-- For misses that are smooth (twice continuously differentiable), the gradient of $F$ is $J^{\mathsf T} r$.
-- For the same misses, the Hessian of $F$ is $J^{\mathsf T}J + S$, with $S = \sum_i r_i \nabla^2 r_i$.
-- Rosenbrock's function as two misses, $10(y - x^2)$ and $1 - x$: half their squared sum is half the function.
-- Gauss-Newton from $(-1.2, 1)$ lands at $(1, -3.84)$, then at the minimum $(1, 1)$, where both misses are zero.
+- Take any slope table $`J`$, misses $`r`$ and damping $`\lambda \ge 0`$, and let $`d`$ solve the damped step equation with Marquardt's $`D`$.
+- Then no step $`d'`$ with $`\lVert d' \rVert_D \le \lVert d \rVert_D`$ gives the straight-line model a lower value than $`d`$ does.
+- For misses that are smooth (twice continuously differentiable), the gradient of $`F`$ is $`J^{\mathsf T} r`$.
+- For the same misses, the Hessian of $`F`$ is $`J^{\mathsf T}J + S`$, with $`S = \sum_i r_i \nabla^2 r_i`$.
+- Rosenbrock's function as two misses, $`10(y - x^2)`$ and $`1 - x`$: half their squared sum is half the function.
+- Gauss-Newton from $`(-1.2, 1)`$ lands at $`(1, -3.84)`$, then at the minimum $`(1, 1)`$, where both misses are zero.
 - The damping ladder: 0.001 tripled six times is 0.729, and 0.729 divided by 3 eight times is 1/9000, or 0.000111.
 
-The pan fit, the $\lambda$ table, the error factors and the certificate at the fit are left to the Python and Rust checks.
+The pan fit, the $`\lambda`$ table, the error factors and the certificate at the fit are left to the Python and Rust checks.
 
 ```lean
 -- Nonlinear least squares: the Levenberg-Marquardt damped step is the best step of its own scaled length for the straight-line model, and the Hessian of half the sum of squared misses is J-transpose-J plus the misses times their own curvatures.
@@ -763,7 +773,7 @@ example : (729 / 1000 : ℚ) / 3 ^ 8 = 1 / 9000 := by norm_num
 > **Try changing**
 > - **Guess first: does plain damping work?** In `step`, replace `lam * A[i][i]` by `lam`. The same fit arrives, but only after many refusals and more steps. The trust-region assert then fails: the step is now best in a round ball, which mixes °C with "per minute", not in the scaled ball the check samples.
 > - **Guess first: how bad can the probe get?** Change `ys = readings(1.5)` to `ys = readings(30.0)`. The fit converges, to the 29.645 °C rms miss already printed in the rate lines. Then the log-line shortcut crashes: some readings now fall below the guessed 30 °C room, and the log of a negative number does not exist.
-> - **Guess first: what if the slope has the wrong sign?** Delete the minus sign in front of `(1.0 if wrong else a)`. Each step still lowers $F$ a little, with ρ near 0, while the rate drifts ever higher; the 200-step cap ends the run, and the first assert stops it.
+> - **Guess first: what if the slope has the wrong sign?** Delete the minus sign in front of `(1.0 if wrong else a)`. Each step still lowers $`F`$ a little, with ρ near 0, while the rate drifts ever higher; the 200-step cap ends the run, and the first assert stops it.
 > - **Guess first: does the start matter?** Change `0.6` to `0.1` in `start`. Pure Gauss-Newton now settles within two steps, close to the fit. The first assert stops the run, since it expects the explosion.
 
 ---
@@ -771,7 +781,7 @@ example : (729 / 1000 : ℚ) / 3 ^ 8 = 1 / 9000 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Trusting the undamped step because Gauss-Newton is "fast".** It is fast near the answer, where its error factor here is 0.0102. Far away the straight lines it trusts are wrong: from a rate of 0.6 one step lands at −0.40071 and raises $F$ from 38332.6665 to 1.0414e+11. Damp it, and keep a step only when $F$ really falls, $\rho > 0$.
+> **Trusting the undamped step because Gauss-Newton is "fast".** It is fast near the answer, where its error factor here is 0.0102. Far away the straight lines it trusts are wrong: from a rate of 0.6 one step lands at −0.40071 and raises $`F`$ from 38332.6665 to 1.0414e+11. Damp it, and keep a step only when $`F`$ really falls, $`\rho > 0`$.
 >
 > - **Taking logs with a guessed room temperature.** Guessing 30 °C gives a rate of 0.22600, not 0.152744.
 > - **Expecting Newton's speed on large misses.** At 30 °C misses the factor is 0.1544, against 0.0102 at 1.5 °C.
@@ -787,22 +797,22 @@ example : (729 / 1000 : ℚ) / 3 ^ 8 = 1 / 9000 := by norm_num
 - **Option desks.** [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md) fits model parameters to market quotes with this method.
 
 > **Say it back**
-> Nonlinear least squares chooses the numbers in a curved model so the squared misses are smallest. Gauss-Newton straightens each miss at the current guess and solves the resulting straight-line fit. Its curvature, $J^{\mathsf T}J$, drops a term weighted by the misses, so it is nearly Newton when the misses are small and slower when they are large. Far from the answer the straightening lies, and the undamped step can explode. Damping limits the step to a trust region, grown after every step that lowers $F$ and shrunk after every step that does not.
+> Nonlinear least squares chooses the numbers in a curved model so the squared misses are smallest. Gauss-Newton straightens each miss at the current guess and solves the resulting straight-line fit. Its curvature, $`J^{\mathsf T}J`$, drops a term weighted by the misses, so it is nearly Newton when the misses are small and slower when they are large. Far from the answer the straightening lies, and the undamped step can explode. Damping limits the step to a trust region, grown after every step that lowers $`F`$ and shrunk after every step that does not.
 
 ---
 
 ## What this builds on
 
 - [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md): the full-Hessian step that Gauss-Newton approximates, and its quadratic rate.
-- [Trust regions](08-trust-region-methods.md): the ratio $\rho_k$ and the grow-or-shrink rule that the damping turns out to be.
+- [Trust regions](08-trust-region-methods.md): the ratio $`\rho_k`$ and the grow-or-shrink rule that the damping turns out to be.
 - [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the straight-line fit that each Gauss-Newton step solves, and that the profile road solves for room and excess.
 - [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): the derivation of the damped step, Marquardt's scaling, and the proof that the damped step exists and goes downhill.
 
 ## Where this goes next
 
-- [Automatic differentiation](10-automatic-differentiation-and-backpropagation.md): the slope table $J$ computed exactly from the model's code, the next card on this shelf.
+- [Automatic differentiation](10-automatic-differentiation-and-backpropagation.md): the slope table $`J`$ computed exactly from the model's code, the next card on this shelf.
 
-The question left open: when the misses at the answer are large and the factor nears 1, the dropped term $S$ has to come back, and how to add it cheaply without paying for full Newton is not settled here.
+The question left open: when the misses at the answer are large and the factor nears 1, the dropped term $`S`$ has to come back, and how to add it cheaply without paying for full Newton is not settled here.
 
 ---
 
@@ -811,7 +821,7 @@ The question left open: when the misses at the answer are large and the factor n
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Levenberg, Kenneth. "A method for the solution of certain non-linear problems in least squares." *Quarterly of Applied Mathematics* 2 (1944): 164–168. [doi:10.1090/qam/10666](https://doi.org/10.1090/qam/10666). The damped step.
-- Marquardt, Donald W. "An Algorithm for Least-Squares Estimation of Nonlinear Parameters." *Journal of the Society for Industrial and Applied Mathematics* 11 (1963): 431–441. [doi:10.1137/0111030](https://doi.org/10.1137/0111030). Damping scaled by the diagonal of $J^{\mathsf T}J$.
+- Marquardt, Donald W. "An Algorithm for Least-Squares Estimation of Nonlinear Parameters." *Journal of the Society for Industrial and Applied Mathematics* 11 (1963): 431–441. [doi:10.1137/0111030](https://doi.org/10.1137/0111030). Damping scaled by the diagonal of $`J^{\mathsf T}J`$.
 - Moré, Jorge J. "The Levenberg-Marquardt algorithm: Implementation and theory." In *Numerical Analysis*, Lecture Notes in Mathematics 630, Springer, 1978. [doi:10.1007/BFb0067700](https://doi.org/10.1007/BFb0067700). The damping read as a trust region, and the implementation behind MINPACK.
-- Nocedal, Jorge, and Stephen J. Wright. *Numerical Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5). Chapter 10: Gauss-Newton, the $J^{\mathsf T}J$ approximation and its rate.
+- Nocedal, Jorge, and Stephen J. Wright. *Numerical Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5). Chapter 10: Gauss-Newton, the $`J^{\mathsf T}J`$ approximation and its rate.
 - Dennis, J. E., and Robert B. Schnabel. *Numerical Methods for Unconstrained Optimization and Nonlinear Equations*. SIAM Classics, 1996. [doi:10.1137/1.9781611971200](https://doi.org/10.1137/1.9781611971200). Small-residual and large-residual convergence of Gauss-Newton.

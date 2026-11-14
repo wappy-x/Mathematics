@@ -35,51 +35,59 @@ Orange: sunny today. Green: cloudy today. Dark: rainy today. These are exact cha
 
 ## The formula
 
-Notation from earlier cards. The weather on day n is $X_n$, time in days. The table is the transition matrix $P$ ([Markov chains](01-markov-chains.md)): its entry $p_{ij}$ is the chance that tomorrow is state $j$ when today is state $i$. Its power $P^n$ holds the n-day chances ([n-step transitions](02-multi-step-transitions.md)). The stationary law $\pi$ is the mix that one day of weather leaves unchanged, $\pi P = \pi$ ([Stationary distributions](04-stationary-distributions.md)). For this table it is 0.6, 0.2, 0.2; the sunny column checks it: 0.6 × 0.8 + 0.2 × 0.5 + 0.2 × 0.1 = 0.6.
+Notation from earlier cards. The weather on day n is $`X_n`$, time in days. The table is the transition matrix $`P`$ ([Markov chains](01-markov-chains.md)): its entry $`p_{ij}`$ is the chance that tomorrow is state $`j`$ when today is state $`i`$. Its power $`P^n`$ holds the n-day chances ([n-step transitions](02-multi-step-transitions.md)). The stationary law $`\pi`$ is the mix that one day of weather leaves unchanged, $`\pi P = \pi`$ ([Stationary distributions](04-stationary-distributions.md)). For this table it is 0.6, 0.2, 0.2; the sunny column checks it: 0.6 × 0.8 + 0.2 × 0.5 + 0.2 × 0.1 = 0.6.
 
-One more notion, met on [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) and recalled here: a distance between two forecasts. A forecast is a law $\mu$ on the three states, three chances adding to 1. The **total variation distance** between two laws is half the sum of their gaps, state by state:
+One more notion, met on [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) and recalled here: a distance between two forecasts. A forecast is a law $`\mu`$ on the three states, three chances adding to 1. The **total variation distance** between two laws is half the sum of their gaps, state by state:
 
-$$\operatorname{TV}(\mu, \nu) = \tfrac12 \sum_j \lvert \mu_j - \nu_j \rvert .$$
+```math
+\mathrm{TV}(\mu, \nu) = \tfrac12 \sum_j \lvert \mu_j - \nu_j \rvert .
+```
 
 It equals the largest gap the two forecasts give to any one event, such as "not rainy". It runs from 0 (identical) to 1 (no overlap). The worst-start distance on day n is
 
-$$d(n) = \max_i \operatorname{TV}\bigl(\text{row } i \text{ of } P^n,\ \pi\bigr).$$
+```math
+d(n) = \max_i \mathrm{TV}\bigl(\text{row } i \text{ of } P^n,\ \pi\bigr).
+```
 
-The theorem. Suppose that for some block of $r$ days, every row of $P^r$ gives each state $j$ at least $\varepsilon\,\nu_j$, for one fixed law $\nu$ and a number $0 < \varepsilon \le 1$. This shared floor is called a **minorisation** (Doeblin's condition). Then
+The theorem. Suppose that for some block of $`r`$ days, every row of $`P^r`$ gives each state $`j`$ at least $`\varepsilon\,\nu_j`$, for one fixed law $`\nu`$ and a number $`0 < \varepsilon \le 1`$. This shared floor is called a **minorisation** (Doeblin's condition). Then
 
-$$d(n) \;\le\; (1 - \varepsilon)^{\lfloor n / r \rfloor}, \qquad \text{so } (P^n)_{ij} \to \pi_j \text{ for every start } i .$$
+```math
+d(n) \;\le\; (1 - \varepsilon)^{\lfloor n / r \rfloor}, \qquad \text{so } (P^n)_{ij} \to \pi_j \text{ for every start } i .
+```
 
-The brackets $\lfloor n/r \rfloor$ count complete blocks of $r$ days. Every finite chain that is irreducible (every state can reach every other) and aperiodic (not locked into a cycle) has such a block ([Classifying states](03-classifying-states.md) defines both words).
+The brackets $`\lfloor n/r \rfloor`$ count complete blocks of $`r`$ days. Every finite chain that is irreducible (every state can reach every other) and aperiodic (not locked into a cycle) has such a block ([Classifying states](03-classifying-states.md) defines both words).
 
 **Read it aloud:** if every starting day shares a slice of size epsilon of its r-day forecast, then each block of r days removes at least that share of the remaining disagreement, whatever the start.
 
-For the weather, one day is enough, $r = 1$. Every column of $P$ has smallest entry 0.1, so each row holds at least 0.1 of each state: $\varepsilon = 0.3$, spread evenly. The guarantee is $d(n) \le 0.7^n$. The town of stationary-distributions, with rows 0.6, 0.3, 0.1; 0.4, 0.4, 0.2; 0.4, 0.3, 0.3, has column minima 0.4, 0.3 and 0.1, so there $\varepsilon = 0.8$: from any start its forecasts are within $0.2^n$ of its mix 1/2, 1/3, 1/6.
+For the weather, one day is enough, $`r = 1`$. Every column of $`P`$ has smallest entry 0.1, so each row holds at least 0.1 of each state: $`\varepsilon = 0.3`$, spread evenly. The guarantee is $`d(n) \le 0.7^n`$. The town of stationary-distributions, with rows 0.6, 0.3, 0.1; 0.4, 0.4, 0.2; 0.4, 0.3, 0.3, has column minima 0.4, 0.3 and 0.1, so there $`\varepsilon = 0.8`$: from any start its forecasts are within $`0.2^n`$ of its mix 1/2, 1/3, 1/6.
 
-The guarantee is not the true speed. That is read from the eigenvalues of $P$ (the numbers $\lambda$ with $vP = \lambda v$ for some nonzero row $v$). One is always 1. The largest of the others in size, $\lambda_2$, sets the rate:
+The guarantee is not the true speed. That is read from the eigenvalues of $`P`$ (the numbers $`\lambda`$ with $`vP = \lambda v`$ for some nonzero row $`v`$). One is always 1. The largest of the others in size, $`\lambda_2`$, sets the rate:
 
-$$d(n) \approx C\,\lvert\lambda_2\rvert^{\,n}, \qquad \text{here } \lambda_2 = 0.5 .$$
+```math
+d(n) \approx C\,\lvert\lambda_2\rvert^{\,n}, \qquad \text{here } \lambda_2 = 0.5 .
+```
 
 **Read it aloud:** past the first few days, each day cuts the worst disagreement by the factor lambda-two; for this town, it halves.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_n$, $Y_n$, $n$ | the weather on day n in the first and second copy; the day | sunny, rainy on day 0 | — |
-| $P$, $p_{ij}$, $P^n$, $i$, $j$ | the table; chance of $j$ tomorrow after $i$ today; the n-day table | 0.8 for sun after sun; 0.29 for sun two days after rain | — |
-| $\mu$, $\nu$ | two laws: three chances adding to 1 | a forecast; $\nu$ even, one third each | — |
-| $\pi$, $\Pi$ | the stationary law, $\pi P = \pi$; the table with every row $\pi$ | 0.6, 0.2, 0.2 | — |
-| $\operatorname{TV}$ | total variation: largest gap on any event | 0.7 between sunny and rainy starts, day 1 | — |
-| $d(n)$ | worst-start distance from $\pi$ on day n | 0.5 on day 1, 0.01228 on day 7 | — |
-| $\varepsilon$, $r$ | the share every row holds in common; the block length in days | 0.3; 1 | $\varepsilon$ up: guarantee tightens; $r$ up: it loosens |
-| $T$ | the first day the two copies agree | 1 with chance 0.3 | — |
-| $\lambda$, $\lambda_2$, $\lambda_3$ | an eigenvalue; the other two eigenvalues of $P$ | 0.5 and 0.3 | forgetting slows |
-| $A_2$, $A_3$, $I$ | the two fading pieces of $P^n$; the identity table | built from $P$ in Step 6 | — |
-| $C$, $a$, $b$ | the constant in front of the rate; the weights on $0.5^n$ and $0.3^n$ from a rainy start | 1.6; −1.6 and 1 | — |
-| $K$, $R$ | Detailed proof only: the block table $P^r$; the leftover table once the shared part is taken out | — | — |
-| $X$, $Y$, $\nu'$ | Detailed proof only: the two copies; the second copy's starting law | — | — |
-| $A$, $B$ | Detailed proof only: the states where $\mu$ gives more than $\nu$; any event | — | — |
-| $\rho$, $m$, $k$, $s$ | Detailed proof only: a second stationary law; a number of whole blocks; a number of further blocks; a remainder in a division | — | — |
-| $v$, $S$, $g$, $h$, $t$, $q$ | Detailed proof only: a fixed state; the set of return lengths at $v$; two return lengths with $g - h = 1$; a length to be built from them; its quotient by $h$ | — | — |
-| $a_i$, $b_j$ | Detailed proof only: the length of a route from $i$ to $v$; of a route from $v$ to $j$ | — | — |
+| $`X_n`$, $`Y_n`$, $`n`$ | the weather on day n in the first and second copy; the day | sunny, rainy on day 0 | — |
+| $`P`$, $`p_{ij}`$, $`P^n`$, $`i`$, $`j`$ | the table; chance of $`j`$ tomorrow after $`i`$ today; the n-day table | 0.8 for sun after sun; 0.29 for sun two days after rain | — |
+| $`\mu`$, $`\nu`$ | two laws: three chances adding to 1 | a forecast; $`\nu`$ even, one third each | — |
+| $`\pi`$, $`\Pi`$ | the stationary law, $`\pi P = \pi`$; the table with every row $`\pi`$ | 0.6, 0.2, 0.2 | — |
+| $`\mathrm{TV}`$ | total variation: largest gap on any event | 0.7 between sunny and rainy starts, day 1 | — |
+| $`d(n)`$ | worst-start distance from $`\pi`$ on day n | 0.5 on day 1, 0.01228 on day 7 | — |
+| $`\varepsilon`$, $`r`$ | the share every row holds in common; the block length in days | 0.3; 1 | $`\varepsilon`$ up: guarantee tightens; $`r`$ up: it loosens |
+| $`T`$ | the first day the two copies agree | 1 with chance 0.3 | — |
+| $`\lambda`$, $`\lambda_2`$, $`\lambda_3`$ | an eigenvalue; the other two eigenvalues of $`P`$ | 0.5 and 0.3 | forgetting slows |
+| $`A_2`$, $`A_3`$, $`I`$ | the two fading pieces of $`P^n`$; the identity table | built from $`P`$ in Step 6 | — |
+| $`C`$, $`a`$, $`b`$ | the constant in front of the rate; the weights on $`0.5^n`$ and $`0.3^n`$ from a rainy start | 1.6; −1.6 and 1 | — |
+| $`K`$, $`R`$ | Detailed proof only: the block table $`P^r`$; the leftover table once the shared part is taken out | — | — |
+| $`X`$, $`Y`$, $`\nu'`$ | Detailed proof only: the two copies; the second copy's starting law | — | — |
+| $`A`$, $`B`$ | Detailed proof only: the states where $`\mu`$ gives more than $`\nu`$; any event | — | — |
+| $`\rho`$, $`m`$, $`k`$, $`s`$ | Detailed proof only: a second stationary law; a number of whole blocks; a number of further blocks; a remainder in a division | — | — |
+| $`v`$, $`S`$, $`g`$, $`h`$, $`t`$, $`q`$ | Detailed proof only: a fixed state; the set of return lengths at $`v`$; two return lengths with $`g - h = 1`$; a length to be built from them; its quotient by $`h`$ | — | — |
+| $`a_i`$, $`b_j`$ | Detailed proof only: the length of a route from $`i`$ to $`v`$; of a route from $`v`$ to $`j`$ | — | — |
 
 ### When it holds
 
@@ -96,56 +104,62 @@ These are sufficient, not necessary. A chain in which rain, once ended, never re
 
 ### Step 0: two copies that meet never part
 
-Run two copies of the weather, $X_n$ from sunny and $Y_n$ from rainy. Each copy on its own must follow the table; how the two are tied together is free. Tie them so that once they share a day, one draw moves both from then on. Their forecasts can then differ only on paths where they have not yet met. Such a tying is a **coupling**, the word used from here on.
+Run two copies of the weather, $`X_n`$ from sunny and $`Y_n`$ from rainy. Each copy on its own must follow the table; how the two are tied together is free. Tie them so that once they share a day, one draw moves both from then on. Their forecasts can then differ only on paths where they have not yet met. Such a tying is a **coupling**, the word used from here on.
 
 ### Step 1: total variation is the largest gap on an event
 
-The event that shows the largest gap is the set of states where $\mu$ gives more than $\nu$. The gaps sum to zero, so its gap is half their total size: hence the $\tfrac12$. Between a sunny and a rainy start on day 1, the rows are 0.8, 0.1, 0.1 and 0.1, 0.3, 0.6: the distance is 0.7, and the event "sunny" shows the whole of it.
+The event that shows the largest gap is the set of states where $`\mu`$ gives more than $`\nu`$. The gaps sum to zero, so its gap is half their total size: hence the $`\tfrac12`$. Between a sunny and a rainy start on day 1, the rows are 0.8, 0.1, 0.1 and 0.1, 0.3, 0.6: the distance is 0.7, and the event "sunny" shows the whole of it.
 
 ### Step 2: the coupling inequality
 
-For any event, the chance it happens to $X_n$ minus the chance it happens to $Y_n$ comes only from paths where $X_n \ne Y_n$: where they agree, the event happens to both or to neither. So
+For any event, the chance it happens to $`X_n`$ minus the chance it happens to $`Y_n`$ comes only from paths where $`X_n \ne Y_n`$: where they agree, the event happens to both or to neither. So
 
-$$\operatorname{TV}\bigl(\text{law of } X_n,\ \text{law of } Y_n\bigr) \le \Pr(X_n \ne Y_n) = \Pr(T > n),$$
+```math
+\mathrm{TV}\bigl(\text{law of } X_n,\ \text{law of } Y_n\bigr) \le \Pr(X_n \ne Y_n) = \Pr(T > n),
+```
 
-where $T$ is the first day the copies agree. The last step holds because met copies stay together.
+where $`T`$ is the first day the copies agree. The last step holds because met copies stay together.
 
 ### Step 3: the common share makes meeting likely
 
 Every row of the table gives at least 0.1 to every state, so 0.3 of each row is the same whatever the day before. Split each day's move in two. With chance 0.3, make one draw from that shared part, one third to each state, and move both copies to it. With chance 0.7, move each copy by the rest of its own row, rescaled to add to 1. Each copy still follows the table: 0.3 times the shared part plus 0.7 times the rest is its row. On every day not yet met, the copies meet with chance at least 0.3. So
 
-$$\Pr(T > n) \le 0.7^{\,n}.$$
+```math
+\Pr(T > n) \le 0.7^{\,n}.
+```
 
 The simulation below runs exactly this coupling, 20000 pairs: on day 1 the pairs have not met 0.7049 ± 0.0032 of the time, the exact 0.7 within two standard errors.
 
 ### Step 4: start the second copy in equilibrium
 
-Now start $Y_n$ not on a rainy day but with a random day drawn from $\pi$. Because $\pi P = \pi$, the second copy's law is $\pi$ on every day. Steps 2 and 3 give, from any start $i$,
+Now start $`Y_n`$ not on a rainy day but with a random day drawn from $`\pi`$. Because $`\pi P = \pi`$, the second copy's law is $`\pi`$ on every day. Steps 2 and 3 give, from any start $`i`$,
 
-$$\operatorname{TV}\bigl(\text{row } i \text{ of } P^n,\ \pi\bigr) \le 0.7^{\,n}.$$
+```math
+\mathrm{TV}\bigl(\text{row } i \text{ of } P^n,\ \pi\bigr) \le 0.7^{\,n}.
+```
 
-That is $d(n) \le 0.7^n$: on day 30 at most 2.254e-05. Every chance in $P^n$ is within that of its limit, so each tends to the stationary value.
+That is $`d(n) \le 0.7^n`$: on day 30 at most 2.254e-05. Every chance in $`P^n`$ is within that of its limit, so each tends to the stationary value.
 
 ### Step 5: any irreducible aperiodic chain has a working block
 
-Some chains have a zero in every column of $P$, so no single day shares anything. Irreducibility says each state reaches every other by some route. Aperiodicity says the return times to a state have no common factor above 1. Together, on finitely many states, they give one block length $r$ after which every route length is available at once: every entry of $P^r$ is positive. Take $\nu$ and $\varepsilon$ from the column minima of $P^r$, run Step 3 once per block, and the guarantee becomes $(1 - \varepsilon)^{\lfloor n/r \rfloor}$. The same argument builds $\pi$ from scratch, without assuming it exists.
+Some chains have a zero in every column of $`P`$, so no single day shares anything. Irreducibility says each state reaches every other by some route. Aperiodicity says the return times to a state have no common factor above 1. Together, on finitely many states, they give one block length $`r`$ after which every route length is available at once: every entry of $`P^r`$ is positive. Take $`\nu`$ and $`\varepsilon`$ from the column minima of $`P^r`$, run Step 3 once per block, and the guarantee becomes $`(1 - \varepsilon)^{\lfloor n/r \rfloor}`$. The same argument builds $`\pi`$ from scratch, without assuming it exists.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** A finite state set, a transition matrix $P$ with rows adding to 1, a law $\nu$ and $0 < \varepsilon \le 1$ with $(P^r)_{ij} \ge \varepsilon\,\nu_j$ for all $i, j$. Write $K = P^r$.
+**Setting.** A finite state set, a transition matrix $`P`$ with rows adding to 1, a law $`\nu`$ and $`0 < \varepsilon \le 1`$ with $`(P^r)_{ij} \ge \varepsilon\,\nu_j`$ for all $`i, j`$. Write $`K = P^r`$.
 
-**(a) Total variation is the largest event gap.** Let $A$ be the states where $\mu_j > \nu_j$. For any event $B$, $\mu(B) - \nu(B) \le \mu(A) - \nu(A)$, since states outside $A$ add non-positive gaps and states in $A$ add positive ones. The gaps sum to 0, so $\mu(A) - \nu(A) = \tfrac12 \sum_j \lvert\mu_j - \nu_j\rvert$. The same holds with the roles swapped.
+**(a) Total variation is the largest event gap.** Let $`A`$ be the states where $`\mu_j > \nu_j`$. For any event $`B`$, $`\mu(B) - \nu(B) \le \mu(A) - \nu(A)`$, since states outside $`A`$ add non-positive gaps and states in $`A`$ add positive ones. The gaps sum to 0, so $`\mu(A) - \nu(A) = \tfrac12 \sum_j \lvert\mu_j - \nu_j\rvert`$. The same holds with the roles swapped.
 
-**(b) One step never increases the distance.** $\sum_j \lvert \sum_i (\mu_i - \nu_i) p_{ij} \rvert \le \sum_i \lvert \mu_i - \nu_i\rvert \sum_j p_{ij} = \sum_i \lvert \mu_i - \nu_i \rvert$, by the triangle inequality and row sums of 1.
+**(b) One step never increases the distance.** $`\sum_j \lvert \sum_i (\mu_i - \nu_i) p_{ij} \rvert \le \sum_i \lvert \mu_i - \nu_i\rvert \sum_j p_{ij} = \sum_i \lvert \mu_i - \nu_i \rvert`$, by the triangle inequality and row sums of 1.
 
-**(c) One block contracts by $1 - \varepsilon$.** If $\varepsilon = 1$, every row of $K$ equals $\nu$, so $\mu K = \nu K$ for all laws and the distance after one block is 0. Otherwise set $R_{ij} = (K_{ij} - \varepsilon\nu_j)/(1 - \varepsilon)$: its entries are non-negative and its rows add to 1. Start copies $X$, $Y$ from laws $\mu$, $\nu'$, equal as often as possible: the overlap $\min(\mu_j, \nu'_j)$ has total $1 - \operatorname{TV}(\mu, \nu')$ by (a), so with that chance draw one state for both from the overlap, rescaled, and otherwise draw each from what its own law has left, rescaled. Each block, while unequal: with chance $\varepsilon$ both jump to one state drawn from $\nu$; otherwise each moves by its own row of $R$. Once equal, one draw from $K$ moves both. Each copy moves by $\varepsilon\nu_j + (1 - \varepsilon)R_{ij} = K_{ij}$, so its law after $m$ blocks is the start times $K^m$. The copies are unequal after $m$ blocks only if they started unequal and every coin failed: chance at most $(1 - \varepsilon)^m \operatorname{TV}(\mu, \nu')$. By the argument of Step 2, which uses only (a), $\operatorname{TV}(\mu K^m, \nu' K^m) \le (1 - \varepsilon)^m \operatorname{TV}(\mu, \nu')$.
+**(c) One block contracts by $`1 - \varepsilon`$.** If $`\varepsilon = 1`$, every row of $`K`$ equals $`\nu`$, so $`\mu K = \nu K`$ for all laws and the distance after one block is 0. Otherwise set $`R_{ij} = (K_{ij} - \varepsilon\nu_j)/(1 - \varepsilon)`$: its entries are non-negative and its rows add to 1. Start copies $`X`$, $`Y`$ from laws $`\mu`$, $`\nu'`$, equal as often as possible: the overlap $`\min(\mu_j, \nu'_j)`$ has total $`1 - \mathrm{TV}(\mu, \nu')`$ by (a), so with that chance draw one state for both from the overlap, rescaled, and otherwise draw each from what its own law has left, rescaled. Each block, while unequal: with chance $`\varepsilon`$ both jump to one state drawn from $`\nu`$; otherwise each moves by its own row of $`R`$. Once equal, one draw from $`K`$ moves both. Each copy moves by $`\varepsilon\nu_j + (1 - \varepsilon)R_{ij} = K_{ij}`$, so its law after $`m`$ blocks is the start times $`K^m`$. The copies are unequal after $`m`$ blocks only if they started unequal and every coin failed: chance at most $`(1 - \varepsilon)^m \mathrm{TV}(\mu, \nu')`$. By the argument of Step 2, which uses only (a), $`\mathrm{TV}(\mu K^m, \nu' K^m) \le (1 - \varepsilon)^m \mathrm{TV}(\mu, \nu')`$.
 
-**(d) The limit exists and is stationary.** Fix $\mu$ and put $\mu_m = \mu K^m$. Apply (c) to the starts $\mu$ and $\mu K^k$: $\operatorname{TV}(\mu_{m+k}, \mu_m) \le (1 - \varepsilon)^m$ for all $k$. Each coordinate is therefore a Cauchy sequence of real numbers, and converges (completeness of the reals, [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The limit $\pi$ has non-negative entries adding to 1. Matrix products are finite sums, so they pass to the limit: $\pi K = \pi$. If $\rho K = \rho$ too, (c) gives $\operatorname{TV}(\pi, \rho) \le (1 - \varepsilon)\operatorname{TV}(\pi, \rho)$, so $\rho = \pi$: the $K$-stationary law is unique. Since $(\pi P)K = (\pi K)P = \pi P$, uniqueness gives $\pi P = \pi$.
+**(d) The limit exists and is stationary.** Fix $`\mu`$ and put $`\mu_m = \mu K^m`$. Apply (c) to the starts $`\mu`$ and $`\mu K^k`$: $`\mathrm{TV}(\mu_{m+k}, \mu_m) \le (1 - \varepsilon)^m`$ for all $`k`$. Each coordinate is therefore a Cauchy sequence of real numbers, and converges (completeness of the reals, [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The limit $`\pi`$ has non-negative entries adding to 1. Matrix products are finite sums, so they pass to the limit: $`\pi K = \pi`$. If $`\rho K = \rho`$ too, (c) gives $`\mathrm{TV}(\pi, \rho) \le (1 - \varepsilon)\mathrm{TV}(\pi, \rho)`$, so $`\rho = \pi`$: the $`K`$-stationary law is unique. Since $`(\pi P)K = (\pi K)P = \pi P`$, uniqueness gives $`\pi P = \pi`$.
 
-**(e) The rate for every day.** Write $n = mr + s$ with $0 \le s < r$. Then $\mu P^n = (\mu K^m) P^s$ and $\pi = \pi K^m P^s$. By (c) and then (b), $\operatorname{TV}(\mu P^n, \pi) \le (1 - \varepsilon)^m$. Taking $\mu$ as a certain start $i$ gives $d(n) \le (1 - \varepsilon)^{\lfloor n/r \rfloor}$.
+**(e) The rate for every day.** Write $`n = mr + s`$ with $`0 \le s < r`$. Then $`\mu P^n = (\mu K^m) P^s`$ and $`\pi = \pi K^m P^s`$. By (c) and then (b), $`\mathrm{TV}(\mu P^n, \pi) \le (1 - \varepsilon)^m`$. Taking $`\mu`$ as a certain start $`i`$ gives $`d(n) \le (1 - \varepsilon)^{\lfloor n/r \rfloor}`$.
 
-**(f) Irreducible and aperiodic give a positive power.** Fix a state $v$. The set $S$ of lengths of routes from $v$ back to $v$ is closed under addition (go round twice). Aperiodic means its greatest common divisor is 1; finitely many members already have divisor 1, and Bézout's identity (the greatest common divisor of whole numbers is a whole-number combination of them) writes 1 as a whole-number combination of them. Collect the positive and negative terms: $1 = g - h$ with $g$ and $h$ in $S$, or $h = 0$. If $h = 0$ then $1 \in S$ and every length is a return length. Otherwise take any $t \ge 1$ with $t \ge h(h - 1)$ and write $t = qh + s$ with $0 \le s < h$; then $q \ge h - 1 \ge s$ and $t = s\,g + (q - s)\,h$, a sum of members of $S$. So every length $t \ge \max(1, h(h-1))$ is a return length. Irreducibility gives a route $i \to v$ of some length $a_i$ and $v \to j$ of some length $b_j$. For $r$ at least $\max(1, h(h-1))$ plus the largest $a_i + b_j$, every pair $i, j$ has a route of exactly $r$ days: $i \to v$, a loop at $v$, then $v \to j$. Each route has positive chance, so every entry of $P^r$ is positive. Let $\varepsilon = \sum_j \min_i (P^r)_{ij} > 0$ and $\nu_j = \min_i (P^r)_{ij} / \varepsilon$. Then (a) to (e) apply.
+**(f) Irreducible and aperiodic give a positive power.** Fix a state $`v`$. The set $`S`$ of lengths of routes from $`v`$ back to $`v`$ is closed under addition (go round twice). Aperiodic means its greatest common divisor is 1; finitely many members already have divisor 1, and Bézout's identity (the greatest common divisor of whole numbers is a whole-number combination of them) writes 1 as a whole-number combination of them. Collect the positive and negative terms: $`1 = g - h`$ with $`g`$ and $`h`$ in $`S`$, or $`h = 0`$. If $`h = 0`$ then $`1 \in S`$ and every length is a return length. Otherwise take any $`t \ge 1`$ with $`t \ge h(h - 1)`$ and write $`t = qh + s`$ with $`0 \le s < h`$; then $`q \ge h - 1 \ge s`$ and $`t = s\,g + (q - s)\,h`$, a sum of members of $`S`$. So every length $`t \ge \max(1, h(h-1))`$ is a return length. Irreducibility gives a route $`i \to v`$ of some length $`a_i`$ and $`v \to j`$ of some length $`b_j`$. For $`r`$ at least $`\max(1, h(h-1))`$ plus the largest $`a_i + b_j`$, every pair $`i, j`$ has a route of exactly $`r`$ days: $`i \to v`$, a loop at $`v`$, then $`v \to j`$. Each route has positive chance, so every entry of $`P^r`$ is positive. Let $`\varepsilon = \sum_j \min_i (P^r)_{ij} > 0`$ and $`\nu_j = \min_i (P^r)_{ij} / \varepsilon`$. Then (a) to (e) apply.
 
 </details>
 
@@ -153,33 +167,35 @@ Some chains have a zero in every column of $P$, so no single day shares anything
 
 The guarantee 0.7 is a floor on progress; the actual speed is in the eigenvalues. For a 3 by 3 table, one eigenvalue is 1; the other two add to the trace minus 1 and multiply to the determinant. Here they are 0.5 and 0.3. With three different eigenvalues the n-day table splits into three fixed pieces:
 
-$$P^n = \Pi + \lambda_2^{\,n} A_2 + \lambda_3^{\,n} A_3 ,$$
+```math
+P^n = \Pi + \lambda_2^{\,n} A_2 + \lambda_3^{\,n} A_3 ,
+```
 
-where $\Pi$ has every row equal to $\pi$, and $A_2 = (P - I)(P - \lambda_3 I) / \bigl((\lambda_2 - 1)(\lambda_2 - \lambda_3)\bigr)$, with $I$ the identity table and $A_3$ built the same way. This is Sylvester's formula. [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md) splits $P^n$ into fixed pieces times powers of the eigenvalues, and a factor $P - \lambda I$ wipes out the piece at $\lambda$ while scaling each other piece by its eigenvalue minus $\lambda$; so the product in $A_2$ keeps only the piece at $\lambda_2$, scaled by the denominator. The last two pieces fade, and the one at 0.5 fades last. So after a few days the distance halves every day: $d(31)/d(30)$ is 0.5 to six decimals in the check.
+where $`\Pi`$ has every row equal to $`\pi`$, and $`A_2 = (P - I)(P - \lambda_3 I) / \bigl((\lambda_2 - 1)(\lambda_2 - \lambda_3)\bigr)`$, with $`I`$ the identity table and $`A_3`$ built the same way. This is Sylvester's formula. [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md) splits $`P^n`$ into fixed pieces times powers of the eigenvalues, and a factor $`P - \lambda I`$ wipes out the piece at $`\lambda`$ while scaling each other piece by its eigenvalue minus $`\lambda`$; so the product in $`A_2`$ keeps only the piece at $`\lambda_2`$, scaled by the denominator. The last two pieces fade, and the one at 0.5 fades last. So after a few days the distance halves every day: $`d(31)/d(30)`$ is 0.5 to six decimals in the check.
 
 The guarantee is loose because it credits the copies with only a 0.3 chance of meeting each day; from most pairs of states they meet more often. For a sunny and a rainy start the coupling itself wastes nothing: computed exactly over the nine pairs of states, its chance of not having met equals the distance on each of days 1 to 6, 0.4100 on day 2. The simulated 0.4111 ± 0.0035 differs from it only by sampling noise.
 
-The other road to the rate goes through the spectral gap $1 - \lvert\lambda_2\rvert$, here 0.5, which for a chain with detailed balance traps $d(n)$ between two multiples of $\lvert\lambda_2\rvert^n$, and through the conductance of a graph, which ties the gap to bottlenecks. Detailed balance means that in equilibrium the flow from each state to another equals the flow back: $\pi_i p_{ij} = \pi_j p_{ji}$. It is done properly in [Expanders](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/07-expanders-and-mixing.md).
+The other road to the rate goes through the spectral gap $`1 - \lvert\lambda_2\rvert`$, here 0.5, which for a chain with detailed balance traps $`d(n)`$ between two multiples of $`\lvert\lambda_2\rvert^n`$, and through the conductance of a graph, which ties the gap to bottlenecks. Detailed balance means that in equilibrium the flow from each state to another equals the flow back: $`\pi_i p_{ij} = \pi_j p_{ji}`$. It is done properly in [Expanders](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/07-expanders-and-mixing.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Rainy today. The chance of sun on day n is $0.6 + a\,0.5^n + b\,0.3^n$ for two constants $a$ and $b$, by Step 6. Day 0 gives $a + b = -0.6$; day 1 gives $0.5a + 0.3b = 0.1 - 0.6$. So $b = 1$ and $a = -1.6$.
+Rainy today. The chance of sun on day n is $`0.6 + a\,0.5^n + b\,0.3^n`$ for two constants $`a`$ and $`b`$, by Step 6. Day 0 gives $`a + b = -0.6`$; day 1 gives $`0.5a + 0.3b = 0.1 - 0.6`$. So $`b = 1`$ and $`a = -1.6`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| trace of $P$ | 0.8 + 0.4 + 0.6 | 1.8 |
+| trace of $`P`$ | 0.8 + 0.4 + 0.6 | 1.8 |
 | other two eigenvalues: sum | 1.8 − 1 | 0.8 |
-| other two eigenvalues: product | determinant of $P$ | 0.15 |
+| other two eigenvalues: product | determinant of $`P`$ | 0.15 |
 | split them | (0.8 ± 0.2) / 2, where 0.2 is the square root of 0.8 × 0.8 − 4 × 0.15 | 0.5 and 0.3 |
 | sun on day 1 | 0.6 − 0.8 + 0.3 | 0.1 |
 | sun on day 2 | 0.6 − 0.4 + 0.09 | 0.29 |
 | sun on day 3 | 0.6 − 0.2 + 0.027 | 0.427 |
 | sun on day 7 | 0.6 − 0.0125 + 0.0002187 | 0.5877187 |
-| worst-start distance, day 7 | exact, from $P^7$ | 0.01228 |
-| guarantee, day 7 | $0.7^7$ | 0.08235 |
-| **first day every start is within 0.01 of the mix** | exact $d(n)$ | **day 8** |
+| worst-start distance, day 7 | exact, from $`P^7`$ | 0.01228 |
+| guarantee, day 7 | $`0.7^7`$ | 0.08235 |
+| **first day every start is within 0.01 of the mix** | exact $`d(n)`$ | **day 8** |
 
 From a rainy morning, the forecast a week out gives sun 0.5877 against the long-run 0.6. From day 8 on, whatever today's weather, every event's chance is within 0.01 of its long-run value; on day 30, within 1.490e-09.
 
@@ -189,7 +205,7 @@ From a rainy morning, the forecast a week out gives sun 0.5877 against the long-
 | --- | --- | --- |
 | Weather forced round sunny → cloudy → rainy (period 3) | worst-start distance 0.666667 on day 29 and day 30 | aperiodicity dropped: the forecast from a sunny day is certain on every day |
 | Two climates: rain never ends, sun and cloud never bring it | distance 1.000000 between sunny and rainy starts on day 30 | irreducibility dropped: two stationary laws, and today picks one |
-| Reading the guarantee 0.7 as the rate | 13 days to reach 0.01 | the true factor is $\lambda_2$ = 0.5; the true answer is 8 days |
+| Reading the guarantee 0.7 as the rate | 13 days to reach 0.01 | the true factor is $`\lambda_2`$ = 0.5; the true answer is 8 days |
 
 ---
 
@@ -197,11 +213,11 @@ From a rainy morning, the forecast a week out gives sun 0.5877 against the long-
 
 Three roads:
 
-- Road 1 takes exact whole-number powers of $P$ (ten to the n times $P^n$, so nothing is rounded).
+- Road 1 takes exact whole-number powers of $`P`$ (ten to the n times $`P^n`$, so nothing is rounded).
 - Road 2 is the eigenvalue formula of Step 6, with eigenvalues from trace and determinant; the two agree on all nine entries for 31 days.
 - Road 3 simulates the coupling of Step 3 with a SplitMix64 generator, seed 20260929, 20000 pairs, and asserts both inequalities to within three standard errors; it also runs the same coupling exactly over the nine pairs of states and asserts that its chance of not having met equals the distance. A month from a rainy start, 20000 runs, must land within four standard errors of 0.6.
 
-Other asserts: $\pi P = \pi$ exactly, the guarantee on every day to 31, and $d(31)/d(30)$ against $\lambda_2$ from the quadratic. The by-hand weights $a$, $b$, the exact day 8 and both what-breaks chains are exact and asserted; the bound's days 4 and 13 come from the computed $1 - \varepsilon$, each checked against the closed form $\lceil \log(\text{limit}) / \log(1 - \varepsilon) \rceil$.
+Other asserts: $`\pi P = \pi`$ exactly, the guarantee on every day to 31, and $`d(31)/d(30)`$ against $`\lambda_2`$ from the quadratic. The by-hand weights $`a`$, $`b`$, the exact day 8 and both what-breaks chains are exact and asserted; the bound's days 4 and 13 come from the computed $`1 - \varepsilon`$, each checked against the closed form $`\lceil \log(\text{limit}) / \log(1 - \varepsilon) \rceil`$.
 
 ### Python
 
@@ -619,20 +635,20 @@ The coupling rows are one seeded sample; another seed moves each estimate by abo
 
 Lean proves the theorem, Doeblin's bound and the largest-gap fact for every finite chain, and checks the card's numbers exactly.
 
-- Take a finite chain that is irreducible and aperiodic. Then it has a stationary law $\pi$, and $(P^n)_{ij} \to \pi_j$ for every start $i$.
-- Take the same chain. Then some block of $r$ days makes every entry of $P^r$ positive.
-- Take $\varepsilon$ as the sum of the column minima of that $P^r$. Then $d(n) \le (1 - \varepsilon)^{\lfloor n/r \rfloor}$ on every day $n$.
-- Suppose $\nu$ is a law, $0 < \varepsilon \le 1$, and $(P^r)_{ij} \ge \varepsilon \nu_j$ for all $i, j$. Then $d(n) \le (1 - \varepsilon)^{\lfloor n/r \rfloor}$ on every day $n$.
+- Take a finite chain that is irreducible and aperiodic. Then it has a stationary law $`\pi`$, and $`(P^n)_{ij} \to \pi_j`$ for every start $`i`$.
+- Take the same chain. Then some block of $`r`$ days makes every entry of $`P^r`$ positive.
+- Take $`\varepsilon`$ as the sum of the column minima of that $`P^r`$. Then $`d(n) \le (1 - \varepsilon)^{\lfloor n/r \rfloor}`$ on every day $`n`$.
+- Suppose $`\nu`$ is a law, $`0 < \varepsilon \le 1`$, and $`(P^r)_{ij} \ge \varepsilon \nu_j`$ for all $`i, j`$. Then $`d(n) \le (1 - \varepsilon)^{\lfloor n/r \rfloor}`$ on every day $`n`$.
 - For any two laws, the total variation distance equals the largest gap they give to any one event.
-- The weather table has stationary law 0.6, 0.2, 0.2, and its common share is $\varepsilon = 0.3$.
+- The weather table has stationary law 0.6, 0.2, 0.2, and its common share is $`\varepsilon = 0.3`$.
 - Its trace is 1.8 and its determinant is 0.15. The eigenvalues 0.5 and 0.3 add to 0.8 and multiply to 0.15.
 - From a rainy start, the chance of sun on days 1, 2, 3 and 7 is 0.1, 0.29, 0.427 and 0.5877187.
-- The by-hand formula with $a = -1.6$ and $b = 1$ gives the same day-7 value.
+- The by-hand formula with $`a = -1.6`$ and $`b = 1`$ gives the same day-7 value.
 - On day 7 the rainy start is more than 0.01 from the mix. On day 8 every start is within 0.01.
-- The guarantee on day 7 is $0.7^7 = 0.0823543$, above the exact distance 0.0122813.
+- The guarantee on day 7 is $`0.7^7 = 0.0823543`$, above the exact distance 0.0122813.
 - The forced cycle is certainly rainy on day 29 and certainly back to sunny on day 30.
 - With two climates, the sunny start gives rain chance 0 on day 30, and the rainy start gives 1.
-- In the town of stationary-distributions, $\varepsilon = 0.8$, and the mix 1/2, 1/3, 1/6 is stationary.
+- In the town of stationary-distributions, $`\varepsilon = 0.8`$, and the mix 1/2, 1/3, 1/6 is stationary.
 
 The eigenvalue formula over 31 days, the distances on other days, and the simulations are left to the Python and Rust checks.
 
@@ -1053,9 +1069,9 @@ example : vecMul ![1/2, 1/3, 1/6] town = ![1/2, 1/3, 1/6] := by
 
 > [!TIP]
 > **Try changing**
-> - **Start the month on a sunny day.** Guess first: does day 30 care? Change `x = 2` to `x = 0` in the month loop. The estimate stays within a few standard errors of 0.6, because $d(30)$ is 1.490e-09.
+> - **Start the month on a sunny day.** Guess first: does day 30 care? Change `x = 2` to `x = 0` in the month loop. The estimate stays within a few standard errors of 0.6, because $`d(30)`$ is 1.490e-09.
 > - **Claim a bigger common share.** Guess first: what breaks if the coupling branch tests `eps + 0.1`? The copies stop following the table and meet too often; the chance of not having met on day 1 falls below the exact distance 0.7, and the coupling assert stops the run.
-> - **Read the guarantee as the forecast.** Guess first: how many days does $0.7^n$ say until 0.25? The check prints 4; the exact answer is 3.
+> - **Read the guarantee as the forecast.** Guess first: how many days does $`0.7^n`$ say until 0.25? The check prints 4; the exact answer is 3.
 
 ---
 
@@ -1065,16 +1081,16 @@ example : vecMul ![1/2, 1/3, 1/6] town = ![1/2, 1/3, 1/6] := by
 > **Believing the weather settles.** Convergence to equilibrium is about forecasts, not about the sky. The chance of sun on day 30 is 0.600000 from any start, yet the weather still changes every day: sunny, then maybe rainy, then cloudy. Stationary means the mix of chances stands still, not the process.
 >
 > - **Having a stationary law is not converging to it.** The cycle sunny → cloudy → rainy has the stationary law one third each, and no start ever reaches it: distance 0.666667 on day 30.
-> - **Treating the guarantee as the rate.** $0.7^n$ says 13 days to within 0.01; the truth is 8. The bound is a promise for every start, not a forecast of the speed.
+> - **Treating the guarantee as the rate.** $`0.7^n`$ says 13 days to within 0.01; the truth is 8. The bound is a promise for every start, not a forecast of the speed.
 > - **Using the eigenvalue 0.3 because it is the smaller.** The slowest-fading piece sets the pace: 0.5, not 0.3.
 
 ---
 
 ## Where you meet it in real life
 
-- **Sampling by simulation.** Markov chain Monte Carlo runs a chain whose stationary law is the distribution wanted and discards the early steps while the start is forgotten; how many is a question about $d(n)$: [MCMC](07-markov-chain-monte-carlo.md).
+- **Sampling by simulation.** Markov chain Monte Carlo runs a chain whose stationary law is the distribution wanted and discards the early steps while the start is forgotten; how many is a question about $`d(n)`$: [MCMC](07-markov-chain-monte-carlo.md).
 - **Ranking web pages.** PageRank adds a step in which the surfer jumps to a page chosen at random. That jump is a common share in exactly the sense of Step 3, so the ranking converges geometrically from any starting guess.
-- **Shuffling cards.** How many riffle shuffles make a deck fair is $d(n)$ for a chain on the deck's orderings.
+- **Shuffling cards.** How many riffle shuffles make a deck fair is $`d(n)`$ for a chain on the deck's orderings.
 - **Long-run averages.** The fraction of sunny days over a long record tends to 0.6 from any start; the time-average version is on [Stationary distributions](04-stationary-distributions.md).
 - **Chains that do settle.** A chain that stops in an end state, such as a finished board game, settles for a different reason: [Absorption](06-absorption-and-first-step-analysis.md).
 
@@ -1085,8 +1101,8 @@ example : vecMul ![1/2, 1/3, 1/6] town = ![1/2, 1/3, 1/6] := by
 
 ## What this builds on
 
-- [Stationary distributions](04-stationary-distributions.md): the law $\pi$ with $\pi P = \pi$, here 0.6, 0.2, 0.2.
-- [n-step transitions](02-multi-step-transitions.md): the n-day forecast as $P^n$.
+- [Stationary distributions](04-stationary-distributions.md): the law $`\pi`$ with $`\pi P = \pi`$, here 0.6, 0.2, 0.2.
+- [n-step transitions](02-multi-step-transitions.md): the n-day forecast as $`P^n`$.
 - [Classifying states](03-classifying-states.md): irreducible and aperiodic, the two hypotheses.
 
 ## Where this goes next

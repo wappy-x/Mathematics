@@ -35,14 +35,16 @@ Each arrow's number is how many percentage points of return one unit of that dra
 
 Notation first, in words.
 
-- A capital letter now stands for a whole list of numbers, stacked in a column and called a vector: $Z$ is the three draws, $X$ the three returns.
-- A table of numbers with rows and columns is a matrix; $L$ is the table of mixing weights, one row per share and one column per draw, and $L\,Z$ runs each row along the draws and adds, as on [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md).
-- A raised T means the transpose, the table flipped so rows become columns: $L^T$.
+- A capital letter now stands for a whole list of numbers, stacked in a column and called a vector: $`Z`$ is the three draws, $`X`$ the three returns.
+- A table of numbers with rows and columns is a matrix; $`L`$ is the table of mixing weights, one row per share and one column per draw, and $`L\,Z`$ runs each row along the draws and adds, as on [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md).
+- A raised T means the transpose, the table flipped so rows become columns: $`L^T`$.
 - Writing X ~ N(μ, Σ) means "X follows the multivariate normal law with average vector μ and covariance matrix Σ".
 - X_i is the i-th reading, and Cov(X_i, X_j) the covariance of two readings, as on [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md).
 - E[…] is the average of what is inside the brackets, and Var(…) its variance.
 
-$$X = \mu + L\,Z, \qquad \Sigma = L\,L^T$$
+```math
+X = \mu + L\,Z, \qquad \Sigma = L\,L^T
+```
 
 **Read it aloud:** each return is its average plus a weighted mix of independent standard normal draws, and the covariance matrix is the mixing table times its own transpose.
 
@@ -52,42 +54,48 @@ In numbers, with returns in percent:
 
 The diagonal of Σ holds the variances, 1, 2.25 and 4, so the standard deviations are 1, 1.5 and 2 percent. Off the diagonal sit the covariances. Divided by both standard deviations they give the correlations: 0.6 for bank and insurer, 0.6 for bank and miner, 0.36 for insurer and miner.
 
-Mix again with a fixed matrix $B$ and a fixed vector $a$, and the result is still multivariate normal:
+Mix again with a fixed matrix $`B`$ and a fixed vector $`a`$, and the result is still multivariate normal:
 
-$$a + B\,X \;\sim\; N\big(a + B\mu,\; B\,\Sigma\,B^T\big)$$
+```math
+a + B\,X \;\sim\; N\big(a + B\mu,\; B\,\Sigma\,B^T\big)
+```
 
 **Read it aloud:** a fixed linear mix of a normal vector is a normal vector, its average is the same mix of the averages, and its covariance is the matrix on both sides of Σ.
 
-When B is a single row, the fund's dollar weights $w$, this is the portfolio: its gain is w^T X, normal with average w^T μ and variance w^T Σ w.
+When B is a single row, the fund's dollar weights $`w`$, this is the portfolio: its gain is w^T X, normal with average w^T μ and variance w^T Σ w.
 
-When Σ has an inverse, $X$ has a density:
+When Σ has an inverse, $`X`$ has a density:
 
-$$f(x) = \frac{1}{(2\pi)^{d/2}\sqrt{\det\Sigma}}\;\exp\!\Big(-\tfrac12\,(x-\mu)^T\,\Sigma^{-1}\,(x-\mu)\Big)$$
+```math
+f(x) = \frac{1}{(2\pi)^{d/2}\sqrt{\det\Sigma}}\;\exp\!\Big(-\tfrac12\,(x-\mu)^T\,\Sigma^{-1}\,(x-\mu)\Big)
+```
 
 **Read it aloud:** the height of the joint bell at a day x falls off with the squared distance of x from the average, measured in the covariance's own units, and the constant in front makes the total volume 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $Z$ | independent standard normal draws, each average 0, variance 1 | three draws; one day's are 1.00, −0.50, 0.25 | a bigger draw moves every share that hears it |
-| $X$ | the vector of returns, in percent | bank, insurer, miner; that day 1.04, 0.33, 1.65 | — |
-| $\mu$ | the average vector | 0.04, 0.03, 0.05 percent a day | shifts the whole bell, changes no spread |
-| $L$, $L_{ij}$, $L_{jj}$ | mixing table; entry in row i, column j; a diagonal entry | lower triangular, diagonal 1.0, 1.2, 1.6 | more spread for the share in that row |
-| $L^T$ | the transpose: rows turned into columns | first row 1.0, 0.9, 1.2 | — |
-| $\Sigma$, $\Sigma_{ij}$ | covariance matrix; entry i, j is Cov(X_i, X_j); a block such as Σ_12,12 is the part for readings 1 and 2 | variances 1, 2.25, 4 on the diagonal | wider, more tilted bell |
-| $d$ | how many readings the vector holds | 3 | one more dimension to spread over |
-| $w$, $c$ | dollars gained per 1 percent move of each share; c = L^T w, the portfolio's weight on each draw | w = 50, 30, 20; c = 101, 36, 32 | more money at risk |
-| $B$, $a$ | a fixed matrix and vector that mix $X$ again | the row w^T and 0, for the portfolio | — |
-| $\det\Sigma$ | the determinant: how much Σ stretches volume | 3.6864 | a flatter, wider bell, lower peak |
-| $\Sigma^{-1}$ | the inverse matrix, undoing Σ | used through elimination, never written out | — |
-| $f(x)$, $x$ | joint density at a possible day x, per percent cubed | 0.033070 at the average day | — |
-| $\Phi$ | the standard normal area to the left of a point | Φ(−1.8222) = 0.0342, the bad-day chance | rises from 0 to 1 |
-| $p_j$ | the pivot: the number under the j-th square root in Cholesky's recipe, the variance reading j keeps once the earlier readings are known | 1, 1.44, 2.56 | — |
-| $P$, $u$, $s$ | in Step 2's proof: a weighted sum of draws, and the numbers at which a generating function is read | P = 101 Z1 + 36 Z2 + 32 Z3, the fund's gain less its average | — |
-| $Q$, $\Lambda$, $\lambda$ | in the spectral tip: the table of perpendicular unit directions; the diagonal table of eigenvalues; one eigenvalue, the variance along its direction | the eigenvalues of Σ, none negative | a bigger λ, more spread along its direction |
+| $`Z`$ | independent standard normal draws, each average 0, variance 1 | three draws; one day's are 1.00, −0.50, 0.25 | a bigger draw moves every share that hears it |
+| $`X`$ | the vector of returns, in percent | bank, insurer, miner; that day 1.04, 0.33, 1.65 | — |
+| $`\mu`$ | the average vector | 0.04, 0.03, 0.05 percent a day | shifts the whole bell, changes no spread |
+| $`L`$, $`L_{ij}`$, $`L_{jj}`$ | mixing table; entry in row i, column j; a diagonal entry | lower triangular, diagonal 1.0, 1.2, 1.6 | more spread for the share in that row |
+| $`L^T`$ | the transpose: rows turned into columns | first row 1.0, 0.9, 1.2 | — |
+| $`\Sigma`$, $`\Sigma_{ij}`$ | covariance matrix; entry i, j is Cov(X_i, X_j); a block such as Σ_12,12 is the part for readings 1 and 2 | variances 1, 2.25, 4 on the diagonal | wider, more tilted bell |
+| $`d`$ | how many readings the vector holds | 3 | one more dimension to spread over |
+| $`w`$, $`c`$ | dollars gained per 1 percent move of each share; c = L^T w, the portfolio's weight on each draw | w = 50, 30, 20; c = 101, 36, 32 | more money at risk |
+| $`B`$, $`a`$ | a fixed matrix and vector that mix $`X`$ again | the row w^T and 0, for the portfolio | — |
+| $`\det\Sigma`$ | the determinant: how much Σ stretches volume | 3.6864 | a flatter, wider bell, lower peak |
+| $`\Sigma^{-1}`$ | the inverse matrix, undoing Σ | used through elimination, never written out | — |
+| $`f(x)`$, $`x`$ | joint density at a possible day x, per percent cubed | 0.033070 at the average day | — |
+| $`\Phi`$ | the standard normal area to the left of a point | Φ(−1.8222) = 0.0342, the bad-day chance | rises from 0 to 1 |
+| $`p_j`$ | the pivot: the number under the j-th square root in Cholesky's recipe, the variance reading j keeps once the earlier readings are known | 1, 1.44, 2.56 | — |
+| $`P`$, $`u`$, $`s`$ | in Step 2's proof: a weighted sum of draws, and the numbers at which a generating function is read | P = 101 Z1 + 36 Z2 + 32 Z3, the fund's gain less its average | — |
+| $`Q`$, $`\Lambda`$, $`\lambda`$ | in the spectral tip: the table of perpendicular unit directions; the diagonal table of eigenvalues; one eigenvalue, the variance along its direction | the eigenvalues of Σ, none negative | a bigger λ, more spread along its direction |
 
 Cholesky's recipe gets the triangular table back from Σ alone, one entry at a time, down each column:
 
-$$L_{jj} = \sqrt{\Sigma_{jj} - \textstyle\sum_{k<j} L_{jk}^2}, \qquad L_{ij} = \frac{\Sigma_{ij} - \sum_{k<j} L_{ik}\,L_{jk}}{L_{jj}} \quad (i > j)$$
+```math
+L_{jj} = \sqrt{\Sigma_{jj} - \textstyle\sum_{k<j} L_{jk}^2}, \qquad L_{ij} = \frac{\Sigma_{ij} - \sum_{k<j} L_{ik}\,L_{jk}}{L_{jj}} \quad (i > j)
+```
 
 In words: a diagonal weight is the square root of the variance still unexplained by earlier draws; an entry below it is the covariance still unexplained, divided by that weight. The number under each square root is called the pivot.
 
@@ -122,7 +130,9 @@ So the portfolio is a constant plus three independent normals scaled by 101, 36 
 <summary>Detailed proof: a weighted sum of independent standard normals is normal</summary>
 
 Write P = c_1 Z_1 + … + c_d Z_d. The moment generating function of P at a number u is E[e^{uP}] ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)). Independence splits the average of a product into a product of averages:
-$$E\big[e^{uP}\big] = \prod_k E\big[e^{u c_k Z_k}\big] = \prod_k e^{u^2 c_k^2/2} = e^{u^2 (c_1^2 + \dots + c_d^2)/2}.$$
+
+$`\displaystyle E\big[e^{uP}\big] = \prod_k E\big[e^{u c_k Z_k}\big] = \prod_k e^{u^2 c_k^2/2} = e^{u^2 (c_1^2 + \dots + c_d^2)/2}.`$
+
 The middle step is the standard normal's own generating function, E[e^{sZ}] = e^{s^2/2}, found by completing the square in the Gaussian integral. The right side is the generating function of N(0, c_1^2 + … + c_d^2). Two laws with the same generating function, finite near 0, are the same law. So P is normal, with variance the sum of the squared weights. If every c_k is 0, P is the constant 0, a normal with variance 0.
 
 </details>
@@ -131,7 +141,9 @@ The middle step is the standard normal's own generating function, E[e^{sZ}] = e^
 
 Now mix with a whole matrix: Y = a + B X. Substitute X = μ + L Z:
 
-$$Y = (a + B\mu) + (B L)\,Z.$$
+```math
+Y = (a + B\mu) + (B L)\,Z.
+```
 
 That is the recipe again: independent standard normals through a fixed matrix, BL, plus a constant. By the definition Y is multivariate normal. Step 1 applied to BL gives its covariance, (BL)(BL)^T = B L L^T B^T = B Σ B^T, since a transposed product is the transposes in reverse order.
 

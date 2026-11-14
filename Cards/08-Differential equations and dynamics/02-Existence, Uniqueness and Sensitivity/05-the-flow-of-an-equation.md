@@ -8,7 +8,7 @@
 
 A colony of 100 animals lives thinly spread over an island. A birth needs two animals to meet, and meetings go up with the square of the head count. Count in hundreds and time in years: the colony gains its own size squared, in hundreds per year. At 100 animals it gains 100 a year; at 200, 400.
 
-Start with 100 animals and wait three months: 133. Wait three more: 200. Start again from 100 and wait six months in one go: 200 again. Two short waits land where one long wait lands. In symbols, with $y$ the colony in hundreds and $t$ the time in years, the law is $y' = y^2$.
+Start with 100 animals and wait three months: 133. Wait three more: 200. Start again from 100 and wait six months in one go: 200 again. Two short waits land where one long wait lands. In symbols, with $`y`$ the colony in hundreds and $`t`$ the time in years, the law is $`y' = y^2`$.
 
 The law never looks at the calendar, only at the head count. So "wait three months" is one fixed rule taking any head count to a later one, whatever the date. From here on that rule is the **flow** of the equation: the map that moves every starting value forward by a given time.
 
@@ -35,30 +35,34 @@ From the bottom: colonies of 50 (orange), 100 (green) and 133 (dark blue). Dark 
 
 ## The formula
 
-Notation first, in words. A rule $y' = f(y)$, whose rate depends on the state alone and not on the time, is called **autonomous**. The flow is written $\varphi_t$, read "phi t": $\varphi_t(x)$ is where the solution that starts at $x$ stands after time $t$. A small circle means "after", as on the [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md) card: $\varphi_s \circ \varphi_t$ applies $\varphi_t$ first, then $\varphi_s$.
+Notation first, in words. A rule $`y' = f(y)`$, whose rate depends on the state alone and not on the time, is called **autonomous**. The flow is written $`\varphi_t`$, read "phi t": $`\varphi_t(x)`$ is where the solution that starts at $`x`$ stands after time $`t`$. A small circle means "after", as on the [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md) card: $`\varphi_s \circ \varphi_t`$ applies $`\varphi_t`$ first, then $`\varphi_s`$.
 
-For the colony, $y' = y^2$, the flow is
+For the colony, $`y' = y^2`$, the flow is
 
-$$\varphi_t(x) = \frac{x}{1 - t x}, \qquad \text{for } t x < 1.$$
+```math
+\varphi_t(x) = \frac{x}{1 - t x}, \qquad \text{for } t x < 1.
+```
 
 **Read it aloud:** a colony that starts at x hundred animals holds x divided by one minus t times x after t years.
 
 Every flow of an autonomous equation obeys two laws:
 
-$$\varphi_0(x) = x, \qquad \varphi_s\bigl(\varphi_t(x)\bigr) = \varphi_{s+t}(x).$$
+```math
+\varphi_0(x) = x, \qquad \varphi_s\bigl(\varphi_t(x)\bigr) = \varphi_{s+t}(x).
+```
 
 **Read it aloud:** waiting no time changes nothing, and waiting t then waiting s is the same as waiting s plus t.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y$, $y'$ | colony size in hundreds; its rate, hundreds per year | 1 at the start; rate 1 per year there | grows faster, by the square |
-| $f$ | the rule giving the rate from the state alone | $f(y) = y^2$ | — |
-| $x$ | the starting value | 1, that is 100 animals | curve starts higher, ends sooner |
-| $t$, $s$ | two lengths of time, years; negative runs backwards | 0.25 and 0.25 | the flow carries further |
-| $\varphi_t$, $\varphi_s$ | the flow: start to state after time $t$ (or $s$) | $\varphi_{0.25}(1) = 4/3$ | — |
-| $\circ$ | "after": apply the right-hand map first | $\varphi_{0.25} \circ \varphi_{0.25}$ | — |
-| $1/x$ | the life span: time until the colony formula runs to infinity | 1 year from 100 animals | — |
-| $h$ | water height in the shelf's leaking bucket, cm | 25 cm at the start | empties later |
+| $`y`$, $`y'`$ | colony size in hundreds; its rate, hundreds per year | 1 at the start; rate 1 per year there | grows faster, by the square |
+| $`f`$ | the rule giving the rate from the state alone | $`f(y) = y^2`$ | — |
+| $`x`$ | the starting value | 1, that is 100 animals | curve starts higher, ends sooner |
+| $`t`$, $`s`$ | two lengths of time, years; negative runs backwards | 0.25 and 0.25 | the flow carries further |
+| $`\varphi_t`$, $`\varphi_s`$ | the flow: start to state after time $`t`$ (or $`s`$) | $`\varphi_{0.25}(1) = 4/3`$ | — |
+| $`\circ`$ | "after": apply the right-hand map first | $`\varphi_{0.25} \circ \varphi_{0.25}`$ | — |
+| $`1/x`$ | the life span: time until the colony formula runs to infinity | 1 year from 100 animals | — |
+| $`h`$ | water height in the shelf's leaking bucket, cm | 25 cm at the start | empties later |
 
 ### The picture: two moves or one
 
@@ -73,8 +77,8 @@ Both routes end at 2, as the composition law promises for every start and every 
 
 ### When it holds
 
-- **The rule reads only the state.** If it reads the clock, as in $y' = 2ty$, a wait depends on when it begins: the map from year 0, used twice, gives 1.1331 against 1.2840 for one move. Such an equation needs a map from a start time to an end time.
-- **One start gives one history, both ways in time.** Otherwise the flow is no function. [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md) guarantees it when $f$ is Lipschitz: its slope stays bounded. The leaking bucket, $h' = -0.2\sqrt{h}$, fails that at empty. Forward it is fine, but starts of 25 cm and 1 cm both read 0.00 at 60 minutes, so running back from empty has no single answer.
+- **The rule reads only the state.** If it reads the clock, as in $`y' = 2ty`$, a wait depends on when it begins: the map from year 0, used twice, gives 1.1331 against 1.2840 for one move. Such an equation needs a map from a start time to an end time.
+- **One start gives one history, both ways in time.** Otherwise the flow is no function. [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md) guarantees it when $`f`$ is Lipschitz: its slope stays bounded. The leaking bucket, $`h' = -0.2\sqrt{h}`$, fails that at empty. Forward it is fine, but starts of 25 cm and 1 cm both read 0.00 at 60 minutes, so running back from empty has no single answer.
 - **The time stays inside the life span** ([Blow-up](03-blow-up-and-the-life-span-of-a-solution.md)). From 100 animals that is under 1 year; at 1.5 years the formula prints −2.00, which is no colony.
 - **The colony model fits only while it is sparse.** Crowding stops real growth long before infinity.
 
@@ -84,42 +88,44 @@ Both routes end at 2, as the composition law promises for every start and every 
 
 ### Step 0: a rule that ignores the clock treats every start date alike
 
-If a curve obeys $y' = y^2$, the same curve delayed a quarter-year obeys it too: its slopes are unchanged, and the rule asks only for the height. A history starting on 1 January and one starting on 1 April from the same head count are one history, delayed. That is why "wait three months" can be a single map.
+If a curve obeys $`y' = y^2`$, the same curve delayed a quarter-year obeys it too: its slopes are unchanged, and the rule asks only for the height. A history starting on 1 January and one starting on 1 April from the same head count are one history, delayed. That is why "wait three months" can be a single map.
 
 ### Step 1: one start, one history, so the flow is a function
 
-The rule $f(y) = y^2$ is Lipschitz on any bounded range of head counts, since its slope $2y$ stays bounded there. So by the Picard-Lindelöf theorem each start gives exactly one solution, and $\varphi_t(x)$ has one value whenever that solution lives to time $t$.
+The rule $`f(y) = y^2`$ is Lipschitz on any bounded range of head counts, since its slope $`2y`$ stays bounded there. So by the Picard-Lindelöf theorem each start gives exactly one solution, and $`\varphi_t(x)`$ has one value whenever that solution lives to time $`t`$.
 
 ### Step 2: find the colony's flow
 
-By the chain rule the rate of $1/y$ is $-y'/y^2$, which the law makes exactly $-1$. So $1/y = 1/x - t$, and $y = x/(1 - tx)$. At $t = 1/x$ the reciprocal reaches zero and the colony runs to infinity: the life span.
+By the chain rule the rate of $`1/y`$ is $`-y'/y^2`$, which the law makes exactly $`-1`$. So $`1/y = 1/x - t`$, and $`y = x/(1 - tx)`$. At $`t = 1/x`$ the reciprocal reaches zero and the colony runs to infinity: the life span.
 
 ### Step 3: waiting twice is waiting once, longer
 
-Start at $x$, wait $t$, and call the result $z = \varphi_t(x)$. From that moment compare two curves in the extra wait $s$: the flow from $z$, $\varphi_s(z)$, and the original history carried on, $\varphi_{s+t}(x)$. By Step 0 both obey the law; at $s = 0$ both read $z$. By Step 1 they are one solution, so $\varphi_s(\varphi_t(x)) = \varphi_{s+t}(x)$.
+Start at $`x`$, wait $`t`$, and call the result $`z = \varphi_t(x)`$. From that moment compare two curves in the extra wait $`s`$: the flow from $`z`$, $`\varphi_s(z)`$, and the original history carried on, $`\varphi_{s+t}(x)`$. By Step 0 both obey the law; at $`s = 0`$ both read $`z`$. By Step 1 they are one solution, so $`\varphi_s(\varphi_t(x)) = \varphi_{s+t}(x)`$.
 
-For the colony the algebra agrees. Put $z = x/(1 - tx)$ into the flow:
+For the colony the algebra agrees. Put $`z = x/(1 - tx)`$ into the flow:
 
-$$\varphi_s(z) = \frac{x/(1 - tx)}{1 - s x/(1 - tx)} = \frac{x}{1 - tx - sx} = \varphi_{s+t}(x).$$
+```math
+\varphi_s(z) = \frac{x/(1 - tx)}{1 - s x/(1 - tx)} = \frac{x}{1 - tx - sx} = \varphi_{s+t}(x).
+```
 
 ### Step 4: the flow can be undone
 
-Take $s = -t$: $\varphi_{-t}(\varphi_t(x)) = \varphi_0(x) = x$. Running backwards by $t$ returns the start, $\varphi_{-0.5}(2) = 1$, so no two starts are sent to one place.
+Take $`s = -t`$: $`\varphi_{-t}(\varphi_t(x)) = \varphi_0(x) = x`$. Running backwards by $`t`$ returns the start, $`\varphi_{-0.5}(2) = 1`$, so no two starts are sent to one place.
 
 ### Step 5: two solution curves never cross
 
 Two histories with the same head count at the same moment are both the unique solution from that meeting: one history. So graphs over time run side by side, as the three colonies do on the chart.
 
-A **system** has several quantities with linked rates; its **orbit** is the path the state traces, with time left off. If two orbits of an autonomous system share one state, even at different times, Step 0 makes one history the other delayed, so the orbits are one path: they coincide or never meet. The dark blue colony is the green one delayed by 0.25 years; the code confirms $\varphi_t(4/3) = \varphi_{t+0.25}(1)$ to within 1.07e-14.
+A **system** has several quantities with linked rates; its **orbit** is the path the state traces, with time left off. If two orbits of an autonomous system share one state, even at different times, Step 0 makes one history the other delayed, so the orbits are one path: they coincide or never meet. The dark blue colony is the green one delayed by 0.25 years; the code confirms $`\varphi_t(4/3) = \varphi_{t+0.25}(1)`$ to within 1.07e-14.
 
 <details>
 <summary>Detailed proof: the composition law, with its domain</summary>
 
-Let $f$ be locally Lipschitz ([The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md)). For each start $x$ let $t \mapsto \varphi_t(x)$ be the unique solution of $y' = f(y)$, $y(0) = x$, on its largest open time interval $J(x)$ containing 0.
+Let $`f`$ be locally Lipschitz ([The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md)). For each start $`x`$ let $`t \mapsto \varphi_t(x)`$ be the unique solution of $`y' = f(y)`$, $`y(0) = x`$, on its largest open time interval $`J(x)`$ containing 0.
 
-Fix $t$ in $J(x)$, put $z = \varphi_t(x)$ and $u(s) = \varphi_{s+t}(x)$ for $s + t$ in $J(x)$. Then $u'(s) = f(u(s))$ and $u(0) = z$, so by uniqueness $u(s) = \varphi_s(z)$, and $J(x) - t \subseteq J(z)$ by maximality. If $J(z)$ reached beyond $J(x) - t$, the curve $s \mapsto \varphi_{s-t}(z)$ would extend the solution from $x$ past its largest interval; so equality holds: $J(z) = J(x) - t$.
+Fix $`t`$ in $`J(x)`$, put $`z = \varphi_t(x)`$ and $`u(s) = \varphi_{s+t}(x)`$ for $`s + t`$ in $`J(x)`$. Then $`u'(s) = f(u(s))`$ and $`u(0) = z`$, so by uniqueness $`u(s) = \varphi_s(z)`$, and $`J(x) - t \subseteq J(z)`$ by maximality. If $`J(z)`$ reached beyond $`J(x) - t`$, the curve $`s \mapsto \varphi_{s-t}(z)`$ would extend the solution from $`x`$ past its largest interval; so equality holds: $`J(z) = J(x) - t`$.
 
-Non-crossing: if $\varphi_{t_1}(p) = \varphi_{t_2}(q)$, the law gives $\varphi_{t_1+s}(p) = \varphi_{t_2+s}(q)$ for every admissible $s$, so the two orbits are one set.
+Non-crossing: if $`\varphi_{t_1}(p) = \varphi_{t_2}(q)`$, the law gives $`\varphi_{t_1+s}(p) = \varphi_{t_2+s}(q)`$ for every admissible $`s`$, so the two orbits are one set.
 
 </details>
 
@@ -144,10 +150,10 @@ Two quarter-year waits and one half-year wait both bring the colony of 100 to 20
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Rule reads the clock, $y' = 2ty$: the year-0 map used twice | 1.1331 against 1.2840 | Waiting depends on when the wait starts |
-| Growth factor reused: 4/3 squared | 1.7778, not 2.0000 | Factors repeat only for a linear law such as $y' = y$ |
-| Formula used past the life span: $\varphi_{1.5}(1)$ | −2.00 | The colony ran out at 1 year; the flow is undefined there |
-| Bucket $h' = -0.2\sqrt{h}$ run backwards from empty | 0.00 or 1.00 cm, 10 minutes earlier | Two histories meet at empty, so no backward flow |
+| Rule reads the clock, $`y' = 2ty`$: the year-0 map used twice | 1.1331 against 1.2840 | Waiting depends on when the wait starts |
+| Growth factor reused: 4/3 squared | 1.7778, not 2.0000 | Factors repeat only for a linear law such as $`y' = y`$ |
+| Formula used past the life span: $`\varphi_{1.5}(1)`$ | −2.00 | The colony ran out at 1 year; the flow is undefined there |
+| Bucket $`h' = -0.2\sqrt{h}`$ run backwards from empty | 0.00 or 1.00 cm, 10 minutes earlier | Two histories meet at empty, so no backward flow |
 
 ---
 
@@ -339,7 +345,7 @@ Lean proves the composition law and the no-crossing rule for every rule that rea
 
 - For a rule that reads only the state and is Lipschitz near each state, waiting t then s is waiting s + t. This holds whenever s + t stays inside the life span.
 - Two solutions that read the same state at one moment are one history: their curves never cross.
-- The colony curve $x/(1 - tx)$ starts at x, obeys $y' = y^2$ and composes, as long as $tx$ stays under 1.
+- The colony curve $`x/(1 - tx)`$ starts at x, obeys $`y' = y^2`$ and composes, as long as $`tx`$ stays under 1.
 - The worked numbers by hand are exact, from 4/3 and 2 down to the −2 past the life span.
 
 The Python and Rust checks cover the rest: the travel times by Simpson's rule, Euler's rule, the clock-reading rule and the leaking bucket.
@@ -513,8 +519,8 @@ example : (1 : ℚ) / (1 - 3/2 * 1) = -2 := by norm_num
 > [!TIP]
 > **Try changing**
 > - **Start the colony at 200 animals.** Guess its life span first. It is 0.50 years: its curve is the green line moved half a year to the left.
-> - **Take the house example $y' = y$, whose flow multiplies by a fixed factor.** Guess whether reusing the growth factor now works. It does: a linear law's flow is multiplication.
-> - **Replace `math.exp(t * t)` by `math.exp(t)`.** Guess which assert fails. The last: $y' = y$ ignores the clock, so its map composes and the gap closes.
+> - **Take the house example $`y' = y`$, whose flow multiplies by a fixed factor.** Guess whether reusing the growth factor now works. It does: a linear law's flow is multiplication.
+> - **Replace `math.exp(t * t)` by `math.exp(t)`.** Guess which assert fails. The last: $`y' = y`$ ignores the clock, so its map composes and the gap closes.
 
 ---
 
@@ -523,8 +529,8 @@ example : (1 : ℚ) / (1 - 3/2 * 1) = -2 := by norm_num
 > [!warning]
 > **Treating the flow as a growth factor.** A quarter-year multiplies 100 animals by 4/3, so it is tempting to multiply by 4/3 again: 1.7778 hundred, not 2.0000. The flow composes by applying the map to the new state, and 133 animals grow faster than 100 did.
 >
-> - **Composing a clock-reading rule with itself.** For $y' = 2ty$ this gives 1.1331 instead of 1.2840.
-> - **Forgetting the life span.** $\varphi_{1.5}(1) = -2$ is algebra past the blow-up at 1 year, not a population.
+> - **Composing a clock-reading rule with itself.** For $`y' = 2ty`$ this gives 1.1331 instead of 1.2840.
+> - **Forgetting the life span.** $`\varphi_{1.5}(1) = -2`$ is algebra past the blow-up at 1 year, not a population.
 > - **Running back without uniqueness.** 10 minutes before an empty reading, the bucket held anything from 0.00 to 1.00 cm.
 
 ---

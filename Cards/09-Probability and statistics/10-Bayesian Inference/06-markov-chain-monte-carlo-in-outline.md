@@ -36,34 +36,40 @@ Bars: the share of the walk's 100,000 kept positions in each bin. Line: the exac
 
 ## The formula
 
-Notation first, in words. $p_t$ is where the walker stands after step t. $f(p)$ is prior times likelihood, the posterior's height up to an unknown constant. $g(p)$ is the true posterior density, $f(p)$ divided by the area under it. A proposed move is written $p'$, read "p-prime". $h$ is the largest step allowed. $u$ and $v$ are independent random numbers, each equally likely to fall anywhere between 0 and 1. $\alpha$ (alpha) is the chance of accepting the proposal.
+Notation first, in words. $`p_t`$ is where the walker stands after step t. $`f(p)`$ is prior times likelihood, the posterior's height up to an unknown constant. $`g(p)`$ is the true posterior density, $`f(p)`$ divided by the area under it. A proposed move is written $`p'`$, read "p-prime". $`h`$ is the largest step allowed. $`u`$ and $`v`$ are independent random numbers, each equally likely to fall anywhere between 0 and 1. $`\alpha`$ (alpha) is the chance of accepting the proposal.
 
-$$p' = p_t + h\,(2u - 1), \qquad \alpha = \min\!\left(1,\ \frac{f(p')}{f(p_t)}\right)$$
+```math
+p' = p_t + h\,(2u - 1), \qquad \alpha = \min\!\left(1,\ \frac{f(p')}{f(p_t)}\right)
+```
 
 **Read it aloud:** propose a point at random up to h either side of the current one; then move there with chance equal to the height ratio, capped at 1.
 
-Draw a second uniform number $v$. If $v < \alpha$ the walker moves, $p_{t+1} = p'$; otherwise it stays, $p_{t+1} = p_t$, and that repeated value is recorded like any other. For the coin with a flat prior,
+Draw a second uniform number $`v`$. If $`v < \alpha`$ the walker moves, $`p_{t+1} = p'`$; otherwise it stays, $`p_{t+1} = p_t`$, and that repeated value is recorded like any other. For the coin with a flat prior,
 
-$$f(p) = p^{7}(1-p)^{3}, \qquad g(p) = \frac{f(p)}{Z}, \qquad Z = \int_0^1 f(p)\,dp = \frac{1}{1320}$$
+```math
+f(p) = p^{7}(1-p)^{3}, \qquad g(p) = \frac{f(p)}{Z}, \qquad Z = \int_0^1 f(p)\,dp = \frac{1}{1320}
+```
 
-and outside 0 to 1 the height is zero, so a proposal there is always refused. The estimate of a posterior average is the plain average of the $N$ positions kept; $N_{\text{eff}}$, the effective sample size, is defined below the table.
+and outside 0 to 1 the height is zero, so a proposal there is always refused. The estimate of a posterior average is the plain average of the $`N`$ positions kept; $`N_{\text{eff}}`$, the effective sample size, is defined below the table.
 
-$$\bar p = \frac{1}{N}\sum_{t=1}^{N} p_t, \qquad \text{standard error} \approx \frac{\text{spread of the } p_t}{\sqrt{N_{\text{eff}}}}$$
+```math
+\bar p = \frac{1}{N}\sum_{t=1}^{N} p_t, \qquad \text{standard error} \approx \frac{\text{spread of the } p_t}{\sqrt{N_{\text{eff}}}}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the coin's chance of heads, the unknown | 0 to 1 | — |
-| $p_t$ | the walker's position after step t | starts at 0.5 | — |
-| $p'$ | a proposed next position | 0.6638 at step 1 | — |
-| $f(p)$ | prior times likelihood: the posterior's height, constant unknown | $p^7(1-p)^3$ | — |
-| $g(p)$ | the posterior density, total area 1 | Beta(8, 4) | — |
-| $Z$ | the area under $f$, the constant MCMC never needs | 1/1320 = 0.000757576 | cancels in every ratio |
-| $h$ | the largest step the walker may propose | 0.25 | fewer moves accepted, bolder moves |
-| $u$, $v$ | independent uniform numbers between 0 and 1 | step 1's $u$ is 0.8277, its $v$ 0.1756 | — |
-| $\alpha$ | the chance of accepting the proposal | 1 uphill; 0.3518 at step 4 | the walk moves more often |
-| $N$ | positions kept after the burn-in | 100,000 | smaller standard error |
-| $N_{\text{eff}}$ | effective sample size: independent draws the walk is worth | 15,276 | smaller standard error |
-| $\bar p$ | the walk's average, the estimate of the posterior mean | 0.6677 | — |
+| $`p`$ | the coin's chance of heads, the unknown | 0 to 1 | — |
+| $`p_t`$ | the walker's position after step t | starts at 0.5 | — |
+| $`p'`$ | a proposed next position | 0.6638 at step 1 | — |
+| $`f(p)`$ | prior times likelihood: the posterior's height, constant unknown | $`p^7(1-p)^3`$ | — |
+| $`g(p)`$ | the posterior density, total area 1 | Beta(8, 4) | — |
+| $`Z`$ | the area under $`f`$, the constant MCMC never needs | 1/1320 = 0.000757576 | cancels in every ratio |
+| $`h`$ | the largest step the walker may propose | 0.25 | fewer moves accepted, bolder moves |
+| $`u`$, $`v`$ | independent uniform numbers between 0 and 1 | step 1's $`u`$ is 0.8277, its $`v`$ 0.1756 | — |
+| $`\alpha`$ | the chance of accepting the proposal | 1 uphill; 0.3518 at step 4 | the walk moves more often |
+| $`N`$ | positions kept after the burn-in | 100,000 | smaller standard error |
+| $`N_{\text{eff}}`$ | effective sample size: independent draws the walk is worth | 15,276 | smaller standard error |
+| $`\bar p`$ | the walk's average, the estimate of the posterior mean | 0.6677 | — |
 
 The **burn-in** is the stretch of steps discarded at the start, here 1,000, while the walk leaves wherever it was put. **Effective sample size** (ESS) answers a fair question: the 100,000 positions are not 100,000 independent draws, since each one sits next to the last, so how many independent draws carry the same information? Here 15,276, found by the batch-means method in Step 5.
 
@@ -84,13 +90,13 @@ A **Markov chain** is a sequence of random positions in which the next position 
 
 ### Step 1: only ratios are needed, so the constant cancels
 
-The acceptance chance uses $f(p')/f(p_t)$. Since $g = f/Z$, the ratio of true posterior heights is $g(p')/g(p_t) = f(p')/f(p_t)$: $Z$ appears on top and bottom and cancels. That is the whole reason MCMC exists. For the coin, step 1 proposes 0.6638 from 0.5; the height ratio is 2.2099, uphill, so the move is taken. The walker never learns that $Z$ is 1/1320.
+The acceptance chance uses $`f(p')/f(p_t)`$. Since $`g = f/Z`$, the ratio of true posterior heights is $`g(p')/g(p_t) = f(p')/f(p_t)`$: $`Z`$ appears on top and bottom and cancels. That is the whole reason MCMC exists. For the coin, step 1 proposes 0.6638 from 0.5; the height ratio is 2.2099, uphill, so the move is taken. The walker never learns that $`Z`$ is 1/1320.
 
 ### Step 2: flows balance between every pair of places
 
 Imagine a huge crowd of walkers, spread exactly like the posterior, all taking one step at once.
 
-Pick two places, a and b, with b higher. The flow from a to b is the crowd at a, times the chance of proposing b, times 1 (uphill is always accepted). The flow from b to a is the crowd at b, times the same proposal chance (the proposal is symmetric), times $f(a)/f(b)$. The crowd at b is the crowd at a times $f(b)/f(a)$, so the two flows are equal.
+Pick two places, a and b, with b higher. The flow from a to b is the crowd at a, times the chance of proposing b, times 1 (uphill is always accepted). The flow from b to a is the crowd at b, times the same proposal chance (the proposal is symmetric), times $`f(a)/f(b)`$. The crowd at b is the crowd at a times $`f(b)/f(a)`$, so the two flows are equal.
 
 This is **detailed balance**: in one step as many walkers go from a to b as from b to a. On a grid of 99 values of p, the check builds each move chance from the same step function the grid walk runs. It computes every such pair of flows and finds the largest imbalance to be 2.2e-19, rounding error.
 
@@ -101,11 +107,11 @@ If every pair of places swaps equal numbers of walkers, no place gains or loses,
 <details>
 <summary>Detailed proof: detailed balance on the grid, and why it gives a resting state</summary>
 
-Take states $i = 1, \dots, 99$ with heights $w_i = f(i/100)$ and target shares $\pi_i = w_i / \sum_j w_j$. From state i the walk proposes each of the 20 states $i \pm 1, \dots, i \pm 10$ with chance 1/20. A proposal off the grid is refused. So for $k \ne i$ the move chance is $P_{ik} = \tfrac{1}{20}\min(1, w_k/w_i)$, and the stay chance is what is left, $P_{ii} = 1 - \sum_{k \ne i} P_{ik}$.
+Take states $`i = 1, \dots, 99`$ with heights $`w_i = f(i/100)`$ and target shares $`\pi_i = w_i / \sum_j w_j`$. From state i the walk proposes each of the 20 states $`i \pm 1, \dots, i \pm 10`$ with chance 1/20. A proposal off the grid is refused. So for $`k \ne i`$ the move chance is $`P_{ik} = \tfrac{1}{20}\min(1, w_k/w_i)`$, and the stay chance is what is left, $`P_{ii} = 1 - \sum_{k \ne i} P_{ik}`$.
 
-Balance: $\pi_i P_{ik} = \tfrac{1}{20}\min(\pi_i,\ \pi_i w_k / w_i) = \tfrac{1}{20}\min(\pi_i, \pi_k)$, since $\pi_i w_k / w_i = \pi_k$. The right side does not change when i and k swap, so $\pi_i P_{ik} = \pi_k P_{ki}$.
+Balance: $`\pi_i P_{ik} = \tfrac{1}{20}\min(\pi_i,\ \pi_i w_k / w_i) = \tfrac{1}{20}\min(\pi_i, \pi_k)`$, since $`\pi_i w_k / w_i = \pi_k`$. The right side does not change when i and k swap, so $`\pi_i P_{ik} = \pi_k P_{ki}`$.
 
-Resting state: the share at state k after one step is $\sum_i \pi_i P_{ik} = \pi_k P_{kk} + \sum_{i \ne k} \pi_k P_{ki} = \pi_k \bigl(P_{kk} + \sum_{i \ne k} P_{ki}\bigr) = \pi_k$, because the chances of leaving state k and of staying there add to 1.
+Resting state: the share at state k after one step is $`\sum_i \pi_i P_{ik} = \pi_k P_{kk} + \sum_{i \ne k} \pi_k P_{ki} = \pi_k \bigl(P_{kk} + \sum_{i \ne k} P_{ki}\bigr) = \pi_k`$, because the chances of leaving state k and of staying there add to 1.
 
 The continuous walk on (0, 1) is the same argument with sums replaced by integrals. The chance of staying is no longer a single number but an integral over refused proposals; it cancels in the same way.
 
@@ -142,12 +148,12 @@ Another way round the constant, importance sampling (drawing from an easy law an
 
 ## Worked numbers, by hand
 
-The walk starts at 0.5 with $h = 0.25$. Each row uses two uniform numbers from the generator: one sets the proposal, one decides.
+The walk starts at 0.5 with $`h = 0.25`$. Each row uses two uniform numbers from the generator: one sets the proposal, one decides.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | 1: propose from 0.5000 | 0.5 + 0.25 × (2u − 1), with u = 0.8277 | 0.6638 |
-| 1: height ratio | $f(0.6638)/f(0.5)$ | 2.2099, uphill: **move** |
+| 1: height ratio | $`f(0.6638)/f(0.5)`$ | 2.2099, uphill: **move** |
 | 2: propose from 0.6638 | 0.6638 + 0.25 × (2u − 1), with u = 0.3365 | 0.5821 |
 | 2: ratio, draw | 0.7658 against a draw of 0.2897 | 0.2897 < 0.7658: **move** |
 | 3: 0.5821 to 0.5952 | ratio 1.0619 | uphill: **move** |
@@ -165,7 +171,7 @@ The exact tail comes from a counting identity. The chance that a Beta(8, 4) valu
 
 Read back in the world: after 7 heads in 10, the coin favours heads with posterior chance about 0.89. Its chance of heads is between 0.39 and 0.89 with posterior probability 0.95, as [Credible intervals and decisions](05-credible-intervals-and-decisions.md) reads such an interval.
 
-The triangle prior peaked at a fair coin, height min(p, 1 − p), has no named partner law. The same walk with $f(p) = \min(p, 1-p)\,p^7(1-p)^3$ averages 0.6272 (SE 0.0008); Simpson's rule on the unnormalised height, an independent road, gives 0.6272. Simpson's rule computes an area from the heights at evenly spaced points. The sceptical prior pulls the estimate toward 0.5.
+The triangle prior peaked at a fair coin, height min(p, 1 − p), has no named partner law. The same walk with $`f(p) = \min(p, 1-p)\,p^7(1-p)^3`$ averages 0.6272 (SE 0.0008); Simpson's rule on the unnormalised height, an independent road, gives 0.6272. Simpson's rule computes an area from the heights at evenly spaced points. The sceptical prior pulls the estimate toward 0.5.
 
 ### What breaks if you drop a piece
 
@@ -181,7 +187,7 @@ The small-step row carries its own warning: its batch standard error, 0.0014, is
 <details>
 <summary>Why log-odds loses a head and a tail</summary>
 
-Log-odds is $\ln\frac{p}{1-p}$, a scale that runs over the whole number line. A symmetric walk there with acceptance ratio $f(p')/f(p)$ rests on a law whose density in log-odds is proportional to $f$. Changing variables back to p multiplies by the stretch factor, called the Jacobian (the word in the code's output), $\frac{d}{dp}\ln\frac{p}{1-p} = \frac{1}{p(1-p)}$, so the resting law in p is $p^7(1-p)^3 / (p(1-p)) = p^6(1-p)^2$: Beta(7, 3). Multiplying $f$ by $p(1-p)$ before taking the ratio restores Beta(8, 4). Metropolis–Hastings, the general form, puts this correction into the acceptance ratio for any asymmetric proposal.
+Log-odds is $`\ln\frac{p}{1-p}`$, a scale that runs over the whole number line. A symmetric walk there with acceptance ratio $`f(p')/f(p)`$ rests on a law whose density in log-odds is proportional to $`f`$. Changing variables back to p multiplies by the stretch factor, called the Jacobian (the word in the code's output), $`\frac{d}{dp}\ln\frac{p}{1-p} = \frac{1}{p(1-p)}`$, so the resting law in p is $`p^7(1-p)^3 / (p(1-p)) = p^6(1-p)^2`$: Beta(7, 3). Multiplying $`f`$ by $`p(1-p)`$ before taking the ratio restores Beta(8, 4). Metropolis–Hastings, the general form, puts this correction into the acceptance ratio for any asymmetric proposal.
 
 </details>
 
@@ -191,7 +197,7 @@ Log-odds is $\ln\frac{p}{1-p}$, a scale that runs over the whole number line. A 
 
 Both programs draw every random number from SplitMix64, written out, with seed 20260929, so they make the same walk and print the same digits. Five roads reach the coin's posterior.
 
-Road 1 counts: the Beta(8, 4) mean, spread, tail and interval from factorials and binomial sums. Road 2 integrates $p^7(1-p)^3$ by Simpson's rule, which recovers $Z$ = 1/1320 without factorials. Road 3 is the Metropolis walk. Road 4 draws independently, as the 8th smallest of 11 uniforms. Road 5 runs the walk on a grid of 99 points and pushes its entire distribution forward exactly. Seven asserts compare roads, and simulated numbers are allowed four standard errors.
+Road 1 counts: the Beta(8, 4) mean, spread, tail and interval from factorials and binomial sums. Road 2 integrates $`p^7(1-p)^3`$ by Simpson's rule, which recovers $`Z`$ = 1/1320 without factorials. Road 3 is the Metropolis walk. Road 4 draws independently, as the 8th smallest of 11 uniforms. Road 5 runs the walk on a grid of 99 points and pushes its entire distribution forward exactly. Seven asserts compare roads, and simulated numbers are allowed four standard errors.
 
 ### Python
 
@@ -585,7 +591,7 @@ Lean proves the walk's resting-state facts for any finite set of places with a s
 - Multiply every height by the same positive number, such as 1/Z. Then every move chance stays the same, so the walk never needs Z.
 - The exact tail holds: 232 of the 2048 outcomes of 11 fair flips have 8 or more heads.
 - Z is exactly 1/1320, and the Beta(8, 4) mean 8/12 is 2/3.
-- On the grid there are 20 proposals from each state, $i \pm 1$ to $i \pm 10$.
+- On the grid there are 20 proposals from each state, $`i \pm 1`$ to $`i \pm 10`$.
 
 The continuous walk, forgetting the start, settling averages and every decimal are left to the Python and Rust checks.
 

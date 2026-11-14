@@ -40,38 +40,42 @@ The lower line is the bid, the upper the ask. Flat, they sit 2.20 cents either s
 
 ## The formula
 
-Three notes on notation. Here $r$ is a price and $q$ a position, not the house market's interest rate and dividend yield. A small letter written high after a symbol is a label here, not a power: $\delta^a$ is "the distance for the ask" and $\delta^b$ "the distance for the bid". And $\ln$ is the natural logarithm.
+Three notes on notation. Here $`r`$ is a price and $`q`$ a position, not the house market's interest rate and dividend yield. A small letter written high after a symbol is a label here, not a power: $`\delta^a`$ is "the distance for the ask" and $`\delta^b`$ "the distance for the bid". And $`\ln`$ is the natural logarithm.
 
 Prices are per **lot** of 100 shares, since the dealer trades a lot at a time: $10,000 a lot is $100.00 a share, and a dollar a lot is a cent a share. Time runs in trading days, not years, since the dealer's horizon is the close.
 
-$$r = S - q\,\gamma\,\sigma^2\,\tau \qquad\qquad w = \gamma\,\sigma^2\,\tau + \frac{2}{\gamma}\ln\!\Big(1 + \frac{\gamma}{k}\Big)$$
+```math
+r = S - q\,\gamma\,\sigma^2\,\tau \qquad\qquad w = \gamma\,\sigma^2\,\tau + \frac{2}{\gamma}\ln\!\Big(1 + \frac{\gamma}{k}\Big)
+```
 
-$$\text{bid} = r - \tfrac12 w, \qquad \text{ask} = r + \tfrac12 w$$
+```math
+\text{bid} = r - \tfrac12 w, \qquad \text{ask} = r + \tfrac12 w
+```
 
 **Read it aloud:** centre the quotes on the mid, moved against the position by the risk of carrying it to the close; make the spread the risk of one lot plus twice the price of being filled less often.
 
 | Symbol | Plain meaning | In our example | Push it up and the quotes… |
 | --- | --- | --- | --- |
-| $S$ | the mid-price of one lot of 100 shares | $10,000 | both rise one for one |
-| $q$, $X$, $W$ | the position in lots (positive = long); the dealer's cash, and its wealth, in dollars | 5 lots | both fall, 0.40 a lot per lot at the open |
-| $\gamma$ | risk aversion: how much the dealer dislikes an uncertain dollar, per dollar. Say "gamma". | 0.001 | skew further and widen |
-| $\sigma$ | volatility of the mid: dollars per lot per square root of a day | $20 | skew further and widen, as its square |
-| $T$, $t$, $\tau$ | the close, now, and time left $\tau = T - t$, in days | 1, 0, 1 | skew further and widen |
-| $A$, $k$, $\lambda$ | fill rate $\lambda = A e^{-k\delta}$: $A$ fills a day at the mid, falling by a factor e for every $1/k$ dollars of distance | 30 a day; 0.5 per dollar | $A$ leaves the closed form alone; larger $k$ narrows the spread |
-| $\delta^a$, $\delta^b$ | how far the ask sits above the mid, and the bid below | $0.198003, $4.198003 | — |
-| $r$, $r^a$, $r^b$ | reservation centre; least the dealer takes to sell a lot, most it pays to buy one | $9,998.00; $9,998.20, $9,997.80 | — |
-| $w$ | the full spread, ask minus bid | $4.396005 | — |
-| $c$ | the **concession**: what each side gives up for being hit less often, $\ln(1+\gamma/k)/\gamma$ | $1.998003 | — |
-| $h_q$, $v_q$ | the dollar value of the future, beyond marking the position at the mid; $v_q = e^{k h_q}$ | used in the full solve | — |
-| $\alpha$, $\eta$ | the two constants of the full solve: $\alpha = k\gamma\sigma^2/2$, $\eta = A(1+\gamma/k)^{-(1+k/\gamma)}$ | set by the inputs above | — |
+| $`S`$ | the mid-price of one lot of 100 shares | $10,000 | both rise one for one |
+| $`q`$, $`X`$, $`W`$ | the position in lots (positive = long); the dealer's cash, and its wealth, in dollars | 5 lots | both fall, 0.40 a lot per lot at the open |
+| $`\gamma`$ | risk aversion: how much the dealer dislikes an uncertain dollar, per dollar. Say "gamma". | 0.001 | skew further and widen |
+| $`\sigma`$ | volatility of the mid: dollars per lot per square root of a day | $20 | skew further and widen, as its square |
+| $`T`$, $`t`$, $`\tau`$ | the close, now, and time left $`\tau = T - t`$, in days | 1, 0, 1 | skew further and widen |
+| $`A`$, $`k`$, $`\lambda`$ | fill rate $`\lambda = A e^{-k\delta}`$: $`A`$ fills a day at the mid, falling by a factor e for every $`1/k`$ dollars of distance | 30 a day; 0.5 per dollar | $`A`$ leaves the closed form alone; larger $`k`$ narrows the spread |
+| $`\delta^a`$, $`\delta^b`$ | how far the ask sits above the mid, and the bid below | $0.198003, $4.198003 | — |
+| $`r`$, $`r^a`$, $`r^b`$ | reservation centre; least the dealer takes to sell a lot, most it pays to buy one | $9,998.00; $9,998.20, $9,997.80 | — |
+| $`w`$ | the full spread, ask minus bid | $4.396005 | — |
+| $`c`$ | the **concession**: what each side gives up for being hit less often, $`\ln(1+\gamma/k)/\gamma`$ | $1.998003 | — |
+| $`h_q`$, $`v_q`$ | the dollar value of the future, beyond marking the position at the mid; $`v_q = e^{k h_q}`$ | used in the full solve | — |
+| $`\alpha`$, $`\eta`$ | the two constants of the full solve: $`\alpha = k\gamma\sigma^2/2`$, $`\eta = A(1+\gamma/k)^{-(1+k/\gamma)}`$ | set by the inputs above | — |
 
-The spread has two halves: $\gamma\sigma^2\tau$, the risk one extra lot adds, and $2c$, the markup. For small $\gamma$, $c$ is close to $1/k$.
+The spread has two halves: $`\gamma\sigma^2\tau`$, the risk one extra lot adds, and $`2c`$, the markup. For small $`\gamma`$, $`c`$ is close to $`1/k`$.
 
 ### When it holds
 
-- **The mid wanders with no drift and a fixed jumpiness.** Over time left $\tau$ it moves by a bell-curve amount of spread $\sigma\sqrt{\tau}$. If volatility doubles and the dealer keeps yesterday's $\sigma$, it skews a quarter as much as it should.
+- **The mid wanders with no drift and a fixed jumpiness.** Over time left $`\tau`$ it moves by a bell-curve amount of spread $`\sigma\sqrt{\tau}`$. If volatility doubles and the dealer keeps yesterday's $`\sigma`$, it skews a quarter as much as it should.
 - **Orders arrive at random, at a rate that falls exponentially with distance, and tell nothing about the price.** If customers who hit the bid know the price is about to fall, fills lose money on average: adverse selection, the subject of [The spread](02-bid-ask-spread-and-adverse-selection.md), and this model leaves it out.
-- **Whatever is left at the close is valued at the mid, free.** With $\tau$ near zero the skew fades, so the dealer stops pushing its position to zero just when a real desk would push hardest. The simulated day below ends 3 lots long for that reason.
+- **Whatever is left at the close is valued at the mid, free.** With $`\tau`$ near zero the skew fades, so the dealer stops pushing its position to zero just when a real desk would push hardest. The simulated day below ends 3 lots long for that reason.
 - **The dealer's dislike of risk is exponential.** That makes cash drop out of the quotes; other preferences do not.
 - **The closed form is an approximation.** It prices the position as though it were frozen until the close. At 5 lots long it skews the centre 2.00 cents; the full solution skews it 0.93 cents.
 
@@ -85,17 +89,21 @@ Where to centre the quotes is a question about **risk**: how much worse off the 
 
 ### Step 1: what the position costs to carry
 
-Freeze the position: the dealer holds $q$ lots, posts no quotes, and marks them at the mid at the close. The mid then is $S + \sigma\sqrt{\tau}\,Z$, where $Z$ is a standard bell-curve draw. A dealer with exponential dislike of risk rates this gamble as worth, for certain,
+Freeze the position: the dealer holds $`q`$ lots, posts no quotes, and marks them at the mid at the close. The mid then is $`S + \sigma\sqrt{\tau}\,Z`$, where $`Z`$ is a standard bell-curve draw. A dealer with exponential dislike of risk rates this gamble as worth, for certain,
 
-$$qS - \tfrac12\,\gamma\,q^2\sigma^2\tau .$$
+```math
+qS - \tfrac12\,\gamma\,q^2\sigma^2\tau .
+```
 
-The first term is the position at today's mid. The second is the discount for risk. It grows with the **square** of the position, because the swing in the position's value is $q$ times the swing in price, and risk is measured in squared dollars.
+The first term is the position at today's mid. The second is the discount for risk. It grows with the **square** of the position, because the swing in the position's value is $`q`$ times the swing in price, and risk is measured in squared dollars.
 
 <details>
 <summary>The algebra behind this</summary>
 
-Exponential utility scores wealth $W$ as $-e^{-\gamma W}$. The certainty equivalent is the sure amount with the same score: $-\tfrac1\gamma \ln \mathbb{E}\big[e^{-\gamma W}\big]$. Here $W = q(S + \sigma\sqrt\tau Z)$. For a standard bell-curve draw, completing the square in the integral gives $\mathbb{E}[e^{bZ}] = e^{b^2/2}$ for any number b. With $b = -\gamma q \sigma\sqrt\tau$:
-$$-\tfrac1\gamma \ln\Big(e^{-\gamma q S}\, e^{\gamma^2 q^2\sigma^2\tau/2}\Big) = qS - \tfrac12\gamma q^2\sigma^2\tau .$$
+Exponential utility scores wealth $`W`$ as $`-e^{-\gamma W}`$. The certainty equivalent is the sure amount with the same score: $`-\tfrac1\gamma \ln \mathbb{E}\big[e^{-\gamma W}\big]`$. Here $`W = q(S + \sigma\sqrt\tau Z)`$. For a standard bell-curve draw, completing the square in the integral gives $`\mathbb{E}[e^{bZ}] = e^{b^2/2}`$ for any number b. With $`b = -\gamma q \sigma\sqrt\tau`$:
+
+$`\displaystyle -\tfrac1\gamma \ln\Big(e^{-\gamma q S}\, e^{\gamma^2 q^2\sigma^2\tau/2}\Big) = qS - \tfrac12\gamma q^2\sigma^2\tau .`$
+
 The code checks this by adding up thin slices of the bell curve instead (Simpson's rule), never using the formula.
 
 </details>
@@ -104,46 +112,58 @@ The code checks this by adding up thin slices of the bell curve instead (Simpson
 
 The most the dealer would pay for one more lot is what the extra lot adds to the certainty equivalent. The least it would take to part with one is what losing it removes:
 
-$$r^b = S - \gamma\sigma^2\tau\,(q + \tfrac12), \qquad r^a = S - \gamma\sigma^2\tau\,(q - \tfrac12).$$
+```math
+r^b = S - \gamma\sigma^2\tau\,(q + \tfrac12), \qquad r^a = S - \gamma\sigma^2\tau\,(q - \tfrac12).
+```
 
-At 5 lots and a full day, $\gamma\sigma^2\tau = 0.001 \times 20^2 \times 1 = 0.40$, so $r^b = \$9{,}997.80$ and $r^a = \$9{,}998.20$. Their midpoint is the reservation centre, $r = S - q\gamma\sigma^2\tau = \$9{,}998.00$, 2.00 cents a share under the mid. Their gap, 0.40, is the risk of one lot. Both follow from Step 1 by subtraction: the quadratic term's differences are $(q+1)^2 - q^2 = 2q + 1$ and $q^2 - (q-1)^2 = 2q - 1$.
+At 5 lots and a full day, $`\gamma\sigma^2\tau = 0.001 \times 20^2 \times 1 = 0.40`$, so $`r^b = \$9{,}997.80`$ and $`r^a = \$9{,}998.20`$. Their midpoint is the reservation centre, $`r = S - q\gamma\sigma^2\tau = \$9{,}998.00`$, 2.00 cents a share under the mid. Their gap, 0.40, is the risk of one lot. Both follow from Step 1 by subtraction: the quadratic term's differences are $`(q+1)^2 - q^2 = 2q + 1`$ and $`q^2 - (q-1)^2 = 2q - 1`$.
 
-Quoting exactly at $r^b$ and $r^a$ would leave the dealer indifferent to every fill: no profit.
+Quoting exactly at $`r^b`$ and $`r^a`$ would leave the dealer indifferent to every fill: no profit.
 
 ### Step 3: how far out to quote, one side at a time
 
-Now let fills happen. A quote at distance $\delta$ from the mid is hit at rate $\lambda = A e^{-k\delta}$ fills a day. Each hit on the ask sells a lot for $S + \delta$ and moves the position to $q - 1$. Choosing both distances at every moment to make the close as good as possible is a stochastic control problem. Its value obeys a Hamilton–Jacobi–Bellman equation, the HJB of [Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): drift in time, plus the price's wiggle, plus the best expected gain from each side's fills, adds to zero.
+Now let fills happen. A quote at distance $`\delta`$ from the mid is hit at rate $`\lambda = A e^{-k\delta}`$ fills a day. Each hit on the ask sells a lot for $`S + \delta`$ and moves the position to $`q - 1`$. Choosing both distances at every moment to make the close as good as possible is a stochastic control problem. Its value obeys a Hamilton–Jacobi–Bellman equation, the HJB of [Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): drift in time, plus the price's wiggle, plus the best expected gain from each side's fills, adds to zero.
 
-Write the dealer's value as marked wealth $X + qS$ plus an adjustment $h_q$ that depends on the position and the time left. Let $d$ be how much a fill on the side in question changes that adjustment. For the ask, $d = h_{q-1} - h_q$. The side's contribution to the equation is, per unit of time,
+Write the dealer's value as marked wealth $`X + qS`$ plus an adjustment $`h_q`$ that depends on the position and the time left. Let $`d`$ be how much a fill on the side in question changes that adjustment. For the ask, $`d = h_{q-1} - h_q`$. The side's contribution to the equation is, per unit of time,
 
-$$\frac{A}{\gamma}\,e^{-k\delta}\,\Big(1 - e^{-\gamma(\delta + d)}\Big).$$
+```math
+\frac{A}{\gamma}\,e^{-k\delta}\,\Big(1 - e^{-\gamma(\delta + d)}\Big).
+```
 
-The first factor is how often the side is hit. The second is how much each hit is worth, in the dealer's units of utility. Push $\delta$ out and the second grows while the first shrinks. Setting the slope to zero gives one answer, the only maximum:
+The first factor is how often the side is hit. The second is how much each hit is worth, in the dealer's units of utility. Push $`\delta`$ out and the second grows while the first shrinks. Setting the slope to zero gives one answer, the only maximum:
 
-$$\delta^* = c - d, \qquad c = \frac1\gamma \ln\Big(1 + \frac\gamma k\Big) = \$1.998003 \text{ a lot}.$$
+```math
+\delta^* = c - d, \qquad c = \frac1\gamma \ln\Big(1 + \frac\gamma k\Big) = \$1.998003 \text{ a lot}.
+```
 
-The concession $c$ is the same on both sides and does not depend on the position. Everything about the position enters through $d$.
+The concession $`c`$ is the same on both sides and does not depend on the position. Everything about the position enters through $`d`$.
 
 <details>
 <summary>Detailed proof: the HJB, the adjustment, and the unique best distance</summary>
 
-The value $u(t, S, X, q)$ of the best quoting policy satisfies
-$$0 = \partial_t u + \tfrac12\sigma^2\partial_{SS}u + \max_{\delta^a} \lambda(\delta^a)\,\big[u(X + S + \delta^a, q - 1) - u\big] + \max_{\delta^b} \lambda(\delta^b)\,\big[u(X - S + \delta^b, q + 1) - u\big],$$
-with $u = -e^{-\gamma(X + qS)}$ at the close. Try $u = -e^{-\gamma(X + qS + h_q(t))}$ with $h_q = 0$ at the close. Then $\partial_t u = -\gamma h_q' u$, $\partial_{SS}u = \gamma^2 q^2 u$, and after an ask fill $u$ becomes $u\,e^{-\gamma(\delta^a + h_{q-1} - h_q)}$. Divide the equation by $-\gamma u$, which is positive:
-$$0 = h_q' - \tfrac12\gamma\sigma^2 q^2 + \max_{\delta}\,\tfrac{A}{\gamma}e^{-k\delta}\big(1 - e^{-\gamma(\delta + h_{q-1} - h_q)}\big) + \max_{\delta}\,\tfrac{A}{\gamma}e^{-k\delta}\big(1 - e^{-\gamma(\delta + h_{q+1} - h_q)}\big).$$
-The price $S$ has dropped out, so the adjustment depends only on position and time. For one side, the slope of $\tfrac{A}{\gamma}e^{-k\delta}(1 - e^{-\gamma(\delta+d)})$ in $\delta$ is $\tfrac{A}{\gamma}e^{-k\delta}\big[(k + \gamma)e^{-\gamma(\delta + d)} - k\big]$. The bracket falls steadily from very large to $-k$ as $\delta$ grows, so it crosses zero exactly once, where $e^{-\gamma(\delta+d)} = k/(k+\gamma)$: that is $\delta = c - d$. Left of it the slope is positive, right of it negative, so it is the one global maximum. The value there is $\tfrac{A}{k+\gamma}(1 + \gamma/k)^{-k/\gamma}\,e^{kd}$.
+The value $`u(t, S, X, q)`$ of the best quoting policy satisfies
+
+$`\displaystyle 0 = \partial_t u + \tfrac12\sigma^2\partial_{SS}u + \max_{\delta^a} \lambda(\delta^a)\,\big[u(X + S + \delta^a, q - 1) - u\big] + \max_{\delta^b} \lambda(\delta^b)\,\big[u(X - S + \delta^b, q + 1) - u\big],`$
+
+with $`u = -e^{-\gamma(X + qS)}`$ at the close. Try $`u = -e^{-\gamma(X + qS + h_q(t))}`$ with $`h_q = 0`$ at the close. Then $`\partial_t u = -\gamma h_q' u`$, $`\partial_{SS}u = \gamma^2 q^2 u`$, and after an ask fill $`u`$ becomes $`u\,e^{-\gamma(\delta^a + h_{q-1} - h_q)}`$. Divide the equation by $`-\gamma u`$, which is positive:
+
+$`\displaystyle 0 = h_q' - \tfrac12\gamma\sigma^2 q^2 + \max_{\delta}\,\tfrac{A}{\gamma}e^{-k\delta}\big(1 - e^{-\gamma(\delta + h_{q-1} - h_q)}\big) + \max_{\delta}\,\tfrac{A}{\gamma}e^{-k\delta}\big(1 - e^{-\gamma(\delta + h_{q+1} - h_q)}\big).`$
+
+The price $`S`$ has dropped out, so the adjustment depends only on position and time. For one side, the slope of $`\tfrac{A}{\gamma}e^{-k\delta}(1 - e^{-\gamma(\delta+d)})`$ in $`\delta`$ is $`\tfrac{A}{\gamma}e^{-k\delta}\big[(k + \gamma)e^{-\gamma(\delta + d)} - k\big]`$. The bracket falls steadily from very large to $`-k`$ as $`\delta`$ grows, so it crosses zero exactly once, where $`e^{-\gamma(\delta+d)} = k/(k+\gamma)`$: that is $`\delta = c - d`$. Left of it the slope is positive, right of it negative, so it is the one global maximum. The value there is $`\tfrac{A}{k+\gamma}(1 + \gamma/k)^{-k/\gamma}\,e^{kd}`$.
 
 </details>
 
 ### Step 4: the closed form, by pricing the future as frozen
 
-The best distances need $h_q$, and $h_q$ comes from solving the whole equation. Avellaneda and Stoikov approximate it: they expand the solution in the position to second order, linearise the fill terms, and keep the leading terms. The result is the frozen-inventory cost of Step 1,
+The best distances need $`h_q`$, and $`h_q`$ comes from solving the whole equation. Avellaneda and Stoikov approximate it: they expand the solution in the position to second order, linearise the fill terms, and keep the leading terms. The result is the frozen-inventory cost of Step 1,
 
-$$h_q \approx -\tfrac12\gamma\sigma^2 q^2\tau.$$
+```math
+h_q \approx -\tfrac12\gamma\sigma^2 q^2\tau.
+```
 
-Put it into Step 3. For the ask, $d = h_{q-1} - h_q = \gamma\sigma^2\tau(q - \tfrac12)$, so the ask sits at $S + c - \gamma\sigma^2\tau(q - \tfrac12) = r^a + c$. For the bid, the same algebra gives $r^b - c$. So:
+Put it into Step 3. For the ask, $`d = h_{q-1} - h_q = \gamma\sigma^2\tau(q - \tfrac12)`$, so the ask sits at $`S + c - \gamma\sigma^2\tau(q - \tfrac12) = r^a + c`$. For the bid, the same algebra gives $`r^b - c`$. So:
 
-**Each quote is its reservation price, moved outward by the concession.** The centre is $r$. The spread is $r^a - r^b + 2c = \gamma\sigma^2\tau + 2c$. That is the formula.
+**Each quote is its reservation price, moved outward by the concession.** The centre is $`r`$. The spread is $`r^a - r^b + 2c = \gamma\sigma^2\tau + 2c`$. That is the formula.
 
 At the open, long 5 lots, the ask is $9,998.20 plus $1.998003, which puts it $0.198003 above the mid. The bid is $9,997.80 minus $1.998003, $4.198003 below the mid. Per share, $100.0020 and $99.9580.
 
@@ -151,7 +171,7 @@ At the open, long 5 lots, the ask is $9,998.20 plus $1.998003, which puts it $0.
 
 The frozen-inventory cost ignores that future fills let the dealer shed the position, so the full solution should skew less.
 
-It can be computed. Setting $v_q = e^{k h_q}$ turns the HJB of Step 3 into a set of linear equations, one per position, which the code steps backward from the close. The exact distances are then $\delta^a = c + \tfrac1k \ln(v_q / v_{q-1})$ and $\delta^b = c + \tfrac1k\ln(v_q/v_{q+1})$.
+It can be computed. Setting $`v_q = e^{k h_q}`$ turns the HJB of Step 3 into a set of linear equations, one per position, which the code steps backward from the close. The exact distances are then $`\delta^a = c + \tfrac1k \ln(v_q / v_{q-1})`$ and $`\delta^b = c + \tfrac1k\ln(v_q/v_{q+1})`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -169,15 +189,19 @@ At 5 lots the full solution puts the ask $1.159193 above the mid and the bid $3.
 
 The closed form over-skews by about a factor of two here and quotes slightly too wide. Its shape, close to a straight line in the position, is right.
 
-Two checks that the solver is sound. Switch the fills off, $A$ near zero, and it must price the position as frozen: it returns $0.198003 and $4.198003, the closed form's distances to six decimals. With fills on, golden-section search on the solved $h_q$ returns the same distances, and the solved $h_q$ satisfies the HJB to six decimals.
+Two checks that the solver is sound. Switch the fills off, $`A`$ near zero, and it must price the position as frozen: it returns $0.198003 and $4.198003, the closed form's distances to six decimals. With fills on, golden-section search on the solved $`h_q`$ returns the same distances, and the solved $`h_q`$ satisfies the HJB to six decimals.
 
 <details>
 <summary>Detailed proof: the linear equations behind the full solve</summary>
 
-At the best distances each side contributes $\tfrac{A}{k+\gamma}(1+\gamma/k)^{-k/\gamma}e^{kd}$ (Step 3). Measure time backward from the close, so $\tau$ grows. The equation for $h_q$ becomes
-$$\frac{dh_q}{d\tau} = -\tfrac12\gamma\sigma^2q^2 + \tfrac{\eta}{k}\Big(e^{k(h_{q-1}-h_q)} + e^{k(h_{q+1}-h_q)}\Big).$$
-Multiply by $k\,v_q$ with $v_q = e^{kh_q}$: the exponentials become ratios of neighbouring $v_q$ and the equation turns linear:
-$$\frac{dv_q}{d\tau} = -\alpha q^2 v_q + \eta\,(v_{q-1} + v_{q+1}), \qquad v_q = 1 \text{ at the close}.$$
+At the best distances each side contributes $`\tfrac{A}{k+\gamma}(1+\gamma/k)^{-k/\gamma}e^{kd}`$ (Step 3). Measure time backward from the close, so $`\tau`$ grows. The equation for $`h_q`$ becomes
+
+$`\displaystyle \frac{dh_q}{d\tau} = -\tfrac12\gamma\sigma^2q^2 + \tfrac{\eta}{k}\Big(e^{k(h_{q-1}-h_q)} + e^{k(h_{q+1}-h_q)}\Big).`$
+
+Multiply by $`k\,v_q`$ with $`v_q = e^{kh_q}`$: the exponentials become ratios of neighbouring $`v_q`$ and the equation turns linear:
+
+$`\displaystyle \frac{dv_q}{d\tau} = -\alpha q^2 v_q + \eta\,(v_{q-1} + v_{q+1}), \qquad v_q = 1 \text{ at the close}.`$
+
 This is linear, so it has one solution for each starting point. The code keeps positions from −30 to 30 lots (a fill that would cross the edge is not allowed) and steps it with the fourth-order Runge–Kutta method, 2,000 steps over the day. Guéant, Lehalle and Fernandez-Tapia found this change of variable and solved the capped problem exactly.
 
 </details>
@@ -186,21 +210,21 @@ This is linear, so it has one solution for each starting point. The code keeps p
 
 ## Worked numbers, by hand
 
-Long 5 lots at the open: $S = 10{,}000$, $q = 5$, $\gamma = 0.001$, $\sigma = 20$, $\tau = 1$, $k = 0.5$.
+Long 5 lots at the open: $`S = 10{,}000`$, $`q = 5`$, $`\gamma = 0.001`$, $`\sigma = 20`$, $`\tau = 1`$, $`k = 0.5`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| risk of one lot to the close, $\gamma\sigma^2\tau$ | $0.001 \times 20^2 \times 1$ | 0.40 |
-| skew, $q\gamma\sigma^2\tau$ | $5 \times 0.40$ | $2.00 a lot |
-| reservation centre, $r$ | $10{,}000 - 2.00$ | $9,998.00 |
-| concession, $c$ | $\ln(1.002)/0.001$ | $1.998003 |
-| spread, $w$ | $0.40 + 2 \times 1.998003$ | $4.396005 |
-| ask above the mid, $r^a + c - S$ | $9{,}998.20 + 1.998003 - 10{,}000$ | $0.198003 |
-| bid below the mid, $S - (r^b - c)$ | $10{,}000 - 9{,}997.80 + 1.998003$ | $4.198003 |
-| **per share** | $(10{,}000 - 4.198003)/100$ and $(10{,}000 + 0.198003)/100$ | **$99.9580 bid, $100.0020 ask** |
-| fills a day at those distances | $30e^{-0.5 \times 0.198}$ and $30e^{-0.5 \times 4.198}$ | 27.17 on the ask, 3.68 on the bid |
+| risk of one lot to the close, $`\gamma\sigma^2\tau`$ | $`0.001 \times 20^2 \times 1`$ | 0.40 |
+| skew, $`q\gamma\sigma^2\tau`$ | $`5 \times 0.40`$ | $2.00 a lot |
+| reservation centre, $`r`$ | $`10{,}000 - 2.00`$ | $9,998.00 |
+| concession, $`c`$ | $`\ln(1.002)/0.001`$ | $1.998003 |
+| spread, $`w`$ | $`0.40 + 2 \times 1.998003`$ | $4.396005 |
+| ask above the mid, $`r^a + c - S`$ | $`9{,}998.20 + 1.998003 - 10{,}000`$ | $0.198003 |
+| bid below the mid, $`S - (r^b - c)`$ | $`10{,}000 - 9{,}997.80 + 1.998003`$ | $4.198003 |
+| **per share** | $`(10{,}000 - 4.198003)/100`$ and $`(10{,}000 + 0.198003)/100`$ | **$99.9580 bid, $100.0020 ask** |
+| fills a day at those distances | $`30e^{-0.5 \times 0.198}`$ and $`30e^{-0.5 \times 4.198}`$ | 27.17 on the ask, 3.68 on the bid |
 
-The dealer expects to sell about seven times as often as it buys while the position lasts, and each fill still earns the concession $c$ beyond its reservation price.
+The dealer expects to sell about seven times as often as it buys while the position lasts, and each fill still earns the concession $`c`$ beyond its reservation price.
 
 ### What breaks if you drop a piece
 
@@ -209,9 +233,9 @@ Same dealer, 5 lots long at the open; the right centre is $99.9800 a share.
 | Mistake | Centre comes out at | What went wrong |
 | --- | --- | --- |
 | Skew added instead of subtracted | $100.0200 | Quotes go up: the dealer sells less and buys more, growing the position it wanted to shed |
-| $\sigma$ in place of $\sigma^2$ | $99.9990 | Risk is measured in squared dollars; with $\sigma = 20$ the skew shrinks twentyfold |
+| $`\sigma`$ in place of $`\sigma^2`$ | $99.9990 | Risk is measured in squared dollars; with $`\sigma = 20`$ the skew shrinks twentyfold |
 | Time left stuck at 1 when 0.1 of the day remains | $99.9800 (right: $99.9980) | The risk of carrying a lot to the close shrinks as the close nears |
-| Quoting at the reservation prices themselves | bid $9,997.80, ask $9,998.20 a lot | A spread of 0.40 only pays for the risk; the concession $c$ is the margin |
+| Quoting at the reservation prices themselves | bid $9,997.80, ask $9,998.20 a lot | A spread of 0.40 only pays for the risk; the concession $`c`$ is the margin |
 
 ---
 
@@ -225,11 +249,11 @@ Nothing trades, the mid stays at $100.00, and by the afternoon the long dealer's
 | half a day | $99.9690, $100.0110 | $99.9790, $100.0210 |
 | a tenth of a day | $99.9778, $100.0182 | $99.9798, $100.0202 |
 
-Both spreads narrow toward the concession alone, $2c$, as the risk half shrinks.
+Both spreads narrow toward the concession alone, $`2c`$, as the risk half shrinks.
 
 ### One simulated day
 
-The code runs a day of 1,000 steps. In each step the ask is hit with probability $\lambda(\delta^a)$ times the step length, the bid likewise, and then the mid takes a bell-curve step of size $\sigma$ times the square root of the step length. Two dealers see the same random numbers: one skews, one centres its quotes on the mid with the same spread.
+The code runs a day of 1,000 steps. In each step the ask is hit with probability $`\lambda(\delta^a)`$ times the step length, the bid likewise, and then the mid takes a bell-curve step of size $`\sigma`$ times the square root of the step length. Two dealers see the same random numbers: one skews, one centres its quotes on the mid with the same spread.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -674,12 +698,12 @@ The two outputs match line for line. Golden-section search stops a millionth of 
 
 Lean proves Steps 1, 2 and 3 for every position and every time left, and checks the worked numbers.
 
-- Take $\gamma > 0$ and $\tau \ge 0$. Then a frozen position of $q$ lots is worth $qS - \tfrac12\gamma q^2\sigma^2\tau$ for certain.
-- Take $\gamma > 0$, $\tau \ge 0$ and a whole number of lots $q$. Then $r^b = S - \gamma\sigma^2\tau\,(q + \tfrac12)$.
-- Under the same conditions, $r^a = S - \gamma\sigma^2\tau\,(q - \tfrac12)$.
-- Under the same conditions, their midpoint is the centre $r = S - q\gamma\sigma^2\tau$.
-- Suppose also the dealer is long, $\sigma \ne 0$ and $\tau > 0$. Then $r < S$: the centre sits below the mid.
-- Take $A > 0$, $\gamma > 0$, $k > 0$ and any change $d$. Then one side's contribution is largest at $\delta = c - d$, and smaller at every other distance.
+- Take $`\gamma > 0`$ and $`\tau \ge 0`$. Then a frozen position of $`q`$ lots is worth $`qS - \tfrac12\gamma q^2\sigma^2\tau`$ for certain.
+- Take $`\gamma > 0`$, $`\tau \ge 0`$ and a whole number of lots $`q`$. Then $`r^b = S - \gamma\sigma^2\tau\,(q + \tfrac12)`$.
+- Under the same conditions, $`r^a = S - \gamma\sigma^2\tau\,(q - \tfrac12)`$.
+- Under the same conditions, their midpoint is the centre $`r = S - q\gamma\sigma^2\tau`$.
+- Suppose also the dealer is long, $`\sigma \ne 0`$ and $`\tau > 0`$. Then $`r < S`$: the centre sits below the mid.
+- Take $`A > 0`$, $`\gamma > 0`$, $`k > 0`$ and any change $`d`$. Then one side's contribution is largest at $`\delta = c - d`$, and smaller at every other distance.
 - In the worked numbers, the risk of one lot is 0.40 and the skew is $2.00 a lot.
 - The reservation bid is $9,997.80, the centre $9,998.00 and the reservation ask $9,998.20.
 - With a tenth of the day left, the centre is $99.9980 a share.
@@ -879,7 +903,7 @@ example : (10000 : ℝ) - 5 * (1 / 1000) * 20 ^ 2 * (1 / 10) = 9999 + 4 / 5 := b
 > [!warning]
 > **Reading the reservation price as a forecast.** A dealer long 5 lots centres its quotes at $99.98, but the model gives the mid no drift at all: it expects $100.00 at the close. The reservation price is what a lot is worth *to this dealer*, holding what it holds. Two dealers with opposite positions quote on opposite sides of the mid at the same moment, and both are right.
 >
-> - **Mixing units.** $\sigma$ must be per lot if $q$ counts lots; per-share $\sigma$ with lots understates the skew ten-thousandfold, since it enters squared.
+> - **Mixing units.** $`\sigma`$ must be per lot if $`q`$ counts lots; per-share $`\sigma`$ with lots understates the skew ten-thousandfold, since it enters squared.
 > - **Treating the closed form as exact.** At 5 lots it skews 2.00 cents where the full solution skews 0.93. It is a good first policy, not the optimum.
 > - **Expecting the dealer to be flat at the close.** The model values leftovers at the mid, so the skew fades as the day ends: across 400 days the skewing dealer still closes 2.50 lots from flat on average. A desk that must be flat adds a closing penalty.
 
@@ -889,11 +913,11 @@ example : (10000 : ℝ) - 5 * (1 / 1000) * 20 ^ 2 * (1 / 10) = 9999 + 4 / 5 := b
 
 - **Electronic market makers.** Firms quoting thousands of stocks centre their quotes on a fair value moved against the position and widen them with volatility. The book they post into is [The order book](01-the-limit-order-book.md).
 - **Currency and bond dealers.** A bank that has bought euros from a client shades its euro price down to attract a buyer, rather than paying a spread to sell.
-- **Why spreads widen in a storm.** The risk half of the spread grows with $\sigma^2$, so quoted spreads widen when volatility jumps, even with the same traders. Adverse selection widens them further: [The spread](02-bid-ask-spread-and-adverse-selection.md).
+- **Why spreads widen in a storm.** The risk half of the spread grows with $`\sigma^2`$, so quoted spreads widen when volatility jumps, even with the same traders. Adverse selection widens them further: [The spread](02-bid-ask-spread-and-adverse-selection.md).
 - **The other side of an execution.** An institution selling a large block on the pattern of [Almgren-Chriss](04-optimal-execution-almgren-chriss.md) is selling into dealers like this one, whose bids fall as they fill up. That falling bid is part of the price impact modelled in [Kyle's model](03-kyle-model-and-price-impact.md).
 
 > **Say it back**
-> A dealer quotes a bid and an ask and earns the spread, but fills leave it holding a position whose price can move. Carrying $q$ lots to the close costs, in certain money, half of $\gamma q^2\sigma^2\tau$, so each extra lot is worth less to a long dealer: its quotes centre on $S - q\gamma\sigma^2\tau$. Around that centre each side sits one concession $c$ out, the distance that best trades margin for fills. The closed form prices the position as if it could not be sold before the close, so it over-skews; the full solution skews about half as much here. Over many days, skewing keeps the income and halves the risk.
+> A dealer quotes a bid and an ask and earns the spread, but fills leave it holding a position whose price can move. Carrying $`q`$ lots to the close costs, in certain money, half of $`\gamma q^2\sigma^2\tau`$, so each extra lot is worth less to a long dealer: its quotes centre on $`S - q\gamma\sigma^2\tau`$. Around that centre each side sits one concession $`c`$ out, the distance that best trades margin for fills. The closed form prices the position as if it could not be sold before the close, so it over-skews; the full solution skews about half as much here. Over many days, skewing keeps the income and halves the risk.
 
 ---
 

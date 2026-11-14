@@ -41,43 +41,49 @@ The bars are logarithmic: each extra block multiplies the count by 10. The grid'
 
 ## The formula
 
-The integrand $f$ (the function being integrated) is the payoff of one basket. Its input is a point $\mathbf u = (u_1, \dots, u_d)$ in the unit cube, one number $u_i$ between 0 and 1 per asset; asset $i$ grows by $0.8 + 0.4u_i$. The target is the integral over the whole cube:
+The integrand $`f`$ (the function being integrated) is the payoff of one basket. Its input is a point $`\mathbf u = (u_1, \dots, u_d)`$ in the unit cube, one number $`u_i`$ between 0 and 1 per asset; asset $`i`$ grows by $`0.8 + 0.4u_i`$. The target is the integral over the whole cube:
 
-$$I = \int_0^1\!\!\cdots\!\int_0^1 f(u_1, \dots, u_d)\,du_1\cdots du_d$$
+```math
+I = \int_0^1\!\!\cdots\!\int_0^1 f(u_1, \dots, u_d)\,du_1\cdots du_d
+```
 
-**The product midpoint rule.** Put $m$ points on each axis, at the midpoints $x_j = (j - \tfrac12)/m$ of $m$ equal pieces of width $h = 1/m$. Try every combination and average:
+**The product midpoint rule.** Put $`m`$ points on each axis, at the midpoints $`x_j = (j - \tfrac12)/m`$ of $`m`$ equal pieces of width $`h = 1/m`$. Try every combination and average:
 
-$$Q_m = \frac{1}{m^d}\sum_{j_1=1}^{m}\cdots\sum_{j_d=1}^{m} f(x_{j_1}, \dots, x_{j_d}), \qquad N = m^d, \qquad |Q_m - I| \le \frac{d\,M\,h^2}{24} = \frac{d\,M}{24}\,N^{-2/d}$$
+```math
+Q_m = \frac{1}{m^d}\sum_{j_1=1}^{m}\cdots\sum_{j_d=1}^{m} f(x_{j_1}, \dots, x_{j_d}), \qquad N = m^d, \qquad |Q_m - I| \le \frac{d\,M\,h^2}{24} = \frac{d\,M}{24}\,N^{-2/d}
+```
 
 **Read it aloud:** the grid's estimate is the plain average of f over all m-to-the-d grid points; it costs N = m to the d evaluations, and it misses by at most d times M times h squared over 24, which is N to the minus two over d.
 
-**Monte Carlo.** Draw $N$ independent random points $\mathbf U_1, \dots, \mathbf U_N$, each spread evenly over the cube, and average:
+**Monte Carlo.** Draw $`N`$ independent random points $`\mathbf U_1, \dots, \mathbf U_N`$, each spread evenly over the cube, and average:
 
-$$\hat I_N = \frac1N\sum_{i=1}^{N} f(\mathbf U_i), \qquad \mathrm{SE} = \frac{\sigma}{\sqrt N}$$
+```math
+\hat I_N = \frac1N\sum_{i=1}^{N} f(\mathbf U_i), \qquad \mathrm{SE} = \frac{\sigma}{\sqrt N}
+```
 
 **Read it aloud:** the random estimate is the average of f at N random points, and its root-mean-square miss is one payoff's spread divided by the square root of N, with no d anywhere.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $d$ | the dimension: how many numbers one input has | 5 assets | the grid's cost explodes; Monte Carlo's does not |
-| $\mathbf u$, $u_i$, $S$, $L$ | one point in the cube; its $i$-th coordinate; $S$ is the sum of the coordinates; $L$ is a stretch length in the closed-form fold | one basket's five draws | — |
-| $f$, $A$, $g$ | the integrand: one basket's payoff, in dollars; $A$ is the basket's average growth factor; $g$ is a function of fewer variables inside the proofs | $f = 100 \times \max(A - 1, 0)$ | — |
-| $I$ | the true value: the average payoff | $2.081597 | — |
-| $m$, $h$, $x_j$ | grid points per axis; their spacing $1/m$; the $j$-th midpoint | 10; 0.1 | more points per axis: smaller grid error |
-| $N$ | number of evaluations, grid points or random points | 100,000 grid; 10,000 random | smaller error, higher cost |
-| $Q_m$, $E_k$, $R_k$ | the product-grid estimate; in the proof, exact integration and the midpoint rule along axis $k$ | 2.073600 | — |
-| $M$, $C$ | $M$: the largest second derivative of $f$ along any one axis; $C$: the constant in a grid error of the form $C N^{-2/d}$, read off a run | $M$ none, since the payoff has a corner; $C$ = 0.7997 | larger grid error |
-| $\hat I_N$, $\mathbf U_i$, $X_i$, $Z_i$ | the Monte Carlo estimate (the hat marks a computed value); the $i$-th random point; its payoff; its miss $X_i - I$ | 2.076778 | — |
-| $\sigma$, $s$, $E[\cdot]$ | spread (standard deviation) of one payoff; $s$ is the same spread measured from the run; $E[\cdot]$ is the long-run average | 3.000048; 3.000391 | wider error bar |
-| $\mathrm{SE}$ | standard error: the root-mean-square miss of $\hat I_N$ | 0.030004 from the run | — |
-| $i$, $j$, $k$ | counters: a coordinate or a draw; a grid position; an axis or a term of a sum | — | — |
+| $`d`$ | the dimension: how many numbers one input has | 5 assets | the grid's cost explodes; Monte Carlo's does not |
+| $`\mathbf u`$, $`u_i`$, $`S`$, $`L`$ | one point in the cube; its $`i`$-th coordinate; $`S`$ is the sum of the coordinates; $`L`$ is a stretch length in the closed-form fold | one basket's five draws | — |
+| $`f`$, $`A`$, $`g`$ | the integrand: one basket's payoff, in dollars; $`A`$ is the basket's average growth factor; $`g`$ is a function of fewer variables inside the proofs | $`f = 100 \times \max(A - 1, 0)`$ | — |
+| $`I`$ | the true value: the average payoff | $2.081597 | — |
+| $`m`$, $`h`$, $`x_j`$ | grid points per axis; their spacing $`1/m`$; the $`j`$-th midpoint | 10; 0.1 | more points per axis: smaller grid error |
+| $`N`$ | number of evaluations, grid points or random points | 100,000 grid; 10,000 random | smaller error, higher cost |
+| $`Q_m`$, $`E_k`$, $`R_k`$ | the product-grid estimate; in the proof, exact integration and the midpoint rule along axis $`k`$ | 2.073600 | — |
+| $`M`$, $`C`$ | $`M`$: the largest second derivative of $`f`$ along any one axis; $`C`$: the constant in a grid error of the form $`C N^{-2/d}`$, read off a run | $`M`$ none, since the payoff has a corner; $`C`$ = 0.7997 | larger grid error |
+| $`\hat I_N`$, $`\mathbf U_i`$, $`X_i`$, $`Z_i`$ | the Monte Carlo estimate (the hat marks a computed value); the $`i`$-th random point; its payoff; its miss $`X_i - I`$ | 2.076778 | — |
+| $`\sigma`$, $`s`$, $`E[\cdot]`$ | spread (standard deviation) of one payoff; $`s`$ is the same spread measured from the run; $`E[\cdot]`$ is the long-run average | 3.000048; 3.000391 | wider error bar |
+| $`\mathrm{SE}`$ | standard error: the root-mean-square miss of $`\hat I_N`$ | 0.030004 from the run | — |
+| $`i`$, $`j`$, $`k`$ | counters: a coordinate or a draw; a grid position; an axis or a term of a sum | — | — |
 
 ### When it holds
 
-- **The grid bound needs a bounded second derivative along each axis.** The basket payoff has a corner where the basket breaks even, so $M$ does not exist and the bound says nothing. The errors still fell like $h^2$ for even $m$, but they jump about: 4 per axis missed by −0.050347, and 5 per axis by −0.056637.
+- **The grid bound needs a bounded second derivative along each axis.** The basket payoff has a corner where the basket breaks even, so $`M`$ does not exist and the bound says nothing. The errors still fell like $`h^2`$ for even $`m`$, but they jump about: 4 per axis missed by −0.050347, and 5 per axis by −0.056637.
 - **Monte Carlo needs independent points spread evenly over the cube.** Reuse one random number for all five assets and the average aims at a different, one-dimensional integral, worth 5.000000; the run reads 4.991290 instead of 2.081597.
-- **Monte Carlo needs a finite spread σ.** The rate σ/√N has no $d$ in it, but σ itself depends on the integrand. Here σ fell from 3.000048 at $d = 5$ to 1.505635 at $d = 20$, because a bigger basket averages out; another integrand could make it grow.
-- **Costs are counted in evaluations of $f$.** Each random point needs $d$ random numbers, so its work grows in proportion to $d$, not like a power of $d$.
+- **Monte Carlo needs a finite spread σ.** The rate σ/√N has no $`d`$ in it, but σ itself depends on the integrand. Here σ fell from 3.000048 at $`d = 5`$ to 1.505635 at $`d = 20`$, because a bigger basket averages out; another integrand could make it grow.
+- **Costs are counted in evaluations of $`f`$.** Each random point needs $`d`$ random numbers, so its work grows in proportion to $`d`$, not like a power of $`d`$.
 
 ---
 
@@ -85,40 +91,40 @@ $$\hat I_N = \frac1N\sum_{i=1}^{N} f(\mathbf U_i), \qquad \mathrm{SE} = \frac{\s
 
 ### Step 0: a grid spends its points on every axis at once
 
-A one-dimensional rule with 10 points has spacing 0.1, and its error depends on that spacing. A product grid keeps the spacing 0.1 on every axis, so it needs 10 points on each, multiplied together. Its accuracy is set by the spacing, but its cost by the spacing raised to the power $-d$.
+A one-dimensional rule with 10 points has spacing 0.1, and its error depends on that spacing. A product grid keeps the spacing 0.1 on every axis, so it needs 10 points on each, multiplied together. Its accuracy is set by the spacing, but its cost by the spacing raised to the power $`-d`$.
 
-Random points do not divide up the axes. Each one is an independent sample of the payoff, and averaging $N$ samples cuts the spread of the average by $\sqrt N$, whatever a sample's dimension. The dimension never enters the error formula.
+Random points do not divide up the axes. Each one is an independent sample of the payoff, and averaging $`N`$ samples cuts the spread of the average by $`\sqrt N`$, whatever a sample's dimension. The dimension never enters the error formula.
 
 The rest of this section proves both facts and then sets them side by side. The comparison of rates alone is on [Monte Carlo integration](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md); this card adds the proofs, the constants and the cost of each.
 
 ### Step 1: the product grid's error is at most d one-dimensional errors
 
-In one dimension, the composite midpoint rule with spacing $h$ on 0 to 1 misses by at most $h^2 M / 24$, where $M$ bounds $|g''|$. That bound is proved on [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
+In one dimension, the composite midpoint rule with spacing $`h`$ on 0 to 1 misses by at most $`h^2 M / 24`$, where $`M`$ bounds $`|g''|`$. That bound is proved on [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
 
-The product rule applies that one-dimensional rule on each axis in turn. The total error splits into $d$ pieces, one per axis. Each piece is a one-dimensional midpoint error on that axis, after the other axes have been averaged. Averaging cannot make a number bigger than its largest value, so each piece stays within $h^2 M / 24$. Adding $d$ pieces gives $d M h^2 / 24$.
+The product rule applies that one-dimensional rule on each axis in turn. The total error splits into $`d`$ pieces, one per axis. Each piece is a one-dimensional midpoint error on that axis, after the other axes have been averaged. Averaging cannot make a number bigger than its largest value, so each piece stays within $`h^2 M / 24`$. Adding $`d`$ pieces gives $`d M h^2 / 24`$.
 
 <details>
 <summary>Detailed proof: the product rule's error splits axis by axis</summary>
 
-Write $E_k$ for "integrate over axis $k$" and $R_k$ for "apply the midpoint rule on axis $k$". Both act on a function of several variables and remove one of them. The true integral is $E_1 E_2 \cdots E_d f$, and the grid estimate is $R_1 R_2 \cdots R_d f$.
+Write $`E_k`$ for "integrate over axis $`k`$" and $`R_k`$ for "apply the midpoint rule on axis $`k`$". Both act on a function of several variables and remove one of them. The true integral is $`E_1 E_2 \cdots E_d f`$, and the grid estimate is $`R_1 R_2 \cdots R_d f`$.
 
 The difference telescopes (each middle term appears once with each sign):
 
-$$E_1 \cdots E_d f - R_1 \cdots R_d f = \sum_{k=1}^{d} R_1 \cdots R_{k-1}\,(E_k - R_k)\,E_{k+1} \cdots E_d f.$$
+$`\displaystyle E_1 \cdots E_d f - R_1 \cdots R_d f = \sum_{k=1}^{d} R_1 \cdots R_{k-1}\,(E_k - R_k)\,E_{k+1} \cdots E_d f.`$
 
-Fix $k$. Let $g = E_{k+1} \cdots E_d f$, a function of $u_1, \dots, u_k$. Integrating over the later axes does not increase the second derivative along axis $k$, so $|\partial^2 g / \partial u_k^2| \le M$. The one-dimensional bound then gives $|(E_k - R_k) g| \le h^2 M / 24$ at every value of $u_1, \dots, u_{k-1}$.
+Fix $`k`$. Let $`g = E_{k+1} \cdots E_d f`$, a function of $`u_1, \dots, u_k`$. Integrating over the later axes does not increase the second derivative along axis $`k`$, so $`|\partial^2 g / \partial u_k^2| \le M`$. The one-dimensional bound then gives $`|(E_k - R_k) g| \le h^2 M / 24`$ at every value of $`u_1, \dots, u_{k-1}`$.
 
-Finally, $R_1 \cdots R_{k-1}$ takes averages with positive weights that add to 1, so it keeps the bound. Each of the $d$ terms is at most $h^2 M / 24$, and the triangle inequality gives $|Q_m - I| \le d M h^2 / 24$.
+Finally, $`R_1 \cdots R_{k-1}`$ takes averages with positive weights that add to 1, so it keeps the bound. Each of the $`d`$ terms is at most $`h^2 M / 24`$, and the triangle inequality gives $`|Q_m - I| \le d M h^2 / 24`$.
 
 </details>
 
 ### Step 2: in point count, the grid's rate gets worse with every dimension
 
-The bound is $h^2$, but the cost is $N = m^d = h^{-d}$. So $h = N^{-1/d}$ and the error bound is $\frac{dM}{24} N^{-2/d}$.
+The bound is $`h^2`$, but the cost is $`N = m^d = h^{-d}`$. So $`h = N^{-1/d}`$ and the error bound is $`\frac{dM}{24} N^{-2/d}`$.
 
-To halve the error, $h$ must shrink by $\sqrt 2$ on every axis. That multiplies $N$ by $2^{d/2}$:
+To halve the error, $`h`$ must shrink by $`\sqrt 2`$ on every axis. That multiplies $`N`$ by $`2^{d/2}`$:
 
-| Dimension $d$ | Grid, 10 per axis | Grid rate, power of $1/N$ | To halve the grid error | To halve the Monte Carlo error |
+| Dimension $`d`$ | Grid, 10 per axis | Grid rate, power of $`1/N`$ | To halve the grid error | To halve the Monte Carlo error |
 | ---: | ---: | ---: | ---: | ---: |
 | 1 | 10 | 2.00 | ×1.41 | ×4 |
 | 2 | 100 | 1.00 | ×2.00 | ×4 |
@@ -128,46 +134,46 @@ To halve the error, $h$ must shrink by $\sqrt 2$ on every axis. That multiplies 
 | 10 | 10,000,000,000 | 0.20 | ×32.00 | ×4 |
 | 20 | 100,000,000,000,000,000,000 | 0.10 | ×1024.00 | ×4 |
 
-At $d = 4$ the two rates tie. Above it, the grid's rate is the slower one.
+At $`d = 4`$ the two rates tie. Above it, the grid's rate is the slower one.
 
-**The bound, checked on a smooth integrand.** The basket payoff has a corner, so take a smooth stand-in: $100\,e^{A - 1}$, where $A$ is the basket's average growth factor. Along each axis its second derivative is at most $100 \times 0.08^2 \times e^{0.2}$. With 10 per axis in five dimensions, the bound is 0.00162854 and the true error is −0.00133510. The bound is 1.2198 times the true error, so it is nearly tight. The grid reads low because this integrand curves upward.
+**The bound, checked on a smooth integrand.** The basket payoff has a corner, so take a smooth stand-in: $`100\,e^{A - 1}`$, where $`A`$ is the basket's average growth factor. Along each axis its second derivative is at most $`100 \times 0.08^2 \times e^{0.2}`$. With 10 per axis in five dimensions, the bound is 0.00162854 and the true error is −0.00133510. The bound is 1.2198 times the true error, so it is nearly tight. The grid reads low because this integrand curves upward.
 
-**The rate, observed on the basket payoff.** Even $m$ gives a clean ladder. The observed order in $h$ is 2.0368, 2.0118, 2.0059, 2.0035, against the theorem's 2; per $N$ that is 0.4007 at the end, against $2/5 = 0.40$. Odd $m$ breaks the pattern: with odd $m$, some grid points sit exactly on the payoff's corner, and with even $m$ none do.
+**The rate, observed on the basket payoff.** Even $`m`$ gives a clean ladder. The observed order in $`h`$ is 2.0368, 2.0118, 2.0059, 2.0035, against the theorem's 2; per $`N`$ that is 0.4007 at the end, against $`2/5 = 0.40`$. Odd $`m`$ breaks the pattern: with odd $`m`$, some grid points sit exactly on the payoff's corner, and with even $`m`$ none do.
 
 ### Step 3: the Monte Carlo error is σ/√N, whatever the dimension
 
 The full statement, with the 95 percent interval from the central limit theorem, is on [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md). The core is short.
 
-Each payoff $X_i = f(\mathbf U_i)$ has mean $I$ and variance $\sigma^2$ (its average squared distance from the mean). The estimate's error is the average of the misses $X_i - I$. Independent misses do not cancel or reinforce on average, so the variances add: $N$ misses give variance $N\sigma^2$, and dividing by $N$ divides the variance by $N^2$.
+Each payoff $`X_i = f(\mathbf U_i)`$ has mean $`I`$ and variance $`\sigma^2`$ (its average squared distance from the mean). The estimate's error is the average of the misses $`X_i - I`$. Independent misses do not cancel or reinforce on average, so the variances add: $`N`$ misses give variance $`N\sigma^2`$, and dividing by $`N`$ divides the variance by $`N^2`$.
 
 <details>
 <summary>Detailed proof: the variance of an average of independent draws</summary>
 
-Write $Z_i = X_i - I$, the $i$-th draw's miss. Write $E[\cdot]$ for the long-run average (the expectation; it has nothing to do with the axis operators $E_k$ above). Then $E[Z_i] = 0$ and $E[Z_i^2] = \sigma^2$. The estimate's error is $\hat I_N - I = \frac1N \sum_i Z_i$, so
+Write $`Z_i = X_i - I`$, the $`i`$-th draw's miss. Write $`E[\cdot]`$ for the long-run average (the expectation; it has nothing to do with the axis operators $`E_k`$ above). Then $`E[Z_i] = 0`$ and $`E[Z_i^2] = \sigma^2`$. The estimate's error is $`\hat I_N - I = \frac1N \sum_i Z_i`$, so
 
-$$E\big[(\hat I_N - I)^2\big] = \frac{1}{N^2}\sum_{i=1}^{N}\sum_{j=1}^{N} E[Z_i Z_j].$$
+$`\displaystyle E\big[(\hat I_N - I)^2\big] = \frac{1}{N^2}\sum_{i=1}^{N}\sum_{j=1}^{N} E[Z_i Z_j].`$
 
-For $i \ne j$, independence gives $E[Z_i Z_j] = E[Z_i]\,E[Z_j] = 0$. Only the $N$ terms with $i = j$ remain, each equal to $\sigma^2$. So the mean squared error is $\sigma^2 / N$, and the root-mean-square error is $\sigma / \sqrt N$.
+For $`i \ne j`$, independence gives $`E[Z_i Z_j] = E[Z_i]\,E[Z_j] = 0`$. Only the $`N`$ terms with $`i = j`$ remain, each equal to $`\sigma^2`$. So the mean squared error is $`\sigma^2 / N`$, and the root-mean-square error is $`\sigma / \sqrt N`$.
 
-Nothing in the argument mentions $d$. The point $\mathbf U_i$ may have five coordinates or thousands; only the spread of $f(\mathbf U_i)$ counts. Chebyshev's inequality turns this into a guarantee: a miss of more than $k$ standard errors has probability at most $1/k^2$.
+Nothing in the argument mentions $`d`$. The point $`\mathbf U_i`$ may have five coordinates or thousands; only the spread of $`f(\mathbf U_i)`$ counts. Chebyshev's inequality turns this into a guarantee: a miss of more than $`k`$ standard errors has probability at most $`1/k^2`$.
 
 </details>
 
 **Observed.** Over 40 independent runs at each size, the root-mean-square error was:
 
-| $N$ | Root-mean-square error | $\sigma / \sqrt N$ | Ratio |
+| $`N`$ | Root-mean-square error | $`\sigma / \sqrt N`$ | Ratio |
 | ---: | ---: | ---: | ---: |
 | 100 | 0.298810 | 0.300005 | 0.9960 |
 | 1,000 | 0.093133 | 0.094870 | 0.9817 |
 | 10,000 | 0.028595 | 0.030000 | 0.9531 |
 
-The observed order per $N$, from 100 to 10,000 points, is 0.5096, against the theorem's 0.5.
+The observed order per $`N`$, from 100 to 10,000 points, is 0.5096, against the theorem's 0.5.
 
 ### Step 4: a faster rate is not yet a smaller error
 
 In five dimensions Monte Carlo has the faster rate, 0.5 against 0.40. Yet at the same budget of 100,000 evaluations the grid misses by −0.007997, while Monte Carlo's standard error is σ/√N = 0.009487. The constants decide.
 
-Model the grid's even-$m$ errors as $C N^{-0.4}$ and read $C$ off the $m = 10$ grid: $C = 0.7997$. Monte Carlo's constant is $\sigma = 3.000048$. The two error curves cross where $C N^{-0.4} = \sigma N^{-0.5}$, that is at $N = (\sigma / C)^{10}$ = 551,938 points. This is an **estimate**, extrapolated from that one reading of $C$, not a run. Below it the grid wins in five dimensions; above it, random points do.
+Model the grid's even-$`m`$ errors as $`C N^{-0.4}`$ and read $`C`$ off the $`m = 10`$ grid: $`C = 0.7997`$. Monte Carlo's constant is $`\sigma = 3.000048`$. The two error curves cross where $`C N^{-0.4} = \sigma N^{-0.5}`$, that is at $`N = (\sigma / C)^{10}`$ = 551,938 points. This is an **estimate**, extrapolated from that one reading of $`C`$, not a run. Below it the grid wins in five dimensions; above it, random points do.
 
 Double the dimension and the picture flips at once. In ten dimensions a grid of 3 per axis costs 59,049 evaluations and misses by −0.098967. Monte Carlo with 10,000 draws has standard error 0.021106. The grid's miss is 4.69 of those standard errors.
 
@@ -175,9 +181,9 @@ Double the dimension and the picture flips at once. In ten dimensions a grid of 
 
 | Situation | Method that wins | Why |
 | --- | --- | --- |
-| Smooth integrand, 1 to 3 dimensions | Product rule, ideally a [Gaussian quadrature](03-gaussian-quadrature.md) rule on each axis | A high-order rule needs few points per axis, and $m^d$ stays small |
-| Smooth integrand, moderate dimension | Sparse grids or quasi-Monte Carlo ([Quasi-Monte Carlo and sparse grids](07-quasi-monte-carlo-and-sparse-grids.md)) | They keep part of a rule's accuracy without the full $m^d$ cost |
-| High dimension, rough integrand, or an error bar is needed | Monte Carlo | σ/√N in any dimension, and $s$ from the run gives the error bar for free |
+| Smooth integrand, 1 to 3 dimensions | Product rule, ideally a [Gaussian quadrature](03-gaussian-quadrature.md) rule on each axis | A high-order rule needs few points per axis, and $`m^d`$ stays small |
+| Smooth integrand, moderate dimension | Sparse grids or quasi-Monte Carlo ([Quasi-Monte Carlo and sparse grids](07-quasi-monte-carlo-and-sparse-grids.md)) | They keep part of a rule's accuracy without the full $`m^d`$ cost |
+| High dimension, rough integrand, or an error bar is needed | Monte Carlo | σ/√N in any dimension, and $`s`$ from the run gives the error bar for free |
 
 A grid gives no error bar of its own. Monte Carlo's comes from the same run that gives the estimate.
 
@@ -185,34 +191,34 @@ A grid gives no error bar of its own. Monte Carlo's comes from the same run that
 
 ## Worked numbers, by hand
 
-The basket pays $100 \times \max(A - 1, 0)$, where $A = 0.8 + 0.4 \times S/5$ and $S = u_1 + \dots + u_5$. Then $A - 1 = 0.08\,(S - 2.5)$, so the payoff is $8 \times \max(S - 2.5, 0)$.
+The basket pays $`100 \times \max(A - 1, 0)`$, where $`A = 0.8 + 0.4 \times S/5`$ and $`S = u_1 + \dots + u_5`$. Then $`A - 1 = 0.08\,(S - 2.5)`$, so the payoff is $`8 \times \max(S - 2.5, 0)`$.
 
-The sum $S$ is symmetric about its mean 2.5, so $\max(S - 2.5, 0)$ has the same average as $\max(2.5 - S, 0)$. That average has a closed form (the fold below derives it).
+The sum $`S`$ is symmetric about its mean 2.5, so $`\max(S - 2.5, 0)`$ has the same average as $`\max(2.5 - S, 0)`$. That average has a closed form (the fold below derives it).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| first term | $2.5^6$ | 244.140625 |
-| second term | $5 \times 1.5^6$ | 56.953125 |
-| third term | $10 \times 0.5^6$ | 0.156250 |
-| alternating sum | $244.140625 - 56.953125 + 0.156250$ | 187.343750 |
-| divide by $6! = 720$ | $187.343750 / 720$ | 0.260200 |
-| times 8: the average payoff $I$ | $8 \times 0.260200$ | **$2.081597** |
-| average squared payoff | $64 \times 5/24$ | 13.333333 |
-| variance $\sigma^2$ | $13.333333 - 2.081597^2 = 13.333333 - 4.333047$ | 9.000286 |
-| spread $\sigma$ | $\sqrt{9.000286}$ | 3.000048 |
-| Monte Carlo standard error, $N = 10{,}000$ | $3.000048 / 100$ | 0.030000 |
-| grid, 10 per axis, $N = 100{,}000$ | true error $2.073600 - 2.081597$ | −0.007997 |
+| first term | $`2.5^6`$ | 244.140625 |
+| second term | $`5 \times 1.5^6`$ | 56.953125 |
+| third term | $`10 \times 0.5^6`$ | 0.156250 |
+| alternating sum | $`244.140625 - 56.953125 + 0.156250`$ | 187.343750 |
+| divide by $`6! = 720`$ | $`187.343750 / 720`$ | 0.260200 |
+| times 8: the average payoff $`I`$ | $`8 \times 0.260200`$ | **$2.081597** |
+| average squared payoff | $`64 \times 5/24`$ | 13.333333 |
+| variance $`\sigma^2`$ | $`13.333333 - 2.081597^2 = 13.333333 - 4.333047`$ | 9.000286 |
+| spread $`\sigma`$ | $`\sqrt{9.000286}`$ | 3.000048 |
+| Monte Carlo standard error, $`N = 10{,}000`$ | $`3.000048 / 100`$ | 0.030000 |
+| grid, 10 per axis, $`N = 100{,}000`$ | true error $`2.073600 - 2.081597`$ | −0.007997 |
 
 The basket call is worth $2.08 on average per $100. The 100,000-point grid reads 2.0736, a miss of 0.008: within a cent, but just outside the 0.005 target. 10,000 random points give 2.08 ± 0.03.
 
 <details>
 <summary>Where the closed form comes from</summary>
 
-The sum $S$ of five independent uniform numbers has a density (the Irwin–Hall density) built from polynomial pieces. One piece switches on at each whole number $k$ from 0 to 5. It is $(S - k)^4 / 4!$ beyond $k$ and zero before, weighted by $(-1)^k \binom5k$: signs alternate, and the weights are 1, 5, 10 and so on.
+The sum $`S`$ of five independent uniform numbers has a density (the Irwin–Hall density) built from polynomial pieces. One piece switches on at each whole number $`k`$ from 0 to 5. It is $`(S - k)^4 / 4!`$ beyond $`k`$ and zero before, weighted by $`(-1)^k \binom5k`$: signs alternate, and the weights are 1, 5, 10 and so on.
 
-To average $\max(2.5 - S, 0)$, multiply each piece by $(2.5 - S)$ and integrate from $k$ up to 2.5. With $L = 2.5 - k$ the length of that stretch, a beta integral gives $L^6 / 6!$. Only the pieces for $k = 0, 1, 2$ switch on below 2.5. That gives the three terms in the table: $2.5^6$, $5 \times 1.5^6$ and $10 \times 0.5^6$, over $6!$.
+To average $`\max(2.5 - S, 0)`$, multiply each piece by $`(2.5 - S)`$ and integrate from $`k`$ up to 2.5. With $`L = 2.5 - k`$ the length of that stretch, a beta integral gives $`L^6 / 6!`$. Only the pieces for $`k = 0, 1, 2`$ switch on below 2.5. That gives the three terms in the table: $`2.5^6`$, $`5 \times 1.5^6`$ and $`10 \times 0.5^6`$, over $`6!`$.
 
-For the second moment, $E[(S - 2.5)^2] = \mathrm{Var}\,S = 5/12$. By the same symmetry, the positive and negative parts each carry half, so $E[\max(S - 2.5, 0)^2] = 5/24$. Times $8^2 = 64$ gives the average squared payoff.
+For the second moment, $`E[(S - 2.5)^2] = \mathrm{Var}\,S = 5/12`$. By the same symmetry, the positive and negative parts each carry half, so $`E[\max(S - 2.5, 0)^2] = 5/24`$. Times $`8^2 = 64`$ gives the average squared payoff.
 
 </details>
 
@@ -220,9 +226,9 @@ For the second moment, $E[(S - 2.5)^2] = \mathrm{Var}\,S = 5/12$. By the same sy
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Grid at the corners of each cell instead of the midpoints, 10 per axis | 1.216600, error −0.864997 | The corner rule has order 1 in $h$, not 2, and it misses on the same side on every axis |
+| Grid at the corners of each cell instead of the midpoints, 10 per axis | 1.216600, error −0.864997 | The corner rule has order 1 in $`h`$, not 2, and it misses on the same side on every axis |
 | One random number reused for all five assets | 4.991290, error +2.909693 | The draws are not independent, so the average estimates a one-dimensional integral, worth 5.000000, not the basket |
-| Error bar $s/N$ instead of $s/\sqrt N$ | 0.000300; the true error is 16.1 of these | It shrinks the bar by a further factor of $\sqrt N$, claiming precision the run does not have |
+| Error bar $`s/N`$ instead of $`s/\sqrt N`$ | 0.000300; the true error is 16.1 of these | It shrinks the bar by a further factor of $`\sqrt N`$, claiming precision the run does not have |
 | Payoff with a corner, 5 per axis instead of 4 | error −0.056637, worse than −0.050347 | The bound's second derivative does not exist; more points can do worse |
 | Grid in 10 dimensions, 3 per axis | 59,049 evaluations, error −0.098967 | 3 points per axis cannot resolve anything; it is 4.69 Monte Carlo standard errors off |
 
@@ -230,7 +236,7 @@ For the second moment, $E[(S - 2.5)^2] = \mathrm{Var}\,S = 5/12$. By the same sy
 
 ## Code, from first principles, and it actually runs
 
-The script reaches the basket's value by three independent roads. Road 1 is the closed form: exact rational arithmetic in Python, and the same formula in floating point in Rust. Road 2 is the product midpoint grid, which closes in on road 1 at the proved order 2 in $h$. Road 3 is Monte Carlo with a SplitMix64 generator (a small, fully specified random-number recipe from wing 09), seed 2026, which lands within a few standard errors. Forty repeat runs then test σ/√N itself, and a smooth integrand tests the grid's bound. Both programs print identical output.
+The script reaches the basket's value by three independent roads. Road 1 is the closed form: exact rational arithmetic in Python, and the same formula in floating point in Rust. Road 2 is the product midpoint grid, which closes in on road 1 at the proved order 2 in $`h`$. Road 3 is Monte Carlo with a SplitMix64 generator (a small, fully specified random-number recipe from wing 09), seed 2026, which lands within a few standard errors. Forty repeat runs then test σ/√N itself, and a smooth integrand tests the grid's bound. Both programs print identical output.
 
 ### Python
 
@@ -648,10 +654,10 @@ ALL CHECKS PASS
 
 Lean proves the grid's error bound, its cost and rate, and the Monte Carlo mean squared error, for every dimension d and every m and N.
 
-- Suppose f has two continuous derivatives, and its second derivative along each axis is at most M in size on the cube. Then $|Q_m - I| \le d\,M\,h^2/24$, with $h = 1/m$.
-- A grid of m points on each of d axes has $N = m^d$ points, and $h^2 = N^{-2/d}$, so the bound falls like $N^{-2/d}$.
-- Suppose $\mathbf U_1, \dots, \mathbf U_N$ are independent, each spread evenly over the cube, and $f^2$ has a finite average there. Then $E[(\hat I_N - I)^2] = \sigma^2/N$ exactly, with no $d$ in it.
-- The hand arithmetic holds exactly: the grid sizes $10^5$, $10^{10}$, $10^{20}$, $2^{10}$, $3^{10}$ and $4^{10}$, and the closed-form steps giving $I = 1199/576$. So do the average squared payoff 40/3, $\sigma^2 = 40/3 - I^2$ and the reused-draw target 5.
+- Suppose f has two continuous derivatives, and its second derivative along each axis is at most M in size on the cube. Then $`|Q_m - I| \le d\,M\,h^2/24`$, with $`h = 1/m`$.
+- A grid of m points on each of d axes has $`N = m^d`$ points, and $`h^2 = N^{-2/d}`$, so the bound falls like $`N^{-2/d}`$.
+- Suppose $`\mathbf U_1, \dots, \mathbf U_N`$ are independent, each spread evenly over the cube, and $`f^2`$ has a finite average there. Then $`E[(\hat I_N - I)^2] = \sigma^2/N`$ exactly, with no $`d`$ in it.
+- The hand arithmetic holds exactly: the grid sizes $`10^5`$, $`10^{10}`$, $`10^{20}`$, $`2^{10}`$, $`3^{10}`$ and $`4^{10}`$, and the closed-form steps giving $`I = 1199/576`$. So do the average squared payoff 40/3, $`\sigma^2 = 40/3 - I^2`$ and the reused-draw target 5.
 
 The closed form, the runs, the observed orders, the crossover estimate and the failure cases are left to the Python and Rust checks.
 

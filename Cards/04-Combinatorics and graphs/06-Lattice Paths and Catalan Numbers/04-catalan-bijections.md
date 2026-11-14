@@ -36,19 +36,25 @@ The bracket word is the common currency; every arrow reverses.
 
 Notation first, in words. Cat(n) is the Catalan number at size n, as on the previous card, and upright bars round a collection count its members. Four letters cover five families: words and paths are the same objects relabelled.
 
-$$\lvert D_n\rvert = \lvert T_n\rvert = \lvert G_n\rvert = \lvert H_n\rvert = \mathrm{Cat}(n)$$
+```math
+\lvert D_n\rvert = \lvert T_n\rvert = \lvert G_n\rvert = \lvert H_n\rvert = \mathrm{Cat}(n)
+```
 
 **Read it aloud:** at one size those four collections hold the same number of things, the Catalan number. The tabletop is size 4: 6 corners, 8 seats, all counts 14.
 
 A word becomes a tree by cutting at the **first return**, where its opening bracket meets its partner: that bracket, a stretch P, the partner, then the rest Q.
 
-$$\mathrm{tree}\big(\texttt{(}P\texttt{)}Q\big) = \big(\mathrm{tree}(P),\ \mathrm{tree}(Q)\big), \qquad \mathrm{tree}(\text{the empty word}) = \text{a bare leaf}$$
+```math
+\mathrm{tree}\big(\texttt{(}P\texttt{)}Q\big) = \big(\mathrm{tree}(P),\ \mathrm{tree}(Q)\big), \qquad \mathrm{tree}(\text{the empty word}) = \text{a bare leaf}
+```
 
 One fork, the inside hanging left, the rest hanging right.
 
-A cut polygon becomes a word the same way. Corners $a$ and $b$ end the edge being read, and the triangle on it points at a third corner $c$ between them, its **apex**:
+A cut polygon becomes a word the same way. Corners $`a`$ and $`b`$ end the edge being read, and the triangle on it points at a third corner $`c`$ between them, its **apex**:
 
-$$\mathrm{word}(a,b) = \texttt{(}\,\mathrm{word}(a,c)\,\texttt{)}\,\mathrm{word}(c,b), \qquad \mathrm{word}(a,\,a{+}1) = \text{the empty word}$$
+```math
+\mathrm{word}(a,b) = \texttt{(}\,\mathrm{word}(a,c)\,\texttt{)}\,\mathrm{word}(c,b), \qquad \mathrm{word}(a,\,a{+}1) = \text{the empty word}
+```
 
 One pair of brackets for that triangle, round the left piece's word, then the right piece's word; a plain side carries nothing.
 
@@ -56,15 +62,15 @@ The third recipe needs no formula: a seat opens when its partner sits further ro
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the size: bracket pairs, forks, triangles | 4 | all counts climb |
-| $\mathrm{Cat}(n)$ | the Catalan number of that size | 14 | — |
-| $D_n$ | bracket words of n pairs, or paths of 2n steps that never dip | 14 | — |
-| $T_n$ | plane binary trees with n forks | 14 | — |
-| $G_n$ | cuttings of a polygon of n + 2 corners into triangles by braces that never cross | 14 | — |
-| $H_n$ | handshakes among 2n seats, none crossing | 14 | — |
-| $P$, $Q$ | the word inside the first pair, and the word after it | ((())) and empty | — |
-| $a$, $b$ | the ends of the edge being read | 0 and 5 | — |
-| $c$ | the apex on that edge | 1, 2, 3 or 4 | — |
+| $`n`$ | the size: bracket pairs, forks, triangles | 4 | all counts climb |
+| $`\mathrm{Cat}(n)`$ | the Catalan number of that size | 14 | — |
+| $`D_n`$ | bracket words of n pairs, or paths of 2n steps that never dip | 14 | — |
+| $`T_n`$ | plane binary trees with n forks | 14 | — |
+| $`G_n`$ | cuttings of a polygon of n + 2 corners into triangles by braces that never cross | 14 | — |
+| $`H_n`$ | handshakes among 2n seats, none crossing | 14 | — |
+| $`P`$, $`Q`$ | the word inside the first pair, and the word after it | ((())) and empty | — |
+| $`a`$, $`b`$ | the ends of the edge being read | 0 and 5 | — |
+| $`c`$ | the apex on that edge | 1, 2, 3 or 4 | — |
 
 ### When it holds
 
@@ -96,7 +102,7 @@ Take corner 0 to corner 5 as the base edge. Exactly one triangle stands on it; i
 <details>
 <summary>Detailed proof: the polygon recipe runs both ways</summary>
 
-**Forward.** A piece runs from corner $a$ to corner $b$ along the rim. If $b$ is $a + 1$ its word is empty; otherwise the base triangle's apex $c$ splits it into two pieces with fewer corners, so the recipe ends. A piece of k corners gives k − 2 pairs, so the hexagon gives 4.
+**Forward.** A piece runs from corner $`a`$ to corner $`b`$ along the rim. If $`b`$ is $`a + 1`$ its word is empty; otherwise the base triangle's apex $`c`$ splits it into two pieces with fewer corners, so the recipe ends. A piece of k corners gives k − 2 pairs, so the hexagon gives 4.
 
 **Backward.** A word of 4 pairs splits at the first bracket's partner into an inside word of i pairs and one of 3 − i after. Put the apex at corner i + 1, draw the two braces where they are not already sides, repeat inside each piece. No brace crosses another, each lying inside a piece no earlier brace enters.
 

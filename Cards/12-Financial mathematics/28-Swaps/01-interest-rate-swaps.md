@@ -40,49 +40,57 @@ The bending line is the forward rate for each year: the rate today's curve alrea
 
 Notation first, in words.
 
-- The payment years are counted by $i$, from 1 to $n$, and $n = 5$ here.
-- Year $i$ ends on the date $T_i$; the start of the first year is today.
-- Today's price of one dollar paid on $T_i$ is the **discount factor** $D_i$, short for $D(T_i)$, read off the bootstrapped curve ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)). A dollar today costs a dollar, so $D_0 = 1$.
-- The **year fraction** $\alpha_i$ is how much of a year period $i$ counts as; every period here is a full year, so each $\alpha_i$ is 1.
-- The notional is $N$ and the fixed rate is $K$.
-- The **forward rate** $F_i$ is the rate for year $i$ that the curve already contains.
+- The payment years are counted by $`i`$, from 1 to $`n`$, and $`n = 5`$ here.
+- Year $`i`$ ends on the date $`T_i`$; the start of the first year is today.
+- Today's price of one dollar paid on $`T_i`$ is the **discount factor** $`D_i`$, short for $`D(T_i)`$, read off the bootstrapped curve ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)). A dollar today costs a dollar, so $`D_0 = 1`$.
+- The **year fraction** $`\alpha_i`$ is how much of a year period $`i`$ counts as; every period here is a full year, so each $`\alpha_i`$ is 1.
+- The notional is $`N`$ and the fixed rate is $`K`$.
+- The **forward rate** $`F_i`$ is the rate for year $`i`$ that the curve already contains.
 
 Every sign is for Linden's side, the side that pays fixed, called the **payer**.
 
-$$F_i \;=\; \frac{1}{\alpha_i}\left(\frac{D_{i-1}}{D_i} - 1\right)$$
+```math
+F_i \;=\; \frac{1}{\alpha_i}\left(\frac{D_{i-1}}{D_i} - 1\right)
+```
 
-**Read it aloud:** a dollar parked from the start of year $i$ to its end grows by the ratio of the two discount factors, and the forward rate is that growth stated per year.
+**Read it aloud:** a dollar parked from the start of year $`i`$ to its end grows by the ratio of the two discount factors, and the forward rate is that growth stated per year.
 
 The swap as a strip of forwards:
 
-$$V \;=\; \sum_{i=1}^{n} N\,\alpha_i\,\bigl(F_i - K\bigr)\,D_i$$
+```math
+V \;=\; \sum_{i=1}^{n} N\,\alpha_i\,\bigl(F_i - K\bigr)\,D_i
+```
 
 **Read it aloud:** each year, the gap between the forward rate and the fixed rate, turned into dollars on the notional, shrunk to today, and added up.
 
 The swap as two bonds:
 
-$$V \;=\; B_{\text{flt}} - B_{\text{fix}}, \qquad B_{\text{flt}} = N, \qquad B_{\text{fix}} = \sum_{i=1}^{n} N\,\alpha_i\,K\,D_i \;+\; N\,D_n$$
+```math
+V \;=\; B_{\text{flt}} - B_{\text{fix}}, \qquad B_{\text{flt}} = N, \qquad B_{\text{fix}} = \sum_{i=1}^{n} N\,\alpha_i\,K\,D_i \;+\; N\,D_n
+```
 
 **Read it aloud:** hold a floating-rate note worth its face (its **par** value), owe a bond paying the fixed coupon with the notional repaid at the end, and the swap is the difference.
 
 The theorem is that these two formulas always give the same number. The bridge between them is one identity, the **telescoping** of the floating leg: a sum where each term cancels part of the next.
 
-$$\sum_{i=1}^{n} N\,\alpha_i\,F_i\,D_i \;=\; N\,\bigl(1 - D_n\bigr)$$
+```math
+\sum_{i=1}^{n} N\,\alpha_i\,F_i\,D_i \;=\; N\,\bigl(1 - D_n\bigr)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | the notional: the amount the rates are applied to, never exchanged | 10,000,000.00 dollars | every dollar figure scales with it |
-| $K$ | the fixed rate written into the swap | 4.50 percent | the payer's swap loses value |
-| $n$ | the number of payments left | 5 | more years of the gap |
-| $i$ | which year's payment | 1 to 5 | — |
-| $T_i$, $T_n$ | the date year $i$ ends and its payment is made | 1 to 5 years from today | — |
-| $\alpha_i$ | the year fraction of period $i$ | 1 | each payment is bigger |
-| $D_i$, $D(T)$, $D_0$ | the discount factor: today's price of one dollar paid on that date | 0.79621728 at five years | the fixed bond gains while the note stays at par, so the payer's swap loses |
-| $F_i$ | the forward rate for year $i$, from two neighbouring discount factors | 4.2000 to 4.8719 percent | the payer receives more, so the swap gains |
-| $L_i$, $L_n$ | the fixing: the floating rate actually read at the start of year $i$ | known today for year 1 only | pays more that year, with no effect on today's value |
-| $V$ | the swap's value today to the payer | 65,736.36 dollars | — |
-| $B_{\text{flt}}$, $B_{\text{fix}}$ | the floating-rate note and the fixed-coupon bond, both repaying $N$ at the end | 10,000,000.00 and 9,934,263.64 dollars | — |
-| $A$ | the annuity: the sum of $\alpha_i D_i$, what one unit of coupon a year costs today | 4.382424 | — |
+| $`N`$ | the notional: the amount the rates are applied to, never exchanged | 10,000,000.00 dollars | every dollar figure scales with it |
+| $`K`$ | the fixed rate written into the swap | 4.50 percent | the payer's swap loses value |
+| $`n`$ | the number of payments left | 5 | more years of the gap |
+| $`i`$ | which year's payment | 1 to 5 | — |
+| $`T_i`$, $`T_n`$ | the date year $`i`$ ends and its payment is made | 1 to 5 years from today | — |
+| $`\alpha_i`$ | the year fraction of period $`i`$ | 1 | each payment is bigger |
+| $`D_i`$, $`D(T)`$, $`D_0`$ | the discount factor: today's price of one dollar paid on that date | 0.79621728 at five years | the fixed bond gains while the note stays at par, so the payer's swap loses |
+| $`F_i`$ | the forward rate for year $`i`$, from two neighbouring discount factors | 4.2000 to 4.8719 percent | the payer receives more, so the swap gains |
+| $`L_i`$, $`L_n`$ | the fixing: the floating rate actually read at the start of year $`i`$ | known today for year 1 only | pays more that year, with no effect on today's value |
+| $`V`$ | the swap's value today to the payer | 65,736.36 dollars | — |
+| $`B_{\text{flt}}`$, $`B_{\text{fix}}`$ | the floating-rate note and the fixed-coupon bond, both repaying $`N`$ at the end | 10,000,000.00 and 9,934,263.64 dollars | — |
+| $`A`$ | the annuity: the sum of $`\alpha_i D_i`$, what one unit of coupon a year costs today | 4.382424 | — |
 
 **Conventions verified 27 Sep 2026.** This card fixes every year fraction at 1 and reads each floating rate at the start of its year, paid at the end. The dollar market's floating leg now references SOFR, an overnight rate published each business day by the Federal Reserve Bank of New York, compounded over each period and known only at the period's end ([Money markets](../02-Curves/03-money-market-instruments-and-sofr.md)). The telescoping below survives that change: compounded overnight rates still grow a dollar from one payment date to the next by the ratio of the two discount factors.
 
@@ -104,42 +112,44 @@ The floating payments depend on rates that will be read in the years ahead. That
 
 ### Step 1: one floating payment is worth two discount factors apart
 
-Take the payment for year $i$: $N\,\alpha_i\,L_i$, paid at $T_i$, where $L_i$ is read at $T_{i-1}$.
+Take the payment for year $`i`$: $`N\,\alpha_i\,L_i`$, paid at $`T_i`$, where $`L_i`$ is read at $`T_{i-1}`$.
 
-Copy it like this. Hold $N$ dollars at $T_{i-1}$. Lend them for the year at whatever rate $L_i$ then turns out to be. At $T_i$ they come back as $N(1 + \alpha_i L_i)$. Keep the interest, $N\alpha_i L_i$, which is the payment. Hand back the $N$.
+Copy it like this. Hold $`N`$ dollars at $`T_{i-1}`$. Lend them for the year at whatever rate $`L_i`$ then turns out to be. At $`T_i`$ they come back as $`N(1 + \alpha_i L_i)`$. Keep the interest, $`N\alpha_i L_i`$, which is the payment. Hand back the $`N`$.
 
-That plan needs $N$ dollars at $T_{i-1}$, which costs $N D_{i-1}$ today, and gives up $N$ dollars at $T_i$, which is worth $N D_i$ today. So the payment is worth $N(D_{i-1} - D_i)$ today, whatever the rate turns out to be. By the definition of the forward rate, that is exactly $N\,\alpha_i\,F_i\,D_i$: the payment priced as if the rate were the forward rate.
+That plan needs $`N`$ dollars at $`T_{i-1}`$, which costs $`N D_{i-1}`$ today, and gives up $`N`$ dollars at $`T_i`$, which is worth $`N D_i`$ today. So the payment is worth $`N(D_{i-1} - D_i)`$ today, whatever the rate turns out to be. By the definition of the forward rate, that is exactly $`N\,\alpha_i\,F_i\,D_i`$: the payment priced as if the rate were the forward rate.
 
 ### Step 2: the floating leg telescopes
 
 Add the five payments:
 
-$$N(D_0 - D_1) + N(D_1 - D_2) + N(D_2 - D_3) + N(D_3 - D_4) + N(D_4 - D_5) \;=\; N(1 - D_5)$$
+```math
+N(D_0 - D_1) + N(D_1 - D_2) + N(D_2 - D_3) + N(D_3 - D_4) + N(D_4 - D_5) \;=\; N(1 - D_5)
+```
 
 Every middle discount factor appears once with a plus and once with a minus. Only the first and the last survive. The floating leg is worth 10,000,000.00 times one minus 0.79621728: **2,037,827.18 dollars**. The code adds the five forward-rate payments one by one and lands on the same figure to the cent.
 
 ### Step 3: add the notional, and the floating leg becomes a note worth par
 
-Now attach a repayment of $N$ at $T_n$ to the floating leg. That payment is worth $N D_n$ today. The floating leg plus the repayment is a **floating-rate note**: a bond whose coupon is the floating rate, repaying its face at the end. Its value is $N(1 - D_n) + N D_n = N$. Exactly the face, 10,000,000.00 dollars, on a reset date.
+Now attach a repayment of $`N`$ at $`T_n`$ to the floating leg. That payment is worth $`N D_n`$ today. The floating leg plus the repayment is a **floating-rate note**: a bond whose coupon is the floating rate, repaying its face at the end. Its value is $`N(1 - D_n) + N D_n = N`$. Exactly the face, 10,000,000.00 dollars, on a reset date.
 
 The same repayment attached to the fixed leg makes an ordinary bond: five coupons of 450,000.00 dollars and the notional at the end. It is worth 9,934,263.64 dollars.
 
-A repayment of $N$ added to both legs cancels in the swap. So the swap is the note less the bond: 10,000,000.00 minus 9,934,263.64, which is 65,736.36 dollars. The two views are the same sum with the notional added to both sides.
+A repayment of $`N`$ added to both legs cancels in the swap. So the swap is the note less the bond: 10,000,000.00 minus 9,934,263.64, which is 65,736.36 dollars. The two views are the same sum with the notional added to both sides.
 
 <details>
 <summary>Detailed proof: the note is worth par at every reset, whatever rates do</summary>
 
-Work backwards from the last reset, $T_{n-1}$. There the rate $L_n$ is read, and the note will pay $N(1 + \alpha_n L_n)$ at $T_n$. Discounted over that one period at that same rate, it is worth $N(1 + \alpha_n L_n) / (1 + \alpha_n L_n) = N$.
+Work backwards from the last reset, $`T_{n-1}`$. There the rate $`L_n`$ is read, and the note will pay $`N(1 + \alpha_n L_n)`$ at $`T_n`$. Discounted over that one period at that same rate, it is worth $`N(1 + \alpha_n L_n) / (1 + \alpha_n L_n) = N`$.
 
-Suppose the note is worth $N$, just after its payment, on the reset date $T_i$, in every state of the world. Step back to $T_{i-1}$, where $L_i$ is read. At $T_i$ the holder receives the coupon $N\alpha_i L_i$ and keeps a note worth $N$: a total of $N(1 + \alpha_i L_i)$, the same in every state. Discounting a certain amount over one period at the rate for that period gives $N$ again.
+Suppose the note is worth $`N`$, just after its payment, on the reset date $`T_i`$, in every state of the world. Step back to $`T_{i-1}`$, where $`L_i`$ is read. At $`T_i`$ the holder receives the coupon $`N\alpha_i L_i`$ and keeps a note worth $`N`$: a total of $`N(1 + \alpha_i L_i)`$, the same in every state. Discounting a certain amount over one period at the rate for that period gives $`N`$ again.
 
-By induction the note is worth $N$ on every reset date, in every state, and so today. No step used a model of how rates move: only that each coupon is paid at the rate that discounts its own period. Step 1 reaches the same total by pricing each payment separately; this proof reaches it by collapsing the payments from the end. The code runs both.
+By induction the note is worth $`N`$ on every reset date, in every state, and so today. No step used a model of how rates move: only that each coupon is paid at the rate that discounts its own period. Step 1 reaches the same total by pricing each payment separately; this proof reaches it by collapsing the payments from the end. The code runs both.
 
 </details>
 
 ### Step 4: the forwards give the same answer term by term
 
-Road two needs no bonds. Each year the payer receives $N\alpha_i F_i$ and pays $N\alpha_i K$ in forward terms, a net of $N\alpha_i(F_i - K)$, worth that times $D_i$ today. Year one costs Linden 30,000.00 dollars, worth 28,790.79 today. Years two to five pay Linden. The sum is 65,736.36 dollars. Both roads agree because Step 2 showed the forward-rate floating leg equals $N(1 - D_n)$, and Step 3 showed that is the note less the repayment.
+Road two needs no bonds. Each year the payer receives $`N\alpha_i F_i`$ and pays $`N\alpha_i K`$ in forward terms, a net of $`N\alpha_i(F_i - K)`$, worth that times $`D_i`$ today. Year one costs Linden 30,000.00 dollars, worth 28,790.79 today. Years two to five pay Linden. The sum is 65,736.36 dollars. Both roads agree because Step 2 showed the forward-rate floating leg equals $`N(1 - D_n)`$, and Step 3 showed that is the note less the repayment.
 
 ### Step 5: a tree of random rates changes nothing
 
@@ -160,22 +170,22 @@ A shortcut runs through the **par swap rate**, the fixed rate that makes a new s
 
 ## Worked numbers, by hand
 
-The curve is the five annual discount factors bootstrapped on [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md). The swap: $N$ = 10,000,000.00 dollars, $K$ = 4.50 percent, five annual payments, each $\alpha_i$ = 1.
+The curve is the five annual discount factors bootstrapped on [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md). The swap: $`N`$ = 10,000,000.00 dollars, $`K`$ = 4.50 percent, five annual payments, each $`\alpha_i`$ = 1.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| year 1 forward | $1 / 0.95969290 - 1$ | 4.2000 percent |
-| year 2 forward | $0.95969290 / 0.91740758 - 1$ | 4.6092 percent |
+| year 1 forward | $`1 / 0.95969290 - 1`$ | 4.2000 percent |
+| year 2 forward | $`0.95969290 / 0.91740758 - 1`$ | 4.6092 percent |
 | years 3, 4, 5 forwards | the same ratio, one year on each time | 4.8719, 4.8509, 4.7851 percent |
-| year 1 net, today | $10{,}000{,}000 \times (0.042 - 0.045) \times 0.95969290$ | −28,790.79 |
-| years 2 to 5 net, today | the same, with $F_i$ and $D_i$ | 10,019.78; 32,530.45; 29,275.03; 22,701.88 |
+| year 1 net, today | $`10{,}000{,}000 \times (0.042 - 0.045) \times 0.95969290`$ | −28,790.79 |
+| years 2 to 5 net, today | the same, with $`F_i`$ and $`D_i`$ | 10,019.78; 32,530.45; 29,275.03; 22,701.88 |
 | **road two: strip of forwards** | the five added, before rounding | **65,736.36** |
-| annuity | $0.95969290 + 0.91740758 + 0.87478903 + 0.83431725 + 0.79621728$ | 4.38242404 |
-| fixed coupons, today | $450{,}000 \times 4.38242404$ | 1,972,090.82 |
-| fixed bond's principal, today | $10{,}000{,}000 \times 0.79621728$ | 7,962,172.82 |
-| fixed bond | $1{,}972{,}090.82 + 7{,}962{,}172.82$ | 9,934,263.64 |
+| annuity | $`0.95969290 + 0.91740758 + 0.87478903 + 0.83431725 + 0.79621728`$ | 4.38242404 |
+| fixed coupons, today | $`450{,}000 \times 4.38242404`$ | 1,972,090.82 |
+| fixed bond's principal, today | $`10{,}000{,}000 \times 0.79621728`$ | 7,962,172.82 |
+| fixed bond | $`1{,}972{,}090.82 + 7{,}962{,}172.82`$ | 9,934,263.64 |
 | floating note | par on a reset date | 10,000,000.00 |
-| **road one: note less bond** | $10{,}000{,}000.00 - 9{,}934{,}263.64$ | **65,736.36** |
+| **road one: note less bond** | $`10{,}000{,}000.00 - 9{,}934{,}263.64`$ | **65,736.36** |
 
 Linden's swap is an asset worth 65,736.36 dollars: that is what a dealer should pay Linden to take it over this morning, and what Linden's accounts carry it at.
 
@@ -212,7 +222,7 @@ Every number in the table is printed by both checks.
 | Convexity (gamma) | the down move exceeds the up move by | 2.44, slightly against the payer |
 | Volatility (vega) | tree volatility from 1 to 2 percent | 0.00 |
 
-The payer gains as rates rise, almost linearly, and volatility is worth nothing. Why the DV01 differs from the quick estimate $N \times A \times 0.0001$ = 4,382.42, and how to hedge it, is [Swap DV01](03-swap-dv01-and-hedging.md).
+The payer gains as rates rise, almost linearly, and volatility is worth nothing. Why the DV01 differs from the quick estimate $`N \times A \times 0.0001`$ = 4,382.42, and how to hedge it, is [Swap DV01](03-swap-dv01-and-hedging.md).
 
 ---
 
@@ -583,9 +593,9 @@ The two bond roads and the forward strip agree to the cent, as the algebra says 
 
 Lean proves the card's three main facts, for any number of payments and any rates that avoid dividing by zero.
 
-- Take any curve with $D_0 = 1$, so today is a reset date. Then the strip of forwards equals the floating-rate note at par less the fixed-coupon bond.
-- Take the same curve. Then the floating payments at their forward rates add up to $N(1 - D_n)$, the notional less its discounted repayment.
-- Suppose the note is worth $N$ at its end, and each period's payment is discounted at that period's rate $L_i$. Then the note is worth $N$ on every reset date, whatever path the rates take.
+- Take any curve with $`D_0 = 1`$, so today is a reset date. Then the strip of forwards equals the floating-rate note at par less the fixed-coupon bond.
+- Take the same curve. Then the floating payments at their forward rates add up to $`N(1 - D_n)`$, the notional less its discounted repayment.
+- Suppose the note is worth $`N`$ at its end, and each period's payment is discounted at that period's rate $`L_i`$. Then the note is worth $`N`$ on every reset date, whatever path the rates take.
 
 The curve itself, the rate tree, the sensitivities and every dollar figure are left to the Python and Rust checks.
 
@@ -711,7 +721,7 @@ theorem floating_rate_note_par_at_every_reset (n : ℕ) (N : ℝ) (α L V : ℕ 
 > **Adding the notional to one leg only.** The notional is never paid. Adding it is legal only as a trick applied to both legs at once, which turns the floating leg into a par note and the fixed leg into a bond. Treat the floating leg as a note worth 10,000,000.00 dollars but leave the fixed leg as bare coupons, and Linden's swap comes out at 8,027,909.18 dollars: more than a hundred times its value.
 >
 > Smaller traps:
-> - **Calling the floating leg unknowable.** Its payments are unknown; its value today is not. It is $N(1 - D_n)$, 2,037,827.18 dollars here, fixed by the curve alone.
+> - **Calling the floating leg unknowable.** Its payments are unknown; its value today is not. It is $`N(1 - D_n)`$, 2,037,827.18 dollars here, fixed by the curve alone.
 > - **Using par swap quotes as one-year rates.** The five-year quote averages five years. Used as each year's floating rate, the quotes give −11,635.85 dollars, the wrong sign.
 > - **Par only on a reset date.** Halfway through a year the coming payment is already fixed, and the note is not worth par. Value the fixed payment and the notional from the next payment date instead.
 > - **Losing track of the side.** The payer of fixed gains when rates rise; the receiver loses the same amount, −65,736.36 dollars here. State the side with every value.

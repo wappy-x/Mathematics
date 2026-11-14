@@ -28,29 +28,33 @@ Schematic: the lane lengths are not to scale, and they do not matter. Only who i
 
 ## The formula
 
-$$E_a[\tau_b] + E_b[\tau_a] = 2\,m\,R_{\text{eff}}(a, b)$$
+```math
+E_a[\tau_b] + E_b[\tau_a] = 2\,m\,R_{\text{eff}}(a, b)
+```
 
 **Read it aloud:** the average number of trips to go from station a to station b and back equals twice the number of links times the effective resistance between a and b.
 
-The second half of the card's result says where each leg comes from. Feed $d(x)$ amps into every station $x$, let all $2m$ amps leave at $b$, and hold $b$ at 0 volts. Then the voltage at each station is its hitting time:
+The second half of the card's result says where each leg comes from. Feed $`d(x)`$ amps into every station $`x`$, let all $`2m`$ amps leave at $`b`$, and hold $`b`$ at 0 volts. Then the voltage at each station is its hitting time:
 
-$$v(x) = E_x[\tau_b].$$
+```math
+v(x) = E_x[\tau_b].
+```
 
 **Read it aloud:** with each station fed as many amps as it has links, and the target grounded, the voltage at a station is the average number of trips from there to the target.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$, $b$ | the start station and the target station | Market, Docks | — |
-| $x$, $y$ | any station, and one of its neighbours | — | — |
-| $n$ | the number of stations | 6 | nothing directly; $m$ is what counts |
-| $m$ | the number of links (lanes), each a 1-ohm resistor | 7 | commute time rises, in proportion |
-| $d(x)$ | the **degree** of $x$: how many links meet there | Park 3, Market 2 | — |
-| $\tau_b$ | "tau b": the number of trips until the bike first reaches $b$, a random count | — | — |
-| $E_a[\tau_b]$ | the **hitting time**: the average of $\tau_b$ for a bike that starts at $a$ | 6 trips | — |
-| $R_{\text{eff}}(a, b)$ | the **effective resistance**: the single resistor that could replace the whole network between $a$ and $b$, in ohms | 15/14 ≈ 1.0714 Ω | commute time rises, in proportion |
-| $E_a[\tau_b] + E_b[\tau_a]$ | the **commute time**: out and back | 6 + 9 = 15 trips | — |
-| $v(x)$, $w(x)$ | the voltage at station $x$ in the circuit fed $d(x)$ amps everywhere, grounded at $b$ (for $v$) or at $a$ (for $w$) | Market 6 V, Docks 9 V | — |
-| $s(x)$ | the current fed in at $x$, current taken out counting as negative; $s_1$ and $s_2$ in the two runs of Step 2 | Park 3 A | — |
+| $`a`$, $`b`$ | the start station and the target station | Market, Docks | — |
+| $`x`$, $`y`$ | any station, and one of its neighbours | — | — |
+| $`n`$ | the number of stations | 6 | nothing directly; $`m`$ is what counts |
+| $`m`$ | the number of links (lanes), each a 1-ohm resistor | 7 | commute time rises, in proportion |
+| $`d(x)`$ | the **degree** of $`x`$: how many links meet there | Park 3, Market 2 | — |
+| $`\tau_b`$ | "tau b": the number of trips until the bike first reaches $`b`$, a random count | — | — |
+| $`E_a[\tau_b]`$ | the **hitting time**: the average of $`\tau_b`$ for a bike that starts at $`a`$ | 6 trips | — |
+| $`R_{\text{eff}}(a, b)`$ | the **effective resistance**: the single resistor that could replace the whole network between $`a`$ and $`b`$, in ohms | 15/14 ≈ 1.0714 Ω | commute time rises, in proportion |
+| $`E_a[\tau_b] + E_b[\tau_a]`$ | the **commute time**: out and back | 6 + 9 = 15 trips | — |
+| $`v(x)`$, $`w(x)`$ | the voltage at station $`x`$ in the circuit fed $`d(x)`$ amps everywhere, grounded at $`b`$ (for $`v`$) or at $`a`$ (for $`w`$) | Market 6 V, Docks 9 V | — |
+| $`s(x)`$ | the current fed in at $`x`$, current taken out counting as negative; $`s_1`$ and $`s_2`$ in the two runs of Step 2 | Park 3 A | — |
 
 Effective resistance is the measure of how well connected two stations are: many short, separate routes between them make it small, one long thin route makes it large. That is exactly what makes a bike find its way across quickly or slowly.
 
@@ -59,7 +63,7 @@ Effective resistance is the measure of how well connected two stations are: many
 - **Every lane can be ridden both ways, and a rider picks among the lanes at a station with equal chances.** Make the Market–Park lane one-way (Market to Park only) and the round trip becomes 31.5 trips, while the circuit still says 15. The identity needs a walk that looks the same run backwards; one-way lanes break that.
 - **The next rider's choice depends only on where the bike is now.** If riders tend to bring a bike back where it came from, the walk has memory. The first-step equation behind the proof fails, and so does the answer.
 - **The network is connected.** If Docks cannot be reached, the hitting time is infinite and so is the resistance; the formula then reads infinity equals infinity, which says nothing useful.
-- **All lanes count the same.** If riders favour some lanes, give each lane a weight in proportion to how often it is picked, use a resistor of one over that weight in ohms, and replace $m$ by the total weight. Using plain $m$ on a weighted network gives the wrong number.
+- **All lanes count the same.** If riders favour some lanes, give each lane a weight in proportion to how often it is picked, use a resistor of one over that weight in ohms, and replace $`m`$ by the total weight. Using plain $`m`$ on a weighted network gives the wrong number.
 
 ---
 
@@ -73,36 +77,42 @@ The two rules have the same shape: "the value here is set by the average of the 
 
 ### Step 1: hitting times are voltages
 
-With every link a 1-ohm resistor, the current from $x$ to a neighbour $y$ is $v(x) - v(y)$ (Ohm's law: current = voltage drop ÷ resistance). Feed $d(x)$ amps into every station $x$. The current law at each $x$ other than $b$ says that what is fed in flows out along the links:
+With every link a 1-ohm resistor, the current from $`x`$ to a neighbour $`y`$ is $`v(x) - v(y)`$ (Ohm's law: current = voltage drop ÷ resistance). Feed $`d(x)`$ amps into every station $`x`$. The current law at each $`x`$ other than $`b`$ says that what is fed in flows out along the links:
 
-$$\sum_{y \text{ next to } x} \big(v(x) - v(y)\big) = d(x).$$
+```math
+\sum_{y \text{ next to } x} \big(v(x) - v(y)\big) = d(x).
+```
 
-There are $d(x)$ terms on the left. Divide both sides by $d(x)$ and rearrange:
+There are $`d(x)`$ terms on the left. Divide both sides by $`d(x)`$ and rearrange:
 
-$$v(x) = 1 + \frac{1}{d(x)} \sum_{y \text{ next to } x} v(y).$$
+```math
+v(x) = 1 + \frac{1}{d(x)} \sum_{y \text{ next to } x} v(y).
+```
 
-That is first-step analysis word for word: one trip, plus the average over the $d(x)$ equally likely next stations. At the target, $v(b) = 0$ because $b$ is grounded, and the hitting time from $b$ to itself is also 0. The Absorption card shows these equations have exactly one solution when the target can be reached. So $v(x) = E_x[\tau_b]$ at every station.
+That is first-step analysis word for word: one trip, plus the average over the $`d(x)`$ equally likely next stations. At the target, $`v(b) = 0`$ because $`b`$ is grounded, and the hitting time from $`b`$ to itself is also 0. The Absorption card shows these equations have exactly one solution when the target can be reached. So $`v(x) = E_x[\tau_b]`$ at every station.
 
-All the current fed in, $d(x)$ at every station, adds up to $2m$, since each link is counted once at each end. It all leaves at $b$.
+All the current fed in, $`d(x)`$ at every station, adds up to $`2m`$, since each link is counted once at each end. It all leaves at $`b`$.
 
 ### Step 2: the round trip is one current from a to b
 
-Run the same circuit twice. In the first run, all the current leaves at $b$; the voltages are $v(x) = E_x[\tau_b]$. In the second, all of it leaves at $a$; the voltages are $w(x) = E_x[\tau_a]$.
+Run the same circuit twice. In the first run, all the current leaves at $`b`$; the voltages are $`v(x) = E_x[\tau_b]`$. In the second, all of it leaves at $`a`$; the voltages are $`w(x) = E_x[\tau_a]`$.
 
-Circuits are linear: subtract one run from the other and the result is again a valid circuit, carrying the difference of the currents. The $d(x)$ amps fed in at each station cancel. What is left is $2m$ amps going in at $a$ and $2m$ amps coming out at $b$. By the definition of effective resistance and Ohm's law, the voltage between $a$ and $b$ in that circuit is $2m \times R_{\text{eff}}(a, b)$.
+Circuits are linear: subtract one run from the other and the result is again a valid circuit, carrying the difference of the currents. The $`d(x)`$ amps fed in at each station cancel. What is left is $`2m`$ amps going in at $`a`$ and $`2m`$ amps coming out at $`b`$. By the definition of effective resistance and Ohm's law, the voltage between $`a`$ and $`b`$ in that circuit is $`2m \times R_{\text{eff}}(a, b)`$.
 
-Read the same voltage off the two runs: it is $\big(v(a) - w(a)\big) - \big(v(b) - w(b)\big)$. Here $w(a) = 0$ and $v(b) = 0$, because each is a hitting time from a station to itself. So the voltage is $v(a) + w(b) = E_a[\tau_b] + E_b[\tau_a]$, and
+Read the same voltage off the two runs: it is $`\big(v(a) - w(a)\big) - \big(v(b) - w(b)\big)`$. Here $`w(a) = 0`$ and $`v(b) = 0`$, because each is a hitting time from a station to itself. So the voltage is $`v(a) + w(b) = E_a[\tau_b] + E_b[\tau_a]`$, and
 
-$$E_a[\tau_b] + E_b[\tau_a] = 2m\,R_{\text{eff}}(a, b).$$
+```math
+E_a[\tau_b] + E_b[\tau_a] = 2m\,R_{\text{eff}}(a, b).
+```
 
 <details>
 <summary>The subtraction, station by station</summary>
 
-Write $s_1(x)$ for the current fed in at $x$ in the first run and $s_2(x)$ in the second. In the first run, $s_1(x) = d(x)$ everywhere except $b$, where $s_1(b) = d(b) - 2m$. In the second, $s_2(x) = d(x)$ everywhere except $a$, where $s_2(a) = d(a) - 2m$.
+Write $`s_1(x)`$ for the current fed in at $`x`$ in the first run and $`s_2(x)`$ in the second. In the first run, $`s_1(x) = d(x)`$ everywhere except $`b`$, where $`s_1(b) = d(b) - 2m`$. In the second, $`s_2(x) = d(x)`$ everywhere except $`a`$, where $`s_2(a) = d(a) - 2m`$.
 
-The difference $s_1 - s_2$ is 0 at every station except two: at $a$ it is $d(a) - (d(a) - 2m) = 2m$, and at $b$ it is $(d(b) - 2m) - d(b) = -2m$.
+The difference $`s_1 - s_2`$ is 0 at every station except two: at $`a`$ it is $`d(a) - (d(a) - 2m) = 2m`$, and at $`b`$ it is $`(d(b) - 2m) - d(b) = -2m`$.
 
-The current law is a set of linear equations in the voltages: the sum over neighbours $y$ of the drops $v(x) - v(y)$ equals $s(x)$. Subtract the second run's equations from the first's, and the differences $v(x) - w(x)$ solve the same law with currents $s_1 - s_2$. A circuit carrying $2m$ amps from $a$ to $b$ has a voltage drop of $2m R_{\text{eff}}(a, b)$, by the meaning of $R_{\text{eff}}$: the one resistor that passes the same current for the same drop.
+The current law is a set of linear equations in the voltages: the sum over neighbours $`y`$ of the drops $`v(x) - v(y)`$ equals $`s(x)`$. Subtract the second run's equations from the first's, and the differences $`v(x) - w(x)`$ solve the same law with currents $`s_1 - s_2`$. A circuit carrying $`2m`$ amps from $`a`$ to $`b`$ has a voltage drop of $`2m R_{\text{eff}}(a, b)`$, by the meaning of $`R_{\text{eff}}`$: the one resistor that passes the same current for the same drop.
 
 </details>
 
@@ -110,8 +120,8 @@ The current law is a set of linear equations in the voltages: the sum over neigh
 
 The circuit view brings the electrician's rules with it. Resistors end to end (**in series**) add. Two side by side (**in parallel**) combine as their product over their sum, smaller than either. And adding a lane never raises the resistance, because the current gains a route and loses none. So:
 
-- The resistance is at most the length of the shortest route, here 2 lanes. The commute time is therefore at most $2m$ times the shortest route: $14 \times 2 = 28$ trips here, against the true 15.
-- A new lane can still slow the bike down, because it raises $m$. A dead-end station hung off Park leaves the resistance at 15/14 and pushes the round trip from 15 to 17.14 trips: the bike now wastes trips going down the dead end and back.
+- The resistance is at most the length of the shortest route, here 2 lanes. The commute time is therefore at most $`2m`$ times the shortest route: $`14 \times 2 = 28`$ trips here, against the true 15.
+- A new lane can still slow the bike down, because it raises $`m`$. A dead-end station hung off Park leaves the resistance at 15/14 and pushes the round trip from 15 to 17.14 trips: the bike now wastes trips going down the dead end and back.
 
 ---
 
@@ -121,15 +131,15 @@ Reduce the circuit between Market and Docks, then multiply.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Park to Docks: direct lane, side by side with Park–University–Docks | $1 \times 2 / (1 + 2)$ | 2/3 Ω |
-| add Market–Park, end to end | $1 + 2/3$ | 5/3 Ω |
-| lower side: Market–Library–Hospital–Docks, end to end | $1 + 1 + 1$ | 3 Ω |
-| the two sides side by side | $(5/3 \times 3)/(5/3 + 3) = 5 / (14/3)$ | 15/14 ≈ 1.0714 Ω |
-| links, doubled | $2 \times 7$ | 14 |
-| **commute time** | $14 \times 15/14$ | **15 trips** |
-| check the out leg at Market (first step, using Park 4 and Library 6 from the code) | $1 + (4 + 6)/2$ | 6 trips |
-| check the back leg at Docks (Park 7, Hospital 8, University 9) | $1 + (7 + 8 + 9)/3$ | 9 trips |
-| out plus back | $6 + 9$ | 15 trips |
+| Park to Docks: direct lane, side by side with Park–University–Docks | $`1 \times 2 / (1 + 2)`$ | 2/3 Ω |
+| add Market–Park, end to end | $`1 + 2/3`$ | 5/3 Ω |
+| lower side: Market–Library–Hospital–Docks, end to end | $`1 + 1 + 1`$ | 3 Ω |
+| the two sides side by side | $`(5/3 \times 3)/(5/3 + 3) = 5 / (14/3)`$ | 15/14 ≈ 1.0714 Ω |
+| links, doubled | $`2 \times 7`$ | 14 |
+| **commute time** | $`14 \times 15/14`$ | **15 trips** |
+| check the out leg at Market (first step, using Park 4 and Library 6 from the code) | $`1 + (4 + 6)/2`$ | 6 trips |
+| check the back leg at Docks (Park 7, Hospital 8, University 9) | $`1 + (7 + 8 + 9)/3`$ | 9 trips |
+| out plus back | $`6 + 9`$ | 15 trips |
 
 A bike leaving Market reaches the repair van at Docks after 6 rides on average, and a bike leaving Docks drifts back to Market after 9: the two legs differ, but their sum is fixed by the circuit at 15.
 
@@ -139,8 +149,8 @@ The back leg is longer because every neighbour of Docks is itself far from Marke
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $n$ stations used for $m$ links: $2 \times 6 \times 15/14$ | 12.86 trips | the formula counts lanes, not stations |
-| the 2 dropped: $7 \times 15/14$ | 7.5 trips | each lane is counted at both its ends, so the current fed in totals $2m$ |
+| $`n`$ stations used for $`m`$ links: $`2 \times 6 \times 15/14`$ | 12.86 trips | the formula counts lanes, not stations |
+| the 2 dropped: $`7 \times 15/14`$ | 7.5 trips | each lane is counted at both its ends, so the current fed in totals $`2m`$ |
 | the shortest route, 2 lanes, used as the resistance | 28 trips | that is only an upper bound; the parallel routes cut resistance to 15/14 |
 | round trip taken as twice the out leg, or twice the back leg | 12 or 18 trips | hitting times are not symmetric; only their sum is fixed |
 | a one-way lane, Market to Park only (hypothesis fails) | 31.5 trips (4.5 out, 27 back) | the walk is no longer the same run backwards; the circuit still says 15 |
@@ -153,7 +163,7 @@ The one-way lane is the instructive case. The out leg gets shorter, 4.5 trips, b
 
 The script builds the network, writes Kirchhoff's current law at every station and solves it with its own [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md) (removing one unknown at a time). It reaches the commute time by **four independent roads**:
 
-1. the circuit solved with 1 amp from Market to Docks, giving $R_{\text{eff}}$;
+1. the circuit solved with 1 amp from Market to Docks, giving $`R_{\text{eff}}`$;
 2. the series and parallel rules from the table above;
 3. the walk's own first-step equations, written with transition chances rather than resistors, solved for both legs;
 4. 20,000 simulated round trips, with riders' choices drawn from a SplitMix64 generator (a small random-number generator written out in both languages) seeded at 2026, so every run draws the same choices.
@@ -552,17 +562,17 @@ The two outputs are identical line for line, simulation included, because both u
 
 Lean proves the round-trip formula and the voltage rule on every connected network of two-way lanes, and checks the six-station numbers.
 
-- Take a connected network, every lane a 1-ohm resistor, and any two stations $a$ and $b$. Then the commute time between them is $2m R_{\text{eff}}(a, b)$.
-- Take the same network and a target $b$. Then exactly one set of numbers solves both the first-step equations and the circuit fed $d(x)$ amps everywhere, grounded at $b$.
-- Take the same network. Then the commute time is at most $2m$ times the number of lanes on the shortest route.
+- Take a connected network, every lane a 1-ohm resistor, and any two stations $`a`$ and $`b`$. Then the commute time between them is $`2m R_{\text{eff}}(a, b)`$.
+- Take the same network and a target $`b`$. Then exactly one set of numbers solves both the first-step equations and the circuit fed $`d(x)`$ amps everywhere, grounded at $`b`$.
+- Take the same network. Then the commute time is at most $`2m`$ times the number of lanes on the shortest route.
 - The network has 7 links, and degrees Market 2, Park 3, Library 2, Hospital 2, University 2, Docks 3.
 - The hitting times to Docks, Market 6, Park 4, Library 6, Hospital 4 and University 3, solve the first-step equations.
 - The hitting times to Market, Park 7, Library 5, Hospital 8, University 9 and Docks 9, solve the first-step equations.
-- Feed 1 amp in at Market and take it out at Docks. Then the current law holds with Market at 15/14 volts and Docks at 0, so $R_{\text{eff}} = 15/14$ ohm.
-- Take the series and parallel steps of the hand table. Then they give 2/3 and 15/14 ohm, and $2 \times 7 \times 15/14 = 15$ trips.
+- Feed 1 amp in at Market and take it out at Docks. Then the current law holds with Market at 15/14 volts and Docks at 0, so $`R_{\text{eff}} = 15/14`$ ohm.
+- Take the series and parallel steps of the hand table. Then they give 2/3 and 15/14 ohm, and $`2 \times 7 \times 15/14 = 15`$ trips.
 - The two legs, 6 and 9 trips, add up to 15.
 - The wrong answers come out at 90/7 (about 12.86), 7.5 and 28 trips.
-- Take a dead-end station off Park, so $m = 8$ and the resistance stays 15/14. Then the round trip is $2 \times 8 \times 15/14 = 120/7$ trips.
+- Take a dead-end station off Park, so $`m = 8`$ and the resistance stays 15/14. Then the round trip is $`2 \times 8 \times 15/14 = 120/7`$ trips.
 
 Lean starts from the first-step equations, so the simulation, the one-way lane and the added and closed lanes are left to the Python and Rust checks.
 
@@ -995,12 +1005,12 @@ end RandomWalksAndElectricalNetworks
 ## The usual mistake
 
 > [!warning]
-> **Treating the hitting time as symmetric.** The circuit gives the round trip, not each leg. Market to Docks is 6 trips and Docks to Market is 9, so halving the round trip, 7.5, is wrong both ways, and doubling a leg gives 12 or 18 instead of 15. Each leg needs its own circuit: feed $d(x)$ amps everywhere and ground the target.
+> **Treating the hitting time as symmetric.** The circuit gives the round trip, not each leg. Market to Docks is 6 trips and Docks to Market is 9, so halving the round trip, 7.5, is wrong both ways, and doubling a leg gives 12 or 18 instead of 15. Each leg needs its own circuit: feed $`d(x)`$ amps everywhere and ground the target.
 >
 > Smaller traps:
 > - **Using the shortest route as the distance.** Two lanes gives 28 trips. Parallel routes lower the resistance, and the bike uses all of them.
-> - **Counting stations instead of lanes.** $2 \times 6 \times 15/14$ gives 12.86 trips. The factor is the number of links, and in a dense network the two differ hugely.
-> - **Ignoring dead ends.** A spur station leaves the resistance untouched but raises the round trip from 15 to 17.14 trips, because $m$ counts every lane, even ones off the route.
+> - **Counting stations instead of lanes.** $`2 \times 6 \times 15/14`$ gives 12.86 trips. The factor is the number of links, and in a dense network the two differ hugely.
+> - **Ignoring dead ends.** A spur station leaves the resistance untouched but raises the round trip from 15 to 17.14 trips, because $`m`$ counts every lane, even ones off the route.
 > - **Applying it to one-way streets.** With one lane made one-way the true round trip is 31.5 trips; the circuit's 15 is wrong there.
 
 ---
@@ -1009,8 +1019,8 @@ end RandomWalksAndElectricalNetworks
 
 - **Bike-share and car-share planning.** As a first model of how bikes drift, the circuit gives how many rides until a bike reaches a depot, from one linear solve over the city's 1,200 stations instead of a long simulation.
 - **Recommendations and link prediction.** In a social network of 5,000 people, commute time serves as a distance: two people joined by many short, separate paths are close even if they are not directly linked. It is a better guide than the shortest path, for the same reason as the 28-trip trap.
-- **Testing whether a network is connected with little memory.** A random walk that keeps only its current position reaches any target in a connected network in at most $2m(n - 1)$ average steps, since the resistance is at most the length of the shortest route, and no shortest route is longer than $n - 1$ links.
-- **Visiting everything.** The time for a walk to visit every node, the cover time, is at least $m$ times the largest resistance in the network, and at most that amount times a constant times the logarithm of the number of nodes. That is the main result of the paper by Chandra and co-authors below.
+- **Testing whether a network is connected with little memory.** A random walk that keeps only its current position reaches any target in a connected network in at most $`2m(n - 1)`$ average steps, since the resistance is at most the length of the shortest route, and no shortest route is longer than $`n - 1`$ links.
+- **Visiting everything.** The time for a walk to visit every node, the cover time, is at least $`m`$ times the largest resistance in the network, and at most that amount times a constant times the logarithm of the number of nodes. That is the main result of the paper by Chandra and co-authors below.
 - **Chemistry.** The resistance between two atoms in a molecule's bond network is used as a distance between them, called the resistance distance.
 
 > **Say it back**
@@ -1024,7 +1034,7 @@ end RandomWalksAndElectricalNetworks
 - [Simple random walk](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md): the walk on a line, plus one or minus one each step. A random walk on a network is the same idea with the line replaced by lanes.
 - [Gambler's ruin](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md): the walk on a line of resistors. The fair game's expected length, chips held times chips still to win, is this card's hitting-time circuit on a path with both ends grounded.
 - [Absorption](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/06-absorption-and-first-step-analysis.md): first-step equations for hitting times, and why they have exactly one solution. Step 1 of this card is those equations written as a circuit.
-- [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): node voltages, the current law and equivalent resistance, which this card uses to compute $R_{\text{eff}}$.
+- [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): node voltages, the current law and equivalent resistance, which this card uses to compute $`R_{\text{eff}}`$.
 
 ## Where this goes next
 
@@ -1041,5 +1051,5 @@ The open question this card leaves: how long until the bike has visited every st
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Doyle, Peter G., and J. Laurie Snell. *Random Walks and Electric Networks*. Carus Mathematical Monographs 22, Mathematical Association of America, 1984. [doi:10.5948/UPO9781614440222](https://doi.org/10.5948/UPO9781614440222); the authors' free version is [arXiv:math/0001057](https://arxiv.org/abs/math/0001057). The classic account of walks as circuits: voltages as probabilities, series and parallel rules, adding a link never raises resistance.
-- Chandra, Ashok K., Prabhakar Raghavan, Walter L. Ruzzo, Roman Smolensky, and Prasoon Tiwari. "The Electrical Resistance of a Graph Captures Its Commute and Cover Times." *Computational Complexity* 6, no. 4 (1996): 312–340. [doi:10.1007/BF01270385](https://doi.org/10.1007/BF01270385). The commute-time identity $2mR_{\text{eff}}$ and the cover-time bounds.
+- Chandra, Ashok K., Prabhakar Raghavan, Walter L. Ruzzo, Roman Smolensky, and Prasoon Tiwari. "The Electrical Resistance of a Graph Captures Its Commute and Cover Times." *Computational Complexity* 6, no. 4 (1996): 312–340. [doi:10.1007/BF01270385](https://doi.org/10.1007/BF01270385). The commute-time identity $`2mR_{\text{eff}}`$ and the cover-time bounds.
 - Lyons, Russell, and Yuval Peres. *Probability on Trees and Networks*. Cambridge University Press, 2016. [doi:10.1017/9781316672815](https://doi.org/10.1017/9781316672815). Chapter 2 develops random walks and electric networks in full, including the commute-time identity and weighted links.

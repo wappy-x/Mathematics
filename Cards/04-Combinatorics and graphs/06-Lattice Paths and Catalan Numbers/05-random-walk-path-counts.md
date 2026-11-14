@@ -33,29 +33,35 @@ Odd heights are missing on purpose: ten flips cannot finish at an odd total.
 
 ## The formula
 
-Notation first, in words. $n$ is the number of flips, $h$ the height the path ends at, $u$ how many flips came up heads. C(n, k) in brackets is the count of ways to choose k things from n, read "n choose k". A Catalan number keeps the shelf's notation, Cat(m) ([Catalan numbers](03-catalan-numbers.md)).
+Notation first, in words. $`n`$ is the number of flips, $`h`$ the height the path ends at, $`u`$ how many flips came up heads. C(n, k) in brackets is the count of ways to choose k things from n, read "n choose k". A Catalan number keeps the shelf's notation, Cat(m) ([Catalan numbers](03-catalan-numbers.md)).
 
-$$P(n, h) \;=\; C\!\left(n,\ \frac{n + h}{2}\right)$$
+```math
+P(n, h) \;=\; C\!\left(n,\ \frac{n + h}{2}\right)
+```
 
 **Read it aloud:** count the paths ending at a height by choosing which flips were heads, and the height fixes how many heads that is.
 
-Set the height to zero with an even flip count $n = 2m$, and the path is back where it started:
+Set the height to zero with an even flip count $`n = 2m`$, and the path is back where it started:
 
-$$P(2m,\ 0) \;=\; C(2m,\ m)$$
+```math
+P(2m,\ 0) \;=\; C(2m,\ m)
+```
 
 Of those returns, the ones that never drop below zero and the ones that stay strictly above zero in between are two neighbouring Catalan numbers:
 
-$$\text{never below zero} = \mathrm{Cat}(m) = \frac{C(2m,\ m)}{m+1}, \qquad \text{strictly above zero} = \mathrm{Cat}(m-1)$$
+```math
+\text{never below zero} = \mathrm{Cat}(m) = \frac{C(2m,\ m)}{m+1}, \qquad \text{strictly above zero} = \mathrm{Cat}(m-1)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | flips in the path, one step each | 10 | more paths, spread wider |
-| $h$ | the height the path ends at | 0, or +2 | falls away from zero |
-| $u$ | flips that came up heads | 5 to end level, 6 for +2 | the ending height rises |
-| $m$ | half the flips, when the flip count is even | 5 | — |
-| $P(n,h)$ | paths of $n$ flips ending at $h$ | 252 at zero, 210 at +2 | — |
-| $C(n,k)$ | ways to choose k things from n | C(10, 5) = 252 | — |
-| $\mathrm{Cat}(m)$ | the m-th Catalan number | Cat(5) = 42, Cat(4) = 14 | grows, but slower |
+| $`n`$ | flips in the path, one step each | 10 | more paths, spread wider |
+| $`h`$ | the height the path ends at | 0, or +2 | falls away from zero |
+| $`u`$ | flips that came up heads | 5 to end level, 6 for +2 | the ending height rises |
+| $`m`$ | half the flips, when the flip count is even | 5 | — |
+| $`P(n,h)`$ | paths of $`n`$ flips ending at $`h`$ | 252 at zero, 210 at +2 | — |
+| $`C(n,k)`$ | ways to choose k things from n | C(10, 5) = 252 | — |
+| $`\mathrm{Cat}(m)`$ | the m-th Catalan number | Cat(5) = 42, Cat(4) = 14 | grows, but slower |
 
 ### When it holds
 
@@ -76,7 +82,9 @@ H T T H H H T H T T is the set of head positions 1, 4, 5, 6, 8. Hand back that s
 
 With u heads the tails number n − u. Each head adds one, each tail takes one away:
 
-$$h = u - (n - u) = 2u - n, \qquad u = \frac{n + h}{2}$$
+```math
+h = u - (n - u) = 2u - n, \qquad u = \frac{n + h}{2}
+```
 
 No slack in that. A ten-flip path ending at +2 had exactly six heads, so those paths are the subsets of size six: C(10, 6) = 210. Ending at zero needs five: C(10, 5) = 252. When flip count and height disagree in parity, (n + h)/2 is not whole and the count is zero — not small, none.
 
@@ -88,7 +96,9 @@ Put h = 0 into Step 1: the head count is n/2, which needs n even. Write n = 2m a
 
 Of the 252 level enders, some sink below zero and some never do. The ones staying at or above zero throughout are called Dyck paths ([Lattice paths](01-lattice-paths.md)). They are counted by the Catalan number Cat(m) — the middle entry shared among m + 1 equal parts:
 
-$$\mathrm{Cat}(m) = \frac{C(2m,\ m)}{m+1} \quad\longrightarrow\quad \frac{252}{6} = 42$$
+```math
+\mathrm{Cat}(m) = \frac{C(2m,\ m)}{m+1} \quad\longrightarrow\quad \frac{252}{6} = 42
+```
 
 The divisor is proved on [Catalan numbers](03-catalan-numbers.md). The reflection principle reaches the same 42 without it: every dipping path matches one for one with a path ending at −2 ([The reflection principle](02-reflection-principle-and-ballot-problem.md)), and those number C(10, 4) = 210, leaving 252 − 210 = 42.
 
@@ -104,7 +114,9 @@ Add the 1 back, glue the head and tail on again, and the excursion returns, so t
 
 Nothing in that argument used the number ten. Excursions of 2m flips are counted by the Dyck paths of 2m − 2, one Catalan number back:
 
-$$\mathrm{Cat}(m-1) = \frac{C(2m - 2,\ m - 1)}{m} \quad\longrightarrow\quad \frac{70}{5} = 14$$
+```math
+\mathrm{Cat}(m-1) = \frac{C(2m - 2,\ m - 1)}{m} \quad\longrightarrow\quad \frac{70}{5} = 14
+```
 
 ---
 

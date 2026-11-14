@@ -42,43 +42,49 @@ Orange, the top line: gross exposure, every trade floored on its own. Green, the
 
 ## The formula
 
-Notation first, in words. $V_i$ is the value to the bank of trade number $i$, for $i$ from 1 to $n$. A capital sigma, $\sum$, means "add up" ([Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md) covers adding signed amounts). A small plus sign raised after a number means "that number, or zero if it is negative": $x^+ = \max(x, 0)$. Writing $i \in A$ means "trade $i$ belongs to netting set $A$".
+Notation first, in words. $`V_i`$ is the value to the bank of trade number $`i`$, for $`i`$ from 1 to $`n`$. A capital sigma, $`\sum`$, means "add up" ([Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md) covers adding signed amounts). A small plus sign raised after a number means "that number, or zero if it is negative": $`x^+ = \max(x, 0)`$. Writing $`i \in A`$ means "trade $`i`$ belongs to netting set $`A`$".
 
-$$E \;=\; \sum_{\text{netting sets } A}\;\Big(\sum_{i \in A} V_i\Big)^{+}$$
+```math
+E \;=\; \sum_{\text{netting sets } A}\;\Big(\sum_{i \in A} V_i\Big)^{+}
+```
 
 **Read it aloud:** inside each netting set, add the trades' signed values; keep the total if it is positive and write zero if not; then add those kept totals across the sets.
 
-Two arrangements bracket every other. With no agreement at all, each trade is its own netting set, which gives the **gross exposure** $G$. With one agreement covering everything, there is one set, the **net exposure**:
+Two arrangements bracket every other. With no agreement at all, each trade is its own netting set, which gives the **gross exposure** $`G`$. With one agreement covering everything, there is one set, the **net exposure**:
 
-$$G = \sum_{i=1}^{n} V_i^{+}, \qquad \Big(\sum_{i=1}^{n} V_i\Big)^{+} \;\le\; E \;\le\; G .$$
+```math
+G = \sum_{i=1}^{n} V_i^{+}, \qquad \Big(\sum_{i=1}^{n} V_i\Big)^{+} \;\le\; E \;\le\; G .
+```
 
-Inside a single set, the saving has an exact size. Let $P$ be the sum of the positive values and $Q$ the sum of the sizes of the negative ones. Then
+Inside a single set, the saving has an exact size. Let $`P`$ be the sum of the positive values and $`Q`$ the sum of the sizes of the negative ones. Then
 
-$$G - E = \min(P, Q), \qquad L = (1 - R)\,E .$$
+```math
+G - E = \min(P, Q), \qquad L = (1 - R)\,E .
+```
 
-The first equation says netting cancels whichever side is smaller. The second turns exposure into money lost: $L$ is the loss if Northwind fails today and the bank recovers a fraction $R$ of its claim.
+The first equation says netting cancels whichever side is smaller. The second turns exposure into money lost: $`L`$ is the loss if Northwind fails today and the bank recovers a fraction $`R`$ of its claim.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V_i$ | value of trade $i$ to the bank today: what Northwind would owe (plus) or be owed (minus) if the trade ended now | +5, −3, +2 ($ million) | exposure rises, unless that set's total stays at or below zero |
-| $i$, $n$ | a trade's number, and how many trades there are | 1 to 3 | — |
-| $x^+$ | the floor: $x$ if positive, zero if not | $(-3)^+ = 0$ | — |
-| $\sum$ | add up the terms that follow | — | — |
-| $A$ | a netting set: trades under one enforceable agreement | all three, or {1, 3} and {2} | fewer, larger sets: exposure falls or stays |
-| $E$ | current exposure: what is at risk if the counterparty fails today | 4 net; 7 with trade 2 apart | — |
-| $G$ | gross exposure: every trade floored on its own | 7 | — |
-| $P$ | total the bank is owed, trade by trade | 7 | saving grows until $P$ passes $Q$ |
-| $Q$ | total the bank owes, trade by trade | 3 | saving grows until $Q$ passes $P$ |
-| $R$ | recovery rate: fraction of a claim a failed firm's estate pays back | 40% | loss falls |
-| $L$ | loss if the counterparty fails today | $2.40 million net | — |
-| $a$, $b$ | any two amounts, such as two netting sets' totals | +7 and −3 | — |
+| $`V_i`$ | value of trade $`i`$ to the bank today: what Northwind would owe (plus) or be owed (minus) if the trade ended now | +5, −3, +2 ($ million) | exposure rises, unless that set's total stays at or below zero |
+| $`i`$, $`n`$ | a trade's number, and how many trades there are | 1 to 3 | — |
+| $`x^+`$ | the floor: $`x`$ if positive, zero if not | $`(-3)^+ = 0`$ | — |
+| $`\sum`$ | add up the terms that follow | — | — |
+| $`A`$ | a netting set: trades under one enforceable agreement | all three, or {1, 3} and {2} | fewer, larger sets: exposure falls or stays |
+| $`E`$ | current exposure: what is at risk if the counterparty fails today | 4 net; 7 with trade 2 apart | — |
+| $`G`$ | gross exposure: every trade floored on its own | 7 | — |
+| $`P`$ | total the bank is owed, trade by trade | 7 | saving grows until $`P`$ passes $`Q`$ |
+| $`Q`$ | total the bank owes, trade by trade | 3 | saving grows until $`Q`$ passes $`P`$ |
+| $`R`$ | recovery rate: fraction of a claim a failed firm's estate pays back | 40% | loss falls |
+| $`L`$ | loss if the counterparty fails today | $2.40 million net | — |
+| $`a`$, $`b`$ | any two amounts, such as two netting sets' totals | +7 and −3 | — |
 
 Conventions verified 28 Sep 2026: the Basel Committee's counterparty definitions (CRE50) treat each trade not covered by a legally enforceable bilateral netting agreement as its own netting set.
 
 ### When it holds
 
 - **The agreement is enforceable where Northwind goes bankrupt.** If a court refuses to net, each trade becomes its own set and exposure jumps from $4 million to $7 million. Banks obtain legal opinions country by country for this reason.
-- **The values are replacement values today.** $V_i$ is what another dealer would charge or pay to take the trade over. If the close-out valuation (the values fixed when the trades are ended on default) is disputed, every $V_i$ moves and so does $E$.
+- **The values are replacement values today.** $`V_i`$ is what another dealer would charge or pay to take the trade over. If the close-out valuation (the values fixed when the trades are ended on default) is disputed, every $`V_i`$ moves and so does $`E`$.
 - **No collateral is held.** Collateral the bank holds from Northwind would be subtracted inside the floor; this card sets it to zero.
 - **Default and close-out happen today, at today's values.** In practice close-out takes days, and values move in between. How large exposure may become later is [Expected exposure over time](02-expected-exposure-profiles.md).
 - **One currency.** Values in different currencies must be converted at today's rates before they can be added.
@@ -93,11 +99,11 @@ A trade in progress is a bundle of future payments. On the day a counterparty fa
 
 ### Step 1: one trade on its own, and why only positive value counts
 
-If the bank is owed $5 million, it files a claim against Northwind's estate and joins the other creditors. It gets back a fraction $R$ of the claim, here 40%, and loses the rest.
+If the bank is owed $5 million, it files a claim against Northwind's estate and joins the other creditors. It gets back a fraction $`R`$ of the claim, here 40%, and loses the rest.
 
 If the bank owes $3 million, the estate's administrator collects it in full. A failed firm's debtors do not get a discount because the firm failed. The bank pays $3 million, exactly what it would have paid anyway. Nothing is lost.
 
-So a single trade puts $V^+$ at risk: its value if positive, zero if not. The loss is $(1 - R)V^+$. That asymmetry is the whole reason for the floor.
+So a single trade puts $`V^+`$ at risk: its value if positive, zero if not. The loss is $`(1 - R)V^+`$. That asymmetry is the whole reason for the floor.
 
 ### Step 2: a master agreement closes every trade into one amount
 
@@ -117,32 +123,34 @@ Which trade sits apart matters. Putting the +$2 million trade apart instead leav
 
 ### Step 4: netting never raises exposure
 
-The key fact is one line about two numbers $a$ and $b$:
+The key fact is one line about two numbers $`a`$ and $`b`$:
 
-$$(a + b)^+ \;\le\; a^+ + b^+ .$$
+```math
+(a + b)^+ \;\le\; a^+ + b^+ .
+```
 
-If $a + b$ is zero or negative, the left side is zero and the right side is never negative. If $a + b$ is positive, then $a + b \le a^+ + b^+$, because each number is at most its floored value.
+If $`a + b`$ is zero or negative, the left side is zero and the right side is never negative. If $`a + b`$ is positive, then $`a + b \le a^+ + b^+`$, because each number is at most its floored value.
 
-Merging two netting sets into one replaces $a^+ + b^+$ by $(a + b)^+$, so exposure falls or stays. Splitting a set does the reverse. Full netting and no netting are the two extremes, so every arrangement lies between the net and gross numbers: $4 \le E \le 7$ for Northwind.
+Merging two netting sets into one replaces $`a^+ + b^+`$ by $`(a + b)^+`$, so exposure falls or stays. Splitting a set does the reverse. Full netting and no netting are the two extremes, so every arrangement lies between the net and gross numbers: $`4 \le E \le 7`$ for Northwind.
 
 ### Step 5: the saving is the smaller side
 
-Inside one set, the positive trades add to $P$ and the negative ones to $-Q$, so the total is $P - Q$. If $P \ge Q$, exposure is $P - Q$ and the saving over gross is $Q$. If $P < Q$, exposure is zero and the saving is all of $P$. Either way the saving is $\min(P, Q)$. For Northwind, $P = 7$, $Q = 3$, saving $3$.
+Inside one set, the positive trades add to $`P`$ and the negative ones to $`-Q`$, so the total is $`P - Q`$. If $`P \ge Q`$, exposure is $`P - Q`$ and the saving over gross is $`Q`$. If $`P < Q`$, exposure is zero and the saving is all of $`P`$. Either way the saving is $`\min(P, Q)`$. For Northwind, $`P = 7`$, $`Q = 3`$, saving $`3`$.
 
 <details>
 <summary>Detailed proof: every partition lies between net and gross, and refining never helps</summary>
 
-Write $x^+ = \max(x, 0)$ and note $x \le x^+$ and $x^+ \ge 0$ for every real $x$.
+Write $`x^+ = \max(x, 0)`$ and note $`x \le x^+`$ and $`x^+ \ge 0`$ for every real $`x`$.
 
-**Two terms.** If $a + b \le 0$, then $(a+b)^+ = 0 \le a^+ + b^+$. If $a + b > 0$, then $(a+b)^+ = a + b \le a^+ + b^+$. Induction on the number of terms extends this to any finite list: $(\sum_k a_k)^+ \le \sum_k a_k^+$.
+**Two terms.** If $`a + b \le 0`$, then $`(a+b)^+ = 0 \le a^+ + b^+`$. If $`a + b > 0`$, then $`(a+b)^+ = a + b \le a^+ + b^+`$. Induction on the number of terms extends this to any finite list: $`(\sum_k a_k)^+ \le \sum_k a_k^+`$.
 
-**Upper bound.** For each netting set $A$, apply the list version to the trades in $A$: $(\sum_{i \in A} V_i)^+ \le \sum_{i \in A} V_i^+$. The sets do not overlap and cover every trade once, so adding over sets gives $E \le G$.
+**Upper bound.** For each netting set $`A`$, apply the list version to the trades in $`A`$: $`(\sum_{i \in A} V_i)^+ \le \sum_{i \in A} V_i^+`$. The sets do not overlap and cover every trade once, so adding over sets gives $`E \le G`$.
 
-**Lower bound.** Apply the list version to the set totals instead. Their sum is the sum of all trades, so $(\sum_i V_i)^+ \le \sum_A (\sum_{i \in A} V_i)^+ = E$.
+**Lower bound.** Apply the list version to the set totals instead. Their sum is the sum of all trades, so $`(\sum_i V_i)^+ \le \sum_A (\sum_{i \in A} V_i)^+ = E`$.
 
 **Refining.** If each set of a finer arrangement lies inside one set of a coarser arrangement, each coarse total is a sum of fine totals, and the list version gives coarse exposure at most fine exposure. Equality holds when the fine totals inside each coarse set all share a sign; strict inequality needs a positive and a negative total meeting.
 
-**Exact saving.** Inside one set, $V_i = V_i^+ - (-V_i)^+$ for each trade, so the total is $P - Q$ with $P, Q \ge 0$. If $P \ge Q$, $E = P - Q$ and $P - E = Q$. If $P < Q$, $E = 0$ and $P - E = P$. Both cases read $P - E = \min(P, Q)$, and here $G = P$.
+**Exact saving.** Inside one set, $`V_i = V_i^+ - (-V_i)^+`$ for each trade, so the total is $`P - Q`$ with $`P, Q \ge 0`$. If $`P \ge Q`$, $`E = P - Q`$ and $`P - E = Q`$. If $`P < Q`$, $`E = 0`$ and $`P - E = P`$. Both cases read $`P - E = \min(P, Q)`$, and here $`G = P`$.
 
 </details>
 
@@ -158,8 +166,8 @@ Northwind: trades +5, −3, +2 ($ million), recovery 40%.
 | --- | --- | --- |
 | gross: floor each trade, then add | 5 + 0 + 2 | $7 million |
 | net: add, then floor | (5 − 3 + 2)^+ = 4^+ | $4 million |
-| $P$, owed to the bank trade by trade | 5 + 2 | $7 million |
-| $Q$, owed by the bank trade by trade | 3 | $3 million |
+| $`P`$, owed to the bank trade by trade | 5 + 2 | $7 million |
+| $`Q`$, owed by the bank trade by trade | 3 | $3 million |
 | saving from netting | min(7, 3) | $3 million |
 | net-to-gross ratio | 4 / 7 | 0.57 |
 | loss if Northwind fails today, one agreement | (1 − 0.40) × 4 | $2.40 million |
@@ -188,7 +196,7 @@ Hold both under one agreement and exposure is 9.23 − 6.33 = $2.90, which is ex
 The code reaches the exposure by three independent roads and tests the theorem on a fourth.
 
 - Road 1 is the formula: add inside each set, floor, add.
-- Road 2 follows the cash on the day of default. Each set closes to one amount, a claim recovers $R$, and a debt is paid in full. The loss is what the trades were worth minus the cash the bank ends up with; it must equal $(1 - R)E$.
+- Road 2 follows the cash on the day of default. Each set closes to one amount, a claim recovers $`R`$, and a debt is paid in full. The loss is what the trades were worth minus the cash the bank ends up with; it must equal $`(1 - R)E`$.
 - Road 3 pairs cents owed against cents owing and counts what is left.
 - Road 4 draws 20,000 random books of up to six trades, split at random into up to three agreements. It checks net ≤ exposure ≤ gross, that roads 1, 2 and 3 agree, and that merging two agreements never raises exposure.
 
@@ -577,9 +585,9 @@ The two outputs agree line for line.
 Lean proves the netting facts on this card for any finite book of trades and any split into netting sets.
 
 - Suppose every netting set of one arrangement lies inside a single set of a second. Then exposure under the second is at most exposure under the first.
-- Take any arrangement of netting sets. Then net exposure is at most $E$, and $E$ is at most gross exposure $G$.
-- Take a single netting set, with $G$, $E$, $P$ and $Q$ worked out for that set alone. Then $G - E = \min(P, Q)$ exactly.
-- Take the Northwind trades +5, −3 and +2. Then gross is 7, net is 4, $P$ is 7, $Q$ is 3, and the saving is 3.
+- Take any arrangement of netting sets. Then net exposure is at most $`E`$, and $`E`$ is at most gross exposure $`G`$.
+- Take a single netting set, with $`G`$, $`E`$, $`P`$ and $`Q`$ worked out for that set alone. Then $`G - E = \min(P, Q)`$ exactly.
+- Take the Northwind trades +5, −3 and +2. Then gross is 7, net is 4, $`P`$ is 7, $`Q`$ is 3, and the saving is 3.
 - Take the same trades with one trade under its own agreement. Then exposure is 7 with −3 apart, 4 with +2 apart, and 5 with +5 apart.
 - Take the middle trade at −9 under one agreement. Then net exposure is 0, and gross exposure stays 7.
 

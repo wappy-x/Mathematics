@@ -45,13 +45,17 @@ The first line (orange) is the true value, repriced at each spread. The second (
 
 ## The formula
 
-Notation first, in words. $N$ is the notional. $s_0$ is the spread written into the contract; $s$ is the par spread the market quotes today for the same remaining term. $A$ and $P$ are the two legs per dollar of notional, as priced in [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md). Inside them, $\delta$ is a quarter, $D$ discounts, $Q$ is the chance Northwind survives, $\lambda$ is the hazard and $R$ the recovery; the table below gives each. The sum adds the premium dates one by one; the integral adds the chance of default over every instant.
+Notation first, in words. $`N`$ is the notional. $`s_0`$ is the spread written into the contract; $`s`$ is the par spread the market quotes today for the same remaining term. $`A`$ and $`P`$ are the two legs per dollar of notional, as priced in [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md). Inside them, $`\delta`$ is a quarter, $`D`$ discounts, $`Q`$ is the chance Northwind survives, $`\lambda`$ is the hazard and $`R`$ the recovery; the table below gives each. The sum adds the premium dates one by one; the integral adds the chance of default over every instant.
 
-$$V = N\,(P - s_0\,A), \qquad A = \sum_{j=1}^{n} \delta\,D(t_j)\,Q(t_j), \qquad P = (1-R)\int_0^T D(t)\,\lambda\,Q(t)\,dt$$
+```math
+V = N\,(P - s_0\,A), \qquad A = \sum_{j=1}^{n} \delta\,D(t_j)\,Q(t_j), \qquad P = (1-R)\int_0^T D(t)\,\lambda\,Q(t)\,dt
+```
 
-Since today's par spread is $s = P/A$ by definition, the value collapses to one line:
+Since today's par spread is $`s = P/A`$ by definition, the value collapses to one line:
 
-$$V = N\,A\,(s - s_0)$$
+```math
+V = N\,A\,(s - s_0)
+```
 
 **Read it aloud:** the position is worth the notional, times the value of a premium of one a year paid while Northwind survives, times how far today's spread sits above the contract's.
 
@@ -59,26 +63,26 @@ The five risk numbers are defined by moving one input and repricing, with the ma
 
 | Number | Move | Holding fixed | Northwind at par |
 | --- | --- | --- | --- |
-| CS01 | quoted spread $s$ up 1 bp | recovery, rates | $4,180.23 |
+| CS01 | quoted spread $`s`$ up 1 bp | recovery, rates | $4,180.23 |
 | Jump-to-default | default now | nothing | $6,000,000.00 |
-| Recovery sensitivity ("Rec01") | recovery $R$ up 1 point | quoted spread | $0.00 |
-| IR01 | riskless rate $r$ up 1 bp | quoted spread | $0.00 |
+| Recovery sensitivity ("Rec01") | recovery $`R`$ up 1 point | quoted spread | $0.00 |
+| IR01 | riskless rate $`r`$ up 1 bp | quoted spread | $0.00 |
 | Carry, per quarter | one premium | nothing | −$30,264.04 |
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | notional: the debt the protection covers | $10,000,000 | every dollar figure scales with it |
-| $V$ | value of the position to the protection buyer | $0 on day one | — |
-| $A$ | risky annuity: value of 1 a year paid quarterly while Northwind survives | 4.181935 | CS01 rises with it |
-| $P$ | protection leg: value of the default payout, per $1 | 0.050625 | $V$ rises |
-| $s$ | market par spread today for the remaining term | 121.06 bp | $V$ rises about CS01 per bp |
-| $s_0$ | contract spread, fixed at the trade | 121.06 bp | $V$ falls |
-| $\lambda$ | hazard ("lambda"): chance of default per year among survivors | 2%; 3.30% at 200 bp | $A$ falls |
-| $R$ | recovery: fraction of notional recovered on default | 40% | jump-to-default falls $100,000 per point |
-| $r$ | riskless rate, continuously compounded | 5% | $A$ falls a little |
-| $T$, $\delta$, $t_j$, $n$ | years left; the quarter each premium covers; the premium dates, numbered $j = 1$ to $n$ | 5; 0.25; 0.25 to 5, twenty dates | — |
-| $D(t)$, $Q(t)$ | discount factor $e^{-rt}$; survival chance $e^{-\lambda t}$ | — | — |
-| $k$, $G$ | the combined shrink rate $r + \lambda$; $G = (1 - e^{-kT})/k$, the leg formulas' shared factor | 0.07 | — |
+| $`N`$ | notional: the debt the protection covers | $10,000,000 | every dollar figure scales with it |
+| $`V`$ | value of the position to the protection buyer | $0 on day one | — |
+| $`A`$ | risky annuity: value of 1 a year paid quarterly while Northwind survives | 4.181935 | CS01 rises with it |
+| $`P`$ | protection leg: value of the default payout, per $1 | 0.050625 | $`V`$ rises |
+| $`s`$ | market par spread today for the remaining term | 121.06 bp | $`V`$ rises about CS01 per bp |
+| $`s_0`$ | contract spread, fixed at the trade | 121.06 bp | $`V`$ falls |
+| $`\lambda`$ | hazard ("lambda"): chance of default per year among survivors | 2%; 3.30% at 200 bp | $`A`$ falls |
+| $`R`$ | recovery: fraction of notional recovered on default | 40% | jump-to-default falls $100,000 per point |
+| $`r`$ | riskless rate, continuously compounded | 5% | $`A`$ falls a little |
+| $`T`$, $`\delta`$, $`t_j`$, $`n`$ | years left; the quarter each premium covers; the premium dates, numbered $`j = 1`$ to $`n`$ | 5; 0.25; 0.25 to 5, twenty dates | — |
+| $`D(t)`$, $`Q(t)`$ | discount factor $`e^{-rt}`$; survival chance $`e^{-\lambda t}`$ | — | — |
+| $`k`$, $`G`$ | the combined shrink rate $`r + \lambda`$; $`G = (1 - e^{-kT})/k`$, the leg formulas' shared factor | 0.07 | — |
 
 ### When it holds
 
@@ -96,35 +100,43 @@ Conventions verified 28 Sep 2026: single-name contracts now trade with a fixed c
 
 ### Step 0: the value is a spread gap times an annuity
 
-Every premium the fund owes is $s_0$ a year, paid while Northwind survives, so the premium leg is $s_0 A$. Today's par spread $s$ is the premium that would make a new trade worth zero, so the protection leg is exactly $s \times A$. Subtract:
+Every premium the fund owes is $`s_0`$ a year, paid while Northwind survives, so the premium leg is $`s_0 A`$. Today's par spread $`s`$ is the premium that would make a new trade worth zero, so the protection leg is exactly $`s \times A`$. Subtract:
 
-$$V = N(sA - s_0A) = N\,A\,(s - s_0).$$
+```math
+V = N(sA - s_0A) = N\,A\,(s - s_0).
+```
 
-This is the mark-to-market identity of [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md). It holds for any hazard and any rates. Each risk number moves one factor: CS01 moves $s$; recovery and rates move $A$ while $s$ is held; the calendar shortens $A$ and slides $s$ along the curve; default ends the contract.
+This is the mark-to-market identity of [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md). It holds for any hazard and any rates. Each risk number moves one factor: CS01 moves $`s`$; recovery and rates move $`A`$ while $`s`$ is held; the calendar shortens $`A`$ and slides $`s`$ along the curve; default ends the contract.
 
 ### Step 1: CS01 at par is the notional times the annuity
 
-Differentiate $V = NA(s - s_0)$ with respect to $s$. The product rule gives two terms:
+Differentiate $`V = NA(s - s_0)`$ with respect to $`s`$. The product rule gives two terms:
 
-$$\frac{dV}{ds} = N\,A + N\,(s - s_0)\,\frac{dA}{ds}.$$
+```math
+\frac{dV}{ds} = N\,A + N\,(s - s_0)\,\frac{dA}{ds}.
+```
 
-At par, $s = s_0$, so the second term is multiplied by zero. CS01 is $N \times A \times$ 1 bp: 10,000,000 × 4.181935 × 0.0001 = **$4,181.94**.
+At par, $`s = s_0`$, so the second term is multiplied by zero. CS01 is $`N \times A \times`$ 1 bp: 10,000,000 × 4.181935 × 0.0001 = **$4,181.94**.
 
 The desk's report uses a one-sided bump: reprice at 122.06 bp. That gives $4,180.23, a little less. The reason is the second term. As the spread rises, the implied hazard rises, survival falls, and the annuity shrinks, so each further basis point is worth slightly less than the one before. Far from par the effect is large. The same contract is worth $3,921.25 a basis point once Northwind trades at 200 bp and $2,430.14 at 800 bp: at high spreads the premiums are unlikely to be paid for long, so a basis point of them is worth little.
 
-The analytic road needs one more step, because the pricer takes a hazard, not a spread. Move the hazard $\lambda$ a little and both $V$ and $s$ move; divide one change by the other:
+The analytic road needs one more step, because the pricer takes a hazard, not a spread. Move the hazard $`\lambda`$ a little and both $`V`$ and $`s`$ move; divide one change by the other:
 
-$$\text{CS01} = \frac{\partial V/\partial\lambda}{\partial s/\partial\lambda} \times 1\text{ bp}.$$
+```math
+\text{CS01} = \frac{\partial V/\partial\lambda}{\partial s/\partial\lambda} \times 1\text{ bp}.
+```
 
-Both pieces come from differentiating the leg formulas; the folded proof below writes them out. At par the ratio reduces exactly to $N \times A$, which the code checks against the central bump to the cent.
+Both pieces come from differentiating the leg formulas; the folded proof below writes them out. At par the ratio reduces exactly to $`N \times A`$, which the code checks against the central bump to the cent.
 
 ### Step 2: jump-to-default is the payout minus what is lost
 
-If Northwind defaults this instant, the premiums stop and the seller pays $(1-R)N$ = **$6,000,000**. The position that was worth $V$ disappears. So jump-to-default, JTD for short, is
+If Northwind defaults this instant, the premiums stop and the seller pays $`(1-R)N`$ = **$6,000,000**. The position that was worth $`V`$ disappears. So jump-to-default, JTD for short, is
 
-$$\text{JTD} = (1 - R)\,N - V \;(+\text{ premium accrued, owed to the seller}).$$
+```math
+\text{JTD} = (1 - R)\,N - V \;(+\text{ premium accrued, owed to the seller}).
+```
 
-On day one $V$ = 0 and nothing has accrued, so jump-to-default is the full $6 million. After the widening to 200 bp the position is already worth $319,729.45, and default adds only $5,680,270.55 on top: part of the default is already in the price.
+On day one $`V`$ = 0 and nothing has accrued, so jump-to-default is the full $6 million. After the widening to 200 bp the position is already worth $319,729.45, and default adds only $5,680,270.55 on top: part of the default is already in the price.
 
 The second road makes the hazard absurdly large, ten million a year, so default is certain within the first instant, and reprices the contract normally. It lands at $5,999,999.97. The few missing cents are the discounting of the tiny delay before that default.
 
@@ -132,24 +144,30 @@ Recovery enters jump-to-default directly: each point of recovery takes $100,000 
 
 ### Step 3: recovery and rates act only through the annuity, and at par they are multiplied by zero
 
-Hold the market's quote $s$ fixed and raise the recovery $R$. The quote no longer fits the old hazard, so the desk re-implies it: with less lost per default, the market must be expecting more defaults, and the hazard rises. That lowers $A$. In $V = NA(s - s_0)$ nothing else moves.
+Hold the market's quote $`s`$ fixed and raise the recovery $`R`$. The quote no longer fits the old hazard, so the desk re-implies it: with less lost per default, the market must be expecting more defaults, and the hazard rises. That lowers $`A`$. In $`V = NA(s - s_0)`$ nothing else moves.
 
-At par, $s - s_0 = 0$, so the change in $A$ is multiplied by zero. **Rec01 at par is exactly $0.00.** The same argument covers rates: a higher $r$ shrinks $A$ and nothing else, and IR01 at par is $0.00.
+At par, $`s - s_0 = 0`$, so the change in $`A`$ is multiplied by zero. **Rec01 at par is exactly $0.00.** The same argument covers rates: a higher $`r`$ shrinks $`A`$ and nothing else, and IR01 at par is $0.00.
 
 Off par the gap is not zero. After Northwind widens to 200 bp the fund's position is worth $319,729.45. One more point of recovery, with the 200 bp quote held, raises the implied hazard and costs $429.55. One more basis point of rates costs $78.11. Both are small: the spread gap is under one percent and the annuity moves by a sliver.
 
 <details>
 <summary>Detailed proof: the three sensitivities from the leg formulas</summary>
 
-With a flat hazard and $k = r + \lambda$, the legs are
-$$A = \sum_{j=1}^{n}\delta\,e^{-k t_j}, \qquad P = (1-R)\,\lambda\,G, \qquad G = \frac{1 - e^{-kT}}{k}.$$
-Both $A$ and $G$ depend on $r$ and $\lambda$ only through $k$, so
-$$\frac{\partial A}{\partial \lambda} = \frac{\partial A}{\partial r} = -\sum_{j}\delta\,t_j\,e^{-k t_j}, \qquad G' = \frac{T e^{-kT}}{k} - \frac{G}{k}.$$
-The protection leg's derivatives follow: $\partial P/\partial\lambda = (1-R)(G + \lambda G')$, $\partial P/\partial r = (1-R)\lambda G'$, $\partial P/\partial R = -P/(1-R)$. The par spread $s = P/A$ has derivatives by the quotient rule, for example $\partial s/\partial\lambda = (A\,\partial P/\partial\lambda - P\,\partial A/\partial\lambda)/A^2$.
+With a flat hazard and $`k = r + \lambda`$, the legs are
 
-Hold the quote: for any input $x$ (spread, rate or recovery) the hazard must move so that $s$ stays put, which needs $d\lambda/dx = -(\partial s/\partial x)/(\partial s/\partial\lambda)$. The value $V = N(P - s_0 A)$ then changes by
-$$\frac{dV}{dx} = \frac{\partial V}{\partial x} + \frac{\partial V}{\partial \lambda}\,\frac{d\lambda}{dx}, \qquad \frac{\partial V}{\partial \lambda} = N\Big(\frac{\partial P}{\partial\lambda} - s_0\,\frac{\partial A}{\partial\lambda}\Big).$$
-At par, $s_0 = P/A$, so $\partial V/\partial\lambda = N A\,\partial s/\partial\lambda$. Substituting: the CS01 ratio becomes $N \times A$; for rates, $\partial V/\partial r = NA\,\partial s/\partial r$ cancels the second term exactly; for recovery, $\partial V/\partial R = -NP/(1-R) = NA\,\partial s/\partial R$ cancels likewise. Off par none of these cancellations happens, and the code evaluates the formulas as written.
+$`\displaystyle A = \sum_{j=1}^{n}\delta\,e^{-k t_j}, \qquad P = (1-R)\,\lambda\,G, \qquad G = \frac{1 - e^{-kT}}{k}.`$
+
+Both $`A`$ and $`G`$ depend on $`r`$ and $`\lambda`$ only through $`k`$, so
+
+$`\displaystyle \frac{\partial A}{\partial \lambda} = \frac{\partial A}{\partial r} = -\sum_{j}\delta\,t_j\,e^{-k t_j}, \qquad G' = \frac{T e^{-kT}}{k} - \frac{G}{k}.`$
+
+The protection leg's derivatives follow: $`\partial P/\partial\lambda = (1-R)(G + \lambda G')`$, $`\partial P/\partial r = (1-R)\lambda G'`$, $`\partial P/\partial R = -P/(1-R)`$. The par spread $`s = P/A`$ has derivatives by the quotient rule, for example $`\partial s/\partial\lambda = (A\,\partial P/\partial\lambda - P\,\partial A/\partial\lambda)/A^2`$.
+
+Hold the quote: for any input $`x`$ (spread, rate or recovery) the hazard must move so that $`s`$ stays put, which needs $`d\lambda/dx = -(\partial s/\partial x)/(\partial s/\partial\lambda)`$. The value $`V = N(P - s_0 A)`$ then changes by
+
+$`\displaystyle \frac{dV}{dx} = \frac{\partial V}{\partial x} + \frac{\partial V}{\partial \lambda}\,\frac{d\lambda}{dx}, \qquad \frac{\partial V}{\partial \lambda} = N\Big(\frac{\partial P}{\partial\lambda} - s_0\,\frac{\partial A}{\partial\lambda}\Big).`$
+
+At par, $`s_0 = P/A`$, so $`\partial V/\partial\lambda = N A\,\partial s/\partial\lambda`$. Substituting: the CS01 ratio becomes $`N \times A`$; for rates, $`\partial V/\partial r = NA\,\partial s/\partial r`$ cancels the second term exactly; for recovery, $`\partial V/\partial R = -NP/(1-R) = NA\,\partial s/\partial R`$ cancels likewise. Off par none of these cancellations happens, and the code evaluates the formulas as written.
 
 </details>
 
@@ -157,14 +175,14 @@ At par, $s_0 = P/A$, so $\partial V/\partial\lambda = N A\,\partial s/\partial\l
 
 A quarter passes with no default and no change in the market. Two things happen.
 
-**Carry.** The fund pays one premium: $s_0 N \delta$ = $30,264.04. That is the cost of holding the protection. It is not wasted: in expectation the protection pays $(1-R)N(1 - Q(0.25))$ = $29,925.12 in that same quarter, the payout times the chance default lands in it.
+**Carry.** The fund pays one premium: $`s_0 N \delta`$ = $30,264.04. That is the cost of holding the protection. It is not wasted: in expectation the protection pays $`(1-R)N(1 - Q(0.25))`$ = $29,925.12 in that same quarter, the payout times the chance default lands in it.
 
 **Roll-down.** The contract now has 4.75 years left and is priced off the 4.75-year point of the same curve. On a flat hazard curve the par spread is the same for every quarterly maturity, 121.06 bp, so roll-down is **$0.00**. On a rising curve the 4.75-year spread is below the 5-year one, the contract's 121.06 bp now sits above the market, and the protection buyer loses. The protection seller gains the same amount.
 
 <details>
 <summary>Why a flat curve has no roll-down at all</summary>
 
-With a flat hazard, $A = \delta\,e^{-k\delta}(1 - e^{-kT})/(1 - e^{-k\delta})$ and $P = (1-R)\lambda(1 - e^{-kT})/k$. Both carry the same factor $1 - e^{-kT}$, which is the only place $T$ appears, so their ratio $s$ does not depend on the maturity. Any whole number of quarters gives 121.06 bp.
+With a flat hazard, $`A = \delta\,e^{-k\delta}(1 - e^{-kT})/(1 - e^{-k\delta})`$ and $`P = (1-R)\lambda(1 - e^{-kT})/k`$. Both carry the same factor $`1 - e^{-kT}`$, which is the only place $`T`$ appears, so their ratio $`s`$ does not depend on the maturity. Any whole number of quarters gives 121.06 bp.
 
 </details>
 
@@ -178,14 +196,14 @@ Northwind: $10m of protection, five years, quarterly premiums, hazard 2%, recove
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| risky annuity $A$ | twenty quarterly survival-weighted discounts | 4.181935 |
-| protection leg $P$ | $0.6 \times 0.02 \times (1 - e^{-0.35})/0.07$ | 0.050625 |
-| contract spread $s_0 = P/A$ | $0.050625 / 4.181935$ | 121.06 bp |
-| **CS01 at par** | $N \times A \times$ 1 bp $= 10{,}000{,}000 \times 4.181935 \times 0.0001$ | **$4,181.94** |
+| risky annuity $`A`$ | twenty quarterly survival-weighted discounts | 4.181935 |
+| protection leg $`P`$ | $`0.6 \times 0.02 \times (1 - e^{-0.35})/0.07`$ | 0.050625 |
+| contract spread $`s_0 = P/A`$ | $`0.050625 / 4.181935`$ | 121.06 bp |
+| **CS01 at par** | $`N \times A \times`$ 1 bp $`= 10{,}000{,}000 \times 4.181935 \times 0.0001`$ | **$4,181.94** |
 | CS01, one-sided bump | reprice at 122.06 bp | $4,180.23 |
-| **jump-to-default** | $(1 - 0.4) \times 10{,}000{,}000 - 0$ | **$6,000,000** |
-| Rec01 and IR01 at par | $NA \times (s - s_0) \times$ anything | **$0.00** |
-| **carry, per quarter** | $0.012106 \times 10{,}000{,}000 \times 0.25$ | **$30,264.04** |
+| **jump-to-default** | $`(1 - 0.4) \times 10{,}000{,}000 - 0`$ | **$6,000,000** |
+| Rec01 and IR01 at par | $`NA \times (s - s_0) \times`$ anything | **$0.00** |
+| **carry, per quarter** | $`0.012106 \times 10{,}000{,}000 \times 0.25`$ | **$30,264.04** |
 | roll-down, flat curve | 4.75-year par spread is still 121.06 bp | $0.00 |
 
 A desk holding this trade reports: it gains about $4,180 per basis point Northwind widens, $6 million if Northwind defaults, nothing from a recovery or rate revision today, and pays $30,264 a quarter to keep it.
@@ -198,7 +216,7 @@ A desk holding this trade reports: it gains about $4,180 per basis point Northwi
 | IR01 with the hazard held | $6.35 (right: $0.00) | Same error: a rate move with the quote fixed changes the hazard too |
 | CS01 from the riskless annuity | $4,396.39 (right: $4,181.94) | Counted premiums in years Northwind may not survive |
 | Value at 200 bp as CS01 times the move | $330,138.06 (right: $319,729.45) | CS01 is a slope; the annuity shrinks as the spread widens |
-| Jump-to-default at 200 bp as $(1-R)N$ | $6,000,000 (right: $5,680,270.55) | Forgot the value already on the books |
+| Jump-to-default at 200 bp as $`(1-R)N`$ | $6,000,000 (right: $5,680,270.55) | Forgot the value already on the books |
 
 Every number in that table is printed by the code below.
 
@@ -672,7 +690,7 @@ The two outputs agree line for line. The only visible gap between roads is Rec01
 
 Lean proves the card's three flat-hazard theorems for any notional, rate, recovery and quarter length, with at least one premium.
 
-- Suppose the hazard is re-implied from each quote and moves continuously with it. Then CS01 at par, the slope of $V$ in $s$, is exactly $N \times A$.
+- Suppose the hazard is re-implied from each quote and moves continuously with it. Then CS01 at par, the slope of $`V`$ in $`s`$, is exactly $`N \times A`$.
 - Suppose the quote is held at the contract spread and the hazard is re-implied after each bump. Then Rec01 and IR01 at par are exactly zero.
 - Take one flat hazard. Then the par spread is the same for every whole number of quarters, so roll-down is exactly zero.
 - The Northwind counts are exact: twenty premium dates, 4.75 years left after a quarter, and a combined shrink rate of 0.07.
@@ -890,7 +908,7 @@ example : (10000000 : ℚ) * 5 * (1 / 10000) = 5000 := by norm_num
 > **Bumping recovery or rates while holding the hazard fixed.** The hazard is not observed; it is backed out of the quote. Raise recovery with the hazard frozen and the pricer says the protection lost $8,437.48, a loss the fund would never see: the market still quotes 121.06 bp, so the position is still at par. Every CDS risk number holds the quote and re-implies the hazard. A hazard-held number answers a different question: what a change of model does, not what the market does.
 >
 > - **Reading CS01 as fixed.** It is $4,181.94 at par and $2,430.14 at 800 bp. A hedge sized once and left alone is too big after a widening.
-> - **Jump-to-default as the notional.** The payout is $(1-R)N$, $6 million, not $10 million; and a position already in profit gains less, $5,680,270.55 at 200 bp.
+> - **Jump-to-default as the notional.** The payout is $`(1-R)N`$, $6 million, not $10 million; and a position already in profit gains less, $5,680,270.55 at 200 bp.
 > - **Carry counted as a loss.** The $30,264.04 a quarter buys protection whose expected payout in the quarter is $29,925.12.
 > - **Roll-down with the wrong sign.** On a rising curve the protection buyer loses roll-down, −$17,742.91 a quarter here; the seller earns it.
 
@@ -911,7 +929,7 @@ example : (10000000 : ℚ) * 5 * (1 / 10000) = 5000 := by norm_num
 
 ## What this builds on
 
-- [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md): the value $NA(s - s_0)$ that every risk number on this card differentiates.
+- [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md): the value $`NA(s - s_0)`$ that every risk number on this card differentiates.
 - [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): shift an input, reprice, divide; and why a central bump beats a one-sided one.
 
 ## Where this goes next

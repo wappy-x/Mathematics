@@ -38,44 +38,52 @@ The orange line is the screen; the green line is the calibrated model; the large
 
 ## The formula
 
-Notation first, in words. Forward rate number $i$, written $L_i$, is today's fair rate for the year running from $T_i$ to $T_{i+1}$, where $T_i$ is $i$ years from now. A small $i$ or $j$ below a symbol picks out one forward. A sum sign $\sum$ adds a term for every forward named under and over it.
+Notation first, in words. Forward rate number $`i`$, written $`L_i`$, is today's fair rate for the year running from $`T_i`$ to $`T_{i+1}`$, where $`T_i`$ is $`i`$ years from now. A small $`i`$ or $`j`$ below a symbol picks out one forward. A sum sign $`\sum`$ adds a term for every forward named under and over it.
 
-Each forward's volatility at calendar time $t$ is a common shape times its own multiplier:
+Each forward's volatility at calendar time $`t`$ is a common shape times its own multiplier:
 
-$$\sigma_i(t) = k_i\,g(T_i - t), \qquad g(\tau) = (a + b\,\tau)\,e^{-c\,\tau} + d, \qquad k_i = v_i\sqrt{\frac{T_i}{\int_0^{T_i} g(T_i - t)^2\,dt}}$$
+```math
+\sigma_i(t) = k_i\,g(T_i - t), \qquad g(\tau) = (a + b\,\tau)\,e^{-c\,\tau} + d, \qquad k_i = v_i\sqrt{\frac{T_i}{\int_0^{T_i} g(T_i - t)^2\,dt}}
+```
 
 **Read it aloud:** a forward's wobble depends on how long it has left before fixing, through one hump-shaped curve shared by all forwards, scaled by the one multiplier that makes its caplet's total wobble equal the quote.
 
-The swaption formula, Rebonato's, for a swaption expiring at $T_p$ on a swap of $n$ yearly periods:
+The swaption formula, Rebonato's, for a swaption expiring at $`T_p`$ on a swap of $`n`$ yearly periods:
 
-$$\hat u^{\,2}\,T_p = \sum_{i=p}^{p+n-1}\;\sum_{j=p}^{p+n-1} \frac{w_i L_i\; w_j L_j}{S^2}\;\rho_{ij}\int_0^{T_p}\sigma_i(t)\,\sigma_j(t)\,dt, \qquad \rho_{ij} = e^{-\beta\,|T_i - T_j|}$$
+```math
+\hat u^{\,2}\,T_p = \sum_{i=p}^{p+n-1}\;\sum_{j=p}^{p+n-1} \frac{w_i L_i\; w_j L_j}{S^2}\;\rho_{ij}\int_0^{T_p}\sigma_i(t)\,\sigma_j(t)\,dt, \qquad \rho_{ij} = e^{-\beta\,|T_i - T_j|}
+```
 
 **Read it aloud:** the swaption's total variance is the variance of a basket of forward rates, each held in the proportion it contributes to the swap rate today, with every pair counted by how closely it moves together, up to the expiry date.
 
 The weights and swap rate come from today's discount factors, with every period one year long:
 
-$$A = \sum_{i=p}^{p+n-1} P(0,T_{i+1}), \qquad w_i = \frac{P(0,T_{i+1})}{A}, \qquad S = \sum_{i=p}^{p+n-1} w_i L_i$$
+```math
+A = \sum_{i=p}^{p+n-1} P(0,T_{i+1}), \qquad w_i = \frac{P(0,T_{i+1})}{A}, \qquad S = \sum_{i=p}^{p+n-1} w_i L_i
+```
 
 Finally the four knobs are chosen to make the misses small, measured in volatility points:
 
-$$\mathcal{L}(a,b,c,\beta) = \tfrac12\sum_{m=1}^{10}\big(100\,[\hat u_m - u_m]\big)^2$$
+```math
+\mathcal{L}(a,b,c,\beta) = \tfrac12\sum_{m=1}^{10}\big(100\,[\hat u_m - u_m]\big)^2
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L_i$, $T_i$, $dL_i$, $i$, $j$ | forward rate for the year from $T_i$ to $T_{i+1}$, $i$ years from now; $dL_i$ its change over a short time; $i$, $j$ label forwards | 3.0% for the year starting now, rising 0.2 points a year to 5.0% | more weight in its swap rate |
-| $P(0,T)$, $T$ | discount factor: today's price of 1 dollar paid at time $T$ | 0.940769 at two years | — |
-| $v_i$ | caplet $i$'s quoted Black volatility | 22.10% at one year, 17.20% at ten | $k_i$ rises in proportion |
-| $\sigma_i(t)$, $t$, $dt$ | forward $i$'s volatility at calendar time $t$; $dt$ a short stretch of time | ten-year forward: 14.18% today, 22.48% at year nine | options on that forward rise |
-| $g$, $\tau$, $a$, $b$, $c$, $d$ | the shared hump in time-to-fixing $\tau$: $a$ its height at fixing above $d$, $b$ its rise, $c$ its decay, $d$ its floor | $a$ 0.020228, $b$ 0.137257, $c$ 0.796333, $d$ fixed at 0.12 | reshapes the timing; overall scale is absorbed by $k_i$ |
-| $k_i$, $k_1$, $k_2$ | forward $i$'s multiplier, set so its caplet reprices exactly | 1.1390 to 1.2637 | that forward wobbles more |
-| $\rho_{ij}$, $\rho_{12}$, $\beta$, $dW_i$ | correlation of forwards $i$ and $j$; $\beta$ sets how fast it fades with the gap between their dates; $dW_i$ forward $i$'s random kick | $\beta$ = 0.128525; neighbours correlate at 0.879392 | $\beta$ up: long swaptions cheaper |
-| $I_{ij}$, $I_{11}$, $I_{12}$, $I_{22}$, $s$, $\kappa$ | overlap integral $\int_0^{T_p} g(T_i - t)\,g(T_j - t)\,dt$; $s$, $\kappa$ are working letters in its closed form | 0.032778 for forwards 1 and 2 to year 1 | — |
-| $A$, $w_i$, $w_1$, $w_2$, $S$, $K$ | the annuity (value of 1 a year paid on each payment date), each forward's weight, the swap rate, the strike ($S$ at the money) | 1x2 swaption: 1.850604, 0.508358 and 0.491642, 3.298328% | — |
-| $T_p$, $p$, $n$ | swaption expiry; its first forward; the swap's number of yearly periods | 1x2: $p$ = 1, $n$ = 2 | more time to wobble |
-| $u$, $\hat u$ | swaption Black volatility: quoted, and from Rebonato's formula | 1x2: 22.19% and 22.18% | — |
-| $\mathcal{L}$, $N(x)$, $\sum$ | half the sum of squared misses in volatility points; the normal CDF (cumulative distribution function: the bell-curve area left of $x$) in Black's formula; the sum sign | $\mathcal{L}$ = 0.020388 at the fit | worse fit |
+| $`L_i`$, $`T_i`$, $`dL_i`$, $`i`$, $`j`$ | forward rate for the year from $`T_i`$ to $`T_{i+1}`$, $`i`$ years from now; $`dL_i`$ its change over a short time; $`i`$, $`j`$ label forwards | 3.0% for the year starting now, rising 0.2 points a year to 5.0% | more weight in its swap rate |
+| $`P(0,T)`$, $`T`$ | discount factor: today's price of 1 dollar paid at time $`T`$ | 0.940769 at two years | — |
+| $`v_i`$ | caplet $`i`$'s quoted Black volatility | 22.10% at one year, 17.20% at ten | $`k_i`$ rises in proportion |
+| $`\sigma_i(t)`$, $`t`$, $`dt`$ | forward $`i`$'s volatility at calendar time $`t`$; $`dt`$ a short stretch of time | ten-year forward: 14.18% today, 22.48% at year nine | options on that forward rise |
+| $`g`$, $`\tau`$, $`a`$, $`b`$, $`c`$, $`d`$ | the shared hump in time-to-fixing $`\tau`$: $`a`$ its height at fixing above $`d`$, $`b`$ its rise, $`c`$ its decay, $`d`$ its floor | $`a`$ 0.020228, $`b`$ 0.137257, $`c`$ 0.796333, $`d`$ fixed at 0.12 | reshapes the timing; overall scale is absorbed by $`k_i`$ |
+| $`k_i`$, $`k_1`$, $`k_2`$ | forward $`i`$'s multiplier, set so its caplet reprices exactly | 1.1390 to 1.2637 | that forward wobbles more |
+| $`\rho_{ij}`$, $`\rho_{12}`$, $`\beta`$, $`dW_i`$ | correlation of forwards $`i`$ and $`j`$; $`\beta`$ sets how fast it fades with the gap between their dates; $`dW_i`$ forward $`i`$'s random kick | $`\beta`$ = 0.128525; neighbours correlate at 0.879392 | $`\beta`$ up: long swaptions cheaper |
+| $`I_{ij}`$, $`I_{11}`$, $`I_{12}`$, $`I_{22}`$, $`s`$, $`\kappa`$ | overlap integral $`\int_0^{T_p} g(T_i - t)\,g(T_j - t)\,dt`$; $`s`$, $`\kappa`$ are working letters in its closed form | 0.032778 for forwards 1 and 2 to year 1 | — |
+| $`A`$, $`w_i`$, $`w_1`$, $`w_2`$, $`S`$, $`K`$ | the annuity (value of 1 a year paid on each payment date), each forward's weight, the swap rate, the strike ($`S`$ at the money) | 1x2 swaption: 1.850604, 0.508358 and 0.491642, 3.298328% | — |
+| $`T_p`$, $`p`$, $`n`$ | swaption expiry; its first forward; the swap's number of yearly periods | 1x2: $`p`$ = 1, $`n`$ = 2 | more time to wobble |
+| $`u`$, $`\hat u`$ | swaption Black volatility: quoted, and from Rebonato's formula | 1x2: 22.19% and 22.18% | — |
+| $`\mathcal{L}`$, $`N(x)`$, $`\sum`$ | half the sum of squared misses in volatility points; the normal CDF (cumulative distribution function: the bell-curve area left of $`x`$) in Black's formula; the sum sign | $`\mathcal{L}`$ = 0.020388 at the fit | worse fit |
 
-The shape $g$ is the "abcd" curve. At fixing it equals $a + d$; far from fixing it sinks to $d$; in between, $b$ lifts it into a hump. Rates are calmest when their fixing is far off and wobble most about a year before it.
+The shape $`g`$ is the "abcd" curve. At fixing it equals $`a + d`$; far from fixing it sinks to $`d`$; in between, $`b`$ lifts it into a hump. Rates are calmest when their fixing is far off and wobble most about a year before it.
 
 ### When it holds
 
@@ -85,19 +93,19 @@ The shape $g$ is the "abcd" curve. At fixing it equals $a + d$; far from fixing 
 - **Frozen weights.** Rebonato's formula pretends the swap's weights never move. On the five-into-five swaption the model's own price implies 15.58% against the formula's 15.64%. That gap is measured at one point only; elsewhere it must be measured again, not assumed.
 - **One curve.** Discounting and forward rates come from the same curve; with separate curves the weights change ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
 
-Conventions verified 28 September 2026: at-the-money lognormal (Black) volatilities in percent a year; one-year periods paid at the end; caplet $i$ fixes at $T_i$. Many desks now quote rate options in normal volatility; the method is the same with a normal model underneath.
+Conventions verified 28 September 2026: at-the-money lognormal (Black) volatilities in percent a year; one-year periods paid at the end; caplet $`i`$ fixes at $`T_i`$. Many desks now quote rate options in normal volatility; the method is the same with a normal model underneath.
 
 ### Before solving: does an answer exist, and is it the only one?
 
-**Caplets.** For every positive quote $v_i$ and positive shape $g$, the integral under $k_i$ is positive, so $k_i$ exists, is positive and is unique. Edges: a zero quote gives a multiplier of zero, a forward that never moves; a fixed caplet has no quote to match.
+**Caplets.** For every positive quote $`v_i`$ and positive shape $`g`$, the integral under $`k_i`$ is positive, so $`k_i`$ exists, is positive and is unique. Edges: a zero quote gives a multiplier of zero, a forward that never moves; a fixed caplet has no quote to match.
 
-**Swaptions.** The loss is continuous in the knobs, so on any closed, bounded box of knobs it has a smallest value. The checks keep $c$ between 0.05 and 5, $\beta$ between 0 and 3 and $a$ above $-d$, but leave $a$ and $b$ unbounded, so there existence is observed, not proved.
+**Swaptions.** The loss is continuous in the knobs, so on any closed, bounded box of knobs it has a smallest value. The checks keep $`c`$ between 0.05 and 5, $`\beta`$ between 0 and 3 and $`a`$ above $`-d`$, but leave $`a`$ and $`b`$ unbounded, so there existence is observed, not proved.
 
-Nothing makes the smallest value unique. The checks reach it twice, by two unrelated searches from different starts, and agree to six decimals. For every $\beta \ge 0$ the matrix $e^{-\beta|T_i - T_j|}$ is a genuine correlation matrix, so every trial is a real model.
+Nothing makes the smallest value unique. The checks reach it twice, by two unrelated searches from different starts, and agree to six decimals. For every $`\beta \ge 0`$ the matrix $`e^{-\beta|T_i - T_j|}`$ is a genuine correlation matrix, so every trial is a real model.
 
-Edges: $\beta = 0$ makes all forwards move as one; $c \to 0$ flattens the hump into a line, and the closed-form integrals divide by $c$; a one-period swaption carries no information about correlation.
+Edges: $`\beta = 0`$ makes all forwards move as one; $`c \to 0`$ flattens the hump into a line, and the closed-form integrals divide by $`c`$; a one-period swaption carries no information about correlation.
 
-**Identification.** The fourth abcd number, $d$, is not a knob; Step 2 shows why.
+**Identification.** The fourth abcd number, $`d`$, is not a knob; Step 2 shows why.
 
 ---
 
@@ -113,63 +121,75 @@ Hence a division of labour: ten multipliers absorb the ten caplets exactly; four
 
 ### Step 1: caplets are matched exactly
 
-Price a caplet in units of the bond that pays on its payment date. Under those pricing weights, the forward measure of [Forward measures](02-forward-measures-for-rates.md), forward $i$ has no drift. Its logarithm at fixing is then a bell curve with variance $\int_0^{T_i}\sigma_i(t)^2\,dt$. Black-76 prices the caplet from a bell curve with variance $v_i^2 T_i$ ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). Same distribution, same price, whenever
+Price a caplet in units of the bond that pays on its payment date. Under those pricing weights, the forward measure of [Forward measures](02-forward-measures-for-rates.md), forward $`i`$ has no drift. Its logarithm at fixing is then a bell curve with variance $`\int_0^{T_i}\sigma_i(t)^2\,dt`$. Black-76 prices the caplet from a bell curve with variance $`v_i^2 T_i`$ ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). Same distribution, same price, whenever
 
-$$\int_0^{T_i} k_i^2\,g(T_i - t)^2\,dt = v_i^2\,T_i.$$
+```math
+\int_0^{T_i} k_i^2\,g(T_i - t)^2\,dt = v_i^2\,T_i.
+```
 
-Solve for $k_i$ and the formula above falls out. The match holds at every strike of that caplet, because the whole distribution matches. The checks confirm it with an integrator the fit never uses: Simpson's rule reprices all ten caplets with a largest miss of 0.0000000000 volatility points.
+Solve for $`k_i`$ and the formula above falls out. The match holds at every strike of that caplet, because the whole distribution matches. The checks confirm it with an integrator the fit never uses: Simpson's rule reprices all ten caplets with a largest miss of 0.0000000000 volatility points.
 
-### Step 2: the overall size of the shape cancels, so $d$ is fixed
+### Step 2: the overall size of the shape cancels, so $`d`$ is fixed
 
-Multiply $a$, $b$ and $d$ by the same number, say 1.5. The curve $g$ becomes 1.5 times itself. Every integral under $k_i$ grows by 1.5 squared, so every $k_i$ shrinks by 1.5. Their product, the actual volatility $\sigma_i(t)$, does not move. No quote can see the change.
+Multiply $`a`$, $`b`$ and $`d`$ by the same number, say 1.5. The curve $`g`$ becomes 1.5 times itself. Every integral under $`k_i`$ grows by 1.5 squared, so every $`k_i`$ shrinks by 1.5. Their product, the actual volatility $`\sigma_i(t)`$, does not move. No quote can see the change.
 
-So only three abcd numbers carry information: two ratios and the decay $c$. Fitting all four would send the optimiser along a direction where the loss is perfectly flat. The card fixes $d$ at 0.12. Scaling $a$, $b$ and $d$ by 1.5, the checks report the largest change in any fitted swaption volatility as 0.0000000000.
+So only three abcd numbers carry information: two ratios and the decay $`c`$. Fitting all four would send the optimiser along a direction where the loss is perfectly flat. The card fixes $`d`$ at 0.12. Scaling $`a`$, $`b`$ and $`d`$ by 1.5, the checks report the largest change in any fitted swaption volatility as 0.0000000000.
 
 ### Step 3: the swap rate as a frozen basket
 
 The swap rate is an exact weighted average of the forwards:
 
-$$S(t) = \sum_i w_i(t)\,L_i(t).$$
+```math
+S(t) = \sum_i w_i(t)\,L_i(t).
+```
 
-The weights $w_i(t)$ are ratios of discount factors, and they move with rates. Rebonato freezes them at today's values. A small change in the swap rate is then $\sum_i w_i\,dL_i$. Divide by $S$:
+The weights $`w_i(t)`$ are ratios of discount factors, and they move with rates. Rebonato freezes them at today's values. A small change in the swap rate is then $`\sum_i w_i\,dL_i`$. Divide by $`S`$:
 
-$$\frac{dS}{S} \approx \sum_i \frac{w_i L_i}{S}\,\frac{dL_i}{L_i}.$$
+```math
+\frac{dS}{S} \approx \sum_i \frac{w_i L_i}{S}\,\frac{dL_i}{L_i}.
+```
 
-Over a short time $dt$ the random part of $dL_i / L_i$ has variance $\sigma_i(t)^2\,dt$, and two forwards' random parts have covariance $\rho_{ij}\,\sigma_i(t)\sigma_j(t)\,dt$. A weighted sum's variance is the double sum of weights times covariances. Add it up to the swaption's expiry, freeze $L_i$ and $S$ at today's values too, and that is Rebonato's formula. Treat the swap rate as lognormal with that variance, and Black's swaption formula gives the price ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)).
+Over a short time $`dt`$ the random part of $`dL_i / L_i`$ has variance $`\sigma_i(t)^2\,dt`$, and two forwards' random parts have covariance $`\rho_{ij}\,\sigma_i(t)\sigma_j(t)\,dt`$. A weighted sum's variance is the double sum of weights times covariances. Add it up to the swaption's expiry, freeze $`L_i`$ and $`S`$ at today's values too, and that is Rebonato's formula. Treat the swap rate as lognormal with that variance, and Black's swaption formula gives the price ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)).
 
-A consistency check comes free. A one-period swaption is a caplet: one forward, weight 1, and the formula returns $v_p^2$ by Step 1. The checks put the five-into-one swaption at 19.630000% against the five-year caplet quote of 19.630000%.
+A consistency check comes free. A one-period swaption is a caplet: one forward, weight 1, and the formula returns $`v_p^2`$ by Step 1. The checks put the five-into-one swaption at 19.630000% against the five-year caplet quote of 19.630000%.
 
 <details>
 <summary>Detailed proof: what the frozen basket keeps and what it throws away</summary>
 
-Price swaptions in units of the annuity $A(t)$, the annuity measure of [The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md). Under it the swap rate has no drift, and a payer swaption is worth $A(0)\,\mathbb{E}^A[(S(T_p) - K)^+]$, where $K$ is the strike and $\mathbb{E}^A$ the average under those weights. Changing the unit changes drifts only, never the random parts, so the random part of each $dL_i$ is $L_i\,\sigma_i(t)\,dW_i$, with $dW_i$ the random kick to forward $i$ and $dW_i\,dW_j = \rho_{ij}\,dt$.
+Price swaptions in units of the annuity $`A(t)`$, the annuity measure of [The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md). Under it the swap rate has no drift, and a payer swaption is worth $`A(0)\,\mathbb{E}^A[(S(T_p) - K)^+]`$, where $`K`$ is the strike and $`\mathbb{E}^A`$ the average under those weights. Changing the unit changes drifts only, never the random parts, so the random part of each $`dL_i`$ is $`L_i\,\sigma_i(t)\,dW_i`$, with $`dW_i`$ the random kick to forward $`i`$ and $`dW_i\,dW_j = \rho_{ij}\,dt`$.
 
-Ito's product rule on $S = \sum_i w_i L_i$ gives
-$$dS = \sum_i \big(w_i\,dL_i + L_i\,dw_i + dw_i\,dL_i\big).$$
-The frozen basket keeps the first term and drops the other two, which are real: the weights are discount-factor ratios and move with the same forwards. The random part of $dS/S$ is then $\sum_i x_i(t)\,\sigma_i(t)\,dW_i$ with $x_i = w_i L_i / S$. Its variance rate is $\sum_{i,j} x_i x_j \rho_{ij}\sigma_i\sigma_j$. Replace each $x_i(t)$ by today's value $x_i(0)$, integrate from 0 to $T_p$, and the result is $\hat u^{\,2} T_p$.
+Ito's product rule on $`S = \sum_i w_i L_i`$ gives
 
-Two approximations so far: dropping the weight terms, and freezing the proportions. A third comes with Black's formula: a sum of lognormal forwards is not lognormal, so even the exact variance would not give the exact price. The result is exact when $n = 1$ and carries no error bound. Step 5 measures the error.
+$`\displaystyle dS = \sum_i \big(w_i\,dL_i + L_i\,dw_i + dw_i\,dL_i\big).`$
+
+The frozen basket keeps the first term and drops the other two, which are real: the weights are discount-factor ratios and move with the same forwards. The random part of $`dS/S`$ is then $`\sum_i x_i(t)\,\sigma_i(t)\,dW_i`$ with $`x_i = w_i L_i / S`$. Its variance rate is $`\sum_{i,j} x_i x_j \rho_{ij}\sigma_i\sigma_j`$. Replace each $`x_i(t)`$ by today's value $`x_i(0)`$, integrate from 0 to $`T_p`$, and the result is $`\hat u^{\,2} T_p`$.
+
+Two approximations so far: dropping the weight terms, and freezing the proportions. A third comes with Black's formula: a sum of lognormal forwards is not lognormal, so even the exact variance would not give the exact price. The result is exact when $`n = 1`$ and carries no error bound. Step 5 measures the error.
 
 </details>
 
 ### Step 4: fit four knobs to ten swaptions
 
-With the multipliers recomputed inside every evaluation, the loss depends on $a$, $b$, $c$ and $\beta$ only: the least-squares problem of [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md). Levenberg-Marquardt, with slopes found by nudging each knob, takes 10 accepted steps. Nelder-Mead, which uses no slopes and only compares losses at the five corners of a shrinking simplex, takes 576 loss evaluations from a different start. Both report $a$ = 0.020228, $b$ = 0.137257, $c$ = 0.796333, $\beta$ = 0.128525, loss 0.020388.
+With the multipliers recomputed inside every evaluation, the loss depends on $`a`$, $`b`$, $`c`$ and $`\beta`$ only: the least-squares problem of [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md). Levenberg-Marquardt, with slopes found by nudging each knob, takes 10 accepted steps. Nelder-Mead, which uses no slopes and only compares losses at the five corners of a shrinking simplex, takes 576 loss evaluations from a different start. Both report $`a`$ = 0.020228, $`b`$ = 0.137257, $`c`$ = 0.796333, $`\beta`$ = 0.128525, loss 0.020388.
 
 Speed comes from a closed form for the overlap integrals, checked against Simpson's rule for forwards 3 and 7 up to year 3: 0.06971338 both ways.
 
 <details>
 <summary>The closed form for the overlap integral</summary>
 
-Put $s = T_p - t$, so forward $i$'s time to fixing is $(T_i - T_p) + s$. Then $g(T_i - t) = (\alpha_i + b\,s)\,\varepsilon_i\,e^{-cs} + d$ with $\alpha_i = a + b(T_i - T_p)$ and $\varepsilon_i = e^{-c(T_i - T_p)}$. Multiply two and integrate term by term; everything reduces to three integrals, $m = 0, 1, 2$,
-$$M_m(\kappa) = \int_0^{T_p} s^m e^{-\kappa s}\,ds,$$
-taken at $\kappa = 2c$ and at $\kappa = c$. Integration by parts gives $M_0 = (1 - e^{-\kappa T_p})/\kappa$, $M_1 = (M_0 - T_p\,e^{-\kappa T_p})/\kappa$, $M_2 = (2M_1 - T_p^2 e^{-\kappa T_p})/\kappa$. The result:
-$$I_{ij} = \varepsilon_i\varepsilon_j\big(\alpha_i\alpha_j M_0(2c) + b(\alpha_i + \alpha_j)M_1(2c) + b^2 M_2(2c)\big) + d\big(\varepsilon_i(\alpha_i M_0(c) + bM_1(c)) + \varepsilon_j(\alpha_j M_0(c) + bM_1(c))\big) + d^2 T_p.$$
-The division by $\kappa$ is why $c$ is kept away from zero.
+Put $`s = T_p - t`$, so forward $`i`$'s time to fixing is $`(T_i - T_p) + s`$. Then $`g(T_i - t) = (\alpha_i + b\,s)\,\varepsilon_i\,e^{-cs} + d`$ with $`\alpha_i = a + b(T_i - T_p)`$ and $`\varepsilon_i = e^{-c(T_i - T_p)}`$. Multiply two and integrate term by term; everything reduces to three integrals, $`m = 0, 1, 2`$,
+
+$`\displaystyle M_m(\kappa) = \int_0^{T_p} s^m e^{-\kappa s}\,ds,`$
+
+taken at $`\kappa = 2c`$ and at $`\kappa = c`$. Integration by parts gives $`M_0 = (1 - e^{-\kappa T_p})/\kappa`$, $`M_1 = (M_0 - T_p\,e^{-\kappa T_p})/\kappa`$, $`M_2 = (2M_1 - T_p^2 e^{-\kappa T_p})/\kappa`$. The result:
+
+$`\displaystyle I_{ij} = \varepsilon_i\varepsilon_j\big(\alpha_i\alpha_j M_0(2c) + b(\alpha_i + \alpha_j)M_1(2c) + b^2 M_2(2c)\big) + d\big(\varepsilon_i(\alpha_i M_0(c) + bM_1(c)) + \varepsilon_j(\alpha_j M_0(c) + bM_1(c))\big) + d^2 T_p.`$
+
+The division by $`\kappa`$ is why $`c`$ is kept away from zero.
 
 </details>
 
-The fitted shape is not the one that manufactured the screen. The quotes were built from $a$ = 0.08, $b$ = 0.12, $c$ = 0.60, $\beta$ = 0.10, then nudged by up to a few tenths of a point, the way real quotes disagree with any four-number model. The nudges moved $a$ to 0.020228. For the ten-year forward the two shapes differ most at fixing, 16.50% against 20.21%, yet both reprice the screen closely: loss 0.047490 against the fit's 0.020388.
+The fitted shape is not the one that manufactured the screen. The quotes were built from $`a`$ = 0.08, $`b`$ = 0.12, $`c`$ = 0.60, $`\beta`$ = 0.10, then nudged by up to a few tenths of a point, the way real quotes disagree with any four-number model. The nudges moved $`a`$ to 0.020228. For the ten-year forward the two shapes differ most at fixing, 16.50% against 20.21%, yet both reprice the screen closely: loss 0.047490 against the fit's 0.020388.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -185,9 +205,11 @@ The orange line is the calibrated shape; the green line is the shape that manufa
 
 ### Step 5: measure the approximation by simulating the model
 
-Rebonato's formula stands in for the model's true swaption price; the only way to see its error is to price inside the model. The checks simulate forwards 5 to 10 up to year 5, in units of the bond paying at year 11 (the terminal measure). In those units forward $i$'s proportional drift per year is
+Rebonato's formula stands in for the model's true swaption price; the only way to see its error is to price inside the model. The checks simulate forwards 5 to 10 up to year 5, in units of the bond paying at year 11 (the terminal measure). In those units forward $`i`$'s proportional drift per year is
 
-$$-\,\sigma_i(t)\sum_{j=i+1}^{10}\frac{L_j\,\rho_{ij}\,\sigma_j(t)}{1 + L_j}$$
+```math
+-\,\sigma_i(t)\sum_{j=i+1}^{10}\frac{L_j\,\rho_{ij}\,\sigma_j(t)}{1 + L_j}
+```
 
 the cost of measuring every forward against the same far bond ([Forward measures](02-forward-measures-for-rates.md)). Twenty quarterly steps; each step's random moves carry exactly the covariance the closed-form integrals give, through a Cholesky factor (a lower-triangular matrix whose product with its own transpose is that covariance); 20,000 pairs of paths with opposite signs.
 
@@ -207,18 +229,18 @@ The one-into-two swaption: expiry in one year, a two-year swap on forwards 1 and
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| discount factors $P(0,2)$, $P(0,3)$ | $1/(1.030 \times 1.032)$; then divide by $1.034$ | 0.940769, 0.909835 |
-| annuity $A$ | $0.940769 + 0.909835$ | 1.850604 |
-| weights $w_1$, $w_2$ | $0.940769 / 1.850604$; $0.909835 / 1.850604$ | 0.508358, 0.491642 |
-| swap rate $S$ | $0.508358 \times 3.2\% + 0.491642 \times 3.4\%$ | 3.298328% |
-| multipliers $k_1$, $k_2$ | from the caplet quotes 22.10% and 22.96% | 1.258172, 1.263689 |
-| overlaps to year 1: $I_{11}$, $I_{12}$, $I_{22}$ | closed form above | 0.030854, 0.032778, 0.035169 |
-| correlation $\rho_{12}$ | $e^{-0.128525 \times 1}$ | 0.879392 |
-| forward 1 alone, $(w_1 L_1 k_1)^2 I_{11}$ | $(0.508358 \times 0.032 \times 1.258172)^2 \times 0.030854$ | 12.924796 millionths |
-| both cross terms, $2\,w_1 L_1 k_1\,w_2 L_2 k_2\,\rho_{12} I_{12}$ | same pieces, times 0.879392 and 0.032778 | 24.923925 millionths |
-| forward 2 alone, $(w_2 L_2 k_2)^2 I_{22}$ | $(0.491642 \times 0.034 \times 1.263689)^2 \times 0.035169$ | 15.692733 millionths |
+| discount factors $`P(0,2)`$, $`P(0,3)`$ | $`1/(1.030 \times 1.032)`$; then divide by $`1.034`$ | 0.940769, 0.909835 |
+| annuity $`A`$ | $`0.940769 + 0.909835`$ | 1.850604 |
+| weights $`w_1`$, $`w_2`$ | $`0.940769 / 1.850604`$; $`0.909835 / 1.850604`$ | 0.508358, 0.491642 |
+| swap rate $`S`$ | $`0.508358 \times 3.2\% + 0.491642 \times 3.4\%`$ | 3.298328% |
+| multipliers $`k_1`$, $`k_2`$ | from the caplet quotes 22.10% and 22.96% | 1.258172, 1.263689 |
+| overlaps to year 1: $`I_{11}`$, $`I_{12}`$, $`I_{22}`$ | closed form above | 0.030854, 0.032778, 0.035169 |
+| correlation $`\rho_{12}`$ | $`e^{-0.128525 \times 1}`$ | 0.879392 |
+| forward 1 alone, $`(w_1 L_1 k_1)^2 I_{11}`$ | $`(0.508358 \times 0.032 \times 1.258172)^2 \times 0.030854`$ | 12.924796 millionths |
+| both cross terms, $`2\,w_1 L_1 k_1\,w_2 L_2 k_2\,\rho_{12} I_{12}`$ | same pieces, times 0.879392 and 0.032778 | 24.923925 millionths |
+| forward 2 alone, $`(w_2 L_2 k_2)^2 I_{22}`$ | $`(0.491642 \times 0.034 \times 1.263689)^2 \times 0.035169`$ | 15.692733 millionths |
 | total | add the three | 53.541454 millionths |
-| divide by $T_p S^2$ | $S^2$ = 1087.897035 millionths, $T_p$ = 1; take the square root | **22.18%** |
+| divide by $`T_p S^2`$ | $`S^2`$ = 1087.897035 millionths, $`T_p`$ = 1; take the square root | **22.18%** |
 
 The model prices the one-into-two swaption at 22.18% against a screen quote of 22.19%: one hundredth of a point cheap. The cross terms are nearly half the total; with independent forwards that row would vanish.
 
@@ -229,7 +251,7 @@ Rows two to four are the one-into-ten swaption, quoted at 14.34% and fitted at 1
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | One common multiplier, 1.2067, for all ten forwards | caplets miss by up to 1.04 points | the shape alone cannot follow the jagged caplet quotes; per-forward multipliers can |
-| Correlation 1 between all forwards ($\beta = 0$) | 17.38% | ten forwards moving in lockstep never cancel; the basket wobbles as much as its parts |
+| Correlation 1 between all forwards ($`\beta = 0`$) | 17.38% | ten forwards moving in lockstep never cancel; the basket wobbles as much as its parts |
 | Each forward given its caplet volatility, flat through time | 16.33% | the far forwards are calm in the swaption's single year; their caplet volatilities average in the hump near their own fixing |
 | Swaption volatility as the weighted average of caplet volatilities | 19.71% | both errors at once: lockstep movement and the wrong time window |
 
@@ -629,9 +651,9 @@ ALL CHECKS PASS
 
 Lean proves three facts the method rests on, for every input that meets each fact's conditions.
 
-- Suppose the quote $v_i$, the date $T_i$ and the shape $g$ up to fixing are all positive. Then $k_i$ is positive, reprices its caplet exactly, and is the only positive number that does.
-- Suppose $a$, $b$ and $d$ are all multiplied by the same positive number. Then every $\sigma_i(t)$ stays the same at every time.
-- Take any $\beta \ge 0$ and any dates $T_i$. Then the matrix $\rho_{ij}$ has ones on its diagonal, and no weighted basket of forwards gets a negative variance.
+- Suppose the quote $`v_i`$, the date $`T_i`$ and the shape $`g`$ up to fixing are all positive. Then $`k_i`$ is positive, reprices its caplet exactly, and is the only positive number that does.
+- Suppose $`a`$, $`b`$ and $`d`$ are all multiplied by the same positive number. Then every $`\sigma_i(t)`$ stays the same at every time.
+- Take any $`\beta \ge 0`$ and any dates $`T_i`$. Then the matrix $`\rho_{ij}`$ has ones on its diagonal, and no weighted basket of forwards gets a negative variance.
 
 Rebonato's swaption formula, the fitted knobs, the simulation and every number are left to the Python and Rust checks.
 
@@ -800,21 +822,21 @@ theorem exp_abs_decay_is_correlation_matrix (n : ℕ) (T : Fin n → ℝ) (β : 
 
 > [!TIP]
 > **Try changing**
-> - **Guess first: faster-fading correlation.** Set $\beta$ to 0.30 in the one-into-ten line. Answer: 11.85%, down from 14.39%: the basket cancels more.
+> - **Guess first: faster-fading correlation.** Set $`\beta`$ to 0.30 in the one-into-ten line. Answer: 11.85%, down from 14.39%: the basket cancels more.
 > - **Guess first: raise one caplet.** Add 1 point to the five-year caplet quote and reprice the five-into-five swaption without refitting. Answer: 15.82%, up from 15.64%: one of five forwards got livelier.
 > - **Guess first: the knobs that made the screen.** Plug in 0.08, 0.12, 0.60, 0.10. Answer: loss 0.047490, more than twice the fit's 0.020388, yet the one-into-ten moves only from 14.39% to 14.26%.
-> - **Guess first: scale the shape.** Multiply $a$, $b$ and $d$ by 1.5. Answer: every swaption volatility changes by 0.0000000000. That is Step 2.
+> - **Guess first: scale the shape.** Multiply $`a`$, $`b`$ and $`d`$ by 1.5. Answer: every swaption volatility changes by 0.0000000000. That is Step 2.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Reading "exact on caplets" as evidence.** Ten multipliers can hit any ten positive quotes, so a perfect caplet fit is bought, not earned. The evidence lies in the swaption misses, here 0.12 points at worst, and in whether the four knobs stay put from one day's screen to the next. Small nudges to the quotes moved $a$ from 0.08 to 0.020228; a parameter that moves that easily measures little.
+> **Reading "exact on caplets" as evidence.** Ten multipliers can hit any ten positive quotes, so a perfect caplet fit is bought, not earned. The evidence lies in the swaption misses, here 0.12 points at worst, and in whether the four knobs stay put from one day's screen to the next. Small nudges to the quotes moved $`a`$ from 0.08 to 0.020228; a parameter that moves that easily measures little.
 >
 > - **Swaption volatility as an average of caplet volatilities.** For the one-into-ten it gives 19.71% against a fitted 14.39%. It ignores decorrelation and counts wobble from after the swaption has expired.
 > - **Treating the fitted misses as the model's pricing error.** The misses are measured through Rebonato's formula. The model's own five-into-five price, by simulation, implies 15.58%, not the formula's 15.64%.
-> - **Fitting $d$ as a fifth knob.** Scaling $a$, $b$, $d$ together changes nothing, so the slope table turns singular.
+> - **Fitting $`d`$ as a fifth knob.** Scaling $`a`$, $`b`$, $`d`$ together changes nothing, so the slope table turns singular.
 > - **Feeding flat cap volatilities in as caplet volatilities.** Every multiplier is then set to the wrong target; the fit stays exact, to the wrong numbers.
 
 ---

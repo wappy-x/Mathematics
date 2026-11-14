@@ -33,36 +33,42 @@ The line is the odometer reading each second: bending up to 5 s while the car sp
 
 ## The formula
 
-Notation first, in words. Reminder from [The derivative](01-the-derivative.md): $s'(t)$ is the rate of s per unit of t. Two primes, $s''(t)$, read "s double prime of t", is the derivative of $s'$; the other notation, $\frac{d^2 s}{dt^2}$, has its 2s count derivatives, not a square. Past three primes the count goes in brackets: $f^{(4)}$.
+Notation first, in words. Reminder from [The derivative](01-the-derivative.md): $`s'(t)`$ is the rate of s per unit of t. Two primes, $`s''(t)`$, read "s double prime of t", is the derivative of $`s'`$; the other notation, $`\frac{d^2 s}{dt^2}`$, has its 2s count derivatives, not a square. Past three primes the count goes in brackets: $`f^{(4)}`$.
 
-$$s''(t) = \lim_{h \to 0} \frac{s'(t+h) - s'(t)}{h}$$
+```math
+s''(t) = \lim_{h \to 0} \frac{s'(t+h) - s'(t)}{h}
+```
 
 **Read it aloud:** the change in velocity over a step h, divided by h, as h shrinks to zero.
 
 The same number comes straight from positions:
 
-$$s''(t) = \lim_{h \to 0} \frac{s(t+h) - 2\,s(t) + s(t-h)}{h^2}$$
+```math
+s''(t) = \lim_{h \to 0} \frac{s(t+h) - 2\,s(t) + s(t-h)}{h^2}
+```
 
 **Read it aloud:** distance gained in the window after t, minus distance gained in the window before, over the window squared.
 
-For the car, $s(t) = 1.5t^2 - 0.1t^3$ metres at $t$ seconds, from 0 to 10 s. Velocity $s'(t) = 3t - 0.3t^2$ m/s, acceleration $s''(t) = 3 - 0.6t$ m/s^2. At 7 s: 39.2 m, 6.3 m/s, −1.2 m/s^2.
+For the car, $`s(t) = 1.5t^2 - 0.1t^3`$ metres at $`t`$ seconds, from 0 to 10 s. Velocity $`s'(t) = 3t - 0.3t^2`$ m/s, acceleration $`s''(t) = 3 - 0.6t`$ m/s^2. At 7 s: 39.2 m, 6.3 m/s, −1.2 m/s^2.
 
-The bend has its own measure, **curvature** $\kappa$ (Greek kappa): for a graph $y = f(t)$, its turning per metre along it, with a second and a metre drawn the same length:
+The bend has its own measure, **curvature** $`\kappa`$ (Greek kappa): for a graph $`y = f(t)`$, its turning per metre along it, with a second and a metre drawn the same length:
 
-$$\kappa = \frac{\lvert f''\rvert}{\left(1 + (f')^2\right)^{3/2}}$$
+```math
+\kappa = \frac{\lvert f''\rvert}{\left(1 + (f')^2\right)^{3/2}}
+```
 
 **Read it aloud:** the size of the second derivative, shrunk by the graph's steepness.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s(t)$ | odometer reading, metres, at time t | 39.2 m at 7 s | — |
-| $t$ | seconds since the first lights | 7 s | past 5 s, braking |
-| $s'(t)$ | velocity: metres per second | 6.3 m/s at 7 s | a steeper graph |
-| $s''(t)$, $\frac{d^2 s}{dt^2}$ | acceleration: metres per second per second | −1.2 m/s^2 at 7 s | the graph bends up more |
-| $s'''(t)$ | the third derivative, jerk: m/s^3 | −0.6 m/s^3 at every instant | the acceleration climbs faster |
-| $h$ | the window: a small time step, never 0 | 1, 0.1, 0.01, 0.001 s | differences drift from the limit |
-| $f$, $f^{(4)}$ | any function; its fourth derivative | the odometer; 0 | — |
-| $\kappa$ | curvature: turning per unit length of graph | 0.004623 per m at 7 s | tighter bend, smaller circle |
+| $`s(t)`$ | odometer reading, metres, at time t | 39.2 m at 7 s | — |
+| $`t`$ | seconds since the first lights | 7 s | past 5 s, braking |
+| $`s'(t)`$ | velocity: metres per second | 6.3 m/s at 7 s | a steeper graph |
+| $`s''(t)`$, $`\frac{d^2 s}{dt^2}`$ | acceleration: metres per second per second | −1.2 m/s^2 at 7 s | the graph bends up more |
+| $`s'''(t)`$ | the third derivative, jerk: m/s^3 | −0.6 m/s^3 at every instant | the acceleration climbs faster |
+| $`h`$ | the window: a small time step, never 0 | 1, 0.1, 0.01, 0.001 s | differences drift from the limit |
+| $`f`$, $`f^{(4)}`$ | any function; its fourth derivative | the odometer; 0 | — |
+| $`\kappa`$ | curvature: turning per unit length of graph | 0.004623 per m at 7 s | tighter bend, smaller circle |
 
 ### When it holds
 
@@ -82,7 +88,7 @@ The derivative turns an odometer into a speedometer. Velocity is itself a functi
 
 ### Step 1: differentiate the car twice
 
-From the derivative card, $t^2$ has rate $2t$. For $t^3$, the binomial theorem gives $(t+h)^3 = t^3 + 3t^2h + 3th^2 + h^3$. Subtract $t^3$ and divide by h: $3t^2 + 3th + h^2$, heading for $3t^2$. So velocity is $s'(t) = 1.5 \times 2t - 0.1 \times 3t^2 = 3t - 0.3t^2$, acceleration $s''(t) = 3 - 0.6t$, and jerk $s'''(t) = -0.6$ at every instant; every later derivative is 0.
+From the derivative card, $`t^2`$ has rate $`2t`$. For $`t^3`$, the binomial theorem gives $`(t+h)^3 = t^3 + 3t^2h + 3th^2 + h^3`$. Subtract $`t^3`$ and divide by h: $`3t^2 + 3th + h^2`$, heading for $`3t^2`$. So velocity is $`s'(t) = 1.5 \times 2t - 0.1 \times 3t^2 = 3t - 0.3t^2`$, acceleration $`s''(t) = 3 - 0.6t`$, and jerk $`s'''(t) = -0.6`$ at every instant; every later derivative is 0.
 
 At 7 s the acceleration is 3 − 0.6 × 7 = −1.2 m/s^2.
 
@@ -90,25 +96,27 @@ At 7 s the acceleration is 3 − 0.6 × 7 = −1.2 m/s^2.
 
 Average velocity over a window is distance gained over h. Take it for the window after t and the window before, subtract, divide by h again: the second formula above, a difference of differences. Whole seconds at 7 s give 5.6 − 6.8 = −1.2. This central form is exact here at any window, because its error is set by the fourth derivative, which is 0.
 
-The one-sided form, $\frac{s(t+2h) - 2s(t+h) + s(t)}{h^2}$, is off by jerk times h: −1.8 at h = 1 s, −1.26 at 0.1 s, −1.206 at 0.01 s, closing on −1.2. To land within 0.001 of −1.2, any window under 0.001 / 0.6 of a second will do.
+The one-sided form, $`\frac{s(t+2h) - 2s(t+h) + s(t)}{h^2}`$, is off by jerk times h: −1.8 at h = 1 s, −1.26 at 0.1 s, −1.206 at 0.01 s, closing on −1.2. To land within 0.001 of −1.2, any window under 0.001 / 0.6 of a second will do.
 
 ### Step 3: the sign decides the bend
 
-The **tangent** at 7 s is the straight line touching the curve there, slope 6.3 m/s: where the car would be if it held its speed. Expanding the cubic, the gap between curve and tangent a time $h$ later is
+The **tangent** at 7 s is the straight line touching the curve there, slope 6.3 m/s: where the car would be if it held its speed. Expanding the cubic, the gap between curve and tangent a time $`h`$ later is
 
-$$s(7+h) - \big(s(7) + s'(7)\,h\big) = h^2 \left(\tfrac{1}{2}s''(7) + \tfrac{1}{6}s'''\,h\right) = h^2(-0.6 - 0.1h)$$
+```math
+s(7+h) - \big(s(7) + s'(7)\,h\big) = h^2 \left(\tfrac{1}{2}s''(7) + \tfrac{1}{6}s'''\,h\right) = h^2(-0.6 - 0.1h)
+```
 
-$h^2$ is never negative, and for small h the bracket is near half the second derivative. So the gap has the sign of $s''(7)$: negative, and the curve lies below its tangent. At 8 s the tangent predicts 45.5 m; the car is at 44.8 m, 0.7 m short.
+$`h^2`$ is never negative, and for small h the bracket is near half the second derivative. So the gap has the sign of $`s''(7)`$: negative, and the curve lies below its tangent. At 8 s the tangent predicts 45.5 m; the car is at 44.8 m, 0.7 m short.
 
 That is **concave down**: below the tangents, an upturned bowl. **Concave up** is the reverse, with a positive second derivative. The trip is concave up from 0 to 5 s, concave down from 5 to 10 s.
 
 ### Step 4: the switch is an inflection point
 
-An **inflection point** is where the second derivative changes sign. Here $3 - 0.6t$ crosses zero at 5 s, at 25 m, at top speed 7.5 m/s; the tangent there crosses the curve. The check finds 5 s by halving on raw second differences alone.
+An **inflection point** is where the second derivative changes sign. Here $`3 - 0.6t`$ crosses zero at 5 s, at 25 m, at top speed 7.5 m/s; the tangent there crosses the curve. The check finds 5 s by halving on raw second differences alone.
 
 ### Step 5: why curvature divides by the steepness
 
-Slope is the tan of the graph's angle (tan, the tangent ratio: rise over run). By [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md) and the [Chain rule](03-chain-rule.md), the angle turns $\frac{f''}{1 + (f')^2}$ per unit of t, while by Pythagoras one unit of t covers $\sqrt{1 + (f')^2}$ of graph. Their ratio is the curvature formula.
+Slope is the tan of the graph's angle (tan, the tangent ratio: rise over run). By [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md) and the [Chain rule](03-chain-rule.md), the angle turns $`\frac{f''}{1 + (f')^2}`$ per unit of t, while by Pythagoras one unit of t covers $`\sqrt{1 + (f')^2}`$ of graph. Their ratio is the curvature formula.
 
 At 7 s the steep graph spreads the bend thin: 0.004623 per metre. At 10 s the graph is flat and curvature equals the second derivative's size, 3 per metre. The check confirms both with circles through three nearby points, whose radius heads for 1 / curvature.
 
@@ -161,7 +169,7 @@ First line (orange): velocity, peaking at 7.5 m/s at 5 s. Second line (teal): ac
 | --- | --- | --- |
 | Squaring the velocity at 7 s | 39.69 | the 2 counts derivatives |
 | Reading the bend from velocity's sign | "bends up", since 6.3 > 0 | the bend follows acceleration, −1.2 |
-| Taking s'' = 0 as an inflection: $f(t) = t^4$ at 0 | 0.12 at −0.1, 0.000002 at 0, 0.12 at +0.1 | no sign change: concave up on both sides |
+| Taking s'' = 0 as an inflection: $`f(t) = t^4`$ at 0 | 0.12 at −0.1, 0.000002 at 0, 0.12 at +0.1 | no sign change: concave up on both sides |
 | Using s'' as curvature on a steep graph | 1.2 per m instead of 0.004623 | the steepness divisor was dropped |
 
 ---
@@ -542,7 +550,7 @@ example : (12 * 0 ^ 2 : ℚ) = 0 ∧ (12 * (-1 / 10) ^ 2 : ℚ) = 3 / 25 ∧ (12
 >
 > - **Squaring instead of differentiating twice.** 6.3 squared is 39.69, meaningless here.
 > - **Negative acceleration read as "going backwards".** Velocity stays positive until 10 s; only its size is falling.
-> - **Zero second derivative read as an inflection.** $f(t) = t^4$ bends up on both sides of 0.
+> - **Zero second derivative read as an inflection.** $`f(t) = t^4`$ bends up on both sides of 0.
 
 ---
 
@@ -552,7 +560,7 @@ example : (12 * 0 ^ 2 : ℚ) = 0 ∧ (12 * (-1 / 10) ^ 2 : ℚ) = 3 / 25 ∧ (12
 - **Ride comfort.** Lift and railway engineers limit jerk, the third derivative, which passengers feel as a lurch.
 - **Beams.** A loaded beam's bending is the second derivative of its sag: [Stress, strain and bending](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md).
 - **Track design.** Railway and road curves are joined so second derivatives match at each seam, or passengers feel a jolt: [Cubic splines](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/05-splines.md).
-- **Hanging chains.** The curve on [Hyperbolic functions](07-hyperbolic-functions.md) is concave up everywhere: cosh, the hyperbolic cosine $(e^t + e^{-t})/2$, is its own second derivative.
+- **Hanging chains.** The curve on [Hyperbolic functions](07-hyperbolic-functions.md) is concave up everywhere: cosh, the hyperbolic cosine $`(e^t + e^{-t})/2`$, is its own second derivative.
 
 > **Say it back**
 > The second derivative is the derivative of the derivative; for position, acceleration. Raw positions give it as a difference of differences over the window squared. Negative means the graph lies below its tangents: concave down. Where the sign changes is an inflection point, here 5 s into the trip. Curvature is the second derivative shrunk by the graph's steepness.

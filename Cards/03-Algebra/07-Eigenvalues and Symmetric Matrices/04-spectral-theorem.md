@@ -37,19 +37,21 @@ The line is the stretch. It bottoms out at 1.000000 at slope -1, the direction (
 
 A square matrix of real numbers equal to its own transpose (the same matrix with rows and columns swapped, marked with a superscript T) is **symmetric**. For every one of them:
 
-$$A = Q D Q^{\mathsf T}, \qquad Q^{\mathsf T} Q = I$$
+```math
+A = Q D Q^{\mathsf T}, \qquad Q^{\mathsf T} Q = I
+```
 
 **Read it aloud:** read the input in the perpendicular axes, stretch each coordinate by its axis's factor, read the answer back in the ordinary axes. Products act right to left.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the symmetric matrix | rows (2, 1) and (1, 2) | a bigger shared entry spreads the factors |
-| $Q$ | the axes, one unit long, as columns | columns $q_1$ and $q_2$ | it re-aims axes, never scales |
-| $D$ | the stretch factors down the diagonal, in column order | rows (3, 0) and (0, 1) | that axis pulls harder |
-| $I$ | the identity, which leaves every vector alone | rows (1, 0), (0, 1) | — |
-| $q_1$, $q_2$ | the axes as vectors | (0.707107, 0.707107), (0.707107, -0.707107) | — |
-| $\lambda$, $\mu$ | two stretch factors in the argument below | 3 and 1 | — |
-| $v$, $w$ | two directions kept on their own lines | (1, 1), (1, -1) | — |
+| $`A`$ | the symmetric matrix | rows (2, 1) and (1, 2) | a bigger shared entry spreads the factors |
+| $`Q`$ | the axes, one unit long, as columns | columns $`q_1`$ and $`q_2`$ | it re-aims axes, never scales |
+| $`D`$ | the stretch factors down the diagonal, in column order | rows (3, 0) and (0, 1) | that axis pulls harder |
+| $`I`$ | the identity, which leaves every vector alone | rows (1, 0), (0, 1) | — |
+| $`q_1`$, $`q_2`$ | the axes as vectors | (0.707107, 0.707107), (0.707107, -0.707107) | — |
+| $`\lambda`$, $`\mu`$ | two stretch factors in the argument below | 3 and 1 | — |
+| $`v`$, $`w`$ | two directions kept on their own lines | (1, 1), (1, -1) | — |
 
 A direction kept on its own line is an **eigenvector**, its multiplier the **eigenvalue** ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)); a matrix with perpendicular unit columns is **orthogonal** ([Gram-Schmidt](../06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)).
 
@@ -67,33 +69,41 @@ A direction kept on its own line is an **eigenvector**, its multiplier the **eig
 
 Take the matrix with rows (a, b) and (b, d) — symmetry repeats the b — and vectors v = (p, q), w = (r, t). Apply it to v and dot with w; apply it to w and dot with v. Both expand to a p r + b (q r + p t) + d q t. So
 
-$$(A v) \cdot w = v \cdot (A w)$$
+```math
+(A v) \cdot w = v \cdot (A w)
+```
 
 A symmetric matrix steps from one side of a dot product to the other. Everything below spends that.
 
 ### Step 1: two different factors force a right angle
 
-Say the matrix keeps v with factor $\lambda$ and w with factor $\mu$. Then $(A v) \cdot w = \lambda (v \cdot w)$ and $v \cdot (A w) = \mu (v \cdot w)$. Step 0 makes those equal, so $(\lambda - \mu)(v \cdot w) = 0$. A product is zero only if a factor is, so different factors force v · w = 0. For our table 3 and 1 differ, so (1, 1) · (1, -1) = 0 was no coincidence.
+Say the matrix keeps v with factor $`\lambda`$ and w with factor $`\mu`$. Then $`(A v) \cdot w = \lambda (v \cdot w)`$ and $`v \cdot (A w) = \mu (v \cdot w)`$. Step 0 makes those equal, so $`(\lambda - \mu)(v \cdot w) = 0`$. A product is zero only if a factor is, so different factors force v · w = 0. For our table 3 and 1 differ, so (1, 1) · (1, -1) = 0 was no coincidence.
 
 A repeated factor is the loose case: a plane is kept, and Gram-Schmidt picks a perpendicular pair from it.
 
 ### Step 2: at 2 by 2 the factors are always real
 
-The quadratic giving the factors is $\lambda^2 - (a + d)\lambda + (a d - b^2) = 0$, and under its square root sits
+The quadratic giving the factors is $`\lambda^2 - (a + d)\lambda + (a d - b^2) = 0`$, and under its square root sits
 
-$$(a + d)^2 - 4(a d - b^2) = (a - d)^2 + 4 b^2$$
+```math
+(a + d)^2 - 4(a d - b^2) = (a - d)^2 + 4 b^2
+```
 
 A square plus four times a square: never negative, so both roots are real. For our table it is 4, giving the 3.000000 and 1.000000 the code prints. Drop symmetry — rows (a, b) and (c, d) — and it reads (a - d)^2 + 4 b c, which can go negative: a quarter turn gives -4 and keeps no direction.
 
 ### Step 3: stack the axes, and the transpose does the inverse's work
 
-Shrink the two directions to length one and stand them up as the columns of $Q$. The matrix scales each column by that column's factor, which is $Q$ times $D$:
+Shrink the two directions to length one and stand them up as the columns of $`Q`$. The matrix scales each column by that column's factor, which is $`Q`$ times $`D`$:
 
-$$A Q = Q D$$
+```math
+A Q = Q D
+```
 
-Every entry of $Q^{\mathsf T} Q$ is one of those dot products: 1s down the diagonal, 0s off it. So $Q^{\mathsf T} Q = I$ and $Q^{\mathsf T}$ is the inverse of $Q$, written $Q^{-1}$, the matrix that undoes $Q$. Multiply on the right by it:
+Every entry of $`Q^{\mathsf T} Q`$ is one of those dot products: 1s down the diagonal, 0s off it. So $`Q^{\mathsf T} Q = I`$ and $`Q^{\mathsf T}`$ is the inverse of $`Q`$, written $`Q^{-1}`$, the matrix that undoes $`Q`$. Multiply on the right by it:
 
-$$A = Q D Q^{\mathsf T}$$
+```math
+A = Q D Q^{\mathsf T}
+```
 
 ```mermaid
 flowchart LR
@@ -103,7 +113,7 @@ flowchart LR
   B --> Y["the answer (10, 8)"]
 ```
 
-Coordinates in the new axes, stretch each, pieces back. Ordinary diagonalisation does the same but must compute $Q^{-1}$ ([Diagonalisation](03-diagonalisation-and-matrix-powers.md)); here it is a transpose.
+Coordinates in the new axes, stretch each, pieces back. Ordinary diagonalisation does the same but must compute $`Q^{-1}`$ ([Diagonalisation](03-diagonalisation-and-matrix-powers.md)); here it is a transpose.
 
 <details>
 <summary>Detailed proof: every size, not just 2 by 2</summary>
@@ -114,7 +124,7 @@ Coordinates in the new axes, stretch each, pieces back. Ordinary diagonalisation
 
 </details>
 
-The same line reads as 3 times a projection onto $q_1$ plus 1 times one onto $q_2$ ([Projection](../06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)).
+The same line reads as 3 times a projection onto $`q_1`$ plus 1 times one onto $`q_2`$ ([Projection](../06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)).
 
 ---
 
@@ -128,8 +138,8 @@ Rows (2, 1) and (1, 2), taken apart and put back.
 | road two, 40 multiply-then-shrink rounds from (1, 0.25) | slides onto the strongest axis | q1 = (0.707107, 0.707107) |
 | a quarter turn on, then dot | q2 = (0.707107, -0.707107); q1 · q2 | 0.000000 |
 | the stretch on each axis | A q1 = (2.121320, 2.121320); A q2 = q2 | 3.000000 and 1.000000 |
-| Q is orthogonal | rows of $Q^{\mathsf T} Q$ | (1.000000, 0.000000), (0.000000, 1.000000) |
-| rebuild | rows of $Q D Q^{\mathsf T}$ | **(2.000000, 1.000000), (1.000000, 2.000000)** |
+| Q is orthogonal | rows of $`Q^{\mathsf T} Q`$ | (1.000000, 0.000000), (0.000000, 1.000000) |
+| rebuild | rows of $`Q D Q^{\mathsf T}`$ | **(2.000000, 1.000000), (1.000000, 2.000000)** |
 | the mix (4, 2) through the axes | dotted to (4.242641, 1.414214), stretched to (12.727922, 1.414214), then Q | **(10.000000, 8.000000)** |
 | the same mix straight through | (2 × 4 + 1 × 2, 1 × 4 + 2 × 2) | **(10.000000, 8.000000)** |
 
@@ -149,7 +159,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Two roads share no arithmetic: the quadratic from the trace and determinant, and forty rounds of multiply-then-shrink, which uses neither. The rest checks the card in order — $Q^{\mathsf T} Q$ the identity, $Q D Q^{\mathsf T}$ rebuilding the table, the mix (4, 2) both ways, 4002 directions bracketing the factors. A second case runs the fleet table through the quadratic.
+Nothing is imported. Two roads share no arithmetic: the quadratic from the trace and determinant, and forty rounds of multiply-then-shrink, which uses neither. The rest checks the card in order — $`Q^{\mathsf T} Q`$ the identity, $`Q D Q^{\mathsf T}`$ rebuilding the table, the mix (4, 2) both ways, 4002 directions bracketing the factors. A second case runs the fleet table through the quadratic.
 
 ### Python
 
@@ -352,7 +362,7 @@ The two outputs match line for line.
 
 Lean proves the three general claims for every size of real symmetric matrix, not just 2 by 2.
 
-- Every symmetric matrix of real numbers splits as $A = Q D Q^{\mathsf T}$, with $Q^{\mathsf T} Q = I$ and the stretch factors down D's diagonal.
+- Every symmetric matrix of real numbers splits as $`A = Q D Q^{\mathsf T}`$, with $`Q^{\mathsf T} Q = I`$ and the stretch factors down D's diagonal.
 - Two eigenvectors with different eigenvalues meet at a right angle: their dot product is 0.
 - The stretch factors are real. Even when complex numbers are allowed, every eigenvalue has imaginary part zero.
 
@@ -485,7 +495,7 @@ example : (1 / 2 : ℝ) • (!![1, 1; 1, -1] * !![1, 0; 0, 3] * (!![1, 1; 1, -1]
 > **Try changing**
 > Guess first, then run it. An assert stops the program on a wrong number, and these are pinned to this table.
 > - **Start on the weak axis.** Set the start to `[1.0, -1.0]`. Multiply-then-shrink cannot climb: the table leaves that direction alone, so `big` reports 1.000000 and the first assert stops it.
-> - **Skip the shrink.** Make `unit` return its vector untouched. Q's columns grow, $Q^{\mathsf T} Q$ is no longer the identity, and the second assert stops it.
+> - **Skip the shrink.** Make `unit` return its vector untouched. Q's columns grow, $`Q^{\mathsf T} Q`$ is no longer the identity, and the second assert stops it.
 > - **Break the symmetry.** Set A's second row to `[0.0, 2.0]`. The factors collapse into one, the rebuild fails, the first assert stops it.
 
 ---

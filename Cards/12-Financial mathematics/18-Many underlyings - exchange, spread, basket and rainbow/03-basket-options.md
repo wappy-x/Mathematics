@@ -41,50 +41,60 @@ The one line is the payoff: flat at zero while the basket is at or below $100, t
 
 ## The formula
 
-Notation first, in words. The subscript 1 means Acme and 2 means Birch. $\mathbb{E}[\,\cdot\,]$ is the average over every possible future in the pretend world where every asset grows at the bank rate less its dividends ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), Step 0). Below, "the pilot" means that card, and "the house call" means its price for one share at these same numbers.
+Notation first, in words. The subscript 1 means Acme and 2 means Birch. $`\mathbb{E}[\,\cdot\,]`$ is the average over every possible future in the pretend world where every asset grows at the bank rate less its dividends ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), Step 0). Below, "the pilot" means that card, and "the house call" means its price for one share at these same numbers.
 
 The contract, exact and on its own unusable:
 
-$$B_T = w_1 S_1(T) + w_2 S_2(T), \qquad C = e^{-rT}\,\mathbb{E}\big[\max(B_T - K,\ 0)\big]$$
+```math
+B_T = w_1 S_1(T) + w_2 S_2(T), \qquad C = e^{-rT}\,\mathbb{E}\big[\max(B_T - K,\ 0)\big]
+```
 
 **Read it aloud:** the basket is the weighted total of the two shares on expiry day; the call is worth today the average of what it pays, pulled back a year.
 
-The moment-matched price. A quantity's moments are its average, its average square, its average cube and so on. First the basket's exact average and exact average square, where $F_1 = S_1 e^{(r-q)T}$ and $F_2 = S_2 e^{(r-q)T}$ are the two forward prices:
+The moment-matched price. A quantity's moments are its average, its average square, its average cube and so on. First the basket's exact average and exact average square, where $`F_1 = S_1 e^{(r-q)T}`$ and $`F_2 = S_2 e^{(r-q)T}`$ are the two forward prices:
 
-$$M_1 = w_1F_1 + w_2F_2$$
+```math
+M_1 = w_1F_1 + w_2F_2
+```
 
-$$M_2 = w_1^2F_1^2\,e^{\sigma_1^2T} + w_2^2F_2^2\,e^{\sigma_2^2T} + 2\,w_1w_2F_1F_2\,e^{\rho\,\sigma_1\sigma_2T}$$
+```math
+M_2 = w_1^2F_1^2\,e^{\sigma_1^2T} + w_2^2F_2^2\,e^{\sigma_2^2T} + 2\,w_1w_2F_1F_2\,e^{\rho\,\sigma_1\sigma_2T}
+```
 
 Then the single lognormal share with that average and that average square, and the ordinary call on it:
 
-$$v = \ln\frac{M_2}{M_1^2}, \qquad \sigma_B = \sqrt{v/T}, \qquad C \approx e^{-rT}\big[M_1N(d_1) - K\,N(d_2)\big]$$
+```math
+v = \ln\frac{M_2}{M_1^2}, \qquad \sigma_B = \sqrt{v/T}, \qquad C \approx e^{-rT}\big[M_1N(d_1) - K\,N(d_2)\big]
+```
 
-$$d_1 = \frac{\ln(M_1/K) + \tfrac12 v}{\sqrt{v}}, \qquad d_2 = d_1 - \sqrt{v}$$
+```math
+d_1 = \frac{\ln(M_1/K) + \tfrac12 v}{\sqrt{v}}, \qquad d_2 = d_1 - \sqrt{v}
+```
 
 **Read it aloud:** work out what the basket averages at expiry and how widely it spreads, pretend it is one share with exactly that average and spread, and price a plain call on the pretend share.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$ | the basket call's price today | $8.22 | — |
-| $B_T$ | the basket's value on expiry day | starts at $100 | — |
-| $w_1$, $w_2$ | shares of Acme and Birch in the basket, fixed on day one | 0.5 and 0.5 | rises: more basket |
-| $S_1$, $S_2$, $F_1$, $F_2$, $F$ | prices today; forward prices, today's grown at $r - q$ (F when both are equal) | $100; $103.05 | rises |
-| $K$ | the strike: the level the whole basket must beat | $100 | falls |
-| $\sigma_1$, $\sigma_2$ | each share's volatility: the yearly spread of its log price | 20% | rises, diluted by the weight |
-| $\rho$ | the correlation between the two shares' log moves | 0.5 | rises: less cancelling, wider basket |
-| $r$, $q$, $T$ | bank rate, dividend yield, years to expiry | 5%, 2%, 1 | as for one share |
-| $Z_1$, $Z_2$; $a$, $k$, $s$ | two independent bell-curve draws, one per share; in Step 5, Birch's scale, the strike left for Birch, Birch's spread left once Acme's draw is fixed | — | — |
-| $M_1$, $M_2$, $M_3$ | the basket's exact average, average square, average cube | $103.05; 10942.29 | $M_2$ rises: wider |
-| $v$, $\sigma_B$ | the fitted share's total log-variance; its volatility | 0.030050; 17.33% | rises |
-| $d_1$, $d_2$, $N(x)$, $e^{-rT}$ | the pilot's cut-offs; bell-curve area left of x; discount | 0.2597, 0.0864 | — |
+| $`C`$ | the basket call's price today | $8.22 | — |
+| $`B_T`$ | the basket's value on expiry day | starts at $100 | — |
+| $`w_1`$, $`w_2`$ | shares of Acme and Birch in the basket, fixed on day one | 0.5 and 0.5 | rises: more basket |
+| $`S_1`$, $`S_2`$, $`F_1`$, $`F_2`$, $`F`$ | prices today; forward prices, today's grown at $`r - q`$ (F when both are equal) | $100; $103.05 | rises |
+| $`K`$ | the strike: the level the whole basket must beat | $100 | falls |
+| $`\sigma_1`$, $`\sigma_2`$ | each share's volatility: the yearly spread of its log price | 20% | rises, diluted by the weight |
+| $`\rho`$ | the correlation between the two shares' log moves | 0.5 | rises: less cancelling, wider basket |
+| $`r`$, $`q`$, $`T`$ | bank rate, dividend yield, years to expiry | 5%, 2%, 1 | as for one share |
+| $`Z_1`$, $`Z_2`$; $`a`$, $`k`$, $`s`$ | two independent bell-curve draws, one per share; in Step 5, Birch's scale, the strike left for Birch, Birch's spread left once Acme's draw is fixed | — | — |
+| $`M_1`$, $`M_2`$, $`M_3`$ | the basket's exact average, average square, average cube | $103.05; 10942.29 | $`M_2`$ rises: wider |
+| $`v`$, $`\sigma_B`$ | the fitted share's total log-variance; its volatility | 0.030050; 17.33% | rises |
+| $`d_1`$, $`d_2`$, $`N(x)`$, $`e^{-rT}`$ | the pilot's cut-offs; bell-curve area left of x; discount | 0.2597, 0.0864 | — |
 
-The correlation appears in one place only: the last exponent of $M_2$. Everything the basket knows about the two shares moving together enters there.
+The correlation appears in one place only: the last exponent of $`M_2`$. Everything the basket knows about the two shares moving together enters there.
 
 ### When it holds
 
-- **Each share lognormal, volatilities and correlation constant.** Real correlation rises in a crash. A basket put, which pays in a crash, priced at one fixed $\rho$ is then too cheap.
-- **Correlation that can happen.** Any $\rho$ from −1 to +1 is possible for two shares. With three or more, some mixes of pairwise correlations are impossible, and the simulation's factoring step fails.
-- **A basket close to lognormal.** True when correlation is positive and the volatilities are similar. At $\rho = -1$ moment matching is 20 cents too dear; with unequal volatilities the gap grows too.
+- **Each share lognormal, volatilities and correlation constant.** Real correlation rises in a crash. A basket put, which pays in a crash, priced at one fixed $`\rho`$ is then too cheap.
+- **Correlation that can happen.** Any $`\rho`$ from −1 to +1 is possible for two shares. With three or more, some mixes of pairwise correlations are impossible, and the simulation's factoring step fails.
+- **A basket close to lognormal.** True when correlation is positive and the volatilities are similar. At $`\rho = -1`$ moment matching is 20 cents too dear; with unequal volatilities the gap grows too.
 - **Fixed weights and one expiry date.** A basket that is rebalanced, or averaged over dates, is a different contract.
 
 ---
@@ -97,57 +107,61 @@ Any option's price is its average payoff in the pretend world, pulled back to to
 
 ### Step 1: a sum of lognormals is not lognormal
 
-Take the extreme case first: $\rho = -1$, Birch always moving opposite Acme. One draw $Z_1$ then drives both, and the basket is half of $F e^{-\sigma^2T/2}$ times $e^{\sigma\sqrt{T}Z_1} + e^{-\sigma\sqrt{T}Z_1}$. A number plus its reciprocal is never below 2. So the basket never ends below $101.005017.
+Take the extreme case first: $`\rho = -1`$, Birch always moving opposite Acme. One draw $`Z_1`$ then drives both, and the basket is half of $`F e^{-\sigma^2T/2}`$ times $`e^{\sigma\sqrt{T}Z_1} + e^{-\sigma\sqrt{T}Z_1}`$. A number plus its reciprocal is never below 2. So the basket never ends below $101.005017.
 
 A lognormal share can end below any positive level: its log is a bell curve, which reaches every value. A quantity with a hard floor above zero is not lognormal. That settles it for one case.
 
-For the house correlation, 0.5, count moments. A lognormal is fixed by its average and average square; its average cube then follows, as $M_1^3(M_2/M_1^2)^3$. The basket's own average cube is 1197398.1535. The lognormal with the basket's first two moments has 1197396.9562. The two differ, so the basket is not that lognormal, and so not any lognormal.
+For the house correlation, 0.5, count moments. A lognormal is fixed by its average and average square; its average cube then follows, as $`M_1^3(M_2/M_1^2)^3`$. The basket's own average cube is 1197398.1535. The lognormal with the basket's first two moments has 1197396.9562. The two differ, so the basket is not that lognormal, and so not any lognormal.
 
 They part company in the seventh digit. The basket is not lognormal, but at this correlation it is very close, which is why the approximation works.
 
 ### Step 2: the first two moments are exact
 
-The average is the easy part: each share averages its forward, so $M_1 = w_1F_1 + w_2F_2$ = 103.045453.
+The average is the easy part: each share averages its forward, so $`M_1 = w_1F_1 + w_2F_2`$ = 103.045453.
 
-The average square multiplies the basket by itself, giving four products. The product of two lognormals is lognormal, since logs add. Its average is the two forwards times one correction, $e^{\rho\sigma_1\sigma_2T}$, set by how the two logs move together. A share times itself gets $e^{\sigma^2T}$.
+The average square multiplies the basket by itself, giving four products. The product of two lognormals is lognormal, since logs add. Its average is the two forwards times one correction, $`e^{\rho\sigma_1\sigma_2T}`$, set by how the two logs move together. A share times itself gets $`e^{\sigma^2T}`$.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-Write $S_i(T) = F_i\,e^{-\frac12\sigma_i^2T + \sigma_i\sqrt{T}X_i}$ with $X_1 = Z_1$ and $X_2 = \rho Z_1 + \sqrt{1-\rho^2}\,Z_2$. The sum $Y = \sigma_1\sqrt{T}X_1 + \sigma_2\sqrt{T}X_2$ is a bell curve with mean zero and variance $\sigma_1^2T + \sigma_2^2T + 2\rho\sigma_1\sigma_2T$ ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). A bell curve with variance $s^2$ has $\mathbb{E}[e^{Y}] = e^{s^2/2}$. So
-$$\mathbb{E}[S_1(T)S_2(T)] = F_1F_2\,e^{-\frac12\sigma_1^2T - \frac12\sigma_2^2T}\,e^{\frac12(\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2)T} = F_1F_2\,e^{\rho\sigma_1\sigma_2T}.$$
-Set the two shares equal and $\rho = 1$ to get $F^2e^{\sigma^2T}$. The average cube is the same step on three factors: one correction for each of the three pairs.
+Write $`S_i(T) = F_i\,e^{-\frac12\sigma_i^2T + \sigma_i\sqrt{T}X_i}`$ with $`X_1 = Z_1`$ and $`X_2 = \rho Z_1 + \sqrt{1-\rho^2}\,Z_2`$. The sum $`Y = \sigma_1\sqrt{T}X_1 + \sigma_2\sqrt{T}X_2`$ is a bell curve with mean zero and variance $`\sigma_1^2T + \sigma_2^2T + 2\rho\sigma_1\sigma_2T`$ ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). A bell curve with variance $`s^2`$ has $`\mathbb{E}[e^{Y}] = e^{s^2/2}`$. So
+
+$`\displaystyle \mathbb{E}[S_1(T)S_2(T)] = F_1F_2\,e^{-\frac12\sigma_1^2T - \frac12\sigma_2^2T}\,e^{\frac12(\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2)T} = F_1F_2\,e^{\rho\sigma_1\sigma_2T}.`$
+
+Set the two shares equal and $`\rho = 1`$ to get $`F^2e^{\sigma^2T}`$. The average cube is the same step on three factors: one correction for each of the three pairs.
 
 </details>
 
-At the house numbers the four products group into three parts: Acme with itself, 2762.927295; Birch with itself, 2762.927295; the cross part, 5416.435338. The cross part is about half of $M_2$ = 10942.289929, and it is the only part that sees $\rho$.
+At the house numbers the four products group into three parts: Acme with itself, 2762.927295; Birch with itself, 2762.927295; the cross part, 5416.435338. The cross part is about half of $`M_2`$ = 10942.289929, and it is the only part that sees $`\rho`$.
 
 ### Step 3: fit one lognormal share and price it
 
-A lognormal share with average $M_1$ and total log-variance $v$ has average square $M_1^2e^{v}$. Setting that equal to $M_2$ gives $v = \ln(M_2/M_1^2)$ = 0.030050, a volatility of 17.33 percent. Each share alone has 20.
+A lognormal share with average $`M_1`$ and total log-variance $`v`$ has average square $`M_1^2e^{v}`$. Setting that equal to $`M_2`$ gives $`v = \ln(M_2/M_1^2)`$ = 0.030050, a volatility of 17.33 percent. Each share alone has 20.
 
-A call on a lognormal quantity whose average at expiry is $M_1$ is the pilot's formula with $M_1$ in place of $Se^{(r-q)T}$: the share half $M_1N(d_1)$ minus the cash half $KN(d_2)$, discounted. That is the formula above. It is exactly right whenever the basket really is lognormal: at $\rho = 1$ with equal volatilities it returns the house call, 9.227006.
+A call on a lognormal quantity whose average at expiry is $`M_1`$ is the pilot's formula with $`M_1`$ in place of $`Se^{(r-q)T}`$: the share half $`M_1N(d_1)`$ minus the cash half $`KN(d_2)`$, discounted. That is the formula above. It is exactly right whenever the basket really is lognormal: at $`\rho = 1`$ with equal volatilities it returns the house call, 9.227006.
 
 ### Step 4: simulate the two shares together
 
-The average can also be sampled. Draw two independent bell-curve numbers $Z_1$ and $Z_2$. Give Acme $Z_1$. Give Birch $\rho Z_1 + \sqrt{1-\rho^2}\,Z_2$: a share $\rho$ of Acme's draw plus a fresh piece. Independent variances add, so Birch's draw has variance $\rho^2 + (1 - \rho^2) = 1$ and correlation $\rho$ with Acme's. That mixing recipe is the two-share case of the Cholesky factor ([Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md)).
+The average can also be sampled. Draw two independent bell-curve numbers $`Z_1`$ and $`Z_2`$. Give Acme $`Z_1`$. Give Birch $`\rho Z_1 + \sqrt{1-\rho^2}\,Z_2`$: a share $`\rho`$ of Acme's draw plus a fresh piece. Independent variances add, so Birch's draw has variance $`\rho^2 + (1 - \rho^2) = 1`$ and correlation $`\rho`$ with Acme's. That mixing recipe is the two-share case of the Cholesky factor ([Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md)).
 
 Build both shares, add them with the weights, record the payoff, repeat, average, discount. Nothing is assumed about the basket's shape. The cost is noise: 400,000 draws give 8.228716 with a standard error (the typical size of the sampling wobble) of 0.018879, which shrinks like one over the square root of the number of draws.
 
 ### Step 5: the referee, an exact integral
 
-Freeze Acme's draw $Z_1$. Acme's price is then a number, and Birch is one lognormal share. The basket call becomes a plain call on Birch with strike $K$ minus Acme's part, which has a closed form. What remains is an average over the single draw $Z_1$, done by Simpson's rule on 2,000 slices. It gives 8.217922, and 1,000 slices give the same to six decimals.
+Freeze Acme's draw $`Z_1`$. Acme's price is then a number, and Birch is one lognormal share. The basket call becomes a plain call on Birch with strike $`K`$ minus Acme's part, which has a closed form. What remains is an average over the single draw $`Z_1`$, done by Simpson's rule on 2,000 slices. It gives 8.217922, and 1,000 slices give the same to six decimals.
 
 <details>
 <summary>Detailed proof: the inner call in closed form</summary>
 
-Given $Z_1 = z$, Acme's part is $c = w_1F_1e^{-\frac12\sigma_1^2T + \sigma_1\sqrt{T}z}$ and Birch's part is $a\,e^{sZ_2}$, with $a = w_2F_2e^{-\frac12\sigma_2^2T + \rho\sigma_2\sqrt{T}z}$ and $s = \sigma_2\sqrt{T}\sqrt{1-\rho^2}$. The payoff is $\max(a e^{sZ_2} - k,\ 0)$ with $k = K - c$.
+Given $`Z_1 = z`$, Acme's part is $`c = w_1F_1e^{-\frac12\sigma_1^2T + \sigma_1\sqrt{T}z}`$ and Birch's part is $`a\,e^{sZ_2}`$, with $`a = w_2F_2e^{-\frac12\sigma_2^2T + \rho\sigma_2\sqrt{T}z}`$ and $`s = \sigma_2\sqrt{T}\sqrt{1-\rho^2}`$. The payoff is $`\max(a e^{sZ_2} - k,\ 0)`$ with $`k = K - c`$.
 
-If $k \le 0$ the call always pays, and its average is $a e^{s^2/2} - k$.
+If $`k \le 0`$ the call always pays, and its average is $`a e^{s^2/2} - k`$.
 
-If $k > 0$, it pays when $Z_2 > b$ with $b = \ln(k/a)/s$. The cash half is $k$ times the chance $Z_2 > b$, which is $kN(-b)$. The share half is $a$ times the average of $e^{sZ_2}$ over $Z_2 > b$. Completing the square, $e^{sz}e^{-z^2/2} = e^{s^2/2}e^{-(z-s)^2/2}$: the bell curve slides by $s$, as in the pilot's Step 3, and the share half is $a e^{s^2/2}N(s - b)$. So
-$$\mathbb{E}\big[\max(ae^{sZ_2} - k, 0)\big] = a\,e^{s^2/2}\,N(s - b) - k\,N(-b).$$
-The price is $e^{-rT}$ times the average of this over $z$, weighted by the bell curve's height. The integrand is smooth, so Simpson's rule converges fast. This conditioning idea is Curran's (1994).
+If $`k > 0`$, it pays when $`Z_2 > b`$ with $`b = \ln(k/a)/s`$. The cash half is $`k`$ times the chance $`Z_2 > b`$, which is $`kN(-b)`$. The share half is $`a`$ times the average of $`e^{sZ_2}`$ over $`Z_2 > b`$. Completing the square, $`e^{sz}e^{-z^2/2} = e^{s^2/2}e^{-(z-s)^2/2}`$: the bell curve slides by $`s`$, as in the pilot's Step 3, and the share half is $`a e^{s^2/2}N(s - b)`$. So
+
+$`\displaystyle \mathbb{E}\big[\max(ae^{sZ_2} - k, 0)\big] = a\,e^{s^2/2}\,N(s - b) - k\,N(-b).`$
+
+The price is $`e^{-rT}`$ times the average of this over $`z`$, weighted by the bell curve's height. The integrand is smooth, so Simpson's rule converges fast. This conditioning idea is Curran's (1994).
 
 </details>
 
@@ -165,7 +179,7 @@ xychart-beta
     line [2.90, 4.54, 5.54, 6.35, 7.04, 7.66, 8.22, 8.74, 9.23]
 ```
 
-Orange: moment matching. Green: the exact integral. They are one line except toward the left, where the basket's floor makes the fitted lognormal wrong: it gives a 0.147628 chance of ending below $100 to a basket that never can, and prices the call at $3.10 against the true $2.90. At $\rho = -1$ the true price is plain arithmetic: the call always pays, so it is worth $e^{-rT}(M_1 - K)$ = 2.896925.
+Orange: moment matching. Green: the exact integral. They are one line except toward the left, where the basket's floor makes the fitted lognormal wrong: it gives a 0.147628 chance of ending below $100 to a basket that never can, and prices the call at $3.10 against the true $2.90. At $`\rho = -1`$ the true price is plain arithmetic: the call always pays, so it is worth $`e^{-rT}(M_1 - K)`$ = 2.896925.
 
 Now the claim. Each share's volatility can be read from that share's own traded options. Correlation mostly cannot: it is estimated from past prices, and the estimate changes with the window chosen. Take a doubt of 0.2 either way on correlation and one vol point either way on Acme's volatility:
 
@@ -186,18 +200,18 @@ Acme and Birch: each $100 today, 20% volatility, 2% dividend yield; correlation 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| each forward, $F$ | $100\,e^{0.05 - 0.02}$ | 103.045453 |
-| $M_1$ | $0.5F + 0.5F$ | 103.045453 |
-| own parts of $M_2$ | $0.25F^2e^{0.04}$, twice | 2762.927295 each |
-| cross part of $M_2$ | $2 \times 0.25F^2e^{0.5 \times 0.04}$ | 5416.435338 |
-| $M_2$ | sum of the three | 10942.289929 |
-| $M_2/M_1^2$ | ratio | 1.030506 |
-| $v$ | $\ln 1.030506$ | 0.030050 |
-| $\sigma_B$ | $\sqrt{0.030050}$ | 0.173349 |
-| $d_1$ | $(0.03 + 0.030050/2)/0.173349$ | 0.259736 |
-| $d_2$ | $d_1 - 0.173349$ | 0.086386 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.602466, 0.534420 |
-| **moment-matched call** | $e^{-0.05}(103.045453 \times 0.602466 - 100 \times 0.534420)$ | **8.218018** |
+| each forward, $`F`$ | $`100\,e^{0.05 - 0.02}`$ | 103.045453 |
+| $`M_1`$ | $`0.5F + 0.5F`$ | 103.045453 |
+| own parts of $`M_2`$ | $`0.25F^2e^{0.04}`$, twice | 2762.927295 each |
+| cross part of $`M_2`$ | $`2 \times 0.25F^2e^{0.5 \times 0.04}`$ | 5416.435338 |
+| $`M_2`$ | sum of the three | 10942.289929 |
+| $`M_2/M_1^2`$ | ratio | 1.030506 |
+| $`v`$ | $`\ln 1.030506`$ | 0.030050 |
+| $`\sigma_B`$ | $`\sqrt{0.030050}`$ | 0.173349 |
+| $`d_1`$ | $`(0.03 + 0.030050/2)/0.173349`$ | 0.259736 |
+| $`d_2`$ | $`d_1 - 0.173349`$ | 0.086386 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.602466, 0.534420 |
+| **moment-matched call** | $`e^{-0.05}(103.045453 \times 0.602466 - 100 \times 0.534420)`$ | **8.218018** |
 | exact integral | Step 5 | 8.217922 |
 | simulation | 400,000 draws | 8.228716 ± 0.018879 |
 
@@ -217,9 +231,9 @@ Greeks measure how far the price moves when one input moves. Each is found by bu
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Buy two calls, half each, or price the basket at the 20% average vol | 9.227006 | No cancelling: the price of $\rho = 1$ |
+| Buy two calls, half each, or price the basket at the 20% average vol | 9.227006 | No cancelling: the price of $`\rho = 1`$ |
 | Correlation left at 0 | 7.039496 | The cross part loses its lift |
-| Today's prices in $M_1$, not forwards | 6.570132 | The basket's average at expiry is too low |
+| Today's prices in $`M_1`$, not forwards | 6.570132 | The basket's average at expiry is too low |
 | No discount | 8.639365 | The payoff arrives in a year, not now |
 | Correlation matrix used as the mixer in the simulation | 8.648267 ± 0.019857 | Its rows are not length one: Birch's vol becomes 0.223607, the correlation 0.447214 |
 
@@ -229,11 +243,11 @@ The code prints every one.
 
 ## Code, from first principles, and it actually runs
 
-The scripts import only log, exp, square root, sine, cosine and pi. The bell-curve area is Marsaglia's series written out; the random numbers come from a hand-written generator (splitmix64) turned into bell-curve draws by the Box–Muller recipe. Three independent roads reach the price: the moment formula, the simulation, and the conditional integral. Two closed forms referee the ends: the house call at $\rho = 1$ and the floor case at $\rho = -1$. The Greeks are bumped on two roads.
+The scripts import only log, exp, square root, sine, cosine and pi. The bell-curve area is Marsaglia's series written out; the random numbers come from a hand-written generator (splitmix64) turned into bell-curve draws by the Box–Muller recipe. Three independent roads reach the price: the moment formula, the simulation, and the conditional integral. Two closed forms referee the ends: the house call at $`\rho = 1`$ and the floor case at $`\rho = -1`$. The Greeks are bumped on two roads.
 
-The asserts: simulation within three standard errors of the integral; the integral unchanged when its slices are halved; both roads at $\rho = 1$ equal to the typed-in house call; the integral at $\rho = -1$ equal to $e^{-rT}(M_1 - K)$, with moment matching more than 10 cents above it; the two roads' correlation Greek and price within a tenth of a cent.
+The asserts: simulation within three standard errors of the integral; the integral unchanged when its slices are halved; both roads at $`\rho = 1`$ equal to the typed-in house call; the integral at $`\rho = -1`$ equal to $`e^{-rT}(M_1 - K)`$, with moment matching more than 10 cents above it; the two roads' correlation Greek and price within a tenth of a cent.
 
-Each was broken on purpose (drop the $\sqrt{1-\rho^2}$, mix with the raw matrix, zero the cross correlation, drop the slide factor) and an assert stopped the run each time.
+Each was broken on purpose (drop the $`\sqrt{1-\rho^2}`$, mix with the raw matrix, zero the cross correlation, drop the slide factor) and an assert stopped the run each time.
 
 ### Python
 
@@ -660,12 +674,12 @@ The two outputs match line for line.
 
 Lean proves Step 2's exact moments, Step 3's fit and Step 1's floor case, for two lognormal shares.
 
-- Take Acme and Birch lognormal, Birch's draw mixed as in Step 4, and any $\rho$ from −1 to +1. Then the basket's exact average is $M_1$, and its exact average square is $M_2$.
-- Suppose also that both weights and both forwards are above zero. Then the fitted share, with $v = \ln(M_2/M_1^2)$, has the basket's average and average square.
-- Suppose the weights, forwards, volatilities and $T$ are all above zero, and $\rho = -1$. Then the basket's log is no bell curve, so the basket is not lognormal.
+- Take Acme and Birch lognormal, Birch's draw mixed as in Step 4, and any $`\rho`$ from −1 to +1. Then the basket's exact average is $`M_1`$, and its exact average square is $`M_2`$.
+- Suppose also that both weights and both forwards are above zero. Then the fitted share, with $`v = \ln(M_2/M_1^2)`$, has the basket's average and average square.
+- Suppose the weights, forwards, volatilities and $`T`$ are all above zero, and $`\rho = -1`$. Then the basket's log is no bell curve, so the basket is not lognormal.
 - Take Acme ending at $130 and Birch at $80, half of each. Then the basket is $105, the call pays $5, and two half-calls pay $15.
 - Take the basket at 80, 85 and so on up to 130. Then the call pays 0, 0, 0, 0, 0, 5, 10, 15, 20, 25 and 30.
-- Take $\rho = 0.5$. Then Birch's draw has variance $0.5^2 + (1 - 0.5^2) = 1$.
+- Take $`\rho = 0.5`$. Then Birch's draw has variance $`0.5^2 + (1 - 0.5^2) = 1`$.
 
 The prices, the simulation, the exact integral, the Greeks and the average-cube test at 0.5 are left to the Python and Rust checks.
 
@@ -1048,7 +1062,7 @@ example : (1 / 2 : ℚ) ^ 2 + (1 - (1 / 2) ^ 2) = 1 := by norm_num
 > - **Leaving correlation out.** A basket priced as if the shares were independent comes out at 7.039496 against 8.218018.
 > - **Mixing draws with the correlation matrix itself.** Its rows are not length one, so Birch's volatility silently becomes 0.223607 and the correlation 0.447214; the simulation reports 8.648267.
 > - **Averaging today's prices.** The basket's average at expiry is built from forwards; today's prices give 6.570132.
-> - **Trusting moment matching everywhere.** At strongly negative correlation the basket has a floor no lognormal can copy: 3.0993 against the true 2.8969 at $\rho = -1$.
+> - **Trusting moment matching everywhere.** At strongly negative correlation the basket has a floor no lognormal can copy: 3.0993 against the true 2.8969 at $`\rho = -1`$.
 
 ---
 

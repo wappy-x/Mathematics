@@ -36,30 +36,34 @@ Orange: d(n), falling. Green: d(n) − 1/(12n), rising. They close on 0.91893853
 
 ## The formula
 
-Notation first, in words. A wavy equals sign, $a_n \sim b_n$, means "the ratio a_n / b_n heads for 1 as n grows": the two sides agree in percentage, not in difference.
+Notation first, in words. A wavy equals sign, $`a_n \sim b_n`$, means "the ratio a_n / b_n heads for 1 as n grows": the two sides agree in percentage, not in difference.
 
-$$n! \sim \sqrt{2\pi n}\,\left(\frac{n}{e}\right)^{n}$$
+```math
+n! \sim \sqrt{2\pi n}\,\left(\frac{n}{e}\right)^{n}
+```
 
 **Read it aloud:** n factorial is, in ratio, the square root of 2π n times n over e to the nth.
 
 The card proves a sharper statement, true at every n from 1 up:
 
-$$n! = \sqrt{2\pi n}\,\left(\frac{n}{e}\right)^{n} e^{\theta_n}, \qquad 0 < \theta_n < \frac{1}{12n}$$
+```math
+n! = \sqrt{2\pi n}\,\left(\frac{n}{e}\right)^{n} e^{\theta_n}, \qquad 0 < \theta_n < \frac{1}{12n}
+```
 
 **Read it aloud:** the estimate is always a little low, and the factor that repairs it lies between 1 and e to the one over 12n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the count multiplied up to | 20 runners | n! outgrows any power of n |
-| $n!$ | the product 1 × 2 × … × n | 2.4329 × 10^18 | — |
-| $e$, $\pi$ | base of natural logs; circle constant | π built as 3.141592653590 | fixed |
-| $\theta_n$ | the repair exponent | between 0 and 1/240 at n = 20 | shrinks |
-| $d_n$ | the leftover, ln n! − (n + ½) ln n + n | 0.9231 at n = 20 | falls to C |
-| $C$ | where the leftover settles | 0.91893853 | — |
-| $W_k$, $k$ | area under sin x to the kth power, 0 to π/2 | W_20 = 0.2767696821 | shrinks |
-| $m$, $t$ | helpers: half an even k; 1/(2n + 1) | m = 1000 | — |
+| $`n`$ | the count multiplied up to | 20 runners | n! outgrows any power of n |
+| $`n!`$ | the product 1 × 2 × … × n | 2.4329 × 10^18 | — |
+| $`e`$, $`\pi`$ | base of natural logs; circle constant | π built as 3.141592653590 | fixed |
+| $`\theta_n`$ | the repair exponent | between 0 and 1/240 at n = 20 | shrinks |
+| $`d_n`$ | the leftover, ln n! − (n + ½) ln n + n | 0.9231 at n = 20 | falls to C |
+| $`C`$ | where the leftover settles | 0.91893853 | — |
+| $`W_k`$, $`k`$ | area under sin x to the kth power, 0 to π/2 | W_20 = 0.2767696821 | shrinks |
+| $`m`$, $`t`$ | helpers: half an even k; 1/(2n + 1) | m = 1000 | — |
 
-$d_n$ is the d(n) plotted above, a sequence with n as its clock.
+$`d_n`$ is the d(n) plotted above, a sequence with n as its clock.
 
 ### When it holds
 
@@ -79,11 +83,15 @@ The log of a product is the sum of the logs: ln 20! = ln 2 + ln 3 + … + ln 20.
 
 The rising curve stays below height ln k from k − 1 to k, and above it from k to k + 1:
 
-$$\int_{k-1}^{k} \ln x\,dx \;\le\; \ln k \;\le\; \int_{k}^{k+1} \ln x\,dx$$
+```math
+\int_{k-1}^{k} \ln x\,dx \;\le\; \ln k \;\le\; \int_{k}^{k+1} \ln x\,dx
+```
 
 Add these from k = 2 to n, start the right-hand area at 1 (adding a little), and use the antiderivative:
 
-$$n\ln n - n + 1 \;\le\; \ln n! \;\le\; (n+1)\ln(n+1) - n$$
+```math
+n\ln n - n + 1 \;\le\; \ln n! \;\le\; (n+1)\ln(n+1) - n
+```
 
 At n = 20: 40.914645 ≤ 42.335616 ≤ 43.934971. So 20! lies between 5.8750 × 10^17 and 1.2042 × 10^19. The shape is found, since e^(n ln n − n) is (n/e)^n, but the band is far too wide to use.
 
@@ -91,37 +99,51 @@ At n = 20: 40.914645 ≤ 42.335616 ≤ 43.934971. So 20! lies between 5.8750 × 
 
 Slanted strip tops, the trapezoid rule ([Numerical integration](../04-Integrals/08-numerical-integration.md)), sum under ln x to ln n! − ½ ln n. That sum minus the antiderivative's value at n, n ln n − n, is the leftover to watch:
 
-$$d_n = \ln n! - \left(n + \tfrac{1}{2}\right)\ln n + n$$
+```math
+d_n = \ln n! - \left(n + \tfrac{1}{2}\right)\ln n + n
+```
 
 From n to n + 1 the leftover changes by
 
-$$d_n - d_{n+1} = \left(n + \tfrac12\right)\ln\frac{n+1}{n} - 1$$
+```math
+d_n - d_{n+1} = \left(n + \tfrac12\right)\ln\frac{n+1}{n} - 1
+```
 
-Now name $t = 1/(2n+1)$. Then (n + 1)/n = (1 + t)/(1 − t) and n + ½ = 1/(2t). The Taylor series of ln(1 + t) minus that of ln(1 − t) ([Taylor series](05-taylor-series.md)) keeps only the odd powers, doubled:
+Now name $`t = 1/(2n+1)`$. Then (n + 1)/n = (1 + t)/(1 − t) and n + ½ = 1/(2t). The Taylor series of ln(1 + t) minus that of ln(1 − t) ([Taylor series](05-taylor-series.md)) keeps only the odd powers, doubled:
 
-$$\ln\frac{1+t}{1-t} = 2\left(t + \frac{t^3}{3} + \frac{t^5}{5} + \cdots\right)$$
+```math
+\ln\frac{1+t}{1-t} = 2\left(t + \frac{t^3}{3} + \frac{t^5}{5} + \cdots\right)
+```
 
 Multiply by 1/(2t) and subtract 1:
 
-$$d_n - d_{n+1} = \frac{t^2}{3} + \frac{t^4}{5} + \frac{t^6}{7} + \cdots$$
+```math
+d_n - d_{n+1} = \frac{t^2}{3} + \frac{t^4}{5} + \frac{t^6}{7} + \cdots
+```
 
 Every term is positive, so the leftover falls at every step. Each term is also at most the matching term of the geometric series t^2/3 × (1 + t^2 + t^4 + …), whose sum, written back in n, gives
 
-$$d_n - d_{n+1} < \frac{1}{12n(n+1)} = \frac{1}{12n} - \frac{1}{12(n+1)}$$
+```math
+d_n - d_{n+1} < \frac{1}{12n(n+1)} = \frac{1}{12n} - \frac{1}{12(n+1)}
+```
 
 Rearranged: d_n − 1/(12n) rises at every step. A falling sequence sits above a rising one, with a gap of 1/(12n) that shrinks to nothing. The real numbers have no gaps, so both close on one number, called C ([No gaps](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). So C < d_n < C + 1/(12n), which unpacks to
 
-$$n! = e^{C}\sqrt{n}\left(\frac{n}{e}\right)^{n} e^{\theta_n}, \qquad 0 < \theta_n < \frac{1}{12n}$$
+```math
+n! = e^{C}\sqrt{n}\left(\frac{n}{e}\right)^{n} e^{\theta_n}, \qquad 0 < \theta_n < \frac{1}{12n}
+```
 
 At n = 100 the squeeze pins C between 0.91893853 and 0.91977186. Numbers alone never name C; the next two steps do.
 
 ### Step 3: Wallis's integrals pin π/2 between two products of factorials
 
-Let $W_k$ be the area under sin x to the kth power, from 0 to π/2. Integration by parts ([Integration by parts](../04-Integrals/04-integration-by-parts.md)) gives the rule W_k = (k − 1)/k × W_(k−2), starting from W_0 = π/2 and W_1 = 1.
+Let $`W_k`$ be the area under sin x to the kth power, from 0 to π/2. Integration by parts ([Integration by parts](../04-Integrals/04-integration-by-parts.md)) gives the rule W_k = (k − 1)/k × W_(k−2), starting from W_0 = π/2 and W_1 = 1.
 
 Between 0 and π/2, sin x lies between 0 and 1, so a higher power is never larger: W_(2m+1) ≤ W_(2m) ≤ W_(2m−1). The rule makes the outer two differ only by the factor (2m + 1)/(2m). Writing the products as factorials, with m standing for half an even k:
 
-$$P_m \le \frac{\pi}{2} \le P_m\,\frac{2m+1}{2m}, \qquad P_m = \frac{2^{4m}\,(m!)^4}{\big((2m)!\big)^2\,(2m+1)}$$
+```math
+P_m \le \frac{\pi}{2} \le P_m\,\frac{2m+1}{2m}, \qquad P_m = \frac{2^{4m}\,(m!)^4}{\big((2m)!\big)^2\,(2m+1)}
+```
 
 At m = 1000 this reads 1.570404 ≤ π/2 ≤ 1.571189. The check confirms the rule on W_20: Simpson's rule (an area estimate that fits parabolas through evenly spaced points) and the parts formula both give 0.2767696821.
 
@@ -129,7 +151,9 @@ At m = 1000 this reads 1.570404 ≤ π/2 ≤ 1.571189. The check confirms the ru
 
 Put Step 2's form, e^C √n (n/e)^n, into P_m. The 2^(4m) and the (m/e)^(4m) cancel, leaving
 
-$$P_m \approx \frac{e^{2C}\,m}{2(2m+1)} \longrightarrow \frac{e^{2C}}{4}$$
+```math
+P_m \approx \frac{e^{2C}\,m}{2(2m+1)} \longrightarrow \frac{e^{2C}}{4}
+```
 
 The repair factors tend to 1. But P_m also tends to π/2, so e^(2C) = 2π and e^C = √(2π): Step 2's formula is Stirling's.
 

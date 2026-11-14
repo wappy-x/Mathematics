@@ -40,52 +40,60 @@ That the whole adaptive loop settles down is shown here by simulation, not prove
 
 ## The formula
 
-Notation first, in words. The PI gains $K_p$ and $K_i$ (proportional and integral) are from [PID control](../03-Feedback%20Control/07-pid-control-and-tuning.md). The Laplace variable $s$ is from [The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md), and the transfer function $G$, input to output written in $s$, from [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md). The adaptive half works on samples: $v_k$ is the belt speed at sample $k$, taken every $T_s$ seconds. A hat marks an estimate, as in the statistics wing: $\hat J$ is the controller's guess at $J$.
+Notation first, in words. The PI gains $`K_p`$ and $`K_i`$ (proportional and integral) are from [PID control](../03-Feedback%20Control/07-pid-control-and-tuning.md). The Laplace variable $`s`$ is from [The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md), and the transfer function $`G`$, input to output written in $`s`$, from [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md). The adaptive half works on samples: $`v_k`$ is the belt speed at sample $`k`$, taken every $`T_s`$ seconds. A hat marks an estimate, as in the statistics wing: $`\hat J`$ is the controller's guess at $`J`$.
 
-The conveyor, torque $u$ in N·m to belt speed $v$ in rad/s, with a drive lag $\tau$ and a load $m$ in kg:
+The conveyor, torque $`u`$ in N·m to belt speed $`v`$ in rad/s, with a drive lag $`\tau`$ and a load $`m`$ in kg:
 
-$$G(s) = \frac{1}{(Js + b)(\tau s + 1)}, \qquad J = 0.20 + 0.0025\,m.$$
+```math
+G(s) = \frac{1}{(Js + b)(\tau s + 1)}, \qquad J = 0.20 + 0.0025\,m.
+```
 
-The 0.0025 is the drive roller's radius squared, $(0.05\text{ m})^2$: a mass on the belt adds its mass times the radius squared to the inertia.
+The 0.0025 is the drive roller's radius squared, $`(0.05\text{ m})^2`$: a mass on the belt adds its mass times the radius squared to the inertia.
 
-**The schedule.** Pick the closed-loop lag $T_c$ wanted, the same for every load, and set
+**The schedule.** Pick the closed-loop lag $`T_c`$ wanted, the same for every load, and set
 
-$$K_p(m) = \frac{J(m)}{T_c}, \qquad K_i = \frac{b}{T_c}.$$
+```math
+K_p(m) = \frac{J(m)}{T_c}, \qquad K_i = \frac{b}{T_c}.
+```
 
 **Read it aloud:** the proportional gain grows in step with the inertia the load cell reports; the integral gain stays fixed.
 
-**The adaptive loop.** Sampled every $T_s$, the belt obeys $v_{k+1} = a\,v_k + g\,u_k$, where $a$ is how much speed survives one sample and $g$ is the speed gained per N·m of torque. The reference model is the response wanted, $v^m_{k+1} = a_m v^m_k + (1 - a_m)\,r_k$: its speed $v^m$ follows the command $r$, and its pole $a_m$ is how much of its speed survives one sample. With estimates $\hat a$, $\hat g$ the controller sends
+**The adaptive loop.** Sampled every $`T_s`$, the belt obeys $`v_{k+1} = a\,v_k + g\,u_k`$, where $`a`$ is how much speed survives one sample and $`g`$ is the speed gained per N·m of torque. The reference model is the response wanted, $`v^m_{k+1} = a_m v^m_k + (1 - a_m)\,r_k`$: its speed $`v^m`$ follows the command $`r`$, and its pole $`a_m`$ is how much of its speed survives one sample. With estimates $`\hat a`$, $`\hat g`$ the controller sends
 
-$$u_k = \frac{(a_m - \hat a)\,v_k + (1 - a_m)\,r_k}{\hat g},$$
+```math
+u_k = \frac{(a_m - \hat a)\,v_k + (1 - a_m)\,r_k}{\hat g},
+```
 
-and recursive least squares updates the estimates $\hat\theta = (\hat a, \hat g)$ from the regressor $\varphi_k = (v_k, u_k)$, the two numbers the next speed depends on. $K_k$ is the update gain, $P$ is a 2×2 matrix saying how uncertain the estimates still are, and $\lambda$ is the forgetting factor:
+and recursive least squares updates the estimates $`\hat\theta = (\hat a, \hat g)`$ from the regressor $`\varphi_k = (v_k, u_k)`$, the two numbers the next speed depends on. $`K_k`$ is the update gain, $`P`$ is a 2×2 matrix saying how uncertain the estimates still are, and $`\lambda`$ is the forgetting factor:
 
-$$K_k = \frac{P\varphi_k}{\lambda + \varphi_k^{\mathsf T} P \varphi_k}, \qquad \hat\theta \leftarrow \hat\theta + K_k\,(v_{k+1} - \varphi_k^{\mathsf T}\hat\theta), \qquad P \leftarrow \frac{P - K_k\varphi_k^{\mathsf T}P}{\lambda}.$$
+```math
+K_k = \frac{P\varphi_k}{\lambda + \varphi_k^{\mathsf T} P \varphi_k}, \qquad \hat\theta \leftarrow \hat\theta + K_k\,(v_{k+1} - \varphi_k^{\mathsf T}\hat\theta), \qquad P \leftarrow \frac{P - K_k\varphi_k^{\mathsf T}P}{\lambda}.
+```
 
-**Read it aloud:** move each estimate by the surprise in the newest speed, scaled by how uncertain that estimate still is ($P$), and let old data fade by a factor $\lambda$ each sample.
+**Read it aloud:** move each estimate by the surprise in the newest speed, scaled by how uncertain that estimate still is ($`P`$), and let old data fade by a factor $`\lambda`$ each sample.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $m$, $J$, $\hat J$ | parcel load, kg; inertia of motor, belt and load, kg·m²; the controller's estimate of $J$ | 0, 40, 60, 80 kg; 0.20 to 0.40 kg·m² | heavier belt: slower unless the gains follow |
-| $b$, $\hat b$, $\tau$ | belt friction, N·m·s/rad, and its estimate; the drive's torque lag, s | 0.40 N·m·s/rad; 0.02 s | — |
-| $u$, $v$, $r$ | torque command, N·m; belt speed, rad/s; speed command, rad/s | a 5 rad/s step; a square wave of 4 and 6 rad/s | — |
-| $K_p$, $K_i$ | PI gains: N·m per rad/s of speed error; N·m per rad of built-up error | 0.800 to 1.600; 1.600 | — |
-| $T_c$ | the closed-loop lag the schedule aims for, s | 0.25 s; settles in 0.915 s | slower, calmer loop |
-| $s$, $G$, $L$ | the Laplace variable; the belt's transfer function; the loop gain, controller times belt | $L = 1/(T_c s(\tau s + 1))$ on every load | — |
-| $T_s$, $k$ | sampling interval, s; sample number | 0.05 s | — |
-| $a$, $g$ | the sampled belt: how much speed survives one sample; speed gained per N·m over one sample | empty 0.904837 and 0.237906; full 0.951229 and 0.121926 | — |
-| $a_m$, $v^m$ | the reference model's pole, $e^{-T_s/T_c}$; its speed, rad/s | 0.818731 | slower reference |
-| $\hat\theta$, $\varphi$, $K_k$, $y$ | estimates $(\hat a, \hat g)$; regressor $(v_k, u_k)$; update gain; the newest speed $v_{k+1}$ | start at (0.5, 0.5) | — |
-| $P$, $\lambda$, $R$, $q$, $N$ | how uncertain the estimates still are (a 2×2 matrix, $P = R^{-1}$); forgetting factor; the weighted sums in the normal equations $R\hat\theta = q$; samples so far | $P$ starts at 100 times the identity; $\lambda$ = 0.98 | longer memory, slower to follow a load change |
-| $d$ | torque ripple, N·m, random and centred on zero | up to ±0.3 N·m | noisier estimates |
+| $`m`$, $`J`$, $`\hat J`$ | parcel load, kg; inertia of motor, belt and load, kg·m²; the controller's estimate of $`J`$ | 0, 40, 60, 80 kg; 0.20 to 0.40 kg·m² | heavier belt: slower unless the gains follow |
+| $`b`$, $`\hat b`$, $`\tau`$ | belt friction, N·m·s/rad, and its estimate; the drive's torque lag, s | 0.40 N·m·s/rad; 0.02 s | — |
+| $`u`$, $`v`$, $`r`$ | torque command, N·m; belt speed, rad/s; speed command, rad/s | a 5 rad/s step; a square wave of 4 and 6 rad/s | — |
+| $`K_p`$, $`K_i`$ | PI gains: N·m per rad/s of speed error; N·m per rad of built-up error | 0.800 to 1.600; 1.600 | — |
+| $`T_c`$ | the closed-loop lag the schedule aims for, s | 0.25 s; settles in 0.915 s | slower, calmer loop |
+| $`s`$, $`G`$, $`L`$ | the Laplace variable; the belt's transfer function; the loop gain, controller times belt | $`L = 1/(T_c s(\tau s + 1))`$ on every load | — |
+| $`T_s`$, $`k`$ | sampling interval, s; sample number | 0.05 s | — |
+| $`a`$, $`g`$ | the sampled belt: how much speed survives one sample; speed gained per N·m over one sample | empty 0.904837 and 0.237906; full 0.951229 and 0.121926 | — |
+| $`a_m`$, $`v^m`$ | the reference model's pole, $`e^{-T_s/T_c}`$; its speed, rad/s | 0.818731 | slower reference |
+| $`\hat\theta`$, $`\varphi`$, $`K_k`$, $`y`$ | estimates $`(\hat a, \hat g)`$; regressor $`(v_k, u_k)`$; update gain; the newest speed $`v_{k+1}`$ | start at (0.5, 0.5) | — |
+| $`P`$, $`\lambda`$, $`R`$, $`q`$, $`N`$ | how uncertain the estimates still are (a 2×2 matrix, $`P = R^{-1}`$); forgetting factor; the weighted sums in the normal equations $`R\hat\theta = q`$; samples so far | $`P`$ starts at 100 times the identity; $`\lambda`$ = 0.98 | longer memory, slower to follow a load change |
+| $`d`$ | torque ripple, N·m, random and centred on zero | up to ±0.3 N·m | noisier estimates |
 
 ### When it holds
 
 - **The load changes slowly next to the loop.** The schedule designs each gain for a frozen load. Its loop settles in 0.915 s, so a load that changes over seconds is fine. A belt loaded within a fraction of that is a time-varying plant, which no frozen-load design covers.
-- **The target is slower than the drive.** The cancellation is exact even with the drive lag, but the lag still sets how fast the loop can be. At $T_c$ = 0.25 s the loop is overdamped: it never swings past the target. Ask for $T_c$ = 0.02 s and the damping ratio, which must be 1 or more to avoid overshoot, falls to 0.500: a 16.30% overshoot on every load. A 5 rad/s step on the empty belt would then ask for 50 N·m at once.
-- **The commands keep the belt moving.** Recursive least squares learns two numbers, so the data must vary in two directions. A square-wave command does that. Hold the command at a constant 5 rad/s and $\hat J$ wanders from 0.259 to 0.995 kg·m² while the true value sits at 0.40. This is called **persistence of excitation**.
+- **The target is slower than the drive.** The cancellation is exact even with the drive lag, but the lag still sets how fast the loop can be. At $`T_c`$ = 0.25 s the loop is overdamped: it never swings past the target. Ask for $`T_c`$ = 0.02 s and the damping ratio, which must be 1 or more to avoid overshoot, falls to 0.500: a 16.30% overshoot on every load. A 5 rad/s step on the empty belt would then ask for 50 N·m at once.
+- **The commands keep the belt moving.** Recursive least squares learns two numbers, so the data must vary in two directions. A square-wave command does that. Hold the command at a constant 5 rad/s and $`\hat J`$ wanders from 0.259 to 0.995 kg·m² while the true value sits at 0.40. This is called **persistence of excitation**.
 - **The model has the right shape.** The adaptive half fits a first-order belt and leaves out the 0.02 s drive lag, shorter than half a sample. Its simulation leaves the lag out of the belt too, so it shows the method, not the cost of that omission. The ripple is taken as random, centred on zero and unrelated from sample to sample. A steady extra drag, or a much longer lag, would bias the estimates.
-- **The gain stays away from zero.** The controller divides by $\hat g$. The code holds it at 0.02 or more, because the sign of the motor's effect is known in advance and a near-zero guess would ask for unbounded torque. In these runs the floor never acts: even with the constant command, $\hat g$ stays at 0.0498 or above.
+- **The gain stays away from zero.** The controller divides by $`\hat g`$. The code holds it at 0.02 or more, because the sign of the motor's effect is known in advance and a near-zero guess would ask for unbounded torque. In these runs the floor never acts: even with the constant command, $`\hat g`$ stays at 0.0498 or above.
 
 ---
 
@@ -99,64 +107,72 @@ If it cannot be measured, estimate the plant from the signals already in the loo
 
 ### Step 1: the schedule makes every load look the same
 
-Ignore the drive lag for a moment. The PI controller is $K_p + K_i/s = (K_p s + K_i)/s$, which has a zero at $s = -K_i/K_p$: a value of $s$ that makes it zero. The belt has a pole at $s = -b/J$: a value of $s$ that makes it infinite. Choose the gains so the zero sits on the pole: $K_i/K_p = b/J$. With $K_p = J/T_c$ that means $K_i = b/T_c$. Then the loop gain is
+Ignore the drive lag for a moment. The PI controller is $`K_p + K_i/s = (K_p s + K_i)/s`$, which has a zero at $`s = -K_i/K_p`$: a value of $`s`$ that makes it zero. The belt has a pole at $`s = -b/J`$: a value of $`s`$ that makes it infinite. Choose the gains so the zero sits on the pole: $`K_i/K_p = b/J`$. With $`K_p = J/T_c`$ that means $`K_i = b/T_c`$. Then the loop gain is
 
-$$L(s) = \frac{K_p(s + b/J)}{s}\cdot\frac{1}{J(s + b/J)(\tau s + 1)} = \frac{1}{T_c\, s\,(\tau s + 1)}.$$
+```math
+L(s) = \frac{K_p(s + b/J)}{s}\cdot\frac{1}{J(s + b/J)(\tau s + 1)} = \frac{1}{T_c\, s\,(\tau s + 1)}.
+```
 
-$J$ has cancelled. Every load gives the same loop, so the closed loop from command to speed is
+$`J`$ has cancelled. Every load gives the same loop, so the closed loop from command to speed is
 
-$$\frac{v}{r} = \frac{L}{1 + L} = \frac{1}{T_c\tau s^2 + T_c s + 1}.$$
+```math
+\frac{v}{r} = \frac{L}{1 + L} = \frac{1}{T_c\tau s^2 + T_c s + 1}.
+```
 
-For $T_c$ = 0.25 s and $\tau$ = 0.02 s its poles are −4.384 and −45.616 per second. The slow one dominates, and the speed settles to within 2% in 0.915 s. A first-order guess, $T_c\ln 50$, gives 0.978 s; the fast pole shaves a little off.
+For $`T_c`$ = 0.25 s and $`\tau`$ = 0.02 s its poles are −4.384 and −45.616 per second. The slow one dominates, and the speed settles to within 2% in 0.915 s. A first-order guess, $`T_c\ln 50`$, gives 0.978 s; the fast pole shaves a little off.
 
-The schedule needs only $K_p$ to follow the load: 0.800, 1.200 and 1.600 N·m/(rad/s) at 0, 40 and 80 kg. Between table rows the controller interpolates. Here $K_p$ is a straight line in $m$, so interpolation is exact. On a real plant the gains are rarely straight lines, and the table needs enough rows that the line between two rows is close.
+The schedule needs only $`K_p`$ to follow the load: 0.800, 1.200 and 1.600 N·m/(rad/s) at 0, 40 and 80 kg. Between table rows the controller interpolates. Here $`K_p`$ is a straight line in $`m`$, so interpolation is exact. On a real plant the gains are rarely straight lines, and the table needs enough rows that the line between two rows is close.
 
 ### Step 2: the sampled belt
 
-Hold the torque constant over one sample. The belt equation $J\dot v = u - bv$ then has an exact solution over $T_s$ seconds:
+Hold the torque constant over one sample. The belt equation $`J\dot v = u - bv`$ then has an exact solution over $`T_s`$ seconds:
 
-$$v_{k+1} = a\,v_k + g\,u_k, \qquad a = e^{-bT_s/J}, \qquad g = \frac{1 - a}{b}.$$
+```math
+v_{k+1} = a\,v_k + g\,u_k, \qquad a = e^{-bT_s/J}, \qquad g = \frac{1 - a}{b}.
+```
 
-So two numbers describe the belt. Both carry the inertia, and it can be read back from an estimate: $\hat b = (1 - \hat a)/\hat g$ and $\hat J = -\hat b\,T_s/\ln \hat a$. Dividing by $\ln\hat a$ needs $\hat a$ between 0 and 1, which a working estimate always meets.
+So two numbers describe the belt. Both carry the inertia, and it can be read back from an estimate: $`\hat b = (1 - \hat a)/\hat g`$ and $`\hat J = -\hat b\,T_s/\ln \hat a`$. Dividing by $`\ln\hat a`$ needs $`\hat a`$ between 0 and 1, which a working estimate always meets.
 
 ### Step 3: the matching controller makes the belt copy the model
 
 Put the controller into the sampled belt, with the estimates equal to the truth:
 
-$$v_{k+1} = a v_k + g\cdot\frac{(a_m - a)v_k + (1 - a_m)r_k}{g} = a_m v_k + (1 - a_m)r_k.$$
+```math
+v_{k+1} = a v_k + g\cdot\frac{(a_m - a)v_k + (1 - a_m)r_k}{g} = a_m v_k + (1 - a_m)r_k.
+```
 
-That is the reference model, exactly. The belt's own pole $a$ has been replaced by the chosen $a_m$. For the full belt the controller is $u = -1.08671\,v + 1.48671\,r$ and the closed-loop pole is 0.818731, which is $a_m$. An RK4 simulation (fourth-order Runge–Kutta) of $J\dot v = u - bv$ over one sample, torque held, lands on the same 0.818731.
+That is the reference model, exactly. The belt's own pole $`a`$ has been replaced by the chosen $`a_m`$. For the full belt the controller is $`u = -1.08671\,v + 1.48671\,r`$ and the closed-loop pole is 0.818731, which is $`a_m`$. An RK4 simulation (fourth-order Runge–Kutta) of $`J\dot v = u - bv`$ over one sample, torque held, lands on the same 0.818731.
 
-If the estimates are wrong, the match fails gracefully here. Keep the empty-belt values on the full belt and the closed-loop pole becomes 0.907100: a lag of 0.5128 s instead of 0.25 s. The belt still reaches the right speed, because the steady state needs only $(1 - a)/g$, which is $b$ for every load. Slow, but not wrong at rest.
+If the estimates are wrong, the match fails gracefully here. Keep the empty-belt values on the full belt and the closed-loop pole becomes 0.907100: a lag of 0.5128 s instead of 0.25 s. The belt still reaches the right speed, because the steady state needs only $`(1 - a)/g`$, which is $`b`$ for every load. Slow, but not wrong at rest.
 
 ### Step 4: recursive least squares is ordinary least squares, kept up to date
 
-[Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md) picks the line whose squared misses add up to the least. Here every sample gives one equation, $v_{k+1} \approx \hat a\,v_k + \hat g\,u_k$. Least squares chooses $\hat\theta$ to make the weighted sum $\sum_k \lambda^{N-1-k}(v_{k+1} - \varphi_k^{\mathsf T}\hat\theta)^2$ as small as possible. The weight $\lambda^{N-1-k}$ makes a sample $n$ steps old count $\lambda^n$ as much as the newest. With $\lambda$ = 0.98, data a few seconds old has mostly faded. That is what lets the estimate follow a load change.
+[Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md) picks the line whose squared misses add up to the least. Here every sample gives one equation, $`v_{k+1} \approx \hat a\,v_k + \hat g\,u_k`$. Least squares chooses $`\hat\theta`$ to make the weighted sum $`\sum_k \lambda^{N-1-k}(v_{k+1} - \varphi_k^{\mathsf T}\hat\theta)^2`$ as small as possible. The weight $`\lambda^{N-1-k}`$ makes a sample $`n`$ steps old count $`\lambda^n`$ as much as the newest. With $`\lambda`$ = 0.98, data a few seconds old has mostly faded. That is what lets the estimate follow a load change.
 
-Setting the derivative to zero gives the normal equations $R\,\hat\theta = q$, with $R = \sum \lambda^{N-1-k}\varphi_k\varphi_k^{\mathsf T}$ and $q = \sum \lambda^{N-1-k}\varphi_k v_{k+1}$. Solving them afresh every sample is wasteful. The recursion keeps $P = R^{-1}$ instead and updates it when one new row arrives. The fold shows that the update is exact. The checks confirm it: after 20 s and after 40 s, the recursion and the batch solution agree to better than $10^{-8}$.
+Setting the derivative to zero gives the normal equations $`R\,\hat\theta = q`$, with $`R = \sum \lambda^{N-1-k}\varphi_k\varphi_k^{\mathsf T}`$ and $`q = \sum \lambda^{N-1-k}\varphi_k v_{k+1}`$. Solving them afresh every sample is wasteful. The recursion keeps $`P = R^{-1}`$ instead and updates it when one new row arrives. The fold shows that the update is exact. The checks confirm it: after 20 s and after 40 s, the recursion and the batch solution agree to better than $`10^{-8}`$.
 
 <details>
 <summary>Why the recursive update equals the batch solution</summary>
 
-One new sample changes $R$ to $R' = \lambda R + \varphi\varphi^{\mathsf T}$ and $q$ to $q' = \lambda q + \varphi y$, where $y = v_{k+1}$. For a rank-one change the inverse has a closed form (the Sherman–Morrison formula):
+One new sample changes $`R`$ to $`R' = \lambda R + \varphi\varphi^{\mathsf T}`$ and $`q`$ to $`q' = \lambda q + \varphi y`$, where $`y = v_{k+1}`$. For a rank-one change the inverse has a closed form (the Sherman–Morrison formula):
 
-$(\lambda R + \varphi\varphi^{\mathsf T})^{-1} = \dfrac{1}{\lambda}\left(P - \dfrac{P\varphi\varphi^{\mathsf T}P}{\lambda + \varphi^{\mathsf T}P\varphi}\right) = \dfrac{P - K\varphi^{\mathsf T}P}{\lambda}$, with $K = \dfrac{P\varphi}{\lambda + \varphi^{\mathsf T}P\varphi}$.
+$`(\lambda R + \varphi\varphi^{\mathsf T})^{-1} = \dfrac{1}{\lambda}\left(P - \dfrac{P\varphi\varphi^{\mathsf T}P}{\lambda + \varphi^{\mathsf T}P\varphi}\right) = \dfrac{P - K\varphi^{\mathsf T}P}{\lambda}`$, with $`K = \dfrac{P\varphi}{\lambda + \varphi^{\mathsf T}P\varphi}`$.
 
-Multiply by $q'$ and simplify, using $P'\varphi = K$:
+Multiply by $`q'`$ and simplify, using $`P'\varphi = K`$:
 
-$\hat\theta' = P'q' = P'(\lambda R\hat\theta + \varphi y) = P'(R' - \varphi\varphi^{\mathsf T})\hat\theta + K y = \hat\theta + K(y - \varphi^{\mathsf T}\hat\theta)$.
+$`\hat\theta' = P'q' = P'(\lambda R\hat\theta + \varphi y) = P'(R' - \varphi\varphi^{\mathsf T})\hat\theta + K y = \hat\theta + K(y - \varphi^{\mathsf T}\hat\theta)`$.
 
-The starting values act as one extra row of evidence: $P_0$ = 100 times the identity says "the guess (0.5, 0.5) is worth very little". The batch road in the code adds the same prior, $\lambda^N P_0^{-1}$ to $R$ and $\lambda^N P_0^{-1}\hat\theta_0$ to $q$, so the two roads agree exactly.
+The starting values act as one extra row of evidence: $`P_0`$ = 100 times the identity says "the guess (0.5, 0.5) is worth very little". The batch road in the code adds the same prior, $`\lambda^N P_0^{-1}`$ to $`R`$ and $`\lambda^N P_0^{-1}\hat\theta_0`$ to $`q`$, so the two roads agree exactly.
 
 </details>
 
 ### Step 5: why the data must keep moving
 
-Two unknowns need two kinds of evidence. At a steady speed every sample says the same thing: $v = a v + g u$, so $(1 - a)\,v = g\,u$. That one equation fixes the ratio $g/(1 - a)$, which is $1/b$, and says nothing about the inertia. The matrix $R$ then becomes nearly singular, which means it cannot be inverted reliably.
+Two unknowns need two kinds of evidence. At a steady speed every sample says the same thing: $`v = a v + g u`$, so $`(1 - a)\,v = g\,u`$. That one equation fixes the ratio $`g/(1 - a)`$, which is $`1/b`$, and says nothing about the inertia. The matrix $`R`$ then becomes nearly singular, which means it cannot be inverted reliably.
 
-With forgetting, $P = R^{-1}$ would grow without limit if nothing new arrived, an effect called covariance windup. Here the ripple's small kicks keep it bounded but large, and the ripple alone pushes the estimates around. That is why a constant command lets $\hat J$ wander from 0.259 to 0.995 kg·m².
+With forgetting, $`P = R^{-1}`$ would grow without limit if nothing new arrived, an effect called covariance windup. Here the ripple's small kicks keep it bounded but large, and the ripple alone pushes the estimates around. That is why a constant command lets $`\hat J`$ wander from 0.259 to 0.995 kg·m².
 
-A command that keeps changing level supplies transients, and during a transient speed and torque are not in fixed ratio. The square wave of 4 and 6 rad/s, 2 s each, keeps $\hat J$ between 0.382 and 0.406 kg·m² over the last 10 s.
+A command that keeps changing level supplies transients, and during a transient speed and torque are not in fixed ratio. The square wave of 4 and 6 rad/s, 2 s each, keeps $`\hat J`$ between 0.382 and 0.406 kg·m² over the last 10 s.
 
 ### Step 6: what the adaptive loop does not prove
 
@@ -170,40 +186,40 @@ The schedule at 60 kg, then the adaptive controller on the full belt.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| inertia at 60 kg | $0.20 + 0.0025 \times 60$ | 0.3500 kg·m² |
-| proportional gain | $0.35 / 0.25$ | 1.400 N·m/(rad/s) |
-| integral gain, any load | $0.40 / 0.25$ | 1.600 N·m/rad |
-| closed-loop poles | roots of $0.005s^2 + 0.25s + 1$: $(-0.25 \pm \sqrt{0.0625 - 0.02})/0.01$ | −4.384 and −45.616 1/s |
-| reference pole | $e^{-0.05/0.25} = e^{-0.2}$ | 0.818731 |
-| full belt, sampled | $a = e^{-0.40 \times 0.05/0.40} = e^{-0.05}$; $g = (1 - 0.951229)/0.40$ | 0.951229; 0.121926 |
-| speed feedback | $(0.818731 - 0.951229)/0.121926$ | −1.08671 |
-| command feedforward | $(1 - 0.818731)/0.121926$ | 1.48671 |
-| **closed-loop pole** | $0.951229 + 0.121926 \times (-1.08671)$ | **0.818731** |
+| inertia at 60 kg | $`0.20 + 0.0025 \times 60`$ | 0.3500 kg·m² |
+| proportional gain | $`0.35 / 0.25`$ | 1.400 N·m/(rad/s) |
+| integral gain, any load | $`0.40 / 0.25`$ | 1.600 N·m/rad |
+| closed-loop poles | roots of $`0.005s^2 + 0.25s + 1`$: $`(-0.25 \pm \sqrt{0.0625 - 0.02})/0.01`$ | −4.384 and −45.616 1/s |
+| reference pole | $`e^{-0.05/0.25} = e^{-0.2}`$ | 0.818731 |
+| full belt, sampled | $`a = e^{-0.40 \times 0.05/0.40} = e^{-0.05}`$; $`g = (1 - 0.951229)/0.40`$ | 0.951229; 0.121926 |
+| speed feedback | $`(0.818731 - 0.951229)/0.121926`$ | −1.08671 |
+| command feedforward | $`(1 - 0.818731)/0.121926`$ | 1.48671 |
+| **closed-loop pole** | $`0.951229 + 0.121926 \times (-1.08671)`$ | **0.818731** |
 
 The full belt with the matched controller has exactly the reference model's pole: it answers like a 0.25 s lag, the same lag the schedule aims for.
 
-One step of the estimator, the very first sample. The belt starts at rest, $v_0$ = 0, with guesses $\hat a = \hat g$ = 0.5 and $P$ = 100 times the identity.
+One step of the estimator, the very first sample. The belt starts at rest, $`v_0`$ = 0, with guesses $`\hat a = \hat g`$ = 0.5 and $`P`$ = 100 times the identity.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| torque sent for $r$ = 4 | $(1 - 0.818731) \times 4 / 0.5$ | 1.4502 N·m |
-| regressor $\varphi_0$ | $(v_0, u_0)$ | (0.0000, 1.4502) |
+| torque sent for $`r`$ = 4 | $`(1 - 0.818731) \times 4 / 0.5`$ | 1.4502 N·m |
+| regressor $`\varphi_0`$ | $`(v_0, u_0)`$ | (0.0000, 1.4502) |
 | speed measured | from the belt, with ripple | 0.3293 rad/s |
-| surprise | $0.3293 - 0.5 \times 1.4502$ | −0.3958 rad/s |
-| update gain for $\hat g$ | $100 \times 1.4502/(0.98 + 100 \times 1.4502^2)$, with $u_0$ unrounded | 0.68638 |
-| **new $\hat g$** | $0.5 + 0.68638 \times (-0.3958)$ | **0.2283** |
+| surprise | $`0.3293 - 0.5 \times 1.4502`$ | −0.3958 rad/s |
+| update gain for $`\hat g`$ | $`100 \times 1.4502/(0.98 + 100 \times 1.4502^2)`$, with $`u_0`$ unrounded | 0.68638 |
+| **new $`\hat g`$** | $`0.5 + 0.68638 \times (-0.3958)`$ | **0.2283** |
 
-The first sample teaches the gain and nothing else: $\hat a$ stays at 0.5000, because with $v_0$ = 0 the speed term carried no information. That is Step 5 in miniature. The true empty-belt $g$ is 0.237906, so one sample came close.
+The first sample teaches the gain and nothing else: $`\hat a`$ stays at 0.5000, because with $`v_0`$ = 0 the speed term carried no information. That is Step 5 in miniature. The true empty-belt $`g`$ is 0.237906, so one sample came close.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | No schedule: keep the empty-belt gains on the full belt | settles in 2.504 s, overshoot 8.59%, against 0.915 s and none | The PI zero no longer cancels the belt pole; the loop is slower and swings |
-| Schedule aimed faster than the drive, $T_c$ = 0.02 s | overshoot 16.30% on every load; 50 N·m asked for a 5 rad/s step | The closed loop is $1/(T_c\tau s^2 + T_c s + 1)$; with $T_c$ equal to $\tau$ its damping ratio is 0.500 |
+| Schedule aimed faster than the drive, $`T_c`$ = 0.02 s | overshoot 16.30% on every load; 50 N·m asked for a 5 rad/s step | The closed loop is $`1/(T_c\tau s^2 + T_c s + 1)`$; with $`T_c`$ equal to $`\tau`$ its damping ratio is 0.500 |
 | Adaptive loop with learning switched off, empty-belt model kept | full-belt tracking error 0.3059 rad/s rms (root mean square), against 0.0688 | The closed-loop pole moves to 0.907100: a 0.5128 s lag, not 0.25 s |
-| No forgetting, $\lambda$ = 1 | $\hat J$ = 0.2945 kg·m² at 40 s; tracking error 0.2106 rad/s rms | 20 s of empty-belt data outvote the new evidence |
-| Constant command, 5 rad/s | $\hat J$ wanders 0.259 to 0.995 kg·m² | No persistence of excitation: steady data fix only $b$ |
+| No forgetting, $`\lambda`$ = 1 | $`\hat J`$ = 0.2945 kg·m² at 40 s; tracking error 0.2106 rad/s rms | 20 s of empty-belt data outvote the new evidence |
+| Constant command, 5 rad/s | $`\hat J`$ wanders 0.259 to 0.995 kg·m² | No persistence of excitation: steady data fix only $`b`$ |
 
 ---
 
@@ -211,7 +227,7 @@ The first sample teaches the gain and nothing else: $\hat a$ stays at 0.5000, be
 
 The story: the belt runs empty for 20 s while the command steps between 4 and 6 rad/s every 2 s. At 20 s, 80 kg of parcels land at once, just as the command drops to 4 rad/s. Torque ripple of up to ±0.3 N·m shakes the belt the whole time.
 
-| Time | What happens | $\hat J$, kg·m² |
+| Time | What happens | $`\hat J`$, kg·m² |
 | --- | --- | --- |
 | 10 to 20 s | empty belt, learned | 0.1960 ± 0.0066 on average |
 | 20 s | 80 kg land | true value jumps to 0.40 |
@@ -240,7 +256,7 @@ xychart-beta
     line [0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.40, 0.40, 0.40, 0.40, 0.40, 0.40, 0.40, 0.40, 0.40, 0.40]
 ```
 
-Orange: $\hat J$ every 2 s. Green: the true inertia. The estimate jitters by about 0.0056 kg·m² from the ripple. It reaches within 10% of the new value 2.05 s after the parcels land, one sample after the command step at 22 s, and stays there.
+Orange: $`\hat J`$ every 2 s. Green: the true inertia. The estimate jitters by about 0.0056 kg·m² from the ripple. It reaches within 10% of the new value 2.05 s after the parcels land, one sample after the command step at 22 s, and stays there.
 
 The speed loop keeps up. Over the empty half the tracking error, belt speed minus reference model speed, is 0.0750 rad/s rms against 0.0736 for a controller told the true inertia. Over the full half it is 0.0688 against 0.0370; the difference is the two seconds of learning just after the landing.
 
@@ -252,7 +268,7 @@ The scripts write out a fourth-order Runge–Kutta (RK4) simulation of the conve
 
 1. the closed-form step response of the scheduled loop against an RK4 simulation of each load;
 2. the recursive estimate against a batch weighted least-squares fit of the same data;
-3. the sampled belt formulas against an RK4 integration of the belt over one sample, which puts the matched loop's pole on $a_m$, with the learned inertia checked against the true one.
+3. the sampled belt formulas against an RK4 integration of the belt over one sample, which puts the matched loop's pole on $`a_m`$, with the learned inertia checked against the true one.
 
 ### Python
 
@@ -643,12 +659,12 @@ ALL CHECKS PASS
 
 Lean proves the three theorems from Why it works for every belt and all data, and checks the hand arithmetic.
 
-- Take $T_c > 0$, $K_p = J/T_c$, $K_i = b/T_c$, and any $s$ where controller and belt are defined. Then the loop gain is $L = 1/(T_c s(\tau s + 1))$, the same for every load.
-- Take the same gains and the same $s$. Then the closed loop from command to speed is $L/(1 + L) = 1/(T_c\tau s^2 + T_c s + 1)$.
-- Suppose the estimates equal the truth and $g \ne 0$. Then the matched controller makes the belt obey $v_{k+1} = a_m v_k + (1 - a_m) r_k$, the reference model.
-- Suppose $\lambda > 0$ and $R$ is positive definite, meaning $x^{\mathsf T} R x > 0$ for every nonzero $x$. Then $(\lambda R + \varphi\varphi^{\mathsf T})^{-1} = (P - K\varphi^{\mathsf T}P)/\lambda$, which is the recursive update of $P$.
-- Take the same $R$ and $\lambda$, with $\hat\theta = Pq$ solving $R\hat\theta = q$. Then the batch solution after the new sample equals the recursive update $\hat\theta + K(y - \varphi^{\mathsf T}\hat\theta)$.
-- Lean also checks the hand arithmetic: the inertia at 60 kg, $K_p$ and $K_i$, the damping ratio 0.500 and the 50 N·m.
+- Take $`T_c > 0`$, $`K_p = J/T_c`$, $`K_i = b/T_c`$, and any $`s`$ where controller and belt are defined. Then the loop gain is $`L = 1/(T_c s(\tau s + 1))`$, the same for every load.
+- Take the same gains and the same $`s`$. Then the closed loop from command to speed is $`L/(1 + L) = 1/(T_c\tau s^2 + T_c s + 1)`$.
+- Suppose the estimates equal the truth and $`g \ne 0`$. Then the matched controller makes the belt obey $`v_{k+1} = a_m v_k + (1 - a_m) r_k`$, the reference model.
+- Suppose $`\lambda > 0`$ and $`R`$ is positive definite, meaning $`x^{\mathsf T} R x > 0`$ for every nonzero $`x`$. Then $`(\lambda R + \varphi\varphi^{\mathsf T})^{-1} = (P - K\varphi^{\mathsf T}P)/\lambda`$, which is the recursive update of $`P`$.
+- Take the same $`R`$ and $`\lambda`$, with $`\hat\theta = Pq`$ solving $`R\hat\theta = q`$. Then the batch solution after the new sample equals the recursive update $`\hat\theta + K(y - \varphi^{\mathsf T}\hat\theta)`$.
+- Lean also checks the hand arithmetic: the inertia at 60 kg, $`K_p`$ and $`K_i`$, the damping ratio 0.500 and the 50 N·m.
 
 The settling times, the overshoots and the adaptive loop learning under ripple are left to the Python and Rust checks.
 
@@ -789,23 +805,23 @@ example : (5 : ℚ) * ((20 / 100) / (2 / 100)) = 50 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - Guess first: a longer memory, $\lambda$ = 0.99 instead of 0.98. Steadier or jumpier? Steadier: the spread of $\hat J$ over the last 10 s falls from 0.0056 to 0.0038 kg·m², at the cost of slower learning after a change.
-> - Guess first: double the ripple to ±0.6 N·m. The spread of $\hat J$ roughly doubles, to 0.0114 kg·m².
-> - Guess first: a calmer schedule, $T_c$ = 0.5 s. The settling time is 1.896 s, about twice 0.915 s, for every load.
+> - Guess first: a longer memory, $`\lambda`$ = 0.99 instead of 0.98. Steadier or jumpier? Steadier: the spread of $`\hat J`$ over the last 10 s falls from 0.0056 to 0.0038 kg·m², at the cost of slower learning after a change.
+> - Guess first: double the ripple to ±0.6 N·m. The spread of $`\hat J`$ roughly doubles, to 0.0114 kg·m².
+> - Guess first: a calmer schedule, $`T_c`$ = 0.5 s. The settling time is 1.896 s, about twice 0.915 s, for every load.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Trusting an estimate that the data could not support.** Recursive least squares always returns numbers. With a constant 5 rad/s command, the belt tracks fine, yet $\hat J$ wanders from 0.259 to 0.995 kg·m² over 10 s while the truth is 0.40.
+> **Trusting an estimate that the data could not support.** Recursive least squares always returns numbers. With a constant 5 rad/s command, the belt tracks fine, yet $`\hat J`$ wanders from 0.259 to 0.995 kg·m² over 10 s while the truth is 0.40.
 >
 > The cost shows at the next command change. A controller frozen on those estimates would give the full belt a loop pole from 0.555 to 0.881, a lag from 0.085 s to 0.394 s where 0.25 s was designed: a jumpier or a slower answer, not a runaway. Before trusting an estimate, check that the signals moved in more than one way.
 >
 > Smaller traps:
-> - **Forgetting nothing.** With $\lambda$ = 1 every old sample counts forever; 20 s after the parcels land, $\hat J$ is still 0.2945 kg·m².
-> - **Scheduling faster than the hardware.** The schedule can make every load alike, but not faster than the 0.02 s drive allows. At $T_c$ = 0.02 s every load overshoots by 16.30%.
-> - **Dividing by a tiny gain estimate.** Early guesses can be anywhere; without a floor on $\hat g$, one bad sample would ask the drive for a huge torque.
+> - **Forgetting nothing.** With $`\lambda`$ = 1 every old sample counts forever; 20 s after the parcels land, $`\hat J`$ is still 0.2945 kg·m².
+> - **Scheduling faster than the hardware.** The schedule can make every load alike, but not faster than the 0.02 s drive allows. At $`T_c`$ = 0.02 s every load overshoots by 16.30%.
+> - **Dividing by a tiny gain estimate.** Early guesses can be anywhere; without a floor on $`\hat g`$, one bad sample would ask the drive for a huge torque.
 
 ---
 
@@ -818,7 +834,7 @@ example : (5 : ℚ) * ((20 / 100) / (2 / 100)) = 50 := by norm_num
 - **Conveyors, cranes and robot arms.** Load, rope length or payload change the inertia; drives either measure it and schedule, or estimate it from torque and speed, as this card's belt does.
 
 > **Say it back**
-> When the plant changes, a fixed controller serves some operating points well and others badly. Gain scheduling measures what changed and reads gains from a table designed in advance; for the conveyor, $K_p = J/T_c$ makes every load settle in 0.915 s. Adaptive control learns the plant from torque and speed by recursive least squares and recomputes the gains so the belt copies a reference model. The learning works only while the commands keep the belt moving: with a square wave $\hat J$ settles at 0.3957 kg·m², while with a constant command it wanders up to 0.995. Forgetting old data lets the estimate follow a change; without it the estimate lags far behind.
+> When the plant changes, a fixed controller serves some operating points well and others badly. Gain scheduling measures what changed and reads gains from a table designed in advance; for the conveyor, $`K_p = J/T_c`$ makes every load settle in 0.915 s. Adaptive control learns the plant from torque and speed by recursive least squares and recomputes the gains so the belt copies a reference model. The learning works only while the commands keep the belt moving: with a square wave $`\hat J`$ settles at 0.3957 kg·m², while with a constant command it wanders up to 0.995. Forgetting old data lets the estimate follow a change; without it the estimate lags far behind.
 
 ---
 

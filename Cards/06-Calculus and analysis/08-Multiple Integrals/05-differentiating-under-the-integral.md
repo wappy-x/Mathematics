@@ -39,17 +39,21 @@ Orange: n = 1, area 1. Teal: n = 2, area 2. Dark blue: n = 3, area 6. Each extra
 
 Reminder: the curly d marks a partial derivative, the rate in one input with the others held still ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)).
 
-The integrand has two inputs: the dial $t$, called the **parameter** from here on, and the position $x$ along the base. The total over x depends on the parameter alone: $F(t)$.
+The integrand has two inputs: the dial $`t`$, called the **parameter** from here on, and the position $`x`$ along the base. The total over x depends on the parameter alone: $`F(t)`$.
 
 **Fixed ends.**
 
-$$F(t)=\int_a^b f(t,x)\,dx \quad\Longrightarrow\quad F'(t)=\int_a^b \frac{\partial f}{\partial t}(t,x)\,dx$$
+```math
+F(t)=\int_a^b f(t,x)\,dx \quad\Longrightarrow\quad F'(t)=\int_a^b \frac{\partial f}{\partial t}(t,x)\,dx
+```
 
 **Read it aloud:** the rate of the total per unit of the parameter is the total of the rates.
 
-**Moving ends.** If the ends are themselves functions of the parameter, $a(t)$ and $b(t)$:
+**Moving ends.** If the ends are themselves functions of the parameter, $`a(t)`$ and $`b(t)`$:
 
-$$\frac{d}{dt}\int_{a(t)}^{b(t)} f(t,x)\,dx=\int_{a(t)}^{b(t)} \frac{\partial f}{\partial t}(t,x)\,dx+f\big(t,b(t)\big)\,b'(t)-f\big(t,a(t)\big)\,a'(t)$$
+```math
+\frac{d}{dt}\int_{a(t)}^{b(t)} f(t,x)\,dx=\int_{a(t)}^{b(t)} \frac{\partial f}{\partial t}(t,x)\,dx+f\big(t,b(t)\big)\,b'(t)-f\big(t,a(t)\big)\,a'(t)
+```
 
 **Read it aloud:** the heights inside change, the right end sweeps in area at its height times its speed, and the left end sweeps area out the same way.
 
@@ -57,14 +61,14 @@ The second is the **Leibniz integral rule**. On the example, the total of x^n e^
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | the parameter: a dial inside the integrand | the decay rate, 1 or 2 | the area shrinks, like 1/t^(n+1) |
-| $x$ | the position the integral runs over | 0 to infinity; 0 to 10 when cut | — |
-| $n$, $n!$ | the power of x; 1 × 2 × ⋯ × n | n = 3, 3! = 6 | the area grows by the factor n + 1 at t = 1 |
-| $f$ | the integrand, a height depending on t and x | x^3 e^(-tx) | — |
-| $F$, $J$ | the total as a function of t; the total with a moving end | F(1) = 6; J(1) = 0.264241 | — |
-| $a$, $b$ | the ends of the interval, fixed or moving | 0 and 10; b(t) = 1/t | a later right end adds area |
-| $a'$, $b'$ | the ends' speeds per unit of t | b'(1) = -1 | a faster right end adds more |
-| $h$ | a small step in t, for a difference quotient | 0.1, 0.01, 0.001 | a larger quotient error |
+| $`t`$ | the parameter: a dial inside the integrand | the decay rate, 1 or 2 | the area shrinks, like 1/t^(n+1) |
+| $`x`$ | the position the integral runs over | 0 to infinity; 0 to 10 when cut | — |
+| $`n`$, $`n!`$ | the power of x; 1 × 2 × ⋯ × n | n = 3, 3! = 6 | the area grows by the factor n + 1 at t = 1 |
+| $`f`$ | the integrand, a height depending on t and x | x^3 e^(-tx) | — |
+| $`F`$, $`J`$ | the total as a function of t; the total with a moving end | F(1) = 6; J(1) = 0.264241 | — |
+| $`a`$, $`b`$ | the ends of the interval, fixed or moving | 0 and 10; b(t) = 1/t | a later right end adds area |
+| $`a'`$, $`b'`$ | the ends' speeds per unit of t | b'(1) = -1 | a faster right end adds more |
+| $`h`$ | a small step in t, for a difference quotient | 0.1, 0.01, 0.001 | a larger quotient error |
 
 F'(t) is in the total's units per unit of t; here both are bare numbers.
 
@@ -82,7 +86,9 @@ F'(t) is in the total's units per unit of t; here both are bare numbers.
 
 The total's difference quotient over a step h is a total of quotients, one per x:
 
-$$\frac{F(t+h)-F(t)}{h}=\int_a^b \frac{f(t+h,x)-f(t,x)}{h}\,dx$$
+```math
+\frac{F(t+h)-F(t)}{h}=\int_a^b \frac{f(t+h,x)-f(t,x)}{h}\,dx
+```
 
 Each quotient inside heads for the t-rate at its x. The limit passes through the integral when the quotients close in **uniformly**: one worst gap for every x, shrinking to 0 ([Swapping limits](../06-Series/08-swapping-limits-with-integrals-and-derivatives.md)).
 
@@ -105,7 +111,7 @@ Let f and its t-rate f_t be continuous for t from p to q and x from a to b, with
 
 For 0 < |h| < δ and each x, the mean value theorem gives a ξ between t and t + h with (f(t + h, x) - f(t, x))/h = f_t(ξ, x). Since |ξ - t| < δ, the quotient is within ε of f_t(t, x), for every x. Integrating,
 
-$$\left|\frac{F(t+h)-F(t)}{h}-\int_a^b f_t(t,x)\,dx\right|\le (b-a)\,\varepsilon .$$
+$`\displaystyle \left|\frac{F(t+h)-F(t)}{h}-\int_a^b f_t(t,x)\,dx\right|\le (b-a)\,\varepsilon .`$
 
 ε was arbitrary, so F'(t) exists and equals the integral of f_t.
 
@@ -117,7 +123,7 @@ Freeze the ends and the total changes at the integral of rates. Let the right en
 
 As algebra: let G(t, u, v) be the integral of f(t, x) from u to v. Its partial rates are the integral of the t-rate (Step 2), f(t, v) and -f(t, u) (the fundamental theorem of calculus). All are continuous, so the chain rule for G(t, a(t), b(t)) gives the Leibniz rule term by term ([Chain rule in several variables](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)).
 
-**The example.** Cut the curve x e^(-tx) at one decay length, b(t) = 1/t, where e^(-tx) has fallen to 1/e. Call the total $J$. At t = 1:
+**The example.** Cut the curve x e^(-tx) at one decay length, b(t) = 1/t, where e^(-tx) has fallen to 1/e. Call the total $`J`$. At t = 1:
 
 - inside: the integral of -x^2 e^(-x) from 0 to 1, -0.160603;
 - right end: height e^(-1) times speed b'(1) = -1, giving -0.367879;
@@ -129,11 +135,15 @@ Sum: -0.528482. The substitution u = tx turns J into (1 - 2/e)/t^2, whose slope 
 
 Cut the range at b. For t from 1/2 to 2, e^(-tx) and all its t-rates are continuous, so Step 2 applies n times:
 
-$$\frac{d^n}{dt^n}\int_0^b e^{-tx}\,dx=(-1)^n\int_0^b x^n e^{-tx}\,dx$$
+```math
+\frac{d^n}{dt^n}\int_0^b e^{-tx}\,dx=(-1)^n\int_0^b x^n e^{-tx}\,dx
+```
 
 Let b run through 1, 2, 3, …. The left totals head for 1/t. The right side's tails shrink for every t at once: for t at least 1/2 the n = 3 tail beyond b = 60 is at most 0.000000045. So the swapping card's derivative theorem passes the limit through each derivative:
 
-$$\int_0^\infty x^n e^{-tx}\,dx=(-1)^n\frac{d^n}{dt^n}\,\frac1t=\frac{n!}{t^{n+1}}$$
+```math
+\int_0^\infty x^n e^{-tx}\,dx=(-1)^n\frac{d^n}{dt^n}\,\frac1t=\frac{n!}{t^{n+1}}
+```
 
 The last step is the power rule n times, each step bringing down the next whole number. At t = 1 the area is n!.
 

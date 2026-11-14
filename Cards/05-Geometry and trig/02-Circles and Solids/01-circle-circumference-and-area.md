@@ -26,30 +26,34 @@ Scale 1 cm = 1.1 units. The dot is the chalk mark, on the ground at the start an
 
 ## The formula
 
-Notation first, in words. The Greek letter $\pi$, said "pie", names the distance round any circle divided by the distance across it. Below, $C$ is the circumference, $d$ the diameter, $r$ the radius and $A$ the disc's area; a raised 2, as in $r^2$, means that letter times itself.
+Notation first, in words. The Greek letter $`\pi`$, said "pie", names the distance round any circle divided by the distance across it. Below, $`C`$ is the circumference, $`d`$ the diameter, $`r`$ the radius and $`A`$ the disc's area; a raised 2, as in $`r^2`$, means that letter times itself.
 
-$$C = \pi\, d = 2\pi\, r$$
+```math
+C = \pi\, d = 2\pi\, r
+```
 
 **Read it aloud:** the distance round is pi times the distance across, or two pi times the radius.
 
-$$A = \tfrac12\, C\, r = \pi\, r^2$$
+```math
+A = \tfrac12\, C\, r = \pi\, r^2
+```
 
 **Read it aloud:** the disc covers half the circumference times the radius, which is pi times the radius times itself.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $d$ | diameter: edge to edge through the centre | 70 cm | circumference grows in step |
-| $r$ | radius: centre to edge, half the diameter | 35 cm | doubled: circumference twice, disc four times |
-| $C$ | circumference: the distance round, so the distance per turn | 219.911486 cm | — |
-| $A$ | area of the disc inside the edge | 3848.451001 square cm | — |
-| $\pi$ | circumference over diameter, the same for every circle | 3.1415926536 | fixed |
-| $P$ | perimeter of a polygon inside the circle | 210 cm, hexagon | rises to $C$ as sides double |
-| $h$ | centre to the middle of a side of that polygon | under 35 cm | rises to $r$ |
-| $s$ | one side of that polygon | 35 cm, hexagon | about halves per doubling |
+| $`d`$ | diameter: edge to edge through the centre | 70 cm | circumference grows in step |
+| $`r`$ | radius: centre to edge, half the diameter | 35 cm | doubled: circumference twice, disc four times |
+| $`C`$ | circumference: the distance round, so the distance per turn | 219.911486 cm | — |
+| $`A`$ | area of the disc inside the edge | 3848.451001 square cm | — |
+| $`\pi`$ | circumference over diameter, the same for every circle | 3.1415926536 | fixed |
+| $`P`$ | perimeter of a polygon inside the circle | 210 cm, hexagon | rises to $`C`$ as sides double |
+| $`h`$ | centre to the middle of a side of that polygon | under 35 cm | rises to $`r`$ |
+| $`s`$ | one side of that polygon | 35 cm, hexagon | about halves per doubling |
 
 ### When it holds
 
-- **A flat plane.** On a globe, with the radius measured along the surface, the circumference falls short of $2\pi r$: the equator, centred on the North Pole, is four radii round.
+- **A flat plane.** On a globe, with the radius measured along the surface, the circumference falls short of $`2\pi r`$: the equator, centred on the North Pole, is four radii round.
 - **A true circle.** A tyre squashed under a rider sits lower than its unladen radius, so it rolls a little less than pi times its width per turn.
 - **No slipping.** A wheel spinning on ice turns and goes nowhere.
 
@@ -59,38 +63,40 @@ $$A = \tfrac12\, C\, r = \pi\, r^2$$
 
 ### Step 0: every circle is one shape, and a disc unrolls into a triangle
 
-Any circle is an enlarged copy of any other, so round over across cannot depend on size: that ratio is $\pi$. And a disc cut into thin rings straightens into a triangle.
+Any circle is an enlarged copy of any other, so round over across cannot depend on size: that ratio is $`\pi`$. And a disc cut into thin rings straightens into a triangle.
 
 ### Step 1: one ratio for every circle
 
 Centre a 140 cm wheel on the 70 cm wheel and enlarge the small one by 2: each edge point moves from 35 cm out to 70 cm, onto the big wheel's edge.
 
-The circumference is the length that paths of short straight hops round the edge close in on as the hops shrink. Enlarging doubles every hop, so the circumference doubles, 439.822972 cm against 219.911486 cm, and so does the width. No enlargement changes the ratio, so every circle shares it: $\pi$.
+The circumference is the length that paths of short straight hops round the edge close in on as the hops shrink. Enlarging doubles every hop, so the circumference doubles, 439.822972 cm against 219.911486 cm, and so does the width. No enlargement changes the ratio, so every circle shares it: $`\pi`$.
 
 ### Step 2: trap pi between polygons
 
-A regular hexagon, six equal sides and six equal angles, fits inside the circle with each side equal to the radius: it splits into six triangles with all sides equal. Its perimeter is 3 diameters, and each straight side is shorter than the curve it cuts across, so $\pi$ is more than 3. A hexagon wrapped outside has a perimeter of 3.464102 diameters, so $\pi$ is less than that.
+A regular hexagon, six equal sides and six equal angles, fits inside the circle with each side equal to the radius: it splits into six triangles with all sides equal. Its perimeter is 3 diameters, and each straight side is shorter than the curve it cuts across, so $`\pi`$ is more than 3. A hexagon wrapped outside has a perimeter of 3.464102 diameters, so $`\pi`$ is less than that.
 
 Doubling the sides, with Pythagoras giving each new side from the old, shrinks the gap between the two bounds about fourfold each time: 0.464102, 0.109562, 0.027031, 0.006736, 0.001683. Archimedes stopped at 96 sides, between 3.141032 and 3.142715, and rounded outward to 3 10/71 and 3 1/7, which are 3.140845 and 3.142857; 3 1/7 is the familiar 22/7. At 6,291,456 sides both bounds read 3.1415926536.
 
-No fraction is exact: $\pi$ is irrational, like root 2 on [Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md), as Johann Heinrich Lambert proved in the 1760s by a route beyond this card.
+No fraction is exact: $`\pi`$ is irrational, like root 2 on [Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md), as Johann Heinrich Lambert proved in the 1760s by a route beyond this card.
 
 <details>
 <summary>The algebra behind the doubling</summary>
 
-Radius 1, inside side $s$. By Pythagoras the centre is h = √(1 − s^2/4) from each side's midpoint. A new corner goes on the circle straight out past that midpoint. The new side is the long side of a right-angled triangle with legs s/2 and 1 − h, so new side^2 = 2 − √(4 − s^2). The code computes the same new side as s ÷ √(2 + √(4 − s^2)), to avoid subtracting nearly equal numbers. The outside polygon is the inside one enlarged until its sides touch, so its side is s ÷ h.
+Radius 1, inside side $`s`$. By Pythagoras the centre is h = √(1 − s^2/4) from each side's midpoint. A new corner goes on the circle straight out past that midpoint. The new side is the long side of a right-angled triangle with legs s/2 and 1 − h, so new side^2 = 2 − √(4 − s^2). The code computes the same new side as s ÷ √(2 + √(4 − s^2)), to avoid subtracting nearly equal numbers. The outside polygon is the inside one enlarged until its sides touch, so its side is s ÷ h.
 
 </details>
 
 ### Step 3: the circumference
 
-Turn the definition round: $C = \pi d$, or $2\pi r$, since the diameter is two radii. For the wheel, 3.1415926536 × 70 = 219.911486 cm per turn, 454.73 turns to the kilometre.
+Turn the definition round: $`C = \pi d`$, or $`2\pi r`$, since the diameter is two radii. For the wheel, 3.1415926536 × 70 = 219.911486 cm per turn, 454.73 turns to the kilometre.
 
 ### Step 4: unroll the disc into a triangle
 
-Cut the disc into rings, like the growth rings of a sawn log, and straighten each into a strip as long as its circumference: $2\pi$ times its distance from the centre, by Step 3. Stack the strips, outermost at the bottom. Their lengths fall steadily from 219.91 cm to nothing 35 cm up: a right-angled triangle with base $C$ and height $r$. A triangle is half base times height ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)), so
+Cut the disc into rings, like the growth rings of a sawn log, and straighten each into a strip as long as its circumference: $`2\pi`$ times its distance from the centre, by Step 3. Stack the strips, outermost at the bottom. Their lengths fall steadily from 219.91 cm to nothing 35 cm up: a right-angled triangle with base $`C`$ and height $`r`$. A triangle is half base times height ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)), so
 
-$$A = \tfrac12 \times 2\pi r \times r = \pi r^2$$
+```math
+A = \tfrac12 \times 2\pi r \times r = \pi r^2
+```
 
 Half of 219.911486 × 35 is 3848.451001 square centimetres. This is Proposition 1 of Archimedes' *Measurement of a Circle*.
 
@@ -102,20 +108,20 @@ Scale 1 cm = 1.4 units. The shaded outer ring becomes the shaded bottom strip, i
 
 ### Step 5: why thin rings are enough
 
-A straightened ring's inner edge is shorter than its outer, so the stack is only nearly a triangle, and "thin enough" is a claim about ever finer slicing. Archimedes settled it with polygons, folded below. The code adds a road with no rings and no $\pi$: millimetre squares wholly inside the wheel cover 3833.64 square centimetres, those touching it 3861.44, and 3848.451001 sits between.
+A straightened ring's inner edge is shorter than its outer, so the stack is only nearly a triangle, and "thin enough" is a claim about ever finer slicing. Archimedes settled it with polygons, folded below. The code adds a road with no rings and no $`\pi`$: millimetre squares wholly inside the wheel cover 3833.64 square centimetres, those touching it 3861.44, and 3848.451001 sits between.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Inside.** Join the centre to each corner of the inside polygon: triangles of height $h$, adding to half of $P$ times $h$. As $P$ is less than $C$ and $h$ less than $r$, this is less than the triangle, half of C times r.
+**Inside.** Join the centre to each corner of the inside polygon: triangles of height $`h`$, adding to half of $`P`$ times $`h`$. As $`P`$ is less than $`C`$ and $`h`$ less than $`r`$, this is less than the triangle, half of C times r.
 
-**Outside.** The outside polygon's triangles have height $r$, so its area is half its perimeter times $r$. That perimeter exceeds $C$, so the area exceeds the triangle. Outside perimeters exceeding $C$ and inside ones falling short is Archimedes' starting rule for curved lengths.
+**Outside.** The outside polygon's triangles have height $`r`$, so its area is half its perimeter times $`r`$. That perimeter exceeds $`C`$, so the area exceeds the triangle. Outside perimeters exceeding $`C`$ and inside ones falling short is Archimedes' starting rule for curved lengths.
 
 **Between.** The disc contains the inside polygon and lies within the outside one, so disc and triangle both lie between the two polygon areas.
 
 **The squeeze.** The outside polygon is the inside one enlarged by r ÷ h, so their gap is the inside area times (r^2 − h^2) ÷ h^2. By Pythagoras r^2 − h^2 is the square of half a side, which falls about fourfold per doubling, so the gap drops below any amount named in advance.
 
-**Equal.** If disc and triangle differed by some amount, double until the gap is smaller; both lie inside it, a contradiction. So $A = \tfrac12 C r$.
+**Equal.** If disc and triangle differed by some amount, double until the gap is smaller; both lie inside it, a contradiction. So $`A = \tfrac12 C r`$.
 
 </details>
 
@@ -150,7 +156,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported and no built-in $\pi$ is used. Road one is Archimedes' polygons, square roots alone. Road two is a grid and Pythagoras: 10,000 straight hops round an eighth of the edge, times 8, and a count of squares. The asserts test Archimedes' fractions against the polygons and the walk against pi times 70. They also test the squares, millimetre bracket inside centimetre bracket, against pi r squared and against half the walked circumference times the radius, which needs no $\pi$.
+Nothing is imported and no built-in $`\pi`$ is used. Road one is Archimedes' polygons, square roots alone. Road two is a grid and Pythagoras: 10,000 straight hops round an eighth of the edge, times 8, and a count of squares. The asserts test Archimedes' fractions against the polygons and the walk against pi times 70. They also test the squares, millimetre bracket inside centimetre bracket, against pi r squared and against half the walked circumference times the radius, which needs no $`\pi`$.
 
 ### Python
 
@@ -352,7 +358,7 @@ The two outputs match line for line.
 Lean proves both formulas for every circle in a flat plane, and proves Archimedes' bounds on pi.
 
 - Every circle's circumference is pi times its diameter, measured as the length that paths of ever shorter straight hops round the edge close in on.
-- The disc inside every circle covers $\pi r^2$, where $r$ is the radius.
+- The disc inside every circle covers $`\pi r^2`$, where $`r`$ is the radius.
 - Pi is more than 3 10/71 and less than 3 1/7, the familiar 22/7.
 - The card's whole-number sums: the hexagon's 210 cm, Archimedes' 96 sides, and the 3712 and 3980 centimetre squares.
 

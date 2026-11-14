@@ -34,11 +34,13 @@ Rubbing out the numbers sends 720 orderings onto 60 bars, twelve onto each.
 
 ## The formula
 
-Two pieces of notation, both from the shelf before. The factorial $n!$ means $n$ × ($n$ − 1) × … × 1, the number of orderings of $n$ distinct things ([Factorials](../01-Counting%20Principles/03-factorial.md)). The binomial coefficient $C(n, k)$, read "n choose k", counts the ways of picking k positions out of $n$, order ignored ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
+Two pieces of notation, both from the shelf before. The factorial $`n!`$ means $`n`$ × ($`n`$ − 1) × … × 1, the number of orderings of $`n`$ distinct things ([Factorials](../01-Counting%20Principles/03-factorial.md)). The binomial coefficient $`C(n, k)`$, read "n choose k", counts the ways of picking k positions out of $`n`$, order ignored ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
-Let the line hold $n$ items of $m$ kinds: $a_1$ copies of the first kind, $a_2$ of the second, and so on to $a_m$ of the last, the copies together filling the line, so that $a_1$ + $a_2$ + … + $a_m$ = $n$.
+Let the line hold $`n`$ items of $`m`$ kinds: $`a_1`$ copies of the first kind, $`a_2`$ of the second, and so on to $`a_m`$ of the last, the copies together filling the line, so that $`a_1`$ + $`a_2`$ + … + $`a_m`$ = $`n`$.
 
-$$\text{distinct arrangements} \;=\; \frac{n!}{a_1!\,a_2!\cdots a_m!}$$
+```math
+\text{distinct arrangements} \;=\; \frac{n!}{a_1!\,a_2!\cdots a_m!}
+```
 
 Books call this number the multinomial coefficient.
 
@@ -46,12 +48,12 @@ Books call this number the multinomial coefficient.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many items stand in the line | 11 letters; 6 drum slots | climbs fast: one more letter multiplies the count |
-| $m$ | how many kinds of item | 4 kinds of letter; 3 drum sounds | climbs, since the same $n$ splits into smaller blocks |
-| $a_1$, $a_2$, …, $a_m$ | copies of each kind, adding to $n$ | 1, 4, 4, 2; 3, 2, 1 | falls: a fatter block hides more orderings |
-| $n!$ | the orderings of $n$ distinct things | 11! = 39,916,800 | — |
-| $a_1!$, …, $a_m!$ | the orderings inside one block | 4! = 24, 2! = 2 | falls, one division at a time |
-| $C(n, k)$ | ways of choosing k of the $n$ positions | C(10, 4) = 210 | — |
+| $`n`$ | how many items stand in the line | 11 letters; 6 drum slots | climbs fast: one more letter multiplies the count |
+| $`m`$ | how many kinds of item | 4 kinds of letter; 3 drum sounds | climbs, since the same $`n`$ splits into smaller blocks |
+| $`a_1`$, $`a_2`$, …, $`a_m`$ | copies of each kind, adding to $`n`$ | 1, 4, 4, 2; 3, 2, 1 | falls: a fatter block hides more orderings |
+| $`n!`$ | the orderings of $`n`$ distinct things | 11! = 39,916,800 | — |
+| $`a_1!`$, …, $`a_m!`$ | the orderings inside one block | 4! = 24, 2! = 2 | falls, one division at a time |
+| $`C(n, k)`$ | ways of choosing k of the $`n`$ positions | C(10, 4) = 210 | — |
 
 ### When it holds
 
@@ -98,15 +100,17 @@ MISSISSIPPI the same way: C(11, 1) × C(10, 4) × C(6, 4) × C(2, 2) = 11 × 210
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** A line of $n$ items of $m$ kinds, with $a_1$ + $a_2$ + … + $a_m$ = $n$ copies, has $n!/(a_1!\,a_2!\cdots a_m!)$ distinct arrangements.
+**Claim.** A line of $`n`$ items of $`m`$ kinds, with $`a_1`$ + $`a_2`$ + … + $`a_m`$ = $`n`$ copies, has $`n!/(a_1!\,a_2!\cdots a_m!)`$ distinct arrangements.
 
-**Numbering road.** Number the copies of kind 1 from 1 to $a_1$, and likewise for each kind. All $n$ items are now distinct, so the numbered lines number $n!$, and rubbing the numbers out sends each to one arrangement.
+**Numbering road.** Number the copies of kind 1 from 1 to $`a_1`$, and likewise for each kind. All $`n`$ items are now distinct, so the numbered lines number $`n!`$, and rubbing the numbers out sends each to one arrangement.
 
-Fix an arrangement. It fixes which positions hold kind 1, and the $a_1$ numbers spread over them in $a_1!$ ways, independently of every other kind. So the numbered lines rubbing out to it number $a_1!\,a_2!\cdots a_m!$, whatever the arrangement. They split into groups of that one size, one per arrangement, hence (arrangements) × $a_1!\,a_2!\cdots a_m!$ = $n!$, the claim.
+Fix an arrangement. It fixes which positions hold kind 1, and the $`a_1`$ numbers spread over them in $`a_1!`$ ways, independently of every other kind. So the numbered lines rubbing out to it number $`a_1!\,a_2!\cdots a_m!`$, whatever the arrangement. They split into groups of that one size, one per arrangement, hence (arrangements) × $`a_1!\,a_2!\cdots a_m!`$ = $`n!`$, the claim.
 
-**Position road.** Choose the $a_1$ positions for kind 1, then the $a_2$ positions for kind 2 from what is left, and so on:
-$$C(n, a_1)\,C(n - a_1, a_2)\cdots C(a_m, a_m) = \frac{n!}{a_1!\,(n-a_1)!}\cdot\frac{(n-a_1)!}{a_2!\,(n-a_1-a_2)!}\cdots\frac{a_m!}{a_m!\,0!}$$
-Each numerator cancels the denominator before it, the last leftover being 0! = 1. What survives is $n!/(a_1!\,a_2!\cdots a_m!)$, the same number by a road that never numbered anything.
+**Position road.** Choose the $`a_1`$ positions for kind 1, then the $`a_2`$ positions for kind 2 from what is left, and so on:
+
+$`\displaystyle C(n, a_1)\,C(n - a_1, a_2)\cdots C(a_m, a_m) = \frac{n!}{a_1!\,(n-a_1)!}\cdot\frac{(n-a_1)!}{a_2!\,(n-a_1-a_2)!}\cdots\frac{a_m!}{a_m!\,0!}`$
+
+Each numerator cancels the denominator before it, the last leftover being 0! = 1. What survives is $`n!/(a_1!\,a_2!\cdots a_m!)`$, the same number by a road that never numbered anything.
 
 </details>
 
@@ -347,9 +351,9 @@ The two outputs match line for line.
 
 Lean proves the division for every line, every number of kinds and every set of block sizes that fill the line exactly.
 
-- The distinct arrangements number $n!$ divided by $a_1!\,a_2!\cdots a_m!$.
-- The numbering road, with no division: the arrangements times $a_1!\,a_2!\cdots a_m!$ make exactly $n!$.
-- The position road gives the same count: $C(n, a_1)\,C(n - a_1, a_2)\cdots C(a_m, a_m)$.
+- The distinct arrangements number $`n!`$ divided by $`a_1!\,a_2!\cdots a_m!`$.
+- The numbering road, with no division: the arrangements times $`a_1!\,a_2!\cdots a_m!`$ make exactly $`n!`$.
+- The position road gives the same count: $`C(n, a_1)\,C(n - a_1, a_2)\cdots C(a_m, a_m)`$.
 - Built bar by bar, the drum kit of three kicks, two snares and one hat holds exactly 60 bars.
 - The card's other numbers check out: 34,650 for MISSISSIPPI, 56 grid routes, the four mistakes and both Try changing counts.
 

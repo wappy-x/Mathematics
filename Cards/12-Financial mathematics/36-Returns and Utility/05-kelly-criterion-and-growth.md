@@ -40,42 +40,50 @@ It falls back through zero just short of 0.20, twice Kelly, and past that the ba
 
 ## The formula
 
-Notation first, in words. The letter $f$ stands for the share of the current bankroll staked on each bet, a number between 0 and 1. The natural log, written $\ln$, turns multiplying into adding ([Returns](01-returns-simple-log-and-annualised.md)). A star marks the best value: $f^\star$ is the best stake.
+Notation first, in words. The letter $`f`$ stands for the share of the current bankroll staked on each bet, a number between 0 and 1. The natural log, written $`\ln`$, turns multiplying into adding ([Returns](01-returns-simple-log-and-annualised.md)). A star marks the best value: $`f^\star`$ is the best stake.
 
-$$g(f) = p\,\ln(1 + b f) + q\,\ln(1 - f)$$
+```math
+g(f) = p\,\ln(1 + b f) + q\,\ln(1 - f)
+```
 
 **Read it aloud:** growth per bet is the win chance times the log of the winning multiplier, plus the loss chance times the log of the losing multiplier.
 
-$$f^\star = \frac{bp - q}{b} = p - \frac{q}{b}$$
+```math
+f^\star = \frac{bp - q}{b} = p - \frac{q}{b}
+```
 
 **Read it aloud:** the Kelly fraction is the average profit per dollar staked, divided by the profit per dollar on a win.
 
-The top line, $bp - q$, is the **edge**: the average profit on one dollar staked. For the coin it is 0.55 − 0.45 = 0.10, and with $b = 1$ the fraction equals the edge.
+The top line, $`bp - q`$, is the **edge**: the average profit on one dollar staked. For the coin it is 0.55 − 0.45 = 0.10, and with $`b = 1`$ the fraction equals the edge.
 
-Fractional Kelly stakes $c$ times the Kelly fraction. Its growth, close to the peak, is
+Fractional Kelly stakes $`c`$ times the Kelly fraction. Its growth, close to the peak, is
 
-$$g(c\,f^\star) \approx c\,(2 - c)\; g(f^\star)$$
+```math
+g(c\,f^\star) \approx c\,(2 - c)\; g(f^\star)
+```
 
 **Read it aloud:** staking a multiple c of Kelly keeps c times (2 minus c) of the best growth, so half keeps three quarters and double keeps none.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | share of the current bankroll staked on each bet | 0.10 at Kelly | growth rises to the peak at 0.10, then falls, and turns negative just short of 0.20 |
-| $p$ | chance of winning a bet | 0.55 | the Kelly fraction rises |
-| $q$ | chance of losing a bet, 1 − p | 0.45 | the Kelly fraction falls |
-| $b$ | net odds: profit per dollar staked, on a win | 1 (even odds) | the Kelly fraction rises towards p |
-| $f^\star$ | the Kelly fraction, the stake with the most growth | 0.10 | — |
-| $g(f)$ | expected log growth per bet, in natural-log units | 0.005008 at 0.10, half a log point | — |
-| $W_0$, $W_n$ | bankroll at the start, and after n bets | $100, then about $100 times 149.66 on the typical path after 1,000 bets | — |
-| $n$, $K$ | number of bets, and how many of them are won | 1,000 bets; 550 wins on the median path | wealth on the typical path grows like the exponential of n times g |
-| $c$ | multiple of the Kelly fraction actually staked | 0.5 for half Kelly | growth c(2 − c) of the best, risk rises with c |
-| $r$ | the saver's riskless deposit rate, per year | 4% | the edge μ − r shrinks, so the saver's Kelly fraction falls |
-| $\mu$ | the fund's mean return per year, "mu" | 8% | the saver's Kelly fraction rises |
-| $\sigma$ | the fund's spread (volatility) per year, "sigma" | 15% | the saver's Kelly fraction falls with its square |
+| $`f`$ | share of the current bankroll staked on each bet | 0.10 at Kelly | growth rises to the peak at 0.10, then falls, and turns negative just short of 0.20 |
+| $`p`$ | chance of winning a bet | 0.55 | the Kelly fraction rises |
+| $`q`$ | chance of losing a bet, 1 − p | 0.45 | the Kelly fraction falls |
+| $`b`$ | net odds: profit per dollar staked, on a win | 1 (even odds) | the Kelly fraction rises towards p |
+| $`f^\star`$ | the Kelly fraction, the stake with the most growth | 0.10 | — |
+| $`g(f)`$ | expected log growth per bet, in natural-log units | 0.005008 at 0.10, half a log point | — |
+| $`W_0`$, $`W_n`$ | bankroll at the start, and after n bets | $100, then about $100 times 149.66 on the typical path after 1,000 bets | — |
+| $`n`$, $`K`$ | number of bets, and how many of them are won | 1,000 bets; 550 wins on the median path | wealth on the typical path grows like the exponential of n times g |
+| $`c`$ | multiple of the Kelly fraction actually staked | 0.5 for half Kelly | growth c(2 − c) of the best, risk rises with c |
+| $`r`$ | the saver's riskless deposit rate, per year | 4% | the edge μ − r shrinks, so the saver's Kelly fraction falls |
+| $`\mu`$ | the fund's mean return per year, "mu" | 8% | the saver's Kelly fraction rises |
+| $`\sigma`$ | the fund's spread (volatility) per year, "sigma" | 15% | the saver's Kelly fraction falls with its square |
 
 For an investment rather than a coin, the same idea in continuous time gives a companion pair, derived at the end of Why it works:
 
-$$f^\star = \frac{\mu - r}{\sigma^2}, \qquad g(f) = r + f(\mu - r) - \tfrac12 f^2\sigma^2$$
+```math
+f^\star = \frac{\mu - r}{\sigma^2}, \qquad g(f) = r + f(\mu - r) - \tfrac12 f^2\sigma^2
+```
 
 ### When it holds
 
@@ -97,88 +105,104 @@ The logarithm turns the product into a sum, and the law of large numbers ([Law o
 
 ### Step 1: one bet's multiplier
 
-Stake the share $f$ of the bankroll. A win adds $b f$ of the bankroll; a loss removes $f$. So one bet multiplies wealth by
+Stake the share $`f`$ of the bankroll. A win adds $`b f`$ of the bankroll; a loss removes $`f`$. So one bet multiplies wealth by
 
-$$1 + b f \text{ with chance } p, \qquad 1 - f \text{ with chance } q.$$
+```math
+1 + b f \text{ with chance } p, \qquad 1 - f \text{ with chance } q.
+```
 
 ### Step 2: many bets, and the growth rate appears
 
-After $n$ bets with $K$ wins, where $K$ counts the wins,
+After $`n`$ bets with $`K`$ wins, where $`K`$ counts the wins,
 
-$$W_n = W_0\,(1 + b f)^{K}\,(1 - f)^{\,n - K}.$$
+```math
+W_n = W_0\,(1 + b f)^{K}\,(1 - f)^{\,n - K}.
+```
 
-Take logs and divide by $n$:
+Take logs and divide by $`n`$:
 
-$$\frac{1}{n}\ln\frac{W_n}{W_0} = \frac{K}{n}\ln(1 + b f) + \frac{n - K}{n}\ln(1 - f).$$
+```math
+\frac{1}{n}\ln\frac{W_n}{W_0} = \frac{K}{n}\ln(1 + b f) + \frac{n - K}{n}\ln(1 - f).
+```
 
-The share of wins, K divided by n, settles on $p$ as $n$ grows. So the left side settles on $g(f) = p\ln(1+bf) + q\ln(1-f)$, and on almost every long run
+The share of wins, K divided by n, settles on $`p`$ as $`n`$ grows. So the left side settles on $`g(f) = p\ln(1+bf) + q\ln(1-f)`$, and on almost every long run
 
-$$W_n \approx W_0\, e^{\,n\,g(f)}.$$
+```math
+W_n \approx W_0\, e^{\,n\,g(f)}.
+```
 
 The growth rate is not a matter of taste. It is where the typical bankroll goes.
 
 ### Step 3: find the peak
 
-Set the slope of $g$ to zero. The slope of $\ln(1 + bf)$ is $b/(1+bf)$, and the slope of $\ln(1-f)$ is $-1/(1-f)$:
+Set the slope of $`g`$ to zero. The slope of $`\ln(1 + bf)`$ is $`b/(1+bf)`$, and the slope of $`\ln(1-f)`$ is $`-1/(1-f)`$:
 
-$$g'(f) = \frac{pb}{1 + bf} - \frac{q}{1 - f} = 0.$$
+```math
+g'(f) = \frac{pb}{1 + bf} - \frac{q}{1 - f} = 0.
+```
 
-Cross-multiply: $pb(1 - f) = q(1 + bf)$, so $pb - q = bf(p + q) = bf$, because $p + q = 1$. Hence $f^\star = (bp - q)/b$. For the coin, $0.10/1 = 0.10$.
+Cross-multiply: $`pb(1 - f) = q(1 + bf)`$, so $`pb - q = bf(p + q) = bf`$, because $`p + q = 1`$. Hence $`f^\star = (bp - q)/b`$. For the coin, $`0.10/1 = 0.10`$.
 
 ### Step 4: it is the only peak, and the edges behave
 
 The slope of the slope is
 
-$$g''(f) = -\frac{pb^2}{(1+bf)^2} - \frac{q}{(1-f)^2},$$
+```math
+g''(f) = -\frac{pb^2}{(1+bf)^2} - \frac{q}{(1-f)^2},
+```
 
 negative everywhere: the curve bends down all the way (it is **concave**). A curve that bends down all the way has at most one peak, and the point where its slope is zero is it.
 
 Three boundary cases close the argument:
 
-- With no edge, $bp \le q$, the slope at zero is zero or negative, and the best stake is zero: do not bet.
-- As $f$ approaches 1, the term $\ln(1 - f)$ runs to minus infinity, so staking everything is never best while a loss is possible.
-- $f^\star = p - q/b$ is below $p$, so below 1, whenever the chance of losing is above zero.
+- With no edge, $`bp \le q`$, the slope at zero is zero or negative, and the best stake is zero: do not bet.
+- As $`f`$ approaches 1, the term $`\ln(1 - f)`$ runs to minus infinity, so staking everything is never best while a loss is possible.
+- $`f^\star = p - q/b`$ is below $`p`$, so below 1, whenever the chance of losing is above zero.
 
 ### Step 5: why the hump makes half Kelly cheap
 
-Near zero, $\ln(1 + u)$ is close to $u - u^2/2$. Apply it to one bet's gain, $f$ times a return of $+b$ or $-1$:
+Near zero, $`\ln(1 + u)`$ is close to $`u - u^2/2`$. Apply it to one bet's gain, $`f`$ times a return of $`+b`$ or $`-1`$:
 
-$$g(f) \approx f\,(bp - q) - \tfrac12 f^2\,(b^2 p + q).$$
+```math
+g(f) \approx f\,(bp - q) - \tfrac12 f^2\,(b^2 p + q).
+```
 
 That is a downward parabola: the edge pays linearly, and the bounce costs with the square of the stake. The cost of bouncing is often called **volatility drag**.
 
-For the coin it reads $0.10f - \tfrac12 f^2$, which peaks at 0.10 with height about 0.005; the exact height is 0.005008.
+For the coin it reads $`0.10f - \tfrac12 f^2`$, which peaks at 0.10 with height about 0.005; the exact height is 0.005008.
 
-Put $f = c\,f^\star$ into the parabola and the growth is $c(2-c)$ times the peak. Half Kelly keeps 0.7500 of the peak by this rule; the exact figure for the coin is 0.7493. Twice Kelly keeps 0.0000 by the rule; exactly, −0.0275.
+Put $`f = c\,f^\star`$ into the parabola and the growth is $`c(2-c)`$ times the peak. Half Kelly keeps 0.7500 of the peak by this rule; the exact figure for the coin is 0.7493. Twice Kelly keeps 0.0000 by the rule; exactly, −0.0275.
 
 ### Step 6: what half Kelly buys
 
 The spread of the log change on one bet grows roughly in step with the stake. It is 0.0998 at full Kelly and 0.0498 at half: halved. A smaller spread means shallower falls.
 
-Treat log wealth as a steady drift plus random noise. Then a classical result gives the chance of ever falling to a share $x$ of the starting bankroll when staking $c$ times Kelly:
+Treat log wealth as a steady drift plus random noise. Then a classical result gives the chance of ever falling to a share $`x`$ of the starting bankroll when staking $`c`$ times Kelly:
 
-$$\text{chance of ever falling to } x = x^{\,2/c \,-\, 1}.$$
+```math
+\text{chance of ever falling to } x = x^{\,2/c \,-\, 1}.
+```
 
-For a fall to half, $x = 0.5$. Full Kelly gives 0.500. Half Kelly gives 0.125. So **half Kelly trades a quarter of the growth for half the spread and a quarter of the chance of losing half the money.** The exact figures for the coin, summed path by path over 4,000 bets, are 0.476 and 0.116.
+For a fall to half, $`x = 0.5`$. Full Kelly gives 0.500. Half Kelly gives 0.125. So **half Kelly trades a quarter of the growth for half the spread and a quarter of the chance of losing half the money.** The exact figures for the coin, summed path by path over 4,000 bets, are 0.476 and 0.116.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The peak.** Steps 3 and 4 are complete for $0 < p < 1$ and $b > 0$. If $p = 1$ there is no loss; $g(f) = \ln(1 + bf)$ rises all the way to $f = 1$, and the formula is not needed.
+**The peak.** Steps 3 and 4 are complete for $`0 < p < 1`$ and $`b > 0`$. If $`p = 1`$ there is no loss; $`g(f) = \ln(1 + bf)`$ rises all the way to $`f = 1`$, and the formula is not needed.
 
-**The long run.** Each bet's log multiplier is $\ln(1+bf)$ on a win and $\ln(1-f)$ on a loss. For a fixed stake below 1 these are independent, identically distributed and bounded, so the strong law of large numbers gives $\frac1n\ln(W_n/W_0) \to g(f)$ with probability 1.
+**The long run.** Each bet's log multiplier is $`\ln(1+bf)`$ on a win and $`\ln(1-f)`$ on a loss. For a fixed stake below 1 these are independent, identically distributed and bounded, so the strong law of large numbers gives $`\frac1n\ln(W_n/W_0) \to g(f)`$ with probability 1.
 
 Now run two fixed stakes on the same tosses and apply the same law to the difference of their log multipliers. If the first stake has the larger growth rate, the log of the ratio of the two bankrolls grows without bound. So the first ends up ahead by any factor at all, on almost every run.
 
 Breiman proved the stronger version, in two parts. First, no strategy, even one that changes its stake as it goes, ends up ahead of the Kelly bettor by an unbounded factor. Second, the Kelly bettor reaches a distant target fastest on average.
 
-**Expected wealth disagrees.** Each bet multiplies expected wealth by $p(1+bf) + q(1-f) = 1 + f(bp - q)$, which rises in $f$ all the way to $f = 1$. At $f = 1$ one loss ends the game, and the chance of $n$ straight wins, $p^n$, goes to zero. The expected value is carried by paths that almost never happen.
+**Expected wealth disagrees.** Each bet multiplies expected wealth by $`p(1+bf) + q(1-f) = 1 + f(bp - q)`$, which rises in $`f`$ all the way to $`f = 1`$. At $`f = 1`$ one loss ends the game, and the chance of $`n`$ straight wins, $`p^n`$, goes to zero. The expected value is carried by paths that almost never happen.
 
-**The parabola rule.** With edge $e = bp - q$ and second moment $v = b^2 p + q$, the parabola $g \approx fe - \tfrac12 f^2 v$ peaks at $f = e/v$ with height $e^2/(2v)$. At $f = c\,e/v$ it equals $(e^2/v)(c - c^2/2) = c(2-c)\,e^2/(2v)$. Near-exact for small stakes; for the coin $e/v = 0.10$ matches the exact Kelly fraction because $v = 1$.
+**The parabola rule.** With edge $`e = bp - q`$ and second moment $`v = b^2 p + q`$, the parabola $`g \approx fe - \tfrac12 f^2 v`$ peaks at $`f = e/v`$ with height $`e^2/(2v)`$. At $`f = c\,e/v`$ it equals $`(e^2/v)(c - c^2/2) = c(2-c)\,e^2/(2v)`$. Near-exact for small stakes; for the coin $`e/v = 0.10`$ matches the exact Kelly fraction because $`v = 1`$.
 
-**The falling chance.** Say log wealth drifts up by m per bet, with variance s squared per bet (variance: the average squared distance from the mean). A Brownian motion with those two numbers ever falls a distance d below its start with chance $e^{-2md/s^2}$, the gambler's-ruin result for Brownian motion.
+**The falling chance.** Say log wealth drifts up by m per bet, with variance s squared per bet (variance: the average squared distance from the mean). A Brownian motion with those two numbers ever falls a distance d below its start with chance $`e^{-2md/s^2}`$, the gambler's-ruin result for Brownian motion.
 
-With the parabola, staking $c$ times Kelly gives drift $m = c(1 - c/2)\,e^2/v$ and variance $s^2 = c^2 e^2/v$, so $2m/s^2 = 2/c - 1$. A fall to the share $x$ is a distance $d = \ln(1/x)$, and $e^{-(2/c - 1)\ln(1/x)} = x^{2/c-1}$.
+With the parabola, staking $`c`$ times Kelly gives drift $`m = c(1 - c/2)\,e^2/v`$ and variance $`s^2 = c^2 e^2/v`$, so $`2m/s^2 = 2/c - 1`$. A fall to the share $`x`$ is a distance $`d = \ln(1/x)`$, and $`e^{-(2/c - 1)\ln(1/x)} = x^{2/c-1}`$.
 
 The coin's own drift and variance give 0.498 at full Kelly and 0.123 at half. The exact sums are lower, 0.476 and 0.116. The coin's bankroll is only looked at after each toss, so it cannot dip below the line between tosses the way a continuous path can. The 4,000-toss horizon trims a little more.
 
@@ -186,27 +210,27 @@ The coin's own drift and variance give 0.498 at full Kelly and 0.123 at half. Th
 
 ### The other door: continuous time
 
-Replace the coin by a fund whose price follows geometric Brownian motion, a steady drift plus random kicks in log space ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). Hold the share $f$ in the fund and the rest on deposit, rebalanced continuously.
+Replace the coin by a fund whose price follows geometric Brownian motion, a steady drift plus random kicks in log space ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). Hold the share $`f`$ in the fund and the rest on deposit, rebalanced continuously.
 
-Wealth then drifts at $r + f(\mu - r)$ and wiggles with spread $f\sigma$. [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md), the chain rule for random paths, applied to the log subtracts half the squared spread, and the growth rate is $g(f) = r + f(\mu - r) - \tfrac12 f^2\sigma^2$: the Step 5 parabola, now exact.
+Wealth then drifts at $`r + f(\mu - r)`$ and wiggles with spread $`f\sigma`$. [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md), the chain rule for random paths, applied to the log subtracts half the squared spread, and the growth rate is $`g(f) = r + f(\mu - r) - \tfrac12 f^2\sigma^2`$: the Step 5 parabola, now exact.
 
-Its peak is at $f^\star = (\mu - r)/\sigma^2$. The check finds the same peak by searching one day's growth, averaged over the bell curve.
+Its peak is at $`f^\star = (\mu - r)/\sigma^2`$. The check finds the same peak by searching one day's growth, averaged over the bell curve.
 
 ---
 
 ## Worked numbers, by hand
 
-The coin: $p = 0.55$, $q = 0.45$, $b = 1$.
+The coin: $`p = 0.55`$, $`q = 0.45`$, $`b = 1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| edge, $bp - q$ | 0.55 − 0.45 | 0.10 |
-| Kelly fraction, $f^\star$ | 0.10 / 1 | **0.10** |
-| log of a win, $\ln(1 + bf^\star)$ | ln 1.1 | 0.0953102 |
-| log of a loss, $\ln(1 - f^\star)$ | ln 0.9 | −0.1053605 |
-| win share, $p\ln(1 + bf^\star)$ | 0.55 × 0.0953102 | 0.0524206 |
-| loss share, $q\ln(1 - f^\star)$ | 0.45 × −0.1053605 | −0.0474122 |
-| growth per bet, $g(f^\star)$ | 0.0524206 − 0.0474122 | **0.0050084** |
+| edge, $`bp - q`$ | 0.55 − 0.45 | 0.10 |
+| Kelly fraction, $`f^\star`$ | 0.10 / 1 | **0.10** |
+| log of a win, $`\ln(1 + bf^\star)`$ | ln 1.1 | 0.0953102 |
+| log of a loss, $`\ln(1 - f^\star)`$ | ln 0.9 | −0.1053605 |
+| win share, $`p\ln(1 + bf^\star)`$ | 0.55 × 0.0953102 | 0.0524206 |
+| loss share, $`q\ln(1 - f^\star)`$ | 0.45 × −0.1053605 | −0.0474122 |
+| growth per bet, $`g(f^\star)`$ | 0.0524206 − 0.0474122 | **0.0050084** |
 | bets to double | ln 2 / 0.0050084 | 138.4 |
 | half Kelly stake | 0.10 / 2 | 0.05 |
 | growth at half Kelly | 0.55 ln 1.05 + 0.45 ln 0.95 | 0.003753 |
@@ -643,18 +667,18 @@ The two outputs agree line for line; the same splitmix generator feeds both simu
 
 Lean proves the Kelly peak and the no-edge rule for any win chance and odds, the parabola rule, and the worked numbers.
 
-- Suppose $0 < p < 1$, $b > 0$ and a positive edge, $bp > q$. Then $f^\star$ lies strictly between 0 and 1.
-- Take the same $p$, $b$ and positive edge, and any other stake $f$ with $0 \le f < 1$. Then $g(f) < g(f^\star)$: no other stake grows faster.
-- Suppose $0 < p < 1$, $b > 0$ and no edge, $bp \le q$. Then every stake $f$ with $0 < f < 1$ has $g(f) < g(0)$, so the best stake is zero.
-- Take the parabola $f e - \tfrac12 f^2 v$, for any $e$ and any $v > 0$. Then it is highest at $f = e/v$.
-- Take the stake $c\,e/v$, for any number $c$. Then the parabola there is exactly $c(2 - c)$ times its peak height.
+- Suppose $`0 < p < 1`$, $`b > 0`$ and a positive edge, $`bp > q`$. Then $`f^\star`$ lies strictly between 0 and 1.
+- Take the same $`p`$, $`b`$ and positive edge, and any other stake $`f`$ with $`0 \le f < 1`$. Then $`g(f) < g(f^\star)`$: no other stake grows faster.
+- Suppose $`0 < p < 1`$, $`b > 0`$ and no edge, $`bp \le q`$. Then every stake $`f`$ with $`0 < f < 1`$ has $`g(f) < g(0)`$, so the best stake is zero.
+- Take the parabola $`f e - \tfrac12 f^2 v`$, for any $`e`$ and any $`v > 0`$. Then it is highest at $`f = e/v`$.
+- Take the stake $`c\,e/v`$, for any number $`c`$. Then the parabola there is exactly $`c(2 - c)`$ times its peak height.
 - The coin's Kelly fraction, 0.10, checks, and so do the $99.00 and $99.75 after a win then a loss.
-- Take $c$ as a quarter, a half, 1.5 and 2. Then $c(2 - c)$ is 0.4375, 0.75, 0.75 and 0, as in the table.
-- Take a fall to half, $x = 0.5$. Then $x^{2/c - 1}$ is 0.5 at full Kelly and 0.125 at half Kelly.
-- Take the saver's $r$, $\mu$ and $\sigma$. Then $f^\star = 16/9$, about 1.78, and growth at Kelly is exactly 17/225, about 7.56 percent.
+- Take $`c`$ as a quarter, a half, 1.5 and 2. Then $`c(2 - c)`$ is 0.4375, 0.75, 0.75 and 0, as in the table.
+- Take a fall to half, $`x = 0.5`$. Then $`x^{2/c - 1}`$ is 0.5 at full Kelly and 0.125 at half Kelly.
+- Take the saver's $`r`$, $`\mu`$ and $`\sigma`$. Then $`f^\star = 16/9`$, about 1.78, and growth at Kelly is exactly 17/225, about 7.56 percent.
 - Take half Kelly for the saver, a stake of 8/9. Then growth is exactly 1/15, about 6.67 percent.
 
-The long run, the simulation, the halving chances, the daily saver and the parabola's closeness to $g$ are left to the Python and Rust checks.
+The long run, the simulation, the halving chances, the daily saver and the parabola's closeness to $`g`$ are left to the Python and Rust checks.
 
 ```lean
 -- Kelly: with a real edge the stake (bp - q)/b is the one stake that makes expected log growth largest, with no edge the best stake is zero, and on the growth parabola c times Kelly keeps c(2 - c) of the best growth.
@@ -801,7 +825,7 @@ example : (4 / 100 : ℚ) + 8 / 9 * (8 / 100 - 4 / 100) - (8 / 9) ^ 2 * (15 / 10
 > **Taking a good bet as a reason to bet big.** A positive edge makes every single bet worth taking, but it does not make a big stake good. Expected wealth rises with the stake all the way to betting everything; typical wealth peaks at the Kelly fraction and falls to nothing just short of double it. Past twice Kelly the bankroll shrinks on almost every path while the spreadsheet average climbs.
 >
 > - **Plugging in an estimated win chance as if it were known.** Kelly is steep on the far side: overestimating a 55 percent coin as 60 percent doubles the stake and turns growth of 0.005008 into −0.000138 per bet. Staking half the estimated Kelly lands exactly on the true Kelly fraction in that case, which is the plainest argument for half.
-> - **Using the edge as the fraction at any odds.** The fraction is the edge divided by the net odds, $(bp - q)/b$. The two agree only at even odds.
+> - **Using the edge as the fraction at any odds.** The fraction is the edge divided by the net odds, $`(bp - q)/b`$. The two agree only at even odds.
 > - **Sizing against the wrong bankroll.** The fraction is of the whole wealth being compounded, not of one account. Size against a tenth of the real bankroll and the stake is a tenth of Kelly; the other way round, ten times Kelly.
 > - **Fixed dollar stakes.** Kelly assumes the stake shrinks after losses. A fixed stake does not, and a run of losses can take it to zero.
 
@@ -811,7 +835,7 @@ example : (4 / 100 : ℚ) + 8 / 9 * (8 / 100 - 4 / 100) - (8 / 9) ^ 2 * (15 / 10
 
 - **Card counting.** Edward Thorp used Kelly to size blackjack bets in the early 1960s, betting more when the count gave an edge and nothing when it did not.
 - **Betting and prediction markets.** Bettors who size by Kelly often stake a half or a quarter of it, because their win chances are estimates.
-- **Leverage in a portfolio.** The saver choosing between a 4 percent deposit and a fund with mean 8 percent and spread 15 percent has $f^\star = 0.04/0.0225 = 1.78$. Kelly says borrow 78 cents at the deposit rate for every dollar owned and put it all in the fund, for growth of 7.56 percent a year. Half Kelly, 0.89 in the fund, grows at 6.67 percent: three quarters of the growth above the deposit rate. Twice Kelly, 3.56 times leveraged, grows at exactly the 4 percent deposit rate: the most risk, for the riskless return.
+- **Leverage in a portfolio.** The saver choosing between a 4 percent deposit and a fund with mean 8 percent and spread 15 percent has $`f^\star = 0.04/0.0225 = 1.78`$. Kelly says borrow 78 cents at the deposit rate for every dollar owned and put it all in the fund, for growth of 7.56 percent a year. Half Kelly, 0.89 in the fund, grows at 6.67 percent: three quarters of the growth above the deposit rate. Twice Kelly, 3.56 times leveraged, grows at exactly the 4 percent deposit rate: the most risk, for the riskless return.
 - **Log utility.** Maximising expected log wealth is the same as having log utility ([Expected utility](02-expected-utility-and-risk-aversion.md)). Kelly gives a reason for that score that needs no taste: it is what the typical long run rewards. Fractional Kelly behaves like a more risk-averse utility.
 - **Information theory.** In Kelly's paper the gambler has a noisy private tip; the best growth rate equals the rate at which the tip carries information.
 

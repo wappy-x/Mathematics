@@ -34,35 +34,39 @@ Orange: gazelles, in hundreds. Green: cheetahs, in tens. The cheetahs peak at 2 
 
 ## The formula
 
-As in [Phase portraits and nullclines](01-phase-portraits-and-nullclines.md), $x'$ is the rate of $x$, and paths live in the plane of the two populations. The Lotka-Volterra system is
+As in [Phase portraits and nullclines](01-phase-portraits-and-nullclines.md), $`x'`$ is the rate of $`x`$, and paths live in the plane of the two populations. The Lotka-Volterra system is
 
-$$x' = a\,x - b\,x\,y, \qquad y' = -c\,y + d\,x\,y .$$
+```math
+x' = a\,x - b\,x\,y, \qquad y' = -c\,y + d\,x\,y .
+```
 
 **Read it aloud:** gazelles breed in proportion to their number and are eaten in proportion to meetings with cheetahs; cheetahs die in proportion to their number and are born in proportion to those meetings.
 
-On this card every rate is 1, so the laws are $x' = x - xy$ and $y' = -y + xy$, from $x$ = 2, $y$ = 1. The quantity that never changes is
+On this card every rate is 1, so the laws are $`x' = x - xy`$ and $`y' = -y + xy`$, from $`x`$ = 2, $`y`$ = 1. The quantity that never changes is
 
-$$H = x - \ln x + y - \ln y, \qquad H(2, 1) = 3 - \ln 2 = 2.306853 .$$
+```math
+H = x - \ln x + y - \ln y, \qquad H(2, 1) = 3 - \ln 2 = 2.306853 .
+```
 
 **Read it aloud:** each count minus its logarithm, added; the sum stays at 2.31 forever.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | gazelles, in hundreds | 2 at the start | cheetahs breed faster |
-| $y$ | cheetahs, in tens | 1 at the start | gazelles die faster |
-| $a$, $c$ | gazelle birth rate; cheetah death rate, per year | 1, 1 | larger $c$: more gazelles at balance |
-| $b$, $d$ | per-meeting rates: gazelles lost, cheetahs born | 1, 1 | larger $b$: fewer cheetahs at balance |
-| $H$, $g$ | the fixed quantity; $g(u) = u - \ln u$, one half of it | $H$ = 2.306853 | a wider loop |
-| $T$ | one lap, the period | 6.6085 years | — |
-| $\lambda$ | a rate at which small departures from a rest grow, shrink or turn (an eigenvalue, Step 2) | ±1 at (0, 0); ±i at (1, 1) | — |
+| $`x`$ | gazelles, in hundreds | 2 at the start | cheetahs breed faster |
+| $`y`$ | cheetahs, in tens | 1 at the start | gazelles die faster |
+| $`a`$, $`c`$ | gazelle birth rate; cheetah death rate, per year | 1, 1 | larger $`c`$: more gazelles at balance |
+| $`b`$, $`d`$ | per-meeting rates: gazelles lost, cheetahs born | 1, 1 | larger $`b`$: fewer cheetahs at balance |
+| $`H`$, $`g`$ | the fixed quantity; $`g(u) = u - \ln u`$, one half of it | $`H`$ = 2.306853 | a wider loop |
+| $`T`$ | one lap, the period | 6.6085 years | — |
+| $`\lambda`$ | a rate at which small departures from a rest grow, shrink or turn (an eigenvalue, Step 2) | ±1 at (0, 0); ±i at (1, 1) | — |
 
-With general rates the balance point is $x$ = $c/d$, $y$ = $a/b$, and the fixed quantity is $d\,x - c \ln x + b\,y - a \ln y$. Here the balance is (1, 1): 100 gazelles, 10 cheetahs.
+With general rates the balance point is $`x`$ = $`c/d`$, $`y`$ = $`a/b`$, and the fixed quantity is $`d\,x - c \ln x + b\,y - a \ln y`$. Here the balance is (1, 1): 100 gazelles, 10 cheetahs.
 
 ### When it holds
 
 - **Gazelles breed without limit when alone.** Cap the herd, as grass would, and the loops become spirals into a rest (What breaks).
 - **Kills scale with both counts.** Sated cheetahs break the product term, and cycles can grow or shrink.
-- **Fixed rates, no seasons.** A dry season makes $a$ vary, and $H$ is no longer fixed.
+- **Fixed rates, no seasons.** A dry season makes $`a`$ vary, and $`H`$ is no longer fixed.
 - **Large, smooth counts.** A trough of about 4 cheetahs could lose the species; the model always recovers.
 
 ---
@@ -75,29 +79,29 @@ Divide one rate law by the other and the clock cancels. What is left integrates 
 
 ### Step 1: find the rests
 
-A rest is a state where both rates are zero. $x(1 - y)$ = 0 and $y(x - 1)$ = 0 hold together only at (0, 0), the empty reserve, and at (1, 1), the balance point. The nullclines (lines where one rate is zero), $y$ = 1 and $x$ = 1, cut the quarter plane into four boxes whose arrows turn anticlockwise round (1, 1).
+A rest is a state where both rates are zero. $`x(1 - y)`$ = 0 and $`y(x - 1)`$ = 0 hold together only at (0, 0), the empty reserve, and at (1, 1), the balance point. The nullclines (lines where one rate is zero), $`y`$ = 1 and $`x`$ = 1, cut the quarter plane into four boxes whose arrows turn anticlockwise round (1, 1).
 
 ### Step 2: linearise at each rest
 
-By [Linearisation](02-linearisation-and-the-jacobian.md), the Jacobian (the table of partial derivatives of the two rates) is $\begin{pmatrix} 1 - y & -x \\ y & x - 1 \end{pmatrix}$. Its eigenvalues $\lambda$ are the rates at which small departures from a rest grow (positive), shrink (negative) or turn (imaginary).
+By [Linearisation](02-linearisation-and-the-jacobian.md), the Jacobian (the table of partial derivatives of the two rates) is $`\begin{pmatrix} 1 - y & -x \\ y & x - 1 \end{pmatrix}`$. Its eigenvalues $`\lambda`$ are the rates at which small departures from a rest grow (positive), shrink (negative) or turn (imaginary).
 
-At (0, 0) it is $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$, with $\lambda$ = +1 and −1: a saddle, where paths arrive along the cheetah axis and leave along the gazelle axis.
+At (0, 0) it is $`\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}`$, with $`\lambda`$ = +1 and −1: a saddle, where paths arrive along the cheetah axis and leave along the gazelle axis.
 
-At (1, 1) it is $\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$, with $\lambda$ = ±i: a linear centre, small paths circling once every 2π = 6.2832 years. Linearisation cannot settle a centre, since a nonlinear term can make it a slow spiral. Step 3 settles it.
+At (1, 1) it is $`\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}`$, with $`\lambda`$ = ±i: a linear centre, small paths circling once every 2π = 6.2832 years. Linearisation cannot settle a centre, since a nonlinear term can make it a slow spiral. Step 3 settles it.
 
 ### Step 3: the fixed quantity
 
-Along a path, cheetahs change per gazelle at the ratio of the rates, $y(x - 1)$ over $x(1 - y)$. Put each letter on its own side: $(1 - y)/y$ per unit of $y$ matches $(x - 1)/x$ per unit of $x$. Integrate: $\ln y - y$ equals $x - \ln x$ plus a constant. So $H$ is constant.
+Along a path, cheetahs change per gazelle at the ratio of the rates, $`y(x - 1)`$ over $`x(1 - y)`$. Put each letter on its own side: $`(1 - y)/y`$ per unit of $`y`$ matches $`(x - 1)/x`$ per unit of $`x`$. Integrate: $`\ln y - y`$ equals $`x - \ln x`$ plus a constant. So $`H`$ is constant.
 
-Directly, by the chain rule the rate of $H$ is $(1 - 1/x)\,x' + (1 - 1/y)\,y'$ = $(x - 1)(1 - y) + (y - 1)(x - 1)$ = 0.
+Directly, by the chain rule the rate of $`H`$ is $`(1 - 1/x)\,x' + (1 - 1/y)\,y'`$ = $`(x - 1)(1 - y) + (y - 1)(x - 1)`$ = 0.
 
 ### Step 4: the paths are closed loops
 
-$H$ is $g(x) + g(y)$. The function $g$ is a bowl: its slope $1 - 1/u$ is negative below 1 and positive above, its lowest value is 1, and it climbs without bound at both ends. So $H$ is a bowl with its bottom, 2, at (1, 1).
+$`H`$ is $`g(x) + g(y)`$. The function $`g`$ is a bowl: its slope $`1 - 1/u`$ is negative below 1 and positive above, its lowest value is 1, and it climbs without bound at both ends. So $`H`$ is a bowl with its bottom, 2, at (1, 1).
 
 The start sits at height 2.306853. The contour there is a closed loop round (1, 1), and the path must stay on it. The loop holds no rest, so the path never stops and comes back to (2, 1). One path runs through each point, so it then repeats exactly.
 
-On the line $y$ = 1 the loop meets $g(x)$ = 1.306853 at $x$ = 0.406376 and $x$ = 2. $H$ is symmetric, so the cheetahs span the same range.
+On the line $`y`$ = 1 the loop meets $`g(x)`$ = 1.306853 at $`x`$ = 0.406376 and $`x`$ = 2. $`H`$ is symmetric, so the cheetahs span the same range.
 
 <details>
 <summary>Detailed proof: every contour above the bottom is one closed loop, and the path goes round it</summary>
@@ -110,15 +114,15 @@ No rest lies on it, so the speed there has a positive minimum m, and the curve h
 
 ### Step 5: the averages are the balance point
 
-Divide the gazelle law by $x$: the rate of $\ln x$ is $1 - y$. Integrate over one lap of length $T$. The left side, the change in $\ln x$ over a lap, is zero. The right side is $T$ minus the area under the cheetah curve. So that area is $T$: the cheetahs average exactly 1. The rate of $\ln y$ is $x - 1$, which gives the gazelles an average of 1 the same way.
+Divide the gazelle law by $`x`$: the rate of $`\ln x`$ is $`1 - y`$. Integrate over one lap of length $`T`$. The left side, the change in $`\ln x`$ over a lap, is zero. The right side is $`T`$ minus the area under the cheetah curve. So that area is $`T`$: the cheetahs average exactly 1. The rate of $`\ln y`$ is $`x - 1`$, which gives the gazelles an average of 1 the same way.
 
-With general rates the averages are $c/d$ gazelles and $a/b$ cheetahs: the balance point, whatever the loop's size.
+With general rates the averages are $`c/d`$ gazelles and $`a/b`$ cheetahs: the balance point, whatever the loop's size.
 
 ### Step 6: bigger loops take longer
 
 Near (1, 1) the loops are small circles with period 2π = 6.2832 years. The loop through (2, 1) takes 6.6085 years.
 
-A second road: in the coordinates $\ln x$ and $\ln y$ the system becomes a frictionless oscillator with $H$ as its energy, the picture of [The pendulum](03-the-nonlinear-pendulum.md).
+A second road: in the coordinates $`\ln x`$ and $`\ln y`$ the system becomes a frictionless oscillator with $`H`$ as its energy, the picture of [The pendulum](03-the-nonlinear-pendulum.md).
 
 ### The picture: the loop through (2, 1), with the nullclines
 
@@ -132,10 +136,10 @@ Scale: 80 units per hundred gazelles across and per ten cheetahs up. The loop is
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| rates at the start | $x'$ = 2 − 2 × 1; $y'$ = −1 + 2 × 1 | 0 and +1 per year |
+| rates at the start | $`x'`$ = 2 − 2 × 1; $`y'`$ = −1 + 2 × 1 | 0 and +1 per year |
 | fixed quantity at the start | 2 − ln 2 + 1 − ln 1 = 3 − 0.693147 | 2.306853 |
-| the loop on the line $y$ = 1 | $g(x)$ = 2.306853 − 1 | 1.306853 |
-| the trough | $g(0.406376)$ = 0.406376 − ln 0.406376 = 0.406376 + 0.900477 | 1.306853 |
+| the loop on the line $`y`$ = 1 | $`g(x)`$ = 2.306853 − 1 | 1.306853 |
+| the trough | $`g(0.406376)`$ = 0.406376 − ln 0.406376 = 0.406376 + 0.900477 | 1.306853 |
 | this lap | stepped by Runge-Kutta 4 | 6.6085 years |
 | average over a lap | Step 5 | **1 each: 100 gazelles, 10 cheetahs** |
 
@@ -143,7 +147,7 @@ Scale: 80 units per hundred gazelles across and per ten cheetahs up. The loop is
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Euler steps (plain slope steps), 20 years | $H$ = 3.9123 at h = 0.1, 2.3728 at h = 0.01, not 2.3069 | each step leaves the loop outward |
+| Euler steps (plain slope steps), 20 years | $`H`$ = 3.9123 at h = 0.1, 2.3728 at h = 0.01, not 2.3069 | each step leaves the loop outward |
 | Gazelles capped at 5 (hundreds) | (0.9953, 0.7871) after 40 years, nearing (1, 0.8) | unlimited breeding dropped: the cycles die |
 | Average taken as mid of peak and trough | 1.2032 | the herd lingers near its trough |
 | Small-swing period for this lap | 6.2832 years, not 6.6085 | holds only for small loops |
@@ -152,7 +156,7 @@ Scale: 80 units per hundred gazelles across and per ten cheetahs up. The loop is
 
 ## Code, from first principles, and it actually runs
 
-Two roads reach the loop. Road one uses only $H$: bisection (halving an interval until it pins a root) solves $g(u)$ = 1.306853 for trough and peak. Road two never uses $H$: it steps the rate laws with [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md), the four-slope rule. It reads off the extremes, the lap time and the averages. The checks also show the drift in $H$ falling sixteenfold per halved step, as a fourth-order rule should.
+Two roads reach the loop. Road one uses only $`H`$: bisection (halving an interval until it pins a root) solves $`g(u)`$ = 1.306853 for trough and peak. Road two never uses $`H`$: it steps the rate laws with [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md), the four-slope rule. It reads off the extremes, the lap time and the averages. The checks also show the drift in $`H`$ falling sixteenfold per halved step, as a fourth-order rule should.
 
 ### Python
 
@@ -355,13 +359,13 @@ The outputs match line for line.
 
 ### Lean
 
-Lean proves the card's three results from Why it works, for every choice of positive rates $a$, $b$, $c$ and $d$.
+Lean proves the card's three results from Why it works, for every choice of positive rates $`a`$, $`b`$, $`c`$ and $`d`$.
 
 - Start from positive counts. Then both counts stay positive forever: neither species dies out.
-- Along every path the fixed quantity $d\,x - c \ln x + b\,y - a \ln y$ keeps its starting value.
-- Every path repeats. After some lap time $T$ > 0, both counts are back where they were, and the same lap runs forever.
-- Over a lap, the gazelles average exactly $c/d$ and the cheetahs exactly $a/b$: the balance point, whatever the loop's size.
-- The hand arithmetic holds exactly: the rates at the start, the two rests, the Jacobian entries behind the eigenvalues, and $H(1, 1)$ = 2.
+- Along every path the fixed quantity $`d\,x - c \ln x + b\,y - a \ln y`$ keeps its starting value.
+- Every path repeats. After some lap time $`T`$ > 0, both counts are back where they were, and the same lap runs forever.
+- Over a lap, the gazelles average exactly $`c/d`$ and the cheetahs exactly $`a/b`$: the balance point, whatever the loop's size.
+- The hand arithmetic holds exactly: the rates at the start, the two rests, the Jacobian entries behind the eigenvalues, and $`H(1, 1)`$ = 2.
 
 The decimals, the 6.6085-year lap, the Runge-Kutta stepping and the What breaks rows are left to the Python and Rust checks.
 
@@ -874,7 +878,7 @@ example : (1 : ℝ) - Real.log 1 + 1 - Real.log 1 = 2 := by norm_num
 > **Try changing**
 > Guess first, then run it. The labels stay fixed; read the numbers.
 > - **A wider small swing.** Change `(1.01, 1)` to `(1.5, 1)`. The period prints 6.3826 years and the third assert stops the run: that loop is no longer small.
-> - **Finer plain steps.** Change the Euler steps `(0.1, 0.01)` to `(0.1, 0.001)`. The second $H$ prints 2.3129: a tenfold smaller step, a tenfold smaller leak, the mark of a first-order rule.
+> - **Finer plain steps.** Change the Euler steps `(0.1, 0.01)` to `(0.1, 0.001)`. The second $`H`$ prints 2.3129: a tenfold smaller step, a tenfold smaller leak, the mark of a first-order rule.
 > - **A looser cap.** Change `x / 5` to `x / 50`. After 40 years the pair sits at (1.4293, 1.3839), still swinging.
 
 ---
@@ -885,7 +889,7 @@ example : (1 : ℝ) - Real.log 1 + 1 - Real.log 1 = 2 := by norm_num
 > **Reading the loop as a cycle the populations are pulled onto.** Every start has its own loop, nested among the others. Nudge the populations and they move to a neighbouring loop and stay there. A cycle that attracts is a limit cycle, on [Limit cycles](08-limit-cycles-and-van-der-pol.md).
 >
 > - **Average from peak and trough.** (0.406376 + 2) ÷ 2 = 1.2032, not 1.
-> - **Trusting plain steps.** Euler's rule with h = 0.1 drives $H$ to 3.9123 in 20 years: a spiral the model lacks.
+> - **Trusting plain steps.** Euler's rule with h = 0.1 drives $`H`$ to 3.9123 in 20 years: a spiral the model lacks.
 > - **Predators first.** The prey peaks first, the predators a year later.
 
 ---
@@ -893,11 +897,11 @@ example : (1 : ℝ) - Real.log 1 + 1 - Real.log 1 = 2 := by norm_num
 ## Where you meet it in real life
 
 - **Fur-trade records.** Canadian pelt counts of hare and lynx cycle over about a decade, the lynx lagging.
-- **Fisheries.** Volterra built the model to explain why predatory fish rose in the Adriatic catch when fishing paused in the First World War. Fishing lowers $a$ and raises $c$, so by Step 5 the averages shift toward prey.
+- **Fisheries.** Volterra built the model to explain why predatory fish rose in the Adriatic catch when fishing paused in the First World War. Fishing lowers $`a`$ and raises $`c`$, so by Step 5 the averages shift toward prey.
 - **Epidemics.** Susceptible and infected people meet through the same product term in [The SIR model](07-the-sir-epidemic-model.md).
 
 > **Say it back**
-> Prey breed, predators die, and each meeting moves one count down and the other up. Dividing the two rate laws removes time and leaves a fixed quantity, $H = x - \ln x + y - \ln y$, a bowl with its bottom at the balance point. Every path rides one contour of that bowl, a closed loop repeated forever. Over a lap the averages equal the balance point: 100 gazelles and 10 cheetahs.
+> Prey breed, predators die, and each meeting moves one count down and the other up. Dividing the two rate laws removes time and leaves a fixed quantity, $`H = x - \ln x + y - \ln y`$, a bowl with its bottom at the balance point. Every path rides one contour of that bowl, a closed loop repeated forever. Over a lap the averages equal the balance point: 100 gazelles and 10 cheetahs.
 
 ---
 
@@ -908,7 +912,7 @@ example : (1 : ℝ) - Real.log 1 + 1 - Real.log 1 = 2 := by norm_num
 
 ## Where this goes next
 
-- [Lyapunov functions](04-lyapunov-functions.md): $H$ as a Lyapunov function with rate exactly zero.
+- [Lyapunov functions](04-lyapunov-functions.md): $`H`$ as a Lyapunov function with rate exactly zero.
 - [The SIR model](07-the-sir-epidemic-model.md): the product term in an outbreak that runs once.
 - [Limit cycles](08-limit-cycles-and-van-der-pol.md): an isolated loop that pulls paths onto itself.
 - [Poincare-Bendixson](09-poincare-bendixson-and-bendixsons-criterion.md): when a closed loop must exist, and when none can.

@@ -26,45 +26,49 @@ Drawn to scale: months across, offers up, heights in proportion to the dollar am
 
 ## The formula
 
-Notation first, in words. Months are numbered n = 1, 2, 3, and the deadline is N = 3. The offer in month n is $X_n$. The **reward** $Z_n$ is what selling in month n leaves the seller: the offer minus the costs paid so far, $Z_n = X_n - c\,n$ with $c$ = $3,000. What is known in month n is $\mathcal{F}_n$, the filtration from the first shelf of this wing: here, the offers of months 1 to n. A **stopping rule** is a stopping time $\tau$ ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)): a month to sell that can be recognised when it arrives, from the offers seen so far.
+Notation first, in words. Months are numbered n = 1, 2, 3, and the deadline is N = 3. The offer in month n is $`X_n`$. The **reward** $`Z_n`$ is what selling in month n leaves the seller: the offer minus the costs paid so far, $`Z_n = X_n - c\,n`$ with $`c`$ = $3,000. What is known in month n is $`\mathcal{F}_n`$, the filtration from the first shelf of this wing: here, the offers of months 1 to n. A **stopping rule** is a stopping time $`\tau`$ ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)): a month to sell that can be recognised when it arrives, from the offers seen so far.
 
-The **Snell envelope** $U_n$ is defined backwards from the deadline:
+The **Snell envelope** $`U_n`$ is defined backwards from the deadline:
 
-$$U_N = Z_N, \qquad U_n = \max\big(Z_n,\; E[U_{n+1} \mid \mathcal{F}_n]\big) \quad \text{for } n = N-1, \dots, 1.$$
+```math
+U_N = Z_N, \qquad U_n = \max\big(Z_n,\; E[U_{n+1} \mid \mathcal{F}_n]\big) \quad \text{for } n = N-1, \dots, 1.
+```
 
 **Read it aloud:** on the last month the house is worth its reward; on any earlier month it is worth the better of selling now and the average worth of waiting one more month, given what is known.
 
-The second term has its own name. The **wait value** is $C_n = E[U_{n+1} \mid \mathcal{F}_n]$. Month 0 has no offer, so the house at listing is worth the wait value alone: $U_0 = C_0 = E[U_1]$.
+The second term has its own name. The **wait value** is $`C_n = E[U_{n+1} \mid \mathcal{F}_n]`$. Month 0 has no offer, so the house at listing is worth the wait value alone: $`U_0 = C_0 = E[U_1]`$.
 
 The theorem has three parts.
 
-$$U_0 = \max_{\tau} E[Z_\tau], \qquad \tau^* = \min\{\, n \ge 1 : U_n = Z_n \,\} \text{ attains it},$$
+```math
+U_0 = \max_{\tau} E[Z_\tau], \qquad \tau^* = \min\{\, n \ge 1 : U_n = Z_n \,\} \text{ attains it},
+```
 
-and $U_n$ is the smallest **supermartingale** above the reward: any process $Y_n$ with $Y_n \ge Z_n$ and $E[Y_{n+1} \mid \mathcal{F}_n] \le Y_n$ at every month has $Y_n \ge U_n$ at every month. A supermartingale is a game whose best forecast of tomorrow is today or lower ([Martingales](../02-Martingales/01-martingales.md)).
+and $`U_n`$ is the smallest **supermartingale** above the reward: any process $`Y_n`$ with $`Y_n \ge Z_n`$ and $`E[Y_{n+1} \mid \mathcal{F}_n] \le Y_n`$ at every month has $`Y_n \ge U_n`$ at every month. A supermartingale is a game whose best forecast of tomorrow is today or lower ([Martingales](../02-Martingales/01-martingales.md)).
 
 **Read it aloud:** the envelope at listing is the best average reward any honest rule (one that decides from the past only) can earn, the rule "sell the first time the reward equals the envelope" earns it, and nothing smaller than the envelope can be fair-or-falling while covering the reward.
 
-In the example, $U_0$ = $404,680.
+In the example, $`U_0`$ = $404,680.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $N$ | the month; the deadline month | n = 1, 2, 3; N = 3 | a later deadline raises $U_0$ |
-| $X_n$ | the offer in month n | $380,000, $400,000 or $430,000 | raising every offer by $1 raises $U_0$ by $1 |
-| $c$ | holding cost per month | $3,000 | the bar to sell falls; $U_0$ falls |
-| $Z_n$ | reward for selling in month n: offer minus costs so far | $427,000 for $430,000 in month 1 | — |
-| $\mathcal{F}_n$ | what is known in month n | the offers of months 1 to n | — |
-| $\tau$, $\tau^*$ | a stopping rule; the best one | $\tau^*$ sells in month 2 on a $400,000 offer | — |
-| $U_n$, $U_0$, $U_1$ | the Snell envelope: worth of the unsold house to the seller | $U_1$ = $399,100 after a $380,000 offer | — |
-| $C_n$, $C_1$, $C_2$ | wait value: average of next month's envelope | $C_1$ = $399,100, $C_2$ = $391,000 | a higher wait value means more waiting |
-| $Y_n$, $Y$ | any supermartingale at or above the reward | the prophet's process, $409,222 at listing | — |
-| $E[\,\cdot \mid \mathcal{F}_n]$ | the average given what is known in month n | weights 0.3, 0.5, 0.2 on next month's offer | — |
-| $V_k$, $k$, $V$, $V_1$, $V_2$, $V_3$ | best average result with k offers still to come | $V_1$ = $397,000, $V_2$ = $402,100 | grows with k toward $415,000 |
+| $`n`$, $`N`$ | the month; the deadline month | n = 1, 2, 3; N = 3 | a later deadline raises $`U_0`$ |
+| $`X_n`$ | the offer in month n | $380,000, $400,000 or $430,000 | raising every offer by $1 raises $`U_0`$ by $1 |
+| $`c`$ | holding cost per month | $3,000 | the bar to sell falls; $`U_0`$ falls |
+| $`Z_n`$ | reward for selling in month n: offer minus costs so far | $427,000 for $430,000 in month 1 | — |
+| $`\mathcal{F}_n`$ | what is known in month n | the offers of months 1 to n | — |
+| $`\tau`$, $`\tau^*`$ | a stopping rule; the best one | $`\tau^*`$ sells in month 2 on a $400,000 offer | — |
+| $`U_n`$, $`U_0`$, $`U_1`$ | the Snell envelope: worth of the unsold house to the seller | $`U_1`$ = $399,100 after a $380,000 offer | — |
+| $`C_n`$, $`C_1`$, $`C_2`$ | wait value: average of next month's envelope | $`C_1`$ = $399,100, $`C_2`$ = $391,000 | a higher wait value means more waiting |
+| $`Y_n`$, $`Y`$ | any supermartingale at or above the reward | the prophet's process, $409,222 at listing | — |
+| $`E[\,\cdot \mid \mathcal{F}_n]`$ | the average given what is known in month n | weights 0.3, 0.5, 0.2 on next month's offer | — |
+| $`V_k`$, $`k`$, $`V`$, $`V_1`$, $`V_2`$, $`V_3`$ | best average result with k offers still to come | $`V_1`$ = $397,000, $`V_2`$ = $402,100 | grows with k toward $415,000 |
 
 ### When it holds
 
 - **A fixed deadline.** The recursion starts at month N. With no deadline it has nowhere to start, and a best rule may not exist: a buyer who raises the bid each month toward $430,000, with no holding cost, is always worth waiting for, and waiting forever sells nothing.
 - **Rules that use only the past.** The maximum is over stopping times. A prophet who sees all three offers in advance averages $409,222, more than any honest rule.
-- **Rewards with finite averages.** Each $Z_n$ needs a finite average, so the conditional averages exist. Here the rewards are bounded.
+- **Rewards with finite averages.** Each $`Z_n`$ needs a finite average, so the conditional averages exist. Here the rewards are bounded.
 - **The chances are right.** The wait values are averages under the stated chances. With wrong chances the arithmetic is still exact, but the rule is wrong for the real market.
 - **Independence is not needed.** The recursion works on any tree of outcomes. Independent offers only make the wait value depend on the month alone, so each month has one bar.
 
@@ -82,36 +86,36 @@ Month 3: the rewards are $371,000, $391,000 and $421,000. Their average is the m
 
 ### Step 2: the envelope is a supermartingale at or above the reward
 
-By definition, $U_n$ is the larger of $Z_n$ and $C_n$. So $U_n \ge Z_n$: the envelope always covers selling now. And $U_n \ge C_n = E[U_{n+1} \mid \mathcal{F}_n]$: the forecast of next month's envelope is never above this month's. That is the supermartingale condition. Read in the world: the worth of the house to the seller drifts down on average, because each month costs $3,000 and uses up one chance.
+By definition, $`U_n`$ is the larger of $`Z_n`$ and $`C_n`$. So $`U_n \ge Z_n`$: the envelope always covers selling now. And $`U_n \ge C_n = E[U_{n+1} \mid \mathcal{F}_n]`$: the forecast of next month's envelope is never above this month's. That is the supermartingale condition. Read in the world: the worth of the house to the seller drifts down on average, because each month costs $3,000 and uses up one chance.
 
 ### Step 3: it is the smallest such process
 
-Take any process $Y_n$ that covers the reward and is a supermartingale. At the deadline, $Y_N \ge Z_N = U_N$. Suppose $Y_{n+1} \ge U_{n+1}$ on every branch. Averages keep order, so $E[Y_{n+1} \mid \mathcal{F}_n] \ge C_n$, and $Y_n$ is at least that forecast. $Y_n$ also covers $Z_n$. So $Y_n$ is at least the larger of the two, which is $U_n$. Backward induction carries this to month 0.
+Take any process $`Y_n`$ that covers the reward and is a supermartingale. At the deadline, $`Y_N \ge Z_N = U_N`$. Suppose $`Y_{n+1} \ge U_{n+1}`$ on every branch. Averages keep order, so $`E[Y_{n+1} \mid \mathcal{F}_n] \ge C_n`$, and $`Y_n`$ is at least that forecast. $`Y_n`$ also covers $`Z_n`$. So $`Y_n`$ is at least the larger of the two, which is $`U_n`$. Backward induction carries this to month 0.
 
 The code checks this from the other side. Lower the envelope by $1 at any one of the 40 points of the tree (listing, then 3, 9 and 27 offer histories), and it either drops below the reward there or breaks the supermartingale condition. It fails at all 40.
 
 ### Step 4: no stopping rule beats the envelope
 
-Take any stopping rule $\tau$. Selling at $\tau$ earns $Z_\tau$, which is at most $U_\tau$. The envelope is a supermartingale, and $\tau$ comes by month 3. Optional stopping, in its supermartingale form, says the average of a fair-or-falling game at a bounded stopping time is at most its starting value. So the average reward is at most $U_0$ = $404,680.
+Take any stopping rule $`\tau`$. Selling at $`\tau`$ earns $`Z_\tau`$, which is at most $`U_\tau`$. The envelope is a supermartingale, and $`\tau`$ comes by month 3. Optional stopping, in its supermartingale form, says the average of a fair-or-falling game at a bounded stopping time is at most its starting value. So the average reward is at most $`U_0`$ = $404,680.
 
 ### Step 5: the rule "sell when the reward meets the envelope" attains it
 
-Let $\tau^*$ be the first month with $U_n = Z_n$. Before $\tau^*$, the envelope equals the wait value: it is exactly the average of next month's envelope. So up to $\tau^*$ the envelope is a fair game, a martingale, and optional stopping now gives equality: the average of $U_{\tau^*}$ is $U_0$. At $\tau^*$, the envelope equals the reward. So the average reward of $\tau^*$ is $U_0$ = $404,680.
+Let $`\tau^*`$ be the first month with $`U_n = Z_n`$. Before $`\tau^*`$, the envelope equals the wait value: it is exactly the average of next month's envelope. So up to $`\tau^*`$ the envelope is a fair game, a martingale, and optional stopping now gives equality: the average of $`U_{\tau^*}`$ is $`U_0`$. At $`\tau^*`$, the envelope equals the reward. So the average reward of $`\tau^*`$ is $`U_0`$ = $404,680.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** A filtration $\mathcal{F}_0 \subseteq \dots \subseteq \mathcal{F}_N$. Rewards $Z_1, \dots, Z_N$, each determined by $\mathcal{F}_n$ with $E|Z_n| < \infty$. Define $U_N = Z_N$, $U_n = \max(Z_n, E[U_{n+1} \mid \mathcal{F}_n])$ for $1 \le n < N$, and $U_0 = E[U_1 \mid \mathcal{F}_0]$. Each $U_n$ is integrable, since $|U_n| \le |Z_n| + E[|U_{n+1}| \mid \mathcal{F}_n]$, and determined by $\mathcal{F}_n$.
+**Setting.** A filtration $`\mathcal{F}_0 \subseteq \dots \subseteq \mathcal{F}_N`$. Rewards $`Z_1, \dots, Z_N`$, each determined by $`\mathcal{F}_n`$ with $`E|Z_n| < \infty`$. Define $`U_N = Z_N`$, $`U_n = \max(Z_n, E[U_{n+1} \mid \mathcal{F}_n])`$ for $`1 \le n < N`$, and $`U_0 = E[U_1 \mid \mathcal{F}_0]`$. Each $`U_n`$ is integrable, since $`|U_n| \le |Z_n| + E[|U_{n+1}| \mid \mathcal{F}_n]`$, and determined by $`\mathcal{F}_n`$.
 
-**(a) Supermartingale above Z.** $U_n \ge Z_n$ and $U_n \ge E[U_{n+1} \mid \mathcal{F}_n]$ almost surely, from the definition.
+**(a) Supermartingale above Z.** $`U_n \ge Z_n`$ and $`U_n \ge E[U_{n+1} \mid \mathcal{F}_n]`$ almost surely, from the definition.
 
-**(b) Smallest.** Let $Y$ be adapted, integrable, $Y_n \ge Z_n$ and $Y_n \ge E[Y_{n+1} \mid \mathcal{F}_n]$. Then $Y_N \ge U_N$. If $Y_{n+1} \ge U_{n+1}$ almost surely, monotonicity of conditional expectation (wing 10) gives $Y_n \ge E[Y_{n+1} \mid \mathcal{F}_n] \ge E[U_{n+1} \mid \mathcal{F}_n]$, and with $Y_n \ge Z_n$, $Y_n \ge U_n$. Induct down to n = 1; at n = 0 the same monotonicity gives $Y_0 \ge U_0$.
+**(b) Smallest.** Let $`Y`$ be adapted, integrable, $`Y_n \ge Z_n`$ and $`Y_n \ge E[Y_{n+1} \mid \mathcal{F}_n]`$. Then $`Y_N \ge U_N`$. If $`Y_{n+1} \ge U_{n+1}`$ almost surely, monotonicity of conditional expectation (wing 10) gives $`Y_n \ge E[Y_{n+1} \mid \mathcal{F}_n] \ge E[U_{n+1} \mid \mathcal{F}_n]`$, and with $`Y_n \ge Z_n`$, $`Y_n \ge U_n`$. Induct down to n = 1; at n = 0 the same monotonicity gives $`Y_0 \ge U_0`$.
 
-**(c) Optional stopping for a supermartingale.** For a stopping time $1 \le \tau \le N$, write $U_\tau = U_1 + \sum_{k=2}^{N} \mathbf{1}_{\{\tau \ge k\}}(U_k - U_{k-1})$. The event $\{\tau \ge k\}$ is the complement of $\{\tau \le k-1\}$, so it lies in $\mathcal{F}_{k-1}$. Taking out what is known, $E[\mathbf{1}_{\{\tau \ge k\}}(U_k - U_{k-1}) \mid \mathcal{F}_{k-1}] = \mathbf{1}_{\{\tau \ge k\}}(E[U_k \mid \mathcal{F}_{k-1}] - U_{k-1}) \le 0$, because the indicator is 0 or 1. By the tower property each term has mean at most 0, so $E[U_\tau] \le E[U_1] = U_0$. With $Z_\tau \le U_\tau$, $E[Z_\tau] \le U_0$.
+**(c) Optional stopping for a supermartingale.** For a stopping time $`1 \le \tau \le N`$, write $`U_\tau = U_1 + \sum_{k=2}^{N} \mathbf{1}_{\{\tau \ge k\}}(U_k - U_{k-1})`$. The event $`\{\tau \ge k\}`$ is the complement of $`\{\tau \le k-1\}`$, so it lies in $`\mathcal{F}_{k-1}`$. Taking out what is known, $`E[\mathbf{1}_{\{\tau \ge k\}}(U_k - U_{k-1}) \mid \mathcal{F}_{k-1}] = \mathbf{1}_{\{\tau \ge k\}}(E[U_k \mid \mathcal{F}_{k-1}] - U_{k-1}) \le 0`$, because the indicator is 0 or 1. By the tower property each term has mean at most 0, so $`E[U_\tau] \le E[U_1] = U_0`$. With $`Z_\tau \le U_\tau`$, $`E[Z_\tau] \le U_0`$.
 
-**(d) Attained.** Let $\tau^* = \min\{n \ge 1 : U_n = Z_n\}$; it is at most N because $U_N = Z_N$, and $\{\tau^* \le n\}$ is decided by $U_1, Z_1, \dots, U_n, Z_n$, all known at n, so it is a stopping time. On $\{\tau^* \ge k\}$, the month $k-1$ is before the stop, so $U_{k-1} > Z_{k-1}$ and hence $U_{k-1} = E[U_k \mid \mathcal{F}_{k-1}]$. Each term in (c) then has conditional mean exactly 0, so $E[U_{\tau^*}] = U_0$, and $U_{\tau^*} = Z_{\tau^*}$ gives $E[Z_{\tau^*}] = U_0$.
+**(d) Attained.** Let $`\tau^* = \min\{n \ge 1 : U_n = Z_n\}`$; it is at most N because $`U_N = Z_N`$, and $`\{\tau^* \le n\}`$ is decided by $`U_1, Z_1, \dots, U_n, Z_n`$, all known at n, so it is a stopping time. On $`\{\tau^* \ge k\}`$, the month $`k-1`$ is before the stop, so $`U_{k-1} > Z_{k-1}`$ and hence $`U_{k-1} = E[U_k \mid \mathcal{F}_{k-1}]`$. Each term in (c) then has conditional mean exactly 0, so $`E[U_{\tau^*}] = U_0`$, and $`U_{\tau^*} = Z_{\tau^*}`$ gives $`E[Z_{\tau^*}] = U_0`$.
 
-**(e) Conclusion.** (c) and (d) give $U_0 = \max_\tau E[Z_\tau]$, with the maximum attained at $\tau^*$. The same argument started at month n gives $U_n = \max E[Z_\tau \mid \mathcal{F}_n]$ over stopping times $\tau$ with $n \le \tau \le N$: the envelope is the best the seller can still do from where things stand.
+**(e) Conclusion.** (c) and (d) give $`U_0 = \max_\tau E[Z_\tau]`$, with the maximum attained at $`\tau^*`$. The same argument started at month n gives $`U_n = \max E[Z_\tau \mid \mathcal{F}_n]`$ over stopping times $`\tau`$ with $`n \le \tau \le N`$: the envelope is the best the seller can still do from where things stand.
 
 </details>
 
@@ -126,13 +130,13 @@ The tree is small enough to search outright. A rule says, for each month-1 offer
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | month-3 rewards | 380,000 − 9,000; 400,000 − 9,000; 430,000 − 9,000 | $371,000, $391,000, $421,000 |
-| month-2 wait value $C_2$ | 0.3 × 371,000 + 0.5 × 391,000 + 0.2 × 421,000 | $391,000 |
+| month-2 wait value $`C_2`$ | 0.3 × 371,000 + 0.5 × 391,000 + 0.2 × 421,000 | $391,000 |
 | month-2 rewards | 374,000; 394,000; 424,000 | — |
 | month-2 envelope | max(374,000, 391,000); max(394,000, 391,000); max(424,000, 391,000) | $391,000, $394,000, $424,000 |
-| month-1 wait value $C_1$ | 0.3 × 391,000 + 0.5 × 394,000 + 0.2 × 424,000 | $399,100 |
+| month-1 wait value $`C_1`$ | 0.3 × 391,000 + 0.5 × 394,000 + 0.2 × 424,000 | $399,100 |
 | month-1 rewards | 377,000; 397,000; 427,000 | — |
 | month-1 envelope | max(377,000, 399,100); max(397,000, 399,100); max(427,000, 399,100) | $399,100, $399,100, $427,000 |
-| **worth at listing $U_0$** | 0.3 × 399,100 + 0.5 × 399,100 + 0.2 × 427,000 | **$404,680** |
+| **worth at listing $`U_0`$** | 0.3 × 399,100 + 0.5 × 399,100 + 0.2 × 427,000 | **$404,680** |
 
 The seller who follows the rule sells in month 1 with chance 20%, month 2 with chance 56% and month 3 with chance 24%. That is 2.04 months on the market on average, paying 2.04 × 3,000 = $6,120 in costs. The average sale price is $410,800, and 410,800 − 6,120 = $404,680.
 
@@ -165,7 +169,7 @@ Bars from left: take the first offer, hold out for $430,000, the myopic rule, th
 
 ## How the bar moves with the deadline
 
-A seller with more months has more chances, so each month's bar is higher. With independent offers there is a shortcut: the best average result with k offers still to come, $V_k$, measured from the month before the first of them. One offer to come: its average minus a month's cost, $V_1$ = 400,000 − 3,000 = $397,000. With k offers to come, take the next offer if it beats $V_{k-1}$, else wait: $V_k = E[\max(X, V_{k-1})] - c$. Three offers give $V_3$ = $404,680, the envelope's answer by a second route. The bar in month n is $V$ for the months left after it: $V_2$ = $402,100 in month 1, $V_1$ = $397,000 in month 2.
+A seller with more months has more chances, so each month's bar is higher. With independent offers there is a shortcut: the best average result with k offers still to come, $`V_k`$, measured from the month before the first of them. One offer to come: its average minus a month's cost, $`V_1`$ = 400,000 − 3,000 = $397,000. With k offers to come, take the next offer if it beats $`V_{k-1}`$, else wait: $`V_k = E[\max(X, V_{k-1})] - c`$. Three offers give $`V_3`$ = $404,680, the envelope's answer by a second route. The bar in month n is $`V`$ for the months left after it: $`V_2`$ = $402,100 in month 1, $`V_1`$ = $397,000 in month 2.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -176,7 +180,7 @@ xychart-beta
     line [397.00, 402.10, 404.68, 406.74, 408.40, 409.72, 410.77, 411.62, 412.29, 412.84, 413.27, 413.61]
 ```
 
-The line is $V_k$ for deadlines of 1 to 12 months. It rises and flattens: $414,904.81 at 24 months, $414,999.97 at 60. The limit solves $V = E[\max(X, V)] - c$. For V between $400,000 and $430,000 that reads V = 0.8 V + 0.2 × 430,000 − 3,000, so V = $415,000. With no deadline at all, the seller turns down everything but $430,000, every month. Here a best rule exists, because the cost makes endless waiting expensive; the rising-bid case above shows it need not.
+The line is $`V_k`$ for deadlines of 1 to 12 months. It rises and flattens: $414,904.81 at 24 months, $414,999.97 at 60. The limit solves $`V = E[\max(X, V)] - c`$. For V between $400,000 and $430,000 that reads V = 0.8 V + 0.2 × 430,000 − 3,000, so V = $415,000. With no deadline at all, the seller turns down everything but $430,000, every month. Here a best rule exists, because the cost makes endless waiting expensive; the rising-bid case above shows it need not.
 
 ---
 
@@ -553,12 +557,12 @@ The two outputs are identical. The simulated mean, $404,737.58 with standard err
 
 Lean proves the three parts of the theorem, for any deadline and any rewards with finite averages, and checks the worked numbers.
 
-- Take a deadline $N \ge 1$ and rewards with finite averages, each known in its month. Then no stopping rule that sells by the deadline averages more than $U_0$.
-- With the same rewards, $\tau^*$ is a stopping rule that sells by the deadline. Its average reward is exactly $U_0$.
+- Take a deadline $`N \ge 1`$ and rewards with finite averages, each known in its month. Then no stopping rule that sells by the deadline averages more than $`U_0`$.
+- With the same rewards, $`\tau^*`$ is a stopping rule that sells by the deadline. Its average reward is exactly $`U_0`$.
 - The envelope is known in its month, has a finite average and covers the reward. It is a supermartingale up to the deadline.
-- Take any process $Y_n$ with finite averages that covers the reward and is a supermartingale. Then $Y_n \ge U_n$ at every month, listing included.
-- Take the house. Then $C_2$ = $391,000, $C_1$ = $399,100 and $U_0$ = $404,680, exactly.
-- Take the deadline shortcut. Then $V_1$ = $397,000, $V_2$ = $402,100, $V_3$ = $404,680, and the no-deadline bar is $415,000.
+- Take any process $`Y_n`$ with finite averages that covers the reward and is a supermartingale. Then $`Y_n \ge U_n`$ at every month, listing included.
+- Take the house. Then $`C_2`$ = $391,000, $`C_1`$ = $399,100 and $`U_0`$ = $404,680, exactly.
+- Take the deadline shortcut. Then $`V_1`$ = $397,000, $`V_2`$ = $402,100, $`V_3`$ = $404,680, and the no-deadline bar is $415,000.
 - The sale chances, the $6,120 in costs and the other rules' results in Worked numbers also check.
 
 The search over all 729 rules, the 40 lowered envelopes, the prophet and the simulation are left to the Python and Rust checks.
@@ -1047,7 +1051,7 @@ example : (8 * 415000 + 2 * 430000) / 10 - 3000 = 415000 := by norm_num
 ## What this builds on
 
 - [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md): what an honest rule is, and the optional stopping argument used in Steps 4 and 5.
-- [Martingale convergence](../02-Martingales/04-martingale-convergence.md): a supermartingale bounded below settles to a limit along each path; the general theory of stopping with no deadline rests on this, while this card meets that case only through the fixed point $V = E[\max(X, V)] - c$.
+- [Martingale convergence](../02-Martingales/04-martingale-convergence.md): a supermartingale bounded below settles to a limit along each path; the general theory of stopping with no deadline rests on this, while this card meets that case only through the fixed point $`V = E[\max(X, V)] - c`$.
 
 ## Where this goes next
 

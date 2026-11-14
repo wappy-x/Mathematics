@@ -34,40 +34,46 @@ Orange: the true radius. Green: the tangent line at time 0, climbing at a consta
 
 ## The formula
 
-Notation first, in words. $f'(a)$ is the derivative of $f$ at the input $a$, the rate of output per unit of input ([The derivative](../02-Derivatives/01-the-derivative.md)). $f''$ is the derivative of that rate, how fast the slope itself turns. $h$ is the step, and $R(h)$ the remainder: true value minus tangent forecast.
+Notation first, in words. $`f'(a)`$ is the derivative of $`f`$ at the input $`a`$, the rate of output per unit of input ([The derivative](../02-Derivatives/01-the-derivative.md)). $`f''`$ is the derivative of that rate, how fast the slope itself turns. $`h`$ is the step, and $`R(h)`$ the remainder: true value minus tangent forecast.
 
-$$f(a+h) = f(a) + f'(a)\,h + R(h), \qquad \frac{R(h)}{h} \to 0 \text{ as } h \to 0$$
+```math
+f(a+h) = f(a) + f'(a)\,h + R(h), \qquad \frac{R(h)}{h} \to 0 \text{ as } h \to 0
+```
 
 **Read it aloud:** the value a step away is the value here, plus slope times step, plus a remainder tiny even compared with the step.
 
-When the size of $f''$ stays below a ceiling $M$ all the way from $a$ to $a+h$, the remainder has a bound:
+When the size of $`f''`$ stays below a ceiling $`M`$ all the way from $`a`$ to $`a+h`$, the remainder has a bound:
 
-$$\lvert R(h)\rvert \le \frac{M\,h^2}{2}$$
+```math
+\lvert R(h)\rvert \le \frac{M\,h^2}{2}
+```
 
 **Read it aloud:** the error is at most half the ceiling times the step squared.
 
 For the balloon, the sphere's volume gives the related-rates formula:
 
-$$V = \tfrac{4}{3}\pi r^3, \qquad \frac{dV}{dt} = 4\pi r^2\,\frac{dr}{dt}, \qquad \frac{dr}{dt} = \frac{dV/dt}{4\pi r^2}$$
+```math
+V = \tfrac{4}{3}\pi r^3, \qquad \frac{dV}{dt} = 4\pi r^2\,\frac{dr}{dt}, \qquad \frac{dr}{dt} = \frac{dV/dt}{4\pi r^2}
+```
 
 **Read it aloud:** the volume rate is the surface area times the radius rate; so the radius rate is the pump rate spread over the surface.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $a$ | a function, and the input where its value and slope are known | radius against volume; 4188.790 cm^3 | new base, new slope |
-| $h$ | the step from the base | 500 cm^3, one second of pumping | error grows as its square |
-| $f'(a)$ | the slope at the base, output units per input unit | 0.000795775 cm per cm^3 | forecast moves further |
-| $R$ | true value minus tangent forecast | −0.014858 cm | — |
-| $M$ | a ceiling on the size of $f''$ over the step | 12.6651 × 10^-8 cm per cm^6 | bound widens |
-| $r$, $V$ | radius and volume | 10 cm, 4188.790 cm^3 | bigger balloon, slower radius |
-| $t$ | time in seconds, 0 now | 0 s | — |
-| $dV/dt$, $dr/dt$ | volume rate and radius rate | 500 cm^3/s, 0.397887358 cm/s | radius rate rises in step |
+| $`f`$, $`a`$ | a function, and the input where its value and slope are known | radius against volume; 4188.790 cm^3 | new base, new slope |
+| $`h`$ | the step from the base | 500 cm^3, one second of pumping | error grows as its square |
+| $`f'(a)`$ | the slope at the base, output units per input unit | 0.000795775 cm per cm^3 | forecast moves further |
+| $`R`$ | true value minus tangent forecast | −0.014858 cm | — |
+| $`M`$ | a ceiling on the size of $`f''`$ over the step | 12.6651 × 10^-8 cm per cm^6 | bound widens |
+| $`r`$, $`V`$ | radius and volume | 10 cm, 4188.790 cm^3 | bigger balloon, slower radius |
+| $`t`$ | time in seconds, 0 now | 0 s | — |
+| $`dV/dt`$, $`dr/dt`$ | volume rate and radius rate | 500 cm^3/s, 0.397887358 cm/s | radius rate rises in step |
 
 ### When it holds
 
 - **A derivative at the base.** At a corner, such as the absolute value of x at 0, the slopes from right and left disagree; there is no tangent line to use.
 - **A small step.** The error grows as the step squared: 20 s out, the line says 17.96 cm against a true 15.02 cm.
-- **A ceiling on the bend.** The bound needs $M$, which blows up as the balloon empties. Without one, $R(h)/h$ still heads for 0, but $R$ need not stay under any multiple of $h^2$: for $\lvert x\rvert^{3/2}$ at 0, $R/h^2$ is 10 at $h = 0.01$ and 100 at $h = 0.0001$.
+- **A ceiling on the bend.** The bound needs $`M`$, which blows up as the balloon empties. Without one, $`R(h)/h`$ still heads for 0, but $`R`$ need not stay under any multiple of $`h^2`$: for $`\lvert x\rvert^{3/2}`$ at 0, $`R/h^2`$ is 10 at $`h = 0.01`$ and 100 at $`h = 0.0001`$.
 - **The relation at every instant.** A balloon stretching into a sausage makes 4πr^2 the wrong surface.
 - **A nonzero surface.** At radius 0 the division by 4πr^2 fails.
 
@@ -83,7 +89,9 @@ Zoom far enough into a point with a derivative and curve and tangent line become
 
 Rearrange the formula. The remainder divided by the step is
 
-$$\frac{R(h)}{h} = \frac{f(a+h) - f(a)}{h} - f'(a).$$
+```math
+\frac{R(h)}{h} = \frac{f(a+h) - f(a)}{h} - f'(a).
+```
 
 The first term is the slope of a chord (a straight line through two points of the curve). By definition the derivative is what that slope heads for as the step shrinks, so the difference heads for 0.
 
@@ -91,7 +99,7 @@ For the balloon's radius against volume, steps of 500, 250 and 125 cm^3 give rem
 
 ### Step 2: the size of the error, from the bend
 
-The first line says the error is small, not how small. The tangent's slope is fixed; the curve's slope drifts from it at a rate of at most $M$. After a distance s the slopes differ by at most $M$ times s, and adding up a gap that grows in a straight line from 0 gives half of $M$ times the step squared.
+The first line says the error is small, not how small. The tangent's slope is fixed; the curve's slope drifts from it at a rate of at most $`M`$. After a distance s the slopes differ by at most $`M`$ times s, and adding up a gap that grows in a straight line from 0 gives half of $`M`$ times the step squared.
 
 <details>
 <summary>Detailed proof: the bound M h^2 / 2</summary>
@@ -104,7 +112,7 @@ Let p(s) = Ms^2/2 − g(s). Then p(0) = 0 and p'(s) = Ms − g'(s) ≥ 0. A func
 
 </details>
 
-The sign of $f''$ gives the side. The radius bends downwards against volume, since each extra cm^3 spreads over a larger surface, so the tangent overestimates. At a 500 cm^3 step the true radius is 10.383029 cm, the tangent says 10.397887 cm: an error of −0.014858 cm, inside the bound of 0.015831 cm.
+The sign of $`f''`$ gives the side. The radius bends downwards against volume, since each extra cm^3 spreads over a larger surface, so the tangent overestimates. At a 500 cm^3 step the true radius is 10.383029 cm, the tangent says 10.397887 cm: an error of −0.014858 cm, inside the bound of 0.015831 cm.
 
 <details>
 <summary>The algebra behind the ceiling M</summary>
@@ -119,7 +127,9 @@ In a short time the radius grows by a small thickness, and the new air forms a t
 
 Divide by the time taken. The left side is the average volume rate; the right side is 4πr^2 times the average radius rate, plus terms still carrying a factor of the thickness. As the time shrinks the thickness goes to 0, those terms vanish, and
 
-$$\frac{dV}{dt} = 4\pi r^2\,\frac{dr}{dt}.$$
+```math
+\frac{dV}{dt} = 4\pi r^2\,\frac{dr}{dt}.
+```
 
 This is exact at each instant. At r = 10 cm the surface is 1256.637 cm^2, and 500 ÷ 1256.637 = 0.397887358 cm/s.
 
@@ -338,9 +348,9 @@ ALL CHECKS PASS
 Lean proves both ideas for every function with the needed derivatives, and the related-rates formula for every round balloon.
 
 - With a derivative at the base, the remainder divided by the step heads for 0 as the step shrinks.
-- When the size of $f''$ stays below $M$ from $a$ to $a+h$, the remainder is at most $M h^2 / 2$ in size.
-- If $V = \tfrac{4}{3}\pi r^3$ at every instant, the volume rate is $4\pi r^2$ times the radius rate.
-- When the radius is not 0, the radius rate is the volume rate divided by $4\pi r^2$.
+- When the size of $`f''`$ stays below $`M`$ from $`a`$ to $`a+h`$, the remainder is at most $`M h^2 / 2`$ in size.
+- If $`V = \tfrac{4}{3}\pi r^3`$ at every instant, the volume rate is $`4\pi r^2`$ times the radius rate.
+- When the radius is not 0, the radius rate is the volume rate divided by $`4\pi r^2`$.
 - The absolute value of x has no derivative at 0, so there is no tangent line there.
 - At 20 cm the surface is four times larger, so the radius rate is a quarter.
 

@@ -42,40 +42,48 @@ Orange, top: full repricing, volatility unchanged. Green: full repricing, volati
 
 ## The formula
 
-Notation first, in words. Two numbers describe each scenario. The spot move $s$ is Acme's change in percent: $s = -20$ means \$100 becomes \$80. The volatility move $v$ is counted in **vol points**, where one point is one percentage point of annual volatility: $v = 15$ takes 20 percent to 35 percent. The book's value at a given Acme price and volatility is written $V$.
+Notation first, in words. Two numbers describe each scenario. The spot move $`s`$ is Acme's change in percent: $`s = -20`$ means \$100 becomes \$80. The volatility move $`v`$ is counted in **vol points**, where one point is one percentage point of annual volatility: $`v = 15`$ takes 20 percent to 35 percent. The book's value at a given Acme price and volatility is written $`V`$.
 
-$$L(s,v) \;=\; V\!\left(S_0\big(1+\tfrac{s}{100}\big),\; \sigma_0+\tfrac{v}{100}\right) \;-\; V(S_0,\sigma_0), \qquad V(S,\sigma) \;=\; \sum_i n_i\,P_i(S,\sigma) \;+\; n_S\,S$$
+```math
+L(s,v) \;=\; V\!\left(S_0\big(1+\tfrac{s}{100}\big),\; \sigma_0+\tfrac{v}{100}\right) \;-\; V(S_0,\sigma_0), \qquad V(S,\sigma) \;=\; \sum_i n_i\,P_i(S,\sigma) \;+\; n_S\,S
+```
 
 **Read it aloud:** move Acme's price and its volatility to the scenario, price every option again with the same model, add the shares, and subtract today's value of the same positions.
 
-The reverse test measures how far-fetched a scenario is by a distance $d$, counted in typical months:
+The reverse test measures how far-fetched a scenario is by a distance $`d`$, counted in typical months:
 
-$$d(s,v)^2 \;=\; \frac{z_s^2 - 2\rho\,z_s z_v + z_v^2}{1-\rho^2}, \qquad z_s = \frac{s}{m_s}, \quad z_v = \frac{v}{m_v}$$
+```math
+d(s,v)^2 \;=\; \frac{z_s^2 - 2\rho\,z_s z_v + z_v^2}{1-\rho^2}, \qquad z_s = \frac{s}{m_s}, \quad z_v = \frac{v}{m_v}
+```
 
 **Read it aloud:** scale each move by its typical monthly size, then measure how far the pair sits from "nothing happened", with the correlation deciding which directions count as ordinary.
 
-The reverse test is then: find the scenario with the smallest $d$ among those where $L(s,v)$ is at or below −\$3 million. Call that smallest distance $d_*$. If a month's moves are jointly normal (bell-shaped, with the stated sizes and correlation), then
+The reverse test is then: find the scenario with the smallest $`d`$ among those where $`L(s,v)`$ is at or below −\$3 million. Call that smallest distance $`d_*`$. If a month's moves are jointly normal (bell-shaped, with the stated sizes and correlation), then
 
-$$\Pr\big[\,L(s,v) \le -\$3\text{ million}\,\big] \;\le\; e^{-d_*^2/2}.$$
+```math
+\Pr\big[\,L(s,v) \le -\$3\text{ million}\,\big] \;\le\; e^{-d_*^2/2}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_0$, $S$ | Acme's price today, and in the scenario | \$100, and \$80 in the headline | little changes near \$100; large falls cost money, as the grid shows |
-| $\sigma_0$, $\sigma$ | Acme's volatility today, and in the scenario | 20%, and 35% in the headline | the book loses: it is short volatility |
-| $s$ | Acme's move in percent | −20 | a smaller fall costs less |
-| $v$ | the volatility move, in vol points | +15 | each point costs about \$82,324 near today, more after a fall |
-| $V$ | the book's marked value: options at model prices plus shares | changes only matter here | |
-| $n_i$, $P_i$ | how many of each option the book holds (negative when sold), and its Black-Scholes price | −380,000 one-year \$90 puts at \$2.7145; +140,000 three-month \$100 puts at \$3.5924 | |
-| $n_S$ | shares held (negative when sold) | −18,715 | |
-| $L$ | the change in the book's value in the scenario; negative is a loss | −\$2.13 million | |
-| $\Delta$, $\Gamma$, $\nu$ | the book's delta (shares), gamma (shares per dollar) and vega (dollars per vol point) | −0.1, 19.4, −\$82,324 | |
-| $m_s$, $m_v$, $z_s$, $z_v$ | a typical one-month move in spot and in volatility, and each scenario move divided by it | 5.7735% and 4 points | a larger typical move makes a scenario less far-fetched |
-| $\rho$ | the correlation between monthly spot moves and volatility moves | −0.7: falls usually come with volatility rises | makes "fall plus vol spike" more ordinary |
-| $d$, $d_*$ | distance in typical months; the smallest distance that reaches the loss limit | 3.93 for the headline; 5.10 for the \$3 million limit | a larger $d_*$ means the limit is harder to reach |
+| $`S_0`$, $`S`$ | Acme's price today, and in the scenario | \$100, and \$80 in the headline | little changes near \$100; large falls cost money, as the grid shows |
+| $`\sigma_0`$, $`\sigma`$ | Acme's volatility today, and in the scenario | 20%, and 35% in the headline | the book loses: it is short volatility |
+| $`s`$ | Acme's move in percent | −20 | a smaller fall costs less |
+| $`v`$ | the volatility move, in vol points | +15 | each point costs about \$82,324 near today, more after a fall |
+| $`V`$ | the book's marked value: options at model prices plus shares | changes only matter here | |
+| $`n_i`$, $`P_i`$ | how many of each option the book holds (negative when sold), and its Black-Scholes price | −380,000 one-year \$90 puts at \$2.7145; +140,000 three-month \$100 puts at \$3.5924 | |
+| $`n_S`$ | shares held (negative when sold) | −18,715 | |
+| $`L`$ | the change in the book's value in the scenario; negative is a loss | −\$2.13 million | |
+| $`\Delta`$, $`\Gamma`$, $`\nu`$ | the book's delta (shares), gamma (shares per dollar) and vega (dollars per vol point) | −0.1, 19.4, −\$82,324 | |
+| $`m_s`$, $`m_v`$, $`z_s`$, $`z_v`$ | a typical one-month move in spot and in volatility, and each scenario move divided by it | 5.7735% and 4 points | a larger typical move makes a scenario less far-fetched |
+| $`\rho`$ | the correlation between monthly spot moves and volatility moves | −0.7: falls usually come with volatility rises | makes "fall plus vol spike" more ordinary |
+| $`d`$, $`d_*`$ | distance in typical months; the smallest distance that reaches the loss limit | 3.93 for the headline; 5.10 for the \$3 million limit | a larger $`d_*`$ means the limit is harder to reach |
 
 The Greeks' estimate, which the card uses only to show where it fails, is the second-order Taylor sum from the book's sensitivities (see [Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md)):
 
-$$L \;\approx\; \Delta\,(S - S_0) \;+\; \tfrac12\,\Gamma\,(S - S_0)^2 \;+\; \nu\,v.$$
+```math
+L \;\approx\; \Delta\,(S - S_0) \;+\; \tfrac12\,\Gamma\,(S - S_0)^2 \;+\; \nu\,v.
+```
 
 ### When it holds
 
@@ -83,7 +91,7 @@ $$L \;\approx\; \Delta\,(S - S_0) \;+\; \tfrac12\,\Gamma\,(S - S_0)^2 \;+\; \nu\
 - **The pricing model is right at the stressed point.** Both puts are priced with Black-Scholes at one flat volatility. If short-dated volatility jumps more than one-year volatility, or the smile steepens, the loss differs from the grid.
 - **Everything else is held fixed.** The 5 percent rate and 2 percent dividend yield do not move. In a real crisis rates often fall and dividends get cut.
 - **The replay mapping.** A replay borrows an index's move and a volatility index's move for Acme. If Acme's own moves differ, the replay is off by that gap.
-- **The reverse test's yardstick.** The distance $d$ assumes bell-shaped monthly moves with the stated sizes and correlation. Real markets have fatter tails, so the chance bound understates how often such months arrive.
+- **The reverse test's yardstick.** The distance $`d`$ assumes bell-shaped monthly moves with the stated sizes and correlation. Real markets have fatter tails, so the chance bound understates how often such months arrive.
 
 ---
 
@@ -126,7 +134,7 @@ Volatility alone costs $1.40 million, more than $82,324 times 15, which is $1.23
 
 ### Step 3: historical replay turns dated closes into a scenario
 
-A replay picks a crisis window, reads the start and end closes of a spot index and a volatility index, and converts them into $(s, v)$. Spot moves are relative: $s$ is 100 times the ratio of end close to start close, minus 100. Volatility moves are differences in points: $v$ is the volatility index's end close minus its start close, since that index is already quoted in points.
+A replay picks a crisis window, reads the start and end closes of a spot index and a volatility index, and converts them into $`(s, v)`$. Spot moves are relative: $`s`$ is 100 times the ratio of end close to start close, minus 100. Volatility moves are differences in points: $`v`$ is the volatility index's end close minus its start close, since that index is already quoted in points.
 
 The card uses the Nasdaq Composite for spot and the Cboe VIX for volatility, both from FRED, the public data service of the Federal Reserve Bank of St. Louis. VIX measures S&P 500 option volatility, not Acme's. Borrowing it is a mapping assumption, stated as such.
 
@@ -156,12 +164,12 @@ The headline scenario, −20 percent with +15 vol points, happened on no particu
 
 ### Step 5: the reverse test searches for the least far-fetched way to lose $3 million
 
-Fix the unacceptable loss at \$3 million. Many scenarios produce it; the useful one asks the least of the market, measured by $d$. The card takes a typical month as a 5.7735 percent spot move (20 percent volatility scaled to one month by the square root of 1/12) and a 4-point volatility move, with correlation −0.7. The last two are assumptions of this card; the volatility forecasting card estimates such numbers from data ([Tomorrow's volatility](04-volatility-forecasting-ewma-garch-and-realised.md)).
+Fix the unacceptable loss at \$3 million. Many scenarios produce it; the useful one asks the least of the market, measured by $`d`$. The card takes a typical month as a 5.7735 percent spot move (20 percent volatility scaled to one month by the square root of 1/12) and a 4-point volatility move, with correlation −0.7. The last two are assumptions of this card; the volatility forecasting card estimates such numbers from data ([Tomorrow's volatility](04-volatility-forecasting-ewma-garch-and-realised.md)).
 
-The negative correlation makes a fall with a volatility spike an ordinary combination, so $d$ counts it as closer than a fall with volatility steady. Two roads find the answer.
+The negative correlation makes a fall with a volatility spike an ordinary combination, so $`d`$ counts it as closer than a fall with volatility steady. Two roads find the answer.
 
-- **Rays.** Walk out from "nothing happened" along 720 directions, each spaced half a degree apart in a coordinate system where $d$ is plain distance. On each ray, step outward until the loss reaches \$3 million, then halve the gap 40 times (bisection) to pin the crossing. Keep the closest crossing. Result: $d_* = 5.098$, at a spot move of −26.89 percent and a volatility move of +18.96 points.
-- **Brute force.** Evaluate the loss on every point of a grid spaced a quarter of a point apart, from −60 to 0 percent in spot and −15 to +45 points in volatility. Among the points that lose at least \$3 million, keep the one with the smallest $d$. Result: $d = 5.095$, at −27.50 percent and +18.50 points.
+- **Rays.** Walk out from "nothing happened" along 720 directions, each spaced half a degree apart in a coordinate system where $`d`$ is plain distance. On each ray, step outward until the loss reaches \$3 million, then halve the gap 40 times (bisection) to pin the crossing. Keep the closest crossing. Result: $`d_* = 5.098`$, at a spot move of −26.89 percent and a volatility move of +18.96 points.
+- **Brute force.** Evaluate the loss on every point of a grid spaced a quarter of a point apart, from −60 to 0 percent in spot and −15 to +45 points in volatility. Among the points that lose at least \$3 million, keep the one with the smallest $`d`$. Result: $`d = 5.095`$, at −27.50 percent and +18.50 points.
 
 The two agree to 0.003 in distance. The gap is resolution: the grid's best point sits between two rays, and near the minimum nearby scenarios score almost the same.
 
@@ -169,26 +177,30 @@ So the most plausible way to lose $3 million is Acme down about 27 percent with 
 
 ### Step 6: the chance bound, and why it is only a ranking
 
-The distance $d$ comes with a guarantee. Under bell-shaped monthly moves, the chance that a month lands at distance $d_*$ or beyond is exactly $e^{-d_*^2/2}$. Every scenario that loses \$3 million lies at least that far out, so the chance of a \$3 million month is at most $e^{-d_*^2/2}$. For $d_* = 5.098$ that bound is 2.27 months in a million: one month in 440,693.
+The distance $`d`$ comes with a guarantee. Under bell-shaped monthly moves, the chance that a month lands at distance $`d_*`$ or beyond is exactly $`e^{-d_*^2/2}`$. Every scenario that loses \$3 million lies at least that far out, so the chance of a \$3 million month is at most $`e^{-d_*^2/2}`$. For $`d_* = 5.098`$ that bound is 2.27 months in a million: one month in 440,693.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write the standardised moves as $z_s = x$ and $z_v = \rho\,x + \sqrt{1-\rho^2}\,y$, where $(x, y)$ are two independent standard bell-curve draws. This pair has the right sizes (each has spread 1) and the right correlation $\rho$.
+Write the standardised moves as $`z_s = x`$ and $`z_v = \rho\,x + \sqrt{1-\rho^2}\,y`$, where $`(x, y)`$ are two independent standard bell-curve draws. This pair has the right sizes (each has spread 1) and the right correlation $`\rho`$.
 
 Substitute into the distance. The numerator is
-$$x^2 - 2\rho x(\rho x + c\,y) + (\rho x + c\,y)^2, \qquad c = \sqrt{1-\rho^2}.$$
-Expanding, the cross terms in $x\,y$ cancel and the rest is $x^2(1-\rho^2) + c^2 y^2 = (1-\rho^2)(x^2+y^2)$. Divide by $(1-\rho^2)$: $d^2 = x^2 + y^2$. In the $(x, y)$ coordinates the distance is ordinary distance. The rays in the check are straight lines in exactly these coordinates, so a point a length $d$ out along a ray sits at distance exactly $d$; the check prints the ray point's distance by the formula as 5.098, matching.
 
-The joint density of two independent standard draws is $\frac{1}{2\pi}e^{-(x^2+y^2)/2}$. In polar coordinates, with $r^2 = x^2 + y^2$, the area element is $r\,dr\,d\theta$. The chance that the radius exceeds some $a > 0$ is
-$$\int_0^{2\pi}\!\!\int_a^\infty \frac{1}{2\pi}e^{-r^2/2}\,r\,dr\,d\theta \;=\; \Big[-e^{-r^2/2}\Big]_a^\infty \;=\; e^{-a^2/2}.$$
-Every scenario with $L(s,v) \le -\$3$ million has $d \ge d_*$ by the definition of $d_*$ as the smallest such distance. So the loss event sits inside the event $d \ge d_*$, and its chance is at most $e^{-d_*^2/2}$. The bound is an inequality because most of the region $d \ge d_*$, for instance a large spot rise, loses less than \$3 million.
+$`\displaystyle x^2 - 2\rho x(\rho x + c\,y) + (\rho x + c\,y)^2, \qquad c = \sqrt{1-\rho^2}.`$
+
+Expanding, the cross terms in $`x\,y`$ cancel and the rest is $`x^2(1-\rho^2) + c^2 y^2 = (1-\rho^2)(x^2+y^2)`$. Divide by $`(1-\rho^2)`$: $`d^2 = x^2 + y^2`$. In the $`(x, y)`$ coordinates the distance is ordinary distance. The rays in the check are straight lines in exactly these coordinates, so a point a length $`d`$ out along a ray sits at distance exactly $`d`$; the check prints the ray point's distance by the formula as 5.098, matching.
+
+The joint density of two independent standard draws is $`\frac{1}{2\pi}e^{-(x^2+y^2)/2}`$. In polar coordinates, with $`r^2 = x^2 + y^2`$, the area element is $`r\,dr\,d\theta`$. The chance that the radius exceeds some $`a > 0`$ is
+
+$`\displaystyle \int_0^{2\pi}\!\!\int_a^\infty \frac{1}{2\pi}e^{-r^2/2}\,r\,dr\,d\theta \;=\; \Big[-e^{-r^2/2}\Big]_a^\infty \;=\; e^{-a^2/2}.`$
+
+Every scenario with $`L(s,v) \le -\$3`$ million has $`d \ge d_*`$ by the definition of $`d_*`$ as the smallest such distance. So the loss event sits inside the event $`d \ge d_*`$, and its chance is at most $`e^{-d_*^2/2}`$. The bound is an inequality because most of the region $`d \ge d_*`$, for instance a large spot rise, loses less than \$3 million.
 
 </details>
 
 The same yardstick scores the replays. The 2008 window sits at distance 11.875 and the 2020 window at 12.549. Their chance bounds are 10 to the power −30.62 and −34.20: the bell-curve yardstick calls both impossible. Both happened within twelve years.
 
-So $d$ is useful for **ranking** scenarios, and for finding the cheapest route to a given loss, but its chance bound is not the chance. Real monthly moves have far fatter tails than a bell curve; the tail cards treat this properly ([Extreme value theory](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md)).
+So $`d`$ is useful for **ranking** scenarios, and for finding the cheapest route to a given loss, but its chance bound is not the chance. Real monthly moves have far fatter tails than a bell curve; the tail cards treat this properly ([Extreme value theory](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md)).
 
 ### The other door
 
@@ -648,14 +660,14 @@ The two outputs agree line for line.
 
 Lean proves the reverse test's chance bound and the two steps of its detailed proof, for any correlation strictly between −1 and 1.
 
-- Suppose the monthly moves are jointly normal, with mean zero and the stated sizes and correlation. Then for any book and limit, the chance of a month at or below the limit is at most $e^{-d_*^2/2}$.
-- Take $z_s = x$ and $z_v = \rho x + \sqrt{1-\rho^2}\,y$. Then $d^2 = x^2 + y^2$, so in these coordinates $d$ is plain distance.
-- Take two independent standard bell-curve draws $x$ and $y$, and any $a > 0$. Then the chance that $\sqrt{x^2 + y^2}$ exceeds $a$ is exactly $e^{-a^2/2}$.
+- Suppose the monthly moves are jointly normal, with mean zero and the stated sizes and correlation. Then for any book and limit, the chance of a month at or below the limit is at most $`e^{-d_*^2/2}`$.
+- Take $`z_s = x`$ and $`z_v = \rho x + \sqrt{1-\rho^2}\,y`$. Then $`d^2 = x^2 + y^2`$, so in these coordinates $`d`$ is plain distance.
+- Take two independent standard bell-curve draws $`x`$ and $`y`$, and any $`a > 0`$. Then the chance that $`\sqrt{x^2 + y^2}`$ exceeds $`a`$ is exactly $`e^{-a^2/2}`$.
 - The worked numbers match. Acme at \$100 falling 20 percent ends at \$80, and 20 percent plus 15 vol points is 35 percent.
 - Reading "+15 vol" as 15 percent of 20 gives 23 percent instead.
 - The 18,715 sold shares gain \$374,300, and 720 rays half a degree apart cover the full circle.
 
-The option prices, the grid, the replays, both searches and the value of $d_*$ are left to the Python and Rust checks.
+The option prices, the grid, the replays, both searches and the value of $`d_*`$ are left to the Python and Rust checks.
 
 ```lean
 -- Stress tests: if a month's spot and volatility moves are jointly normal with mean zero, typical sizes m_s and m_v and correlation ρ, then the chance that the book loses at least a given limit is at most e^(-d*²/2), where d* is the smallest distance d among the scenarios that reach the limit; along the way, d is plain distance in independent standard coordinates and two independent standard draws land beyond radius a with chance exactly e^(-a²/2).
@@ -950,7 +962,7 @@ example : (720 : ℚ) * (1 / 2) = 360 := by norm_num
 > - **Adding single-factor stresses.** Spot alone plus volatility alone gives $1.89 million; together they give $2.13 million. Stress spot and volatility jointly.
 > - **Vol points against percent.** "+15 vol" means 20 percent becomes 35 percent. Reading it as 15 percent of 20 gives 23 percent and a loss of $0.82 million, less than two fifths of the real one.
 > - **Replaying levels instead of moves.** A replay borrows the VIX's change, +44.29 points in 2008, and adds it to the book's own 20 percent. Setting the book's volatility to the VIX's end level assumes the book started where the VIX did.
-> - **Reading the chance bound as a chance.** The bell-curve yardstick puts the 2008 window at 10 to the power −30.62. It happened. Use $d$ to rank scenarios and find the cheapest route to a loss, not to promise how rare the loss is.
+> - **Reading the chance bound as a chance.** The bell-curve yardstick puts the 2008 window at 10 to the power −30.62. It happened. Use $`d`$ to rank scenarios and find the cheapest route to a loss, not to promise how rare the loss is.
 
 ---
 
@@ -984,6 +996,6 @@ The grid, the replays and the reverse test each produce a number: $2.13 million,
 Verified 2026-09-28: every link below resolves to the publisher's page or the data itself.
 
 - Basel Committee on Banking Supervision. *Stress testing principles*. Bank for International Settlements, October 2018. [Publisher page](https://www.bis.org/bcbs/publ/d450.htm). The supervisors' principles: objectives, governance, scenario design and documentation for bank stress tests.
-- Breuer, Thomas, Martin Jandačka, Klaus Rheinberger, and Martin Summer. "How to Find Plausible, Severe, and Useful Stress Scenarios." *International Journal of Central Banking* 5, no. 3 (September 2009). [Journal page](https://www.ijcb.org/journal/v5n3/how-find-plausible-severe-and-useful-stress-scenarios). The reverse search on this card: the worst loss within a plausibility ellipse measured by the distance $d$.
+- Breuer, Thomas, Martin Jandačka, Klaus Rheinberger, and Martin Summer. "How to Find Plausible, Severe, and Useful Stress Scenarios." *International Journal of Central Banking* 5, no. 3 (September 2009). [Journal page](https://www.ijcb.org/journal/v5n3/how-find-plausible-severe-and-useful-stress-scenarios). The reverse search on this card: the worst loss within a plausibility ellipse measured by the distance $`d`$.
 - Breuer, Thomas, and Imre Csiszár. "Systematic Stress Tests with Entropic Plausibility Constraints." *Journal of Banking & Finance* 37, no. 5 (2013): 1552–1559. [doi:10.1016/j.jbankfin.2012.04.013](https://doi.org/10.1016/j.jbankfin.2012.04.013). The generalisation beyond bell-shaped moves mentioned in The other door.
 - Federal Reserve Bank of St. Louis, FRED: Nasdaq Composite (series NASDAQCOM, source Nasdaq) and Cboe VIX (series VIXCLS, source Cboe). The four closes per window in Step 3, from the dated extracts: [Nasdaq 2008](https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQCOM&cosd=2008-09-12&coed=2008-10-10), [VIX 2008](https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS&cosd=2008-09-12&coed=2008-10-10), [Nasdaq 2020](https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQCOM&cosd=2020-02-19&coed=2020-03-23), [VIX 2020](https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS&cosd=2020-02-19&coed=2020-03-23).

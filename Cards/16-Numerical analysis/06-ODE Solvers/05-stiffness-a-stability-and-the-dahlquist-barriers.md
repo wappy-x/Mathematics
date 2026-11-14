@@ -28,43 +28,47 @@ Drawn to scale from the checks' `figure,` line, 34 pixels per unit. Forward Eule
 
 Reminder: [Stiff equations](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md) gives the per-step factors 1 + z (forward Euler), 1/(1 − z) (backward Euler) and (1 + z/2)/(1 − z/2) (trapezoid), proves the last two A-stable, and states the second barrier. This card maps such factors on the complex plane for Runge-Kutta and multistep methods, and proves the barrier.
 
-Everything is measured on the **test equation** $y' = \lambda y$, where $\lambda$ is a complex rate with negative real part. The step $h$ enters only through $z = h\lambda$. A one-step method multiplies $y$ by its **stability function** $R(z)$ each step. A $k$-step linear multistep method $\sum_{j=0}^{k} a_j y_{n+j} = h \sum_{j=0}^{k} b_j f_{n+j}$, with weights listed oldest first, has two polynomials $\rho(\zeta) = \sum a_j \zeta^j$ and $\sigma(\zeta) = \sum b_j \zeta^j$. These are the weights of [Multistep methods](04-multistep-adams-and-bdf.md), written there $\alpha_j$, $\beta_j$ and listed newest first; here they are $a_j$, $b_j$, listed oldest first, because $\alpha$ is the wedge angle below. On the test equation its solutions are combinations of $\zeta^n$, where $\zeta$ solves $\rho(\zeta) = z\,\sigma(\zeta)$. The **stability region** is
+Everything is measured on the **test equation** $`y' = \lambda y`$, where $`\lambda`$ is a complex rate with negative real part. The step $`h`$ enters only through $`z = h\lambda`$. A one-step method multiplies $`y`$ by its **stability function** $`R(z)`$ each step. A $`k`$-step linear multistep method $`\sum_{j=0}^{k} a_j y_{n+j} = h \sum_{j=0}^{k} b_j f_{n+j}`$, with weights listed oldest first, has two polynomials $`\rho(\zeta) = \sum a_j \zeta^j`$ and $`\sigma(\zeta) = \sum b_j \zeta^j`$. These are the weights of [Multistep methods](04-multistep-adams-and-bdf.md), written there $`\alpha_j`$, $`\beta_j`$ and listed newest first; here they are $`a_j`$, $`b_j`$, listed oldest first, because $`\alpha`$ is the wedge angle below. On the test equation its solutions are combinations of $`\zeta^n`$, where $`\zeta`$ solves $`\rho(\zeta) = z\,\sigma(\zeta)`$. The **stability region** is
 
-$$S = \{\, z : |R(z)| \le 1 \,\} \qquad\text{or}\qquad S = \{\, z : \text{every root of } \rho(\zeta) - z\,\sigma(\zeta) \text{ has } |\zeta| \le 1, \text{ and those with } |\zeta| = 1 \text{ are simple} \,\}$$
+```math
+S = \{\, z : |R(z)| \le 1 \,\} \qquad\text{or}\qquad S = \{\, z : \text{every root of } \rho(\zeta) - z\,\sigma(\zeta) \text{ has } |\zeta| \le 1, \text{ and those with } |\zeta| = 1 \text{ are simple} \,\}
+```
 
 **Read it aloud:** the stability region is the set of values of step times rate for which one step does not make any part of the solution bigger.
 
 Three grades of "safe for stiff problems" follow:
 
-- **A-stable:** $S$ contains every $z$ with negative real part.
-- **L-stable:** A-stable, and the factor tends to 0 as $z \to -\infty$, so the fastest parts die in one step.
-- **A(α)-stable:** $S$ contains the wedge of angle $\alpha$ either side of the negative real axis.
+- **A-stable:** $`S`$ contains every $`z`$ with negative real part.
+- **L-stable:** A-stable, and the factor tends to 0 as $`z \to -\infty`$, so the fastest parts die in one step.
+- **A(α)-stable:** $`S`$ contains the wedge of angle $`\alpha`$ either side of the negative real axis.
 
-The two barriers cap the order $p$ of linear multistep methods. The first is for zero-stable ones (the root condition of [Multistep methods](04-multistep-adams-and-bdf.md): every root of $\rho$ at most 1 in size, and those of size exactly 1 simple):
+The two barriers cap the order $`p`$ of linear multistep methods. The first is for zero-stable ones (the root condition of [Multistep methods](04-multistep-adams-and-bdf.md): every root of $`\rho`$ at most 1 in size, and those of size exactly 1 simple):
 
-$$\text{first: } p \le k + 2 \ (k \text{ even}),\quad p \le k + 1 \ (k \text{ odd}),\quad p \le k \ (\text{explicit}); \qquad \text{second: A-stable} \ \Rightarrow\ p \le 2, \ \text{and if}\ p = 2 \ \text{then}\ C \le -\tfrac{1}{12}$$
+```math
+\text{first: } p \le k + 2 \ (k \text{ even}),\quad p \le k + 1 \ (k \text{ odd}),\quad p \le k \ (\text{explicit}); \qquad \text{second: A-stable} \ \Rightarrow\ p \le 2, \ \text{and if}\ p = 2 \ \text{then}\ C \le -\tfrac{1}{12}
+```
 
 **Read it aloud:** a zero-stable k-step formula has order at most k plus 2; an A-stable one has order at most 2, and at order 2 an error constant at least the trapezoid's one twelfth in size.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $J$; $y$, $f$, $n$, $t$ | the reaction's matrix of rates, (A, B)′ = $J$(A, B); a solution value, its slope $f = y'$, the step number, time in s | B(1 s) = 0.3678798091 | — |
-| $\lambda$ | a rate of the problem: an eigenvalue of $J$, per s | −1000000 (fast), −1 (slow) | more negative: a tighter explicit limit |
-| $h$ | step size, s | 0.01 for BDF2; 1.90e-6 for forward Euler | outside $S$: blow-up |
-| $z$ | $h\lambda$, step measured in lifetimes of a part | −10000 for the fast part at h = 0.01 | — |
-| $R(z)$ | one-step factor on the test equation | RK4: $1 + z + z^2/2 + z^3/6 + z^4/24$ | size above 1: growth |
-| $a_j$, $b_j$, $k$; $\rho$, $\sigma$ | a multistep formula's state and slope weights, its step count; their polynomials | BDF2: $\rho = \tfrac{3}{2}\zeta^2 - 2\zeta + \tfrac12$, $\sigma = \zeta^2$ | — |
-| $\zeta$ | a root: the factor one part of a multistep solution gains per step | BDF2 at z = −10000: size 0.0070705 | size above 1: growth |
-| $S$ | stability region | forward Euler: disc of radius 1 about −1 | — |
-| $\alpha$ | the A(α) angle, degrees | BDF3: 86.03 | wider safe wedge |
-| $p$, $C$ | order; error constant $C = C_{p+1}/\sigma(1)$, the leading error per step, where $C_{p+1}$ is the coefficient of $h^{p+1} y^{(p+1)}$ left over when the exact solution is put into the formula | trapezoid: 2, −0.08333; BDF2: 2, −0.33333 | larger error at the same order |
-| $\theta$ | angle round the unit circle, $\zeta = e^{i\theta}$ | 0 to π | — |
-| $\varphi$, $w$ | the proof's test function; $w = \log\zeta$ | $\varphi$(1.01): BDF2 2.463e-3 | — |
+| $`J`$; $`y`$, $`f`$, $`n`$, $`t`$ | the reaction's matrix of rates, (A, B)′ = $`J`$(A, B); a solution value, its slope $`f = y'`$, the step number, time in s | B(1 s) = 0.3678798091 | — |
+| $`\lambda`$ | a rate of the problem: an eigenvalue of $`J`$, per s | −1000000 (fast), −1 (slow) | more negative: a tighter explicit limit |
+| $`h`$ | step size, s | 0.01 for BDF2; 1.90e-6 for forward Euler | outside $`S`$: blow-up |
+| $`z`$ | $`h\lambda`$, step measured in lifetimes of a part | −10000 for the fast part at h = 0.01 | — |
+| $`R(z)`$ | one-step factor on the test equation | RK4: $`1 + z + z^2/2 + z^3/6 + z^4/24`$ | size above 1: growth |
+| $`a_j`$, $`b_j`$, $`k`$; $`\rho`$, $`\sigma`$ | a multistep formula's state and slope weights, its step count; their polynomials | BDF2: $`\rho = \tfrac{3}{2}\zeta^2 - 2\zeta + \tfrac12`$, $`\sigma = \zeta^2`$ | — |
+| $`\zeta`$ | a root: the factor one part of a multistep solution gains per step | BDF2 at z = −10000: size 0.0070705 | size above 1: growth |
+| $`S`$ | stability region | forward Euler: disc of radius 1 about −1 | — |
+| $`\alpha`$ | the A(α) angle, degrees | BDF3: 86.03 | wider safe wedge |
+| $`p`$, $`C`$ | order; error constant $`C = C_{p+1}/\sigma(1)`$, the leading error per step, where $`C_{p+1}`$ is the coefficient of $`h^{p+1} y^{(p+1)}`$ left over when the exact solution is put into the formula | trapezoid: 2, −0.08333; BDF2: 2, −0.33333 | larger error at the same order |
+| $`\theta`$ | angle round the unit circle, $`\zeta = e^{i\theta}`$ | 0 to π | — |
+| $`\varphi`$, $`w`$ | the proof's test function; $`w = \log\zeta`$ | $`\varphi`$(1.01): BDF2 2.463e-3 | — |
 
 ### When it holds
 
 - **A linear problem, or one frozen near a state.** The rates are the eigenvalues of the Jacobian (the matrix of partial derivatives of the rule). On a nonlinear problem they drift, and the test must hold all along the run.
-- **A full set of eigenvectors.** If the eigenvectors are nearly parallel, errors can grow for a while even when every $z$ is in $S$.
+- **A full set of eigenvectors.** If the eigenvectors are nearly parallel, errors can grow for a while even when every $`z`$ is in $`S`$.
 - **Linear multistep methods, for the barriers.** Implicit Runge-Kutta methods, such as the Radau family, are A-stable at any order, at the price of a larger system per step.
 - **Zero-stability, for the first barrier.** Drop it and three steps reach order 6, then blow up.
 - **Parts that really decay.** Backward Euler's region also covers most of the right half-plane, so a long step can damp a part that truly grows.
@@ -75,29 +79,29 @@ $$\text{first: } p \le k + 2 \ (k \text{ even}),\quad p \le k + 1 \ (k \text{ od
 
 ### Step 0: one step multiplies each part by a number that depends only on z
 
-A linear method acts on each eigen-direction of the problem separately. On that direction it sees $y' = \lambda y$ and multiplies by a factor that depends on $h$ and $\lambda$ only through $z = h\lambda$. So "is this step safe?" becomes "is $z$ in the method's region?" One picture per method then covers every linear problem.
+A linear method acts on each eigen-direction of the problem separately. On that direction it sees $`y' = \lambda y`$ and multiplies by a factor that depends on $`h`$ and $`\lambda`$ only through $`z = h\lambda`$. So "is this step safe?" becomes "is $`z`$ in the method's region?" One picture per method then covers every linear problem.
 
 ### Step 1: the reaction has one fast rate and one slow rate
 
-Here $J$ is lower triangular, with rows $(-10^6, 0)$ and $(10^6, -1)$. Its trace and determinant give eigenvalues −1000000.0 and −1.000000 per s: a stiffness ratio of 1000000. By [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md), the solution is a fast part times $e^{-10^6 t}$ plus a slow part times $e^{-t}$.
+Here $`J`$ is lower triangular, with rows $`(-10^6, 0)`$ and $`(10^6, -1)`$. Its trace and determinant give eigenvalues −1000000.0 and −1.000000 per s: a stiffness ratio of 1000000. By [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md), the solution is a fast part times $`e^{-10^6 t}`$ plus a slow part times $`e^{-t}`$.
 
-A step of size $h$ is safe only if both $z = -10^6 h$ and $z = -h$ lie in $S$. Accuracy cares about the slow part. Stability cares about the fast one, long after it has died.
+A step of size $`h`$ is safe only if both $`z = -10^6 h`$ and $`z = -h`$ lie in $`S`$. Accuracy cares about the slow part. Stability cares about the fast one, long after it has died.
 
 ### Step 2: explicit methods have bounded regions
 
-An explicit Runge-Kutta step gives a polynomial $R(z)$; for RK4 it is the Taylor polynomial of $e^z$ up to $z^4$ ([Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md)). A polynomial grows without limit, so its region is bounded, and no explicit method is A-stable.
+An explicit Runge-Kutta step gives a polynomial $`R(z)`$; for RK4 it is the Taylor polynomial of $`e^z`$ up to $`z^4`$ ([Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md)). A polynomial grows without limit, so its region is bounded, and no explicit method is A-stable.
 
-Bisection on the factor's size finds each region's left end on the real axis: forward Euler −2.0000, AB2 (two-step Adams-Bashforth) −1.0000, RK4 −2.7853. Newton's method on $(R(x) - 1)/x = 0$ confirms RK4's as −2.785294. Divided by the fast rate, these give the step limits 2.000e-6 s, 1.000e-6 s and 2.785e-6 s. RK4's region also crosses the imaginary axis at ±2.8284i, which is $2\sqrt 2$.
+Bisection on the factor's size finds each region's left end on the real axis: forward Euler −2.0000, AB2 (two-step Adams-Bashforth) −1.0000, RK4 −2.7853. Newton's method on $`(R(x) - 1)/x = 0`$ confirms RK4's as −2.785294. Divided by the fast rate, these give the step limits 2.000e-6 s, 1.000e-6 s and 2.785e-6 s. RK4's region also crosses the imaginary axis at ±2.8284i, which is $`2\sqrt 2`$.
 
 ### Step 3: a multistep region is bounded by its boundary locus
 
-A multistep method changes from stable to unstable only where a root crosses the unit circle. There $\zeta = e^{i\theta}$, so $z = \rho(e^{i\theta})/\sigma(e^{i\theta})$. As $\theta$ goes round, this traces the **boundary locus**, and the edge of $S$ lies on it.
+A multistep method changes from stable to unstable only where a root crosses the unit circle. There $`\zeta = e^{i\theta}`$, so $`z = \rho(e^{i\theta})/\sigma(e^{i\theta})`$. As $`\theta`$ goes round, this traces the **boundary locus**, and the edge of $`S`$ lies on it.
 
-For BDF2 the real part of the locus is $(1 - \cos\theta)^2$, never negative. The locus is the oval in the picture, from 0 to 4. The left half-plane contains no locus point, and BDF2 is stable at $z = -1$, so it is stable on the whole left half-plane: A-stable.
+For BDF2 the real part of the locus is $`(1 - \cos\theta)^2`$, never negative. The locus is the oval in the picture, from 0 to 4. The left half-plane contains no locus point, and BDF2 is stable at $`z = -1`$, so it is stable on the whole left half-plane: A-stable.
 
 That gives a test with two independent roads. Road 1 finds the smallest real part on the locus: below zero means a crossing in the left half-plane. Road 2 computes the root sizes directly on a grid of points across the left half-plane. The code demands that they agree, and that the locus's leftmost point equals the real-axis edge (0 for the A-stable ones, −1/12 for BDF3):
 
-| Method | Order $p$ | $C$ | Real-axis edge | Locus min Re $z$ | Worst grid factor | A-stable | Factor at −1e8 |
+| Method | Order $`p`$ | $`C`$ | Real-axis edge | Locus min Re $`z`$ | Worst grid factor | A-stable | Factor at −1e8 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | forward Euler | 1 | 0.50000 | −2.0000 | −2.00000 | 1.00e3 | no | 1.00e8 |
 | AB2 | 2 | 0.41667 | −1.0000 | −1.00000 | 1.50e3 | no | 1.50e8 |
@@ -108,19 +112,19 @@ That gives a test with two independent roads. Road 1 finds the smallest real par
 | BDF2 | 2 | −0.33333 | −∞ | 0.00000 | 0.9997 | yes | 7.07e-5 |
 | BDF3 | 3 | −0.25000 | −∞ | −0.08333 | 1.0265 | no | 1.50e-3 |
 
-AM2 is the two-step Adams-Moulton formula, implicit and order 3. For RK4, road 1 solves $R(z) = e^{i\theta}$ for $z$. Only order-1 and order-2 methods pass; for the multistep ones, that is the second barrier at work.
+AM2 is the two-step Adams-Moulton formula, implicit and order 3. For RK4, road 1 solves $`R(z) = e^{i\theta}`$ for $`z`$. Only order-1 and order-2 methods pass; for the multistep ones, that is the second barrier at work.
 
 ### Step 4: A-stable is not enough; the fast part must also die
 
 The last column is the factor for an extremely fast part. The trapezoid's is 1.00e0: it hardly damps at all. On the reaction at h = 0.01 s, its factor on the fast part is −0.99960. After 100 steps A should be zero, but the trapezoid still shows 0.9608, and B is off by −0.9608.
 
-Backward Euler multiplies the same part by 9.999e-5 and BDF2 by roots of size 0.0070705. Both factors tend to 0 as $z \to -\infty$: they are **L-stable**. That is why stiff solvers prefer BDF to the trapezoid.
+Backward Euler multiplies the same part by 9.999e-5 and BDF2 by roots of size 0.0070705. Both factors tend to 0 as $`z \to -\infty`$: they are **L-stable**. That is why stiff solvers prefer BDF to the trapezoid.
 
 ### Step 5: the BDF family trades angle for order
 
-BDF$k$ has order $k$. The code builds $\rho$ for $k$ = 1 to 7 and finds:
+BDF$`k`$ has order $`k`$. The code builds $`\rho`$ for $`k`$ = 1 to 7 and finds:
 
-| $k$ | Largest root of $\rho$ besides 1 | Angle $\alpha$ (degrees) |
+| $`k`$ | Largest root of $`\rho`$ besides 1 | Angle $`\alpha`$ (degrees) |
 | --- | --- | --- |
 | 1 | 0.0000 | 90.00 |
 | 2 | 0.3333 | 90.00 |
@@ -130,44 +134,44 @@ BDF$k$ has order $k$. The code builds $\rho$ for $k$ = 1 to 7 and finds:
 | 6 | 0.8634 | 17.84 |
 | 7 | 1.0222 | unstable |
 
-The angles match the published values (Hairer and Wanner, chapter V). BDF3 to BDF6 are not A-stable: BDF3's locus dips to −0.08333 near the imaginary axis. That is exactly −1/12: on the circle its real part is $u^2(4u - 3)/3$ with $u = 1 - \cos\theta$, smallest at $u = 1/2$. But they contain the whole negative real axis. A problem whose rates are real and negative, like this reaction, is safe with any of them. Rates with large imaginary parts (fast, lightly damped vibrations) need the wider wedges of low $k$. BDF7 fails zero-stability, so the family stops at 6.
+The angles match the published values (Hairer and Wanner, chapter V). BDF3 to BDF6 are not A-stable: BDF3's locus dips to −0.08333 near the imaginary axis. That is exactly −1/12: on the circle its real part is $`u^2(4u - 3)/3`$ with $`u = 1 - \cos\theta`$, smallest at $`u = 1/2`$. But they contain the whole negative real axis. A problem whose rates are real and negative, like this reaction, is safe with any of them. Rates with large imaginary parts (fast, lightly damped vibrations) need the wider wedges of low $`k`$. BDF7 fails zero-stability, so the family stops at 6.
 
 ### Step 6: the first barrier
 
-A $k$-step formula has $2k + 1$ free weights once $a_k = 1$. The order conditions are linear in them, so order $2k$ is always reachable algebraically. The code solves for that formula:
+A $`k`$-step formula has $`2k + 1`$ free weights once $`a_k = 1`$. The order conditions are linear in them, so order $`2k`$ is always reachable algebraically. The code solves for that formula:
 
-| $k$ | Order reached | $\rho$ weights | Largest root of $\rho$ | Zero-stable? |
+| $`k`$ | Order reached | $`\rho`$ weights | Largest root of $`\rho`$ | Zero-stable? |
 | --- | --- | --- | --- | --- |
 | 1 | 2 | −1.0000, 1.0000 | 1.0000 | yes: the trapezoid |
 | 2 | 4 | −1.0000, 0.0000, 1.0000 | 1.0000 | yes, just: roots ±1 |
 | 3 | 6 | −1.0000, −2.4545, 2.4545, 1.0000 | 3.1356 | no |
 
-At $k = 2$ the barrier $k + 2 = 4$ is reached exactly, by the Milne-Simpson formula. At $k = 3$ the cap is 4, so the order-6 formula must be unstable, and it is: a root at −3.1356. On $y' = -y$ with h = 0.1 and exact starting values, its errors are 3.856e-7, 4.437e-2 and 5.103e3 after 10, 20 and 30 steps.
+At $`k = 2`$ the barrier $`k + 2 = 4`$ is reached exactly, by the Milne-Simpson formula. At $`k = 3`$ the cap is 4, so the order-6 formula must be unstable, and it is: a root at −3.1356. On $`y' = -y`$ with h = 0.1 and exact starting values, its errors are 3.856e-7, 4.437e-2 and 5.103e3 after 10, 20 and 30 steps.
 
-The proof is Dahlquist's (1956), not reproduced here. Its key steps: the map $\zeta = (1 + s)/(1 - s)$ sends the outside of the unit circle to the right half-plane. Zero-stability then forces the transformed $\rho$ to have coefficients of one sign. Order $p$ forces the transformed polynomials to match a fixed power series of $s$ whose higher coefficients all have the opposite sign. The two demands collide beyond $k + 1$ or $k + 2$.
+The proof is Dahlquist's (1956), not reproduced here. Its key steps: the map $`\zeta = (1 + s)/(1 - s)`$ sends the outside of the unit circle to the right half-plane. Zero-stability then forces the transformed $`\rho`$ to have coefficients of one sign. Order $`p`$ forces the transformed polynomials to match a fixed power series of $`s`$ whose higher coefficients all have the opposite sign. The two demands collide beyond $`k + 1`$ or $`k + 2`$.
 
 ### Step 7: the second barrier, by a function that cannot be negative
 
-The idea: A-stability forces $\sigma/\rho$ to have a non-negative real part outside the unit circle. Subtract the trapezoid's own fraction, whose real part is zero on the circle, and call the rest $\varphi$. A fact from complex analysis (the real part of such a function takes its minimum on the boundary) keeps the real part of $\varphi$ non-negative outside the circle.
+The idea: A-stability forces $`\sigma/\rho`$ to have a non-negative real part outside the unit circle. Subtract the trapezoid's own fraction, whose real part is zero on the circle, and call the rest $`\varphi`$. A fact from complex analysis (the real part of such a function takes its minimum on the boundary) keeps the real part of $`\varphi`$ non-negative outside the circle.
 
-But near $\zeta = 1$ the order fixes $\varphi$. With $w = \log\zeta$, $\varphi = -C\,w^{p-1} - w/12 + \dots$. For $p \ge 3$ that is negative just outside the circle: a contradiction. For $p = 2$ it forces $C \le -1/12$. The code evaluates $\varphi$ at $\zeta$ = 1.01: trapezoid 0.000e0, BDF2 2.463e-3, and AM2, order 3, −8.251e-4, negative as predicted.
+But near $`\zeta = 1`$ the order fixes $`\varphi`$. With $`w = \log\zeta`$, $`\varphi = -C\,w^{p-1} - w/12 + \dots`$. For $`p \ge 3`$ that is negative just outside the circle: a contradiction. For $`p = 2`$ it forces $`C \le -1/12`$. The code evaluates $`\varphi`$ at $`\zeta`$ = 1.01: trapezoid 0.000e0, BDF2 2.463e-3, and AM2, order 3, −8.251e-4, negative as predicted.
 
 <details>
 <summary>Detailed proof: an A-stable linear multistep method has order at most 2, and at order 2, C ≤ −1/12</summary>
 
-**Assume** the method is consistent and zero-stable, $\rho$ and $\sigma$ share no root, and the only root of $\rho$ on the unit circle is $\zeta = 1$. If $\rho$ has other roots on the circle, $\sigma/\rho$ has poles there too, and Step C needs a limiting argument; that case is in Hairer and Wanner, chapter V. Consistency gives $\rho(1) = 0$ and $\rho'(1) = \sigma(1)$.
+**Assume** the method is consistent and zero-stable, $`\rho`$ and $`\sigma`$ share no root, and the only root of $`\rho`$ on the unit circle is $`\zeta = 1`$. If $`\rho`$ has other roots on the circle, $`\sigma/\rho`$ has poles there too, and Step C needs a limiting argument; that case is in Hairer and Wanner, chapter V. Consistency gives $`\rho(1) = 0`$ and $`\rho'(1) = \sigma(1)`$.
 
-**Step A: the sign outside the circle.** Take $|\zeta| > 1$ with $\rho(\zeta) \ne 0$ and $\sigma(\zeta) \ne 0$, and set $z = \rho(\zeta)/\sigma(\zeta)$. Then $\zeta$ is a root of $\rho - z\sigma$ of size above 1, so $z \notin S$. A-stability puts every $z$ with $\operatorname{Re} z < 0$ inside $S$, so $\operatorname{Re} z \ge 0$. Since $\operatorname{Re}(1/z) = \operatorname{Re} z / |z|^2$, also $\operatorname{Re}(\sigma/\rho) \ge 0$.
+**Step A: the sign outside the circle.** Take $`|\zeta| > 1`$ with $`\rho(\zeta) \ne 0`$ and $`\sigma(\zeta) \ne 0`$, and set $`z = \rho(\zeta)/\sigma(\zeta)`$. Then $`\zeta`$ is a root of $`\rho - z\sigma`$ of size above 1, so $`z \notin S`$. A-stability puts every $`z`$ with $`\mathrm{Re}\, z < 0`$ inside $`S`$, so $`\mathrm{Re}\, z \ge 0`$. Since $`\mathrm{Re}(1/z) = \mathrm{Re}\, z / |z|^2`$, also $`\mathrm{Re}(\sigma/\rho) \ge 0`$.
 
-**Step B: the comparison function.** Let $T(\zeta) = (\zeta + 1)/(2(\zeta - 1))$. Then $\operatorname{Re} T(\zeta) = (|\zeta|^2 - 1)/(2|\zeta - 1|^2)$, which is 0 on $|\zeta| = 1$. Set $\varphi = \sigma/\rho - T$.
+**Step B: the comparison function.** Let $`T(\zeta) = (\zeta + 1)/(2(\zeta - 1))`$. Then $`\mathrm{Re}\, T(\zeta) = (|\zeta|^2 - 1)/(2|\zeta - 1|^2)`$, which is 0 on $`|\zeta| = 1`$. Set $`\varphi = \sigma/\rho - T`$.
 
-**Step C: $\varphi$ is non-negative outside the circle.** Zero-stability puts no root of $\rho$ outside the circle, so $\sigma/\rho$ has no pole there. At $\zeta = 1$, both $\sigma/\rho$ and $T$ have a simple pole with residue $\sigma(1)/\rho'(1) = 1$, so the poles cancel and $\varphi$ is regular there. As $\zeta \to \infty$, $\varphi$ tends to the finite limit $b_k/a_k - 1/2$. So $\varphi$ has a complex derivative on $|\zeta| > 1$ including infinity, and is continuous up to the circle. On the circle, $\operatorname{Re}\varphi = \operatorname{Re}(\sigma/\rho) \ge 0$, a limit of Step A. The real part of such a function takes its minimum on the boundary, so $\operatorname{Re}\varphi \ge 0$ for all $|\zeta| > 1$.
+**Step C: $`\varphi`$ is non-negative outside the circle.** Zero-stability puts no root of $`\rho`$ outside the circle, so $`\sigma/\rho`$ has no pole there. At $`\zeta = 1`$, both $`\sigma/\rho`$ and $`T`$ have a simple pole with residue $`\sigma(1)/\rho'(1) = 1`$, so the poles cancel and $`\varphi`$ is regular there. As $`\zeta \to \infty`$, $`\varphi`$ tends to the finite limit $`b_k/a_k - 1/2`$. So $`\varphi`$ has a complex derivative on $`|\zeta| > 1`$ including infinity, and is continuous up to the circle. On the circle, $`\mathrm{Re}\,\varphi = \mathrm{Re}(\sigma/\rho) \ge 0`$, a limit of Step A. The real part of such a function takes its minimum on the boundary, so $`\mathrm{Re}\,\varphi \ge 0`$ for all $`|\zeta| > 1`$.
 
-**Step D: the expansion at $\zeta = 1$.** Write $\zeta = e^w$. Order $p$ means $\rho(e^w) - w\,\sigma(e^w) = C_{p+1} w^{p+1} + O(w^{p+2})$ as $w \to 0$. Dividing by $w\,\sigma(e^w)$ gives $\rho/\sigma = w + C w^{p+1} + O(w^{p+2})$ with $C = C_{p+1}/\sigma(1)$, so $\sigma/\rho = 1/w - C w^{p-1} + O(w^p)$. The trapezoid's fraction is $T(e^w) = \tfrac12\coth(w/2) = 1/w + w/12 + O(w^3)$. Hence
+**Step D: the expansion at $`\zeta = 1`$.** Write $`\zeta = e^w`$. Order $`p`$ means $`\rho(e^w) - w\,\sigma(e^w) = C_{p+1} w^{p+1} + O(w^{p+2})`$ as $`w \to 0`$. Dividing by $`w\,\sigma(e^w)`$ gives $`\rho/\sigma = w + C w^{p+1} + O(w^{p+2})`$ with $`C = C_{p+1}/\sigma(1)`$, so $`\sigma/\rho = 1/w - C w^{p-1} + O(w^p)`$. The trapezoid's fraction is $`T(e^w) = \tfrac12\coth(w/2) = 1/w + w/12 + O(w^3)`$. Hence
 
-$$\varphi(e^w) = -C\,w^{p-1} - \frac{w}{12} + O(w^{p}) + O(w^3).$$
+$`\displaystyle \varphi(e^w) = -C\,w^{p-1} - \frac{w}{12} + O(w^{p}) + O(w^3).`$
 
-**Step E: the contradiction.** Take $w > 0$ small and real, so $\zeta = e^w$ is just outside the circle. If $p \ge 3$, $\varphi = -w/12 + O(w^2) < 0$, against Step C. So $p \le 2$. If $p = 2$, $\varphi = -(C + 1/12)\,w + O(w^2)$, and Step C needs $C \le -1/12$. The trapezoid has $\varphi \equiv 0$, so it meets the bound with equality. $\blacksquare$
+**Step E: the contradiction.** Take $`w > 0`$ small and real, so $`\zeta = e^w`$ is just outside the circle. If $`p \ge 3`$, $`\varphi = -w/12 + O(w^2) < 0`$, against Step C. So $`p \le 2`$. If $`p = 2`$, $`\varphi = -(C + 1/12)\,w + O(w^2)`$, and Step C needs $`C \le -1/12`$. The trapezoid has $`\varphi \equiv 0`$, so it meets the bound with equality. $`\blacksquare`$
 
 </details>
 
@@ -179,12 +183,12 @@ The fast part at h = 0.01 s, and the step counts over 1 s.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $z$ | $0.01 \times (-1000000)$ | −10000 |
-| forward Euler factor | $1 + z$ | −9999 |
-| backward Euler factor | $1/(1 - z) = 1/10001$ | 9.999e-5 |
-| trapezoid factor | $(1 + z/2)/(1 - z/2)$ | −0.99960 |
-| BDF2 roots | $(\tfrac32 - z)\zeta^2 - 2\zeta + \tfrac12 = 0$: a complex pair, size $\sqrt{0.5/(1.5 - z)}$ | 0.0070705 |
-| forward Euler limit | $\lvert 1 + h\lambda\rvert \le 1$ needs $h \le 2/1000000$ | 2.000e-6 s |
+| $`z`$ | $`0.01 \times (-1000000)`$ | −10000 |
+| forward Euler factor | $`1 + z`$ | −9999 |
+| backward Euler factor | $`1/(1 - z) = 1/10001`$ | 9.999e-5 |
+| trapezoid factor | $`(1 + z/2)/(1 - z/2)`$ | −0.99960 |
+| BDF2 roots | $`(\tfrac32 - z)\zeta^2 - 2\zeta + \tfrac12 = 0`$: a complex pair, size $`\sqrt{0.5/(1.5 - z)}`$ | 0.0070705 |
+| forward Euler limit | $`\lvert 1 + h\lambda\rvert \le 1`$ needs $`h \le 2/1000000`$ | 2.000e-6 s |
 | steps to 1 s | forward Euler at 1.90e-6 s against BDF2 at 0.01 s | **525000 against 100** |
 
 Forward Euler's 525000 steps miss B by −3.504e-7; BDF2's 100 steps miss by 1.542e-5, both inside the 10^−4 target. Forward Euler's error is far inside the target, so accuracy did not choose its step: stability did, to keep the long-dead fast part from growing back.
@@ -196,7 +200,7 @@ Forward Euler's 525000 steps miss B by −3.504e-7; BDF2's 100 steps miss by 1.5
 | Forward Euler at h = 2.1e-6 s, just past the limit | A = 5.046e19 after 1 ms | factor −1.1 per step on the fast part |
 | Trapezoid at h = 0.01 s | A = 9.608e-1 at 1 s, B off by −9.608e-1 | A-stable but not L-stable: factor −0.99960 |
 | Backward Euler instead of BDF2 at h = 0.01 s | B off by 1.832e-3, over the target | stable, but only order 1 |
-| Order 6 from three steps | error 5.103e3 after 30 steps of $y' = -y$ | breaks the first barrier: root −3.1356 |
+| Order 6 from three steps | error 5.103e3 after 30 steps of $`y' = -y`$ | breaks the first barrier: root −3.1356 |
 | BDF7 for more order | a root of size 1.0222 | not zero-stable; the family stops at BDF6 |
 
 ---
@@ -206,7 +210,7 @@ Forward Euler's 525000 steps miss B by −3.504e-7; BDF2's 100 steps miss by 1.5
 The code steps the reaction five ways against the exact solution, then tests eight methods on the test equation. Roots come from Durand-Kerner iteration, which finds all roots of a polynomial at once. Independent roads meet at each answer:
 
 - **Explicit limits:** bisection against the closed forms −2 and −1, and Newton's method for RK4.
-- **Runs:** errors against the exact B, with observed orders 0.999 (backward Euler) and 2.002 (BDF2); forward Euler's B and the trapezoid's A against their exact discrete values, such as $(-4999/5001)^{100}$.
+- **Runs:** errors against the exact B, with observed orders 0.999 (backward Euler) and 2.002 (BDF2); forward Euler's B and the trapezoid's A against their exact discrete values, such as $`(-4999/5001)^{100}`$.
 - **A-stability:** the boundary locus against a brute-force grid, which must agree for every method, and the locus's leftmost point against the bisected edge.
 - **BDF and the barriers:** angles against published values; the first barrier's formulas from solving the order conditions.
 
@@ -620,14 +624,14 @@ The two outputs match line for line.
 
 Lean proves the second barrier for every A-stable linear multistep method, that no explicit method is A-stable, and the card's exact worked numbers.
 
-- Take a linear multistep method whose $\rho$ and $\sigma$ share no root. If it is A-stable, its order is at most 2.
-- If such a method has order 2, its error constant $C$ is at most −1/12, the trapezoid's value.
-- Unlike the fold's proof, Lean does not assume that 1 is the only root of $\rho$ on the unit circle.
-- If $R(z)$ is a polynomial with real coefficients that is not constant, some $z$ with negative real part has $|R(z)| > 1$. So no explicit Runge-Kutta method is A-stable.
-- At $z$ = −10000 the forward Euler, backward Euler and trapezoid factors are exactly −9999, 1/10001 and −4999/5001.
-- At $z$ = −10000, BDF2's roots are a complex pair whose size squared is 1/20003.
+- Take a linear multistep method whose $`\rho`$ and $`\sigma`$ share no root. If it is A-stable, its order is at most 2.
+- If such a method has order 2, its error constant $`C`$ is at most −1/12, the trapezoid's value.
+- Unlike the fold's proof, Lean does not assume that 1 is the only root of $`\rho`$ on the unit circle.
+- If $`R(z)`$ is a polynomial with real coefficients that is not constant, some $`z`$ with negative real part has $`|R(z)| > 1`$. So no explicit Runge-Kutta method is A-stable.
+- At $`z`$ = −10000 the forward Euler, backward Euler and trapezoid factors are exactly −9999, 1/10001 and −4999/5001.
+- At $`z`$ = −10000, BDF2's roots are a complex pair whose size squared is 1/20003.
 - At h = 2/1000000 s, forward Euler's factor on the fast part is exactly −1. At h = 2.1e-6 s it is −1.1.
-- RK4's 360000 steps cost 1440000 slope evaluations, and its region meets the imaginary axis at $\pm 2\sqrt 2\,i$.
+- RK4's 360000 steps cost 1440000 slope evaluations, and its region meets the imaginary axis at $`\pm 2\sqrt 2\,i`$.
 - The error constants are −1/12 for the trapezoid, −1/3 for BDF2, −1/24 for AM2 and −1/4 for BDF3.
 - BDF3's boundary locus dips to exactly −1/12.
 
@@ -1227,10 +1231,10 @@ example : ((1 / 2 : ℚ) ^ 2 * (4 * (1 / 2) - 3)) / 3 = -1 / 12 := by norm_num
 
 ## What this builds on
 
-- [Multistep methods](04-multistep-adams-and-bdf.md): the formulas, their polynomial $\rho$, zero-stability and the BDF weights, used here on the test equation.
+- [Multistep methods](04-multistep-adams-and-bdf.md): the formulas, their polynomial $`\rho`$, zero-stability and the BDF weights, used here on the test equation.
 - [Stiff equations](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md): forward Euler blowing up, the three Euler-type factors, and the A-stability of backward Euler and the trapezoid.
-- [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): why a linear system splits into parts that each obey $y' = \lambda y$.
-- [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md): RK4's step, whose factor on the test equation is $R(z)$.
+- [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): why a linear system splits into parts that each obey $`y' = \lambda y`$.
+- [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md): RK4's step, whose factor on the test equation is $`R(z)`$.
 
 ## Where this goes next
 

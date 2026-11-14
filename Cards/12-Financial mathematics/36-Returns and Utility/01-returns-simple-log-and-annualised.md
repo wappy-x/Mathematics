@@ -42,49 +42,59 @@ The zigzag is the price. The flat line at $100 is what an average return of zero
 
 ## The formula
 
-Notation first, in words. $P_0$ is the price at the start of a period and $P_1$ the price at its end. $\ln$ is the natural logarithm ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)), and $e$ is its base, so that $\ln e^{x} = x$.
+Notation first, in words. $`P_0`$ is the price at the start of a period and $`P_1`$ the price at its end. $`\ln`$ is the natural logarithm ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)), and $`e`$ is its base, so that $`\ln e^{x} = x`$.
 
-$$R = \frac{P_1 - P_0}{P_0}, \qquad r = \ln\frac{P_1}{P_0} = \ln(1 + R), \qquad R = e^{r} - 1$$
+```math
+R = \frac{P_1 - P_0}{P_0}, \qquad r = \ln\frac{P_1}{P_0} = \ln(1 + R), \qquad R = e^{r} - 1
+```
 
 **Read it aloud:** the simple return is the change over the start; the log return is the log of end over start; the growth factor, one plus the simple return, carries each into the other.
 
-Over several periods the growth factors multiply and the log returns add. Numbered subscripts count the months, first to $n$-th:
+Over several periods the growth factors multiply and the log returns add. Numbered subscripts count the months, first to $`n`$-th:
 
-$$1 + R_{\text{total}} = (1 + R_1)(1 + R_2)\cdots(1 + R_n), \qquad r_{\text{total}} = r_1 + r_2 + \cdots + r_n$$
+```math
+1 + R_{\text{total}} = (1 + R_1)(1 + R_2)\cdots(1 + R_n), \qquad r_{\text{total}} = r_1 + r_2 + \cdots + r_n
+```
 
 **Read it aloud:** to chain months, multiply their growth factors, or add their log returns.
 
-Scaling to a year, when the months are independent (one month's outcome says nothing about another's) and share one spread, with $g$ the average monthly log return and $\sigma$ its monthly spread:
+Scaling to a year, when the months are independent (one month's outcome says nothing about another's) and share one spread, with $`g`$ the average monthly log return and $`\sigma`$ its monthly spread:
 
-$$\text{average of the } n\text{-month log return} = n\,g, \qquad \text{its spread} = \sigma\sqrt{n}$$
+```math
+\text{average of the } n\text{-month log return} = n\,g, \qquad \text{its spread} = \sigma\sqrt{n}
+```
 
 **Read it aloud:** the average grows in proportion to time; the spread grows with the square root of time.
 
-A return earned over $T$ years is **annualised** as the steady yearly rate that ends at the same place:
+A return earned over $`T`$ years is **annualised** as the steady yearly rate that ends at the same place:
 
-$$R_{\text{annual}} = (1 + R_{\text{total}})^{1/T} - 1, \qquad r_{\text{annual}} = r_{\text{total}} / T$$
+```math
+R_{\text{annual}} = (1 + R_{\text{total}})^{1/T} - 1, \qquad r_{\text{annual}} = r_{\text{total}} / T
+```
 
-**Read it aloud:** take the $T$-th root of the growth factor, or divide the log return by the years.
+**Read it aloud:** take the $`T`$-th root of the growth factor, or divide the log return by the years.
 
-The drag links the two averages, with $\mu$ the average simple return and $\sigma$, here, the spread of the simple return:
+The drag links the two averages, with $`\mu`$ the average simple return and $`\sigma`$, here, the spread of the simple return:
 
-$$g \approx \mu - \tfrac12\sigma^2, \qquad \text{exactly, for up } a \text{ then down } a: \quad (1 + a)(1 - a) = 1 - a^2$$
+```math
+g \approx \mu - \tfrac12\sigma^2, \qquad \text{exactly, for up } a \text{ then down } a: \quad (1 + a)(1 - a) = 1 - a^2
+```
 
 **Read it aloud:** the growth rate is the average return less half the square of the spread; up and down by the same fraction always loses that fraction squared.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P_0$ | price at the start of a period | $100 | every dollar figure scales with it; returns do not change |
-| $P_1$ | price at the end of the period | $110 after the up month | both returns rise |
-| $R$ | simple return: change over start | +10%, then −10% | $r$ rises: slower than $R$ above zero, faster below |
-| $r$ | log return: $\ln(P_1/P_0)$ | +9.53%, then −10.54% | $R$ rises: faster than $r$ above zero, slower below |
-| $e$ | base of the natural log, about 2.718 | $e^{r} - 1$ turns $r$ back into $R$ | — |
-| $n$ | number of periods chained together | 12 months | average grows as $n$, spread as $\sqrt{n}$ |
-| $T$ | years a return was earned over | 1 year | the annualised return moves toward zero |
-| $a$ | size of each monthly move | 0.10 | the drag grows as its square |
-| $\mu$ | average simple return per month | 0 | growth rises one for one |
-| $\sigma$ | spread (standard deviation: root of the average squared distance from the mean) of one month's return | 10% simple, 10.03% log | growth falls by about $\sigma$ times the rise |
-| $g$ | growth rate: average log return per month | −0.5025% | the typical path climbs |
+| $`P_0`$ | price at the start of a period | $100 | every dollar figure scales with it; returns do not change |
+| $`P_1`$ | price at the end of the period | $110 after the up month | both returns rise |
+| $`R`$ | simple return: change over start | +10%, then −10% | $`r`$ rises: slower than $`R`$ above zero, faster below |
+| $`r`$ | log return: $`\ln(P_1/P_0)`$ | +9.53%, then −10.54% | $`R`$ rises: faster than $`r`$ above zero, slower below |
+| $`e`$ | base of the natural log, about 2.718 | $`e^{r} - 1`$ turns $`r`$ back into $`R`$ | — |
+| $`n`$ | number of periods chained together | 12 months | average grows as $`n`$, spread as $`\sqrt{n}`$ |
+| $`T`$ | years a return was earned over | 1 year | the annualised return moves toward zero |
+| $`a`$ | size of each monthly move | 0.10 | the drag grows as its square |
+| $`\mu`$ | average simple return per month | 0 | growth rises one for one |
+| $`\sigma`$ | spread (standard deviation: root of the average squared distance from the mean) of one month's return | 10% simple, 10.03% log | growth falls by about $`\sigma`$ times the rise |
+| $`g`$ | growth rate: average log return per month | −0.5025% | the typical path climbs |
 
 ### When it holds
 
@@ -102,17 +112,19 @@ $$g \approx \mu - \tfrac12\sigma^2, \qquad \text{exactly, for up } a \text{ then
 
 A month's return acts on whatever the price is at the start of that month. So the second month's 10% fall acts on $110, not $100. Chaining months means multiplying growth factors: 1.10 × 0.90 = 0.99.
 
-Averages and spreads are built for sums. The logarithm turns a product into a sum: $\ln(ab) = \ln a + \ln b$. Every result on this card is that one move.
+Averages and spreads are built for sums. The logarithm turns a product into a sum: $`\ln(ab) = \ln a + \ln b`$. Every result on this card is that one move.
 
 ### Step 1: the conversion, and where the two kinds part
 
-From the definitions, $r = \ln(1 + R)$. The series for the log near 1 ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)) gives
+From the definitions, $`r = \ln(1 + R)`$. The series for the log near 1 ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)) gives
 
-$$r = R - \tfrac12 R^2 + \tfrac13 R^3 - \cdots$$
+```math
+r = R - \tfrac12 R^2 + \tfrac13 R^3 - \cdots
+```
 
 For small moves the first two terms are enough. The two kinds of return agree to the first order and part by about half the square:
 
-| Simple return $R$ | Log return $r$ | First two terms, $R - \tfrac12 R^2$ |
+| Simple return $`R`$ | Log return $`r`$ | First two terms, $`R - \tfrac12 R^2`$ |
 | --- | --- | --- |
 | +50% | +40.55% | +37.50% |
 | +10% | +9.53% | +9.50% |
@@ -125,7 +137,7 @@ The log return is always the smaller of the two, and the gap is lopsided. A 50% 
 
 ### Step 2: logs add across time, simple returns add across holdings
 
-**Across time.** Take logs of the chained growth factors: $\ln\big((1 + R_1)(1 + R_2)\big) = \ln(1 + R_1) + \ln(1 + R_2)$. For the share, 0.0953 − 0.1054 = −0.0101, and $e^{-0.0101} - 1 = -1.00\%$: the two-month loss. Simple returns do not add across time: +10% and −10% add to 0%, and the share lost 1%.
+**Across time.** Take logs of the chained growth factors: $`\ln\big((1 + R_1)(1 + R_2)\big) = \ln(1 + R_1) + \ln(1 + R_2)`$. For the share, 0.0953 − 0.1054 = −0.0101, and $`e^{-0.0101} - 1 = -1.00\%`$: the two-month loss. Simple returns do not add across time: +10% and −10% add to 0%, and the share lost 1%.
 
 **Across holdings.** Put $50 in a share that rises 10% and $50 in one that falls 10%. The portfolio ends at $100.00. Its simple return is 0%, the weighted average of +10% and −10%. That works because the portfolio's value is a sum of holdings. Average the log returns instead and the answer is −0.50%, a loss that did not happen. The log of a sum is not a sum of logs.
 
@@ -135,7 +147,7 @@ So each kind has its job. Logs chain time. Simple returns combine holdings. Cros
 
 Now make the months random. Each month, independently, the share rises 10% or falls 10%, each with chance one half. Call it the coin-flip share.
 
-Each month's log return is ln 1.10 = 0.0953 or ln 0.90 = −0.1054. Its average is $g$ = −0.5025%. Its spread is half the gap between the two values, 10.03%.
+Each month's log return is ln 1.10 = 0.0953 or ln 0.90 = −0.1054. Its average is $`g`$ = −0.5025%. Its spread is half the gap between the two values, 10.03%.
 
 A year's log return is the sum of twelve monthly ones. The **variance** (the square of the spread) of a sum of independent pieces is the sum of their variances. Twelve months give twelve times the monthly variance, so the spread is the monthly spread times √12: 10.03% × √12 = 34.76%.
 
@@ -144,11 +156,11 @@ The reason, in words: square the year's deviation from its average and it breaks
 <details>
 <summary>Detailed proof</summary>
 
-Let the monthly log returns $r_1, \dots, r_n$ be independent, each with average $g$ and variance $\sigma^2$. The year's total $r_1 + \cdots + r_n$ has average $n g$. Its deviation from that average is $(r_1 - g) + \cdots + (r_n - g)$.
+Let the monthly log returns $`r_1, \dots, r_n`$ be independent, each with average $`g`$ and variance $`\sigma^2`$. The year's total $`r_1 + \cdots + r_n`$ has average $`n g`$. Its deviation from that average is $`(r_1 - g) + \cdots + (r_n - g)`$.
 
-Square the deviation: $\sum_i (r_i - g)^2 + \sum_{i \neq j} (r_i - g)(r_j - g)$. Take the average of each term. Each square averages to $\sigma^2$, and there are $n$ of them. Independence means the average of a product is the product of the averages, so each cross term averages to $0 \times 0$. The variance of the total is $n\sigma^2$, and its spread is $\sigma\sqrt{n}$.
+Square the deviation: $`\sum_i (r_i - g)^2 + \sum_{i \neq j} (r_i - g)(r_j - g)`$. Take the average of each term. Each square averages to $`\sigma^2`$, and there are $`n`$ of them. Independence means the average of a product is the product of the averages, so each cross term averages to $`0 \times 0`$. The variance of the total is $`n\sigma^2`$, and its spread is $`\sigma\sqrt{n}`$.
 
-For simple returns the year's growth factor is a product, not a sum. Each month's squared factor averages to $\tfrac12(1.1^2 + 0.9^2) = 1 + a^2 = 1.01$ and each factor averages to 1, so the year's variance is $1.01^{12} - 1$ and its spread is $\sqrt{1.01^{12} - 1} = 35.61\%$. The square-root rule gives $0.10\sqrt{12} = 34.64\%$. It is the linear shadow of the exact answer, and it drifts further off as the spread or the horizon grows.
+For simple returns the year's growth factor is a product, not a sum. Each month's squared factor averages to $`\tfrac12(1.1^2 + 0.9^2) = 1 + a^2 = 1.01`$ and each factor averages to 1, so the year's variance is $`1.01^{12} - 1`$ and its spread is $`\sqrt{1.01^{12} - 1} = 35.61\%`$. The square-root rule gives $`0.10\sqrt{12} = 34.64\%`$. It is the linear shadow of the exact answer, and it drifts further off as the spread or the horizon grows.
 
 </details>
 
@@ -156,20 +168,22 @@ Two independent roads confirm 34.76% in the code: the rule, and a brute-force li
 
 ### Step 4: the volatility drag
 
-The growth rate $g$ is the average log return. Put the series from Step 1 inside the average: the average of $R - \tfrac12 R^2$ is $\mu - \tfrac12(\sigma^2 + \mu^2)$, since the average square is the variance plus the squared average. For monthly returns $\mu^2$ is tiny next to $\sigma^2$, which leaves
+The growth rate $`g`$ is the average log return. Put the series from Step 1 inside the average: the average of $`R - \tfrac12 R^2`$ is $`\mu - \tfrac12(\sigma^2 + \mu^2)`$, since the average square is the variance plus the squared average. For monthly returns $`\mu^2`$ is tiny next to $`\sigma^2`$, which leaves
 
-$$g \approx \mu - \tfrac12\sigma^2.$$
+```math
+g \approx \mu - \tfrac12\sigma^2.
+```
 
-For the coin-flip share $\mu = 0$ and $\sigma = 0.10$, so the estimate is −0.50% a month. The exact value is the average of the two logs, $\tfrac12\ln(1.1 \times 0.9) = \tfrac12\ln(1 - a^2) = -0.5025\%$. The series of that log is $-\tfrac12 a^2 - \tfrac14 a^4 - \cdots$, so the approximation's error is about $\tfrac14 a^4$: −0.5025% against −0.50%, a gap of 0.0025 percentage points.
+For the coin-flip share $`\mu = 0`$ and $`\sigma = 0.10`$, so the estimate is −0.50% a month. The exact value is the average of the two logs, $`\tfrac12\ln(1.1 \times 0.9) = \tfrac12\ln(1 - a^2) = -0.5025\%`$. The series of that log is $`-\tfrac12 a^2 - \tfrac14 a^4 - \cdots`$, so the approximation's error is about $`\tfrac14 a^4`$: −0.5025% against −0.50%, a gap of 0.0025 percentage points.
 
-Up by $a$ and down by $a$ multiplies money by $(1 + a)(1 - a) = 1 - a^2$, in either order. Up 10, down 10 keeps 99%. Up 50, down 50 keeps 75%. The average move is zero and the loss is the square of the move.
+Up by $`a`$ and down by $`a`$ multiplies money by $`(1 + a)(1 - a) = 1 - a^2`$, in either order. Up 10, down 10 keeps 99%. Up 50, down 50 keeps 75%. The average move is zero and the loss is the square of the move.
 
-Compounded, the growth rate is $e^{g} - 1 = \sqrt{0.99} - 1 = -0.5013\%$ a month, the geometric mean return (the steady monthly rate that ends at the same place). Compounded over twelve months it gives $0.99^6 - 1 = -5.85\%$, the annualised return of the median year (the middle year when all 4,096 are ranked). The −0.5025% log figure and the −0.5013% compound figure differ for the same reason the +9.53% and +10% did in Step 1.
+Compounded, the growth rate is $`e^{g} - 1 = \sqrt{0.99} - 1 = -0.5013\%`$ a month, the geometric mean return (the steady monthly rate that ends at the same place). Compounded over twelve months it gives $`0.99^6 - 1 = -5.85\%`$, the annualised return of the median year (the middle year when all 4,096 are ranked). The −0.5025% log figure and the −0.5013% compound figure differ for the same reason the +9.53% and +10% did in Step 1.
 
 <details>
 <summary>The same drag in continuous time</summary>
 
-A price that wiggles continuously, with average simple growth $\mu$ a year and spread $\sigma$, is modelled as geometric Brownian motion ([Prices as geometric Brownian motion](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)). Its log grows at $\mu - \tfrac12\sigma^2$, exactly, with no approximation left. That is the drag of Step 4 with the months shrunk to nothing, and it is the $-\tfrac12\sigma^2$ inside the Black–Scholes formula ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+A price that wiggles continuously, with average simple growth $`\mu`$ a year and spread $`\sigma`$, is modelled as geometric Brownian motion ([Prices as geometric Brownian motion](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)). Its log grows at $`\mu - \tfrac12\sigma^2`$, exactly, with no approximation left. That is the drag of Step 4 with the months shrunk to nothing, and it is the $`-\tfrac12\sigma^2`$ inside the Black–Scholes formula ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 </details>
 
@@ -188,7 +202,7 @@ The share: $100, up 10% then down 10%; then the coin-flip share for a year.
 | log returns | ln 1.10 and ln 0.90 | +9.53% and −10.54% |
 | two-month log return | 0.09531 − 0.10536 | −1.005% |
 | back to simple | e^(−0.01005) − 1 | −1.00% |
-| growth rate $g$ | −1.005% ÷ 2 | −0.5025% a month |
+| growth rate $`g`$ | −1.005% ÷ 2 | −0.5025% a month |
 | drag estimate | 0 − 0.10^2 ÷ 2 | −0.50% a month |
 | a year's log drift (the average log return over the year) | 12 × −0.5025% | −6.03% |
 | median year-end (the middle of all 4,096 years) | 100 × 0.99^6 | $94.15 |
@@ -215,7 +229,7 @@ The code prints every figure in this table.
 
 A puzzle first. For the coin-flip share, the average of each month's growth factor is ½(1.10 + 0.90) = 1. So the average year-end wealth, across all 4,096 equally likely years, is exactly $100.00. Yet the median year (the middle one when all are ranked) ends at $94.15, and 61.28% of years end below $100. The average stays put. The typical path sinks.
 
-| Horizon | Median wealth | Chance below $100 | Log drift, $n g$ | Log spread, $\sigma\sqrt{n}$ |
+| Horizon | Median wealth | Chance below $100 | Log drift, $`n g`$ | Log spread, $`\sigma\sqrt{n}`$ |
 | --- | --- | --- | --- | --- |
 | 1 year | $94.15 | 61.28% | −0.0603 | 0.3476 |
 | 5 years | $73.97 | 65.06% | −0.3015 | 0.7772 |
@@ -254,7 +268,7 @@ Each year of the median path costs 6.03% in logs, the same slice every year. So 
 
 ### The race
 
-The drift grows as $n$. The spread grows as $\sqrt{n}$. Whatever their sizes, the one that grows as $n$ wins in the end. The drift catches the spread when $n |g| = \sigma\sqrt{n}$, that is at $n = (\sigma/g)^2$ = 398.7 months, about 33.2 years. Before that, luck can easily outweigh the drag. After it, a typical piece of luck no longer covers it, and the chance of ending below $100 keeps climbing toward certainty.
+The drift grows as $`n`$. The spread grows as $`\sqrt{n}`$. Whatever their sizes, the one that grows as $`n`$ wins in the end. The drift catches the spread when $`n |g| = \sigma\sqrt{n}`$, that is at $`n = (\sigma/g)^2`$ = 398.7 months, about 33.2 years. Before that, luck can easily outweigh the drag. After it, a typical piece of luck no longer covers it, and the chance of ending below $100 keeps climbing toward certainty.
 
 The average holds at $100 throughout because a thinning set of lucky paths ends enormously rich. Few holders ever live on one of them. That split between the average and the typical is what the growth-optimal staking rule in [Kelly](05-kelly-criterion-and-growth.md) is built on.
 
@@ -709,9 +723,9 @@ Lean proves how returns chain, the square root of time, and the exact drag, for 
 
 - Take positive prices, one at the start and one at each month's end. Then the growth factors multiply to the total growth factor.
 - Take the same prices. Then the monthly log returns add up to the total log return.
-- Take independent monthly log returns, each with average $g$ and spread $\sigma$. Then the $n$-month log return has average $n g$ and spread $\sigma\sqrt{n}$.
-- Take a move $a$ between −1 and 1, so prices stay positive. Then up by $a$ and down by $a$ multiplies money by $1 - a^2$.
-- Take the same move. Then the pair's average log return is $\tfrac12\ln(1 - a^2)$, below zero whenever $a$ is not zero.
+- Take independent monthly log returns, each with average $`g`$ and spread $`\sigma`$. Then the $`n`$-month log return has average $`n g`$ and spread $`\sigma\sqrt{n}`$.
+- Take a move $`a`$ between −1 and 1, so prices stay positive. Then up by $`a`$ and down by $`a`$ multiplies money by $`1 - a^2`$.
+- Take the same move. Then the pair's average log return is $`\tfrac12\ln(1 - a^2)`$, below zero whenever $`a`$ is not zero.
 - Up 10% then down 10% takes $100 to $99, and the half-and-half portfolio keeps its $100.
 - Twelve up-or-down months give 4,096 possible years, and six up-down pairs take $100 to exactly $94.1480149401.
 - Up 20 then down 20 leaves $96; up 50 then down 50 leaves $75.
@@ -848,11 +862,11 @@ example : 261 - 10 = 251 := by norm_num
 
 ## Where you meet it in real life
 
-- **Fund reports.** A fund's annualised return over several years is the compound rate $(1 + R_{\text{total}})^{1/T} - 1$. It sits below the average of the yearly returns, and the gap is the drag.
+- **Fund reports.** A fund's annualised return over several years is the compound rate $`(1 + R_{\text{total}})^{1/T} - 1`$. It sits below the average of the yearly returns, and the gap is the drag.
 - **Risk reports.** Desks measure spread on daily returns and multiply by √252 to quote it per year. A house fund with a 15% annual spread moves about 4.33% in a typical month and 0.945% on a typical day. Conventions verified 28 Sep 2026: 252 is the usual count of trading days; the New York Stock Exchange's (NYSE) published 2026 calendar gives 261 weekdays less 10 holidays, 251 trading days.
 - **Choosing between a deposit and a fund.** A saver weighs a 4% deposit against a fund with an 8% average return and a 15% spread. The fund's growth rate is about 8% − ½ × 0.15^2 = 6.875% a year, not 8%. How to weigh that against the risk is the work of [Expected utility](02-expected-utility-and-risk-aversion.md) and [Risk premium](03-certainty-equivalent-and-risk-premium.md).
 - **Leveraged funds that reset daily.** A fund that doubles each day's move turns a 10% bounce into a 20% one, and the drag grows with the square of the move: in the try-changing run, up 20 then down 20 left $96.00.
-- **Option pricing.** The log of a share's price is what the Black–Scholes model treats as a bell curve, and its drift carries the $-\tfrac12\sigma^2$ of Step 4 ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+- **Option pricing.** The log of a share's price is what the Black–Scholes model treats as a bell curve, and its drift carries the $`-\tfrac12\sigma^2`$ of Step 4 ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 > **Say it back**
 > A simple return is the change over the start; a log return is the log of end over start, and one converts to the other through the growth factor. Growth factors multiply over time, so log returns add over time, while simple returns add across the holdings of a portfolio. With independent months, the average scales with the number of months and the spread with its square root. Bouncing costs growth: up and down by the same fraction loses its square, and in general the growth rate is about the average return less half the squared spread. So a share that goes up 10 and down 10 ends at $99.

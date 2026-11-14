@@ -36,44 +36,50 @@ Each bar is one year's 12 monthly totals, averaged. The line is the fitted cubic
 
 ## The formula
 
-Notation first. The months are numbered j = 1 to m, with m = 360. Each month's centre is mapped onto the interval −1 to 1, so x_j = (2j − 361)/360: January 1995 sits just inside −1 and December 2024 just inside +1. The rainfall in month j is y_j. Two polynomials p and q are **orthogonal on the points** when $\sum_j p(x_j)\,q(x_j) = 0$, and $\lVert p\rVert^2 = \sum_j p(x_j)^2$ is the squared size of p on the points.
+Notation first. The months are numbered j = 1 to m, with m = 360. Each month's centre is mapped onto the interval −1 to 1, so x_j = (2j − 361)/360: January 1995 sits just inside −1 and December 2024 just inside +1. The rainfall in month j is y_j. Two polynomials p and q are **orthogonal on the points** when $`\sum_j p(x_j)\,q(x_j) = 0`$, and $`\lVert p\rVert^2 = \sum_j p(x_j)^2`$ is the squared size of p on the points.
 
-Least squares chooses the coefficients $c_0, \dots, c_n$ of a degree-n curve to make the squared misses smallest:
+Least squares chooses the coefficients $`c_0, \dots, c_n`$ of a degree-n curve to make the squared misses smallest:
 
-$$\min_{c_0,\dots,c_n}\ \sum_{j=1}^{m}\Big(y_j-\sum_{k=0}^{n}c_k\,p_k(x_j)\Big)^2 .$$
+```math
+\min_{c_0,\dots,c_n}\ \sum_{j=1}^{m}\Big(y_j-\sum_{k=0}^{n}c_k\,p_k(x_j)\Big)^2 .
+```
 
-If the basis polynomials $p_0, \dots, p_n$ are orthogonal on the points, the answer is one division per coefficient, and each added term lowers the squared misses by a known amount:
+If the basis polynomials $`p_0, \dots, p_n`$ are orthogonal on the points, the answer is one division per coefficient, and each added term lowers the squared misses by a known amount:
 
-$$c_k=\frac{\sum_j y_j\,p_k(x_j)}{\lVert p_k\rVert^2}, \qquad S_{k-1}-S_k=c_k^2\,\lVert p_k\rVert^2 .$$
+```math
+c_k=\frac{\sum_j y_j\,p_k(x_j)}{\lVert p_k\rVert^2}, \qquad S_{k-1}-S_k=c_k^2\,\lVert p_k\rVert^2 .
+```
 
 Such a basis exists for any distinct points, and three terms build it:
 
-$$p_{k+1}(x)=(x-\alpha_k)\,p_k(x)-\beta_k\,p_{k-1}(x),\qquad \alpha_k=\frac{\sum_j x_j\,p_k(x_j)^2}{\lVert p_k\rVert^2},\qquad \beta_k=\frac{\lVert p_k\rVert^2}{\lVert p_{k-1}\rVert^2},$$
+```math
+p_{k+1}(x)=(x-\alpha_k)\,p_k(x)-\beta_k\,p_{k-1}(x),\qquad \alpha_k=\frac{\sum_j x_j\,p_k(x_j)^2}{\lVert p_k\rVert^2},\qquad \beta_k=\frac{\lVert p_k\rVert^2}{\lVert p_{k-1}\rVert^2},
+```
 
-starting from $p_{-1} = 0$ and $p_0 = 1$.
+starting from $`p_{-1} = 0`$ and $`p_0 = 1`$.
 
 **Read it aloud:** with perpendicular building blocks, each coefficient is the data's overlap with its block divided by the block's own size, each new block removes its own share of the squared misses, and each block is made from the previous two.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $m$ | number of data points | 360 months | the noise in each coefficient shrinks |
-| $j$, $x_j$, $y_j$ | month number; its centre on −1 to 1; rainfall that month | mean $y$ = 70.4997 mm | — |
-| $n$ | degree of the fitted polynomial | 3, a cubic | fewer squared misses, more risk of chasing noise |
-| $p_k$, $\lVert p_k\rVert^2$ | the k-th basis polynomial, degree k; its squared size on the points | from the recurrence | — |
-| $c_k$ | coefficient of $p_k$ in the fit | one division each | — |
-| $P_k$; $q_k$, $t$ | Legendre polynomial of degree k, with $P_k(1) = 1$; Step 3's whole-number versions, in $t$ = 360 x | $P_3 = (5x^3 - 3x)/2$ | — |
-| $d_k$ | coefficient of $P_k$ in the same fit, in mm | $d_3$ = 9.759009189951 | a stronger S-shaped bend |
-| $\alpha_k$, $\beta_k$ | the recurrence's shift and its pull-back to the previous polynomial | $\alpha_k$ = 0 in exact arithmetic: the points are symmetric about 0 | — |
-| $S_n$ | sum of squared misses of the degree-n fit, in mm² | $S_3$ = 292,714.786 | falls as $n$ rises, never rises |
-| $\kappa$; $u$ | condition number of the basis: largest stretch over smallest, columns scaled to length 1; unit roundoff, $2^{-53}$ | 1.0000413 for Legendre, 1.42e+08 for calendar years; $u$ = 1.11e-16 | digits lost grow with κ |
-| $A$; $\Delta_k$ | design matrix: one row per month, one column per basis polynomial; change in $p_k$ from the first month to the last | 360 rows, 4 columns | — |
-| $\sigma$, $\hat\sigma$ | spread of one month's miss, true and estimated, in mm | $\hat\sigma$ = 28.67 mm | every standard error grows with it |
+| $`m`$ | number of data points | 360 months | the noise in each coefficient shrinks |
+| $`j`$, $`x_j`$, $`y_j`$ | month number; its centre on −1 to 1; rainfall that month | mean $`y`$ = 70.4997 mm | — |
+| $`n`$ | degree of the fitted polynomial | 3, a cubic | fewer squared misses, more risk of chasing noise |
+| $`p_k`$, $`\lVert p_k\rVert^2`$ | the k-th basis polynomial, degree k; its squared size on the points | from the recurrence | — |
+| $`c_k`$ | coefficient of $`p_k`$ in the fit | one division each | — |
+| $`P_k`$; $`q_k`$, $`t`$ | Legendre polynomial of degree k, with $`P_k(1) = 1`$; Step 3's whole-number versions, in $`t`$ = 360 x | $`P_3 = (5x^3 - 3x)/2`$ | — |
+| $`d_k`$ | coefficient of $`P_k`$ in the same fit, in mm | $`d_3`$ = 9.759009189951 | a stronger S-shaped bend |
+| $`\alpha_k`$, $`\beta_k`$ | the recurrence's shift and its pull-back to the previous polynomial | $`\alpha_k`$ = 0 in exact arithmetic: the points are symmetric about 0 | — |
+| $`S_n`$ | sum of squared misses of the degree-n fit, in mm² | $`S_3`$ = 292,714.786 | falls as $`n`$ rises, never rises |
+| $`\kappa`$; $`u`$ | condition number of the basis: largest stretch over smallest, columns scaled to length 1; unit roundoff, $`2^{-53}`$ | 1.0000413 for Legendre, 1.42e+08 for calendar years; $`u`$ = 1.11e-16 | digits lost grow with κ |
+| $`A`$; $`\Delta_k`$ | design matrix: one row per month, one column per basis polynomial; change in $`p_k`$ from the first month to the last | 360 rows, 4 columns | — |
+| $`\sigma`$, $`\hat\sigma`$ | spread of one month's miss, true and estimated, in mm | $`\hat\sigma`$ = 28.67 mm | every standard error grows with it |
 
-The design matrix A, κ and $u$ come from [Least squares two ways](../03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): a matrix A with one row per month and one column per basis polynomial. The Legendre polynomials and their orthogonality on −1 to 1, for the integral, are from [Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md).
+The design matrix A, κ and $`u`$ come from [Least squares two ways](../03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): a matrix A with one row per month and one column per basis polynomial. The Legendre polynomials and their orthogonality on −1 to 1, for the integral, are from [Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md).
 
 ### When it holds
 
-- **At least n + 1 distinct x-values.** With fewer, some $\lVert p_k\rVert^2$ is 0, the division is by zero, and no single curve is best.
+- **At least n + 1 distinct x-values.** With fewer, some $`\lVert p_k\rVert^2`$ is 0, the division is by zero, and no single curve is best.
 - **Orthogonal means orthogonal on these points.** Legendre polynomials are orthogonal for the integral from −1 to 1, not for a sum over 360 points. Here the overlaps are tiny, −0.001388889 and −0.003240716; ignoring them moves the trend by 1.40e-03 mm. On uneven or gappy data they are not tiny, and the recurrence is needed.
 - **The x-values are mapped onto −1 to 1 first.** Powers of the raw calendar year are nearly parallel columns: κ = 1.42e+08, and the normal equations put the trend off by 10.2 mm.
 - **Standard errors assume independent misses of equal spread.** The monthly misses here include the seasonal cycle, so the 9.44 mm standard error is an estimate, not a guarantee.
@@ -85,22 +91,22 @@ The design matrix A, κ and $u$ come from [Least squares two ways](../03-Numeric
 
 ### Step 0: perpendicular columns turn one tangled system into separate one-line problems
 
-Least squares projects the data onto the space of curves the basis can make ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)). The projection is found by the normal equations $A^TA\,c = A^Ty$. Entry (i, k) of $A^TA$ is the overlap $\sum_j p_i(x_j)\,p_k(x_j)$ of two columns.
+Least squares projects the data onto the space of curves the basis can make ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)). The projection is found by the normal equations $`A^TA\,c = A^Ty`$. Entry (i, k) of $`A^TA`$ is the overlap $`\sum_j p_i(x_j)\,p_k(x_j)`$ of two columns.
 
 If the columns are perpendicular, every overlap off the diagonal is 0. The system splits into n + 1 separate equations, one per coefficient. No elimination, no error passed from one coefficient to the next, and a condition number of exactly 1 once the columns are scaled. The rest of the card is about getting such a basis cheaply, and about what it costs not to.
 
 ### Step 1: in an orthogonal basis each coefficient is one division, and the misses fall by a known amount
 
-With a diagonal $A^TA$, row k of the normal equations reads $\lVert p_k\rVert^2\,c_k = \sum_j y_j\,p_k(x_j)$. Divide, and that is the formula for $c_k$.
+With a diagonal $`A^TA`$, row k of the normal equations reads $`\lVert p_k\rVert^2\,c_k = \sum_j y_j\,p_k(x_j)`$. Divide, and that is the formula for $`c_k`$.
 
 Two useful facts follow.
 
 1. **Earlier coefficients never move.** Raising the degree adds a new column perpendicular to the old ones, so the old equations are unchanged. A fit can therefore grow one degree at a time; the code's `degree` lines come from one degree-6 run.
-2. **Each term removes its own share of the misses.** By Pythagoras, $S_n = \lVert y\rVert^2 - \sum_{k\le n} c_k^2\lVert p_k\rVert^2$, so adding degree k lowers $S$ by $c_k^2\lVert p_k\rVert^2$. On the rainfall the cubic term drops $S$ from 297,612.224 to 292,714.786 mm², by 4,897.439, the same number the formula gives.
+2. **Each term removes its own share of the misses.** By Pythagoras, $`S_n = \lVert y\rVert^2 - \sum_{k\le n} c_k^2\lVert p_k\rVert^2`$, so adding degree k lowers $`S`$ by $`c_k^2\lVert p_k\rVert^2`$. On the rainfall the cubic term drops $`S`$ from 297,612.224 to 292,714.786 mm², by 4,897.439, the same number the formula gives.
 
 ### Step 2: plain powers are nearly parallel, and calendar years are far worse
 
-On −1 to 1, the columns $x^k$ and $x^{k+2}$ have the same shape: both are flat near 0 and steep near the ends. So they point in nearly the same direction, and κ grows fast with the degree:
+On −1 to 1, the columns $`x^k`$ and $`x^{k+2}`$ have the same shape: both are flat near 0 and steep near the ends. So they point in nearly the same direction, and κ grows fast with the degree:
 
 | Degree | κ, powers of x | κ, Legendre | κ² u, powers | Trend error, powers | Trend error, Legendre |
 | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -110,43 +116,49 @@ On −1 to 1, the columns $x^k$ and $x^{k+2}$ have the same shape: both are flat
 | 12 | 8,879 | 1.006242 | 8.75e-09 | 9.15e-08 mm | 4.55e-13 mm |
 | 15 | 117,100 | 1.014131 | 1.52e-06 | 1.26e-05 mm | 6.25e-13 mm |
 
-Both fits use the normal equations solved by Cholesky (writing $A^TA$ as a lower-triangular matrix times its transpose, then two triangular solves; [Cholesky](../03-Numerical%20Linear%20Algebra/04-cholesky-decomposition.md)), and the errors are measured against the recurrence fit, which is itself within 3.13e-13 mm of the exact cubic. The powers lose digits in step with κ² u, as [Least squares two ways](../03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md) predicts. The Legendre fit does not lose any.
+Both fits use the normal equations solved by Cholesky (writing $`A^TA`$ as a lower-triangular matrix times its transpose, then two triangular solves; [Cholesky](../03-Numerical%20Linear%20Algebra/04-cholesky-decomposition.md)), and the errors are measured against the recurrence fit, which is itself within 3.13e-13 mm of the exact cubic. The powers lose digits in step with κ² u, as [Least squares two ways](../03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md) predicts. The Legendre fit does not lose any.
 
 Calendar years are the extreme case. Across 1995 to 2024 the columns 1, year, year² and year³ barely change shape, because the year barely changes in relative terms. κ is 1.42e+08, κ² u is 2.25, above 1, and the normal equations return a cubic that misses the true least-squares cubic by up to 10.2 mm in some month. Cholesky does not stop; it just returns the wrong curve.
 
-The trouble is the route, not the trend. The trend is the same curve in every basis and is well determined: the Jacobi rotations of Step 3 make the same calendar-year columns perpendicular without forming $A^TA$, and projecting onto them gives the trend to 3.23e-08 mm. Forming $A^TA$ squares κ, so the normal equations are an unstable route here, though Cholesky solves the system it is handed stably. A good basis fixes both: with κ about 1, even the normal equations are safe.
+The trouble is the route, not the trend. The trend is the same curve in every basis and is well determined: the Jacobi rotations of Step 3 make the same calendar-year columns perpendicular without forming $`A^TA`$, and projecting onto them gives the trend to 3.23e-08 mm. Forming $`A^TA`$ squares κ, so the normal equations are an unstable route here, though Cholesky solves the system it is handed stably. A good basis fixes both: with κ about 1, even the normal equations are safe.
 
 ### Step 3: Legendre polynomials are almost orthogonal on evenly spread points
 
-The Legendre polynomials satisfy $\int_{-1}^{1} P_i P_k\,dx = 0$ for i ≠ k ([Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md)). A sum over 360 evenly spread month centres is the midpoint rule for that integral, times m/2. So the sums are nearly zero, but not quite.
+The Legendre polynomials satisfy $`\int_{-1}^{1} P_i P_k\,dx = 0`$ for i ≠ k ([Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md)). A sum over 360 evenly spread month centres is the midpoint rule for that integral, times m/2. So the sums are nearly zero, but not quite.
 
 For these points the defects can be written exactly. Let t = 2j − 361 = 360 x, an odd whole number from −359 to 359. The whole-number polynomials
 
-$$q_0 = 1,\quad q_1 = t,\quad q_2 = 3t^2-(m^2-1),\quad q_3 = 5t^3-(3m^2-7)\,t$$
+```math
+q_0 = 1,\quad q_1 = t,\quad q_2 = 3t^2-(m^2-1),\quad q_3 = 5t^3-(3m^2-7)\,t
+```
 
 are exactly orthogonal on the points: the code adds up all six cross products in whole-number arithmetic and gets 0 each time. Comparing with the Legendre polynomials,
 
-$$\frac{q_2}{2m^2} = P_2 + \frac{1}{2m^2},\qquad \frac{q_3}{2m^3} = P_3 + \frac{7x}{2m^2}.$$
+```math
+\frac{q_2}{2m^2} = P_2 + \frac{1}{2m^2},\qquad \frac{q_3}{2m^3} = P_3 + \frac{7x}{2m^2}.
+```
 
-So the Legendre polynomials are the exact orthogonal polynomials for these points, up to corrections that shrink like $1/m^2$ as m → ∞. The overlaps are $\sum_j P_0P_2 = -1/(2m)$ = −0.001388889 and $\sum_j P_1P_3 = -7(m^2-1)/(6m^3)$ = −0.003240716, as the code finds by direct summation.
+So the Legendre polynomials are the exact orthogonal polynomials for these points, up to corrections that shrink like $`1/m^2`$ as m → ∞. The overlaps are $`\sum_j P_0P_2 = -1/(2m)`$ = −0.001388889 and $`\sum_j P_1P_3 = -7(m^2-1)/(6m^3)`$ = −0.003240716, as the code finds by direct summation.
 
-Those overlaps set κ. Scaled to length 1, the P1 and P3 columns meet at a cosine of about $-7\sqrt{21}/(6m^2)$, and a 2 × 2 block with off-diagonal cosine c has κ = $\sqrt{(1+c)/(1-c)}$ ≈ 1 + |c|. So
+Those overlaps set κ. Scaled to length 1, the P1 and P3 columns meet at a cosine of about $`-7\sqrt{21}/(6m^2)`$, and a 2 × 2 block with off-diagonal cosine c has κ = $`\sqrt{(1+c)/(1-c)}`$ ≈ 1 + |c|. So
 
-$$\kappa \approx 1 + \frac{7\sqrt{21}}{6m^2} = 1.0000413,$$
+```math
+\kappa \approx 1 + \frac{7\sqrt{21}}{6m^2} = 1.0000413,
+```
 
 which matches the value the code measures, 1.0000413, to all printed digits. The code measures κ by one-sided Jacobi: it rotates pairs of columns until all are perpendicular, then divides the longest length by the shortest.
 
 <details>
 <summary>Detailed proof: the whole-number polynomials are orthogonal on the 360 points</summary>
 
-The points t are symmetric about 0, so any odd polynomial sums to 0. That settles every pair of opposite parity: $q_0q_1$, $q_0q_3$, $q_1q_2$, $q_2q_3$.
+The points t are symmetric about 0, so any odd polynomial sums to 0. That settles every pair of opposite parity: $`q_0q_1`$, $`q_0q_3`$, $`q_1q_2`$, $`q_2q_3`$.
 
-Two pairs remain. Write $T_2 = \sum t^2$ and $T_4 = \sum t^4$ over the m odd numbers from $-(m-1)$ to $m-1$. Standard sums of odd powers give $T_2 = m(m^2-1)/3$ and $T_4 = m(m^2-1)(3m^2-7)/15$.
+Two pairs remain. Write $`T_2 = \sum t^2`$ and $`T_4 = \sum t^4`$ over the m odd numbers from $`-(m-1)`$ to $`m-1`$. Standard sums of odd powers give $`T_2 = m(m^2-1)/3`$ and $`T_4 = m(m^2-1)(3m^2-7)/15`$.
 
-- $\sum q_0q_2 = 3T_2 - m(m^2-1) = m(m^2-1) - m(m^2-1) = 0$.
-- $\sum q_1q_3 = 5T_4 - (3m^2-7)T_2 = \tfrac{m(m^2-1)(3m^2-7)}{3} - \tfrac{m(m^2-1)(3m^2-7)}{3} = 0$.
+- $`\sum q_0q_2 = 3T_2 - m(m^2-1) = m(m^2-1) - m(m^2-1) = 0`$.
+- $`\sum q_1q_3 = 5T_4 - (3m^2-7)T_2 = \tfrac{m(m^2-1)(3m^2-7)}{3} - \tfrac{m(m^2-1)(3m^2-7)}{3} = 0`$.
 
-For the Legendre comparison, substitute t = m x: $q_2 = 3m^2x^2 - m^2 + 1 = 2m^2P_2 + 1$ and $q_3 = 5m^3x^3 - 3m^3x + 7mx = 2m^3P_3 + 7mx$. Divide. $\blacksquare$
+For the Legendre comparison, substitute t = m x: $`q_2 = 3m^2x^2 - m^2 + 1 = 2m^2P_2 + 1`$ and $`q_3 = 5m^3x^3 - 3m^3x + 7mx = 2m^3P_3 + 7mx`$. Divide. $`\blacksquare`$
 
 </details>
 
@@ -154,22 +166,22 @@ For the Legendre comparison, substitute t = m x: $q_2 = 3m^2x^2 - m^2 + 1 = 2m^2
 
 Legendre polynomials are only nearly right, and only for evenly spread points. A record with missing months needs a basis orthogonal on *its* points. The three-term recurrence builds one without solving any system.
 
-The idea: multiply the latest polynomial $p_k$ by x to raise the degree by one, then subtract its overlaps with the earlier polynomials. Only two overlaps are not already zero, with $p_k$ and $p_{k-1}$. So two subtractions suffice, and they are exactly $\alpha_k p_k$ and $\beta_k p_{k-1}$.
+The idea: multiply the latest polynomial $`p_k`$ by x to raise the degree by one, then subtract its overlaps with the earlier polynomials. Only two overlaps are not already zero, with $`p_k`$ and $`p_{k-1}`$. So two subtractions suffice, and they are exactly $`\alpha_k p_k`$ and $`\beta_k p_{k-1}`$.
 
 On the rainfall, the recurrence's cubic matches the exact cubic to 3.13e-13 mm, and its columns have κ = 1.0000000.
 
 <details>
 <summary>Detailed proof: why only the last two polynomials matter</summary>
 
-Take $p_0, \dots, p_k$, orthogonal on the points, each with leading coefficient 1 and degree equal to its index. Write $\langle f, g\rangle = \sum_j f(x_j)g(x_j)$.
+Take $`p_0, \dots, p_k`$, orthogonal on the points, each with leading coefficient 1 and degree equal to its index. Write $`\langle f, g\rangle = \sum_j f(x_j)g(x_j)`$.
 
-$x\,p_k$ has degree k + 1 and leading coefficient 1, so $x\,p_k = p_{k+1} + \sum_{i\le k} a_i\,p_i$ for some numbers $a_i$, where $p_{k+1}$ is defined by this equation and is orthogonal to every $p_i$ with $i \le k$ once the $a_i$ are right. Taking the overlap with $p_i$ gives $a_i = \langle x\,p_k, p_i\rangle / \lVert p_i\rVert^2$.
+$`x\,p_k`$ has degree k + 1 and leading coefficient 1, so $`x\,p_k = p_{k+1} + \sum_{i\le k} a_i\,p_i`$ for some numbers $`a_i`$, where $`p_{k+1}`$ is defined by this equation and is orthogonal to every $`p_i`$ with $`i \le k`$ once the $`a_i`$ are right. Taking the overlap with $`p_i`$ gives $`a_i = \langle x\,p_k, p_i\rangle / \lVert p_i\rVert^2`$.
 
-Move the x across: $\langle x\,p_k, p_i\rangle = \langle p_k, x\,p_i\rangle$, because both are $\sum_j x_j\,p_k(x_j)\,p_i(x_j)$. Now $x\,p_i$ has degree $i + 1$. If $i < k - 1$ that degree is below k, so $x\,p_i$ is a combination of $p_0, \dots, p_{k-1}$, all orthogonal to $p_k$. The overlap is 0.
+Move the x across: $`\langle x\,p_k, p_i\rangle = \langle p_k, x\,p_i\rangle`$, because both are $`\sum_j x_j\,p_k(x_j)\,p_i(x_j)`$. Now $`x\,p_i`$ has degree $`i + 1`$. If $`i < k - 1`$ that degree is below k, so $`x\,p_i`$ is a combination of $`p_0, \dots, p_{k-1}`$, all orthogonal to $`p_k`$. The overlap is 0.
 
-Only $i = k$ and $i = k-1$ survive. For $i = k$: $a_k = \langle x\,p_k, p_k\rangle/\lVert p_k\rVert^2 = \alpha_k$. For $i = k-1$: $x\,p_{k-1} = p_k + (\text{lower degree})$, so $\langle p_k, x\,p_{k-1}\rangle = \lVert p_k\rVert^2$ and $a_{k-1} = \lVert p_k\rVert^2/\lVert p_{k-1}\rVert^2 = \beta_k$.
+Only $`i = k`$ and $`i = k-1`$ survive. For $`i = k`$: $`a_k = \langle x\,p_k, p_k\rangle/\lVert p_k\rVert^2 = \alpha_k`$. For $`i = k-1`$: $`x\,p_{k-1} = p_k + (\text{lower degree})`$, so $`\langle p_k, x\,p_{k-1}\rangle = \lVert p_k\rVert^2`$ and $`a_{k-1} = \lVert p_k\rVert^2/\lVert p_{k-1}\rVert^2 = \beta_k`$.
 
-So $p_{k+1} = (x - \alpha_k)\,p_k - \beta_k\,p_{k-1}$. The construction needs $\lVert p_k\rVert^2 > 0$, which holds while k is below the number of distinct points. $\blacksquare$
+So $`p_{k+1} = (x - \alpha_k)\,p_k - \beta_k\,p_{k-1}`$. The construction needs $`\lVert p_k\rVert^2 > 0`$, which holds while k is below the number of distinct points. $`\blacksquare`$
 
 </details>
 
@@ -177,11 +189,11 @@ In floating point the recurrence can lose orthogonality at high degree on badly 
 
 ### Step 5: the noise, not the rounding, sets the answer's real error
 
-In an orthogonal basis the noise is as easy to handle as the fit. Each $c_k$ is a fixed weighted sum of the y's. If each month's miss has spread σ and the misses are independent, $c_k$ has standard error $\sigma/\lVert p_k\rVert$, and different coefficients are uncorrelated, because their weights are perpendicular.
+In an orthogonal basis the noise is as easy to handle as the fit. Each $`c_k`$ is a fixed weighted sum of the y's. If each month's miss has spread σ and the misses are independent, $`c_k`$ has standard error $`\sigma/\lVert p_k\rVert`$, and different coefficients are uncorrelated, because their weights are perpendicular.
 
-The trend's change from the first month to the last uses only the odd terms: the even ones take the same value at both ends, by symmetry. So its standard error is $\hat\sigma\sqrt{\Delta_1^2/\lVert p_1\rVert^2 + \Delta_3^2/\lVert p_3\rVert^2}$, where $\Delta_k = p_k(x_m) - p_k(x_1)$ and $\hat\sigma^2 = S_3/(m-4)$.
+The trend's change from the first month to the last uses only the odd terms: the even ones take the same value at both ends, by symmetry. So its standard error is $`\hat\sigma\sqrt{\Delta_1^2/\lVert p_1\rVert^2 + \Delta_3^2/\lVert p_3\rVert^2}`$, where $`\Delta_k = p_k(x_m) - p_k(x_1)`$ and $`\hat\sigma^2 = S_3/(m-4)`$.
 
-- $\hat\sigma$ = 28.67 mm, the spread of one month's miss;
+- $`\hat\sigma`$ = 28.67 mm, the spread of one month's miss;
 - the change, 9.00 mm, carries a standard error of 9.44 mm;
 - the cubic term is 2.44 standard errors from zero.
 
@@ -191,7 +203,7 @@ The rounding error of a good basis is about 1e-13 mm; the noise gives 9.44 mm. O
 
 Counted as flops (one floating-point add or multiply) for m = 360 points ([Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md)). The normal-equations column is the textbook leading-order count; the recurrence column counts the code's own operations, less the printout's sum of squared misses:
 
-| Coefficients | Normal equations, textbook count $m(n+1)^2 + (n+1)^3/3$ | Recurrence, code's count $13\,m\,(n+1)$ |
+| Coefficients | Normal equations, textbook count $`m(n+1)^2 + (n+1)^3/3`$ | Recurrence, code's count $`13\,m\,(n+1)`$ |
 | ---: | ---: | ---: |
 | 4 | 5,781 | 18,720 |
 | 16 | 93,525 | 74,880 |
@@ -207,12 +219,12 @@ The rainfall record, 360 months, a cubic, in the order the code runs. Every row 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | mean month | sum of the 360 totals ÷ 360 | 70.4997 mm |
-| Legendre coefficients | exact whole-number ratios, then $d_0 = c_0 + c_2$, … | $d_0$ = 70.49972264537, $d_1$ = −5.108620774322, $d_2$ = 0.1096803931646, $d_3$ = 9.759009189951 mm |
+| Legendre coefficients | exact whole-number ratios, then $`d_0 = c_0 + c_2`$, … | $`d_0`$ = 70.49972264537, $`d_1`$ = −5.108620774322, $`d_2`$ = 0.1096803931646, $`d_3`$ = 9.759009189951 mm |
 | same, by Cholesky on Legendre columns | normal equations, κ = 1.0000413 | the same 13 digits |
-| trend, January 1995 | $\sum_k d_k P_k(x_1)$, at $x_1$ = −359/360 | 66.11 mm |
-| trend, December 2024 | $\sum_k d_k P_k(x_{360})$, at $x_{360}$ = 359/360 | 75.11 mm |
+| trend, January 1995 | $`\sum_k d_k P_k(x_1)`$, at $`x_1`$ = −359/360 | 66.11 mm |
+| trend, December 2024 | $`\sum_k d_k P_k(x_{360})`$, at $`x_{360}`$ = 359/360 | 75.11 mm |
 | change over 30 years | 75.11 − 66.11 | 9.00 mm |
-| spread of one miss | $\sqrt{S_3/(360 - 4)}$ | 28.67 mm |
+| spread of one miss | $`\sqrt{S_3/(360 - 4)}`$ | 28.67 mm |
 | standard error of the change | Step 5 | 9.44 mm |
 | answer | | **+9.00 mm a month, standard error 9.44 mm; rounding error about 1e-13 mm** |
 
@@ -222,9 +234,9 @@ So the cubic trend rose by 9 mm a month over the 30 years, but a record this noi
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Normal equations on powers of the calendar year | trend off by up to 10.2 mm (1.02e+01), against 1.14e-13 mm for Legendre | κ = 1.42e+08, squared by forming $A^TA$: κ² u = 2.25; rotations without $A^TA$ give 3.23e-08 mm |
+| Normal equations on powers of the calendar year | trend off by up to 10.2 mm (1.02e+01), against 1.14e-13 mm for Legendre | κ = 1.42e+08, squared by forming $`A^TA`$: κ² u = 2.25; rotations without $`A^TA`$ give 3.23e-08 mm |
 | Powers of x at degree 15 instead of Legendre | trend error 1.26e-05 mm, against 6.25e-13 mm | κ = 117,100: x¹³ and x¹⁵ are nearly the same column |
-| Legendre treated as exactly orthogonal: $d_k$ = overlap ÷ size | trend off by 1.40e-03 mm | the overlaps −0.001388889 and −0.003240716 were dropped |
+| Legendre treated as exactly orthogonal: $`d_k`$ = overlap ÷ size | trend off by 1.40e-03 mm | the overlaps −0.001388889 and −0.003240716 were dropped |
 
 The third row is harmless here, because 360 even points make the overlaps small. It is the warning for uneven data: there the recurrence of Step 4 is the fix.
 
@@ -232,7 +244,7 @@ The third row is harmless here, because 360 even points make the overlaps small.
 
 ## Code, from first principles, and it actually runs
 
-The code makes the 360 monthly totals from a seeded SplitMix64 generator (a short pseudo-random number generator written out in full), stored as whole tenths of a millimetre, and fits the cubic by three independent roads. Road one is exact: the whole-number polynomials of Step 3, summed in integers, give each coefficient as one ratio of whole numbers, rounded once. Road two builds Legendre columns by Bonnet's recurrence, $(k+1)P_{k+1} = (2k+1)\,x\,P_k - k\,P_{k-1}$, and solves the normal equations by Cholesky. Road three is the three-term recurrence on the points. A separate one-sided Jacobi routine (Step 3) measures κ of each basis without forming $A^TA$, and a formula from Step 3 predicts κ for Legendre. The same rotations also fit the calendar-year columns without $A^TA$ (Step 2). The code then repeats the normal equations in four other bases and sweeps the degree up to 21.
+The code makes the 360 monthly totals from a seeded SplitMix64 generator (a short pseudo-random number generator written out in full), stored as whole tenths of a millimetre, and fits the cubic by three independent roads. Road one is exact: the whole-number polynomials of Step 3, summed in integers, give each coefficient as one ratio of whole numbers, rounded once. Road two builds Legendre columns by Bonnet's recurrence, $`(k+1)P_{k+1} = (2k+1)\,x\,P_k - k\,P_{k-1}`$, and solves the normal equations by Cholesky. Road three is the three-term recurrence on the points. A separate one-sided Jacobi routine (Step 3) measures κ of each basis without forming $`A^TA`$, and a formula from Step 3 predicts κ for Legendre. The same rotations also fit the calendar-year columns without $`A^TA`$ (Step 2). The code then repeats the normal equations in four other bases and sweeps the degree up to 21.
 
 ### Python
 
@@ -638,13 +650,13 @@ The two outputs are identical, line for line.
 
 Lean proves Steps 1 and 4 for any data points, and checks the exact numbers of Steps 3 and 6 on the 360 months.
 
-- Take $p_0, \dots, p_n$ orthogonal on the points, with $p_k$ of degree k, and at least n + 1 distinct x-values. Then the one-division coefficients $c_k$ give the smallest sum of squared misses, and no other coefficients do as well.
-- For $p_0, \dots, p_n$ orthogonal on the points, adding term k lowers the squared misses by exactly $c_k^2\lVert p_k\rVert^2$, for k from 1 to n.
-- The three-term recurrence, started from $p_0 = 1$, gives each $p_k$ degree k and leading coefficient 1.
-- With at least n + 1 distinct x-values, the recurrence's $p_0, \dots, p_n$ are orthogonal on the points.
-- On the 360 months, the whole-number polynomials $q_0$ to $q_3$ are exactly orthogonal: all six cross products sum to 0.
-- The sums $T_2$ and $T_4$ in Step 3's proof match their formulas at m = 360.
-- At m = 360 the Legendre overlaps are exactly $\sum_j P_0P_2 = -1/(2m)$ and $\sum_j P_1P_3 = -7(m^2-1)/(6m^3)$.
+- Take $`p_0, \dots, p_n`$ orthogonal on the points, with $`p_k`$ of degree k, and at least n + 1 distinct x-values. Then the one-division coefficients $`c_k`$ give the smallest sum of squared misses, and no other coefficients do as well.
+- For $`p_0, \dots, p_n`$ orthogonal on the points, adding term k lowers the squared misses by exactly $`c_k^2\lVert p_k\rVert^2`$, for k from 1 to n.
+- The three-term recurrence, started from $`p_0 = 1`$, gives each $`p_k`$ degree k and leading coefficient 1.
+- With at least n + 1 distinct x-values, the recurrence's $`p_0, \dots, p_n`$ are orthogonal on the points.
+- On the 360 months, the whole-number polynomials $`q_0`$ to $`q_3`$ are exactly orthogonal: all six cross products sum to 0.
+- The sums $`T_2`$ and $`T_4`$ in Step 3's proof match their formulas at m = 360.
+- At m = 360 the Legendre overlaps are exactly $`\sum_j P_0P_2 = -1/(2m)`$ and $`\sum_j P_1P_3 = -7(m^2-1)/(6m^3)`$.
 - Step 6's flop counts are right: 5,781 and 93,525 for the normal equations, 18,720 and 74,880 for the recurrence.
 
 The rainfall fit, κ, the rounding errors, the standard errors and the runs up to degree 21 are left to the Python and Rust checks.
@@ -994,7 +1006,7 @@ example : 13 * 360 * 16 = 74880 := by norm_num
 > **Try changing**
 > The asserts are pinned to this record; the printed lines give the answers.
 > - **Guess first:** count time as months 1 to 360 instead of calendar years. Is that safe? Mostly: κ falls to 86.68 and the trend error to 2.16e-12 mm, worse than Legendre's 1.14e-13 but harmless.
-> - **Guess first:** fit degree 4 instead of 3. Do $c_0$ to $c_3$ change? No: the new column is perpendicular to the old ones (Step 1). Degree 4 lowers $S$ by only 55.594 mm², a term 0.26 standard errors from zero.
+> - **Guess first:** fit degree 4 instead of 3. Do $`c_0`$ to $`c_3`$ change? No: the new column is perpendicular to the old ones (Step 1). Degree 4 lowers $`S`$ by only 55.594 mm², a term 0.26 standard errors from zero.
 > - **Guess first:** raise the degree past 15, to 18 and 21 (the last two `sweep` lines). How fast do the powers lose the trend? At 18, κ² u is 2.75e-04 and the error 3.05e-04 mm; at 21, 5.02e-02 and 2.31e-01 mm. Legendre stays at 6.54e-13 and 7.53e-13 mm.
 > - **Guess first:** drop the overlaps and divide, as if Legendre were exactly orthogonal on the points. The trend moves by 1.40e-03 mm.
 
@@ -1006,8 +1018,8 @@ example : 13 * 360 * 16 = 74880 := by norm_num
 > **Fitting against the calendar year in plain powers.** It looks natural to write trend = a + b × year + c × year² + d × year³. The columns 1, year, year² and year³ are almost parallel across 1995 to 2024, κ = 1.42e+08, and the normal equations return a trend that is off by up to 10.2 mm in some month, with no error message. Map time onto −1 to 1, which alone fixes a cubic, and use Legendre polynomials or the recurrence so higher degrees stay safe.
 >
 > - **Thinking Legendre is orthogonal on any data.** It is orthogonal for the integral on −1 to 1. On these 360 even points the overlaps are −0.001388889 and −0.003240716, and ignoring them moves the trend by 1.40e-03 mm; on gappy data the overlaps are larger. The recurrence is orthogonal on whatever points it is given.
-> - **Raising the degree because the misses keep falling.** $S$ falls at every degree, by 55.594, 39.940 and 77.993 mm² at degrees 4, 5 and 6, terms only 0.26, −0.22 and 0.31 standard errors from zero. That is noise being fitted. Choose the degree by held-out data ([Overfitting](../../09-Probability%20and%20statistics/09-Regression/08-cross-validation-and-overfitting.md)).
-> - **Interpolating instead of fitting.** A degree-359 polynomial through all 360 months drives $S$ to 0 mm² and has no meaning; it is the setting of [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md).
+> - **Raising the degree because the misses keep falling.** $`S`$ falls at every degree, by 55.594, 39.940 and 77.993 mm² at degrees 4, 5 and 6, terms only 0.26, −0.22 and 0.31 standard errors from zero. That is noise being fitted. Choose the degree by held-out data ([Overfitting](../../09-Probability%20and%20statistics/09-Regression/08-cross-validation-and-overfitting.md)).
+> - **Interpolating instead of fitting.** A degree-359 polynomial through all 360 months drives $`S`$ to 0 mm² and has no meaning; it is the setting of [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md).
 
 ---
 
@@ -1016,7 +1028,7 @@ example : 13 * 360 * 16 = 74880 := by norm_num
 - **Climate and hydrology records.** Trend lines through decades of rainfall, river flow or temperature are low-degree least-squares fits against time. Rescaling time onto −1 to 1 before fitting is a standard guard against the calendar-year trap.
 - **Polynomial-fitting routines in numerical libraries.** Careful routines map the x-values onto a standard interval before fitting, and many offer a Legendre or Chebyshev basis. The conversion back to powers of the raw x is where digits are lost.
 - **Calibration curves.** A sensor's reading against a reference is fitted by a low-degree polynomial. An orthogonal basis lets the technician add a degree and see at once whether the new term is bigger than its standard error.
-- **Building quadrature rules.** The recurrence that makes polynomials orthogonal on data points also makes them orthogonal for an integral, and its numbers $\alpha_k$, $\beta_k$ give the nodes and weights of Gaussian quadrature.
+- **Building quadrature rules.** The recurrence that makes polynomials orthogonal on data points also makes them orthogonal for an integral, and its numbers $`\alpha_k`$, $`\beta_k`$ give the nodes and weights of Gaussian quadrature.
 
 > **Say it back**
 > Least squares chooses the curve with the smallest sum of squared misses instead of passing through every point. Written in powers of the calendar year, a cubic's columns are nearly parallel, κ is 1.42e+08, and the normal equations return a trend off by 10.2 mm. Written in Legendre polynomials on −1 to 1, the columns are almost perpendicular, κ is 1.0000413, and each coefficient is nearly one division. The three-term recurrence makes the basis exactly perpendicular on any points, so earlier coefficients never move and each term's share of the misses is read off directly. On the rainfall record the trend rose 9.00 mm with a standard error of 9.44 mm: the noise, not the arithmetic, limits the answer.
@@ -1034,7 +1046,7 @@ example : 13 * 360 * 16 = 74880 := by norm_num
 ## Where this goes next
 
 - [Weierstrass and the minimax fit](08-weierstrass-and-best-approximation.md), the next card: least squares makes the *sum* of squared misses smallest; the minimax fit makes the *worst* single miss smallest.
-- [Gaussian quadrature](../05-Quadrature/03-gaussian-quadrature.md): the zeros of an orthogonal polynomial are the sample points of the most accurate integration rules, and recurrence numbers like $\alpha_k$ and $\beta_k$ give them.
+- [Gaussian quadrature](../05-Quadrature/03-gaussian-quadrature.md): the zeros of an orthogonal polynomial are the sample points of the most accurate integration rules, and recurrence numbers like $`\alpha_k`$ and $`\beta_k`$ give them.
 - Orthogonal polynomials (planned): the families that other weights produce, Chebyshev, Hermite and Laguerre, and their common theory.
 
 This card leaves open which degree to fit when the noise is unknown, and how to fit a trend that a single polynomial cannot follow at all.

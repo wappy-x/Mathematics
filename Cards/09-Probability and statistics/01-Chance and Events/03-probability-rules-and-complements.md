@@ -37,57 +37,67 @@ The orange curve is the true chance, one minus five sixths to the power n. The g
 
 Notation first, in words. From [Sample spaces and events](02-sample-spaces-and-events.md):
 
-- $\Omega$ is the sample space, the list of every possible outcome.
+- $`\Omega`$ is the sample space, the list of every possible outcome.
 - An event is a set of outcomes.
-- $P(A)$ is read "the chance of A".
+- $`P(A)`$ is read "the chance of A".
 
-Union and intersection come from [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): $A \cup B$ is "A or B or both", and $A \cap B$ is "A and B together".
+Union and intersection come from [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): $`A \cup B`$ is "A or B or both", and $`A \cap B`$ is "A and B together".
 
-The one new piece: $A^c$, read "not A", is the **complement** of A, every outcome in $\Omega$ that is not in A. The small c stands for complement.
+The one new piece: $`A^c`$, read "not A", is the **complement** of A, every outcome in $`\Omega`$ that is not in A. The small c stands for complement.
 
-Two events are **separate** (the textbook word is *disjoint*) when they share no outcome: $A \cap B = \varnothing$, the empty event.
+Two events are **separate** (the textbook word is *disjoint*) when they share no outcome: $`A \cap B = \varnothing`$, the empty event.
 
 **Additivity** (the axiom):
 
-$$P(A \cup B) = P(A) + P(B) \quad \text{when } A \cap B = \varnothing$$
+```math
+P(A \cup B) = P(A) + P(B) \quad \text{when } A \cap B = \varnothing
+```
 
 **Read it aloud:** if two events cannot happen together, the chance that one or the other happens is the sum of their chances.
 
 **The complement rule:**
 
-$$P(A^c) = 1 - P(A)$$
+```math
+P(A^c) = 1 - P(A)
+```
 
 **Read it aloud:** the chance that A fails is one minus the chance that it happens.
 
 **Inclusion–exclusion** for two events, then three:
 
-$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+```math
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+```
 
-$$P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)$$
+```math
+P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)
+```
 
 **Read it aloud:** add the single chances, subtract every overlap of two, and add back the overlap of all three.
 
-On the gambler's bet, with $S_1$ to $S_4$ the events "six on roll 1" to "six on roll 4":
+On the gambler's bet, with $`S_1`$ to $`S_4`$ the events "six on roll 1" to "six on roll 4":
 
-$$P(\text{at least one six}) = 1 - P(\text{no six}) = 1 - \left(\tfrac{5}{6}\right)^4 = 1 - \tfrac{625}{1296} = \tfrac{671}{1296} = 0.517747$$
+```math
+P(\text{at least one six}) = 1 - P(\text{no six}) = 1 - \left(\tfrac{5}{6}\right)^4 = 1 - \tfrac{625}{1296} = \tfrac{671}{1296} = 0.517747
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$ | the sample space: every possible outcome | the 1296 sequences of four rolls | — |
-| $A$, $B$, $C$ | events: sets of outcomes | "six on roll 1", "six on roll 2" | a bigger event never has a smaller chance |
-| $P(A)$ | the chance of A, from 0 to 1 | $P(S_1)$ = 216/1296, one in six | the complement's chance falls by the same amount |
-| $A^c$ | not A: every outcome outside A | "no six at all" is the complement of "at least one six" | — |
-| $A \cup B$ | A or B or both | "a six on roll 1 or roll 2" | — |
-| $A \cap B$ | A and B together | "sixes on both roll 1 and roll 2", 36 sequences | the more overlap, the more the plain sum overshoots |
-| $\varnothing$ | the empty event, no outcomes | "a seven on a six-sided die" | — |
-| $S_1$, $S_2$, $S_3$, $S_4$ | six on roll 1, 2, 3, 4 | 216 sequences each | — |
-| $n$ | number of rolls | 4 | the chance of at least one six climbs toward 1 |
+| $`\Omega`$ | the sample space: every possible outcome | the 1296 sequences of four rolls | — |
+| $`A`$, $`B`$, $`C`$ | events: sets of outcomes | "six on roll 1", "six on roll 2" | a bigger event never has a smaller chance |
+| $`P(A)`$ | the chance of A, from 0 to 1 | $`P(S_1)`$ = 216/1296, one in six | the complement's chance falls by the same amount |
+| $`A^c`$ | not A: every outcome outside A | "no six at all" is the complement of "at least one six" | — |
+| $`A \cup B`$ | A or B or both | "a six on roll 1 or roll 2" | — |
+| $`A \cap B`$ | A and B together | "sixes on both roll 1 and roll 2", 36 sequences | the more overlap, the more the plain sum overshoots |
+| $`\varnothing`$ | the empty event, no outcomes | "a seven on a six-sided die" | — |
+| $`S_1`$, $`S_2`$, $`S_3`$, $`S_4`$ | six on roll 1, 2, 3, 4 | 216 sequences each | — |
+| $`n`$ | number of rolls | 4 | the chance of at least one six climbs toward 1 |
 
 ### When it holds
 
 - **Separate events, for plain adding.** Additivity needs no shared outcome. Add "six on roll 1" and "six on roll 2" as if separate and the game with two sixes is counted twice: four such events give 0.6667, and seven give 1.1667.
-- **The complement of the right event, inside $\Omega$.** The complement of "at least one six" is "no six". "Not every roll a six" is a different event, with chance 0.9992.
-- **Chances that total 1.** The rules assume $P(\Omega) = 1$; a table of chances summing to anything else is no probability, and its complements mean nothing.
+- **The complement of the right event, inside $`\Omega`$.** The complement of "at least one six" is "no six". "Not every roll a six" is a different event, with chance 0.9992.
+- **Chances that total 1.** The rules assume $`P(\Omega) = 1`$; a table of chances summing to anything else is no probability, and its complements mean nothing.
 - **No independence needed.** The rules hold whether or not events influence each other; independence enters only when a joint chance is found by multiplying ([Independence](07-independence.md)).
 
 ---
@@ -98,37 +108,39 @@ $$P(\text{at least one six}) = 1 - P(\text{no six}) = 1 - \left(\tfrac{5}{6}\rig
 
 Picture the total chance, 1, as a heap of sand spread over the outcomes. An event's chance is the sand lying on its outcomes. From here on the sand is called **probability**, and the rules below are bookkeeping about where it lies.
 
-On a finite sample space, $P(A)$ is the sum of the weights of A's outcomes, and all weights sum to 1; [Probability](01-what-probability-means.md) says where weights come from. Andrey Kolmogorov took three statements as the definition of probability in 1933: every chance is at least 0, $P(\Omega) = 1$, and separate events add, even along an endless list (that case matters from wing 10 on). Every rule on this card follows from those three.
+On a finite sample space, $`P(A)`$ is the sum of the weights of A's outcomes, and all weights sum to 1; [Probability](01-what-probability-means.md) says where weights come from. Andrey Kolmogorov took three statements as the definition of probability in 1933: every chance is at least 0, $`P(\Omega) = 1`$, and separate events add, even along an endless list (that case matters from wing 10 on). Every rule on this card follows from those three.
 
 ### Step 1: separate events add
 
-If A and B share no outcome, the sand on $A \cup B$ is the sand on A plus the sand on B, nothing counted twice. That is additivity, and it extends to any finite list of separate events one at a time.
+If A and B share no outcome, the sand on $`A \cup B`$ is the sand on A plus the sand on B, nothing counted twice. That is additivity, and it extends to any finite list of separate events one at a time.
 
 On the dice, split "at least one six" by where the first six lands. First six on roll 1: 216 sequences. First six on roll 2 (roll 1 not a six): 5 × 36 = 180. On roll 3: 25 × 6 = 150. On roll 4: 125. These four events are separate, since a game has only one first six, so they add: 216 + 180 + 150 + 125 = 671, by additivity alone.
 
 ### Step 2: the complement rule
 
-A and $A^c$ share no outcome, and together they are all of $\Omega$. Additivity then gives $P(A) + P(A^c) = P(\Omega) = 1$. Subtract $P(A)$ from both sides: $P(A^c) = 1 - P(A)$.
+A and $`A^c`$ share no outcome, and together they are all of $`\Omega`$. Additivity then gives $`P(A) + P(A^c) = P(\Omega) = 1`$. Subtract $`P(A)`$ from both sides: $`P(A^c) = 1 - P(A)`$.
 
-Two by-products drop out. With $A = \Omega$, the complement is $\varnothing$, so $P(\varnothing) = 0$. And since $P(A^c)$ is at least 0, $P(A)$ is at most 1: the range 0 to 1 is a consequence, not an extra rule.
+Two by-products drop out. With $`A = \Omega`$, the complement is $`\varnothing`$, so $`P(\varnothing) = 0`$. And since $`P(A^c)`$ is at least 0, $`P(A)`$ is at most 1: the range 0 to 1 is a consequence, not an extra rule.
 
-The same split gives **monotonicity**: if every outcome of A is in B, then B is A plus the separate piece "B without A", so $P(A) \le P(B)$.
+The same split gives **monotonicity**: if every outcome of A is in B, then B is A plus the separate piece "B without A", so $`P(A) \le P(B)`$.
 
 The rule pays off when "at least one" is a union of overlapping events and "none" is one clean event: here, all four rolls from the faces one to five, 625 sequences. So the chance is 1 − 625/1296 = 671/1296.
 
 ### Step 3: two overlapping events
 
-Cut $A \cup B$ into three separate pieces: A without B, the overlap $A \cap B$, and B without A. Additivity adds them. Now A itself is the first two pieces, and B is the last two. So $P(A) + P(B)$ counts the overlap twice, and one copy must go:
+Cut $`A \cup B`$ into three separate pieces: A without B, the overlap $`A \cap B`$, and B without A. Additivity adds them. Now A itself is the first two pieces, and B is the last two. So $`P(A) + P(B)`$ counts the overlap twice, and one copy must go:
 
-$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+```math
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+```
 
 On the shelf's house example, two dice with 36 equally likely outcomes: a six on the first die covers 6 outcomes, a six on the second covers 6, and both covers 1. At least one six: 6 + 6 − 1 = 11 of 36, a chance of 0.3056. The complement agrees: 25 outcomes show no six, and 36 − 25 = 11.
 
-A by-product: since the overlap's chance is at least 0, $P(A \cup B) \le P(A) + P(B)$. The plain sum is always an upper bound on the chance of "A or B", the union bound of [Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md). It is exact only when the events are separate.
+A by-product: since the overlap's chance is at least 0, $`P(A \cup B) \le P(A) + P(B)`$. The plain sum is always an upper bound on the chance of "A or B", the union bound of [Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md). It is exact only when the events are separate.
 
 ### Step 4: three overlapping events
 
-With three events the subtraction goes too far, and something must be added back. Roll three times and take $S_1$, $S_2$, $S_3$. The 216 sequences fall into the regions of the picture below.
+With three events the subtraction goes too far, and something must be added back. Roll three times and take $`S_1`$, $`S_2`$, $`S_3`$. The 216 sequences fall into the regions of the picture below.
 
 ### The picture: three rolls, eight regions
 
@@ -138,7 +150,9 @@ Each number counts the three-roll sequences in that region, out of 216; the circ
 
 Adding the three single events (36 each) counts a two-region sequence twice and the centre three times. Subtracting the three pairs (6 each) removes the centre three times, so it is back to zero and must be added once more:
 
-$$36 + 36 + 36 - 6 - 6 - 6 + 1 = 91$$
+```math
+36 + 36 + 36 - 6 - 6 - 6 + 1 = 91
+```
 
 The complement agrees: 125 sequences show no six, and 216 − 125 = 91. The chance of at least one six in three rolls is 91/216, 0.4213.
 
@@ -496,9 +510,9 @@ The two outputs match line for line. The simulated 0.5187 sits within one standa
 
 Lean proves the rules for every probability on any sample space, and checks the card's dice counts exactly.
 
-- Take two separate events A and B. Then $P(A \cup B) = P(A) + P(B)$.
-- Take any event A and its complement $A^c$ inside $\Omega$. Then $P(A^c) = 1 - P(A)$.
-- Take any two events A and B, separate or overlapping. Then $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.
+- Take two separate events A and B. Then $`P(A \cup B) = P(A) + P(B)`$.
+- Take any event A and its complement $`A^c`$ inside $`\Omega`$. Then $`P(A^c) = 1 - P(A)`$.
+- Take any two events A and B, separate or overlapping. Then $`P(A \cup B) = P(A) + P(B) - P(A \cap B)`$.
 - Take any three events A, B and C. Then the chance of "A or B or C" is the single chances, minus every overlap of two, plus the overlap of all three.
 - None of these rules assumes independence.
 - The four-roll counts hold exactly: 1296 sequences, 625 with no six, and 671 with a six, by the complement, the first-six split and inclusion–exclusion.
@@ -621,7 +635,7 @@ example : (Finset.univ.filter
 
 ## What this builds on
 
-- [Sample spaces and events](02-sample-spaces-and-events.md): the sample space, events as sets of outcomes, and $P(A)$.
+- [Sample spaces and events](02-sample-spaces-and-events.md): the sample space, events as sets of outcomes, and $`P(A)`$.
 - [Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md): the counting version of the overlap correction.
 - [Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md): the plain sum as an upper bound.
 

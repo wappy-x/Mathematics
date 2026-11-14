@@ -38,38 +38,46 @@ Orange: the payoff in July, power minus $27.50 or nothing. Green: the option's v
 
 ## The formula
 
-When the July contracts expire at $T$, the plant earns, per MWh of capacity,
+When the July contracts expire at $`T`$, the plant earns, per MWh of capacity,
 
-$$\text{payoff} = \max\big(S_T - H\,G_T - K,\; 0\big),$$
+```math
+\text{payoff} = \max\big(S_T - H\,G_T - K,\; 0\big),
+```
 
 and on 1 January that payoff is worth, by Kirk's approximation,
 
-$$V \approx e^{-rT}\Big[F_P\,N(d_1) - (H F_G + K)\,N(d_2)\Big].$$
+```math
+V \approx e^{-rT}\Big[F_P\,N(d_1) - (H F_G + K)\,N(d_2)\Big].
+```
 
 **Read it aloud:** the power expected to be sold, weighted by one chance, minus the fuel and running cost expected to be paid, weighted by another, both shrunk back to today's dollars.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F_P$ | power forward: the price fixed today for delivery through July | $50/MWh | rises, by about 0.97 per dollar |
-| $F_G$ | gas forward for July | $3.00/MMBtu | falls, by about 7.22 per dollar |
-| $H$ | heat rate: MMBtu of gas burned per MWh made | 7.5 | falls: dearer fuel per MWh |
-| $K$ | variable cost per MWh, the option's strike | $5 | falls |
-| $\sigma_P$, $\sigma_G$ | volatility: yearly spread of percentage moves in the power and gas forwards | 50%, 40% | rises with power's; gas's can push either way, since gas moves with power |
-| $\rho$ | correlation: how closely the two forwards move together, from −1 to 1 | 0.70 | falls: the gap between them steadies |
-| $T$ | years until July's price is known | 0.5 | — |
-| $r$, $e^{-rT}$ | riskless rate, and the discount it gives: today's value of $1 paid at $T$ | 5%, 0.97531 | falls a little |
-| $S_T$, $G_T$ | July power and gas prices at $T$, when July's contracts expire | unknown today | — |
-| $V$ | the option's value today, per MWh of capacity | $21.97 | — |
-| $b$, $\sigma_K$ | Kirk's weight on gas, fuel over fuel-plus-cost, and the blended volatility it gives | 0.8182, 35.78% | — |
-| $d_1$, $d_2$, $N(x)$ | distances to the strike in units of $\sigma_K\sqrt{T}$, and the bell-curve area left of $x$ | 2.4895, 2.2365 | — |
+| $`F_P`$ | power forward: the price fixed today for delivery through July | $50/MWh | rises, by about 0.97 per dollar |
+| $`F_G`$ | gas forward for July | $3.00/MMBtu | falls, by about 7.22 per dollar |
+| $`H`$ | heat rate: MMBtu of gas burned per MWh made | 7.5 | falls: dearer fuel per MWh |
+| $`K`$ | variable cost per MWh, the option's strike | $5 | falls |
+| $`\sigma_P`$, $`\sigma_G`$ | volatility: yearly spread of percentage moves in the power and gas forwards | 50%, 40% | rises with power's; gas's can push either way, since gas moves with power |
+| $`\rho`$ | correlation: how closely the two forwards move together, from −1 to 1 | 0.70 | falls: the gap between them steadies |
+| $`T`$ | years until July's price is known | 0.5 | — |
+| $`r`$, $`e^{-rT}`$ | riskless rate, and the discount it gives: today's value of $1 paid at $`T`$ | 5%, 0.97531 | falls a little |
+| $`S_T`$, $`G_T`$ | July power and gas prices at $`T`$, when July's contracts expire | unknown today | — |
+| $`V`$ | the option's value today, per MWh of capacity | $21.97 | — |
+| $`b`$, $`\sigma_K`$ | Kirk's weight on gas, fuel over fuel-plus-cost, and the blended volatility it gives | 0.8182, 35.78% | — |
+| $`d_1`$, $`d_2`$, $`N(x)`$ | distances to the strike in units of $`\sigma_K\sqrt{T}`$, and the bell-curve area left of $`x`$ | 2.4895, 2.2365 | — |
 
 Kirk's two helpers:
 
-$$b = \frac{H F_G}{H F_G + K}, \qquad \sigma_K = \sqrt{\sigma_P^2 - 2\rho\,\sigma_P\sigma_G\,b + \sigma_G^2 b^2}.$$
+```math
+b = \frac{H F_G}{H F_G + K}, \qquad \sigma_K = \sqrt{\sigma_P^2 - 2\rho\,\sigma_P\sigma_G\,b + \sigma_G^2 b^2}.
+```
 
-In words: fuel plus cost is treated as one lognormal price, and its volatility is gas's volatility scaled by the share of that lump that is gas. The heat rate multiplies the gas price, not its percentage moves, so $\sigma_G$ carries through unchanged.
+In words: fuel plus cost is treated as one lognormal price, and its volatility is gas's volatility scaled by the share of that lump that is gas. The heat rate multiplies the gas price, not its percentage moves, so $`\sigma_G`$ carries through unchanged.
 
-$$d_1 = \frac{\ln\!\big(F_P/(H F_G + K)\big) + \tfrac12\sigma_K^2 T}{\sigma_K\sqrt{T}}, \qquad d_2 = d_1 - \sigma_K\sqrt{T}.$$
+```math
+d_1 = \frac{\ln\!\big(F_P/(H F_G + K)\big) + \tfrac12\sigma_K^2 T}{\sigma_K\sqrt{T}}, \qquad d_2 = d_1 - \sigma_K\sqrt{T}.
+```
 
 These are the Black-76 distances from [Options on a futures price](01-options-on-commodity-futures.md), with fuel-plus-cost as the strike.
 
@@ -98,14 +106,16 @@ Power cannot be stored in bulk: the grid must balance supply and demand every se
 
 What pins the July forward instead? A forward costs nothing to enter and pays the difference between the delivered spot price and the forward price. Something that costs nothing today must average to zero under the pricing weights (the risk-neutral probabilities that make every traded asset's price its discounted average payoff). So
 
-$$F_P = \mathbb{E}^{Q}\big[S_T\big]:$$
+```math
+F_P = \mathbb{E}^{Q}\big[S_T\big]:
+```
 
 the forward is the average July spot price under the pricing weights. Those weights fold in the market's appetite for risk as well as expected demand, heat waves and plant outages. No trade pins them down, so the market's forward is an input, not an output. A forward on a stored good is also an average under the same weights, but for it the carry trade forces that average to equal spot plus carry. Power has no such trade, so the average is all there is.
 
 <details>
 <summary>Detailed proof: a zero-cost forward is an expectation</summary>
 
-Let a forward agreed today at price $F_P$ pay $S_T - F_P$ at time $T$. Entering costs nothing. Under the pricing weights, every traded payoff's price today is $e^{-rT}$ times its average payoff. So $0 = e^{-rT}\,\mathbb{E}^{Q}[S_T - F_P]$. Since $F_P$ is fixed today it comes out of the average: $F_P = \mathbb{E}^{Q}[S_T]$. No storage entered the argument. For a storable good a second relation holds as well, spot times carry, and the two together give the familiar curve. For power only the first holds.
+Let a forward agreed today at price $`F_P`$ pay $`S_T - F_P`$ at time $`T`$. Entering costs nothing. Under the pricing weights, every traded payoff's price today is $`e^{-rT}`$ times its average payoff. So $`0 = e^{-rT}\,\mathbb{E}^{Q}[S_T - F_P]`$. Since $`F_P`$ is fixed today it comes out of the average: $`F_P = \mathbb{E}^{Q}[S_T]`$. No storage entered the argument. For a storable good a second relation holds as well, spot times carry, and the two together give the familiar curve. For power only the first holds.
 
 </details>
 
@@ -119,7 +129,9 @@ Exchanges set their own holiday rules per hub, and those move a day or two betwe
 
 A baseload forward is the hour-weighted average of the two blocks. With peak at $60 and baseload at $50:
 
-$$50 \times 744 = 60 \times 352 + \text{off-peak} \times 392 \;\Rightarrow\; \text{off-peak} = \$41.02.$$
+```math
+50 \times 744 = 60 \times 352 + \text{off-peak} \times 392 \;\Rightarrow\; \text{off-peak} = \$41.02.
+```
 
 The code finds the weekday of 1 July 2027 by Sakamoto's rule (a short formula for the day of the week of any date) and counts the peak hours from it. The same weighting runs through a day: an hourly shape is a set of weights that average back to the block price.
 
@@ -146,20 +158,20 @@ Two consequences. The forward sits well above a typical day's price, and that is
 
 ### Step 4: the plant's month as a spread option
 
-Set the hourly detail aside and let the plant decide once for July. It pays $S_T - H\,F_G(T) - K$ if positive: power minus 7.5 times gas minus $5. That is a call on the difference of two prices, a **spread option**. [Spread options](04-margrabe-and-kirk-spread-options.md) prices it; this card uses the result.
+Set the hourly detail aside and let the plant decide once for July. It pays $`S_T - H\,F_G(T) - K`$ if positive: power minus 7.5 times gas minus $5. That is a call on the difference of two prices, a **spread option**. [Spread options](04-margrabe-and-kirk-spread-options.md) prices it; this card uses the result.
 
-With a zero strike, Margrabe's exchange formula is exact: measure power in units of fuel, and only the volatility of their ratio matters. With a positive strike, fuel plus cost is no longer lognormal, and Kirk's move is to pretend it is, with volatility $\sigma_K$. The weight $b$ says how much of that lump moves with gas: here 22.50 of 27.50, or 0.8182. At zero strike $b$ is 1 and Kirk equals Margrabe exactly: the code gets $26.8230 both ways.
+With a zero strike, Margrabe's exchange formula is exact: measure power in units of fuel, and only the volatility of their ratio matters. With a positive strike, fuel plus cost is no longer lognormal, and Kirk's move is to pretend it is, with volatility $`\sigma_K`$. The weight $`b`$ says how much of that lump moves with gas: here 22.50 of 27.50, or 0.8182. At zero strike $`b`$ is 1 and Kirk equals Margrabe exactly: the code gets $26.8230 both ways.
 
 ### Step 5: the exact road, by fixing gas first
 
-Kirk is an approximation, so the card checks it against an exact price. Fix July gas at one outcome. Given that outcome, power is still lognormal: its forward shifts by the part of its move that follows gas, and its leftover volatility is $\sigma_P\sqrt{1-\rho^2}$. Fuel plus cost is now a fixed number, so Black-76 prices the call on power exactly. Average those prices across every gas outcome, weighted by the bell curve, and discount. The average is a one-dimensional integral, done by Simpson's rule (adding up the area under a curve from evenly spaced slices) on 600 slices. That is **$21.9723** against Kirk's **$21.9721**.
+Kirk is an approximation, so the card checks it against an exact price. Fix July gas at one outcome. Given that outcome, power is still lognormal: its forward shifts by the part of its move that follows gas, and its leftover volatility is $`\sigma_P\sqrt{1-\rho^2}`$. Fuel plus cost is now a fixed number, so Black-76 prices the call on power exactly. Average those prices across every gas outcome, weighted by the bell curve, and discount. The average is a one-dimensional integral, done by Simpson's rule (adding up the area under a curve from evenly spaced slices) on 600 slices. That is **$21.9723** against Kirk's **$21.9721**.
 
 A third road, simulation, draws 100,000 correlated pairs of July prices, each with its mirror image, and averages the payoff: $21.9752, within one standard error of 0.0126 of the integral.
 
 <details>
 <summary>Detailed proof: power given gas is lognormal</summary>
 
-Write July gas as $F_G\,e^{-\frac12\sigma_G^2 T + \sigma_G\sqrt{T}\,z}$ and July power as $F_P\,e^{-\frac12\sigma_P^2 T + \sigma_P\sqrt{T}\,(\rho z + \sqrt{1-\rho^2}\,u)}$, where $z$ and $u$ are independent standard bell-curve draws. Both have the right averages, and their log moves have correlation $\rho$. Hold $z$ fixed. Power becomes $F_P\,e^{-\frac12\rho^2\sigma_P^2 T + \rho\sigma_P\sqrt{T}z} \cdot e^{-\frac12(1-\rho^2)\sigma_P^2 T + \sigma_P\sqrt{1-\rho^2}\sqrt{T}\,u}$. The first factor is a new forward. The second has average 1 and log-spread $\sigma_P\sqrt{1-\rho^2}\sqrt{T}$: a lognormal. So given $z$, the call on power struck at $H F_G e^{\dots z} + K$ is Black-76 with that forward and that volatility. Averaging over $z$ against the bell curve gives the exact price. Nothing was approximated but the numerical integral.
+Write July gas as $`F_G\,e^{-\frac12\sigma_G^2 T + \sigma_G\sqrt{T}\,z}`$ and July power as $`F_P\,e^{-\frac12\sigma_P^2 T + \sigma_P\sqrt{T}\,(\rho z + \sqrt{1-\rho^2}\,u)}`$, where $`z`$ and $`u`$ are independent standard bell-curve draws. Both have the right averages, and their log moves have correlation $`\rho`$. Hold $`z`$ fixed. Power becomes $`F_P\,e^{-\frac12\rho^2\sigma_P^2 T + \rho\sigma_P\sqrt{T}z} \cdot e^{-\frac12(1-\rho^2)\sigma_P^2 T + \sigma_P\sqrt{1-\rho^2}\sqrt{T}\,u}`$. The first factor is a new forward. The second has average 1 and log-spread $`\sigma_P\sqrt{1-\rho^2}\sqrt{T}`$: a lognormal. So given $`z`$, the call on power struck at $`H F_G e^{\dots z} + K`$ is Black-76 with that forward and that volatility. Averaging over $`z`$ against the bell curve gives the exact price. Nothing was approximated but the numerical integral.
 
 </details>
 
@@ -177,16 +189,16 @@ July 2027, valued 1 January: power $50, gas $3.00, heat rate 7.5, cost $5, volat
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| fuel per MWh, $H F_G$ | 7.5 × 3.00 | $22.50 |
+| fuel per MWh, $`H F_G`$ | 7.5 × 3.00 | $22.50 |
 | spark spread | 50 − 22.50 | $27.50 |
 | fuel plus cost, the strike lump | 22.50 + 5 | $27.50 |
-| gas weight $b$ | 22.50 / 27.50 | 0.8182 |
-| $\sigma_K$ | √(0.25 − 2 × 0.7 × 0.5 × 0.4 × 0.8182 + 0.16 × 0.8182^2) | 0.3578 |
-| $\sigma_K\sqrt{T}$ | 0.3578 × √0.5 | 0.2530 |
+| gas weight $`b`$ | 22.50 / 27.50 | 0.8182 |
+| $`\sigma_K`$ | √(0.25 − 2 × 0.7 × 0.5 × 0.4 × 0.8182 + 0.16 × 0.8182^2) | 0.3578 |
+| $`\sigma_K\sqrt{T}`$ | 0.3578 × √0.5 | 0.2530 |
 | log distance | ln(50 / 27.50) | 0.5978 |
-| $d_1$ | (0.5978 + ½ × 0.3578^2 × 0.5) / 0.2530 | 2.4895 |
-| $d_2$ | 2.4895 − 0.2530 | 2.2365 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.99360, 0.98734 |
+| $`d_1`$ | (0.5978 + ½ × 0.3578^2 × 0.5) / 0.2530 | 2.4895 |
+| $`d_2`$ | 2.4895 − 0.2530 | 2.2365 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.99360, 0.98734 |
 | discount | e^(−0.05 × 0.5) | 0.97531 |
 | option value | 0.97531 × (50 × 0.99360 − 27.50 × 0.98734) | **$21.97 per MWh** |
 | July, 400 MW × 744 hours | 21.9721 × 744 × 400 | **$6.539 million** |
@@ -837,7 +849,7 @@ A Greek is the change in the option's value for a small change in one input. Eac
 > **Pricing forward power from spot plus carry.** Carry works only for goods that can be bought now and delivered later from storage. Power cannot be, so January's $30 says nothing mechanical about July. Carry gives $30.76 and a July option worth $4.72; the market's $50 forward gives $21.97.
 >
 > - **Valuing a plant at its forward margin.** For an efficient plant in July the margin is nearly everything, $21.94 of $21.97. For a peaker at the money it is nothing, yet the option is $4.90.
-> - **Scaling gas volatility by the heat rate.** Multiplying gas by 7.5 multiplies its dollar moves, not its percentage moves. The heat rate enters Kirk through $b$, not through $\sigma_G$.
+> - **Scaling gas volatility by the heat rate.** Multiplying gas by 7.5 multiplies its dollar moves, not its percentage moves. The heat rate enters Kirk through $`b`$, not through $`\sigma_G`$.
 > - **Reading the forward as a forecast of a typical day.** In the spike sketch a typical day clears near $39.61 while the forward is $50. The gap is the spikes, not bias.
 > - **Monthly Kirk as the plant's full value.** Hourly choices and spikes add value a monthly lognormal cannot see: splitting peak and off-peak alone lifts $21.97 to $22.05. Start-up costs, also unseen, subtract.
 

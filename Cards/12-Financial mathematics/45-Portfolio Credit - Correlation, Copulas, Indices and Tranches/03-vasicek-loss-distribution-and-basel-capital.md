@@ -40,50 +40,60 @@ Rising line: the default rate the bad year reaches. Flat line: the 2% average. T
 
 ## The formula
 
-Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$: the chance that a standard normal draw (a draw from the bell curve with average 0 and spread 1) comes out below $x$. $N^{-1}(u)$ runs it backwards: the point with area $u$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+Notation first, in words. $`N(x)`$ is the bell-curve area to the left of $`x`$: the chance that a standard normal draw (a draw from the bell curve with average 0 and spread 1) comes out below $`x`$. $`N^{-1}(u)`$ runs it backwards: the point with area $`u`$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
 
-$L$ is the fraction of the pool that defaults in the year, a number between 0 and 1. $p$ is one loan's default chance (the PD, 2% here), $\rho$ the asset correlation (20%, defined in the table below) and $\alpha$ the confidence level (99.9%).
+$`L`$ is the fraction of the pool that defaults in the year, a number between 0 and 1. $`p`$ is one loan's default chance (the PD, 2% here), $`\rho`$ the asset correlation (20%, defined in the table below) and $`\alpha`$ the confidence level (99.9%).
 
-The chance that the default fraction stays at or below a level $x$:
+The chance that the default fraction stays at or below a level $`x`$:
 
-$$F(x) = P(L \le x) = N\!\left(\frac{\sqrt{1-\rho}\;N^{-1}(x) - N^{-1}(p)}{\sqrt{\rho}}\right)$$
+```math
+F(x) = P(L \le x) = N\!\left(\frac{\sqrt{1-\rho}\;N^{-1}(x) - N^{-1}(p)}{\sqrt{\rho}}\right)
+```
 
 **Read it aloud:** turn the default level into a bell-curve position, scale it by the private share of risk, subtract the default threshold, divide by the shared share of risk, and read the area.
 
-Run backwards, the level that the default fraction stays under with chance $\alpha$:
+Run backwards, the level that the default fraction stays under with chance $`\alpha`$:
 
-$$x_\alpha = N\!\left(\frac{N^{-1}(p) + \sqrt{\rho}\;N^{-1}(\alpha)}{\sqrt{1-\rho}}\right)$$
+```math
+x_\alpha = N\!\left(\frac{N^{-1}(p) + \sqrt{\rho}\;N^{-1}(\alpha)}{\sqrt{1-\rho}}\right)
+```
 
-**Read it aloud:** start at the default threshold, push it up by $\sqrt{\rho}$ times the one-in-a-thousand bad economy, rescale by the private share, and read the area: that is the default rate in the bad year.
+**Read it aloud:** start at the default threshold, push it up by $`\sqrt{\rho}`$ times the one-in-a-thousand bad economy, rescale by the private share, and read the area: that is the default rate in the bad year.
 
 Capital per loan is the loss in the bad year minus the loss in the average year, the **unexpected loss**:
 
-$$K = \mathrm{LGD} \times \big(x_{0.999} - p\big), \qquad \text{capital} = K \times \mathrm{EAD}$$
+```math
+K = \mathrm{LGD} \times \big(x_{0.999} - p\big), \qquad \text{capital} = K \times \mathrm{EAD}
+```
 
-Basel's rule for company loans of one-year maturity uses exactly this $K$, with $\alpha = 0.999$ and its own correlation, falling from 24% for the safest borrowers to 12% for the riskiest:
+Basel's rule for company loans of one-year maturity uses exactly this $`K`$, with $`\alpha = 0.999`$ and its own correlation, falling from 24% for the safest borrowers to 12% for the riskiest:
 
-$$\rho_{\text{Basel}}(p) = 0.12\,w + 0.24\,(1 - w), \qquad w = \frac{1 - e^{-50p}}{1 - e^{-50}}$$
+```math
+\rho_{\text{Basel}}(p) = 0.12\,w + 0.24\,(1 - w), \qquad w = \frac{1 - e^{-50p}}{1 - e^{-50}}
+```
 
 The **expected shortfall** (the average default fraction over the worst 0.1% of years, [Expected shortfall](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md)) averages the same curve over the tail:
 
-$$\mathrm{ES}_\alpha = \frac{1}{1-\alpha}\int_\alpha^1 x_u \, du$$
+```math
+\mathrm{ES}_\alpha = \frac{1}{1-\alpha}\int_\alpha^1 x_u \, du
+```
 
-Here $x_u$ is the quantile formula above at level $u$, and the integral averages it over every level $u$ from $\alpha$ up to 1.
+Here $`x_u`$ is the quantile formula above at level $`u`$, and the integral averages it over every level $`u`$ from $`\alpha`$ up to 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the 99.9% default rate… |
 | --- | --- | --- | --- |
-| $p$ | **PD**, probability of default: one loan's chance of defaulting in the year | 2% | rises, but more slowly than PD: 2.8% at 0.1% PD |
-| $\rho$ | **asset correlation**: the share of each company's ups and downs that comes from the shared economy. Say "rho". | 20% | rises steeply: 12.8% at 10%, 33.3% at 30% |
-| $M$, $m$, $m_x$ | the economy's state for the year, a bell-curve draw; $m$ is one value of it, $m_x$ the value that gives default fraction $x$. Low is bad. | −3.09 in the one-in-a-thousand year | a better economy means fewer defaults |
-| $Z_i$, $A_i$, $i$ | company $i$'s private luck, and its health $A_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,Z_i$ | bell-curve draws | — |
-| $c$ | the **default threshold** $N^{-1}(p)$: health below it means default | −2.0537 | a higher threshold means more defaults |
-| $L$, $L_n$ | the fraction of the pool that defaults in the year; $L_n$ for a pool of $n$ loans | 2% on average | — |
-| $x$, $F$ | a level of default fraction; $F(x)$ is the chance $L$ stays at or below it | 22.6% at the 99.9% point | — |
-| $\alpha$ | the confidence level: the share of years the bank must survive | 99.9% | rises; at 99% it is 12.9% |
-| $N$, $N^{-1}$, $\varphi$ | bell-curve area to the left, its inverse, and the bell curve's height | $N^{-1}(0.999) = 3.0902$ | — |
-| $\mathrm{LGD}$, $\mathrm{EAD}$ | **loss given default**, the share lost when a loan defaults; **exposure at default**, the amount owed | 60%; $100 | capital rises in proportion |
-| $K$ | capital per dollar of exposure: bad-year loss minus average loss | $12.38 per $100 | — |
-| $n$ | the number of loans in the pool; the formula is the limit of very large $n$ | 25, 100, 1,000 in the checks | the 99.9% rate falls toward 22.6% |
+| $`p`$ | **PD**, probability of default: one loan's chance of defaulting in the year | 2% | rises, but more slowly than PD: 2.8% at 0.1% PD |
+| $`\rho`$ | **asset correlation**: the share of each company's ups and downs that comes from the shared economy. Say "rho". | 20% | rises steeply: 12.8% at 10%, 33.3% at 30% |
+| $`M`$, $`m`$, $`m_x`$ | the economy's state for the year, a bell-curve draw; $`m`$ is one value of it, $`m_x`$ the value that gives default fraction $`x`$. Low is bad. | −3.09 in the one-in-a-thousand year | a better economy means fewer defaults |
+| $`Z_i`$, $`A_i`$, $`i`$ | company $`i`$'s private luck, and its health $`A_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,Z_i`$ | bell-curve draws | — |
+| $`c`$ | the **default threshold** $`N^{-1}(p)`$: health below it means default | −2.0537 | a higher threshold means more defaults |
+| $`L`$, $`L_n`$ | the fraction of the pool that defaults in the year; $`L_n`$ for a pool of $`n`$ loans | 2% on average | — |
+| $`x`$, $`F`$ | a level of default fraction; $`F(x)`$ is the chance $`L`$ stays at or below it | 22.6% at the 99.9% point | — |
+| $`\alpha`$ | the confidence level: the share of years the bank must survive | 99.9% | rises; at 99% it is 12.9% |
+| $`N`$, $`N^{-1}`$, $`\varphi`$ | bell-curve area to the left, its inverse, and the bell curve's height | $`N^{-1}(0.999) = 3.0902`$ | — |
+| $`\mathrm{LGD}`$, $`\mathrm{EAD}`$ | **loss given default**, the share lost when a loan defaults; **exposure at default**, the amount owed | 60%; $100 | capital rises in proportion |
+| $`K`$ | capital per dollar of exposure: bad-year loss minus average loss | $12.38 per $100 | — |
+| $`n`$ | the number of loans in the pool; the formula is the limit of very large $`n`$ | 25, 100, 1,000 in the checks | the 99.9% rate falls toward 22.6% |
 
 ### When it holds
 
@@ -105,52 +115,56 @@ So once the economy is known, the default fraction is known. The only uncertaint
 
 ### Step 1: default is health falling below a line
 
-This is the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md). Company $i$ has a health score $A_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,Z_i$, where the economy $M$ and the private luck $Z_i$ are independent bell-curve draws. The weights are square roots so that the two variances, $\rho$ and $1-\rho$, add to 1, keeping $A_i$ itself a standard bell-curve draw.
+This is the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md). Company $`i`$ has a health score $`A_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,Z_i`$, where the economy $`M`$ and the private luck $`Z_i`$ are independent bell-curve draws. The weights are square roots so that the two variances, $`\rho`$ and $`1-\rho`$, add to 1, keeping $`A_i`$ itself a standard bell-curve draw.
 
-The company defaults when $A_i$ falls below the threshold $c$. Setting $c = N^{-1}(p)$ makes the chance of that exactly $p$: here $c = N^{-1}(0.02) = -2.0537$.
+The company defaults when $`A_i`$ falls below the threshold $`c`$. Setting $`c = N^{-1}(p)`$ makes the chance of that exactly $`p`$: here $`c = N^{-1}(0.02) = -2.0537`$.
 
 ### Step 2: the default chance in a given economy
 
-Fix the economy at $m$. Company $i$ defaults when $\sqrt{\rho}\,m + \sqrt{1-\rho}\,Z_i < c$, that is when $Z_i < (c - \sqrt{\rho}\,m)/\sqrt{1-\rho}$. The private luck is a bell-curve draw, so
+Fix the economy at $`m`$. Company $`i`$ defaults when $`\sqrt{\rho}\,m + \sqrt{1-\rho}\,Z_i < c`$, that is when $`Z_i < (c - \sqrt{\rho}\,m)/\sqrt{1-\rho}`$. The private luck is a bell-curve draw, so
 
-$$p(m) = N\!\left(\frac{c - \sqrt{\rho}\,m}{\sqrt{1-\rho}}\right).$$
+```math
+p(m) = N\!\left(\frac{c - \sqrt{\rho}\,m}{\sqrt{1-\rho}}\right).
+```
 
-In a normal economy, $m = 0$, this is $N(-2.0537/0.8944)$, well under 2%. In the one-in-a-thousand economy, $m = -3.0902$, the threshold effectively rises and the chance jumps to 22.6%. Averaged over all economies, $p(m)$ gives back 2%: the checks integrate it and get 0.020000.
+In a normal economy, $`m = 0`$, this is $`N(-2.0537/0.8944)`$, well under 2%. In the one-in-a-thousand economy, $`m = -3.0902`$, the threshold effectively rises and the chance jumps to 22.6%. Averaged over all economies, $`p(m)`$ gives back 2%: the checks integrate it and get 0.020000.
 
 ### Step 3: in a large pool, the fraction equals the chance
 
-Given $m$, the $n$ companies default independently, each with chance $p(m)$. The count of defaults is binomial: its average is $n\,p(m)$ and its spread, as a fraction, is $\sqrt{p(m)(1-p(m))/n}$, which shrinks to 0 as $n$ grows. This is the law of large numbers. In the limit, $L = p(M)$ exactly: the default fraction is a fixed function of the economy.
+Given $`m`$, the $`n`$ companies default independently, each with chance $`p(m)`$. The count of defaults is binomial: its average is $`n\,p(m)`$ and its spread, as a fraction, is $`\sqrt{p(m)(1-p(m))/n}`$, which shrinks to 0 as $`n`$ grows. This is the law of large numbers. In the limit, $`L = p(M)`$ exactly: the default fraction is a fixed function of the economy.
 
 ### Step 4: read the distribution off the economy
 
-$p(m)$ falls as $m$ rises: a better economy means fewer defaults. So "the fraction is at most $x$" is the same event as "the economy is at least the level $m_x$ that gives exactly $x$". Solve $p(m_x) = x$:
+$`p(m)`$ falls as $`m`$ rises: a better economy means fewer defaults. So "the fraction is at most $`x`$" is the same event as "the economy is at least the level $`m_x`$ that gives exactly $`x`$". Solve $`p(m_x) = x`$:
 
-$$\frac{c - \sqrt{\rho}\,m_x}{\sqrt{1-\rho}} = N^{-1}(x) \quad\Longrightarrow\quad m_x = \frac{c - \sqrt{1-\rho}\,N^{-1}(x)}{\sqrt{\rho}}.$$
+```math
+\frac{c - \sqrt{\rho}\,m_x}{\sqrt{1-\rho}} = N^{-1}(x) \quad\Longrightarrow\quad m_x = \frac{c - \sqrt{1-\rho}\,N^{-1}(x)}{\sqrt{\rho}}.
+```
 
-The chance that the economy is at least $m_x$ is $N(-m_x)$, which is $F(x)$ as written in The formula.
+The chance that the economy is at least $`m_x`$ is $`N(-m_x)`$, which is $`F(x)`$ as written in The formula.
 
 ### Step 5: quantiles pass straight through
 
-Because $L$ is a falling function of $M$, the worst 0.1% of years for the pool are the worst 0.1% of economies. The economy is below $-N^{-1}(0.999) = -3.0902$ with chance 0.1%. Put that into $p(m)$: $x_{0.999} = N\big((c + \sqrt{\rho} \times 3.0902)/\sqrt{1-\rho}\big)$, which is the quantile formula. The same argument gives every quantile, which is how the picture above was drawn.
+Because $`L`$ is a falling function of $`M`$, the worst 0.1% of years for the pool are the worst 0.1% of economies. The economy is below $`-N^{-1}(0.999) = -3.0902`$ with chance 0.1%. Put that into $`p(m)`$: $`x_{0.999} = N\big((c + \sqrt{\rho} \times 3.0902)/\sqrt{1-\rho}\big)`$, which is the quantile formula. The same argument gives every quantile, which is how the picture above was drawn.
 
 ### Step 6: expected shortfall is the average over the bad economies
 
-The average default fraction over the worst 0.1% of years is the average of $p(m)$ over the worst 0.1% of economies. Written as an integral over the economy, it is 27.16%. The checks compute it a second way, over loss levels instead of economies, using the ES card's formula $\mathrm{ES} = x_\alpha + E[(L - x_\alpha)_+]/(1-\alpha)$, and get the same 0.271614.
+The average default fraction over the worst 0.1% of years is the average of $`p(m)`$ over the worst 0.1% of economies. Written as an integral over the economy, it is 27.16%. The checks compute it a second way, over loss levels instead of economies, using the ES card's formula $`\mathrm{ES} = x_\alpha + E[(L - x_\alpha)_+]/(1-\alpha)`$, and get the same 0.271614.
 
 ### Step 7: capital covers the unexpected part
 
-The bank prices the average loss, $p \times \mathrm{LGD}$ per dollar, into its interest rates and provisions (money set aside in its accounts for the losses it expects). Capital is for the rest: the gap between the bad year and the average year, $\mathrm{LGD} \times (x_{0.999} - p)$.
+The bank prices the average loss, $`p \times \mathrm{LGD}`$ per dollar, into its interest rates and provisions (money set aside in its accounts for the losses it expects). Capital is for the rest: the gap between the bad year and the average year, $`\mathrm{LGD} \times (x_{0.999} - p)`$.
 
 Michael Gordy showed in 2003 that in a one-factor model with a very large pool, this charge for each loan depends only on that loan's own PD, LGD and correlation, not on what else is in the book. That property, called portfolio invariance, is why a regulator can set capital loan by loan and add it up. The model under it is the **asymptotic single risk factor** (ASRF) model: asymptotic because the pool is taken as infinitely large.
 
 <details>
 <summary>Detailed proof: the large-pool limit, and the two expected-shortfall routes agreeing</summary>
 
-**The limit.** Fix $m$. The indicators $D_1, \dots, D_n$ (1 if company $i$ defaults, else 0) are independent with mean $p(m)$, so $L_n = \frac1n\sum D_i$ has mean $p(m)$ and variance $p(m)(1-p(m))/n \le 1/(4n)$. By Chebyshev's inequality (the chance of landing more than $\varepsilon$ from the average is at most the variance divided by $\varepsilon^2$), $P(|L_n - p(m)| > \varepsilon \mid M = m) \le 1/(4n\varepsilon^2)$ for every $m$. Averaging over $M$, the same bound holds unconditionally, so $L_n - p(M) \to 0$ in probability, and the distribution of $L_n$ converges to that of $p(M)$ at every level $x$ where $F$ is continuous, which is every $x$ strictly between 0 and 1.
+**The limit.** Fix $`m`$. The indicators $`D_1, \dots, D_n`$ (1 if company $`i`$ defaults, else 0) are independent with mean $`p(m)`$, so $`L_n = \frac1n\sum D_i`$ has mean $`p(m)`$ and variance $`p(m)(1-p(m))/n \le 1/(4n)`$. By Chebyshev's inequality (the chance of landing more than $`\varepsilon`$ from the average is at most the variance divided by $`\varepsilon^2`$), $`P(|L_n - p(m)| > \varepsilon \mid M = m) \le 1/(4n\varepsilon^2)`$ for every $`m`$. Averaging over $`M`$, the same bound holds unconditionally, so $`L_n - p(M) \to 0`$ in probability, and the distribution of $`L_n`$ converges to that of $`p(M)`$ at every level $`x`$ where $`F`$ is continuous, which is every $`x`$ strictly between 0 and 1.
 
-**The distribution.** $p$ is strictly decreasing and continuous, so $\{p(M) \le x\} = \{M \ge m_x\}$ with $m_x$ from Step 4, and $P(M \ge m_x) = 1 - N(m_x) = N(-m_x)$ by the bell curve's symmetry. That gives $F$. Setting $F(x) = \alpha$ and solving: $-m_x = N^{-1}(\alpha)$, so $\sqrt{1-\rho}\,N^{-1}(x) = c + \sqrt{\rho}\,N^{-1}(\alpha)$, which gives $x_\alpha$.
+**The distribution.** $`p`$ is strictly decreasing and continuous, so $`\{p(M) \le x\} = \{M \ge m_x\}`$ with $`m_x`$ from Step 4, and $`P(M \ge m_x) = 1 - N(m_x) = N(-m_x)`$ by the bell curve's symmetry. That gives $`F`$. Setting $`F(x) = \alpha`$ and solving: $`-m_x = N^{-1}(\alpha)`$, so $`\sqrt{1-\rho}\,N^{-1}(x) = c + \sqrt{\rho}\,N^{-1}(\alpha)`$, which gives $`x_\alpha`$.
 
-**Expected shortfall.** With $u = N(z)$, the quantile integral becomes $\frac{1}{1-\alpha}\int_{z_\alpha}^{\infty} p(-z)\,\varphi(z)\,dz$, where $\varphi$ is the bell-curve height and $z_\alpha = N^{-1}(\alpha)$: an average over the worst economies, road one in the checks. For any loss $L$ with a continuous distribution, $\int_\alpha^1 x_u\,du = (1-\alpha)x_\alpha + E[(L - x_\alpha)_+]$, and $E[(L - x_\alpha)_+] = \int_{x_\alpha}^1 (1 - F(y))\,dy$ by integrating the tail. That is road two, an integral over loss levels that never touches the economy. The two agree to six decimals in both languages. The checks also assert that capital from road 2 and Basel's quantile found by root-finding match the closed form.
+**Expected shortfall.** With $`u = N(z)`$, the quantile integral becomes $`\frac{1}{1-\alpha}\int_{z_\alpha}^{\infty} p(-z)\,\varphi(z)\,dz`$, where $`\varphi`$ is the bell-curve height and $`z_\alpha = N^{-1}(\alpha)`$: an average over the worst economies, road one in the checks. For any loss $`L`$ with a continuous distribution, $`\int_\alpha^1 x_u\,du = (1-\alpha)x_\alpha + E[(L - x_\alpha)_+]`$, and $`E[(L - x_\alpha)_+] = \int_{x_\alpha}^1 (1 - F(y))\,dy`$ by integrating the tail. That is road two, an integral over loss levels that never touches the economy. The two agree to six decimals in both languages. The checks also assert that capital from road 2 and Basel's quantile found by root-finding match the closed form.
 
 </details>
 
@@ -160,25 +174,25 @@ The one-factor model has cousins. **CreditMetrics** (J.P. Morgan, 1997) simulate
 
 ## Worked numbers, by hand
 
-PD $p = 2\%$, correlation $\rho = 20\%$, LGD 60%, $100 per loan, confidence 99.9%.
+PD $`p = 2\%`$, correlation $`\rho = 20\%`$, LGD 60%, $100 per loan, confidence 99.9%.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| default threshold $c$ | $N^{-1}(0.02)$ | −2.0537 |
-| bad economy | $N^{-1}(0.999)$ | 3.0902 |
-| shared and private weights | $\sqrt{0.20}$, $\sqrt{0.80}$ | 0.4472, 0.8944 |
-| position in the bad year | $(-2.0537 + 0.4472 \times 3.0902) / 0.8944$ | −0.7510 |
-| **99.9% default fraction** | $N(-0.7510)$ | **22.63%** |
-| above the average | $22.63\% - 2\%$ | 20.63 points |
-| expected loss per loan | $100 \times 0.60 \times 0.02$ | $1.20 |
-| bad-year loss per loan | $100 \times 0.60 \times 0.2263$ | $13.58 |
-| **capital per loan** | $13.58 - 1.20$ | **$12.38** |
+| default threshold $`c`$ | $`N^{-1}(0.02)`$ | −2.0537 |
+| bad economy | $`N^{-1}(0.999)`$ | 3.0902 |
+| shared and private weights | $`\sqrt{0.20}`$, $`\sqrt{0.80}`$ | 0.4472, 0.8944 |
+| position in the bad year | $`(-2.0537 + 0.4472 \times 3.0902) / 0.8944`$ | −0.7510 |
+| **99.9% default fraction** | $`N(-0.7510)`$ | **22.63%** |
+| above the average | $`22.63\% - 2\%`$ | 20.63 points |
+| expected loss per loan | $`100 \times 0.60 \times 0.02`$ | $1.20 |
+| bad-year loss per loan | $`100 \times 0.60 \times 0.2263`$ | $13.58 |
+| **capital per loan** | $`13.58 - 1.20`$ | **$12.38** |
 | expected shortfall | average over the worst 0.1% | 27.16%, $16.30 per loan |
-| Basel weight, w in the formula | $(1 - e^{-1})/(1 - e^{-50})$ | 0.6321 |
-| Basel correlation | $0.12 \times 0.6321 + 0.24 \times (1 - 0.6321)$ | 16.41% |
+| Basel weight, w in the formula | $`(1 - e^{-1})/(1 - e^{-50})`$ | 0.6321 |
+| Basel correlation | $`0.12 \times 0.6321 + 0.24 \times (1 - 0.6321)`$ | 16.41% |
 | Basel 99.9% default fraction | same quantile formula at 16.41% | 19.03% |
-| **Basel capital per loan** | $100 \times 0.60 \times (0.1903 - 0.02)$ | **$10.22** |
-| risk-weighted assets per loan | $12.5 \times 10.22$ | $127.69 |
+| **Basel capital per loan** | $`100 \times 0.60 \times (0.1903 - 0.02)`$ | **$10.22** |
+| risk-weighted assets per loan | $`12.5 \times 10.22`$ | $127.69 |
 
 A bank holding this book at 20% correlation needs $12.38 of its own money behind every $100 loan to survive the one-in-a-thousand year with the average loss already priced in. Basel, assuming a lower correlation for this PD, asks for $10.22. The factor 12.5 is 1 divided by 8%: Basel records the charge as $127.69 of "risk-weighted assets", on which the headline 8% minimum ratio gives back the $10.22.
 
@@ -222,14 +236,14 @@ Correct answer: $12.38 per loan.
 | Correlation set to 0 | 99.9% rate 2.0%: no capital | With no shared economy, private luck averages out and every year looks average |
 | Capital = bad-year loss, expected loss left in | $13.58 | The $1.20 average loss is already priced and provisioned; counting it again double-charges |
 | LGD forgotten | $20.63 | Counts every defaulted dollar as lost; 40 cents in the dollar comes back |
-| $N^{-1}(0.001)$ used for the bad economy | −$1.20 | Took the one-in-a-thousand *good* year: almost no defaults, so negative capital |
+| $`N^{-1}(0.001)`$ used for the bad economy | −$1.20 | Took the one-in-a-thousand *good* year: almost no defaults, so negative capital |
 | Default correlation 3.6% put in place of asset correlation 20% | $2.83 | Two different correlations; the one in the formula is between healths, not between default events |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the bell-curve area themselves (Python from `math.erf`, Rust from a series and a continued fraction), invert it by bisection, and integrate by Simpson's rule. The 99.9% default fraction is reached **four independent ways**: the closed-form quantile; a root-finder on the closed-form distribution $F$; exact finite pools of 25, 100 and 1,000 loans built from binomial counts, closing in on the limit; and a simulation of 100 loans with their own private luck over 100,000 years, which never uses the formula at all. Expected shortfall is reached two ways, over economies and over loss levels. Every number on the card is printed.
+Both programs build the bell-curve area themselves (Python from `math.erf`, Rust from a series and a continued fraction), invert it by bisection, and integrate by Simpson's rule. The 99.9% default fraction is reached **four independent ways**: the closed-form quantile; a root-finder on the closed-form distribution $`F`$; exact finite pools of 25, 100 and 1,000 loans built from binomial counts, closing in on the limit; and a simulation of 100 loans with their own private luck over 100,000 years, which never uses the formula at all. Expected shortfall is reached two ways, over economies and over loss levels. Every number on the card is printed.
 
 ### Python
 
@@ -661,11 +675,11 @@ The two outputs agree line for line, including the simulation: both use the same
 
 Lean proves the loss curve, the bad-year default rate and the large-pool limit, inside the one-factor model of Step 1.
 
-- Suppose $M$ is a bell-curve draw, $0 < \rho < 1$, $c = N^{-1}(p)$ and $0 < x < 1$. Then the chance that $p(M)$ is at most $x$ is exactly $F(x)$.
-- Take the same model and $0 < \alpha < 1$. Then $p(M)$ stays at or below $x_\alpha$ with chance exactly $\alpha$. Every lower level has chance below $\alpha$.
-- Take $M$ and every private luck $Z_i$ as independent bell-curve draws, with $0 \le \rho < 1$. Then for every $\varepsilon > 0$, the chance that $|L_n - p(M)| > \varepsilon$ tends to 0 as $n$ grows.
-- Take the example loan. Then $100 \times 0.60 \times 0.02$ is exactly 1.20, the expected loss in dollars.
-- Take Basel's factor 12.5. Then $12.5 \times 8\%$ is exactly 1, so risk-weighted assets times 8% give back the capital.
+- Suppose $`M`$ is a bell-curve draw, $`0 < \rho < 1`$, $`c = N^{-1}(p)`$ and $`0 < x < 1`$. Then the chance that $`p(M)`$ is at most $`x`$ is exactly $`F(x)`$.
+- Take the same model and $`0 < \alpha < 1`$. Then $`p(M)`$ stays at or below $`x_\alpha`$ with chance exactly $`\alpha`$. Every lower level has chance below $`\alpha`$.
+- Take $`M`$ and every private luck $`Z_i`$ as independent bell-curve draws, with $`0 \le \rho < 1`$. Then for every $`\varepsilon > 0`$, the chance that $`|L_n - p(M)| > \varepsilon`$ tends to 0 as $`n`$ grows.
+- Take the example loan. Then $`100 \times 0.60 \times 0.02`$ is exactly 1.20, the expected loss in dollars.
+- Take Basel's factor 12.5. Then $`12.5 \times 8\%`$ is exactly 1, so risk-weighted assets times 8% give back the capital.
 
 The example's decimals, expected shortfall, Basel's correlation and the finite pools are left to the Python and Rust checks.
 
@@ -1038,11 +1052,11 @@ example : (25 / 2 : ℚ) * (8 / 100) = 1 := by norm_num
 
 ## Where you meet it in real life
 
-- **Bank capital for company loans.** Every bank using the Basel internal-ratings-based approach runs this formula loan by loan: its own PD and LGD estimates in, the regulator's correlation, 12.5 times $K$ out as risk-weighted assets. The deeper regulatory story is [The Basel credit formula](../48-Regulatory%20Capital%20in%20Outline/03-vasicek-asrf-and-credit-capital.md).
+- **Bank capital for company loans.** Every bank using the Basel internal-ratings-based approach runs this formula loan by loan: its own PD and LGD estimates in, the regulator's correlation, 12.5 times $`K`$ out as risk-weighted assets. The deeper regulatory story is [The Basel credit formula](../48-Regulatory%20Capital%20in%20Outline/03-vasicek-asrf-and-credit-capital.md).
 - **Mortgages and credit cards.** The same formula with fixed correlations for retail books, set lower for credit cards than for mortgages.
 - **Economic capital.** Banks run their own version, with their own correlations and often more factors, to price loans.
-- **Tranches.** Slice the pool's losses into layers, the first few percent lost, the next few, and so on, and each layer's price is an average over this same loss curve: [Tranches](05-cdo-tranches-in-outline.md). The market's quoted correlation for index tranches, [Implied correlation](06-implied-and-base-correlation.md), is the $\rho$ that makes this curve match prices on pools such as [Credit indices (CDX and iTraxx in outline)](04-credit-indices.md).
-- **Stress testing.** Pick a bad economy $m$ instead of a probability, and $p(m)$ gives the default rate in that scenario.
+- **Tranches.** Slice the pool's losses into layers, the first few percent lost, the next few, and so on, and each layer's price is an average over this same loss curve: [Tranches](05-cdo-tranches-in-outline.md). The market's quoted correlation for index tranches, [Implied correlation](06-implied-and-base-correlation.md), is the $`\rho`$ that makes this curve match prices on pools such as [Credit indices (CDX and iTraxx in outline)](04-credit-indices.md).
+- **Stress testing.** Pick a bad economy $`m`$ instead of a probability, and $`p(m)`$ gives the default rate in that scenario.
 
 > **Say it back**
 > Each company's health mixes one shared economy with its own luck, and it defaults when health falls below a threshold set by its PD. In a very large pool the private luck averages out, so the default fraction is a fixed, falling function of the economy. The pool's loss distribution is therefore the economy's bell curve passed through that function, and its 99.9% point comes from putting the one-in-a-thousand economy in. Capital is that bad-year loss minus the average loss already priced in: $12.38 per $100 loan here, $10.22 with Basel's own correlation. A finite pool is lumpier and needs more.
@@ -1054,7 +1068,7 @@ example : (25 / 2 : ℚ) * (8 / 100) = 1 := by norm_num
 - [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md): the health score, one shared factor plus private luck, and the default threshold. This card takes that model to a pool too large to count.
 - [Value at risk](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md): value at risk as a quantile of the loss distribution. The 99.9% default fraction is exactly that quantile.
 - [Expected shortfall](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md): the average beyond the quantile, and the formula used as the second road to it here.
-- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): $N^{-1}$, the bell curve run backwards, used twice in every capital calculation.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): $`N^{-1}`$, the bell curve run backwards, used twice in every capital calculation.
 
 ## Where this goes next
 

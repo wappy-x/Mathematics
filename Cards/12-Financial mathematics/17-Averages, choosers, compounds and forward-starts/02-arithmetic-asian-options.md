@@ -38,70 +38,82 @@ The sloped line is the holder's profit; the flat line is break-even. The shape i
 
 ## The formula
 
-Notation first, in words. A small subscript names a date: $S_{t_i}$ is Acme's price on the $i$-th fixing date $t_i$, counted in years from today. A capital sigma adds up a list, here over the fixings numbered $i = 1$ to $n$. A capital E with square brackets, $E[\;]$, is an average over all possible futures in the risk-neutral world, where every asset grows at the bank rate less its dividend ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). $N(x)$ is the bell-curve area left of $x$.
+Notation first, in words. A small subscript names a date: $`S_{t_i}`$ is Acme's price on the $`i`$-th fixing date $`t_i`$, counted in years from today. A capital sigma adds up a list, here over the fixings numbered $`i = 1`$ to $`n`$. A capital E with square brackets, $`E[\;]`$, is an average over all possible futures in the risk-neutral world, where every asset grows at the bank rate less its dividend ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). $`N(x)`$ is the bell-curve area left of $`x`$.
 
 The contract and its price:
 
-$$A = \frac{1}{n}\sum_{i=1}^{n} S_{t_i}, \qquad C_A = e^{-rT}\,E\big[\max(A - K,\,0)\big]$$
+```math
+A = \frac{1}{n}\sum_{i=1}^{n} S_{t_i}, \qquad C_A = e^{-rT}\,E\big[\max(A - K,\,0)\big]
+```
 
 **Read it aloud:** average the price over the fixings; the call is worth today's value of the average's excess over the strike, averaged over every future.
 
 The **floating-strike** version swaps the roles: the average becomes the strike, and the last price is compared to it.
 
-$$\text{floating-strike call} = e^{-rT}\,E\big[\max(S_T - A,\,0)\big]$$
+```math
+\text{floating-strike call} = e^{-rT}\,E\big[\max(S_T - A,\,0)\big]
+```
 
 **Read it aloud:** the option pays however far the last price ends above the year's average.
 
 The price is estimated by simulation, corrected by the geometric twin:
 
-$$\widehat{C}_A = \bar X - \beta\,\big(\bar Y - C_G\big)$$
+```math
+\widehat{C}_A = \bar X - \beta\,\big(\bar Y - C_G\big)
+```
 
 **Read it aloud:** the plain simulated price, minus a slope times however far the simulated twin missed its exact price.
 
-Here $X$ is one simulated year's discounted arithmetic payoff and $Y$ the geometric one on the same year; a bar over a letter is its average across the simulated years.
+Here $`X`$ is one simulated year's discounted arithmetic payoff and $`Y`$ the geometric one on the same year; a bar over a letter is its average across the simulated years.
 
-The one-line approximation, **Turnbull-Wakeman**: pretend $A$ follows a bell curve in its logarithm, with its true mean and true mean square, and use Black's formula, the vanilla call formula written with a forward.
+The one-line approximation, **Turnbull-Wakeman**: pretend $`A`$ follows a bell curve in its logarithm, with its true mean and true mean square, and use Black's formula, the vanilla call formula written with a forward.
 
-$$C_A \approx e^{-rT}\big(M_1\,N(e_1) - K\,N(e_2)\big)$$
+```math
+C_A \approx e^{-rT}\big(M_1\,N(e_1) - K\,N(e_2)\big)
+```
 
 **Read it aloud:** the average's expected value you might receive, minus the strike you might pay, each weighted by its own chance.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_{t_i}$, $S_T$ | Acme today; on fixing $i$; on the last day | \$100.00 today | rises: every fixing starts higher |
-| $K$ | the strike | \$100.00 | falls: further for the average to climb |
-| $k$, $m$, $K^*$ | fixings already in; fixings still to come; the strike the remaining fixings must average | 0, 52 and \$100.00 today | $k$ up: less of the average left to move; $K^*$ up: falls |
-| $r$, $q$ | bank rate; dividend yield, both continuous | 5% and 2% | $r$ up: dearer; $q$ up: cheaper, the price drifts less |
-| $\sigma$ | volatility: yearly spread of Acme's log returns | 20% | rises, though less than a vanilla's: 22 cents per volatility point against 38 |
-| $T$, $n$, $t_i$, $i$, $t$ | years to expiry; number of fixings; fixing dates, numbered by $i$; $t$ any date | 1; 52; one week to one year | $n$ up: cheaper, the average smooths harder |
-| $A$, $G$ | arithmetic and geometric averages of the fixings | $G$ never exceeds $A$ | the payoff reads $A$ |
-| $F$, $F_G$, $M_1$ | expected values: of $S_T$, of $G$, of $A$ | \$103.05, \$101.20, \$101.54 | rises: more to receive |
-| $M_2$, $v_A$, $v$ | mean square of $A$; its fitted log-spread; $v$ any log-spread | 10,455.23; 0.118 | $v_A$ up: dearer |
-| $e_1$, $e_2$, $d_1$, $d_2$, $N$ | cut-offs for the average, like the vanilla's $d_1$, $d_2$; bell-curve area | 0.189, 0.071 | — |
-| $C_A$, $C_G$ | arithmetic call price; geometric twin's exact price | \$5.26; \$5.06 | — |
-| $X$, $Y$, $\beta$, $\rho$ | discounted payoffs per path; slope; correlation | $\rho$ = 0.9996 | $\rho$ nearer one: tighter error bar |
-| $e^{-rT}$ | the discount: a dollar at expiry, today | 0.951 | — |
+| $`S`$, $`S_{t_i}`$, $`S_T`$ | Acme today; on fixing $`i`$; on the last day | \$100.00 today | rises: every fixing starts higher |
+| $`K`$ | the strike | \$100.00 | falls: further for the average to climb |
+| $`k`$, $`m`$, $`K^*`$ | fixings already in; fixings still to come; the strike the remaining fixings must average | 0, 52 and \$100.00 today | $`k`$ up: less of the average left to move; $`K^*`$ up: falls |
+| $`r`$, $`q`$ | bank rate; dividend yield, both continuous | 5% and 2% | $`r`$ up: dearer; $`q`$ up: cheaper, the price drifts less |
+| $`\sigma`$ | volatility: yearly spread of Acme's log returns | 20% | rises, though less than a vanilla's: 22 cents per volatility point against 38 |
+| $`T`$, $`n`$, $`t_i`$, $`i`$, $`t`$ | years to expiry; number of fixings; fixing dates, numbered by $`i`$; $`t`$ any date | 1; 52; one week to one year | $`n`$ up: cheaper, the average smooths harder |
+| $`A`$, $`G`$ | arithmetic and geometric averages of the fixings | $`G`$ never exceeds $`A`$ | the payoff reads $`A`$ |
+| $`F`$, $`F_G`$, $`M_1`$ | expected values: of $`S_T`$, of $`G`$, of $`A`$ | \$103.05, \$101.20, \$101.54 | rises: more to receive |
+| $`M_2`$, $`v_A`$, $`v`$ | mean square of $`A`$; its fitted log-spread; $`v`$ any log-spread | 10,455.23; 0.118 | $`v_A`$ up: dearer |
+| $`e_1`$, $`e_2`$, $`d_1`$, $`d_2`$, $`N`$ | cut-offs for the average, like the vanilla's $`d_1`$, $`d_2`$; bell-curve area | 0.189, 0.071 | — |
+| $`C_A`$, $`C_G`$ | arithmetic call price; geometric twin's exact price | \$5.26; \$5.06 | — |
+| $`X`$, $`Y`$, $`\beta`$, $`\rho`$ | discounted payoffs per path; slope; correlation | $`\rho`$ = 0.9996 | $`\rho`$ nearer one: tighter error bar |
+| $`e^{-rT}`$ | the discount: a dollar at expiry, today | 0.951 | — |
 
 The helpers, each exact:
 
-$$M_1 = \frac{S}{n}\sum_{i=1}^{n} e^{(r-q)t_i}, \qquad M_2 = \frac{S^2}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} e^{(r-q)(t_i + t_j) + \sigma^2 \min(t_i,\,t_j)}$$
+```math
+M_1 = \frac{S}{n}\sum_{i=1}^{n} e^{(r-q)t_i}, \qquad M_2 = \frac{S^2}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} e^{(r-q)(t_i + t_j) + \sigma^2 \min(t_i,\,t_j)}
+```
 
-In words: $M_1$ averages the forward prices of the 52 dates; $M_2$ adds up how each pair of dates moves together.
+In words: $`M_1`$ averages the forward prices of the 52 dates; $`M_2`$ adds up how each pair of dates moves together.
 
-$$v_A = \sqrt{\ln\!\big(M_2 / M_1^2\big)}, \qquad e_1 = \frac{\ln(M_1/K) + \tfrac12 v_A^2}{v_A}, \qquad e_2 = e_1 - v_A$$
+```math
+v_A = \sqrt{\ln\!\big(M_2 / M_1^2\big)}, \qquad e_1 = \frac{\ln(M_1/K) + \tfrac12 v_A^2}{v_A}, \qquad e_2 = e_1 - v_A
+```
 
-In words: $v_A$ is the log-spread a bell-curve-in-the-log variable would need to have those two moments; $e_1$ and $e_2$ are the vanilla's $d_1$ and $d_2$ with the average in place of the share.
+In words: $`v_A`$ is the log-spread a bell-curve-in-the-log variable would need to have those two moments; $`e_1`$ and $`e_2`$ are the vanilla's $`d_1`$ and $`d_2`$ with the average in place of the share.
 
 ### When it holds
 
-- **Constant volatility.** The simulation and both formulas assume Acme's spread is the same at every fixing. With a volatility that changes by date, each pair of dates carries its own variance in $M_2$ and in the paths; keeping 20% everywhere misprices by roughly vega (the price change per volatility point) times the error: 22 cents a point.
-- **Fixings fixed in advance.** The dates are written in the contract. A missed fixing or a holiday rule changes $n$ and the dates; fewer fixings make the option dearer, as the chart in Why it works shows.
-- **Smooth dividends and rates.** A 2% yield paid continuously tilts every forward the same way. A lump dividend inside the window lowers the later fixings' forwards, and $M_1$ must be rebuilt date by date.
-- **No fixings yet.** Once some fixings are known, part of the average is fixed cash. With $k$ of the $n$ fixings in and $m = n - k$ to come, the call is worth $m/n$ of a fresh Asian on the remaining dates, struck at $K^* = (nK - \text{sum of the fixings in})/m$: the level the remaining fixings must average for the whole average to reach $K$.
+- **Constant volatility.** The simulation and both formulas assume Acme's spread is the same at every fixing. With a volatility that changes by date, each pair of dates carries its own variance in $`M_2`$ and in the paths; keeping 20% everywhere misprices by roughly vega (the price change per volatility point) times the error: 22 cents a point.
+- **Fixings fixed in advance.** The dates are written in the contract. A missed fixing or a holiday rule changes $`n`$ and the dates; fewer fixings make the option dearer, as the chart in Why it works shows.
+- **Smooth dividends and rates.** A 2% yield paid continuously tilts every forward the same way. A lump dividend inside the window lowers the later fixings' forwards, and $`M_1`$ must be rebuilt date by date.
+- **No fixings yet.** Once some fixings are known, part of the average is fixed cash. With $`k`$ of the $`n`$ fixings in and $`m = n - k`$ to come, the call is worth $`m/n`$ of a fresh Asian on the remaining dates, struck at $`K^* = (nK - \text{sum of the fixings in})/m`$: the level the remaining fixings must average for the whole average to reach $`K`$.
 
-  $K^*$ is below $K$ only when the fixings in averaged above $K$, and above it when they averaged below. If $K^*$ is zero or less, the call is sure to pay and is worth a forward: today's value of the expected average minus $K$.
+  $`K^*`$ is below $`K`$ only when the fixings in averaged above $`K`$, and above it when they averaged below. If $`K^*`$ is zero or less, the call is sure to pay and is worth a forward: today's value of the expected average minus $`K`$.
 
-  Rerunning the formula with a shorter $T$ throws the known fixings away; dropping the $m/n$ weight overprices by $n/m$, double halfway through the fixings. The rewrite is exact: [Asian Greeks and implied volatility](03-asian-greeks-and-implied-volatility.md) derives it, and [Asian Greeks and the average already banked](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/04-asian-greeks-and-the-running-average.md) works it on jet fuel.
+  Rerunning the formula with a shorter $`T`$ throws the known fixings away; dropping the $`m/n`$ weight overprices by $`n/m`$, double halfway through the fixings. The rewrite is exact: [Asian Greeks and implied volatility](03-asian-greeks-and-implied-volatility.md) derives it, and [Asian Greeks and the average already banked](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/04-asian-greeks-and-the-running-average.md) works it on jet fuel.
 - **A statistical answer.** The simulated price carries an error bar. Two prices that differ by less than about three bars are not different prices.
 
 ---
@@ -112,7 +124,7 @@ In words: $v_A$ is the log-spread a bell-curve-in-the-log variable would need to
 
 Nothing about pricing changes. In the risk-neutral world every asset grows at the bank rate less its dividend, and an option is worth its discounted average payoff ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). Only the payoff changed: it now reads 52 prices.
 
-That change is what breaks the formula. On the vanilla card the log of the last price follows a bell curve, and the average over futures closes into $N(d_1)$ and $N(d_2)$.
+That change is what breaks the formula. On the vanilla card the log of the last price follows a bell curve, and the average over futures closes into $`N(d_1)`$ and $`N(d_2)`$.
 
 Here the payoff reads a sum. The log of a product is a sum of logs. The logs of the fixings are built from the same Brownian shoves, so their sum is again a bell curve, and the geometric average closes exactly.
 
@@ -120,26 +132,28 @@ The log of a sum is not a sum of anything. The arithmetic average's distribution
 
 ### Step 1: the average's first two moments are exact
 
-The average itself has no formula, but its mean and mean square do. In the risk-neutral world, Acme's expected price on date $t$ is its forward, $S e^{(r-q)t}$. Averaging those over the 52 dates gives $M_1$ = \$101.54. The last date's forward alone is $F$ = \$103.05. The early fixings sit on a curve that has barely begun to climb.
+The average itself has no formula, but its mean and mean square do. In the risk-neutral world, Acme's expected price on date $`t`$ is its forward, $`S e^{(r-q)t}`$. Averaging those over the 52 dates gives $`M_1`$ = \$101.54. The last date's forward alone is $`F`$ = \$103.05. The early fixings sit on a curve that has barely begun to climb.
 
-For the mean square, two dates share every random shove up to the earlier one. That shared stretch is the $\sigma^2 \min(t_i, t_j)$ inside $M_2$. Summed over all 52 × 52 pairs, $M_2$ = 10,455.23.
+For the mean square, two dates share every random shove up to the earlier one. That shared stretch is the $`\sigma^2 \min(t_i, t_j)`$ inside $`M_2`$. Summed over all 52 × 52 pairs, $`M_2`$ = 10,455.23.
 
 <details>
 <summary>Detailed proof: the two moments</summary>
 
-Write Acme's price as $S_t = S\exp\big((r-q-\tfrac12\sigma^2)t + \sigma W_t\big)$, where the shove term $\sigma W_t$ is Brownian motion scaled by the volatility: a running total of independent shoves whose spread equals the time elapsed, and two dates share the spread up to the earlier one.
+Write Acme's price as $`S_t = S\exp\big((r-q-\tfrac12\sigma^2)t + \sigma W_t\big)`$, where the shove term $`\sigma W_t`$ is Brownian motion scaled by the volatility: a running total of independent shoves whose spread equals the time elapsed, and two dates share the spread up to the earlier one.
 
-A bell-curve variable $Z$ with mean 0 and spread $v^2$ has $E[e^Z] = e^{v^2/2}$. Taking $Z = \sigma W_t$, with spread $\sigma^2 t$, gives $E[S_t] = S e^{(r-q)t}$. Average over the fixings: that is $M_1$.
+A bell-curve variable $`Z`$ with mean 0 and spread $`v^2`$ has $`E[e^Z] = e^{v^2/2}`$. Taking $`Z = \sigma W_t`$, with spread $`\sigma^2 t`$, gives $`E[S_t] = S e^{(r-q)t}`$. Average over the fixings: that is $`M_1`$.
 
-For a pair of dates $a \le b$, $W_a + W_b$ has spread $a + b + 2\min(a,b)$, since the two share every shove up to the earlier date. So
-$$E[S_a S_b] = S^2 e^{(r-q-\frac12\sigma^2)(a+b)}\,e^{\frac12\sigma^2(a+b) + \sigma^2\min(a,b)} = S^2 e^{(r-q)(a+b) + \sigma^2\min(a,b)}.$$
-The square of the average is $\frac{1}{n^2}$ times the sum over all pairs of $S_a S_b$. Take the expectation term by term: that is $M_2$.
+For a pair of dates $`a \le b`$, $`W_a + W_b`$ has spread $`a + b + 2\min(a,b)`$, since the two share every shove up to the earlier date. So
+
+$`\displaystyle E[S_a S_b] = S^2 e^{(r-q-\frac12\sigma^2)(a+b)}\,e^{\frac12\sigma^2(a+b) + \sigma^2\min(a,b)} = S^2 e^{(r-q)(a+b) + \sigma^2\min(a,b)}.`$
+
+The square of the average is $`\frac{1}{n^2}`$ times the sum over all pairs of $`S_a S_b`$. Take the expectation term by term: that is $`M_2`$.
 
 </details>
 
 ### Step 2: why averaging makes it cheaper
 
-Hold the vanilla call's machinery and turn two dials. The vanilla uses the last day's forward, \$103.05, and the log-spread of one price, $\sigma\sqrt{T}$ = 0.20. The average has its own forward, \$101.54, and its own log-spread, 0.118 (Step 3 computes it).
+Hold the vanilla call's machinery and turn two dials. The vanilla uses the last day's forward, \$103.05, and the log-spread of one price, $`\sigma\sqrt{T}`$ = 0.20. The average has its own forward, \$101.54, and its own log-spread, 0.118 (Step 3 computes it).
 
 ```
 Each bar is a price in dollars, one block per $0.25
@@ -171,9 +185,9 @@ Upper line: the arithmetic Asian by Turnbull-Wakeman. Lower line: the geometric 
 
 ### Step 3: Turnbull-Wakeman fits a bell curve to the log of the average
 
-Suppose $A$ did follow a bell curve in its log, with log-spread $v$. Then its mean square over its squared mean would be exactly $e^{v^2}$. Run that backwards on the true moments: $M_2 / M_1^2$ = 1.013962, so $v_A$ = 0.117751.
+Suppose $`A`$ did follow a bell curve in its log, with log-spread $`v`$. Then its mean square over its squared mean would be exactly $`e^{v^2}`$. Run that backwards on the true moments: $`M_2 / M_1^2`$ = 1.013962, so $`v_A`$ = 0.117751.
 
-Now treat the average as a share whose forward is $M_1$ and whose log-spread over the whole life is $v_A$, and apply Black's formula, which is the vanilla's formula written with a forward. The moments are exact. The bell-curve shape is the only guess.
+Now treat the average as a share whose forward is $`M_1`$ and whose log-spread over the whole life is $`v_A`$, and apply Black's formula, which is the vanilla's formula written with a forward. The moments are exact. The bell-curve shape is the only guess.
 
 The true average is more lopsided than the fitted lognormal. Its skewness, a measure of lopsidedness that is zero for a bell curve, is 0.42 against the fit's 0.36. The true average has more chance below the strike and in the far tail, and less just above the strike, where this call earns most of its value. So the fit lands at \$5.27, 1.5 cents above the simulation.
 
@@ -181,34 +195,34 @@ This two-moment form is Levy's (1992); software labelled Turnbull-Wakeman usuall
 
 ### Step 4: simulate, and read the error bar honestly
 
-In the risk-neutral world, one week of Acme's life multiplies its price by $e^{(r - q - \frac12\sigma^2)\Delta t + \sigma\sqrt{\Delta t}\,Z}$, with $\Delta t$ one week in years and $Z$ a fresh bell-curve draw. That step is exact, not an approximation, so 52 steps build one possible year with no discretisation error ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)).
+In the risk-neutral world, one week of Acme's life multiplies its price by $`e^{(r - q - \frac12\sigma^2)\Delta t + \sigma\sqrt{\Delta t}\,Z}`$, with $`\Delta t`$ one week in years and $`Z`$ a fresh bell-curve draw. That step is exact, not an approximation, so 52 steps build one possible year with no discretisation error ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)).
 
 Build 50,000 years. On each, average the 52 prices, take the discounted payoff, and average those payoffs. The plain answer is $5.29. Its error bar is the spread of the payoffs over the square root of 50,000: 3.4 cents. The bar shrinks only with the square root of the number of paths, so tightening it by brute force is expensive.
 
 ### Step 5: the geometric twin as a control variate
 
-A **control variate** is a companion quantity with a known price, simulated on the same paths so that its error reveals theirs. On every simulated year, compute the geometric average too, and its discounted payoff. That twin's exact price is known: \$5.06. This batch of years priced it at \$5.09. The batch ran rich. The arithmetic payoff rides the same paths, so it ran rich by nearly the same amount. Subtract a multiple $\beta$ of the twin's miss.
+A **control variate** is a companion quantity with a known price, simulated on the same paths so that its error reveals theirs. On every simulated year, compute the geometric average too, and its discounted payoff. That twin's exact price is known: \$5.06. This batch of years priced it at \$5.09. The batch ran rich. The arithmetic payoff rides the same paths, so it ran rich by nearly the same amount. Subtract a multiple $`\beta`$ of the twin's miss.
 
-The correction adds nothing on average, for any $\beta$, because the twin's miss averages to zero. So it cannot bias the price. The best $\beta$ is the slope of the arithmetic payoff against the geometric one across the paths, and with that slope the remaining variance is $1 - \rho^2$ of the plain variance, where $\rho$ is their correlation. The proof is on [Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md).
+The correction adds nothing on average, for any $`\beta`$, because the twin's miss averages to zero. So it cannot bias the price. The best $`\beta`$ is the slope of the arithmetic payoff against the geometric one across the paths, and with that slope the remaining variance is $`1 - \rho^2`$ of the plain variance, where $`\rho`$ is their correlation. The proof is on [Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md).
 
-Here $\rho$ = 0.9996. The two averages differ by little on any path, and their payoffs switch on together. The controlled price is \$5.2577 with an error bar of 0.09 cents. The bar is 37 times tighter, from the same paths.
+Here $`\rho`$ = 0.9996. The two averages differ by little on any path, and their payoffs switch on together. The controlled price is \$5.2577 with an error bar of 0.09 cents. The bar is 37 times tighter, from the same paths.
 
 <details>
 <summary>Detailed proof: why the correction cannot bias the price</summary>
 
-For any fixed number $\beta$, the estimator is $\bar X - \beta(\bar Y - C_G)$. Its expectation is $E[X] - \beta(E[Y] - C_G)$. The twin's exact price is its expected discounted payoff, $C_G = E[Y]$, so the bracket is zero and the expectation is $E[X] = C_A$. The variance is $\operatorname{var}(X) - 2\beta\operatorname{cov}(X,Y) + \beta^2\operatorname{var}(Y)$, a parabola in $\beta$ with its lowest point at $\beta = \operatorname{cov}(X,Y)/\operatorname{var}(Y)$. There it equals $(1-\rho^2)\operatorname{var}(X)$. Estimating $\beta$ from the same paths adds a bias that shrinks like one over the number of paths, far below the error bar here.
+For any fixed number $`\beta`$, the estimator is $`\bar X - \beta(\bar Y - C_G)`$. Its expectation is $`E[X] - \beta(E[Y] - C_G)`$. The twin's exact price is its expected discounted payoff, $`C_G = E[Y]`$, so the bracket is zero and the expectation is $`E[X] = C_A`$. The variance is $`\mathrm{var}(X) - 2\beta\mathrm{cov}(X,Y) + \beta^2\mathrm{var}(Y)`$, a parabola in $`\beta`$ with its lowest point at $`\beta = \mathrm{cov}(X,Y)/\mathrm{var}(Y)`$. There it equals $`(1-\rho^2)\mathrm{var}(X)`$. Estimating $`\beta`$ from the same paths adds a bias that shrinks like one over the number of paths, far below the error bar here.
 
 </details>
 
 ### Step 6: a floor and a ceiling, with no simulation at all
 
-On every path, adding and dividing never gives less than multiplying and rooting: $A \ge G$, the arithmetic-geometric mean inequality. So the arithmetic payoff is never below the geometric one, and $C_A \ge C_G$ = \$5.06.
+On every path, adding and dividing never gives less than multiplying and rooting: $`A \ge G`$, the arithmetic-geometric mean inequality. So the arithmetic payoff is never below the geometric one, and $`C_A \ge C_G`$ = \$5.06.
 
-The gap between the two payoffs is never more than the gap between the averages: $\max(A-K,0) - \max(G-K,0) \le A - G$. Take the discounted average over futures: $C_A \le C_G + e^{-rT}(M_1 - F_G)$ = \$5.39. The simulation's \$5.26 sits inside \$5.06 to \$5.39, a window built from two exact numbers and one inequality.
+The gap between the two payoffs is never more than the gap between the averages: $`\max(A-K,0) - \max(G-K,0) \le A - G`$. Take the discounted average over futures: $`C_A \le C_G + e^{-rT}(M_1 - F_G)`$ = \$5.39. The simulation's \$5.26 sits inside \$5.06 to \$5.39, a window built from two exact numbers and one inequality.
 
 ### The floating strike
 
-The same 50,000 years price the floating-strike call, which pays $\max(S_T - A, 0)$. Its natural control is the payoff without the floor, $S_T - A$, whose exact value is $e^{-rT}(F - M_1)$. Plain simulation gives \$5.11 with a 3.5-cent bar; controlled, \$5.15 with a 1.5-cent bar. The control helps less: a straight line tracks a kinked payoff worse than the geometric twin tracks its arithmetic sibling.
+The same 50,000 years price the floating-strike call, which pays $`\max(S_T - A, 0)`$. Its natural control is the payoff without the floor, $`S_T - A`$, whose exact value is $`e^{-rT}(F - M_1)`$. Plain simulation gives \$5.11 with a 3.5-cent bar; controlled, \$5.15 with a 1.5-cent bar. The control helps less: a straight line tracks a kinked payoff worse than the geometric twin tracks its arithmetic sibling.
 
 Other routes exist. A lattice (a tree of possible prices) or a partial differential equation (an equation in rates of change) in two variables, the price and the running average, prices the same contract. Quasi-random points, spread evenly on purpose, cut the error bar further than the control alone ([Quasi-Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
 
@@ -216,19 +230,19 @@ Other routes exist. A lattice (a tree of possible prices) or a partial different
 
 ## Worked numbers, by hand
 
-House market: $S$ = \$100, $K$ = \$100, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%, $T$ = 1 year, $n$ = 52 weekly fixings from one week (0.019231 years) to one year.
+House market: $`S`$ = \$100, $`K`$ = \$100, $`r`$ = 5%, $`q`$ = 2%, $`\sigma`$ = 20%, $`T`$ = 1 year, $`n`$ = 52 weekly fixings from one week (0.019231 years) to one year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| mean of the average | $M_1 = \frac{100}{52}\sum e^{0.03\,i/52}$ | 101.544399 |
-| mean square of the average | $M_2$, the double sum over 52 × 52 pairs | 10,455.230120 |
-| ratio | $M_2 / M_1^2$ | 1.013962 |
-| fitted log-spread | $v_A = \sqrt{\ln 1.013962}$ | 0.117751 |
-| first cut-off | $e_1 = (\ln 1.015444 + \tfrac12 v_A^2)/v_A$ | 0.189031 |
-| second cut-off | $e_2 = 0.189031 - 0.117751$ | 0.071280 |
-| chances | $N(e_1)$, $N(e_2)$ | 0.574966, 0.528412 |
-| discount | $e^{-0.05}$ | 0.951229 |
-| Turnbull-Wakeman | $0.951229 \times (101.544399 \times 0.574966 - 100 \times 0.528412)$ | 5.272956 |
+| mean of the average | $`M_1 = \frac{100}{52}\sum e^{0.03\,i/52}`$ | 101.544399 |
+| mean square of the average | $`M_2`$, the double sum over 52 × 52 pairs | 10,455.230120 |
+| ratio | $`M_2 / M_1^2`$ | 1.013962 |
+| fitted log-spread | $`v_A = \sqrt{\ln 1.013962}`$ | 0.117751 |
+| first cut-off | $`e_1 = (\ln 1.015444 + \tfrac12 v_A^2)/v_A`$ | 0.189031 |
+| second cut-off | $`e_2 = 0.189031 - 0.117751`$ | 0.071280 |
+| chances | $`N(e_1)`$, $`N(e_2)`$ | 0.574966, 0.528412 |
+| discount | $`e^{-0.05}`$ | 0.951229 |
+| Turnbull-Wakeman | $`0.951229 \times (101.544399 \times 0.574966 - 100 \times 0.528412)`$ | 5.272956 |
 | geometric twin, exact | sibling card's formula | 5.064562 |
 | **controlled simulation** | 50,000 paths, twin as control | **$5.2577 ± 0.0009** |
 
@@ -251,7 +265,7 @@ The Greeks are the price's sensitivities to its inputs. Nudge Acme's price by 1%
 | Price the last day's price, not the average | $9.23 | That is the vanilla; the averaging is the whole contract |
 | Keep the full spread 0.20 on the average's forward | $8.39 | An average of partly known prices spreads less than one price |
 | Treat the 52 fixings as independent draws | $1.95 | Neighbouring Fridays share almost all their shoves; the spread is not 0.20 over root 52 |
-| Quote the geometric twin as the price | \$5.06 | $G$ never exceeds $A$, so the twin is the floor, not the price |
+| Quote the geometric twin as the price | \$5.06 | $`G`$ never exceeds $`A`$, so the twin is the floor, not the price |
 
 The code prints all four.
 
@@ -698,13 +712,13 @@ The two outputs match line for line: the same generator, the same arithmetic in 
 
 Lean proves the control variate rule, the floor and ceiling, and the rewrite once fixings are in, for any prices and strike.
 
-- Correcting by the twin's miss leaves the average payoff unchanged, for any slope $\beta$.
-- Take the slope $\beta = \operatorname{cov}(X,Y)/\operatorname{var}(Y)$. Then the variance left is $(1-\rho^2)\operatorname{var}(X)$.
+- Correcting by the twin's miss leaves the average payoff unchanged, for any slope $`\beta`$.
+- Take the slope $`\beta = \mathrm{cov}(X,Y)/\mathrm{var}(Y)`$. Then the variance left is $`(1-\rho^2)\mathrm{var}(X)`$.
 - No other slope leaves a smaller variance.
 - On every path, the arithmetic payoff is never below the geometric one.
-- On every path, the arithmetic payoff beats the geometric one by at most $A - G$.
-- Suppose $k$ fixings are in and $m$, at least one, are still to come. Then the payoff is $m/n$ times a fresh Asian payoff struck at $K^*$.
-- Suppose prices are positive and $K^*$ is zero or less. Then the call is sure to pay, and its payoff is $A - K$.
+- On every path, the arithmetic payoff beats the geometric one by at most $`A - G`$.
+- Suppose $`k`$ fixings are in and $`m`$, at least one, are still to come. Then the payoff is $`m/n`$ times a fresh Asian payoff struck at $`K^*`$.
+- Suppose prices are positive and $`K^*`$ is zero or less. Then the call is sure to pay, and its payoff is $`A - K`$.
 
 The step from payoffs to prices, the moments, Turnbull-Wakeman and every simulated number are left to the Python and Rust checks.
 
@@ -892,7 +906,7 @@ example : (52 : ℚ) / (52 - 26) = 2 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **The average's spread is not the price's spread over root $n$.** Dividing by root 52 treats the Fridays as 52 independent coins. They are not: this Friday's price is last Friday's price plus one week of movement, so neighbouring fixings share almost everything. The honest log-spread is 0.118, not 0.20 over root 52, and the independent-draws price is \$1.95 against the true \$5.26.
+> **The average's spread is not the price's spread over root $`n`$.** Dividing by root 52 treats the Fridays as 52 independent coins. They are not: this Friday's price is last Friday's price plus one week of movement, so neighbouring fixings share almost everything. The honest log-spread is 0.118, not 0.20 over root 52, and the independent-draws price is \$1.95 against the true \$5.26.
 >
 > - **Quoting the twin.** The geometric price, $5.06, is the floor. Quoting it as the arithmetic price, $5.06 against $5.26, undersells every contract.
 > - **Using the last day's forward.** The average centres on $101.54, not $103.05. With the full spread as well, the price comes out at $8.39.

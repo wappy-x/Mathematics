@@ -34,7 +34,9 @@ One bar is 20 blocks per bit. The ten extra blocks on the Lisbon bar are the div
 
 Notation from [Entropy](01-entropy.md): a table p lists the chance p(x) of each reading x, and H(p), the entropy, is the fewest bits per reading any code can average. log2 is the logarithm base 2, so log2(8) = 3: a reading with chance 1 in 8 is worth 3 bits.
 
-$$H(p, q) = \sum_x p(x)\,\log_2\frac{1}{q(x)} \qquad D(p\,\|\,q) = \sum_x p(x)\,\log_2\frac{p(x)}{q(x)} = H(p, q) - H(p)$$
+```math
+H(p, q) = \sum_x p(x)\,\log_2\frac{1}{q(x)} \qquad D(p\,\|\,q) = \sum_x p(x)\,\log_2\frac{p(x)}{q(x)} = H(p, q) - H(p)
+```
 
 **Read it aloud:** the cross-entropy is the bits a code built for q spends per reading when the readings really follow p, and the divergence is how much of that is waste over the best code for p.
 
@@ -42,25 +44,25 @@ The order matters: D(p‖q) is read "the divergence of p from q", and the true t
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | one day's reading | sunny, cloudy, drizzle or rain | — |
-| $p(x)$ | the true chance of reading x, the sky that actually happens | London: 0.125, 0.500, 0.250, 0.125 | more weight on the readings the code serves badly raises the waste |
-| $q(x)$ | the chance the code was built for; Step 2 writes y for the ratio q(x)/p(x) | Lisbon: 0.500, 0.250, 0.125, 0.125 | moving q towards p lowers the waste to 0 |
-| $\ell(x)$ | the codeword length for x, in bits; a code built for q uses $\ell(x) = \log_2 (1/q(x))$ | Lisbon: 1, 2, 3, 3 | a longer word on a common reading costs more |
-| $H(p)$ | entropy: bits per reading with the best code for p | 1.75 | — |
-| $H(p, q)$ | cross-entropy: bits per reading with q's code on p's sky | 2.25 | grows as q drifts from p |
-| $D(p\,\|\,q)$ | KL divergence: the wasted bits per reading; with the natural log ln in place of log2 it counts nats | 0.5 (0.346574 in nats) | grows as q drifts; infinite if q(x) = 0 for a reading p sends |
-| $n$ | the number of days observed | 365 | more days pull the year's table towards p |
-| $\hat p(x)$ | "p-hat": the share of the n days that read x | 49, 184, 86 and 46 days of 365 | — |
-| $k(x)$, $\bar k$ | the wetness score of a reading: 0 sunny, 1 cloudy, 2 drizzle, 3 rain; $\bar k$ is its average over the year | $\bar k$ = 1.353425 | — |
-| $t$, $\theta$ | the wetness dial on Lisbon's table; t = 1 is Lisbon itself; the fold writes $t = e^\theta$ | best fit 1.455 | above 1 moves weight towards rain |
-| $q_t(x)$, $Z(t)$ | the dialled table $q(x)\,t^{k(x)}/Z(t)$; Z(t) is the total that makes it add to 1 | fitted: 0.330, 0.240, 0.175, 0.254 | — |
+| $`x`$ | one day's reading | sunny, cloudy, drizzle or rain | — |
+| $`p(x)`$ | the true chance of reading x, the sky that actually happens | London: 0.125, 0.500, 0.250, 0.125 | more weight on the readings the code serves badly raises the waste |
+| $`q(x)`$ | the chance the code was built for; Step 2 writes y for the ratio q(x)/p(x) | Lisbon: 0.500, 0.250, 0.125, 0.125 | moving q towards p lowers the waste to 0 |
+| $`\ell(x)`$ | the codeword length for x, in bits; a code built for q uses $`\ell(x) = \log_2 (1/q(x))`$ | Lisbon: 1, 2, 3, 3 | a longer word on a common reading costs more |
+| $`H(p)`$ | entropy: bits per reading with the best code for p | 1.75 | — |
+| $`H(p, q)`$ | cross-entropy: bits per reading with q's code on p's sky | 2.25 | grows as q drifts from p |
+| $`D(p\,\Vert\,q)`$ | KL divergence: the wasted bits per reading; with the natural log ln in place of log2 it counts nats | 0.5 (0.346574 in nats) | grows as q drifts; infinite if q(x) = 0 for a reading p sends |
+| $`n`$ | the number of days observed | 365 | more days pull the year's table towards p |
+| $`\hat p(x)`$ | "p-hat": the share of the n days that read x | 49, 184, 86 and 46 days of 365 | — |
+| $`k(x)`$, $`\bar k`$ | the wetness score of a reading: 0 sunny, 1 cloudy, 2 drizzle, 3 rain; $`\bar k`$ is its average over the year | $`\bar k`$ = 1.353425 | — |
+| $`t`$, $`\theta`$ | the wetness dial on Lisbon's table; t = 1 is Lisbon itself; the fold writes $`t = e^\theta`$ | best fit 1.455 | above 1 moves weight towards rain |
+| $`q_t(x)`$, $`Z(t)`$ | the dialled table $`q(x)\,t^{k(x)}/Z(t)`$; Z(t) is the total that makes it add to 1 | fitted: 0.330, 0.240, 0.175, 0.254 | — |
 
 ### When it holds
 
 - **q must give every reading p can send a chance above zero.** If Lisbon's table had rain at 0, the Lisbon code would have no codeword for rain, and the first rainy London day could not be sent. The divergence is then infinite, and the check prints `inf`.
 - **The lengths log2(1/q) are whole numbers only when every chance is a power of 1/2.** Here they are, by design. Otherwise a real code such as [Huffman coding](05-source-coding-and-huffman.md) pays up to one extra bit per reading, and [Arithmetic and Lempel-Ziv coding](06-arithmetic-and-lempel-ziv-coding.md) closes that gap over long runs. The divergence counts the waste of the ideal code.
 - **The days follow one fixed table, independently.** The averages are long-run averages; over a single week the waste can be more or less than half a bit a day.
-- **p is the truth, and nobody knows it.** In practice p is replaced by $\hat p$, a sample's own table (Step 3).
+- **p is the truth, and nobody knows it.** In practice p is replaced by $`\hat p`$, a sample's own table (Step 3).
 - **Bits need log2.** The same sum with the natural logarithm ln counts in nats, a larger unit, and gives 0.346574 for the same waste.
 
 ---
@@ -69,7 +71,7 @@ The order matters: D(p‖q) is read "the divergence of p from q", and the true t
 
 ### Step 0: a code is a bet on a table
 
-A prefix code (no codeword is the start of another, so a string of bits splits into readings one way only) with lengths ℓ(x) satisfies the Kraft sum: the numbers $2^{-\ell(x)}$ add to at most 1 ([Huffman coding](05-source-coding-and-huffman.md)). So every code quietly names a table, $q(x) = 2^{-\ell(x)}$, and every table names a code with $\ell(x) = \log_2(1/q(x))$. Lisbon's lengths 1, 2, 3, 3 are the table 0.5, 0.25, 0.125, 0.125; both Kraft sums print as exactly 1.
+A prefix code (no codeword is the start of another, so a string of bits splits into readings one way only) with lengths ℓ(x) satisfies the Kraft sum: the numbers $`2^{-\ell(x)}`$ add to at most 1 ([Huffman coding](05-source-coding-and-huffman.md)). So every code quietly names a table, $`q(x) = 2^{-\ell(x)}`$, and every table names a code with $`\ell(x) = \log_2(1/q(x))`$. Lisbon's lengths 1, 2, 3, 3 are the table 0.5, 0.25, 0.125, 0.125; both Kraft sums print as exactly 1.
 
 Choosing a code is betting on how often each reading will come.
 
@@ -77,11 +79,15 @@ Choosing a code is betting on how often each reading will come.
 
 Under London's sky, a reading x arrives a share p(x) of the days and costs log2(1/q(x)) bits under Lisbon's code. Average over the days:
 
-$$H(p, q) = \sum_x p(x) \log_2\frac{1}{q(x)} = 0.125 \times 1 + 0.5 \times 2 + 0.25 \times 3 + 0.125 \times 3 = 2.25 \text{ bits.}$$
+```math
+H(p, q) = \sum_x p(x) \log_2\frac{1}{q(x)} = 0.125 \times 1 + 0.5 \times 2 + 0.25 \times 3 + 0.125 \times 3 = 2.25 \text{ bits.}
+```
 
 London's own code charges log2(1/p(x)), and its bill is the entropy, 1.75 bits. Subtract the two bills reading by reading:
 
-$$H(p, q) - H(p) = \sum_x p(x) \left[\log_2\frac{1}{q(x)} - \log_2\frac{1}{p(x)}\right] = \sum_x p(x)\log_2\frac{p(x)}{q(x)} = D(p\,\|\,q).$$
+```math
+H(p, q) - H(p) = \sum_x p(x) \left[\log_2\frac{1}{q(x)} - \log_2\frac{1}{p(x)}\right] = \sum_x p(x)\log_2\frac{p(x)}{q(x)} = D(p\,\|\,q).
+```
 
 Sunny days save Lisbon's code 2 bits but come one day in eight. Cloudy days cost 1 extra bit every other day; drizzle 1 extra bit one day in four. Net: half a bit a day.
 
@@ -89,27 +95,31 @@ Sunny days save Lisbon's code 2 bits but come one day in eight. Cloudy days cost
 
 [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md) proves the divergence non-negative for any two models with [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md). For finite tables, one fact about logarithms is enough.
 
-The fact: $\ln y \le y - 1$ for every y > 0, with equality only at y = 1. The curve ln y bends downward ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)) and touches its tangent line y − 1 at y = 1.
+The fact: $`\ln y \le y - 1`$ for every y > 0, with equality only at y = 1. The curve ln y bends downward ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)) and touches its tangent line y − 1 at y = 1.
 
-Put $y = q(x)/p(x)$ for each reading with p(x) > 0, multiply by p(x) and add:
+Put $`y = q(x)/p(x)`$ for each reading with p(x) > 0, multiply by p(x) and add:
 
-$$\sum_x p(x)\ln\frac{q(x)}{p(x)} \;\le\; \sum_x p(x)\left(\frac{q(x)}{p(x)} - 1\right) = \sum_x q(x) - \sum_x p(x) \le 1 - 1 = 0.$$
+```math
+\sum_x p(x)\ln\frac{q(x)}{p(x)} \;\le\; \sum_x p(x)\left(\frac{q(x)}{p(x)} - 1\right) = \sum_x q(x) - \sum_x p(x) \le 1 - 1 = 0.
+```
 
-The left side is minus the divergence, in nats. So $D(p\,\|\,q) \ge 0$. Equality needs y = 1 at every reading, so the waste is zero only when q = p. For London and Lisbon the left side is −0.346574 and the right side 0, and the check confirms the inequality reading by reading.
+The left side is minus the divergence, in nats. So $`D(p\,\|\,q) \ge 0`$. Equality needs y = 1 at every reading, so the waste is zero only when q = p. For London and Lisbon the left side is −0.346574 and the right side 0, and the check confirms the inequality reading by reading.
 
 Two consequences come free. No code beats the entropy: any code is some table q, and its bill H(p, q) is H(p) plus something non-negative. And the divergence is not a distance: D(q‖p), coding Lisbon's sky with London's book, is 0.625 bits, not 0.5.
 
 ### Step 3: maximum likelihood is divergence minimisation
 
-Now turn it around. London's true table is unknown; what exists is a log of n = 365 days. In the simulated year, the counts are 49 sunny, 184 cloudy, 86 drizzle and 46 rain, so $\hat p$ is those counts divided by 365.
+Now turn it around. London's true table is unknown; what exists is a log of n = 365 days. In the simulated year, the counts are 49 sunny, 184 cloudy, 86 drizzle and 46 rain, so $`\hat p`$ is those counts divided by 365.
 
 A model is a table q. Its likelihood ([Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)) is the product of q over the 365 days. Take minus log2 and divide by n:
 
-$$-\frac{1}{n}\log_2 \prod_{\text{days}} q(x_{\text{day}}) = \sum_x \hat p(x)\log_2\frac{1}{q(x)} = H(\hat p, q) = H(\hat p) + D(\hat p\,\|\,q).$$
+```math
+-\frac{1}{n}\log_2 \prod_{\text{days}} q(x_{\text{day}}) = \sum_x \hat p(x)\log_2\frac{1}{q(x)} = H(\hat p, q) = H(\hat p) + D(\hat p\,\|\,q).
+```
 
-The middle step groups the days by reading: reading x turns up $n\,\hat p(x)$ times. So minus the average log-likelihood is the bits per day the model's code would spend sending this very year.
+The middle step groups the days by reading: reading x turns up $`n\,\hat p(x)`$ times. So minus the average log-likelihood is the bits per day the model's code would spend sending this very year.
 
-$H(\hat p)$, 1.755044 bits, belongs to the data and does not move with the model. So the table with the highest likelihood is the one with the smallest $D(\hat p\,\|\,q)$. If every table is allowed, Gibbs says the answer is $q = \hat p$, the year's own shares, and the divergence falls to zero.
+$`H(\hat p)`$, 1.755044 bits, belongs to the data and does not move with the model. So the table with the highest likelihood is the one with the smallest $`D(\hat p\,\|\,q)`$. If every table is allowed, Gibbs says the answer is $`q = \hat p`$, the year's own shares, and the divergence falls to zero.
 
 Usually the model is restricted. Give the Lisbon forecaster one dial t, "wetter": multiply each reading's Lisbon chance by t once per step of wetness, then rescale so the table adds to 1. The chart scans the dial. At every setting, the bits per day equals 1.755044 plus the divergence, which the check confirms to nine decimals.
 
@@ -128,19 +138,19 @@ Orange: bits per day, which is minus the average log-likelihood. Green: the year
 <details>
 <summary>Why the best dial matches the average wetness</summary>
 
-Write the dialled table as $q_t(x) = q(x)\,t^{k(x)}/Z(t)$ with $Z(t) = \sum_x q(x)\,t^{k(x)}$. The average log-likelihood per day, in nats, is
+Write the dialled table as $`q_t(x) = q(x)\,t^{k(x)}/Z(t)`$ with $`Z(t) = \sum_x q(x)\,t^{k(x)}`$. The average log-likelihood per day, in nats, is
 
-$$\sum_x \hat p(x)\left[\ln q(x) + k(x)\ln t\right] - \ln Z(t).$$
+$`\displaystyle \sum_x \hat p(x)\left[\ln q(x) + k(x)\ln t\right] - \ln Z(t).`$
 
-Its slope in t is $\bar k / t - Z'(t)/Z(t)$, where $\bar k = \sum_x \hat p(x)\,k(x)$ is the year's average wetness. Since $Z'(t) = \sum_x q(x)\,k(x)\,t^{k(x)-1}$, the ratio $Z'(t)/Z(t)$ is $\frac1t\sum_x q_t(x)\,k(x)$, the model's average wetness over t. The slope is zero exactly when the model's average wetness equals the year's, 1.353425. This is the tilt of [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md) with $e^\theta = t$ (θ is that card's tilt strength). Bisection on that equation gives t = 1.455125, the third road to the fit.
+Its slope in t is $`\bar k / t - Z'(t)/Z(t)`$, where $`\bar k = \sum_x \hat p(x)\,k(x)`$ is the year's average wetness. Since $`Z'(t) = \sum_x q(x)\,k(x)\,t^{k(x)-1}`$, the ratio $`Z'(t)/Z(t)`$ is $`\frac1t\sum_x q_t(x)\,k(x)`$, the model's average wetness over t. The slope is zero exactly when the model's average wetness equals the year's, 1.353425. This is the tilt of [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md) with $`e^\theta = t`$ (θ is that card's tilt strength). Bisection on that equation gives t = 1.455125, the third road to the fit.
 
 </details>
 
 ### Step 4: a small divergence means close tables
 
-Pinsker's inequality, stated here and proved in Cover and Thomas (Sources): the largest difference in chance two tables give to any event is at most $\sqrt{D \ln 2 / 2}$, with D in bits. For London and Lisbon that largest difference is 0.375 (the reading "sunny": 0.5 under Lisbon against 0.125 under London), and the ceiling is 0.416277.
+Pinsker's inequality, stated here and proved in Cover and Thomas (Sources): the largest difference in chance two tables give to any event is at most $`\sqrt{D \ln 2 / 2}`$, with D in bits. For London and Lisbon that largest difference is 0.375 (the reading "sunny": 0.5 under Lisbon against 0.125 under London), and the ceiling is 0.416277.
 
-So a small divergence forces the two tables to agree on every event. The year's own table $\hat p$, the unrestricted fit, drifts towards London's true p as days pile up, so its divergence from p shrinks and Pinsker turns that into closeness event by event.
+So a small divergence forces the two tables to agree on every event. The year's own table $`\hat p`$, the unrestricted fit, drifts towards London's true p as days pile up, so its divergence from p shrinks and Pinsker turns that into closeness event by event.
 
 A restricted model such as the one-dial table keeps a floor of divergence that no amount of data removes: 0.353661 bits for London's true table, at t = 1.477712. This one year's fit shows 0.337930; more days pull it toward the floor.
 
@@ -546,8 +556,8 @@ Lean proves Gibbs' inequality and Steps 1 and 3 for any finite tables, and check
 
 - Suppose q gives every reading p can send a chance above zero. Then D(p‖q) is never negative, and it is zero only when q = p.
 - Take the same two tables. Then D(p‖q) = H(p, q) − H(p), so no code beats the entropy: H(p) ≤ H(p, q).
-- Take a log of n readings and a table q that gives every logged reading a chance above zero. Then minus log2 of q's likelihood, divided by n, is $H(\hat p) + D(\hat p\,\|\,q)$.
-- Take two such tables. Then the first has at least the likelihood of the second exactly when its divergence from $\hat p$ is no larger.
+- Take a log of n readings and a table q that gives every logged reading a chance above zero. Then minus log2 of q's likelihood, divided by n, is $`H(\hat p) + D(\hat p\,\|\,q)`$.
+- Take two such tables. Then the first has at least the likelihood of the second exactly when its divergence from $`\hat p`$ is no larger.
 - Take London's p and Lisbon's q. Then H(p) = 1.75, H(p, q) = 2.25, D(p‖q) = 0.5 and D(q‖p) = 0.625 bits.
 - The unweighted sum of log2(p/q) is 0, both Kraft sums are 1, and a year of waste is 182.5 bits.
 - The hand bills, the largest difference in chance, 0.375, and the year's counts 49, 184, 86 and 46 also check.

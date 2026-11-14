@@ -51,21 +51,27 @@ The steep line is bonds' share of risk. The falling line is shares' share. The f
 
 ## The formula
 
-Notation first, in words. The fund's weights are $w_i$: the fraction of the money in asset number $i$, with $i$ running over shares, bonds, gold. The list of all of them is $w$. The covariance table $\Sigma$ holds, in row $i$ and column $j$, the number $\Sigma_{ij} = \rho_{ij}\sigma_i\sigma_j$: correlation times the two volatilities ([Two assets](01-two-asset-portfolio-risk-and-return.md) builds it for two assets). Here it reads, row by row, `0.0400 0.0024 0.0030 | 0.0024 0.0036 0.0000 | 0.0030 0.0000 0.0225`.
+Notation first, in words. The fund's weights are $`w_i`$: the fraction of the money in asset number $`i`$, with $`i`$ running over shares, bonds, gold. The list of all of them is $`w`$. The covariance table $`\Sigma`$ holds, in row $`i`$ and column $`j`$, the number $`\Sigma_{ij} = \rho_{ij}\sigma_i\sigma_j`$: correlation times the two volatilities ([Two assets](01-two-asset-portfolio-risk-and-return.md) builds it for two assets). Here it reads, row by row, `0.0400 0.0024 0.0030 | 0.0024 0.0036 0.0000 | 0.0030 0.0000 0.0225`.
 
 The fund's volatility is
 
-$$\sigma(w) = \sqrt{\sum_i \sum_j w_i \Sigma_{ij} w_j}$$
+```math
+\sigma(w) = \sqrt{\sum_i \sum_j w_i \Sigma_{ij} w_j}
+```
 
 and each asset's **marginal risk** and **risk contribution** are
 
-$$\mathrm{MRC}_i = \frac{\partial \sigma}{\partial w_i} = \frac{(\Sigma w)_i}{\sigma(w)}, \qquad \mathrm{RC}_i = w_i\,\mathrm{MRC}_i = \frac{w_i (\Sigma w)_i}{\sigma(w)}, \qquad \sum_i \mathrm{RC}_i = \sigma(w).$$
+```math
+\mathrm{MRC}_i = \frac{\partial \sigma}{\partial w_i} = \frac{(\Sigma w)_i}{\sigma(w)}, \qquad \mathrm{RC}_i = w_i\,\mathrm{MRC}_i = \frac{w_i (\Sigma w)_i}{\sigma(w)}, \qquad \sum_i \mathrm{RC}_i = \sigma(w).
+```
 
 **Read it aloud:** an asset's marginal risk is how fast the fund's volatility rises per extra unit of that asset; its contribution is its weight times that rate; the contributions add up to the fund's volatility exactly.
 
 Risk parity, also called the equal-risk-contribution portfolio, asks for
 
-$$\mathrm{RC}_1 = \mathrm{RC}_2 = \dots = \mathrm{RC}_n = \frac{\sigma(w)}{n}, \qquad \text{equivalently} \qquad w_i (\Sigma w)_i \text{ the same for every } i,$$
+```math
+\mathrm{RC}_1 = \mathrm{RC}_2 = \dots = \mathrm{RC}_n = \frac{\sigma(w)}{n}, \qquad \text{equivalently} \qquad w_i (\Sigma w)_i \text{ the same for every } i,
+```
 
 with every weight positive and the weights adding to 1.
 
@@ -73,20 +79,20 @@ with every weight positive and the weights adding to 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $w_i$, $w$ | fraction of the money in asset $i$; the whole list | bonds 0.587375 at equal risk | that asset's contribution rises faster than its weight |
-| $n$, $i$, $j$ | how many assets; asset numbers running from 1 to $n$ | 3; shares, bonds, gold | each target share, one $n$-th, shrinks |
-| $\sigma_i$ | asset $i$'s own volatility | 0.20, 0.06, 0.15 | the asset gets less money |
-| $\rho_{ij}$ | correlation of assets $i$ and $j$ | 0.2, 0.1, 0 | both get less money |
-| $\Sigma$, $\Sigma_{ij}$ | covariance table and one entry, $\rho_{ij}\sigma_i\sigma_j$ | shares with bonds 0.0024 | more fund risk |
-| $(\Sigma w)_i$ | covariance of asset $i$ with the whole fund | shares 0.008836 | larger contribution |
-| $\sigma(w)$ | the fund's volatility | 0.066584 | — |
-| $\mathrm{MRC}_i$ | marginal risk: volatility added per unit of asset $i$ | shares 0.132703, bonds 0.037786 | each extra dollar adds more risk |
-| $\mathrm{RC}_i$ | risk contribution: weight times marginal risk | 0.022195 each | larger slice of the fund's risk |
-| $t$ | a scaling factor applied to every weight at once | 2 doubles the fund | volatility scales by the same factor |
-| $y_i$, $y_j$, $y$, $f$ | unscaled weights the solver works with; the score it minimises | normalised to $w$ at the end | — |
-| $b_i$ | covariance of asset $i$ with the other assets' $y$ | recomputed each step | smaller $y_i$ |
+| $`w_i`$, $`w`$ | fraction of the money in asset $`i`$; the whole list | bonds 0.587375 at equal risk | that asset's contribution rises faster than its weight |
+| $`n`$, $`i`$, $`j`$ | how many assets; asset numbers running from 1 to $`n`$ | 3; shares, bonds, gold | each target share, one $`n`$-th, shrinks |
+| $`\sigma_i`$ | asset $`i`$'s own volatility | 0.20, 0.06, 0.15 | the asset gets less money |
+| $`\rho_{ij}`$ | correlation of assets $`i`$ and $`j`$ | 0.2, 0.1, 0 | both get less money |
+| $`\Sigma`$, $`\Sigma_{ij}`$ | covariance table and one entry, $`\rho_{ij}\sigma_i\sigma_j`$ | shares with bonds 0.0024 | more fund risk |
+| $`(\Sigma w)_i`$ | covariance of asset $`i`$ with the whole fund | shares 0.008836 | larger contribution |
+| $`\sigma(w)`$ | the fund's volatility | 0.066584 | — |
+| $`\mathrm{MRC}_i`$ | marginal risk: volatility added per unit of asset $`i`$ | shares 0.132703, bonds 0.037786 | each extra dollar adds more risk |
+| $`\mathrm{RC}_i`$ | risk contribution: weight times marginal risk | 0.022195 each | larger slice of the fund's risk |
+| $`t`$ | a scaling factor applied to every weight at once | 2 doubles the fund | volatility scales by the same factor |
+| $`y_i`$, $`y_j`$, $`y`$, $`f`$ | unscaled weights the solver works with; the score it minimises | normalised to $`w`$ at the end | — |
+| $`b_i`$ | covariance of asset $`i`$ with the other assets' $`y`$ | recomputed each step | smaller $`y_i`$ |
 
-Two helper readings. $(\Sigma w)_i = \sum_j \Sigma_{ij} w_j$ is the covariance between asset $i$'s return and the fund's return, so $\mathrm{RC}_i / \sigma(w)$ is asset $i$'s share of the fund's variance. A risk *budget* replaces the equal thirds with any chosen shares; equal thirds is the special case.
+Two helper readings. $`(\Sigma w)_i = \sum_j \Sigma_{ij} w_j`$ is the covariance between asset $`i`$'s return and the fund's return, so $`\mathrm{RC}_i / \sigma(w)`$ is asset $`i`$'s share of the fund's variance. A risk *budget* replaces the equal thirds with any chosen shares; equal thirds is the special case.
 
 ### When it holds
 
@@ -101,65 +107,73 @@ Two helper readings. $(\Sigma w)_i = \sum_j \Sigma_{ij} w_j$ is the covariance b
 
 ### Step 0: doubling every position doubles the risk
 
-Hold twice as much of everything and every return doubles, so volatility doubles. A function with that property, $\sigma(tw) = t\,\sigma(w)$ for every positive $t$, is called homogeneous of degree one. Euler noticed that such a function is always the sum of its inputs times its slopes. That is the whole reason risk can be split into pieces that add up.
+Hold twice as much of everything and every return doubles, so volatility doubles. A function with that property, $`\sigma(tw) = t\,\sigma(w)`$ for every positive $`t`$, is called homogeneous of degree one. Euler noticed that such a function is always the sum of its inputs times its slopes. That is the whole reason risk can be split into pieces that add up.
 
 ### Step 1: the slope of volatility in one weight
 
-Variance is $\sigma(w)^2 = \sum_i\sum_j w_i \Sigma_{ij} w_j$. The weight $w_i$ appears in row $i$ and in column $i$; the table is symmetric, so both give $(\Sigma w)_i$, and the slope of variance is $2(\Sigma w)_i$. Volatility is the square root of variance; the chain rule divides by $2\sigma(w)$:
+Variance is $`\sigma(w)^2 = \sum_i\sum_j w_i \Sigma_{ij} w_j`$. The weight $`w_i`$ appears in row $`i`$ and in column $`i`$; the table is symmetric, so both give $`(\Sigma w)_i`$, and the slope of variance is $`2(\Sigma w)_i`$. Volatility is the square root of variance; the chain rule divides by $`2\sigma(w)`$:
 
-$$\frac{\partial \sigma}{\partial w_i} = \frac{2(\Sigma w)_i}{2\sigma(w)} = \frac{(\Sigma w)_i}{\sigma(w)}.$$
+```math
+\frac{\partial \sigma}{\partial w_i} = \frac{2(\Sigma w)_i}{2\sigma(w)} = \frac{(\Sigma w)_i}{\sigma(w)}.
+```
 
 For shares at the equal-risk weights: 0.008836 divided by 0.066584 is 0.132703. Nudging each weight up and down by a millionth and measuring the change gives the same three numbers to six places.
 
 ### Step 2: the slopes, weighted, rebuild the whole
 
-Differentiate $\sigma(tw) = t\,\sigma(w)$ with respect to $t$. The right side gives $\sigma(w)$. The left side, by the chain rule, gives $\sum_i w_i \, \partial\sigma/\partial w_i$ evaluated at the scaled weights. Set $t = 1$:
+Differentiate $`\sigma(tw) = t\,\sigma(w)`$ with respect to $`t`$. The right side gives $`\sigma(w)`$. The left side, by the chain rule, gives $`\sum_i w_i \, \partial\sigma/\partial w_i`$ evaluated at the scaled weights. Set $`t = 1`$:
 
-$$\sum_i w_i \frac{\partial \sigma}{\partial w_i} = \sigma(w).$$
+```math
+\sum_i w_i \frac{\partial \sigma}{\partial w_i} = \sigma(w).
+```
 
-That is Euler's theorem for this function. Here it can also be checked directly: $\sum_i w_i (\Sigma w)_i / \sigma(w)$ is variance over volatility, which is volatility. The pieces $\mathrm{RC}_i$ add to the whole with nothing left over and nothing counted twice. That is what makes "a third of the risk" a meaningful phrase.
+That is Euler's theorem for this function. Here it can also be checked directly: $`\sum_i w_i (\Sigma w)_i / \sigma(w)`$ is variance over volatility, which is volatility. The pieces $`\mathrm{RC}_i`$ add to the whole with nothing left over and nothing counted twice. That is what makes "a third of the risk" a meaningful phrase.
 
-A second reading: $(\Sigma w)_i$ is the covariance of asset $i$ with the fund, so $\mathrm{RC}_i/\sigma(w)$ is $w_i$ times that covariance over the fund's variance. It is the part of the fund's variance that asset $i$ is responsible for, cross terms included. A simulation of 200,000 years of returns in the code splits the variance this way and lands within half a percent of a third each.
+A second reading: $`(\Sigma w)_i`$ is the covariance of asset $`i`$ with the fund, so $`\mathrm{RC}_i/\sigma(w)`$ is $`w_i`$ times that covariance over the fund's variance. It is the part of the fund's variance that asset $`i`$ is responsible for, cross terms included. A simulation of 200,000 years of returns in the code splits the variance this way and lands within half a percent of a third each.
 
 ### Step 3: exactly one equal-risk portfolio exists
 
-Equal contributions means $w_i(\Sigma w)_i$ is the same number for every asset: $n$ equations, curved, with the weights on both sides. That such a system has one positive answer is not obvious. The proof trades the equations for a valley with one lowest point. Take unscaled weights $y_i > 0$ and the score
+Equal contributions means $`w_i(\Sigma w)_i`$ is the same number for every asset: $`n`$ equations, curved, with the weights on both sides. That such a system has one positive answer is not obvious. The proof trades the equations for a valley with one lowest point. Take unscaled weights $`y_i > 0`$ and the score
 
-$$f(y) = \tfrac12 \sum_i\sum_j y_i \Sigma_{ij} y_j - \sum_i \ln y_i.$$
+```math
+f(y) = \tfrac12 \sum_i\sum_j y_i \Sigma_{ij} y_j - \sum_i \ln y_i.
+```
 
-The first term is half the variance. The second pushes back hard as any $y_i$ approaches zero. Its lowest point has zero slope in every direction: $(\Sigma y)_i - 1/y_i = 0$, which is $y_i(\Sigma y)_i = 1$ for every $i$. Equal contributions. Dividing $y$ by its total gives weights $w$ that add to 1, and the contributions stay equal, since $w_i(\Sigma w)_i$ just scales by one common factor.
+The first term is half the variance. The second pushes back hard as any $`y_i`$ approaches zero. Its lowest point has zero slope in every direction: $`(\Sigma y)_i - 1/y_i = 0`$, which is $`y_i(\Sigma y)_i = 1`$ for every $`i`$. Equal contributions. Dividing $`y`$ by its total gives weights $`w`$ that add to 1, and the contributions stay equal, since $`w_i(\Sigma w)_i`$ just scales by one common factor.
 
 <details>
 <summary>Detailed proof: one lowest point, and every equal-risk portfolio is it</summary>
 
-**Existence.** Assume $\Sigma$ is positive definite: no mix of the assets has zero volatility. Then the variance term grows like the square of the size of $y$ while $-\sum \ln y_i$ falls only like a logarithm, so $f$ rises without bound far out. Near any face where some $y_i \to 0$, $-\ln y_i \to +\infty$, while on any bounded region the other terms are bounded below, so $f$ rises there too. A continuous function that rises at every edge of its region has a lowest point inside it.
+**Existence.** Assume $`\Sigma`$ is positive definite: no mix of the assets has zero volatility. Then the variance term grows like the square of the size of $`y`$ while $`-\sum \ln y_i`$ falls only like a logarithm, so $`f`$ rises without bound far out. Near any face where some $`y_i \to 0`$, $`-\ln y_i \to +\infty`$, while on any bounded region the other terms are bounded below, so $`f`$ rises there too. A continuous function that rises at every edge of its region has a lowest point inside it.
 
-**Uniqueness of the lowest point.** The variance term is convex (a bowl), and each $-\ln y_i$ is strictly convex. Their sum is strictly convex, and a strictly convex function has at most one lowest point.
+**Uniqueness of the lowest point.** The variance term is convex (a bowl), and each $`-\ln y_i`$ is strictly convex. Their sum is strictly convex, and a strictly convex function has at most one lowest point.
 
-**Every equal-risk portfolio comes from it.** Let $w > 0$ satisfy $w_i(\Sigma w)_i = k$ for all $i$, with $k > 0$. Put $y = w/\sqrt{k}$. Then $y_i(\Sigma y)_i = w_i(\Sigma w)_i / k = 1$, so $y$ is a point of zero slope of $f$, which for a strictly convex function is the lowest point. So $w$ is the lowest point rescaled, and two equal-risk portfolios with weights adding to 1 are the same one.
+**Every equal-risk portfolio comes from it.** Let $`w > 0`$ satisfy $`w_i(\Sigma w)_i = k`$ for all $`i`$, with $`k > 0`$. Put $`y = w/\sqrt{k}`$. Then $`y_i(\Sigma y)_i = w_i(\Sigma w)_i / k = 1`$, so $`y`$ is a point of zero slope of $`f`$, which for a strictly convex function is the lowest point. So $`w`$ is the lowest point rescaled, and two equal-risk portfolios with weights adding to 1 are the same one.
 
-**Boundary cases.** Two assets: $w_1^2\Sigma_{11} + w_1w_2\Sigma_{12} = w_2^2\Sigma_{22} + w_1w_2\Sigma_{12}$, the cross terms cancel, and $w_1\sigma_1 = w_2\sigma_2$: weights in inverse proportion to volatility, whatever the correlation. All correlations equal: the same inverse-volatility answer, by symmetry of the row sums in Step 5. Shorts allowed: the logarithm term no longer fences off the faces, and flipping signs yields further solutions, so the long-only answer is the one meant.
+**Boundary cases.** Two assets: $`w_1^2\Sigma_{11} + w_1w_2\Sigma_{12} = w_2^2\Sigma_{22} + w_1w_2\Sigma_{12}`$, the cross terms cancel, and $`w_1\sigma_1 = w_2\sigma_2`$: weights in inverse proportion to volatility, whatever the correlation. All correlations equal: the same inverse-volatility answer, by symmetry of the row sums in Step 5. Shorts allowed: the logarithm term no longer fences off the faces, and flipping signs yields further solutions, so the long-only answer is the one meant.
 
 </details>
 
 ### Step 4: finding it, one asset at a time
 
-Hold every $y_j$ but one fixed. The slope of $f$ in $y_i$ is $\Sigma_{ii}y_i + b_i - 1/y_i$, where $b_i = \sum_{j \ne i}\Sigma_{ij}y_j$ is asset $i$'s covariance with the rest. Setting it to zero gives a quadratic, $\Sigma_{ii}y_i^2 + b_i y_i - 1 = 0$, with one positive root:
+Hold every $`y_j`$ but one fixed. The slope of $`f`$ in $`y_i`$ is $`\Sigma_{ii}y_i + b_i - 1/y_i`$, where $`b_i = \sum_{j \ne i}\Sigma_{ij}y_j`$ is asset $`i`$'s covariance with the rest. Setting it to zero gives a quadratic, $`\Sigma_{ii}y_i^2 + b_i y_i - 1 = 0`$, with one positive root:
 
-$$y_i = \frac{-b_i + \sqrt{b_i^2 + 4\Sigma_{ii}}}{2\Sigma_{ii}}.$$
+```math
+y_i = \frac{-b_i + \sqrt{b_i^2 + 4\Sigma_{ii}}}{2\Sigma_{ii}}.
+```
 
-Each such step lowers $f$. Cycling through the assets a few hundred times reaches the lowest point to machine precision. This is the coordinate-descent method of Griveau-Billion, Richard and Roncalli, and it is road 1 in the code. Road 2 is Newton's method on the same slope equations, road 3 a brute-force search over every weight in steps of 0.1 percent.
+Each such step lowers $`f`$. Cycling through the assets a few hundred times reaches the lowest point to machine precision. This is the coordinate-descent method of Griveau-Billion, Richard and Roncalli, and it is road 1 in the code. Road 2 is Newton's method on the same slope equations, road 3 a brute-force search over every weight in steps of 0.1 percent.
 
 ### Step 5: the alternatives, read through the same lens
 
 The contributions give a common ruler for other weighting rules.
 
-- **Equal money** gives $w_i = 1/n$. Contributions follow volatility and correlation, so shares dominate: 59.04 percent.
-- **Inverse volatility** gives $w_i \propto 1/\sigma_i$: 17.65, 58.82, 23.53 percent. Then $w_i\sigma_i$ is one common number, and $\mathrm{RC}_i$ is proportional to $\sum_j \rho_{ij}$, the row sum of the correlation table. Those sums are 1.30, 1.20, 1.10 out of 3.60, so the risk shares are 36.11, 33.33, 30.56 percent. Close to parity, not equal: shares correlate most with the rest, so they carry extra.
+- **Equal money** gives $`w_i = 1/n`$. Contributions follow volatility and correlation, so shares dominate: 59.04 percent.
+- **Inverse volatility** gives $`w_i \propto 1/\sigma_i`$: 17.65, 58.82, 23.53 percent. Then $`w_i\sigma_i`$ is one common number, and $`\mathrm{RC}_i`$ is proportional to $`\sum_j \rho_{ij}`$, the row sum of the correlation table. Those sums are 1.30, 1.20, 1.10 out of 3.60, so the risk shares are 36.11, 33.33, 30.56 percent. Close to parity, not equal: shares correlate most with the rest, so they carry extra.
 - **Minimum variance** makes the *marginal* risks equal, 0.055618 each; that is the first-order condition for the lowest volatility ([The efficient frontier](02-efficient-frontier-and-minimum-variance.md)). Equal marginals make each risk share equal the weight: bonds hold 84.84 percent of the money and 84.84 percent of the risk.
 - **Equal risk** sits between them. Its volatility, 6.66 percent, lies above minimum variance's 5.56 and below equal money's 9.24. Maillard, Roncalli and Teiletche prove that order holds for every covariance table.
 
-Another route to the same weights solves the $n$ curved equations directly with any root finder; the valley in Step 3 is the reason that route has one answer to find.
+Another route to the same weights solves the $`n`$ curved equations directly with any root finder; the valley in Step 3 is the reason that route has one answer to find.
 
 ---
 
@@ -185,7 +199,7 @@ Bonds add the least volatility per dollar, so they take the most dollars; each a
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Equal money read as equal risk | shares 59.04, bonds 7.80, gold 33.16 percent of risk | weight is not risk |
-| Own variance only, $w_i^2\Sigma_{ii}$ over the fund's variance | 25.24, 28.02, 30.56, summing to 83.81 percent | the cross terms are dropped, so the pieces miss the whole |
+| Own variance only, $`w_i^2\Sigma_{ii}`$ over the fund's variance | 25.24, 28.02, 30.56, summing to 83.81 percent | the cross terms are dropped, so the pieces miss the whole |
 | Equal marginal risk instead of equal contribution | bonds 84.84 percent of the money and of the risk | that condition is minimum variance |
 | Levering the equal-risk mix to 60/40's volatility, borrowing ignored | 9.37 percent a year, but 4.84 percent after borrowing at 5 percent | leverage costs the cash rate on every borrowed dollar |
 
@@ -596,11 +610,11 @@ The two outputs match line for line, the simulated shares included, since both p
 
 Lean proves Euler's split and the single equal-risk portfolio for any table with no riskless mix, and the two-asset rule for any correlation.
 
-- Take weights adding to 1 and a covariance table with no riskless mix. Then $\sigma(tw) = t\,\sigma(w)$ for every positive $t$.
-- Take the same table and weights. Then the slope of $\sigma$ in $w_i$ alone is the marginal risk $(\Sigma w)_i / \sigma(w)$.
-- Take the same table and weights. Then the risk contributions $\mathrm{RC}_i$ add up exactly to $\sigma(w)$.
-- Take $n \ge 1$ assets with no riskless mix. Then exactly one list of positive weights adding to 1 gives $\mathrm{RC}_i = \sigma(w)/n$ for every $i$.
-- Take two assets with volatilities $\sigma_1, \sigma_2 > 0$ and any correlation. Suppose positive weights adding to 1 give equal contributions. Then $w_1 = \sigma_2/(\sigma_1+\sigma_2)$ and $w_2 = \sigma_1/(\sigma_1+\sigma_2)$.
+- Take weights adding to 1 and a covariance table with no riskless mix. Then $`\sigma(tw) = t\,\sigma(w)`$ for every positive $`t`$.
+- Take the same table and weights. Then the slope of $`\sigma`$ in $`w_i`$ alone is the marginal risk $`(\Sigma w)_i / \sigma(w)`$.
+- Take the same table and weights. Then the risk contributions $`\mathrm{RC}_i`$ add up exactly to $`\sigma(w)`$.
+- Take $`n \ge 1`$ assets with no riskless mix. Then exactly one list of positive weights adding to 1 gives $`\mathrm{RC}_i = \sigma(w)/n`$ for every $`i`$.
+- Take two assets with volatilities $`\sigma_1, \sigma_2 > 0`$ and any correlation. Suppose positive weights adding to 1 give equal contributions. Then $`w_1 = \sigma_2/(\sigma_1+\sigma_2)`$ and $`w_2 = \sigma_1/(\sigma_1+\sigma_2)`$.
 - The covariance table and the risk shares for equal money, 60/40 and inverse volatility check exactly.
 - Inverse-volatility weights for shares and bonds give equal contributions at correlation 0.2 and at −0.5.
 
@@ -1090,7 +1104,7 @@ example : (fun i => ![3, 10] i *
 > [!warning]
 > **Reading weights as risk.** A fund a third in each asset is not diversified in risk: shares carry 59.04 percent of it. A 60/40 fund's risk is 92.86 percent shares. Diversification is judged by the contributions, never by the money.
 >
-> - **Adding up own variances.** Each asset's $w_i^2\Sigma_{ii}$ over the fund's variance ignores the covariance terms; at the equal-risk weights these shares come to 25.24, 28.02 and 30.56 percent and add to only 83.81 percent.
+> - **Adding up own variances.** Each asset's $`w_i^2\Sigma_{ii}`$ over the fund's variance ignores the covariance terms; at the equal-risk weights these shares come to 25.24, 28.02 and 30.56 percent and add to only 83.81 percent.
 > - **Taking inverse volatility for risk parity.** It ignores correlation; here the shares come out 36.11, 33.33 and 30.56 percent. It is exact only for two assets or equal correlations.
 > - **Equalising marginal risks.** That produces the minimum-variance portfolio, with 84.84 percent in bonds, not the equal-risk one.
 > - **Forgetting the cost of leverage.** The equal-risk mix has a better return per unit of risk, 0.7381 against 60/40's 0.5040, but reaching 60/40's volatility means levering it 1.9073 times; borrowing at 5 percent turns 9.37 percent into 4.84. The mix earns 4.91 percent, below the 5 percent borrowing rate, so every borrowed dollar loses money.

@@ -28,32 +28,40 @@ To scale: left 80 units per 1, origin (95, 120); right 40 units per 1, origin (2
 
 Reminders: |z| is distance from 0, arg z the angle, in (−π, π] ([Polar form](../01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md)); f'(a) is the limit of (f(a + h) − f(a))/h as the complex step h shrinks to 0 from any direction.
 
-$$f(a + h) = f(a) + f'(a)\,h + \varepsilon(h)\,h, \qquad \varepsilon(h) \to 0 \text{ as } h \to 0$$
+```math
+f(a + h) = f(a) + f'(a)\,h + \varepsilon(h)\,h, \qquad \varepsilon(h) \to 0 \text{ as } h \to 0
+```
 
 **Read it aloud:** near a, a step h goes to f'(a) times h, plus a vanishing share of h. In polar form:
 
-$$f'(a) = \rho\, e^{i\theta}, \qquad \rho = |f'(a)|, \qquad \theta = \arg f'(a)$$
+```math
+f'(a) = \rho\, e^{i\theta}, \qquad \rho = |f'(a)|, \qquad \theta = \arg f'(a)
+```
 
 **Read it aloud:** small arrows from a stretch by ρ and turn by θ. The local inverse g undoes f near a, at points w near f(a):
 
-$$g'(w) = \frac{1}{f'(g(w))}$$
+```math
+g'(w) = \frac{1}{f'(g(w))}
+```
 
 A globe point at latitude φ, longitude λ projects to z = r e^(iλ), r = tan(π/4 − φ/2). Mercator's chart is
 
-$$w = -i\,\mathrm{Log}\, z = \lambda + i\,\ln \tan\!\left(\frac{\pi}{4} + \frac{\varphi}{2}\right), \qquad \text{stretch} = \frac{1}{\cos\varphi}$$
+```math
+w = -i\,\mathrm{Log}\, z = \lambda + i\,\ln \tan\!\left(\frac{\pi}{4} + \frac{\varphi}{2}\right), \qquad \text{stretch} = \frac{1}{\cos\varphi}
+```
 
 **Read it aloud:** across is longitude, up is ln tan(π/4 + φ/2), and lengths near latitude φ stretch by 1/cos φ.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $a$, $h$ | the map, the point, a small complex step | z^2, 1 + i, h = 0.001 | chords drift further |
-| $f'(a)$ | the complex derivative at a | 2 + 2i | — |
-| $\rho$ | the local stretch, \|f'(a)\| | 2.828427 | small shapes grow more |
-| $\theta$ | the local turn, arg f'(a), in radians | π/4, which is 45 degrees | small shapes turn further |
-| $\varepsilon$ | the error share, ε(h) → 0 | for z^2 it is exactly h | — |
-| $g$, $w$ | the local inverse, and a point it acts on | g(2i) = 1 + i, g'(2i) = 0.25 − 0.25i | — |
-| $z$, $r$ | the stereographic point and its distance from 0 | r = 0.158384 at 72 degrees | nearer the equator |
-| $\varphi$, $\lambda$ | latitude and longitude, in radians | 72 and −40 degrees | higher: 1/cos φ grows without bound |
+| $`f`$, $`a`$, $`h`$ | the map, the point, a small complex step | z^2, 1 + i, h = 0.001 | chords drift further |
+| $`f'(a)`$ | the complex derivative at a | 2 + 2i | — |
+| $`\rho`$ | the local stretch, \|f'(a)\| | 2.828427 | small shapes grow more |
+| $`\theta`$ | the local turn, arg f'(a), in radians | π/4, which is 45 degrees | small shapes turn further |
+| $`\varepsilon`$ | the error share, ε(h) → 0 | for z^2 it is exactly h | — |
+| $`g`$, $`w`$ | the local inverse, and a point it acts on | g(2i) = 1 + i, g'(2i) = 0.25 − 0.25i | — |
+| $`z`$, $`r`$ | the stereographic point and its distance from 0 | r = 0.158384 at 72 degrees | nearer the equator |
+| $`\varphi`$, $`\lambda`$ | latitude and longitude, in radians | 72 and −40 degrees | higher: 1/cos φ grows without bound |
 
 ### When it holds
 
@@ -78,7 +86,9 @@ The gap ε(h) between (f(a + h) − f(a))/h and f'(a) shrinks to 0 by the deriva
 
 Two curves leave a with velocities v and u (their tangent arrows). By the chain rule their images leave f(a) with velocities f'(a)v and f'(a)u. The angle between image arrows is the argument of their quotient:
 
-$$\frac{f'(a)\,u}{f'(a)\,v} = \frac{u}{v}$$
+```math
+\frac{f'(a)\,u}{f'(a)\,v} = \frac{u}{v}
+```
 
 The nonzero multiplier cancels: the angle is unchanged.
 
@@ -109,7 +119,9 @@ At 0 the derivative of z^2 is 0, and nothing cancels. With z = s e^(iα), z^2 = 
 
 As a map of the plane, (x, y) to (u, v), with f'(a) = A + iB, its matrix of partial derivatives is A + iB in real form ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)):
 
-$$\begin{pmatrix} A & -B \\ B & A \end{pmatrix}, \qquad \det = A^2 + B^2 = |f'(a)|^2 > 0$$
+```math
+\begin{pmatrix} A & -B \\ B & A \end{pmatrix}, \qquad \det = A^2 + B^2 = |f'(a)|^2 > 0
+```
 
 f' is continuous: holomorphic functions have derivatives of every order ([Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)). So the nonzero determinant lets the inverse function theorem for maps of the plane ([Inverse and implicit function theorems](../../06-Calculus%20and%20analysis/07-Several%20Variables/07-inverse-and-implicit-function-theorems.md)) supply small discs around a and f(a) with a smooth inverse g between them.
 

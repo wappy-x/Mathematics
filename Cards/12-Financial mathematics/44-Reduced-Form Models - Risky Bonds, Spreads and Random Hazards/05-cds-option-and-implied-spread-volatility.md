@@ -36,48 +36,58 @@ Rising line (orange): the payer. Falling line (green): the receiver. Neither lin
 
 ## The formula
 
-Notation first, in words. The option expires at $T$ and the underlying contract matures at $T_M$. $A$ is today's value of the **forward risky annuity**: one unit of premium a year, paid quarterly from $T$ to $T_M$, only while Northwind survives. $V_{\text{prot}}$ is today's value of the protection over the same window. Their ratio is the forward spread $F$. $N(x)$ is the standard bell-curve area to the left of $x$ ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)).
+Notation first, in words. The option expires at $`T`$ and the underlying contract matures at $`T_M`$. $`A`$ is today's value of the **forward risky annuity**: one unit of premium a year, paid quarterly from $`T`$ to $`T_M`$, only while Northwind survives. $`V_{\text{prot}}`$ is today's value of the protection over the same window. Their ratio is the forward spread $`F`$. $`N(x)`$ is the standard bell-curve area to the left of $`x`$ ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)).
 
-$$V_{\text{pay}} = A\left[F\,N(d_1) - K\,N(d_2)\right], \qquad V_{\text{rec}} = A\left[K\,N(-d_2) - F\,N(-d_1)\right], \qquad F = \frac{V_{\text{prot}}}{A}$$
+```math
+V_{\text{pay}} = A\left[F\,N(d_1) - K\,N(d_2)\right], \qquad V_{\text{rec}} = A\left[K\,N(-d_2) - F\,N(-d_1)\right], \qquad F = \frac{V_{\text{prot}}}{A}
+```
 
 **Read it aloud:** the payer is the forward risky annuity times Black's call on the forward spread struck at the strike spread; the receiver is the same annuity times Black's put.
 
 The payer that does not die on an early default adds the front-end protection:
 
-$$V_{\text{pay}}^{\text{keep}} = V_{\text{pay}} + \text{FEP}, \qquad \text{FEP} = (1 - R)\,D(T)\,\left[1 - Q(T)\right]$$
+```math
+V_{\text{pay}}^{\text{keep}} = V_{\text{pay}} + \text{FEP}, \qquad \text{FEP} = (1 - R)\,D(T)\,\left[1 - Q(T)\right]
+```
 
 **Read it aloud:** the front-end protection is the loss on default, paid at expiry, times the chance of defaulting before expiry.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | forward spread: the fair premium today for protection from $T$ to $T_M$ | 290.5480 bp | payer rises, receiver falls |
-| $K$ | strike spread: the premium the holder may lock in | 250 bp | payer falls, receiver rises |
-| $\sigma$ | spread volatility: yearly standard deviation of the logarithm of the future spread | 50 percent | both rise |
-| $T$, $T_M$ | option expiry; maturity of the underlying CDS, in years | 1 and 5 | more time, more value; longer window, bigger annuity |
-| $A$, $A_T$, $A_t$ | forward risky annuity today; the risky annuity as it stands at expiry, or at any date $t$ | 3.069756; random | every basis point is worth more |
-| $V_{\text{prot}}$ | today's value of protection from $T$ to $T_M$ | 8.919113 percent | forward spread rises |
-| $s_T$, $s_t$ | Northwind's spread at expiry, or at date $t$, for protection to $T_M$ | unknown today | payer pays more |
-| $R$, $r$, $D(t)$, $t$ | recovery on default; riskless rate; discount factor $e^{-rt}$; a date in years | 40 percent; 5 percent; $D(1)$ = 0.951229 | front-end protection falls; less value; — |
-| $Q(t)$, $\lambda$, $\tau$ | chance of surviving to $t$; hazard, the default rate per year; the default date | $Q(1)$ = 0.980369; 1.9826, 4.0440, 5.6837 percent | front-end protection rises with $\lambda$ |
-| $N(x)$, $\varphi$, $d_1$, $d_2$ | bell-curve area left of $x$; bell-curve height; Black's two cut-offs | $d_1$ = 0.550616, $d_2$ = 0.050616 | — |
-| $\mathbb{E}^{A}$, $\mathbb{1}$, $w$, $X$ | average with the survival measure's weights; indicator: 1 if the event happens, else 0; the weight that switches units; any payoff at expiry | $\mathbb{E}^{A}[s_T]$ = $F$ | — |
-| $\Delta$, $\nu$ | spread delta: change in premium per unit change in $F$; vega: change per unit of $\sigma$ | 0.021766 percent per bp; 0.030577 percent per vol point | — |
+| $`F`$ | forward spread: the fair premium today for protection from $`T`$ to $`T_M`$ | 290.5480 bp | payer rises, receiver falls |
+| $`K`$ | strike spread: the premium the holder may lock in | 250 bp | payer falls, receiver rises |
+| $`\sigma`$ | spread volatility: yearly standard deviation of the logarithm of the future spread | 50 percent | both rise |
+| $`T`$, $`T_M`$ | option expiry; maturity of the underlying CDS, in years | 1 and 5 | more time, more value; longer window, bigger annuity |
+| $`A`$, $`A_T`$, $`A_t`$ | forward risky annuity today; the risky annuity as it stands at expiry, or at any date $`t`$ | 3.069756; random | every basis point is worth more |
+| $`V_{\text{prot}}`$ | today's value of protection from $`T`$ to $`T_M`$ | 8.919113 percent | forward spread rises |
+| $`s_T`$, $`s_t`$ | Northwind's spread at expiry, or at date $`t`$, for protection to $`T_M`$ | unknown today | payer pays more |
+| $`R`$, $`r`$, $`D(t)`$, $`t`$ | recovery on default; riskless rate; discount factor $`e^{-rt}`$; a date in years | 40 percent; 5 percent; $`D(1)`$ = 0.951229 | front-end protection falls; less value; — |
+| $`Q(t)`$, $`\lambda`$, $`\tau`$ | chance of surviving to $`t`$; hazard, the default rate per year; the default date | $`Q(1)`$ = 0.980369; 1.9826, 4.0440, 5.6837 percent | front-end protection rises with $`\lambda`$ |
+| $`N(x)`$, $`\varphi`$, $`d_1`$, $`d_2`$ | bell-curve area left of $`x`$; bell-curve height; Black's two cut-offs | $`d_1`$ = 0.550616, $`d_2`$ = 0.050616 | — |
+| $`\mathbb{E}^{A}`$, $`\mathbb{1}`$, $`w`$, $`X`$ | average with the survival measure's weights; indicator: 1 if the event happens, else 0; the weight that switches units; any payoff at expiry | $`\mathbb{E}^{A}[s_T]`$ = $`F`$ | — |
+| $`\Delta`$, $`\nu`$ | spread delta: change in premium per unit change in $`F`$; vega: change per unit of $`\sigma`$ | 0.021766 percent per bp; 0.030577 percent per vol point | — |
 
 The two cut-offs, as on the Black-76 card:
 
-$$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
 In words: how many standard deviations of the log-spread separate the forward from the strike, shifted half a variance each way.
 
 The Greeks, holding the annuity fixed:
 
-$$\Delta_{\text{pay}} = A\,N(d_1), \qquad \nu = A\,F\,\varphi(d_1)\sqrt{T}$$
+```math
+\Delta_{\text{pay}} = A\,N(d_1), \qquad \nu = A\,F\,\varphi(d_1)\sqrt{T}
+```
 
-The inverse. For a given premium $V$, the implied spread volatility is the $\sigma$ that solves $V_{\text{pay}}(\sigma) = V$. It exists, and is unique, exactly when
+The inverse. For a given premium $`V`$, the implied spread volatility is the $`\sigma`$ that solves $`V_{\text{pay}}(\sigma) = V`$. It exists, and is unique, exactly when
 
-$$A\,(F - K)^+ < V < A\,F,$$
+```math
+A\,(F - K)^+ < V < A\,F,
+```
 
-where $(y)^+$ means y if positive and zero otherwise. For Northwind that range is 1.244724 to 8.919113 percent. At or outside either end there is no volatility.
+where $`(y)^+`$ means y if positive and zero otherwise. For Northwind that range is 1.244724 to 8.919113 percent. At or outside either end there is no volatility.
 
 **Conventions verified 2026-09-28** against the shelf's bootstrapped curve ([Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)): quarterly premiums paid at the end of each quarter survived, year fractions of 0.25, no premium accrued between the last payment and default, strike quoted as a running spread. Standard traded contracts pay a fixed coupon plus an upfront amount ([Valuing an existing CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md)); that changes the strike's units, not the method.
 
@@ -98,56 +108,66 @@ A payer, once exercised, gives the holder a CDS whose value is a number of basis
 
 ### Step 1: the payoff is the annuity times a call on the spread
 
-At expiry, if Northwind has survived, the holder may enter a CDS paying $K$ for protection to $T_M$. The market's fair premium that day is $s_T$. A CDS paying $K$ when the market charges $s_T$ is worth the protection leg minus the premium leg: $A_T s_T - A_T K = A_T (s_T - K)$ per unit of notional. The holder exercises only when that is positive. If Northwind has already defaulted, the knock-out option is void. So the payoff is
+At expiry, if Northwind has survived, the holder may enter a CDS paying $`K`$ for protection to $`T_M`$. The market's fair premium that day is $`s_T`$. A CDS paying $`K`$ when the market charges $`s_T`$ is worth the protection leg minus the premium leg: $`A_T s_T - A_T K = A_T (s_T - K)`$ per unit of notional. The holder exercises only when that is positive. If Northwind has already defaulted, the knock-out option is void. So the payoff is
 
-$$\mathbb{1}_{\{\tau > T\}}\,A_T\,(s_T - K)^+.$$
+```math
+\mathbb{1}_{\{\tau > T\}}\,A_T\,(s_T - K)^+.
+```
 
 ### Step 2: the risky annuity is a traded unit, positive until default
 
-$A_t$ is the value of a strip of zero-recovery bonds: 0.25 of a dollar paid at each quarter from $T$ to $T_M$, but only if Northwind is alive on that date. It can be bought. It is positive while Northwind survives and zero afterwards. Weighting each possible future by $D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T / A$ gives a set of probabilities, because those weights are never negative and average to one: the average of $D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T$ is today's price of the strip, which is $A$. These weights are the **survival measure**, written $\mathbb{E}^{A}$. It puts zero weight on every path where Northwind defaults before expiry.
+$`A_t`$ is the value of a strip of zero-recovery bonds: 0.25 of a dollar paid at each quarter from $`T`$ to $`T_M`$, but only if Northwind is alive on that date. It can be bought. It is positive while Northwind survives and zero afterwards. Weighting each possible future by $`D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T / A`$ gives a set of probabilities, because those weights are never negative and average to one: the average of $`D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T`$ is today's price of the strip, which is $`A`$. These weights are the **survival measure**, written $`\mathbb{E}^{A}`$. It puts zero weight on every path where Northwind defaults before expiry.
 
 ### Step 3: under those weights the forward spread has no drift
 
-The average of $s_T$ under the survival measure is
+The average of $`s_T`$ under the survival measure is
 
-$$\mathbb{E}^{A}[s_T] = \frac{\mathbb{E}\left[D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T\,s_T\right]}{A} = \frac{\mathbb{E}\left[D(T)\,\mathbb{1}_{\{\tau>T\}}\,V_{\text{prot}}(T)\right]}{A} = \frac{V_{\text{prot}}}{A} = F.$$
+```math
+\mathbb{E}^{A}[s_T] = \frac{\mathbb{E}\left[D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T\,s_T\right]}{A} = \frac{\mathbb{E}\left[D(T)\,\mathbb{1}_{\{\tau>T\}}\,V_{\text{prot}}(T)\right]}{A} = \frac{V_{\text{prot}}}{A} = F.
+```
 
-The middle step uses the definition of the spread: $A_T s_T$ is the value at expiry of protection to $T_M$. The next step says that protection from $T$ onward, bought today, pays only if Northwind reached $T$ alive, so its price is the average of its discounted surviving value. Nothing here is an assumption beyond the absence of free money.
+The middle step uses the definition of the spread: $`A_T s_T`$ is the value at expiry of protection to $`T_M`$. The next step says that protection from $`T`$ onward, bought today, pays only if Northwind reached $`T`$ alive, so its price is the average of its discounted surviving value. Nothing here is an assumption beyond the absence of free money.
 
 ### Step 4: the random annuity cancels
 
 Price the payoff of Step 1 in dollars, then switch weights:
 
-$$V_{\text{pay}} = \mathbb{E}\left[D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T\,(s_T - K)^+\right] = A\,\mathbb{E}^{A}\left[(s_T - K)^+\right].$$
+```math
+V_{\text{pay}} = \mathbb{E}\left[D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T\,(s_T - K)^+\right] = A\,\mathbb{E}^{A}\left[(s_T - K)^+\right].
+```
 
-The random annuity at expiry, which depends on how Northwind's credit has moved, has gone. So has the indicator. What remains is a plain call on one number whose average is $F$. This is still exact.
+The random annuity at expiry, which depends on how Northwind's credit has moved, has gone. So has the indicator. What remains is a plain call on one number whose average is $`F`$. This is still exact.
 
 ### Step 5: add a lognormal shape and Black's formula drops out
 
-Assume $s_T = F\,e^{-\frac12\sigma^2 T + \sigma\sqrt{T}Z}$ under the survival measure, with $Z$ a standard bell-curve draw. The centre is forced by Step 3. The call average is the Black-76 integral: $\mathbb{E}^{A}[(s_T - K)^+] = F\,N(d_1) - K\,N(d_2)$. Multiply by $A$. The receiver follows the same way with the put payoff, and payer minus receiver is $A(F - K)$, the value today of a forward CDS struck at $K$. That identity is **payer-receiver parity**.
+Assume $`s_T = F\,e^{-\frac12\sigma^2 T + \sigma\sqrt{T}Z}`$ under the survival measure, with $`Z`$ a standard bell-curve draw. The centre is forced by Step 3. The call average is the Black-76 integral: $`\mathbb{E}^{A}[(s_T - K)^+] = F\,N(d_1) - K\,N(d_2)`$. Multiply by $`A`$. The receiver follows the same way with the put payoff, and payer minus receiver is $`A(F - K)`$, the value today of a forward CDS struck at $`K`$. That identity is **payer-receiver parity**.
 
 <details>
 <summary>Detailed proof: the survival measure is a genuine measure, and the pricing rule holds for every payoff</summary>
 
-Let $\mathbb{E}$ be the risk-neutral average with the bank account as unit, so that every traded price today is the average of its discounted payoff. Define the weight
-$$w = \frac{D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T}{A}.$$
-It is never negative. Its average is $\mathbb{E}[D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T]/A$. The numerator is the price today of receiving the risky annuity at $T$ if alive, which is the forward risky annuity itself, so the average is 1. Hence $\mathbb{E}^{A}[Y] := \mathbb{E}[w\,Y]$ is an average under a probability measure. It is not equivalent to the original one: it gives zero weight to default before $T$. That is harmless for any payoff that is itself zero on those paths.
+Let $`\mathbb{E}`$ be the risk-neutral average with the bank account as unit, so that every traded price today is the average of its discounted payoff. Define the weight
 
-Take any payoff $X$ paid at $T$ that is zero when $\tau \le T$. On survival paths $X = A_T \cdot (X/A_T)$, so
-$$\mathbb{E}[D(T)\,X] = \mathbb{E}\left[D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T\,\frac{X}{A_T}\right] = A\,\mathbb{E}^{A}\left[\frac{X}{A_T}\right].$$
-With $X = V_{\text{prot}}(T)\,\mathbb{1}_{\{\tau>T\}}$ this gives $\mathbb{E}^{A}[s_T] = F$ (Step 3). With $X = \mathbb{1}_{\{\tau>T\}}A_T(s_T-K)^+$ it gives Step 4. Applying the same argument at every date $t$ before $T$, with averages conditional on what is known at $t$, shows the spread $s_t$ is a martingale on survival, which is what "no drift" means.
+$`\displaystyle w = \frac{D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T}{A}.`$
+
+It is never negative. Its average is $`\mathbb{E}[D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T]/A`$. The numerator is the price today of receiving the risky annuity at $`T`$ if alive, which is the forward risky annuity itself, so the average is 1. Hence $`\mathbb{E}^{A}[Y] := \mathbb{E}[w\,Y]`$ is an average under a probability measure. It is not equivalent to the original one: it gives zero weight to default before $`T`$. That is harmless for any payoff that is itself zero on those paths.
+
+Take any payoff $`X`$ paid at $`T`$ that is zero when $`\tau \le T`$. On survival paths $`X = A_T \cdot (X/A_T)`$, so
+
+$`\displaystyle \mathbb{E}[D(T)\,X] = \mathbb{E}\left[D(T)\,\mathbb{1}_{\{\tau>T\}}\,A_T\,\frac{X}{A_T}\right] = A\,\mathbb{E}^{A}\left[\frac{X}{A_T}\right].`$
+
+With $`X = V_{\text{prot}}(T)\,\mathbb{1}_{\{\tau>T\}}`$ this gives $`\mathbb{E}^{A}[s_T] = F`$ (Step 3). With $`X = \mathbb{1}_{\{\tau>T\}}A_T(s_T-K)^+`$ it gives Step 4. Applying the same argument at every date $`t`$ before $`T`$, with averages conditional on what is known at $`t`$, shows the spread $`s_t`$ is a martingale on survival, which is what "no drift" means.
 
 </details>
 
 ### Step 6: front-end protection, the part a payer keeps
 
-A payer that does not knock out has one more outcome. If Northwind defaults before expiry, the holder exercises into protection on a name that has already defaulted and collects the loss, $1 - R$, at expiry. A receiver would never exercise then: selling protection on a defaulted name only loses. So the payer gains $(1 - R)\,D(T)\,[1 - Q(T)]$ and the receiver gains nothing. With survival to one year of 0.980369 that is 1.120398 percent. Buying the one-year CDS today gives similar cover, but it pays at the default date and costs premiums; the front-end protection is the version paid at expiry.
+A payer that does not knock out has one more outcome. If Northwind defaults before expiry, the holder exercises into protection on a name that has already defaulted and collects the loss, $`1 - R`$, at expiry. A receiver would never exercise then: selling protection on a defaulted name only loses. So the payer gains $`(1 - R)\,D(T)\,[1 - Q(T)]`$ and the receiver gains nothing. With survival to one year of 0.980369 that is 1.120398 percent. Buying the one-year CDS today gives similar cover, but it pays at the default date and costs premiums; the front-end protection is the version paid at expiry.
 
 ### Step 7: the implied volatility exists and is unique inside Black's range
 
-Hold $F$, $K$, $A$ fixed and let $\sigma$ vary. The premium is continuous in $\sigma$. It is strictly increasing, because its slope is vega, $A\,F\,\varphi(d_1)\sqrt{T}$, which is positive. As $\sigma$ shrinks to zero the spread becomes certain, and the price falls to $A\,(F - K)^+$: 1.244724 percent. As $\sigma$ grows without bound, $N(d_1)$ goes to 1 and $N(d_2)$ to 0, so the price climbs towards $A\,F = V_{\text{prot}}$: 8.919113 percent, the whole forward protection leg. A continuous, strictly increasing function takes each value between its limits exactly once. So every premium strictly between 1.244724 and 8.919113 percent has one implied volatility, and every premium outside has none.
+Hold $`F`$, $`K`$, $`A`$ fixed and let $`\sigma`$ vary. The premium is continuous in $`\sigma`$. It is strictly increasing, because its slope is vega, $`A\,F\,\varphi(d_1)\sqrt{T}`$, which is positive. As $`\sigma`$ shrinks to zero the spread becomes certain, and the price falls to $`A\,(F - K)^+`$: 1.244724 percent. As $`\sigma`$ grows without bound, $`N(d_1)`$ goes to 1 and $`N(d_2)`$ to 0, so the price climbs towards $`A\,F = V_{\text{prot}}`$: 8.919113 percent, the whole forward protection leg. A continuous, strictly increasing function takes each value between its limits exactly once. So every premium strictly between 1.244724 and 8.919113 percent has one implied volatility, and every premium outside has none.
 
-The bounds are prices, not artefacts. A payer below $A(F - K)^+$ could be bought and a forward CDS sold against it for a sure profit. A payer above $V_{\text{prot}}$ would cost more than simply buying the forward protection outright. Bisection (halve an interval known to contain the answer, keep the half that still does) is guaranteed to find the root; Newton's method (follow the slope to where the line crosses) is faster from a good start. Both are on [Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md).
+The bounds are prices, not artefacts. A payer below $`A(F - K)^+`$ could be bought and a forward CDS sold against it for a sure profit. A payer above $`V_{\text{prot}}`$ would cost more than simply buying the forward protection outright. Bisection (halve an interval known to contain the answer, keep the half that still does) is guaranteed to find the root; Newton's method (follow the slope to where the line crosses) is faster from a good start. Both are on [Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md).
 
 The other road to the price is a hedge: hold the option, sell forward protection in the amount of the spread delta, and require the hedged book to earn the riskless rate. The annuity-unit route above is shorter and shows why the annuity, not a discount factor, multiplies the bracket.
 
@@ -160,33 +180,33 @@ The curve: Northwind's CDS at 120, 200 and 250 basis points for one, three and f
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | hazard pieces | bootstrapped from the three quotes | 1.9826, 4.0440, 5.6837 percent |
-| survival to expiry $Q(1)$ | $e^{-0.019826}$ | 0.980369 |
-| forward risky annuity $A$ | 16 quarters, $\sum 0.25\,D(t)\,Q(t)$ for $t$ = 1.25 to 5 | 3.069756 |
-| forward protection $V_{\text{prot}}$ | $(1-R)$ times the discounted default density, year 1 to 5 | 8.919113 percent |
-| forward spread $F$ | $0.08919113 / 3.069756$ | 290.5480 bp |
-| $\ln(F/K)$ | $\ln(290.548 / 250)$ | 0.150308 |
-| half variance | $\tfrac12 \times 0.5^2 \times 1$ | 0.125000 |
-| $d_1$ | $(0.150308 + 0.125) / 0.5$ | 0.550616 |
-| $d_2$ | $0.550616 - 0.5$ | 0.050616 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.709051, 0.520184 |
-| Black bracket | $290.548 \times 0.709051 - 250 \times 0.520184$ | 75.9674 bp |
-| **payer, knock-out** | $3.069756 \times 75.9674$ bp | **2.332014 percent** |
-| front-end protection | $0.6 \times 0.951229 \times (1 - 0.980369)$ | 1.120398 percent |
-| **payer that keeps FEP** | $2.332014 + 1.120398$ | **3.452412 percent** |
+| survival to expiry $`Q(1)`$ | $`e^{-0.019826}`$ | 0.980369 |
+| forward risky annuity $`A`$ | 16 quarters, $`\sum 0.25\,D(t)\,Q(t)`$ for $`t`$ = 1.25 to 5 | 3.069756 |
+| forward protection $`V_{\text{prot}}`$ | $`(1-R)`$ times the discounted default density, year 1 to 5 | 8.919113 percent |
+| forward spread $`F`$ | $`0.08919113 / 3.069756`$ | 290.5480 bp |
+| $`\ln(F/K)`$ | $`\ln(290.548 / 250)`$ | 0.150308 |
+| half variance | $`\tfrac12 \times 0.5^2 \times 1`$ | 0.125000 |
+| $`d_1`$ | $`(0.150308 + 0.125) / 0.5`$ | 0.550616 |
+| $`d_2`$ | $`0.550616 - 0.5`$ | 0.050616 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.709051, 0.520184 |
+| Black bracket | $`290.548 \times 0.709051 - 250 \times 0.520184`$ | 75.9674 bp |
+| **payer, knock-out** | $`3.069756 \times 75.9674`$ bp | **2.332014 percent** |
+| front-end protection | $`0.6 \times 0.951229 \times (1 - 0.980369)`$ | 1.120398 percent |
+| **payer that keeps FEP** | $`2.332014 + 1.120398`$ | **3.452412 percent** |
 
 The Black bracket reads directly in spread terms: the option is worth 75.97 basis points a year of premium over the four-year window, paid while Northwind survives.
 
-The receiver is worth 1.087291 percent. Payer minus receiver is 1.244724 percent, which is $A(F - K)$, also 1.244724 percent: parity holds.
+The receiver is worth 1.087291 percent. Payer minus receiver is 1.244724 percent, which is $`A(F - K)`$, also 1.244724 percent: parity holds.
 
 ### The Greeks
 
 | Greek | Formula | Value | Meaning |
 | --- | --- | --- | --- |
-| spread delta, payer | $A\,N(d_1)$ | 0.021766 percent of notional per bp of $F$ | a 1 bp rise in the forward spread adds 0.021766 percent |
-| spread delta, whole curve moved 1 bp | re-bootstrap the curve, reprice | 0.020955 percent per bp | lower: $F$ rises about 1 bp, but the annuity shrinks too |
-| vega | $A\,F\,\varphi(d_1)\sqrt{T}$ | 0.030577 percent per vol point | one point of volatility adds 0.030577 percent |
+| spread delta, payer | $`A\,N(d_1)`$ | 0.021766 percent of notional per bp of $`F`$ | a 1 bp rise in the forward spread adds 0.021766 percent |
+| spread delta, whole curve moved 1 bp | re-bootstrap the curve, reprice | 0.020955 percent per bp | lower: $`F`$ rises about 1 bp, but the annuity shrinks too |
+| vega | $`A\,F\,\varphi(d_1)\sqrt{T}`$ | 0.030577 percent per vol point | one point of volatility adds 0.030577 percent |
 
-The receiver's delta is the payer's minus $A$, and its vega is the same, by parity.
+The receiver's delta is the payer's minus $`A`$, and its vega is the same, by parity.
 
 ### Implied spread volatility
 
@@ -202,7 +222,7 @@ xychart-beta
     line [1.24, 1.24, 1.24, 1.24, 1.24, 1.24, 1.24, 1.24, 1.24, 1.24]
 ```
 
-Rising line (orange): the payer premium. Flat line (green): the floor $A(F - K)$, 1.24 percent, which the premium approaches as volatility falls to zero. Read across from 2.33 percent and down: 50 percent. Every premium on the rising line has one volatility; a premium on or below the flat line has none. The ceiling, 8.92 percent, is off the top of the chart.
+Rising line (orange): the payer premium. Flat line (green): the floor $`A(F - K)`$, 1.24 percent, which the premium approaches as volatility falls to zero. Read across from 2.33 percent and down: 50 percent. Every premium on the rising line has one volatility; a premium on or below the flat line has none. The ceiling, 8.92 percent, is off the top of the chart.
 
 ### What breaks if you drop a piece
 
@@ -210,7 +230,7 @@ Right answer: 2.332014 percent for the knock-out payer at 50 percent.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Discount the bracket by $D(1)$, as if the option paid once | 0.722624 percent | The payoff is a four-year stream of premium; $A$ = 3.069756, not 0.951229 |
+| Discount the bracket by $`D(1)`$, as if the option paid once | 0.722624 percent | The payoff is a four-year stream of premium; $`A`$ = 3.069756, not 0.951229 |
 | Use the riskless annuity from year 1 to 5 | 2.603452 percent | Premiums stop on default; the unit must be the risky annuity |
 | Use the spot 5-year annuity from today | 3.059387 percent | That annuity includes the first year, which the option does not cover |
 | Use today's 5-year spread, 250 bp, as the forward | 1.515022 percent | The forward from year 1 to 5 is 290.55 bp on an upward-sloping curve |
@@ -646,11 +666,11 @@ The two outputs are identical to the printed precision.
 
 Lean proves when the implied volatility exists, payer-receiver parity, and the survival measure's change of unit, for any inputs the card allows.
 
-- Take $A$, $F$, $K$ and $T$ all positive, and a quoted payer premium $V$. Then exactly one positive $\sigma$ prices the payer at $V$ if and only if $A(F-K)^+ < V < AF$.
-- Take any annuity, spread, strike, expiry and volatility. Then payer minus receiver equals $A(F - K)$.
-- Suppose $D(T)$ is positive, $A_T$ is positive on survival, and $A$ is positive. Then the weights $w$ form a probability measure, the survival measure.
-- Take any payoff $X$ at expiry that is zero on default before expiry. Then $\mathbb{E}[D(T)X] = A\,\mathbb{E}^{A}[X/A_T]$.
-- The hand steps for the half variance, $d_1$, $d_2$ and the payer that keeps FEP are exact.
+- Take $`A`$, $`F`$, $`K`$ and $`T`$ all positive, and a quoted payer premium $`V`$. Then exactly one positive $`\sigma`$ prices the payer at $`V`$ if and only if $`A(F-K)^+ < V < AF`$.
+- Take any annuity, spread, strike, expiry and volatility. Then payer minus receiver equals $`A(F - K)`$.
+- Suppose $`D(T)`$ is positive, $`A_T`$ is positive on survival, and $`A`$ is positive. Then the weights $`w`$ form a probability measure, the survival measure.
+- Take any payoff $`X`$ at expiry that is zero on default before expiry. Then $`\mathbb{E}[D(T)X] = A\,\mathbb{E}^{A}[X/A_T]`$.
+- The hand steps for the half variance, $`d_1`$, $`d_2`$ and the payer that keeps FEP are exact.
 - The premium 2.332014 percent lies inside Black's range, and 1.20 percent lies below its floor.
 
 The Black-76 integral, the front-end protection, the Greeks, the curve and the simulations are left to the Python and Rust checks.
@@ -999,12 +1019,12 @@ example : (120 : ℚ) / 100 < 1244724 / 10 ^ 6 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Multiplying Black's bracket by a discount factor instead of the forward risky annuity.** The option does not pay once. It delivers a CDS, a stream of premium differences that stops if Northwind defaults. The multiplier is the value of that stream per basis point, 3.069756, not $D(1)$ = 0.951229. The discount-factor version gives 0.722624 percent instead of 2.332014. The riskless annuity is closer, 2.603452 percent, but still wrong, because it keeps paying after a default that the CDS does not survive.
+> **Multiplying Black's bracket by a discount factor instead of the forward risky annuity.** The option does not pay once. It delivers a CDS, a stream of premium differences that stops if Northwind defaults. The multiplier is the value of that stream per basis point, 3.069756, not $`D(1)`$ = 0.951229. The discount-factor version gives 0.722624 percent instead of 2.332014. The riskless annuity is closer, 2.603452 percent, but still wrong, because it keeps paying after a default that the CDS does not survive.
 >
 > Smaller traps:
 > - **Mixing knock-out and non-knock-out quotes.** A premium that includes front-end protection, inverted through the knock-out formula, gives 86.99 percent volatility instead of 50. Subtract the 1.120398 percent first.
 > - **Using today's spread as the forward.** On an upward-sloping curve the forward is higher: 290.55 bp, not 250. At-the-money on today's spread is well in the money on the forward; pricing at 250 gives 1.515022 percent.
-> - **Taking spread delta as the hedge ratio for a curve move.** $A\,N(d_1)$ holds the annuity fixed. Move the whole curve by a basis point and the annuity shrinks too: 0.020955 against 0.021766 percent per bp.
+> - **Taking spread delta as the hedge ratio for a curve move.** $`A\,N(d_1)`$ holds the annuity fixed. Move the whole curve by a basis point and the annuity shrinks too: 0.020955 against 0.021766 percent per bp.
 > - **Reporting a volatility for any premium.** Below 1.244724 percent or above 8.919113 percent no volatility exists. A solver that returns its interval edge has not found a root.
 
 ---
@@ -1012,7 +1032,7 @@ example : (120 : ℚ) / 100 < 1244724 / 10 ^ 6 := by norm_num
 ## Where you meet it in real life
 
 - **Index options.** Most traded credit options are on CDS indices such as CDX and iTraxx ([Credit indices (CDX and iTraxx in outline)](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/04-credit-indices.md)). They are priced the same way: Black on the forward index spread, with the index's risky annuity as the unit. One difference matters. An index option does not knock out: names that default before expiry are settled when the option is exercised, so the front-end protection sits inside the payoff and inside the exercise decision, not on top of it. The market fix adds the expected loss before expiry, per unit of annuity, to the forward before Black is applied, and quotes the strike against the index's fixed coupon.
-- **Volatility quotes.** Dealers quote CDS and index options in implied spread volatility, the $\sigma$ that makes Black match the premium. Step 7 is why a single number can stand in for the price: inside the bounds, one premium and one volatility determine each other.
+- **Volatility quotes.** Dealers quote CDS and index options in implied spread volatility, the $`\sigma`$ that makes Black match the premium. Step 7 is why a single number can stand in for the price: inside the bounds, one premium and one volatility determine each other.
 - **Hedging bond portfolios.** A payer is cheap tail cover: it pays when spreads widen, and it costs less than protection bought outright because it can expire unused. Its delta, 0.021766 percent of notional per basis point here, says how much forward protection hedges it day to day.
 - **Stress in credit markets.** When spreads jump, the annuity shrinks as the spread rises: the payoff chart's bend. A hedge built on the fixed-annuity delta drifts off as spreads move.
 - **Random-hazard models.** Where spread volatility comes from is the subject of [A random hazard](03-stochastic-hazard-cox-process.md). The bond and basis cards, [A risky bond from the hazard curve](01-pricing-a-defaultable-bond-from-the-survival-curve.md) and [Implied hazard from a bond price, and why the CDS disagrees](02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md), price the cash side of the same Northwind curve.

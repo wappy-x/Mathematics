@@ -43,24 +43,28 @@ Three pieces of notation, in words first.
 - The sign ∏ is sigma's twin for multiplying. Where ∑ adds one term per whole number in a range, ∏ multiplies in one factor per whole number: here k = 1, then 2, and on without stopping.
 - 1/(1 − x^k) is shorthand for a list, not a division. It is the endless 1 + x^k + x^{2k} + … , whose product with 1 − x^k is 1 and nothing else. Each term of it is the one before times x^k, which is what **geometric** means.
 
-$$\sum_{n \ge 0} p(n)\,x^n \;=\; \prod_{k \ge 1} \frac{1}{1 - x^k}$$
+```math
+\sum_{n \ge 0} p(n)\,x^n \;=\; \prod_{k \ge 1} \frac{1}{1 - x^k}
+```
 
 **Read it aloud:** one endless bracket per part size, each offering any number of parts of that size; the number at the x^n place counts the partitions of n.
 
 The second statement trims every bracket to two terms:
 
-$$\prod_{k \ge 1}\left(1 + x^k\right) \;=\; \prod_{k \ge 1}\frac{1}{1 - x^{2k-1}}$$
+```math
+\prod_{k \ge 1}\left(1 + x^k\right) \;=\; \prod_{k \ge 1}\frac{1}{1 - x^{2k-1}}
+```
 
 **Read it aloud:** each size at most once, or odd sizes freely, come to the same count at every total.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the total shared out | 8 marbles | 204,226 ways at 50 |
-| $p(n)$ | partitions of n: cup sizes, order ignored | p(8) = 22 | — |
-| $k$ | one cup size, one bracket | 1, 2, … 8 | more brackets |
-| $m_k$ | cups holding k marbles | 3+3+2 has two cups of three | each adds k to the total |
-| $x$ | a tally mark, never a number | x^8 marks a total of 8 | — |
-| $d(n)$, $o(n)$ | no size twice; odd sizes only | d(8) = o(8) = 6 | always equal |
+| $`n`$ | the total shared out | 8 marbles | 204,226 ways at 50 |
+| $`p(n)`$ | partitions of n: cup sizes, order ignored | p(8) = 22 | — |
+| $`k`$ | one cup size, one bracket | 1, 2, … 8 | more brackets |
+| $`m_k`$ | cups holding k marbles | 3+3+2 has two cups of three | each adds k to the total |
+| $`x`$ | a tally mark, never a number | x^8 marks a total of 8 | — |
+| $`d(n)`$, $`o(n)`$ | no size twice; odd sizes only | d(8) = o(8) = 6 | always equal |
 
 ### When it holds
 
@@ -75,7 +79,7 @@ $$\prod_{k \ge 1}\left(1 + x^k\right) \;=\; \prod_{k \ge 1}\frac{1}{1 - x^{2k-1}
 
 ### Step 0: a sharing is a tally of sizes
 
-Take 3 + 3 + 2. Nothing of it survives but a tally: no cups of one, one of two, two of three, none above. So a sharing of n is a choice, for every size k, of a count $m_k$: how many cups hold k marbles. One times the ones, plus two times the twos, and so on, must add to n. Sizes constrain each other only through that total, and independent choices under one total are what a product does.
+Take 3 + 3 + 2. Nothing of it survives but a tally: no cups of one, one of two, two of three, none above. So a sharing of n is a choice, for every size k, of a count $`m_k`$: how many cups hold k marbles. One times the ones, plus two times the twos, and so on, must add to n. Sizes constrain each other only through that total, and independent choices under one total are what a product does.
 
 ### Step 1: one bracket per size, and multiplying out does the bookkeeping
 
@@ -101,7 +105,9 @@ Trim each bracket to two terms. Then 1 + x^k offers a cup of size k once or not 
 
 Since 1 − x^k times 1 + x^k is 1 − x^{2k}, that bracket is the list 1 − x^{2k} over 1 − x^k. Multiply over the sizes: the numerators 1 − x^2, 1 − x^4, 1 − x^6, … are exactly the even denominators, each cancelling its twin below and leaving the odd ones alone:
 
-$$\prod_{k \ge 1}\left(1 + x^k\right) \;=\; \prod_{k \ge 1}\frac{1 - x^{2k}}{1 - x^k} \;=\; \prod_{k \ge 1}\frac{1}{1 - x^{2k-1}}$$
+```math
+\prod_{k \ge 1}\left(1 + x^k\right) \;=\; \prod_{k \ge 1}\frac{1 - x^{2k}}{1 - x^k} \;=\; \prod_{k \ge 1}\frac{1}{1 - x^{2k-1}}
+```
 
 The right side is Step 1's product with the even sizes struck out, so its coefficient of x^n counts the sharings into odd sizes, o(n). One list of coefficients, so d(n) = o(n) always; the code lists both families at eight marbles, 6 each.
 

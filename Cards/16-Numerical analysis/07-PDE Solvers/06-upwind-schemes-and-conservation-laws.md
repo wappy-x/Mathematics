@@ -41,44 +41,46 @@ Orange: the exact pulse. Green: upwind, lower and wider. Dark blue: Lax-Wendroff
 
 ## The formula
 
-Notation first, as on [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md). The grid value $u_j^n$ is the computed concentration in cell $j$ after $n$ time steps. The **Courant number** $\nu = c\,\Delta t/h$ is the fraction of a cell the water crosses in one step. Here $\nu = 2.0 \times 0.1/0.25 = 0.80$.
+Notation first, as on [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md). The grid value $`u_j^n`$ is the computed concentration in cell $`j`$ after $`n`$ time steps. The **Courant number** $`\nu = c\,\Delta t/h`$ is the fraction of a cell the water crosses in one step. Here $`\nu = 2.0 \times 0.1/0.25 = 0.80`$.
 
-The river obeys $u_t + c\,u_x = 0$ with $c > 0$, so water flows toward larger $j$. The **upwind step** takes the space difference from the side the flow comes from:
+The river obeys $`u_t + c\,u_x = 0`$ with $`c > 0`$, so water flows toward larger $`j`$. The **upwind step** takes the space difference from the side the flow comes from:
 
-$$u_j^{n+1} = u_j^n - \nu\,\big(u_j^n - u_{j-1}^n\big), \qquad \text{and it behaves like} \qquad u_t + c\,u_x = \alpha_{\text{num}}\,u_{xx}, \quad \alpha_{\text{num}} = \frac{c\,h}{2}\,(1 - \nu).$$
+```math
+u_j^{n+1} = u_j^n - \nu\,\big(u_j^n - u_{j-1}^n\big), \qquad \text{and it behaves like} \qquad u_t + c\,u_x = \alpha_{\text{num}}\,u_{xx}, \quad \alpha_{\text{num}} = \frac{c\,h}{2}\,(1 - \nu).
+```
 
 **Read it aloud:** the new value is the old value, minus the Courant number times the drop from the upstream neighbour; and the grid then carries the pulse at the right speed while spreading it like a river that mixes at the rate c h (1 − ν)/2.
 
-The term $\alpha_{\text{num}} u_{xx}$ is a diffusion term, the same smoothing term as in [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md). The grid adds it; the river did not have it. The equation it appears in is the scheme's **modified equation**: the equation the grid solves more accurately than the one it was built for.
+The term $`\alpha_{\text{num}} u_{xx}`$ is a diffusion term, the same smoothing term as in [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md). The grid adds it; the river did not have it. The equation it appears in is the scheme's **modified equation**: the equation the grid solves more accurately than the one it was built for.
 
 The two other steps on this card, side by side with upwind:
 
 | Scheme | Update | Order | Behaviour on the river |
 | --- | --- | --- | --- |
-| centred | $u_j^n - \tfrac{\nu}{2}(u_{j+1}^n - u_{j-1}^n)$ | 1 in time, 2 in space | grows: unstable at every fixed $\nu > 0$ |
-| upwind | $u_j^n - \nu(u_j^n - u_{j-1}^n)$ | 1 | smears, never wobbles, for $0 \le \nu \le 1$ |
-| Lax-Wendroff | centred $+ \tfrac{\nu^2}{2}(u_{j+1}^n - 2u_j^n + u_{j-1}^n)$ | 2 | sharp, but wobbles behind the pulse |
+| centred | $`u_j^n - \tfrac{\nu}{2}(u_{j+1}^n - u_{j-1}^n)`$ | 1 in time, 2 in space | grows: unstable at every fixed $`\nu > 0`$ |
+| upwind | $`u_j^n - \nu(u_j^n - u_{j-1}^n)`$ | 1 | smears, never wobbles, for $`0 \le \nu \le 1`$ |
+| Lax-Wendroff | centred $`+ \tfrac{\nu^2}{2}(u_{j+1}^n - 2u_j^n + u_{j-1}^n)`$ | 2 | sharp, but wobbles behind the pulse |
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$; $u_t$, $u_{tt}$, $u_x$, $u_{xx}$, $u_{xxx}$ | the carried concentration; a subscript marks a rate: $u_t$ in time, $u_x$ along the river, a repeated letter a rate of a rate | mg/L | — |
-| $x$, $t$ | place along the river; time since the spill | km; h | — |
-| $c$ | the current's speed | 2.0 km/h | the pulse travels further per step |
-| $f$ | the starting pulse, $f(x) = 10\,e^{-x^2}$ | peak 10.0000 mg/L | every value scales with it |
-| $h$, $\Delta t$ | cell length; time step | 0.25 km; 0.1 h | larger $h$: more smear |
-| $\nu$ | Courant number $c\,\Delta t/h$ | 0.80 | toward 1, less smear; past 1, blow-up |
-| $u_j^n$ | computed value in cell $j$, at place $x_j$, after $n$ steps, at time $t_n$ | 7.9003 mg/L at 6 km, $n = 30$ | — |
-| $\xi$, $i$ | a wave's phase change per cell, from 0 to $\pi$; $i$ is $\sqrt{-1}$ | $\pi/4$, $\pi/2$, $\pi$ | shorter wave |
-| $g(\xi)$ | the factor one step multiplies that wave by | 0.8246 at $\xi = \pi/2$, upwind | above 1 in size: the wave grows |
-| $\alpha_{\text{num}}$ | numerical diffusivity: mixing the grid invents | 0.0500 km²/h = 13.89 m²/s | lower, wider peak |
-| $s^2$ | the pulse's variance, a measure of its width squared | 0.5 at the spill, 0.8000 km² at 3.0 h | lower peak, $10\sqrt{0.5/s^2}$ |
-| $F_{j+1/2}$ | flux: pollutant crossing the edge between cells $j$ and $j+1$, per hour | $c\,u_j^n$ | — |
+| $`u`$; $`u_t`$, $`u_{tt}`$, $`u_x`$, $`u_{xx}`$, $`u_{xxx}`$ | the carried concentration; a subscript marks a rate: $`u_t`$ in time, $`u_x`$ along the river, a repeated letter a rate of a rate | mg/L | — |
+| $`x`$, $`t`$ | place along the river; time since the spill | km; h | — |
+| $`c`$ | the current's speed | 2.0 km/h | the pulse travels further per step |
+| $`f`$ | the starting pulse, $`f(x) = 10\,e^{-x^2}`$ | peak 10.0000 mg/L | every value scales with it |
+| $`h`$, $`\Delta t`$ | cell length; time step | 0.25 km; 0.1 h | larger $`h`$: more smear |
+| $`\nu`$ | Courant number $`c\,\Delta t/h`$ | 0.80 | toward 1, less smear; past 1, blow-up |
+| $`u_j^n`$ | computed value in cell $`j`$, at place $`x_j`$, after $`n`$ steps, at time $`t_n`$ | 7.9003 mg/L at 6 km, $`n = 30`$ | — |
+| $`\xi`$, $`i`$ | a wave's phase change per cell, from 0 to $`\pi`$; $`i`$ is $`\sqrt{-1}`$ | $`\pi/4`$, $`\pi/2`$, $`\pi`$ | shorter wave |
+| $`g(\xi)`$ | the factor one step multiplies that wave by | 0.8246 at $`\xi = \pi/2`$, upwind | above 1 in size: the wave grows |
+| $`\alpha_{\text{num}}`$ | numerical diffusivity: mixing the grid invents | 0.0500 km²/h = 13.89 m²/s | lower, wider peak |
+| $`s^2`$ | the pulse's variance, a measure of its width squared | 0.5 at the spill, 0.8000 km² at 3.0 h | lower peak, $`10\sqrt{0.5/s^2}`$ |
+| $`F_{j+1/2}`$ | flux: pollutant crossing the edge between cells $`j`$ and $`j+1`$, per hour | $`c\,u_j^n`$ | — |
 
 ### When it holds
 
-- **The flow direction is known.** Upwind means "from the side the water comes from". If $c < 0$, the step must use $u_{j+1}$ instead. Using the downstream cell blows up: the check finds values of 10^5.7 mg/L after 3.0 h.
-- **The Courant number is at most 1.** The water must not cross more than one cell per step. At $\nu = 1.2$ (a 0.15 h step) the upwind grid reaches 14.0384 mg/L and −1.0038 mg/L.
-- **The speed is steady and the equation linear.** The diffusivity formula uses a constant $c$. For a speed that depends on $u$, as in flood waves or traffic, the conservation form below still applies, but shocks need theory beyond this wing.
+- **The flow direction is known.** Upwind means "from the side the water comes from". If $`c < 0`$, the step must use $`u_{j+1}`$ instead. Using the downstream cell blows up: the check finds values of 10^5.7 mg/L after 3.0 h.
+- **The Courant number is at most 1.** The water must not cross more than one cell per step. At $`\nu = 1.2`$ (a 0.15 h step) the upwind grid reaches 14.0384 mg/L and −1.0038 mg/L.
+- **The speed is steady and the equation linear.** The diffusivity formula uses a constant $`c`$. For a speed that depends on $`u`$, as in flood waves or traffic, the conservation form below still applies, but shocks need theory beyond this wing.
 - **The pulse is smooth on the scale of a cell.** The modified equation comes from a Taylor series. Its leading term predicts the upwind peak to 0.0054 mg/L here, but a pulse only one or two cells wide is beyond it.
 
 ---
@@ -93,15 +95,17 @@ The water at 6.00 km at 3.0 h was at 5.80 km at 2.9 h. Nothing downstream of 6.0
 
 Rearrange the upwind update:
 
-$$u_j^{n+1} = (1 - \nu)\,u_j^n + \nu\,u_{j-1}^n.$$
+```math
+u_j^{n+1} = (1 - \nu)\,u_j^n + \nu\,u_{j-1}^n.
+```
 
-The water now in cell $j$ was a distance $\nu h$ upstream one step ago. That point lies between cells $j-1$ and $j$. The update reads the old value there by drawing a straight line between the two cells.
+The water now in cell $`j`$ was a distance $`\nu h`$ upstream one step ago. That point lies between cells $`j-1`$ and $`j`$. The update reads the old value there by drawing a straight line between the two cells.
 
 <p align="center"><img src="../figures/upwind-schemes-and-conservation-laws.svg" alt="One upwind step to scale: the water reaching 6.00 km at 3.0 h came from 5.80 km at 2.9 h, between cells at 5.75 and 6.00 km, weighted 0.8 and 0.2" width="420"></p>
 
 To scale: the cells at 5.50, 5.75, 6.00 and 6.25 km sit at x = 60, 140, 220 and 300, and the 0.1 h step runs from y = 180 up to y = 60. The dashed path has slope 2.0 km/h. It lands at 5.80 km, which is 0.8 of the way from 6.00 km toward 5.75 km. So the 5.75 km cell gets weight 0.8 and the 6.00 km cell gets 0.2. The 6.25 km cell is not used.
 
-For $0 \le \nu \le 1$ both weights are between 0 and 1 and add to 1. A weighted average of that kind can never exceed its largest input or fall below its smallest. So:
+For $`0 \le \nu \le 1`$ both weights are between 0 and 1 and add to 1. A weighted average of that kind can never exceed its largest input or fall below its smallest. So:
 
 - the grid never shows more than the largest old value, 10.0000 mg/L;
 - it never shows less than the smallest, 0.0000 mg/L;
@@ -111,52 +115,56 @@ A scheme with this property is called **monotone**: it creates no new peaks or d
 
 ### Step 2: the wave test agrees, and convicts the centred step
 
-[Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md) feeds a single wave $e^{i\xi j}$ into a step and reads off the factor $g(\xi)$ it is multiplied by, and its Step 4 already derives $g$ for all three of these schemes. Here $i$ is $\sqrt{-1}$ and $\xi$ is the wave's phase change per cell, written $\xi h$ on that card. A wave grows when $|g| > 1$. In this notation $|g|^2$ is $1 - 2\nu(1-\nu)(1 - \cos\xi)$ for upwind, $1 + \nu^2\sin^2\xi$ for centred, and $1 - \nu^2(1-\nu^2)(1-\cos\xi)^2$ for Lax-Wendroff.
+[Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md) feeds a single wave $`e^{i\xi j}`$ into a step and reads off the factor $`g(\xi)`$ it is multiplied by, and its Step 4 already derives $`g`$ for all three of these schemes. Here $`i`$ is $`\sqrt{-1}`$ and $`\xi`$ is the wave's phase change per cell, written $`\xi h`$ on that card. A wave grows when $`|g| > 1`$. In this notation $`|g|^2`$ is $`1 - 2\nu(1-\nu)(1 - \cos\xi)`$ for upwind, $`1 + \nu^2\sin^2\xi`$ for centred, and $`1 - \nu^2(1-\nu^2)(1-\cos\xi)^2`$ for Lax-Wendroff.
 
-For upwind, $|g|^2 \le 1$ exactly when $0 \le \nu \le 1$. For centred, $|g|^2 > 1$ for every wave except the flat one and the shortest one, at every $\nu > 0$. Shrinking the step along with the cell, at a fixed $\nu$, does not save it.
+For upwind, $`|g|^2 \le 1`$ exactly when $`0 \le \nu \le 1`$. For centred, $`|g|^2 > 1`$ for every wave except the flat one and the shortest one, at every $`\nu > 0`$. Shrinking the step along with the cell, at a fixed $`\nu`$, does not save it.
 
 The check measures each factor by feeding a cosine wave into one step on a periodic grid of 16 cells:
 
-| Scheme | $\xi = \pi/4$ | $\xi = \pi/2$ | $\xi = \pi$ |
+| Scheme | $`\xi = \pi/4`$ | $`\xi = \pi/2`$ | $`\xi = \pi`$ |
 | --- | --- | --- | --- |
 | upwind | 0.9520 | 0.8246 | 0.6000 |
 | centred | 1.1489 | 1.2806 | 1.0000 |
 | Lax-Wendroff | 0.9901 | 0.8773 | 0.2800 |
 
-Measured and formula agree to within 1e-12, and the check asserts it. The centred step multiplies the $\xi = \pi/2$ wave, four cells long, by 1.2806 every step.
+Measured and formula agree to within 1e-12, and the check asserts it. The centred step multiplies the $`\xi = \pi/2`$ wave, four cells long, by 1.2806 every step.
 
-Which wave does the damage? A bell curve contains every wavelength, the short ones only with tiny weight. The $\xi = \pi/2$ wave grows 1670-fold in 30 steps, yet the spill holds only 1 part in 19334 of it. A longer wave wins: the check takes the centred error apart into waves (a discrete Fourier transform) and finds the strongest at $\xi = 0.277\pi$, 7.2 cells long. The spill holds 1 part in 21 of it, and 30 steps grow it 117.3-fold. That wave dominates the error behind the 65.4478 mg/L peak.
+Which wave does the damage? A bell curve contains every wavelength, the short ones only with tiny weight. The $`\xi = \pi/2`$ wave grows 1670-fold in 30 steps, yet the spill holds only 1 part in 19334 of it. A longer wave wins: the check takes the centred error apart into waves (a discrete Fourier transform) and finds the strongest at $`\xi = 0.277\pi`$, 7.2 cells long. The spill holds 1 part in 21 of it, and 30 steps grow it 117.3-fold. That wave dominates the error behind the 65.4478 mg/L peak.
 
 ### Step 3: the hidden term is a diffusion
 
 Write the upwind step as the centred step plus a correction:
 
-$$u_j^n - \nu(u_j^n - u_{j-1}^n) \;=\; \underbrace{u_j^n - \tfrac{\nu}{2}(u_{j+1}^n - u_{j-1}^n)}_{\text{centred}} \;+\; \tfrac{\nu}{2}\big(u_{j+1}^n - 2u_j^n + u_{j-1}^n\big).$$
+```math
+u_j^n - \nu(u_j^n - u_{j-1}^n) \;=\; \underbrace{u_j^n - \tfrac{\nu}{2}(u_{j+1}^n - u_{j-1}^n)}_{\text{centred}} \;+\; \tfrac{\nu}{2}\big(u_{j+1}^n - 2u_j^n + u_{j-1}^n\big).
+```
 
-The last bracket is about $h^2 u_{xx}$: a grid version of the second derivative. So upwinding is centred differencing plus added smoothing. That smoothing is what stabilises it.
+The last bracket is about $`h^2 u_{xx}`$: a grid version of the second derivative. So upwinding is centred differencing plus added smoothing. That smoothing is what stabilises it.
 
-A Taylor series gives the amount, to leading order. The forward time step itself contributes a negative diffusion, $-\tfrac{c^2\Delta t}{2}u_{xx}$. The upwind correction contributes $+\tfrac{c h}{2}u_{xx}$. The sum is
+A Taylor series gives the amount, to leading order. The forward time step itself contributes a negative diffusion, $`-\tfrac{c^2\Delta t}{2}u_{xx}`$. The upwind correction contributes $`+\tfrac{c h}{2}u_{xx}`$. The sum is
 
-$$\alpha_{\text{num}} = \frac{c h}{2} - \frac{c^2\Delta t}{2} = \frac{c h}{2}(1 - \nu) = \frac{2.0 \times 0.25}{2} \times 0.2 = 0.0500 \text{ km}^2/\text{h}.$$
+```math
+\alpha_{\text{num}} = \frac{c h}{2} - \frac{c^2\Delta t}{2} = \frac{c h}{2}(1 - \nu) = \frac{2.0 \times 0.25}{2} \times 0.2 = 0.0500 \text{ km}^2/\text{h}.
+```
 
 The centred step has only the negative part: a river that un-mixes. That is the backward heat equation, which magnifies short waves, the same verdict as Step 2.
 
 <details>
 <summary>Detailed proof: the modified equation of the upwind step</summary>
 
-Let $u$ be a smooth function and put it into the upwind step. Expand each grid value about $(x_j, t_n)$ by Taylor's theorem:
+Let $`u`$ be a smooth function and put it into the upwind step. Expand each grid value about $`(x_j, t_n)`$ by Taylor's theorem:
 
-$$u_j^{n+1} = u + \Delta t\,u_t + \tfrac{\Delta t^2}{2}u_{tt} + O(\Delta t^3), \qquad u_{j-1}^n = u - h\,u_x + \tfrac{h^2}{2}u_{xx} + O(h^3).$$
+$`\displaystyle u_j^{n+1} = u + \Delta t\,u_t + \tfrac{\Delta t^2}{2}u_{tt} + O(\Delta t^3), \qquad u_{j-1}^n = u - h\,u_x + \tfrac{h^2}{2}u_{xx} + O(h^3).`$
 
-Substitute into $\frac{u_j^{n+1} - u_j^n}{\Delta t} + c\,\frac{u_j^n - u_{j-1}^n}{h} = 0$:
+Substitute into $`\frac{u_j^{n+1} - u_j^n}{\Delta t} + c\,\frac{u_j^n - u_{j-1}^n}{h} = 0`$:
 
-$$u_t + \tfrac{\Delta t}{2}u_{tt} + c\,u_x - \tfrac{c h}{2}u_{xx} = O(h^2) \quad\text{with } \nu \text{ held fixed as } h \to 0.$$
+$`\displaystyle u_t + \tfrac{\Delta t}{2}u_{tt} + c\,u_x - \tfrac{c h}{2}u_{xx} = O(h^2) \quad\text{with } \nu \text{ held fixed as } h \to 0.`$
 
-To leading order $u_t = -c\,u_x$, so $u_{tt} = c^2 u_{xx} + O(h)$. Replace $u_{tt}$:
+To leading order $`u_t = -c\,u_x`$, so $`u_{tt} = c^2 u_{xx} + O(h)`$. Replace $`u_{tt}`$:
 
-$$u_t + c\,u_x = \Big(\tfrac{c h}{2} - \tfrac{c^2\Delta t}{2}\Big)u_{xx} + O(h^2) = \tfrac{c h}{2}(1-\nu)\,u_{xx} + O(h^2).$$
+$`\displaystyle u_t + c\,u_x = \Big(\tfrac{c h}{2} - \tfrac{c^2\Delta t}{2}\Big)u_{xx} + O(h^2) = \tfrac{c h}{2}(1-\nu)\,u_{xx} + O(h^2).`$
 
-The same expansion for Lax-Wendroff cancels the $u_{xx}$ term exactly; that is how its correction $\tfrac{\nu^2}{2}$ was chosen. What is left is a third-derivative term, $-\tfrac{c h^2}{6}(1-\nu^2)\,u_{xxx}$. A third derivative does not smooth. It makes waves of different lengths travel at different speeds, called **dispersion**. Short waves fall behind and leave the ripple seen upstream of the pulse.
+The same expansion for Lax-Wendroff cancels the $`u_{xx}`$ term exactly; that is how its correction $`\tfrac{\nu^2}{2}`$ was chosen. What is left is a third-derivative term, $`-\tfrac{c h^2}{6}(1-\nu^2)\,u_{xxx}`$. A third derivative does not smooth. It makes waves of different lengths travel at different speeds, called **dispersion**. Short waves fall behind and leave the ripple seen upstream of the pulse.
 
 The derivation follows Warming and Hyett (1974).
 
@@ -164,21 +172,25 @@ The derivation follows Warming and Hyett (1974).
 
 ### Step 4: a diffused bell curve has a closed form
 
-A bell curve under diffusion stays a bell curve. Its variance grows by $2\alpha_{\text{num}} t$, as on [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md), and its total stays the same, so its peak falls as $1/s$. The spill $10\,e^{-x^2}$ has variance $s^2 = 0.5$ km². After 3.0 h of numerical diffusion:
+A bell curve under diffusion stays a bell curve. Its variance grows by $`2\alpha_{\text{num}} t`$, as on [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md), and its total stays the same, so its peak falls as $`1/s`$. The spill $`10\,e^{-x^2}`$ has variance $`s^2 = 0.5`$ km². After 3.0 h of numerical diffusion:
 
-$$s^2 = 0.5 + 2 \times 0.05 \times 3 = 0.8000 \text{ km}^2, \qquad \text{peak} = 10\sqrt{0.5/0.8} = 7.9057 \text{ mg/L}.$$
+```math
+s^2 = 0.5 + 2 \times 0.05 \times 3 = 0.8000 \text{ km}^2, \qquad \text{peak} = 10\sqrt{0.5/0.8} = 7.9057 \text{ mg/L}.
+```
 
 The upwind grid reads 7.9003 mg/L. The modified equation predicts the smear to 0.0054 mg/L. Across the whole river, the grid is up to 2.0997 mg/L from the exact pulse but only 0.1165 from the diffused bell curve. Numerical diffusion explains almost all of upwind's error.
 
 ### Step 5: conservation form keeps the pollutant
 
-Think of $u_j^n$ as the average concentration over cell $j$, so cell $j$ holds $h\,u_j^n$ of pollutant per unit of cross-section. Each step, pollutant leaves through the right edge and enters through the left. The upwind flux says the water crossing an edge carries the concentration of the cell it leaves: $F_{j+1/2} = c\,u_j^n$. Then
+Think of $`u_j^n`$ as the average concentration over cell $`j`$, so cell $`j`$ holds $`h\,u_j^n`$ of pollutant per unit of cross-section. Each step, pollutant leaves through the right edge and enters through the left. The upwind flux says the water crossing an edge carries the concentration of the cell it leaves: $`F_{j+1/2} = c\,u_j^n`$. Then
 
-$$u_j^{n+1} = u_j^n - \frac{\Delta t}{h}\big(F_{j+1/2} - F_{j-1/2}\big),$$
+```math
+u_j^{n+1} = u_j^n - \frac{\Delta t}{h}\big(F_{j+1/2} - F_{j-1/2}\big),
+```
 
 which is the upwind step again. This is the **conservation form**, the starting point of the **finite volume method**: track what crosses each cell edge.
 
-Add the update over all cells. Each inner edge's flux leaves one cell and enters the next, so the inner fluxes cancel. Only the two ends of the reach can change the total. The spill's total is $10\sqrt{\pi} = 17.7245385$ mg/L·km. After 30 upwind steps the grid holds 17.7245384. The pulse is smeared, but no pollutant is lost.
+Add the update over all cells. Each inner edge's flux leaves one cell and enters the next, so the inner fluxes cancel. Only the two ends of the reach can change the total. The spill's total is $`10\sqrt{\pi} = 17.7245385`$ mg/L·km. After 30 upwind steps the grid holds 17.7245384. The pulse is smeared, but no pollutant is lost.
 
 ### Step 6: Godunov's theorem, the choice
 
@@ -196,16 +208,16 @@ The upwind step at 6.00 km, from 2.9 h to 3.0 h, then the smear predicted by the
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Courant number $\nu$ | $2.0 \times 0.1 / 0.25$ | 0.80 |
+| Courant number $`\nu`$ | $`2.0 \times 0.1 / 0.25`$ | 0.80 |
 | upstream cell at 2.9 h, 5.75 km | from the grid | 7.9238 mg/L |
 | this cell at 2.9 h, 6.00 km | from the grid | 7.8063 mg/L |
-| upwind step | $7.8063 - 0.8 \times (7.8063 - 7.9238)$ | 7.9003 mg/L |
-| numerical diffusivity | $2.0 \times 0.25 \times (1 - 0.8)/2$ | 0.0500 km²/h |
-| same, in m²/s | $0.05 \times 10^6 / 3600$ | 13.89 m²/s |
-| variance at 3.0 h | $0.5 + 2 \times 0.05 \times 3$ | 0.8000 km² |
-| predicted peak | $10\sqrt{0.5/0.8}$ | 7.9057 mg/L |
+| upwind step | $`7.8063 - 0.8 \times (7.8063 - 7.9238)`$ | 7.9003 mg/L |
+| numerical diffusivity | $`2.0 \times 0.25 \times (1 - 0.8)/2`$ | 0.0500 km²/h |
+| same, in m²/s | $`0.05 \times 10^6 / 3600`$ | 13.89 m²/s |
+| variance at 3.0 h | $`0.5 + 2 \times 0.05 \times 3`$ | 0.8000 km² |
+| predicted peak | $`10\sqrt{0.5/0.8}`$ | 7.9057 mg/L |
 | exact peak | the pulse is only shifted | 10.0000 mg/L |
-| **upwind's error at the peak** | $10.0000 - 7.9003$ | **2.0997 mg/L** |
+| **upwind's error at the peak** | $`10.0000 - 7.9003`$ | **2.0997 mg/L** |
 
 The peak error is also the largest error anywhere on the grid. The upwind model under-reports the worst concentration by about a fifth, and the modified equation predicted that before the grid was run.
 
@@ -215,7 +227,7 @@ The peak error is also the largest error anywhere on the grid. The upwind model 
 | --- | --- | --- |
 | centred difference with a forward time step | peak 65.4478, lowest −60.7129 mg/L at 3.0 h; 10^10.0 mg/L by 12 h | every wave but two grows; Step 2 |
 | difference taken from the downstream side | 10^5.7 mg/L at 3.0 h | information read from where the water is going |
-| step too long: $\nu = 1.2$, a 0.15 h step | peak 14.0384, lowest −1.0038 mg/L | the weight $1 - \nu$ turns negative, so the average becomes an extrapolation |
+| step too long: $`\nu = 1.2`$, a 0.15 h step | peak 14.0384, lowest −1.0038 mg/L | the weight $`1 - \nu`$ turns negative, so the average becomes an extrapolation |
 | upwind smear read as real mixing | 13.89 m²/s of mixing that is not there | a calibrated "dispersion" absorbs the grid's own error |
 
 The checks print all four.
@@ -249,13 +261,13 @@ xychart-beta
     line [0.11, 0.49, -1.40, -2.82, 4.41, 13.50, 12.78, 6.26, 1.81, 0.32, 0.04, 0.00, 0.00]
 ```
 
-Orange: the exact pulse, centred at 2 km. Green: the centred grid after 10 steps. Its peak is too high and too far upstream, and a ripple already trails behind it, below zero at 0.0 and 0.5 km. The strongest wave in its error is $\xi = 0.185\pi$, 10.8 cells long, grown 2.4-fold in 10 steps. By 3.0 h the strongest is 7.2 cells long: shorter waves grow faster, so the ripple tightens as it grows.
+Orange: the exact pulse, centred at 2 km. Green: the centred grid after 10 steps. Its peak is too high and too far upstream, and a ripple already trails behind it, below zero at 0.0 and 0.5 km. The strongest wave in its error is $`\xi = 0.185\pi`$, 10.8 cells long, grown 2.4-fold in 10 steps. By 3.0 h the strongest is 7.2 cells long: shorter waves grow faster, so the ripple tightens as it grows.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code runs the three schemes on the same river and grid. It reaches the upwind answer by three independent roads: the exact shifted pulse, the grid stepped with no formula, and the modified equation's diffused bell curve. It measures each growth factor by feeding a wave through one step, and compares it with the von Neumann formula. It shows the order of each scheme from errors at three cell lengths, checks the pollutant total against $10\sqrt{\pi}$, and prints every failure in the table above.
+The code runs the three schemes on the same river and grid. It reaches the upwind answer by three independent roads: the exact shifted pulse, the grid stepped with no formula, and the modified equation's diffused bell curve. It measures each growth factor by feeding a wave through one step, and compares it with the von Neumann formula. It shows the order of each scheme from errors at three cell lengths, checks the pollutant total against $`10\sqrt{\pi}`$, and prints every failure in the table above.
 
 ### Python
 
@@ -673,10 +685,10 @@ The two outputs match line for line. Upwind's error ratios, 1.71 then 1.82, clim
 
 Lean proves the card's three facts about the steps for every river speed, cell length and smooth pulse, not just this river.
 
-- With the Courant number $\nu$ at most 1, every upwind step keeps each cell between the smallest and largest starting values, after any number of steps.
-- Feed the exact moving pulse into the upwind step, with $\nu$ held fixed. It misses by $-\alpha_{\text{num}} u_{xx}$, with $\alpha_{\text{num}} = c h (1 - \nu)/2$, up to an error of order $h^2$ as $h \to 0$.
-- For every $\nu > 0$, the centred step's growth factor has $|g(\xi)| > 1$ for every wave except the flat one and the shortest one.
-- The hand arithmetic holds: $\nu = 0.80$, $\alpha_{\text{num}} = 0.0500$ km²/h $= 125/9$ m²/s, the variance 0.8000 km², $\nu = 1.2$, and the squared growth factors behind 0.6000, 0.2800 and 1.2806.
+- With the Courant number $`\nu`$ at most 1, every upwind step keeps each cell between the smallest and largest starting values, after any number of steps.
+- Feed the exact moving pulse into the upwind step, with $`\nu`$ held fixed. It misses by $`-\alpha_{\text{num}} u_{xx}`$, with $`\alpha_{\text{num}} = c h (1 - \nu)/2`$, up to an error of order $`h^2`$ as $`h \to 0`$.
+- For every $`\nu > 0`$, the centred step's growth factor has $`|g(\xi)| > 1`$ for every wave except the flat one and the shortest one.
+- The hand arithmetic holds: $`\nu = 0.80`$, $`\alpha_{\text{num}} = 0.0500`$ km²/h $`= 125/9`$ m²/s, the variance 0.8000 km², $`\nu = 1.2`$, and the squared growth factors behind 0.6000, 0.2800 and 1.2806.
 
 Every grid run, the upwind wave test, pollutant conservation and each scheme's order are left to the Python and Rust checks.
 
@@ -839,10 +851,10 @@ example : 1 + (4 / 5 : ℝ) ^ 2 * Real.sin (Real.pi / 2) ^ 2 = 41 / 25 := by
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Courant number exactly 1.** Guess first: does the smear vanish? The loop `for nu in (1.0, 0.5)` runs it. At `nu = 1.0` the upwind peak is 10.0000 mg/L. The water crosses exactly one cell per step, the update copies each cell into the next, and $\alpha_{\text{num}} = 0$.
-> - **A shorter time step.** Guess first: does halving the step from $\nu = 1$ help? The same loop runs `nu = 0.5`. It hurts: the peak falls to 6.3126 mg/L, against 6.3246 predicted. More, shorter steps add more smear, because $1 - \nu$ grows.
-> - **Halve the cell.** Guess first: how much of the 2.0997 mg/L error goes? The loop `for h in (0.25, 0.125, 0.0625)` runs it at a fixed $\nu = 0.8$. At `h = 0.125` the peak rises to 8.7700 mg/L and the largest error falls to 1.2300 mg/L. Less than half the error goes, because order 1 is reached only slowly.
-> - **Too long a step.** Guess first: what does $\nu = 1.2$ do to upwind? The line `big = run("upwind", nu=1.2)` runs it: peak 14.0384, lowest −1.0038 mg/L. The weight $1 - \nu$ is negative, so the "average" overshoots.
+> - **Courant number exactly 1.** Guess first: does the smear vanish? The loop `for nu in (1.0, 0.5)` runs it. At `nu = 1.0` the upwind peak is 10.0000 mg/L. The water crosses exactly one cell per step, the update copies each cell into the next, and $`\alpha_{\text{num}} = 0`$.
+> - **A shorter time step.** Guess first: does halving the step from $`\nu = 1`$ help? The same loop runs `nu = 0.5`. It hurts: the peak falls to 6.3126 mg/L, against 6.3246 predicted. More, shorter steps add more smear, because $`1 - \nu`$ grows.
+> - **Halve the cell.** Guess first: how much of the 2.0997 mg/L error goes? The loop `for h in (0.25, 0.125, 0.0625)` runs it at a fixed $`\nu = 0.8`$. At `h = 0.125` the peak rises to 8.7700 mg/L and the largest error falls to 1.2300 mg/L. Less than half the error goes, because order 1 is reached only slowly.
+> - **Too long a step.** Guess first: what does $`\nu = 1.2`$ do to upwind? The line `big = run("upwind", nu=1.2)` runs it: peak 14.0384, lowest −1.0038 mg/L. The weight $`1 - \nu`$ is negative, so the "average" overshoots.
 
 ---
 
@@ -851,10 +863,10 @@ example : 1 + (4 / 5 : ℝ) ^ 2 * Real.sin (Real.pi / 2) ^ 2 = 41 / 25 := by
 > [!warning]
 > **Trusting a smooth upwind answer.** A smeared pulse looks physical. It has no wiggles and no negative values, so nothing flags it. But its peak is 7.9003 mg/L where the truth is 10.0000, and the spread is the grid's own 13.89 m²/s of mixing. If that model is calibrated to field data, the fitted mixing rate absorbs the grid error and the model then gives the wrong answer on any other grid.
 >
-> - **Shrinking the time step to fix the smear.** It makes it worse. At $\nu = 0.5$ the peak falls to 6.3126 mg/L. Hold $\nu$ near 1 and shrink $h$.
+> - **Shrinking the time step to fix the smear.** It makes it worse. At $`\nu = 0.5`$ the peak falls to 6.3126 mg/L. Hold $`\nu`$ near 1 and shrink $`h`$.
 > - **Upwinding by the grid's direction, not the flow's.** If the current reverses, as in a tidal river, the "upstream" cell changes side. The downstream difference reaches 10^5.7 mg/L in 3.0 h.
 > - **Clipping negative values from Lax-Wendroff.** Setting the dips, down to −0.1286 mg/L, to zero adds pollutant that was never spilled. The total rises from 17.7245385 to 17.8028402 mg/L·km.
-> - **Treating the centred step as "just needs a smaller step".** At any fixed $\nu$ its growth factor exceeds 1, and by 12 h it reaches 10^10.0 mg/L. Only a time step that shrinks like $h^2$ tames it, at far more steps than upwind needs.
+> - **Treating the centred step as "just needs a smaller step".** At any fixed $`\nu`$ its growth factor exceeds 1, and by 12 h it reaches 10^10.0 mg/L. Only a time step that shrinks like $`h^2`$ tames it, at far more steps than upwind needs.
 
 ---
 
@@ -872,12 +884,12 @@ example : 1 + (4 / 5 : ℝ) ^ 2 * Real.sin (Real.pi / 2) ^ 2 = 41 / 25 := by
 
 ## What this builds on
 
-- [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md): the growth factor $g(\xi)$, the Courant number $\nu$ and the CFL condition $\nu \le 1$ (the water must not outrun the grid). This card applies them to three transport steps.
-- [The transport equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md): the river, the pulse, and the exact answer $f(x - ct)$. It already ran an upwind grid as a second road; this card explains that grid's error.
+- [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md): the growth factor $`g(\xi)`$, the Courant number $`\nu`$ and the CFL condition $`\nu \le 1`$ (the water must not outrun the grid). This card applies them to three transport steps.
+- [The transport equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md): the river, the pulse, and the exact answer $`f(x - ct)`$. It already ran an upwind grid as a second road; this card explains that grid's error.
 
 ## Where this goes next
 
-- [Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md): the implicit time-centred step, met there on the heat equation. Used on the river with centred differences in space, it keeps $|g| = 1$: no growth and no smear, but the waves still disperse.
+- [Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md): the implicit time-centred step, met there on the heat equation. Used on the river with centred differences in space, it keeps $`|g| = 1`$: no growth and no smear, but the waves still disperse.
 - [Spectral methods](10-spectral-methods-and-the-fft.md): differentiate by transforming all the samples at once, shown there on a heated ring. For a smooth periodic function the error falls faster than any power of the number of points.
 - [Finite elements](07-finite-elements-galerkin-and-hat-functions.md): another way to build the grid equations, by integrating against test functions, shown there on a sagging cable. On a flow problem, plain Galerkin weighs both neighbours equally, as the centred step does.
 

@@ -36,36 +36,42 @@ Orange: the wave, cos t, with t on the real axis. Green: the cable, cos(it), the
 
 ## The formula
 
-Notation first, in words. "e to the z", written $e^z$, is the exponential series summed at the complex number z. The rate of change d/dz is the limit of the slope (f(z + h) − f(z))/h as the complex step h shrinks to 0 from every direction ([The complex derivative](01-complex-derivative-and-cauchy-riemann.md)). A function with that rate everywhere in the plane is called **entire**.
+Notation first, in words. "e to the z", written $`e^z`$, is the exponential series summed at the complex number z. The rate of change d/dz is the limit of the slope (f(z + h) − f(z))/h as the complex step h shrinks to 0 from every direction ([The complex derivative](01-complex-derivative-and-cauchy-riemann.md)). A function with that rate everywhere in the plane is called **entire**.
 
-$$e^{z} = \sum_{n=0}^{\infty} \frac{z^n}{n!}, \qquad \frac{d}{dz}\,e^{z} = e^{z}$$
+```math
+e^{z} = \sum_{n=0}^{\infty} \frac{z^n}{n!}, \qquad \frac{d}{dz}\,e^{z} = e^{z}
+```
 
 **Read it aloud:** e to the z is the sum of z to the n over n factorial, and its rate of change is itself.
 
-$$\cos z = \frac{e^{iz} + e^{-iz}}{2}, \qquad \sin z = \frac{e^{iz} - e^{-iz}}{2i}$$
+```math
+\cos z = \frac{e^{iz} + e^{-iz}}{2}, \qquad \sin z = \frac{e^{iz} - e^{-iz}}{2i}
+```
 
 **Read it aloud:** cosine is the average of e to the iz and e to the minus iz; sine is their half-difference, divided by i.
 
-$$\cos(iy) = \cosh y, \qquad \sin(iy) = i\,\sinh y$$
+```math
+\cos(iy) = \cosh y, \qquad \sin(iy) = i\,\sinh y
+```
 
 **Read it aloud:** cosine a distance y up the imaginary axis is the hyperbolic cosine of y; sine there is i times the hyperbolic sine.
 
-Proved below: $|\sin(x+iy)|^2 = \sin^2 x + \sinh^2 y$, so sine is unbounded; $e^z \neq 0$; and $e^{z+2\pi i} = e^z$.
+Proved below: $`|\sin(x+iy)|^2 = \sin^2 x + \sinh^2 y`$, so sine is unbounded; $`e^z \neq 0`$; and $`e^{z+2\pi i} = e^z`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$, $x$, $y$ | a complex input, z = x + iy | z = i: x = 0, y = 1 | y up: sine grows like e^y / 2 |
-| $i$ | square −1; multiplying by it turns a quarter | wave's axis to cable's | — |
-| $e$, $e^z$ | the base of natural growth; the exponential at z | e^(1 + i) = 1.468694 + 2.287355i | x stretches; y turns |
-| $\sin$, $\cos$ | sine and cosine of complex inputs | sin(i) = 1.175201i | unbounded off the real axis |
-| $\sinh$, $\cosh$ | half-difference and average of e^y and e^−y | cosh 1 = 1.543081 | both climb |
-| $h$ | a small complex step for a slope | size 0.1 down to 0.00001 | smaller: slope nearer e^z |
-| $n$, $n!$ | term number; 1 × 2 × … × n | 60 terms in the code | — |
-| $\pi$, $\bar z$ | a half turn; z-bar, z mirrored: x − iy | period 2πi | — |
+| $`z`$, $`x`$, $`y`$ | a complex input, z = x + iy | z = i: x = 0, y = 1 | y up: sine grows like e^y / 2 |
+| $`i`$ | square −1; multiplying by it turns a quarter | wave's axis to cable's | — |
+| $`e`$, $`e^z`$ | the base of natural growth; the exponential at z | e^(1 + i) = 1.468694 + 2.287355i | x stretches; y turns |
+| $`\sin`$, $`\cos`$ | sine and cosine of complex inputs | sin(i) = 1.175201i | unbounded off the real axis |
+| $`\sinh`$, $`\cosh`$ | half-difference and average of e^y and e^−y | cosh 1 = 1.543081 | both climb |
+| $`h`$ | a small complex step for a slope | size 0.1 down to 0.00001 | smaller: slope nearer e^z |
+| $`n`$, $`n!`$ | term number; 1 × 2 × … × n | 60 terms in the code | — |
+| $`\pi`$, $`\bar z`$ | a half turn; z-bar, z mirrored: x − iy | period 2πi | — |
 
 ### When it holds
 
-- **Every complex input.** The series converges for every z, so $e^z$, sin z and cos z are entire.
+- **Every complex input.** The series converges for every z, so $`e^z`$, sin z and cos z are entire.
 - **Identities from adding exponents carry over.** Angle sums and cos^2 z + sin^2 z = 1 hold for all complex z.
 - **Inequalities do not.** |sin x| ≤ 1 is about real x: sin(3i) has size 10.017875. The identity cos^2 z + sin^2 z = 1 survives, but sin(i)^2 = −1.381098 is negative, so cos(i)^2 = 2.381098 exceeds 1.
 - **Undoing needs a choice.** The exponential repeats every 2πi; the choice is made on [The complex logarithm](04-complex-logarithm.md).
@@ -80,7 +86,7 @@ The exponential series converges on the whole plane ([Euler's formula](../01-Com
 
 ### Step 1: the exponential is its own rate of change
 
-Differentiate the series term by term. The term $z^n/n!$ has rate $n z^{n-1}/n!$, which is $z^{n-1}/(n-1)!$: the term before it. So the differentiated series is the same series shifted by one place, and $\frac{d}{dz}e^z = e^z$.
+Differentiate the series term by term. The term $`z^n/n!`$ has rate $`n z^{n-1}/n!`$, which is $`z^{n-1}/(n-1)!`$: the term before it. So the differentiated series is the same series shifted by one place, and $`\frac{d}{dz}e^z = e^z`$.
 
 At z = 1 + i the exponential is 1.468694 + 2.287355i. The slope (e^(z + h) − e^z)/h with steps of size 0.1, 0.001, 0.00001 misses it by 0.140560, 0.001360, 0.000014 stepping along the real axis, and by 0.135876, 0.001359, 0.000014 stepping straight up. Every direction closes on the same number, as a complex derivative demands.
 
@@ -89,25 +95,27 @@ At z = 1 + i the exponential is 1.468694 + 2.287355i. The slope (e^(z + h) − e
 
 Exponents add ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md), Step 4), so
 
-$$\frac{e^{z+h} - e^{z}}{h} - e^{z} = e^{z}\Big(\frac{e^{h} - 1}{h} - 1\Big) = e^{z} \sum_{n=2}^{\infty} \frac{h^{n-1}}{n!}.$$
+$`\displaystyle \frac{e^{z+h} - e^{z}}{h} - e^{z} = e^{z}\Big(\frac{e^{h} - 1}{h} - 1\Big) = e^{z} \sum_{n=2}^{\infty} \frac{h^{n-1}}{n!}.`$
 
-Each term has size at most $|h|\cdot|h|^{n-2}/(n-2)!$, so the sum has size at most $|h|\,e^{|h|}$. Given a tolerance ε > 0, take δ = min(1, ε / (e |e^z|)). Any step with 0 < |h| < δ puts the slope within |e^z| · |h| · e < ε of e^z. The direction of h never entered, so the limit is $e^z$ from every direction.
+Each term has size at most $`|h|\cdot|h|^{n-2}/(n-2)!`$, so the sum has size at most $`|h|\,e^{|h|}`$. Given a tolerance ε > 0, take δ = min(1, ε / (e |e^z|)). Any step with 0 < |h| < δ puts the slope within |e^z| · |h| · e < ε of e^z. The direction of h never entered, so the limit is $`e^z`$ from every direction.
 
 </details>
 
 ### Step 2: sine and cosine are fixed by two exponentials
 
-For a real angle θ, Euler's formula gives $e^{i\theta} = \cos\theta + i\sin\theta$ and $e^{-i\theta} = \cos\theta - i\sin\theta$. Add and halve: cosine. Subtract and divide by 2i: sine. The right-hand sides make sense for any complex z, so they define cos z and sin z; on the real line they return the old functions.
+For a real angle θ, Euler's formula gives $`e^{i\theta} = \cos\theta + i\sin\theta`$ and $`e^{-i\theta} = \cos\theta - i\sin\theta`$. Add and halve: cosine. Subtract and divide by 2i: sine. The right-hand sides make sense for any complex z, so they define cos z and sin z; on the real line they return the old functions.
 
-They match the old series too. In $e^{iz} + e^{-iz}$ the odd powers cancel, leaving $1 - z^2/2! + z^4/4! - \cdots$; the difference keeps the odd powers. The code sums those series separately at z = i and gets the same 1.543081 and 1.175201i.
+They match the old series too. In $`e^{iz} + e^{-iz}`$ the odd powers cancel, leaving $`1 - z^2/2! + z^4/4! - \cdots`$; the difference keeps the odd powers. The code sums those series separately at z = i and gets the same 1.543081 and 1.175201i.
 
-Each is entire. The rate of $e^{iz}$ is $i e^{iz}$ by the chain rule, so the rate of sin z is cos z and of cos z is −sin z.
+Each is entire. The rate of $`e^{iz}`$ is $`i e^{iz}`$ by the chain rule, so the rate of sin z is cos z and of cos z is −sin z.
 
 ### Step 3: turn the input a quarter and you get cosh and sinh
 
 Put z = iy, a point y up the imaginary axis. Then iz = −y and −iz = y, both real.
 
-$$\cos(iy) = \frac{e^{-y} + e^{y}}{2} = \cosh y, \qquad \sin(iy) = \frac{e^{-y} - e^{y}}{2i} = \frac{-2\sinh y}{2i} = i\sinh y,$$
+```math
+\cos(iy) = \frac{e^{-y} + e^{y}}{2} = \cosh y, \qquad \sin(iy) = \frac{e^{-y} - e^{y}}{2i} = \frac{-2\sinh y}{2i} = i\sinh y,
+```
 
 using 1/i = −i. At y = 1: cos(i) = 1.543081, the cable one unit out, and sin(i) = 1.175201i. Read the other way, cosh z = cos(iz) and sinh z = −i sin(iz): the hyperbolic functions are the circular ones with the input turned a quarter.
 
@@ -115,21 +123,25 @@ using 1/i = −i. At y = 1: cos(i) = 1.543081, the cable one unit out, and sin(i
 
 The angle-sum formula for sine comes from adding exponents, so it holds for complex inputs. With Step 3 it gives
 
-$$\sin(x + iy) = \sin x\,\cosh y + i\cos x\,\sinh y.$$
+```math
+\sin(x + iy) = \sin x\,\cosh y + i\cos x\,\sinh y.
+```
 
 At 1 + 3i both routes give 8.471645 + 5.412681i. Square the two parts, add, and use cosh^2 y = 1 + sinh^2 y:
 
-$$|\sin(x+iy)|^2 = \sin^2 x\,(1 + \sinh^2 y) + \cos^2 x\,\sinh^2 y = \sin^2 x + \sinh^2 y.$$
+```math
+|\sin(x+iy)|^2 = \sin^2 x\,(1 + \sinh^2 y) + \cos^2 x\,\sinh^2 y = \sin^2 x + \sinh^2 y.
+```
 
 Sinh y grows like e^y / 2, so the size of sine climbs without end up the imaginary axis: 1.175201 at i, 10.017875 at 3i, 11013.232875 at 10i. The size is 0 only when y = 0 and sin x = 0, so sine gains no zeros off the real line. [Liouville's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md), later in this wing, says a bounded entire function is constant, so unboundedness was forced.
 
 ### Step 5: the exponential never vanishes, and it repeats
 
-Exponents add, so $e^z e^{-z} = e^0 = 1$; the code gets 1.000000 + 0.000000i at z = 1 + i. A product equal to 1 has no zero factor, so $e^z \neq 0$.
+Exponents add, so $`e^z e^{-z} = e^0 = 1`$; the code gets 1.000000 + 0.000000i at z = 1 + i. A product equal to 1 has no zero factor, so $`e^z \neq 0`$.
 
-A full turn returns the arrow: $e^{2\pi i} = 1$, so $e^{z+2\pi i} = e^z$. At 1 + i both are 1.468694 + 2.287355i. Sine and cosine keep their real period 2π; cosh and sinh, turned a quarter, repeat every 2πi.
+A full turn returns the arrow: $`e^{2\pi i} = 1`$, so $`e^{z+2\pi i} = e^z`$. At 1 + i both are 1.468694 + 2.287355i. Sine and cosine keep their real period 2π; cosh and sinh, turned a quarter, repeat every 2πi.
 
-A second road to the rate: $e^{x+iy} = e^x\cos y + i e^x\sin y$. Its real part u and imaginary part v have partial derivatives $u_x = e^x\cos y = v_y$ and $u_y = -e^x\sin y = -v_x$, continuous everywhere. These are the Cauchy–Riemann equations of [The complex derivative](01-complex-derivative-and-cauchy-riemann.md), and the rate $u_x + i v_x$ is $e^z$ again.
+A second road to the rate: $`e^{x+iy} = e^x\cos y + i e^x\sin y`$. Its real part u and imaginary part v have partial derivatives $`u_x = e^x\cos y = v_y`$ and $`u_y = -e^x\sin y = -v_x`$, continuous everywhere. These are the Cauchy–Riemann equations of [The complex derivative](01-complex-derivative-and-cauchy-riemann.md), and the rate $`u_x + i v_x`$ is $`e^z`$ again.
 
 ---
 
@@ -160,7 +172,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Both programs build $e^z$ from its own series and take three roads to cosine and sine: two exponentials, their own power series, and cosh and sinh from the real exponential. The asserts check that the roads agree at i and at seven points up the imaginary axis; that $e^{1+i}$ equals e(cos 1 + i sin 1), its slopes close in, and a full turn returns it; and that e^(z-bar) has two different slopes.
+Both programs build $`e^z`$ from its own series and take three roads to cosine and sine: two exponentials, their own power series, and cosh and sinh from the real exponential. The asserts check that the roads agree at i and at seven points up the imaginary axis; that $`e^{1+i}`$ equals e(cos 1 + i sin 1), its slopes close in, and a full turn returns it; and that e^(z-bar) has two different slopes.
 
 ### Python
 
@@ -520,5 +532,5 @@ The exponential repeats every 2πi, so undoing it needs a choice of copy; that c
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Euler, Leonhard. *Introductio in analysin infinitorum*, volume 1, 1748. [Euler Archive, E101](https://scholarlycommons.pacific.edu/euler-works/101/). Chapter 8 writes cosine and sine as sums of imaginary exponentials.
-- Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 1: power series, term-by-term derivatives, $e^z$, sin z, cos z.
+- Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 1: power series, term-by-term derivatives, $`e^z`$, sin z, cos z.
 - Orloff, Jeremy. "Topic 2: Analytic functions." MIT OpenCourseWare 18.04, Spring 2018. [Course notes](https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/resources/mit18_04s18_topic2/). Free notes: complex derivatives, entire functions, complex cosh and sinh.

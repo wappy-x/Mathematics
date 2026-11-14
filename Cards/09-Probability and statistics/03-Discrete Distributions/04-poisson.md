@@ -38,44 +38,52 @@ The bars are the Poisson law with average 12. The line is the coarse slot model:
 
 ## The formula
 
-A count $X$ follows the Poisson law with average $\lambda > 0$, written X ~ Poisson($\lambda$) and read "X follows the Poisson law with mean lambda", when
+A count $`X`$ follows the Poisson law with average $`\lambda > 0`$, written X ~ Poisson($`\lambda`$) and read "X follows the Poisson law with mean lambda", when
 
-$$p_k = P(X = k) = e^{-\lambda}\,\frac{\lambda^k}{k!}, \qquad k = 0, 1, 2, \ldots$$
+```math
+p_k = P(X = k) = e^{-\lambda}\,\frac{\lambda^k}{k!}, \qquad k = 0, 1, 2, \ldots
+```
 
 **Read it aloud:** the chance of exactly k events is e (about 2.71828) to the minus lambda, times lambda to the power k, divided by k factorial.
 
 Two facts ride with it:
 
-$$E[X] = \lambda, \qquad \mathrm{Var}(X) = \lambda$$
+```math
+E[X] = \lambda, \qquad \mathrm{Var}(X) = \lambda
+```
 
 The average count is lambda, and so is the variance: the spread is fixed by the average.
 
 The help desk's question is a tail: the chance of anything above 20.
 
-$$P(X > 20) = 1 - \sum_{k=0}^{20} e^{-12}\,\frac{12^k}{k!} = 0.011598$$
+```math
+P(X > 20) = 1 - \sum_{k=0}^{20} e^{-12}\,\frac{12^k}{k!} = 0.011598
+```
 
-A recurrence makes the sum a chain of multiplications. Start at $p_0 = e^{-\lambda}$, then each mass is the one before times lambda over the new count:
+A recurrence makes the sum a chain of multiplications. Start at $`p_0 = e^{-\lambda}`$, then each mass is the one before times lambda over the new count:
 
-$$p_{k+1} = p_k \cdot \frac{\lambda}{k+1}$$
+```math
+p_{k+1} = p_k \cdot \frac{\lambda}{k+1}
+```
 
 The ratio is above 1 while the count is below lambda, and below 1 after. So the masses climb, peak at 11 and 12 (equal, because 12/12 is 1), then fall away.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the count: emails that arrive in one hour | anything from 0 up | — |
-| $k$ | one particular count asked about | 20 is the cut-off | the tail beyond it shrinks |
-| $p_k$; $p_0$, $p_{11}$, $p_{12}$, $p_{20}$, $p_{21}$ | the chance of exactly k emails, P(X = k) | $p_{20}$ = 0.009682 | — |
-| $\lambda$, $np$ | lambda: the average count in the window; also the variance | 12 | the whole hump slides right and widens; the tail above 20 grows |
-| $r$ | the rate: average emails per hour | 12 per hour | $\lambda$ grows in step |
-| $t$ | the window's length, in hours | 1 | $\lambda$ = r × t grows in step |
-| $e$ | the base of natural growth, about 2.71828 | $e^{-12}$ = 6.1442e-06 | — |
-| $k!$ | k factorial: 1 × 2 × … × k, with 0! = 1 | 20! for the last term | — |
-| $n$ | the number of slots the window is cut into | 60, 600, 3600, 36000 | the binomial lands closer to the Poisson |
-| $p$ | the chance of an email in one slot, $\lambda/n$ | 0.2 down to 0.000333 | — |
-| $B_n$ | the slot-model count, binomial with n slots and chance p | tail 0.004826 at 60 slots | — |
-| $E[X]$, $\mathrm{Var}(X)$ | the long-run average of X, and its variance | 12 and 12 | — |
+| $`X`$ | the count: emails that arrive in one hour | anything from 0 up | — |
+| $`k`$ | one particular count asked about | 20 is the cut-off | the tail beyond it shrinks |
+| $`p_k`$; $`p_0`$, $`p_{11}`$, $`p_{12}`$, $`p_{20}`$, $`p_{21}`$ | the chance of exactly k emails, P(X = k) | $`p_{20}`$ = 0.009682 | — |
+| $`\lambda`$, $`np`$ | lambda: the average count in the window; also the variance | 12 | the whole hump slides right and widens; the tail above 20 grows |
+| $`r`$ | the rate: average emails per hour | 12 per hour | $`\lambda`$ grows in step |
+| $`t`$ | the window's length, in hours | 1 | $`\lambda`$ = r × t grows in step |
+| $`e`$ | the base of natural growth, about 2.71828 | $`e^{-12}`$ = 6.1442e-06 | — |
+| $`k!`$ | k factorial: 1 × 2 × … × k, with 0! = 1 | 20! for the last term | — |
+| $`n`$ | the number of slots the window is cut into | 60, 600, 3600, 36000 | the binomial lands closer to the Poisson |
+| $`p`$ | the chance of an email in one slot, $`\lambda/n`$ | 0.2 down to 0.000333 | — |
+| $`B_n`$ | the slot-model count, binomial with n slots and chance p | tail 0.004826 at 60 slots | — |
+| $`E[X]`$, $`\mathrm{Var}(X)`$ | the long-run average of X, and its variance | 12 and 12 | — |
 
-$E[X]$ is read "the average value of X in the long run", and $\mathrm{Var}(X)$ is the average squared distance from that average. [Expectation](../02-Random%20Variables/02-expectation.md) and [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md) define both. The standard deviation, the square root of the variance, is 3.4641 here.
+$`E[X]`$ is read "the average value of X in the long run", and $`\mathrm{Var}(X)`$ is the average squared distance from that average. [Expectation](../02-Random%20Variables/02-expectation.md) and [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md) define both. The standard deviation, the square root of the variance, is 3.4641 here.
 
 ### When it holds
 
@@ -91,62 +99,70 @@ $E[X]$ is read "the average value of X in the long run", and $\mathrm{Var}(X)$ i
 
 ### Step 0: the average is the only thing that survives
 
-The slot picture has two dials, the number of slots $n$ and the chance per slot $p$. Their product $np$ is the average count. Refining the slots turns $n$ up and $p$ down together, holding $np$ at 12. The claim is that in the limit the binomial's answer depends on $np$ alone. Every step below is that claim, made exact.
+The slot picture has two dials, the number of slots $`n`$ and the chance per slot $`p`$. Their product $`np`$ is the average count. Refining the slots turns $`n`$ up and $`p`$ down together, holding $`np`$ at 12. The claim is that in the limit the binomial's answer depends on $`np`$ alone. Every step below is that claim, made exact.
 
 ### Step 1: write the binomial with the average built in
 
-With $p = \lambda/n$, the binomial chance of exactly k emails in n slots splits into four factors:
+With $`p = \lambda/n`$, the binomial chance of exactly k emails in n slots splits into four factors:
 
-$$P(B_n = k) = \underbrace{\frac{n(n-1)\cdots(n-k+1)}{n^k}}_{\to 1}\cdot\frac{\lambda^k}{k!}\cdot\underbrace{\left(1-\frac{\lambda}{n}\right)^{n}}_{\to e^{-\lambda}}\cdot\underbrace{\left(1-\frac{\lambda}{n}\right)^{-k}}_{\to 1}$$
+```math
+P(B_n = k) = \underbrace{\frac{n(n-1)\cdots(n-k+1)}{n^k}}_{\to 1}\cdot\frac{\lambda^k}{k!}\cdot\underbrace{\left(1-\frac{\lambda}{n}\right)^{n}}_{\to e^{-\lambda}}\cdot\underbrace{\left(1-\frac{\lambda}{n}\right)^{-k}}_{\to 1}
+```
 
-The first factor is k numbers each close to n, divided by n multiplied k times: for a fixed count like 20 it creeps toward 1 as the slots multiply. The last factor is a fixed number of copies of something close to 1. The middle factor $\lambda^k/k!$ never depended on n at all.
+The first factor is k numbers each close to n, divided by n multiplied k times: for a fixed count like 20 it creeps toward 1 as the slots multiply. The last factor is a fixed number of copies of something close to 1. The middle factor $`\lambda^k/k!`$ never depended on n at all.
 
 ### Step 2: the one factor that does not go to 1
 
-$(1 - \lambda/n)^n$ is the chance that every one of n slots stays empty. Each slot is nearly certain to be empty, but there are very many of them, and the two pull in opposite directions. Take the logarithm and use the Taylor series of $\ln(1-u)$, which is $-u - u^2/2 - \ldots$ for small u ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)):
+$`(1 - \lambda/n)^n`$ is the chance that every one of n slots stays empty. Each slot is nearly certain to be empty, but there are very many of them, and the two pull in opposite directions. Take the logarithm and use the Taylor series of $`\ln(1-u)`$, which is $`-u - u^2/2 - \ldots`$ for small u ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)):
 
-$$n \ln\!\left(1 - \frac{\lambda}{n}\right) = -\lambda - \frac{\lambda^2}{2n} - \ldots \;\longrightarrow\; -\lambda$$
+```math
+n \ln\!\left(1 - \frac{\lambda}{n}\right) = -\lambda - \frac{\lambda^2}{2n} - \ldots \;\longrightarrow\; -\lambda
+```
 
-So the chance of an empty hour tends to $e^{-\lambda}$. For the help desk, $e^{-12}$ = 6.1442e-06: an hour with no email at all happens a few times in a million hours.
+So the chance of an empty hour tends to $`e^{-\lambda}`$. For the help desk, $`e^{-12}`$ = 6.1442e-06: an hour with no email at all happens a few times in a million hours.
 
-Multiply the four limits and the Poisson mass appears: $e^{-\lambda}\lambda^k/k!$. The count of slots has disappeared.
+Multiply the four limits and the Poisson mass appears: $`e^{-\lambda}\lambda^k/k!`$. The count of slots has disappeared.
 
 ### Step 3: the masses add to 1
 
-A law must account for every outcome. The Taylor series of the exponential says $\sum_{k \ge 0} \lambda^k/k! = e^{\lambda}$, so the masses add to $e^{-\lambda} e^{\lambda} = 1$. No count is left out, even though the counts run without end.
+A law must account for every outcome. The Taylor series of the exponential says $`\sum_{k \ge 0} \lambda^k/k! = e^{\lambda}`$, so the masses add to $`e^{-\lambda} e^{\lambda} = 1`$. No count is left out, even though the counts run without end.
 
 ### Step 4: mean equals variance
 
 Two sums, each by the same move: cancel k against k!, then shift the index so the exponential series reappears.
 
-$$E[X] = \sum_{k\ge1} k\,e^{-\lambda}\frac{\lambda^k}{k!} = \lambda \sum_{j\ge0} e^{-\lambda}\frac{\lambda^j}{j!} = \lambda$$
+```math
+E[X] = \sum_{k\ge1} k\,e^{-\lambda}\frac{\lambda^k}{k!} = \lambda \sum_{j\ge0} e^{-\lambda}\frac{\lambda^j}{j!} = \lambda
+```
 
-$$E[X(X-1)] = \sum_{k\ge2} k(k-1)\,e^{-\lambda}\frac{\lambda^k}{k!} = \lambda^2$$
+```math
+E[X(X-1)] = \sum_{k\ge2} k(k-1)\,e^{-\lambda}\frac{\lambda^k}{k!} = \lambda^2
+```
 
-Then $E[X^2] = E[X(X-1)] + E[X] = \lambda^2 + \lambda$, and the variance, the average square minus the square of the average, is $\lambda^2 + \lambda - \lambda^2 = \lambda$. At the help desk: mean 12, variance 12, standard deviation 3.4641.
+Then $`E[X^2] = E[X(X-1)] + E[X] = \lambda^2 + \lambda`$, and the variance, the average square minus the square of the average, is $`\lambda^2 + \lambda - \lambda^2 = \lambda`$. At the help desk: mean 12, variance 12, standard deviation 3.4641.
 
-The binomial explains why. Its variance is $np(1-p)$. The factor $1-p$ is the chance a slot stays empty, and as slots shrink it tends to 1, so the variance closes in on $np$, the mean.
+The binomial explains why. Its variance is $`np(1-p)`$. The factor $`1-p`$ is the chance a slot stays empty, and as slots shrink it tends to 1, so the variance closes in on $`np`$, the mean.
 
 <details>
 <summary>Detailed proof: the binomial limit, with every factor accounted for</summary>
 
-Fix a count $k$ and let $n > k$ with $p = \lambda/n < 1$. The binomial mass is $\binom{n}{k} p^k (1-p)^{n-k}$, and $\binom{n}{k} = n(n-1)\cdots(n-k+1)/k!$. Substitute $p = \lambda/n$ and regroup:
+Fix a count $`k`$ and let $`n > k`$ with $`p = \lambda/n < 1`$. The binomial mass is $`\binom{n}{k} p^k (1-p)^{n-k}`$, and $`\binom{n}{k} = n(n-1)\cdots(n-k+1)/k!`$. Substitute $`p = \lambda/n`$ and regroup:
 
-$$\binom{n}{k}\frac{\lambda^k}{n^k}\left(1-\frac{\lambda}{n}\right)^{n-k} = \frac{\lambda^k}{k!}\cdot\prod_{j=0}^{k-1}\left(1-\frac{j}{n}\right)\cdot\left(1-\frac{\lambda}{n}\right)^{n}\cdot\left(1-\frac{\lambda}{n}\right)^{-k}.$$
+$`\displaystyle \binom{n}{k}\frac{\lambda^k}{n^k}\left(1-\frac{\lambda}{n}\right)^{n-k} = \frac{\lambda^k}{k!}\cdot\prod_{j=0}^{k-1}\left(1-\frac{j}{n}\right)\cdot\left(1-\frac{\lambda}{n}\right)^{n}\cdot\left(1-\frac{\lambda}{n}\right)^{-k}.`$
 
-The product has k factors, a number that does not grow with n, and each tends to 1, so the product tends to 1. The last factor is a fixed power of a number tending to 1, so it tends to 1. For the middle factor, $\ln(1-u) = -u - u^2/2 - u^3/3 - \ldots$ for $0 \le u < 1$, and for $u \le 1/2$ the terms after the first add to at most $u^2$ in size (they are bounded by the geometric series $u^2/2 \cdot (1 + u + u^2 + \ldots) \le u^2$). With $u = \lambda/n$ and $n \ge 2\lambda$, so that u is at most 1/2:
+The product has k factors, a number that does not grow with n, and each tends to 1, so the product tends to 1. The last factor is a fixed power of a number tending to 1, so it tends to 1. For the middle factor, $`\ln(1-u) = -u - u^2/2 - u^3/3 - \ldots`$ for $`0 \le u < 1`$, and for $`u \le 1/2`$ the terms after the first add to at most $`u^2`$ in size (they are bounded by the geometric series $`u^2/2 \cdot (1 + u + u^2 + \ldots) \le u^2`$). With $`u = \lambda/n`$ and $`n \ge 2\lambda`$, so that u is at most 1/2:
 
-$$\left| n\ln\!\left(1-\frac{\lambda}{n}\right) + \lambda \right| \le n\cdot\frac{\lambda^2}{n^2} = \frac{\lambda^2}{n} \to 0.$$
+$`\displaystyle \left| n\ln\!\left(1-\frac{\lambda}{n}\right) + \lambda \right| \le n\cdot\frac{\lambda^2}{n^2} = \frac{\lambda^2}{n} \to 0.`$
 
-The exponential is continuous, so $(1-\lambda/n)^n \to e^{-\lambda}$. A product of finitely many convergent factors converges to the product of the limits, which is $e^{-\lambda}\lambda^k/k!$. The proof holds k fixed; for a count that grows with n it gives no guarantee, and a separate bound is needed.
+The exponential is continuous, so $`(1-\lambda/n)^n \to e^{-\lambda}`$. A product of finitely many convergent factors converges to the product of the limits, which is $`e^{-\lambda}\lambda^k/k!`$. The proof holds k fixed; for a count that grows with n it gives no guarantee, and a separate bound is needed.
 
-Moments: the sums in Step 4 have non-negative terms, so reordering and shifting the index is safe, and each shifted sum is the exponential series, which converges for every λ. Hence $E[X] = \lambda$ and $E[X(X-1)] = \lambda^2$ are finite, and $\mathrm{Var}(X) = \lambda$ follows by subtraction.
+Moments: the sums in Step 4 have non-negative terms, so reordering and shifting the index is safe, and each shifted sum is the exponential series, which converges for every λ. Hence $`E[X] = \lambda`$ and $`E[X(X-1)] = \lambda^2`$ are finite, and $`\mathrm{Var}(X) = \lambda`$ follows by subtraction.
 
 </details>
 
 ### Step 5: how close is close
 
-The limit does not say how fast. Lucien Le Cam proved a bound for n independent slots, each with chance p. The chance of any event, such as "more than 20", differs between the two laws by at most $n p^2 = \lambda^2/n$, here 144/n.
+The limit does not say how fast. Lucien Le Cam proved a bound for n independent slots, each with chance p. The chance of any event, such as "more than 20", differs between the two laws by at most $`n p^2 = \lambda^2/n`$, here 144/n.
 
 At 3600 slots the bound is 0.0400 and the actual gap 1.29e-04. The gap times n settles near 0.465, so the error shrinks like 1/n, as the bound says, with a far smaller constant.
 
@@ -159,12 +175,12 @@ The limit is one road to the Poisson law. The other builds it from waiting times
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | lambda | 12 emails an hour × 1 hour | 12 |
-| empty hour, $p_0$ | $e^{-12}$ | 6.1442e-06 |
-| the peak, $p_{11}$ and $p_{12}$ | chain the recurrence 11 and 12 times | 0.114368 each |
-| exactly 20, $p_{20}$ | chain on to 20 | 0.009682 |
-| 20 or fewer | $p_0 + p_1 + \cdots + p_{20}$ | 0.988402 |
+| empty hour, $`p_0`$ | $`e^{-12}`$ | 6.1442e-06 |
+| the peak, $`p_{11}`$ and $`p_{12}`$ | chain the recurrence 11 and 12 times | 0.114368 each |
+| exactly 20, $`p_{20}`$ | chain on to 20 | 0.009682 |
+| 20 or fewer | $`p_0 + p_1 + \cdots + p_{20}`$ | 0.988402 |
 | more than 20 | 1 − 0.988402 | **0.011598** |
-| check from above: $p_{21}$ | 0.009682 × 12/21 | 0.005533 |
+| check from above: $`p_{21}`$ | 0.009682 × 12/21 | 0.005533 |
 | bracket | each later ratio is at most 12/22, so the tail is at most 0.005533 × 22/10 | 0.012172 |
 
 The answer, 0.011598, sits inside the bracket from 0.005533 to 0.012172. The bracket needs nothing but the first term above the cut and a geometric series, so it is a check a pencil can finish.
@@ -175,7 +191,7 @@ In the world: the desk overflows in about one hour in 86. The cut-off, 20, is 2.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| "More than 20" read as "20 or more" | 0.021280 | adds $p_{20}$ = 0.009682, nearly doubling the answer |
+| "More than 20" read as "20 or more" | 0.021280 | adds $`p_{20}`$ = 0.009682, nearly doubling the answer |
 | Cut the hour into 60 one-minute slots, at most one email each | 0.004826 | slots too coarse: the variance falls to 9.6 and the busy hours vanish |
 | Normal curve at mean 12, standard deviation 3.4641, with the usual half-step | 0.007069 | the Poisson leans right; a symmetric curve thins the tail |
 | A coin flip picks rate 6 or 18 each hour | 0.134641 | the steady-rate hypothesis dropped: variance 48, not 12 |
@@ -195,7 +211,7 @@ The programs reach the tail by five roads.
 - Road 4 is the binomial with the hour cut into 60, 600, 3600 and 36000 slots, computed by its own recurrence, never by the Poisson formula.
 - Road 5 simulates 200,000 hours with a seeded generator, SplitMix64, written out in both languages so both draw the same numbers.
 
-The simulation multiplies random numbers between 0 and 1 until the product falls below $e^{-12}$ and counts the multiplications before that. Why that count is Poisson belongs to [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md). The simulation uses only $e^{-12}$, not the mass formula. Every simulated number is printed with its standard error. The normal-curve area is built from its own Taylor series.
+The simulation multiplies random numbers between 0 and 1 until the product falls below $`e^{-12}`$ and counts the multiplications before that. Why that count is Poisson belongs to [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md). The simulation uses only $`e^{-12}`$, not the mass formula. Every simulated number is printed with its standard error. The normal-curve area is built from its own Taylor series.
 
 ### Python
 
@@ -560,10 +576,10 @@ The two outputs match line for line. The simulated tail, 0.01150 with standard e
 
 Lean proves the binomial limit, the masses adding to 1, and mean equal to variance, for every lambda above 0.
 
-- Take lambda above 0, a fixed count k, and n slots, each with chance lambda/n. Then the binomial chance of exactly k events tends to $e^{-\lambda}\lambda^k/k!$ as n grows.
-- Take any lambda above 0. Then the masses $e^{-\lambda}\lambda^k/k!$, summed over every count k from 0 up, add to exactly 1.
-- Take a count X ~ Poisson($\lambda$) with lambda above 0. Then $E[X] = \lambda$ and $\mathrm{Var}(X) = \lambda$.
-- The hand arithmetic holds exactly: the equal peak at 11 and 12, the step from $p_{20}$ to $p_{21}$, and the bracket's 22/10.
+- Take lambda above 0, a fixed count k, and n slots, each with chance lambda/n. Then the binomial chance of exactly k events tends to $`e^{-\lambda}\lambda^k/k!`$ as n grows.
+- Take any lambda above 0. Then the masses $`e^{-\lambda}\lambda^k/k!`$, summed over every count k from 0 up, add to exactly 1.
+- Take a count X ~ Poisson($`\lambda`$) with lambda above 0. Then $`E[X] = \lambda`$ and $`\mathrm{Var}(X) = \lambda`$.
+- The hand arithmetic holds exactly: the equal peak at 11 and 12, the step from $`p_{20}`$ to $`p_{21}`$, and the bracket's 22/10.
 - The arithmetic behind the variances checks too: 24 for pairs, 48 for the coin flip, and 9.6 for 60 one-minute slots.
 
 The decimals, the tail 0.011598, Le Cam's bound itself, the simulation and the mistakes table are left to the Python and Rust checks.
@@ -723,14 +739,14 @@ example : (12 : ℕ) * 2 = 24 := by norm_num
 - **Radioactive decay and biology.** Clicks of a Geiger counter in a second, mutations along a genome: counts of independent rare events.
 
 > **Say it back**
-> Cut a window into many slots, each with a small chance of an event, independent of the others, and the count of events follows the binomial. Refine the slots while holding the average fixed and the binomial tends to the Poisson law, $e^{-\lambda}\lambda^k/k!$, which depends on the average alone. Its mean and its variance both equal lambda. At a help desk averaging 12 emails an hour, more than 20 arrive in 0.011598 of hours, about one in 86. The law fails when events cluster, come in pairs, or arrive at a changing rate, and the variance running above the mean is the sign.
+> Cut a window into many slots, each with a small chance of an event, independent of the others, and the count of events follows the binomial. Refine the slots while holding the average fixed and the binomial tends to the Poisson law, $`e^{-\lambda}\lambda^k/k!`$, which depends on the average alone. Its mean and its variance both equal lambda. At a help desk averaging 12 emails an hour, more than 20 arrive in 0.011598 of hours, about one in 86. The law fails when events cluster, come in pairs, or arrive at a changing rate, and the variance running above the mean is the sign.
 
 ---
 
 ## What this builds on
 
-- [Binomial](01-bernoulli-and-binomial.md): the slot model, its mass formula, and its variance $np(1-p)$.
-- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the series for $e^x$ that makes the masses add to 1, and the series for $\ln(1-u)$ that turns the empty-hour chance into $e^{-\lambda}$.
+- [Binomial](01-bernoulli-and-binomial.md): the slot model, its mass formula, and its variance $`np(1-p)`$.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the series for $`e^x`$ that makes the masses add to 1, and the series for $`\ln(1-u)`$ that turns the empty-hour chance into $`e^{-\lambda}`$.
 
 ## Where this goes next
 

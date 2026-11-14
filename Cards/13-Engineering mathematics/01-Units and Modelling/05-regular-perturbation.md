@@ -35,47 +35,53 @@ Orange: the exact period. Green: the easy answer plus two corrections. Dark blue
 
 ## The formula
 
-Two pieces of notation first, in words. The Greek letter $\varepsilon$ (epsilon) names the small number an expansion is built on. $O(\varepsilon^3)$, read "order epsilon cubed", stands for a remainder no bigger than some fixed multiple of $\varepsilon^3$ once $\varepsilon$ is small enough.
+Two pieces of notation first, in words. The Greek letter $`\varepsilon`$ (epsilon) names the small number an expansion is built on. $`O(\varepsilon^3)`$, read "order epsilon cubed", stands for a remainder no bigger than some fixed multiple of $`\varepsilon^3`$ once $`\varepsilon`$ is small enough.
 
-The pendulum's law, from [The pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md), is $\theta'' = -(g/l)\sin\theta$, with $g$ the acceleration of gravity and $l$ the rod length: the angle's acceleration is minus $g/l$ times its sine. The swing starts at rest at angle $a$. Count time $t$ in units of $\sqrt{l/g}$, 0.318310 s here, and measure the angle in units of the release angle, $u = \theta/a$. Then
+The pendulum's law, from [The pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md), is $`\theta'' = -(g/l)\sin\theta`$, with $`g`$ the acceleration of gravity and $`l`$ the rod length: the angle's acceleration is minus $`g/l`$ times its sine. The swing starts at rest at angle $`a`$. Count time $`t`$ in units of $`\sqrt{l/g}`$, 0.318310 s here, and measure the angle in units of the release angle, $`u = \theta/a`$. Then
 
-$$u'' + u = \frac{\varepsilon}{6}\,u^3 - \frac{\varepsilon^2}{120}\,u^5 + O(\varepsilon^3), \qquad \varepsilon = a^2, \qquad u(0) = 1,\; u'(0) = 0.$$
+```math
+u'' + u = \frac{\varepsilon}{6}\,u^3 - \frac{\varepsilon^2}{120}\,u^5 + O(\varepsilon^3), \qquad \varepsilon = a^2, \qquad u(0) = 1,\; u'(0) = 0.
+```
 
 **Read it aloud:** the swing is a plain oscillator, pushed by a small cubic force of size epsilon over six and a smaller fifth-power force of size epsilon squared.
 
 Regular perturbation of this equation gives the period:
 
-$$\frac{T}{T_0} = 1 + \frac{\varepsilon}{16} + \frac{11\,\varepsilon^2}{3072} + O(\varepsilon^3), \qquad T_0 = 2\pi\sqrt{l/g}.$$
+```math
+\frac{T}{T_0} = 1 + \frac{\varepsilon}{16} + \frac{11\,\varepsilon^2}{3072} + O(\varepsilon^3), \qquad T_0 = 2\pi\sqrt{l/g}.
+```
 
 **Read it aloud:** the true period is the small-swing period, stretched by one sixteenth of epsilon, plus eleven parts in 3072 of epsilon squared, plus something of order epsilon cubed.
 
 It gives the motion too:
 
-$$\theta(t) = a\Big[\cos\tau + \frac{\varepsilon}{192}\,(\cos\tau - \cos 3\tau)\Big] + O(a\,\varepsilon^2), \qquad \tau = \omega t, \quad \omega = 1 - \frac{\varepsilon}{16} + \frac{\varepsilon^2}{3072}.$$
+```math
+\theta(t) = a\Big[\cos\tau + \frac{\varepsilon}{192}\,(\cos\tau - \cos 3\tau)\Big] + O(a\,\varepsilon^2), \qquad \tau = \omega t, \quad \omega = 1 - \frac{\varepsilon}{16} + \frac{\varepsilon^2}{3072}.
+```
 
 **Read it aloud:** the angle is a cosine running at a slightly slowed clock, plus a small ripple at three times the swing frequency.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | angle of the rod from vertical, rad | starts at 10 degrees | — |
-| $a$ | release angle, the amplitude, rad | 0.174533 rad = 10 degrees | period rises |
-| $\varepsilon$ | the small number, $a^2$ | 0.030462 | each correction grows; at 2.467 (90 degrees) two corrections are 0.37% short |
-| $u$, $u_0$, $u_1$, $u_2$ | angle in units of $a$; the easy answer and its corrections | $u_0 = \cos\tau$ | — |
-| $t$ | time in units of $\sqrt{l/g}$ | one unit is 0.318310 s | — |
-| $\tau$ | strained time: $t$ run at the true frequency | one swing is $2\pi$ | — |
-| $\omega$, $\omega_1$, $\omega_2$ | true angular frequency in units of $\sqrt{g/l}$, and its corrections | $\omega_1 = -1/16$, $\omega_2 = 1/3072$ | lower frequency, longer period |
-| $T$, $T_0$ | true period; small-swing period | 2.003814376 s; 2.000000000 s | — |
-| $g$, $l$ | gravity; rod length | 9.80665 m/s^2 (standard gravity, NIST); 0.993621 m | $g$ up: faster; $l$ up: slower |
-| $k$, $\varphi$ | in the exact period integral: $k$ is the sine of half the release angle, $\varphi$ the variable integrated over | $k$ = sin 5 degrees | $k$ near 1: period without bound |
-| $O(\varepsilon^3)$ | a remainder at most a fixed multiple of $\varepsilon^3$ | 6.6 parts per billion of $T$ | — |
+| $`\theta`$ | angle of the rod from vertical, rad | starts at 10 degrees | — |
+| $`a`$ | release angle, the amplitude, rad | 0.174533 rad = 10 degrees | period rises |
+| $`\varepsilon`$ | the small number, $`a^2`$ | 0.030462 | each correction grows; at 2.467 (90 degrees) two corrections are 0.37% short |
+| $`u`$, $`u_0`$, $`u_1`$, $`u_2`$ | angle in units of $`a`$; the easy answer and its corrections | $`u_0 = \cos\tau`$ | — |
+| $`t`$ | time in units of $`\sqrt{l/g}`$ | one unit is 0.318310 s | — |
+| $`\tau`$ | strained time: $`t`$ run at the true frequency | one swing is $`2\pi`$ | — |
+| $`\omega`$, $`\omega_1`$, $`\omega_2`$ | true angular frequency in units of $`\sqrt{g/l}`$, and its corrections | $`\omega_1 = -1/16`$, $`\omega_2 = 1/3072`$ | lower frequency, longer period |
+| $`T`$, $`T_0`$ | true period; small-swing period | 2.003814376 s; 2.000000000 s | — |
+| $`g`$, $`l`$ | gravity; rod length | 9.80665 m/s^2 (standard gravity, NIST); 0.993621 m | $`g`$ up: faster; $`l`$ up: slower |
+| $`k`$, $`\varphi`$ | in the exact period integral: $`k`$ is the sine of half the release angle, $`\varphi`$ the variable integrated over | $`k`$ = sin 5 degrees | $`k`$ near 1: period without bound |
+| $`O(\varepsilon^3)`$ | a remainder at most a fixed multiple of $`\varepsilon^3`$ | 6.6 parts per billion of $`T`$ | — |
 
-The ratio $T/T_0$ depends on the angle alone. Local gravity differs from the standard 9.80665 m/s^2 by a few parts in a thousand, which moves $T_0$ but not the stretch.
+The ratio $`T/T_0`$ depends on the angle alone. Local gravity differs from the standard 9.80665 m/s^2 by a few parts in a thousand, which moves $`T_0`$ but not the stretch.
 
 ### When it holds
 
-- **$\varepsilon$ small.** At 10 degrees two corrections are good to 6.6 parts per billion. At 90 degrees ($\varepsilon$ = 2.467) they are 0.37% short; at 170 degrees, 25.07% short. Near 180 degrees the true period grows without bound and no finite sum follows it.
-- **Setting $\varepsilon$ to zero leaves the same kind of problem.** Here it leaves a second-order equation with both its starting conditions. When the small number multiplies the highest derivative, setting it to zero drops a condition, and the method fails: that is [Boundary layers](06-boundary-layers-and-singular-perturbation.md).
-- **The frequency is expanded too.** A plain expansion of the motion in powers of $\varepsilon$ holds only while $\varepsilon t$ is small. After 100 swings it reports 14.80 degrees for a swing that stays at 10.00. Why it works shows the cause and the fix.
+- **$`\varepsilon`$ small.** At 10 degrees two corrections are good to 6.6 parts per billion. At 90 degrees ($`\varepsilon`$ = 2.467) they are 0.37% short; at 170 degrees, 25.07% short. Near 180 degrees the true period grows without bound and no finite sum follows it.
+- **Setting $`\varepsilon`$ to zero leaves the same kind of problem.** Here it leaves a second-order equation with both its starting conditions. When the small number multiplies the highest derivative, setting it to zero drops a condition, and the method fails: that is [Boundary layers](06-boundary-layers-and-singular-perturbation.md).
+- **The frequency is expanded too.** A plain expansion of the motion in powers of $`\varepsilon`$ holds only while $`\varepsilon t`$ is small. After 100 swings it reports 14.80 degrees for a swing that stays at 10.00. Why it works shows the cause and the fix.
 - **The model.** A rigid rod, a point bob, no friction, no drive. A real clock loses energy to air and gets it back from the escapement (the mechanism that releases the gear train one tick at a time); both shift the period by amounts this card does not model.
 
 ---
@@ -84,27 +90,33 @@ The ratio $T/T_0$ depends on the angle alone. Local gravity differs from the sta
 
 ### Step 0: a smooth answer has a series, and the series is found one rung at a time
 
-If the answer depends smoothly on $\varepsilon$, it has a Taylor series in $\varepsilon$, a sum of powers of $\varepsilon$ each times a fixed number ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Put the series into the equation and collect the terms with no $\varepsilon$, then those with one power, then two. Each collection must vanish on its own, since the equation holds for every small $\varepsilon$. The rung with no $\varepsilon$ is the easy problem. Every later rung has the same linear left side, with a right side built from rungs already solved. One hard nonlinear problem becomes a ladder of easy linear ones.
+If the answer depends smoothly on $`\varepsilon`$, it has a Taylor series in $`\varepsilon`$, a sum of powers of $`\varepsilon`$ each times a fixed number ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Put the series into the equation and collect the terms with no $`\varepsilon`$, then those with one power, then two. Each collection must vanish on its own, since the equation holds for every small $`\varepsilon`$. The rung with no $`\varepsilon`$ is the easy problem. Every later rung has the same linear left side, with a right side built from rungs already solved. One hard nonlinear problem becomes a ladder of easy linear ones.
 
 ### Step 1: scaling exposes the small number
 
-Scaling ([Nondimensionalisation](03-scaling-and-nondimensionalisation.md)) strips the units. Time in units of $\sqrt{l/g}$ removes $g$ and $l$. The angle in units of $a$ makes the starting angle 1. The law becomes $u'' + \sin(a u)/a = 0$. The sine's Taylor series, $\sin x = x - x^3/6 + x^5/120 - \dots$, gives
+Scaling ([Nondimensionalisation](03-scaling-and-nondimensionalisation.md)) strips the units. Time in units of $`\sqrt{l/g}`$ removes $`g`$ and $`l`$. The angle in units of $`a`$ makes the starting angle 1. The law becomes $`u'' + \sin(a u)/a = 0`$. The sine's Taylor series, $`\sin x = x - x^3/6 + x^5/120 - \dots`$, gives
 
-$$\frac{\sin(a u)}{a} = u - \frac{a^2}{6}u^3 + \frac{a^4}{120}u^5 - \dots$$
+```math
+\frac{\sin(a u)}{a} = u - \frac{a^2}{6}u^3 + \frac{a^4}{120}u^5 - \dots
+```
 
-Only $a^2$ appears, never $a$ alone, because swinging left is the mirror of swinging right. So the natural small number is $\varepsilon = a^2$, not $a$.
+Only $`a^2`$ appears, never $`a`$ alone, because swinging left is the mirror of swinging right. So the natural small number is $`\varepsilon = a^2`$, not $`a`$.
 
 ### Step 2: the first try, and the term that grows
 
-Write $u = u_0 + \varepsilon u_1$. The rung with no $\varepsilon$ is $u_0'' + u_0 = 0$ with $u_0(0) = 1$: so $u_0 = \cos t$. The rung with one $\varepsilon$ is
+Write $`u = u_0 + \varepsilon u_1`$. The rung with no $`\varepsilon`$ is $`u_0'' + u_0 = 0`$ with $`u_0(0) = 1`$: so $`u_0 = \cos t`$. The rung with one $`\varepsilon`$ is
 
-$$u_1'' + u_1 = \tfrac16\cos^3 t = \tfrac18\cos t + \tfrac{1}{24}\cos 3t, \qquad u_1(0) = u_1'(0) = 0.$$
+```math
+u_1'' + u_1 = \tfrac16\cos^3 t = \tfrac18\cos t + \tfrac{1}{24}\cos 3t, \qquad u_1(0) = u_1'(0) = 0.
+```
 
-The $\cos 3t$ part is answered by $-\cos 3t/192$. The $\cos t$ part pushes the oscillator at its own frequency, which is resonance (each push lands in step and the response builds). Its answer is $t\sin t/16$, which grows with time. Fitting the starting conditions:
+The $`\cos 3t`$ part is answered by $`-\cos 3t/192`$. The $`\cos t`$ part pushes the oscillator at its own frequency, which is resonance (each push lands in step and the response builds). Its answer is $`t\sin t/16`$, which grows with time. Fitting the starting conditions:
 
-$$u_1 = \frac{\cos t - \cos 3t}{192} + \frac{t \sin t}{16}.$$
+```math
+u_1 = \frac{\cos t - \cos 3t}{192} + \frac{t \sin t}{16}.
+```
 
-The growing term is called **secular**. It cannot be right: energy is conserved, so the swing returns to 10 degrees every period. The cause is a frequency error. The true frequency is about $1 - \varepsilon/16$, and the Taylor series of $\cos((1 - \varepsilon/16)t)$ in $\varepsilon$ is $\cos t + (\varepsilon t/16)\sin t + \dots$. The plain expansion is expanding a phase that grows with time, which is fine for a few swings and wrong for many.
+The growing term is called **secular**. It cannot be right: energy is conserved, so the swing returns to 10 degrees every period. The cause is a frequency error. The true frequency is about $`1 - \varepsilon/16`$, and the Taylor series of $`\cos((1 - \varepsilon/16)t)`$ in $`\varepsilon`$ is $`\cos t + (\varepsilon t/16)\sin t + \dots`$. The plain expansion is expanding a phase that grows with time, which is fine for a few swings and wrong for many.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -121,61 +133,67 @@ Orange: the true swing, stepped by RK4 (Runge-Kutta 4, a stepping rule that samp
 
 ### Step 3: let the frequency carry a series of its own
 
-Run the cosine on a stretched clock. Set $\tau = \omega t$ with $\omega = 1 + \varepsilon\omega_1 + \varepsilon^2\omega_2$, an unknown frequency with its own corrections. This is the Lindstedt-Poincaré method: still regular perturbation, but in two unknowns at once, the shape and the frequency. The law becomes $\omega^2 u_{\tau\tau} + \sin(a u)/a = 0$, where $u_{\tau\tau}$ is the second derivative in $\tau$; from here on a prime means a derivative in $\tau$. The rung with no $\varepsilon$ gives $u_0 = \cos\tau$ again. The rung with one $\varepsilon$ now has an extra term from $\omega^2 = 1 + 2\varepsilon\omega_1 + \dots$:
+Run the cosine on a stretched clock. Set $`\tau = \omega t`$ with $`\omega = 1 + \varepsilon\omega_1 + \varepsilon^2\omega_2`$, an unknown frequency with its own corrections. This is the Lindstedt-Poincaré method: still regular perturbation, but in two unknowns at once, the shape and the frequency. The law becomes $`\omega^2 u_{\tau\tau} + \sin(a u)/a = 0`$, where $`u_{\tau\tau}`$ is the second derivative in $`\tau`$; from here on a prime means a derivative in $`\tau`$. The rung with no $`\varepsilon`$ gives $`u_0 = \cos\tau`$ again. The rung with one $`\varepsilon`$ now has an extra term from $`\omega^2 = 1 + 2\varepsilon\omega_1 + \dots`$:
 
-$$u_1'' + u_1 = \Big(2\omega_1 + \tfrac18\Big)\cos\tau + \tfrac{1}{24}\cos 3\tau.$$
+```math
+u_1'' + u_1 = \Big(2\omega_1 + \tfrac18\Big)\cos\tau + \tfrac{1}{24}\cos 3\tau.
+```
 
-Choose $\omega_1$ to kill the resonant push: $2\omega_1 + 1/8 = 0$, so $\omega_1 = -1/16$. What is left has no resonance:
+Choose $`\omega_1`$ to kill the resonant push: $`2\omega_1 + 1/8 = 0`$, so $`\omega_1 = -1/16`$. What is left has no resonance:
 
-$$u_1 = \frac{\cos\tau - \cos 3\tau}{192}.$$
+```math
+u_1 = \frac{\cos\tau - \cos 3\tau}{192}.
+```
 
-That is the ripple in the motion formula. Its size, $\varepsilon/192$ = 0.0001587 of the swing, is what RK4 measures as the swing's third harmonic: −0.0001590, the gap being the next rung.
+That is the ripple in the motion formula. Its size, $`\varepsilon/192`$ = 0.0001587 of the swing, is what RK4 measures as the swing's third harmonic: −0.0001590, the gap being the next rung.
 
 ### Step 4: the second rung fixes the second frequency correction
 
-The rung with two powers of $\varepsilon$ has the same left side, $u_2'' + u_2$. Its right side collects the earlier rungs. Again its $\cos\tau$ part must vanish, which fixes $\omega_2$. That part works out to $2\omega_2 - 1/1536$, so $\omega_2 = 1/3072$.
+The rung with two powers of $`\varepsilon`$ has the same left side, $`u_2'' + u_2`$. Its right side collects the earlier rungs. Again its $`\cos\tau`$ part must vanish, which fixes $`\omega_2`$. That part works out to $`2\omega_2 - 1/1536`$, so $`\omega_2 = 1/3072`$.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-With $\omega^2 = 1 + 2\varepsilon\omega_1 + \varepsilon^2(\omega_1^2 + 2\omega_2)$ and $u = u_0 + \varepsilon u_1 + \varepsilon^2 u_2$, the rung with $\varepsilon^2$ reads
-$u_2'' + u_2 = -2\omega_1 u_1'' - (\omega_1^2 + 2\omega_2)u_0'' + \tfrac12 u_0^2 u_1 - \tfrac{1}{120}u_0^5.$
-Read off each term's $\cos\tau$ part, using $u_0 = \cos\tau$ and $u_1 = (\cos\tau - \cos 3\tau)/192$:
-- $-2\omega_1 u_1'' = \tfrac18 \cdot (-\cos\tau + 9\cos 3\tau)/192$ gives $-1/1536$.
-- $-(\omega_1^2 + 2\omega_2)u_0''$ gives $+1/256 + 2\omega_2$.
-- $\tfrac12\cos^2\tau\,(\cos\tau - \cos 3\tau)/192$: $\cos^3\tau$ holds $\tfrac34\cos\tau$ and $\cos^2\tau\cos 3\tau$ holds $\tfrac14\cos\tau$, giving $\tfrac{1}{384}(\tfrac34 - \tfrac14) = +1/768$.
-- $-\tfrac{1}{120}\cos^5\tau$: $\cos^5\tau$ holds $\tfrac58\cos\tau$, giving $-1/192$.
+With $`\omega^2 = 1 + 2\varepsilon\omega_1 + \varepsilon^2(\omega_1^2 + 2\omega_2)`$ and $`u = u_0 + \varepsilon u_1 + \varepsilon^2 u_2`$, the rung with $`\varepsilon^2`$ reads
+$`u_2'' + u_2 = -2\omega_1 u_1'' - (\omega_1^2 + 2\omega_2)u_0'' + \tfrac12 u_0^2 u_1 - \tfrac{1}{120}u_0^5.`$
+Read off each term's $`\cos\tau`$ part, using $`u_0 = \cos\tau`$ and $`u_1 = (\cos\tau - \cos 3\tau)/192`$:
+- $`-2\omega_1 u_1'' = \tfrac18 \cdot (-\cos\tau + 9\cos 3\tau)/192`$ gives $`-1/1536`$.
+- $`-(\omega_1^2 + 2\omega_2)u_0''`$ gives $`+1/256 + 2\omega_2`$.
+- $`\tfrac12\cos^2\tau\,(\cos\tau - \cos 3\tau)/192`$: $`\cos^3\tau`$ holds $`\tfrac34\cos\tau`$ and $`\cos^2\tau\cos 3\tau`$ holds $`\tfrac14\cos\tau`$, giving $`\tfrac{1}{384}(\tfrac34 - \tfrac14) = +1/768`$.
+- $`-\tfrac{1}{120}\cos^5\tau`$: $`\cos^5\tau`$ holds $`\tfrac58\cos\tau`$, giving $`-1/192`$.
 
-In units of 1/1536 the sum is $-1 + 6 + 2 - 8 = -1$, plus $2\omega_2$. Setting it to zero gives $\omega_2 = 1/3072$.
+In units of 1/1536 the sum is $`-1 + 6 + 2 - 8 = -1`$, plus $`2\omega_2`$. Setting it to zero gives $`\omega_2 = 1/3072`$.
 
 </details>
 
 ### Step 5: the period from the frequency
 
-One swing is $\tau = 2\pi$, so in time units the period is $2\pi/\omega$, and $T/T_0 = 1/\omega$. Expand $1/(1 - \varepsilon/16 + \varepsilon^2/3072)$:
+One swing is $`\tau = 2\pi`$, so in time units the period is $`2\pi/\omega`$, and $`T/T_0 = 1/\omega`$. Expand $`1/(1 - \varepsilon/16 + \varepsilon^2/3072)`$:
 
-$$\frac{1}{\omega} = 1 + \frac{\varepsilon}{16} + \Big(\frac{1}{256} - \frac{1}{3072}\Big)\varepsilon^2 + O(\varepsilon^3) = 1 + \frac{\varepsilon}{16} + \frac{11\,\varepsilon^2}{3072} + O(\varepsilon^3).$$
+```math
+\frac{1}{\omega} = 1 + \frac{\varepsilon}{16} + \Big(\frac{1}{256} - \frac{1}{3072}\Big)\varepsilon^2 + O(\varepsilon^3) = 1 + \frac{\varepsilon}{16} + \frac{11\,\varepsilon^2}{3072} + O(\varepsilon^3).
+```
 
 These are the card's two corrections: 0.001903859 and 0.000003323 at 10 degrees.
 
 ### Step 6: why the error shrinks like the cube
 
-The exact period is a smooth function of $\varepsilon$, so its Taylor series exists and the remainder after the $\varepsilon^2$ term is at most a constant times $\varepsilon^3$. Halving the amplitude quarters $\varepsilon$, so the two-correction error should fall 64-fold. The code measures 64.02.
+The exact period is a smooth function of $`\varepsilon`$, so its Taylor series exists and the remainder after the $`\varepsilon^2`$ term is at most a constant times $`\varepsilon^3`$. Halving the amplitude quarters $`\varepsilon`$, so the two-correction error should fall 64-fold. The code measures 64.02.
 
 <details>
 <summary>Detailed proof: the series is the Taylor series of the exact period, with remainder of order epsilon cubed</summary>
 
-The exact period, from [The pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md), is $T/T_0 = \tfrac{2}{\pi}\int_0^{\pi/2} (1 - k^2\sin^2\varphi)^{-1/2}\,d\varphi$ with $k = \sin(a/2)$ and $\varphi$ the integral's variable.
+The exact period, from [The pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md), is $`T/T_0 = \tfrac{2}{\pi}\int_0^{\pi/2} (1 - k^2\sin^2\varphi)^{-1/2}\,d\varphi`$ with $`k = \sin(a/2)`$ and $`\varphi`$ the integral's variable.
 
-For $k^2 < 1$ the binomial series $(1 - x)^{-1/2} = 1 + \tfrac12 x + \tfrac38 x^2 + \dots$ converges uniformly in $\varphi$ (after enough terms the error is below any chosen bound for every $\varphi$ at once), so it may be integrated term by term. With $\tfrac{2}{\pi}\int_0^{\pi/2}\sin^2\varphi\,d\varphi = \tfrac12$ and $\tfrac{2}{\pi}\int_0^{\pi/2}\sin^4\varphi\,d\varphi = \tfrac38$, this gives $T/T_0 = 1 + \tfrac14 k^2 + \tfrac{9}{64}k^4 + \dots$, a convergent series.
+For $`k^2 < 1`$ the binomial series $`(1 - x)^{-1/2} = 1 + \tfrac12 x + \tfrac38 x^2 + \dots`$ converges uniformly in $`\varphi`$ (after enough terms the error is below any chosen bound for every $`\varphi`$ at once), so it may be integrated term by term. With $`\tfrac{2}{\pi}\int_0^{\pi/2}\sin^2\varphi\,d\varphi = \tfrac12`$ and $`\tfrac{2}{\pi}\int_0^{\pi/2}\sin^4\varphi\,d\varphi = \tfrac38`$, this gives $`T/T_0 = 1 + \tfrac14 k^2 + \tfrac{9}{64}k^4 + \dots`$, a convergent series.
 
-Now $k^2 = \sin^2(a/2) = (1 - \cos a)/2 = \varepsilon/4 - \varepsilon^2/48 + O(\varepsilon^3)$, itself a convergent series in $\varepsilon$. Substituting: $T/T_0 = 1 + \varepsilon/16 - \varepsilon^2/192 + 9\varepsilon^2/1024 + O(\varepsilon^3)$, and $-16/3072 + 27/3072 = 11/3072$. The same two coefficients, by a road with no differential equation in it.
+Now $`k^2 = \sin^2(a/2) = (1 - \cos a)/2 = \varepsilon/4 - \varepsilon^2/48 + O(\varepsilon^3)`$, itself a convergent series in $`\varepsilon`$. Substituting: $`T/T_0 = 1 + \varepsilon/16 - \varepsilon^2/192 + 9\varepsilon^2/1024 + O(\varepsilon^3)`$, and $`-16/3072 + 27/3072 = 11/3072`$. The same two coefficients, by a road with no differential equation in it.
 
-A convergent power series has a remainder after the $\varepsilon^2$ term equal to $\varepsilon^3$ times a convergent series, which is bounded on any interval $0 \le \varepsilon \le \varepsilon_{\max}$ inside the radius (the distance from 0, counting complex values of $\varepsilon$ too, within which the series converges). That is the $O(\varepsilon^3)$. The radius reaches the nearest $\varepsilon$, real or complex, where the period breaks down, which is where $k^2 = 1$, that is $\cos\sqrt{\varepsilon} = -1$. No complex $\varepsilon$ nearer than $\pi^2$ does that, and $\varepsilon = \pi^2$ is the swing to the top, $a = \pi$, so the full series converges for every swing short of 180 degrees, ever more slowly near it.
+A convergent power series has a remainder after the $`\varepsilon^2`$ term equal to $`\varepsilon^3`$ times a convergent series, which is bounded on any interval $`0 \le \varepsilon \le \varepsilon_{\max}`$ inside the radius (the distance from 0, counting complex values of $`\varepsilon`$ too, within which the series converges). That is the $`O(\varepsilon^3)`$. The radius reaches the nearest $`\varepsilon`$, real or complex, where the period breaks down, which is where $`k^2 = 1`$, that is $`\cos\sqrt{\varepsilon} = -1`$. No complex $`\varepsilon`$ nearer than $`\pi^2`$ does that, and $`\varepsilon = \pi^2`$ is the swing to the top, $`a = \pi`$, so the full series converges for every swing short of 180 degrees, ever more slowly near it.
 
 </details>
 
-A third road skips series altogether. Gauss's arithmetic-geometric mean, AGM (average two numbers both ways, arithmetic and geometric, and repeat until they agree), gives the exact period in a few steps: $T = T_0/\mathrm{AGM}(1, \cos(a/2))$. The code uses it as the exact answer and reads the two coefficients back off it: 0.0625000000 and 0.0035807292, against 1/16 and 11/3072.
+A third road skips series altogether. Gauss's arithmetic-geometric mean, AGM (average two numbers both ways, arithmetic and geometric, and repeat until they agree), gives the exact period in a few steps: $`T = T_0/\mathrm{AGM}(1, \cos(a/2))`$. The code uses it as the exact answer and reads the two coefficients back off it: 0.0625000000 and 0.0035807292, against 1/16 and 11/3072.
 
 ---
 
@@ -184,10 +202,10 @@ A third road skips series altogether. Gauss's arithmetic-geometric mean, AGM (av
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | release angle in radians | 10 × π/180 | 0.174533 rad |
-| the small number | $\varepsilon = a^2$ | 0.030462 |
-| first correction | $\varepsilon/16$ | 0.001903859 |
-| second correction | $11\varepsilon^2/3072$ | 0.000003323 |
-| period, easy answer | $T_0 = 2\pi\sqrt{l/g}$ | 2.000000000 s |
+| the small number | $`\varepsilon = a^2`$ | 0.030462 |
+| first correction | $`\varepsilon/16`$ | 0.001903859 |
+| second correction | $`11\varepsilon^2/3072`$ | 0.000003323 |
+| period, easy answer | $`T_0 = 2\pi\sqrt{l/g}`$ | 2.000000000 s |
 | period, one correction | 2 s × (1 + 0.001903859) | 2.003807718 s |
 | period, two corrections | add 2 s × 0.000003323 | **2.003814363 s** |
 | exact, for comparison | AGM and RK4 agree | 2.003814376 s |
@@ -201,12 +219,12 @@ The error falls with each rung. Keeping no correction is 1903.5577 parts per mil
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $\varepsilon$ from the angle in degrees, 100 | period 86.1146 s | the series needs radians; $\varepsilon$ is not small |
-| $\varepsilon = a$ instead of $a^2$ | period 2.022035 s | only even powers of the angle appear (Step 1) |
-| frequency read as period: $1 - \varepsilon/16 + \dots$ | period 1.996193 s, shorter | $T/T_0 = 1/\omega$: a lower frequency is a longer period |
-| plain expansion, no strained time, 100 swings | 14.80 degrees for a 10.00 degree swing | the secular term $t\sin t/16$ grows without bound |
+| $`\varepsilon`$ from the angle in degrees, 100 | period 86.1146 s | the series needs radians; $`\varepsilon`$ is not small |
+| $`\varepsilon = a`$ instead of $`a^2`$ | period 2.022035 s | only even powers of the angle appear (Step 1) |
+| frequency read as period: $`1 - \varepsilon/16 + \dots`$ | period 1.996193 s, shorter | $`T/T_0 = 1/\omega`$: a lower frequency is a longer period |
+| plain expansion, no strained time, 100 swings | 14.80 degrees for a 10.00 degree swing | the secular term $`t\sin t/16`$ grows without bound |
 
-Outside the range the series falls short. At 170 degrees, $\varepsilon$ = 8.803, two corrections give 3.6554 s against the true 4.8787 s, 25.07% short.
+Outside the range the series falls short. At 170 degrees, $`\varepsilon`$ = 8.803, two corrections give 3.6554 s against the true 4.8787 s, 25.07% short.
 
 ---
 
@@ -639,10 +657,10 @@ The two outputs match line for line.
 
 Lean proves the period series, the step from frequency to period, and the first correction, for every swing small enough.
 
-- Take the exact period integral of the detailed proof, with $k = \sin(a/2)$. Then $T/T_0 = 1 + \varepsilon/16 + 11\varepsilon^2/3072 + O(\varepsilon^3)$ as $a$ goes to zero. Lean starts from this integral; it does not derive it from the pendulum's law.
-- Take the frequency $\omega = 1 - \varepsilon/16 + \varepsilon^2/3072$. Then the period $1/\omega$ is $1 + \varepsilon/16 + 11\varepsilon^2/3072 + O(\varepsilon^3)$.
-- Take $\omega_1 = -1/16$ and $u_1 = (\cos\tau - \cos 3\tau)/192$. Then $u_1'' + u_1 = 2\omega_1\cos\tau + \tfrac16\cos^3\tau$. It starts at rest at zero, so no term grows with time.
-- The arithmetic of Steps 3 to 6 holds. It gives $\omega_1 = -1/16$ and $\omega_2 = 1/3072$. It gets $11/3072$ both from the frequency and from the integral, and checks the 64-fold drop.
+- Take the exact period integral of the detailed proof, with $`k = \sin(a/2)`$. Then $`T/T_0 = 1 + \varepsilon/16 + 11\varepsilon^2/3072 + O(\varepsilon^3)`$ as $`a`$ goes to zero. Lean starts from this integral; it does not derive it from the pendulum's law.
+- Take the frequency $`\omega = 1 - \varepsilon/16 + \varepsilon^2/3072`$. Then the period $`1/\omega`$ is $`1 + \varepsilon/16 + 11\varepsilon^2/3072 + O(\varepsilon^3)`$.
+- Take $`\omega_1 = -1/16`$ and $`u_1 = (\cos\tau - \cos 3\tau)/192`$. Then $`u_1'' + u_1 = 2\omega_1\cos\tau + \tfrac16\cos^3\tau`$. It starts at rest at zero, so no term grows with time.
+- The arithmetic of Steps 3 to 6 holds. It gives $`\omega_1 = -1/16`$ and $`\omega_2 = 1/3072`$. It gets $`11/3072`$ both from the frequency and from the integral, and checks the 64-fold drop.
 
 Lean has no RK4 or AGM, so the motion formula and every measured number are left to the Python and Rust checks.
 
@@ -926,28 +944,28 @@ example : (2 : ℕ) ^ 2 = 4 ∧ (4 : ℕ) ^ 3 = 64 := by decide
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Double the swing to 20 degrees.** $\varepsilon$ quadruples to 0.121847. Guess the error growth. The shrink rows answer it: one correction is off 53.1824 ppm against 3.3229 (16 times, $\varepsilon^2$), two corrections 425.0839 ppb against 6.6348 (64 times, $\varepsilon^3$).
-> - **Break the second coefficient.** Change 11.0 to 12.0 in `series`. The two-correction error now shrinks like $\varepsilon^2$, the halving ratio falls far below 64, and the fourth assert stops the run.
+> - **Double the swing to 20 degrees.** $`\varepsilon`$ quadruples to 0.121847. Guess the error growth. The shrink rows answer it: one correction is off 53.1824 ppm against 3.3229 (16 times, $`\varepsilon^2`$), two corrections 425.0839 ppb against 6.6348 (64 times, $`\varepsilon^3`$).
+> - **Break the second coefficient.** Change 11.0 to 12.0 in `series`. The two-correction error now shrinks like $`\varepsilon^2`$, the halving ratio falls far below 64, and the fourth assert stops the run.
 > - **Spoil the frequency correction.** In `strained`, change `e / 16.0` to `e / 15.0`. The strained expansion slips out of step with RK4 over 100 swings and the sixth assert stops the run.
-> - **Take the swing to 90 degrees.** The beyond row shows 2.3520 s from two corrections against the true 2.3607 s: 0.37% short, at $\varepsilon$ = 2.467.
+> - **Take the swing to 90 degrees.** The beyond row shows 2.3520 s from two corrections against the true 2.3607 s: 0.37% short, at $`\varepsilon`$ = 2.467.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Expanding the motion and leaving the frequency fixed.** The plain expansion is right for a few swings and then grows a term, $t\sin t/16$, that no conserved-energy swing can have: it reports 14.80 degrees after 100 swings for a pendulum that never exceeds 10.00. The fix is to give the frequency its own series and choose each correction so that nothing pushes at resonance.
+> **Expanding the motion and leaving the frequency fixed.** The plain expansion is right for a few swings and then grows a term, $`t\sin t/16`$, that no conserved-energy swing can have: it reports 14.80 degrees after 100 swings for a pendulum that never exceeds 10.00. The fix is to give the frequency its own series and choose each correction so that nothing pushes at resonance.
 >
-> - **The small number in degrees.** $\varepsilon$ = 100 gives a period of 86.1146 s for a 2 s pendulum.
-> - **The wrong small number.** $\varepsilon = a$ rather than $a^2$ gives 2.022035 s; the mirror symmetry of the swing allows only even powers.
-> - **Frequency mistaken for period.** Writing $T/T_0 = 1 - \varepsilon/16$ gives 1.996193 s, a pendulum that speeds up as it swings wider.
+> - **The small number in degrees.** $`\varepsilon`$ = 100 gives a period of 86.1146 s for a 2 s pendulum.
+> - **The wrong small number.** $`\varepsilon = a`$ rather than $`a^2`$ gives 2.022035 s; the mirror symmetry of the swing allows only even powers.
+> - **Frequency mistaken for period.** Writing $`T/T_0 = 1 - \varepsilon/16`$ gives 1.996193 s, a pendulum that speeds up as it swings wider.
 > - **Trusting the series far out.** At 170 degrees two corrections are 25.07% short; the series converges for every swing below 180 degrees but needs ever more terms near it.
 
 ---
 
 ## Where you meet it in real life
 
-- **Clockmaking.** Horologists call the amplitude dependence of the period "circular error". It is the first correction, $\varepsilon/16$, and it is why precision regulators swing only a few degrees and work to keep the swing constant.
+- **Clockmaking.** Horologists call the amplitude dependence of the period "circular error". It is the first correction, $`\varepsilon/16`$, and it is why precision regulators swing only a few degrees and work to keep the swing constant.
 - **Vibrating structures.** A cable, a beam or a spring whose stiffness changes as it stretches has a frequency that shifts with amplitude. The same strained-time expansion gives the shift.
 - **Planetary orbits.** Lindstedt built the method in the 1880s for the slow drift of orbits under small pulls from other planets, where a plain expansion grows the same secular terms.
 - **Tolerance and sensitivity.** The 32.89 s/day per degree is a sensitivity: how the output moves with an input. How such sensitivities combine with measurement errors is [Error propagation](07-error-propagation-and-sensitivity.md).
@@ -961,7 +979,7 @@ example : (2 : ℕ) ^ 2 = 4 ∧ (4 : ℕ) ^ 3 = 64 := by decide
 ## What this builds on
 
 - [Nondimensionalisation](03-scaling-and-nondimensionalisation.md): choosing the time and angle units that make the small number appear.
-- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the sine's series, and why a smooth answer has one in $\varepsilon$.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the sine's series, and why a smooth answer has one in $`\varepsilon`$.
 - [The pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md): the law, its conserved energy and the exact period integral.
 
 ## Where this goes next
@@ -976,7 +994,7 @@ Regular perturbation needs the easy problem to keep every condition of the hard 
 
 Verified 2026-09-30: every link below resolves to the publisher's page.
 
-- National Institute of Standards and Technology. "Standard acceleration of gravity", CODATA internationally recommended values. [NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gn). The conventional value 9.80665 m/s^2 used for $g$.
+- National Institute of Standards and Technology. "Standard acceleration of gravity", CODATA internationally recommended values. [NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gn). The conventional value 9.80665 m/s^2 used for $`g`$.
 - Hinch, E. J. *Perturbation Methods*. Cambridge University Press, 1991. [Publisher page](https://doi.org/10.1017/CBO9781139172189). Regular expansions, secular terms and strained coordinates, in a short book.
 - Nayfeh, Ali H. *Perturbation Methods*. Wiley Classics Library, Wiley-VCH, 2008. [Publisher page](https://www.wiley.com/en-us/Perturbation+Methods-p-9783527617616). The Lindstedt-Poincaré method for nonlinear oscillators, worked in full.
 - Carvalhaes, Claudio G., and Patrick Suppes. "Approximations for the period of the simple pendulum based on the arithmetic-geometric mean." *American Journal of Physics* 76, 1150–1154 (2008). [doi:10.1119/1.2968864](https://doi.org/10.1119/1.2968864). The AGM formula for the exact period, road two of the code.

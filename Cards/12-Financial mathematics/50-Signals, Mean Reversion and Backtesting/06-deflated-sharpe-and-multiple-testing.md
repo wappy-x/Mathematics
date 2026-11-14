@@ -38,49 +38,55 @@ The rising curve is luck's best; it crosses the flat line at 1.4, the winner's S
 
 ## The formula
 
-Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$, as on the [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md) card, and $N^{-1}$ runs it backwards: given an area, it returns the point with that much area to its left. A hat marks a number measured from data. Everything inside the formula is **per period**, here per trading day; a yearly Sharpe is the daily one times $\sqrt{252}$.
+Notation first, in words. $`N(x)`$ is the bell-curve area to the left of $`x`$, as on the [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md) card, and $`N^{-1}`$ runs it backwards: given an area, it returns the point with that much area to its left. A hat marks a number measured from data. Everything inside the formula is **per period**, here per trading day; a yearly Sharpe is the daily one times $`\sqrt{252}`$.
 
 The bar the winner must clear:
 
-$$SR_0 = \sqrt{V}\,\Big[(1-\gamma)\,N^{-1}\!\big(1-\tfrac{1}{M}\big) + \gamma\,N^{-1}\!\big(1-\tfrac{1}{Me}\big)\Big]$$
+```math
+SR_0 = \sqrt{V}\,\Big[(1-\gamma)\,N^{-1}\!\big(1-\tfrac{1}{M}\big) + \gamma\,N^{-1}\!\big(1-\tfrac{1}{Me}\big)\Big]
+```
 
-**Read it aloud:** the Sharpe that the best of $M$ no-skill strategies shows on average, written as the no-skill spread times a number of spreads read off the bell curve.
+**Read it aloud:** the Sharpe that the best of $`M`$ no-skill strategies shows on average, written as the no-skill spread times a number of spreads read off the bell curve.
 
 The deflated Sharpe ratio:
 
-$$\mathrm{DSR} = N\!\left(\frac{(\widehat{SR} - SR_0)\,\sqrt{T-1}}{\sqrt{1 - \gamma_3\,\widehat{SR} + \tfrac{\gamma_4 - 1}{4}\,\widehat{SR}^2}}\right)$$
+```math
+\mathrm{DSR} = N\!\left(\frac{(\widehat{SR} - SR_0)\,\sqrt{T-1}}{\sqrt{1 - \gamma_3\,\widehat{SR} + \tfrac{\gamma_4 - 1}{4}\,\widehat{SR}^2}}\right)
+```
 
 **Read it aloud:** how many standard errors (the typical error in a measured Sharpe) the winner stands above luck's best, turned into a number between 0 and 1.
 
 The probability of backtest overfitting, from combinatorially symmetric cross-validation (CSCV: every way of splitting the history into two equal halves):
 
-$$\mathrm{PBO} = \frac{1}{\binom{S}{S/2}} \sum_{c} \mathbf{1}\{\,r_c \le M/2\,\}$$
+```math
+\mathrm{PBO} = \frac{1}{\binom{S}{S/2}} \sum_{c} \mathbf{1}\{\,r_c \le M/2\,\}
+```
 
 **Read it aloud:** over every split, the share of splits in which the strategy that won on one half ranks in the bottom half on the other.
 
-The bold $\mathbf{1}\{\cdot\}$ counts 1 when the condition inside the braces holds and 0 when it does not.
+The bold $`\mathbf{1}\{\cdot\}`$ counts 1 when the condition inside the braces holds and 0 when it does not.
 
 | Symbol | Plain meaning | In our example | Push it up and the DSR… |
 | --- | --- | --- | --- |
-| $M$ | number of strategies tried, including the abandoned ones | 100 | falls: luck's best rises |
-| $T$ | number of return observations behind each Sharpe | 756 trading days | rises: luck's spread shrinks |
-| $\widehat{SR}$ | the winner's measured Sharpe, per period | 0.088192 a day, 1.4 a year | rises |
-| $SR_0$ | the bar: luck's average best Sharpe, per period | 0.092098 a day, 1.46 a year | falls |
-| $V$ | variance of a no-skill Sharpe across trials, taken as $1/(T-1)$ | spread $\sqrt{V}$ = 0.036394 a day | falls: a wider spread lifts the bar |
-| $\gamma$, $e$ | Euler's constant and Euler's number | 0.5772 and 2.71828 | fixed |
-| $\gamma_3$, $\gamma_4$ | skewness (lopsidedness) and kurtosis (fat tails) of the winner's daily returns | 0 and 3, the bell-curve values | either one: the DSR moves toward 0.5 when the pair widens the standard error |
-| $N(x)$, $N^{-1}$, $\phi$ | bell-curve area left of $x$, its inverse, and $\phi$, the curve's height | $N^{-1}(0.99)$ = 2.326348 | — |
-| $S$ | number of equal time blocks CSCV cuts the history into; $\binom{S}{S/2}$ ways to choose half of them | 6 blocks of 126 days; 20 splits | more splits, finer estimate |
-| $a$, $b$ | location and width of the Gumbel curve for luck's best, in no-skill spreads | $a$ = 2.326348, $a + b$ = 2.680210 | — |
-| $r_c$, $c$ | out-of-sample rank of split $c$'s in-sample winner, 1 = worst, $M$ = best | from 1 to 100 | — |
-| $\lambda_c$ | the paper's logit, $\ln\big(\omega_c/(1-\omega_c)\big)$ with $\omega_c = r_c/(M+1)$; below zero exactly when $r_c \le M/2$ | — | — |
+| $`M`$ | number of strategies tried, including the abandoned ones | 100 | falls: luck's best rises |
+| $`T`$ | number of return observations behind each Sharpe | 756 trading days | rises: luck's spread shrinks |
+| $`\widehat{SR}`$ | the winner's measured Sharpe, per period | 0.088192 a day, 1.4 a year | rises |
+| $`SR_0`$ | the bar: luck's average best Sharpe, per period | 0.092098 a day, 1.46 a year | falls |
+| $`V`$ | variance of a no-skill Sharpe across trials, taken as $`1/(T-1)`$ | spread $`\sqrt{V}`$ = 0.036394 a day | falls: a wider spread lifts the bar |
+| $`\gamma`$, $`e`$ | Euler's constant and Euler's number | 0.5772 and 2.71828 | fixed |
+| $`\gamma_3`$, $`\gamma_4`$ | skewness (lopsidedness) and kurtosis (fat tails) of the winner's daily returns | 0 and 3, the bell-curve values | either one: the DSR moves toward 0.5 when the pair widens the standard error |
+| $`N(x)`$, $`N^{-1}`$, $`\phi`$ | bell-curve area left of $`x`$, its inverse, and $`\phi`$, the curve's height | $`N^{-1}(0.99)`$ = 2.326348 | — |
+| $`S`$ | number of equal time blocks CSCV cuts the history into; $`\binom{S}{S/2}`$ ways to choose half of them | 6 blocks of 126 days; 20 splits | more splits, finer estimate |
+| $`a`$, $`b`$ | location and width of the Gumbel curve for luck's best, in no-skill spreads | $`a`$ = 2.326348, $`a + b`$ = 2.680210 | — |
+| $`r_c`$, $`c`$ | out-of-sample rank of split $`c`$'s in-sample winner, 1 = worst, $`M`$ = best | from 1 to 100 | — |
+| $`\lambda_c`$ | the paper's logit, $`\ln\big(\omega_c/(1-\omega_c)\big)`$ with $`\omega_c = r_c/(M+1)`$; below zero exactly when $`r_c \le M/2`$ | — | — |
 
 ### When it holds
 
-- **Trials independent, or $M$ replaced by an effective count.** The maximum law multiplies probabilities, which needs independence. Strategies that are small variations of one another behave like fewer trials; counting each as a full trial sets the bar too high.
-- **Every trial counted.** $M$ must include the strategies that were dropped along the way. Report 10 of 100 and the DSR comes out at 0.80 instead of 0.46.
-- **Sharpe estimates roughly bell-shaped, with no-skill variance $1/(T-1)$.** True for a few hundred observations of returns without extreme tails. In practice $V$ is estimated from the spread of the trials' own Sharpe ratios.
-- **One clock throughout.** $\widehat{SR}$, $SR_0$, $T$ and the moments must be on the same period. The annual 1.4 fed into the daily formula gives a DSR of 1.000, a meaningless certainty.
+- **Trials independent, or $`M`$ replaced by an effective count.** The maximum law multiplies probabilities, which needs independence. Strategies that are small variations of one another behave like fewer trials; counting each as a full trial sets the bar too high.
+- **Every trial counted.** $`M`$ must include the strategies that were dropped along the way. Report 10 of 100 and the DSR comes out at 0.80 instead of 0.46.
+- **Sharpe estimates roughly bell-shaped, with no-skill variance $`1/(T-1)`$.** True for a few hundred observations of returns without extreme tails. In practice $`V`$ is estimated from the spread of the trials' own Sharpe ratios.
+- **One clock throughout.** $`\widehat{SR}`$, $`SR_0`$, $`T`$ and the moments must be on the same period. The annual 1.4 fed into the daily formula gives a DSR of 1.000, a meaningless certainty.
 - **CSCV: returns fixed before the splitting, blocks long enough to hold a Sharpe.** CSCV chooses among fixed return columns; it does not retrain strategies, and it cannot repair a column built with future information.
 
 ---
@@ -93,52 +99,54 @@ A test of one strategy asks: could luck have produced a Sharpe this high? A sear
 
 ### Step 1: a no-skill Sharpe is a bell curve of known width
 
-A daily return with no edge has true mean zero. Its measured Sharpe over $T$ days is the sample average divided by the sample spread. Averages of many independent returns follow a bell curve, and dividing by the spread leaves a bell curve centred on zero with standard deviation $1/\sqrt{T-1}$, up to a small correction ([Lo 2002](https://doi.org/10.2469/faj.v58.n4.2453)).
+A daily return with no edge has true mean zero. Its measured Sharpe over $`T`$ days is the sample average divided by the sample spread. Averages of many independent returns follow a bell curve, and dividing by the spread leaves a bell curve centred on zero with standard deviation $`1/\sqrt{T-1}`$, up to a small correction ([Lo 2002](https://doi.org/10.2469/faj.v58.n4.2453)).
 
-For 756 days that width is 0.036394 a day, or $\sqrt{252/755}$ = 0.577732 a year. Three years is not long: a no-skill strategy lands above 0.58 about one time in six.
+For 756 days that width is 0.036394 a day, or $`\sqrt{252/755}`$ = 0.577732 a year. Three years is not long: a no-skill strategy lands above 0.58 about one time in six.
 
 ### Step 2: the best of M draws has an exact law
 
-Divide each of $M$ independent no-skill Sharpes by that width. The results $Z_1, \dots, Z_M$ are standard bell-curve draws. The best is at most $z$ exactly when every one is at most $z$. Independence multiplies the chances:
+Divide each of $`M`$ independent no-skill Sharpes by that width. The results $`Z_1, \dots, Z_M`$ are standard bell-curve draws. The best is at most $`z`$ exactly when every one is at most $`z`$. Independence multiplies the chances:
 
-$$P(\max_j Z_j \le z) = N(z)^M.$$
+```math
+P(\max_j Z_j \le z) = N(z)^M.
+```
 
-Its average follows by integrating $z$ against the slope of that curve: 2.507594 widths for $M = 100$. Times the annual width 0.577732, the best of 100 lucky strategies averages a Sharpe of 1.448718. The chance that the best reaches 1.4 or more is $1 - N(1.4/0.577732)^{100}$ = 0.537937: more often than not.
+Its average follows by integrating $`z`$ against the slope of that curve: 2.507594 widths for $`M = 100`$. Times the annual width 0.577732, the best of 100 lucky strategies averages a Sharpe of 1.448718. The chance that the best reaches 1.4 or more is $`1 - N(1.4/0.577732)^{100}`$ = 0.537937: more often than not.
 
 <details>
 <summary>Detailed proof: the maximum law and two routes to its average</summary>
 
-**The law.** The event "$\max_j Z_j \le z$" is the event "$Z_1 \le z$ and … and $Z_M \le z$". For independent events the probability of all of them is the product, and each factor is $N(z)$. So the maximum has distribution function $F(z) = N(z)^M$.
+**The law.** The event "$`\max_j Z_j \le z`$" is the event "$`Z_1 \le z`$ and … and $`Z_M \le z`$". For independent events the probability of all of them is the product, and each factor is $`N(z)`$. So the maximum has distribution function $`F(z) = N(z)^M`$.
 
-**Route one, the density.** Differentiate: $F'(z) = M\,\phi(z)\,N(z)^{M-1}$, where $\phi$ is the bell curve's height. The average is $\int z\,M\,\phi(z)\,N(z)^{M-1}\,dz$ over the whole line.
+**Route one, the density.** Differentiate: $`F'(z) = M\,\phi(z)\,N(z)^{M-1}`$, where $`\phi`$ is the bell curve's height. The average is $`\int z\,M\,\phi(z)\,N(z)^{M-1}\,dz`$ over the whole line.
 
-**Route two, the tails.** For any quantity with a finite average, the average is the area of its upper tail beyond zero minus the area of its lower tail below zero. For the best of $M$, with $P(\max_j Z_j \le z) = N(z)^M$, this is $\int_0^\infty \big(1 - N(z)^M\big)\,dz - \int_{-\infty}^0 N(z)^M\,dz$.
+**Route two, the tails.** For any quantity with a finite average, the average is the area of its upper tail beyond zero minus the area of its lower tail below zero. For the best of $`M`$, with $`P(\max_j Z_j \le z) = N(z)^M`$, this is $`\int_0^\infty \big(1 - N(z)^M\big)\,dz - \int_{-\infty}^0 N(z)^M\,dz`$.
 
-The two routes share no integrand. The checks compute both with Simpson's rule on $[-12, 12]$; they agree to within one part in a hundred million, at 2.507594. The average exists because $|\max_j Z_j| \le |Z_1| + \dots + |Z_M|$, which has a finite average.
+The two routes share no integrand. The checks compute both with Simpson's rule on $`[-12, 12]`$; they agree to within one part in a hundred million, at 2.507594. The average exists because $`|\max_j Z_j| \le |Z_1| + \dots + |Z_M|`$, which has a finite average.
 
-**Why independence matters.** If the $M$ strategies are variations of one idea, their scores move together and the best reaches less far. For positively correlated scores, Slepian's inequality gives $P(\max_j Z_j \le z) \ge N(z)^M$: the independent case is the furthest luck can reach, so the true bar is lower.
+**Why independence matters.** If the $`M`$ strategies are variations of one idea, their scores move together and the best reaches less far. For positively correlated scores, Slepian's inequality gives $`P(\max_j Z_j \le z) \ge N(z)^M`$: the independent case is the furthest luck can reach, so the true bar is lower.
 
 </details>
 
 ### Step 3: the shortcut, luck's best as a Gumbel curve
 
-The integral has no closed form, so the paper uses a shortcut from extreme-value theory (the study of maxima). For large $M$, the best of $M$ bell-curve draws follows a **Gumbel** curve, whose distribution function is $\exp(-e^{-(x-a)/b})$ with a location $a$ and a width $b$.
+The integral has no closed form, so the paper uses a shortcut from extreme-value theory (the study of maxima). For large $`M`$, the best of $`M`$ bell-curve draws follows a **Gumbel** curve, whose distribution function is $`\exp(-e^{-(x-a)/b})`$ with a location $`a`$ and a width $`b`$.
 
-Match two points. At $a = N^{-1}(1 - 1/M)$, the chance that one draw exceeds it is $1/M$, and the chance that none of $M$ does is about $e^{-1}$, the Gumbel value at $x = a$. At $a + b = N^{-1}(1 - 1/(Me))$, the chance that none exceeds it is about $e^{-1/e}$, the Gumbel value at $x = a + b$.
+Match two points. At $`a = N^{-1}(1 - 1/M)`$, the chance that one draw exceeds it is $`1/M`$, and the chance that none of $`M`$ does is about $`e^{-1}`$, the Gumbel value at $`x = a`$. At $`a + b = N^{-1}(1 - 1/(Me))`$, the chance that none exceeds it is about $`e^{-1/e}`$, the Gumbel value at $`x = a + b`$.
 
-A Gumbel curve's average is its location plus $\gamma$ widths, where $\gamma$ is Euler's constant 0.5772. So the average best is $a + \gamma b = (1-\gamma)\,a + \gamma\,(a + b)$, which is the bracket in the formula. For $M = 100$: $a$ = 2.326348, $a + b$ = 2.680210, and the bracket is 2.530603. The exact value is 2.507594; the shortcut overshoots by 0.9 percent, which makes the bar slightly strict.
+A Gumbel curve's average is its location plus $`\gamma`$ widths, where $`\gamma`$ is Euler's constant 0.5772. So the average best is $`a + \gamma b = (1-\gamma)\,a + \gamma\,(a + b)`$, which is the bracket in the formula. For $`M = 100`$: $`a`$ = 2.326348, $`a + b`$ = 2.680210, and the bracket is 2.530603. The exact value is 2.507594; the shortcut overshoots by 0.9 percent, which makes the bar slightly strict.
 
 ### Step 4: stand the winner against the bar
 
-The measured Sharpe itself has a standard error. For returns with skewness $\gamma_3$ and kurtosis $\gamma_4$, its variance is about $\big(1 - \gamma_3\,SR + \tfrac{\gamma_4 - 1}{4}\,SR^2\big)/(T-1)$. This card states that result without proof; it comes from a first-order Taylor expansion of the ratio (the delta method), carried out in Lo's paper for bell-curve returns; Bailey and López de Prado use the version for skewed, fat-tailed ones.
+The measured Sharpe itself has a standard error. For returns with skewness $`\gamma_3`$ and kurtosis $`\gamma_4`$, its variance is about $`\big(1 - \gamma_3\,SR + \tfrac{\gamma_4 - 1}{4}\,SR^2\big)/(T-1)`$. This card states that result without proof; it comes from a first-order Taylor expansion of the ratio (the delta method), carried out in Lo's paper for bell-curve returns; Bailey and López de Prado use the version for skewed, fat-tailed ones.
 
-The distance from the bar in standard errors is the fraction inside $N(\cdot)$. Pushing it through $N$ turns a number of standard errors into a number between 0 and 1: 0.5 means the winner sits exactly on luck's average best, 0.95 or more is the level the paper treats as evidence.
+The distance from the bar in standard errors is the fraction inside $`N(\cdot)`$. Pushing it through $`N`$ turns a number of standard errors into a number between 0 and 1: 0.5 means the winner sits exactly on luck's average best, 0.95 or more is the level the paper treats as evidence.
 
 Negative skew and fat tails raise the denominator: a strategy that earns small gains and suffers rare large losses has a less trustworthy Sharpe, and its DSR moves toward 0.5, which for a winner above the bar means down.
 
 ### Step 5: CSCV, and why pure luck gives one half
 
-The DSR needs $M$ and assumes the trials are independent. CSCV needs neither. Cut the 756 days into $S = 6$ blocks of 126 days. Choose 3 blocks as the **in-sample** half, the part used to pick the winner; the other 3 are the **out-of-sample** half, used to judge it. There are $\binom{6}{3} = 20$ such choices. In each, pick the strategy with the best in-sample Sharpe, then rank all 100 on the out-of-sample half. PBO is the share of the 20 splits in which the pick ranks 50 or worse.
+The DSR needs $`M`$ and assumes the trials are independent. CSCV needs neither. Cut the 756 days into $`S = 6`$ blocks of 126 days. Choose 3 blocks as the **in-sample** half, the part used to pick the winner; the other 3 are the **out-of-sample** half, used to judge it. There are $`\binom{6}{3} = 20`$ such choices. In each, pick the strategy with the best in-sample Sharpe, then rank all 100 on the out-of-sample half. PBO is the share of the 20 splits in which the pick ranks 50 or worse.
 
 ```mermaid
 flowchart LR
@@ -154,7 +162,7 @@ For pure noise the answer is exactly one half, by symmetry.
 <details>
 <summary>Detailed proof: PBO is one half when no strategy has skill</summary>
 
-Suppose every column of returns is independent noise with the same distribution. The in-sample and out-of-sample halves use different days, so they are independent. The identity of the in-sample winner depends only on the in-sample days. Given that identity, the out-of-sample scores of all 100 strategies are still independent and identically distributed, so the winner is equally likely to hold any of the 100 out-of-sample ranks. The chance its rank is 50 or less is $50/100 = 1/2$.
+Suppose every column of returns is independent noise with the same distribution. The in-sample and out-of-sample halves use different days, so they are independent. The identity of the in-sample winner depends only on the in-sample days. Given that identity, the out-of-sample scores of all 100 strategies are still independent and identically distributed, so the winner is equally likely to hold any of the 100 out-of-sample ranks. The chance its rank is 50 or less is $`50/100 = 1/2`$.
 
 The 20 splits share days, so they are not 20 independent tests; the fraction for one history can land well away from one half. Its average over many histories is one half. The simulation in the checks averages 500 histories and gets 0.5039.
 
@@ -168,29 +176,29 @@ The same question has a classical answer on the [Many tests](../../09-Probabilit
 
 ## Worked numbers, by hand
 
-The winner: annual Sharpe 1.4 from 756 daily returns, best of $M = 100$, bell-curve returns ($\gamma_3 = 0$, $\gamma_4 = 3$).
+The winner: annual Sharpe 1.4 from 756 daily returns, best of $`M = 100`$, bell-curve returns ($`\gamma_3 = 0`$, $`\gamma_4 = 3`$).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| winner's Sharpe per day | $1.4 / \sqrt{252}$ | 0.088192 |
-| no-skill spread per day | $1 / \sqrt{755}$ | 0.036394 |
-| first quantile | $N^{-1}(1 - 1/100)$ | 2.326348 |
-| second quantile | $N^{-1}(1 - 1/(100e))$ | 2.680210 |
-| bracket | $0.4228 \times 2.326348 + 0.5772 \times 2.680210$ | 2.530603 |
-| bar per day, $SR_0$ | $2.530603 \times 0.036394$ | 0.092098 |
-| bar per year | $0.092098 \times \sqrt{252}$ | 1.462012 |
-| gap | $0.088192 - 0.092098$ | −0.003906 |
-| denominator | $\sqrt{1 + \tfrac{2}{4} \times 0.088192^2}$ | 1.001943 |
-| standard errors above the bar | $-0.003906 \times 27.477263 / 1.001943$ | −0.107128 |
-| **DSR** | $N(-0.107128)$ | **0.457344** |
+| winner's Sharpe per day | $`1.4 / \sqrt{252}`$ | 0.088192 |
+| no-skill spread per day | $`1 / \sqrt{755}`$ | 0.036394 |
+| first quantile | $`N^{-1}(1 - 1/100)`$ | 2.326348 |
+| second quantile | $`N^{-1}(1 - 1/(100e))`$ | 2.680210 |
+| bracket | $`0.4228 \times 2.326348 + 0.5772 \times 2.680210`$ | 2.530603 |
+| bar per day, $`SR_0`$ | $`2.530603 \times 0.036394`$ | 0.092098 |
+| bar per year | $`0.092098 \times \sqrt{252}`$ | 1.462012 |
+| gap | $`0.088192 - 0.092098`$ | −0.003906 |
+| denominator | $`\sqrt{1 + \tfrac{2}{4} \times 0.088192^2}`$ | 1.001943 |
+| standard errors above the bar | $`-0.003906 \times 27.477263 / 1.001943`$ | −0.107128 |
+| **DSR** | $`N(-0.107128)`$ | **0.457344** |
 
 The winner sits a tenth of a standard error *below* the Sharpe that the best of 100 coin tosses shows on average. Nothing in the record separates it from luck.
 
-The same 1.4, earned over ten years of monthly returns ($T = 120$), faces a bar of 0.803602 a year and scores a DSR of 0.964526. Ten years of daily returns give 0.970757. Evidence accumulates mainly with the years a record covers, not with how often it is sampled.
+The same 1.4, earned over ten years of monthly returns ($`T = 120`$), faces a bar of 0.803602 a year and scores a DSR of 0.964526. Ten years of daily returns give 0.970757. Evidence accumulates mainly with the years a record covers, not with how often it is sampled.
 
 ### CSCV by hand: four rules, four blocks
 
-Four rules, A to D, each recording profit per block in four blocks: A is (8, 8, −2, −2), B is (2, 2, 2, 2), C is (−2, −2, 8, 8), D is (1, 1, 1, 1). The score on a half is the mean profit per block. Two blocks of four go in-sample, so there are $\binom{4}{2} = 6$ splits. Ties go to the earlier rule. Rank 1 is worst, 4 is best.
+Four rules, A to D, each recording profit per block in four blocks: A is (8, 8, −2, −2), B is (2, 2, 2, 2), C is (−2, −2, 8, 8), D is (1, 1, 1, 1). The score on a half is the mean profit per block. Two blocks of four go in-sample, so there are $`\binom{4}{2} = 6`$ splits. Ties go to the earlier rule. Rank 1 is worst, 4 is best.
 
 | In-sample blocks | In-sample means A B C D | Winner | Out-of-sample means A B C D | Winner's rank |
 | --- | --- | --- | --- | --- |
@@ -649,8 +657,8 @@ The simulated average best Sharpe, 1.4559, sits just above the exact 1.448718. P
 
 Lean proves the maximum law and the pure-noise PBO of one half, for any number of strategies, and checks the hand CSCV counts.
 
-- Take $M$ independent no-skill Sharpes, each divided by its width, so each $Z_j$ is a standard bell-curve draw. Then $P(\max_j Z_j \le z) = N(z)^M$ for every $z$.
-- Take $M$ even, with out-of-sample scores that are independent, share one distribution, tie with chance zero, and are independent of in-sample scores. Then the winner, picked from in-sample scores alone, ranks $M/2$ or worse out of sample with chance exactly one half.
+- Take $`M`$ independent no-skill Sharpes, each divided by its width, so each $`Z_j`$ is a standard bell-curve draw. Then $`P(\max_j Z_j \le z) = N(z)^M`$ for every $`z`$.
+- Take $`M`$ even, with out-of-sample scores that are independent, share one distribution, tie with chance zero, and are independent of in-sample scores. Then the winner, picked from in-sample scores alone, ranks $`M/2`$ or worse out of sample with chance exactly one half.
 - Six blocks give 20 CSCV splits, and four blocks give 6.
 - In the hand CSCV table, the winners' out-of-sample ranks are 1, 1, 4, 4, 4, 4. So PBO is 2/6 = 1/3.
 
@@ -938,10 +946,10 @@ example : ((2 : ℚ) / Nat.choose 4 2) = 1 / 3 := by norm_num [Nat.choose]
 
 ## Where this goes next
 
-- [A moving hedge ratio](07-kalman-filter-for-dynamic-hedge-ratios.md): a hedge ratio that updates itself; each tuning of its noise settings tried on the same history is one more trial in $M$.
+- [A moving hedge ratio](07-kalman-filter-for-dynamic-hedge-ratios.md): a hedge ratio that updates itself; each tuning of its noise settings tried on the same history is one more trial in $`M`$.
 - [Momentum and factor signals](03-momentum-and-factor-signals.md): signals chosen from a crowded field, where the deflation here decides which survive.
 
-The question this card leaves open: how many independent trials $M$ a family of near-identical strategies really counts as.
+The question this card leaves open: how many independent trials $`M`$ a family of near-identical strategies really counts as.
 
 ---
 

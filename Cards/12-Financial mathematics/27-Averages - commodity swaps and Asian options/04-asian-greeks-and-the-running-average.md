@@ -40,56 +40,66 @@ First line: the true contract. It starts paying at $97, not $100, and gains 50 c
 
 ## The formula
 
-Notation first. There are $n$ fixings in all; $k$ are already in and $m = n - k$ are still to come. The fixings in averaged $\bar a$. The weight of the open part is $w = m/n$. The fixings still to come are $X_1, \dots, X_m$, at times $t_1, \dots, t_m$ in years from today, and they will average $A_{\text{rest}}$, unknown today. For each fixing date the futures market quotes today a **forward price** $F_i$: the price agreed now for a barrel delivered on that date. The final payoff is paid at the last fixing, $\tau$ years from now, and $e^{-r\tau}$ discounts it at the bank rate $r$.
+Notation first. There are $`n`$ fixings in all; $`k`$ are already in and $`m = n - k`$ are still to come. The fixings in averaged $`\bar a`$. The weight of the open part is $`w = m/n`$. The fixings still to come are $`X_1, \dots, X_m`$, at times $`t_1, \dots, t_m`$ in years from today, and they will average $`A_{\text{rest}}`$, unknown today. For each fixing date the futures market quotes today a **forward price** $`F_i`$: the price agreed now for a barrel delivered on that date. The final payoff is paid at the last fixing, $`\tau`$ years from now, and $`e^{-r\tau}`$ discounts it at the bank rate $`r`$.
 
 **The banked part** (proved on [Asian Greeks and implied volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md); one line of algebra):
 
-$$A = \frac{k}{n}\,\bar a + w\,A_{\text{rest}}, \qquad (A - K)^+ = w\,\big(A_{\text{rest}} - K^*\big)^+, \qquad K^* = \frac{K - \tfrac{k}{n}\,\bar a}{w}$$
+```math
+A = \frac{k}{n}\,\bar a + w\,A_{\text{rest}}, \qquad (A - K)^+ = w\,\big(A_{\text{rest}} - K^*\big)^+, \qquad K^* = \frac{K - \tfrac{k}{n}\,\bar a}{w}
+```
 
 **Read it aloud:** subtract the settled money from the strike, scale the rest up by the open weight, and what remains is a smaller Asian on the fixings to come.
 
 **The moment-matched price** (Lévy's approximation, fed the futures curve):
 
-$$V \approx e^{-r\tau}\,w\,\big[M_1\,N(d_1) - K^*\,N(d_1 - v)\big], \qquad d_1 = \frac{\ln(M_1/K^*) + \tfrac12 v^2}{v}$$
+```math
+V \approx e^{-r\tau}\,w\,\big[M_1\,N(d_1) - K^*\,N(d_1 - v)\big], \qquad d_1 = \frac{\ln(M_1/K^*) + \tfrac12 v^2}{v}
+```
 
-$$M_1 = \frac{1}{m}\sum_{i=1}^{m} F_i, \qquad M_2 = \frac{1}{m^2}\sum_{i=1}^{m}\sum_{j=1}^{m} F_i F_j\,e^{\sigma^2 \min(t_i, t_j)}, \qquad v = \sqrt{\ln\!\big(M_2 / M_1^2\big)}$$
+```math
+M_1 = \frac{1}{m}\sum_{i=1}^{m} F_i, \qquad M_2 = \frac{1}{m^2}\sum_{i=1}^{m}\sum_{j=1}^{m} F_i F_j\,e^{\sigma^2 \min(t_i, t_j)}, \qquad v = \sqrt{\ln\!\big(M_2 / M_1^2\big)}
+```
 
 **Read it aloud:** replace the open average by a lognormal variable with the same mean and the same mean square, and price it with Black-76, the call formula for an option on a forward price.
 
-**Its Greeks,** in closed form. When jet fuel moves, the whole curve moves in proportion, so $M_1$ is proportional to $S$ and $v$ does not change:
+**Its Greeks,** in closed form. When jet fuel moves, the whole curve moves in proportion, so $`M_1`$ is proportional to $`S`$ and $`v`$ does not change:
 
-$$\Delta = e^{-r\tau}\,w\,\frac{M_1}{S}\,N(d_1), \qquad \Gamma = e^{-r\tau}\,w\,\frac{M_1}{S}\,\frac{\varphi(d_1)}{S\,v}, \qquad \mathcal{V} = e^{-r\tau}\,w\,M_1\,\varphi(d_1)\,\frac{\partial M_2/\partial\sigma}{2\,M_2\,v}$$
+```math
+\Delta = e^{-r\tau}\,w\,\frac{M_1}{S}\,N(d_1), \qquad \Gamma = e^{-r\tau}\,w\,\frac{M_1}{S}\,\frac{\varphi(d_1)}{S\,v}, \qquad \mathcal{V} = e^{-r\tau}\,w\,M_1\,\varphi(d_1)\,\frac{\partial M_2/\partial\sigma}{2\,M_2\,v}
+```
 
-**Read it aloud:** the matched call's own Greeks, scaled by the open weight. Here $\varphi$ is the bell-curve height (the normal density).
+**Read it aloud:** the matched call's own Greeks, scaled by the open weight. Here $`\varphi`$ is the bell-curve height (the normal density).
 
-**The bump road,** on the same random draws each time, with $h$ = $1 on jet fuel and one point on volatility:
+**The bump road,** on the same random draws each time, with $`h`$ = $1 on jet fuel and one point on volatility:
 
-$$\Delta \approx \frac{V(S+h) - V(S-h)}{2h}, \qquad \Gamma \approx \frac{V(S+h) - 2V(S) + V(S-h)}{h^2}, \qquad \mathcal{V} \approx \frac{V(\sigma + 0.01) - V(\sigma - 0.01)}{2}$$
+```math
+\Delta \approx \frac{V(S+h) - V(S-h)}{2h}, \qquad \Gamma \approx \frac{V(S+h) - 2V(S) + V(S-h)}{h^2}, \qquad \mathcal{V} \approx \frac{V(\sigma + 0.01) - V(\sigma - 0.01)}{2}
+```
 
-**The ladder:** $\Delta_Q$ is the price change when only quarter Q's forwards rise 1 percent. The rungs add up to $\Delta$.
+**The ladder:** $`\Delta_Q`$ is the price change when only quarter Q's forwards rise 1 percent. The rungs add up to $`\Delta`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | price of the Asian call today, per barrel | $5.87 fresh (formula); $2.89 half-fixed | — |
-| $S$ | jet fuel's price today; the whole curve moves in proportion with it | $100 | V rises, by delta per $1 |
-| $K$, $K^*$ | the strike; the strike the open average must beat | $100; $97.00 after 26 fixings at $103 | V falls |
-| $n$, $k$, $m$ | fixings in all, already in, still to come | 52; 26 and 26 half-way | more k: less risk left |
-| $\bar a$, $w$ | average of the fixings in; open weight m/n | $103; 0.50 | ā up: V and delta rise |
-| $A$, $A_{\text{rest}}$, $X_i$, $i$, $j$ | the final average; the average still to come; the i-th fixing to come; counters over fixings | settles at the last fixing | — |
-| $F_i$, $t_i$ | today's forward price for fixing i; its time from today in years | $100 grown at 5 percent to each date; i/52 | $F_i$ up: V up by that fixing's rung |
-| $r$, $\tau$, $D$ | bank rate; time to the last fixing; $D = e^{-r\tau}$, the discount factor | 5%; 1 then 0.5; 0.9512 then 0.9753 | r up: forwards rise, discount deepens |
-| $\sigma$, $W$ | volatility of every fixing's log, per year; the one random path (Brownian motion) all fixings share | 20% | V rises, always |
-| $M_1$, $M_2$, $v$, $Y$ | expected open average (the fair swap price); its expected square; log-spread of the matched lognormal Y | $102.59, v 0.1180 fresh; $101.31, v 0.0843 half-fixed | — |
-| $N$, $\varphi$, $d_1$ | bell-curve area and height; distance to the strike in spread units | d1 0.2758 fresh, 0.5577 half-fixed | — |
-| $\Delta$, $\Gamma$, $\mathcal{V}$, $\Delta_Q$, $h$ | delta per $1; gamma per $1; vega per volatility point; one quarter's rung; bump size | 0.59, 0.032, $0.22 fresh; 0.35, 0.020, $0.07 half-fixed; h = $1 | — |
+| $`V`$ | price of the Asian call today, per barrel | $5.87 fresh (formula); $2.89 half-fixed | — |
+| $`S`$ | jet fuel's price today; the whole curve moves in proportion with it | $100 | V rises, by delta per $1 |
+| $`K`$, $`K^*`$ | the strike; the strike the open average must beat | $100; $97.00 after 26 fixings at $103 | V falls |
+| $`n`$, $`k`$, $`m`$ | fixings in all, already in, still to come | 52; 26 and 26 half-way | more k: less risk left |
+| $`\bar a`$, $`w`$ | average of the fixings in; open weight m/n | $103; 0.50 | ā up: V and delta rise |
+| $`A`$, $`A_{\text{rest}}`$, $`X_i`$, $`i`$, $`j`$ | the final average; the average still to come; the i-th fixing to come; counters over fixings | settles at the last fixing | — |
+| $`F_i`$, $`t_i`$ | today's forward price for fixing i; its time from today in years | $100 grown at 5 percent to each date; i/52 | $`F_i`$ up: V up by that fixing's rung |
+| $`r`$, $`\tau`$, $`D`$ | bank rate; time to the last fixing; $`D = e^{-r\tau}`$, the discount factor | 5%; 1 then 0.5; 0.9512 then 0.9753 | r up: forwards rise, discount deepens |
+| $`\sigma`$, $`W`$ | volatility of every fixing's log, per year; the one random path (Brownian motion) all fixings share | 20% | V rises, always |
+| $`M_1`$, $`M_2`$, $`v`$, $`Y`$ | expected open average (the fair swap price); its expected square; log-spread of the matched lognormal Y | $102.59, v 0.1180 fresh; $101.31, v 0.0843 half-fixed | — |
+| $`N`$, $`\varphi`$, $`d_1`$ | bell-curve area and height; distance to the strike in spread units | d1 0.2758 fresh, 0.5577 half-fixed | — |
+| $`\Delta`$, $`\Gamma`$, $`\mathcal{V}`$, $`\Delta_Q`$, $`h`$ | delta per $1; gamma per $1; vega per volatility point; one quarter's rung; bump size | 0.59, 0.032, $0.22 fresh; 0.35, 0.020, $0.07 half-fixed; h = $1 | — |
 
 ### When it holds
 
 - **One volatility for every fixing.** A real curve has more volatility near the front month than in the back; each fixing then needs its own σ, and a single number misprices the option by roughly the gap, in points, times the vega.
 - **All fixings driven by one random path.** Real curve points do not move in lockstep; with a second factor the far fixings are less correlated with the near ones, and the average is calmer than this card says.
 - **Shared draws for every bump.** With fresh random numbers per bump, delta becomes the difference of two noisy prices; the noise does not shrink as the bump does ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)).
-- **New strike above zero.** If the banked average $\bar a$ is so high that $K^* \le 0$, the call pays for certain: its price is $e^{-r\tau} w (M_1 - K^*)$, an average-price forward, vega is zero and gamma is zero. With 26 fixings at $205 the new strike is −5 and the price $51.84; the simulation agrees.
-- **Draining is not a law.** It holds with prices steady. If the banked prices pull $K^*$ from far out of the money to the money, the half-option left has more gamma and vega than the fresh one had.
+- **New strike above zero.** If the banked average $`\bar a`$ is so high that $`K^* \le 0`$, the call pays for certain: its price is $`e^{-r\tau} w (M_1 - K^*)`$, an average-price forward, vega is zero and gamma is zero. With 26 fixings at $205 the new strike is −5 and the price $51.84; the simulation agrees.
+- **Draining is not a law.** It holds with prices steady. If the banked prices pull $`K^*`$ from far out of the money to the money, the half-option left has more gamma and vega than the fresh one had.
 - **Lognormal matching is close, not exact.** A sum of lognormals is not lognormal. Here the formula sits 2 cents above the simulation on price and 0.004 on delta; the gap grows with volatility and length.
 
 ---
@@ -104,46 +114,50 @@ A simulated price is an average of payoffs over many random paths. Nudge an inpu
 
 A commodity desk has no spot price and dividend yield to feed a model. It has the futures curve. A futures price has no drift in the pricing world: the contract costs nothing to enter, so its expected change must be zero ([Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)). Fixing i is that date's price, which the matching futures price reaches at delivery, so
 
-$$X_i = F_i\,\exp\!\big(\sigma W(t_i) - \tfrac12\sigma^2 t_i\big),$$
+```math
+X_i = F_i\,\exp\!\big(\sigma W(t_i) - \tfrac12\sigma^2 t_i\big),
+```
 
-where $W$ is one random path (a Brownian motion) shared by every fixing. The $-\tfrac12\sigma^2 t_i$ keeps the expected fixing equal to $F_i$. Here the curve is the house one, $F_i = 100\,e^{0.05\,t_i}$: full carry at the bank rate, no storage cost, no convenience yield. A real curve in backwardation (falling with delivery date) goes in the same slot; see [Contango and backwardation](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md).
+where $`W`$ is one random path (a Brownian motion) shared by every fixing. The $`-\tfrac12\sigma^2 t_i`$ keeps the expected fixing equal to $`F_i`$. Here the curve is the house one, $`F_i = 100\,e^{0.05\,t_i}`$: full carry at the bank rate, no storage cost, no convenience yield. A real curve in backwardation (falling with delivery date) goes in the same slot; see [Contango and backwardation](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md).
 
-On the equity card, [Asian Greeks and implied volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md), every fixing was today's share price grown at $r - q$, the bank rate minus the dividend yield. Here the input is a list of 52 prices, and every Greek can be asked per point of it.
+On the equity card, [Asian Greeks and implied volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md), every fixing was today's share price grown at $`r - q`$, the bank rate minus the dividend yield. Here the input is a list of 52 prices, and every Greek can be asked per point of it.
 
 **Conventions verified 28 Sep 2026:** a listed Gulf Coast jet fuel swap averages Platts' daily Gulf Coast Jet/Kero 54 mid-price over every business day of the contract month (AEGIS SEF rulebook, chapter 1403). That is about 250 fixings a year, grouped by month. The 52 weekly fixings here are the shelf's simpler schedule; the formulas take any schedule.
 
 ### Step 2: the two moments, from the one path
 
-The average's mean is the average of the forwards: $M_1 = \frac1m \sum F_i$. For the fresh contract that is $102.59, the fair fixed price of a jet-fuel swap on the same fixings ([Commodity swap](01-commodity-swap-and-average-price-forward.md)).
+The average's mean is the average of the forwards: $`M_1 = \frac1m \sum F_i`$. For the fresh contract that is $102.59, the fair fixed price of a jet-fuel swap on the same fixings ([Commodity swap](01-commodity-swap-and-average-price-forward.md)).
 
-For the mean square, multiply two fixings. Their logs share the path up to the earlier date, so the covariance of the logs is $\sigma^2 \min(t_i, t_j)$, and the expected product is $F_i F_j e^{\sigma^2 \min(t_i, t_j)}$. Average over all pairs: $M_2$. A lognormal variable with the same two moments has log-spread $v = \sqrt{\ln(M_2/M_1^2)}$: 0.1180 for the fresh contract, against 0.20 for one fixing a year out. Black-76 on a forward $M_1$ with spread $v$ gives the price.
+For the mean square, multiply two fixings. Their logs share the path up to the earlier date, so the covariance of the logs is $`\sigma^2 \min(t_i, t_j)`$, and the expected product is $`F_i F_j e^{\sigma^2 \min(t_i, t_j)}`$. Average over all pairs: $`M_2`$. A lognormal variable with the same two moments has log-spread $`v = \sqrt{\ln(M_2/M_1^2)}`$: 0.1180 for the fresh contract, against 0.20 for one fixing a year out. Black-76 on a forward $`M_1`$ with spread $`v`$ gives the price.
 
 <details>
 <summary>Detailed proof: the moments and the matched Greeks</summary>
 
-**Product of two fixings.** $\ln X_i + \ln X_j = \ln F_i + \ln F_j - \tfrac12\sigma^2(t_i + t_j) + \sigma\big(W(t_i) + W(t_j)\big)$. The sum $W(t_i) + W(t_j)$ is normal with variance $t_i + t_j + 2\min(t_i, t_j)$. The mean of $e^Y$ for a normal $Y$ is $e^{\text{mean} + \frac12\text{variance}}$, so $\mathbb{E}[X_i X_j] = F_i F_j\,e^{\sigma^2 \min(t_i, t_j)}$. Dividing the double sum by $m^2$ gives $M_2$.
+**Product of two fixings.** $`\ln X_i + \ln X_j = \ln F_i + \ln F_j - \tfrac12\sigma^2(t_i + t_j) + \sigma\big(W(t_i) + W(t_j)\big)`$. The sum $`W(t_i) + W(t_j)`$ is normal with variance $`t_i + t_j + 2\min(t_i, t_j)`$. The mean of $`e^Y`$ for a normal $`Y`$ is $`e^{\text{mean} + \frac12\text{variance}}`$, so $`\mathbb{E}[X_i X_j] = F_i F_j\,e^{\sigma^2 \min(t_i, t_j)}`$. Dividing the double sum by $`m^2`$ gives $`M_2`$.
 
-**Matching.** A lognormal $Y$ with $\mathbb{E}[Y] = M_1$ and $\mathbb{E}[Y^2] = M_2$ has $\ln Y$ normal with variance $v^2 = \ln(M_2/M_1^2)$. Black-76 on it: $\mathbb{E}[(Y - K^*)^+] = M_1 N(d_1) - K^* N(d_1 - v)$.
+**Matching.** A lognormal $`Y`$ with $`\mathbb{E}[Y] = M_1`$ and $`\mathbb{E}[Y^2] = M_2`$ has $`\ln Y`$ normal with variance $`v^2 = \ln(M_2/M_1^2)`$. Black-76 on it: $`\mathbb{E}[(Y - K^*)^+] = M_1 N(d_1) - K^* N(d_1 - v)`$.
 
-**Delta and gamma.** Scaling $S$ scales every $F_i$ by the same factor, so $M_1 \propto S$, $M_2 \propto S^2$, and $v$ does not move. Then $\partial d_1/\partial S = 1/(S v)$, and the standard Black identity $M_1 \varphi(d_1) = K^* \varphi(d_1 - v)$ cancels the terms from $d_1$'s movement, leaving $\Delta = e^{-r\tau} w (M_1/S) N(d_1)$. Differentiating once more gives $\Gamma$.
+**Delta and gamma.** Scaling $`S`$ scales every $`F_i`$ by the same factor, so $`M_1 \propto S`$, $`M_2 \propto S^2`$, and $`v`$ does not move. Then $`\partial d_1/\partial S = 1/(S v)`$, and the standard Black identity $`M_1 \varphi(d_1) = K^* \varphi(d_1 - v)`$ cancels the terms from $`d_1`$'s movement, leaving $`\Delta = e^{-r\tau} w (M_1/S) N(d_1)`$. Differentiating once more gives $`\Gamma`$.
 
-**Vega.** $M_1$ does not depend on σ. Black-76's slope in its spread is $M_1 \varphi(d_1)$; the chain rule through $v^2 = \ln M_2 - 2\ln M_1$ gives $\partial v/\partial\sigma = (\partial M_2/\partial\sigma)/(2 M_2 v)$, with $\partial M_2/\partial\sigma = \frac{1}{m^2}\sum\sum F_i F_j e^{\sigma^2 \min(t_i, t_j)}\,2\sigma\min(t_i, t_j)$.
+**Vega.** $`M_1`$ does not depend on σ. Black-76's slope in its spread is $`M_1 \varphi(d_1)`$; the chain rule through $`v^2 = \ln M_2 - 2\ln M_1`$ gives $`\partial v/\partial\sigma = (\partial M_2/\partial\sigma)/(2 M_2 v)`$, with $`\partial M_2/\partial\sigma = \frac{1}{m^2}\sum\sum F_i F_j e^{\sigma^2 \min(t_i, t_j)}\,2\sigma\min(t_i, t_j)`$.
 
-**Ladder adds up.** A 1 percent rise in every forward is, to first order, the sum of 1 percent rises quarter by quarter, and it equals a 1 percent rise in $S$: $1 at $100. So the rungs sum to delta.
+**Ladder adds up.** A 1 percent rise in every forward is, to first order, the sum of 1 percent rises quarter by quarter, and it equals a 1 percent rise in $`S`$: $1 at $100. So the rungs sum to delta.
 
 </details>
 
 ### Step 3: why delta and vega are damped
 
-Delta is the matched call's $N(d_1)$ times $M_1/S$, discounted. For the fresh contract: $0.9512 \times (102.5915/100) \times 0.6086$ = 0.5940. The plain call's delta is 0.6368. The average responds a little less to today's price than the last fixing does.
+Delta is the matched call's $`N(d_1)`$ times $`M_1/S`$, discounted. For the fresh contract: $`0.9512 \times (102.5915/100) \times 0.6086`$ = 0.5940. The plain call's delta is 0.6368. The average responds a little less to today's price than the last fixing does.
 
-Vega is damped much harder. Volatility enters only through $v$, and the average keeps 0.1180 of spread where one year-end fixing keeps 0.20: vega per point falls from 37.52 cents to 22.19. Gamma goes the other way, 0.0318 against 0.0188, because a narrow spread bends the price tightly round the strike.
+Vega is damped much harder. Volatility enters only through $`v`$, and the average keeps 0.1180 of spread where one year-end fixing keeps 0.20: vega per point falls from 37.52 cents to 22.19. Gamma goes the other way, 0.0318 against 0.0188, because a narrow spread bends the price tightly round the strike.
 
 ### Step 4: the banked fixings leave the ladder and shrink the rest
 
 After 26 fixings averaging $103:
 
-$$A = \tfrac{26}{52} \times 103 + \tfrac{26}{52}\,A_{\text{rest}} = 51.50 + 0.5\,A_{\text{rest}}, \qquad (A - 100)^+ = 0.5\,(A_{\text{rest}} - 97)^+.$$
+```math
+A = \tfrac{26}{52} \times 103 + \tfrac{26}{52}\,A_{\text{rest}} = 51.50 + 0.5\,A_{\text{rest}}, \qquad (A - 100)^+ = 0.5\,(A_{\text{rest}} - 97)^+.
+```
 
 The first two quarters of the ladder are now exactly zero: no forward for a date already fixed exists to hedge with. Every remaining Greek is 0.5 times the Greek of a six-month Asian on 26 fixings struck at $97. That six-month option is in the money (its matched forward is $101.31 against the $97 strike), so its own delta is high, near 0.7; the half weight cuts it to 0.35. The result is a little over half the fresh delta: the weight halves it and the in-the-money strike gives some back.
 
@@ -161,16 +175,16 @@ The half-fixed contract: 26 fixings in at an average of $103, jet fuel at $100, 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| settled money | $\tfrac{26}{52} \times 103$ | $51.50 |
-| open weight $w$ | $26/52$ | 0.50 |
-| new strike $K^*$ | $(100 - 51.50)/0.5$ | $97.00 |
-| expected open average $M_1$ | average of $100\,e^{0.05\,i/52}$ over i = 1 … 26 | $101.3092 |
-| log-spread $v$ | $\sqrt{\ln(M_2/M_1^2)}$ | 0.0843 |
-| $d_1$ | $(\ln(101.3092/97) + \tfrac12 \times 0.0843^2)/0.0843$ | 0.5577 |
-| $N(d_1)$, $N(d_1 - v)$ | bell-curve areas | 0.7115, 0.6820 |
-| discount $D$ | $e^{-0.05 \times 0.5}$ | 0.9753 |
-| **price** | $0.9753 \times 0.5 \times (101.3092 \times 0.7115 - 97 \times 0.6820)$ | **$2.89** (code, full precision: 2.8879) |
-| **delta** | $0.9753 \times 0.5 \times (101.3092/100) \times 0.7115$ | **0.3515** |
+| settled money | $`\tfrac{26}{52} \times 103`$ | $51.50 |
+| open weight $`w`$ | $`26/52`$ | 0.50 |
+| new strike $`K^*`$ | $`(100 - 51.50)/0.5`$ | $97.00 |
+| expected open average $`M_1`$ | average of $`100\,e^{0.05\,i/52}`$ over i = 1 … 26 | $101.3092 |
+| log-spread $`v`$ | $`\sqrt{\ln(M_2/M_1^2)}`$ | 0.0843 |
+| $`d_1`$ | $`(\ln(101.3092/97) + \tfrac12 \times 0.0843^2)/0.0843`$ | 0.5577 |
+| $`N(d_1)`$, $`N(d_1 - v)`$ | bell-curve areas | 0.7115, 0.6820 |
+| discount $`D`$ | $`e^{-0.05 \times 0.5}`$ | 0.9753 |
+| **price** | $`0.9753 \times 0.5 \times (101.3092 \times 0.7115 - 97 \times 0.6820)`$ | **$2.89** (code, full precision: 2.8879) |
+| **delta** | $`0.9753 \times 0.5 \times (101.3092/100) \times 0.7115`$ | **0.3515** |
 | delta, simulated full contract | bump $1 on shared draws | 0.3504 |
 
 The bank holds about 0.35 barrels of jet-fuel futures per barrel of contract, all in the second half of the year, where it held 0.59 spread over all four quarters in January.
@@ -183,7 +197,7 @@ Right answers, formula road: half-fixed $2.89 with delta 0.35; fresh $5.87 with 
 | --- | --- | --- |
 | Ignore the banked fixings: price the 26 to come as a fresh Asian struck at $100 | $3.98, delta 0.57 | The settled $51.50 was dropped: weight 1 instead of 0.5, strike $100 instead of $97 |
 | Move the strike to $97 but keep full weight | $5.78, delta 0.70 | Twice the right answer: the open part is only half the average |
-| Subtract the $51.50 from the strike but forget to divide by the weight | $25.75 | The strike must be rescaled to the open average's units: $(100 - 51.50)/0.5$, not $100 - 51.50$ |
+| Subtract the $51.50 from the strike but forget to divide by the weight | $25.75 | The strike must be rescaled to the open average's units: $`(100 - 51.50)/0.5`$, not $`100 - 51.50`$ |
 | Use today's $100 for every fixing instead of the forward curve (fresh contract) | $4.45, delta 0.50 | A flat curve drops the carry: the average's forward is $102.59, not $100 |
 
 ---
@@ -653,10 +667,10 @@ The two outputs agree line for line.
 
 Lean proves the banked-part rewrite for any prices and strike, the sure-paying case and the moment-matched delta, and checks the worked numbers.
 
-- Take $n$ fixings, $k < n$ of them already in. Then $A = \tfrac{k}{n}\,\bar a + w\,A_{\text{rest}}$, whatever the prices.
-- Take the same fixings and any strike $K$. Then $(A - K)^+ = w\,(A_{\text{rest}} - K^*)^+$.
-- Take open fixings that cannot go below zero, and $K^* \le 0$. Then $(A - K)^+ = w\,(A_{\text{rest}} - K^*)$: no kink, an average-price forward.
-- Take $\sigma > 0$, $S > 0$, $K^* > 0$, a fixing still to come, and forwards $F_i = S\,e^{r t_i}$. Then the moment-matched price has slope $\Delta = e^{-r\tau}\,w\,(M_1/S)\,N(d_1)$ in $S$.
+- Take $`n`$ fixings, $`k < n`$ of them already in. Then $`A = \tfrac{k}{n}\,\bar a + w\,A_{\text{rest}}`$, whatever the prices.
+- Take the same fixings and any strike $`K`$. Then $`(A - K)^+ = w\,(A_{\text{rest}} - K^*)^+`$.
+- Take open fixings that cannot go below zero, and $`K^* \le 0`$. Then $`(A - K)^+ = w\,(A_{\text{rest}} - K^*)`$: no kink, an average-price forward.
+- Take $`\sigma > 0`$, $`S > 0`$, $`K^* > 0`$, a fixing still to come, and forwards $`F_i = S\,e^{r t_i}`$. Then the moment-matched price has slope $`\Delta = e^{-r\tau}\,w\,(M_1/S)\,N(d_1)`$ in $`S`$.
 - With 26 of 52 fixings in at $103, the settled money is $51.50, the open weight 0.50 and the new strike $97.
 - On the picture, the true payoff at open averages 100, 105, 110 and 115 is 1.50, 4.00, 6.50 and 9.00.
 - Banked at $205, the new strike is −5. Forgetting to divide by the weight leaves 48.50, not 97.
@@ -950,7 +964,7 @@ example : (100 : ℚ) - 26 / 52 * 103 = 97 / 2 := by norm_num
 > Guess the direction first. Then run it.
 > - **A cheaper banked average.** Set the 26 fixings to average $97 instead of $103. The new strike becomes $103, out of the money: price **$1.30**, delta **0.22**.
 > - **Monthly fixings.** Twelve month-end fixings instead of 52 weekly ones. Fewer, later readings keep more spread: the fresh price rises to **$6.17** and delta to **0.60**.
-> - **Double the volatility.** Set σ to 0.40. The fresh price goes to **$10.38**, delta falls to **0.58**: a wider spread pulls $N(d_1)$ down.
+> - **Double the volatility.** Set σ to 0.40. The fresh price goes to **$10.38**, delta falls to **0.58**: a wider spread pulls $`N(d_1)`$ down.
 > - **Starve the simulation.** Set `pairs = 500`. The controlled price and Greeks barely move, because the geometric control absorbs most of the noise. The raw-simulator assert fails: without the control, 1,000 paths cannot place the geometric price within 2 cents.
 
 ---

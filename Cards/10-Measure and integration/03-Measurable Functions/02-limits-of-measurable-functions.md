@@ -37,53 +37,63 @@ Orange: wetness 0.45, which settles at 2.90 m. Green: wetness 0.95, which swings
 
 ## The formula
 
-Notation first, in words. A **measurable space** $(\Omega, \mathcal{F})$ is a set of outcomes with a sigma-algebra, the collection of its subsets we allow ourselves to measure ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). Here an outcome is a year's wetness and the allowed sets are the Borel sets, the sets built from intervals by countably many unions, intersections and complements ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)). Lebesgue measure $\lambda$, length, gives each set of wetness values its probability.
+Notation first, in words. A **measurable space** $`(\Omega, \mathcal{F})`$ is a set of outcomes with a sigma-algebra, the collection of its subsets we allow ourselves to measure ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). Here an outcome is a year's wetness and the allowed sets are the Borel sets, the sets built from intervals by countably many unions, intersections and complements ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)). Lebesgue measure $`\lambda`$, length, gives each set of wetness values its probability.
 
-A function is measurable when every threshold set $\{f < c\}$, "the outcomes where f is below c", is allowed; the first card of this shelf proves that this test is enough. The gauge model, with the sluice swing written $s(\omega) = \max(0,\ \omega - 0.75)$, is
+A function is measurable when every threshold set $`\{f < c\}`$, "the outcomes where f is below c", is allowed; the first card of this shelf proves that this test is enough. The gauge model, with the sluice swing written $`s(\omega) = \max(0,\ \omega - 0.75)`$, is
 
-$$f_n(\omega) = 2 + 2\omega\,(1 - 0.5^{\,n}) + (-1)^n\, s(\omega)$$
+```math
+f_n(\omega) = 2 + 2\omega\,(1 - 0.5^{\,n}) + (-1)^n\, s(\omega)
+```
 
 **Read it aloud:** at hour n the level is 2 m, plus a rise that approaches twice the wetness, plus the sluice's swing, added on even hours and removed on odd ones.
 
-The theorem. Let $f$, $g$ and $f_1, f_2, f_3, \ldots$ be measurable functions on the same measurable space. Then these are measurable:
+The theorem. Let $`f`$, $`g`$ and $`f_1, f_2, f_3, \ldots`$ be measurable functions on the same measurable space. Then these are measurable:
 
-$$f + g,\quad f\,g,\quad \max(f, g),\quad \min(f, g),\quad \sup_n f_n,\quad \inf_n f_n,\quad \limsup_{n} f_n,\quad \liminf_{n} f_n$$
+```math
+f + g,\quad f\,g,\quad \max(f, g),\quad \min(f, g),\quad \sup_n f_n,\quad \inf_n f_n,\quad \limsup_{n} f_n,\quad \liminf_{n} f_n
+```
 
 and the set where the sequence has a finite limit is allowed:
 
-$$L = \{\omega : \liminf_n f_n(\omega) = \limsup_n f_n(\omega) \text{ and both are finite}\} \in \mathcal{F}.$$
+```math
+L = \{\omega : \liminf_n f_n(\omega) = \limsup_n f_n(\omega) \text{ and both are finite}\} \in \mathcal{F}.
+```
 
 **Read it aloud:** everything built from measurable functions by arithmetic, by taking the largest or smallest, or by passing to a limit, is measurable, and "the sequence settles here" is a question with an answer we can measure.
 
-The sup is the least number no reading exceeds, possibly $+\infty$ ([No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The lim sup is the eventual ceiling, the sup of the readings from hour k on as k grows; the lim inf is the eventual floor. This card introduces both, and Claim 4 of the Detailed proof shows that a sequence converges exactly when the two meet at a finite value. Three identities carry the proof:
+The sup is the least number no reading exceeds, possibly $`+\infty`$ ([No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The lim sup is the eventual ceiling, the sup of the readings from hour k on as k grows; the lim inf is the eventual floor. This card introduces both, and Claim 4 of the Detailed proof shows that a sequence converges exactly when the two meet at a finite value. Three identities carry the proof:
 
-$$\{\sup_n f_n > c\} = \bigcup_{n=1}^{\infty} \{f_n > c\}, \qquad \limsup_n f_n = \inf_{k} \sup_{n \ge k} f_n,$$
+```math
+\{\sup_n f_n > c\} = \bigcup_{n=1}^{\infty} \{f_n > c\}, \qquad \limsup_n f_n = \inf_{k} \sup_{n \ge k} f_n,
+```
 
-$$\{f + g < a\} = \bigcup_{q \in \mathbb{Q}} \big(\{f < q\} \cap \{g < a - q\}\big).$$
+```math
+\{f + g < a\} = \bigcup_{q \in \mathbb{Q}} \big(\{f < q\} \cap \{g < a - q\}\big).
+```
 
 In words: the record passes c exactly when some hour does; the eventual ceiling is the lowest tail ceiling; and two readings sum to less than a exactly when a rational fits between the first and a minus the second.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$ | the set of all outcomes | every wetness from 0 up to 1 | — |
-| $\mathcal{F}$ | the allowed sets, a sigma-algebra | Borel sets of wetness values | more allowed sets, more measurable functions |
-| $\lambda$ | Lebesgue measure: length, here a probability | the band above 22/23 has length 1/23 | — |
-| $\omega$ | one outcome; the code writes w | a year of wetness 0.95 | wetter years, higher levels |
-| $f_n$, $f$, $g$ | measurable functions; $f_n$ is the reading at hour n | hour 6 at wetness 0.95 reads 4.07 m | — |
-| $n$, $k$, $m$, $N$ | whole numbers counting hours or steps | hour 6; the first N = 8 hours | — |
-| $M_N$ | the running maximum, the largest of hours 1 to N | 4.07 m at N = 6, wetness 0.95 | never falls as N grows |
-| $c$, $a$ | threshold levels, in metres | the flood mark c = 4 | fewer outcomes pass |
-| $q$ | a rational number, a fraction of whole numbers | a reading to the centimetre, 2.92 | — |
-| $s$ | the sluice swing, the wetness above 0.75 | 0.2 at wetness 0.95 | a wider swing, no limit |
-| $L$ | the set of outcomes where the limit exists | wetness from 0 to 0.75, length 0.75 | — |
-| $f_\infty$ | the limit, where it exists; 0 elsewhere | 2.90 m at wetness 0.45 | — |
-| $h$, $h_k$, $t$, $\ell$, $u$, ε | proof letters: any measurable function; the tail sup from hour k on; a fixed positive multiplier; the lim inf and lim sup; a tolerance | at wetness 0.95, $\ell$ = 3.70 m and $u$ = 4.10 m | — |
+| $`\Omega`$ | the set of all outcomes | every wetness from 0 up to 1 | — |
+| $`\mathcal{F}`$ | the allowed sets, a sigma-algebra | Borel sets of wetness values | more allowed sets, more measurable functions |
+| $`\lambda`$ | Lebesgue measure: length, here a probability | the band above 22/23 has length 1/23 | — |
+| $`\omega`$ | one outcome; the code writes w | a year of wetness 0.95 | wetter years, higher levels |
+| $`f_n`$, $`f`$, $`g`$ | measurable functions; $`f_n`$ is the reading at hour n | hour 6 at wetness 0.95 reads 4.07 m | — |
+| $`n`$, $`k`$, $`m`$, $`N`$ | whole numbers counting hours or steps | hour 6; the first N = 8 hours | — |
+| $`M_N`$ | the running maximum, the largest of hours 1 to N | 4.07 m at N = 6, wetness 0.95 | never falls as N grows |
+| $`c`$, $`a`$ | threshold levels, in metres | the flood mark c = 4 | fewer outcomes pass |
+| $`q`$ | a rational number, a fraction of whole numbers | a reading to the centimetre, 2.92 | — |
+| $`s`$ | the sluice swing, the wetness above 0.75 | 0.2 at wetness 0.95 | a wider swing, no limit |
+| $`L`$ | the set of outcomes where the limit exists | wetness from 0 to 0.75, length 0.75 | — |
+| $`f_\infty`$ | the limit, where it exists; 0 elsewhere | 2.90 m at wetness 0.45 | — |
+| $`h`$, $`h_k`$, $`t`$, $`\ell`$, $`u`$, ε | proof letters: any measurable function; the tail sup from hour k on; a fixed positive multiplier; the lim inf and lim sup; a tolerance | at wetness 0.95, $`\ell`$ = 3.70 m and $`u`$ = 4.10 m | — |
 
 ### When it holds
 
 - **Countably many functions.** Sups, infs and limits run over a list. Over an uncountable family the sup can fail: the indicators (functions that are 1 on a set and 0 off it) of the single points of a non-measurable set have that set's indicator as their sup ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)).
 - **One sigma-algebra for all.** A function measurable for one collection plus a function measurable for another can be measurable for neither; the code prints a four-point case.
-- **Finite values for sums and products.** Sups and upper and lower limits may be infinite and remain measurable, but $+\infty$ plus $-\infty$ has no value; restrict sums to finite functions, or fix a convention first.
+- **Finite values for sums and products.** Sups and upper and lower limits may be infinite and remain measurable, but $`+\infty`$ plus $`-\infty`$ has no value; restrict sums to finite functions, or fix a convention first.
 - **Convergence everywhere, or a complete measure.** Almost everywhere means outside a null set, a set of measure 0. If the sequence converges only almost everywhere, the limit is measurable once it is set to 0 on the null set where convergence fails. It is also measurable once the measure is completed, which makes every subset of a null set allowed ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
 
 ---
@@ -98,7 +108,9 @@ A sigma-algebra survives complements, countable unions and countable intersectio
 
 The running maximum passes the flood mark within N hours exactly when some hour up to N passes it:
 
-$$\{M_N > 4\} = \{f_1 > 4\} \cup \{f_2 > 4\} \cup \cdots \cup \{f_N > 4\}.$$
+```math
+\{M_N > 4\} = \{f_1 > 4\} \cup \{f_2 > 4\} \cup \cdots \cup \{f_N > 4\}.
+```
 
 A finite union of allowed sets is allowed. "Ever above 4 m" is the union over every hour, a countable union, so it is allowed too.
 
@@ -106,7 +118,7 @@ On the gauge each set is a band of wet years. Only even hours can pass 4 m, and 
 
 ### Step 2: floors, and the larger or smaller of two
 
-The lowest reading is minus the highest of the negated readings, and negation keeps measurability, since $\{-f > c\}$ is $\{f < -c\}$. The larger of f and g is the sup of the list f, g, g, g, …, and the smaller its inf.
+The lowest reading is minus the highest of the negated readings, and negation keeps measurability, since $`\{-f > c\}`$ is $`\{f < -c\}`$. The larger of f and g is the sup of the list f, g, g, g, …, and the smaller its inf.
 
 ### Step 3: upper and lower limits, and the limit set
 
@@ -126,7 +138,7 @@ The code prints the four left edges and the 0.75 mark on its line starting "figu
 
 ### Step 4: sums, through the rationals
 
-Uncountably many pairs of values add to less than a, so a direct description is useless; the rationals repair it. If $f(\omega) + g(\omega) < a$, the gap between $f(\omega)$ and $a - g(\omega)$ is positive and holds some rational q. Then $f(\omega) < q$ and $g(\omega) < a - q$, and conversely those two add to $f + g < a$. That is the third identity of The formula: a countable union.
+Uncountably many pairs of values add to less than a, so a direct description is useless; the rationals repair it. If $`f(\omega) + g(\omega) < a`$, the gap between $`f(\omega)`$ and $`a - g(\omega)`$ is positive and holds some rational q. Then $`f(\omega) < q`$ and $`g(\omega) < a - q`$, and conversely those two add to $`f + g < a`$. That is the third identity of The formula: a countable union.
 
 The code watches the union fill up. Hours 2 and 3 sum to under 6 m exactly for wetness below 8/13, about 0.615385; the swing cancels. Measured on the grid, whole-number q catch a set of length 0.571433; exactly, it is the wetness below 4/7, about 0.571429. Rationals to one decimal place catch 0.600000; to two, 0.613333; to three, 0.615333. Each year in the set is caught at some precision, so the union over all rationals is the set.
 
@@ -134,7 +146,9 @@ The code watches the union fill up. Hours 2 and 3 sum to under 6 m exactly for w
 
 A square is measurable: the set where the square exceeds c is everything when c is negative, and otherwise the outcomes where f is above the square root of c or below minus it. Multiplying by a fixed positive number rescales the threshold. Then
 
-$$f\,g = \tfrac14\big((f + g)^2 - (f - g)^2\big),$$
+```math
+f\,g = \tfrac14\big((f + g)^2 - (f - g)^2\big),
+```
 
 a combination of sums, squares and a fixed multiple, each measurable.
 
@@ -147,23 +161,23 @@ These functions converge at every point to the function that is 1 on every ratio
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F})$ is a measurable space. Functions take values in the extended line, the reals with $+\infty$ and $-\infty$ added. A function h is measurable when $\{h < c\} \in \mathcal{F}$ for every real c, the threshold test of [Measurable functions](01-measurable-functions.md), taken as the definition for extended values too.
+**Setting.** $`(\Omega, \mathcal{F})`$ is a measurable space. Functions take values in the extended line, the reals with $`+\infty`$ and $`-\infty`$ added. A function h is measurable when $`\{h < c\} \in \mathcal{F}`$ for every real c, the threshold test of [Measurable functions](01-measurable-functions.md), taken as the definition for extended values too.
 
-**Lemma 0 (other thresholds).** If h is measurable, so are the sets $\{h \le c\} = \bigcap_{m \ge 1} \{h < c + 1/m\}$ and its complement $\{h > c\}$. Conversely, if every $\{h > c\}$ is allowed, then $\{h < c\} = \bigcup_{m \ge 1} \{h \le c - 1/m\}$ is allowed, each $\{h \le c - 1/m\}$ being a complement. So either threshold form may be tested.
+**Lemma 0 (other thresholds).** If h is measurable, so are the sets $`\{h \le c\} = \bigcap_{m \ge 1} \{h < c + 1/m\}`$ and its complement $`\{h > c\}`$. Conversely, if every $`\{h > c\}`$ is allowed, then $`\{h < c\} = \bigcup_{m \ge 1} \{h \le c - 1/m\}`$ is allowed, each $`\{h \le c - 1/m\}`$ being a complement. So either threshold form may be tested.
 
-**Claim 1 (sup and inf).** $\{\sup_n f_n > c\} = \bigcup_n \{f_n > c\}$. If some $f_m(\omega) > c$, the sup is at least $f_m(\omega)$. If none exceeds c, then c is an upper bound, and the least upper bound is at most c. The union is countable, so allowed. Since $\{-h > c\} = \{h < -c\}$, $-h$ is measurable, and $\inf_n f_n = -\sup_n(-f_n)$.
+**Claim 1 (sup and inf).** $`\{\sup_n f_n > c\} = \bigcup_n \{f_n > c\}`$. If some $`f_m(\omega) > c`$, the sup is at least $`f_m(\omega)`$. If none exceeds c, then c is an upper bound, and the least upper bound is at most c. The union is countable, so allowed. Since $`\{-h > c\} = \{h < -c\}`$, $`-h`$ is measurable, and $`\inf_n f_n = -\sup_n(-f_n)`$.
 
-**Claim 2 (max and min).** $\max(f, g)$ and $\min(f, g)$ are the sup and inf of the list f, g, g, …; the running maximum $M_N$ likewise.
+**Claim 2 (max and min).** $`\max(f, g)`$ and $`\min(f, g)`$ are the sup and inf of the list f, g, g, …; the running maximum $`M_N`$ likewise.
 
-**Claim 3 (lim sup and lim inf).** Each tail sup $h_k = \sup_{n \ge k} f_n$ is measurable by Claim 1. They fall as k grows, so their limit, the lim sup, is their inf: measurable by Claim 1. Likewise $\liminf_n f_n = \sup_k \inf_{n \ge k} f_n$.
+**Claim 3 (lim sup and lim inf).** Each tail sup $`h_k = \sup_{n \ge k} f_n`$ is measurable by Claim 1. They fall as k grows, so their limit, the lim sup, is their inf: measurable by Claim 1. Likewise $`\liminf_n f_n = \sup_k \inf_{n \ge k} f_n`$.
 
-**Claim 4 (the limit set).** Write $\ell = \liminf_n f_n$ and $u = \limsup_n f_n$, so $\ell \le u$. Then $\{\ell < u\} = \bigcup_{q \in \mathbb{Q}} (\{\ell < q\} \cap \{u > q\})$, because a rational lies strictly between any two different reals ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md), Claim 5), or between a real and an infinite value. That union is countable, so $\{\ell = u\}$, its complement, is allowed. Also $\{u < \infty\} = \bigcup_m \{u < m\}$ and $\{\ell > -\infty\} = \bigcup_m \{\ell > -m\}$. A sequence of numbers converges exactly when its lim inf and lim sup are equal and finite. If $\ell(\omega) = u(\omega)$ is finite, take any tolerance ε > 0: that common value is the inf of the falling tail sups and the sup of the rising tail infs, so some tail sup is below it plus ε and some tail inf is above it minus ε, and from the later of those two hours on every $f_n(\omega)$ lies within ε of it, which is convergence ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). Conversely, if $f_n(\omega)$ converges to a number $f_\infty(\omega)$, then for each ε > 0 every reading past some cutoff lies within ε of it, so every later tail sup and tail inf does too, and $\ell(\omega)$ and $u(\omega)$ lie within ε of $f_\infty(\omega)$ for every ε: both equal it. So $L = \{\ell = u\} \cap \{u < \infty\} \cap \{\ell > -\infty\} \in \mathcal{F}$.
+**Claim 4 (the limit set).** Write $`\ell = \liminf_n f_n`$ and $`u = \limsup_n f_n`$, so $`\ell \le u`$. Then $`\{\ell < u\} = \bigcup_{q \in \mathbb{Q}} (\{\ell < q\} \cap \{u > q\})`$, because a rational lies strictly between any two different reals ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md), Claim 5), or between a real and an infinite value. That union is countable, so $`\{\ell = u\}`$, its complement, is allowed. Also $`\{u < \infty\} = \bigcup_m \{u < m\}`$ and $`\{\ell > -\infty\} = \bigcup_m \{\ell > -m\}`$. A sequence of numbers converges exactly when its lim inf and lim sup are equal and finite. If $`\ell(\omega) = u(\omega)`$ is finite, take any tolerance ε > 0: that common value is the inf of the falling tail sups and the sup of the rising tail infs, so some tail sup is below it plus ε and some tail inf is above it minus ε, and from the later of those two hours on every $`f_n(\omega)`$ lies within ε of it, which is convergence ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). Conversely, if $`f_n(\omega)`$ converges to a number $`f_\infty(\omega)`$, then for each ε > 0 every reading past some cutoff lies within ε of it, so every later tail sup and tail inf does too, and $`\ell(\omega)`$ and $`u(\omega)`$ lie within ε of $`f_\infty(\omega)`$ for every ε: both equal it. So $`L = \{\ell = u\} \cap \{u < \infty\} \cap \{\ell > -\infty\} \in \mathcal{F}`$.
 
-**Claim 5 (the limit function).** Set $f_\infty = u$ on L and 0 off L. Then $\{f_\infty > c\}$ is $L \cap \{u > c\}$, joined with the complement of L when $c < 0$. Both pieces are allowed. If the sequence converges at every ω, the limit is u itself.
+**Claim 5 (the limit function).** Set $`f_\infty = u`$ on L and 0 off L. Then $`\{f_\infty > c\}`$ is $`L \cap \{u > c\}`$, joined with the complement of L when $`c < 0`$. Both pieces are allowed. If the sequence converges at every ω, the limit is u itself.
 
-**Claim 6 (sums).** Let f and g be real-valued. $\{f + g < a\} = \bigcup_{q \in \mathbb{Q}} (\{f < q\} \cap \{g < a - q\})$: if $f(\omega) < a - g(\omega)$, a rational q lies strictly between them; conversely $f(\omega) < q$ and $g(\omega) < a - q$ add to $f(\omega) + g(\omega) < a$. Countable union, so allowed. Also $f - g = f + (-g)$.
+**Claim 6 (sums).** Let f and g be real-valued. $`\{f + g < a\} = \bigcup_{q \in \mathbb{Q}} (\{f < q\} \cap \{g < a - q\})`$: if $`f(\omega) < a - g(\omega)`$, a rational q lies strictly between them; conversely $`f(\omega) < q`$ and $`g(\omega) < a - q`$ add to $`f(\omega) + g(\omega) < a`$. Countable union, so allowed. Also $`f - g = f + (-g)`$.
 
-**Claim 7 (products).** For a fixed number $t > 0$, $\{t f > c\} = \{f > c/t\}$. For squares, $\{f^2 > c\}$ is $\Omega$ when $c < 0$ and otherwise $\{f > \sqrt{c}\} \cup \{f < -\sqrt{c}\}$. Expanding both squares gives $f g = \tfrac14((f + g)^2 - (f - g)^2)$, measurable by Claim 6.
+**Claim 7 (products).** For a fixed number $`t > 0`$, $`\{t f > c\} = \{f > c/t\}`$. For squares, $`\{f^2 > c\}`$ is $`\Omega`$ when $`c < 0`$ and otherwise $`\{f > \sqrt{c}\} \cup \{f < -\sqrt{c}\}`$. Expanding both squares gives $`f g = \tfrac14((f + g)^2 - (f - g)^2)`$, measurable by Claim 6.
 
 **Where countability entered.** Claims 1, 4 and 6 each wrote a threshold set as a union over the hours or over the rationals. For an uncountable family the same union need not be allowed.
 
@@ -197,7 +211,7 @@ One year in twelve passes the flood mark at some hour and three in four settle; 
 | --- | --- | --- |
 | Adding functions measurable for different sigma-algebras | f + g = (2, 1, 1, 0), allowed for neither; 36 of 81 such pairs fail | "Is the sum above 1?" picks out one point, which neither collection allows |
 | Counting on Riemann to survive a pointwise limit | upper sum 1.0000, lower 0 on every cut | Riemann integrable functions are not closed under limits; measurable ones are |
-| Writing "the record reaches 4" as "some hour reaches 4" | at wetness 11/12 the sup is 4, yet hour 10 is 0.00179036 short and hour 20 is 0.00000175 short | a sup need not be attained; only the strict form $\{\sup > c\}$ is a plain union |
+| Writing "the record reaches 4" as "some hour reaches 4" | at wetness 11/12 the sup is 4, yet hour 10 is 0.00179036 short and hour 20 is 0.00000175 short | a sup need not be attained; only the strict form $`\{\sup > c\}`$ is a plain union |
 
 The code prints all three.
 
@@ -713,7 +727,7 @@ example : (![1, 1, 0, 0] + ![1, 0, 1, 0] : Fin 4 → ℕ) = ![2, 1, 1, 0] := by 
 > [!warning]
 > **Taking a sup over every instant instead of a list of hours.** The theorem covers countably many functions. Over uncountably many it can fail: the sup of the indicators of the single points of a non-measurable set is that set's indicator. A level recorded continuously is safe when its path is continuous, since then the sup over all instants equals the sup over rational instants, a list.
 >
-> - **Writing "the record reaches 4" as a union.** At wetness 11/12 the record is exactly 4 m and no hour reaches it. The correct form is $\bigcap_m \bigcup_n \{f_n > 4 - 1/m\}$.
+> - **Writing "the record reaches 4" as a union.** At wetness 11/12 the record is exactly 4 m and no hour reaches it. The correct form is $`\bigcap_m \bigcup_n \{f_n > 4 - 1/m\}`$.
 > - **Assuming the limit exists.** Only on L, length 0.75 here. The year at 0.95 has floor 3.70 m and ceiling 4.10 m.
 
 ---

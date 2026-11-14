@@ -44,38 +44,44 @@ First line: profit after the premium, flat at −$5.64 until the average passes 
 
 ## The formula
 
-Notation first. The fixings fall on the dates $t_i = iT/n$ for i = 1 to n: n equal steps, the last on the expiry date T, today not counted. The futures price quoted today for delivery at date t is written $F(0,t)$. The geometric average of the fixings is $G$. The call pays $\max(G - K, 0)$ at T.
+Notation first. The fixings fall on the dates $`t_i = iT/n`$ for i = 1 to n: n equal steps, the last on the expiry date T, today not counted. The futures price quoted today for delivery at date t is written $`F(0,t)`$. The geometric average of the fixings is $`G`$. The call pays $`\max(G - K, 0)`$ at T.
 
 The price is Black-76 on the average:
 
-$$C_G = e^{-rT}\left[\,F_G\,N(d_1) - K\,N(d_2)\,\right], \qquad P_G = e^{-rT}\left[\,K\,N(-d_2) - F_G\,N(-d_1)\,\right]$$
+```math
+C_G = e^{-rT}\left[\,F_G\,N(d_1) - K\,N(d_2)\,\right], \qquad P_G = e^{-rT}\left[\,K\,N(-d_2) - F_G\,N(-d_1)\,\right]
+```
 
-$$d_1 = \frac{\ln(F_G/K) + \tfrac12\sigma_G^2 T}{\sigma_G\sqrt{T}}, \qquad d_2 = d_1 - \sigma_G\sqrt{T}$$
+```math
+d_1 = \frac{\ln(F_G/K) + \tfrac12\sigma_G^2 T}{\sigma_G\sqrt{T}}, \qquad d_2 = d_1 - \sigma_G\sqrt{T}
+```
 
 with the two doctored inputs
 
-$$\sigma_G = \sigma\sqrt{\frac{(n+1)(2n+1)}{6n^2}}, \qquad F_G = \Big(F(0,t_1)\,F(0,t_2)\cdots F(0,t_n)\Big)^{1/n}\, e^{-\frac12\left(\sigma^2\bar t - \sigma_G^2 T\right)}, \qquad \bar t = \frac{(n+1)T}{2n}.$$
+```math
+\sigma_G = \sigma\sqrt{\frac{(n+1)(2n+1)}{6n^2}}, \qquad F_G = \Big(F(0,t_1)\,F(0,t_2)\cdots F(0,t_n)\Big)^{1/n}\, e^{-\frac12\left(\sigma^2\bar t - \sigma_G^2 T\right)}, \qquad \bar t = \frac{(n+1)T}{2n}.
+```
 
 **Read it aloud:** the call on the average is a plain futures call on a pretend futures price, whose level is the geometric mean of the curve at the fixing dates, shaved slightly, and whose volatility is the commodity's volatility cut by the averaging.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C_G$, $P_G$ | today's price of the call and the put on the geometric average | $5.64; $3.51 | is the answer |
-| $G$, $n$, $t_i$, $X_i$ | the geometric average of the fixings; how many fixings; the date of the i-th; the i-th fixing | weekly: n = 52, $t_i$ = i/52 | more fixings: call falls toward $5.55 |
-| $F(0,t)$, $S_0$, $c$ | today's futures price for delivery at t, the curve; its level for delivery now; its slope, a rate per year | 100 e^(0.05t): $100 now, $105.13 at T | the whole curve up, or c up: call rises |
-| $K$ | the strike the average is compared with | $100 | call falls |
-| $T$, $\bar t$ | expiry, the last fixing, in years; the centre of the fixing dates | 1; 0.5096 | — |
-| $r$ | the bank rate, continuously compounded; $e^{-rT}$ discounts a dollar paid at T | 5%; 0.9512 | curve held fixed: call falls a little |
-| $\sigma$ | volatility of the futures prices: the spread of their yearly log change | 20% | call rises |
-| $\sigma_G$ | volatility of the average | 0.1171 | is the volatility the option sees |
-| $F_G$ | forward of the average: what G is worth, delivered at T | $102.24 | call rises |
-| $d_1$, $d_2$ | distances of the strike from the centre of ln G, in its own standard deviations | 0.2477; 0.1305 | — |
-| $N$ | the bell-curve area to the left of a point | N(d1) 0.5978, N(d2) 0.5519 | — |
-| $W$, $W_t$ | the one random path that moves the whole curve; its value at time t, normal with mean 0 and variance t | one path per simulated year | — |
+| $`C_G`$, $`P_G`$ | today's price of the call and the put on the geometric average | $5.64; $3.51 | is the answer |
+| $`G`$, $`n`$, $`t_i`$, $`X_i`$ | the geometric average of the fixings; how many fixings; the date of the i-th; the i-th fixing | weekly: n = 52, $`t_i`$ = i/52 | more fixings: call falls toward $5.55 |
+| $`F(0,t)`$, $`S_0`$, $`c`$ | today's futures price for delivery at t, the curve; its level for delivery now; its slope, a rate per year | 100 e^(0.05t): $100 now, $105.13 at T | the whole curve up, or c up: call rises |
+| $`K`$ | the strike the average is compared with | $100 | call falls |
+| $`T`$, $`\bar t`$ | expiry, the last fixing, in years; the centre of the fixing dates | 1; 0.5096 | — |
+| $`r`$ | the bank rate, continuously compounded; $`e^{-rT}`$ discounts a dollar paid at T | 5%; 0.9512 | curve held fixed: call falls a little |
+| $`\sigma`$ | volatility of the futures prices: the spread of their yearly log change | 20% | call rises |
+| $`\sigma_G`$ | volatility of the average | 0.1171 | is the volatility the option sees |
+| $`F_G`$ | forward of the average: what G is worth, delivered at T | $102.24 | call rises |
+| $`d_1`$, $`d_2`$ | distances of the strike from the centre of ln G, in its own standard deviations | 0.2477; 0.1305 | — |
+| $`N`$ | the bell-curve area to the left of a point | N(d1) 0.5978, N(d2) 0.5519 | — |
+| $`W`$, $`W_t`$ | the one random path that moves the whole curve; its value at time t, normal with mean 0 and variance t | one path per simulated year | — |
 
-In words, $d_2$ counts how far ln G is expected to land above ln K, in units of the spread (standard deviation) of ln G, and $d_1$ sits one spread further. The factor $\bar t$ is the plain average of the fixing dates, and the haircut $e^{-\frac12(\sigma^2\bar t - \sigma_G^2 T)}$ is 0.9967 here.
+In words, $`d_2`$ counts how far ln G is expected to land above ln K, in units of the spread (standard deviation) of ln G, and $`d_1`$ sits one spread further. The factor $`\bar t`$ is the plain average of the fixing dates, and the haircut $`e^{-\frac12(\sigma^2\bar t - \sigma_G^2 T)}`$ is 0.9967 here.
 
-When the curve rises at a steady rate c, as $F(0,t) = S_0 e^{ct}$, the geometric mean of the forwards is the forward at the centre date, $F(0,\bar t) = S_0 e^{c\bar t}$: $102.58 here. Then $F_G$ = 102.58 × 0.9967 = $102.24.
+When the curve rises at a steady rate c, as $`F(0,t) = S_0 e^{ct}`$, the geometric mean of the forwards is the forward at the centre date, $`F(0,\bar t) = S_0 e^{c\bar t}`$: $102.58 here. Then $`F_G`$ = 102.58 × 0.9967 = $102.24.
 
 ### When it holds
 
@@ -97,51 +103,59 @@ Black-76 prices a call on any lognormal quantity once its forward and its total 
 
 ### Step 1: each fixing is lognormal around its own futures price
 
-A futures contract costs nothing to enter. In the pricing world (the risk-neutral world of [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)) a price that costs nothing to hold has no expected gain, so today's futures price is the expected price at delivery. The fixing at $t_i$ is the price for delivery that week, read that week: it is the futures contract for date $t_i$, at its own expiry.
+A futures contract costs nothing to enter. In the pricing world (the risk-neutral world of [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)) a price that costs nothing to hold has no expected gain, so today's futures price is the expected price at delivery. The fixing at $`t_i`$ is the price for delivery that week, read that week: it is the futures contract for date $`t_i`$, at its own expiry.
 
-With one Brownian path $W$ (the random walk of [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md), with $W_t$ normal with mean 0 and variance t) moving the whole curve, the fixing is
+With one Brownian path $`W`$ (the random walk of [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md), with $`W_t`$ normal with mean 0 and variance t) moving the whole curve, the fixing is
 
-$$X_i = F(0,t_i)\,e^{\sigma W_{t_i} - \frac12\sigma^2 t_i}.$$
+```math
+X_i = F(0,t_i)\,e^{\sigma W_{t_i} - \frac12\sigma^2 t_i}.
+```
 
-The −σ^2 t_i/2 is the lognormal correction: a lognormal's mean is the exponential of its log's mean plus half its log's variance ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)), so subtracting half the variance keeps the expected fixing at $F(0,t_i)$.
+The −σ^2 t_i/2 is the lognormal correction: a lognormal's mean is the exponential of its log's mean plus half its log's variance ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)), so subtracting half the variance keeps the expected fixing at $`F(0,t_i)`$.
 
 ### Step 2: the centre of ln G sits at the centre of the dates
 
 Average the logs of the n fixings. The random part has mean zero. What remains is
 
-$$\text{centre of } \ln G = \frac1n\sum_{i=1}^n \ln F(0,t_i) \;-\; \tfrac12\sigma^2\,\bar t .$$
+```math
+\text{centre of } \ln G = \frac1n\sum_{i=1}^n \ln F(0,t_i) \;-\; \tfrac12\sigma^2\,\bar t .
+```
 
-The first term is the log of the geometric mean of the curve at the fixing dates. The second collects the corrections, and averaging $t_i = iT/n$ gives $\bar t = (n+1)T/(2n)$, using 1 + 2 + … + n = n(n+1)/2. For weekly fixings $\bar t$ = 0.5096: just past mid-year, because today is not a fixing and the last day is.
+The first term is the log of the geometric mean of the curve at the fixing dates. The second collects the corrections, and averaging $`t_i = iT/n`$ gives $`\bar t = (n+1)T/(2n)`$, using 1 + 2 + … + n = n(n+1)/2. For weekly fixings $`\bar t`$ = 0.5096: just past mid-year, because today is not a fixing and the last day is.
 
 ### Step 3: the variance of ln G is about a third of the last fixing's
 
 Cut the year into n weeks and let the shock in week k be the change in W over that week. That shock sits inside every fixing from week k on: n − k + 1 of them. So it enters the average of the logs with weight (n − k + 1)/n. Early shocks count almost fully; the last week's shock counts once in 52.
 
-Shocks in different weeks are independent, so their variances add, each scaled by the square of its weight. The weights squared add up to $(1^2 + 2^2 + \dots + n^2)/n^2$, and $1^2 + \dots + n^2 = n(n+1)(2n+1)/6$. Each week's shock has variance σ^2 T/n. The total is
+Shocks in different weeks are independent, so their variances add, each scaled by the square of its weight. The weights squared add up to $`(1^2 + 2^2 + \dots + n^2)/n^2`$, and $`1^2 + \dots + n^2 = n(n+1)(2n+1)/6`$. Each week's shock has variance σ^2 T/n. The total is
 
-$$\operatorname{Var}(\ln G) = \sigma^2 T\,\frac{(n+1)(2n+1)}{6n^2} = \sigma_G^2\,T .$$
+```math
+\mathrm{Var}(\ln G) = \sigma^2 T\,\frac{(n+1)(2n+1)}{6n^2} = \sigma_G^2\,T .
+```
 
-For 52 fixings the fraction is 0.3430, so the variance of ln G is 0.013720 and $\sigma_G$ = 0.20 × √0.3430 = 0.1171. As n grows the fraction falls to 2n^2/6n^2 = 1/3. This step is the equity card's, unchanged: the curve moves the centre, never the variance. The code's second road redoes it as a brute-force sum of σ^2 min(t_i, t_j) over all 52 × 52 pairs of dates.
+For 52 fixings the fraction is 0.3430, so the variance of ln G is 0.013720 and $`\sigma_G`$ = 0.20 × √0.3430 = 0.1171. As n grows the fraction falls to 2n^2/6n^2 = 1/3. This step is the equity card's, unchanged: the curve moves the centre, never the variance. The code's second road redoes it as a brute-force sum of σ^2 min(t_i, t_j) over all 52 × 52 pairs of dates.
 
 ### Step 4: the forward of the average, with its haircut
 
 Black-76 needs the forward of G: its expected value in the pricing world. A lognormal's mean is the exponential of its log's centre plus half its log's variance:
 
-$$F_G = \exp\!\Big(\text{centre of }\ln G + \tfrac12\sigma_G^2 T\Big) = \Big(\prod_i F(0,t_i)\Big)^{1/n}\,e^{-\frac12(\sigma^2\bar t - \sigma_G^2 T)} .$$
+```math
+F_G = \exp\!\Big(\text{centre of }\ln G + \tfrac12\sigma_G^2 T\Big) = \Big(\prod_i F(0,t_i)\Big)^{1/n}\,e^{-\frac12(\sigma^2\bar t - \sigma_G^2 T)} .
+```
 
-The haircut is below 1 because $\sigma^2\bar t$ exceeds $\sigma_G^2 T$: each fixing carries its own full variance, but the average keeps only part of it, so it loses part of the lift that variance gives a lognormal's mean. For jet fuel the geometric mean of the curve is $102.58 and the haircut is 0.9967, so $F_G$ = $102.24.
+The haircut is below 1 because $`\sigma^2\bar t`$ exceeds $`\sigma_G^2 T`$: each fixing carries its own full variance, but the average keeps only part of it, so it loses part of the lift that variance gives a lognormal's mean. For jet fuel the geometric mean of the curve is $102.58 and the haircut is 0.9967, so $`F_G`$ = $102.24.
 
 ### Step 5: price it with Black-76
 
-G is now a lognormal quantity with forward $F_G$ and total log-variance $\sigma_G^2 T$, paid at T.
+G is now a lognormal quantity with forward $`F_G`$ and total log-variance $`\sigma_G^2 T`$, paid at T.
 
-Black-76 prices a call on exactly such a quantity: split the payoff into "receive G" and "pay K", each on the event that G ends above K. The cash half is $K e^{-rT} N(d_2)$. Counting in units of G shifts the bell curve by one spread and gives $F_G e^{-rT} N(d_1)$.
+Black-76 prices a call on exactly such a quantity: split the payoff into "receive G" and "pay K", each on the event that G ends above K. The cash half is $`K e^{-rT} N(d_2)`$. Counting in units of G shifts the bell curve by one spread and gives $`F_G e^{-rT} N(d_1)`$.
 
-The put follows the same way, and the two obey parity: $C_G - P_G = e^{-rT}(F_G - K)$. Nothing is approximated. Given the model, the price is exact.
+The put follows the same way, and the two obey parity: $`C_G - P_G = e^{-rT}(F_G - K)`$. Nothing is approximated. Given the model, the price is exact.
 
 ### Step 6: the two ends of the ladder
 
-With one fixing, $\bar t = T$, the fraction is 1, the haircut is 1 and $F_G = F(0,T)$ = $105.13: Black-76 on the one-year futures, $10.45. As the fixings multiply, $\bar t \to T/2$ and the fraction tends to 1/3, so $\sigma_G \to \sigma/\sqrt{3}$ and, on the steadily rising curve, $F_G \to F(0, T/2)\,e^{-\sigma^2 T/12}$, which gives $5.55.
+With one fixing, $`\bar t = T`$, the fraction is 1, the haircut is 1 and $`F_G = F(0,T)`$ = $105.13: Black-76 on the one-year futures, $10.45. As the fixings multiply, $`\bar t \to T/2`$ and the fraction tends to 1/3, so $`\sigma_G \to \sigma/\sqrt{3}`$ and, on the steadily rising curve, $`F_G \to F(0, T/2)\,e^{-\sigma^2 T/12}`$, which gives $5.55.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -155,24 +169,24 @@ xychart-beta
 
 First line: the n-fixing price, from the plain call's $10.45 at one fixing, through $5.94 monthly and $5.64 weekly, to $5.57 on 252 daily fixings. Second line: the continuous price, $5.55, the floor they approach.
 
-On a curve that rises at the rate r, $F(0,t) = S_0 e^{rt}$, these inputs are exactly the equity card's formula with no dividend, and its continuous price with the yield set to zero is this card's $5.55. Pricing by simulation, as on [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), is the other route, and the code takes it.
+On a curve that rises at the rate r, $`F(0,t) = S_0 e^{rt}`$, these inputs are exactly the equity card's formula with no dividend, and its continuous price with the yield set to zero is this card's $5.55. Pricing by simulation, as on [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), is the other route, and the code takes it.
 
 ---
 
 ## Worked numbers, by hand
 
-Jet fuel: curve $100 e^{0.05t}$, K = $100, r = 5%, σ = 20%, T = 1 year, 52 weekly fixings.
+Jet fuel: curve $`100 e^{0.05t}`$, K = $100, r = 5%, σ = 20%, T = 1 year, 52 weekly fixings.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| centre of the dates, $\bar t$ | 53 / 104 | 0.5096 |
+| centre of the dates, $`\bar t`$ | 53 / 104 | 0.5096 |
 | variance fraction | 53 × 105 / (6 × 52^2) | 0.3430 |
-| $\sigma_G$ | 0.20 × √0.3430 | 0.1171 |
+| $`\sigma_G`$ | 0.20 × √0.3430 | 0.1171 |
 | geometric mean of the curve | 100 × e^(0.05 × 0.5096) | $102.58 |
 | haircut | e^(−(0.04 × 0.5096 − 0.1171^2) / 2) | 0.9967 |
-| $F_G$ | 102.58 × 0.9967 | $102.24 |
-| $d_1$ | (ln 1.0224 + 0.1171^2 / 2) / 0.1171 | 0.2477 |
-| $d_2$ | 0.2477 − 0.1171 | 0.1305 |
+| $`F_G`$ | 102.58 × 0.9967 | $102.24 |
+| $`d_1`$ | (ln 1.0224 + 0.1171^2 / 2) / 0.1171 | 0.2477 |
+| $`d_2`$ | 0.2477 − 0.1171 | 0.1305 |
 | N(d1), N(d2) | bell-curve table | 0.5978, 0.5519 |
 | discount | e^(−0.05) | 0.9512 |
 | average half | 0.9512 × 102.24 × 0.5978 | $58.14 |
@@ -189,12 +203,12 @@ Same contract, right answer $5.64. Every wrong number is printed by both checks.
 | --- | --- | --- |
 | Keep the raw 20% volatility | $8.77 | The average carries a third of the variance of one fixing, not all of it |
 | Use the continuous σ/√3 formula on the weekly contract | $5.55 | Fifty-two readings are jumpier than a continuum; monthly the gap is $5.55 against $5.94 |
-| Use the swap price, the plain average of the forwards, as $F_G$ | $5.84 | $102.59 is the forward of the arithmetic average; the geometric one is $102.24 |
+| Use the swap price, the plain average of the forwards, as $`F_G`$ | $5.84 | $102.59 is the forward of the arithmetic average; the geometric one is $102.24 |
 | The fixings read one futures contract, whose price is flat at $100, but the curve is taken to rise at 5% | $5.64 (right: $4.28) | A single futures contract has no drift; each fixing's forward is $100 |
 
 ### The Greeks
 
-Sensitivities by bumping the formula. Delta here moves the whole curve with today's price $S_0$; rho moves the bank rate with the futures prices held still. How these change once fixings are banked is on [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md).
+Sensitivities by bumping the formula. Delta here moves the whole curve with today's price $`S_0`$; rho moves the bank rate with the futures prices held still. How these change once fixings are banked is on [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md).
 
 | Greek | Plain meaning | Value |
 | --- | --- | --- |
@@ -211,11 +225,11 @@ Rho is negative and small: with the futures prices given, the rate only discount
 
 The same 52 weekly fixings, the same volatility, the same strike. Only the shape of the curve changes.
 
-| Curve, $F(0,t)$ | What it means | Geometric Asian call |
+| Curve, $`F(0,t)`$ | What it means | Geometric Asian call |
 | --- | --- | --- |
-| $100 e^{0.05t}$, contango at the bank rate | fuel for later delivery costs more: full cost of carry | $5.64 |
+| $`100 e^{0.05t}`$, contango at the bank rate | fuel for later delivery costs more: full cost of carry | $5.64 |
 | flat at $100 | every fixing reads one futures contract, or storage and yield cancel the rate | $4.28 |
-| $100 e^{-0.05t}$, backwardation | fuel for later delivery costs less: a scarcity premium on prompt barrels | $3.16 |
+| $`100 e^{-0.05t}`$, backwardation | fuel for later delivery costs less: a scarcity premium on prompt barrels | $3.16 |
 
 The equity habit is to feed a spot price and let it grow at the rate less a yield. A commodity desk reads the curve instead, date by date, because the curve is the market's price for each fixing. The same spot of $100 gives $5.64 or $3.16 depending on the curve.
 
@@ -654,14 +668,14 @@ The two outputs agree line for line, simulation included: both languages run the
 
 ### Lean
 
-Lean proves the formula, the bell curve of $\ln G$ and $F_G$, for any number of fixings, in the one-factor lognormal model.
+Lean proves the formula, the bell curve of $`\ln G`$ and $`F_G`$, for any number of fixings, in the one-factor lognormal model.
 
-- Suppose one Brownian path $W$ moves the curve, every $F(0,t_i)$ is positive, and $\sigma$, $K$, $T$ are positive. Then the call is exactly $C_G$ and the put exactly $P_G$: Black-76 fed $F_G$ and $\sigma_G$.
-- Take the same model. Then $\ln G$ is bell-curved, with the centre of Step 2 and variance $\sigma_G^2 T$.
-- Take the same model. Then the average value of $G$ in the pricing world is $F_G$, the forward of the average.
-- Take 52 weekly fixings over one year, with $\sigma = 0.20$. Then $\bar t = 53/104$ and the variance fraction is $1855/5408$.
-- Take the same 52 fixings. Then the variance of $\ln G$ is exactly $1855/135200$, which is 0.013720.
-- Take one fixing. Then $\bar t = T$ and the variance fraction is 1, as for the last fixing alone.
+- Suppose one Brownian path $`W`$ moves the curve, every $`F(0,t_i)`$ is positive, and $`\sigma`$, $`K`$, $`T`$ are positive. Then the call is exactly $`C_G`$ and the put exactly $`P_G`$: Black-76 fed $`F_G`$ and $`\sigma_G`$.
+- Take the same model. Then $`\ln G`$ is bell-curved, with the centre of Step 2 and variance $`\sigma_G^2 T`$.
+- Take the same model. Then the average value of $`G`$ in the pricing world is $`F_G`$, the forward of the average.
+- Take 52 weekly fixings over one year, with $`\sigma = 0.20`$. Then $`\bar t = 53/104`$ and the variance fraction is $`1855/5408`$.
+- Take the same 52 fixings. Then the variance of $`\ln G`$ is exactly $`1855/135200`$, which is 0.013720.
+- Take one fixing. Then $`\bar t = T`$ and the variance fraction is 1, as for the last fixing alone.
 
 The dollar prices, the haircut 0.9967, the Greeks and the simulations are left to the Python and Rust checks.
 

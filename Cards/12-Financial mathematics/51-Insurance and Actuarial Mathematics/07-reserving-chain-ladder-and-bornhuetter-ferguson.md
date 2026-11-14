@@ -51,57 +51,69 @@ Bars: chain-ladder IBNR. Line: BF IBNR. 2016 is fully developed. 2025 alone carr
 
 ## The formula
 
-Notation first, in words. $C_{i,k}$ is the cumulative reported amount for accident year $i$ at age $k$. Years run 1 to $n$, oldest first: 2016 is year 1, 2025 is year 10. Year $i$'s latest figure is $C_{i,n+1-i}$; for 2025, $C_{10,1} = 4{,}486$. A hat marks an estimate made from the triangle; a letter without one is the true, unknown value. The sign Σ adds the rows named beneath and above it.
+Notation first, in words. $`C_{i,k}`$ is the cumulative reported amount for accident year $`i`$ at age $`k`$. Years run 1 to $`n`$, oldest first: 2016 is year 1, 2025 is year 10. Year $`i`$'s latest figure is $`C_{i,n+1-i}`$; for 2025, $`C_{10,1} = 4{,}486`$. A hat marks an estimate made from the triangle; a letter without one is the true, unknown value. The sign Σ adds the rows named beneath and above it.
 
-**The age-to-age factor** for age $k$: over the years seen at both ages, the total at age $k+1$ divided by the total at age $k$.
+**The age-to-age factor** for age $`k`$: over the years seen at both ages, the total at age $`k+1`$ divided by the total at age $`k`$.
 
-$$\hat f_k = \frac{\sum_{i=1}^{n-k} C_{i,k+1}}{\sum_{i=1}^{n-k} C_{i,k}}$$
+```math
+\hat f_k = \frac{\sum_{i=1}^{n-k} C_{i,k+1}}{\sum_{i=1}^{n-k} C_{i,k}}
+```
 
 **Chain ladder.** Multiply the latest figure by every factor still to come:
 
-$$F_i = \hat f_{n+1-i}\,\hat f_{n+2-i}\cdots \hat f_{n-1}, \qquad \hat U_i = C_{i,n+1-i}\,F_i, \qquad \hat R_i^{\,CL} = C_{i,n+1-i}\,(F_i - 1)$$
+```math
+F_i = \hat f_{n+1-i}\,\hat f_{n+2-i}\cdots \hat f_{n-1}, \qquad \hat U_i = C_{i,n+1-i}\,F_i, \qquad \hat R_i^{\,CL} = C_{i,n+1-i}\,(F_i - 1)
+```
 
-For 2016 no factor remains, so $F_1 = 1$ and its reserve is zero.
+For 2016 no factor remains, so $`F_1 = 1`$ and its reserve is zero.
 
-**Bornhuetter-Ferguson.** Take an expected ultimate $E_i$, set before looking at the triangle, and keep the share still unreported:
+**Bornhuetter-Ferguson.** Take an expected ultimate $`E_i`$, set before looking at the triangle, and keep the share still unreported:
 
-$$\hat R_i^{\,BF} = E_i\,\Bigl(1 - \frac{1}{F_i}\Bigr)$$
+```math
+\hat R_i^{\,BF} = E_i\,\Bigl(1 - \frac{1}{F_i}\Bigr)
+```
 
 **Read it aloud:** the chain ladder says "this year will grow the way older years grew from the same age"; BF says "this year still has the usual unreported share of what it was expected to cost".
 
-**Mack's standard error.** The scatter of single years around the factor at age $k$:
+**Mack's standard error.** The scatter of single years around the factor at age $`k`$:
 
-$$\hat\sigma_k^2 = \frac{1}{n-k-1}\sum_{i=1}^{n-k} C_{i,k}\Bigl(\frac{C_{i,k+1}}{C_{i,k}} - \hat f_k\Bigr)^2$$
+```math
+\hat\sigma_k^2 = \frac{1}{n-k-1}\sum_{i=1}^{n-k} C_{i,k}\Bigl(\frac{C_{i,k+1}}{C_{i,k}} - \hat f_k\Bigr)^2
+```
 
-The last age has one year and no scatter to measure. Mack sets it to zero when the last factor is 1; here $\hat f_9 = 1.0032$, so he extends the series: $\hat\sigma_{n-1}^2 = \min\bigl(\hat\sigma_{n-2}^4/\hat\sigma_{n-3}^2,\ \hat\sigma_{n-3}^2,\ \hat\sigma_{n-2}^2\bigr)$. The mean squared error (the expected square of the miss) of year $i$'s reserve is estimated by
+The last age has one year and no scatter to measure. Mack sets it to zero when the last factor is 1; here $`\hat f_9 = 1.0032`$, so he extends the series: $`\hat\sigma_{n-1}^2 = \min\bigl(\hat\sigma_{n-2}^4/\hat\sigma_{n-3}^2,\ \hat\sigma_{n-3}^2,\ \hat\sigma_{n-2}^2\bigr)`$. The mean squared error (the expected square of the miss) of year $`i`$'s reserve is estimated by
 
-$$\widehat{\mathrm{mse}}(\hat R_i) = \hat U_i^{\,2}\sum_{k=n+1-i}^{n-1}\frac{\hat\sigma_k^2}{\hat f_k^{\,2}}\Bigl(\frac{1}{\hat C_{i,k}} + \frac{1}{S_k}\Bigr), \qquad S_k = \sum_{j=1}^{n-k} C_{j,k}$$
+```math
+\widehat{\mathrm{mse}}(\hat R_i) = \hat U_i^{\,2}\sum_{k=n+1-i}^{n-1}\frac{\hat\sigma_k^2}{\hat f_k^{\,2}}\Bigl(\frac{1}{\hat C_{i,k}} + \frac{1}{S_k}\Bigr), \qquad S_k = \sum_{j=1}^{n-k} C_{j,k}
+```
 
-where $\hat C_{i,k}$ is year $i$'s projected figure at age $k$ (its observed figure at its latest age). The first fraction is the year's own randomness to come; the second, the error in the factors. The standard error, se, is the square root. For all years together, add a term for each pair of years, since they share the factors:
+where $`\hat C_{i,k}`$ is year $`i`$'s projected figure at age $`k`$ (its observed figure at its latest age). The first fraction is the year's own randomness to come; the second, the error in the factors. The standard error, se, is the square root. For all years together, add a term for each pair of years, since they share the factors:
 
-$$\widehat{\mathrm{mse}}(\hat R) = \sum_i \widehat{\mathrm{mse}}(\hat R_i) + 2\sum_{i<j} \hat U_i\,\hat U_j \sum_{k=n+1-i}^{n-1}\frac{\hat\sigma_k^2/\hat f_k^{\,2}}{S_k}$$
+```math
+\widehat{\mathrm{mse}}(\hat R) = \sum_i \widehat{\mathrm{mse}}(\hat R_i) + 2\sum_{i<j} \hat U_i\,\hat U_j \sum_{k=n+1-i}^{n-1}\frac{\hat\sigma_k^2/\hat f_k^{\,2}}{S_k}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the IBNR… |
 | --- | --- | --- | --- |
-| $C_{i,k}$; $i$; $k$ | cumulative reported claims of accident year $i$ at development age $k$, thousands of dollars | $C_{10,1} = 4{,}486$ | a bigger latest figure raises chain-ladder IBNR in proportion; BF ignores it |
-| $n$ | number of accident years, and of ages | 10 | more old years: firmer factors, smaller se |
-| $\hat f_k$; $f_k$ | age-to-age factor, estimated or true: growth from age $k$ to $k+1$ | $\hat f_1 = 1.5221$ | rises, for every year still to pass age $k$ |
-| $F_i$ | factor to ultimate: all the growth still to come for year $i$ | 2.2492 for 2025 | rises |
-| $z_i$ | share reported so far, $1/F_i$ | 44.46% for 2025 | falls |
-| $\hat U_i$ | estimated ultimate: the year's final total | 10,089.9 for 2025 | rises one for one |
-| $\hat R_i$ | the reserve: ultimate minus reported, the IBNR | 5,603.87 for 2025 | — |
-| $E_i$ | expected ultimate set in advance: premium times planning loss ratio (expected claims per dollar of premium) | $0.70 \times 15{,}500 = 10{,}850$ for 2025 | BF rises; chain ladder does not move |
-| $\hat\sigma_k^2$ | scatter of single years' growth around $\hat f_k$, in thousands of dollars | 78.7044 at age 1 | se rises |
-| $S_k$ | total at age $k$ of the years that also have age $k+1$ | 35,207 at age 1 | se falls: more data behind the factor |
-| $\widehat{\mathrm{mse}}$, se | estimated squared miss, and its square root | se 1,301.3 in total | — |
+| $`C_{i,k}`$; $`i`$; $`k`$ | cumulative reported claims of accident year $`i`$ at development age $`k`$, thousands of dollars | $`C_{10,1} = 4{,}486`$ | a bigger latest figure raises chain-ladder IBNR in proportion; BF ignores it |
+| $`n`$ | number of accident years, and of ages | 10 | more old years: firmer factors, smaller se |
+| $`\hat f_k`$; $`f_k`$ | age-to-age factor, estimated or true: growth from age $`k`$ to $`k+1`$ | $`\hat f_1 = 1.5221`$ | rises, for every year still to pass age $`k`$ |
+| $`F_i`$ | factor to ultimate: all the growth still to come for year $`i`$ | 2.2492 for 2025 | rises |
+| $`z_i`$ | share reported so far, $`1/F_i`$ | 44.46% for 2025 | falls |
+| $`\hat U_i`$ | estimated ultimate: the year's final total | 10,089.9 for 2025 | rises one for one |
+| $`\hat R_i`$ | the reserve: ultimate minus reported, the IBNR | 5,603.87 for 2025 | — |
+| $`E_i`$ | expected ultimate set in advance: premium times planning loss ratio (expected claims per dollar of premium) | $`0.70 \times 15{,}500 = 10{,}850`$ for 2025 | BF rises; chain ladder does not move |
+| $`\hat\sigma_k^2`$ | scatter of single years' growth around $`\hat f_k`$, in thousands of dollars | 78.7044 at age 1 | se rises |
+| $`S_k`$ | total at age $`k`$ of the years that also have age $`k+1`$ | 35,207 at age 1 | se falls: more data behind the factor |
+| $`\widehat{\mathrm{mse}}`$, se | estimated squared miss, and its square root | se 1,301.3 in total | — |
 
 ### When it holds
 
 - **A stable pattern.** Young years must develop as old years did. If claims staff start setting case estimates (the amount booked against each reported claim) higher, old factors overstate the growth to come and the IBNR is too high.
 - **Nothing after the last age.** The method stops at age 10. If claims still surface later, as with industrial disease, the answer is short by a **tail factor** the triangle cannot show.
 - **Independent years.** Mack treats each accident year as its own process. Inflation hits every year in the same calendar year, along a diagonal; the se then understates the risk.
-- **An honest prior for BF.** $E_i$ must come from premiums and pricing. A prior copied from the chain ladder returns the chain ladder.
-- **Mack's variance shape.** Scatter must grow in proportion to size, $\sigma_k^2 C_{i,k}$. If big years are steadier than that, the se is too wide; if wilder, too narrow.
+- **An honest prior for BF.** $`E_i`$ must come from premiums and pricing. A prior copied from the chain ladder returns the chain ladder.
+- **Mack's variance shape.** Scatter must grow in proportion to size, $`\sigma_k^2 C_{i,k}`$. If big years are steadier than that, the se is too wide; if wilder, too narrow.
 
 ---
 
@@ -124,37 +136,37 @@ The line is one over the factor to ultimate at each age: the chain ladder's repo
 
 ### Step 1: the volume-weighted factor is the best straight-line fit
 
-Take age 1 to 2. Nine years have both figures. Their age-2 total is 53,587 and their age-1 total is 35,207, so $\hat f_1 = 1.5221$.
+Take age 1 to 2. Nine years have both figures. Their age-2 total is 53,587 and their age-1 total is 35,207, so $`\hat f_1 = 1.5221`$.
 
-Why totals over totals, not the average of nine ratios? Suppose each year's next figure is this year's times a common factor, plus noise whose variance grows with this year's size, $\sigma_k^2 C_{i,k}$: Mack's assumption. Then weighted least squares (the factor making the size-weighted squared misses smallest) is exactly the ratio of totals. A small year's noisy ratio counts for little. The plain average gives every year one vote and yields $13.81 million of IBNR, not $14.00 million.
+Why totals over totals, not the average of nine ratios? Suppose each year's next figure is this year's times a common factor, plus noise whose variance grows with this year's size, $`\sigma_k^2 C_{i,k}`$: Mack's assumption. Then weighted least squares (the factor making the size-weighted squared misses smallest) is exactly the ratio of totals. A small year's noisy ratio counts for little. The plain average gives every year one vote and yields $13.81 million of IBNR, not $14.00 million.
 
 <details>
 <summary>The algebra behind the ratio of totals</summary>
 
-Minimise $\sum_i (C_{i,k+1} - g\,C_{i,k})^2 / C_{i,k}$ over a trial factor g; dividing by $C_{i,k}$ undoes the variance $\sigma_k^2 C_{i,k}$. The derivative in g is $-2\sum_i (C_{i,k+1} - g\,C_{i,k})$. Zero gives $\sum_i C_{i,k+1} = g \sum_i C_{i,k}$: the ratio of totals. The second derivative, $2\sum_i C_{i,k} > 0$, makes it the minimum.
+Minimise $`\sum_i (C_{i,k+1} - g\,C_{i,k})^2 / C_{i,k}`$ over a trial factor g; dividing by $`C_{i,k}`$ undoes the variance $`\sigma_k^2 C_{i,k}`$. The derivative in g is $`-2\sum_i (C_{i,k+1} - g\,C_{i,k})`$. Zero gives $`\sum_i C_{i,k+1} = g \sum_i C_{i,k}`$: the ratio of totals. The second derivative, $`2\sum_i C_{i,k} > 0`$, makes it the minimum.
 
 </details>
 
 ### Step 2: chaining the factors gives the expected ultimate
 
-Mack's first assumption: given a year's history, its expected next figure is today's times the true factor, $E[C_{i,k+1} \mid \text{history}] = f_k C_{i,k}$. Apply it twice and the expected age-3 figure is $f_2 f_1$ times the age-1 figure, since an average of averages is the average. Repeat to age 10: the expected ultimate is the latest figure times every factor still to come. Put in the estimates and that is the chain ladder.
+Mack's first assumption: given a year's history, its expected next figure is today's times the true factor, $`E[C_{i,k+1} \mid \text{history}] = f_k C_{i,k}`$. Apply it twice and the expected age-3 figure is $`f_2 f_1`$ times the age-1 figure, since an average of averages is the average. Repeat to age 10: the expected ultimate is the latest figure times every factor still to come. Put in the estimates and that is the chain ladder.
 
-For 2025, $F_{10} = 2.2492$, so 4,486 reported becomes 10,089.9 ultimate, with 5,603.87 to come. Mack (1993, Theorem 2) proves the estimated factors are uncorrelated, so the estimated ultimate is unbiased: right on average.
+For 2025, $`F_{10} = 2.2492`$, so 4,486 reported becomes 10,089.9 ultimate, with 5,603.87 to come. Mack (1993, Theorem 2) proves the estimated factors are uncorrelated, so the estimated ultimate is unbiased: right on average.
 
 ### Step 3: the same answer from row and column totals
 
-A second road, with no ratios. Turn the triangle into **increments**: what was reported during each development year. Model each increment as $x_i\,y_k$: a size for accident year $i$ times the share of any year's cost that arrives at age $k$. Choose sizes and shares so every observed row total and column total is matched exactly, then fill each empty cell with its product.
+A second road, with no ratios. Turn the triangle into **increments**: what was reported during each development year. Model each increment as $`x_i\,y_k`$: a size for accident year $`i`$ times the share of any year's cost that arrives at age $`k`$. Choose sizes and shares so every observed row total and column total is matched exactly, then fill each empty cell with its product.
 
 That fit, the **marginal-totals method**, returns 14,000.2: the chain-ladder figure to the last digit printed. Its shares are the steps in the Step 0 picture.
 
 <details>
 <summary>Detailed proof: marginal totals reproduce the chain ladder</summary>
 
-Take sizes $x_i = \hat U_i$, the chain-ladder ultimates, and shares $y_k = 1/F^{(k)} - 1/F^{(k-1)}$, where $F^{(k)} = \hat f_k \cdots \hat f_{n-1}$ is the factor to ultimate from age $k$, with $1/F^{(0)} = 0$. The shares add to $1/F^{(n)} = 1$.
+Take sizes $`x_i = \hat U_i`$, the chain-ladder ultimates, and shares $`y_k = 1/F^{(k)} - 1/F^{(k-1)}`$, where $`F^{(k)} = \hat f_k \cdots \hat f_{n-1}`$ is the factor to ultimate from age $`k`$, with $`1/F^{(0)} = 0`$. The shares add to $`1/F^{(n)} = 1`$.
 
-**Rows.** Year $i$'s fitted increments up to its latest age, $n+1-i$, add to $\hat U_i / F^{(n+1-i)} = C_{i,n+1-i}$, its observed total.
+**Rows.** Year $`i`$'s fitted increments up to its latest age, $`n+1-i`$, add to $`\hat U_i / F^{(n+1-i)} = C_{i,n+1-i}`$, its observed total.
 
-**Columns.** Claim first that $\sum_{i \le n+1-k} \hat U_i / F^{(k)} = \sum_{i \le n+1-k} C_{i,k}$ for every age $k$. At $k = n$ only 2016 is summed and both sides are $C_{1,n}$. If it holds at $k+1$, then for the years $i \le n-k$, dividing by one more factor gives $\sum \hat U_i / F^{(k)} = \frac{1}{\hat f_k}\sum C_{i,k+1} = \sum C_{i,k}$, by the definition of $\hat f_k$. The one extra year $i = n+1-k$ has latest age $k$, so $\hat U_i / F^{(k)} = C_{i,k}$. Adding it keeps the claim true. The same step one age earlier gives $\sum_{i \le n+1-k} \hat U_i / F^{(k-1)} = \sum_{i \le n+1-k} C_{i,k-1}$. Subtract the two: the fitted column-$k$ increments equal the observed ones.
+**Columns.** Claim first that $`\sum_{i \le n+1-k} \hat U_i / F^{(k)} = \sum_{i \le n+1-k} C_{i,k}`$ for every age $`k`$. At $`k = n`$ only 2016 is summed and both sides are $`C_{1,n}`$. If it holds at $`k+1`$, then for the years $`i \le n-k`$, dividing by one more factor gives $`\sum \hat U_i / F^{(k)} = \frac{1}{\hat f_k}\sum C_{i,k+1} = \sum C_{i,k}`$, by the definition of $`\hat f_k`$. The one extra year $`i = n+1-k`$ has latest age $`k`$, so $`\hat U_i / F^{(k)} = C_{i,k}`$. Adding it keeps the claim true. The same step one age earlier gives $`\sum_{i \le n+1-k} \hat U_i / F^{(k-1)} = \sum_{i \le n+1-k} C_{i,k-1}`$. Subtract the two: the fitted column-$`k`$ increments equal the observed ones.
 
 So the chain-ladder completion matches every row and column total. The marginal-totals fit is unique once the shares are pinned to add to one, so it is this one, and its reserves are the chain-ladder reserves.
 
@@ -162,28 +174,30 @@ So the chain-ladder completion matches every row and column total. The marginal-
 
 ### Step 4: Bornhuetter-Ferguson trusts the data by the share reported
 
-The chain ladder's ultimate is the latest figure divided by the share reported, $z_i$. For 2025, at 44.46 percent, every dollar of first-year luck is multiplied by 2.2492. BF instead takes the unreported share, $1 - z_i$, of the expected ultimate $E_i$, and adds what is reported.
+The chain ladder's ultimate is the latest figure divided by the share reported, $`z_i`$. For 2025, at 44.46 percent, every dollar of first-year luck is multiplied by 2.2492. BF instead takes the unreported share, $`1 - z_i`$, of the expected ultimate $`E_i`$, and adds what is reported.
 
-Rearranged, BF is a weighted average. Since the latest figure is $z_i \hat U_i$, BF's ultimate is $z_i\,\hat U_i + (1-z_i)\,E_i$. The weight on the data is the share of the data that exists: all of it for 2016, under half for 2025. Blending a year's own evidence with an outside expectation is the **credibility** idea.
+Rearranged, BF is a weighted average. Since the latest figure is $`z_i \hat U_i`$, BF's ultimate is $`z_i\,\hat U_i + (1-z_i)\,E_i`$. The weight on the data is the share of the data that exists: all of it for 2016, under half for 2025. Blending a year's own evidence with an outside expectation is the **credibility** idea.
 
-BF also comes out of the second road: $E_i$ times the fitted shares for the ages year $i$ has not reached. That gives 14,295.9, as the formula does. Feeding BF's ultimate back in as the prior and running BF again is the **Benktander** method: 14,191.2, between the two.
+BF also comes out of the second road: $`E_i`$ times the fitted shares for the ages year $`i`$ has not reached. That gives 14,295.9, as the formula does. Feeding BF's ultimate back in as the prior and running BF again is the **Benktander** method: 14,191.2, between the two.
 
 ### Step 5: Mack's error, two parts
 
 Mack's model has three assumptions: the factor assumption of Step 2, the variance assumption of Step 1, and independent accident years. Under them the miss splits in two.
 
-**Process error.** Even with true factors, each year's future is random. Variance builds a year at a time: next year's is the factor squared times this year's, plus new noise $\sigma_k^2$ times the expected size. Unrolled, that is the $1/\hat C_{i,k}$ term. The code runs this recursion as a second road, and simulates the model 40,000 times as a third: simulated spread 1,157.6, formula 1,155.7.
+**Process error.** Even with true factors, each year's future is random. Variance builds a year at a time: next year's is the factor squared times this year's, plus new noise $`\sigma_k^2`$ times the expected size. Unrolled, that is the $`1/\hat C_{i,k}`$ term. The code runs this recursion as a second road, and simulates the model 40,000 times as a third: simulated spread 1,157.6, formula 1,155.7.
 
-**Estimation error.** Given the earlier ages, $\hat f_k$ has variance $\sigma_k^2 / S_k$: more volume, steadier factor. That is the $1/S_k$ term. Every year still to pass age $k$ uses the same $\hat f_k$, so a factor too high pushes them all up together. That is the cross term: it adds 163,223.2 (square thousands of dollars) to the squared error, lifting the total se from 1,237.0 to 1,301.3.
+**Estimation error.** Given the earlier ages, $`\hat f_k`$ has variance $`\sigma_k^2 / S_k`$: more volume, steadier factor. That is the $`1/S_k`$ term. Every year still to pass age $`k`$ uses the same $`\hat f_k`$, so a factor too high pushes them all up together. That is the cross term: it adds 163,223.2 (square thousands of dollars) to the squared error, lifting the total se from 1,237.0 to 1,301.3.
 
 <details>
 <summary>Detailed proof: the process variance, and where Mack approximates</summary>
 
-Given the triangle, let the mean and variance of year $i$'s figure at age $k$ be $(m_k, v_k)$, starting from its latest age $a = n+1-i$ with $m_a = C_{i,a}$ and $v_a = 0$. By the factor assumption and the rule "variance = average of the conditional variance + variance of the conditional mean",
-$$m_{k+1} = f_k m_k, \qquad v_{k+1} = \sigma_k^2 m_k + f_k^2 v_k.$$
-Unroll: $v_n = \sum_{k \ge a} \sigma_k^2 m_k \prod_{j > k} f_j^2$. Since $m_n = m_k f_k \prod_{j>k} f_j$, the product is $m_n^2 / (m_k^2 f_k^2)$, so $v_n = m_n^2 \sum_{k \ge a} \sigma_k^2 / (f_k^2 m_k)$: the first term of the formula.
+Given the triangle, let the mean and variance of year $`i`$'s figure at age $`k`$ be $`(m_k, v_k)`$, starting from its latest age $`a = n+1-i`$ with $`m_a = C_{i,a}`$ and $`v_a = 0`$. By the factor assumption and the rule "variance = average of the conditional variance + variance of the conditional mean",
 
-The squared miss adds the square of $C_{i,a}\,(\prod f_k - \prod \hat f_k)$, which cannot be computed because the true factors are unknown. Mack writes the difference of products as a sum of one-factor differences. He replaces each squared difference by its conditional average $\sigma_k^2 / S_k$ times the other factors squared, and drops the cross products, which average to zero. Substituting estimates gives the $1/S_k$ term. For two years the same expansion leaves only the factors both still need, which is the pair term of the total. This step is an approximation, not an identity; Mack (1993, Theorem 3 and its Corollary) sets it out in full.
+$`\displaystyle m_{k+1} = f_k m_k, \qquad v_{k+1} = \sigma_k^2 m_k + f_k^2 v_k.`$
+
+Unroll: $`v_n = \sum_{k \ge a} \sigma_k^2 m_k \prod_{j > k} f_j^2`$. Since $`m_n = m_k f_k \prod_{j>k} f_j`$, the product is $`m_n^2 / (m_k^2 f_k^2)`$, so $`v_n = m_n^2 \sum_{k \ge a} \sigma_k^2 / (f_k^2 m_k)`$: the first term of the formula.
+
+The squared miss adds the square of $`C_{i,a}\,(\prod f_k - \prod \hat f_k)`$, which cannot be computed because the true factors are unknown. Mack writes the difference of products as a sum of one-factor differences. He replaces each squared difference by its conditional average $`\sigma_k^2 / S_k`$ times the other factors squared, and drops the cross products, which average to zero. Substituting estimates gives the $`1/S_k`$ term. For two years the same expansion leaves only the factors both still need, which is the pair term of the total. This step is an approximation, not an identity; Mack (1993, Theorem 3 and its Corollary) sets it out in full.
 
 </details>
 
@@ -197,8 +211,8 @@ Recursion and formula both give 1,301.3. The code also runs Mack's own example, 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\hat f_1$, age 1 to 2 | 53,587 / 35,207 | 1.5221 |
-| factor to ultimate from age 2 | $\hat f_2 \times \cdots \times \hat f_9$ | 1.4777 |
+| $`\hat f_1`$, age 1 to 2 | 53,587 / 35,207 | 1.5221 |
+| factor to ultimate from age 2 | $`\hat f_2 \times \cdots \times \hat f_9`$ | 1.4777 |
 | factor to ultimate from age 1 | 1.5221 × 1.4777 | 2.2492 |
 | share reported | 1 / 2.2492 | 44.46% |
 | chain-ladder ultimate | 4,486 × 2.2492 | 10,089.9 |
@@ -670,9 +684,9 @@ Lean proves Steps 1, 3 and 5 for any positive figures, and checks some of the ca
 
 - Fill each cell with the year's chain-ladder ultimate times the age's share. Then the shares add to one, and every row and column total matches the observed one.
 - In that fill, each year's future cells add to its chain-ladder reserve.
-- Take positive figures at age $k$. Then no trial factor g gives smaller size-weighted squared misses than $\hat f_k$, the ratio of totals.
-- Suppose the variance is zero at the latest age, the factors are positive, and the mean and variance follow the card's one-year recursion. Then the final variance is $m_n^2 \sum \sigma_k^2/(f_k^2 m_k)$, the first term of Mack's formula.
-- The table is a triangle of positive figures, and the totals behind $\hat f_1$ are 53,587 and 35,207.
+- Take positive figures at age $`k`$. Then no trial factor g gives smaller size-weighted squared misses than $`\hat f_k`$, the ratio of totals.
+- Suppose the variance is zero at the latest age, the factors are positive, and the mean and variance follow the card's one-year recursion. Then the final variance is $`m_n^2 \sum \sigma_k^2/(f_k^2 m_k)`$, the first term of Mack's formula.
+- The table is a triangle of positive figures, and the totals behind $`\hat f_1`$ are 53,587 and 35,207.
 
 The decimal figures, Bornhuetter-Ferguson and Mack's estimation error are left to the Python and Rust checks.
 

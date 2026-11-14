@@ -38,53 +38,59 @@ Orange: the 15 kHz whistle. Green: a 5 kHz tone. The converter reads at 0, 50, 1
 
 ## The formula
 
-Notation first. A signal is $x(t)$, its value at time $t$. The converter reads it every $T$ seconds, $f_s = 1/T$ times a second; $f_s$ is the **sampling rate**. The $n$-th reading is $x[n] = x(nT)$, square brackets for a count of samples, as in [The z-transform](../02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md).
+Notation first. A signal is $`x(t)`$, its value at time $`t`$. The converter reads it every $`T`$ seconds, $`f_s = 1/T`$ times a second; $`f_s`$ is the **sampling rate**. The $`n`$-th reading is $`x[n] = x(nT)`$, square brackets for a count of samples, as in [The z-transform](../02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md).
 
-A signal is **band-limited** to $B$ when its spectrum $X(f)$, the amount of each frequency $f$ it holds ([The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md)), is zero for every $|f| > B$. Frequencies here are in hertz (cycles per second) or kHz, not radians per second.
+A signal is **band-limited** to $`B`$ when its spectrum $`X(f)`$, the amount of each frequency $`f`$ it holds ([The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md)), is zero for every $`|f| > B`$. Frequencies here are in hertz (cycles per second) or kHz, not radians per second.
 
-**The sampling theorem.** If $x$ is band-limited to $B$ and $f_s > 2B$, then for every time $t$
+**The sampling theorem.** If $`x`$ is band-limited to $`B`$ and $`f_s > 2B`$, then for every time $`t`$
 
-$$x(t) = \sum_{n=-\infty}^{\infty} x[n]\;\operatorname{sinc}\!\left(\frac{t - nT}{T}\right), \qquad \operatorname{sinc}(u) = \frac{\sin \pi u}{\pi u},\ \operatorname{sinc}(0) = 1.$$
+```math
+x(t) = \sum_{n=-\infty}^{\infty} x[n]\;\mathrm{sinc}\!\left(\frac{t - nT}{T}\right), \qquad \mathrm{sinc}(u) = \frac{\sin \pi u}{\pi u},\ \mathrm{sinc}(0) = 1.
+```
 
 **Read it aloud:** the signal at any moment is every reading times a sinc bump centred on that reading's time, all added up.
 
-Half the sampling rate, $f_s/2$, is the **Nyquist frequency**: 10 kHz here. Twice the band limit, $2B$, is the **Nyquist rate**: the sampling rate to beat. For the 15 kHz whistle it is 30 kHz, and 20 kHz falls short.
+Half the sampling rate, $`f_s/2`$, is the **Nyquist frequency**: 10 kHz here. Twice the band limit, $`2B`$, is the **Nyquist rate**: the sampling rate to beat. For the 15 kHz whistle it is 30 kHz, and 20 kHz falls short.
 
-**The alias.** A tone at $f$ sampled at $f_s$ gives the same samples as a tone at
+**The alias.** A tone at $`f`$ sampled at $`f_s`$ gives the same samples as a tone at
 
-$$f_a = \lvert f - k f_s \rvert, \qquad k = \text{the whole number nearest } f/f_s.$$
+```math
+f_a = \lvert f - k f_s \rvert, \qquad k = \text{the whole number nearest } f/f_s.
+```
 
 **Read it aloud:** the heard frequency is the distance from the true frequency to the nearest whole multiple of the sampling rate.
 
-For the whistle, 15/20 is nearest 1, so $f_a$ = |15 − 20| = 5 kHz. The answer always lands between 0 and $f_s/2$.
+For the whistle, 15/20 is nearest 1, so $`f_a`$ = |15 − 20| = 5 kHz. The answer always lands between 0 and $`f_s/2`$.
 
-**The filter before the converter.** To keep 0 to $f_p$ clean, everything at or above $f_{\text{stop}} = f_s - f_p$ must be cut by $A$ decibels (dB: a loss of $A$ dB divides a wave's height by $10^{A/20}$). A Butterworth low-pass filter of order $N$, the standard design that is flattest in the kept band, with its corner at $f_p$, does it when
+**The filter before the converter.** To keep 0 to $`f_p`$ clean, everything at or above $`f_{\text{stop}} = f_s - f_p`$ must be cut by $`A`$ decibels (dB: a loss of $`A`$ dB divides a wave's height by $`10^{A/20}`$). A Butterworth low-pass filter of order $`N`$, the standard design that is flattest in the kept band, with its corner at $`f_p`$, does it when
 
-$$N \ \ge\ \frac{\log_{10}\!\left(10^{A/10} - 1\right)}{2\,\log_{10}\!\left(f_{\text{stop}}/f_p\right)}.$$
+```math
+N \ \ge\ \frac{\log_{10}\!\left(10^{A/10} - 1\right)}{2\,\log_{10}\!\left(f_{\text{stop}}/f_p\right)}.
+```
 
 **Read it aloud:** the order needed is the required loss, in powers of ten, over twice the number of decades (factors of ten in frequency) between the band edge and the stop edge.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $\omega$ | frequency of a tone, kHz; $\omega = 2\pi f$, the same in radians per second, used only in Step 3 | 15 kHz whistle | the alias walks up and down between 0 and 10 kHz |
-| $f_s$, $T$ | sampling rate; time between readings, $T = 1/f_s$ | 20 kHz; 50 μs | Nyquist frequency rises, fewer tones alias |
-| $f_s/2$ | the Nyquist frequency: the fastest tone the readings can hold | 10 kHz | — |
-| $B$, $2B$ | band limit: nothing above it; the Nyquist rate | 15 kHz; 30 kHz | a faster converter is needed |
-| $f_a$, $k$ | the alias, the frequency heard; the nearest whole multiple | 5 kHz; 1 | — |
-| $x(t)$, $x[n]$, $n$ | the signal; its $n$-th reading; the reading count | 1, 0, −1, 0, 1 | — |
-| $t$, $u$ | time; time counted in readings, $u = t/T$ | 12.5 μs is $u$ = 0.25 | — |
-| $X(f)$, $j$, $z$ | the spectrum, amount of frequency $f$; the square root of −1; a tone's point on the unit circle, $z = e^{j2\pi f T}$ | spikes at ±15 kHz; the whistle's $z$ at 270° | — |
-| $c_n$ | a Fourier coefficient of the spectrum, in the proof | $T\,x[n]$ | — |
-| $\operatorname{sinc}$ | the bump sin(πu)/(πu): 1 at 0, zero at every other whole number | — | — |
-| $f_p$, $f_{\text{stop}}$ | band kept; where the cut must be complete, $f_s - f_p$ | 5 kHz; 15 kHz | wider band, steeper filter |
-| $N$, $A$ | filter order (its number of poles); loss required at $f_{\text{stop}}$ | 7; 60 dB | more loss, higher order |
+| $`f`$, $`\omega`$ | frequency of a tone, kHz; $`\omega = 2\pi f`$, the same in radians per second, used only in Step 3 | 15 kHz whistle | the alias walks up and down between 0 and 10 kHz |
+| $`f_s`$, $`T`$ | sampling rate; time between readings, $`T = 1/f_s`$ | 20 kHz; 50 μs | Nyquist frequency rises, fewer tones alias |
+| $`f_s/2`$ | the Nyquist frequency: the fastest tone the readings can hold | 10 kHz | — |
+| $`B`$, $`2B`$ | band limit: nothing above it; the Nyquist rate | 15 kHz; 30 kHz | a faster converter is needed |
+| $`f_a`$, $`k`$ | the alias, the frequency heard; the nearest whole multiple | 5 kHz; 1 | — |
+| $`x(t)`$, $`x[n]`$, $`n`$ | the signal; its $`n`$-th reading; the reading count | 1, 0, −1, 0, 1 | — |
+| $`t`$, $`u`$ | time; time counted in readings, $`u = t/T`$ | 12.5 μs is $`u`$ = 0.25 | — |
+| $`X(f)`$, $`j`$, $`z`$ | the spectrum, amount of frequency $`f`$; the square root of −1; a tone's point on the unit circle, $`z = e^{j2\pi f T}`$ | spikes at ±15 kHz; the whistle's $`z`$ at 270° | — |
+| $`c_n`$ | a Fourier coefficient of the spectrum, in the proof | $`T\,x[n]`$ | — |
+| $`\mathrm{sinc}`$ | the bump sin(πu)/(πu): 1 at 0, zero at every other whole number | — | — |
+| $`f_p`$, $`f_{\text{stop}}`$ | band kept; where the cut must be complete, $`f_s - f_p`$ | 5 kHz; 15 kHz | wider band, steeper filter |
+| $`N`$, $`A`$ | filter order (its number of poles); loss required at $`f_{\text{stop}}`$ | 7; 60 dB | more loss, higher order |
 
 ### When it holds
 
-- **Band-limited, strictly.** The theorem needs nothing at or above $f_s/2$. Exactly at it fails: a 10 kHz sine read at 20 kHz is caught at its zero crossings, and every reading is 0.000000.
-- **Every reading, for ever.** The sinc sum runs over all $n$. A real recording stops, and a ten-second chord still needs a window and a finite sum, the subject of [Windows](03-windows-and-spectral-leakage.md). No signal that stops is exactly band-limited; the theorem is approached, not met.
-- **Readings exactly on time.** The spacing $T$ must be steady. Jitter (small timing wobble) turns a pure tone into a tone plus noise.
-- **Exact values.** A converter rounds each reading to one of its steps. That rounding is a separate error; for a 16-bit converter one step is 96.33 dB below full scale, which sets the $A$ worth aiming for.
+- **Band-limited, strictly.** The theorem needs nothing at or above $`f_s/2`$. Exactly at it fails: a 10 kHz sine read at 20 kHz is caught at its zero crossings, and every reading is 0.000000.
+- **Every reading, for ever.** The sinc sum runs over all $`n`$. A real recording stops, and a ten-second chord still needs a window and a finite sum, the subject of [Windows](03-windows-and-spectral-leakage.md). No signal that stops is exactly band-limited; the theorem is approached, not met.
+- **Readings exactly on time.** The spacing $`T`$ must be steady. Jitter (small timing wobble) turns a pure tone into a tone plus noise.
+- **Exact values.** A converter rounds each reading to one of its steps. That rounding is a separate error; for a 16-bit converter one step is 96.33 dB below full scale, which sets the $`A`$ worth aiming for.
 - **The filter model.** The order rule is for a Butterworth filter; other designs (Chebyshev, elliptic) trade a ripple in the band for a steeper cut and need fewer poles.
 
 ---
@@ -93,48 +99,50 @@ $$N \ \ge\ \frac{\log_{10}\!\left(10^{A/10} - 1\right)}{2\,\log_{10}\!\left(f_{\
 
 ### Step 0: a sampler sees positions on a circle, and a full turn is invisible
 
-Write a tone as a point turning round a circle ([Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md)). Between readings, a 15 kHz tone turns 270°. The converter does not see the turning, only where the point is at each reading. A turn of 270° lands where a turn of −90° lands. So any tone that turns a whole number of extra laps between readings looks the same, and frequency is only known up to whole multiples of $f_s$.
+Write a tone as a point turning round a circle ([Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md)). Between readings, a 15 kHz tone turns 270°. The converter does not see the turning, only where the point is at each reading. A turn of 270° lands where a turn of −90° lands. So any tone that turns a whole number of extra laps between readings looks the same, and frequency is only known up to whole multiples of $`f_s`$.
 
 ### Step 1: frequencies one sampling rate apart give the same readings
 
-Write the tone as $e^{j2\pi f t}$, $j$ being the square root of −1 as engineers write it. Its $n$-th reading is $e^{j2\pi f nT}$. Add $f_s$ to the frequency:
+Write the tone as $`e^{j2\pi f t}`$, $`j`$ being the square root of −1 as engineers write it. Its $`n`$-th reading is $`e^{j2\pi f nT}`$. Add $`f_s`$ to the frequency:
 
-$$e^{j2\pi (f + f_s) nT} = e^{j2\pi f nT}\, e^{j2\pi n} = e^{j2\pi f nT},$$
+```math
+e^{j2\pi (f + f_s) nT} = e^{j2\pi f nT}\, e^{j2\pi n} = e^{j2\pi f nT},
+```
 
-since $f_s T = 1$ and $e^{j2\pi n} = 1$ for every whole $n$. So $f$ and $f + k f_s$ are indistinguishable for every whole $k$.
+since $`f_s T = 1`$ and $`e^{j2\pi n} = 1`$ for every whole $`n`$. So $`f`$ and $`f + k f_s`$ are indistinguishable for every whole $`k`$.
 
-A real cosine is two such turning points, at $+f$ and $-f$ ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). So the cosine at $f$ also matches the cosine at $k f_s - f$. Pick the $k$ that brings the answer nearest 0: that is $f_a = \lvert f - k f_s\rvert$, folded into 0 to $f_s/2$.
+A real cosine is two such turning points, at $`+f`$ and $`-f`$ ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). So the cosine at $`f`$ also matches the cosine at $`k f_s - f`$. Pick the $`k`$ that brings the answer nearest 0: that is $`f_a = \lvert f - k f_s\rvert`$, folded into 0 to $`f_s/2`$.
 
 The whistle at 15 kHz turns 270° per reading, the same point as −90°; the 5 kHz tone turns 90°, its mirror image, and a cosine is the sum of a point and its mirror.
 
-In the z-plane of [The z-transform](../02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md), a tone of frequency $f$ sits at $z = e^{j2\pi f T}$ on the unit circle. One lap of the circle is $f_s$. That is why the circle has room for 0 to $f_s/2$ and no more.
+In the z-plane of [The z-transform](../02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md), a tone of frequency $`f`$ sits at $`z = e^{j2\pi f T}`$ on the unit circle. One lap of the circle is $`f_s`$. That is why the circle has room for 0 to $`f_s/2`$ and no more.
 
-A sine is the difference of a point and its mirror, so folding about a multiple of $f_s$ flips its sign: the 15 kHz sine's readings are minus those of the 5 kHz sine. The cosine never flips.
+A sine is the difference of a point and its mirror, so folding about a multiple of $`f_s`$ flips its sign: the 15 kHz sine's readings are minus those of the 5 kHz sine. The cosine never flips.
 
-### Step 2: sampling copies the spectrum every $f_s$
+### Step 2: sampling copies the spectrum every $`f_s`$
 
-Step 1, applied to every frequency at once, says that the readings carry the spectrum $X(f)$ plus copies of it shifted by every whole multiple of $f_s$: $\pm f_s$, $\pm 2f_s$ and on. This is the Poisson summation formula; it is stated here and proved in Poisson summation and sampling (planned).
+Step 1, applied to every frequency at once, says that the readings carry the spectrum $`X(f)`$ plus copies of it shifted by every whole multiple of $`f_s`$: $`\pm f_s`$, $`\pm 2f_s`$ and on. This is the Poisson summation formula; it is stated here and proved in Poisson summation and sampling (planned).
 
-If $X$ sits inside $-B$ to $B$, the copy at $+f_s$ starts at $f_s - B$. The copies stay clear of the original exactly when $f_s - B > B$, that is $f_s > 2B$. Then the readings hold an undamaged copy of $X$, and Step 3 recovers it. If the copies overlap, two frequencies share each spot and no rule can split them.
+If $`X`$ sits inside $`-B`$ to $`B`$, the copy at $`+f_s`$ starts at $`f_s - B`$. The copies stay clear of the original exactly when $`f_s - B > B`$, that is $`f_s > 2B`$. Then the readings hold an undamaged copy of $`X`$, and Step 3 recovers it. If the copies overlap, two frequencies share each spot and no rule can split them.
 
 ### Step 3: the readings are the Fourier coefficients of the spectrum
 
-Here the spectrum is $X(f) = \int x(t)\, e^{-j2\pi f t}\, dt$, integrated over all time: the transform of [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md) with ω written as $2\pi f$; the inverse then has no $1/2\pi$ in front.
+Here the spectrum is $`X(f) = \int x(t)\, e^{-j2\pi f t}\, dt`$, integrated over all time: the transform of [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md) with ω written as $`2\pi f`$; the inverse then has no $`1/2\pi`$ in front.
 
-Since $X$ is zero outside $-f_s/2$ to $f_s/2$, treat that stretch as one period and expand $X$ in a Fourier series there. By the inverse transform, its coefficients turn out to be $T\,x(nT)$: the readings. Put the series back into the inverse transform and each term integrates to one sinc bump. The readings fix the spectrum, and the spectrum fixes the signal.
+Since $`X`$ is zero outside $`-f_s/2`$ to $`f_s/2`$, treat that stretch as one period and expand $`X`$ in a Fourier series there. By the inverse transform, its coefficients turn out to be $`T\,x(nT)`$: the readings. Put the series back into the inverse transform and each term integrates to one sinc bump. The readings fix the spectrum, and the spectrum fixes the signal.
 
 <details>
 <summary>Detailed proof: the sinc sum</summary>
 
-Let $X(f) = 0$ for $|f| > B$, with $B < f_s/2$. Then $X$ lives on $-B$ to $B$, strictly inside the interval from $-f_s/2$ to $f_s/2$, of width $f_s$, and is zero outside that interval. On that interval expand $X$ in a complex Fourier series in the variable $f$, period $f_s$:
+Let $`X(f) = 0`$ for $`|f| > B`$, with $`B < f_s/2`$. Then $`X`$ lives on $`-B`$ to $`B`$, strictly inside the interval from $`-f_s/2`$ to $`f_s/2`$, of width $`f_s`$, and is zero outside that interval. On that interval expand $`X`$ in a complex Fourier series in the variable $`f`$, period $`f_s`$:
 
-$$X(f) = \sum_n c_n\, e^{-j2\pi n f/f_s}, \qquad c_n = \frac{1}{f_s}\int_{-f_s/2}^{f_s/2} X(f)\, e^{j2\pi n f/f_s}\, df.$$
+$`\displaystyle X(f) = \sum_n c_n\, e^{-j2\pi n f/f_s}, \qquad c_n = \frac{1}{f_s}\int_{-f_s/2}^{f_s/2} X(f)\, e^{j2\pi n f/f_s}\, df.`$
 
-The inverse transform at $t = nT = n/f_s$ is $x(nT) = \int X(f)\, e^{j2\pi f nT}\, df$, the same integral, since $X$ is zero outside the interval. So $c_n = T\,x(nT)$. Now rebuild $x$ at any $t$:
+The inverse transform at $`t = nT = n/f_s`$ is $`x(nT) = \int X(f)\, e^{j2\pi f nT}\, df`$, the same integral, since $`X`$ is zero outside the interval. So $`c_n = T\,x(nT)`$. Now rebuild $`x`$ at any $`t`$:
 
-$$x(t) = \int_{-f_s/2}^{f_s/2} X(f)\, e^{j2\pi f t}\, df = \sum_n T\,x(nT) \int_{-f_s/2}^{f_s/2} e^{j2\pi f (t - nT)}\, df.$$
+$`\displaystyle x(t) = \int_{-f_s/2}^{f_s/2} X(f)\, e^{j2\pi f t}\, df = \sum_n T\,x(nT) \int_{-f_s/2}^{f_s/2} e^{j2\pi f (t - nT)}\, df.`$
 
-The last integral is $\sin(\pi f_s (t - nT)) / (\pi (t - nT))$, and $T$ times it is $\operatorname{sinc}((t - nT)/T)$. That is the formula. Swapping sum and integral is safe when $X$ has finite energy, since the Fourier series then converges in mean square ([Convergence](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/02-convergence-jumps-and-gibbs.md)). ∎
+The last integral is $`\sin(\pi f_s (t - nT)) / (\pi (t - nT))`$, and $`T`$ times it is $`\mathrm{sinc}((t - nT)/T)`$. That is the formula. Swapping sum and integral is safe when $`X`$ has finite energy, since the Fourier series then converges in mean square ([Convergence](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/02-convergence-jumps-and-gibbs.md)). ∎
 
 </details>
 
@@ -142,19 +150,21 @@ Each sinc bump is 1 at its own reading and 0 at every other one, so the sum pass
 
 ### Step 4: what this means for the whistle
 
-Fed the whistle's readings, the sinc sum cannot rebuild 15 kHz: the formula only ever builds signals below $f_s/2$. It rebuilds the one band-limited wave through those readings, the 5 kHz tone. At 12.5 μs it gives 0.92388: the 5 kHz value, where the 15 kHz whistle was at 0.38268. That is the alias, made audible by the very formula that would have recovered a legal signal perfectly.
+Fed the whistle's readings, the sinc sum cannot rebuild 15 kHz: the formula only ever builds signals below $`f_s/2`$. It rebuilds the one band-limited wave through those readings, the 5 kHz tone. At 12.5 μs it gives 0.92388: the 5 kHz value, where the 15 kHz whistle was at 0.38268. That is the alias, made audible by the very formula that would have recovered a legal signal perfectly.
 
 ### Step 5: the filter has to come first
 
 After sampling, the whistle's readings are a 5 kHz tone's readings, digit for digit. A digital filter sees numbers only, so it cannot remove the alias without removing a real 5 kHz tone too. The fast part must go while it is still a voltage, before the converter.
 
-What must go? Anything that folds into the kept band, 0 to $f_p$. By Step 1, that is every frequency within $f_p$ of a multiple of $f_s$. The lowest such frequency is $f_s - f_p$: 15 kHz for a 5 kHz band. Between $f_p$ and $f_s - f_p$ lies a **guard band**, where the filter can roll off; content there folds onto the part above $f_p$ that gets thrown away anyway.
+What must go? Anything that folds into the kept band, 0 to $`f_p`$. By Step 1, that is every frequency within $`f_p`$ of a multiple of $`f_s`$. The lowest such frequency is $`f_s - f_p`$: 15 kHz for a 5 kHz band. Between $`f_p`$ and $`f_s - f_p`$ lies a **guard band**, where the filter can roll off; content there folds onto the part above $`f_p`$ that gets thrown away anyway.
 
-A Butterworth filter of order $N$ cuts a wobble at $f$ by
+A Butterworth filter of order $`N`$ cuts a wobble at $`f`$ by
 
-$$10\log_{10}\!\left(1 + (f/f_p)^{2N}\right) \ \text{dB},$$
+```math
+10\log_{10}\!\left(1 + (f/f_p)^{2N}\right) \ \text{dB},
+```
 
-when its corner sits at $f_p$. Its $N$ poles sit evenly on a half circle in the left half plane, where complex numbers have a negative real part ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). Each one steepens the fall above the corner by the same amount ([Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). Ask for $A$ dB at $f_{\text{stop}}$, take logarithms, and the order rule falls out. The code reaches the order a second way, from the distances to the poles alone.
+when its corner sits at $`f_p`$. Its $`N`$ poles sit evenly on a half circle in the left half plane, where complex numbers have a negative real part ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). Each one steepens the fall above the corner by the same amount ([Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). Ask for $`A`$ dB at $`f_{\text{stop}}`$, take logarithms, and the order rule falls out. The code reaches the order a second way, from the distances to the poles alone.
 
 ### The picture: where every frequency lands
 
@@ -195,8 +205,8 @@ Sampled at 20 kHz, the 15 kHz whistle is heard at 5 kHz. A seventh-order filter 
 | --- | --- | --- |
 | Assume a tone above the Nyquist frequency is simply lost | a 5 kHz tone at amplitude 1.000, full loudness | Folding moves a tone; it does not delete it |
 | Filter after the converter, digital low-pass with corner at 5 kHz | the alias kept at 0.7071 of its height | Its readings are a real 5 kHz tone's; no digital filter can tell |
-| Sample at exactly twice the band limit: 10 kHz sine at 20 kHz | every reading 0.000000 | The theorem needs $f_s > 2B$ strictly |
-| Size the filter for 60 dB at the Nyquist frequency, 10 kHz | order 10 | The stop edge is $f_s - f_p$ = 15 kHz; 10 kHz content folds onto the discarded part, so order 7 suffices |
+| Sample at exactly twice the band limit: 10 kHz sine at 20 kHz | every reading 0.000000 | The theorem needs $`f_s > 2B`$ strictly |
+| Size the filter for 60 dB at the Nyquist frequency, 10 kHz | order 10 | The stop edge is $`f_s - f_p`$ = 15 kHz; 10 kHz content folds onto the discarded part, so order 7 suffices |
 
 ---
 
@@ -513,9 +523,9 @@ The two outputs match line for line. The Rust builds the same sums in its own lo
 
 Lean proves the sampling theorem, the alias formula and the filter order rule in general, and checks the worked numbers.
 
-- Suppose $x$ has a spectrum $X(f)$ of finite energy, zero for every $|f| > B$, and $f_s > 2B$. Then at every time $t$, the sinc sum of all readings $x[n]$ adds up to $x(t)$.
-- Take a cosine tone at $f$, sampled at $f_s > 0$, with $k$ the whole number nearest $f/f_s$. Then its readings equal those of a cosine at $f_a = \lvert f - k f_s \rvert$. That $f_a$ always lands between 0 and $f_s/2$.
-- Take a Butterworth filter of order $N$, corner $f_p$, stop edge $f_{\text{stop}} > f_p$, and required loss $A > 0$ dB. Then it cuts $A$ dB at $f_{\text{stop}}$ exactly when $N$ meets the order rule.
+- Suppose $`x`$ has a spectrum $`X(f)`$ of finite energy, zero for every $`|f| > B`$, and $`f_s > 2B`$. Then at every time $`t`$, the sinc sum of all readings $`x[n]`$ adds up to $`x(t)`$.
+- Take a cosine tone at $`f`$, sampled at $`f_s > 0`$, with $`k`$ the whole number nearest $`f/f_s`$. Then its readings equal those of a cosine at $`f_a = \lvert f - k f_s \rvert`$. That $`f_a`$ always lands between 0 and $`f_s/2`$.
+- Take a Butterworth filter of order $`N`$, corner $`f_p`$, stop edge $`f_{\text{stop}} > f_p`$, and required loss $`A > 0`$ dB. Then it cuts $`A`$ dB at $`f_{\text{stop}}`$ exactly when $`N`$ meets the order rule.
 - The whistle folds to 5 kHz, and order 7 reaches 60 dB while order 6 does not.
 
 The pole search, the spectrum search, and the 10 kHz sine read at its zeros are left to the Python and Rust checks.
@@ -799,7 +809,7 @@ end Sampling
 ## The usual mistake
 
 > [!warning]
-> **Trying to remove aliasing after sampling.** Once the 15 kHz whistle is read at 20 kHz, its readings are a 5 kHz tone's readings, exactly. Software, a digital filter or a cleverer rebuild cannot tell them apart, because no information separates them. The only cure is an analogue filter in front of the converter, sized for the stop edge $f_s - f_p$.
+> **Trying to remove aliasing after sampling.** Once the 15 kHz whistle is read at 20 kHz, its readings are a 5 kHz tone's readings, exactly. Software, a digital filter or a cleverer rebuild cannot tell them apart, because no information separates them. The only cure is an analogue filter in front of the converter, sized for the stop edge $`f_s - f_p`$.
 >
 > - **Nyquist frequency versus Nyquist rate.** The frequency is half the sampling rate, 10 kHz here. The rate is twice the band limit, 30 kHz for the whistle. Mix them up, compare the 15 kHz whistle with 30 kHz instead of 10 kHz, and it looks safe; it is not.
 > - **"Twice" is not enough.** A 10 kHz sine at exactly 20 kHz can be read at every zero crossing: all readings 0.000000. The inequality is strict.
@@ -826,7 +836,7 @@ sampling rate   Butterworth order for 96.33 dB above the stop edge
 - **Cameras and screens.** A camera sensor samples in space. Fine stripes on a shirt fold into broad false patterns, moiré, which is why many sensors sit behind an optical blur filter: the same filter, before the sampler.
 
 > **Say it back**
-> A converter sees a signal only at its readings, so frequencies a whole sampling rate apart look the same. A signal with nothing at or above half the sampling rate is fixed exactly by its readings, and the sinc sum rebuilds it between them. Anything faster folds down: a 15 kHz whistle read at 20 kHz is heard at 5 kHz, as loud as before. No processing after the converter can undo that. So a low-pass filter goes first, sized to crush everything from $f_s - f_p$ up.
+> A converter sees a signal only at its readings, so frequencies a whole sampling rate apart look the same. A signal with nothing at or above half the sampling rate is fixed exactly by its readings, and the sinc sum rebuilds it between them. Anything faster folds down: a 15 kHz whistle read at 20 kHz is heard at 5 kHz, as loud as before. No processing after the converter can undo that. So a low-pass filter goes first, sized to crush everything from $`f_s - f_p`$ up.
 
 ---
 
@@ -834,7 +844,7 @@ sampling rate   Butterworth order for 96.33 dB above the stop edge
 
 - [Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md): gain in decibels against frequency on log scales, and the roll-off each pole adds, which sizes the filter.
 - [The z-transform](../02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md): readings as a sequence, and frequency as an angle on the unit circle, where one lap is the sampling rate.
-- [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): the spectrum $X(f)$ and the inverse transform the proof runs through.
+- [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): the spectrum $`X(f)`$ and the inverse transform the proof runs through.
 - [Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md): the series that the proof writes the spectrum as, with the readings as its coefficients.
 
 ## Where this goes next

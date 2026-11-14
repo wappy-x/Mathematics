@@ -48,26 +48,30 @@ Twelve walkways: four per floor, four between them. The round above takes three 
 
 ## The formula
 
-Notation first, in words. A network of dots and lines is $G$: dots are vertices, lines edges ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). The vertex count is $n$; the edges at one vertex are its degree, $\deg(v)$ ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A network's smallest degree is $\delta(G)$, the Greek letter delta, read "the minimum degree of G".
+Notation first, in words. A network of dots and lines is $`G`$: dots are vertices, lines edges ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). The vertex count is $`n`$; the edges at one vertex are its degree, $`\deg(v)`$ ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A network's smallest degree is $`\delta(G)`$, the Greek letter delta, read "the minimum degree of G".
 
 A **Hamiltonian cycle** lists every vertex once, an edge joining each to the next and the last back to the first:
 
-$$x_1 \to x_2 \to \cdots \to x_n \to x_1$$
+```math
+x_1 \to x_2 \to \cdots \to x_n \to x_1
+```
 
 Dirac's theorem, from 1952, is the guarantee:
 
-$$\text{if } n \ge 3 \text{ and } \delta(G) \ge n/2, \text{ then } G \text{ has a Hamiltonian cycle}$$
+```math
+\text{if } n \ge 3 \text{ and } \delta(G) \ge n/2, \text{ then } G \text{ has a Hamiltonian cycle}
+```
 
 **Read it aloud:** three vertices or more, each reaching at least half of them, is enough for a round through all.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | the network: vertices and edges | 8 corners, 12 walkways | — |
-| $n$ | how many vertices | 8 | the bar rises with it |
-| $\deg(v)$ | edges at one vertex | 3 at every corner | rounds get easier to find |
-| $\delta(G)$ | the smallest degree anywhere | 3 | at half of $n$ the guarantee fires |
-| $n/2$ | half the vertices: Dirac's bar | 4 | harder to clear |
-| $x_1$, $x_i$, $x_k$, $x_n$ | a route's vertices in order: a full round ends at $x_n$, a part-route at $x_k$, with $x_i$ along the way | 0, 1, 3, 2, 6, 7, 5, 4 | — |
+| $`G`$ | the network: vertices and edges | 8 corners, 12 walkways | — |
+| $`n`$ | how many vertices | 8 | the bar rises with it |
+| $`\deg(v)`$ | edges at one vertex | 3 at every corner | rounds get easier to find |
+| $`\delta(G)`$ | the smallest degree anywhere | 3 | at half of $`n`$ the guarantee fires |
+| $`n/2`$ | half the vertices: Dirac's bar | 4 | harder to clear |
+| $`x_1`$, $`x_i`$, $`x_k`$, $`x_n`$ | a route's vertices in order: a full round ends at $`x_n`$, a part-route at $`x_k`$, with $`x_i`$ along the way | 0, 1, 3, 2, 6, 7, 5, 4 | — |
 
 ### When it holds
 
@@ -85,17 +89,17 @@ The proof never asks whether the network has a round. It takes a longest route a
 
 ### Step 1: the ends of a longest route have nowhere new to go
 
-Let $x_1$ and $x_k$ end a route with no repeats, through as many vertices as any route in the network. A neighbour of $x_1$ off that route could be hung on the front, making a longer one — so every neighbour of either end already lies on it.
+Let $`x_1`$ and $`x_k`$ end a route with no repeats, through as many vertices as any route in the network. A neighbour of $`x_1`$ off that route could be hung on the front, making a longer one — so every neighbour of either end already lies on it.
 
 ### Step 2: the ends' neighbours must collide, and the collision closes the route
 
-Each end has at least half of $n$ neighbours, all on the route. Mark where $x_1$'s neighbours sit, and mark one step past each of $x_k$'s: two lists, at least $n$ marks between them, in the fewer than $n$ positions after the first. Two marks must land together, giving a vertex $x_i$ joined to $x_1$ with the vertex before it joined to $x_k$.
+Each end has at least half of $`n`$ neighbours, all on the route. Mark where $`x_1`$'s neighbours sit, and mark one step past each of $`x_k`$'s: two lists, at least $`n`$ marks between them, in the fewer than $`n`$ positions after the first. Two marks must land together, giving a vertex $`x_i`$ joined to $`x_1`$ with the vertex before it joined to $`x_k`$.
 
-That collision closes the route: from $x_1$ jump to $x_i$, run forward to $x_k$, jump back to the vertex before $x_i$, run backwards to $x_1$, every vertex used once.
+That collision closes the route: from $`x_1`$ jump to $`x_i`$, run forward to $`x_k`$, jump back to the vertex before $`x_i`$, run backwards to $`x_1`$, every vertex used once.
 
 ### Step 3: the loop cannot have left a vertex out
 
-The loop holds all of $x_1$'s neighbours, so more than half the vertices sit on it. Suppose one sits outside. Joined to the loop anywhere, it lets the loop be cut open there, and that route with the stray on the end beats the longest. Joined nowhere, its neighbours all lie outside, where fewer than half the vertices remain. Impossible either way, so the loop is a Hamiltonian cycle.
+The loop holds all of $`x_1`$'s neighbours, so more than half the vertices sit on it. Suppose one sits outside. Joined to the loop anywhere, it lets the loop be cut open there, and that route with the stray on the end beats the longest. Joined nowhere, its neighbours all lie outside, where fewer than half the vertices remain. Impossible either way, so the loop is a Hamiltonian cycle.
 
 <details>
 <summary>Detailed proof: the collision, counted exactly</summary>
@@ -126,7 +130,7 @@ flowchart TB
     q -->|"none of the three fires"| s["exhaustive search, as on the cube and the depots"]
 ```
 
-Ore's theorem of 1960 asks less: two vertices with no edge between them need only have degrees adding to at least $n$. Step 2 used nothing more, so the collision survives; only Step 3's last count is restated, as a degree sum under $n$.
+Ore's theorem of 1960 asks less: two vertices with no edge between them need only have degrees adding to at least $`n`$. Step 2 used nothing more, so the collision survives; only Step 3's last count is restated, as a degree sum under $`n`$.
 
 ---
 
@@ -348,7 +352,7 @@ The two outputs match line for line.
 
 Lean proves Dirac's theorem and the two-sided test for every network, and checks the warehouse and depot numbers.
 
-- Three vertices or more, simply joined, every degree at least $n/2$ as a fraction: a Hamiltonian cycle exists.
+- Three vertices or more, simply joined, every degree at least $`n/2`$ as a fraction: a Hamiltonian cycle exists.
 - A two-sided network, every edge crossing, with sides of different sizes, has no Hamiltonian cycle.
 - The cube warehouse sits at degree 3, below its bar of 4, and still has a round.
 - The cube has 12 walkways and degree 3 at every corner; the round 0-1-3-2-6-7-5-4-0 walks only walkways and signs every corner once.
@@ -826,7 +830,7 @@ end HamiltonianCycles
 >
 > - **Asking for every edge once.** That is a degree count; this is not. All eight cube corners have odd degree, so no circuit covers each walkway once, while six rounds cover each corner.
 > - **Taking a route through everything as a round.** The depots have a route touching all ten, 0-1-2-3-4-9-6-8-5-7, and no round: its ends are not joined, and no reshuffle joins them.
-> - **Halving with whole numbers.** The bar is $n/2$ as a fraction; rounding it down on an odd vertex count manufactures guarantees.
+> - **Halving with whole numbers.** The bar is $`n/2`$ as a fraction; rounding it down on an odd vertex count manufactures guarantees.
 
 ---
 

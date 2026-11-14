@@ -26,32 +26,38 @@ To scale: 1.5 px per metre in both directions, summit at the bottom-left corner.
 
 ## The formula
 
-Notation first, in words. The curly-d partial derivative $\partial h/\partial x$ is the rate of h per metre east with y held fixed ([Partial derivatives](01-partial-derivatives.md)). The gradient is written $\nabla h$, read "grad h"; the upside-down triangle is called nabla. It is the pair of partial derivatives, taken at one point:
+Notation first, in words. The curly-d partial derivative $`\partial h/\partial x`$ is the rate of h per metre east with y held fixed ([Partial derivatives](01-partial-derivatives.md)). The gradient is written $`\nabla h`$, read "grad h"; the upside-down triangle is called nabla. It is the pair of partial derivatives, taken at one point:
 
-$$\nabla h(p)=\left(\frac{\partial h}{\partial x}(p),\ \frac{\partial h}{\partial y}(p)\right)$$
+```math
+\nabla h(p)=\left(\frac{\partial h}{\partial x}(p),\ \frac{\partial h}{\partial y}(p)\right)
+```
 
-A direction is an arrow $u = (u_1, u_2)$ of length 1: one metre of map distance. The **directional derivative** $D_u h(p)$ is the rate of height per metre travelled from $p$ along $u$:
+A direction is an arrow $`u = (u_1, u_2)`$ of length 1: one metre of map distance. The **directional derivative** $`D_u h(p)`$ is the rate of height per metre travelled from $`p`$ along $`u`$:
 
-$$D_u h(p)=\lim_{t\to 0}\frac{h(p+t\,u)-h(p)}{t}=\nabla h(p)\cdot u=\frac{\partial h}{\partial x}(p)\,u_1+\frac{\partial h}{\partial y}(p)\,u_2$$
+```math
+D_u h(p)=\lim_{t\to 0}\frac{h(p+t\,u)-h(p)}{t}=\nabla h(p)\cdot u=\frac{\partial h}{\partial x}(p)\,u_1+\frac{\partial h}{\partial y}(p)\,u_2
+```
 
 **Read it aloud:** the rate in any direction is the east rate times the eastward share of the step, plus the north rate times the northward share.
 
-In lengths and an angle, with $|\nabla h(p)|$ the arrow's length (the square root of the sum of its squared parts) and $\theta$ the angle between it and $u$:
+In lengths and an angle, with $`|\nabla h(p)|`$ the arrow's length (the square root of the sum of its squared parts) and $`\theta`$ the angle between it and $`u`$:
 
-$$\nabla h(p)\cdot u=|\nabla h(p)|\cos\theta$$
+```math
+\nabla h(p)\cdot u=|\nabla h(p)|\cos\theta
+```
 
 **Read it aloud:** the rate is the gradient's length times the cosine of the angle away from it, so it peaks along the gradient, bottoms out against it, and is zero across it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $h$ | height of the snow, metres | 466 m at p | steeper hill, larger rates |
-| $x$, $y$ | metres east and north of the summit | 120, 80 | further out, steeper |
-| $p$ | the point where the rates are taken | (120, 80) | moving p turns the gradient |
-| $u$, $u_1$, $u_2$ | a direction of length 1; its east and north shares | fall line (0.6, 0.8) | turning u moves the rate between −0.5 and 0.5 |
-| $\nabla h$ | the gradient: both partial derivatives as one arrow | (−0.3, −0.4) | longer arrow, steeper slope |
-| $D_u h$ | the rate along u | −0.5 on the fall line | capped by the arrow's length |
-| $t$ | metres travelled along u | 10, 1, 0.01 | larger gap from the limit |
-| $\theta$ | angle between the gradient and u | 180° on the fall line | rate follows its cosine |
+| $`h`$ | height of the snow, metres | 466 m at p | steeper hill, larger rates |
+| $`x`$, $`y`$ | metres east and north of the summit | 120, 80 | further out, steeper |
+| $`p`$ | the point where the rates are taken | (120, 80) | moving p turns the gradient |
+| $`u`$, $`u_1`$, $`u_2`$ | a direction of length 1; its east and north shares | fall line (0.6, 0.8) | turning u moves the rate between −0.5 and 0.5 |
+| $`\nabla h`$ | the gradient: both partial derivatives as one arrow | (−0.3, −0.4) | longer arrow, steeper slope |
+| $`D_u h`$ | the rate along u | −0.5 on the fall line | capped by the arrow's length |
+| $`t`$ | metres travelled along u | 10, 1, 0.01 | larger gap from the limit |
+| $`\theta`$ | angle between the gradient and u | 180° on the fall line | rate follows its cosine |
 
 Rates are in metres of height per metre of ground.
 
@@ -73,7 +79,7 @@ A small enough patch of snow is nearly a tilted plane. There a step east changes
 
 ### Step 1: the rate along a line is the dot product
 
-Differentiability says: near p, a small step changes the height by the plane's amount, the gradient dotted with the step, plus an error small even compared with the step's length. Step $t$ metres along $u$: the plane's part is $t$ times $\nabla h(p)\cdot u$. Divide by $t$. The error over $t$ shrinks to 0, and the formula is left.
+Differentiability says: near p, a small step changes the height by the plane's amount, the gradient dotted with the step, plus an error small even compared with the step's length. Step $`t`$ metres along $`u`$: the plane's part is $`t`$ times $`\nabla h(p)\cdot u`$. Divide by $`t`$. The error over $`t`$ shrinks to 0, and the formula is left.
 
 On the ski slope the error can be written out exactly. Along the fall line h(p + t u) = 466 − 0.5 t − 0.00205 t^2, so the quotient is −0.5 − 0.00205 t: −0.5205 at 10 m, −0.50205 at 1 m, −0.5000205 at 0.01 m. To land within 0.001 of −0.5, any step under 0.48 m will do.
 
@@ -94,13 +100,13 @@ The zero rate holds only at p itself. A straight 20 m traverse along the level d
 <details>
 <summary>Detailed proof</summary>
 
-Let $h$ be differentiable at $p$, with gradient $g=\nabla h(p)$: for every $\varepsilon>0$ there is a $\delta>0$ with $|h(p+s)-h(p)-g\cdot s|\le\varepsilon|s|$ whenever $0<|s|<\delta$.
+Let $`h`$ be differentiable at $`p`$, with gradient $`g=\nabla h(p)`$: for every $`\varepsilon>0`$ there is a $`\delta>0`$ with $`|h(p+s)-h(p)-g\cdot s|\le\varepsilon|s|`$ whenever $`0<|s|<\delta`$.
 
-**Rate.** Take $|u|=1$, $0<|t|<\delta$ and $s=t\,u$, so $|s|=|t|$. Divide by $|t|$: $\left|\frac{h(p+tu)-h(p)}{t}-g\cdot u\right|\le\varepsilon$. So the limit exists and equals $g\cdot u$.
+**Rate.** Take $`|u|=1`$, $`0<|t|<\delta`$ and $`s=t\,u`$, so $`|s|=|t|`$. Divide by $`|t|`$: $`\left|\frac{h(p+tu)-h(p)}{t}-g\cdot u\right|\le\varepsilon`$. So the limit exists and equals $`g\cdot u`$.
 
-**Maximum.** By the Cauchy–Schwarz inequality, $|g\cdot u|\le|g|\,|u|=|g|$, with equality only when $u$ is a multiple of the gradient. For $g\ne0$, $u=g/|g|$ gives the unique maximum $|g|$, and $u=-g/|g|$ the unique minimum $-|g|$.
+**Maximum.** By the Cauchy–Schwarz inequality, $`|g\cdot u|\le|g|\,|u|=|g|`$, with equality only when $`u`$ is a multiple of the gradient. For $`g\ne0`$, $`u=g/|g|`$ gives the unique maximum $`|g|`$, and $`u=-g/|g|`$ the unique minimum $`-|g|`$.
 
-**Right angle.** Let $c(\tau)$ be a curve with $c(0)=p$, $h(c(\tau))=h(p)$ near 0, and $c'(0)=w\ne0$. Write $c(\tau)-p=\tau w+r(\tau)$ with $|r(\tau)|/|\tau|\to0$. Then $0=h(c(\tau))-h(p)=\tau\,(g\cdot w)+g\cdot r(\tau)+E(\tau)$, where $|E(\tau)|\le\varepsilon\,|c(\tau)-p|\le2\varepsilon|w|\,|\tau|$ once the parameter is near enough 0. Divide by the parameter and let it shrink: $|g\cdot w|\le2\varepsilon|w|$ for every $\varepsilon>0$, so $g\cdot w=0$.
+**Right angle.** Let $`c(\tau)`$ be a curve with $`c(0)=p`$, $`h(c(\tau))=h(p)`$ near 0, and $`c'(0)=w\ne0`$. Write $`c(\tau)-p=\tau w+r(\tau)`$ with $`|r(\tau)|/|\tau|\to0`$. Then $`0=h(c(\tau))-h(p)=\tau\,(g\cdot w)+g\cdot r(\tau)+E(\tau)`$, where $`|E(\tau)|\le\varepsilon\,|c(\tau)-p|\le2\varepsilon|w|\,|\tau|`$ once the parameter is near enough 0. Divide by the parameter and let it shrink: $`|g\cdot w|\le2\varepsilon|w|`$ for every $`\varepsilon>0`$, so $`g\cdot w=0`$.
 
 </details>
 

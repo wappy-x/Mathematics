@@ -38,43 +38,49 @@ The straight line is the interest difference itself, settled at the end of the y
 
 ## The formula
 
-Notation first, in words. The period the contract covers starts at a date written $T_1$, said "T one", and ends at $T_2$. Today's price of one dollar paid on a later date is the **discount factor**, written $D(T)$ with that date in the brackets and said "D of T" ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)).
+Notation first, in words. The period the contract covers starts at a date written $`T_1`$, said "T one", and ends at $`T_2`$. Today's price of one dollar paid on a later date is the **discount factor**, written $`D(T)`$ with that date in the brackets and said "D of T" ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)).
 
-The **year fraction** $\alpha$, said "alpha", is how much of a year the period counts as under the day-count rule the contract names ([Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)); for Kestrel's second year it is 1. Rates are simple: the rate multiplies the year fraction once, and nothing compounds inside the period.
+The **year fraction** $`\alpha`$, said "alpha", is how much of a year the period counts as under the day-count rule the contract names ([Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)); for Kestrel's second year it is 1. Rates are simple: the rate multiplies the year fraction once, and nothing compounds inside the period.
 
 The rate the curve already contains, over that period:
 
-$$G \;=\; \frac{D(T_1)}{D(T_2)}, \qquad F \;=\; \frac{G - 1}{\alpha}$$
+```math
+G \;=\; \frac{D(T_1)}{D(T_2)}, \qquad F \;=\; \frac{G - 1}{\alpha}
+```
 
 **Read it aloud:** a dollar parked from the start of the period to its end grows by the ratio of the two discount factors, and the forward rate is that growth stated as a rate per year.
 
-Three more names. The **notional** $N$ is the amount the rate is applied to, never itself exchanged. $K$ is the fixed rate written into the contract. $L$ is the **fixing**, the benchmark rate read off the screen at $T_1$. Every sign below is for the side that pays $K$ and receives $L$, which is the side a borrower takes; the other side is the same numbers negated.
+Three more names. The **notional** $`N`$ is the amount the rate is applied to, never itself exchanged. $`K`$ is the fixed rate written into the contract. $`L`$ is the **fixing**, the benchmark rate read off the screen at $`T_1`$. Every sign below is for the side that pays $`K`$ and receives $`L`$, which is the side a borrower takes; the other side is the same numbers negated.
 
 The settlement, once the fixing is known:
 
-$$X \;=\; N\,\alpha\,(L - K) \quad\text{due at } T_2, \qquad S \;=\; \frac{N\,\alpha\,(L - K)}{1 + \alpha L} \quad\text{paid at } T_1$$
+```math
+X \;=\; N\,\alpha\,(L - K) \quad\text{due at } T_2, \qquad S \;=\; \frac{N\,\alpha\,(L - K)}{1 + \alpha L} \quad\text{paid at } T_1
+```
 
 **Read it aloud:** the difference in a period's interest between the rate that turned up and the rate that was locked, paid early and therefore shrunk by exactly the growth the money would have earned over the period at the rate that turned up.
 
-The value of an agreement already on the books, at any date before $T_1$:
+The value of an agreement already on the books, at any date before $`T_1`$:
 
-$$V \;=\; N\,\alpha\,D(T_2)\,(F - K) \;=\; N\big[\,D(T_1) - (1 + \alpha K)\,D(T_2)\,\big]$$
+```math
+V \;=\; N\,\alpha\,D(T_2)\,(F - K) \;=\; N\big[\,D(T_1) - (1 + \alpha K)\,D(T_2)\,\big]
+```
 
 **Read it aloud:** the gap between today's forward rate and the contract's rate, turned into money over the period and discounted to today — or, the same number, one dollar owed at the start of the period against a dollar plus locked interest owed at the end.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | the notional: the amount the rate is applied to, never itself exchanged | 1,000,000.00 dollars | every amount scales with it |
-| $\alpha$ | the year fraction: how much of a year the period counts as | 1 | longer period, more interest at stake |
-| $T_1$, $T_2$ | the dates the period starts and ends | one year and two years from today | — |
-| $D(T)$ | the discount factor: today's price of one dollar paid on the date in the brackets | 0.952380952381 and 0.898472596586 | a dearer future dollar means a lower forward rate |
-| $G$ | the growth across the period a dollar earns if parked from $T_1$ to $T_2$ | 1.06 | raises the forward rate in step |
-| $F$ | the forward rate: the rate for the period that today's curve already contains | 6 percent | the contract gains value for the side paying fixed |
-| $K$ | the fixed rate written into the contract, agreed at the start | 6 percent | the fixed payer does worse |
-| $L$ | the fixing: the benchmark rate read off the screen at $T_1$ | 8 percent | the fixed payer is paid more |
-| $X$ | the interest difference, as it would fall due at the end of the period | 20,000.00 dollars | — |
-| $S$ | the settlement actually paid, at the start of the period | 18,518.52 dollars | — |
-| $V$ | what an agreement already on the books is worth today | 0.00 dollars at the fair rate | — |
+| $`N`$ | the notional: the amount the rate is applied to, never itself exchanged | 1,000,000.00 dollars | every amount scales with it |
+| $`\alpha`$ | the year fraction: how much of a year the period counts as | 1 | longer period, more interest at stake |
+| $`T_1`$, $`T_2`$ | the dates the period starts and ends | one year and two years from today | — |
+| $`D(T)`$ | the discount factor: today's price of one dollar paid on the date in the brackets | 0.952380952381 and 0.898472596586 | a dearer future dollar means a lower forward rate |
+| $`G`$ | the growth across the period a dollar earns if parked from $`T_1`$ to $`T_2`$ | 1.06 | raises the forward rate in step |
+| $`F`$ | the forward rate: the rate for the period that today's curve already contains | 6 percent | the contract gains value for the side paying fixed |
+| $`K`$ | the fixed rate written into the contract, agreed at the start | 6 percent | the fixed payer does worse |
+| $`L`$ | the fixing: the benchmark rate read off the screen at $`T_1`$ | 8 percent | the fixed payer is paid more |
+| $`X`$ | the interest difference, as it would fall due at the end of the period | 20,000.00 dollars | — |
+| $`S`$ | the settlement actually paid, at the start of the period | 18,518.52 dollars | — |
+| $`V`$ | what an agreement already on the books is worth today | 0.00 dollars at the fair rate | — |
 
 **Conventions verified 14 Sep 2026.** An FRA is quoted by the two ends of its period in months: a "1 against 4" fixes the rate for a three-month deposit starting in one month, and a "3 against 9" fixes a six-month rate starting in three.
 
@@ -90,7 +96,7 @@ The benchmark itself is not permanent either. The dollar market's fixing was LIB
 - **The fixing is the rate that is actually paid.** Kestrel's own loan will cost the benchmark plus a margin for Kestrel's own credit. The FRA locks the benchmark part. A margin that widens between today and the fixing is not hedged, and shows up as extra interest.
 - **The dates, the day count and the payment rule are named in the contract.** Pay the end-of-period amount at the start without shrinking it first and it is a different deal, worth 1,600.00 dollars more by the end.
 - **Both sides pay.** An FRA is not an option. At a 4 percent fixing Kestrel pays out 19,230.77 dollars and is glad to, because its loan got cheaper by the same amount. Anyone treating it as protection against only one direction has misread it.
-- **The forward rate is a price, not a forecast.** $F$ is the rate that can be locked today, which is a fact about today's quotes. Whether the fixing tends to land above or below it is a separate question this card does not touch.
+- **The forward rate is a price, not a forecast.** $`F`$ is the rate that can be locked today, which is a fact about today's quotes. Whether the fixing tends to land above or below it is a separate question this card does not touch.
 
 ---
 
@@ -112,7 +118,7 @@ Take out a two-year loan today of 952,380.95 dollars, and put exactly that sum o
 
 Nothing today, a million in hand at year one, 1,060,000.00 dollars handed back at year two. That is a one-year loan of a million at 6 percent, and it was arranged with two deposits and no view about the future.
 
-Any other rate for the second year would let someone run this ledger one way and the cheaper alternative the other, for money out of nothing. So 6 percent is the rate, and it is the $F$ in the formula: the two-year growth 1.113 divided by the one-year growth 1.05 is 1.06.
+Any other rate for the second year would let someone run this ledger one way and the cheaper alternative the other, for money out of nothing. So 6 percent is the rate, and it is the $`F`$ in the formula: the two-year growth 1.113 divided by the one-year growth 1.05 is 1.06.
 
 ### Step 2: the fair fixed rate is the one nobody pays for
 
@@ -124,13 +130,15 @@ Now strip the principal out. Kestrel does not want a million dollars at year one
 | borrow the notional over the same period at the contract's 5 percent | +1,000,000.00 | −1,050,000.00 |
 | **net** | **0.00** | **+10,000.00** |
 
-The principals cancel at year one, exactly as the notional does in the real contract, and what is left at year two is the interest difference $N\alpha(F - K)$: 10,000.00 dollars. Today that is worth 10,000.00 × 0.898472596586, which is 8,984.73 dollars, and that is what a contract struck at 5 percent costs the side paying fixed.
+The principals cancel at year one, exactly as the notional does in the real contract, and what is left at year two is the interest difference $`N\alpha(F - K)`$: 10,000.00 dollars. Today that is worth 10,000.00 × 0.898472596586, which is 8,984.73 dollars, and that is what a contract struck at 5 percent costs the side paying fixed.
 
-An agreement on notional $N$ at fixed rate $K$ is therefore worth, today, the same as a package of dated claims worth $N[D(T_1) - (1 + \alpha K)D(T_2)]$. Set that to zero and solve for $K$:
+An agreement on notional $`N`$ at fixed rate $`K`$ is therefore worth, today, the same as a package of dated claims worth $`N[D(T_1) - (1 + \alpha K)D(T_2)]`$. Set that to zero and solve for $`K`$:
 
-$$D(T_1) = (1 + \alpha K)\,D(T_2) \quad\Longrightarrow\quad K = \frac{1}{\alpha}\left(\frac{D(T_1)}{D(T_2)} - 1\right) = F$$
+```math
+D(T_1) = (1 + \alpha K)\,D(T_2) \quad\Longrightarrow\quad K = \frac{1}{\alpha}\left(\frac{D(T_1)}{D(T_2)} - 1\right) = F
+```
 
-Exactly one rate makes the contract free to enter. The value falls steadily as $K$ rises, by $N\alpha D(T_2)$ per unit of rate, and $D(T_2)$ is a price and so is positive: a strictly falling line crosses zero once. The crossing is at $F$, and every other fixed rate costs one side money up front.
+Exactly one rate makes the contract free to enter. The value falls steadily as $`K`$ rises, by $`N\alpha D(T_2)`$ per unit of rate, and $`D(T_2)`$ is a price and so is positive: a strictly falling line crosses zero once. The crossing is at $`F`$, and every other fixed rate costs one side money up front.
 
 The exception is a contract with nothing in it: if the notional or the year fraction is zero, every fixed rate gives a value of zero and no rate can be recovered from the cashflows.
 
@@ -140,16 +148,18 @@ This is the fair-rate test, and the check runs it twice. The first run uses the 
 
 The interest difference belongs at the end of the period. Kestrel's extra interest at an 8 percent fixing is 20,000.00 dollars, and it falls due at year two with the rest of the loan.
 
-The market pays it a year earlier, at $T_1$, as soon as the fixing is known. Paying the same amount early would be a gift, so the amount is shrunk first — and the right shrinking factor is not the curve's, it is the fixing's.
+The market pays it a year earlier, at $`T_1`$, as soon as the fixing is known. Paying the same amount early would be a gift, so the amount is shrunk first — and the right shrinking factor is not the curve's, it is the fixing's.
 
 The party receiving 18,518.52 dollars at year one can deposit it at the rate that just fixed, 8 percent, and hold exactly 20,000.00 dollars at year two. One year earlier, one year of interest smaller, at the rate the year is actually paying.
 
 <details>
 <summary>The algebra behind the early payment</summary>
 
-Let the end-of-period amount be $X = N\alpha(L - K)$ and let $S$ be the amount paid at $T_1$ instead. For the two to be the same deal, $S$ must grow into $X$ over the period at the rate now known to apply, which is $L$:
-$$S\,(1 + \alpha L) = X \quad\Longrightarrow\quad S = \frac{N\alpha(L - K)}{1 + \alpha L}.$$
-Nothing here assumes $X$ is positive. If the fixing comes in below $K$, both $X$ and $S$ are negative and the same growth argument runs with the signs reversed: borrowing and lending use the same factor. The one thing the step needs is $1 + \alpha L > 0$, which is the statement that a dollar deposited over the period does not vanish. At deeply negative rates it can fail, and then the early-settlement rule has nothing to say.
+Let the end-of-period amount be $`X = N\alpha(L - K)`$ and let $`S`$ be the amount paid at $`T_1`$ instead. For the two to be the same deal, $`S`$ must grow into $`X`$ over the period at the rate now known to apply, which is $`L`$:
+
+$`\displaystyle S\,(1 + \alpha L) = X \quad\Longrightarrow\quad S = \frac{N\alpha(L - K)}{1 + \alpha L}.`$
+
+Nothing here assumes $`X`$ is positive. If the fixing comes in below $`K`$, both $`X`$ and $`S`$ are negative and the same growth argument runs with the signs reversed: borrowing and lending use the same factor. The one thing the step needs is $`1 + \alpha L > 0`$, which is the statement that a dollar deposited over the period does not vanish. At deeply negative rates it can fail, and then the early-settlement rule has nothing to say.
 
 </details>
 
@@ -160,15 +170,17 @@ Between the trade and the fixing, the curve moves and the agreement stops being 
 <details>
 <summary>Detailed proof: the value of an off-market fixed rate</summary>
 
-Take a contract that receives the fixing and pays a fixed rate $K$, on notional $N$, over the period from $T_1$ to $T_2$. Under one curve with no defaults and no spread between borrowing and lending, the fixing is known in advance as $F$. So the end-of-period payment is the certain amount $N\alpha(F - K)$, and its price today is that amount times $D(T_2)$. That is the first form.
+Take a contract that receives the fixing and pays a fixed rate $`K`$, on notional $`N`$, over the period from $`T_1`$ to $`T_2`$. Under one curve with no defaults and no spread between borrowing and lending, the fixing is known in advance as $`F`$. So the end-of-period payment is the certain amount $`N\alpha(F - K)`$, and its price today is that amount times $`D(T_2)`$. That is the first form.
 
-Substitute $\alpha F = D(T_1)/D(T_2) - 1$ from Step 1:
-$$N\alpha D(T_2)(F - K) = N\Big[D(T_2)\Big(\tfrac{D(T_1)}{D(T_2)} - 1\Big) - \alpha K D(T_2)\Big] = N\big[D(T_1) - (1 + \alpha K)D(T_2)\big].$$
-That is the second form: a claim to one dollar per unit of notional at $T_1$, against a debt of one dollar plus the locked interest at $T_2$.
+Substitute $`\alpha F = D(T_1)/D(T_2) - 1`$ from Step 1:
 
-The start-paid version has the same value. Its payment $S = X/(1 + \alpha F)$ falls at $T_1$, so its price today is $D(T_1)S$, and since $1 + \alpha F = D(T_1)/D(T_2)$ that is $D(T_2)X$ again. The choice of payment date changes nothing, as long as the amount is adjusted with it.
+$`\displaystyle N\alpha D(T_2)(F - K) = N\Big[D(T_2)\Big(\tfrac{D(T_1)}{D(T_2)} - 1\Big) - \alpha K D(T_2)\Big] = N\big[D(T_1) - (1 + \alpha K)D(T_2)\big].`$
 
-At the fixing date itself the same expression, with $D(T_1) = 1$ and $D(T_2) = 1/(1 + \alpha L)$, returns 18,518.52 dollars: the mark to market (the agreement's value at that day's prices) has converged on the settlement amount. The check computes it both ways and compares.
+That is the second form: a claim to one dollar per unit of notional at $`T_1`$, against a debt of one dollar plus the locked interest at $`T_2`$.
+
+The start-paid version has the same value. Its payment $`S = X/(1 + \alpha F)`$ falls at $`T_1`$, so its price today is $`D(T_1)S`$, and since $`1 + \alpha F = D(T_1)/D(T_2)`$ that is $`D(T_2)X`$ again. The choice of payment date changes nothing, as long as the amount is adjusted with it.
+
+At the fixing date itself the same expression, with $`D(T_1) = 1`$ and $`D(T_2) = 1/(1 + \alpha L)`$, returns 18,518.52 dollars: the mark to market (the agreement's value at that day's prices) has converged on the settlement amount. The check computes it both ways and compares.
 
 </details>
 
@@ -184,15 +196,15 @@ Kestrel's period: 1,000,000.00 dollars, the second year, year fraction 1, locked
 | --- | --- | --- |
 | the one-year quote | a dollar comes back as | 1.05 |
 | the two-year quote | a dollar comes back as | 1.113 |
-| $D(T_1)$ | 1 ÷ 1.05 | 0.952380952381 |
-| $D(T_2)$ | 1 ÷ 1.113 | 0.898472596586 |
-| growth across the second year, $G$ | 1.113 ÷ 1.05 | 1.06 |
-| the forward rate, $F$ | (1.06 − 1) ÷ 1 | **6 percent** |
-| interest locked in, $N\alpha K$ | 1,000,000 × 1 × 0.06 | **60,000.00** |
-| the fixing lands at | $L$ | 8 percent |
-| interest at the fixing, $N\alpha L$ | 1,000,000 × 1 × 0.08 | 80,000.00 |
-| the difference at year 2, $X$ | 80,000.00 − 60,000.00 | **20,000.00** |
-| the settlement at year 1, $S$ | 20,000.00 ÷ 1.08 | **18,518.52** |
+| $`D(T_1)`$ | 1 ÷ 1.05 | 0.952380952381 |
+| $`D(T_2)`$ | 1 ÷ 1.113 | 0.898472596586 |
+| growth across the second year, $`G`$ | 1.113 ÷ 1.05 | 1.06 |
+| the forward rate, $`F`$ | (1.06 − 1) ÷ 1 | **6 percent** |
+| interest locked in, $`N\alpha K`$ | 1,000,000 × 1 × 0.06 | **60,000.00** |
+| the fixing lands at | $`L`$ | 8 percent |
+| interest at the fixing, $`N\alpha L`$ | 1,000,000 × 1 × 0.08 | 80,000.00 |
+| the difference at year 2, $`X`$ | 80,000.00 − 60,000.00 | **20,000.00** |
+| the settlement at year 1, $`S`$ | 20,000.00 ÷ 1.08 | **18,518.52** |
 | borrowed at year 1, net of it | 1,000,000.00 − 18,518.52 | 981,481.48 |
 | repaid at year 2 | 981,481.48 × 1.08 | **1,060,000.00** |
 
@@ -235,12 +247,12 @@ An agreement struck at 5 percent instead, on today's unchanged curve, is worth 8
 
 | Sensitivity | What it is | In our example |
 | --- | --- | --- |
-| value per basis point on the forward | $N\alpha D(T_2)$ × 0.0001, the slope at the struck rate; a basis point is one hundredth of a percent | 89.85 |
+| value per basis point on the forward | $`N\alpha D(T_2)`$ × 0.0001, the slope at the struck rate; a basis point is one hundredth of a percent | 89.85 |
 | value per basis point on the fixed rate | the same size, the other sign | −89.85 |
-| curvature in the forward rate | slight: straight in $F$ at a frozen $D(T_2)$, but moving $F$ moves $D(T_2)$ too | each 50 basis point step is worth about 43 less than the last |
+| curvature in the forward rate | slight: straight in $`F`$ at a frozen $`D(T_2)`$, but moving $`F`$ moves $`D(T_2)`$ too | each 50 basis point step is worth about 43 less than the last |
 | the settlement's own curvature | a fixing one percentage point above the locked rate pays 9,345.79; one point below costs 9,523.81 | a gap of 178.02 |
 
-Both bends have one cause: the rate that moves also moves the factor that discounts. Raise the forward and the gap widens while $D(T_2)$ cheapens, so each 50 basis point step adds a little less than the last. Raise the fixing and the settlement grows while its own discount shrinks it, so receipts come out slightly smaller than payments. Tiny here. At scale it is one reason a futures contract on the same rate, settled daily and paying the difference straight, is not an FRA.
+Both bends have one cause: the rate that moves also moves the factor that discounts. Raise the forward and the gap widens while $`D(T_2)`$ cheapens, so each 50 basis point step adds a little less than the last. Raise the fixing and the settlement grows while its own discount shrinks it, so receipts come out slightly smaller than payments. Tiny here. At scale it is one reason a futures contract on the same rate, settled daily and paying the difference straight, is not an FRA.
 
 ---
 
@@ -660,12 +672,12 @@ The two outputs match line for line.
 
 Lean proves the card's pricing and settlement rules for all values that meet the conditions below, and the worked numbers exactly.
 
-- Take a positive $D(T_2)$, and a notional and year fraction that are not zero. Then the agreement is worth nothing today exactly when $K$ equals $F$.
-- Suppose $1 + \alpha L$ is above zero. Then a borrower who takes $S$ at $T_1$ and borrows the rest at $L$ repays exactly $N(1 + \alpha K)$.
-- Take positive $D(T_1)$ and $D(T_2)$, and a year fraction that is not zero. Then the two forms of $V$ agree.
-- Under the same conditions, $X$ paid at $T_1$ instead is shrunk by $1 + \alpha F$. Then it has the same value today as $X$ paid at $T_2$.
-- Suppose $1 + \alpha L$ is above zero. Then $S$, deposited at $L$ over the period, grows to exactly $X$.
-- Take the fixing date, with $1 + \alpha L$ above zero. Then $V$, priced with $D(T_1) = 1$ and $D(T_2) = 1/(1 + \alpha L)$, equals $S$.
+- Take a positive $`D(T_2)`$, and a notional and year fraction that are not zero. Then the agreement is worth nothing today exactly when $`K`$ equals $`F`$.
+- Suppose $`1 + \alpha L`$ is above zero. Then a borrower who takes $`S`$ at $`T_1`$ and borrows the rest at $`L`$ repays exactly $`N(1 + \alpha K)`$.
+- Take positive $`D(T_1)`$ and $`D(T_2)`$, and a year fraction that is not zero. Then the two forms of $`V`$ agree.
+- Under the same conditions, $`X`$ paid at $`T_1`$ instead is shrunk by $`1 + \alpha F`$. Then it has the same value today as $`X`$ paid at $`T_2`$.
+- Suppose $`1 + \alpha L`$ is above zero. Then $`S`$, deposited at $`L`$ over the period, grows to exactly $`X`$.
+- Take the fixing date, with $`1 + \alpha L`$ above zero. Then $`V`$, priced with $`D(T_1) = 1`$ and $`D(T_2) = 1/(1 + \alpha L)`$, equals $`S`$.
 - The worked numbers hold exactly in fractions: the 6 percent forward, the ledger, the settlement, the repayment and the mistakes table.
 
 The decimals, the value and sensitivity tables, the root finder and the handbook's 1x4 example are left to the Python and Rust checks.
@@ -816,7 +828,7 @@ example : (1000000 : ℚ) * (183 / 360) * (8 / 100 - 6 / 100) = 30500 / 3 := by 
 > - **Flatten the curve.** Set `G2` to `1.1025`, which is 1.05 twice over. The forward rate for the second year becomes 5 percent, the same as the first, and the ledger assert stops the program because the two deposits no longer build a 6 percent loan.
 > - **Settle at the wrong rate.** In `settle`, divide by `1.0 + alpha * strike` instead of `1.0 + alpha * fixing`. Every row of the hedge table still prints, but the repayments drift off 1,060,000.00 and the sweep assert stops it.
 > - **Drop the year fraction.** In `value`, use `1.0 + strike` in place of `1.0 + A * strike`. With alpha at 1 nothing visible changes; set `A` to `0.5` as well and the root finder and the curve part company.
-> - **Make the rate negative.** Set `FIX` to `-0.02`. The settlement is a payment from the dairy, the hedge still lands on 1,060,000.00, and every assert holds: none of the algebra needed a positive rate. Set it to `-1.0` instead and the program stops on a division by zero, which is the boundary $1 + \alpha L > 0$ arriving.
+> - **Make the rate negative.** Set `FIX` to `-0.02`. The settlement is a payment from the dairy, the hedge still lands on 1,060,000.00, and every assert holds: none of the algebra needed a positive rate. Set it to `-1.0` instead and the program stops on a division by zero, which is the boundary $`1 + \alpha L > 0`$ arriving.
 
 ---
 

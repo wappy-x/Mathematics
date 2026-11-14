@@ -38,54 +38,62 @@ Orange: North. Teal: South. Both climb about 50 cents over the year, and neither
 
 Notation first.
 
-- A small $t$ under a price names the day: $N_t$ is North's price on day $t$, $S_t$ South's.
-- A capital delta, $\Delta$, means "change since yesterday": $\Delta N_t = N_t - N_{t-1}$.
-- A hat marks a value fitted from data; a bar marks an average over the record, so $\bar N$ is North's average price.
+- A small $`t`$ under a price names the day: $`N_t`$ is North's price on day $`t`$, $`S_t`$ South's.
+- A capital delta, $`\Delta`$, means "change since yesterday": $`\Delta N_t = N_t - N_{t-1}`$.
+- A hat marks a value fitted from data; a bar marks an average over the record, so $`\bar N`$ is North's average price.
 - A series **wanders**, or is **integrated of order one**, written I(1), when its daily changes are steady but its level has no home ([Unit roots](04-differencing-and-unit-roots.md)).
 - A series is **steady**, written I(0), when it keeps returning to a fixed level with a fixed spread ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)).
 
-**The definition.** Two I(1) series are cointegrated when, for some fixed $\beta$ and $c$,
+**The definition.** Two I(1) series are cointegrated when, for some fixed $`\beta`$ and $`c`$,
 
-$$z_t = N_t - c - \beta S_t \quad \text{is I(0).}$$
+```math
+z_t = N_t - c - \beta S_t \quad \text{is I(0).}
+```
 
 **Read it aloud:** take North's price, remove a fixed premium and a fixed multiple of South's price, and what is left no longer wanders.
 
-**Engle–Granger, step one: fit the tie.** Least squares ([Least squares](../09-Regression/01-least-squares-regression.md)) fits the line $N_t = c + \beta S_t + z_t$ over the $n$ = 365 days:
+**Engle–Granger, step one: fit the tie.** Least squares ([Least squares](../09-Regression/01-least-squares-regression.md)) fits the line $`N_t = c + \beta S_t + z_t`$ over the $`n`$ = 365 days:
 
-$$\hat\beta = \frac{\sum_t (S_t - \bar S)(N_t - \bar N)}{\sum_t (S_t - \bar S)^2}, \qquad \hat c = \bar N - \hat\beta\,\bar S, \qquad \hat z_t = N_t - \hat c - \hat\beta S_t .$$
+```math
+\hat\beta = \frac{\sum_t (S_t - \bar S)(N_t - \bar N)}{\sum_t (S_t - \bar S)^2}, \qquad \hat c = \bar N - \hat\beta\,\bar S, \qquad \hat z_t = N_t - \hat c - \hat\beta S_t .
+```
 
 **Read it aloud:** the ratio is how far North moves with South, divided by how far South moves on its own; the leftover is North's price less the fitted premium and the fitted share of South.
 
-**Engle–Granger, step two: test the leftover.** Regress each day's change in the leftover on yesterday's leftover, with $e_t$ the part of the change the pull does not explain:
+**Engle–Granger, step two: test the leftover.** Regress each day's change in the leftover on yesterday's leftover, with $`e_t`$ the part of the change the pull does not explain:
 
-$$\Delta \hat z_t = \rho\, \hat z_{t-1} + e_t, \qquad \tau = \frac{\hat\rho}{\operatorname{se}(\hat\rho)} .$$
+```math
+\Delta \hat z_t = \rho\, \hat z_{t-1} + e_t, \qquad \tau = \frac{\hat\rho}{\mathrm{se}(\hat\rho)} .
+```
 
 **Read it aloud:** when yesterday's gap was wide, does today's change narrow it, and by how many standard errors is that pull away from zero?
 
-A standard error, se, is the typical size of the error in a fitted value. For $\hat\rho$ it is $\operatorname{se}(\hat\rho) = \sqrt{\big(\sum_t \hat e_t^2/(m-1)\big) \big/ \sum_t \hat z_{t-1}^2}$, over the $m = n - 1$ daily changes, with $\hat e_t$ the fitted values of $e_t$. "No tie" is rejected when $\tau$ falls below the 5% cutoff, the value unrelated pairs fall below only 5% of the time: **−3.353** for two series and 364 changes, from MacKinnon's published table. The one-series cutoff, **−2.870**, is the wrong one here.
+A standard error, se, is the typical size of the error in a fitted value. For $`\hat\rho`$ it is $`\mathrm{se}(\hat\rho) = \sqrt{\big(\sum_t \hat e_t^2/(m-1)\big) \big/ \sum_t \hat z_{t-1}^2}`$, over the $`m = n - 1`$ daily changes, with $`\hat e_t`$ the fitted values of $`e_t`$. "No tie" is rejected when $`\tau`$ falls below the 5% cutoff, the value unrelated pairs fall below only 5% of the time: **−3.353** for two series and 364 changes, from MacKinnon's published table. The one-series cutoff, **−2.870**, is the wrong one here.
 
 **The error-correction model.** Each station's daily change answers yesterday's gap:
 
-$$\Delta N_t = \alpha_N\, \hat z_{t-1} + \varepsilon_{N,t}, \qquad \Delta S_t = \alpha_S\, \hat z_{t-1} + \varepsilon_{S,t} .$$
+```math
+\Delta N_t = \alpha_N\, \hat z_{t-1} + \varepsilon_{N,t}, \qquad \Delta S_t = \alpha_S\, \hat z_{t-1} + \varepsilon_{S,t} .
+```
 
 **Read it aloud:** tomorrow North moves by its own pull times today's gap, plus news; South likewise, with its own pull.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N_t$, $S_t$ | North's and South's price of regular on day $t$, dollars per gallon; $\bar N$, $\bar S$ their averages | $3.46 and $3.40 on day 0 | both up together: leftover unchanged |
-| $t$, $n$, $m$ | day number; days in the record; daily changes | 0 to 364; 365; 364 | a sharper ratio, a fairer test |
-| $\beta$, $b$ | the tie ratio: dollars North moves, in the long run, per dollar South moves; $b$ any trial ratio | built 1; fitted 0.9931 | North carries more of South's wander |
-| $c$ | the premium: North's usual price above the tie | built $0.06; fitted $0.0806 | moves the level, not the pull |
-| $z_t$ | the leftover or gap, $N_t - c - \beta S_t$ | −$0.05 to $0.11 at the plotted days | North is dear against South |
-| $\Delta$ | change since yesterday | $\Delta N_t$, $\Delta \hat z_t$ | — |
-| $\rho$ | the daily pull-back: minus the share of yesterday's gap removed today (the slope called $\gamma$ on [Unit roots](04-differencing-and-unit-roots.md), which keeps $\rho$ for the carry-over, here $\phi$) | fitted −0.1621 | more negative: gaps close faster |
-| $\phi$ | the share of a gap still there tomorrow, $1 + \rho$ (the carry-over of [Autoregression](02-ar-models.md)) | built 0.85; fitted 0.8379 | towards 1: gaps linger; at 1 there is no tie |
-| $e_t$, $\varepsilon$, $u_t$ | news: the part of a day's change the pull does not explain; $u_t$ the gap's news, in the proof | — | — |
-| $R^2$ | the share of one series' movement that a fitted line appears to explain, from 0 to 1 | median 0.17 over 4,000 unrelated pairs; 0.67 for the unrelated price of Step 3 | nearer 1: the line looks better, which for two wandering series proves nothing |
-| $\operatorname{se}$ | standard error: the typical size of the error in a fitted value | $\operatorname{se}(\hat\rho)$ = 0.0288 | the fit is less sure |
-| $\tau$, $\tau_{5\%}$ | the test statistic; the cutoff it must fall below | −5.64; −3.353 | more negative: stronger evidence of a tie |
-| $\alpha_N$, $\alpha_S$ | each station's pull: its move per dollar of yesterday's gap | built −0.12, 0.03; fitted −0.1268, 0.0356 | that station closes more of the gap |
-| $\eta$, $v$, $w$ | first folded proof only: South's daily change, its variance, the leftover's variance | — | — |
+| $`N_t`$, $`S_t`$ | North's and South's price of regular on day $`t`$, dollars per gallon; $`\bar N`$, $`\bar S`$ their averages | $3.46 and $3.40 on day 0 | both up together: leftover unchanged |
+| $`t`$, $`n`$, $`m`$ | day number; days in the record; daily changes | 0 to 364; 365; 364 | a sharper ratio, a fairer test |
+| $`\beta`$, $`b`$ | the tie ratio: dollars North moves, in the long run, per dollar South moves; $`b`$ any trial ratio | built 1; fitted 0.9931 | North carries more of South's wander |
+| $`c`$ | the premium: North's usual price above the tie | built $0.06; fitted $0.0806 | moves the level, not the pull |
+| $`z_t`$ | the leftover or gap, $`N_t - c - \beta S_t`$ | −$0.05 to $0.11 at the plotted days | North is dear against South |
+| $`\Delta`$ | change since yesterday | $`\Delta N_t`$, $`\Delta \hat z_t`$ | — |
+| $`\rho`$ | the daily pull-back: minus the share of yesterday's gap removed today (the slope called $`\gamma`$ on [Unit roots](04-differencing-and-unit-roots.md), which keeps $`\rho`$ for the carry-over, here $`\phi`$) | fitted −0.1621 | more negative: gaps close faster |
+| $`\phi`$ | the share of a gap still there tomorrow, $`1 + \rho`$ (the carry-over of [Autoregression](02-ar-models.md)) | built 0.85; fitted 0.8379 | towards 1: gaps linger; at 1 there is no tie |
+| $`e_t`$, $`\varepsilon`$, $`u_t`$ | news: the part of a day's change the pull does not explain; $`u_t`$ the gap's news, in the proof | — | — |
+| $`R^2`$ | the share of one series' movement that a fitted line appears to explain, from 0 to 1 | median 0.17 over 4,000 unrelated pairs; 0.67 for the unrelated price of Step 3 | nearer 1: the line looks better, which for two wandering series proves nothing |
+| $`\mathrm{se}`$ | standard error: the typical size of the error in a fitted value | $`\mathrm{se}(\hat\rho)`$ = 0.0288 | the fit is less sure |
+| $`\tau`$, $`\tau_{5\%}`$ | the test statistic; the cutoff it must fall below | −5.64; −3.353 | more negative: stronger evidence of a tie |
+| $`\alpha_N`$, $`\alpha_S`$ | each station's pull: its move per dollar of yesterday's gap | built −0.12, 0.03; fitted −0.1268, 0.0356 | that station closes more of the gap |
+| $`\eta`$, $`v`$, $`w`$ | first folded proof only: South's daily change, its variance, the leftover's variance | — | — |
 
 ### When it holds
 
@@ -114,23 +122,27 @@ How precise is 0.9931? Over 500 simulated years of the same two stations, the fi
 <details>
 <summary>Detailed proof: the tying ratio is unique, and least squares homes in on it</summary>
 
-Model South as a random walk: $S_t = S_0 + \eta_1 + \dots + \eta_t$, with independent daily changes $\eta$ of variance $v$. The variance of $S_t$ is then $t v$, growing with $t$. Let $N_t = c + \beta S_t + z_t$, with $z_t$ steady (its variance is a fixed number $w$) and independent of the $\eta$.
+Model South as a random walk: $`S_t = S_0 + \eta_1 + \dots + \eta_t`$, with independent daily changes $`\eta`$ of variance $`v`$. The variance of $`S_t`$ is then $`t v`$, growing with $`t`$. Let $`N_t = c + \beta S_t + z_t`$, with $`z_t`$ steady (its variance is a fixed number $`w`$) and independent of the $`\eta`$.
 
-For any trial ratio $b$: $N_t - b S_t = c + (\beta - b) S_t + z_t$. Its variance is $(\beta - b)^2\, t v + w$. When $b \neq \beta$ this grows without limit, so the mix wanders. Only at $b = \beta$ is it $c + z_t$, which is steady. The ratio is unique.
+For any trial ratio $`b`$: $`N_t - b S_t = c + (\beta - b) S_t + z_t`$. Its variance is $`(\beta - b)^2\, t v + w`$. When $`b \neq \beta`$ this grows without limit, so the mix wanders. Only at $`b = \beta`$ is it $`c + z_t`$, which is steady. The ratio is unique.
 
-Least squares minimises $\sum_t \big((N_t - \bar N) - b(S_t - \bar S)\big)^2$. Each term splits into a wandering part, $(\beta - b)(S_t - \bar S)$, and a steady part, $z_t - \bar z$, where $\bar z$ is the leftover's average. Squaring and adding gives three totals:
-$$(\beta - b)^2 \sum_t (S_t - \bar S)^2 \;+\; 2(\beta - b) \sum_t (S_t - \bar S)(z_t - \bar z) \;+\; \sum_t (z_t - \bar z)^2 .$$
-The last does not depend on $b$, so it cannot move the fit. Setting the slope of the misfit in $b$ to zero gives
-$$\hat\beta - \beta = \frac{\sum_t (S_t - \bar S)(z_t - \bar z)}{\sum_t (S_t - \bar S)^2} .$$
-The bottom grows like $n^2$, since each of its $n$ terms has a size that grows with $n$. The top grows only like $n$. Its $n$ products each have a size of about $\sqrt n$, but their signs follow $z$, which keeps crossing its level. So they largely cancel, and their sum grows like $\sqrt n$ times $\sqrt n$. The fitted ratio's error therefore shrinks like $n / n^2 = 1/n$, faster than the $1/\sqrt n$ of an ordinary mean. This is **superconsistency**; Hamilton's cointegration chapter gives the full argument.
+Least squares minimises $`\sum_t \big((N_t - \bar N) - b(S_t - \bar S)\big)^2`$. Each term splits into a wandering part, $`(\beta - b)(S_t - \bar S)`$, and a steady part, $`z_t - \bar z`$, where $`\bar z`$ is the leftover's average. Squaring and adding gives three totals:
+
+$`\displaystyle (\beta - b)^2 \sum_t (S_t - \bar S)^2 \;+\; 2(\beta - b) \sum_t (S_t - \bar S)(z_t - \bar z) \;+\; \sum_t (z_t - \bar z)^2 .`$
+
+The last does not depend on $`b`$, so it cannot move the fit. Setting the slope of the misfit in $`b`$ to zero gives
+
+$`\displaystyle \hat\beta - \beta = \frac{\sum_t (S_t - \bar S)(z_t - \bar z)}{\sum_t (S_t - \bar S)^2} .`$
+
+The bottom grows like $`n^2`$, since each of its $`n`$ terms has a size that grows with $`n`$. The top grows only like $`n`$. Its $`n`$ products each have a size of about $`\sqrt n`$, but their signs follow $`z`$, which keeps crossing its level. So they largely cancel, and their sum grows like $`\sqrt n`$ times $`\sqrt n`$. The fitted ratio's error therefore shrinks like $`n / n^2 = 1/n`$, faster than the $`1/\sqrt n`$ of an ordinary mean. This is **superconsistency**; Hamilton's cointegration chapter gives the full argument.
 
 </details>
 
 ### Step 2: test the leftover for a pull back
 
-A steady leftover is pulled towards its level: if North is 10 cents too dear today, the gap tends to fall tomorrow. So regress each day's change in the leftover on the day before's leftover. A tie shows as a negative slope $\rho$. No tie shows as $\rho$ near zero: yesterday's gap says nothing about today's change.
+A steady leftover is pulled towards its level: if North is 10 cents too dear today, the gap tends to fall tomorrow. So regress each day's change in the leftover on the day before's leftover. A tie shows as a negative slope $`\rho`$. No tie shows as $`\rho`$ near zero: yesterday's gap says nothing about today's change.
 
-The stations were built so that 15% of each gap closes each day, $\phi$ = 0.85. The fit gives $\hat\rho$ = −0.1621 with standard error 0.0288, a fitted $\phi$ of 0.8379. The statistic is $\tau$ = −0.1621 / 0.0288 = −5.64, far below −3.353. The pair is judged tied.
+The stations were built so that 15% of each gap closes each day, $`\phi`$ = 0.85. The fit gives $`\hat\rho`$ = −0.1621 with standard error 0.0288, a fitted $`\phi`$ of 0.8379. The statistic is $`\tau`$ = −0.1621 / 0.0288 = −5.64, far below −3.353. The pair is judged tied.
 
 This is the unit-root test of [Unit roots](04-differencing-and-unit-roots.md), run on the leftover, with a different cutoff.
 
@@ -138,9 +150,9 @@ This is the unit-root test of [Unit roots](04-differencing-and-unit-roots.md), r
 
 Step one chose the line that makes the leftover as small and tidy as possible, for any two series, tied or not. So two unrelated wanderers still give a leftover that looks steadier than either, and the test must be judged against what fitting alone produces.
 
-The code builds 4,000 pairs of unrelated random walks of 365 days, runs both steps on each, and records $\tau$. The value that 5% of them fall below is −3.307, close to MacKinnon's −3.353. Judged at −3.353, 4.58% of the unrelated pairs pass (standard error 0.33 points): within simulation noise of 5%. Judged at the one-series cutoff, −2.870, 14.77% pass: nearly three times the promised false-alarm rate.
+The code builds 4,000 pairs of unrelated random walks of 365 days, runs both steps on each, and records $`\tau`$. The value that 5% of them fall below is −3.307, close to MacKinnon's −3.353. Judged at −3.353, 4.58% of the unrelated pairs pass (standard error 0.33 points): within simulation noise of 5%. Judged at the one-series cutoff, −2.870, 14.77% pass: nearly three times the promised false-alarm rate.
 
-The fitting fools the eye too. Across the 4,000 unrelated pairs the median $R^2$, the share of one series' movement the line appears to explain, is 0.17: **spurious regression**, named by Granger and Newbold in 1974. One unrelated price, picked to show the trap, explains 67% of North's movement at a ratio of 0.72. Its $\tau$ is −3.20: past the one-series cutoff, short of the right one. The two leftovers, side by side:
+The fitting fools the eye too. Across the 4,000 unrelated pairs the median $`R^2`$, the share of one series' movement the line appears to explain, is 0.17: **spurious regression**, named by Granger and Newbold in 1974. One unrelated price, picked to show the trap, explains 67% of North's movement at a ratio of 0.72. Its $`\tau`$ is −3.20: past the one-series cutoff, short of the right one. The two leftovers, side by side:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -156,16 +168,18 @@ Orange: North against South, crossing zero every few weeks. Teal: North against 
 
 ### Step 4: the error-correction model says who closes the gap
 
-The test says a gap closes; the error-correction model says who closes it. Regress North's daily change on yesterday's leftover, then South's. The fitted pulls are $\alpha_N$ = −0.1268 (standard error 0.0353) and $\alpha_S$ = 0.0356 (standard error 0.0342). North's pull is 3.6 standard errors from zero: when North is dear, North cuts. South's is one standard error from zero: one year cannot tell it from no pull at all, though the build gave it 0.03. These standard errors are the ordinary ones, since the leftover they lean on is steady.
+The test says a gap closes; the error-correction model says who closes it. Regress North's daily change on yesterday's leftover, then South's. The fitted pulls are $`\alpha_N`$ = −0.1268 (standard error 0.0353) and $`\alpha_S`$ = 0.0356 (standard error 0.0342). North's pull is 3.6 standard errors from zero: when North is dear, North cuts. South's is one standard error from zero: one year cannot tell it from no pull at all, though the build gave it 0.03. These standard errors are the ordinary ones, since the leftover they lean on is steady.
 
-The two pulls rebuild step two exactly. The leftover's change is North's change less $\hat\beta$ times South's, so its pull is $\alpha_N - \hat\beta\,\alpha_S$ = −0.1268 − 0.9931 × 0.0356 = −0.162, the $\hat\rho$ of step two. The code prints both: they agree to four places.
+The two pulls rebuild step two exactly. The leftover's change is North's change less $`\hat\beta`$ times South's, so its pull is $`\alpha_N - \hat\beta\,\alpha_S`$ = −0.1268 − 0.9931 × 0.0356 = −0.162, the $`\hat\rho`$ of step two. The code prints both: they agree to four places.
 
 <details>
 <summary>Detailed proof: pulls of the right sign make the gap steady</summary>
 
-Suppose each change is a pull on yesterday's gap plus news: $\Delta N_t = \alpha_N z_{t-1} + \varepsilon_{N,t}$ and $\Delta S_t = \alpha_S z_{t-1} + \varepsilon_{S,t}$, with $z_t = N_t - c - \beta S_t$. Subtract $\beta$ times the second from the first. The premium $c$ does not change, so $\Delta z_t = (\alpha_N - \beta\alpha_S)\,z_{t-1} + (\varepsilon_{N,t} - \beta\varepsilon_{S,t})$, that is
-$$z_t = \phi\, z_{t-1} + u_t, \qquad \phi = 1 + \alpha_N - \beta\alpha_S,$$
-with $u_t$ the combined news. That is an AR(1), an autoregression of order one, with carry-over $\phi$, which is steady exactly when $-1 < \phi < 1$ ([Autoregression](02-ar-models.md)). Here $\phi = 1 - 0.12 - 0.03 = 0.85$. The wholesale news enters both stations equally and cancels in $u_t$ when $\beta = 1$: Step 0 in symbols. So pulls of the right sign, not too strong, produce a cointegrated pair.
+Suppose each change is a pull on yesterday's gap plus news: $`\Delta N_t = \alpha_N z_{t-1} + \varepsilon_{N,t}`$ and $`\Delta S_t = \alpha_S z_{t-1} + \varepsilon_{S,t}`$, with $`z_t = N_t - c - \beta S_t`$. Subtract $`\beta`$ times the second from the first. The premium $`c`$ does not change, so $`\Delta z_t = (\alpha_N - \beta\alpha_S)\,z_{t-1} + (\varepsilon_{N,t} - \beta\varepsilon_{S,t})`$, that is
+
+$`\displaystyle z_t = \phi\, z_{t-1} + u_t, \qquad \phi = 1 + \alpha_N - \beta\alpha_S,`$
+
+with $`u_t`$ the combined news. That is an AR(1), an autoregression of order one, with carry-over $`\phi`$, which is steady exactly when $`-1 < \phi < 1`$ ([Autoregression](02-ar-models.md)). Here $`\phi = 1 - 0.12 - 0.03 = 0.85`$. The wholesale news enters both stations equally and cancels in $`u_t`$ when $`\beta = 1`$: Step 0 in symbols. So pulls of the right sign, not too strong, produce a cointegrated pair.
 
 The converse, that every cointegrated pair has an error-correction form, is the **Granger representation theorem**, proved in Engle and Granger (1987). It needs the moving-average algebra of [Moving average and ARMA](03-ma-and-arma.md) in two dimensions and is stated here, not proved.
 
@@ -185,22 +199,22 @@ First, step two on one week, small enough to do on paper. The leftover is in cen
 | today's changes | days 1 to 6 | −1, −2, 1, −2, −1, 1 |
 | sum of gap × change | −4 − 6 + 1 − 4 + 0 − 1 | −14 |
 | sum of gap squared | 16 + 9 + 1 + 4 + 0 + 1 | 31 |
-| **fitted pull-back** $\hat\rho$ | −14 / 31 | **−0.4516** |
+| **fitted pull-back** $`\hat\rho`$ | −14 / 31 | **−0.4516** |
 
 About 45% of each gap closed each day that week; six changes are far too few for a verdict. The year, from the code:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| step one: ratio | least squares over 365 days | $\hat\beta$ = 0.9931 |
-| step one: premium | $\bar N - \hat\beta \bar S$ | $\hat c$ = $0.0806 |
-| step two: pull-back | $\Delta \hat z_t$ on $\hat z_{t-1}$, 364 changes | $\hat\rho$ = −0.1621, se 0.0288 |
-| test statistic | −0.1621 / 0.0288 | $\tau$ = −5.64 |
+| step one: ratio | least squares over 365 days | $`\hat\beta`$ = 0.9931 |
+| step one: premium | $`\bar N - \hat\beta \bar S`$ | $`\hat c`$ = $0.0806 |
+| step two: pull-back | $`\Delta \hat z_t`$ on $`\hat z_{t-1}`$, 364 changes | $`\hat\rho`$ = −0.1621, se 0.0288 |
+| test statistic | −0.1621 / 0.0288 | $`\tau`$ = −5.64 |
 | cutoff | −3.33613 − 6.1101 / 364 − 6.823 / 364^2 | −3.353 |
 | **verdict** | −5.64 is below −3.353 | **tied** |
 | share of a gap left tomorrow | 1 − 0.1621 | 0.8379 |
 | half-life of a gap | ln 0.5 / ln 0.8379 | 3.92 days |
-| North's pull | $\Delta N_t$ on $\hat z_{t-1}$ | $\alpha_N$ = −0.1268, se 0.0353 |
-| South's pull | $\Delta S_t$ on $\hat z_{t-1}$ | $\alpha_S$ = 0.0356, se 0.0342 |
+| North's pull | $`\Delta N_t`$ on $`\hat z_{t-1}`$ | $`\alpha_N`$ = −0.1268, se 0.0353 |
+| South's pull | $`\Delta S_t`$ on $`\hat z_{t-1}`$ | $`\alpha_S`$ = 0.0356, se 0.0342 |
 
 The two stations are tied: a gap between them halves in about four days, against 4.27 days in the build (ln 0.5 / ln 0.85). North does almost all the closing.
 
@@ -209,8 +223,8 @@ The two stations are tied: a gap between them halves in about four days, against
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | One-series cutoff −2.870 on a fitted leftover | 14.77% of 4,000 unrelated pairs pass, not 5% | Step one already made the leftover look steady |
-| Trusting a regression of one wandering level on another | an unrelated price: $R^2$ 0.67, ratio 0.72; its $\tau$ −3.20 fails the right cutoff | Two walkers always seem to explain each other |
-| Quoting the textbook standard error of $\hat\beta$ | 0.0118, against a spread of 0.0545 over 500 simulated years | It assumes independent leftovers; these persist |
+| Trusting a regression of one wandering level on another | an unrelated price: $`R^2`$ 0.67, ratio 0.72; its $`\tau`$ −3.20 fails the right cutoff | Two walkers always seem to explain each other |
+| Quoting the textbook standard error of $`\hat\beta`$ | 0.0118, against a spread of 0.0545 over 500 simulated years | It assumes independent leftovers; these persist |
 | Differencing both prices and regressing change on change | slope 0.66, not 1 | Changes carry day-to-day co-movement; the long-run tie is gone |
 
 The code prints all four.
@@ -240,13 +254,13 @@ day 4   █████████████████████         
 day 5   ██████████████████                        4.44
 ```
 
-Summed over every day, North gives back 8.00 cents and South rises 2.00. The geometric series, $\alpha_N \times 10 / (\alpha_S - \alpha_N)$, gives the same −8.00. So after North's 10-cent jump, both stations end 2 cents dearer. The split is the pulls' split: North 0.12 of 0.15, South 0.03 of 0.15.
+Summed over every day, North gives back 8.00 cents and South rises 2.00. The geometric series, $`\alpha_N \times 10 / (\alpha_S - \alpha_N)`$, gives the same −8.00. So after North's 10-cent jump, both stations end 2 cents dearer. The split is the pulls' split: North 0.12 of 0.15, South 0.03 of 0.15.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Only `math` is imported in Python, nothing in Rust. Random draws come from SplitMix64 with stated seeds, made bell-shaped by the Box–Muller formula, so both languages draw the same numbers. Five pairs of roads: the ratio by formula and by bracket search; the cutoff by 4,000 simulated pairs and by MacKinnon's formula; the pulls against the built values; the gap's closing summed day by day and by the geometric series; the week's pull-back against −14/31. Asserts also hold the verdict, the pulls' rebuild of $\hat\rho$ and the one-series cutoff's excess passes. Flipping the bracket search, using the one-series cutoff or reversing North's pull each stops the run.
+Only `math` is imported in Python, nothing in Rust. Random draws come from SplitMix64 with stated seeds, made bell-shaped by the Box–Muller formula, so both languages draw the same numbers. Five pairs of roads: the ratio by formula and by bracket search; the cutoff by 4,000 simulated pairs and by MacKinnon's formula; the pulls against the built values; the gap's closing summed day by day and by the geometric series; the week's pull-back against −14/31. Asserts also hold the verdict, the pulls' rebuild of $`\hat\rho`$ and the one-series cutoff's excess passes. Flipping the bracket search, using the one-series cutoff or reversing North's pull each stops the run.
 
 ### Python
 
@@ -642,11 +656,11 @@ The two outputs match line for line.
 
 Lean proves three facts from Why it works and How a gap closes, for every choice of numbers, and checks the worked numbers exactly.
 
-- Suppose South's daily changes are independent with variance $v > 0$, and the leftover $z_t$ has fixed variance $w$, independent of South. Then the variance of $N_t - b S_t$ stays bounded over all days exactly when $b = \beta$.
-- Suppose each station's daily change is its pull times yesterday's gap, plus news. Then tomorrow's gap is $\phi$ times today's, plus news, with $\phi = 1 + \alpha_N - \beta\alpha_S$.
-- Suppose the tie ratio is 1, there is no news after a jump of $g_0$, and $-1 < \phi < 1$. Then North moves $\alpha_N g_0 / (\alpha_S - \alpha_N)$ in all, summed over every day. South moves $\alpha_S g_0 / (\alpha_S - \alpha_N)$ in all.
+- Suppose South's daily changes are independent with variance $`v > 0`$, and the leftover $`z_t`$ has fixed variance $`w`$, independent of South. Then the variance of $`N_t - b S_t`$ stays bounded over all days exactly when $`b = \beta`$.
+- Suppose each station's daily change is its pull times yesterday's gap, plus news. Then tomorrow's gap is $`\phi`$ times today's, plus news, with $`\phi = 1 + \alpha_N - \beta\alpha_S`$.
+- Suppose the tie ratio is 1, there is no news after a jump of $`g_0`$, and $`-1 < \phi < 1`$. Then North moves $`\alpha_N g_0 / (\alpha_S - \alpha_N)`$ in all, summed over every day. South moves $`\alpha_S g_0 / (\alpha_S - \alpha_N)`$ in all.
 - The week by hand gives sums −14 and 31, so the fitted pull-back is −14 / 31.
-- The built pulls give $\phi$ = 0.85. A 10-cent jump moves North −1.20 and South +0.30 on day 0, and leaves a gap of 8.50 on day 1.
+- The built pulls give $`\phi`$ = 0.85. A 10-cent jump moves North −1.20 and South +0.30 on day 0, and leaves a gap of 8.50 on day 1.
 - Summed over every day, North gives back 8 cents and South rises 2, so both end 2 cents dearer.
 
 How fast least squares finds the ratio, the test's cutoff and the fitted pulls are left to the Python and Rust checks.
@@ -804,8 +818,8 @@ example : (-12 / 100 : ℚ) * 10 / (3 / 100 - (-12 / 100)) = -8 ∧
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Let South do the closing.** Set `A_N, A_S` to `-0.03, 0.12`. The test barely notices: $\tau$ = −5.62, tied. The pulls swap: $\alpha_N$ = −0.0398, $\alpha_S$ = 0.1234, and the 10-cent jump now ends with North down 2.00 cents and South up 8.00.
-> - **Loosen the leash.** Set `A_N, A_S` to `-0.02, 0.0`. A gap now halves in 34.31 days. The year's $\tau$ is −3.07: past the one-series cutoff, short of −3.353, so the test does not declare a tie that is really there; over 500 such years it finds the tie only 10.60% of the time. The trace assert then stops the run, since 400 days no longer finish closing the gap.
+> - **Let South do the closing.** Set `A_N, A_S` to `-0.03, 0.12`. The test barely notices: $`\tau`$ = −5.62, tied. The pulls swap: $`\alpha_N`$ = −0.0398, $`\alpha_S`$ = 0.1234, and the 10-cent jump now ends with North down 2.00 cents and South up 8.00.
+> - **Loosen the leash.** Set `A_N, A_S` to `-0.02, 0.0`. A gap now halves in 34.31 days. The year's $`\tau`$ is −3.07: past the one-series cutoff, short of −3.353, so the test does not declare a tie that is really there; over 500 such years it finds the tie only 10.60% of the time. The trace assert then stops the run, since 400 days no longer finish closing the gap.
 > - **Shorten the record.** Set `DAYS` to 60. The cutoff moves to −3.442, the ratio is fitted at 0.6809, and only 17.40% of 500 two-month records are judged tied. A tie that takes days to show needs months of data to prove.
 
 ---
@@ -813,7 +827,7 @@ example : (-12 / 100 : ℚ) * 10 / (3 / 100 - (-12 / 100)) = -8 ∧
 ## The usual mistake
 
 > [!warning]
-> **Reading prices that move together as tied.** Two wandering series nearly always look related: across 4,000 unrelated pairs the median $R^2$ is 0.17, and the unrelated price picked in Step 3 reaches 0.67. Cointegration is a claim about the leftover: it must keep coming back, judged against a cutoff built for fitted leftovers. Nor is a tie a cause: both stations answer the same market and the same drivers, and the pulls say who adjusts, not who is to blame.
+> **Reading prices that move together as tied.** Two wandering series nearly always look related: across 4,000 unrelated pairs the median $`R^2`$ is 0.17, and the unrelated price picked in Step 3 reaches 0.67. Cointegration is a claim about the leftover: it must keep coming back, judged against a cutoff built for fitted leftovers. Nor is a tie a cause: both stations answer the same market and the same drivers, and the pulls say who adjusts, not who is to blame.
 >
 > - **The wrong cutoff.** The one-series −2.870 on a fitted leftover passes 14.77% of unrelated pairs.
 > - **Differencing both series first.** Change on change gives a slope of 0.66, not the tie's 1, and a model in changes never sees a gap to close.
@@ -839,7 +853,7 @@ example : (-12 / 100 : ℚ) * 10 / (3 / 100 - (-12 / 100)) = -8 ∧
 ## What this builds on
 
 - [Unit roots](04-differencing-and-unit-roots.md): what it means for a series to wander, and the unit-root test that step two runs on the leftover.
-- [Autoregression](02-ar-models.md): the carry-over $\phi$, and why a gap with $\phi$ below 1 keeps returning.
+- [Autoregression](02-ar-models.md): the carry-over $`\phi`$, and why a gap with $`\phi`$ below 1 keeps returning.
 - [Least squares](../09-Regression/01-least-squares-regression.md): the line fitted in step one and the slopes fitted in step two and the error-correction model.
 
 ## Where this goes next

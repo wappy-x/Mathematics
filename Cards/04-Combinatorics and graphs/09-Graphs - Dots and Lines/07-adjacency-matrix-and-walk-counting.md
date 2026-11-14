@@ -34,31 +34,35 @@ flowchart LR
 
 ## The formula
 
-Notation first, in words. Fix an order for the stations and keep it: A is station 1, F is station 6. The **adjacency matrix** $A$ is the square table with a row and a column per station, and its cell in row $i$, column $j$ — written $A_{ij}$ — holds 1 when a line joins those stations.
+Notation first, in words. Fix an order for the stations and keep it: A is station 1, F is station 6. The **adjacency matrix** $`A`$ is the square table with a row and a column per station, and its cell in row $`i`$, column $`j`$ — written $`A_{ij}`$ — holds 1 when a line joins those stations.
 
-$$A_{ij} \;=\; 1 \text{ when a line joins } i \text{ and } j, \text{ otherwise } 0$$
+```math
+A_{ij} \;=\; 1 \text{ when a line joins } i \text{ and } j, \text{ otherwise } 0
+```
 
 **Read it aloud:** one row and one column per station, and a 1 wherever a line lands.
 
-Row A reads 0 1 0 0 0 1: lines to B and to F, nothing else. A line joins A and B both ways, so tipping the table over changes nothing: $A$ equals its transpose $A^{T}$ ([Matrices](../../03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo.md)). Each row adds up to its station's **degree**, the number of lines meeting it ([Degrees and the handshaking lemma](02-degree-and-handshaking.md)): 2, 3, 3, 2, 3, 3.
+Row A reads 0 1 0 0 0 1: lines to B and to F, nothing else. A line joins A and B both ways, so tipping the table over changes nothing: $`A`$ equals its transpose $`A^{T}`$ ([Matrices](../../03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo.md)). Each row adds up to its station's **degree**, the number of lines meeting it ([Degrees and the handshaking lemma](02-degree-and-handshaking.md)): 2, 3, 3, 2, 3, 3.
 
-A **walk** of length $k$ is a ride along $k$ lines in turn, stations and lines free to repeat ([Walks, paths and cycles](03-walks-paths-and-cycles.md)). The result the card exists for:
+A **walk** of length $`k`$ is a ride along $`k`$ lines in turn, stations and lines free to repeat ([Walks, paths and cycles](03-walks-paths-and-cycles.md)). The result the card exists for:
 
-$$\bigl(A^{k}\bigr)_{ij} \;=\; \text{walks of length } k \text{ from } i \text{ to } j$$
+```math
+\bigl(A^{k}\bigr)_{ij} \;=\; \text{walks of length } k \text{ from } i \text{ to } j
+```
 
 **Read it aloud:** multiply the table into itself k times and every cell counts the k-line routes from its row's station to its column's.
 
-The **trace** is the sum of a square table's diagonal. The **incidence matrix** $M$ is the same map line-by-station: eight rows, six columns, a 1 where a line touches a station — the grid of ends on [Degrees and the handshaking lemma](02-degree-and-handshaking.md), tipped over.
+The **trace** is the sum of a square table's diagonal. The **incidence matrix** $`M`$ is the same map line-by-station: eight rows, six columns, a 1 where a line touches a station — the grid of ends on [Degrees and the handshaking lemma](02-degree-and-handshaking.md), tipped over.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $A^{T}$ | the map as a square table of ones and zeros; $A^{T}$ is it tipped over | 6 by 6; row A is 0 1 0 0 0 1 | — |
-| $A_{ij}$ | the cell in row $i$, column $j$ | row 1, column 6 is 1: A-F is a line | — |
-| $i$, $j$ | the row's and the column's station | A is 1, F is 6 | — |
-| $k$ | lines the route rides | 3 | counts climb steeply, the work does not |
-| $A^{k}$ | the table multiplied into itself $k$ times | $A^{3}$, the three-line counts | one more multiply per line added |
-| $D$ | the degrees down a diagonal, 0 elsewhere | 2, 3, 3, 2, 3, 3 | — |
-| $M$ | a row per line, a column per station | 8 by 6, two ones a row | — |
+| $`A`$, $`A^{T}`$ | the map as a square table of ones and zeros; $`A^{T}`$ is it tipped over | 6 by 6; row A is 0 1 0 0 0 1 | — |
+| $`A_{ij}`$ | the cell in row $`i`$, column $`j`$ | row 1, column 6 is 1: A-F is a line | — |
+| $`i`$, $`j`$ | the row's and the column's station | A is 1, F is 6 | — |
+| $`k`$ | lines the route rides | 3 | counts climb steeply, the work does not |
+| $`A^{k}`$ | the table multiplied into itself $`k`$ times | $`A^{3}`$, the three-line counts | one more multiply per line added |
+| $`D`$ | the degrees down a diagonal, 0 elsewhere | 2, 3, 3, 2, 3, 3 | — |
+| $`M`$ | a row per line, a column per station | 8 by 6, two ones a row | — |
 
 ### When it holds
 
@@ -79,16 +83,18 @@ Length 1 needs no work: joined stations have one one-line ride, unjoined ones no
 
 ### Step 1: one more line is one more multiply, and induction does the rest
 
-Sort the walks of length k+1 from i to j by the station u they stand at before the final line. A walk in u's pile is a walk of length k from i to u, then the line u-j, so u's pile holds the k-line count from i to u times row u, column j of $A$ — 1 if that line exists, 0 if not. Adding over every u:
+Sort the walks of length k+1 from i to j by the station u they stand at before the final line. A walk in u's pile is a walk of length k from i to u, then the line u-j, so u's pile holds the k-line count from i to u times row u, column j of $`A`$ — 1 if that line exists, 0 if not. Adding over every u:
 
-$$\bigl(A^{k+1}\bigr)_{ij} \;=\; \sum_{u} \bigl(A^{k}\bigr)_{iu} \, A_{uj}$$
+```math
+\bigl(A^{k+1}\bigr)_{ij} \;=\; \sum_{u} \bigl(A^{k}\bigr)_{iu} \, A_{uj}
+```
 
-The Greek capital sigma says "add this up as u runs over all six stations". The right-hand side is, symbol for symbol, row i, column j of a matrix product. Every walk of length k+1 lands in exactly one pile, so no walk is counted twice or missed. That carries "right at length k" to length k+1, so by induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)) the count table for length k is $A^{k}$.
+The Greek capital sigma says "add this up as u runs over all six stations". The right-hand side is, symbol for symbol, row i, column j of a matrix product. Every walk of length k+1 lands in exactly one pile, so no walk is counted twice or missed. That carries "right at length k" to length k+1, so by induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)) the count table for length k is $`A^{k}`$.
 
 <details>
 <summary>The same count on one-way lines</summary>
 
-No step used the fact that a line runs both ways: read $A_{ij}$ as "an arc leads from i to j" and the induction is unchanged, so powers of a one-way table count one-way routes ([Directed graphs](06-directed-graphs-and-topological-order.md)).
+No step used the fact that a line runs both ways: read $`A_{ij}`$ as "an arc leads from i to j" and the induction is unchanged, so powers of a one-way table count one-way routes ([Directed graphs](06-directed-graphs-and-topological-order.md)).
 
 </details>
 
@@ -100,7 +106,7 @@ With no loops, three lines can only come home by visiting three different statio
 
 ### Step 3: the line-by-station table gives the same map back
 
-Each row of the incidence matrix holds two ones, one per end: 16 ones in all, and each column adds to a degree. Tip it over and multiply: row u, column v of $M^{T}M$ counts the lines touching both u and v — 1 when a line joins two stations, the degree when v is u, 0 otherwise. So $M^{T}M$ equals $A + D$: a third road to the same map, checked cell by cell in the code.
+Each row of the incidence matrix holds two ones, one per end: 16 ones in all, and each column adds to a degree. Tip it over and multiply: row u, column v of $`M^{T}M`$ counts the lines touching both u and v — 1 when a line joins two stations, the degree when v is u, 0 otherwise. So $`M^{T}M`$ equals $`A + D`$: a third road to the same map, checked cell by cell in the code.
 
 ---
 

@@ -8,7 +8,7 @@
 
 Take 0.1, flip it to 10, take the sine of 10, and multiply by 0.1 squared: −0.00544021. From 0.01 the same recipe gives −0.00005064; from 0.001, 0.00000083. The recipe is x squared times the sine of 1 over x. Where does it head as x heads for 0?
 
-The sine part never settles: as x shrinks, it swings between 1 and −1 ever faster. Yet the product is pinned. A sine never leaves −1 to 1, so the product never leaves $-x^2$ to $x^2$, and both of those head for 0.
+The sine part never settles: as x shrinks, it swings between 1 and −1 ever faster. Yet the product is pinned. A sine never leaves −1 to 1, so the product never leaves $`-x^2`$ to $`x^2`$, and both of those head for 0.
 
 That trap is the **squeeze**. Beside it sit the **limit laws**: if two functions head for known numbers, their sum heads for the sum, their product for the product, their quotient for the quotient, provided the bottom number is not 0. The squeeze handles pieces the laws cannot touch.
 
@@ -35,38 +35,42 @@ Orange: the function where its sine reads exactly −1 or +1. Green: the ceiling
 
 ## The formula
 
-Reminder ([Limits](01-limits.md)): $\lim_{x\to a} f(x) = L$ reads "f(x) heads for L as x heads for a".
+Reminder ([Limits](01-limits.md)): $`\lim_{x\to a} f(x) = L`$ reads "f(x) heads for L as x heads for a".
 
-If $\lim_{x\to a} f(x) = L$ and $\lim_{x\to a} g(x) = M$, both finite, then:
+If $`\lim_{x\to a} f(x) = L`$ and $`\lim_{x\to a} g(x) = M`$, both finite, then:
 
-$$\lim_{x\to a}\big(f(x)+g(x)\big)=L+M,\qquad \lim_{x\to a} c\,f(x)=c\,L,\qquad \lim_{x\to a} f(x)\,g(x)=L\,M,\qquad \lim_{x\to a}\frac{f(x)}{g(x)}=\frac{L}{M}\ \text{ if } M\neq 0.$$
+```math
+\lim_{x\to a}\big(f(x)+g(x)\big)=L+M,\qquad \lim_{x\to a} c\,f(x)=c\,L,\qquad \lim_{x\to a} f(x)\,g(x)=L\,M,\qquad \lim_{x\to a}\frac{f(x)}{g(x)}=\frac{L}{M}\ \text{ if } M\neq 0.
+```
 
 **Read it aloud:** the limit of a sum, multiple, product or quotient is the sum, multiple, product or quotient of the limits, as long as the bottom limit is not zero.
 
 Subtraction follows: take c = −1 and add. The squeeze theorem: if, for every x in some window around a (a itself aside),
 
-$$f(x)\le h(x)\le g(x)\qquad\text{and}\qquad \lim_{x\to a} f(x)=\lim_{x\to a} g(x)=L,$$
+```math
+f(x)\le h(x)\le g(x)\qquad\text{and}\qquad \lim_{x\to a} f(x)=\lim_{x\to a} g(x)=L,
+```
 
-then $\lim_{x\to a} h(x) = L$.
+then $`\lim_{x\to a} h(x) = L`$.
 
 **Read it aloud:** a function caught between a floor and a ceiling that both head for L heads for L as well.
 
-Here $h(x) = x^2 \sin(1/x)$, floor $-x^2$, ceiling $x^2$, a = 0, L = 0.
+Here $`h(x) = x^2 \sin(1/x)`$, floor $`-x^2`$, ceiling $`x^2`$, a = 0, L = 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the input, a pure number | heads for 0 | — |
-| $a$ | the point x heads for | 0 | a new question |
-| $f$, $g$ | functions with known limits; in the squeeze, floor and ceiling | $-x^2$, $x^2$ | a higher ceiling allows more wobble |
-| $L$, $M$ | the finite numbers f and g head for | 0, 0 | the combined limit moves with them |
-| $c$ | a fixed multiplier | −1 turns ceiling into floor | the limit scales with it |
-| $h$ | the trapped function | $x^2 \sin(1/x)$ | — |
-| $B$ | a height to beat, for an infinite limit | 1000000 | x must come closer to 0 |
-| $\infty$ | "beyond every height or distance", never a number | 1/x squared at 0 | — |
+| $`x`$ | the input, a pure number | heads for 0 | — |
+| $`a`$ | the point x heads for | 0 | a new question |
+| $`f`$, $`g`$ | functions with known limits; in the squeeze, floor and ceiling | $`-x^2`$, $`x^2`$ | a higher ceiling allows more wobble |
+| $`L`$, $`M`$ | the finite numbers f and g head for | 0, 0 | the combined limit moves with them |
+| $`c`$ | a fixed multiplier | −1 turns ceiling into floor | the limit scales with it |
+| $`h`$ | the trapped function | $`x^2 \sin(1/x)`$ | — |
+| $`B`$ | a height to beat, for an infinite limit | 1000000 | x must come closer to 0 |
+| $`\infty`$ | "beyond every height or distance", never a number | 1/x squared at 0 | — |
 
 ### When it holds
 
-- **Each part has a finite limit.** Otherwise the law is silent: the sine part has no limit, so the product law says nothing about $x^2 \sin(1/x)$, which still heads for 0.
+- **Each part has a finite limit.** Otherwise the law is silent: the sine part has no limit, so the product law says nothing about $`x^2 \sin(1/x)`$, which still heads for 0.
 - **The bottom limit is not 0.** Otherwise 0 over 0 can mean anything: see What breaks.
 - **The trap holds on a whole window around a.** Eight charted points prove nothing.
 - **Floor and ceiling share one limit.** The sine sits between −1 and 1, which differ, and has no limit.
@@ -88,7 +92,9 @@ For a sum within 0.001 of L + M, ask f and g for 0.0005 each. Inside the narrowe
 
 Write the error of a product in two pieces:
 
-$$f(x)\,g(x)-L\,M = f(x)\big(g(x)-M\big)+M\big(f(x)-L\big).$$
+```math
+f(x)\,g(x)-L\,M = f(x)\big(g(x)-M\big)+M\big(f(x)-L\big).
+```
 
 Near a, f stays within 1 of L, so the first piece is bounded times small and the second is fixed times small. Shrink the window until each is under half the tolerance.
 
@@ -98,7 +104,7 @@ If M is not 0, near a the bottom g(x) stays at least half as far from 0 as M. In
 
 ### Step 4: the squeeze, by trapping the tolerance
 
-Ask for h within 0.001 of 0. The ceiling $x^2$ is under 0.001 once x is within the square root of 0.001, 0.031623, of 0; the floor is above −0.001 there; h sits between. A grid scan of that window found the largest size of h to be 0.00092071. Tolerance 0.00001 gives window 0.003162 and largest size 0.00000984.
+Ask for h within 0.001 of 0. The ceiling $`x^2`$ is under 0.001 once x is within the square root of 0.001, 0.031623, of 0; the floor is above −0.001 there; h sits between. A grid scan of that window found the largest size of h to be 0.00092071. Tolerance 0.00001 gives window 0.003162 and largest size 0.00000984.
 
 <details>
 <summary>Detailed proof</summary>
@@ -121,9 +127,9 @@ At x = 1/(π/2 + 2πn), for whole numbers n, the sine factor reads 1; at x = 1/(
 
 ### Step 6: infinity, two different ways
 
-An **infinite limit** is about the output. $\lim_{x\to 0} 1/x^2 = \infty$, read "1 over x squared heads for infinity", means: name any height B, and a window around 0 exists where the output beats it. For B = 1000000 the window is 0.001. No number is approached. Sides can differ: 1 over x is 1000 at x = 0.001 and −1000 at x = −0.001.
+An **infinite limit** is about the output. $`\lim_{x\to 0} 1/x^2 = \infty`$, read "1 over x squared heads for infinity", means: name any height B, and a window around 0 exists where the output beats it. For B = 1000000 the window is 0.001. No number is approached. Sides can differ: 1 over x is 1000 at x = 0.001 and −1000 at x = −0.001.
 
-A **limit at infinity** is about the input. $\lim_{x\to\infty} 1/x = 0$ means: name a tolerance, and a cutoff exists beyond which the output stays within it. For 0.001 the cutoff is 1000, where the output is 0.001000. The laws and the squeeze carry over unchanged.
+A **limit at infinity** is about the input. $`\lim_{x\to\infty} 1/x = 0`$ means: name a tolerance, and a cutoff exists beyond which the output stays within it. For 0.001 the cutoff is 1000, where the output is 0.001000. The laws and the squeeze carry over unchanged.
 
 The two meet here: with t = 1/x, the sine of 1 over x near 0 is sin t far out, and it has no limit there either.
 

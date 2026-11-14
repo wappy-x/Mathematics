@@ -32,59 +32,67 @@ To scale: 280 drawing units per km across (0 km at 40, 1 km at 320) and 160 per 
 
 Notation first, in words.
 
-- The river is the **outcome space** $\Omega$ (omega), here the interval [0, 1] in km, and a mooring point is $\omega$.
-- The sets we allow ourselves to measure are the Borel sets of [0, 1], written $\mathcal F$. The probability $P$ gives each such set its length, so $P$ of the whole river is 1.
-- The depth under the boat is the function $X(\omega) = 4\omega(1-\omega)$. A **random variable** is a measurable function on $\Omega$, and $X$ is one because it is continuous.
-- A **Borel function** $g$ on the line is one for which every set $\{t : g(t) \in B\}$ with B Borel is itself Borel.
-- $\int X\,dP$ is the integral of X against P, built on this shelf from simple functions ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)).
-- The **law** of X, $\mu_X = P\circ X^{-1}$, is the probability on the depth line that gives a set B of depths the probability that the depth lands in B ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
+- The river is the **outcome space** $`\Omega`$ (omega), here the interval [0, 1] in km, and a mooring point is $`\omega`$.
+- The sets we allow ourselves to measure are the Borel sets of [0, 1], written $`\mathcal F`$. The probability $`P`$ gives each such set its length, so $`P`$ of the whole river is 1.
+- The depth under the boat is the function $`X(\omega) = 4\omega(1-\omega)`$. A **random variable** is a measurable function on $`\Omega`$, and $`X`$ is one because it is continuous.
+- A **Borel function** $`g`$ on the line is one for which every set $`\{t : g(t) \in B\}`$ with B Borel is itself Borel.
+- $`\int X\,dP`$ is the integral of X against P, built on this shelf from simple functions ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)).
+- The **law** of X, $`\mu_X = P\circ X^{-1}`$, is the probability on the depth line that gives a set B of depths the probability that the depth lands in B ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
 
 The definition:
 
-$$E[X] \;=\; \int_\Omega X\,dP ,$$
+```math
+E[X] \;=\; \int_\Omega X\,dP ,
+```
 
-for $X \ge 0$ (the value $+\infty$ allowed) or for $X$ integrable, meaning $\int_\Omega \lvert X\rvert\,dP < \infty$ ([Integrable functions](04-integrable-functions-and-l1.md)).
+for $`X \ge 0`$ (the value $`+\infty`$ allowed) or for $`X`$ integrable, meaning $`\int_\Omega \lvert X\rvert\,dP < \infty`$ ([Integrable functions](04-integrable-functions-and-l1.md)).
 
 **Read it aloud:** the expected value of X is the integral of X against the probability, over all outcomes.
 
 The theorem, the **change of variables formula**:
 
-$$E[g(X)] \;=\; \int_\Omega g\big(X(\omega)\big)\,P(d\omega) \;=\; \int_{\mathbb R} g(t)\,\mu_X(dt),$$
+```math
+E[g(X)] \;=\; \int_\Omega g\big(X(\omega)\big)\,P(d\omega) \;=\; \int_{\mathbb R} g(t)\,\mu_X(dt),
+```
 
-for every Borel function $g$ that is non-negative, or for which either side is finite with $\lvert g\rvert$ in place of $g$. Writing $P(d\omega)$ for dP names the variable integrated over, the mooring point; $\mu_X(dt)$ likewise names the depth t.
+for every Borel function $`g`$ that is non-negative, or for which either side is finite with $`\lvert g\rvert`$ in place of $`g`$. Writing $`P(d\omega)`$ for dP names the variable integrated over, the mooring point; $`\mu_X(dt)`$ likewise names the depth t.
 
 **Read it aloud:** to average g of the depth, either average over the river, or average g over the depth line weighted by the law; the two agree.
 
-Two special cases are the formulas of the probability wing. If the law sits on countably many values $x_i$ with probabilities $p_i$, the integral on the line is a sum. If the law has a **density** $f$, meaning $\mu_X(B) = \int_B f\,d\lambda$ for every Borel set B, where $\lambda$ is length on the line, the integral is a density integral:
+Two special cases are the formulas of the probability wing. If the law sits on countably many values $`x_i`$ with probabilities $`p_i`$, the integral on the line is a sum. If the law has a **density** $`f`$, meaning $`\mu_X(B) = \int_B f\,d\lambda`$ for every Borel set B, where $`\lambda`$ is length on the line, the integral is a density integral:
 
-$$E[g(X)] = \sum_i g(x_i)\,p_i \qquad\text{or}\qquad E[g(X)] = \int_{\mathbb R} g(t)\,f(t)\,dt .$$
+```math
+E[g(X)] = \sum_i g(x_i)\,p_i \qquad\text{or}\qquad E[g(X)] = \int_{\mathbb R} g(t)\,f(t)\,dt .
+```
 
-Variance and moments are expectations too, so they are integrals: the **k-th moment** is $E[X^k] = \int t^k\,\mu_X(dt)$, and
+Variance and moments are expectations too, so they are integrals: the **k-th moment** is $`E[X^k] = \int t^k\,\mu_X(dt)`$, and
 
-$$\operatorname{Var}(X) = E\big[(X - E[X])^2\big] = E[X^2] - E[X]^2 .$$
+```math
+\mathrm{Var}(X) = E\big[(X - E[X])^2\big] = E[X^2] - E[X]^2 .
+```
 
-On the river the law has distribution function $F_X(t) = P(X \le t) = 1 - \sqrt{1-t}$ for depths t from 0 to 1 m, and density $f(t) = 1/(2\sqrt{1-t})$.
+On the river the law has distribution function $`F_X(t) = P(X \le t) = 1 - \sqrt{1-t}`$ for depths t from 0 to 1 m, and density $`f(t) = 1/(2\sqrt{1-t})`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\omega$, $x$ | the outcome space; one outcome, first written x, a distance in km | the river [0, 1] km; a mooring point | — |
-| $\mathcal F$, $P$ | the measurable sets; the probability on them | Borel sets of the river; length | P of a stretch grows with its length |
-| $X$ | a random variable: a measurable function on the outcomes | depth 4ω(1 − ω) m; 0.84 at 0.3 km | a deeper bed, a larger E[X] |
-| $E[X]$ | the expectation: the integral of X against P | 2/3 = 0.6667 m | — |
-| $\mu_X$ | the law of X: μ_X(B) = P(X in B) | μ_X of [0.75, 1] is 0.5 | more weight on deep values, larger E[X] |
-| $g$ | a Borel function of the value | t^2, a gauge's rounding, a payout | — |
-| $t$, $B$, $B_i$ | a point and sets on the value line | a depth in metres; the depths from 0.75 to 1 | — |
-| $F_X$ | distribution function, P(X ≤ t) | 1 − √(1 − t); 0.2929 at t = 0.5 | — |
-| $a$, $u$ | where the depth first reaches t; the substitution u = √(1 − t), equal to P(X ≥ t) | 0.25 km and 0.5 at t = 0.75 | — |
-| $f$, $\lambda$ | a density of the law; length on the line | 1/(2√(1 − t)); f(0.5) = 0.7071 | — |
-| $x_i$, $p_i$, $S$ | the values of a countable law, their probabilities, the set of them | gauge reading 0.75 m, probability 0.5 | — |
-| $\mathbf 1_B$, $s_n$ | indicator, one on B and zero off it; a simple function below g | the gauge rounding down to 2^−n m | larger n, closer to g |
-| $\operatorname{Var}(X)$, $k$ | variance; the order of a moment | 4/45 = 0.0889 m^2; k = 1 to 4 | — |
-| $a_i$, $m$, $\varepsilon$ | proof letters: a simple function's values and their count (Claim 2), m also the mean (Claim 9); a gap below 1 m (Claim 8) | m = 2/3 in Claim 9 | — |
+| $`\Omega`$, $`\omega`$, $`x`$ | the outcome space; one outcome, first written x, a distance in km | the river [0, 1] km; a mooring point | — |
+| $`\mathcal F`$, $`P`$ | the measurable sets; the probability on them | Borel sets of the river; length | P of a stretch grows with its length |
+| $`X`$ | a random variable: a measurable function on the outcomes | depth 4ω(1 − ω) m; 0.84 at 0.3 km | a deeper bed, a larger E[X] |
+| $`E[X]`$ | the expectation: the integral of X against P | 2/3 = 0.6667 m | — |
+| $`\mu_X`$ | the law of X: μ_X(B) = P(X in B) | μ_X of [0.75, 1] is 0.5 | more weight on deep values, larger E[X] |
+| $`g`$ | a Borel function of the value | t^2, a gauge's rounding, a payout | — |
+| $`t`$, $`B`$, $`B_i`$ | a point and sets on the value line | a depth in metres; the depths from 0.75 to 1 | — |
+| $`F_X`$ | distribution function, P(X ≤ t) | 1 − √(1 − t); 0.2929 at t = 0.5 | — |
+| $`a`$, $`u`$ | where the depth first reaches t; the substitution u = √(1 − t), equal to P(X ≥ t) | 0.25 km and 0.5 at t = 0.75 | — |
+| $`f`$, $`\lambda`$ | a density of the law; length on the line | 1/(2√(1 − t)); f(0.5) = 0.7071 | — |
+| $`x_i`$, $`p_i`$, $`S`$ | the values of a countable law, their probabilities, the set of them | gauge reading 0.75 m, probability 0.5 | — |
+| $`\mathbf 1_B`$, $`s_n`$ | indicator, one on B and zero off it; a simple function below g | the gauge rounding down to 2^−n m | larger n, closer to g |
+| $`\mathrm{Var}(X)`$, $`k`$ | variance; the order of a moment | 4/45 = 0.0889 m^2; k = 1 to 4 | — |
+| $`a_i`$, $`m`$, $`\varepsilon`$ | proof letters: a simple function's values and their count (Claim 2), m also the mean (Claim 9); a gap below 1 m (Claim 8) | m = 2/3 in Claim 9 | — |
 
 ### When it holds
 
-- **X measurable for the sigma-algebra $\mathcal F$, the measurable sets of the outcome space.** Without it "X lands in B" need not be a measurable set, and the law is not defined. A depth continuous in the mooring point passes.
+- **X measurable for the sigma-algebra $`\mathcal F`$, the measurable sets of the outcome space.** Without it "X lands in B" need not be a measurable set, and the law is not defined. A depth continuous in the mooring point passes.
 - **g Borel.** Then g(X) is measurable and has an expectation to compare. Continuous functions, indicators of Borel sets and rounding all qualify.
 - **g non-negative, or g(X) integrable.** Drop this and neither side has a value. A payout of (−2)^k on the depth band k (defined in Worked numbers) gives running totals 1/2, 0, 1/2, 0, … as deeper bands are added: no limit, no expectation.
 - **P a probability, total 1.** The transfer holds for any measure; the word "average" needs total 1. Measure the river in metres instead, total 1000, and the same integral is the cross-section area, 666.67 m^2, not a mean depth.
@@ -98,33 +106,37 @@ On the river the law has distribution function $F_X(t) = P(X \le t) = 1 - \sqrt{
 
 The whole proof rests on one line. "Is the depth in B?" is a yes-or-no question about the boat.
 
-On the river its answer is the set of mooring points $X^{-1}(B)$, with probability $P(X^{-1}(B))$. On the line it is $\mu_X(B)$. These are equal because that is how the law is defined.
+On the river its answer is the set of mooring points $`X^{-1}(B)`$, with probability $`P(X^{-1}(B))`$. On the line it is $`\mu_X(B)`$. These are equal because that is how the law is defined.
 
-So for an indicator, $g = \mathbf 1_B$, both sides of the formula are the same number. Everything else is the integral's own construction, climbed once on each side: indicators, then simple functions, then non-negative functions by monotone limits, then signed ones.
+So for an indicator, $`g = \mathbf 1_B`$, both sides of the formula are the same number. Everything else is the integral's own construction, climbed once on each side: indicators, then simple functions, then non-negative functions by monotone limits, then signed ones.
 
 ### Step 1: the expectation on the river
 
-$X$ is continuous and bounded, so it is measurable and integrable. For a continuous function on a closed interval the Lebesgue integral equals the Riemann integral ([Riemann meets Lebesgue](05-riemann-meets-lebesgue.md)), so
+$`X`$ is continuous and bounded, so it is measurable and integrable. For a continuous function on a closed interval the Lebesgue integral equals the Riemann integral ([Riemann meets Lebesgue](05-riemann-meets-lebesgue.md)), so
 
-$$E[X] = \int_0^1 (4\omega - 4\omega^2)\,d\omega = 2 - \tfrac43 = \tfrac23\ \text{m}.$$
+```math
+E[X] = \int_0^1 (4\omega - 4\omega^2)\,d\omega = 2 - \tfrac43 = \tfrac23\ \text{m}.
+```
 
-The second moment is the same kind of polynomial integral: $16\int_0^1 \omega^2(1-\omega)^2\,d\omega = 16\left(\tfrac13 - \tfrac12 + \tfrac15\right) = \tfrac{8}{15}$.
+The second moment is the same kind of polynomial integral: $`16\int_0^1 \omega^2(1-\omega)^2\,d\omega = 16\left(\tfrac13 - \tfrac12 + \tfrac15\right) = \tfrac{8}{15}`$.
 
 ### Step 2: simple functions transfer, and the sum formula is this case
 
-A depth gauge marked only in quarter metres reads the depth rounded down: the reading is $R = g(X)$ with $g(t)$ the largest multiple of 0.25 at most t. This $g$ is simple: finitely many values, each on a Borel set of depths. The reading is 0.75 m exactly when the depth is at least 0.75 m. On the river that is the stretch 0.25 to 0.75 km, of length 0.5. On the line it is $\mu_X([0.75, 1])$, which is 0.5 because the law is defined that way.
+A depth gauge marked only in quarter metres reads the depth rounded down: the reading is $`R = g(X)`$ with $`g(t)`$ the largest multiple of 0.25 at most t. This $`g`$ is simple: finitely many values, each on a Borel set of depths. The reading is 0.75 m exactly when the depth is at least 0.75 m. On the river that is the stretch 0.25 to 0.75 km, of length 0.5. On the line it is $`\mu_X([0.75, 1])`$, which is 0.5 because the law is defined that way.
 
 Each value of a simple function carries its indicator across, and the integral of a simple function is linear ([The integral of a simple function](01-integral-of-a-simple-function.md)), so the whole reading carries across:
 
-$$E[R] = 0 \times 0.1340 + 0.25 \times 0.1589 + 0.5 \times 0.2071 + 0.75 \times 0.5000 = 0.5183\ \text{m}.$$
+```math
+E[R] = 0 \times 0.1340 + 0.25 \times 0.1589 + 0.5 \times 0.2071 + 0.75 \times 0.5000 = 0.5183\ \text{m}.
+```
 
 That line is the probability wing's sum formula. Here it is a theorem about one integral, not a separate definition. It is also the quarter-metre staircase of [The integral of a simple function](01-integral-of-a-simple-function.md), 0.5183, read as an average instead of an area.
 
 ### Step 3: non-negative functions, by monotone limits
 
-Refine the gauge: the reading rounded down to $2^{-n}$ m is a simple function $s_n$ of the depth, and it rises to the true depth as n grows, never overshooting and never more than $2^{-n}$ below. The monotone convergence theorem ([The monotone convergence theorem](03-monotone-convergence-theorem.md)) lets the limit pass through the integral on each side. Each $s_n$ transfers by Step 2, so the limits agree.
+Refine the gauge: the reading rounded down to $`2^{-n}`$ m is a simple function $`s_n`$ of the depth, and it rises to the true depth as n grows, never overshooting and never more than $`2^{-n}`$ below. The monotone convergence theorem ([The monotone convergence theorem](03-monotone-convergence-theorem.md)) lets the limit pass through the integral on each side. Each $`s_n`$ transfers by Step 2, so the limits agree.
 
-Each mark the depth reaches adds $2^{-n}$ to the reading, so the gauge's average is $2^{-n}$ times the sum, over the marks t, of $P(X \ge t)$. The code finds each $P(X \ge t)$ twice: on the river, by measuring the stretch at least t deep, and on the line, from the law's tail $\sqrt{1-t}$. With infinitely fine marks the sum becomes $\int_0^1 P(X \ge t)\,dt = 2/3$, proved in general in [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
+Each mark the depth reaches adds $`2^{-n}`$ to the reading, so the gauge's average is $`2^{-n}`$ times the sum, over the marks t, of $`P(X \ge t)`$. The code finds each $`P(X \ge t)`$ twice: on the river, by measuring the stretch at least t deep, and on the line, from the law's tail $`\sqrt{1-t}`$. With infinitely fine marks the sum becomes $`\int_0^1 P(X \ge t)\,dt = 2/3`$, proved in general in [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
 
 | gauge step | on the river | against the law | short of 2/3 by |
 | --- | --- | --- | --- |
@@ -134,15 +146,15 @@ Each mark the depth reaches adds $2^{-n}$ to the reading, so the gauge's average
 | 1/256 m (n = 8) | 0.664663 | 0.664663 | 0.002003 |
 | 1/1024 m (n = 10) | 0.666172 | 0.666172 | 0.000495 |
 
-Every row agrees to the printed digits, and each gap stays below its bound $2^{-n}$.
+Every row agrees to the printed digits, and each gap stays below its bound $`2^{-n}`$.
 
 ### Step 4: signed functions, by splitting
 
-A signed g is its positive part minus its negative part, each non-negative. Step 3 applied to $\lvert g\rvert$ shows that g(X) is integrable on the river exactly when g is integrable against the law. Step 3 applied to each part then gives two finite numbers on each side; subtracting finishes.
+A signed g is its positive part minus its negative part, each non-negative. Step 3 applied to $`\lvert g\rvert`$ shows that g(X) is integrable on the river exactly when g is integrable against the law. Step 3 applied to each part then gives two finite numbers on each side; subtracting finishes.
 
 ### Step 5: the law of the depth, and the density formula
 
-Solve $4\omega(1-\omega) = t$: the roots are $\omega = (1 \pm \sqrt{1-t})/2$. The depth is at most t near the banks, on $[0, a]$ and $[1-a, 1]$ with $a = (1 - \sqrt{1-t})/2$, a total length of $1 - \sqrt{1-t}$. That is $F_X(t)$. Its slope is the density $f(t) = 1/(2\sqrt{1-t})$, which reaches 5.0000 at t = 0.99 and has no bound near 1 m: the flat middle of the trough spends a long stretch near 1 m.
+Solve $`4\omega(1-\omega) = t`$: the roots are $`\omega = (1 \pm \sqrt{1-t})/2`$. The depth is at most t near the banks, on $`[0, a]`$ and $`[1-a, 1]`$ with $`a = (1 - \sqrt{1-t})/2`$, a total length of $`1 - \sqrt{1-t}`$. That is $`F_X(t)`$. Its slope is the density $`f(t) = 1/(2\sqrt{1-t})`$, which reaches 5.0000 at t = 0.99 and has no bound near 1 m: the flat middle of the trough spends a long stretch near 1 m.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -154,44 +166,48 @@ xychart-beta
     line [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 ```
 
-Caption: the orange curve is the law's distribution function $1 - \sqrt{1-t}$, plotted to two decimals, which both checks also measure on the river; the green line is what a depth spread evenly over 0 to 1 m would give. The law lies below the line: less probability on shallow water, more on deep.
+Caption: the orange curve is the law's distribution function $`1 - \sqrt{1-t}`$, plotted to two decimals, which both checks also measure on the river; the green line is what a depth spread evenly over 0 to 1 m would give. The law lies below the line: less probability on shallow water, more on deep.
 
-A density turns the law into length weighted by f. For an indicator that is the definition of a density; the ladder of Steps 2 to 4 carries it to every g. So $E[g(X)] = \int g(t) f(t)\,dt$, the probability wing's density formula ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). On the river, put $u = \sqrt{1-t}$; then $t^k f(t)\,dt$ becomes $(1-u^2)^k\,du$, and
+A density turns the law into length weighted by f. For an indicator that is the definition of a density; the ladder of Steps 2 to 4 carries it to every g. So $`E[g(X)] = \int g(t) f(t)\,dt`$, the probability wing's density formula ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). On the river, put $`u = \sqrt{1-t}`$; then $`t^k f(t)\,dt`$ becomes $`(1-u^2)^k\,du`$, and
 
-$$E[X] = \int_0^1 (1 - u^2)\,du = \tfrac23, \qquad E[X^2] = \int_0^1 (1-u^2)^2\,du = 1 - \tfrac23 + \tfrac15 = \tfrac{8}{15}.$$
+```math
+E[X] = \int_0^1 (1 - u^2)\,du = \tfrac23, \qquad E[X^2] = \int_0^1 (1-u^2)^2\,du = 1 - \tfrac23 + \tfrac15 = \tfrac{8}{15}.
+```
 
-The same numbers as Step 1, by arithmetic that never touches the river. As a Riemann integral, $\int_0^1 t\,f(t)\,dt$ is improper, since f has no bound; as a Lebesgue integral it needs nothing extra.
+The same numbers as Step 1, by arithmetic that never touches the river. As a Riemann integral, $`\int_0^1 t\,f(t)\,dt`$ is improper, since f has no bound; as a Lebesgue integral it needs nothing extra.
 
 ### Step 6: variance and moments
 
-The variance is the expectation of $(X - E[X])^2$, so it is an integral. Expanding the square and using linearity:
+The variance is the expectation of $`(X - E[X])^2`$, so it is an integral. Expanding the square and using linearity:
 
-$$\operatorname{Var}(X) = E[X^2] - E[X]^2 = \tfrac{8}{15} - \tfrac49 = \tfrac{4}{45} = 0.0889\ \text{m}^2,$$
+```math
+\mathrm{Var}(X) = E[X^2] - E[X]^2 = \tfrac{8}{15} - \tfrac49 = \tfrac{4}{45} = 0.0889\ \text{m}^2,
+```
 
-a standard deviation of 0.2981 m. Linearity needs $X^2$ integrable; a bounded depth guarantees it. The code integrates $(X - 2/3)^2$ directly on the river and gets 4/45 without the shortcut. Moments of every order come the same way: on both roads $E[X^3] = 16/35$ and $E[X^4] = 128/315$.
+a standard deviation of 0.2981 m. Linearity needs $`X^2`$ integrable; a bounded depth guarantees it. The code integrates $`(X - 2/3)^2`$ directly on the river and gets 4/45 without the shortcut. Moments of every order come the same way: on both roads $`E[X^3] = 16/35`$ and $`E[X^4] = 128/315`$.
 
 <details>
 <summary>Detailed proof</summary>
 
-Setting: $(\Omega, \mathcal F, P)$ a probability space, $X$ an $\mathcal F$-measurable real function, $\mu_X(B) = P(X^{-1}(B))$ for Borel $B$, a probability on $\mathcal B(\mathbb R)$ ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
+Setting: $`(\Omega, \mathcal F, P)`$ a probability space, $`X`$ an $`\mathcal F`$-measurable real function, $`\mu_X(B) = P(X^{-1}(B))`$ for Borel $`B`$, a probability on $`\mathcal B(\mathbb R)`$ ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
 
-**Claim 1: indicators.** For Borel $B$, $\mathbf 1_B(X(\omega)) = 1$ exactly when $\omega \in X^{-1}(B)$, so $\mathbf 1_B \circ X = \mathbf 1_{X^{-1}(B)}$. The integral of an indicator is the measure of its set ([The integral of a simple function](01-integral-of-a-simple-function.md)), so $\int \mathbf 1_B \circ X\,dP = P(X^{-1}(B)) = \mu_X(B) = \int \mathbf 1_B\,d\mu_X$.
+**Claim 1: indicators.** For Borel $`B`$, $`\mathbf 1_B(X(\omega)) = 1`$ exactly when $`\omega \in X^{-1}(B)`$, so $`\mathbf 1_B \circ X = \mathbf 1_{X^{-1}(B)}`$. The integral of an indicator is the measure of its set ([The integral of a simple function](01-integral-of-a-simple-function.md)), so $`\int \mathbf 1_B \circ X\,dP = P(X^{-1}(B)) = \mu_X(B) = \int \mathbf 1_B\,d\mu_X`$.
 
-**Claim 2: simple functions.** Let $g = \sum_{i=1}^m a_i \mathbf 1_{B_i}$ with $a_i \ge 0$ and $B_i$ Borel. Then $g \circ X = \sum a_i \mathbf 1_{X^{-1}(B_i)}$, a non-negative simple function on $\Omega$, since each $X^{-1}(B_i)$ is in $\mathcal F$. The integral of a simple function does not depend on how it is written and is linear (same card), so $\int g\circ X\,dP = \sum a_i P(X^{-1}(B_i)) = \sum a_i \mu_X(B_i) = \int g\,d\mu_X$ by Claim 1.
+**Claim 2: simple functions.** Let $`g = \sum_{i=1}^m a_i \mathbf 1_{B_i}`$ with $`a_i \ge 0`$ and $`B_i`$ Borel. Then $`g \circ X = \sum a_i \mathbf 1_{X^{-1}(B_i)}`$, a non-negative simple function on $`\Omega`$, since each $`X^{-1}(B_i)`$ is in $`\mathcal F`$. The integral of a simple function does not depend on how it is written and is linear (same card), so $`\int g\circ X\,dP = \sum a_i P(X^{-1}(B_i)) = \sum a_i \mu_X(B_i) = \int g\,d\mu_X`$ by Claim 1.
 
-**Claim 3: non-negative Borel g, values in $[0, \infty]$.** Let $s_n = \min\big(n, 2^{-n}\lfloor 2^n g\rfloor\big)$. Each $s_n$ is simple and Borel, and $s_n \uparrow g$ pointwise ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). Then $s_n \circ X \uparrow g \circ X$ at every $\omega$. By the monotone convergence theorem on $(\Omega, P)$ and again on $(\mathbb R, \mu_X)$ ([The monotone convergence theorem](03-monotone-convergence-theorem.md)), $\int g\circ X\,dP = \lim_n \int s_n\circ X\,dP = \lim_n \int s_n\,d\mu_X = \int g\,d\mu_X$, the middle equality by Claim 2. Both sides may be $+\infty$, and then both are.
+**Claim 3: non-negative Borel g, values in $`[0, \infty]`$.** Let $`s_n = \min\big(n, 2^{-n}\lfloor 2^n g\rfloor\big)`$. Each $`s_n`$ is simple and Borel, and $`s_n \uparrow g`$ pointwise ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). Then $`s_n \circ X \uparrow g \circ X`$ at every $`\omega`$. By the monotone convergence theorem on $`(\Omega, P)`$ and again on $`(\mathbb R, \mu_X)`$ ([The monotone convergence theorem](03-monotone-convergence-theorem.md)), $`\int g\circ X\,dP = \lim_n \int s_n\circ X\,dP = \lim_n \int s_n\,d\mu_X = \int g\,d\mu_X`$, the middle equality by Claim 2. Both sides may be $`+\infty`$, and then both are.
 
-**Claim 4: integrable g.** Claim 3 for $\lvert g\rvert$ gives $\int \lvert g\circ X\rvert\,dP = \int \lvert g\rvert\,d\mu_X$, so one is finite exactly when the other is. Write $g = g^+ - g^-$ with $g^+ = \max(g, 0)$ and $g^- = \max(-g, 0)$; then $(g\circ X)^\pm = g^\pm \circ X$. Claim 3 for each part gives equal finite integrals on both sides, and the integral of an integrable function is the difference of its parts' integrals ([Integrable functions](04-integrable-functions-and-l1.md)).
+**Claim 4: integrable g.** Claim 3 for $`\lvert g\rvert`$ gives $`\int \lvert g\circ X\rvert\,dP = \int \lvert g\rvert\,d\mu_X`$, so one is finite exactly when the other is. Write $`g = g^+ - g^-`$ with $`g^+ = \max(g, 0)`$ and $`g^- = \max(-g, 0)`$; then $`(g\circ X)^\pm = g^\pm \circ X`$. Claim 3 for each part gives equal finite integrals on both sides, and the integral of an integrable function is the difference of its parts' integrals ([Integrable functions](04-integrable-functions-and-l1.md)).
 
-**Claim 5: the sum formula.** Suppose $\mu_X(S) = 1$ for a countable set $S = \{x_1, x_2, \ldots\}$, with $p_i = \mu_X(\{x_i\})$. For $g \ge 0$, $g\,\mathbf 1_S = \sum_i g(x_i)\mathbf 1_{\{x_i\}}$, and the partial sums rise to it; Claim 2 and monotone convergence give $\int g\,\mathbf 1_S\,d\mu_X = \sum_i g(x_i)p_i$. Off $S$ the law has measure zero, so the integral of $g\,\mathbf 1_{\mathbb R\setminus S}$ is 0. Signed g follows by Claim 4.
+**Claim 5: the sum formula.** Suppose $`\mu_X(S) = 1`$ for a countable set $`S = \{x_1, x_2, \ldots\}`$, with $`p_i = \mu_X(\{x_i\})`$. For $`g \ge 0`$, $`g\,\mathbf 1_S = \sum_i g(x_i)\mathbf 1_{\{x_i\}}`$, and the partial sums rise to it; Claim 2 and monotone convergence give $`\int g\,\mathbf 1_S\,d\mu_X = \sum_i g(x_i)p_i`$. Off $`S`$ the law has measure zero, so the integral of $`g\,\mathbf 1_{\mathbb R\setminus S}`$ is 0. Signed g follows by Claim 4.
 
-**Claim 6: the density formula.** Suppose $f \ge 0$ is Borel and $\mu_X(B) = \int_B f\,d\lambda$ for every Borel $B$. For $g = \mathbf 1_B$ this is $\int g\,d\mu_X = \int g f\,d\lambda$. Linearity extends it to simple g; for $g \ge 0$, $s_n f \uparrow g f$, so monotone convergence on both sides extends it; Claim 4's splitting handles g with $\int \lvert g\rvert f\,d\lambda < \infty$.
+**Claim 6: the density formula.** Suppose $`f \ge 0`$ is Borel and $`\mu_X(B) = \int_B f\,d\lambda`$ for every Borel $`B`$. For $`g = \mathbf 1_B`$ this is $`\int g\,d\mu_X = \int g f\,d\lambda`$. Linearity extends it to simple g; for $`g \ge 0`$, $`s_n f \uparrow g f`$, so monotone convergence on both sides extends it; Claim 4's splitting handles g with $`\int \lvert g\rvert f\,d\lambda < \infty`$.
 
-**Claim 7: the river's law has density $f(t) = 1/(2\sqrt{1-t})$ on [0, 1).** For $0 \le t \le 1$, $4\omega(1-\omega) \le t$ iff $4\omega^2 - 4\omega + t \ge 0$ iff $\omega \le a$ or $\omega \ge 1 - a$, with $a = (1 - \sqrt{1-t})/2$ the smaller root. So $F_X(t) = 2a = 1 - \sqrt{1-t}$, with $F_X(t) = 0$ below 0 and 1 above 1. For $t < 1$, $\int_0^t f\,d\lambda = 1 - \sqrt{1-t}$ by the fundamental theorem of calculus, and at $t = 1$ monotone convergence gives 1. So the law and the measure $B \mapsto \int_B f\,d\lambda$ agree on every ray $(-\infty, t]$. The rays form a pi-system generating the Borel sets, and two probabilities agreeing on such a pi-system agree on all Borel sets ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)).
+**Claim 7: the river's law has density $`f(t) = 1/(2\sqrt{1-t})`$ on [0, 1).** For $`0 \le t \le 1`$, $`4\omega(1-\omega) \le t`$ iff $`4\omega^2 - 4\omega + t \ge 0`$ iff $`\omega \le a`$ or $`\omega \ge 1 - a`$, with $`a = (1 - \sqrt{1-t})/2`$ the smaller root. So $`F_X(t) = 2a = 1 - \sqrt{1-t}`$, with $`F_X(t) = 0`$ below 0 and 1 above 1. For $`t < 1`$, $`\int_0^t f\,d\lambda = 1 - \sqrt{1-t}`$ by the fundamental theorem of calculus, and at $`t = 1`$ monotone convergence gives 1. So the law and the measure $`B \mapsto \int_B f\,d\lambda`$ agree on every ray $`(-\infty, t]`$. The rays form a pi-system generating the Borel sets, and two probabilities agreeing on such a pi-system agree on all Borel sets ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)).
 
-**Claim 8: the moments on the line.** For $k \ge 1$ and $0 < \varepsilon < 1$, the substitution $u = \sqrt{1-t}$ on $[0, 1-\varepsilon]$ gives $\int_0^{1-\varepsilon} t^k f(t)\,dt = \int_{\sqrt\varepsilon}^1 (1-u^2)^k\,du$, since $dt = -2u\,du$ and $f(t) = 1/(2u)$. The integrand is non-negative, so monotone convergence as $\varepsilon \to 0$ gives $E[X^k] = \int_0^1 (1-u^2)^k\,du$. Expanding by the binomial theorem: $1 - \tfrac13 = \tfrac23$ for $k = 1$ and $1 - \tfrac23 + \tfrac15 = \tfrac8{15}$ for $k = 2$.
+**Claim 8: the moments on the line.** For $`k \ge 1`$ and $`0 < \varepsilon < 1`$, the substitution $`u = \sqrt{1-t}`$ on $`[0, 1-\varepsilon]`$ gives $`\int_0^{1-\varepsilon} t^k f(t)\,dt = \int_{\sqrt\varepsilon}^1 (1-u^2)^k\,du`$, since $`dt = -2u\,du`$ and $`f(t) = 1/(2u)`$. The integrand is non-negative, so monotone convergence as $`\varepsilon \to 0`$ gives $`E[X^k] = \int_0^1 (1-u^2)^k\,du`$. Expanding by the binomial theorem: $`1 - \tfrac13 = \tfrac23`$ for $`k = 1`$ and $`1 - \tfrac23 + \tfrac15 = \tfrac8{15}`$ for $`k = 2`$.
 
-**Claim 9: variance.** If $E[X^2] < \infty$, then X is integrable (since $\lvert X\rvert \le 1 + X^2$), and $(X - m)^2 = X^2 - 2mX + m^2$ with $m = E[X]$. Linearity of the integral gives $E[(X-m)^2] = E[X^2] - 2m^2 + m^2 = E[X^2] - m^2$.
+**Claim 9: variance.** If $`E[X^2] < \infty`$, then X is integrable (since $`\lvert X\rvert \le 1 + X^2`$), and $`(X - m)^2 = X^2 - 2mX + m^2`$ with $`m = E[X]`$. Linearity of the integral gives $`E[(X-m)^2] = E[X^2] - 2m^2 + m^2 = E[X^2] - m^2`$.
 
 </details>
 
@@ -221,13 +237,13 @@ A randomly moored boat sits over 2/3 m of water on average, give or take 0.2981 
 | Take (E[X])^2 for E[X^2] | 4/9 = 0.4444, not 8/15 = 0.5333; the variance would be 0 | the average of a square is not the square of the average |
 | Drop integrability: pay (−2)^k on depth band k | totals 1/2, 0, 1/2, 0, 1/2, 0 after 1 to 6 bands | each band adds 1/2 in size, so both parts are infinite and the expectation has no value |
 
-Depth band k is the depths from $1 - 4^{-k}$ to $1 - 4^{-(k+1)}$ m: band 0 is 0 to 0.75 m, band 1 is 0.75 to 0.9375 m. Band k has probability $2^{-k-1}$, so its payout times its probability is ±1/2, on both roads. The code prints all three.
+Depth band k is the depths from $`1 - 4^{-k}`$ to $`1 - 4^{-(k+1)}`$ m: band 0 is 0 to 0.75 m, band 1 is 0.75 to 0.9375 m. Band k has probability $`2^{-k-1}`$, so its payout times its probability is ±1/2, on both roads. The code prints all three.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code takes four roads. Road one integrates powers of the depth over the river, in exact fractions. Road two integrates against the law after the substitution $u = \sqrt{1-t}$, also exactly, sharing no polynomial with road one. Road three averages each gauge twice: on the river, by bisecting for where the depth passes each mark, and on the line, from the law's tail. Road four moors 100000 boats with a SplitMix64 generator, seed 2026, written out in both languages. The code checks four moments, seven gauges and one simulation; that the transfer holds for every Borel g on every probability space is what the proof shows.
+The code takes four roads. Road one integrates powers of the depth over the river, in exact fractions. Road two integrates against the law after the substitution $`u = \sqrt{1-t}`$, also exactly, sharing no polynomial with road one. Road three averages each gauge twice: on the river, by bisecting for where the depth passes each mark, and on the line, from the law's tail. Road four moors 100000 boats with a SplitMix64 generator, seed 2026, written out in both languages. The code checks four moments, seven gauges and one simulation; that the transfer holds for every Borel g on every probability space is what the proof shows.
 
 ### Python
 
@@ -696,7 +712,7 @@ example : (List.range 6).map (fun n => ∑ k ∈ Finset.range (n + 1),
 >
 > - **The square of the mean for the mean of the square.** (E[X])^2 = 4/9 = 0.4444; E[X^2] = 8/15 = 0.5333. The difference, 4/45, is the variance.
 > - **A density read as a probability.** f(0.99) = 5.0000 is not a probability; P(X = 0.99) is 0. Only integrals of f over sets are probabilities.
-> - **An expectation assumed to exist.** The (−2)^k payout has no expectation: cutting off at deeper bands gives 1/2, 0, 1/2, 0. Check $E\lvert g(X)\rvert < \infty$ first.
+> - **An expectation assumed to exist.** The (−2)^k payout has no expectation: cutting off at deeper bands gives 1/2, 0, 1/2, 0. Check $`E\lvert g(X)\rvert < \infty`$ first.
 > - **Sums and densities as two definitions.** A reading that sits on four values, like the quarter-metre gauge, has no density, and the depth has no list of point probabilities; both are one integral against the law. Some laws are neither: a law spread over the Cantor set ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)) has no atoms, no single value with positive probability, and no density, and only the general integral reaches it.
 
 ---

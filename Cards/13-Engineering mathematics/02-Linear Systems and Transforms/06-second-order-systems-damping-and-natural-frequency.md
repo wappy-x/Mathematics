@@ -41,56 +41,68 @@ The flat line (dark) is the final drop, 49.68 mm. Both curves are simulated; bot
 
 ## The formula
 
-Newton's second law for the body, with the drop $x$ measured downward from where the body sat, in metres, and $t$ the time in seconds:
+Newton's second law for the body, with the drop $`x`$ measured downward from where the body sat, in metres, and $`t`$ the time in seconds:
 
-$$m\,\ddot x + c\,\dot x + k\,x = F .$$
+```math
+m\,\ddot x + c\,\dot x + k\,x = F .
+```
 
-Each dot is one time derivative. The spring pushes back with k times the drop; the damper pushes back with c times the speed; the load's weight $F$ pushes down. Divide by $m$ and name the two coefficients that are left:
+Each dot is one time derivative. The spring pushes back with k times the drop; the damper pushes back with c times the speed; the load's weight $`F`$ pushes down. Divide by $`m`$ and name the two coefficients that are left:
 
-$$\ddot x + 2\zeta\omega_n\,\dot x + \omega_n^2\,x = \omega_n^2\,\frac{F}{k}, \qquad \omega_n = \sqrt{\frac{k}{m}}, \qquad \zeta = \frac{c}{2\sqrt{k\,m}} .$$
+```math
+\ddot x + 2\zeta\omega_n\,\dot x + \omega_n^2\,x = \omega_n^2\,\frac{F}{k}, \qquad \omega_n = \sqrt{\frac{k}{m}}, \qquad \zeta = \frac{c}{2\sqrt{k\,m}} .
+```
 
 **Read it aloud:** the natural frequency is the square root of stiffness over mass; the damping ratio is the damper's coefficient divided by twice the square root of stiffness times mass.
 
-The number $\omega_n$ is in radians per second, dimension [T]^−1; in hertz it is $f_n$ = ω_n/(2π). The number $\zeta$ has no units: it is c divided by the critical damping 2√(km), the value of c at which bouncing just stops.
+The number $`\omega_n`$ is in radians per second, dimension [T]^−1; in hertz it is $`f_n`$ = ω_n/(2π). The number $`\zeta`$ has no units: it is c divided by the critical damping 2√(km), the value of c at which bouncing just stops.
 
-The poles of the corner are the roots of m s^2 + c s + k = 0. Here $s$ is the Laplace variable: the complex frequency that the Laplace transform uses in place of time. The letter $j$ is the square root of −1 as engineers write it (the rest of the library writes i). For ζ below 1 they are a complex pair $p$:
+The poles of the corner are the roots of m s^2 + c s + k = 0. Here $`s`$ is the Laplace variable: the complex frequency that the Laplace transform uses in place of time. The letter $`j`$ is the square root of −1 as engineers write it (the rest of the library writes i). For ζ below 1 they are a complex pair $`p`$:
 
-$$p = -\sigma \pm j\,\omega_d, \qquad \sigma = \zeta\,\omega_n, \qquad \omega_d = \omega_n\sqrt{1-\zeta^2} .$$
+```math
+p = -\sigma \pm j\,\omega_d, \qquad \sigma = \zeta\,\omega_n, \qquad \omega_d = \omega_n\sqrt{1-\zeta^2} .
+```
 
 **Read it aloud:** the poles sit a distance ω_n from the origin, at an angle from the negative real axis whose cosine is ζ; their real part is the decay rate, their imaginary part the frequency of the ringing.
 
 Going back is just as short. Given a pole p:
 
-$$\omega_n = \lvert p \rvert, \qquad \zeta = \frac{-\operatorname{Re} p}{\lvert p\rvert} = \cos\theta .$$
+```math
+\omega_n = \lvert p \rvert, \qquad \zeta = \frac{-\mathrm{Re}\, p}{\lvert p\rvert} = \cos\theta .
+```
 
-Here $\theta$ is the angle between the pole and the negative real axis.
+Here $`\theta`$ is the angle between the pole and the negative real axis.
 
-The step-response numbers follow. They need a transfer function, the ratio of output to input written in s, with no zero: no value of s makes its top line zero (see When it holds). After a sudden constant push, the overshoot $M_p$ as a fraction of the final value, the time of the first peak $t_p$ and the 2% settling time $t_s$ are
+The step-response numbers follow. They need a transfer function, the ratio of output to input written in s, with no zero: no value of s makes its top line zero (see When it holds). After a sudden constant push, the overshoot $`M_p`$ as a fraction of the final value, the time of the first peak $`t_p`$ and the 2% settling time $`t_s`$ are
 
-$$M_p = e^{-\pi\zeta/\sqrt{1-\zeta^2}}, \qquad t_p = \frac{\pi}{\omega_d}, \qquad t_s \approx \frac{4}{\zeta\,\omega_n} .$$
+```math
+M_p = e^{-\pi\zeta/\sqrt{1-\zeta^2}}, \qquad t_p = \frac{\pi}{\omega_d}, \qquad t_s \approx \frac{4}{\zeta\,\omega_n} .
+```
 
 **Read it aloud:** the overshoot depends on the damping ratio alone; the first peak comes half a ringing period after the step; the response is within 2% after about four decay times.
 
-In the frequency domain, the transfer function $G$ from load force to body drop, scaled so its steady gain is 1, answers a sine push of angular frequency $\omega$ with
+In the frequency domain, the transfer function $`G`$ from load force to body drop, scaled so its steady gain is 1, answers a sine push of angular frequency $`\omega`$ with
 
-$$G(j\omega) = \frac{k}{k - m\,\omega^2 + j\,c\,\omega}, \qquad G(j\omega_n) = \frac{1}{2\zeta\,j} .$$
+```math
+G(j\omega) = \frac{k}{k - m\,\omega^2 + j\,c\,\omega}, \qquad G(j\omega_n) = \frac{1}{2\zeta\,j} .
+```
 
 **Read it aloud:** at the natural frequency the response lags by exactly a quarter cycle, and its size is one over twice the damping ratio.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $m$ | sprung mass on one corner | 400 kg | ω_n and ζ both fall |
-| $k$ | spring stiffness | 15791.4 N/m | ω_n rises, ζ falls, sag shrinks |
-| $c$ | damper coefficient: force per unit squeeze speed | 3518.6 N s/m | ζ rises, overshoot falls |
-| $F$, $x$, $t$ | load's weight; body drop, down positive; time | 784.53 N; settles at 49.68 mm | sag grows with F |
-| $\omega_n$, $f_n$ | natural frequency in rad/s; the same in Hz | 6.2832 rad/s; 1 Hz | every time on the card shrinks in proportion |
-| $\zeta$ | damping ratio, c over critical damping | 0.7 | overshoot falls; past 1, response slows |
-| $\sigma$, $\omega_d$ | decay rate ζω_n; damped (ringing) frequency | 4.3982 per second; 4.4871 rad/s = 0.7141 Hz | faster decay; faster ringing |
-| $s$, $p$, $j$ | Laplace variable; a pole; √−1 | p = −4.3982 ± 4.4871j rad/s | — |
-| $\theta$ | pole angle from the negative real axis, arccos ζ | 45.57° | more ringing |
-| $M_p$, $t_p$ | overshoot as a fraction; time of first peak | 4.60% = 2.28 mm; 0.7001 s | — |
-| $t_s$ | 2% settling time | 0.9516 s simulated; 0.9095 s by 4/(ζω_n) | — |
-| $G$, $\omega$, $r$ | transfer function; sine frequency; road height under the wheel | gain 0.7143 at ω_n; a 5 cm kerb | — |
+| $`m`$ | sprung mass on one corner | 400 kg | ω_n and ζ both fall |
+| $`k`$ | spring stiffness | 15791.4 N/m | ω_n rises, ζ falls, sag shrinks |
+| $`c`$ | damper coefficient: force per unit squeeze speed | 3518.6 N s/m | ζ rises, overshoot falls |
+| $`F`$, $`x`$, $`t`$ | load's weight; body drop, down positive; time | 784.53 N; settles at 49.68 mm | sag grows with F |
+| $`\omega_n`$, $`f_n`$ | natural frequency in rad/s; the same in Hz | 6.2832 rad/s; 1 Hz | every time on the card shrinks in proportion |
+| $`\zeta`$ | damping ratio, c over critical damping | 0.7 | overshoot falls; past 1, response slows |
+| $`\sigma`$, $`\omega_d`$ | decay rate ζω_n; damped (ringing) frequency | 4.3982 per second; 4.4871 rad/s = 0.7141 Hz | faster decay; faster ringing |
+| $`s`$, $`p`$, $`j`$ | Laplace variable; a pole; √−1 | p = −4.3982 ± 4.4871j rad/s | — |
+| $`\theta`$ | pole angle from the negative real axis, arccos ζ | 45.57° | more ringing |
+| $`M_p`$, $`t_p`$ | overshoot as a fraction; time of first peak | 4.60% = 2.28 mm; 0.7001 s | — |
+| $`t_s`$ | 2% settling time | 0.9516 s simulated; 0.9095 s by 4/(ζω_n) | — |
+| $`G`$, $`\omega`$, $`r`$ | transfer function; sine frequency; road height under the wheel | gain 0.7143 at ω_n; a 5 cm kerb | — |
 
 ### When it holds
 
@@ -121,7 +133,9 @@ What is left is one number, ζ, and it alone decides the shape of the response. 
 
 Try x = e^(st) in the unforced equation. It works when m s^2 + c s + k = 0, the characteristic equation, solved in [Complex roots](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md). Its roots are the poles of the transfer function ([Poles and zeros](03-poles-zeros-and-stability.md)). The quadratic formula gives
 
-$$s = \frac{-c \pm \sqrt{c^2 - 4mk}}{2m} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1} .$$
+```math
+s = \frac{-c \pm \sqrt{c^2 - 4mk}}{2m} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1} .
+```
 
 The square root changes character at ζ = 1. Below it, the root is imaginary and the poles are the complex pair −σ ± jω_d. The engineer's two numbers are the polar coordinates of that pair.
 
@@ -135,7 +149,9 @@ For the corner: |p| = 6.2832 rad/s, which is 1.0000 Hz, and ζ = 4.3982/6.2832 =
 
 Put the constant push F on at t = 0, with the body at rest. The final drop is F/k, the static sag. The response is the sag minus a decaying ring:
 
-$$x(t) = \frac{F}{k}\left[1 - e^{-\sigma t}\left(\cos\omega_d t + \frac{\sigma}{\omega_d}\sin\omega_d t\right)\right].$$
+```math
+x(t) = \frac{F}{k}\left[1 - e^{-\sigma t}\left(\cos\omega_d t + \frac{\sigma}{\omega_d}\sin\omega_d t\right)\right].
+```
 
 The decay rate σ comes from the real part of the poles; the ringing frequency ω_d from the imaginary part. Check t = 0: the bracket is 1 − 1 = 0, so the body starts at rest position. Check large t: the exponential dies and x tends to F/k.
 
@@ -143,11 +159,15 @@ The decay rate σ comes from the real part of the poles; the ringing frequency �
 <summary>Detailed proof: the step response and its first peak</summary>
 
 Take Laplace transforms with zero starting position and speed. The equation becomes (m s^2 + c s + k) X(s) = F/s, so X(s) = (F/k) ω_n^2 / (s (s^2 + 2σ s + ω_n^2)). Partial fractions give
-$$X(s) = \frac{F}{k}\left[\frac{1}{s} - \frac{s + 2\sigma}{(s+\sigma)^2 + \omega_d^2}\right] = \frac{F}{k}\left[\frac1s - \frac{s+\sigma}{(s+\sigma)^2+\omega_d^2} - \frac{\sigma}{\omega_d}\,\frac{\omega_d}{(s+\sigma)^2+\omega_d^2}\right],$$
+
+$`\displaystyle X(s) = \frac{F}{k}\left[\frac{1}{s} - \frac{s + 2\sigma}{(s+\sigma)^2 + \omega_d^2}\right] = \frac{F}{k}\left[\frac1s - \frac{s+\sigma}{(s+\sigma)^2+\omega_d^2} - \frac{\sigma}{\omega_d}\,\frac{\omega_d}{(s+\sigma)^2+\omega_d^2}\right],`$
+
 using (s + σ)^2 + ω_d^2 = s^2 + 2σs + ω_n^2. The three pieces invert to 1, e^(−σt) cos ω_d t and e^(−σt) sin ω_d t, which is the formula in Step 3.
 
 Differentiate. The cosine terms cancel and what is left is
-$$\dot x(t) = \frac{F}{k}\,\frac{\omega_n^2}{\omega_d}\,e^{-\sigma t}\sin\omega_d t .$$
+
+$`\displaystyle \dot x(t) = \frac{F}{k}\,\frac{\omega_n^2}{\omega_d}\,e^{-\sigma t}\sin\omega_d t .`$
+
 The speed is zero exactly when sin ω_d t = 0, at t = π/ω_d, 2π/ω_d, …. The first of these is the first peak, t_p = π/ω_d.
 
 There cos ω_d t = −1 and sin ω_d t = 0, so x(t_p) = (F/k)(1 + e^(−σπ/ω_d)). The overshoot is the second term: M_p = e^(−σπ/ω_d), and σ/ω_d = ζ/√(1 − ζ^2). Each later extremum is smaller than the one before by the same factor M_p, alternating sides.
@@ -158,7 +178,9 @@ There cos ω_d t = −1 and sin ω_d t = 0, so x(t_p) = (F/k)(1 + e^(−σπ/ω_
 
 From the folded proof, the first peak comes at t_p = π/ω_d, half a ringing period, and overshoots by
 
-$$M_p = e^{-\sigma\pi/\omega_d} = e^{-\pi\zeta/\sqrt{1-\zeta^2}} .$$
+```math
+M_p = e^{-\sigma\pi/\omega_d} = e^{-\pi\zeta/\sqrt{1-\zeta^2}} .
+```
 
 This is the overshoot [The RLC circuit](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/08-the-rlc-circuit-and-the-spring.md) found from the roots as e^(π × real part / imaginary part); with real part −ζω_n and imaginary part ω_n√(1 − ζ^2) it becomes the formula above. The natural frequency cancelled.
 

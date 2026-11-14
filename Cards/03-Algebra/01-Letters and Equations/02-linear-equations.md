@@ -38,31 +38,35 @@ The climbing line is the fare: it starts at 3 before you move, then rises 2 a mi
 
 Every equation on this card has one shape: an unknown is multiplied by a number, another number is added, and the total is stated. That shape is what linear means: the unknown is only multiplied and added to, never squared, never under a root. That is why the fare above drew a straight line. In letters:
 
-$$ax + b = c$$
+```math
+ax + b = c
+```
 
-**Read it aloud:** something unknown, multiplied by $a$, with $b$ added on, comes to $c$.
+**Read it aloud:** something unknown, multiplied by $`a`$, with $`b`$ added on, comes to $`c`$.
 
-Undo the two steps in reverse order — subtract $b$ from both sides, then divide both sides by $a$ — and the unknown stands alone:
+Undo the two steps in reverse order — subtract $`b`$ from both sides, then divide both sides by $`a`$ — and the unknown stands alone:
 
-$$x = \frac{c - b}{a}$$
+```math
+x = \frac{c - b}{a}
+```
 
-The bar means divide: the top divided by the bottom ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)). It works whenever $a$ is not zero — Step 3 covers the rest.
+The bar means divide: the top divided by the bottom ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)). It works whenever $`a`$ is not zero — Step 3 covers the rest.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the unknown, the number you were not told | the miles, written $m$ here | — |
-| $a$ | what the unknown is multiplied by | 2, the dollars per mile | shrinks: fewer miles fit in the same fare |
-| $b$ | what is added on top, whatever the unknown turns out to be | 3, the dollars charged before you move | shrinks: more of the fare goes before the wheels turn |
-| $c$ | the total the equation lands on | 15, the meter reading in dollars | grows: a bigger fare is a longer ride |
-| $m$ | this card's unknown, the miles | 6 | — |
+| $`x`$ | the unknown, the number you were not told | the miles, written $`m`$ here | — |
+| $`a`$ | what the unknown is multiplied by | 2, the dollars per mile | shrinks: fewer miles fit in the same fare |
+| $`b`$ | what is added on top, whatever the unknown turns out to be | 3, the dollars charged before you move | shrinks: more of the fare goes before the wheels turn |
+| $`c`$ | the total the equation lands on | 15, the meter reading in dollars | grows: a bigger fare is a longer ride |
+| $`m`$ | this card's unknown, the miles | 6 | — |
 
-Our taxi is that shape with $a$ = 2, $b$ = 3, $c$ = 15, and the unknown named $m$ because it counts miles: 2m + 3 = 15. Writing the fare as 3 + 2m or 2m + 3 changes nothing.
+Our taxi is that shape with $`a`$ = 2, $`b`$ = 3, $`c`$ = 15, and the unknown named $`m`$ because it counts miles: 2m + 3 = 15. Writing the fare as 3 + 2m or 2m + 3 changes nothing.
 
 One more sign, from [The number line and inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): < means less than, its small end pointing at the smaller side, and > means greater than. So 2m + 3 < 15 says the fare stays under fifteen.
 
 ### When it holds
 
-- **$a$ is not zero.** With no unknown left there is nothing to divide by: 3 + 2m = 5 + 2m comes down to 3 = 5, no answer, and 3 + m + m = 3 + 2m to 0 = 0, every number (Step 3).
+- **$`a`$ is not zero.** With no unknown left there is nothing to divide by: 3 + 2m = 5 + 2m comes down to 3 = 5, no answer, and 3 + m + m = 3 + 2m to 0 = 0, every number (Step 3).
 - **The unknown is only multiplied and added to.** Square it and the fare line bends, and the two undo steps no longer set it free.
 - **The same move on both sides.** Take the 3 off the left only and 2m = 15 gives 7.5 miles, a sentence about a different taxi.
 - **An equals sign, not a less-than.** The same steps solve 2m + 3 < 15, except that multiplying or dividing by a negative flips the sign: −2m > −12 becomes m < 6, never m > 6.

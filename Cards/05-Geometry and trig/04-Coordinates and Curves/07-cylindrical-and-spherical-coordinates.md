@@ -32,39 +32,45 @@ Drawn at 1000 km = 15 units. O is the Earth's centre. The radius ρ to Tokyo is 
 
 Three new letters, in words first.
 
-- The Greek letter rho, $\rho$, is the distance from the centre.
-- The Greek letter theta, $\theta$, is the angle around the axis: on Earth, the longitude.
-- The Greek letter phi, $\phi$, is the angle down from the North Pole, called the **colatitude**, which is 90° minus the latitude.
+- The Greek letter rho, $`\rho`$, is the distance from the centre.
+- The Greek letter theta, $`\theta`$, is the angle around the axis: on Earth, the longitude.
+- The Greek letter phi, $`\phi`$, is the angle down from the North Pole, called the **colatitude**, which is 90° minus the latitude.
 
-Spherical coordinates list them as (ρ, θ, φ), and cylindrical coordinates as (r, θ, z), with $r$ the distance from the axis and $z$ the height.
+Spherical coordinates list them as (ρ, θ, φ), and cylindrical coordinates as (r, θ, z), with $`r`$ the distance from the axis and $`z`$ the height.
 
 Spherical to grid:
 
-$$x = \rho\sin\phi\cos\theta, \qquad y = \rho\sin\phi\sin\theta, \qquad z = \rho\cos\phi$$
+```math
+x = \rho\sin\phi\cos\theta, \qquad y = \rho\sin\phi\sin\theta, \qquad z = \rho\cos\phi
+```
 
 **Read it aloud:** the radius times the sine of the colatitude is the distance from the axis; split that by longitude into x and y; the radius times the cosine of the colatitude is the height.
 
 Cylindrical to grid, and the link between the two:
 
-$$x = r\cos\theta, \qquad y = r\sin\theta, \qquad r = \rho\sin\phi$$
+```math
+x = r\cos\theta, \qquad y = r\sin\theta, \qquad r = \rho\sin\phi
+```
 
 **Read it aloud:** the shadow on the equator's plane is plain polar coordinates, and the height rides along unchanged.
 
 Back from the grid:
 
-$$\rho = \sqrt{x^2 + y^2 + z^2}, \qquad \theta = \operatorname{atan2}(y, x), \qquad \phi = \operatorname{atan2}(r, z)$$
+```math
+\rho = \sqrt{x^2 + y^2 + z^2}, \qquad \theta = \mathrm{atan2}(y, x), \qquad \phi = \mathrm{atan2}(r, z)
+```
 
 Here atan2(y, x) is the sign-aware arctangent of polar coordinates, given above −180° and up to 180°: it reads the signs of x and y separately, so it knows which quarter of the circle the direction lies in.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$, $z$ | distances along the three axes | −3946.3, 3347.9, 3715.9 km | the point slides along that axis |
-| $\rho$ | distance from the centre | 6371 km | the point moves straight out |
-| $\theta$ | angle around the axis from Greenwich, east positive: longitude | 139.69° | the point travels east along its circle of latitude |
-| $\phi$ | angle down from the North Pole: colatitude | 54.32° | the point travels south; past 90°, z turns negative |
-| $r$ | distance from the spin axis, the radius of the circle of latitude | 5175.1 km | the point moves away from the axis at the same height |
-| $\text{lat}$ | latitude, angle up from the equator, 90° − φ | 35.68° | the point travels north |
-| $\operatorname{atan2}(v, u)$ | the angle of the direction u across, v up, in the right quarter | atan2(3347.9, −3946.3) = 139.69° | — |
+| $`x`$, $`y`$, $`z`$ | distances along the three axes | −3946.3, 3347.9, 3715.9 km | the point slides along that axis |
+| $`\rho`$ | distance from the centre | 6371 km | the point moves straight out |
+| $`\theta`$ | angle around the axis from Greenwich, east positive: longitude | 139.69° | the point travels east along its circle of latitude |
+| $`\phi`$ | angle down from the North Pole: colatitude | 54.32° | the point travels south; past 90°, z turns negative |
+| $`r`$ | distance from the spin axis, the radius of the circle of latitude | 5175.1 km | the point moves away from the axis at the same height |
+| $`\text{lat}`$ | latitude, angle up from the equator, 90° − φ | 35.68° | the point travels north |
+| $`\mathrm{atan2}(v, u)`$ | the angle of the direction u across, v up, in the right quarter | atan2(3347.9, −3946.3) = 139.69° | — |
 
 ### When it holds
 

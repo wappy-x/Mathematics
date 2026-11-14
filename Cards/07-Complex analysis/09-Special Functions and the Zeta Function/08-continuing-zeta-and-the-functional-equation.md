@@ -35,30 +35,36 @@ Each doubling adds close to half of ln 2 = 0.693147 block lengths, for ever.
 
 Σ adds the terms its limits name. Re s is the real part of s. Res marks a residue, the coefficient of 1/(s − 1) near a pole ([Residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)).
 
-$$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}\ \ (\operatorname{Re} s > 1), \qquad \eta(s) = \sum_{n=1}^{\infty} \frac{(-1)^{n-1}}{n^s}\ \ (\operatorname{Re} s > 0)$$
+```math
+\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}\ \ (\mathrm{Re}\, s > 1), \qquad \eta(s) = \sum_{n=1}^{\infty} \frac{(-1)^{n-1}}{n^s}\ \ (\mathrm{Re}\, s > 0)
+```
 
 **Read it aloud:** zeta adds one over n to the s; eta adds the same terms with alternating signs, and settles on a bigger region.
 
-$$\zeta(s) = \frac{\eta(s)}{1 - 2^{1-s}}, \qquad \operatorname{Res}_{s=1} \zeta = 1$$
+```math
+\zeta(s) = \frac{\eta(s)}{1 - 2^{1-s}}, \qquad \mathrm{Res}_{s=1} \zeta = 1
+```
 
 **Read it aloud:** zeta is eta divided by one minus two to the one minus s, with a single pole, at 1, of residue 1.
 
 This quotient is road one. Road two is a second route to zeta that skips eta, the Euler–Maclaurin formula of Step 5.
 
-$$\zeta(s) = 2^{s}\, \pi^{s-1} \sin\!\left(\frac{\pi s}{2}\right) \Gamma(1-s)\, \zeta(1-s)$$
+```math
+\zeta(s) = 2^{s}\, \pi^{s-1} \sin\!\left(\frac{\pi s}{2}\right) \Gamma(1-s)\, \zeta(1-s)
+```
 
 **Read it aloud:** zeta at s is zeta at the mirror point 1 − s, times a known factor.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | the input, a complex number | 0.5; −1 | past Re s = 1 the sum settles |
-| $n$, $N$ | a term's position; road two's cut-off | N = 30 | smaller error |
-| $\zeta$ | zeta, the sum, continued | ζ(0.5) = −1.460355 | — |
-| $\eta$ | eta: the alternating sum | η(0.5) = 0.604899 | — |
-| $H_n$ | 1 + 1/2 + … + 1/n | H_54/2 = 2.2877 | grows like ln n |
-| $\gamma$ | Euler's constant, limit of H_n − ln n | 0.57722 | — |
-| $\Gamma$ | the gamma function, Γ(n) = (n − 1)! | Γ(2) = 1 | — |
-| $k$ | whole number marking where 2^(1−s) = 1 | k = 1: s = 1 + 9.064720i | — |
+| $`s`$ | the input, a complex number | 0.5; −1 | past Re s = 1 the sum settles |
+| $`n`$, $`N`$ | a term's position; road two's cut-off | N = 30 | smaller error |
+| $`\zeta`$ | zeta, the sum, continued | ζ(0.5) = −1.460355 | — |
+| $`\eta`$ | eta: the alternating sum | η(0.5) = 0.604899 | — |
+| $`H_n`$ | 1 + 1/2 + … + 1/n | H_54/2 = 2.2877 | grows like ln n |
+| $`\gamma`$ | Euler's constant, limit of H_n − ln n | 0.57722 | — |
+| $`\Gamma`$ | the gamma function, Γ(n) = (n − 1)! | Γ(2) = 1 | — |
+| $`k`$ | whole number marking where 2^(1−s) = 1 | k = 1: s = 1 + 9.064720i | — |
 
 ### When it holds
 
@@ -85,13 +91,15 @@ The convergence is uniform on any closed bounded piece of the half-plane, so eta
 
 Where Re s > 1, subtract: odd terms cancel, even terms double.
 
-$$\zeta(s) - \eta(s) = 2\left(\frac{1}{2^s} + \frac{1}{4^s} + \cdots\right) = 2^{1-s}\zeta(s)$$
+```math
+\zeta(s) - \eta(s) = 2\left(\frac{1}{2^s} + \frac{1}{4^s} + \cdots\right) = 2^{1-s}\zeta(s)
+```
 
 So η = (1 − 2^(1−s)) ζ, and by Step 0 the quotient continues zeta wherever the divisor is not 0. ζ(0.5) = 0.604899 / (1 − √2) = −1.460355.
 
 ### Step 3: where the divisor is zero
 
-2^(1−s) = e^((1−s) ln 2) is 1 exactly when s = 1 + 2πik / ln 2 for a whole number $k$: s = 1, then 1 + 9.064720i for k = 1. There eta is 0 too, so the gap fills: road one approaching it and road two at it both give 1.346580 + 0.109883i.
+2^(1−s) = e^((1−s) ln 2) is 1 exactly when s = 1 + 2πik / ln 2 for a whole number $`k`$: s = 1, then 1 + 9.064720i for k = 1. There eta is 0 too, so the gap fills: road one approaching it and road two at it both give 1.346580 + 0.109883i.
 
 <details>
 <summary>Detailed proof: eta vanishes at every such point except 1</summary>
@@ -106,13 +114,15 @@ Both lists share a point only if 3^k = 2^m, forcing k = m = 0 (odd against even)
 
 At s = 1, eta is 1 − 1/2 + 1/3 − … = ln 2 = 0.693147. Near 1 the divisor is close to (s − 1) ln 2. So ζ(s) is close to 1/(s − 1): a simple pole, residue 1. The check prints (s − 1)ζ(s) as 1.005779 at 1.01 and 1.000577 at 1.001.
 
-With 1/(s − 1) removed, zeta tends to $\gamma$: the average of ζ(1.001) and ζ(0.999) is 0.57722, and a million blocks give H_n − ln n = 0.57722. The overhang is close to (ln n + γ)/2: the pole is the stack's growth, seen from the s side.
+With 1/(s − 1) removed, zeta tends to $`\gamma`$: the average of ζ(1.001) and ζ(0.999) is 0.57722, and a million blocks give H_n − ln n = 0.57722. The overhang is close to (ln n + γ)/2: the pole is the stack's growth, seen from the s side.
 
 ### Step 5: road two reaches every s but 1
 
 Add the first N − 1 terms; replace the rest by the area under x^(−s) from N on, plus half the N-th term; correct the swap with end terms (the Euler–Maclaurin formula):
 
-$$\zeta(s) = \sum_{n=1}^{N-1} \frac{1}{n^s} + \frac{N^{1-s}}{s-1} + \frac{1}{2N^s} + \frac{s}{12\,N^{s+1}} - \cdots$$
+```math
+\zeta(s) = \sum_{n=1}^{N-1} \frac{1}{n^s} + \frac{N^{1-s}}{s-1} + \frac{1}{2N^s} + \frac{s}{12\,N^{s+1}} - \cdots
+```
 
 The area term carries the pole, residue 1 on sight. With three corrections the leftover is holomorphic for Re s > −5; each further one reaches two units further left. So road two continues zeta without eta, matching road one: −1.460355 at 0.5, −1/2 at 0.
 

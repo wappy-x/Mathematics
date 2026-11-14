@@ -39,26 +39,28 @@ One line: the security market line. Beta 0 is the bank at 4.00 percent. Beta 0.8
 
 ## The formula
 
-Notation first, in words. A **return** is the fractional gain over a period, dividends included. The letter $E$ before a bracket means **expected value**: the probability-weighted average. **Covariance**, written Cov, measures how two returns move together; **variance**, written Var, is a return's covariance with itself, its spread around its average. Subscript $i$ names one share; subscript $M$ names the market.
+Notation first, in words. A **return** is the fractional gain over a period, dividends included. The letter $`E`$ before a bracket means **expected value**: the probability-weighted average. **Covariance**, written Cov, measures how two returns move together; **variance**, written Var, is a return's covariance with itself, its spread around its average. Subscript $`i`$ names one share; subscript $`M`$ names the market.
 
-$$E[R_i] = r_f + \beta_i\,\big(E[R_M] - r_f\big), \qquad \beta_i = \frac{\operatorname{Cov}(R_i, R_M)}{\operatorname{Var}(R_M)}$$
+```math
+E[R_i] = r_f + \beta_i\,\big(E[R_M] - r_f\big), \qquad \beta_i = \frac{\mathrm{Cov}(R_i, R_M)}{\mathrm{Var}(R_M)}
+```
 
 **Read it aloud:** a share's expected return is the bank rate plus its beta times the market's expected return above the bank rate; its beta is how much it moves with the market, divided by how much the market moves on its own.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r_f$ | the **risk-free rate**: what a bank deposit pays over the period | 4% | with the market's return held fixed: rises if beta is below 1, falls if above |
-| $R_i$, $E[R_i]$, $\mu$, $i$, $j$ | share $i$'s return, and its expected value; $\mu$ lists every share's; $i$, $j$ name shares | Kestrel, 8.8% | — |
-| $R_M$, $E[R_M]$, $M$, $T$ | the market portfolio's return, and its expected value; $T$ marks the tangency mix, which equilibrium makes equal to $M$ | 8% | rises for every share with positive beta |
-| $E[R_M] - r_f$ | the **market premium**: the market's reward over the bank | 4 points | rises in proportion to beta |
-| $\beta_i$, $\beta$ | **beta**: the share's movement with the market, per unit of market movement | Kestrel 1.2 | rises 4 points per unit of beta |
-| $\operatorname{Cov}(R_i, R_M)$, $\Sigma$ | covariance of the share with the market; $\Sigma$ is the table of all covariances between shares | 480 (squared percent) | raises beta |
-| $\operatorname{Var}(R_M)$, $\sigma_M$ | the market's variance, and its **volatility** (the square root) | 400 (squared percent), 20% | lowers every beta |
-| $\sigma_i$ | a share's own volatility | Kestrel 30% | nothing, while beta is held fixed |
-| $w_i$, $w$, $w_T$, $W_k$, $k$ | the market's weight in share $i$: its fraction of all money invested; $w$ any mix, $w_T$ the tangency mix; $W_k$ investor $k$'s wealth | 20, 40, 40% | — |
-| $\lambda$, $h$ | reward per unit of covariance with the market; $h$ a small sum moved into one share | 1 in decimals | — |
-| $\alpha_i$, $\varepsilon_i$ | **alpha**: return beyond what beta explains; $\varepsilon_i$ is the leftover wobble | CAPM says alpha is 0 | — |
-| $x_t$, $y_t$, $n$, $t$ | market and share returns above the bank rate in period $t$; $n$ periods | four quarters | more periods, tighter beta |
+| $`r_f`$ | the **risk-free rate**: what a bank deposit pays over the period | 4% | with the market's return held fixed: rises if beta is below 1, falls if above |
+| $`R_i`$, $`E[R_i]`$, $`\mu`$, $`i`$, $`j`$ | share $`i`$'s return, and its expected value; $`\mu`$ lists every share's; $`i`$, $`j`$ name shares | Kestrel, 8.8% | — |
+| $`R_M`$, $`E[R_M]`$, $`M`$, $`T`$ | the market portfolio's return, and its expected value; $`T`$ marks the tangency mix, which equilibrium makes equal to $`M`$ | 8% | rises for every share with positive beta |
+| $`E[R_M] - r_f`$ | the **market premium**: the market's reward over the bank | 4 points | rises in proportion to beta |
+| $`\beta_i`$, $`\beta`$ | **beta**: the share's movement with the market, per unit of market movement | Kestrel 1.2 | rises 4 points per unit of beta |
+| $`\mathrm{Cov}(R_i, R_M)`$, $`\Sigma`$ | covariance of the share with the market; $`\Sigma`$ is the table of all covariances between shares | 480 (squared percent) | raises beta |
+| $`\mathrm{Var}(R_M)`$, $`\sigma_M`$ | the market's variance, and its **volatility** (the square root) | 400 (squared percent), 20% | lowers every beta |
+| $`\sigma_i`$ | a share's own volatility | Kestrel 30% | nothing, while beta is held fixed |
+| $`w_i`$, $`w`$, $`w_T`$, $`W_k`$, $`k`$ | the market's weight in share $`i`$: its fraction of all money invested; $`w`$ any mix, $`w_T`$ the tangency mix; $`W_k`$ investor $`k`$'s wealth | 20, 40, 40% | — |
+| $`\lambda`$, $`h`$ | reward per unit of covariance with the market; $`h`$ a small sum moved into one share | 1 in decimals | — |
+| $`\alpha_i`$, $`\varepsilon_i`$ | **alpha**: return beyond what beta explains; $`\varepsilon_i`$ is the leftover wobble | CAPM says alpha is 0 | — |
+| $`x_t`$, $`y_t`$, $`n`$, $`t`$ | market and share returns above the bank rate in period $`t`$; $`n`$ periods | four quarters | more periods, tighter beta |
 
 Two helper facts follow from the definitions. The market's own beta is 1, since its covariance with itself is its variance. And a bank deposit has beta 0, since a fixed return does not move with anything.
 
@@ -80,40 +82,46 @@ An investor who holds a broad portfolio and adds a sliver of Kestrel does not ta
 
 ### Step 1: at the tangency portfolio, every share pays the same reward per unit of covariance
 
-The previous card ([Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md)) finds the risky mix $T$ with the highest **Sharpe ratio**: expected return above the bank rate, divided by volatility. Every investor holds that mix plus a bank account.
+The previous card ([Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md)) finds the risky mix $`T`$ with the highest **Sharpe ratio**: expected return above the bank rate, divided by volatility. Every investor holds that mix plus a bank account.
 
-Take a tiny amount $h$ of money out of the bank and put it into share $i$, on top of the tangency mix. The portfolio's expected return rises by $h$ times share $i$'s excess return, $E[R_i] - r_f$. Its variance rises by $2h$ times $\operatorname{Cov}(R_i, R_T)$, ignoring a much smaller term in $h^2$.
+Take a tiny amount $`h`$ of money out of the bank and put it into share $`i`$, on top of the tangency mix. The portfolio's expected return rises by $`h`$ times share $`i`$'s excess return, $`E[R_i] - r_f`$. Its variance rises by $`2h`$ times $`\mathrm{Cov}(R_i, R_T)`$, ignoring a much smaller term in $`h^2`$.
 
 So each share offers a rate of exchange: extra expected return per extra variance. Suppose share A offered a better rate than share B. Add a sliver of A, remove enough B to leave the variance unchanged, and settle the difference with the bank. Expected return rises, and so does the Sharpe ratio. The tangency mix has the highest Sharpe ratio, so no such move can help. Every share must offer the same rate:
 
-$$E[R_i] - r_f = \lambda\,\operatorname{Cov}(R_i, R_T) \quad \text{for every share } i,$$
+```math
+E[R_i] - r_f = \lambda\,\mathrm{Cov}(R_i, R_T) \quad \text{for every share } i,
+```
 
-with one constant $\lambda$ shared by all.
+with one constant $`\lambda`$ shared by all.
 
 ### Step 2: the constant is fixed by the tangency mix itself
 
-The tangency mix is a weighted sum of shares, so the condition holds for it too, with its covariance with itself being its variance: $E[R_T] - r_f = \lambda \operatorname{Var}(R_T)$. Divide:
+The tangency mix is a weighted sum of shares, so the condition holds for it too, with its covariance with itself being its variance: $`E[R_T] - r_f = \lambda \mathrm{Var}(R_T)`$. Divide:
 
-$$\lambda = \frac{E[R_T] - r_f}{\operatorname{Var}(R_T)}.$$
+```math
+\lambda = \frac{E[R_T] - r_f}{\mathrm{Var}(R_T)}.
+```
 
 Put that back into Step 1:
 
-$$E[R_i] - r_f = \frac{\operatorname{Cov}(R_i, R_T)}{\operatorname{Var}(R_T)}\,\big(E[R_T] - r_f\big).$$
+```math
+E[R_i] - r_f = \frac{\mathrm{Cov}(R_i, R_T)}{\mathrm{Var}(R_T)}\,\big(E[R_T] - r_f\big).
+```
 
 The fraction is a beta against the tangency mix. Nothing so far used equilibrium: this is true of any single investor's best mix.
 
 ### Step 3: market clearing makes the tangency mix the market
 
-If every investor holds the same risky mix, only in different amounts, then adding up all their holdings gives that mix again, scaled up. But the sum of all holdings is everything there is to own: the market. So the tangency mix has the market's weights, $T = M$, and the formula becomes the security market line.
+If every investor holds the same risky mix, only in different amounts, then adding up all their holdings gives that mix again, scaled up. But the sum of all holdings is everything there is to own: the market. So the tangency mix has the market's weights, $`T = M`$, and the formula becomes the security market line.
 
 For the economy on this card: the market holds 20 percent Kestrel, 40 percent Oakridge, 40 percent Pinecrest. With the returns the line assigns, 8.8, 7.2 and 8.4 percent, the tangency mix solved from scratch comes out at exactly 20, 40 and 40. The market is the best mix, as the argument requires.
 
 <details>
 <summary>Detailed proof: the tangency condition with covariance matrices</summary>
 
-Write $\mu$ for the list of expected returns, $\Sigma$ for the covariance matrix (row $i$, column $j$ holds $\operatorname{Cov}(R_i, R_j)$), assumed invertible, and $\mathbf 1$ for a list of ones. A mix $w$ with weights summing to 1 has excess return $w^\top(\mu - r_f \mathbf 1)$ and variance $w^\top \Sigma w$. Maximising the Sharpe ratio, the gradient of $\ln$ of the ratio is $(\mu - r_f\mathbf 1)/(w^\top(\mu - r_f\mathbf 1)) - \Sigma w/(w^\top\Sigma w)$, and setting it to zero gives $\mu - r_f\mathbf 1 = \lambda\,\Sigma w_T$ with $\lambda = w_T^\top(\mu - r_f\mathbf 1)/(w_T^\top \Sigma w_T)$. Row $i$ of $\Sigma w_T$ is $\operatorname{Cov}(R_i, R_T)$, which is Step 1; multiplying on the left by $w_T^\top$ is Step 2. The ratio is unchanged when $w$ is scaled, so the solution is $w_T = \Sigma^{-1}(\mu - r_f\mathbf 1)$ divided by the sum of its entries, which needs that sum to be positive.
+Write $`\mu`$ for the list of expected returns, $`\Sigma`$ for the covariance matrix (row $`i`$, column $`j`$ holds $`\mathrm{Cov}(R_i, R_j)`$), assumed invertible, and $`\mathbf 1`$ for a list of ones. A mix $`w`$ with weights summing to 1 has excess return $`w^\top(\mu - r_f \mathbf 1)`$ and variance $`w^\top \Sigma w`$. Maximising the Sharpe ratio, the gradient of $`\ln`$ of the ratio is $`(\mu - r_f\mathbf 1)/(w^\top(\mu - r_f\mathbf 1)) - \Sigma w/(w^\top\Sigma w)`$, and setting it to zero gives $`\mu - r_f\mathbf 1 = \lambda\,\Sigma w_T`$ with $`\lambda = w_T^\top(\mu - r_f\mathbf 1)/(w_T^\top \Sigma w_T)`$. Row $`i`$ of $`\Sigma w_T`$ is $`\mathrm{Cov}(R_i, R_T)`$, which is Step 1; multiplying on the left by $`w_T^\top`$ is Step 2. The ratio is unchanged when $`w`$ is scaled, so the solution is $`w_T = \Sigma^{-1}(\mu - r_f\mathbf 1)`$ divided by the sum of its entries, which needs that sum to be positive.
 
-For market clearing, investor $k$ with wealth $W_k$ puts a fraction $c_k \ge 0$ of it into $w_T$. Total money in each share is $(\sum_k c_k W_k)\,w_T$. Setting this equal to the total value of each share outstanding, and dividing by the total, gives $w_T = w_M$. The step needs every investor to see the same $\mu$ and $\Sigma$ and the same $r_f$; it does not show that such prices exist, only what they must satisfy if they do.
+For market clearing, investor $`k`$ with wealth $`W_k`$ puts a fraction $`c_k \ge 0`$ of it into $`w_T`$. Total money in each share is $`(\sum_k c_k W_k)\,w_T`$. Setting this equal to the total value of each share outstanding, and dividing by the total, gives $`w_T = w_M`$. The step needs every investor to see the same $`\mu`$ and $`\Sigma`$ and the same $`r_f`$; it does not show that such prices exist, only what they must satisfy if they do.
 
 </details>
 
@@ -121,13 +129,17 @@ For market clearing, investor $k$ with wealth $W_k$ puts a fraction $c_k \ge 0$ 
 
 Split Kestrel's return into a piece that moves with the market and a leftover:
 
-$$R_i - r_f = \alpha_i + \beta_i\,(R_M - r_f) + \varepsilon_i,$$
+```math
+R_i - r_f = \alpha_i + \beta_i\,(R_M - r_f) + \varepsilon_i,
+```
 
-where the leftover $\varepsilon_i$ averages zero and has zero covariance with the market. Variances then add:
+where the leftover $`\varepsilon_i`$ averages zero and has zero covariance with the market. Variances then add:
 
-$$\sigma_i^2 = \beta_i^2\,\sigma_M^2 + \operatorname{Var}(\varepsilon_i).$$
+```math
+\sigma_i^2 = \beta_i^2\,\sigma_M^2 + \mathrm{Var}(\varepsilon_i).
+```
 
-For Kestrel: 900 = 1.44 × 400 + 324, so 30 percent total volatility is 24 percent from the market and 18 percent private, combined as squares. The line pays for the first part only, and says $\alpha_i = 0$.
+For Kestrel: 900 = 1.44 × 400 + 324, so 30 percent total volatility is 24 percent from the market and 18 percent private, combined as squares. The line pays for the first part only, and says $`\alpha_i = 0`$.
 
 Pinecrest has less total volatility than Kestrel, 25 percent against 30, and less beta, 1.1 against 1.2. Oakridge has the lowest total volatility, 20 percent, and the lowest beta. Their private volatilities are 18, 12 and 11.87 percent. None of that private part changes the expected return.
 
@@ -140,11 +152,13 @@ Suppose Kestrel's private wobble did earn extra return. An investor could hold K
 
 ### Step 5: estimating beta is fitting a straight line
 
-Nobody observes a covariance directly. From $n$ past periods, record the market's return above the bank rate, $x_t$, and the share's, $y_t$. Fit the line $y = a + b\,x$ that makes the sum of squared misses smallest ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). With $\bar x$ and $\bar y$ the averages:
+Nobody observes a covariance directly. From $`n`$ past periods, record the market's return above the bank rate, $`x_t`$, and the share's, $`y_t`$. Fit the line $`y = a + b\,x`$ that makes the sum of squared misses smallest ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). With $`\bar x`$ and $`\bar y`$ the averages:
 
-$$\hat\beta = \frac{\sum_t (x_t - \bar x)(y_t - \bar y)}{\sum_t (x_t - \bar x)^2}, \qquad \hat\alpha = \bar y - \hat\beta\,\bar x.$$
+```math
+\hat\beta = \frac{\sum_t (x_t - \bar x)(y_t - \bar y)}{\sum_t (x_t - \bar x)^2}, \qquad \hat\alpha = \bar y - \hat\beta\,\bar x.
+```
 
-The hats mean "estimated from data". The slope is the sample covariance over the sample variance: the definition of beta, applied to the data. The intercept is the estimated alpha. The fit is on returns *above the bank rate* for both series; otherwise the intercept mixes in a piece of the bank rate. The market's returns must vary: if every $x_t$ is equal, the bottom sum is 0 and no slope exists.
+The hats mean "estimated from data". The slope is the sample covariance over the sample variance: the definition of beta, applied to the data. The intercept is the estimated alpha. The fit is on returns *above the bank rate* for both series; otherwise the intercept mixes in a piece of the bank rate. The market's returns must vary: if every $`x_t`$ is equal, the bottom sum is 0 and no slope exists.
 
 An alpha is only as good as the data behind it. Its standard error (the typical size of its estimation error) depends on the leftover volatility and on how many periods there are, and for a single share it is large: several percentage points a year from twenty years of monthly data, as the code shows.
 
@@ -171,11 +185,11 @@ So Kestrel's investors should expect 8.8 percent a year: 4 for waiting, 4.8 for 
 
 ### Reading beta and alpha from four quarters
 
-Four quarters of returns above the bank rate, in percent: the market, $x_t$ = −2, −1, 1, 2; Kestrel, $y_t$ = −0.9, −2.7, 3.7, 1.9.
+Four quarters of returns above the bank rate, in percent: the market, $`x_t`$ = −2, −1, 1, 2; Kestrel, $`y_t`$ = −0.9, −2.7, 3.7, 1.9.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| averages | $\bar x$ = 0, $\bar y$ = 2 / 4 | 0 and 0.5 |
+| averages | $`\bar x`$ = 0, $`\bar y`$ = 2 / 4 | 0 and 0.5 |
 | spread of the market | 4 + 1 + 1 + 4 | 10 |
 | joint spread | (−2)(−1.4) + (−1)(−3.2) + (1)(3.2) + (2)(1.4) | 12 |
 | **fitted beta** | 12 / 10 | **1.2** |
@@ -600,9 +614,9 @@ The two outputs agree line for line at four decimals, including the simulation, 
 
 Lean proves the security market line, the variance split and the fitted line, for any number of shares or periods.
 
-- Suppose $\Sigma$ is invertible, the market weights sum to 1, and the market has the highest Sharpe ratio, as Step 3 says. Then $E[R_i] - r_f = \beta_i\,(E[R_M] - r_f)$ for every share $i$.
-- Take Step 4's split, with finite variances and a leftover $\varepsilon_i$ of zero covariance with the market. Then $\sigma_i^2 = \beta_i^2\,\sigma_M^2 + \operatorname{Var}(\varepsilon_i)$, whatever alpha is.
-- Take $n$ periods of $x_t$ and $y_t$, where the market's returns are not all equal. Then the line with slope $\hat\beta$ and intercept $\hat\alpha$ has a smaller sum of squared misses than any other line.
+- Suppose $`\Sigma`$ is invertible, the market weights sum to 1, and the market has the highest Sharpe ratio, as Step 3 says. Then $`E[R_i] - r_f = \beta_i\,(E[R_M] - r_f)`$ for every share $`i`$.
+- Take Step 4's split, with finite variances and a leftover $`\varepsilon_i`$ of zero covariance with the market. Then $`\sigma_i^2 = \beta_i^2\,\sigma_M^2 + \mathrm{Var}(\varepsilon_i)`$, whatever alpha is.
+- Take $`n`$ periods of $`x_t`$ and $`y_t`$, where the market's returns are not all equal. Then the line with slope $`\hat\beta`$ and intercept $`\hat\alpha`$ has a smaller sum of squared misses than any other line.
 - Take the three shares at weights 20, 40 and 40 percent. Then their betas are 1.2, 0.8 and 1.1, and their expected returns 8.8, 7.2 and 8.4 percent.
 - Kestrel's split 900 = 1.44 × 400 + 324 also checks, as does the four-quarter fit: beta 1.2, alpha 0.5.
 - The mistakes giving 10.0, 7.2 and 9.6 percent also check.

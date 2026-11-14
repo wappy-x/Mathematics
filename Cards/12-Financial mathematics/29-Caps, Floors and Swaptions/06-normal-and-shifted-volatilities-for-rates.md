@@ -40,59 +40,71 @@ The rising line is the normal volatility that reproduces each 30 percent lognorm
 
 ## The formula
 
-Notation first, in words. $F$ is the **forward swap rate**, the fixed rate that makes the swap worth nothing today. $K$ is the strike. $T$ is the wait to expiry, in years. $M$ is the notional and $A$ the **annuity**: today's value of receiving one unit of rate on each fixed payment date, so $M A$ turns a rate into dollars. The premium is $V$ in dollars and $p = V/(MA)$ in rate units. Each model has one volatility dial: $\sigma$ (lognormal), $\sigma_N$ (normal), $\sigma_a$ (shifted by an amount $a$).
+Notation first, in words. $`F`$ is the **forward swap rate**, the fixed rate that makes the swap worth nothing today. $`K`$ is the strike. $`T`$ is the wait to expiry, in years. $`M`$ is the notional and $`A`$ the **annuity**: today's value of receiving one unit of rate on each fixed payment date, so $`M A`$ turns a rate into dollars. The premium is $`V`$ in dollars and $`p = V/(MA)`$ in rate units. Each model has one volatility dial: $`\sigma`$ (lognormal), $`\sigma_N`$ (normal), $`\sigma_a`$ (shifted by an amount $`a`$).
 
 All three models price the payer the same way, as dollars-per-unit-of-rate times an average payoff:
 
-$$V = M\,A\,p$$
+```math
+V = M\,A\,p
+```
 
-and differ only in $p$:
+and differ only in $`p`$:
 
-$$\text{lognormal (Black):}\quad p = F\,N(d_1) - K\,N(d_2), \qquad d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+\text{lognormal (Black):}\quad p = F\,N(d_1) - K\,N(d_2), \qquad d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-$$\text{normal (Bachelier):}\quad p = (F - K)\,N(d) + \sigma_N\sqrt{T}\,\phi(d), \qquad d = \frac{F - K}{\sigma_N\sqrt{T}}$$
+```math
+\text{normal (Bachelier):}\quad p = (F - K)\,N(d) + \sigma_N\sqrt{T}\,\phi(d), \qquad d = \frac{F - K}{\sigma_N\sqrt{T}}
+```
 
-$$\text{shifted:}\quad p = \text{Black with } F + a,\ K + a \text{ and } \sigma_a$$
+```math
+\text{shifted:}\quad p = \text{Black with } F + a,\ K + a \text{ and } \sigma_a
+```
 
 **Read it aloud:** one premium, three models, three dials; a quote is whichever dial setting reproduces the premium.
 
-The conversions. At the money, $K = F$, exactly:
+The conversions. At the money, $`K = F`$, exactly:
 
-$$\sigma_N = F\,\sqrt{\frac{2\pi}{T}}\,\Bigl[\,2N\!\bigl(\tfrac{w}{2}\bigr) - 1\Bigr] \;\approx\; F\,\sigma\,\Bigl(1 - \frac{w^2}{24}\Bigr), \qquad w = \sigma\sqrt{T}$$
+```math
+\sigma_N = F\,\sqrt{\frac{2\pi}{T}}\,\Bigl[\,2N\!\bigl(\tfrac{w}{2}\bigr) - 1\Bigr] \;\approx\; F\,\sigma\,\Bigl(1 - \frac{w^2}{24}\Bigr), \qquad w = \sigma\sqrt{T}
+```
 
 **Read it aloud:** normal volatility is the rate times its lognormal volatility, shrunk by a factor a little under one.
 
 Away from the money, approximately:
 
-$$\sigma_N \approx \sigma\,\ell(F, K)\,\Bigl(1 - \frac{w^2}{24}\Bigr), \qquad \sigma_a \approx \sigma\,\frac{\ell(F, K)}{\ell(F + a,\,K + a)}, \qquad \ell(x, y) = \frac{x - y}{\ln(x / y)}$$
+```math
+\sigma_N \approx \sigma\,\ell(F, K)\,\Bigl(1 - \frac{w^2}{24}\Bigr), \qquad \sigma_a \approx \sigma\,\frac{\ell(F, K)}{\ell(F + a,\,K + a)}, \qquad \ell(x, y) = \frac{x - y}{\ln(x / y)}
+```
 
 **Read it aloud:** away from the money, replace the rate by its logarithmic mean with the strike.
 
-$\ell(x, y)$ is the **logarithmic mean** of two positive numbers. It always lies between them, a little below their plain average, and $\ell(x, x) = x$, so the away-from-the-money rule collapses to the at-the-money one when the strike meets the forward.
+$`\ell(x, y)`$ is the **logarithmic mean** of two positive numbers. It always lies between them, a little below their plain average, and $`\ell(x, x) = x`$, so the away-from-the-money rule collapses to the at-the-money one when the strike meets the forward.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$, $p$ | the premium in dollars, and in rate units | $221,223.24; 52.46 bp | — |
-| $M$, $A$ | the notional, and the annuity (years of fixed payments, discounted) | $10 million; 4.216702 | scale the dollar premium, never the volatility |
-| $F$ | the forward swap rate | 4.40 percent (440 bp) | raises normal volatility at a fixed lognormal one: 101.62 bp at 3.40 percent, 131.51 bp at 4.40 |
-| $K$ | the strike | 440 bp; 240 to 640 bp on the strike table | at a fixed lognormal volatility, normal volatility rises with it |
-| $T$ | the wait to expiry, in years | 1 | deepens the shrink factor: 127.21 bp at 10 years, not 132 |
-| $\sigma$ | lognormal volatility: the wobble as a yearly fraction of the rate | 30 percent | dearer premium |
-| $\sigma_N$ | normal volatility: the wobble in bp per year | 131.51 bp | dearer premium |
-| $a$, $\sigma_a$ | the shift, and the volatility of the shifted rate | 200 bp; 20.58 percent | a larger shift needs a smaller $\sigma_a$ for the same premium: 17.79 percent at 300 bp |
-| $w$ | one **wiggle unit**, $\sigma\sqrt{T}$: the lognormal wobble over the whole wait | 0.30 | — |
-| $N(x)$, $\phi(x)$ | the bell-curve area left of $x$, and the curve's height at $x$ | $N(0.15) = 0.559618$ | — |
-| $d_1$, $d_2$, $d$ | the cut-offs, in wiggle units, where the payer starts to pay | 0.15, −0.15; 0 | — |
-| $\ell$ | the logarithmic mean of two positive numbers | $\ell(440, 540) = 488.29$ bp | — |
+| $`V`$, $`p`$ | the premium in dollars, and in rate units | $221,223.24; 52.46 bp | — |
+| $`M`$, $`A`$ | the notional, and the annuity (years of fixed payments, discounted) | $10 million; 4.216702 | scale the dollar premium, never the volatility |
+| $`F`$ | the forward swap rate | 4.40 percent (440 bp) | raises normal volatility at a fixed lognormal one: 101.62 bp at 3.40 percent, 131.51 bp at 4.40 |
+| $`K`$ | the strike | 440 bp; 240 to 640 bp on the strike table | at a fixed lognormal volatility, normal volatility rises with it |
+| $`T`$ | the wait to expiry, in years | 1 | deepens the shrink factor: 127.21 bp at 10 years, not 132 |
+| $`\sigma`$ | lognormal volatility: the wobble as a yearly fraction of the rate | 30 percent | dearer premium |
+| $`\sigma_N`$ | normal volatility: the wobble in bp per year | 131.51 bp | dearer premium |
+| $`a`$, $`\sigma_a`$ | the shift, and the volatility of the shifted rate | 200 bp; 20.58 percent | a larger shift needs a smaller $`\sigma_a`$ for the same premium: 17.79 percent at 300 bp |
+| $`w`$ | one **wiggle unit**, $`\sigma\sqrt{T}`$: the lognormal wobble over the whole wait | 0.30 | — |
+| $`N(x)`$, $`\phi(x)`$ | the bell-curve area left of $`x`$, and the curve's height at $`x`$ | $`N(0.15) = 0.559618`$ | — |
+| $`d_1`$, $`d_2`$, $`d`$ | the cut-offs, in wiggle units, where the payer starts to pay | 0.15, −0.15; 0 | — |
+| $`\ell`$ | the logarithmic mean of two positive numbers | $`\ell(440, 540) = 488.29`$ bp | — |
 
 ### When it holds
 
-- **Same contract, same annuity.** A conversion compares two models of one swaption. $M$ and $A$ multiply every model's $p$ alike, so they cancel. Convert a swaption volatility using a cap's annuity, or a different expiry, and the numbers mean nothing.
-- **The rate sits above the model's floor.** Lognormal needs $F$ and $K$ above zero; shifted needs them above $-a$; normal has no floor. Inside those limits every model's premium rises strictly with its dial, from the payoff already locked in at zero volatility towards a ceiling: $F$ for lognormal, $F + a$ for shifted, none for normal. So each translation has exactly one answer when the premium lies strictly between the payoff locked in and the target model's ceiling, and none outside. For a flat 131.51 bp normal smile the lognormal translation fails only for strikes below 0.014 bp, where the normal premium reaches the lognormal ceiling $F$.
+- **Same contract, same annuity.** A conversion compares two models of one swaption. $`M`$ and $`A`$ multiply every model's $`p`$ alike, so they cancel. Convert a swaption volatility using a cap's annuity, or a different expiry, and the numbers mean nothing.
+- **The rate sits above the model's floor.** Lognormal needs $`F`$ and $`K`$ above zero; shifted needs them above $`-a`$; normal has no floor. Inside those limits every model's premium rises strictly with its dial, from the payoff already locked in at zero volatility towards a ceiling: $`F`$ for lognormal, $`F + a`$ for shifted, none for normal. So each translation has exactly one answer when the premium lies strictly between the payoff locked in and the target model's ceiling, and none outside. For a flat 131.51 bp normal smile the lognormal translation fails only for strikes below 0.014 bp, where the normal premium reaches the lognormal ceiling $`F`$.
 - **The shift is part of the quote.** "20.58 percent" is a price only together with "shift 200 bp".
-- **The rules are approximations.** The logarithmic-mean rule is off by at most 0.0027 bp across 240 to 640 bp here. The errors grow with $w$ and with the distance of the strike from the forward: at a 10-year expiry the plain rule $F\sigma$ gives 132 bp against an exact 127.21 bp.
+- **The rules are approximations.** The logarithmic-mean rule is off by at most 0.0027 bp across 240 to 640 bp here. The errors grow with $`w`$ and with the distance of the strike from the forward: at a 10-year expiry the plain rule $`F\sigma`$ gives 132 bp against an exact 127.21 bp.
 
-**Conventions, dated 28 Sep 2026:** normal volatility is quoted in basis points per year (strictly, per square root of a year); lognormal and shifted volatility in percent per year; the shift travels with the quote. This card uses annual fixed payments, a flat curve at 4.40 percent annually compounded, and continuous time in years; a real swaption's fixed leg runs on its own day count, which enters through $A$ only.
+**Conventions, dated 28 Sep 2026:** normal volatility is quoted in basis points per year (strictly, per square root of a year); lognormal and shifted volatility in percent per year; the shift travels with the quote. This card uses annual fixed payments, a flat curve at 4.40 percent annually compounded, and continuous time in years; a real swaption's fixed leg runs on its own day count, which enters through $`A`$ only.
 
 ---
 
@@ -106,64 +118,70 @@ Translation between languages is therefore exact by construction: price in one m
 
 ### Step 1: the three models share everything except the spread
 
-In units of the annuity, the forward swap rate is a fair bet on its own future value: its average, taken that way, is today's $F$ ([The annuity measure](05-the-annuity-measure.md)). Every model therefore centres its spread of possible rates on the same 4.40 percent, and multiplies its average payoff by the same $M A$.
+In units of the annuity, the forward swap rate is a fair bet on its own future value: its average, taken that way, is today's $`F`$ ([The annuity measure](05-the-annuity-measure.md)). Every model therefore centres its spread of possible rates on the same 4.40 percent, and multiplies its average payoff by the same $`M A`$.
 
 What is left is the shape of the spread:
 
 - Lognormal: a move is proportional to the rate. At 4.40 percent a 30 percent volatility means a typical wobble of about 132 bp a year; at a lower rate, proportionally less.
 - Normal: a move is the same size wherever the rate is. 131.51 bp a year at any level, including below zero.
-- Shifted: a move is proportional to the rate's distance above $-a$. With $a = 200$ bp, a 20.58 percent volatility wobbles by almost the same number of basis points at 4.40 percent.
+- Shifted: a move is proportional to the rate's distance above $`-a`$. With $`a = 200`$ bp, a 20.58 percent volatility wobbles by almost the same number of basis points at 4.40 percent.
 
 Near the forward, all three spreads have almost the same width. That is why their volatilities convert through the rate's level.
 
 ### Step 2: at the money the conversion is exact
 
-Set $K = F$. The Black formula collapses: $d_1 = w/2$ and $d_2 = -w/2$, and $N(-x) = 1 - N(x)$, so
+Set $`K = F`$. The Black formula collapses: $`d_1 = w/2`$ and $`d_2 = -w/2`$, and $`N(-x) = 1 - N(x)`$, so
 
-$$p = F\,\bigl[\,2N(w/2) - 1\,\bigr].$$
+```math
+p = F\,\bigl[\,2N(w/2) - 1\,\bigr].
+```
 
-The Bachelier formula collapses too: $d = 0$, $N(0) = \tfrac12$, the first term vanishes and $\phi(0) = 1/\sqrt{2\pi}$, so
+The Bachelier formula collapses too: $`d = 0`$, $`N(0) = \tfrac12`$, the first term vanishes and $`\phi(0) = 1/\sqrt{2\pi}`$, so
 
-$$p = \sigma_N\,\sqrt{T/(2\pi)}.$$
+```math
+p = \sigma_N\,\sqrt{T/(2\pi)}.
+```
 
-Two expressions for one premium. Set them equal and solve for $\sigma_N$: that is the exact conversion in The formula. For the shifted model the same collapse gives $(F + a)\bigl[2N(w_a/2) - 1\bigr]$ with $w_a = \sigma_a\sqrt{T}$; set it equal to the Black premium and solve for $\sigma_a$ by the root finder, since $N$ has no closed-form reverse.
+Two expressions for one premium. Set them equal and solve for $`\sigma_N`$: that is the exact conversion in The formula. For the shifted model the same collapse gives $`(F + a)\bigl[2N(w_a/2) - 1\bigr]`$ with $`w_a = \sigma_a\sqrt{T}`$; set it equal to the Black premium and solve for $`\sigma_a`$ by the root finder, since $`N`$ has no closed-form reverse.
 
 The prerequisite card proves the same at-the-money identity for a floorlet ([Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)); here it runs on a swaption, where the annuity replaces the discount factor.
 
 <details>
 <summary>Detailed proof: the shrink factor 1 − w^2/24</summary>
 
-Near zero the bell curve's area grows as $N(x) - \tfrac12 = \phi(0)\,\bigl(x - x^3/6 + x^5/40 - \dots\bigr)$, found by integrating the series $e^{-t^2/2} = 1 - t^2/2 + t^4/8 - \dots$ term by term from 0 to $x$.
+Near zero the bell curve's area grows as $`N(x) - \tfrac12 = \phi(0)\,\bigl(x - x^3/6 + x^5/40 - \dots\bigr)`$, found by integrating the series $`e^{-t^2/2} = 1 - t^2/2 + t^4/8 - \dots`$ term by term from 0 to $`x`$.
 
-Put $x = w/2$ and double: $2N(w/2) - 1 = \phi(0)\,\bigl(w - w^3/24 + w^5/640 - \dots\bigr)$.
+Put $`x = w/2`$ and double: $`2N(w/2) - 1 = \phi(0)\,\bigl(w - w^3/24 + w^5/640 - \dots\bigr)`$.
 
-Multiply by $F\sqrt{2\pi/T} = F/(\phi(0)\sqrt{T})$ and use $w/\sqrt{T} = \sigma$:
+Multiply by $`F\sqrt{2\pi/T} = F/(\phi(0)\sqrt{T})`$ and use $`w/\sqrt{T} = \sigma`$:
 
-$\sigma_N = F\,\sigma\,\bigl(1 - w^2/24 + w^4/640 - \dots\bigr)$.
+$`\sigma_N = F\,\sigma\,\bigl(1 - w^2/24 + w^4/640 - \dots\bigr)`$.
 
-The series alternates with shrinking terms, so stopping after $-w^2/24$ undershoots by less than $F\sigma\,w^4/640$. At $w = 0.30$ that bound is a tiny fraction of a basis point; the checks find the rule at 131.505 bp against an exact 131.506666 bp.
+The series alternates with shrinking terms, so stopping after $`-w^2/24`$ undershoots by less than $`F\sigma\,w^4/640`$. At $`w = 0.30`$ that bound is a tiny fraction of a basis point; the checks find the rule at 131.505 bp against an exact 131.506666 bp.
 
 </details>
 
-For the shifted model the same first-order match reads $(F + a)\,\sigma_a \approx F\,\sigma$: both models must wobble the same number of basis points at the forward. Hence $\sigma_a \approx \sigma F/(F + a)$: 20.625 percent by the rule, 20.584 percent exact.
+For the shifted model the same first-order match reads $`(F + a)\,\sigma_a \approx F\,\sigma`$: both models must wobble the same number of basis points at the forward. Hence $`\sigma_a \approx \sigma F/(F + a)`$: 20.625 percent by the rule, 20.584 percent exact.
 
 ### Step 3: away from the money, average the wobble along the way
 
-The at-the-money rule uses the wobble at the forward. A 2.40 percent payer is the 2.40 percent receiver plus the fixed amount $F - K$, so both carry one volatility. The receiver pays only if the rate travels from 4.40 down to 2.40 percent, so the wobble that matters is the wobble along that road. In the lognormal model it shrinks as the rate falls: $\sigma x$ bp a year when the rate is at $x$.
+The at-the-money rule uses the wobble at the forward. A 2.40 percent payer is the 2.40 percent receiver plus the fixed amount $`F - K`$, so both carry one volatility. The receiver pays only if the rate travels from 4.40 down to 2.40 percent, so the wobble that matters is the wobble along that road. In the lognormal model it shrinks as the rate falls: $`\sigma x`$ bp a year when the rate is at $`x`$.
 
 A car trip gives the right kind of average. Drive a road where the speed limit changes along the way. The average speed is the distance divided by the total time, and the slow stretches take most of the time, so they pull the average down more than their length suggests. That average is a **harmonic average**: total distance over the sum of distance-divided-by-speed. From here on the car is gone and the term stays.
 
-Take the rate's travel from $F$ to $K$ as the road and the local wobble $\sigma x$ as the speed. The total "time" is $\int_K^F \mathrm{d}x/(\sigma x) = \ln(F/K)/\sigma$. The harmonic average wobble is the distance over that:
+Take the rate's travel from $`F`$ to $`K`$ as the road and the local wobble $`\sigma x`$ as the speed. The total "time" is $`\int_K^F \mathrm{d}x/(\sigma x) = \ln(F/K)/\sigma`$. The harmonic average wobble is the distance over that:
 
-$$\sigma_N \approx \frac{F - K}{\ln(F/K)/\sigma} = \sigma\,\ell(F, K).$$
+```math
+\sigma_N \approx \frac{F - K}{\ln(F/K)/\sigma} = \sigma\,\ell(F, K).
+```
 
-That this harmonic average is the right leading term for short expiries is a theorem: Berestycki, Busca and Florent (2002, in Sources) prove it for lognormal quotes, and the normal-quote version follows the same way. The checks measure what is left: with the shrink factor $1 - w^2/24$ from Step 2 applied, the rule matches the exact inversion within 0.0027 bp at every strike from 240 to 640 bp.
+That this harmonic average is the right leading term for short expiries is a theorem: Berestycki, Busca and Florent (2002, in Sources) prove it for lognormal quotes, and the normal-quote version follows the same way. The checks measure what is left: with the shrink factor $`1 - w^2/24`$ from Step 2 applied, the rule matches the exact inversion within 0.0027 bp at every strike from 240 to 640 bp.
 
-The shifted model has local wobble $\sigma_a(x + a)$, so the same road gives $\sigma_a\,\ell(F + a, K + a)$. Match the two harmonic averages and the shifted rule in The formula follows. It carries no shrink factor, so it is a few hundredths of a percentage point high: 18.55 against an exact 18.50 percent at 240 bp.
+The shifted model has local wobble $`\sigma_a(x + a)`$, so the same road gives $`\sigma_a\,\ell(F + a, K + a)`$. Match the two harmonic averages and the shifted rule in The formula follows. It carries no shrink factor, so it is a few hundredths of a percentage point high: 18.55 against an exact 18.50 percent at 240 bp.
 
 ### Step 4: flat in one language is sloped in another
 
-A single lognormal volatility across all strikes gives a normal volatility that rises with the strike, because $\ell(F, K)$ rises with $K$: the chart in the overview. The reverse holds too. A single normal volatility across strikes gives a lognormal volatility that falls with the strike:
+A single lognormal volatility across all strikes gives a normal volatility that rises with the strike, because $`\ell(F, K)`$ rises with $`K`$: the chart in the overview. The reverse holds too. A single normal volatility across strikes gives a lognormal volatility that falls with the strike:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -187,20 +205,20 @@ The 1-into-5 payer on $10 million, forward and strike at 4.40 percent, 30 percen
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| wiggle unit $w$ | $0.30 \times \sqrt{1}$ | 0.30 |
-| $N(w/2)$ | $N(0.15)$ | 0.559618 |
-| bracket $2N(w/2) - 1$ | $2 \times 0.559618 - 1$ | 0.119235 |
-| Black premium $p$ | $440 \times 0.119235$ | 52.46 bp |
-| dollar premium $V$ | $10{,}000{,}000 \times 4.216702 \times 0.0052463569$ | $221,223.24 |
-| $\sqrt{2\pi/T}$ | $\sqrt{2\pi}$, one year | 2.506628 |
-| exact normal volatility | $440 \times 2.506628 \times 0.119235$ | 131.51 bp |
-| rule of thumb | $440 \times 0.30$ | 132 bp |
-| rule with shrink | $132 \times (1 - 0.30^2/24) = 132 \times 0.99625$ | 131.505 bp |
-| shifted bracket, $a = 200$ bp | $52.463569 / 640$ | 0.081974 |
-| shifted volatility | root finder: $2N(w_a/2) - 1 = 0.081974$ | 20.58 percent |
-| shifted rule | $30 \times 440 / 640$ | 20.625 percent |
-| away: $\ell(440, 540)$ | $100 / \ln(540/440)$ | 488.29 bp |
-| away: normal rule at 540 bp | $0.30 \times 488.29 \times 0.99625$ | 145.94 bp |
+| wiggle unit $`w`$ | $`0.30 \times \sqrt{1}`$ | 0.30 |
+| $`N(w/2)`$ | $`N(0.15)`$ | 0.559618 |
+| bracket $`2N(w/2) - 1`$ | $`2 \times 0.559618 - 1`$ | 0.119235 |
+| Black premium $`p`$ | $`440 \times 0.119235`$ | 52.46 bp |
+| dollar premium $`V`$ | $`10{,}000{,}000 \times 4.216702 \times 0.0052463569`$ | $221,223.24 |
+| $`\sqrt{2\pi/T}`$ | $`\sqrt{2\pi}`$, one year | 2.506628 |
+| exact normal volatility | $`440 \times 2.506628 \times 0.119235`$ | 131.51 bp |
+| rule of thumb | $`440 \times 0.30`$ | 132 bp |
+| rule with shrink | $`132 \times (1 - 0.30^2/24) = 132 \times 0.99625`$ | 131.505 bp |
+| shifted bracket, $`a = 200`$ bp | $`52.463569 / 640`$ | 0.081974 |
+| shifted volatility | root finder: $`2N(w_a/2) - 1 = 0.081974`$ | 20.58 percent |
+| shifted rule | $`30 \times 440 / 640`$ | 20.625 percent |
+| away: $`\ell(440, 540)`$ | $`100 / \ln(540/440)`$ | 488.29 bp |
+| away: normal rule at 540 bp | $`0.30 \times 488.29 \times 0.99625`$ | 145.94 bp |
 | away: exact at 540 bp | root finder on the 21.38 bp premium | **145.94 bp** |
 
 **At 4.40 percent, 30 percent lognormal is 131.51 bp normal and 20.58 percent at a 200 bp shift; at a 5.40 percent strike the same 30 percent is 145.94 bp.** The fund's $221,223.24 is one price whichever dealer quotes it; a dealer who quotes the 5.40 percent strike at 131.51 bp normal, copying the at-the-money figure, is quoting a cheaper option, not the same one.
@@ -212,7 +230,7 @@ The 1-into-5 payer on $10 million, forward and strike at 4.40 percent, 30 percen
 | At-the-money 132 bp used for a 2.40 percent receiver | $15,757.10 against $3,274.49 | the rule uses the wobble at the forward; the road down to 2.40 percent wobbles far less under 30 percent lognormal |
 | A 2%-shift volatility, 20.58 percent, priced with a 1% shift | $186,657.11 against $221,223.24 | the shift is part of the quote; a smaller shift needs a larger volatility, 24.41 percent |
 | 131.51 bp read as a lognormal 1.3151 percent | $9,733.75 against $221,223.24 | units: a normal volatility is an amount of rate, not a fraction of it |
-| $F\sigma$ at a 10-year expiry | 132 bp against 127.21 bp | the shrink factor $1 - w^2/24$ is no longer small when $w$ is near 1 |
+| $`F\sigma`$ at a 10-year expiry | 132 bp against 127.21 bp | the shrink factor $`1 - w^2/24`$ is no longer small when $`w`$ is near 1 |
 
 ---
 
@@ -614,10 +632,10 @@ The two outputs agree line for line.
 
 Lean proves the exact at-the-money conversion, and that each premium in range has exactly one volatility, for every input the card allows.
 
-- Suppose the strike equals the forward, and $F$, $\sigma$, $T$, $M$, $A$ are all positive. Then the two dollar premiums match exactly when $\sigma_N = F \sqrt{2\pi/T} [2N(w/2) - 1]$.
-- Take a shift $a$, with $F + a$ and $K + a$ above zero, and $T > 0$. Then any premium strictly between the payoff locked in and the ceiling $F + a$ has exactly one positive shifted volatility. A zero shift gives the plain lognormal case.
-- Take any $F$ and $K$, negative ones included, and $T > 0$. Then any premium above the payoff locked in has exactly one positive normal volatility.
-- The hand arithmetic for $d_1$, $d_2$, the 132 bp rule, the 131.505 bp shrink and the shifted rule's 20.625 percent is exact.
+- Suppose the strike equals the forward, and $`F`$, $`\sigma`$, $`T`$, $`M`$, $`A`$ are all positive. Then the two dollar premiums match exactly when $`\sigma_N = F \sqrt{2\pi/T} [2N(w/2) - 1]`$.
+- Take a shift $`a`$, with $`F + a`$ and $`K + a`$ above zero, and $`T > 0`$. Then any premium strictly between the payoff locked in and the ceiling $`F + a`$ has exactly one positive shifted volatility. A zero shift gives the plain lognormal case.
+- Take any $`F`$ and $`K`$, negative ones included, and $`T > 0`$. Then any premium above the payoff locked in has exactly one positive normal volatility.
+- The hand arithmetic for $`d_1`$, $`d_2`$, the 132 bp rule, the 131.505 bp shrink and the shifted rule's 20.625 percent is exact.
 
 The bell-curve values, the logarithmic-mean rule and every dollar figure are left to the Python and Rust checks.
 
@@ -1106,7 +1124,7 @@ end RateVolatilities
 > - **Lower the rate to 1.00 percent, keep 30 percent lognormal.** Guess the normal volatility first. It is 29.89 bp: the same percentage of a smaller rate.
 > - **Lower the rate to 3.40 percent, keep 30 percent lognormal.** Normal volatility falls to 101.62 bp. Hold the normal quote at 131.51 bp instead and the lognormal quote rises to 38.92 percent. Which of the two stays put when rates move is an empirical question, and the answer has changed over the decades.
 > - **Raise the shift to 300 bp.** Guess first: larger or smaller than 20.58 percent? Smaller, 17.79 percent, against the rule's 17.84.
-> - **Stretch the expiry to 10 years.** The exact normal volatility is 127.21 bp; the plain $F\sigma$ still says 132.
+> - **Stretch the expiry to 10 years.** The exact normal volatility is 127.21 bp; the plain $`F\sigma`$ still says 132.
 
 ---
 
@@ -1114,10 +1132,10 @@ end RateVolatilities
 
 > [!warning]
 > **Reading a volatility number without its language.** "30", "131.5" and "20.58" are the same price, and "20.58" alone is not a price at all without its 200 bp shift. Put a quote into the wrong model and the premium is off by a factor, not a rounding: 131.51 bp read as lognormal gives $9,733.75 for a $221,223.24 option.
-> - **Carrying the at-the-money conversion to other strikes.** Pricing a 2.40 percent receiver at 132 bp charges $15,757.10 for a $3,274.49 option. Convert each strike through $\ell(F, K)$, or invert strike by strike.
-> - **Dropping the shrink factor at long expiries.** Harmless at one year, 131.505 against 131.51 bp; at ten years $F\sigma$ is 132 against 127.21 bp.
+> - **Carrying the at-the-money conversion to other strikes.** Pricing a 2.40 percent receiver at 132 bp charges $15,757.10 for a $3,274.49 option. Convert each strike through $`\ell(F, K)`$, or invert strike by strike.
+> - **Dropping the shrink factor at long expiries.** Harmless at one year, 131.505 against 131.51 bp; at ten years $`F\sigma`$ is 132 against 127.21 bp.
 > - **Reading skew as a market view.** A flat normal smile is a lognormal skew from 40.12 percent at 2.40 percent to 24.70 percent at 6.40 percent. Translate before interpreting.
-> - **Assuming a conversion survives a move in rates.** Every conversion runs through $F$. At 3.40 percent the same 30 percent lognormal is 101.62 bp normal.
+> - **Assuming a conversion survives a move in rates.** Every conversion runs through $`F`$. At 3.40 percent the same 30 percent lognormal is 101.62 bp normal.
 
 ---
 

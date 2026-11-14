@@ -36,17 +36,21 @@ Schematic, not to scale. Each line joins the two ends of its routes. A line from
 
 Two names come first. **OPT** is the fewest posts any plan can use: here 4 if inspectors may stand only at termini, 3 if any station is allowed. **ALG** is the number of posts a method uses. A method is a **ρ-approximation** ("rho") when, on every possible input,
 
-$$\text{ALG} \le \rho \times \text{OPT}$$
+```math
+\text{ALG} \le \rho \times \text{OPT}
+```
 
 **Read it aloud:** whatever network it is given, the method never uses more than ρ times the fewest possible posts.
 
 The three methods on this card carry these ratios:
 
-$$\rho_{\text{matching}} = 2, \qquad \rho_{\text{rounding}} = f, \qquad \rho_{\text{greedy}} = H(n) = 1 + \tfrac{1}{2} + \tfrac{1}{3} + \dots + \tfrac{1}{n} \;\le\; 1 + \ln n$$
+```math
+\rho_{\text{matching}} = 2, \qquad \rho_{\text{rounding}} = f, \qquad \rho_{\text{greedy}} = H(n) = 1 + \tfrac{1}{2} + \tfrac{1}{3} + \dots + \tfrac{1}{n} \;\le\; 1 + \ln n
+```
 
 **Read it aloud:** the matching rule is within 2; rounding is within f, the most stations a single route can be checked at; greedy is within the harmonic sum H(n), which grows like the natural log of the number of routes.
 
-Rounding needs a **linear program**, LP for short: a linear goal under linear limits, with each yes-or-no choice relaxed to a fraction between 0 and 1. Here the choice "post at station v, yes or no" becomes a fraction $x_v$. The LP asks for the smallest total of the $x_v$ such that, for every route, the fractions at the stations where it can be checked add up to at least 1. [Integer programs](../05-Operations%20Research/03-integer-programming-and-branch-and-bound.md) treats them in general; this card solves its small one by checking every point built from 0, 0.5 and 1, which includes every corner (Step 2).
+Rounding needs a **linear program**, LP for short: a linear goal under linear limits, with each yes-or-no choice relaxed to a fraction between 0 and 1. Here the choice "post at station v, yes or no" becomes a fraction $`x_v`$. The LP asks for the smallest total of the $`x_v`$ such that, for every route, the fractions at the stations where it can be checked add up to at least 1. [Integer programs](../05-Operations%20Research/03-integer-programming-and-branch-and-bound.md) treats them in general; this card solves its small one by checking every point built from 0, 0.5 and 1, which includes every corner (Step 2).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -57,9 +61,9 @@ Rounding needs a **linear program**, LP for short: a linear goal under linear li
 | H(n), ln n | the harmonic sum 1 + 1/2 + … + 1/n; ln is the natural log | H(30) = 3.995; 1 + ln 30 = 4.401 | — |
 | j, t | a term's place in the harmonic sum, and a point on the curve 1/t that bounds it | — | — |
 | M | the routes the matching rule picks; no two share a station | routes 1, 14, 27 | each forces a post in every plan |
-| $x_v$, $x_u$ | the fraction of an inspector at station v; u and v are the two ends of a route | N 1, A 0.5, D 0 | more posts after rounding |
+| $`x_v`$, $`x_u`$ | the fraction of an inspector at station v; u and v are the two ends of a route | N 1, A 0.5, D 0 | more posts after rounding |
 | LP | the least total of fractions that checks every route | 3.5 | the floor under OPT rises |
-| $y_r$ | a weight on route r, with at most 1 in total at each station | 1 on routes 1 and 14; 0.5 on 27, 28, 29 | a higher floor, if loads stay at most 1 |
+| $`y_r`$ | a weight on route r, with at most 1 in total at each station | 1 on routes 1 and 14; 0.5 on 27, 28, 29 | a higher floor, if loads stay at most 1 |
 | k | routes still unchecked when greedy posts | 30, 14, 6, 3, 1 | the price allowed per route falls |
 | f | the most stations at which one route can be checked | 2 at termini; 3 at any station | rounding's threshold 1/f falls and its ratio f rises |
 
@@ -91,13 +95,15 @@ Here 6 against a true fewest of 4: ratio 1.50. The matching need not be the larg
 
 ### Step 2: the fractional plan, a floor that can be computed
 
-Now relax each yes-or-no post to a fraction $x_v$ between 0 and 1, and ask that each route's two ends hold at least 1 between them: $x_u + x_v \ge 1$ for a route from u to v. Every real plan is one of these fractional plans, with 1 at posts and 0 elsewhere. So the cheapest fractional plan, LP, is a floor: LP ≤ OPT.
+Now relax each yes-or-no post to a fraction $`x_v`$ between 0 and 1, and ask that each route's two ends hold at least 1 between them: $`x_u + x_v \ge 1`$ for a route from u to v. Every real plan is one of these fractional plans, with 1 at posts and 0 elsewhere. So the cheapest fractional plan, LP, is a floor: LP ≤ OPT.
 
 **Solving it by corners.** The allowed points form a region with flat sides, and a linear goal is smallest at a corner of it ([Corners are enough](../../15-Optimization/04-Linear%20Programming/02-corners-and-the-fundamental-theorem.md) proves this). When every route has two ends, every corner uses only the values 0, 0.5 and 1; the fold below proves it. So it is enough to try every point built from those three values: 3 choices at each of 8 termini, 6,561 points. The best is 3.5: 1 at N and S, 0.5 at A, B and C, and 0 at D, E and F.
 
-**A second road to the same 3.5, with no corners.** Put a weight $y_r$ on each route r so that the weights touching any one station, its **load**, add to at most 1. Call such weights a **packing**. Every fractional plan pays at least the packing's total:
+**A second road to the same 3.5, with no corners.** Put a weight $`y_r`$ on each route r so that the weights touching any one station, its **load**, add to at most 1. Call such weights a **packing**. Every fractional plan pays at least the packing's total:
 
-$$\text{total of the } y_r \;\le\; \text{total of } y_r\,(x_u + x_v) \;=\; \text{total of } x_v \times \text{load at } v \;\le\; \text{total of the } x_v$$
+```math
+\text{total of the } y_r \;\le\; \text{total of } y_r\,(x_u + x_v) \;=\; \text{total of } x_v \times \text{load at } v \;\le\; \text{total of the } x_v
+```
 
 Read it left to right. Each route's two ends hold at least 1 between them, so multiplying its weight by their sum cannot shrink it. Adding route by route and then regrouping station by station, each station's fraction is multiplied by its load. Each load is at most 1. Weight 1 on route 1 (N–D), 1 on route 14 (S–E), and 0.5 on each ring route: the heaviest station load is 1, and the total is 3.5. So no fractional plan costs less than 3.5, and one costs exactly 3.5. Two roads, one value.
 
@@ -108,7 +114,7 @@ Posts come whole, so a floor of 3.5 means at least 4. Brute force over all 256 s
 
 Take an allowed point with at least one fraction other than 0, 0.5 and 1. Call a station low if its fraction lies strictly between 0 and 0.5, and high if strictly between 0.5 and 1. Make two new points: add a small amount to every low station and subtract the same amount from every high one; then the reverse. If the amount is small enough, every fraction stays between 0 and 1.
 
-Check each route's limit $x_u + x_v \ge 1$. If it has room to spare, a small enough change keeps it. If it is exactly 1, its ends are 0.5 and 0.5 (untouched), or 0 and 1 (untouched), or one low and one high, and the two changes cancel. So both new points are allowed, and the first point is their midpoint. A point that is the midpoint of two allowed points is not a corner. So every corner uses only 0, 0.5 and 1.
+Check each route's limit $`x_u + x_v \ge 1`$. If it has room to spare, a small enough change keeps it. If it is exactly 1, its ends are 0.5 and 0.5 (untouched), or 0 and 1 (untouched), or one low and one high, and the two changes cancel. So both new points are allowed, and the first point is their midpoint. A point that is the midpoint of two allowed points is not a corner. So every corner uses only 0, 0.5 and 1.
 
 </details>
 
@@ -116,13 +122,13 @@ The packing argument is the matching floor of Step 1 with fractional weights: a 
 
 ### Step 3: rounding keeps the floor's factor
 
-**The rule:** post wherever $x_v$ is at least 0.5.
+**The rule:** post wherever $`x_v`$ is at least 0.5.
 
 Every route is checked: its two ends hold at least 1 between them, so one of them holds at least 0.5. And each post had a fraction of at least 0.5, so the number of posts is at most 2 times the sum of the fractions: ALG ≤ 2 × LP ≤ 2 × OPT.
 
 Here that is N, S, A, B and C: 5 posts, under 2 × 3.5 = 7. Ratio 5/4 = 1.25, better than the matching rule on this city, under the same promise.
 
-The same argument works whenever every route can be checked at most at f stations. One of its f fractions is at least 1/f, so post where $x_v \ge 1/f$; the posts number at most f × LP. At any station in this city f is 3, which gives a ratio of 3.
+The same argument works whenever every route can be checked at most at f stations. One of its f fractions is at least 1/f, so post where $`x_v \ge 1/f`$; the posts number at most f × LP. At any station in this city f is 3, which gives a ratio of 3.
 
 When f is large, a coin can replace the fixed threshold: post at each station with chance equal to its fraction, and repeat for a small multiple of ln n rounds, where n is the number of routes. That is **randomised rounding**, the shelf's coins put to work ([Randomised algorithms](01-randomised-algorithms-and-expectation.md)). Each round costs the LP on average, so the expected cost is that many rounds times the LP: the rounds are where the log factor comes from.
 
@@ -473,7 +479,7 @@ The two outputs match line for line.
 Lean proves the three ratios for every network of routes, and checks this city's posts, floors and greedy run.
 
 - Take any list of routes, each with two ends. Then the matching rule's posts check every route, and number at most 2 × OPT.
-- Suppose each route can be checked at no more than f stations, and $x_v$ is a cheapest fractional plan. Then posting wherever $x_v \ge 1/f$ checks every route.
+- Suppose each route can be checked at no more than f stations, and $`x_v`$ is a cheapest fractional plan. Then posting wherever $`x_v \ge 1/f`$ checks every route.
 - Take the same routes and plan. Then those posts number at most f × LP, and so at most f × OPT.
 - Take any run of greedy that checks all n routes. Then it uses at most H(n) × OPT posts.
 - The harmonic sum obeys H(n) ≤ 1 + ln n for every n.

@@ -26,35 +26,37 @@ Drawn at 1 metre of side = 200 units across, 1 square metre of miss = 50 units u
 
 ## The formula
 
-A reminder of notation from [Sequences](../01-Limits%20and%20Continuity/03-sequences-and-limits.md): a list of guesses is written $x_n$, with $n$ as its clock, so $x_0$ is the start and $x_{n+1}$ the guess after $x_n$.
+A reminder of notation from [Sequences](../01-Limits%20and%20Continuity/03-sequences-and-limits.md): a list of guesses is written $`x_n`$, with $`n`$ as its clock, so $`x_0`$ is the start and $`x_{n+1}`$ the guess after $`x_n`$.
 
-To solve "something equals a target", move the target across first, so the job becomes $f(x) = 0$. For the tile, $f(x) = x^2 - 2$. Then one Newton step is
+To solve "something equals a target", move the target across first, so the job becomes $`f(x) = 0`$. For the tile, $`f(x) = x^2 - 2`$. Then one Newton step is
 
-$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+```math
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
+```
 
 **Read it aloud:** the next guess is the current one minus the miss divided by the miss's rate of change.
 
-For the tile, $f'(x) = 2x$, and the step simplifies to $x_{n+1} = \tfrac{1}{2}\left(x_n + 2/x_n\right)$: average the guess with 2 divided by the guess.
+For the tile, $`f'(x) = 2x`$, and the step simplifies to $`x_{n+1} = \tfrac{1}{2}\left(x_n + 2/x_n\right)`$: average the guess with 2 divided by the guess.
 
-The **residual** is $f(x_n)$: how far the guess misses, in the equation's units. Here the run stops once it is below $10^{-10}$ square metres.
+The **residual** is $`f(x_n)`$: how far the guess misses, in the equation's units. Here the run stops once it is below $`10^{-10}`$ square metres.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the miss: area minus target | $x^2 - 2$, square metres | scaling it changes no step |
-| $f'$, $f''$ | the slope of $f$ and the rate that slope changes | $2x$ square metres per metre, and 2 | a shorter step |
-| $x_n$, $x_0$, $n$ | the guess after $n$ steps, in metres | $x_0 = 1$, $x_1 = 1.5$ | — |
-| $r$ | the root: the side that exactly works | 1.414213562373095 m | — |
-| $e_n$ | the error $x_n - r$ | $e_2 = 0.0025$ m | the next grows as its square |
-| $a$, $b$ | ends of a bracket: $f$ changes sign between them | 1 and 2 | a looser guard |
-| $m$ | the smallest slope size in the bracket | 2 square metres per metre on 1 to 2 | a tighter error bound |
-| $\xi$ | a point a theorem says exists | between $x_n$ and $r$ | — |
+| $`f`$ | the miss: area minus target | $`x^2 - 2`$, square metres | scaling it changes no step |
+| $`f'`$, $`f''`$ | the slope of $`f`$ and the rate that slope changes | $`2x`$ square metres per metre, and 2 | a shorter step |
+| $`x_n`$, $`x_0`$, $`n`$ | the guess after $`n`$ steps, in metres | $`x_0 = 1`$, $`x_1 = 1.5`$ | — |
+| $`r`$ | the root: the side that exactly works | 1.414213562373095 m | — |
+| $`e_n`$ | the error $`x_n - r`$ | $`e_2 = 0.0025`$ m | the next grows as its square |
+| $`a`$, $`b`$ | ends of a bracket: $`f`$ changes sign between them | 1 and 2 | a looser guard |
+| $`m`$ | the smallest slope size in the bracket | 2 square metres per metre on 1 to 2 | a tighter error bound |
+| $`\xi`$ | a point a theorem says exists | between $`x_n`$ and $`r`$ | — |
 
 ### When it holds
 
-- **A nonzero slope at the root.** Where the curve only touches the axis, as $x^2$ does at 0, the error merely halves each step.
-- **A start close enough, or a bracket.** Far off, the tangent can point anywhere: $x^3 - 2x + 2$ from 0 bounces 0, 1, 0, 1.
-- **No flat point on the way.** From $x_0 = 0$ the tile's step divides by zero.
-- **A residual stop in the right units.** The residual is in square metres, the answer in metres; dividing by $m$ converts.
+- **A nonzero slope at the root.** Where the curve only touches the axis, as $`x^2`$ does at 0, the error merely halves each step.
+- **A start close enough, or a bracket.** Far off, the tangent can point anywhere: $`x^3 - 2x + 2`$ from 0 bounces 0, 1, 0, 1.
+- **No flat point on the way.** From $`x_0 = 0`$ the tile's step divides by zero.
+- **A residual stop in the right units.** The residual is in square metres, the answer in metres; dividing by $`m`$ converts.
 
 ---
 
@@ -66,17 +68,19 @@ Zoomed in, a smooth curve looks like its tangent line ([Linear approximation](01
 
 ### Step 1: solve the tangent line
 
-The tangent at $x_n$ is $y = f(x_n) + f'(x_n)(x - x_n)$. Set $y = 0$. If $f'(x_n)$ is not zero, divide by it: $x = x_n - f(x_n)/f'(x_n)$. That is the formula.
+The tangent at $`x_n`$ is $`y = f(x_n) + f'(x_n)(x - x_n)`$. Set $`y = 0`$. If $`f'(x_n)`$ is not zero, divide by it: $`x = x_n - f(x_n)/f'(x_n)`$. That is the formula.
 
-At the tile's start, $f(1) = -1$ and $f'(1) = 2$: the line $y = 2x - 3$ meets the axis at 1.5. Units: square metres over square metres per metre leave metres.
+At the tile's start, $`f(1) = -1`$ and $`f'(1) = 2`$: the line $`y = 2x - 3`$ meets the axis at 1.5. Units: square metres over square metres per metre leave metres.
 
 ### Step 2: for the tile, the error is squared exactly
 
-Subtract the root $r$ from both sides of $x_{n+1} = (x_n^2 + 2)/(2x_n)$ and use $r^2 = 2$:
+Subtract the root $`r`$ from both sides of $`x_{n+1} = (x_n^2 + 2)/(2x_n)`$ and use $`r^2 = 2`$:
 
-$$e_{n+1} = \frac{x_n^2 - 2 r x_n + r^2}{2x_n} = \frac{e_n^2}{2x_n}$$
+```math
+e_{n+1} = \frac{x_n^2 - 2 r x_n + r^2}{2x_n} = \frac{e_n^2}{2x_n}
+```
 
-No approximation was made. For $x_n > 0$ the new error is positive, so after one step every guess sits above $r$. It is at most half the old one, so the guesses fall to $r$. Near $r$ it is the old error squared times about 1/(2 × 1.414) = 0.3536: 0.0025 becomes 0.0000021.
+No approximation was made. For $`x_n > 0`$ the new error is positive, so after one step every guess sits above $`r`$. It is at most half the old one, so the guesses fall to $`r`$. Near $`r`$ it is the old error squared times about 1/(2 × 1.414) = 0.3536: 0.0025 becomes 0.0000021.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -93,34 +97,38 @@ The line counts decimal places the guess shares with the root, from the code's s
 
 Taylor's theorem ([Taylor's theorem](05-taylors-theorem.md)) says a curve leaves its tangent by an amount proportional to the distance squared. The step removes the straight part of the error; the bent part remains:
 
-$$e_{n+1} = \frac{f''(\xi)}{2 f'(x_n)}\, e_n^2$$
+```math
+e_{n+1} = \frac{f''(\xi)}{2 f'(x_n)}\, e_n^2
+```
 
 **Read it aloud:** the next error is the current error squared, times the curve's bend divided by twice its slope.
 
 <details>
 <summary>Detailed proof: local quadratic convergence</summary>
 
-Assume $f$ has a continuous second derivative near $r$, with $f(r) = 0$ and $f'(r) \neq 0$. Taylor's theorem with remainder, centred at $x_n$ and evaluated at $r$, gives a point $\xi$ between $x_n$ and $r$ with $0 = f(x_n) + f'(x_n)(r - x_n) + \tfrac{1}{2} f''(\xi)(r - x_n)^2$. Divide by $f'(x_n)$ and rearrange: $x_n - f(x_n)/f'(x_n) - r = \tfrac{f''(\xi)}{2 f'(x_n)}(x_n - r)^2$, which is the displayed rule.
+Assume $`f`$ has a continuous second derivative near $`r`$, with $`f(r) = 0`$ and $`f'(r) \neq 0`$. Taylor's theorem with remainder, centred at $`x_n`$ and evaluated at $`r`$, gives a point $`\xi`$ between $`x_n`$ and $`r`$ with $`0 = f(x_n) + f'(x_n)(r - x_n) + \tfrac{1}{2} f''(\xi)(r - x_n)^2`$. Divide by $`f'(x_n)`$ and rearrange: $`x_n - f(x_n)/f'(x_n) - r = \tfrac{f''(\xi)}{2 f'(x_n)}(x_n - r)^2`$, which is the displayed rule.
 
-By continuity, pick $\delta > 0$ so that from $r - \delta$ to $r + \delta$ the slope keeps $|f'| \ge \mu > 0$ and the bend keeps $|f''| \le M$. Let $K = M/(2\mu)$ and shrink the interval until $K\delta \le 1/2$. If $|e_n| \le \delta$, then $|e_{n+1}| \le K e_n^2 \le (K\delta)|e_n| \le |e_n|/2$, so the next guess stays inside. By induction the errors halve at least, the guesses tend to $r$, and $|e_{n+1}| \le K |e_n|^2$ throughout.
+By continuity, pick $`\delta > 0`$ so that from $`r - \delta`$ to $`r + \delta`$ the slope keeps $`|f'| \ge \mu > 0`$ and the bend keeps $`|f''| \le M`$. Let $`K = M/(2\mu)`$ and shrink the interval until $`K\delta \le 1/2`$. If $`|e_n| \le \delta`$, then $`|e_{n+1}| \le K e_n^2 \le (K\delta)|e_n| \le |e_n|/2`$, so the next guess stays inside. By induction the errors halve at least, the guesses tend to $`r`$, and $`|e_{n+1}| \le K |e_n|^2`$ throughout.
 
 </details>
 
 ### Step 4: a small residual bounds the error, through the slope
 
-The error needs the unknown root; the residual does not. The mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) connects them: $f(x_n) - f(r) = f'(\xi)(x_n - r)$ for some $\xi$ between. With $f(r) = 0$ and every slope at least $m$ in size:
+The error needs the unknown root; the residual does not. The mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) connects them: $`f(x_n) - f(r) = f'(\xi)(x_n - r)`$ for some $`\xi`$ between. With $`f(r) = 0`$ and every slope at least $`m`$ in size:
 
-$$|x_n - r| \le \frac{|f(x_n)|}{m}$$
+```math
+|x_n - r| \le \frac{|f(x_n)|}{m}
+```
 
-On the bracket from 1 to 2 the slope $2x$ is at least 2. After step 4 the residual is 0.0000000000045, so the error is at most 0.0000000000023 m; measured, it is 0.0000000000016.
+On the bracket from 1 to 2 the slope $`2x`$ is at least 2. After step 4 the residual is 0.0000000000045, so the error is at most 0.0000000000023 m; measured, it is 0.0000000000016.
 
 ### Step 5: the bracket is the safety net
 
-First check that $f(a)$ and $f(b)$ differ in sign: $f(1) = -1$, $f(2) = 2$, so a continuous $f$ crosses zero between. The slope $2x$ is positive there, so $f$ only rises and the root is unique. If a Newton step would leave the bracket, take the midpoint; then keep the half whose ends still differ in sign. The root never escapes.
+First check that $`f(a)`$ and $`f(b)`$ differ in sign: $`f(1) = -1`$, $`f(2) = 2`$, so a continuous $`f`$ crosses zero between. The slope $`2x`$ is positive there, so $`f`$ only rises and the root is unique. If a Newton step would leave the bracket, take the midpoint; then keep the half whose ends still differ in sign. The root never escapes.
 
-The cubic $x^3 - 2x + 2$ on $-2$ to 0 shows it. Unguarded from 0 it cycles. Guarded, two tangents point outside, so two halvings, then five Newton steps land on $-1.769292354239$.
+The cubic $`x^3 - 2x + 2`$ on $`-2`$ to 0 shows it. Unguarded from 0 it cycles. Guarded, two tangents point outside, so two halvings, then five Newton steps land on $`-1.769292354239`$.
 
-Bisection alone, halving by signs and never using the slope, is the second road: it reaches 1.414213562373095 but needs 34 halvings to get under $10^{-10}$ wide. Newton needed 4. When any rule of the form "next = rule(current)" must converge is [Fixed points](07-fixed-point-iteration-and-the-contraction-principle.md).
+Bisection alone, halving by signs and never using the slope, is the second road: it reaches 1.414213562373095 but needs 34 halvings to get under $`10^{-10}`$ wide. Newton needed 4. When any rule of the form "next = rule(current)" must converge is [Fixed points](07-fixed-point-iteration-and-the-contraction-principle.md).
 
 ---
 
@@ -142,9 +150,9 @@ A tile cut to 1.414213562374690 m misses 2 square metres by 0.0000000000045 of o
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Start at 0 | slope $f'(0) = 0$, no next guess | a flat tangent never meets the axis |
-| $x^3 - 2x + 2$ from 0, no bracket | 0, 1, 0, 1, 0 for ever | the tangent at 1 points straight back to 0 |
-| Tile equation times $10^{-12}$, same stop | stops at once at 1.000, error 0.414 | the residual ignores the slope; the bound 0.500 warns |
+| Start at 0 | slope $`f'(0) = 0`$, no next guess | a flat tangent never meets the axis |
+| $`x^3 - 2x + 2`$ from 0, no bracket | 0, 1, 0, 1, 0 for ever | the tangent at 1 points straight back to 0 |
+| Tile equation times $`10^{-12}`$, same stop | stops at once at 1.000, error 0.414 | the residual ignores the slope; the bound 0.500 warns |
 
 ---
 
@@ -347,16 +355,16 @@ The two outputs match line for line.
 
 Lean proves the convergence rule for every function near a simple root, and the tile's exact rules and numbers.
 
-- If $f$ has a continuous second derivative near a simple root, every start close enough works.
+- If $`f`$ has a continuous second derivative near a simple root, every start close enough works.
 - From such a start, every guess stays close to the root, and none lands on a flat point.
-- Each new error is at most a fixed number $K$ times the old error squared: the bound form of Step 3.
+- Each new error is at most a fixed number $`K`$ times the old error squared: the bound form of Step 3.
 - Each new error is also at most half the old one, so the guesses tend to the root.
-- For the tile, one step from any positive guess gives exactly $e_{n+1} = e_n^2/(2x_n)$.
+- For the tile, one step from any positive guess gives exactly $`e_{n+1} = e_n^2/(2x_n)`$.
 - So the new guess never sits below the root, and from at or above it the error at least halves.
-- If every slope on a bracket is at least $m$ in size, any point there is within $|f(x)|/m$ of a root there.
-- The bracket's signs, the tangent $y = 2x - 3$, and the steps 3/2, 17/12, 577/408 and 665857/470832.
-- The residual after step 4 is exactly 1 over 470832 squared, below the stop; half of it is below $10^{-11}$.
-- Bisection needs 34 halvings to get under $10^{-10}$ wide; 33 are not enough.
+- If every slope on a bracket is at least $`m`$ in size, any point there is within $`|f(x)|/m`$ of a root there.
+- The bracket's signs, the tangent $`y = 2x - 3`$, and the steps 3/2, 17/12, 577/408 and 665857/470832.
+- The residual after step 4 is exactly 1 over 470832 squared, below the stop; half of it is below $`10^{-11}`$.
+- Bisection needs 34 halvings to get under $`10^{-10}`$ wide; 33 are not enough.
 - The three failures: the flat slope at 0, the cubic's 0, 1, 0 cycle, and the scaled equation's bound 0.500.
 
 The decimal runs, the guarded cubic, the decimal counts, the error ratios and the figure are left to the Python and Rust checks.
@@ -594,12 +602,12 @@ example : |(1 / 10 ^ 12 : ℚ) * (1 ^ 2 - 2)| < 1 / 10 ^ 10 ∧
 ## The usual mistake
 
 > [!warning]
-> **Trusting a small residual as a small error.** The residual is in the equation's units, the error in the answer's. Multiply the tile equation by $10^{-12}$ and the start 1 passes the stop while 0.414 m wrong. Divided by the smallest slope, $m$, the residual gives the honest bound 0.500 m.
+> **Trusting a small residual as a small error.** The residual is in the equation's units, the error in the answer's. Multiply the tile equation by $`10^{-12}`$ and the start 1 passes the stop while 0.414 m wrong. Divided by the smallest slope, $`m`$, the residual gives the honest bound 0.500 m.
 >
-> - **Flipping the sign.** Adding $f/f'$ instead of subtracting walks away from the root.
+> - **Flipping the sign.** Adding $`f/f'`$ instead of subtracting walks away from the root.
 > - **Starting on a flat spot.** From 0 the tile's step divides by zero.
-> - **Expecting any start to work.** $x^3 - 2x + 2$ from 0 repeats 0, 1, 0, 1. A bracket fixes it.
-> - **A double root.** Where the curve touches the axis, $f'(r) = 0$ and the error only halves each step.
+> - **Expecting any start to work.** $`x^3 - 2x + 2`$ from 0 repeats 0, 1, 0, 1. A bracket fixes it.
+> - **A double root.** Where the curve touches the axis, $`f'(r) = 0`$ and the error only halves each step.
 
 ---
 
@@ -639,7 +647,7 @@ example : |(1 / 10 ^ 12 : ℚ) * (1 ^ 2 - 2)| < 1 / 10 ^ 10 ∧
 - [Newton and BFGS](../../15-Optimization/02-Unconstrained%20Methods/05-newton-and-quasi-newton-bfgs.md): Newton on the gradient, the slope in every direction; BFGS learns the bend from slopes alone.
 - [Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md): Newton without a derivative.
 
-Left open: each step needs the slope $f'$. When the slope is costly or unknown, can a step still converge almost as fast?
+Left open: each step needs the slope $`f'`$. When the slope is costly or unknown, can a step still converge almost as fast?
 
 ---
 

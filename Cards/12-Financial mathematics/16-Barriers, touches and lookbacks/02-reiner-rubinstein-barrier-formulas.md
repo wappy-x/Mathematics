@@ -53,36 +53,48 @@ Orange: the down-and-out call. Green: the down-and-in call. Dark: the plain call
 
 Notation first, in words. Two switches carry the eight cases:
 
-- $\phi$ (phi) is +1 for a call and −1 for a put.
-- $\eta$ (eta) is +1 for a down barrier and −1 for an up barrier.
+- $`\phi`$ (phi) is +1 for a call and −1 for a put.
+- $`\eta`$ (eta) is +1 for a down barrier and −1 for an up barrier.
 
 Multiplying by a switch either leaves a term alone or flips its sign.
 
-The bell-curve area $N(x)$ is the chance that a standard bell-curve draw lands below $x$, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card.
+The bell-curve area $`N(x)`$ is the chance that a standard bell-curve draw lands below $`x`$, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card.
 
-$S$ is Acme's price today, $K$ the strike, $H$ the barrier; $r$, $q$, $\sigma$ and $T$ are the bank rate, dividend yield, volatility and years to expiry. The helpers $\mu$, $\lambda$, $x_1$, $x_2$, $y_1$, $y_2$ and $z$ are distances defined just below the blocks.
+$`S`$ is Acme's price today, $`K`$ the strike, $`H`$ the barrier; $`r`$, $`q`$, $`\sigma`$ and $`T`$ are the bank rate, dividend yield, volatility and years to expiry. The helpers $`\mu`$, $`\lambda`$, $`x_1`$, $`x_2`$, $`y_1`$, $`y_2`$ and $`z`$ are distances defined just below the blocks.
 
 The four price blocks:
 
-$$A = \phi S e^{-qT} N(\phi x_1) - \phi K e^{-rT} N(\phi x_1 - \phi\sigma\sqrt T)$$
+```math
+A = \phi S e^{-qT} N(\phi x_1) - \phi K e^{-rT} N(\phi x_1 - \phi\sigma\sqrt T)
+```
 
-$$B = \phi S e^{-qT} N(\phi x_2) - \phi K e^{-rT} N(\phi x_2 - \phi\sigma\sqrt T)$$
+```math
+B = \phi S e^{-qT} N(\phi x_2) - \phi K e^{-rT} N(\phi x_2 - \phi\sigma\sqrt T)
+```
 
-$$C = \phi S e^{-qT} (H/S)^{2\mu+2} N(\eta y_1) - \phi K e^{-rT} (H/S)^{2\mu} N(\eta y_1 - \eta\sigma\sqrt T)$$
+```math
+C = \phi S e^{-qT} (H/S)^{2\mu+2} N(\eta y_1) - \phi K e^{-rT} (H/S)^{2\mu} N(\eta y_1 - \eta\sigma\sqrt T)
+```
 
-$$D = \phi S e^{-qT} (H/S)^{2\mu+2} N(\eta y_2) - \phi K e^{-rT} (H/S)^{2\mu} N(\eta y_2 - \eta\sigma\sqrt T)$$
+```math
+D = \phi S e^{-qT} (H/S)^{2\mu+2} N(\eta y_2) - \phi K e^{-rT} (H/S)^{2\mu} N(\eta y_2 - \eta\sigma\sqrt T)
+```
 
-and the two rebate blocks, for a fixed cash rebate $R$:
+and the two rebate blocks, for a fixed cash rebate $`R`$:
 
-$$E = R e^{-rT}\left[N(\eta x_2 - \eta\sigma\sqrt T) - (H/S)^{2\mu} N(\eta y_2 - \eta\sigma\sqrt T)\right]$$
+```math
+E = R e^{-rT}\left[N(\eta x_2 - \eta\sigma\sqrt T) - (H/S)^{2\mu} N(\eta y_2 - \eta\sigma\sqrt T)\right]
+```
 
-$$F = R\left[(H/S)^{\mu+\lambda} N(\eta z) + (H/S)^{\mu-\lambda} N(\eta z - 2\eta\lambda\sigma\sqrt T)\right]$$
+```math
+F = R\left[(H/S)^{\mu+\lambda} N(\eta z) + (H/S)^{\mu-\lambda} N(\eta z - 2\eta\lambda\sigma\sqrt T)\right]
+```
 
-**Read it aloud:** A is the plain option. B is the same option counted only where Acme finishes beyond the barrier. C and D are A and B read off the mirror-image curve, weighted by the mirror's tilt $(H/S)^{2\mu}$, a drift correction explained in Step 0. E is the rebate's discounted chance of never touching; F is the rebate's discounted value if paid on the day of the touch.
+**Read it aloud:** A is the plain option. B is the same option counted only where Acme finishes beyond the barrier. C and D are A and B read off the mirror-image curve, weighted by the mirror's tilt $`(H/S)^{2\mu}`$, a drift correction explained in Step 0. E is the rebate's discounted chance of never touching; F is the rebate's discounted value if paid on the day of the touch.
 
 How the eight contracts assemble them, depending on which side of the barrier the strike sits:
 
-| Contract | Strike above barrier, $K > H$ | Strike below barrier, $K < H$ |
+| Contract | Strike above barrier, $`K > H`$ | Strike below barrier, $`K < H`$ |
 | --- | --- | --- |
 | down-and-in call, DIC | `C + E` | `A − B + D + E` |
 | up-and-in call, UIC | `A + E` | `B − C + D + E` |
@@ -97,38 +109,44 @@ Read any in-row and its out-row in the same column and add them, rebates aside: 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100 | down-and-out call rises: further from the floor |
-| $K$ | the strike | $100 | calls fall, puts rise, as for plain options |
-| $H$ | the barrier level | $80 floor, $120 ceiling | a higher floor kills more often: down-and-out falls, down-and-in rises |
-| $R$, $\tau$ | the cash rebate, and $\tau$ (tau) the moment of the first touch | $3 | out prices rise by the discounted rebate |
-| $r$, $q$ | bank rate and dividend yield, continuously compounded | 5%, 2% | as for plain options |
-| $\sigma$, $T$ | volatility and years to expiry | 20%, 1 | more touches: out prices usually fall, in prices rise |
-| $\phi$, $\eta$ | the switches: call +1, put −1; down +1, up −1 | | |
-| $\mu$, $\lambda$ | the drift in volatility units, and its rebate cousin | 0.25, 1.600781 | |
-| $x_1$, $x_2$, $y_1$, $y_2$, $z$, $d_1$ | distances in "wiggle units" $\sigma\sqrt T$: to the strike, to the barrier, and their mirror images; $d_1$ is the Black-Scholes card's name for $x_1$ | $x_1 = 0.25$, $y_1 = −1.981436$ at the $80 floor | |
-| $A$, $B$, $C$, $D$, $E$, $F$ | the four price blocks; the rebate paid at expiry if untouched, and paid at the touch | $E = \$2.14$, $F = \$0.73$ at the floor | |
-| $u$, $b$, $f$ | log price at expiry, the barrier in log terms, and the bell-curve height of $u$ | $b = \ln 0.8$ at the floor | |
-| $N$, $(H/S)^{2\mu}$ | bell-curve area; the mirror's tilt | $(H/S)^{2\mu} = 0.894427$ at the floor | |
+| $`S`$ | Acme's price today | $100 | down-and-out call rises: further from the floor |
+| $`K`$ | the strike | $100 | calls fall, puts rise, as for plain options |
+| $`H`$ | the barrier level | $80 floor, $120 ceiling | a higher floor kills more often: down-and-out falls, down-and-in rises |
+| $`R`$, $`\tau`$ | the cash rebate, and $`\tau`$ (tau) the moment of the first touch | $3 | out prices rise by the discounted rebate |
+| $`r`$, $`q`$ | bank rate and dividend yield, continuously compounded | 5%, 2% | as for plain options |
+| $`\sigma`$, $`T`$ | volatility and years to expiry | 20%, 1 | more touches: out prices usually fall, in prices rise |
+| $`\phi`$, $`\eta`$ | the switches: call +1, put −1; down +1, up −1 | | |
+| $`\mu`$, $`\lambda`$ | the drift in volatility units, and its rebate cousin | 0.25, 1.600781 | |
+| $`x_1`$, $`x_2`$, $`y_1`$, $`y_2`$, $`z`$, $`d_1`$ | distances in "wiggle units" $`\sigma\sqrt T`$: to the strike, to the barrier, and their mirror images; $`d_1`$ is the Black-Scholes card's name for $`x_1`$ | $`x_1 = 0.25`$, $`y_1 = −1.981436`$ at the $80 floor | |
+| $`A`$, $`B`$, $`C`$, $`D`$, $`E`$, $`F`$ | the four price blocks; the rebate paid at expiry if untouched, and paid at the touch | $`E = \$2.14`$, $`F = \$0.73`$ at the floor | |
+| $`u`$, $`b`$, $`f`$ | log price at expiry, the barrier in log terms, and the bell-curve height of $`u`$ | $`b = \ln 0.8`$ at the floor | |
+| $`N`$, $`(H/S)^{2\mu}`$ | bell-curve area; the mirror's tilt | $`(H/S)^{2\mu} = 0.894427`$ at the floor | |
 
 The helpers, each a distance measured in wiggle units:
 
-$$\mu = \frac{r - q - \tfrac12\sigma^2}{\sigma^2}, \qquad \lambda = \sqrt{\mu^2 + \frac{2r}{\sigma^2}}$$
+```math
+\mu = \frac{r - q - \tfrac12\sigma^2}{\sigma^2}, \qquad \lambda = \sqrt{\mu^2 + \frac{2r}{\sigma^2}}
+```
 
-$$x_1 = \frac{\ln(S/K)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T, \qquad x_2 = \frac{\ln(S/H)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T$$
+```math
+x_1 = \frac{\ln(S/K)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T, \qquad x_2 = \frac{\ln(S/H)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T
+```
 
-$$y_1 = \frac{\ln\!\big(H^2/(SK)\big)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T, \qquad y_2 = \frac{\ln(H/S)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T, \qquad z = \frac{\ln(H/S)}{\sigma\sqrt T} + \lambda\sigma\sqrt T$$
+```math
+y_1 = \frac{\ln\!\big(H^2/(SK)\big)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T, \qquad y_2 = \frac{\ln(H/S)}{\sigma\sqrt T} + (1+\mu)\sigma\sqrt T, \qquad z = \frac{\ln(H/S)}{\sigma\sqrt T} + \lambda\sigma\sqrt T
+```
 
-In words: $x_1$ is the Black-Scholes $d_1$, since $(1+\mu)\sigma^2 = r - q + \tfrac12\sigma^2$; that is why $A$ is the plain option. $x_2$ measures to the barrier instead of the strike. $y_1$ and $y_2$ measure the same two distances from the mirror image of today's price, $H^2/S$, which sits as far beyond the barrier as $S$ sits before it.
+In words: $`x_1`$ is the Black-Scholes $`d_1`$, since $`(1+\mu)\sigma^2 = r - q + \tfrac12\sigma^2`$; that is why $`A`$ is the plain option. $`x_2`$ measures to the barrier instead of the strike. $`y_1`$ and $`y_2`$ measure the same two distances from the mirror image of today's price, $`H^2/S`$, which sits as far beyond the barrier as $`S`$ sits before it.
 
-$\mu$ is the pretend-world drift of the log price over $\sigma^2$. The pretend world is the Black-Scholes pricing world, where Acme grows at the bank rate less the dividend yield. $\lambda$ folds in the bank rate, needed only when money arrives on a random day.
+$`\mu`$ is the pretend-world drift of the log price over $`\sigma^2`$. The pretend world is the Black-Scholes pricing world, where Acme grows at the bank rate less the dividend yield. $`\lambda`$ folds in the bank rate, needed only when money arrives on a random day.
 
 ### When it holds
 
 - **Continuous monitoring.** A touch at any instant counts. A contract that checks one price a day is hit less often than the formula assumes; [Daily monitoring](03-discrete-monitoring-correction.md) fixes that.
 - **Continuous paths.** The mirror needs a path that cannot skip over the line. A price that jumps crosses without touching, and the hit chance is wrong.
 - **Constant volatility, rate and dividend yield.** Barrier prices lean on volatility near the barrier. A volatility smile is a market volatility that changes with the strike. With a smile, the flat-volatility price errs by more than a plain option's would.
-- **The barrier not yet touched.** A down barrier needs $S > H$ today, an up barrier $S < H$. Otherwise the out-option is worth its rebate paid now and the in-option is the plain option.
-- **Stated rebate timing.** $E$ pays at expiry, $F$ at the touch. An out-rebate paid at expiry needs a different block.
+- **The barrier not yet touched.** A down barrier needs $`S > H`$ today, an up barrier $`S < H`$. Otherwise the out-option is worth its rebate paid now and the in-option is the plain option.
+- **Stated rebate timing.** $`E`$ pays at expiry, $`F`$ at the touch. An out-rebate paid at expiry needs a different block.
 
 ---
 
@@ -136,28 +154,30 @@ $\mu$ is the pretend-world drift of the log price over $\sigma^2$. The pretend w
 
 ### Step 0: a mirror counts the paths that touch
 
-Work with the log price $u = \ln(S_T/S)$, Acme's final price as a log-return from today. In the pretend world of the Black-Scholes card it ends on a bell curve with centre $(r - q - \tfrac12\sigma^2)T$ and spread $\sigma\sqrt T$. The barrier sits at $b = \ln(H/S)$, which is $\ln 0.8$ for the floor.
+Work with the log price $`u = \ln(S_T/S)`$, Acme's final price as a log-return from today. In the pretend world of the Black-Scholes card it ends on a bell curve with centre $`(r - q - \tfrac12\sigma^2)T`$ and spread $`\sigma\sqrt T`$. The barrier sits at $`b = \ln(H/S)`$, which is $`\ln 0.8`$ for the floor.
 
-Take a path that touches the floor and ends at $u$ above it. Flip the part after the first touch across the floor: the flipped path ends at the mirror point $2b - u$, below the floor. The pairing is one-to-one, and without drift each pair is equally likely. So touching paths that end at $u$ are exactly as common as paths that end at $2b - u$, all of which touched.
+Take a path that touches the floor and ends at $`u`$ above it. Flip the part after the first touch across the floor: the flipped path ends at the mirror point $`2b - u`$, below the floor. The pairing is one-to-one, and without drift each pair is equally likely. So touching paths that end at $`u`$ are exactly as common as paths that end at $`2b - u`$, all of which touched.
 
-With drift, the pair are not equally likely: one partner has drifted further than the other. The correction depends only on the two end points, and it comes out as one constant factor, $(H/S)^{2\mu}$, the **mirror's tilt**.
+With drift, the pair are not equally likely: one partner has drifted further than the other. The correction depends only on the two end points, and it comes out as one constant factor, $`(H/S)^{2\mu}`$, the **mirror's tilt**.
 
 ### Step 1: surviving paths are the bell curve minus its mirror image
 
-Write $f(u)$ for the bell-curve height of the log price at $u$. On the live side of the barrier:
+Write $`f(u)`$ for the bell-curve height of the log price at $`u`$. On the live side of the barrier:
 
-$$\text{touched and ended at } u \;=\; (H/S)^{2\mu} f(u - 2b), \qquad \text{never touched and ended at } u \;=\; f(u) - (H/S)^{2\mu} f(u - 2b).$$
+```math
+\text{touched and ended at } u \;=\; (H/S)^{2\mu} f(u - 2b), \qquad \text{never touched and ended at } u \;=\; f(u) - (H/S)^{2\mu} f(u - 2b).
+```
 
-On the dead side, every path touched: its weight is $f(u)$ in full. For an up barrier the live side is below the line; the same two formulas hold with the inequality turned round.
+On the dead side, every path touched: its weight is $`f(u)`$ in full. For an up barrier the live side is below the line; the same two formulas hold with the inequality turned round.
 
 <details>
 <summary>Detailed proof: the mirror's tilt</summary>
 
-Let the log price be $X_t = \nu t + \sigma W_t$, with $\nu = r - q - \tfrac12\sigma^2$ and the last term $\sigma$ times a Brownian motion. Without drift ($\nu = 0$), the reflection principle for Brownian motion says: for $u > b$ and $b < 0$, the chance of touching $b$ and ending near $u$ equals the chance of ending near $2b - u$ ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md) has the process). The proof is the path flip of Step 0, which preserves Brownian likelihood because the flipped increments are again independent bell-curve draws.
+Let the log price be $`X_t = \nu t + \sigma W_t`$, with $`\nu = r - q - \tfrac12\sigma^2`$ and the last term $`\sigma`$ times a Brownian motion. Without drift ($`\nu = 0`$), the reflection principle for Brownian motion says: for $`u > b`$ and $`b < 0`$, the chance of touching $`b`$ and ending near $`u`$ equals the chance of ending near $`2b - u`$ ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md) has the process). The proof is the path flip of Step 0, which preserves Brownian likelihood because the flipped increments are again independent bell-curve draws.
 
-Drift reweights each driftless path by $\exp(\nu X_T/\sigma^2 - \nu^2 T/(2\sigma^2))$, a factor depending only on where the path ends. So the drifted density of "touched, ended at $u$" is the driftless density at $2b - u$ times that factor at $u$. Rewrite the driftless density at $2b - u$ as the drifted density $f$ there, divided by the factor at $2b - u$. The two factors leave $\exp(2\nu(u - b)/\sigma^2)$. Finally compare $f(2b - u)$ with $f(u - 2b)$: their exponents differ by $4\nu T(2b - u)/(2\sigma^2 T)$. Multiplying out, every $u$ cancels and what remains is $\exp(2\nu b/\sigma^2) = \exp(2\mu\ln(H/S)) = (H/S)^{2\mu}$.
+Drift reweights each driftless path by $`\exp(\nu X_T/\sigma^2 - \nu^2 T/(2\sigma^2))`$, a factor depending only on where the path ends. So the drifted density of "touched, ended at $`u`$" is the driftless density at $`2b - u`$ times that factor at $`u`$. Rewrite the driftless density at $`2b - u`$ as the drifted density $`f`$ there, divided by the factor at $`2b - u`$. The two factors leave $`\exp(2\nu(u - b)/\sigma^2)`$. Finally compare $`f(2b - u)`$ with $`f(u - 2b)`$: their exponents differ by $`4\nu T(2b - u)/(2\sigma^2 T)`$. Multiplying out, every $`u`$ cancels and what remains is $`\exp(2\nu b/\sigma^2) = \exp(2\mu\ln(H/S)) = (H/S)^{2\mu}`$.
 
-The up barrier is the same argument for $-X$. The code checks the result by integrating the surviving and touched densities numerically, with no use of the blocks.
+The up barrier is the same argument for $`-X`$. The code checks the result by integrating the surviving and touched densities numerically, with no use of the blocks.
 
 </details>
 
@@ -170,7 +190,7 @@ A price is the discounted average payoff, and the payoff is "share minus cash" w
 - **C:** the mirror curve, over the region beyond the strike.
 - **D:** the mirror curve, over the region beyond the barrier.
 
-The mirror curve's cash half carries the tilt $(H/S)^{2\mu}$. Its share half carries $(H/S)^{2\mu+2}$. The extra $(H/S)^2$ is the share's own value on the mirror: a share at $S e^{u}$ with $u = u' + 2b$ is worth $S e^{u'}(H/S)^2$. Mirroring also moves the strike test, so the distance to the strike becomes $\ln(H^2/(SK))$: that is $y_1$.
+The mirror curve's cash half carries the tilt $`(H/S)^{2\mu}`$. Its share half carries $`(H/S)^{2\mu+2}`$. The extra $`(H/S)^2`$ is the share's own value on the mirror: a share at $`S e^{u}`$ with $`u = u' + 2b`$ is worth $`S e^{u'}(H/S)^2`$. Mirroring also moves the strike test, so the distance to the strike becomes $`\ln(H^2/(SK))`$: that is $`y_1`$.
 
 ### Step 3: the strike decides which pieces are live
 
@@ -178,22 +198,22 @@ The mirror curve's cash half carries the tilt $(H/S)^{2\mu}$. Its share half car
 
 **Down-and-out call, strike below the floor.** Finishes between strike and floor are dead. The live paying region starts at the floor, so both readings are cut there: `B − D`.
 
-**Up-and-out call, strike below the ceiling.** It pays only between $100 and $120. The direct reading of that slice is `A − B`. The mirror reading of it enters with a plus sign, `+ C − D`: with $\eta = -1$ every bell-curve argument in C and D is flipped, and C − D comes out as minus the mirror slice.
+**Up-and-out call, strike below the ceiling.** It pays only between $100 and $120. The direct reading of that slice is `A − B`. The mirror reading of it enters with a plus sign, `+ C − D`: with $`\eta = -1`$ every bell-curve argument in C and D is flipped, and C − D comes out as minus the mirror slice.
 
 **Up-and-out call, strike above the ceiling.** Every survivor finishes below the ceiling, so below the strike. Nothing pays: the price is 0, plus any rebate.
 
-Each knock-in is the touched weight over the same region: the direct curve on the dead side plus the mirror curve on the live side. That gives the in-column of the table. Puts follow by $\phi = -1$, which flips which side of the strike pays.
+Each knock-in is the touched weight over the same region: the direct curve on the dead side plus the mirror curve on the live side. That gives the in-column of the table. Puts follow by $`\phi = -1`$, which flips which side of the strike pays.
 
 ### Step 4: rebates, two timings
 
-A rebate is cash paid when the option fails to deliver. For a knock-in, failure is known only at expiry: the rebate $R$ is paid then if Acme never touched. Its value is $R e^{-rT}$ times the survival chance, and the survival chance is Step 1's surviving weight over the whole live side. That is block $E$.
+A rebate is cash paid when the option fails to deliver. For a knock-in, failure is known only at expiry: the rebate $`R`$ is paid then if Acme never touched. Its value is $`R e^{-rT}`$ times the survival chance, and the survival chance is Step 1's surviving weight over the whole live side. That is block $`E`$.
 
-For a knock-out, failure happens at the touch. The rebate pays at that moment $\tau$, so it is discounted by $e^{-r\tau}$ with $\tau$ random. Averaging $e^{-r\tau}$ over the first-touch times gives block $F$.
+For a knock-out, failure happens at the touch. The rebate pays at that moment $`\tau`$, so it is discounted by $`e^{-r\tau}`$ with $`\tau`$ random. Averaging $`e^{-r\tau}`$ over the first-touch times gives block $`F`$.
 
 <details>
 <summary>Why a new exponent, λ, appears in F</summary>
 
-The first-touch time of a drifting log price has a known density. Multiplying it by $e^{-rt}$ puts r times t into the exponent next to the drift term. Completing the square there turns the drift $\mu$ into $\sqrt{\mu^2 + 2r/\sigma^2}$, which is $\lambda$. The two terms of $F$, with tilts $(H/S)^{\mu+\lambda}$ and $(H/S)^{\mu-\lambda}$, are the two halves of that completed square. With $r = 0$, $\lambda = |\mu|$ and $F$ collapses to $R$ times the plain chance of touching.
+The first-touch time of a drifting log price has a known density. Multiplying it by $`e^{-rt}`$ puts r times t into the exponent next to the drift term. Completing the square there turns the drift $`\mu`$ into $`\sqrt{\mu^2 + 2r/\sigma^2}`$, which is $`\lambda`$. The two terms of $`F`$, with tilts $`(H/S)^{\mu+\lambda}`$ and $`(H/S)^{\mu-\lambda}`$, are the two halves of that completed square. With $`r = 0`$, $`\lambda = |\mu|`$ and $`F`$ collapses to $`R`$ times the plain chance of touching.
 
 </details>
 
@@ -207,37 +227,37 @@ A second road: solve the Black-Scholes equation ([The Black-Scholes equation](..
 
 ## Worked numbers, by hand
 
-House market: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$. First the down-and-out call at the $80 floor. The strike is above the floor, so the table says `A − C`.
+House market: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$. First the down-and-out call at the $80 floor. The strike is above the floor, so the table says `A − C`.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| drift in volatility units, $\mu$ | $(0.05 - 0.02 - 0.02)/0.04$ | $0.25$ |
-| rebate exponent, $\lambda$ | $\sqrt{0.0625 + 2.5}$ | $1.600781$ |
-| $x_1$ | $0 + 1.25 \times 0.20$, the Black-Scholes $d_1$ | $0.25$ |
-| block $A$ | the plain call | $\$9.227006$ |
-| $y_1$ | $\ln(0.64)/0.20 + 0.25$ | $-1.981436$ |
-| $N(y_1)$, $N(y_1 - 0.20)$ | bell-curve table | $0.023771$, $0.014576$ |
-| tilts $(0.8)^{2.5}$, $(0.8)^{0.5}$ | powers | $0.572433$, $0.894427$ |
-| share half of $C$ | $100 e^{-0.02} \times 0.572433 \times 0.023771$ | $\$1.333800$ |
-| cash half of $C$ | $100 e^{-0.05} \times 0.894427 \times 0.014576$ | $\$1.240101$ |
-| block $C$ | $1.333800 - 1.240101$ | $\$0.093699$ |
-| **down-and-out call** | $9.227006 - 0.093699$ | **$\$9.133306$** |
+| drift in volatility units, $`\mu`$ | $`(0.05 - 0.02 - 0.02)/0.04`$ | $`0.25`$ |
+| rebate exponent, $`\lambda`$ | $`\sqrt{0.0625 + 2.5}`$ | $`1.600781`$ |
+| $`x_1`$ | $`0 + 1.25 \times 0.20`$, the Black-Scholes $`d_1`$ | $`0.25`$ |
+| block $`A`$ | the plain call | $`\$9.227006`$ |
+| $`y_1`$ | $`\ln(0.64)/0.20 + 0.25`$ | $`-1.981436`$ |
+| $`N(y_1)`$, $`N(y_1 - 0.20)`$ | bell-curve table | $`0.023771`$, $`0.014576`$ |
+| tilts $`(0.8)^{2.5}`$, $`(0.8)^{0.5}`$ | powers | $`0.572433`$, $`0.894427`$ |
+| share half of $`C`$ | $`100 e^{-0.02} \times 0.572433 \times 0.023771`$ | $`\$1.333800`$ |
+| cash half of $`C`$ | $`100 e^{-0.05} \times 0.894427 \times 0.014576`$ | $`\$1.240101`$ |
+| block $`C`$ | $`1.333800 - 1.240101`$ | $`\$0.093699`$ |
+| **down-and-out call** | $`9.227006 - 0.093699`$ | **$`\$9.133306`$** |
 
-Block $C$ on its own is the down-and-in call: $0.09. Few paths touch the floor and still climb back above $100.
+Block $`C`$ on its own is the down-and-in call: $0.09. Few paths touch the floor and still climb back above $100.
 
 Now the up-and-out call at the $120 ceiling, strike below it: `A − B + C − D`.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| blocks $A$, $B$ | the call, and the call counted only above $120 | $\$9.227006$, $\$6.411140$ |
-| direct slice, $A - B$ | finishes between $100 and $120 | $\$2.815866$ |
-| blocks $C$, $D$ | mirror readings, signs flipped by $\eta = -1$ | $-\$0.230613$, $\$1.452760$ |
-| $C - D$ | minus the mirror slice | $-\$1.683374$ |
-| **up-and-out call** | $2.815866 - 1.683374$ | **$\$1.132492$** |
+| blocks $`A`$, $`B`$ | the call, and the call counted only above $120 | $`\$9.227006`$, $`\$6.411140`$ |
+| direct slice, $`A - B`$ | finishes between $100 and $120 | $`\$2.815866`$ |
+| blocks $`C`$, $`D`$ | mirror readings, signs flipped by $`\eta = -1`$ | $`-\$0.230613`$, $`\$1.452760`$ |
+| $`C - D`$ | minus the mirror slice | $`-\$1.683374`$ |
+| **up-and-out call** | $`2.815866 - 1.683374`$ | **$`\$1.132492`$** |
 
 Of the $9.23 plain call, $6.41 comes from finishes above $120, which a ceiling at $120 kills outright. Of the $2.82 left, $1.68 belongs to paths that touched $120 and fell back. The survivor keeps $1.13.
 
-With a $3 rebate: the pretend-world chance of touching the floor within the year is 0.250014 and the ceiling 0.378622. Paid at the touch, $F$ is $0.73 at the floor, so the down-and-out call becomes $9.86. Paid at expiry to an untouched knock-in, $E$ is $2.14, so the down-and-in call becomes $2.23.
+With a $3 rebate: the pretend-world chance of touching the floor within the year is 0.250014 and the ceiling 0.378622. Paid at the touch, $`F`$ is $0.73 at the floor, so the down-and-out call becomes $9.86. Paid at expiry to an untouched knock-in, $`E`$ is $2.14, so the down-and-in call becomes $2.23.
 
 ### What breaks if you drop a piece
 
@@ -246,8 +266,8 @@ Correct down-and-out call $9.13; correct up-and-out call $1.13.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Down-and-out call at the $80 floor from the other column, `B − D` | $7.40 | That branch assumes the strike is below the floor. Here it is above. |
-| Up-and-out call at $120 with $\eta$ left at +1 | $4.50 | The mirror blocks read the wrong side of the ceiling. |
-| One tilt, $(H/S)^{2\mu}$, on both halves of $C$ | $8.38 | The share half needs the extra $(H/S)^2$: a share is worth less on the mirror. |
+| Up-and-out call at $120 with $`\eta`$ left at +1 | $4.50 | The mirror blocks read the wrong side of the ceiling. |
+| One tilt, $`(H/S)^{2\mu}`$, on both halves of $`C`$ | $8.38 | The share half needs the extra $`(H/S)^2`$: a share is worth less on the mirror. |
 | $3 out-rebate valued as paid at expiry, not at the touch | $9.85 against $9.86 | A touch in month two pays ten months earlier; discounting is shorter. |
 
 Each is printed by the code.
@@ -260,7 +280,7 @@ Four roads:
 
 - **Road 1** assembles the prices from blocks A to F through the table.
 - **Road 2** never sees a block: Simpson's rule (an area rule that fits small parabolas under a curve) integrates the payoff against Step 1's surviving or touched density, and the rebates against the first-touch-time density.
-- **Road 3** simulates 200,000 paths in twelve monthly steps. Between steps it applies the Brownian-bridge chance of a touch, $\exp(-2\,g_0 g_1/(\sigma^2\Delta t))$: the chance that a path pinned at both ends of a step touched the barrier in between. The two gaps $g_0$, $g_1$ are the step's end points' log-distances from the barrier and $\Delta t$ is one month, so it prices continuous monitoring.
+- **Road 3** simulates 200,000 paths in twelve monthly steps. Between steps it applies the Brownian-bridge chance of a touch, $`\exp(-2\,g_0 g_1/(\sigma^2\Delta t))`$: the chance that a path pinned at both ends of a step touched the barrier in between. The two gaps $`g_0`$, $`g_1`$ are the step's end points' log-distances from the barrier and $`\Delta t`$ is one month, so it prices continuous monitoring.
 - **Road 4** is parity against plain options.
 
 Strikes $60 under the floor and $140 over the ceiling reach the table's other column. The bell-curve area is built from Simpson slices, the random numbers from a 64-bit linear congruential generator, a multiply-and-add recipe that repeats exactly from its seed.
@@ -460,7 +480,7 @@ worst formula-integral gap 4.3e-11; worst simulation gap 2.25 standard errors
 ALL CHECKS PASS
 ```
 
-Formula and integral agree to $4.3 \times 10^{-11}$ on all sixteen prices. The simulation lands within 2.25 standard errors (its own measured noise, the `+/- se` column) of every one. The two zero rows are the empty branches: a down-and-out put struck at $60 under an $80 floor, and an up-and-out call struck at $140 over a $120 ceiling, cannot pay.
+Formula and integral agree to $`4.3 \times 10^{-11}`$ on all sixteen prices. The simulation lands within 2.25 standard errors (its own measured noise, the `+/- se` column) of every one. The two zero rows are the empty branches: a down-and-out put struck at $60 under an $80 floor, and an up-and-out call struck at $140 over a $120 ceiling, cannot pay.
 
 ### Rust
 
@@ -693,17 +713,17 @@ The two outputs match line for line, simulation included, since both run the sam
 
 ### Lean
 
-Lean proves the block formulas from the bell curves, for calls, puts, up and down barriers, and any positive $S$, $K$, $H$, $\sigma$, $T$.
+Lean proves the block formulas from the bell curves, for calls, puts, up and down barriers, and any positive $`S`$, $`K`$, $`H`$, $`\sigma`$, $`T`$.
 
 - Take the plain bell curve of the log price. Then block A is the discounted average payoff over it, on the side of the strike where the option pays.
 - Take the same reading, cut at the barrier instead of the strike. Then it is block B.
-- Take the mirror curve, weighted by the mirror's tilt $(H/S)^{2\mu}$. Then blocks C and D are its readings, cut at the strike and at the barrier. Each runs above the cut for a down barrier, below it for an up one.
-- Take the plain curve minus the mirror curve, over the live side of the barrier. Then block E is $R e^{-rT}$ times its area.
-- Take the driftless bell curve at the mirror point $2b - u$, reweighted for drift. Then it is the tilt $(H/S)^{2\mu}$ times the plain curve at $u - 2b$.
-- Take the house market. Then $\mu = 0.25$, $\lambda = \sqrt{41}/4$, about 1.600781, and $x_1 = 0.25$.
-- Take the house market. Then $(1+\mu)\sigma^2$ and $r - q + \tfrac12\sigma^2$ are both 0.05.
-- Take the floor at 80. Then $H^2/(SK) = 0.64$, and the tilt exponents $2\mu + 2$ and $2\mu$ are 2.5 and 0.5.
-- Take any values for the blocks. Then each in-row plus its out-row in the table adds to $A + E + F$.
+- Take the mirror curve, weighted by the mirror's tilt $`(H/S)^{2\mu}`$. Then blocks C and D are its readings, cut at the strike and at the barrier. Each runs above the cut for a down barrier, below it for an up one.
+- Take the plain curve minus the mirror curve, over the live side of the barrier. Then block E is $`R e^{-rT}`$ times its area.
+- Take the driftless bell curve at the mirror point $`2b - u`$, reweighted for drift. Then it is the tilt $`(H/S)^{2\mu}`$ times the plain curve at $`u - 2b`$.
+- Take the house market. Then $`\mu = 0.25`$, $`\lambda = \sqrt{41}/4`$, about 1.600781, and $`x_1 = 0.25`$.
+- Take the house market. Then $`(1+\mu)\sigma^2`$ and $`r - q + \tfrac12\sigma^2`$ are both 0.05.
+- Take the floor at 80. Then $`H^2/(SK) = 0.64`$, and the tilt exponents $`2\mu + 2`$ and $`2\mu`$ are 2.5 and 0.5.
+- Take any values for the blocks. Then each in-row plus its out-row in the table adds to $`A + E + F`$.
 
 The Python and Rust checks cover the rest: the reflection principle itself, block F, the choice of column, and every dollar price.
 
@@ -1097,23 +1117,23 @@ end ReinerRubinstein
 ## The usual mistake
 
 > [!warning]
-> **Picking a formula without checking which side of the barrier the strike sits.** Every contract has two formulas, one per column. Price the $80 down-and-out call with the strike-below-barrier branch and it comes out at $7.40, not $9.13, with no error message. Test $K > H$ first, every time.
+> **Picking a formula without checking which side of the barrier the strike sits.** Every contract has two formulas, one per column. Price the $80 down-and-out call with the strike-below-barrier branch and it comes out at $7.40, not $9.13, with no error message. Test $`K > H`$ first, every time.
 >
 > - **The up-and-out call as a cheap call with the same upside.** It is cheap because it has no big upside: every finish above $120 is a dead path. $1.13 buys a payoff capped near $20, and only for paths that never touch.
-> - **One sign convention for both directions.** Leave $\eta$ at +1 on the up barrier and the up-and-out call comes out at $4.50, four times the truth.
+> - **One sign convention for both directions.** Leave $`\eta`$ at +1 on the up barrier and the up-and-out call comes out at $4.50, four times the truth.
 > - **Daily fixings priced with this card's formula.** The formula counts touches between fixings that the contract ignores. Checking only at twelve month-ends, the simulation puts the down-and-out call at $9.19, not $9.13; see [Daily monitoring](03-discrete-monitoring-correction.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Currency options.** Knock-outs and knock-ins on exchange rates trade in size, with the foreign interest rate in place of $q$. Desks start from this formula and adjust for the smile.
+- **Currency options.** Knock-outs and knock-ins on exchange rates trade in size, with the foreign interest rate in place of $`q`$. Desks start from this formula and adjust for the smile.
 - **Reverse convertibles.** A high-coupon bank note usually hides a down-and-in put sold by the investor: touch a floor at 60 or 70 percent of today's price and the note repays in shares.
 - **Turbo certificates.** European retail products that are down-and-out calls with the barrier near the strike: the knock-out strips out almost all time value.
 - **The shelf.** Hedging near the barrier is on [Barrier Greeks](04-barrier-greeks-at-the-wall.md). Rebates alone, as contracts, are [One-touch and no-touch](05-one-touch-and-no-touch.md). The running maximum is [Lookback options](06-lookback-options.md). Running the formulas backwards to a barrier or a volatility is [Barrier inverses](07-barrier-inverses-level-and-volatility.md).
 
 > **Say it back**
-> A barrier option is a call or put that dies, or is born, when the price touches a line. The reflection principle counts touching paths with a mirror-image bell curve tilted by $(H/S)^{2\mu}$, so surviving weight is the bell curve minus its mirror. Share and cash over half-lines of the two curves give blocks A to D; the rebates give E and F. Which blocks a contract uses depends on direction, call or put, in or out, and the strike's side of the barrier. In and out always add back to the plain option.
+> A barrier option is a call or put that dies, or is born, when the price touches a line. The reflection principle counts touching paths with a mirror-image bell curve tilted by $`(H/S)^{2\mu}`$, so surviving weight is the bell curve minus its mirror. Share and cash over half-lines of the two curves give blocks A to D; the rebates give E and F. Which blocks a contract uses depends on direction, call or put, in or out, and the strike's side of the barrier. In and out always add back to the plain option.
 
 ---
 

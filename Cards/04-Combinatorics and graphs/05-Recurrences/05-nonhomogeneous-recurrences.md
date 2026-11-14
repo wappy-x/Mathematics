@@ -36,24 +36,28 @@ flowchart TB
 
 Writing a(n) means the n-th term, and a rule building each term from the one before it is a first-order recurrence:
 
-$$a(n) = c\,a(n-1) + f(n)$$
+```math
+a(n) = c\,a(n-1) + f(n)
+```
 
 **Read it aloud:** each term is the one before it times a fixed number, plus what the driving term adds at that step.
 
 Call the same rule with the driving term deleted the **stripped rule**. Every solution then splits in two: one sequence obeying the full rule, plus a solution of the stripped rule:
 
-$$a(n) = A\,c^n + p(n)$$
+```math
+a(n) = A\,c^n + p(n)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a(n)$ | the n-th term | h(6) = 63 moves | — |
-| $c$ | the multiplier on the previous term | 2; 1.01 | climbs faster |
-| $f(n)$ | the driving term, added at step n | 1 move; 10n dollars | rises by more |
-| $p(n)$ | a particular solution: one sequence obeying the rule | −1 | — |
-| $A$ | the unknown in $A c^n$, fixed by the starting value | 1; 101000 | raises every term, by c^n times the change |
-| $B$, $C$ | the undetermined coefficients in the guess | −1 (discs); −1000, −101000 (account) | — |
+| $`a(n)`$ | the n-th term | h(6) = 63 moves | — |
+| $`c`$ | the multiplier on the previous term | 2; 1.01 | climbs faster |
+| $`f(n)`$ | the driving term, added at step n | 1 move; 10n dollars | rises by more |
+| $`p(n)`$ | a particular solution: one sequence obeying the rule | −1 | — |
+| $`A`$ | the unknown in $`A c^n`$, fixed by the starting value | 1; 101000 | raises every term, by c^n times the change |
+| $`B`$, $`C`$ | the undetermined coefficients in the guess | −1 (discs); −1000, −101000 (account) | — |
 
-The guess copies the driving term's shape, because the rule preserves it: multiply a constant by $c$, add a constant, and a constant comes back.
+The guess copies the driving term's shape, because the rule preserves it: multiply a constant by $`c`$, add a constant, and a constant comes back.
 
 | Driving term f(n) | Guess for p(n) | When it fails |
 | --- | --- | --- |
@@ -84,9 +88,9 @@ Find any single sequence p(n) obeying the full rule — the particular solution.
 <details>
 <summary>Detailed proof: the family is exactly $A c^n + p(n)$</summary>
 
-Let p obey $p(n) = c\,p(n-1) + f(n)$ for every n ≥ 1, and let a be any other solution. Put d(n) = a(n) − p(n). Then
+Let p obey $`p(n) = c\,p(n-1) + f(n)`$ for every n ≥ 1, and let a be any other solution. Put d(n) = a(n) − p(n). Then
 
-$$d(n) = \big(c\,a(n-1) + f(n)\big) - \big(c\,p(n-1) + f(n)\big) = c\,d(n-1).$$
+$`\displaystyle d(n) = \big(c\,a(n-1) + f(n)\big) - \big(c\,p(n-1) + f(n)\big) = c\,d(n-1).`$
 
 The copies of f(n) cancel, so d obeys the stripped rule, and stepping down to 0 gives d(n) = d(0) c^n. With A = a(0) − p(0), a(n) = A c^n + p(n). The other way round, q(n) = A c^n + p(n) gives c q(n-1) + f(n) = q(n) for any A. So the solutions are exactly A c^n + p(n), and a(0) picks one.
 
@@ -104,13 +108,17 @@ The stripped rule is doubling, so its solutions are A 2^n. Adding the parts give
 
 The account has c = 1.01 and f(n) = 10n. Guess a straight line back, p(n) = Bn + C:
 
-$$Bn + C = 1.01\big(B(n-1) + C\big) + 10n.$$
+```math
+Bn + C = 1.01\big(B(n-1) + C\big) + 10n.
+```
 
 Two straight lines agree at every n only if their n parts and constant parts agree separately ([Linear equations](../../03-Algebra/01-Letters%20and%20Equations/02-linear-equations.md)).
 
 The n parts give B = 1.01B + 10, so B = −1000; the constant parts give C = −1.01B + 1.01C, so C = −101000. An empty account, s(0) = 0, fixes A = 101000:
 
-$$s(n) = 101000 \times 1.01^n - 1000n - 101000.$$
+```math
+s(n) = 101000 \times 1.01^n - 1000n - 101000.
+```
 
 ### Step 4: when the guess is already homogeneous
 

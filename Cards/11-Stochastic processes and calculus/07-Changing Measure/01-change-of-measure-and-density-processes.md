@@ -36,49 +36,55 @@ The line peaking at 6 heads is the loaded coin. The symmetric line peaking at 5 
 
 ## The formula
 
-Notation first. $P$ is the loaded coin's probability and $Q$, read "the measure Q", is the fair coin's, on the same runs. $E^Q$, read "the average under Q", averages with $Q$'s chances; $E^P$ with $P$'s. The filtration $\mathcal{F}_n$ is what is known after $n$ tosses: the first $n$ results ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). $H_n$ counts heads in the first $n$ tosses and $S_n = 2H_n - n$ is the money won so far.
+Notation first. $`P`$ is the loaded coin's probability and $`Q`$, read "the measure Q", is the fair coin's, on the same runs. $`E^Q`$, read "the average under Q", averages with $`Q`$'s chances; $`E^P`$ with $`P`$'s. The filtration $`\mathcal{F}_n`$ is what is known after $`n`$ tosses: the first $`n`$ results ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). $`H_n`$ counts heads in the first $`n`$ tosses and $`S_n = 2H_n - n`$ is the money won so far.
 
-The density process, after $n$ tosses:
+The density process, after $`n`$ tosses:
 
-$$Z_n = \Big(\frac{q}{p}\Big)^{H_n} \Big(\frac{1-q}{1-p}\Big)^{n - H_n}, \qquad Z_0 = 1.$$
+```math
+Z_n = \Big(\frac{q}{p}\Big)^{H_n} \Big(\frac{1-q}{1-p}\Big)^{n - H_n}, \qquad Z_0 = 1.
+```
 
 **Read it aloud:** the weight after n tosses is the fair-to-loaded ratio of chances, multiplied once for every toss so far.
 
-The new measure is defined from the weight at the horizon $N = 10$, and three facts follow:
+The new measure is defined from the weight at the horizon $`N = 10`$, and three facts follow:
 
-$$Q(A) = E^P\big[Z_N \mathbf{1}_A\big], \qquad E^Q[X] = E^P[X Z_N], \qquad Z_n = E^P[Z_N \mid \mathcal{F}_n].$$
+```math
+Q(A) = E^P\big[Z_N \mathbf{1}_A\big], \qquad E^Q[X] = E^P[X Z_N], \qquad Z_n = E^P[Z_N \mid \mathcal{F}_n].
+```
 
 **Read it aloud:** the new chance of an event is the old average of the weight over the runs where it happens; any new average is the old average of the quantity times the weight; and the best forecast of the final weight, after n tosses, is the weight so far.
 
 The fourth fact is Bayes' rule for a conditional average under the new measure:
 
-$$E^Q[X \mid \mathcal{F}_n] = \frac{E^P[X Z_N \mid \mathcal{F}_n]}{Z_n}.$$
+```math
+E^Q[X \mid \mathcal{F}_n] = \frac{E^P[X Z_N \mid \mathcal{F}_n]}{Z_n}.
+```
 
 **Read it aloud:** to forecast under Q from partway through, forecast quantity-times-weight under P and divide by the weight already earned.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P$ | the original measure: the loaded coin's chance for every run | heads 0.6 per toss | — |
-| $Q$, $Q_N$ | the second measure, built by reweighting; the one built from the weight at horizon $N$ | the fair coin | — |
-| $E^P$, $E^Q$ | averages taken with each measure's chances | $E^P$ of winnings 2, $E^Q$ 0 | — |
-| $p$, $q$ | chance of heads under $P$ and under $Q$ | 0.6 and 0.5 | raise $q$ towards $p$: the heads factor $q/p$ grows to 1 |
-| $n$, $N$ | tosses so far; the horizon | $N$ = 10 | larger $N$: weights spread wider |
-| $\mathcal{F}_n$ | what is known after $n$ tosses | the first $n$ results | — |
-| $H_n$, $H$, $k$ | heads among the first $n$ tosses; heads in Step 6; a heads count | 7 of 10 on the traced run | each extra head multiplies $Z$ by 5/6 |
-| $S_n$, $S_{10}$ | winnings in dollars after $n$ tosses, $2H_n - n$ | 4 after the traced run | — |
-| $Z_n$, $Z_N$, $Z_4$ | the density process: the running weight; at the horizon; after four tosses | 0.545081 after the traced run | — |
-| $X$, $Y_n$, $V$, $A$, $\mathbf{1}_A$ | a quantity fixed by the ten tosses; a process known at each toss; a forecast built in the proof; an event; its indicator, 1 when $A$ happens and 0 otherwise | winnings; 7 or more heads | — |
-| $h$, $\mu$, $\theta$ | Step 6 only: rounds between tosses; the coin's lean per round; the fixed number $\theta$ of the exponential martingale | $h$ from 1 down to 1/1024; $\mu$ = 0.2; $\theta = -\mu$ = −0.2 | smaller $h$: closer to Brownian motion |
-| $W_t$, $t$, $T$, $x$ | Step 6 only: Brownian motion; time in rounds; the horizon in rounds of the continuous-time statement; the winnings after time $t$ | $t$ = 10 rounds, $x$ = 2 | — |
+| $`P`$ | the original measure: the loaded coin's chance for every run | heads 0.6 per toss | — |
+| $`Q`$, $`Q_N`$ | the second measure, built by reweighting; the one built from the weight at horizon $`N`$ | the fair coin | — |
+| $`E^P`$, $`E^Q`$ | averages taken with each measure's chances | $`E^P`$ of winnings 2, $`E^Q`$ 0 | — |
+| $`p`$, $`q`$ | chance of heads under $`P`$ and under $`Q`$ | 0.6 and 0.5 | raise $`q`$ towards $`p`$: the heads factor $`q/p`$ grows to 1 |
+| $`n`$, $`N`$ | tosses so far; the horizon | $`N`$ = 10 | larger $`N`$: weights spread wider |
+| $`\mathcal{F}_n`$ | what is known after $`n`$ tosses | the first $`n`$ results | — |
+| $`H_n`$, $`H`$, $`k`$ | heads among the first $`n`$ tosses; heads in Step 6; a heads count | 7 of 10 on the traced run | each extra head multiplies $`Z`$ by 5/6 |
+| $`S_n`$, $`S_{10}`$ | winnings in dollars after $`n`$ tosses, $`2H_n - n`$ | 4 after the traced run | — |
+| $`Z_n`$, $`Z_N`$, $`Z_4`$ | the density process: the running weight; at the horizon; after four tosses | 0.545081 after the traced run | — |
+| $`X`$, $`Y_n`$, $`V`$, $`A`$, $`\mathbf{1}_A`$ | a quantity fixed by the ten tosses; a process known at each toss; a forecast built in the proof; an event; its indicator, 1 when $`A`$ happens and 0 otherwise | winnings; 7 or more heads | — |
+| $`h`$, $`\mu`$, $`\theta`$ | Step 6 only: rounds between tosses; the coin's lean per round; the fixed number $`\theta`$ of the exponential martingale | $`h`$ from 1 down to 1/1024; $`\mu`$ = 0.2; $`\theta = -\mu`$ = −0.2 | smaller $`h`$: closer to Brownian motion |
+| $`W_t`$, $`t`$, $`T`$, $`x`$ | Step 6 only: Brownian motion; time in rounds; the horizon in rounds of the continuous-time statement; the winnings after time $`t`$ | $`t`$ = 10 rounds, $`x`$ = 2 | — |
 
-The heads factor is $q/p = 5/6$ and the tails factor is $(1-q)/(1-p) = 5/4$. Under $P$ they average $0.6 \times 5/6 + 0.4 \times 5/4 = 0.5 + 0.5 = 1$, and that one line is why everything else works.
+The heads factor is $`q/p = 5/6`$ and the tails factor is $`(1-q)/(1-p) = 5/4`$. Under $`P`$ they average $`0.6 \times 5/6 + 0.4 \times 5/4 = 0.5 + 0.5 = 1`$, and that one line is why everything else works.
 
 ### When it holds
 
-- **The weight is positive on every run.** Then $P$ and $Q$ are **equivalent**: they agree on which events are impossible. A weight of 0 on some runs still gives a measure, but $Q$ then rules out runs $P$ allows, and nothing can be reweighted back.
-- **The weight averages 1.** Otherwise $Q$ is not a probability: the upside-down ratio, 6/5 on heads and 4/5 on tails, averages 1.480244 over ten tosses.
+- **The weight is positive on every run.** Then $`P`$ and $`Q`$ are **equivalent**: they agree on which events are impossible. A weight of 0 on some runs still gives a measure, but $`Q`$ then rules out runs $`P`$ allows, and nothing can be reweighted back.
+- **The weight averages 1.** Otherwise $`Q`$ is not a probability: the upside-down ratio, 6/5 on heads and 4/5 on tails, averages 1.480244 over ten tosses.
 - **A finite horizon.** Over infinitely many tosses a density exists only if the weights settle to a limit that still averages 1. For these two coins the limit is 0, and no density exists; see What breaks.
-- **Bayes' rule needs the division by $Z_n$.** Without it a conditional average under $Q$ comes out scaled by the weight already earned.
+- **Bayes' rule needs the division by $`Z_n`$.** Without it a conditional average under $`Q`$ comes out scaled by the weight already earned.
 
 ---
 
@@ -88,72 +94,80 @@ Every step below is a finite sum over 1,024 runs. The folded proof after Step 5 
 
 ### Step 0: reweight the runs, do not edit them
 
-A measure is a list of chances, one per run. Two coins on the same ten tosses are two lists over the same 1,024 runs. To turn the first list into the second, multiply each entry by the ratio of the two: $Q(\text{run}) = P(\text{run}) \times Z_N(\text{run})$. That is the whole idea. The runs, and every quantity computed from a run, stay exactly as they were. Only how much each run counts in an average changes. On one run this is the likelihood ratio of [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md).
+A measure is a list of chances, one per run. Two coins on the same ten tosses are two lists over the same 1,024 runs. To turn the first list into the second, multiply each entry by the ratio of the two: $`Q(\text{run}) = P(\text{run}) \times Z_N(\text{run})`$. That is the whole idea. The runs, and every quantity computed from a run, stay exactly as they were. Only how much each run counts in an average changes. On one run this is the likelihood ratio of [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md).
 
 ### Step 1: the weight averages 1, so Q is a probability
 
-The weight is a product of ten factors, one per toss. Under $P$ the tosses are independent, so the average of a product of their factors is the product of their averages. Each factor averages 1. So $E^P[Z_N] = 1$ and $Q$ gives total chance 1 to all runs together. Each run's weight is positive, so $Q$ puts positive chance exactly where $P$ does: the two are equivalent.
+The weight is a product of ten factors, one per toss. Under $`P`$ the tosses are independent, so the average of a product of their factors is the product of their averages. Each factor averages 1. So $`E^P[Z_N] = 1`$ and $`Q`$ gives total chance 1 to all runs together. Each run's weight is positive, so $`Q`$ puts positive chance exactly where $`P`$ does: the two are equivalent.
 
 ### Step 2: every average transforms by the weight
 
-For one run, $Q(\text{run}) = P(\text{run}) Z_N(\text{run})$. Multiply by any quantity $X$ evaluated on that run and add over all runs:
+For one run, $`Q(\text{run}) = P(\text{run}) Z_N(\text{run})`$. Multiply by any quantity $`X`$ evaluated on that run and add over all runs:
 
-$$E^Q[X] = \sum_{\text{runs}} X \, Q(\text{run}) = \sum_{\text{runs}} X Z_N \, P(\text{run}) = E^P[X Z_N].$$
+```math
+E^Q[X] = \sum_{\text{runs}} X \, Q(\text{run}) = \sum_{\text{runs}} X Z_N \, P(\text{run}) = E^P[X Z_N].
+```
 
-With $X = \mathbf{1}_A$ this is the definition of $Q(A)$. With $X$ the winnings it says the weighted loaded-coin average of $S_{10}$ is the fair-coin average, $10 \times (2 \times 0.5 - 1) = 0$.
+With $`X = \mathbf{1}_A`$ this is the definition of $`Q(A)`$. With $`X`$ the winnings it says the weighted loaded-coin average of $`S_{10}`$ is the fair-coin average, $`10 \times (2 \times 0.5 - 1) = 0`$.
 
 ### Step 3: the weight seen partway through is the density on the past
 
-After four tosses the last six are still unknown. Average the final weight over them, under $P$, holding the first four fixed. The last six factors are independent of the first four, and each averages 1, so what is left is the product of the first four factors:
+After four tosses the last six are still unknown. Average the final weight over them, under $`P`$, holding the first four fixed. The last six factors are independent of the first four, and each averages 1, so what is left is the product of the first four factors:
 
-$$E^P[Z_N \mid \mathcal{F}_n] = Z_n.$$
+```math
+E^P[Z_N \mid \mathcal{F}_n] = Z_n.
+```
 
-The code checks this exactly, in fractions, after every one of the 2,047 possible beginnings of zero to ten tosses. Two consequences follow. First, $Z_n$ is a martingale under $P$ ([Martingales](../02-Martingales/01-martingales.md)), by the tower property, which says that averaging in two stages equals averaging once ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)): $E^P[Z_{n+1} \mid \mathcal{F}_n] = E^P[E^P[Z_N \mid \mathcal{F}_{n+1}] \mid \mathcal{F}_n] = Z_n$. Second, $Z_n$ is itself the Radon-Nikodym derivative of $Q$ against $P$ on events decided by the first $n$ tosses. For such an event $A$, $Q(A) = E^P[Z_N \mathbf{1}_A] = E^P[E^P[Z_N \mid \mathcal{F}_n] \mathbf{1}_A] = E^P[Z_n \mathbf{1}_A]$.
+The code checks this exactly, in fractions, after every one of the 2,047 possible beginnings of zero to ten tosses. Two consequences follow. First, $`Z_n`$ is a martingale under $`P`$ ([Martingales](../02-Martingales/01-martingales.md)), by the tower property, which says that averaging in two stages equals averaging once ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)): $`E^P[Z_{n+1} \mid \mathcal{F}_n] = E^P[E^P[Z_N \mid \mathcal{F}_{n+1}] \mid \mathcal{F}_n] = Z_n`$. Second, $`Z_n`$ is itself the Radon-Nikodym derivative of $`Q`$ against $`P`$ on events decided by the first $`n`$ tosses. For such an event $`A`$, $`Q(A) = E^P[Z_N \mathbf{1}_A] = E^P[E^P[Z_N \mid \mathcal{F}_n] \mathbf{1}_A] = E^P[Z_n \mathbf{1}_A]`$.
 
-The converse is the definition this shelf runs on. Start from any positive $P$-martingale $Z_n$ with $Z_0 = 1$. Define $Q_N(A) = E^P[Z_N \mathbf{1}_A]$ for each horizon $N$. The martingale property makes these agree: an event decided by toss 4 gets the same chance whichever later horizon builds the measure. **A density process is a positive martingale with mean 1, and it defines one measure that is consistent across every finite horizon.**
+The converse is the definition this shelf runs on. Start from any positive $`P`$-martingale $`Z_n`$ with $`Z_0 = 1`$. Define $`Q_N(A) = E^P[Z_N \mathbf{1}_A]`$ for each horizon $`N`$. The martingale property makes these agree: an event decided by toss 4 gets the same chance whichever later horizon builds the measure. **A density process is a positive martingale with mean 1, and it defines one measure that is consistent across every finite horizon.**
 
 ### Step 4: Bayes' rule for forecasts under Q
 
-Partway through, a forecast under $Q$ must use $Q$'s chances for the remaining tosses, given the ones already seen. Given the beginning, $Q$'s chance of a continuation is $Q(\text{whole run})$ divided by $Q(\text{beginning})$. Write both as $P$ times weight: $Q(\text{whole}) = P(\text{whole}) Z_N$ and $Q(\text{beginning}) = P(\text{beginning}) Z_n$. Dividing gives $P$'s chance of the continuation times $Z_N / Z_n$. Average $X$ against that:
+Partway through, a forecast under $`Q`$ must use $`Q`$'s chances for the remaining tosses, given the ones already seen. Given the beginning, $`Q`$'s chance of a continuation is $`Q(\text{whole run})`$ divided by $`Q(\text{beginning})`$. Write both as $`P`$ times weight: $`Q(\text{whole}) = P(\text{whole}) Z_N`$ and $`Q(\text{beginning}) = P(\text{beginning}) Z_n`$. Dividing gives $`P`$'s chance of the continuation times $`Z_N / Z_n`$. Average $`X`$ against that:
 
-$$E^Q[X \mid \mathcal{F}_n] = \frac{E^P[X Z_N \mid \mathcal{F}_n]}{Z_n}.$$
+```math
+E^Q[X \mid \mathcal{F}_n] = \frac{E^P[X Z_N \mid \mathcal{F}_n]}{Z_n}.
+```
 
-After four heads, $Z_4 = (5/6)^4 = 0.482253$. The code averages winnings times weight over the 64 possible endings and gets 1.929012. Dividing by $Z_4$ gives 4.000000. That is the fair-coin forecast: 4 dollars already won, and six fair tosses add nothing on average.
+After four heads, $`Z_4 = (5/6)^4 = 0.482253`$. The code averages winnings times weight over the 64 possible endings and gets 1.929012. Dividing by $`Z_4`$ gives 4.000000. That is the fair-coin forecast: 4 dollars already won, and six fair tosses add nothing on average.
 
 ### Step 5: a fair game under Q is a P-martingale after multiplying by Z
 
-Take any process $Y_n$ decided by the first $n$ tosses. By Step 4 with $X = Y_{n+1}$, and Step 3 to put $Z_{n+1}$ in place of $Z_N$, the forecast $E^Q[Y_{n+1} \mid \mathcal{F}_n]$ equals $E^P[Y_{n+1} Z_{n+1} \mid \mathcal{F}_n] / Z_n$. So $Y_n$ is a martingale under $Q$ exactly when $Y_n Z_n$ is a martingale under $P$. The winnings $S_n$ are fair under the fair coin, so $S_n Z_n$ must be a fair game under the loaded coin. Meanwhile $S_n$ alone is not fair under $P$: after four heads its forecast for toss 10 exceeds today's 4 dollars by 1.200000, six tosses times the loaded coin's average win of $0.2 per toss.
+Take any process $`Y_n`$ decided by the first $`n`$ tosses. By Step 4 with $`X = Y_{n+1}`$, and Step 3 to put $`Z_{n+1}`$ in place of $`Z_N`$, the forecast $`E^Q[Y_{n+1} \mid \mathcal{F}_n]`$ equals $`E^P[Y_{n+1} Z_{n+1} \mid \mathcal{F}_n] / Z_n`$. So $`Y_n`$ is a martingale under $`Q`$ exactly when $`Y_n Z_n`$ is a martingale under $`P`$. The winnings $`S_n`$ are fair under the fair coin, so $`S_n Z_n`$ must be a fair game under the loaded coin. Meanwhile $`S_n`$ alone is not fair under $`P`$: after four heads its forecast for toss 10 exceeds today's 4 dollars by 1.200000, six tosses times the loaded coin's average win of $0.2 per toss.
 
 <details>
 <summary>Detailed proof: the five facts on any probability space</summary>
 
-Let $(\Omega, \mathcal{F}, P)$ be a probability space with a filtration $\mathcal{F}_0 \subset \dots \subset \mathcal{F}_N \subset \mathcal{F}$, and let $Z_N$ be $\mathcal{F}_N$-measurable, positive almost surely, with $E^P[Z_N] = 1$. Define $Q(A) = E^P[Z_N \mathbf{1}_A]$ for $A$ in $\mathcal{F}$.
+Let $`(\Omega, \mathcal{F}, P)`$ be a probability space with a filtration $`\mathcal{F}_0 \subset \dots \subset \mathcal{F}_N \subset \mathcal{F}`$, and let $`Z_N`$ be $`\mathcal{F}_N`$-measurable, positive almost surely, with $`E^P[Z_N] = 1`$. Define $`Q(A) = E^P[Z_N \mathbf{1}_A]`$ for $`A`$ in $`\mathcal{F}`$.
 
-**Q is a probability equivalent to P.** $Q(\Omega) = E^P[Z_N] = 1$ and $Q(A) \ge 0$. For disjoint $A_1, A_2, \dots$ the indicator of their union is the increasing limit of the partial sums of their indicators, so monotone convergence gives countable additivity. If $P(A) = 0$ then $Z_N \mathbf{1}_A$ is 0 almost surely and $Q(A) = 0$. If $Q(A) = 0$ then $Z_N \mathbf{1}_A = 0$ almost surely; since $Z_N > 0$, $\mathbf{1}_A = 0$ almost surely and $P(A) = 0$.
+**Q is a probability equivalent to P.** $`Q(\Omega) = E^P[Z_N] = 1`$ and $`Q(A) \ge 0`$. For disjoint $`A_1, A_2, \dots`$ the indicator of their union is the increasing limit of the partial sums of their indicators, so monotone convergence gives countable additivity. If $`P(A) = 0`$ then $`Z_N \mathbf{1}_A`$ is 0 almost surely and $`Q(A) = 0`$. If $`Q(A) = 0`$ then $`Z_N \mathbf{1}_A = 0`$ almost surely; since $`Z_N > 0`$, $`\mathbf{1}_A = 0`$ almost surely and $`P(A) = 0`$.
 
-**$E^Q[X] = E^P[X Z_N]$ for every $X \ge 0$, and for every $X$ with $E^Q|X|$ finite.** For an indicator this is the definition. Both sides are linear, so it holds for simple functions. A nonnegative $X$ is the increasing limit of simple functions; apply monotone convergence on both sides. A general $X$ is its positive part minus its negative part.
+**$`E^Q[X] = E^P[X Z_N]`$ for every $`X \ge 0`$, and for every $`X`$ with $`E^Q|X|`$ finite.** For an indicator this is the definition. Both sides are linear, so it holds for simple functions. A nonnegative $`X`$ is the increasing limit of simple functions; apply monotone convergence on both sides. A general $`X`$ is its positive part minus its negative part.
 
-**$Z_n = E^P[Z_N \mid \mathcal{F}_n]$ is the density of $Q$ on $\mathcal{F}_n$, and a martingale.** Step 3's two lines use only the defining property of conditional expectation and the tower property, so they hold here. By uniqueness of the Radon-Nikodym derivative, $Z_n$ is $dQ/dP$ on $\mathcal{F}_n$. Positivity of $Z_N$ makes $Z_n$ positive almost surely.
+**$`Z_n = E^P[Z_N \mid \mathcal{F}_n]`$ is the density of $`Q`$ on $`\mathcal{F}_n`$, and a martingale.** Step 3's two lines use only the defining property of conditional expectation and the tower property, so they hold here. By uniqueness of the Radon-Nikodym derivative, $`Z_n`$ is $`dQ/dP`$ on $`\mathcal{F}_n`$. Positivity of $`Z_N`$ makes $`Z_n`$ positive almost surely.
 
-**Bayes' rule.** Let $X$ be integrable under $Q$, and let $A$ be in $\mathcal{F}_n$. Put $V = E^P[X Z_N \mid \mathcal{F}_n] / Z_n$, which is $\mathcal{F}_n$-measurable. Then $E^Q[V \mathbf{1}_A] = E^P[V Z_n \mathbf{1}_A]$, by the density on $\mathcal{F}_n$, which equals $E^P[E^P[X Z_N \mid \mathcal{F}_n] \mathbf{1}_A] = E^P[X Z_N \mathbf{1}_A] = E^Q[X \mathbf{1}_A]$. So $V$ has the defining property of $E^Q[X \mid \mathcal{F}_n]$, and by uniqueness they are equal almost surely.
+**Bayes' rule.** Let $`X`$ be integrable under $`Q`$, and let $`A`$ be in $`\mathcal{F}_n`$. Put $`V = E^P[X Z_N \mid \mathcal{F}_n] / Z_n`$, which is $`\mathcal{F}_n`$-measurable. Then $`E^Q[V \mathbf{1}_A] = E^P[V Z_n \mathbf{1}_A]`$, by the density on $`\mathcal{F}_n`$, which equals $`E^P[E^P[X Z_N \mid \mathcal{F}_n] \mathbf{1}_A] = E^P[X Z_N \mathbf{1}_A] = E^Q[X \mathbf{1}_A]`$. So $`V`$ has the defining property of $`E^Q[X \mid \mathcal{F}_n]`$, and by uniqueness they are equal almost surely.
 
-**Martingales.** Step 5's argument holds as written for an adapted $Y_n$ with $Y_{n+1}$ integrable under $Q$, using Bayes' rule with the density $Z_{n+1}$ on $\mathcal{F}_{n+1}$.
+**Martingales.** Step 5's argument holds as written for an adapted $`Y_n`$ with $`Y_{n+1}`$ integrable under $`Q`$, using Bayes' rule with the density $`Z_{n+1}`$ on $`\mathcal{F}_{n+1}`$.
 
-**The converse.** For Step 3's positive martingale $Z$, $E^P[Z_N] = 1$ for each $N$ and the measures $Q_N$ agree on $\mathcal{F}_M$ for $M \le N$, since $E^P[Z_N \mathbf{1}_A] = E^P[Z_M \mathbf{1}_A]$ for $A$ in $\mathcal{F}_M$. Whether one measure exists on all of $\mathcal{F}_\infty$ with these restrictions and a density is a separate question, settled for this coin in What breaks.
+**The converse.** For Step 3's positive martingale $`Z`$, $`E^P[Z_N] = 1`$ for each $`N`$ and the measures $`Q_N`$ agree on $`\mathcal{F}_M`$ for $`M \le N`$, since $`E^P[Z_N \mathbf{1}_A] = E^P[Z_M \mathbf{1}_A]`$ for $`A`$ in $`\mathcal{F}_M`$. Whether one measure exists on all of $`\mathcal{F}_\infty`$ with these restrictions and a density is a separate question, settled for this coin in What breaks.
 
 </details>
 
 ### Step 6: speed the coin up and the density becomes the exponential martingale
 
-Measure time in rounds, one round being the gap between tosses of the original coin. Now toss every $h$ rounds, move the winnings up or down by $\sqrt{h}$, and lean the coin so heads has chance $(1 + \mu\sqrt{h})/2$, with $\mu = 0.2$. With $h = 1$ this is the original coin: heads 0.6. As $h$ shrinks, the winnings path becomes Brownian motion with drift $\mu$ per round ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). The fair coin becomes driftless Brownian motion.
+Measure time in rounds, one round being the gap between tosses of the original coin. Now toss every $`h`$ rounds, move the winnings up or down by $`\sqrt{h}`$, and lean the coin so heads has chance $`(1 + \mu\sqrt{h})/2`$, with $`\mu = 0.2`$. With $`h = 1`$ this is the original coin: heads 0.6. As $`h`$ shrinks, the winnings path becomes Brownian motion with drift $`\mu`$ per round ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). The fair coin becomes driftless Brownian motion.
 
-The density for this coin, at winnings $x$ after time $t$, with $H$ heads in $n = t/h$ tosses, takes logarithms to a sum: $-H \ln(1 + \mu\sqrt{h}) - (n - H)\ln(1 - \mu\sqrt{h})$. Expand each logarithm. The first-order terms add to $-\mu x$. The second-order terms add to $+\tfrac12\mu^2 t$, because there are $t/h$ tosses and each contributes $\tfrac12\mu^2 h$. Everything after that shrinks in proportion to $h$. Writing the winnings as $x = W_t + \mu t$, with $W_t$ the driftless part under $P$:
+The density for this coin, at winnings $`x`$ after time $`t`$, with $`H`$ heads in $`n = t/h`$ tosses, takes logarithms to a sum: $`-H \ln(1 + \mu\sqrt{h}) - (n - H)\ln(1 - \mu\sqrt{h})`$. Expand each logarithm. The first-order terms add to $`-\mu x`$. The second-order terms add to $`+\tfrac12\mu^2 t`$, because there are $`t/h`$ tosses and each contributes $`\tfrac12\mu^2 h`$. Everything after that shrinks in proportion to $`h`$. Writing the winnings as $`x = W_t + \mu t`$, with $`W_t`$ the driftless part under $`P`$:
 
-$$Z_t = \exp\big(-\mu x + \tfrac12\mu^2 t\big) = \exp\big(-\mu W_t - \tfrac12\mu^2 t\big).$$
+```math
+Z_t = \exp\big(-\mu x + \tfrac12\mu^2 t\big) = \exp\big(-\mu W_t - \tfrac12\mu^2 t\big).
+```
 
-That is the exponential martingale of [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md), which writes it $\exp(\theta W_t - \tfrac12\theta^2 t)$ for a fixed number $\theta$; here $\theta = -\mu$. The code compares the coin's exact density with this limit at $x = 2$ and $t = 10$ rounds for six step sizes. The error falls from 0.0011087 at $h = 1$ to 0.0000011 at $h = 1/1024$, about four-fold each time $h$ is quartered.
+That is the exponential martingale of [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md), which writes it $`\exp(\theta W_t - \tfrac12\theta^2 t)`$ for a fixed number $`\theta`$; here $`\theta = -\mu`$. The code compares the coin's exact density with this limit at $`x = 2`$ and $`t = 10`$ rounds for six step sizes. The error falls from 0.0011087 at $`h = 1`$ to 0.0000011 at $`h = 1/1024`$, about four-fold each time $`h`$ is quartered.
 
-This card shows the limit only numerically. The continuous-time statement, with $W_t$ a $P$-Brownian motion and $Z_T = \exp(-\mu W_T - \tfrac12\mu^2 T)$ defining $Q$ at a horizon of $T$ rounds, is that $W_t + \mu t$ is a $Q$-Brownian motion on $[0, T]$. It is Girsanov's theorem, proved in [Girsanov](02-girsanov-theorem.md) and in Karatzas and Shreve, section 3.5.
+This card shows the limit only numerically. The continuous-time statement, with $`W_t`$ a $`P`$-Brownian motion and $`Z_T = \exp(-\mu W_T - \tfrac12\mu^2 T)`$ defining $`Q`$ at a horizon of $`T`$ rounds, is that $`W_t + \mu t`$ is a $`Q`$-Brownian motion on $`[0, T]`$. It is Girsanov's theorem, proved in [Girsanov](02-girsanov-theorem.md) and in Karatzas and Shreve, section 3.5.
 
 ---
 
@@ -182,9 +196,9 @@ Counted with its weights, the loaded coin gives the fair game's answers: the bet
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Average without the weights | winnings 2.000000, not 0 | That is the loaded coin's average, not the fair coin's |
-| Ratio upside down, 6/5 on heads and 4/5 on tails | weights average 1.480244, not 1 | That ratio is $P$ over $Q$; with $P$'s chances it is no probability |
-| Bayes' rule without dividing by $Z_4$ | 1.929012, not 4 | The weight already earned scales the answer |
-| An infinite horizon | $P(Z_{500} \le 0.01) = 0.8908$ while $Q$ gives it 0.0005 | The weight sinks to 0 along almost every loaded run; no density exists in the limit |
+| Ratio upside down, 6/5 on heads and 4/5 on tails | weights average 1.480244, not 1 | That ratio is $`P`$ over $`Q`$; with $`P`$'s chances it is no probability |
+| Bayes' rule without dividing by $`Z_4`$ | 1.929012, not 4 | The weight already earned scales the answer |
+| An infinite horizon | $`P(Z_{500} \le 0.01) = 0.8908`$ while $`Q`$ gives it 0.0005 | The weight sinks to 0 along almost every loaded run; no density exists in the limit |
 
 The code prints all four. The last row is the subject of the next section.
 
@@ -192,11 +206,11 @@ The code prints all four. The last row is the subject of the next section.
 
 ## How the density moves
 
-Every $Z_n$ averages exactly 1 under the loaded coin. Yet along a typical loaded run the weight falls. Both are true at once.
+Every $`Z_n`$ averages exactly 1 under the loaded coin. Yet along a typical loaded run the weight falls. Both are true at once.
 
 The traced run is the first one the code's simulation draws, with seed 20260930. Its weight, toss by toss:
 
-| Toss | Result | Factor | $Z_n$ |
+| Toss | Result | Factor | $`Z_n`$ |
 | --- | --- | --- | --- |
 | 0 | — | — | 1.0000 |
 | 1 | T | 1.2500 | 1.2500 |
@@ -220,9 +234,9 @@ xychart-beta
     line [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ```
 
-The falling line is one sample run, plotted to two decimals from the code's `figure,` line. The flat line is the average of $Z_n$ over all runs, computed by enumeration on the code's `figure, E^P[Z_n]` line. Heads come more often than the fair coin expects, and each head shrinks the weight.
+The falling line is one sample run, plotted to two decimals from the code's `figure,` line. The flat line is the average of $`Z_n`$ over all runs, computed by enumeration on the code's `figure, E^P[Z_n]` line. Heads come more often than the fair coin expects, and each head shrinks the weight.
 
-The mean stays at 1 because rare runs carry huge weights: a run of ten tails has weight 9.3132. Per toss, the logarithm of the weight changes by $\ln(5/6)$ or $\ln(5/4)$, and under $P$ that averages $0.6 \ln(5/6) + 0.4 \ln(5/4) = -0.020136$ per toss. By the law of large numbers the logarithm drifts down without limit, and the weight goes to 0 along almost every loaded run. The chart below shows the chance that the weight has fallen to 0.01 or less, computed exactly from the binomial law.
+The mean stays at 1 because rare runs carry huge weights: a run of ten tails has weight 9.3132. Per toss, the logarithm of the weight changes by $`\ln(5/6)`$ or $`\ln(5/4)`$, and under $`P`$ that averages $`0.6 \ln(5/6) + 0.4 \ln(5/4) = -0.020136`$ per toss. By the law of large numbers the logarithm drifts down without limit, and the weight goes to 0 along almost every loaded run. The chart below shows the chance that the weight has fallen to 0.01 or less, computed exactly from the binomial law.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -234,7 +248,7 @@ xychart-beta
     line [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
 ```
 
-Both lines are plotted to two decimals from the code's `figure,` lines. The rising line is the loaded coin's chance; by 500 tosses it is 0.8908. The line along zero is the fair coin's chance of the same event, at most 0.0014 at any plotted point and never above 0.01 times the loaded chance, since $Q(A) = E^P[Z_n \mathbf{1}_A] \le 0.01\, P(A)$ when $Z_n \le 0.01$ on $A$.
+Both lines are plotted to two decimals from the code's `figure,` lines. The rising line is the loaded coin's chance; by 500 tosses it is 0.8908. The line along zero is the fair coin's chance of the same event, at most 0.0014 at any plotted point and never above 0.01 times the loaded chance, since $`Q(A) = E^P[Z_n \mathbf{1}_A] \le 0.01\, P(A)`$ when $`Z_n \le 0.01`$ on $`A`$.
 
 Over infinitely many tosses the loaded coin is sure the heads frequency tends to 0.6; the fair coin is sure it tends to 0.5. Each measure gives probability 1 to an event the other gives probability 0: they are **singular**, the opposite of equivalent. This is Kakutani's theorem for infinite products of coins. The density process exists on every finite horizon and fails only at the end of time.
 
@@ -242,7 +256,7 @@ Over infinitely many tosses the loaded coin is sure the heads frequency tends to
 
 ## Code, from first principles, and it actually runs
 
-The script takes three roads. The fair-coin formula and a binomial count give the answers directly under $Q$. Exact enumeration in fractions weights every one of the 1,024 loaded-coin runs and checks the martingale and Bayes facts on all 2,047 beginnings. A seeded simulation draws 200,000 runs of the loaded coin from a SplitMix64 generator written out in both languages, carries each run's weight in ordinary floating point, and prints every estimate with its standard error. The script also prints the Brownian limit at six step sizes and the infinite-horizon failure.
+The script takes three roads. The fair-coin formula and a binomial count give the answers directly under $`Q`$. Exact enumeration in fractions weights every one of the 1,024 loaded-coin runs and checks the martingale and Bayes facts on all 2,047 beginnings. A seeded simulation draws 200,000 runs of the loaded coin from a SplitMix64 generator written out in both languages, carries each run's weight in ordinary floating point, and prints every estimate with its standard error. The script also prints the Brownian limit at six step sizes and the infinite-horizon failure.
 
 ### Python
 
@@ -671,13 +685,13 @@ The simulated weighted winnings, −0.0059 with standard error 0.0102, sit withi
 
 Lean proves the general theorems for any positive martingale with mean 1, and checks the coin's numbers exactly.
 
-- Suppose $Z_n$ is a positive $P$-martingale with mean 1, and $Q(A) = E^P[Z_N \mathbf{1}_A]$. Then $Q$ is a probability equivalent to $P$, and $E^Q[X] = E^P[X Z_N]$.
-- Take an event $A$ decided by the first $M$ tosses, with $M \le N$. Then $Q(A) = E^P[Z_M \mathbf{1}_A]$, so every horizon builds the same measure on it.
-- Take $n \le N$ and any $X$ with a finite average under $Q$. Then $E^Q[X \mid \mathcal{F}_n]$ is $E^P[X Z_N \mid \mathcal{F}_n]$ divided by $Z_n$: Bayes' rule.
-- Take a process $Y_n$ known at each toss, with finite averages under $Q$ up to $N$. Then, up to $N$, $Y_n$ is a martingale under $Q$ exactly when $Y_n Z_n$ is one under $P$.
+- Suppose $`Z_n`$ is a positive $`P`$-martingale with mean 1, and $`Q(A) = E^P[Z_N \mathbf{1}_A]`$. Then $`Q`$ is a probability equivalent to $`P`$, and $`E^Q[X] = E^P[X Z_N]`$.
+- Take an event $`A`$ decided by the first $`M`$ tosses, with $`M \le N`$. Then $`Q(A) = E^P[Z_M \mathbf{1}_A]`$, so every horizon builds the same measure on it.
+- Take $`n \le N`$ and any $`X`$ with a finite average under $`Q`$. Then $`E^Q[X \mid \mathcal{F}_n]`$ is $`E^P[X Z_N \mid \mathcal{F}_n]`$ divided by $`Z_n`$: Bayes' rule.
+- Take a process $`Y_n`$ known at each toss, with finite averages under $`Q`$ up to $`N`$. Then, up to $`N`$, $`Y_n`$ is a martingale under $`Q`$ exactly when $`Y_n Z_n`$ is one under $`P`$.
 - The coin's numbers are exact: each factor averages 1, and the traced run's chance times its weight is 1/1024.
-- So is $E^P[Z_{10}] = 1$, and the winnings average 2 without the weights and 0 with them.
-- So are 176/1024 for seven or more heads, $(26/25)^{10}$ for the upside-down ratio, and Bayes' answer of 4 after four heads.
+- So is $`E^P[Z_{10}] = 1`$, and the winnings average 2 without the weights and 0 with them.
+- So are 176/1024 for seven or more heads, $`(26/25)^{10}`$ for the upside-down ratio, and Bayes' answer of 4 after four heads.
 
 The Brownian limit in Step 6, the infinite-horizon failure and the simulation are left to the Python and Rust checks.
 
@@ -933,7 +947,7 @@ example : (∑ k ∈ Finset.range 7, (Nat.choose 6 k : ℚ) * (3 / 5) ^ k * (2 /
 > **Thinking the change of measure changes the runs.** Nothing about any run moves: the same tosses, the same winnings on each. Only the chances attached to the runs change, so every average and every forecast changes. Under the fair coin the game is fair; the real coin still wins $2 on average, and "fair under Q" never meant it cannot win.
 >
 > - **Averaging without the weights.** Simulating the loaded coin and taking a plain average gives winnings of 2, not 0.
-> - **The ratio upside down.** $P$ over $Q$ is the density of $P$ against $Q$; used with $P$'s chances its weights average 1.480244 and give no probability.
+> - **The ratio upside down.** $`P`$ over $`Q`$ is the density of $`P`$ against $`Q`$; used with $`P`$'s chances its weights average 1.480244 and give no probability.
 > - **Bayes' rule without the division.** After four heads the undivided weighted forecast is 1.929012; the fair forecast is 4.
 > - **Trusting a density over an infinite horizon.** Mean 1 at every finite time does not survive the limit: by 500 tosses the weight is at most 0.01 on 89% of loaded runs, and the limit is 0.
 
@@ -959,7 +973,7 @@ example : (∑ k ∈ Finset.range 7, (Nat.choose 6 k : ℚ) * (3 / 5) ^ k * (2 /
 
 ## Where this goes next
 
-- [Girsanov](02-girsanov-theorem.md): the continuous-time density $\exp(-\mu W_t - \tfrac12\mu^2 t)$ turns Brownian motion with drift into Brownian motion without it, and leaves the wiggle untouched.
+- [Girsanov](02-girsanov-theorem.md): the continuous-time density $`\exp(-\mu W_t - \tfrac12\mu^2 t)`$ turns Brownian motion with drift into Brownian motion without it, and leaves the wiggle untouched.
 - [Novikov](03-novikov-condition.md): when an exponential density is a true martingale with mean 1, and not one that leaks mass.
 
 The question this card leaves open: what does the reweighting do to a Brownian path's drift, and why can its volatility not move? [Girsanov](02-girsanov-theorem.md) answers it.

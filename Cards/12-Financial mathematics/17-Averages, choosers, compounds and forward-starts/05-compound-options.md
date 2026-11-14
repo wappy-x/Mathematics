@@ -38,49 +38,57 @@ First line: the underlying call, one year struck at $100, valued with six months
 
 ## The formula
 
-Notation first. Write $T_1$ for the first date, when the fee is due, and $T_2$ for the second, when the call expires. Write $K_1$ for the fee and $K_2$ for the call's strike. Write $S^*$ for the critical share price. $N(x)$ is the one-dimensional bell-curve area to the left of $x$. The new symbol is $M(a, b; \rho)$: the chance that two standard bell-curve quantities, correlated by $\rho$ (say "rho"), land below $a$ and below $b$ at the same time.
+Notation first. Write $`T_1`$ for the first date, when the fee is due, and $`T_2`$ for the second, when the call expires. Write $`K_1`$ for the fee and $`K_2`$ for the call's strike. Write $`S^*`$ for the critical share price. $`N(x)`$ is the one-dimensional bell-curve area to the left of $`x`$. The new symbol is $`M(a, b; \rho)`$: the chance that two standard bell-curve quantities, correlated by $`\rho`$ (say "rho"), land below $`a`$ and below $`b`$ at the same time.
 
-$$V = S\,e^{-qT_2}\,M(a_1, b_1; \rho) \;-\; K_2\,e^{-rT_2}\,M(a_2, b_2; \rho) \;-\; K_1\,e^{-rT_1}\,N(a_2)$$
+```math
+V = S\,e^{-qT_2}\,M(a_1, b_1; \rho) \;-\; K_2\,e^{-rT_2}\,M(a_2, b_2; \rho) \;-\; K_1\,e^{-rT_1}\,N(a_2)
+```
 
 **Read it aloud:** the share that arrives only if both options are used, less the strike paid only if both are used, less the fee paid only if the first is used, each shrunk to today and weighted by its own chance.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | price today of the call on the call | $4.03 | is the answer |
-| $S$, $S_1$, $S_2$ | Acme's price today, on the first date, on the second | $100; unknown; unknown | $S$ up: rises, about 41 cents per dollar |
-| $K_1$ | the fee to buy the call on the first date | $8 | falls: from $9.23 at no fee to $1.68 at $16 |
-| $K_2$ | the strike of the underlying call | $100 | falls: the call is worth less |
-| $T_1$, $T_2$ | the first date and the call's expiry, in years | 0.5 and 1 | $T_1$ up: rises, the decision waits longer |
-| $r$, $q$ | bank rate and dividend yield, continuously compounded; $e^{-rT}$ is the discount | 5% and 2% | $r$ up: rises; $q$ up: falls |
-| $\sigma$, $W$ | Acme's volatility: the spread of its yearly log return; $W$ the Brownian path that drives it | 20% | rises: $7.44 at 30% |
-| $C$, $C_0$ | the underlying call's value on the first date, a function of $S_1$; its value today | $6.31 if Acme is at $100; $9.23 | — |
-| $S^*$ | critical share price: where $C$ equals the fee | $102.81 | rises with the fee |
-| $N$, $M$, $\phi$ | bell-curve area in one and in two dimensions; $\phi$ the bell curve's height | $N(a_2)$ = 0.4362 | — |
-| $\rho$, $X$, $Y$ | correlation of $X$ and $Y$, the two dates' standardised returns: $\sqrt{T_1/T_2}$ | 0.7071 | — |
-| $a$, $b$; $a_1$, $a_2$, $b_1$, $b_2$ | the two levels in $M$; distances to $S^*$ at $T_1$ and to $K_2$ at $T_2$, in standard deviations | −0.0192, −0.1606, 0.25, 0.05 | — |
+| $`V`$ | price today of the call on the call | $4.03 | is the answer |
+| $`S`$, $`S_1`$, $`S_2`$ | Acme's price today, on the first date, on the second | $100; unknown; unknown | $`S`$ up: rises, about 41 cents per dollar |
+| $`K_1`$ | the fee to buy the call on the first date | $8 | falls: from $9.23 at no fee to $1.68 at $16 |
+| $`K_2`$ | the strike of the underlying call | $100 | falls: the call is worth less |
+| $`T_1`$, $`T_2`$ | the first date and the call's expiry, in years | 0.5 and 1 | $`T_1`$ up: rises, the decision waits longer |
+| $`r`$, $`q`$ | bank rate and dividend yield, continuously compounded; $`e^{-rT}`$ is the discount | 5% and 2% | $`r`$ up: rises; $`q`$ up: falls |
+| $`\sigma`$, $`W`$ | Acme's volatility: the spread of its yearly log return; $`W`$ the Brownian path that drives it | 20% | rises: $7.44 at 30% |
+| $`C`$, $`C_0`$ | the underlying call's value on the first date, a function of $`S_1`$; its value today | $6.31 if Acme is at $100; $9.23 | — |
+| $`S^*`$ | critical share price: where $`C`$ equals the fee | $102.81 | rises with the fee |
+| $`N`$, $`M`$, $`\phi`$ | bell-curve area in one and in two dimensions; $`\phi`$ the bell curve's height | $`N(a_2)`$ = 0.4362 | — |
+| $`\rho`$, $`X`$, $`Y`$ | correlation of $`X`$ and $`Y`$, the two dates' standardised returns: $`\sqrt{T_1/T_2}`$ | 0.7071 | — |
+| $`a`$, $`b`$; $`a_1`$, $`a_2`$, $`b_1`$, $`b_2`$ | the two levels in $`M`$; distances to $`S^*`$ at $`T_1`$ and to $`K_2`$ at $`T_2`$, in standard deviations | −0.0192, −0.1606, 0.25, 0.05 | — |
 
 The four distances are Black-Scholes distances, one pair per date:
 
-$$a_2 = \frac{\ln(S/S^*) + (r - q - \tfrac12\sigma^2)\,T_1}{\sigma\sqrt{T_1}}, \quad a_1 = a_2 + \sigma\sqrt{T_1}$$
+```math
+a_2 = \frac{\ln(S/S^*) + (r - q - \tfrac12\sigma^2)\,T_1}{\sigma\sqrt{T_1}}, \quad a_1 = a_2 + \sigma\sqrt{T_1}
+```
 
-$$b_2 = \frac{\ln(S/K_2) + (r - q - \tfrac12\sigma^2)\,T_2}{\sigma\sqrt{T_2}}, \quad b_1 = b_2 + \sigma\sqrt{T_2}$$
+```math
+b_2 = \frac{\ln(S/K_2) + (r - q - \tfrac12\sigma^2)\,T_2}{\sigma\sqrt{T_2}}, \quad b_1 = b_2 + \sigma\sqrt{T_2}
+```
 
-In words: $a_2$ counts how far Acme is expected to land above the critical price at the first date, in units of its spread by then. The pair $b_1$, $b_2$ are the house call's own distances from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+In words: $`a_2`$ counts how far Acme is expected to land above the critical price at the first date, in units of its spread by then. The pair $`b_1`$, $`b_2`$ are the house call's own distances from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 The critical price comes first, from one equation with one unknown:
 
-$$C(S^*) = K_1$$
+```math
+C(S^*) = K_1
+```
 
-It has no closed form, so it is solved numerically. The call's value on the first date rises steadily from 0 toward no ceiling as the share price grows, so every fee above zero has **exactly one** critical price. Boundary cases: a fee of zero makes the compound the call itself, $9.23; a first date equal to the second makes it a plain call struck at $K_2 + K_1$.
+It has no closed form, so it is solved numerically. The call's value on the first date rises steadily from 0 toward no ceiling as the share price grows, so every fee above zero has **exactly one** critical price. Boundary cases: a fee of zero makes the compound the call itself, $9.23; a first date equal to the second makes it a plain call struck at $`K_2 + K_1`$.
 
-Three siblings use the same pieces. A **put on a call** is the right to *sell* the call for $K_1$ on the first date; a **call on a put** and a **put on a put** do the same with the one-year put underneath. Their formulas flip signs and are folded into Step 5. On the put the critical price is where the put is worth $8, $93.83. It exists only for a fee below the put's ceiling, the strike discounted over the last half year.
+Three siblings use the same pieces. A **put on a call** is the right to *sell* the call for $`K_1`$ on the first date; a **call on a put** and a **put on a put** do the same with the one-year put underneath. Their formulas flip signs and are folded into Step 5. On the put the critical price is where the put is worth $8, $93.83. It exists only for a fee below the put's ceiling, the strike discounted over the last half year.
 
 ### When it holds
 
-- **Acme follows the Black-Scholes model: constant volatility, rate and dividend yield.** If volatility itself moves, the call's value on the first date is not a fixed function of $S_1$, the critical price blurs into a band, and the formula misprices by roughly the compound's vega (its change per volatility point, 33 cents) times the error.
-- **Both options are European.** The fee is paid, or refused, on exactly $T_1$; the call is used on exactly $T_2$. An American underlying call breaks the formula for $C$ and needs a tree.
-- **The fee is paid on the first date, not later.** A fee due at $T_2$ is discounted over the whole year and changes the price.
-- **The underlying option is delivered at its fair value on the first date.** If the call can only be resold at a bid below its fair value, the fee is worth paying only when the call clears $K_1$ plus that gap, and the critical price rises.
+- **Acme follows the Black-Scholes model: constant volatility, rate and dividend yield.** If volatility itself moves, the call's value on the first date is not a fixed function of $`S_1`$, the critical price blurs into a band, and the formula misprices by roughly the compound's vega (its change per volatility point, 33 cents) times the error.
+- **Both options are European.** The fee is paid, or refused, on exactly $`T_1`$; the call is used on exactly $`T_2`$. An American underlying call breaks the formula for $`C`$ and needs a tree.
+- **The fee is paid on the first date, not later.** A fee due at $`T_2`$ is discounted over the whole year and changes the price.
+- **The underlying option is delivered at its fair value on the first date.** If the call can only be resold at a bid below its fair value, the fee is worth paying only when the call clears $`K_1`$ plus that gap, and the critical price rises.
 
 ---
 
@@ -88,105 +96,123 @@ Three siblings use the same pieces. A **put on a call** is the right to *sell* t
 
 ### Step 0: on the first date, the compound is an ordinary option on a known number
 
-Stand at six months. Acme's price $S_1$ is known, and the Black-Scholes formula turns it into the call's value $C(S_1)$. The compound pays $\max(C(S_1) - K_1, 0)$ that day: a payoff on one date, depending only on that date's share price, like any European option. So today's price is the discounted pretend-world average of that payoff, where the pretend world is the one in which everything grows at the bank rate ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The whole task is to do that average in closed form.
+Stand at six months. Acme's price $`S_1`$ is known, and the Black-Scholes formula turns it into the call's value $`C(S_1)`$. The compound pays $`\max(C(S_1) - K_1, 0)`$ that day: a payoff on one date, depending only on that date's share price, like any European option. So today's price is the discounted pretend-world average of that payoff, where the pretend world is the one in which everything grows at the bank rate ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The whole task is to do that average in closed form.
 
 ### Step 1: the exercise decision is a cutoff on the share price
 
-The call's value $C(S_1)$ rises with $S_1$. So $C(S_1) > K_1$ exactly when $S_1 > S^*$. The payoff splits into two pieces on the event "Acme above $S^*$ at six months":
+The call's value $`C(S_1)`$ rises with $`S_1`$. So $`C(S_1) > K_1`$ exactly when $`S_1 > S^*`$. The payoff splits into two pieces on the event "Acme above $`S^*`$ at six months":
 
-$$V = e^{-rT_1}\,\mathbb{E}\big[\,C(S_1)\,\mathbf{1}\{S_1 > S^*\}\big] \;-\; K_1\,e^{-rT_1}\,\mathbb{P}(S_1 > S^*)$$
+```math
+V = e^{-rT_1}\,\mathbb{E}\big[\,C(S_1)\,\mathbf{1}\{S_1 > S^*\}\big] \;-\; K_1\,e^{-rT_1}\,\mathbb{P}(S_1 > S^*)
+```
 
-Here $\mathbb{E}$ is the pretend-world average, $\mathbb{P}$ the pretend-world chance, and $\mathbf{1}\{\cdot\}$ a switch that reads 1 when its event happens and 0 otherwise. The fee term is a Black-Scholes cash leg with $S^*$ as its strike and $T_1$ as its date. Its chance is $N(a_2)$: 0.4362 for Acme.
+Here $`\mathbb{E}`$ is the pretend-world average, $`\mathbb{P}`$ the pretend-world chance, and $`\mathbf{1}\{\cdot\}`$ a switch that reads 1 when its event happens and 0 otherwise. The fee term is a Black-Scholes cash leg with $`S^*`$ as its strike and $`T_1`$ as its date. Its chance is $`N(a_2)`$: 0.4362 for Acme.
 
 ### Step 2: the call's value is itself an average, so fold the two averages into one
 
-On the first date, $C(S_1)$ is the discounted average of the call's final payoff, given what is known at six months. Averaging that again over the first half year gives the plain average over the whole year. This is the **tower rule**: an average of conditional averages is the overall average. The first term becomes
+On the first date, $`C(S_1)`$ is the discounted average of the call's final payoff, given what is known at six months. Averaging that again over the first half year gives the plain average over the whole year. This is the **tower rule**: an average of conditional averages is the overall average. The first term becomes
 
-$$e^{-rT_2}\,\mathbb{E}\big[(S_2 - K_2)\,\mathbf{1}\{S_1 > S^*,\ S_2 > K_2\}\big],$$
+```math
+e^{-rT_2}\,\mathbb{E}\big[(S_2 - K_2)\,\mathbf{1}\{S_1 > S^*,\ S_2 > K_2\}\big],
+```
 
-with $S_2$ Acme's price at one year. The call pays only if both events happen: the fee was paid, and Acme then finished above $100. Split once more, into a share leg and a strike leg:
+with $`S_2`$ Acme's price at one year. The call pays only if both events happen: the fee was paid, and Acme then finished above $100. Split once more, into a share leg and a strike leg:
 
-$$e^{-rT_2}\,\mathbb{E}\big[S_2\,\mathbf{1}\{\text{both}\}\big] \;-\; K_2\,e^{-rT_2}\,\mathbb{P}(\text{both}).$$
+```math
+e^{-rT_2}\,\mathbb{E}\big[S_2\,\mathbf{1}\{\text{both}\}\big] \;-\; K_2\,e^{-rT_2}\,\mathbb{P}(\text{both}).
+```
 
 ### Step 3: two dates, one path, so the two readings are correlated
 
-In the pretend world, Acme's log price at any date is a straight line plus $\sigma$ times a Brownian path $W$ ([Prices as geometric Brownian motion](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)). The first event depends on $W$ at $T_1$, the second on $W$ at $T_2$. The later value is the earlier one plus an independent piece, so the two share their first half.
+In the pretend world, Acme's log price at any date is a straight line plus $`\sigma`$ times a Brownian path $`W`$ ([Prices as geometric Brownian motion](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)). The first event depends on $`W`$ at $`T_1`$, the second on $`W`$ at $`T_2`$. The later value is the earlier one plus an independent piece, so the two share their first half.
 
-Standardise each by dividing by its own spread; call the results $X$ and $Y$. The covariance of the two path values is $T_1$, the variance they share. Their spreads are $\sqrt{T_1}$ and $\sqrt{T_2}$. The correlation is
+Standardise each by dividing by its own spread; call the results $`X`$ and $`Y`$. The covariance of the two path values is $`T_1`$, the variance they share. Their spreads are $`\sqrt{T_1}`$ and $`\sqrt{T_2}`$. The correlation is
 
-$$\rho = \frac{T_1}{\sqrt{T_1}\sqrt{T_2}} = \sqrt{\frac{T_1}{T_2}} = \sqrt{0.5} = 0.7071.$$
+```math
+\rho = \frac{T_1}{\sqrt{T_1}\sqrt{T_2}} = \sqrt{\frac{T_1}{T_2}} = \sqrt{0.5} = 0.7071.
+```
 
-Rewriting "$S_1 > S^*$" and "$S_2 > K_2$" in these standardised units gives, after swapping $(X, Y)$ for $(-X, -Y)$ to turn "above" into "below", the chance of both as $M(a_2, b_2; \rho)$: 0.3490 for Acme. That is the strike leg's weight.
+Rewriting "$`S_1 > S^*`$" and "$`S_2 > K_2`$" in these standardised units gives, after swapping $`(X, Y)`$ for $`(-X, -Y)`$ to turn "above" into "below", the chance of both as $`M(a_2, b_2; \rho)`$: 0.3490 for Acme. That is the strike leg's weight.
 
 ### Step 4: counting in shares slides both readings
 
-The share leg averages $S_2$ over the double event. As on the Black-Scholes card, weighting by the share's value slides the bell curve toward the good outcomes by one spread. In two dimensions the slide acts on both readings at once: the first by $\sigma\sqrt{T_1}$, the second by $\sigma\sqrt{T_2}$. The correlation is untouched, because a slide moves the curve without reshaping it. The thresholds become $a_1$ and $b_1$, and the share leg is $S\,e^{-qT_2}\,M(a_1, b_1; \rho)$: weight 0.4146 for Acme.
+The share leg averages $`S_2`$ over the double event. As on the Black-Scholes card, weighting by the share's value slides the bell curve toward the good outcomes by one spread. In two dimensions the slide acts on both readings at once: the first by $`\sigma\sqrt{T_1}`$, the second by $`\sigma\sqrt{T_2}`$. The correlation is untouched, because a slide moves the curve without reshaping it. The thresholds become $`a_1`$ and $`b_1`$, and the share leg is $`S\,e^{-qT_2}\,M(a_1, b_1; \rho)`$: weight 0.4146 for Acme.
 
 <details>
 <summary>Detailed proof: the two-dimensional slide</summary>
 
-Write $X = W_{T_1}/\sqrt{T_1}$ and $Y = W_{T_2}/\sqrt{T_2}$, standard normals with correlation $\rho$. Then $S_2 = S\,e^{(r - q - \frac12\sigma^2)T_2 + \sigma\sqrt{T_2}\,Y}$. The pretend-world average of $e^{\sigma\sqrt{T_2}\,Y}$ is $e^{\frac12\sigma^2 T_2}$, so $\mathbb{E}[S_2] = S\,e^{(r-q)T_2}$ and $e^{-rT_2}\mathbb{E}[S_2\,\mathbf{1}\{A\}] = S\,e^{-qT_2}\,\widetilde{\mathbb{P}}(A)$, where $\widetilde{\mathbb{P}}$ weights each outcome by $e^{\sigma\sqrt{T_2}Y - \frac12\sigma^2 T_2}$.
+Write $`X = W_{T_1}/\sqrt{T_1}`$ and $`Y = W_{T_2}/\sqrt{T_2}`$, standard normals with correlation $`\rho`$. Then $`S_2 = S\,e^{(r - q - \frac12\sigma^2)T_2 + \sigma\sqrt{T_2}\,Y}`$. The pretend-world average of $`e^{\sigma\sqrt{T_2}\,Y}`$ is $`e^{\frac12\sigma^2 T_2}`$, so $`\mathbb{E}[S_2] = S\,e^{(r-q)T_2}`$ and $`e^{-rT_2}\mathbb{E}[S_2\,\mathbf{1}\{A\}] = S\,e^{-qT_2}\,\widetilde{\mathbb{P}}(A)`$, where $`\widetilde{\mathbb{P}}`$ weights each outcome by $`e^{\sigma\sqrt{T_2}Y - \frac12\sigma^2 T_2}`$.
 
-Under that weighting the pair $(X, Y)$ is still bell-shaped with the same spreads and correlation, and its centre moves. Complete the square in the joint density $\exp\!\big(-(x^2 - 2\rho xy + y^2)/(2(1-\rho^2))\big)$ times $e^{c y}$ with $c = \sigma\sqrt{T_2}$: the centre moves to $(\rho c,\ c)$. Now $\rho c = \sqrt{T_1/T_2}\,\sigma\sqrt{T_2} = \sigma\sqrt{T_1}$. So $X$ shifts by $\sigma\sqrt{T_1}$ and $Y$ by $\sigma\sqrt{T_2}$: exactly the steps from $a_2$ to $a_1$ and from $b_2$ to $b_1$. Hence $\widetilde{\mathbb{P}}(S_1 > S^*,\ S_2 > K_2) = M(a_1, b_1; \rho)$.
+Under that weighting the pair $`(X, Y)`$ is still bell-shaped with the same spreads and correlation, and its centre moves. Complete the square in the joint density $`\exp\!\big(-(x^2 - 2\rho xy + y^2)/(2(1-\rho^2))\big)`$ times $`e^{c y}`$ with $`c = \sigma\sqrt{T_2}`$: the centre moves to $`(\rho c,\ c)`$. Now $`\rho c = \sqrt{T_1/T_2}\,\sigma\sqrt{T_2} = \sigma\sqrt{T_1}`$. So $`X`$ shifts by $`\sigma\sqrt{T_1}`$ and $`Y`$ by $`\sigma\sqrt{T_2}`$: exactly the steps from $`a_2`$ to $`a_1`$ and from $`b_2`$ to $`b_1`$. Hence $`\widetilde{\mathbb{P}}(S_1 > S^*,\ S_2 > K_2) = M(a_1, b_1; \rho)`$.
 
-The event $S_1 > S^*$ reads $X > -a_2$ and $S_2 > K_2$ reads $Y > -b_2$. Replacing $(X, Y)$ by $(-X, -Y)$, which has the same law, turns both into "below": $M(a_2, b_2; \rho)$. Collecting the three legs from Steps 1 to 4 gives the formula.
+The event $`S_1 > S^*`$ reads $`X > -a_2`$ and $`S_2 > K_2`$ reads $`Y > -b_2`$. Replacing $`(X, Y)`$ by $`(-X, -Y)`$, which has the same law, turns both into "below": $`M(a_2, b_2; \rho)`$. Collecting the three legs from Steps 1 to 4 gives the formula.
 
 </details>
 
 ### Step 5: the three siblings and parity
 
-A put on the call pays $\max(K_1 - C(S_1), 0)$. The payoffs of the call on the call and the put on the call differ by $C(S_1) - K_1$ in every state. Averaging and discounting gives **compound parity**:
+A put on the call pays $`\max(K_1 - C(S_1), 0)`$. The payoffs of the call on the call and the put on the call differ by $`C(S_1) - K_1`$ in every state. Averaging and discounting gives **compound parity**:
 
-$$V_{\text{call on call}} - V_{\text{put on call}} = C_0 - K_1\,e^{-rT_1},$$
+```math
+V_{\text{call on call}} - V_{\text{put on call}} = C_0 - K_1\,e^{-rT_1},
+```
 
-with $C_0$ the house call today, $9.23. The right side is $1.42. So the put on the call is $4.03 − $1.42 = $2.61. The fee is discounted from the first date; the strike $K_2$ stays inside $C_0$.
+with $`C_0`$ the house call today, $9.23. The right side is $1.42. So the put on the call is $4.03 − $1.42 = $2.61. The fee is discounted from the first date; the strike $`K_2`$ stays inside $`C_0`$.
 
 <details>
 <summary>Detailed proof: the sibling formulas</summary>
 
-Put on call: exercise when $S_1 < S^*$.
-$$V = K_2 e^{-rT_2} M(-a_2, b_2; -\rho) - S e^{-qT_2} M(-a_1, b_1; -\rho) + K_1 e^{-rT_1} N(-a_2).$$
-Call on put, with $S^*$ now the price where the put is worth $K_1$; exercise when $S_1 < S^*$.
-$$V = K_2 e^{-rT_2} M(-a_2, -b_2; \rho) - S e^{-qT_2} M(-a_1, -b_1; \rho) - K_1 e^{-rT_1} N(-a_2).$$
-Put on put, same $S^*$; exercise when $S_1 > S^*$.
-$$V = S e^{-qT_2} M(a_1, -b_1; -\rho) - K_2 e^{-rT_2} M(a_2, -b_2; -\rho) + K_1 e^{-rT_1} N(a_2).$$
-Each follows Steps 1 to 4 with the event signs changed. A reading "below" at one date and "above" at the other flips the sign of one standardised variable and so of $\rho$. Parity for the pair on the put reads the same way, with the house put in place of the call.
+Put on call: exercise when $`S_1 < S^*`$.
+
+$`\displaystyle V = K_2 e^{-rT_2} M(-a_2, b_2; -\rho) - S e^{-qT_2} M(-a_1, b_1; -\rho) + K_1 e^{-rT_1} N(-a_2).`$
+
+Call on put, with $`S^*`$ now the price where the put is worth $`K_1`$; exercise when $`S_1 < S^*`$.
+
+$`\displaystyle V = K_2 e^{-rT_2} M(-a_2, -b_2; \rho) - S e^{-qT_2} M(-a_1, -b_1; \rho) - K_1 e^{-rT_1} N(-a_2).`$
+
+Put on put, same $`S^*`$; exercise when $`S_1 > S^*`$.
+
+$`\displaystyle V = S e^{-qT_2} M(a_1, -b_1; -\rho) - K_2 e^{-rT_2} M(a_2, -b_2; -\rho) + K_1 e^{-rT_1} N(a_2).`$
+
+Each follows Steps 1 to 4 with the event signs changed. A reading "below" at one date and "above" at the other flips the sign of one standardised variable and so of $`\rho`$. Parity for the pair on the put reads the same way, with the house put in place of the call.
 
 </details>
 
 <details>
 <summary>How a two-dimensional bell-curve area is computed</summary>
 
-Condition on the first reading. If $X = z$, then $Y$ is bell-shaped with centre $\rho z$ and spread $\sqrt{1 - \rho^2}$ ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)). So
-$$M(a, b; \rho) = \int_{-\infty}^{a} \phi(z)\,N\!\left(\frac{b - \rho z}{\sqrt{1 - \rho^2}}\right) dz.$$
-One dimension of integration, one ordinary $N$ inside. The code does this with Simpson's rule, which adds up the area under a curve in many thin strips, each topped by a short parabola. At $a = b = 0$ there is an exact answer, $\tfrac14 + \arcsin(\rho)/(2\pi)$, which is 0.375 at $\rho = 0.7071$; the code checks its routine against it.
+Condition on the first reading. If $`X = z`$, then $`Y`$ is bell-shaped with centre $`\rho z`$ and spread $`\sqrt{1 - \rho^2}`$ ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)). So
+
+$`\displaystyle M(a, b; \rho) = \int_{-\infty}^{a} \phi(z)\,N\!\left(\frac{b - \rho z}{\sqrt{1 - \rho^2}}\right) dz.`$
+
+One dimension of integration, one ordinary $`N`$ inside. The code does this with Simpson's rule, which adds up the area under a curve in many thin strips, each topped by a short parabola. At $`a = b = 0`$ there is an exact answer, $`\tfrac14 + \arcsin(\rho)/(2\pi)`$, which is 0.375 at $`\rho = 0.7071`$; the code checks its routine against it.
 
 </details>
 
-A second route skips the two-dimensional curve. Step 0 already says the compound is an option on $C(S_1)$. Average $\max(C(S_1) - 8, 0)$ over the bell curve of $S_1$ directly, with the Black-Scholes formula inside the average. That is a one-dimensional integral over the first date, and the code does it as road 2. A third route builds one coin-flip tree to one year, values the call at the six-month layer, applies the fee there, and rolls back: road 3, which never computes $S^*$ at all.
+A second route skips the two-dimensional curve. Step 0 already says the compound is an option on $`C(S_1)`$. Average $`\max(C(S_1) - 8, 0)`$ over the bell curve of $`S_1`$ directly, with the Black-Scholes formula inside the average. That is a one-dimensional integral over the first date, and the code does it as road 2. A third route builds one coin-flip tree to one year, values the call at the six-month layer, applies the fee there, and rolls back: road 3, which never computes $`S^*`$ at all.
 
 ---
 
 ## Worked numbers, by hand
 
-Acme: $S = K_2 = 100$, $K_1 = 8$, $T_1 = 0.5$, $T_2 = 1$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$.
+Acme: $`S = K_2 = 100`$, $`K_1 = 8`$, $`T_1 = 0.5`$, $`T_2 = 1`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| critical price $S^*$ | Newton on $C(S^*) = 8$, from $100 | $102.81 |
-| spread to $T_1$, $\sigma\sqrt{T_1}$ | $0.20 \times \sqrt{0.5}$ | 0.141421 |
-| drift to $T_1$ | $(0.05 - 0.02 - 0.02) \times 0.5$ | 0.005 |
-| $a_2$ | $(\ln(100/102.81) + 0.005)/0.141421 = (-0.027715 + 0.005)/0.141421$ | −0.160621 |
-| $a_1$ | $-0.160621 + 0.141421$ | −0.019199 |
-| $b_2$, $b_1$ | the house call's own two distances | 0.05, 0.25 |
-| $\rho$ | $\sqrt{0.5/1}$ | 0.707107 |
-| $N(a_2)$, chance the fee is paid | bell-curve area | 0.436196 |
-| $M(a_2, b_2; \rho)$, chance both are used | two-dimensional area | 0.349048 |
-| $M(a_1, b_1; \rho)$, the same counted in shares | two-dimensional area | 0.414567 |
-| share leg | $100 \times 0.980199 \times 0.414567$ | 40.635757 |
-| strike leg | $100 \times 0.951229 \times 0.349048$ | 33.202429 |
-| fee leg | $8 \times 0.975310 \times 0.436196$ | 3.403411 |
-| **call on call** | $40.635757 - 33.202429 - 3.403411$ | **$4.03** (4.029917) |
+| critical price $`S^*`$ | Newton on $`C(S^*) = 8`$, from $100 | $102.81 |
+| spread to $`T_1`$, $`\sigma\sqrt{T_1}`$ | $`0.20 \times \sqrt{0.5}`$ | 0.141421 |
+| drift to $`T_1`$ | $`(0.05 - 0.02 - 0.02) \times 0.5`$ | 0.005 |
+| $`a_2`$ | $`(\ln(100/102.81) + 0.005)/0.141421 = (-0.027715 + 0.005)/0.141421`$ | −0.160621 |
+| $`a_1`$ | $`-0.160621 + 0.141421`$ | −0.019199 |
+| $`b_2`$, $`b_1`$ | the house call's own two distances | 0.05, 0.25 |
+| $`\rho`$ | $`\sqrt{0.5/1}`$ | 0.707107 |
+| $`N(a_2)`$, chance the fee is paid | bell-curve area | 0.436196 |
+| $`M(a_2, b_2; \rho)`$, chance both are used | two-dimensional area | 0.349048 |
+| $`M(a_1, b_1; \rho)`$, the same counted in shares | two-dimensional area | 0.414567 |
+| share leg | $`100 \times 0.980199 \times 0.414567`$ | 40.635757 |
+| strike leg | $`100 \times 0.951229 \times 0.349048`$ | 33.202429 |
+| fee leg | $`8 \times 0.975310 \times 0.436196`$ | 3.403411 |
+| **call on call** | $`40.635757 - 33.202429 - 3.403411`$ | **$4.03** (4.029917) |
 
 The right to decide in six months whether to pay $8 for the house call costs $4.03 today. The fee is paid in about 44 percent of pretend-world outcomes, and both options end up used in about 35 percent.
 
@@ -206,8 +232,8 @@ Same contract, correct answer $4.03:
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Treat it as "the call less the fee", $9.23 − $7.80 | $1.42 | Assumes the fee is always paid. The right to refuse it is worth $2.61, the put on the call. |
-| Correlation $T_1/T_2 = 0.5$ instead of $\sqrt{0.5}$ | $4.01 | Standardised returns share variance $T_1$; divided by two spreads, that is a square root. |
-| Fee discounted from $T_2$, not $T_1$ | $4.11 | The fee is paid at six months; discounting it over a year understates it. |
+| Correlation $`T_1/T_2 = 0.5`$ instead of $`\sqrt{0.5}`$ | $4.01 | Standardised returns share variance $`T_1`$; divided by two spreads, that is a square root. |
+| Fee discounted from $`T_2`$, not $`T_1`$ | $4.11 | The fee is paid at six months; discounting it over a year understates it. |
 | Pay the fee whenever Acme is above $100 | $3.96 | Between $100 and $102.81 the call is worth less than $8; paying for it loses money. |
 
 The last row is small because the loss occurs only in a narrow band of outcomes near the critical price.
@@ -223,7 +249,7 @@ Each Greek is the change in price for a small change in one input, found by nudg
 | vega, per volatility point | $0.33 | $0.38 | slightly less |
 | gearing, percent move per 1% of Acme | 10.08 | 6.36 | much more leverage |
 
-Delta has a closed form, $e^{-qT_2}\,M(a_1, b_1; \rho)$, the share leg's weight shrunk by the dividend drag; the code checks it against the nudge. The last row is the reason buyers want compounds. A 1 percent rise in Acme moves the call about 6 percent and the compound about 10 percent: an option on an option is leverage on leverage.
+Delta has a closed form, $`e^{-qT_2}\,M(a_1, b_1; \rho)`$, the share leg's weight shrunk by the dividend drag; the code checks it against the nudge. The last row is the reason buyers want compounds. A 1 percent rise in Acme moves the call about 6 percent and the compound about 10 percent: an option on an option is leverage on leverage.
 
 ### The fee sets the price
 
@@ -694,11 +720,11 @@ The two outputs match line for line.
 
 Lean proves three facts the formula rests on, for every input that meets each fact's conditions.
 
-- Suppose the path adds an independent piece after $T_1 > 0$, with spreads $\sqrt{T_1}$ before and $\sqrt{T_2 - T_1}$ after. Then the two readings have covariance $T_1$ and correlation $\sqrt{T_1/T_2}$.
-- Suppose the call's value on the first date has a finite average. Then the call on the call, less the put on the call, equals that average less $K_1$, both discounted from $T_1$.
-- Suppose the volatility, the time left on the call, $K_2$ and the fee are all above zero. Then exactly one share price above zero makes $C$ equal the fee.
+- Suppose the path adds an independent piece after $`T_1 > 0`$, with spreads $`\sqrt{T_1}`$ before and $`\sqrt{T_2 - T_1}`$ after. Then the two readings have covariance $`T_1`$ and correlation $`\sqrt{T_1/T_2}`$.
+- Suppose the call's value on the first date has a finite average. Then the call on the call, less the put on the call, equals that average less $`K_1`$, both discounted from $`T_1`$.
+- Suppose the volatility, the time left on the call, $`K_2`$ and the fee are all above zero. Then exactly one share price above zero makes $`C`$ equal the fee.
 
-Geske's formula itself, the tower rule behind $C_0$, and every dollar figure are left to the Python and Rust checks.
+Geske's formula itself, the tower rule behind $`C_0`$, and every dollar figure are left to the Python and Rust checks.
 
 ```lean
 -- Compound options: the share's readings at the two dates have correlation √(T₁/T₂), a call on a call less a put on the call equals today's call less the discounted fee, and every positive fee has exactly one critical share price.
@@ -966,9 +992,9 @@ end CompoundOptions
 > **Pricing the compound as the call minus the fee.** That values a forward contract on the call: an obligation to pay $8 at six months. It comes out at $1.42. The compound is a right, not an obligation, and the right to refuse the fee is itself a put on the call, worth $2.61. Parity adds them: $1.42 + $2.61 = $4.03.
 >
 > Four smaller traps:
-> - **The wrong correlation.** $\rho = \sqrt{T_1/T_2}$, not $T_1/T_2$. Using 0.5 instead of 0.7071 gives $4.01: close enough to pass a glance, wrong enough to fail a check.
+> - **The wrong correlation.** $`\rho = \sqrt{T_1/T_2}`$, not $`T_1/T_2`$. Using 0.5 instead of 0.7071 gives $4.01: close enough to pass a glance, wrong enough to fail a check.
 > - **The wrong exercise cutoff.** The fee is worth paying when the *call's value* exceeds $8, which happens at Acme $102.81, not when Acme passes the call's strike of $100. Using $100 gives $3.96.
-> - **Discounting the fee over the wrong time.** The fee is due at $T_1$. Discounting it from $T_2$ gives $4.11.
+> - **Discounting the fee over the wrong time.** The fee is due at $`T_1`$. Discounting it from $`T_2`$ gives $4.11.
 > - **Reusing one critical price for all four contracts.** Contracts on the call use $102.81; contracts on the put need their own root, $93.83, and for a large enough fee the put has no root at all.
 
 ---
@@ -989,7 +1015,7 @@ end CompoundOptions
 ## What this builds on
 
 - [Chooser options](04-chooser-options.md): pricing a decision taken at an intermediate date, by valuing what the holder will hold then and averaging back.
-- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): the two-dimensional bell curve, its correlation, and the conditional formula that reduces $M$ to one integral.
+- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): the two-dimensional bell curve, its correlation, and the conditional formula that reduces $`M`$ to one integral.
 - [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the root-finder for the critical price, and why it converges from above on a rising, bending-upward curve.
 
 ## Where this goes next
@@ -1006,5 +1032,5 @@ Verified 2026-09-24: every link below resolves to the publisher's page.
 
 - Geske, Robert. "The Valuation of Compound Options." *Journal of Financial Economics* 7, no. 1 (1979): 63–81. [doi:10.1016/0304-405X(79)90022-9](https://doi.org/10.1016/0304-405X(79)90022-9). The formula on this card, derived for a call on shares that are themselves a call on a firm's assets.
 - Cox, John C., Stephen A. Ross, and Mark Rubinstein. "Option Pricing: A Simplified Approach." *Journal of Financial Economics* 7, no. 3 (1979): 229–263. [doi:10.1016/0304-405X(79)90015-1](https://doi.org/10.1016/0304-405X(79)90015-1). The coin-flip tree used as road 3.
-- Genz, Alan. "Numerical Computation of Rectangular Bivariate and Trivariate Normal and t Probabilities." *Statistics and Computing* 14 (2004): 251–260. [doi:10.1023/B:STCO.0000035304.20635.31](https://doi.org/10.1023/B:STCO.0000035304.20635.31). How production code computes $M$; the one-integral form used here is its starting point.
+- Genz, Alan. "Numerical Computation of Rectangular Bivariate and Trivariate Normal and t Probabilities." *Statistics and Computing* 14 (2004): 251–260. [doi:10.1023/B:STCO.0000035304.20635.31](https://doi.org/10.1023/B:STCO.0000035304.20635.31). How production code computes $`M`$; the one-integral form used here is its starting point.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The textbook treatment of compound options, in the chapter on exotic options.

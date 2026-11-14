@@ -37,57 +37,63 @@ One bar per reading. The speed's bar is 63.17 % of the total; the area's is 28.0
 
 Notation first, in words.
 
-- A measured input is $x_i$, with $i$ counting the inputs; here there are four.
-- Its **standard uncertainty**, $u(x_i)$, is its likely error written as one standard deviation, in the input's own unit.
-- The answer is $y = f(x_1, \dots, x_4)$.
-- The slope of $f$ along one input with the others held still is the partial derivative $\partial f/\partial x_i$; engineers call it the **sensitivity coefficient**, $c_i$.
+- A measured input is $`x_i`$, with $`i`$ counting the inputs; here there are four.
+- Its **standard uncertainty**, $`u(x_i)`$, is its likely error written as one standard deviation, in the input's own unit.
+- The answer is $`y = f(x_1, \dots, x_4)`$.
+- The slope of $`f`$ along one input with the others held still is the partial derivative $`\partial f/\partial x_i`$; engineers call it the **sensitivity coefficient**, $`c_i`$.
 
 The **law of propagation of uncertainty**, for independent inputs, is
 
-$$u(y)^2 = \sum_i c_i^2\, u(x_i)^2, \qquad c_i = \frac{\partial f}{\partial x_i}$$
+```math
+u(y)^2 = \sum_i c_i^2\, u(x_i)^2, \qquad c_i = \frac{\partial f}{\partial x_i}
+```
 
 **Read it aloud:** the answer's squared uncertainty is the sum, over the inputs, of each slope squared times that input's squared uncertainty.
 
-Each product $c_i\,u(x_i)$ is one input's **term**: how far that input alone would push the answer. The square of a term over $u(y)^2$ is that input's **share**. A table of terms and shares is an **uncertainty budget**.
+Each product $`c_i\,u(x_i)`$ is one input's **term**: how far that input alone would push the answer. The square of a term over $`u(y)^2`$ is that input's **share**. A table of terms and shares is an **uncertainty budget**.
 
 The drag coefficient is
 
-$$C_d = \frac{2F}{\rho\, v^2 A}$$
+```math
+C_d = \frac{2F}{\rho\, v^2 A}
+```
 
 **Read it aloud:** the drag coefficient is twice the force, divided by the air's density times the speed squared times the frontal area.
 
-Reminder from [Units and dimensions](01-si-units-and-dimensional-homogeneity.md): square brackets give a quantity's dimensions, [M] mass, [L] length, [T] time. Force is [M L T^-2]; the bottom is [M L^-3][L^2 T^-2][L^2], also [M L T^-2]. So $C_d$ has no unit, which is why it is the number a rider's shape is judged by; [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md) shows why such a group must exist.
+Reminder from [Units and dimensions](01-si-units-and-dimensional-homogeneity.md): square brackets give a quantity's dimensions, [M] mass, [L] length, [T] time. Force is [M L T^-2]; the bottom is [M L^-3][L^2 T^-2][L^2], also [M L T^-2]. So $`C_d`$ has no unit, which is why it is the number a rider's shape is judged by; [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md) shows why such a group must exist.
 
-A formula that is a product of powers has a shortcut. If $y = k\,x_1^{n_1} x_2^{n_2}\cdots$, with $k$ a fixed number, then
+A formula that is a product of powers has a shortcut. If $`y = k\,x_1^{n_1} x_2^{n_2}\cdots`$, with $`k`$ a fixed number, then
 
-$$\left(\frac{u(y)}{y}\right)^2 = \sum_i n_i^2 \left(\frac{u(x_i)}{x_i}\right)^2$$
+```math
+\left(\frac{u(y)}{y}\right)^2 = \sum_i n_i^2 \left(\frac{u(x_i)}{x_i}\right)^2
+```
 
 **Read it aloud:** in percentages, each input's error is multiplied by its power, and the multiplied percentages add in squares.
 
-For $C_d$ the powers are $+1$ on $F$, $-2$ on $v$, $-1$ on $A$ and $-1$ on $\rho$. The minus signs vanish when squared. The 2 on the speed does not: it doubles the speed's 1.5 % into 3 %.
+For $`C_d`$ the powers are $`+1`$ on $`F`$, $`-2`$ on $`v`$, $`-1`$ on $`A`$ and $`-1`$ on $`\rho`$. The minus signs vanish when squared. The 2 on the speed does not: it doubles the speed's 1.5 % into 3 %.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | drag force read by the balance | 24.0 N, u = 0.24 N | $C_d$ rises in proportion |
-| $v$ | air speed in the tunnel | 12.00 m/s, u = 0.18 m/s | $C_d$ falls as one over its square |
-| $A$ | frontal area, from a photograph | 0.400 m^2, u = 0.008 m^2 | $C_d$ falls in proportion |
-| $\rho$ | air density (rho) | 1.204 kg/m^3, u = 0.006 kg/m^3 | $C_d$ falls in proportion |
-| $C_d$ | drag coefficient, no unit | 0.692137 | — |
-| $x_i$, $i$ | the i-th measured input, and the counter i | $F$, $v$, $A$, $\rho$ | — |
-| $u(x_i)$, $u(y)$ | standard uncertainty, one standard deviation, of an input and of the answer | 0.18 m/s for speed; 0.026126 for $C_d$ | $u(y)$ grows |
-| $y$, $f$ | the answer, and the formula that makes it | $C_d$ and $2F/(\rho v^2 A)$ | — |
-| $c_i$ | sensitivity coefficient: the partial derivative of $f$ by $x_i$ | −0.115356 per m/s for speed | that input's term grows |
-| $\delta_i$, $\delta y$ | an input's actual error, and the answer's | a speed 0.18 m/s high moves $C_d$ by −0.020764 | — |
-| $\mathrm{Var}$, $E$ | variance, the average squared distance from the mean; expected value, the long-run average | $\mathrm{Var}(\delta y)$ is $u(C_d)^2$ | — |
-| $H_{ij}$, $R$ | second partial derivatives of $f$; the leftover third-order remainder | $H_{vv} = 6C_d/v^2$ | the average result drifts |
-| $n_i$, $k$ | the power on each input, and the fixed factor in front | −2 on speed; $k$ = 2 | a bigger power magnifies that input |
+| $`F`$ | drag force read by the balance | 24.0 N, u = 0.24 N | $`C_d`$ rises in proportion |
+| $`v`$ | air speed in the tunnel | 12.00 m/s, u = 0.18 m/s | $`C_d`$ falls as one over its square |
+| $`A`$ | frontal area, from a photograph | 0.400 m^2, u = 0.008 m^2 | $`C_d`$ falls in proportion |
+| $`\rho`$ | air density (rho) | 1.204 kg/m^3, u = 0.006 kg/m^3 | $`C_d`$ falls in proportion |
+| $`C_d`$ | drag coefficient, no unit | 0.692137 | — |
+| $`x_i`$, $`i`$ | the i-th measured input, and the counter i | $`F`$, $`v`$, $`A`$, $`\rho`$ | — |
+| $`u(x_i)`$, $`u(y)`$ | standard uncertainty, one standard deviation, of an input and of the answer | 0.18 m/s for speed; 0.026126 for $`C_d`$ | $`u(y)`$ grows |
+| $`y`$, $`f`$ | the answer, and the formula that makes it | $`C_d`$ and $`2F/(\rho v^2 A)`$ | — |
+| $`c_i`$ | sensitivity coefficient: the partial derivative of $`f`$ by $`x_i`$ | −0.115356 per m/s for speed | that input's term grows |
+| $`\delta_i`$, $`\delta y`$ | an input's actual error, and the answer's | a speed 0.18 m/s high moves $`C_d`$ by −0.020764 | — |
+| $`\mathrm{Var}`$, $`E`$ | variance, the average squared distance from the mean; expected value, the long-run average | $`\mathrm{Var}(\delta y)`$ is $`u(C_d)^2`$ | — |
+| $`H_{ij}`$, $`R`$ | second partial derivatives of $`f`$; the leftover third-order remainder | $`H_{vv} = 6C_d/v^2`$ | the average result drifts |
+| $`n_i`$, $`k`$ | the power on each input, and the fixed factor in front | −2 on speed; $`k`$ = 2 | a bigger power magnifies that input |
 
 ### When it holds
 
 - **Small errors.** The law keeps only the tangent-plane part of the formula. At 1.5 % on the speed the simulated spread is 0.026185 against the law's 0.026126; at 15 % the law says 30.09 % and the simulation gives 37.40 %, chart below.
-- **Independent inputs.** If two readings, $x_i$ and $x_j$, share a cause, their errors move together and a cross term $2c_ic_j$ times their covariance (the average product of their two errors) belongs in the sum. Dropping it can err either way.
-- **A slope that is not zero.** At a minimum or a kink of $f$ the slope is zero or undefined, and the first-order law reports no uncertainty when there is some.
-- **Like with like.** Every $u(x_i)$ must be one standard deviation. A maker's "±2 %" tolerance is often a limit, not a standard deviation. If every value inside ±a is equally likely, the standard deviation is a/√3.
+- **Independent inputs.** If two readings, $`x_i`$ and $`x_j`$, share a cause, their errors move together and a cross term $`2c_ic_j`$ times their covariance (the average product of their two errors) belongs in the sum. Dropping it can err either way.
+- **A slope that is not zero.** At a minimum or a kink of $`f`$ the slope is zero or undefined, and the first-order law reports no uncertainty when there is some.
+- **Like with like.** Every $`u(x_i)`$ must be one standard deviation. A maker's "±2 %" tolerance is often a limit, not a standard deviation. If every value inside ±a is equally likely, the standard deviation is a/√3.
 - **The formula itself is right.** The law spreads measurement error only. A tunnel's blockage correction (the adjustment for the rider crowding the tunnel and speeding up the air around them) left out shifts every result the same way, and no budget of reading errors sees it.
 
 ```mermaid
@@ -112,44 +118,50 @@ A 1.5 % error in the speed is a small step. Over a small step a curved formula i
 
 ### Step 1: each error moves the answer by slope times error
 
-Write each reading as its true value plus an error, $x_i + \delta_i$. The multivariable chain rule ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)) gives the first-order change in the answer:
+Write each reading as its true value plus an error, $`x_i + \delta_i`$. The multivariable chain rule ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)) gives the first-order change in the answer:
 
-$$\delta y \approx \sum_i c_i\, \delta_i$$
+```math
+\delta y \approx \sum_i c_i\, \delta_i
+```
 
-A speed reading 0.18 m/s high, alone, moves $C_d$ by −0.115356 × 0.18 = −0.020764. The minus sign says faster air makes the same force look slipperier.
+A speed reading 0.18 m/s high, alone, moves $`C_d`$ by −0.115356 × 0.18 = −0.020764. The minus sign says faster air makes the same force look slipperier.
 
 ### Step 2: independent errors add in squares
 
-Each $\delta_i$ is random, with standard deviation $u(x_i)$. The variance of a constant times a random quantity is the constant squared times its variance. The variance of a sum of independent quantities is the sum of their variances ([Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md)). Together:
+Each $`\delta_i`$ is random, with standard deviation $`u(x_i)`$. The variance of a constant times a random quantity is the constant squared times its variance. The variance of a sum of independent quantities is the sum of their variances ([Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md)). Together:
 
-$$\mathrm{Var}(\delta y) = \sum_i c_i^2\, u(x_i)^2$$
+```math
+\mathrm{Var}(\delta y) = \sum_i c_i^2\, u(x_i)^2
+```
 
 Taking the square root gives the law. Engineers call this adding in quadrature. The terms add like perpendicular sides: the four terms 1.00 %, 3.00 %, 2.00 % and 0.498 % give 3.775 %, not 6.498 %, because independent errors rarely all go the same way at full size.
 
 <details>
 <summary>Detailed proof, with the error of the approximation</summary>
 
-Let the input errors $\delta_i$ be independent with mean 0 and variances $u(x_i)^2$. Taylor's theorem in several variables, the many-input form of [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md), gives
-$$f(x + \delta) = f(x) + \sum_i c_i \delta_i + \tfrac12 \sum_{i,j} H_{ij}\, \delta_i \delta_j + R,$$
-where $H_{ij}$ are the second partial derivatives at $x$ and $R$ is of third order in the δ's.
+Let the input errors $`\delta_i`$ be independent with mean 0 and variances $`u(x_i)^2`$. Taylor's theorem in several variables, the many-input form of [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md), gives
 
-**Spread.** The linear part has variance $\sum_i c_i^2 u(x_i)^2$: expand $E[(\sum_i c_i\delta_i)^2]$, and every cross term $E[\delta_i\delta_j]$ with $i \ne j$ is $E[\delta_i]E[\delta_j] = 0$ by independence. For symmetric errors such as normal ones, the quadratic part adds only terms of fourth order in the u's, which is why the law is first-order.
+$`\displaystyle f(x + \delta) = f(x) + \sum_i c_i \delta_i + \tfrac12 \sum_{i,j} H_{ij}\, \delta_i \delta_j + R,`$
 
-**Centre.** The linear part has mean 0, but the quadratic part does not: its mean is $\tfrac12 \sum_i H_{ii} u(x_i)^2$. The answer's average sits above or below $f(x)$ by about that much. For $C_d$, $H_{vv} = 6C_d/v^2$, $H_{AA} = 2C_d/A^2$, $H_{\rho\rho} = 2C_d/\rho^2$ and $H_{FF} = 0$. The second-order mean is 0.692899; the simulation's mean is 0.692955, with standard error 0.000059. A standard error is the likely error of a simulated average: the results' spread divided by the square root of their count. Both sit above 0.692137.
+where $`H_{ij}`$ are the second partial derivatives at $`x`$ and $`R`$ is of third order in the δ's.
 
-**When the expansion stops working.** The remainder $R$ is small only when every $\delta_i$ is small next to the distance over which the second derivatives change. For one over the speed squared that distance is the speed itself, so errors of a few percent are fine and 15 % is not.
+**Spread.** The linear part has variance $`\sum_i c_i^2 u(x_i)^2`$: expand $`E[(\sum_i c_i\delta_i)^2]`$, and every cross term $`E[\delta_i\delta_j]`$ with $`i \ne j`$ is $`E[\delta_i]E[\delta_j] = 0`$ by independence. For symmetric errors such as normal ones, the quadratic part adds only terms of fourth order in the u's, which is why the law is first-order.
+
+**Centre.** The linear part has mean 0, but the quadratic part does not: its mean is $`\tfrac12 \sum_i H_{ii} u(x_i)^2`$. The answer's average sits above or below $`f(x)`$ by about that much. For $`C_d`$, $`H_{vv} = 6C_d/v^2`$, $`H_{AA} = 2C_d/A^2`$, $`H_{\rho\rho} = 2C_d/\rho^2`$ and $`H_{FF} = 0`$. The second-order mean is 0.692899; the simulation's mean is 0.692955, with standard error 0.000059. A standard error is the likely error of a simulated average: the results' spread divided by the square root of their count. Both sit above 0.692137.
+
+**When the expansion stops working.** The remainder $`R`$ is small only when every $`\delta_i`$ is small next to the distance over which the second derivatives change. For one over the speed squared that distance is the speed itself, so errors of a few percent are fine and 15 % is not.
 
 </details>
 
 ### Step 3: for a product of powers, work in percentages
 
-Take $y = k\,x_1^{n_1}x_2^{n_2}\cdots$. Then $\partial y/\partial x_i = n_i\, y / x_i$. Divide the law by $y^2$ and each term becomes $n_i\,u(x_i)/x_i$: the power times the percentage error. The answer's percentage error depends only on the inputs' percentage errors and the powers, not on their sizes. That is why the budget below is a column of percentages.
+Take $`y = k\,x_1^{n_1}x_2^{n_2}\cdots`$. Then $`\partial y/\partial x_i = n_i\, y / x_i`$. Divide the law by $`y^2`$ and each term becomes $`n_i\,u(x_i)/x_i`$: the power times the percentage error. The answer's percentage error depends only on the inputs' percentage errors and the powers, not on their sizes. That is why the budget below is a column of percentages.
 
 ### Step 4: the budget ranks the inputs
 
 Each term squared, over the total, is the fraction of the answer's variance that input causes. Halving the input with the biggest share does the most good. Halving one with a tiny share does almost nothing: the sum of squares lets the big term rule.
 
-The probability wing proves the same linearisation as a limit theorem for a function of an average ([Delta method](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)); this card is the engineer's budget built on it. Where a partial derivative is awkward to find by hand, a central difference finds it from the formula alone: the change in $f$ across a small step either side of the input, divided by the step's width ([Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md)), and the code does both.
+The probability wing proves the same linearisation as a limit theorem for a function of an average ([Delta method](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)); this card is the engineer's budget built on it. Where a partial derivative is awkward to find by hand, a central difference finds it from the formula alone: the change in $`f`$ across a small step either side of the input, divided by the step's width ([Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md)), and the code does both.
 
 ---
 
@@ -184,7 +196,7 @@ The rider's drag coefficient is 0.692 with a standard uncertainty of 0.026. Doub
 
 ## Code, from first principles, and it actually runs
 
-The code computes $C_d$ and its uncertainty by four roads. Road 1 uses the partial derivatives worked by hand. Road 2 finds them again by central differences from the formula alone. Road 3 uses the exponent rule in percentages. Road 4, a Monte Carlo simulation, builds 200,000 simulated rigs, each with fresh normal errors on all four readings, from a SplitMix64 generator (a small random-number generator) and the Box–Muller transform (a rule turning two uniform random numbers into a normal one), both written out, and measures the spread and mean of the results. It then prints the what-breaks numbers, the upgrade options and the chart points. The two languages print the same bytes.
+The code computes $`C_d`$ and its uncertainty by four roads. Road 1 uses the partial derivatives worked by hand. Road 2 finds them again by central differences from the formula alone. Road 3 uses the exponent rule in percentages. Road 4, a Monte Carlo simulation, builds 200,000 simulated rigs, each with fresh normal errors on all four readings, from a SplitMix64 generator (a small random-number generator) and the Box–Muller transform (a rule turning two uniform random numbers into a normal one), both written out, and measures the spread and mean of the results. It then prints the what-breaks numbers, the upgrade options and the chart points. The two languages print the same bytes.
 
 ### Python
 
@@ -522,15 +534,15 @@ chart, shares %       7.02  63.17  28.07   1.74
 ALL CHECKS PASS
 ```
 
-The first three roads agree to six decimals on $u(C_d)$ = 0.026126, and the fourth, the simulated spread, 0.026185, sits slightly above it: the small upward bend of one over speed squared. The simulated mean, 0.692955, matches the second-order mean, 0.692899, to within its standard error, 0.000059, the simulation's own likely error.
+The first three roads agree to six decimals on $`u(C_d)`$ = 0.026126, and the fourth, the simulated spread, 0.026185, sits slightly above it: the small upward bend of one over speed squared. The simulated mean, 0.692955, matches the second-order mean, 0.692899, to within its standard error, 0.000059, the simulation's own likely error.
 
 ### Lean
 
 Lean proves the law for a straight-line formula, the percentage shortcut, and the quadrature bound, and checks the worked numbers.
 
-- Suppose $f$ is a straight line in its inputs, with slopes $c_i$, and the errors $\delta_i$ are independent with finite variances. Then $u(y)^2 = \sum_i c_i^2\, u(x_i)^2$ exactly.
-- Take $y = k\,x_1^{n_1} x_2^{n_2}\cdots$ with whole-number powers, and $k$ and every reading nonzero. Then $(u(y)/y)^2 = \sum_i n_i^2\,(u(x_i)/x_i)^2$.
-- Take any terms $a_i$. Then $\sqrt{\sum_i a_i^2} \le \sum_i |a_i|$: adding in quadrature never gives more than adding straight.
+- Suppose $`f`$ is a straight line in its inputs, with slopes $`c_i`$, and the errors $`\delta_i`$ are independent with finite variances. Then $`u(y)^2 = \sum_i c_i^2\, u(x_i)^2`$ exactly.
+- Take $`y = k\,x_1^{n_1} x_2^{n_2}\cdots`$ with whole-number powers, and $`k`$ and every reading nonzero. Then $`(u(y)/y)^2 = \sum_i n_i^2\,(u(x_i)/x_i)^2`$.
+- Take any terms $`a_i`$. Then $`\sqrt{\sum_i a_i^2} \le \sum_i |a_i|`$: adding in quadrature never gives more than adding straight.
 - The worked numbers hold: the bottom is 69.3504, and the terms are 1 %, 3 %, 2 % and 150/301 %, about 0.498 %.
 - The squares add to between 14.2483 and 14.2484, and the speed's 9 is the biggest.
 - Straight addition gives about 6.498 %, and quadrature rounds to 3.775 %.
@@ -685,7 +697,7 @@ example : (37745 / 10000 : ℚ) ^ 2 < 1 ^ 2 + 3 ^ 2 + 2 ^ 2 + (150 / 301) ^ 2 �
 
 ## What this builds on
 
-- [Units and dimensions](01-si-units-and-dimensional-homogeneity.md): units on every reading, and the dimension check that makes $C_d$ unitless.
+- [Units and dimensions](01-si-units-and-dimensional-homogeneity.md): units on every reading, and the dimension check that makes $`C_d`$ unitless.
 - [Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md): how small changes in several inputs combine into one change in the answer.
 - [Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md): why independent variances add, and what one standard deviation means.
 - [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md): the central difference that gives road 2 its slopes.

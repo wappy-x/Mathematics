@@ -53,36 +53,42 @@ Reminder from [Phasors](02-phasors-and-impedance.md): a sine wave of angular fre
 
 In series the impedances add:
 
-$$Z(\omega) = R + j\left(\omega L - \frac{1}{\omega C}\right), \qquad I = \frac{V}{|Z|}$$
+```math
+Z(\omega) = R + j\left(\omega L - \frac{1}{\omega C}\right), \qquad I = \frac{V}{|Z|}
+```
 
 **Read it aloud:** the loop's opposition is the resistance plus a sideways part, the coil's push-back minus the capacitor's; the current is the antenna voltage divided by the size of that opposition.
 
 The sideways part is zero at one frequency, and that gives the three numbers an engineer reads off:
 
-$$f_0 = \frac{1}{2\pi\sqrt{LC}}, \qquad Q = \frac{\omega_0 L}{R} = \frac{1}{R}\sqrt{\frac{L}{C}}, \qquad \Delta f = \frac{f_0}{Q} = \frac{R}{2\pi L}$$
+```math
+f_0 = \frac{1}{2\pi\sqrt{LC}}, \qquad Q = \frac{\omega_0 L}{R} = \frac{1}{R}\sqrt{\frac{L}{C}}, \qquad \Delta f = \frac{f_0}{Q} = \frac{R}{2\pi L}
+```
 
 **Read it aloud:** the resonant frequency is one over two pi root L C; the quality factor is the coil's reactance at resonance divided by the resistance; the bandwidth is the resonant frequency divided by Q.
 
 Away from the peak, the current as a fraction of its peak value is
 
-$$G(f) = \frac{|I(f)|}{|I(f_0)|} = \frac{1}{\sqrt{1 + Q^2\left(\dfrac{f}{f_0} - \dfrac{f_0}{f}\right)^2}}$$
+```math
+G(f) = \frac{|I(f)|}{|I(f_0)|} = \frac{1}{\sqrt{1 + Q^2\left(\dfrac{f}{f_0} - \dfrac{f_0}{f}\right)^2}}
+```
 
 **Read it aloud:** one over the root of one plus Q squared times how far the frequency is from resonance, measured as f over f0 minus f0 over f.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$ | the coil's inductance, henries: volts per amp-per-second of change | 100 nH | f0 falls; Q rises; bandwidth narrows |
-| $C$ | the capacitor's capacitance, farads: coulombs stored per volt; the tuning knob | 26.1077 pF | f0 falls; Q falls a little |
-| $R$ | all the resistance in the loop: the coil's own losses, with the antenna coupled in lightly, ohms | 0.5 Ω | Q falls; bandwidth widens; f0 does not move |
-| $f$, $\omega$ | the signal's frequency in hertz; ω = 2πf in rad/s | 98.7 MHz, a neighbour | — |
-| $f_0$, $\omega_0$ | the resonant frequency, where the current peaks | 98.5 MHz; 618.89 million rad/s | — |
-| $Z$, $X$, $j$ | impedance in ohms, a complex number; X its sideways part, the reactance; j = √−1 | Z = 0.5 Ω and X = 0 at f0 | less current |
-| $V$, $I$, $q$, $t$ | antenna voltage and loop current, as peak values ([Phasors](02-phasors-and-impedance.md) used rms, root-mean-square, values; ratios such as G and Q are the same either way); charge on the capacitor; time | 10 µV; 20 µA at f0 | every current and voltage scales with V |
-| $V_C$ | the voltage across the capacitor, what the amplifier reads | 1.2378 mV at f0, which is Q × V | — |
-| $Q$ | quality factor: sharpness of the peak, no units | 123.78 | narrower band, bigger voltage gain, longer ringing |
-| $\Delta f$, $f_1$, $f_2$ | bandwidth: width of the band passing at least half the peak power; its lower and upper edges | 795.77 kHz; 98.1029 and 98.8987 MHz | — |
-| $G$, $x$ | gain: current as a fraction of the peak current; x = f/f0 − f0/f, the detuning | 0.8937 at 98.7 MHz | — |
-| $\zeta$, $\omega_n$, $m$, $c$, $k$ | the loop seen as a spring: damping ratio 1/(2Q), natural frequency; mass, damper, stiffness | 0.004039; ω_n = ω0 | Q falls |
+| $`L`$ | the coil's inductance, henries: volts per amp-per-second of change | 100 nH | f0 falls; Q rises; bandwidth narrows |
+| $`C`$ | the capacitor's capacitance, farads: coulombs stored per volt; the tuning knob | 26.1077 pF | f0 falls; Q falls a little |
+| $`R`$ | all the resistance in the loop: the coil's own losses, with the antenna coupled in lightly, ohms | 0.5 Ω | Q falls; bandwidth widens; f0 does not move |
+| $`f`$, $`\omega`$ | the signal's frequency in hertz; ω = 2πf in rad/s | 98.7 MHz, a neighbour | — |
+| $`f_0`$, $`\omega_0`$ | the resonant frequency, where the current peaks | 98.5 MHz; 618.89 million rad/s | — |
+| $`Z`$, $`X`$, $`j`$ | impedance in ohms, a complex number; X its sideways part, the reactance; j = √−1 | Z = 0.5 Ω and X = 0 at f0 | less current |
+| $`V`$, $`I`$, $`q`$, $`t`$ | antenna voltage and loop current, as peak values ([Phasors](02-phasors-and-impedance.md) used rms, root-mean-square, values; ratios such as G and Q are the same either way); charge on the capacitor; time | 10 µV; 20 µA at f0 | every current and voltage scales with V |
+| $`V_C`$ | the voltage across the capacitor, what the amplifier reads | 1.2378 mV at f0, which is Q × V | — |
+| $`Q`$ | quality factor: sharpness of the peak, no units | 123.78 | narrower band, bigger voltage gain, longer ringing |
+| $`\Delta f`$, $`f_1`$, $`f_2`$ | bandwidth: width of the band passing at least half the peak power; its lower and upper edges | 795.77 kHz; 98.1029 and 98.8987 MHz | — |
+| $`G`$, $`x`$ | gain: current as a fraction of the peak current; x = f/f0 − f0/f, the detuning | 0.8937 at 98.7 MHz | — |
+| $`\zeta`$, $`\omega_n`$, $`m`$, $`c`$, $`k`$ | the loop seen as a spring: damping ratio 1/(2Q), natural frequency; mass, damper, stiffness | 0.004039; ω_n = ω0 | Q falls |
 
 ### When it holds
 
@@ -106,7 +112,9 @@ The coil resists changes in current: the faster the signal, the harder it pushes
 
 The coil's impedance is jωL and the capacitor's is 1/(jωC) = −j/(ωC). Their sum is the **reactance**, X = ωL − 1/(ωC), the sideways part of Z. The size of Z is √(R² + X²). R does not depend on frequency, so |Z| is smallest, and the current largest, where X = 0:
 
-$$\omega_0 L = \frac{1}{\omega_0 C} \quad\Longrightarrow\quad \omega_0 = \frac{1}{\sqrt{LC}}, \qquad f_0 = \frac{\omega_0}{2\pi}.$$
+```math
+\omega_0 L = \frac{1}{\omega_0 C} \quad\Longrightarrow\quad \omega_0 = \frac{1}{\sqrt{LC}}, \qquad f_0 = \frac{\omega_0}{2\pi}.
+```
 
 R does not appear. That is why the two curves in the picture peak at the same place. For the tuner: ω0 = 618.89 million rad/s, and f0 = 98.5000 MHz. At f0 the coil's reactance is ω0L = 61.8894 Ω, and the capacitor's is the same, with the opposite sign.
 
@@ -114,7 +122,9 @@ R does not appear. That is why the two curves in the picture peak at the same pl
 
 Write the reactance using ω0. Since 1/C = ω0²L,
 
-$$X = \omega L - \frac{\omega_0^2 L}{\omega} = \omega_0 L\left(\frac{\omega}{\omega_0} - \frac{\omega_0}{\omega}\right).$$
+```math
+X = \omega L - \frac{\omega_0^2 L}{\omega} = \omega_0 L\left(\frac{\omega}{\omega_0} - \frac{\omega_0}{\omega}\right).
+```
 
 Divide Z by R. The real part becomes 1, and the sideways part becomes (ω0L/R) times the bracket. Name ω0L/R the **quality factor** Q. Then |Z|/R = √(1 + Q²x²), where x = ω/ω0 − ω0/ω = f/f0 − f0/f. The current is V/|Z|, and at the peak it is V/R, so their ratio is the formula for G.
 
@@ -124,7 +134,9 @@ The whole curve depends on two numbers: f0 places it, Q shapes it. For the neigh
 
 The power the resistor takes is proportional to the current squared. It falls to half its peak where G = 1/√2, which means Qx = ±1. Solving that gives two frequencies, f1 below f0 and f2 above, and
 
-$$f_2 - f_1 = \frac{f_0}{Q}, \qquad f_1 f_2 = f_0^2.$$
+```math
+f_2 - f_1 = \frac{f_0}{Q}, \qquad f_1 f_2 = f_0^2.
+```
 
 The width is exactly f0/Q, at any Q. The two edges sit symmetrically around f0 on a ratio scale, not on a straight scale: f0 is their geometric mean, √(f1 f2).
 
@@ -133,7 +145,7 @@ The width is exactly f0/Q, at any Q. The two edges sit symmetrically around f0 o
 
 The edges satisfy ω/ω0 − ω0/ω = ±1/Q. Multiply by ωω0:
 
-$$\omega^2 \mp \frac{\omega_0}{Q}\,\omega - \omega_0^2 = 0.$$
+$`\displaystyle \omega^2 \mp \frac{\omega_0}{Q}\,\omega - \omega_0^2 = 0.`$
 
 Take the + sign version, ω² − (ω0/Q)ω − ω0² = 0. Its roots multiply to −ω0², so one is positive and one negative. The positive one is the upper edge ω2. The other sign's equation has the same roots with their signs flipped, so its positive root is the lower edge ω1, and the negative root of the first equation is −ω1.
 
@@ -155,7 +167,9 @@ For the tuner: f1 = 98.1029 MHz, f2 = 98.8987 MHz, a width of 795.7747 kHz, and 
 
 [The RLC circuit](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/08-the-rlc-circuit-and-the-spring.md) matches the loop to a damped spring term by term: inductance L plays mass m, resistance R plays the damper c, and 1/C plays stiffness k. [Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md) reduces any such system to a natural frequency ω_n = √(k/m) and a damping ratio ζ = c/(2√(km)). Translated:
 
-$$\omega_n = \sqrt{\frac{1/C}{L}} = \frac{1}{\sqrt{LC}} = \omega_0, \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}, \qquad Q = \frac{1}{2\zeta}.$$
+```math
+\omega_n = \sqrt{\frac{1/C}{L}} = \frac{1}{\sqrt{LC}} = \omega_0, \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}, \qquad Q = \frac{1}{2\zeta}.
+```
 
 The last one follows because (1/R)√(L/C) is one over twice (R/2)√(C/L). It is the same number that card found as the gain at the natural frequency, 1/(2ζ); in the loop that gain is V_C/V, the capacitor's voltage over the antenna's.
 

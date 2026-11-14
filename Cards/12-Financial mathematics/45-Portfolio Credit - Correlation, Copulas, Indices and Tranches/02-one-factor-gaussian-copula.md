@@ -38,40 +38,46 @@ Falling curve: the default chance of each firm at 20% asset correlation, once th
 
 ## The formula
 
-Notation first, in words. The economy score is $M$, a bell-curve draw with average 0 and spread 1; a particular value of it is $m$. Firm number $i$ has private noise $\varepsilon_i$, another independent bell-curve draw. $N(x)$ is the bell-curve area to the left of $x$, as on [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md), and $N^{-1}$ runs it backwards: the point with a given area to its left. $\varphi(x)$ is the bell-curve height at $x$. The default chance of one firm is $p$ (5% here), the asset correlation is $\rho$ (20% here), and the default cutoff is $a$.
+Notation first, in words. The economy score is $`M`$, a bell-curve draw with average 0 and spread 1; a particular value of it is $`m`$. Firm number $`i`$ has private noise $`\varepsilon_i`$, another independent bell-curve draw. $`N(x)`$ is the bell-curve area to the left of $`x`$, as on [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md), and $`N^{-1}`$ runs it backwards: the point with a given area to its left. $`\varphi(x)`$ is the bell-curve height at $`x`$. The default chance of one firm is $`p`$ (5% here), the asset correlation is $`\rho`$ (20% here), and the default cutoff is $`a`$.
 
-$$X_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,\varepsilon_i, \qquad \text{firm } i \text{ defaults when } X_i < a, \qquad a = N^{-1}(p)$$
+```math
+X_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,\varepsilon_i, \qquad \text{firm } i \text{ defaults when } X_i < a, \qquad a = N^{-1}(p)
+```
 
 **Read it aloud:** each firm's score is the economy weighted by the square root of the correlation plus its own noise weighted by the square root of the rest, and it defaults when the score drops below the cutoff that leaves exactly its default chance to the left.
 
-Fix the economy at $m$ and ask each firm's default chance:
+Fix the economy at $`m`$ and ask each firm's default chance:
 
-$$q(m) = N\!\left(\frac{a - \sqrt{\rho}\,m}{\sqrt{1-\rho}}\right)$$
+```math
+q(m) = N\!\left(\frac{a - \sqrt{\rho}\,m}{\sqrt{1-\rho}}\right)
+```
 
 **Read it aloud:** take the economy's share out of the cutoff, measure what is left in units of the private noise, and read the bell-curve area below it.
 
 Two firms, averaged over every economy:
 
-$$J = \int_{-\infty}^{\infty} \varphi(m)\,q(m)^2\,dm$$
+```math
+J = \int_{-\infty}^{\infty} \varphi(m)\,q(m)^2\,dm
+```
 
 **Read it aloud:** the chance both default is the chance each defaults in a given economy, squared because the two are independent once the economy is known, averaged over how often each economy occurs.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | one firm's chance of default over the five years | 5% | cutoff rises; every default chance rises |
-| $\rho$, $r$ | asset correlation: the share of each score's variance that comes from the economy; $r$ is a value running from 0 up to $\rho$ | 20% | pair default rises; single-name chance stays 5% |
-| $M$, $m$ | the economy score, a bell-curve draw; $m$ is one value of it | −2 for a bad economy | every firm's default chance falls |
-| $\varepsilon_i$, $i$ | firm $i$'s private noise ($i$ numbers the firms, 1 to 100), a bell-curve draw independent of everything else | one draw per firm | — |
-| $X_i$, $X_1$, $X_2$, $U_i$ | firm $i$'s latent score, the blend of economy and noise ($X_1$, $X_2$ for firms 1 and 2); $U_i = N(X_i)$ is its rank | spread 1 at every $\rho$ | — |
-| $a$ | the default cutoff, $N^{-1}(p)$ | −1.645 | more defaults |
-| $q(m)$ | each firm's default chance once the economy is known to be $m$ | 20.07% at $m = -2$ | — |
-| $N$, $N^{-1}$ | bell-curve area to the left of a point, and its inverse | $N(-1.645) = 0.05$ | — |
-| $\varphi$ | bell-curve height: how often each economy score occurs | highest at $m = 0$ | — |
-| $J$ | chance two named firms both default | 0.5245% | — |
-| $C$, $N_2$, $f_r$, $u_1$, $u_2$ | the copula, a joint law with uniform single laws; $N_2$ the bell-curve area for a correlated pair, $f_r$ its height; $u_1$, $u_2$ two single-name chances | $C(0.05, 0.05) = J$ | — |
-| $S$ | the number of defaults in the pool of 100 | average 5 | — |
+| $`p`$ | one firm's chance of default over the five years | 5% | cutoff rises; every default chance rises |
+| $`\rho`$, $`r`$ | asset correlation: the share of each score's variance that comes from the economy; $`r`$ is a value running from 0 up to $`\rho`$ | 20% | pair default rises; single-name chance stays 5% |
+| $`M`$, $`m`$ | the economy score, a bell-curve draw; $`m`$ is one value of it | −2 for a bad economy | every firm's default chance falls |
+| $`\varepsilon_i`$, $`i`$ | firm $`i`$'s private noise ($`i`$ numbers the firms, 1 to 100), a bell-curve draw independent of everything else | one draw per firm | — |
+| $`X_i`$, $`X_1`$, $`X_2`$, $`U_i`$ | firm $`i`$'s latent score, the blend of economy and noise ($`X_1`$, $`X_2`$ for firms 1 and 2); $`U_i = N(X_i)`$ is its rank | spread 1 at every $`\rho`$ | — |
+| $`a`$ | the default cutoff, $`N^{-1}(p)`$ | −1.645 | more defaults |
+| $`q(m)`$ | each firm's default chance once the economy is known to be $`m`$ | 20.07% at $`m = -2`$ | — |
+| $`N`$, $`N^{-1}`$ | bell-curve area to the left of a point, and its inverse | $`N(-1.645) = 0.05`$ | — |
+| $`\varphi`$ | bell-curve height: how often each economy score occurs | highest at $`m = 0`$ | — |
+| $`J`$ | chance two named firms both default | 0.5245% | — |
+| $`C`$, $`N_2`$, $`f_r`$, $`u_1`$, $`u_2`$ | the copula, a joint law with uniform single laws; $`N_2`$ the bell-curve area for a correlated pair, $`f_r`$ its height; $`u_1`$, $`u_2`$ two single-name chances | $`C(0.05, 0.05) = J`$ | — |
+| $`S`$ | the number of defaults in the pool of 100 | average 5 | — |
 
-Two consequences follow in one line each. The **default correlation** (correlation between the zero-or-one default outcomes) is $(J - p^2)/(p(1-p)) = 0.058$, far below the 20% asset correlation. The pool's default count $S$, once the economy is known, is 100 independent coin flips with chance $q(m)$ each.
+Two consequences follow in one line each. The **default correlation** (correlation between the zero-or-one default outcomes) is $`(J - p^2)/(p(1-p)) = 0.058`$, far below the 20% asset correlation. The pool's default count $`S`$, once the economy is known, is 100 independent coin flips with chance $`q(m)`$ each.
 
 ### When it holds
 
@@ -79,7 +85,7 @@ Two consequences follow in one line each. The **default correlation** (correlati
 - **Bell-curve scores.** The factor and the noise are bell-curve draws. Real crises are fatter-tailed; the Gaussian version gives joint extreme defaults too little weight, which [Tail dependence](07-tail-dependence-and-the-t-copula.md) measures.
 - **One horizon.** The 5% and the cutoff belong to one fixed five-year window. Mixing a one-year default chance with a five-year one gives cutoffs that mean different things.
 - **Fixed recoveries.** The 40% recovery is the same in good and bad economies. In real downturns recoveries fall too, so losses in the bad scenarios are larger than this model says.
-- **Correlation from 0 to below 1.** At $\rho = 1$ the private noise vanishes and $q(m)$ divides by zero; there every firm defaults exactly when the economy score itself is below −1.645.
+- **Correlation from 0 to below 1.** At $`\rho = 1`$ the private noise vanishes and $`q(m)`$ divides by zero; there every firm defaults exactly when the economy score itself is below −1.645.
 
 ---
 
@@ -87,41 +93,47 @@ Two consequences follow in one line each. The **default correlation** (correlati
 
 ### Step 0: once the economy is known, the firms are strangers
 
-The firms share nothing except the dial. Fix the dial at one setting and what remains is 100 independent private noises, whose chances multiply. So every joint question is answered in two moves. First, answer it for one fixed economy, where the firms are independent. Second, average that answer over all economies, weighting each by how often it occurs. The second move is always a single integral over one variable, $m$, however many firms are in the pool.
+The firms share nothing except the dial. Fix the dial at one setting and what remains is 100 independent private noises, whose chances multiply. So every joint question is answered in two moves. First, answer it for one fixed economy, where the firms are independent. Second, average that answer over all economies, weighting each by how often it occurs. The second move is always a single integral over one variable, $`m`$, however many firms are in the pool.
 
 ### Step 1: the blend keeps every score on the same bell curve
 
-A weighted sum of independent bell-curve draws is again a bell-curve draw; its variance is the sum of the squared weights times the variances. Here the weights are $\sqrt{\rho}$ and $\sqrt{1-\rho}$, so the variance is $\rho + (1 - \rho) = 1$. The score $X_i$ has average 0 and spread 1 **at every correlation**. That is why the weights are square roots: they split the variance, not the spread.
+A weighted sum of independent bell-curve draws is again a bell-curve draw; its variance is the sum of the squared weights times the variances. Here the weights are $`\sqrt{\rho}`$ and $`\sqrt{1-\rho}`$, so the variance is $`\rho + (1 - \rho) = 1`$. The score $`X_i`$ has average 0 and spread 1 **at every correlation**. That is why the weights are square roots: they split the variance, not the spread.
 
-So the chance that $X_i$ falls below $a$ is $N(a)$. Choose $a = N^{-1}(0.05) = -1.645$ and each firm defaults with chance exactly 5%, whether $\rho$ is 0%, 20% or 90%. Correlation becomes a pure togetherness knob: it moves joint chances and leaves every single-name chance where the credit team put it.
+So the chance that $`X_i`$ falls below $`a`$ is $`N(a)`$. Choose $`a = N^{-1}(0.05) = -1.645`$ and each firm defaults with chance exactly 5%, whether $`\rho`$ is 0%, 20% or 90%. Correlation becomes a pure togetherness knob: it moves joint chances and leaves every single-name chance where the credit team put it.
 
-The pair of scores $X_1$, $X_2$ share only the economy term, so their covariance is $\sqrt{\rho}\sqrt{\rho} = \rho$. With spread 1 each, their correlation is $\rho$: the name "asset correlation" is exact.
+The pair of scores $`X_1`$, $`X_2`$ share only the economy term, so their covariance is $`\sqrt{\rho}\sqrt{\rho} = \rho`$. With spread 1 each, their correlation is $`\rho`$: the name "asset correlation" is exact.
 
 ### Step 2: the default chance in a known economy
 
-Fix $M = m$. Firm $i$ defaults when $\sqrt{\rho}\,m + \sqrt{1-\rho}\,\varepsilon_i < a$. Move the economy term across and divide by $\sqrt{1-\rho}$:
+Fix $`M = m`$. Firm $`i`$ defaults when $`\sqrt{\rho}\,m + \sqrt{1-\rho}\,\varepsilon_i < a`$. Move the economy term across and divide by $`\sqrt{1-\rho}`$:
 
-$$\varepsilon_i < \frac{a - \sqrt{\rho}\,m}{\sqrt{1-\rho}}.$$
+```math
+\varepsilon_i < \frac{a - \sqrt{\rho}\,m}{\sqrt{1-\rho}}.
+```
 
-The noise $\varepsilon_i$ is a bell-curve draw that knows nothing of $m$, so the chance is $N$ of the right-hand side. That is $q(m)$. At $m = -2$ the right side is $(-1.645 + 0.894)/0.894 = -0.839$, and $N(-0.839) = 20.07\%$. The bad economy has used up part of the distance to the cutoff; the private noise has less room left to save the firm.
+The noise $`\varepsilon_i`$ is a bell-curve draw that knows nothing of $`m`$, so the chance is $`N`$ of the right-hand side. That is $`q(m)`$. At $`m = -2`$ the right side is $`(-1.645 + 0.894)/0.894 = -0.839`$, and $`N(-0.839) = 20.07\%`$. The bad economy has used up part of the distance to the cutoff; the private noise has less room left to save the firm.
 
 ### Step 3: averaging over the economy gives back 5%
 
 The law of total probability (a chance equals the average of its conditional chances) says
 
-$$\int_{-\infty}^{\infty} \varphi(m)\,q(m)\,dm = P(X_i < a) = p.$$
+```math
+\int_{-\infty}^{\infty} \varphi(m)\,q(m)\,dm = P(X_i < a) = p.
+```
 
-The code evaluates the left side at $\rho = 20\%$ and $\rho = 50\%$ and gets 0.050000 both times: a separate road to Step 1's result.
+The code evaluates the left side at $`\rho = 20\%`$ and $`\rho = 50\%`$ and gets 0.050000 both times: a separate road to Step 1's result.
 
-### Step 4: the pair, and why it always exceeds $p^2$
+### Step 4: the pair, and why it always exceeds $`p^2`$
 
-Given the economy, firms 1 and 2 default independently, so both default with chance $q(m) \times q(m)$. Average over the economy and that is $J$. At 20% correlation the integral gives **0.5245%**.
+Given the economy, firms 1 and 2 default independently, so both default with chance $`q(m) \times q(m)`$. Average over the economy and that is $`J`$. At 20% correlation the integral gives **0.5245%**.
 
-Why more than $p^2 = 0.25\%$? Step 3 says $q(M)$ averages to $p$. Any quantity's average square equals its squared average plus its variance, so
+Why more than $`p^2 = 0.25\%`$? Step 3 says $`q(M)`$ averages to $`p`$. Any quantity's average square equals its squared average plus its variance, so
 
-$$J - p^2 = \text{variance of } q(M).$$
+```math
+J - p^2 = \text{variance of } q(M).
+```
 
-The excess is exactly how much the economy moves a firm's default chance: 0.2745% here. Disconnect the dial ($\rho = 0$) and $q$ is flat at 5%, the variance is zero, and $J = p^2$. Connect it and $q$ swings, and $J$ climbs. Dividing the excess by $p(1-p)$ gives the default correlation, 0.058.
+The excess is exactly how much the economy moves a firm's default chance: 0.2745% here. Disconnect the dial ($`\rho = 0`$) and $`q`$ is flat at 5%, the variance is zero, and $`J = p^2`$. Connect it and $`q`$ swings, and $`J`$ climbs. Dividing the excess by $`p(1-p)`$ gives the default correlation, 0.058.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -134,16 +146,20 @@ xychart-beta
 
 One line: the pair's joint default chance from the factor integral, rising from 0.25% (independent) toward 5% (the two firms default together whenever either does, reached only at correlation 1).
 
-The same number comes out of a second road that never mentions the economy. The two scores $X_1$, $X_2$ form a correlated bell-curve pair with correlation $\rho$, so $J = N_2(a, a; \rho)$, the chance both land below $a$. A classical identity (Plackett's) says this area grows with correlation at a rate equal to the pair's bell-curve height at the corner $(a, a)$. Start from $p^2$ at zero correlation and add up that growth from 0 to $\rho$: 0.5245% again, to nine decimals in the code.
+The same number comes out of a second road that never mentions the economy. The two scores $`X_1`$, $`X_2`$ form a correlated bell-curve pair with correlation $`\rho`$, so $`J = N_2(a, a; \rho)`$, the chance both land below $`a`$. A classical identity (Plackett's) says this area grows with correlation at a rate equal to the pair's bell-curve height at the corner $`(a, a)`$. Start from $`p^2`$ at zero correlation and add up that growth from 0 to $`\rho`$: 0.5245% again, to nine decimals in the code.
 
 <details>
 <summary>Detailed proof: the correlation road</summary>
 
-Write $f_r(x, y) = \exp\!\big(-(x^2 - 2rxy + y^2)/(2(1-r^2))\big) / (2\pi\sqrt{1-r^2})$ for the joint bell-curve height of a pair with correlation $r$. Differentiating directly shows $\partial f_r/\partial r = \partial^2 f_r/\partial x\,\partial y$; both sides equal $f_r$ times the same polynomial in the two coordinates and the correlation. Integrate both sides over the corner $x < a$, $y < a$. The right side integrates the mixed derivative over a quarter-plane, which leaves the value at the corner: $f_r(a, a)$. The bell-curve decay lets the derivative in $r$ pass inside the integral for any $r$ strictly between −1 and 1. So
-$$\frac{d}{dr} N_2(a, a; r) = f_r(a, a) = \frac{e^{-a^2/(1+r)}}{2\pi\sqrt{1-r^2}}.$$
-At $r = 0$ the pair is independent and $N_2(a, a; 0) = p^2$. Integrating from 0 to $\rho$:
-$$J = p^2 + \int_0^{\rho} \frac{e^{-a^2/(1+r)}}{2\pi\sqrt{1-r^2}}\,dr.$$
-The integrand is positive, so $J > p^2$ for every positive $\rho$: positive asset correlation always means positive default correlation in this model. As $\rho$ approaches 1 the two scores coincide and $J$ approaches $p$.
+Write $`f_r(x, y) = \exp\!\big(-(x^2 - 2rxy + y^2)/(2(1-r^2))\big) / (2\pi\sqrt{1-r^2})`$ for the joint bell-curve height of a pair with correlation $`r`$. Differentiating directly shows $`\partial f_r/\partial r = \partial^2 f_r/\partial x\,\partial y`$; both sides equal $`f_r`$ times the same polynomial in the two coordinates and the correlation. Integrate both sides over the corner $`x < a`$, $`y < a`$. The right side integrates the mixed derivative over a quarter-plane, which leaves the value at the corner: $`f_r(a, a)`$. The bell-curve decay lets the derivative in $`r`$ pass inside the integral for any $`r`$ strictly between −1 and 1. So
+
+$`\displaystyle \frac{d}{dr} N_2(a, a; r) = f_r(a, a) = \frac{e^{-a^2/(1+r)}}{2\pi\sqrt{1-r^2}}.`$
+
+At $`r = 0`$ the pair is independent and $`N_2(a, a; 0) = p^2`$. Integrating from 0 to $`\rho`$:
+
+$`\displaystyle J = p^2 + \int_0^{\rho} \frac{e^{-a^2/(1+r)}}{2\pi\sqrt{1-r^2}}\,dr.`$
+
+The integrand is positive, so $`J > p^2`$ for every positive $`\rho`$: positive asset correlation always means positive default correlation in this model. As $`\rho`$ approaches 1 the two scores coincide and $`J`$ approaches $`p`$.
 
 </details>
 
@@ -151,17 +167,19 @@ The integrand is positive, so $J > p^2$ for every positive $\rho$: positive asse
 
 **Sklar's theorem, in words:** any joint law of several quantities splits into two separate pieces, the single law of each quantity and a copula that says how they move together; conversely, any copula joined to any single laws gives a valid joint law. When the single laws are continuous (no jumps), the copula is unique. A copula is itself a joint law whose single laws are uniform on 0 to 1: it carries rank information only.
 
-This model uses the second half of the theorem. Turn each score into its rank: $U_i = N(X_i)$ is uniform on 0 to 1, and firm $i$ defaults exactly when $U_i < p$. The joint law of the ranks is the **Gaussian copula**
+This model uses the second half of the theorem. Turn each score into its rank: $`U_i = N(X_i)`$ is uniform on 0 to 1, and firm $`i`$ defaults exactly when $`U_i < p`$. The joint law of the ranks is the **Gaussian copula**
 
-$$C(u_1, u_2) = N_2\big(N^{-1}(u_1), N^{-1}(u_2); \rho\big).$$
+```math
+C(u_1, u_2) = N_2\big(N^{-1}(u_1), N^{-1}(u_2); \rho\big).
+```
 
-The single-name default chances plug in as $u_1$ and $u_2$, and the dependence comes from $\rho$ alone. Pair default is $C(0.05, 0.05) = J$. A firm with a 1% chance paired with one at 5% needs no new machinery: new cutoffs, same copula, joint chance 0.1287%. The default indicators themselves jump from 0 to 1, so their own copula is not unique; the model sidesteps that by building the defaults from continuous scores.
+The single-name default chances plug in as $`u_1`$ and $`u_2`$, and the dependence comes from $`\rho`$ alone. Pair default is $`C(0.05, 0.05) = J`$. A firm with a 1% chance paired with one at 5% needs no new machinery: new cutoffs, same copula, joint chance 0.1287%. The default indicators themselves jump from 0 to 1, so their own copula is not unique; the model sidesteps that by building the defaults from continuous scores.
 
 ### Step 6: simulate the pool
 
-For each of 20,000 imagined pools: draw one economy score, then 100 private noises; form the 100 scores; count those below −1.645. Across pools, the default fraction estimates 5%, the fraction of pairs that both default estimates $J$, and the share of pools with ten or more defaults estimates the pool tail.
+For each of 20,000 imagined pools: draw one economy score, then 100 private noises; form the 100 scores; count those below −1.645. Across pools, the default fraction estimates 5%, the fraction of pairs that both default estimates $`J`$, and the share of pools with ten or more defaults estimates the pool tail.
 
-The [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) works at two levels here. Across many independent pools, averages settle on the unconditional answers: 5%, 0.5245%. Within one pool, adding firms does **not** drive the default fraction to 5%: it drives it to $q(M)$ for that pool's economy. In the simulated pools whose economy landed near −2, the default rate was 19.53%. A shared shock does not diversify away. That fact, pushed to an infinite pool, is [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md).
+The [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) works at two levels here. Across many independent pools, averages settle on the unconditional answers: 5%, 0.5245%. Within one pool, adding firms does **not** drive the default fraction to 5%: it drives it to $`q(M)`$ for that pool's economy. In the simulated pools whose economy landed near −2, the default rate was 19.53%. A shared shock does not diversify away. That fact, pushed to an infinite pool, is [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md).
 
 The joint chances of a pair taken alone, and the table of feasible default correlations, are on [Default correlation](01-default-correlation-and-joint-default.md); this card supplies a model that produces them.
 
@@ -169,21 +187,21 @@ The joint chances of a pair taken alone, and the table of feasible default corre
 
 ## Worked numbers, by hand
 
-House pool: $p = 5\%$ over five years, recovery 40%, $\rho = 20\%$, 100 firms.
+House pool: $`p = 5\%`$ over five years, recovery 40%, $`\rho = 20\%`$, 100 firms.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| cutoff $a$ | $N^{-1}(0.05)$, from a bell-curve table | $-1.645$ |
-| economy weight, noise weight | $\sqrt{0.20}$, $\sqrt{0.80}$ | $0.4472$, $0.8944$ |
-| argument at $m = -2$ | $(-1.645 + 0.4472 \times 2)/0.8944$ | $-0.839$ |
-| $q(-2)$ | $N(-0.839)$ | $20.07\%$ |
-| argument at $m = -3$ | $(-1.645 + 0.4472 \times 3)/0.8944$ | $-0.339$ |
-| $q(-3)$ | $N(-0.339)$ | $36.73\%$ |
-| pair default $J$ | $\int \varphi(m)\,q(m)^2\,dm$, by Simpson's rule (adding thin slices under the curve) | $0.5245\%$ |
-| independent pair | $0.05 \times 0.05$ | $0.25\%$ |
-| default correlation | $(0.005245 - 0.0025)/(0.05 \times 0.95)$ | $0.058$ |
-| pool expected loss | $5\% \times 60\%$ | $3\%$ |
-| **ten or more defaults** | $\int \varphi(m) \times$ (binomial tail at $q(m)$), averaged over $m$ | **15.69%** |
+| cutoff $`a`$ | $`N^{-1}(0.05)`$, from a bell-curve table | $`-1.645`$ |
+| economy weight, noise weight | $`\sqrt{0.20}`$, $`\sqrt{0.80}`$ | $`0.4472`$, $`0.8944`$ |
+| argument at $`m = -2`$ | $`(-1.645 + 0.4472 \times 2)/0.8944`$ | $`-0.839`$ |
+| $`q(-2)`$ | $`N(-0.839)`$ | $`20.07\%`$ |
+| argument at $`m = -3`$ | $`(-1.645 + 0.4472 \times 3)/0.8944`$ | $`-0.339`$ |
+| $`q(-3)`$ | $`N(-0.339)`$ | $`36.73\%`$ |
+| pair default $`J`$ | $`\int \varphi(m)\,q(m)^2\,dm`$, by Simpson's rule (adding thin slices under the curve) | $`0.5245\%`$ |
+| independent pair | $`0.05 \times 0.05`$ | $`0.25\%`$ |
+| default correlation | $`(0.005245 - 0.0025)/(0.05 \times 0.95)`$ | $`0.058`$ |
+| pool expected loss | $`5\% \times 60\%`$ | $`3\%`$ |
+| **ten or more defaults** | $`\int \varphi(m) \times`$ (binomial tail at $`q(m)`$), averaged over $`m`$ | **15.69%** |
 
 Ten defaults cost the pool 6% of its money, twice the expected loss. Under independence that happens in 2.82% of five-year windows; with a 20% shared economy it happens in 15.69%, more than five times as often, although no single loan got riskier.
 
@@ -192,9 +210,9 @@ Ten defaults cost the pool 6% of its money, twice the expected loss. Under indep
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Use the 20% asset correlation as the default correlation | pair 1.20%, not 0.5245% | Scores correlate at 20%; zero-or-one defaults correlate at 0.058 |
-| Blend as $\sqrt{\rho}\,M + \varepsilon_i$, no $\sqrt{1-\rho}$ | each firm 6.66%, not 5% | Score variance is 1.2, so the fixed cutoff lets through too many |
-| Weight the economy by $\rho$, not $\sqrt{\rho}$ | each firm 3.64%, not 5% | Variance $0.04 + 0.8 = 0.84$; the cutoff lets through too few |
-| Skip the division by $\sqrt{1-\rho}$ in $q(-2)$ | 22.65%, not 20.07% | The leftover distance must be measured in units of the noise's spread, 0.894 |
+| Blend as $`\sqrt{\rho}\,M + \varepsilon_i`$, no $`\sqrt{1-\rho}`$ | each firm 6.66%, not 5% | Score variance is 1.2, so the fixed cutoff lets through too many |
+| Weight the economy by $`\rho`$, not $`\sqrt{\rho}`$ | each firm 3.64%, not 5% | Variance $`0.04 + 0.8 = 0.84`$; the cutoff lets through too few |
+| Skip the division by $`\sqrt{1-\rho}`$ in $`q(-2)`$ | 22.65%, not 20.07% | The leftover distance must be measured in units of the noise's spread, 0.894 |
 
 ---
 
@@ -202,7 +220,7 @@ Ten defaults cost the pool 6% of its money, twice the expected loss. Under indep
 
 The pool's credit quality never changes, yet its losses swing hard. The single-name chance is fixed at 5%; the economy score decides how many of the 100 firms fail in a given five-year window.
 
-| Economy score $m$ | Each firm's default chance | Expected defaults of 100 | Expected pool loss |
+| Economy score $`m`$ | Each firm's default chance | Expected defaults of 100 | Expected pool loss |
 | --- | --- | --- | --- |
 | +2 (boom) | 0.23% | 0.23 | 0.14% |
 | +1 | 0.97% | 0.97 | 0.58% |
@@ -230,7 +248,7 @@ Independent firms bunch around 5 defaults. The shared economy spreads the same a
 
 ## Code, from first principles, and it actually runs
 
-The code builds its own bell-curve area, finds the cutoff by bisection in Python and by Newton's method in Rust, and reaches the pair default chance by **three independent roads**: the factor integral, the correlation road (Plackett's identity), and a simulation of 20,000 pools of 100 firms with a hand-written random-number generator. It also computes the full count law of defaults as a mixture of binomials, checks it against the pair chance and the simulation, and prints every number on the card, including the chart points and the what-breaks rows. Python builds $N$ from a series; Rust builds it by adding thin slices under the bell curve.
+The code builds its own bell-curve area, finds the cutoff by bisection in Python and by Newton's method in Rust, and reaches the pair default chance by **three independent roads**: the factor integral, the correlation road (Plackett's identity), and a simulation of 20,000 pools of 100 firms with a hand-written random-number generator. It also computes the full count law of defaults as a mixture of binomials, checks it against the pair chance and the simulation, and prints every number on the card, including the chart points and the what-breaks rows. Python builds $`N`$ from a series; Rust builds it by adding thin slices under the bell curve.
 
 ### Python
 
@@ -412,7 +430,7 @@ chart, pair in %       0.25  0.37  0.52  0.71  0.94  1.22  1.55  1.96  2.48  3.1
 ALL CHECKS PASS
 ```
 
-Three roads, one pair chance. The factor integral and the correlation road agree to nine decimals. The simulation gives 0.5110%, less than two standard errors (0.0096 percentage points each) below 0.5245%. The error bar is measured across pools, not pairs, because pairs inside one pool share an economy draw. The simulated default rate in pools whose economy landed between −2.25 and −1.75 is 19.53%, close to $q(-2) = 20.07\%$ and a little lower because more of that band sits near −1.75.
+Three roads, one pair chance. The factor integral and the correlation road agree to nine decimals. The simulation gives 0.5110%, less than two standard errors (0.0096 percentage points each) below 0.5245%. The error bar is measured across pools, not pairs, because pairs inside one pool share an economy draw. The simulated default rate in pools whose economy landed between −2.25 and −1.75 is 19.53%, close to $`q(-2) = 20.07\%`$ and a little lower because more of that band sits near −1.75.
 
 ### Rust
 
@@ -623,13 +641,13 @@ The two outputs agree line for line. The bell-curve areas were reached by differ
 
 Lean proves the exact single-name chance, the pair integral and the pair excess, for every correlation from 0 up to below 1.
 
-- Take an economy score $M$ and private noise $\varepsilon$, independent bell-curve draws, with $0 \le \rho < 1$ and $N(a) = p$. Then each firm defaults with chance exactly $p$, and the average of $q(m)$ over the economy is also $p$.
-- Take one economy score and two private noises, all three independent bell-curve draws, with $0 \le \rho < 1$. Then the chance both firms default is $J = \int \varphi(m)\,q(m)^2\,dm$.
-- Take any cutoff $a$ and $0 < \rho < 1$. Then $J$ is strictly larger than $p^2$, the pair chance for unconnected firms.
+- Take an economy score $`M`$ and private noise $`\varepsilon`$, independent bell-curve draws, with $`0 \le \rho < 1`$ and $`N(a) = p`$. Then each firm defaults with chance exactly $`p`$, and the average of $`q(m)`$ over the economy is also $`p`$.
+- Take one economy score and two private noises, all three independent bell-curve draws, with $`0 \le \rho < 1`$. Then the chance both firms default is $`J = \int \varphi(m)\,q(m)^2\,dm`$.
+- Take any cutoff $`a`$ and $`0 < \rho < 1`$. Then $`J`$ is strictly larger than $`p^2`$, the pair chance for unconnected firms.
 - The worked numbers hold as exact fractions: the 3% expected loss, the 6% cost of ten defaults and the 0.25% unconnected pair.
-- The score variances hold too: 1 for the correct blend, 1.2 without $\sqrt{1-\rho}$, and 0.84 with $\rho$ in place of $\sqrt{\rho}$.
+- The score variances hold too: 1 for the correct blend, 1.2 without $`\sqrt{1-\rho}`$, and 0.84 with $`\rho`$ in place of $`\sqrt{\rho}`$.
 
-The decimal values, such as $q(-2) = 20.07\%$ and $J = 0.5245\%$, and the simulated pools are left to the Python and Rust checks.
+The decimal values, such as $`q(-2) = 20.07\%`$ and $`J = 0.5245\%`$, and the simulated pools are left to the Python and Rust checks.
 
 ```lean
 -- The one-factor Gaussian copula: blending one shared standard-normal economy factor with private standard-normal noise keeps each firm's default chance exactly N(a) = p for every correlation 0 ≤ ρ < 1, the pair default chance is the one-dimensional average of q(m)², and it is strictly larger than p² whenever 0 < ρ < 1.
@@ -906,7 +924,7 @@ example : (20 / 100 : ℚ) + 1 = 12 / 10 := by norm_num
 > Guess the direction first. Then run it.
 > - **Raise the correlation to 50%.** Each firm stays at 5%. The pair's joint default chance rises from 0.5245% to **1.2189%**. The row `try: pair default, rho = 0.5` prints it.
 > - **Make firm 2 safer, 1% instead of 5%.** New cutoff for that firm, same copula. The pair's joint chance is **0.1287%**, against 0.05% if they were independent.
-> - **A bad economy under strong correlation.** At $\rho = 50\%$ and economy score −3, each firm defaults with chance **74.98%**, against 36.73% at 20%. Stronger correlation means the dial does more of the work.
+> - **A bad economy under strong correlation.** At $`\rho = 50\%`$ and economy score −3, each firm defaults with chance **74.98%**, against 36.73% at 20%. Stronger correlation means the dial does more of the work.
 
 ---
 
@@ -917,7 +935,7 @@ example : (20 / 100 : ℚ) + 1 = 12 / 10 := by norm_num
 >
 > Smaller traps:
 > - **Expecting a big pool to diversify the economy away.** Private noise averages out; the shared factor does not. A pool of a million firms in a −2 economy still sees about 20% defaults, not 5%.
-> - **Changing the correlation and the cutoff together.** The cutoff depends only on $p$. Re-deriving it from $\rho$, or leaving out the $\sqrt{1-\rho}$ weight, breaks the single-name chance: 6.66% instead of 5% in the what-breaks table.
+> - **Changing the correlation and the cutoff together.** The cutoff depends only on $`p`$. Re-deriving it from $`\rho`$, or leaving out the $`\sqrt{1-\rho}`$ weight, breaks the single-name chance: 6.66% instead of 5% in the what-breaks table.
 > - **Mixing horizons.** A 5% five-year chance and a 1% one-year chance give cutoffs that answer different questions. Put every firm on the same horizon first.
 > - **Treating the Gaussian copula as a description of crises.** It fits the middle of the distribution. Its joint extremes are thinner than markets have shown; see [Tail dependence](07-tail-dependence-and-the-t-copula.md).
 
@@ -932,20 +950,20 @@ example : (20 / 100 : ℚ) + 1 = 12 / 10 := by norm_num
 - **The 2008 criticism.** Tranches rated as safe under this model lost heavily when house prices fell nationwide at once. The single Gaussian factor, and the correlations fed into it, gave that scenario too little weight.
 
 > **Say it back**
-> Single-name default chances do not say whether defaults come together. The one-factor Gaussian copula gives each firm a hidden score, a blend of one shared economy factor and private noise, weighted so the score's spread is 1 at every correlation. The cutoff $N^{-1}(p)$ then keeps each firm's default chance exact, and a bad economy raises every firm's chance at once: from 5% to 20% at −2. Given the economy the firms are independent, so every joint chance is a one-dimensional average: the pair's 0.5245% is the average of $q(m)^2$. Sklar's theorem says this joining of single laws by a copula is always possible.
+> Single-name default chances do not say whether defaults come together. The one-factor Gaussian copula gives each firm a hidden score, a blend of one shared economy factor and private noise, weighted so the score's spread is 1 at every correlation. The cutoff $`N^{-1}(p)`$ then keeps each firm's default chance exact, and a bad economy raises every firm's chance at once: from 5% to 20% at −2. Given the economy the firms are independent, so every joint chance is a one-dimensional average: the pair's 0.5245% is the average of $`q(m)^2`$. Sklar's theorem says this joining of single laws by a copula is always possible.
 
 ---
 
 ## What this builds on
 
 - [Default correlation](01-default-correlation-and-joint-default.md): the joint default chance, default correlation, and why single-name chances do not fix them. This card gives a model that does.
-- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, $N(x)$ and its inverse, used for every cutoff and every conditional chance.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, $`N(x)`$ and its inverse, used for every cutoff and every conditional chance.
 - [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): correlated bell-curve pairs and how one behaves once the other is known; the correlation road in Step 4 is built on it.
-- [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why averages over many simulated pools settle, and why the average within one pool settles on $q(M)$ rather than 5%.
+- [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why averages over many simulated pools settle, and why the average within one pool settles on $`q(M)`$ rather than 5%.
 
 ## Where this goes next
 
-- [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md): let the pool grow without limit; the loss fraction becomes $q(M)$ itself, with a closed-form law and the regulator's 99.9% point.
+- [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md): let the pool grow without limit; the loss fraction becomes $`q(M)`$ itself, with a closed-form law and the regulator's 99.9% point.
 - [Tail dependence](07-tail-dependence-and-the-t-copula.md): keep the single-name chances, swap the Gaussian copula for one with fatter joint extremes, and measure the difference.
 - [Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md): the same shared-factor idea linking a counterparty's default to the exposure it leaves behind.
 

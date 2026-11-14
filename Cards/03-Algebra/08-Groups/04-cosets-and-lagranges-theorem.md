@@ -34,36 +34,40 @@ Sliding by 3 draws no fourth arrow: it returns to the first block.
 
 ## The formula
 
-Notation first, in words. Bars count members: $\lvert G\rvert$ is how many members G has, read "the order of G". Square brackets with a colon, $[G:H]$, count the distinct cosets — the **index** of H in G. An unnamed group's operation is written $*$; here it is wrap-round addition.
+Notation first, in words. Bars count members: $`\lvert G\rvert`$ is how many members G has, read "the order of G". Square brackets with a colon, $`[G:H]`$, count the distinct cosets — the **index** of H in G. An unnamed group's operation is written $`*`$; here it is wrap-round addition.
 
-$$g * H = \{\,g * h \text{ for every } h \text{ in } H\,\}$$
+```math
+g * H = \{\,g * h \text{ for every } h \text{ in } H\,\}
+```
 
 **Read it aloud:** combine one member of the group with each member of the subgroup in turn; the results are one coset.
 
-On the clock, $1 + H$ is 1, 4, 7, 10. Lagrange's theorem is one line of counting:
+On the clock, $`1 + H`$ is 1, 4, 7, 10. Lagrange's theorem is one line of counting:
 
-$$\lvert G\rvert = [G:H] \times \lvert H\rvert$$
+```math
+\lvert G\rvert = [G:H] \times \lvert H\rvert
+```
 
 **Read it aloud:** the group's member count is the number of blocks times the members in one block.
 
-The right side is a whole number of copies of $\lvert H\rvert$: that is what "divides" means, 12 = 3 × 4.
+The right side is a whole number of copies of $`\lvert H\rvert`$: that is what "divides" means, 12 = 3 × 4.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | the whole group | hours 0 to 11 | more room for blocks |
-| $H$ | a subgroup: a subset that is itself a group | 0, 3, 6, 9 | fewer, fatter blocks |
-| $g$, $a$, $b$ | members of $G$ used as slides | 1, 2, 4 | two slides can name one block |
-| $h$, $k$ | members of $H$, running over all of it | 3, 6 | — |
-| $g * H$ | one coset: $H$ slid by $g$ | 1, 4, 7, 10 | — |
-| $\lvert G\rvert$, $\lvert H\rvert$ | member counts | 12 and 4 | — |
-| $[G:H]$ | the index: distinct cosets | 3 | smaller blocks |
-| $g^{-1}$ | the undo of $g$ | 11, since 11 + 1 wraps to 0 | — |
+| $`G`$ | the whole group | hours 0 to 11 | more room for blocks |
+| $`H`$ | a subgroup: a subset that is itself a group | 0, 3, 6, 9 | fewer, fatter blocks |
+| $`g`$, $`a`$, $`b`$ | members of $`G`$ used as slides | 1, 2, 4 | two slides can name one block |
+| $`h`$, $`k`$ | members of $`H`$, running over all of it | 3, 6 | — |
+| $`g * H`$ | one coset: $`H`$ slid by $`g`$ | 1, 4, 7, 10 | — |
+| $`\lvert G\rvert`$, $`\lvert H\rvert`$ | member counts | 12 and 4 | — |
+| $`[G:H]`$ | the index: distinct cosets | 3 | smaller blocks |
+| $`g^{-1}`$ | the undo of $`g`$ | 11, since 11 + 1 wraps to 0 | — |
 
 ### When it holds
 
 - **A finite group.** Cosets slice infinite groups too, but with no count there is nothing to divide.
 - **A real subgroup, not a subset of the right size.** It must hold the member that changes nothing, any two members' combination, and every undo. Drop one and the copies overlap: those of 0, 3, 6, 7 make 12 sets, 48 slots for 12 hours.
-- **One side at a time.** Here $g$ slides from the left, as in $g * H$. Sliding from the right gives as many blocks of the same size, but where the order of combining matters the two collections can differ, so a proof must keep to one side.
+- **One side at a time.** Here $`g`$ slides from the left, as in $`g * H`$. Sliding from the right gives as many blocks of the same size, but where the order of combining matters the two collections can differ, so a proof must keep to one side.
 
 ---
 
@@ -73,26 +77,26 @@ The right side is a whole number of copies of $\lvert H\rvert$: that is what "di
 
 Slide 0, 3, 6, 9 by 1, then slide the result by 11: the original four come back, since 11 + 1 wraps to 0.
 
-In any group, sliding by $g$ is undone by sliding by $g^{-1}$, so it fuses no members and misses none. It matches $H$ to $g * H$ one for one: every coset holds as many members as $H$, four here.
+In any group, sliding by $`g`$ is undone by sliding by $`g^{-1}`$, so it fuses no members and misses none. It matches $`H`$ to $`g * H`$ one for one: every coset holds as many members as $`H`$, four here.
 
 ### Step 1: blocks that share a member are equal
 
-Slide by 4 and the hours 4, 7, 10, 1 appear — the same block as $1 + H$, from a different start, because 4 − 1 = 3 sits in H.
+Slide by 4 and the hours 4, 7, 10, 1 appear — the same block as $`1 + H`$, from a different start, because 4 − 1 = 3 sits in H.
 
 In general, if two cosets share a member, combining one slide's undo with the other lands in H, and each coset's members are then the other's: two cosets are identical or share nothing.
 
 <details>
 <summary>Detailed proof: two cosets that meet are equal</summary>
 
-Suppose $a * H$ and $b * H$ share a member: $a * h = b * k$ for some $h$ and $k$ in H. Combine on the left with $b^{-1}$, then on the right with $h^{-1}$: $b^{-1} * a = k * h^{-1}$, which is in H, since subgroups hold undos and combinations.
+Suppose $`a * H`$ and $`b * H`$ share a member: $`a * h = b * k`$ for some $`h`$ and $`k`$ in H. Combine on the left with $`b^{-1}`$, then on the right with $`h^{-1}`$: $`b^{-1} * a = k * h^{-1}`$, which is in H, since subgroups hold undos and combinations.
 
-Since $b^{-1} * a$ is in H, so is $(b^{-1} * a) * h$ for every $h$ in H. And $a * h = b * ((b^{-1} * a) * h)$, so every member of $a * H$ lies in $b * H$. Swapping $a$ and $b$ puts $b * H$ inside $a * H$, so the sets are equal. No step needed the operation to ignore the order of combining.
+Since $`b^{-1} * a`$ is in H, so is $`(b^{-1} * a) * h`$ for every $`h`$ in H. And $`a * h = b * ((b^{-1} * a) * h)`$, so every member of $`a * H`$ lies in $`b * H`$. Swapping $`a`$ and $`b`$ puts $`b * H`$ inside $`a * H`$, so the sets are equal. No step needed the operation to ignore the order of combining.
 
 </details>
 
 ### Step 2: nothing is left out
 
-A subgroup holds the member that changes nothing, 0 here, so $g * H$ contains $g$: every member is in a coset, its own. Hour 5 is in $5 + H$, the block 2, 5, 8, 11.
+A subgroup holds the member that changes nothing, 0 here, so $`g * H`$ contains $`g`$: every member is in a coset, its own. Hour 5 is in $`5 + H`$, the block 2, 5, 8, 11.
 
 ### Step 3: count the blocks
 

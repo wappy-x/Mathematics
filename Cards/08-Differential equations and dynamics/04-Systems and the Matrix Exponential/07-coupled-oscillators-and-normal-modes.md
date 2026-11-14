@@ -36,38 +36,46 @@ Orange: the left cart. Teal: the right cart. Neither curve ever repeats exactly:
 
 ## The formula
 
-Notation first, in words. The carts' distances from rest, in cm, form one vector $x$ with entries $x_1$ (left) and $x_2$ (right). A prime is a rate, as for x' = Ax on [From one equation to a system](01-from-one-equation-to-a-system.md), so x'' is the rate of the rate: acceleration. Newton's law, mass times acceleration equals force, for both carts at once:
+Notation first, in words. The carts' distances from rest, in cm, form one vector $`x`$ with entries $`x_1`$ (left) and $`x_2`$ (right). A prime is a rate, as for x' = Ax on [From one equation to a system](01-from-one-equation-to-a-system.md), so x'' is the rate of the rate: acceleration. Newton's law, mass times acceleration equals force, for both carts at once:
 
-$$M\,x'' = -K\,x$$
+```math
+M\,x'' = -K\,x
+```
 
 **Read it aloud:** the masses times the accelerations equal minus the stiffness matrix times the displacements; the springs pull every cart back toward rest.
 
-For the carts, $M$ is the identity matrix $I$ (both 1 kg) and
+For the carts, $`M`$ is the identity matrix $`I`$ (both 1 kg) and
 
-$$K = \begin{pmatrix} 2 & -1 \\ -1 & 2 \end{pmatrix}, \qquad x_1'' = -2x_1 + x_2, \qquad x_2'' = x_1 - 2x_2 .$$
+```math
+K = \begin{pmatrix} 2 & -1 \\ -1 & 2 \end{pmatrix}, \qquad x_1'' = -2x_1 + x_2, \qquad x_2'' = x_1 - 2x_2 .
+```
 
-A normal mode is a vector $v$ and a number $\lambda$ with
+A normal mode is a vector $`v`$ and a number $`\lambda`$ with
 
-$$K\,v = \lambda\,M\,v, \qquad \omega = \sqrt{\lambda},$$
+```math
+K\,v = \lambda\,M\,v, \qquad \omega = \sqrt{\lambda},
+```
 
-and every motion from rest at $x(0)$ is a sum of modes. The dot $\cdot$ multiplies two vectors entry by entry and adds:
+and every motion from rest at $`x(0)`$ is a sum of modes. The dot $`\cdot`$ multiplies two vectors entry by entry and adds:
 
-$$x(t) = \sum_i c_i \cos(\omega_i t)\, v_i, \qquad c_i = \frac{x(0)\cdot v_i}{v_i \cdot v_i} \quad (M = I,\ v_i \text{ perpendicular}).$$
+```math
+x(t) = \sum_i c_i \cos(\omega_i t)\, v_i, \qquad c_i = \frac{x(0)\cdot v_i}{v_i \cdot v_i} \quad (M = I,\ v_i \text{ perpendicular}).
+```
 
 **Read it aloud:** split the start into its mode shapes, let each shape swing at its own frequency, and add them back up.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since release, in s | 0 to 12 s | — |
-| $x$, $x_1$, $x_2$ | each cart's distance from rest, in cm | start (10, 0) | — |
-| $M$ | mass matrix: the masses on its diagonal | identity, 1 kg each | lower frequencies |
-| $K$, $k$ | stiffness matrix, built from the spring stiffnesses $k$ | `[[2, -1], [-1, 2]]`, k = 1 N/m | higher frequencies |
-| $\lambda$ | eigenvalue: the squared frequency of one mode, in 1/s^2 | 1 and 3 | a faster mode |
-| $\omega$, $\omega_i$ | a mode's angular frequency, in rad/s; its period is 2π/ω | 1 and 1.732 | shorter period |
-| $v$, $v_1$, $v_2$, $v_i$ | a mode shape: the carts' relative movements | (1, 1) and (1, −1) | — |
-| $q_1$, $q_2$, $q_i$, $c_i$, $A_i$, $B_i$ | amount of mode i at time t, in cm; $c_i$ at the start | shares 5 and 5 | that mode dominates |
+| $`t`$ | time since release, in s | 0 to 12 s | — |
+| $`x`$, $`x_1`$, $`x_2`$ | each cart's distance from rest, in cm | start (10, 0) | — |
+| $`M`$ | mass matrix: the masses on its diagonal | identity, 1 kg each | lower frequencies |
+| $`K`$, $`k`$ | stiffness matrix, built from the spring stiffnesses $`k`$ | `[[2, -1], [-1, 2]]`, k = 1 N/m | higher frequencies |
+| $`\lambda`$ | eigenvalue: the squared frequency of one mode, in 1/s^2 | 1 and 3 | a faster mode |
+| $`\omega`$, $`\omega_i`$ | a mode's angular frequency, in rad/s; its period is 2π/ω | 1 and 1.732 | shorter period |
+| $`v`$, $`v_1`$, $`v_2`$, $`v_i`$ | a mode shape: the carts' relative movements | (1, 1) and (1, −1) | — |
+| $`q_1`$, $`q_2`$, $`q_i`$, $`c_i`$, $`A_i`$, $`B_i`$ | amount of mode i at time t, in cm; $`c_i`$ at the start | shares 5 and 5 | that mode dominates |
 
-A start with speed adds a sine per mode: $A_i \cos \omega_i t + B_i \sin \omega_i t$, with $A_i = c_i$ and $B_i$ the starting speed's share over $\omega_i$.
+A start with speed adds a sine per mode: $`A_i \cos \omega_i t + B_i \sin \omega_i t`$, with $`A_i = c_i`$ and $`B_i`$ the starting speed's share over $`\omega_i`$.
 
 ### When it holds
 
@@ -81,25 +89,25 @@ A start with speed adds a sine per mode: $A_i \cos \omega_i t + B_i \sin \omega_
 
 ### Step 0: in a mode, the spring force points back along the displacement
 
-Push both carts 10 cm right. The middle spring is unstretched, so each cart feels only its wall spring and swings like a lone cart at $\omega = \sqrt{k/m} = 1$ rad/s, with $m$ the cart's mass. Push them 10 cm each in opposite directions. The middle spring, stretched or squeezed 20 cm, adds 0.2 N to the wall's 0.1 N: triple the stiffness, frequency $\sqrt{3} = 1.732$ rad/s.
+Push both carts 10 cm right. The middle spring is unstretched, so each cart feels only its wall spring and swings like a lone cart at $`\omega = \sqrt{k/m} = 1`$ rad/s, with $`m`$ the cart's mass. Push them 10 cm each in opposite directions. The middle spring, stretched or squeezed 20 cm, adds 0.2 N to the wall's 0.1 N: triple the stiffness, frequency $`\sqrt{3} = 1.732`$ rad/s.
 
-Either way the force is a multiple of the displacement, so the pattern keeps its shape: $Kv = \lambda v$ read as physics.
+Either way the force is a multiple of the displacement, so the pattern keeps its shape: $`Kv = \lambda v`$ read as physics.
 
 ### Step 1: find the modes
 
-Eigenvalues of $K$ solve det(K − λI) = 0 ([The eigenvalue method](02-the-eigenvalue-method.md)): λ^2 − 4λ + 3 = 0, so λ = 1 or 3. The first row of (K − λI)v = 0 then gives v = (1, 1) and v = (1, −1), which are perpendicular: 1 × 1 + 1 × (−1) = 0.
+Eigenvalues of $`K`$ solve det(K − λI) = 0 ([The eigenvalue method](02-the-eigenvalue-method.md)): λ^2 − 4λ + 3 = 0, so λ = 1 or 3. The first row of (K − λI)v = 0 then gives v = (1, 1) and v = (1, −1), which are perpendicular: 1 × 1 + 1 × (−1) = 0.
 
 ### Step 2: in mode coordinates the equations come apart
 
-Write the motion as $x = q_1 v_1 + q_2 v_2$, with $q_1$ and $q_2$ changing in time. Substitute into $x'' = -Kx$:
+Write the motion as $`x = q_1 v_1 + q_2 v_2`$, with $`q_1`$ and $`q_2`$ changing in time. Substitute into $`x'' = -Kx`$:
 
 q₁'' v₁ + q₂'' v₂ = −λ₁ q₁ v₁ − λ₂ q₂ v₂.
 
-Dot both sides with $v_1$. Since $v_1 \cdot v_2 = 0$, the $v_2$ terms drop out: q₁'' = −λ₁ q₁. Likewise q₂'' = −λ₂ q₂. Two coupled equations have become two lone springs, each solved by a cosine and a sine at frequency √λ.
+Dot both sides with $`v_1`$. Since $`v_1 \cdot v_2 = 0`$, the $`v_2`$ terms drop out: q₁'' = −λ₁ q₁. Likewise q₂'' = −λ₂ q₂. Two coupled equations have become two lone springs, each solved by a cosine and a sine at frequency √λ.
 
 ### Step 3: fit the start
 
-From rest, only cosines appear. Dotting x(0) = c₁v₁ + c₂v₂ with each mode gives $c_i = x(0)\cdot v_i / (v_i \cdot v_i)$, here 10/2 = 5 for both. So
+From rest, only cosines appear. Dotting x(0) = c₁v₁ + c₂v₂ with each mode gives $`c_i = x(0)\cdot v_i / (v_i \cdot v_i)`$, here 10/2 = 5 for both. So
 
 x₁(t) = 5 cos t + 5 cos(1.732 t), x₂(t) = 5 cos t − 5 cos(1.732 t) cm.
 
@@ -107,12 +115,12 @@ At t = 0 these give 10 and 0.
 
 ### Step 4: each mode keeps its own energy
 
-Energy is half of each mass times its squared speed, summed, plus $\tfrac12 x\cdot Kx$ ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). At release, in metres, that is ½ × 2 × 0.1^2 J = 10 mJ. Perpendicular modes leave no cross terms, so it splits into ½ × λ × 2 × 0.05^2 J per mode (2 is v·v, 0.05 m the share): 2.50 mJ slow, 7.50 mJ fast, each fixed forever.
+Energy is half of each mass times its squared speed, summed, plus $`\tfrac12 x\cdot Kx`$ ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). At release, in metres, that is ½ × 2 × 0.1^2 J = 10 mJ. Perpendicular modes leave no cross terms, so it splits into ½ × λ × 2 × 0.05^2 J per mode (2 is v·v, 0.05 m the share): 2.50 mJ slow, 7.50 mJ fast, each fixed forever.
 
 <details>
 <summary>Detailed proof: n masses, any positive masses</summary>
 
-Let $M$ be diagonal with positive masses, $K$ symmetric positive definite, both n by n. M^(1/2) has the square roots of the masses on its diagonal. With y = M^(1/2) x, y'' = −S y where S = M^(−1/2) K M^(−1/2) is symmetric positive definite.
+Let $`M`$ be diagonal with positive masses, $`K`$ symmetric positive definite, both n by n. M^(1/2) has the square roots of the masses on its diagonal. With y = M^(1/2) x, y'' = −S y where S = M^(−1/2) K M^(−1/2) is symmetric positive definite.
 
 By the spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) S has n perpendicular unit eigenvectors uᵢ with real eigenvalues λᵢ, each positive since λ = u·Su > 0.
 
@@ -161,7 +169,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Road one finds the eigenvalues, checks the mode shapes against $K$, and sums the modes. Road two uses no eigenvalues: Euler's rule (new value = old value + step length × rate, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)) steps positions and speeds, its error halving with the step, and the periods are timed from zero crossings of x₁ + x₂ and x₁ − x₂. Euler also runs the weak-spring case against the envelope formula.
+Road one finds the eigenvalues, checks the mode shapes against $`K`$, and sums the modes. Road two uses no eigenvalues: Euler's rule (new value = old value + step length × rate, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)) steps positions and speeds, its error halving with the step, and the periods are timed from zero crossings of x₁ + x₂ and x₁ − x₂. Euler also runs the weak-spring case against the envelope formula.
 
 ### Python
 
@@ -784,7 +792,7 @@ example : (!![1, -1; -1, 1] : Matrix (Fin 2) (Fin 2) ℚ) *ᵥ ![1, 1] = (0 : �
 ## The usual mistake
 
 > [!warning]
-> **Reading the eigenvalue as the frequency.** The eigenvalues of $K$ are 1 and 3; the frequencies are their square roots, 1 and 1.732 rad/s. Differentiating cos(ωt) twice brings out ω^2, not ω. Taking 3 as the frequency gives a fast period of 2.094 s, not 3.628 s.
+> **Reading the eigenvalue as the frequency.** The eigenvalues of $`K`$ are 1 and 3; the frequencies are their square roots, 1 and 1.732 rad/s. Differentiating cos(ωt) twice brings out ω^2, not ω. Taking 3 as the frequency gives a fast period of 2.094 s, not 3.628 s.
 >
 > - **One cart pulled, one mode.** A start of (10, 0) is 5 of each; only starts along (1, 1) or (1, −1) give one mode.
 > - **Plain Euler on a long run.** Each step multiplies a mode's energy by 1 + (step × ω)^2: 200 steps of 0.1 s turn 10 mJ into 2788 mJ. The fix is on [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md).

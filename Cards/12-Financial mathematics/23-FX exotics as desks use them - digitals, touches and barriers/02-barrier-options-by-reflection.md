@@ -36,34 +36,40 @@ Orange: the payoff if EURUSD never traded at 1.05 during the year, the plain cal
 
 ## The formula
 
-Write $C(x)$ for the Garman–Kohlhagen price of the plain euro call when the spot is $x$ and everything else is unchanged ([Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md)). For a barrier $H$ at or below the strike, with the spot above the barrier:
+Write $`C(x)`$ for the Garman–Kohlhagen price of the plain euro call when the spot is $`x`$ and everything else is unchanged ([Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md)). For a barrier $`H`$ at or below the strike, with the spot above the barrier:
 
-$$C_{do} = C(S) - \left(\frac{H}{S}\right)^{2\lambda} C\!\left(\frac{H^2}{S}\right), \qquad \lambda = \frac{r_d - r_f - \tfrac12\sigma^2}{\sigma^2}$$
+```math
+C_{do} = C(S) - \left(\frac{H}{S}\right)^{2\lambda} C\!\left(\frac{H^2}{S}\right), \qquad \lambda = \frac{r_d - r_f - \tfrac12\sigma^2}{\sigma^2}
+```
 
-$$C_{di} = C(S) - C_{do} = \left(\frac{H}{S}\right)^{2\lambda} C\!\left(\frac{H^2}{S}\right)$$
+```math
+C_{di} = C(S) - C_{do} = \left(\frac{H}{S}\right)^{2\lambda} C\!\left(\frac{H^2}{S}\right)
+```
 
 **Read it aloud:** the knock-out is the plain call minus the plain call started from the mirror spot, shrunk by the mirror weight; the knock-in is exactly what was subtracted.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | EURUSD today, dollars per euro | 1.10 | knock-out rises fast: more upside and more room above the wall |
-| $K$ | the strike, the rate at which euros may be bought | 1.10 | falls: more to pay at expiry |
-| $H$, $b$ | the barrier; $b = \ln(H/S)$ is its distance below spot on the log scale | 1.05 | knock-out falls: the wall moves closer |
-| $r_d$ | the dollar interest rate, continuously compounded; $e^{-r_d T}$ discounts dollars | 5% | rises: the drift of EURUSD tilts up, away from the wall |
-| $r_f$ | the euro interest rate; $e^{-r_f T}$ discounts euros | 3% | falls: the drift tilts down, toward the wall |
-| $\sigma$ | volatility: the yearly spread of log moves in EURUSD | 10% | either way: more upside, but more touches |
-| $T$ | time to expiry, in years | 1 | rises much less than the plain call: more time to gain, more time to die |
-| $C(x)$, $N(x)$, $d_1$, $d_2$ | the plain call at spot $x$; the bell-curve area $N$ and its two distances $d_1$, $d_2$, as on the Garman–Kohlhagen card | $C(1.10) = 0.053556$ | |
-| $\lambda$, $\nu$ | $\nu = r_d - r_f - \tfrac12\sigma^2$ is the drift of log EURUSD in the pricing world; $\lambda = \nu/\sigma^2$ is that drift in units of the yearly variance | $\nu = 0.015$, $\lambda = 1.5$ | |
-| $H^2/S$, $(H/S)^{2\lambda}$ | the mirror spot, as far below the wall in percentage terms as spot is above it; and the mirror weight | 1.002273 and 0.869741 | |
-| $C_{do}$, $C_{di}$ | prices today of the down-and-out and down-and-in calls, dollars per euro | 0.041661 and 0.011895 | |
-| $n$, $\beta$ | number of equally spaced monitoring dates; the shift constant 0.5826 of Broadie, Glasserman and Kou | 252; 0.5826 | |
+| $`S`$ | EURUSD today, dollars per euro | 1.10 | knock-out rises fast: more upside and more room above the wall |
+| $`K`$ | the strike, the rate at which euros may be bought | 1.10 | falls: more to pay at expiry |
+| $`H`$, $`b`$ | the barrier; $`b = \ln(H/S)`$ is its distance below spot on the log scale | 1.05 | knock-out falls: the wall moves closer |
+| $`r_d`$ | the dollar interest rate, continuously compounded; $`e^{-r_d T}`$ discounts dollars | 5% | rises: the drift of EURUSD tilts up, away from the wall |
+| $`r_f`$ | the euro interest rate; $`e^{-r_f T}`$ discounts euros | 3% | falls: the drift tilts down, toward the wall |
+| $`\sigma`$ | volatility: the yearly spread of log moves in EURUSD | 10% | either way: more upside, but more touches |
+| $`T`$ | time to expiry, in years | 1 | rises much less than the plain call: more time to gain, more time to die |
+| $`C(x)`$, $`N(x)`$, $`d_1`$, $`d_2`$ | the plain call at spot $`x`$; the bell-curve area $`N`$ and its two distances $`d_1`$, $`d_2`$, as on the Garman–Kohlhagen card | $`C(1.10) = 0.053556`$ | |
+| $`\lambda`$, $`\nu`$ | $`\nu = r_d - r_f - \tfrac12\sigma^2`$ is the drift of log EURUSD in the pricing world; $`\lambda = \nu/\sigma^2`$ is that drift in units of the yearly variance | $`\nu = 0.015`$, $`\lambda = 1.5`$ | |
+| $`H^2/S`$, $`(H/S)^{2\lambda}`$ | the mirror spot, as far below the wall in percentage terms as spot is above it; and the mirror weight | 1.002273 and 0.869741 | |
+| $`C_{do}`$, $`C_{di}`$ | prices today of the down-and-out and down-and-in calls, dollars per euro | 0.041661 and 0.011895 | |
+| $`n`$, $`\beta`$ | number of equally spaced monitoring dates; the shift constant 0.5826 of Broadie, Glasserman and Kou | 252; 0.5826 | |
 
-Two helper facts. The mirror spot $H^2/S$ satisfies $\ln(H^2/S) = 2\ln H - \ln S$: reflection in the wall is done on the log scale, because rates move by percentages. The weight $(H/S)^{2\lambda}$ corrects for drift: with EURUSD drifting up, a path that dips to the wall is less likely than its mirror partner, by exactly that factor.
+Two helper facts. The mirror spot $`H^2/S`$ satisfies $`\ln(H^2/S) = 2\ln H - \ln S`$: reflection in the wall is done on the log scale, because rates move by percentages. The weight $`(H/S)^{2\lambda}`$ corrects for drift: with EURUSD drifting up, a path that dips to the wall is less likely than its mirror partner, by exactly that factor.
 
-For daily or other discrete monitoring on $n$ equal dates, the Broadie–Glasserman–Kou shift prices the contract with the same formula and a moved wall:
+For daily or other discrete monitoring on $`n`$ equal dates, the Broadie–Glasserman–Kou shift prices the contract with the same formula and a moved wall:
 
-$$C_{do}^{(n)} \approx C_{do}\ \text{with } H \text{ replaced by } H\,e^{-\beta\sigma\sqrt{T/n}}$$
+```math
+C_{do}^{(n)} \approx C_{do}\ \text{with } H \text{ replaced by } H\,e^{-\beta\sigma\sqrt{T/n}}
+```
 
 In words: move the wall away from spot by about six-tenths of one period's standard deviation of log moves.
 
@@ -86,40 +92,44 @@ Every possible path of EURUSD over the year either touches 1.05 or does not. The
 
 Hold one knock-out and one knock-in with the same strike, wall and expiry. Follow any path. If it touches 1.05, the knock-out died and the knock-in came alive: the holder has one plain call. If it never touches, the knock-in never woke and the knock-out survived: again one plain call. Two positions that pay the same on every path cost the same:
 
-$$C_{di} + C_{do} = C(S).$$
+```math
+C_{di} + C_{do} = C(S).
+```
 
 No model entered that argument. It holds with any volatility smile, with jumps, with any monitoring rule, as long as both legs use the same rule. Price one leg and the other is free.
 
 ### Step 2: on the log scale the wall is a flat line
 
-Measure where EURUSD is by $\ln(S_t/S)$, the log of its ratio to today's rate. In the pricing world of the Garman–Kohlhagen card, that log ratio is a Brownian motion ([Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) with drift $\nu = r_d - r_f - \tfrac12\sigma^2$ per year and spread $\sigma$ per root-year. Here $\nu = 0.05 - 0.03 - 0.005 = 0.015$. The wall 1.05 becomes the flat level $b = \ln(1.05/1.10)$, below zero.
+Measure where EURUSD is by $`\ln(S_t/S)`$, the log of its ratio to today's rate. In the pricing world of the Garman–Kohlhagen card, that log ratio is a Brownian motion ([Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) with drift $`\nu = r_d - r_f - \tfrac12\sigma^2`$ per year and spread $`\sigma`$ per root-year. Here $`\nu = 0.05 - 0.03 - 0.005 = 0.015`$. The wall 1.05 becomes the flat level $`b = \ln(1.05/1.10)`$, below zero.
 
 ### Step 3: without drift, a touching path is paired with a path from the mirror start
 
-Suppose for a moment the drift were zero. Take a path that starts at 0, touches the level $b$, and ends at some point $x$ above it. Flip the part before the first touch, up for down, about $b$. The flipped path starts at $2b$, the mirror of the start, and still ends at $x$. Every path from $2b$ to a point above the wall must cross the wall, so flipping back recovers a touching path: the pairing is one for one. Flipping a driftless Brownian motion keeps every probability ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)).
+Suppose for a moment the drift were zero. Take a path that starts at 0, touches the level $`b`$, and ends at some point $`x`$ above it. Flip the part before the first touch, up for down, about $`b`$. The flipped path starts at $`2b`$, the mirror of the start, and still ends at $`x`$. Every path from $`2b`$ to a point above the wall must cross the wall, so flipping back recovers a touching path: the pairing is one for one. Flipping a driftless Brownian motion keeps every probability ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)).
 
-So the paths that start at today's rate, touch the wall and finish at $x$ are counted exactly by all paths that start at the mirror point and finish at $x$, with no condition on them at all. On the rate scale the mirror start is $S e^{2b} = S (H/S)^2 = H^2/S$, which is 1.002273.
+So the paths that start at today's rate, touch the wall and finish at $`x`$ are counted exactly by all paths that start at the mirror point and finish at $`x`$, with no condition on them at all. On the rate scale the mirror start is $`S e^{2b} = S (H/S)^2 = H^2/S`$, which is 1.002273.
 
 ### Step 4: put the drift back, and the mirror gets a weight
 
-With drift, up and down are no longer equally likely, so the flip changes probabilities. Girsanov's theorem ([Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) says how: a drifted path's probability is the driftless one times $e^{\nu \times (\text{end} - \text{start})/\sigma^2}$ and a constant. A path from 0 to $x$ travelled $x$; its partner from $2b$ to $x$ travelled $x - 2b$. So the original's factor is $e^{2\nu b/\sigma^2}$ times its partner's, the same for every $x$. Since $b = \ln(H/S)$, that ratio is $(H/S)^{2\nu/\sigma^2} = (H/S)^{2\lambda}$. Here it is $(1.05/1.10)^3 = 0.869741$.
+With drift, up and down are no longer equally likely, so the flip changes probabilities. Girsanov's theorem ([Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) says how: a drifted path's probability is the driftless one times $`e^{\nu \times (\text{end} - \text{start})/\sigma^2}`$ and a constant. A path from 0 to $`x`$ travelled $`x`$; its partner from $`2b`$ to $`x`$ travelled $`x - 2b`$. So the original's factor is $`e^{2\nu b/\sigma^2}`$ times its partner's, the same for every $`x`$. Since $`b = \ln(H/S)`$, that ratio is $`(H/S)^{2\nu/\sigma^2} = (H/S)^{2\lambda}`$. Here it is $`(1.05/1.10)^3 = 0.869741`$.
 
-So the density of ending at $x$ without having touched is two bell curves: the ordinary one from today's rate, minus the one from the mirror start, shrunk by the weight.
+So the density of ending at $`x`$ without having touched is two bell curves: the ordinary one from today's rate, minus the one from the mirror start, shrunk by the weight.
 
 ### Step 5: each bell curve prices a plain call
 
-Integrate the payoff $\max(S e^{x} - K, 0)$ against the ordinary bell curve: that is the plain call, $C(S)$. Integrate it against the bell curve from the mirror start: that is the plain call for a rate starting at $H^2/S$, so $C(H^2/S)$, times the weight. Subtract: the formula.
+Integrate the payoff $`\max(S e^{x} - K, 0)`$ against the ordinary bell curve: that is the plain call, $`C(S)`$. Integrate it against the bell curve from the mirror start: that is the plain call for a rate starting at $`H^2/S`$, so $`C(H^2/S)`$, times the weight. Subtract: the formula.
 
-The condition $H \le K$ entered in one place. The payoff is positive only above the strike, and when the strike is at or above the wall, that whole region lies above the wall, so the two-curve density applies to all of it without cutting.
+The condition $`H \le K`$ entered in one place. The payoff is positive only above the strike, and when the strike is at or above the wall, that whole region lies above the wall, so the two-curve density applies to all of it without cutting.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $x_t = \ln(S_t/S)$, a Brownian motion with drift $\nu$ and variance $\sigma^2$ per year, and write $v = \sigma^2 T$. For driftless motion (Step 3), the density of ending at $x > b$ with the running minimum above $b$ is $\varphi_v(x) - \varphi_v(x - 2b)$, where $\varphi_v(u) = e^{-u^2/(2v)}/\sqrt{2\pi v}$; the second term is a free path from the mirror start $2b$.
+Let $`x_t = \ln(S_t/S)`$, a Brownian motion with drift $`\nu`$ and variance $`\sigma^2`$ per year, and write $`v = \sigma^2 T`$. For driftless motion (Step 3), the density of ending at $`x > b`$ with the running minimum above $`b`$ is $`\varphi_v(x) - \varphi_v(x - 2b)`$, where $`\varphi_v(u) = e^{-u^2/(2v)}/\sqrt{2\pi v}`$; the second term is a free path from the mirror start $`2b`$.
 
-Girsanov: the drifted law has density $e^{\nu x_T/\sigma^2 - \nu^2 T/(2\sigma^2)}$ against the driftless one. The survival condition is a statement about the path and passes through unchanged. On the first term, completing the square gives $\varphi_v(x - \nu T)$. On the second, write $\nu x/\sigma^2 = 2\nu b/\sigma^2 + \nu (x - 2b)/\sigma^2$; completing the square gives $e^{2\nu b/\sigma^2}\varphi_v(x - 2b - \nu T)$. So
-$$P(x_T \in dx,\ \text{no touch}) = \Big[\varphi_v(x - \nu T) - e^{2\nu b/\sigma^2}\,\varphi_v(x - 2b - \nu T)\Big]dx,\quad x > b.$$
-The knock-out is $e^{-r_d T}\int_{\ln(K/S)}^{\infty} (S e^{x} - K)\,[\ldots]\,dx$; the lower limit is at or above $b$ because $H \le K$. The first term is the Garman–Kohlhagen integral, so it gives $C(S)$. In the second substitute $x = y + 2b$: the density becomes $\varphi_v(y - \nu T)$, the payoff becomes $(H^2/S)e^{y} - K$, and the limit becomes $y > \ln(K S/H^2)$, which is exactly where that payoff turns positive. It is the Garman–Kohlhagen integral for spot $H^2/S$. With $e^{2\nu b/\sigma^2} = (H/S)^{2\lambda}$ the formula follows. At $S = H$ both terms are equal and cancel; at expiry the mirror call is worthless because $H^2/S < H \le K$.
+Girsanov: the drifted law has density $`e^{\nu x_T/\sigma^2 - \nu^2 T/(2\sigma^2)}`$ against the driftless one. The survival condition is a statement about the path and passes through unchanged. On the first term, completing the square gives $`\varphi_v(x - \nu T)`$. On the second, write $`\nu x/\sigma^2 = 2\nu b/\sigma^2 + \nu (x - 2b)/\sigma^2`$; completing the square gives $`e^{2\nu b/\sigma^2}\varphi_v(x - 2b - \nu T)`$. So
+
+$`\displaystyle P(x_T \in dx,\ \text{no touch}) = \Big[\varphi_v(x - \nu T) - e^{2\nu b/\sigma^2}\,\varphi_v(x - 2b - \nu T)\Big]dx,\quad x > b.`$
+
+The knock-out is $`e^{-r_d T}\int_{\ln(K/S)}^{\infty} (S e^{x} - K)\,[\ldots]\,dx`$; the lower limit is at or above $`b`$ because $`H \le K`$. The first term is the Garman–Kohlhagen integral, so it gives $`C(S)`$. In the second substitute $`x = y + 2b`$: the density becomes $`\varphi_v(y - \nu T)`$, the payoff becomes $`(H^2/S)e^{y} - K`$, and the limit becomes $`y > \ln(K S/H^2)`$, which is exactly where that payoff turns positive. It is the Garman–Kohlhagen integral for spot $`H^2/S`$. With $`e^{2\nu b/\sigma^2} = (H/S)^{2\lambda}`$ the formula follows. At $`S = H`$ both terms are equal and cancel; at expiry the mirror call is worthless because $`H^2/S < H \le K`$.
 
 </details>
 
@@ -127,7 +137,7 @@ The knock-out is $e^{-r_d T}\int_{\ln(K/S)}^{\infty} (S e^{x} - K)\,[\ldots]\,dx
 
 A contract that looks only at 252 daily closes misses a dip that happens and reverses between two closes. It survives more often, so it is worth more. In the checks, a fraction 0.596499 of continuous paths touch 1.05 during the year, while only 0.568990 of simulated daily paths are caught at a close.
 
-Broadie, Glasserman and Kou showed that the continuous formula with the wall moved away from spot by $\beta\sigma\sqrt{T/n}$ on the log scale matches the $n$-date price, with an error that shrinks faster than $1/\sqrt{n}$. The constant $\beta$ is 0.5826, the average amount by which a random walk with bell-curve steps overshoots a level it crosses, measured in step standard deviations. For daily monitoring the wall 1.05 becomes 1.046154. The intuition: a daily path is only caught once it is already past the wall by about that overshoot, so it acts like a continuous path facing a slightly lower wall.
+Broadie, Glasserman and Kou showed that the continuous formula with the wall moved away from spot by $`\beta\sigma\sqrt{T/n}`$ on the log scale matches the $`n`$-date price, with an error that shrinks faster than $`1/\sqrt{n}`$. The constant $`\beta`$ is 0.5826, the average amount by which a random walk with bell-curve steps overshoots a level it crosses, measured in step standard deviations. For daily monitoring the wall 1.05 becomes 1.046154. The intuition: a daily path is only caught once it is already past the wall by about that overshoot, so it acts like a continuous path facing a slightly lower wall.
 
 ### Another road
 
@@ -141,16 +151,16 @@ EURUSD 1.10, strike 1.10, wall 1.05, dollar rate 5%, euro rate 3%, volatility 10
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| drift of log EURUSD, $\nu$ | $0.05 - 0.03 - \tfrac12 (0.10)^2$ | 0.015 |
-| $\lambda$ | $0.015 / 0.01$ | 1.5 |
-| mirror weight $(H/S)^{2\lambda}$ | $(1.05/1.10)^{3}$ | 0.869741 |
-| mirror spot $H^2/S$ | $1.1025 / 1.10$ | 1.002273 |
-| plain call $C(1.10)$ | Garman–Kohlhagen | 0.053556 |
-| mirror call $C(1.002273)$ | Garman–Kohlhagen, strike still 1.10 | 0.013677 |
-| weighted mirror | $0.869741 \times 0.013677$ | 0.011895 |
-| **down-and-out** | $0.053556 - 0.011895$ | **0.041661** |
+| drift of log EURUSD, $`\nu`$ | $`0.05 - 0.03 - \tfrac12 (0.10)^2`$ | 0.015 |
+| $`\lambda`$ | $`0.015 / 0.01`$ | 1.5 |
+| mirror weight $`(H/S)^{2\lambda}`$ | $`(1.05/1.10)^{3}`$ | 0.869741 |
+| mirror spot $`H^2/S`$ | $`1.1025 / 1.10`$ | 1.002273 |
+| plain call $`C(1.10)`$ | Garman–Kohlhagen | 0.053556 |
+| mirror call $`C(1.002273)`$ | Garman–Kohlhagen, strike still 1.10 | 0.013677 |
+| weighted mirror | $`0.869741 \times 0.013677`$ | 0.011895 |
+| **down-and-out** | $`0.053556 - 0.011895`$ | **0.041661** |
 | **down-and-in** | the weighted mirror | **0.011895** |
-| check | $0.041661 + 0.011895$ | 0.053556 |
+| check | $`0.041661 + 0.011895`$ | 0.053556 |
 
 In desk units: the plain call is 535.56 pips, the knock-out 416.61, the knock-in 118.95. A wall touched on about 60% of paths (0.596499) removes only 118.95 of the 535.56 pips. The touching paths are the ones where the euro fell, and most of those would have finished below 1.10 and paid nothing anyway.
 
@@ -161,10 +171,10 @@ Right answer 0.041661.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Ignore the barrier | 0.053556 | Paid for paths the contract kills. |
-| Drop the weight $(H/S)^{2\lambda}$ | 0.039879 | Treated each touching path as being as likely as its mirror partner; with drift toward higher EURUSD it is less likely. Still zero on the wall, so it does not announce itself. |
-| Use $\lambda$ with $+\tfrac12\sigma^2$ in the exponent | 0.042717 | Took the other textbook's lambda, which belongs with a different form of the formula. |
-| Put the mirror at $H$ instead of $H^2/S$ | 0.028398 | Reflected in the wrong place: subtracted far too much. |
-| Leave out the euro rate $r_f$ | 0.060032 | Priced a currency like a share with no dividend; the drift and the euro discount are both wrong. |
+| Drop the weight $`(H/S)^{2\lambda}`$ | 0.039879 | Treated each touching path as being as likely as its mirror partner; with drift toward higher EURUSD it is less likely. Still zero on the wall, so it does not announce itself. |
+| Use $`\lambda`$ with $`+\tfrac12\sigma^2`$ in the exponent | 0.042717 | Took the other textbook's lambda, which belongs with a different form of the formula. |
+| Put the mirror at $`H`$ instead of $`H^2/S`$ | 0.028398 | Reflected in the wrong place: subtracted far too much. |
+| Leave out the euro rate $`r_f`$ | 0.060032 | Priced a currency like a share with no dividend; the drift and the euro discount are both wrong. |
 | Continuous formula for a daily contract | 0.041661 against 0.043239 | 15.78 pips too cheap: the formula counts touches the contract never sees. |
 | Shift the wall up, not down | 0.039891 against 0.043239 | Moves the wrong way: worse than no shift. |
 
@@ -216,7 +226,7 @@ The knock-out moves more than the plain call with spot, because a rise both adds
 The code reaches the knock-out by five roads that share nothing but the inputs. The bell-curve area is its own series; nothing imported knows the answer.
 
 - **Road 1** is the formula.
-- **Road 2** integrates the payoff against the two-curve density of Step 4 by Simpson's rule (an area added up from evenly spaced points), with no bell-curve area and no $d_1$.
+- **Road 2** integrates the payoff against the two-curve density of Step 4 by Simpson's rule (an area added up from evenly spaced points), with no bell-curve area and no $`d_1`$.
 - **Road 3** prices the knock-in from a formula written in the other textbook convention, with its own lambda, and checks that in plus out equals the plain call.
 - **Road 4** prices the contract monitored on 12, 52 or 252 dates exactly, by stepping backward on a grid of log EURUSD and keeping only the points above the wall at each date.
 - **Road 5** simulates 100,000 daily paths and their mirror-image twins with a hand-written random number generator. Each path gives two prices: its daily payoff, and its payoff times the chance it never dipped between closes (a Brownian bridge weight, which recovers the continuous price). Their difference on the same paths measures the monitoring gap with a small error.
@@ -650,16 +660,16 @@ continuous formula   ███████████████████�
 plain call, no wall  ███████████████████████████████████     0.053556
 ```
 
-Fewer looks, fewer knock-outs, a dearer option. The gap closes slowly, like one over the square root of the number of dates, which is why the shift carries $\sqrt{T/n}$.
+Fewer looks, fewer knock-outs, a dearer option. The gap closes slowly, like one over the square root of the number of dates, which is why the shift carries $`\sqrt{T/n}`$.
 
 ### Lean
 
 Lean proves in-plus-out in every model, and Step 5 for every barrier at or below the strike with spot above it.
 
 - Take a knock-in and a knock-out with the same strike, wall, expiry and monitoring rule, and no rebate. Then their prices add up to the plain call's price, in any model.
-- Take a positive barrier at or below the strike, spot above the barrier, and positive volatility and time to expiry. Then the discounted payoff against Step 4's two-bell-curve density equals $C(S) - (H/S)^{2\lambda} C(H^2/S)$.
+- Take a positive barrier at or below the strike, spot above the barrier, and positive volatility and time to expiry. Then the discounted payoff against Step 4's two-bell-curve density equals $`C(S) - (H/S)^{2\lambda} C(H^2/S)`$.
 - Take spot equal to the barrier. Then the mirror spot is spot itself, the weight is 1, and the knock-out formula gives 0.
-- The worked numbers check exactly in fractions: $\nu = 3/200$, $\lambda = 3/2$, mirror weight $9261/10648$ and mirror spot $441/440$. The mirror spot sits below the wall, and 416.61 plus 118.95 is 535.56 pips.
+- The worked numbers check exactly in fractions: $`\nu = 3/200`$, $`\lambda = 3/2`$, mirror weight $`9261/10648`$ and mirror spot $`441/440`$. The mirror spot sits below the wall, and 416.61 plus 118.95 is 535.56 pips.
 
 Step 4's two-bell-curve density, the dollar prices and the daily-monitoring shift are left to the Python and Rust checks.
 
@@ -858,7 +868,7 @@ end BarrierOptionsByReflection
 > Smaller traps:
 > - **Using the continuous formula for a contract fixed once a day.** It comes out 15.78 pips too cheap here, always in the same direction. Shift the wall away from spot, to 1.046154 for daily dates.
 > - **Shifting the wall the wrong way.** Moving it toward spot gives 0.039891 against a true 0.043239: worse than not shifting.
-> - **Mixing the two lambdas.** Books write the formula with $\lambda$ as here or with $\lambda + 1$ and a different exponent. Putting one book's lambda into the other's formula gives 0.042717.
+> - **Mixing the two lambdas.** Books write the formula with $`\lambda`$ as here or with $`\lambda + 1`$ and a different exponent. Putting one book's lambda into the other's formula gives 0.042717.
 > - **Using this formula with the wall above the strike.** It still returns a number. The number is wrong; the extra terms are on [The eight single barriers in one table](03-the-eight-barrier-types.md).
 
 ---
@@ -873,13 +883,13 @@ end BarrierOptionsByReflection
 - **Shares.** The same formula with a dividend yield in place of the euro rate prices equity knock-outs: [Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md).
 
 > **Say it back**
-> A knock-out dies the first time the rate touches its wall; a knock-in is born then. Held together they are one plain option on every path, so their prices add to the plain price. The knock-in is the plain call priced from the mirror image of spot in the wall, weighted by $(H/S)^{2\lambda}$ because the upward drift makes a path that dips to the wall less likely than its mirror partner. For the house euro call that is 0.011895, leaving 0.041661 for the knock-out. A contract checked once a day is worth more, and moving the wall away from spot by $0.5826\,\sigma\sqrt{T/n}$ prices it here to within a pip.
+> A knock-out dies the first time the rate touches its wall; a knock-in is born then. Held together they are one plain option on every path, so their prices add to the plain price. The knock-in is the plain call priced from the mirror image of spot in the wall, weighted by $`(H/S)^{2\lambda}`$ because the upward drift makes a path that dips to the wall less likely than its mirror partner. For the house euro call that is 0.011895, leaving 0.041661 for the knock-out. A contract checked once a day is worth more, and moving the wall away from spot by $`0.5826\,\sigma\sqrt{T/n}`$ prices it here to within a pip.
 
 ---
 
 ## What this builds on
 
-- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the plain euro call $C(x)$, used twice in the formula, and the pricing world with drift $r_d - r_f$.
+- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the plain euro call $`C(x)`$, used twice in the formula, and the pricing world with drift $`r_d - r_f`$.
 - [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the flip after the first touch, which pairs touching paths with mirror paths.
 - [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the model of log EURUSD, and why it restarts afresh at the touch.
 - [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): how drift reweights paths, which produces the mirror weight.
@@ -899,7 +909,7 @@ This card priced one wall below the strike; what a knock-out is worth when the w
 Verified 2026-09-27: every link below resolves to the publisher's page.
 
 - Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The first published down-and-out call formula.
-- Garman, Mark B., and Steven W. Kohlhagen. "Foreign Currency Option Values." *Journal of International Money and Finance* 2, no. 3 (1983): 231–237. [doi:10.1016/S0261-5606(83)80001-1](https://doi.org/10.1016/S0261-5606(83)80001-1). The plain currency call $C(x)$, with the euro rate in place of a dividend.
+- Garman, Mark B., and Steven W. Kohlhagen. "Foreign Currency Option Values." *Journal of International Money and Finance* 2, no. 3 (1983): 231–237. [doi:10.1016/S0261-5606(83)80001-1](https://doi.org/10.1016/S0261-5606(83)80001-1). The plain currency call $`C(x)`$, with the euro rate in place of a dividend.
 - Broadie, Mark, Paul Glasserman, and Steven Kou. "A Continuity Correction for Discrete Barrier Options." *Mathematical Finance* 7, no. 4 (1997): 325–349. [doi:10.1111/1467-9965.00035](https://doi.org/10.1111/1467-9965.00035). The shifted wall and the constant 0.5826.
 - Beaglehole, David R., Philip H. Dybvig, and Guofu Zhou. "Going to Extremes: Correcting Simulation Bias in Exotic Option Valuation." *Financial Analysts Journal* 53, no. 1 (1997): 62–68. [doi:10.2469/faj.v53.n1.2057](https://doi.org/10.2469/faj.v53.n1.2057). The Brownian bridge weight used in road 5.
 - Shreve, Steven E. *Stochastic Calculus for Finance II: Continuous-Time Models*. Springer, 2004. [Publisher page](https://link.springer.com/book/9780387401010). The reflection principle with drift and the barrier price derived from it.

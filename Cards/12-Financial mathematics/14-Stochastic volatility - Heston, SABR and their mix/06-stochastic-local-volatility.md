@@ -41,48 +41,54 @@ Orange: the house surface, 20.00% at every strike. Green: Heston alone, from 22.
 
 ## The formula
 
-Notation first, in words. $S_t$ is Acme's price $t$ years from today. $v_t$ is the Heston variance on that date. $W^1_t$ and $W^2_t$ are two random drivers, one for the price and one for the variance, as on the Heston card; over a short step $dt$ each moves by a bell-curve amount with spread $\sqrt{dt}$, and the two moves are correlated by $\rho$. $\mathbb{E}[\,\cdot \mid S_t = S\,]$ is an average over only the paths standing at price $S$ on date $t$: an average given what is known ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)).
+Notation first, in words. $`S_t`$ is Acme's price $`t`$ years from today. $`v_t`$ is the Heston variance on that date. $`W^1_t`$ and $`W^2_t`$ are two random drivers, one for the price and one for the variance, as on the Heston card; over a short step $`dt`$ each moves by a bell-curve amount with spread $`\sqrt{dt}`$, and the two moves are correlated by $`\rho`$. $`\mathbb{E}[\,\cdot \mid S_t = S\,]`$ is an average over only the paths standing at price $`S`$ on date $`t`$: an average given what is known ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)).
 
-$$dS_t = (r - q)\,S_t\,dt + L(S_t, t)\,\sqrt{v_t}\,S_t\,dW^1_t, \qquad dv_t = \kappa\,(\theta - v_t)\,dt + \xi\,\sqrt{v_t}\,dW^2_t$$
+```math
+dS_t = (r - q)\,S_t\,dt + L(S_t, t)\,\sqrt{v_t}\,S_t\,dW^1_t, \qquad dv_t = \kappa\,(\theta - v_t)\,dt + \xi\,\sqrt{v_t}\,dW^2_t
+```
 
-**Read it aloud:** Acme drifts at the riskless rate less its dividend yield; its volatility is Heston's, the root of $v_t$, times a leverage looked up by price and date; the variance is pulled toward $\theta$ at speed $\kappa$ and shaken in proportion to $\xi$.
+**Read it aloud:** Acme drifts at the riskless rate less its dividend yield; its volatility is Heston's, the root of $`v_t`$, times a leverage looked up by price and date; the variance is pulled toward $`\theta`$ at speed $`\kappa`$ and shaken in proportion to $`\xi`$.
 
 The leverage function that makes the mix reprice the surface:
 
-$$L(S, t) = \frac{\sigma_{\text{loc}}(S, t)}{\sqrt{\mathbb{E}\big[\,v_t \mid S_t = S\,\big]}}$$
+```math
+L(S, t) = \frac{\sigma_{\text{loc}}(S, t)}{\sqrt{\mathbb{E}\big[\,v_t \mid S_t = S\,\big]}}
+```
 
 **Read it aloud:** the leverage at a price and a date is the surface's local volatility there, divided by the root of the average Heston variance over the paths standing there.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_t$, $S_0$, $S_T$, $S_{t_1}$ | a price level; Acme's price on date $t$, today, at expiry, on the reset date | $100 today | — |
-| $v$, $v_t$ | Heston variance: the square of Heston's volatility | 0.04 at the start; 0.051845 near $90 halfway | the leverage there falls |
-| $L$ | the leverage function: a multiplier on Heston's volatility, one per price and date | 1 at the start; 0.8676 at $90 halfway | the mix's volatility there rises |
-| $\sigma_{\text{loc}}$, $\sigma_t$, $\sigma$ | the surface's local volatility; any model's volatility on date $t$; one flat volatility | 20% everywhere | the leverage rises in step |
-| $\kappa$, $\theta$ | Heston's pull: its speed per year, and the variance it pulls toward | 2; 0.04 | the leverage nears 1; it falls |
-| $\xi$ | volatility of variance: how hard the variance is shaken | 0.3 | the leverage tilts more |
-| $\rho$ | correlation of the price shocks with the variance shocks | −0.7 | less skew to undo; at zero the leverage is a dome |
-| $W^1_t$, $W^2_t$, $dt$ | the two random drivers, and a short time step | 40 steps a year in the code | — |
-| $r$, $q$ | riskless rate and dividend yield, continuously compounded | 5% and 2% | — |
-| $K$, $T$, $t$, $t_1$, $k$ | strike; expiry; a date; a forward start's reset date, and its strike as a fraction of Acme's price then | $80 to $120; 1; any date up to 1; 0.5; 0.8 to 1.2 | — |
-| $C$, $C_T$, $C_K$, $C_{KK}$ | a call's price in strike and expiry; its slope in expiry, slope in strike, bend in strike | as on the Dupire card | — |
-| $C_{\text{BS}}$ | the Black-Scholes call price | 6.307635 for the half-year call on $100 | — |
+| $`S`$, $`S_t`$, $`S_0`$, $`S_T`$, $`S_{t_1}`$ | a price level; Acme's price on date $`t`$, today, at expiry, on the reset date | $100 today | — |
+| $`v`$, $`v_t`$ | Heston variance: the square of Heston's volatility | 0.04 at the start; 0.051845 near $90 halfway | the leverage there falls |
+| $`L`$ | the leverage function: a multiplier on Heston's volatility, one per price and date | 1 at the start; 0.8676 at $90 halfway | the mix's volatility there rises |
+| $`\sigma_{\text{loc}}`$, $`\sigma_t`$, $`\sigma`$ | the surface's local volatility; any model's volatility on date $`t`$; one flat volatility | 20% everywhere | the leverage rises in step |
+| $`\kappa`$, $`\theta`$ | Heston's pull: its speed per year, and the variance it pulls toward | 2; 0.04 | the leverage nears 1; it falls |
+| $`\xi`$ | volatility of variance: how hard the variance is shaken | 0.3 | the leverage tilts more |
+| $`\rho`$ | correlation of the price shocks with the variance shocks | −0.7 | less skew to undo; at zero the leverage is a dome |
+| $`W^1_t`$, $`W^2_t`$, $`dt`$ | the two random drivers, and a short time step | 40 steps a year in the code | — |
+| $`r`$, $`q`$ | riskless rate and dividend yield, continuously compounded | 5% and 2% | — |
+| $`K`$, $`T`$, $`t`$, $`t_1`$, $`k`$ | strike; expiry; a date; a forward start's reset date, and its strike as a fraction of Acme's price then | $80 to $120; 1; any date up to 1; 0.5; 0.8 to 1.2 | — |
+| $`C`$, $`C_T`$, $`C_K`$, $`C_{KK}`$ | a call's price in strike and expiry; its slope in expiry, slope in strike, bend in strike | as on the Dupire card | — |
+| $`C_{\text{BS}}`$ | the Black-Scholes call price | 6.307635 for the half-year call on $100 | — |
 
 Behind the formula sits one condition, in averaged form:
 
-$$\mathbb{E}\big[\,L(S_t, t)^2\,v_t \mid S_t = S\,\big] = \sigma_{\text{loc}}^2(S, t)$$
+```math
+\mathbb{E}\big[\,L(S_t, t)^2\,v_t \mid S_t = S\,\big] = \sigma_{\text{loc}}^2(S, t)
+```
 
-At every price and date, the mix's squared volatility, averaged over the paths standing there, equals the surface's local variance. At one exact price $L$ is one number, comes out of the average, and gives the formula. On a coarse grid $L$ changes inside each node's neighbourhood, so the code solves this averaged form.
+At every price and date, the mix's squared volatility, averaged over the paths standing there, equals the surface's local variance. At one exact price $`L`$ is one number, comes out of the average, and gives the formula. On a coarse grid $`L`$ changes inside each node's neighbourhood, so the code solves this averaged form.
 
-The test of future smiles is the forward start: it fixes its strike on the reset date $t_1$ at a fraction $k$ of Acme's price that day, and pays $\max(S_T - k\,S_{t_1},\ 0)$ at $T$. At one flat volatility $\sigma$ it is worth $S_0\,e^{-q t_1}\,C_{\text{BS}}(1,\ k,\ T - t_1,\ \sigma)$ ([Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
+The test of future smiles is the forward start: it fixes its strike on the reset date $`t_1`$ at a fraction $`k`$ of Acme's price that day, and pays $`\max(S_T - k\,S_{t_1},\ 0)`$ at $`T`$. At one flat volatility $`\sigma`$ it is worth $`S_0\,e^{-q t_1}\,C_{\text{BS}}(1,\ k,\ T - t_1,\ \sigma)`$ ([Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
 
 ### When it holds
 
 - **Continuous paths.** The proof applies [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md), the chain rule for random paths, to paths without jumps; a jump adds terms the formula lacks ([Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)).
-- **A finite leverage.** The formula divides by the average variance at each price. If Heston's variance can reach zero, as when the Feller condition $2\kappa\theta \ge \xi^2$ fails ([The Heston model](01-heston-model.md)), that average can sink toward zero and the leverage runs away. The house values pass the test.
+- **A finite leverage.** The formula divides by the average variance at each price. If Heston's variance can reach zero, as when the Feller condition $`2\kappa\theta \ge \xi^2`$ fails ([The Heston model](01-heston-model.md)), that average can sink toward zero and the leverage runs away. The house values pass the test.
 - **Enough paths wherever it matters.** Where few paths arrive, the average is noise. The code trusts a node only when it carries the weight of 100 paths, and holds the leverage flat beyond.
 - **A smooth, arbitrage-free surface.** The local volatility on top comes from Dupire's formula. A kink or an arbitrage in the surface makes that local variance negative or infinite, and the leverage with it.
-- **A chosen variance model.** The surface fixes the leverage once $\kappa$, $\theta$, $\xi$ and $\rho$ are chosen, but not those four. Each choice reprices the same surface and predicts different future smiles.
+- **A chosen variance model.** The surface fixes the leverage once $`\kappa`$, $`\theta`$, $`\xi`$ and $`\rho`$ are chosen, but not those four. Each choice reprices the same surface and predicts different future smiles.
 
 ---
 
@@ -90,62 +96,70 @@ The test of future smiles is the forward start: it fixes its strike on the reset
 
 ### Step 0: plain options see one date at a time
 
-A plain call expiring at $T$ pays on Acme's price at $T$ and nothing else. Two models that spread Acme's price the same way on every date give every plain option the same price, however differently their paths wander in between.
+A plain call expiring at $`T`$ pays on Acme's price at $`T`$ and nothing else. Two models that spread Acme's price the same way on every date give every plain option the same price, however differently their paths wander in between.
 
 That spread is governed by one function: the average squared volatility of the paths standing at each price on each date. Match it to the surface's local variance and every plain option comes back. How volatility moves between dates is left free, and that freedom is where Heston's dynamics live.
 
 ### Step 1: every model has a local-volatility twin
 
-Let $\sigma_t$ be Acme's volatility in any model without jumps, random or not, kept between two positive bounds. István Gyöngy proved in 1986 that the local-volatility model whose squared volatility at price $K$ on date $T$ is $\mathbb{E}[\sigma_T^2 \mid S_T = K]$ spreads Acme's price exactly as the model does, date by date. The twin and the model agree on every plain call and put. The folded proof below reaches the same statement from call prices.
+Let $`\sigma_t`$ be Acme's volatility in any model without jumps, random or not, kept between two positive bounds. István Gyöngy proved in 1986 that the local-volatility model whose squared volatility at price $`K`$ on date $`T`$ is $`\mathbb{E}[\sigma_T^2 \mid S_T = K]`$ spreads Acme's price exactly as the model does, date by date. The twin and the model agree on every plain call and put. The folded proof below reaches the same statement from call prices.
 
 ### Step 2: in the mix, the leverage comes out of the average
 
-In the mix $\sigma_t = L(S_t, t)\sqrt{v_t}$. On the paths with $S_T = K$ the leverage is one known number, $L(K, T)$, and a known factor comes out of an average given that knowledge:
+In the mix $`\sigma_t = L(S_t, t)\sqrt{v_t}`$. On the paths with $`S_T = K`$ the leverage is one known number, $`L(K, T)`$, and a known factor comes out of an average given that knowledge:
 
-$$\mathbb{E}\big[\,L(S_T, T)^2\,v_T \mid S_T = K\,\big] = L(K, T)^2\;\mathbb{E}\big[\,v_T \mid S_T = K\,\big]$$
+```math
+\mathbb{E}\big[\,L(S_T, T)^2\,v_T \mid S_T = K\,\big] = L(K, T)^2\;\mathbb{E}\big[\,v_T \mid S_T = K\,\big]
+```
 
 ### Step 3: match the twin to the surface
 
 The surface has exactly one local volatility wherever its density is positive: Dupire's formula reads it off the prices. The mix reprices the surface exactly when its twin is that local volatility:
 
-$$L(K, T)^2\;\mathbb{E}\big[\,v_T \mid S_T = K\,\big] = \sigma_{\text{loc}}^2(K, T)$$
+```math
+L(K, T)^2\;\mathbb{E}\big[\,v_T \mid S_T = K\,\big] = \sigma_{\text{loc}}^2(K, T)
+```
 
 Divide by the average and take the root: the formula at the top of the card.
 
 <details>
 <summary>Detailed proof: call prices under a random volatility obey Dupire's equation with the conditional average</summary>
 
-Let Acme follow $dS_t = (r - q)\,S_t\,dt + \sigma_t\,S_t\,dW^1_t$, with $\sigma_t$ random but bounded, and let $p(x, T)$ be the density of $S_T$: the chance per dollar of finishing at $x$. The call price is $C(K, T) = e^{-rT}\,\mathbb{E}\big[(S_T - K)^+\big]$, where $(x)^+$ means $\max(x, 0)$.
+Let Acme follow $`dS_t = (r - q)\,S_t\,dt + \sigma_t\,S_t\,dW^1_t`$, with $`\sigma_t`$ random but bounded, and let $`p(x, T)`$ be the density of $`S_T`$: the chance per dollar of finishing at $`x`$. The call price is $`C(K, T) = e^{-rT}\,\mathbb{E}\big[(S_T - K)^+\big]`$, where $`(x)^+`$ means $`\max(x, 0)`$.
 
-Itô's lemma extended to the kink of $(S - K)^+$, Tanaka's formula, gives over a short step
-$$d(S_t - K)^+ = \mathbf{1}\{S_t > K\}\,dS_t + \tfrac12\,\sigma_t^2\,S_t^2\,\delta(S_t - K)\,dt,$$
-where $\mathbf{1}\{S_t > K\}$ is 1 above the strike and 0 below, and $\delta(S_t - K)$ is the spike that counts the paths standing at the strike.
+Itô's lemma extended to the kink of $`(S - K)^+`$, Tanaka's formula, gives over a short step
 
-Average both sides. The random part of the price step averages to zero. The drift part gives $(r - q)\,\mathbb{E}\big[S_T\,\mathbf{1}\{S_T > K\}\big] = (r - q)\,e^{rT}\,(C - K\,C_K)$, as in Step 2 of [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md). Averaging against the spike reads the density at $K$, weighted by the average of $\sigma_T^2$ over the paths there: $\tfrac12\,K^2\,\mathbb{E}\big[\sigma_T^2 \mid S_T = K\big]\,p(K, T)$.
+$`\displaystyle d(S_t - K)^+ = \mathbf{1}\{S_t > K\}\,dS_t + \tfrac12\,\sigma_t^2\,S_t^2\,\delta(S_t - K)\,dt,`$
 
-Differentiating $C$ in $T$, discounting adds $-rC$. Replace $e^{-rT}\,p(K, T)$ by $C_{KK}$, as on [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md), and collect:
-$$C_T = \tfrac12\,\mathbb{E}\big[\sigma_T^2 \mid S_T = K\big]\,K^2\,C_{KK} - (r - q)\,K\,C_K - q\,C.$$
-This is Dupire's forward equation with the local variance replaced by the conditional average. So Dupire's formula, applied to this model's prices, returns $\mathbb{E}[\sigma_T^2 \mid S_T = K]$ wherever $C_{KK} > 0$.
+where $`\mathbf{1}\{S_t > K\}`$ is 1 above the strike and 0 below, and $`\delta(S_t - K)`$ is the spike that counts the paths standing at the strike.
 
-For the mix, Step 2 turns that average into $L(K, T)^2\,\mathbb{E}[v_T \mid S_T = K]$. If it equals $\sigma_{\text{loc}}^2(K, T)$ everywhere, the mix's prices and the surface's solve the same forward equation from the same starting payoff $(S_0 - K)^+$, so they are equal. Conversely, equal prices give equal Dupire readings, so the condition holds wherever $C_{KK} > 0$. $\blacksquare$
+Average both sides. The random part of the price step averages to zero. The drift part gives $`(r - q)\,\mathbb{E}\big[S_T\,\mathbf{1}\{S_T > K\}\big] = (r - q)\,e^{rT}\,(C - K\,C_K)`$, as in Step 2 of [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md). Averaging against the spike reads the density at $`K`$, weighted by the average of $`\sigma_T^2`$ over the paths there: $`\tfrac12\,K^2\,\mathbb{E}\big[\sigma_T^2 \mid S_T = K\big]\,p(K, T)`$.
+
+Differentiating $`C`$ in $`T`$, discounting adds $`-rC`$. Replace $`e^{-rT}\,p(K, T)`$ by $`C_{KK}`$, as on [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md), and collect:
+
+$`\displaystyle C_T = \tfrac12\,\mathbb{E}\big[\sigma_T^2 \mid S_T = K\big]\,K^2\,C_{KK} - (r - q)\,K\,C_K - q\,C.`$
+
+This is Dupire's forward equation with the local variance replaced by the conditional average. So Dupire's formula, applied to this model's prices, returns $`\mathbb{E}[\sigma_T^2 \mid S_T = K]`$ wherever $`C_{KK} > 0`$.
+
+For the mix, Step 2 turns that average into $`L(K, T)^2\,\mathbb{E}[v_T \mid S_T = K]`$. If it equals $`\sigma_{\text{loc}}^2(K, T)`$ everywhere, the mix's prices and the surface's solve the same forward equation from the same starting payoff $`(S_0 - K)^+`$, so they are equal. Conversely, equal prices give equal Dupire readings, so the condition holds wherever $`C_{KK} > 0`$. $`\blacksquare`$
 
 </details>
 
 ### Step 4: the loop, and how simulated particles close it
 
-The average $\mathbb{E}[v_t \mid S_t = S]$ is taken under the mix itself. The mix depends on $L$, and $L$ depends on the average: the price equation contains the distribution of its own solution. Such an equation is called a **McKean equation**. No table can be read off in advance.
+The average $`\mathbb{E}[v_t \mid S_t = S]`$ is taken under the mix itself. The mix depends on $`L`$, and $`L`$ depends on the average: the price equation contains the distribution of its own solution. Such an equation is called a **McKean equation**. No table can be read off in advance.
 
 **Exists, unique, and where it fails.** The leverage is solved for from prices, so three statements come first.
 
 - *Exists:* not proved in general. Daniel Lacker, Mykhaylo Shkolnikov and Jiacheng Zhang proved it in 2020 for stationary cases, where the joint spread of price and variance does not change with time. Here the evidence is the fresh-path test in the code.
 - *Unique:* given the average variance at each price, the formula gives one leverage wherever paths arrive; where none arrive it is free and changes no price. Whether the loop has only one solution is proved only in special cases, one of them in the same 2020 paper. The model itself is not unique (When it holds).
-- *Where it fails:* at $t = 0$ only today's price is reachable, and the leverage there, $\sigma_{\text{loc}}(S_0, 0)/\sqrt{v_0}$, runs away as the starting variance goes to zero. Where variance can stick at zero, the leverage can explode. On a coarse grid, the formula read at the nodes alone is biased on the wings, the prices far from today's (What breaks).
+- *Where it fails:* at $`t = 0`$ only today's price is reachable, and the leverage there, $`\sigma_{\text{loc}}(S_0, 0)/\sqrt{v_0}`$, runs away as the starting variance goes to zero. Where variance can stick at zero, the leverage can explode. On a coarse grid, the formula read at the nodes alone is biased on the wings, the prices far from today's (What breaks).
 
 The **particle method** of Julien Guyon and Pierre Henry-Labordère closes the loop one date at a time. Each simulated path is a particle, and at every date the particles pool what they know. Start 50,000 of them at $100 with variance 0.04. At each of 40 dates a year:
 
 1. Assign each particle to the two nearest nodes of a coarse price grid, $40, $50, …, $200, with weights that fall off linearly with distance, like a hat.
 2. Average the variance near each node; the first leverage there is 0.20 divided by the root of that average.
-3. Rescale each node so the weighted average of $L^2 v$ near it comes to 0.04. Moving one node nudges its neighbours, so repeat; two passes bring every busy node close.
+3. Rescale each node so the weighted average of $`L^2 v`$ near it comes to 0.04. Moving one node nudges its neighbours, so repeat; two passes bring every busy node close.
 4. Move every particle one step, a fortieth of a year, with the leverage at its own price.
 
 At the start every particle sits at $100 with variance 0.04, so the leverage is 0.20 / 0.20 = 1.
@@ -163,7 +177,7 @@ xychart-beta
 
 Orange: a quarter of a year in. Green: half a year. Dark blue: three quarters.
 
-The leverage rises with price. Paths that have fallen carry high Heston variance, because falls come with variance rises when $\rho$ is negative, and the leverage turns them down. Paths that have risen carry low variance and are turned up. The tilt eases as the variance drifts home: from 0.54 at $70 and 1.60 at $130 after a quarter, to 0.63 and 1.46 after three.
+The leverage rises with price. Paths that have fallen carry high Heston variance, because falls come with variance rises when $`\rho`$ is negative, and the leverage turns them down. Paths that have risen carry low variance and are turned up. The tilt eases as the variance drifts home: from 0.54 at $70 and 1.60 at $130 after a quarter, to 0.63 and 1.46 after three.
 
 ### Step 5: why the future smile keeps a Heston shape
 
@@ -202,7 +216,7 @@ The $90 node, half a year in, from the calibration run:
 | their average variance | weighted sum of their variances ÷ 11,052.4 | 0.051845 |
 | as a volatility | √0.051845 | 0.227696 |
 | first leverage | 0.20 ÷ 0.227696 | 0.8784 |
-| after two rescaling passes | average of $L^2 v$ near $90 set to 0.04 | **0.8676** |
+| after two rescaling passes | average of $`L^2 v`$ near $90 set to 0.04 | **0.8676** |
 | a path at $90 with Heston volatility 30% | 0.8676 × 0.30 | 0.2603 |
 | a path at $90 with Heston volatility 10% | 0.8676 × 0.10 | 0.0868 |
 
@@ -240,7 +254,7 @@ The check calibrates the leverage on 50,000 particles from one seed, then prices
 
 - the mix against the Black-Scholes formula at 20%;
 - the mix against local volatility on the same random numbers, which cuts the noise in the gap ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md));
-- the average of $L^2 v$ at each price on the fresh paths against 0.04;
+- the average of $`L^2 v`$ at each price on the fresh paths against 0.04;
 - Heston by plain paths against the mixing formula of Romano and Touzi, which prices each variance path with Black-Scholes;
 - the local-volatility forward start by paths against its closed form.
 
@@ -429,7 +443,7 @@ what breaks, priced against LV on the same paths   call 100 (vol %)          cal
 ALL CHECKS PASS
 ```
 
-Out of sample, every option on the strip comes back: each gap to local volatility is inside three standard errors. On the fresh paths the root of the average of $L^2 v$ reads 19.85% to 20.06% from $70 to $130, where Heston alone reads 28.48% down to 13.89%.
+Out of sample, every option on the strip comes back: each gap to local volatility is inside three standard errors. On the fresh paths the root of the average of $`L^2 v`$ reads 19.85% to 20.06% from $70 to $130, where Heston alone reads 28.48% down to 13.89%.
 
 Heston's $120 call is estimated three ways: 1.7932 against local volatility on the same paths, 1.8171 by plain paths, 1.8025 by the mixing formula. They agree within their standard errors, and the mixing formula's is the smallest, 0.0076 against 0.0228 for plain paths.
 
@@ -787,11 +801,11 @@ example : (8676 / 10000 : ℚ) * (1 / 10) = 8676 / 100000 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Believing that a model fitting every plain option prices everything.** Local volatility and the mix give the same price to every plain call and put on the house surface, yet price the 110% forward start at 2.5602 and 2.3683. The surface fixes how Acme's price is spread on each date, not how two dates hang together. That is a modelling choice, made through $\kappa$, $\theta$, $\xi$ and $\rho$, and the desk owns it.
+> **Believing that a model fitting every plain option prices everything.** Local volatility and the mix give the same price to every plain call and put on the house surface, yet price the 110% forward start at 2.5602 and 2.3683. The surface fixes how Acme's price is spread on each date, not how two dates hang together. That is a modelling choice, made through $`\kappa`$, $`\theta`$, $`\xi`$ and $`\rho`$, and the desk owns it.
 >
 > - **Averaging under the wrong model.** Taking the average variance from pure-Heston paths ignores that the leverage moves the paths: the $100 call comes out at 9.0897.
-> - **Averaging volatility instead of variance.** Dividing by the average of $\sqrt{v}$ instead of the root of the average of $v$ makes the leverage too large, since the average of a root is below the root of the average ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). Every plain option comes out too dear.
-> - **Reading the leverage as a volatility.** $L$ is a multiplier near 1. At 0.8676 it scales each path's Heston volatility at $90; it does not say Acme's volatility is 87%.
+> - **Averaging volatility instead of variance.** Dividing by the average of $`\sqrt{v}`$ instead of the root of the average of $`v`$ makes the leverage too large, since the average of a root is below the root of the average ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). Every plain option comes out too dear.
+> - **Reading the leverage as a volatility.** $`L`$ is a multiplier near 1. At 0.8676 it scales each path's Heston volatility at $90; it does not say Acme's volatility is 87%.
 > - **Trusting the far wings.** Beyond the last busy node the leverage is held flat: a barrier deep out of the money sits where the calibration saw fewest paths.
 
 ---

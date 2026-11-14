@@ -26,58 +26,68 @@ flowchart LR
     M -->|"z"| D
 ```
 
-Schematic. The error $\Delta$ receives the signal $z$ and sends back $p$. Everything else in the loop, the modelled motor, the controller and the envelope, is lumped into one block $M$. A signal going round loses at least 1 − 0.6288 of its size on every lap.
+Schematic. The error $`\Delta`$ receives the signal $`z`$ and sends back $`p`$. Everything else in the loop, the modelled motor, the controller and the envelope, is lumped into one block $`M`$. A signal going round loses at least 1 − 0.6288 of its size on every lap.
 
 ---
 
 ## The formula
 
-Some notation, reminded or introduced. The **loop gain** $L(s)$ is one trip round controller and motor; the **sensitivity** is $S = 1/(1+L)$ and the **complementary sensitivity** is $T = L/(1+L)$ ([Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md)). Engineers write $j$ for the square root of −1; the rest of the library writes i. A transfer function evaluated at $s = j\omega$ says what the system does to a sine wave of angular frequency $\omega$, in rad/s.
+Some notation, reminded or introduced. The **loop gain** $`L(s)`$ is one trip round controller and motor; the **sensitivity** is $`S = 1/(1+L)`$ and the **complementary sensitivity** is $`T = L/(1+L)`$ ([Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md)). Engineers write $`j`$ for the square root of −1; the rest of the library writes i. A transfer function evaluated at $`s = j\omega`$ says what the system does to a sine wave of angular frequency $`\omega`$, in rad/s.
 
 The **H-infinity norm**, introduced here, is the largest gain a stable system shows at any frequency:
 
-$$\lVert G \rVert_\infty = \max_{\omega} \lvert G(j\omega) \rvert$$
+```math
+\lVert G \rVert_\infty = \max_{\omega} \lvert G(j\omega) \rvert
+```
 
 **Read it aloud:** the H-infinity norm of G is the peak, over all frequencies, of the size of G's answer to a sine wave. The name comes from a family of function spaces; here it means "worst-case gain".
 
 The conveyor, with the torque command in N·m and the belt speed in rad/s:
 
-$$P_0(s) = \frac{1}{(J_0 s + b)(\tau_a s + 1)}, \qquad C(s) = K_p + \frac{K_i}{s}$$
+```math
+P_0(s) = \frac{1}{(J_0 s + b)(\tau_a s + 1)}, \qquad C(s) = K_p + \frac{K_i}{s}
+```
 
 The model error, written two ways:
 
-$$\text{a percentage:}\ \ P = P_0\,(1 + W\Delta), \qquad \text{an added lump:}\ \ P = P_0 + W_A \Delta_A, \qquad \lVert\Delta\rVert_\infty \le 1$$
+```math
+\text{a percentage:}\ \ P = P_0\,(1 + W\Delta), \qquad \text{an added lump:}\ \ P = P_0 + W_A \Delta_A, \qquad \lVert\Delta\rVert_\infty \le 1
+```
 
 and the small gain rule for each:
 
-$$\lVert W T \rVert_\infty < 1 \qquad\text{or}\qquad \lVert W_A\, C S \rVert_\infty < 1$$
+```math
+\lVert W T \rVert_\infty < 1 \qquad\text{or}\qquad \lVert W_A\, C S \rVert_\infty < 1
+```
 
-**Read it aloud:** if the true plant is the model times one plus an error no bigger than the envelope W, the loop is safe when the envelope times the complementary sensitivity stays below 1 at every frequency; if the true plant is the model plus a lump no bigger than $W_A$, it is safe when that envelope times the controller times the sensitivity stays below 1.
+**Read it aloud:** if the true plant is the model times one plus an error no bigger than the envelope W, the loop is safe when the envelope times the complementary sensitivity stays below 1 at every frequency; if the true plant is the model plus a lump no bigger than $`W_A`$, it is safe when that envelope times the controller times the sensitivity stays below 1.
 
-For the doubled inertia the percentage error is $(J_0 - J)s/(Js + b)$. Its size is exactly the envelope
+For the doubled inertia the percentage error is $`(J_0 - J)s/(Js + b)`$. Its size is exactly the envelope
 
-$$W(s) = \frac{0.5\,s}{s + 1},$$
+```math
+W(s) = \frac{0.5\,s}{s + 1},
+```
 
 which is 0 for a steady speed, 35.4% at 1 rad/s and 50% for fast wobbles. Every load between 0.20 and 0.40 kg·m² stays inside it, which the code checks at 2,001 frequencies.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $P_0(s)$, $P(s)$ | the modelled and the true motor: torque command to belt speed, (rad/s) per N·m | $P_0 = 1/((0.2s + 0.4)(0.02s + 1))$ | — |
-| $J_0$, $J$, $k$ | modelled and true load inertia in kg·m²; the factor $k = J/J_0$ | 0.20, 0.40, $k$ = 2 | the error approaches $1 - 1/k$; certified up to $k$ = 4.87 |
-| $b$, $\tau_a$ | belt friction, N·m·s/rad; the drive's torque lag, s | 0.40 N·m·s/rad, 0.020 s | — |
-| $C(s)$, $K_p$, $K_i$ | the PI (proportional-integral) speed controller: N·m per rad/s of error, N·m per rad of built-up error | 10.0 and 50.0 | $\lVert WT\rVert_\infty$ rises: 0.8125 at double both |
-| $L$, $L_0$, $S$, $T$ | loop gain $P_0 C$, written $L_0$ beside the true loop gain; sensitivity $1/(1+L)$; complementary sensitivity $L/(1+L)$ | $\lVert T\rVert_\infty$ = 1.2582 at 35.58 rad/s, $\lVert S\rVert_\infty$ = 1.5344 at 55.75 rad/s | — |
-| $s$, $j$, $\omega$, $\omega^*$ | the Laplace variable; the square root of −1; angular frequency in rad/s; the frequency of the peak | $\omega^*$ = 35.60 rad/s | — |
-| $W(s)$, $\Delta$ | the percentage envelope; the unknown, any stable system whose gain never exceeds 1 | $0.5s/(s+1)$, up to 50% | the certificate number rises in proportion |
-| $W_A(s)$, $\Delta_A$ | the added-lump envelope, (rad/s)/N·m; its unknown | true lump peaks at 0.8330 at 1.41 rad/s | — |
-| $\lVert\cdot\rVert_\infty$, $G$, $\bar\sigma$ | the H-infinity norm, peak gain over frequency, of any stable system $G$; the largest singular value, its replacement for several inputs | $\lVert WT\rVert_\infty$ = 0.6288 | at 1 the guarantee is lost |
-| $M$, $F_\lambda$, $\lambda$ | the rest of the loop as the error sees it: $-WT$ or $-W_A CS$; in the proof, $F_\lambda = 1 - \lambda M\Delta$, with $\lambda$ sliding from 0 to 1 | peak 0.6288 | — |
-| $\theta$ | an extra time delay in the loop, s | certified 19.38 ms; true limit 20.94 ms | the loop oscillates past 20.94 ms |
-| $u$, $y$, $z$, $p$ | torque command (N·m), belt speed (rad/s); the signal into the error and the signal out of it | — | — |
+| $`P_0(s)`$, $`P(s)`$ | the modelled and the true motor: torque command to belt speed, (rad/s) per N·m | $`P_0 = 1/((0.2s + 0.4)(0.02s + 1))`$ | — |
+| $`J_0`$, $`J`$, $`k`$ | modelled and true load inertia in kg·m²; the factor $`k = J/J_0`$ | 0.20, 0.40, $`k`$ = 2 | the error approaches $`1 - 1/k`$; certified up to $`k`$ = 4.87 |
+| $`b`$, $`\tau_a`$ | belt friction, N·m·s/rad; the drive's torque lag, s | 0.40 N·m·s/rad, 0.020 s | — |
+| $`C(s)`$, $`K_p`$, $`K_i`$ | the PI (proportional-integral) speed controller: N·m per rad/s of error, N·m per rad of built-up error | 10.0 and 50.0 | $`\lVert WT\rVert_\infty`$ rises: 0.8125 at double both |
+| $`L`$, $`L_0`$, $`S`$, $`T`$ | loop gain $`P_0 C`$, written $`L_0`$ beside the true loop gain; sensitivity $`1/(1+L)`$; complementary sensitivity $`L/(1+L)`$ | $`\lVert T\rVert_\infty`$ = 1.2582 at 35.58 rad/s, $`\lVert S\rVert_\infty`$ = 1.5344 at 55.75 rad/s | — |
+| $`s`$, $`j`$, $`\omega`$, $`\omega^*`$ | the Laplace variable; the square root of −1; angular frequency in rad/s; the frequency of the peak | $`\omega^*`$ = 35.60 rad/s | — |
+| $`W(s)`$, $`\Delta`$ | the percentage envelope; the unknown, any stable system whose gain never exceeds 1 | $`0.5s/(s+1)`$, up to 50% | the certificate number rises in proportion |
+| $`W_A(s)`$, $`\Delta_A`$ | the added-lump envelope, (rad/s)/N·m; its unknown | true lump peaks at 0.8330 at 1.41 rad/s | — |
+| $`\lVert\cdot\rVert_\infty`$, $`G`$, $`\bar\sigma`$ | the H-infinity norm, peak gain over frequency, of any stable system $`G`$; the largest singular value, its replacement for several inputs | $`\lVert WT\rVert_\infty`$ = 0.6288 | at 1 the guarantee is lost |
+| $`M`$, $`F_\lambda`$, $`\lambda`$ | the rest of the loop as the error sees it: $`-WT`$ or $`-W_A CS`$; in the proof, $`F_\lambda = 1 - \lambda M\Delta`$, with $`\lambda`$ sliding from 0 to 1 | peak 0.6288 | — |
+| $`\theta`$ | an extra time delay in the loop, s | certified 19.38 ms; true limit 20.94 ms | the loop oscillates past 20.94 ms |
+| $`u`$, $`y`$, $`z`$, $`p`$ | torque command (N·m), belt speed (rad/s); the signal into the error and the signal out of it | — | — |
 
 ### The picture: the envelope against the room the loop leaves
 
-The rule $\lvert W T\rvert < 1$ is the same as $\lvert W\rvert < 1/\lvert T\rvert$: the envelope must pass under the curve $1/\lvert T\rvert$ at every frequency.
+The rule $`\lvert W T\rvert < 1`$ is the same as $`\lvert W\rvert < 1/\lvert T\rvert`$: the envelope must pass under the curve $`1/\lvert T\rvert`$ at every frequency.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -89,11 +99,11 @@ xychart-beta
     line [1.000, 1.000, 0.998, 0.983, 0.932, 0.869, 0.795, 1.227, 3.585]
 ```
 
-Orange: the envelope $\lvert W\rvert$, the error the full belt brings, rising to 50%. Green: $1/\lvert T\rvert$, the largest error the loop tolerates at each frequency, at its lowest, 0.795, near 35.6 rad/s, where $T$ peaks. The gap is narrowest there: 0.500 against 0.795, a ratio of 0.6288. At 300 and 1000 rad/s the green curve reaches 35.505 and 399.497, off the chart.
+Orange: the envelope $`\lvert W\rvert`$, the error the full belt brings, rising to 50%. Green: $`1/\lvert T\rvert`$, the largest error the loop tolerates at each frequency, at its lowest, 0.795, near 35.6 rad/s, where $`T`$ peaks. The gap is narrowest there: 0.500 against 0.795, a ratio of 0.6288. At 300 and 1000 rad/s the green curve reaches 35.505 and 399.497, off the chart.
 
 ### When it holds
 
-- **Both parts stable.** The theorem needs the nominal loop stable and the error $\Delta$ stable. An error that adds an unstable pole, such as a belt that runs away on its own, is not a bounded gain and is not covered.
+- **Both parts stable.** The theorem needs the nominal loop stable and the error $`\Delta`$ stable. An error that adds an unstable pole, such as a belt that runs away on its own, is not a bounded gain and is not covered.
 - **The envelope really covers the error.** It is an assumption about the machine. Leave out a 25 ms delay in the speed sensor's fieldbus (the factory network that carries its readings) and the light belt's loop has a closed-loop pole at +2.2098 ± 37.2618j /s: it oscillates and grows, while the certificate still reads 0.6288.
 - **Inside the stated range.** The envelope was drawn for 0.20 to 0.40 kg·m². A belt loaded to three times the morning inertia is outside it; its own envelope gives 0.8386, still certified, but the 50% envelope says nothing about it.
 - **Linear.** The drive delivers torque up to a limit. Each 1 rad/s of speed error asks for 10.0 N·m at once; a large speed change saturates the drive and the transfer functions stop describing it.
@@ -105,50 +115,52 @@ Orange: the envelope $\lvert W\rvert$, the error the full belt brings, rising to
 
 ### Step 0: a signal that shrinks on every lap dies out
 
-Suppose a signal goes round a loop and comes back at most 0.6288 times as big, whatever its frequency. Then after two laps it is at most 0.6288² of its size, after three 0.6288³, and so on. The sum of all the laps is at most $1/(1 - 0.6288)$ times the starting size: finite. Nothing can build up. A loop goes unstable only when some signal can come back at least as big as it left, with the right timing to reinforce itself.
+Suppose a signal goes round a loop and comes back at most 0.6288 times as big, whatever its frequency. Then after two laps it is at most 0.6288² of its size, after three 0.6288³, and so on. The sum of all the laps is at most $`1/(1 - 0.6288)`$ times the starting size: finite. Nothing can build up. A loop goes unstable only when some signal can come back at least as big as it left, with the right timing to reinforce itself.
 
 ### Step 1: measure size by the worst frequency
 
-Every signal is a mix of sine waves ([Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). A stable linear system multiplies each one by $\lvert G(j\omega)\rvert$. So the most it can amplify any signal's energy, in the root-mean-square sense, is the largest of those multipliers: $\lVert G\rVert_\infty$. For a system with several inputs and outputs, $G(j\omega)$ is a matrix and its largest stretch is its largest singular value $\bar\sigma$ ([The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)); everything below carries over with $\bar\sigma$ in place of $\lvert\cdot\rvert$.
+Every signal is a mix of sine waves ([Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). A stable linear system multiplies each one by $`\lvert G(j\omega)\rvert`$. So the most it can amplify any signal's energy, in the root-mean-square sense, is the largest of those multipliers: $`\lVert G\rVert_\infty`$. For a system with several inputs and outputs, $`G(j\omega)`$ is a matrix and its largest stretch is its largest singular value $`\bar\sigma`$ ([The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)); everything below carries over with $`\bar\sigma`$ in place of $`\lvert\cdot\rvert`$.
 
 ### Step 2: pull the error out of the loop
 
-Hold the setpoint at zero. The controller sends $u = -C y$. The true motor answers $y = P_0(1 + W\Delta)u = P_0 u + P_0 W p$, where $p = \Delta z$ is the error's output and $z = u$ is what it sees. Solve for $y$: $y = P_0 W p/(1 + L)$. Then the error's input is
+Hold the setpoint at zero. The controller sends $`u = -C y`$. The true motor answers $`y = P_0(1 + W\Delta)u = P_0 u + P_0 W p`$, where $`p = \Delta z`$ is the error's output and $`z = u`$ is what it sees. Solve for $`y`$: $`y = P_0 W p/(1 + L)`$. Then the error's input is
 
-$$z = u = -C y = -\frac{W L}{1 + L}\,p = -W T\,p.$$
+```math
+z = u = -C y = -\frac{W L}{1 + L}\,p = -W T\,p.
+```
 
-So the error sees the rest of the loop as one block, $M = -WT$. For the added lump, $y = P_0 u + W_A p$ with $z = u$, and the same steps give $M = -W_A C S$.
+So the error sees the rest of the loop as one block, $`M = -WT`$. For the added lump, $`y = P_0 u + W_A p`$ with $`z = u`$, and the same steps give $`M = -W_A C S`$.
 
 ### Step 3: the small gain theorem
 
-Round the loop $z \to \Delta \to p \to M \to z$ the gain at each frequency is at most $\lvert M(j\omega)\rvert\,\lvert\Delta(j\omega)\rvert \le \lvert M(j\omega)\rvert$. If $\lVert M\rVert_\infty < 1$, Step 0 applies at every frequency. Both blocks are stable, so the closed loop is stable.
+Round the loop $`z \to \Delta \to p \to M \to z`$ the gain at each frequency is at most $`\lvert M(j\omega)\rvert\,\lvert\Delta(j\omega)\rvert \le \lvert M(j\omega)\rvert`$. If $`\lVert M\rVert_\infty < 1`$, Step 0 applies at every frequency. Both blocks are stable, so the closed loop is stable.
 
-The same fact in the picture of [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the true loop gain $L_0(1 + W\Delta)$ lies, at each frequency, in a disc centred on the model's $L_0$ with radius $\lvert W L_0\rvert$. The closed loop fails where the loop gain reaches −1. The distance from $L_0$ to −1 is $\lvert 1 + L_0\rvert$. So −1 stays outside every disc exactly when $\lvert W L_0\rvert < \lvert 1 + L_0 \rvert$, which is $\lvert W T\rvert < 1$.
+The same fact in the picture of [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the true loop gain $`L_0(1 + W\Delta)`$ lies, at each frequency, in a disc centred on the model's $`L_0`$ with radius $`\lvert W L_0\rvert`$. The closed loop fails where the loop gain reaches −1. The distance from $`L_0`$ to −1 is $`\lvert 1 + L_0\rvert`$. So −1 stays outside every disc exactly when $`\lvert W L_0\rvert < \lvert 1 + L_0 \rvert`$, which is $`\lvert W T\rvert < 1`$.
 
 <details>
 <summary>Detailed proof: the turn count cannot change</summary>
 
-Let $M$ and $\Delta$ be stable, with $\lvert M(j\omega)\Delta(j\omega)\rvert < 1$ for every $\omega$, including in the limit $\omega \to \infty$. The loop of $M$ and $\Delta$ fails exactly where $1 - M\Delta$ has a zero in the closed right half-plane. Consider $F_\lambda = 1 - \lambda M \Delta$ for $\lambda$ from 0 to 1. Each $F_\lambda$ is stable, so it has no poles in the right half-plane, and on the imaginary axis $\lvert F_\lambda - 1\rvert \le \lvert M\Delta\rvert < 1$, so $F_\lambda(j\omega)$ stays inside the disc of radius 1 about 1 and never reaches 0.
+Let $`M`$ and $`\Delta`$ be stable, with $`\lvert M(j\omega)\Delta(j\omega)\rvert < 1`$ for every $`\omega`$, including in the limit $`\omega \to \infty`$. The loop of $`M`$ and $`\Delta`$ fails exactly where $`1 - M\Delta`$ has a zero in the closed right half-plane. Consider $`F_\lambda = 1 - \lambda M \Delta`$ for $`\lambda`$ from 0 to 1. Each $`F_\lambda`$ is stable, so it has no poles in the right half-plane, and on the imaginary axis $`\lvert F_\lambda - 1\rvert \le \lvert M\Delta\rvert < 1`$, so $`F_\lambda(j\omega)`$ stays inside the disc of radius 1 about 1 and never reaches 0.
 
-For $\lambda = 0$, $F_0 = 1$ has no zeros. The number of right-half-plane zeros of $F_\lambda$ equals the number of turns of $F_\lambda(j\omega)$ round 0 (the argument principle, as on the Nyquist card, with no poles to subtract). A curve confined to a disc that excludes 0 makes no turns, for every $\lambda$. So $F_1 = 1 - M\Delta$ has no right-half-plane zeros and the loop is stable.
+For $`\lambda = 0`$, $`F_0 = 1`$ has no zeros. The number of right-half-plane zeros of $`F_\lambda`$ equals the number of turns of $`F_\lambda(j\omega)`$ round 0 (the argument principle, as on the Nyquist card, with no poles to subtract). A curve confined to a disc that excludes 0 makes no turns, for every $`\lambda`$. So $`F_1 = 1 - M\Delta`$ has no right-half-plane zeros and the loop is stable.
 
-For the conveyor, $M\Delta = -WT\Delta$, and the internal stability of the nominal loop ([Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md)) makes every transfer function in the perturbed loop a stable combination of $S$, $T$ and $(1 - M\Delta)^{-1}$.
+For the conveyor, $`M\Delta = -WT\Delta`$, and the internal stability of the nominal loop ([Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md)) makes every transfer function in the perturbed loop a stable combination of $`S`$, $`T`$ and $`(1 - M\Delta)^{-1}`$.
 
 </details>
 
 ### Step 4: the rule is exact for the worst error, cautious for a particular one
 
-Suppose instead the peak reaches 1 at some $\omega^*$. Then an error of size 1 with exactly the right phase at $\omega^*$, $\Delta(j\omega^*) = 1/M(j\omega^*) = -1/(WT)(j\omega^*)$, makes $1 - M\Delta$ zero and puts the true loop gain $L_0(1 + W\Delta)$ on −1, and some stable $\Delta$ achieves it. So for "every error inside the envelope", the rule cannot be improved.
+Suppose instead the peak reaches 1 at some $`\omega^*`$. Then an error of size 1 with exactly the right phase at $`\omega^*`$, $`\Delta(j\omega^*) = 1/M(j\omega^*) = -1/(WT)(j\omega^*)`$, makes $`1 - M\Delta`$ zero and puts the true loop gain $`L_0(1 + W\Delta)`$ on −1, and some stable $`\Delta`$ achieves it. So for "every error inside the envelope", the rule cannot be improved.
 
-A delay can take any phase, so it comes close to that worst case. The relative error of a delay $\theta$ is $e^{-j\omega\theta} - 1$. The small gain rule with that as envelope certifies up to 19.38 ms; the loop's true delay margin, the largest delay it survives, is 20.94 ms, at 39.50 rad/s.
+A delay can take any phase, so it comes close to that worst case. The relative error of a delay $`\theta`$ is $`e^{-j\omega\theta} - 1`$. The small gain rule with that as envelope certifies up to 19.38 ms; the loop's true delay margin, the largest delay it survives, is 20.94 ms, at 39.50 rad/s.
 
 A heavier load cannot choose its phase. At each frequency its error has one definite phase, set by the physics, and for this loop that phase never lines up the loop gain with −1. The rule, using only the error's size, certifies loads up to 4.87 times the morning inertia.
 
-Routh's test on the closed-loop polynomial $J\tau_a s^3 + (J + b\tau_a)s^2 + (b + K_p)s + K_i$ ([Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md)) shows the loop is stable for every load: its decisive term is $J(b + K_p - \tau_a K_i) = 9.4J$ plus a positive constant. The rule is sufficient, never necessary; the extra caution is what it charges for not knowing the error's phase.
+Routh's test on the closed-loop polynomial $`J\tau_a s^3 + (J + b\tau_a)s^2 + (b + K_p)s + K_i`$ ([Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md)) shows the loop is stable for every load: its decisive term is $`J(b + K_p - \tau_a K_i) = 9.4J`$ plus a positive constant. The rule is sufficient, never necessary; the extra caution is what it charges for not knowing the error's phase.
 
 ### Step 5: lump or percentage
 
-The two forms describe the same error when $W_A = P_0 W$: then $W_A C S = W P_0 C S = W T$, and the certificate is 0.6288 either way.
+The two forms describe the same error when $`W_A = P_0 W`$: then $`W_A C S = W P_0 C S = W T`$, and the certificate is 0.6288 either way.
 
 They differ when the envelope is drawn crudely. A percentage suits errors that scale with the plant: inertia, a motor constant, a gain. A lump suits errors with a fixed size in physical units, such as an unmodelled resonance or a parallel leakage path. Bounding the inertia error by a flat lump of its peak size, 0.8330 (rad/s)/N·m at all frequencies, gives a certificate of 12.83: a failure, for a loop that is fine.
 
@@ -156,19 +168,19 @@ They differ when the envelope is drawn crudely. A percentage suits errors that s
 
 ## Worked numbers, by hand
 
-At the peak frequency, $\omega^*$ = 35.60 rad/s, found by sweeping 2,001 frequencies from 0.01 to 1,000 rad/s:
+At the peak frequency, $`\omega^*`$ = 35.60 rad/s, found by sweeping 2,001 frequencies from 0.01 to 1,000 rad/s:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| belt factor $\lvert J_0 j\omega + b\rvert$ | $\sqrt{0.4^2 + (0.2 \times 35.60)^2}$ | 7.1307 |
-| drive factor $\lvert \tau_a j\omega + 1\rvert$ | $\sqrt{1 + (0.02 \times 35.60)^2}$ | 1.2275 |
-| controller $\lvert C(j\omega)\rvert$ | $\sqrt{10^2 + (50 / 35.60)^2}$ | 10.0982 |
-| loop gain size $\lvert L\rvert$ | 10.0982 / (7.1307 × 1.2275) | 1.1536 |
-| loop gain phase | $-\arctan\frac{50}{10 \times 35.60} - \arctan\frac{0.2 \times 35.60}{0.4} - \arctan(0.02 \times 35.60)$ | −130.2286° |
-| distance to −1, $\lvert 1 + L\rvert$ | $\lvert 1 + 1.1536\,e^{-j\,130.2286^\circ}\rvert$ | 0.9169 |
-| $\lvert T\rvert$ | 1.1536 / 0.9169 | 1.2582 |
-| envelope $\lvert W\rvert$ | $0.5 \times 35.60 / \sqrt{35.60^2 + 1}$ | 0.4998 |
-| **certificate** $\lVert WT\rVert_\infty$ | 0.4998 × 1.2582 | **0.6288** |
+| belt factor $`\lvert J_0 j\omega + b\rvert`$ | $`\sqrt{0.4^2 + (0.2 \times 35.60)^2}`$ | 7.1307 |
+| drive factor $`\lvert \tau_a j\omega + 1\rvert`$ | $`\sqrt{1 + (0.02 \times 35.60)^2}`$ | 1.2275 |
+| controller $`\lvert C(j\omega)\rvert`$ | $`\sqrt{10^2 + (50 / 35.60)^2}`$ | 10.0982 |
+| loop gain size $`\lvert L\rvert`$ | 10.0982 / (7.1307 × 1.2275) | 1.1536 |
+| loop gain phase | $`-\arctan\frac{50}{10 \times 35.60} - \arctan\frac{0.2 \times 35.60}{0.4} - \arctan(0.02 \times 35.60)`$ | −130.2286° |
+| distance to −1, $`\lvert 1 + L\rvert`$ | $`\lvert 1 + 1.1536\,e^{-j\,130.2286^\circ}\rvert`$ | 0.9169 |
+| $`\lvert T\rvert`$ | 1.1536 / 0.9169 | 1.2582 |
+| envelope $`\lvert W\rvert`$ | $`0.5 \times 35.60 / \sqrt{35.60^2 + 1}`$ | 0.4998 |
+| **certificate** $`\lVert WT\rVert_\infty`$ | 0.4998 × 1.2582 | **0.6288** |
 | room to spare | 1 / 0.6288 | 1.590 |
 
 The speed loop stays stable at every load from 0.20 to 0.40 kg·m², and would stay stable for any error up to 1.59 times the envelope.
@@ -179,9 +191,9 @@ Checked against the belt itself. With the full load, the rightmost closed-loop p
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Test the envelope against the loop gain $L$ instead of $T$ | peak $\lvert WL\rvert$ = 62.50: "fails" | The error sees $L/(1+L)$, not $L$. At low frequency $L$ is huge but $T$ is near 1: feedback absorbs slow errors |
-| Bound the inertia error by a flat lump of its peak size | 0.8330 (rad/s)/N·m everywhere, certificate 12.83: "fails" | The true lump is small at high frequency, where $CS$ is large; a flat envelope charges the worst size at every frequency |
-| Leave a 25 ms fieldbus delay out of the envelope | certificate 0.6288 "safe"; truth: pole at +2.2098 ± 37.2618j /s | The hypothesis failed: the delay's error is not inside $W$, and 25 ms is past the 20.94 ms delay margin |
+| Test the envelope against the loop gain $`L`$ instead of $`T`$ | peak $`\lvert WL\rvert`$ = 62.50: "fails" | The error sees $`L/(1+L)`$, not $`L`$. At low frequency $`L`$ is huge but $`T`$ is near 1: feedback absorbs slow errors |
+| Bound the inertia error by a flat lump of its peak size | 0.8330 (rad/s)/N·m everywhere, certificate 12.83: "fails" | The true lump is small at high frequency, where $`CS`$ is large; a flat envelope charges the worst size at every frequency |
+| Leave a 25 ms fieldbus delay out of the envelope | certificate 0.6288 "safe"; truth: pole at +2.2098 ± 37.2618j /s | The hypothesis failed: the delay's error is not inside $`W`$, and 25 ms is past the 20.94 ms delay margin |
 | Read a failed certificate as instability: load ×5 | exact envelope gives above 1 (the limit is ×4.87); truth: pole at −5.8957 ± 5.4766j /s, stable | The rule is sufficient, not necessary |
 
 ---
@@ -190,11 +202,11 @@ Checked against the belt itself. With the full load, the rightmost closed-loop p
 
 The code reaches the verdict by three independent roads.
 
-- Road 1 sweeps frequency, finds the peak of $\lvert WT\rvert$ by a coarse grid and then golden-section search (narrowing an interval by a fixed ratio each time), and also checks that the envelope covers 21 loads between 0.20 and 0.40 kg·m².
+- Road 1 sweeps frequency, finds the peak of $`\lvert WT\rvert`$ by a coarse grid and then golden-section search (narrowing an interval by a fixed ratio each time), and also checks that the envelope covers 21 loads between 0.20 and 0.40 kg·m².
 - Road 2 finds the closed-loop poles of the true belt at several loads, by Durand-Kerner iteration (an update that moves all of a polynomial's roots at once), with no frequency response at all.
-- Road 3 simulates the loop with fourth-order Runge-Kutta (RK4) steps: a sine wave at the peak frequency measures $\lvert T\rvert$ in the time domain, and speed steps show both loads settle.
+- Road 3 simulates the loop with fourth-order Runge-Kutta (RK4) steps: a sine wave at the peak frequency measures $`\lvert T\rvert`$ in the time domain, and speed steps show both loads settle.
 
-For the delay, Newton's method finds the closed-loop pole of the delay equation (it contains $e^{-s\theta}$, so it is not a polynomial), confirming the delay margin and the 25 ms instability. Asserts compare the roads with each other.
+For the delay, Newton's method finds the closed-loop pole of the delay equation (it contains $`e^{-s\theta}`$, so it is not a polynomial), confirming the delay margin and the 25 ms instability. Asserts compare the roads with each other.
 
 ### Python
 
@@ -517,11 +529,11 @@ ALL CHECKS PASS
 
 Lean proves the small gain rule's algebra at a single frequency, and checks the conveyor's envelope and Routh's decisive term exactly.
 
-- Suppose the model's loop gain $L_0$ never touches −1, $\lvert W T\rvert < 1$ and $\lvert\Delta\rvert \le 1$ at every frequency. Then the true loop gain $L_0(1 + W\Delta)$ never reaches −1.
-- Take the setpoint at zero, $u = -C y$, $y = P_0 u + P_0 W p$, and $L_0$ not −1. Then $u = -W T\,p$: the error sees the rest of the loop as one block.
-- Suppose $L_0$ is not −1 and $\lvert W T\rvert = 1$ at some frequency. Then an error of size exactly 1, with the right phase, puts $L_0(1 + W\Delta)$ on −1.
-- Take $J_0$ = 0.20 and $J$ = 0.40 kg·m², with $b$ = 0.40. Then the percentage error $(J_0 - J)s/(Js + b)$ is $-W(s)$, so its size is exactly the envelope.
-- Take the card's $b$, $K_p$, $\tau_a$ and $K_i$, and any load $J$. Then Routh's decisive term is $9.4J$ plus a positive constant.
+- Suppose the model's loop gain $`L_0`$ never touches −1, $`\lvert W T\rvert < 1`$ and $`\lvert\Delta\rvert \le 1`$ at every frequency. Then the true loop gain $`L_0(1 + W\Delta)`$ never reaches −1.
+- Take the setpoint at zero, $`u = -C y`$, $`y = P_0 u + P_0 W p`$, and $`L_0`$ not −1. Then $`u = -W T\,p`$: the error sees the rest of the loop as one block.
+- Suppose $`L_0`$ is not −1 and $`\lvert W T\rvert = 1`$ at some frequency. Then an error of size exactly 1, with the right phase, puts $`L_0(1 + W\Delta)`$ on −1.
+- Take $`J_0`$ = 0.20 and $`J`$ = 0.40 kg·m², with $`b`$ = 0.40. Then the percentage error $`(J_0 - J)s/(Js + b)`$ is $`-W(s)`$, so its size is exactly the envelope.
+- Take the card's $`b`$, $`K_p`$, $`\tau_a`$ and $`K_i`$, and any load $`J`$. Then Routh's decisive term is $`9.4J`$ plus a positive constant.
 
 Lean works one frequency at a time; the turn count, the sweeps, the poles and the simulations are left to the Python and Rust checks.
 
@@ -635,7 +647,7 @@ example (J : ℚ) :
 
 > [!TIP]
 > **Try changing**
-> - Guess first: double both controller gains, `Kp` to 20 and `Ki` to 100. Does the certificate get better or worse? Worse: 0.8125. A harder-working loop has a taller $T$ peak and less room for error.
+> - Guess first: double both controller gains, `Kp` to 20 and `Ki` to 100. Does the certificate get better or worse? Worse: 0.8125. A harder-working loop has a taller $`T`$ peak and less room for error.
 > - Guess first: halve them, to 5 and 25. The certificate improves to 0.5578: a gentler loop leaves more room for error.
 > - Guess first: draw the exact envelope for a load that triples, `Wk(s, 3)`, in place of the 50% one. The certificate is 0.8386, still below 1.
 > - Guess first: in the delay search, how close does the small gain rule come to the true limit? Close: 19.38 ms certified against 20.94 ms, because a delay can take any phase.
@@ -647,7 +659,7 @@ example (J : ℚ) :
 > [!warning]
 > **Treating the certificate as a fact about the machine.** It is a fact about the envelope. It guarantees stability for every error inside it and says nothing about errors outside it. The conveyor's certificate, 0.6288, is unchanged by a 25 ms delay in the speed sensor, and with that delay the empty belt oscillates, its pole at +2.2098 ± 37.2618j /s. The work is in drawing the envelope honestly: every load, every delay, every unmodelled lag.
 >
-> - **Using $L$ where $T$ belongs.** The error sees the closed loop. Testing $\lvert WL\rvert$ gives 62.50 and condemns a good loop.
+> - **Using $`L`$ where $`T`$ belongs.** The error sees the closed loop. Testing $`\lvert WL\rvert`$ gives 62.50 and condemns a good loop.
 > - **Reading "fails" as "unstable".** Above 1 means "not guaranteed". The belt is stable at five times the load, where the rule has already given up at 4.87.
 > - **A flat bound on a shaped error.** Charging the peak lump, 0.8330 (rad/s)/N·m, at every frequency turns 0.6288 into 12.83.
 > - **Margins one at a time.** A gain margin and a phase margin each assume the other quantity is exact; the envelope covers size and phase errors together at every frequency.
@@ -659,23 +671,23 @@ example (J : ℚ) :
 - **Conveyors, winders and packaging lines.** Loads change through the shift. One controller certified across the whole range avoids retuning, and the certificate says how much more change, here a factor of 1.59, is safe.
 - **Drives on a network.** Speed and position often arrive over a fieldbus with a few milliseconds of delay. The small gain rule with a delay envelope certified 19.38 ms here, close to the true limit of 20.94 ms.
 - **Robot arms.** A gripped payload changes the arm's inertia by a percentage, which is the multiplicative form; when the percentage is too large for one controller, gains are scheduled by payload ([Adapting as you go](04-gain-scheduling-and-adaptive-control.md)).
-- **Multivariable plants.** Distillation columns and aircraft have several inputs and outputs; $\lvert\cdot\rvert$ becomes the largest singular value $\bar\sigma$, and the same rule certifies the loop.
+- **Multivariable plants.** Distillation columns and aircraft have several inputs and outputs; $`\lvert\cdot\rvert`$ becomes the largest singular value $`\bar\sigma`$, and the same rule certifies the loop.
 - **Nonlinear parts.** A part whose output never exceeds its input in size, such as a saturation, has gain at most 1, so the rule applies to it too; [Passivity](05-passivity-and-absolute-stability.md) gives a sharper test for parts that only absorb energy.
 
 > **Say it back**
-> A model is wrong, so write the error down as an envelope: a percentage of the plant or an added lump, sized at every frequency. Pull the error out of the loop: it sees the rest as one block, $-WT$ for a percentage. If that block's gain stays below 1 at every frequency, no signal can build up, so every error inside the envelope leaves the loop stable. The conveyor's certificate is 0.6288, so a load that doubles is safe with room to spare. The rule is exact for the worst error of that size, cautious for a particular one, and blind to errors left out of the envelope.
+> A model is wrong, so write the error down as an envelope: a percentage of the plant or an added lump, sized at every frequency. Pull the error out of the loop: it sees the rest as one block, $`-WT`$ for a percentage. If that block's gain stays below 1 at every frequency, no signal can build up, so every error inside the envelope leaves the loop stable. The conveyor's certificate is 0.6288, so a load that doubles is safe with room to spare. The rule is exact for the worst error of that size, cautious for a particular one, and blind to errors left out of the envelope.
 
 ---
 
 ## What this builds on
 
 - [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the loop fails where its gain reaches −1, and the turn count that proves the small gain theorem.
-- [Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md): $S$ and $T$, internal stability, and the peak of $\lvert S\rvert$ as distance to −1.
-- [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): the largest stretch of a matrix, which replaces $\lvert\cdot\rvert$ when the plant has several inputs and outputs.
+- [Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md): $`S`$ and $`T`$, internal stability, and the peak of $`\lvert S\rvert`$ as distance to −1.
+- [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): the largest stretch of a matrix, which replaces $`\lvert\cdot\rvert`$ when the plant has several inputs and outputs.
 
 ## Where this goes next
 
-- [Robust tests](02-robust-stability-and-robust-performance.md): from "stays stable" to "still performs", with weights on $S$ and $T$ tested together for every plant in the family.
+- [Robust tests](02-robust-stability-and-robust-performance.md): from "stays stable" to "still performs", with weights on $`S`$ and $`T`$ tested together for every plant in the family.
 
 The certificate checks a controller someone already designed; how to choose the controller that makes the worst-case gain as small as possible is the question [H-infinity design](03-h-infinity-control-in-outline.md) takes up.
 
@@ -686,6 +698,6 @@ The certificate checks a controller someone already designed; how to choose the 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Zames, George. "On the Input-Output Stability of Time-Varying Nonlinear Feedback Systems, Part One: Conditions Derived Using Concepts of Loop Gain, Conicity, and Positivity." *IEEE Transactions on Automatic Control* 11, no. 2 (1966): 228–238. [doi:10.1109/TAC.1966.1098316](https://doi.org/10.1109/TAC.1966.1098316). The small gain theorem in its original, operator form.
-- Doyle, John C., and Gunter Stein. "Multivariable Feedback Design: Concepts for a Classical/Modern Synthesis." *IEEE Transactions on Automatic Control* 26, no. 1 (1981): 4–16. [doi:10.1109/TAC.1981.1102555](https://doi.org/10.1109/TAC.1981.1102555). Frequency-shaped envelopes for model error and the test $\bar\sigma(WT) < 1$.
+- Doyle, John C., and Gunter Stein. "Multivariable Feedback Design: Concepts for a Classical/Modern Synthesis." *IEEE Transactions on Automatic Control* 26, no. 1 (1981): 4–16. [doi:10.1109/TAC.1981.1102555](https://doi.org/10.1109/TAC.1981.1102555). Frequency-shaped envelopes for model error and the test $`\bar\sigma(WT) < 1`$.
 - Skogestad, Sigurd, and Ian Postlethwaite. *Multivariable Feedback Control: Analysis and Design*, 2nd ed. Wiley, 2005. [Publisher's page](https://www.wiley.com/en-us/Multivariable+Feedback+Control%3A+Analysis+and+Design%2C+2nd+Edition-p-9780470011683). Additive and multiplicative uncertainty, the M–Δ structure, and how to fit an envelope to a family of plants.
 - Åström, Karl J., and Richard M. Murray. *Feedback Systems: An Introduction for Scientists and Engineers*, 2nd ed. Princeton University Press, 2021. [Publisher's page](https://press.princeton.edu/books/hardcover/9780691193984/feedback-systems). The robustness chapter: uncertainty descriptions, the disc picture on the Nyquist plot, and robust stability for unmodelled delays.

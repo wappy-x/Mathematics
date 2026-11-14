@@ -28,40 +28,44 @@ To scale, 160 pixels per unit. The black arrow is the state. The two grey arrows
 
 Notation first, in words.
 
-- $\psi$, read "psi", is the **state**: everything that can be known about the system, as a vector. When the state describes a wave spread over space, as for an electron in a box, $\psi$ is called the **wavefunction**.
-- A hat on a letter, as in $\hat A$, marks an **operator**: a matrix that stands for something you can measure. In the statistics wing a hat meant an estimate; here it means an operator.
-- $\hbar$, read "h-bar", is the reduced Planck constant, the exchange rate between a frequency and an energy.
+- $`\psi`$, read "psi", is the **state**: everything that can be known about the system, as a vector. When the state describes a wave spread over space, as for an electron in a box, $`\psi`$ is called the **wavefunction**.
+- A hat on a letter, as in $`\hat A`$, marks an **operator**: a matrix that stands for something you can measure. In the statistics wing a hat meant an estimate; here it means an operator.
+- $`\hbar`$, read "h-bar", is the reduced Planck constant, the exchange rate between a frequency and an energy.
 - The star is the conjugate transpose from [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): flip a column into a row and conjugate every entry.
 
-$$\hat A\,u_k = \lambda_k\,u_k, \qquad p_k = \bigl\lvert u_k^*\,\psi\bigr\rvert^2, \qquad \langle\hat A\rangle = \sum_k \lambda_k\,p_k = \psi^*\hat A\,\psi$$
+```math
+\hat A\,u_k = \lambda_k\,u_k, \qquad p_k = \bigl\lvert u_k^*\,\psi\bigr\rvert^2, \qquad \langle\hat A\rangle = \sum_k \lambda_k\,p_k = \psi^*\hat A\,\psi
+```
 
-**Read it aloud:** the device's eigenvalues are the readings it can show; the chance of reading $\lambda_k$ is the squared size of the state's component along that reading's eigenvector; the average reading over many repeats is the state, times the matrix, times the state again.
+**Read it aloud:** the device's eigenvalues are the readings it can show; the chance of reading $`\lambda_k`$ is the squared size of the state's component along that reading's eigenvector; the average reading over many repeats is the state, times the matrix, times the state again.
 
-For a polariser with its pass axis at angle $\alpha$, reading $+1$ for "pass" and $-1$ for "blocked", the matrix is
+For a polariser with its pass axis at angle $`\alpha`$, reading $`+1`$ for "pass" and $`-1`$ for "blocked", the matrix is
 
-$$\hat A_\alpha = \begin{pmatrix}\cos 2\alpha & \sin 2\alpha \\ \sin 2\alpha & -\cos 2\alpha\end{pmatrix}, \qquad \hat A_{45^\circ} = \begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix}$$
+```math
+\hat A_\alpha = \begin{pmatrix}\cos 2\alpha & \sin 2\alpha \\ \sin 2\alpha & -\cos 2\alpha\end{pmatrix}, \qquad \hat A_{45^\circ} = \begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\psi$, $\psi_c$, $i$ | the state: a unit column of complex numbers; $\psi_c$ is a second state; $i$ is the square root of −1 | (0.8660, 0.5000), the 30° photon; (0.8660, 0.5000$i$) | — |
-| $e_H$, $e_V$ | the basis: horizontal (1, 0) and vertical (0, 1) | the lab's two reference directions | — |
-| $c_H$, $c_V$ | amplitudes: the state's entries in that basis, $\psi = c_H e_H + c_V e_V$ | 0.8660 and 0.5000 | more horizontal light |
-| $\theta$, $\alpha$ | the photon's polarisation angle; the device's pass-axis angle | 30° and 45° | the pass chance follows $\cos^2(\alpha - \theta)$ |
-| $\hat A$, $\hat A_\alpha$ | the observable: a Hermitian matrix for the device | `[[0, 1], [1, 0]]` at 45° | — |
-| $\lambda_k$, $k$ | the eigenvalues, one per exit $k$ (+ or −): the only readings | +1 pass, −1 blocked | a different scale of readings |
-| $u_k$ | the eigenvectors: the state each exit leaves behind | (0.7071, 0.7071) and (0.7071, −0.7071) | — |
-| $p_k$ | the chance of reading $\lambda_k$ | 0.9330 and 0.0670 | — |
-| $\langle\hat A\rangle$ | the expected value: the long-run average reading | 0.8660 | rises as $\theta$ nears $\alpha$ |
-| $u^*\psi$, $\langle u\vert\psi\rangle$ | the complex dot product; physicists write it with angle brackets | 0.9659 on the pass exit | — |
-| $\hbar$, $\omega$, $E$ | reduced Planck constant; angular frequency; photon energy $E = \hbar\omega$ | 1.054572 × 10⁻³⁴ J s; 2.9758 × 10¹⁵ rad/s; 3.1381 × 10⁻¹⁹ J | bluer light, more energy per photon |
-| $N$ | a look-alike matrix that is not Hermitian | `[[1, 2], [0, -1]]` | — |
+| $`\psi`$, $`\psi_c`$, $`i`$ | the state: a unit column of complex numbers; $`\psi_c`$ is a second state; $`i`$ is the square root of −1 | (0.8660, 0.5000), the 30° photon; (0.8660, 0.5000$`i`$) | — |
+| $`e_H`$, $`e_V`$ | the basis: horizontal (1, 0) and vertical (0, 1) | the lab's two reference directions | — |
+| $`c_H`$, $`c_V`$ | amplitudes: the state's entries in that basis, $`\psi = c_H e_H + c_V e_V`$ | 0.8660 and 0.5000 | more horizontal light |
+| $`\theta`$, $`\alpha`$ | the photon's polarisation angle; the device's pass-axis angle | 30° and 45° | the pass chance follows $`\cos^2(\alpha - \theta)`$ |
+| $`\hat A`$, $`\hat A_\alpha`$ | the observable: a Hermitian matrix for the device | `[[0, 1], [1, 0]]` at 45° | — |
+| $`\lambda_k`$, $`k`$ | the eigenvalues, one per exit $`k`$ (+ or −): the only readings | +1 pass, −1 blocked | a different scale of readings |
+| $`u_k`$ | the eigenvectors: the state each exit leaves behind | (0.7071, 0.7071) and (0.7071, −0.7071) | — |
+| $`p_k`$ | the chance of reading $`\lambda_k`$ | 0.9330 and 0.0670 | — |
+| $`\langle\hat A\rangle`$ | the expected value: the long-run average reading | 0.8660 | rises as $`\theta`$ nears $`\alpha`$ |
+| $`u^*\psi`$, $`\langle u\vert\psi\rangle`$ | the complex dot product; physicists write it with angle brackets | 0.9659 on the pass exit | — |
+| $`\hbar`$, $`\omega`$, $`E`$ | reduced Planck constant; angular frequency; photon energy $`E = \hbar\omega`$ | 1.054572 × 10⁻³⁴ J s; 2.9758 × 10¹⁵ rad/s; 3.1381 × 10⁻¹⁹ J | bluer light, more energy per photon |
+| $`N`$ | a look-alike matrix that is not Hermitian | `[[1, 2], [0, -1]]` | — |
 
 ### When it holds
 
 - **The state is one unit vector.** A laser or a single-photon source gives one. Unpolarised light, such as sunlight, is a random mix: it passes half the time whatever optics come first, and no single vector does that, so it needs a density matrix (a matrix that describes a random mix of states), which this outline leaves out. Circular light, equal horizontal and vertical swings a quarter cycle out of step, passes with chance 0.5000 at every polariser axis too, but a quarter-wave plate (a crystal that delays one direction of swing by a quarter cycle) turns it into a straight-line state that the right polariser passes for certain.
-- **The device is Hermitian: it equals its own conjugate transpose.** Then its readings are real and its exits are perpendicular. Use the non-Hermitian $N$ and the "chances" add to 0.8170, while the "average reading" comes out at 1.3660, above the largest reading the device can show.
+- **The device is Hermitian: it equals its own conjugate transpose.** Then its readings are real and its exits are perpendicular. Use the non-Hermitian $`N`$ and the "chances" add to 0.8170, while the "average reading" comes out at 1.3660, above the largest reading the device can show.
 - **The device is ideal.** A real splitter absorbs a little light and leaks a little into the wrong exit; a real detector misses some photons. Multiply by measured efficiencies afterwards; the model gives the physics ceiling.
-- **Each photon is measured once, fresh.** The chances are per photon. A count over a second fluctuates around $p_k$ times the number sent, by about the square root of (number sent × $p_k$ × $(1 - p_k)$): 250 photons for the pass count.
+- **Each photon is measured once, fresh.** The chances are per photon. A count over a second fluctuates around $`p_k`$ times the number sent, by about the square root of (number sent × $`p_k`$ × $`(1 - p_k)`$): 250 photons for the pass count.
 - **Nothing changes during the measurement.** How a state moves between measurements is [Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md).
 
 ---
@@ -74,43 +78,47 @@ A polarising splitter has two exits, and a photon polarised exactly along one ax
 
 ### Step 1: the state is a unit vector of amplitudes
 
-Pick a basis: here horizontal $e_H = (1, 0)$ and vertical $e_V = (0, 1)$. A photon at angle $\theta$ is $\psi = (\cos\theta, \sin\theta)$, so the 30° photon is (0.8660, 0.5000). Its length squared, $\psi^*\psi = 0.75 + 0.25$, is 1.0000. Every state is scaled to length 1.
+Pick a basis: here horizontal $`e_H = (1, 0)`$ and vertical $`e_V = (0, 1)`$. A photon at angle $`\theta`$ is $`\psi = (\cos\theta, \sin\theta)`$, so the 30° photon is (0.8660, 0.5000). Its length squared, $`\psi^*\psi = 0.75 + 0.25`$, is 1.0000. Every state is scaled to length 1.
 
-Entries may be complex. Elliptically polarised light, where the vertical swing runs a quarter cycle out of step with the horizontal one, is $\psi_c = (0.8660, 0.5000\,i)$. The factor $i$ records that delay. Multiplying the whole vector by one complex number of size 1 changes nothing measurable. Changing one entry's phase against the other does, as Step 5 shows.
+Entries may be complex. Elliptically polarised light, where the vertical swing runs a quarter cycle out of step with the horizontal one, is $`\psi_c = (0.8660, 0.5000\,i)`$. The factor $`i`$ records that delay. Multiplying the whole vector by one complex number of size 1 changes nothing measurable. Changing one entry's phase against the other does, as Step 5 shows.
 
 ### Step 2: a device becomes a Hermitian matrix
 
-Give each exit a reading $\lambda_k$ and a unit direction $u_k$, the directions perpendicular. Package them as one matrix:
+Give each exit a reading $`\lambda_k`$ and a unit direction $`u_k`$, the directions perpendicular. Package them as one matrix:
 
-$$\hat A = \lambda_+\,u_+u_+^* + \lambda_-\,u_-u_-^*$$
+```math
+\hat A = \lambda_+\,u_+u_+^* + \lambda_-\,u_-u_-^*
+```
 
-Each $u_k u_k^*$ is a projector: it keeps a vector's piece along $u_k$ and drops the rest. So $\hat A u_+ = \lambda_+ u_+$: the directions are eigenvectors and the readings are eigenvalues. The star of each term is itself, so $\hat A^* = \hat A$: the matrix is Hermitian.
+Each $`u_k u_k^*`$ is a projector: it keeps a vector's piece along $`u_k`$ and drops the rest. So $`\hat A u_+ = \lambda_+ u_+`$: the directions are eigenvectors and the readings are eigenvalues. The star of each term is itself, so $`\hat A^* = \hat A`$: the matrix is Hermitian.
 
 The road also runs backwards. The spectral theorem says every Hermitian matrix is exactly such a package, with real eigenvalues on perpendicular eigenvectors ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md), with every transpose starred). So "observable" and "Hermitian matrix" mean the same thing.
 
-For the polariser, $u_+ = (\cos\alpha, \sin\alpha)$ and $u_- = (-\sin\alpha, \cos\alpha)$. Multiplying out $u_+u_+^* - u_-u_-^*$ entry by entry gives $\cos^2\alpha - \sin^2\alpha = \cos 2\alpha$ on the top left and $2\sin\alpha\cos\alpha = \sin 2\alpha$ off the diagonal: the matrix $\hat A_\alpha$ above. The doubled angle is not a choice. A polariser turned through 180° is the same polariser.
+For the polariser, $`u_+ = (\cos\alpha, \sin\alpha)`$ and $`u_- = (-\sin\alpha, \cos\alpha)`$. Multiplying out $`u_+u_+^* - u_-u_-^*`$ entry by entry gives $`\cos^2\alpha - \sin^2\alpha = \cos 2\alpha`$ on the top left and $`2\sin\alpha\cos\alpha = \sin 2\alpha`$ off the diagonal: the matrix $`\hat A_\alpha`$ above. The doubled angle is not a choice. A polariser turned through 180° is the same polariser.
 
 ### Step 3: finding the readings from the matrix
 
-Given only the matrix, the readings come from its eigenvalues. For a 2 × 2 Hermitian matrix with diagonal $a$, $d$ and corner $b$, they are $\tfrac12(a + d) \pm \sqrt{\tfrac14(a - d)^2 + \lvert b\rvert^2}$, and $(b, \lambda - a)$ is an eigenvector. For $\hat A_{45^\circ}$, $a = d = 0$ and $b = 1$, so the readings are +1 and −1, with eigenvectors (1, 1) and (1, −1), scaled to length 1 as (0.7071, 0.7071) and (0.7071, −0.7071). The square root is of a sum of squares, so it is never imaginary: real readings, as Step 2 promised.
+Given only the matrix, the readings come from its eigenvalues. For a 2 × 2 Hermitian matrix with diagonal $`a`$, $`d`$ and corner $`b`$, they are $`\tfrac12(a + d) \pm \sqrt{\tfrac14(a - d)^2 + \lvert b\rvert^2}`$, and $`(b, \lambda - a)`$ is an eigenvector. For $`\hat A_{45^\circ}`$, $`a = d = 0`$ and $`b = 1`$, so the readings are +1 and −1, with eigenvectors (1, 1) and (1, −1), scaled to length 1 as (0.7071, 0.7071) and (0.7071, −0.7071). The square root is of a sum of squares, so it is never imaginary: real readings, as Step 2 promised.
 
 ### Step 4: the Born rule, and why the chances add to 1
 
-The chance of reading $\lambda_k$ is $p_k = \lvert u_k^*\psi\rvert^2$, the **Born rule**. Here $u_+^*\psi = 0.7071 \times 0.8660 + 0.7071 \times 0.5000 = 0.9659$, so $p_+ = 0.9330$.
+The chance of reading $`\lambda_k`$ is $`p_k = \lvert u_k^*\psi\rvert^2`$, the **Born rule**. Here $`u_+^*\psi = 0.7071 \times 0.8660 + 0.7071 \times 0.5000 = 0.9659`$, so $`p_+ = 0.9330`$.
 
-The two eigenvectors are perpendicular unit vectors, so they are a new basis, and the amplitudes $u_+^*\psi$ and $u_-^*\psi$ are $\psi$'s entries in it. Changing to a perpendicular basis keeps length, so $p_+ + p_- = \psi^*\psi = 1$. For the photon, $0.9330 + 0.0670 = 1.0000$.
+The two eigenvectors are perpendicular unit vectors, so they are a new basis, and the amplitudes $`u_+^*\psi`$ and $`u_-^*\psi`$ are $`\psi`$'s entries in it. Changing to a perpendicular basis keeps length, so $`p_+ + p_- = \psi^*\psi = 1`$. For the photon, $`0.9330 + 0.0670 = 1.0000`$.
 
 ### Step 5: the average reading is the matrix sandwiched by the state
 
-Write $\psi$ in the eigenvector basis and apply $\hat A$: each piece is multiplied by its reading. Then
+Write $`\psi`$ in the eigenvector basis and apply $`\hat A`$: each piece is multiplied by its reading. Then
 
-$$\psi^*\hat A\,\psi = \sum_k \lambda_k\,(\psi^* u_k)(u_k^*\psi) = \sum_k \lambda_k\,\lvert u_k^*\psi\rvert^2 = \sum_k \lambda_k\,p_k$$
+```math
+\psi^*\hat A\,\psi = \sum_k \lambda_k\,(\psi^* u_k)(u_k^*\psi) = \sum_k \lambda_k\,\lvert u_k^*\psi\rvert^2 = \sum_k \lambda_k\,p_k
+```
 
-For the photon, $\psi^*\hat A_{45^\circ}\psi = 2 \times 0.8660 \times 0.5000 = 0.8660$, and $(+1)(0.9330) + (-1)(0.0670) = 0.8660$. The sandwich needs no eigenvectors.
+For the photon, $`\psi^*\hat A_{45^\circ}\psi = 2 \times 0.8660 \times 0.5000 = 0.8660`$, and $`(+1)(0.9330) + (-1)(0.0670) = 0.8660`$. The sandwich needs no eigenvectors.
 
-The angles give a third road. $u_+^*\psi = \cos\alpha\cos\theta + \sin\alpha\sin\theta = \cos(\alpha - \theta)$, so $p_+ = \cos^2(\alpha - \theta) = \cos^2 15^\circ = 0.9330$. That is **Malus's law** for a light beam's power through a polariser, measured long before photons were known. The quantum rule reproduces it photon by photon.
+The angles give a third road. $`u_+^*\psi = \cos\alpha\cos\theta + \sin\alpha\sin\theta = \cos(\alpha - \theta)`$, so $`p_+ = \cos^2(\alpha - \theta) = \cos^2 15^\circ = 0.9330`$. That is **Malus's law** for a light beam's power through a polariser, measured long before photons were known. The quantum rule reproduces it photon by photon.
 
-Now the complex state. In the horizontal–vertical basis $\psi_c$ gives 0.7500 and 0.2500, the same as $\psi$. At 45° it gives 0.5000, not 0.9330, and its average reading is 0.0000. The phase $i$ was invisible on one axis and decisive on another.
+Now the complex state. In the horizontal–vertical basis $`\psi_c`$ gives 0.7500 and 0.2500, the same as $`\psi`$. At 45° it gives 0.5000, not 0.9330, and its average reading is 0.0000. The phase $`i`$ was invisible on one axis and decisive on another.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -122,20 +130,20 @@ xychart-beta
     line [0.750, 0.717, 0.625, 0.500, 0.375, 0.283, 0.250, 0.283, 0.375, 0.500, 0.625, 0.717, 0.750]
 ```
 
-Orange: the 30° photon $\psi$, certain to pass at 30° and certain to be blocked at 120°. Green: the elliptical photon $\psi_c$, never certain at any angle. The two agree at 0° and 90°, the only axes a horizontal–vertical measurement uses.
+Orange: the 30° photon $`\psi`$, certain to pass at 30° and certain to be blocked at 120°. Green: the elliptical photon $`\psi_c`$, never certain at any angle. The two agree at 0° and 90°, the only axes a horizontal–vertical measurement uses.
 
 ### Step 6: after the reading, the state is the eigenvector
 
-A photon that leaves by the pass exit is now polarised at 45°: its state is $u_+$. Measure it again at 45° and it passes with chance 1. This collapse is a rule of the model, not a theorem. The section "What a measurement does to the state" shows the numbers it predicts.
+A photon that leaves by the pass exit is now polarised at 45°: its state is $`u_+`$. Measure it again at 45° and it passes with chance 1. This collapse is a rule of the model, not a theorem. The section "What a measurement does to the state" shows the numbers it predicts.
 
 <details>
 <summary>Detailed proof: real readings and perpendicular exits for any Hermitian matrix</summary>
 
-**Real readings.** Let $\hat A u = \lambda u$ with $u$ non-zero. Then $u^*\hat A u = \lambda\,u^*u$. The conjugate of the number $u^*\hat A u$ is $u^*\hat A^* u = u^*\hat A u$, so it is real, and $u^*u > 0$, so $\lambda$ is real.
+**Real readings.** Let $`\hat A u = \lambda u`$ with $`u`$ non-zero. Then $`u^*\hat A u = \lambda\,u^*u`$. The conjugate of the number $`u^*\hat A u`$ is $`u^*\hat A^* u = u^*\hat A u`$, so it is real, and $`u^*u > 0`$, so $`\lambda`$ is real.
 
-**Perpendicular exits.** Let $\hat A u = \lambda u$ and $\hat A w = \mu w$ with $\lambda \ne \mu$. Then $\mu\,w^*u = (\hat A w)^* u = w^*\hat A u = \lambda\,w^*u$, so $w^*u = 0$.
+**Perpendicular exits.** Let $`\hat A u = \lambda u`$ and $`\hat A w = \mu w`$ with $`\lambda \ne \mu`$. Then $`\mu\,w^*u = (\hat A w)^* u = w^*\hat A u = \lambda\,w^*u`$, so $`w^*u = 0`$.
 
-**Chances add to 1 in any dimension.** With perpendicular unit eigenvectors $u_1, \dots, u_n$, $\psi = \sum_k (u_k^*\psi)\,u_k$. Its length squared is $\sum_k \lvert u_k^*\psi\rvert^2$, because the cross terms $u_j^* u_k$ vanish. That sum is $\psi^*\psi = 1$.
+**Chances add to 1 in any dimension.** With perpendicular unit eigenvectors $`u_1, \dots, u_n`$, $`\psi = \sum_k (u_k^*\psi)\,u_k`$. Its length squared is $`\sum_k \lvert u_k^*\psi\rvert^2`$, because the cross terms $`u_j^* u_k`$ vanish. That sum is $`\psi^*\psi = 1`$.
 
 </details>
 
@@ -147,22 +155,22 @@ The 30° photon at a 45° polarising splitter, 1,000,000 photons a second.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| state $\psi$ | $(\cos 30^\circ, \sin 30^\circ)$ | (0.8660, 0.5000) |
-| length squared | $0.8660^2 + 0.5000^2$ | 1.0000 |
-| device $\hat A_{45^\circ}$ | $\cos 90^\circ = 0$, $\sin 90^\circ = 1$ | `[[0, 1], [1, 0]]` |
-| readings | $\pm\sqrt{0 + 1^2}$ | +1 and −1 |
-| eigenvectors | $(1, \pm 1)$ over $\sqrt 2$ | (0.7071, 0.7071), (0.7071, −0.7071) |
-| pass amplitude $u_+^*\psi$ | $0.7071 \times 0.8660 + 0.7071 \times 0.5000$ | 0.9659 |
-| blocked amplitude $u_-^*\psi$ | $0.7071 \times 0.8660 - 0.7071 \times 0.5000$ | 0.2588 |
-| chances | $0.9659^2$ and $0.2588^2$ | 0.9330 and 0.0670 |
-| expected value, by readings | $0.9330 - 0.0670$ | 0.8660 |
-| expected value, by sandwich | $2 \times 0.8660 \times 0.5000$ | 0.8660 |
-| counts per second | $1{,}000{,}000 \times 0.9330$ and $\times 0.0670$ | 933,013 and 66,987 |
-| **pass chance, Malus check** | $\cos^2(45^\circ - 30^\circ)$ | **0.9330** |
+| state $`\psi`$ | $`(\cos 30^\circ, \sin 30^\circ)`$ | (0.8660, 0.5000) |
+| length squared | $`0.8660^2 + 0.5000^2`$ | 1.0000 |
+| device $`\hat A_{45^\circ}`$ | $`\cos 90^\circ = 0`$, $`\sin 90^\circ = 1`$ | `[[0, 1], [1, 0]]` |
+| readings | $`\pm\sqrt{0 + 1^2}`$ | +1 and −1 |
+| eigenvectors | $`(1, \pm 1)`$ over $`\sqrt 2`$ | (0.7071, 0.7071), (0.7071, −0.7071) |
+| pass amplitude $`u_+^*\psi`$ | $`0.7071 \times 0.8660 + 0.7071 \times 0.5000`$ | 0.9659 |
+| blocked amplitude $`u_-^*\psi`$ | $`0.7071 \times 0.8660 - 0.7071 \times 0.5000`$ | 0.2588 |
+| chances | $`0.9659^2`$ and $`0.2588^2`$ | 0.9330 and 0.0670 |
+| expected value, by readings | $`0.9330 - 0.0670`$ | 0.8660 |
+| expected value, by sandwich | $`2 \times 0.8660 \times 0.5000`$ | 0.8660 |
+| counts per second | $`1{,}000{,}000 \times 0.9330`$ and $`\times 0.0670`$ | 933,013 and 66,987 |
+| **pass chance, Malus check** | $`\cos^2(45^\circ - 30^\circ)`$ | **0.9330** |
 
 So each photon passes with chance 0.9330, and the pass detector should log about 933,000 counts a second. A simulated run of 100,000 photons gave 93,305 passes, 0.9331, well inside its band of four standard errors, ±0.0032. A standard error is the typical random scatter of a measured fraction; it shrinks as one over the square root of the number of photons.
 
-The same splitter on a bright beam: red light of wavelength 633 nm has angular frequency $\omega$ = 2π × (speed of light) / (wavelength) = 2.9758 × 10¹⁵ rad/s. With $\hbar$ = 1.054572 × 10⁻³⁴ J s (the Planck constant over 2π, from its exact SI value in CODATA 2018), each photon carries $E = \hbar\omega$ = 3.1381 × 10⁻¹⁹ J, or 1.9587 eV (electronvolts: 1 eV is the energy one electron gains across 1 volt). A 1.000 mW beam is 3.1866 × 10¹⁵ photons a second, and 0.9330 mW leaves by the pass exit: Malus's law, one photon at a time.
+The same splitter on a bright beam: red light of wavelength 633 nm has angular frequency $`\omega`$ = 2π × (speed of light) / (wavelength) = 2.9758 × 10¹⁵ rad/s. With $`\hbar`$ = 1.054572 × 10⁻³⁴ J s (the Planck constant over 2π, from its exact SI value in CODATA 2018), each photon carries $`E = \hbar\omega`$ = 3.1381 × 10⁻¹⁹ J, or 1.9587 eV (electronvolts: 1 eV is the energy one electron gains across 1 volt). A 1.000 mW beam is 3.1866 × 10¹⁵ photons a second, and 0.9330 mW leaves by the pass exit: Malus's law, one photon at a time.
 
 ### What breaks if you drop a piece
 
@@ -170,9 +178,9 @@ The same splitter on a bright beam: red light of wavelength 633 nm has angular f
 | --- | --- | --- |
 | Use the amplitude, not its square | pass "chance" 0.9659; the two add to 1.2247 | Amplitudes add like sides of a right triangle, not like chances |
 | Write the state as (1.7321, 1) and skip scaling | pass "chance" 3.7321 | A state must have length 1 before the Born rule applies |
-| Leave out the conjugate: $\psi_c^T\hat A\psi_c$, a plain transpose $T$ | "average reading" 0.8660$i$ | Without the star the length can cancel; the right answer is 0.0000 |
-| Drop the phase, treating $\psi_c$ as (0.8660, 0.5000) | pass chance 0.9330, right answer 0.5000 | Relative phase is measurable along a tilted axis |
-| Use the non-Hermitian $N$ = `[[1, 2], [0, -1]]` as a device | "chances" add to 0.8170; "average" 1.3660 | Its eigenvectors are not perpendicular, so Pythagoras fails |
+| Leave out the conjugate: $`\psi_c^T\hat A\psi_c`$, a plain transpose $`T`$ | "average reading" 0.8660$`i`$ | Without the star the length can cancel; the right answer is 0.0000 |
+| Drop the phase, treating $`\psi_c`$ as (0.8660, 0.5000) | pass chance 0.9330, right answer 0.5000 | Relative phase is measurable along a tilted axis |
+| Use the non-Hermitian $`N`$ = `[[1, 2], [0, -1]]` as a device | "chances" add to 0.8170; "average" 1.3660 | Its eigenvectors are not perpendicular, so Pythagoras fails |
 
 ---
 
@@ -180,7 +188,7 @@ The same splitter on a bright beam: red light of wavelength 633 nm has angular f
 
 A photon at 30° meets a polariser at 120°, at right angles to it. It is blocked for certain: chance 0.0000. Now slip a 45° polariser in front. Adding a filter lets light through.
 
-At 45° a photon passes with chance 0.9330, and if it passes its state is now $u_+$, polarised at 45°. The 30° history is gone. At 120° it meets an axis 75° away from 45°, so it passes with chance $\cos^2 75^\circ$ = 0.0670.
+At 45° a photon passes with chance 0.9330, and if it passes its state is now $`u_+`$, polarised at 45°. The 30° history is gone. At 120° it meets an axis 75° away from 45°, so it passes with chance $`\cos^2 75^\circ`$ = 0.0670.
 
 | Stage | State going in | Chance of passing | Fraction still going |
 | --- | --- | --- | --- |
@@ -209,7 +217,7 @@ The best middle axis is 75°, halfway between, with a quarter of the photons thr
 
 ## Code, from first principles, and it actually runs
 
-The script builds the state and the polariser matrix, finds the eigenvalues and eigenvectors by the 2 × 2 quadratic written out, and applies the Born rule. Complex numbers are Python's built-in type and a small struct in Rust; nothing imported knows any quantum mechanics. It reaches the pass chance four independent ways: eigenvectors and the Born rule, the sandwich $\psi^*\hat A\psi$ against the reading-weighted average, Malus's law from the angles alone, and 100,000 photons simulated one by one with a SplitMix64 generator, seed 2026, the same in both languages. It also prints every other number on the card, including a second simulation (seed 7) for the polariser chain.
+The script builds the state and the polariser matrix, finds the eigenvalues and eigenvectors by the 2 × 2 quadratic written out, and applies the Born rule. Complex numbers are Python's built-in type and a small struct in Rust; nothing imported knows any quantum mechanics. It reaches the pass chance four independent ways: eigenvectors and the Born rule, the sandwich $`\psi^*\hat A\psi`$ against the reading-weighted average, Malus's law from the angles alone, and 100,000 photons simulated one by one with a SplitMix64 generator, seed 2026, the same in both languages. It also prints every other number on the card, including a second simulation (seed 7) for the polariser chain.
 
 ### Python
 
@@ -609,20 +617,20 @@ The two outputs are identical, digit for digit, including the simulated counts.
 
 Lean proves the measurement rule for every Hermitian matrix, Malus's law for every pair of angles, and the card's worked numbers.
 
-- Take an $n \times n$ Hermitian matrix with perpendicular unit eigenvectors $u_1, \dots, u_n$, and a unit state $\psi$. Then every reading $\lambda_k$ is real, and the chances $p_k$ add to 1.
-- Take the same matrix and state. Then the average reading $\sum_k \lambda_k\,p_k$ equals the sandwich $\psi^*\hat A\,\psi$.
-- Take a Hermitian $\hat A$ with $\hat A u = \lambda u$, $\hat A w = \mu w$ and $\lambda \ne \mu$. Then the exits are perpendicular: $w^* u = 0$.
-- Take a polariser at any angle $\alpha$. Then $\hat A_\alpha$ reads +1 on $u_+ = (\cos\alpha, \sin\alpha)$ and −1 on $u_- = (-\sin\alpha, \cos\alpha)$.
-- Take a photon at any angle $\theta$. Then its pass chance $(u_+^*\psi)^2$ is $\cos^2(\alpha - \theta)$, Malus's law.
+- Take an $`n \times n`$ Hermitian matrix with perpendicular unit eigenvectors $`u_1, \dots, u_n`$, and a unit state $`\psi`$. Then every reading $`\lambda_k`$ is real, and the chances $`p_k`$ add to 1.
+- Take the same matrix and state. Then the average reading $`\sum_k \lambda_k\,p_k`$ equals the sandwich $`\psi^*\hat A\,\psi`$.
+- Take a Hermitian $`\hat A`$ with $`\hat A u = \lambda u`$, $`\hat A w = \mu w`$ and $`\lambda \ne \mu`$. Then the exits are perpendicular: $`w^* u = 0`$.
+- Take a polariser at any angle $`\alpha`$. Then $`\hat A_\alpha`$ reads +1 on $`u_+ = (\cos\alpha, \sin\alpha)`$ and −1 on $`u_- = (-\sin\alpha, \cos\alpha)`$.
+- Take a photon at any angle $`\theta`$. Then its pass chance $`(u_+^*\psi)^2`$ is $`\cos^2(\alpha - \theta)`$, Malus's law.
 - The 45° splitter is Hermitian, reads +1 on (1, 1) and −1 on (1, −1), and those two exits are perpendicular.
-- The 30° photon $(\sqrt 3/2, 1/2)$ has length 1.
-- Take the 30° photon at the 45° splitter. Then the chances are exactly $(2 + \sqrt 3)/4$ and $(2 - \sqrt 3)/4$, and they add to 1.
+- The 30° photon $`(\sqrt 3/2, 1/2)`$ has length 1.
+- Take the 30° photon at the 45° splitter. Then the chances are exactly $`(2 + \sqrt 3)/4`$ and $`(2 - \sqrt 3)/4`$, and they add to 1.
 - The average reading comes out the same by readings and by sandwich.
 - The counts 933,013 and 66,987 add to 1,000,000.
-- Take the chain 30° → 45° → 120°. Then the fraction through, $(2 + \sqrt 3)/4$ times $(2 - \sqrt 3)/4$, is exactly 1/16.
-- $N$ is not Hermitian. It reads +1 on (1, 0) and −1 on (1, −1), but those exits are not perpendicular.
-- Take $N$'s two "chances", 3/4 and $(2 - \sqrt 3)/4$. Then they add to $(5 - \sqrt 3)/4$, not 1.
-- Take $N$ and the 30° photon. Then the sandwich is $(1 + \sqrt 3)/2$, above the largest reading, 1.
+- Take the chain 30° → 45° → 120°. Then the fraction through, $`(2 + \sqrt 3)/4`$ times $`(2 - \sqrt 3)/4`$, is exactly 1/16.
+- $`N`$ is not Hermitian. It reads +1 on (1, 0) and −1 on (1, −1), but those exits are not perpendicular.
+- Take $`N`$'s two "chances", 3/4 and $`(2 - \sqrt 3)/4`$. Then they add to $`(5 - \sqrt 3)/4`$, not 1.
+- Take $`N`$ and the 30° photon. Then the sandwich is $`(1 + \sqrt 3)/2`$, above the largest reading, 1.
 
 The decimals, the complex states, the simulations and the photon energy are left to the Python and Rust checks.
 
@@ -852,9 +860,9 @@ example : 1 < (1 + Real.sqrt 3) / 2 := by
 >
 > Smaller traps:
 > - **The expected value is not a reading.** The average is 0.8660, but every photon reads +1 or −1. No detector ever shows 0.8660.
-> - **Dropping the conjugate.** With complex states, $\psi^T\hat A\psi$, flipping the column without conjugating, gives 0.8660$i$ for $\psi_c$, an "average" that is not even real. The star is what keeps it real: 0.0000.
-> - **Calling the phase decoration.** $\psi$ and $\psi_c$ agree on the horizontal–vertical axis, 0.7500 and 0.2500, and disagree at 45°: 0.9330 against 0.5000.
-> - **Halving the doubled angle.** A polariser at $\alpha$ has $2\alpha$ in its matrix, because turning it through 180° changes nothing. Put $\alpha$ in place of $2\alpha$ and the 45° device becomes a 22.5° device: the 30° photon passes with chance 0.9830, not 0.9330.
+> - **Dropping the conjugate.** With complex states, $`\psi^T\hat A\psi`$, flipping the column without conjugating, gives 0.8660$`i`$ for $`\psi_c`$, an "average" that is not even real. The star is what keeps it real: 0.0000.
+> - **Calling the phase decoration.** $`\psi`$ and $`\psi_c`$ agree on the horizontal–vertical axis, 0.7500 and 0.2500, and disagree at 45°: 0.9330 against 0.5000.
+> - **Halving the doubled angle.** A polariser at $`\alpha`$ has $`2\alpha`$ in its matrix, because turning it through 180° changes nothing. Put $`\alpha`$ in place of $`2\alpha`$ and the 45° device becomes a 22.5° device: the 30° photon passes with chance 0.9830, not 0.9330.
 
 ---
 
@@ -862,12 +870,12 @@ example : 1 < (1 + Real.sqrt 3) / 2 := by
 
 - **Quantum key distribution.** The sender encodes bits on photons at 0°, 90°, 45° or 135°. A receiver who measures on the wrong pair of axes gets a fair coin, 0.5000, as in the Try box. An eavesdropper who guesses the axes wrong must collapse the state, and that shows up as errors the two ends can count.
 - **Photon counters, sunglasses and LCD screens.** Single-photon detectors in lidar report clicks, not power: each click rate is a Born-rule chance times a photon rate. Polarising sunglasses and LCD pixels use Malus's law, the same chance applied to billions of photons a second.
-- **Qubits in quantum computers.** A qubit is a two-state system written exactly like $\psi$. Each run ends in one reading, so a computation is repeated thousands of times and the counts estimate the $p_k$, with the error band of the simulation above.
+- **Qubits in quantum computers.** A qubit is a two-state system written exactly like $`\psi`$. Each run ends in one reading, so a computation is repeated thousands of times and the counts estimate the $`p_k`$, with the error band of the simulation above.
 - **Electron spin in a magnetic field.** The same two-by-two algebra describes a spin measured along an axis: [Spin one-half](06-spin-and-two-state-systems.md).
 - **The electron in a box.** The shelf's house example: an electron in a 1 nm box has an energy operator whose eigenvalues are its allowed energies. Measuring the energy follows this card's recipe: [Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md).
 
 > **Say it back**
-> A quantum state is a unit vector of complex amplitudes, written in a chosen basis. A measuring device is a Hermitian matrix; its eigenvalues are the only readings it can give and its eigenvectors are the states those readings leave behind. The chance of each reading is the squared length of the state's piece along that eigenvector, and the pieces' squares add to 1 by Pythagoras. The average reading is $\psi^*\hat A\psi$. A 30° photon at a 45° polariser passes with chance 0.9330, which is Malus's law one photon at a time.
+> A quantum state is a unit vector of complex amplitudes, written in a chosen basis. A measuring device is a Hermitian matrix; its eigenvalues are the only readings it can give and its eigenvectors are the states those readings leave behind. The chance of each reading is the squared length of the state's piece along that eigenvector, and the pieces' squares add to 1 by Pythagoras. The average reading is $`\psi^*\hat A\psi`$. A 30° photon at a 45° polariser passes with chance 0.9330, which is Malus's law one photon at a time.
 
 ---
 
@@ -895,4 +903,4 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Griffiths, David J., and Darrell F. Schroeter. *Introduction to Quantum Mechanics*, 3rd ed. Cambridge University Press, 2018. [doi:10.1017/9781316995433](https://doi.org/10.1017/9781316995433). Hermitian observables, the generalised statistical interpretation, and the expected value as a sandwich.
 - Nielsen, Michael A., and Isaac L. Chuang. *Quantum Computation and Quantum Information*, 10th anniversary ed. Cambridge University Press, 2010. [doi:10.1017/CBO9780511976667](https://doi.org/10.1017/CBO9780511976667). The measurement postulates for finite systems, written as projectors, and two-state systems as qubits.
 - Bennett, Charles H., and Gilles Brassard. "Quantum cryptography: Public key distribution and coin tossing." *Theoretical Computer Science* 560 (2014): 7–11. [doi:10.1016/j.tcs.2014.05.025](https://doi.org/10.1016/j.tcs.2014.05.025). The four-polarisation key distribution scheme behind the overview's link.
-- Tiesinga, Eite, Peter J. Mohr, David B. Newell, and Barry N. Taylor. "CODATA recommended values of the fundamental physical constants: 2018." *Reviews of Modern Physics* 93 (2021): 025010. [doi:10.1103/RevModPhys.93.025010](https://doi.org/10.1103/RevModPhys.93.025010). The exact values of $h$, $c$ and the electron charge used for $\hbar$ and the photon energy.
+- Tiesinga, Eite, Peter J. Mohr, David B. Newell, and Barry N. Taylor. "CODATA recommended values of the fundamental physical constants: 2018." *Reviews of Modern Physics* 93 (2021): 025010. [doi:10.1103/RevModPhys.93.025010](https://doi.org/10.1103/RevModPhys.93.025010). The exact values of $`h`$, $`c`$ and the electron charge used for $`\hbar`$ and the photon energy.

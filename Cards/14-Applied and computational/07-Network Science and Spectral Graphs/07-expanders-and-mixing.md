@@ -36,39 +36,41 @@ The computer checked all 637 ways to pick 1 to 5 of the 10 stations. Cutting off
 
 ## The formula
 
-Notation first, in words. The network has $n$ stations, each with $d$ links (here $d$ = 3). Pick a set $S$ of stations; $|S|$ is how many are in it, and $\partial S$ (read "the boundary of S") is the set of links with one end inside $S$ and one outside. Closing those links cuts $S$ off.
+Notation first, in words. The network has $`n`$ stations, each with $`d`$ links (here $`d`$ = 3). Pick a set $`S`$ of stations; $`|S|`$ is how many are in it, and $`\partial S`$ (read "the boundary of S") is the set of links with one end inside $`S`$ and one outside. Closing those links cuts $`S`$ off.
 
-The **edge expansion** $h$ is the cheapest cut, priced per station cut off:
+The **edge expansion** $`h`$ is the cheapest cut, priced per station cut off:
 
-$$h = \min_{1 \le |S| \le n/2} \frac{|\partial S|}{|S|}, \qquad \frac{\lambda_2}{2} \;\le\; h \;\le\; \sqrt{2d\,\lambda_2}, \qquad t_{\text{mix}} \;\le\; \frac{2d}{\lambda_2}\,\ln\bigl(2\sqrt{n}\bigr).$$
+```math
+h = \min_{1 \le |S| \le n/2} \frac{|\partial S|}{|S|}, \qquad \frac{\lambda_2}{2} \;\le\; h \;\le\; \sqrt{2d\,\lambda_2}, \qquad t_{\text{mix}} \;\le\; \frac{2d}{\lambda_2}\,\ln\bigl(2\sqrt{n}\bigr).
+```
 
 **Read it aloud:** the expansion is the fewest links per station you must close to cut off at most half the network; it is at least half the spectral gap and at most the square root of 2d times the gap; and a walker who waits half the time forgets her start within 2d over the gap, times the log of 2 root n, steps.
 
-The **spectral gap** $\lambda_2$ comes from the graph Laplacian $L = D - A$ of [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md): $A$ is the adjacency table (1 where two stations share a link), $D$ the table of degrees. An eigenvalue of $L$ is a number $\lambda$ for which some nonzero list $f$, one number per station, gives $Lf = \lambda f$; that list is its eigenvector. $\lambda_2$ is the second-smallest eigenvalue of $L$ (the smallest is 0). Here it is called the gap because it is the distance from that 0.
+The **spectral gap** $`\lambda_2`$ comes from the graph Laplacian $`L = D - A`$ of [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md): $`A`$ is the adjacency table (1 where two stations share a link), $`D`$ the table of degrees. An eigenvalue of $`L`$ is a number $`\lambda`$ for which some nonzero list $`f`$, one number per station, gives $`Lf = \lambda f`$; that list is its eigenvector. $`\lambda_2`$ is the second-smallest eigenvalue of $`L`$ (the smallest is 0). Here it is called the gap because it is the distance from that 0.
 
-The limit $|S| \le n/2$ is needed: cutting off all 1,200 stations costs nothing, and cutting off 1,199 is the same cut as cutting off 1.
+The limit $`|S| \le n/2`$ is needed: cutting off all 1,200 stations costs nothing, and cutting off 1,199 is the same cut as cutting off 1.
 
-The walk is the **lazy walk**: at each step, toss a coin; heads, stay put; tails, ride one of the $d$ lanes, each equally likely. The mixing time $t_{\text{mix}}$ is the number of steps after which, from the worst start, the walker's spread of chances is within a quarter of even, measured by total variation distance (the largest chance any set of stations has too much of). Both are defined on [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md).
+The walk is the **lazy walk**: at each step, toss a coin; heads, stay put; tails, ride one of the $`d`$ lanes, each equally likely. The mixing time $`t_{\text{mix}}`$ is the number of steps after which, from the worst start, the walker's spread of chances is within a quarter of even, measured by total variation distance (the largest chance any set of stations has too much of). Both are defined on [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | stations | 1,200 (pilot 10) | mixing bound grows only like $\ln n$ |
-| $d$ | links per station | 3 | gap can grow |
-| $S$, $\lvert S \rvert$, $s$ | a set of stations; how many ($s$ in the proofs) | the inner star, 5 | — |
-| $\partial S$ | links leaving $S$ | 5 spokes | — |
-| $h$ | edge expansion: cheapest links per station cut off | pilot 1; random design 0.0822 to 0.3661 | harder to cut |
-| $A$, $D$, $L$, $I$, $J$ | adjacency table; degree table; $L = D - A$; identity (1 on the diagonal); all-ones table | $D$ is 3 on the diagonal | — |
-| $\lambda_2$ | spectral gap: second-smallest eigenvalue of $L$ | pilot 2; random 0.164347; ladder 0.000110 | faster mixing, harder to cut |
-| $f$, $f_i$, $g$, $\theta$, $\mu$ | a pattern: one number per station; its positive part; a cut-off level; an eigenvalue of $A$ | in the proofs; pilot $\mu$ = 1 or −2 | — |
-| $t$, $k$, $t_{\text{mix}}$ | steps of the walk; steps apart (or stations in a sweep); steps to forget the start | random design: 82 from the worst start (47 from station 0), 155 guaranteed | — |
-| $P$, $\lambda_*$ | the lazy walk's table of chances; its slowest fade per step, $1 - \lambda_2/(2d)$ | random design 1 − 0.164347/6 | slower mixing |
-| $\sigma$ | spread (standard deviation) of an estimate over repeated runs | 0.0127 for 1,000 independent picks | — |
+| $`n`$ | stations | 1,200 (pilot 10) | mixing bound grows only like $`\ln n`$ |
+| $`d`$ | links per station | 3 | gap can grow |
+| $`S`$, $`\lvert S \rvert`$, $`s`$ | a set of stations; how many ($`s`$ in the proofs) | the inner star, 5 | — |
+| $`\partial S`$ | links leaving $`S`$ | 5 spokes | — |
+| $`h`$ | edge expansion: cheapest links per station cut off | pilot 1; random design 0.0822 to 0.3661 | harder to cut |
+| $`A`$, $`D`$, $`L`$, $`I`$, $`J`$ | adjacency table; degree table; $`L = D - A`$; identity (1 on the diagonal); all-ones table | $`D`$ is 3 on the diagonal | — |
+| $`\lambda_2`$ | spectral gap: second-smallest eigenvalue of $`L`$ | pilot 2; random 0.164347; ladder 0.000110 | faster mixing, harder to cut |
+| $`f`$, $`f_i`$, $`g`$, $`\theta`$, $`\mu`$ | a pattern: one number per station; its positive part; a cut-off level; an eigenvalue of $`A`$ | in the proofs; pilot $`\mu`$ = 1 or −2 | — |
+| $`t`$, $`k`$, $`t_{\text{mix}}`$ | steps of the walk; steps apart (or stations in a sweep); steps to forget the start | random design: 82 from the worst start (47 from station 0), 155 guaranteed | — |
+| $`P`$, $`\lambda_*`$ | the lazy walk's table of chances; its slowest fade per step, $`1 - \lambda_2/(2d)`$ | random design 1 − 0.164347/6 | slower mixing |
+| $`\sigma`$ | spread (standard deviation) of an estimate over repeated runs | 0.0127 for 1,000 independent picks | — |
 
 ### When it holds
 
-- **Every station has the same number of links, $d$.** The proofs use it. With uneven degrees the same results hold for the Laplacian rescaled by degree (the normalised Laplacian), not for $L$ as written.
-- **The network is connected.** A city in two pieces has $\lambda_2 = 0$ and $h = 0$, and the walker never leaves her piece.
-- **The walk waits half the time.** A cube of 8 stations, 3 links each, has a gap of 2, yet a walker who always moves sits at distance 0.5000 from even after 60 steps and after 61. The cube's stations split into two colours with every link joining different colours, so she alternates colours forever. The lazy walk on the same cube reaches 0.0000. Without waiting, a network with no two-colouring still forgets its start eventually, but how fast also depends on the most negative eigenvalue of $A$, not on the gap alone.
+- **Every station has the same number of links, $`d`$.** The proofs use it. With uneven degrees the same results hold for the Laplacian rescaled by degree (the normalised Laplacian), not for $`L`$ as written.
+- **The network is connected.** A city in two pieces has $`\lambda_2 = 0`$ and $`h = 0`$, and the walker never leaves her piece.
+- **The walk waits half the time.** A cube of 8 stations, 3 links each, has a gap of 2, yet a walker who always moves sits at distance 0.5000 from even after 60 steps and after 61. The cube's stations split into two colours with every link joining different colours, so she alternates colours forever. The lazy walk on the same cube reaches 0.0000. Without waiting, a network with no two-colouring still forgets its start eventually, but how fast also depends on the most negative eigenvalue of $`A`$, not on the gap alone.
 - **The gap is computed, not assumed.** "Random 3-link networks have a gap near 3 − 2√2 = 0.171573" is true as the network grows. This particular 1,200-station network has 0.164347, just below. A guarantee needs the gap of the network you built.
 
 ---
@@ -79,64 +81,70 @@ The walk is the **lazy walk**: at each step, toss a coin; heads, stay put; tails
 
 Picture the inspector inside one district. Each ride leaves the district only along a boundary link. If the district has few such links compared with its size, she stays a long time, and her record over-reports that district. So slow mixing and cheap cuts are the same problem.
 
-But $h$ is a minimum over all $2^{1200}$ sets, which nobody can check. The gap $\lambda_2$ is one eigenvalue, computed in a second. Cheeger's inequality says the gap and the cheapest cut always bound each other, so the computable number certifies the uncomputable one.
+But $`h`$ is a minimum over all $`2^{1200}`$ sets, which nobody can check. The gap $`\lambda_2`$ is one eigenvalue, computed in a second. Cheeger's inequality says the gap and the cheapest cut always bound each other, so the computable number certifies the uncomputable one.
 
 ### Step 1: the gap is the smoothest pattern that is not flat
 
-Give each station a number $f_i$ (a pattern). The Laplacian measures how much the pattern changes across links: $f^{\mathsf T} L f = \sum_{\text{links } ij} (f_i - f_j)^2$. The flat pattern, all ones, changes nowhere; it has eigenvalue 0. Among patterns that add to zero, the smoothest one has eigenvalue $\lambda_2$ (the Rayleigh quotient form of the spectral theorem; see [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md)):
+Give each station a number $`f_i`$ (a pattern). The Laplacian measures how much the pattern changes across links: $`f^{\mathsf T} L f = \sum_{\text{links } ij} (f_i - f_j)^2`$. The flat pattern, all ones, changes nowhere; it has eigenvalue 0. Among patterns that add to zero, the smoothest one has eigenvalue $`\lambda_2`$ (the Rayleigh quotient form of the spectral theorem; see [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md)):
 
-$$\lambda_2 = \min_{f \ne 0,\ \sum_i f_i = 0} \frac{\sum_{\text{links } ij} (f_i - f_j)^2}{\sum_i f_i^2}.$$
+```math
+\lambda_2 = \min_{f \ne 0,\ \sum_i f_i = 0} \frac{\sum_{\text{links } ij} (f_i - f_j)^2}{\sum_i f_i^2}.
+```
 
 So a small gap means some non-flat pattern barely changes across links.
 
-### Step 2: a cheap cut makes a smooth pattern, so $h \ge \lambda_2 / 2$
+### Step 2: a cheap cut makes a smooth pattern, so $`h \ge \lambda_2 / 2`$
 
-Take any set $S$ with $|S| = s \le n/2$. Build the pattern "1 inside $S$, 0 outside", then subtract its average $s/n$ so it adds to zero. Across a link inside $S$, or inside the rest, the pattern does not change. Across a boundary link it changes by exactly 1. So the top of the fraction is $|\partial S|$.
+Take any set $`S`$ with $`|S| = s \le n/2`$. Build the pattern "1 inside $`S`$, 0 outside", then subtract its average $`s/n`$ so it adds to zero. Across a link inside $`S`$, or inside the rest, the pattern does not change. Across a boundary link it changes by exactly 1. So the top of the fraction is $`|\partial S|`$.
 
-The bottom is $s(1 - s/n)^2 + (n - s)(s/n)^2 = s(n - s)/n$. Step 1 says $\lambda_2$ is at most this fraction:
+The bottom is $`s(1 - s/n)^2 + (n - s)(s/n)^2 = s(n - s)/n`$. Step 1 says $`\lambda_2`$ is at most this fraction:
 
-$$\lambda_2 \le \frac{|\partial S|\, n}{s (n - s)} \le \frac{2\,|\partial S|}{s},$$
+```math
+\lambda_2 \le \frac{|\partial S|\, n}{s (n - s)} \le \frac{2\,|\partial S|}{s},
+```
 
-since $n - s \ge n/2$. At $s = n/2$ the first form is $4|\partial S|/n$, the half-and-half bound of [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md). Every allowed set gives $|\partial S|/s \ge \lambda_2/2$, so the cheapest does: $h \ge \lambda_2/2$.
+since $`n - s \ge n/2`$. At $`s = n/2`$ the first form is $`4|\partial S|/n`$, the half-and-half bound of [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md). Every allowed set gives $`|\partial S|/s \ge \lambda_2/2`$, so the cheapest does: $`h \ge \lambda_2/2`$.
 
-On the random design that is $h \ge 0.0822$: every district of up to 600 stations has at least 0.0822 boundary links per station. The first inequality is sharper: a district of 240 stations must have at least $\lambda_2 \cdot 240 \cdot 960 / 1200$ = 31.55 links out. The one around station 0 has 220.
+On the random design that is $`h \ge 0.0822`$: every district of up to 600 stations has at least 0.0822 boundary links per station. The first inequality is sharper: a district of 240 stations must have at least $`\lambda_2 \cdot 240 \cdot 960 / 1200`$ = 31.55 links out. The one around station 0 has 220.
 
-### Step 3: a smooth pattern makes a cheap cut, so $h \le \sqrt{2d\,\lambda_2}$
+### Step 3: a smooth pattern makes a cheap cut, so $`h \le \sqrt{2d\,\lambda_2}`$
 
-Go the other way. Take the smoothest pattern $f$, the eigenvector for $\lambda_2$ (the Fiedler vector of [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md)). Line the stations up from smallest $f$ to largest. Try every cut of the form "the first $k$ stations" from either end of the line, for $k$ up to $n/2$, and keep the cheapest per station. This is a **sweep cut**.
+Go the other way. Take the smoothest pattern $`f`$, the eigenvector for $`\lambda_2`$ (the Fiedler vector of [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md)). Line the stations up from smallest $`f`$ to largest. Try every cut of the form "the first $`k`$ stations" from either end of the line, for $`k`$ up to $`n/2`$, and keep the cheapest per station. This is a **sweep cut**.
 
-The proof shows that one of these cuts, swept from whichever end holds fewer stations, costs at most $\sqrt{2d\lambda_2}$ per station. The code sweeps both ends, so it always includes that one.
+The proof shows that one of these cuts, swept from whichever end holds fewer stations, costs at most $`\sqrt{2d\lambda_2}`$ per station. The code sweeps both ends, so it always includes that one.
 
-On the random design the sweep finds 216 links around 590 stations: 0.3661 per station. Cheeger's upper bound is 0.9930. So the true $h$ is pinned between 0.0822 and 0.3661, without checking $2^{1200}$ sets.
+On the random design the sweep finds 216 links around 590 stations: 0.3661 per station. Cheeger's upper bound is 0.9930. So the true $`h`$ is pinned between 0.0822 and 0.3661, without checking $`2^{1200}`$ sets.
 
 <details>
 <summary>Detailed proof: the sweep cut costs at most the square root of 2d times the gap</summary>
 
-Let $f$ be an eigenvector, $Lf = \lambda_2 f$, with the sign chosen so that at most $n/2$ stations have $f_i > 0$. Let $g_i = \max(f_i, 0)$.
+Let $`f`$ be an eigenvector, $`Lf = \lambda_2 f`$, with the sign chosen so that at most $`n/2`$ stations have $`f_i > 0`$. Let $`g_i = \max(f_i, 0)`$.
 
-**$g$ is at least as smooth as $f$.** At a station with $g_i > 0$: $(Lg)_i = d g_i - \sum_{j \sim i} g_j \le d f_i - \sum_{j \sim i} f_j = \lambda_2 g_i$, because $g_i = f_i$ there and $g_j \ge f_j$ for the neighbours $j$. Multiply by $g_i$ and add up (stations with $g_i = 0$ add nothing): $\sum_{\text{links}} (g_i - g_j)^2 = \sum_i g_i (Lg)_i \le \lambda_2 \sum_i g_i^2$.
+**$`g`$ is at least as smooth as $`f`$.** At a station with $`g_i > 0`$: $`(Lg)_i = d g_i - \sum_{j \sim i} g_j \le d f_i - \sum_{j \sim i} f_j = \lambda_2 g_i`$, because $`g_i = f_i`$ there and $`g_j \ge f_j`$ for the neighbours $`j`$. Multiply by $`g_i`$ and add up (stations with $`g_i = 0`$ add nothing): $`\sum_{\text{links}} (g_i - g_j)^2 = \sum_i g_i (Lg)_i \le \lambda_2 \sum_i g_i^2`$.
 
-**Cauchy–Schwarz.** $\sum_{\text{links}} \lvert g_i^2 - g_j^2 \rvert = \sum \lvert g_i - g_j \rvert (g_i + g_j)$ is at most $\sqrt{\sum (g_i - g_j)^2}\sqrt{\sum (g_i + g_j)^2}$. The first root is at most $\sqrt{\lambda_2 \sum g_i^2}$. For the second, $(g_i + g_j)^2 \le 2g_i^2 + 2g_j^2$, and each station sits on $d$ links, so it is at most $\sqrt{2d \sum g_i^2}$. Together: $\sum_{\text{links}} \lvert g_i^2 - g_j^2 \rvert \le \sqrt{2d\lambda_2}\, \sum_i g_i^2$.
+**Cauchy–Schwarz.** $`\sum_{\text{links}} \lvert g_i^2 - g_j^2 \rvert = \sum \lvert g_i - g_j \rvert (g_i + g_j)`$ is at most $`\sqrt{\sum (g_i - g_j)^2}\sqrt{\sum (g_i + g_j)^2}`$. The first root is at most $`\sqrt{\lambda_2 \sum g_i^2}`$. For the second, $`(g_i + g_j)^2 \le 2g_i^2 + 2g_j^2`$, and each station sits on $`d`$ links, so it is at most $`\sqrt{2d \sum g_i^2}`$. Together: $`\sum_{\text{links}} \lvert g_i^2 - g_j^2 \rvert \le \sqrt{2d\lambda_2}\, \sum_i g_i^2`$.
 
-**Sweep.** For each level $\theta > 0$ let $S_\theta$ be the stations with $g_i^2 > \theta$; each has at most $n/2$ stations, so $|\partial S_\theta| \ge h\,|S_\theta|$. A link $ij$ is in $\partial S_\theta$ exactly for $\theta$ between $g_i^2$ and $g_j^2$, so integrating over $\theta$: $\int_0^\infty |\partial S_\theta|\, d\theta = \sum_{\text{links}} \lvert g_i^2 - g_j^2 \rvert$, and $\int_0^\infty |S_\theta|\, d\theta = \sum_i g_i^2$. Hence $h \sum g_i^2 \le \sqrt{2d\lambda_2} \sum g_i^2$, which is $h \le \sqrt{2d\lambda_2}$. Some $S_\theta$, a sweep cut, does at least as well as the average, which is why the sweep finds a cut this cheap.
+**Sweep.** For each level $`\theta > 0`$ let $`S_\theta`$ be the stations with $`g_i^2 > \theta`$; each has at most $`n/2`$ stations, so $`|\partial S_\theta| \ge h\,|S_\theta|`$. A link $`ij`$ is in $`\partial S_\theta`$ exactly for $`\theta`$ between $`g_i^2`$ and $`g_j^2`$, so integrating over $`\theta`$: $`\int_0^\infty |\partial S_\theta|\, d\theta = \sum_{\text{links}} \lvert g_i^2 - g_j^2 \rvert`$, and $`\int_0^\infty |S_\theta|\, d\theta = \sum_i g_i^2`$. Hence $`h \sum g_i^2 \le \sqrt{2d\lambda_2} \sum g_i^2`$, which is $`h \le \sqrt{2d\lambda_2}`$. Some $`S_\theta`$, a sweep cut, does at least as well as the average, which is why the sweep finds a cut this cheap.
 
 </details>
 
 ### Step 4: on the pilot every number is exact
 
-In the pilot, two stations either share a link or share exactly one neighbour, never both. Counting two-step routes gives the table $A^2$: 3 on the diagonal (out and back along each lane), 0 between linked stations, 1 between unlinked ones. That is $A^2 + A - 2I = J$, with $I$ the identity and $J$ the table of all ones. The code checks every entry.
+In the pilot, two stations either share a link or share exactly one neighbour, never both. Counting two-step routes gives the table $`A^2`$: 3 on the diagonal (out and back along each lane), 0 between linked stations, 1 between unlinked ones. That is $`A^2 + A - 2I = J`$, with $`I`$ the identity and $`J`$ the table of all ones. The code checks every entry.
 
-On a pattern adding to zero, $J$ gives zero, so each eigenvalue $\mu$ of $A$ satisfies $\mu^2 + \mu - 2 = 0$: $\mu = 1$ or $\mu = -2$. Since $L = 3I - A$, the gap is $3 - 1 = 2$. Cheeger then says $1 \le h \le 3.464102$, and the brute-force count says $h = 1$. On the pilot the lower bound is exact.
+On a pattern adding to zero, $`J`$ gives zero, so each eigenvalue $`\mu`$ of $`A`$ satisfies $`\mu^2 + \mu - 2 = 0`$: $`\mu = 1`$ or $`\mu = -2`$. Since $`L = 3I - A`$, the gap is $`3 - 1 = 2`$. Cheeger then says $`1 \le h \le 3.464102`$, and the brute-force count says $`h = 1`$. On the pilot the lower bound is exact.
 
 ### Step 5: the gap sets the speed of forgetting
 
-The lazy walk moves chances by the table $P = \tfrac12 I + \tfrac{1}{2d} A = I - \tfrac{1}{2d} L$. Its eigenvalues are $1 - \lambda/(2d)$, one for each eigenvalue $\lambda$ of $L$, all between 0 and 1. The largest below 1 is $\lambda_* = 1 - \lambda_2/(2d)$.
+The lazy walk moves chances by the table $`P = \tfrac12 I + \tfrac{1}{2d} A = I - \tfrac{1}{2d} L`$. Its eigenvalues are $`1 - \lambda/(2d)`$, one for each eigenvalue $`\lambda`$ of $`L`$, all between 0 and 1. The largest below 1 is $`\lambda_* = 1 - \lambda_2/(2d)`$.
 
-[Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) proves that from any start the distance after $t$ steps is at most $\tfrac12 \lambda_*^t \sqrt{n - 1}$, since each station's long-run share is $1/n$. (That card calls $1 - \lambda_*$ the spectral gap; here it equals $\lambda_2/(2d)$, the same idea rescaled.) Use $\lambda_* \le e^{-\lambda_2/(2d)}$ and solve for the distance to reach a quarter:
+[Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) proves that from any start the distance after $`t`$ steps is at most $`\tfrac12 \lambda_*^t \sqrt{n - 1}`$, since each station's long-run share is $`1/n`$. (That card calls $`1 - \lambda_*`$ the spectral gap; here it equals $`\lambda_2/(2d)`$, the same idea rescaled.) Use $`\lambda_* \le e^{-\lambda_2/(2d)}`$ and solve for the distance to reach a quarter:
 
-$$t \ge \frac{2d}{\lambda_2} \ln\bigl(2\sqrt{n}\bigr) \quad\Longrightarrow\quad \text{distance} \le \tfrac14 .$$
+```math
+t \ge \frac{2d}{\lambda_2} \ln\bigl(2\sqrt{n}\bigr) \quad\Longrightarrow\quad \text{distance} \le \tfrac14 .
+```
 
-The $\ln n$ is the point. On a family of networks whose gap stays put as they grow, mixing time grows like $\ln n$. The random design's gap barely moves: 0.222661 at 120 stations, 0.164347 at 1,200. The ladder's falls a hundredfold, from 0.010956 to 0.000110, because a long ladder has a smooth pattern that rises slowly around the loop. For the random design the guarantee is 155 steps; the ladder's is 231888.
+The $`\ln n`$ is the point. On a family of networks whose gap stays put as they grow, mixing time grows like $`\ln n`$. The random design's gap barely moves: 0.222661 at 120 stations, 0.164347 at 1,200. The ladder's falls a hundredfold, from 0.010956 to 0.000110, because a long ladder has a smooth pattern that rises slowly around the loop. For the random design the guarantee is 155 steps; the ladder's is 231888.
 
 [Convergence to equilibrium](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/05-convergence-to-equilibrium.md) gets the same kind of guarantee by coupling instead of eigenvalues.
 
@@ -144,17 +152,19 @@ The $\ln n$ is the point. On a family of networks whose gap stays put as they gr
 
 The inspector wants the share of stations in a district: the 240 stations nearest station 0, so the true answer is 0.2. Her estimate is the share of her 1,000 stops that fall inside it.
 
-Two stops $k$ steps apart are correlated, but on the lazy walk every part of the pattern except the flat part fades by at least $\lambda_*$ per step, so the correlation is at most $\lambda_*^k$. Adding up these correlations, the spread of the walk's estimate is at most
+Two stops $`k`$ steps apart are correlated, but on the lazy walk every part of the pattern except the flat part fades by at least $`\lambda_*`$ per step, so the correlation is at most $`\lambda_*^k`$. Adding up these correlations, the spread of the walk's estimate is at most
 
-$$\sigma_{\text{walk}} \le \sqrt{\frac{1 + \lambda_*}{1 - \lambda_*}}\;\sigma_{\text{independent}},$$
+```math
+\sigma_{\text{walk}} \le \sqrt{\frac{1 + \lambda_*}{1 - \lambda_*}}\;\sigma_{\text{independent}},
+```
 
-when the walk starts at a station picked evenly. The factor depends on the gap, not on $n$. For the random design it is 8.49, so 1,000 stops promise a spread of at most 0.1073. Over 200 runs the measured spread is 0.0713. Independent picks give 0.0127, against the textbook $\sqrt{0.2 \times 0.8 / 1000}$ = 0.0126.
+when the walk starts at a station picked evenly. The factor depends on the gap, not on $`n`$. For the random design it is 8.49, so 1,000 stops promise a spread of at most 0.1073. Over 200 runs the measured spread is 0.0713. Independent picks give 0.0127, against the textbook $`\sqrt{0.2 \times 0.8 / 1000}`$ = 0.0126.
 
 The plain reason is Step 2. A district on an expander has many links out: from a station picked evenly inside the 240, one lazy step leaves with chance 0.1528. On the ladder the same district has 6 links out and the chance is 0.0042. The ladder walk's 200 estimates have spread 0.3992: most runs are almost entirely inside the district or almost entirely outside it.
 
-What the walk saves is randomness. Independent picks cost $\log_2 1200$ random bits each, 10229 bits for 1,000. The walk costs one pick to start, then at most a coin and a choice of 3 per step: 2595 bits.
+What the walk saves is randomness. Independent picks cost $`\log_2 1200`$ random bits each, 10229 bits for 1,000. The walk costs one pick to start, then at most a coin and a choice of 3 per step: 2595 bits.
 
-Here that does not pay, because the walk needs more stops for the same spread. It pays when the space is enormous, such as all $2^{100}$ settings of a 100-bit key, where a fresh pick costs 100 bits and a step on a 3-link expander still costs under 3.
+Here that does not pay, because the walk needs more stops for the same spread. It pays when the space is enormous, such as all $`2^{100}`$ settings of a 100-bit key, where a fresh pick costs 100 bits and a step on a 3-link expander still costs under 3.
 
 ---
 
@@ -168,8 +178,8 @@ On the pilot: 10 stations, 3 lanes each.
 | one station alone | 3 lanes out, 1 station | 3 per station |
 | inner star alone | 5 spokes, 5 stations | 1 per station |
 | any loop of five | 15 lane-ends, 10 used inside: 5 out, 5 stations | 1 per station |
-| two-step routes | $A^2$: 3 on diagonal, 0 if linked, 1 if not | $A^2 + A - 2I = J$ |
-| eigenvalues off the flat pattern | $\mu^2 + \mu - 2 = 0$ | 1 and −2 |
+| two-step routes | $`A^2`$: 3 on diagonal, 0 if linked, 1 if not | $`A^2 + A - 2I = J`$ |
+| eigenvalues off the flat pattern | $`\mu^2 + \mu - 2 = 0`$ | 1 and −2 |
 | gap | 3 − 1 | 2 |
 | Cheeger | 2/2 ≤ h ≤ √(2 × 3 × 2) | 1 ≤ h ≤ 3.464102 |
 | mixing guarantee | (6/2) × ln(2√10), rounded up | 6 steps |
@@ -182,8 +192,8 @@ Every way of cutting off up to half the pilot costs at least one lane per statio
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Plain walk, no waiting, on a two-colour network (the cube) | distance 0.5000 at step 60 and step 61, though the gap is 2 | Eigenvalue −1 of the plain walk; the gap bound is for the lazy walk |
-| A sparse network with a bottleneck (the ladder) | guarantee 231888 steps; still 0.8387 after 1,000 | 4 lanes cut 600 stations off: $h \le$ 0.0067, gap 0.000110 |
-| Reading the easy side as the value of $h$ | 0.0822, when a cut of 0.3661 is the best found | $\lambda_2/2$ is a floor; the true $h$ lies between 0.0822 and 0.3661 |
+| A sparse network with a bottleneck (the ladder) | guarantee 231888 steps; still 0.8387 after 1,000 | 4 lanes cut 600 stations off: $`h \le`$ 0.0067, gap 0.000110 |
+| Reading the easy side as the value of $`h`$ | 0.0822, when a cut of 0.3661 is the best found | $`\lambda_2/2`$ is a floor; the true $`h`$ lies between 0.0822 and 0.3661 |
 | Sampling by walking the ladder | spread 0.3992 against 0.0713 on the random design | The walk stays in whichever district it starts in |
 
 The code prints all four.
@@ -207,7 +217,7 @@ Both designs give every station 3 lanes and the inspector picks lanes the same w
 
 The distance is from the even spread, starting at station 0, computed exactly by pushing chances along lanes, not simulated. The guarantee is capped at 1, since no distance exceeds 1.
 
-On the random design the set of stations she could be at grows fast, because the lanes keep leading somewhere new. On the ladder she spreads around the loop like a drop of ink in a pipe: after $t$ steps she has covered a stretch about $\sqrt t$ stations long.
+On the random design the set of stations she could be at grows fast, because the lanes keep leading somewhere new. On the ladder she spreads around the loop like a drop of ink in a pipe: after $`t`$ steps she has covered a stretch about $`\sqrt t`$ stations long.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -226,9 +236,9 @@ Orange: the random design, under a quarter from step 47. Teal: the ladder, barel
 
 ## Code, from first principles, and it actually runs
 
-The script builds the pilot, a random 3-link network from SplitMix64 (a small pseudo-random number generator written into the script) with seed 2026, and the ladder. It takes three roads to the expansion and the gap: brute force over all 637 sets of the pilot, the exact identity $A^2 + A - 2I = J$, and power iteration (repeatedly applying $3I + A$ and removing the flat part) on the pilot, the cube and both random networks.
+The script builds the pilot, a random 3-link network from SplitMix64 (a small pseudo-random number generator written into the script) with seed 2026, and the ladder. It takes three roads to the expansion and the gap: brute force over all 637 sets of the pilot, the exact identity $`A^2 + A - 2I = J`$, and power iteration (repeatedly applying $`3I + A`$ and removing the flat part) on the pilot, the cube and both random networks.
 
-The ladder's gap comes from its closed form, $2 - 2\cos(2\pi/600)$ at 1,200 stations. Power iteration confirms the same closed form on the 120-station ladder. At 1,200 stations the gap is too small for power iteration to settle in time, so there the code only checks that the cosine pattern around the loop reaches it.
+The ladder's gap comes from its closed form, $`2 - 2\cos(2\pi/600)`$ at 1,200 stations. Power iteration confirms the same closed form on the 120-station ladder. At 1,200 stations the gap is too small for power iteration to settle in time, so there the code only checks that the cosine pattern around the loop reaches it.
 
 Two roads lead to mixing: the exact spread of chances step by step, from station 0 and from every start, against the gap's guarantee. The sampler is a seeded simulation of 200 runs, checked against the independent-pick formula and the gap's spread bound.
 
@@ -632,14 +642,14 @@ The power iteration gives the same gap, 0.164347, after 1,500 and after 3,000 ro
 
 ### Lean
 
-Lean proves Cheeger's inequality and the mixing bound for every connected network with $d$ links per station, and the pilot's exact numbers.
+Lean proves Cheeger's inequality and the mixing bound for every connected network with $`d`$ links per station, and the pilot's exact numbers.
 
-- Take a connected network with $d$ links per station. Then every set of 1 to $n/2$ stations has at least $\lambda_2/2$ boundary links per station.
-- Take the same network. Then some set of 1 to $n/2$ stations has at most $\sqrt{2d\,\lambda_2}$ boundary links per station.
-- Take the same network, any start and any $t \ge \frac{2d}{\lambda_2}\ln(2\sqrt{n})$. Then after $t$ steps the lazy walk is within a quarter of even.
-- Take the 10-station pilot. Then its gap $\lambda_2$ is exactly 2.
-- Take the pilot's 637 sets of 1 to 5 stations. Then each has at least one lane out per station, and 12 have exactly one, so $h = 1$.
-- Take the pilot's adjacency table $A$. Then $A^2 + A - 2I = J$ at every entry.
+- Take a connected network with $`d`$ links per station. Then every set of 1 to $`n/2`$ stations has at least $`\lambda_2/2`$ boundary links per station.
+- Take the same network. Then some set of 1 to $`n/2`$ stations has at most $`\sqrt{2d\,\lambda_2}`$ boundary links per station.
+- Take the same network, any start and any $`t \ge \frac{2d}{\lambda_2}\ln(2\sqrt{n})`$. Then after $`t`$ steps the lazy walk is within a quarter of even.
+- Take the 10-station pilot. Then its gap $`\lambda_2`$ is exactly 2.
+- Take the pilot's 637 sets of 1 to 5 stations. Then each has at least one lane out per station, and 12 have exactly one, so $`h = 1`$.
+- Take the pilot's adjacency table $`A`$. Then $`A^2 + A - 2I = J`$ at every entry.
 - The pilot's worked numbers also check: 3 lanes each, 637 sets, and 5 lanes out of the inner star and of the outer loop.
 
 Every number about the 1,200-station designs, the cube and the sampler is left to the Python and Rust checks.
@@ -1918,7 +1928,7 @@ end ExpandersAndMixing
 > - **Expecting the gap to speed up a walk that never waits.** The cube has gap 2 and the plain walk still sits at 0.5000 forever. The bound is for the lazy walk.
 > - **Quoting 3 − 2√2 as this network's gap.** The large-network value is 0.171573; the network built here has 0.164347. Compute the gap of the network you have.
 > - **Taking a guarantee as a forecast.** The gap promises 155 steps; the worst start needs 82, and station 0 needs 47.
-> - **Calling $\lambda_2/2$ the expansion.** It is a floor, 0.0822 here, under a found cut of 0.3661.
+> - **Calling $`\lambda_2/2`$ the expansion.** It is a floor, 0.0822 here, under a found cut of 0.3661.
 
 ---
 
@@ -1941,7 +1951,7 @@ end ExpandersAndMixing
 
 ## What this builds on
 
-- [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md): defines $L = D - A$, its eigenvalue $\lambda_2$ and the Fiedler vector, and proves that $\lambda_2$ is the smoothest non-flat pattern.
+- [The graph Laplacian](03-graph-laplacian-and-spectral-clustering.md): defines $`L = D - A`$, its eigenvalue $`\lambda_2`$ and the Fiedler vector, and proves that $`\lambda_2`$ is the smoothest non-flat pattern.
 - [MCMC as a tool](../02-Randomised%20and%20Approximate%20Algorithms/08-markov-chain-monte-carlo-for-computation.md): runs a Markov chain to sample what cannot be sampled directly; the gap is what makes that chain fast.
 - [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): defines total variation and the mixing time, introduces the lazy walk, and proves the eigenvalue bound used in Step 5.
 - [Convergence to equilibrium](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/05-convergence-to-equilibrium.md): proves that a connected chain that is not locked in a cycle forgets its start, by coupling.
@@ -1962,6 +1972,6 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Hoory, Linial and Wigderson, [Expander graphs and their applications](https://doi.org/10.1090/S0273-0979-06-01126-8), Bulletin of the AMS, 2006: the survey; edge expansion, Cheeger's inequality with the sweep proof, and the applications above.
 - Alon, [Eigenvalues and expanders](https://doi.org/10.1007/BF02579166), Combinatorica, 1986: the graph form of Cheeger's inequality, linking the gap to expansion.
-- Friedman, [A proof of Alon's second eigenvalue conjecture and related problems](https://doi.org/10.1090/memo/0910), Memoirs of the AMS, 2008: a large random $d$-link network has gap close to $d - 2\sqrt{d-1}$, the source of 3 − 2√2.
+- Friedman, [A proof of Alon's second eigenvalue conjecture and related problems](https://doi.org/10.1090/memo/0910), Memoirs of the AMS, 2008: a large random $`d`$-link network has gap close to $`d - 2\sqrt{d-1}`$, the source of 3 − 2√2.
 - Gillman, [A Chernoff bound for random walks on expander graphs](https://doi.org/10.1137/S0097539794268765), SIAM Journal on Computing, 1998: an expander walk's averages obey a tail bound like independent samples, with the gap in the exponent.
 - Levin and Peres, [Markov Chains and Mixing Times](https://doi.org/10.1090/mbk/107), second edition, AMS, 2017: the eigenvalue mixing bound and the variance of walk averages for reversible chains.

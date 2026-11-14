@@ -43,43 +43,51 @@ Orange, lower line: shooting with RK4, with slope about 4 (observed order 4.01).
 
 All three methods treat the same problem. The cable's height y at distance x from the left tower obeys
 
-$$y'' = F(x, y, y'), \qquad y(0) = \alpha, \qquad y(L) = \beta, \qquad \text{here } F = \frac{\sqrt{1 + y'^2}}{a}.$$
+```math
+y'' = F(x, y, y'), \qquad y(0) = \alpha, \qquad y(L) = \beta, \qquad \text{here } F = \frac{\sqrt{1 + y'^2}}{a}.
+```
 
 **Read it aloud:** the cable's bending at each point is the square root of one plus its slope squared, divided by a; it starts at height α and ends at height β.
 
-The two primes in $y''$ mean the rate of the rate: the bending. The extra length of a sloped piece of cable, $\sqrt{1 + y'^2}$ per metre across, is what makes the law nonlinear.
+The two primes in $`y''`$ mean the rate of the rate: the bending. The extra length of a sloped piece of cable, $`\sqrt{1 + y'^2}`$ per metre across, is what makes the law nonlinear.
 
-**Shooting.** Run forward from height α with start slope s, and call the landing height $y(L; s)$. Shooting solves the one equation
+**Shooting.** Run forward from height α with start slope s, and call the landing height $`y(L; s)`$. Shooting solves the one equation
 
-$$g(s) = y(L; s) - \beta = 0, \qquad s_{\text{new}} = s - \frac{g(s)}{z(L)}, \qquad z'' = F_y\, z + F_p\, z', \quad z(0) = 0,\ z'(0) = 1.$$
+```math
+g(s) = y(L; s) - \beta = 0, \qquad s_{\text{new}} = s - \frac{g(s)}{z(L)}, \qquad z'' = F_y\, z + F_p\, z', \quad z(0) = 0,\ z'(0) = 1.
+```
 
 **Read it aloud:** the miss is where the shot lands minus where it should; correct the slope by the miss divided by how fast the landing moves with the slope, and that rate comes from a second equation run alongside the shot.
 
-**Finite differences.** Split the span into N intervals of width h, with heights $y_i$ at the marks $x_i = ih$. At each inside mark,
+**Finite differences.** Split the span into N intervals of width h, with heights $`y_i`$ at the marks $`x_i = ih`$. At each inside mark,
 
-$$\frac{y_{i-1} - 2y_i + y_{i+1}}{h^2} = F\!\left(x_i,\ y_i,\ \frac{y_{i+1} - y_{i-1}}{2h}\right), \qquad i = 1, \dots, N-1.$$
+```math
+\frac{y_{i-1} - 2y_i + y_{i+1}}{h^2} = F\!\left(x_i,\ y_i,\ \frac{y_{i+1} - y_{i-1}}{2h}\right), \qquad i = 1, \dots, N-1.
+```
 
 **Read it aloud:** at each mark, the bending read off three neighbouring heights equals the law evaluated with the slope read off the two neighbours.
 
 **Collocation.** Look for one polynomial of degree n. Demand the equation exactly at the inside Chebyshev points, which bunch towards the two ends:
 
-$$y''(x_j) = F\big(x_j,\ y(x_j),\ y'(x_j)\big), \qquad x_j = \tfrac{L}{2}\left(1 - \cos\tfrac{j\pi}{n}\right), \qquad j = 1, \dots, n-1.$$
+```math
+y''(x_j) = F\big(x_j,\ y(x_j),\ y'(x_j)\big), \qquad x_j = \tfrac{L}{2}\left(1 - \cos\tfrac{j\pi}{n}\right), \qquad j = 1, \dots, n-1.
+```
 
 **Read it aloud:** the polynomial must bend exactly as the law says at n − 1 chosen points, and pass through both tower heights.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | distance from the left tower; cable height, both in m | 0 to 100 m; 28.686688231 m at midspan | — |
-| $L$, $\alpha$, $\beta$ | span; left and right tower heights | 100 m; 30 m; 40 m | a higher β needs a steeper start |
-| $a$, $x_0$, $y_{\min}$ | horizontal pull over weight per metre; position and height of the lowest point | 200 m; 30.238992 m; 27.709650 m | larger a: the cable hangs flatter |
-| $F$, $p$ | the law's right side; $p$ stands for the slope $y'$ inside F (not an order) | $\sqrt{1 + p^2}/a$ | more bending |
-| $F_y$, $F_p$ | how fast F changes with height, and with slope | 0 and $p/(a\sqrt{1 + p^2})$ | Newton's corrections change |
-| $s$ | the start slope, the unknown of shooting | exact −0.151771672 | the far end rises 100.3889 m per unit |
-| $g$ | the miss at the far tower, in m | 2.6074e1 at s = 0.1 | zero means the shot lands |
-| $z$ | the sensitivity: how much the height moves per unit change in s (not [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md)'s $z = h\lambda$) | z(L) = 100.3889 m | larger z: rounding in s matters more |
-| $h$, $N$, $x_i$, $y_i$, $F_i$ | spacing; number of intervals; mark i; height there; F there | 25 m; 4; $x_2$ = 50 m; 28.694680 m | error grows like $h^2$ |
-| $n$, $x_j$, $t_j$, $c_j$, $D$ | the polynomial's degree; collocation point j; the same point on the interval from −1 to 1; a weight, 2 at the ends and 1 inside; the differentiation matrix | 8; 9 points from 0 to 100 m | error falls geometrically |
-| $k$ | stiffness of the spring bed in the failure test, $y'' = k^2 y$ | 10 to 40 | shooting's magnification grows like $e^k$ |
+| $`x`$, $`y`$ | distance from the left tower; cable height, both in m | 0 to 100 m; 28.686688231 m at midspan | — |
+| $`L`$, $`\alpha`$, $`\beta`$ | span; left and right tower heights | 100 m; 30 m; 40 m | a higher β needs a steeper start |
+| $`a`$, $`x_0`$, $`y_{\min}`$ | horizontal pull over weight per metre; position and height of the lowest point | 200 m; 30.238992 m; 27.709650 m | larger a: the cable hangs flatter |
+| $`F`$, $`p`$ | the law's right side; $`p`$ stands for the slope $`y'`$ inside F (not an order) | $`\sqrt{1 + p^2}/a`$ | more bending |
+| $`F_y`$, $`F_p`$ | how fast F changes with height, and with slope | 0 and $`p/(a\sqrt{1 + p^2})`$ | Newton's corrections change |
+| $`s`$ | the start slope, the unknown of shooting | exact −0.151771672 | the far end rises 100.3889 m per unit |
+| $`g`$ | the miss at the far tower, in m | 2.6074e1 at s = 0.1 | zero means the shot lands |
+| $`z`$ | the sensitivity: how much the height moves per unit change in s (not [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md)'s $`z = h\lambda`$) | z(L) = 100.3889 m | larger z: rounding in s matters more |
+| $`h`$, $`N`$, $`x_i`$, $`y_i`$, $`F_i`$ | spacing; number of intervals; mark i; height there; F there | 25 m; 4; $`x_2`$ = 50 m; 28.694680 m | error grows like $`h^2`$ |
+| $`n`$, $`x_j`$, $`t_j`$, $`c_j`$, $`D`$ | the polynomial's degree; collocation point j; the same point on the interval from −1 to 1; a weight, 2 at the ends and 1 inside; the differentiation matrix | 8; 9 points from 0 to 100 m | error falls geometrically |
+| $`k`$ | stiffness of the spring bed in the failure test, $`y'' = k^2 y`$ | 10 to 40 | shooting's magnification grows like $`e^k`$ |
 | ulp | one unit in the last place of a double, the gap to the next one | 7.11e-15 for s near −40 | — |
 
 ### When it holds
@@ -106,48 +114,52 @@ Each list of equations is nonlinear, so each is solved by Newton's method ([Newt
 
 ### Step 1: shooting, with an exact derivative for Newton
 
-Shooting and its secant form are taught on [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md). What is new here is Newton's derivative, $g'(s)$. Differentiate the law with respect to the start slope s. Write $z = \partial y / \partial s$, the sensitivity of the height to the aim. Then
+Shooting and its secant form are taught on [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md). What is new here is Newton's derivative, $`g'(s)`$. Differentiate the law with respect to the start slope s. Write $`z = \partial y / \partial s`$, the sensitivity of the height to the aim. Then
 
-$$z'' = F_y\, z + F_p\, z', \qquad z(0) = 0, \qquad z'(0) = 1,$$
+```math
+z'' = F_y\, z + F_p\, z', \qquad z(0) = 0, \qquad z'(0) = 1,
+```
 
-because the start height does not depend on s and the start slope is s itself. This is the **variational equation**. It is linear in z, and it rides along with the shot: RK4 steps the four numbers $(y, y', z, z')$ together. At the far end, $g'(s) = z(L)$.
+because the start height does not depend on s and the start slope is s itself. This is the **variational equation**. It is linear in z, and it rides along with the shot: RK4 steps the four numbers $`(y, y', z, z')`$ together. At the far end, $`g'(s) = z(L)`$.
 
-For the cable, $F_y = 0$ and $F_p = p/(a\sqrt{1 + p^2})$. For a weightless string, $F = 0$, and $z(L) = L = 100$ m: raise the start slope by 1 and the far end rises by the span. The sagging cable's value, 100.3889 m, is close to that.
+For the cable, $`F_y = 0`$ and $`F_p = p/(a\sqrt{1 + p^2})`$. For a weightless string, $`F = 0`$, and $`z(L) = L = 100`$ m: raise the start slope by 1 and the far end rises by the span. The sagging cable's value, 100.3889 m, is close to that.
 
 <details>
 <summary>Detailed proof: the variational equation, and the magnification sinh(k)/k</summary>
 
-**The variational equation.** Let $y(x; s)$ solve $y'' = F(x, y, y')$ with $y(0) = \alpha$ and $y'(0) = s$. When F has continuous first derivatives, the solution is differentiable in s; this is the standard dependence theorem for initial value problems. Differentiate both sides of the law with respect to s, using the chain rule on the right:
+**The variational equation.** Let $`y(x; s)`$ solve $`y'' = F(x, y, y')`$ with $`y(0) = \alpha`$ and $`y'(0) = s`$. When F has continuous first derivatives, the solution is differentiable in s; this is the standard dependence theorem for initial value problems. Differentiate both sides of the law with respect to s, using the chain rule on the right:
 
-$$\frac{\partial y''}{\partial s} = F_y\,\frac{\partial y}{\partial s} + F_p\,\frac{\partial y'}{\partial s}.$$
+$`\displaystyle \frac{\partial y''}{\partial s} = F_y\,\frac{\partial y}{\partial s} + F_p\,\frac{\partial y'}{\partial s}.`$
 
-The derivatives in x and s commute for such solutions, so with $z = \partial y / \partial s$ this reads $z'' = F_y z + F_p z'$. At x = 0, $y = \alpha$ for every s, so $z(0) = 0$; and $y' = s$, so $z'(0) = 1$. Then $g(s) = y(L; s) - \beta$ has $g'(s) = z(L)$.
+The derivatives in x and s commute for such solutions, so with $`z = \partial y / \partial s`$ this reads $`z'' = F_y z + F_p z'`$. At x = 0, $`y = \alpha`$ for every s, so $`z(0) = 0`$; and $`y' = s`$, so $`z'(0) = 1`$. Then $`g(s) = y(L; s) - \beta`$ has $`g'(s) = z(L)`$.
 
-**Newton converges quadratically.** If $z(L) \ne 0$ at the exact slope and g has a continuous second derivative, Newton's error near the root is a constant times the square of the previous error ([Newton and secant](../02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md)). Near the root the miss is about z(L) times the slope's error, so the misses obey the same rule. The checks divide each miss by the square of the one before and print 1.11e-3, 1.22e-3, 1.22e-3: a steady constant, the mark of quadratic convergence.
+**Newton converges quadratically.** If $`z(L) \ne 0`$ at the exact slope and g has a continuous second derivative, Newton's error near the root is a constant times the square of the previous error ([Newton and secant](../02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md)). Near the root the miss is about z(L) times the slope's error, so the misses obey the same rule. The checks divide each miss by the square of the one before and print 1.11e-3, 1.22e-3, 1.22e-3: a steady constant, the mark of quadratic convergence.
 
-**The stiff bed.** Take $y'' = k^2 y$ on $0 \le x \le 1$. Here $F_y = k^2$ and $F_p = 0$, so $z'' = k^2 z$ with $z(0) = 0$ and $z'(0) = 1$. The solution is $z = \sinh(kx)/k$; check it: $z'' = k \sinh(kx) = k^2 z$, $z(0) = 0$, $z'(0) = \cosh 0 = 1$. So the far end moves by $\sinh(k)/k$ per unit of start slope, and the midspan by $\sinh(k/2)/k$.
+**The stiff bed.** Take $`y'' = k^2 y`$ on $`0 \le x \le 1`$. Here $`F_y = k^2`$ and $`F_p = 0`$, so $`z'' = k^2 z`$ with $`z(0) = 0`$ and $`z'(0) = 1`$. The solution is $`z = \sinh(kx)/k`$; check it: $`z'' = k \sinh(kx) = k^2 z`$, $`z(0) = 0`$, $`z'(0) = \cosh 0 = 1`$. So the far end moves by $`\sinh(k)/k`$ per unit of start slope, and the midspan by $`\sinh(k/2)/k`$.
 
-**The problem itself is well conditioned.** Its solution is $y = \alpha \sinh(k(1-x))/\sinh k + \beta \sinh(kx)/\sinh k$. Both weights lie between 0 and 1 on the span. So a change in either end height changes the solution anywhere by at most that change. The trouble on the stiff bed belongs to shooting, not to the problem.
+**The problem itself is well conditioned.** Its solution is $`y = \alpha \sinh(k(1-x))/\sinh k + \beta \sinh(kx)/\sinh k`$. Both weights lie between 0 and 1 on the span. So a change in either end height changes the solution anywhere by at most that change. The trouble on the stiff bed belongs to shooting, not to the problem.
 
 </details>
 
 ### Step 2: finite differences, Newton on a tridiagonal system
 
-Replacing $y''$ by the three-point difference and solving one linear system is taught on [Finite differences](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md), with the proof that its error is order 2. The cable adds two things.
+Replacing $`y''`$ by the three-point difference and solving one linear system is taught on [Finite differences](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md), with the proof that its error is order 2. The cable adds two things.
 
-First, the slope inside F is the centred difference $(y_{i+1} - y_{i-1})/(2h)$. Its error is also order $h^2$, so the scheme stays order 2. A one-sided slope $(y_{i+1} - y_i)/h$ has error order h, and drags the whole scheme down to order 1.
+First, the slope inside F is the centred difference $`(y_{i+1} - y_{i-1})/(2h)`$. Its error is also order $`h^2`$, so the scheme stays order 2. A one-sided slope $`(y_{i+1} - y_i)/h`$ has error order h, and drags the whole scheme down to order 1.
 
-Second, the equations are nonlinear, so Newton is needed. Write equation i as $y_{i-1} - 2y_i + y_{i+1} - h^2 F_i = 0$, where $F_i$ is F at mark i. Equation i involves only $y_{i-1}$, $y_i$ and $y_{i+1}$. Its derivatives with respect to them are
+Second, the equations are nonlinear, so Newton is needed. Write equation i as $`y_{i-1} - 2y_i + y_{i+1} - h^2 F_i = 0`$, where $`F_i`$ is F at mark i. Equation i involves only $`y_{i-1}`$, $`y_i`$ and $`y_{i+1}`$. Its derivatives with respect to them are
 
-$$1 + \tfrac{h}{2}F_p, \qquad -2 - h^2 F_y, \qquad 1 - \tfrac{h}{2}F_p,$$
+```math
+1 + \tfrac{h}{2}F_p, \qquad -2 - h^2 F_y, \qquad 1 - \tfrac{h}{2}F_p,
+```
 
-because the centred slope changes by $\mp 1/(2h)$ when a neighbour moves by 1. So the Jacobian is tridiagonal, and each Newton step is one sweep of [The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md): eight flops per unknown, less seven, so 113 flops for the 15 unknowns of 16 intervals.
+because the centred slope changes by $`\mp 1/(2h)`$ when a neighbour moves by 1. So the Jacobian is tridiagonal, and each Newton step is one sweep of [The Thomas algorithm](../03-Numerical%20Linear%20Algebra/03-tridiagonal-systems-and-the-thomas-algorithm.md): eight flops per unknown, less seven, so 113 flops for the 15 unknowns of 16 intervals.
 
 ### Step 3: collocation, one polynomial that obeys the law at chosen points
 
 **Collocation** means: choose a family of functions, here polynomials of degree n, and demand that the law hold exactly at n − 1 chosen points. The unknowns are the polynomial's values at n + 1 Chebyshev points, including both ends.
 
-A **differentiation matrix** D turns those values into the polynomial's slopes at the same points. The polynomial through n + 1 values is unique, so its slope at each point is a fixed linear combination of the values: that combination is a row of D. Then $D^2$ gives the bending. The law at point j becomes $(D^2 y)_j = F(x_j, y_j, (Dy)_j)$. The Jacobian is dense: every unknown affects every slope.
+A **differentiation matrix** D turns those values into the polynomial's slopes at the same points. The polynomial through n + 1 values is unique, so its slope at each point is a fixed linear combination of the values: that combination is a row of D. Then $`D^2`$ gives the bending. The law at point j becomes $`(D^2 y)_j = F(x_j, y_j, (Dy)_j)`$. The Jacobian is dense: every unknown affects every slope.
 
 Why it is so accurate: at Chebyshev points, the polynomial through the values of an analytic function has an error that falls by a fixed factor each time the degree rises. Collocation inherits that geometric rate whenever the discrete problem is stable. This is stated with its source, Trefethen (2000), chapters 6 and 7, and measured here, not proved:
 
@@ -164,11 +176,11 @@ Each rise of 2 in the degree cuts the error by a large, roughly steady factor, u
 <details>
 <summary>Detailed formula: the Chebyshev differentiation matrix</summary>
 
-On the standard interval, the points are $t_j = \cos(j\pi/n)$ for j = 0 to n. Let $c_0 = c_n = 2$ and $c_j = 1$ otherwise. For $i \ne j$,
+On the standard interval, the points are $`t_j = \cos(j\pi/n)`$ for j = 0 to n. Let $`c_0 = c_n = 2`$ and $`c_j = 1`$ otherwise. For $`i \ne j`$,
 
-$$D_{ij} = \frac{c_i}{c_j}\,\frac{(-1)^{i+j}}{t_i - t_j}, \qquad D_{ii} = -\sum_{j \ne i} D_{ij}.$$
+$`\displaystyle D_{ij} = \frac{c_i}{c_j}\,\frac{(-1)^{i+j}}{t_i - t_j}, \qquad D_{ii} = -\sum_{j \ne i} D_{ij}.`$
 
-The diagonal rule says each row sums to zero: a constant has slope zero. Computing the diagonal that way, rather than by its own formula, cancels rounding errors (Trefethen 2000, chapter 6). The map $x = \tfrac{L}{2}(1 - t)$ carries the interval onto the span, and multiplies each slope by $-2/L$. The checks build D this way.
+The diagonal rule says each row sums to zero: a constant has slope zero. Computing the diagonal that way, rather than by its own formula, cancels rounding errors (Trefethen 2000, chapter 6). The map $`x = \tfrac{L}{2}(1 - t)`$ carries the interval onto the span, and multiplies each slope by $`-2/L`$. The checks build D this way.
 
 </details>
 
@@ -176,9 +188,9 @@ The diagonal rule says each row sums to zero: a constant has slope zero. Computi
 
 ### Step 4: when shooting fails
 
-Put the cable on a spring bed so stiff that its law becomes $y'' = k^2 y$, on a span of 1 with both ends at height 1. Stiff means a strong spring here, not the [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md) sense: the trouble is the growing solution $e^{kx}$, which any accurate stepper must follow. The bed pulls the middle almost flat to the ground: the exact midspan height is $1/\cosh(k/2)$. [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md) met this law with k = 1.
+Put the cable on a spring bed so stiff that its law becomes $`y'' = k^2 y`$, on a span of 1 with both ends at height 1. Stiff means a strong spring here, not the [Stiffness](05-stiffness-a-stability-and-the-dahlquist-barriers.md) sense: the trouble is the growing solution $`e^{kx}`$, which any accurate stepper must follow. The bed pulls the middle almost flat to the ground: the exact midspan height is $`1/\cosh(k/2)`$. [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md) met this law with k = 1.
 
-From Step 1, the far end moves by $\sinh(k)/k$ per unit of start slope. The checks run RK4 with 200 steps and compare:
+From Step 1, the far end moves by $`\sinh(k)/k`$ per unit of start slope. The checks run RK4 with 200 steps and compare:
 
 | k | z(1), RK4 | sinh(k)/k | Midspan, exact | Shooting | Finite differences | Shooting's last miss |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -189,7 +201,7 @@ From Step 1, the far end moves by $\sinh(k)/k$ per unit of start slope. The chec
 
 At k = 40 the start slope is close to −k. One ulp there is 7.11e-15. That one ulp moves the midspan by 4.31e-8, more than the true midspan height of 4.122e-9, and the far end by 2.09e1. No double can aim better, so shooting's Newton stops with the far end 4.56 off and the midspan at 1.353e-8.
 
-This is a failure of **stability** (how a method amplifies its own small errors), not of **conditioning** (how the answer responds to changes in the data; see [Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md)). The problem is well conditioned, as the fold above shows. Finite differences never run across the span, so they reach 4.261e-9: off by the $h^2$ error of a 200-interval grid, not by rounding.
+This is a failure of **stability** (how a method amplifies its own small errors), not of **conditioning** (how the answer responds to changes in the data; see [Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md)). The problem is well conditioned, as the fold above shows. Finite differences never run across the span, so they reach 4.261e-9: off by the $`h^2`$ error of a 200-interval grid, not by rounding.
 
 The standard repair is **multiple shooting**: cut the span into pieces, shoot each piece from its own unknown start, and solve for all the starts together. In 10 pieces, a piece's far end moves only sinh(4)/40 = 0.6822 per unit of its start slope and cosh(4) = 27.31 per unit of its start height, against 2.941e15 per unit of slope across the whole span. The unknowns then form a block system much like the finite-difference one.
 
@@ -204,10 +216,10 @@ The finite-difference grid with N = 4 intervals of h = 25 m has three unknown he
 | start: the straight line | 30 + 10 × i/4 at marks 1, 2, 3 | 32.5, 35.0, 37.5 m |
 | slope at every mark | (next height − previous height) ÷ 50 | 0.1 |
 | each equation's miss | (neighbours − 2 × height) − 25² × √(1 + 0.1²) ÷ 200, and the first part is 0 on a line | −3.140586 m |
-| Jacobian row | 1 + 12.5 $F_p$, then −2, then 1 − 12.5 $F_p$, with $F_p$ = 0.1 ÷ (200 √1.01) | 1.006219, −2.0, 0.993781 |
+| Jacobian row | 1 + 12.5 $`F_p`$, then −2, then 1 − 12.5 $`F_p`$, with $`F_p`$ = 0.1 ÷ (200 √1.01) | 1.006219, −2.0, 0.993781 |
 | solve the 3-by-3 tridiagonal system for the corrections, and add them | one Thomas sweep | 27.808773, 28.719071, 32.769712 m |
 | three more Newton steps | the same, from the new heights | 27.784307, **28.694680**, 32.745397 m |
-| closed form, for comparison | $y_{\min} + a\left(\cosh((x - x_0)/a) - 1\right)$ at 25, 50, 75 m | 27.778272, 28.686688, 32.739462 m |
+| closed form, for comparison | $`y_{\min} + a\left(\cosh((x - x_0)/a) - 1\right)`$ at 25, 50, 75 m | 27.778272, 28.686688, 32.739462 m |
 
 **The grid's midspan height, 28.694680 m, is 7.99e-3 m above the true 28.686688 m**: a true error, against the closed form. Halving h four times cuts it to 3.12e-5 m, about a quarter each time.
 
@@ -215,15 +227,15 @@ The finite-difference grid with N = 4 intervals of h = 25 m has three unknown he
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| One-sided slope $(y_{i+1} - y_i)/h$ in the grid equations | midspan error −1.01e-2 m at h = 6.25 m, against 4.99e-4; observed order 1.01 | a first-order slope inside a second-order scheme makes the whole scheme first order |
+| One-sided slope $`(y_{i+1} - y_i)/h`$ in the grid equations | midspan error −1.01e-2 m at h = 6.25 m, against 4.99e-4; observed order 1.01 | a first-order slope inside a second-order scheme makes the whole scheme first order |
 | Shooting on the stiff bed, k = 40 | midspan 1.353e-8, true 4.122e-9; far end misses by 4.56 | the forward run magnifies one ulp of the slope into 2.09e1 at the far end |
-| Grid Jacobian without the slope term $F_p$ | 8 Newton steps instead of 4; the answer moves only −2.49e-14 m | an approximate Jacobian still finds the root, but converges linearly, not quadratically |
+| Grid Jacobian without the slope term $`F_p`$ | 8 Newton steps instead of 4; the answer moves only −2.49e-14 m | an approximate Jacobian still finds the root, but converges linearly, not quadratically |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script solves the cable four ways and compares them. Road one is the closed form, $y = y_{\min} + a\left(\cosh((x - x_0)/a) - 1\right)$, with $x_0$ found from the two tower heights. Roads two to four are shooting with RK4 and the variational equation, finite differences with Newton and a Thomas sweep, and Chebyshev collocation with Newton and dense elimination. The orders are measured by halving h, and the stiff bed checks the variational equation against sinh(k)/k. Python's `sum` adds floats with compensation, so the script writes its own plain sum, and both languages print the same digits.
+The script solves the cable four ways and compares them. Road one is the closed form, $`y = y_{\min} + a\left(\cosh((x - x_0)/a) - 1\right)`$, with $`x_0`$ found from the two tower heights. Roads two to four are shooting with RK4 and the variational equation, finite differences with Newton and a Thomas sweep, and Chebyshev collocation with Newton and dense elimination. The orders are measured by halving h, and the stiff bed checks the variational equation against sinh(k)/k. Python's `sum` adds floats with compensation, so the script writes its own plain sum, and both languages print the same digits.
 
 ### Python
 
@@ -645,9 +657,9 @@ Four roads agree with the closed form: shooting at 64 steps to 3.06e-11 m at mid
 
 Lean proves the stiff-bed facts from the proof fold in Step 1, for every stiffness k > 0.
 
-- On the stiff bed $y'' = k^2 y$, take every shot that starts at height α, with start slope s. Its height at each x moves by $\sinh(kx)/k$ per unit of s. At the far end, x = 1, that is $\sinh(k)/k$.
-- The curve $\alpha \sinh(k(1-x))/\sinh k + \beta \sinh(kx)/\sinh k$ starts at height α, ends at height β, and obeys $y'' = k^2 y$ everywhere.
-- The problem is well conditioned. On the span $0 \le x \le 1$, changing the end heights moves this solution anywhere by at most the larger of the two changes.
+- On the stiff bed $`y'' = k^2 y`$, take every shot that starts at height α, with start slope s. Its height at each x moves by $`\sinh(kx)/k`$ per unit of s. At the far end, x = 1, that is $`\sinh(k)/k`$.
+- The curve $`\alpha \sinh(k(1-x))/\sinh k + \beta \sinh(kx)/\sinh k`$ starts at height α, ends at height β, and obeys $`y'' = k^2 y`$ everywhere.
+- The problem is well conditioned. On the span $`0 \le x \le 1`$, changing the end heights moves this solution anywhere by at most the larger of the two changes.
 - The counts add up: 8 × 15 − 7 = 113 flops, 16 − 1 = 15 grid unknowns and 8 + 1 = 9 collocation unknowns. Lean checks only this arithmetic.
 
 The cable, the measured orders, collocation's rate and shooting's rounding failure at k = 40 are left to the Python and Rust checks.

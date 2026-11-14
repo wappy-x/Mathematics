@@ -35,51 +35,61 @@ It crosses zero between $100.00 and $105.00, at the strike where call and put co
 
 ## The formula
 
-Notation, as on the parity card. A **discount factor** $D$ is today's value of one dollar paid on expiry day, $D = e^{-rT}$ in this wing's style. Its reverse, $e^{rT}$, carries a dollar today forward to expiry day. The natural logarithm, written ln, undoes the exponential: $\ln(e^{x}) = x$.
+Notation, as on the parity card. A **discount factor** $`D`$ is today's value of one dollar paid on expiry day, $`D = e^{-rT}`$ in this wing's style. Its reverse, $`e^{rT}`$, carries a dollar today forward to expiry day. The natural logarithm, written ln, undoes the exponential: $`\ln(e^{x}) = x`$.
 
-Put-call parity, with the forward $F$ written in:
+Put-call parity, with the forward $`F`$ written in:
 
-$$C - P = D\,(F - K)$$
+```math
+C - P = D\,(F - K)
+```
 
 Solved for the forward, from one strike, with the rate known:
 
-$$F = K + (C - P)\,e^{rT}$$
+```math
+F = K + (C - P)\,e^{rT}
+```
 
 Solved for the dividend yield, once the forward is known:
 
-$$q = r - \frac{\ln(F/S)}{T}$$
+```math
+q = r - \frac{\ln(F/S)}{T}
+```
 
 **Read it aloud:** carry the call-minus-put gap forward to expiry and add the strike, and that is the forward; the forward's growth over the share price, per year, is the rate minus the dividend yield.
 
 Without the rate, the share price and forward alone still give the **carry**, the rate minus the yield:
 
-$$r - q = \frac{\ln(F/S)}{T}$$
+```math
+r - q = \frac{\ln(F/S)}{T}
+```
 
-And two strikes $K_1 < K_2$ give the rate itself. This package is called a **box**: a call-minus-put at the low strike, less a call-minus-put at the high strike, pays $K_2 - K_1$ for certain on expiry day. With $g_1$ and $g_2$ the two call-minus-put gaps:
+And two strikes $`K_1 < K_2`$ give the rate itself. This package is called a **box**: a call-minus-put at the low strike, less a call-minus-put at the high strike, pays $`K_2 - K_1`$ for certain on expiry day. With $`g_1`$ and $`g_2`$ the two call-minus-put gaps:
 
-$$D = \frac{g_1 - g_2}{K_2 - K_1}, \qquad r = -\frac{\ln D}{T}, \qquad F = K_1 + \frac{g_1}{D}$$
+```math
+D = \frac{g_1 - g_2}{K_2 - K_1}, \qquad r = -\frac{\ln D}{T}, \qquad F = K_1 + \frac{g_1}{D}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$ | the call's price today: the right to **buy** at the strike | $9.23 | forward rises, by $1.05 per dollar; implied yield falls |
-| $P$ | the put's price today: the right to **sell** at the strike | $6.33 | forward falls, by $1.05 per dollar; implied yield rises |
-| $S$ | Acme's price today | $100.00 | forward unchanged (it comes from the options); implied yield rises |
-| $K$ | the **strike**, the price both tickets name | $100.00 | no change in the forward: the gap shrinks to match |
-| $T$ | time to expiry, in **years** | 1.00 | the same price error moves the yield less; divide by a small $T$ and errors swell |
-| $r$ | the **riskless rate**, continuously compounded | 5.00% | forward rises a little (the gap is carried at a higher rate); implied yield rises almost one for one |
-| $q$ | the **dividend yield**: dividends a year as a fraction of the share price | 2.00% | the answer, not an input |
-| $F$ | the **forward price**: the fixed price agreed today for one share on expiry day | $103.05 | implied yield falls |
-| $D$ | the **discount factor** $e^{-rT}$: one dollar on expiry day, valued today | 0.951229 | a higher $D$ means a lower rate |
-| $K_1$, $K_2$ | the low and high strikes of a box | $90.00, $110.00 | wider apart: quote errors move $D$ less |
-| $g_1$, $g_2$ | the call-minus-put gap at each box strike | $12.41, −$6.62 | a wider difference means a larger $D$, a lower rate |
+| $`C`$ | the call's price today: the right to **buy** at the strike | $9.23 | forward rises, by $1.05 per dollar; implied yield falls |
+| $`P`$ | the put's price today: the right to **sell** at the strike | $6.33 | forward falls, by $1.05 per dollar; implied yield rises |
+| $`S`$ | Acme's price today | $100.00 | forward unchanged (it comes from the options); implied yield rises |
+| $`K`$ | the **strike**, the price both tickets name | $100.00 | no change in the forward: the gap shrinks to match |
+| $`T`$ | time to expiry, in **years** | 1.00 | the same price error moves the yield less; divide by a small $`T`$ and errors swell |
+| $`r`$ | the **riskless rate**, continuously compounded | 5.00% | forward rises a little (the gap is carried at a higher rate); implied yield rises almost one for one |
+| $`q`$ | the **dividend yield**: dividends a year as a fraction of the share price | 2.00% | the answer, not an input |
+| $`F`$ | the **forward price**: the fixed price agreed today for one share on expiry day | $103.05 | implied yield falls |
+| $`D`$ | the **discount factor** $`e^{-rT}`$: one dollar on expiry day, valued today | 0.951229 | a higher $`D`$ means a lower rate |
+| $`K_1`$, $`K_2`$ | the low and high strikes of a box | $90.00, $110.00 | wider apart: quote errors move $`D`$ less |
+| $`g_1`$, $`g_2`$ | the call-minus-put gap at each box strike | $12.41, −$6.62 | a wider difference means a larger $`D`$, a lower rate |
 
 ### One answer, and when there is none
 
 Every inverse card on this shelf answers three questions before it solves. Does an answer exist? Is it the only one? Where does it break?
 
-- **Only one.** The forward enters parity once, multiplied by $D$ and nothing else. So each gap gives one forward, and each forward gives one gap: the line in the picture never doubles back. The logarithm only climbs, so each forward gives one yield. For the box, the two gaps are two straight-line equations in two unknowns, the discount factor and $D$ times the forward. Two such equations have exactly one solution whenever the strikes differ.
-- **When it exists.** The yield needs a positive forward, so $C - P$ must exceed $-K\,D$: a put can never cost more than the call plus the strike's value today. A pair that breaks this is free money, not an input. The box needs a positive $D$: the box must cost something, and less than $K_2 - K_1$ while rates are positive.
-- **Where it breaks.** The yield divides by $T$, so for short options a small price error becomes a large yield error. The box divides by $K_2 - K_1$, so for close strikes a small price error becomes a large rate error. The card measures both below.
+- **Only one.** The forward enters parity once, multiplied by $`D`$ and nothing else. So each gap gives one forward, and each forward gives one gap: the line in the picture never doubles back. The logarithm only climbs, so each forward gives one yield. For the box, the two gaps are two straight-line equations in two unknowns, the discount factor and $`D`$ times the forward. Two such equations have exactly one solution whenever the strikes differ.
+- **When it exists.** The yield needs a positive forward, so $`C - P`$ must exceed $`-K\,D`$: a put can never cost more than the call plus the strike's value today. A pair that breaks this is free money, not an input. The box needs a positive $`D`$: the box must cost something, and less than $`K_2 - K_1`$ while rates are positive.
+- **Where it breaks.** The yield divides by $`T`$, so for short options a small price error becomes a large yield error. The box divides by $`K_2 - K_1`$, so for close strikes a small price error becomes a large rate error. The card measures both below.
 
 ### When it holds
 
@@ -94,82 +104,90 @@ Every inverse card on this shelf answers three questions before it solves. Does 
 
 ### Step 0: a call-minus-put is a forward, so its price is a forward's price
 
-On expiry day a call bought and a put sold at one strike pay the share price minus the strike, whatever the share does. That is a forward's payoff. Two things that pay the same must cost the same today. So the price gap between the call and the put is the value today of a forward struck at $K$. Nothing about the model of Acme's price enters. The parity card proves this; this card uses it and turns it round.
+On expiry day a call bought and a put sold at one strike pay the share price minus the strike, whatever the share does. That is a forward's payoff. Two things that pay the same must cost the same today. So the price gap between the call and the put is the value today of a forward struck at $`K`$. Nothing about the model of Acme's price enters. The parity card proves this; this card uses it and turns it round.
 
 ### Step 1: what a forward struck at K is worth today
 
-A forward struck at the market's forward price $F$ is worth nothing today: that is what "the forward price" means. A forward struck at $K$ instead pays $F - K$ more, or less, than that one on expiry day, for certain. A certain amount on expiry day is worth $D$ times that amount today. So
+A forward struck at the market's forward price $`F`$ is worth nothing today: that is what "the forward price" means. A forward struck at $`K`$ instead pays $`F - K`$ more, or less, than that one on expiry day, for certain. A certain amount on expiry day is worth $`D`$ times that amount today. So
 
-$$C - P = D\,(F - K)$$
+```math
+C - P = D\,(F - K)
+```
 
-With the parity card's own form, $S\,e^{-qT} - K\,e^{-rT}$, the two agree because $F = S\,e^{(r-q)T}$.
+With the parity card's own form, $`S\,e^{-qT} - K\,e^{-rT}`$, the two agree because $`F = S\,e^{(r-q)T}`$.
 
 ### Step 2: solve for the forward
 
-Divide by $D$ and add $K$. Dividing by $D$ is multiplying by $e^{rT}$:
+Divide by $`D`$ and add $`K`$. Dividing by $`D`$ is multiplying by $`e^{rT}`$:
 
-$$F = K + (C - P)\,e^{rT}$$
+```math
+F = K + (C - P)\,e^{rT}
+```
 
-On the house prices: $2.896925 \times 1.051271 = 3.045453$, plus the strike, $103.045453$. The share's own price did not enter.
+On the house prices: $`2.896925 \times 1.051271 = 3.045453`$, plus the strike, $`103.045453`$. The share's own price did not enter.
 
 ### Step 3: solve for the yield
 
-Cash and carry says $F = S\,e^{(r-q)T}$. Divide by $S$, take logarithms, divide by $T$:
+Cash and carry says $`F = S\,e^{(r-q)T}`$. Divide by $`S`$, take logarithms, divide by $`T`$:
 
-$$\frac{\ln(F/S)}{T} = r - q, \qquad q = r - \frac{\ln(F/S)}{T}$$
+```math
+\frac{\ln(F/S)}{T} = r - q, \qquad q = r - \frac{\ln(F/S)}{T}
+```
 
-On the house numbers: $\ln(1.030455) = 3.0000\%$, so the carry is 3.00% and the yield is 5.00% − 3.00% = 2.00%. Without the rate, this step still gives the carry, 3.00%, and stops.
+On the house numbers: $`\ln(1.030455) = 3.0000\%`$, so the carry is 3.00% and the yield is 5.00% − 3.00% = 2.00%. Without the rate, this step still gives the carry, 3.00%, and stops.
 
 ### Step 4: two strikes remove the need for the rate
 
 At two strikes, parity gives two equations:
 
-$$g_1 = D\,F - D\,K_1, \qquad g_2 = D\,F - D\,K_2$$
+```math
+g_1 = D\,F - D\,K_1, \qquad g_2 = D\,F - D\,K_2
+```
 
-Subtract the second from the first. The forward cancels and leaves $g_1 - g_2 = D\,(K_2 - K_1)$.
+Subtract the second from the first. The forward cancels and leaves $`g_1 - g_2 = D\,(K_2 - K_1)`$.
 
-The package behind that subtraction is the box: long a call and short a put at $K_1$, short a call and long a put at $K_2$. Long means bought and held; short means sold. On expiry day it pays Acme's price less $K_1$, minus Acme's price less $K_2$: that is $K_2 - K_1$, and Acme's price drops out.
+The package behind that subtraction is the box: long a call and short a put at $`K_1`$, short a call and long a put at $`K_2`$. Long means bought and held; short means sold. On expiry day it pays Acme's price less $`K_1`$, minus Acme's price less $`K_2`$: that is $`K_2 - K_1`$, and Acme's price drops out.
 
-On the house market the box pays 20.00 dollars for certain in a year and costs 12.409219 + 6.615369 dollars today, so the discount factor is 0.951229 and the rate, $-\ln D / T$, is 5.00%. Put $D$ back into the first equation and the forward comes out as before, $103.045453$.
+On the house market the box pays 20.00 dollars for certain in a year and costs 12.409219 + 6.615369 dollars today, so the discount factor is 0.951229 and the rate, $`-\ln D / T`$, is 5.00%. Put $`D`$ back into the first equation and the forward comes out as before, $`103.045453`$.
 
 ### Step 5: how a price error travels to the yield
 
-Nudge the put up by a small amount. The forward falls by that amount times $e^{rT}$. The yield rises by the forward's fall divided by $F \times T$. So a put error of $0.10 moves the yield by about $0.10 \times e^{rT} / (F\,T)$ = 0.10 percentage point on the house market. The $T$ in the denominator is why short options give wild yields.
+Nudge the put up by a small amount. The forward falls by that amount times $`e^{rT}`$. The yield rises by the forward's fall divided by $`F \times T`$. So a put error of $0.10 moves the yield by about $`0.10 \times e^{rT} / (F\,T)`$ = 0.10 percentage point on the house market. The $`T`$ in the denominator is why short options give wild yields.
 
 <details>
 <summary>Detailed proof: uniqueness, existence, and the error rule</summary>
 
-**Uniqueness, one strike.** The map from $F$ to $C - P$ is $F \mapsto D(F - K)$ with $D > 0$. It is a straight line with positive slope, so it has an inverse, $g \mapsto K + g/D$, defined for every gap. The map from $F$ to $q$, $F \mapsto r - \ln(F/S)/T$, is strictly decreasing for $F > 0$, so it too has exactly one inverse. The composition of two one-to-one maps is one-to-one.
+**Uniqueness, one strike.** The map from $`F`$ to $`C - P`$ is $`F \mapsto D(F - K)`$ with $`D > 0`$. It is a straight line with positive slope, so it has an inverse, $`g \mapsto K + g/D`$, defined for every gap. The map from $`F`$ to $`q`$, $`F \mapsto r - \ln(F/S)/T`$, is strictly decreasing for $`F > 0`$, so it too has exactly one inverse. The composition of two one-to-one maps is one-to-one.
 
-**Existence.** $\ln$ needs $F > 0$, that is $K + g/D > 0$, that is $g > -K D$, which reads $P < C + K\,e^{-rT}$. Were the put dearer than that, buying the call, lending $K\,e^{-rT}$ and selling the put would bring in money today and leave a position that never pays less than nothing on expiry day. So an arbitrage-free pair always has an answer.
+**Existence.** $`\ln`$ needs $`F > 0`$, that is $`K + g/D > 0`$, that is $`g > -K D`$, which reads $`P < C + K\,e^{-rT}`$. Were the put dearer than that, buying the call, lending $`K\,e^{-rT}`$ and selling the put would bring in money today and leave a position that never pays less than nothing on expiry day. So an arbitrage-free pair always has an answer.
 
-**The box as a linear system.** Unknowns $D$ and $D\,F$. Equations $D\,F - K_1 D = g_1$ and $D\,F - K_2 D = g_2$. The determinant (the number whose being nonzero guarantees one solution) is $K_1 - K_2$, nonzero when the strikes differ. Solution $D = (g_1 - g_2)/(K_2 - K_1)$, $D\,F = g_1 + K_1 D$, and $F$ is the second divided by the first. Existence of the rate needs $D > 0$.
+**The box as a linear system.** Unknowns $`D`$ and $`D\,F`$. Equations $`D\,F - K_1 D = g_1`$ and $`D\,F - K_2 D = g_2`$. The determinant (the number whose being nonzero guarantees one solution) is $`K_1 - K_2`$, nonzero when the strikes differ. Solution $`D = (g_1 - g_2)/(K_2 - K_1)`$, $`D\,F = g_1 + K_1 D`$, and $`F`$ is the second divided by the first. Existence of the rate needs $`D > 0`$.
 
-**The error rule.** $F = K + (C - P)e^{rT}$ gives $\partial F / \partial P = -e^{rT}$. $q = r - \ln(F/S)/T$ gives $\partial q / \partial F = -1/(F T)$. By the chain rule $\partial q / \partial P = e^{rT}/(F T)$. For the box, $\partial D / \partial g_1 = 1/(K_2 - K_1)$: halving the strike distance doubles the effect of every price error on $D$, and so on the rate.
+**The error rule.** $`F = K + (C - P)e^{rT}`$ gives $`\partial F / \partial P = -e^{rT}`$. $`q = r - \ln(F/S)/T`$ gives $`\partial q / \partial F = -1/(F T)`$. By the chain rule $`\partial q / \partial P = e^{rT}/(F T)`$. For the box, $`\partial D / \partial g_1 = 1/(K_2 - K_1)`$: halving the strike distance doubles the effect of every price error on $`D`$, and so on the rate.
 
 </details>
 
-The alternative road is to skip the formulas and hunt: guess a yield, compute $S\,e^{-qT} - K\,e^{-rT}$, compare with $C - P$, and adjust. That is a root finder, and the code runs one as its second road. It lands on the same 2.00%, as it must, since the equation has one root. It is the method a desk falls back on when dividends come as a list of cash amounts on dates and no clean logarithm exists; the root-finding machinery itself is on [Solving for implied volatility](02-implied-volatility-by-newton-and-bisection.md).
+The alternative road is to skip the formulas and hunt: guess a yield, compute $`S\,e^{-qT} - K\,e^{-rT}`$, compare with $`C - P`$, and adjust. That is a root finder, and the code runs one as its second road. It lands on the same 2.00%, as it must, since the equation has one root. It is the method a desk falls back on when dividends come as a list of cash amounts on dates and no clean logarithm exists; the root-finding machinery itself is on [Solving for implied volatility](02-implied-volatility-by-newton-and-bisection.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The house market: Acme at $S$ = $100.00, strike $K$ = $100.00, rate $r$ = 5.00%, $T$ = 1.00 year, call $9.227006, put $6.330081. The dividend yield is treated as unknown.
+The house market: Acme at $`S`$ = $100.00, strike $`K`$ = $100.00, rate $`r`$ = 5.00%, $`T`$ = 1.00 year, call $9.227006, put $6.330081. The dividend yield is treated as unknown.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the gap, $C - P$ | $9.227006 - 6.330081$ | $2.896925 |
-| carry factor, $e^{rT}$ | $e^{0.05}$ | 1.051271 |
-| gap carried to expiry | $2.896925 \times 1.051271$ | $3.045453 |
-| forward, $F$ | $100.00 + 3.045453$ | **$103.045453** |
-| forward over share, $F/S$ | $103.045453 / 100.00$ | 1.030455 |
-| carry, $\ln(F/S)/T$ | $\ln(1.030455) / 1$ | 3.0000% |
-| dividend yield, $q$ | $5.0000\% - 3.0000\%$ | **2.0000%** |
+| the gap, $`C - P`$ | $`9.227006 - 6.330081`$ | $2.896925 |
+| carry factor, $`e^{rT}`$ | $`e^{0.05}`$ | 1.051271 |
+| gap carried to expiry | $`2.896925 \times 1.051271`$ | $3.045453 |
+| forward, $`F`$ | $`100.00 + 3.045453`$ | **$103.045453** |
+| forward over share, $`F/S`$ | $`103.045453 / 100.00`$ | 1.030455 |
+| carry, $`\ln(F/S)/T`$ | $`\ln(1.030455) / 1`$ | 3.0000% |
+| dividend yield, $`q`$ | $`5.0000\% - 3.0000\%`$ | **2.0000%** |
 | box: gaps at $90 and $110 | from the call and put at each strike | $12.409219 and −$6.615369 |
-| box: discount factor, $D$ | $(12.409219 + 6.615369) / 20$ | 0.951229 |
-| box: rate, $-\ln D / T$ | | **5.0000%** |
-| cross-check: cash and carry | $100.00 \times e^{0.03}$ | $103.045453 |
+| box: discount factor, $`D`$ | $`(12.409219 + 6.615369) / 20`$ | 0.951229 |
+| box: rate, $`-\ln D / T`$ | | **5.0000%** |
+| cross-check: cash and carry | $`100.00 \times e^{0.03}`$ | $103.045453 |
 
 The market is selling Acme forward at $103.05 and so is quietly assuming a 2.00% dividend yield: the same yield the prices were built from, recovered from two quotes and a rate.
 
@@ -180,8 +198,8 @@ Right answers: forward $103.045453, yield 2.00%.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Put quoted $0.10 too high | forward $102.940326, yield 2.10% | a dime on one leg moves the yield by 0.10 percentage point, the error rule of Step 5 |
-| Gap not carried forward, $F = K + C - P$ | yield 2.14% | the gap is a price today; the forward lives on expiry day |
-| Sign swapped, $r + \ln(F/S)/T$ | yield 8.00% | the forward sits below the share grown at the rate, so the yield is the rate less the carry |
+| Gap not carried forward, $`F = K + C - P`$ | yield 2.14% | the gap is a price today; the forward lives on expiry day |
+| Sign swapped, $`r + \ln(F/S)/T`$ | yield 8.00% | the forward sits below the share grown at the rate, so the yield is the rate less the carry |
 | Stale call, priced when Acme was $99.00 | call $8.649699, forward $102.438548, yield 2.59% | the two legs describe two different markets |
 
 ### Bid, ask and crossed quotes
@@ -614,9 +632,9 @@ The two outputs are identical line for line.
 
 Lean proves that parity, run backwards, gives the forward, the yield and the rate, for any prices that obey it.
 
-- **One strike, rate given.** Suppose $C - P = D\,(F - K)$ and $F = S\,e^{(r-q)T}$, with $S$ and $T$ positive. Then $F = K + (C - P)\,e^{rT}$ and $q = r - \ln(F/S)/T$.
-- **One answer.** Take $S$ and $T$ positive, and $C - P$ above $-K\,D$. Then exactly one forward $F$ and one yield $q$ make parity and cash and carry both hold.
-- **The box.** Take $T$ positive and strikes $K_1 < K_2$, with both gaps $g_1$ and $g_2$ obeying parity for one forward $F$. Then $D = (g_1 - g_2)/(K_2 - K_1)$, $r = -\ln D/T$ and $F = K_1 + g_1/D$.
+- **One strike, rate given.** Suppose $`C - P = D\,(F - K)`$ and $`F = S\,e^{(r-q)T}`$, with $`S`$ and $`T`$ positive. Then $`F = K + (C - P)\,e^{rT}`$ and $`q = r - \ln(F/S)/T`$.
+- **One answer.** Take $`S`$ and $`T`$ positive, and $`C - P`$ above $`-K\,D`$. Then exactly one forward $`F`$ and one yield $`q`$ make parity and cash and carry both hold.
+- **The box.** Take $`T`$ positive and strikes $`K_1 < K_2`$, with both gaps $`g_1`$ and $`g_2`$ obeying parity for one forward $`F`$. Then $`D = (g_1 - g_2)/(K_2 - K_1)`$, $`r = -\ln D/T`$ and $`F = K_1 + g_1/D`$.
 
 The worked numbers, how price errors travel to the yield, and the noisy many-strike fits are left to the Python and Rust checks.
 
@@ -725,8 +743,8 @@ theorem implied_rate_and_forward_from_box
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Use the $120.00 strike alone.** Guess whether a deep-in-the-money put gives a different forward. It does not: $103.045453 again, because the gap falls by exactly $D$ per dollar of strike.
-> - **Shorten the option to one week and quote the put $0.10 too high.** Guess the implied yield. It comes out at 7.2046%, not 2.00%: the same dime, divided by a tiny $T$.
+> - **Use the $120.00 strike alone.** Guess whether a deep-in-the-money put gives a different forward. It does not: $103.045453 again, because the gap falls by exactly $`D`$ per dollar of strike.
+> - **Shorten the option to one week and quote the put $0.10 too high.** Guess the implied yield. It comes out at 7.2046%, not 2.00%: the same dime, divided by a tiny $`T`$.
 > - **Fit the rate from the noisy $95.00 and $105.00 strikes only.** Guess how far off. The rate comes out at 6.0273%, a full point high, from errors of at most five cents.
 > - **Cross the put at $6.45 bid and $6.25 ask.** The forward band's low end, $103.080224, lands above its high end, $102.975097. The check asserts it.
 
@@ -737,8 +755,8 @@ theorem implied_rate_and_forward_from_box
 > [!warning]
 > **Reading the implied yield as the dividend forecast.** The yield parity returns is everything that makes owning the share differ from owning cash for a year: the dividend, plus any fee to borrow the share, plus, for American options, the value of early exercise, which parity does not know is there. A hard-to-borrow share can show an implied yield of several percent while paying no dividend at all. The number is the options market's carry, and splitting it into dividend and borrow cost needs outside information.
 >
-> - **Leaving the gap uncarried.** $F = K + C - P$ treats a price today as an amount on expiry day. Here it gives 2.14% instead of 2.00%.
-> - **Flipping the sign.** $q = r + \ln(F/S)/T$ gives 8.00%. The forward sits below the share grown at the rate, so the dividend is what brings it down.
+> - **Leaving the gap uncarried.** $`F = K + C - P`$ treats a price today as an amount on expiry day. Here it gives 2.14% instead of 2.00%.
+> - **Flipping the sign.** $`q = r + \ln(F/S)/T`$ gives 8.00%. The forward sits below the share grown at the rate, so the dividend is what brings it down.
 > - **Pairing a stale leg with a live one.** A call priced when Acme was $99.00, paired with a live put, gives 2.59%. A $1.00 move in the share, seen by one leg and not the other, is worth more than half a percentage point of yield on a one-year option.
 > - **Trusting a short-dated yield.** At one week a $0.10 put error gives 7.20%. Read carry from longer options, or from many strikes averaged.
 
@@ -754,7 +772,7 @@ theorem implied_rate_and_forward_from_box
 - **Currencies.** For a currency option the dividend slot holds the foreign interest rate, so the same algebra reads that rate off option prices: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
 
 > **Say it back**
-> A call bought and a put sold at one strike make a forward, so the call's price minus the put's is the forward's value today, $D(F - K)$. Carry the gap forward and add the strike: $F = K + (C - P)e^{rT}$, $103.05 on the house quotes. The forward over the share, logged and divided by the time, is the rate minus the yield, so the yield is 5.00% − 3.00% = 2.00%. Two strikes give the rate as well, because the forward cancels between them and leaves a certain payment. Each step is a straight line or a steady climb, so the answer is unique, and its weak points are short expiries, close strikes, stale legs and crossed quotes.
+> A call bought and a put sold at one strike make a forward, so the call's price minus the put's is the forward's value today, $`D(F - K)`$. Carry the gap forward and add the strike: $`F = K + (C - P)e^{rT}`$, $103.05 on the house quotes. The forward over the share, logged and divided by the time, is the rate minus the yield, so the yield is 5.00% − 3.00% = 2.00%. Two strikes give the rate as well, because the forward cancels between them and leaves a certain payment. Each step is a straight line or a steady climb, so the answer is unique, and its weak points are short expiries, close strikes, stale legs and crossed quotes.
 
 ---
 
@@ -762,7 +780,7 @@ theorem implied_rate_and_forward_from_box
 
 - [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the equation this card runs backwards, and the proof that no model of the share enters it.
 - [Implied volatility](01-implied-volatility.md): the shelf's first inverse, and the reason a desk wants the forward before it wants anything else.
-- [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): $F = S\,e^{(r-q)T}$, the link from the forward to the yield in Step 3.
+- [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): $`F = S\,e^{(r-q)T}`$, the link from the forward to the yield in Step 3.
 
 ## Where this goes next
 
@@ -780,5 +798,5 @@ Verified 24 Sep 2026: every link below resolves to the publisher's page.
 - Stoll, Hans R. "The Relationship Between Put and Call Option Prices." *The Journal of Finance* 24, no. 5 (1969): 801–824. [doi:10.1111/j.1540-6261.1969.tb01694.x](https://doi.org/10.1111/j.1540-6261.1969.tb01694.x). The relation this card inverts, with the trades that enforce it.
 - Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). Adds the dividend yield to parity, and shows why American options break the equality.
 - van Binsbergen, Jules, Michael Brandt, and Ralph Koijen. "On the Timing and Pricing of Dividends." *American Economic Review* 102, no. 4 (2012): 1596–1618. [doi:10.1257/aer.102.4.1596](https://doi.org/10.1257/aer.102.4.1596). Recovers the price of near-term index dividends from option prices by parity.
-- Cboe Global Indices. *Cboe Volatility Index Methodology*. [Cboe PDF](https://cdn.cboe.com/resources/indices/Volatility_Index_Methodology_Cboe_Volatility_Index.pdf). The forward rule $F = K + e^{rT}(C - P)$ as an index provider applies it every day.
+- Cboe Global Indices. *Cboe Volatility Index Methodology*. [Cboe PDF](https://cdn.cboe.com/resources/indices/Volatility_Index_Methodology_Cboe_Volatility_Index.pdf). The forward rule $`F = K + e^{rT}(C - P)`$ as an index provider applies it every day.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). Parity with dividends, box spreads, and the forward from cash and carry.

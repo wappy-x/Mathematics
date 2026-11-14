@@ -37,41 +37,45 @@ The line is the stopping boundary: at or above it, sell; below it, wait. It fall
 
 Two earlier cards hold most of the machinery. [Backward induction](01-finite-horizon-dynamic-programming-and-backward-induction.md) solves the last month first and proves the resulting table is the best over every rule. [Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md) solves a stopping problem the same way, on the tree of every possible history, and calls the result the Snell envelope. New here: the history is replaced by a **state**, today's price, so the table has one row per month and one column per price, and the decision becomes a boundary in that table.
 
-Prices are in thousands of pounds, on the grid 60, 70, …, 140. Months run $k = 0$ (1 June) to $N = 6$ (1 December).
+Prices are in thousands of pounds, on the grid 60, 70, …, 140. Months run $`k = 0`$ (1 June) to $`N = 6`$ (1 December).
 
-$$V_N(x) = x, \qquad W_k(x) = -c + \sum_{x'} p(x' \mid x)\, V_{k+1}(x'), \qquad V_k(x) = \max\big(x,\; W_k(x)\big)$$
+```math
+V_N(x) = x, \qquad W_k(x) = -c + \sum_{x'} p(x' \mid x)\, V_{k+1}(x'), \qquad V_k(x) = \max\big(x,\; W_k(x)\big)
+```
 
 **Read it aloud:** in December the block is worth its price; in any earlier month the value of waiting is next month's value averaged over where the price may go, minus a month's storage, and the block is worth the better of selling now and waiting.
 
-The **stopping boundary** is the bar $b_k$, the lowest price at which selling wins:
+The **stopping boundary** is the bar $`b_k`$, the lowest price at which selling wins:
 
-$$b_k = \min\{\, x : x \ge W_k(x) \,\}, \qquad \text{rule: sell in month } k \text{ when } x \ge b_k.$$
+```math
+b_k = \min\{\, x : x \ge W_k(x) \,\}, \qquad \text{rule: sell in month } k \text{ when } x \ge b_k.
+```
 
 In the language of [Markov decision processes](02-markov-decision-processes.md), the state is the month and the price, the two actions are stop and wait, and "sold" is a state that earns nothing more.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $k$ | the month, from 0 (1 June) to $N$ | 0 to 6 | fewer months left: $W_k$ and $b_k$ fall |
-| $N$ | the deadline month, when the block must be sold | 6 (1 December) | more chances: $V_0(80)$ rises, 85.145 at 12 months |
-| $x$ | today's forward price for the block, £ thousand | 80 on 1 June | selling now pays more |
-| $x'$ | next month's price | $x - 10$ or $x + 10$; at the grid's ends, the blocked move stays put | — |
-| $p(x' \mid x)$ | chance the price moves from $x$ to $x'$ | rise 0.54 from 80, 0.50 from 100, 0.46 from 120 | more chance of a rise: more waiting |
-| $i$ | the price's grid step, 0 at £60,000 up to 8 at £140,000 | 2 at £80,000 | — |
-| $c$ | storage cost per month, £ thousand | 1 | waiting costs more: $b_k$ falls |
-| $V_k(x)$ | value: best average net result from month $k$ at price $x$, £ thousand | $V_0(80)$ = 82.36 | — |
-| $W_k(x)$ | wait value: the average of next month's value, less storage | $W_0(80)$ = 82.36, $W_5(80)$ = 79.80 | above $x$: wait |
-| $b_k$ | the bar: lowest price at which selling wins | 100, 100, 90, 90, 80, 80 | — |
-| $\max(x, W_k(x))$ | the choice: stop and take $x$, or wait and get $W_k(x)$ on average | June at 90: max(90, 90.33), so wait | — |
+| $`k`$ | the month, from 0 (1 June) to $`N`$ | 0 to 6 | fewer months left: $`W_k`$ and $`b_k`$ fall |
+| $`N`$ | the deadline month, when the block must be sold | 6 (1 December) | more chances: $`V_0(80)`$ rises, 85.145 at 12 months |
+| $`x`$ | today's forward price for the block, £ thousand | 80 on 1 June | selling now pays more |
+| $`x'`$ | next month's price | $`x - 10`$ or $`x + 10`$; at the grid's ends, the blocked move stays put | — |
+| $`p(x' \mid x)`$ | chance the price moves from $`x`$ to $`x'`$ | rise 0.54 from 80, 0.50 from 100, 0.46 from 120 | more chance of a rise: more waiting |
+| $`i`$ | the price's grid step, 0 at £60,000 up to 8 at £140,000 | 2 at £80,000 | — |
+| $`c`$ | storage cost per month, £ thousand | 1 | waiting costs more: $`b_k`$ falls |
+| $`V_k(x)`$ | value: best average net result from month $`k`$ at price $`x`$, £ thousand | $`V_0(80)`$ = 82.36 | — |
+| $`W_k(x)`$ | wait value: the average of next month's value, less storage | $`W_0(80)`$ = 82.36, $`W_5(80)`$ = 79.80 | above $`x`$: wait |
+| $`b_k`$ | the bar: lowest price at which selling wins | 100, 100, 90, 90, 80, 80 | — |
+| $`\max(x, W_k(x))`$ | the choice: stop and take $`x`$, or wait and get $`W_k(x)`$ on average | June at 90: max(90, 90.33), so wait | — |
 
-The chance of a rise from grid step $i$ ($i = 0$ at £60,000, $i = 4$ at £100,000) is $0.5 - 0.02\,(i - 4)$: the price leans back toward £100,000. That lean is called **mean reversion**.
+The chance of a rise from grid step $`i`$ ($`i = 0`$ at £60,000, $`i = 4`$ at £100,000) is $`0.5 - 0.02\,(i - 4)`$: the price leans back toward £100,000. That lean is called **mean reversion**.
 
 ### When it holds
 
 - **The price is a Markov chain**: next month's chance depends on today's price only. Then the price is enough state. If prices have momentum, a rise tending to follow a rise, the state must also carry last month's move, or the bars are wrong.
 - **The decision uses only prices seen so far.** A rule that knew the whole path would average 94.365, but no one can follow it.
-- **A deadline exists.** It anchors the recursion at $V_N(x) = x$. With no deadline the same equation becomes a fixed point: the value table must come back unchanged after one more backward step. [Value and policy iteration](03-value-and-policy-iteration.md) solves it, and a best rule need not exist without a cost or discount.
+- **A deadline exists.** It anchors the recursion at $`V_N(x) = x`$. With no deadline the same equation becomes a fixed point: the value table must come back unchanged after one more backward step. [Value and policy iteration](03-value-and-policy-iteration.md) solves it, and a best rule need not exist without a cost or discount.
 - **Stopping is final.** Once sold, the block is gone. A problem where one can sell part and keep part is a general dynamic program, not a stopping problem.
-- **One bar per month needs the right shape.** The bar exists because the gap $W_k(x) - x$ shrinks as the price rises. That holds here (Step 3), but in other models the sell prices can come in two separate bands.
+- **One bar per month needs the right shape.** The bar exists because the gap $`W_k(x) - x`$ shrinks as the price rises. That holds here (Step 3), but in other models the sell prices can come in two separate bands.
 
 ---
 
@@ -79,43 +83,43 @@ The chance of a rise from grid step $i$ ($i = 0$ at £60,000, $i = 4$ at £100,0
 
 ### Step 0: stopping is a dynamic program with two choices
 
-Every stopping problem has the same structure. At each month there are two moves: take the reward on offer, or pay to see one more month. Taking the reward ends the game, so its value is just the reward. Waiting leads to next month, whose value is already known if the table is filled from the deadline back. So the whole decision is a table of numbers $V_k(x)$, one per month and price, filled right to left.
+Every stopping problem has the same structure. At each month there are two moves: take the reward on offer, or pay to see one more month. Taking the reward ends the game, so its value is just the reward. Waiting leads to next month, whose value is already known if the table is filled from the deadline back. So the whole decision is a table of numbers $`V_k(x)`$, one per month and price, filled right to left.
 
-What makes a table possible is that the price is the whole story. On 1 September at £90,000, the future looks the same whether the price got there by rising or by falling. So the best average from here is one number, $V_3(90)$, not one number per history.
+What makes a table possible is that the price is the whole story. On 1 September at £90,000, the future looks the same whether the price got there by rising or by falling. So the best average from here is one number, $`V_3(90)`$, not one number per history.
 
 ### Step 1: the table gives the best rule
 
-The general proof is on [Backward induction](01-finite-horizon-dynamic-programming-and-backward-induction.md): with the choices "stop" and "wait", and "sold" as an extra state worth nothing more, it says no rule averages more than $V_0(x)$, even one that remembers every past price. The rule that picks the larger side of each maximum attains it.
+The general proof is on [Backward induction](01-finite-horizon-dynamic-programming-and-backward-induction.md): with the choices "stop" and "wait", and "sold" as an extra state worth nothing more, it says no rule averages more than $`V_0(x)`$, even one that remembers every past price. The rule that picks the larger side of each maximum attains it.
 
 The same numbers are the Snell envelope of [Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md), which solves the problem on the full tree of price histories. Because the price is Markov, every branch that reaches the same month and price has the same envelope value, so that tree collapses into this table. That collapse is what a dynamic program buys: the tree doubles in size with every month added, while the table grows by one row of nine prices.
 
 ### Step 2: the deadline anchors it, and one month back is a comparison
 
-On 1 December the block must go: $V_6(x) = x$. On 1 November at £80,000, waiting gives £70,000 with chance 0.46 or £90,000 with chance 0.54, less £1,000: $W_5(80) = 79.80$. That is below 80, so sell. At £70,000, waiting gives $0.44 \times 60 + 0.56 \times 80 - 1 = 70.20$, above 70, so wait. The bar in November is £80,000.
+On 1 December the block must go: $`V_6(x) = x`$. On 1 November at £80,000, waiting gives £70,000 with chance 0.46 or £90,000 with chance 0.54, less £1,000: $`W_5(80) = 79.80`$. That is below 80, so sell. At £70,000, waiting gives $`0.44 \times 60 + 0.56 \times 80 - 1 = 70.20`$, above 70, so wait. The bar in November is £80,000.
 
 ### Step 3: one bar per month
 
-Selling wins where $x \ge W_k(x)$, so look at the gap $W_k(x) - x$, the gain from waiting. It splits into two parts:
+Selling wins where $`x \ge W_k(x)`$, so look at the gap $`W_k(x) - x`$, the gain from waiting. It splits into two parts:
 
-- **The drift**, the average move less storage: $10 \times (0.5 - 0.02\,(i-4)) - 10 \times (0.5 + 0.02\,(i-4)) - 1$. That is $-0.4\,(i-4) - 1$, which falls by 0.4 per grid step except at the grid's two ends, where the blocked move stays put and the drift falls faster still.
+- **The drift**, the average move less storage: $`10 \times (0.5 - 0.02\,(i-4)) - 10 \times (0.5 + 0.02\,(i-4)) - 1`$. That is $`-0.4\,(i-4) - 1`$, which falls by 0.4 per grid step except at the grid's two ends, where the blocked move stays put and the drift falls faster still.
 - **The option**, how much next month's value beats next month's price on average. Next month's value exceeds the price only at low prices, where waiting is still worth something, so this part is largest at the bottom of the grid.
 
 Both parts are largest at low prices and shrink as the price rises. So the gap crosses zero once, and the sell prices are everything at or above one bar. In June the gap is 13.02 at £60,000, 2.36 at £80,000, 0.33 at £90,000 and −0.99 at £100,000. The second part's shape is not automatic for every chain, so the code checks the one-bar shape in every month with an assert that can fail.
 
 ### Step 4: the bar falls toward the deadline
 
-More months left can only help: with one extra month the operator could always copy the shorter rule and stop when it stops. So $V_k(x) \ge V_{k+1}(x)$ at every price, and the wait value, an average of next month's values less a fixed cost, is also larger earlier. A larger wait value means a higher bar. The wait value at £80,000 runs 82.36, 81.95, 81.30, 80.86, 79.89, 79.80 from June to November; it crosses 80 between September and October, which is where the bar drops to £80,000.
+More months left can only help: with one extra month the operator could always copy the shorter rule and stop when it stops. So $`V_k(x) \ge V_{k+1}(x)`$ at every price, and the wait value, an average of next month's values less a fixed cost, is also larger earlier. A larger wait value means a higher bar. The wait value at £80,000 runs 82.36, 81.95, 81.30, 80.86, 79.89, 79.80 from June to November; it crosses 80 between September and October, which is where the bar drops to £80,000.
 
 <details>
 <summary>Detailed proof: the bar never rises toward the deadline</summary>
 
-The prices, chances and cost are the same every month, so $V_k$ depends only on the months left, $N - k$. Claim: $V_k(x) \ge V_{k+1}(x)$ for every $x$ and every $k < N$.
+The prices, chances and cost are the same every month, so $`V_k`$ depends only on the months left, $`N - k`$. Claim: $`V_k(x) \ge V_{k+1}(x)`$ for every $`x`$ and every $`k < N`$.
 
-Base: $V_{N-1}(x) = \max(x, W_{N-1}(x)) \ge x = V_N(x)$.
+Base: $`V_{N-1}(x) = \max(x, W_{N-1}(x)) \ge x = V_N(x)`$.
 
-Step: suppose $V_{k+1} \ge V_{k+2}$ at every price. The chances $p(x' \mid x)$ are not negative, so averaging keeps the order: $W_k(x) = -c + \sum p(x' \mid x) V_{k+1}(x') \ge -c + \sum p(x' \mid x) V_{k+2}(x') = W_{k+1}(x)$. Then $V_k(x) = \max(x, W_k(x)) \ge \max(x, W_{k+1}(x)) = V_{k+1}(x)$. Induction downward gives the claim at every month.
+Step: suppose $`V_{k+1} \ge V_{k+2}`$ at every price. The chances $`p(x' \mid x)`$ are not negative, so averaging keeps the order: $`W_k(x) = -c + \sum p(x' \mid x) V_{k+1}(x') \ge -c + \sum p(x' \mid x) V_{k+2}(x') = W_{k+1}(x)`$. Then $`V_k(x) = \max(x, W_k(x)) \ge \max(x, W_{k+1}(x)) = V_{k+1}(x)`$. Induction downward gives the claim at every month.
 
-The bar follows. If selling wins at price $x$ in month $k$, then $x \ge W_k(x) \ge W_{k+1}(x)$, so selling also wins at $x$ in month $k + 1$. Every sell price stays a sell price as the deadline nears, so $b_{k+1} \le b_k$.
+The bar follows. If selling wins at price $`x`$ in month $`k`$, then $`x \ge W_k(x) \ge W_{k+1}(x)`$, so selling also wins at $`x`$ in month $`k + 1`$. Every sell price stays a sell price as the deadline nears, so $`b_{k+1} \le b_k`$.
 
 </details>
 
@@ -136,7 +140,7 @@ Prices in £ thousand. December first, then back.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| 1 Dec, any price | must sell: $V_6(x) = x$ | 60 to 140 |
+| 1 Dec, any price | must sell: $`V_6(x) = x`$ | 60 to 140 |
 | 1 Nov at 70, wait | 0.44 × 60 + 0.56 × 80 − 1 | 70.20 > 70: wait |
 | 1 Nov at 80, wait | 0.46 × 70 + 0.54 × 90 − 1 | 79.80 < 80: sell |
 | 1 Nov at 90, wait | 0.48 × 80 + 0.52 × 100 − 1 | 89.40 < 90: sell |
@@ -144,11 +148,11 @@ Prices in £ thousand. December first, then back.
 | September back to July | the same step, three more times | see the table below |
 | 1 Jun at 90, wait | the June wait value | 90.33 > 90: wait |
 | 1 Jun at 100, wait | the June wait value | 99.01 < 100: sell; bar 100 |
-| **1 Jun at 80** | $V_0(80) = W_0(80)$, since waiting wins | **82.36** |
+| **1 Jun at 80** | $`V_0(80) = W_0(80)`$, since waiting wins | **82.36** |
 
 The block is worth £82,360 to an operator who follows the bars, against £80,000 for selling on 1 June: the right to wait is worth £2,360.
 
-The whole table, value $V_k(x)$ in £ thousand, with the bar:
+The whole table, value $`V_k(x)`$ in £ thousand, with the bar:
 
 | Month | Bar | 60 | 70 | 80 | 90 | 100 | 110 to 140 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
@@ -170,7 +174,7 @@ The right answer is 82.360, in £ thousand, from a June price of 80.
 | --- | --- | --- |
 | Sell on 1 June | 80.000 | Throws away the right to wait, worth 2.360 |
 | Hold to 1 December | 80.630 | Pays six months' storage and ignores good prices on the way |
-| Look one month ahead only | 80.000 | Compares 80 with $W$ computed as if next month must sell: 79.80, so sells at once. Waiting buys the right to decide again |
+| Look one month ahead only | 80.000 | Compares 80 with $`W`$ computed as if next month must sell: 79.80, so sells at once. Waiting buys the right to decide again |
 | Best fixed bar for every month (90) | 82.328 | Close, because the bar moves only one step at a time here, but it holds out too long in October and November and sells too soon in June and July |
 | Treat each month's price as a fresh draw | delivered 81.074 | A wrong price model: it draws next month's price from the long-run spread around £100,000, whatever today's price, so it expects a low price to jump straight back, when the price really moves only £10,000 a month. The bars come out too high, 120.98 down to 99.00, so the rule turns down £90,000 and £100,000 for months |
 | The prophet, who sees the whole path first | 94.365 | Not a rule anyone can follow: it decides using future prices. An upper bound, not a plan |
@@ -195,7 +199,7 @@ The block sells on 1 September at £90,000, net £87,000 after three months' sto
 
 Across all seasons, the rule sells in August with chance 28.1%, September 27.9%, October 19.9%, November 2.8% and on 1 December 21.4%. It never sells in June or July from a start of £80,000, because the price cannot reach £100,000 in one month. On average the block is held 3.614 months and fetches 85.974, and 85.974 − 3.614 × 1 = 82.360.
 
-One force at a time: $V_0(80)$ in £ thousand when one setting changes.
+One force at a time: $`V_0(80)`$ in £ thousand when one setting changes.
 
 ```
 no pull toward 100        ████████████████████████████████▎        80.688
@@ -226,7 +230,7 @@ Orange: the value on 1 June. Green: the value on 1 November. Dark: the price, wh
 
 ## Code, from first principles, and it actually runs
 
-The script fills the table from 1 December back, reads off each month's bar, and asserts that the sell prices form one block at the top in every month. It then reaches $V_0(80)$ by three more roads. Road 2 runs the bar rule forward, carrying the chance of each unsold price, with no maximum taken. Road 3 lists all 262,144 pairs of stop sets for October and November and checks the best matches the table at every price. Road 4 simulates 200,000 seasons with a SplitMix64 random-number generator started from seed 20261111, and checks the mean lies within four standard errors. A hand-computed November wait value is checked, and the mistakes and experiments are computed and printed. Both languages add their sums in the same order, so their outputs match to the last digit.
+The script fills the table from 1 December back, reads off each month's bar, and asserts that the sell prices form one block at the top in every month. It then reaches $`V_0(80)`$ by three more roads. Road 2 runs the bar rule forward, carrying the chance of each unsold price, with no maximum taken. Road 3 lists all 262,144 pairs of stop sets for October and November and checks the best matches the table at every price. Road 4 simulates 200,000 seasons with a SplitMix64 random-number generator started from seed 20261111, and checks the mean lies within four standard errors. A hand-computed November wait value is checked, and the mistakes and experiments are computed and printed. Both languages add their sums in the same order, so their outputs match to the last digit.
 
 ### Python
 
@@ -631,13 +635,13 @@ The two outputs match line for line.
 
 Lean proves the backward-induction claims for any finite price grid, chances and storage cost, and checks this card's bars and June value exactly.
 
-- If the chances are not negative and each price's chances add up to 1, no rule that decides from the prices seen so far averages more than $V_0(x)$.
-- The bar rule, sell when the price is at least the wait value, averages exactly $V_0(x)$.
-- More months left can only help: $V_k(x) \ge V_{k+1}(x)$ at every price, in every month before the deadline.
+- If the chances are not negative and each price's chances add up to 1, no rule that decides from the prices seen so far averages more than $`V_0(x)`$.
+- The bar rule, sell when the price is at least the wait value, averages exactly $`V_0(x)`$.
+- More months left can only help: $`V_k(x) \ge V_{k+1}(x)`$ at every price, in every month before the deadline.
 - If selling wins at a price in one month, it still wins there the next month, so the bar never rises toward the deadline.
 - In this card's model the chances are not negative, and each price's chances add up to 1: the price is a Markov chain.
 - In every month from June to November, selling wins exactly at the prices at or above that month's bar: 100, 100, 90, 90, 80, 80.
-- $V_0(80)$ is exactly 12868727317/156250000, about 82.3599, shown as 82.36 on this card.
+- $`V_0(80)`$ is exactly 12868727317/156250000, about 82.3599, shown as 82.36 on this card.
 - The hand arithmetic holds exactly, as fractions. That covers the November wait values 70.20, 79.80 and 89.40, October's 79.89 at £80,000, the story's net 87, and 262,144 rule pairs.
 
 The forward run of the rule, the search over October and November rules, the simulation, the mistakes and the experiments are left to the Python and Rust checks.
@@ -869,9 +873,9 @@ end OptimalStopping
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Each experiment is one entry `(c, pull, n)` of the `try:` list near the end of the script, and its answer is printed on the matching `try:` line; edit those entries to explore further. Changing `C`, `PULL` or `N` at the top instead stops the script early, because the month names and the hand-computed November value are pinned to this card's settings.
-> - **Guess first:** does free storage raise the bars or lower them? Entry `(0.0, PULL, N)`. They rise, to 120, 110, 110, 110, 110, 100, and $V_0(80)$ becomes 86.835.
-> - **Guess first:** without the pull toward £100,000, is waiting still worth much? Entry `(C, 0.0, N)`. $V_0(80)$ falls to 80.688 and the bars drop to 90, 90, 80, 80, 80, 70.
-> - **Guess first:** a 12-month season from June? Entry `(C, PULL, 12)`. $V_0(80)$ = 85.145; the bar stays at 100 for eight months, then falls 90, 90, 80, 80.
+> - **Guess first:** does free storage raise the bars or lower them? Entry `(0.0, PULL, N)`. They rise, to 120, 110, 110, 110, 110, 100, and $`V_0(80)`$ becomes 86.835.
+> - **Guess first:** without the pull toward £100,000, is waiting still worth much? Entry `(C, 0.0, N)`. $`V_0(80)`$ falls to 80.688 and the bars drop to 90, 90, 80, 80, 80, 70.
+> - **Guess first:** a 12-month season from June? Entry `(C, PULL, 12)`. $`V_0(80)`$ = 85.145; the bar stays at 100 for eight months, then falls 90, 90, 80, 80.
 > - **Guess first:** at what storage cost does selling on 1 June become right? Entry `(3.0, PULL, N)`: the June bar is 80, so the block sells at once for 80.000.
 
 ---
@@ -879,12 +883,12 @@ end OptimalStopping
 ## The usual mistake
 
 > [!warning]
-> **Comparing today's price with next month's average price, instead of with the value of waiting.** Next month's average less storage is 79.80 at £80,000, so a one-step look says sell, and that rule gets 80.000. But waiting does not commit to selling next month. It buys the right to decide again, and that right is worth 82.36 − 80 = 2.36 here. The value of waiting must be the average of next month's *value*, $V_{k+1}$, not next month's price.
+> **Comparing today's price with next month's average price, instead of with the value of waiting.** Next month's average less storage is 79.80 at £80,000, so a one-step look says sell, and that rule gets 80.000. But waiting does not commit to selling next month. It buys the right to decide again, and that right is worth 82.36 − 80 = 2.36 here. The value of waiting must be the average of next month's *value*, $`V_{k+1}`$, not next month's price.
 >
 > - **A fixed bar.** One bar for the whole season, at its best (£90,000), gives 82.328. The bar should fall as the deadline nears.
 > - **Forgetting the state.** Treating each month's price as a fresh draw around £100,000, whatever today's price, expects a low price to jump straight back, when it moves only £10,000 a month; the resulting bars are too high, and the rule delivers 81.074.
 > - **Aiming at the prophet.** 94.365 needs to know future prices. It bounds what is possible; it is not a target.
-> - **Getting the deadline wrong.** The forced sale on 1 December, $V_N(x) = x$, anchors every bar. Planning as if the block could wait a 12-month season values it at 85.145 instead of 82.360, and holds out for £100,000 all the way to November.
+> - **Getting the deadline wrong.** The forced sale on 1 December, $`V_N(x) = x`$, anchors every bar. Planning as if the block could wait a 12-month season values it at 85.145 instead of 82.360, and holds out for £100,000 all the way to November.
 
 ---
 

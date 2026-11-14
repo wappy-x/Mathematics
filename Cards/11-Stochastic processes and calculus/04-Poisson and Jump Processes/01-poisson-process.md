@@ -38,40 +38,44 @@ Orange: the count on this one morning, with calls at 2.8, 28.9, 45.3, 63.9, 73.5
 
 ## The formula
 
-Notation first, in words. The rate is $\lambda$ (lambda), in calls per hour; time $t$ is in hours after nine. $E_n$ is the $n$-th gap, the wait from call $n-1$ to call $n$, with call 0 meaning nine o'clock. $T_n$ is the time of call $n$. $N(t)$ counts the calls by time $t$, a call exactly at $t$ included. The construction:
+Notation first, in words. The rate is $`\lambda`$ (lambda), in calls per hour; time $`t`$ is in hours after nine. $`E_n`$ is the $`n`$-th gap, the wait from call $`n-1`$ to call $`n`$, with call 0 meaning nine o'clock. $`T_n`$ is the time of call $`n`$. $`N(t)`$ counts the calls by time $`t`$, a call exactly at $`t`$ included. The construction:
 
-$$T_n = E_1 + E_2 + \dots + E_n, \qquad N(t) = \text{the largest } n \text{ with } T_n \le t$$
+```math
+T_n = E_1 + E_2 + \dots + E_n, \qquad N(t) = \text{the largest } n \text{ with } T_n \le t
+```
 
-with $E_1, E_2, \dots$ independent and each exponential with rate $\lambda$: $P(E_n > u) = e^{-\lambda u}$.
+with $`E_1, E_2, \dots`$ independent and each exponential with rate $`\lambda`$: $`P(E_n > u) = e^{-\lambda u}`$.
 
-The theorem. The count in the window from $s$ to $s+t$ is an **increment** of the process, $N(s+t) - N(s)$, and
+The theorem. The count in the window from $`s`$ to $`s+t`$ is an **increment** of the process, $`N(s+t) - N(s)`$, and
 
-$$P\big(N(s+t) - N(s) = k\big) = e^{-\lambda t}\,\frac{(\lambda t)^k}{k!}, \qquad k = 0, 1, 2, \dots$$
+```math
+P\big(N(s+t) - N(s) = k\big) = e^{-\lambda t}\,\frac{(\lambda t)^k}{k!}, \qquad k = 0, 1, 2, \dots
+```
 
-**Read it aloud:** the chance of exactly $k$ calls in a window is the Poisson chance with mean rate times length, wherever the window sits.
+**Read it aloud:** the chance of exactly $`k`$ calls in a window is the Poisson chance with mean rate times length, wherever the window sits.
 
-For back-to-back windows with ends $0 = t_0 < t_1 < \dots < t_q$, the counts $N(t_1) - N(t_0), \dots, N(t_q) - N(t_{q-1})$ are **independent**: the chance of any joint pattern is the product of the separate chances.
+For back-to-back windows with ends $`0 = t_0 < t_1 < \dots < t_q`$, the counts $`N(t_1) - N(t_0), \dots, N(t_q) - N(t_{q-1})`$ are **independent**: the chance of any joint pattern is the product of the separate chances.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\lambda$ | the rate: calls per hour on average | 4 | more calls in every window |
-| $t$ | a length of time, in hours | 0.25, a quarter hour | more calls, in step |
-| $s$ | where a window starts | 0 or 0.25 | nothing changes |
-| $E_n$ | the $n$-th gap between calls | exponential, mean 0.25 hour = 15 minutes | — |
-| $g_1$ to $g_n$, $x_1$ to $x_n$, $g_i$, $x_i$ | possible values of the gaps and of the call times, the variables of Steps 1 to 3 and the proof; i numbers them | call times 2.8, 28.9, … minutes on the pictured path | — |
-| $T_n$ | the time of call $n$; $T_0 = 0$ | first call at 2.8 minutes, pictured path | — |
-| $N(t)$ | calls by time $t$ | 6 by 120 minutes on the pictured path | — |
-| $n$, $k$, $m$, $j$, $k_1$, $k_2$, $k_j$ | whole numbers: call number, count, total, window number, count in window $j$ | $k$ = 0, 1, 2 calls | — |
-| $e^{-\lambda t}$ | chance of no call in a window of length $t$ | $e^{-1}$ = 0.3679 | — |
-| $k!$ | $k$ factorial, 1 × 2 × … × $k$; 0! = 1 | 2! = 2 | — |
-| $t_j$, $t_q$, $q$ | the ends of $q$ back-to-back windows | 0, 0.25, 0.5 | — |
-| $u$, $u_1$ to $u_n$, $h$ | spare time lengths; a slot length | $h$ = 1 minute to 1 second | slots drift from the process |
+| $`\lambda`$ | the rate: calls per hour on average | 4 | more calls in every window |
+| $`t`$ | a length of time, in hours | 0.25, a quarter hour | more calls, in step |
+| $`s`$ | where a window starts | 0 or 0.25 | nothing changes |
+| $`E_n`$ | the $`n`$-th gap between calls | exponential, mean 0.25 hour = 15 minutes | — |
+| $`g_1`$ to $`g_n`$, $`x_1`$ to $`x_n`$, $`g_i`$, $`x_i`$ | possible values of the gaps and of the call times, the variables of Steps 1 to 3 and the proof; i numbers them | call times 2.8, 28.9, … minutes on the pictured path | — |
+| $`T_n`$ | the time of call $`n`$; $`T_0 = 0`$ | first call at 2.8 minutes, pictured path | — |
+| $`N(t)`$ | calls by time $`t`$ | 6 by 120 minutes on the pictured path | — |
+| $`n`$, $`k`$, $`m`$, $`j`$, $`k_1`$, $`k_2`$, $`k_j`$ | whole numbers: call number, count, total, window number, count in window $`j`$ | $`k`$ = 0, 1, 2 calls | — |
+| $`e^{-\lambda t}`$ | chance of no call in a window of length $`t`$ | $`e^{-1}`$ = 0.3679 | — |
+| $`k!`$ | $`k`$ factorial, 1 × 2 × … × $`k`$; 0! = 1 | 2! = 2 | — |
+| $`t_j`$, $`t_q`$, $`q`$ | the ends of $`q`$ back-to-back windows | 0, 0.25, 0.5 | — |
+| $`u`$, $`u_1`$ to $`u_n`$, $`h`$ | spare time lengths; a slot length | $`h`$ = 1 minute to 1 second | slots drift from the process |
 
-At 4 calls an hour and a quarter hour, $\lambda t$ = 1: one call expected.
+At 4 calls an hour and a quarter hour, $`\lambda t`$ = 1: one call expected.
 
 ### When it holds
 
-- **A constant rate.** At 8 calls an hour over lunch and 4 in the morning, no single $\lambda$ describes the day.
+- **A constant rate.** At 8 calls an hour over lunch and 4 in the morning, no single $`\lambda`$ describes the day.
 - **Gaps independent of one another.** Callers who redial after a busy signal bring calls in clumps, and the count spreads more than a Poisson count, whose variance equals its mean.
 - **Exponential gaps, not merely the right mean.** Gaps spread evenly between 0 and 30 minutes also average 15 minutes, yet leave the first quarter hour empty half the time, and consecutive quarter hours correlate at −0.2940 ± 0.0022 in simulation instead of 0.
 - **One call at a time.** If calls could arrive in pairs, the count would jump by two. That is [Compound Poisson](04-compound-poisson.md).
@@ -89,83 +93,95 @@ So what happens after quarter past is a new copy of the same process, independen
 
 ### Step 1: the call times have a flat joint density
 
-The first $n$ gaps have a joint density, a chance per unit of volume in $n$ dimensions, equal to the product of $n$ exponential densities:
+The first $`n`$ gaps have a joint density, a chance per unit of volume in $`n`$ dimensions, equal to the product of $`n`$ exponential densities:
 
-$$\lambda e^{-\lambda g_1} \times \dots \times \lambda e^{-\lambda g_n} = \lambda^n e^{-\lambda (g_1 + \dots + g_n)}$$
+```math
+\lambda e^{-\lambda g_1} \times \dots \times \lambda e^{-\lambda g_n} = \lambda^n e^{-\lambda (g_1 + \dots + g_n)}
+```
 
-where $g_1, \dots, g_n$ are the gap values. The sum in the exponent is the time of the last call, a value $x_n$ of $T_n$. Switching from gaps to call times $x_1 < x_2 < \dots < x_n$ slides each coordinate by the ones before it (a shear), which keeps volumes, so the density of the call times is
+where $`g_1, \dots, g_n`$ are the gap values. The sum in the exponent is the time of the last call, a value $`x_n`$ of $`T_n`$. Switching from gaps to call times $`x_1 < x_2 < \dots < x_n`$ slides each coordinate by the ones before it (a shear), which keeps volumes, so the density of the call times is
 
-$$\lambda^n e^{-\lambda x_n} \quad \text{on } 0 < x_1 < x_2 < \dots < x_n.$$
+```math
+\lambda^n e^{-\lambda x_n} \quad \text{on } 0 < x_1 < x_2 < \dots < x_n.
+```
 
-Only the last call time appears. Where the earlier calls sit, in order, does not change the density. Integrating out the earlier ones gives the gamma law for $T_n$, as on [Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
+Only the last call time appears. Where the earlier calls sit, in order, does not change the density. Integrating out the earlier ones gives the gamma law for $`T_n`$, as on [Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
 
 ### Step 2: exactly k calls makes the density constant
 
-Exactly $k$ calls by time $t$ means the first $k$ calls come by $t$ and the next gap outlasts what is left of the window: $E_{k+1} > t - T_k$, which has chance $e^{-\lambda (t - x_k)}$. Multiply:
+Exactly $`k`$ calls by time $`t`$ means the first $`k`$ calls come by $`t`$ and the next gap outlasts what is left of the window: $`E_{k+1} > t - T_k`$, which has chance $`e^{-\lambda (t - x_k)}`$. Multiply:
 
-$$\lambda^k e^{-\lambda x_k} \times e^{-\lambda (t - x_k)} = \lambda^k e^{-\lambda t}.$$
+```math
+\lambda^k e^{-\lambda x_k} \times e^{-\lambda (t - x_k)} = \lambda^k e^{-\lambda t}.
+```
 
-The call times have dropped out. Every arrangement of $k$ calls in the window is equally likely. So the chance of $k$ calls is $\lambda^k e^{-\lambda t}$ times the volume of the set of arrangements, $0 < x_1 < \dots < x_k < t$.
+The call times have dropped out. Every arrangement of $`k`$ calls in the window is equally likely. So the chance of $`k`$ calls is $`\lambda^k e^{-\lambda t}`$ times the volume of the set of arrangements, $`0 < x_1 < \dots < x_k < t`$.
 
-That volume is $t^k / k!$. The cube of all $k$ unordered times has volume $t^k$. It splits into $k!$ equal pieces, one for each order the times can come in, and the ordered set is one of them. So
+That volume is $`t^k / k!`$. The cube of all $`k`$ unordered times has volume $`t^k`$. It splits into $`k!`$ equal pieces, one for each order the times can come in, and the ordered set is one of them. So
 
-$$P\big(N(t) = k\big) = \lambda^k e^{-\lambda t} \times \frac{t^k}{k!} = e^{-\lambda t}\frac{(\lambda t)^k}{k!}.$$
+```math
+P\big(N(t) = k\big) = \lambda^k e^{-\lambda t} \times \frac{t^k}{k!} = e^{-\lambda t}\frac{(\lambda t)^k}{k!}.
+```
 
-For $k$ = 0: no call by $t$ means the first gap outlasts $t$, chance $e^{-\lambda t}$.
+For $`k`$ = 0: no call by $`t`$ means the first gap outlasts $`t`$, chance $`e^{-\lambda t}`$.
 
 ### Step 3: several windows at once
 
-Take back-to-back windows ending at $t_1 < \dots < t_q$, and ask for $k_1$ calls in the first, $k_2$ in the second, and so on, $m$ in all. The same cancellation gives the constant density $\lambda^m e^{-\lambda t_q}$. The allowed arrangements put an ordered group of $k_j$ calls inside each window $j$, so their volume is a product of one volume per window. Splitting $e^{-\lambda t_q}$ and $\lambda^m$ window by window gives
+Take back-to-back windows ending at $`t_1 < \dots < t_q`$, and ask for $`k_1`$ calls in the first, $`k_2`$ in the second, and so on, $`m`$ in all. The same cancellation gives the constant density $`\lambda^m e^{-\lambda t_q}`$. The allowed arrangements put an ordered group of $`k_j`$ calls inside each window $`j`$, so their volume is a product of one volume per window. Splitting $`e^{-\lambda t_q}`$ and $`\lambda^m`$ window by window gives
 
-$$\prod_{j=1}^{q} e^{-\lambda (t_j - t_{j-1})}\,\frac{\big(\lambda (t_j - t_{j-1})\big)^{k_j}}{k_j!}.$$
+```math
+\prod_{j=1}^{q} e^{-\lambda (t_j - t_{j-1})}\,\frac{\big(\lambda (t_j - t_{j-1})\big)^{k_j}}{k_j!}.
+```
 
-A product of Poisson chances, one per window, is exactly what independence means. Each factor depends on its window's length alone, not on where it starts. Taking windows from 0 to $s$ and from $s$ to $s+t$ gives the displayed formula for any start $s$.
+A product of Poisson chances, one per window, is exactly what independence means. Each factor depends on its window's length alone, not on where it starts. Taking windows from 0 to $`s`$ and from $`s`$ to $`s+t`$ gives the displayed formula for any start $`s`$.
 
 ### Step 4: the calls never pile up
 
-Could infinitely many calls crowd into one morning? The strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)) says $T_n / n$ settles at the mean gap, 0.25 hour, with probability one. So $T_n$ grows without limit, and only finitely many calls come by any time. On the leftover set of chance zero, define the count to be 0; no probability changes.
+Could infinitely many calls crowd into one morning? The strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)) says $`T_n / n`$ settles at the mean gap, 0.25 hour, with probability one. So $`T_n`$ grows without limit, and only finitely many calls come by any time. On the leftover set of chance zero, define the count to be 0; no probability changes.
 
 <details>
 <summary>Detailed proof: every step, with the change of variables written out</summary>
 
-*Gaps to call times.* By independence the gaps $(E_1, \dots, E_n)$ have density $\lambda^n e^{-\lambda(g_1 + \dots + g_n)}$ for positive values. The map $x_i = g_1 + \dots + g_i$ is linear with inverse $g_i = x_i - x_{i-1}$, whose matrix has ones on the diagonal and minus ones just below: determinant 1. The change-of-variables rule gives $(T_1, \dots, T_n)$ the density $\lambda^n e^{-\lambda x_n}$ on $0 < x_1 < \dots < x_n$, and $(T_1, \dots, T_n, E_{n+1})$ the density $\lambda^{n+1} e^{-\lambda(x_n + g_{n+1})}$, with $g_{n+1}$ the value of the next gap.
+*Gaps to call times.* By independence the gaps $`(E_1, \dots, E_n)`$ have density $`\lambda^n e^{-\lambda(g_1 + \dots + g_n)}`$ for positive values. The map $`x_i = g_1 + \dots + g_i`$ is linear with inverse $`g_i = x_i - x_{i-1}`$, whose matrix has ones on the diagonal and minus ones just below: determinant 1. The change-of-variables rule gives $`(T_1, \dots, T_n)`$ the density $`\lambda^n e^{-\lambda x_n}`$ on $`0 < x_1 < \dots < x_n`$, and $`(T_1, \dots, T_n, E_{n+1})`$ the density $`\lambda^{n+1} e^{-\lambda(x_n + g_{n+1})}`$, with $`g_{n+1}`$ the value of the next gap.
 
-*One window.* Off a null set (a set of chance zero), $N(t) = k$ is the event "$T_k \le t$ and $E_{k+1} > t - T_k$". Integrate the next gap from $t - x_k$ to infinity, then the call times over $0 < x_1 < \dots < x_k < t$:
-$$P\big(N(t) = k\big) = \int \lambda^k e^{-\lambda x_k}\, e^{-\lambda(t - x_k)}\, dx = \lambda^k e^{-\lambda t} \cdot \frac{t^k}{k!}.$$
-The ordered set is one of $k!$ pieces of the cube $(0,t)^k$ obtained by permuting coordinates; permutations keep volume and ties have volume zero.
+*One window.* Off a null set (a set of chance zero), $`N(t) = k`$ is the event "$`T_k \le t`$ and $`E_{k+1} > t - T_k`$". Integrate the next gap from $`t - x_k`$ to infinity, then the call times over $`0 < x_1 < \dots < x_k < t`$:
 
-*Several windows.* For counts $k_1, \dots, k_q$ with total $m \ge 1$, the event puts calls number $k_1 + \dots + k_{j-1} + 1$ to $k_1 + \dots + k_j$ inside window $j$, and needs $E_{m+1} > t_q - T_m$. The allowed set is a product of ordered sets with volume $\prod_j (t_j - t_{j-1})^{k_j} / k_j!$; times $\lambda^m e^{-\lambda t_q}$ this regroups into the product of Poisson chances. For $m = 0$ the chance is $P(E_1 > t_q) = e^{-\lambda t_q}$, the same formula. Summing over any sets of counts, one per window, still factorises, since each Poisson law sums to 1: that is mutual independence. Windows with space between them count the spaces as extra windows, summed out.
+$`\displaystyle P\big(N(t) = k\big) = \int \lambda^k e^{-\lambda x_k}\, e^{-\lambda(t - x_k)}\, dx = \lambda^k e^{-\lambda t} \cdot \frac{t^k}{k!}.`$
 
-*The converse.* A counting process that starts at 0, rises by one at a time and has independent Poisson increments with mean rate times length has independent exponential gaps. For the first gap alone, $P(E_1 > u) = P(N(u) = 0) = e^{-\lambda u}$. For all of them at once, call $n$ has come by time $u$ exactly when $N(u) \ge n$, so $P(T_1 \le u_1, \dots, T_n \le u_n) = P(N(u_1) \ge 1, \dots, N(u_n) \ge n)$, and the right side depends only on the joint law of the counts, which the independent Poisson increments fix. The process built from gaps has those same count laws, so its call times, and with them its gaps, have the same joint law: independent exponentials. Either description therefore defines the same process.
+The ordered set is one of $`k!`$ pieces of the cube $`(0,t)^k`$ obtained by permuting coordinates; permutations keep volume and ties have volume zero.
+
+*Several windows.* For counts $`k_1, \dots, k_q`$ with total $`m \ge 1`$, the event puts calls number $`k_1 + \dots + k_{j-1} + 1`$ to $`k_1 + \dots + k_j`$ inside window $`j`$, and needs $`E_{m+1} > t_q - T_m`$. The allowed set is a product of ordered sets with volume $`\prod_j (t_j - t_{j-1})^{k_j} / k_j!`$; times $`\lambda^m e^{-\lambda t_q}`$ this regroups into the product of Poisson chances. For $`m = 0`$ the chance is $`P(E_1 > t_q) = e^{-\lambda t_q}`$, the same formula. Summing over any sets of counts, one per window, still factorises, since each Poisson law sums to 1: that is mutual independence. Windows with space between them count the spaces as extra windows, summed out.
+
+*The converse.* A counting process that starts at 0, rises by one at a time and has independent Poisson increments with mean rate times length has independent exponential gaps. For the first gap alone, $`P(E_1 > u) = P(N(u) = 0) = e^{-\lambda u}`$. For all of them at once, call $`n`$ has come by time $`u`$ exactly when $`N(u) \ge n`$, so $`P(T_1 \le u_1, \dots, T_n \le u_n) = P(N(u_1) \ge 1, \dots, N(u_n) \ge n)`$, and the right side depends only on the joint law of the counts, which the independent Poisson increments fix. The process built from gaps has those same count laws, so its call times, and with them its gaps, have the same joint law: independent exponentials. Either description therefore defines the same process.
 
 </details>
 
 ### Two other roads to the same law
 
-Condition on the first gap $u$: if it ends inside the window, the process restarts there, and $k$ calls by $t$ needs $k - 1$ in the time left. So $P(N(t) = k)$ is the integral over $u$ from 0 to $t$ of $\lambda e^{-\lambda u}$ times $P(N(t-u) = k-1)$, a recursion the code solves on a grid.
+Condition on the first gap $`u`$: if it ends inside the window, the process restarts there, and $`k`$ calls by $`t`$ needs $`k - 1`$ in the time left. So $`P(N(t) = k)`$ is the integral over $`u`$ from 0 to $`t`$ of $`\lambda e^{-\lambda u}`$ times $`P(N(t-u) = k-1)`$, a recursion the code solves on a grid.
 
-Or cut time into slots of length $h$, each holding a call with chance $\lambda h$, and let $h$ shrink: the binomial count tends to the Poisson count, as [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md) proves. The code takes both roads.
+Or cut time into slots of length $`h`$, each holding a call with chance $`\lambda h`$, and let $`h`$ shrink: the binomial count tends to the Poisson count, as [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md) proves. The code takes both roads.
 
 ---
 
 ## Worked numbers, by hand
 
-The next quarter hour: $\lambda$ = 4 calls an hour, $t$ = 0.25 hour.
+The next quarter hour: $`\lambda`$ = 4 calls an hour, $`t`$ = 0.25 hour.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| expected calls, $\lambda t$ | 4 × 0.25 | 1 |
-| mean gap, $1/\lambda$ | 1/4 hour | 0.25 hour = 15 minutes |
-| no call | $e^{-1}$ | 0.3679 |
-| exactly one call | $e^{-1} \times 1^1 / 1!$ | 0.3679 |
-| exactly two | $e^{-1} / 2$ | 0.1839 |
-| exactly three | $e^{-1} / 6$ | 0.0613 |
+| expected calls, $`\lambda t`$ | 4 × 0.25 | 1 |
+| mean gap, $`1/\lambda`$ | 1/4 hour | 0.25 hour = 15 minutes |
+| no call | $`e^{-1}`$ | 0.3679 |
+| exactly one call | $`e^{-1} \times 1^1 / 1!`$ | 0.3679 |
+| exactly two | $`e^{-1} / 2`$ | 0.1839 |
+| exactly three | $`e^{-1} / 6`$ | 0.0613 |
 | four or more | 1 − 0.3679 − 0.3679 − 0.1839 − 0.0613 | 0.0190 |
 | one call, then two in the following quarter hour | 0.3679 × 0.1839, by independence | 0.0677 |
-| three calls in the half hour | $e^{-2} \times 2^3 / 3!$ | 0.1804 |
-| **no call in the next quarter hour** | $e^{-\lambda t}$ | **0.3679** |
+| three calls in the half hour | $`e^{-2} \times 2^3 / 3!`$ | 0.1804 |
+| **no call in the next quarter hour** | $`e^{-\lambda t}`$ | **0.3679** |
 
-More than a third of quarter hours pass with no call at all, although a call is expected every 15 minutes. Running totals, unlike increments, are not independent: the count by half past contains the count by quarter past. Their variances are 1 and 2, their covariance is $\lambda$ times the shorter time, 4 × 0.25 = 1, so they correlate at $1/\sqrt{2}$ = 0.7071.
+More than a third of quarter hours pass with no call at all, although a call is expected every 15 minutes. Running totals, unlike increments, are not independent: the count by half past contains the count by quarter past. Their variances are 1 and 2, their covariance is $`\lambda`$ times the shorter time, 4 × 0.25 = 1, so they correlate at $`1/\sqrt{2}`$ = 0.7071.
 
 ### The picture: the law of the quarter-hour count
 
@@ -186,8 +202,8 @@ Orange bars: the Poisson law with mean 1. Green: 200,000 simulated quarter hours
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Treating the totals $N(0.25)$ and $N(0.5)$ as independent | chance of 1 by quarter past and 2 by half past: 0.0996, true 0.1353 | the later total contains the earlier one; only the increments are independent |
-| Using 1 − $\lambda t$ for the chance of no call | 0 for a quarter hour (true 0.3679); −3 for an hour (true 0.0183) | the short-window approximation stretched to a long window |
+| Treating the totals $`N(0.25)`$ and $`N(0.5)`$ as independent | chance of 1 by quarter past and 2 by half past: 0.0996, true 0.1353 | the later total contains the earlier one; only the increments are independent |
+| Using 1 − $`\lambda t`$ for the chance of no call | 0 for a quarter hour (true 0.3679); −3 for an hour (true 0.0183) | the short-window approximation stretched to a long window |
 | Gaps even between 0 and 30 minutes, same mean | empty first quarter 0.5000; consecutive quarters correlated −0.2940 ± 0.0022, simulated; wait from quarter past 9.75 ± 0.01 minutes, simulated, not 15 | only exponential gaps restart at a fixed time |
 | Slots of 1 minute, at most one call each | no call 0.3553, off by up to 0.0128 | two calls in one minute are forbidden; 1-second slots cut the error to 0.0002 |
 
@@ -572,15 +588,15 @@ The two outputs are identical line for line.
 
 ### Lean
 
-Lean proves the count laws and that calls never pile up, for every rate $\lambda > 0$ and all windows fixed in advance.
+Lean proves the count laws and that calls never pile up, for every rate $`\lambda > 0`$ and all windows fixed in advance.
 
-- Suppose the gaps are independent and exponential with rate $\lambda > 0$, and $s, t \ge 0$. Then the chance of exactly $k$ calls from $s$ to $s+t$ is $e^{-\lambda t}(\lambda t)^k/k!$.
-- Take the same gaps and window ends $0 = t_0 < t_1 < \dots < t_q$. Then the chance of $k_j$ calls in each window $j$ at once is the product of the Poisson chances.
-- With the same gaps, only finitely many calls come by any time $t$, with probability one.
-- At 4 calls an hour, a quarter hour gives $\lambda t$ = 1 and a mean gap of 15 minutes.
-- No call and exactly one call each have chance $e^{-1}$; two calls $e^{-1}/2$; three calls $e^{-1}/6$.
-- Four or more calls have chance $1 - (8/3)e^{-1}$, and three calls in the half hour $(4/3)e^{-2}$.
-- From variances 1 and 2 and covariance 1, the running totals correlate at $1/\sqrt{2}$.
+- Suppose the gaps are independent and exponential with rate $`\lambda > 0`$, and $`s, t \ge 0`$. Then the chance of exactly $`k`$ calls from $`s`$ to $`s+t`$ is $`e^{-\lambda t}(\lambda t)^k/k!`$.
+- Take the same gaps and window ends $`0 = t_0 < t_1 < \dots < t_q`$. Then the chance of $`k_j`$ calls in each window $`j`$ at once is the product of the Poisson chances.
+- With the same gaps, only finitely many calls come by any time $`t`$, with probability one.
+- At 4 calls an hour, a quarter hour gives $`\lambda t`$ = 1 and a mean gap of 15 minutes.
+- No call and exactly one call each have chance $`e^{-1}`$; two calls $`e^{-1}/2`$; three calls $`e^{-1}/6`$.
+- Four or more calls have chance $`1 - (8/3)e^{-1}`$, and three calls in the half hour $`(4/3)e^{-2}`$.
+- From variances 1 and 2 and covariance 1, the running totals correlate at $`1/\sqrt{2}`$.
 - Over the two hours of the chart, the mean count is 4 × 2 = 8.
 
 The decimals, the first-gap recursion, the slots, the simulation and the evenly spread gaps are left to the Python and Rust checks.
@@ -1407,8 +1423,8 @@ end PoissonProcess
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Double the rate, halve the window.** Set `LAM = 8.0` and `WIN = 0.125`. Only $\lambda t$ = 1 enters the law, so the formula column stays at 0.367879 down to 0.003066.
-> - **Watch a half hour instead.** Set `WIN = 0.5`. The mean count becomes 2, no call has chance $e^{-2}$ = 0.1353, and exactly three calls 0.1804.
+> - **Double the rate, halve the window.** Set `LAM = 8.0` and `WIN = 0.125`. Only $`\lambda t`$ = 1 enters the law, so the formula column stays at 0.367879 down to 0.003066.
+> - **Watch a half hour instead.** Set `WIN = 0.5`. The mean count becomes 2, no call has chance $`e^{-2}`$ = 0.1353, and exactly three calls 0.1804.
 > - **Swap the gap law.** Replace the exponential gap by `0.5 * uniform()`, same 15-minute mean. The asserts fail: the first quarter hour is empty about half the time (exactly 0.5), and consecutive quarters correlate near −0.29.
 
 ---
@@ -1420,7 +1436,7 @@ end PoissonProcess
 >
 > - **"A call is due."** After a quiet quarter hour, the wait for the next call still averages 15 minutes. Silence does not build up credit.
 > - **Right mean, wrong shape.** Evenly spread gaps with the same 15-minute mean leave the first quarter hour empty half the time. Only exponential gaps give the Poisson table.
-> - **1 − $\lambda t$ for "no call".** Fine for a few seconds. For a quarter hour it gives 0 instead of 0.3679.
+> - **1 − $`\lambda t`$ for "no call".** Fine for a few seconds. For a quarter hour it gives 0 instead of 0.3679.
 > - **Mixed units.** The rate is per hour, so the window is 0.25, not 15.
 
 ---

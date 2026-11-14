@@ -35,13 +35,15 @@ Orange, gain 4 kW per °C: overshoot to a highest sample of 20.06 °C, then sett
 
 ## The formula
 
-Reminders. The transfer function $G(s)$ says what a system does to each exponential e^(st). A loop is stable when every root of its characteristic polynomial, each a **pole**, has negative real part ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). Each pole adds one exponential term, a mode, to the loop's response. The mode grows when its pole lies in the right half-plane, where the real part is positive.
+Reminders. The transfer function $`G(s)`$ says what a system does to each exponential e^(st). A loop is stable when every root of its characteristic polynomial, each a **pole**, has negative real part ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). Each pole adds one exponential term, a mode, to the loop's response. The mode grows when its pole lies in the right half-plane, where the real part is positive.
 
-Closing a loop with gain $K$ around $G(s)$ = N(s)/D(s), a numerator polynomial N over a denominator polynomial D, gives the characteristic polynomial D(s) + K N(s) ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)). Engineers write j for the square root of −1; the rest of the library writes i.
+Closing a loop with gain $`K`$ around $`G(s)`$ = N(s)/D(s), a numerator polynomial N over a denominator polynomial D, gives the characteristic polynomial D(s) + K N(s) ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)). Engineers write j for the square root of −1; the rest of the library writes i.
 
 For the workshop, time in hours, with s in 1/h:
 
-$$G(s) = \frac{5}{(s+1)(s+2)(s+3)}\ ^\circ\text{C per kW}, \qquad p(s) = (s+1)(s+2)(s+3) + 5K = s^3 + 6s^2 + 11s + (6 + 5K).$$
+```math
+G(s) = \frac{5}{(s+1)(s+2)(s+3)}\ ^\circ\text{C per kW}, \qquad p(s) = (s+1)(s+2)(s+3) + 5K = s^3 + 6s^2 + 11s + (6 + 5K).
+```
 
 Write a polynomial of degree n as p(s) = a_n s^n + a_(n−1) s^(n−1) + … + a_0. The **Routh array** has one row per power, s^n down to s^0. The first two rows take the coefficients alternately:
 
@@ -52,13 +54,17 @@ Write a polynomial of degree n as p(s) = a_n s^n + a_(n−1) s^(n−1) + … + a
 
 Each later row comes from the two above it. With the row two above written x_0, x_1, … and the row just above y_0, y_1, …, the new row is
 
-$$z_j = \frac{y_0\, x_{j+1} - x_0\, y_{j+1}}{y_0}, \qquad j = 0, 1, 2, \dots$$
+```math
+z_j = \frac{y_0\, x_{j+1} - x_0\, y_{j+1}}{y_0}, \qquad j = 0, 1, 2, \dots
+```
 
 **Read it aloud:** each new entry is the little two-by-two cross product of the first column with the next column over, divided by the first entry of the row just above.
 
 The criterion:
 
-$$\#\{\text{roots of } p \text{ with positive real part}\} = \#\{\text{sign changes down the first column}\}.$$
+```math
+\#\{\text{roots of } p \text{ with positive real part}\} = \#\{\text{sign changes down the first column}\}.
+```
 
 **Read it aloud:** the number of flips between positive and negative down the first column is the number of modes that grow.
 
@@ -73,24 +79,26 @@ For the workshop the array is
 
 No sign change needs 60 − 5K > 0 and 6 + 5K > 0. So the loop is stable exactly when
 
-$$-1.2 < K < 12 \ \text{kW per }^\circ\text{C}, \qquad K_{cr} = 12 \ \text{kW per }^\circ\text{C}.$$
+```math
+-1.2 < K < 12 \ \text{kW per }^\circ\text{C}, \qquad K_{cr} = 12 \ \text{kW per }^\circ\text{C}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | the rate in a test exponential e^(st), in 1/h; its imaginary part in rad/h | any complex number | — |
-| $G(s)$ | the plant: boiler heat in, room temperature out, in °C per kW | 5/((s+1)(s+2)(s+3)), steady gain 0.8333 °C per kW | — |
-| $N(s)$, $D(s)$ | the plant's numerator and denominator polynomials, G = N/D | N = 5, D = (s+1)(s+2)(s+3) | — |
-| $K$ | thermostat gain, kW of heat per °C of shortfall | 4 kW per °C as a working setting | past 12 the room swings ever wider |
-| $K_{cr}$ | critical gain: the edge between settling and growing swings | 12 kW per °C | — |
-| $p(s)$ | the closed loop's characteristic polynomial; its roots are the loop's poles | s^3 + 6s^2 + 11s + (6 + 5K) | — |
-| $a_k$ | the coefficient of s^k in p(s) | a_3 = 1, a_2 = 6, a_1 = 11, a_0 = 6 + 5K | a_0 up: the s^1 entry falls |
-| $r_k(s)$ | the polynomial whose coefficients are row k of the array, read with every second power | r_1 = s^3 + 11s, r_2 = 6s^2 + (6 + 5K) | — |
-| $\mu$ | ratio of the first entries of two consecutive rows | 1/6 for rows s^3 and s^2 | negative means one more growing root |
-| $\omega$ | angular frequency of a swing, in rad/h | 3.316625 rad/h at K = 12 | faster swing, shorter period |
-| $A(s)$ | auxiliary polynomial: the row above a row of zeros | 6s^2 + 66 at K = 12 | — |
-| $\varepsilon$ | a small positive number put in place of a zero first entry (not the perturbation ε of shelf 01) | 1e-9 in the code | the count does not depend on it |
-| $\Delta_2$ | a Hurwitz determinant: a_2 a_1 − a_3 a_0 for a cubic | 60 − 5K, so 40 at K = 4 | positive is needed for stability |
-| $n$, $x_j$, $y_j$, $z_j$, $q(s)$, $p_t(s)$, $t$, $c_k$, $w$ | helpers in the rule and the proof: the degree of p; entries of the row two above, the row just above, and the new row; the reduced polynomial r_2 + r_3; the family joining q to p as t runs from 0 to 1; the first-column entries; s rescaled as w = ts | n = 3; q = 6s^2 + ((60 − 5K)/6)s + (6 + 5K); c_k = 1, 6, 6.6667, 26 at K = 4 | — |
+| $`s`$ | the rate in a test exponential e^(st), in 1/h; its imaginary part in rad/h | any complex number | — |
+| $`G(s)`$ | the plant: boiler heat in, room temperature out, in °C per kW | 5/((s+1)(s+2)(s+3)), steady gain 0.8333 °C per kW | — |
+| $`N(s)`$, $`D(s)`$ | the plant's numerator and denominator polynomials, G = N/D | N = 5, D = (s+1)(s+2)(s+3) | — |
+| $`K`$ | thermostat gain, kW of heat per °C of shortfall | 4 kW per °C as a working setting | past 12 the room swings ever wider |
+| $`K_{cr}`$ | critical gain: the edge between settling and growing swings | 12 kW per °C | — |
+| $`p(s)`$ | the closed loop's characteristic polynomial; its roots are the loop's poles | s^3 + 6s^2 + 11s + (6 + 5K) | — |
+| $`a_k`$ | the coefficient of s^k in p(s) | a_3 = 1, a_2 = 6, a_1 = 11, a_0 = 6 + 5K | a_0 up: the s^1 entry falls |
+| $`r_k(s)`$ | the polynomial whose coefficients are row k of the array, read with every second power | r_1 = s^3 + 11s, r_2 = 6s^2 + (6 + 5K) | — |
+| $`\mu`$ | ratio of the first entries of two consecutive rows | 1/6 for rows s^3 and s^2 | negative means one more growing root |
+| $`\omega`$ | angular frequency of a swing, in rad/h | 3.316625 rad/h at K = 12 | faster swing, shorter period |
+| $`A(s)`$ | auxiliary polynomial: the row above a row of zeros | 6s^2 + 66 at K = 12 | — |
+| $`\varepsilon`$ | a small positive number put in place of a zero first entry (not the perturbation ε of shelf 01) | 1e-9 in the code | the count does not depend on it |
+| $`\Delta_2`$ | a Hurwitz determinant: a_2 a_1 − a_3 a_0 for a cubic | 60 − 5K, so 40 at K = 4 | positive is needed for stability |
+| $`n`$, $`x_j`$, $`y_j`$, $`z_j`$, $`q(s)`$, $`p_t(s)`$, $`t`$, $`c_k`$, $`w`$ | helpers in the rule and the proof: the degree of p; entries of the row two above, the row just above, and the new row; the reduced polynomial r_2 + r_3; the family joining q to p as t runs from 0 to 1; the first-column entries; s rescaled as w = ts | n = 3; q = 6s^2 + ((60 − 5K)/6)s + (6 + 5K); c_k = 1, 6, 6.6667, 26 at K = 4 | — |
 
 ### When it holds
 
@@ -110,13 +118,15 @@ Roots move continuously with the coefficients, so a root passes into the right h
 
 ### Step 1: the room as a cubic
 
-Pipe, radiator and room are three first-order lags in a row: the pipe water follows the boiler at rate 3 per h, the radiator follows the pipe at 2 per h, the room follows the radiator at 1 per h. The room loses 1.2000 kW per °C above its surroundings, so a held kilowatt warms it by 0.8333 °C in the end. The product of the three stages is $G(s)$. The thermostat delivers K times the shortfall, the closed loop is KG/(1 + KG), and clearing the denominator of 1 + KG(s) = 0 gives p(s) = s^3 + 6s^2 + 11s + (6 + 5K).
+Pipe, radiator and room are three first-order lags in a row: the pipe water follows the boiler at rate 3 per h, the radiator follows the pipe at 2 per h, the room follows the radiator at 1 per h. The room loses 1.2000 kW per °C above its surroundings, so a held kilowatt warms it by 0.8333 °C in the end. The product of the three stages is $`G(s)`$. The thermostat delivers K times the shortfall, the closed loop is KG/(1 + KG), and clearing the denominator of 1 + KG(s) = 0 gives p(s) = s^3 + 6s^2 + 11s + (6 + 5K).
 
 ### Step 2: each Routh row is a polynomial, and each step is one division
 
-Read each row as a polynomial with every second power: row 1 is r_1(s) = s^3 + 11s, row 2 is r_2(s) = 6s^2 + (6 + 5K), and their sum is p(s). Take $\mu$ = a_n/a_(n−1), the ratio of the rows' first entries. Row 3 is what is left after subtracting μ s times row 2 from row 1:
+Read each row as a polynomial with every second power: row 1 is r_1(s) = s^3 + 11s, row 2 is r_2(s) = 6s^2 + (6 + 5K), and their sum is p(s). Take $`\mu`$ = a_n/a_(n−1), the ratio of the rows' first entries. Row 3 is what is left after subtracting μ s times row 2 from row 1:
 
-$$r_3(s) = r_1(s) - \mu\, s\, r_2(s).$$
+```math
+r_3(s) = r_1(s) - \mu\, s\, r_2(s).
+```
 
 Spelled out entry by entry, that subtraction is the cross-multiplication rule. For the workshop, μ = 1/6 and r_3(s) = s^3 + 11s − (s/6)(6s^2 + 6 + 5K) = ((60 − 5K)/6) s. That is the s^1 row.
 
@@ -124,7 +134,9 @@ Spelled out entry by entry, that subtraction is the cross-multiplication rule. F
 
 Let q(s) = r_2(s) + r_3(s), of degree n − 1; its Routh array is that of p with the top row removed. Join q to p through a family:
 
-$$p_t(s) = q(s) + t\,\mu\, s\, r_2(s), \qquad 0 \le t \le 1, \qquad p_1 = p.$$
+```math
+p_t(s) = q(s) + t\,\mu\, s\, r_2(s), \qquad 0 \le t \le 1, \qquad p_1 = p.
+```
 
 Two facts finish the step.
 
@@ -147,19 +159,21 @@ Degree n: build q of degree n − 1 from rows 2 and 3 as in Step 3. Its first co
 
 ### Step 4: a whole row of zeros means a mirror-image pair of roots
 
-At K = 12 the whole s^1 row is zero. Then r_3 = 0, so r_1 = μ s r_2 and p = (μ s + 1) r_2: the row above, the auxiliary polynomial $A(s)$ = 6s^2 + 66, is a factor of p:
+At K = 12 the whole s^1 row is zero. Then r_3 = 0, so r_1 = μ s r_2 and p = (μ s + 1) r_2: the row above, the auxiliary polynomial $`A(s)`$ = 6s^2 + 66, is a factor of p:
 
-$$s^3 + 6s^2 + 11s + 66 = (s + 6)(s^2 + 11).$$
+```math
+s^3 + 6s^2 + 11s + 66 = (s + 6)(s^2 + 11).
+```
 
 An even polynomial has its roots in mirror pairs about the origin: ±jω, ±σ, or a quartet ±σ ± jω. Here s = ±j√11 = ±3.316625j rad/h: a swing that neither grows nor fades, period 113.67 min. To finish the array, replace the zero row by the coefficients of the derivative A′(s) = 12s. The column becomes 1, 6, 12, 66: no root in the right half-plane, but two on the axis. **A zero row never means stable.**
 
 ### Step 5: a zero first entry with the rest of its row nonzero
 
-If only a row's first entry is zero, replace it by a small positive $\varepsilon$ and carry on. That is the array of a slightly nudged polynomial; with no root on the axis, a tiny nudge cannot carry a root across it, so the count as ε shrinks to 0 is the true count. The quartic s^4 + s^3 + 3s^2 + 3s + 3 hits a zero first entry in its s^2 row; with ε the column shows 2 sign changes, and the root finder confirms 2 right-half-plane roots.
+If only a row's first entry is zero, replace it by a small positive $`\varepsilon`$ and carry on. That is the array of a slightly nudged polynomial; with no root on the axis, a tiny nudge cannot carry a root across it, so the count as ε shrinks to 0 is the true count. The quartic s^4 + s^3 + 3s^2 + 3s + 3 hits a zero first entry in its s^2 row; with ε the column shows 2 sign changes, and the root finder confirms 2 right-half-plane roots.
 
 ### Step 6: the same test written as determinants
 
-Hurwitz (1895) wrote the condition as determinants of the coefficients. For a cubic with a_3 > 0: every coefficient positive, and $\Delta_2$ = a_2 a_1 − a_3 a_0 > 0. For the workshop Δ_2 = 60 − 5K, 6 times the Routh s^1 entry; in general each Hurwitz determinant is a product of Routh first-column entries.
+Hurwitz (1895) wrote the condition as determinants of the coefficients. For a cubic with a_3 > 0: every coefficient positive, and $`\Delta_2`$ = a_2 a_1 − a_3 a_0 > 0. For the workshop Δ_2 = 60 − 5K, 6 times the Routh s^1 entry; in general each Hurwitz determinant is a product of Routh first-column entries.
 
 **Another route.** The critical gain is where the phase of G(jω) reaches −180°, taking K = 1/|G(jω)| there: for the workshop at 3.316625 rad/h, where |G| = 0.083333 = 1/12. [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md) builds the test on that picture, and it still works with time delays. [Root locus](05-root-locus.md) draws where the poles go as the gain rises, for a faster room (lags 2, 4 and 10 min) whose pair crosses the axis at loop gain 12.6.
 
@@ -207,7 +221,7 @@ The thermostat can be turned up to three times its working setting before the ro
 
 ## Code, from first principles, and it actually runs
 
-Four independent roads to the critical gain. Road 1 builds the Routh array for any polynomial, both special cases included, and bisects on the gain until the sign-change count flips. Road 2 finds all roots by a Durand-Kerner iteration (each guess corrected by the polynomial's value over its distances to the other guesses) and bisects on the largest real part. Road 3 finds where the phase of $G$ reaches −180° and takes 1/|G| there. Road 4 simulates pipe, radiator and room by fourth-order Runge-Kutta (RK4, a standard time-stepping method), step 0.002 h, and bisects on whether successive swings grow. The asserts also check the sign-change count against the root count, the simulated growth at K = 11 and 13 against the roots, the simulated period against the auxiliary polynomial, and the simulated delay loop against the delay's critical gain.
+Four independent roads to the critical gain. Road 1 builds the Routh array for any polynomial, both special cases included, and bisects on the gain until the sign-change count flips. Road 2 finds all roots by a Durand-Kerner iteration (each guess corrected by the polynomial's value over its distances to the other guesses) and bisects on the largest real part. Road 3 finds where the phase of $`G`$ reaches −180° and takes 1/|G| there. Road 4 simulates pipe, radiator and room by fourth-order Runge-Kutta (RK4, a standard time-stepping method), step 0.002 h, and bisects on whether successive swings grow. The asserts also check the sign-change count against the root count, the simulated growth at K = 11 and 13 against the roots, the simulated period against the auxiliary polynomial, and the simulated delay loop against the delay's critical gain.
 
 ### Python
 

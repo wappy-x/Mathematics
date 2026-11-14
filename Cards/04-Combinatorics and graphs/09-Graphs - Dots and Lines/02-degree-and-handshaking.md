@@ -36,23 +36,25 @@ A and D sit on the ring only, the loop A-B-C-D-E-F-A; B, C, E and F each carry a
 
 ## The formula
 
-Notation first. The degree of a vertex $v$ is written $\deg(v)$, read "the degree of v". A **loop**, a line from a station back to itself, lays both ends there, adding two. The degrees largest first are the **degree sequence**, here 3, 3, 3, 3, 2, 2. Bars count a set's members, so $\lvert E\rvert$ is the line count, 8. A capital sigma says "add one term per item listed underneath", here every vertex $v$.
+Notation first. The degree of a vertex $`v`$ is written $`\deg(v)`$, read "the degree of v". A **loop**, a line from a station back to itself, lays both ends there, adding two. The degrees largest first are the **degree sequence**, here 3, 3, 3, 3, 2, 2. Bars count a set's members, so $`\lvert E\rvert`$ is the line count, 8. A capital sigma says "add one term per item listed underneath", here every vertex $`v`$.
 
-$$\deg(A) + \deg(B) + \cdots + \deg(F) \;=\; 2\lvert E\rvert, \qquad\text{that is}\qquad \sum_{v \in V} \deg(v) \;=\; 2\lvert E\rvert$$
+```math
+\deg(A) + \deg(B) + \cdots + \deg(F) \;=\; 2\lvert E\rvert, \qquad\text{that is}\qquad \sum_{v \in V} \deg(v) \;=\; 2\lvert E\rvert
+```
 
 **Read it aloud:** add up how many line-ends meet each vertex, and the total is two for every line.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | the dots, stations here | A to F | more terms |
-| $E$ | the lines, as pairs | eight | — |
-| $\lvert E\rvert$ | how many lines | 8 | total up by 2 |
-| $v$ | one vertex of $V$ | B | — |
-| $\deg(v)$ | line-ends at $v$; loop 2 | deg(B) = 3 | bigger total |
-| $\sum_{v \in V}$ | one term per vertex | six terms | — |
-| $n$ | how many dots | 6 | average falls |
+| $`V`$ | the dots, stations here | A to F | more terms |
+| $`E`$ | the lines, as pairs | eight | — |
+| $`\lvert E\rvert`$ | how many lines | 8 | total up by 2 |
+| $`v`$ | one vertex of $`V`$ | B | — |
+| $`\deg(v)`$ | line-ends at $`v`$; loop 2 | deg(B) = 3 | bigger total |
+| $`\sum_{v \in V}`$ | one term per vertex | six terms | — |
+| $`n`$ | how many dots | 6 | average falls |
 
-Shared out, that total is the average degree, $2\lvert E\rvert$ over $n$: 16 / 6 = 2.67 per station, a figure none has.
+Shared out, that total is the average degree, $`2\lvert E\rvert`$ over $`n`$: 16 / 6 = 2.67 per station, a figure none has.
 
 ### When it holds
 
@@ -74,7 +76,7 @@ Sweep up the tokens at A: two, from A-B and F-A. At B, three; at C, three; at D,
 
 ### Step 2: gather the tokens line by line
 
-Sweep by line instead. Each line surrenders two tokens, one per end, a loop both at one station. Eight lines, sixteen tokens, so the pile is 2 times $\lvert E\rvert$ — and one pile means the two expressions are equal. As a grid, one object read twice:
+Sweep by line instead. Each line surrenders two tokens, one per end, a loop both at one station. Eight lines, sixteen tokens, so the pile is 2 times $`\lvert E\rvert`$ — and one pile means the two expressions are equal. As a grid, one object read twice:
 
 ```
           A-B  B-C  C-D  D-E  E-F  F-A  B-E  C-F    ends
@@ -96,7 +98,7 @@ Split the vertices by parity of degree: whether the degree is even or odd. The e
 <details>
 <summary>Detailed proof, written out</summary>
 
-Let $V$ and $E$ be finite, and form one collection: every pair of a vertex and an end of an edge lying at it, a loop contributing two. Grouped by vertex, the group at $v$ holds $\deg(v)$ members, so the size is $\sum_{v \in V} \deg(v)$. Grouped by edge, each group holds two, so the size is $2\lvert E\rvert$, and two counts of one collection are equal. The odd-degree vertices, set apart, have degrees adding to $2\lvert E\rvert$ less the even degrees, both even; a sum of odd numbers is even only for an even count of them. No step used connectedness or any drawing.
+Let $`V`$ and $`E`$ be finite, and form one collection: every pair of a vertex and an end of an edge lying at it, a loop contributing two. Grouped by vertex, the group at $`v`$ holds $`\deg(v)`$ members, so the size is $`\sum_{v \in V} \deg(v)`$. Grouped by edge, each group holds two, so the size is $`2\lvert E\rvert`$, and two counts of one collection are equal. The odd-degree vertices, set apart, have degrees adding to $`2\lvert E\rvert`$ less the even degrees, both even; a sum of odd numbers is even only for an even count of them. No step used connectedness or any drawing.
 
 </details>
 

@@ -39,35 +39,39 @@ Nine players lettered A to I. Each of the 280 unnamed splits can be pinned to nu
 
 Notation first, in words. Factorial is written with an exclamation mark: 9! means 1 × 2 × 3 × … × 9, the number of ways to line nine distinct things up ([Factorials](../01-Counting%20Principles/03-factorial.md)).
 
-The splitting count gets a notation of its own: write it $C(n; n_1, n_2, \ldots, n_k)$, the **multinomial coefficient**, the semicolon saying that a list of pile sizes follows, not one choice. Books often stack the sizes under the n instead.
+The splitting count gets a notation of its own: write it $`C(n; n_1, n_2, \ldots, n_k)`$, the **multinomial coefficient**, the semicolon saying that a list of pile sizes follows, not one choice. Books often stack the sizes under the n instead.
 
-The binomial coefficient $C(n, k)$, "n choose k", is its two-pile case: the number of ways to pick k of n things when order does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
+The binomial coefficient $`C(n, k)`$, "n choose k", is its two-pile case: the number of ways to pick k of n things when order does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
-$$C(n; n_1, n_2, \ldots, n_k) = \frac{n!}{n_1!\,n_2!\cdots n_k!}$$
+```math
+C(n; n_1, n_2, \ldots, n_k) = \frac{n!}{n_1!\,n_2!\cdots n_k!}
+```
 
 **Read it aloud:** count every line-up of everyone, then divide out the line-ups inside each pile, which were never different splits.
 
-For the session: $C(9; 3, 3, 3) = 9! / (3!\,3!\,3!) = 362,880 / 216 = 1,680$.
+For the session: $`C(9; 3, 3, 3) = 9! / (3!\,3!\,3!) = 362,880 / 216 = 1,680`$.
 
-Take the names off and one more division follows. Where $m$ piles share a size and carry no names:
+Take the names off and one more division follows. Where $`m`$ piles share a size and carry no names:
 
-$$\text{unnamed count} = \frac{1}{m!} \cdot C(n; n_1, n_2, \ldots, n_k)$$
+```math
+\text{unnamed count} = \frac{1}{m!} \cdot C(n; n_1, n_2, \ldots, n_k)
+```
 
-All three piles are trios, so $m$ is 3 and the count is 1,680 / 6 = 280. With every pile the same size $m$ equals $k$: the divide-by-k! of the title. Where only some sizes repeat, divide once per repeated size, by the factorial of how many share it.
+All three piles are trios, so $`m`$ is 3 and the count is 1,680 / 6 = 280. With every pile the same size $`m`$ equals $`k`$: the divide-by-k! of the title. Where only some sizes repeat, divide once per repeated size, by the factorial of how many share it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many distinct things are split | 9 players | climbs faster than any fixed power |
-| $k$ | how many piles they go into | 3 tables | more cuts, so more splits |
-| $n_1$, $n_2$, … , $n_k$ | the pile sizes, adding up to $n$ | 3, 3 and 3 | near-equal sizes give the largest count |
-| $m$ | how many unnamed piles share one size | 3 trios | the count shrinks by a factorial |
-| $C(n; n_1, n_2, \ldots, n_k)$ | the multinomial coefficient: splits into named piles | 1,680 | — |
-| $C(n, k)$ | the binomial coefficient, the two-pile case | C(9,3) = 84 | — |
+| $`n`$ | how many distinct things are split | 9 players | climbs faster than any fixed power |
+| $`k`$ | how many piles they go into | 3 tables | more cuts, so more splits |
+| $`n_1`$, $`n_2`$, … , $`n_k`$ | the pile sizes, adding up to $`n`$ | 3, 3 and 3 | near-equal sizes give the largest count |
+| $`m`$ | how many unnamed piles share one size | 3 trios | the count shrinks by a factorial |
+| $`C(n; n_1, n_2, \ldots, n_k)`$ | the multinomial coefficient: splits into named piles | 1,680 | — |
+| $`C(n, k)`$ | the binomial coefficient, the two-pile case | C(9,3) = 84 | — |
 
 ### When it holds
 
 - **The things being split are distinct.** Nine named players. Where items repeat, the job is [Arranging with repeats](01-multiset-permutations.md).
-- **The sizes are fixed in advance and add up to $n$.** Let them vary and the question becomes how many size lists exist, which is [Stars and bars](02-stars-and-bars.md).
+- **The sizes are fixed in advance and add up to $`n`$.** Let them vary and the question becomes how many size lists exist, which is [Stars and bars](02-stars-and-bars.md).
 - **Order inside a pile does not count.** Rank each table's three as first, second and third board (an order of play) and the divisions are wrong: the count is 362,880.
 - **Only equal-sized unnamed piles get the extra division.** Piles of 4, 3 and 2 cannot be mistaken for each other, so named and unnamed agree at 1,260; dividing anyway gives 210.
 
@@ -94,7 +98,7 @@ Choose 3 of the 9 for table 1: C(9,3) = 84 ways. Choose 3 of the 6 left for tabl
 
 Write the choices as factorials and watch them cancel:
 
-$$\frac{9!}{3!\,6!}\cdot\frac{6!}{3!\,3!}\cdot\frac{3!}{3!\,0!} = \frac{9!}{3!\,3!\,3!}$$
+$`\displaystyle \frac{9!}{3!\,6!}\cdot\frac{6!}{3!\,3!}\cdot\frac{3!}{3!\,0!} = \frac{9!}{3!\,3!\,3!}`$
 
 The 6! left by the first choice is eaten by the second, the 3! left by the second by the third. With more piles it runs the whole way down, so the piles may be filled in any order. The last factor is 1, since 0! is 1 by convention.
 
@@ -111,7 +115,7 @@ So the 1,680 named splits fall into blocks of 6 sharing a set of trios, and the 
 
 Take a split with no names: piles of the stated sizes, disjoint, covering everyone. Naming it means deciding which pile is called 1, which 2, and so on. A pile of four cannot take a label reserved for a pile of three without changing the sizes, so the free choices lie among piles that already share a size.
 
-Suppose $m$ piles share a size. Those $m$ labels can be dealt out in $m!$ ways, and every deal gives a different named split, since two equal-sized piles are still different sets of people.
+Suppose $`m`$ piles share a size. Those $`m`$ labels can be dealt out in $`m!`$ ways, and every deal gives a different named split, since two equal-sized piles are still different sets of people.
 
 Do that for each repeated size and every unnamed split holds the product of those factorials as its named versions. No named split belongs to two unnamed ones, since rubbing the names out is forced. So the named splits sit in equal blocks, and the block count is the named count over the block size — here 6, and the check confirms all 280 blocks hold six.
 
@@ -349,9 +353,9 @@ The two outputs match line for line.
 
 Lean proves the counts for any number of distinct things and any pile sizes, not just nine players.
 
-- Named piles of fixed sizes adding up to $n$: the count is the multinomial coefficient, $n!$ over the product of the pile factorials.
-- Unnamed piles, none of them empty: divide that again by $m!$ for each size that $m$ piles share. A size held by one pile divides by 1.
-- $k$ unnamed piles all of one size: the named count divided by $k!$, the title's case.
+- Named piles of fixed sizes adding up to $`n`$: the count is the multinomial coefficient, $`n!`$ over the product of the pile factorials.
+- Unnamed piles, none of them empty: divide that again by $`m!`$ for each size that $`m`$ piles share. A size held by one pile divides by 1.
+- $`k`$ unnamed piles all of one size: the named count divided by $`k!`$, the title's case.
 - The card's numbers come out exactly: 1,680, 280, 1,260, the three mistakes and the Try changing counts.
 
 Writing out all 19,683 handouts and collecting the distinct splits one by one is left to the Python and Rust checks.

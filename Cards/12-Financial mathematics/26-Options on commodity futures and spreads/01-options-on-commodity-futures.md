@@ -40,36 +40,42 @@ The upper kinked line is the settlement per barrel: nothing up to the strike of 
 
 ## The formula
 
-Notation first, in words. $F$ is the **futures price** quoted today, $K$ the **strike**, $T$ the time in years to the **option's** expiry, $r$ the bank rate, continuously compounded, $\sigma$ (say "sigma") the volatility of the futures quote, and $D = e^{-rT}$ the **discount factor**, what a dollar paid on option expiry is worth today. $N(x)$ is the bell-curve area to the left of $x$.
+Notation first, in words. $`F`$ is the **futures price** quoted today, $`K`$ the **strike**, $`T`$ the time in years to the **option's** expiry, $`r`$ the bank rate, continuously compounded, $`\sigma`$ (say "sigma") the volatility of the futures quote, and $`D = e^{-rT}`$ the **discount factor**, what a dollar paid on option expiry is worth today. $`N(x)`$ is the bell-curve area to the left of $`x`$.
 
-$$C = D\,\bigl[F\,N(d_1) - K\,N(d_2)\bigr], \qquad P = D\,\bigl[K\,N(-d_2) - F\,N(-d_1)\bigr]$$
+```math
+C = D\,\bigl[F\,N(d_1) - K\,N(d_2)\bigr], \qquad P = D\,\bigl[K\,N(-d_2) - F\,N(-d_1)\bigr]
+```
 
-$$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
 **Read it aloud:** the futures quote the holder might step into, minus the strike the holder might pay, each weighted by its own chance, with the pair shrunk once to today's money.
 
-When the premium is margined like a future, nothing is paid today and nothing needs shrinking. The fair quote $V$ is the same bracket without $D$:
+When the premium is margined like a future, nothing is paid today and nothing needs shrinking. The fair quote $`V`$ is the same bracket without $`D`$:
 
-$$V = F\,N(d_1) - K\,N(d_2) = C / D$$
+```math
+V = F\,N(d_1) - K\,N(d_2) = C / D
+```
 
 **Read it aloud:** a margined premium is the plain average payoff on expiry day, because the money moves then, not now.
 
 | Symbol | Plain meaning | In our example | Push it up and the call… |
 | --- | --- | --- | --- |
-| $F$ | the futures price quoted today | 85 USD/bbl | rises: more to step into |
-| $F_T$ | the futures price on option expiry, unknown today | — | — |
-| $K$ | the strike | 85 USD/bbl | falls: further to climb |
-| $T$ | years to the **option's** expiry | 0.5 | rises: more room to move |
-| $T_f$ | years to the future's own last trading day, three business days after $T$ | just over 0.5 | nothing: it is not in the formula |
-| $r$, $D$ | bank rate, and the discount factor $e^{-rT}$ | 5 percent, 0.975310 | falls slightly: rho, the change per unit of rate, is −3.501339 |
-| $\sigma$, $\sigma_N$ | volatility of the futures quote as a fraction of itself; and the normal volatility, in dollars | 30 percent; 25.50 USD/bbl a year | rises, and it matters most |
-| $N(x)$, $\phi(x)$ | the bell curve's area to the left of $x$, and its height at $x$ | — | — |
-| $d_1$, $d_2$ | the quote's lead over the strike in units of $\sigma\sqrt{T}$, plus and minus half a unit | 0.106066, −0.106066 | — |
-| $C$, $P$ | call and put premiums, paid today | 7.002679 each | — |
-| $V$ | the margined quote, $C/D$ | 7.179952 | — |
-| $S$, $y$ | the spot price, and the net convenience yield that links it to $F$ | 87, 9.65 percent | nothing, with $F$ held fixed |
+| $`F`$ | the futures price quoted today | 85 USD/bbl | rises: more to step into |
+| $`F_T`$ | the futures price on option expiry, unknown today | — | — |
+| $`K`$ | the strike | 85 USD/bbl | falls: further to climb |
+| $`T`$ | years to the **option's** expiry | 0.5 | rises: more room to move |
+| $`T_f`$ | years to the future's own last trading day, three business days after $`T`$ | just over 0.5 | nothing: it is not in the formula |
+| $`r`$, $`D`$ | bank rate, and the discount factor $`e^{-rT}`$ | 5 percent, 0.975310 | falls slightly: rho, the change per unit of rate, is −3.501339 |
+| $`\sigma`$, $`\sigma_N`$ | volatility of the futures quote as a fraction of itself; and the normal volatility, in dollars | 30 percent; 25.50 USD/bbl a year | rises, and it matters most |
+| $`N(x)`$, $`\phi(x)`$ | the bell curve's area to the left of $`x`$, and its height at $`x`$ | — | — |
+| $`d_1`$, $`d_2`$ | the quote's lead over the strike in units of $`\sigma\sqrt{T}`$, plus and minus half a unit | 0.106066, −0.106066 | — |
+| $`C`$, $`P`$ | call and put premiums, paid today | 7.002679 each | — |
+| $`V`$ | the margined quote, $`C/D`$ | 7.179952 | — |
+| $`S`$, $`y`$ | the spot price, and the net convenience yield that links it to $`F`$ | 87, 9.65 percent | nothing, with $`F`$ held fixed |
 
-At the money, with $F = K$, the call and the put cost the same: $C - P = D\,(F - K)$ is zero. A future has no carry left to tilt one side.
+At the money, with $`F = K`$, the call and the put cost the same: $`C - P = D\,(F - K)`$ is zero. A future has no carry left to tilt one side.
 
 ### When it holds
 
@@ -94,11 +100,13 @@ That one sentence is the reason Black-76 fits, and the reason the spot can be le
 
 ### Step 1: exercise hands over a future, and the cash moves that day
 
-On option expiry, exercising a call opens a long future at the strike. The exchange marks it to that day's settlement price $F_T$ at once, so the holder is credited $F_T - K$ in margin that day. The barrels, the future's own last trading day $T_f$, and the contract month all lie later and never touch the option. The payoff is
+On option expiry, exercising a call opens a long future at the strike. The exchange marks it to that day's settlement price $`F_T`$ at once, so the holder is credited $`F_T - K`$ in margin that day. The barrels, the future's own last trading day $`T_f`$, and the contract month all lie later and never touch the option. The payoff is
 
-$$\max(F_T - K,\ 0), \quad \text{paid in cash at } T.$$
+```math
+\max(F_T - K,\ 0), \quad \text{paid in cash at } T.
+```
 
-So the volatility runs to $T$, since the quote's wander after $T$ changes nothing the holder receives; and the discount runs to $T$, since that is when the cash arrives.
+So the volatility runs to $`T`$, since the quote's wander after $`T`$ changes nothing the holder receives; and the discount runs to $`T`$, since that is when the cash arrives.
 
 ```mermaid
 flowchart LR
@@ -111,46 +119,48 @@ Only the first arrow carries volatility and discounting. The later boxes are the
 
 ### Step 2: price the payoff with Black-76
 
-Step 0 says the quote drifts nowhere; the model adds that its logarithm spreads as a bell curve with width $\sigma\sqrt{T}$. That is exactly the setting of [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md), which proves the formula: average the payoff over the bell curve, and the strike half gets the chance $N(d_2)$ while the futures half gets the shifted chance $N(d_1)$. The check does that average again here by brute force, Simpson's rule over the bell curve, and lands on 7.002679 to six decimals.
+Step 0 says the quote drifts nowhere; the model adds that its logarithm spreads as a bell curve with width $`\sigma\sqrt{T}`$. That is exactly the setting of [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md), which proves the formula: average the payoff over the bell curve, and the strike half gets the chance $`N(d_2)`$ while the futures half gets the shifted chance $`N(d_1)`$. The check does that average again here by brute force, Simpson's rule over the bell curve, and lands on 7.002679 to six decimals.
 
 ### Step 3: the spot drops out
 
-Suppose instead the pricing started from the barrel. Spot Brent at 87 and a future at 85 means holding a barrel earns more than the bank rate, through its **net convenience yield** $y$: the benefit of having oil on hand, less storage. The futures quote carries it: $F = S\,e^{(r-y)T}$, so $y = r - \ln(F/S)/T$, which is 9.65 percent for a spot of 87.
+Suppose instead the pricing started from the barrel. Spot Brent at 87 and a future at 85 means holding a barrel earns more than the bank rate, through its **net convenience yield** $`y`$: the benefit of having oil on hand, less storage. The futures quote carries it: $`F = S\,e^{(r-y)T}`$, so $`y = r - \ln(F/S)/T`$, which is 9.65 percent for a spot of 87.
 
-Feed spot and yield into Black-Scholes, the option formula for a share that pays a yield ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)), with $y$ in the dividend's place, and the premium is 7.002679. Feed a spot of 80 instead, a curve in **contango** (futures above spot, so $y$ comes out at −7.12 percent), and it is 7.002679 again. Any spot, with its yield chosen to reproduce the quote 85, gives the same premium.
+Feed spot and yield into Black-Scholes, the option formula for a share that pays a yield ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)), with $`y`$ in the dividend's place, and the premium is 7.002679. Feed a spot of 80 instead, a curve in **contango** (futures above spot, so $`y`$ comes out at −7.12 percent), and it is 7.002679 again. Any spot, with its yield chosen to reproduce the quote 85, gives the same premium.
 
 <details>
 <summary>Detailed proof: every spot route collapses onto the futures quote</summary>
 
-Black-Scholes with yield $y$ reads $C = S\,e^{-yT}N(d_1) - K\,e^{-rT}N(d_2)$ with $d_1 = \bigl[\ln(S/K) + (r - y + \tfrac12\sigma^2)T\bigr]/(\sigma\sqrt{T})$. Substitute $S = F\,e^{-(r-y)T}$.
+Black-Scholes with yield $`y`$ reads $`C = S\,e^{-yT}N(d_1) - K\,e^{-rT}N(d_2)`$ with $`d_1 = \bigl[\ln(S/K) + (r - y + \tfrac12\sigma^2)T\bigr]/(\sigma\sqrt{T})`$. Substitute $`S = F\,e^{-(r-y)T}`$.
 
-The top of $d_1$: $\ln(S/K) + (r-y)T = \ln\bigl(F\,e^{-(r-y)T}/K\bigr) + (r-y)T = \ln(F/K)$. The yield cancels, leaving $\ln(F/K) + \tfrac12\sigma^2 T$, which is Black-76's $d_1$; $d_2$ follows.
+The top of $`d_1`$: $`\ln(S/K) + (r-y)T = \ln\bigl(F\,e^{-(r-y)T}/K\bigr) + (r-y)T = \ln(F/K)`$. The yield cancels, leaving $`\ln(F/K) + \tfrac12\sigma^2 T`$, which is Black-76's $`d_1`$; $`d_2`$ follows.
 
-The front: $S\,e^{-yT} = F\,e^{-(r-y)T}e^{-yT} = F\,e^{-rT} = D\,F$. The yield cancels again.
+The front: $`S\,e^{-yT} = F\,e^{-(r-y)T}e^{-yT} = F\,e^{-rT} = D\,F`$. The yield cancels again.
 
-So $C = D\,[F\,N(d_1) - K\,N(d_2)]$ for every pair $(S, y)$ with the same $F$. The spot and the yield enter only through their combination $S\,e^{(r-y)T}$, and that combination is the quote on the screen. $\blacksquare$
+So $`C = D\,[F\,N(d_1) - K\,N(d_2)]`$ for every pair $`(S, y)`$ with the same $`F`$. The spot and the yield enter only through their combination $`S\,e^{(r-y)T}`$, and that combination is the quote on the screen. $`\blacksquare`$
 
 </details>
 
-The practical reading: for oil, the yield is not observable on its own. It is backed out of the futures curve. A model that starts from spot has to invent $y$ to match $F$, and then the invention cancels.
+The practical reading: for oil, the yield is not observable on its own. It is backed out of the futures curve. A model that starts from spot has to invent $`y`$ to match $`F`$, and then the invention cancels.
 
 ### Step 4: a margined premium is a future on the payoff
 
 On ICE, the buyer of a Brent option pays nothing on the trade date. The option's quote is marked daily like a future, and on expiry the buyer has paid, in total, the quote at purchase and received the payoff. That makes the quote a futures price whose underlying is the payoff. By Step 0 a futures price is the plain average of what it settles to, with no discount:
 
-$$V = \text{average of } \max(F_T - K, 0) = F\,N(d_1) - K\,N(d_2) = C/D = 7.179952.$$
+```math
+V = \text{average of } \max(F_T - K, 0) = F\,N(d_1) - K\,N(d_2) = C/D = 7.179952.
+```
 
-The two ways of paying have the same value today. A buyer who pays 7.002679 today gives up the 5 percent interest on it; a margined buyer keeps the cash, and the quote rises by exactly the interest: $7.002679 / 0.975310 = 7.179952$. On one lot the gap is 177.27 dollars.
+The two ways of paying have the same value today. A buyer who pays 7.002679 today gives up the 5 percent interest on it; a margined buyer keeps the cash, and the quote rises by exactly the interest: $`7.002679 / 0.975310 = 7.179952`$. On one lot the gap is 177.27 dollars.
 
 The margined quote also kills early exercise.
 
-Exercising early, with the quote at some level $F'$, collects $F' - K$. Keeping the option is worth the average of $\max(F_T - K, 0)$ from there, which is at least $\max(\text{average of } F_T - K,\ 0) = \max(F' - K, 0)$, since the quote averages to itself and the payoff bends upward. So the live option is always worth at least its exercise value and nobody exercises early. American and European margined options have one price.
+Exercising early, with the quote at some level $`F'`$, collects $`F' - K`$. Keeping the option is worth the average of $`\max(F_T - K, 0)`$ from there, which is at least $`\max(\text{average of } F_T - K,\ 0) = \max(F' - K, 0)`$, since the quote averages to itself and the payoff bends upward. So the live option is always worth at least its exercise value and nobody exercises early. American and European margined options have one price.
 
-The check's American tree with no funding lands on 7.179055, within a tenth of a cent of $C/D$. With the premium paid up front the discount breaks that inequality deep in the money, and the American tree finds 3.4 cents of early-exercise value.
+The check's American tree with no funding lands on 7.179055, within a tenth of a cent of $`C/D`$. With the premium paid up front the discount breaks that inequality deep in the money, and the American tree finds 3.4 cents of early-exercise value.
 
 ### Step 5: where the model ends
 
-A lognormal quote puts zero weight below zero, at every level. The **normal**, or **Bachelier**, model lets the quote move by dollars rather than percentages ([Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)). Matched at 85, a 30 percent volatility is about $\sigma_N = 0.30 \times 85 = 25.50$ dollars a year, and the Bachelier call is 7.015811, 0.013132 above Black-76. The chance of a negative quote at six months is 0.000001.
+A lognormal quote puts zero weight below zero, at every level. The **normal**, or **Bachelier**, model lets the quote move by dollars rather than percentages ([Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)). Matched at 85, a 30 percent volatility is about $`\sigma_N = 0.30 \times 85 = 25.50`$ dollars a year, and the Bachelier call is 7.015811, 0.013132 above Black-76. The chance of a negative quote at six months is 0.000001.
 
 The models only part company when the quote is low. With one month to run and the dollar volatility held at 25.50, as it is when moves stay dollar-sized, the normal model's weight below zero grows as the quote falls:
 
@@ -165,27 +175,27 @@ future  5   |██████████████████████�
 
 At 5 dollars a month out, a put struck at zero is worth 1.084719 under the normal model and nothing under the lognormal one. At −37.63 the lognormal formula has no answer at all, since it takes the logarithm of a negative number; the normal one prices the same put at 37.473535.
 
-A third road to the premium, a 2,000-step coin-flip tree on the futures quote, lands on 7.001803. The tree's up-probability solves $p\,u + (1-p)\,d = 1$, which is Step 0 written for one step.
+A third road to the premium, a 2,000-step coin-flip tree on the futures quote, lands on 7.001803. The tree's up-probability solves $`p\,u + (1-p)\,d = 1`$, which is Step 0 written for one step.
 
 ---
 
 ## Worked numbers, by hand
 
-House Brent: $F = 85$, $K = 85$, $\sigma = 30$ percent, $T = 0.5$, $r = 5$ percent.
+House Brent: $`F = 85`$, $`K = 85`$, $`\sigma = 30`$ percent, $`T = 0.5`$, $`r = 5`$ percent.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| lead over strike, in logs | $\ln(85/85)$ | 0 |
-| one wiggle unit, $\sigma\sqrt{T}$ | $0.30 \times \sqrt{0.5}$ | 0.212132 |
-| $d_1$ | $(0 + \tfrac12 \times 0.212132^2)/0.212132$ | 0.106066 |
-| $d_2$ | $0.106066 - 0.212132$ | −0.106066 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.542235, 0.457765 |
-| bracket, $F\,N(d_1) - K\,N(d_2)$ | $85 \times (0.542235 - 0.457765)$ | 7.179952 |
-| discount $D$ | $e^{-0.05 \times 0.5}$ | 0.975310 |
-| **call, paid up front** | $0.975310 \times 7.179952$ | **7.002679** |
-| per 1,000-barrel lot | $7.002679 \times 1{,}000$ | 7,002.68 |
-| **margined quote** | the bracket itself, $C/D$ | **7.179952** |
-| put | parity, $C - D(F-K)$ | 7.002679 |
+| lead over strike, in logs | $`\ln(85/85)`$ | 0 |
+| one wiggle unit, $`\sigma\sqrt{T}`$ | $`0.30 \times \sqrt{0.5}`$ | 0.212132 |
+| $`d_1`$ | $`(0 + \tfrac12 \times 0.212132^2)/0.212132`$ | 0.106066 |
+| $`d_2`$ | $`0.106066 - 0.212132`$ | −0.106066 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.542235, 0.457765 |
+| bracket, $`F\,N(d_1) - K\,N(d_2)`$ | $`85 \times (0.542235 - 0.457765)`$ | 7.179952 |
+| discount $`D`$ | $`e^{-0.05 \times 0.5}`$ | 0.975310 |
+| **call, paid up front** | $`0.975310 \times 7.179952`$ | **7.002679** |
+| per 1,000-barrel lot | $`7.002679 \times 1{,}000`$ | 7,002.68 |
+| **margined quote** | the bracket itself, $`C/D`$ | **7.179952** |
+| put | parity, $`C - D(F-K)`$ | 7.002679 |
 
 A buyer paying up front hands over 7,002.68 dollars per lot today; a margined buyer on ICE hands over nothing today and is quoted 7.18 a barrel. Both have the same value today.
 
@@ -193,21 +203,21 @@ The option's first-order sensitivities, printed by the check and taken apart pro
 
 | Greek | Formula | Value |
 | --- | --- | --- |
-| delta, per dollar on the future | $D\,N(d_1)$ | 0.528847 (0.528847 by bumping) |
-| gamma, change in delta per dollar | $D\,\phi(d_1)/(F\sigma\sqrt{T})$ | 0.021458 |
-| vega, per unit of volatility | $D\,F\,\phi(d_1)\sqrt{T}$ | 23.254860 |
-| rho, per unit of rate, future held | $-T\,C$ | −3.501339 |
+| delta, per dollar on the future | $`D\,N(d_1)`$ | 0.528847 (0.528847 by bumping) |
+| gamma, change in delta per dollar | $`D\,\phi(d_1)/(F\sigma\sqrt{T})`$ | 0.021458 |
+| vega, per unit of volatility | $`D\,F\,\phi(d_1)\sqrt{T}`$ | 23.254860 |
+| rho, per unit of rate, future held | $`-T\,C`$ | −3.501339 |
 
-Delta sits just above one half, as for any at-the-money option, and the discount pulls it down from $N(d_1)$ = 0.542235.
+Delta sits just above one half, as for any at-the-money option, and the discount pulls it down from $`N(d_1)`$ = 0.542235.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Spot 87 used as $F$ | 8.102748 | The barrel today is not what the option delivers; the quote is 85 |
+| Spot 87 used as $`F`$ | 8.102748 | The barrel today is not what the option delivers; the quote is 85 |
 | Seven months, a clock run past expiry toward the contract month | 7.529958 | The option dies at six months; the quote's later wander is not the holder's |
-| Future treated as a share, drifting at $r$ | 8.189645 | Carry counted twice: it is already inside 85 |
-| Margined quote paid as $C$ | 0.177274 too little | Discounting a premium that is not paid today |
+| Future treated as a share, drifting at $`r`$ | 8.189645 | Carry counted twice: it is already inside 85 |
+| Margined quote paid as $`C`$ | 0.177274 too little | Discounting a premium that is not paid today |
 
 ---
 
@@ -393,7 +403,7 @@ chart, profit after C/D  -7.18  -7.18  -7.18  -7.18  -7.18  -2.18   2.82   7.82 
 ALL CHECKS PASS
 ```
 
-Four roads, one call. The integral and both spot routes agree with the formula to six decimals; the tree is a tenth of a cent low and closes with more steps. The margined American tree matches $C/D$ to the same tenth of a cent, with no early-exercise value, while the up-front American tree carries 0.034393 of it.
+Four roads, one call. The integral and both spot routes agree with the formula to six decimals; the tree is a tenth of a cent low and closes with more steps. The margined American tree matches $`C/D`$ to the same tenth of a cent, with no early-exercise value, while the up-front American tree carries 0.034393 of it.
 
 ### Rust
 
@@ -603,12 +613,12 @@ The two outputs agree line for line.
 
 Lean proves the formula and Steps 3 and 4 for every positive quote, strike, volatility and time, and checks the chart.
 
-- Suppose the futures quote wanders lognormally and drifts nowhere, with $F$, $K$, $\sigma$ and $T$ above zero. Then the average call payoff is the bracket $F\,N(d_1) - K\,N(d_2)$.
-- Take the same setting. Then the call paid up front, $D$ times that average, is $C = D\,[F\,N(d_1) - K\,N(d_2)]$.
-- Take the same setting. Then the put paid up front is $P = D\,[K\,N(-d_2) - F\,N(-d_1)]$.
-- Take the same setting. Then the margined quote, the plain average payoff, equals $V = C/D$.
-- Suppose a spot $S > 0$ and net convenience yield $y$ give $F = S\,e^{(r-y)T}$, with $K$, $\sigma$, $T$ above zero. Then Black-Scholes fed with $S$ and $y$ gives exactly the Black-76 call on $F$.
-- Suppose the quote on expiry has a finite average, equal to today's quote $F'$, under the pricing rule. Then the margined call's average payoff is at least the exercise value $\max(F' - K, 0)$.
+- Suppose the futures quote wanders lognormally and drifts nowhere, with $`F`$, $`K`$, $`\sigma`$ and $`T`$ above zero. Then the average call payoff is the bracket $`F\,N(d_1) - K\,N(d_2)`$.
+- Take the same setting. Then the call paid up front, $`D`$ times that average, is $`C = D\,[F\,N(d_1) - K\,N(d_2)]`$.
+- Take the same setting. Then the put paid up front is $`P = D\,[K\,N(-d_2) - F\,N(-d_1)]`$.
+- Take the same setting. Then the margined quote, the plain average payoff, equals $`V = C/D`$.
+- Suppose a spot $`S > 0`$ and net convenience yield $`y`$ give $`F = S\,e^{(r-y)T}`$, with $`K`$, $`\sigma`$, $`T`$ above zero. Then Black-Scholes fed with $`S`$ and $`y`$ gives exactly the Black-76 call on $`F`$.
+- Suppose the quote on expiry has a finite average, equal to today's quote $`F'`$, under the pricing rule. Then the margined call's average payoff is at least the exercise value $`\max(F' - K, 0)`$.
 - The chart's settlement per barrel at futures prices 65 to 105 is 0, 0, 0, 0, 0, 5, 10, 15, 20.
 
 The worked numbers, the sensitivities, the trees and the Bachelier model are left to the Python and Rust checks.
@@ -968,14 +978,14 @@ example :
 
 ## Where you meet it in real life
 
-- **ICE Brent options.** American exercise, futures-style margined, 1,000 barrels, expiring three business days before the future. The quote is $V$, and by Step 4 early exercise has no value.
-- **Options paid on the trade date.** Where the premium changes hands up front, the price is $C$, and an American contract carries a small early-exercise premium that needs a tree.
+- **ICE Brent options.** American exercise, futures-style margined, 1,000 barrels, expiring three business days before the future. The quote is $`V`$, and by Step 4 early exercise has no value.
+- **Options paid on the trade date.** Where the premium changes hands up front, the price is $`C`$, and an American contract carries a small early-exercise premium that needs a tree.
 - **April 2020.** With West Texas crude futures near zero and then below it, commodity exchanges temporarily switched their option models from Black-Scholes to Bachelier; CME Clearing's switch took effect on 22 April 2020, two days after the May contract settled at −37.63.
 - **Refining and power margins.** A refiner's margin is an option on the gap between two futures, gasoline and crude: [Spread options](04-margrabe-and-kirk-spread-options.md), with its sensitivities on [Greeks of a spread option](05-spread-option-greeks.md) and the correlation read back on [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md). Electricity, which cannot be stored, strains Step 0 hardest: [Power that cannot be stored](07-electricity-and-the-spark-spread.md).
-- **Quoting in volatility.** Desks quote these options by the $\sigma$ that makes the formula match the price, and the numbers differ by strike: [Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md).
+- **Quoting in volatility.** Desks quote these options by the $`\sigma`$ that makes the formula match the price, and the numbers differ by strike: [Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md).
 
 > **Say it back**
-> A futures quote costs nothing to hold and settles daily, so it is a fair bet on itself, and every carry cost already sits inside it. An option on it is Black-76 with that quote as the underlying, so the spot never appears. The volatility and the discount run to the option's expiry, not the future's and not the contract month. A premium paid up front is $C$; a margined premium is $C/D$, the same value, and it makes early exercise worthless. At or below zero the lognormal model stops, and the normal model takes over.
+> A futures quote costs nothing to hold and settles daily, so it is a fair bet on itself, and every carry cost already sits inside it. An option on it is Black-76 with that quote as the underlying, so the spot never appears. The volatility and the discount run to the option's expiry, not the future's and not the contract month. A premium paid up front is $`C`$; a margined premium is $`C/D`$, the same value, and it makes early exercise worthless. At or below zero the lognormal model stops, and the normal model takes over.
 
 ---
 

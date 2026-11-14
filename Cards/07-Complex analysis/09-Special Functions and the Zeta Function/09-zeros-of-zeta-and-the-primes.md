@@ -40,30 +40,36 @@ Notation first, in words. Λ(n), "big lambda of n", is ln p when n is a power of
 
 Re s is the real part of s. A zero of zeta off the real axis is ρ, "rho"; every ρ lies in the strip 0 ≤ Re s ≤ 1 (Step 6). The sum over ρ takes zeros in mirror pairs, lowest first.
 
-$$-\frac{\zeta'(s)}{\zeta(s)} = \sum_{n=1}^{\infty} \frac{\Lambda(n)}{n^{s}} \qquad (\operatorname{Re} s > 1)$$
+```math
+-\frac{\zeta'(s)}{\zeta(s)} = \sum_{n=1}^{\infty} \frac{\Lambda(n)}{n^{s}} \qquad (\mathrm{Re}\, s > 1)
+```
 
 **Read it aloud:** minus zeta's slope over zeta is a series with weight ln p on every prime power.
 
-$$\psi(x) = x - \sum_{\rho} \frac{x^{\rho}}{\rho} - \ln 2\pi - \tfrac12 \ln\!\left(1 - x^{-2}\right)$$
+```math
+\psi(x) = x - \sum_{\rho} \frac{x^{\rho}}{\rho} - \ln 2\pi - \tfrac12 \ln\!\left(1 - x^{-2}\right)
+```
 
 **Read it aloud:** the weighted staircase is x, minus one term per zero of zeta, minus two small corrections.
 
 This is the **explicit formula**, for x above 1 and not a prime power. Then:
 
-$$\pi(x) \sim \operatorname{li}(x) = \int_0^x \frac{dt}{\ln t}, \qquad \text{RH: every } \rho \text{ has } \operatorname{Re}\rho = \tfrac12$$
+```math
+\pi(x) \sim \mathrm{li}(x) = \int_0^x \frac{dt}{\ln t}, \qquad \text{RH: every } \rho \text{ has } \mathrm{Re}\,\rho = \tfrac12
+```
 
 **Read it aloud:** π(x) divided by li(x) tends to 1 (1/ln t blows up at t = 1; li takes the area the same distance either side and lets the two cancel); the Riemann hypothesis says every zero in the strip lies on the line Re s = 1/2.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | zeta's complex input | 2 | terms shrink faster |
-| $\zeta$, $\zeta'$ | zeta, and its derivative | −ζ′/ζ(2) = 0.56996 | — |
-| $\Lambda(n)$ | ln p at powers of a prime p, else 0 | Λ(8) = ln 2 | — |
-| $x$, $n$, $p$ | count limit; whole number; prime | 10^6 | bigger waves |
-| $\psi(x)$ | sum of Λ(n) up to x | ψ(29.5) = 28.48 | close to x |
-| $\pi(x)$ | primes up to x (bare π: the circle constant) | 78,498 | — |
-| $\operatorname{li}(x)$ | area under 1/ln t, 0 to x | 78,627.55 | outgrows x ÷ ln x |
-| $\rho$, $t$ | a zero in the strip; its height | t = 14.134725 | faster, smaller wave |
+| $`s`$ | zeta's complex input | 2 | terms shrink faster |
+| $`\zeta`$, $`\zeta'`$ | zeta, and its derivative | −ζ′/ζ(2) = 0.56996 | — |
+| $`\Lambda(n)`$ | ln p at powers of a prime p, else 0 | Λ(8) = ln 2 | — |
+| $`x`$, $`n`$, $`p`$ | count limit; whole number; prime | 10^6 | bigger waves |
+| $`\psi(x)`$ | sum of Λ(n) up to x | ψ(29.5) = 28.48 | close to x |
+| $`\pi(x)`$ | primes up to x (bare π: the circle constant) | 78,498 | — |
+| $`\mathrm{li}(x)`$ | area under 1/ln t, 0 to x | 78,627.55 | outgrows x ÷ ln x |
+| $`\rho`$, $`t`$ | a zero in the strip; its height | t = 14.134725 | faster, smaller wave |
 
 ### When it holds
 
@@ -91,7 +97,9 @@ At s = 2 the prime-power sum gives 0.56996, and zeta's measured slope gives 0.56
 
 Up a vertical line right of 0, the line Re s = c, the integral of y^s/s over 2πi is 1 when y > 1 and 0 when y < 1: a switch. With y = x/n it keeps the terms with n below x:
 
-$$\psi(x) = \frac{1}{2\pi i}\int_{c - i\infty}^{c + i\infty} \left(-\frac{\zeta'(s)}{\zeta(s)}\right) \frac{x^{s}}{s}\, ds, \qquad c > 1.$$
+```math
+\psi(x) = \frac{1}{2\pi i}\int_{c - i\infty}^{c + i\infty} \left(-\frac{\zeta'(s)}{\zeta(s)}\right) \frac{x^{s}}{s}\, ds, \qquad c > 1.
+```
 
 This is the inversion of [The Mellin transform](07-mellin-transform.md) applied to a Dirichlet series ([Dirichlet series](06-dirichlet-series-and-mobius-inversion.md)).
 
@@ -138,7 +146,9 @@ Riemann wrote in 1859 that all zeros in the strip very probably lie on the criti
 
 A zero at β + it with β above 1/2 would add a wave of size x^β. With every zero on the line, Schoenfeld proved in 1976 that for x at least 2657
 
-$$|\pi(x) - \operatorname{li}(x)| < \frac{\sqrt{x}\,\ln x}{8\pi}.$$
+```math
+|\pi(x) - \mathrm{li}(x)| < \frac{\sqrt{x}\,\ln x}{8\pi}.
+```
 
 At a million the bound is 549.70; the true gap is 129.55. Von Koch showed in 1901 that such a bound implies the hypothesis back (The Riemann hypothesis).
 

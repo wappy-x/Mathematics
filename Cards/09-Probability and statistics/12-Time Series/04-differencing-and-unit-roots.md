@@ -35,49 +35,53 @@ One line: the closing price, sampled every tenth trading day. It drops through t
 
 ## The formula
 
-Notation first, in words. A subscript names the day: $y_t$ is the value on day $t$, and $y_{t-1}$ is the value the day before. Here $y_t$ is the logarithm of the closing price, so the change from one day to the next is the log return, within a hair of the percentage change for 1% moves. The Greek capital delta, $\Delta$, read "the change in", marks differencing: $\Delta y_t = y_t - y_{t-1}$. A hat marks an estimate, as in [Regression error bars](../09-Regression/02-regression-inference.md).
+Notation first, in words. A subscript names the day: $`y_t`$ is the value on day $`t`$, and $`y_{t-1}`$ is the value the day before. Here $`y_t`$ is the logarithm of the closing price, so the change from one day to the next is the log return, within a hair of the percentage change for 1% moves. The Greek capital delta, $`\Delta`$, read "the change in", marks differencing: $`\Delta y_t = y_t - y_{t-1}`$. A hat marks an estimate, as in [Regression error bars](../09-Regression/02-regression-inference.md).
 
 The autoregression from [Autoregression](02-ar-models.md) says tomorrow is a fraction of today plus a fresh shock:
 
-$$y_t = \rho\, y_{t-1} + \varepsilon_t$$
+```math
+y_t = \rho\, y_{t-1} + \varepsilon_t
+```
 
 **Read it aloud:** today's value is yesterday's value times a carry-over factor, plus today's surprise.
 
-The series has a **unit root** when the carry-over factor is exactly 1. Then $y_t = y_{t-1} + \varepsilon_t$: a **random walk**, and nothing ever decays. Subtract $y_{t-1}$ from both sides of the autoregression, write $\gamma = \rho - 1$, allow a constant and $p$ lagged changes, and the question "is the carry-over factor 1?" becomes the question "is the slope on yesterday's level 0?" in the regression
+The series has a **unit root** when the carry-over factor is exactly 1. Then $`y_t = y_{t-1} + \varepsilon_t`$: a **random walk**, and nothing ever decays. Subtract $`y_{t-1}`$ from both sides of the autoregression, write $`\gamma = \rho - 1`$, allow a constant and $`p`$ lagged changes, and the question "is the carry-over factor 1?" becomes the question "is the slope on yesterday's level 0?" in the regression
 
-$$\Delta y_t = \alpha + \gamma\, y_{t-1} + \sum_{j=1}^{p} \delta_j\, \Delta y_{t-j} + \varepsilon_t, \qquad \tau = \frac{\hat\gamma}{\operatorname{se}(\hat\gamma)}.$$
+```math
+\Delta y_t = \alpha + \gamma\, y_{t-1} + \sum_{j=1}^{p} \delta_j\, \Delta y_{t-j} + \varepsilon_t, \qquad \tau = \frac{\hat\gamma}{\mathrm{se}(\hat\gamma)}.
+```
 
 **Read it aloud:** regress today's change on a constant, yesterday's level and the last few changes; divide the estimated slope on the level by its standard error; call that ratio tau.
 
-A unit root means $\gamma = 0$. Stationarity means $\gamma < 0$: a level above average is followed, on average, by a fall. The test rejects the unit root only when $\tau$ falls below a cutoff $c$ that is far more negative than the usual one: −2.8732 at the 5% level for 250 observations, against −1.645 for an ordinary one-sided test.
+A unit root means $`\gamma = 0`$. Stationarity means $`\gamma < 0`$: a level above average is followed, on average, by a fall. The test rejects the unit root only when $`\tau`$ falls below a cutoff $`c`$ that is far more negative than the usual one: −2.8732 at the 5% level for 250 observations, against −1.645 for an ordinary one-sided test.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y_t$ | the log of the closing price on day $t$ | log of $100 on day 0 | a higher level; says nothing about wandering |
-| $t$ | the day number | 0 to 250 | a random walk's spread grows as the square root of $t$ |
-| $\varepsilon_t$ | the day's shock: new, independent, average zero | about 1% either way | — |
-| $\sigma$ | the typical size of a shock, its standard deviation | 1% a day | every spread scales with it; the test statistic does not |
-| $\rho$ | the carry-over factor: how much of yesterday survives today (written phi on ar-models) | 1 for the share | at 1 shocks never fade; below 1 each shock shrinks by the factor $\rho$ every day |
-| $\Delta y_t$ | the change in the log price from yesterday: here, the day's return | about ±1% | — |
-| $\gamma$ | $\rho - 1$: the pull back towards the average | 0 under the unit root; estimated −0.024741 with no lags, −0.027399 with one | more negative means faster pull-back and an easier rejection |
-| $\alpha$ | a constant, the regression's intercept | 0 under the unit root; fitted, far from 0: about −$\hat\gamma$ times the average log level, because the fitted line passes through the averages | — |
-| $\delta_j$, $j$, $p$ | the weight on the change $j$ days ago, and how many such lagged changes the regression includes | $p = 1$; weight estimated 0.0423 | more lags: safer against memory, fewer effective observations |
-| $\tau$ | the test statistic: the slope on the level over its standard error | −2.1145 for the price, −10.3459 for returns | more negative: stronger evidence against a unit root |
-| $T$ | the number of observations in the test regression | 250 (249 once a lag is added) | the cutoff barely moves: −2.8644 at 1,000 |
-| $c$ | the 5% cutoff for $\tau$ under a unit root, with a constant | −2.8732 | a lower cutoff makes rejection harder |
+| $`y_t`$ | the log of the closing price on day $`t`$ | log of $100 on day 0 | a higher level; says nothing about wandering |
+| $`t`$ | the day number | 0 to 250 | a random walk's spread grows as the square root of $`t`$ |
+| $`\varepsilon_t`$ | the day's shock: new, independent, average zero | about 1% either way | — |
+| $`\sigma`$ | the typical size of a shock, its standard deviation | 1% a day | every spread scales with it; the test statistic does not |
+| $`\rho`$ | the carry-over factor: how much of yesterday survives today (written phi on ar-models) | 1 for the share | at 1 shocks never fade; below 1 each shock shrinks by the factor $`\rho`$ every day |
+| $`\Delta y_t`$ | the change in the log price from yesterday: here, the day's return | about ±1% | — |
+| $`\gamma`$ | $`\rho - 1`$: the pull back towards the average | 0 under the unit root; estimated −0.024741 with no lags, −0.027399 with one | more negative means faster pull-back and an easier rejection |
+| $`\alpha`$ | a constant, the regression's intercept | 0 under the unit root; fitted, far from 0: about −$`\hat\gamma`$ times the average log level, because the fitted line passes through the averages | — |
+| $`\delta_j`$, $`j`$, $`p`$ | the weight on the change $`j`$ days ago, and how many such lagged changes the regression includes | $`p = 1`$; weight estimated 0.0423 | more lags: safer against memory, fewer effective observations |
+| $`\tau`$ | the test statistic: the slope on the level over its standard error | −2.1145 for the price, −10.3459 for returns | more negative: stronger evidence against a unit root |
+| $`T`$ | the number of observations in the test regression | 250 (249 once a lag is added) | the cutoff barely moves: −2.8644 at 1,000 |
+| $`c`$ | the 5% cutoff for $`\tau`$ under a unit root, with a constant | −2.8732 | a lower cutoff makes rejection harder |
 
-The cutoff $c$ comes from MacKinnon's published formula, $c(T) = -2.86154 - 2.8903/T - 4.234/T^2 - 40.040/T^3$, fitted to millions of simulated random walks. The checks below reproduce it by their own simulation.
+The cutoff $`c`$ comes from MacKinnon's published formula, $`c(T) = -2.86154 - 2.8903/T - 4.234/T^2 - 40.040/T^3`$, fitted to millions of simulated random walks. The checks below reproduce it by their own simulation.
 
 <details>
 <summary>Why "unit root"?</summary>
 
-Write the autoregression as $(1 - \rho B)\,y_t = \varepsilon_t$, where the backshift B moves a series back one day. The polynomial $1 - \rho z$ has its root at $z = 1/\rho$. The series is stationary when that root lies outside the unit circle, which for a real number means $\rho$ between −1 and 1. At $\rho = 1$ the root sits on the circle, at exactly 1: a unit root. For an autoregression with $p$ lags the same rule applies to every root of its polynomial, and one root at exactly 1 is what the Dickey-Fuller regression looks for.
+Write the autoregression as $`(1 - \rho B)\,y_t = \varepsilon_t`$, where the backshift B moves a series back one day. The polynomial $`1 - \rho z`$ has its root at $`z = 1/\rho`$. The series is stationary when that root lies outside the unit circle, which for a real number means $`\rho`$ between −1 and 1. At $`\rho = 1`$ the root sits on the circle, at exactly 1: a unit root. For an autoregression with $`p`$ lags the same rule applies to every root of its polynomial, and one root at exactly 1 is what the Dickey-Fuller regression looks for.
 
 </details>
 
 ### When it holds
 
-- **The shocks have constant spread and no memory left after the lags.** If the changes carry more memory than $p$ lags soak up, $\tau$ is misread and the test rejects a true unit root too often. Choose $p$ before looking, or by a stated rule.
+- **The shocks have constant spread and no memory left after the lags.** If the changes carry more memory than $`p`$ lags soak up, $`\tau`$ is misread and the test rejects a true unit root too often. Choose $`p`$ before looking, or by a stated rule.
 - **The right fixed terms.** The version here has a constant and no trend, correct for a share whose log price has no steady drift. A series that climbs a steady slope needs the trend version, with its own, more negative cutoff; the constant-only version applied to a trending stationary series tends to find a unit root that is not there.
 - **No breaks.** A one-off jump in level, such as a takeover bid, makes a stationary series look like it wanders. The test cannot tell a single permanent shift from many small permanent shocks.
 - **Enough calendar time.** Power depends on how long the series runs, not on how many points it has. Over one year the test catches a factor of 0.95 only 44.59% of the time.
@@ -88,17 +92,19 @@ Write the autoregression as $(1 - \rho B)\,y_t = \varepsilon_t$, where the backs
 
 ### Step 0: a unit root is a sum that never forgets
 
-Solve the random walk backwards: $y_t = y_0 + \varepsilon_1 + \varepsilon_2 + \dots + \varepsilon_t$. Today's log price is the starting value plus every shock ever received, each with full weight. Everything below follows from that sum.
+Solve the random walk backwards: $`y_t = y_0 + \varepsilon_1 + \varepsilon_2 + \dots + \varepsilon_t`$. Today's log price is the starting value plus every shock ever received, each with full weight. Everything below follows from that sum.
 
 ### Step 1: the spread grows without limit
 
 The shocks are independent, so the variance of their sum is the sum of their variances ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)):
 
-$$\operatorname{Var}(y_t - y_0) = t\,\sigma^2.$$
+```math
+\mathrm{Var}(y_t - y_0) = t\,\sigma^2.
+```
 
 After 250 days of 1% shocks the standard deviation is 1% times the square root of 250: 15.81%. The simulation of 10,000 walks gives a variance of 246.91 squared percent against the exact 250.00, with a standard error of 3.54.
 
-With a carry-over factor below 1 the old shocks shrink by $\rho$ each day, the sum becomes a geometric series, and the variance levels off at $\sigma^2/(1 - \rho^2)$. For $\rho = 0.95$ that is a standard deviation of 3.20%, reached within a few weeks.
+With a carry-over factor below 1 the old shocks shrink by $`\rho`$ each day, the sum becomes a geometric series, and the variance levels off at $`\sigma^2/(1 - \rho^2)`$. For $`\rho = 0.95`$ that is a standard deviation of 3.20%, reached within a few weeks.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -114,32 +120,32 @@ Orange, rising: the random walk, standard deviation 1% times the square root of 
 
 ### Step 2: one difference returns the shocks
 
-Subtract yesterday from today: $\Delta y_t = y_t - y_{t-1} = \varepsilon_t$. The whole accumulated sum cancels except the newest shock. The differenced series has constant average and constant spread, and no memory: it is stationary. For the share, differencing the log price gives the daily return. A series that needs one difference to become stationary is called **integrated of order one**. That is the "I" in ARIMA, short for autoregressive integrated moving average: an ARMA model, as on [Moving average and ARMA](03-ma-and-arma.md), fitted to the differenced series.
+Subtract yesterday from today: $`\Delta y_t = y_t - y_{t-1} = \varepsilon_t`$. The whole accumulated sum cancels except the newest shock. The differenced series has constant average and constant spread, and no memory: it is stationary. For the share, differencing the log price gives the daily return. A series that needs one difference to become stationary is called **integrated of order one**. That is the "I" in ARIMA, short for autoregressive integrated moving average: an ARMA model, as on [Moving average and ARMA](03-ma-and-arma.md), fitted to the differenced series.
 
-Differencing once too often does harm. The change in the return, $\varepsilon_t - \varepsilon_{t-1}$, shares the shock $\varepsilon_{t-1}$ with its neighbour, with opposite signs. Its lag-one autocorrelation, the correlation between consecutive values, is exactly −0.5. The share's twice-differenced series shows −0.5063, with a standard error of 0.0448.
+Differencing once too often does harm. The change in the return, $`\varepsilon_t - \varepsilon_{t-1}`$, shares the shock $`\varepsilon_{t-1}`$ with its neighbour, with opposite signs. Its lag-one autocorrelation, the correlation between consecutive values, is exactly −0.5. The share's twice-differenced series shows −0.5063, with a standard error of 0.0448.
 
 <details>
 <summary>Detailed proof: the two variances and the −0.5</summary>
 
-**Random walk.** $y_t - y_0 = \sum_{s=1}^{t} \varepsilon_s$. For independent terms the covariances vanish, so $\operatorname{Var}(y_t - y_0) = \sum_{s=1}^{t} \operatorname{Var}(\varepsilon_s) = t\sigma^2$.
+**Random walk.** $`y_t - y_0 = \sum_{s=1}^{t} \varepsilon_s`$. For independent terms the covariances vanish, so $`\mathrm{Var}(y_t - y_0) = \sum_{s=1}^{t} \mathrm{Var}(\varepsilon_s) = t\sigma^2`$.
 
-**Stationary autoregression started at 0.** Substituting repeatedly, $y_t = \sum_{j=0}^{t-1} \rho^j \varepsilon_{t-j}$. The variance is $\sigma^2 \sum_{j=0}^{t-1} \rho^{2j} = \sigma^2 (1 - \rho^{2t})/(1 - \rho^2)$, a finite geometric sum. When $|\rho| < 1$ the term $\rho^{2t}$ goes to 0 and the variance settles at $\sigma^2/(1-\rho^2)$. At $\rho = 1$ the sum has $t$ equal terms and gives $t\sigma^2$ back.
+**Stationary autoregression started at 0.** Substituting repeatedly, $`y_t = \sum_{j=0}^{t-1} \rho^j \varepsilon_{t-j}`$. The variance is $`\sigma^2 \sum_{j=0}^{t-1} \rho^{2j} = \sigma^2 (1 - \rho^{2t})/(1 - \rho^2)`$, a finite geometric sum. When $`|\rho| < 1`$ the term $`\rho^{2t}`$ goes to 0 and the variance settles at $`\sigma^2/(1-\rho^2)`$. At $`\rho = 1`$ the sum has $`t`$ equal terms and gives $`t\sigma^2`$ back.
 
-**Over-differencing.** Let $w_t = \varepsilon_t - \varepsilon_{t-1}$. Then $\operatorname{Var}(w_t) = \sigma^2 + \sigma^2 = 2\sigma^2$. Consecutive terms share one shock: $\operatorname{Cov}(w_t, w_{t-1}) = \operatorname{Cov}(\varepsilon_t - \varepsilon_{t-1}, \varepsilon_{t-1} - \varepsilon_{t-2}) = -\operatorname{Var}(\varepsilon_{t-1}) = -\sigma^2$. Terms two or more days apart share nothing. The lag-one autocorrelation is $-\sigma^2 / 2\sigma^2 = -1/2$, whatever the shock size. The same bookkeeping on a stationary autoregression, whose values one and two days apart have covariances $\rho$ and $\rho^2$ times its variance, gives the change a lag-one covariance of $-(1-\rho)^2$ and a variance of $2(1-\rho)$, both times that variance: a lag-one autocorrelation of $-(1-\rho)/2$, still negative, and nearer 0 the longer the memory.
+**Over-differencing.** Let $`w_t = \varepsilon_t - \varepsilon_{t-1}`$. Then $`\mathrm{Var}(w_t) = \sigma^2 + \sigma^2 = 2\sigma^2`$. Consecutive terms share one shock: $`\mathrm{Cov}(w_t, w_{t-1}) = \mathrm{Cov}(\varepsilon_t - \varepsilon_{t-1}, \varepsilon_{t-1} - \varepsilon_{t-2}) = -\mathrm{Var}(\varepsilon_{t-1}) = -\sigma^2`$. Terms two or more days apart share nothing. The lag-one autocorrelation is $`-\sigma^2 / 2\sigma^2 = -1/2`$, whatever the shock size. The same bookkeeping on a stationary autoregression, whose values one and two days apart have covariances $`\rho`$ and $`\rho^2`$ times its variance, gives the change a lag-one covariance of $`-(1-\rho)^2`$ and a variance of $`2(1-\rho)`$, both times that variance: a lag-one autocorrelation of $`-(1-\rho)/2`$, still negative, and nearer 0 the longer the memory.
 
 </details>
 
 ### Step 3: turn "is the factor 1?" into a slope
 
-Subtracting $y_{t-1}$ from both sides of $y_t = \rho y_{t-1} + \varepsilon_t$ gives $\Delta y_t = (\rho - 1) y_{t-1} + \varepsilon_t$. The carry-over factor becomes the slope $\gamma$ of today's change on yesterday's level. Under a unit root that slope is 0: yesterday's level tells nothing about today's change. Under stationarity it is negative: high levels are followed by falls. The constant $\alpha$ lets the moored series settle around any level, not only zero. Least squares estimates the slope, and $\tau$ divides it by its standard error, the same ratio that [Regression error bars](../09-Regression/02-regression-inference.md) calls a t statistic.
+Subtracting $`y_{t-1}`$ from both sides of $`y_t = \rho y_{t-1} + \varepsilon_t`$ gives $`\Delta y_t = (\rho - 1) y_{t-1} + \varepsilon_t`$. The carry-over factor becomes the slope $`\gamma`$ of today's change on yesterday's level. Under a unit root that slope is 0: yesterday's level tells nothing about today's change. Under stationarity it is negative: high levels are followed by falls. The constant $`\alpha`$ lets the moored series settle around any level, not only zero. Least squares estimates the slope, and $`\tau`$ divides it by its standard error, the same ratio that [Regression error bars](../09-Regression/02-regression-inference.md) calls a t statistic.
 
 ### Step 4: why the usual cutoff is wrong
 
 In ordinary regression that ratio follows, approximately, the standard bell curve, and a one-sided 5% test rejects below −1.645. Here the regressor is the wandering level itself, and two effects break the bell curve.
 
-First, the estimate of the carry-over factor is pulled below 1. The constant in the regression centres the fit on the path's own average, and any path, even a pure random walk, sits above its own average about as often as below it and crosses it. Over a finite stretch the fitted line reads that as pull-back. For the share, $\hat\rho = 0.975259$ although the true factor is exactly 1.
+First, the estimate of the carry-over factor is pulled below 1. The constant in the regression centres the fit on the path's own average, and any path, even a pure random walk, sits above its own average about as often as below it and crosses it. Over a finite stretch the fitted line reads that as pull-back. For the share, $`\hat\rho = 0.975259`$ although the true factor is exactly 1.
 
-Second, the standard error is computed as if the level were a stable regressor, and it is not: its spread grows with time. Together these shift the whole distribution of $\tau$ to the left. Across 10,000 simulated random walks of 250 days, 4.93% land below MacKinnon's cutoff of −2.8732 (standard error 0.22%): the published cutoff and this card's own simulation agree.
+Second, the standard error is computed as if the level were a stable regressor, and it is not: its spread grows with time. Together these shift the whole distribution of $`\tau`$ to the left. Across 10,000 simulated random walks of 250 days, 4.93% land below MacKinnon's cutoff of −2.8732 (standard error 0.22%): the published cutoff and this card's own simulation agree.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -151,22 +157,22 @@ xychart-beta
     line [0.00, 0.00, 0.00, 0.00, 0.01, 0.03, 0.09, 0.18, 0.30, 0.39, 0.39, 0.30, 0.18, 0.09, 0.03, 0.01]
 ```
 
-Orange: the Dickey-Fuller law, a histogram of $\tau$ from 10,000 simulated random walks in bins half a unit wide. Green: the standard bell curve that ordinary regression would use. The orange hump sits well to the left, so a cutoff taken from the green curve rejects a true unit root 45.92% of the time (standard error 0.50%) instead of 5%.
+Orange: the Dickey-Fuller law, a histogram of $`\tau`$ from 10,000 simulated random walks in bins half a unit wide. Green: the standard bell curve that ordinary regression would use. The orange hump sits well to the left, so a cutoff taken from the green curve rejects a true unit root 45.92% of the time (standard error 0.50%) instead of 5%.
 
 Dickey and Fuller derived and tabulated the limit of this law, as the series grows long, in 1979; it is written today as a ratio of integrals of a Brownian path. Its proof needs [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md) and is not given here; this card states it, simulates it, and checks the simulation against MacKinnon's published cutoffs.
 
 ### Step 5: augment the regression when the changes have memory
 
-A share's returns carry almost no memory, but many series do: this month's change in unemployment predicts part of next month's. Memory left in the shocks distorts $\tau$. The augmented test adds $p$ lagged changes to the regression. They absorb the short memory, so the leftover shocks are close to independent, and Said and Dickey showed in 1984 that the same cutoffs then remain valid. For the share, one lag gets weight 0.0423 with a standard error of 0.0632: no detectable memory, as expected for returns, and the test statistic moves only from −1.9206 to −2.1145.
+A share's returns carry almost no memory, but many series do: this month's change in unemployment predicts part of next month's. Memory left in the shocks distorts $`\tau`$. The augmented test adds $`p`$ lagged changes to the regression. They absorb the short memory, so the leftover shocks are close to independent, and Said and Dickey showed in 1984 that the same cutoffs then remain valid. For the share, one lag gets weight 0.0423 with a standard error of 0.0632: no detectable memory, as expected for returns, and the test statistic moves only from −1.9206 to −2.1145.
 
 <details>
 <summary>The algebra behind the augmented slope</summary>
 
-The slope on the level in a regression with several regressors equals the slope obtained in two stages. First regress today's change on the constant and the lagged changes, and keep the leftovers. Then regress yesterday's level on the same constant and lagged changes, and keep those leftovers. The slope of the first leftovers on the second is $\hat\gamma$, and its standard error follows from the full regression's residuals, which are the same. This is the Frisch-Waugh-Lovell theorem of [Multiple regression](../09-Regression/03-multiple-regression-and-gauss-markov.md). The code uses it as a third, independent road to $\tau$: it never forms or inverts a matrix, and it lands on −2.1145 like the full solve.
+The slope on the level in a regression with several regressors equals the slope obtained in two stages. First regress today's change on the constant and the lagged changes, and keep the leftovers. Then regress yesterday's level on the same constant and lagged changes, and keep those leftovers. The slope of the first leftovers on the second is $`\hat\gamma`$, and its standard error follows from the full regression's residuals, which are the same. This is the Frisch-Waugh-Lovell theorem of [Multiple regression](../09-Regression/03-multiple-regression-and-gauss-markov.md). The code uses it as a third, independent road to $`\tau`$: it never forms or inverts a matrix, and it lands on −2.1145 like the full solve.
 
 </details>
 
-Another door: the Phillips-Perron test corrects $\tau$ for memory afterwards instead of adding lags, and the KPSS test takes stationarity, not the unit root, as the claim under test.
+Another door: the Phillips-Perron test corrects $`\tau`$ for memory afterwards instead of adding lags, and the KPSS test takes stationarity, not the unit root, as the claim under test.
 
 ---
 
@@ -181,12 +187,12 @@ The plain Dickey-Fuller regression, with no lags, on the share's log price. Call
 | Sxx, spread of yesterday's level | sum of squared (x − average) | 0.586235 |
 | Sxd, level against change | sum of (x − average)(d − average) | −0.01450402 |
 | Sdd, spread of the change | sum of squared (d − average) | 0.02448476 |
-| slope, $\hat\gamma$ | −0.01450402 / 0.586235 | −0.024741 |
-| implied factor, $\hat\rho$ | 1 − 0.024741 | 0.975259 |
+| slope, $`\hat\gamma`$ | −0.01450402 / 0.586235 | −0.024741 |
+| implied factor, $`\hat\rho`$ | 1 − 0.024741 | 0.975259 |
 | leftover sum of squares | 0.02448476 − 0.024741 × 0.01450402 | 0.02412592 |
 | leftover variance, s squared | 0.02412592 / 248 | 0.00009728 |
 | standard error of the slope | square root of (0.00009728 / 0.586235) | 0.012882 |
-| $\tau$ | −0.024741 / 0.012882 | −1.9206 |
+| $`\tau`$ | −0.024741 / 0.012882 | −1.9206 |
 | 5% cutoff for T = 250 | MacKinnon's formula | −2.8732 |
 | **verdict** | −1.9206 is above −2.8732 | **unit root not rejected** |
 
@@ -198,16 +204,16 @@ The price wanders and the returns do not. The test does not prove the price has 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Compare $\tau$ with the normal cutoff −1.645 | The share "reverts": −2.1145 is below −1.645. A true random walk is rejected 45.92% of the time (standard error 0.50%), not 5% | The law of $\tau$ under a unit root is shifted left; the bell curve is the wrong yardstick |
-| Regress one wandering price on another | Two unrelated random walks give a "significant" slope, $\lvert t\rvert$ above 1.96, in 84.70% of 5,000 pairs (standard error 0.51%) | Spurious regression: two sums of shocks both drift, and drifting paths look related |
+| Compare $`\tau`$ with the normal cutoff −1.645 | The share "reverts": −2.1145 is below −1.645. A true random walk is rejected 45.92% of the time (standard error 0.50%), not 5% | The law of $`\tau`$ under a unit root is shifted left; the bell curve is the wrong yardstick |
+| Regress one wandering price on another | Two unrelated random walks give a "significant" slope, $`\lvert t\rvert`$ above 1.96, in 84.70% of 5,000 pairs (standard error 0.51%) | Spurious regression: two sums of shocks both drift, and drifting paths look related |
 | Difference the returns again | Lag-one autocorrelation −0.5063; exact value −0.5 | Over-differencing builds a pattern into pure noise |
-| Read $\hat\rho$ = 0.975259 as real pull-back | A "half-life" of 27.7 days | The estimate is biased below 1 even when the true factor is exactly 1 |
+| Read $`\hat\rho`$ = 0.975259 as real pull-back | A "half-life" of 27.7 days | The estimate is biased below 1 even when the true factor is exactly 1 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code simulates the share from SplitMix64, a small random number generator written out in both languages with seed 7, so Python and Rust draw the same shocks. It reaches the test statistic by three independent roads: the five sums of the hand calculation, a Gauss-Jordan solve of the full regression with any number of lags, and the two-stage partialling-out route for one lag. It reaches the 5% cutoff two ways: MacKinnon's published formula, and 10,000 simulated random walks whose rejection rate at that cutoff must sit within four standard errors of 5%. The spread of a random walk is checked against $t\sigma^2$, the over-differencing autocorrelation against −0.5, and every what-breaks number is reproduced. Six asserts. Breaking the maths five ways, one at a time, made an assert fail each time.
+The code simulates the share from SplitMix64, a small random number generator written out in both languages with seed 7, so Python and Rust draw the same shocks. It reaches the test statistic by three independent roads: the five sums of the hand calculation, a Gauss-Jordan solve of the full regression with any number of lags, and the two-stage partialling-out route for one lag. It reaches the 5% cutoff two ways: MacKinnon's published formula, and 10,000 simulated random walks whose rejection rate at that cutoff must sit within four standard errors of 5%. The spread of a random walk is checked against $`t\sigma^2`$, the over-differencing autocorrelation against −0.5, and every what-breaks number is reproduced. Six asserts. Breaking the maths five ways, one at a time, made an assert fail each time.
 
 ### Python
 
@@ -646,11 +652,11 @@ The two outputs agree line for line.
 
 Lean proves the spread facts of Steps 1 and 2, for every shock size and every day.
 
-- Suppose the shocks are independent, each with variance $\sigma^2$, and the random walk adds one a day. Then its variance after $t$ days is $t\sigma^2$.
-- If $\sigma$ is above 0, that variance grows without limit.
-- Take the same shocks, a start at 0, and a carry-over factor $\rho$ between −1 and 1. Then the variance after $t$ days is $\sigma^2 (1 - \rho^{2t})/(1 - \rho^2)$.
-- As $t$ grows, that variance settles at $\sigma^2/(1 - \rho^2)$.
-- Take the same shocks with $\sigma$ above 0, and difference them once too often. Then the result has variance $2\sigma^2$ and lag-one covariance $-\sigma^2$.
+- Suppose the shocks are independent, each with variance $`\sigma^2`$, and the random walk adds one a day. Then its variance after $`t`$ days is $`t\sigma^2`$.
+- If $`\sigma`$ is above 0, that variance grows without limit.
+- Take the same shocks, a start at 0, and a carry-over factor $`\rho`$ between −1 and 1. Then the variance after $`t`$ days is $`\sigma^2 (1 - \rho^{2t})/(1 - \rho^2)`$.
+- As $`t`$ grows, that variance settles at $`\sigma^2/(1 - \rho^2)`$.
+- Take the same shocks with $`\sigma`$ above 0, and difference them once too often. Then the result has variance $`2\sigma^2`$ and lag-one covariance $`-\sigma^2`$.
 - So its lag-one autocorrelation is exactly −1/2, whatever the shock size.
 - The hand figures hold: standard deviations 5%, 10% and 15% at days 25, 100 and 225, and variance 250 squared percent at day 250.
 
@@ -842,8 +848,8 @@ example : (-(1 : ℚ) ^ 2) / (2 * 1 ^ 2) = -1 / 2 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - **Anchor the share.** Guess first: with the same shocks but a carry-over factor of 0.9 instead of 1, does the test notice? The checks already print it, from the path `u`. It does: $\tau$ = −4.3710, well below −2.8732.
-> - **Regress returns on returns.** Guess first: does the spurious regression survive differencing? The checks already print it: pairs of independent return series give $\lvert t\rvert$ above 1.96 in 5.50% of cases (standard error 0.32%), the honest 5%.
+> - **Anchor the share.** Guess first: with the same shocks but a carry-over factor of 0.9 instead of 1, does the test notice? The checks already print it, from the path `u`. It does: $`\tau`$ = −4.3710, well below −2.8732.
+> - **Regress returns on returns.** Guess first: does the spurious regression survive differencing? The checks already print it: pairs of independent return series give $`\lvert t\rvert`$ above 1.96 in 5.50% of cases (standard error 0.32%), the honest 5%.
 > - **Four years of data.** Guess first: does the cutoff drift towards −1.645 as the sample grows? Call the cutoff formula with T = 1000: −2.8644. The shift is not a small-sample quirk; it stays in the limit.
 
 ---
@@ -856,7 +862,7 @@ example : (-(1 : ℚ) ^ 2) / (2 * 1 ^ 2) = -1 / 2 := by norm_num
 > Smaller traps:
 > - **The bell-curve cutoff.** −1.645 rejects a true random walk 45.92% of the time. Use the Dickey-Fuller cutoff: −2.8732 for 250 observations with a constant.
 > - **Correlating prices instead of returns.** Two unrelated wandering prices look significantly related in 84.70% of pairs. Correlate returns, or test the gap for a unit root, which is the idea of [Cointegration](07-cointegration-in-outline.md).
-> - **Differencing a stationary series.** It manufactures a negative lag-one autocorrelation: −0.5 for a series with no memory, like these returns, and $-(1-\rho)/2$ for an autoregression with carry-over factor $\rho$. It also makes forecasts worse. Test before differencing, and difference only as many times as the test demands.
+> - **Differencing a stationary series.** It manufactures a negative lag-one autocorrelation: −0.5 for a series with no memory, like these returns, and $`-(1-\rho)/2`$ for an autoregression with carry-over factor $`\rho`$. It also makes forecasts worse. Test before differencing, and difference only as many times as the test demands.
 > - **Trusting the half-life of a wandering series.** A fitted factor of 0.975259 implies a 27.7-day half-life that does not exist.
 
 ---

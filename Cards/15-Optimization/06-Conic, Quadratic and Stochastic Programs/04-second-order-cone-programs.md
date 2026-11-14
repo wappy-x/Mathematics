@@ -36,42 +36,48 @@ The orange line is the long-only fund, solved by the method on this card at each
 
 ## The formula
 
-The **second-order cone** of dimension k, here written $\mathcal Q^{k}$, holds every point $(h, v)$ made of one number $h$ (the height) and a list $v$ of $k - 1$ numbers whose length is at most the height:
+The **second-order cone** of dimension k, here written $`\mathcal Q^{k}`$, holds every point $`(h, v)`$ made of one number $`h`$ (the height) and a list $`v`$ of $`k - 1`$ numbers whose length is at most the height:
 
-$$\mathcal Q^{k} = \{\,(h, v) : \lVert v\rVert \le h\,\}$$
+```math
+\mathcal Q^{k} = \{\,(h, v) : \lVert v\rVert \le h\,\}
+```
 
 **Read it aloud:** a point is in the cone when its list is no longer than its height.
 
-In three dimensions this is an ice cream cone standing on its tip: at height $h$ the slice is a disc of radius $h$. The fund's problem is
+In three dimensions this is an ice cream cone standing on its tip: at height $`h`$ the slice is a disc of radius $`h`$. The fund's problem is
 
-$$\text{maximise } \mu^{\mathsf T} w \quad\text{subject to}\quad \mathbf 1^{\mathsf T} w = 1,\quad w \ge 0,\quad \big(\delta,\; A(w - w_b)\big) \in \mathcal Q^{8}$$
+```math
+\text{maximise } \mu^{\mathsf T} w \quad\text{subject to}\quad \mathbf 1^{\mathsf T} w = 1,\quad w \ge 0,\quad \big(\delta,\; A(w - w_b)\big) \in \mathcal Q^{8}
+```
 
 **Read it aloud:** make the expected return as large as possible, fully invested, with no negative weight, and with the risk list of the active weights no longer than 2%.
 
-The proof of optimality is one inequality. For any numbers $\nu$, any $\lambda \ge 0$ and any cone point $(z, u)$ in $\mathcal Q^{8}$ that satisfy $A^{\mathsf T} u + \nu \mathbf 1 - \lambda = \mu$, every allowed mix obeys
+The proof of optimality is one inequality. For any numbers $`\nu`$, any $`\lambda \ge 0`$ and any cone point $`(z, u)`$ in $`\mathcal Q^{8}`$ that satisfy $`A^{\mathsf T} u + \nu \mathbf 1 - \lambda = \mu`$, every allowed mix obeys
 
-$$\mu^{\mathsf T} w \;\le\; \nu + \delta z + u^{\mathsf T} A w_b$$
+```math
+\mu^{\mathsf T} w \;\le\; \nu + \delta z + u^{\mathsf T} A w_b
+```
 
 **Read it aloud:** a price on the budget, prices on the floors and a price list that lies in the same cone give a ceiling on the return of every mix inside the limits.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $w$, $w_i$, $\mathbf 1$ | the five weights chosen, weight number $i$; a list of five ones, so $\mathbf 1^{\mathsf T} w$ is their total | 11.75, 39.13, 21.11, 17.27, 10.73 (%) | — |
-| $w_b$ | the benchmark weights | 25, 30, 10, 20, 15 (%) | the fund starts nearer whatever it adds |
-| $\mu$ | expected return of each asset, a year | 6, 7, 8.5, 4, 4.8 (%) | that asset gains weight |
-| $A$, $\Sigma = A^{\mathsf T} A$ | the risk model: 7 rows, one per risk source, 5 columns; the covariance matrix it builds | table below | more risk per unit of active weight, less return |
-| $t$ | the barrier weight of the interior-point method (Step 4) | 1, then ×10 each round | the method's answer nears the best |
-| $\delta$ | the tracking-error limit, a year | 0.02 | return above the benchmark rises, in a straight line while the floor is slack |
-| $\lVert v\rVert$ | length of a list: square root of the sum of squares | $\lVert A(w - w_b)\rVert$ = 0.02 at the answer | — |
-| $\mathcal Q^{k}$, $(h, v)$ | the cone of dimension k; a point with height $h$ and list $v$ | k = 8: height 0.02, list of 7 | — |
-| $\nu$, $\lambda$ | prices on the budget and on the five floors | $\nu$ = 0.042861, $\lambda$ = 0 (no floor binds) | — |
-| $(z, u)$ | the dual point: a price list $u$ on the 7 risk sources and its height $z$ | $z$ = 0.237440 | the ceiling rises; the best certificate takes the smallest height the cone allows, $z = \lVert u\rVert$ |
-| $g$, $r$ | the direction of the active bets, solving $\Sigma g = \mu - \nu\mathbf 1$ (built in Step 3 from $a = \Sigma^{-1}\mu$ and $o = \Sigma^{-1}\mathbf 1$); $r = \lVert Ag\rVert$, its risk length, the information ratio | $r$ = 0.237440 | — |
-| $x_1$, $x_2$ | two numbers in the hyperbola example of Step 5 | $x_1 x_2 \ge 1$ | — |
+| $`w`$, $`w_i`$, $`\mathbf 1`$ | the five weights chosen, weight number $`i`$; a list of five ones, so $`\mathbf 1^{\mathsf T} w`$ is their total | 11.75, 39.13, 21.11, 17.27, 10.73 (%) | — |
+| $`w_b`$ | the benchmark weights | 25, 30, 10, 20, 15 (%) | the fund starts nearer whatever it adds |
+| $`\mu`$ | expected return of each asset, a year | 6, 7, 8.5, 4, 4.8 (%) | that asset gains weight |
+| $`A`$, $`\Sigma = A^{\mathsf T} A`$ | the risk model: 7 rows, one per risk source, 5 columns; the covariance matrix it builds | table below | more risk per unit of active weight, less return |
+| $`t`$ | the barrier weight of the interior-point method (Step 4) | 1, then ×10 each round | the method's answer nears the best |
+| $`\delta`$ | the tracking-error limit, a year | 0.02 | return above the benchmark rises, in a straight line while the floor is slack |
+| $`\lVert v\rVert`$ | length of a list: square root of the sum of squares | $`\lVert A(w - w_b)\rVert`$ = 0.02 at the answer | — |
+| $`\mathcal Q^{k}`$, $`(h, v)`$ | the cone of dimension k; a point with height $`h`$ and list $`v`$ | k = 8: height 0.02, list of 7 | — |
+| $`\nu`$, $`\lambda`$ | prices on the budget and on the five floors | $`\nu`$ = 0.042861, $`\lambda`$ = 0 (no floor binds) | — |
+| $`(z, u)`$ | the dual point: a price list $`u`$ on the 7 risk sources and its height $`z`$ | $`z`$ = 0.237440 | the ceiling rises; the best certificate takes the smallest height the cone allows, $`z = \lVert u\rVert`$ |
+| $`g`$, $`r`$ | the direction of the active bets, solving $`\Sigma g = \mu - \nu\mathbf 1`$ (built in Step 3 from $`a = \Sigma^{-1}\mu`$ and $`o = \Sigma^{-1}\mathbf 1`$); $`r = \lVert Ag\rVert`$, its risk length, the information ratio | $`r`$ = 0.237440 | — |
+| $`x_1`$, $`x_2`$ | two numbers in the hyperbola example of Step 5 | $`x_1 x_2 \ge 1`$ | — |
 
 The risk model has two shared sources (an equity factor and an interest-rate factor) and one private source per asset. Each entry is the asset's yearly return move, as a decimal, for a one-standard-deviation shock to that source.
 
-| Asset | $\mu$ | $w_b$ | Equity factor | Rate factor | Own risk |
+| Asset | $`\mu`$ | $`w_b`$ | Equity factor | Rate factor | Own risk |
 | --- | --- | --- | --- | --- | --- |
 | UK shares | 0.060 | 0.25 | 0.14 | 0.00 | 0.06 |
 | US shares | 0.070 | 0.30 | 0.15 | 0.00 | 0.05 |
@@ -79,26 +85,26 @@ The risk model has two shared sources (an equity factor and an interest-rate fac
 | Gilts | 0.040 | 0.20 | −0.01 | 0.06 | 0.02 |
 | Corporate bonds | 0.048 | 0.15 | 0.04 | 0.05 | 0.03 |
 
-The two factor columns are the first two rows of $A$; the "own risk" column fills the diagonal of its last five rows.
+The two factor columns are the first two rows of $`A`$; the "own risk" column fills the diagonal of its last five rows.
 
 ### Recognising a cone constraint
 
 | Constraint as written | As cone membership |
 | --- | --- |
-| $\lVert A(w - w_b)\rVert \le \delta$ | $(\delta, A(w - w_b)) \in \mathcal Q^{8}$ |
-| $(w - w_b)^{\mathsf T}\Sigma(w - w_b) \le \delta^2$, with $\Sigma = A^{\mathsf T}A$ | the same, after a square root of both sides |
-| $x_1 x_2 \ge 1$, with $x_1, x_2 \ge 0$ (a hyperbola) | $\big(x_1 + x_2,\ (x_1 - x_2,\ 2)\big) \in \mathcal Q^{3}$ |
-| a size limit on one number, $\lvert a\rvert \le h$ | $(h, a) \in \mathcal Q^{2}$, which is two straight-line limits |
-| a straight-line limit, a number at least 0 | $\mathcal Q^{1}$: a height with an empty list |
+| $`\lVert A(w - w_b)\rVert \le \delta`$ | $`(\delta, A(w - w_b)) \in \mathcal Q^{8}`$ |
+| $`(w - w_b)^{\mathsf T}\Sigma(w - w_b) \le \delta^2`$, with $`\Sigma = A^{\mathsf T}A`$ | the same, after a square root of both sides |
+| $`x_1 x_2 \ge 1`$, with $`x_1, x_2 \ge 0`$ (a hyperbola) | $`\big(x_1 + x_2,\ (x_1 - x_2,\ 2)\big) \in \mathcal Q^{3}`$ |
+| a size limit on one number, $`\lvert a\rvert \le h`$ | $`(h, a) \in \mathcal Q^{2}`$, which is two straight-line limits |
+| a straight-line limit, a number at least 0 | $`\mathcal Q^{1}`$: a height with an empty list |
 
-A **turnover** limit (the sum of the sizes of the weight changes from the current holdings at most some number) is linear, not a cone: each size splits into two straight-line limits, as in a linear program. The tracking-error limit is the one that needs the cone. A limit like $\lVert v\rVert \ge 1$ (stay *outside* a ball) is not a cone constraint at all; it is not convex (a convex set holds the whole straight segment between any two of its points, and the outside of a ball does not).
+A **turnover** limit (the sum of the sizes of the weight changes from the current holdings at most some number) is linear, not a cone: each size splits into two straight-line limits, as in a linear program. The tracking-error limit is the one that needs the cone. A limit like $`\lVert v\rVert \ge 1`$ (stay *outside* a ball) is not a cone constraint at all; it is not convex (a convex set holds the whole straight segment between any two of its points, and the outside of a ball does not).
 
 ### When it holds
 
 - **The curved limits are lengths bounded above.** Swap to a lower bound on a length and the feasible set gets a hole: no cone, no convexity, and a local optimum need not be global.
-- **A quadratic limit has a covariance of the form $A^{\mathsf T}A$.** A covariance estimated badly, with a negative eigenvalue, has no such $A$; the "variance" can go negative and the limit is not convex. The factor model above gives $A$ directly, with no square root to take.
+- **A quadratic limit has a covariance of the form $`A^{\mathsf T}A`$.** A covariance estimated badly, with a negative eigenvalue, has no such $`A`$; the "variance" can go negative and the limit is not convex. The factor model above gives $`A`$ directly, with no square root to take.
 - **Strong duality needs a strictly feasible point**: one inside the cone, not on its rim, and inside every floor. The benchmark itself qualifies here (tracking error 0, every weight positive). Without one, the ceiling can sit above the best value. The dual side needs one too: without a strictly feasible dual point, the best value can be approached and never reached, as in Step 5, where the primal has a strictly feasible point and the dual does not.
-- **The units must match.** $\delta$ is a standard deviation (0.02), so a variance limit is $\delta^2$ (0.0004). Writing 0.02 as a variance cap lets the optimiser reach a tracking error of 12.1130% (What breaks).
+- **The units must match.** $`\delta`$ is a standard deviation (0.02), so a variance limit is $`\delta^2`$ (0.0004). Writing 0.02 as a variance cap lets the optimiser reach a tracking error of 12.1130% (What breaks).
 
 ---
 
@@ -106,52 +112,56 @@ A **turnover** limit (the sum of the sizes of the weight changes from the curren
 
 ### Step 0: two cone points always meet at a non-negative angle
 
-Take any two points of the cone, $(h, v)$ and $(z, u)$. Their inner product (sum of products of matching entries) is $hz + v^{\mathsf T}u$. The Cauchy–Schwarz inequality ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)) says $v^{\mathsf T}u \ge -\lVert v\rVert\,\lVert u\rVert$, and each length is at most its height, so
+Take any two points of the cone, $`(h, v)`$ and $`(z, u)`$. Their inner product (sum of products of matching entries) is $`hz + v^{\mathsf T}u`$. The Cauchy–Schwarz inequality ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)) says $`v^{\mathsf T}u \ge -\lVert v\rVert\,\lVert u\rVert`$, and each length is at most its height, so
 
-$$hz + v^{\mathsf T}u \;\ge\; hz - \lVert v\rVert\,\lVert u\rVert \;\ge\; hz - hz = 0.$$
+```math
+hz + v^{\mathsf T}u \;\ge\; hz - \lVert v\rVert\,\lVert u\rVert \;\ge\; hz - hz = 0.
+```
 
-The **dual cone** of a cone is the set of points whose inner product with every member is at least 0. The display shows every member of $\mathcal Q^{k}$ is in its dual cone, and the reverse also holds, so the second-order cone is **self-dual**: prices for a cone constraint live in the same cone. That one fact is what the whole duality theory below runs on. The non-negative orthant (the points whose entries are all at least 0), where linear programs live, is self-dual too; that is why a linear program's prices are non-negative numbers.
+The **dual cone** of a cone is the set of points whose inner product with every member is at least 0. The display shows every member of $`\mathcal Q^{k}`$ is in its dual cone, and the reverse also holds, so the second-order cone is **self-dual**: prices for a cone constraint live in the same cone. That one fact is what the whole duality theory below runs on. The non-negative orthant (the points whose entries are all at least 0), where linear programs live, is self-dual too; that is why a linear program's prices are non-negative numbers.
 
 ### Step 1: turn the risk limit into a length
 
-The variance of the fund's return minus the benchmark's is $(w - w_b)^{\mathsf T}\Sigma(w - w_b)$. With $\Sigma = A^{\mathsf T}A$, this is $(A(w - w_b))^{\mathsf T}(A(w - w_b)) = \lVert A(w - w_b)\rVert^2$. Written out, it is the square of the active equity exposure, plus the square of the active rate exposure, plus each asset's own risk times its active weight, squared. Tracking error is the square root of that variance, so "tracking error at most 2%" is "the 7-entry list $A(w - w_b)$ has length at most 0.02": a point of $\mathcal Q^{8}$.
+The variance of the fund's return minus the benchmark's is $`(w - w_b)^{\mathsf T}\Sigma(w - w_b)`$. With $`\Sigma = A^{\mathsf T}A`$, this is $`(A(w - w_b))^{\mathsf T}(A(w - w_b)) = \lVert A(w - w_b)\rVert^2`$. Written out, it is the square of the active equity exposure, plus the square of the active rate exposure, plus each asset's own risk times its active weight, squared. Tracking error is the square root of that variance, so "tracking error at most 2%" is "the 7-entry list $`A(w - w_b)`$ has length at most 0.02": a point of $`\mathcal Q^{8}`$.
 
 The quadratic form and the length are the same number; the code computes the tracking error both ways and prints 2.0000% twice.
 
 ### Step 2: weak duality, the ceiling
 
-Take any allowed mix $w$ and any prices with $A^{\mathsf T}u + \nu\mathbf 1 - \lambda = \mu$, $\lambda \ge 0$ and $(z, u) \in \mathcal Q^{8}$. Multiply that equation by $w$:
+Take any allowed mix $`w`$ and any prices with $`A^{\mathsf T}u + \nu\mathbf 1 - \lambda = \mu`$, $`\lambda \ge 0`$ and $`(z, u) \in \mathcal Q^{8}`$. Multiply that equation by $`w`$:
 
-$$\mu^{\mathsf T}w = \nu\,\mathbf 1^{\mathsf T}w - \lambda^{\mathsf T}w + u^{\mathsf T}A(w - w_b) + u^{\mathsf T}Aw_b.$$
+```math
+\mu^{\mathsf T}w = \nu\,\mathbf 1^{\mathsf T}w - \lambda^{\mathsf T}w + u^{\mathsf T}A(w - w_b) + u^{\mathsf T}Aw_b.
+```
 
-Now bound each term. The total weight is 1, so the first is $\nu$. Weights and floor prices are both non-negative, so $-\lambda^{\mathsf T}w \le 0$. Cauchy–Schwarz and the two cone memberships give $u^{\mathsf T}A(w - w_b) \le \lVert u\rVert\,\lVert A(w - w_b)\rVert \le z\delta$; this is Step 0's inequality for the cone points $(\delta, A(w - w_b))$ and $(z, -u)$. Adding up gives the ceiling in The formula. No mix inside the limits beats any such price set.
+Now bound each term. The total weight is 1, so the first is $`\nu`$. Weights and floor prices are both non-negative, so $`-\lambda^{\mathsf T}w \le 0`$. Cauchy–Schwarz and the two cone memberships give $`u^{\mathsf T}A(w - w_b) \le \lVert u\rVert\,\lVert A(w - w_b)\rVert \le z\delta`$; this is Step 0's inequality for the cone points $`(\delta, A(w - w_b))`$ and $`(z, -u)`$. Adding up gives the ceiling in The formula. No mix inside the limits beats any such price set.
 
 ### Step 3: find the prices that touch the ceiling
 
-The ceiling is tight when every inequality in Step 2 is an equality: $\lambda^{\mathsf T}w = 0$ (here no floor binds, so $\lambda = 0$), and $u$ points the same way as $A(w - w_b)$, with both cone points on the rim. Those are the KKT conditions (Karush–Kuhn–Tucker: the stationarity, feasibility and complementary-slackness conditions of [Quadratic programs](01-quadratic-programs-and-markowitz.md), here with a cone in place of a quadratic).
+The ceiling is tight when every inequality in Step 2 is an equality: $`\lambda^{\mathsf T}w = 0`$ (here no floor binds, so $`\lambda = 0`$), and $`u`$ points the same way as $`A(w - w_b)`$, with both cone points on the rim. Those are the KKT conditions (Karush–Kuhn–Tucker: the stationarity, feasibility and complementary-slackness conditions of [Quadratic programs](01-quadratic-programs-and-markowitz.md), here with a cone in place of a quadratic).
 
-Solving them takes two linear solves. Find $g$ from $\Sigma g = \mu - \nu\mathbf 1$, with $\nu$ chosen so that $\mathbf 1^{\mathsf T}g = 0$: the active bets must net to zero, as the weights still add to one. Then scale $g$ until its risk length reaches the limit.
+Solving them takes two linear solves. Find $`g`$ from $`\Sigma g = \mu - \nu\mathbf 1`$, with $`\nu`$ chosen so that $`\mathbf 1^{\mathsf T}g = 0`$: the active bets must net to zero, as the weights still add to one. Then scale $`g`$ until its risk length reaches the limit.
 
 <details>
 <summary>Detailed derivation: the closed form and its dual point</summary>
 
-Write $a = \Sigma^{-1}\mu$ and $o = \Sigma^{-1}\mathbf 1$, each found by Gaussian elimination. Then $g = a - \nu o$, and $\mathbf 1^{\mathsf T}g = 0$ gives $\nu = \mathbf 1^{\mathsf T}a / \mathbf 1^{\mathsf T}o$.
+Write $`a = \Sigma^{-1}\mu`$ and $`o = \Sigma^{-1}\mathbf 1`$, each found by Gaussian elimination. Then $`g = a - \nu o`$, and $`\mathbf 1^{\mathsf T}g = 0`$ gives $`\nu = \mathbf 1^{\mathsf T}a / \mathbf 1^{\mathsf T}o`$.
 
-Let $r = \sqrt{g^{\mathsf T}\Sigma g} = \lVert Ag\rVert$. The mix is $w = w_b + \delta g / r$, whose risk length is exactly $\delta$. Its return above the benchmark is $\mu^{\mathsf T}(w - w_b) = \delta\,\mu^{\mathsf T}g / r$. Since $\mu = \Sigma g + \nu\mathbf 1$ and $\mathbf 1^{\mathsf T}g = 0$, $\mu^{\mathsf T}g = g^{\mathsf T}\Sigma g = r^2$, so the extra return is $\delta r$: a straight line in $\delta$, slope $r$.
+Let $`r = \sqrt{g^{\mathsf T}\Sigma g} = \lVert Ag\rVert`$. The mix is $`w = w_b + \delta g / r`$, whose risk length is exactly $`\delta`$. Its return above the benchmark is $`\mu^{\mathsf T}(w - w_b) = \delta\,\mu^{\mathsf T}g / r`$. Since $`\mu = \Sigma g + \nu\mathbf 1`$ and $`\mathbf 1^{\mathsf T}g = 0`$, $`\mu^{\mathsf T}g = g^{\mathsf T}\Sigma g = r^2`$, so the extra return is $`\delta r`$: a straight line in $`\delta`$, slope $`r`$.
 
-The prices: $u = (r/\delta)\,A(w - w_b) = Ag$ and $z = \lVert u\rVert = r$, so $(z, u)$ is on the rim of the cone. Then $A^{\mathsf T}u = \Sigma g = \mu - \nu\mathbf 1$, so stationarity holds with $\lambda = 0$. The ceiling is $\nu + \delta r + g^{\mathsf T}\Sigma w_b = \nu + \delta r + (\mu - \nu\mathbf 1)^{\mathsf T}w_b = \mu^{\mathsf T}w_b + \delta r$, which equals the mix's return. Ceiling met: the mix is optimal, provided every weight it gives is non-negative. If one is negative the closed form answers a different question (shorting allowed), and the method of Step 4 is needed.
+The prices: $`u = (r/\delta)\,A(w - w_b) = Ag`$ and $`z = \lVert u\rVert = r`$, so $`(z, u)`$ is on the rim of the cone. Then $`A^{\mathsf T}u = \Sigma g = \mu - \nu\mathbf 1`$, so stationarity holds with $`\lambda = 0`$. The ceiling is $`\nu + \delta r + g^{\mathsf T}\Sigma w_b = \nu + \delta r + (\mu - \nu\mathbf 1)^{\mathsf T}w_b = \mu^{\mathsf T}w_b + \delta r`$, which equals the mix's return. Ceiling met: the mix is optimal, provided every weight it gives is non-negative. If one is negative the closed form answers a different question (shorting allowed), and the method of Step 4 is needed.
 
 </details>
 
-The slope $r$ is the best ratio of extra return to tracking error any mix can reach; fund managers call that ratio the **information ratio**. Here it is 0.237440, so 2% of tracking error buys 0.4749% of extra return.
+The slope $`r`$ is the best ratio of extra return to tracking error any mix can reach; fund managers call that ratio the **information ratio**. Here it is 0.237440, so 2% of tracking error buys 0.4749% of extra return.
 
 ### Step 4: the method, when the floor might bind
 
-The closed form ignores the no-shorting floor. The general method, used by every SOCP solver, is an **interior-point method** (the barrier idea of [Interior point methods](../03-Constrained%20Optimisation/08-interior-point-methods.md)): replace each limit with a penalty that rises to infinity at its edge, then minimise $-t\,\mu^{\mathsf T}w - \sum \log w_i - \log(\delta^2 - \lVert A(w - w_b)\rVert^2)$ with Newton's method. The term $-\log(h^2 - \lVert v\rVert^2)$ is the cone's own barrier. The weight $t$ starts at 1 and grows tenfold each round.
+The closed form ignores the no-shorting floor. The general method, used by every SOCP solver, is an **interior-point method** (the barrier idea of [Interior point methods](../03-Constrained%20Optimisation/08-interior-point-methods.md)): replace each limit with a penalty that rises to infinity at its edge, then minimise $`-t\,\mu^{\mathsf T}w - \sum \log w_i - \log(\delta^2 - \lVert A(w - w_b)\rVert^2)`$ with Newton's method. The term $`-\log(h^2 - \lVert v\rVert^2)`$ is the cone's own barrier. The weight $`t`$ starts at 1 and grows tenfold each round.
 
-At the exact minimiser for a given $t$, the gap between its return and the true best is at most (number of barrier terms)$/t$, here $6/t$. The code stops when that bound is below $10^{-10}$, at $6 \times 10^{-11}$, after 61 Newton steps in total from the benchmark as the start. That count is measured, not promised.
+At the exact minimiser for a given $`t`$, the gap between its return and the true best is at most (number of barrier terms)$`/t`$, here $`6/t`$. The code stops when that bound is below $`10^{-10}`$, at $`6 \times 10^{-11}`$, after 61 Newton steps in total from the benchmark as the start. That count is measured, not promised.
 
-The proved bound on Newton steps depends on how fast $t$ grows (Boyd and Vandenberghe, section 11.5, in Sources; [Interior point methods](../03-Constrained%20Optimisation/08-interior-point-methods.md) states it too). Raise $t$ by a factor of one plus one over the square root of the number of barrier terms each round, and the total grows like that square root times the log of the accuracy wanted. With a fixed factor such as the 10 used here, the proved bound grows like the number of terms itself, times the same log.
+The proved bound on Newton steps depends on how fast $`t`$ grows (Boyd and Vandenberghe, section 11.5, in Sources; [Interior point methods](../03-Constrained%20Optimisation/08-interior-point-methods.md) states it too). Raise $`t`$ by a factor of one plus one over the square root of the number of barrier terms each round, and the total grows like that square root times the log of the accuracy wanted. With a fixed factor such as the 10 used here, the proved bound grows like the number of terms itself, times the same log.
 
 ### Step 5: the strong duality theorem, and what it does not promise
 
@@ -159,7 +169,7 @@ The proved bound on Newton steps depends on how fast $t$ grows (Boyd and Vandenb
 
 For the fund the benchmark is strictly feasible, so a perfect certificate must exist, and Step 3 built it. The proof goes through a separating hyperplane: the set of reachable (return, constraint) pairs is convex, and a flat wall between it and a slightly better return supplies the prices ([Separating hyperplanes](../01-Convexity/06-separating-hyperplanes.md)).
 
-The theorem does not promise that the best value is *reached*. Minimise $x_1$ subject to $x_1 x_2 \ge 1$ with both positive: a hyperbola, written as the single cone constraint $(x_1 + x_2, (x_1 - x_2, 2)) \in \mathcal Q^{3}$, which already forces both to be positive. Taking $x_2$ = 10, 100 and 1000 forces $x_1$ = 0.1000, 0.0100 and 0.0010: the value heads to 0 and no point gets there. The only dual point is $(0.5, 0.5, 0)$, which sits on the rim of its cone, so the dual is not strictly feasible and the primal attainment the theorem would give is lost. A linear program never does this; a cone program can.
+The theorem does not promise that the best value is *reached*. Minimise $`x_1`$ subject to $`x_1 x_2 \ge 1`$ with both positive: a hyperbola, written as the single cone constraint $`(x_1 + x_2, (x_1 - x_2, 2)) \in \mathcal Q^{3}`$, which already forces both to be positive. Taking $`x_2`$ = 10, 100 and 1000 forces $`x_1`$ = 0.1000, 0.0100 and 0.0010: the value heads to 0 and no point gets there. The only dual point is $`(0.5, 0.5, 0)`$, which sits on the rim of its cone, so the dual is not strictly feasible and the primal attainment the theorem would give is lost. A linear program never does this; a cone program can.
 
 ---
 
@@ -168,16 +178,16 @@ The theorem does not promise that the best value is *reached*. Minimise $x_1$ su
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | benchmark return | 0.25 × 6 + 0.30 × 7 + 0.10 × 8.5 + 0.20 × 4 + 0.15 × 4.8 | 5.9700% |
-| direction of the active bets, $g$ | two solves by elimination (Step 3): $\Sigma g = \mu - \nu\mathbf 1$, entries adding to 0; the checks print it | −1.572593, 1.084034, 1.319204, −0.323704, −0.506941 |
-| information ratio $r$ | $\sqrt{\mu^{\mathsf T}g}$, since $\mu^{\mathsf T}g = r^2$ (Step 3's fold): √(0.060 × (−1.572593) + 0.070 × 1.084034 + 0.085 × 1.319204 + 0.040 × (−0.323704) + 0.048 × (−0.506941)) | 0.237440 |
-| $g$'s equity exposure, the first entry of $u = Ag$ | 0.14 × (−1.572593) + 0.15 × 1.084034 + 0.18 × 1.319204 − 0.01 × (−0.323704) + 0.04 × (−0.506941) | 0.162858 |
-| price on the budget, $\nu$ | UK row of $\Sigma g = \mu - \nu\mathbf 1$; UK shares have no rate exposure, so that row of $\Sigma$ is 0.14 times the equity column plus 0.06² on the diagonal: 0.060 − 0.14 × 0.162858 − 0.06² × (−1.572593) | 0.042861 |
+| direction of the active bets, $`g`$ | two solves by elimination (Step 3): $`\Sigma g = \mu - \nu\mathbf 1`$, entries adding to 0; the checks print it | −1.572593, 1.084034, 1.319204, −0.323704, −0.506941 |
+| information ratio $`r`$ | $`\sqrt{\mu^{\mathsf T}g}`$, since $`\mu^{\mathsf T}g = r^2`$ (Step 3's fold): √(0.060 × (−1.572593) + 0.070 × 1.084034 + 0.085 × 1.319204 + 0.040 × (−0.323704) + 0.048 × (−0.506941)) | 0.237440 |
+| $`g`$'s equity exposure, the first entry of $`u = Ag`$ | 0.14 × (−1.572593) + 0.15 × 1.084034 + 0.18 × 1.319204 − 0.01 × (−0.323704) + 0.04 × (−0.506941) | 0.162858 |
+| price on the budget, $`\nu`$ | UK row of $`\Sigma g = \mu - \nu\mathbf 1`$; UK shares have no rate exposure, so that row of $`\Sigma`$ is 0.14 times the equity column plus 0.06² on the diagonal: 0.060 − 0.14 × 0.162858 − 0.06² × (−1.572593) | 0.042861 |
 | extra return | 0.02 × 0.237440 | 0.4749% |
-| weights, $w_b + 0.02\,g / r$ | UK: 0.25 + 0.02 × (−1.572593) / 0.237440; the other four alike | 11.75, 39.13, 21.11, 17.27, 10.73 (%) |
-| floor check | smallest weight | 10.73% > 0, so $\lambda = 0$ |
-| tracking error, two ways | $\lVert A(w - w_b)\rVert$ and $\sqrt{(w - w_b)^{\mathsf T}\Sigma(w - w_b)}$ | 2.0000% and 2.0000% |
-| dual height | $z = \lVert u\rVert$ | 0.237440 |
-| ceiling | $\nu + 0.02 z + u^{\mathsf T}Aw_b$ | 6.4449% |
+| weights, $`w_b + 0.02\,g / r`$ | UK: 0.25 + 0.02 × (−1.572593) / 0.237440; the other four alike | 11.75, 39.13, 21.11, 17.27, 10.73 (%) |
+| floor check | smallest weight | 10.73% > 0, so $`\lambda = 0`$ |
+| tracking error, two ways | $`\lVert A(w - w_b)\rVert`$ and $`\sqrt{(w - w_b)^{\mathsf T}\Sigma(w - w_b)}`$ | 2.0000% and 2.0000% |
+| dual height | $`z = \lVert u\rVert`$ | 0.237440 |
+| ceiling | $`\nu + 0.02 z + u^{\mathsf T}Aw_b`$ | 6.4449% |
 | **best expected return** | 5.9700 + 0.4749 | **6.4449%** |
 
 The fund tilts from UK shares toward US and emerging-market shares (its turnover, the sum of the sizes of the weight changes, is 40.49%) and expects 6.4449% a year; the price list with height 0.237440 shows that no long-only mix within 2% tracking error expects more.
@@ -187,9 +197,9 @@ The fund tilts from UK shares toward US and emerging-market shares (its turnover
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Variance capped at 0.02 instead of 0.02² | 100% emerging markets; 2.5300% extra, real tracking error 12.1130% | A standard deviation used as a variance: the real limit is the square root of 0.02, far looser than 2% |
-| Plain length of weight changes $\lVert w - w_b\rVert \le$ 0.02 | 0.0712% extra at 0.3453% tracking error; scaled up to 2%, still only 0.4124% | No risk model: correlation and each asset's own risk are ignored, so the bets point the wrong way |
+| Plain length of weight changes $`\lVert w - w_b\rVert \le`$ 0.02 | 0.0712% extra at 0.3453% tracking error; scaled up to 2%, still only 0.4124% | No risk model: correlation and each asset's own risk are ignored, so the bets point the wrong way |
 | Closed form used at a 5% limit | UK shares at −8.12% | The floor binds; the long-only answer needs the method of Step 4 |
-| Expecting the best value to be reached: minimise $x_1$ with $x_1 x_2 \ge 1$ | $x_1$ = 0.1000, 0.0100, 0.0010, never 0 | The dual point (0.5, 0.5, 0) is on the rim, so no strictly feasible dual |
+| Expecting the best value to be reached: minimise $`x_1`$ with $`x_1 x_2 \ge 1`$ | $`x_1`$ = 0.1000, 0.0100, 0.0010, never 0 | The dual point (0.5, 0.5, 0) is on the rim, so no strictly feasible dual |
 
 The code prints all four.
 
@@ -197,7 +207,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported holds the answer: there is no optimisation or linear-algebra library, and linear systems are solved by Gaussian elimination written out. The code reaches the fund's answer by three roads. Road 1 is the log-barrier Newton method of Step 4, long-only, started at the benchmark. Road 2 is the closed form of Step 3, which ignores the floor. Road 3 builds the dual point $(z, u)$, checks it is in the cone and satisfies stationarity, and checks that its ceiling meets the return. Then it prints the mistakes, the hyperbola and the chart points, which come from road 1 at each limit. A plain left-to-right sum replaces Python's built-in `sum`, which adds with extra precision, so both languages do the same arithmetic.
+Nothing imported holds the answer: there is no optimisation or linear-algebra library, and linear systems are solved by Gaussian elimination written out. The code reaches the fund's answer by three roads. Road 1 is the log-barrier Newton method of Step 4, long-only, started at the benchmark. Road 2 is the closed form of Step 3, which ignores the floor. Road 3 builds the dual point $`(z, u)`$, checks it is in the cone and satisfies stationarity, and checks that its ceiling meets the return. Then it prints the mistakes, the hyperbola and the chart points, which come from road 1 at each limit. A plain left-to-right sum replaces Python's built-in `sum`, which adds with extra precision, so both languages do the same arithmetic.
 
 ### Python
 
@@ -574,10 +584,10 @@ The two outputs match line for line, Newton step count included.
 
 Lean proves the ceiling, the self-dual cone and the hyperbola for every size of problem, and checks the hand arithmetic.
 
-- Weak duality, Step 2: for any number of assets and risk sources, any allowed mix returns at most $\nu + \delta z + u^{\mathsf T} A w_b$.
-- That holds for any budget price $\nu$, any floor prices $\lambda \ge 0$ and any cone point $(z, u)$ with $A^{\mathsf T}u + \nu\mathbf 1 - \lambda = \mu$.
+- Weak duality, Step 2: for any number of assets and risk sources, any allowed mix returns at most $`\nu + \delta z + u^{\mathsf T} A w_b`$.
+- That holds for any budget price $`\nu`$, any floor prices $`\lambda \ge 0`$ and any cone point $`(z, u)`$ with $`A^{\mathsf T}u + \nu\mathbf 1 - \lambda = \mu`$.
 - The cone is self-dual, Step 0: a point is in the cone exactly when its inner product with every cone point is at least 0.
-- The hyperbola: take $x_1, x_2 \ge 0$. Then $x_1 x_2 \ge 1$ holds exactly when $\big(x_1 + x_2,\ (x_1 - x_2,\ 2)\big)$ is in $\mathcal Q^{3}$.
+- The hyperbola: take $`x_1, x_2 \ge 0`$. Then $`x_1 x_2 \ge 1`$ holds exactly when $`\big(x_1 + x_2,\ (x_1 - x_2,\ 2)\big)`$ is in $`\mathcal Q^{3}`$.
 - The hand arithmetic holds exactly: the benchmark weights add to 100%, its return is 5.97%, and the hyperbola points sit on the rim.
 
 The fund's optimal weights, the barrier method, the strong duality theorem, the mistakes and the chart are left to the Python and Rust checks.
@@ -720,7 +730,7 @@ example : (1 / 2 : ℚ) ^ 2 + 0 ^ 2 = (1 / 2) ^ 2 := by norm_num
 > - **Dropping the risk model.** Bounding the plain length of the weight changes treats every asset as equally risky and unrelated. It gives 0.0712% extra at a tracking error of 0.3453%, and even scaled up to the full 2% only 0.4124%, against 0.4749% from the true constraint.
 > - **Trusting a closed form past its floor.** The formula of Step 3 is right only while every weight stays positive. At a 5% limit it shorts UK shares at −8.12%.
 > - **Calling turnover a cone constraint.** A turnover cap is a sum of sizes of changes: linear pieces, solvable as a linear program. Here the turnover is 40.49%; capping it adds straight-line limits, not cones.
-> - **Expecting an optimum to be reached.** Minimising $x_1$ with $x_1 x_2 \ge 1$ gives 0.1000, 0.0100, 0.0010 and never 0. Check for strict feasibility on both sides before relying on attainment.
+> - **Expecting an optimum to be reached.** Minimising $`x_1`$ with $`x_1 x_2 \ge 1`$ gives 0.1000, 0.0100, 0.0010 and never 0. Check for strict feasibility on both sides before relying on attainment.
 
 ---
 
@@ -732,7 +742,7 @@ example : (1 / 2 : ℚ) ^ 2 + 0 ^ 2 = (1 / 2) ^ 2 := by norm_num
 - **Engineering structures.** The force in a bar, or friction at a contact (the friction cone of mechanics), must stay inside a cone; truss and grasping problems are solved as SOCPs.
 
 > **Say it back**
-> A second-order cone holds the points whose list is no longer than their height, like an ice cream cone. A length bounded by a number or a straight-line expression is a cone constraint, and so are convex quadratic limits written through a factor $A$ with $\Sigma = A^{\mathsf T}A$, and hyperbolas. The cone is its own dual, by Cauchy–Schwarz, so prices on a cone constraint form a cone point, and any such prices give a ceiling on the best value. When the problem has a strictly feasible point, prices exist that meet the ceiling exactly. For the fund, a 2% tracking-error limit buys 0.4749% of extra return, and the price list with height 0.237440 proves nothing does better.
+> A second-order cone holds the points whose list is no longer than their height, like an ice cream cone. A length bounded by a number or a straight-line expression is a cone constraint, and so are convex quadratic limits written through a factor $`A`$ with $`\Sigma = A^{\mathsf T}A`$, and hyperbolas. The cone is its own dual, by Cauchy–Schwarz, so prices on a cone constraint form a cone point, and any such prices give a ceiling on the best value. When the problem has a strictly feasible point, prices exist that meet the ceiling exactly. For the fund, a 2% tracking-error limit buys 0.4749% of extra return, and the price list with height 0.237440 proves nothing does better.
 
 ---
 

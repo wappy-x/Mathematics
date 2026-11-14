@@ -26,38 +26,44 @@ Scale: 45 units per radian across, 0.2 per kg m^2/s up. Each curve is one value 
 
 ## The formula
 
-The angle $\theta$ is measured from straight down; a prime means rate in time, so $\theta'$ is the angular speed. The Lagrangian $L$ is kinetic minus potential energy. For a swing of mass $m$, rod length $l$, under gravity $g$:
+The angle $`\theta`$ is measured from straight down; a prime means rate in time, so $`\theta'`$ is the angular speed. The Lagrangian $`L`$ is kinetic minus potential energy. For a swing of mass $`m`$, rod length $`l`$, under gravity $`g`$:
 
-$$L(\theta, \theta') = \tfrac12\, m l^2\, \theta'^2 + m g l \cos\theta$$
+```math
+L(\theta, \theta') = \tfrac12\, m l^2\, \theta'^2 + m g l \cos\theta
+```
 
-The **momentum** $p$ is the slope of $L$ in the velocity; the **Hamiltonian** $H$ comes from the Legendre transform of Step 2:
+The **momentum** $`p`$ is the slope of $`L`$ in the velocity; the **Hamiltonian** $`H`$ comes from the Legendre transform of Step 2:
 
-$$p = \frac{\partial L}{\partial \theta'} = m l^2\, \theta', \qquad H(\theta, p) = p\,\theta' - L = \frac{p^2}{2 m l^2} - m g l \cos\theta$$
+```math
+p = \frac{\partial L}{\partial \theta'} = m l^2\, \theta', \qquad H(\theta, p) = p\,\theta' - L = \frac{p^2}{2 m l^2} - m g l \cos\theta
+```
 
 **Read it aloud:** momentum is how steeply the Lagrangian rises with speed; the Hamiltonian is momentum times speed minus the Lagrangian, in angle and momentum only. Hamilton's equations:
 
-$$\theta' = \frac{\partial H}{\partial p} = \frac{p}{m l^2}, \qquad p' = -\frac{\partial H}{\partial \theta} = -m g l \sin\theta$$
+```math
+\theta' = \frac{\partial H}{\partial p} = \frac{p}{m l^2}, \qquad p' = -\frac{\partial H}{\partial \theta} = -m g l \sin\theta
+```
 
 **Read it aloud:** the angle changes at the Hamiltonian's slope in the momentum, the momentum at minus its slope in the angle.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | angle from straight down, rad | −60 degrees at release | seat higher |
-| $\theta'$ | angular speed, rad/s | 0 at release, 2.2147 at the bottom | more kinetic energy |
-| $p$ | momentum about the pivot, kg m^2/s | 0 at release, 177.18 at the bottom | faster swing |
-| $L$ | kinetic minus potential energy, J | 588.6 J at the bottom | — |
-| $H$ | kinetic plus potential energy, J | −196.2 J throughout | past 392.4 J: over the top |
-| $m$, $l$, $g$ | mass 20 kg, rod length 2 m, gravity 9.81 m/s^2 | $m l^2$ = 80 kg m^2, $m g l$ = 392.4 J | longer rods: slower swing |
-| $q$, $v$ | any position, its velocity | $\theta$, $\theta'$ | — |
-| $t$, $h$ | time, s; a method's step | $h$ = 0.05 s | larger error per step |
+| $`\theta`$ | angle from straight down, rad | −60 degrees at release | seat higher |
+| $`\theta'`$ | angular speed, rad/s | 0 at release, 2.2147 at the bottom | more kinetic energy |
+| $`p`$ | momentum about the pivot, kg m^2/s | 0 at release, 177.18 at the bottom | faster swing |
+| $`L`$ | kinetic minus potential energy, J | 588.6 J at the bottom | — |
+| $`H`$ | kinetic plus potential energy, J | −196.2 J throughout | past 392.4 J: over the top |
+| $`m`$, $`l`$, $`g`$ | mass 20 kg, rod length 2 m, gravity 9.81 m/s^2 | $`m l^2`$ = 80 kg m^2, $`m g l`$ = 392.4 J | longer rods: slower swing |
+| $`q`$, $`v`$ | any position, its velocity | $`\theta`$, $`\theta'`$ | — |
+| $`t`$, $`h`$ | time, s; a method's step | $`h`$ = 0.05 s | larger error per step |
 
 Potential energy is zero with the rods horizontal, −392.4 J hanging.
 
 ### When it holds
 
-- **The Lagrangian curves upward in the velocity.** Here its second slope (the slope of its slope) is $m l^2$ = 80, so each momentum names one speed. A Lagrangian that is a straight line in the velocity has no Legendre transform.
-- **No clock inside the Hamiltonian.** A child who stands and squats changes $l$; $H$ then changes, which is how pumping works.
-- **Forces from a potential.** Friction is not one; with it $H$ drains away, as on [LaSalle's principle](../06-Nonlinear%20Dynamics%20in%20the%20Plane/05-lasalle-and-the-damped-pendulum.md).
+- **The Lagrangian curves upward in the velocity.** Here its second slope (the slope of its slope) is $`m l^2`$ = 80, so each momentum names one speed. A Lagrangian that is a straight line in the velocity has no Legendre transform.
+- **No clock inside the Hamiltonian.** A child who stands and squats changes $`l`$; $`H`$ then changes, which is how pumping works.
+- **Forces from a potential.** Friction is not one; with it $`H`$ drains away, as on [LaSalle's principle](../06-Nonlinear%20Dynamics%20in%20the%20Plane/05-lasalle-and-the-damped-pendulum.md).
 - **Any coordinate works.** Each position coordinate gets its own **conjugate momentum** by the same slope rule.
 
 ---
@@ -70,26 +76,28 @@ A second-order equation becomes two first-order ones with a second unknown ([Fro
 
 ### Step 1: the momentum
 
-The slope of $L$ in $\theta'$ is $m l^2 \theta'$: 80 × 2.2147 = 177.18 kg m^2/s at the bottom. It is mass times the seat's speed $l\theta'$, times the lever arm $l$.
+The slope of $`L`$ in $`\theta'`$ is $`m l^2 \theta'`$: 80 × 2.2147 = 177.18 kg m^2/s at the bottom. It is mass times the seat's speed $`l\theta'`$, times the lever arm $`l`$.
 
 ### Step 2: the Legendre transform
 
-For a fixed $p$, let the velocity $v$ vary in $p\,v - L(\theta, v)$. Because $L$ curves upward in $v$, this has one highest point, where its slope $p - \partial L/\partial v$ is zero: where $p$ is the momentum of $v$. The highest value is the Hamiltonian:
+For a fixed $`p`$, let the velocity $`v`$ vary in $`p\,v - L(\theta, v)`$. Because $`L`$ curves upward in $`v`$, this has one highest point, where its slope $`p - \partial L/\partial v`$ is zero: where $`p`$ is the momentum of $`v`$. The highest value is the Hamiltonian:
 
-$$H(\theta, p) = \max_{v}\,\big(p\,v - L(\theta, v)\big)$$
+```math
+H(\theta, p) = \max_{v}\,\big(p\,v - L(\theta, v)\big)
+```
 
-This is the **Legendre transform**. At the bottom, $p$ = 177.18, the best $v$ is 2.2147 rad/s and the maximum −196.2 J; the code finds both by search. For the swing the maximum is kinetic plus potential energy.
+This is the **Legendre transform**. At the bottom, $`p`$ = 177.18, the best $`v`$ is 2.2147 rad/s and the maximum −196.2 J; the code finds both by search. For the swing the maximum is kinetic plus potential energy.
 
 ### Step 3: the two slopes of H are the two rates
 
-Nudge $p$ in $H = p\,\theta' - L$. $H$ changes by $\theta'$, plus $p$ times the change in $\theta'$, minus $\partial L/\partial\theta'$ times that change. The last two cancel, because $p = \partial L/\partial\theta'$. So $\partial H/\partial p = \theta'$.
+Nudge $`p`$ in $`H = p\,\theta' - L`$. $`H`$ changes by $`\theta'`$, plus $`p`$ times the change in $`\theta'`$, minus $`\partial L/\partial\theta'`$ times that change. The last two cancel, because $`p = \partial L/\partial\theta'`$. So $`\partial H/\partial p = \theta'`$.
 
-Nudging $\theta$ leaves only $-\partial L/\partial\theta$. Lagrange's equation says the rate of $\partial L/\partial\theta'$, which is $p'$, equals $\partial L/\partial\theta$. So $p' = -\partial H/\partial\theta$. At release that is −392.4 × sin(−60°) = +339.83 N m, a torque, pushing the seat toward the bottom.
+Nudging $`\theta`$ leaves only $`-\partial L/\partial\theta`$. Lagrange's equation says the rate of $`\partial L/\partial\theta'`$, which is $`p'`$, equals $`\partial L/\partial\theta`$. So $`p' = -\partial H/\partial\theta`$. At release that is −392.4 × sin(−60°) = +339.83 N m, a torque, pushing the seat toward the bottom.
 
 <details>
 <summary>Detailed proof: Hamilton's equations for any smooth Lagrangian</summary>
 
-Let $L(q, v, t)$ be smooth with $\partial^2 L/\partial v^2 > 0$. By the inverse function theorem $p = \partial L/\partial v(q, v, t)$ has a unique smooth solution $v = V(q, p, t)$. Define $H = p\,V - L(q, V, t)$. The chain rule gives $\partial H/\partial p = V + (p - \partial L/\partial v)\,\partial V/\partial p = V$ and $\partial H/\partial q = (p - \partial L/\partial v)\,\partial V/\partial q - \partial L/\partial q = -\partial L/\partial q$. If $q(t)$ solves $(\partial L/\partial v)' = \partial L/\partial q$ and $p = \partial L/\partial v(q, q', t)$, then $q' = V = \partial H/\partial p$ and $p' = \partial L/\partial q = -\partial H/\partial q$. The steps reverse, so the two systems share their solutions. Several coordinates work the same way, the matrix of second slopes positive definite.
+Let $`L(q, v, t)`$ be smooth with $`\partial^2 L/\partial v^2 > 0`$. By the inverse function theorem $`p = \partial L/\partial v(q, v, t)`$ has a unique smooth solution $`v = V(q, p, t)`$. Define $`H = p\,V - L(q, V, t)`$. The chain rule gives $`\partial H/\partial p = V + (p - \partial L/\partial v)\,\partial V/\partial p = V`$ and $`\partial H/\partial q = (p - \partial L/\partial v)\,\partial V/\partial q - \partial L/\partial q = -\partial L/\partial q`$. If $`q(t)`$ solves $`(\partial L/\partial v)' = \partial L/\partial q`$ and $`p = \partial L/\partial v(q, q', t)`$, then $`q' = V = \partial H/\partial p`$ and $`p' = \partial L/\partial q = -\partial H/\partial q`$. The steps reverse, so the two systems share their solutions. Several coordinates work the same way, the matrix of second slopes positive definite.
 
 </details>
 
@@ -97,21 +105,23 @@ Let $L(q, v, t)$ be smooth with $\partial^2 L/\partial v^2 > 0$. By the inverse 
 
 Along a motion, the chain rule gives
 
-$$H' = \frac{\partial H}{\partial \theta}\,\theta' + \frac{\partial H}{\partial p}\,p' = \frac{\partial H}{\partial \theta}\,\frac{\partial H}{\partial p} - \frac{\partial H}{\partial p}\,\frac{\partial H}{\partial \theta} = 0.$$
+```math
+H' = \frac{\partial H}{\partial \theta}\,\theta' + \frac{\partial H}{\partial p}\,p' = \frac{\partial H}{\partial \theta}\,\frac{\partial H}{\partial p} - \frac{\partial H}{\partial p}\,\frac{\partial H}{\partial \theta} = 0.
+```
 
-The sign between the two equations makes the terms cancel, so $H$ keeps its release value, −196.2 J. At the bottom the cosine is 1: $p^2/160 = -196.2 + 392.4$, so $p$ = 177.18 and the seat moves at 2 m × 2.2147 = 4.43 m/s. If $H$ carries an explicit time, the same line gives $H' = \partial H/\partial t$.
+The sign between the two equations makes the terms cancel, so $`H`$ keeps its release value, −196.2 J. At the bottom the cosine is 1: $`p^2/160 = -196.2 + 392.4`$, so $`p`$ = 177.18 and the seat moves at 2 m × 2.2147 = 4.43 m/s. If $`H`$ carries an explicit time, the same line gives $`H' = \partial H/\partial t`$.
 
 ### Step 5: the level curves are the pendulum's portrait
 
-Each motion keeps to one curve, $p = \pm\sqrt{2 m l^2\,(H + m g l\cos\theta)}$. Below 392.4 J the square root limits the angle: a closed loop. At 392.4 J the momentum reaches zero exactly upside down: the separatrix. Above it the momentum never vanishes: the seat goes over the top. This is the portrait of [The pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md) with momentum on the vertical axis; that card's quarter-swing integral, scaled by $\sqrt{l/g}$ to 2 m rods, gives 0.761156138 s.
+Each motion keeps to one curve, $`p = \pm\sqrt{2 m l^2\,(H + m g l\cos\theta)}`$. Below 392.4 J the square root limits the angle: a closed loop. At 392.4 J the momentum reaches zero exactly upside down: the separatrix. Above it the momentum never vanishes: the seat goes over the top. This is the portrait of [The pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md) with momentum on the vertical axis; that card's quarter-swing integral, scaled by $`\sqrt{l/g}`$ to 2 m rods, gives 0.761156138 s.
 
 ### Step 6: the motion keeps area, and so should the steps
 
-A small patch of starting states changes area at the divergence of the rates, $\partial\theta'/\partial\theta + \partial p'/\partial p = \partial^2 H/\partial\theta\,\partial p - \partial^2 H/\partial p\,\partial\theta = 0$. Areas never change: Liouville's theorem. A map that keeps this area is **symplectic**.
+A small patch of starting states changes area at the divergence of the rates, $`\partial\theta'/\partial\theta + \partial p'/\partial p = \partial^2 H/\partial\theta\,\partial p - \partial^2 H/\partial p\,\partial\theta = 0`$. Areas never change: Liouville's theorem. A map that keeps this area is **symplectic**.
 
-Euler's rule, a straight step along the current slope ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), stretches area by $1 + h^2 (g/l)\cos\theta$: 1.01226250 per step at the bottom with $h$ = 0.05 s. Leapfrog (half a kick to $p$, a drift of $\theta$, half a kick) is three shears, each keeping area exactly. Over 100 s Euler's swing spins over the top; leapfrog's $H$ stays within 0.55 J.
+Euler's rule, a straight step along the current slope ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), stretches area by $`1 + h^2 (g/l)\cos\theta`$: 1.01226250 per step at the bottom with $`h`$ = 0.05 s. Leapfrog (half a kick to $`p`$, a drift of $`\theta`$, half a kick) is three shears, each keeping area exactly. Over 100 s Euler's swing spins over the top; leapfrog's $`H`$ stays within 0.55 J.
 
-Another road: the equations are the Euler–Lagrange equations of $\int (p\,\theta' - H)\,dt$, with angle and momentum varied independently, the start of Hamilton-Jacobi.
+Another road: the equations are the Euler–Lagrange equations of $`\int (p\,\theta' - H)\,dt`$, with angle and momentum varied independently, the start of Hamilton-Jacobi.
 
 ---
 
@@ -119,26 +129,26 @@ Another road: the equations are the Euler–Lagrange equations of $\int (p\,\the
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $m l^2$ and $m g l$ | 20 × 2 × 2; 20 × 9.81 × 2 | 80 kg m^2; 392.4 J |
-| $H$ at release | 0/160 − 392.4 × cos(−60°) = −392.4 × 0.5 | **−196.2 J** |
-| rates at release | $\theta'$ = 0/80; $p'$ = −392.4 × sin(−60°) | 0 rad/s; +339.83 N m |
-| $H$ at the bottom, still −196.2 | $p^2$/160 − 392.4 = −196.2, so $p^2$ = 160 × 196.2 = 31,392 | $p$ = **177.18** kg m^2/s |
+| $`m l^2`$ and $`m g l`$ | 20 × 2 × 2; 20 × 9.81 × 2 | 80 kg m^2; 392.4 J |
+| $`H`$ at release | 0/160 − 392.4 × cos(−60°) = −392.4 × 0.5 | **−196.2 J** |
+| rates at release | $`\theta'`$ = 0/80; $`p'`$ = −392.4 × sin(−60°) | 0 rad/s; +339.83 N m |
+| $`H`$ at the bottom, still −196.2 | $`p^2`$/160 − 392.4 = −196.2, so $`p^2`$ = 160 × 196.2 = 31,392 | $`p`$ = **177.18** kg m^2/s |
 | speed at the bottom | 177.18 / 80; times 2 m | 2.2147 rad/s; **4.43 m/s** |
-| over the top | needs $H$ above 392.4: $p^2$/160 = 784.8 | $p$ = 354.36; seat 8.859 m/s |
+| over the top | needs $`H`$ above 392.4: $`p^2`$/160 = 784.8 | $`p`$ = 354.36; seat 8.859 m/s |
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Momentum taken as $m l\,\theta'$ | 88.59, so $H$ = −343.35 J at the bottom | Not the slope of $L$: one $l$ missing |
-| Sign of $p'$ flipped | after 1 s: −185.8 degrees, $H$ = 977.02 J | The two terms in $H'$ add |
-| Euler's rule, $h$ = 0.05 s, 100 s | $H$ = 4526.44 J: spinning | Each step stretches area |
+| Momentum taken as $`m l\,\theta'`$ | 88.59, so $`H`$ = −343.35 J at the bottom | Not the slope of $`L`$: one $`l`$ missing |
+| Sign of $`p'`$ flipped | after 1 s: −185.8 degrees, $`H`$ = 977.02 J | The two terms in $`H'`$ add |
+| Euler's rule, $`h`$ = 0.05 s, 100 s | $`H`$ = 4526.44 J: spinning | Each step stretches area |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Three roads. The bottom momentum comes from the level curve of $H$ and from Runge-Kutta 4 (RK4, four slope samples per step) stepping Hamilton's equations. The quarter swing comes from Simpson's rule on the pendulum card's integral and from the same steps; the error falls 16-fold when the step halves, as a fourth-order method's should. The Hamiltonian is also found as the Legendre maximum, by search.
+Three roads. The bottom momentum comes from the level curve of $`H`$ and from Runge-Kutta 4 (RK4, four slope samples per step) stepping Hamilton's equations. The quarter swing comes from Simpson's rule on the pendulum card's integral and from the same steps; the error falls 16-fold when the step halves, as a fourth-order method's should. The Hamiltonian is also found as the Legendre maximum, by search.
 
 ### Python
 
@@ -342,9 +352,9 @@ Lean proves Hamilton's equations and the kept Hamiltonian for every smooth Lagra
 - Suppose a smooth Lagrangian with no clock inside has positive second slope in the velocity, and a smooth motion obeys Lagrange's equation. Then its Legendre transform equals momentum times velocity minus the Lagrangian, at every time.
 - Along that motion, the Hamiltonian's slope in the momentum is the velocity, and its slope in the position is minus the momentum's rate.
 - Along that motion, the Hamiltonian keeps its starting value.
-- Take the swing, with $m$ and $l$ positive and any $g$. Then its Legendre transform is $H = p^2/(2 m l^2) - m g l \cos\theta$.
-- Take the same swing. Then $\partial H/\partial p = p/(m l^2)$ and $\partial H/\partial\theta = m g l \sin\theta$.
-- Take the swing, any step size $h$ and any state. Then one Euler step stretches area by $1 + h^2 (g/l)\cos\theta$, and one leapfrog step keeps area exactly.
+- Take the swing, with $`m`$ and $`l`$ positive and any $`g`$. Then its Legendre transform is $`H = p^2/(2 m l^2) - m g l \cos\theta`$.
+- Take the same swing. Then $`\partial H/\partial p = p/(m l^2)`$ and $`\partial H/\partial\theta = m g l \sin\theta`$.
+- Take the swing, any step size $`h`$ and any state. Then one Euler step stretches area by $`1 + h^2 (g/l)\cos\theta`$, and one leapfrog step keeps area exactly.
 - The hand arithmetic in the worked numbers holds exactly, including mistake 1 and both Euler area factors.
 
 The decimals, the RK4 runs, the quarter swing, the 100 s drift and the flipped sign are left to the Python and Rust checks.
@@ -734,18 +744,18 @@ example : (1 : ℚ) + (1 / 20) ^ 2 * ((981 / 100) / 1) * 1 = 102452500 / 1000000
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python. Every run passes its asserts.
-> - **Release from 90 degrees.** Set `TH0` to `-pi / 2`. $H$ becomes 0 J (printed −0.0), the bottom momentum 250.57, the full swing 3.349 s.
+> - **Release from 90 degrees.** Set `TH0` to `-pi / 2`. $`H`$ becomes 0 J (printed −0.0), the bottom momentum 250.57, the full swing 3.349 s.
 > - **A heavier child.** Set `M` to `40.0`. The momentum doubles to 354.36; the angular speed stays 2.2147 rad/s, the full swing 3.045 s.
-> - **Shorter rods.** Set `L` to `1.0`. The full swing drops to 2.153 s, the pendulum card's 1 m swing, and Euler's area factor rises to 1.02452500, since it carries $g/l$.
+> - **Shorter rods.** Set `L` to `1.0`. The full swing drops to 2.153 s, the pendulum card's 1 m swing, and Euler's area factor rises to 1.02452500, since it carries $`g/l`$.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Differentiating the energy written in angle and speed.** $H$ must be a function of angle and momentum. The energy written with $\theta'$ has slope 177.18 in $\theta'$ at the bottom: the momentum, not the rate 2.2147 rad/s. The equations come out right only after the Legendre transform replaces speed by momentum.
+> **Differentiating the energy written in angle and speed.** $`H`$ must be a function of angle and momentum. The energy written with $`\theta'`$ has slope 177.18 in $`\theta'`$ at the bottom: the momentum, not the rate 2.2147 rad/s. The equations come out right only after the Legendre transform replaces speed by momentum.
 >
-> - **Momentum as mass times speed in every coordinate.** For an angle it is $m l^2\,\theta'$; $m l\,\theta'$ gives 88.59 and a false energy of −343.35 J.
+> - **Momentum as mass times speed in every coordinate.** For an angle it is $`m l^2\,\theta'`$; $`m l\,\theta'`$ gives 88.59 and a false energy of −343.35 J.
 
 ---
 
@@ -769,7 +779,7 @@ example : (1 : ℚ) + (1 / 20) ^ 2 * ((981 / 100) / 1) * 1 = 102452500 / 1000000
 
 - [Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md): the same pair of equations with a control to choose.
 - [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): machines with several coordinates.
-- [Symmetry and conservation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): a coordinate missing from $H$ has a conserved momentum.
+- [Symmetry and conservation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): a coordinate missing from $`H`$ has a conserved momentum.
 - [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): why kept area bounds the energy error.
 - Hamilton-Jacobi: a function whose slopes are the momenta.
 - Symplectic form: the kept area as a geometric object.

@@ -39,47 +39,53 @@ The one line is the false-alarm rate from the formula below. At the design count
 
 ## The formula
 
-Notation first, in words. A **hash** $h(x)$ is a fixed scrambling rule that turns an item $x$, here a URL, into a number that looks random ([Data structures](../01-Algorithms%20and%20Growth/06-data-structures-heaps-hashes-and-trees.md)). This card introduces a Bloom filter's $m$ bits and $k$ hashes: $m$ is the length of the bit row, and $k$ is how many positions each item sets.
+Notation first, in words. A **hash** $`h(x)`$ is a fixed scrambling rule that turns an item $`x`$, here a URL, into a number that looks random ([Data structures](../01-Algorithms%20and%20Growth/06-data-structures-heaps-hashes-and-trees.md)). This card introduces a Bloom filter's $`m`$ bits and $`k`$ hashes: $`m`$ is the length of the bit row, and $`k`$ is how many positions each item sets.
 
-For $n$ stored items, the chance $p$ that a new item gets a false "yes" is
+For $`n`$ stored items, the chance $`p`$ that a new item gets a false "yes" is
 
-$$p \approx \left(1 - e^{-kn/m}\right)^{k}$$
+```math
+p \approx \left(1 - e^{-kn/m}\right)^{k}
+```
 
-**Read it aloud:** after $n$ items, a fraction $e^{-kn/m}$ of the bits is still 0, so a new item's $k$ positions are all 1 with chance "one minus that fraction", multiplied by itself $k$ times.
+**Read it aloud:** after $`n`$ items, a fraction $`e^{-kn/m}`$ of the bits is still 0, so a new item's $`k`$ positions are all 1 with chance "one minus that fraction", multiplied by itself $`k`$ times.
 
-The best number of hashes, and the memory a target $p$ needs:
+The best number of hashes, and the memory a target $`p`$ needs:
 
-$$k_{\text{best}} = \frac{m}{n}\ln 2, \qquad m = \frac{n \ln(1/p)}{(\ln 2)^2} \approx 1.4427\; n \log_2(1/p)$$
+```math
+k_{\text{best}} = \frac{m}{n}\ln 2, \qquad m = \frac{n \ln(1/p)}{(\ln 2)^2} \approx 1.4427\; n \log_2(1/p)
+```
 
-**Read it aloud:** choose $k$ so that half the bits end up set; then each halving of the false-alarm rate costs 1.4427 bits per item.
+**Read it aloud:** choose $`k`$ so that half the bits end up set; then each halving of the false-alarm rate costs 1.4427 bits per item.
 
-The distinct-count sketch. Hash each item to a number $U$ between 0 and 1. Keep the $t$ smallest different values. Let $U_{(t)}$ be the largest of those, the $t$-th smallest overall. The estimate of the number of different items $D$ is
+The distinct-count sketch. Hash each item to a number $`U`$ between 0 and 1. Keep the $`t`$ smallest different values. Let $`U_{(t)}`$ be the largest of those, the $`t`$-th smallest overall. The estimate of the number of different items $`D`$ is
 
-$$\hat D = \frac{t-1}{U_{(t)}}, \qquad \text{relative spread of } \hat D \approx \frac{1}{\sqrt{t-2}}$$
+```math
+\hat D = \frac{t-1}{U_{(t)}}, \qquad \text{relative spread of } \hat D \approx \frac{1}{\sqrt{t-2}}
+```
 
-**Read it aloud:** $D$ random points in the range 0 to 1 sit about $1/D$ apart, so the $t$-th one sits near $t/D$; turn that round, and correct $t$ to $t-1$ so the estimate is right on average.
+**Read it aloud:** $`D`$ random points in the range 0 to 1 sit about $`1/D`$ apart, so the $`t`$-th one sits near $`t/D`$; turn that round, and correct $`t`$ to $`t-1`$ so the estimate is right on average.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $h(x)$ | the hash: a fixed rule turning item $x$ into a random-looking number; $h_1$, $h_2$ are two such rules | FNV-1a, then a scrambler | — |
-| $E[\,\cdot\,]$ | the average over the hash's randomness | $E[\hat D] = D$ | — |
-| $n$ | items stored in the filter | 10,000,000 URLs | false alarms rise, fast past the design count |
-| $m$ | bits in the filter | 96,000,000 (12 MB) | false alarms fall |
-| $k$ | hashes per item: bits each item sets and each query checks | 7 | false alarms fall, then rise; best at $(m/n)\ln 2$ |
-| $p$ | false-alarm rate: chance a new item reads "seen" | 0.009965 | — |
-| $f$ | fraction of bits still 0 after $n$ items, $e^{-kn/m}$ | 0.482311 | false alarms fall |
-| $D$ | different items in a stream (visitors) | 389,921 | $U_{(t)}$ falls |
-| $t$ | smallest hash values the sketch keeps | 1,024 | spread falls like $1/\sqrt{t}$; memory grows like $t$ |
-| $U_{(t)}$ | the $t$-th smallest hash value $U$, each $U$ scaled to lie between 0 and 1 | 0.00266074 | $\hat D$ falls |
-| $\hat D$ | the sketch's estimate of $D$ | 384,480 | — |
+| $`h(x)`$ | the hash: a fixed rule turning item $`x`$ into a random-looking number; $`h_1`$, $`h_2`$ are two such rules | FNV-1a, then a scrambler | — |
+| $`E[\,\cdot\,]`$ | the average over the hash's randomness | $`E[\hat D] = D`$ | — |
+| $`n`$ | items stored in the filter | 10,000,000 URLs | false alarms rise, fast past the design count |
+| $`m`$ | bits in the filter | 96,000,000 (12 MB) | false alarms fall |
+| $`k`$ | hashes per item: bits each item sets and each query checks | 7 | false alarms fall, then rise; best at $`(m/n)\ln 2`$ |
+| $`p`$ | false-alarm rate: chance a new item reads "seen" | 0.009965 | — |
+| $`f`$ | fraction of bits still 0 after $`n`$ items, $`e^{-kn/m}`$ | 0.482311 | false alarms fall |
+| $`D`$ | different items in a stream (visitors) | 389,921 | $`U_{(t)}`$ falls |
+| $`t`$ | smallest hash values the sketch keeps | 1,024 | spread falls like $`1/\sqrt{t}`$; memory grows like $`t`$ |
+| $`U_{(t)}`$ | the $`t`$-th smallest hash value $`U`$, each $`U`$ scaled to lie between 0 and 1 | 0.00266074 | $`\hat D`$ falls |
+| $`\hat D`$ | the sketch's estimate of $`D`$ | 384,480 | — |
 
 ### When it holds
 
-- **The hash behaves like random darts.** The formulas assume each item's positions are independent and uniform. A weak hash on similar URLs (`/item/1`, `/item/2`, …) can pile them onto the same bits, and the false-alarm rate rises above $p$. A hash whose rule an attacker knows can be fed URLs crafted to collide; a secret salt mixed into the hash (a **keyed** hash) prevents that.
-- **The count stays at or below the design $n$.** The filter does not grow. Past its design count it still never misses a stored URL, but false alarms climb: 15.67 percent at twice the count.
+- **The hash behaves like random darts.** The formulas assume each item's positions are independent and uniform. A weak hash on similar URLs (`/item/1`, `/item/2`, …) can pile them onto the same bits, and the false-alarm rate rises above $`p`$. A hash whose rule an attacker knows can be fed URLs crafted to collide; a secret salt mixed into the hash (a **keyed** hash) prevents that.
+- **The count stays at or below the design $`n`$.** The filter does not grow. Past its design count it still never misses a stored URL, but false alarms climb: 15.67 percent at twice the count.
 - **Items are only added, never removed.** Clearing a deleted item's bits also clears bits other items share, and those items then read "never seen": a false "no", the one error the filter promised not to make.
 - **The sketch sees each item through the same hash.** Repeats of one visitor land on the same value and change nothing. Change the salt halfway through the day and every visitor seen in both halves counts twice.
-- **$m$ is large.** The formula $p \approx (1 - e^{-kn/m})^k$ treats the $k$ bits a query checks as independent. They are slightly positively linked, so the true rate sits a little above the formula; at 96,000,000 bits the gap is invisible, at 8 bits it is not (Step 2 below).
+- **$`m`$ is large.** The formula $`p \approx (1 - e^{-kn/m})^k`$ treats the $`k`$ bits a query checks as independent. They are slightly positively linked, so the true rate sits a little above the formula; at 96,000,000 bits the gap is invisible, at 8 bits it is not (Step 2 below).
 
 ---
 
@@ -87,45 +93,53 @@ $$\hat D = \frac{t-1}{U_{(t)}}, \qquad \text{relative spread of } \hat D \approx
 
 ### Step 0: one-sided error, and points that crowd
 
-A stored URL set its own bits, and bits are never cleared, so a stored URL always reads "seen". The only error is a new URL whose bits were all set by others. Its chance depends only on what fraction of the row is 1. Everything below is working out that fraction and then choosing $k$ to make the chance small.
+A stored URL set its own bits, and bits are never cleared, so a stored URL always reads "seen". The only error is a new URL whose bits were all set by others. Its chance depends only on what fraction of the row is 1. Everything below is working out that fraction and then choosing $`k`$ to make the chance small.
 
 A filter like this is a Monte Carlo method in the sense of [Randomised algorithms](01-randomised-algorithms-and-expectation.md): it can be wrong, but only one way and with a known chance.
 
-For the sketch, the idea is crowding. Hash $D$ different visitors and you get $D$ random points between 0 and 1; repeat visits land on points already there. With 389,921 points, the gaps are tiny, and the 1,024th smallest point sits very close to 0. With 1,000 points it would sit near the top. Its position is a ruler for $D$.
+For the sketch, the idea is crowding. Hash $`D`$ different visitors and you get $`D`$ random points between 0 and 1; repeat visits land on points already there. With 389,921 points, the gaps are tiny, and the 1,024th smallest point sits very close to 0. With 1,000 points it would sit near the top. Its position is a ruler for $`D`$.
 
 ### Step 1: the chance a bit is still 0
 
-One hash of one item hits a given bit with chance $1/m$ and misses it with chance $1 - 1/m$. Storing $n$ items makes $kn$ hash throws, so the bit survives all of them with chance
+One hash of one item hits a given bit with chance $`1/m`$ and misses it with chance $`1 - 1/m`$. Storing $`n`$ items makes $`kn`$ hash throws, so the bit survives all of them with chance
 
-$$\left(1 - \frac1m\right)^{kn} \approx e^{-kn/m}.$$
+```math
+\left(1 - \frac1m\right)^{kn} \approx e^{-kn/m}.
+```
 
-The approximation is the same one behind the birthday problem in [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md): $1 - x$ is close to $e^{-x}$ when $x$ is small, and here $x = 1/m$ is one in 96 million. Averages add, so the expected fraction of zeros is this same number, $f = e^{-kn/m}$. For the crawler, $kn/m = 7 \times 10{,}000{,}000 / 96{,}000{,}000 = 0.729167$, and $f = 0.482311$: just under half the bits are still 0.
+The approximation is the same one behind the birthday problem in [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md): $`1 - x`$ is close to $`e^{-x}`$ when $`x`$ is small, and here $`x = 1/m`$ is one in 96 million. Averages add, so the expected fraction of zeros is this same number, $`f = e^{-kn/m}`$. For the crawler, $`kn/m = 7 \times 10{,}000{,}000 / 96{,}000{,}000 = 0.729167`$, and $`f = 0.482311`$: just under half the bits are still 0.
 
 ### Step 2: the chance of a false "yes"
 
-A new URL's $k$ positions are fresh throws. Each lands on a 1 with chance about $1 - f$. All $k$ do with chance about
+A new URL's $`k`$ positions are fresh throws. Each lands on a 1 with chance about $`1 - f`$. All $`k`$ do with chance about
 
-$$p \approx (1 - f)^{k} = \left(1 - e^{-kn/m}\right)^{k}.$$
+```math
+p \approx (1 - f)^{k} = \left(1 - e^{-kn/m}\right)^{k}.
+```
 
-The word "about" hides one thing. The fraction of 1s is itself random, and the chance of a false "yes" is the average of (fraction of 1s)$^k$, which is a little more than (average fraction)$^k$ whenever the fraction varies. With 96 million bits the fraction hardly varies.
+The word "about" hides one thing. The fraction of 1s is itself random, and the chance of a false "yes" is the average of (fraction of 1s)$`^k`$, which is a little more than (average fraction)$`^k`$ whenever the fraction varies. With 96 million bits the fraction hardly varies.
 
-In a toy filter of 8 bits, 2 hashes and 3 items, listing all 262,144 ways the 6 throws can land gives an exact rate of 0.314240, against 0.303827 from $(1 - (1-1/m)^{kn})^k$ and 0.278397 from the $e$ form. The code does that full count.
+In a toy filter of 8 bits, 2 hashes and 3 items, listing all 262,144 ways the 6 throws can land gives an exact rate of 0.314240, against 0.303827 from $`(1 - (1-1/m)^{kn})^k`$ and 0.278397 from the $`e`$ form. The code does that full count.
 
 ### Step 3: the best number of hashes
 
-More hashes mean more bits to check, which helps, but also a fuller row, which hurts. Write the false-alarm rate in terms of $f$. Since $f = e^{-kn/m}$, the number of hashes is $k = -(m/n)\ln f$, and
+More hashes mean more bits to check, which helps, but also a fuller row, which hurts. Write the false-alarm rate in terms of $`f`$. Since $`f = e^{-kn/m}`$, the number of hashes is $`k = -(m/n)\ln f`$, and
 
-$$\ln p = k \ln(1 - f) = -\frac{m}{n}\,\ln f \cdot \ln(1-f).$$
+```math
+\ln p = k \ln(1 - f) = -\frac{m}{n}\,\ln f \cdot \ln(1-f).
+```
 
-The product $\ln f \cdot \ln(1-f)$ does not change when $f$ and $1-f$ swap, but that alone does not put its top at the middle, so check its slope.
+The product $`\ln f \cdot \ln(1-f)`$ does not change when $`f`$ and $`1-f`$ swap, but that alone does not put its top at the middle, so check its slope.
 
-Multiplied by $f(1-f)$, which is positive, the slope is $(1-f)\ln(1-f) - f\ln f$. That is 0 as $f$ leaves 0 and 0 again at $f = 1/2$. Its own slope, $-\ln\big(f(1-f)\big) - 2$, is first positive and then negative in between. So it rises, falls back to 0, and stays above 0 the whole way.
+Multiplied by $`f(1-f)`$, which is positive, the slope is $`(1-f)\ln(1-f) - f\ln f`$. That is 0 as $`f`$ leaves 0 and 0 again at $`f = 1/2`$. Its own slope, $`-\ln\big(f(1-f)\big) - 2`$, is first positive and then negative in between. So it rises, falls back to 0, and stays above 0 the whole way.
 
-The product therefore climbs until $f = 1/2$ and, by the swap, falls after it: it is largest at the middle. So the false-alarm rate is smallest when **half the bits are set**. Then $k = (m/n)\ln 2$, every checked bit is a coin flip, and
+The product therefore climbs until $`f = 1/2`$ and, by the swap, falls after it: it is largest at the middle. So the false-alarm rate is smallest when **half the bits are set**. Then $`k = (m/n)\ln 2`$, every checked bit is a coin flip, and
 
-$$p = \left(\tfrac12\right)^{k}.$$
+```math
+p = \left(\tfrac12\right)^{k}.
+```
 
-For the crawler, $m/n = 9.6$ bits per URL, so the best $k$ is $9.6 \ln 2$, which rounds to 7. The curve is flat near the bottom: 6 hashes give 1.01 percent and 7 give 1.00 percent.
+For the crawler, $`m/n = 9.6`$ bits per URL, so the best $`k`$ is $`9.6 \ln 2`$, which rounds to 7. The curve is flat near the bottom: 6 hashes give 1.01 percent and 7 give 1.00 percent.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -140,30 +154,34 @@ The one line is the formula at 9.6 bits per URL. One hash wastes the memory; twe
 
 ### Step 4: size the filter from the target
 
-Put the best $k$ into $p = (1/2)^k$: $\ln p = -(m/n)(\ln 2)^2$, so
+Put the best $`k`$ into $`p = (1/2)^k`$: $`\ln p = -(m/n)(\ln 2)^2`$, so
 
-$$\frac{m}{n} = \frac{\ln(1/p)}{(\ln 2)^2}.$$
+```math
+\frac{m}{n} = \frac{\ln(1/p)}{(\ln 2)^2}.
+```
 
-For $p$ = 1 in 100 this is 9.5851 bits per URL, so 10 million URLs need 95,850,584 bits, 11.98 MB. A 12 MB budget fits. Each extra bit of memory per URL buys a constant factor in $p$, so the cost grows with the logarithm of how rare false alarms must be, not with the URLs' length.
+For $`p`$ = 1 in 100 this is 9.5851 bits per URL, so 10 million URLs need 95,850,584 bits, 11.98 MB. A 12 MB budget fits. Each extra bit of memory per URL buys a constant factor in $`p`$, so the cost grows with the logarithm of how rare false alarms must be, not with the URLs' length.
 
-No structure of any kind can answer "seen it?" with a 1-in-100 false-alarm rate in much less than $\log_2(1/p)$ bits per item, here 6.6439, once the possible URLs far outnumber the stored ones. That floor comes from a counting argument not proved on this card; the survey of Bloom filters in Sources proves it, in its section on a lower bound. The Bloom filter uses 1/ln 2 = 1.4427 times that floor, the price of its simplicity.
+No structure of any kind can answer "seen it?" with a 1-in-100 false-alarm rate in much less than $`\log_2(1/p)`$ bits per item, here 6.6439, once the possible URLs far outnumber the stored ones. That floor comes from a counting argument not proved on this card; the survey of Bloom filters in Sources proves it, in its section on a lower bound. The Bloom filter uses 1/ln 2 = 1.4427 times that floor, the price of its simplicity.
 
 ### Step 5: the sketch is right on average
 
-Take $D$ different items with ideal hash values: $D$ independent points spread uniformly between 0 and 1. The $t$-th smallest of them, $U_{(t)}$, has a known law: a point lands below $u$ with chance $u$, and $U_{(t)} \le u$ exactly when at least $t$ of the $D$ points do. Working out the average of $1/U_{(t)}$ from that law gives exactly
+Take $`D`$ different items with ideal hash values: $`D`$ independent points spread uniformly between 0 and 1. The $`t`$-th smallest of them, $`U_{(t)}`$, has a known law: a point lands below $`u`$ with chance $`u`$, and $`U_{(t)} \le u`$ exactly when at least $`t`$ of the $`D`$ points do. Working out the average of $`1/U_{(t)}`$ from that law gives exactly
 
-$$E\!\left[\frac{1}{U_{(t)}}\right] = \frac{D}{t-1}, \quad\text{so}\quad E\big[\hat D\big] = E\!\left[\frac{t-1}{U_{(t)}}\right] = D.$$
+```math
+E\!\left[\frac{1}{U_{(t)}}\right] = \frac{D}{t-1}, \quad\text{so}\quad E\big[\hat D\big] = E\!\left[\frac{t-1}{U_{(t)}}\right] = D.
+```
 
-The same calculation one power higher gives the spread: the relative standard deviation of $\hat D$ is $\sqrt{(D-1)(t-1)/(D(t-2)) - 1}$, which is $1/\sqrt{t-2}$ to many decimals when $D$ is large. With $t = 1{,}024$ that is 3.13 percent. Four times the memory halves it.
+The same calculation one power higher gives the spread: the relative standard deviation of $`\hat D`$ is $`\sqrt{(D-1)(t-1)/(D(t-2)) - 1}`$, which is $`1/\sqrt{t-2}`$ to many decimals when $`D`$ is large. With $`t = 1{,}024`$ that is 3.13 percent. Four times the memory halves it.
 
 <details>
 <summary>The integral behind the average</summary>
 
-The $t$-th smallest of $D$ uniform points has density $\dfrac{D!}{(t-1)!\,(D-t)!}\,u^{t-1}(1-u)^{D-t}$ on $0 < u < 1$: $t-1$ points below $u$, one at $u$, $D-t$ above, counted in every order. Multiply by $1/u$ and integrate. The power $u^{t-1}$ drops to $u^{t-2}$, and the integral of $u^{a}(1-u)^{b}$ over 0 to 1 is $a!\,b!/(a+b+1)!$. So
+The $`t`$-th smallest of $`D`$ uniform points has density $`\dfrac{D!}{(t-1)!\,(D-t)!}\,u^{t-1}(1-u)^{D-t}`$ on $`0 < u < 1`$: $`t-1`$ points below $`u`$, one at $`u`$, $`D-t`$ above, counted in every order. Multiply by $`1/u`$ and integrate. The power $`u^{t-1}`$ drops to $`u^{t-2}`$, and the integral of $`u^{a}(1-u)^{b}`$ over 0 to 1 is $`a!\,b!/(a+b+1)!`$. So
 
-$$E\!\left[\frac1{U_{(t)}}\right] = \frac{D!}{(t-1)!\,(D-t)!}\cdot\frac{(t-2)!\,(D-t)!}{(D-1)!} = \frac{D}{t-1}.$$
+$`\displaystyle E\!\left[\frac1{U_{(t)}}\right] = \frac{D!}{(t-1)!\,(D-t)!}\cdot\frac{(t-2)!\,(D-t)!}{(D-1)!} = \frac{D}{t-1}.`$
 
-Multiply by $1/u^2$ instead and the same steps give $E[1/U_{(t)}^2] = D(D-1)/((t-1)(t-2))$. The variance of $\hat D$ is $(t-1)^2$ times the difference $E[1/U_{(t)}^2] - E[1/U_{(t)}]^2$, which is where the spread formula comes from.
+Multiply by $`1/u^2`$ instead and the same steps give $`E[1/U_{(t)}^2] = D(D-1)/((t-1)(t-2))`$. The variance of $`\hat D`$ is $`(t-1)^2`$ times the difference $`E[1/U_{(t)}^2] - E[1/U_{(t)}]^2`$, which is where the spread formula comes from.
 
 </details>
 
@@ -206,10 +224,10 @@ Same filter, correct answer 0.009965:
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Fill it with 20 million URLs, twice the design count | 0.156696 | the row is too full; the filter does not grow |
-| Use one hash, $k = 1$ | 0.098925 | one bit per query is a weak test |
+| Use one hash, $`k = 1`$ | 0.098925 | one bit per query is a weak test |
 | Use twenty hashes | 0.069981 | each URL sets 20 bits, so the row fills up |
-| Read 12 MB as 12 million bits, keep $k = 7$ | 0.979681 | bytes are 8 bits; the row is almost all 1s |
-| Budget only the floor, 6.6439 bits per URL (66,438,562 bits), best $k$ = 5 | 0.041367 | the floor is for an ideal structure; a Bloom filter needs 1.4427 times it |
+| Read 12 MB as 12 million bits, keep $`k = 7`$ | 0.979681 | bytes are 8 bits; the row is almost all 1s |
+| Budget only the floor, 6.6439 bits per URL (66,438,562 bits), best $`k`$ = 5 | 0.041367 | the floor is for an ideal structure; a Bloom filter needs 1.4427 times it |
 | Count requests, not visitors | 1,000,000 against 389,921 | repeat visits counted again |
 
 The first row is also run, not only computed: at 1/1000 scale, 20,000 URLs in 96,000 bits gave false alarms on 0.156550 of tests, against 0.156696 from the formula.
@@ -232,7 +250,7 @@ Three roads reach the sketch:
 
 - one sketch against the exact count on a synthetic stream of 1,000,000 requests;
 - 100 sketches with different salts against the exact theory for the spread;
-- 400 more sketches of only $t = 4$ values, where dropping the $-1$ would show as a 33 percent bias, against the exact theory for the average.
+- 400 more sketches of only $`t = 4`$ values, where dropping the $`-1`$ would show as a 33 percent bias, against the exact theory for the average.
 
 Each simulated number must land within four standard errors of the formula.
 
@@ -617,20 +635,20 @@ ALL CHECKS PASS
 
 The scaled filter set 49754 of 96000 bits, 0.518271 against a predicted 0.517689, and 963 of 100,000 unseen URLs read "seen": 0.009630 against the formula's 0.009965, about one standard error away.
 
-The 100 sketches averaged 10,011.8 for 10,000 visitors, with a typical error of 13.33 percent against 12.66 percent from the exact theory: a little worse than promised, within the scatter 100 sketches allow. The 400 sketches of 4 values averaged 10,049.4, inside the allowed 10,000 ± 1,414.0; without the $-1$ they would average 13,399.2, 33 percent high.
+The 100 sketches averaged 10,011.8 for 10,000 visitors, with a typical error of 13.33 percent against 12.66 percent from the exact theory: a little worse than promised, within the scatter 100 sketches allow. The 400 sketches of 4 values averaged 10,049.4, inside the allowed 10,000 ± 1,414.0; without the $`-1`$ they would average 13,399.2, 33 percent high.
 
-The `one smallest only` line is a different estimate, a one-mark ruler: $1/U_{(1)}$ reads 832,454, more than twice the truth, and has no finite average. The card's own $(t-1)/U_{(t)}$ at $t = 1$ gives 0.
+The `one smallest only` line is a different estimate, a one-mark ruler: $`1/U_{(1)}`$ reads 832,454, more than twice the truth, and has no finite average. The card's own $`(t-1)/U_{(t)}`$ at $`t = 1`$ gives 0.
 
 ### Lean
 
 Lean proves three facts about an ideal hash, exactly and at every size, and checks the card's byte counts.
 
-- Take a fraction $f$ of bits still 0, between 0 and 1, and $k = -(m/n)\ln f$ hashes. Then $(1-f)^k$ is never below $(1/2)^{(m/n)\ln 2}$, the rate when half the bits are set.
-- Take $m$ bits and $N$ throws, and list all $m^N$ ways the throws can land. Then the bits still 0, added over all ways, total $m(m-1)^N$. So each bit stays 0 in a $(1-1/m)^N$ share of them, with $N = kn$.
-- Take $2 \le t \le D$ and the density of $U_{(t)}$ from Step 5. Then the average of $(t-1)/U_{(t)}$ over that density is exactly $D$.
+- Take a fraction $`f`$ of bits still 0, between 0 and 1, and $`k = -(m/n)\ln f`$ hashes. Then $`(1-f)^k`$ is never below $`(1/2)^{(m/n)\ln 2}`$, the rate when half the bits are set.
+- Take $`m`$ bits and $`N`$ throws, and list all $`m^N`$ ways the throws can land. Then the bits still 0, added over all ways, total $`m(m-1)^N`$. So each bit stays 0 in a $`(1-1/m)^N`$ share of them, with $`N = kn`$.
+- Take $`2 \le t \le D`$ and the density of $`U_{(t)}`$ from Step 5. Then the average of $`(t-1)/U_{(t)}`$ over that density is exactly $`D`$.
 - The toy filter's 262,144 arrangements and its average bits set, the 12 MB budget and the byte counts in Worked numbers also check.
 
-The false-alarm formula, the $e$ approximations, the density of $U_{(t)}$, the spread and simulated runs are left to the Python and Rust checks.
+The false-alarm formula, the $`e`$ approximations, the density of $`U_{(t)}`$, the spread and simulated runs are left to the Python and Rust checks.
 
 ```lean
 -- Hashing for size: for an ideal hash, a Bloom filter's false-alarm rate is smallest when half its bits are set, each bit stays 0 in exactly a (1 - 1/m)^(kn) share of all ways the throws can land, and the sketch (t-1)/U_(t) is right on average.
@@ -833,10 +851,10 @@ example : 389921 * 8 = 3119368 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - Guess first: does 6 hashes instead of 7 matter? Set `k = 6` in the line `m, k = 96_000_000, 7`. Answer: false alarms go from 1.00 to 1.01 percent, the values at 7 and 6 in the `chart2` line, and every assert still passes. The curve is flat near its bottom, so rounding $k$ costs almost nothing.
+> - Guess first: does 6 hashes instead of 7 matter? Set `k = 6` in the line `m, k = 96_000_000, 7`. Answer: false alarms go from 1.00 to 1.01 percent, the values at 7 and 6 in the `chart2` line, and every assert still passes. The curve is flat near its bottom, so rounding $`k`$ costs almost nothing.
 > - Guess first: ten times fewer false alarms. Set `p = 0.001` in the line `n, p = 10_000_000, 0.01`. Answer: 14.3776 bits per URL instead of 9.5851, so 17.97 MB instead of 11.98, as the `try:` line shows: half as much memory again buys ten times fewer false alarms.
 > - Guess first: a sketch with a quarter of the memory. Set `t` to 256 in the line `t, pool, reqs, salt = 1024, …`. Answer: the promised spread doubles, from 3.13 to 6.27 percent, and the estimate becomes 378,791, 2.85% low, as the `try:` line shows.
-> - Guess first: does the $-1$ matter? In `estimate`, change `(t - 1)` to `t`. Answer: the big sketch barely moves, from 384,480 to 384,856 (the `wrong: t/U` line), but the 400 sketches of 4 values now average 13,399.2, 33 percent high, and the last assert stops the script.
+> - Guess first: does the $`-1`$ matter? In `estimate`, change `(t - 1)` to `t`. Answer: the big sketch barely moves, from 384,480 to 384,856 (the `wrong: t/U` line), but the 400 sketches of 4 values now average 13,399.2, 33 percent high, and the last assert stops the script.
 
 ---
 
@@ -847,7 +865,7 @@ example : 389921 * 8 = 3119368 := by norm_num
 >
 > - **Filling past the design count.** The filter keeps working and gives no warning. At 20 million URLs the 12 MB filter wrongly says "seen" to 0.156696 of new URLs. Size for the largest count expected, or start a fresh filter when the count is reached.
 > - **Mixing bits and bytes.** Read 12 MB as 12 million bits and the 7-hash filter says "seen" to 0.979681 of new URLs: almost everything.
-> - **Dropping the $-1$ in the sketch.** $t/U_{(t)}$ gives 384,856 instead of 384,480. Small at $t = 1{,}024$, but it is a bias, so it never averages away.
+> - **Dropping the $`-1`$ in the sketch.** $`t/U_{(t)}`$ gives 384,856 instead of 384,480. Small at $`t = 1{,}024`$, but it is a bias, so it never averages away.
 > - **Thinking more hashes are always safer.** Twenty hashes in the same 12 MB give 0.069981, against 0.009965 for seven.
 
 ---
@@ -861,7 +879,7 @@ example : 389921 * 8 = 3119368 := by norm_num
 - **Networks and query planners.** Routers estimate how many different connections pass through, to spot floods, and databases estimate how many different values a column holds, to choose how to run a query.
 
 > **Say it back**
-> A hash turns each item into positions or values that behave like random darts. A Bloom filter sets $k$ bits per item in a row of $m$ bits; a "no" is certain and a "yes" is wrong with chance $(1 - e^{-kn/m})^k$. That chance is smallest when half the bits are set, and then each URL needs $\ln(1/p)/(\ln 2)^2$ bits: 9.5851 for 1 in 100, so 10 million URLs fit in 12 MB. A sketch keeps the $t$ smallest hash values, and $(t-1)/U_{(t)}$ estimates the number of different items, right on average with a spread of about $1/\sqrt{t-2}$. Both stay honest only up to their design: overfill the filter, delete from it, or change the hash, and the promise fails.
+> A hash turns each item into positions or values that behave like random darts. A Bloom filter sets $`k`$ bits per item in a row of $`m`$ bits; a "no" is certain and a "yes" is wrong with chance $`(1 - e^{-kn/m})^k`$. That chance is smallest when half the bits are set, and then each URL needs $`\ln(1/p)/(\ln 2)^2`$ bits: 9.5851 for 1 in 100, so 10 million URLs fit in 12 MB. A sketch keeps the $`t`$ smallest hash values, and $`(t-1)/U_{(t)}`$ estimates the number of different items, right on average with a spread of about $`1/\sqrt{t-2}`$. Both stay honest only up to their design: overfill the filter, delete from it, or change the hash, and the promise fails.
 
 ---
 
@@ -869,7 +887,7 @@ example : 389921 * 8 = 3119368 := by norm_num
 
 - [Tail bounds](02-tail-bounds-and-repeated-trials.md): why a measured false-alarm rate sits close to its formula, and how many independent sketches make a large error rare.
 - [Data structures](../01-Algorithms%20and%20Growth/06-data-structures-heaps-hashes-and-trees.md): hashes and hash tables, the exact set that a Bloom filter shrinks by giving up certainty.
-- [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md): random labels colliding, and the approximation $1 - x \approx e^{-x}$ used in Step 1.
+- [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md): random labels colliding, and the approximation $`1 - x \approx e^{-x}`$ used in Step 1.
 
 ## Where this goes next
 
@@ -885,6 +903,6 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Bloom, Burton H. "Space/time trade-offs in hash coding with allowable errors." *Communications of the ACM* 13(7), 1970, 422–426. [doi:10.1145/362686.362692](https://doi.org/10.1145/362686.362692). The filter itself, and the trade of a small error rate for memory.
 - Bose, Prosenjit, et al. "On the false-positive rate of Bloom filters." *Information Processing Letters* 108(4), 2008, 210–213. [doi:10.1016/j.ipl.2008.05.018](https://doi.org/10.1016/j.ipl.2008.05.018). Shows the textbook formula slightly understates the true rate, as the toy count on this card does.
-- Kirsch, Adam, and Michael Mitzenmacher. "Less hashing, same performance: building a better Bloom filter." *Random Structures and Algorithms* 33(2), 2008, 187–218. [doi:10.1002/rsa.20208](https://doi.org/10.1002/rsa.20208). Two hashes combined as $h_1 + i\,h_2$ give, for large filters, the same false-alarm rate as $k$ independent ones; the code uses this.
-- Beyer, Kevin, et al. "On synopses for distinct-value estimation under multiset operations." *Proceedings of the 2007 ACM SIGMOD International Conference on Management of Data*, 199–210. [doi:10.1145/1247480.1247504](https://doi.org/10.1145/1247480.1247504). The $t$-smallest-values sketch, the unbiased estimate $(t-1)/U_{(t)}$ and its spread.
-- Broder, Andrei, and Michael Mitzenmacher. "Network applications of Bloom filters: a survey." *Internet Mathematics* 1(4), 2004, 485–509. [doi:10.1080/15427951.2004.10129096](https://doi.org/10.1080/15427951.2004.10129096). Proves by counting that any structure with false-alarm rate $p$ needs about $\log_2(1/p)$ bits per item, and that a Bloom filter sits within a factor $\log_2 e$ of that floor.
+- Kirsch, Adam, and Michael Mitzenmacher. "Less hashing, same performance: building a better Bloom filter." *Random Structures and Algorithms* 33(2), 2008, 187–218. [doi:10.1002/rsa.20208](https://doi.org/10.1002/rsa.20208). Two hashes combined as $`h_1 + i\,h_2`$ give, for large filters, the same false-alarm rate as $`k`$ independent ones; the code uses this.
+- Beyer, Kevin, et al. "On synopses for distinct-value estimation under multiset operations." *Proceedings of the 2007 ACM SIGMOD International Conference on Management of Data*, 199–210. [doi:10.1145/1247480.1247504](https://doi.org/10.1145/1247480.1247504). The $`t`$-smallest-values sketch, the unbiased estimate $`(t-1)/U_{(t)}`$ and its spread.
+- Broder, Andrei, and Michael Mitzenmacher. "Network applications of Bloom filters: a survey." *Internet Mathematics* 1(4), 2004, 485–509. [doi:10.1080/15427951.2004.10129096](https://doi.org/10.1080/15427951.2004.10129096). Proves by counting that any structure with false-alarm rate $`p`$ needs about $`\log_2(1/p)`$ bits per item, and that a Bloom filter sits within a factor $`\log_2 e`$ of that floor.

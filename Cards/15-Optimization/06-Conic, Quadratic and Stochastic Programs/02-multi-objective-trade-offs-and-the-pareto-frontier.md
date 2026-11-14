@@ -46,50 +46,56 @@ Both lines climb as τ rises: each step buys return and pays for it in risk. The
 
 ## The formula
 
-Notation first, in words. The holdings are a list $x = (x_1, \dots, x_5)$: the fraction of the money in each fund, in the table's order. $\mu_i$ (Greek "mu") is fund $i$'s expected return and $\sigma_i^2$ its variance. With uncorrelated funds the portfolio's variance and return are
+Notation first, in words. The holdings are a list $`x = (x_1, \dots, x_5)`$: the fraction of the money in each fund, in the table's order. $`\mu_i`$ (Greek "mu") is fund $`i`$'s expected return and $`\sigma_i^2`$ its variance. With uncorrelated funds the portfolio's variance and return are
 
-$$V(x) = \sum_i \sigma_i^2 x_i^2, \qquad R(x) = \sum_i \mu_i x_i .$$
+```math
+V(x) = \sum_i \sigma_i^2 x_i^2, \qquad R(x) = \sum_i \mu_i x_i .
+```
 
-**Pareto optimality.** A split is feasible when the rules allow it: all the money invested, nothing sold short. A feasible $y$ dominates $x$ when $V(y) \le V(x)$ and $R(y) \ge R(x)$, with at least one of the two strict. A feasible $x^*$ is Pareto optimal when nothing feasible dominates it.
+**Pareto optimality.** A split is feasible when the rules allow it: all the money invested, nothing sold short. A feasible $`y`$ dominates $`x`$ when $`V(y) \le V(x)`$ and $`R(y) \ge R(x)`$, with at least one of the two strict. A feasible $`x^*`$ is Pareto optimal when nothing feasible dominates it.
 
-**The weighted sum**, for a weight $\tau \ge 0$:
+**The weighted sum**, for a weight $`\tau \ge 0`$:
 
-$$\text{minimise } V(x) - \tau\,R(x) \quad\text{subject to}\quad x_1 + \dots + x_5 = 1,\; x \ge 0 .$$
+```math
+\text{minimise } V(x) - \tau\,R(x) \quad\text{subject to}\quad x_1 + \dots + x_5 = 1,\; x \ge 0 .
+```
 
 **Read it aloud:** among all splits that invest all the money and sell nothing short, find the one whose variance, less τ times its return, is smallest.
 
-Its answer has a closed shape. A number $\nu$ (Greek "nu", the price of the budget) is fixed by making the weights add to 1, and
+Its answer has a closed shape. A number $`\nu`$ (Greek "nu", the price of the budget) is fixed by making the weights add to 1, and
 
-$$x_i = \max\!\Big(0,\; \frac{\tau\mu_i - \nu}{2\sigma_i^2}\Big).$$
+```math
+x_i = \max\!\Big(0,\; \frac{\tau\mu_i - \nu}{2\sigma_i^2}\Big).
+```
 
-**Read it aloud:** a fund is held when its weighted return $\tau\mu_i$ beats the budget price $\nu$, and it is held in proportion to that excess divided by twice its variance.
+**Read it aloud:** a fund is held when its weighted return $`\tau\mu_i`$ beats the budget price $`\nu`$, and it is held in proportion to that excess divided by twice its variance.
 
 The two halves of the theorem:
 
-1. Every weighted-sum answer with $\tau \ge 0$ is Pareto optimal (when $\tau = 0$, because the answer is unique).
-2. If the set of choices is convex (a blend of any two choices is again a choice; see [Convex sets](../01-Convexity/02-convex-sets.md)), $V$ is convex (a bowl) and $R$ is a straight-line function, every Pareto-optimal point where the frontier's slope is finite is a weighted-sum answer for some $\tau \ge 0$, and that $\tau$ is the slope there: the extra variance per extra point of return. The slope is finite everywhere except perhaps at the top end, the largest return. There it can be infinite on a curved choice set, and then no finite $\tau$ reaches that point. It stays finite when $V$ is quadratic and the choices are cut out by straight-line limits, as here, where τ = 500 reaches the top. Without convexity a Pareto point can be missed by every $\tau$; the **epsilon-constraint** form, minimise $V(x)$ subject to $R(x) \ge \varepsilon$, still finds it.
+1. Every weighted-sum answer with $`\tau \ge 0`$ is Pareto optimal (when $`\tau = 0`$, because the answer is unique).
+2. If the set of choices is convex (a blend of any two choices is again a choice; see [Convex sets](../01-Convexity/02-convex-sets.md)), $`V`$ is convex (a bowl) and $`R`$ is a straight-line function, every Pareto-optimal point where the frontier's slope is finite is a weighted-sum answer for some $`\tau \ge 0`$, and that $`\tau`$ is the slope there: the extra variance per extra point of return. The slope is finite everywhere except perhaps at the top end, the largest return. There it can be infinite on a curved choice set, and then no finite $`\tau`$ reaches that point. It stays finite when $`V`$ is quadratic and the choices are cut out by straight-line limits, as here, where τ = 500 reaches the top. Without convexity a Pareto point can be missed by every $`\tau`$; the **epsilon-constraint** form, minimise $`V(x)`$ subject to $`R(x) \ge \varepsilon`$, still finds it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_i$ | the holdings, and the fraction of the money in fund $i$; $x^*$ is a weighted-sum answer and $y$ any rival split | at τ = 50: 0, 25.51%, 21.09%, 30.79%, 22.61% | — |
-| $\mu_i$ | fund $i$'s expected return a year | 3, 4, 5, 6.5, 9 percent | that fund gets more weight |
-| $\sigma_i^2$ | fund $i$'s variance, in percent squared | 25, 64, 196, 256, 625 | that fund gets less weight |
-| $V(x)$ | the portfolio's variance: the goal to make small | 69.11 at τ = 50 | — |
-| $R(x)$ | the portfolio's expected return: the goal to make large | 6.111% at τ = 50 | — |
-| $\tau$ | weight on return: variance traded for one point of return | 0, 10, …, 100 | the answer slides up the frontier, riskier and richer |
-| $\nu$ | the budget price, fixed so the weights add to 1 | 167.35 at τ = 50 | — |
-| $\lambda_i$ | multiplier on $x_i \ge 0$: how hard a fund held at zero pushes to stay out | gilt 17.35 at τ = 50 | — |
-| $\theta$ | a mixing fraction between two points, $\theta a + (1-\theta) b$ | 0.6 | — |
-| $\varepsilon$ | the return floor in the epsilon-constraint form | 5% picks property | the answer moves to a richer fund |
-| $F(m)$, $m^*$ | the frontier as a curve: least variance among splits with return at least $m$; $m^*$ is one frontier point's return | $F(6)$ = 63.795 | rises, faster and faster |
+| $`x`$, $`x_i`$ | the holdings, and the fraction of the money in fund $`i`$; $`x^*`$ is a weighted-sum answer and $`y`$ any rival split | at τ = 50: 0, 25.51%, 21.09%, 30.79%, 22.61% | — |
+| $`\mu_i`$ | fund $`i`$'s expected return a year | 3, 4, 5, 6.5, 9 percent | that fund gets more weight |
+| $`\sigma_i^2`$ | fund $`i`$'s variance, in percent squared | 25, 64, 196, 256, 625 | that fund gets less weight |
+| $`V(x)`$ | the portfolio's variance: the goal to make small | 69.11 at τ = 50 | — |
+| $`R(x)`$ | the portfolio's expected return: the goal to make large | 6.111% at τ = 50 | — |
+| $`\tau`$ | weight on return: variance traded for one point of return | 0, 10, …, 100 | the answer slides up the frontier, riskier and richer |
+| $`\nu`$ | the budget price, fixed so the weights add to 1 | 167.35 at τ = 50 | — |
+| $`\lambda_i`$ | multiplier on $`x_i \ge 0`$: how hard a fund held at zero pushes to stay out | gilt 17.35 at τ = 50 | — |
+| $`\theta`$ | a mixing fraction between two points, $`\theta a + (1-\theta) b`$ | 0.6 | — |
+| $`\varepsilon`$ | the return floor in the epsilon-constraint form | 5% picks property | the answer moves to a richer fund |
+| $`F(m)`$, $`m^*`$ | the frontier as a curve: least variance among splits with return at least $`m`$; $`m^*`$ is one frontier point's return | $`F(6)`$ = 63.795 | rises, faster and faster |
 
 ### When it holds
 
-- **Weights not negative.** With $\tau < 0$ the score rewards *losing* return. At τ = −10 the answer returns 3.312% at variance 16.97, beaten on both counts by τ = 0's 3.741% at 15.10.
-- **Convexity, for half 2.** Blending funds freely is a convex choice set, cut out by straight-line limits, and $V$ is a convex bowl, so every frontier point is reachable, the top end included. The one-fund rule allows only five separate points, not a convex set, and property falls in the dent.
+- **Weights not negative.** With $`\tau < 0`$ the score rewards *losing* return. At τ = −10 the answer returns 3.312% at variance 16.97, beaten on both counts by τ = 0's 3.741% at 15.10.
+- **Convexity, for half 2.** Blending funds freely is a convex choice set, cut out by straight-line limits, and $`V`$ is a convex bowl, so every frontier point is reachable, the top end included. The one-fund rule allows only five separate points, not a convex set, and property falls in the dent.
 - **A unique answer when one weight is zero.** At τ = 0 the score ignores return. Here the variance bowl is strictly curved, so the answer is unique and therefore Pareto optimal; with ties, a tied answer can be beaten on return.
 - **The same feasible set throughout.** Drop the no-short-sales limit and τ = 100 sells gilts short to −87.87% of the money. That is a frontier point of a different problem, not a portfolio this scheme can hold.
-- **Uncorrelated funds, for the closed shape.** Correlations change the formula for $x_i$ (it then needs a linear solve, as in [Quadratic programs](01-quadratic-programs-and-markowitz.md)), not the theorem.
+- **Uncorrelated funds, for the closed shape.** Correlations change the formula for $`x_i`$ (it then needs a linear solve, as in [Quadratic programs](01-quadratic-programs-and-markowitz.md)), not the theorem.
 
 ---
 
@@ -97,40 +103,44 @@ The two halves of the theorem:
 
 ### Step 0: a weighted sum is a ruler laid at a slope
 
-Draw every achievable choice as a point: variance across, return up. The score $V - \tau R$ is the same all along a straight line of slope $1/\tau$ (return per unit of variance). Minimising the score means sliding that line up and to the left until it last touches the set of points. Whatever it touches last is the answer.
+Draw every achievable choice as a point: variance across, return up. The score $`V - \tau R`$ is the same all along a straight line of slope $`1/\tau`$ (return per unit of variance). Minimising the score means sliding that line up and to the left until it last touches the set of points. Whatever it touches last is the answer.
 
 Two things follow at once. The touched point cannot have a point further up and to the left, or the ruler would have touched that one later: so it is Pareto optimal. And a ruler can only touch the outer boundary of the point cloud's convex hull (the shape a rubber band makes around it). A Pareto point tucked inside that band is never touched.
 
 ### Step 1: a weighted-sum answer is never beaten
 
-Suppose $x^*$ minimises $V - \tau R$ with $\tau \ge 0$, and some $y$ dominates it: $V(y) \le V(x^*)$ and $R(y) \ge R(x^*)$, one strictly. Then
+Suppose $`x^*`$ minimises $`V - \tau R`$ with $`\tau \ge 0`$, and some $`y`$ dominates it: $`V(y) \le V(x^*)`$ and $`R(y) \ge R(x^*)`$, one strictly. Then
 
-$$V(y) - \tau R(y) \;\le\; V(x^*) - \tau R(x^*).$$
+```math
+V(y) - \tau R(y) \;\le\; V(x^*) - \tau R(x^*).
+```
 
-If $\tau > 0$ either strict inequality makes this strict, contradicting that $x^*$ was the minimum. If $\tau = 0$, $y$ ties $x^*$ on variance, so $y$ is a second minimiser; when the minimiser is unique, $y = x^*$, and nothing beats it. That is half 1.
+If $`\tau > 0`$ either strict inequality makes this strict, contradicting that $`x^*`$ was the minimum. If $`\tau = 0`$, $`y`$ ties $`x^*`$ on variance, so $`y`$ is a second minimiser; when the minimiser is unique, $`y = x^*`$, and nothing beats it. That is half 1.
 
 ### Step 2: solving one weighted sum, with its certificate
 
-For a fixed τ the problem is a quadratic program: a bowl ($V$) tilted by a straight-line term ($-\tau R$) under straight-line limits. Its KKT conditions (Karush–Kuhn–Tucker conditions: the optimality conditions of [Quadratic programs](01-quadratic-programs-and-markowitz.md), set out in general in [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md)) say: there is one budget price $\nu$ and multipliers $\lambda_i \ge 0$ with
+For a fixed τ the problem is a quadratic program: a bowl ($`V`$) tilted by a straight-line term ($`-\tau R`$) under straight-line limits. Its KKT conditions (Karush–Kuhn–Tucker conditions: the optimality conditions of [Quadratic programs](01-quadratic-programs-and-markowitz.md), set out in general in [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md)) say: there is one budget price $`\nu`$ and multipliers $`\lambda_i \ge 0`$ with
 
-$$2\sigma_i^2 x_i - \tau\mu_i + \nu - \lambda_i = 0, \qquad \lambda_i x_i = 0 .$$
+```math
+2\sigma_i^2 x_i - \tau\mu_i + \nu - \lambda_i = 0, \qquad \lambda_i x_i = 0 .
+```
 
-In words: every fund that is held has the same marginal score (the change in score per extra sliver of that fund), $-\nu$. A fund left at zero has $\lambda_i = \nu - \tau\mu_i \ge 0$: adding a sliver of it would raise the score. Solve the first equation for $x_i$ and the closed shape of The formula falls out. Because the bowl is convex, any point that meets these conditions is the global minimum, not just a local one; that makes the printed conditions a certificate.
+In words: every fund that is held has the same marginal score (the change in score per extra sliver of that fund), $`-\nu`$. A fund left at zero has $`\lambda_i = \nu - \tau\mu_i \ge 0`$: adding a sliver of it would raise the score. Solve the first equation for $`x_i`$ and the closed shape of The formula falls out. Because the bowl is convex, any point that meets these conditions is the global minimum, not just a local one; that makes the printed conditions a certificate.
 
 The code finds the answer by trying all 31 possible sets of held funds and keeping one whose conditions hold. Any set that passes describes the same split: the strictly curved bowl has exactly one bottom.
 
 ### Step 3: when everything is convex, the weight is the frontier's slope
 
-Let $F(m)$ be the least variance among splits with return at least $m$. Mix two such best splits, θ of one and $1-\theta$ of the other: the return mixes in the same proportion, and the variance comes out no more than the same mix of variances, because $V$ is convex. So $F$ is a convex curve. A convex curve has a supporting line at every point between its ends, and at an end where its slope is finite: a line touching it there and lying below it everywhere else. That line's slope is a τ, and the ruler at that slope touches the frontier at exactly that point.
+Let $`F(m)`$ be the least variance among splits with return at least $`m`$. Mix two such best splits, θ of one and $`1-\theta`$ of the other: the return mixes in the same proportion, and the variance comes out no more than the same mix of variances, because $`V`$ is convex. So $`F`$ is a convex curve. A convex curve has a supporting line at every point between its ends, and at an end where its slope is finite: a line touching it there and lying below it everywhere else. That line's slope is a τ, and the ruler at that slope touches the frontier at exactly that point.
 
 So every frontier point of the blended problem is a weighted-sum answer, and τ is the curve's slope: the variance one more point of return costs right there. At a 6% target the code finds τ = 45.512 by bisection on τ (halving the search range until the return is 6%), then measures the frontier's slope by a central difference (the change in least variance across a small step either side of 6%) and gets 45.512 again.
 
 <details>
 <summary>Detailed proof: every Pareto point of a convex problem is a weighted-sum answer</summary>
 
-Take a frontier point $x^*$ with return $m^* = R(x^*)$. Its variance is $F(m^*)$, or a split with at least that return and less variance would beat it. Suppose first that $m^*$ is above the least-variance portfolio's return and below the largest return. $F$ is convex (Step 3) and non-decreasing on that range, since a higher floor can only shrink the choice. A convex function on an interval has, at every interior point, a slope $\tau$ with $F(m) \ge F(m^*) + \tau (m - m^*)$ for all $m$; non-decreasing makes $\tau \ge 0$.
+Take a frontier point $`x^*`$ with return $`m^* = R(x^*)`$. Its variance is $`F(m^*)`$, or a split with at least that return and less variance would beat it. Suppose first that $`m^*`$ is above the least-variance portfolio's return and below the largest return. $`F`$ is convex (Step 3) and non-decreasing on that range, since a higher floor can only shrink the choice. A convex function on an interval has, at every interior point, a slope $`\tau`$ with $`F(m) \ge F(m^*) + \tau (m - m^*)`$ for all $`m`$; non-decreasing makes $`\tau \ge 0`$.
 
-Now take any feasible $y$, with return $R(y)$. By the definition of $F$, $V(y) \ge F(R(y)) \ge F(m^*) + \tau(R(y) - m^*)$. Rearranged: $V(y) - \tau R(y) \ge V(x^*) - \tau R(x^*)$. So $x^*$ minimises the weighted sum with that $\tau$. The bottom end, the least-variance portfolio, is τ = 0. At the top end, $m^*$ the largest return, the same steps work with $\tau$ the slope of $F$ from the left, provided it is finite, because no split returns more than $m^*$. Here it is finite, and τ = 500 reaches all emerging markets. On a curved choice set it can be infinite. Take choices filling a disc, with $V$ the across coordinate and $R$ the up coordinate. The disc's topmost point is Pareto optimal, the frontier is vertical there, and every finite τ picks a point to its left.
+Now take any feasible $`y`$, with return $`R(y)`$. By the definition of $`F`$, $`V(y) \ge F(R(y)) \ge F(m^*) + \tau(R(y) - m^*)`$. Rearranged: $`V(y) - \tau R(y) \ge V(x^*) - \tau R(x^*)`$. So $`x^*`$ minimises the weighted sum with that $`\tau`$. The bottom end, the least-variance portfolio, is τ = 0. At the top end, $`m^*`$ the largest return, the same steps work with $`\tau`$ the slope of $`F`$ from the left, provided it is finite, because no split returns more than $`m^*`$. Here it is finite, and τ = 500 reaches all emerging markets. On a curved choice set it can be infinite. Take choices filling a disc, with $`V`$ the across coordinate and $`R`$ the up coordinate. The disc's topmost point is Pareto optimal, the frontier is vertical there, and every finite τ picks a point to its left.
 
 </details>
 
@@ -143,7 +153,9 @@ Now the one-fund rule. The choices are five points, not a convex set. Average th
 
 This average is not a fund anyone can buy. It is a point on the rubber band. But the score is a straight-line function of the point, so for every τ
 
-$$\text{score(property)} - \big[0.6\,\text{score(corp bond)} + 0.4\,\text{score(UK equity)}\big] = 196 - 140.80 = 55.20 .$$
+```math
+\text{score(property)} - \big[0.6\,\text{score(corp bond)} + 0.4\,\text{score(UK equity)}\big] = 196 - 140.80 = 55.20 .
+```
 
 The return terms cancel because the returns match. An average is never below the smaller of its two parts, so property trails the better of those two funds by at least 55.20, at every τ. The sweep agrees: the winner is the gilt up to τ = 39.0, the corporate bond up to 76.8, UK equity up to 147.6, then emerging markets, and property comes closest at τ = 76.8, still 55.20 behind. Yet property is Pareto optimal: no single fund has its 5% return with less variance.
 
@@ -165,13 +177,13 @@ The weighted sum at τ = 50, by hand. Guess that the gilt is left out, solve, th
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| weighted returns $\tau\mu_i$ | 50 × 3, 50 × 4, 50 × 5, 50 × 6.5, 50 × 9 | 150, 200, 250, 325, 450 |
+| weighted returns $`\tau\mu_i`$ | 50 × 3, 50 × 4, 50 × 5, 50 × 6.5, 50 × 9 | 150, 200, 250, 325, 450 |
 | twice the variances | 2 × 25, 2 × 64, 2 × 196, 2 × 256, 2 × 625 | 50, 128, 392, 512, 1250 |
 | first sum, four held funds | 200/128 + 250/392 + 325/512 + 450/1250 | 3.1950 |
 | second sum | 1/128 + 1/392 + 1/512 + 1/1250 | 0.013117 |
-| budget price $\nu$ | (3.1950 − 1) / 0.013117 | 167.35 |
+| budget price $`\nu`$ | (3.1950 − 1) / 0.013117 | 167.35 |
 | weights | (200 − 167.35)/128, (250 − 167.35)/392, (325 − 167.35)/512, (450 − 167.35)/1250 | 25.51%, 21.09%, 30.79%, 22.61% |
-| check the gilt | $\lambda_1 = \nu - \tau\mu_1$ = 167.35 − 150 | 17.35, not negative, so the gilt stays out |
+| check the gilt | $`\lambda_1 = \nu - \tau\mu_1`$ = 167.35 − 150 | 17.35, not negative, so the gilt stays out |
 | return | sum of weight × return | 6.111% |
 | variance | sum of variance × weight squared | 69.11, standard deviation **8.313%** |
 
@@ -518,7 +530,7 @@ The two outputs match line for line.
 Lean proves both halves of the theorem in general, and the dent for the card's five funds under the one-fund rule.
 
 - Half 1: a weighted-sum answer with τ ≥ 0 is Pareto optimal. When τ = 0, this uses the fact that the answer is unique.
-- Half 2: take a convex choice set, a convex $V$ and a straight-line $R$. Every Pareto point with a finite frontier slope is a weighted-sum answer for some τ ≥ 0.
+- Half 2: take a convex choice set, a convex $`V`$ and a straight-line $`R`$. Every Pareto point with a finite frontier slope is a weighted-sum answer for some τ ≥ 0.
 - Under the one-fund rule, all five funds are Pareto optimal, property included.
 - At every τ, some other fund scores at least 55.2 below property, so no weighted sum ever picks it.
 - The limit "return at least 5%" picks property: every fund meeting it has a variance of at least 196.

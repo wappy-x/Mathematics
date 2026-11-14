@@ -36,45 +36,51 @@ Orange: the exact monthly path, one sample drawn with seed 20260930. Green: Eule
 
 ## The formula
 
-Notation first, in words. Time $t$ is in years. The chosen dates are $t_0 = 0 < t_1 < \dots < t_{12} = 1$, here the month-ends, and $h_k = t_{k+1} - t_k$ is the gap between two dates.
+Notation first, in words. Time $`t`$ is in years. The chosen dates are $`t_0 = 0 < t_1 < \dots < t_{12} = 1`$, here the month-ends, and $`h_k = t_{k+1} - t_k`$ is the gap between two dates.
 
-$W_t$ is Brownian motion, the random walk seen from far away; $dW_t$ is shorthand for an Ito integral (the limit of sums of values times Brownian increments, as in [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)), never a derivative, because the path has none. $Z_k$ is a standard normal draw (mean 0, variance 1), one per date, independent of all the others.
+$`W_t`$ is Brownian motion, the random walk seen from far away; $`dW_t`$ is shorthand for an Ito integral (the limit of sums of values times Brownian increments, as in [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)), never a derivative, because the path has none. $`Z_k`$ is a standard normal draw (mean 0, variance 1), one per date, independent of all the others.
 
-The share follows GBM, $dS_t = \mu S_t\,dt + \sigma S_t\,dW_t$. Its exact step is
+The share follows GBM, $`dS_t = \mu S_t\,dt + \sigma S_t\,dW_t`$. Its exact step is
 
-$$S_{t_{k+1}} = S_{t_k}\,\exp\!\Big(\big(\mu - \tfrac12\sigma^2\big)h_k + \sigma\sqrt{h_k}\,Z_k\Big).$$
+```math
+S_{t_{k+1}} = S_{t_k}\,\exp\!\Big(\big(\mu - \tfrac12\sigma^2\big)h_k + \sigma\sqrt{h_k}\,Z_k\Big).
+```
 
 **Read it aloud:** next month's price is this month's price times a lognormal factor (a number whose log is normal): a fixed drift in the log, minus half the variance, plus one normal shock scaled by the root of the gap.
 
-The rate follows OU, $dr_t = \kappa(\theta - r_t)\,dt + \sigma_r\,dW_t$. Its exact step is
+The rate follows OU, $`dr_t = \kappa(\theta - r_t)\,dt + \sigma_r\,dW_t`$. Its exact step is
 
-$$r_{t_{k+1}} = \theta + (r_{t_k} - \theta)\,e^{-\kappa h_k} + \sigma_r\sqrt{\frac{1 - e^{-2\kappa h_k}}{2\kappa}}\;Z_k .$$
+```math
+r_{t_{k+1}} = \theta + (r_{t_k} - \theta)\,e^{-\kappa h_k} + \sigma_r\sqrt{\frac{1 - e^{-2\kappa h_k}}{2\kappa}}\;Z_k .
+```
 
 **Read it aloud:** next month's rate is the level plus today's gap shrunk by the exponential, plus one normal shock whose size is what the noise builds up over the month after the pull has drained part of it.
 
-For contrast, the Euler step over a gap $h$ replaces each exact factor by its first-order version:
+For contrast, the Euler step over a gap $`h`$ replaces each exact factor by its first-order version:
 
-$$S \to S\,(1 + \mu h + \sigma\sqrt{h}\,Z), \qquad r \to r + \kappa(\theta - r)h + \sigma_r\sqrt{h}\,Z .$$
+```math
+S \to S\,(1 + \mu h + \sigma\sqrt{h}\,Z), \qquad r \to r + \kappa(\theta - r)h + \sigma_r\sqrt{h}\,Z .
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $t_k$, $h_k$, $T$ | time in years; the k-th chosen date; the gap to the next date; the horizon | month-ends; $h_k$ = 1/12, or days/365 on the calendar; 1 year | longer gaps cost the exact step nothing |
-| $S_t$, $S_0$ | the share price at time $t$; today's price | 100 dollars | — |
-| $\mu$ | the share's drift, "mu": its mean growth rate per year | 0.08 | mean $S_0 e^{\mu T}$ rises |
-| $\sigma$ | the share's volatility, "sigma", per root-year | 0.20 | wider log spread; Euler's error grows |
-| $W_t$, $dW_t$ | Brownian motion; its increment, shorthand for an Ito integral | — | — |
-| $Z$, $Z_k$ | standard normal draws, one per date | from SplitMix64, seed 20260930 | — |
-| $r_t$, $r_0$, $r_{t_k}$ | the rate at time $t$, a decimal; today's rate; the rate on date k | 0.06 | — |
-| $\theta$ | the rate's long-run level, "theta" | 0.04 | the mean moves toward it |
-| $\kappa$, $a$ | the pull speed per year, "kappa"; the share of the gap kept over one gap, $a = e^{-\kappa h}$ | 0.5; 0.959189 per month | a faster pull, a smaller $a$ |
-| $\sigma_r$, $s_h$ | the rate's noise size per root-year; the exact step's shock size $\sigma_r\sqrt{(1-a^2)/(2\kappa)}$ | 0.02; 0.565528 points per month | larger shocks |
-| $n$, $h$ | the number of Euler steps in the year; Euler's step $T/n$ | 1, 10, 12, 100, 1000 | more steps, smaller error |
-| $X$, $X_{t_k}$, $Y_k$, $F_k$, $\xi_k$, $m$ | proof names: GBM or OU, and its value on date k; the simulated chain; the exact step as a map; the normal built from Brownian increments; the number of dates | — | — |
+| $`t`$, $`t_k`$, $`h_k`$, $`T`$ | time in years; the k-th chosen date; the gap to the next date; the horizon | month-ends; $`h_k`$ = 1/12, or days/365 on the calendar; 1 year | longer gaps cost the exact step nothing |
+| $`S_t`$, $`S_0`$ | the share price at time $`t`$; today's price | 100 dollars | — |
+| $`\mu`$ | the share's drift, "mu": its mean growth rate per year | 0.08 | mean $`S_0 e^{\mu T}`$ rises |
+| $`\sigma`$ | the share's volatility, "sigma", per root-year | 0.20 | wider log spread; Euler's error grows |
+| $`W_t`$, $`dW_t`$ | Brownian motion; its increment, shorthand for an Ito integral | — | — |
+| $`Z`$, $`Z_k`$ | standard normal draws, one per date | from SplitMix64, seed 20260930 | — |
+| $`r_t`$, $`r_0`$, $`r_{t_k}`$ | the rate at time $`t`$, a decimal; today's rate; the rate on date k | 0.06 | — |
+| $`\theta`$ | the rate's long-run level, "theta" | 0.04 | the mean moves toward it |
+| $`\kappa`$, $`a`$ | the pull speed per year, "kappa"; the share of the gap kept over one gap, $`a = e^{-\kappa h}`$ | 0.5; 0.959189 per month | a faster pull, a smaller $`a`$ |
+| $`\sigma_r`$, $`s_h`$ | the rate's noise size per root-year; the exact step's shock size $`\sigma_r\sqrt{(1-a^2)/(2\kappa)}`$ | 0.02; 0.565528 points per month | larger shocks |
+| $`n`$, $`h`$ | the number of Euler steps in the year; Euler's step $`T/n`$ | 1, 10, 12, 100, 1000 | more steps, smaller error |
+| $`X`$, $`X_{t_k}`$, $`Y_k`$, $`F_k`$, $`\xi_k`$, $`m`$ | proof names: GBM or OU, and its value on date k; the simulated chain; the exact step as a map; the normal built from Brownian increments; the number of dates | — | — |
 
 ### When it holds
 
-- **A transition law known in closed form.** GBM and OU are linear equations, so Ito calculus solves them and the law from one date to the next is lognormal or normal. Give the rate a pull such as $\kappa(\theta - r_t)^3$ and no closed-form law exists; this card's method then does not apply, and a scheme such as Euler takes over.
-- **Coefficients fixed over each gap.** If the volatility changes inside a month on a known schedule, the step needs the month's total variance, the integral of $\sigma^2$ over the month, in place of $\sigma^2 h_k$. A step that uses the volatility at the start of the month is an Euler step again.
+- **A transition law known in closed form.** GBM and OU are linear equations, so Ito calculus solves them and the law from one date to the next is lognormal or normal. Give the rate a pull such as $`\kappa(\theta - r_t)^3`$ and no closed-form law exists; this card's method then does not apply, and a scheme such as Euler takes over.
+- **Coefficients fixed over each gap.** If the volatility changes inside a month on a known schedule, the step needs the month's total variance, the integral of $`\sigma^2`$ over the month, in place of $`\sigma^2 h_k`$. A step that uses the volatility at the start of the month is an Euler step again.
 - **Exact at the dates, and only there.** The chain says nothing about the path between month-ends. A question about the path in between, such as whether the share touched $90 mid-month, needs a bridge between the dates, as in [Brownian bridge](../05-Brownian%20Motion/05-brownian-bridge.md).
 - **Independent standard normal draws.** The method is exact up to the random number generator and floating-point rounding. A generator with correlated outputs breaks it.
 
@@ -88,27 +94,35 @@ GBM and OU are Markov processes: given today's value, the future does not depend
 
 ### Step 1: the share's log is Brownian motion with drift
 
-Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) applied to $\ln S_t$ gives
+Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) applied to $`\ln S_t`$ gives
 
-$$d\ln S_t = \big(\mu - \tfrac12\sigma^2\big)\,dt + \sigma\,dW_t .$$
+```math
+d\ln S_t = \big(\mu - \tfrac12\sigma^2\big)\,dt + \sigma\,dW_t .
+```
 
-The $-\tfrac12\sigma^2$ is Ito's extra term: the second derivative of the log, $-1/S^2$, times half the squared noise, $\sigma^2 S^2$. Ordinary calculus would miss it. The right side has constant coefficients, so integrating over one gap is exact:
+The $`-\tfrac12\sigma^2`$ is Ito's extra term: the second derivative of the log, $`-1/S^2`$, times half the squared noise, $`\sigma^2 S^2`$. Ordinary calculus would miss it. The right side has constant coefficients, so integrating over one gap is exact:
 
-$$\ln S_{t_{k+1}} - \ln S_{t_k} = \big(\mu - \tfrac12\sigma^2\big)h_k + \sigma\,(W_{t_{k+1}} - W_{t_k}).$$
+```math
+\ln S_{t_{k+1}} - \ln S_{t_k} = \big(\mu - \tfrac12\sigma^2\big)h_k + \sigma\,(W_{t_{k+1}} - W_{t_k}).
+```
 
-The Brownian increment is normal with mean 0 and variance $h_k$, and independent of everything up to $t_k$. Write it as $\sqrt{h_k}\,Z_k$ and exponentiate: that is the GBM step. This is the same solution as [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md), restarted at each date.
+The Brownian increment is normal with mean 0 and variance $`h_k`$, and independent of everything up to $`t_k`$. Write it as $`\sqrt{h_k}\,Z_k`$ and exponentiate: that is the GBM step. This is the same solution as [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md), restarted at each date.
 
 ### Step 2: the rate is today's gap, faded, plus faded shocks
 
-The OU solution from [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), restarted at time $t_k$, reads
+The OU solution from [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), restarted at time $`t_k`$, reads
 
-$$r_{t_{k+1}} = \theta + (r_{t_k} - \theta)\,e^{-\kappa h_k} + \sigma_r\int_{t_k}^{t_{k+1}} e^{-\kappa(t_{k+1} - u)}\,dW_u .$$
+```math
+r_{t_{k+1}} = \theta + (r_{t_k} - \theta)\,e^{-\kappa h_k} + \sigma_r\int_{t_k}^{t_{k+1}} e^{-\kappa(t_{k+1} - u)}\,dW_u .
+```
 
 The integrand is a fixed function, not random, so the integral is normal with mean 0. The Ito isometry gives its variance: the integral of the squared integrand,
 
-$$\sigma_r^2\int_{t_k}^{t_{k+1}} e^{-2\kappa(t_{k+1}-u)}\,du = \sigma_r^2\,\frac{1 - e^{-2\kappa h_k}}{2\kappa}.$$
+```math
+\sigma_r^2\int_{t_k}^{t_{k+1}} e^{-2\kappa(t_{k+1}-u)}\,du = \sigma_r^2\,\frac{1 - e^{-2\kappa h_k}}{2\kappa}.
+```
 
-It uses only Brownian increments after $t_k$, so it is independent of $r_{t_k}$. That is the OU step, with $Z_k$ standing for the integral divided by its standard deviation.
+It uses only Brownian increments after $`t_k`$, so it is independent of $`r_{t_k}`$. That is the OU step, with $`Z_k`$ standing for the integral divided by its standard deviation.
 
 ### Step 3: chaining the steps gives the right joint law
 
@@ -117,27 +131,27 @@ Each step is exact given the previous value, and each draw is fresh. So the simu
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** Let $X$ be GBM or OU, and let $Y_0 = X_0$ and $Y_{k+1} = F_k(Y_k, Z_k)$, where $F_k$ is the exact step over $[t_k, t_{k+1}]$ and $Z_0, Z_1, \dots$ are independent standard normals. Then $(Y_0, \dots, Y_m)$ and $(X_{t_0}, \dots, X_{t_m})$ have the same joint law for every $m$.
+**Claim.** Let $`X`$ be GBM or OU, and let $`Y_0 = X_0`$ and $`Y_{k+1} = F_k(Y_k, Z_k)`$, where $`F_k`$ is the exact step over $`[t_k, t_{k+1}]`$ and $`Z_0, Z_1, \dots`$ are independent standard normals. Then $`(Y_0, \dots, Y_m)`$ and $`(X_{t_0}, \dots, X_{t_m})`$ have the same joint law for every $`m`$.
 
-**Base.** $Y_0 = X_0$, a fixed number.
+**Base.** $`Y_0 = X_0`$, a fixed number.
 
-**The process side.** Steps 1 and 2 show $X_{t_{k+1}} = F_k(X_{t_k}, \xi_k)$, where $\xi_k$ is a standard normal built from Brownian increments on $(t_k, t_{k+1}]$: for GBM the scaled increment, for OU the scaled integral. Brownian increments on disjoint intervals are independent, and $X_{t_k}$ is built from increments up to $t_k$. So $\xi_k$ is independent of $(X_{t_0}, \dots, X_{t_k})$.
+**The process side.** Steps 1 and 2 show $`X_{t_{k+1}} = F_k(X_{t_k}, \xi_k)`$, where $`\xi_k`$ is a standard normal built from Brownian increments on $`(t_k, t_{k+1}]`$: for GBM the scaled increment, for OU the scaled integral. Brownian increments on disjoint intervals are independent, and $`X_{t_k}`$ is built from increments up to $`t_k`$. So $`\xi_k`$ is independent of $`(X_{t_0}, \dots, X_{t_k})`$.
 
-**Induction.** Suppose $(Y_0, \dots, Y_k)$ and $(X_{t_0}, \dots, X_{t_k})$ have the same law. Each extended vector is the image of (the first $k + 1$ values, an independent standard normal) under the same map $(v, z) \mapsto (v, F_k(v_k, z))$. Equal laws of the pieces, independence and the same measurable map give equal laws of the images. So the vectors up to $k + 1$ agree in law.
+**Induction.** Suppose $`(Y_0, \dots, Y_k)`$ and $`(X_{t_0}, \dots, X_{t_k})`$ have the same law. Each extended vector is the image of (the first $`k + 1`$ values, an independent standard normal) under the same map $`(v, z) \mapsto (v, F_k(v_k, z))`$. Equal laws of the pieces, independence and the same measurable map give equal laws of the images. So the vectors up to $`k + 1`$ agree in law.
 
-**Conclusion.** By induction, every finite set of chosen dates gets the exact joint law, with no condition on the gaps. For GBM the result is stronger: with $Z_k = (W_{t_{k+1}} - W_{t_k})/\sqrt{h_k}$ the chain equals the true path at the dates, path by path. For OU with an independent $Z_k$ the law is exact, but the path is not tied to a given Brownian path; tying it needs $\xi_k$ drawn jointly with the increment, a pair of correlated normals (Gillespie 1996). $\blacksquare$
+**Conclusion.** By induction, every finite set of chosen dates gets the exact joint law, with no condition on the gaps. For GBM the result is stronger: with $`Z_k = (W_{t_{k+1}} - W_{t_k})/\sqrt{h_k}`$ the chain equals the true path at the dates, path by path. For OU with an independent $`Z_k`$ the law is exact, but the path is not tied to a given Brownian path; tying it needs $`\xi_k`$ drawn jointly with the increment, a pair of correlated normals (Gillespie 1996). $`\blacksquare`$
 
 </details>
 
 ### Step 4: the steps compose, so the grid does not matter
 
-Two exact months in a row must give one exact two-month step, or the method would depend on the grid. They do. For GBM the log drifts add and the log variances $\sigma^2 h$ add. For OU the shrink factors multiply, $a \cdot a = e^{-2\kappa h}$, and the variances combine as $a^2 s_h^2 + s_h^2 = \sigma_r^2(1 - a^4)/(2\kappa)$: the two-month formula.
+Two exact months in a row must give one exact two-month step, or the method would depend on the grid. They do. For GBM the log drifts add and the log variances $`\sigma^2 h`$ add. For OU the shrink factors multiply, $`a \cdot a = e^{-2\kappa h}`$, and the variances combine as $`a^2 s_h^2 + s_h^2 = \sigma_r^2(1 - a^4)/(2\kappa)`$: the two-month formula.
 
 This is the Chapman-Kolmogorov property: the law over two gaps is the law over the first gap followed by the law over the second. The code chains twelve even months and twelve calendar months (31, 28, 31 … days over 365) and lands on the one-year closed form to ten decimals both times.
 
 ### Step 5: what Euler does instead
 
-Euler keeps only the first-order terms of each exact factor. Over a month, $e^{-\kappa h} = 0.959189$ becomes $1 - \kappa h = 0.958333$, and the share's lognormal factor becomes $1 + \mu h + \sigma\sqrt{h}\,Z$. Each step misses by a term of order $h^2$ in the mean, so over a year of $n$ steps the law is off by order $1/n$. Along a single path the error is larger, of order $1/\sqrt{n}$ for GBM.
+Euler keeps only the first-order terms of each exact factor. Over a month, $`e^{-\kappa h} = 0.959189`$ becomes $`1 - \kappa h = 0.958333`$, and the share's lognormal factor becomes $`1 + \mu h + \sigma\sqrt{h}\,Z`$. Each step misses by a term of order $`h^2`$ in the mean, so over a year of $`n`$ steps the law is off by order $`1/n`$. Along a single path the error is larger, of order $`1/\sqrt{n}`$ for GBM.
 
 Those two error rates are the subject of [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md); this card only shows both errors shrink with the step and never reach zero.
 
@@ -155,13 +169,13 @@ The share: 100 dollars today, drift 0.08, volatility 0.20. The rate: 6 percent t
 | share's log shock size per month | 0.20 × √(1/12) | 0.057735 |
 | a month with a one-standard-deviation (sd) up shock, exact | 100 × exp(0.005 + 0.057735) | $106.4745 |
 | the same month, Euler | 100 × (1 + 0.006667 + 0.057735) | $106.4402 |
-| rate's kept share of the gap per month, $a$ | $e^{-0.5/12}$ | 0.959189 |
+| rate's kept share of the gap per month, $`a`$ | $`e^{-0.5/12}`$ | 0.959189 |
 | rate's exact shock size per month | 2 points × √((1 − 0.959189^2) / (2 × 0.5)) | 0.565528 points |
 | Euler's shock size per month | 2 points × √(1/12) | 0.577350 points |
 | a month with a one-sd up shock, exact | 4 + 2 × 0.959189 + 0.565528 | 6.4839 percent |
 | the same month, Euler | 6 − 0.5 × 2 / 12 + 0.577350 | 6.4940 percent |
-| **share at one year: mean, sd** | 100 × $e^{0.08}$; √(100^2 × $e^{0.16}$ × ($e^{0.04}$ − 1)) | **108.3287 dollars, 21.8842 dollars** |
-| **rate at one year: mean, sd** | 4 + 2 × $e^{-0.5}$; 2 points × √((1 − $e^{-1}$) / (2 × 0.5)) | **5.2131 percent, 1.5901 points** |
+| **share at one year: mean, sd** | 100 × $`e^{0.08}`$; √(100^2 × $`e^{0.16}`$ × ($`e^{0.04}`$ − 1)) | **108.3287 dollars, 21.8842 dollars** |
+| **rate at one year: mean, sd** | 4 + 2 × $`e^{-0.5}`$; 2 points × √((1 − $`e^{-1}`$) / (2 × 0.5)) | **5.2131 percent, 1.5901 points** |
 | chance the share ends above $120 | normal area below (0.06 − ln 1.2) / 0.20 | 0.2704 |
 
 Euler's kept share is too small and its shocks too large: its pull is too strong, its noise too loud. The mean feels only the pull, so twelve monthly Euler steps end at 5.2001 percent, not 5.2131. In the variance the two errors partly cancel, leaving it 3.39 percent too high. The share's Euler variance is 1.56 percent too low.
@@ -172,8 +186,8 @@ So the share ends the year at $108.33 on average, give or take $21.88, and above
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Exact GBM step without the $-\tfrac12\sigma^2$ | mean 110.5171 dollars (simulated 110.6973 ± 0.1584), not 108.3287 | Ordinary calculus on the log: Ito's extra term dropped, so the mean grows at $\mu + \tfrac12\sigma^2$ |
-| OU step with $e^{-\kappa h}$ but Euler's shock size $\sigma_r\sqrt{h}$ | variance 0.00026353, not 0.00025285, 4.2 percent high | The shock built up over a month is drained by the pull as it builds; $\sigma_r\sqrt{h}$ ignores the drain |
+| Exact GBM step without the $`-\tfrac12\sigma^2`$ | mean 110.5171 dollars (simulated 110.6973 ± 0.1584), not 108.3287 | Ordinary calculus on the log: Ito's extra term dropped, so the mean grows at $`\mu + \tfrac12\sigma^2`$ |
+| OU step with $`e^{-\kappa h}`$ but Euler's shock size $`\sigma_r\sqrt{h}`$ | variance 0.00026353, not 0.00025285, 4.2 percent high | The shock built up over a month is drained by the pull as it builds; $`\sigma_r\sqrt{h}`$ ignores the drain |
 | One Euler step for the whole year | share variance 400.0000, not 478.9189; rate mean 5.0000, not 5.2131 percent | Euler follows the tangent line; over a whole year the true curve bends away from it |
 | Twelve Euler steps, "monthly is fine" | share variance −1.56 percent, rate variance +3.39 percent; path gap 70 cents | Euler's error shrinks with the step but never vanishes; the exact step has none |
 
@@ -596,9 +610,9 @@ Each bar is the average over 2000 sample paths of the gap at one year, with stan
 
 Lean proves Step 3 for the share at any dates, Step 4 for the rate at any gaps, and the one-step Euler numbers.
 
-- Take dates $t_0 = 0 < t_1 < \dots < t_m$ and independent standard normal draws $Z_k$. Then the exact share chain $Y_0, \dots, Y_m$ has the joint law of $S_{t_0}, \dots, S_{t_m}$.
-- Take $Z_k = (W_{t_{k+1}} - W_{t_k})/\sqrt{h_k}$. Then the exact share chain equals $S_{t_k}$ at every date, path by path, with probability 1.
-- Take $\kappa > 0$ and gaps $h_1, h_2 \ge 0$. Then exact rate steps over $h_1$ and $h_2$ compose into one exact step over $h_1 + h_2$.
+- Take dates $`t_0 = 0 < t_1 < \dots < t_m`$ and independent standard normal draws $`Z_k`$. Then the exact share chain $`Y_0, \dots, Y_m`$ has the joint law of $`S_{t_0}, \dots, S_{t_m}`$.
+- Take $`Z_k = (W_{t_{k+1}} - W_{t_k})/\sqrt{h_k}`$. Then the exact share chain equals $`S_{t_k}`$ at every date, path by path, with probability 1.
+- Take $`\kappa > 0`$ and gaps $`h_1, h_2 \ge 0`$. Then exact rate steps over $`h_1`$ and $`h_2`$ compose into one exact step over $`h_1 + h_2`$.
 - One Euler step for the whole year gives share mean 108 dollars, share variance 400 and rate mean 5 percent.
 
 Lean has no Ito integral, so Steps 1 and 2, the rate's joint law and every simulation are left to Python and Rust.
@@ -832,7 +846,7 @@ example : (6 : ℚ) + 1 / 2 * (4 - 6) * 1 = 5 := by norm_num
 > [!TIP]
 > **Try changing**
 > - **Guess first: does the calendar change the year-end law?** Compare the two `exact chain` lines, one on `EVEN`, one on `CAL`: identical to ten decimals, mean 108.3287067675. Only the total time matters for the law at the year-end.
-> - **Drop the Ito term.** Remove `- SIG * SIG / 2` from the exact share step: the simulated mean jumps to 110.6973 dollars, near the 110.5171 of growth at $\mu + \tfrac12\sigma^2$, and the assert fails.
+> - **Drop the Ito term.** Remove `- SIG * SIG / 2` from the exact share step: the simulated mean jumps to 110.6973 dollars, near the 110.5171 of growth at $`\mu + \tfrac12\sigma^2`$, and the assert fails.
 > - **Use Euler's noise in the exact rate step.** In road 4, replace the OU shock size by `SIG_R * math.sqrt(d)`: the simulated variance rises to about 0.000264, 4.2 percent high as the mistake line predicts, and the OU assert fails.
 > - **Take one Euler step.** The `Euler    1 steps` line: share variance 400.0000 against 478.9189, rate variance 58 percent too high. The exact step at the same spacing is still exact.
 
@@ -844,9 +858,9 @@ example : (6 : ℚ) + 1 / 2 * (4 - 6) * 1 = 5 := by norm_num
 > **Believing a fine enough Euler grid is "exact enough" for every purpose.** For the law at the year-end it nearly is: 1000 Euler steps get the share's variance within 0.02 percent. Along each path it is not: the same 1000-step path ends 8 cents from the true one on average, against 0 for twelve exact steps. Exact simulation is cheaper, 12 normal draws against 1000, and has no error to trade off.
 >
 > Smaller traps:
-> - **Trusting Euler on the log in general.** The exact GBM step is Euler applied to $\ln S_t$, exact only because the log's coefficients are constant. When they depend on the state, the same move is an approximation.
-> - **Dropping the $-\tfrac12\sigma^2$.** The mean grows to 110.52 dollars (simulated 110.70 ± 0.16) instead of 108.33.
-> - **Using $\sigma_r\sqrt{h}$ as the OU shock.** Exact shrink, wrong shock: variance 4.2 percent high on monthly dates, and much worse on long gaps.
+> - **Trusting Euler on the log in general.** The exact GBM step is Euler applied to $`\ln S_t`$, exact only because the log's coefficients are constant. When they depend on the state, the same move is an approximation.
+> - **Dropping the $`-\tfrac12\sigma^2`$.** The mean grows to 110.52 dollars (simulated 110.70 ± 0.16) instead of 108.33.
+> - **Using $`\sigma_r\sqrt{h}`$ as the OU shock.** Exact shrink, wrong shock: variance 4.2 percent high on monthly dates, and much worse on long gaps.
 > - **Reading exact at the dates as exact between them.** Twelve exact values say nothing about the lowest price inside a month; a bridge is needed for that.
 > - **Reusing one stream of draws across scenarios.** Exactness assumes independent normals. Restarting the generator at the same seed for each scenario gives identical paths, not independent ones.
 
@@ -856,12 +870,12 @@ example : (6 : ℚ) + 1 / 2 * (4 - 6) * 1 = 5 := by norm_num
 
 - **Pricing by simulation.** Monte Carlo pricing of options whose payoff depends on monthly closes, such as an average-price option, uses exact GBM steps at the fixing dates: [Monte Carlo pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md).
 - **Risk scenarios.** Value-at-risk engines step market factors to a horizon in one exact move when the model allows: [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md).
-- **Rates and spreads.** An OU rate observed monthly is exactly an autoregression with coefficient $a$ = 0.959189, which is why fitting OU to data is a linear regression: [Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md).
+- **Rates and spreads.** An OU rate observed monthly is exactly an autoregression with coefficient $`a`$ = 0.959189, which is why fitting OU to data is a linear regression: [Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md).
 - **Physics.** A particle's velocity under friction and molecular kicks is OU; Gillespie's exact update simulates it with any time step.
 - **Paths between the dates.** When a payoff watches the path between fixings, the exact endpoints are filled in with a Brownian bridge: [Quasi-Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md).
 
 > **Say it back**
-> GBM and OU are Markov processes with a known law from one date to the next: lognormal for the share, normal for the rate. Drawing from that law once per date gives values with the process's exact joint law at those dates, whatever their spacing. The share's step comes from Ito's lemma on the log, which brings the $-\tfrac12\sigma^2$; the rate's step comes from the OU solution, whose shock is drained by the pull as it builds. Euler replaces each exact factor by its first-order version and leaves an error that shrinks with the step but never vanishes.
+> GBM and OU are Markov processes with a known law from one date to the next: lognormal for the share, normal for the rate. Drawing from that law once per date gives values with the process's exact joint law at those dates, whatever their spacing. The share's step comes from Ito's lemma on the log, which brings the $`-\tfrac12\sigma^2`$; the rate's step comes from the OU solution, whose shock is drained by the pull as it builds. Euler replaces each exact factor by its first-order version and leaves an error that shrinks with the step but never vanishes.
 
 ---
 

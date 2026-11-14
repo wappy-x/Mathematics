@@ -33,52 +33,62 @@ Each bar is the chance that a model with a true 1% exception rate produces exact
 
 ## The formula
 
-Notation first, in words. A subscript $t$ names the day, running from 1 to $n$. $V_t$ is the VaR published on the morning of day $t$, as a positive number of dollars of loss. $L_t$ is that day's loss. $I_t$ is a switch that reads 1 on an exception day and 0 otherwise, and $K$ is the year's count of exceptions.
+Notation first, in words. A subscript $`t`$ names the day, running from 1 to $`n`$. $`V_t`$ is the VaR published on the morning of day $`t`$, as a positive number of dollars of loss. $`L_t`$ is that day's loss. $`I_t`$ is a switch that reads 1 on an exception day and 0 otherwise, and $`K`$ is the year's count of exceptions.
 
-$$I_t = \begin{cases} 1 & \text{if } L_t > V_t \\ 0 & \text{otherwise} \end{cases} \qquad K = I_1 + I_2 + \dots + I_n$$
+```math
+I_t = \begin{cases} 1 & \text{if } L_t > V_t \\ 0 & \text{otherwise} \end{cases} \qquad K = I_1 + I_2 + \dots + I_n
+```
 
 **Read it aloud:** a day is an exception when the loss is strictly bigger than the morning's VaR, and the count is the number of such days.
 
-For a correct model with promised exception rate $p$, the count follows the binomial distribution. The bracket $\binom{n}{k}$ counts the ways to choose which $k$ of the $n$ days carry the exceptions:
+For a correct model with promised exception rate $`p`$, the count follows the binomial distribution. The bracket $`\binom{n}{k}`$ counts the ways to choose which $`k`$ of the $`n`$ days carry the exceptions:
 
-$$P(K = k) = \binom{n}{k}\, p^k\, (1-p)^{n-k}$$
+```math
+P(K = k) = \binom{n}{k}\, p^k\, (1-p)^{n-k}
+```
 
-**Read it aloud:** the chance of exactly $k$ exceptions is the number of ways to place them, times the chance of any one such pattern.
+**Read it aloud:** the chance of exactly $`k`$ exceptions is the number of ways to place them, times the chance of any one such pattern.
 
-**Kupiec's test**, the unconditional-coverage test, compares the promised rate $p$ with the observed rate $\hat p = K/n$ (read "p-hat"). LR stands for likelihood ratio, the ratio of a record's chances under two explanations; uc for unconditional coverage:
+**Kupiec's test**, the unconditional-coverage test, compares the promised rate $`p`$ with the observed rate $`\hat p = K/n`$ (read "p-hat"). LR stands for likelihood ratio, the ratio of a record's chances under two explanations; uc for unconditional coverage:
 
-$$\text{LR}_{\text{uc}} = 2\left[K \ln\frac{\hat p}{p} + (n-K)\ln\frac{1-\hat p}{1-p}\right]$$
+```math
+\text{LR}_{\text{uc}} = 2\left[K \ln\frac{\hat p}{p} + (n-K)\ln\frac{1-\hat p}{1-p}\right]
+```
 
 **Read it aloud:** twice the log of how many times more likely the year's record is under the observed rate than under the promised one.
 
-**Christoffersen's test** of independence (ind) reads the days in order as 249 pairs of neighbours. Each pair is labelled by two digits, yesterday's first, with 0 for a quiet day and 1 for an exception: $n_{01}$ counts the quiet-then-exception pairs, and $n_{00}$, $n_{10}$, $n_{11}$ count the others. The chance of an exception after a quiet day is estimated by $\hat p_{01} = n_{01}/(n_{00}+n_{01})$, and after an exception by $\hat p_{11} = n_{11}/(n_{10}+n_{11})$. The single rate over the pairs is $\bar p = (n_{01}+n_{11})/(n-1)$. Then
+**Christoffersen's test** of independence (ind) reads the days in order as 249 pairs of neighbours. Each pair is labelled by two digits, yesterday's first, with 0 for a quiet day and 1 for an exception: $`n_{01}`$ counts the quiet-then-exception pairs, and $`n_{00}`$, $`n_{10}`$, $`n_{11}`$ count the others. The chance of an exception after a quiet day is estimated by $`\hat p_{01} = n_{01}/(n_{00}+n_{01})`$, and after an exception by $`\hat p_{11} = n_{11}/(n_{10}+n_{11})`$. The single rate over the pairs is $`\bar p = (n_{01}+n_{11})/(n-1)`$. Then
 
-$$\text{LR}_{\text{ind}} = 2\Big[\, n_{00}\ln(1-\hat p_{01}) + n_{01}\ln\hat p_{01} + n_{10}\ln(1-\hat p_{11}) + n_{11}\ln\hat p_{11} \;-\; (n_{00}+n_{10})\ln(1-\bar p) - (n_{01}+n_{11})\ln\bar p \,\Big]$$
+```math
+\text{LR}_{\text{ind}} = 2\Big[\, n_{00}\ln(1-\hat p_{01}) + n_{01}\ln\hat p_{01} + n_{10}\ln(1-\hat p_{11}) + n_{11}\ln\hat p_{11} \;-\; (n_{00}+n_{10})\ln(1-\bar p) - (n_{01}+n_{11})\ln\bar p \,\Big]
+```
 
 **Read it aloud:** twice the log of how much better the record is explained when yesterday's state is allowed to change today's chance.
 
-The joint test, for conditional coverage (cc), adds the two. With $\text{LR}_{\text{uc}}$ computed on the same 249 pairs, the sum is exact:
+The joint test, for conditional coverage (cc), adds the two. With $`\text{LR}_{\text{uc}}`$ computed on the same 249 pairs, the sum is exact:
 
-$$\text{LR}_{\text{cc}} = \text{LR}_{\text{ind}} + \text{LR}_{\text{uc}}$$
+```math
+\text{LR}_{\text{cc}} = \text{LR}_{\text{ind}} + \text{LR}_{\text{uc}}
+```
 
-Any term of the form $0 \ln 0$ counts as zero, its limit.
+Any term of the form $`0 \ln 0`$ counts as zero, its limit.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $t$ | number of days in the test, and one day's position in it | 250 days | more days: the tests see smaller faults |
-| $V_t$, $L_t$ | VaR published on the morning of day $t$, and that day's loss (a gain is a negative loss) | 4 days with $L_t$ above $V_t$ | higher VaR: fewer exceptions |
-| $I_t$ | exception switch: 1 if $L_t > V_t$, else 0 | 1 on days 40, 90, 140, 200 | — |
-| $K$, $k$ | the year's exception count, and any possible value of it | $K = 4$ | past 4: yellow; past 9: red |
-| $p$, $q$ | promised exception rate (1 minus the VaR's confidence level), and any trial rate | 0.01 | expected count $n \times p$ rises |
-| $\hat p$, $\bar p$ | observed exception rate over the $n$ days, and over the 249 pairs | 0.016, and 4 of 249 | further from $p$: $\text{LR}_{\text{uc}}$ grows |
-| $n_{00}$, $n_{01}$, $n_{10}$, $n_{11}$ | counts of neighbouring-day pairs by state (quiet 0, exception 1) | 241, 4, 4, 0 spread out; 244, 1, 1, 3 bunched | more $n_{11}$: stronger bunching |
-| $p_{01}$, $p_{11}$, $\hat p_{01}$, $\hat p_{11}$ | chance of an exception after a quiet day, and after an exception; a hat marks the estimate | 0.004082 and 0.75, bunched | a gap between them: $\text{LR}_{\text{ind}}$ grows |
-| $\text{LR}_{\text{uc}}$ | Kupiec statistic: does the count fit $p$? | 0.769138 | above 3.841459: reject at 5% |
-| $\text{LR}_{\text{ind}}$ | Christoffersen statistic: are exceptions independent of yesterday? | 0.130618 spread out; 23.487554 bunched | above 3.841459: reject at 5% |
-| $\text{LR}_{\text{cc}}$ | joint statistic: right rate and no bunching | 0.911980 spread out; 24.268916 bunched | above 5.991465: reject at 5% |
-| $c$, $N(x)$ | a chi-square cut-off, and the normal CDF: the bell-curve area left of $x$ | 3.841459 | higher cut-off: fewer rejections |
+| $`n`$, $`t`$ | number of days in the test, and one day's position in it | 250 days | more days: the tests see smaller faults |
+| $`V_t`$, $`L_t`$ | VaR published on the morning of day $`t`$, and that day's loss (a gain is a negative loss) | 4 days with $`L_t`$ above $`V_t`$ | higher VaR: fewer exceptions |
+| $`I_t`$ | exception switch: 1 if $`L_t > V_t`$, else 0 | 1 on days 40, 90, 140, 200 | — |
+| $`K`$, $`k`$ | the year's exception count, and any possible value of it | $`K = 4`$ | past 4: yellow; past 9: red |
+| $`p`$, $`q`$ | promised exception rate (1 minus the VaR's confidence level), and any trial rate | 0.01 | expected count $`n \times p`$ rises |
+| $`\hat p`$, $`\bar p`$ | observed exception rate over the $`n`$ days, and over the 249 pairs | 0.016, and 4 of 249 | further from $`p`$: $`\text{LR}_{\text{uc}}`$ grows |
+| $`n_{00}`$, $`n_{01}`$, $`n_{10}`$, $`n_{11}`$ | counts of neighbouring-day pairs by state (quiet 0, exception 1) | 241, 4, 4, 0 spread out; 244, 1, 1, 3 bunched | more $`n_{11}`$: stronger bunching |
+| $`p_{01}`$, $`p_{11}`$, $`\hat p_{01}`$, $`\hat p_{11}`$ | chance of an exception after a quiet day, and after an exception; a hat marks the estimate | 0.004082 and 0.75, bunched | a gap between them: $`\text{LR}_{\text{ind}}`$ grows |
+| $`\text{LR}_{\text{uc}}`$ | Kupiec statistic: does the count fit $`p`$? | 0.769138 | above 3.841459: reject at 5% |
+| $`\text{LR}_{\text{ind}}`$ | Christoffersen statistic: are exceptions independent of yesterday? | 0.130618 spread out; 23.487554 bunched | above 3.841459: reject at 5% |
+| $`\text{LR}_{\text{cc}}`$ | joint statistic: right rate and no bunching | 0.911980 spread out; 24.268916 bunched | above 5.991465: reject at 5% |
+| $`c`$, $`N(x)`$ | a chi-square cut-off, and the normal CDF: the bell-curve area left of $`x`$ | 3.841459 | higher cut-off: fewer rejections |
 
-The cut-offs come from the **chi-square distribution**. With one degree of freedom it is the distribution of $Z^2$, the square of a standard normal draw $Z$, so the chance of exceeding a cut-off $c$ is $2[1 - N(\sqrt{c})]$, where $N(x)$ is the normal CDF (the area under the bell curve to the left of $x$). Setting that to 5% gives 3.841459. With two degrees of freedom, a sum of two independent squares, the chance of exceeding $c$ is $e^{-c/2}$, and 5% gives $-2\ln 0.05 = 5.991465$.
+The cut-offs come from the **chi-square distribution**. With one degree of freedom it is the distribution of $`Z^2`$, the square of a standard normal draw $`Z`$, so the chance of exceeding a cut-off $`c`$ is $`2[1 - N(\sqrt{c})]`$, where $`N(x)`$ is the normal CDF (the area under the bell curve to the left of $`x`$). Setting that to 5% gives 3.841459. With two degrees of freedom, a sum of two independent squares, the chance of exceeding $`c`$ is $`e^{-c/2}`$, and 5% gives $`-2\ln 0.05 = 5.991465`$.
 
 That chance, taken at a statistic's own value, is its p-value: how often a correct model would score at least that high. A p-value below 5% means reject. [Hypothesis tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md) treats p-values in general.
 
@@ -97,7 +107,7 @@ Conventions verified 2026-09-28 against the Basel Committee's 1996 text: yellow 
 - **Each forecast is fixed before its day, and the loss is comparable.** The loss should be the change in value of the morning's book. New trades, fees and intraday income can create or hide exceptions that say nothing about the model.
 - **The days are independent trials with the same chance.** If a volatile week raises the chance on every day of it, the count is no longer binomial and the tests' 5% becomes some other number. Christoffersen's test checks one form of this: dependence on yesterday.
 - **Horizons do not overlap.** A 10-day VaR checked every day shares nine days with the next check, so neighbouring results are linked by construction.
-- **The loss has no lumps at the VaR.** A book whose loss often lands on exactly one value can show fewer exceptions than $p$ promises.
+- **The loss has no lumps at the VaR.** A book whose loss often lands on exactly one value can show fewer exceptions than $`p`$ promises.
 - **The chi-square cut-offs are a large-sample approximation.** At 2.5 expected exceptions they are rough: the nominal 5% Kupiec test rejects a correct model in 0.094760 of years. The exact binomial and the traffic light avoid the approximation.
 
 ---
@@ -110,9 +120,9 @@ A correct 99% VaR is exceeded with chance 1 in 100 on each day, whatever happene
 
 ### Step 1: a correct model's count is binomial
 
-Pick any four days, say 40, 90, 140 and 200. The chance that exactly those four are exceptions and the other 246 are quiet is $0.01^4 \times 0.99^{246}$, because independent chances multiply. Every other choice of four days has the same chance. There are $\binom{250}{4} = 158{,}882{,}750$ such choices, and they cannot happen together, so their chances add. That is the formula for $P(K = 4)$, and the same argument works for every $k$.
+Pick any four days, say 40, 90, 140 and 200. The chance that exactly those four are exceptions and the other 246 are quiet is $`0.01^4 \times 0.99^{246}`$, because independent chances multiply. Every other choice of four days has the same chance. There are $`\binom{250}{4} = 158{,}882{,}750`$ such choices, and they cannot happen together, so their chances add. That is the formula for $`P(K = 4)`$, and the same argument works for every $`k`$.
 
-For the desk, $P(K = 4)$ is 13.41%, and the chance of 4 or more is 0.241883. A correct model does this often.
+For the desk, $`P(K = 4)`$ is 13.41%, and the chance of 4 or more is 0.241883. A correct model does this often.
 
 ### Step 2: the traffic light is the binomial, cut in two places
 
@@ -122,41 +132,43 @@ The cut at 95% is a choice about errors. A correct model still lands outside gre
 
 ### Step 3: Kupiec's test compares two coins
 
-Suppose the coin's bias were some rate $q$. The chance of the desk's exact record would be $q^4(1-q)^{246}$. As $q$ varies, this is largest at $q = 4/250 = 0.016$, the observed rate. Kupiec's statistic is twice the log of the record's chance at that best rate divided by its chance at the promised rate $q = 0.01$.
+Suppose the coin's bias were some rate $`q`$. The chance of the desk's exact record would be $`q^4(1-q)^{246}`$. As $`q`$ varies, this is largest at $`q = 4/250 = 0.016`$, the observed rate. Kupiec's statistic is twice the log of the record's chance at that best rate divided by its chance at the promised rate $`q = 0.01`$.
 
-A log near 0 says the promise explains the record almost as well as the best rate. For the desk the log-ratio has two parts: $4\ln(0.016/0.01) = 1.880015$ from the exception days and $246\ln(0.984/0.99) = -1.495445$ from the quiet days. Twice their sum is 0.769138, well below 3.841459. Kupiec does not reject.
+A log near 0 says the promise explains the record almost as well as the best rate. For the desk the log-ratio has two parts: $`4\ln(0.016/0.01) = 1.880015`$ from the exception days and $`246\ln(0.984/0.99) = -1.495445`$ from the quiet days. Twice their sum is 0.769138, well below 3.841459. Kupiec does not reject.
 
 <details>
 <summary>Detailed proof: the best rate is the observed rate, and the statistic is near a squared normal</summary>
 
-The log of the record's chance is $K\ln q + (n-K)\ln(1-q)$. Its slope in $q$ is $K/q - (n-K)/(1-q)$, which is positive below $q = K/n$ and negative above it, so the unique maximum is $q = \hat p = K/n$ when $0 < K < n$. At $K = 0$ the maximum is at $q = 0$, and the $0\ln 0 = 0$ convention gives the same formula. Since $p$ is one of the rates allowed, the best case is at least as likely as the promise, and $\text{LR}_{\text{uc}} \ge 0$.
+The log of the record's chance is $`K\ln q + (n-K)\ln(1-q)`$. Its slope in $`q`$ is $`K/q - (n-K)/(1-q)`$, which is positive below $`q = K/n`$ and negative above it, so the unique maximum is $`q = \hat p = K/n`$ when $`0 < K < n`$. At $`K = 0`$ the maximum is at $`q = 0`$, and the $`0\ln 0 = 0`$ convention gives the same formula. Since $`p`$ is one of the rates allowed, the best case is at least as likely as the promise, and $`\text{LR}_{\text{uc}} \ge 0`$.
 
-Expand each logarithm to second order in the gap $\hat p - p$, using $\ln(1 + x) = x - x^2/2 + \dots$ The first-order terms cancel, because $K = n\hat p$. What remains is
-$$\text{LR}_{\text{uc}} \approx \frac{n\,(\hat p - p)^2}{p(1-p)} = \left(\frac{K - np}{\sqrt{np(1-p)}}\right)^2.$$
-The bracket is the count's distance from its mean in standard deviations. By the central limit theorem it is close to a standard normal draw when $n \times p$ is large, so its square is close to chi-square with one degree of freedom. That closeness is exactly what fails at $n \times p = 2.5$.
+Expand each logarithm to second order in the gap $`\hat p - p`$, using $`\ln(1 + x) = x - x^2/2 + \dots`$ The first-order terms cancel, because $`K = n\hat p`$. What remains is
+
+$`\displaystyle \text{LR}_{\text{uc}} \approx \frac{n\,(\hat p - p)^2}{p(1-p)} = \left(\frac{K - np}{\sqrt{np(1-p)}}\right)^2.`$
+
+The bracket is the count's distance from its mean in standard deviations. By the central limit theorem it is close to a standard normal draw when $`n \times p`$ is large, so its square is close to chi-square with one degree of freedom. That closeness is exactly what fails at $`n \times p = 2.5`$.
 
 </details>
 
 ### Step 4: Christoffersen's test lets yesterday matter
 
-The count cannot see timing: both of the desk's possible years have $K = 4$ and the same $\text{LR}_{\text{uc}}$. So sort the 249 pairs of neighbouring days by state.
+The count cannot see timing: both of the desk's possible years have $`K = 4`$ and the same $`\text{LR}_{\text{uc}}`$. So sort the 249 pairs of neighbouring days by state.
 
-An exception with quiet days on both sides makes one quiet-to-exception pair and one exception-to-quiet pair. Four such exceptions spread out give $n_{01} = 4$, $n_{10} = 4$, $n_{11} = 0$, and the other 241 pairs are quiet-to-quiet. A run of four exceptions makes one pair going in, three pairs inside the run and one going out: $n_{01} = 1$, $n_{11} = 3$, $n_{10} = 1$, and 244 quiet pairs.
+An exception with quiet days on both sides makes one quiet-to-exception pair and one exception-to-quiet pair. Four such exceptions spread out give $`n_{01} = 4`$, $`n_{10} = 4`$, $`n_{11} = 0`$, and the other 241 pairs are quiet-to-quiet. A run of four exceptions makes one pair going in, three pairs inside the run and one going out: $`n_{01} = 1`$, $`n_{11} = 3`$, $`n_{10} = 1`$, and 244 quiet pairs.
 
-Now compare two coins again. The first coin allows two biases: one for the day after a quiet day, one for the day after an exception. This is a **Markov chain**: a process whose next step depends only on its current state. The second coin has one bias for all days. For the bunched year the Markov coin fits far better: the estimated chance of an exception is 0.75 after an exception, against 0.004082 after a quiet day. Its log-chance is $-8.748555$ against $-20.492332$ for the single coin, and twice the gap is 23.487554, far above the 3.841459 cut-off. For the spread-out year the two coins give $-20.427023$ and $-20.492332$, and twice the gap is 0.130618.
+Now compare two coins again. The first coin allows two biases: one for the day after a quiet day, one for the day after an exception. This is a **Markov chain**: a process whose next step depends only on its current state. The second coin has one bias for all days. For the bunched year the Markov coin fits far better: the estimated chance of an exception is 0.75 after an exception, against 0.004082 after a quiet day. Its log-chance is $`-8.748555`$ against $`-20.492332`$ for the single coin, and twice the gap is 23.487554, far above the 3.841459 cut-off. For the spread-out year the two coins give $`-20.427023`$ and $`-20.492332`$, and twice the gap is 0.130618.
 
 <details>
 <summary>Detailed proof: the transition likelihood and the exact sum</summary>
 
-Given the first day's state, a two-state Markov chain gives the record the chance $(1-p_{01})^{n_{00}}\,p_{01}^{n_{01}}\,(1-p_{11})^{n_{10}}\,p_{11}^{n_{11}}$, one factor per pair. Each pair of factors is a separate coin, so, as in Step 3, it is largest at $p_{01} = \hat p_{01}$ and $p_{11} = \hat p_{11}$. Forcing $p_{01} = p_{11}$ leaves one coin tossed on 249 days, largest at $\bar p$. Forcing both to $p$ gives the fixed-promise chance. Three nested fits give three best log-chances: Markov, single coin, promise, each at least as large as the next. $\text{LR}_{\text{ind}}$ is twice Markov minus single coin, the 249-day coverage statistic is twice single coin minus promise, and $\text{LR}_{\text{cc}}$, twice Markov minus promise, is their sum. Adding the 250-day $\text{LR}_{\text{uc}}$ instead, as many texts do, is a slightly different number.
+Given the first day's state, a two-state Markov chain gives the record the chance $`(1-p_{01})^{n_{00}}\,p_{01}^{n_{01}}\,(1-p_{11})^{n_{10}}\,p_{11}^{n_{11}}`$, one factor per pair. Each pair of factors is a separate coin, so, as in Step 3, it is largest at $`p_{01} = \hat p_{01}`$ and $`p_{11} = \hat p_{11}`$. Forcing $`p_{01} = p_{11}`$ leaves one coin tossed on 249 days, largest at $`\bar p`$. Forcing both to $`p`$ gives the fixed-promise chance. Three nested fits give three best log-chances: Markov, single coin, promise, each at least as large as the next. $`\text{LR}_{\text{ind}}`$ is twice Markov minus single coin, the 249-day coverage statistic is twice single coin minus promise, and $`\text{LR}_{\text{cc}}`$, twice Markov minus promise, is their sum. Adding the 250-day $`\text{LR}_{\text{uc}}`$ instead, as many texts do, is a slightly different number.
 
 </details>
 
-The joint statistic $\text{LR}_{\text{cc}}$ is 24.268916 for the bunched year and 0.911980 for the spread-out one, against a cut-off of 5.991465.
+The joint statistic $`\text{LR}_{\text{cc}}`$ is 24.268916 for the bunched year and 0.911980 for the spread-out one, against a cut-off of 5.991465.
 
 ### Step 5: an exact check that needs no approximation
 
-The chi-square cut-offs rest on a large-sample argument that four exceptions do not satisfy. The run has an exact answer. Given four exceptions from a correct model, every choice of four days out of 250 is equally likely. A run of four can start on any day from 1 to 247. So the chance that four exceptions form one run is $247/158{,}882{,}750 = 1.555 \times 10^{-6}$. This is valid only if the run test was chosen before looking at the data; picked after seeing the cluster, it proves nothing.
+The chi-square cut-offs rest on a large-sample argument that four exceptions do not satisfy. The run has an exact answer. Given four exceptions from a correct model, every choice of four days out of 250 is equally likely. A run of four can start on any day from 1 to 247. So the chance that four exceptions form one run is $`247/158{,}882{,}750 = 1.555 \times 10^{-6}`$. This is valid only if the run test was chosen before looking at the data; picked after seeing the cluster, it proves nothing.
 
 ### The other route
 
@@ -166,24 +178,24 @@ The exact binomial answers Kupiec's question without chi-square: the chance of 4
 
 ## Worked numbers, by hand
 
-The desk: $n = 250$ days, $p = 0.01$, $K = 4$ exceptions.
+The desk: $`n = 250`$ days, $`p = 0.01`$, $`K = 4`$ exceptions.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| expected count | $250 \times 0.01$ | $2.5$ |
-| running total at 4, green edge | $8.11 + 20.47 + 25.74 + 21.49 + 13.41$ (%) | $89.22\%$ |
+| expected count | $`250 \times 0.01`$ | $`2.5`$ |
+| running total at 4, green edge | $`8.11 + 20.47 + 25.74 + 21.49 + 13.41`$ (%) | $`89.22\%`$ |
 | **Basel zone** | 4 is at most 4 | **green**, plus factor 0.00, multiplier 3.00 |
-| observed rate $\hat p$ | $4 / 250$ | $0.016$ |
-| exception-day term | $4 \ln(0.016/0.01)$ | $1.880015$ |
-| quiet-day term | $246 \ln(0.984/0.99)$ | $-1.495445$ |
-| **Kupiec statistic** | $2 \times (1.880015 - 1.495445)$ | **0.769138** |
-| Kupiec p-value | $2[1 - N(\sqrt{0.769138})]$ | $0.380484$ |
-| pairs, bunched year | days 40 to 43 | $n_{00}, n_{01}, n_{10}, n_{11} = 244, 1, 1, 3$ |
-| Markov log-chance, bunched | $244\ln\tfrac{244}{245} + \ln\tfrac{1}{245} + \ln\tfrac14 + 3\ln\tfrac34$ | $-8.748555$ |
-| single-coin log-chance | $245\ln\tfrac{245}{249} + 4\ln\tfrac{4}{249}$ | $-20.492332$ |
-| **Christoffersen statistic, bunched** | $2 \times (-8.748555 + 20.492332)$ | **23.487554** |
-| its p-value | $2[1 - N(\sqrt{23.487554})]$ | $1.257 \times 10^{-6}$ |
-| joint statistic, bunched | 23.487554 + 0.781362 (coverage on 249 pairs) | $24.268916$ |
+| observed rate $`\hat p`$ | $`4 / 250`$ | $`0.016`$ |
+| exception-day term | $`4 \ln(0.016/0.01)`$ | $`1.880015`$ |
+| quiet-day term | $`246 \ln(0.984/0.99)`$ | $`-1.495445`$ |
+| **Kupiec statistic** | $`2 \times (1.880015 - 1.495445)`$ | **0.769138** |
+| Kupiec p-value | $`2[1 - N(\sqrt{0.769138})]`$ | $`0.380484`$ |
+| pairs, bunched year | days 40 to 43 | $`n_{00}, n_{01}, n_{10}, n_{11} = 244, 1, 1, 3`$ |
+| Markov log-chance, bunched | $`244\ln\tfrac{244}{245} + \ln\tfrac{1}{245} + \ln\tfrac14 + 3\ln\tfrac34`$ | $`-8.748555`$ |
+| single-coin log-chance | $`245\ln\tfrac{245}{249} + 4\ln\tfrac{4}{249}`$ | $`-20.492332`$ |
+| **Christoffersen statistic, bunched** | $`2 \times (-8.748555 + 20.492332)`$ | **23.487554** |
+| its p-value | $`2[1 - N(\sqrt{23.487554})]`$ | $`1.257 \times 10^{-6}`$ |
+| joint statistic, bunched | 23.487554 + 0.781362 (coverage on 249 pairs) | $`24.268916`$ |
 
 The desk's year is green and passes Kupiec whichever days the exceptions fell on. If they fell on days 40 to 43, the model misses something that makes a bad day likelier after a bad day, and the count alone would never show it.
 
@@ -191,10 +203,10 @@ The desk's year is green and passes Kupiec whichever days the exceptions fell on
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Test a 99% VaR against $p = 0.05$ | 8.185171: reject | 0.05 is the rate of a 95% VaR. Four exceptions are far too few for it. |
-| Keep only the exception-day term, $2K\ln(\hat p/p)$ | 3.760029 (right: 0.769138) | The quiet days carry evidence too. Dropping them nearly rejects a sound year. |
-| Judge the bunched year by the count alone | 0.769138: pass | The count is blind to timing. $\text{LR}_{\text{ind}}$ is 23.487554. |
-| Add the 250-day $\text{LR}_{\text{uc}}$ to $\text{LR}_{\text{ind}}$ | 24.256692 (exact: 24.268916) | The sum is exact only on the same 249 pairs. Harmless here, but a different number. |
+| Test a 99% VaR against $`p = 0.05`$ | 8.185171: reject | 0.05 is the rate of a 95% VaR. Four exceptions are far too few for it. |
+| Keep only the exception-day term, $`2K\ln(\hat p/p)`$ | 3.760029 (right: 0.769138) | The quiet days carry evidence too. Dropping them nearly rejects a sound year. |
+| Judge the bunched year by the count alone | 0.769138: pass | The count is blind to timing. $`\text{LR}_{\text{ind}}`$ is 23.487554. |
+| Add the 250-day $`\text{LR}_{\text{uc}}`$ to $`\text{LR}_{\text{ind}}`$ | 24.256692 (exact: 24.268916) | The sum is exact only on the same 249 pairs. Harmless here, but a different number. |
 
 ---
 
@@ -652,13 +664,13 @@ The outputs agree line for line; both use the same seed and generator, so even t
 
 Lean proves the binomial count, the best-rate fact behind Kupiec's test and the run count, for any number of days.
 
-- Suppose the days' exceptions are independent and each has the same chance $p$. Then $P(K = k) = \binom{n}{k}\, p^k\, (1-p)^{n-k}$ for every $k$.
-- Take a record of $K$ exceptions in $n$ days and any trial rate $q$ strictly between 0 and 1. Then the log-chance $K\ln q + (n-K)\ln(1-q)$ is at most its value at $\hat p = K/n$. With $q = p$, this says Kupiec's statistic is never negative.
-- Take $k$ days out of $n$, with $1 \le k \le n$. Then exactly $n - k + 1$ of the $\binom{n}{k}$ choices are runs of consecutive days.
-- Both of the desk's years have $K = 4$: days 40, 90, 140 and 200, or days 40 to 43.
-- Spread out, the pair counts $n_{00}$, $n_{01}$, $n_{10}$, $n_{11}$ are 241, 4, 4, 0. Bunched, they are 244, 1, 1, 3.
-- There are $\binom{250}{4} = 158{,}882{,}750$ ways to place four exceptions, and 247 of them are runs.
-- For the desk, $P(K = 4)$ lies between 0.1340 and 0.1342, the 13.41% in the picture.
+- Suppose the days' exceptions are independent and each has the same chance $`p`$. Then $`P(K = k) = \binom{n}{k}\, p^k\, (1-p)^{n-k}`$ for every $`k`$.
+- Take a record of $`K`$ exceptions in $`n`$ days and any trial rate $`q`$ strictly between 0 and 1. Then the log-chance $`K\ln q + (n-K)\ln(1-q)`$ is at most its value at $`\hat p = K/n`$. With $`q = p`$, this says Kupiec's statistic is never negative.
+- Take $`k`$ days out of $`n`$, with $`1 \le k \le n`$. Then exactly $`n - k + 1`$ of the $`\binom{n}{k}`$ choices are runs of consecutive days.
+- Both of the desk's years have $`K = 4`$: days 40, 90, 140 and 200, or days 40 to 43.
+- Spread out, the pair counts $`n_{00}`$, $`n_{01}`$, $`n_{10}`$, $`n_{11}`$ are 241, 4, 4, 0. Bunched, they are 244, 1, 1, 3.
+- There are $`\binom{250}{4} = 158{,}882{,}750`$ ways to place four exceptions, and 247 of them are runs.
+- For the desk, $`P(K = 4)`$ lies between 0.1340 and 0.1342, the 13.41% in the picture.
 
 The traffic light, the chi-square cut-offs, Christoffersen's statistics, the p-values and the simulated years are left to the Python and Rust checks.
 
@@ -900,9 +912,9 @@ example : (1340 : ℚ) / 10000 < 158882750 * (1 / 100) ^ 4 * (99 / 100) ^ 246 �
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
-> - **A 97.5% VaR.** Set `p = 0.025` in the Kupiec call. Four exceptions are now fewer than such a model expects, and $\text{LR}_{\text{uc}}$ is 0.950409: still a pass.
+> - **A 97.5% VaR.** Set `p = 0.025` in the Kupiec call. Four exceptions are now fewer than such a model expects, and $`\text{LR}_{\text{uc}}`$ is 0.950409: still a pass.
 > - **Twice the data, same rate.** Set `n = 500` and `K = 8`. The statistic doubles to 1.538277. The evidence grows with the number of days, which is why longer backtests see smaller faults.
-> - **One pair of neighbours.** Put the exceptions on days 40, 41, 90 and 140. $\text{LR}_{\text{ind}}$ is 4.106993, above 3.841459. With so few exceptions, one adjacent pair is enough to reject independence at 5%.
+> - **One pair of neighbours.** Put the exceptions on days 40, 41, 90 and 140. $`\text{LR}_{\text{ind}}`$ is 4.106993, above 3.841459. With so few exceptions, one adjacent pair is enough to reject independence at 5%.
 
 ---
 
@@ -912,10 +924,10 @@ example : (1340 : ℚ) / 10000 < 158882750 * (1 / 100) ^ 4 * (99 / 100) ^ 246 �
 > **Reading green as proof that the model is right.** Green says only that the count is not surprising for a correct model. A model whose true rate is double its promise lands green in almost half of years (outside green 56.13% of the time). Over 250 days the tests catch gross faults and miss moderate ones.
 >
 > Smaller traps:
-> - **Treating zero exceptions as perfect.** Kupiec rejects $K = 0$: $\text{LR}_{\text{uc}}$ is 5.025, above 3.841459. A VaR that is never exceeded is too cautious, and it ties up capital the bank did not need to hold.
+> - **Treating zero exceptions as perfect.** Kupiec rejects $`K = 0`$: $`\text{LR}_{\text{uc}}`$ is 5.025, above 3.841459. A VaR that is never exceeded is too cautious, and it ties up capital the bank did not need to hold.
 > - **Trusting the 5% label.** With 2.5 expected exceptions, the chi-square cut-off makes Kupiec's test reject a correct model in 0.094760 of years, not 0.05. The exact binomial states its error honestly.
-> - **Judging timing by the count.** Four exceptions in a row score the same count, the same colour and the same $\text{LR}_{\text{uc}}$, 0.769138, as four spread out.
-> - **Choosing the test after seeing the data.** The run chance of $1.555 \times 10^{-6}$ means something only if the run test was chosen in advance.
+> - **Judging timing by the count.** Four exceptions in a row score the same count, the same colour and the same $`\text{LR}_{\text{uc}}`$, 0.769138, as four spread out.
+> - **Choosing the test after seeing the data.** The run chance of $`1.555 \times 10^{-6}`$ means something only if the run test was chosen in advance.
 
 ---
 

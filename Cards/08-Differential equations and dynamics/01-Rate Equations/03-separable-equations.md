@@ -36,30 +36,36 @@ Orange: the true volume, on the separated formula until 100 minutes, then on the
 
 Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)"; y(0) = y0 is the starting value ([A differential equation](01-what-a-differential-equation-says.md)). An equation is **separable** when the rate splits into a time part times an unknown part:
 
-$$y' = g(t)\,h(y)$$
+```math
+y' = g(t)\,h(y)
+```
 
-Wherever $h(y)$ is not zero, divide by it and integrate each side against its own variable:
+Wherever $`h(y)`$ is not zero, divide by it and integrate each side against its own variable:
 
-$$\int \frac{dy}{h(y)} \;=\; \int g(t)\,dt \qquad\text{that is}\qquad H(y) = G(t) + C$$
+```math
+\int \frac{dy}{h(y)} \;=\; \int g(t)\,dt \qquad\text{that is}\qquad H(y) = G(t) + C
+```
 
 **Read it aloud:** an antiderivative of one over the unknown's part equals an antiderivative of the time part, plus a constant; and each value where h is zero gives one more solution, y held constant there.
 
 The dy and dt are bookkeeping, as in [Substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md), not a fraction being split.
 
-On the snowball, $V$ is the volume, g(t) = −k with k = 0.3, and h(V) = V^(2/3):
+On the snowball, $`V`$ is the volume, g(t) = −k with k = 0.3, and h(V) = V^(2/3):
 
-$$\int V^{-2/3}\,dV = \int -0.3\,dt \quad\Longrightarrow\quad 3V^{1/3} = 30 - 0.3t \quad\Longrightarrow\quad V = (10 - 0.1t)^3$$
+```math
+\int V^{-2/3}\,dV = \int -0.3\,dt \quad\Longrightarrow\quad 3V^{1/3} = 30 - 0.3t \quad\Longrightarrow\quad V = (10 - 0.1t)^3
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time, in minutes | 0 to 120 min | — |
-| $y$, $V$ | the unknown; for the snowball, its volume in cm^3 | 1000 at the start | more snow lasts longer |
-| $y'$, $V'$ | the unknown's rate, per minute | −30 cm^3/min at the start | — |
-| $g$ | the part of the rate that depends only on time | −k, a constant | — |
-| $h$ | the part that depends only on the unknown | V^(2/3), in cm^2 | — |
-| $G$, $H$ | antiderivatives of g and of 1/h | −0.3t and 3V^(1/3) | — |
-| $k$ | melting constant, in cm per minute | 0.3 | faster melt, shorter life |
-| $C$ | the constant of integration, fixed by the start | 30 | — |
+| $`t`$ | time, in minutes | 0 to 120 min | — |
+| $`y`$, $`V`$ | the unknown; for the snowball, its volume in cm^3 | 1000 at the start | more snow lasts longer |
+| $`y'`$, $`V'`$ | the unknown's rate, per minute | −30 cm^3/min at the start | — |
+| $`g`$ | the part of the rate that depends only on time | −k, a constant | — |
+| $`h`$ | the part that depends only on the unknown | V^(2/3), in cm^2 | — |
+| $`G`$, $`H`$ | antiderivatives of g and of 1/h | −0.3t and 3V^(1/3) | — |
+| $`k`$ | melting constant, in cm per minute | 0.3 | faster melt, shorter life |
+| $`C`$ | the constant of integration, fixed by the start | 30 | — |
 
 k is in cm/min, not one over minutes: V^(2/3) is an area, and k times an area must give cm^3 per minute.
 

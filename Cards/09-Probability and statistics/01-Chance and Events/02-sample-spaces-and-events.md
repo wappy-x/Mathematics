@@ -30,39 +30,47 @@ The shaded band is the event "total is 7": six dots on one diagonal. The dashed 
 
 ## The formula
 
-Notation first, in words. The sample space gets a letter, $\Omega$, the Greek capital omega. One result in it is an **outcome**. A pair $(i, j)$ is one outcome: $i$ is the red die's face, $j$ the white die's. Bars count members: $\lvert A\rvert$ is how many outcomes the event $A$ holds.
+Notation first, in words. The sample space gets a letter, $`\Omega`$, the Greek capital omega. One result in it is an **outcome**. A pair $`(i, j)`$ is one outcome: $`i`$ is the red die's face, $`j`$ the white die's. Bars count members: $`\lvert A\rvert`$ is how many outcomes the event $`A`$ holds.
 
-$$\Omega = \{\,(i, j) \text{ for } i \text{ and } j \text{ each one of } 1, 2, 3, 4, 5, 6\,\}, \qquad \lvert \Omega\rvert = 36$$
+```math
+\Omega = \{\,(i, j) \text{ for } i \text{ and } j \text{ each one of } 1, 2, 3, 4, 5, 6\,\}, \qquad \lvert \Omega\rvert = 36
+```
 
-$$A = \{\,(i, j) \text{ in } \Omega \text{ with } i + j = 7\,\} = \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}, \qquad \lvert A\rvert = 6$$
+```math
+A = \{\,(i, j) \text{ in } \Omega \text{ with } i + j = 7\,\} = \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}, \qquad \lvert A\rvert = 6
+```
 
 **Read it aloud:** the sample space is every red-white pair; the event "total is 7" is the pairs whose faces add to 7, and there are six.
 
-Events combine by the set operations of [Set operations](../../01-Foundations/07-Sets/03-set-operations.md). With $S$ the event "a six shows":
+Events combine by the set operations of [Set operations](../../01-Foundations/07-Sets/03-set-operations.md). With $`S`$ the event "a six shows":
 
-$$A \cap S = \{(1,6), (6,1)\}, \qquad A \cup S \text{ has } 15, \qquad \text{not } A \text{ has } 36 - 6 = 30$$
+```math
+A \cap S = \{(1,6), (6,1)\}, \qquad A \cup S \text{ has } 15, \qquad \text{not } A \text{ has } 36 - 6 = 30
+```
 
 **Read it aloud:** "A and S" is the overlap, "A or S" is everything in either, "not A" is the rest of the sample space.
 
 For a count of "or", the overlap must come off once, since it was counted in both ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)):
 
-$$\lvert A \cup S\rvert = \lvert A\rvert + \lvert S\rvert - \lvert A \cap S\rvert = 6 + 11 - 2 = 15$$
+```math
+\lvert A \cup S\rvert = \lvert A\rvert + \lvert S\rvert - \lvert A \cap S\rvert = 6 + 11 - 2 = 15
+```
 
-Chances attach to events: $P(A)$, read "the chance of A" ([Probability](01-what-probability-means.md)). With fair dice the 36 outcomes are equally likely, so $P(A)$ is 6 out of 36, 0.166667: about 1 throw in 6 totals 7. Why that division is licensed is [Counting chances](04-equally-likely-outcomes-and-counting.md).
+Chances attach to events: $`P(A)`$, read "the chance of A" ([Probability](01-what-probability-means.md)). With fair dice the 36 outcomes are equally likely, so $`P(A)`$ is 6 out of 36, 0.166667: about 1 throw in 6 totals 7. Why that division is licensed is [Counting chances](04-equally-likely-outcomes-and-counting.md).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$ | the sample space: every complete result, each listed once | the 36 red-white pairs | more outcomes, each one a smaller share |
-| $i$, $j$, $(i, j)$ | the red face, the white face, and the outcome they make | (3,4), not the same as (4,3) | — |
-| $A$ | the event "total is 7" | 6 outcomes | — |
-| $S$ | the event "a six shows" | 11 outcomes | — |
-| $D$ | the event "a double": both faces equal | 6 outcomes, none of them in $A$ | — |
-| $s$ | a total, 2 to 12 | 7 | outcomes with that total rise to 6 at 7, then fall |
-| $\lvert A\rvert$ | how many outcomes an event holds | 6 | the event takes a bigger share of $\Omega$ |
-| $\cap$, $A \cap S$ | "A and S": outcomes in both | (1,6) and (6,1) | — |
-| $\cup$, $A \cup S$ | "A or S": outcomes in either, or both | 15 | — |
-| not $A$ | outcomes of $\Omega$ outside $A$ | 30 | shrinks as $A$ grows |
-| $P$ | the chance attached to an event | $P(A)$ = 6/36 | — |
+| $`\Omega`$ | the sample space: every complete result, each listed once | the 36 red-white pairs | more outcomes, each one a smaller share |
+| $`i`$, $`j`$, $`(i, j)`$ | the red face, the white face, and the outcome they make | (3,4), not the same as (4,3) | — |
+| $`A`$ | the event "total is 7" | 6 outcomes | — |
+| $`S`$ | the event "a six shows" | 11 outcomes | — |
+| $`D`$ | the event "a double": both faces equal | 6 outcomes, none of them in $`A`$ | — |
+| $`s`$ | a total, 2 to 12 | 7 | outcomes with that total rise to 6 at 7, then fall |
+| $`\lvert A\rvert`$ | how many outcomes an event holds | 6 | the event takes a bigger share of $`\Omega`$ |
+| $`\cap`$, $`A \cap S`$ | "A and S": outcomes in both | (1,6) and (6,1) | — |
+| $`\cup`$, $`A \cup S`$ | "A or S": outcomes in either, or both | 15 | — |
+| not $`A`$ | outcomes of $`\Omega`$ outside $`A`$ | 30 | shrinks as $`A`$ grows |
+| $`P`$ | the chance attached to an event | $`P(A)`$ = 6/36 | — |
 
 ### When it holds
 
@@ -90,40 +98,42 @@ Two questions that mark the same outcomes are the same event, however worded.
 
 ### Step 2: and, or, not are intersection, union, complement
 
-An outcome says yes to "A and S" when it says yes to both, so it sits in both sets: the intersection. It says yes to "A or S" when it says yes to at least one: the union. "Or" here always includes both. It says yes to "not A" when it is in $\Omega$ but outside $A$: the complement.
+An outcome says yes to "A and S" when it says yes to both, so it sits in both sets: the intersection. It says yes to "A or S" when it says yes to at least one: the union. "Or" here always includes both. It says yes to "not A" when it is in $`\Omega`$ but outside $`A`$: the complement.
 
 ### Step 3: counting a combination
 
 For "and", count the overlap directly: two outcomes, (1,6) and (6,1). For "or", add and take the overlap off once: 6 + 11 − 2 = 15. When two events share nothing they are **disjoint**, the overlap is zero, and counts simply add. "Total is 7" and "a double" are disjoint: a double's total is twice one face, always even, and 7 is odd.
 
-"And" and "or" swap places as they cross a "not". Being outside "A or S" means being outside $A$ and outside $S$, so
+"And" and "or" swap places as they cross a "not". Being outside "A or S" means being outside $`A`$ and outside $`S`$, so
 
-$$\text{not } (A \cup S) = (\text{not } A) \cap (\text{not } S)$$
+```math
+\text{not } (A \cup S) = (\text{not } A) \cap (\text{not } S)
+```
 
 which here is 21 outcomes both ways. That is De Morgan's law ([Logical equivalence and De Morgan](../../01-Foundations/05-Logic/03-logical-equivalence-and-de-morgan.md)), in dice.
 
 ### Step 4: every subset is an event, including two odd ones
 
-On a finite sample space, any subset of $\Omega$ can be an event. Each of the 36 outcomes is in or out, so there are $2^{36}$ = 68,719,476,736 events. The empty set is the **impossible event**, "the total exceeds 12"; the whole of $\Omega$ is the **certain event**.
+On a finite sample space, any subset of $`\Omega`$ can be an event. Each of the 36 outcomes is in or out, so there are $`2^{36}`$ = 68,719,476,736 events. The empty set is the **impossible event**, "the total exceeds 12"; the whole of $`\Omega`$ is the **certain event**.
 
 ### Step 5: some events split the space into pieces
 
-The 11 events "total is $s$", for $s$ from 2 to 12, share no outcome and together cover all 36: a **partition**. Its counts are 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1: for a total $s$, the number of outcomes is 6 minus the distance from $s$ to 7.
+The 11 events "total is $`s`$", for $`s`$ from 2 to 12, share no outcome and together cover all 36: a **partition**. Its counts are 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1: for a total $`s`$, the number of outcomes is 6 minus the distance from $`s`$ to 7.
 
 That is why the totals fail as a sample space: "a six shows" cuts through the blocks for totals 7, 8, 9 and 10, and a question that cuts a block cannot be answered from the block's name.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The operations are the logic of the questions.** For any outcome in $\Omega$: it is in $A \cap S$ exactly when it is in $A$ and in $S$; in $A \cup S$ exactly when it is in at least one; in not $A$ exactly when it is not in $A$. So each set operation gives the event whose yes-outcomes are the combined question's yes-outcomes.
+**The operations are the logic of the questions.** For any outcome in $`\Omega`$: it is in $`A \cap S`$ exactly when it is in $`A`$ and in $`S`$; in $`A \cup S`$ exactly when it is in at least one; in not $`A`$ exactly when it is not in $`A`$. So each set operation gives the event whose yes-outcomes are the combined question's yes-outcomes.
 
-**De Morgan.** An outcome is in not $(A \cup S)$ exactly when it is in neither set. That is exactly when it is outside $A$ and outside $S$, which is membership in (not $A$) $\cap$ (not $S$). Same members, same set. Swapping the roles of and and or gives not $(A \cap S)$ = (not $A$) $\cup$ (not $S$).
+**De Morgan.** An outcome is in not $`(A \cup S)`$ exactly when it is in neither set. That is exactly when it is outside $`A`$ and outside $`S`$, which is membership in (not $`A`$) $`\cap`$ (not $`S`$). Same members, same set. Swapping the roles of and and or gives not $`(A \cap S)`$ = (not $`A`$) $`\cup`$ (not $`S`$).
 
-**The union count.** Split $A \cup S$ into three pieces that share nothing: in $A$ only, in both, in $S$ only. Then $\lvert A\rvert$ counts the first two pieces and $\lvert S\rvert$ the last two, so their sum counts "both" twice. Subtract it once: $\lvert A \cup S\rvert = \lvert A\rvert + \lvert S\rvert - \lvert A \cap S\rvert$.
+**The union count.** Split $`A \cup S`$ into three pieces that share nothing: in $`A`$ only, in both, in $`S`$ only. Then $`\lvert A\rvert`$ counts the first two pieces and $`\lvert S\rvert`$ the last two, so their sum counts "both" twice. Subtract it once: $`\lvert A \cup S\rvert = \lvert A\rvert + \lvert S\rvert - \lvert A \cap S\rvert`$.
 
-**The number of events.** Choose, outcome by outcome, whether it is in. Each of the 36 choices has 2 options, and different choices give different sets, so there are 2 × 2 × … × 2, 36 factors, which is $2^{36}$.
+**The number of events.** Choose, outcome by outcome, whether it is in. Each of the 36 choices has 2 options, and different choices give different sets, so there are 2 × 2 × … × 2, 36 factors, which is $`2^{36}`$.
 
-**The totals.** For a red face $i$, a total $s$ needs white face $s - i$, which must lie between 1 and 6. For $s$ = 7 every red face from 1 to 6 has its partner, so the count is 6. Each step of $s$ away from 7 loses one red face at the edge, so the count is 6 minus the distance from $s$ to 7.
+**The totals.** For a red face $`i`$, a total $`s`$ needs white face $`s - i`$, which must lie between 1 and 6. For $`s`$ = 7 every red face from 1 to 6 has its partner, so the count is 6. Each step of $`s`$ away from 7 loses one red face at the edge, so the count is 6 minus the distance from $`s`$ to 7.
 
 </details>
 
@@ -140,7 +150,7 @@ xychart-beta
     bar [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1]
 ```
 
-Each bar is one event; the bars add to 36 because the events cover $\Omega$ without overlap. The tallest bar is total 7.
+Each bar is one event; the bars add to 36 because the events cover $`\Omega`$ without overlap. The tallest bar is total 7.
 
 ---
 
@@ -149,7 +159,7 @@ Each bar is one event; the bars add to 36 because the events cover $\Omega$ with
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | the sample space | 6 red faces × 6 white faces | 36 |
-| total is 7 | one white partner, 7 − $i$, for each red face | **6** |
+| total is 7 | one white partner, 7 − $`i`$, for each red face | **6** |
 | a six shows | 6 with red six + 6 with white six − (6,6) counted twice | 11 |
 | total 7 and a six | (1,6) and (6,1) | 2 |
 | total 7 or a six | 6 + 11 − 2 | **15** |
@@ -491,16 +501,16 @@ The two outputs match line for line.
 Lean proves three rules for every finite sample space, and checks the two-dice counts on this card exactly.
 
 - On any finite sample space, "and", "or" and "not" of two questions give the intersection, union and complement of their events.
-- Take any two events $A$ and $S$. Then $\lvert A \cup S\rvert = \lvert A\rvert + \lvert S\rvert - \lvert A \cap S\rvert$.
-- Take a sample space of $n$ outcomes. Then it has $2^n$ events.
+- Take any two events $`A`$ and $`S`$. Then $`\lvert A \cup S\rvert = \lvert A\rvert + \lvert S\rvert - \lvert A \cap S\rvert`$.
+- Take a sample space of $`n`$ outcomes. Then it has $`2^n`$ events.
 - Two dice give 36 outcomes, and "total is 7" is exactly the six pairs (1,6), (2,5), (3,4), (4,3), (5,2) and (6,1).
 - "A six shows" has 11 outcomes, and "total 7 and a six shows" is exactly (1,6) and (6,1).
 - "Total 7 or a six shows" has 15 outcomes, and "not total 7" has 30.
-- Take $A$ as "total is 7" and $S$ as "a six shows". Then not $(A \cup S)$ = (not $A$) $\cap$ (not $S$), with 21 outcomes.
+- Take $`A`$ as "total is 7" and $`S`$ as "a six shows". Then not $`(A \cup S)`$ = (not $`A`$) $`\cap`$ (not $`S`$), with 21 outcomes.
 - "Total is 7" and "a double" are disjoint, and "a double" has 6 outcomes.
-- Take a total $s$ from 2 to 12. Then "total is $s$" holds 6 minus the distance from $s$ to 7 outcomes.
-- The 11 events "total is $s$" together cover all 36 outcomes.
-- The two-dice space has $2^{36}$ = 68,719,476,736 events.
+- Take a total $`s`$ from 2 to 12. Then "total is $`s`$" holds 6 minus the distance from $`s`$ to 7 outcomes.
+- The 11 events "total is $`s`$" together cover all 36 outcomes.
+- The two-dice space has $`2^{36}`$ = 68,719,476,736 events.
 
 The simulation, the chances, the bit patterns, the figure, and the totals sharing no outcome are left to the Python and Rust checks.
 
@@ -600,7 +610,7 @@ example : 2 ^ dice.card = 68719476736 := by decide
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to two fair dice and the total 7, so expect one to stop the program.
 > - **Ask about 8 instead.** In `seven`, change `7` to `8`. The listing finds 5 outcomes while the partner count still finds 6, and the first assert stops it.
-> - **Shrink "a six shows" to "both show six".** Change `or` to `and` in `six`. $S$ drops to the single outcome (6,6), "A or S" falls to 7, and the second assert stops it.
+> - **Shrink "a six shows" to "both show six".** Change `or` to `and` in `six`. $`S`$ drops to the single outcome (6,6), "A or S" falls to 7, and the second assert stops it.
 > - **Load the dice.** Change both `% 6 + 1` to `% 5 + 1`, so no die shows a six. The true chance of 7 becomes 4/25 = 0.16; the simulated share lands about five standard errors from 1/6, and the last assert stops it.
 
 ---
@@ -629,7 +639,7 @@ example : 2 ^ dice.card = 68719476736 := by decide
 
 ## What this builds on
 
-- [Probability](01-what-probability-means.md): what a chance is, and the notation $P(A)$ this card attaches to events.
+- [Probability](01-what-probability-means.md): what a chance is, and the notation $`P(A)`$ this card attaches to events.
 - [Sets](../../01-Foundations/07-Sets/01-sets-and-membership.md): a set as the answer to one membership question.
 - [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): union, intersection and complement, here renamed or, and, not.
 

@@ -39,26 +39,30 @@ Reminder: a differential equation links a function to its own rates ([A differen
 
 Bessel's equation of order zero, and its solution equal to 1 at the centre:
 
-$$x^2 y'' + x\,y' + x^2 y = 0, \qquad J_0(x) = \sum_{m=0}^{\infty} \frac{(-1)^m\, x^{2m}}{4^m\,(m!)^2} = 1 - \frac{x^2}{4} + \frac{x^4}{64} - \frac{x^6}{2304} + \cdots$$
+```math
+x^2 y'' + x\,y' + x^2 y = 0, \qquad J_0(x) = \sum_{m=0}^{\infty} \frac{(-1)^m\, x^{2m}}{4^m\,(m!)^2} = 1 - \frac{x^2}{4} + \frac{x^4}{64} - \frac{x^6}{2304} + \cdots
+```
 
 **Read it aloud:** start at 1; each term is the last times minus x squared, over four times the term's number squared.
 
 The drum's notes:
 
-$$f_n = \frac{c\, j_n}{2\pi R}$$
+```math
+f_n = \frac{c\, j_n}{2\pi R}
+```
 
 **Read it aloud:** the n-th round note is the wave speed times the n-th zero of J0, over the rim's circumference.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r$, $R$ | distance from the centre; the rim's radius | 0 to 0.3 m; R = 0.3 m | R up: every note falls |
-| $w$ | the head's height in a pure note, as a fraction of the centre's | 1 at the centre, 0 at the rim | — |
-| $f$, $c$ | a note's frequency, in Hz; the speed of waves across the head | 127.6 Hz; 100 m/s | c up: notes rise, ratios fixed |
-| $k$ | 2πf/c, radians of wave per metre | j_n/R for note n | — |
-| $x$, $y$ | the scaled distance kr, a pure number; the shape in terms of x | 0 to 2.404826 for the fundamental | — |
-| $s$, $a_n$ | the Frobenius trial power; the coefficient of x^n | s = 0; a_2 = −1/4 | — |
-| $J_0$ | the series solution, 1 at the centre: Bessel's function of order zero | J0(2.4) = 0.002508 | — |
-| $j_n$ | the n-th zero of J0 | 2.404826, 5.520078, 8.653728 | later zeros space out by about π |
+| $`r`$, $`R`$ | distance from the centre; the rim's radius | 0 to 0.3 m; R = 0.3 m | R up: every note falls |
+| $`w`$ | the head's height in a pure note, as a fraction of the centre's | 1 at the centre, 0 at the rim | — |
+| $`f`$, $`c`$ | a note's frequency, in Hz; the speed of waves across the head | 127.6 Hz; 100 m/s | c up: notes rise, ratios fixed |
+| $`k`$ | 2πf/c, radians of wave per metre | j_n/R for note n | — |
+| $`x`$, $`y`$ | the scaled distance kr, a pure number; the shape in terms of x | 0 to 2.404826 for the fundamental | — |
+| $`s`$, $`a_n`$ | the Frobenius trial power; the coefficient of x^n | s = 0; a_2 = −1/4 | — |
+| $`J_0`$ | the series solution, 1 at the centre: Bessel's function of order zero | J0(2.4) = 0.002508 | — |
+| $`j_n`$ | the n-th zero of J0 | 2.404826, 5.520078, 8.653728 | later zeros space out by about π |
 
 m counts terms; m! is 1 × 2 × … × m.
 
@@ -81,7 +85,9 @@ In a pure note every point swings in step: height w(r) times cos(2πft), t the t
 
 Cut the head into thin rings. Tension pulls each ring from inside and outside. The pull scales with slope times edge length, r w'; where that changes across the ring, the pulls fail to cancel and drive it. Force equals mass times acceleration:
 
-$$w'' + \frac{1}{r}\,w' + k^2 w = 0, \qquad k = \frac{2\pi f}{c}.$$
+```math
+w'' + \frac{1}{r}\,w' + k^2 w = 0, \qquad k = \frac{2\pi f}{c}.
+```
 
 The middle term is what a string lacks: an outer ring is longer.
 
@@ -98,7 +104,9 @@ Measure distance as x = kr, a pure number. Each rate picks up a factor k, cancel
 
 Divided by x^2 the equation reads y'' + y'/x + y = 0. The 1/x blows up at the centre, but no faster than 1/x: a regular singular point, where [Frobenius](02-frobenius-and-regular-singular-points.md) tries a power x^s times a power series:
 
-$$y = \sum_{n \ge 0} a_n\, x^{n+s}.$$
+```math
+y = \sum_{n \ge 0} a_n\, x^{n+s}.
+```
 
 Put it in. The x^2 y'' and x y' terms give (n + s)^2 a_n x^(n+s); the x^2 y term shifts each power up by two. Matching powers:
 
@@ -124,7 +132,9 @@ At the rim the height is zero: J0(kR) = 0. So kR is a zero j_n, and since k = 2�
 
 Write y = u/√x. Bessel's equation becomes
 
-$$u'' + \left(1 + \frac{1}{4x^2}\right) u = 0.$$
+```math
+u'' + \left(1 + \frac{1}{4x^2}\right) u = 0.
+```
 
 Far out the 1/(4x^2) is tiny, u behaves like a sine wave, and zeros settle to a spacing of π. Near the centre that term shifts where the wave starts. The zeros come out near (n − 1/4)π: 2.356, 5.498, 8.639, with ratios (4n − 1)/3, that is 2.333 and 3.667, not 2 and 3. The quarter-step offset puts the drum out of tune with itself.
 

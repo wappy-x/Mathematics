@@ -26,42 +26,48 @@ Drawn to scale: 5 px per minute across, 6.4 px per cm up. Each drain curve is an
 
 ## The formula
 
-A rate law is written $y' = f(t, y)$: the rate of $y$ at time $t$ is the rule $f$ applied to the time and the current value, starting from the value $y_0$ at time $t_0$. For the bucket the unknown is the depth $h$ and $f(t, h) = -0.2\sqrt{h}$.
+A rate law is written $`y' = f(t, y)`$: the rate of $`y`$ at time $`t`$ is the rule $`f`$ applied to the time and the current value, starting from the value $`y_0`$ at time $`t_0`$. For the bucket the unknown is the depth $`h`$ and $`f(t, h) = -0.2\sqrt{h}`$.
 
-Everything happens in a **box** around the start: times within $a$ of $t_0$, values within $b$ of $y_0$. The Lipschitz condition asks for one number $L$ bounding how fast the rule changes with the value:
+Everything happens in a **box** around the start: times within $`a`$ of $`t_0`$, values within $`b`$ of $`y_0`$. The Lipschitz condition asks for one number $`L`$ bounding how fast the rule changes with the value:
 
-$$\lvert f(t, y) - f(t, z)\rvert \le L\,\lvert y - z\rvert \quad\text{for every } t, y, z \text{ in the box}$$
+```math
+\lvert f(t, y) - f(t, z)\rvert \le L\,\lvert y - z\rvert \quad\text{for every } t, y, z \text{ in the box}
+```
 
 **Read it aloud:** two values a distance apart get rates at most L times that distance apart.
 
-The theorem. Let $f$ be continuous in the box with Lipschitz constant $L$, and let $M$ be the largest size of $f$ in the box. Then
+The theorem. Let $`f`$ be continuous in the box with Lipschitz constant $`L`$, and let $`M`$ be the largest size of $`f`$ in the box. Then
 
-$$y' = f(t, y),\;\; y(t_0) = y_0 \quad\text{has exactly one solution for } \lvert t - t_0\rvert \le T, \qquad T = \min\!\left(a,\ \frac{b}{M}\right).$$
+```math
+y' = f(t, y),\;\; y(t_0) = y_0 \quad\text{has exactly one solution for } \lvert t - t_0\rvert \le T, \qquad T = \min\!\left(a,\ \frac{b}{M}\right).
+```
 
 **Read it aloud:** the start fixes one solution, lasting at least until the box's time runs out or the solution could first reach its edge.
 
-The proof uses the **Picard map** $P$ of [Picard iteration](01-picard-iteration.md): a guessed curve in, the start value plus the rule's integral along the guess out.
+The proof uses the **Picard map** $`P`$ of [Picard iteration](01-picard-iteration.md): a guessed curve in, the start value plus the rule's integral along the guess out.
 
-$$P[y](t) = y_0 + \int_{t_0}^{t} f\bigl(s, y(s)\bigr)\,ds$$
+```math
+P[y](t) = y_0 + \int_{t_0}^{t} f\bigl(s, y(s)\bigr)\,ds
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y$, $h$ | the unknown; for the bucket, depth in cm | $h$ | — |
-| $t$, $t_0$ | time in minutes; the start time | $t_0 = 0$ | — |
-| $y_0$ | the starting value | 25 cm | — |
-| $f$ | the rate law, cm per minute | $-0.2\sqrt{h}$ | a faster rule, a larger $M$ |
-| $a$, $b$ | the box's half-widths in time and value | 10 min, 16 cm | a longer promise, until $b/M$ binds |
-| $M$ | the largest size of $f$ in the box | $0.2\sqrt{41} = 1.280625$ cm/min | a shorter window $b/M$ |
-| $L$ | the Lipschitz constant, per minute | $0.1/\sqrt{9} = 0.033333$ | each Picard round shrinks less |
-| $T$, $P$ | the guaranteed window; the Picard map | 10 min | — |
+| $`y`$, $`h`$ | the unknown; for the bucket, depth in cm | $`h`$ | — |
+| $`t`$, $`t_0`$ | time in minutes; the start time | $`t_0 = 0`$ | — |
+| $`y_0`$ | the starting value | 25 cm | — |
+| $`f`$ | the rate law, cm per minute | $`-0.2\sqrt{h}`$ | a faster rule, a larger $`M`$ |
+| $`a`$, $`b`$ | the box's half-widths in time and value | 10 min, 16 cm | a longer promise, until $`b/M`$ binds |
+| $`M`$ | the largest size of $`f`$ in the box | $`0.2\sqrt{41} = 1.280625`$ cm/min | a shorter window $`b/M`$ |
+| $`L`$ | the Lipschitz constant, per minute | $`0.1/\sqrt{9} = 0.033333`$ | each Picard round shrinks less |
+| $`T`$, $`P`$ | the guaranteed window; the Picard map | 10 min | — |
 
-When $f$ has a derivative in the value, $L$ is its steepest slope in the box. The reason is the [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): the average slope between two values equals the slope at some point between them. For the bucket, that is $0.1/\sqrt{h}$ at the shallow end, 9 cm.
+When $`f`$ has a derivative in the value, $`L`$ is its steepest slope in the box. The reason is the [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): the average slope between two values equals the slope at some point between them. For the bucket, that is $`0.1/\sqrt{h}`$ at the shallow end, 9 cm.
 
 ### When it holds
 
 - **The rule is continuous in the box.** Drop this and there may be no solution: with rate −1 at zero and above, +1 below, every curve from zero is pushed back across.
 - **A Lipschitz bound on the state.** Drop it and a solution still exists (Peano's theorem: continuity alone gives existence, not uniqueness), but several may leave the same start. The bucket at empty has infinitely many.
-- **Time only up to $T$.** The promise is local: $y' = y^2$ from $y = 1$ reaches infinity at $t = 1$ ([Blow-up](03-blow-up-and-the-life-span-of-a-solution.md)).
+- **Time only up to $`T`$.** The promise is local: $`y' = y^2`$ from $`y = 1`$ reaches infinity at $`t = 1`$ ([Blow-up](03-blow-up-and-the-life-span-of-a-solution.md)).
 
 ---
 
@@ -69,34 +75,36 @@ When $f$ has a derivative in the value, $L$ is its steepest slope in the box. Th
 
 ### Step 0: a solution is a curve the Picard map leaves unchanged
 
-Adding up a rate over time gives the total change ([Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)). So a continuous curve solves $y' = f(t, y)$ with $y(t_0) = y_0$ exactly when $P[y] = y$. So "how many solutions?" becomes "how many curves does $P$ leave fixed?" The contraction principle answers that ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)): a map that brings any two inputs closer by a fixed factor below 1 has exactly one fixed point.
+Adding up a rate over time gives the total change ([Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)). So a continuous curve solves $`y' = f(t, y)`$ with $`y(t_0) = y_0`$ exactly when $`P[y] = y`$. So "how many solutions?" becomes "how many curves does $`P`$ leave fixed?" The contraction principle answers that ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)): a map that brings any two inputs closer by a fixed factor below 1 has exactly one fixed point.
 
 ### Step 1: the map keeps curves inside the box
 
-The rule's size is at most $M$ in the box, so $P[y]$ drifts from $y_0$ by at most $M$ per minute: at most $b$ over $T \le b/M$ minutes. A guess inside the box comes back inside, where the Lipschitz bound applies. For the bucket, $b/M = 16/1.280625 = 12.49$ minutes, so $T = 10$ minutes.
+The rule's size is at most $`M`$ in the box, so $`P[y]`$ drifts from $`y_0`$ by at most $`M`$ per minute: at most $`b`$ over $`T \le b/M`$ minutes. A guess inside the box comes back inside, where the Lipschitz bound applies. For the bucket, $`b/M = 16/1.280625 = 12.49`$ minutes, so $`T = 10`$ minutes.
 
 ### Step 2: the map shrinks the gap between two guesses
 
-Take two guesses $y$ and $z$; their gap is the largest distance between them over the window. At each moment their rates differ by at most $L$ times the gap, so after at most $T$ minutes of integrating, the outputs differ by at most $L \cdot T$ times the gap. For the bucket $L \cdot T = (1/30) \times 10 = 1/3$: each round cuts any gap to a third or less.
+Take two guesses $`y`$ and $`z`$; their gap is the largest distance between them over the window. At each moment their rates differ by at most $`L`$ times the gap, so after at most $`T`$ minutes of integrating, the outputs differ by at most $`L \cdot T`$ times the gap. For the bucket $`L \cdot T = (1/30) \times 10 = 1/3`$: each round cuts any gap to a third or less.
 
 ### Step 3: the rounds settle on a curve
 
-Start from the flat guess $y_0$ and apply $P$ repeatedly. Each move is at most a third of the last, so the moves total at most $10 + 10/3 + 10/9 + \dots = 15$ cm, and the curves close in on one limit ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). $P$ leaves the limit fixed: a solution exists.
+Start from the flat guess $`y_0`$ and apply $`P`$ repeatedly. Each move is at most a third of the last, so the moves total at most $`10 + 10/3 + 10/9 + \dots = 15`$ cm, and the curves close in on one limit ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). $`P`$ leaves the limit fixed: a solution exists.
 
 ### Step 4: two solutions would have to coincide
 
-If $y$ and $z$ both solve the problem, both are fixed by $P$, so their gap is at most a third of itself. That gap is zero.
+If $`y`$ and $`z`$ both solve the problem, both are fixed by $`P`$, so their gap is at most a third of itself. That gap is zero.
 
 ### Step 5: why the empty bucket escapes
 
-Near empty, the rate's change divided by the depth's change is $0.2/\sqrt{h}$: 0.2 from 1 cm, 2 from 0.01 cm, 20 from 0.0001 cm. No $L$ covers a box touching zero, so Step 2 has no factor and Step 4 nothing to squeeze. The fork in the picture fills that hole.
+Near empty, the rate's change divided by the depth's change is $`0.2/\sqrt{h}`$: 0.2 from 1 cm, 2 from 0.01 cm, 20 from 0.0001 cm. No $`L`$ covers a box touching zero, so Step 2 has no factor and Step 4 nothing to squeeze. The fork in the picture fills that hole.
 
 <details>
 <summary>Detailed proof: dropping the need for $L \cdot T &lt; 1$</summary>
 
-Let $d_j(t)$ be the largest distance between the j-th rounds from two guesses, over times from $t_0$ to $t$, and $d$ the starting gap. The Lipschitz bound inside the integral gives $d_1(t) \le L\lvert t - t_0\rvert d$; feeding that back in, $d_2(t) \le \tfrac{1}{2}(L\lvert t - t_0\rvert)^2 d$, and by induction
-$$d_j(t) \le \frac{(L\lvert t - t_0\rvert)^j}{j!}\, d.$$
-The factorial beats any power, so for some count of rounds the factor falls below 1 and that many rounds of $P$ form a contraction. Its fixed point is fixed by $P$ too, since $P$ of it is another fixed point of the same rounds. Every solution stays in the box up to time $T$ by Step 1, so every solution is that point. Epsilon form: given $\varepsilon > 0$, past the round whose factor drops below $\varepsilon$, the curves stay within $\varepsilon d$ of each other.
+Let $`d_j(t)`$ be the largest distance between the j-th rounds from two guesses, over times from $`t_0`$ to $`t`$, and $`d`$ the starting gap. The Lipschitz bound inside the integral gives $`d_1(t) \le L\lvert t - t_0\rvert d`$; feeding that back in, $`d_2(t) \le \tfrac{1}{2}(L\lvert t - t_0\rvert)^2 d`$, and by induction
+
+$`\displaystyle d_j(t) \le \frac{(L\lvert t - t_0\rvert)^j}{j!}\, d.`$
+
+The factorial beats any power, so for some count of rounds the factor falls below 1 and that many rounds of $`P`$ form a contraction. Its fixed point is fixed by $`P`$ too, since $`P`$ of it is another fixed point of the same rounds. Every solution stays in the box up to time $`T`$ by Step 1, so every solution is that point. Epsilon form: given $`\varepsilon > 0`$, past the round whose factor drops below $`\varepsilon`$, the curves stay within $`\varepsilon d`$ of each other.
 
 </details>
 
@@ -110,14 +118,14 @@ The bucket from 25 cm at minute 0, box of 10 minutes by 16 cm.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| fastest fall in the box | $0.2\sqrt{41}$ | 1.280625 cm/min |
-| time to reach the box's edge | $16 / 1.280625$ | 12.49 min |
-| guaranteed window | the smaller of 10 and 12.49 | $T = 10$ min |
-| Lipschitz constant | steepest slope, $0.1/\sqrt{9}$ | 0.033333 per min |
-| promised shrink per round | $L \cdot T = 0.033333 \times 10$ | 1/3 |
-| round 1 at 10 min | $25 + 10 \times (-0.2\sqrt{25})$ | 15 cm |
-| round 2 at 10 min | $25 - \tfrac{2}{15}(125 - 15^{3/2})$ | 16.0793 cm |
-| separation formula | $(5 - 0.1 \times 10)^2$ | **16 cm** |
+| fastest fall in the box | $`0.2\sqrt{41}`$ | 1.280625 cm/min |
+| time to reach the box's edge | $`16 / 1.280625`$ | 12.49 min |
+| guaranteed window | the smaller of 10 and 12.49 | $`T = 10`$ min |
+| Lipschitz constant | steepest slope, $`0.1/\sqrt{9}`$ | 0.033333 per min |
+| promised shrink per round | $`L \cdot T = 0.033333 \times 10`$ | 1/3 |
+| round 1 at 10 min | $`25 + 10 \times (-0.2\sqrt{25})`$ | 15 cm |
+| round 2 at 10 min | $`25 - \tfrac{2}{15}(125 - 15^{3/2})`$ | 16.0793 cm |
+| separation formula | $`(5 - 0.1 \times 10)^2`$ | **16 cm** |
 
 Four more rounds land on 16.000000 cm, the value [Separable equations](../01-Rate%20Equations/03-separable-equations.md) gives. After 10 minutes the bucket holds 16 cm, and no other depth is possible.
 
@@ -125,15 +133,15 @@ Four more rounds land on 16.000000 cm, the value [Separable equations](../01-Rat
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Start from empty at 50 min, where no $L$ exists | depth at 0 min: 0, 25 or 9 cm, all valid | slope quotients 0.2, 2, 20 near empty: no speed limit |
-| Stretch the window to 40 min, same box | $L \cdot T = 1.333333$; depth hits the box's floor, 9 cm, at 20 min | no shrink below 1, and the curve leaves the box |
+| Start from empty at 50 min, where no $`L`$ exists | depth at 0 min: 0, 25 or 9 cm, all valid | slope quotients 0.2, 2, 20 near empty: no speed limit |
+| Stretch the window to 40 min, same box | $`L \cdot T = 1.333333`$; depth hits the box's floor, 9 cm, at 20 min | no shrink below 1, and the curve leaves the box |
 | Take a solver's answer as the only one | Euler's rule stepped back 50 min from empty: 0.000000 cm | a method follows one branch |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Three roads to the depth at 10 minutes: the separation formula; six Picard rounds, integrating by the trapezoid rule (averaging the rate at both ends of each small slice); and Euler's rule, small steps along the slope ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), whose error halves with the step. $L$ is found by calculus and by the largest quotient on a fine grid. The full-bucket past is checked against the integral equation, not the formula that drew it.
+Three roads to the depth at 10 minutes: the separation formula; six Picard rounds, integrating by the trapezoid rule (averaging the rate at both ends of each small slice); and Euler's rule, small steps along the slope ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), whose error halves with the step. $`L`$ is found by calculus and by the largest quotient on a fine grid. The full-bucket past is checked against the integral equation, not the formula that drew it.
 
 ### Python
 
@@ -328,14 +336,14 @@ The outputs match line for line.
 
 Lean proves the theorem for every rule, box and window that meet its conditions, and checks the bucket's three pasts and box numbers.
 
-- Let the rule be continuous in the box, with Lipschitz constant $L$ and size at most $M$ there. Then the start fixes exactly one solution for $\lvert t - t_0\rvert \le T$.
-- This holds for any window $T$ up to $a$ with $M \cdot T \le b$. The card's $T = \min(a, b/M)$ is the longest such window.
-- Three depth curves obey $h' = -0.2\sqrt{h}$ at every time: full at minute 0, 9 cm at minute 0, and always empty.
+- Let the rule be continuous in the box, with Lipschitz constant $`L`$ and size at most $`M`$ there. Then the start fixes exactly one solution for $`\lvert t - t_0\rvert \le T`$.
+- This holds for any window $`T`$ up to $`a`$ with $`M \cdot T \le b`$. The card's $`T = \min(a, b/M)`$ is the longest such window.
+- Three depth curves obey $`h' = -0.2\sqrt{h}`$ at every time: full at minute 0, 9 cm at minute 0, and always empty.
 - All three read 0 cm at minute 50, so the empty bucket has many pasts.
-- For depths from 9 to 41 cm, $L = 0.1/\sqrt{9} = 1/30$ per minute is a Lipschitz constant for the bucket's rule.
-- There the rule's size is at most $0.2\sqrt{41}$ cm per minute, and $0.2\sqrt{41} \times 10 \le 16$, so $T = 10$ minutes fits the box.
-- The worked numbers: 1 cm a minute at 25 cm, $L \cdot T = 1/3$, 15 cm after round 1, moves totalling 15 cm, and 16 cm at 10 minutes.
-- The 40-minute window gives $L \cdot T = 4/3$ and 9 cm at 20 minutes. The Try changing values are 1/6, 20.25 cm and 12.25 cm.
+- For depths from 9 to 41 cm, $`L = 0.1/\sqrt{9} = 1/30`$ per minute is a Lipschitz constant for the bucket's rule.
+- There the rule's size is at most $`0.2\sqrt{41}`$ cm per minute, and $`0.2\sqrt{41} \times 10 \le 16`$, so $`T = 10`$ minutes fits the box.
+- The worked numbers: 1 cm a minute at 25 cm, $`L \cdot T = 1/3`$, 15 cm after round 1, moves totalling 15 cm, and 16 cm at 10 minutes.
+- The 40-minute window gives $`L \cdot T = 4/3`$ and 9 cm at 20 minutes. The Try changing values are 1/6, 20.25 cm and 12.25 cm.
 
 The decimals, the Picard rounds on a grid, Euler's rule, the slope quotients near empty and the figure are left to the Python and Rust checks.
 
@@ -665,7 +673,7 @@ example : (1 / 30 : ℚ) * 5 = 1 / 6 ∧ ((5 : ℚ) - 5 / 10) ^ 2 = 81 / 4 ∧
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Widen the box.** Set `B` to `20.0`, reaching down to 5 cm. $L$ rises to 0.044721 and the promised shrink to 0.447214; the rounds still settle on 16 cm.
+> - **Widen the box.** Set `B` to `20.0`, reaching down to 5 cm. $`L`$ rises to 0.044721 and the promised shrink to 0.447214; the rounds still settle on 16 cm.
 > - **Shorten the window.** Set `A` to `5.0`. The promise tightens to 0.166667, and the rounds land on (5 − 0.5)^2 = 20.25 cm, the depth at 5 minutes (the label still says 10).
 > - **Break the rate law.** Change `-0.2` to `-0.3` in `f` only. The rounds land on (5 − 1.5)^2 = 12.25 cm, the formula still says 16, and the first assert stops the run.
 
@@ -674,18 +682,18 @@ example : (1 / 30 : ℚ) * 5 = 1 / 6 ∧ ((5 : ℚ) - 5 / 10) ^ 2 = 81 / 4 ∧
 ## The usual mistake
 
 > [!warning]
-> **Reading the theorem as "continuous rules have one solution".** Continuity buys only existence. The bucket's rule is continuous at empty, and three pasts reach the same empty bucket. Uniqueness needs the speed limit $L$, which $\sqrt{h}$ lacks at zero.
+> **Reading the theorem as "continuous rules have one solution".** Continuity buys only existence. The bucket's rule is continuous at empty, and three pasts reach the same empty bucket. Uniqueness needs the speed limit $`L`$, which $`\sqrt{h}`$ lacks at zero.
 >
-> - **Reading a failed hypothesis as proof of many solutions.** Without $L$ the theorem is silent. Forwards from empty the bucket has one future, since depth cannot go negative; the fork is in the past.
+> - **Reading a failed hypothesis as proof of many solutions.** Without $`L`$ the theorem is silent. Forwards from empty the bucket has one future, since depth cannot go negative; the fork is in the past.
 > - **Treating the window as the solution's life.** The promise is 10 minutes; the curve lives on to empty at 50.
-> - **Measuring $L$ at the start only.** The slope at 25 cm is 0.020000 per minute; at the box's floor it is 0.033333, and the proof needs the worst.
+> - **Measuring $`L`$ at the start only.** The slope at 25 cm is 0.020000 per minute; at the box's floor it is 0.033333, and the proof needs the worst.
 
 ---
 
 ## Where you meet it in real life
 
 - **Draining tanks.** Torricelli's law makes outflow grow with the square root of the depth, so an empty tank does not reveal when it emptied; reconstructing past levels needs extra data.
-- **Simulation software.** A solver assumes the current state fixes the next; $L$ also governs how its errors grow ([From local error to global error](../../16-Numerical%20analysis/06-ODE%20Solvers/02-convergence-of-one-step-methods.md)).
+- **Simulation software.** A solver assumes the current state fixes the next; $`L`$ also governs how its errors grow ([From local error to global error](../../16-Numerical%20analysis/06-ODE%20Solvers/02-convergence-of-one-step-methods.md)).
 
 > **Say it back**
 > A rate law can allow several solutions from one start. If the rule is continuous and its rate changes at most L times as fast as the value, the Picard map shrinks the gap between any two guesses by a fixed factor. Its rounds settle on one curve, and no second curve exists, for a window the box fixes. The bucket from 25 cm has one future; the empty bucket has many pasts, because the square root has no such bound at zero.
@@ -695,17 +703,17 @@ example : (1 / 30 : ℚ) * 5 = 1 / 6 ∧ ((5 : ℚ) - 5 / 10) ^ 2 = 81 / 4 ∧
 ## What this builds on
 
 - [Picard iteration](01-picard-iteration.md): the Picard map and its rounds.
-- [Separable equations](../01-Rate%20Equations/03-separable-equations.md): the closed form $(5 - 0.1t)^2$.
+- [Separable equations](../01-Rate%20Equations/03-separable-equations.md): the closed form $`(5 - 0.1t)^2`$.
 - [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): a shrinking map has exactly one fixed point.
 - [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): why shrinking moves have a limit.
 
 ## Where this goes next
 
 - [Blow-up](03-blow-up-and-the-life-span-of-a-solution.md): how long a unique solution runs.
-- [Gronwall's inequality](04-gronwall-and-continuous-dependence.md): $L$ bounds how nearby starts drift apart.
+- [Gronwall's inequality](04-gronwall-and-continuous-dependence.md): $`L`$ bounds how nearby starts drift apart.
 - [Fixed points of a map](../11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md): shrinking maps on numbers.
 - [When an SDE has one solution](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md): the argument with noise added.
-- [From local error to global error](../../16-Numerical%20analysis/06-ODE%20Solvers/02-convergence-of-one-step-methods.md): $L$ controlling solver error.
+- [From local error to global error](../../16-Numerical%20analysis/06-ODE%20Solvers/02-convergence-of-one-step-methods.md): $`L`$ controlling solver error.
 - Vector field and its flow: one solution through every point.
 
 The theorem certifies 10 minutes; how long a solution actually survives, and whether it can reach infinity in finite time, is answered in [Blow-up](03-blow-up-and-the-life-span-of-a-solution.md).

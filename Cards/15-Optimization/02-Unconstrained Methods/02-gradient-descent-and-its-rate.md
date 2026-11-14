@@ -6,21 +6,23 @@
 
 ## General Overview
 
-Choose two numbers, $x_1$ and $x_2$, to make one height as small as possible. The height is the Rosenbrock function, a standard test valley since 1960:
+Choose two numbers, $`x_1`$ and $`x_2`$, to make one height as small as possible. The height is the Rosenbrock function, a standard test valley since 1960:
 
-$$f(x_1, x_2) = (1 - x_1)^2 + 100\,(x_2 - x_1^2)^2.$$
+```math
+f(x_1, x_2) = (1 - x_1)^2 + 100\,(x_2 - x_1^2)^2.
+```
 
-This is a minimisation with no limits on the choice. Read $f$ as the height of the ground over a map. The second term is a steep wall, 100 times heavier than the first, and it is zero along the curve $x_2 = x_1^2$. So the ground forms a long, narrow valley bent like a banana. The first term tilts the valley floor gently down towards its lowest point, $(1, 1)$, where the height is 0.
+This is a minimisation with no limits on the choice. Read $`f`$ as the height of the ground over a map. The second term is a steep wall, 100 times heavier than the first, and it is zero along the curve $`x_2 = x_1^2`$. So the ground forms a long, narrow valley bent like a banana. The first term tilts the valley floor gently down towards its lowest point, $`(1, 1)`$, where the height is 0.
 
-Gradient descent ignores the map and feels only the slope underfoot. From the start $(-1.2, 1)$, height 24.2 and 2.2 map units from the bottom, it steps straight downhill 200 times. Each move is the slope times a fixed step size, 0.001, so steep ground gives long moves and flat ground short ones.
+Gradient descent ignores the map and feels only the slope underfoot. From the start $`(-1.2, 1)`$, height 24.2 and 2.2 map units from the bottom, it steps straight downhill 200 times. Each move is the slope times a fixed step size, 0.001, so steep ground gives long moves and flat ground short ones.
 
-The first step drops the height from 24.2 to 5.3529: it falls off the steep wall onto the valley floor. The other 199 steps only crawl along the floor, down to 3.4622. After all 200 the walk is still 1.8762 from the bottom. Run on, it needs 17,082 steps to come within 0.001 of $(1, 1)$.
+The first step drops the height from 24.2 to 5.3529: it falls off the steep wall onto the valley floor. The other 199 steps only crawl along the floor, down to 3.4622. After all 200 the walk is still 1.8762 from the bottom. Run on, it needs 17,082 steps to come within 0.001 of $`(1, 1)`$.
 
 Both halves of that story are theorems. If the step is below 2 over the steepest curvature, every step is guaranteed to go down. How fast it goes down is set by the gentlest curvature, and in a narrow valley the gentlest curvature is tiny.
 
 **Gradient descent repeats one move, a fixed step against the gradient; a step under 2/L guarantees the height falls every time, and near the bottom the error shrinks by a fixed factor per step set by the flattest direction, so a long, narrow valley is slow.**
 
-**What kind of fact this is:** a method, with three theorems proved on this card in Why it works: the descent guarantee, the bound on the gradient for any smooth function, and the fixed-factor rate under strong convexity. The answer $(1, 1)$ is certified: $f$ is a sum of two squares, so it is never below 0, and it equals 0 only at $(1, 1)$.
+**What kind of fact this is:** a method, with three theorems proved on this card in Why it works: the descent guarantee, the bound on the gradient for any smooth function, and the fixed-factor rate under strong convexity. The answer $`(1, 1)`$ is certified: $`f`$ is a sum of two squares, so it is never below 0, and it equals 0 only at $`(1, 1)`$.
 
 The applied wing already runs this walk on a regression and adds a noisy version ([Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md)). This card proves why it works and how fast.
 
@@ -28,59 +30,67 @@ The applied wing already runs this walk on a regression and adds a noisy version
 
 <p align="center"><img src="../figures/gradient-descent-and-its-rate.svg" alt="Contours of the banana valley at heights 25, 4 and 1, with the 200-step path: one jump from the start onto the valley floor, a short crawl, and the bottom at (1, 1) far away" width="420"></p>
 
-To scale: 100 px per unit on both axes, dotted lines at $x_1 = 0$ and $x_2 = 0$. The start is $(-1.2, 1)$, at height 24.2, just inside the height-25 contour. Step 1 lands at $(-0.9844, 1.0880)$ and step 2 bounces back to $(-1.0273, 1.0642)$: one zigzag across the floor. Step 200 is at $(-0.8590, 0.7459)$, just inside the height-4 contour. The bottom $(1, 1)$ sits inside the thin height-1 contour, on the far side.
+To scale: 100 px per unit on both axes, dotted lines at $`x_1 = 0`$ and $`x_2 = 0`$. The start is $`(-1.2, 1)`$, at height 24.2, just inside the height-25 contour. Step 1 lands at $`(-0.9844, 1.0880)`$ and step 2 bounces back to $`(-1.0273, 1.0642)`$: one zigzag across the floor. Step 200 is at $`(-0.8590, 0.7459)`$, just inside the height-4 contour. The bottom $`(1, 1)`$ sits inside the thin height-1 contour, on the far side.
 
 ---
 
 ## The formula
 
-Notation first, in words. This card introduces $x_k$ for the point after $k$ steps (the **iterate**), $\alpha_k$ for the step size and $d_k$ for the direction of step $k$. Here the step size is fixed, written $\alpha$ (alpha), and the direction is $d_k = -\nabla f(x_k)$, minus the gradient ([Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md)). Counting starts at $k = 0$, the start point.
+Notation first, in words. This card introduces $`x_k`$ for the point after $`k`$ steps (the **iterate**), $`\alpha_k`$ for the step size and $`d_k`$ for the direction of step $`k`$. Here the step size is fixed, written $`\alpha`$ (alpha), and the direction is $`d_k = -\nabla f(x_k)`$, minus the gradient ([Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md)). Counting starts at $`k = 0`$, the start point.
 
-$$x_{k+1} = x_k - \alpha\,\nabla f(x_k)$$
+```math
+x_{k+1} = x_k - \alpha\,\nabla f(x_k)
+```
 
 **Read it aloud:** the next point is this point, moved a fixed fraction of the gradient's length straight downhill.
 
-Two numbers describe the shape of the ground. The **curvature** along a direction is how fast the slope changes along it. At each point the largest and smallest curvatures are the eigenvalues $\lambda$ of the Hessian $\nabla^2 f$, the table of second derivatives ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). $L$ is the largest curvature anywhere the walk goes, called **smoothness**; $\mu$ (mu) is the smallest, called **strong convexity** when it is positive ([Convex functions](../01-Convexity/03-convex-functions-and-their-tests.md)). The length of the gradient is $\|\nabla f\|$.
+Two numbers describe the shape of the ground. The **curvature** along a direction is how fast the slope changes along it. At each point the largest and smallest curvatures are the eigenvalues $`\lambda`$ of the Hessian $`\nabla^2 f`$, the table of second derivatives ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). $`L`$ is the largest curvature anywhere the walk goes, called **smoothness**; $`\mu`$ (mu) is the smallest, called **strong convexity** when it is positive ([Convex functions](../01-Convexity/03-convex-functions-and-their-tests.md)). The length of the gradient is $`\|\nabla f\|`$.
 
-The **descent guarantee**, for a step under $2/L$:
+The **descent guarantee**, for a step under $`2/L`$:
 
-$$f(x_{k+1}) \le f(x_k) - \alpha\Bigl(1 - \frac{L\alpha}{2}\Bigr)\,\|\nabla f(x_k)\|^2$$
+```math
+f(x_{k+1}) \le f(x_k) - \alpha\Bigl(1 - \frac{L\alpha}{2}\Bigr)\,\|\nabla f(x_k)\|^2
+```
 
 **Read it aloud:** each step lowers the height by at least the step size, times a safety factor, times the slope's length squared.
 
-The **gradient bound**, for any $f$ that never goes below a number $f_{\text{low}}$, after $K$ steps:
+The **gradient bound**, for any $`f`$ that never goes below a number $`f_{\text{low}}`$, after $`K`$ steps:
 
-$$\min_{0 \le k < K} \|\nabla f(x_k)\|^2 \le \frac{f(x_0) - f_{\text{low}}}{K\,\alpha\,(1 - L\alpha/2)}$$
+```math
+\min_{0 \le k < K} \|\nabla f(x_k)\|^2 \le \frac{f(x_0) - f_{\text{low}}}{K\,\alpha\,(1 - L\alpha/2)}
+```
 
-**Read it aloud:** somewhere in the first $K$ steps the slope was small, and the guaranteed bound on its square shrinks like one over $K$.
+**Read it aloud:** somewhere in the first $`K`$ steps the slope was small, and the guaranteed bound on its square shrinks like one over $`K`$.
 
-The **linear rate**, when $\mu > 0$ and $x^*$ is the minimiser:
+The **linear rate**, when $`\mu > 0`$ and $`x^*`$ is the minimiser:
 
-$$f(x_{k+1}) - f(x^*) \le \Bigl(1 - 2\mu\alpha\Bigl(1 - \frac{L\alpha}{2}\Bigr)\Bigr)\bigl(f(x_k) - f(x^*)\bigr)$$
+```math
+f(x_{k+1}) - f(x^*) \le \Bigl(1 - 2\mu\alpha\Bigl(1 - \frac{L\alpha}{2}\Bigr)\Bigr)\bigl(f(x_k) - f(x^*)\bigr)
+```
 
-**Read it aloud:** with curvature at least $\mu$ in every direction, the height still to lose shrinks by a fixed factor every step.
+**Read it aloud:** with curvature at least $`\mu`$ in every direction, the height still to lose shrinks by a fixed factor every step.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the height being minimised | 24.2 at the start, 0 at the bottom | — |
-| $x = (x_1, x_2)$ | the two chosen numbers: a point on the map | the start $(-1.2, 1)$ | — |
-| $x_k$, $k$, $K$ | the iterate after $k$ steps; the step count; how many steps the gradient bound counts | $x_{200} = (-0.8590, 0.7459)$; $K = 200$ | larger $K$, smaller guaranteed slope |
-| $d_k$ | the direction of step $k$, here minus the gradient | $(215.6, 88)$ at the start | — |
-| $\alpha$ | the step size | 0.001 | faster, until it passes $2/L$; then steps can climb |
-| $\nabla f$, $\Vert\nabla f\Vert$ | the gradient (steepest climb) and its length | $(-215.6, -88)$; length squared 54227.36 | bigger guaranteed drop |
-| $\nabla^2 f$, $\lambda$ | the Hessian; an eigenvalue of it, the largest or smallest curvature at a point | 1001.6006 and 0.3994 at the bottom | — |
-| $L$ | the largest curvature where the walk goes | 1506.3670 on the path; 1001.6006 at the bottom | smaller safe step |
-| $\mu$ | the smallest curvature, near the bottom | 0.3994 | faster final approach |
-| $x^*$, $f(x^*)$ | the minimiser; its height | $(1, 1)$; 0 | — |
-| $f_{\text{low}}$ | a floor the height never goes under | 0, since $f$ is a sum of squares | a tighter (smaller) gradient bound |
-| $y$, $s$, $t$, $c$ | in the proof only: a second point; the move $y - x$; the fraction of the way along it; the safety constant $\alpha(1 - L\alpha/2)$ | $c = 0.001 \times 0.2468$ | larger $c$, faster guaranteed fall |
+| $`f`$ | the height being minimised | 24.2 at the start, 0 at the bottom | — |
+| $`x = (x_1, x_2)`$ | the two chosen numbers: a point on the map | the start $`(-1.2, 1)`$ | — |
+| $`x_k`$, $`k`$, $`K`$ | the iterate after $`k`$ steps; the step count; how many steps the gradient bound counts | $`x_{200} = (-0.8590, 0.7459)`$; $`K = 200`$ | larger $`K`$, smaller guaranteed slope |
+| $`d_k`$ | the direction of step $`k`$, here minus the gradient | $`(215.6, 88)`$ at the start | — |
+| $`\alpha`$ | the step size | 0.001 | faster, until it passes $`2/L`$; then steps can climb |
+| $`\nabla f`$, $`\Vert\nabla f\Vert`$ | the gradient (steepest climb) and its length | $`(-215.6, -88)`$; length squared 54227.36 | bigger guaranteed drop |
+| $`\nabla^2 f`$, $`\lambda`$ | the Hessian; an eigenvalue of it, the largest or smallest curvature at a point | 1001.6006 and 0.3994 at the bottom | — |
+| $`L`$ | the largest curvature where the walk goes | 1506.3670 on the path; 1001.6006 at the bottom | smaller safe step |
+| $`\mu`$ | the smallest curvature, near the bottom | 0.3994 | faster final approach |
+| $`x^*`$, $`f(x^*)`$ | the minimiser; its height | $`(1, 1)`$; 0 | — |
+| $`f_{\text{low}}`$ | a floor the height never goes under | 0, since $`f`$ is a sum of squares | a tighter (smaller) gradient bound |
+| $`y`$, $`s`$, $`t`$, $`c`$ | in the proof only: a second point; the move $`y - x`$; the fraction of the way along it; the safety constant $`\alpha(1 - L\alpha/2)`$ | $`c = 0.001 \times 0.2468`$ | larger $`c`$, faster guaranteed fall |
 
 ### When it holds
 
-- **Curvature at most $L$ on the ground the walk covers.** The banana has no single $L$: its curvature grows like $1200 x_1^2$ far out. From $(-2, 2)$ the curvature is 4163.4745, the step 0.001 is above $2/L$ there, and the first step climbs from 409 to 505.8398.
-- **A step under $2/L$.** On the path $2/L = 0.0013277$. At step 0.002 the guarantee is gone, and the first step climbs from 24.2 to 37.3449.
-- **A floor under $f$.** The gradient bound needs only this floor, not a bowl. A height with no floor, such as a tilted plane, can fall for ever.
-- **Positive curvature in every direction, for the linear rate.** The banana is not a bowl everywhere: above the floor its $x_1$-curvature $1200x_1^2 - 400x_2 + 2$ goes negative near $x_1 = 0$. The linear rate is a statement about the last stretch, near the bottom, where $\mu = 0.3994$.
+- **Curvature at most $`L`$ on the ground the walk covers.** The banana has no single $`L`$: its curvature grows like $`1200 x_1^2`$ far out. From $`(-2, 2)`$ the curvature is 4163.4745, the step 0.001 is above $`2/L`$ there, and the first step climbs from 409 to 505.8398.
+- **A step under $`2/L`$.** On the path $`2/L = 0.0013277`$. At step 0.002 the guarantee is gone, and the first step climbs from 24.2 to 37.3449.
+- **A floor under $`f`$.** The gradient bound needs only this floor, not a bowl. A height with no floor, such as a tilted plane, can fall for ever.
+- **Positive curvature in every direction, for the linear rate.** The banana is not a bowl everywhere: above the floor its $`x_1`$-curvature $`1200x_1^2 - 400x_2 + 2`$ goes negative near $`x_1 = 0`$. The linear rate is a statement about the last stretch, near the bottom, where $`\mu = 0.3994`$.
 - **The exact gradient.** A gradient estimated from a sample is noisy, and a fixed step then jitters around the bottom instead of settling: [Stochastic gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md).
 
 ---
@@ -89,59 +99,59 @@ $$f(x_{k+1}) - f(x^*) \le \Bigl(1 - 2\mu\alpha\Bigl(1 - \frac{L\alpha}{2}\Bigr)\
 
 ### Step 0: the slope cannot change faster than L
 
-Close up, the ground is nearly a tilted plane, and the plane says: step against the gradient by $\alpha$ and you drop by $\alpha\|\nabla f\|^2$. The plane is wrong because the ground curves. But if the curvature is at most $L$, the plane's error after a move is at most $\tfrac{L}{2}$ times the move's length squared.
+Close up, the ground is nearly a tilted plane, and the plane says: step against the gradient by $`\alpha`$ and you drop by $`\alpha\|\nabla f\|^2`$. The plane is wrong because the ground curves. But if the curvature is at most $`L`$, the plane's error after a move is at most $`\tfrac{L}{2}`$ times the move's length squared.
 
-A move of length $\alpha\|\nabla f\|$ therefore drops at least $\alpha\|\nabla f\|^2 - \tfrac{L}{2}\alpha^2\|\nabla f\|^2$. That is positive exactly when $\alpha < 2/L$. Everything else on this card is that one inequality, added up or combined with a second one.
+A move of length $`\alpha\|\nabla f\|`$ therefore drops at least $`\alpha\|\nabla f\|^2 - \tfrac{L}{2}\alpha^2\|\nabla f\|^2`$. That is positive exactly when $`\alpha < 2/L`$. Everything else on this card is that one inequality, added up or combined with a second one.
 
 ### Step 1: every step goes down
 
-The inequality in Step 0 is the **descent lemma**, proved in the fold below. On the banana's path the steepest curvature, sampled at 11 points along every step, is $L = 1506.3670$, so the limit is $2/L = 0.0013277$ and the step 0.001 is under it. The safety factor is $1 - L\alpha/2 = 0.2468$.
+The inequality in Step 0 is the **descent lemma**, proved in the fold below. On the banana's path the steepest curvature, sampled at 11 points along every step, is $`L = 1506.3670`$, so the limit is $`2/L = 0.0013277`$ and the step 0.001 is under it. The safety factor is $`1 - L\alpha/2 = 0.2468`$.
 
-At the start the gradient's length squared is 54227.36, so the promised drop for step 1 is $0.001 \times 0.2468 \times 54227.36 = 13.3842$. The actual drop is 18.8471. The check compares promise and drop at all 200 steps: the promise is kept 200 times out of 200. The promise is a floor, not a forecast.
+At the start the gradient's length squared is 54227.36, so the promised drop for step 1 is $`0.001 \times 0.2468 \times 54227.36 = 13.3842`$. The actual drop is 18.8471. The check compares promise and drop at all 200 steps: the promise is kept 200 times out of 200. The promise is a floor, not a forecast.
 
 ### Step 2: the slope must get small, at a rate of one over K
 
-Add the guarantee over $K$ steps. The drops add up to at most the total height available, $f(x_0) - f_{\text{low}}$, so the slopes squared, weighted by $\alpha(1 - L\alpha/2)$, add up to at most that too. The smallest of $K$ numbers is at most their average. That is the gradient bound, and it needs no bowl: it holds on any smooth ground with a floor.
+Add the guarantee over $`K`$ steps. The drops add up to at most the total height available, $`f(x_0) - f_{\text{low}}`$, so the slopes squared, weighted by $`\alpha(1 - L\alpha/2)`$, add up to at most that too. The smallest of $`K`$ numbers is at most their average. That is the gradient bound, and it needs no bowl: it holds on any smooth ground with a floor.
 
-On the banana, $f_{\text{low}} = 0$ and $K = 200$ give a bound of 490.2427 for the smallest slope squared. The walk's smallest is 3.1497. The bound is honest but loose, and it promises only a flat spot, not a minimum: a saddle or a ridge top is flat too.
+On the banana, $`f_{\text{low}} = 0`$ and $`K = 200`$ give a bound of 490.2427 for the smallest slope squared. The walk's smallest is 3.1497. The bound is honest but loose, and it promises only a flat spot, not a minimum: a saddle or a ridge top is flat too.
 
 ### Step 3: strong convexity turns a small slope into a small error
 
-On ground with curvature at least $\mu$ in every direction, a slope of length $\|\nabla f\|$ means the bottom is at most $\|\nabla f\|^2/(2\mu)$ below you. Turn that around: $\|\nabla f\|^2 \ge 2\mu\,(f(x) - f(x^*))$. Put it into the descent guarantee and each step removes at least the fraction $2\mu\alpha(1 - L\alpha/2)$ of the height still to lose. That is the linear rate: "linear" because the logarithm of the error falls in a straight line.
+On ground with curvature at least $`\mu`$ in every direction, a slope of length $`\|\nabla f\|`$ means the bottom is at most $`\|\nabla f\|^2/(2\mu)`$ below you. Turn that around: $`\|\nabla f\|^2 \ge 2\mu\,(f(x) - f(x^*))`$. Put it into the descent guarantee and each step removes at least the fraction $`2\mu\alpha(1 - L\alpha/2)`$ of the height still to lose. That is the linear rate: "linear" because the logarithm of the error falls in a straight line.
 
-At the banana's bottom the curvatures are $L = 1001.6006$ and $\mu = 0.3994$. The theorem needs bounds that hold over the whole region the walk covers; taking these values from the bottom point alone, its factor per step is 0.999601. The walk, measured between steps 17,000 and 17,001, shrinks its height by 0.999201 per step: inside the bound.
+At the banana's bottom the curvatures are $`L = 1001.6006`$ and $`\mu = 0.3994`$. The theorem needs bounds that hold over the whole region the walk covers; taking these values from the bottom point alone, its factor per step is 0.999601. The walk, measured between steps 17,000 and 17,001, shrinks its height by 0.999201 per step: inside the bound.
 
 <details>
 <summary>Detailed proof: the descent lemma, the gradient bound and the linear rate</summary>
 
-Suppose the gradient changes by at most $L$ times the distance moved: $\|\nabla f(y) - \nabla f(x)\| \le L\|y - x\|$ on a convex region holding the walk. For a twice-differentiable $f$ this is every curvature lying between $-L$ and $L$ there.
+Suppose the gradient changes by at most $`L`$ times the distance moved: $`\|\nabla f(y) - \nabla f(x)\| \le L\|y - x\|`$ on a convex region holding the walk. For a twice-differentiable $`f`$ this is every curvature lying between $`-L`$ and $`L`$ there.
 
-**Descent lemma.** Write $s = y - x$. By the fundamental theorem of calculus along the segment,
+**Descent lemma.** Write $`s = y - x`$. By the fundamental theorem of calculus along the segment,
 
-$$f(y) - f(x) - \nabla f(x)\cdot s = \int_0^1 \bigl(\nabla f(x + ts) - \nabla f(x)\bigr)\cdot s\,dt \le \int_0^1 L\,t\,\|s\|^2\,dt = \frac{L}{2}\|s\|^2,$$
+$`\displaystyle f(y) - f(x) - \nabla f(x)\cdot s = \int_0^1 \bigl(\nabla f(x + ts) - \nabla f(x)\bigr)\cdot s\,dt \le \int_0^1 L\,t\,\|s\|^2\,dt = \frac{L}{2}\|s\|^2,`$
 
-using the Cauchy–Schwarz inequality inside the integral. Put $s = -\alpha\nabla f(x)$: then $f(y) \le f(x) - \alpha\|\nabla f(x)\|^2 + \frac{L\alpha^2}{2}\|\nabla f(x)\|^2$, which is the guarantee.
+using the Cauchy–Schwarz inequality inside the integral. Put $`s = -\alpha\nabla f(x)`$: then $`f(y) \le f(x) - \alpha\|\nabla f(x)\|^2 + \frac{L\alpha^2}{2}\|\nabla f(x)\|^2`$, which is the guarantee.
 
-**Gradient bound.** Write $c = \alpha(1 - L\alpha/2) > 0$. Summing the guarantee for $k = 0, \dots, K-1$, the heights telescope: $c\sum_{k<K}\|\nabla f(x_k)\|^2 \le f(x_0) - f(x_K) \le f(x_0) - f_{\text{low}}$. The minimum of the $K$ terms is at most their mean, which gives the bound.
+**Gradient bound.** Write $`c = \alpha(1 - L\alpha/2) > 0`$. Summing the guarantee for $`k = 0, \dots, K-1`$, the heights telescope: $`c\sum_{k<K}\|\nabla f(x_k)\|^2 \le f(x_0) - f(x_K) \le f(x_0) - f_{\text{low}}`$. The minimum of the $`K`$ terms is at most their mean, which gives the bound.
 
-**Linear rate.** Strong convexity with $\mu > 0$ says $f(y) \ge f(x) + \nabla f(x)\cdot(y - x) + \frac{\mu}{2}\|y - x\|^2$ for all $x, y$. The right side is smallest at $y = x - \nabla f(x)/\mu$, where it equals $f(x) - \|\nabla f(x)\|^2/(2\mu)$. Taking $y = x^*$ on the left gives $f(x^*) \ge f(x) - \|\nabla f(x)\|^2/(2\mu)$, so $\|\nabla f(x)\|^2 \ge 2\mu\,(f(x) - f(x^*))$. Subtract $f(x^*)$ from both sides of the guarantee and use this:
+**Linear rate.** Strong convexity with $`\mu > 0`$ says $`f(y) \ge f(x) + \nabla f(x)\cdot(y - x) + \frac{\mu}{2}\|y - x\|^2`$ for all $`x, y`$. The right side is smallest at $`y = x - \nabla f(x)/\mu`$, where it equals $`f(x) - \|\nabla f(x)\|^2/(2\mu)`$. Taking $`y = x^*`$ on the left gives $`f(x^*) \ge f(x) - \|\nabla f(x)\|^2/(2\mu)`$, so $`\|\nabla f(x)\|^2 \ge 2\mu\,(f(x) - f(x^*))`$. Subtract $`f(x^*)`$ from both sides of the guarantee and use this:
 
-$$f(x_{k+1}) - f(x^*) \le f(x_k) - f(x^*) - c\cdot 2\mu\,\bigl(f(x_k) - f(x^*)\bigr) = (1 - 2\mu c)\bigl(f(x_k) - f(x^*)\bigr).$$
+$`\displaystyle f(x_{k+1}) - f(x^*) \le f(x_k) - f(x^*) - c\cdot 2\mu\,\bigl(f(x_k) - f(x^*)\bigr) = (1 - 2\mu c)\bigl(f(x_k) - f(x^*)\bigr).`$
 
-At $\alpha = 1/L$ the factor is $1 - \mu/L$, the best this argument gives.
+At $`\alpha = 1/L`$ the factor is $`1 - \mu/L`$, the best this argument gives.
 
 </details>
 
 ### Step 4: in a stretched bowl the factors are exact, and one of them zigzags
 
-Near its bottom the banana is almost exactly a bowl: the quadratic model whose Hessian is $\nabla^2 f(1, 1)$, with rows 802, −400 and −400, 200. The check scans 3600 directions and finds the curvatures 1001.6005 and 0.3995, against 1001.6006 and 0.3994 from the formula. The steep direction runs across the valley floor; the gentle one runs along it.
+Near its bottom the banana is almost exactly a bowl: the quadratic model whose Hessian is $`\nabla^2 f(1, 1)`$, with rows 802, −400 and −400, 200. The check scans 3600 directions and finds the curvatures 1001.6005 and 0.3995, against 1001.6006 and 0.3994 from the formula. The steep direction runs across the valley floor; the gentle one runs along it.
 
-In a bowl the gradient is the Hessian times the error $x - x^*$, so one step multiplies the error along each curvature direction by exactly $1 - \alpha\lambda$. Two things follow.
+In a bowl the gradient is the Hessian times the error $`x - x^*`$, so one step multiplies the error along each curvature direction by exactly $`1 - \alpha\lambda`$. Two things follow.
 
-- **Across the floor**, $\lambda = 1001.6006$. If $\alpha\lambda > 1$, the factor is negative: the error flips side every step. That is the zigzag. It dies quickly when the factor is near 0 and lingers when it is near −1. Past $\alpha = 2/\lambda = 0.0019968$ it is below −1 and the zigzag grows.
-- **Along the floor**, $\lambda = 0.3994$, and the factor $1 - 0.001 \times 0.3994 = 0.999601$ is almost 1. The height counts the error squared, so it shrinks by $0.999601^2 = 0.999201$ per step: the value the banana walk measured. A tenfold drop takes 2882 steps.
+- **Across the floor**, $`\lambda = 1001.6006`$. If $`\alpha\lambda > 1`$, the factor is negative: the error flips side every step. That is the zigzag. It dies quickly when the factor is near 0 and lingers when it is near −1. Past $`\alpha = 2/\lambda = 0.0019968`$ it is below −1 and the zigzag grows.
+- **Along the floor**, $`\lambda = 0.3994`$, and the factor $`1 - 0.001 \times 0.3994 = 0.999601`$ is almost 1. The height counts the error squared, so it shrinks by $`0.999601^2 = 0.999201`$ per step: the value the banana walk measured. A tenfold drop takes 2882 steps.
 
-No fixed step helps much: the step must stay under $2/1001.6006$ for the across direction, so the along direction never gets a factor much below $1 - 2 \times 0.3994/1001.6006$. The ratio of the two curvatures, 2508.0 here, sets the pace; [Convergence rates](03-rates-of-convergence-and-conditioning.md) names it and measures its cost. [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md) remove it by using the curvature itself.
+No fixed step helps much: the step must stay under $`2/1001.6006`$ for the across direction, so the along direction never gets a factor much below $`1 - 2 \times 0.3994/1001.6006`$. The ratio of the two curvatures, 2508.0 here, sets the pace; [Convergence rates](03-rates-of-convergence-and-conditioning.md) names it and measures its cost. [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md) remove it by using the curvature itself.
 
 ---
 
@@ -151,15 +161,15 @@ The first step, then the pace at the bottom.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| height at the start | $(1 + 1.2)^2 + 100\,(1 - 1.44)^2 = 4.84 + 19.36$ | 24.2 |
-| gradient at the start | $(-2 \times 2.2 - 400 \times (-1.2) \times (-0.44),\ 200 \times (-0.44))$ | $(-215.6, -88)$ |
-| step 1 | $(-1.2 + 0.001 \times 215.6,\ 1 + 0.001 \times 88)$ | $(-0.9844, 1.0880)$, height 5.3529 |
-| slope length squared | $215.6^2 + 88^2 = 46483.36 + 7744$ | 54227.36 |
-| safety factor | $1 - 1506.3670 \times 0.001 / 2$ | 0.2468 |
-| promised drop | $0.001 \times 0.2468 \times 54227.36$ | 13.3842, against 18.8471 actual |
-| along-floor factor | $1 - 0.001 \times 0.3994$ | 0.999601 |
-| height factor per step | $0.999601^2$ | 0.999201 |
-| steps for a tenfold drop | $\ln 10 \div (-\ln 0.999201)$ | **2882 steps** |
+| height at the start | $`(1 + 1.2)^2 + 100\,(1 - 1.44)^2 = 4.84 + 19.36`$ | 24.2 |
+| gradient at the start | $`(-2 \times 2.2 - 400 \times (-1.2) \times (-0.44),\ 200 \times (-0.44))`$ | $`(-215.6, -88)`$ |
+| step 1 | $`(-1.2 + 0.001 \times 215.6,\ 1 + 0.001 \times 88)`$ | $`(-0.9844, 1.0880)`$, height 5.3529 |
+| slope length squared | $`215.6^2 + 88^2 = 46483.36 + 7744`$ | 54227.36 |
+| safety factor | $`1 - 1506.3670 \times 0.001 / 2`$ | 0.2468 |
+| promised drop | $`0.001 \times 0.2468 \times 54227.36`$ | 13.3842, against 18.8471 actual |
+| along-floor factor | $`1 - 0.001 \times 0.3994`$ | 0.999601 |
+| height factor per step | $`0.999601^2`$ | 0.999201 |
+| steps for a tenfold drop | $`\ln 10 \div (-\ln 0.999201)`$ | **2882 steps** |
 
 Every 2882 steps buys one more correct digit of height, which is why 200 steps along the floor barely register and 17,082 are needed to come within 0.001.
 
@@ -167,11 +177,11 @@ Every 2882 steps buys one more correct digit of height, which is why 200 steps a
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Step 0.002, above $2/L = 0.0013277$ | height 37.3449 after step 1, up from 24.2 | The steep wall overshoots: the guarantee needs the step under $2/L$ |
-| Start at $(-2, 2)$ with step 0.001 | height 505.8398 after step 1, up from 409 | Curvature there is 4163.4745: the banana's $L$ holds only on a region |
+| Step 0.002, above $`2/L = 0.0013277`$ | height 37.3449 after step 1, up from 24.2 | The steep wall overshoots: the guarantee needs the step under $`2/L`$ |
+| Start at $`(-2, 2)`$ with step 0.001 | height 505.8398 after step 1, up from 409 | Curvature there is 4163.4745: the banana's $`L`$ holds only on a region |
 | Stepping with the gradient, not against it | height 56216.2293 after 3 steps | The gradient points uphill |
 | Stopping when one step drops less than 0.01 | stops at step 3, still 2.0278 from the bottom | A slow floor looks like a finished walk |
-| Step 0.0021 in the stretched bowl | across-floor error 24.4701 after 50 steps, from 0.1790 | Factor −1.1034: past $2/\lambda$ the zigzag grows |
+| Step 0.0021 in the stretched bowl | across-floor error 24.4701 after 50 steps, from 0.1790 | Factor −1.1034: past $`2/\lambda`$ the zigzag grows |
 
 ---
 
@@ -181,7 +191,7 @@ The puzzle: a bigger step should be faster. Across the valley it is, up to a poi
 
 ### One story: the across-floor error at step 0.0019
 
-The stretched bowl, started at $(0.8, 1)$: 0.1790 across the floor and 0.0893 along it. Step 0.0019 gives an across factor of −0.9030.
+The stretched bowl, started at $`(0.8, 1)`$: 0.1790 across the floor and 0.0893 along it. Step 0.0019 gives an across factor of −0.9030.
 
 | Step | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -191,7 +201,7 @@ The sign flips every step: the walk bounces from wall to wall. After 50 steps th
 
 ### One force at a time: the step size, across the floor
 
-How much of the across-floor error survives one step (the size of $1 - \alpha\lambda$):
+How much of the across-floor error survives one step (the size of $`1 - \alpha\lambda`$):
 
 ```
 step 0.001     ▏                                         0.0016
@@ -223,7 +233,7 @@ The one line is the height of the banana walk, as a power of ten. The first drop
 
 ## Code, from first principles, and it actually runs
 
-The code runs the walk on the banana and checks each claim by a second road: the gradient formula against central differences of the height (the change in height across a tiny step either side); the closed-form curvatures against a scan of 3600 directions; the descent promise against the actual drop at every step; the predicted rate $(1 - \alpha\mu)^2$ against the ratio measured deep in the run; and the bowl's iteration against its closed form $(1 - \alpha\lambda)^{50}$. Five roads, plus the certificate that $f \ge 0$ with $f(1, 1) = 0$.
+The code runs the walk on the banana and checks each claim by a second road: the gradient formula against central differences of the height (the change in height across a tiny step either side); the closed-form curvatures against a scan of 3600 directions; the descent promise against the actual drop at every step; the predicted rate $`(1 - \alpha\mu)^2`$ against the ratio measured deep in the run; and the bowl's iteration against its closed form $`(1 - \alpha\lambda)^{50}`$. Five roads, plus the certificate that $`f \ge 0`$ with $`f(1, 1) = 0`$.
 
 ### Python
 
@@ -533,16 +543,16 @@ The two outputs match line for line.
 
 Lean proves the three theorems for every height that meets their conditions, over any number of chosen numbers, and checks the banana's numbers as exact fractions.
 
-- The conditions: a convex region holds the whole walk. On it, the gradient changes by at most $L$ times the distance moved. The step $\alpha$ is positive and under $2/L$.
-- Then every step lowers the height by at least $\alpha(1 - L\alpha/2)$ times the slope's length squared. Where the slope is not zero, the height falls strictly.
-- Suppose the height never goes below $f_{\text{low}}$. Then some slope squared in the first $K$ steps is at most $(f(x_0) - f_{\text{low}})/(K\alpha(1 - L\alpha/2))$.
-- Suppose also the curvature is at least $\mu > 0$ in every direction on the region, and $x^*$ is the region's lowest point. Then the height still to lose shrinks by the factor $1 - 2\mu\alpha(1 - L\alpha/2)$ every step.
-- The start $(-1.2, 1)$ has height 24.2 and gradient $(-215.6, -88)$. The slope's length squared there is 54227.36.
-- Step 1 lands at $(-0.9844, 1.0880)$, with height between 5.35 and 5.36.
+- The conditions: a convex region holds the whole walk. On it, the gradient changes by at most $`L`$ times the distance moved. The step $`\alpha`$ is positive and under $`2/L`$.
+- Then every step lowers the height by at least $`\alpha(1 - L\alpha/2)`$ times the slope's length squared. Where the slope is not zero, the height falls strictly.
+- Suppose the height never goes below $`f_{\text{low}}`$. Then some slope squared in the first $`K`$ steps is at most $`(f(x_0) - f_{\text{low}})/(K\alpha(1 - L\alpha/2))`$.
+- Suppose also the curvature is at least $`\mu > 0`$ in every direction on the region, and $`x^*`$ is the region's lowest point. Then the height still to lose shrinks by the factor $`1 - 2\mu\alpha(1 - L\alpha/2)`$ every step.
+- The start $`(-1.2, 1)`$ has height 24.2 and gradient $`(-215.6, -88)`$. The slope's length squared there is 54227.36.
+- Step 1 lands at $`(-0.9844, 1.0880)`$, with height between 5.35 and 5.36.
 - Step 0.002 climbs from 24.2 to between 37 and 38.
-- The far start $(-2, 2)$ has height 409, and step 0.001 climbs to between 505 and 506.
-- At $(-2, 2)$ the steepest curvature is above 2000, so step 0.001 is above $2/L$ there.
-- The certificate: the height is 0 at $(1, 1)$, the gradient is zero there, and the height is never below 0.
+- The far start $`(-2, 2)`$ has height 409, and step 0.001 climbs to between 505 and 506.
+- At $`(-2, 2)`$ the steepest curvature is above 2000, so step 0.001 is above $`2/L`$ there.
+- The certificate: the height is 0 at $`(1, 1)`$, the gradient is zero there, and the height is never below 0.
 - At the bottom both curvatures are positive, and the steeper one is above 1000.
 
 The decimals, the 200-step walk, the zigzag counts and the measured rates are left to the Python and Rust checks.
@@ -839,8 +849,8 @@ example : (1200 * 1 ^ 2 - 400 * 1 + 2 : ℚ) = 802 ∧ (802 + 200 : ℚ) = 1002 
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to the step 0.001 and the start $(-1.2, 1)$, so a change may stop the program.
-> - **Guess first: does step 0.002 still go down every time?** In the line that sets `x0, alpha, xs`, set `alpha` to `0.002`. No: the first step climbs to 37.3449. The step is above $2/L = 0.0013277$, so no step carries a promise, the count of kept promises falls to 0, and its assert stops the program.
+> Guess first, then run it. The asserts are pinned to the step 0.001 and the start $`(-1.2, 1)`$, so a change may stop the program.
+> - **Guess first: does step 0.002 still go down every time?** In the line that sets `x0, alpha, xs`, set `alpha` to `0.002`. No: the first step climbs to 37.3449. The step is above $`2/L = 0.0013277`$, so no step carries a promise, the count of kept promises falls to 0, and its assert stops the program.
 > - **Guess first: does a far start matter?** Set `x0` to `[-2.0, 2.0]`. The steepest curvature on the path becomes 4163.4745, the first step climbs from 409 to 505.8398, and the same assert stops it.
 > - **Guess first: does a bigger step zigzag more?** Read the reversal line first: 1 reversal at 0.001, 4 at 0.0013, 13 at 0.0017. Then set `alpha` to `0.0017`. The walk still goes down, but 0.0017 is above 0.0013277, so the theorem promises nothing: the count falls to 0 and the assert stops it.
 
@@ -849,9 +859,9 @@ example : (1200 * 1 ^ 2 - 400 * 1 + 2 : ℚ) = 802 ∧ (802 + 200 : ℚ) = 1002 
 ## The usual mistake
 
 > [!warning]
-> **Reading a slow walk as a finished one.** Step 3 lowers the banana's height by less than 0.01. A stop rule on that halts at step 3, still 2.0278 from the bottom. The walk has not arrived. It is crawling along a flat floor at a factor of 0.999201 per step. Stop on the gradient's length, or on a certificate, and quote the start, the test and its tolerance: here, 17,082 steps from $(-1.2, 1)$ to within 0.001.
+> **Reading a slow walk as a finished one.** Step 3 lowers the banana's height by less than 0.01. A stop rule on that halts at step 3, still 2.0278 from the bottom. The walk has not arrived. It is crawling along a flat floor at a factor of 0.999201 per step. Stop on the gradient's length, or on a certificate, and quote the start, the test and its tolerance: here, 17,082 steps from $`(-1.2, 1)`$ to within 0.001.
 >
-> - **Taking $L$ from the bottom only.** There $2/L = 0.0019968$, but on the path the steepest curvature is 1506.3670 and the limit is 0.0013277. Step 0.002 climbs to 37.3449 on step 1.
+> - **Taking $`L`$ from the bottom only.** There $`2/L = 0.0019968`$, but on the path the steepest curvature is 1506.3670 and the limit is 0.0013277. Step 0.002 climbs to 37.3449 on step 1.
 > - **Quoting the linear rate from the start.** The rate needs positive curvature everywhere the walk goes. The banana has it only near the bottom; in the first 200 steps the height fell from 24.2 to 3.4622 by no fixed factor.
 > - **Raising the step to beat the crawl.** The along-floor factor moves from 0.999601 to 0.999161 as the step doubles, while the across-floor factor reaches −1.1034 and the zigzag grows.
 
@@ -871,14 +881,14 @@ example : (1200 * 1 ^ 2 - 400 * 1 + 2 : ℚ) = 802 ∧ (802 + 200 : ℚ) = 1002 
 
 ## What this builds on
 
-- [Optimality conditions](01-optimality-conditions.md): a flat slope and upward curvature at $(1, 1)$, the target this walk is aiming for.
+- [Optimality conditions](01-optimality-conditions.md): a flat slope and upward curvature at $`(1, 1)`$, the target this walk is aiming for.
 - [Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md): why minus the gradient is the steepest way down.
 - [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): the same walk run on a regression, with the step limit on a quadratic loss and the noisy version.
 
 ## Where this goes next
 
 - [Convergence rates](03-rates-of-convergence-and-conditioning.md): linear, superlinear and quadratic rates, and what the curvature ratio 2508.0 costs.
-- [Line search](04-line-search-armijo-and-wolfe.md): choosing each step $\alpha_k$ as the walk goes, with no $L$ known in advance.
+- [Line search](04-line-search-armijo-and-wolfe.md): choosing each step $`\alpha_k`$ as the walk goes, with no $`L`$ known in advance.
 - [Proximal gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/06-proximal-methods-ista-fista-and-the-lasso.md): the same step, followed by a shrink, for costs with a corner.
 - [Stochastic gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md): the noisy gradient, and the shrinking steps that make it settle.
 - Riemannian gradient descent (planned): stepping downhill on a curved surface instead of a flat map.

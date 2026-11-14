@@ -10,7 +10,9 @@ A hiker stands in a bowl-shaped valley, 1 km north of its lowest point. The map 
 
 Measure x km east and y km north of the valley floor, and height in hundreds of metres. The ground rises 2x + y hundred metres per km going east, and x + 2y going north. A small step dx east and dy north changes the height by about (2x + y)dx + (x + 2y)dy. Walking level means that change is zero:
 
-$$(2x + y)\,dx + (x + 2y)\,dy = 0.$$
+```math
+(2x + y)\,dx + (x + 2y)\,dy = 0.
+```
 
 That is a differential equation for the path, solved by rebuilding the lost map: if one height function has these slopes, the level paths are its contours. Here the height is x^2 + xy + y^2, and the level paths are the ellipses x^2 + xy + y^2 = C, one for each height C.
 
@@ -30,32 +32,38 @@ To scale, 50 px per km, floor where the axes cross. Rings: the 25, 100 and 225 m
 
 ## The formula
 
-Notation first, in words. $M\,dx + N\,dy = 0$ says a small step $dx$ east and $dy$ north changes the hidden quantity by nothing. On a path y(x) it means $M + N y' = 0$: the slope is $y' = -M/N$. A **partial derivative** $\partial M/\partial y$ is M's rate as y moves with x held fixed ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
+Notation first, in words. $`M\,dx + N\,dy = 0`$ says a small step $`dx`$ east and $`dy`$ north changes the hidden quantity by nothing. On a path y(x) it means $`M + N y' = 0`$: the slope is $`y' = -M/N`$. A **partial derivative** $`\partial M/\partial y`$ is M's rate as y moves with x held fixed ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
 
 The test for exactness:
 
-$$\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$$
+```math
+\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}
+```
 
-When it passes, there is a function $F$ with $\partial F/\partial x = M$ and $\partial F/\partial y = N$, built by integrating twice:
+When it passes, there is a function $`F`$ with $`\partial F/\partial x = M`$ and $`\partial F/\partial y = N`$, built by integrating twice:
 
-$$F(x, y) = \int M\,dx + g(y), \qquad g'(y) = N - \frac{\partial}{\partial y}\int M\,dx,$$
+```math
+F(x, y) = \int M\,dx + g(y), \qquad g'(y) = N - \frac{\partial}{\partial y}\int M\,dx,
+```
 
 and the solutions are the level curves
 
-$$F(x, y) = C.$$
+```math
+F(x, y) = C.
+```
 
 **Read it aloud:** if M's rate going north equals N's rate going east, integrate M in x, fix the leftover piece in y by matching N, and each solution holds F at one value.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | km east and north of the valley floor | start at (0, 1) | — |
-| $M$, $N$ | slopes of the ground east and north, 100 m per km | 2x + y and x + 2y; 1 and 2 at the start | — |
-| $\partial M/\partial y$, $\partial N/\partial x$ | M's rate going north, N's going east | both 1 | unequal: no F |
-| $F$ | the hidden function: height, in hundreds of metres | x^2 + xy + y^2 | — |
-| $g$ | the leftover from integrating in x, a function of y | y^2 | — |
-| $C$ | the level held along a solution | 1, the 100 m contour | a larger ring |
-| $y'$ | the path's slope, km north per km east | −0.5 at the start | — |
-| $dx$, $dy$ | a small step east and north, in km | — | — |
+| $`x`$, $`y`$ | km east and north of the valley floor | start at (0, 1) | — |
+| $`M`$, $`N`$ | slopes of the ground east and north, 100 m per km | 2x + y and x + 2y; 1 and 2 at the start | — |
+| $`\partial M/\partial y`$, $`\partial N/\partial x`$ | M's rate going north, N's going east | both 1 | unequal: no F |
+| $`F`$ | the hidden function: height, in hundreds of metres | x^2 + xy + y^2 | — |
+| $`g`$ | the leftover from integrating in x, a function of y | y^2 | — |
+| $`C`$ | the level held along a solution | 1, the 100 m contour | a larger ring |
+| $`y'`$ | the path's slope, km north per km east | −0.5 at the start | — |
+| $`dx`$, $`dy`$ | a small step east and north, in km | — | — |
 
 ### When it holds
 
@@ -72,34 +80,38 @@ $$F(x, y) = C.$$
 
 Suppose F has slopes M and N. Along a path y(x), the two-variable chain rule gives F's rate:
 
-$$\frac{d}{dx}F(x, y(x)) = \frac{\partial F}{\partial x} + \frac{\partial F}{\partial y}\,y' = M + N y'.$$
+```math
+\frac{d}{dx}F(x, y(x)) = \frac{\partial F}{\partial x} + \frac{\partial F}{\partial y}\,y' = M + N y'.
+```
 
 The equation says this is zero, so F is constant along every solution; and every smooth path along a level of F solves the equation. Solving and drawing contours are one job.
 
 ### Step 1: the test is necessary
 
-If F exists, $\partial M/\partial y$ is F differentiated in x then y, and $\partial N/\partial x$ the same in the other order. With continuous second partials the order does not matter: the off-diagonal entries of the Hessian, the table of F's second partials, agree ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). Unequal partials mean no F.
+If F exists, $`\partial M/\partial y`$ is F differentiated in x then y, and $`\partial N/\partial x`$ the same in the other order. With continuous second partials the order does not matter: the off-diagonal entries of the Hessian, the table of F's second partials, agree ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). Unequal partials mean no F.
 
 ### Step 2: the test is sufficient, and integrating twice builds F
 
 Integrate M = 2x + y in x, holding y fixed: x^2 + xy. The constant of integration may depend on y; call it g(y). The y-rate of x^2 + xy + g(y) must equal N = x + 2y:
 
-$$x + g'(y) = x + 2y.$$
+```math
+x + g'(y) = x + 2y.
+```
 
-The x cancels: g'(y) = 2y, g(y) = y^2, F = x^2 + xy + y^2. The cancellation is the test at work: in general the leftover's x-rate is $\partial N/\partial x - \partial M/\partial y$, zero by the test, so one more integral in y finishes F.
+The x cancels: g'(y) = 2y, g(y) = y^2, F = x^2 + xy + y^2. The cancellation is the test at work: in general the leftover's x-rate is $`\partial N/\partial x - \partial M/\partial y`$, zero by the test, so one more integral in y finishes F.
 
 <details>
 <summary>Detailed proof: on a rectangle, a passed test builds F</summary>
 
 Let M and N have continuous first partials on an open rectangle containing (a, b), with matching mixed partials. Define
 
-$$F(x, y) = \int_a^x M(s, b)\,ds + \int_b^y N(x, t)\,dt.$$
+$`\displaystyle F(x, y) = \int_a^x M(s, b)\,ds + \int_b^y N(x, t)\,dt.`$
 
 The first term has no y, so the y-rate of F is N(x, y).
 
 For the x-rate, differentiate under the integral sign, allowed since N's x-rate is continuous:
 
-$$\frac{\partial F}{\partial x} = M(x, b) + \int_b^y \frac{\partial N}{\partial x}(x, t)\,dt = M(x, b) + \int_b^y \frac{\partial M}{\partial y}(x, t)\,dt = M(x, b) + M(x, y) - M(x, b) = M(x, y).$$
+$`\displaystyle \frac{\partial F}{\partial x} = M(x, b) + \int_b^y \frac{\partial N}{\partial x}(x, t)\,dt = M(x, b) + \int_b^y \frac{\partial M}{\partial y}(x, t)\,dt = M(x, b) + M(x, y) - M(x, b) = M(x, y).`$
 
 The middle step is the test; the last is the fundamental theorem of calculus. The rectangle keeps both legs inside the region; around a hole the angle form shows the conclusion can fail. Two such F differ by a constant.
 
@@ -109,7 +121,9 @@ The middle step is the test; the last is the fundamental theorem of calculus. Th
 
 At the start (0, 1), F = 1: the path is the 100 m ring x^2 + xy + y^2 = 1. As a quadratic in y,
 
-$$y = \frac{-x + \sqrt{4 - 3x^2}}{2},$$
+```math
+y = \frac{-x + \sqrt{4 - 3x^2}}{2},
+```
 
 the branch through (0, 1), valid for x within 1.1547 km of zero. At x = 0.5 the hiker is 0.6514 km north; at x = 1, due east of the floor.
 

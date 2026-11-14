@@ -38,40 +38,48 @@ Orange, the straight line: good and bad news equally likely. The spread is the i
 
 ## The formula
 
-Notation first. $E[V \mid \text{buy}]$ is the average of the value over the situations in which a buy arrives, each weighted by how likely it is; read "the expected value given a buy" ([Bayes' rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md) supplies the conditioning).
+Notation first. $`E[V \mid \text{buy}]`$ is the average of the value over the situations in which a buy arrives, each weighted by how likely it is; read "the expected value given a buy" ([Bayes' rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md) supplies the conditioning).
 
-$$A = E[V \mid \text{buy}] = v_L + \Delta\,h_B, \qquad B = E[V \mid \text{sell}] = v_L + \Delta\,h_S$$
+```math
+A = E[V \mid \text{buy}] = v_L + \Delta\,h_B, \qquad B = E[V \mid \text{sell}] = v_L + \Delta\,h_S
+```
 
-$$s = A - B = \Delta\,\frac{4\mu\,\pi(1-\pi)}{1-\mu^2(2\pi-1)^2}$$
+```math
+s = A - B = \Delta\,\frac{4\mu\,\pi(1-\pi)}{1-\mu^2(2\pi-1)^2}
+```
 
 **Read it aloud:** the ask is the value expected once a buyer shows up, the bid the value expected once a seller shows up, and the spread is the gap between the two values scaled by how far one order moves the odds.
 
-With even odds, $\pi = 1/2$, the bottom of the fraction is 1 and the top is $\mu$, so the spread is just $s = \mu\Delta$.
+With even odds, $`\pi = 1/2`$, the bottom of the fraction is 1 and the top is $`\mu`$, so the spread is just $`s = \mu\Delta`$.
 
 The two probabilities after an order come from Bayes' rule:
 
-$$h_B = \frac{\pi(1+\mu)}{1+\mu(2\pi-1)}, \qquad h_S = \frac{\pi(1-\mu)}{1-\mu(2\pi-1)}$$
+```math
+h_B = \frac{\pi(1+\mu)}{1+\mu(2\pi-1)}, \qquad h_S = \frac{\pi(1-\mu)}{1-\mu(2\pi-1)}
+```
 
 Roll's reverse formula reads the spread from trade prices alone. Cov is covariance: the average product of two quantities' deviations from their averages; negative means they tend to move opposite ways.
 
-$$\gamma_1 = \operatorname{Cov}(R_t, R_{t-1}) = -c^2, \qquad s = 2c = 2\sqrt{-\gamma_1}$$
+```math
+\gamma_1 = \mathrm{Cov}(R_t, R_{t-1}) = -c^2, \qquad s = 2c = 2\sqrt{-\gamma_1}
+```
 
 **Read it aloud:** the covariance of successive price changes is minus the square of the half-spread, so twice the square root of its size is the spread.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | Acme's value once the news is out | $99.80 or $100.20 | — |
-| $v_L$, $v_H$ | the two possible values | 9,980 and 10,020 cents | both up together: spread unchanged |
-| $\Delta$ | the gap $v_H - v_L$ | 40 cents | spread grows in proportion |
-| $\pi$ | the dealer's chance of good news, before the order | 0.5 | spread shrinks as $\pi$ moves from 0.5 toward 0 or 1 |
-| $\mu$ | the share of traders who know $V$ (Greek "mu") | 0.10 | spread widens, up to $\Delta$ at $\mu = 1$ |
-| $A$, $B$ | the ask and the bid, the dealer's two quotes | $100.02 and $99.98 | — |
-| $s$, $c$ | the spread $A - B$, and the half-spread $c = s/2$ | 4 cents and 2 cents | — |
-| $h_B$, $h_S$ | the probability of good news after a buy, after a sell | 0.55 and 0.45 | — |
-| $P_t$, $R_t$ | price of trade number t, and its change from the trade before | a string of trades | — |
-| $M_t$, $\varepsilon_t$ | the unseen fair price midway between quotes, and its news step | news of 1 cent a trade | noisier prices, same covariance |
-| $Q_t$ | the side of trade t: +1 at the ask, −1 at the bid | ±1 | — |
-| $\gamma_1$ | the lag-one covariance of price changes (Greek "gamma") | −4 square cents | more negative: wider implied spread |
+| $`V`$ | Acme's value once the news is out | $99.80 or $100.20 | — |
+| $`v_L`$, $`v_H`$ | the two possible values | 9,980 and 10,020 cents | both up together: spread unchanged |
+| $`\Delta`$ | the gap $`v_H - v_L`$ | 40 cents | spread grows in proportion |
+| $`\pi`$ | the dealer's chance of good news, before the order | 0.5 | spread shrinks as $`\pi`$ moves from 0.5 toward 0 or 1 |
+| $`\mu`$ | the share of traders who know $`V`$ (Greek "mu") | 0.10 | spread widens, up to $`\Delta`$ at $`\mu = 1`$ |
+| $`A`$, $`B`$ | the ask and the bid, the dealer's two quotes | $100.02 and $99.98 | — |
+| $`s`$, $`c`$ | the spread $`A - B`$, and the half-spread $`c = s/2`$ | 4 cents and 2 cents | — |
+| $`h_B`$, $`h_S`$ | the probability of good news after a buy, after a sell | 0.55 and 0.45 | — |
+| $`P_t`$, $`R_t`$ | price of trade number t, and its change from the trade before | a string of trades | — |
+| $`M_t`$, $`\varepsilon_t`$ | the unseen fair price midway between quotes, and its news step | news of 1 cent a trade | noisier prices, same covariance |
+| $`Q_t`$ | the side of trade t: +1 at the ask, −1 at the bid | ±1 | — |
+| $`\gamma_1`$ | the lag-one covariance of price changes (Greek "gamma") | −4 square cents | more negative: wider implied spread |
 
 ### When it holds
 
@@ -91,58 +99,68 @@ The dealer does not know the news, but knows who tends to buy when it is good. S
 
 ### Step 1: competition pins each quote to a conditional value
 
-An ask above $E[V \mid \text{buy}]$ expects a profit on every sale, and a rival undercuts it. An ask below expects a loss, and the dealer raises it. Only one ask survives:
+An ask above $`E[V \mid \text{buy}]`$ expects a profit on every sale, and a rival undercuts it. An ask below expects a loss, and the dealer raises it. Only one ask survives:
 
-$$A = E[V \mid \text{buy}].$$
+```math
+A = E[V \mid \text{buy}].
+```
 
-The same argument gives $B = E[V \mid \text{sell}]$. The dealer still loses on every sale to an informed buyer; the uninformed pay for it (Step 4).
+The same argument gives $`B = E[V \mid \text{sell}]`$. The dealer still loses on every sale to an informed buyer; the uninformed pay for it (Step 4).
 
 ### Step 2: Bayes' rule turns an order into odds
 
 With good news, an informed trader always buys, and an uninformed trader buys half the time:
 
-$$P(\text{buy} \mid \text{good}) = \mu + \tfrac12(1-\mu) = \tfrac12(1+\mu).$$
+```math
+P(\text{buy} \mid \text{good}) = \mu + \tfrac12(1-\mu) = \tfrac12(1+\mu).
+```
 
-With bad news only the uninformed buy: $\tfrac12(1-\mu)$. For Acme these are 0.55 and 0.45. Bayes' rule weighs each by its prior and divides by the total chance of a buy, $\tfrac12[1 + \mu(2\pi-1)]$. That gives $h_B$ and $h_S$ in The formula. For Acme, $h_B = 0.5 \times 0.55 / 0.50 = 0.55$.
+With bad news only the uninformed buy: $`\tfrac12(1-\mu)`$. For Acme these are 0.55 and 0.45. Bayes' rule weighs each by its prior and divides by the total chance of a buy, $`\tfrac12[1 + \mu(2\pi-1)]`$. That gives $`h_B`$ and $`h_S`$ in The formula. For Acme, $`h_B = 0.5 \times 0.55 / 0.50 = 0.55`$.
 
-A value that is $v_H$ with some probability and $v_L$ otherwise averages $v_L$ plus the gap times that probability. So the ask is $99.80 + 0.40 \times 0.55 = \$100.02$ and the bid is $99.80 + 0.40 \times 0.45 = \$99.98$.
+A value that is $`v_H`$ with some probability and $`v_L`$ otherwise averages $`v_L`$ plus the gap times that probability. So the ask is $`99.80 + 0.40 \times 0.55 = \$100.02`$ and the bid is $`99.80 + 0.40 \times 0.45 = \$99.98`$.
 
 ### Step 3: subtract
 
-$$s = A - B = \Delta\,(h_B - h_S).$$
+```math
+s = A - B = \Delta\,(h_B - h_S).
+```
 
-Over a common bottom, the top collapses to $4\mu\pi(1-\pi)$: the formula. With no informed traders, $\mu = 0$, an order says nothing and the spread is 0. With the news already certain, $\pi = 0$ or 1, the spread is 0. With even odds it is $\mu\Delta$.
+Over a common bottom, the top collapses to $`4\mu\pi(1-\pi)`$: the formula. With no informed traders, $`\mu = 0`$, an order says nothing and the spread is 0. With the news already certain, $`\pi = 0`$ or 1, the spread is 0. With even odds it is $`\mu\Delta`$.
 
 <details>
 <summary>Detailed proof: the spread formula, and the boundary cases</summary>
 
-Write $d = 2\pi - 1$. The chance of a buy is $\tfrac12(1 + \mu d)$ and of a sell $\tfrac12(1 - \mu d)$. Both are positive whenever $\mu d$ lies strictly between −1 and 1.
+Write $`d = 2\pi - 1`$. The chance of a buy is $`\tfrac12(1 + \mu d)`$ and of a sell $`\tfrac12(1 - \mu d)`$. Both are positive whenever $`\mu d`$ lies strictly between −1 and 1.
 
 Then
-$$h_B - h_S = \frac{\pi[(1+\mu)(1-\mu d) - (1-\mu)(1+\mu d)]}{(1+\mu d)(1-\mu d)}.$$
-Expand the bracket: $(1 + \mu - \mu d - \mu^2 d) - (1 - \mu + \mu d - \mu^2 d) = 2\mu(1 - d) = 4\mu(1-\pi)$. The bottom is $1 - \mu^2 d^2$. So $h_B - h_S = 4\mu\pi(1-\pi)/(1-\mu^2 d^2)$, which is never negative: the ask is never below the bid.
 
-It rises with $\mu$. For $0 < \pi < 1$ the size of $d$ is below 1. The slope of $\mu/(1 - \mu^2 d^2)$ is $(1 + \mu^2 d^2)/(1 - \mu^2 d^2)^2$, which is positive.
+$`\displaystyle h_B - h_S = \frac{\pi[(1+\mu)(1-\mu d) - (1-\mu)(1+\mu d)]}{(1+\mu d)(1-\mu d)}.`$
 
-At $\mu = 1$ with $0 < \pi < 1$, buys come only under good news and sells only under bad, so $A = v_H$, $B = v_L$ and $s = \Delta$.
+Expand the bracket: $`(1 + \mu - \mu d - \mu^2 d) - (1 - \mu + \mu d - \mu^2 d) = 2\mu(1 - d) = 4\mu(1-\pi)`$. The bottom is $`1 - \mu^2 d^2`$. So $`h_B - h_S = 4\mu\pi(1-\pi)/(1-\mu^2 d^2)`$, which is never negative: the ask is never below the bid.
 
-At $\mu = 1$ with $\pi = 0$ nobody ever buys; with $\pi = 1$ nobody ever sells. The quote on the missing side is a value "given an event of probability zero", which is undefined, not zero. Everywhere else the formula holds.
+It rises with $`\mu`$. For $`0 < \pi < 1`$ the size of $`d`$ is below 1. The slope of $`\mu/(1 - \mu^2 d^2)`$ is $`(1 + \mu^2 d^2)/(1 - \mu^2 d^2)^2`$, which is positive.
+
+At $`\mu = 1`$ with $`0 < \pi < 1`$, buys come only under good news and sells only under bad, so $`A = v_H`$, $`B = v_L`$ and $`s = \Delta`$.
+
+At $`\mu = 1`$ with $`\pi = 0`$ nobody ever buys; with $`\pi = 1`$ nobody ever sells. The quote on the missing side is a value "given an event of probability zero", which is undefined, not zero. Everywhere else the formula holds.
 
 </details>
 
 ### Step 4: the books balance
 
-The same answer falls out of the dealer's accounts, with no Bayes. Take even odds and quotes half a spread either side of the average value. An informed trader buys only at the high value and sells only at the low one, so each informed trade costs the dealer half the gap minus half the spread; informed traders are a fraction $\mu$ of arrivals. An uninformed trade says nothing about the value, so the dealer gains half the spread, $s/2$, on average.
+The same answer falls out of the dealer's accounts, with no Bayes. Take even odds and quotes half a spread either side of the average value. An informed trader buys only at the high value and sells only at the low one, so each informed trade costs the dealer half the gap minus half the spread; informed traders are a fraction $`\mu`$ of arrivals. An uninformed trade says nothing about the value, so the dealer gains half the spread, $`s/2`$, on average.
 
 Zero profit means the two flows match:
 
-$$\mu\left(\frac{\Delta}{2} - \frac{s}{2}\right) = (1-\mu)\,\frac{s}{2} \quad\Longrightarrow\quad s = \mu\Delta.$$
+```math
+\mu\left(\frac{\Delta}{2} - \frac{s}{2}\right) = (1-\mu)\,\frac{s}{2} \quad\Longrightarrow\quad s = \mu\Delta.
+```
 
-For Acme: informed traders take $0.10 \times 18 = 1.8$ cents per trade, and uninformed traders pay $0.90 \times 2 = 1.8$. The spread is a transfer from traders who do not know to traders who do, with the dealer as a zero-profit go-between.
+For Acme: informed traders take $`0.10 \times 18 = 1.8`$ cents per trade, and uninformed traders pay $`0.90 \times 2 = 1.8`$. The spread is a transfer from traders who do not know to traders who do, with the dealer as a zero-profit go-between.
 
 ### Step 5: after the trade, the odds carry forward
 
-After a buy, the chance of good news is 0.55; the next order is judged from there, with $h_B$ as the new $\pi$. The dealer learns the news trade by trade, as the section after the worked numbers shows.
+After a buy, the chance of good news is 0.55; the next order is judged from there, with $`h_B`$ as the new $`\pi`$. The dealer learns the news trade by trade, as the section after the worked numbers shows.
 
 Each trade happens at the dealer's best estimate of the value given everything seen so far. So trade prices form a **martingale** (a sequence whose expected next value is its current value): their changes do not reverse on average.
 
@@ -150,24 +168,30 @@ Each trade happens at the dealer's best estimate of the value given everything s
 
 Now look only at trade prices. Roll writes each as a fair price plus half a spread in the direction of the trade:
 
-$$P_t = M_t + c\,Q_t, \qquad M_t = M_{t-1} + \varepsilon_t.$$
+```math
+P_t = M_t + c\,Q_t, \qquad M_t = M_{t-1} + \varepsilon_t.
+```
 
-The side $Q_t$ is a fresh coin flip each trade, unrelated to the news steps $\varepsilon_t$. Take differences:
+The side $`Q_t`$ is a fresh coin flip each trade, unrelated to the news steps $`\varepsilon_t`$. Take differences:
 
-$$R_t = \varepsilon_t + c\,(Q_t - Q_{t-1}).$$
+```math
+R_t = \varepsilon_t + c\,(Q_t - Q_{t-1}).
+```
 
-Two successive changes share one coin flip, $Q_{t-1}$: plus in $R_{t-1}$, minus in $R_t$. Everything else is independent, so the covariance is $-c^2$. A trade at the ask tends to be followed by one at the bid: the price bounces.
+Two successive changes share one coin flip, $`Q_{t-1}`$: plus in $`R_{t-1}`$, minus in $`R_t`$. Everything else is independent, so the covariance is $`-c^2`$. A trade at the ask tends to be followed by one at the bid: the price bounces.
 
-**The inverse, before solving it.** Existence: a spread comes back only if $\gamma_1 \le 0$; a positive covariance has no real square root. Uniqueness: the spread is not negative, so $c = \sqrt{-\gamma_1}$ is the only answer. Boundary: $\gamma_1 = 0$ gives $s = 0$. For Acme, $c = 2$ cents gives $\gamma_1 = -4$ square cents and back $s = 4$ cents; a simulated record of 200,000 trades in the code gives back 3.99 cents.
+**The inverse, before solving it.** Existence: a spread comes back only if $`\gamma_1 \le 0`$; a positive covariance has no real square root. Uniqueness: the spread is not negative, so $`c = \sqrt{-\gamma_1}`$ is the only answer. Boundary: $`\gamma_1 = 0`$ gives $`s = 0`$. For Acme, $`c = 2`$ cents gives $`\gamma_1 = -4`$ square cents and back $`s = 4`$ cents; a simulated record of 200,000 trades in the code gives back 3.99 cents.
 
 <details>
 <summary>Detailed proof: Roll's covariance</summary>
 
 Assume the news steps have average zero, finite variance, and are independent of each other and of every trade side. Assume the sides are independent fair ±1 flips. Then every change has average zero, and
-$$\operatorname{Cov}(R_t, R_{t-1}) = E\big[(\varepsilon_t + cQ_t - cQ_{t-1})(\varepsilon_{t-1} + cQ_{t-1} - cQ_{t-2})\big].$$
-Multiply out the nine products. A product of two different news steps averages zero. A product of a news step and a side averages zero, by independence. A product of two different sides averages zero. The only survivor is $(-cQ_{t-1})(cQ_{t-1}) = -c^2 Q_{t-1}^2 = -c^2$, since $Q_{t-1}^2 = 1$.
 
-The same count gives $\operatorname{Var}(R_t) = \operatorname{Var}(\varepsilon_t) + 2c^2$: news makes prices noisier but leaves the lag-one covariance alone. That is why the spread can be read off through any amount of news, given enough trades.
+$`\displaystyle \mathrm{Cov}(R_t, R_{t-1}) = E\big[(\varepsilon_t + cQ_t - cQ_{t-1})(\varepsilon_{t-1} + cQ_{t-1} - cQ_{t-2})\big].`$
+
+Multiply out the nine products. A product of two different news steps averages zero. A product of a news step and a side averages zero, by independence. A product of two different sides averages zero. The only survivor is $`(-cQ_{t-1})(cQ_{t-1}) = -c^2 Q_{t-1}^2 = -c^2`$, since $`Q_{t-1}^2 = 1`$.
+
+The same count gives $`\mathrm{Var}(R_t) = \mathrm{Var}(\varepsilon_t) + 2c^2`$: news makes prices noisier but leaves the lag-one covariance alone. That is why the spread can be read off through any amount of news, given enough trades.
 
 </details>
 
@@ -183,24 +207,24 @@ The other road to informed trading lets the informed trader pick the order's siz
 
 ## Worked numbers, by hand
 
-Acme after earnings: $v_L = \$99.80$, $v_H = \$100.20$, even odds $\pi = 0.5$, informed share $\mu = 0.10$.
+Acme after earnings: $`v_L = \$99.80`$, $`v_H = \$100.20`$, even odds $`\pi = 0.5`$, informed share $`\mu = 0.10`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| chance of a buy, good news | $0.10 + 0.90 \times 0.5$ | 0.55 |
-| chance of a buy, bad news | $0.90 \times 0.5$ | 0.45 |
-| chance of a buy overall | $0.5 \times 0.55 + 0.5 \times 0.45$ | 0.50 |
-| good news, given a buy, $h_B$ | $0.5 \times 0.55 / 0.50$ | 0.55 |
-| good news, given a sell, $h_S$ | $0.5 \times 0.45 / 0.50$ | 0.45 |
-| ask $A$ | $99.80 + 0.40 \times 0.55$ | $100.02 |
-| bid $B$ | $99.80 + 0.40 \times 0.45$ | $99.98 |
-| spread from the quotes | $100.02 - 99.98$ | 4 cents |
-| spread from the formula | $40 \times 4 \times 0.10 \times 0.25 / 1$ | 4 cents |
-| informed take, per trade | $0.10 \times (20 - 2)$ cents | 1.8 cents |
-| uninformed pay, per trade | $0.90 \times 2$ cents | 1.8 cents |
-| Roll: half-spread $c$ | $4 / 2$ | 2 cents |
-| Roll: covariance $\gamma_1$ | $-c^2$ | −4 square cents |
-| **Roll: spread back** | $2\sqrt{4}$ | **4 cents** |
+| chance of a buy, good news | $`0.10 + 0.90 \times 0.5`$ | 0.55 |
+| chance of a buy, bad news | $`0.90 \times 0.5`$ | 0.45 |
+| chance of a buy overall | $`0.5 \times 0.55 + 0.5 \times 0.45`$ | 0.50 |
+| good news, given a buy, $`h_B`$ | $`0.5 \times 0.55 / 0.50`$ | 0.55 |
+| good news, given a sell, $`h_S`$ | $`0.5 \times 0.45 / 0.50`$ | 0.45 |
+| ask $`A`$ | $`99.80 + 0.40 \times 0.55`$ | $100.02 |
+| bid $`B`$ | $`99.80 + 0.40 \times 0.45`$ | $99.98 |
+| spread from the quotes | $`100.02 - 99.98`$ | 4 cents |
+| spread from the formula | $`40 \times 4 \times 0.10 \times 0.25 / 1`$ | 4 cents |
+| informed take, per trade | $`0.10 \times (20 - 2)`$ cents | 1.8 cents |
+| uninformed pay, per trade | $`0.90 \times 2`$ cents | 1.8 cents |
+| Roll: half-spread $`c`$ | $`4 / 2`$ | 2 cents |
+| Roll: covariance $`\gamma_1`$ | $`-c^2`$ | −4 square cents |
+| **Roll: spread back** | $`2\sqrt{4}`$ | **4 cents** |
 
 An uninformed round trip in Acme costs 4 cents, and all of it ends up with the traders who read the earnings first.
 
@@ -212,7 +236,7 @@ Same Acme, correct spread 4 cents:
 | --- | --- | --- |
 | Quote $100.00 on both sides | the dealer loses 2.00 cents a trade (2.01 in simulation) | informed traders take 20 cents on one trade in ten; nobody pays for it |
 | Assume every trader is informed | 40.00 cents | a buy would then prove good news; the spread is the whole gap |
-| Roll without the 2: $\sqrt{-\gamma_1}$ | 2.00 cents | that is the half-spread $c$, not the spread |
+| Roll without the 2: $`\sqrt{-\gamma_1}`$ | 2.00 cents | that is the half-spread $`c`$, not the spread |
 | Roll on prices that are pure noise, no spread at all | a "spread" of 2.00 cents | noisy prices also reverse; the covariance −1 came from noise, not a bounce |
 | Roll on Glosten-Milgrom trade prices | 0.00 cents | adverse selection is permanent, not a bounce: the covariance is 0 |
 
@@ -687,15 +711,15 @@ The two outputs agree byte for byte: the same generator and seed drive the same 
 
 ### Lean
 
-Lean proves the spread formula and its rise with the informed share for every allowed $\pi$ and $\mu$, and Roll's covariance in general.
+Lean proves the spread formula and its rise with the informed share for every allowed $`\pi`$ and $`\mu`$, and Roll's covariance in general.
 
-- Take $\pi$ and $\mu$ between 0 and 1, with $\mu(2\pi-1)$ strictly between −1 and 1. Then $A - B$ equals the spread formula exactly.
-- Suppose $0 < \pi < 1$ and $v_L < v_H$. Then the spread rises strictly as $\mu$ goes from 0 to 1.
-- Suppose, in Roll's model, the news steps average zero with finite variance, and the sides are fair ±1 flips, all independent. Then $\operatorname{Cov}(R_t, R_{t-1}) = -c^2$.
-- Take Acme's numbers. Then $h_B = 0.55$, $h_S = 0.45$, the ask is 10,002 cents and the bid 9,998 cents.
+- Take $`\pi`$ and $`\mu`$ between 0 and 1, with $`\mu(2\pi-1)`$ strictly between −1 and 1. Then $`A - B`$ equals the spread formula exactly.
+- Suppose $`0 < \pi < 1`$ and $`v_L < v_H`$. Then the spread rises strictly as $`\mu`$ goes from 0 to 1.
+- Suppose, in Roll's model, the news steps average zero with finite variance, and the sides are fair ±1 flips, all independent. Then $`\mathrm{Cov}(R_t, R_{t-1}) = -c^2`$.
+- Take Acme's numbers. Then $`h_B = 0.55`$, $`h_S = 0.45`$, the ask is 10,002 cents and the bid 9,998 cents.
 - Take a prior of 3/4 and 20 percent informed. Then the spread is exactly 200/33 cents, about 6.06.
 - Take everyone informed, or half informed, or a 100-cent gap. Then the spread is 40, 20 or 10 cents.
-- Take $c = 2$ and news steps of ±1 cent, over all 32 equally likely cases. Then the covariance is −4 square cents, and $2\sqrt{4} = 4$.
+- Take $`c = 2`$ and news steps of ±1 cent, over all 32 equally likely cases. Then the covariance is −4 square cents, and $`2\sqrt{4} = 4`$.
 
 The simulations, the ten-order path and the spread shrinking over many trades are left to the Python and Rust checks.
 
@@ -978,5 +1002,5 @@ This card priced one share at a time; what happens when an informed trader can c
 Verified 2026-11-14: every link below resolves to the publisher's page.
 
 - Glosten, Lawrence R., and Paul R. Milgrom. "Bid, Ask and Transaction Prices in a Specialist Market with Heterogeneously Informed Traders." *Journal of Financial Economics* 14, no. 1 (1985): 71–100. [doi:10.1016/0304-405X(85)90044-3](https://doi.org/10.1016/0304-405X(85)90044-3). The model: quotes as conditional expected values, and trade prices as a martingale.
-- Roll, Richard. "A Simple Implicit Measure of the Effective Bid-Ask Spread in an Efficient Market." *Journal of Finance* 39, no. 4 (1984): 1127–1139. [doi:10.1111/j.1540-6261.1984.tb03897.x](https://doi.org/10.1111/j.1540-6261.1984.tb03897.x). The bounce and the covariance $-c^2$, and the distinction between effective and quoted spread.
+- Roll, Richard. "A Simple Implicit Measure of the Effective Bid-Ask Spread in an Efficient Market." *Journal of Finance* 39, no. 4 (1984): 1127–1139. [doi:10.1111/j.1540-6261.1984.tb03897.x](https://doi.org/10.1111/j.1540-6261.1984.tb03897.x). The bounce and the covariance $`-c^2`$, and the distinction between effective and quoted spread.
 - Bagehot, Walter (pseudonym of Jack Treynor). "The Only Game in Town." *Financial Analysts Journal* 27, no. 2 (1971): 12–14. [doi:10.2469/faj.v27.n2.12](https://doi.org/10.2469/faj.v27.n2.12). The first statement that a market maker loses to informed traders and recovers it from the uninformed.

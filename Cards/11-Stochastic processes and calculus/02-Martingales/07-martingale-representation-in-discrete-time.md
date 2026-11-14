@@ -30,46 +30,50 @@ Drawn to scale: 95 units a day across, 2.7 units a dollar up, $70 at the bottom 
 
 Notation first, in words.
 
-- Toss $k$ is written $\varepsilon_k$: +1 for heads, −1 for tails.
-- The share price after day $n$ is $S_n$, so $S_n = 100 + 10(\varepsilon_1 + \dots + \varepsilon_n)$.
-- What is known after day $n$ is written $\mathcal F_n$, read "what is known by time $n$": here, the first $n$ tosses.
-- A process $M_n$ is a **martingale** when its best forecast of tomorrow, given $\mathcal F_n$, is its value today ([Martingales](01-martingales.md)).
-- A stake $H_k$ is **predictable** when it is fixed by $\mathcal F_{k-1}$: it may use every toss already seen, never toss $k$ itself ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)).
+- Toss $`k`$ is written $`\varepsilon_k`$: +1 for heads, −1 for tails.
+- The share price after day $`n`$ is $`S_n`$, so $`S_n = 100 + 10(\varepsilon_1 + \dots + \varepsilon_n)`$.
+- What is known after day $`n`$ is written $`\mathcal F_n`$, read "what is known by time $`n`$": here, the first $`n`$ tosses.
+- A process $`M_n`$ is a **martingale** when its best forecast of tomorrow, given $`\mathcal F_n`$, is its value today ([Martingales](01-martingales.md)).
+- A stake $`H_k`$ is **predictable** when it is fixed by $`\mathcal F_{k-1}`$: it may use every toss already seen, never toss $`k`$ itself ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)).
 
-Standing just before toss $k$, with the earlier tosses known, $M_k$ can take only two values. Write $M_k^{+}$ for the value if toss $k$ is heads and $M_k^{-}$ for the value if tails. Likewise $S_k^{+}$ and $S_k^{-}$ for the share. The theorem:
+Standing just before toss $`k`$, with the earlier tosses known, $`M_k`$ can take only two values. Write $`M_k^{+}`$ for the value if toss $`k`$ is heads and $`M_k^{-}`$ for the value if tails. Likewise $`S_k^{+}`$ and $`S_k^{-}`$ for the share. The theorem:
 
-$$M_n = M_0 + \sum_{k=1}^{n} H_k\,(S_k - S_{k-1}), \qquad H_k = \frac{M_k^{+} - M_k^{-}}{S_k^{+} - S_k^{-}}.$$
+```math
+M_n = M_0 + \sum_{k=1}^{n} H_k\,(S_k - S_{k-1}), \qquad H_k = \frac{M_k^{+} - M_k^{-}}{S_k^{+} - S_k^{-}}.
+```
 
-**Read it aloud:** a martingale on the coin tree is its starting value plus the gain from holding $H_k$ shares over each day, each holding being the spread of the martingale's two possible next values over the share's.
+**Read it aloud:** a martingale on the coin tree is its starting value plus the gain from holding $`H_k`$ shares over each day, each holding being the spread of the martingale's two possible next values over the share's.
 
-For a payoff $V$, a number attached to each of the eight sequences, take $M_n = E[V \mid \mathcal F_n]$, the fair value of the ticket once $n$ tosses are known. Then $M_3 = V$ and $M_0 = E[V]$, so the theorem reads
+For a payoff $`V`$, a number attached to each of the eight sequences, take $`M_n = E[V \mid \mathcal F_n]`$, the fair value of the ticket once $`n`$ tosses are known. Then $`M_3 = V`$ and $`M_0 = E[V]`$, so the theorem reads
 
-$$V = E[V] + \sum_{k=1}^{3} H_k\,(S_k - S_{k-1}).$$
+```math
+V = E[V] + \sum_{k=1}^{3} H_k\,(S_k - S_{k-1}).
+```
 
-**Read it aloud:** the payoff is its average plus the gain of a trading strategy; the average is what the strategy costs, and $H$ is the hedge.
+**Read it aloud:** the payoff is its average plus the gain of a trading strategy; the average is what the strategy costs, and $`H`$ is the hedge.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\varepsilon_k$ | toss $k$: +1 heads, −1 tails | HTH is +1, −1, +1 | — |
-| $S_n$, $S_k$, $S$ | share price after day $n$ (or $k$) | $100, then $110 or $90, … | — |
-| $\mathcal F_n$ | what is known after day $n$: the first $n$ tosses | after day 1, one toss | — |
-| $V$, $E$ | the payoff, one number for each of the 8 sequences; $E$ averages over the coin | call: $30, $10 three times, $0 four times; $E[V] = 7.50$ | the price rises by the average increase |
-| $M_n$, $M_0$, $M_k$, $M_1$, $M$ | fair value of the payoff once $n$ tosses are known, $E[V \mid \mathcal F_n]$ | $7.50 at the start | — |
-| $M_k^{+}$, $M_k^{-}$, $S_k^{+}$, $S_k^{-}$ | the two values $M_k$ (or $S_k$) can take, heads or tails, given the earlier tosses | $12.50 and $2.50; $110 and $90, on day 1 | a wider value spread needs a larger stake; a wider price spread, a smaller one |
-| $H_k$, $H_k'$, $H_1$, $H_2$, $H$ | shares held over day $k$, fixed after day $k - 1$ (a second candidate, in Step 4) | 0.50 on day 1 | — |
-| $p$ | chance of heads | 0.5, the only chance that makes ±$10 moves fair | the share drifts up and stops being a martingale |
-| $n$, $k$, $N$ | a day count, the day being bet on, and the last day | $N = 3$ | more days, more stakes; still one per node |
-| $a$, $b$, $x$, $y$ | Step 1 only: the day's two possible moves of $M$ ($a$, $b$) and of $S$ ($x$, $y$) | +5 and −5; +10 and −10, on day 1 | — |
-| $c_\emptyset$, $c_1$, $c_{12}$ | Walsh coefficients: averages of the payoff times a product of signs | $c_\emptyset = 7.50$ for the call | — |
-| $A$, $m$, $s$, $q$, $r$ | Detailed proof only: a cell of what is known before a toss, $M$ and $S$ on it, the chance of its heads child, its number of children | node H: $m = 12.50$, $s = 110$, $q = 0.5$, $r = 2$ | $r = 3$ breaks the theorem |
+| $`\varepsilon_k`$ | toss $`k`$: +1 heads, −1 tails | HTH is +1, −1, +1 | — |
+| $`S_n`$, $`S_k`$, $`S`$ | share price after day $`n`$ (or $`k`$) | $100, then $110 or $90, … | — |
+| $`\mathcal F_n`$ | what is known after day $`n`$: the first $`n`$ tosses | after day 1, one toss | — |
+| $`V`$, $`E`$ | the payoff, one number for each of the 8 sequences; $`E`$ averages over the coin | call: $30, $10 three times, $0 four times; $`E[V] = 7.50`$ | the price rises by the average increase |
+| $`M_n`$, $`M_0`$, $`M_k`$, $`M_1`$, $`M`$ | fair value of the payoff once $`n`$ tosses are known, $`E[V \mid \mathcal F_n]`$ | $7.50 at the start | — |
+| $`M_k^{+}`$, $`M_k^{-}`$, $`S_k^{+}`$, $`S_k^{-}`$ | the two values $`M_k`$ (or $`S_k`$) can take, heads or tails, given the earlier tosses | $12.50 and $2.50; $110 and $90, on day 1 | a wider value spread needs a larger stake; a wider price spread, a smaller one |
+| $`H_k`$, $`H_k'`$, $`H_1`$, $`H_2`$, $`H`$ | shares held over day $`k`$, fixed after day $`k - 1`$ (a second candidate, in Step 4) | 0.50 on day 1 | — |
+| $`p`$ | chance of heads | 0.5, the only chance that makes ±$10 moves fair | the share drifts up and stops being a martingale |
+| $`n`$, $`k`$, $`N`$ | a day count, the day being bet on, and the last day | $`N = 3`$ | more days, more stakes; still one per node |
+| $`a`$, $`b`$, $`x`$, $`y`$ | Step 1 only: the day's two possible moves of $`M`$ ($`a`$, $`b`$) and of $`S`$ ($`x`$, $`y`$) | +5 and −5; +10 and −10, on day 1 | — |
+| $`c_\emptyset`$, $`c_1`$, $`c_{12}`$ | Walsh coefficients: averages of the payoff times a product of signs | $`c_\emptyset = 7.50`$ for the call | — |
+| $`A`$, $`m`$, $`s`$, $`q`$, $`r`$ | Detailed proof only: a cell of what is known before a toss, $`M`$ and $`S`$ on it, the chance of its heads child, its number of children | node H: $`m = 12.50`$, $`s = 110`$, $`q = 0.5`$, $`r = 2`$ | $`r = 3`$ breaks the theorem |
 
 ### When it holds
 
 - **Each day has exactly two outcomes.** Add a flat third outcome and the call can no longer be copied: the best hedge misses on all 27 sequences, leaving a spread (standard deviation) of $1.76 against $8.31 unhedged.
-- **The share can move on every branch**, $S_k^{+} \ne S_k^{-}$. Otherwise there is nothing to bet with, and the formula divides by zero.
+- **The share can move on every branch**, $`S_k^{+} \ne S_k^{-}`$. Otherwise there is nothing to bet with, and the formula divides by zero.
 - **The share is a fair game under the chances used to average.** Averaging with a chance 0.6 of heads gives $10.80, while the hedge that pays the ticket costs $7.50.
 - **The process represented is a martingale.** The running count of heads drifts upward half a head a day, so a bet started from 0 leaves 1.50 over after three days on every sequence: that 1.50 is its predictable drift. The final count, as a payoff, is still copied exactly, starting from its average, 1.50.
-- **Stakes may use the whole history**, $\mathcal F_{k-1}$, not today's price alone: two sequences at the same price can need different stakes.
+- **Stakes may use the whole history**, $`\mathcal F_{k-1}`$, not today's price alone: two sequences at the same price can need different stakes.
 
 ---
 
@@ -81,50 +85,54 @@ Stand before one toss. A quantity that takes one value on heads, another on tail
 
 ### Step 1: one day
 
-Write the martingale's two possible moves as $a = M_k^{+} - M_{k-1}$ and $b = M_k^{-} - M_{k-1}$, and the share's as $x = S_k^{+} - S_{k-1}$ and $y = S_k^{-} - S_{k-1}$. Fairness of each, with chance $p$ of heads:
+Write the martingale's two possible moves as $`a = M_k^{+} - M_{k-1}`$ and $`b = M_k^{-} - M_{k-1}`$, and the share's as $`x = S_k^{+} - S_{k-1}`$ and $`y = S_k^{-} - S_{k-1}`$. Fairness of each, with chance $`p`$ of heads:
 
-$$p\,a + (1-p)\,b = 0, \qquad p\,x + (1-p)\,y = 0.$$
+```math
+p\,a + (1-p)\,b = 0, \qquad p\,x + (1-p)\,y = 0.
+```
 
-So $b = -\tfrac{p}{1-p}\,a$ and $y = -\tfrac{p}{1-p}\,x$. The share must move, $x \ne y$, so $x \ne 0$. Set $H_k = a / x$. Then $H_k x = a$ on heads, and $H_k y = -\tfrac{p}{1-p}\,a = b$ on tails. Both branches match. Since $a - b$ and $x - y$ are the same multiple, $\tfrac{1}{1-p}$, of $a$ and $x$, the stake is also
+So $`b = -\tfrac{p}{1-p}\,a`$ and $`y = -\tfrac{p}{1-p}\,x`$. The share must move, $`x \ne y`$, so $`x \ne 0`$. Set $`H_k = a / x`$. Then $`H_k x = a`$ on heads, and $`H_k y = -\tfrac{p}{1-p}\,a = b`$ on tails. Both branches match. Since $`a - b`$ and $`x - y`$ are the same multiple, $`\tfrac{1}{1-p}`$, of $`a`$ and $`x`$, the stake is also
 
-$$H_k = \frac{a - b}{x - y} = \frac{M_k^{+} - M_k^{-}}{S_k^{+} - S_k^{-}}.$$
+```math
+H_k = \frac{a - b}{x - y} = \frac{M_k^{+} - M_k^{-}}{S_k^{+} - S_k^{-}}.
+```
 
-The chance $p$ has dropped out of the stake. It stays inside the values $M$, through the averaging, and nowhere else.
+The chance $`p`$ has dropped out of the stake. It stays inside the values $`M`$, through the averaging, and nowhere else.
 
 ### Step 2: the stake is known in time
 
-$M_k^{+}$, $M_k^{-}$, $S_k^{+}$ and $S_k^{-}$ are all settled once the first $k - 1$ tosses are known: they list what could happen next, not what did. So $H_k$ is fixed by $\mathcal F_{k-1}$. It is predictable, the kind of stake the martingale transform is built from.
+$`M_k^{+}`$, $`M_k^{-}`$, $`S_k^{+}`$ and $`S_k^{-}`$ are all settled once the first $`k - 1`$ tosses are known: they list what could happen next, not what did. So $`H_k`$ is fixed by $`\mathcal F_{k-1}`$. It is predictable, the kind of stake the martingale transform is built from.
 
 ### Step 3: add the days
 
-Step 1 gives $M_k - M_{k-1} = H_k (S_k - S_{k-1})$ on every branch of every day. Adding from day 1 to day $n$, the left side telescopes to $M_n - M_0$. That is the formula.
+Step 1 gives $`M_k - M_{k-1} = H_k (S_k - S_{k-1})`$ on every branch of every day. Adding from day 1 to day $`n`$, the left side telescopes to $`M_n - M_0`$. That is the formula.
 
 ### Step 4: the stake is unique
 
-Suppose two predictable stakes $H_k$ and $H_k'$ both work. On day $k$, $(H_k - H_k')(S_k - S_{k-1}) = 0$ on both branches. The share moves on at least one branch, so $H_k = H_k'$. There is one hedge, not a family of them.
+Suppose two predictable stakes $`H_k`$ and $`H_k'`$ both work. On day $`k`$, $`(H_k - H_k')(S_k - S_{k-1}) = 0`$ on both branches. The share moves on at least one branch, so $`H_k = H_k'`$. There is one hedge, not a family of them.
 
 ### Step 5: every payoff is a strategy
 
-Given any payoff $V$, the fair values $M_n = E[V \mid \mathcal F_n]$ form a martingale by the tower rule, averaging in stages ([Martingales](01-martingales.md)). Steps 1 to 3 give $V = M_3 = M_0 + \sum H_k (S_k - S_{k-1})$. Read it as a trading account.
+Given any payoff $`V`$, the fair values $`M_n = E[V \mid \mathcal F_n]`$ form a martingale by the tower rule, averaging in stages ([Martingales](01-martingales.md)). Steps 1 to 3 give $`V = M_3 = M_0 + \sum H_k (S_k - S_{k-1})`$. Read it as a trading account.
 
-Start with $M_0$, hold $H_1$ shares, and keep the rest, $M_0 - H_1 S_0$, as cash (negative means borrowed). After day 1 the account is worth $M_1$. Rebalancing to $H_2$ shares is paid from cash, so no money comes in or goes out. After day 3 the account holds exactly $V$: the dealer who charges $M_0$ and trades this way carries no risk.
+Start with $`M_0`$, hold $`H_1`$ shares, and keep the rest, $`M_0 - H_1 S_0`$, as cash (negative means borrowed). After day 1 the account is worth $`M_1`$. Rebalancing to $`H_2`$ shares is paid from cash, so no money comes in or goes out. After day 3 the account holds exactly $`V`$: the dealer who charges $`M_0`$ and trades this way carries no risk.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** A finite probability space with a filtration (the growing record of what is known) $\mathcal F_0 \subseteq \mathcal F_1 \subseteq \dots \subseteq \mathcal F_N$, $\mathcal F_0$ trivial (nothing is known yet). Each $\mathcal F_k$ is generated by a partition of the space into cells (atoms), and every cell $A$ of $\mathcal F_{k-1}$ with positive probability splits into exactly two cells $A^{+}$, $A^{-}$ of $\mathcal F_k$, each with positive probability. $S$ is a martingale for this filtration with $S_k$ taking different values on $A^{+}$ and $A^{-}$ for every such $A$. Everything is finite, so every random quantity is integrable (has a finite average).
+**Setting.** A finite probability space with a filtration (the growing record of what is known) $`\mathcal F_0 \subseteq \mathcal F_1 \subseteq \dots \subseteq \mathcal F_N`$, $`\mathcal F_0`$ trivial (nothing is known yet). Each $`\mathcal F_k`$ is generated by a partition of the space into cells (atoms), and every cell $`A`$ of $`\mathcal F_{k-1}`$ with positive probability splits into exactly two cells $`A^{+}`$, $`A^{-}`$ of $`\mathcal F_k`$, each with positive probability. $`S`$ is a martingale for this filtration with $`S_k`$ taking different values on $`A^{+}`$ and $`A^{-}`$ for every such $`A`$. Everything is finite, so every random quantity is integrable (has a finite average).
 
-**Existence.** Let $M$ be any martingale. Fix $k$ and a cell $A$ of $\mathcal F_{k-1}$. On $A$, the values $M_{k-1}$ and $S_{k-1}$ are constants $m$ and $s$ (they are fixed by $\mathcal F_{k-1}$). On $A^{\pm}$, $M_k$ and $S_k$ are constants $m^{\pm}$, $s^{\pm}$. With $q = P(A^{+})/P(A)$, strictly between 0 and 1, the martingale property on $A$ reads $q\,(m^{+} - m) + (1 - q)(m^{-} - m) = 0$, and likewise for $s$.
+**Existence.** Let $`M`$ be any martingale. Fix $`k`$ and a cell $`A`$ of $`\mathcal F_{k-1}`$. On $`A`$, the values $`M_{k-1}`$ and $`S_{k-1}`$ are constants $`m`$ and $`s`$ (they are fixed by $`\mathcal F_{k-1}`$). On $`A^{\pm}`$, $`M_k`$ and $`S_k`$ are constants $`m^{\pm}`$, $`s^{\pm}`$. With $`q = P(A^{+})/P(A)`$, strictly between 0 and 1, the martingale property on $`A`$ reads $`q\,(m^{+} - m) + (1 - q)(m^{-} - m) = 0`$, and likewise for $`s`$.
 
-Define $H_k = (m^{+} - m^{-})/(s^{+} - s^{-})$ on $A$. The computation of Step 1 with $p = q$ gives $M_k - M_{k-1} = H_k (S_k - S_{k-1})$ on $A^{+}$ and on $A^{-}$. Doing this for every cell defines $H_k$ everywhere, constant on the cells of $\mathcal F_{k-1}$, hence predictable. Summing over $k$ gives $M_n = M_0 + \sum_{k \le n} H_k (S_k - S_{k-1})$. Cells of probability zero do not affect any average and may be given $H_k = 0$.
+Define $`H_k = (m^{+} - m^{-})/(s^{+} - s^{-})`$ on $`A`$. The computation of Step 1 with $`p = q`$ gives $`M_k - M_{k-1} = H_k (S_k - S_{k-1})`$ on $`A^{+}`$ and on $`A^{-}`$. Doing this for every cell defines $`H_k`$ everywhere, constant on the cells of $`\mathcal F_{k-1}`$, hence predictable. Summing over $`k`$ gives $`M_n = M_0 + \sum_{k \le n} H_k (S_k - S_{k-1})`$. Cells of probability zero do not affect any average and may be given $`H_k = 0`$.
 
-**Uniqueness.** If $H'$ is another predictable process with the same property, then on each cell $A$ of positive probability, $(H_k - H_k')(s^{\pm} - s) = 0$ on both children; since $s^{+} \ne s^{-}$, at least one factor $s^{\pm} - s$ is non-zero, so $H_k = H_k'$ on $A$.
+**Uniqueness.** If $`H'`$ is another predictable process with the same property, then on each cell $`A`$ of positive probability, $`(H_k - H_k')(s^{\pm} - s) = 0`$ on both children; since $`s^{+} \ne s^{-}`$, at least one factor $`s^{\pm} - s`$ is non-zero, so $`H_k = H_k'`$ on $`A`$.
 
-**Payoffs.** For any $V$ fixed by $\mathcal F_N$, $M_n = E[V \mid \mathcal F_n]$ is a martingale by the tower rule, $M_N = V$, and existence applies.
+**Payoffs.** For any $`V`$ fixed by $`\mathcal F_N`$, $`M_n = E[V \mid \mathcal F_n]`$ is a martingale by the tower rule, $`M_N = V`$, and existence applies.
 
-**Why two children is the whole story.** On a cell $A$ with $r$ children, the possible martingale moves are the functions on the $r$ children that average to zero: a space of dimension $r - 1$. The moves a stake can produce, $H_k (S_k - S_{k-1})$ with $H_k$ a single number on $A$, form a space of dimension at most 1. Every martingale is representable exactly when $r - 1 \le 1$ on every cell (with the share moving where $r = 2$).
+**Why two children is the whole story.** On a cell $`A`$ with $`r`$ children, the possible martingale moves are the functions on the $`r`$ children that average to zero: a space of dimension $`r - 1`$. The moves a stake can produce, $`H_k (S_k - S_{k-1})`$ with $`H_k`$ a single number on $`A`$, form a space of dimension at most 1. Every martingale is representable exactly when $`r - 1 \le 1`$ on every cell (with the share moving where $`r = 2`$).
 
-With $r = 3$, a martingale move orthogonal to the share's move exists (its product with the share's move averages to zero), and no stake reaches it. The same count, globally: payoffs on a two-way tree of $N$ days form a space of dimension $2^N$, and strategies have $1 + 1 + 2 + \dots + 2^{N-1} = 2^N$ free numbers, a starting value and a stake at every non-final node.
+With $`r = 3`$, a martingale move orthogonal to the share's move exists (its product with the share's move averages to zero), and no stake reaches it. The same count, globally: payoffs on a two-way tree of $`N`$ days form a space of dimension $`2^N`$, and strategies have $`1 + 1 + 2 + \dots + 2^{N-1} = 2^N`$ free numbers, a starting value and a stake at every non-final node.
 
 </details>
 
@@ -132,9 +140,9 @@ With $r = 3$, a martingale move orthogonal to the share's move exists (its produ
 
 A payoff is eight numbers, one per sequence. A strategy is also eight: a starting value, one stake on day 1, two on day 2, four on day 3. Eight equations, eight unknowns, and Steps 1 to 4 show they always have exactly one solution. With three outcomes a day, a payoff is 27 numbers and a strategy only 1 + 1 + 3 + 9 = 14, so most payoffs, the call among them, are out of reach.
 
-A second road reaches the same stakes without working backwards. Any payoff on three coin signs can be written as a sum of products of signs, $c_\emptyset + c_1 \varepsilon_1 + c_2 \varepsilon_2 + c_{12}\varepsilon_1\varepsilon_2 + \dots$, with each coefficient an average of the payoff times a product of signs (the Walsh expansion).
+A second road reaches the same stakes without working backwards. Any payoff on three coin signs can be written as a sum of products of signs, $`c_\emptyset + c_1 \varepsilon_1 + c_2 \varepsilon_2 + c_{12}\varepsilon_1\varepsilon_2 + \dots`$, with each coefficient an average of the payoff times a product of signs (the Walsh expansion).
 
-Group the terms by the last toss they contain. Terms ending in $\varepsilon_k$ are $\varepsilon_k$ times something fixed by the earlier tosses, and $\varepsilon_k = (S_k - S_{k-1})/10$. That something, divided by 10, is $H_k$. The code takes this road too, and the two stakes agree at every node. The continuous-time version, with the coin replaced by Brownian motion, a random path that moves at every instant, is [Martingale representation](../07-Changing%20Measure/04-martingale-representation-theorem.md).
+Group the terms by the last toss they contain. Terms ending in $`\varepsilon_k`$ are $`\varepsilon_k`$ times something fixed by the earlier tosses, and $`\varepsilon_k = (S_k - S_{k-1})/10`$. That something, divided by 10, is $`H_k`$. The code takes this road too, and the two stakes agree at every node. The continuous-time version, with the coin replaced by Brownian motion, a random path that moves at every instant, is [Martingale representation](../07-Changing%20Measure/04-martingale-representation-theorem.md).
 
 ---
 
@@ -578,9 +586,9 @@ The two outputs match line for line.
 
 Lean proves the theorem for any number of days, the payoff form, the failure with three outcomes, and the worked numbers.
 
-- Suppose each day has two outcomes, both with positive chance, $S$ and $M$ are martingales, and $S_k^{+} \ne S_k^{-}$. Then a predictable stake $H_k$ gives $M_n = M_0 + \sum H_k\,(S_k - S_{k-1})$ on every sequence.
+- Suppose each day has two outcomes, both with positive chance, $`S`$ and $`M`$ are martingales, and $`S_k^{+} \ne S_k^{-}`$. Then a predictable stake $`H_k`$ gives $`M_n = M_0 + \sum H_k\,(S_k - S_{k-1})`$ on every sequence.
 - That stake is the only one that works, at every node before the last day.
-- Take a fair coin, a share moving up or down by the same nonzero amount, and any payoff $V$. Then $V = E[V] + \sum H_k\,(S_k - S_{k-1})$ on every sequence, with $H_k$ predictable.
+- Take a fair coin, a share moving up or down by the same nonzero amount, and any payoff $`V`$. Then $`V = E[V] + \sum H_k\,(S_k - S_{k-1})`$ on every sequence, with $`H_k`$ predictable.
 - With a flat third move each day, no starting value and predictable stakes copy the call on all 27 sequences.
 - The call's fair price, the average of its eight payments, is 7.50.
 - Working back gives values 20, 5, 12.50 and 2.50 at nodes HH, HT, H and T.
@@ -819,7 +827,7 @@ example : 2 ^ 3 = 1 + 1 + 2 + 4 ∧ 3 ^ 3 = 27 ∧ 1 + 1 + 3 + 9 = 14 := by norm
 ## What this builds on
 
 - [Martingales](01-martingales.md): the fair game itself, the tower rule that makes fair values a martingale, and the Doob decomposition that splits off a drift.
-- [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md): the predictable stake and the martingale transform, the betting gain $\sum H_k (S_k - S_{k-1})$, shown there to be a fair game. This card runs the implication the other way.
+- [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md): the predictable stake and the martingale transform, the betting gain $`\sum H_k (S_k - S_{k-1})`$, shown there to be a fair game. This card runs the implication the other way.
 
 ## Where this goes next
 

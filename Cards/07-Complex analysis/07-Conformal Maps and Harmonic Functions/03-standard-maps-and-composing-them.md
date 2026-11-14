@@ -28,29 +28,35 @@ To scale: 30 units per 1 on the left, 16 on the right, 0 where each panel's axes
 
 ## The formula
 
-A map sends each point $z$ of a starting region to a point $w$ of a target region; "C after squaring" means square first, then apply C. Reminder: $e^{i\theta}$ is the point at distance 1 and angle θ ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)); Arg is the principal argument, the angle in (−π, π]. The modulus |w| is the distance from w to 0.
+A map sends each point $`z`$ of a starting region to a point $`w`$ of a target region; "C after squaring" means square first, then apply C. Reminder: $`e^{i\theta}`$ is the point at distance 1 and angle θ ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)); Arg is the principal argument, the angle in (−π, π]. The modulus |w| is the distance from w to 0.
 
-$$z = r e^{i\theta} \;\mapsto\; z^{a} = r^{a} e^{ia\theta}, \qquad a = \frac{\pi}{\alpha}$$
+```math
+z = r e^{i\theta} \;\mapsto\; z^{a} = r^{a} e^{ia\theta}, \qquad a = \frac{\pi}{\alpha}
+```
 
 **Read it aloud:** a power raises the distance to the a-th power and multiplies the angle by a, so a = π over the wedge's angle opens the wedge flat.
 
-$$e^{x+iy} = e^{x} e^{iy}, \qquad \operatorname{Log} w = \ln|w| + i \operatorname{Arg} w$$
+```math
+e^{x+iy} = e^{x} e^{iy}, \qquad \mathrm{Log}\, w = \ln|w| + i \mathrm{Arg}\, w
+```
 
 **Read it aloud:** the exponential turns the real part into a distance and the height into an angle; the principal logarithm turns them back.
 
-$$C(w) = \frac{w - i}{w + i}$$
+```math
+C(w) = \frac{w - i}{w + i}
+```
 
 **Read it aloud:** the Cayley map compares a point's distance to i with its distance to −i, sending the upper half plane into the unit disc.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$ | a point of the starting region | 1 + 2i in the lot | — |
-| $w$ | the image point | −3 + 4i | — |
-| $r$, $\theta$ | distance from 0 and angle of z | 2.236068 and 1.107149 | the image moves out, turns further |
-| $x$, $y$ | real part and height of a corridor point | ln 2 and π/3 | e^z moves out, turns further |
-| $\alpha$ | the wedge's opening angle, in radians | π/2 for the lot, π/4 for the wedge | a smaller power opens it |
-| $a$ | the power that opens the wedge, π/α | 2, then 4 | the wedge opens past flat; once aα passes 2π it overlaps |
-| $C$ | the Cayley map, half plane to disc | −3 + 4i goes to 0.705882 + 0.176471i | — |
+| $`z`$ | a point of the starting region | 1 + 2i in the lot | — |
+| $`w`$ | the image point | −3 + 4i | — |
+| $`r`$, $`\theta`$ | distance from 0 and angle of z | 2.236068 and 1.107149 | the image moves out, turns further |
+| $`x`$, $`y`$ | real part and height of a corridor point | ln 2 and π/3 | e^z moves out, turns further |
+| $`\alpha`$ | the wedge's opening angle, in radians | π/2 for the lot, π/4 for the wedge | a smaller power opens it |
+| $`a`$ | the power that opens the wedge, π/α | 2, then 4 | the wedge opens past flat; once aα passes 2π it overlaps |
+| $`C`$ | the Cayley map, half plane to disc | −3 + 4i goes to 0.705882 + 0.176471i | — |
 
 ### When it holds
 
@@ -75,13 +81,13 @@ The lot is every angle strictly between 0 and π/2 at every positive distance. D
 
 ### Step 2: opening any wedge with a power
 
-A wedge of angle α holds the angles between 0 and α; the power a = π/α stretches them to 0 to π. The 45-degree wedge needs a = 4. Its midline point $2e^{i\pi/8}$ = 1.847759 + 0.765367i goes to distance 16 at angle π/2, which is 16i.
+A wedge of angle α holds the angles between 0 and α; the power a = π/α stretches them to 0 to π. The 45-degree wedge needs a = 4. Its midline point $`2e^{i\pi/8}`$ = 1.847759 + 0.765367i goes to distance 16 at angle π/2, which is 16i.
 
 A fractional a works the same way through the principal branch, z^a = e^(a Log z), as long as the wedge avoids the negative real axis.
 
 ### Step 3: the exponential lays the corridor flat
 
-For a corridor point x + iy, the exponential gives distance $e^{x}$ and angle y. As x runs over all real numbers the distance runs over all positive numbers; the angle runs strictly between 0 and π. So the corridor fills the upper half plane, each point once.
+For a corridor point x + iy, the exponential gives distance $`e^{x}`$ and angle y. As x runs over all real numbers the distance runs over all positive numbers; the angle runs strictly between 0 and π. So the corridor fills the upper half plane, each point once.
 
 The point ln 2 + iπ/3 goes to distance 2 at angle π/3, which is 1 + 1.732051i; the midline point iπ/2 goes to i. Horizontal lines become rays from 0; the bottom edge becomes the positive real axis, the top edge the negative one.
 
@@ -113,11 +119,11 @@ Every arrow is one-to-one and onto; inverses walk back.
 <details>
 <summary>Detailed proof: each map is one-to-one and onto its target</summary>
 
-**Powers.** Let the wedge hold $z = re^{i\theta}$ with r > 0 and 0 < θ < α, and let aα = π. Then $z^a = r^a e^{ia\theta}$ with 0 < aθ < π: in the upper half plane. Given $w = \rho e^{i\varphi}$ with 0 < φ < π, the point with distance $\rho^{1/a}$ and angle φ/a lies in the wedge and maps to w: onto. Two wedge points with one image have equal distances and angles differing by a multiple of 2π/a; both lie in an interval shorter than 2π/a, so they are equal: one-to-one.
+**Powers.** Let the wedge hold $`z = re^{i\theta}`$ with r > 0 and 0 < θ < α, and let aα = π. Then $`z^a = r^a e^{ia\theta}`$ with 0 < aθ < π: in the upper half plane. Given $`w = \rho e^{i\varphi}`$ with 0 < φ < π, the point with distance $`\rho^{1/a}`$ and angle φ/a lies in the wedge and maps to w: onto. Two wedge points with one image have equal distances and angles differing by a multiple of 2π/a; both lie in an interval shorter than 2π/a, so they are equal: one-to-one.
 
-**Exponential.** Given w in the upper half plane, x = ln|w| and y = Arg w is the one corridor point mapping to it, since $e^{x}$ takes each positive value once. The logarithm is that inverse.
+**Exponential.** Given w in the upper half plane, x = ln|w| and y = Arg w is the one corridor point mapping to it, since $`e^{x}`$ takes each positive value once. The logarithm is that inverse.
 
-**Cayley.** For w = s + it, $|w - i|^2 - |w + i|^2 = (s^2 + (t-1)^2) - (s^2 + (t+1)^2) = -4t$. It is negative exactly when t > 0: into the disc. Solving ζ = (w − i)/(w + i) for w gives w = i(1 + ζ)/(1 − ζ), whose height is (1 − |ζ|^2)/|1 − ζ|^2 > 0 when |ζ| < 1: onto.
+**Cayley.** For w = s + it, $`|w - i|^2 - |w + i|^2 = (s^2 + (t-1)^2) - (s^2 + (t+1)^2) = -4t`$. It is negative exactly when t > 0: into the disc. Solving ζ = (w − i)/(w + i) for w gives w = i(1 + ζ)/(1 − ζ), whose height is (1 − |ζ|^2)/|1 − ζ|^2 > 0 when |ζ| < 1: onto.
 
 </details>
 

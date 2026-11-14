@@ -36,44 +36,50 @@ The orange curve is the skewed surface used on this card: 30.14% at the $80 stri
 
 For one expiry, the recipe computes a variance:
 
-$$\sigma_j^2 \;=\; \frac{2}{T_j}\sum_i \frac{\Delta K_i}{K_i^2}\, e^{rT_j}\, Q(K_i) \;-\; \frac{1}{T_j}\left(\frac{F_j}{K_0} - 1\right)^2$$
+```math
+\sigma_j^2 \;=\; \frac{2}{T_j}\sum_i \frac{\Delta K_i}{K_i^2}\, e^{rT_j}\, Q(K_i) \;-\; \frac{1}{T_j}\left(\frac{F_j}{K_0} - 1\right)^2
+```
 
 **Read it aloud:** for each listed strike, take the out-of-the-money option's price, grow it at the bank rate to the expiry, weight it by the strike gap over the strike squared, add them all up and double; then subtract a small correction for having switched from puts to calls at a listed strike instead of at the forward, and divide by the time.
 
 Then two expiries, a near one and a next one, are blended to 30 days and quoted as a volatility:
 
-$$\mathrm{VIX} \;=\; 100\,\sqrt{\Big(T_1\,\sigma_1^2\, w_1 \;+\; T_2\,\sigma_2^2\,(1 - w_1)\Big)\,\frac{N_{365}}{N_{30}}}, \qquad w_1 = \frac{N_2 - N_{30}}{N_2 - N_1}$$
+```math
+\mathrm{VIX} \;=\; 100\,\sqrt{\Big(T_1\,\sigma_1^2\, w_1 \;+\; T_2\,\sigma_2^2\,(1 - w_1)\Big)\,\frac{N_{365}}{N_{30}}}, \qquad w_1 = \frac{N_2 - N_{30}}{N_2 - N_1}
+```
 
 **Read it aloud:** turn each expiry's variance into total variance (variance times time), take the straight-line blend of the two that lands at 30 days, convert back to a per-year rate, take the square root, and multiply by 100.
 
 | Symbol | Plain meaning | In our example | Push it up and the VIX… |
 | --- | --- | --- | --- |
-| $\mathrm{VIX}$ | the published number: 30-day volatility, in points | 20.00 flat, 21.18 skewed | |
-| $\sigma_j^2$, $\sigma_1^2$, $\sigma_2^2$ | the recipe's variance for expiry $j$, per year | 0.039995 flat; 0.043620 and 0.045595 skewed | rises with it |
-| $T_1$, $T_2$, $T_j$, $T$, $j$ | time to each expiry in years: minutes to expiry over 525,600 | 23/365 = 0.063014 and 37/365 = 0.101370 | |
-| $N_1$, $N_2$, $N_{30}$, $N_{365}$ | the same times counted in days (the exchange counts minutes); 30 and 365 are fixed | 23, 37, 30, 365 | |
-| $w_1$ | weight on the near expiry | 0.50 | shifts the blend toward the near expiry |
-| $F$, $F_j$, $S$, $q$, $S_T$ | the forward: the price agreed today for delivery at the expiry, $F = S e^{(r-q)T}$, with $S$ the index level today, $S_T$ its level at expiry, and $q$ its dividend yield | $S$ = 100, $q$ = 2%, $F$ = 100.189220 at 23 days | |
-| $K_0$ | the listed strike at or just below the forward | 100.10 at 23 days, 100.30 at 37 | |
-| $K_i$, $K$, $i$ | the $i$-th strike used, counting up from the lowest; $K$ is any strike | 85.50 to 117.60 at 23 days, flat | |
-| $\Delta K_i$, $dK$ | the strike gap, the listed stand-in for the integral's $dK$: half the distance between its two neighbours, or the one gap at either end | $0.10 near the money, $0.50 further out | rises: coarser strikes overstate |
-| $Q(K_i)$, $P$, $C$ | the out-of-the-money option's mid price: a put ($P$) below $K_0$, a call ($C$) above, the average of the two at $K_0$ | from Black-Scholes at the surface's vol | rises with every option price |
-| $r$, $e^{rT}$ | the riskless rate, and the factor that grows a price paid today to the expiry | 5% | barely moves it |
-| $k$ | log-moneyness, $\ln(K/F)$: how far a strike sits from the forward, as a log ratio | 0 at the forward | |
+| $`\mathrm{VIX}`$ | the published number: 30-day volatility, in points | 20.00 flat, 21.18 skewed | |
+| $`\sigma_j^2`$, $`\sigma_1^2`$, $`\sigma_2^2`$ | the recipe's variance for expiry $`j`$, per year | 0.039995 flat; 0.043620 and 0.045595 skewed | rises with it |
+| $`T_1`$, $`T_2`$, $`T_j`$, $`T`$, $`j`$ | time to each expiry in years: minutes to expiry over 525,600 | 23/365 = 0.063014 and 37/365 = 0.101370 | |
+| $`N_1`$, $`N_2`$, $`N_{30}`$, $`N_{365}`$ | the same times counted in days (the exchange counts minutes); 30 and 365 are fixed | 23, 37, 30, 365 | |
+| $`w_1`$ | weight on the near expiry | 0.50 | shifts the blend toward the near expiry |
+| $`F`$, $`F_j`$, $`S`$, $`q`$, $`S_T`$ | the forward: the price agreed today for delivery at the expiry, $`F = S e^{(r-q)T}`$, with $`S`$ the index level today, $`S_T`$ its level at expiry, and $`q`$ its dividend yield | $`S`$ = 100, $`q`$ = 2%, $`F`$ = 100.189220 at 23 days | |
+| $`K_0`$ | the listed strike at or just below the forward | 100.10 at 23 days, 100.30 at 37 | |
+| $`K_i`$, $`K`$, $`i`$ | the $`i`$-th strike used, counting up from the lowest; $`K`$ is any strike | 85.50 to 117.60 at 23 days, flat | |
+| $`\Delta K_i`$, $`dK`$ | the strike gap, the listed stand-in for the integral's $`dK`$: half the distance between its two neighbours, or the one gap at either end | $0.10 near the money, $0.50 further out | rises: coarser strikes overstate |
+| $`Q(K_i)`$, $`P`$, $`C`$ | the out-of-the-money option's mid price: a put ($`P`$) below $`K_0`$, a call ($`C`$) above, the average of the two at $`K_0`$ | from Black-Scholes at the surface's vol | rises with every option price |
+| $`r`$, $`e^{rT}`$ | the riskless rate, and the factor that grows a price paid today to the expiry | 5% | barely moves it |
+| $`k`$ | log-moneyness, $`\ln(K/F)`$: how far a strike sits from the forward, as a log ratio | 0 at the forward | |
 
 The skewed surface is one formula, quoted in annual variance by log-moneyness:
 
-$$\sigma(k)^2 = 0.0325 + 0.15\left(-0.7\,k + \sqrt{k^2 + 0.0025}\right)$$
+```math
+\sigma(k)^2 = 0.0325 + 0.15\left(-0.7\,k + \sqrt{k^2 + 0.0025}\right)
+```
 
-In words: at the forward ($k$ = 0) it gives 0.0325 + 0.15 × 0.05 = 0.04, a 20% vol; to the left it rises, to the right it dips and then lifts. The shape is the raw SVI curve ([The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md)), applied here to annual variance rather than total variance, and used at both expiries.
+In words: at the forward ($`k`$ = 0) it gives 0.0325 + 0.15 × 0.05 = 0.04, a 20% vol; to the left it rises, to the right it dips and then lifts. The shape is the raw SVI curve ([The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md)), applied here to annual variance rather than total variance, and used at both expiries.
 
 **Conventions verified 27 Sep 2026** against Cboe's VIX Index Methodology (version 6.0) and Volatility Index Mathematics Methodology (version 5.0), both last revised 26 Feb 2026:
 
 - time counted in minutes over 525,600;
 - the near expiry is the last one on or before 30 days out and the next expiry the first after (the "bracket method");
 - the forward read from the strike where call and put mid prices are closest;
-- $K_0$ the strike at or just below it;
-- strikes walked outward from $K_0$ until two consecutive zero bids (or zero asks);
+- $`K_0`$ the strike at or just below it;
+- strikes walked outward from $`K_0`$ until two consecutive zero bids (or zero asks);
 - separate Treasury-spline rates per expiry (rates read off a smooth curve fitted to US Treasury yields).
 
 The exchange could change any of these; the maths below does not depend on which.
@@ -92,9 +98,9 @@ The VIX is a definition, so it always equals its recipe. What can fail is readin
 
 The VIX is an inverse: prices in, a volatility out.
 
-- **Existence.** Every out-of-the-money price is at least zero, so the strip term is at least zero. The correction is very small (at most one strike gap squared over $K_0^2 T$), so the variance is positive whenever any option carries value.
+- **Existence.** Every out-of-the-money price is at least zero, so the strip term is at least zero. The correction is very small (at most one strike gap squared over $`K_0^2 T`$), so the variance is positive whenever any option carries value.
 - **Uniqueness.** The recipe is explicit arithmetic, one input set, one output. There is no equation to solve and no second root.
-- **Edge cases.** If the forward lands exactly on a listed strike, $K_0 = F$ and the correction is zero. If the near expiry sits exactly 30 days out, $w_1$ = 1 and the second expiry drops out. If every out-of-the-money put, or every call, is excluded, the index cannot be calculated and the last valid value is republished.
+- **Edge cases.** If the forward lands exactly on a listed strike, $`K_0 = F`$ and the correction is zero. If the near expiry sits exactly 30 days out, $`w_1`$ = 1 and the second expiry drops out. If every out-of-the-money put, or every call, is excluded, the index cannot be calculated and the last valid value is republished.
 
 ---
 
@@ -104,13 +110,15 @@ The VIX is an inverse: prices in, a volatility out.
 
 A variance swap pays the realised variance of the index over a period, against a fixed strike. Its fair strike needs no model: it is the price of a strip of out-of-the-money options, each weighted by one over its strike squared ([The variance swap](03-variance-swap-fair-strike.md), built on [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md)):
 
-$$\sigma^2_{\text{fair}} = \frac{2\,e^{rT}}{T}\left(\int_0^{F} \frac{P(K)}{K^2}\,dK + \int_F^{\infty} \frac{C(K)}{K^2}\,dK\right)$$
+```math
+\sigma^2_{\text{fair}} = \frac{2\,e^{rT}}{T}\left(\int_0^{F} \frac{P(K)}{K^2}\,dK + \int_F^{\infty} \frac{C(K)}{K^2}\,dK\right)
+```
 
-Here $P(K)$ and $C(K)$ are the put and call prices at strike $K$. The VIX takes that integral, which assumes a strike at every price, and makes it work on the strikes that actually exist. Three things need fixing: the integral becomes a sum, the switch from puts to calls happens at a listed strike rather than at the forward, and there is no expiry exactly 30 days out.
+Here $`P(K)`$ and $`C(K)`$ are the put and call prices at strike $`K`$. The VIX takes that integral, which assumes a strike at every price, and makes it work on the strikes that actually exist. Three things need fixing: the integral becomes a sum, the switch from puts to calls happens at a listed strike rather than at the forward, and there is no expiry exactly 30 days out.
 
 ### Step 1: the integral becomes a sum over listed strikes
 
-Replace $dK$ by the gap each strike covers. A strike with neighbours at 99.9 and 100.1 covers the band from 99.95 to 100.05, a width of $\Delta K_i$ = 0.10; at the two ends of the strip the width is the single gap to the neighbour. This is the midpoint rule of numerical integration. It is accurate when the strikes are close together relative to how fast the integrand changes. The integrand peaks sharply at the money (a put's price rises to it from the left, a call's falls from it to the right), so the spacing near the money is what matters. The chart below shows that peak.
+Replace $`dK`$ by the gap each strike covers. A strike with neighbours at 99.9 and 100.1 covers the band from 99.95 to 100.05, a width of $`\Delta K_i`$ = 0.10; at the two ends of the strip the width is the single gap to the neighbour. This is the midpoint rule of numerical integration. It is accurate when the strikes are close together relative to how fast the integrand changes. The integrand peaks sharply at the money (a put's price rises to it from the left, a call's falls from it to the right), so the spacing near the money is what matters. The chart below shows that peak.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -122,64 +130,68 @@ xychart-beta
     line [0.00, 0.03, 1.09, 12.80, 60.67, 13.98, 1.69, 0.12, 0.00]
 ```
 
-The orange line is the skewed surface, the green line the flat one: each point is $(2e^{rT}/T)\,Q(K)/K^2$ in units of 0.0001, so the area under a curve is the variance in the same units, about 400 for the flat surface. Both peak at the money near 60.7. The difference is on the left: at the $90 strike the skewed strip contributes 4.01 against 1.09, at $85 it contributes 0.80 against 0.03. Those extra put contributions, less a little on the calls, make the gap between 20.00 and 21.18.
+The orange line is the skewed surface, the green line the flat one: each point is $`(2e^{rT}/T)\,Q(K)/K^2`$ in units of 0.0001, so the area under a curve is the variance in the same units, about 400 for the flat surface. Both peak at the money near 60.7. The difference is on the left: at the $90 strike the skewed strip contributes 4.01 against 1.09, at $85 it contributes 0.80 against 0.03. Those extra put contributions, less a little on the calls, make the gap between 20.00 and 21.18.
 
 ### Step 2: switching at a listed strike costs a correction term
 
-The integral switches from puts to calls at the forward $F$. The recipe switches at $K_0$, the listed strike at or just below $F$. So on the band from $K_0$ to $F$ it uses calls where the integral wants puts. [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) says how much too much that is: at every strike $C - P = e^{-rT}(F - K)$. The extra amount, carried through the formula, is
+The integral switches from puts to calls at the forward $`F`$. The recipe switches at $`K_0`$, the listed strike at or just below $`F`$. So on the band from $`K_0`$ to $`F`$ it uses calls where the integral wants puts. [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) says how much too much that is: at every strike $`C - P = e^{-rT}(F - K)`$. The extra amount, carried through the formula, is
 
-$$\frac{2e^{rT}}{T}\int_{K_0}^{F}\frac{e^{-rT}(F-K)}{K^2}\,dK \;\approx\; \frac{2}{T}\cdot\frac{(F-K_0)^2}{2K_0^2} \;=\; \frac{1}{T}\left(\frac{F}{K_0}-1\right)^2.$$
+```math
+\frac{2e^{rT}}{T}\int_{K_0}^{F}\frac{e^{-rT}(F-K)}{K^2}\,dK \;\approx\; \frac{2}{T}\cdot\frac{(F-K_0)^2}{2K_0^2} \;=\; \frac{1}{T}\left(\frac{F}{K_0}-1\right)^2.
+```
 
-That is exactly the term the recipe subtracts. On the 23-day strip, $F$ = 100.189220 and $K_0$ = 100.10, so the term is 0.000013; on the 37-day strip, $F$ = 100.304572 and $K_0$ = 100.30, and it rounds to zero. It is small whenever the strikes are fine, and it is there so the recipe stays right when they are not.
+That is exactly the term the recipe subtracts. On the 23-day strip, $`F`$ = 100.189220 and $`K_0`$ = 100.10, so the term is 0.000013; on the 37-day strip, $`F`$ = 100.304572 and $`K_0`$ = 100.30, and it rounds to zero. It is small whenever the strikes are fine, and it is there so the recipe stays right when they are not.
 
 <details>
 <summary>Detailed proof: the correction, with the at-the-money average included</summary>
 
-The recipe prices strike $K_0$ at the average $\tfrac12(P + C)$. Split its band into halves: below $K_0$ the band uses $P$, as the integral does for $K < F$. Above $K_0$ the recipe uses $C$ throughout, while the integral uses $P$ up to $F$ and $C$ after. On $[K_0, F]$ the recipe's excess is $C - P = e^{-rT}(F-K)$. Grown by $e^{rT}$ and weighted by $2/(TK^2)$, the excess is
-$$E = \frac{2}{T}\int_{K_0}^{F}\frac{F-K}{K^2}\,dK = \frac{2}{T}\left(\frac{F}{K_0} - 1 - \ln\frac{F}{K_0}\right).$$
-Write $x = F/K_0 - 1$, a small number when strikes are fine. Then $x - \ln(1+x) = \tfrac12 x^2 - \tfrac13 x^3 + \dots$, so $E = \tfrac{1}{T}x^2\,(1 - \tfrac23 x + \dots)$. The recipe subtracts the leading term $\tfrac1T x^2$; so the recipe over-subtracts by about $\tfrac{2}{3T}x^3$, third order in a number that is already small, and far below the fourth decimal of the VIX. The midpoint rule's own error from sampling the peak is a separate matter and shrinks with the square of the strike gap.
+The recipe prices strike $`K_0`$ at the average $`\tfrac12(P + C)`$. Split its band into halves: below $`K_0`$ the band uses $`P`$, as the integral does for $`K < F`$. Above $`K_0`$ the recipe uses $`C`$ throughout, while the integral uses $`P`$ up to $`F`$ and $`C`$ after. On $`[K_0, F]`$ the recipe's excess is $`C - P = e^{-rT}(F-K)`$. Grown by $`e^{rT}`$ and weighted by $`2/(TK^2)`$, the excess is
+
+$`\displaystyle E = \frac{2}{T}\int_{K_0}^{F}\frac{F-K}{K^2}\,dK = \frac{2}{T}\left(\frac{F}{K_0} - 1 - \ln\frac{F}{K_0}\right).`$
+
+Write $`x = F/K_0 - 1`$, a small number when strikes are fine. Then $`x - \ln(1+x) = \tfrac12 x^2 - \tfrac13 x^3 + \dots`$, so $`E = \tfrac{1}{T}x^2\,(1 - \tfrac23 x + \dots)`$. The recipe subtracts the leading term $`\tfrac1T x^2`$; so the recipe over-subtracts by about $`\tfrac{2}{3T}x^3`$, third order in a number that is already small, and far below the fourth decimal of the VIX. The midpoint rule's own error from sampling the peak is a separate matter and shrinks with the square of the strike gap.
 
 </details>
 
 ### Step 3: blend the two expiries in total variance
 
-Variance adds over time: the variance for 37 days is the variance for the first 23 days plus the forward variance from day 23 to day 37 ([Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md)). So the quantity that grows in a straight line with time is total variance, $\sigma^2 T$, not volatility. The recipe interpolates total variance linearly in days to day 30: weight $w_1 = (37 - 30)/(37 - 23)$ = 0.50 on the near expiry, 0.50 on the next. That gives total variance for 30 days; multiplying by 365/30 turns it back into a per-year rate. The square root is the volatility, and the exchange multiplies by 100 so that 20% prints as 20.
+Variance adds over time: the variance for 37 days is the variance for the first 23 days plus the forward variance from day 23 to day 37 ([Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md)). So the quantity that grows in a straight line with time is total variance, $`\sigma^2 T`$, not volatility. The recipe interpolates total variance linearly in days to day 30: weight $`w_1 = (37 - 30)/(37 - 23)`$ = 0.50 on the near expiry, 0.50 on the next. That gives total variance for 30 days; multiplying by 365/30 turns it back into a per-year rate. The square root is the volatility, and the exchange multiplies by 100 so that 20% prints as 20.
 
 Blending volatilities instead of variances gives a slightly different number, 21.1192 on the skewed surface instead of 21.1750. The gap is small here because the two expiries are close in variance; it grows when the term structure is steep.
 
 ### Step 4: why a skew lifts the VIX above the at-the-money vol
 
-Every term in the strip is positive, and each one grows with its option's price. A skew makes the puts below the money dearer than a flat 20% would, and makes calls just above the money slightly cheaper. The weights $1/K^2$ favour low strikes, and the chart shows the puts carry most of the change. So the strip, and the VIX, rise above the at-the-money vol. On this surface at-the-money is 20.0000 and the VIX is 21.1750. A smile that lifts both wings does the same from both sides. The VIX is closer to an average of volatility across strikes, weighted toward the downside, than to any single option's vol.
+Every term in the strip is positive, and each one grows with its option's price. A skew makes the puts below the money dearer than a flat 20% would, and makes calls just above the money slightly cheaper. The weights $`1/K^2`$ favour low strikes, and the chart shows the puts carry most of the change. So the strip, and the VIX, rise above the at-the-money vol. On this surface at-the-money is 20.0000 and the VIX is 21.1750. A smile that lifts both wings does the same from both sides. The VIX is closer to an average of volatility across strikes, weighted toward the downside, than to any single option's vol.
 
 ### The other door: read the density, then average the log payoff
 
-The same variance can be reached without the strip. Call prices, differentiated twice in the strike, give the market's risk-neutral density of the index at expiry: the spread of index levels at expiry that today's option prices imply ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). The fair variance is then $\tfrac{2}{T}$ times the average of $S_T/F - 1 - \ln(S_T/F)$ under that density, where $S_T$ is the index at expiry. Integrating by parts twice turns this into the strip formula, which is how the two roads meet. The code takes both, numerically, and they agree to six decimals.
+The same variance can be reached without the strip. Call prices, differentiated twice in the strike, give the market's risk-neutral density of the index at expiry: the spread of index levels at expiry that today's option prices imply ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). The fair variance is then $`\tfrac{2}{T}`$ times the average of $`S_T/F - 1 - \ln(S_T/F)`$ under that density, where $`S_T`$ is the index at expiry. Integrating by parts twice turns this into the strip formula, which is how the two roads meet. The code takes both, numerically, and they agree to six decimals.
 
 ---
 
 ## Worked numbers, by hand
 
-The house index: $S$ = 100, $r$ = 5%, $q$ = 2%. Flat 20% surface, strikes $0.10 apart from 80 to 120 and $0.50 apart outside. The strip sums themselves run to hundreds of terms and come from the code; every step around them is arithmetic.
+The house index: $`S`$ = 100, $`r`$ = 5%, $`q`$ = 2%. Flat 20% surface, strikes $0.10 apart from 80 to 120 and $0.50 apart outside. The strip sums themselves run to hundreds of terms and come from the code; every step around them is arithmetic.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| near expiry in years, $T_1$ | 23 / 365 | 0.063014 |
-| next expiry in years, $T_2$ | 37 / 365 | 0.101370 |
-| forward at 23 days, from parity | strike with call and put closest, plus $e^{rT}(C - P)$ | 100.189220 |
-| the same, from $S e^{(r-q)T}$ | $100 \times e^{0.03 \times 0.063014}$ | 100.189220 |
-| $K_0$, 23 days | the listed strike at or just below 100.189220 | 100.10 |
+| near expiry in years, $`T_1`$ | 23 / 365 | 0.063014 |
+| next expiry in years, $`T_2`$ | 37 / 365 | 0.101370 |
+| forward at 23 days, from parity | strike with call and put closest, plus $`e^{rT}(C - P)`$ | 100.189220 |
+| the same, from $`S e^{(r-q)T}`$ | $`100 \times e^{0.03 \times 0.063014}`$ | 100.189220 |
+| $`K_0`$, 23 days | the listed strike at or just below 100.189220 | 100.10 |
 | strikes kept, 23 days | walk out from 100.10 until two zero bids in a row | 322, from 85.50 to 117.60 |
-| strip term, 23 days | $\tfrac{2}{T_1}\sum \tfrac{\Delta K_i}{K_i^2}e^{rT_1}Q(K_i)$ | 0.040007 |
-| correction, 23 days | $\tfrac{1}{0.063014}(100.189220/100.10 - 1)^2$ | 0.000013 |
-| $\sigma_1^2$ | 0.040007 − 0.000013 | 0.039995 |
-| $\sigma_2^2$, 37 days, the same way | $K_0$ = 100.30, 390 strikes | 0.039995 |
-| weight on the near expiry, $w_1$ | (37 − 30) / (37 − 23) | 0.50 |
+| strip term, 23 days | $`\tfrac{2}{T_1}\sum \tfrac{\Delta K_i}{K_i^2}e^{rT_1}Q(K_i)`$ | 0.040007 |
+| correction, 23 days | $`\tfrac{1}{0.063014}(100.189220/100.10 - 1)^2`$ | 0.000013 |
+| $`\sigma_1^2`$ | 0.040007 − 0.000013 | 0.039995 |
+| $`\sigma_2^2`$, 37 days, the same way | $`K_0`$ = 100.30, 390 strikes | 0.039995 |
+| weight on the near expiry, $`w_1`$ | (37 − 30) / (37 − 23) | 0.50 |
 | near part | 0.063014 × 0.039995 × 0.50 | 0.001260 |
 | next part | 0.101370 × 0.039995 × 0.50 | 0.002027 |
 | per-year 30-day variance | (0.001260 + 0.002027) × 365 / 30 | 0.039995 |
 | **VIX** | 100 × √0.039995 | **19.9988, printed 20.00** |
 
-On the skewed surface the same steps give $\sigma_1^2$ = 0.043620 and $\sigma_2^2$ = 0.045595, near part 0.001374, next part 0.002311, per-year variance 0.044838, and a **VIX of 21.1750, printed 21.18**, against an at-the-money vol of 20.00.
+On the skewed surface the same steps give $`\sigma_1^2`$ = 0.043620 and $`\sigma_2^2`$ = 0.045595, near part 0.001374, next part 0.002311, per-year variance 0.044838, and a **VIX of 21.1750, printed 21.18**, against an at-the-money vol of 20.00.
 
 A flat 20% market reads 20.00 on the recipe to two decimals: the recipe returns the vol that generated the prices. The skewed market reads more than a point higher with the same at-the-money price, because the puts that protect against a fall cost more.
 
@@ -187,7 +199,7 @@ A flat 20% market reads 20.00 on the recipe to two decimals: the recipe returns 
 
 | Mistake | VIX comes out at | What went wrong |
 | --- | --- | --- |
-| In-the-money calls below $K_0$ instead of out-of-the-money puts, flat | 68.9440 | Each in-the-money call carries its intrinsic value $F - K$, which is not volatility; parity says it adds $e^{-rT}(F-K)$ per strike |
+| In-the-money calls below $`K_0`$ instead of out-of-the-money puts, flat | 68.9440 | Each in-the-money call carries its intrinsic value $`F - K`$, which is not volatility; parity says it adds $`e^{-rT}(F-K)`$ per strike |
 | Strikes $5 apart everywhere | 21.2319 flat, 22.3435 skewed | The midpoint rule samples the at-the-money peak at full height across a whole $5 band |
 | Blend the two vols instead of the two total variances, skewed | 21.1192 (right: 21.1750) | Variance adds over time; volatility does not |
 | Use the 23-day strip alone, skewed | 20.8854 | The shorter strip reaches less far into the put wing; 30 days needs both expiries |
@@ -196,7 +208,7 @@ A flat 20% market reads 20.00 on the recipe to two decimals: the recipe returns 
 
 ## Code, from first principles, and it actually runs
 
-The code prices every listed option on both surfaces with its own normal CDF (Marsaglia's series), then reaches each expiry's variance three independent ways: **1** the exchange's recipe, with the forward from parity, $K_0$, the zero-bid walk, the strike gaps and the correction; **2** a fine Simpson integral (Simpson's rule, a standard numerical integration method) of the continuous strip, switched at the exact forward; **3** the density read off call prices by second differences, averaged against the log payoff. It checks that no butterfly on a $0.50 grid has a negative price (a butterfly buys a call $0.50 below a strike and a call $0.50 above it, and sells two calls at the strike; none costing less than zero means the skewed surface is free of arbitrage), blends to 30 days, and reproduces every mistake in the table and every point in both charts.
+The code prices every listed option on both surfaces with its own normal CDF (Marsaglia's series), then reaches each expiry's variance three independent ways: **1** the exchange's recipe, with the forward from parity, $`K_0`$, the zero-bid walk, the strike gaps and the correction; **2** a fine Simpson integral (Simpson's rule, a standard numerical integration method) of the continuous strip, switched at the exact forward; **3** the density read off call prices by second differences, averaged against the log payoff. It checks that no butterfly on a $0.50 grid has a negative price (a butterfly buys a call $0.50 below a strike and a call $0.50 above it, and sells two calls at the strike; none costing less than zero means the skewed surface is free of arbitrage), blends to 30 days, and reproduces every mistake in the table and every point in both charts.
 
 ### Python
 
@@ -602,12 +614,12 @@ The two outputs are identical line for line.
 
 Lean proves the recipe's two corrections, the forward switch and the blend, for any rate, strikes and expiry days.
 
-- Suppose put-call parity holds at every strike, $T > 0$, $0 < K_0 \le F$ and $x = F/K_0 - 1$. Then the excess on the band from $K_0$ to $F$ is exactly $\tfrac{2}{T}(x - \ln(1 + x))$.
-- Take the same setting. Then the subtracted term $x^2/T$ is at least that excess, and over-subtracts by at most $2x^3/(3T)$.
-- Suppose $N_1 < N_2$. Then $w_1 N_1 + (1 - w_1) N_2 = N_{30}$: the blend lands at exactly 30 days.
-- Suppose both expiries carry the same per-year variance $v$. Then the VIX formula returns $100\sqrt{v}$.
-- Suppose $N_1 < N_2$. Then $0 \le w_1 \le 1$ exactly when the two expiries bracket 30 days.
-- Take expiries 23 and 37 days out. Then $w_1 = 1/2$, and a flat 20% surface, variance 1/25, prints 20.
+- Suppose put-call parity holds at every strike, $`T > 0`$, $`0 < K_0 \le F`$ and $`x = F/K_0 - 1`$. Then the excess on the band from $`K_0`$ to $`F`$ is exactly $`\tfrac{2}{T}(x - \ln(1 + x))`$.
+- Take the same setting. Then the subtracted term $`x^2/T`$ is at least that excess, and over-subtracts by at most $`2x^3/(3T)`$.
+- Suppose $`N_1 < N_2`$. Then $`w_1 N_1 + (1 - w_1) N_2 = N_{30}`$: the blend lands at exactly 30 days.
+- Suppose both expiries carry the same per-year variance $`v`$. Then the VIX formula returns $`100\sqrt{v}`$.
+- Suppose $`N_1 < N_2`$. Then $`0 \le w_1 \le 1`$ exactly when the two expiries bracket 30 days.
+- Take expiries 23 and 37 days out. Then $`w_1 = 1/2`$, and a flat 20% surface, variance 1/25, prints 20.
 
 The strip sums, the forward read from parity and the printed values 20.00 and 21.18 are left to the Python and Rust checks.
 
@@ -826,7 +838,7 @@ example : 100 * √((1 : ℝ) / 25) = 20 := by
 > [!TIP]
 > **Try changing**
 > - **Keep the options the zero-bid rule throws away.** Guess first: does the skewed VIX move in the second decimal? Set `cut=0.0`. It moves from 21.1750 to 21.1791, the fourth decimal; the discarded tails are worth almost nothing on this surface.
-> - **Drop the correction term.** Guess first: how far off is the flat VIX? Call `cboe` with `fix=False`. It reads 20.0000 instead of 19.9988: with ten-cent strikes the switch costs almost nothing. On $1 strikes with $K_0$ = 99.40 the check asserts the term cuts the error at least threefold.
+> - **Drop the correction term.** Guess first: how far off is the flat VIX? Call `cboe` with `fix=False`. It reads 20.0000 instead of 19.9988: with ten-cent strikes the switch costs almost nothing. On $1 strikes with $`K_0`$ = 99.40 the check asserts the term cuts the error at least threefold.
 > - **List strikes $5 apart.** Guess first: which way does the error go? Pass `listed(True)`. Up, to 21.2319 on the flat surface and 22.3435 on the skewed one.
 > - **Only the near expiry.** Guess first: higher or lower than 21.18 on the skewed surface? Lower: 20.8854, because a shorter strip gives the put wing less room.
 
@@ -860,7 +872,7 @@ example : 100 * √((1 : ℝ) / 25) = 20 := by
 
 ## What this builds on
 
-- [The variance swap](03-variance-swap-fair-strike.md): the $1/K^2$ strip that prices variance with no model. The VIX is that strip on listed strikes.
+- [The variance swap](03-variance-swap-fair-strike.md): the $`1/K^2`$ strip that prices variance with no model. The VIX is that strip on listed strikes.
 - [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): what a surface of implied vols is, and the no-butterfly rule the skewed surface is checked against.
 - [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md): why a strip of options can rebuild the log payoff at all.
 - [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md): why total variance adds over time, the reason the blend is linear in variance.
@@ -879,7 +891,7 @@ The VIX prices today's view of the next 30 days; what the market will pay today 
 Verified 2026-09-27: every link below resolves to the publisher's page.
 
 - Cboe Global Indices. *Cboe Volatility Index Methodology*, version 6.0, last revised 26 Feb 2026. [cdn.cboe.com](https://cdn.cboe.com/api/global/us_indices/governance/Volatility_Index_Methodology_Cboe_Volatility_Index.pdf). The VIX's selection of expiries, the zero-bid filter, and a worked sample calculation.
-- Cboe Global Indices. *Cboe Volatility Index Mathematics Methodology*, version 5.0, last revised 26 Feb 2026. [cdn.cboe.com](https://cdn.cboe.com/api/global/us_indices/governance/Cboe_Volatility_Index_Mathematics_Methodology.pdf). The single-term formula, the forward and $K_0$ rule, the strike gaps, time in minutes, and the 30-day blend.
+- Cboe Global Indices. *Cboe Volatility Index Mathematics Methodology*, version 5.0, last revised 26 Feb 2026. [cdn.cboe.com](https://cdn.cboe.com/api/global/us_indices/governance/Cboe_Volatility_Index_Mathematics_Methodology.pdf). The single-term formula, the forward and $`K_0`$ rule, the strike gaps, time in minutes, and the 30-day blend.
 - Demeterfi, Kresimir, Emanuel Derman, Michael Kamal, and Joseph Zou. "A Guide to Volatility and Variance Swaps." *The Journal of Derivatives* 6, no. 4 (1999): 9–32. [doi:10.3905/jod.1999.319129](https://doi.org/10.3905/jod.1999.319129). The strip that the VIX discretises, and the effect of skew on the variance strike.
 - Britten-Jones, Mark, and Anthony Neuberger. "Option Prices, Implied Price Processes, and Stochastic Volatility." *The Journal of Finance* 55, no. 2 (2000): 839–866. [doi:10.1111/0022-1082.00228](https://doi.org/10.1111/0022-1082.00228). Model-free implied variance: the strip prices expected variance under any continuous price process.
 - Carr, Peter, and Liuren Wu. "A Tale of Two Indices." *The Journal of Derivatives* 13, no. 3 (2006): 13–29. [doi:10.3905/jod.2006.616865](https://doi.org/10.3905/jod.2006.616865). The old at-the-money VXO against the strip-based VIX, and why the new recipe prices variance.

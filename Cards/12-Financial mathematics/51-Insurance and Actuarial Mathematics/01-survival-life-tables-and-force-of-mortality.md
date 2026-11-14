@@ -36,52 +36,62 @@ Orange: the life table used on this card. Green: a two-number Gompertz curve fit
 
 ## The formula
 
-Notation first, in words. Actuaries hang the age on the letter as a small subscript on the right: $l_x$ is "the l-number at age x". A count of years ahead goes as a small subscript on the left: ${}_tp_x$ reads "t p x", the chance that someone aged x lives t more years. So ${}_{25}p_{40}$ is the number this card is after.
+Notation first, in words. Actuaries hang the age on the letter as a small subscript on the right: $`l_x`$ is "the l-number at age x". A count of years ahead goes as a small subscript on the left: $`{}_tp_x`$ reads "t p x", the chance that someone aged x lives t more years. So $`{}_{25}p_{40}`$ is the number this card is after.
 
-The life table's columns, for each whole age $x$:
+The life table's columns, for each whole age $`x`$:
 
-$$l_{x+1} = l_x\,p_x, \qquad d_x = l_x - l_{x+1} = l_x\,q_x, \qquad p_x = 1 - q_x.$$
+```math
+l_{x+1} = l_x\,p_x, \qquad d_x = l_x - l_{x+1} = l_x\,q_x, \qquad p_x = 1 - q_x.
+```
 
 **Read it aloud:** of the people alive at age x, a fraction p_x reach the next birthday; the rest, d_x of them, die in the year.
 
 Survival over many years, two ways:
 
-$${}_tp_x \;=\; \frac{l_{x+t}}{l_x} \;=\; \exp\!\Big(-\int_0^t \mu_{x+s}\,ds\Big).$$
+```math
+{}_tp_x \;=\; \frac{l_{x+t}}{l_x} \;=\; \exp\!\Big(-\int_0^t \mu_{x+s}\,ds\Big).
+```
 
 **Read it aloud:** the chance of lasting t more years is the survivors at the later age over the survivors now, which is also e to the minus the force of mortality piled up over those t years.
 
 The force of mortality is the slope of the log of the survivor count, with its sign turned:
 
-$$\mu_x \;=\; -\frac{1}{l_x}\,\frac{dl_x}{dx} \;=\; -\frac{d}{dx}\ln l_x.$$
+```math
+\mu_x \;=\; -\frac{1}{l_x}\,\frac{dl_x}{dx} \;=\; -\frac{d}{dx}\ln l_x.
+```
 
 Life expectancy, two versions:
 
-$$e_x = \sum_{k=1}^{\infty} {}_kp_x, \qquad \mathring{e}_x = \int_0^{\infty} {}_tp_x\,dt.$$
+```math
+e_x = \sum_{k=1}^{\infty} {}_kp_x, \qquad \mathring{e}_x = \int_0^{\infty} {}_tp_x\,dt.
+```
 
 The first counts only whole years lived (the **curtate** expectation); the second counts fractions of a year too (the **complete** expectation).
 
 Makeham's law, the shape used for this card's table, and Gompertz's law inside it:
 
-$$\mu_x = A + B\,c^{\,x}, \qquad {}_tp_x = \exp\!\Big(-A\,t - \frac{B}{\ln c}\,c^{\,x}\big(c^{\,t}-1\big)\Big).$$
+```math
+\mu_x = A + B\,c^{\,x}, \qquad {}_tp_x = \exp\!\Big(-A\,t - \frac{B}{\ln c}\,c^{\,x}\big(c^{\,t}-1\big)\Big).
+```
 
-Set $A$ to 0 and it is Gompertz's law.
+Set $`A`$ to 0 and it is Gompertz's law.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | age now, in whole years | 40 | survival over the next 25 years falls |
-| $t$, $n$, $k$, $s$ | years ahead ($t$, $s$ any number; $n$, $k$ whole) | 25 | survival falls |
-| $l_x$ | survivors at exact age x, out of a chosen starting count (the **radix**) | 10,000 at 40; 9,520.98 at 65 | a bigger radix scales every count, never a chance |
-| $d_x$ | deaths between age x and x + 1 | 56.31 at 65 | — |
-| $q_x$ | chance of dying before the next birthday, given alive at x | 0.005915 at 65 | survival falls |
-| $p_x$ | chance of reaching the next birthday, 1 − q_x | one minus the above | survival rises |
-| ${}_tp_x$ | chance of living t more years, given alive at x | 0.952098 for 40 to 65 | — |
-| $\mu_x$ | force of mortality: deaths per year per survivor, at an instant | 0.000510 at 40; 0.005605 at 65 | survival falls |
-| $e_x$, $\mathring{e}_x$ | curtate and complete life expectancy, in years | 45.78 and 46.28 at 40 | — |
-| $A$ | Makeham's constant: the part of the force that does not age (accidents, infections) | 0.00022 per year | survival falls at every age |
-| $B$, $c$ | Gompertz's level and growth factor: the ageing part is $B c^{\,x}$ | 0.0000027 and 1.124 | survival falls, sharply at old ages |
-| $E_j$ | the event "alive at age x + j", used in the detailed proof; $E[\,\cdot\,]$ alone means an average | — | — |
+| $`x`$ | age now, in whole years | 40 | survival over the next 25 years falls |
+| $`t`$, $`n`$, $`k`$, $`s`$ | years ahead ($`t`$, $`s`$ any number; $`n`$, $`k`$ whole) | 25 | survival falls |
+| $`l_x`$ | survivors at exact age x, out of a chosen starting count (the **radix**) | 10,000 at 40; 9,520.98 at 65 | a bigger radix scales every count, never a chance |
+| $`d_x`$ | deaths between age x and x + 1 | 56.31 at 65 | — |
+| $`q_x`$ | chance of dying before the next birthday, given alive at x | 0.005915 at 65 | survival falls |
+| $`p_x`$ | chance of reaching the next birthday, 1 − q_x | one minus the above | survival rises |
+| $`{}_tp_x`$ | chance of living t more years, given alive at x | 0.952098 for 40 to 65 | — |
+| $`\mu_x`$ | force of mortality: deaths per year per survivor, at an instant | 0.000510 at 40; 0.005605 at 65 | survival falls |
+| $`e_x`$, $`\mathring{e}_x`$ | curtate and complete life expectancy, in years | 45.78 and 46.28 at 40 | — |
+| $`A`$ | Makeham's constant: the part of the force that does not age (accidents, infections) | 0.00022 per year | survival falls at every age |
+| $`B`$, $`c`$ | Gompertz's level and growth factor: the ageing part is $`B c^{\,x}`$ | 0.0000027 and 1.124 | survival falls, sharply at old ages |
+| $`E_j`$ | the event "alive at age x + j", used in the detailed proof; $`E[\,\cdot\,]`$ alone means an average | — | — |
 
-The mortality basis is the Standard Ultimate Survival Model from Dickson, Hardy and Waters (Sources): a published teaching table, not any one country's data. With $c = 1.124$, the ageing part of the force grows 12.4% for every year of age.
+The mortality basis is the Standard Ultimate Survival Model from Dickson, Hardy and Waters (Sources): a published teaching table, not any one country's data. With $`c = 1.124`$, the ageing part of the force grows 12.4% for every year of age.
 
 ### When it holds
 
@@ -100,15 +110,17 @@ Nobody reaches 65 without first reaching 41, then 42, and so on. Each birthday i
 
 ### Step 1: the table is that product, written as counts
 
-Start the table with $l_{40} = 10{,}000$. Each year's survivors are last year's times that year's survival chance: $l_{x+1} = l_x p_x$. Chain it:
+Start the table with $`l_{40} = 10{,}000`$. Each year's survivors are last year's times that year's survival chance: $`l_{x+1} = l_x p_x`$. Chain it:
 
-$$l_{65} = l_{40}\,p_{40}\,p_{41}\cdots p_{64}.$$
+```math
+l_{65} = l_{40}\,p_{40}\,p_{41}\cdots p_{64}.
+```
 
-Divide both sides by $l_{40} = 10{,}000$ and the product of 25 chances is left: ${}_{25}p_{40} = l_{65}/l_{40}$. The radix cancels. Choosing 10,000, or 100,000 as published tables often do, changes every count and no chance.
+Divide both sides by $`l_{40} = 10{,}000`$ and the product of 25 chances is left: $`{}_{25}p_{40} = l_{65}/l_{40}`$. The radix cancels. Choosing 10,000, or 100,000 as published tables often do, changes every count and no chance.
 
 Here are some rows of this card's table, starting from the 10,000 policyholders.
 
-| age $x$ | $q_x$ | $l_x$ | $d_x$ | $\mu_x$ |
+| age $`x`$ | $`q_x`$ | $`l_x`$ | $`d_x`$ | $`\mu_x`$ |
 | --- | --- | --- | --- | --- |
 | 40 | 0.000527 | 10,000.00 | 5.27 | 0.000510 |
 | 50 | 0.001209 | 9,923.30 | 11.99 | 0.001153 |
@@ -122,25 +134,31 @@ Counts in the table are not whole people. They are expected values: 5.27 deaths 
 
 ### Step 2: from whole years to the instant
 
-A yearly table answers only yearly questions. Shrink the year to a short stretch of length h. The chance of dying in it, among survivors at x, is $(l_x - l_{x+h})/l_x$. Divide by h and let h shrink: that limit is the force of mortality: the hazard rate from credit, under an actuarial name.
+A yearly table answers only yearly questions. Shrink the year to a short stretch of length h. The chance of dying in it, among survivors at x, is $`(l_x - l_{x+h})/l_x`$. Divide by h and let h shrink: that limit is the force of mortality: the hazard rate from credit, under an actuarial name.
 
-$$\mu_x = \lim_{h\to 0}\frac{l_x - l_{x+h}}{h\,l_x} = -\frac{1}{l_x}\frac{dl_x}{dx} = -\frac{d}{dx}\ln l_x.$$
+```math
+\mu_x = \lim_{h\to 0}\frac{l_x - l_{x+h}}{h\,l_x} = -\frac{1}{l_x}\frac{dl_x}{dx} = -\frac{d}{dx}\ln l_x.
+```
 
-The last form is the useful one. Integrate the slope of $\ln l$ from $x$ to $x+t$ and the change in $\ln l$ comes back:
+The last form is the useful one. Integrate the slope of $`\ln l`$ from $`x`$ to $`x+t`$ and the change in $`\ln l`$ comes back:
 
-$$\ln l_{x+t} - \ln l_x = -\int_0^t \mu_{x+s}\,ds, \qquad\text{so}\qquad {}_tp_x = \exp\!\Big(-\int_0^t \mu_{x+s}\,ds\Big).$$
+```math
+\ln l_{x+t} - \ln l_x = -\int_0^t \mu_{x+s}\,ds, \qquad\text{so}\qquad {}_tp_x = \exp\!\Big(-\int_0^t \mu_{x+s}\,ds\Big).
+```
 
-The table carries the force inside it. A central difference on the log counts estimates it: $(\ln l_{64} - \ln l_{66})/2$ gives 0.005617 per year, against the formula's 0.005605 at 65. The small gap is the curvature of $\ln l$ over two years.
+The table carries the force inside it. A central difference on the log counts estimates it: $`(\ln l_{64} - \ln l_{66})/2`$ gives 0.005617 per year, against the formula's 0.005605 at 65. The small gap is the curvature of $`\ln l`$ over two years.
 
-The force $\mu_x$ is a rate, not a chance. At 65 it is 0.005605 per year while the chance of dying before 66 is 0.005915. The chance is larger because the force keeps rising through the year; for one year, $q_x = 1 - \exp(-\int_0^1 \mu_{x+s}\,ds)$.
+The force $`\mu_x`$ is a rate, not a chance. At 65 it is 0.005605 per year while the chance of dying before 66 is 0.005915. The chance is larger because the force keeps rising through the year; for one year, $`q_x = 1 - \exp(-\int_0^1 \mu_{x+s}\,ds)`$.
 
 ### Step 3: life expectancy is a sum of survival chances
 
 Call K the number of whole further years a 40-year-old lives. K counts the birthdays reached: it is 1 for each k with "alive at 40 + k" true, added up. The average of a sum is the sum of averages, and the average of a yes-or-no count is its chance. So
 
-$$e_{40} = E[K] = \sum_{k\ge1} {}_kp_{40} = \frac{l_{41} + l_{42} + \cdots}{l_{40}} = 45.78 \text{ years.}$$
+```math
+e_{40} = E[K] = \sum_{k\ge1} {}_kp_{40} = \frac{l_{41} + l_{42} + \cdots}{l_{40}} = 45.78 \text{ years.}
+```
 
-A second road averages K directly: K equals k exactly when the death falls between 40 + k and 41 + k, which has chance $d_{40+k}/l_{40}$. Weighting each k by that chance gives 45.78 again, the same to the six decimals printed.
+A second road averages K directly: K equals k exactly when the death falls between 40 + k and 41 + k, which has chance $`d_{40+k}/l_{40}`$. Weighting each k by that chance gives 45.78 again, the same to the six decimals printed.
 
 The complete expectation adds the part-year lived in the year of death. Integrating the survival curve gives 46.28 years. Deaths spread evenly across each year would add exactly half a year to the curtate figure; here the gap is half a year to four decimal places, because this table's deaths are close to even within each year.
 
@@ -160,15 +178,15 @@ One line: expected deaths per five-year band, from the table's d_x. Deaths peak 
 <details>
 <summary>Detailed proof: the two identities</summary>
 
-**Ratio of counts.** For each whole j, write $E_j$ for the event "alive at x + j". The events shrink, $E_{j+1} \subseteq E_j$: being alive later means being alive earlier. The multiplication rule for conditional chances gives $P(E_n \mid E_0) = \prod_{j=0}^{n-1} P(E_{j+1}\mid E_j) = \prod_{j=0}^{n-1} p_{x+j}$. The table's recursion $l_{x+j+1} = l_{x+j}\,p_{x+j}$ telescopes to the same product times $l_x$. Nothing about independence was used.
+**Ratio of counts.** For each whole j, write $`E_j`$ for the event "alive at x + j". The events shrink, $`E_{j+1} \subseteq E_j`$: being alive later means being alive earlier. The multiplication rule for conditional chances gives $`P(E_n \mid E_0) = \prod_{j=0}^{n-1} P(E_{j+1}\mid E_j) = \prod_{j=0}^{n-1} p_{x+j}`$. The table's recursion $`l_{x+j+1} = l_{x+j}\,p_{x+j}`$ telescopes to the same product times $`l_x`$. Nothing about independence was used.
 
-**Tail sum.** K is a whole number at least 0, and for every outcome $K = \sum_{k\ge1}\mathbf{1}[K \ge k]$, where the bracket is 1 when true and 0 when false. All terms are non-negative, so the expectation passes inside the sum: $E[K] = \sum_{k\ge1} P(K\ge k) = \sum_{k\ge1} {}_kp_x$. For the complete lifetime R, the same move with an integral: $R = \int_0^\infty \mathbf{1}[R > t]\,dt$, so $E[R] = \int_0^\infty {}_tp_x\,dt$. Since $K \le R < K+1$, the complete expectation lies within one year above the curtate one; if deaths are spread evenly within each year, $E[R - K] = 1/2$ exactly.
+**Tail sum.** K is a whole number at least 0, and for every outcome $`K = \sum_{k\ge1}\mathbf{1}[K \ge k]`$, where the bracket is 1 when true and 0 when false. All terms are non-negative, so the expectation passes inside the sum: $`E[K] = \sum_{k\ge1} P(K\ge k) = \sum_{k\ge1} {}_kp_x`$. For the complete lifetime R, the same move with an integral: $`R = \int_0^\infty \mathbf{1}[R > t]\,dt`$, so $`E[R] = \int_0^\infty {}_tp_x\,dt`$. Since $`K \le R < K+1`$, the complete expectation lies within one year above the curtate one; if deaths are spread evenly within each year, $`E[R - K] = 1/2`$ exactly.
 
 </details>
 
 ### Step 4: Gompertz's law, and fitting it
 
-Gompertz's 1825 idea: the power to resist death wears out by a fixed fraction each year. Then the force grows by a fixed factor c per year of age: $\mu_x = B c^{\,x}$. Take logs and it is a straight line in age: $\ln \mu_x = \ln B + x \ln c$.
+Gompertz's 1825 idea: the power to resist death wears out by a fixed fraction each year. Then the force grows by a fixed factor c per year of age: $`\mu_x = B c^{\,x}`$. Take logs and it is a straight line in age: $`\ln \mu_x = \ln B + x \ln c`$.
 
 The force of mortality at every tenth year, per 1,000 lives per year:
 
@@ -183,11 +201,11 @@ age   force of mortality, deaths per 1,000 lives per year (bar scale: log)
 100   ████████████████████████████████████  322.32
 ```
 
-The bars are drawn on a log scale, so equal steps mean equal multiples. From 60 on each decade multiplies the force by close to $c^{10}$ = 3.2186, Gompertz's growth per decade. From 40 to 50 it only a little more than doubles: Makeham's constant, 0.22 per 1,000, is 43% of the total at 40 and does not age.
+The bars are drawn on a log scale, so equal steps mean equal multiples. From 60 on each decade multiplies the force by close to $`c^{10}`$ = 3.2186, Gompertz's growth per decade. From 40 to 50 it only a little more than doubles: Makeham's constant, 0.22 per 1,000, is 43% of the total at 40 and does not age.
 
-To fit Gompertz to a table, turn each year's survival into its integrated force: $-\ln p_x$ is the force added up across the year from x to x + 1, close to the force at the year's midpoint. Take the log of that, and fit a straight line through the points for ages 40 to 99 by least squares (the line that makes the squared vertical misses smallest). The slope is $\ln c$ and the intercept is $\ln B$.
+To fit Gompertz to a table, turn each year's survival into its integrated force: $`-\ln p_x`$ is the force added up across the year from x to x + 1, close to the force at the year's midpoint. Take the log of that, and fit a straight line through the points for ages 40 to 99 by least squares (the line that makes the squared vertical misses smallest). The slope is $`\ln c`$ and the intercept is $`\ln B`$.
 
-The fit gives B = 4.646040 × 10^-6 and c = 1.116802. The force doubles every $\ln 2/\ln c$ = 6.27 years. The fitted curve gives ${}_{25}p_{40}$ = 0.949563 against the table's 0.952098: close, as the overview chart shows. The fitted force at 40 is 0.000386 against the table's 0.000510. A pure Gompertz line cannot bend to take in the flat accident term, so it tilts: it lowers c from 1.124 to 1.1168 and raises B to make up. That is why Makeham added A in 1860.
+The fit gives B = 4.646040 × 10^-6 and c = 1.116802. The force doubles every $`\ln 2/\ln c`$ = 6.27 years. The fitted curve gives $`{}_{25}p_{40}`$ = 0.949563 against the table's 0.952098: close, as the overview chart shows. The fitted force at 40 is 0.000386 against the table's 0.000510. A pure Gompertz line cannot bend to take in the flat accident term, so it tilts: it lowers c from 1.124 to 1.1168 and raises B to make up. That is why Makeham added A in 1860.
 
 The other road to Gompertz goes through data, not a model: estimate q_x from recorded deaths and the years people were watched, smooth the rough rates (**graduation**), then fit. The fitting step is the same.
 
@@ -199,15 +217,15 @@ The 10,000 policyholders aged 40, on Makeham's law with A = 0.00022, B = 0.00000
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\ln c$ | $\ln 1.124$ | 0.116894 |
-| $B/\ln c$ | $0.0000027 / 0.116894$ | 2.309790 × 10^-5 |
-| $c^{40}$ | $1.124^{40}$ | 107.3130 |
-| $c^{25} - 1$ | $1.124^{25} - 1$ | 17.5848 |
-| ageing part of the piled-up force | $2.309790\times10^{-5} \times 107.3130 \times 17.5848$ | 0.043588 |
-| accident part | $0.00022 \times 25$ | 0.005500 |
-| total force over the 25 years | $0.043588 + 0.005500$ | 0.049088 |
-| **chance of reaching 65** | $\exp(-0.049088)$ | **0.952098** |
-| expected survivors of 10,000 | $10{,}000 \times 0.952098$ | 9,520.98 |
+| $`\ln c`$ | $`\ln 1.124`$ | 0.116894 |
+| $`B/\ln c`$ | $`0.0000027 / 0.116894`$ | 2.309790 × 10^-5 |
+| $`c^{40}`$ | $`1.124^{40}`$ | 107.3130 |
+| $`c^{25} - 1`$ | $`1.124^{25} - 1`$ | 17.5848 |
+| ageing part of the piled-up force | $`2.309790\times10^{-5} \times 107.3130 \times 17.5848`$ | 0.043588 |
+| accident part | $`0.00022 \times 25`$ | 0.005500 |
+| total force over the 25 years | $`0.043588 + 0.005500`$ | 0.049088 |
+| **chance of reaching 65** | $`\exp(-0.049088)`$ | **0.952098** |
+| expected survivors of 10,000 | $`10{,}000 \times 0.952098`$ | 9,520.98 |
 
 The table road gives the same number: 9,520.98 alive at 65 out of 10,000 at 40. Of every 10,000 pensions the office writes at 40, it should expect to pay about 9,521.
 
@@ -606,9 +624,9 @@ ALL CHECKS PASS
 
 Lean proves the three exact rules on the card, for any survivor counts, not just this card's table.
 
-- Suppose the survivor count $l_x$ stays above zero and changes smoothly, and $\mu_x = -\frac{d}{dx}\ln l_x$. Then, for any $x$ and $t$, $l_{x+t}/l_x = \exp(-\int_0^t \mu_{x+s}\,ds)$.
-- Suppose $l_{y+1} = l_y\,p_y$ at every whole age $y$, and $l_x$ is not zero. Then $l_{x+n}/l_x = p_x\,p_{x+1}\cdots p_{x+n-1}$, so the radix cancels.
-- Suppose the table closes at age $x+N$, so $l_{x+N} = 0$. Then both roads of Step 3 give the same curtate expectation, $\sum_{k=1}^{N} l_{x+k}/l_x$.
+- Suppose the survivor count $`l_x`$ stays above zero and changes smoothly, and $`\mu_x = -\frac{d}{dx}\ln l_x`$. Then, for any $`x`$ and $`t`$, $`l_{x+t}/l_x = \exp(-\int_0^t \mu_{x+s}\,ds)`$.
+- Suppose $`l_{y+1} = l_y\,p_y`$ at every whole age $`y`$, and $`l_x`$ is not zero. Then $`l_{x+n}/l_x = p_x\,p_{x+1}\cdots p_{x+n-1}`$, so the radix cancels.
+- Suppose the table closes at age $`x+N`$, so $`l_{x+N} = 0`$. Then both roads of Step 3 give the same curtate expectation, $`\sum_{k=1}^{N} l_{x+k}/l_x`$.
 
 The worked numbers, the complete expectation, the simulation and the Gompertz fit are left to the Python and Rust checks.
 
@@ -704,7 +722,7 @@ theorem curtate_expectation_deaths_eq_sum_survival (l : ℕ → ℝ) (x N : ℕ)
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
-> - **Slow the ageing.** Set `c = 1.10` in the try-changing line. The chance of reaching 65 rises from 0.952098 to **0.982054**. At c = 1.10, $c^{40}$ is 45.26 instead of 107.31, so the ageing part is far smaller.
+> - **Slow the ageing.** Set `c = 1.10` in the try-changing line. The chance of reaching 65 rises from 0.952098 to **0.982054**. At c = 1.10, $`c^{40}`$ is 45.26 instead of 107.31, so the ageing part is far smaller.
 > - **Start at 60 instead.** The chance a 60-year-old reaches 85 is **0.633160**. The same 25 years, over a third of the group gone: the force at 60 is already 0.003222 a year, against 0.000510 at 40.
 > - **Double the accident term.** Set A to 0.00044. The chance falls to **0.946876**. The flat term, small as it looks, is about a tenth of the whole 25-year force at these ages.
 > - **Change the seed.** Set `state` to another number. The simulated count of 65-year-olds moves by a few lives either side of 9,520.98; the closed form and the table do not move at all.
@@ -719,14 +737,14 @@ theorem curtate_expectation_deaths_eq_sum_survival (l : ℕ → ℝ) (x N : ℕ)
 > Smaller traps:
 > - **Adding the q's.** One minus the sum of the yearly death chances from 40 to 89 gives 0.156461; the right survival is 0.421198. Multiply survival chances, never add death chances.
 > - **Treating the force as a chance.** At 65 the force is 0.005605 per year and the one-year death chance is 0.005915. They are close when both are small and part company at old ages: at 100 the force is 0.322323 per year and q is 0.289584.
-> - **Forgetting the condition.** ${}_{25}p_{40}$ is a chance for someone already alive at 40. The chance a newborn reaches 65 is a different, smaller number, from a different ratio of the same column.
+> - **Forgetting the condition.** $`{}_{25}p_{40}`$ is a chance for someone already alive at 40. The chance a newborn reaches 65 is a different, smaller number, from a different ratio of the same column.
 > - **Using a period table as a forecast.** A period table assumes today's death rates hold for the rest of each life. With improving mortality, that understates how long today's 40-year-olds will draw a pension.
 
 ---
 
 ## Where you meet it in real life
 
-- **Pensions and annuities.** Every payment a pension makes at age 65 + k is weighted by ${}_{25+k}p_{40}$ before it is discounted. [Life annuities and insurance](02-life-annuities-and-insurance-values.md) builds those values.
+- **Pensions and annuities.** Every payment a pension makes at age 65 + k is weighted by $`{}_{25+k}p_{40}`$ before it is discounted. [Life annuities and insurance](02-life-annuities-and-insurance-values.md) builds those values.
 - **Life insurance premiums and reserves.** Term insurance pays on death, so it uses the deaths column; the premium and the money held back for later years come from the same table: [Premiums and reserves](03-premiums-and-reserves.md).
 - **National statistics.** Official offices, such as the US National Center for Health Statistics, publish annual period life tables with exactly these columns: q_x, l_x, d_x and life expectancy.
 - **Longevity risk.** Pension funds and insurers watch the force of mortality fall year by year. A few percent less mortality at every age adds months of pension to every member.
@@ -745,7 +763,7 @@ theorem curtate_expectation_deaths_eq_sum_survival (l : ℕ → ℝ) (x N : ℕ)
 
 ## Where this goes next
 
-- [Life annuities and insurance](02-life-annuities-and-insurance-values.md): combines the survival chances ${}_tp_x$ with discounting to value a pension or a life policy today.
+- [Life annuities and insurance](02-life-annuities-and-insurance-values.md): combines the survival chances $`{}_tp_x`$ with discounting to value a pension or a life policy today.
 
 The table says who will be alive to be paid; it does not say what a promise to pay them is worth today, and that is the question the annuity and insurance values answer.
 

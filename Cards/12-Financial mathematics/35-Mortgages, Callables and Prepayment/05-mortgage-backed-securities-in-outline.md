@@ -41,57 +41,63 @@ Orange: the IO, climbing as rates climb. Green: the PO, falling steeply. Dark: t
 
 Every slice is priced the same way: the average, over simulated paths of interest rates, of its monthly cash discounted along each path.
 
-$$V_X = \mathbb{E}\Big[\sum_{k=1}^{n} D_k\,X_k\Big], \qquad D_k = \exp\Big(-\sum_{j=1}^{k}\tfrac12\,(r_{j-1}+r_j)\,\Delta t\Big)$$
+```math
+V_X = \mathbb{E}\Big[\sum_{k=1}^{n} D_k\,X_k\Big], \qquad D_k = \exp\Big(-\sum_{j=1}^{k}\tfrac12\,(r_{j-1}+r_j)\,\Delta t\Big)
+```
 
 **Read it aloud:** the value of a slice is the average, over many possible futures for interest rates, of the sum of every monthly payment it receives, each shrunk by the discount built up along that future.
 
-The pool's month $k$ produces the cash every slice shares:
+The pool's month $`k`$ produces the cash every slice shares:
 
-$$I_k = i\,B_{k-1}, \qquad P_k = \frac{i\,B_{k-1}}{1-(1+i)^{-(n-k+1)}} - I_k, \qquad Q_k = P_k + s_k\,(B_{k-1} - P_k), \qquad B_k = B_{k-1} - Q_k$$
+```math
+I_k = i\,B_{k-1}, \qquad P_k = \frac{i\,B_{k-1}}{1-(1+i)^{-(n-k+1)}} - I_k, \qquad Q_k = P_k + s_k\,(B_{k-1} - P_k), \qquad B_k = B_{k-1} - Q_k
+```
 
 **Read it aloud:** interest is one month's rate on the balance; scheduled principal is the level loan payment minus that interest; prepayment takes a fraction of what is left; the balance falls by all the principal paid.
 
-Prepayment responds to rates through the mortgage rate $m_k$ on offer that month:
+Prepayment responds to rates through the mortgage rate $`m_k`$ on offer that month:
 
-$$s_k = 1 - (1 - \text{CPR}_k)^{1/12}, \qquad \text{CPR}_k = \min\big(50\%,\ \max(3\%,\ 8\% + 8\,(6\% - m_k))\big), \qquad m_k = r_{k-1} + 1\%$$
+```math
+s_k = 1 - (1 - \text{CPR}_k)^{1/12}, \qquad \text{CPR}_k = \min\big(50\%,\ \max(3\%,\ 8\% + 8\,(6\% - m_k))\big), \qquad m_k = r_{k-1} + 1\%
+```
 
 **Read it aloud:** the yearly prepayment speed starts at 8 percent, climbs 8 points of speed for every point new loans are cheaper than the old 6 percent, and is held between 3 and 50 percent; the monthly rate is the one that, survived twelve times, leaves the same fraction a year.
 
-Each slice is one rule for its $X_k$:
+Each slice is one rule for its $`X_k`$:
 
-| Slice | Its monthly cash $X_k$ |
+| Slice | Its monthly cash $`X_k`$ |
 | --- | --- |
-| Pass-through | $I_k + Q_k$ |
-| IO | $I_k$ |
-| PO | $Q_k$ |
-| Sequential tranche A (first $40) | $i\,A_{k-1} + \min(A_{k-1}, Q_k)$ |
+| Pass-through | $`I_k + Q_k`$ |
+| IO | $`I_k`$ |
+| PO | $`Q_k`$ |
+| Sequential tranche A (first $40) | $`i\,A_{k-1} + \min(A_{k-1}, Q_k)`$ |
 | Tranche B (next $35), tranche C (last $25) | interest on its own balance, plus principal only once every earlier tranche is paid off |
 
 A **tranche** (French for slice) is a bond cut from the pool with its own place in the queue for principal. **Sequential** means strictly in turn: A takes all principal until it is repaid, then B, then C.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V_X$ | value today of slice $X$ | IO $35.11, PO $69.29, pool $104.40 | — |
-| $\mathbb{E}$ | the average over simulated rate paths | 1,000 paths, in 500 mirrored pairs | — |
-| $k$, $n$, $\Delta t$ | the month; the loan's length in months; one month in years | 1 to 360; 360; 1/12 | — |
-| $i$ | the loans' interest rate per month, the note rate | 6% ÷ 12 = 0.005 | every slice with interest gains |
-| $B_k$, $S_k$ | pool balance after month $k$; the fraction still owed with no prepayment | $100 at the start; $S_0 = 1$ | — |
-| $I_k$, $P_k$, $Q_k$ | interest; scheduled principal; all principal, scheduled plus prepaid | first month 0.50, 0.099551, and 0.099551 + 0.691749 | — |
-| $s_k$, $s$, $\text{CPR}_k$ | monthly prepayment rate (fixed: $s$) and yearly | 0.006924 and 8% | IO falls, PO rises |
-| $m_k$ | mortgage rate on offer for new loans | 6% today | prepayment slows: IO gains |
-| $r_k$ | the short rate at the end of month $k$ | 5% today | discounting heavier, prepayment slower |
-| $\kappa$, $\theta$, $\sigma$ | the rate model's pull speed, pull level, and shock size, per year | 0.15, 5%, 1% | $\sigma$ up: more paths trigger refinancing |
-| $D_k$, $v$ | discount factor along a path to month $k$; one month's factor on a flat rate | $v = e^{-0.05/12}$ on the flat path | — |
-| $A_k$, $X$, $X_k$ | tranche A's balance; a slice; its cash in month $k$ | $40 at the start | — |
+| $`V_X`$ | value today of slice $`X`$ | IO $35.11, PO $69.29, pool $104.40 | — |
+| $`\mathbb{E}`$ | the average over simulated rate paths | 1,000 paths, in 500 mirrored pairs | — |
+| $`k`$, $`n`$, $`\Delta t`$ | the month; the loan's length in months; one month in years | 1 to 360; 360; 1/12 | — |
+| $`i`$ | the loans' interest rate per month, the note rate | 6% ÷ 12 = 0.005 | every slice with interest gains |
+| $`B_k`$, $`S_k`$ | pool balance after month $`k`$; the fraction still owed with no prepayment | $100 at the start; $`S_0 = 1`$ | — |
+| $`I_k`$, $`P_k`$, $`Q_k`$ | interest; scheduled principal; all principal, scheduled plus prepaid | first month 0.50, 0.099551, and 0.099551 + 0.691749 | — |
+| $`s_k`$, $`s`$, $`\text{CPR}_k`$ | monthly prepayment rate (fixed: $`s`$) and yearly | 0.006924 and 8% | IO falls, PO rises |
+| $`m_k`$ | mortgage rate on offer for new loans | 6% today | prepayment slows: IO gains |
+| $`r_k`$ | the short rate at the end of month $`k`$ | 5% today | discounting heavier, prepayment slower |
+| $`\kappa`$, $`\theta`$, $`\sigma`$ | the rate model's pull speed, pull level, and shock size, per year | 0.15, 5%, 1% | $`\sigma`$ up: more paths trigger refinancing |
+| $`D_k`$, $`v`$ | discount factor along a path to month $`k`$; one month's factor on a flat rate | $`v = e^{-0.05/12}`$ on the flat path | — |
+| $`A_k`$, $`X`$, $`X_k`$ | tranche A's balance; a slice; its cash in month $`k`$ | $40 at the start | — |
 
-The rate model is the Vasicek model ([Vasicek](../30-Short-Rate%20Models/02-vasicek-model.md)): the short rate is pulled toward the level $\theta$ at speed $\kappa$ and knocked about by normal shocks of size $\sigma$. The simulation steps it one month at a time with its exact one-month distribution.
+The rate model is the Vasicek model ([Vasicek](../30-Short-Rate%20Models/02-vasicek-model.md)): the short rate is pulled toward the level $`\theta`$ at speed $`\kappa`$ and knocked about by normal shocks of size $`\sigma`$. The simulation steps it one month at a time with its exact one-month distribution.
 
 ### When it holds
 
 - **Prepayment follows the rule.** Real borrowers refinance with a lag, some never do, and a pool that has already lived through low rates has lost its keenest refinancers (called burnout). A wrong rule moves the IO most, because the IO is almost all prepayment risk.
 - **One rate drives everything.** Here the mortgage rate is the short rate plus one point. Real mortgage rates follow ten-year yields, which move less than the short rate; a one-factor model misses a curve that twists.
 - **No defaults.** The pool is taken to be guaranteed, as agency pools are. Without a guarantee, losses hit the slices in a set order and the pricing needs a model of joint default.
-- **No fees, no delay.** Real pass-throughs pay investors less than the loan rate, the gap going to servicer and guarantor, and pay some days late. Both shift every price slightly. Conventions verified 28 Sep 2026: speeds are quoted as CPR, a yearly rate, and turned into a monthly rate (the single monthly mortality, SMM) by $1-(1-\text{CPR})^{1/12}$.
+- **No fees, no delay.** Real pass-throughs pay investors less than the loan rate, the gap going to servicer and guarantor, and pay some days late. Both shift every price slightly. Conventions verified 28 Sep 2026: speeds are quoted as CPR, a yearly rate, and turned into a monthly rate (the single monthly mortality, SMM) by $`1-(1-\text{CPR})^{1/12}`$.
 - **Enough paths.** With 1,000 paths the simulated 10-year discount factor is 0.610070 against the formula's 0.610329. Prices carry sampling error of that order.
 
 ---
@@ -102,7 +108,9 @@ The rate model is the Vasicek model ([Vasicek](../30-Short-Rate%20Models/02-vasi
 
 Each month the pool pays out some cash. Every slicing rule on this card hands each of those dollars to exactly one slice. So in every month and on every path, the slices' cash adds up to the pool's cash. Discounting multiplies each month's cash by the same factor for every slice, and averaging over paths respects sums. The values therefore add up too:
 
-$$V_A + V_B + V_C = V_{IO} + V_{PO} = V_{\text{pool}}$$
+```math
+V_A + V_B + V_C = V_{IO} + V_{PO} = V_{\text{pool}}
+```
 
 In the simulation that is $104.40 three ways. What changes from slice to slice is *when* the cash arrives and in *which* futures. That is the entire content of the slicing.
 
@@ -110,38 +118,42 @@ In the simulation that is $104.40 three ways. What changes from slice to slice i
 
 A level-payment loan pays the same amount each month; the annuity formula fixes it ([Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md)). On $100 at 0.005 a month for 360 months it is $0.599551. Of that, $0.50 is interest and $0.099551 is scheduled principal.
 
-Prepayment then takes a fraction $s$ of what remains after scheduled principal. At 8 percent a year, $s = 1 - 0.92^{1/12} = 0.006924$ a month, so that surviving twelve months leaves 0.92 of the balance. Dividing 8 percent by 12 instead is a common slip, priced in What breaks.
+Prepayment then takes a fraction $`s`$ of what remains after scheduled principal. At 8 percent a year, $`s = 1 - 0.92^{1/12} = 0.006924`$ a month, so that surviving twelve months leaves 0.92 of the balance. Dividing 8 percent by 12 instead is a common slip, priced in What breaks.
 
 After prepayment the remaining loans recompute a level payment over the months left, so the same formula runs again next month on a smaller balance. The full schedule is the sibling card [Mortgage pools](02-mortgage-cash-flows-and-prepayment.md).
 
 ### Step 2: the IO shrinks when prepayment speeds up, and gains when rates rise
 
-Take one fixed prepayment rate $s$ and one flat discount factor $v$ per month. Each month the balance is multiplied by the loan's scheduled fraction and then by $1 - s$. After $k$ months the balance is
+Take one fixed prepayment rate $`s`$ and one flat discount factor $`v`$ per month. Each month the balance is multiplied by the loan's scheduled fraction and then by $`1 - s`$. After $`k`$ months the balance is
 
-$$B_k = 100\,(1-s)^k\,S_k, \qquad S_k = \frac{1-(1+i)^{-(n-k)}}{1-(1+i)^{-n}}$$
+```math
+B_k = 100\,(1-s)^k\,S_k, \qquad S_k = \frac{1-(1+i)^{-(n-k)}}{1-(1+i)^{-n}}
+```
 
-where $S_k$ is the fraction a loan with no prepayment would still owe. The IO is paid $i\,B_{k-1}$ in month $k$, so its value is
+where $`S_k`$ is the fraction a loan with no prepayment would still owe. The IO is paid $`i\,B_{k-1}`$ in month $`k`$, so its value is
 
-$$V_{IO} = \sum_{k=1}^{n} i\,B_{k-1}\,v^k .$$
+```math
+V_{IO} = \sum_{k=1}^{n} i\,B_{k-1}\,v^k .
+```
 
-Every term carries $(1-s)^{k-1}$, so raising $s$ shrinks every term. Faster prepayment means less interest, forever, and the IO has nothing else.
+Every term carries $`(1-s)^{k-1}`$, so raising $`s`$ shrinks every term. Faster prepayment means less interest, forever, and the IO has nothing else.
 
-Now let rates rise. Two things happen to the IO. The discount is heavier, which lowers its value like any bond's. And the mortgage rate on offer rises, $s$ falls to the slowest speed, and every future interest payment grows. On this pool the second effect wins by a wide margin: the IO goes from $35.11 to $41.82 on a one-point rise.
+Now let rates rise. Two things happen to the IO. The discount is heavier, which lowers its value like any bond's. And the mortgage rate on offer rises, $`s`$ falls to the slowest speed, and every future interest payment grows. On this pool the second effect wins by a wide margin: the IO goes from $35.11 to $41.82 on a one-point rise.
 
-The PO's $Q_k$ add up to $100 on every path: the loans are repaid in full, only the timing varies. Falling rates help it twice: lighter discounting, and earlier cash.
+The PO's $`Q_k`$ add up to $100 on every path: the loans are repaid in full, only the timing varies. Falling rates help it twice: lighter discounting, and earlier cash.
 
 The sum over months is two geometric series, so the IO has a closed form on a flat path. The check uses it as its second road.
 
 <details>
 <summary>The algebra behind this: the IO as two geometric sums</summary>
 
-Write $g = 1 + i$ and $q = (1-s)v$. Substituting $B_{k-1} = 100(1-s)^{k-1}S_{k-1}$,
+Write $`g = 1 + i`$ and $`q = (1-s)v`$. Substituting $`B_{k-1} = 100(1-s)^{k-1}S_{k-1}`$,
 
-$$V_{IO} = \frac{100\,i}{1-g^{-n}}\sum_{k=1}^{n}(1-s)^{k-1}v^k\big(1 - g^{-(n-k+1)}\big).$$
+$`\displaystyle V_{IO} = \frac{100\,i}{1-g^{-n}}\sum_{k=1}^{n}(1-s)^{k-1}v^k\big(1 - g^{-(n-k+1)}\big).`$
 
-The first part is $\sum_{k=1}^{n}(1-s)^{k-1}v^k = v\,\dfrac{1-q^n}{1-q}$.
+The first part is $`\sum_{k=1}^{n}(1-s)^{k-1}v^k = v\,\dfrac{1-q^n}{1-q}`$.
 
-The second is $\sum_{k=1}^{n}(1-s)^{k-1}v^k g^{-(n-k+1)} = g^{-n}\,v\sum_{k=1}^{n}(qg)^{k-1} = g^{-n}\,v\,\dfrac{1-(qg)^n}{1-qg}$.
+The second is $`\sum_{k=1}^{n}(1-s)^{k-1}v^k g^{-(n-k+1)} = g^{-n}\,v\sum_{k=1}^{n}(qg)^{k-1} = g^{-n}\,v\,\dfrac{1-(qg)^n}{1-qg}`$.
 
 Subtract and multiply by the front factor. At 8 percent CPR and a flat 5 percent, this gives 38.586109, the same as the month-by-month loop to every printed digit. Neither sum needs a loop; the loop never uses the geometric-series formula. That is why they count as two roads.
 
@@ -178,16 +190,16 @@ Why not use the single path where rates stay at 5 percent? Because prepayment is
 
 ### Step 5: an identity that checks the machinery
 
-Discount a pass-through at its own note rate, one month at a time at $1 + i$, and it is worth exactly par, $100, at any prepayment speed.
+Discount a pass-through at its own note rate, one month at a time at $`1 + i`$, and it is worth exactly par, $100, at any prepayment speed.
 
 The reason: every month, what the pool pays out is the interest on the old balance plus the drop in balance. So the old balance equals this month's payment, discounted one month, plus the new balance, discounted one month. Apply that month after month and the sum telescopes to the starting $100, whatever the principal schedule.
 
 <details>
 <summary>Detailed proof: a pass-through at its own rate is worth par</summary>
 
-Month $k$ pays $I_k + Q_k = i\,B_{k-1} + (B_{k-1} - B_k)$. Hence $B_{k-1} = \dfrac{(I_k + Q_k) + B_k}{1+i}$.
+Month $`k`$ pays $`I_k + Q_k = i\,B_{k-1} + (B_{k-1} - B_k)`$. Hence $`B_{k-1} = \dfrac{(I_k + Q_k) + B_k}{1+i}`$.
 
-Substitute the same identity for $B_k$, then $B_{k+1}$, and so on: $B_0 = \sum_{k=1}^{n}\dfrac{I_k + Q_k}{(1+i)^k} + \dfrac{B_n}{(1+i)^n}$. The loan is fully repaid, $B_n = 0$, so the pass-through discounted at $1+i$ a month is worth $B_0 = 100$. No step used the size of $Q_k$, so any prepayment rule gives the same answer.
+Substitute the same identity for $`B_k`$, then $`B_{k+1}`$, and so on: $`B_0 = \sum_{k=1}^{n}\dfrac{I_k + Q_k}{(1+i)^k} + \dfrac{B_n}{(1+i)^n}`$. The loan is fully repaid, $`B_n = 0`$, so the pass-through discounted at $`1+i`$ a month is worth $`B_0 = 100`$. No step used the size of $`Q_k`$, so any prepayment rule gives the same answer.
 
 </details>
 
@@ -201,14 +213,14 @@ On the flat path: short rate fixed at 5 percent, prepayment steady at 8 percent 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Monthly prepayment rate | $1 - 0.92^{1/12}$ | 0.006924 |
-| Level payment, month 1 | $100 \times 0.005 / (1 - 1.005^{-360})$ | $0.599551 |
-| Interest, month 1: the IO's cash | $100 \times 0.005$ | $0.500000 |
+| Monthly prepayment rate | $`1 - 0.92^{1/12}`$ | 0.006924 |
+| Level payment, month 1 | $`100 \times 0.005 / (1 - 1.005^{-360})`$ | $0.599551 |
+| Interest, month 1: the IO's cash | $`100 \times 0.005`$ | $0.500000 |
 | Scheduled principal, month 1 | 0.599551 − 0.500000 | $0.099551 |
 | Prepaid, month 1 | 0.006924 × (100 − 0.099551) | $0.691749 |
-| IO over 360 months, month by month | $\sum i\,B_{k-1}\,v^k$ | 38.586109 |
+| IO over 360 months, month by month | $`\sum i\,B_{k-1}\,v^k`$ | 38.586109 |
 | IO by the geometric sums | Step 2 | 38.586109 |
-| PO | $\sum Q_k\,v^k$ | 67.777826 |
+| PO | $`\sum Q_k\,v^k`$ | 67.777826 |
 | Pass-through | IO + PO | **106.363935** |
 
 In the first month the PO's cash is the scheduled and the prepaid principal together; prepayment already outweighs scheduled repayment several times over, which is why prepayment, not amortisation, drives these securities.
@@ -268,7 +280,7 @@ PO value by today's short rate, one block = $2
 
 ### The whole picture as sensitivities
 
-The **effective duration** is the percentage change in value for a one-point fall in rates, measured by repricing up and down one point through the prepayment rule: $(V_{\text{down}} - V_{\text{up}})/(2 \times 0.01 \times V_{\text{today}})$. Negative means the slice gains when rates rise. The full treatment, and the curvature that goes with it, is [Negative convexity](03-negative-convexity.md).
+The **effective duration** is the percentage change in value for a one-point fall in rates, measured by repricing up and down one point through the prepayment rule: $`(V_{\text{down}} - V_{\text{up}})/(2 \times 0.01 \times V_{\text{today}})`$. Negative means the slice gains when rates rise. The full treatment, and the curvature that goes with it, is [Negative convexity](03-negative-convexity.md).
 
 | Slice | Value today | Effective duration, years | Rates up one point |
 | --- | --- | --- | --- |
@@ -704,9 +716,9 @@ The two outputs match line for line.
 
 Lean proves three of the card's facts, for every path, discount factor and principal schedule that meets each condition.
 
-- Suppose the pool's balance never rises or drops below zero, and A, B and C start with sizes adding up to it. Then $V_A + V_B + V_C = V_{IO} + V_{PO} = V_{\text{pool}}$.
-- Take a note rate $i$ of zero or more, and loans fully repaid by month $n$, so $B_n = 0$. Then the pass-through, discounted one month at a time at $1 + i$, is worth exactly $B_0$.
-- Take a flat path, a positive note rate, a positive $v$ and a loan of at least two months. Then raising $s$ to a higher value, both between 0 and 1, lowers $V_{IO}$.
+- Suppose the pool's balance never rises or drops below zero, and A, B and C start with sizes adding up to it. Then $`V_A + V_B + V_C = V_{IO} + V_{PO} = V_{\text{pool}}`$.
+- Take a note rate $`i`$ of zero or more, and loans fully repaid by month $`n`$, so $`B_n = 0`$. Then the pass-through, discounted one month at a time at $`1 + i`$, is worth exactly $`B_0`$.
+- Take a flat path, a positive note rate, a positive $`v`$ and a loan of at least two months. Then raising $`s`$ to a higher value, both between 0 and 1, lowers $`V_{IO}`$.
 - The tranche sizes add up to the pool, 6 percent a year is 0.005 a month, and 30 years is 360 months.
 
 The simulated prices, the rate model, the prepayment rule and every dollar figure are left to the Python and Rust checks.
@@ -991,7 +1003,7 @@ example : (100 : ℚ) * (1 / 200) = 1 / 2 := by norm_num
 >
 > - **Reading an IO as a bond.** It has no principal and no maturity value. Its duration here is −21.44 years: it rises with rates. Hedging it like a bond doubles the risk instead of removing it.
 > - **Freezing prepayment.** At a fixed 8 percent CPR the IO falls from 38.72 to 36.55 when rates rise a point. With prepayment responding it rises to 41.82. The frozen model gets the sign wrong.
-> - **CPR ÷ 12.** The monthly rate is $1 - 0.92^{1/12}$ = 0.006924, not 0.08 ÷ 12. The IO moves from 38.59 to 39.29.
+> - **CPR ÷ 12.** The monthly rate is $`1 - 0.92^{1/12}`$ = 0.006924, not 0.08 ÷ 12. The IO moves from 38.59 to 39.29.
 
 ---
 

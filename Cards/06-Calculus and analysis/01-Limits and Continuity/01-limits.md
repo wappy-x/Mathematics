@@ -28,34 +28,38 @@ Drawn to scale, 70 px per unit on both axes. At tolerance 0.5 the window is 0.5 
 
 ## The formula
 
-Notation first, in words: $\lim_{x \to a} f(x) = L$ is read "f(x) heads for L as x heads for a". The arrow means "approaches".
+Notation first, in words: $`\lim_{x \to a} f(x) = L`$ is read "f(x) heads for L as x heads for a". The arrow means "approaches".
 
-$$\lim_{x \to 1} \frac{x^2 - 1}{x - 1} = 2$$
+```math
+\lim_{x \to 1} \frac{x^2 - 1}{x - 1} = 2
+```
 
 **Read it aloud:** as x heads for 1, the fraction heads for 2.
 
 The promise behind it, at tolerance 0.001:
 
-$$0 < \lvert x - 1\rvert < 0.001 \implies \left\lvert \frac{x^2 - 1}{x - 1} - 2 \right\rvert < 0.001$$
+```math
+0 < \lvert x - 1\rvert < 0.001 \implies \left\lvert \frac{x^2 - 1}{x - 1} - 2 \right\rvert < 0.001
+```
 
 **Read it aloud:** if x is within 0.001 of 1 but not 1, the fraction is within 0.001 of 2. The bars measure distance on either side. The line holds with any positive number in place of both copies of 0.001; that "any" is the whole content of the limit.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $g$ | the rule; $g$ is it with a value patched in at 1 | the fraction; $g(1)$ = 100 | a patch leaves the limit alone |
-| $x$ | an input near the point | 0.999, 1.001 | moves along the line x + 1 |
-| $a$ | the input being approached | 1 | examines the rule somewhere else |
-| $L$ | the value the outputs head for | 2 | a wrong L fails at small tolerances |
-| $\lim_{x \to a} f(x)$ | the limit itself | 2 | — |
-| $\lvert x - a\rvert$ | input distance from the point | under 0.001 | wider lets in worse outputs |
-| $\lvert f(x) - L\rvert$ | output miss from the limit | under 0.001 | looser allows a wider window |
-| $m$ | slope of a line, in Step 4 | 3 | the window shrinks to tolerance ÷ slope |
+| $`f`$, $`g`$ | the rule; $`g`$ is it with a value patched in at 1 | the fraction; $`g(1)`$ = 100 | a patch leaves the limit alone |
+| $`x`$ | an input near the point | 0.999, 1.001 | moves along the line x + 1 |
+| $`a`$ | the input being approached | 1 | examines the rule somewhere else |
+| $`L`$ | the value the outputs head for | 2 | a wrong L fails at small tolerances |
+| $`\lim_{x \to a} f(x)`$ | the limit itself | 2 | — |
+| $`\lvert x - a\rvert`$ | input distance from the point | under 0.001 | wider lets in worse outputs |
+| $`\lvert f(x) - L\rvert`$ | output miss from the limit | under 0.001 | looser allows a wider window |
+| $`m`$ | slope of a line, in Step 4 | 3 | the window shrinks to tolerance ÷ slope |
 
 ### When it holds
 
 A definition holds by agreement; three conditions are built in.
 
-- **The point is excluded.** Only inputs with $0 < \lvert x - a\rvert$ are tested. Without that, the fraction could never have a limit at 1.
+- **The point is excluded.** Only inputs with $`0 < \lvert x - a\rvert`$ are tested. Without that, the fraction could never have a limit at 1.
 - **Inputs exist arbitrarily close to the point.** With none near a, nothing is tested and any L would pass.
 - **Tolerance first, then distance.** The distance may depend on the tolerance, not on which x is tested: one distance serves every x inside it.
 
@@ -71,7 +75,9 @@ The limit never looks at x = 1, only at inputs near it, so a rule can have a lim
 
 Divide x^2 − 1 by x − 1 ([Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)): x^2 − 1 = (x − 1)(x + 1). For any x other than 1, the factor x − 1 is not zero and cancels:
 
-$$\frac{x^2 - 1}{x - 1} = x + 1 \quad \text{for } x \ne 1$$
+```math
+\frac{x^2 - 1}{x - 1} = x + 1 \quad \text{for } x \ne 1
+```
 
 At x = 1 cancelling would divide by zero. The fraction is the line x + 1 with the point (1, 2) punched out.
 
@@ -79,7 +85,9 @@ At x = 1 cancelling would divide by zero. The fraction is the line x + 1 with th
 
 Subtract the candidate limit 2:
 
-$$\lvert f(x) - 2\rvert = \lvert (x + 1) - 2\rvert = \lvert x - 1\rvert$$
+```math
+\lvert f(x) - 2\rvert = \lvert (x + 1) - 2\rvert = \lvert x - 1\rvert
+```
 
 The output misses 2 by exactly as much as the input misses 1, for every x other than 1.
 
@@ -93,11 +101,11 @@ The same move answers every tolerance, named or not: that makes it a proof, and 
 
 The line 3x − 1 also passes through (1, 2) and heads for 2 at 1. Its miss is |3x − 1 − 2| = 3|x − 1|, three times the input distance. To land within 0.001 of 2, stay within 0.001 ÷ 3 ≈ 0.000333 of 1. Reusing the distance 0.001 fails: x = 1.0009 lands 0.0027 from 2.
 
-For any straight line with slope $m$ (not zero), the answer to a tolerance is tolerance ÷ |m|: the promise for the linear case.
+For any straight line with slope $`m`$ (not zero), the answer to a tolerance is tolerance ÷ |m|: the promise for the linear case.
 
 ### Step 5: a patched value and a jump
 
-Fill the hole with the value 100 and call the result $g$: $g(1)$ = 100. The promise never tests x = 1, so $g$ keeps limit 2, with distance 0.001 at tolerance 0.001. When value and limit agree, the rule is continuous there ([Continuity](05-continuity.md)).
+Fill the hole with the value 100 and call the result $`g`$: $`g(1)`$ = 100. The promise never tests x = 1, so $`g`$ keeps limit 2, with distance 0.001 at tolerance 0.001. When value and limit agree, the rule is continuous there ([Continuity](05-continuity.md)).
 
 A jump is different. Take the rule giving 0 for x below 1 and 1 from 1 upwards.
 
@@ -108,11 +116,11 @@ From the left alone the rule heads for 0, from the right for 1; these one-sided 
 <details>
 <summary>Detailed proof: the definition in symbols, the linear case, and why a limit is unique</summary>
 
-**The definition.** Write the Greek letter epsilon, $\varepsilon > 0$, for the output tolerance and delta, $\delta > 0$, for the input distance. Then $\lim_{x \to a} f(x) = L$ means: for every $\varepsilon > 0$ there is a $\delta > 0$ such that every input x of f with $0 < \lvert x - a\rvert < \delta$ satisfies $\lvert f(x) - L\rvert < \varepsilon$. Every positive distance around a must contain inputs of f other than a.
+**The definition.** Write the Greek letter epsilon, $`\varepsilon > 0`$, for the output tolerance and delta, $`\delta > 0`$, for the input distance. Then $`\lim_{x \to a} f(x) = L`$ means: for every $`\varepsilon > 0`$ there is a $`\delta > 0`$ such that every input x of f with $`0 < \lvert x - a\rvert < \delta`$ satisfies $`\lvert f(x) - L\rvert < \varepsilon`$. Every positive distance around a must contain inputs of f other than a.
 
-**Any line.** Let the rule be mx + c, slope $m \ne 0$, constant c; its candidate limit at a is ma + c. Given $\varepsilon > 0$, take $\delta = \varepsilon / \lvert m\rvert$. For $0 < \lvert x - a\rvert < \delta$, the miss is $\lvert m\rvert \cdot \lvert x - a\rvert < \varepsilon$. With m = 1, c = 1, a = 1 this is the fraction off its hole (Step 3); with m = 3, c = −1 it is Step 4.
+**Any line.** Let the rule be mx + c, slope $`m \ne 0`$, constant c; its candidate limit at a is ma + c. Given $`\varepsilon > 0`$, take $`\delta = \varepsilon / \lvert m\rvert`$. For $`0 < \lvert x - a\rvert < \delta`$, the miss is $`\lvert m\rvert \cdot \lvert x - a\rvert < \varepsilon`$. With m = 1, c = 1, a = 1 this is the fraction off its hole (Step 3); with m = 3, c = −1 it is Step 4.
 
-**Uniqueness.** Suppose f heads for L and for a different value K. Take $\varepsilon$ as half the gap between them. Inside the smaller of the two distances pick an input x other than a. Then f(x) is within half the gap of L and within half the gap of K. The gap is at most the sum of those two misses, so the gap is less than itself: impossible. The jump fails for a like reason: every window holds outputs 0 and 1, and no L is less than 0.5 from both.
+**Uniqueness.** Suppose f heads for L and for a different value K. Take $`\varepsilon`$ as half the gap between them. Inside the smaller of the two distances pick an input x other than a. Then f(x) is within half the gap of L and within half the gap of K. The gap is at most the sum of those two misses, so the gap is less than itself: impossible. The jump fails for a like reason: every window holds outputs 0 and 1, and no L is less than 0.5 from both.
 
 </details>
 

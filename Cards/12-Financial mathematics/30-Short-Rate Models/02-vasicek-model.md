@@ -39,39 +39,43 @@ Bottom line: today's rate 2 percent, a steeply rising curve. Middle line: the ho
 
 ## The formula
 
-Notation first. The model is written in the shorthand of Itô calculus ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)): $dr_t$ is the change in the rate over a short step of time $dt$, and $dW_t$ is a random shock over that step, with average zero and variance $dt$. The model is an Ornstein-Uhlenbeck process, a random walk with a pull toward a level ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)):
+Notation first. The model is written in the shorthand of Itô calculus ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)): $`dr_t`$ is the change in the rate over a short step of time $`dt`$, and $`dW_t`$ is a random shock over that step, with average zero and variance $`dt`$. The model is an Ornstein-Uhlenbeck process, a random walk with a pull toward a level ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)):
 
-$$dr_t = a\,(\theta - r_t)\,dt + \sigma\,dW_t$$
+```math
+dr_t = a\,(\theta - r_t)\,dt + \sigma\,dW_t
+```
 
 **Read it aloud:** each instant the rate moves a fraction of the way toward the level, plus a normal shock of fixed size.
 
-The price today of $1 paid at time $T$:
+The price today of $1 paid at time $`T`$:
 
-$$P(0,T) = e^{\,A(T) - B(T)\,r_0}, \qquad B(T) = \frac{1 - e^{-aT}}{a}, \qquad A(T) = \Big(\theta - \frac{\sigma^2}{2a^2}\Big)\big(B(T) - T\big) - \frac{\sigma^2 B(T)^2}{4a}$$
+```math
+P(0,T) = e^{\,A(T) - B(T)\,r_0}, \qquad B(T) = \frac{1 - e^{-aT}}{a}, \qquad A(T) = \Big(\theta - \frac{\sigma^2}{2a^2}\Big)\big(B(T) - T\big) - \frac{\sigma^2 B(T)^2}{4a}
+```
 
-**Read it aloud:** the log of the bond price is a straight line in today's rate, with slope minus $B$ and intercept $A$.
+**Read it aloud:** the log of the bond price is a straight line in today's rate, with slope minus $`B`$ and intercept $`A`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r_t$, $r_0$, $r$, $dr_t$ | the short rate at time $t$; today's value; the rate as a variable; its change over one short step | 4% today | $r_0$ up: every bond cheaper, short ones most |
-| $\theta$ | the level the rate is pulled toward (read "theta") | 5% | bonds cheaper, long ones most |
-| $a$ | the speed of the pull, per year | 0.3 | the curve reaches the level sooner |
-| $\sigma$ | the size of the shocks, per year (read "sigma") | 1% | bonds dearer: see Step 3 |
-| $dW_t$ | a normal shock over one short step | — | — |
-| $t$, $s$, $\tau$, $dt$ | a date; the date a shock lands; time left to maturity; a short step of time | — | — |
-| $T$ | years until the $1 is paid | 5 | bond cheaper |
-| $P(0,T)$ | today's price of $1 paid at $T$ | 0.7999 | — |
-| $B(T)$ | how much a change in today's rate moves the log price; also the rate's remembered weight, in years | 2.5896 | — |
-| $A(T)$ | the part of the log price that does not depend on today's rate | −0.1197 | — |
-| $R(T)$, $R_\infty$ | the yield $-\ln P(0,T)/T$, the flat rate giving the same price; the yield of a very long bond, $\theta - \sigma^2/(2a^2)$ | 4.47%; 4.94% | — |
-| $I_T$, $I$, $m$, $v$ | the area under the rate's path from now to $T$, whose $e^{-I_T}$ is that path's discount factor; its mean; its variance | mean 0.2241, variance 0.001561 | — |
+| $`r_t`$, $`r_0`$, $`r`$, $`dr_t`$ | the short rate at time $`t`$; today's value; the rate as a variable; its change over one short step | 4% today | $`r_0`$ up: every bond cheaper, short ones most |
+| $`\theta`$ | the level the rate is pulled toward (read "theta") | 5% | bonds cheaper, long ones most |
+| $`a`$ | the speed of the pull, per year | 0.3 | the curve reaches the level sooner |
+| $`\sigma`$ | the size of the shocks, per year (read "sigma") | 1% | bonds dearer: see Step 3 |
+| $`dW_t`$ | a normal shock over one short step | — | — |
+| $`t`$, $`s`$, $`\tau`$, $`dt`$ | a date; the date a shock lands; time left to maturity; a short step of time | — | — |
+| $`T`$ | years until the $1 is paid | 5 | bond cheaper |
+| $`P(0,T)`$ | today's price of $1 paid at $`T`$ | 0.7999 | — |
+| $`B(T)`$ | how much a change in today's rate moves the log price; also the rate's remembered weight, in years | 2.5896 | — |
+| $`A(T)`$ | the part of the log price that does not depend on today's rate | −0.1197 | — |
+| $`R(T)`$, $`R_\infty`$ | the yield $`-\ln P(0,T)/T`$, the flat rate giving the same price; the yield of a very long bond, $`\theta - \sigma^2/(2a^2)`$ | 4.47%; 4.94% | — |
+| $`I_T`$, $`I`$, $`m`$, $`v`$ | the area under the rate's path from now to $`T`$, whose $`e^{-I_T}`$ is that path's discount factor; its mean; its variance | mean 0.2241, variance 0.001561 | — |
 
 ### When it holds
 
 - **Normal shocks of one size.** Real rate volatility changes with the rate's level. Near zero, normal shocks of fixed size put too much weight on deeply negative rates; [Cox-Ingersoll-Ross](03-cox-ingersoll-ross-model.md) scales the shocks with the rate.
 - **One source of randomness.** Every yield moves with the same shock, so the 2-year and 30-year yields are perfectly correlated. Real curves also twist; [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a second shock.
 - **A constant level.** Four numbers cannot reproduce the curve the market shows today, which has its own bends. Bonds priced off Vasicek disagree with quoted prices by basis points (hundredths of a percent) or more; [Hull-White](04-hull-white-model.md) lets the level move with time to fit it exactly.
-- **The level is the pricing-world level.** $\theta$ is the level in the pricing world set up on [A short-rate model](01-the-term-structure-equation.md), with the market price of risk (the extra return investors demand for carrying rate risk) folded in. It is not a forecast of where rates will settle.
+- **The level is the pricing-world level.** $`\theta`$ is the level in the pricing world set up on [A short-rate model](01-the-term-structure-equation.md), with the market price of risk (the extra return investors demand for carrying rate risk) folded in. It is not a forecast of where rates will settle.
 
 ---
 
@@ -79,64 +83,78 @@ $$P(0,T) = e^{\,A(T) - B(T)\,r_0}, \qquad B(T) = \frac{1 - e^{-aT}}{a}, \qquad A
 
 ### Step 0: a bond is an average of discount factors
 
-From [A short-rate model](01-the-term-structure-equation.md): in the pricing world (the risk-neutral weighting of paths, under which a price is an average of discounted payoffs), a zero is worth the average, over all paths the rate might take, of $e^{-I_T}$, where $I_T$ is the area under the path from now to $T$. A path that stays at 4 percent for five years has area 0.2 and discounts $1 to $e^{-0.2}$.
+From [A short-rate model](01-the-term-structure-equation.md): in the pricing world (the risk-neutral weighting of paths, under which a price is an average of discounted payoffs), a zero is worth the average, over all paths the rate might take, of $`e^{-I_T}`$, where $`I_T`$ is the area under the path from now to $`T`$. A path that stays at 4 percent for five years has area 0.2 and discounts $1 to $`e^{-0.2}`$.
 
 The rest is one fact about normal variables. Vasicek's rate at every date is built from the same normal shocks, added with fixed weights. Any such weighted sum of shared normal shocks is normal, and an area is a sum.
 
-So $I_T$ is normal, and the average of $e^{-I}$ for a normal $I$ with mean $m$ and variance $v$ is $e^{-m + v/2}$, the mean of a lognormal variable ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md) uses the same fact). Only $m$ and $v$ are needed.
+So $`I_T`$ is normal, and the average of $`e^{-I}`$ for a normal $`I`$ with mean $`m`$ and variance $`v`$ is $`e^{-m + v/2}`$, the mean of a lognormal variable ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md) uses the same fact). Only $`m`$ and $`v`$ are needed.
 
 ### Step 1: solve the rate
 
-Write $x_t = r_t - \theta$, the distance above the level. The pull shrinks it at rate $a$, so without shocks $x_t = x_0 e^{-at}$. Each shock, once it lands, decays the same way. Summing them:
+Write $`x_t = r_t - \theta`$, the distance above the level. The pull shrinks it at rate $`a`$, so without shocks $`x_t = x_0 e^{-at}`$. Each shock, once it lands, decays the same way. Summing them:
 
-$$r_t = \theta + (r_0 - \theta)\,e^{-at} + \sigma \int_0^t e^{-a(t-s)}\,dW_s$$
+```math
+r_t = \theta + (r_0 - \theta)\,e^{-at} + \sigma \int_0^t e^{-a(t-s)}\,dW_s
+```
 
-The last term is a sum of normal shocks, so $r_t$ is normal. Its mean is $\theta + (r_0 - \theta)e^{-at}$: at five years, 4.78 percent, most of the way from 4 to 5. Its standard deviation at five years is 1.26 percent. The [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md) card derives both.
+The last term is a sum of normal shocks, so $`r_t`$ is normal. Its mean is $`\theta + (r_0 - \theta)e^{-at}`$: at five years, 4.78 percent, most of the way from 4 to 5. Its standard deviation at five years is 1.26 percent. The [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md) card derives both.
 
 ### Step 2: the area under the path
 
-Integrate the mean from 0 to $T$. The level contributes $\theta T$. The starting gap $r_0 - \theta$ contributes that gap times
+Integrate the mean from 0 to $`T`$. The level contributes $`\theta T`$. The starting gap $`r_0 - \theta`$ contributes that gap times
 
-$$\int_0^T e^{-at}\,dt = \frac{1 - e^{-aT}}{a} = B(T).$$
+```math
+\int_0^T e^{-at}\,dt = \frac{1 - e^{-aT}}{a} = B(T).
+```
 
-So $B(T)$ is how many years' worth of today's gap the path remembers. A rate with no pull remembers all of it, and $B = T$. At speed 0.3 over five years the path remembers 2.59 years' worth. The mean area is $m = \theta T + (r_0 - \theta)B(T)$, which is 0.2241 here.
+So $`B(T)`$ is how many years' worth of today's gap the path remembers. A rate with no pull remembers all of it, and $`B = T`$. At speed 0.3 over five years the path remembers 2.59 years' worth. The mean area is $`m = \theta T + (r_0 - \theta)B(T)`$, which is 0.2241 here.
 
 The variance of the area is
 
-$$v = \frac{\sigma^2}{a^2}\Big(T - B(T) - \frac{a\,B(T)^2}{2}\Big),$$
+```math
+v = \frac{\sigma^2}{a^2}\Big(T - B(T) - \frac{a\,B(T)^2}{2}\Big),
+```
 
-0.001561 here. A shock that lands at time $s$ keeps pushing the rate until $T$, adding $B(T-s)$ to the area per unit of shock. Adding the squares of those weights over the whole life gives $v$.
+0.001561 here. A shock that lands at time $`s`$ keeps pushing the rate until $`T`$, adding $`B(T-s)`$ to the area per unit of shock. Adding the squares of those weights over the whole life gives $`v`$.
 
 <details>
 <summary>The algebra behind the variance</summary>
 
-Swap the order of integration: $\int_0^T \int_0^t e^{-a(t-s)}\,dW_s\,dt = \int_0^T B(T-s)\,dW_s$, since $\int_s^T e^{-a(t-s)}dt = B(T-s)$. The variance of $\int_0^T f(s)\,dW_s$ is $\int_0^T f(s)^2\,ds$ (the Itô isometry). So
-$$v = \frac{\sigma^2}{a^2}\int_0^T \big(1 - 2e^{-a\tau} + e^{-2a\tau}\big)d\tau = \frac{\sigma^2}{a^2}\Big(T - 2B + \frac{1 - e^{-2aT}}{2a}\Big).$$
-Write $e^{-aT} = 1 - aB$. Then $\frac{1 - e^{-2aT}}{2a} = \frac{(1 - e^{-aT})(1 + e^{-aT})}{2a} = \frac{B(2 - aB)}{2} = B - \frac{aB^2}{2}$, and $v = \frac{\sigma^2}{a^2}\big(T - B - \frac{aB^2}{2}\big)$.
+Swap the order of integration: $`\int_0^T \int_0^t e^{-a(t-s)}\,dW_s\,dt = \int_0^T B(T-s)\,dW_s`$, since $`\int_s^T e^{-a(t-s)}dt = B(T-s)`$. The variance of $`\int_0^T f(s)\,dW_s`$ is $`\int_0^T f(s)^2\,ds`$ (the Itô isometry). So
+
+$`\displaystyle v = \frac{\sigma^2}{a^2}\int_0^T \big(1 - 2e^{-a\tau} + e^{-2a\tau}\big)d\tau = \frac{\sigma^2}{a^2}\Big(T - 2B + \frac{1 - e^{-2aT}}{2a}\Big).`$
+
+Write $`e^{-aT} = 1 - aB`$. Then $`\frac{1 - e^{-2aT}}{2a} = \frac{(1 - e^{-aT})(1 + e^{-aT})}{2a} = \frac{B(2 - aB)}{2} = B - \frac{aB^2}{2}`$, and $`v = \frac{\sigma^2}{a^2}\big(T - B - \frac{aB^2}{2}\big)`$.
 
 </details>
 
 ### Step 3: collect the terms
 
-The price is $e^{-m + v/2}$. Sort the exponent into the part that multiplies $r_0$ and the part that does not:
+The price is $`e^{-m + v/2}`$. Sort the exponent into the part that multiplies $`r_0`$ and the part that does not:
 
-$$-m = \theta\,(B - T) - B\,r_0, \qquad \frac{v}{2} = -\frac{\sigma^2}{2a^2}(B - T) - \frac{\sigma^2 B^2}{4a}.$$
+```math
+-m = \theta\,(B - T) - B\,r_0, \qquad \frac{v}{2} = -\frac{\sigma^2}{2a^2}(B - T) - \frac{\sigma^2 B^2}{4a}.
+```
 
-The terms without $r_0$ add to $A(T)$. The term with $r_0$ is $-B(T)\,r_0$. That is the formula.
+The terms without $`r_0`$ add to $`A(T)`$. The term with $`r_0`$ is $`-B(T)\,r_0`$. That is the formula.
 
-The $+v/2$ is **convexity**: $e^{-I}$ bends upward, so spreading $I$ out raises its average (Jensen's inequality). Randomness makes bonds dearer, and more so the longer they run. It is why the long yield $R_\infty$ sits at 4.94 percent, below the 5 percent level: divide the exponent by $T$ and let $T$ grow, and only $\theta - \sigma^2/(2a^2)$ survives.
+The $`+v/2`$ is **convexity**: $`e^{-I}`$ bends upward, so spreading $`I`$ out raises its average (Jensen's inequality). Randomness makes bonds dearer, and more so the longer they run. It is why the long yield $`R_\infty`$ sits at 4.94 percent, below the 5 percent level: divide the exponent by $`T`$ and let $`T`$ grow, and only $`\theta - \sigma^2/(2a^2)`$ survives.
 
 ### Step 4: the same answer from the bond equation
 
-[A short-rate model](01-the-term-structure-equation.md) says every bond price $P$, as a function of the rate $r$ and the time left $\tau$, satisfies
+[A short-rate model](01-the-term-structure-equation.md) says every bond price $`P`$, as a function of the rate $`r`$ and the time left $`\tau`$, satisfies
 
-$$\frac{\partial P}{\partial \tau} = a(\theta - r)\frac{\partial P}{\partial r} + \tfrac12\sigma^2 \frac{\partial^2 P}{\partial r^2} - rP, \qquad P = 1 \text{ at } \tau = 0.$$
+```math
+\frac{\partial P}{\partial \tau} = a(\theta - r)\frac{\partial P}{\partial r} + \tfrac12\sigma^2 \frac{\partial^2 P}{\partial r^2} - rP, \qquad P = 1 \text{ at } \tau = 0.
+```
 
-Guess $P = e^{A(\tau) - B(\tau) r}$. Each derivative brings down a factor: $\partial P/\partial r = -BP$, $\partial^2 P/\partial r^2 = B^2 P$. Divide by $P$ and the equation must hold for every $r$, so the terms in $r$ and the constant terms must each balance:
+Guess $`P = e^{A(\tau) - B(\tau) r}`$. Each derivative brings down a factor: $`\partial P/\partial r = -BP`$, $`\partial^2 P/\partial r^2 = B^2 P`$. Divide by $`P`$ and the equation must hold for every $`r`$, so the terms in $`r`$ and the constant terms must each balance:
 
-$$B' = 1 - aB, \qquad A' = -a\theta B + \tfrac12\sigma^2 B^2, \qquad A(0) = B(0) = 0.$$
+```math
+B' = 1 - aB, \qquad A' = -a\theta B + \tfrac12\sigma^2 B^2, \qquad A(0) = B(0) = 0.
+```
 
-The first is solved by $B = (1 - e^{-a\tau})/a$; integrating the second gives the same $A$ as Step 3. The code solves both by stepping them forward numerically, without the closed form, and lands on the same price.
+The first is solved by $`B = (1 - e^{-a\tau})/a`$; integrating the second gives the same $`A`$ as Step 3. The code solves both by stepping them forward numerically, without the closed form, and lands on the same price.
 
 A model whose log bond prices are straight lines in the rate is called **affine**. Duffie and Kan (1996) showed which rate models have this property: the drift and the variance of the shocks must both be straight lines in the rate. Vasicek has a straight-line drift and a constant variance; [Cox-Ingersoll-Ross](03-cox-ingersoll-ross-model.md) has a variance proportional to the rate. Both are affine.
 
@@ -144,19 +162,19 @@ A model whose log bond prices are straight lines in the rate is called **affine*
 
 ## Worked numbers, by hand
 
-Level $\theta$ = 5 percent, speed $a$ = 0.3, volatility $\sigma$ = 1 percent, today's rate $r_0$ = 4 percent, $T$ = 5 years.
+Level $`\theta`$ = 5 percent, speed $`a`$ = 0.3, volatility $`\sigma`$ = 1 percent, today's rate $`r_0`$ = 4 percent, $`T`$ = 5 years.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $e^{-aT}$ | $e^{-1.5}$ | 0.223130 |
-| $B(5)$ | $(1 - 0.223130)/0.3$ | 2.589566 |
-| level part | $(0.05 - 0.0001/0.18) \times (2.589566 - 5)$ | −0.119183 |
-| spread part | $0.0001 \times 2.589566^2 / 1.2$ | 0.000559 |
-| $A(5)$ | $-0.119183 - 0.000559$ | −0.119741 |
-| rate part | $-2.589566 \times 0.04$ | −0.103583 |
-| log of price | $-0.119741 - 0.103583$ | −0.223324 |
-| **price** | $e^{-0.223324}$ | **0.7999** |
-| yield | $0.223324/5$ | 4.47% |
+| $`e^{-aT}`$ | $`e^{-1.5}`$ | 0.223130 |
+| $`B(5)`$ | $`(1 - 0.223130)/0.3`$ | 2.589566 |
+| level part | $`(0.05 - 0.0001/0.18) \times (2.589566 - 5)`$ | −0.119183 |
+| spread part | $`0.0001 \times 2.589566^2 / 1.2`$ | 0.000559 |
+| $`A(5)`$ | $`-0.119183 - 0.000559`$ | −0.119741 |
+| rate part | $`-2.589566 \times 0.04`$ | −0.103583 |
+| log of price | $`-0.119741 - 0.103583`$ | −0.223324 |
+| **price** | $`e^{-0.223324}`$ | **0.7999** |
+| yield | $`0.223324/5`$ | 4.47% |
 
 A promise of $1 in five years costs $0.7999 today. The same $1 discounted at a flat 4 percent would cost $0.8187; the pull toward 5 percent makes the bond cheaper.
 
@@ -169,7 +187,7 @@ Correct answer $0.7999 for the 5-year zero.
 | Discount at today's 4% for all five years | 0.8187 | Ignores the pull toward 5% |
 | Discount at the 5% level for all five years | 0.7788 | Ignores that the rate starts below the level |
 | Discount along the expected path, no convexity | 0.7992; 30-year 0.2307 against 0.2339 | Average of discount factors taken as the discount factor of the average rate |
-| Convexity sign flipped, $-v/2$ | 0.7986 | Spreading the area out raises the average of $e^{-I}$; it does not lower it |
+| Convexity sign flipped, $`-v/2`$ | 0.7986 | Spreading the area out raises the average of $`e^{-I}`$; it does not lower it |
 | No pull, speed near 0 | 0.8204 | The path remembers all five years of today's rate, and the shocks pile up without limit |
 
 The code prints every one.
@@ -178,7 +196,7 @@ The code prints every one.
 
 ## How the curve moves with today's rate
 
-One number, today's short rate, sets the whole curve. The level, speed and volatility fix its shape; $r_0$ slides it.
+One number, today's short rate, sets the whole curve. The level, speed and volatility fix its shape; $`r_0`$ slides it.
 
 ### The 5-year zero, one rate at a time
 
@@ -194,13 +212,13 @@ today's rate   price of $1 in 5 years
 
 From 2 to 4 percent the price falls from 0.8424 to 0.7999. A flat rate held for five years would fall much further, since the bond would feel all five years of the move.
 
-The pull prevents that: a move in today's rate is expected to fade, so the bond feels only $B(5)$ = 2.59 years of it. The 5-year yield moves 0.52 of a point for each point in $r_0$. The code confirms 2.59 by nudging $r_0$ and repricing.
+The pull prevents that: a move in today's rate is expected to fade, so the bond feels only $`B(5)`$ = 2.59 years of it. The 5-year yield moves 0.52 of a point for each point in $`r_0`$. The code confirms 2.59 by nudging $`r_0`$ and repricing.
 
 ### Negative rates are allowed
 
 The rate at any date is normal, so it has some chance of being below zero. At five years the rate averages 4.78 percent with a standard deviation of 1.26 percent. The chance it is negative is 0.0074 percent at the house volatility, and 2.89 percent if the volatility is 2 percent; 200,000 simulated draws give 2.93 percent.
 
-When today's rate is already negative, a short zero costs more than it pays. At $r_0$ = −0.5 percent, a 3-month zero costs $1.0007 per $1 back. Euro-area, Swiss and Japanese bonds traded like that for years in the decade after 2014. A model with no negative rates cannot price them at all.
+When today's rate is already negative, a short zero costs more than it pays. At $`r_0`$ = −0.5 percent, a 3-month zero costs $1.0007 per $1 back. Euro-area, Swiss and Japanese bonds traded like that for years in the decade after 2014. A model with no negative rates cannot price them at all.
 
 ### A hump
 
@@ -223,9 +241,9 @@ The one line: the yield climbs from 4.50 toward the level, peaks at 4.60 around 
 
 The 5-year zero is priced four ways that share no code.
 
-First, the closed form. Second, the mean and variance of the area under the path, then the lognormal mean $e^{-m + v/2}$. Third, the bond equation's two ordinary differential equations (ODEs) for $A$ and $B$, stepped forward by fourth-order Runge-Kutta with no closed form in sight. Fourth, 8,000 simulated rate paths (4,000 mirrored pairs), each discounted along its own area.
+First, the closed form. Second, the mean and variance of the area under the path, then the lognormal mean $`e^{-m + v/2}`$. Third, the bond equation's two ordinary differential equations (ODEs) for $`A`$ and $`B`$, stepped forward by fourth-order Runge-Kutta with no closed form in sight. Fourth, 8,000 simulated rate paths (4,000 mirrored pairs), each discounted along its own area.
 
-The random numbers come from a hand-written generator and the normal CDF (cumulative distribution function: the chance a normal draw falls below a value) from Simpson's rule. The rate sensitivity is checked by nudging $r_0$; the chance of a negative rate is checked by drawing 200,000 rates.
+The random numbers come from a hand-written generator and the normal CDF (cumulative distribution function: the chance a normal draw falls below a value) from Simpson's rule. The rate sensitivity is checked by nudging $`r_0`$; the chance of a negative rate is checked by drawing 200,000 rates.
 
 ### Python
 
@@ -642,12 +660,12 @@ The two outputs match line for line, simulations included, since both use the sa
 
 ### Lean
 
-Lean proves the card's three main facts, for every speed $a > 0$ and any level, shock size and today's rate.
+Lean proves the card's three main facts, for every speed $`a > 0`$ and any level, shock size and today's rate.
 
-- Suppose the short rate follows the card's model, with speed $a > 0$, in the pricing world. Then, for every maturity $T$, the area $I_T$ under its path is normal, with mean $m$ and variance $v$. The bond price, the average of $e^{-I_T}$, is $e^{A(T) - B(T)\,r_0}$.
-- Suppose $a > 0$. Then the closed-form price equals 1 when no time is left, and it solves the bond equation of Step 4 at every rate.
-- Suppose $a > 0$. Then the yield $R(T)$ tends to $R_\infty$ as $T$ grows, whatever today's rate.
-- Take $\theta$ = 5 percent, $a$ = 0.3 and $\sigma$ = 1 percent. Then $\sigma^2/(2a^2) = 1/1800$ and $R_\infty = 89/1800$, below the level.
+- Suppose the short rate follows the card's model, with speed $`a > 0`$, in the pricing world. Then, for every maturity $`T`$, the area $`I_T`$ under its path is normal, with mean $`m`$ and variance $`v`$. The bond price, the average of $`e^{-I_T}`$, is $`e^{A(T) - B(T)\,r_0}`$.
+- Suppose $`a > 0`$. Then the closed-form price equals 1 when no time is left, and it solves the bond equation of Step 4 at every rate.
+- Suppose $`a > 0`$. Then the yield $`R(T)`$ tends to $`R_\infty`$ as $`T`$ grows, whatever today's rate.
+- Take $`\theta`$ = 5 percent, $`a`$ = 0.3 and $`\sigma`$ = 1 percent. Then $`\sigma^2/(2a^2) = 1/1800`$ and $`R_\infty = 89/1800`$, below the level.
 
 The decimal figures, such as the price 0.7999, and the simulated paths are left to the Python and Rust checks.
 
@@ -1181,21 +1199,21 @@ end VasicekModel
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **A weak pull.** Speed $a$ from 0.3 to 0.03. The rate barely moves off 4 percent in five years, so the price nears the flat-4-percent $0.8187: it comes out at $0.8173.
-> - **Bigger shocks.** $\sigma$ from 1 to 3 percent. More convexity, a dearer bond: $0.8049.
-> - **A high start.** $r_0$ = 8 percent: $0.7212, and the curve falls, as in the first chart. At $r_0$ = 0: $0.8871.
-> - **Longer.** $T$ = 30: $0.2339; without the convexity term, 0.2307.
+> - **A weak pull.** Speed $`a`$ from 0.3 to 0.03. The rate barely moves off 4 percent in five years, so the price nears the flat-4-percent $0.8187: it comes out at $0.8173.
+> - **Bigger shocks.** $`\sigma`$ from 1 to 3 percent. More convexity, a dearer bond: $0.8049.
+> - **A high start.** $`r_0`$ = 8 percent: $0.7212, and the curve falls, as in the first chart. At $`r_0`$ = 0: $0.8871.
+> - **Longer.** $`T`$ = 30: $0.2339; without the convexity term, 0.2307.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Discounting at the average rate.** The expected rate path gives an average area of 0.2241 and a discount factor of 0.7992. The bond is the average of discount factors, 0.7999. For five years the gap is small; for thirty years it is 0.2307 against 0.2339. The curve of $e^{-I}$ bends, so the average of the discount factors beats the discount factor of the average.
+> **Discounting at the average rate.** The expected rate path gives an average area of 0.2241 and a discount factor of 0.7992. The bond is the average of discount factors, 0.7999. For five years the gap is small; for thirty years it is 0.2307 against 0.2339. The curve of $`e^{-I}`$ bends, so the average of the discount factors beats the discount factor of the average.
 >
-> - **Taking the maturity as the rate sensitivity.** A 1-point rise in today's rate cuts the 5-year zero's price by about $B(5)$ = 2.59 percent, not 5 percent. The pull means today's rate is remembered for 2.59 years only.
-> - **Reading the level as the long yield.** The long yield is 4.94 percent, not 5, because convexity pulls it down by $\sigma^2/(2a^2)$.
-> - **Reading the level as a forecast.** $\theta$ is fitted to bond prices, so it includes the premium investors charge for rate risk. A forecast of rates needs the real-world level, which differs by the market price of risk.
+> - **Taking the maturity as the rate sensitivity.** A 1-point rise in today's rate cuts the 5-year zero's price by about $`B(5)`$ = 2.59 percent, not 5 percent. The pull means today's rate is remembered for 2.59 years only.
+> - **Reading the level as the long yield.** The long yield is 4.94 percent, not 5, because convexity pulls it down by $`\sigma^2/(2a^2)`$.
+> - **Reading the level as a forecast.** $`\theta`$ is fitted to bond prices, so it includes the premium investors charge for rate risk. A forecast of rates needs the real-world level, which differs by the market price of risk.
 > - **Ruling out negative rates.** At 1 percent volatility the chance is small, 0.0074 percent at five years. At 2 percent it is 2.89 percent, enough to misprice an option that pays when rates are low.
 
 ---
@@ -1208,7 +1226,7 @@ end VasicekModel
 - **Credit portfolios.** The Basel capital formula carries Vasicek's name from a different paper, on loan defaults driven by one common factor. Same author, a different model.
 
 > **Say it back**
-> Vasicek models the short rate as a random walk pulled toward a level at a fixed speed, with normal shocks of fixed size. The rate is then normal at every date, and so is the area under its path. A zero is the average of e raised to minus that area, which for a normal area is a closed form: an exponential of a straight line in today's rate. The slope, $B(T)$, is how long today's rate is remembered, 2.59 years for the 5-year zero, which costs $0.7999. The price of the formula is normal rates: they can go negative, and one shock moves every yield together.
+> Vasicek models the short rate as a random walk pulled toward a level at a fixed speed, with normal shocks of fixed size. The rate is then normal at every date, and so is the area under its path. A zero is the average of e raised to minus that area, which for a normal area is a closed form: an exponential of a straight line in today's rate. The slope, $`B(T)`$, is how long today's rate is remembered, 2.59 years for the 5-year zero, which costs $0.7999. The price of the formula is normal rates: they can go negative, and one shock moves every yield together.
 
 ---
 

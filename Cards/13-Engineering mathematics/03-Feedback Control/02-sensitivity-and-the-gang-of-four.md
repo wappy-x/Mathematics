@@ -16,7 +16,7 @@ Left alone, the draught would cool this room by 1.00 °C. Under the thermostat i
 
 <p align="center"><img src="../figures/sensitivity-and-the-gang-of-four.svg" alt="Schematic of the thermostat loop: setpoint r into a summing point, PI controller C, heater power u, draught d added, room P, temperature y, sensor noise n added to the reading that is fed back and subtracted" width="420"></p>
 
-Schematic, not to scale. The setpoint $r$ enters at the left. The controller turns the error into heater power $u$. The draught $d$ adds to the heater's power as heat lost (a negative number of kilowatts). The room turns net power into temperature $y$. The sensor adds its noise $n$, and the reading $y + n$ is fed back and subtracted from the setpoint.
+Schematic, not to scale. The setpoint $`r`$ enters at the left. The controller turns the error into heater power $`u`$. The draught $`d`$ adds to the heater's power as heat lost (a negative number of kilowatts). The room turns net power into temperature $`y`$. The sensor adds its noise $`n`$, and the reading $`y + n`$ is fed back and subtracted from the setpoint.
 
 **A loop with one controller and one plant has four closed-loop transfer functions, the sensitivity S, the complementary sensitivity T, the load sensitivity PS and the noise sensitivity CS; every input reaches every output through one of them, and S + T = 1 at every frequency, so the loop cannot make all four small at once.**
 
@@ -26,45 +26,51 @@ Schematic, not to scale. The setpoint $r$ enters at the left. The controller tur
 
 ## The formula
 
-Notation first, in words. The **loop gain** $L(s)$ is the transfer function once round the loop, controller then room: $L = PC$. A transfer function says what a system does to each exponential $e^{st}$ ([Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)). The **sensitivity** $S(s)$ is $1/(1+L)$: how much of a disturbance at the output survives the loop. The **complementary sensitivity** $T(s)$ is $L/(1+L)$: how much of the setpoint, and of the sensor's noise, reaches the room. Engineers write $j$ for the square root of −1; the rest of the library writes i.
+Notation first, in words. The **loop gain** $`L(s)`$ is the transfer function once round the loop, controller then room: $`L = PC`$. A transfer function says what a system does to each exponential $`e^{st}`$ ([Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)). The **sensitivity** $`S(s)`$ is $`1/(1+L)`$: how much of a disturbance at the output survives the loop. The **complementary sensitivity** $`T(s)`$ is $`L/(1+L)`$: how much of the setpoint, and of the sensor's noise, reaches the room. Engineers write $`j`$ for the square root of −1; the rest of the library writes i.
 
 The room and the thermostat, with time in minutes, temperature in °C and power in kW:
 
-$$P(s) = \frac{K}{\tau s + 1}, \qquad C(s) = K_p + \frac{K_i}{s}$$
+```math
+P(s) = \frac{K}{\tau s + 1}, \qquad C(s) = K_p + \frac{K_i}{s}
+```
 
-$K$ is the room's settled warming per kilowatt and $\tau$ its time constant, the minutes it takes to cover about two-thirds of a change. The controller is proportional-plus-integral (PI): $K_p$ kilowatts for each degree of error now, plus $K_i$ kilowatts for each degree-minute of error built up. Tuning those two numbers is the job of [PID control](07-pid-control-and-tuning.md); here only the controller's transfer function matters.
+$`K`$ is the room's settled warming per kilowatt and $`\tau`$ its time constant, the minutes it takes to cover about two-thirds of a change. The controller is proportional-plus-integral (PI): $`K_p`$ kilowatts for each degree of error now, plus $`K_i`$ kilowatts for each degree-minute of error built up. Tuning those two numbers is the job of [PID control](07-pid-control-and-tuning.md); here only the controller's transfer function matters.
 
-Every output, the room $y$, the heater $u$ and the error $e = r - y$, is a sum of three paths, one per input:
+Every output, the room $`y`$, the heater $`u`$ and the error $`e = r - y`$, is a sum of three paths, one per input:
 
-$$y = T\,r + PS\,d - T\,n, \qquad u = CS\,r - T\,d - CS\,n, \qquad e = S\,r - PS\,d + T\,n$$
+```math
+y = T\,r + PS\,d - T\,n, \qquad u = CS\,r - T\,d - CS\,n, \qquad e = S\,r - PS\,d + T\,n
+```
 
 with the **gang of four**
 
-$$S = \frac{1}{1+PC}, \qquad T = \frac{PC}{1+PC}, \qquad PS = \frac{P}{1+PC}, \qquad CS = \frac{C}{1+PC}, \qquad S + T = 1.$$
+```math
+S = \frac{1}{1+PC}, \qquad T = \frac{PC}{1+PC}, \qquad PS = \frac{P}{1+PC}, \qquad CS = \frac{C}{1+PC}, \qquad S + T = 1.
+```
 
 **Read it aloud:** the setpoint reaches the room through T, the draught reaches the room through PS, the sensor's noise reaches the heater through CS and the room through T, and the sensitivity S plus the complementary sensitivity T is exactly one.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $j$, $\omega$ | the Laplace variable; the square root of −1; angular frequency in rad/min, with $s = j\omega$ for a steady wobble | rad/min, since the room's clock is minutes | — |
-| $P(s)$, $K$, $\tau$ | the room: steady gain in °C per kW, time constant in min | $K$ = 2 °C/kW, $\tau$ = 20 min | a bigger or slower room |
-| $C(s)$, $K_p$, $K_i$ | the PI controller: kW per °C of error, kW per °C·min of built-up error | $K_p$ = 2 kW/°C, $K_i$ = 0.2 kW/(°C·min) | smaller draught dip, more heater jitter |
-| $L(s)$, $PC$ | loop gain, once round the loop: controller times room | large at low $\omega$, small at high | $S$ shrinks, $T$ nears 1 |
-| $S(s)$ | sensitivity, $1/(1+L)$: setpoint to error | 0.4152 at 0.1 rad/min | more of a disturbance survives |
-| $T(s)$ | complementary sensitivity, $L/(1+L)$: setpoint to room, noise to room | 1.0505 at 0.1 rad/min | more noise reaches the room |
-| $PS$, $CS$ | load sensitivity: draught to room; noise sensitivity: noise to heater | 0.3714 °C/kW and 1.1744 kW/°C at 0.1 rad/min | bigger dip; bigger heater jitter |
-| $r$, $d$, $n$, $d_0$, $y$, $u$, $e$ | inputs: setpoint change (°C), draught (kW), sensor noise (°C), $d_0$ the draught's size; outputs: room change (°C), heater change (kW), error $r - y$ (°C) | $d_0$ = −0.5 kW | — |
-| $F(s)$, $b$, $FT$, $FCS$ | a prefilter on the setpoint; the setpoint weight in the P term; the two setpoint paths once $F$ is added | $b$ = 0 gives $F = K_i/(K_p s + K_i)$ | — |
-| $\alpha$, $\omega_d$, $\omega_n$, $\zeta$, $t$ | the dip's decay rate (1/min), its ringing rate (rad/min), natural frequency, damping ratio; time (min) | 0.1250 /min, 0.0661 rad/min, $\zeta$ = 0.8839 | — |
-| $\sigma_n$, $\Delta$, $\Phi_n$, $M_s$ | noise size (°C rms); how long each reading is held (min); the noise's strength at each frequency; the peak of $\lvert S\rvert$ | 0.1 °C, 0.1 min, $M_s$ = 1, approached only at high $\omega$ | more heater jitter |
-| $H$, $h$, $n_k$, $\theta$, $\lambda$ | in the proof: a path's transfer function; a one-reading pulse; the k-th reading; a random start time; a time lag | — | — |
+| $`s`$, $`j`$, $`\omega`$ | the Laplace variable; the square root of −1; angular frequency in rad/min, with $`s = j\omega`$ for a steady wobble | rad/min, since the room's clock is minutes | — |
+| $`P(s)`$, $`K`$, $`\tau`$ | the room: steady gain in °C per kW, time constant in min | $`K`$ = 2 °C/kW, $`\tau`$ = 20 min | a bigger or slower room |
+| $`C(s)`$, $`K_p`$, $`K_i`$ | the PI controller: kW per °C of error, kW per °C·min of built-up error | $`K_p`$ = 2 kW/°C, $`K_i`$ = 0.2 kW/(°C·min) | smaller draught dip, more heater jitter |
+| $`L(s)`$, $`PC`$ | loop gain, once round the loop: controller times room | large at low $`\omega`$, small at high | $`S`$ shrinks, $`T`$ nears 1 |
+| $`S(s)`$ | sensitivity, $`1/(1+L)`$: setpoint to error | 0.4152 at 0.1 rad/min | more of a disturbance survives |
+| $`T(s)`$ | complementary sensitivity, $`L/(1+L)`$: setpoint to room, noise to room | 1.0505 at 0.1 rad/min | more noise reaches the room |
+| $`PS`$, $`CS`$ | load sensitivity: draught to room; noise sensitivity: noise to heater | 0.3714 °C/kW and 1.1744 kW/°C at 0.1 rad/min | bigger dip; bigger heater jitter |
+| $`r`$, $`d`$, $`n`$, $`d_0`$, $`y`$, $`u`$, $`e`$ | inputs: setpoint change (°C), draught (kW), sensor noise (°C), $`d_0`$ the draught's size; outputs: room change (°C), heater change (kW), error $`r - y`$ (°C) | $`d_0`$ = −0.5 kW | — |
+| $`F(s)`$, $`b`$, $`FT`$, $`FCS`$ | a prefilter on the setpoint; the setpoint weight in the P term; the two setpoint paths once $`F`$ is added | $`b`$ = 0 gives $`F = K_i/(K_p s + K_i)`$ | — |
+| $`\alpha`$, $`\omega_d`$, $`\omega_n`$, $`\zeta`$, $`t`$ | the dip's decay rate (1/min), its ringing rate (rad/min), natural frequency, damping ratio; time (min) | 0.1250 /min, 0.0661 rad/min, $`\zeta`$ = 0.8839 | — |
+| $`\sigma_n`$, $`\Delta`$, $`\Phi_n`$, $`M_s`$ | noise size (°C rms); how long each reading is held (min); the noise's strength at each frequency; the peak of $`\lvert S\rvert`$ | 0.1 °C, 0.1 min, $`M_s`$ = 1, approached only at high $`\omega`$ | more heater jitter |
+| $`H`$, $`h`$, $`n_k`$, $`\theta`$, $`\lambda`$ | in the proof: a path's transfer function; a one-reading pulse; the k-th reading; a random start time; a time lag | — | — |
 
 ### When it holds
 
 - **Linear and unsaturated.** The paths add only while the heater stays between off and full power. A 5 °C setpoint step asks this 3 kW heater for 10.0 kW at the first instant; the real heater clips and the formulas no longer describe it ([PID in practice](08-pid-on-real-hardware.md)).
-- **The model is the room.** One time constant leaves out the radiator pipe's own lag. Adding a 4 min pipe lag lifts the peak of $\lvert S\rvert$ from 1 to 1.6580: a disturbance wobbling at 0.2301 rad/min then comes out 1.6580 times bigger with the thermostat on than with it off.
-- **Time-invariant.** The same room, the same heater. A wide-open door changes $K$ and $\tau$, and every function on this card with them.
-- **The loop is stable.** All four functions are computed from $P$ and $C$ whatever they are, but they describe the settled loop only when every closed-loop pole lies in the left half-plane ([Routh-Hurwitz](04-routh-hurwitz-criterion.md)). The loop is **internally stable** when $S$, $T$, $PS$ and $CS$ are all stable; $T$ alone is not enough. A room pole cancelled by a controller zero drops out of $T$ but stays in $PS$, as the pole-cancelling row of What breaks shows. Had that pole been unstable, the room would run away after a draught while $T$ looked fine.
+- **The model is the room.** One time constant leaves out the radiator pipe's own lag. Adding a 4 min pipe lag lifts the peak of $`\lvert S\rvert`$ from 1 to 1.6580: a disturbance wobbling at 0.2301 rad/min then comes out 1.6580 times bigger with the thermostat on than with it off.
+- **Time-invariant.** The same room, the same heater. A wide-open door changes $`K`$ and $`\tau`$, and every function on this card with them.
+- **The loop is stable.** All four functions are computed from $`P`$ and $`C`$ whatever they are, but they describe the settled loop only when every closed-loop pole lies in the left half-plane ([Routh-Hurwitz](04-routh-hurwitz-criterion.md)). The loop is **internally stable** when $`S`$, $`T`$, $`PS`$ and $`CS`$ are all stable; $`T`$ alone is not enough. A room pole cancelled by a controller zero drops out of $`T`$ but stays in $`PS`$, as the pole-cancelling row of What breaks shows. Had that pole been unstable, the room would run away after a draught while $`T`$ looked fine.
 
 ---
 
@@ -76,21 +82,25 @@ The room and the controller are linear: double an input and its effect doubles, 
 
 ### Step 1: solve the loop for the room temperature
 
-Write the loop as two equations in transforms, capital letters standing for the transforms of the signals. The room turns the heater's power plus the draught into temperature: $Y = P(U + D)$. The controller acts on the error it can see, setpoint minus reading: $U = C(R - Y - N)$. Substitute the second into the first:
+Write the loop as two equations in transforms, capital letters standing for the transforms of the signals. The room turns the heater's power plus the draught into temperature: $`Y = P(U + D)`$. The controller acts on the error it can see, setpoint minus reading: $`U = C(R - Y - N)`$. Substitute the second into the first:
 
-$$Y = PC(R - Y - N) + PD \quad\Longrightarrow\quad (1 + PC)\,Y = PC\,R + P\,D - PC\,N.$$
+```math
+Y = PC(R - Y - N) + PD \quad\Longrightarrow\quad (1 + PC)\,Y = PC\,R + P\,D - PC\,N.
+```
 
-Divide by $1 + PC$. The setpoint and the noise both reach the room through $T = PC/(1+PC)$, with opposite signs: the loop cannot tell a real temperature change from a false reading. The draught reaches it through $PS = P/(1+PC)$.
+Divide by $`1 + PC`$. The setpoint and the noise both reach the room through $`T = PC/(1+PC)`$, with opposite signs: the loop cannot tell a real temperature change from a false reading. The draught reaches it through $`PS = P/(1+PC)`$.
 
 ### Step 2: solve it for the heater and for the error
 
-Substitute the other way round: $U = C\big(R - N - P(U + D)\big)$, so $(1 + PC)\,U = C\,R - C\,N - PC\,D$. The heater sees the setpoint and the noise through $CS = C/(1+PC)$, and the draught through $T$. The error is $E = R - Y$, which gives $S\,R - PS\,D + T\,N$ after using $1 - T = S$.
+Substitute the other way round: $`U = C\big(R - N - P(U + D)\big)`$, so $`(1 + PC)\,U = C\,R - C\,N - PC\,D`$. The heater sees the setpoint and the noise through $`CS = C/(1+PC)`$, and the draught through $`T`$. The error is $`E = R - Y`$, which gives $`S\,R - PS\,D + T\,N`$ after using $`1 - T = S`$.
 
 ### Step 3: S + T = 1, and what it forbids
 
-$$S + T = \frac{1}{1+PC} + \frac{PC}{1+PC} = \frac{1 + PC}{1 + PC} = 1.$$
+```math
+S + T = \frac{1}{1+PC} + \frac{PC}{1+PC} = \frac{1 + PC}{1 + PC} = 1.
+```
 
-At every frequency the two add to one, as complex numbers. Where the loop gain is large, $S$ is small and disturbances are crushed, but $T$ is close to 1 and the sensor's noise passes straight into the room. Where the loop gain is small, noise is blocked, and so is the loop's power to fight a draught. A good design makes $S$ small at low frequency, where draughts and setpoint changes live, and $T$ small at high frequency, where the sensor's noise lives. In between, where the loop gain crosses 1, neither can be small.
+At every frequency the two add to one, as complex numbers. Where the loop gain is large, $`S`$ is small and disturbances are crushed, but $`T`$ is close to 1 and the sensor's noise passes straight into the room. Where the loop gain is small, noise is blocked, and so is the loop's power to fight a draught. A good design makes $`S`$ small at low frequency, where draughts and setpoint changes live, and $`T`$ small at high frequency, where the sensor's noise lives. In between, where the loop gain crosses 1, neither can be small.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -102,46 +112,52 @@ xychart-beta
     line [0.00, 0.01, 0.02, 0.06, 0.17, 0.39, 0.43, -1.03, -4.59, -9.16, -14.03, -19.00, -23.98]
 ```
 
-Orange: $\lvert S\rvert$ in decibels (20 log10 of the gain, [Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). Green: $\lvert T\rvert$. Slow disturbances are crushed, by −42.03 dB at 0.0032 rad/min; fast ones pass through untouched. The curves cross between 0.18 and 0.32 rad/min, where neither is small. Labels are rounded; the points are equally spaced on the log scale, a quarter-decade apart.
+Orange: $`\lvert S\rvert`$ in decibels (20 log10 of the gain, [Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). Green: $`\lvert T\rvert`$. Slow disturbances are crushed, by −42.03 dB at 0.0032 rad/min; fast ones pass through untouched. The curves cross between 0.18 and 0.32 rad/min, where neither is small. Labels are rounded; the points are equally spaced on the log scale, a quarter-decade apart.
 
 ### Step 4: integral action zeroes the draught's lasting effect
 
-At $s = 0$ the controller's $K_i/s$ is infinite, so $PS(0) = 0$: a steady draught leaves no steady error. More is true. For a step draught of size $d_0$, the transform of the dip is $Y(s) = PS(s)\,d_0/s$. A transform at $s = 0$ is the plain area under the curve, since $e^{-0\cdot t} = 1$:
+At $`s = 0`$ the controller's $`K_i/s`$ is infinite, so $`PS(0) = 0`$: a steady draught leaves no steady error. More is true. For a step draught of size $`d_0`$, the transform of the dip is $`Y(s) = PS(s)\,d_0/s`$. A transform at $`s = 0`$ is the plain area under the curve, since $`e^{-0\cdot t} = 1`$:
 
-$$\int_0^\infty y\,dt = \lim_{s\to 0}\frac{PS(s)\,d_0}{s} = \lim_{s\to 0}\frac{K\,d_0}{\tau s^2 + (1 + KK_p)s + KK_i} = \frac{d_0}{K_i}.$$
+```math
+\int_0^\infty y\,dt = \lim_{s\to 0}\frac{PS(s)\,d_0}{s} = \lim_{s\to 0}\frac{K\,d_0}{\tau s^2 + (1 + KK_p)s + KK_i} = \frac{d_0}{K_i}.
+```
 
-The room gain $K$ cancels. The degree-minutes the room loses to a draught are set by the integral gain alone: −0.5 kW over 0.2 kW/(°C·min) is −2.5 °C·min.
+The room gain $`K`$ cancels. The degree-minutes the room loses to a draught are set by the integral gain alone: −0.5 kW over 0.2 kW/(°C·min) is −2.5 °C·min.
 
 ### Step 5: the dip itself, in closed form
 
-Multiply out $PS$ for this room: $PS = K s/\big(\tau s^2 + (1 + KK_p)s + KK_i\big)$. For a step draught the transform of the dip is $PS\,d_0/s$, which is $(K d_0/\tau)/(s^2 + 2\alpha s + \omega_n^2)$ with $2\alpha = (1 + KK_p)/\tau$ and $\omega_n^2 = KK_i/\tau$. For our numbers that is $20s^2 + 5s + 0.4$ underneath, a damping ratio $\zeta = \alpha/\omega_n$ of 0.8839, below 1, so the dip barely rings ([Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md)). The inverse transform is
+Multiply out $`PS`$ for this room: $`PS = K s/\big(\tau s^2 + (1 + KK_p)s + KK_i\big)`$. For a step draught the transform of the dip is $`PS\,d_0/s`$, which is $`(K d_0/\tau)/(s^2 + 2\alpha s + \omega_n^2)`$ with $`2\alpha = (1 + KK_p)/\tau`$ and $`\omega_n^2 = KK_i/\tau`$. For our numbers that is $`20s^2 + 5s + 0.4`$ underneath, a damping ratio $`\zeta = \alpha/\omega_n`$ of 0.8839, below 1, so the dip barely rings ([Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md)). The inverse transform is
 
-$$y(t) = \frac{K d_0}{\tau}\,e^{-\alpha t}\,\frac{\sin\omega_d t}{\omega_d}, \qquad \omega_d = \sqrt{\omega_n^2 - \alpha^2}.$$
+```math
+y(t) = \frac{K d_0}{\tau}\,e^{-\alpha t}\,\frac{\sin\omega_d t}{\omega_d}, \qquad \omega_d = \sqrt{\omega_n^2 - \alpha^2}.
+```
 
-Setting its slope to zero gives $\tan(\omega_d t) = \omega_d/\alpha$: the deepest point.
+Setting its slope to zero gives $`\tan(\omega_d t) = \omega_d/\alpha`$: the deepest point.
 
 ### Step 6: a second degree of freedom frees the setpoint path
 
-The setpoint is the one input the controller knows exactly. So it can be shaped before it enters the loop, by a prefilter $F$: the setpoint paths become $FT$ and $FCS$, while the draught and noise paths, $PS$, $T$ and $CS$, are untouched. This is a **two-degree-of-freedom** structure: the feedback $C$ is chosen for draughts and noise, and $F$ separately for setpoint changes. The simplest form keeps the integral term on the error but leaves the setpoint out of the proportional term: $u = K_p(b\,r - y - n) + K_i\!\int(r - y - n)\,dt$ with weight $b = 0$. That is $F = K_i/(K_p s + K_i)$, which cancels the zero in $T$ that caused the overshoot. A one-degree-of-freedom loop has four functions; with $F$ it has six, since $FT$ and $FCS$ join the gang.
+The setpoint is the one input the controller knows exactly. So it can be shaped before it enters the loop, by a prefilter $`F`$: the setpoint paths become $`FT`$ and $`FCS`$, while the draught and noise paths, $`PS`$, $`T`$ and $`CS`$, are untouched. This is a **two-degree-of-freedom** structure: the feedback $`C`$ is chosen for draughts and noise, and $`F`$ separately for setpoint changes. The simplest form keeps the integral term on the error but leaves the setpoint out of the proportional term: $`u = K_p(b\,r - y - n) + K_i\!\int(r - y - n)\,dt`$ with weight $`b = 0`$. That is $`F = K_i/(K_p s + K_i)`$, which cancels the zero in $`T`$ that caused the overshoot. A one-degree-of-freedom loop has four functions; with $`F`$ it has six, since $`FT`$ and $`FCS`$ join the gang.
 
 ### Step 7: how much the noise shakes the heater
 
 Sensor noise is a jumble of all frequencies. The spread it causes at an output is the sum, over frequency, of the noise's strength times the path's gain squared:
 
-$$\text{var}(u) = \frac{1}{\pi}\int_0^\infty \lvert CS(j\omega)\rvert^2\,\Phi_n(\omega)\,d\omega, \qquad \Phi_n(\omega) = \sigma_n^2\,\Delta\left(\frac{\sin(\omega\Delta/2)}{\omega\Delta/2}\right)^2.$$
+```math
+\text{var}(u) = \frac{1}{\pi}\int_0^\infty \lvert CS(j\omega)\rvert^2\,\Phi_n(\omega)\,d\omega, \qquad \Phi_n(\omega) = \sigma_n^2\,\Delta\left(\frac{\sin(\omega\Delta/2)}{\omega\Delta/2}\right)^2.
+```
 
-The strength $\Phi_n$ belongs to readings that each hold a random value for $\Delta$ minutes. At high frequency $CS$ tends to $K_p$, so the heater jitter is close to $K_p\,\sigma_n$: 2 kW/°C times 0.1 °C. The room's jitter uses $\lvert T\rvert^2$ instead, which is small at high frequency, so the room itself barely notices.
+The strength $`\Phi_n`$ belongs to readings that each hold a random value for $`\Delta`$ minutes. At high frequency $`CS`$ tends to $`K_p`$, so the heater jitter is close to $`K_p\,\sigma_n`$: 2 kW/°C times 0.1 °C. The room's jitter uses $`\lvert T\rvert^2`$ instead, which is small at high frequency, so the room itself barely notices.
 
 <details>
 <summary>Detailed proof: why the spread formula holds</summary>
 
-Write the held noise as $n(t) = \sum_k n_k\,h(t - k\Delta - \theta)$, where the $n_k$ are independent with mean 0 and variance $\sigma_n^2$, $h$ is 1 on $[0, \Delta)$ and 0 elsewhere, and $\theta$ is a random start time spread evenly over $[0, \Delta)$, which makes the noise's statistics the same at every time.
+Write the held noise as $`n(t) = \sum_k n_k\,h(t - k\Delta - \theta)`$, where the $`n_k`$ are independent with mean 0 and variance $`\sigma_n^2`$, $`h`$ is 1 on $`[0, \Delta)`$ and 0 elsewhere, and $`\theta`$ is a random start time spread evenly over $`[0, \Delta)`$, which makes the noise's statistics the same at every time.
 
-Its autocorrelation, the average of $n(t)\,n(t + \lambda)$, is $\sigma_n^2(1 - \lvert\lambda\rvert/\Delta)$ for $\lvert\lambda\rvert < \Delta$ and 0 beyond: two times a lag $\lambda$ apart share a reading with probability $1 - \lvert\lambda\rvert/\Delta$. The Fourier transform of that triangle is $\sigma_n^2\,\Delta\,\big(\sin(\omega\Delta/2)/(\omega\Delta/2)\big)^2$, the $\Phi_n$ above.
+Its autocorrelation, the average of $`n(t)\,n(t + \lambda)`$, is $`\sigma_n^2(1 - \lvert\lambda\rvert/\Delta)`$ for $`\lvert\lambda\rvert < \Delta`$ and 0 beyond: two times a lag $`\lambda`$ apart share a reading with probability $`1 - \lvert\lambda\rvert/\Delta`$. The Fourier transform of that triangle is $`\sigma_n^2\,\Delta\,\big(\sin(\omega\Delta/2)/(\omega\Delta/2)\big)^2`$, the $`\Phi_n`$ above.
 
-A stable linear filter $H$ multiplies a stationary input's spectrum by $\lvert H(j\omega)\rvert^2$. The output's variance is its autocorrelation at lag 0, which is the inverse transform at 0: $\frac{1}{2\pi}\int_{-\infty}^{\infty}\lvert H\rvert^2\Phi_n\,d\omega$. The integrand is even in $\omega$, which gives the factor $1/\pi$ over $[0, \infty)$. With $H = -CS$ this is the heater's variance; with $H = -T$, the room's.
+A stable linear filter $`H`$ multiplies a stationary input's spectrum by $`\lvert H(j\omega)\rvert^2`$. The output's variance is its autocorrelation at lag 0, which is the inverse transform at 0: $`\frac{1}{2\pi}\int_{-\infty}^{\infty}\lvert H\rvert^2\Phi_n\,d\omega`$. The integrand is even in $`\omega`$, which gives the factor $`1/\pi`$ over $`[0, \infty)`$. With $`H = -CS`$ this is the heater's variance; with $`H = -T`$, the room's.
 
-Check: with $H = 1$, $\frac{1}{\pi}\int_0^\infty \sigma_n^2\Delta\,\big(\sin x/x\big)^2 \frac{2\,dx}{\Delta} = \frac{2\sigma_n^2}{\pi}\cdot\frac{\pi}{2} = \sigma_n^2$, the noise's own variance.
+Check: with $`H = 1`$, $`\frac{1}{\pi}\int_0^\infty \sigma_n^2\Delta\,\big(\sin x/x\big)^2 \frac{2\,dx}{\Delta} = \frac{2\sigma_n^2}{\pi}\cdot\frac{\pi}{2} = \sigma_n^2`$, the noise's own variance.
 
 </details>
 
@@ -151,18 +167,18 @@ Another route to the same four functions is to measure them: drive one input wit
 
 ## Worked numbers, by hand
 
-The draught: the window opens at $t = 0$ and the room loses 0.5 kW, so $d_0$ = −0.5 kW.
+The draught: the window opens at $`t = 0`$ and the room loses 0.5 kW, so $`d_0`$ = −0.5 kW.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| no thermostat: settled change | $K d_0$ = 2 × (−0.5) | −1.00 °C |
-| closed-loop polynomial | $\tau s^2 + (1 + KK_p)s + KK_i$ | $20s^2 + 5s + 0.4$ |
-| decay rate $\alpha$ | 5 / (2 × 20) | 0.1250 /min |
-| ringing rate $\omega_d$ | √(0.4 / 20 − 0.1250^2) | 0.0661 rad/min |
+| no thermostat: settled change | $`K d_0`$ = 2 × (−0.5) | −1.00 °C |
+| closed-loop polynomial | $`\tau s^2 + (1 + KK_p)s + KK_i`$ | $`20s^2 + 5s + 0.4`$ |
+| decay rate $`\alpha`$ | 5 / (2 × 20) | 0.1250 /min |
+| ringing rate $`\omega_d`$ | √(0.4 / 20 − 0.1250^2) | 0.0661 rad/min |
 | time of the deepest point | arctan(0.0661 / 0.1250) / 0.0661 | 7.36 min |
 | depth | (2 × (−0.5) / 20) × e^(−0.1250 × 7.36) × sin(0.0661 × 7.36) / 0.0661 | −0.1409 °C |
-| area under the dip | $d_0/K_i$ = −0.5 / 0.2 | −2.5 °C·min |
-| heater jitter from the sensor | about $K_p\,\sigma_n$ = 2 × 0.1 | about 0.2 kW rms |
+| area under the dip | $`d_0/K_i`$ = −0.5 / 0.2 | −2.5 °C·min |
+| heater jitter from the sensor | about $`K_p\,\sigma_n`$ = 2 × 0.1 | about 0.2 kW rms |
 | **the draught's dip** | | **−0.1409 °C at 7.36 min** |
 
 A draught that would cool the room by a full degree costs it 0.1409 °C for a few minutes. The occupant will not feel it. The heater jitters by 0.2007 kW rms from the sensor alone, against the 0.2 kW estimate: the heater pays for the good draught rejection.
@@ -178,22 +194,22 @@ xychart-beta
     line [0, -0.14, -0.16, -0.14, -0.12, -0.09, -0.07, -0.06, -0.04, -0.04, -0.03, -0.02, -0.02]
 ```
 
-Orange: no thermostat, heading for −1.00 °C, drawn from its closed form $K d_0 (1 - e^{-t/\tau})$. Green: the PI thermostat, deepest at 7.36 min and back to zero by 45 min. Dark blue: the pole-cancelling design from What breaks, which looks better on a setpoint step and lets the draught linger. Green and dark blue are simulated; the green one also matches the closed form of Step 5.
+Orange: no thermostat, heading for −1.00 °C, drawn from its closed form $`K d_0 (1 - e^{-t/\tau})`$. Green: the PI thermostat, deepest at 7.36 min and back to zero by 45 min. Dark blue: the pole-cancelling design from What breaks, which looks better on a setpoint step and lets the draught linger. Green and dark blue are simulated; the green one also matches the closed form of Step 5.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Judge the loop by its setpoint step alone: choose $K_i = K_p/\tau$ = 0.1, which cancels the room's pole | Setpoint: no overshoot (PI: 0.0719 °C). Draught: still −0.0736 °C at 30 min (PI: −0.0163), area −5.0 °C·min (PI: −2.5) | Cancelling the room's slow pole removes it from $T$, not from $PS$; the draught still sees the 20 min room |
-| Raise $K_p$ to 8 and $K_i$ to 0.8 to beat the draught | Dip −0.0485 °C (was −0.1409), but heater jitter 0.7947 kW (was 0.2007); with a 4 min pipe lag, peak $\lvert S\rvert$ 2.5638 (was 1.6580) | $CS$ grows with $K_p$: noise goes straight to the heater; the model error makes the peak of $S$ worse |
-| Ask for small $S$ and small $T$ at the same frequency | At 0.2 rad/min, $\lvert S\rvert$ = 0.7656 and $\lvert T\rvert$ = 0.8305 | $S + T = 1$ as complex numbers; where the loop gain is near 1, both are near 1 |
+| Judge the loop by its setpoint step alone: choose $`K_i = K_p/\tau`$ = 0.1, which cancels the room's pole | Setpoint: no overshoot (PI: 0.0719 °C). Draught: still −0.0736 °C at 30 min (PI: −0.0163), area −5.0 °C·min (PI: −2.5) | Cancelling the room's slow pole removes it from $`T`$, not from $`PS`$; the draught still sees the 20 min room |
+| Raise $`K_p`$ to 8 and $`K_i`$ to 0.8 to beat the draught | Dip −0.0485 °C (was −0.1409), but heater jitter 0.7947 kW (was 0.2007); with a 4 min pipe lag, peak $`\lvert S\rvert`$ 2.5638 (was 1.6580) | $`CS`$ grows with $`K_p`$: noise goes straight to the heater; the model error makes the peak of $`S`$ worse |
+| Ask for small $`S`$ and small $`T`$ at the same frequency | At 0.2 rad/min, $`\lvert S\rvert`$ = 0.7656 and $`\lvert T\rvert`$ = 0.8305 | $`S + T = 1`$ as complex numbers; where the loop gain is near 1, both are near 1 |
 | Use the linear model for a 5 °C setpoint step | The first instant asks for 10.0 kW from a 3 kW heater | The model has no ceiling; the real heater saturates ([PID in practice](08-pid-on-real-hardware.md)) |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the gang of four by complex arithmetic at six frequencies. Then it simulates the whole loop with a fourth-order Runge-Kutta step (RK4), driving one input at a time with a sine and reading the settled output's size and timing: setpoint to error gives $S$, noise to room gives $T$, draught to room gives $PS$, setpoint to heater gives $CS$. The $S$ and $T$ read from two separate simulations must add to 1. For the draught it compares the simulated dip with the closed form of Step 5 and the simulated area with $d_0/K_i$. For the sensor it generates Gaussian noise from a SplitMix64 generator (seed 0x20260930, written out in both languages) and compares the simulated heater and room jitter with the frequency integral of Step 7. Four roads: formula, sine simulation, time-domain closed form, noise statistics.
+The code builds the gang of four by complex arithmetic at six frequencies. Then it simulates the whole loop with a fourth-order Runge-Kutta step (RK4), driving one input at a time with a sine and reading the settled output's size and timing: setpoint to error gives $`S`$, noise to room gives $`T`$, draught to room gives $`PS`$, setpoint to heater gives $`CS`$. The $`S`$ and $`T`$ read from two separate simulations must add to 1. For the draught it compares the simulated dip with the closed form of Step 5 and the simulated area with $`d_0/K_i`$. For the sensor it generates Gaussian noise from a SplitMix64 generator (seed 0x20260930, written out in both languages) and compares the simulated heater and room jitter with the frequency integral of Step 7. Four roads: formula, sine simulation, time-domain closed form, noise statistics.
 
 ### Python
 
@@ -373,7 +389,7 @@ chart, cancel     0.00 -0.14 -0.16 -0.14 -0.12 -0.09 -0.07 -0.06 -0.04 -0.04 -0.
 ALL CHECKS PASS
 ```
 
-Every simulated gain matches its formula to four decimals, and $\lvert S + T\rvert$ = 1.0000 comes from two simulations that share nothing but the loop. Without the pipe, the first peak line stops at the grid's top, 10 rad/min: $\lvert S\rvert$ climbs toward 1 there and never passes it. The $b = 0$ overshoot of a 1 °C step is asserted against the second-order formula $e^{-\pi\zeta/\sqrt{1-\zeta^2}}$ °C = 0.0026 °C, since $b = 0$ leaves the setpoint path $K K_i/(\tau s^2 + (1+KK_p)s + KK_i)$, which has no zero. The simulated noise figures differ from the integral by 2% or less, as a finite sample of 30,000 readings should: the asserts allow 3% for the heater and 15% for the room, whose jitter is slow and so averages over fewer independent stretches.
+Every simulated gain matches its formula to four decimals, and $`\lvert S + T\rvert`$ = 1.0000 comes from two simulations that share nothing but the loop. Without the pipe, the first peak line stops at the grid's top, 10 rad/min: $`\lvert S\rvert`$ climbs toward 1 there and never passes it. The $`b = 0`$ overshoot of a 1 °C step is asserted against the second-order formula $`e^{-\pi\zeta/\sqrt{1-\zeta^2}}`$ °C = 0.0026 °C, since $`b = 0`$ leaves the setpoint path $`K K_i/(\tau s^2 + (1+KK_p)s + KK_i)`$, which has no zero. The simulated noise figures differ from the integral by 2% or less, as a finite sample of 30,000 readings should: the asserts allow 3% for the heater and 15% for the room, whose jitter is slow and so averages over fewer independent stretches.
 
 ### Rust
 
@@ -595,14 +611,14 @@ The two outputs agree line for line, including the noise figures, since both lan
 
 Lean proves the algebra of Steps 1 to 4 for any complex values, and checks the worked numbers.
 
-- Take $1 + PC$ not zero. Then $S + T = 1$, as complex numbers.
-- Take $Y = P(U + D)$ and $U = C(R - Y - N)$, with $1 + PC$ not zero. Then the room is $Y = T\,R + PS\,D - T\,N$.
-- Take the same loop. Then the heater is $U = CS\,R - T\,D - CS\,N$.
-- Take the same loop. Then the error is $R - Y = S\,R - PS\,D + T\,N$.
-- Take this card's room $P$ and PI controller $C$, with $K$ and $K_i$ not zero. Then $PS(s)\,d_0/s$ tends to $d_0/K_i$ as $s$ tends to 0.
-- With no thermostat the room settles $K d_0$ = −1.00 °C low.
-- The closed-loop polynomial is $20s^2 + 5s + 0.4$, and its decay rate $\alpha$ is 0.1250 /min.
-- $d_0/K_i$ is −2.5 °C·min, and −5.0 °C·min for the pole-cancelling design with $K_i$ = 0.1.
+- Take $`1 + PC`$ not zero. Then $`S + T = 1`$, as complex numbers.
+- Take $`Y = P(U + D)`$ and $`U = C(R - Y - N)`$, with $`1 + PC`$ not zero. Then the room is $`Y = T\,R + PS\,D - T\,N`$.
+- Take the same loop. Then the heater is $`U = CS\,R - T\,D - CS\,N`$.
+- Take the same loop. Then the error is $`R - Y = S\,R - PS\,D + T\,N`$.
+- Take this card's room $`P`$ and PI controller $`C`$, with $`K`$ and $`K_i`$ not zero. Then $`PS(s)\,d_0/s`$ tends to $`d_0/K_i`$ as $`s`$ tends to 0.
+- With no thermostat the room settles $`K d_0`$ = −1.00 °C low.
+- The closed-loop polynomial is $`20s^2 + 5s + 0.4`$, and its decay rate $`\alpha`$ is 0.1250 /min.
+- $`d_0/K_i`$ is −2.5 °C·min, and −5.0 °C·min for the pole-cancelling design with $`K_i`$ = 0.1.
 - A 5 °C setpoint step asks for 10.0 kW at the first instant.
 
 That the limit equals the area, the dip's shape, the noise figures and every simulation are left to the Python and Rust checks.
@@ -708,32 +724,32 @@ example : (2 : ℚ) * 5 = 10 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
-> - **A harder controller.** In `noise_rms` the second pair is $K_p$ = 8, $K_i$ = 0.8. Guess the heater jitter. Four times the proportional gain gives about four times the jitter: **0.7947 kW** against 0.2007, while the draught dip shrinks to **−0.0485 °C**.
+> - **A harder controller.** In `noise_rms` the second pair is $`K_p`$ = 8, $`K_i`$ = 0.8. Guess the heater jitter. Four times the proportional gain gives about four times the jitter: **0.7947 kW** against 0.2007, while the draught dip shrinks to **−0.0485 °C**.
 > - **Setpoint weight.** Call `sim(..., b=0.0)` with a setpoint step. Guess the overshoot. It falls from **0.0719 °C** to **0.0026 °C**, and the draught dip stays at **−0.1409 °C**: the prefilter touches only the setpoint paths. The cost is speed: at 10 min the room has reached 0.4413 °C of the 1 °C step, against 0.9735.
-> - **Cancel the room's pole.** Set `ki=0.1`. Guess the area under the draught dip. It doubles to **−5.0 °C·min**, since the area is $d_0/K_i$.
-> - **Add the pipe.** Call `gang(w, pipe=4.0)`. Guess whether $\lvert S\rvert$ can exceed 1. It peaks at **1.6580** at 0.2301 rad/min.
+> - **Cancel the room's pole.** Set `ki=0.1`. Guess the area under the draught dip. It doubles to **−5.0 °C·min**, since the area is $`d_0/K_i`$.
+> - **Add the pipe.** Call `gang(w, pipe=4.0)`. Guess whether $`\lvert S\rvert`$ can exceed 1. It peaks at **1.6580** at 0.2301 rad/min.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Checking one path and calling the loop good.** A setpoint step shows only $T$ and $CS$. A design can pass it beautifully and still let draughts linger, as the pole-cancelling design does: no overshoot at all on the setpoint, yet the draught is still costing 0.0736 °C after 30 min, against the PI design's 0.0163. A controller is judged on all four paths: setpoint, draught, noise to the room, noise to the heater.
+> **Checking one path and calling the loop good.** A setpoint step shows only $`T`$ and $`CS`$. A design can pass it beautifully and still let draughts linger, as the pole-cancelling design does: no overshoot at all on the setpoint, yet the draught is still costing 0.0736 °C after 30 min, against the PI design's 0.0163. A controller is judged on all four paths: setpoint, draught, noise to the room, noise to the heater.
 >
-> - **Calling S and T independent.** They add to 1. Making $\lvert S\rvert$ small at a frequency forces $T$ near 1 there: $\lvert S\rvert$ = 0.0254 and $\lvert T\rvert$ = 1.0022 at 0.01 rad/min.
-> - **Forgetting the heater.** $CS$ is the path that wears out actuators. At high frequency it tends to $K_p$, so every kilowatt per degree of gain turns 0.1 °C of noise into 0.1 kW of jitter.
-> - **Confusing the noise's sign.** Noise and setpoint both pass through $T$ to the room, with opposite signs: a reading 0.1 °C too high cools the room as if the setpoint had dropped 0.1 °C.
+> - **Calling S and T independent.** They add to 1. Making $`\lvert S\rvert`$ small at a frequency forces $`T`$ near 1 there: $`\lvert S\rvert`$ = 0.0254 and $`\lvert T\rvert`$ = 1.0022 at 0.01 rad/min.
+> - **Forgetting the heater.** $`CS`$ is the path that wears out actuators. At high frequency it tends to $`K_p`$, so every kilowatt per degree of gain turns 0.1 °C of noise into 0.1 kW of jitter.
+> - **Confusing the noise's sign.** Noise and setpoint both pass through $`T`$ to the room, with opposite signs: a reading 0.1 °C too high cools the room as if the setpoint had dropped 0.1 °C.
 > - **Using the gang of four on a saturated heater.** Every path assumes the heater can deliver what is asked. A 5 °C step asks for 10.0 kW.
 
 ---
 
 ## Where you meet it in real life
 
-- **Building heating.** Thermostat loops are tuned against draughts, and sensor filtering is added to calm $CS$, the path that cycles valves and wears relays.
+- **Building heating.** Thermostat loops are tuned against draughts, and sensor filtering is added to calm $`CS`$, the path that cycles valves and wears relays.
 - **Process control.** Plant engineers judge a loop by load disturbances, not setpoint steps, because in a chemical plant the setpoint rarely moves and the feed changes all the time. Pole-cancelling tunings of slow processes are a known trap for exactly the reason in What breaks.
-- **Motion control and disk drives.** The peak of $\lvert S\rvert$, $M_s$, is the usual robustness number, and tuning rules typically cap it between 1.2 and 2; its reciprocal is the closest the loop gain comes to the critical point −1 ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
-- **Loop shaping.** Designers draw $\lvert S\rvert$ and $\lvert T\rvert$ and push each down where it matters ([Loop shaping](09-lead-lag-compensation-and-loop-shaping.md)).
-- **Steady error.** The low-frequency end of $S$ decides how a loop tracks ramps and holds steps ([Steady-state error](03-steady-state-error-and-system-type.md)).
+- **Motion control and disk drives.** The peak of $`\lvert S\rvert`$, $`M_s`$, is the usual robustness number, and tuning rules typically cap it between 1.2 and 2; its reciprocal is the closest the loop gain comes to the critical point −1 ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
+- **Loop shaping.** Designers draw $`\lvert S\rvert`$ and $`\lvert T\rvert`$ and push each down where it matters ([Loop shaping](09-lead-lag-compensation-and-loop-shaping.md)).
+- **Steady error.** The low-frequency end of $`S`$ decides how a loop tracks ramps and holds steps ([Steady-state error](03-steady-state-error-and-system-type.md)).
 
 > **Say it back**
 > A feedback loop has three inputs, setpoint, disturbance and sensor noise, and every output is the sum of their separate effects. Those effects travel through four transfer functions: S, T, PS and CS. S plus T is exactly one, so a loop that crushes disturbances at some frequency passes noise there. The thermostat holds a 0.5 kW draught to a 0.1409 °C dip and pays for it with 0.2007 kW of heater jitter from a 0.1 °C sensor. A design is checked on all four paths, never on the setpoint step alone.
@@ -746,9 +762,9 @@ example : (2 : ℚ) * 5 = 10 := by norm_num
 
 ## Where this goes next
 
-- [Writing down model error](../10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): $T$ measures how a model error in the room is fed back on itself, and the small-gain theorem turns that into a guarantee of stability.
+- [Writing down model error](../10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): $`T`$ measures how a model error in the room is fed back on itself, and the small-gain theorem turns that into a guarantee of stability.
 
-This card shows that a 4 min pipe lag left out of the model raised the peak of $\lvert S\rvert$ from 1 to 1.6580; how large a model error a loop can survive without going unstable is the question the small-gain theorem answers.
+This card shows that a 4 min pipe lag left out of the model raised the peak of $`\lvert S\rvert`$ from 1 to 1.6580; how large a model error a loop can survive without going unstable is the question the small-gain theorem answers.
 
 ---
 

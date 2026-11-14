@@ -39,38 +39,46 @@ This card introduces **kP**, read "k times P": the point P added to itself k tim
 
 Key agreement (ECDH, elliptic-curve Diffie-Hellman):
 
-$$Q_L = d_L G, \qquad Q_B = d_B G, \qquad S = d_L Q_B = d_B Q_L = (d_L d_B \bmod n)\,G$$
+```math
+Q_L = d_L G, \qquad Q_B = d_B G, \qquad S = d_L Q_B = d_B Q_L = (d_L d_B \bmod n)\,G
+```
 
 **Read it aloud:** each side's public key is its secret number times G, and each side's secret number times the other's public key gives the same shared point.
 
-Signing (ECDSA, the elliptic-curve digital signature algorithm, standardised in FIPS 186-5). The bank holds a signing key $d_S$ and publishes $Q_S = d_S G$. To sign a message whose hash is z, it picks a fresh secret number k:
+Signing (ECDSA, the elliptic-curve digital signature algorithm, standardised in FIPS 186-5). The bank holds a signing key $`d_S`$ and publishes $`Q_S = d_S G`$. To sign a message whose hash is z, it picks a fresh secret number k:
 
-$$r = x\text{-coordinate of } kG \bmod n, \qquad s = k^{-1}(z + r\,d_S) \bmod n$$
+```math
+r = x\text{-coordinate of } kG \bmod n, \qquad s = k^{-1}(z + r\,d_S) \bmod n
+```
 
 To check the pair (r, s), anyone computes
 
-$$u_1 = z\,s^{-1} \bmod n, \qquad u_2 = r\,s^{-1} \bmod n, \qquad \text{valid when the } x\text{-coordinate of } u_1 G + u_2 Q_S \text{ is } r \bmod n$$
+```math
+u_1 = z\,s^{-1} \bmod n, \qquad u_2 = r\,s^{-1} \bmod n, \qquad \text{valid when the } x\text{-coordinate of } u_1 G + u_2 Q_S \text{ is } r \bmod n
+```
 
 **Read it aloud:** the signature mixes the hash and the key using a one-time number; the checker rebuilds the point kG from public pieces alone, and the x-coordinate must match.
 
 The cost of breaking it, by the best known general method (the rho method, run on a group of prime order n):
 
-$$\text{steps} \approx \sqrt{\pi n / 4}$$
+```math
+\text{steps} \approx \sqrt{\pi n / 4}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the prime: coordinates are remainders mod p | 17 (toy); $2^{255} - 19$ (real) | more points, a harder search |
-| $a$, $b$, $A$ | the curve's fixed numbers: $y^2 = x^3 + ax + b$; Curve25519 is $v^2 = u^3 + Au^2 + u$ | 2, 2; $A$ = 486662 | a different curve |
-| $x$, $y$, $u$, $v$, $m$ | a point's coordinates: x and y on the toy curves, u and v on Curve25519, which sends only u; $m$ the chord or tangent slope | G is (5, 1); u = 9 | — |
-| $G$ | the base point, agreed by everyone | (5, 1); the point with u = 9 | — |
-| $n$ | the order of G: multiples before O returns | 19; a prime just above $2^{252}$ | attack cost grows like $\sqrt{n}$ |
-| $O$, $kP$ | the zero point; P added to itself k times | 19G = O | — |
-| $d_L$, $d_B$ | the laptop's and the bank's secret numbers | 13 and 7 | — |
-| $Q_L$, $Q_B$, $S$ | their public keys; the shared point | (16, 4) and (0, 6); (3, 16) | — |
-| $d_S$, $Q_S$ | the bank's signing key and its public key | 9 and (7, 6) | — |
-| $k$, $z$ | the signature's one-time number (the code calls it the nonce); the message's hash, a number | 10; 5 (a stand-in) | — |
-| $r$, $s$, $u_1$, $u_2$ | the signature; the checker's two multipliers | 7, 3; 8, 15 | — |
-| $Q$, $w$, $i$, $j$ | in the attack: a public key to undo; the step size, about √n; the key written as $i w + j$ | 32-bit toy: w = 65,536 | cost grows like 2w |
+| $`p`$ | the prime: coordinates are remainders mod p | 17 (toy); $`2^{255} - 19`$ (real) | more points, a harder search |
+| $`a`$, $`b`$, $`A`$ | the curve's fixed numbers: $`y^2 = x^3 + ax + b`$; Curve25519 is $`v^2 = u^3 + Au^2 + u`$ | 2, 2; $`A`$ = 486662 | a different curve |
+| $`x`$, $`y`$, $`u`$, $`v`$, $`m`$ | a point's coordinates: x and y on the toy curves, u and v on Curve25519, which sends only u; $`m`$ the chord or tangent slope | G is (5, 1); u = 9 | — |
+| $`G`$ | the base point, agreed by everyone | (5, 1); the point with u = 9 | — |
+| $`n`$ | the order of G: multiples before O returns | 19; a prime just above $`2^{252}`$ | attack cost grows like $`\sqrt{n}`$ |
+| $`O`$, $`kP`$ | the zero point; P added to itself k times | 19G = O | — |
+| $`d_L`$, $`d_B`$ | the laptop's and the bank's secret numbers | 13 and 7 | — |
+| $`Q_L`$, $`Q_B`$, $`S`$ | their public keys; the shared point | (16, 4) and (0, 6); (3, 16) | — |
+| $`d_S`$, $`Q_S`$ | the bank's signing key and its public key | 9 and (7, 6) | — |
+| $`k`$, $`z`$ | the signature's one-time number (the code calls it the nonce); the message's hash, a number | 10; 5 (a stand-in) | — |
+| $`r`$, $`s`$, $`u_1`$, $`u_2`$ | the signature; the checker's two multipliers | 7, 3; 8, 15 | — |
+| $`Q`$, $`w`$, $`i`$, $`j`$ | in the attack: a public key to undo; the step size, about √n; the key written as $`i w + j`$ | 32-bit toy: w = 65,536 | cost grows like 2w |
 
 In kP, k is any whole number; in ECDSA it is the one-time number. Security levels are written out, as in "128-bit security", so the shelf's "k-bit security" never clashes with it.
 
@@ -78,7 +86,7 @@ In kP, k is any whole number; in ECDSA it is the one-time number. Security level
 
 - **n is a large prime.** The square-root bound is the whole defence. On the 19-point toy curve the laptop's key falls on try 13. On a 32-bit toy curve it falls in 113,472 steps.
 - **Received points are checked.** The maths assumes the other side's point is a multiple of G. Curve25519 has 8n points in all, and a point outside G's multiples can force the answer. A bank "key" of u = 0 makes the shared secret 32 zero bytes.
-- **The one-time number k is fresh and secret.** Two signatures that share k reveal the signing key by two divisions. The toy recovers $d_S$ = 9.
+- **The one-time number k is fresh and secret.** Two signatures that share k reveal the signing key by two divisions. The toy recovers $`d_S`$ = 9.
 - **z is a real hash of the message.** A signature covers the hash, not the text ([Hashes and MACs](03-hash-functions-and-macs.md)). The toy uses stand-in numbers. A weak hash lets a forger find a second message with the same z.
 - **No large quantum computer.** A quantum algorithm would undo kP in polynomial time. That threat is why [Lattices](09-lattices-and-post-quantum-cryptography.md) exist.
 
@@ -104,19 +112,21 @@ Read 13 in binary, 1101, from the top. Start at G. For each later bit, double; i
 
 ### Step 3: why both sides reach the same point
 
-The laptop computes $d_L Q_B$, which is $d_L$ copies of $d_B$ copies of G. Adding is associative, so this is $d_L d_B$ copies of G, in any grouping, and the bank's $d_B Q_L$ is the same count. Since nG = O, copies of G repeat every n, and only $d_L d_B \bmod n$ matters. On the toy, 13 × 7 = 91, and 91 mod 19 = 15, so both sides reach 15G = (3, 16).
+The laptop computes $`d_L Q_B`$, which is $`d_L`$ copies of $`d_B`$ copies of G. Adding is associative, so this is $`d_L d_B`$ copies of G, in any grouping, and the bank's $`d_B Q_L`$ is the same count. Since nG = O, copies of G repeat every n, and only $`d_L d_B \bmod n`$ matters. On the toy, 13 × 7 = 91, and 91 mod 19 = 15, so both sides reach 15G = (3, 16).
 
 ### Step 4: why a valid signature checks
 
-Every multiplier in ECDSA is a count of copies of G, so it lives mod n, not mod p. The checker forms $u_1 G + u_2 Q_S$, which is $(u_1 + u_2 d_S)$ copies of G. Put in the definitions:
+Every multiplier in ECDSA is a count of copies of G, so it lives mod n, not mod p. The checker forms $`u_1 G + u_2 Q_S`$, which is $`(u_1 + u_2 d_S)`$ copies of G. Put in the definitions:
 
-$$u_1 + u_2 d_S = s^{-1}(z + r\,d_S) = s^{-1} \cdot s\,k = k \pmod n$$
+```math
+u_1 + u_2 d_S = s^{-1}(z + r\,d_S) = s^{-1} \cdot s\,k = k \pmod n
+```
 
-The middle step is the signing equation, $s = k^{-1}(z + r d_S)$, turned round: $z + r d_S = s k$. So the checker lands on kG, whose x-coordinate gave r. [Digital signatures](07-digital-signatures.md) takes up what a forger can and cannot do.
+The middle step is the signing equation, $`s = k^{-1}(z + r d_S)`$, turned round: $`z + r d_S = s k`$. So the checker lands on kG, whose x-coordinate gave r. [Digital signatures](07-digital-signatures.md) takes up what a forger can and cannot do.
 
 ### Step 5: the square-root attack, and why it sets the key size
 
-Baby step, giant step ([Diffie-Hellman and ElGamal](05-diffie-hellman-and-elgamal.md) runs it on a clock) works unchanged on points. Let w be the whole number at or just above √n, and write the unknown key as $i w + j$, with i and j below w. Store O, G, 2G, …, (w − 1)G (the baby steps), then walk Q, Q − wG, Q − 2wG, … (the giant steps) until a point matches. That is at most 2w steps, against up to n − 1 for trying keys in order.
+Baby step, giant step ([Diffie-Hellman and ElGamal](05-diffie-hellman-and-elgamal.md) runs it on a clock) works unchanged on points. Let w be the whole number at or just above √n, and write the unknown key as $`i w + j`$, with i and j below w. Store O, G, 2G, …, (w − 1)G (the baby steps), then walk Q, Q − wG, Q − 2wG, … (the giant steps) until a point matches. That is at most 2w steps, against up to n − 1 for trying keys in order.
 
 On the 32-bit toy curve, n = 4,294,956,467. Here w = 65,536. The search takes 65,536 baby steps and 47,936 giant steps, 113,472 in all, and the key 3,141,592,653 comes out. Trying keys in order could need 4,294,956,466 additions. The rho method reaches the same square root with almost no memory. For Curve25519, n has 253 bits, so the attack costs about 2^125.8 steps. That is why the standard calls its security "slightly under" 128 bits.
 
@@ -129,7 +139,7 @@ Attacks on powers mod a prime split numbers into small prime factors and combine
 
 ### Step 6: Curve25519 as the standard writes it
 
-Curve25519 is $v^2 = u^3 + 486662\,u^2 + u$ mod $2^{255} - 19$, with base point u = 9 and n a prime just above $2^{252}$, 253 bits long. It is the same kind of curve in another form. A point P and its mirror image −P share u and differ only in the sign of v, and so do kP and −kP. So u alone fixes the u of kP, and a public key is u alone: 32 bytes. RFC 7748 calls Diffie-Hellman done this way, with u alone, X25519.
+Curve25519 is $`v^2 = u^3 + 486662\,u^2 + u`$ mod $`2^{255} - 19`$, with base point u = 9 and n a prime just above $`2^{252}`$, 253 bits long. It is the same kind of curve in another form. A point P and its mirror image −P share u and differ only in the sign of v, and so do kP and −kP. So u alone fixes the u of kP, and a public key is u alone: 32 bytes. RFC 7748 calls Diffie-Hellman done this way, with u alone, X25519.
 
 The standard computes kP by a **ladder**. It keeps two running points, one always exactly P ahead of the other, and at every bit does one doubling and one addition, whatever the bit: 255 identical steps. Double-and-add does an addition only on 1-bits, so a timer can count them; the ladder gives a timer nothing.
 
@@ -143,17 +153,17 @@ The toy curve y² = x³ + 2x + 2 mod 17, G = (5, 1), n = 19. Each slope uses the
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| double G | slope $(3 \cdot 5^2 + 2) \div (2 \cdot 1)$ mod 17 | slope 13, 2G = (6, 3) |
-| add G | slope $(1 - 3) \div (5 - 6)$ mod 17 | slope 2, 3G = (10, 6) |
-| double | slope $(3 \cdot 10^2 + 2) \div (2 \cdot 6)$ mod 17 | slope 11, 6G = (16, 13) |
-| double | slope $(3 \cdot 16^2 + 2) \div (2 \cdot 13)$ mod 17 | slope 10, 12G = (0, 11) |
-| add G | slope $(1 - 11) \div (5 - 0)$ mod 17 | slope 15, **13G = (16, 4) = $Q_L$** |
-| bank's public key | 7G, the same way | $Q_B$ = (0, 6) |
-| shared point | laptop: 13 $Q_B$; bank: 7 $Q_L$ | both (3, 16), which is 15G |
+| double G | slope $`(3 \cdot 5^2 + 2) \div (2 \cdot 1)`$ mod 17 | slope 13, 2G = (6, 3) |
+| add G | slope $`(1 - 3) \div (5 - 6)`$ mod 17 | slope 2, 3G = (10, 6) |
+| double | slope $`(3 \cdot 10^2 + 2) \div (2 \cdot 6)`$ mod 17 | slope 11, 6G = (16, 13) |
+| double | slope $`(3 \cdot 16^2 + 2) \div (2 \cdot 13)`$ mod 17 | slope 10, 12G = (0, 11) |
+| add G | slope $`(1 - 11) \div (5 - 0)`$ mod 17 | slope 15, **13G = (16, 4) = $`Q_L`$** |
+| bank's public key | 7G, the same way | $`Q_B`$ = (0, 6) |
+| shared point | laptop: 13 $`Q_B`$; bank: 7 $`Q_L`$ | both (3, 16), which is 15G |
 | sign: kG, r | k = 10, 10G = (7, 11) | r = 7 |
-| sign: s | $1/k$ = 2; $2 \times (5 + 7 \times 9)$ mod 19 | **s = 3** |
-| check: $u_1$, $u_2$ | $1/s$ = 13; $5 \times 13$ and $7 \times 13$ mod 19 | 8 and 15 |
-| check: point | $8G + 15 Q_S$; 8 + 15 × 9 leaves 10 mod 19 | (7, 11): x is 7 = r, **valid** |
+| sign: s | $`1/k`$ = 2; $`2 \times (5 + 7 \times 9)`$ mod 19 | **s = 3** |
+| check: $`u_1`$, $`u_2`$ | $`1/s`$ = 13; $`5 \times 13`$ and $`7 \times 13`$ mod 19 | 8 and 15 |
+| check: point | $`8G + 15 Q_S`$; 8 + 15 × 9 leaves 10 mod 19 | (7, 11): x is 7 = r, **valid** |
 
 So the laptop and the bank share the point (3, 16), which a listener could get only by undoing 13G or 7G, and the signature (7, 3) shows that the holder of the key 9 signed the hash 5.
 
@@ -161,7 +171,7 @@ So the laptop and the bank share the point (3, 16), which a listener could get o
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Same k = 10 used to sign hashes 5 and 11 | k = 10 and key 9 recovered | $s - s_2 = k^{-1}(z - z_2)$ gives k; then the signing equation gives $d_S$ |
+| Same k = 10 used to sign hashes 5 and 11 | k = 10 and key 9 recovered | $`s - s_2 = k^{-1}(z - z_2)`$ gives k; then the signing equation gives $`d_S`$ |
 | Accept u = 0 as the bank's public key | shared secret: 32 zero bytes | u = 0 is a point of order 2, outside G's multiples: every secret number gives the same answer |
 | A 19-point group | laptop key found on try 13 of at most 18 | n far too small: trying every key is the attack |
 | A 32-bit group | key found in 113,472 steps | the square-root attack is fast when n is near 2^32 |
@@ -180,7 +190,7 @@ The script works the toy curve, runs ECDH and ECDSA on it, attacks two toy group
 - Baby step, giant step must recover the known secret within 2w steps.
 - X25519 must reproduce the published RFC 7748 test vectors, and nG must come out as O.
 
-The toy curves are **insecure** on purpose. Rust has no big integers, so the Rust check holds each 256-bit number as four 64-bit pieces and uses $2^{256} = 38$ mod p.
+The toy curves are **insecure** on purpose. Rust has no big integers, so the Rust check holds each 256-bit number as four 64-bit pieces and uses $`2^{256} = 38`$ mod p.
 
 ### Python
 
@@ -564,11 +574,11 @@ ALL CHECKS PASS
 
 Lean proves the facts behind Steps 3 to 5 in any group, and checks the worked numbers on the toy curves.
 
-- Take any group, a base point G of order n, and secret numbers $d_L$ and $d_B$. Then $d_L (d_B G) = d_B (d_L G) = (d_L d_B \bmod n)\,G$.
-- Take n prime, G of order n, and $s = k^{-1}(z + r\,d_S) \bmod n$ with s not 0. Then the checker's point $u_1 G + u_2 Q_S$ is kG.
-- Take a whole number w with $w^2 \ge n$, and a key below n. Then the key is $i w + j$, with i and j both below w.
+- Take any group, a base point G of order n, and secret numbers $`d_L`$ and $`d_B`$. Then $`d_L (d_B G) = d_B (d_L G) = (d_L d_B \bmod n)\,G`$.
+- Take n prime, G of order n, and $`s = k^{-1}(z + r\,d_S) \bmod n`$ with s not 0. Then the checker's point $`u_1 G + u_2 Q_S`$ is kG.
+- Take a whole number w with $`w^2 \ge n`$, and a key below n. Then the key is $`i w + j`$, with i and j both below w.
 - On the toy curve mod 17, Lean counts 19 points, O included, and checks that each point in the worked table lies on the curve.
-- It checks the five slopes, 91 mod 19 = 15, and the signature's numbers s = 3, $u_1$ = 8 and $u_2$ = 15.
+- It checks the five slopes, 91 mod 19 = 15, and the signature's numbers s = 3, $`u_1`$ = 8 and $`u_2`$ = 15.
 - On the 32-bit toy, it checks w = 65,536, the key 3,141,592,653 = 47,936 w + 58,957, and 113,472 steps in all.
 
 Point addition, the attacks themselves and X25519 on the RFC 7748 test vectors are left to the Python and Rust checks.
@@ -693,7 +703,7 @@ example : 3141592653 = 47936 * 65536 + 58957 ∧ 65536 + 47936 = 113472 := by no
 ## The usual mistake
 
 > [!warning]
-> **Reusing or predicting the signature's one-time number k.** ECDSA is only as safe as k. Two signatures with the same k give k by one division and the key by another: the toy recovered $d_S$ = 9. A games console's signing key was lost this way in 2010 ([Digital signatures](07-digital-signatures.md) traces it). FIPS 186-5 allows a deterministic k, computed from the key and the hash, so no perfect random source is needed.
+> **Reusing or predicting the signature's one-time number k.** ECDSA is only as safe as k. Two signatures with the same k give k by one division and the key by another: the toy recovered $`d_S`$ = 9. A games console's signing key was lost this way in 2010 ([Digital signatures](07-digital-signatures.md) traces it). FIPS 186-5 allows a deterministic k, computed from the key and the hash, so no perfect random source is needed.
 >
 > Smaller traps:
 > - **Using any 32 bytes as a public key.** A point outside G's multiples can steer the answer. Sent u = 0, the laptop's shared secret is 32 zero bytes. RFC 7748 lets each side check for an all-zero result and abort.

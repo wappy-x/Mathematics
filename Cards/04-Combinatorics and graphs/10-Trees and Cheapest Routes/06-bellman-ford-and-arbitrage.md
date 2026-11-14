@@ -35,35 +35,41 @@ USD, EUR and GBP are the US dollar, the euro and the British pound. Each rate is
 
 ## The formula
 
-Notation first, in words. The market is a directed graph: a dot per currency, an arrow per quoted rate, $n$ of the first and $m$ of the second. On the arrow from $u$ to $v$, the rate $r(u \to v)$ is how much of $v$ one unit of $u$ buys; its cost is minus that rate's natural logarithm, written $\ln$ ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)):
+Notation first, in words. The market is a directed graph: a dot per currency, an arrow per quoted rate, $`n`$ of the first and $`m`$ of the second. On the arrow from $`u`$ to $`v`$, the rate $`r(u \to v)`$ is how much of $`v`$ one unit of $`u`$ buys; its cost is minus that rate's natural logarithm, written $`\ln`$ ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)):
 
-$$w(u \to v) \;=\; -\ln r(u \to v)$$
+```math
+w(u \to v) \;=\; -\ln r(u \to v)
+```
 
 **Read it aloud:** a leg's cost is minus the log of its rate, so a generous rate is cheap.
 
-Next, $d(v)$: the smallest cost so far of a route from the start to $v$, infinity until one is found. To **relax** an arrow is to ask whether reaching $u$ and paying its cost beats the number at $v$, and keep the smaller:
+Next, $`d(v)`$: the smallest cost so far of a route from the start to $`v`$, infinity until one is found. To **relax** an arrow is to ask whether reaching $`u`$ and paying its cost beats the number at $`v`$, and keep the smaller:
 
-$$d(v) \;\leftarrow\; \min\big(d(v),\; d(u) + w(u \to v)\big)$$
+```math
+d(v) \;\leftarrow\; \min\big(d(v),\; d(u) + w(u \to v)\big)
+```
 
-The method is three lines. Set $d$ to 0 at the start, infinity elsewhere. Do $n$ − 1 rounds, each relaxing all $m$ arrows in a fixed order. Do one more: if any relax still improves, a loop pays.
+The method is three lines. Set $`d`$ to 0 at the start, infinity elsewhere. Do $`n`$ − 1 rounds, each relaxing all $`m`$ arrows in a fixed order. Do one more: if any relax still improves, a loop pays.
 
-For a loop of $k$ legs, profit test and cost test are one test:
+For a loop of $`k`$ legs, profit test and cost test are one test:
 
-$$r_1 r_2 \cdots r_k > 1 \quad\Longleftrightarrow\quad w_1 + w_2 + \cdots + w_k < 0$$
+```math
+r_1 r_2 \cdots r_k > 1 \quad\Longleftrightarrow\quad w_1 + w_2 + \cdots + w_k < 0
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r$ | a quoted rate: units bought per unit sold | 0.90, 0.85, 1.32 | the loop's product rises |
-| $w$ | a leg's cost, minus the log of its rate | 0.105361, 0.162519, −0.277632 | routes through it dearer |
-| $d$ | smallest cost so far at a currency | 0.105361 at EUR | — |
-| $u$, $v$ | an arrow's ends, $u$ to $v$ | USD and EUR | — |
-| $n$ | currencies listed | 3 | more rounds, $n$ − 1 of them |
-| $m$ | rates quoted | 3 | each round is $m$ relaxes |
-| $k$ | legs in a route or loop | 3 | — |
+| $`r`$ | a quoted rate: units bought per unit sold | 0.90, 0.85, 1.32 | the loop's product rises |
+| $`w`$ | a leg's cost, minus the log of its rate | 0.105361, 0.162519, −0.277632 | routes through it dearer |
+| $`d`$ | smallest cost so far at a currency | 0.105361 at EUR | — |
+| $`u`$, $`v`$ | an arrow's ends, $`u`$ to $`v`$ | USD and EUR | — |
+| $`n`$ | currencies listed | 3 | more rounds, $`n`$ − 1 of them |
+| $`m`$ | rates quoted | 3 | each round is $`m`$ relaxes |
+| $`k`$ | legs in a route or loop | 3 | — |
 
 ### When it holds
 
-- **Every rate is positive**, or it has no logarithm and so no cost; and the currencies are finitely many, since the round count is $n$ − 1.
+- **Every rate is positive**, or it has no logarithm and so no cost; and the currencies are finitely many, since the round count is $`n`$ − 1.
 - **No loop pays**, where a cheapest route is wanted: riding a paying loop again lowers the total again, and the extra round reports that instead of an answer.
 - **The rates are the ones dealt, and the loop is reachable from the start.** A fee is a positive cost on its leg, and enough of it turns a paying loop into a losing one.
 
@@ -84,26 +90,26 @@ flowchart LR
 
 The same legs as costs: the generous 1.32 turned negative, and the three total −0.009752.
 
-### Step 1: after round $k$, every cheapest route of at most $k$ legs is on the table
+### Step 1: after round $`k`$, every cheapest route of at most $`k`$ legs is on the table
 
-Every number in $d$ is the cost of a real route, so none is ever too low; the rounds chase the numbers that are too high. Round 1 relaxes the arrows leaving the start, so every one-leg route lands. Cut the last arrow, $u$ to $v$, off a cheapest route of at most $k$ legs: what is left reaches $u$ in at most $k$ − 1 legs, on the table by round $k$ − 1, and round $k$ relaxes that arrow.
+Every number in $`d`$ is the cost of a real route, so none is ever too low; the rounds chase the numbers that are too high. Round 1 relaxes the arrows leaving the start, so every one-leg route lands. Cut the last arrow, $`u`$ to $`v`$, off a cheapest route of at most $`k`$ legs: what is left reaches $`u`$ in at most $`k`$ − 1 legs, on the table by round $`k`$ − 1, and round $`k`$ relaxes that arrow.
 
-### Step 2: $n$ − 1 rounds are enough, when no loop pays
+### Step 2: $`n`$ − 1 rounds are enough, when no loop pays
 
-A cheapest route never has to visit a currency twice: cut out the stretch between two visits and a loop is gone, whose costs add to 0 or more when nothing pays, so the route is no dearer. A route with no repeat has at most $n$ − 1 legs, all on the table by round $n$ − 1: with three currencies, two rounds.
+A cheapest route never has to visit a currency twice: cut out the stretch between two visits and a loop is gone, whose costs add to 0 or more when nothing pays, so the route is no dearer. A route with no repeat has at most $`n`$ − 1 legs, all on the table by round $`n`$ − 1: with three currencies, two rounds.
 
-### Step 3: an $n$-th round that still improves is a money machine
+### Step 3: an $`n`$-th round that still improves is a money machine
 
-If no loop pays, the table after $n$ − 1 rounds holds the cheapest costs and every arrow fails its relax question. A further improvement rules that case out: some loop pays. The detector is one round.
+If no loop pays, the table after $`n`$ − 1 rounds holds the cheapest costs and every arrow fails its relax question. A further improvement rules that case out: some loop pays. The detector is one round.
 
 Round 3 drops USD from 0.000000 to −0.009752, and following each improvement back walks the loop: USD to EUR to GBP to USD, costs adding to −0.009752, rates multiplying to 1.009800. The fall does not stop. EUR reaches 0.095608 in the same round, and every later round pulls the table lower, so there is no cheapest route and no ceiling on the money.
 
 <details>
 <summary>Detailed proof: the induction and the exchange</summary>
 
-Let $D_k(v)$ be the least cost of a route from the start to $v$ over at most $k$ arrows. **Claim 1:** after round $k$, $d(v) \le D_k(v)$. Induct: drop the last arrow, $u$ to $v$, of a $k$-arrow route costing $D_k(v)$; the rest is a $k$ − 1 case, so $u$ enters round $k$ at $D_k(v) - w(u \to v)$ or lower, and round $k$ relaxes that arrow.
+Let $`D_k(v)`$ be the least cost of a route from the start to $`v`$ over at most $`k`$ arrows. **Claim 1:** after round $`k`$, $`d(v) \le D_k(v)`$. Induct: drop the last arrow, $`u`$ to $`v`$, of a $`k`$-arrow route costing $`D_k(v)`$; the rest is a $`k`$ − 1 case, so $`u`$ enters round $`k`$ at $`D_k(v) - w(u \to v)`$ or lower, and round $`k`$ relaxes that arrow.
 
-**Claim 2:** with no negative-total loop, deleting the loop between two visits to a repeated currency never raises a cost, so a cheapest route needs at most $n$ − 1 arrows. Those costs admit no relax, so an improvement in round $n$ denies the hypothesis; following each improvement back to the currency it came from, $n$ times, closes the paying loop.
+**Claim 2:** with no negative-total loop, deleting the loop between two visits to a repeated currency never raises a cost, so a cheapest route needs at most $`n`$ − 1 arrows. Those costs admit no relax, so an improvement in round $`n`$ denies the hypothesis; following each improvement back to the currency it came from, $`n`$ times, closes the paying loop.
 
 </details>
 
@@ -139,7 +145,7 @@ Two rounds settled the table and the third moved it anyway: the certificate. Mov
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Stopping after $n$ − 1 rounds | USD reads 0.000000 | the table looks settled; the extra round finds the loop |
+| Stopping after $`n`$ − 1 rounds | USD reads 0.000000 | the table looks settled; the extra round finds the loop |
 | Product against 0, costs against 1 | 0.994500 > 0, 0.005515 < 1 | the losing market clears both, so nothing is detected |
 | Adding the log, not subtracting | the loop totals 0.009752 | a generous rate looks dear, so arbitrage is missed |
 
@@ -149,7 +155,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Two roads reach the verdict: one adds costs, minus the log of each rate, over $n$ − 1 rounds and one more; the other never takes a log, multiplying rates along every route of at most three legs. The log itself is computed twice: from a series, and as the area under 1/t, which is what a natural log measures.
+Nothing is imported. Two roads reach the verdict: one adds costs, minus the log of each rate, over $`n`$ − 1 rounds and one more; the other never takes a log, multiplying rates along every route of at most three legs. The log itself is computed twice: from a series, and as the area under 1/t, which is what a natural log measures.
 
 ### Python
 
@@ -819,7 +825,7 @@ This card says whether a loop pays, not how much it will take before the rates m
 
 Verified 19 Sep 2026: every link below resolves to the publisher's page.
 
-- Bellman, Richard. "On a Routing Problem." *Quarterly of Applied Mathematics* 16 (1958): 87–90. [doi:10.1090/qam/102435](https://doi.org/10.1090/qam/102435). Four pages: the rounds, and why $n$ − 1 of them suffice.
+- Bellman, Richard. "On a Routing Problem." *Quarterly of Applied Mathematics* 16 (1958): 87–90. [doi:10.1090/qam/102435](https://doi.org/10.1090/qam/102435). Four pages: the rounds, and why $`n`$ − 1 of them suffice.
 - Ford, L. R. *Network Flow Theory*. RAND Corporation, paper P-923, 1956. [Publisher page](https://www.rand.org/pubs/papers/P923.html). The earlier statement, hence both names.
 - Floyd, Robert W. "Algorithm 97: Shortest Path." *Communications of the ACM* 5, no. 6 (1962): 345. [doi:10.1145/367766.368168](https://doi.org/10.1145/367766.368168). The all-pairs loop above, in one paragraph.
 - Cormen, Thomas H., Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. *Introduction to Algorithms*, 4th ed. MIT Press, 2022. [Publisher page](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/). The textbook treatment, exchange exercise included.

@@ -41,42 +41,46 @@ The home loan and the small company land on nearly the same weight by different 
 
 ## The formula
 
-Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$: the chance a standard normal draw comes out below $x$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). $N^{-1}(u)$ runs it backwards: the point with area $u$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)). $\ln$ is the natural logarithm.
+Notation first, in words. $`N(x)`$ is the bell-curve area to the left of $`x`$: the chance a standard normal draw comes out below $`x`$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). $`N^{-1}(u)`$ runs it backwards: the point with area $`u`$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)). $`\ln`$ is the natural logarithm.
 
-The capital requirement per dollar lent, $K$:
+The capital requirement per dollar lent, $`K`$:
 
-$$K = \mathrm{LGD}\left[\,N\!\left(\frac{N^{-1}(\mathrm{PD}) + \sqrt{R}\;N^{-1}(0.999)}{\sqrt{1-R}}\right) - \mathrm{PD}\right] \times \frac{1 + (M - 2.5)\,b}{1 - 1.5\,b}$$
+```math
+K = \mathrm{LGD}\left[\,N\!\left(\frac{N^{-1}(\mathrm{PD}) + \sqrt{R}\;N^{-1}(0.999)}{\sqrt{1-R}}\right) - \mathrm{PD}\right] \times \frac{1 + (M - 2.5)\,b}{1 - 1.5\,b}
+```
 
 **Read it aloud:** the loss rate in the one-in-a-thousand economy, minus the average loss rate, stretched by a factor that grows with the loan's maturity.
 
 The maturity slope, and the step from capital to risk-weighted assets:
 
-$$b = \big(0.11852 - 0.05478\,\ln \mathrm{PD}\big)^2, \qquad \mathrm{RW} = 12.5 \times K, \qquad \mathrm{RWA} = \mathrm{RW} \times \mathrm{EAD}$$
+```math
+b = \big(0.11852 - 0.05478\,\ln \mathrm{PD}\big)^2, \qquad \mathrm{RW} = 12.5 \times K, \qquad \mathrm{RWA} = \mathrm{RW} \times \mathrm{EAD}
+```
 
 **Read it aloud:** twelve and a half times the capital rate is the risk weight; the weight times the amount owed is the loan's risk-weighted assets.
 
-The loans to households (home loans, credit cards, other retail) drop the maturity factor entirely. For the home loan, $K$ is the square bracket times LGD, and nothing more.
+The loans to households (home loans, credit cards, other retail) drop the maturity factor entirely. For the home loan, $`K`$ is the square bracket times LGD, and nothing more.
 
 | Symbol | Plain meaning | In our example | Push it up and the risk weight… |
 | --- | --- | --- | --- |
-| $\mathrm{PD}$ | **probability of default**: the bank's estimate of the chance the borrower defaults within one year | 2% | rises, but far less than in proportion: 0.5% gives 31.18%, 10% gives 181.70% |
-| $\mathrm{LGD}$ | **loss given default**: the share of the loan lost if the borrower defaults, measured for bad times | 40% | rises in proportion: 20% gives 39.08% |
-| $\mathrm{EAD}$ | **exposure at default**: the amount owed when default happens | $200,000 | unchanged; the dollar amounts rise in proportion |
-| $R$, $w$, $S$ | **asset correlation**: the share of each borrower's ups and downs that comes from the shared economy, fixed by the rules; $w$ is the weight in the company schedule below; $S$ is a small firm's annual sales in millions of euros | 15% for a home loan; $w = 0.6321$ at 2% | rises steeply: 25% gives 129.25% |
-| $\alpha$ | the **confidence level**: the share of years the capital must survive, fixed at 99.9% | 99.9% | rises: 99.97% gives 97.96% |
-| $N$, $N^{-1}$ | bell-curve area to the left, and its inverse | $N^{-1}(0.999) = 3.0902$ | — |
-| $q$, $m$ | $q$ is the default rate in the bad year; $m$ is the economy's state for the year, a bell-curve draw, low is bad | 17.63%; $m = -3.09$ | — |
-| $\mathrm{EL}$ | **expected loss**: $\mathrm{PD} \times \mathrm{LGD}$, the average loss rate | 0.8%, $1,600 | subtracted: counted elsewhere |
-| $M$, $b$ | **effective maturity** in years, and the maturity slope that sets how much each extra year adds | companies only; $M = 2.5$, $b = 0.1108$ at 2% | rises: factor 1.1993 at 2.5 years, 1.5314 at 5 |
-| $K$ | **capital requirement**: capital per dollar lent | 6.2532% | — |
-| $\mathrm{RW}$, $\mathrm{RWA}$ | **risk weight**, $12.5K$; **risk-weighted assets**, weight times EAD | 78.16%; $156,328.94 | — |
-| $E_i$, $g_i$, $p_i$, $R_i$, $q_i$, $L$, $Z$, $i$ | in the detailed proof: loan $i$'s exposure, LGD, PD, correlation and bad-year default rate; $L$ is the whole book's loss; $Z$ is the economy as a random draw | the $1bn book | — |
+| $`\mathrm{PD}`$ | **probability of default**: the bank's estimate of the chance the borrower defaults within one year | 2% | rises, but far less than in proportion: 0.5% gives 31.18%, 10% gives 181.70% |
+| $`\mathrm{LGD}`$ | **loss given default**: the share of the loan lost if the borrower defaults, measured for bad times | 40% | rises in proportion: 20% gives 39.08% |
+| $`\mathrm{EAD}`$ | **exposure at default**: the amount owed when default happens | $200,000 | unchanged; the dollar amounts rise in proportion |
+| $`R`$, $`w`$, $`S`$ | **asset correlation**: the share of each borrower's ups and downs that comes from the shared economy, fixed by the rules; $`w`$ is the weight in the company schedule below; $`S`$ is a small firm's annual sales in millions of euros | 15% for a home loan; $`w = 0.6321`$ at 2% | rises steeply: 25% gives 129.25% |
+| $`\alpha`$ | the **confidence level**: the share of years the capital must survive, fixed at 99.9% | 99.9% | rises: 99.97% gives 97.96% |
+| $`N`$, $`N^{-1}`$ | bell-curve area to the left, and its inverse | $`N^{-1}(0.999) = 3.0902`$ | — |
+| $`q`$, $`m`$ | $`q`$ is the default rate in the bad year; $`m`$ is the economy's state for the year, a bell-curve draw, low is bad | 17.63%; $`m = -3.09`$ | — |
+| $`\mathrm{EL}`$ | **expected loss**: $`\mathrm{PD} \times \mathrm{LGD}`$, the average loss rate | 0.8%, $1,600 | subtracted: counted elsewhere |
+| $`M`$, $`b`$ | **effective maturity** in years, and the maturity slope that sets how much each extra year adds | companies only; $`M = 2.5`$, $`b = 0.1108`$ at 2% | rises: factor 1.1993 at 2.5 years, 1.5314 at 5 |
+| $`K`$ | **capital requirement**: capital per dollar lent | 6.2532% | — |
+| $`\mathrm{RW}`$, $`\mathrm{RWA}`$ | **risk weight**, $`12.5K`$; **risk-weighted assets**, weight times EAD | 78.16%; $156,328.94 | — |
+| $`E_i`$, $`g_i`$, $`p_i`$, $`R_i`$, $`q_i`$, $`L`$, $`Z`$, $`i`$ | in the detailed proof: loan $`i`$'s exposure, LGD, PD, correlation and bad-year default rate; $`L`$ is the whole book's loss; $`Z`$ is the economy as a random draw | the $1bn book | — |
 
 ### The prescribed inputs
 
 The rules fix the correlation by kind of borrower. The Basel Committee took these from supervisors' default data and from banks' own capital models ([Explanatory Note](https://www.bis.org/publications/explanatory-note-basel-ii-irb-risk-weight-functions.pdf), sections 5.2 and 5.3):
 
-| Kind of exposure | Correlation $R$ | Maturity factor |
+| Kind of exposure | Correlation $`R`$ | Maturity factor |
 | --- | --- | --- |
 | home loans (residential mortgages) | 15%, fixed | none |
 | credit cards and similar revolving lines (qualifying revolving retail, QRRE) | 4%, fixed | none |
@@ -85,11 +89,13 @@ The rules fix the correlation by kind of borrower. The Basel Committee took thes
 | small companies (sales under €50 million) | the company value minus up to 4 points | yes |
 | large or unregulated financial firms | the company value times 1.25 | yes |
 
-The company schedule, where $w$ slides from 0 for the safest borrowers to 1 for the riskiest:
+The company schedule, where $`w`$ slides from 0 for the safest borrowers to 1 for the riskiest:
 
-$$R = 0.12\,w + 0.24\,(1 - w), \qquad w = \frac{1 - e^{-50\,\mathrm{PD}}}{1 - e^{-50}}$$
+```math
+R = 0.12\,w + 0.24\,(1 - w), \qquad w = \frac{1 - e^{-50\,\mathrm{PD}}}{1 - e^{-50}}
+```
 
-At a 2% PD, $w = 0.6321$ and $R = 16.41\%$. Other retail uses the same shape with 0.03, 0.16 and 35 in place of 0.12, 0.24 and 50. The small-company cut is $0.04 \times (1 - (S - 5)/45)$, with $S$ the firm's annual sales in millions of euros, held between 5 and 50.
+At a 2% PD, $`w = 0.6321`$ and $`R = 16.41\%`$. Other retail uses the same shape with 0.03, 0.16 and 35 in place of 0.12, 0.24 and 50. The small-company cut is $`0.04 \times (1 - (S - 5)/45)`$, with $`S`$ the firm's annual sales in millions of euros, held between 5 and 50.
 
 Conventions verified 28 Sep 2026 against the Basel Framework, chapters CRE31 and CRE99, in the version in force from 1 January 2023. National rules implement them with local changes.
 
@@ -113,17 +119,19 @@ Michael Gordy showed in 2003 which model has it: one shared risk factor and a ve
 
 ### Step 1: the bad-year default rate, from Vasicek
 
-The one-factor model gives each borrower a health score, a bell-curve draw that is part shared economy and part private luck. The borrower defaults when the score falls below $N^{-1}(\mathrm{PD})$, the **default threshold**, which a bell-curve draw falls below with chance PD. With the economy at $m$, a very large pool of borrowers with default chance PD and correlation $R$ sees a default rate
+The one-factor model gives each borrower a health score, a bell-curve draw that is part shared economy and part private luck. The borrower defaults when the score falls below $`N^{-1}(\mathrm{PD})`$, the **default threshold**, which a bell-curve draw falls below with chance PD. With the economy at $`m`$, a very large pool of borrowers with default chance PD and correlation $`R`$ sees a default rate
 
-$$q(m) = N\!\left(\frac{N^{-1}(\mathrm{PD}) - \sqrt{R}\,m}{\sqrt{1-R}}\right).$$
+```math
+q(m) = N\!\left(\frac{N^{-1}(\mathrm{PD}) - \sqrt{R}\,m}{\sqrt{1-R}}\right).
+```
 
-The derivation lives on [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md), which also shows that the pool's worst 0.1% of years are its worst 0.1% of economies. The one-in-a-thousand economy is $m = -N^{-1}(0.999) = -3.0902$. Put it in and the minus sign turns into the plus sign of the Basel formula. For the home loan the bad-year default rate is 17.63%.
+The derivation lives on [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md), which also shows that the pool's worst 0.1% of years are its worst 0.1% of economies. The one-in-a-thousand economy is $`m = -N^{-1}(0.999) = -3.0902`$. Put it in and the minus sign turns into the plus sign of the Basel formula. For the home loan the bad-year default rate is 17.63%.
 
 ### Step 2: the book's bad year is the sum of the loans' bad years
 
-Take any book of loans, each with its own PD, LGD, correlation and size. Given the economy $m$, each loan's pool loses its size times its LGD times its own $q(m)$. Every one of those falls as $m$ rises: a better economy means fewer defaults everywhere. A sum of falling functions falls too.
+Take any book of loans, each with its own PD, LGD, correlation and size. Given the economy $`m`$, each loan's pool loses its size times its LGD times its own $`q(m)`$. Every one of those falls as $`m`$ rises: a better economy means fewer defaults everywhere. A sum of falling functions falls too.
 
-So the book's worst 0.1% of years is the same stretch of economies for every loan, the stretch below $-3.0902$. The book's 99.9% loss is the sum of each loan's loss at that one economy.
+So the book's worst 0.1% of years is the same stretch of economies for every loan, the stretch below $`-3.0902`$. The book's 99.9% loss is the sum of each loan's loss at that one economy.
 
 That is portfolio invariance, and it is why the capital of a book can be added loan by loan. The checks test it without the formula.
 
@@ -132,9 +140,9 @@ The house bank, this card's example bank, holds $1 billion of loans. It has $600
 <details>
 <summary>Detailed proof: portfolio invariance in a one-factor book</summary>
 
-Let loan $i$ have size $E_i$, loss rate $g_i$ and conditional default rate $q_i(m) = N\big((N^{-1}(p_i) - \sqrt{R_i}\,m)/\sqrt{1-R_i}\big)$, with $0 < p_i < 1$ and $0 < R_i < 1$. In the large-pool limit the book's loss is $L(Z) = \sum_i E_i g_i q_i(Z)$, where $Z$ is the economy as a random standard normal draw. Each $q_i$ is continuous and strictly decreasing in $m$, since $N$ is strictly increasing and $-\sqrt{R_i} < 0$. So $L$ is continuous and strictly decreasing.
+Let loan $`i`$ have size $`E_i`$, loss rate $`g_i`$ and conditional default rate $`q_i(m) = N\big((N^{-1}(p_i) - \sqrt{R_i}\,m)/\sqrt{1-R_i}\big)`$, with $`0 < p_i < 1`$ and $`0 < R_i < 1`$. In the large-pool limit the book's loss is $`L(Z) = \sum_i E_i g_i q_i(Z)`$, where $`Z`$ is the economy as a random standard normal draw. Each $`q_i`$ is continuous and strictly decreasing in $`m`$, since $`N`$ is strictly increasing and $`-\sqrt{R_i} < 0`$. So $`L`$ is continuous and strictly decreasing.
 
-For a strictly decreasing $L$, the event $L(Z) > L(m)$ is exactly the event $Z < m$. Its chance is $N(m)$. Setting $N(m) = 0.001$ gives $m^\ast = N^{-1}(0.001) = -N^{-1}(0.999)$, so the 99.9% point of the book's loss is $L(m^\ast) = \sum_i E_i g_i q_i(m^\ast)$. Each term depends only on loan $i$'s own inputs. Subtracting the book's average loss, $\sum_i E_i g_i p_i$, which is also a sum over loans, gives capital as a sum of loan charges.
+For a strictly decreasing $`L`$, the event $`L(Z) > L(m)`$ is exactly the event $`Z < m`$. Its chance is $`N(m)`$. Setting $`N(m) = 0.001`$ gives $`m^\ast = N^{-1}(0.001) = -N^{-1}(0.999)`$, so the 99.9% point of the book's loss is $`L(m^\ast) = \sum_i E_i g_i q_i(m^\ast)`$. Each term depends only on loan $`i`$'s own inputs. Subtracting the book's average loss, $`\sum_i E_i g_i p_i`$, which is also a sum over loans, gives capital as a sum of loan charges.
 
 With two factors the argument fails. One loan's pool may do badly when the other does well, so the worst years of the book are not the worst years of each loan. The 99.9% point of the sum is usually less than the sum of the 99.9% points. The sum of per-loan charges then tends to overstate diversified capital. With a finite pool, private luck adds noise that the sum leaves out, which understates it.
 
@@ -142,9 +150,9 @@ With two factors the argument fails. One loan's pool may do badly when the other
 
 ### Step 3: subtract the average, because interest and provisions already cover it
 
-In an average year the home loan loses $\mathrm{PD} \times \mathrm{LGD} = 0.8\%$, $1,600. The bank prices that into its interest rate and sets aside provisions for it. Capital is for the loss nobody can budget for: bad-year loss minus average loss.
+In an average year the home loan loses $`\mathrm{PD} \times \mathrm{LGD} = 0.8\%`$, $1,600. The bank prices that into its interest rate and sets aside provisions for it. Capital is for the loss nobody can budget for: bad-year loss minus average loss.
 
-The Basel text says it directly: risk-weighted assets "are designed to address unexpected losses" (CRE31.1), and expected losses are compared with provisions under separate rules. For the home loan: $0.40 \times 17.63\% = 7.05\%$ in the bad year, minus 0.80%, is $K = 6.25\%$.
+The Basel text says it directly: risk-weighted assets "are designed to address unexpected losses" (CRE31.1), and expected losses are compared with provisions under separate rules. For the home loan: $`0.40 \times 17.63\% = 7.05\%`$ in the bad year, minus 0.80%, is $`K = 6.25\%`$.
 
 ### Step 4: why 99.9%, and why the regulator fixes it
 
@@ -168,21 +176,21 @@ The company schedule falls as PD rises: a risky company tends to fail for its ow
 
 ### Step 6: the maturity factor, a patch from a different model
 
-The one-year model counts only defaults. A five-year company loan can also be downgraded, and its market value falls even if it never defaults. To charge for that, the Basel Committee ran a mark-to-market credit model, one that counts those falls in value, at the same 99.9% level and the same correlations. It recorded capital for each PD and maturity, divided by the capital at 2.5 years, and fitted a smooth formula to the ratios. The result is the factor $(1 + (M - 2.5)b)/(1 - 1.5b)$.
+The one-year model counts only defaults. A five-year company loan can also be downgraded, and its market value falls even if it never defaults. To charge for that, the Basel Committee ran a mark-to-market credit model, one that counts those falls in value, at the same 99.9% level and the same correlations. It recorded capital for each PD and maturity, divided by the capital at 2.5 years, and fitted a smooth formula to the ratios. The result is the factor $`(1 + (M - 2.5)b)/(1 - 1.5b)`$.
 
 Three properties were built in:
 
-- It equals 1 at one year, so a one-year loan gets exactly the ASRF capital: put $M = 1$ and the top becomes $1 - 1.5b$.
+- It equals 1 at one year, so a one-year loan gets exactly the ASRF capital: put $`M = 1`$ and the top becomes $`1 - 1.5b`$.
 - It rises in a straight line with maturity.
-- The slope $b$ falls as PD rises: a safe borrower has further to fall, so time adds more to its risk.
+- The slope $`b`$ falls as PD rises: a safe borrower has further to fall, so time adds more to its risk.
 
-At 2% PD, $b = 0.1108$; a 2.5-year loan carries 1.1993 times the one-year capital, a 5-year loan 1.5314 times. The company bar in the picture above rises from 85.13% at one year to 102.09% at the standard 2.5 years.
+At 2% PD, $`b = 0.1108`$; a 2.5-year loan carries 1.1993 times the one-year capital, a 5-year loan 1.5314 times. The company bar in the picture above rises from 85.13% at one year to 102.09% at the standard 2.5 years.
 
 Household loans have no factor at all (CRE31.13); their correlations were fitted to banks' own capital figures and historical losses for those products, not to the company model.
 
 ### Step 7: 12.5 turns capital into a risk weight
 
-The headline rule is capital of at least 8% of risk-weighted assets ([Basel capital](02-basel-capital-and-risk-weighted-assets.md)). If a loan needs capital $K \times \mathrm{EAD}$, its risk-weighted assets must be $K \times \mathrm{EAD} / 0.08 = 12.5 \times K \times \mathrm{EAD}$. The factor 12.5 is only 1 divided by 8%. It lets credit risk, market risk and operational risk share one denominator.
+The headline rule is capital of at least 8% of risk-weighted assets ([Basel capital](02-basel-capital-and-risk-weighted-assets.md)). If a loan needs capital $`K \times \mathrm{EAD}`$, its risk-weighted assets must be $`K \times \mathrm{EAD} / 0.08 = 12.5 \times K \times \mathrm{EAD}`$. The factor 12.5 is only 1 divided by 8%. It lets credit risk, market risk and operational risk share one denominator.
 
 So the bank estimates PD for every loan, and under the advanced approach LGD and EAD too. The rules fix the confidence level, the correlations, the maturity factor, the 12.5, and floors under the bank's estimates: the numbers that move capital most and are easiest to shade. This split is the internal ratings-based approach, IRB for short.
 
@@ -196,18 +204,18 @@ The home loan: PD 2%, LGD 40%, EAD $200,000, correlation 15%, no maturity factor
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| default threshold | $N^{-1}(0.02)$ | −2.0537 |
-| bad economy | $N^{-1}(0.999)$ | 3.0902 |
-| shared and private weights | $\sqrt{0.15}$, $\sqrt{0.85}$ | 0.3873, 0.9220 |
-| position in the bad year | $(-2.0537 + 0.3873 \times 3.0902) / 0.9220$ | −0.9294 |
-| bad-year default rate $q$ | $N(-0.9294)$ | 17.63% |
-| bad-year loss rate | $0.40 \times 0.1763$ | 7.05% |
-| expected loss rate | $0.40 \times 0.02$ | 0.80% |
-| capital rate $K$ | $7.05\% - 0.80\%$ | 6.2532% |
-| **risk weight** | $12.5 \times 6.2532\%$ | **78.16%** |
-| risk-weighted assets | $0.7816 \times 200{,}000$ | $156,328.94 |
-| **capital at 8%** | $0.08 \times 156{,}328.94$ | **$12,506.32** |
-| the house bank's $600m of such loans | $600\text{m} \times 6.2532\%$ | $37,518,945.40 |
+| default threshold | $`N^{-1}(0.02)`$ | −2.0537 |
+| bad economy | $`N^{-1}(0.999)`$ | 3.0902 |
+| shared and private weights | $`\sqrt{0.15}`$, $`\sqrt{0.85}`$ | 0.3873, 0.9220 |
+| position in the bad year | $`(-2.0537 + 0.3873 \times 3.0902) / 0.9220`$ | −0.9294 |
+| bad-year default rate $`q`$ | $`N(-0.9294)`$ | 17.63% |
+| bad-year loss rate | $`0.40 \times 0.1763`$ | 7.05% |
+| expected loss rate | $`0.40 \times 0.02`$ | 0.80% |
+| capital rate $`K`$ | $`7.05\% - 0.80\%`$ | 6.2532% |
+| **risk weight** | $`12.5 \times 6.2532\%`$ | **78.16%** |
+| risk-weighted assets | $`0.7816 \times 200{,}000`$ | $156,328.94 |
+| **capital at 8%** | $`0.08 \times 156{,}328.94`$ | **$12,506.32** |
+| the house bank's $600m of such loans | $`600\text{m} \times 6.2532\%`$ | $37,518,945.40 |
 
 The bank must fund $12,506.32 of this loan with its own money rather than deposits, on top of the $1,600 a year it expects to lose. Across the house bank's $1 billion book, company loans included, capital is $64,760,388.75 and risk-weighted assets $809,504,859.31.
 
@@ -237,8 +245,8 @@ Correct answer: 78.16%, $12,506.32 of capital on the loan.
 | --- | --- | --- |
 | Expected loss left in | 88.16% | The $1,600 average loss is priced and provisioned; counting it again charges twice |
 | Maturity factor at 2.5 years applied to the home loan | 93.74% | Household formulas have no maturity factor; it belongs to loans to companies, banks and governments |
-| $K$ read as the risk weight | 6.25% | $K$ is capital per dollar; the weight is 12.5 times it |
-| $N^{-1}(0.001)$ used for the bad economy | −$1,583.11 of capital | That is the one-in-a-thousand *good* year: almost nobody defaults |
+| $`K`$ read as the risk weight | 6.25% | $`K`$ is capital per dollar; the weight is 12.5 times it |
+| $`N^{-1}(0.001)`$ used for the bad economy | −$1,583.11 of capital | That is the one-in-a-thousand *good* year: almost nobody defaults |
 
 ---
 
@@ -643,7 +651,7 @@ Lean proves that capital adds up loan by loan in any finite one-factor book, and
 
 - Take any book where each loan has positive size and LGD, and PD and correlation strictly between 0 and 1. Then the book's 99.9% loss equals the sum of each loan's loss in the one-in-a-thousand economy.
 - In that same book, subtract the book's average loss from its 99.9% loss. What is left is exactly the sum of the loan-by-loan charges.
-- Take $M = 1$, with the bottom $1 - 1.5\,b$ not zero. Then the maturity factor equals 1, so a one-year loan gets exactly the one-factor capital.
+- Take $`M = 1`$, with the bottom $`1 - 1.5\,b`$ not zero. Then the maturity factor equals 1, so a one-year loan gets exactly the one-factor capital.
 
 Lean computes no numbers: the 78.16% weight, the published table and the simulated book are left to the Python and Rust checks.
 
@@ -864,7 +872,7 @@ example : (600000000 : ℕ) + 400000000 = 1000000000 := by norm_num
 > Three smaller traps:
 > - **Taking the risk weight as a loss forecast.** 78.16% does not mean the bank expects to lose 78% of anything. The expected loss is 0.80%; the bad-year loss is 7.05%; the weight is capital scaled by 12.5.
 > - **Using a through-the-cycle average LGD.** The formula wants a downturn LGD, the loss rate in bad times, because the bad year is when defaults happen. An average of good and bad years understates it.
-> - **Putting default correlation where asset correlation belongs.** $R$ is the correlation between borrowers' health scores. The correlation between their default events is far smaller; putting that in cuts capital to a fraction of the right number.
+> - **Putting default correlation where asset correlation belongs.** $`R`$ is the correlation between borrowers' health scores. The correlation between their default events is far smaller; putting that in cuts capital to a fraction of the right number.
 
 ---
 

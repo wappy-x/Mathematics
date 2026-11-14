@@ -37,46 +37,56 @@ One line: how many basis points of vol the smile's bow must sit above the broker
 
 The broker's strangle, at one vol:
 
-$$\sigma_{\text{ms}} = \sigma_{\text{ATM}} + \text{BF}_{\text{ms}}, \qquad V_{\text{ms}} = C\big(K^{\text{ms}}_c;\sigma_{\text{ms}}\big) + P\big(K^{\text{ms}}_p;\sigma_{\text{ms}}\big)$$
+```math
+\sigma_{\text{ms}} = \sigma_{\text{ATM}} + \text{BF}_{\text{ms}}, \qquad V_{\text{ms}} = C\big(K^{\text{ms}}_c;\sigma_{\text{ms}}\big) + P\big(K^{\text{ms}}_p;\sigma_{\text{ms}}\big)
+```
 
-where both strikes are the 25-delta strikes found at that one vol. The smile, with its bow $b$ left unknown:
+where both strikes are the 25-delta strikes found at that one vol. The smile, with its bow $`b`$ left unknown:
 
-$$\sigma_{25c}(b) = \sigma_{\text{ATM}} + b + \tfrac12\text{RR}, \qquad \sigma_{25p}(b) = \sigma_{\text{ATM}} + b - \tfrac12\text{RR}$$
+```math
+\sigma_{25c}(b) = \sigma_{\text{ATM}} + b + \tfrac12\text{RR}, \qquad \sigma_{25p}(b) = \sigma_{\text{ATM}} + b - \tfrac12\text{RR}
+```
 
-and the equation that fixes $b$:
+and the equation that fixes $`b`$:
 
-$$g(b) = C\big(K^{\text{ms}}_c;\,\sigma(K^{\text{ms}}_c;b)\big) + P\big(K^{\text{ms}}_p;\,\sigma(K^{\text{ms}}_p;b)\big) - V_{\text{ms}} = 0 .$$
+```math
+g(b) = C\big(K^{\text{ms}}_c;\,\sigma(K^{\text{ms}}_c;b)\big) + P\big(K^{\text{ms}}_p;\,\sigma(K^{\text{ms}}_p;b)\big) - V_{\text{ms}} = 0 .
+```
 
-Its root is the smile strangle, $\text{BF}_{\text{ss}}$.
+Its root is the smile strangle, $`\text{BF}_{\text{ss}}`$.
 
 **Read it aloud:** price the broker's strangle with both legs at ATM plus the quote; then find the bow that, drawn into the smile, makes the same two strikes cost the same total at the smile's own vols.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $F$, $T$, $r_d$, $r_f$ | spot; the forward $S\,e^{(r_d-r_f)T}$; years to expiry; dollar and euro rates, continuously compounded | 1.1000, 1.122221, 1, 5%, 3% | — |
-| $\sigma_{\text{ATM}}$ | the at-the-money vol: the smile's height in the middle | 10.00% | the market strangle and the smile rise together |
-| $\text{RR}$ | the 25-delta risk reversal: call-wing vol minus put-wing vol, the smile's tilt | −1.00 | a larger tilt either way widens the gap |
-| $\text{BF}_{\text{ms}}$ | the broker's butterfly: the market strangle's vol above ATM | +0.25 | the market strangle gets dearer, and so does the bow that reprices it |
-| $\sigma_{\text{ms}}$ | the one vol both legs of the market strangle use | 10.25% | — |
-| $K^{\text{ms}}_c$, $K^{\text{ms}}_p$ | the market strangle's strikes: 25-delta call and put, both found at $\sigma_{\text{ms}}$ | 1.205943, 1.055342 | — |
-| $V_{\text{ms}}$ | the market strangle's price, dollars per euro | 0.034040 | the root moves up |
-| $b$, $\text{BF}_{\text{ss}}$ | the smile's bow, unknown; its solved value, the smile strangle | 0.265924% | — |
-| $\sigma_{25c}(b)$, $\sigma_{25p}(b)$ | the smile's wing vols at its own 25-delta strikes | 9.765924%, 10.765924% at the root | — |
-| $\sigma(K;b)$, $K$, $x$ | the smile's vol at strike $K$; $x = \ln(K/F)$, the strike measured as a log distance from the forward | 9.766000% and 10.724407% at the two market strikes | — |
-| $g(b)$ | the gap: smile price of the strangle minus the broker's price | −1.07 pips at $b$ = 0.25% | rises with $b$ |
-| $C(K;\sigma)$, $P(K;\sigma)$, $\sigma$, $N(z)$ | a euro call or put priced by Garman-Kohlhagen (Black-Scholes with the euro rate as the dividend yield) at a vol $\sigma$; the bell-curve area left of $z$ | 0.016140, 0.017900 at 10.25% | — |
+| $`S`$, $`F`$, $`T`$, $`r_d`$, $`r_f`$ | spot; the forward $`S\,e^{(r_d-r_f)T}`$; years to expiry; dollar and euro rates, continuously compounded | 1.1000, 1.122221, 1, 5%, 3% | — |
+| $`\sigma_{\text{ATM}}`$ | the at-the-money vol: the smile's height in the middle | 10.00% | the market strangle and the smile rise together |
+| $`\text{RR}`$ | the 25-delta risk reversal: call-wing vol minus put-wing vol, the smile's tilt | −1.00 | a larger tilt either way widens the gap |
+| $`\text{BF}_{\text{ms}}`$ | the broker's butterfly: the market strangle's vol above ATM | +0.25 | the market strangle gets dearer, and so does the bow that reprices it |
+| $`\sigma_{\text{ms}}`$ | the one vol both legs of the market strangle use | 10.25% | — |
+| $`K^{\text{ms}}_c`$, $`K^{\text{ms}}_p`$ | the market strangle's strikes: 25-delta call and put, both found at $`\sigma_{\text{ms}}`$ | 1.205943, 1.055342 | — |
+| $`V_{\text{ms}}`$ | the market strangle's price, dollars per euro | 0.034040 | the root moves up |
+| $`b`$, $`\text{BF}_{\text{ss}}`$ | the smile's bow, unknown; its solved value, the smile strangle | 0.265924% | — |
+| $`\sigma_{25c}(b)`$, $`\sigma_{25p}(b)`$ | the smile's wing vols at its own 25-delta strikes | 9.765924%, 10.765924% at the root | — |
+| $`\sigma(K;b)`$, $`K`$, $`x`$ | the smile's vol at strike $`K`$; $`x = \ln(K/F)`$, the strike measured as a log distance from the forward | 9.766000% and 10.724407% at the two market strikes | — |
+| $`g(b)`$ | the gap: smile price of the strangle minus the broker's price | −1.07 pips at $`b`$ = 0.25% | rises with $`b`$ |
+| $`C(K;\sigma)`$, $`P(K;\sigma)`$, $`\sigma`$, $`N(z)`$ | a euro call or put priced by Garman-Kohlhagen (Black-Scholes with the euro rate as the dividend yield) at a vol $`\sigma`$; the bell-curve area left of $`z`$ | 0.016140, 0.017900 at 10.25% | — |
 
-The 25-delta strikes at a vol $\sigma$, with the upper sign for the call ([Risk reversal and butterfly](01-risk-reversal-and-butterfly.md) uses the same step):
+The 25-delta strikes at a vol $`\sigma`$, with the upper sign for the call ([Risk reversal and butterfly](01-risk-reversal-and-butterfly.md) uses the same step):
 
-$$K_{25} = F\exp\!\big(\mp d\,\sigma\sqrt{T} + \tfrac12\sigma^2 T\big), \qquad e^{-r_f T}N(d) = 0.25 .$$
+```math
+K_{25} = F\exp\!\big(\mp d\,\sigma\sqrt{T} + \tfrac12\sigma^2 T\big), \qquad e^{-r_f T}N(d) = 0.25 .
+```
 
 In words: a 25-delta strike is the forward pushed out by a fixed number of standard deviations, so a higher vol pushes it further out.
 
-The smile between its three pillars (the three strikes where the smile's vol is known: the 25-delta put, ATM and the 25-delta call) is drawn on this card as the parabola in $x$ through them. Written with Lagrange's formula, where the capital sigma means "add up the three terms" and the capital pi means "multiply the two factors":
+The smile between its three pillars (the three strikes where the smile's vol is known: the 25-delta put, ATM and the 25-delta call) is drawn on this card as the parabola in $`x`$ through them. Written with Lagrange's formula, where the capital sigma means "add up the three terms" and the capital pi means "multiply the two factors":
 
-$$\sigma(K;b) = \sum_{i}\sigma_i\prod_{j\ne i}\frac{x - x_j}{x_i - x_j},$$
+```math
+\sigma(K;b) = \sum_{i}\sigma_i\prod_{j\ne i}\frac{x - x_j}{x_i - x_j},
+```
 
-with the pillars $(x_p, \sigma_{25p}(b))$, $(x_a, \sigma_{\text{ATM}})$, $(x_c, \sigma_{25c}(b))$. The ATM pillar is the strike where a straddle's delta is zero (a straddle is a call and a put at the same strike), $x_a = \tfrac12\sigma_{\text{ATM}}^2T$, strike 1.127847. Each wing's $x$ is found at that wing's own vol, so moving $b$ moves the wing strikes too.
+with the pillars $`(x_p, \sigma_{25p}(b))`$, $`(x_a, \sigma_{\text{ATM}})`$, $`(x_c, \sigma_{25c}(b))`$. The ATM pillar is the strike where a straddle's delta is zero (a straddle is a call and a put at the same strike), $`x_a = \tfrac12\sigma_{\text{ATM}}^2T`$, strike 1.127847. Each wing's $`x`$ is found at that wing's own vol, so moving $`b`$ moves the wing strikes too.
 
 ### When it holds
 
@@ -93,7 +103,7 @@ Conventions verified 27 Sep 2026, as set out in Reiswich and Wystup (2010, 2012)
 
 ### Step 0: three pillars, three quotes, one unknown
 
-The smile's three pillar vols carry three unknowns. The ATM quote fixes the middle one. The risk reversal fixes the difference of the other two. That leaves one free number, the bow $b$, which lifts both wings together. The market strangle's price is one more fact. One fact, one unknown: a single equation in a single variable, solved by a root finder. Before solving, three questions: does a root exist, is there only one, and where does it fail?
+The smile's three pillar vols carry three unknowns. The ATM quote fixes the middle one. The risk reversal fixes the difference of the other two. That leaves one free number, the bow $`b`$, which lifts both wings together. The market strangle's price is one more fact. One fact, one unknown: a single equation in a single variable, solved by a root finder. Before solving, three questions: does a root exist, is there only one, and where does it fail?
 
 ### Step 1: the market strangle as a contract
 
@@ -120,7 +130,7 @@ One line: the strangle's payoff. It pays below the put strike 1.055342 and above
 
 ### Step 2: why the naive wings misprice it
 
-The naive reading sets the bow equal to the quote: $b$ = 0.25 percent. The smile's wings are then 9.75 and 10.75 percent, at their own 25-delta strikes 1.201425 and 1.052466. Those are the pillar strikes of [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md).
+The naive reading sets the bow equal to the quote: $`b`$ = 0.25 percent. The smile's wings are then 9.75 and 10.75 percent, at their own 25-delta strikes 1.201425 and 1.052466. Those are the pillar strikes of [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md).
 
 The market strangle's strikes are elsewhere. Its put was placed at 10.25 percent, a lower vol than the smile's 10.75, so it sits closer to the middle: 1.055342, not 1.052466. Its call was placed at 10.25, a higher vol than the smile's 9.75, so it sits further out: 1.205943, not 1.201425. Now read the smile at those two strikes. The put moved inward, toward where the smile is lower: 10.710984 percent. The call moved outward, where the tilted smile keeps falling: 9.748225 percent. Both legs land on vols below the pillars. Their average is 10.229605 percent, not 10.25.
 
@@ -130,11 +140,11 @@ The mechanism has two factors, and both come from the tilt. How far each market 
 
 ### Step 3: the root exists, and on the house market it is unique
 
-Write the gap as $g(b)$. Three facts make a root exist.
+Write the gap as $`g(b)`$. Three facts make a root exist.
 
-1. **Continuity.** Each piece of $g$ is a continuous function of $b$: the wing vols, the wing strikes (an exponential of the vol), the parabola through three distinct points, and the Garman-Kohlhagen price. So $g$ is continuous wherever the three pillars stay distinct and the vols stay positive.
-2. **A negative end.** At the naive bow, $g$(0.25%) = −1.07 pips.
-3. **A positive end.** At a bow of 0.375 percent, $g$ = +7.15 pips.
+1. **Continuity.** Each piece of $`g`$ is a continuous function of $`b`$: the wing vols, the wing strikes (an exponential of the vol), the parabola through three distinct points, and the Garman-Kohlhagen price. So $`g`$ is continuous wherever the three pillars stay distinct and the vols stay positive.
+2. **A negative end.** At the naive bow, $`g`$(0.25%) = −1.07 pips.
+3. **A positive end.** At a bow of 0.375 percent, $`g`$ = +7.15 pips.
 
 A continuous function that is negative at one end of an interval and positive at the other crosses zero in between: the intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). Bisection (halving the interval, keeping the half whose ends still differ in sign) finds it: **0.265924 percent**.
 
@@ -149,16 +159,16 @@ xychart-beta
 
 One line: the gap at nine trial bows. It rises steadily and crosses zero once, between 0.250 and 0.375.
 
-**Uniqueness** would follow if $g$ always rose with $b$. Raising $b$ lifts both pillar wing vols, and near the pillars the parabola follows them up, so both legs get dearer. Near the quote each basis point of bow adds 0.671815 pips, close to the two legs' vegas combined. The check confirms the rise on the scan above. It is not a general proof: for very large tilts the parabola bends hard between its pillars and the rise can fail, which is the region Step 4 visits.
+**Uniqueness** would follow if $`g`$ always rose with $`b`$. Raising $`b`$ lifts both pillar wing vols, and near the pillars the parabola follows them up, so both legs get dearer. Near the quote each basis point of bow adds 0.671815 pips, close to the two legs' vegas combined. The check confirms the rise on the scan above. It is not a general proof: for very large tilts the parabola bends hard between its pillars and the rise can fail, which is the region Step 4 visits.
 
 <details>
 <summary>Detailed proof: no tilt means no gap, and the existence argument written out</summary>
 
-**Claim 1: if RR = 0, the smile strangle equals the market strangle.** Put $b = \text{BF}_{\text{ms}}$. Both wing vols are $\sigma_{\text{ATM}} + \text{BF}_{\text{ms}} = \sigma_{\text{ms}}$. A wing's 25-delta strike depends only on its vol, so each smile pillar strike is exactly the market strangle's strike. The parabola passes through its pillars, so at each market strike the smile's vol is $\sigma_{\text{ms}}$. Each leg is then priced at exactly the vol the broker used, and $g(\text{BF}_{\text{ms}}) = 0$. The check's solve returns the quote to ten decimal places.
+**Claim 1: if RR = 0, the smile strangle equals the market strangle.** Put $`b = \text{BF}_{\text{ms}}`$. Both wing vols are $`\sigma_{\text{ATM}} + \text{BF}_{\text{ms}} = \sigma_{\text{ms}}`$. A wing's 25-delta strike depends only on its vol, so each smile pillar strike is exactly the market strangle's strike. The parabola passes through its pillars, so at each market strike the smile's vol is $`\sigma_{\text{ms}}`$. Each leg is then priced at exactly the vol the broker used, and $`g(\text{BF}_{\text{ms}}) = 0`$. The check's solve returns the quote to ten decimal places.
 
-**Claim 2: a sign change on an interval where the smile is defined gives a root.** Take an interval of bows on which both pillar wing vols are positive, the three pillar strikes are in order, and the parabola is positive at both market strikes. On it every piece of $g(b)$ is a composition of continuous functions, so $g(b)$ is continuous. If one bow in the interval gives a negative gap and another a positive one, the intermediate value theorem gives a bow between them with $g(b) = 0$. On the house market 0.25% and 0.375% qualify.
+**Claim 2: a sign change on an interval where the smile is defined gives a root.** Take an interval of bows on which both pillar wing vols are positive, the three pillar strikes are in order, and the parabola is positive at both market strikes. On it every piece of $`g(b)`$ is a composition of continuous functions, so $`g(b)`$ is continuous. If one bow in the interval gives a negative gap and another a positive one, the intermediate value theorem gives a bow between them with $`g(b) = 0`$. On the house market 0.25% and 0.375% qualify.
 
-**Claim 3: the gap grows like RR squared, to first order.** Write $\delta\sigma = \tfrac12\lvert\text{RR}\rvert$. A market strike sits from its pillar by an amount proportional to the vol difference between them, which is $\delta\sigma$ up to the small bow difference. The smile's slope in $x$ is RR divided by the distance between the wing pillars, also proportional to RR. The vol shortfall at each market strike is slope times distance, so of order RR squared; the bow needed to repair it is that shortfall, so it is of order RR squared too. The chart on the overview shows it: 1.59 at −1.00, 7.07 at −2.00, 28.48 at −4.00, each doubling of the tilt about four times the gap.
+**Claim 3: the gap grows like RR squared, to first order.** Write $`\delta\sigma = \tfrac12\lvert\text{RR}\rvert`$. A market strike sits from its pillar by an amount proportional to the vol difference between them, which is $`\delta\sigma`$ up to the small bow difference. The smile's slope in $`x`$ is RR divided by the distance between the wing pillars, also proportional to RR. The vol shortfall at each market strike is slope times distance, so of order RR squared; the bow needed to repair it is that shortfall, so it is of order RR squared too. The chart on the overview shows it: 1.59 at −1.00, 7.07 at −2.00, 28.48 at −4.00, each doubling of the tilt about four times the gap.
 
 </details>
 
@@ -174,7 +184,7 @@ At the root the smile's wings are 9.765924 and 10.765924 percent at their pillar
 
 ### The other door
 
-One step of Newton's method (a straight-line jump from the naive bow, using the slope of $g$ there) gives 0.265879 percent, within 0.1 percent of the root. That is the vega view: the missing 1.07 pips, divided by 0.671815 pips per basis point of bow, is about 1.59 basis points. A desk with a vanna-volga smile solves the same one-unknown equation with that smile in place of the parabola: [Vanna-volga pricing](04-vanna-volga-pricing.md) builds the price for any strike from the three pillars.
+One step of Newton's method (a straight-line jump from the naive bow, using the slope of $`g`$ there) gives 0.265879 percent, within 0.1 percent of the root. That is the vega view: the missing 1.07 pips, divided by 0.671815 pips per basis point of bow, is about 1.59 basis points. A desk with a vanna-volga smile solves the same one-unknown equation with that smile in place of the parabola: [Vanna-volga pricing](04-vanna-volga-pricing.md) builds the price for any strike from the three pillars.
 
 ---
 
@@ -184,19 +194,19 @@ House FX market: EURUSD 1.1000, dollar rate 5 percent, euro rate 3 percent, one 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forward $F$ | $1.10\,e^{0.05-0.03}$ | 1.122221 |
-| market strangle vol | $10.00 + 0.25$ | 10.25% |
+| forward $`F`$ | $`1.10\,e^{0.05-0.03}`$ | 1.122221 |
+| market strangle vol | $`10.00 + 0.25`$ | 10.25% |
 | market call strike | 25 delta at 10.25% | 1.205943 |
 | market put strike | 25 delta at 10.25% | 1.055342 |
 | market call, put | Garman-Kohlhagen at 10.25% | 0.016140, 0.017900 |
-| **market strangle** $V_{\text{ms}}$ | $0.016140 + 0.017900$ | **0.034040** |
-| naive smile at the two market strikes | parabola with $b$ = 0.25% | 9.748225%, 10.710984% |
+| **market strangle** $`V_{\text{ms}}`$ | $`0.016140 + 0.017900`$ | **0.034040** |
+| naive smile at the two market strikes | parabola with $`b`$ = 0.25% | 9.748225%, 10.710984% |
 | naive smile's strangle | each leg at its smile vol | 0.033934 |
-| naive gap | $0.033934 - 0.034040$ | −1.07 pips |
-| slope of $g$ near the root | per basis point of bow | 0.671815 pips |
-| one Newton step | $0.25\% + 1.07/0.671815$ bp | 0.265879% |
-| **smile strangle** $\text{BF}_{\text{ss}}$ | bisection on $g(b) = 0$ | **0.265924%** |
-| smile wing vols | $10.00 + 0.265924 \mp 0.50$ | 9.765924%, 10.765924% |
+| naive gap | $`0.033934 - 0.034040`$ | −1.07 pips |
+| slope of $`g`$ near the root | per basis point of bow | 0.671815 pips |
+| one Newton step | $`0.25\% + 1.07/0.671815`$ bp | 0.265879% |
+| **smile strangle** $`\text{BF}_{\text{ss}}`$ | bisection on $`g(b) = 0`$ | **0.265924%** |
+| smile wing vols | $`10.00 + 0.265924 \mp 0.50`$ | 9.765924%, 10.765924% |
 
 The broker's 0.25 butterfly asks a smile whose wings are 1.59 basis points higher than the naive reading. On one euro the naive smile misprices the strangle by 1.07 pips; on EUR 10 million, by USD 1,066.81.
 
@@ -214,7 +224,7 @@ Every number in that table is printed by the checks below.
 
 ## Code, from first principles, and it actually runs
 
-The script prices the broker's strangle, draws the smile for any bow, and solves $g(b) = 0$. It takes **three roads to the root**. Road 1: closed-form strikes, Garman-Kohlhagen prices, bisection. Road 2: every strike found by searching strike by strike until the delta is 0.25, every price by averaging the payoff over the bell curve with Simpson's rule, and the root by the secant method. Road 3: one Newton step from the naive bow. Two further facts are checked independently: with no tilt the root equals the quote, and the fitted smile still returns the ATM and risk-reversal quotes when its 25-delta and zero-delta-straddle strikes are searched on the smile's own vols. The bell-curve area is itself Simpson's rule written out, so nothing imported knows an answer. It also prints the risk-reversal sweep, the scan of $g$, the payoff, the no-root case and every "what breaks" number.
+The script prices the broker's strangle, draws the smile for any bow, and solves $`g(b) = 0`$. It takes **three roads to the root**. Road 1: closed-form strikes, Garman-Kohlhagen prices, bisection. Road 2: every strike found by searching strike by strike until the delta is 0.25, every price by averaging the payoff over the bell curve with Simpson's rule, and the root by the secant method. Road 3: one Newton step from the naive bow. Two further facts are checked independently: with no tilt the root equals the quote, and the fitted smile still returns the ATM and risk-reversal quotes when its 25-delta and zero-delta-straddle strikes are searched on the smile's own vols. The bell-curve area is itself Simpson's rule written out, so nothing imported knows an answer. It also prints the risk-reversal sweep, the scan of $`g`$, the payoff, the no-root case and every "what breaks" number.
 
 ### Python
 
@@ -658,7 +668,7 @@ The two outputs agree line for line.
 
 Lean proves three facts from Why it works, for every market and quote that meets each fact's conditions.
 
-- Take an interval of bows on which the wing vols, and the smile at both market strikes, are positive, with the pillars in order. Suppose the gap is negative at one bow there and positive at another. Then some bow between them gives $g(b) = 0$.
+- Take an interval of bows on which the wing vols, and the smile at both market strikes, are positive, with the pillars in order. Suppose the gap is negative at one bow there and positive at another. Then some bow between them gives $`g(b) = 0`$.
 - Take a risk reversal of zero, with the three pillars at distinct strikes. Then a bow equal to the broker's butterfly makes the gap zero, so the smile strangle equals the market strangle.
 - Take any vol above zero, and find both strikes as 25-delta strikes at that vol. Then the call's delta is 0.25, the put's is −0.25, and the two vegas are equal.
 
@@ -1001,7 +1011,7 @@ end BrokerButterfly
 ## The usual mistake
 
 > [!warning]
-> **Treating the broker's butterfly as the smile's bow.** The quote is a trade priced at one vol, 10.25 percent, with both strikes found at that vol. A smile drawn with a bow of exactly 0.25 prices the same strangle 1.07 pips cheaper. The smile's bow is the root of $g(b) = 0$: 0.265924 here.
+> **Treating the broker's butterfly as the smile's bow.** The quote is a trade priced at one vol, 10.25 percent, with both strikes found at that vol. A smile drawn with a bow of exactly 0.25 prices the same strangle 1.07 pips cheaper. The smile's bow is the root of $`g(b) = 0`$: 0.265924 here.
 >
 > Smaller traps:
 > - **Matching vols instead of prices.** At the root the smile reads 9.766000 and 10.724407 at the market strikes, not 10.25. Forcing the average vol to 10.25 solves the wrong equation.

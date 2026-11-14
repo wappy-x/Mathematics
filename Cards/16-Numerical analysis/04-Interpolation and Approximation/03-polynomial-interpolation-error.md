@@ -38,47 +38,53 @@ Orange is the true error, sine minus the cubic. Green is the envelope: the produ
 
 Notation first, in words. Angles are in radians in the formulas (π radians = 180°) and in degrees in the tables.
 
-- The **nodes** $x_0, x_1, \dots, x_n$ are the n + 1 points where the function f is known. Here n = 3.
-- $p_n$ is the **interpolating polynomial**: the one polynomial of degree at most n through all the nodes.
-- $e(x) = f(x) - p_n(x)$ is the **true error** at x.
-- $\omega(x)$, read "omega of x", is the **node polynomial**: the product of the distances from x to every node, with their signs. It is the node product of [One polynomial through n points](02-lagrange-and-newton-interpolation.md).
+- The **nodes** $`x_0, x_1, \dots, x_n`$ are the n + 1 points where the function f is known. Here n = 3.
+- $`p_n`$ is the **interpolating polynomial**: the one polynomial of degree at most n through all the nodes.
+- $`e(x) = f(x) - p_n(x)`$ is the **true error** at x.
+- $`\omega(x)`$, read "omega of x", is the **node polynomial**: the product of the distances from x to every node, with their signs. It is the node product of [One polynomial through n points](02-lagrange-and-newton-interpolation.md).
 
-$$\omega(x) = (x - x_0)(x - x_1)\cdots(x - x_n)$$
+```math
+\omega(x) = (x - x_0)(x - x_1)\cdots(x - x_n)
+```
 
-**The interpolation error theorem.** If f has n + 1 derivatives across the smallest interval holding x and all the nodes, there is a point $\xi$ (the Greek letter xi) in that interval with
+**The interpolation error theorem.** If f has n + 1 derivatives across the smallest interval holding x and all the nodes, there is a point $`\xi`$ (the Greek letter xi) in that interval with
 
-$$f(x) - p_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,\omega(x)$$
+```math
+f(x) - p_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,\omega(x)
+```
 
 **Read it aloud:** the error at x is the (n + 1)-th derivative, read at some unknown point in the span, divided by (n + 1) factorial, times the product of the distances from x to the nodes.
 
 The point ξ is unknown, so in practice the derivative is replaced by a ceiling M on its size. That gives the **bound**:
 
-$$|f(x) - p_n(x)| \le \frac{M}{(n+1)!}\,\max|\omega|$$
+```math
+|f(x) - p_n(x)| \le \frac{M}{(n+1)!}\,\max|\omega|
+```
 
 **Read it aloud:** the error is at most the derivative ceiling over (n + 1) factorial, times the largest size of the node polynomial.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $x$ | the function; the point where it is read | sin, read at angles from 0 to π | — |
-| $x_0, \dots, x_n$; $n$ | the nodes; the degree, one less than the node count | 0, π/3, 2π/3, π; n = 3 | more nodes: a larger factorial, more factors in ω |
-| $p_n$, $a$ | the interpolating polynomial; its one coefficient here | $p_3(x) = a\,x(\pi - x)$, a = 0.394860 | — |
-| $e(x)$ | the true error, f minus the polynomial | 0.025721 at 90° | — |
-| $\omega(x)$ | the node polynomial: product of distances to the nodes | 0.676452 at 90°; largest size 1.202581 | larger error |
-| $f^{(n+1)}$, $\xi$ | the (n + 1)-th derivative; the point where it is read | sin x; ξ = 65.86° or 114.14° for x = 90° | larger error |
-| $M$ | a ceiling on the size of $f^{(n+1)}$ over the span | 1 | looser bound |
-| $(n+1)!$ | the factorial 1 × 2 × … × (n + 1) | 4! = 24 | tighter bound |
-| $h$, $s$ | the spacing of equal nodes; position counted in spacings, $x = x_0 + s h$ | h = π/3 | error grows like $h^{n+1}$ |
-| $f[x_0, \dots, x_n, x]$ | divided difference: the next Newton coefficient | 0.038024 at 90° | larger error |
-| $\Lambda$, $\ell_j$ | Lebesgue constant: the largest $\sum_j \lvert\ell_j(x)\rvert$, how much the nodes amplify errors in the data; $\ell_j$ is the Lagrange basis polynomial, 1 at node j and 0 at the others | 1.6311 | data errors amplified more |
-| $g$, $t$, $u$, $I$, $k$ | proof helpers: an auxiliary function, its variable, a substitution in a fold, the smallest interval holding x and the nodes, and a step count | — | — |
+| $`f`$, $`x`$ | the function; the point where it is read | sin, read at angles from 0 to π | — |
+| $`x_0, \dots, x_n`$; $`n`$ | the nodes; the degree, one less than the node count | 0, π/3, 2π/3, π; n = 3 | more nodes: a larger factorial, more factors in ω |
+| $`p_n`$, $`a`$ | the interpolating polynomial; its one coefficient here | $`p_3(x) = a\,x(\pi - x)`$, a = 0.394860 | — |
+| $`e(x)`$ | the true error, f minus the polynomial | 0.025721 at 90° | — |
+| $`\omega(x)`$ | the node polynomial: product of distances to the nodes | 0.676452 at 90°; largest size 1.202581 | larger error |
+| $`f^{(n+1)}`$, $`\xi`$ | the (n + 1)-th derivative; the point where it is read | sin x; ξ = 65.86° or 114.14° for x = 90° | larger error |
+| $`M`$ | a ceiling on the size of $`f^{(n+1)}`$ over the span | 1 | looser bound |
+| $`(n+1)!`$ | the factorial 1 × 2 × … × (n + 1) | 4! = 24 | tighter bound |
+| $`h`$, $`s`$ | the spacing of equal nodes; position counted in spacings, $`x = x_0 + s h`$ | h = π/3 | error grows like $`h^{n+1}`$ |
+| $`f[x_0, \dots, x_n, x]`$ | divided difference: the next Newton coefficient | 0.038024 at 90° | larger error |
+| $`\Lambda`$, $`\ell_j`$ | Lebesgue constant: the largest $`\sum_j \lvert\ell_j(x)\rvert`$, how much the nodes amplify errors in the data; $`\ell_j`$ is the Lagrange basis polynomial, 1 at node j and 0 at the others | 1.6311 | data errors amplified more |
+| $`g`$, $`t`$, $`u`$, $`I`$, $`k`$ | proof helpers: an auxiliary function, its variable, a substitution in a fold, the smallest interval holding x and the nodes, and a step count | — | — |
 
 ### When it holds
 
 - **f has n + 1 derivatives across the span.** A kink breaks it. For |cos x|, which has a corner at 90°, the same four nodes miss by 0.437500 at 90°. The "bound" 0.050108 is false there.
-- **x lies between the nodes, or the span is widened to include x.** At 240°, outside the nodes, the miss is 0.866025. The in-span bound 0.050108 does not apply. With ω read at 240°, the right bound is 1.202581 (by coincidence the same number as max|ω| inside: both equal $(\pi/3)^4$), and it holds.
-- **The nodes are distinct.** If nodes merge, the polynomial must match slopes as well as values. When all n + 1 nodes merge at one point a, ω becomes $(x - a)^{n+1}$ and the theorem becomes [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md).
+- **x lies between the nodes, or the span is widened to include x.** At 240°, outside the nodes, the miss is 0.866025. The in-span bound 0.050108 does not apply. With ω read at 240°, the right bound is 1.202581 (by coincidence the same number as max|ω| inside: both equal $`(\pi/3)^4`$), and it holds.
+- **The nodes are distinct.** If nodes merge, the polynomial must match slopes as well as values. When all n + 1 nodes merge at one point a, ω becomes $`(x - a)^{n+1}`$ and the theorem becomes [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md).
 - **The data are exact.** If each stored value is off by up to some amount, the curve can move by up to Λ times that amount. For these four nodes Λ = 1.6311. This error adds to the theorem's; the theorem does not see it.
-- **Rounding stays small.** The theorem is about exact arithmetic. In doubles, the error at 90° is asserted against the exact value $1 - 9\sqrt3/16$; rounding sits near the 16th digit, far below the 0.025721 being measured. In the window table under Code it does show: at a 0.09° window the true error, 3.220e-15, already exceeds the bound, 2.848e-15.
+- **Rounding stays small.** The theorem is about exact arithmetic. In doubles, the error at 90° is asserted against the exact value $`1 - 9\sqrt3/16`$; rounding sits near the 16th digit, far below the 0.025721 being measured. In the window table under Code it does show: at a 0.09° window the true error, 3.220e-15, already exceeds the bound, 2.848e-15.
 
 ---
 
@@ -86,7 +92,7 @@ $$|f(x) - p_n(x)| \le \frac{M}{(n+1)!}\,\max|\omega|$$
 
 ### Step 0: the error is zero at every node, so it carries every node's factor
 
-The polynomial passes through every node, so the error is zero at each one. A function that is zero at $x_0, \dots, x_n$ behaves as if it contains the factors $(x - x_0), \dots, (x - x_n)$. That product is ω.
+The polynomial passes through every node, so the error is zero at each one. A function that is zero at $`x_0, \dots, x_n`$ behaves as if it contains the factors $`(x - x_0), \dots, (x - x_n)`$. That product is ω.
 
 So the error is ω times something. The whole proof is about finding that something. Rolle's theorem shows it is one derivative, read at one point, over a factorial.
 
@@ -96,9 +102,11 @@ The calculus wing already runs this argument with two nodes: the trapezoid's cho
 
 Fix one point x that is not a node. Define a helper function of a new variable t:
 
-$$g(t) = f(t) - p_n(t) - e(x)\,\frac{\omega(t)}{\omega(x)}$$
+```math
+g(t) = f(t) - p_n(t) - e(x)\,\frac{\omega(t)}{\omega(x)}
+```
 
-At each node, $f - p_n$ is zero and ω is zero, so g is zero. At t = x, the last term equals e(x), which cancels $f(x) - p_n(x)$. So g is zero at x too.
+At each node, $`f - p_n`$ is zero and ω is zero, so g is zero. At t = x, the last term equals e(x), which cancels $`f(x) - p_n(x)`$. So g is zero at x too.
 
 That makes n + 2 distinct zeros: the n + 1 nodes and x.
 
@@ -106,30 +114,32 @@ That makes n + 2 distinct zeros: the n + 1 nodes and x.
 
 Rolle's theorem says a smooth function that is zero at two points has zero slope somewhere between them ([Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)).
 
-- g has n + 2 zeros, so $g'$ has at least n + 1.
-- Then $g''$ has at least n, and so on.
-- So $g^{(n+1)}$ has at least one zero. Call it ξ.
+- g has n + 2 zeros, so $`g'`$ has at least n + 1.
+- Then $`g''`$ has at least n, and so on.
+- So $`g^{(n+1)}`$ has at least one zero. Call it ξ.
 
-Now differentiate g n + 1 times. The polynomial $p_n$ has degree n, so that many derivatives wipe it out. The node polynomial ω starts with $t^{n+1}$, so its (n + 1)-th derivative is the constant (n + 1)!. So
+Now differentiate g n + 1 times. The polynomial $`p_n`$ has degree n, so that many derivatives wipe it out. The node polynomial ω starts with $`t^{n+1}`$, so its (n + 1)-th derivative is the constant (n + 1)!. So
 
-$$0 = g^{(n+1)}(\xi) = f^{(n+1)}(\xi) - e(x)\,\frac{(n+1)!}{\omega(x)}$$
+```math
+0 = g^{(n+1)}(\xi) = f^{(n+1)}(\xi) - e(x)\,\frac{(n+1)!}{\omega(x)}
+```
 
 Solve for e(x) and the theorem appears.
 
-For the sine at 90°, the true error is 0.025721 and ω/24 = 0.028186. So $\sin\xi$ = 0.912576, and ξ is 65.86° or 114.14°. Both lie inside the span, as promised.
+For the sine at 90°, the true error is 0.025721 and ω/24 = 0.028186. So $`\sin\xi`$ = 0.912576, and ξ is 65.86° or 114.14°. Both lie inside the span, as promised.
 
 <details>
 <summary>Detailed proof: the interpolation error theorem, with its hypotheses</summary>
 
-Let I be the smallest closed interval holding x and the nodes. Assume $f^{(n)}$ is continuous on I and $f^{(n+1)}$ exists inside it.
+Let I be the smallest closed interval holding x and the nodes. Assume $`f^{(n)}`$ is continuous on I and $`f^{(n+1)}`$ exists inside it.
 
-If x is a node, both sides are zero and any ξ works. Otherwise $\omega(x) \ne 0$, so g is well defined, and it has the same smoothness as f.
+If x is a node, both sides are zero and any ξ works. Otherwise $`\omega(x) \ne 0`$, so g is well defined, and it has the same smoothness as f.
 
-g vanishes at n + 2 distinct points of I. List them in order. Between each neighbouring pair, Rolle gives a zero of $g'$: n + 1 distinct zeros, strictly inside I. Repeat on $g'$ and its zeros, then on $g''$, and so on. After k steps there are n + 2 − k distinct zeros of $g^{(k)}$. At k = n + 1 there is at least one, ξ, inside I.
+g vanishes at n + 2 distinct points of I. List them in order. Between each neighbouring pair, Rolle gives a zero of $`g'`$: n + 1 distinct zeros, strictly inside I. Repeat on $`g'`$ and its zeros, then on $`g''`$, and so on. After k steps there are n + 2 − k distinct zeros of $`g^{(k)}`$. At k = n + 1 there is at least one, ξ, inside I.
 
-Every derivative of $p_n$ beyond the n-th is zero. Expand ω: $\omega(t) = t^{n+1} + (\text{lower powers})$, so $\omega^{(n+1)}(t) = (n+1)!$ for every t. Hence $g^{(n+1)}(\xi) = f^{(n+1)}(\xi) - e(x)(n+1)!/\omega(x) = 0$, and
+Every derivative of $`p_n`$ beyond the n-th is zero. Expand ω: $`\omega(t) = t^{n+1} + (\text{lower powers})`$, so $`\omega^{(n+1)}(t) = (n+1)!`$ for every t. Hence $`g^{(n+1)}(\xi) = f^{(n+1)}(\xi) - e(x)(n+1)!/\omega(x) = 0`$, and
 
-$$e(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,\omega(x).$$
+$`\displaystyle e(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,\omega(x).`$
 
 ξ depends on x. The proof says nothing about where ξ is beyond lying in I, which is why the bound uses a ceiling M.
 
@@ -137,22 +147,22 @@ $$e(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,\omega(x).$$
 
 ### Step 3: from the exact error to a bound
 
-Replace $|f^{(n+1)}(\xi)|$ by its ceiling M, and |ω(x)| by its largest value. For the sine, M = 1 because every derivative of sine is a sine or cosine.
+Replace $`|f^{(n+1)}(\xi)|`$ by its ceiling M, and |ω(x)| by its largest value. For the sine, M = 1 because every derivative of sine is a sine or cosine.
 
-For equal nodes, write $x = x_0 + s h$, where s counts spacings. Then $\omega = h^4\,s(s-1)(s-2)(s-3)$. Its largest size is exactly 1, at $s = (3 - \sqrt5)/2$, so $\max|\omega| = h^4 = (\pi/3)^4$ = 1.202581, at 22.92° and 157.08°.
+For equal nodes, write $`x = x_0 + s h`$, where s counts spacings. Then $`\omega = h^4\,s(s-1)(s-2)(s-3)`$. Its largest size is exactly 1, at $`s = (3 - \sqrt5)/2`$, so $`\max|\omega| = h^4 = (\pi/3)^4`$ = 1.202581, at 22.92° and 157.08°.
 
 The bound is 1.202581 / 24 = 0.050108. The true worst miss is 0.043616, at 23.43°. Bound and truth are close because 24 e(x)/ω(x), the value of sin ξ, stays between 0.837746 and 0.912576 at every angle of the 3,601-point grid.
 
 <details>
 <summary>Why the largest size of s(s − 1)(s − 2)(s − 3) is exactly 1</summary>
 
-Pair the outer and inner factors: $s(s-3) = u$ and $(s-1)(s-2) = u + 2$, with $u = s^2 - 3s$. The product is $u(u+2) = (u+1)^2 - 1$.
+Pair the outer and inner factors: $`s(s-3) = u`$ and $`(s-1)(s-2) = u + 2`$, with $`u = s^2 - 3s`$. The product is $`u(u+2) = (u+1)^2 - 1`$.
 
-On [0, 3], u runs from 0 down to −9/4. The product is smallest, −1, at u = −1, where $s^2 - 3s + 1 = 0$, so $s = (3 \pm \sqrt5)/2$. Its largest value on the range is $(-9/4)(-1/4) = 9/16$ at s = 3/2. So the largest size is 1, reached in the two outer gaps, not the middle one.
+On [0, 3], u runs from 0 down to −9/4. The product is smallest, −1, at u = −1, where $`s^2 - 3s + 1 = 0`$, so $`s = (3 \pm \sqrt5)/2`$. Its largest value on the range is $`(-9/4)(-1/4) = 9/16`$ at s = 3/2. So the largest size is 1, reached in the two outer gaps, not the middle one.
 
 </details>
 
-**Sizing a table that meets the target.** The four-value table guarantees only 0.050108, far outside 0.001. The same formula sizes one that meets it. Store sine at equal spacing h, split the half turn into pieces of three gaps, and read each angle from the cubic through its own piece's four values. Each piece has max|ω| = $h^4$, so the bound is $h^4/24$, and $h^4/24 \le 0.001$ needs h of at most 22.6°. Three pieces of 60° fit, with values 20° apart: 10 stored values, a bound of 6.186e-04 and a true worst error of 6.092e-04. Two pieces of 90° would give a bound of 3.132e-03, over the target.
+**Sizing a table that meets the target.** The four-value table guarantees only 0.050108, far outside 0.001. The same formula sizes one that meets it. Store sine at equal spacing h, split the half turn into pieces of three gaps, and read each angle from the cubic through its own piece's four values. Each piece has max|ω| = $`h^4`$, so the bound is $`h^4/24`$, and $`h^4/24 \le 0.001`$ needs h of at most 22.6°. Three pieces of 60° fit, with values 20° apart: 10 stored values, a bound of 6.186e-04 and a true worst error of 6.092e-04. Two pieces of 90° would give a bound of 3.132e-03, over the target.
 
 ### Step 4: the same error, read as the next Newton term
 
@@ -160,9 +170,11 @@ Newton's form builds the polynomial one node at a time. Each new node adds its d
 
 Treat x itself as one more node. The new polynomial passes through f(x), so the term it adds is exactly the error:
 
-$$f(x) - p_n(x) = f[x_0, \dots, x_n, x]\;\omega(x)$$
+```math
+f(x) - p_n(x) = f[x_0, \dots, x_n, x]\;\omega(x)
+```
 
-Comparing with the theorem gives $f[x_0, \dots, x_n, x] = f^{(n+1)}(\xi)/(n+1)!$: a divided difference is a derivative over a factorial, read at some point. For the sine at 90°, the divided difference is 0.038024, and 0.038024 × 0.676452 = 0.025721, the true error again.
+Comparing with the theorem gives $`f[x_0, \dots, x_n, x] = f^{(n+1)}(\xi)/(n+1)!`$: a divided difference is a derivative over a factorial, read at some point. For the sine at 90°, the divided difference is 0.038024, and 0.038024 × 0.676452 = 0.025721, the true error again.
 
 ### Step 5: node placement controls only ω
 
@@ -174,7 +186,7 @@ The derivative belongs to the function, and the factorial depends only on the no
 | Chebyshev | 6.9, 55.6, 124.4, 173.1 | 0.761009 | 0.031709 | 0.029199 | 1.086 |
 | bunched in the middle | 45, 75, 105, 135 | 4.439216 | 0.184967 | 0.166407 | 1.112 |
 
-Bunching the nodes leaves the ends far from every node, and the worst error rises from 0.043616 to 0.166407. The **Chebyshev nodes** are the shadows on the axis of points spaced equally around a half circle, so they crowd toward the ends without sitting on them. Their max|ω| is $2(\pi/4)^4$ = 0.761009, the smallest any four nodes can give on this interval. Why, and how much it matters at high degree, is [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md).
+Bunching the nodes leaves the ends far from every node, and the worst error rises from 0.043616 to 0.166407. The **Chebyshev nodes** are the shadows on the axis of points spaced equally around a half circle, so they crowd toward the ends without sitting on them. Their max|ω| is $`2(\pi/4)^4`$ = 0.761009, the smallest any four nodes can give on this interval. Why, and how much it matters at high degree, is [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -197,14 +209,14 @@ Four equal nodes on sine: 0, π/3, 2π/3, π.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | stored values | sin 0, sin 60°, sin 120°, sin 180° | 0, 0.866025, 0.866025, 0 |
-| shape of $p_3$ | $a\,x(\pi - x)$ fits all four points, and only one polynomial does | — |
-| coefficient a | $a \cdot \tfrac{\pi}{3}\cdot\tfrac{2\pi}{3} = \tfrac{\sqrt3}{2}$, so $a = 9\sqrt3/(4\pi^2)$ | 0.394860 |
-| $p_3(90°)$ | $a\,(\pi/2)^2 = 9\sqrt3/16$ | 0.974279 |
+| shape of $`p_3`$ | $`a\,x(\pi - x)`$ fits all four points, and only one polynomial does | — |
+| coefficient a | $`a \cdot \tfrac{\pi}{3}\cdot\tfrac{2\pi}{3} = \tfrac{\sqrt3}{2}`$, so $`a = 9\sqrt3/(4\pi^2)`$ | 0.394860 |
+| $`p_3(90°)`$ | $`a\,(\pi/2)^2 = 9\sqrt3/16`$ | 0.974279 |
 | true error at 90° | 1 − 0.974279 | 0.025721 |
-| ω(90°) | $\tfrac{\pi}{2}\cdot\tfrac{\pi}{6}\cdot(-\tfrac{\pi}{6})\cdot(-\tfrac{\pi}{2}) = \pi^4/144$ | 0.676452 |
+| ω(90°) | $`\tfrac{\pi}{2}\cdot\tfrac{\pi}{6}\cdot(-\tfrac{\pi}{6})\cdot(-\tfrac{\pi}{2}) = \pi^4/144`$ | 0.676452 |
 | bound at 90° | 0.676452 / 24 | 0.028186 |
-| $\sin\xi$ at 90° | 24 × 0.025721 / 0.676452 | 0.912576 |
-| largest size of ω | $(\pi/3)^4$ | 1.202581 |
+| $`\sin\xi`$ at 90° | 24 × 0.025721 / 0.676452 | 0.912576 |
+| largest size of ω | $`(\pi/3)^4`$ | 1.202581 |
 | **bound over the half turn** | 1.202581 / 24 | **0.050108** |
 | true worst error | found by bisection, at 23.43° | 0.043616 |
 
@@ -218,7 +230,7 @@ The right whole-interval bound is 0.050108, against a true worst error of 0.0436
 | --- | --- | --- |
 | Apply the bound to \|cos x\|, which has a corner at 90° | true error 0.437500 against a "bound" of 0.050108 | No fourth derivative at the corner. The theorem's hypothesis fails, and so does its promise. |
 | Divide by 3! instead of 4! | 0.200430 | The factorial is one past the degree. Four times too loose. |
-| Use the span length to the 4th, $\pi^4$, instead of max\|ω\| | 4.058712 | Ignores that the error is pinned to zero at every node. Useless as a guarantee. |
+| Use the span length to the 4th, $`\pi^4`$, instead of max\|ω\| | 4.058712 | Ignores that the error is pinned to zero at every node. Useless as a guarantee. |
 | Read at 240°, keep the in-span bound | true error 0.866025 against 0.050108 | Outside the nodes ω grows fast. At 240° the right bound is 1.202581, by coincidence the same number as max\|ω\| inside. |
 | Read the derivative at x instead of ξ, at 10° | predicts 0.006277; true 0.030830 | sin 10° is small, but ξ sits elsewhere in the span, where sine is larger. |
 
@@ -226,7 +238,7 @@ The right whole-interval bound is 0.050108, against a true worst error of 0.0436
 
 ## Code, from first principles, and it actually runs
 
-The code interpolates sine through four nodes and measures the error on 3,601 angles. It reaches the error by **three independent roads**. Road 1 evaluates the Lagrange form on the grid. Road 2 uses the closed form $a\,x(\pi - x)$ and finds the worst point by bisection on $e'(x) = 0$, with no grid. Road 3 builds a divided-difference table with x as a fifth node. Then it tests the theorem itself: at every grid point that is not a node, 24 e(x)/ω(x) must equal some value of sine, so it must lie between 0 and 1, and its top, at 90°, must equal the hand value 24(1 − 9√3/16)/(π⁴/144). It also measures the observed order as the window shrinks, down to where rounding stops the fall, and sizes a table for the 0.001 target. Evaluating ω at one point costs n + 1 subtractions and n multiplications.
+The code interpolates sine through four nodes and measures the error on 3,601 angles. It reaches the error by **three independent roads**. Road 1 evaluates the Lagrange form on the grid. Road 2 uses the closed form $`a\,x(\pi - x)`$ and finds the worst point by bisection on $`e'(x) = 0`$, with no grid. Road 3 builds a divided-difference table with x as a fifth node. Then it tests the theorem itself: at every grid point that is not a node, 24 e(x)/ω(x) must equal some value of sine, so it must lie between 0 and 1, and its top, at 90°, must equal the hand value 24(1 − 9√3/16)/(π⁴/144). It also measures the observed order as the window shrinks, down to where rounding stops the fall, and sizes a table for the 0.001 target. Evaluating ω at one point costs n + 1 subtractions and n multiplications.
 
 ### Python
 
@@ -652,10 +664,10 @@ The two outputs are identical.
 
 Lean proves the theorem and its bound for every node count, function and reading point, and the equal-node peak for every spacing.
 
-- Let $f^{(n)}$ be continuous across the span, the smallest interval holding x and the n + 1 distinct nodes, with $f^{(n+1)}$ existing inside it.
-- Then some ξ in the span gives exactly $f(x) - p_n(x) = f^{(n+1)}(\xi)/(n+1)!\;\omega(x)$, and ξ lies strictly inside whenever the span has length.
-- If M is a ceiling on the size of $f^{(n+1)}$ inside the span, the error at x is at most M/(n + 1)! times |ω(x)|.
-- For four equal nodes with spacing h, |ω| never exceeds $h^4$ across their span, and it equals $h^4$ at $s = (3 - \sqrt5)/2$.
+- Let $`f^{(n)}`$ be continuous across the span, the smallest interval holding x and the n + 1 distinct nodes, with $`f^{(n+1)}`$ existing inside it.
+- Then some ξ in the span gives exactly $`f(x) - p_n(x) = f^{(n+1)}(\xi)/(n+1)!\;\omega(x)`$, and ξ lies strictly inside whenever the span has length.
+- If M is a ceiling on the size of $`f^{(n+1)}`$ inside the span, the error at x is at most M/(n + 1)! times |ω(x)|.
+- For four equal nodes with spacing h, |ω| never exceeds $`h^4`$ across their span, and it equals $`h^4`$ at $`s = (3 - \sqrt5)/2`$.
 - The hand arithmetic holds exactly: 4! = 24, the factor of four from 3!, the pairing trick, the 9/16 in the middle gap and the 10-value table.
 
 The sine values, true errors, placement table, Newton reading, Lebesgue constant and window table are left to the Python and Rust checks.
@@ -928,7 +940,7 @@ example : 3 * 3 + 1 = 10 ∧ 180 / (3 * 3) = 20 := by decide
 > **Try changing**
 > - Guess first: does a fifth node help a lot or a little? The `try, five equal nodes` line runs the nodes `k * PI / 4` for k = 0 to 4. The true worst error falls from 0.043616 to **0.001812**, and the bound, now max|ω|/5! with M = 1, is 0.009044. Putting those five nodes into `eq` itself stops the program at the closed-form assert, which only knows the four-node cubic.
 > - Guess first: how much do Chebyshev nodes gain over equal ones here? The `chebyshev` row of the placement table answers it: the worst error falls from 0.043616 to **0.029199**. Setting `eq` to the Chebyshev nodes stops the program at the same assert.
-> - Guess first: halve the span to a 90° window centred on 90°, still four equal nodes. The error falls from 4.362e-02 to **3.026e-03**: the $h^4$ in max|ω| at work.
+> - Guess first: halve the span to a 90° window centred on 90°, still four equal nodes. The error falls from 4.362e-02 to **3.026e-03**: the $`h^4`$ in max|ω| at work.
 > - Guess first: bunch the four nodes between 45° and 135°. The ends are now far from every node, and the worst error rises to **0.166407**.
 
 ---
@@ -942,7 +954,7 @@ example : 3 * 3 + 1 = 10 ∧ 180 / (3 * 3) = 20 := by decide
 > - **The wrong factorial.** With four nodes the factorial is 4! = 24, not 3! = 6. The 3! version gives 0.200430.
 > - **Reading outside the nodes with the inside bound.** At 240° the miss is 0.866025, against an inside bound of 0.050108.
 > - **Putting x where ξ belongs.** At 10°, sin 10° × ω/24 predicts 0.006277. The true error is 0.030830.
-> - **Measuring the span instead of the distances.** Using the span length to the 4th, $\pi^4$, in place of max|ω| gives 4.058712: true, but useless.
+> - **Measuring the span instead of the distances.** Using the span length to the 4th, $`\pi^4`$, in place of max|ω| gives 4.058712: true, but useless.
 
 ---
 
@@ -951,7 +963,7 @@ example : 3 * 3 + 1 = 10 ∧ 180 / (3 * 3) = 20 := by decide
 - **Yield curves.** A curve through eight quoted maturities reads rates between the quotes. ω is largest in the widest gaps, often the long end between quoted maturities many years apart. That is where a single polynomial is least reliable, and where [Cubic splines](05-splines.md) take over.
 - **Quadrature rules.** Integrate the interpolant and its error formula, and the error terms of the trapezoid and Simpson rules appear ([Error bounds and Romberg](../05-Quadrature/02-error-bounds-and-romberg.md)). Gauss rules choose their nodes so the integrated error vanishes for more polynomials ([Gaussian quadrature](../05-Quadrature/03-gaussian-quadrature.md)).
 - **Multistep ODE solvers.** Adams methods step forward by integrating a polynomial through recent slopes. Their error constants come from this formula ([Multistep methods](../06-ODE%20Solvers/04-multistep-adams-and-bdf.md)).
-- **Printed tables.** Tables of sines and logarithms told users how many digits linear interpolation kept. That is the n = 1 case: error at most $M h^2/8$ for spacing h ([Linear interpolation](01-linear-interpolation-and-extrapolation.md)).
+- **Printed tables.** Tables of sines and logarithms told users how many digits linear interpolation kept. That is the n = 1 case: error at most $`M h^2/8`$ for spacing h ([Linear interpolation](01-linear-interpolation-and-extrapolation.md)).
 
 > **Say it back**
 > A polynomial through n + 1 points misses the function by a derivative times a product. The derivative is the (n + 1)-th, read at some unknown point ξ in the span, over (n + 1)!. The product, ω, is the distances from x to every node, so the error is zero at the nodes. Rolle's theorem, used n + 1 times on a helper function with n + 2 zeros, proves it. The function fixes the derivative; the node placement fixes ω, and that is the only part a designer can choose.

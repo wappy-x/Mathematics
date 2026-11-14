@@ -38,37 +38,41 @@ Upper line (orange): the path never touched $80, so the contract pays like a pla
 
 ## The formula
 
-Notation first, in words. $C(x)$ means the Black-Scholes call price with today's share price set to $x$ and every other input left alone ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). So $C(S)$ is the plain call, and $C(H^2/S)$ is the same call priced as if the share stood at a different level. The subscripts "do" and "di" stand for down-and-out and down-and-in.
+Notation first, in words. $`C(x)`$ means the Black-Scholes call price with today's share price set to $`x`$ and every other input left alone ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). So $`C(S)`$ is the plain call, and $`C(H^2/S)`$ is the same call priced as if the share stood at a different level. The subscripts "do" and "di" stand for down-and-out and down-and-in.
 
-$$C_{\text{di}} + C_{\text{do}} = C(S)$$
+```math
+C_{\text{di}} + C_{\text{do}} = C(S)
+```
 
 **Read it aloud:** the knock-in plus the knock-out, same strike, same barrier, same expiry, costs exactly one plain call.
 
-$$C_{\text{do}} = C(S) - \left(\frac{H}{S}\right)^{2\nu/\sigma^2} C\!\left(\frac{H^2}{S}\right), \qquad \nu = r - q - \tfrac12\sigma^2$$
+```math
+C_{\text{do}} = C(S) - \left(\frac{H}{S}\right)^{2\nu/\sigma^2} C\!\left(\frac{H^2}{S}\right), \qquad \nu = r - q - \tfrac12\sigma^2
+```
 
 **Read it aloud:** the knock-out is the plain call minus a reflected call, the reflected call started from the mirror image of today's price in the barrier and scaled down by a weight that accounts for drift.
 
-By parity the subtracted piece is the knock-in: $C_{\text{di}} = (H/S)^{2\nu/\sigma^2}\, C(H^2/S)$.
+By parity the subtracted piece is the knock-in: $`C_{\text{di}} = (H/S)^{2\nu/\sigma^2}\, C(H^2/S)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the knock-out… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100 | rises: more upside and more room above the barrier |
-| $S_T$ | Acme's price on expiry day, $T$ years out | unknown today | — |
-| $m_T$ | the running minimum: the lowest price Acme reaches between now and expiry | unknown today | — |
-| $K$ | the strike, the price the holder may pay | $100 | falls |
-| $H$ | the barrier, below today's price and at or below the strike | $80 | falls, steeply near $S$: at $H = S$ it is worth zero |
-| $T$ | time to expiry, in years | 1 | rises here, a little less than a plain call: more time to climb, but also more time to touch |
-| $r$, $q$ | the riskless rate and the dividend yield, both continuously compounded | 5%, 2% | $r$ up: rises; $q$ up: falls, since dividends pull the price toward the barrier |
-| $\sigma$ | volatility: the yearly spread of log price moves | 20% | here rises; with a barrier close to $S$ it can fall |
-| $\nu$ | the drift of the log price in the pricing world | 0.01 | — |
-| $b$ | the barrier in log units, $\ln(H/S)$, negative because $H$ is below $S$ | $\ln 0.8$ | — |
-| $C(x)$, $N$ | the Black-Scholes call with today's price $x$; inside it sit the bell-curve area $N$ and the discount factor $e^{-rT}$ | $C(100) = 9.227006$ | — |
-| $C_{\text{do}}$, $C_{\text{di}}$ | today's price of the down-and-out and down-and-in call | 9.133306, 0.093699 | the out rises exactly as much as the in falls |
+| $`S`$ | Acme's price today | $100 | rises: more upside and more room above the barrier |
+| $`S_T`$ | Acme's price on expiry day, $`T`$ years out | unknown today | — |
+| $`m_T`$ | the running minimum: the lowest price Acme reaches between now and expiry | unknown today | — |
+| $`K`$ | the strike, the price the holder may pay | $100 | falls |
+| $`H`$ | the barrier, below today's price and at or below the strike | $80 | falls, steeply near $`S`$: at $`H = S`$ it is worth zero |
+| $`T`$ | time to expiry, in years | 1 | rises here, a little less than a plain call: more time to climb, but also more time to touch |
+| $`r`$, $`q`$ | the riskless rate and the dividend yield, both continuously compounded | 5%, 2% | $`r`$ up: rises; $`q`$ up: falls, since dividends pull the price toward the barrier |
+| $`\sigma`$ | volatility: the yearly spread of log price moves | 20% | here rises; with a barrier close to $`S`$ it can fall |
+| $`\nu`$ | the drift of the log price in the pricing world | 0.01 | — |
+| $`b`$ | the barrier in log units, $`\ln(H/S)`$, negative because $`H`$ is below $`S`$ | $`\ln 0.8`$ | — |
+| $`C(x)`$, $`N`$ | the Black-Scholes call with today's price $`x`$; inside it sit the bell-curve area $`N`$ and the discount factor $`e^{-rT}`$ | $`C(100) = 9.227006`$ | — |
+| $`C_{\text{do}}`$, $`C_{\text{di}}`$ | today's price of the down-and-out and down-and-in call | 9.133306, 0.093699 | the out rises exactly as much as the in falls |
 
 Two helper quantities have names of their own:
 
-- $H^2/S$ is the **image spot**, $64 here. On a log scale it sits as far below the barrier as today's price sits above it: $\ln 64 = 2\ln 80 - \ln 100$.
-- $(H/S)^{2\nu/\sigma^2}$ is the **reflection weight**, 0.894427 here. With no drift it would be 1. A small upward drift makes the mirrored paths a little rarer than their originals.
+- $`H^2/S`$ is the **image spot**, $64 here. On a log scale it sits as far below the barrier as today's price sits above it: $`\ln 64 = 2\ln 80 - \ln 100`$.
+- $`(H/S)^{2\nu/\sigma^2}`$ is the **reflection weight**, 0.894427 here. With no drift it would be 1. A small upward drift makes the mirrored paths a little rarer than their originals.
 
 ### The eight contracts
 
@@ -76,8 +80,8 @@ A barrier sits **down** (below today's price) or **up** (above it). Touching it 
 
 | Barrier and effect | Call version | Put version | Its parity twin |
 | --- | --- | --- | --- |
-| down-and-out: dies if $m_T$ reaches $H$ | down-and-out call | down-and-out put | down-and-in |
-| down-and-in: born if $m_T$ reaches $H$ | down-and-in call | down-and-in put | down-and-out |
+| down-and-out: dies if $`m_T`$ reaches $`H`$ | down-and-out call | down-and-out put | down-and-in |
+| down-and-in: born if $`m_T`$ reaches $`H`$ | down-and-in call | down-and-in put | down-and-out |
 | up-and-out: dies if the running maximum reaches the barrier | up-and-out call | up-and-out put | up-and-in |
 | up-and-in: born if the running maximum reaches the barrier | up-and-in call | up-and-in put | up-and-out |
 
@@ -88,7 +92,7 @@ Parity pairs each row with its twin, so only four of the eight need their own fo
 - **Parity holds in any model.** It uses only the payoffs and the rule that two things paying the same must cost the same. It fails only when the twins differ in small print: a cash **rebate** paid on knock-out, or a different watching rule on each leg.
 - **The share is watched continuously.** The formula counts a touch at any instant. A contract that checks only daily closes misses touches between closes and is worth more: here about 0.019 more, as the simulation below measures. The fix is on [Daily monitoring](03-discrete-monitoring-correction.md).
 - **Black-Scholes dynamics: constant volatility, rate and dividend yield.** The mirror argument needs the log price to be a Brownian motion (a continuous random walk) with constant drift. Quoted option prices imply a volatility that changes with the price level; there the reflected formula misprices the barrier, and desks use other models.
-- **The barrier sits at or below the strike, and below today's price.** With $H \le K$ every touched path's mirror ends below the strike, which is what makes one subtraction enough. A barrier above the strike needs extra terms. With $S \le H$ the knock-out is already dead, worth 0, and the knock-in is already a plain call.
+- **The barrier sits at or below the strike, and below today's price.** With $`H \le K`$ every touched path's mirror ends below the strike, which is what makes one subtraction enough. A barrier above the strike needs extra terms. With $`S \le H`$ the knock-out is already dead, worth 0, and the knock-in is already a plain call.
 
 ---
 
@@ -104,41 +108,44 @@ So the pair pays exactly a plain call's payoff on every path. Two holdings that 
 
 ### Step 1: price only the untouched paths
 
-The knock-out pays $\max(S_T - K, 0)$ when $m_T > H$, and zero otherwise. Its price is the discounted average of that payoff in the pricing world, where Acme grows at the riskless rate less the dividend yield.
+The knock-out pays $`\max(S_T - K, 0)`$ when $`m_T > H`$, and zero otherwise. Its price is the discounted average of that payoff in the pricing world, where Acme grows at the riskless rate less the dividend yield.
 
-Work in log units. Let $x = \ln(S_T/S)$, the log of the year's growth factor. In the Black-Scholes pricing world $x$ is normally distributed (a bell curve) with centre $\nu T$ and spread $\sigma\sqrt{T}$. The barrier becomes the level $b = \ln(H/S)$ below zero.
+Work in log units. Let $`x = \ln(S_T/S)`$, the log of the year's growth factor. In the Black-Scholes pricing world $`x`$ is normally distributed (a bell curve) with centre $`\nu T`$ and spread $`\sigma\sqrt{T}`$. The barrier becomes the level $`b = \ln(H/S)`$ below zero.
 
-The knock-out must drop the paths that touched $b$ on the way. So the task is to count, for each end point $x$, how many paths reaching it touched $b$ first.
+The knock-out must drop the paths that touched $`b`$ on the way. So the task is to count, for each end point $`x`$, how many paths reaching it touched $`b`$ first.
 
 ### Step 2: with no drift, the touched paths are a mirror image
 
-Take a path that starts at 0, touches $b$, and ends at $x$ above $b$. Flip everything after the first touch upside down about $b$. The new path ends at $2b - x$, below the barrier.
+Take a path that starts at 0, touches $`b`$, and ends at $`x`$ above $`b`$. Flip everything after the first touch upside down about $`b`$. The new path ends at $`2b - x`$, below the barrier.
 
-The flip is one-to-one and, with no drift, keeps probabilities. So "touched $b$ and ended at $x$" is exactly as likely as "ended at $2b - x$". The second event needs no path at all; it is one reading of the bell curve. This is the reflection principle ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)).
+The flip is one-to-one and, with no drift, keeps probabilities. So "touched $`b`$ and ended at $`x`$" is exactly as likely as "ended at $`2b - x`$". The second event needs no path at all; it is one reading of the bell curve. This is the reflection principle ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)).
 
 ### Step 3: drift tilts the mirror by a fixed weight
 
-With drift $\nu$ the flip no longer keeps probabilities. An upward drift favours the original path, which climbs back up after the touch, over its mirror, which keeps falling.
+With drift $`\nu`$ the flip no longer keeps probabilities. An upward drift favours the original path, which climbs back up after the touch, over its mirror, which keeps falling.
 
 The fix is a single factor. The chance density of a drifting path, compared with a driftless one, depends only on where the path ends. That turns the reflection into:
 
-$$\text{density of touched paths ending at } x \;=\; e^{2\nu b/\sigma^2}\,\times\,\text{density of all paths ending at } x - 2b.$$
+```math
+\text{density of touched paths ending at } x \;=\; e^{2\nu b/\sigma^2}\,\times\,\text{density of all paths ending at } x - 2b.
+```
 
-Since $e^{b} = H/S$, the factor $e^{2\nu b/\sigma^2}$ is the reflection weight $(H/S)^{2\nu/\sigma^2}$. Here $\nu = 0.01$, the exponent is 0.5, and the weight is $\sqrt{0.8} = 0.894427$.
+Since $`e^{b} = H/S`$, the factor $`e^{2\nu b/\sigma^2}`$ is the reflection weight $`(H/S)^{2\nu/\sigma^2}`$. Here $`\nu = 0.01`$, the exponent is 0.5, and the weight is $`\sqrt{0.8} = 0.894427`$.
 
 <details>
 <summary>Detailed proof: the drifted reflection</summary>
 
-Write $x$ for the end point and $p_\nu(x)$ for the bell-curve density with centre $\nu T$ and spread $\sigma\sqrt T$; $p_0(x)$ is the same with centre 0.
+Write $`x`$ for the end point and $`p_\nu(x)`$ for the bell-curve density with centre $`\nu T`$ and spread $`\sigma\sqrt T`$; $`p_0(x)`$ is the same with centre 0.
 
-**Driftless.** The reflection principle gives, for $x > b$: the density of paths that touch $b$ and end at $x$ equals $p_0(2b - x)$.
+**Driftless.** The reflection principle gives, for $`x > b`$: the density of paths that touch $`b`$ and end at $`x`$ equals $`p_0(2b - x)`$.
 
-**Adding drift.** Let $W_t$ be a standard Brownian motion, the continuous random walk with mean 0 and variance $t$ at time $t$. A path of $\sigma W_t + \nu t$ has, relative to the driftless path $\sigma W_t$, the likelihood ratio $\exp(\nu x/\sigma^2 - \nu^2 T/(2\sigma^2))$. That ratio depends on the path only through its end point $x$. This is Girsanov's theorem in its simplest form, and it can be checked by completing the square in $p_\nu(x)/p_0(x)$. So the drifted density of touched paths ending at $x$ is
-$$p_0(2b - x)\,\exp\!\left(\frac{\nu x}{\sigma^2} - \frac{\nu^2 T}{2\sigma^2}\right).$$
+**Adding drift.** Let $`W_t`$ be a standard Brownian motion, the continuous random walk with mean 0 and variance $`t`$ at time $`t`$. A path of $`\sigma W_t + \nu t`$ has, relative to the driftless path $`\sigma W_t`$, the likelihood ratio $`\exp(\nu x/\sigma^2 - \nu^2 T/(2\sigma^2))`$. That ratio depends on the path only through its end point $`x`$. This is Girsanov's theorem in its simplest form, and it can be checked by completing the square in $`p_\nu(x)/p_0(x)`$. So the drifted density of touched paths ending at $`x`$ is
 
-**Matching it to a shifted bell curve.** The same ratio at the point $y = x - 2b$ gives $p_\nu(y) = p_0(y)\exp(\nu y/\sigma^2 - \nu^2T/(2\sigma^2))$. Since $p_0(x)$ is symmetric about 0, $p_0(2b - x) = p_0(x - 2b) = p_0(y)$. Divide the two expressions: the touched density equals $p_\nu(x - 2b)\,e^{2\nu b/\sigma^2}$.
+$`\displaystyle p_0(2b - x)\,\exp\!\left(\frac{\nu x}{\sigma^2} - \frac{\nu^2 T}{2\sigma^2}\right).`$
 
-**Untouched paths.** Subtract from all paths: the density of paths ending at $x > b$ that never touched $b$ is $p_\nu(x) - e^{2\nu b/\sigma^2}\,p_\nu(x - 2b)$. At $x = b$ the two terms cancel: the bell curve's values at $b$ and at $-b$ differ by exactly the factor $e^{2\nu b/\sigma^2}$. An untouched path cannot end on the barrier.
+**Matching it to a shifted bell curve.** The same ratio at the point $`y = x - 2b`$ gives $`p_\nu(y) = p_0(y)\exp(\nu y/\sigma^2 - \nu^2T/(2\sigma^2))`$. Since $`p_0(x)`$ is symmetric about 0, $`p_0(2b - x) = p_0(x - 2b) = p_0(y)`$. Divide the two expressions: the touched density equals $`p_\nu(x - 2b)\,e^{2\nu b/\sigma^2}`$.
+
+**Untouched paths.** Subtract from all paths: the density of paths ending at $`x > b`$ that never touched $`b`$ is $`p_\nu(x) - e^{2\nu b/\sigma^2}\,p_\nu(x - 2b)`$. At $`x = b`$ the two terms cancel: the bell curve's values at $`b`$ and at $`-b`$ differ by exactly the factor $`e^{2\nu b/\sigma^2}`$. An untouched path cannot end on the barrier.
 
 </details>
 
@@ -146,17 +153,21 @@ $$p_0(2b - x)\,\exp\!\left(\frac{\nu x}{\sigma^2} - \frac{\nu^2 T}{2\sigma^2}\ri
 
 The knock-out price is the plain call minus the touched part:
 
-$$e^{-rT}\int (S e^{x} - K)^+\; e^{2\nu b/\sigma^2}\, p_\nu(x - 2b)\, dx.$$
+```math
+e^{-rT}\int (S e^{x} - K)^+\; e^{2\nu b/\sigma^2}\, p_\nu(x - 2b)\, dx.
+```
 
-Substitute $y = x - 2b$. Then $S e^{x} = S e^{2b} e^{y} = (H^2/S)\,e^{y}$, because $e^{2b} = H^2/S^2$. The integral becomes the plain call's own average with today's price $H^2/S$ in place of $S$. That is $C(H^2/S)$, times the weight.
+Substitute $`y = x - 2b`$. Then $`S e^{x} = S e^{2b} e^{y} = (H^2/S)\,e^{y}`$, because $`e^{2b} = H^2/S^2`$. The integral becomes the plain call's own average with today's price $`H^2/S`$ in place of $`S`$. That is $`C(H^2/S)`$, times the weight.
 
-One condition was used silently. Step 3 holds only for end points above the barrier, $x > b$. The call pays only when $S_T > K$, and with $K \ge H$ every such end point is above the barrier. With $H > K$ that fails, and extra terms appear.
+One condition was used silently. Step 3 holds only for end points above the barrier, $`x > b`$. The call pays only when $`S_T > K`$, and with $`K \ge H`$ every such end point is above the barrier. With $`H > K`$ that fails, and extra terms appear.
 
 ### Step 5: subtract, and check the edges
 
-$$C_{\text{do}} = C(S) - \left(\frac{H}{S}\right)^{2\nu/\sigma^2} C\!\left(\frac{H^2}{S}\right).$$
+```math
+C_{\text{do}} = C(S) - \left(\frac{H}{S}\right)^{2\nu/\sigma^2} C\!\left(\frac{H^2}{S}\right).
+```
 
-Two edge checks. At $S = H$ the weight is 1 and the image spot is $H$ itself, so the two terms cancel. A knock-out standing on its barrier is worth 0, as it must be. As $H$ falls toward zero, the image spot falls too, the reflected call is worth almost nothing, and the knock-out becomes the plain call.
+Two edge checks. At $`S = H`$ the weight is 1 and the image spot is $`H`$ itself, so the two terms cancel. A knock-out standing on its barrier is worth 0, as it must be. As $`H`$ falls toward zero, the image spot falls too, the reflected call is worth almost nothing, and the knock-out becomes the plain call.
 
 A second door: the knock-out's price obeys the Black-Scholes pricing equation with value zero on the barrier. The mirrored call solves the same equation and cancels the plain call along the barrier, the method of images. Road 3 of the check solves that equation on a grid with no mirror in it.
 
@@ -164,19 +175,19 @@ A second door: the knock-out's price obeys the Black-Scholes pricing equation wi
 
 ## Worked numbers, by hand
 
-House market: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$, barrier $H = 80$.
+House market: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$, barrier $`H = 80`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| drift of the log price, $\nu$ | $0.05 - 0.02 - \tfrac12 (0.2)^2$ | 0.010000 |
-| exponent, $2\nu/\sigma^2$ | $0.02 / 0.04$ | 0.500000 |
-| reflection weight | $(80/100)^{0.5}$ | 0.894427 |
-| image spot, $H^2/S$ | $80 \times 80 / 100$ | 64 |
-| plain call, $C(100)$ | Black-Scholes | 9.227006 |
-| reflected call, $C(64)$ | Black-Scholes, share at $64 | 0.104759 |
-| down-and-in | $0.894427 \times 0.104759$ | **0.093699** |
-| down-and-out | $9.227006 - 0.093699$ | **9.133306** |
-| parity check | $9.133306 + 0.093699$ | 9.227006 |
+| drift of the log price, $`\nu`$ | $`0.05 - 0.02 - \tfrac12 (0.2)^2`$ | 0.010000 |
+| exponent, $`2\nu/\sigma^2`$ | $`0.02 / 0.04`$ | 0.500000 |
+| reflection weight | $`(80/100)^{0.5}`$ | 0.894427 |
+| image spot, $`H^2/S`$ | $`80 \times 80 / 100`$ | 64 |
+| plain call, $`C(100)`$ | Black-Scholes | 9.227006 |
+| reflected call, $`C(64)`$ | Black-Scholes, share at $64 | 0.104759 |
+| down-and-in | $`0.894427 \times 0.104759`$ | **0.093699** |
+| down-and-out | $`9.227006 - 0.093699`$ | **9.133306** |
+| parity check | $`9.133306 + 0.093699`$ | 9.227006 |
 
 The knock-out costs $9.13 and the knock-in $0.09. A 20% fall followed by a recovery above the strike is rare enough on this market that the clause removes only nine cents.
 
@@ -201,9 +212,9 @@ Correct answer 9.133306.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Leave out the reflection weight | 9.122247 | Treats the drifting share as driftless; the mirrored paths are overcounted. Still zero at the barrier, so it hides. |
-| Put $+\tfrac12\sigma^2$ in the exponent's drift | 9.167038 | Uses $r - q + \tfrac12\sigma^2$, a Black-Scholes term that does not belong here; the mirror needs the drift of the log price itself |
-| Place the image at $H$, not $H^2/S$ | 7.857856 | Reflection is multiplicative: $64 lies as far below $80 in log terms as $100 lies above |
-| Check only the end price against the barrier | 9.227006 | With $K \ge H$ every paying end point is above $80 anyway; the clause about the path has been ignored |
+| Put $`+\tfrac12\sigma^2`$ in the exponent's drift | 9.167038 | Uses $`r - q + \tfrac12\sigma^2`$, a Black-Scholes term that does not belong here; the mirror needs the drift of the log price itself |
+| Place the image at $`H`$, not $`H^2/S`$ | 7.857856 | Reflection is multiplicative: $64 lies as far below $80 in log terms as $100 lies above |
+| Check only the end price against the barrier | 9.227006 | With $`K \ge H`$ every paying end point is above $80 anyway; the clause about the path has been ignored |
 
 ---
 
@@ -450,7 +461,7 @@ Road 2 matches the formula to six decimals. The grid, which never heard of mirro
 
 The simulation's plain call came out at 9.293414, error bar 0.138221: this set of paths runs slightly rich, and the knock-out estimates share that luck. The continuous knock-out, 9.192604, sits well inside one error bar of 9.133306. The knock-in is the sharper test, since it pays on few paths: 0.100810 plus or minus 0.011862 against 0.093699.
 
-The **monitoring bias** is measured on the same paths, so the luck cancels. The daily contract is worth 0.019080 more, error bar 0.004469, and the daily knock-in, 0.081730, is that much cheaper. Shifting the barrier down by $e^{-0.5826\,\sigma\sqrt{1/252}}$ and reusing the continuous formula predicts 0.018117, inside the error bar; that shift is the subject of [Daily monitoring](03-discrete-monitoring-correction.md).
+The **monitoring bias** is measured on the same paths, so the luck cancels. The daily contract is worth 0.019080 more, error bar 0.004469, and the daily knock-in, 0.081730, is that much cheaper. Shifting the barrier down by $`e^{-0.5826\,\sigma\sqrt{1/252}}`$ and reusing the continuous formula predicts 0.018117, inside the error bar; that shift is the subject of [Daily monitoring](03-discrete-monitoring-correction.md).
 
 ### Rust
 
@@ -690,9 +701,9 @@ The two outputs are identical line for line.
 Lean proves in-out parity, the Step 3 density match and the reflection price, for every market meeting the conditions in When it holds.
 
 - In any model where "touched the barrier" can be priced, the knock-in plus the knock-out costs exactly one plain call.
-- Take positive $\sigma$ and $T$, and multiply the driftless touched density $p_0(2b - x)$ by the drift's likelihood ratio. Then the result is $e^{2\nu b/\sigma^2}\, p_\nu(x - 2b)$ at every end point $x$.
-- Suppose $0 < H < S$ and $H \le K$, with $\sigma$ and $T$ positive. Then pricing with the untouched-path density gives $C_{\text{do}} = C(S) - (H/S)^{2\nu/\sigma^2} C(H^2/S)$.
-- On the house market, the image spot is 64 and $\nu$ is 0.01. So the exponent $2\nu/\sigma^2$ is one half.
+- Take positive $`\sigma`$ and $`T`$, and multiply the driftless touched density $`p_0(2b - x)`$ by the drift's likelihood ratio. Then the result is $`e^{2\nu b/\sigma^2}\, p_\nu(x - 2b)`$ at every end point $`x`$.
+- Suppose $`0 < H < S`$ and $`H \le K`$, with $`\sigma`$ and $`T`$ positive. Then pricing with the untouched-path density gives $`C_{\text{do}} = C(S) - (H/S)^{2\nu/\sigma^2} C(H^2/S)`$.
+- On the house market, the image spot is 64 and $`\nu`$ is 0.01. So the exponent $`2\nu/\sigma^2`$ is one half.
 
 The driftless mirror, the call prices in dollars, the grid and the simulation are left to the Python and Rust checks.
 
@@ -887,7 +898,7 @@ example : 2 * 2 * 2 = 8 := by decide
 >
 > Smaller traps:
 > - **Leaving out the reflection weight.** Gives 9.122247. The error is small here and does not show at the barrier, where the answer is zero either way, so it survives casual testing.
-> - **Reusing the exponent from another convention.** Textbooks write the formula with $\lambda = (r - q + \tfrac12\sigma^2)/\sigma^2$ and the weight split as $(H/S)^{2\lambda}$ and $(H/S)^{2\lambda - 2}$. Mixing the two conventions gives 9.167038.
+> - **Reusing the exponent from another convention.** Textbooks write the formula with $`\lambda = (r - q + \tfrac12\sigma^2)/\sigma^2`$ and the weight split as $`(H/S)^{2\lambda}`$ and $`(H/S)^{2\lambda - 2}`$. Mixing the two conventions gives 9.167038.
 > - **Pricing a daily contract with the continuous formula.** Undercharges by 0.019080 here, and by far more when the barrier is close.
 > - **Breaking parity with small print.** A rebate paid on knock-out, or a different watching rule on the in and out legs, means the pair no longer pays one plain call.
 
@@ -903,13 +914,13 @@ example : 2 * 2 * 2 = 8 := by decide
 - **The extreme itself.** An option paying on the lowest or highest price reached is a lookback: [Lookback options](06-lookback-options.md). Solving for the barrier or volatility behind a quoted price: [Barrier inverses](07-barrier-inverses-level-and-volatility.md).
 
 > **Say it back**
-> A barrier option is a plain option that dies (knock-out) or is born (knock-in) the first time the share touches a set level. Every path touches or does not, so the in and the out together cost one plain option, in any model. In the Black-Scholes model the touched paths mirror other paths across the barrier, with a weight for drift, so the knock-out is the plain call minus a weighted call started from the image spot $H^2/S$. For Acme with a barrier at $80 that is 9.227006 minus 0.093699, giving 9.133306. A grid with no mirror and a simulation with continuous watching agree; a contract watched only at daily closes is worth a little more.
+> A barrier option is a plain option that dies (knock-out) or is born (knock-in) the first time the share touches a set level. Every path touches or does not, so the in and the out together cost one plain option, in any model. In the Black-Scholes model the touched paths mirror other paths across the barrier, with a weight for drift, so the knock-out is the plain call minus a weighted call started from the image spot $`H^2/S`$. For Acme with a barrier at $80 that is 9.227006 minus 0.093699, giving 9.133306. A grid with no mirror and a simulation with continuous watching agree; a contract watched only at daily closes is worth a little more.
 
 ---
 
 ## What this builds on
 
-- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the plain call $C(x)$ that appears twice in the formula, once at today's price and once at the image spot.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the plain call $`C(x)`$ that appears twice in the formula, once at today's price and once at the image spot.
 - [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the "same payoff, same price" argument that in-out parity repeats with a different pair.
 - [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the driftless mirror of Step 2 and the law of the running minimum.
 - [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulated paths, averages and error bars, as used in road 4.

@@ -26,46 +26,54 @@ To scale: 250 px per unit of dial, 180 px per unit of share. Each column is one 
 
 ## The formula
 
-A map $x_{n+1} = g(x_n)$ turns this summer's value into next summer's ([Iteration](01-iteration-and-cobweb-plots.md)). The logistic map is
+A map $`x_{n+1} = g(x_n)`$ turns this summer's value into next summer's ([Iteration](01-iteration-and-cobweb-plots.md)). The logistic map is
 
-$$x_{n+1} = f(x_n) = r\,x_n\,(1 - x_n).$$
+```math
+x_{n+1} = f(x_n) = r\,x_n\,(1 - x_n).
+```
 
 **Read it aloud:** next summer's share is the dial, times this summer's share, times the food still free.
 
-A **2-cycle** is a pair of shares the map swaps, $f(x_-) = x_+$ and $f(x_+) = x_-$:
+A **2-cycle** is a pair of shares the map swaps, $`f(x_-) = x_+`$ and $`f(x_+) = x_-`$:
 
-$$x_\pm = \frac{r + 1 \pm \sqrt{(r+1)(r-3)}}{2r}.$$
+```math
+x_\pm = \frac{r + 1 \pm \sqrt{(r+1)(r-3)}}{2r}.
+```
 
 **Read it aloud:** two shares either side of (r + 1)/(2r), real only once the dial passes 3.
 
-The cycle's **multiplier** $m$ is the factor a small error is multiplied by over one lap of the cycle:
+The cycle's **multiplier** $`m`$ is the factor a small error is multiplied by over one lap of the cycle:
 
-$$m = f'(x_-)\,f'(x_+) = 4 + 2r - r^2, \qquad \text{the cycle attracts while } |m| < 1.$$
+```math
+m = f'(x_-)\,f'(x_+) = 4 + 2r - r^2, \qquad \text{the cycle attracts while } |m| < 1.
+```
 
 **Read it aloud:** multiply the slopes at the two cycle points; between −1 and 1, errors shrink every lap.
 
 The later splitting dials have no closed form, but their gaps shrink by a fixed ratio:
 
-$$\delta = \lim_{k \to \infty} \frac{r_k - r_{k-1}}{r_{k+1} - r_k} = 4.669\ldots$$
+```math
+\delta = \lim_{k \to \infty} \frac{r_k - r_{k-1}}{r_{k+1} - r_k} = 4.669\ldots
+```
 
 **Read it aloud:** each gap between splits, divided by the next gap, settles on Feigenbaum's constant.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_n$, $n$ | the share in summer $n$; $x_{n+1}$ is the next summer's | 0.2 at the start | more breeders, less food |
-| $r$ | the breeding dial | 3.2 | longer cycles, then chaos |
-| $f$, $f'$ | the map, and its slope $f'(x) = r(1 - 2x)$ | −0.083485 and −1.916515 on the cycle | steeper, errors grow |
-| $x^*$ | the steady share $1 - 1/r$, a fixed point | 0.6875, slope −1.2 | repels harder |
-| $x_-$, $x_+$ | the two shares of the 2-cycle | 0.513045 and 0.799455 | they spread apart |
-| $m$ | the multiplier: error growth per lap | 0.16 | falls through −1 at 3.449490 |
-| $r_k$, $k$ | the dial where period 2^k takes over, $k$ counting splits | 3, 3.449490, 3.544090, 3.564407 | — |
-| $\delta$ | Feigenbaum's constant, the limit of gap ratios | 4.669 | — |
+| $`x_n`$, $`n`$ | the share in summer $`n`$; $`x_{n+1}`$ is the next summer's | 0.2 at the start | more breeders, less food |
+| $`r`$ | the breeding dial | 3.2 | longer cycles, then chaos |
+| $`f`$, $`f'`$ | the map, and its slope $`f'(x) = r(1 - 2x)`$ | −0.083485 and −1.916515 on the cycle | steeper, errors grow |
+| $`x^*`$ | the steady share $`1 - 1/r`$, a fixed point | 0.6875, slope −1.2 | repels harder |
+| $`x_-`$, $`x_+`$ | the two shares of the 2-cycle | 0.513045 and 0.799455 | they spread apart |
+| $`m`$ | the multiplier: error growth per lap | 0.16 | falls through −1 at 3.449490 |
+| $`r_k`$, $`k`$ | the dial where period 2^k takes over, $`k`$ counting splits | 3, 3.449490, 3.544090, 3.564407 | — |
+| $`\delta`$ | Feigenbaum's constant, the limit of gap ratios | 4.669 | — |
 
 ### When it holds
 
 - **A dial between 0 and 4.** The graph of f is a hump whose top, at x = 1/2, has height r/4. Above 4 that top passes 1; the next share is negative and runs away.
 - **A dial above 3 for the 2-cycle to exist.** At 2.8, (r + 1)(r − 3) is −0.76: no real cycle, and the share settles on 0.642857.
-- **A dial below 3.449490 for it to hold.** At 3.5 the formula gives 0.428571 and 0.857143, but $m$ = −1.25, so the share moves on to four values.
+- **A dial below 3.449490 for it to hold.** At 3.5 the formula gives 0.428571 and 0.857143, but $`m`$ = −1.25, so the share moves on to four values.
 - **One smooth hump with a rounded top, for 4.669.** A flatter top doubles at a different ratio.
 - **Separate generations.** The continuous law of [Logistic growth](../01-Rate%20Equations/07-logistic-growth.md) never oscillates: a flow on a line (a share changing smoothly in time) cannot overshoot a rest point (a steady share).
 
@@ -75,45 +83,49 @@ $$\delta = \lim_{k \to \infty} \frac{r_k - r_{k-1}}{r_{k+1} - r_k} = 4.669\ldots
 
 ### Step 0: a 2-cycle is a fixed point of the map applied twice
 
-A share that returns every second summer solves $f(f(x)) = x$. That is the question of [Fixed points of a map](02-fixed-points-of-a-map.md), asked of the map applied twice, with its test: a fixed point attracts when the slope there lies between −1 and 1.
+A share that returns every second summer solves $`f(f(x)) = x`$. That is the question of [Fixed points of a map](02-fixed-points-of-a-map.md), asked of the map applied twice, with its test: a fixed point attracts when the slope there lies between −1 and 1.
 
 ### Step 1: the steady share stops attracting at 3
 
-$x = rx(1-x)$ gives $x = 0$ or $x^* = 1 - 1/r$, where the slope is $2 - r$. That lies between −1 and 1 only for dials from 1 to 3. At 3.2 the steady share 0.6875 has slope −1.2: an error flips sign and grows by a fifth each summer.
+$`x = rx(1-x)`$ gives $`x = 0`$ or $`x^* = 1 - 1/r`$, where the slope is $`2 - r`$. That lies between −1 and 1 only for dials from 1 to 3. At 3.2 the steady share 0.6875 has slope −1.2: an error flips sign and grows by a fifth each summer.
 
 ### Step 2: divide out the fixed points, and a quadratic is left
 
-$f(f(x)) = x$ has degree 4. Both fixed points solve it, so dividing them out leaves
+$`f(f(x)) = x`$ has degree 4. Both fixed points solve it, so dividing them out leaves
 
-$$r^2 x^2 - r(r+1)\,x + (r + 1) = 0,$$
+```math
+r^2 x^2 - r(r+1)\,x + (r + 1) = 0,
+```
 
-whose roots add to $(r+1)/r$ and multiply to $(r+1)/r^2$. [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) gives $x_\pm$.
+whose roots add to $`(r+1)/r`$ and multiply to $`(r+1)/r^2`$. [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) gives $`x_\pm`$.
 
 <details>
 <summary>The algebra behind this</summary>
 
-With $f(x) = rx - rx^2$, $f(f(x)) - x = -r^3x^4 + 2r^3x^3 - (r^3 + r^2)x^2 + (r^2 - 1)x$. This equals $-x\,(rx - r + 1)\,(r^2x^2 - r(r+1)x + r + 1)$; multiply back to confirm. The discriminant is $r^2(r+1)^2 - 4r^2(r+1) = r^2(r+1)(r-3)$.
+With $`f(x) = rx - rx^2`$, $`f(f(x)) - x = -r^3x^4 + 2r^3x^3 - (r^3 + r^2)x^2 + (r^2 - 1)x`$. This equals $`-x\,(rx - r + 1)\,(r^2x^2 - r(r+1)x + r + 1)`$; multiply back to confirm. The discriminant is $`r^2(r+1)^2 - 4r^2(r+1) = r^2(r+1)(r-3)`$.
 
 </details>
 
 ### Step 3: the chain rule turns two slopes into one verdict
 
-The slope of $f(f(x))$ at $x_-$ is the slope at $f(x_-) = x_+$ times the slope at $x_-$: that product is $m$. Using the sum and product from Step 2,
+The slope of $`f(f(x))`$ at $`x_-`$ is the slope at $`f(x_-) = x_+`$ times the slope at $`x_-`$: that product is $`m`$. Using the sum and product from Step 2,
 
-$$m = r^2(1 - 2x_-)(1 - 2x_+) = r^2\Big(1 - \tfrac{2(r+1)}{r} + \tfrac{4(r+1)}{r^2}\Big) = 4 + 2r - r^2.$$
+```math
+m = r^2(1 - 2x_-)(1 - 2x_+) = r^2\Big(1 - \tfrac{2(r+1)}{r} + \tfrac{4(r+1)}{r^2}\Big) = 4 + 2r - r^2.
+```
 
 At 3.2 one slope, −1.916515, is steeper than −1, yet the product is 0.16: an error shrinks to 16% of itself every two summers.
 
 <details>
 <summary>Detailed proof: the 2-cycle attracts when |m| &lt; 1</summary>
 
-Let $F(x) = f(f(x))$, so $F(x_-) = x_-$ and $F'(x_-) = m$. By Taylor's theorem, $F(x_- + e) = x_- + m e + R(e)$ with $|R(e)| \le C e^2$ for $|e| \le 1$, the constant C bounding half of $|F''|$ within 1 of $x_-$. Pick a number q with $|m| < q < 1$ and $\varepsilon = \min(1, (q - |m|)/C)$. If $|e_0| < \varepsilon$ then $|e_1| \le |m||e_0| + C e_0^2 \le q|e_0|$, and by induction $|e_j| \le q^j|e_0| \to 0$. The odd summers then tend to $f(x_-) = x_+$ by continuity. With $|m| > 1$ the same estimate shows small errors grow.
+Let $`F(x) = f(f(x))`$, so $`F(x_-) = x_-`$ and $`F'(x_-) = m`$. By Taylor's theorem, $`F(x_- + e) = x_- + m e + R(e)`$ with $`|R(e)| \le C e^2`$ for $`|e| \le 1`$, the constant C bounding half of $`|F''|`$ within 1 of $`x_-`$. Pick a number q with $`|m| < q < 1`$ and $`\varepsilon = \min(1, (q - |m|)/C)`$. If $`|e_0| < \varepsilon`$ then $`|e_1| \le |m||e_0| + C e_0^2 \le q|e_0|`$, and by induction $`|e_j| \le q^j|e_0| \to 0`$. The odd summers then tend to $`f(x_-) = x_+`$ by continuity. With $`|m| > 1`$ the same estimate shows small errors grow.
 
 </details>
 
 ### Step 4: the cycle is born at 3 and breaks at 1 + √6
 
-$m = 1$ gives $r^2 - 2r - 3 = 0$, so $r = 3$: the cycle is born where the steady share breaks. $m = -1$ gives $r^2 - 2r - 5 = 0$, so $r = 1 + \sqrt 6$ = 3.449490. Past it the cycle repels the same way, and the share alternates around each of its two points: period 4.
+$`m = 1`$ gives $`r^2 - 2r - 3 = 0`$, so $`r = 3`$: the cycle is born where the steady share breaks. $`m = -1`$ gives $`r^2 - 2r - 5 = 0`$, so $`r = 1 + \sqrt 6`$ = 3.449490. Past it the cycle repels the same way, and the share alternates around each of its two points: period 4.
 
 ### Step 5: every split repeats Step 4, and the gaps shrink geometrically
 
@@ -128,7 +140,7 @@ Near the pile-up, the map applied twice, seen on a small window at the hump's to
 
 </details>
 
-A second road: at **superstable** dials the cycle passes through the top, $x = 1/2$, where the slope is 0. Newton's method on the dial (follow the tangent to zero, repeat) finds them: 2, 3.236068, 3.498562, 3.554641, 3.566667, 3.569244, 3.569795, 3.569913, 3.569939. Their gap ratios run 4.7089 … 4.6692, and they pile up at the same 3.569946.
+A second road: at **superstable** dials the cycle passes through the top, $`x = 1/2`$, where the slope is 0. Newton's method on the dial (follow the tangent to zero, repeat) finds them: 2, 3.236068, 3.498562, 3.554641, 3.566667, 3.569244, 3.569795, 3.569913, 3.569939. Their gap ratios run 4.7089 … 4.6692, and they pile up at the same 3.569946.
 
 ---
 
@@ -152,9 +164,9 @@ The orchard swings between 51% and 80% of its maximum forever, and a disturbance
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Solving $f(x) = x$ for the long run | 0.6875, slope −1.2 | it repels; the share never sits there |
-| Stability from one slope | $f'$(0.799455) = −1.916515 | a cycle's verdict is the product, 0.16 |
-| The 2-cycle formula at 3.5 | 0.428571, 0.857143, $m$ = −1.25 | it exists but repels |
+| Solving $`f(x) = x`$ for the long run | 0.6875, slope −1.2 | it repels; the share never sits there |
+| Stability from one slope | $`f'`$(0.799455) = −1.916515 | a cycle's verdict is the product, 0.16 |
+| The 2-cycle formula at 3.5 | 0.428571, 0.857143, $`m`$ = −1.25 | it exists but repels |
 | The formula at 2.8 | (r + 1)(r − 3) = −0.76 | no real cycle below 3 |
 
 The code prints all four.
@@ -365,11 +377,11 @@ ALL CHECKS PASS
 
 Lean proves the 2-cycle facts for every dial between 3 and 1 + √6, and the worked numbers at three dials.
 
-- Take a dial r with 3 < r < 1 + √6. Then the steady share $x^*$ is a fixed point whose slope has size above 1, so it repels.
-- For those dials, $x_-$ and $x_+$ are two different shares, and f swaps them.
-- For those dials, every start close enough to $x_-$ is pulled onto the cycle. Even summers tend to $x_-$, odd summers to $x_+$.
-- Take any dial above 3. Then the slopes at $x_-$ and $x_+$ multiply to $m = 4 + 2r - r^2$.
-- Take a dial between 0 and 4. Then $|m| < 1$ exactly when 3 < r < 1 + √6.
+- Take a dial r with 3 < r < 1 + √6. Then the steady share $`x^*`$ is a fixed point whose slope has size above 1, so it repels.
+- For those dials, $`x_-`$ and $`x_+`$ are two different shares, and f swaps them.
+- For those dials, every start close enough to $`x_-`$ is pulled onto the cycle. Even summers tend to $`x_-`$, odd summers to $`x_+`$.
+- Take any dial above 3. Then the slopes at $`x_-`$ and $`x_+`$ multiply to $`m = 4 + 2r - r^2`$.
+- Take a dial between 0 and 4. Then $`|m| < 1`$ exactly when 3 < r < 1 + √6.
 - At 3.2 the steady share 0.6875 is a fixed point, and its slope 2 − r is −1.2.
 - At 3.2, (r + 1)(r − 3) is 0.84 and m is 0.16. The cycle shares add to 1.3125 and multiply to 0.41015625.
 - At 3.5, f swaps 3/7 and 6/7 exactly, but m is −1.25.

@@ -40,44 +40,50 @@ The seven marks are the path counts the code prints, not an even scale: the firs
 
 ## The formula
 
-Notation first, in words. A hat over a letter means the number was worked out from a sample rather than known exactly. A subscript says how big the sample was, so $\widehat{C}_n$ is the estimated price after $n$ futures. A superscript in brackets labels which future, so the ending price in the first future is written $S_T^{(1)}$.
+Notation first, in words. A hat over a letter means the number was worked out from a sample rather than known exactly. A subscript says how big the sample was, so $`\widehat{C}_n`$ is the estimated price after $`n`$ futures. A superscript in brackets labels which future, so the ending price in the first future is written $`S_T^{(1)}`$.
 
-$$\widehat{C}_n \;=\; \frac{1}{n}\sum_{i=1}^{n} e^{-rT}\max\!\left(S_T^{(i)} - K,\; 0\right)$$
+```math
+\widehat{C}_n \;=\; \frac{1}{n}\sum_{i=1}^{n} e^{-rT}\max\!\left(S_T^{(i)} - K,\; 0\right)
+```
 
-**Read it aloud:** in each of $n$ invented futures, pay the option what it owes at expiry, shrink that payment back to today's money, and average the payments.
+**Read it aloud:** in each of $`n`$ invented futures, pay the option what it owes at expiry, shrink that payment back to today's money, and average the payments.
 
 The invented ending price in one future is the geometric Brownian motion model evaluated once, at expiry, with one bell-curve draw ([Prices as geometric Brownian motion](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)):
 
-$$S_T^{(i)} \;=\; S\,\exp\!\left(\left(r - q - \tfrac12\sigma^2\right)T + \sigma\sqrt{T}\,Z_i\right)$$
+```math
+S_T^{(i)} \;=\; S\,\exp\!\left(\left(r - q - \tfrac12\sigma^2\right)T + \sigma\sqrt{T}\,Z_i\right)
+```
 
-In words: today's price, grown at the pricing world's rate for a year, then shoved sideways by one draw's worth of wiggle. The pricing world is the pretend world used for pricing, in which every asset earns the riskless rate $r$ in total, dividends included (Step 0 below).
+In words: today's price, grown at the pricing world's rate for a year, then shoved sideways by one draw's worth of wiggle. The pricing world is the pretend world used for pricing, in which every asset earns the riskless rate $`r`$ in total, dividends included (Step 0 below).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | 100.00 | rises: every future ends higher |
-| $K$ | the strike, the price the option may buy at | 100.00 | falls: fewer futures pay anything |
-| $T$ | years until expiry | 1 | rises: more room to wander |
-| $r$ | the riskless rate, continuously compounded | 5% | rises: the growth gains more than the heavier discount takes |
-| $q$ | the dividend yield paid out to shareholders | 2% | falls: dividends leak out of the ending price |
-| $e^{-rT}$ | the discount factor: what a dollar at expiry is worth today | 0.951229 | rises: every payment counts for more |
-| $\sigma$ | volatility, how jumpy Acme is. Say "sigma". | 20% | rises: the big endings get bigger, and the small ones still pay nothing |
-| $Z_i$ | one bell-curve draw per future, average 0, spread 1 | −1.314844 first | that future ends higher |
-| $S_T$ | an invented ending price, one per future | 77.649216 first | — |
-| $X_i$ | one future's payment, shrunk to today by $e^{-rT}$ | 0.000000 first | the average rises with it |
-| $n$ | how many futures are drawn | 100000 | the estimate tightens; on average it does not move |
-| $\widehat{C}_n$ | the estimate: the average of the $n$ payments | 9.187610 | — |
-| $s_n$ | the spread of the payments across futures | 13.763943 | more paths are needed for the same tightness |
-| $\widehat{\text{SE}}$ | the standard error: the typical gap between estimate and price | 0.043525 | the band widens |
+| $`S`$ | Acme's price today | 100.00 | rises: every future ends higher |
+| $`K`$ | the strike, the price the option may buy at | 100.00 | falls: fewer futures pay anything |
+| $`T`$ | years until expiry | 1 | rises: more room to wander |
+| $`r`$ | the riskless rate, continuously compounded | 5% | rises: the growth gains more than the heavier discount takes |
+| $`q`$ | the dividend yield paid out to shareholders | 2% | falls: dividends leak out of the ending price |
+| $`e^{-rT}`$ | the discount factor: what a dollar at expiry is worth today | 0.951229 | rises: every payment counts for more |
+| $`\sigma`$ | volatility, how jumpy Acme is. Say "sigma". | 20% | rises: the big endings get bigger, and the small ones still pay nothing |
+| $`Z_i`$ | one bell-curve draw per future, average 0, spread 1 | −1.314844 first | that future ends higher |
+| $`S_T`$ | an invented ending price, one per future | 77.649216 first | — |
+| $`X_i`$ | one future's payment, shrunk to today by $`e^{-rT}`$ | 0.000000 first | the average rises with it |
+| $`n`$ | how many futures are drawn | 100000 | the estimate tightens; on average it does not move |
+| $`\widehat{C}_n`$ | the estimate: the average of the $`n`$ payments | 9.187610 | — |
+| $`s_n`$ | the spread of the payments across futures | 13.763943 | more paths are needed for the same tightness |
+| $`\widehat{\text{SE}}`$ | the standard error: the typical gap between estimate and price | 0.043525 | the band widens |
 
 Two helper formulas measure the error out of the same sample: the payments' spread, and the spread of their average.
 
-$$s_n^2 = \frac{1}{n-1}\sum_{i=1}^{n}\left(X_i - \widehat{C}_n\right)^2, \qquad \widehat{\text{SE}} = \frac{s_n}{\sqrt{n}}$$
+```math
+s_n^2 = \frac{1}{n-1}\sum_{i=1}^{n}\left(X_i - \widehat{C}_n\right)^2, \qquad \widehat{\text{SE}} = \frac{s_n}{\sqrt{n}}
+```
 
 In words: see how far the payments scatter, then divide that scatter by the square root of how many were averaged. The second number, the **standard error**, is the typical gap between the estimate and the price it chases: 13.763943 over the root of 100000, which is 0.043525.
 
 ### When it holds
 
-- **The draws come from the pricing world, not the real one.** The growth inside the exponent is $r - q$ less the volatility drag $\tfrac12\sigma^2$, never anybody's forecast. Feed the same code a 10% expected return and it answers 12.433725 for a contract worth 9.227006.
+- **The draws come from the pricing world, not the real one.** The growth inside the exponent is $`r - q`$ less the volatility drag $`\tfrac12\sigma^2`$, never anybody's forecast. Feed the same code a 10% expected return and it answers 12.433725 for a contract worth 9.227006.
 - **The draws are independent of each other.** Each future is drawn fresh. If the number generator repeats or leans, the average may still look fine while the error bar becomes fiction.
 - **The payments have a finite spread.** The model guarantees one, and this sample measures it at 13.763943 dollars; the standard error formula needs that number to exist. Some heavy-tailed models produce payoffs with no finite spread, and then no honest error bar can be built this way.
 - **The error bar covers sampling only.** It answers "how much would this number move if the futures were drawn again", and nothing else. A wrong volatility shifts the price by more than any number of paths can recover.
@@ -97,19 +103,21 @@ Anything that is an average can be estimated by drawing samples and averaging th
 
 The payoff looks at a single number, the price on expiry day. Nothing in between matters, so there is no need to walk the year day by day: the model jumps straight to expiry in one step, exactly and cheaply.
 
-For Acme the exponent has two pieces. The predictable piece is 0.010000: the rate 5% minus the dividend yield 2% minus half the squared volatility, that last piece being the drag that wiggling costs. The random piece is 0.200000 times the draw — one wiggle unit, $\sigma\sqrt{T}$, per unit of draw. A draw of −1.314844 therefore ends Acme at 77.649216, where the option pays nothing.
+For Acme the exponent has two pieces. The predictable piece is 0.010000: the rate 5% minus the dividend yield 2% minus half the squared volatility, that last piece being the drag that wiggling costs. The random piece is 0.200000 times the draw — one wiggle unit, $`\sigma\sqrt{T}`$, per unit of draw. A draw of −1.314844 therefore ends Acme at 77.649216, where the option pays nothing.
 
 ### Step 2: whole numbers in, bell curve out
 
 The draws have to come from somewhere, and nothing may be imported that already knows the answer. Two steps build them out of integer arithmetic. First, a recurrence grinds out whole numbers, each from the last ([Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md)):
 
-$$a_{j+1} = \left(1664525\,a_j + 1013904223\right) \bmod 2^{32}, \qquad u_j = \frac{a_j + \tfrac12}{2^{32}}$$
+```math
+a_{j+1} = \left(1664525\,a_j + 1013904223\right) \bmod 2^{32}, \qquad u_j = \frac{a_j + \tfrac12}{2^{32}}
+```
 
-Here $a_j$ is the $j$-th whole number in the chain, and mod $2^{32}$ means keep only the remainder after dividing by $2^{32}$. Every number in that chain sits below $2^{32}$, and dividing by $2^{32}$ after nudging by a half turns it into a fraction $u_j$ strictly between 0 and 1. It must be strictly inside, because the next step takes a logarithm, and the logarithm of zero would stop the program.
+Here $`a_j`$ is the $`j`$-th whole number in the chain, and mod $`2^{32}`$ means keep only the remainder after dividing by $`2^{32}`$. Every number in that chain sits below $`2^{32}`$, and dividing by $`2^{32}`$ after nudging by a half turns it into a fraction $`u_j`$ strictly between 0 and 1. It must be strictly inside, because the next step takes a logarithm, and the logarithm of zero would stop the program.
 
 These fractions are spread evenly. Evenness is not the whole requirement: the next step treats two of them as unrelated, and a recurrence this short only imitates that. Two hundred thousand draws sit well inside where the imitation holds; a desk uses a longer-period generator.
 
-Second, the Box–Muller transform ([Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md)) bends two even fractions into two bell-curve draws. Read the first fraction as a distance from the centre, $\sqrt{-2\ln u}$, and the second as an angle, $2\pi v$. Step that far out in that direction: the two coordinates landed on are two independent bell-curve draws.
+Second, the Box–Muller transform ([Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md)) bends two even fractions into two bell-curve draws. Read the first fraction as a distance from the centre, $`\sqrt{-2\ln u}`$, and the second as an angle, $`2\pi v`$. Step that far out in that direction: the two coordinates landed on are two independent bell-curve draws.
 
 It works because a pair of independent bell curves, seen in the plane, has a density depending only on distance from the origin, and that distance's law is exactly what the logarithm produces.
 
@@ -130,24 +138,24 @@ One pass handles two futures, which is why the code counts in pairs.
 
 Two facts do all the work, and both belong to averages in general rather than to finance ([Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md)).
 
-The first: each payment is a fair draw from the very quantity being averaged, so the average of $n$ of them leans neither high nor low. Extra paths do not correct a bias, because there is none to correct.
+The first: each payment is a fair draw from the very quantity being averaged, so the average of $`n`$ of them leans neither high nor low. Extra paths do not correct a bias, because there is none to correct.
 
-The second: averaging independent numbers shrinks their scatter. Add $n$ independent draws and the squared spread adds; divide by $n$ and the squared spread divides by $n^2$. Net effect, the average's spread is one payment's spread over the square root of $n$. Four times the paths, half the error; a hundred times the paths, a tenth.
+The second: averaging independent numbers shrinks their scatter. Add $`n`$ independent draws and the squared spread adds; divide by $`n`$ and the squared spread divides by $`n^2`$. Net effect, the average's spread is one payment's spread over the square root of $`n`$. Four times the paths, half the error; a hundred times the paths, a tenth.
 
 That is the method's blessing and its curse, and the measured numbers obey it. The standard error falls from 0.435284 at 1,000 paths to 0.043525 at 100,000, a ratio of 10.001 where the law predicts exactly 10. From 25,000 to 100,000 the ratio is 1.994 against a predicted 2.
 
 <details>
 <summary>Detailed proof: no lean, and the square-root law</summary>
 
-Each payment $X_i$ is a draw from one fixed law, whose average value is the true price by Step 0. Assume one payment's squared spread is finite.
+Each payment $`X_i`$ is a draw from one fixed law, whose average value is the true price by Step 0. Assume one payment's squared spread is finite.
 
-**No lean.** The average value of a sum is the sum of the average values. Every payment has the true price as its average value, so the estimate — the payments added and divided by $n$ — has the true price as its average value too. This needs the draws to come from the right law; it does not need them to be independent.
+**No lean.** The average value of a sum is the sum of the average values. Every payment has the true price as its average value, so the estimate — the payments added and divided by $`n`$ — has the true price as its average value too. This needs the draws to come from the right law; it does not need them to be independent.
 
-**The square-root law.** For independent draws the squared spread of a sum is the sum of the squared spreads, so $n$ payments added have $n$ times one payment's squared spread. Dividing a quantity by $n$ divides its squared spread by $n$ twice over, leaving one payment's squared spread over $n$. Take square roots: the estimate's spread is one payment's spread divided by the root of $n$. Independence is essential in this step, and it is exactly what the number generator is asked to imitate.
+**The square-root law.** For independent draws the squared spread of a sum is the sum of the squared spreads, so $`n`$ payments added have $`n`$ times one payment's squared spread. Dividing a quantity by $`n`$ divides its squared spread by $`n`$ twice over, leaving one payment's squared spread over $`n`$. Take square roots: the estimate's spread is one payment's spread divided by the root of $`n`$. Independence is essential in this step, and it is exactly what the number generator is asked to imitate.
 
-**Measuring that spread from the same sample.** The sample spread $s_n^2$ divides by $n-1$ rather than $n$ because the payments are measured against their own average rather than against the unknown true price. That shrinks their apparent scatter by exactly one draw's worth. With the correction, $s_n^2$ has one payment's true squared spread as its average value.
+**Measuring that spread from the same sample.** The sample spread $`s_n^2`$ divides by $`n-1`$ rather than $`n`$ because the payments are measured against their own average rather than against the unknown true price. That shrinks their apparent scatter by exactly one draw's worth. With the correction, $`s_n^2`$ has one payment's true squared spread as its average value.
 
-**Why a band at all.** A sum of many independent draws with finite spread follows a bell curve ever more closely as the count grows, whatever shape one draw has. So for large $n$ the estimate lands within two standard errors of the true price about 95 times in 100. That is a claim about the procedure repeated, not a guarantee about one run: the band printed below either holds 9.227006 or it does not, and this one does.
+**Why a band at all.** A sum of many independent draws with finite spread follows a bell curve ever more closely as the count grows, whatever shape one draw has. So for large $`n`$ the estimate lands within two standard errors of the true price about 95 times in 100. That is a claim about the procedure repeated, not a guarantee about one run: the band printed below either holds 9.227006 or it does not, and this one does.
 
 </details>
 
@@ -171,18 +179,18 @@ The first two futures, arithmetic and all, then the answer from 100,000.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the pricing world's growth | $0.05 - 0.02 - \tfrac12 \times 0.20^2$ | 0.010000 |
-| one wiggle unit | $0.20 \times \sqrt{1}$ | 0.200000 |
+| the pricing world's growth | $`0.05 - 0.02 - \tfrac12 \times 0.20^2`$ | 0.010000 |
+| one wiggle unit | $`0.20 \times \sqrt{1}`$ | 0.200000 |
 | first draw, out of the recurrence | Box–Muller on two fractions | −1.314844 |
-| first ending price | $100 \times e^{0.010000 + 0.200000 \times (-1.314844)}$ | 77.649216 |
-| what the call pays there | $\max(77.649216 - 100,\ 0)$ | 0.000000 |
+| first ending price | $`100 \times e^{0.010000 + 0.200000 \times (-1.314844)}`$ | 77.649216 |
+| what the call pays there | $`\max(77.649216 - 100,\ 0)`$ | 0.000000 |
 | second draw, same pair | the sine instead of the cosine | 0.302461 |
-| second ending price | $100 \times e^{0.010000 + 0.200000 \times 0.302461}$ | 107.303627 |
-| what the call pays there | $\max(107.303627 - 100,\ 0)$ | 7.303627 |
-| that payment, shrunk to today | $0.951229 \times 7.303627$ | 6.947425 |
-| average of the first four payments | $(0 + 6.947425 + 34.783815 + 16.694662) / 4$ | 14.606476 |
+| second ending price | $`100 \times e^{0.010000 + 0.200000 \times 0.302461}`$ | 107.303627 |
+| what the call pays there | $`\max(107.303627 - 100,\ 0)`$ | 7.303627 |
+| that payment, shrunk to today | $`0.951229 \times 7.303627`$ | 6.947425 |
+| average of the first four payments | $`(0 + 6.947425 + 34.783815 + 16.694662) / 4`$ | 14.606476 |
 | average of all 100,000 payments | the same arithmetic, 100,000 times | **9.187610** |
-| its standard error | $13.763943 / \sqrt{100000}$ | **0.043525** |
+| its standard error | $`13.763943 / \sqrt{100000}`$ | **0.043525** |
 
 Four futures average more than $14, which is nonsense as a price: one lucky ending above $136 is carrying it. A hundred thousand futures average $9.19, give or take four cents, and that is a price.
 
@@ -200,13 +208,13 @@ A hundredfold in paths, from 1,000 to 100,000, shrank the error by 10.001. Four 
 
 ### What breaks if you drop a piece
 
-Same Acme call, right answer 9.227006. The first three mistakes run through the same 100,000 draws; the last needs no draws, because averaging the endings first replaces them with the forward, $S e^{(r-q)T}$: the pricing world's average ending price ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)).
+Same Acme call, right answer 9.227006. The first three mistakes run through the same 100,000 draws; the last needs no draws, because averaging the endings first replaces them with the forward, $`S e^{(r-q)T}`$: the pricing world's average ending price ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)).
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Simulating a 10% real-world return instead of $r - q$ | 12.433725 | A price is an average in the pricing world. Simulating a forecast prices the forecast. |
-| Dropping the $-\tfrac12\sigma^2$ drag from the growth | 10.410803 | Wiggling costs money; without the drag the average ending price overshoots the forward. |
-| Forgetting the discount $e^{-rT}$ | 9.658669 | Payments arrive in a year and were counted as today's dollars. |
+| Simulating a 10% real-world return instead of $`r - q`$ | 12.433725 | A price is an average in the pricing world. Simulating a forecast prices the forecast. |
+| Dropping the $`-\tfrac12\sigma^2`$ drag from the growth | 10.410803 | Wiggling costs money; without the drag the average ending price overshoots the forward. |
+| Forgetting the discount $`e^{-rT}`$ | 9.658669 | Payments arrive in a year and were counted as today's dollars. |
 | Averaging the futures first, then paying once | 2.896925 | That prices a forward's intrinsic value (what the call pays if Acme ends exactly at the forward), not an option. The option's upside lives in the spread that averaging destroyed. |
 
 The last row is the deepest.
@@ -217,7 +225,7 @@ The last row is the deepest.
 
 Nothing is imported that already knows the answer. The even fractions come from the recurrence above, the draws from Box–Muller, and the bell-curve area and the reference integral from Simpson's rule written out in the file.
 
-The price is reached **three independent ways**: 100,000 simulated futures, the closed formula over the hand-built bell-curve area, and the same average by fine slices. A fourth check points the sampler at a quantity the market already prices — the average discounted ending price must land near $S e^{-qT}$, which is 98.019867 — and the square-root law is measured on prefixes of the same draws.
+The price is reached **three independent ways**: 100,000 simulated futures, the closed formula over the hand-built bell-curve area, and the same average by fine slices. A fourth check points the sampler at a quantity the market already prices — the average discounted ending price must land near $`S e^{-qT}`$, which is 98.019867 — and the square-root law is measured on prefixes of the same draws.
 
 ### Python
 
@@ -621,14 +629,14 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 
 Lean proves Step 3 and the sampler check, for independent bell-curve draws and any count of futures.
 
-- Suppose the draws $Z_i$ are independent bell-curve draws. Then one payment $X_i$ has a finite spread.
-- Take the same draws and $n \ge 1$ futures. Then $\widehat{C}_n$ has the true price as its average value, so it leans neither high nor low.
-- Take the same draws and $n \ge 1$. Then the spread of $\widehat{C}_n$ is one payment's spread divided by $\sqrt{n}$.
-- Take the same draws and $n \ge 2$. Then $s_n^2$ has one payment's true squared spread as its average value.
-- Take one bell-curve draw and $T \ge 0$. Then the pricing world's average ending price is the forward, $S e^{(r-q)T}$.
-- Take the same draw. Then the average of $e^{-rT} S_T$ is the market's $S e^{-qT}$.
-- Take Acme's numbers. Then the growth is 0.01, one wiggle unit is 0.20, and $S_T = 100 e^{0.01 + 0.20 Z}$.
-- Take 1,000, 25,000 and 100,000 paths. Then $\sqrt{100000 / 1000} = 10$ and $\sqrt{100000 / 25000} = 2$.
+- Suppose the draws $`Z_i`$ are independent bell-curve draws. Then one payment $`X_i`$ has a finite spread.
+- Take the same draws and $`n \ge 1`$ futures. Then $`\widehat{C}_n`$ has the true price as its average value, so it leans neither high nor low.
+- Take the same draws and $`n \ge 1`$. Then the spread of $`\widehat{C}_n`$ is one payment's spread divided by $`\sqrt{n}`$.
+- Take the same draws and $`n \ge 2`$. Then $`s_n^2`$ has one payment's true squared spread as its average value.
+- Take one bell-curve draw and $`T \ge 0`$. Then the pricing world's average ending price is the forward, $`S e^{(r-q)T}`$.
+- Take the same draw. Then the average of $`e^{-rT} S_T`$ is the market's $`S e^{-qT}`$.
+- Take Acme's numbers. Then the growth is 0.01, one wiggle unit is 0.20, and $`S_T = 100 e^{0.01 + 0.20 Z}`$.
+- Take 1,000, 25,000 and 100,000 paths. Then $`\sqrt{100000 / 1000} = 10`$ and $`\sqrt{100000 / 25000} = 2`$.
 
 The recurrence, Box–Muller, the simulated numbers, the 95-in-100 band and the formula's 9.227006 are left to the Python and Rust checks.
 
@@ -933,7 +941,7 @@ example : 5000 - 1000 = 4000 ∧ 100000 - 75000 = 25000 ∧ 100000 - 10000 = 900
 > [!warning]
 > **Reading the simulated number as the price.** It estimates the price, and it arrives with a measured error. This run says 9.187610 with a standard error of 0.043525; the true answer is 9.227006. Quote it without its band and the four-cent gap looks like a bug rather than the ordinary noise of a hundred thousand draws.
 >
-> - **Simulating the real world.** The drift must be the pricing world's $r - q$ less the drag, never a return forecast. A 10% drift turns 9.227006 into 12.433725, and the number still looks like a price.
+> - **Simulating the real world.** The drift must be the pricing world's $`r - q`$ less the drag, never a return forecast. A 10% drift turns 9.227006 into 12.433725, and the number still looks like a price.
 > - **More paths to fix a bias.** Paths cure noise, not error. If the drift, the discount or the payoff is wrong, a billion paths converge beautifully on the wrong answer. The first three "what breaks" numbers are averages of 100,000 clean draws.
 > - **Averaging the futures instead of the payoffs.** Collapse the endings to their average first and the option's whole value disappears: 2.896925 instead of 9.227006. The upside lives in the spread, and averaging kills the spread.
 > - **Trusting a band built on too few paths.** At 1,000 paths this code reported 9.362522 with a band from 8.491954 to 10.233090: wide, lopsided and honest. Narrow bands come from paths, or from the next card's tricks, never from wishing.

@@ -26,44 +26,52 @@ One unit of time is 5 pixels and one kilowatt is 30. An open circle is the value
 
 ## The formula
 
-Notation first. $\lambda$ is Lebesgue measure, the length of a set on the line ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). "Almost every point", written a.e., means every point outside a set of length zero. A function is **locally integrable** when the integral of its absolute value over every bounded interval is finite; $L^1_{\mathrm{loc}}$ is the collection of them. The **window average** of $f$ at $x$ with half-width $h$ is
+Notation first. $`\lambda`$ is Lebesgue measure, the length of a set on the line ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). "Almost every point", written a.e., means every point outside a set of length zero. A function is **locally integrable** when the integral of its absolute value over every bounded interval is finite; $`L^1_{\mathrm{loc}}`$ is the collection of them. The **window average** of $`f`$ at $`x`$ with half-width $`h`$ is
 
-$$A_h f(x) = \frac{1}{2h}\int_{x-h}^{x+h} f\,d\lambda .$$
+```math
+A_h f(x) = \frac{1}{2h}\int_{x-h}^{x+h} f\,d\lambda .
+```
 
 **Read it aloud:** the total of f over the window from x − h to x + h, divided by the window's length.
 
-$$f \in L^1_{\mathrm{loc}} \quad\Longrightarrow\quad \lim_{h \to 0}\ \frac{1}{2h}\int_{x-h}^{x+h} \lvert f(s) - f(x)\rvert\,ds = 0 \ \text{ for a.e. } x, \qquad\text{hence}\qquad \lim_{h\to 0} A_h f(x) = f(x) \ \text{ for a.e. } x .$$
+```math
+f \in L^1_{\mathrm{loc}} \quad\Longrightarrow\quad \lim_{h \to 0}\ \frac{1}{2h}\int_{x-h}^{x+h} \lvert f(s) - f(x)\rvert\,ds = 0 \ \text{ for a.e. } x, \qquad\text{hence}\qquad \lim_{h\to 0} A_h f(x) = f(x) \ \text{ for a.e. } x .
+```
 
 **Read it aloud:** for a locally integrable f, at almost every point the average distance between f and its value there, over a shrinking window, tends to zero; so the window averages tend to that value.
 
-A point where the first limit is zero is a **Lebesgue point** of $f$. The theorem says almost every point is one. The first statement is stronger than the second, since $\lvert A_h f(x) - f(x)\rvert$ is at most the average of $\lvert f(s) - f(x)\rvert$.
+A point where the first limit is zero is a **Lebesgue point** of $`f`$. The theorem says almost every point is one. The first statement is stronger than the second, since $`\lvert A_h f(x) - f(x)\rvert`$ is at most the average of $`\lvert f(s) - f(x)\rvert`$.
 
-Two tools carry the proof. The **maximal function** takes the largest window average of $\lvert f\rvert$ at each point:
+Two tools carry the proof. The **maximal function** takes the largest window average of $`\lvert f\rvert`$ at each point:
 
-$$Mf(x) = \sup_{h > 0}\ \frac{1}{2h}\int_{x-h}^{x+h} \lvert f\rvert\,d\lambda .$$
+```math
+Mf(x) = \sup_{h > 0}\ \frac{1}{2h}\int_{x-h}^{x+h} \lvert f\rvert\,d\lambda .
+```
 
-Write $\|f\|_1 = \int \lvert f\rvert\,d\lambda$ for the total of $\lvert f\rvert$ ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)). The **Hardy-Littlewood maximal inequality** bounds how much of the line $Mf$ can make large:
+Write $`\|f\|_1 = \int \lvert f\rvert\,d\lambda`$ for the total of $`\lvert f\rvert`$ ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)). The **Hardy-Littlewood maximal inequality** bounds how much of the line $`Mf`$ can make large:
 
-$$\lambda\{x : Mf(x) > \alpha\} \;\le\; \frac{3}{\alpha}\,\|f\|_1 \qquad\text{for every } f \in L^1 \text{ and } \alpha > 0 .$$
+```math
+\lambda\{x : Mf(x) > \alpha\} \;\le\; \frac{3}{\alpha}\,\|f\|_1 \qquad\text{for every } f \in L^1 \text{ and } \alpha > 0 .
+```
 
 **Read it aloud:** the length of the set where some window average of |f| beats α is at most three times the total of |f|, divided by α.
 
-A consequence names the theorem. With $F(x) = \int_0^x f\,d\lambda$, the running total, $F$ has slope $f(x)$ at every Lebesgue point: integrating and then differentiating returns $f$ almost everywhere.
+A consequence names the theorem. With $`F(x) = \int_0^x f\,d\lambda`$, the running total, $`F`$ has slope $`f(x)`$ at every Lebesgue point: integrating and then differentiating returns $`f`$ almost everywhere.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $f_N$ | the function whose values are sought; f cut off outside (−N, N) | demand in kW: 2 + t^2/200 before minute 20, 5 until 45, 3 after; glitch 100 at t = 30 | — |
-| $t$, $x$, $s$, $y$, $z$, $c$ | points on the line: an instant, a general point, the variable inside an integral; the proof's nearby points and a window's centre | t = 10, 20, 30, 45, 52 minutes | — |
-| $h$, $h_x$, $h_0$ | half-width of the window; a witness window's; a width below which a continuous function stays close | 4, 2, 1, 0.25, 0.001 minutes | wider window, more smoothing, larger error |
-| $A_h f(x)$ | window average of f at x | 4.450833 kW at t = 20, h = 1 | — |
-| $F$ | running total: integral of f from 0 | energy in kW-minutes | its slope is f at Lebesgue points |
-| $\lambda$, $\lVert f\rVert_1$, $L^1$, $L^1_{\mathrm{loc}}$ | length of a set; total of \|f\|; functions with finite total; finite total on every bounded interval | remainder total 1.5 kW-minutes | larger total, larger bound |
-| $\eta$, $q$, $r$, $N$, $k$, $m$, $n$ | a small margin; a rational number; an interval's length; whole-number counters | — | — |
-| $Mf$ | maximal function: largest window average of \|f\| | for a block of height 1 on [0, 1], 1/(2x) at x > 1 | — |
-| $\alpha$ | the level the maximal function must beat | 0.2 kW | higher level, smaller set |
-| $g$, $\varphi$, $\delta$, $\varepsilon$ | the remainder f − φ; a continuous stand-in for f; ramp width; the tolerance for the remainder's total | ramps over [20, 21] and [45, 46], δ = 1 | smaller δ, smaller remainder |
-| $I$, $I_1$, $I_k$, $J$, $J_j$, $3J$, $W_x$, $E$, $K$, $C$, $K_N$ | windows; chosen disjoint windows; J tripled about its centre; a witness window at x; the set where Mf beats α; closed bounded pieces of it | 114 witness windows, 2 chosen | — |
-| $\Theta f(x)$ | the spread: the largest limit of the average of \|f − f(x)\| as h shrinks | 0.5 at t = 20, 95 at t = 30, 0 at t = 10 | zero exactly at Lebesgue points |
+| $`f`$, $`f_N`$ | the function whose values are sought; f cut off outside (−N, N) | demand in kW: 2 + t^2/200 before minute 20, 5 until 45, 3 after; glitch 100 at t = 30 | — |
+| $`t`$, $`x`$, $`s`$, $`y`$, $`z`$, $`c`$ | points on the line: an instant, a general point, the variable inside an integral; the proof's nearby points and a window's centre | t = 10, 20, 30, 45, 52 minutes | — |
+| $`h`$, $`h_x`$, $`h_0`$ | half-width of the window; a witness window's; a width below which a continuous function stays close | 4, 2, 1, 0.25, 0.001 minutes | wider window, more smoothing, larger error |
+| $`A_h f(x)`$ | window average of f at x | 4.450833 kW at t = 20, h = 1 | — |
+| $`F`$ | running total: integral of f from 0 | energy in kW-minutes | its slope is f at Lebesgue points |
+| $`\lambda`$, $`\lVert f\rVert_1`$, $`L^1`$, $`L^1_{\mathrm{loc}}`$ | length of a set; total of \|f\|; functions with finite total; finite total on every bounded interval | remainder total 1.5 kW-minutes | larger total, larger bound |
+| $`\eta`$, $`q`$, $`r`$, $`N`$, $`k`$, $`m`$, $`n`$ | a small margin; a rational number; an interval's length; whole-number counters | — | — |
+| $`Mf`$ | maximal function: largest window average of \|f\| | for a block of height 1 on [0, 1], 1/(2x) at x > 1 | — |
+| $`\alpha`$ | the level the maximal function must beat | 0.2 kW | higher level, smaller set |
+| $`g`$, $`\varphi`$, $`\delta`$, $`\varepsilon`$ | the remainder f − φ; a continuous stand-in for f; ramp width; the tolerance for the remainder's total | ramps over [20, 21] and [45, 46], δ = 1 | smaller δ, smaller remainder |
+| $`I`$, $`I_1`$, $`I_k`$, $`J`$, $`J_j`$, $`3J`$, $`W_x`$, $`E`$, $`K`$, $`C`$, $`K_N`$ | windows; chosen disjoint windows; J tripled about its centre; a witness window at x; the set where Mf beats α; closed bounded pieces of it | 114 witness windows, 2 chosen | — |
+| $`\Theta f(x)`$ | the spread: the largest limit of the average of \|f − f(x)\| as h shrinks | 0.5 at t = 20, 95 at t = 30, 0 at t = 10 | zero exactly at Lebesgue points |
 
 ### When it holds
 
@@ -83,9 +91,9 @@ For a continuous function the averages converge at every point. An integrable fu
 
 ### Step 1: the continuous case, and the smooth part of the meter
 
-If $\varphi$ is continuous at $x$, then for small $h$ every value on the window is within any chosen margin of $\varphi(x)$, so the average of $\lvert\varphi(s) - \varphi(x)\rvert$ is within that margin of zero. Every point is a Lebesgue point.
+If $`\varphi`$ is continuous at $`x`$, then for small $`h`$ every value on the window is within any chosen margin of $`\varphi(x)`$, so the average of $`\lvert\varphi(s) - \varphi(x)\rvert`$ is within that margin of zero. Every point is a Lebesgue point.
 
-On the demand curve at t = 10, the window average is $2.5 + h^2/600$, worked from the running total $F(t) = 2t + t^3/600$. The code reads 2.526667 at h = 4, 2.501667 at h = 1 and 2.500000 at h = 0.001, and the average distance from 2.5 is exactly h/20: 0.050000 at h = 1, 0.000050 at h = 0.001.
+On the demand curve at t = 10, the window average is $`2.5 + h^2/600`$, worked from the running total $`F(t) = 2t + t^3/600`$. The code reads 2.526667 at h = 4, 2.501667 at h = 1 and 2.500000 at h = 0.001, and the average distance from 2.5 is exactly h/20: 0.050000 at h = 1, 0.000050 at h = 0.001.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -101,64 +109,68 @@ Upper line: windows centred on the jump at t = 20, heading to the midpoint 4.5 k
 
 ### Step 2: the Vitali covering lemma, finite version
 
-**Lemma.** From any finite list of intervals, some of them can be chosen, pairwise disjoint, so that tripling each chosen interval about its centre covers every interval on the list. So the union has length at most $3\sum_j \lambda(J_j)$.
+**Lemma.** From any finite list of intervals, some of them can be chosen, pairwise disjoint, so that tripling each chosen interval about its centre covers every interval on the list. So the union has length at most $`3\sum_j \lambda(J_j)`$.
 
-The choice is greedy. Take the longest interval. Throw out everything that meets it. Take the longest survivor, and repeat. An interval $I$ that was thrown out met a chosen $J$ at least as long as itself. Every point of $I$ is then within $\lambda(I) \le \lambda(J)$ of a point of $J$, so within $\tfrac32\lambda(J)$ of $J$'s centre, which is inside $3J$.
+The choice is greedy. Take the longest interval. Throw out everything that meets it. Take the longest survivor, and repeat. An interval $`I`$ that was thrown out met a chosen $`J`$ at least as long as itself. Every point of $`I`$ is then within $`\lambda(I) \le \lambda(J)`$ of a point of $`J`$, so within $`\tfrac32\lambda(J)`$ of $`J`$'s centre, which is inside $`3J`$.
 
 The code runs it on 114 windows, one per grid point where the remainder's maximal function beats 0.2. The greedy choice keeps two, (20.000, 22.400) and (45.000, 49.900), of total length 7.3000. Tripled, they contain every one of the 114.
 
 ### Step 3: the maximal inequality
 
-Let $E$ be the set where $Mf > \alpha$. Each point of $E$ has a **witness window**, an open window whose average of $\lvert f\rvert$ beats $\alpha$; a slightly wider window around any nearby point still does, so $E$ is open. Take a closed bounded piece $K$ of $E$. Its witness windows cover it, and by the Heine-Borel theorem (a closed bounded set covered by open intervals is covered by finitely many of them) finitely many suffice.
+Let $`E`$ be the set where $`Mf > \alpha`$. Each point of $`E`$ has a **witness window**, an open window whose average of $`\lvert f\rvert`$ beats $`\alpha`$; a slightly wider window around any nearby point still does, so $`E`$ is open. Take a closed bounded piece $`K`$ of $`E`$. Its witness windows cover it, and by the Heine-Borel theorem (a closed bounded set covered by open intervals is covered by finitely many of them) finitely many suffice.
 
-Vitali picks disjoint windows $J_1, \dots, J_m$ among them whose triples cover $K$. Each has $\alpha\,\lambda(J_i) < \int_{J_i} \lvert f\rvert\,d\lambda$, and disjoint windows cannot use the same part of the total twice:
+Vitali picks disjoint windows $`J_1, \dots, J_m`$ among them whose triples cover $`K`$. Each has $`\alpha\,\lambda(J_i) < \int_{J_i} \lvert f\rvert\,d\lambda`$, and disjoint windows cannot use the same part of the total twice:
 
-$$\lambda(K) \le 3\sum_i \lambda(J_i) < \frac{3}{\alpha}\sum_i \int_{J_i}\lvert f\rvert\,d\lambda \le \frac{3}{\alpha}\,\|f\|_1 .$$
+```math
+\lambda(K) \le 3\sum_i \lambda(J_i) < \frac{3}{\alpha}\sum_i \int_{J_i}\lvert f\rvert\,d\lambda \le \frac{3}{\alpha}\,\|f\|_1 .
+```
 
-Closed bounded pieces fill $E$ up to any slack, by the regularity of Lebesgue measure ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), so the bound holds for $E$.
+Closed bounded pieces fill $`E`$ up to any slack, by the regularity of Lebesgue measure ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), so the bound holds for $`E`$.
 
-On the meter, $\varphi$ is the demand with each jump replaced by a straight ramp one minute wide, and $g = f - \varphi$: two triangles of total 1.5 kW-minutes. With $\alpha$ = 0.2, the grid finds $Mg > \alpha$ on about 5.70 minutes; three times the chosen lengths is 21.9000; the bound is 22.5000. Loose, and enough.
+On the meter, $`\varphi`$ is the demand with each jump replaced by a straight ramp one minute wide, and $`g = f - \varphi`$: two triangles of total 1.5 kW-minutes. With $`\alpha`$ = 0.2, the grid finds $`Mg > \alpha`$ on about 5.70 minutes; three times the chosen lengths is 21.9000; the bound is 22.5000. Loose, and enough.
 
 ### Step 4: the theorem
 
-Fix a level $\alpha > 0$ and a tolerance $\varepsilon > 0$. Pick $\varphi$ continuous, zero outside a bounded interval, with $\|f - \varphi\|_1 < \varepsilon$, and put $g = f - \varphi$. Write $\Theta f(x)$ for the spread: the largest limit, as $h$ shrinks, of the average of $\lvert f(s) - f(x)\rvert$ over the window. Since $f = \varphi + g$,
+Fix a level $`\alpha > 0`$ and a tolerance $`\varepsilon > 0`$. Pick $`\varphi`$ continuous, zero outside a bounded interval, with $`\|f - \varphi\|_1 < \varepsilon`$, and put $`g = f - \varphi`$. Write $`\Theta f(x)`$ for the spread: the largest limit, as $`h`$ shrinks, of the average of $`\lvert f(s) - f(x)\rvert`$ over the window. Since $`f = \varphi + g`$,
 
-$$\lvert f(s) - f(x)\rvert \le \lvert \varphi(s) - \varphi(x)\rvert + \lvert g(s)\rvert + \lvert g(x)\rvert .$$
+```math
+\lvert f(s) - f(x)\rvert \le \lvert \varphi(s) - \varphi(x)\rvert + \lvert g(s)\rvert + \lvert g(x)\rvert .
+```
 
-Average over the window and let $h$ shrink. The first term goes to 0 (Step 1). The second is at most $Mg(x)$. So $\Theta f(x) \le Mg(x) + \lvert g(x)\rvert$.
+Average over the window and let $`h`$ shrink. The first term goes to 0 (Step 1). The second is at most $`Mg(x)`$. So $`\Theta f(x) \le Mg(x) + \lvert g(x)\rvert`$.
 
-If $\Theta f(x) > 2\alpha$, then $Mg(x) > \alpha$ or $\lvert g(x)\rvert > \alpha$. The maximal inequality bounds the first set by $3\varepsilon/\alpha$. Markov's inequality (the length of the set where $\lvert g\rvert > \alpha$ is at most $\|g\|_1/\alpha$; [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) bounds the second by $\varepsilon/\alpha$. So the set where $\Theta f > 2\alpha$ fits inside a set of length at most $4\varepsilon/\alpha$, for every $\varepsilon$. Its length is zero.
+If $`\Theta f(x) > 2\alpha`$, then $`Mg(x) > \alpha`$ or $`\lvert g(x)\rvert > \alpha`$. The maximal inequality bounds the first set by $`3\varepsilon/\alpha`$. Markov's inequality (the length of the set where $`\lvert g\rvert > \alpha`$ is at most $`\|g\|_1/\alpha`$; [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) bounds the second by $`\varepsilon/\alpha`$. So the set where $`\Theta f > 2\alpha`$ fits inside a set of length at most $`4\varepsilon/\alpha`$, for every $`\varepsilon`$. Its length is zero.
 
-Letting $\alpha$ run through 1, 1/2, 1/3, … gives a countable union of null sets, still null. Off it, $\Theta f = 0$.
+Letting $`\alpha`$ run through 1, 1/2, 1/3, … gives a countable union of null sets, still null. Off it, $`\Theta f = 0`$.
 
-On the meter, narrower ramps shrink the bound $4\|g\|_1/\alpha$: 30.000000 for ramps one minute wide, 7.500000 at a quarter-minute, 1.875000 at 1/16, 0.029297 at 1/1024. The set being bounded, where the spread beats 2α = 0.4, is the three instants t = 20, 30 and 45, whose spreads are 0.5, 95 and 1. Three points have length zero.
+On the meter, narrower ramps shrink the bound $`4\|g\|_1/\alpha`$: 30.000000 for ramps one minute wide, 7.500000 at a quarter-minute, 1.875000 at 1/16, 0.029297 at 1/1024. The set being bounded, where the spread beats 2α = 0.4, is the three instants t = 20, 30 and 45, whose spreads are 0.5, 95 and 1. Three points have length zero.
 
 ### Step 5: Lebesgue points, and the slope of the running total
 
 At t = 20 the spread is 0.500050 at h = 0.001 from the logged 5 and from the midpoint 4.5 alike: no value makes a jump instant a Lebesgue point, though the averages converge there. At t = 30 the spread is 95.000000 from the logged 100 and 0.000000 from 5. One changed value decides whether one point is a Lebesgue point, and one point has length zero.
 
-At a Lebesgue point the running total has slope $f(x)$: the slope over $[x, x+h]$ minus $f(x)$ is the average of $f(s) - f(x)$ there, at most twice the centred average of $\lvert f(s) - f(x)\rvert$. At t = 10 the slope over 0.001 minutes is 2.500050. At t = 20 it is 5.000000 from the right and 3.999900 from the left: the energy curve has a corner there, and no derivative.
+At a Lebesgue point the running total has slope $`f(x)`$: the slope over $`[x, x+h]`$ minus $`f(x)`$ is the average of $`f(s) - f(x)`$ there, at most twice the centred average of $`\lvert f(s) - f(x)\rvert`$. At t = 10 the slope over 0.001 minutes is 2.500050. At t = 20 it is 5.000000 from the right and 3.999900 from the left: the energy curve has a corner there, and no derivative.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $\lambda$ is Lebesgue measure on $\mathbb{R}$. For $f \in L^1_{\mathrm{loc}}$, $x \in \mathbb{R}$ and $h > 0$, write $A_h f(x) = \frac{1}{2h}\int_{x-h}^{x+h} f\,d\lambda$ and $Mf(x) = \sup_{h>0} A_h\lvert f\rvert(x)$, a value in $[0, \infty]$.
+**Setting.** $`\lambda`$ is Lebesgue measure on $`\mathbb{R}`$. For $`f \in L^1_{\mathrm{loc}}`$, $`x \in \mathbb{R}`$ and $`h > 0`$, write $`A_h f(x) = \frac{1}{2h}\int_{x-h}^{x+h} f\,d\lambda`$ and $`Mf(x) = \sup_{h>0} A_h\lvert f\rvert(x)`$, a value in $`[0, \infty]`$.
 
-**Lemma 1 (Vitali, finite).** Let $I_1, \dots, I_n$ be bounded intervals of positive length. Relabel so that $\lambda(I_1) \ge \dots \ge \lambda(I_n)$. Choose $I_1$; then, for $k = 2, \dots, n$ in order, choose $I_k$ if it is disjoint from every interval already chosen. The chosen $J_1, \dots, J_m$ are pairwise disjoint by construction. If $I_k$ was not chosen, it meets some $J$ chosen before it, so $\lambda(J) \ge \lambda(I_k)$. Let $c$ be the centre of $J$ and $y \in I_k \cap J$. For $z \in I_k$: $\lvert z - c\rvert \le \lvert z - y\rvert + \lvert y - c\rvert \le \lambda(I_k) + \tfrac12\lambda(J) \le \tfrac32\lambda(J)$, so $z \in 3J$, the interval with centre $c$ and length $3\lambda(J)$. Hence $\bigcup_k I_k \subseteq \bigcup_j 3J_j$ and, by subadditivity, $\lambda(\bigcup_k I_k) \le 3\sum_j \lambda(J_j)$.
+**Lemma 1 (Vitali, finite).** Let $`I_1, \dots, I_n`$ be bounded intervals of positive length. Relabel so that $`\lambda(I_1) \ge \dots \ge \lambda(I_n)`$. Choose $`I_1`$; then, for $`k = 2, \dots, n`$ in order, choose $`I_k`$ if it is disjoint from every interval already chosen. The chosen $`J_1, \dots, J_m`$ are pairwise disjoint by construction. If $`I_k`$ was not chosen, it meets some $`J`$ chosen before it, so $`\lambda(J) \ge \lambda(I_k)`$. Let $`c`$ be the centre of $`J`$ and $`y \in I_k \cap J`$. For $`z \in I_k`$: $`\lvert z - c\rvert \le \lvert z - y\rvert + \lvert y - c\rvert \le \lambda(I_k) + \tfrac12\lambda(J) \le \tfrac32\lambda(J)`$, so $`z \in 3J`$, the interval with centre $`c`$ and length $`3\lambda(J)`$. Hence $`\bigcup_k I_k \subseteq \bigcup_j 3J_j`$ and, by subadditivity, $`\lambda(\bigcup_k I_k) \le 3\sum_j \lambda(J_j)`$.
 
-**Lemma 2 ($\{Mf > \alpha\}$ is open).** If $A_h\lvert f\rvert(x) > \alpha$ and $\lvert y - x\rvert < \eta$, the window around $y$ of half-width $h + \eta$ contains the one around $x$, so $A_{h+\eta}\lvert f\rvert(y) \ge \frac{h}{h+\eta}A_h\lvert f\rvert(x) > \alpha$ for small $\eta$.
+**Lemma 2 ($`\{Mf > \alpha\}`$ is open).** If $`A_h\lvert f\rvert(x) > \alpha`$ and $`\lvert y - x\rvert < \eta`$, the window around $`y`$ of half-width $`h + \eta`$ contains the one around $`x`$, so $`A_{h+\eta}\lvert f\rvert(y) \ge \frac{h}{h+\eta}A_h\lvert f\rvert(x) > \alpha`$ for small $`\eta`$.
 
-**Theorem 1 (Hardy-Littlewood maximal inequality).** For $f \in L^1$ and $\alpha > 0$, $\lambda\{Mf > \alpha\} \le \frac{3}{\alpha}\|f\|_1$. *Proof.* Let $E = \{Mf > \alpha\}$, open by Lemma 2, so Borel. Let $K \subseteq E$ be closed and bounded. Each $x \in K$ has an open window $W_x = (x - h_x, x + h_x)$ with $\int_{W_x}\lvert f\rvert\,d\lambda > \alpha\,\lambda(W_x)$. By Heine-Borel, finitely many $W_x$ cover $K$. Lemma 1 gives disjoint $J_1, \dots, J_m$ among them with $K \subseteq \bigcup 3J_j$. Then $\lambda(K) \le 3\sum_j\lambda(J_j) < \frac{3}{\alpha}\sum_j \int_{J_j}\lvert f\rvert\,d\lambda \le \frac3\alpha\|f\|_1$, the last step by disjointness and additivity of the integral over disjoint sets. By regularity ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), for every $\eta > 0$ there is a closed $C \subseteq E$ with $\lambda(E \setminus C) < \eta$. The sets $K_N = C \cap [-N, N]$ are closed and bounded and rise to $C$, so continuity of measure from below gives $\lambda(C) = \lim_N \lambda(K_N) \le \frac3\alpha\|f\|_1$. Hence $\lambda(E) \le \frac3\alpha\|f\|_1 + \eta$ for every $\eta > 0$.
+**Theorem 1 (Hardy-Littlewood maximal inequality).** For $`f \in L^1`$ and $`\alpha > 0`$, $`\lambda\{Mf > \alpha\} \le \frac{3}{\alpha}\|f\|_1`$. *Proof.* Let $`E = \{Mf > \alpha\}`$, open by Lemma 2, so Borel. Let $`K \subseteq E`$ be closed and bounded. Each $`x \in K`$ has an open window $`W_x = (x - h_x, x + h_x)`$ with $`\int_{W_x}\lvert f\rvert\,d\lambda > \alpha\,\lambda(W_x)`$. By Heine-Borel, finitely many $`W_x`$ cover $`K`$. Lemma 1 gives disjoint $`J_1, \dots, J_m`$ among them with $`K \subseteq \bigcup 3J_j`$. Then $`\lambda(K) \le 3\sum_j\lambda(J_j) < \frac{3}{\alpha}\sum_j \int_{J_j}\lvert f\rvert\,d\lambda \le \frac3\alpha\|f\|_1`$, the last step by disjointness and additivity of the integral over disjoint sets. By regularity ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), for every $`\eta > 0`$ there is a closed $`C \subseteq E`$ with $`\lambda(E \setminus C) < \eta`$. The sets $`K_N = C \cap [-N, N]`$ are closed and bounded and rise to $`C`$, so continuity of measure from below gives $`\lambda(C) = \lim_N \lambda(K_N) \le \frac3\alpha\|f\|_1`$. Hence $`\lambda(E) \le \frac3\alpha\|f\|_1 + \eta`$ for every $`\eta > 0`$.
 
-**Theorem 2 (Lebesgue differentiation).** For $f \in L^1_{\mathrm{loc}}$, almost every $x$ satisfies $\lim_{h\to 0}\frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds = 0$. *Proof.* First let $f \in L^1$. Put $\Theta f(x) = \limsup_{h \to 0}\frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds$. Fix $\alpha > 0$ and $\varepsilon > 0$. By density of continuous functions in $L^1$ ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md), Theorem 3), choose $\varphi$ continuous and zero outside a bounded interval with $\|f - \varphi\|_1 < \varepsilon$; put $g = f - \varphi$. The triangle inequality gives $\lvert f(s) - f(x)\rvert \le \lvert\varphi(s) - \varphi(x)\rvert + \lvert g(s)\rvert + \lvert g(x)\rvert$. Averaging over the window and taking limsup, $\Theta f(x) \le \Theta\varphi(x) + Mg(x) + \lvert g(x)\rvert$. Continuity of $\varphi$ at $x$ gives $\Theta\varphi(x) = 0$: for $\eta > 0$ some $h_0$ has $\lvert\varphi(s) - \varphi(x)\rvert < \eta$ whenever $\lvert s - x\rvert < h_0$, so the window average is below $\eta$ for $h < h_0$. Hence $\{\Theta f > 2\alpha\} \subseteq \{Mg > \alpha\} \cup \{\lvert g\rvert > \alpha\}$. By Theorem 1 the first has measure at most $3\varepsilon/\alpha$; by Markov's inequality the second, a measurable set, has measure at most $\|g\|_1/\alpha < \varepsilon/\alpha$. So the outer measure of $\{\Theta f > 2\alpha\}$ is at most $4\varepsilon/\alpha$ for every $\varepsilon > 0$, hence 0; the set is null, and measurable because Lebesgue measure is complete. The union over $\alpha = 1/k$, $k = 1, 2, \dots$, is $\{\Theta f > 0\}$, a countable union of null sets, so null. For $f \in L^1_{\mathrm{loc}}$, apply this to $f_N = f\,1_{(-N, N)} \in L^1$: for $x \in (-N+1, N-1)$ and $h < 1$ the windows lie inside $(-N, N)$, where $f_N = f$, so $\Theta f(x) = \Theta f_N(x)$. The union over $N$ of the exceptional sets is null.
+**Theorem 2 (Lebesgue differentiation).** For $`f \in L^1_{\mathrm{loc}}`$, almost every $`x`$ satisfies $`\lim_{h\to 0}\frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds = 0`$. *Proof.* First let $`f \in L^1`$. Put $`\Theta f(x) = \limsup_{h \to 0}\frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds`$. Fix $`\alpha > 0`$ and $`\varepsilon > 0`$. By density of continuous functions in $`L^1`$ ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md), Theorem 3), choose $`\varphi`$ continuous and zero outside a bounded interval with $`\|f - \varphi\|_1 < \varepsilon`$; put $`g = f - \varphi`$. The triangle inequality gives $`\lvert f(s) - f(x)\rvert \le \lvert\varphi(s) - \varphi(x)\rvert + \lvert g(s)\rvert + \lvert g(x)\rvert`$. Averaging over the window and taking limsup, $`\Theta f(x) \le \Theta\varphi(x) + Mg(x) + \lvert g(x)\rvert`$. Continuity of $`\varphi`$ at $`x`$ gives $`\Theta\varphi(x) = 0`$: for $`\eta > 0`$ some $`h_0`$ has $`\lvert\varphi(s) - \varphi(x)\rvert < \eta`$ whenever $`\lvert s - x\rvert < h_0`$, so the window average is below $`\eta`$ for $`h < h_0`$. Hence $`\{\Theta f > 2\alpha\} \subseteq \{Mg > \alpha\} \cup \{\lvert g\rvert > \alpha\}`$. By Theorem 1 the first has measure at most $`3\varepsilon/\alpha`$; by Markov's inequality the second, a measurable set, has measure at most $`\|g\|_1/\alpha < \varepsilon/\alpha`$. So the outer measure of $`\{\Theta f > 2\alpha\}`$ is at most $`4\varepsilon/\alpha`$ for every $`\varepsilon > 0`$, hence 0; the set is null, and measurable because Lebesgue measure is complete. The union over $`\alpha = 1/k`$, $`k = 1, 2, \dots`$, is $`\{\Theta f > 0\}`$, a countable union of null sets, so null. For $`f \in L^1_{\mathrm{loc}}`$, apply this to $`f_N = f\,1_{(-N, N)} \in L^1`$: for $`x \in (-N+1, N-1)`$ and $`h < 1`$ the windows lie inside $`(-N, N)`$, where $`f_N = f`$, so $`\Theta f(x) = \Theta f_N(x)`$. The union over $`N`$ of the exceptional sets is null.
 
-**Corollary 1 (averages).** $\lvert A_h f(x) - f(x)\rvert = \bigl\lvert\frac{1}{2h}\int_{x-h}^{x+h}(f(s) - f(x))\,ds\bigr\rvert \le \frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds$, so $A_h f(x) \to f(x)$ at every Lebesgue point.
+**Corollary 1 (averages).** $`\lvert A_h f(x) - f(x)\rvert = \bigl\lvert\frac{1}{2h}\int_{x-h}^{x+h}(f(s) - f(x))\,ds\bigr\rvert \le \frac{1}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds`$, so $`A_h f(x) \to f(x)`$ at every Lebesgue point.
 
-**Corollary 2 (derivative of the running total).** Let $F(x) = \int_0^x f\,d\lambda$, with $\int_0^x = -\int_x^0$ for $x < 0$. For $h > 0$, $\bigl\lvert\frac{F(x+h) - F(x)}{h} - f(x)\bigr\rvert \le \frac1h\int_x^{x+h}\lvert f(s) - f(x)\rvert\,ds \le \frac{2}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds$, and the same for $\frac{F(x) - F(x-h)}{h}$. So $F'(x) = f(x)$ at every Lebesgue point, hence almost everywhere. The same bound with $[x - r, x + r]$ in place of the centred window shows that any interval containing $x$ of length $r \to 0$ gives the same limit.
+**Corollary 2 (derivative of the running total).** Let $`F(x) = \int_0^x f\,d\lambda`$, with $`\int_0^x = -\int_x^0`$ for $`x < 0`$. For $`h > 0`$, $`\bigl\lvert\frac{F(x+h) - F(x)}{h} - f(x)\bigr\rvert \le \frac1h\int_x^{x+h}\lvert f(s) - f(x)\rvert\,ds \le \frac{2}{2h}\int_{x-h}^{x+h}\lvert f(s) - f(x)\rvert\,ds`$, and the same for $`\frac{F(x) - F(x-h)}{h}`$. So $`F'(x) = f(x)`$ at every Lebesgue point, hence almost everywhere. The same bound with $`[x - r, x + r]`$ in place of the centred window shows that any interval containing $`x`$ of length $`r \to 0`$ gives the same limit.
 
 </details>
 
-Another route first proves that rising functions have a slope almost everywhere, by Riesz's rising-sun lemma (Stein and Shakarchi, Chapter 3); the statement is on [Lebesgue's theorem on monotone functions](03-monotone-functions-differentiable-almost-everywhere.md), which proves it from this card instead. The running total of a non-negative function rises, so it has a slope almost everywhere, and with more work that slope is the integrand; applying that to $\lvert f - q\rvert$ for each rational $q$ gives Lebesgue points. The maximal-function route is the one that carries over to higher dimensions and other averaging kernels, in The maximal function.
+Another route first proves that rising functions have a slope almost everywhere, by Riesz's rising-sun lemma (Stein and Shakarchi, Chapter 3); the statement is on [Lebesgue's theorem on monotone functions](03-monotone-functions-differentiable-almost-everywhere.md), which proves it from this card instead. The running total of a non-negative function rises, so it has a slope almost everywhere, and with more work that slope is the integrand; applying that to $`\lvert f - q\rvert`$ for each rational $`q`$ gives Lebesgue points. The maximal-function route is the one that carries over to higher dimensions and other averaging kernels, in The maximal function.
 
 ---
 
@@ -190,9 +202,9 @@ At the switch-on instant the meter's averages report half-way between before and
 
 ## Code, from first principles, and it actually runs
 
-Three roads lead to each window average: exact fractions from the running total $F$; a meter's sum of 2000 midpoint samples, which never uses $F$; and the closed forms worked by hand, such as $2.5 + h^2/600$ at t = 10. All three must agree.
+Three roads lead to each window average: exact fractions from the running total $`F`$; a meter's sum of 2000 midpoint samples, which never uses $`F`$; and the closed forms worked by hand, such as $`2.5 + h^2/600`$ at t = 10. All three must agree.
 
-The code then runs the proof: the ramped stand-in $\varphi$, the remainder's total by formula and by sum, the maximal function on a grid of 1,201 points and 560 window sizes, the greedy Vitali choice with its tripling check, and the bound. Failures print beside the working case. Rust does the exact fractions with a hand-written type. The code checks windows down to 0.001 minutes on grids; convergence at almost every point of every integrable function is the proof's work.
+The code then runs the proof: the ramped stand-in $`\varphi`$, the remainder's total by formula and by sum, the maximal function on a grid of 1,201 points and 560 window sizes, the greedy Vitali choice with its tripling check, and the bound. Failures print beside the working case. Rust does the exact fractions with a hand-written type. The code checks windows down to 0.001 minutes on grids; convergence at almost every point of every integrable function is the proof's work.
 
 ### Python
 
@@ -575,10 +587,10 @@ The two outputs match line for line.
 
 Lean proves the theorem, the maximal inequality and the slope of the running total, each under the card's condition.
 
-- Take a locally integrable function $f$ on the line. Then almost every point is a Lebesgue point of $f$.
-- Take a locally integrable $f$. Then the window average $A_h f(x)$ tends to $f(x)$ as $h$ shrinks to 0, at almost every $x$.
-- Suppose $f$ has finite total $\|f\|_1$ and $\alpha > 0$. Then the set where $Mf > \alpha$ has length at most $3\|f\|_1/\alpha$.
-- Take a locally integrable $f$ and its running total $F$. Then $F$ has slope $f(x)$ at almost every $x$.
+- Take a locally integrable function $`f`$ on the line. Then almost every point is a Lebesgue point of $`f`$.
+- Take a locally integrable $`f`$. Then the window average $`A_h f(x)`$ tends to $`f(x)`$ as $`h`$ shrinks to 0, at almost every $`x`$.
+- Suppose $`f`$ has finite total $`\|f\|_1`$ and $`\alpha > 0`$. Then the set where $`Mf > \alpha`$ has length at most $`3\|f\|_1/\alpha`$.
+- Take a locally integrable $`f`$ and its running total $`F`$. Then $`F`$ has slope $`f(x)`$ at almost every $`x`$.
 - Exact fractions confirm the hand arithmetic: the averages at t = 10, the window from minute 19 to 21, and the left slope at 20.
 - They also confirm the bounds: Vitali's 21.9 within 22.5, the bad-set bounds 30 to 15/512, and the block's 9 within 30.
 
@@ -802,7 +814,7 @@ example : (1 / (1 / 10) : ℚ) - 1 = 9 ∧ (9 : ℚ) ≤ 3 / (1 / 10) ∧ (3 / (
 ## Where this goes next
 
 - [Lebesgue's theorem on monotone functions](03-monotone-functions-differentiable-almost-everywhere.md): every rising function has a slope almost everywhere, whether or not it is a running total.
-- The maximal function: the maximal function in higher dimensions, its bounds on $L^p$, and the averaging kernels it controls.
+- The maximal function: the maximal function in higher dimensions, its bounds on $`L^p`$, and the averaging kernels it controls.
 
 This card integrates and then differentiates. The question it leaves open is the reverse: which functions are the running totals of their own slopes? [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md) answers it.
 

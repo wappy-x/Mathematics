@@ -10,11 +10,11 @@ A molecule of hydrogen chloride, HCl, is one hydrogen atom bonded to one chlorin
 
 An engineer building a gas sensor for HCl in a chimney wants one number: which colour of infrared light does the molecule soak up? The answer is the energy needed to lift the bond's vibration by one step. A classical spring could take any amount of energy. A quantum spring cannot.
 
-Its energies form a ladder of evenly spaced rungs, 0.37083 eV apart for HCl (an electronvolt, eV, is the energy one electron gains crossing one volt, $1.602\times10^{-19}$ J). So it absorbs light at one wavelength, 3.34 µm (micrometres) in the spring model, and ignores the rest. The first correction for the bond's softening moves the line to 3.4658 µm; the card shows where that 3.5 % gap comes from.
+Its energies form a ladder of evenly spaced rungs, 0.37083 eV apart for HCl (an electronvolt, eV, is the energy one electron gains crossing one volt, $`1.602\times10^{-19}`$ J). So it absorbs light at one wavelength, 3.34 µm (micrometres) in the spring model, and ignores the rest. The first correction for the bond's softening moves the line to 3.4658 µm; the card shows where that 3.5 % gap comes from.
 
 The ladder has a second surprise. Its lowest rung is not at zero. Even at absolute zero the bond keeps half a rung, 0.18542 eV, and the bond length keeps a spread of 7.585 pm. Nothing can take that energy out.
 
-**A quantum spring's energy comes only in equal steps of $\hbar\omega$, starting half a step above the bottom of the well, and two operators that step up and down the ladder prove it.**
+**A quantum spring's energy comes only in equal steps of $`\hbar\omega`$, starting half a step above the bottom of the well, and two operators that step up and down the ladder prove it.**
 
 **What kind of fact this is:** a theorem inside a model. The levels are proved on this card in Why it works. The parabola-shaped well is a model of the bond that holds near its bottom, and the card shows where it fails.
 
@@ -30,28 +30,32 @@ Solid curve: the spring model, energy rising with the square of the stretch. Das
 
 A hat marks an operator, a rule that turns one function into another, as on [States as vectors](02-state-vectors-operators-and-measurement.md). The energy operator for the bond is
 
-$$\hat H = -\frac{\hbar^2}{2\mu}\frac{d^2}{dx^2} + \frac12 k x^2 = \hbar\omega\left(a^\dagger a + \tfrac12\right),$$
+```math
+\hat H = -\frac{\hbar^2}{2\mu}\frac{d^2}{dx^2} + \frac12 k x^2 = \hbar\omega\left(a^\dagger a + \tfrac12\right),
+```
 
 and its allowed energies are
 
-$$E_n = \left(n + \tfrac12\right)\hbar\omega, \qquad n = 0, 1, 2, \ldots, \qquad \omega = \sqrt{k/\mu}.$$
+```math
+E_n = \left(n + \tfrac12\right)\hbar\omega, \qquad n = 0, 1, 2, \ldots, \qquad \omega = \sqrt{k/\mu}.
+```
 
 **Read it aloud:** the energy is a whole number of steps, each the size of the classical vibration frequency times the reduced Planck constant, plus a half step that is always there.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\hat H$ | the energy operator: kinetic part (the second derivative) plus spring part | the HCl bond | — |
-| $E_n$ | the energy of level $n$ | $E_0 = 0.18542$ eV, $E_1 = 0.55625$ eV | — |
-| $n$ | the level number, counting from 0; spectroscopists write $v$ | 0 for nearly every molecule at room temperature | adds one rung of $\hbar\omega$ |
-| $\hbar$ | the reduced Planck constant, $h/2\pi$, with $h = 6.62607015\times10^{-34}$ J s | $1.0546\times10^{-34}$ J s | every rung and the floor scale with it |
-| $\omega$ | the classical angular frequency of the spring, $\sqrt{k/\mu}$ | $5.63390\times10^{14}$ rad/s | rungs spread apart |
-| $\mu$; $m_{\rm H}$, $m_{\rm Cl}$ | reduced mass $m_{\rm H}m_{\rm Cl}/(m_{\rm H}+m_{\rm Cl})$; the two atoms' masses, in u (atomic mass units, a twelfth of a carbon-12 atom) | 0.979593 u; 1.00782503223 u, 34.968852682 u | rungs close up |
-| $k$ | the bond's stiffness, force per metre of stretch | 516.3 N/m | rungs spread apart |
-| $x$, $\xi$ | stretch from the rest length; the same stretch in units of $x_0$, $\xi = x/x_0$ | $\xi = 1$ is 10.727 pm | — |
-| $x_0$ | the natural length, $\sqrt{\hbar/(\mu\omega)}$ | 10.727 pm | the ground state spreads wider |
-| $a$, $a^\dagger$ | the lowering and raising operators, "a" and "a dagger"; $a^\dagger$ is $a$'s star, its conjugate transpose | $a$ turns level $n$ into level $n-1$ | — |
-| $\psi_n$, $\psi$ | the wavefunction of level $n$, or of any state: its square is the chance of each stretch | $\psi_0 = e^{-\xi^2/2}$, a bell curve | — |
-| $\varepsilon$; $y$, $a_j$ | a trial energy in units of $\hbar\omega$; the polynomial part of $\psi$ and its coefficient of $\xi^j$ | $\varepsilon$ allowed only at 0.5, 1.5, 2.5, …; at 2.5, $y = 1 - 2\xi^2$ | — |
+| $`\hat H`$ | the energy operator: kinetic part (the second derivative) plus spring part | the HCl bond | — |
+| $`E_n`$ | the energy of level $`n`$ | $`E_0 = 0.18542`$ eV, $`E_1 = 0.55625`$ eV | — |
+| $`n`$ | the level number, counting from 0; spectroscopists write $`v`$ | 0 for nearly every molecule at room temperature | adds one rung of $`\hbar\omega`$ |
+| $`\hbar`$ | the reduced Planck constant, $`h/2\pi`$, with $`h = 6.62607015\times10^{-34}`$ J s | $`1.0546\times10^{-34}`$ J s | every rung and the floor scale with it |
+| $`\omega`$ | the classical angular frequency of the spring, $`\sqrt{k/\mu}`$ | $`5.63390\times10^{14}`$ rad/s | rungs spread apart |
+| $`\mu`$; $`m_{\rm H}`$, $`m_{\rm Cl}`$ | reduced mass $`m_{\rm H}m_{\rm Cl}/(m_{\rm H}+m_{\rm Cl})`$; the two atoms' masses, in u (atomic mass units, a twelfth of a carbon-12 atom) | 0.979593 u; 1.00782503223 u, 34.968852682 u | rungs close up |
+| $`k`$ | the bond's stiffness, force per metre of stretch | 516.3 N/m | rungs spread apart |
+| $`x`$, $`\xi`$ | stretch from the rest length; the same stretch in units of $`x_0`$, $`\xi = x/x_0`$ | $`\xi = 1`$ is 10.727 pm | — |
+| $`x_0`$ | the natural length, $`\sqrt{\hbar/(\mu\omega)}`$ | 10.727 pm | the ground state spreads wider |
+| $`a`$, $`a^\dagger`$ | the lowering and raising operators, "a" and "a dagger"; $`a^\dagger`$ is $`a`$'s star, its conjugate transpose | $`a`$ turns level $`n`$ into level $`n-1`$ | — |
+| $`\psi_n`$, $`\psi`$ | the wavefunction of level $`n`$, or of any state: its square is the chance of each stretch | $`\psi_0 = e^{-\xi^2/2}`$, a bell curve | — |
+| $`\varepsilon`$; $`y`$, $`a_j`$ | a trial energy in units of $`\hbar\omega`$; the polynomial part of $`\psi`$ and its coefficient of $`\xi^j`$ | $`\varepsilon`$ allowed only at 0.5, 1.5, 2.5, …; at 2.5, $`y = 1 - 2\xi^2`$ | — |
 
 ### When it holds
 
@@ -68,87 +72,99 @@ $$E_n = \left(n + \tfrac12\right)\hbar\omega, \qquad n = 0, 1, 2, \ldots, \qquad
 
 Kinetic plus spring energy has the shape "square plus square". With ordinary numbers, a sum of two squares factors into two brackets, one with a plus and one with a minus, using the square root of −1.
 
-Do the same with the operators, and it almost works. The operators do not commute: "multiply by $\xi$ then take the slope" differs from "take the slope then multiply by $\xi$".
+Do the same with the operators, and it almost works. The operators do not commute: "multiply by $`\xi`$ then take the slope" differs from "take the slope then multiply by $`\xi`$".
 
 The difference is exactly one, so factoring leaves a constant behind. That constant is the half step. The two factors then turn out to move a state up or down the ladder by exactly one rung.
 
 ### Step 1: measure stretch in the bond's own length
 
-Put $x = x_0\xi$. The kinetic part carries $\hbar^2/(\mu x_0^2)$ and the spring part $\mu\omega^2 x_0^2$. Choosing $x_0 = \sqrt{\hbar/(\mu\omega)}$ makes both equal to $\hbar\omega$:
+Put $`x = x_0\xi`$. The kinetic part carries $`\hbar^2/(\mu x_0^2)`$ and the spring part $`\mu\omega^2 x_0^2`$. Choosing $`x_0 = \sqrt{\hbar/(\mu\omega)}`$ makes both equal to $`\hbar\omega`$:
 
-$$\hat H = \hbar\omega\left(-\frac12\frac{d^2}{d\xi^2} + \frac12\xi^2\right).$$
+```math
+\hat H = \hbar\omega\left(-\frac12\frac{d^2}{d\xi^2} + \frac12\xi^2\right).
+```
 
-For HCl, $x_0$ is 10.727 pm. All the physics now sits in the bracket, and energies come in units of $\hbar\omega$, 0.37083 eV.
+For HCl, $`x_0`$ is 10.727 pm. All the physics now sits in the bracket, and energies come in units of $`\hbar\omega`$, 0.37083 eV.
 
 ### Step 2: build the two factors
 
 Define
 
-$$a = \frac{1}{\sqrt2}\left(\xi + \frac{d}{d\xi}\right), \qquad a^\dagger = \frac{1}{\sqrt2}\left(\xi - \frac{d}{d\xi}\right).$$
+```math
+a = \frac{1}{\sqrt2}\left(\xi + \frac{d}{d\xi}\right), \qquad a^\dagger = \frac{1}{\sqrt2}\left(\xi - \frac{d}{d\xi}\right).
+```
 
-Apply $a^\dagger a$ to any function $\psi$ (a prime marks a slope: $\psi'$ is $d\psi/d\xi$, and $\psi''$ is the slope of the slope). The cross terms $\xi\psi'$ cancel, and the slope of $\xi\psi$ leaves an extra $\psi$:
+Apply $`a^\dagger a`$ to any function $`\psi`$ (a prime marks a slope: $`\psi'`$ is $`d\psi/d\xi`$, and $`\psi''`$ is the slope of the slope). The cross terms $`\xi\psi'`$ cancel, and the slope of $`\xi\psi`$ leaves an extra $`\psi`$:
 
-$$a^\dagger a\, \psi = \tfrac12\left(\xi^2 \psi - \psi'' - \psi\right).$$
+```math
+a^\dagger a\, \psi = \tfrac12\left(\xi^2 \psi - \psi'' - \psi\right).
+```
 
-So $a^\dagger a = \hat H/\hbar\omega - \tfrac12$, which is the formula's $\hat H = \hbar\omega(a^\dagger a + \tfrac12)$. The same work in the other order gives $a a^\dagger = \hat H/\hbar\omega + \tfrac12$. Subtracting, $a a^\dagger - a^\dagger a = 1$.
+So $`a^\dagger a = \hat H/\hbar\omega - \tfrac12`$, which is the formula's $`\hat H = \hbar\omega(a^\dagger a + \tfrac12)`$. The same work in the other order gives $`a a^\dagger = \hat H/\hbar\omega + \tfrac12`$. Subtracting, $`a a^\dagger - a^\dagger a = 1`$.
 
 ### Step 3: the factors are a ladder
 
-Suppose $\hat H\psi = E\psi$. Using $a a^\dagger = a^\dagger a + 1$,
+Suppose $`\hat H\psi = E\psi`$. Using $`a a^\dagger = a^\dagger a + 1`$,
 
-$$\hat H\,(a^\dagger\psi) = \hbar\omega\, a^\dagger\left(a a^\dagger + \tfrac12\right)\psi = a^\dagger\left(\hat H + \hbar\omega\right)\psi = (E + \hbar\omega)\,a^\dagger\psi.$$
+```math
+\hat H\,(a^\dagger\psi) = \hbar\omega\, a^\dagger\left(a a^\dagger + \tfrac12\right)\psi = a^\dagger\left(\hat H + \hbar\omega\right)\psi = (E + \hbar\omega)\,a^\dagger\psi.
+```
 
-So $a^\dagger\psi$ is another level, one rung higher. The same steps show $a\psi$ is one rung lower. The rungs are equally spaced because the step is the same operator every time.
+So $`a^\dagger\psi`$ is another level, one rung higher. The same steps show $`a\psi`$ is one rung lower. The rungs are equally spaced because the step is the same operator every time.
 
 ### Step 4: the floor
 
-Stepping down cannot go on for ever. Moving $d/d\xi$ from one function onto the other inside an integral flips its sign (integration by parts; the ends add nothing, because $\psi$ dies away far out).
+Stepping down cannot go on for ever. Moving $`d/d\xi`$ from one function onto the other inside an integral flips its sign (integration by parts; the ends add nothing, because $`\psi`$ dies away far out).
 
-So $a^\dagger$ is $a$'s star, the conjugate transpose of [States as vectors](02-state-vectors-operators-and-measurement.md), and $\int \psi^*\,a^\dagger a\,\psi\,d\xi = \int (a\psi)^*(a\psi)\,d\xi$. For a level of energy $E$, the average of $a^\dagger a$ therefore equals the squared size of $a\psi$, which is never negative. So $E - \tfrac12\hbar\omega \ge 0$. The only way the descent stops is a state that $a$ wipes out:
+So $`a^\dagger`$ is $`a`$'s star, the conjugate transpose of [States as vectors](02-state-vectors-operators-and-measurement.md), and $`\int \psi^*\,a^\dagger a\,\psi\,d\xi = \int (a\psi)^*(a\psi)\,d\xi`$. For a level of energy $`E`$, the average of $`a^\dagger a`$ therefore equals the squared size of $`a\psi`$, which is never negative. So $`E - \tfrac12\hbar\omega \ge 0`$. The only way the descent stops is a state that $`a`$ wipes out:
 
-$$\left(\xi + \frac{d}{d\xi}\right)\psi_0 = 0 \quad\Longrightarrow\quad \psi_0 = e^{-\xi^2/2}.$$
+```math
+\left(\xi + \frac{d}{d\xi}\right)\psi_0 = 0 \quad\Longrightarrow\quad \psi_0 = e^{-\xi^2/2}.
+```
 
-That first-order equation has one solution, a bell curve. Put it into $\hat H$ and its energy is exactly $\tfrac12\hbar\omega$. Every other level is $\psi_0$ raised $n$ times, so $E_n = (n + \tfrac12)\hbar\omega$. No level hides between rungs: stepping down from it would have to end on a state wiped out by $a$, and the bell curve is the only one.
+That first-order equation has one solution, a bell curve. Put it into $`\hat H`$ and its energy is exactly $`\tfrac12\hbar\omega`$. Every other level is $`\psi_0`$ raised $`n`$ times, so $`E_n = (n + \tfrac12)\hbar\omega`$. No level hides between rungs: stepping down from it would have to end on a state wiped out by $`a`$, and the bell curve is the only one.
 
 The floor is the bell curve's width at work. A state with no spread in stretch would need unlimited spread in momentum, and kinetic energy would blow up. The bell curve is the best compromise, and its energy is the half step. [Uncertainty](05-uncertainty-principle.md) makes this trade exact.
 
 ### Step 5: the second road, a series forced to stop
 
-The same levels come out of [Series solutions](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md). Write $\psi = y(\xi)\,e^{-\xi^2/2}$ and try energy $\varepsilon\hbar\omega$. The equation for $y$ is Hermite's equation, $y'' - 2\xi y' + (2\varepsilon - 1)y = 0$. A power series $y = \sum a_j\xi^j$ gives the rule
+The same levels come out of [Series solutions](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md). Write $`\psi = y(\xi)\,e^{-\xi^2/2}`$ and try energy $`\varepsilon\hbar\omega`$. The equation for $`y`$ is Hermite's equation, $`y'' - 2\xi y' + (2\varepsilon - 1)y = 0`$. A power series $`y = \sum a_j\xi^j`$ gives the rule
 
-$$a_{j+2} = \frac{2j + 1 - 2\varepsilon}{(j+1)(j+2)}\,a_j.$$
+```math
+a_{j+2} = \frac{2j + 1 - 2\varepsilon}{(j+1)(j+2)}\,a_j.
+```
 
-If the series never stops, its late coefficients shrink like those of $e^{\xi^2}$. Then $\psi$ grows like $e^{\xi^2/2}$ and cannot describe a molecule that stays together. The series stops only if a numerator hits zero, $2j + 1 = 2\varepsilon$ for some even or odd $j = n$. That is $\varepsilon = n + \tfrac12$ again.
+If the series never stops, its late coefficients shrink like those of $`e^{\xi^2}`$. Then $`\psi`$ grows like $`e^{\xi^2/2}`$ and cannot describe a molecule that stays together. The series stops only if a numerator hits zero, $`2j + 1 = 2\varepsilon`$ for some even or odd $`j = n`$. That is $`\varepsilon = n + \tfrac12`$ again.
 
-At $\varepsilon = 2.5$ the coefficients run 1, −2, 0, 0, …, so $y = 1 - 2\xi^2$, a Hermite polynomial. Read in matrix language, the levels are the eigenvalues of $\hat H$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)), which the code's third road finds directly.
+At $`\varepsilon = 2.5`$ the coefficients run 1, −2, 0, 0, …, so $`y = 1 - 2\xi^2`$, a Hermite polynomial. Read in matrix language, the levels are the eigenvalues of $`\hat H`$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)), which the code's third road finds directly.
 
 ---
 
 ## Worked numbers, by hand
 
-H-35Cl: masses 1.00782503223 u and 34.968852682 u, vibration wavenumber 2990.9463 cm⁻¹, with $1\text{ u} = 1.66053906892\times10^{-27}$ kg.
+H-35Cl: masses 1.00782503223 u and 34.968852682 u, vibration wavenumber 2990.9463 cm⁻¹, with $`1\text{ u} = 1.66053906892\times10^{-27}`$ kg.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| reduced mass $\mu$ | $1.00783 \times 34.96885 / 35.97668$ | 0.979593 u |
-| angular frequency $\omega$ | $2\pi \times 2.99792458\times10^{10}$ cm/s $\times 2990.9463$ cm⁻¹ | $5.63390\times10^{14}$ rad/s |
-| stiffness $k = \mu\omega^2$ | $1.6267\times10^{-27}$ kg $\times (5.63390\times10^{14})^2$ | 516.3 N/m |
-| one rung, $\hbar\omega$ | $1.0546\times10^{-34} \times 5.63390\times10^{14}$ J, over $1.602\times10^{-19}$ J/eV | 0.37083 eV |
-| absorption wavelength, spring model | $10^4 / 2990.9463$ | 3.3434 µm |
-| natural length $x_0$ | $\sqrt{\hbar/(\mu\omega)}$ | 10.727 pm |
-| spread of the bond length, $x_0/\sqrt2$ | $10.727 / 1.4142$ | 7.585 pm, 5.95 % of 127.4552 pm |
-| thermal energy at 298.15 K | Boltzmann's constant $1.380649\times10^{-23}$ J/K times 298.15 K | 0.02569 eV |
-| rung over thermal energy | $0.37083 / 0.02569$ | 14.433 |
-| **the floor, $E_0 = \tfrac12\hbar\omega$** | $0.37083 / 2$ | **0.18542 eV** |
+| reduced mass $`\mu`$ | $`1.00783 \times 34.96885 / 35.97668`$ | 0.979593 u |
+| angular frequency $`\omega`$ | $`2\pi \times 2.99792458\times10^{10}`$ cm/s $`\times 2990.9463`$ cm⁻¹ | $`5.63390\times10^{14}`$ rad/s |
+| stiffness $`k = \mu\omega^2`$ | $`1.6267\times10^{-27}`$ kg $`\times (5.63390\times10^{14})^2`$ | 516.3 N/m |
+| one rung, $`\hbar\omega`$ | $`1.0546\times10^{-34} \times 5.63390\times10^{14}`$ J, over $`1.602\times10^{-19}`$ J/eV | 0.37083 eV |
+| absorption wavelength, spring model | $`10^4 / 2990.9463`$ | 3.3434 µm |
+| natural length $`x_0`$ | $`\sqrt{\hbar/(\mu\omega)}`$ | 10.727 pm |
+| spread of the bond length, $`x_0/\sqrt2`$ | $`10.727 / 1.4142`$ | 7.585 pm, 5.95 % of 127.4552 pm |
+| thermal energy at 298.15 K | Boltzmann's constant $`1.380649\times10^{-23}`$ J/K times 298.15 K | 0.02569 eV |
+| rung over thermal energy | $`0.37083 / 0.02569`$ | 14.433 |
+| **the floor, $`E_0 = \tfrac12\hbar\omega`$** | $`0.37083 / 2`$ | **0.18542 eV** |
 
-A rung is 14.433 times the thermal energy at room temperature, so only a share of $5.391\times10^{-7}$ of molecules sit above the ground level. Almost every HCl molecule in the chimney is on the floor, still vibrating with 0.18542 eV it cannot give up. A sensor tuned to their line sees all of them make the same jump.
+A rung is 14.433 times the thermal energy at room temperature, so only a share of $`5.391\times10^{-7}`$ of molecules sit above the ground level. Almost every HCl molecule in the chimney is on the floor, still vibrating with 0.18542 eV it cannot give up. A sensor tuned to their line sees all of them make the same jump.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drop the half step | floor at 0.00000 eV | The bond would sit still at exactly 127.5 pm, a state with no spread, which Step 4 rules out |
-| Use $h$ where $\hbar$ belongs | floor at 1.1650 eV | $h = 2\pi\hbar$: every energy comes out 6.28 times too large |
+| Use $`h`$ where $`\hbar`$ belongs | floor at 1.1650 eV | $`h = 2\pi\hbar`$: every energy comes out 6.28 times too large |
 | Hydrogen's mass instead of the reduced mass | 2948.8 cm⁻¹, 3.3913 µm | The chlorine moves too; the sensor filter would sit beside the line |
 | A box's ladder, fitted to the first gap | 0→2 line at 7975.9 cm⁻¹, not 5981.9 cm⁻¹ | A box's levels grow as the square of the level number ([Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md)); a parabola's are even |
 
@@ -177,10 +193,10 @@ The Morse curve in the picture, built from the same two constants, has its last 
 
 The scripts compute every number on the card from the constants above and reach the five lowest levels by four roads:
 
-- Road one is the formula $n + \tfrac12$.
-- Road two applies $a^\dagger$ to the bell curve on a grid of points 0.01 $x_0$ apart, using differences for slopes, and measures each state's energy.
+- Road one is the formula $`n + \tfrac12`$.
+- Road two applies $`a^\dagger`$ to the bell curve on a grid of points 0.01 $`x_0`$ apart, using differences for slopes, and measures each state's energy.
 - Road three writes the same energy operator as a matrix on that grid and finds its eigenvalues by Sturm counting: for any trial energy, a pass down the matrix counts how many levels lie below it, and halving the interval homes in.
-- Road four sums the power series out to $\xi = 6$ and halves the trial energy until the tail flips sign.
+- Road four sums the power series out to $`\xi = 6`$ and halves the trial energy until the tail flips sign.
 
 Roads two and three share one grid, so they agree to every printed digit and both sit slightly low, by at most 0.00013. Road four uses no grid and lands on the formula to nine decimals.
 
@@ -562,17 +578,17 @@ The two outputs are identical line for line.
 
 ### Lean
 
-Lean proves the evenly spaced levels, the ladder factoring and the bell-curve floor, for any positive $\hbar$, $\mu$ and $k$.
+Lean proves the evenly spaced levels, the ladder factoring and the bell-curve floor, for any positive $`\hbar`$, $`\mu`$ and $`k`$.
 
-- Take $\hbar$, $\mu$ and $k$ positive, and states that die away far out. Then a nonzero state of energy $E$ exists exactly when $E = (n + \tfrac12)\hbar\omega$ for some level $n$.
-- Take any $\psi$ with a continuous slope of the slope, $\psi''$. Then $a^\dagger a = \hat H/\hbar\omega - \tfrac12$ and $a a^\dagger = \hat H/\hbar\omega + \tfrac12$.
-- Take the same $\psi$. Then the two orders differ by exactly one: $a a^\dagger\psi - a^\dagger a\,\psi = \psi$.
-- Take any $\psi$ with a slope everywhere. Then $a$ wipes out $\psi$ exactly when $\psi$ is a multiple of the bell curve $e^{-\xi^2/2}$.
-- The bell curve $e^{-\xi^2/2}$ has energy exactly $\tfrac12\hbar\omega$.
-- Take $\varepsilon = 2.5$ and $a_0 = 1$. Then the coefficient rule gives $a_2 = -2$ and $a_4 = 0$.
-- Take $\varepsilon = 2.5$. Then $y = 1 - 2\xi^2$ solves Hermite's equation.
+- Take $`\hbar`$, $`\mu`$ and $`k`$ positive, and states that die away far out. Then a nonzero state of energy $`E`$ exists exactly when $`E = (n + \tfrac12)\hbar\omega`$ for some level $`n`$.
+- Take any $`\psi`$ with a continuous slope of the slope, $`\psi''`$. Then $`a^\dagger a = \hat H/\hbar\omega - \tfrac12`$ and $`a a^\dagger = \hat H/\hbar\omega + \tfrac12`$.
+- Take the same $`\psi`$. Then the two orders differ by exactly one: $`a a^\dagger\psi - a^\dagger a\,\psi = \psi`$.
+- Take any $`\psi`$ with a slope everywhere. Then $`a`$ wipes out $`\psi`$ exactly when $`\psi`$ is a multiple of the bell curve $`e^{-\xi^2/2}`$.
+- The bell curve $`e^{-\xi^2/2}`$ has energy exactly $`\tfrac12\hbar\omega`$.
+- Take $`\varepsilon = 2.5`$ and $`a_0 = 1`$. Then the coefficient rule gives $`a_2 = -2`$ and $`a_4 = 0`$.
+- Take $`\varepsilon = 2.5`$. Then $`y = 1 - 2\xi^2`$ solves Hermite's equation.
 - Counting from 1 puts the floor at three times its true height.
-- A box's ladder fitted to the first gap puts the 0→2 line at $8/3$ of that gap, against 2 for the oscillator.
+- A box's ladder fitted to the first gap puts the 0→2 line at $`8/3`$ of that gap, against 2 for the oscillator.
 
 Lean works in exact algebra, so the HCl numbers, the grid roads and the anharmonic correction are left to the Python and Rust checks.
 
@@ -1064,8 +1080,8 @@ example : ((2 : ℚ) + 1 / 2) - (0 + 1 / 2) = 2 := by norm_num
 > [!TIP]
 > **Try changing**
 > - Guess first: swap hydrogen for deuterium, twice as heavy. Does the line move by half, by a factor of 1.41, or less? Read the `try: D-35Cl` line: 2145.1 cm⁻¹, 4.6618 µm. The bond's stiffness stays the same and only the reduced mass changes, by less than a factor of two because the chlorine is heavy.
-> - Guess first: heat the gas to 1000 K. What share of molecules leaves the floor? The `try` line gives 0.0135, against $5.391\times10^{-7}$ at room temperature.
-> - Guess first: stop the series shot at $\xi = 2.5$ instead of 6, which walls the bond in at 26.8 pm either side. Do all levels rise by the same amount? Call `shoot(n, 2.5)`, or read the `try: shoot` line: level 0 rises to 0.5050, level 4 to 5.9784. The wall lifts level 0 by only 0.0050 of a rung and level 4 by 1.4784 rungs: the high levels reach further out, so the wall pinches them most.
+> - Guess first: heat the gas to 1000 K. What share of molecules leaves the floor? The `try` line gives 0.0135, against $`5.391\times10^{-7}`$ at room temperature.
+> - Guess first: stop the series shot at $`\xi = 2.5`$ instead of 6, which walls the bond in at 26.8 pm either side. Do all levels rise by the same amount? Call `shoot(n, 2.5)`, or read the `try: shoot` line: level 0 rises to 0.5050, level 4 to 5.9784. The wall lifts level 0 by only 0.0050 of a rung and level 4 by 1.4784 rungs: the high levels reach further out, so the wall pinches them most.
 
 ---
 
@@ -1075,10 +1091,10 @@ example : ((2 : ℚ) + 1 / 2) - (0 + 1 / 2) = 2 := by norm_num
 > **Thinking the lowest state is a bond at rest.** It is not. The ground state has energy 0.18542 eV and a bell-curve spread of 7.585 pm in bond length. Cooling cannot remove it, because there is no rung below to fall to. Chemists see it directly: bond energies measured from the floor are smaller than the depth of the well by the floor's energy.
 >
 > Smaller traps:
-> - **$h$ for $\hbar$.** The floor comes out at 1.1650 eV instead of 0.18542 eV. Frequency in hertz pairs with $h$; angular frequency in rad/s pairs with $\hbar$.
+> - **$`h`$ for $`\hbar`$.** The floor comes out at 1.1650 eV instead of 0.18542 eV. Frequency in hertz pairs with $`h`$; angular frequency in rad/s pairs with $`\hbar`$.
 > - **The lighter atom's mass.** The line lands at 3.3913 µm instead of 3.3434 µm. Use the reduced mass, 0.979593 u.
 > - **Equal rungs all the way up.** With the first correction the gap from level 9 to 10 is 1934.6 cm⁻¹, not 2990.9 cm⁻¹. Equal spacing is a property of the parabola, and real wells are parabolas only near the bottom.
-> - **Counting from 1.** The oscillator's levels start at $n = 0$, unlike the box's. Starting at 1 puts the floor at 0.55625 eV instead of 0.18542 eV, a rung too high.
+> - **Counting from 1.** The oscillator's levels start at $`n = 0`$, unlike the box's. Starting at 1 puts the floor at 0.55625 eV instead of 0.18542 eV, a rung too high.
 
 ---
 
@@ -1086,12 +1102,12 @@ example : ((2 : ℚ) + 1 / 2) - (0 + 1 / 2) = 2 := by norm_num
 
 - **Gas sensors.** Infrared detectors for HCl, CO and CO₂ in exhaust stacks pass light through the gas and filter it at the molecule's vibration wavelength, near 3.4658 µm for HCl. The rung spacing chooses the filter, once the 3.5 % softening correction is added to the spring model's 3.3434 µm.
 - **Isotope labelling.** Swapping hydrogen for deuterium moves the HCl line, in the spring model, from 3.3434 µm to 4.6618 µm. Chemists use the shift to track which bond a reaction touches.
-- **Reaction rates.** A C–H bond carries more zero-point energy (the floor's energy, $\tfrac12\hbar\omega$) than a C–D bond, so it needs less extra energy to break. Deuterated drugs use this to slow their breakdown in the body.
+- **Reaction rates.** A C–H bond carries more zero-point energy (the floor's energy, $`\tfrac12\hbar\omega`$) than a C–D bond, so it needs less extra energy to break. Deuterated drugs use this to slow their breakdown in the body.
 - **Heat capacity of gases.** At room temperature an HCl rung is 14.433 times the thermal energy, so its vibration barely takes up heat. Nitrogen's and oxygen's rungs are narrower, 2358.6 and 1580.2 cm⁻¹, but still 11.4 and 7.6 times the thermal energy. So their vibration takes up little heat, and air's heat capacity is nearly all motion and rotation.
-- **Light in a cavity.** Each mode of a laser cavity or a microwave resonator is an oscillator, and $n$ counts its photons. Superconducting qubits are oscillators made deliberately lopsided, so their two lowest rungs can be addressed alone.
+- **Light in a cavity.** Each mode of a laser cavity or a microwave resonator is an oscillator, and $`n`$ counts its photons. Superconducting qubits are oscillators made deliberately lopsided, so their two lowest rungs can be addressed alone.
 
 > **Say it back**
-> A bond near its rest length is a spring, and a quantum spring takes energy only in equal steps of $\hbar\omega$. The energy operator factors into a raising and a lowering operator, and because they fail to commute by exactly one, a half step is left over. Lowering must stop at a bell-curve state, whose energy is that half step: the floor. For HCl the step is 0.37083 eV, so the model puts the absorption at 3.34 µm, and the floor is 0.18542 eV. Real bonds soften as they stretch, so the equal spacing holds only for the first few rungs.
+> A bond near its rest length is a spring, and a quantum spring takes energy only in equal steps of $`\hbar\omega`$. The energy operator factors into a raising and a lowering operator, and because they fail to commute by exactly one, a half step is left over. Lowering must stop at a bell-curve state, whose energy is that half step: the floor. For HCl the step is 0.37083 eV, so the model puts the absorption at 3.34 µm, and the floor is 0.18542 eV. Real bonds soften as they stretch, so the equal spacing holds only for the first few rungs.
 
 ---
 

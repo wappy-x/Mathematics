@@ -40,49 +40,55 @@ West bank left, east bank right. W1, W2 and W3 crowd onto E1 and E2, which holds
 
 ## The formula
 
-A graph $G$ is a set of dots and a set of joined pairs ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)): here junctions and streets. $n$ counts the junctions: 8. Four counts matter:
+A graph $`G`$ is a set of dots and a set of joined pairs ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)): here junctions and streets. $`n`$ counts the junctions: 8. Four counts matter:
 
-- $\nu$ ("nu"), the **matching number**: the most streets with no two sharing a junction.
-- $\tau$ ("tau"), the **cover number**: the fewest junctions meeting every street.
-- $\alpha$ ("alpha"), the **independence number**: the most junctions with no street between any two. Such a set is an **independent set**.
-- $\rho$ ("rho"), the **edge-cover number**: the fewest streets reaching every junction. Such a set is an **edge cover**.
+- $`\nu`$ ("nu"), the **matching number**: the most streets with no two sharing a junction.
+- $`\tau`$ ("tau"), the **cover number**: the fewest junctions meeting every street.
+- $`\alpha`$ ("alpha"), the **independence number**: the most junctions with no street between any two. Such a set is an **independent set**.
+- $`\rho`$ ("rho"), the **edge-cover number**: the fewest streets reaching every junction. Such a set is an **edge cover**.
 
 In every graph, two-sided or not:
 
-$$\nu(G) \le \tau(G)$$
+```math
+\nu(G) \le \tau(G)
+```
 
 **Read it aloud:** the fewest guards is never less than the most streets sharing no junction.
 
 Kőnig closes the gap on two sides:
 
-$$\nu(G) = \tau(G) \qquad \text{when } G \text{ is bipartite}$$
+```math
+\nu(G) = \tau(G) \qquad \text{when } G \text{ is bipartite}
+```
 
 **Read it aloud:** on a two-sided plan, the largest matching and the smallest cover are the same size.
 
 Tibor Gallai's identities pair the counts:
 
-$$\alpha(G) + \tau(G) = n, \qquad \nu(G) + \rho(G) = n$$
+```math
+\alpha(G) + \tau(G) = n, \qquad \nu(G) + \rho(G) = n
+```
 
 **Read it aloud:** the junctions a smallest cover leaves out form a largest independent set; and a largest matching and a smallest edge cover sum to the number of junctions.
 
-Here $5 + 3 = 8$ and $3 + 5 = 8$. With Kőnig's $\nu = \tau$, they force $\alpha = \rho$: both 5.
+Here $`5 + 3 = 8`$ and $`3 + 5 = 8`$. With Kőnig's $`\nu = \tau`$, they force $`\alpha = \rho`$: both 5.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | the plan as a graph | 8 junctions, 8 streets | — |
-| $n$ | how many junctions | 8 | $\alpha + \tau$ and $\nu + \rho$ rise with it |
-| $\nu$ | matching number | 3 | on two sides, so does $\tau$ |
-| $\tau$ | cover number | 3 | $\alpha$ falls by as much |
-| $\alpha$ | independence number | 5 | $\tau$ falls by as much |
-| $\rho$ | edge-cover number | 5 | $\nu$ falls by as much |
-| $S$, $N(S)$ | a set of west junctions; the east junctions its streets reach; bars count members | W1, W2, W3; E1, E2 | a bigger shortfall, a smaller matching |
-| $M$, $Z$ | a largest matching; all its alternating walks reach (Step 2) | 3 streets; W1, W2, W3, E1, E2 | — |
+| $`G`$ | the plan as a graph | 8 junctions, 8 streets | — |
+| $`n`$ | how many junctions | 8 | $`\alpha + \tau`$ and $`\nu + \rho`$ rise with it |
+| $`\nu`$ | matching number | 3 | on two sides, so does $`\tau`$ |
+| $`\tau`$ | cover number | 3 | $`\alpha`$ falls by as much |
+| $`\alpha`$ | independence number | 5 | $`\tau`$ falls by as much |
+| $`\rho`$ | edge-cover number | 5 | $`\nu`$ falls by as much |
+| $`S`$, $`N(S)`$ | a set of west junctions; the east junctions its streets reach; bars count members | W1, W2, W3; E1, E2 | a bigger shortfall, a smaller matching |
+| $`M`$, $`Z`$ | a largest matching; all its alternating walks reach (Step 2) | 3 streets; W1, W2, W3, E1, E2 | — |
 
 ### When it holds
 
 - **Two sides, every street crossing.** A ring of three junctions has matching 1 but needs 2 guards; every odd ring fails so. Some other graphs reach equality by luck.
 - **Guards counted, not priced.** If guards cost different amounts, the cheapest bill is Jenő Egerváry's weighted version, also 1931.
-- **No junction without a street.** No edge cover reaches a junction with no street, so $\nu + \rho = n$ fails there. $\alpha + \tau = n$ survives.
+- **No junction without a street.** No edge cover reaches a junction with no street, so $`\nu + \rho = n`$ fails there. $`\alpha + \tau = n`$ survives.
 - **Finitely many junctions.** The walk in Step 2 must stop; infinite plans need other arguments.
 
 ---
@@ -91,51 +97,55 @@ Here $5 + 3 = 8$ and $3 + 5 = 8$. With Kőnig's $\nu = \tau$, they force $\alpha
 
 ### Step 0: each matched street needs a guard of its own
 
-Take any matching and any cover, in any graph. The cover meets every matched street, and no guard serves two of them, since they share no junction. So the cover has at least as many junctions as the matching has streets: $\nu \le \tau$. No sides were used; the reverse direction needs them.
+Take any matching and any cover, in any graph. The cover meets every matched street, and no guard serves two of them, since they share no junction. So the cover has at least as many junctions as the matching has streets: $`\nu \le \tau`$. No sides were used; the reverse direction needs them.
 
 ### Step 1: the junctions a cover leaves out are independent
 
-A street between two left-out junctions would have neither end guarded, so there is none: the leftovers are independent. Backwards too: if the leftovers have no street inside, every street has an end in the chosen set, so it is a cover. A smaller cover means a larger independent set, and $\alpha + \tau = n$: here $5 + 3 = 8$.
+A street between two left-out junctions would have neither end guarded, so there is none: the leftovers are independent. Backwards too: if the leftovers have no street inside, every street has an end in the chosen set, so it is a cover. A smaller cover means a larger independent set, and $`\alpha + \tau = n`$: here $`5 + 3 = 8`$.
 
 ### Step 2: from a largest matching to a cover of the same size
 
-Take a largest matching $M$: W1-E2, W2-E1, W4-E3, with W3 unmatched. From each unmatched west junction, walk **alternating**: out along a street not in $M$, back along one in $M$. From W3: to E2, back to its partner W1, out to E1, back to W2, then stop, since E2 is already reached. Call everything reached $Z$: W1, W2, W3, E1, E2.
+Take a largest matching $`M`$: W1-E2, W2-E1, W4-E3, with W3 unmatched. From each unmatched west junction, walk **alternating**: out along a street not in $`M`$, back along one in $`M`$. From W3: to E2, back to its partner W1, out to E1, back to W2, then stop, since E2 is already reached. Call everything reached $`Z`$: W1, W2, W3, E1, E2.
 
 Guard the west junctions the walk missed and the east junctions it reached:
 
-$$\text{guards} \;=\; (\text{west}\setminus Z)\;\cup\;(\text{east}\cap Z)$$
+```math
+\text{guards} \;=\; (\text{west}\setminus Z)\;\cup\;(\text{east}\cap Z)
+```
 
-That is W4, E1 and E2, the opening's guards. A street they missed would let the walk go one step further, so they meet every street. They hold one end of each street of $M$, so there are $\nu$ of them. So $\tau \le \nu$, and with Step 0, $\nu = \tau$.
+That is W4, E1 and E2, the opening's guards. A street they missed would let the walk go one step further, so they meet every street. They hold one end of each street of $`M`$, so there are $`\nu`$ of them. So $`\tau \le \nu`$, and with Step 0, $`\nu = \tau`$.
 
 <details>
 <summary>Detailed proof: the guards meet every street, and there are exactly ν of them</summary>
 
-**Every street is met.** A missed street has its west end in $Z$ and its east end outside. If it is in $M$, the walk reached its west end by stepping back along it, from its east end, which is then in $Z$. If not, the walk can step out along it, putting the east end in $Z$. Either way, a contradiction.
+**Every street is met.** A missed street has its west end in $`Z`$ and its east end outside. If it is in $`M`$, the walk reached its west end by stepping back along it, from its east end, which is then in $`Z`$. If not, the walk can step out along it, putting the east end in $`Z`$. Either way, a contradiction.
 
-**Every guard is matched.** Unmatched west junctions are starting points, so they lie in $Z$ and get no guard. An unmatched east junction in $Z$ would end an alternating walk; swapping used and unused streets along it would give a bigger matching ([Matchings](01-matchings-and-augmenting-paths.md)), contradicting $M$ being largest.
+**Every guard is matched.** Unmatched west junctions are starting points, so they lie in $`Z`$ and get no guard. An unmatched east junction in $`Z`$ would end an alternating walk; swapping used and unused streets along it would give a bigger matching ([Matchings](01-matchings-and-augmenting-paths.md)), contradicting $`M`$ being largest.
 
-**No street of $M$ is guarded at both ends.** That needs its east end in $Z$ and its west end outside, but the walk always steps from a matched east junction back to its partner. So the guards are one end of each street of $M$: exactly $\nu$.
+**No street of $`M`$ is guarded at both ends.** That needs its east end in $`Z`$ and its west end outside, but the walk always steps from a matched east junction back to its partner. So the guards are one end of each street of $`M`$: exactly $`\nu`$.
 
 </details>
 
 ### Step 3: the same guards, from Hall's shortfall
 
-A second road starts from the obstruction. For a set $S$ of west junctions, $\lvert S\rvert - \lvert N(S)\rvert$ is its **shortfall** (Hall's defect). The worst shortfall is exactly how many west junctions go unmatched ([Hall's theorem](02-halls-marriage-theorem.md)). Here the worst set is W1, W2, W3, reaching only E1 and E2: shortfall 1, so $\nu = 4 - 1 = 3$ for the 4 west junctions.
+A second road starts from the obstruction. For a set $`S`$ of west junctions, $`\lvert S\rvert - \lvert N(S)\rvert`$ is its **shortfall** (Hall's defect). The worst shortfall is exactly how many west junctions go unmatched ([Hall's theorem](02-halls-marriage-theorem.md)). Here the worst set is W1, W2, W3, reaching only E1 and E2: shortfall 1, so $`\nu = 4 - 1 = 3`$ for the 4 west junctions.
 
-Guard $N(S)$ and every west junction outside $S$:
+Guard $`N(S)`$ and every west junction outside $`S`$:
 
-$$\text{guards} \;=\; N(S)\;\cup\;(\text{west}\setminus S)$$
+```math
+\text{guards} \;=\; N(S)\;\cup\;(\text{west}\setminus S)
+```
 
-A street from inside $S$ lands in $N(S)$; every other street starts outside $S$. So this is a cover, with 4 minus the shortfall junctions: E1, E2 and W4 again, and no matching grown.
+A street from inside $`S`$ lands in $`N(S)`$; every other street starts outside $`S`$. So this is a cover, with 4 minus the shortfall junctions: E1, E2 and W4 again, and no matching grown.
 
 ### Step 4: the streets that reach every junction
 
-A largest matching reaches $2\nu$ junctions with $\nu$ streets: 6 with 3. Give each of the other $n - 2\nu$ junctions one of its streets: $n - \nu$ streets reach everything, so $\rho \le n - \nu$. Here $3 + 2 = 5$.
+A largest matching reaches $`2\nu`$ junctions with $`\nu`$ streets: 6 with 3. Give each of the other $`n - 2\nu`$ junctions one of its streets: $`n - \nu`$ streets reach everything, so $`\rho \le n - \nu`$. Here $`3 + 2 = 5`$.
 
 <details>
 <summary>Detailed proof: why an edge cover cannot beat n − ν</summary>
 
-In a smallest edge cover, every street has an end no other street of the cover reaches, or it could be dropped. So each piece of the cover is a **star**: a centre with streets out to ends touching nothing else. A star has one street fewer than junctions, so $\rho$ streets over $n$ junctions make $n - \rho$ stars. One street per star is a matching: $\nu \ge n - \rho$. With Step 4's bound $\rho \le n - \nu$, this gives $\nu + \rho = n$.
+In a smallest edge cover, every street has an end no other street of the cover reaches, or it could be dropped. So each piece of the cover is a **star**: a centre with streets out to ends touching nothing else. A star has one street fewer than junctions, so $`\rho`$ streets over $`n`$ junctions make $`n - \rho`$ stars. One street per star is a matching: $`\nu \ge n - \rho`$. With Step 4's bound $`\rho \le n - \nu`$, this gives $`\nu + \rho = n`$.
 
 </details>
 
@@ -172,7 +182,7 @@ Three guards is not merely the best found; the three separate streets prove noth
 | --- | --- | --- |
 | Both ends of each matched street guarded | 6 guards | One end per street is enough |
 | One whole bank guarded | 4 guards | A cover, not a smallest one |
-| Streets reaching every junction counted | 5 streets | That is $\rho$, a different job |
+| Streets reaching every junction counted | 5 streets | That is $`\rho`$, a different job |
 | Kőnig applied to a ring of three | matching 1, guards 2 | Not two-sided |
 
 ---
@@ -932,7 +942,7 @@ example : ∀ C : Finset (Fin 3), (∀ s ∈ ring, s.1 ∈ C ∨ s.2 ∈ C) → 
 >
 > - **Dropping the condition.** A ring of three: matching 1, guards 2.
 > - **Guarding both ends of a largest matching.** That is a cover, and a common quick method, but it costs 6: twice the answer.
-> - **Confusing what covers what.** Junctions meeting every street is $\tau$, 3. Streets reaching every junction is $\rho$, 5.
+> - **Confusing what covers what.** Junctions meeting every street is $`\tau`$, 3. Streets reaching every junction is $`\rho`$, 5.
 
 ---
 

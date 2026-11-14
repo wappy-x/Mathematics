@@ -49,44 +49,50 @@ Read it right to left: each chance box averages what follows it, and each choice
 
 Notation first, in words.
 
-- An **action** $a$ is one of the orders.
-- The **state** $s$ is Saturday's weather, sun or rain; a capital $S$ means the weather not yet known.
-- $x(a, s)$ is the profit of action $a$ in state $s$.
-- $E[\,\cdot\,]$ is an expectation: weight each outcome by its chance and add.
-- "$\max_a$" means "the largest over the actions".
-- A **message** $m$ is what the forecast says.
-- $\sum_m$ means "add up over the messages", and $\sum_s$ means "add up over the states".
+- An **action** $`a`$ is one of the orders.
+- The **state** $`s`$ is Saturday's weather, sun or rain; a capital $`S`$ means the weather not yet known.
+- $`x(a, s)`$ is the profit of action $`a`$ in state $`s`$.
+- $`E[\,\cdot\,]`$ is an expectation: weight each outcome by its chance and add.
+- "$`\max_a`$" means "the largest over the actions".
+- A **message** $`m`$ is what the forecast says.
+- $`\sum_m`$ means "add up over the messages", and $`\sum_s`$ means "add up over the states".
 
-$$\text{EVPI} \;=\; E\Big[\max_a x(a, S)\Big] \;-\; \max_a E\big[x(a, S)\big]$$
+```math
+\text{EVPI} \;=\; E\Big[\max_a x(a, S)\Big] \;-\; \max_a E\big[x(a, S)\big]
+```
 
 **Read it aloud:** the expected value of perfect information is the average of the best profit in each kind of weather, minus the best average profit you can get by committing first.
 
-For a real forecast, Bayes' rule turns each message into new chances $P(s \mid m)$, and the same fold-back gives the **expected value of sample information**:
+For a real forecast, Bayes' rule turns each message into new chances $`P(s \mid m)`$, and the same fold-back gives the **expected value of sample information**:
 
-$$\text{EVSI} \;=\; \sum_m P(m)\,\max_a \sum_s P(s \mid m)\, x(a, s) \;-\; \max_a E\big[x(a, S)\big]$$
+```math
+\text{EVSI} \;=\; \sum_m P(m)\,\max_a \sum_s P(s \mid m)\, x(a, s) \;-\; \max_a E\big[x(a, S)\big]
+```
 
 **Read it aloud:** for each thing the forecast might say, take the best order given that message, average over the messages, and subtract the best plan without the forecast.
 
-A manager who ranks by expected utility, with score $u$ and spare cash $W_0$, would pay a fee $c$ up to the value that makes the forecast break even in score:
+A manager who ranks by expected utility, with score $`u`$ and spare cash $`W_0`$, would pay a fee $`c`$ up to the value that makes the forecast break even in score:
 
-$$\sum_m P(m)\,\max_a \sum_s P(s \mid m)\, u\big(W_0 + x(a, s) - c\big) \;=\; \max_a E\big[u(W_0 + x(a, S))\big]$$
+```math
+\sum_m P(m)\,\max_a \sum_s P(s \mid m)\, u\big(W_0 + x(a, s) - c\big) \;=\; \max_a E\big[u(W_0 + x(a, S))\big]
+```
 
 **Read it aloud:** the fair price of the forecast is the fee that leaves the manager's best expected score with the forecast equal to the best expected score without it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$, $a_0$ | an action: one of the orders; $a_0$ is the best plan without information | big or small; $a_0$ = big | — |
-| $s$, $S$ | the state of the world: one weather; $S$ is the weather not yet known | sun or rain | — |
-| $P(s)$, $P(s \mid m)$, $P(m)$ | chance of a state before, and after, reading message $m$; chance of the message | 0.6 sun; 0.8571 sun after "says sun"; 0.56 for "says sun" | more sun favours the big order |
-| $x(a, s)$ | profit of action $a$ in state $s$, pounds | big: 600 or −300; small: 250 or 50 | — |
-| $E[\,\cdot\,]$, $\max_a$ | expectation: chance-weighted average; the largest over the actions | big averages £240; the best plan £240 | — |
-| $m$ | the forecast's message | "says sun" or "says rain" | — |
-| $q$ | the forecast's accuracy: chance its message matches the weather | 0.8 | EVSI rises, once $q$ passes 0.6 |
+| $`a`$, $`a_0`$ | an action: one of the orders; $`a_0`$ is the best plan without information | big or small; $`a_0`$ = big | — |
+| $`s`$, $`S`$ | the state of the world: one weather; $`S`$ is the weather not yet known | sun or rain | — |
+| $`P(s)`$, $`P(s \mid m)`$, $`P(m)`$ | chance of a state before, and after, reading message $`m`$; chance of the message | 0.6 sun; 0.8571 sun after "says sun"; 0.56 for "says sun" | more sun favours the big order |
+| $`x(a, s)`$ | profit of action $`a`$ in state $`s`$, pounds | big: 600 or −300; small: 250 or 50 | — |
+| $`E[\,\cdot\,]`$, $`\max_a`$ | expectation: chance-weighted average; the largest over the actions | big averages £240; the best plan £240 | — |
+| $`m`$ | the forecast's message | "says sun" or "says rain" | — |
+| $`q`$ | the forecast's accuracy: chance its message matches the weather | 0.8 | EVSI rises, once $`q`$ passes 0.6 |
 | EVPI | expected value of perfect information: the most any forecast is worth | £140 | — |
 | EVSI | expected value of sample information: what this forecast is worth | £70 | buy when it beats the fee |
-| $u$ | utility: a score for final wealth, here the natural log | $\ln(W_0 + \text{profit})$ | — |
-| $W_0$ | the manager's spare cash before Saturday | £1,000 | the manager acts more like a money-averager |
-| $c$ | the fee paid for the forecast; $c^*$ the most the manager would pay | £50; $c^*$ £100.80 for the cautious manager | — |
+| $`u`$ | utility: a score for final wealth, here the natural log | $`\ln(W_0 + \text{profit})`$ | — |
+| $`W_0`$ | the manager's spare cash before Saturday | £1,000 | the manager acts more like a money-averager |
+| $`c`$ | the fee paid for the forecast; $`c^*`$ the most the manager would pay | £50; $`c^*`$ £100.80 for the cautious manager | — |
 
 ### When it holds
 
@@ -128,9 +134,11 @@ The plan without the forecast was worth £240. The difference, **£140**, is the
 
 The swap can only help. In each weather, the best order is at least as good as the big order is there: £600 against £600 in sun, £50 against −£300 in rain. Averaging those inequalities gives "average of the best ≥ best average", which is the formula's two terms in order. So EVPI is never negative.
 
-The same subtraction has a second reading. Write $a_0$ for the plan without information, the big order. Subtract inside the average instead of outside:
+The same subtraction has a second reading. Write $`a_0`$ for the plan without information, the big order. Subtract inside the average instead of outside:
 
-$$\text{EVPI} = E\big[\max_a x(a, S) - x(a_0, S)\big]$$
+```math
+\text{EVPI} = E\big[\max_a x(a, S) - x(a_0, S)\big]
+```
 
 The bracket is the **regret** (also called opportunity loss): how much better the manager could have done had they known. In sun the regret of a big order is £0. In rain it is £50 − (−£300) = £350. On average: 0.4 × 350 = **£140**, the same number by a different road. A perfect forecast is worth exactly the regret it removes.
 
@@ -161,38 +169,38 @@ So any forecast of this weather is worth between £0 and £140.
 <details>
 <summary>The value of a forecast of any accuracy, from the tree</summary>
 
-Let the forecast be right with chance $q$ in either weather, with $q$ at least 0.5. Folding back each message, and multiplying through by the message's chance:
+Let the forecast be right with chance $`q`$ in either weather, with $`q`$ at least 0.5. Folding back each message, and multiplying through by the message's chance:
 
-- After "sun", big gives $0.6q \times 600 - 0.4(1-q) \times 300 = 480q - 120$; small gives $0.6q \times 250 + 0.4(1-q) \times 50 = 130q + 20$. Big wins whenever $q \ge 0.4$, so always here.
-- After "rain", big gives $0.6(1-q) \times 600 - 0.4q \times 300 = 360 - 480q$; small gives $150 - 130q$. Big wins while $q \le 0.6$.
+- After "sun", big gives $`0.6q \times 600 - 0.4(1-q) \times 300 = 480q - 120`$; small gives $`0.6q \times 250 + 0.4(1-q) \times 50 = 130q + 20`$. Big wins whenever $`q \ge 0.4`$, so always here.
+- After "rain", big gives $`0.6(1-q) \times 600 - 0.4q \times 300 = 360 - 480q`$; small gives $`150 - 130q`$. Big wins while $`q \le 0.6`$.
 
-For $q \le 0.6$ the manager orders big whatever the message, the total is $(480q - 120) + (360 - 480q) = 240$, and the forecast is worth £0. For $q > 0.6$ the total is $(480q - 120) + (150 - 130q) = 350q + 30$, so
+For $`q \le 0.6`$ the manager orders big whatever the message, the total is $`(480q - 120) + (360 - 480q) = 240`$, and the forecast is worth £0. For $`q > 0.6`$ the total is $`(480q - 120) + (150 - 130q) = 350q + 30`$, so
 
-$$\text{EVSI}(q) = 350q - 210, \qquad q > 0.6.$$
+$`\displaystyle \text{EVSI}(q) = 350q - 210, \qquad q > 0.6.`$
 
-At $q = 0.8$ that is £70; at $q = 1$ it is £140, the EVPI. The check confirms the closed form at eleven accuracies.
+At $`q = 0.8`$ that is £70; at $`q = 1`$ it is £140, the EVPI. The check confirms the closed form at eleven accuracies.
 
 </details>
 
 ### Step 4: expected utility, and a price instead of a difference
 
-[Expected utility](../../12-Financial%20mathematics/36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md) ranks choices by the chance-weighted average of a score $u$ for final wealth, and turns a score back into pounds as a **certainty equivalent**: the sure amount that scores the same. A score that bends down, such as the logarithm, makes a gamble worth less than its average. That card derives this; here it is used.
+[Expected utility](../../12-Financial%20mathematics/36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md) ranks choices by the chance-weighted average of a score $`u`$ for final wealth, and turns a score back into pounds as a **certainty equivalent**: the sure amount that scores the same. A score that bends down, such as the logarithm, makes a gamble worth less than its average. That card derives this; here it is used.
 
-Take a manager with £1,000 of spare cash and the log score, $u = \ln(1{,}000 + \text{profit})$:
+Take a manager with £1,000 of spare cash and the log score, $`u = \ln(1{,}000 + \text{profit})`$:
 
 - Big order: 0.6 × ln 1,600 + 0.4 × ln 700. Its certainty equivalent is **£149.51**.
 - Small order: 0.6 × ln 1,250 + 0.4 × ln 1,050. Its certainty equivalent is **£165.79**.
 
 The cautious manager places the small order. A £300 loss is a large bite out of £1,000, and the log score weighs that bite more heavily than the £600 gain.
 
-What would this manager pay for the forecast? Not a difference of averages: score points are not pounds, and paying the fee lowers the cash that every outcome is scored from. The price is the fee $c^*$ at which buying the forecast and not buying it score the same, the third formula above.
+What would this manager pay for the forecast? Not a difference of averages: score points are not pounds, and paying the fee lowers the cash that every outcome is scored from. The price is the fee $`c^*`$ at which buying the forecast and not buying it score the same, the third formula above.
 
 Nothing solves it in closed form, so the check finds it by **bisection**: start with a fee range of £0 to £500, test the middle, keep the half where the answer must lie, and repeat a hundred times.
 
 - Perfect forecast: worth **£181.46** to the cautious manager, against £140 in average money.
 - The 80% forecast: worth **£100.80**, against £70.
 
-Here caution raises the price, because the forecast removes exactly the risk the manager was avoiding: with it, they can bake big on the Saturdays that will be sunny. That is a feature of these payoffs, not a law. With other payoffs a cautious buyer can value the same information below its average-money worth. Setting the score to plain money, $u(w) = w$, the same bisection returns £140 and £70, which is one of the checks.
+Here caution raises the price, because the forecast removes exactly the risk the manager was avoiding: with it, they can bake big on the Saturdays that will be sunny. That is a feature of these payoffs, not a law. With other payoffs a cautious buyer can value the same information below its average-money worth. Setting the score to plain money, $`u(w) = w`$, the same bisection returns £140 and £70, which is one of the checks.
 
 ### The chart: what a forecast of each accuracy is worth
 
@@ -210,7 +218,7 @@ xychart-beta
 ```
 
 - **Lower line, two straight pieces:** the value in average money, the EVSI. It is flat at zero up to 0.6, because until then no message is strong enough to switch the order from big.
-- **Upper, curved line:** the cautious manager's price $c^*$. It stays at zero up to an accuracy of 0.5227, where a "sun" message first becomes strong enough to tip this manager from their usual small order to big.
+- **Upper, curved line:** the cautious manager's price $`c^*`$. It stays at zero up to an accuracy of 0.5227, where a "sun" message first becomes strong enough to tip this manager from their usual small order to big.
 - **Flat line:** the £50 fee.
 
 In average money the forecast earns its fee only above an accuracy of 0.7429.
@@ -246,7 +254,7 @@ At £50 the forecast leaves the manager £20 a Saturday better off on average. A
 | --- | --- | --- |
 | Value the forecast as the best case minus the plan's average | £360.00 | The sunny £600 happens with or without a forecast; information is worth only the change in the decision |
 | Measure against the small order instead of the best plan | £210.00 | The baseline must be the best plan without information, £240, not a worse one |
-| Value an 80% forecast at 80% of perfect | £112.00 | Value is not proportional to accuracy: it is £0 up to 0.6, then $350q - 210$ |
+| Value an 80% forecast at 80% of perfect | £112.00 | Value is not proportional to accuracy: it is £0 up to 0.6, then $`350q - 210`$ |
 | Use a forecast of accuracy 0.6 | £0.00 | The modelling assumption that a message can change the order fails: it never does, so the forecast is worthless at any fee |
 | Rank by average money for the cautious manager | gives up £16.29 | Big is their worse order: certainty equivalent £149.51 against £165.79 |
 
@@ -264,7 +272,7 @@ The script folds back the stall's tree and prices both forecasts, by five indepe
 4. Road 4 simulates 200,000 Saturdays with SplitMix64 (a small random-number generator written out in both languages, seed 20261111).
 5. Road 5 runs the bisection with a plain-money score, which must return the EVPI and EVSI exactly.
 
-A closed form, $350q - 210$, checks the accuracy chart point by point, and a second closed form checks where the cautious price leaves zero. Everything is printed, and Python and Rust print the same lines.
+A closed form, $`350q - 210`$, checks the accuracy chart point by point, and a second closed form checks where the cautious price leaves zero. Everything is printed, and Python and Rust print the same lines.
 
 ### Python
 
@@ -659,9 +667,9 @@ The two outputs match line for line. The simulated averages, £240.90, £380.55 
 Lean proves the card's two theorems for any finite set of actions, states and messages, and the stall's exact numbers.
 
 - Take any states with known chances, any profits, and a forecast with a known chance of each message in each state. Then EVSI is at least zero and at most EVPI.
-- Suppose the action $a_0$ has the best average profit. Then EVPI equals the expected regret of $a_0$, $E[\max_a x(a, S) - x(a_0, S)]$.
+- Suppose the action $`a_0`$ has the best average profit. Then EVPI equals the expected regret of $`a_0`$, $`E[\max_a x(a, S) - x(a_0, S)]`$.
 - For the stall, a perfect forecast is worth exactly £140.
-- Take a forecast right with chance $q$ in either weather, with $q$ from 0.5 to 1. Then the stall's EVSI is exactly $\max(0, 350q - 210)$ pounds.
+- Take a forecast right with chance $`q`$ in either weather, with $`q`$ from 0.5 to 1. Then the stall's EVSI is exactly $`\max(0, 350q - 210)`$ pounds.
 - The hand sums check: £240 and £170 for the two orders, £380 with a perfect forecast, and the regret's £140.
 - The 1,000-Saturday counts check: 560 and 440 messages, totals of £240,000 and £310,000, an EVSI of £70, and £20 ahead after the fee.
 

@@ -39,21 +39,29 @@ Orange: every call repriced with the Black-Scholes formula. Green: delta alone, 
 
 ## The formula
 
-Notation first, in words. $L$ is the book's loss over one day: minus its profit, so a positive $L$ is money lost. $X$ is Acme's move over the day in dollars, and $W$ is the profit of everything else in the book. Capital delta and capital gamma are the calls' combined delta and gamma, 100,000 times the per-call numbers.
+Notation first, in words. $`L`$ is the book's loss over one day: minus its profit, so a positive $`L`$ is money lost. $`X`$ is Acme's move over the day in dollars, and $`W`$ is the profit of everything else in the book. Capital delta and capital gamma are the calls' combined delta and gamma, 100,000 times the per-call numbers.
 
-$$L \;\approx\; -\Big(\Delta X + \tfrac12\,\Gamma X^2\Big) \;-\; W$$
+```math
+L \;\approx\; -\Big(\Delta X + \tfrac12\,\Gamma X^2\Big) \;-\; W
+```
 
 **Read it aloud:** the loss is minus the calls' straight-line gain, minus half the bend times the move squared, minus whatever the rest of the book made.
 
-The loss's first four moments come out exactly, with $s$ the spread of Acme's move and $v$ the spread of the rest:
+The loss's first four moments come out exactly, with $`s`$ the spread of Acme's move and $`v`$ the spread of the rest:
 
-$$\mu = -\tfrac12\Gamma s^2,\qquad \sigma_L^2 = \Delta^2 s^2 + \tfrac12\Gamma^2 s^4 + v^2,$$
+```math
+\mu = -\tfrac12\Gamma s^2,\qquad \sigma_L^2 = \Delta^2 s^2 + \tfrac12\Gamma^2 s^4 + v^2,
+```
 
-$$\gamma_1 = -\,\frac{3\Delta^2\Gamma s^4 + \Gamma^3 s^6}{\sigma_L^3},\qquad \gamma_2 = \frac{12\Delta^2\Gamma^2 s^6 + 3\Gamma^4 s^8}{\sigma_L^4}.$$
+```math
+\gamma_1 = -\,\frac{3\Delta^2\Gamma s^4 + \Gamma^3 s^6}{\sigma_L^3},\qquad \gamma_2 = \frac{12\Delta^2\Gamma^2 s^6 + 3\Gamma^4 s^8}{\sigma_L^4}.
+```
 
 Then the Cornish-Fisher quantile:
 
-$$\mathrm{VaR} \;\approx\; \mu + \sigma_L\,w,\qquad w = z + \frac{(z^2-1)\,\gamma_1}{6} + \frac{(z^3-3z)\,\gamma_2}{24} - \frac{(2z^3-5z)\,\gamma_1^2}{36}$$
+```math
+\mathrm{VaR} \;\approx\; \mu + \sigma_L\,w,\qquad w = z + \frac{(z^2-1)\,\gamma_1}{6} + \frac{(z^3-3z)\,\gamma_2}{24} - \frac{(2z^3-5z)\,\gamma_1^2}{36}
+```
 
 **Read it aloud:** VaR is the average loss plus the loss's spread times a corrected 99% point; the correction nudges the bell curve's 2.33 down when the loss tail is thin (negative skew) and up when the tails are heavy (positive excess kurtosis).
 
@@ -61,17 +69,17 @@ A central moment is the average of a power of the distance from the mean. The fo
 
 | Symbol | Plain meaning | In our example | Push it up and the VaR… |
 | --- | --- | --- | --- |
-| $L$ | the book's loss over one day, minus its profit | the quantity VaR reads a quantile of | is the answer's raw material |
-| $S$, $\sigma$ | Acme's price and its volatility (yearly spread of its returns) | $100 and 20% | rises: bigger moves |
-| $X$, $s$ | Acme's one-day move in dollars, and its standard deviation, $S\sigma\sqrt{1/252}$ | $s$ = $1.259882 | rises |
-| $\Delta$ | the calls' combined delta: Acme shares they behave like | 58,685.11 shares | rises |
-| $\Gamma$ | the calls' combined gamma: shares of delta gained per $1 move | 1,895.06 | falls, for a long option: the bend cushions both tails |
-| $W$, $v$ | the rest of the book's one-day profit, and its standard deviation | $v$ = $191,637.68 | rises |
-| $\mu$, $\sigma_L$ | the loss's average and standard deviation | −$1,504.01 and $205,416.89 | rises one for one with $\mu$, and by $w$ per dollar of $\sigma_L$ |
-| $\gamma_1$ | skew of the loss: third central moment over $\sigma_L^3$; negative means a short right tail | −0.005694 | rises |
-| $\gamma_2$ | excess kurtosis of the loss: fourth cumulant over $\sigma_L^4$, zero for a bell curve | 0.000333 | rises at the 99% level |
-| $z$, $N$, $\varphi$ | $z$ solves $N(z)$ = 0.99; $N$ is the bell curve's area to the left, $\varphi$ its height | $z$ = 2.326348 | rises with the confidence level |
-| $w$ | the Cornish-Fisher 99% point, in units of $\sigma_L$ | 2.322226 | rises one for one, times $\sigma_L$ |
+| $`L`$ | the book's loss over one day, minus its profit | the quantity VaR reads a quantile of | is the answer's raw material |
+| $`S`$, $`\sigma`$ | Acme's price and its volatility (yearly spread of its returns) | $100 and 20% | rises: bigger moves |
+| $`X`$, $`s`$ | Acme's one-day move in dollars, and its standard deviation, $`S\sigma\sqrt{1/252}`$ | $`s`$ = $1.259882 | rises |
+| $`\Delta`$ | the calls' combined delta: Acme shares they behave like | 58,685.11 shares | rises |
+| $`\Gamma`$ | the calls' combined gamma: shares of delta gained per $1 move | 1,895.06 | falls, for a long option: the bend cushions both tails |
+| $`W`$, $`v`$ | the rest of the book's one-day profit, and its standard deviation | $`v`$ = $191,637.68 | rises |
+| $`\mu`$, $`\sigma_L`$ | the loss's average and standard deviation | −$1,504.01 and $205,416.89 | rises one for one with $`\mu`$, and by $`w`$ per dollar of $`\sigma_L`$ |
+| $`\gamma_1`$ | skew of the loss: third central moment over $`\sigma_L^3`$; negative means a short right tail | −0.005694 | rises |
+| $`\gamma_2`$ | excess kurtosis of the loss: fourth cumulant over $`\sigma_L^4`$, zero for a bell curve | 0.000333 | rises at the 99% level |
+| $`z`$, $`N`$, $`\varphi`$ | $`z`$ solves $`N(z)`$ = 0.99; $`N`$ is the bell curve's area to the left, $`\varphi`$ its height | $`z`$ = 2.326348 | rises with the confidence level |
+| $`w`$ | the Cornish-Fisher 99% point, in units of $`\sigma_L`$ | 2.322226 | rises one for one, times $`\sigma_L`$ |
 | VaR | value at risk: the loss exceeded with 1% chance | $475,520.53 | is the answer |
 
 ### When it holds
@@ -87,66 +95,78 @@ A central moment is the average of a power of the distance from the mean. The fo
 
 ### Step 0: one bent variable plus one normal one
 
-The book's value is curved in Acme's price. Replace the curve by its parabola and the loss becomes a quadratic in one normal number $X$, plus an independent normal piece $W$. The moments of a quadratic in a normal variable can be computed exactly. A quantile close to the bell curve's can then be found by correcting the bell curve's quantile, one moment at a time.
+The book's value is curved in Acme's price. Replace the curve by its parabola and the loss becomes a quadratic in one normal number $`X`$, plus an independent normal piece $`W`$. The moments of a quadratic in a normal variable can be computed exactly. A quantile close to the bell curve's can then be found by correcting the bell curve's quantile, one moment at a time.
 
 ### Step 1: the parabola
 
-Taylor's rule, cut after the square, gives the calls' change in value for a move $X$ with the clock stopped:
+Taylor's rule, cut after the square, gives the calls' change in value for a move $`X`$ with the clock stopped:
 
-$$V(S+X) - V(S) \;\approx\; \Delta X + \tfrac12\Gamma X^2.$$
+```math
+V(S+X) - V(S) \;\approx\; \Delta X + \tfrac12\Gamma X^2.
+```
 
 The half is there because delta rises steadily from its old value to its new one during the move, so the calls earn the average delta, halfway between ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)). Add the rest of the book and flip the sign, and that is the formula.
 
 ### Step 2: the mean
 
-A move squared is never negative, and its average is the variance, $s^2$. So the average loss is $\mu = -\tfrac12\Gamma s^2$, which comes to −$1,504.01. With the clock stopped, a long option gains on average whatever the direction: the bend is a small income. Delta-normal sets this to zero. The clock does not really stop: a day's time decay costs these calls $2,021.34, more than the bend earns. That is the price of owning the bend.
+A move squared is never negative, and its average is the variance, $`s^2`$. So the average loss is $`\mu = -\tfrac12\Gamma s^2`$, which comes to −$1,504.01. With the clock stopped, a long option gains on average whatever the direction: the bend is a small income. Delta-normal sets this to zero. The clock does not really stop: a day's time decay costs these calls $2,021.34, more than the bend earns. That is the price of owning the bend.
 
 ### Step 3: spread, skew and kurtosis
 
-Write $X = sZ$, where $Z$ is a standard bell-curve draw, and set $b = \Delta s$ and $c = \tfrac12\Gamma s^2$. The calls' part of the loss, with its mean taken out, is $-\big(bZ + c(Z^2 - 1)\big)$. Only four facts about $Z$ are needed: the averages of its 2nd, 4th, 6th and 8th powers are 1, 3, 15 and 105, and every odd power averages to zero. Expanding the square, the cube and the fourth power and keeping only even powers gives
+Write $`X = sZ`$, where $`Z`$ is a standard bell-curve draw, and set $`b = \Delta s`$ and $`c = \tfrac12\Gamma s^2`$. The calls' part of the loss, with its mean taken out, is $`-\big(bZ + c(Z^2 - 1)\big)`$. Only four facts about $`Z`$ are needed: the averages of its 2nd, 4th, 6th and 8th powers are 1, 3, 15 and 105, and every odd power averages to zero. Expanding the square, the cube and the fourth power and keeping only even powers gives
 
-$$\text{variance } b^2 + 2c^2,\qquad \text{third moment } -(6b^2c + 8c^3),\qquad \text{fourth cumulant } 48b^2c^2 + 48c^4.$$
+```math
+\text{variance } b^2 + 2c^2,\qquad \text{third moment } -(6b^2c + 8c^3),\qquad \text{fourth cumulant } 48b^2c^2 + 48c^4.
+```
 
-The rest of the book is normal and independent. It adds $v^2$ to the variance and nothing to the third moment or the fourth cumulant, because those two quantities add across independent pieces and are zero for a bell curve. Substituting $b = \Delta s$ and $c = \tfrac12\Gamma s^2$ back gives the formulas above.
+The rest of the book is normal and independent. It adds $`v^2`$ to the variance and nothing to the third moment or the fourth cumulant, because those two quantities add across independent pieces and are zero for a bell curve. Substituting $`b = \Delta s`$ and $`c = \tfrac12\Gamma s^2`$ back gives the formulas above.
 
 <details>
 <summary>The algebra behind this</summary>
 
-Let $Y = Z^2 - 1$. Then $E[Y] = 0$, $E[Y^2] = 3 - 2 + 1 = 2$, $E[Z^2 Y] = 3 - 1 = 2$, $E[Y^3] = 15 - 3\cdot 3 + 3 - 1 = 8$, $E[Z^2Y^2] = 15 - 6 + 1 = 10$, $E[Y^4] = 105 - 60 + 18 - 4 + 1 = 60$. Every term with an odd power of $Z$ averages to zero.
-- Variance: $E[(bZ + cY)^2] = b^2 + 2c^2$.
-- Third moment: $E[(bZ + cY)^3] = 3b^2c\,E[Z^2Y] + c^3E[Y^3] = 6b^2c + 8c^3$; the loss carries a minus sign, so its third moment is $-(6b^2c + 8c^3)$.
-- Fourth moment: $E[(bZ + cY)^4] = 3b^4 + 6b^2c^2\cdot 10 + 60c^4$. Subtract $3(b^2 + 2c^2)^2 = 3b^4 + 12b^2c^2 + 12c^4$ to get the fourth cumulant $48b^2c^2 + 48c^4$.
+Let $`Y = Z^2 - 1`$. Then $`E[Y] = 0`$, $`E[Y^2] = 3 - 2 + 1 = 2`$, $`E[Z^2 Y] = 3 - 1 = 2`$, $`E[Y^3] = 15 - 3\cdot 3 + 3 - 1 = 8`$, $`E[Z^2Y^2] = 15 - 6 + 1 = 10`$, $`E[Y^4] = 105 - 60 + 18 - 4 + 1 = 60`$. Every term with an odd power of $`Z`$ averages to zero.
+- Variance: $`E[(bZ + cY)^2] = b^2 + 2c^2`$.
+- Third moment: $`E[(bZ + cY)^3] = 3b^2c\,E[Z^2Y] + c^3E[Y^3] = 6b^2c + 8c^3`$; the loss carries a minus sign, so its third moment is $`-(6b^2c + 8c^3)`$.
+- Fourth moment: $`E[(bZ + cY)^4] = 3b^4 + 6b^2c^2\cdot 10 + 60c^4`$. Subtract $`3(b^2 + 2c^2)^2 = 3b^4 + 12b^2c^2 + 12c^4`$ to get the fourth cumulant $`48b^2c^2 + 48c^4`$.
 
-With $b = \Delta s$ and $c = \tfrac12\Gamma s^2$: $2c^2 = \tfrac12\Gamma^2 s^4$, $6b^2c + 8c^3 = 3\Delta^2\Gamma s^4 + \Gamma^3 s^6$, and $48b^2c^2 + 48c^4 = 12\Delta^2\Gamma^2 s^6 + 3\Gamma^4 s^8$.
+With $`b = \Delta s`$ and $`c = \tfrac12\Gamma s^2`$: $`2c^2 = \tfrac12\Gamma^2 s^4`$, $`6b^2c + 8c^3 = 3\Delta^2\Gamma s^4 + \Gamma^3 s^6`$, and $`48b^2c^2 + 48c^4 = 12\Delta^2\Gamma^2 s^6 + 3\Gamma^4 s^8`$.
 
 </details>
 
 ### Step 4: correct the bell curve's quantile
 
-For a bell curve the 99% point sits at $z$ = 2.326348 standard deviations. Standardise the loss, subtracting $\mu$ and dividing by $\sigma_L$, and ask where its own 99% point $w$ sits. A lopsided distribution's area to the left of a point differs from the bell curve's by a correction built from its skew and kurtosis (the Edgeworth expansion). Set that corrected area equal to 0.99 and solve for $w$ near $z$. To first order the skew moves the point by $(z^2 - 1)\gamma_1/6$: here −0.004187 standard deviations, a thin right tail pulling the 99% point in. The kurtosis moves it by $(z^3 - 3z)\gamma_2/24$, here +0.000078. The last term is second order in the skew, −0.000012.
+For a bell curve the 99% point sits at $`z`$ = 2.326348 standard deviations. Standardise the loss, subtracting $`\mu`$ and dividing by $`\sigma_L`$, and ask where its own 99% point $`w`$ sits. A lopsided distribution's area to the left of a point differs from the bell curve's by a correction built from its skew and kurtosis (the Edgeworth expansion). Set that corrected area equal to 0.99 and solve for $`w`$ near $`z`$. To first order the skew moves the point by $`(z^2 - 1)\gamma_1/6`$: here −0.004187 standard deviations, a thin right tail pulling the 99% point in. The kurtosis moves it by $`(z^3 - 3z)\gamma_2/24`$, here +0.000078. The last term is second order in the skew, −0.000012.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write $\mathrm{He}_2(x) = x^2 - 1$, $\mathrm{He}_3(x) = x^3 - 3x$ and $\mathrm{He}_5(x) = x^5 - 10x^3 + 15x$. The Edgeworth expansion (Cornish and Fisher 1938, in Sources) states that a standardised variable with small skew $\gamma_1$ and excess kurtosis $\gamma_2$ has
-$$P(Y \le y) \approx N(y) - \varphi(y)\Big[\tfrac{\gamma_1}{6}\mathrm{He}_2(y) + \tfrac{\gamma_2}{24}\mathrm{He}_3(y) + \tfrac{\gamma_1^2}{72}\mathrm{He}_5(y)\Big].$$
-It comes from the variable's characteristic function (the average of $e^{itY}$ for each real frequency). Its logarithm is the bell curve's quadratic plus skew and kurtosis terms; exponentiating, and turning each power of the frequency back into a derivative of $N$, gives the series.
+Write $`\mathrm{He}_2(x) = x^2 - 1`$, $`\mathrm{He}_3(x) = x^3 - 3x`$ and $`\mathrm{He}_5(x) = x^5 - 10x^3 + 15x`$. The Edgeworth expansion (Cornish and Fisher 1938, in Sources) states that a standardised variable with small skew $`\gamma_1`$ and excess kurtosis $`\gamma_2`$ has
 
-Call the bracket $A(y)$ and look for $w = z + \delta$ with $N(z) = 0.99$. Expand to second order: $N(z + \delta) \approx N(z) + \varphi(z)\delta - \tfrac12 z\varphi(z)\delta^2$, and $\varphi(w)A(w) \approx \varphi(z)A(z) + \delta\,\varphi(z)\big(A'(z) - zA(z)\big)$. Setting $P(Y \le w) = N(z)$ and dividing by $\varphi(z)$:
-$$\delta = A(z) + \tfrac12 z\delta^2 + \delta\big(A'(z) - zA(z)\big).$$
-First order: $\delta_1 = \tfrac{\gamma_1}{6}\mathrm{He}_2(z) + \tfrac{\gamma_2}{24}\mathrm{He}_3(z)$. Second order, in the skew only, with $k = \gamma_1/6$, $A \approx k\,\mathrm{He}_2$ and $A' \approx 2kz$ inside the correction:
-$$\delta_2 = k^2\Big[\tfrac12\mathrm{He}_5 + \tfrac12 z\,\mathrm{He}_2^2 + \mathrm{He}_2(2z - z\,\mathrm{He}_2)\Big] = k^2\Big[\tfrac12\mathrm{He}_5 - \tfrac12 z\,\mathrm{He}_2^2 + 2z\,\mathrm{He}_2\Big].$$
-Here $\tfrac{\gamma_1^2}{72}\mathrm{He}_5 = \tfrac{k^2}{2}\mathrm{He}_5$ was used. Now $\tfrac12\mathrm{He}_5 - \tfrac12 z\,\mathrm{He}_2^2 = \tfrac12(-8z^3 + 14z) = -4z^3 + 7z$, and $2z\,\mathrm{He}_2 = 2z^3 - 2z$. The sum is $-2z^3 + 5z$, so $\delta_2 = -\gamma_1^2(2z^3 - 5z)/36$. Adding both corrections to $z$ gives the formula for $w$. The error is third order in the skew and kurtosis together.
+$`\displaystyle P(Y \le y) \approx N(y) - \varphi(y)\Big[\tfrac{\gamma_1}{6}\mathrm{He}_2(y) + \tfrac{\gamma_2}{24}\mathrm{He}_3(y) + \tfrac{\gamma_1^2}{72}\mathrm{He}_5(y)\Big].`$
+
+It comes from the variable's characteristic function (the average of $`e^{itY}`$ for each real frequency). Its logarithm is the bell curve's quadratic plus skew and kurtosis terms; exponentiating, and turning each power of the frequency back into a derivative of $`N`$, gives the series.
+
+Call the bracket $`A(y)`$ and look for $`w = z + \delta`$ with $`N(z) = 0.99`$. Expand to second order: $`N(z + \delta) \approx N(z) + \varphi(z)\delta - \tfrac12 z\varphi(z)\delta^2`$, and $`\varphi(w)A(w) \approx \varphi(z)A(z) + \delta\,\varphi(z)\big(A'(z) - zA(z)\big)`$. Setting $`P(Y \le w) = N(z)`$ and dividing by $`\varphi(z)`$:
+
+$`\displaystyle \delta = A(z) + \tfrac12 z\delta^2 + \delta\big(A'(z) - zA(z)\big).`$
+
+First order: $`\delta_1 = \tfrac{\gamma_1}{6}\mathrm{He}_2(z) + \tfrac{\gamma_2}{24}\mathrm{He}_3(z)`$. Second order, in the skew only, with $`k = \gamma_1/6`$, $`A \approx k\,\mathrm{He}_2`$ and $`A' \approx 2kz`$ inside the correction:
+
+$`\displaystyle \delta_2 = k^2\Big[\tfrac12\mathrm{He}_5 + \tfrac12 z\,\mathrm{He}_2^2 + \mathrm{He}_2(2z - z\,\mathrm{He}_2)\Big] = k^2\Big[\tfrac12\mathrm{He}_5 - \tfrac12 z\,\mathrm{He}_2^2 + 2z\,\mathrm{He}_2\Big].`$
+
+Here $`\tfrac{\gamma_1^2}{72}\mathrm{He}_5 = \tfrac{k^2}{2}\mathrm{He}_5`$ was used. Now $`\tfrac12\mathrm{He}_5 - \tfrac12 z\,\mathrm{He}_2^2 = \tfrac12(-8z^3 + 14z) = -4z^3 + 7z`$, and $`2z\,\mathrm{He}_2 = 2z^3 - 2z`$. The sum is $`-2z^3 + 5z`$, so $`\delta_2 = -\gamma_1^2(2z^3 - 5z)/36`$. Adding both corrections to $`z`$ gives the formula for $`w`$. The error is third order in the skew and kurtosis together.
 
 </details>
 
 ### Step 5: an exact answer to test against
 
-For the parabola itself there is an exact answer. Fix Acme's move at $X = su$. The rest of the book is normal, so the chance that the total loss beats a level $x$ is a bell-curve area. Average that area over $u$:
+For the parabola itself there is an exact answer. Fix Acme's move at $`X = su`$. The rest of the book is normal, so the chance that the total loss beats a level $`x`$ is a bell-curve area. Average that area over $`u`$:
 
-$$P(L > x) = \int_{-\infty}^{\infty} \varphi(u)\,N\!\left(\frac{-x - \Delta s u - \tfrac12\Gamma s^2 u^2}{v}\right) du.$$
+```math
+P(L > x) = \int_{-\infty}^{\infty} \varphi(u)\,N\!\left(\frac{-x - \Delta s u - \tfrac12\Gamma s^2 u^2}{v}\right) du.
+```
 
-Solve $P(L > x)$ = 0.01 for $x$ by halving an interval. That is the exact delta-gamma VaR, $475,520.58. Cornish-Fisher gives $475,520.53. Replacing the parabola by a full Black-Scholes reprice at each of 20,000 random moves, and averaging the same bell-curve area, gives $475,418.40. The parabola on those same draws gives $475,453.28. On identical draws the parabola and the full reprice differ by tens of dollars, the same size as the simulation's own sampling noise.
+Solve $`P(L > x)`$ = 0.01 for $`x`$ by halving an interval. That is the exact delta-gamma VaR, $475,520.58. Cornish-Fisher gives $475,520.53. Replacing the parabola by a full Black-Scholes reprice at each of 20,000 random moves, and averaging the same bell-curve area, gives $475,418.40. The parabola on those same draws gives $475,453.28. On identical draws the parabola and the full reprice differ by tens of dollars, the same size as the simulation's own sampling noise.
 
 The other door is pure simulation: draw every price, reprice everything, sort the losses ([Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md)). It needs no parabola, and costs thousands of repricings per book per day. Delta-gamma with Cornish-Fisher costs two Greeks per option and one line of arithmetic.
 
@@ -158,22 +178,22 @@ The house market: Acme at $100, strike $100, 5% rates, 2% dividend yield, 20% vo
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Acme's one-day spread $s$ | 100 × 0.20 × √(1/252) | $1.259882 |
-| calls' delta $\Delta$ | 100,000 × 0.5868511 | 58,685.11 shares |
-| calls' gamma $\Gamma$ | 100,000 × 0.0189506 | 1,895.06 |
-| rest of the book $v$ | √(190,000^2 + 25,000^2) | $191,637.68 |
+| Acme's one-day spread $`s`$ | 100 × 0.20 × √(1/252) | $1.259882 |
+| calls' delta $`\Delta`$ | 100,000 × 0.5868511 | 58,685.11 shares |
+| calls' gamma $`\Gamma`$ | 100,000 × 0.0189506 | 1,895.06 |
+| rest of the book $`v`$ | √(190,000^2 + 25,000^2) | $191,637.68 |
 | VaR without calls | 2.326348 × 191,637.68 | $445,815.91 |
 | delta part's spread | 58,685.11 × 1.259882 | $73,936.29 |
-| gamma part's spread, $\Gamma s^2/\sqrt2$ | 1,895.06 × 1.259882^2 ÷ √2 | $2,127.00 |
+| gamma part's spread, $`\Gamma s^2/\sqrt2`$ | 1,895.06 × 1.259882^2 ÷ √2 | $2,127.00 |
 | delta-normal VaR | 2.326348 × √(191,637.68^2 + 73,936.29^2) | $477,845.53 |
-| mean loss $\mu$ | −½ × 1,895.06 × 1.259882^2 | −$1,504.01 |
-| loss spread $\sigma_L$ | √(73,936.29^2 + 2,127.00^2 + 191,637.68^2) | $205,416.89 |
-| skew $\gamma_1$ | third-moment formula ÷ 205,416.89^3 | −0.005694 |
-| excess kurtosis $\gamma_2$ | fourth-cumulant formula ÷ 205,416.89^4 | 0.000333 |
+| mean loss $`\mu`$ | −½ × 1,895.06 × 1.259882^2 | −$1,504.01 |
+| loss spread $`\sigma_L`$ | √(73,936.29^2 + 2,127.00^2 + 191,637.68^2) | $205,416.89 |
+| skew $`\gamma_1`$ | third-moment formula ÷ 205,416.89^3 | −0.005694 |
+| excess kurtosis $`\gamma_2`$ | fourth-cumulant formula ÷ 205,416.89^4 | 0.000333 |
 | skew term | (2.326348^2 − 1) × (−0.005694) ÷ 6 | −0.004187 |
 | kurtosis term | (2.326348^3 − 3 × 2.326348) × 0.000333 ÷ 24 | 0.000078 |
 | skew-squared term | −(2 × 2.326348^3 − 5 × 2.326348) × 0.005694^2 ÷ 36 | −0.000012 |
-| $w$ | 2.326348 − 0.004187 + 0.000078 − 0.000012 (rounded terms) | 2.322226 |
+| $`w`$ | 2.326348 − 0.004187 + 0.000078 − 0.000012 (rounded terms) | 2.322226 |
 | **Cornish-Fisher VaR** | −1,504.01 + 205,416.89 × 2.322226 | **$475,520.53** |
 | **what the calls add** | 475,520.53 − 445,815.91 | **$29,704.62** |
 
@@ -666,11 +686,11 @@ The two outputs agree line for line at the printed precision.
 
 Lean proves the loss's four moments and the skew-squared term exactly, for any delta, gamma and spreads.
 
-- Suppose Acme's move $X$ and the rest's profit $W$ are independent and normal, with mean zero and spreads $s$ and $v$. Then the loss's mean is $\mu = -\tfrac12\Gamma s^2$.
-- Take the same $X$ and $W$. Then the loss's variance, skew and excess kurtosis equal $\sigma_L^2$, $\gamma_1$ and $\gamma_2$ in the formula.
-- Take a standard bell-curve draw $Z$ and any numbers $b$ and $c$. Then $-(bZ + c(Z^2 - 1))$ has mean 0 and variance $b^2 + 2c^2$.
-- Take the same $Z$, $b$ and $c$. Then its third moment is $-(6b^2c + 8c^3)$. Its fourth cumulant is $48b^2c^2 + 48c^4$.
-- Take any $z$ and $\gamma_1$. Then the second-order step in the detailed proof simplifies to the skew-squared term, $-\gamma_1^2(2z^3 - 5z)/36$.
+- Suppose Acme's move $`X`$ and the rest's profit $`W`$ are independent and normal, with mean zero and spreads $`s`$ and $`v`$. Then the loss's mean is $`\mu = -\tfrac12\Gamma s^2`$.
+- Take the same $`X`$ and $`W`$. Then the loss's variance, skew and excess kurtosis equal $`\sigma_L^2`$, $`\gamma_1`$ and $`\gamma_2`$ in the formula.
+- Take a standard bell-curve draw $`Z`$ and any numbers $`b`$ and $`c`$. Then $`-(bZ + c(Z^2 - 1))`$ has mean 0 and variance $`b^2 + 2c^2`$.
+- Take the same $`Z`$, $`b`$ and $`c`$. Then its third moment is $`-(6b^2c + 8c^3)`$. Its fourth cumulant is $`48b^2c^2 + 48c^4`$.
+- Take any $`z`$ and $`\gamma_1`$. Then the second-order step in the detailed proof simplifies to the skew-squared term, $`-\gamma_1^2(2z^3 - 5z)/36`$.
 - The five whole-number sums in "The algebra behind this" are exact: 2, 2, 8, 10 and 60.
 
 The parabola's fit to a full reprice, the Edgeworth expansion and every VaR figure are left to the Python and Rust checks.

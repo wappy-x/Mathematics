@@ -37,48 +37,56 @@ Orange: the standard normal, right when the spread is known. Green: t with 9 deg
 
 ## The formula
 
-Notation first, in words. $Z$ is a standard normal, N(0, 1). Several of them, Z_1 to Z_k, are independent. The Greek letter chi is written χ and read "kai". $\chi^2_k$ is read "chi-square with k degrees of freedom", and $\nu$ (nu) is the usual letter for a count of degrees of freedom. Γ is the gamma integral of [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), with Γ(1/2) = √π. The gamma law on that card has two settings: the shape, which sets the power of v in its density, and the rate, which sets how fast its exponential tail falls.
+Notation first, in words. $`Z`$ is a standard normal, N(0, 1). Several of them, Z_1 to Z_k, are independent. The Greek letter chi is written χ and read "kai". $`\chi^2_k`$ is read "chi-square with k degrees of freedom", and $`\nu`$ (nu) is the usual letter for a count of degrees of freedom. Γ is the gamma integral of [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), with Γ(1/2) = √π. The gamma law on that card has two settings: the shape, which sets the power of v in its density, and the rate, which sets how fast its exponential tail falls.
 
 **Chi-square: a sum of squares.**
 
-$$V = Z_1^2 + Z_2^2 + \dots + Z_k^2 \sim \chi^2_k, \qquad f_V(v) = \frac{v^{k/2-1}\,e^{-v/2}}{2^{k/2}\,\Gamma(k/2)} \ (v > 0), \qquad E[V] = k, \quad \mathrm{Var}(V) = 2k$$
+```math
+V = Z_1^2 + Z_2^2 + \dots + Z_k^2 \sim \chi^2_k, \qquad f_V(v) = \frac{v^{k/2-1}\,e^{-v/2}}{2^{k/2}\,\Gamma(k/2)} \ (v > 0), \qquad E[V] = k, \quad \mathrm{Var}(V) = 2k
+```
 
 **Read it aloud:** add k independent squared standard normals; the total follows the gamma law with shape k/2 and rate 1/2, averaging k.
 
-**t: a normal over an estimated spread.** With $V \sim \chi^2_\nu$ independent of $Z$:
+**t: a normal over an estimated spread.** With $`V \sim \chi^2_\nu`$ independent of $`Z`$:
 
-$$T = \frac{Z}{\sqrt{V/\nu}} \sim t_\nu, \qquad f_T(t) = \frac{\Gamma\big(\tfrac{\nu+1}{2}\big)}{\sqrt{\nu\pi}\;\Gamma\big(\tfrac{\nu}{2}\big)} \left(1 + \frac{t^2}{\nu}\right)^{-(\nu+1)/2}, \qquad \mathrm{Var}(T) = \frac{\nu}{\nu - 2} \ (\nu > 2)$$
+```math
+T = \frac{Z}{\sqrt{V/\nu}} \sim t_\nu, \qquad f_T(t) = \frac{\Gamma\big(\tfrac{\nu+1}{2}\big)}{\sqrt{\nu\pi}\;\Gamma\big(\tfrac{\nu}{2}\big)} \left(1 + \frac{t^2}{\nu}\right)^{-(\nu+1)/2}, \qquad \mathrm{Var}(T) = \frac{\nu}{\nu - 2} \ (\nu > 2)
+```
 
 **Read it aloud:** divide a standard normal by the square root of a chi-square's average per degree of freedom; the result is bell-shaped, but its tails fall off as a power of t, not as e to the minus t squared over 2.
 
-**F: a ratio of two spreads.** With $U \sim \chi^2_{\nu_1}$ and $V \sim \chi^2_{\nu_2}$ independent, and $c = \nu_1/\nu_2$:
+**F: a ratio of two spreads.** With $`U \sim \chi^2_{\nu_1}`$ and $`V \sim \chi^2_{\nu_2}`$ independent, and $`c = \nu_1/\nu_2`$:
 
-$$F = \frac{U/\nu_1}{V/\nu_2} \sim F(\nu_1, \nu_2), \qquad f_F(x) = \frac{\Gamma\big(\tfrac{\nu_1+\nu_2}{2}\big)\, c^{\nu_1/2}\, x^{\nu_1/2-1}}{\Gamma\big(\tfrac{\nu_1}{2}\big)\Gamma\big(\tfrac{\nu_2}{2}\big)\,(1 + c x)^{(\nu_1+\nu_2)/2}} \ (x > 0), \qquad E[F] = \frac{\nu_2}{\nu_2 - 2} \ (\nu_2 > 2)$$
+```math
+F = \frac{U/\nu_1}{V/\nu_2} \sim F(\nu_1, \nu_2), \qquad f_F(x) = \frac{\Gamma\big(\tfrac{\nu_1+\nu_2}{2}\big)\, c^{\nu_1/2}\, x^{\nu_1/2-1}}{\Gamma\big(\tfrac{\nu_1}{2}\big)\Gamma\big(\tfrac{\nu_2}{2}\big)\,(1 + c x)^{(\nu_1+\nu_2)/2}} \ (x > 0), \qquad E[F] = \frac{\nu_2}{\nu_2 - 2} \ (\nu_2 > 2)
+```
 
 **Read it aloud:** divide one chi-square per degree of freedom by another; the order matters, numerator first.
 
-**What a normal sample gives.** Take $n$ independent measurements, X_1 to X_n, from N(μ, σ^2). Their average is $\bar X$. A residual is one measurement's gap from the average. Their sample variance, $S^2$, is the squared residuals added and divided by n − 1; $S$ is its square root. For two machines, a subscript 1 or 2 marks the sample: sizes $n_1$ and $n_2$, sample variances $S_1^2$ and $S_2^2$, and true standard deviations $\sigma_1$ and $\sigma_2$.
+**What a normal sample gives.** Take $`n`$ independent measurements, X_1 to X_n, from N(μ, σ^2). Their average is $`\bar X`$. A residual is one measurement's gap from the average. Their sample variance, $`S^2`$, is the squared residuals added and divided by n − 1; $`S`$ is its square root. For two machines, a subscript 1 or 2 marks the sample: sizes $`n_1`$ and $`n_2`$, sample variances $`S_1^2`$ and $`S_2^2`$, and true standard deviations $`\sigma_1`$ and $`\sigma_2`$.
 
-$$\frac{(n-1)\,S^2}{\sigma^2} \sim \chi^2_{n-1}, \qquad \frac{\bar X - \mu}{S/\sqrt{n}} \sim t_{n-1}, \qquad \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F(n_1 - 1,\, n_2 - 1)$$
+```math
+\frac{(n-1)\,S^2}{\sigma^2} \sim \chi^2_{n-1}, \qquad \frac{\bar X - \mu}{S/\sqrt{n}} \sim t_{n-1}, \qquad \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F(n_1 - 1,\, n_2 - 1)
+```
 
 **Read it aloud:** the scaled sample variance is chi-square with one degree of freedom fewer than the sample size; the gap between average and true mean, in estimated standard errors, is t with the same count; and two independent samples' variances, each divided by its true variance, give an F ratio.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $n_1$, $n_2$ | number of measurements; $n_1$ and $n_2$ for the two machines | 10 bags (7 from the second machine) | S wobbles less; t moves towards the normal |
-| $X_i$, $\bar X$ | one bag's weight; the average of the sample | 507 g; 502 g | a larger gap to explain |
-| $\mu$ | the machine's true average | 500 g if the label is right | — |
-| $\sigma$, $\sigma_1$, $\sigma_2$ | the machine's true standard deviation; one per machine in the F ratio | unknown; 3 g put to the test | wider scatter of every statistic |
-| $S$, $S_1$, $S_2$ | the sample standard deviation, with n − 1; one per machine | 3.162 g, so S^2 = 10; the second machine's S_2^2 = 4 | the t ratio shrinks |
-| $Z$, $Z_i$ | independent standard normals | the bags' errors divided by σ | — |
-| $k$, $\nu$ | degrees of freedom: independent squares in a chi-square | 9 = 10 − 1 | tails thin towards the normal |
-| $V$, $U$ | chi-square variables | V = 9 S^2/3^2 = 10.000 | — |
-| $T$ | the t ratio | 2.000 | stronger evidence against the label |
-| $F$, $c$ | the F ratio, and the degrees-of-freedom ratio in its density | 10/4 = 2.500 on (9, 6); c = 1.5 | the first spread looks larger |
-| $f_V$, $f_T$, $f_F$ | densities: chance per unit of the statistic | f_T peaks at 0.39 | — |
-| $\Gamma$ | the gamma integral, each law's constant | Γ(1/2) = 1.772454 | — |
-| $\Phi$, $\varphi$ | the standard normal's cumulative area, and its density | 2(1 − Φ(2)) = 0.0455; φ(0) = 0.40 | — |
-| $W_i$, $B$, $a$, $b$, $\beta$, $u$, $\theta$, $s$ | proof-only letters: the rotated standard normals (Step 3); two gamma shapes $a$, $b$ and their total $u$ (Step 2); the beta share U/(U + V), with parameters $a = \nu_1/2$ and $\beta = \nu_2/2$ and value b (Step 5); the angle in the t-tail tip; the generating function's argument (Step 2) | a = 9/2 and β = 6/2 for F(9, 6) | — |
+| $`n`$, $`n_1`$, $`n_2`$ | number of measurements; $`n_1`$ and $`n_2`$ for the two machines | 10 bags (7 from the second machine) | S wobbles less; t moves towards the normal |
+| $`X_i`$, $`\bar X`$ | one bag's weight; the average of the sample | 507 g; 502 g | a larger gap to explain |
+| $`\mu`$ | the machine's true average | 500 g if the label is right | — |
+| $`\sigma`$, $`\sigma_1`$, $`\sigma_2`$ | the machine's true standard deviation; one per machine in the F ratio | unknown; 3 g put to the test | wider scatter of every statistic |
+| $`S`$, $`S_1`$, $`S_2`$ | the sample standard deviation, with n − 1; one per machine | 3.162 g, so S^2 = 10; the second machine's S_2^2 = 4 | the t ratio shrinks |
+| $`Z`$, $`Z_i`$ | independent standard normals | the bags' errors divided by σ | — |
+| $`k`$, $`\nu`$ | degrees of freedom: independent squares in a chi-square | 9 = 10 − 1 | tails thin towards the normal |
+| $`V`$, $`U`$ | chi-square variables | V = 9 S^2/3^2 = 10.000 | — |
+| $`T`$ | the t ratio | 2.000 | stronger evidence against the label |
+| $`F`$, $`c`$ | the F ratio, and the degrees-of-freedom ratio in its density | 10/4 = 2.500 on (9, 6); c = 1.5 | the first spread looks larger |
+| $`f_V`$, $`f_T`$, $`f_F`$ | densities: chance per unit of the statistic | f_T peaks at 0.39 | — |
+| $`\Gamma`$ | the gamma integral, each law's constant | Γ(1/2) = 1.772454 | — |
+| $`\Phi`$, $`\varphi`$ | the standard normal's cumulative area, and its density | 2(1 − Φ(2)) = 0.0455; φ(0) = 0.40 | — |
+| $`W_i`$, $`B`$, $`a`$, $`b`$, $`\beta`$, $`u`$, $`\theta`$, $`s`$ | proof-only letters: the rotated standard normals (Step 3); two gamma shapes $`a`$, $`b`$ and their total $`u`$ (Step 2); the beta share U/(U + V), with parameters $`a = \nu_1/2`$ and $`\beta = \nu_2/2`$ and value b (Step 5); the angle in the t-tail tip; the generating function's argument (Step 2) | a = 9/2 and β = 6/2 for F(9, 6) | — |
 
 ### The picture: the chi-square law of a sample's spread
 
@@ -112,13 +120,17 @@ Every bag's error is σ times a standard normal. A ratio with σ once on top and
 
 ### Step 1: one squared normal is gamma with shape 1/2
 
-$Z^2$ is at most v exactly when Z lies between −√v and √v. Both signs land on the same square, so both halves count:
+$`Z^2`$ is at most v exactly when Z lies between −√v and √v. Both signs land on the same square, so both halves count:
 
-$$P(Z^2 \le v) = \Phi(\sqrt v) - \Phi(-\sqrt v) = 2\,\Phi(\sqrt v) - 1.$$
+```math
+P(Z^2 \le v) = \Phi(\sqrt v) - \Phi(-\sqrt v) = 2\,\Phi(\sqrt v) - 1.
+```
 
 Here Φ is the standard normal's cumulative area ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). Differentiating, by the chain rule of [Transforming a variable](../05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md):
 
-$$f_{Z^2}(v) = 2\,\varphi(\sqrt v)\cdot\frac{1}{2\sqrt v} = \frac{v^{-1/2}\,e^{-v/2}}{\sqrt{2\pi}}.$$
+```math
+f_{Z^2}(v) = 2\,\varphi(\sqrt v)\cdot\frac{1}{2\sqrt v} = \frac{v^{-1/2}\,e^{-v/2}}{\sqrt{2\pi}}.
+```
 
 Here φ is the normal density. This is the gamma density with shape 1/2 and rate 1/2, since 2^(1/2)Γ(1/2) = √2 · √π = √(2π). One squared normal has mean 1 and variance 2: shape over rate, and shape over rate squared.
 
@@ -137,13 +149,17 @@ Write each bag as μ + σZ_i. Then the residual X_i − X̄ is σ(Z_i − Z̄): 
 <details>
 <summary>Detailed proof: the rotation that splits off the mean</summary>
 
-The joint density of $Z_1, \dots, Z_n$ is $(2\pi)^{-n/2} e^{-(z_1^2 + \dots + z_n^2)/2}$. It depends only on the point's distance from the origin. A rotation keeps distances and volumes, so rotated coordinates $W_1, \dots, W_n$ have the same density: independent standard normals again ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)).
+The joint density of $`Z_1, \dots, Z_n`$ is $`(2\pi)^{-n/2} e^{-(z_1^2 + \dots + z_n^2)/2}`$. It depends only on the point's distance from the origin. A rotation keeps distances and volumes, so rotated coordinates $`W_1, \dots, W_n`$ have the same density: independent standard normals again ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)).
 
-Choose the rotation whose first new axis points along `(1, 1, ..., 1)/√n`. Then $W_1 = (Z_1 + \dots + Z_n)/\sqrt n = \sqrt n\,\bar Z$. Distances are kept, so
-$$Z_1^2 + \dots + Z_n^2 = W_1^2 + W_2^2 + \dots + W_n^2.$$
-Expanding the squares also gives $\sum Z_i^2 = \sum (Z_i - \bar Z)^2 + n\bar Z^2$, and $n\bar Z^2 = W_1^2$. Subtracting,
-$$\frac{(n-1)S^2}{\sigma^2} = \sum_{i=1}^n (Z_i - \bar Z)^2 = W_2^2 + \dots + W_n^2.$$
-That is n − 1 independent squared standard normals: $\chi^2_{n-1}$ by Step 2. It uses only $W_2, \dots, W_n$, while the average uses only W_1. So for a normal sample the average and the sample variance are **independent**, the fact Step 4 needs. Non-normal samples lose it: the rotation argument used the density's dependence on distance alone.
+Choose the rotation whose first new axis points along `(1, 1, ..., 1)/√n`. Then $`W_1 = (Z_1 + \dots + Z_n)/\sqrt n = \sqrt n\,\bar Z`$. Distances are kept, so
+
+$`\displaystyle Z_1^2 + \dots + Z_n^2 = W_1^2 + W_2^2 + \dots + W_n^2.`$
+
+Expanding the squares also gives $`\sum Z_i^2 = \sum (Z_i - \bar Z)^2 + n\bar Z^2`$, and $`n\bar Z^2 = W_1^2`$. Subtracting,
+
+$`\displaystyle \frac{(n-1)S^2}{\sigma^2} = \sum_{i=1}^n (Z_i - \bar Z)^2 = W_2^2 + \dots + W_n^2.`$
+
+That is n − 1 independent squared standard normals: $`\chi^2_{n-1}`$ by Step 2. It uses only $`W_2, \dots, W_n`$, while the average uses only W_1. So for a normal sample the average and the sample variance are **independent**, the fact Step 4 needs. Non-normal samples lose it: the rotation argument used the density's dependence on distance alone.
 
 </details>
 
@@ -155,7 +171,9 @@ The middle 95 percent of the chi-square law with 9 degrees runs from 2.700 to 19
 
 The standardised gap with σ known is Z = (X̄ − μ)/(σ/√n), a standard normal. Replace σ by S and divide top and bottom by σ:
 
-$$\frac{\bar X - \mu}{S/\sqrt n} = \frac{(\bar X - \mu)/(\sigma/\sqrt n)}{\sqrt{S^2/\sigma^2}} = \frac{Z}{\sqrt{V/(n-1)}}, \qquad V = \frac{(n-1)S^2}{\sigma^2}.$$
+```math
+\frac{\bar X - \mu}{S/\sqrt n} = \frac{(\bar X - \mu)/(\sigma/\sqrt n)}{\sqrt{S^2/\sigma^2}} = \frac{Z}{\sqrt{V/(n-1)}}, \qquad V = \frac{(n-1)S^2}{\sigma^2}.
+```
 
 σ cancels. The top is a standard normal. The bottom is the square root of a chi-square per degree of freedom, and Step 3 made it independent of the top. That is the t construction with ν = n − 1.
 
@@ -166,16 +184,18 @@ The variance: E[T^2] = ν · E[Z^2] · E[1/V], and the gamma integral gives E[1/
 <details>
 <summary>Detailed proof: the t density</summary>
 
-Hold V at a value v. Then T = Z / √(v/ν) is normal with standard deviation √(ν/v), density $\sqrt{v/\nu}\,\varphi(t\sqrt{v/\nu})$. Average over v with the chi-square density:
-$$f_T(t) = \int_0^\infty \sqrt{\tfrac{v}{\nu}}\,\frac{e^{-t^2 v/(2\nu)}}{\sqrt{2\pi}} \cdot \frac{v^{\nu/2-1} e^{-v/2}}{2^{\nu/2}\Gamma(\nu/2)}\,dv = \frac{1}{\sqrt{2\pi\nu}\;2^{\nu/2}\,\Gamma(\nu/2)} \int_0^\infty v^{\frac{\nu+1}{2}-1} e^{-v\,(1 + t^2/\nu)/2}\,dv.$$
-The gamma integral $\int_0^\infty v^{a-1}e^{-bv}\,dv = \Gamma(a)/b^a$ with $a = (\nu+1)/2$ and $b = (1 + t^2/\nu)/2$ gives $\Gamma(\frac{\nu+1}{2})\,2^{(\nu+1)/2}(1 + t^2/\nu)^{-(\nu+1)/2}$. The powers of 2 reduce to $\sqrt2$, and $\sqrt2/\sqrt{2\pi\nu} = 1/\sqrt{\nu\pi}$, which is the density in The formula. Averaging a density over v uses independence: the law of Z is the same whatever V turned out to be.
+Hold V at a value v. Then T = Z / √(v/ν) is normal with standard deviation √(ν/v), density $`\sqrt{v/\nu}\,\varphi(t\sqrt{v/\nu})`$. Average over v with the chi-square density:
+
+$`\displaystyle f_T(t) = \int_0^\infty \sqrt{\tfrac{v}{\nu}}\,\frac{e^{-t^2 v/(2\nu)}}{\sqrt{2\pi}} \cdot \frac{v^{\nu/2-1} e^{-v/2}}{2^{\nu/2}\Gamma(\nu/2)}\,dv = \frac{1}{\sqrt{2\pi\nu}\;2^{\nu/2}\,\Gamma(\nu/2)} \int_0^\infty v^{\frac{\nu+1}{2}-1} e^{-v\,(1 + t^2/\nu)/2}\,dv.`$
+
+The gamma integral $`\int_0^\infty v^{a-1}e^{-bv}\,dv = \Gamma(a)/b^a`$ with $`a = (\nu+1)/2`$ and $`b = (1 + t^2/\nu)/2`$ gives $`\Gamma(\frac{\nu+1}{2})\,2^{(\nu+1)/2}(1 + t^2/\nu)^{-(\nu+1)/2}`$. The powers of 2 reduce to $`\sqrt2`$, and $`\sqrt2/\sqrt{2\pi\nu} = 1/\sqrt{\nu\pi}`$, which is the density in The formula. Averaging a density over v uses independence: the law of Z is the same whatever V turned out to be.
 
 </details>
 
 <details>
 <summary>Why the code can write the t tail as a finite sum</summary>
 
-Put $t = \sqrt\nu\,\tan\theta$. Then $1 + t^2/\nu = 1/\cos^2\theta$ and the density times dt becomes a constant times $\cos^{\nu-1}\theta\,d\theta$. At ν = 1 that is flat in θ, so $P(|T| < t) = 2\theta/\pi$, the Cauchy law. For odd ν the power of cosine is even, and repeated integration by parts gives θ plus sin θ times a finite sum of odd powers of cos θ, with weights 1, 2/3, 8/15 and so on. The check uses that sum for ν = 9.
+Put $`t = \sqrt\nu\,\tan\theta`$. Then $`1 + t^2/\nu = 1/\cos^2\theta`$ and the density times dt becomes a constant times $`\cos^{\nu-1}\theta\,d\theta`$. At ν = 1 that is flat in θ, so $`P(|T| < t) = 2\theta/\pi`$, the Cauchy law. For odd ν the power of cosine is even, and repeated integration by parts gives θ plus sin θ times a finite sum of odd powers of cos θ, with weights 1, 2/3, 8/15 and so on. The check uses that sum for ν = 9.
 
 </details>
 
@@ -183,7 +203,9 @@ Put $t = \sqrt\nu\,\tan\theta$. Then $1 + t^2/\nu = 1/\cos^2\theta$ and the dens
 
 Weigh seven bags from a second machine, 503, 498, 501, 498, 502, 499 and 499 grams: average 500, sample variance 4 grams squared. If both machines share one σ, the ratio of the two sample variances is
 
-$$\frac{S_1^2}{S_2^2} = \frac{\big(9 S_1^2/\sigma^2\big)/9}{\big(6 S_2^2/\sigma^2\big)/6} = \frac{U/9}{V/6},$$
+```math
+\frac{S_1^2}{S_2^2} = \frac{\big(9 S_1^2/\sigma^2\big)/9}{\big(6 S_2^2/\sigma^2\big)/6} = \frac{U/9}{V/6},
+```
 
 with U and V independent chi-squares on 9 and 6 degrees: the F construction, F(9, 6). The σ cancels again. Here the ratio is 10/4 = 2.500, and a ratio at least that large turns up with chance 0.1385 when the spreads are equal: about 1 time in 7.
 
@@ -192,8 +214,10 @@ The share U/(U + V) of two independent gamma variables at one rate follows the b
 <details>
 <summary>Detailed proof: the F density from the beta share</summary>
 
-Let B = U/(U + V), with density $b^{a-1}(1-b)^{\beta-1}\Gamma(a+\beta)/(\Gamma(a)\Gamma(\beta))$, where a = ν1/2 and β = ν2/2. Then cF = B/(1 − B), so B = cx/(1 + cx) when F = x, and 1 − B = 1/(1 + cx). The stretch factor is dB/dx = c/(1 + cx)^2. Multiplying,
-$$f_F(x) = \frac{\Gamma(a+\beta)}{\Gamma(a)\Gamma(\beta)} \cdot \frac{(cx)^{a-1}}{(1+cx)^{a-1}} \cdot \frac{1}{(1+cx)^{\beta-1}} \cdot \frac{c}{(1+cx)^2} = \frac{\Gamma(a+\beta)\,c^{a}\,x^{a-1}}{\Gamma(a)\Gamma(\beta)\,(1+cx)^{a+\beta}}.$$
+Let B = U/(U + V), with density $`b^{a-1}(1-b)^{\beta-1}\Gamma(a+\beta)/(\Gamma(a)\Gamma(\beta))`$, where a = ν1/2 and β = ν2/2. Then cF = B/(1 − B), so B = cx/(1 + cx) when F = x, and 1 − B = 1/(1 + cx). The stretch factor is dB/dx = c/(1 + cx)^2. Multiplying,
+
+$`\displaystyle f_F(x) = \frac{\Gamma(a+\beta)}{\Gamma(a)\Gamma(\beta)} \cdot \frac{(cx)^{a-1}}{(1+cx)^{a-1}} \cdot \frac{1}{(1+cx)^{\beta-1}} \cdot \frac{c}{(1+cx)^2} = \frac{\Gamma(a+\beta)\,c^{a}\,x^{a-1}}{\Gamma(a)\Gamma(\beta)\,(1+cx)^{a+\beta}}.`$
+
 The mean: E[F] = (ν2/ν1) E[U] E[1/V] = (ν2/ν1) · ν1 · 1/(ν2 − 2) = ν2/(ν2 − 2), which is 6/4 = 1.5000 for (9, 6). Swapping the two samples gives 1/F, which is F(ν2, ν1).
 
 </details>

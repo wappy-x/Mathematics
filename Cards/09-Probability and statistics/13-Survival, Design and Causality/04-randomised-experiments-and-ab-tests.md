@@ -35,54 +35,62 @@ Each bar counts the lotteries whose gap fell in a 0.2-point bin; the first and l
 
 ## The formula
 
-Notation first, in words. Number the visitors $i = 1$ to $N$. Each visitor carries two **potential outcomes**: $y_i(A)$ is 1 if visitor $i$ would buy on page A and 0 if not, and $y_i(B)$ is the same for page B. Both are fixed facts about the visitor before the test begins; the test reveals only one of them. The visitor's **treatment effect** is $y_i(B) - y_i(A)$: 1 if page B wins them a sale, −1 if it loses one, 0 if it changes nothing. The **average treatment effect** $\tau$ (tau) averages that over everyone:
+Notation first, in words. Number the visitors $`i = 1`$ to $`N`$. Each visitor carries two **potential outcomes**: $`y_i(A)`$ is 1 if visitor $`i`$ would buy on page A and 0 if not, and $`y_i(B)`$ is the same for page B. Both are fixed facts about the visitor before the test begins; the test reveals only one of them. The visitor's **treatment effect** is $`y_i(B) - y_i(A)`$: 1 if page B wins them a sale, −1 if it loses one, 0 if it changes nothing. The **average treatment effect** $`\tau`$ (tau) averages that over everyone:
 
-$$\tau = \frac{1}{N}\sum_{i=1}^{N}\bigl[\,y_i(B) - y_i(A)\,\bigr]$$
+```math
+\tau = \frac{1}{N}\sum_{i=1}^{N}\bigl[\,y_i(B) - y_i(A)\,\bigr]
+```
 
 **Read it aloud:** the share of visitors who would buy on B minus the share who would buy on A, as if every visitor could be shown both pages.
 
-The lottery sets $Z_i = 1$ if visitor $i$ lands in B and $Z_i = 0$ if in A, with exactly $n_B$ ones among the $N$ visitors and every such choice equally likely. The estimate is the difference in observed purchase rates:
+The lottery sets $`Z_i = 1`$ if visitor $`i`$ lands in B and $`Z_i = 0`$ if in A, with exactly $`n_B`$ ones among the $`N`$ visitors and every such choice equally likely. The estimate is the difference in observed purchase rates:
 
-$$\hat\tau = \frac{1}{n_B}\sum_{i=1}^{N} Z_i\,y_i(B) \;-\; \frac{1}{n_A}\sum_{i=1}^{N}(1 - Z_i)\,y_i(A)$$
+```math
+\hat\tau = \frac{1}{n_B}\sum_{i=1}^{N} Z_i\,y_i(B) \;-\; \frac{1}{n_A}\sum_{i=1}^{N}(1 - Z_i)\,y_i(A)
+```
 
 **Read it aloud:** the buying rate among those sent to B, minus the buying rate among those sent to A.
 
-The theorem is two lines. $E$ averages over all possible lotteries:
+The theorem is two lines. $`E`$ averages over all possible lotteries:
 
-$$E[\hat\tau] = \tau, \qquad \operatorname{Var}(\hat\tau) = \frac{S_B^2}{n_B} + \frac{S_A^2}{n_A} - \frac{S_\tau^2}{N}$$
+```math
+E[\hat\tau] = \tau, \qquad \mathrm{Var}(\hat\tau) = \frac{S_B^2}{n_B} + \frac{S_A^2}{n_A} - \frac{S_\tau^2}{N}
+```
 
 **Read it aloud:** averaged over every lottery, the observed gap is exactly the average effect; its variance is each page's spread divided by that arm's size, less a correction for how much the effect varies from visitor to visitor.
 
-The spreads are the usual variance of a column of numbers, with divisor $N - 1$: $S_A^2$ for the column of $y_i(A)$, $S_B^2$ for $y_i(B)$, and $S_\tau^2$ for the column of individual effects.
+The spreads are the usual variance of a column of numbers, with divisor $`N - 1`$: $`S_A^2`$ for the column of $`y_i(A)`$, $`S_B^2`$ for $`y_i(B)`$, and $`S_\tau^2`$ for the column of individual effects.
 
-Sizing borrows one formula from [Power](../08-Confidence%20Intervals%20and%20Tests/04-power-and-sample-size.md). To detect a lift from buying chance $p_A$ to $p_B$, a gap $\delta = p_B - p_A$, with a false-alarm rate $\alpha$ and power $1 - \beta$, each arm needs
+Sizing borrows one formula from [Power](../08-Confidence%20Intervals%20and%20Tests/04-power-and-sample-size.md). To detect a lift from buying chance $`p_A`$ to $`p_B`$, a gap $`\delta = p_B - p_A`$, with a false-alarm rate $`\alpha`$ and power $`1 - \beta`$, each arm needs
 
-$$n = \frac{\bigl(z_{1-\alpha/2}\,\sigma_0 + z_{1-\beta}\,\sigma_1\bigr)^2}{\delta^2}, \qquad \sigma_0 = \sqrt{2\bar p(1-\bar p)}, \quad \sigma_1 = \sqrt{p_A(1-p_A) + p_B(1-p_B)}$$
+```math
+n = \frac{\bigl(z_{1-\alpha/2}\,\sigma_0 + z_{1-\beta}\,\sigma_1\bigr)^2}{\delta^2}, \qquad \sigma_0 = \sqrt{2\bar p(1-\bar p)}, \quad \sigma_1 = \sqrt{p_A(1-p_A) + p_B(1-p_B)}
+```
 
-with $\bar p$ the average of $p_A$ and $p_B$. **Read it aloud:** visitors per arm grow with the square of the two cutoffs' combined reach and shrink with the square of the lift being chased.
+with $`\bar p`$ the average of $`p_A`$ and $`p_B`$. **Read it aloud:** visitors per arm grow with the square of the two cutoffs' combined reach and shrink with the square of the lift being chased.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$, $i$ | visitors in the test; one visitor's number | 20,000 | the correction term shrinks |
-| $n_A$, $n_B$ | visitors sent to A, to B | 10,000 each | the variance falls |
-| $y_i(A)$, $y_i(B)$ | would visitor $i$ buy on A, on B: 1 or 0 | rates 0.0500 and 0.0580 in the model shop | — |
-| $\tau$ | the average treatment effect | 0.0080 in the model shop | the arms' gap moves with it |
-| $Z_i$ | the lottery's verdict: 1 for B, 0 for A; $C(N, n_B)$ equally likely patterns | 35 of the 70 patterns put visitor 1 in B, on the 8-visitor table | — |
-| $\hat\tau$ | the observed gap, B's rate minus A's | 0.0080 | — |
-| $E$, Var, $a_i$ | average and variance over all possible lotteries; $a_i$ is a helper in the proof | SD of $\hat\tau$ 0.003052 | — |
-| $S_A^2$, $S_B^2$, $S_\tau^2$, $S_{AB}$ | spread of the A column, the B column, the effect column; how the A and B columns move together | 0.047502, 0.054639, 0.017937 | more spread, more noise; $S_\tau^2$ is subtracted |
-| $p_A$, $p_B$, $\delta$ | buying chances used for planning, and the lift between them | 0.0500, 0.0580, 0.0080 | bigger lift: far fewer visitors |
-| $\bar p$, $p$, $\bar a$ | the average of the two planning chances; one arm's observed buying rate; the average of the $a_i$ in the proof | 0.0540; 0.0500 and 0.0580; — | $\bar p$ nearer one half: more visitors |
-| $\sigma_0$, $\sigma_1$ | one pair of visitors' spread in the gap, without and with the lift | 0.319637 and 0.319587 | more visitors |
-| $\alpha$, $\beta$, $z_{1-\alpha/2}$, $z_{1-\beta}$ | false-alarm rate, miss rate, and their bell-curve cutoffs | 0.05, 0.20; 1.959964, 0.841621 | stricter rates: more visitors |
-| $\Phi$ | the standard bell curve's area to the left of a point | $\Phi(2.5028)$ gives the p-value 0.0123 | — |
+| $`N`$, $`i`$ | visitors in the test; one visitor's number | 20,000 | the correction term shrinks |
+| $`n_A`$, $`n_B`$ | visitors sent to A, to B | 10,000 each | the variance falls |
+| $`y_i(A)`$, $`y_i(B)`$ | would visitor $`i`$ buy on A, on B: 1 or 0 | rates 0.0500 and 0.0580 in the model shop | — |
+| $`\tau`$ | the average treatment effect | 0.0080 in the model shop | the arms' gap moves with it |
+| $`Z_i`$ | the lottery's verdict: 1 for B, 0 for A; $`C(N, n_B)`$ equally likely patterns | 35 of the 70 patterns put visitor 1 in B, on the 8-visitor table | — |
+| $`\hat\tau`$ | the observed gap, B's rate minus A's | 0.0080 | — |
+| $`E`$, Var, $`a_i`$ | average and variance over all possible lotteries; $`a_i`$ is a helper in the proof | SD of $`\hat\tau`$ 0.003052 | — |
+| $`S_A^2`$, $`S_B^2`$, $`S_\tau^2`$, $`S_{AB}`$ | spread of the A column, the B column, the effect column; how the A and B columns move together | 0.047502, 0.054639, 0.017937 | more spread, more noise; $`S_\tau^2`$ is subtracted |
+| $`p_A`$, $`p_B`$, $`\delta`$ | buying chances used for planning, and the lift between them | 0.0500, 0.0580, 0.0080 | bigger lift: far fewer visitors |
+| $`\bar p`$, $`p`$, $`\bar a`$ | the average of the two planning chances; one arm's observed buying rate; the average of the $`a_i`$ in the proof | 0.0540; 0.0500 and 0.0580; — | $`\bar p`$ nearer one half: more visitors |
+| $`\sigma_0`$, $`\sigma_1`$ | one pair of visitors' spread in the gap, without and with the lift | 0.319637 and 0.319587 | more visitors |
+| $`\alpha`$, $`\beta`$, $`z_{1-\alpha/2}`$, $`z_{1-\beta}`$ | false-alarm rate, miss rate, and their bell-curve cutoffs | 0.05, 0.20; 1.959964, 0.841621 | stricter rates: more visitors |
+| $`\Phi`$ | the standard bell curve's area to the left of a point | $`\Phi(2.5028)`$ gives the p-value 0.0123 | — |
 
 ### When it holds
 
-- **A real lottery, fixed arm sizes.** Every set of $n_B$ visitors must be equally likely to form arm B, and neither arm may be empty: $1 \le n_B \le N - 1$. Let visitors choose, or let an engineer pick, and the proof has nothing to stand on: showing B only to returning visitors reports a gap of 0.1725, not 0.0080.
+- **A real lottery, fixed arm sizes.** Every set of $`n_B`$ visitors must be equally likely to form arm B, and neither arm may be empty: $`1 \le n_B \le N - 1`$. Let visitors choose, or let an engineer pick, and the proof has nothing to stand on: showing B only to returning visitors reports a gap of 0.1725, not 0.0080.
 - **No interference.** Each visitor's purchase depends only on the page that visitor saw. If B's buyers empty the stock of a sale item, A's visitors find it gone, and the two columns stop being fixed facts.
 - **One outcome per visitor, recorded for everyone assigned.** Visitors whose session is lost more often on one page than the other bias the gap, whatever the lottery did.
-- **The average is the target.** The theorem speaks about $\tau$, the average over these 20,000 visitors. It says nothing about any single visitor, and nothing about next year's visitors unless they resemble these.
+- **The average is the target.** The theorem speaks about $`\tau`$, the average over these 20,000 visitors. It says nothing about any single visitor, and nothing about next year's visitors unless they resemble these.
 
 ---
 
@@ -94,19 +102,23 @@ Every visitor carries two answers, one per page, and the test sees only the answ
 
 ### Step 1: every visitor has the same chance of landing in B
 
-With 20,000 visitors and 10,000 slots in B, there are $C(20000, 10000)$ possible lotteries, all equally likely. Fix one visitor. The lotteries that put them in B choose the other 9,999 B-visitors from the remaining 19,999: $C(19999, 9999)$ of them. The ratio is
+With 20,000 visitors and 10,000 slots in B, there are $`C(20000, 10000)`$ possible lotteries, all equally likely. Fix one visitor. The lotteries that put them in B choose the other 9,999 B-visitors from the remaining 19,999: $`C(19999, 9999)`$ of them. The ratio is
 
-$$P(Z_i = 1) = \frac{C(N-1,\,n_B-1)}{C(N,\,n_B)} = \frac{n_B}{N} = \frac{1}{2}.$$
+```math
+P(Z_i = 1) = \frac{C(N-1,\,n_B-1)}{C(N,\,n_B)} = \frac{n_B}{N} = \frac{1}{2}.
+```
 
 On an 8-visitor table with 4 slots in B, the 70 possible lotteries put visitor 1 in B exactly 35 times. A returning customer and a first-time visitor face the same one-in-two chance. That is the whole of balance: not that each lottery splits every kind of visitor evenly, but that no kind of visitor is favoured on average. In the first of the model shop's lotteries, 0.1992 of the B arm and 0.2008 of the A arm were returning customers, against 4,000 of 20,000 in the shop.
 
 ### Step 2: the average gap over all lotteries is the true effect
 
-Average the B arm's buying rate over every lottery. Each visitor's $y_i(B)$ is counted with chance $n_B/N$, and the rate divides by $n_B$:
+Average the B arm's buying rate over every lottery. Each visitor's $`y_i(B)`$ is counted with chance $`n_B/N`$, and the rate divides by $`n_B`$:
 
-$$E\Bigl[\frac{1}{n_B}\sum_i Z_i\,y_i(B)\Bigr] = \frac{1}{n_B}\sum_i \frac{n_B}{N}\,y_i(B) = \frac{1}{N}\sum_i y_i(B).$$
+```math
+E\Bigl[\frac{1}{n_B}\sum_i Z_i\,y_i(B)\Bigr] = \frac{1}{n_B}\sum_i \frac{n_B}{N}\,y_i(B) = \frac{1}{N}\sum_i y_i(B).
+```
 
-That is what the whole shop would have bought on B. The same step for A, with chance $n_A/N$ of landing there, gives the whole shop's rate on A. Averages subtract, so $E[\hat\tau] = \tau$. The proof used only the expectation of a sum and Step 1. It needed no bell curve, no independence between visitors, and no model of why people buy.
+That is what the whole shop would have bought on B. The same step for A, with chance $`n_A/N`$ of landing there, gives the whole shop's rate on A. Averages subtract, so $`E[\hat\tau] = \tau`$. The proof used only the expectation of a sum and Step 1. It needed no bell curve, no independence between visitors, and no model of why people buy.
 
 Unbiased means right on average over lotteries. It does not mean right on each one. The 8-visitor table has a true effect of 0.1250, and its 70 lotteries average exactly 0.1250, yet they range from −0.5000 to 0.7500.
 
@@ -114,18 +126,24 @@ Unbiased means right on average over lotteries. It does not mean right on each o
 
 The lottery indicators are not independent: with the arm sizes fixed, one visitor landing in B makes it slightly less likely that another does. Keeping that negative dependence, the variance comes out as the formula shows. The model shop's gap has a standard deviation, over all lotteries, of 0.003052; the 1,000 simulated lotteries show 0.003117.
 
-The trouble is the last term. $S_\tau^2$ measures how much individual effects vary, and no visitor ever shows both outcomes, so it cannot be estimated. The usual practice drops it and estimates the rest from each arm's own spread: the arm's sample variance, with divisor $n - 1$, over its size. For buy-or-not outcomes that is $p(1-p)/(n-1)$; the familiar $p(1-p)/n$ is smaller by a factor $(n-1)/n$, too little to show in the digits below. The term dropped is subtracted, so the usual variance, averaged over lotteries, is never smaller than the true one. In the model shop the usual standard error is 0.003196 against a true 0.003052. One lottery's estimate can still fall short, but on average the intervals err on the wide, safe side. Over the 1,000 lotteries, the 95 percent interval caught the true effect 952 times, give or take 7. When every visitor has the same effect, $S_\tau^2$ is zero and the two agree.
+The trouble is the last term. $`S_\tau^2`$ measures how much individual effects vary, and no visitor ever shows both outcomes, so it cannot be estimated. The usual practice drops it and estimates the rest from each arm's own spread: the arm's sample variance, with divisor $`n - 1`$, over its size. For buy-or-not outcomes that is $`p(1-p)/(n-1)`$; the familiar $`p(1-p)/n`$ is smaller by a factor $`(n-1)/n`$, too little to show in the digits below. The term dropped is subtracted, so the usual variance, averaged over lotteries, is never smaller than the true one. In the model shop the usual standard error is 0.003196 against a true 0.003052. One lottery's estimate can still fall short, but on average the intervals err on the wide, safe side. Over the 1,000 lotteries, the 95 percent interval caught the true effect 952 times, give or take 7. When every visitor has the same effect, $`S_\tau^2`$ is zero and the two agree.
 
 <details>
 <summary>Detailed proof: the variance formula, by counting</summary>
 
-Counting lotteries gives $E[Z_i] = n_B/N$ and, for two different visitors, $E[Z_i Z_j] = n_B(n_B - 1)/(N(N-1))$: the lotteries putting both in B choose the other $n_B - 2$ from $N - 2$. Hence
-$$\operatorname{Var}(Z_i) = \frac{n_A n_B}{N^2}, \qquad \operatorname{Cov}(Z_i, Z_j) = -\frac{n_A n_B}{N^2(N-1)}.$$
-Write $a_i = y_i(B)/n_B + y_i(A)/n_A$. Since $1 - Z_i$ multiplies $y_i(A)$, the estimate is $\hat\tau = \sum_i Z_i a_i - \frac{1}{n_A}\sum_i y_i(A)$, and the last sum is fixed. The variance of a sum is the sum of all variances and covariances:
-$$\operatorname{Var}(\hat\tau) = \frac{n_A n_B}{N^2}\Bigl[\sum_i a_i^2 - \frac{1}{N-1}\sum_{i \ne j} a_i a_j\Bigr] = \frac{n_A n_B}{N(N-1)}\sum_i (a_i - \bar a)^2,$$
-where $\bar a$ is the average of the $a_i$. Write $S_{AB}$ for the covariance of the two columns, divisor $N - 1$. Expanding the square gives $\sum_i (a_i - \bar a)^2 = (N-1)\bigl[S_B^2/n_B^2 + S_A^2/n_A^2 + 2S_{AB}/(n_A n_B)\bigr]$, so
-$$\operatorname{Var}(\hat\tau) = \frac{n_A S_B^2}{N n_B} + \frac{n_B S_A^2}{N n_A} + \frac{2S_{AB}}{N}.$$
-Put $n_A = N - n_B$ in the first term: it is $S_B^2/n_B - S_B^2/N$. Likewise the second is $S_A^2/n_A - S_A^2/N$. The effect column's spread is $S_\tau^2 = S_A^2 + S_B^2 - 2S_{AB}$, so the leftover terms are $-S_\tau^2/N$. That is the formula. On the 8-visitor table the variance over all 70 lotteries and the formula both give 0.069196.
+Counting lotteries gives $`E[Z_i] = n_B/N`$ and, for two different visitors, $`E[Z_i Z_j] = n_B(n_B - 1)/(N(N-1))`$: the lotteries putting both in B choose the other $`n_B - 2`$ from $`N - 2`$. Hence
+
+$`\displaystyle \mathrm{Var}(Z_i) = \frac{n_A n_B}{N^2}, \qquad \mathrm{Cov}(Z_i, Z_j) = -\frac{n_A n_B}{N^2(N-1)}.`$
+
+Write $`a_i = y_i(B)/n_B + y_i(A)/n_A`$. Since $`1 - Z_i`$ multiplies $`y_i(A)`$, the estimate is $`\hat\tau = \sum_i Z_i a_i - \frac{1}{n_A}\sum_i y_i(A)`$, and the last sum is fixed. The variance of a sum is the sum of all variances and covariances:
+
+$`\displaystyle \mathrm{Var}(\hat\tau) = \frac{n_A n_B}{N^2}\Bigl[\sum_i a_i^2 - \frac{1}{N-1}\sum_{i \ne j} a_i a_j\Bigr] = \frac{n_A n_B}{N(N-1)}\sum_i (a_i - \bar a)^2,`$
+
+where $`\bar a`$ is the average of the $`a_i`$. Write $`S_{AB}`$ for the covariance of the two columns, divisor $`N - 1`$. Expanding the square gives $`\sum_i (a_i - \bar a)^2 = (N-1)\bigl[S_B^2/n_B^2 + S_A^2/n_A^2 + 2S_{AB}/(n_A n_B)\bigr]`$, so
+
+$`\displaystyle \mathrm{Var}(\hat\tau) = \frac{n_A S_B^2}{N n_B} + \frac{n_B S_A^2}{N n_A} + \frac{2S_{AB}}{N}.`$
+
+Put $`n_A = N - n_B`$ in the first term: it is $`S_B^2/n_B - S_B^2/N`$. Likewise the second is $`S_A^2/n_A - S_A^2/N`$. The effect column's spread is $`S_\tau^2 = S_A^2 + S_B^2 - 2S_{AB}`$, so the leftover terms are $`-S_\tau^2/N`$. That is the formula. On the 8-visitor table the variance over all 70 lotteries and the formula both give 0.069196.
 
 </details>
 
@@ -155,13 +173,13 @@ The shop's result: 500 of 10,000 bought on A, 580 of 10,000 on B.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | buying rates | 500 / 10,000 and 580 / 10,000 | 0.0500 and 0.0580 |
-| the gap, $\hat\tau$ | 0.0580 − 0.0500 | **0.0080** |
+| the gap, $`\hat\tau`$ | 0.0580 − 0.0500 | **0.0080** |
 | each arm's variance | 0.05 × 0.95 / 10,000 and 0.058 × 0.942 / 10,000 | 0.00000475 and 0.00000546 |
 | standard error | square root of their sum | 0.003196 |
 | 95 percent interval | 0.0080 ± 1.959964 × 0.003196 | **0.0017 to 0.0143** |
 | pooled rate, if the pages were equal | 1,080 / 20,000 | 0.0540 |
 | test statistic | 0.0080 / 0.003196 (pooled) | 2.5028 |
-| two-sided p-value | 2 × (1 − $\Phi$(2.5028)) | 0.0123 |
+| two-sided p-value | 2 × (1 − $`\Phi`$(2.5028)) | 0.0123 |
 | visitors per arm for 80 percent power | ((0.626478 + 0.268971) / 0.008)^2 = 12528.6 | **12,529** |
 
 Page B's estimated lift is 0.80 of a point, standard error 0.32 of a point: about 8 extra sales per 1,000 visitors. The interval runs from 0.17 to 1.43 points; the recipe that built it catches the true lift in 95 of every 100 tests, and says nothing more about this one. If the pages were truly equal, a gap at least this large, either way, would turn up in about 12 tests in 1,000. That p-value is not the chance that page B is no better. The lottery is what licenses "because": the lift is caused by the page, up to that chance noise.
@@ -577,11 +595,11 @@ The two outputs match line for line.
 
 Lean proves Steps 1, 2 and 3 for any number of visitors and any columns of outcomes, and checks the card's exact sums.
 
-- Take $N$ visitors, $n_B$ of them sent to B by lottery and $n_A$ to A, both arms non-empty. Then every visitor lands in B in a share $n_B/N$ of the lotteries.
-- Take the same lottery, with outcomes any numbers, not only 1 or 0. Then the gap, averaged over every lottery, is exactly $\tau$.
-- Take the same lottery and outcomes. Then the gap's variance over all lotteries is $S_B^2/n_B + S_A^2/n_A - S_\tau^2/N$.
+- Take $`N`$ visitors, $`n_B`$ of them sent to B by lottery and $`n_A`$ to A, both arms non-empty. Then every visitor lands in B in a share $`n_B/N`$ of the lotteries.
+- Take the same lottery, with outcomes any numbers, not only 1 or 0. Then the gap, averaged over every lottery, is exactly $`\tau`$.
+- Take the same lottery and outcomes. Then the gap's variance over all lotteries is $`S_B^2/n_B + S_A^2/n_A - S_\tau^2/N`$.
 - On the 8-visitor table, 35 of the 70 lotteries put visitor 1 in B.
-- On that table the 70 gaps average 1/8, which is $\tau$, and their variance is 31/448, as the formula gives.
+- On that table the 70 gaps average 1/8, which is $`\tau`$, and their variance is 31/448, as the formula gives.
 - The model shop's four kinds of visitor add up to 20,000, and its true effect is 0.0080.
 - The observed test's gap is 0.0080, and its pooled rate is 0.0540.
 - Showing B only to returning visitors gives a gap of 0.1725; showing it only to new ones gives −0.1550.
@@ -928,7 +946,7 @@ example : (760 : ℚ) / 4000 - 280 / 16000 = 69 / 400 ∧ (400 : ℚ) / 16000 - 
 > **Try changing**
 > Guess first, then run it.
 > - **Take the lottery away.** In the shuffle, replace `j = i + rng.next() % (N - i)` with `j = i`. B now gets the first 10,000 visitors in the table, all 4,000 returning customers among them. Guess the mean gap: far above 0.0080, and the fourth assert stops the program.
-> - **Remove the visitors page B loses.** In `KINDS`, change the two rows ending `1, 0` to end `0, 0`, so they buy on neither page. The average effect rises to 0.0130, $S_\tau^2$ shrinks, and the true standard deviation moves closer to the usual standard error; the asserts still pass, since each road recomputes the new truth.
+> - **Remove the visitors page B loses.** In `KINDS`, change the two rows ending `1, 0` to end `0, 0`, so they buy on neither page. The average effect rises to 0.0130, $`S_\tau^2`$ shrinks, and the true standard deviation moves closer to the usual standard error; the asserts still pass, since each road recomputes the new truth.
 > - **Ask for 90 percent power.** Change `Phi_inv(0.80)` to `Phi_inv(0.90)`. The visitors needed per arm rise well above 12,529, and the sixth assert, still pinned to the 80 percent boundary, stops the program.
 > - **Change the seed.** The 1,000 lotteries change, the mean gap moves by a standard error or so, and the histogram's bars shift a little; the true effect does not move.
 

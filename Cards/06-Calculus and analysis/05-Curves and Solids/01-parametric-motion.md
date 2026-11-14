@@ -26,34 +26,40 @@ Drawn to scale, 8 units = 1 m. Each arrow is the velocity, drawn as the distance
 
 ## The formula
 
-Notation first, in words. After $t$ seconds the ball is $x(t)$ metres across and $y(t)$ metres up from the hand. The bold $\mathbf r(t)$ is that pair written as one object, a vector. A prime is a rate per second: $x'(t)$, also written dx/dt, is "the rate of x per unit of t".
+Notation first, in words. After $`t`$ seconds the ball is $`x(t)`$ metres across and $`y(t)`$ metres up from the hand. The bold $`\mathbf r(t)`$ is that pair written as one object, a vector. A prime is a rate per second: $`x'(t)`$, also written dx/dt, is "the rate of x per unit of t".
 
-$$\mathbf r(t) = \big(x(t),\, y(t)\big), \qquad \mathbf v(t) = \big(x'(t),\, y'(t)\big), \qquad \mathbf a(t) = \big(x''(t),\, y''(t)\big)$$
+```math
+\mathbf r(t) = \big(x(t),\, y(t)\big), \qquad \mathbf v(t) = \big(x'(t),\, y'(t)\big), \qquad \mathbf a(t) = \big(x''(t),\, y''(t)\big)
+```
 
 **Read it aloud:** position is the pair of coordinates; velocity is the pair of their rates; acceleration is the pair of those rates' rates.
 
 Straight bars around a vector mean its length, by Pythagoras:
 
-$$\text{speed} = \lvert \mathbf v(t) \rvert = \sqrt{x'(t)^2 + y'(t)^2}, \qquad \frac{dy}{dx} = \frac{dy/dt}{dx/dt} \quad \text{when } dx/dt \neq 0$$
+```math
+\text{speed} = \lvert \mathbf v(t) \rvert = \sqrt{x'(t)^2 + y'(t)^2}, \qquad \frac{dy}{dx} = \frac{dy/dt}{dx/dt} \quad \text{when } dx/dt \neq 0
+```
 
 **Read it aloud:** speed is the length of the velocity arrow; the steepness of the path is the up-rate over the across-rate.
 
-For the ball, with $u$ = 12 m/s across, $w$ = 16 m/s up and $g$ = 9.8 m/s^2:
+For the ball, with $`u`$ = 12 m/s across, $`w`$ = 16 m/s up and $`g`$ = 9.8 m/s^2:
 
-$$x(t) = u\,t, \qquad y(t) = w\,t - \tfrac{1}{2} g\,t^2$$
+```math
+x(t) = u\,t, \qquad y(t) = w\,t - \tfrac{1}{2} g\,t^2
+```
 
-so $\mathbf v(t)$ = (12, 16 − 9.8t) m/s and $\mathbf a(t)$ = (0, −9.8) m/s^2 at every instant.
+so $`\mathbf v(t)`$ = (12, 16 − 9.8t) m/s and $`\mathbf a(t)`$ = (0, −9.8) m/s^2 at every instant.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | the parameter: seconds since release | 0 to 3.2653 s | the ball moves on |
-| $x(t)$, $y(t)$ | metres across and up from the hand | 12 and 11.1 m at t = 1 s | — |
-| $\mathbf r(t)$ | position vector: the pair (x, y) | (12, 11.1) m | — |
-| $\mathbf v(t)$ | velocity: rates of x and y, m/s | (12, 6.2) m/s at t = 1 s | the arrow grows and turns |
-| $\lvert \mathbf v(t) \rvert$ | speed: the velocity's length, m/s | 13.5070 m/s at t = 1 s; 12 at the top | — |
-| $\mathbf a(t)$ | acceleration: the velocity's rates, m/s^2 | (0, −9.8) always | — |
-| $u$, $w$ | across and up speed at release | 12 and 16 m/s | u: a longer arch; w: a higher, longer one |
-| $g$ | gravity's pull | 9.8 m/s^2 | a shorter, lower arch |
+| $`t`$ | the parameter: seconds since release | 0 to 3.2653 s | the ball moves on |
+| $`x(t)`$, $`y(t)`$ | metres across and up from the hand | 12 and 11.1 m at t = 1 s | — |
+| $`\mathbf r(t)`$ | position vector: the pair (x, y) | (12, 11.1) m | — |
+| $`\mathbf v(t)`$ | velocity: rates of x and y, m/s | (12, 6.2) m/s at t = 1 s | the arrow grows and turns |
+| $`\lvert \mathbf v(t) \rvert`$ | speed: the velocity's length, m/s | 13.5070 m/s at t = 1 s; 12 at the top | — |
+| $`\mathbf a(t)`$ | acceleration: the velocity's rates, m/s^2 | (0, −9.8) always | — |
+| $`u`$, $`w`$ | across and up speed at release | 12 and 16 m/s | u: a longer arch; w: a higher, longer one |
+| $`g`$ | gravity's pull | 9.8 m/s^2 | a shorter, lower arch |
 
 Acceleration is m/s per second, m/s^2. The slope dy/dx is metres up per metre across, so it has no unit.
 
@@ -74,7 +80,7 @@ A pair changes only when one of its numbers changes, so the rate of a pair shoul
 
 ### Step 1: velocity is the pair of difference quotients
 
-Over a short time h the ball moves from $\mathbf r(t)$ to $\mathbf r(t+h)$. That move divided by h is the pair (change in x ÷ h, change in y ÷ h): two ordinary difference quotients, each heading for its own derivative.
+Over a short time h the ball moves from $`\mathbf r(t)`$ to $`\mathbf r(t+h)`$. That move divided by h is the pair (change in x ÷ h, change in y ÷ h): two ordinary difference quotients, each heading for its own derivative.
 
 The tolerance game of [Limits](../01-Limits%20and%20Continuity/01-limits.md), with numbers: name a tolerance, then find a step h small enough that the quotient lands within it.
 
@@ -101,13 +107,17 @@ At the top the velocity is (12, 0), length 12 m/s. The code measures the distanc
 
 Where dx/dt is never zero, x keeps moving one way, so each x belongs to one time and the height is a function of x alone: call it Y, so y(t) = Y(x(t)). The chain rule ([Chain rule](../02-Derivatives/03-chain-rule.md)) says
 
-$$y'(t) = Y'\big(x(t)\big)\, x'(t).$$
+```math
+y'(t) = Y'\big(x(t)\big)\, x'(t).
+```
 
 Divide by x'(t), which is not zero: the path's slope dY/dx equals y'(t) ÷ x'(t).
 
 For the ball, the clock can be removed by hand. From x = 12t, t = x/12, and substituting gives
 
-$$y = \frac{w}{u}\,x - \frac{g}{2u^2}\,x^2,$$
+```math
+y = \frac{w}{u}\,x - \frac{g}{2u^2}\,x^2,
+```
 
 a parabola. At x = 12 m, where the ball is at t = 1 s, the rule gives 6.2 ÷ 12 = 0.5167. The code checks it from forward difference quotients of y(x): 0.482639, 0.513264, 0.516326, 0.516663 for steps of 1, 0.1, 0.01 and 0.0001 m.
 

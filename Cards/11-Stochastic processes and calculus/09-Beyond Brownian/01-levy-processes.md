@@ -33,60 +33,66 @@ One line: the price along one sample path (one run of the process drawn against 
 
 ## The formula
 
-Notation first, in words. Time $t$ is in years. The process $X_t$, read "the value at time t", is the change in the log price, $X_t = \ln(S_t / 100)$, where $S_t$ is the price. An **increment** is a change over a window, $X_{t+h} - X_t$.
+Notation first, in words. Time $`t`$ is in years. The process $`X_t`$, read "the value at time t", is the change in the log price, $`X_t = \ln(S_t / 100)`$, where $`S_t`$ is the price. An **increment** is a change over a window, $`X_{t+h} - X_t`$.
 
-The letter $i$ is the imaginary unit and $u$ a frequency dial, per unit of log price. The characteristic function $\varphi_t(u) = E[e^{iuX_t}]$ is the average point on the unit circle turned by $u$ times $X_t$ ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md); that card calls the dial $t$, here $t$ is time). It identifies the law of $X_t$ completely.
+The letter $`i`$ is the imaginary unit and $`u`$ a frequency dial, per unit of log price. The characteristic function $`\varphi_t(u) = E[e^{iuX_t}]`$ is the average point on the unit circle turned by $`u`$ times $`X_t`$ ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md); that card calls the dial $`t`$, here $`t`$ is time). It identifies the law of $`X_t`$ completely.
 
-**The definition.** A process $X_t$ is a Lévy process when:
+**The definition.** A process $`X_t`$ is a Lévy process when:
 
-1. it starts at zero: $X_0 = 0$;
+1. it starts at zero: $`X_0 = 0`$;
 2. its increments over windows that do not overlap are independent;
-3. its increments are stationary: the law of $X_{t+h} - X_t$ depends on the length $h$ only, not on the start $t$;
-4. it is continuous in probability: for every size $\varepsilon > 0$, the chance that $|X_{t+h} - X_t| > \varepsilon$ goes to 0 as $h$ goes to 0.
+3. its increments are stationary: the law of $`X_{t+h} - X_t`$ depends on the length $`h`$ only, not on the start $`t`$;
+4. it is continuous in probability: for every size $`\varepsilon > 0`$, the chance that $`|X_{t+h} - X_t| > \varepsilon`$ goes to 0 as $`h`$ goes to 0.
 
 Condition 4 does not forbid jumps, only a jump at a fixed, known time. The share jumps at random moments, so at any given instant the chance of a jump is zero. Every Lévy process has a version whose paths are right-continuous with limits from the left: a jump lands on its new value at once.
 
-**The theorem.** For every Lévy process there is one function $\psi$, the **Lévy exponent**, with
+**The theorem.** For every Lévy process there is one function $`\psi`$, the **Lévy exponent**, with
 
-$$\varphi_t(u) = E\big[e^{iuX_t}\big] = e^{t\,\psi(u)},$$
+```math
+\varphi_t(u) = E\big[e^{iuX_t}\big] = e^{t\,\psi(u)},
+```
 
-$$\psi(u) = i\,b\,u \;-\; \tfrac12 \sigma^2 u^2 \;+\; \int_{x \ne 0} \Big(e^{iux} - 1 - iux\,\mathbf{1}_{\{|x| < 1\}}\Big)\,\nu(dx).$$
+```math
+\psi(u) = i\,b\,u \;-\; \tfrac12 \sigma^2 u^2 \;+\; \int_{x \ne 0} \Big(e^{iux} - 1 - iux\,\mathbf{1}_{\{|x| < 1\}}\Big)\,\nu(dx).
+```
 
 **Read it aloud:** the characteristic function at time t is e raised to t times the exponent, and the exponent is a drift term, minus a Brownian term, plus, over every jump size, the rate of such jumps times what one does to the rotating point, with small jumps' average pull taken out.
 
-The ingredients $(b, \sigma^2, \nu)$ are the **Lévy triplet**. The integral is against a measure, as in [Measures](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/04-measures.md): $\nu(A)$, the **Lévy measure** of a set A of sizes, is the expected number of jumps per year with size in A. It must satisfy $\int \min(1, x^2)\,\nu(dx) < \infty$ and may have infinite total mass. The indicator $\mathbf{1}_{\{|x|<1\}}$ is 1 for jumps smaller than 1, else 0.
+The ingredients $`(b, \sigma^2, \nu)`$ are the **Lévy triplet**. The integral is against a measure, as in [Measures](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/04-measures.md): $`\nu(A)`$, the **Lévy measure** of a set A of sizes, is the expected number of jumps per year with size in A. It must satisfy $`\int \min(1, x^2)\,\nu(dx) < \infty`$ and may have infinite total mass. The indicator $`\mathbf{1}_{\{|x|<1\}}`$ is 1 for jumps smaller than 1, else 0.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $h$ | time in years; the length of a window or slot | $t$ = 1 year; $h$ down to 1/10000 | the exponent $t\psi$ grows: the law spreads |
-| $X_t$, $X_1$ | change in the log price by time $t$; by one year | mean 0.05, variance 0.12 at $t$ = 1 | — |
-| $S_t$ | the price, $100\,e^{X_t}$ | \$111.49 on average after a year | — |
-| $W_t$, $\sigma$ | Brownian motion; the volatility multiplying it | $\sigma$ = 0.20 per square-root year | more wobble: the real part of $\psi$ falls by $\tfrac12 u^2$ per unit of $\sigma^2$ |
-| $\gamma$ | drift of the log price between jumps | 0.25 a year | $b$ rises one for one |
-| $\lambda$, $N(t)$ | jump rate; the number of jumps by time $t$ | 2 a year | more jumps: $\nu$ scales up |
-| $J$, $J_k$ | a jump's size in log price; the k-th jump | −0.20 with chance 0.75, +0.20 with chance 0.25 | bigger jumps fatten the tails |
-| $\nu$ | Lévy measure: expected jumps per year of each size | 1.5 at −0.20, 0.5 at +0.20 | — |
-| $b$ | the triplet's drift, $\gamma$ plus the small jumps' average pull | 0.25 − 0.20 = 0.05 | the mean of $X_t$ rises |
-| $u$, $i$ | frequency dial per unit of log price; the imaginary unit | $u$ = 3 | — |
-| $\varphi_t$, $\psi$ | characteristic function of $X_t$; the Lévy exponent | $\varphi_1(3)$ = 0.578911 + 0.108552 i; $\psi(3)$ = −0.529329 + 0.185358 i | — |
-| $n$, $\varepsilon$, $\alpha$ | a number of equal pieces; a size cut-off; a tail power | $n$ = 10 to 10000; $\varepsilon$ down to 1e-08; $\alpha$ = 1.5 | — |
+| $`t`$, $`h`$ | time in years; the length of a window or slot | $`t`$ = 1 year; $`h`$ down to 1/10000 | the exponent $`t\psi`$ grows: the law spreads |
+| $`X_t`$, $`X_1`$ | change in the log price by time $`t`$; by one year | mean 0.05, variance 0.12 at $`t`$ = 1 | — |
+| $`S_t`$ | the price, $`100\,e^{X_t}`$ | \$111.49 on average after a year | — |
+| $`W_t`$, $`\sigma`$ | Brownian motion; the volatility multiplying it | $`\sigma`$ = 0.20 per square-root year | more wobble: the real part of $`\psi`$ falls by $`\tfrac12 u^2`$ per unit of $`\sigma^2`$ |
+| $`\gamma`$ | drift of the log price between jumps | 0.25 a year | $`b`$ rises one for one |
+| $`\lambda`$, $`N(t)`$ | jump rate; the number of jumps by time $`t`$ | 2 a year | more jumps: $`\nu`$ scales up |
+| $`J`$, $`J_k`$ | a jump's size in log price; the k-th jump | −0.20 with chance 0.75, +0.20 with chance 0.25 | bigger jumps fatten the tails |
+| $`\nu`$ | Lévy measure: expected jumps per year of each size | 1.5 at −0.20, 0.5 at +0.20 | — |
+| $`b`$ | the triplet's drift, $`\gamma`$ plus the small jumps' average pull | 0.25 − 0.20 = 0.05 | the mean of $`X_t`$ rises |
+| $`u`$, $`i`$ | frequency dial per unit of log price; the imaginary unit | $`u`$ = 3 | — |
+| $`\varphi_t`$, $`\psi`$ | characteristic function of $`X_t`$; the Lévy exponent | $`\varphi_1(3)`$ = 0.578911 + 0.108552 i; $`\psi(3)`$ = −0.529329 + 0.185358 i | — |
+| $`n`$, $`\varepsilon`$, $`\alpha`$ | a number of equal pieces; a size cut-off; a tail power | $`n`$ = 10 to 10000; $`\varepsilon`$ down to 1e-08; $`\alpha`$ = 1.5 | — |
 
-**The two extremes.** Brownian motion with volatility $\sigma$ has triplet $(0, \sigma^2, 0)$ and exponent $\psi(u) = -\tfrac12\sigma^2u^2$: no jumps at all ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). The Poisson process at rate $\lambda$ has $\nu$ = $\lambda$ at size 1, nothing else, and exponent $\psi(u) = \lambda(e^{iu} - 1)$: jumps only ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). At $u$ = 3 these are −0.180000 for $\sigma$ = 0.20, and −3.979985 + 0.282240 i for rate 2.
+**The two extremes.** Brownian motion with volatility $`\sigma`$ has triplet $`(0, \sigma^2, 0)`$ and exponent $`\psi(u) = -\tfrac12\sigma^2u^2`$: no jumps at all ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). The Poisson process at rate $`\lambda`$ has $`\nu`$ = $`\lambda`$ at size 1, nothing else, and exponent $`\psi(u) = \lambda(e^{iu} - 1)`$: jumps only ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). At $`u`$ = 3 these are −0.180000 for $`\sigma`$ = 0.20, and −3.979985 + 0.282240 i for rate 2.
 
-**The share's process.** With $N(t)$ the jump count and $J_k$ the jumps,
+**The share's process.** With $`N(t)`$ the jump count and $`J_k`$ the jumps,
 
-$$X_t = \gamma\,t + \sigma W_t + \sum_{k=1}^{N(t)} J_k ,$$
+```math
+X_t = \gamma\,t + \sigma W_t + \sum_{k=1}^{N(t)} J_k ,
+```
 
-with the Brownian motion, jump times and jump sizes independent. Its Lévy measure puts $\lambda \times 0.75$ = 1.5 at −0.20 and $\lambda \times 0.25$ = 0.5 at +0.20.
+with the Brownian motion, jump times and jump sizes independent. Its Lévy measure puts $`\lambda \times 0.75`$ = 1.5 at −0.20 and $`\lambda \times 0.25`$ = 0.5 at +0.20.
 
 ### When it holds
 
 The process is a definition: it has the four properties or it does not. The theorem needs all four, and each failure is concrete.
 
-- **Stationary increments.** A jump rate of 3 a year for six months, then 1, gives exactly the one-year law above but the wrong half-year: mean −0.0250 against 0.0250. The form $e^{t\psi}$ fails.
-- **Independent increments.** A random slope, $X_t = 0.05\,t + 0.3464\,t\,Z$ with $Z$ one standard normal draw, has the right mean and variance at $t$ = 1, but every year repeats the first: $\operatorname{Var} X_2$ = 0.4800, not 0.2400. Variance grows like $t^2$.
+- **Stationary increments.** A jump rate of 3 a year for six months, then 1, gives exactly the one-year law above but the wrong half-year: mean −0.0250 against 0.0250. The form $`e^{t\psi}`$ fails.
+- **Independent increments.** A random slope, $`X_t = 0.05\,t + 0.3464\,t\,Z`$ with $`Z`$ one standard normal draw, has the right mean and variance at $`t`$ = 1, but every year repeats the first: $`\mathrm{Var}\, X_2`$ = 0.4800, not 0.2400. Variance grows like $`t^2`$.
 - **Continuity in probability.** A jump at a scheduled earnings release puts positive chance on one known instant. A window holding that date then has a different law from one of the same length that does not, so stationarity fails too.
-- **The condition on $\nu$.** If $\int \min(1, x^2)\,\nu(dx)$ is infinite, no process exists. If it is finite, the compensator term $-iux\,\mathbf{1}_{\{|x|<1\}}$ keeps the integral finite; Step 6 shows the uncompensated version blowing up.
+- **The condition on $`\nu`$.** If $`\int \min(1, x^2)\,\nu(dx)`$ is infinite, no process exists. If it is finite, the compensator term $`-iux\,\mathbf{1}_{\{|x|<1\}}`$ keeps the integral finite; Step 6 shows the uncompensated version blowing up.
 
 ---
 
@@ -94,70 +100,80 @@ The process is a definition: it has the four properties or it does not. The theo
 
 ### Step 0: chop time into equal pieces
 
-Cut the interval from 0 to $t$ into $n$ equal windows. $X_t$ is the sum of the $n$ increments, which properties 2 and 3 make independent and identically distributed. So for every $n$, $X_t$ is a sum of $n$ independent copies of one law: its law is **infinitely divisible**. And the characteristic function of a sum of independent pieces is the product of theirs. The rest follows from those two facts.
+Cut the interval from 0 to $`t`$ into $`n`$ equal windows. $`X_t`$ is the sum of the $`n`$ increments, which properties 2 and 3 make independent and identically distributed. So for every $`n`$, $`X_t`$ is a sum of $`n`$ independent copies of one law: its law is **infinitely divisible**. And the characteristic function of a sum of independent pieces is the product of theirs. The rest follows from those two facts.
 
 ### Step 1: the characteristic function is an exponential in time
 
-Write $f(t) = \varphi_t(u)$ for one fixed dial $u$. Split the interval from 0 to s + t at time s. The two increments are independent, and the second has the law of $X_t$. So
+Write $`f(t) = \varphi_t(u)`$ for one fixed dial $`u`$. Split the interval from 0 to s + t at time s. The two increments are independent, and the second has the law of $`X_t`$. So
 
-$$f(s + t) = f(s)\,f(t), \qquad f(0) = 1.$$
+```math
+f(s + t) = f(s)\,f(t), \qquad f(0) = 1.
+```
 
-Property 4 makes $f(t)$ continuous in $t$. A continuous function that turns sums into products, starts at 1 and never vanishes is an exponential: $f(t) = e^{t\psi(u)}$, with $\psi(u)$ depending on $u$ but not on $t$. The law of the process at every time is held in the one function $\psi$.
+Property 4 makes $`f(t)`$ continuous in $`t`$. A continuous function that turns sums into products, starts at 1 and never vanishes is an exponential: $`f(t) = e^{t\psi(u)}`$, with $`\psi(u)`$ depending on $`u`$ but not on $`t`$. The law of the process at every time is held in the one function $`\psi`$.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $X_t$ is a Lévy process; fix $u$ and let $f(t) = E[e^{iuX_t}]$ for $t \ge 0$.
+**Setting.** $`X_t`$ is a Lévy process; fix $`u`$ and let $`f(t) = E[e^{iuX_t}]`$ for $`t \ge 0`$.
 
-**1. Multiplicative.** $X_{s+t} = X_s + (X_{s+t} - X_s)$, the two terms independent (property 2), the second with the law of $X_t - X_0 = X_t$ (properties 1 and 3). The expectation of a product of independent bounded variables is the product of expectations, so $f(s+t) = f(s)f(t)$. Also $f(0) = E[e^{0}] = 1$.
+**1. Multiplicative.** $`X_{s+t} = X_s + (X_{s+t} - X_s)`$, the two terms independent (property 2), the second with the law of $`X_t - X_0 = X_t`$ (properties 1 and 3). The expectation of a product of independent bounded variables is the product of expectations, so $`f(s+t) = f(s)f(t)`$. Also $`f(0) = E[e^{0}] = 1`$.
 
-**2. Continuous.** $|f(t+h) - f(t)| = |f(t)|\,|f(h) - 1| \le E|e^{iuX_h} - 1|$. For any $\varepsilon > 0$, split on the event $|X_h| \le \varepsilon$: there $|e^{iuX_h} - 1| \le |u|\varepsilon$, and elsewhere it is at most 2. So $|f(h) - 1| \le |u|\varepsilon + 2P(|X_h| > \varepsilon)$, which property 4 makes smaller than $2|u|\varepsilon$ for small $h$. Hence $f(t)$ is continuous at every $t$.
+**2. Continuous.** $`|f(t+h) - f(t)| = |f(t)|\,|f(h) - 1| \le E|e^{iuX_h} - 1|`$. For any $`\varepsilon > 0`$, split on the event $`|X_h| \le \varepsilon`$: there $`|e^{iuX_h} - 1| \le |u|\varepsilon`$, and elsewhere it is at most 2. So $`|f(h) - 1| \le |u|\varepsilon + 2P(|X_h| > \varepsilon)`$, which property 4 makes smaller than $`2|u|\varepsilon`$ for small $`h`$. Hence $`f(t)`$ is continuous at every $`t`$.
 
-**3. Never zero.** Suppose $f(t_0) = 0$. Then $f(t_0/n)^n = f(t_0) = 0$ by step 1, so $f(t_0/n) = 0$ for every $n$. But $f(t_0/n) \to f(0) = 1$ by step 2. Contradiction.
+**3. Never zero.** Suppose $`f(t_0) = 0`$. Then $`f(t_0/n)^n = f(t_0) = 0`$ by step 1, so $`f(t_0/n) = 0`$ for every $`n`$. But $`f(t_0/n) \to f(0) = 1`$ by step 2. Contradiction.
 
-**4. A continuous logarithm.** A continuous function from $[0, \infty)$ to the nonzero complex numbers has a continuous logarithm $g(t)$ with $g(0) = 0$ and $e^{g(t)} = f(t)$ (lift the angle continuously; the modulus has an ordinary logarithm). Then $g(s+t) - g(s) - g(t)$ is continuous in $(s, t)$, takes values in $2\pi i$ times the integers because both sides exponentiate to the same number, and is 0 at $(0, 0)$. A continuous function with values in a discrete set on a connected set is constant: it is 0 everywhere.
+**4. A continuous logarithm.** A continuous function from $`[0, \infty)`$ to the nonzero complex numbers has a continuous logarithm $`g(t)`$ with $`g(0) = 0`$ and $`e^{g(t)} = f(t)`$ (lift the angle continuously; the modulus has an ordinary logarithm). Then $`g(s+t) - g(s) - g(t)`$ is continuous in $`(s, t)`$, takes values in $`2\pi i`$ times the integers because both sides exponentiate to the same number, and is 0 at $`(0, 0)`$. A continuous function with values in a discrete set on a connected set is constant: it is 0 everywhere.
 
-**5. Additive and continuous means linear.** $g(s+t) = g(s) + g(t)$ gives $g(m/n) = (m/n)\,g(1)$ for whole numbers $m, n \ge 1$; continuity extends it to $g(t) = t\,g(1)$ for every $t \ge 0$. Put $\psi(u) = g(1)$: $f(t) = e^{t\psi(u)}$. ∎
+**5. Additive and continuous means linear.** $`g(s+t) = g(s) + g(t)`$ gives $`g(m/n) = (m/n)\,g(1)`$ for whole numbers $`m, n \ge 1`$; continuity extends it to $`g(t) = t\,g(1)`$ for every $`t \ge 0`$. Put $`\psi(u) = g(1)`$: $`f(t) = e^{t\psi(u)}`$. ∎
 
-The lift can be chosen jointly continuous in $(t, u)$, which makes $\psi$ continuous with $\psi(0) = 0$; Applebaum, chapter 1, gives that refinement.
+The lift can be chosen jointly continuous in $`(t, u)`$, which makes $`\psi`$ continuous with $`\psi(0) = 0`$; Applebaum, chapter 1, gives that refinement.
 
 </details>
 
 ### Step 2: the Brownian extreme
 
-$\sigma W_t$ is normal with mean 0 and variance $\sigma^2 t$, whose characteristic function is $e^{-\frac12\sigma^2u^2t}$. So $\psi(u) = -\tfrac12\sigma^2u^2$: real and negative, as the rotating point's average shrinks while the path spreads. A steady drift $\gamma t$ adds $i\gamma u$.
+$`\sigma W_t`$ is normal with mean 0 and variance $`\sigma^2 t`$, whose characteristic function is $`e^{-\frac12\sigma^2u^2t}`$. So $`\psi(u) = -\tfrac12\sigma^2u^2`$: real and negative, as the rotating point's average shrinks while the path spreads. A steady drift $`\gamma t`$ adds $`i\gamma u`$.
 
 ### Step 3: the Poisson extreme, and then any jump law
 
-A Poisson count $N(t)$ at rate $\lambda$ has $E[e^{iuN(t)}] = \sum_n e^{-\lambda t}(\lambda t)^n e^{iun}/n! = e^{\lambda t(e^{iu} - 1)}$, the exponential series again. So $\psi(u) = \lambda(e^{iu} - 1)$.
+A Poisson count $`N(t)`$ at rate $`\lambda`$ has $`E[e^{iuN(t)}] = \sum_n e^{-\lambda t}(\lambda t)^n e^{iun}/n! = e^{\lambda t(e^{iu} - 1)}`$, the exponential series again. So $`\psi(u) = \lambda(e^{iu} - 1)`$.
 
-Give each jump a random size $J$ drawn independently from one law. Conditioning on the count, exactly as on the compound Poisson card ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)) with the real dial s replaced by $i u$, gives
+Give each jump a random size $`J`$ drawn independently from one law. Conditioning on the count, exactly as on the compound Poisson card ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)) with the real dial s replaced by $`i u`$, gives
 
-$$\psi(u) = \lambda\big(E[e^{iuJ}] - 1\big) = \int \big(e^{iux} - 1\big)\,\nu(dx), \qquad \nu = \lambda \times (\text{the law of } J).$$
+```math
+\psi(u) = \lambda\big(E[e^{iuJ}] - 1\big) = \int \big(e^{iux} - 1\big)\,\nu(dx), \qquad \nu = \lambda \times (\text{the law of } J).
+```
 
-Here $\nu$ earns its meaning: the rate of jumps of each size.
+Here $`\nu`$ earns its meaning: the rate of jumps of each size.
 
 ### Step 4: independent pieces add exponents
 
 Drift, Brownian part and jumps are independent, so the characteristic functions multiply and the exponents add:
 
-$$\psi(u) = i\gamma u - \tfrac12\sigma^2u^2 + \int \big(e^{iux} - 1\big)\,\nu(dx).$$
+```math
+\psi(u) = i\gamma u - \tfrac12\sigma^2u^2 + \int \big(e^{iux} - 1\big)\,\nu(dx).
+```
 
-To reach the Lévy–Khintchine shape, add and subtract $iu\int_{|x|<1} x\,\nu(dx)$. The integral gains the term $-iux$ on small jumps, and the drift becomes
+To reach the Lévy–Khintchine shape, add and subtract $`iu\int_{|x|<1} x\,\nu(dx)`$. The integral gains the term $`-iux`$ on small jumps, and the drift becomes
 
-$$b = \gamma + \int_{|x|<1} x\,\nu(dx) = 0.25 + (1.5 \times (-0.20) + 0.5 \times 0.20) = 0.25 - 0.20 = 0.05.$$
+```math
+b = \gamma + \int_{|x|<1} x\,\nu(dx) = 0.25 + (1.5 \times (-0.20) + 0.5 \times 0.20) = 0.25 - 0.20 = 0.05.
+```
 
 The process is unchanged. The jumps' average pull, −0.20 a year, has moved from the integral into the drift. For the share both forms are finite; Step 6 shows a process where only the second is.
 
 ### Step 5: the mean and the variance come from the exponent
 
-Differentiate $e^{t\psi(u)}$ at $u = 0$. The first derivative gives $E[X_t] = -i\,t\,\psi'(0)$ and the second gives $\operatorname{Var} X_t = -t\,\psi''(0)$:
+Differentiate $`e^{t\psi(u)}`$ at $`u = 0`$. The first derivative gives $`E[X_t] = -i\,t\,\psi'(0)`$ and the second gives $`\mathrm{Var}\, X_t = -t\,\psi''(0)`$:
 
-$$E[X_t] = t\Big(b + \int_{|x|\ge 1} x\,\nu(dx)\Big), \qquad \operatorname{Var} X_t = t\Big(\sigma^2 + \int x^2\,\nu(dx)\Big).$$
+```math
+E[X_t] = t\Big(b + \int_{|x|\ge 1} x\,\nu(dx)\Big), \qquad \mathrm{Var}\, X_t = t\Big(\sigma^2 + \int x^2\,\nu(dx)\Big).
+```
 
-The share has no jumps of size 1 or more, so the mean is $b\,t$ = 0.05 for a year. The variance is 0.04 from the wobble plus 0.08 from the jumps: 0.12, two thirds of it from jumps. Both grow in proportion to $t$. Where that average is finite, the same exponent evaluated at $u = -i$ gives the average of $e^{X_1}$, so the average price after a year is $100\,e^{\psi(-i)}$ = \$111.49.
+The share has no jumps of size 1 or more, so the mean is $`b\,t`$ = 0.05 for a year. The variance is 0.04 from the wobble plus 0.08 from the jumps: 0.12, two thirds of it from jumps. Both grow in proportion to $`t`$. Where that average is finite, the same exponent evaluated at $`u = -i`$ gives the average of $`e^{X_1}`$, so the average price after a year is $`100\,e^{\psi(-i)}`$ = \$111.49.
 
-The law of $X_1$, computed with no simulation by conditioning on the two jump counts, is lopsided in a way the bell curve is not:
+The law of $`X_1`$, computed with no simulation by conditioning on the two jump counts, is lopsided in a way the bell curve is not:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -170,28 +186,28 @@ xychart-beta
     line [3.03, 6.67, 13.83, 20.74, 22.49, 17.63, 10.00, 5.62]
 ```
 
-Orange bars: the exact law of $X_1$. Green line: the share of 40000 simulated years in each band, each with a standard error of at most 0.21 percentage points. Dark line: a normal law with the same mean and variance. The jumps put 3.59 percent of years below −0.6, against 3.03 percent for the bell curve, and fewer in the far right band, 4.94 against 5.62 percent. Down-jumps come three times as often as up-jumps, so the left tail is fatter than the bell curve's and the right tail thinner.
+Orange bars: the exact law of $`X_1`$. Green line: the share of 40000 simulated years in each band, each with a standard error of at most 0.21 percentage points. Dark line: a normal law with the same mean and variance. The jumps put 3.59 percent of years below −0.6, against 3.03 percent for the bell curve, and fewer in the far right band, 4.94 against 5.62 percent. Down-jumps come three times as often as up-jumps, so the left tail is fatter than the bell curve's and the right tail thinner.
 
 ### Step 6: why the compensator is there
 
-The share's Lévy measure is finite, and Step 4's simple form works. Some useful processes have infinitely many small jumps. Take $\nu(dx) = x^{-2.5}\,dx$ on sizes between 0 and 1, the tail power $x^{-1-\alpha}$ with $\alpha$ = 1.5. Its total mass is infinite, but $\int_0^1 x^2 \cdot x^{-2.5}\,dx = 2$, so the condition on $\nu$ holds.
+The share's Lévy measure is finite, and Step 4's simple form works. Some useful processes have infinitely many small jumps. Take $`\nu(dx) = x^{-2.5}\,dx`$ on sizes between 0 and 1, the tail power $`x^{-1-\alpha}`$ with $`\alpha`$ = 1.5. Its total mass is infinite, but $`\int_0^1 x^2 \cdot x^{-2.5}\,dx = 2`$, so the condition on $`\nu`$ holds.
 
-Cut the measure at size $\varepsilon$ and compute the jump integral at $u$ = 3. The real part settles: −6.951792 at $\varepsilon$ = 1e-02, −7.850879 at 1e-08, limit −7.851779.
+Cut the measure at size $`\varepsilon`$ and compute the jump integral at $`u`$ = 3. The real part settles: −6.951792 at $`\varepsilon`$ = 1e-02, −7.850879 at 1e-08, limit −7.851779.
 
-The imaginary part without the compensator, $\int \sin(ux)\,x^{-2.5}\,dx$, grows without bound: 51.509, 591.506, 5991.506, 59991.506, tenfold each time $\varepsilon$ falls a hundredfold. The small jumps, all upward, add up to an infinite drift.
+The imaginary part without the compensator, $`\int \sin(ux)\,x^{-2.5}\,dx`$, grows without bound: 51.509, 591.506, 5991.506, 59991.506, tenfold each time $`\varepsilon`$ falls a hundredfold. The small jumps, all upward, add up to an infinite drift.
 
-With the compensator, $\int(\sin(ux) - ux)\,x^{-2.5}\,dx$ converges to −2.493538. Subtracting each small jump's average contribution leaves a fluctuation with finite variance. That is the indicator term's job.
+With the compensator, $`\int(\sin(ux) - ux)\,x^{-2.5}\,dx`$ converges to −2.493538. Subtracting each small jump's average contribution leaves a fluctuation with finite variance. That is the indicator term's job.
 
 ### Step 7: the general theorem, stated
 
 The **Lévy–Khintchine theorem** says the shape built in Steps 1 to 5 is universal:
 
-- every Lévy process has an exponent of the form in The formula, with exactly one triplet $(b, \sigma^2, \nu)$;
-- every triplet with $\sigma^2 \ge 0$ and $\int \min(1, x^2)\,\nu(dx) < \infty$ comes from a Lévy process.
+- every Lévy process has an exponent of the form in The formula, with exactly one triplet $`(b, \sigma^2, \nu)`$;
+- every triplet with $`\sigma^2 \ge 0`$ and $`\int \min(1, x^2)\,\nu(dx) < \infty`$ comes from a Lévy process.
 
-The key steps, not carried out in full here. By Step 0, $\varphi_1 = (\varphi_{1/n})^n$, so $\psi(u) = \lim_n n\big(\varphi_{1/n}(u) - 1\big) = \lim_n \int (e^{iux} - 1)\, n\,P(X_{1/n} \in dx)$.
+The key steps, not carried out in full here. By Step 0, $`\varphi_1 = (\varphi_{1/n})^n`$, so $`\psi(u) = \lim_n n\big(\varphi_{1/n}(u) - 1\big) = \lim_n \int (e^{iux} - 1)\, n\,P(X_{1/n} \in dx)`$.
 
-Away from 0, the measures $n\,P(X_{1/n} \in dx)$ converge to $\nu$: in a window of length $1/n$ a jump of size near $x$ has chance about $\nu(dx)/n$. Near 0, weighted by $x^2$, they leave a remainder that becomes $\sigma^2$.
+Away from 0, the measures $`n\,P(X_{1/n} \in dx)`$ converge to $`\nu`$: in a window of length $`1/n`$ a jump of size near $`x`$ has chance about $`\nu(dx)/n`$. Near 0, weighted by $`x^2`$, they leave a remainder that becomes $`\sigma^2`$.
 
 The converse builds the process from its triplet: a Brownian motion, a compound Poisson process for jumps of size at least 1, and a limit of compensated compound Poisson processes for the small ones, the **Lévy–Itô decomposition**.
 
@@ -201,31 +217,31 @@ Both directions are proved in Applebaum, chapters 1 and 2, and Kyprianou, chapte
 
 ## Worked numbers, by hand
 
-The share, at dial $u$ = 3 and $t$ = 1 year. Jumps of ±0.20 at $u$ = 3 turn the rotating point by ±0.6.
+The share, at dial $`u`$ = 3 and $`t`$ = 1 year. Jumps of ±0.20 at $`u`$ = 3 turn the rotating point by ±0.6.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| triplet drift $b$ | 0.25 + 1.5 × (−0.20) + 0.5 × 0.20 | 0.05 |
-| drift term $i b u$ | 0.05 × 3 | 0.150000 i |
-| Brownian term $-\tfrac12\sigma^2u^2$ | −0.5 × 0.04 × 9 | −0.180000 |
+| triplet drift $`b`$ | 0.25 + 1.5 × (−0.20) + 0.5 × 0.20 | 0.05 |
+| drift term $`i b u`$ | 0.05 × 3 | 0.150000 i |
+| Brownian term $`-\tfrac12\sigma^2u^2`$ | −0.5 × 0.04 × 9 | −0.180000 |
 | jump term, real part | 1.5 × (cos(−0.6) − 1) + 0.5 × (cos 0.6 − 1) = 2 × (cos 0.6 − 1) | −0.349329 |
 | jump term, imaginary part | 1.5 × (sin(−0.6) + 0.6) + 0.5 × (sin 0.6 − 0.6) = (1.5 − 0.5) × (0.6 − sin 0.6) | 0.035358 i |
-| **exponent $\psi(3)$** | −0.180000 − 0.349329, and 0.150000 + 0.035358 | **−0.529329 + 0.185358 i** |
-| **$\varphi_1(3)$** | e^−0.529329 × (cos 0.185358 + i sin 0.185358) | **0.578911 + 0.108552 i** |
-| mean of $X_1$ | $b$, no jumps of size 1 or more | 0.05 |
-| variance of $X_1$ | 0.04 + 1.5 × 0.04 + 0.5 × 0.04 | 0.12 |
+| **exponent $`\psi(3)`$** | −0.180000 − 0.349329, and 0.150000 + 0.035358 | **−0.529329 + 0.185358 i** |
+| **$`\varphi_1(3)`$** | e^−0.529329 × (cos 0.185358 + i sin 0.185358) | **0.578911 + 0.108552 i** |
+| mean of $`X_1`$ | $`b`$, no jumps of size 1 or more | 0.05 |
+| variance of $`X_1`$ | 0.04 + 1.5 × 0.04 + 0.5 × 0.04 | 0.12 |
 | average price after a year | 100 × e^(0.05 + 0.02 + 1.5 (e^−0.2 − 1 + 0.2) + 0.5 (e^0.2 − 1 − 0.2)) | \$111.49 |
 
-After a year the log price has moved by 0.05 on average, standard deviation 0.3464, and the average price is \$111.49. The chance the log price ends below −0.5 is 0.0609 exactly: about 1 year in 16. At $t$ = 2 the exponent doubles and the characteristic function is 0.323354 + 0.125683 i, the square of the one-year value.
+After a year the log price has moved by 0.05 on average, standard deviation 0.3464, and the average price is \$111.49. The chance the log price ends below −0.5 is 0.0609 exactly: about 1 year in 16. At $`t`$ = 2 the exponent doubles and the characteristic function is 0.323354 + 0.125683 i, the square of the one-year value.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Jump rate 3 a year for six months, then 1 | half-year mean −0.0250, not 0.0250; $\lvert\varphi_{1/2}(3)\rvert$ 0.703283, not 0.767463 | Increments not stationary: one year's law no longer fixes the half-year's |
-| Random slope, $X_t = 0.05\,t + 0.3464\,t\,Z$, same mean and variance at one year | $\operatorname{Var} X_2$ = 0.4800, not 0.2400 | Increments not independent: the second year copies the first |
+| Jump rate 3 a year for six months, then 1 | half-year mean −0.0250, not 0.0250; $`\lvert\varphi_{1/2}(3)\rvert`$ 0.703283, not 0.767463 | Increments not stationary: one year's law no longer fixes the half-year's |
+| Random slope, $`X_t = 0.05\,t + 0.3464\,t\,Z`$, same mean and variance at one year | $`\mathrm{Var}\, X_2`$ = 0.4800, not 0.2400 | Increments not independent: the second year copies the first |
 | Infinitely many small jumps, no compensator | imaginary part 51.509, 591.506, 5991.506, 59991.506 as the cut-off shrinks | The small jumps' average pull summed to infinity |
-| Average price as $100\,e^{E[X_1]}$ | \$105.13, not \$111.49 | The average of $e^{X_1}$ is not e to the average; $\psi(-i)$ keeps the spread and the jumps |
+| Average price as $`100\,e^{E[X_1]}`$ | \$105.13, not \$111.49 | The average of $`e^{X_1}`$ is not e to the average; $`\psi(-i)`$ keeps the spread and the jumps |
 
 The code prints every row.
 
@@ -233,7 +249,7 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-Four roads reach the characteristic function of $X_t$. The first is the Lévy–Khintchine exponent. The second is exact and uses no exponent: given the numbers of down-jumps and up-jumps, two independent Poisson counts, $X_t$ is normal, so sum the normal characteristic functions weighted by the Poisson chances. The third cuts the year into $n$ slots with at most one jump each and prints the error shrinking. The fourth simulates 40000 years, seed 20260930, from a SplitMix64 generator with Box–Muller normals, both written out; each year is two independent half-years drawn exactly, so no grid error enters. Simulated numbers carry standard errors, and their asserts allow four. The normal CDF is summed from its power series. The compensator rows use Simpson's rule on a log scale, checked against a power series for the limit.
+Four roads reach the characteristic function of $`X_t`$. The first is the Lévy–Khintchine exponent. The second is exact and uses no exponent: given the numbers of down-jumps and up-jumps, two independent Poisson counts, $`X_t`$ is normal, so sum the normal characteristic functions weighted by the Poisson chances. The third cuts the year into $`n`$ slots with at most one jump each and prints the error shrinking. The fourth simulates 40000 years, seed 20260930, from a SplitMix64 generator with Box–Muller normals, both written out; each year is two independent half-years drawn exactly, so no grid error enters. Simulated numbers carry standard errors, and their asserts allow four. The normal CDF is summed from its power series. The compensator rows use Simpson's rule on a log scale, checked against a power series for the limit.
 
 ### Python
 
@@ -416,7 +432,7 @@ breaks, nu = x^-2.5 dx on (0,1), cut at 1e-08: real -7.850879; imaginary, raw 59
 ALL CHECKS PASS
 ```
 
-Exponent and exact sum agree to nine decimals at three times. The slot error falls tenfold per tenfold step, from 1.34e-02 to 1.30e-05: the slot model converges at rate $h$. Every simulated value sits within two standard errors of the exact one. The half-years' covariance, −0.00010 with standard error 0.00030, is zero within the noise, and the first half-year's variance, 0.0605, is half the year's.
+Exponent and exact sum agree to nine decimals at three times. The slot error falls tenfold per tenfold step, from 1.34e-02 to 1.30e-05: the slot model converges at rate $`h`$. Every simulated value sits within two standard errors of the exact one. The half-years' covariance, −0.00010 with standard error 0.00030, is zero within the noise, and the first half-year's variance, 0.0605, is half the year's.
 
 ### Rust
 
@@ -637,11 +653,11 @@ The two outputs agree line for line.
 
 Lean proves Step 1's exponential form for every Lévy process, the exponents of both extremes, and the share's numbers.
 
-- Suppose $X_t$ has the four properties of a Lévy process. Then for every dial $u$ there is one $\psi(u)$ with $\varphi_t(u) = e^{t\psi(u)}$ at every time $t$.
-- Take the Poisson law with mean $\lambda t$, the law of the count $N(t)$. Then its characteristic function is $e^{t\lambda(e^{iu} - 1)}$.
-- Take the normal law with mean $\gamma t$ and variance $\sigma^2 t$. Then its characteristic function is $e^{t(i\gamma u - \frac12\sigma^2u^2)}$.
-- The share's numbers are exact: $\nu$ = 1.5 at −0.20 and 0.5 at +0.20, $b$ = 0.05, and variance 0.12, two thirds from jumps.
-- So are two rows of What breaks: half-year mean −0.0250, not 0.0250, and $\operatorname{Var} X_2$ 0.4800, not 0.2400.
+- Suppose $`X_t`$ has the four properties of a Lévy process. Then for every dial $`u`$ there is one $`\psi(u)`$ with $`\varphi_t(u) = e^{t\psi(u)}`$ at every time $`t`$.
+- Take the Poisson law with mean $`\lambda t`$, the law of the count $`N(t)`$. Then its characteristic function is $`e^{t\lambda(e^{iu} - 1)}`$.
+- Take the normal law with mean $`\gamma t`$ and variance $`\sigma^2 t`$. Then its characteristic function is $`e^{t(i\gamma u - \frac12\sigma^2u^2)}`$.
+- The share's numbers are exact: $`\nu`$ = 1.5 at −0.20 and 0.5 at +0.20, $`b`$ = 0.05, and variance 0.12, two thirds from jumps.
+- So are two rows of What breaks: half-year mean −0.0250, not 0.0250, and $`\mathrm{Var}\, X_2`$ 0.4800, not 0.2400.
 
 The Lévy–Khintchine shape, the exact law, the slots and the simulations are left to the Python and Rust checks.
 
@@ -976,7 +992,7 @@ example : (3 / 25 : ℚ) * 2 ^ 2 = 12 / 25 ∧ (2 : ℚ) * (3 / 25) = 6 / 25 := 
 
 > [!TIP]
 > **Try changing**
-> - **Make the jumps symmetric.** Guess first: what happens to $b$? Set both chances to 0.5. Then $\int x\,\nu(dx)$ is 0, $b$ equals $\gamma$, the imaginary jump term of $\psi$ vanishes, and the law of $X_1$ becomes symmetric about its mean.
+> - **Make the jumps symmetric.** Guess first: what happens to $`b`$? Set both chances to 0.5. Then $`\int x\,\nu(dx)`$ is 0, $`b`$ equals $`\gamma`$, the imaginary jump term of $`\psi`$ vanishes, and the law of $`X_1`$ becomes symmetric about its mean.
 > - **Nearly remove the wobble.** Guess first: does the count sum still match? Set `SIG = 0.01`. The process is almost a compound Poisson process with drift. Exponent and count sum still agree, and the sample path is nearly a straight line with two steps.
 > - **Change the seed.** Guess first: do the asserts survive? The simulated rows move by about one standard error, and the asserts allow four.
 
@@ -985,19 +1001,19 @@ example : (3 / 25 : ℚ) * 2 ^ 2 = 12 / 25 ∧ (2 : ℚ) * (3 / 25) = 6 / 25 := 
 ## The usual mistake
 
 > [!warning]
-> **Reading the Lévy measure as a probability law.** It is a rate. The share's $\nu$ has total mass 2, the jumps per year, not 1. The measure in Step 6 has infinite total mass and is still a valid Lévy measure. Only the jump law, $\nu$ divided by its total mass, is a probability law, and only when that mass is finite.
+> **Reading the Lévy measure as a probability law.** It is a rate. The share's $`\nu`$ has total mass 2, the jumps per year, not 1. The measure in Step 6 has infinite total mass and is still a valid Lévy measure. Only the jump law, $`\nu`$ divided by its total mass, is a probability law, and only when that mass is finite.
 >
-> - **Jump variance from $\lambda \operatorname{Var} J$.** That gives 0.0600; the right term is $\int x^2\,\nu(dx) = \lambda E[J^2]$ = 0.0800, because the number of jumps is random too.
-> - **Taking $b$ for the drift between jumps.** $b$ = 0.05; the drift between jumps, $\gamma$, is 0.25. The difference is the compensator, which depends on the cut-off at size 1: move the cut-off and $b$ moves, while the process does not.
-> - **"Stationary increments" read as "standing still".** The increments' law is fixed; the process is not. $X_t$ spreads with variance 0.12 per year, without limit.
+> - **Jump variance from $`\lambda \mathrm{Var}\, J`$.** That gives 0.0600; the right term is $`\int x^2\,\nu(dx) = \lambda E[J^2]`$ = 0.0800, because the number of jumps is random too.
+> - **Taking $`b`$ for the drift between jumps.** $`b`$ = 0.05; the drift between jumps, $`\gamma`$, is 0.25. The difference is the compensator, which depends on the cut-off at size 1: move the cut-off and $`b`$ moves, while the process does not.
+> - **"Stationary increments" read as "standing still".** The increments' law is fixed; the process is not. $`X_t`$ spreads with variance 0.12 per year, without limit.
 
 ---
 
 ## Where you meet it in real life
 
-- **Share prices with crashes.** Merton's 1976 model is this process with normal jump sizes: [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md). Option prices follow from $\psi$ by Fourier inversion: [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
+- **Share prices with crashes.** Merton's 1976 model is this process with normal jump sizes: [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md). Option prices follow from $`\psi`$ by Fourier inversion: [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
 - **Electricity prices.** Power prices spike when demand outruns supply, then fall back. The falling back needs a drift that depends on the current price, past Lévy processes. A stochastic differential equation with a jump term allows that ([Jump diffusions](02-jump-diffusions.md)), and the pull back to a level is the mean reversion of [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md).
-- **Insurance.** An insurer's claims total is a compound Poisson process, the pure-jump Lévy process with finite $\nu$ ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)).
+- **Insurance.** An insurer's claims total is a compound Poisson process, the pure-jump Lévy process with finite $`\nu`$ ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)).
 - **Infinitely many small jumps.** The variance-gamma and CGMY return models use Lévy measures like Step 6's and no Brownian part; the small jumps do the wobbling.
 - **Stochastic calculus beyond Brownian motion.** Lévy processes are the simplest semimartingales with jumps: [Semimartingales](05-semimartingales-in-outline.md).
 

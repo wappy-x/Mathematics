@@ -26,26 +26,28 @@ To scale: 45 units per unit, 0 at (90, 120). The dashed circle about 0 has radiu
 
 ## The formula
 
-Notation first, in words. The loop integral sign ∮ is a contour integral once round a closed path, anticlockwise, as on [Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md). $f^{(n)}(a)$ is the n-th complex derivative of $f$ at $a$.
+Notation first, in words. The loop integral sign ∮ is a contour integral once round a closed path, anticlockwise, as on [Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md). $`f^{(n)}(a)`$ is the n-th complex derivative of $`f`$ at $`a`$.
 
-$$f(z) = \sum_{n=0}^{\infty} c_n (z - a)^n \quad\text{for } |z - a| < R, \qquad c_n = \frac{f^{(n)}(a)}{n!} = \frac{1}{2\pi i}\oint_{|w - a| = r} \frac{f(w)}{(w - a)^{n+1}}\,dw$$
+```math
+f(z) = \sum_{n=0}^{\infty} c_n (z - a)^n \quad\text{for } |z - a| < R, \qquad c_n = \frac{f^{(n)}(a)}{n!} = \frac{1}{2\pi i}\oint_{|w - a| = r} \frac{f(w)}{(w - a)^{n+1}}\,dw
+```
 
 **Read it aloud:** near the centre a, the function is a sum of powers of the step z − a; the n-th coefficient comes from the n-th derivative, or from an average round a circle about a; the sum is exact everywhere closer to a than the nearest singularity.
 
-The radius $R$ is the distance from $a$ to the nearest singularity. For $f(z) = 1/(1 + z^2)$ and real $a$ it is $|a - i| = \sqrt{a^2 + 1}$: 1 about 0, √5 = 2.236068 about 2.
+The radius $`R`$ is the distance from $`a`$ to the nearest singularity. For $`f(z) = 1/(1 + z^2)`$ and real $`a`$ it is $`|a - i| = \sqrt{a^2 + 1}`$: 1 about 0, √5 = 2.236068 about 2.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the function being expanded | 1/(1 + z^2) | — |
-| $a$ | the centre: where the dish stands | 0, then 2 | the reach changes with the distance to ±i |
-| $c_n$, $n$ | the n-th coefficient; the power it multiplies | about 2: c0 = 0.200000, c1 = −0.160000 | sizes shrink roughly by a factor 1/R per step |
-| $R$ | radius of convergence | 1 about 0; 2.236068 about 2 | a larger disc |
-| $r$, $w$ | the integral's circle radius; a point on it | r = 1 about 2, r = 0.5 about 0 | any r below R gives the same c_n |
-| $q$ | the ratio \|z − a\|/r | 0.8/√5 = 0.357771 at z = 1.2, r pushed to R | slower convergence; at 1, none |
-| $N$ | how many terms are kept | 5, 10, 20, 60 | smaller error |
-| $M$ | the largest \|f\| on the circle | error bound only | a larger error bound |
+| $`f`$ | the function being expanded | 1/(1 + z^2) | — |
+| $`a`$ | the centre: where the dish stands | 0, then 2 | the reach changes with the distance to ±i |
+| $`c_n`$, $`n`$ | the n-th coefficient; the power it multiplies | about 2: c0 = 0.200000, c1 = −0.160000 | sizes shrink roughly by a factor 1/R per step |
+| $`R`$ | radius of convergence | 1 about 0; 2.236068 about 2 | a larger disc |
+| $`r`$, $`w`$ | the integral's circle radius; a point on it | r = 1 about 2, r = 0.5 about 0 | any r below R gives the same c_n |
+| $`q`$ | the ratio \|z − a\|/r | 0.8/√5 = 0.357771 at z = 1.2, r pushed to R | slower convergence; at 1, none |
+| $`N`$ | how many terms are kept | 5, 10, 20, 60 | smaller error |
+| $`M`$ | the largest \|f\| on the circle | error bound only | a larger error bound |
 
-The error after $N$ terms is at most $M q^N/(1 - q)$. At z = 1.2 about 2 the true errors after 5, 10 and 20 terms are 0.0004813136, 0.0000179175 and 0.0000000004: on average each term cuts the error by a factor near 0.357771.
+The error after $`N`$ terms is at most $`M q^N/(1 - q)`$. At z = 1.2 about 2 the true errors after 5, 10 and 20 terms are 0.0004813136, 0.0000179175 and 0.0000000004: on average each term cuts the error by a factor near 0.357771.
 
 ### When it holds
 
@@ -59,31 +61,35 @@ The error after $N$ terms is at most $M q^N/(1 - q)$. At z = 1.2 about 2 the tru
 
 ### Step 0: one geometric series does all the work
 
-Cauchy's integral formula writes $f(z)$ as a weighted average of $f(w)$ over a circle, with weight $1/(w - z)$. One over a difference expands as a geometric series, and the average becomes a power series in z − a.
+Cauchy's integral formula writes $`f(z)`$ as a weighted average of $`f(w)`$ over a circle, with weight $`1/(w - z)`$. One over a difference expands as a geometric series, and the average becomes a power series in z − a.
 
 ### Step 1: write the value as a circle average
 
-Take a circle of radius $r$ about $a$, with $r$ below $R$. For any $z$ strictly inside,
+Take a circle of radius $`r`$ about $`a`$, with $`r`$ below $`R`$. For any $`z`$ strictly inside,
 
-$$f(z) = \frac{1}{2\pi i}\oint_{|w - a| = r} \frac{f(w)}{w - z}\,dw.$$
+```math
+f(z) = \frac{1}{2\pi i}\oint_{|w - a| = r} \frac{f(w)}{w - z}\,dw.
+```
 
 This is Cauchy's integral formula, proved on [Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md).
 
 ### Step 2: expand the weight
 
-Write $w - z = (w - a) - (z - a)$ and pull out $w - a$:
+Write $`w - z = (w - a) - (z - a)`$ and pull out $`w - a`$:
 
-$$\frac{1}{w - z} = \frac{1}{w - a}\cdot\frac{1}{1 - \frac{z - a}{w - a}} = \sum_{n=0}^{\infty} \frac{(z - a)^n}{(w - a)^{n+1}}.$$
+```math
+\frac{1}{w - z} = \frac{1}{w - a}\cdot\frac{1}{1 - \frac{z - a}{w - a}} = \sum_{n=0}^{\infty} \frac{(z - a)^n}{(w - a)^{n+1}}.
+```
 
-The ratio $(z - a)/(w - a)$ has length $q = |z - a|/r$, below 1, the same for every $w$ on the circle.
+The ratio $`(z - a)/(w - a)`$ has length $`q = |z - a|/r`$, below 1, the same for every $`w`$ on the circle.
 
 ### Step 3: swap sum and integral
 
-With one rate all round the circle, integrating term by term is allowed (the folded proof shows it). The n-th term gives $(z - a)^n$ times the integral defining $c_n$, so $f(z) = \sum c_n (z - a)^n$. Cauchy's formula for derivatives makes the same integral $f^{(n)}(a)/n!$.
+With one rate all round the circle, integrating term by term is allowed (the folded proof shows it). The n-th term gives $`(z - a)^n`$ times the integral defining $`c_n`$, so $`f(z) = \sum c_n (z - a)^n`$. Cauchy's formula for derivatives makes the same integral $`f^{(n)}(a)/n!`$.
 
 ### Step 4: the reach is the nearest singularity
 
-Steps 1 to 3 needed only a holomorphic closed disc of radius $r$. Every $r$ below the distance to the nearest singularity works, so the series converges on that whole open disc. It cannot pass a pole: a power series is bounded on closed discs inside its radius, while $f$ grows without bound near ±i.
+Steps 1 to 3 needed only a holomorphic closed disc of radius $`r`$. Every $`r`$ below the distance to the nearest singularity works, so the series converges on that whole open disc. It cannot pass a pole: a power series is bounded on closed discs inside its radius, while $`f`$ grows without bound near ±i.
 
 ### Step 5: holomorphic equals analytic
 
@@ -92,23 +98,23 @@ Steps 1 to 4 show holomorphic implies analytic. The reverse was shown on [Power 
 <details>
 <summary>Detailed proof: the error bound and the term-by-term swap</summary>
 
-Let $M$ be the largest value of $|f(w)|$ on the circle $|w - a| = r$, and $q = |z - a|/r < 1$. After $N$ terms of the geometric series in Step 2 the tail is $\frac{(z - a)^N}{(w - a)^N}\cdot\frac{1}{w - z}$, whose size is at most $q^N / (r(1 - q))$ for every $w$ on the circle, since $|w - z| \ge r - |z - a| = r(1 - q)$.
+Let $`M`$ be the largest value of $`|f(w)|`$ on the circle $`|w - a| = r`$, and $`q = |z - a|/r < 1`$. After $`N`$ terms of the geometric series in Step 2 the tail is $`\frac{(z - a)^N}{(w - a)^N}\cdot\frac{1}{w - z}`$, whose size is at most $`q^N / (r(1 - q))`$ for every $`w`$ on the circle, since $`|w - z| \ge r - |z - a| = r(1 - q)`$.
 
-The difference between $f(z)$ and the N-term sum is $\frac{1}{2\pi i}$ times the integral of $f(w)$ times that tail. The circle has length $2\pi r$, so the difference is at most $\frac{1}{2\pi}\cdot 2\pi r \cdot M \cdot \frac{q^N}{r(1 - q)} = \frac{M q^N}{1 - q}$.
+The difference between $`f(z)`$ and the N-term sum is $`\frac{1}{2\pi i}`$ times the integral of $`f(w)`$ times that tail. The circle has length $`2\pi r`$, so the difference is at most $`\frac{1}{2\pi}\cdot 2\pi r \cdot M \cdot \frac{q^N}{r(1 - q)} = \frac{M q^N}{1 - q}`$.
 
-Given any tolerance $\varepsilon > 0$, choose $N$ with $M q^N/(1 - q) < \varepsilon$, possible since $q < 1$. Every later partial sum is within $\varepsilon$ of $f(z)$, so the series converges to $f(z)$.
+Given any tolerance $`\varepsilon > 0`$, choose $`N`$ with $`M q^N/(1 - q) < \varepsilon`$, possible since $`q < 1`$. Every later partial sum is within $`\varepsilon`$ of $`f(z)`$, so the series converges to $`f(z)`$.
 
-For the upper limit on the radius: if the series converged on a disc larger than $R$, it would be continuous, hence bounded, on a closed disc with radius between the two, which contains a pole. Inside radius $R$ the series equals $f$, and $|f|$ exceeds every bound near the pole. So no radius beyond $R$ is possible for $1/(1 + z^2)$.
+For the upper limit on the radius: if the series converged on a disc larger than $`R`$, it would be continuous, hence bounded, on a closed disc with radius between the two, which contains a pole. Inside radius $`R`$ the series equals $`f`$, and $`|f|`$ exceeds every bound near the pole. So no radius beyond $`R`$ is possible for $`1/(1 + z^2)`$.
 
 </details>
 
-A second road to the coefficients needs no integral: multiply out $(1 + z^2) f(z) = 1$ in powers of z − a and match them, as below.
+A second road to the coefficients needs no integral: multiply out $`(1 + z^2) f(z) = 1`$ in powers of z − a and match them, as below.
 
 ---
 
 ## Worked numbers, by hand
 
-About $a = 2$, $1 + z^2 = 5 + 4(z - 2) + (z - 2)^2$. Matching powers in $(1 + z^2)f(z) = 1$ gives the recursion $5c_n + 4c_{n-1} + c_{n-2} = 0$ for $n \ge 1$, with $5c_0 = 1$.
+About $`a = 2`$, $`1 + z^2 = 5 + 4(z - 2) + (z - 2)^2`$. Matching powers in $`(1 + z^2)f(z) = 1`$ gives the recursion $`5c_n + 4c_{n-1} + c_{n-2} = 0`$ for $`n \ge 1`$, with $`5c_0 = 1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -123,7 +129,7 @@ About $a = 2$, $1 + z^2 = 5 + 4(z - 2) + (z - 2)^2$. Matching powers in $(1 + z^
 
 Five terms land within 0.0004813136 of the truth; sixty agree to six decimals: derivatives at 2 recover the value at 1.2.
 
-The second case, about $a = 0$: the recursion gives 1, 0, −1, 0, 1, 0, −1, the series 1 − z^2 + z^4 − …, and at z = 0.5 sixty terms give 0.800000, equal to 1 ÷ 1.25.
+The second case, about $`a = 0`$: the recursion gives 1, 0, −1, 0, 1, 0, −1, the series 1 − z^2 + z^4 − …, and at z = 0.5 sixty terms give 0.800000, equal to 1 ÷ 1.25.
 
 ### What breaks if you drop a piece
 
@@ -137,7 +143,7 @@ The second case, about $a = 0$: the recursion gives 1, 0, −1, 0, 1, 0, −1, t
 
 ## Code, from first principles, and it actually runs
 
-Two roads reach the coefficients: Cauchy's integral as a 256-point trapezoid sum round a circle, and the recursion from $(1 + z^2)f = 1$, with no integral. Two roads reach the radius: the distance to the poles, and the coefficients' decay, $1/|c_n|^{1/n}$ at its smallest for n from 180 to 200; that estimate, 2.245144, creeps down to 2.236068 as n grows.
+Two roads reach the coefficients: Cauchy's integral as a 256-point trapezoid sum round a circle, and the recursion from $`(1 + z^2)f = 1`$, with no integral. Two roads reach the radius: the distance to the poles, and the coefficients' decay, $`1/|c_n|^{1/n}`$ at its smallest for n from 180 to 200; that estimate, 2.245144, creeps down to 2.236068 as n grows.
 
 ### Python
 
@@ -336,13 +342,13 @@ The two outputs match line for line.
 
 Lean proves the main theorem for every function and every disc, the failure past the poles, and the worked numbers exactly.
 
-- A function with a complex derivative throughout an open disc about $a$ equals its Taylor series at every point of that disc.
+- A function with a complex derivative throughout an open disc about $`a`$ equals its Taylor series at every point of that disc.
 - Holomorphic and analytic are the same property on any union of open discs in the plane.
-- The series of 1/(1 + z^2) about 0 diverges at every z with $\lvert z\rvert > 1$, past the poles ±i, so at z = 1.2.
-- About 2, $1 + z^2 = 5 + 4(z - 2) + (z - 2)^2$, and c0 to c4 obey the recursion exactly.
+- The series of 1/(1 + z^2) about 0 diverges at every z with $`\lvert z\rvert > 1`$, past the poles ±i, so at z = 1.2.
+- About 2, $`1 + z^2 = 5 + 4(z - 2) + (z - 2)^2`$, and c0 to c4 obey the recursion exactly.
 - Five terms at z = 1.2 sum to 799521/1953125; the true value is 25/61, an error of 57344/119140625 = 0.0004813136.
 - About 0, the recursion gives 1, 0, −1, 0, 1, 0, −1, and f(0.5) is exactly 0.8.
-- The pole i is √5 from 2, since $2^2 + 1^2 = 5$.
+- The pole i is √5 from 2, since $`2^2 + 1^2 = 5`$.
 
 The contour sums, the radius from the coefficients' decay, the long sums and the z-bar break are left to the Python and Rust checks.
 

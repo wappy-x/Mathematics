@@ -36,46 +36,50 @@ Lower line: the equity. Upper line: the debt. They always add to $100m, so what 
 
 ## The formula
 
-Notation first, in words. A slope with every other input frozen is a **partial derivative**, written with a curly d: $\partial E/\partial\sigma$ reads "the slope of the equity against volatility" ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $N(x)$ is the area under the standard bell curve to the left of $x$, and $\varphi(x)$ is the curve's height at $x$; the area grows at the rate of the height.
+Notation first, in words. A slope with every other input frozen is a **partial derivative**, written with a curly d: $`\partial E/\partial\sigma`$ reads "the slope of the equity against volatility" ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $`N(x)`$ is the area under the standard bell curve to the left of $`x`$, and $`\varphi(x)`$ is the curve's height at $`x`$; the area grows at the rate of the height.
 
 The centre of the card is one pair of slopes and one pair of splits:
 
-$$\frac{\partial E}{\partial \sigma} \;=\; -\frac{\partial B}{\partial \sigma} \;=\; V\,\varphi(d_1)\sqrt{T} \;>\; 0, \qquad \frac{\partial E}{\partial V} = N(d_1), \qquad \frac{\partial B}{\partial V} = N(-d_1)$$
+```math
+\frac{\partial E}{\partial \sigma} \;=\; -\frac{\partial B}{\partial \sigma} \;=\; V\,\varphi(d_1)\sqrt{T} \;>\; 0, \qquad \frac{\partial E}{\partial V} = N(d_1), \qquad \frac{\partial B}{\partial V} = N(-d_1)
+```
 
 **Read it aloud:** more volatility raises the equity by exactly what it takes from the debt, the option's vega; a new dollar of assets goes to the shareholders in proportion N(d1) and to the lenders in proportion N(−d1).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | market value of the firm's assets today | $100m | both claims rise; spread falls |
-| $D$ | face value of the debt, its one payment | $80m | equity falls; spread +11.83 bp per $1m |
-| $\sigma$ | asset volatility: standard deviation of the assets' yearly log return | 20% | equity up, debt down, spread +18.07 bp per point |
-| $r$ | riskless rate, continuously compounded | 5% | equity up, debt down, spread −9.46 bp per point |
-| $T$ | years until the debt is due | 1 | equity up; spread up here, down for long or distressed debt |
-| $E$ | equity value: a call on the assets struck at $D$ | $24.59m | — |
-| $B$ | debt value: the assets minus the equity, $V - E$ | $75.41m | — |
-| $P$ | the lenders' default put: riskless debt minus risky debt, $De^{-rT} - B$ | $0.69m | — |
-| $Q$ | default probability in the pricing (risk-neutral) world, where assets grow on average at $r$: $N(-d_2)$ | 10.28% | — |
-| $s$, $y$ | credit spread $s = y - r$, where $y = -\ln(B/D)/T$ is the debt's yield | 90.71 bp | — |
-| $d_1$, $d_2$ | how far the assets sit above the debt, in units of $\sigma\sqrt{T}$ | 1.4657 and 1.2657 | — |
-| $N(x)$, $\varphi(x)$ | bell-curve area left of $x$, and height at $x$ | $N(d_1) = 0.9286$, $\varphi(d_1) = 0.1363$ | — |
+| $`V`$ | market value of the firm's assets today | $100m | both claims rise; spread falls |
+| $`D`$ | face value of the debt, its one payment | $80m | equity falls; spread +11.83 bp per $1m |
+| $`\sigma`$ | asset volatility: standard deviation of the assets' yearly log return | 20% | equity up, debt down, spread +18.07 bp per point |
+| $`r`$ | riskless rate, continuously compounded | 5% | equity up, debt down, spread −9.46 bp per point |
+| $`T`$ | years until the debt is due | 1 | equity up; spread up here, down for long or distressed debt |
+| $`E`$ | equity value: a call on the assets struck at $`D`$ | $24.59m | — |
+| $`B`$ | debt value: the assets minus the equity, $`V - E`$ | $75.41m | — |
+| $`P`$ | the lenders' default put: riskless debt minus risky debt, $`De^{-rT} - B`$ | $0.69m | — |
+| $`Q`$ | default probability in the pricing (risk-neutral) world, where assets grow on average at $`r`$: $`N(-d_2)`$ | 10.28% | — |
+| $`s`$, $`y`$ | credit spread $`s = y - r`$, where $`y = -\ln(B/D)/T`$ is the debt's yield | 90.71 bp | — |
+| $`d_1`$, $`d_2`$ | how far the assets sit above the debt, in units of $`\sigma\sqrt{T}`$ | 1.4657 and 1.2657 | — |
+| $`N(x)`$, $`\varphi(x)`$ | bell-curve area left of $`x`$, and height at $`x`$ | $`N(d_1) = 0.9286`$, $`\varphi(d_1) = 0.1363`$ | — |
 
 The helpers are the Black–Scholes ones with the stock replaced by the assets, the strike by the debt, and no dividend:
 
-$$d_1 = \frac{\ln(V/D) + (r + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(V/D) + (r + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: $d_2$ counts how many standard deviations over the debt's life, $\sigma\sqrt T$, the assets' log value can fall in the pricing world before the assets stop covering the debt; $d_1$ is one more.
+In words: $`d_2`$ counts how many standard deviations over the debt's life, $`\sigma\sqrt T`$, the assets' log value can fall in the pricing world before the assets stop covering the debt; $`d_1`$ is one more.
 
 ### The Greeks, all of them
 
 Each cell is the slope of the row's claim against the column's input. The debt's row is minus the equity's, except against assets; the reason is Step 0.
 
-| Claim | to assets $V$ | to volatility $\sigma$ | to face $D$ | to time $T$ | to rate $r$ |
+| Claim | to assets $`V`$ | to volatility $`\sigma`$ | to face $`D`$ | to time $`T`$ | to rate $`r`$ |
 | --- | --- | --- | --- | --- | --- |
-| Equity | $N(d_1)$ | $V\varphi(d_1)\sqrt T$ | $-e^{-rT}N(d_2)$ | $\frac{V\varphi(d_1)\sigma}{2\sqrt T} + rDe^{-rT}N(d_2)$ | $TDe^{-rT}N(d_2)$ |
-| Debt | $N(-d_1)$ | $-V\varphi(d_1)\sqrt T$ | $e^{-rT}N(d_2)$ | minus the equity's | $-TDe^{-rT}N(d_2)$ |
-| Put | $-N(-d_1)$ | $V\varphi(d_1)\sqrt T$ | $e^{-rT}N(-d_2)$ | the equity's minus $rDe^{-rT}$ | $-TDe^{-rT}N(-d_2)$ |
-| Default prob. | $-\frac{\varphi(d_2)}{V\sigma\sqrt T}$ | $\frac{\varphi(d_2)\,d_1}{\sigma}$ | $\frac{\varphi(d_2)}{D\sigma\sqrt T}$ | $\frac{\varphi(d_2)\,[\ln(V/D) - (r - \frac12\sigma^2)T]}{2\sigma T^{3/2}}$ | $-\frac{\varphi(d_2)\sqrt T}{\sigma}$ |
-| Spread | $-\frac{1}{TB}\frac{\partial B}{\partial V}$ | $-\frac{1}{TB}\frac{\partial B}{\partial \sigma}$ | $-\frac{1}{T}\left(\frac{1}{B}\frac{\partial B}{\partial D} - \frac{1}{D}\right)$ | $-\frac{1}{TB}\frac{\partial B}{\partial T} - \frac{y}{T}$ | $-\frac{1}{TB}\frac{\partial B}{\partial r} - 1$ |
+| Equity | $`N(d_1)`$ | $`V\varphi(d_1)\sqrt T`$ | $`-e^{-rT}N(d_2)`$ | $`\frac{V\varphi(d_1)\sigma}{2\sqrt T} + rDe^{-rT}N(d_2)`$ | $`TDe^{-rT}N(d_2)`$ |
+| Debt | $`N(-d_1)`$ | $`-V\varphi(d_1)\sqrt T`$ | $`e^{-rT}N(d_2)`$ | minus the equity's | $`-TDe^{-rT}N(d_2)`$ |
+| Put | $`-N(-d_1)`$ | $`V\varphi(d_1)\sqrt T`$ | $`e^{-rT}N(-d_2)`$ | the equity's minus $`rDe^{-rT}`$ | $`-TDe^{-rT}N(-d_2)`$ |
+| Default prob. | $`-\frac{\varphi(d_2)}{V\sigma\sqrt T}`$ | $`\frac{\varphi(d_2)\,d_1}{\sigma}`$ | $`\frac{\varphi(d_2)}{D\sigma\sqrt T}`$ | $`\frac{\varphi(d_2)\,[\ln(V/D) - (r - \frac12\sigma^2)T]}{2\sigma T^{3/2}}`$ | $`-\frac{\varphi(d_2)\sqrt T}{\sigma}`$ |
+| Spread | $`-\frac{1}{TB}\frac{\partial B}{\partial V}`$ | $`-\frac{1}{TB}\frac{\partial B}{\partial \sigma}`$ | $`-\frac{1}{T}\left(\frac{1}{B}\frac{\partial B}{\partial D} - \frac{1}{D}\right)`$ | $`-\frac{1}{TB}\frac{\partial B}{\partial T} - \frac{y}{T}`$ | $`-\frac{1}{TB}\frac{\partial B}{\partial r} - 1`$ |
 
 The same table in numbers, per natural step: \$1m of assets, one volatility point, \$1m of face, one year, one rate point. Money in millions of dollars, the default probability as a fraction, the spread in basis points.
 
@@ -92,7 +96,7 @@ The same table in numbers, per natural step: \$1m of assets, one volatility poin
 - **Assets that wander like a stock, at one fixed volatility.** If volatility moves, each slope is only a first guess. Short spreads come out near zero (13.94 bp at three months), far below market quotes: [Where structural models break](06-where-structural-models-fail.md).
 - **One zero-coupon debt, default only on its due date.** Default at the first touch of a barrier changes every slope: [Black-Cox](05-black-cox-first-passage-default.md).
 - **No cost of going bust.** Then equity plus debt is the whole firm and the tug-of-war is zero-sum. With costs of default, volatility also shrinks the pie.
-- **Pricing-world probabilities.** $Q$ prices the claims; it is not a forecast. With assets expected to grow 8 percent a year, the real-world chance is 7.84 percent: [Distance to default](03-distance-to-default-and-expected-default-frequency.md).
+- **Pricing-world probabilities.** $`Q`$ prices the claims; it is not a forecast. With assets expected to grow 8 percent a year, the real-world chance is 7.84 percent: [Distance to default](03-distance-to-default-and-expected-default-frequency.md).
 - **Small moves.** A slope is local. Doubling volatility with the slope at 20 percent predicts equity of $27.31m; the full reprice gives $28.98m.
 
 ---
@@ -101,82 +105,92 @@ The same table in numbers, per natural step: \$1m of assets, one volatility poin
 
 ### Step 0: the pie has a fixed size
 
-Shareholders and lenders together own the firm, so $E + B = V$ at every moment. Volatility, face, time and rate leave $V$ unchanged, so against each of them the equity's slope and the debt's slope add to zero. Only the assets change the pie's size, and then the two slopes add to one.
+Shareholders and lenders together own the firm, so $`E + B = V`$ at every moment. Volatility, face, time and rate leave $`V`$ unchanged, so against each of them the equity's slope and the debt's slope add to zero. Only the assets change the pie's size, and then the two slopes add to one.
 
-So: find the equity's slopes, and the debt's are their mirror. The put, the default probability and the spread are then read off the debt and $d_2$.
+So: find the equity's slopes, and the debt's are their mirror. The put, the default probability and the spread are then read off the debt and $`d_2`$.
 
 ### Step 1: the equity's slopes are a call's Greeks
 
-The equity is $E = V N(d_1) - D e^{-rT} N(d_2)$: the Black–Scholes call with the assets as the stock and the debt as the strike. Its slope against the assets is the call's delta, $N(d_1) = 0.9286$. Its slope against volatility is the call's vega, $V\varphi(d_1)\sqrt{T}$. With assets of 100 and a height of 0.1363 that is 13.63 per unit of volatility, or \$0.1363m per point.
+The equity is $`E = V N(d_1) - D e^{-rT} N(d_2)`$: the Black–Scholes call with the assets as the stock and the debt as the strike. Its slope against the assets is the call's delta, $`N(d_1) = 0.9286`$. Its slope against volatility is the call's vega, $`V\varphi(d_1)\sqrt{T}`$. With assets of 100 and a height of 0.1363 that is 13.63 per unit of volatility, or \$0.1363m per point.
 
 The other three slopes need one identity from the vega card: the share side and the cash side carry equal weight at the strike,
 
-$$V\,\varphi(d_1) \;=\; D\,e^{-rT}\,\varphi(d_2).$$
+```math
+V\,\varphi(d_1) \;=\; D\,e^{-rT}\,\varphi(d_2).
+```
 
-For this firm both sides are 13.63. Differentiate $E$ against the face $D$: of the three terms, the two carrying $\varphi$ cancel by the identity, since $d_1$ and $d_2$ move together when $D$ moves. What survives is $-e^{-rT}N(d_2) = -0.8534$: each extra \$1m promised to lenders costs shareholders \$0.85m, not \$1m, because in the 10 percent of outcomes where the firm defaults the shareholders pay nothing anyway, and the payment is a year off.
+For this firm both sides are 13.63. Differentiate $`E`$ against the face $`D`$: of the three terms, the two carrying $`\varphi`$ cancel by the identity, since $`d_1`$ and $`d_2`$ move together when $`D`$ moves. What survives is $`-e^{-rT}N(d_2) = -0.8534`$: each extra \$1m promised to lenders costs shareholders \$0.85m, not \$1m, because in the 10 percent of outcomes where the firm defaults the shareholders pay nothing anyway, and the payment is a year off.
 
-The same cancellation gives the rate slope, $TDe^{-rT}N(d_2)$, which is 0.6827 per rate point: a higher rate shrinks today's value of the debt the shareholders must repay. For time, $d_1 - d_2 = \sigma\sqrt T$ itself grows with $T$, so one term survives the cancellation:
+The same cancellation gives the rate slope, $`TDe^{-rT}N(d_2)`$, which is 0.6827 per rate point: a higher rate shrinks today's value of the debt the shareholders must repay. For time, $`d_1 - d_2 = \sigma\sqrt T`$ itself grows with $`T`$, so one term survives the cancellation:
 
-$$\frac{\partial E}{\partial T} \;=\; \underbrace{\frac{V\varphi(d_1)\,\sigma}{2\sqrt{T}}}_{\text{more room to swing}} \;+\; \underbrace{r\,D\,e^{-rT}N(d_2)}_{\text{repayment pushed further off}}$$
+```math
+\frac{\partial E}{\partial T} \;=\; \underbrace{\frac{V\varphi(d_1)\,\sigma}{2\sqrt{T}}}_{\text{more room to swing}} \;+\; \underbrace{r\,D\,e^{-rT}N(d_2)}_{\text{repayment pushed further off}}
+```
 
-For this firm that is $1.3627 + 3.4137 = 4.7765$ per year. Both parts are positive. Shareholders always gain from debt that falls due later.
+For this firm that is $`1.3627 + 3.4137 = 4.7765`$ per year. Both parts are positive. Shareholders always gain from debt that falls due later.
 
 <details>
 <summary>Detailed proof: the identity, and the cancellations</summary>
 
-**The identity.** The bell-curve heights divide as $\varphi(d_1)/\varphi(d_2) = e^{-(d_1^2 - d_2^2)/2} = e^{-(d_1 - d_2)(d_1 + d_2)/2}$. Here $d_1 - d_2 = \sigma\sqrt T$ and $d_1 + d_2 = 2[\ln(V/D) + rT]/(\sigma\sqrt T)$, so the exponent is $-\ln(V/D) - rT$ and the ratio is $De^{-rT}/V$. Multiply out: $V\varphi(d_1) = De^{-rT}\varphi(d_2)$.
+**The identity.** The bell-curve heights divide as $`\varphi(d_1)/\varphi(d_2) = e^{-(d_1^2 - d_2^2)/2} = e^{-(d_1 - d_2)(d_1 + d_2)/2}`$. Here $`d_1 - d_2 = \sigma\sqrt T`$ and $`d_1 + d_2 = 2[\ln(V/D) + rT]/(\sigma\sqrt T)`$, so the exponent is $`-\ln(V/D) - rT`$ and the ratio is $`De^{-rT}/V`$. Multiply out: $`V\varphi(d_1) = De^{-rT}\varphi(d_2)`$.
 
-**The general slope.** For any input $x$, differentiating $E = VN(d_1) - De^{-rT}N(d_2)$ term by term gives
-$$\frac{\partial E}{\partial x} = \frac{\partial V}{\partial x}N(d_1) - \frac{\partial (De^{-rT})}{\partial x}N(d_2) + V\varphi(d_1)\frac{\partial d_1}{\partial x} - De^{-rT}\varphi(d_2)\frac{\partial d_2}{\partial x}.$$
-By the identity the last two terms are $V\varphi(d_1)\,\partial(d_1 - d_2)/\partial x = V\varphi(d_1)\,\partial(\sigma\sqrt T)/\partial x$.
+**The general slope.** For any input $`x`$, differentiating $`E = VN(d_1) - De^{-rT}N(d_2)`$ term by term gives
 
-- $x = V$: $N(d_1) + 0 = N(d_1)$.
-- $x = \sigma$: $0 + V\varphi(d_1)\sqrt T$.
-- $x = D$: $-e^{-rT}N(d_2) + 0$.
-- $x = r$: $TDe^{-rT}N(d_2) + 0$.
-- $x = T$: $rDe^{-rT}N(d_2) + V\varphi(d_1)\,\sigma/(2\sqrt T)$.
+$`\displaystyle \frac{\partial E}{\partial x} = \frac{\partial V}{\partial x}N(d_1) - \frac{\partial (De^{-rT})}{\partial x}N(d_2) + V\varphi(d_1)\frac{\partial d_1}{\partial x} - De^{-rT}\varphi(d_2)\frac{\partial d_2}{\partial x}.`$
 
-The debt's slopes are $\partial V/\partial x$ minus these; the put's are $\partial(De^{-rT})/\partial x$ minus the debt's.
+By the identity the last two terms are $`V\varphi(d_1)\,\partial(d_1 - d_2)/\partial x = V\varphi(d_1)\,\partial(\sigma\sqrt T)/\partial x`$.
+
+- $`x = V`$: $`N(d_1) + 0 = N(d_1)`$.
+- $`x = \sigma`$: $`0 + V\varphi(d_1)\sqrt T`$.
+- $`x = D`$: $`-e^{-rT}N(d_2) + 0`$.
+- $`x = r`$: $`TDe^{-rT}N(d_2) + 0`$.
+- $`x = T`$: $`rDe^{-rT}N(d_2) + V\varphi(d_1)\,\sigma/(2\sqrt T)`$.
+
+The debt's slopes are $`\partial V/\partial x`$ minus these; the put's are $`\partial(De^{-rT})/\partial x`$ minus the debt's.
 
 </details>
 
 ### Step 2: the debt and the put, by subtraction
 
-The debt is $B = V - E$, so its slope against the assets is $N(-d_1) = 0.0714$. Of each extra \$1m of assets, \$0.93m goes to shareholders and \$0.07m to lenders, whose claim is capped and already mostly safe. Against every other input the debt's slope is the equity's with the sign flipped.
+The debt is $`B = V - E`$, so its slope against the assets is $`N(-d_1) = 0.0714`$. Of each extra \$1m of assets, \$0.93m goes to shareholders and \$0.07m to lenders, whose claim is capped and already mostly safe. Against every other input the debt's slope is the equity's with the sign flipped.
 
-The put, $P = De^{-rT} - B$, is the gap between a riskless and a risky promise of \$80m: the insurance the lenders have in effect sold the shareholders, who may hand over the assets instead of paying. Riskless debt ignores volatility, so the put gains the full vega, \$0.1363m per point. Against the assets its slope is $-N(-d_1) = -0.0714$.
+The put, $`P = De^{-rT} - B`$, is the gap between a riskless and a risky promise of \$80m: the insurance the lenders have in effect sold the shareholders, who may hand over the assets instead of paying. Riskless debt ignores volatility, so the put gains the full vega, \$0.1363m per point. Against the assets its slope is $`-N(-d_1) = -0.0714`$.
 
 ### Step 3: the default probability, by the chain rule
 
-In the pricing world the chance that the assets end below the debt is $Q = N(-d_2)$. The area $N$ grows at the rate of the height $\varphi$, so each slope of $Q$ is $-\varphi(d_2)$ times the slope of $d_2$.
+In the pricing world the chance that the assets end below the debt is $`Q = N(-d_2)`$. The area $`N`$ grows at the rate of the height $`\varphi`$, so each slope of $`Q`$ is $`-\varphi(d_2)`$ times the slope of $`d_2`$.
 
-The volatility slope needs care, because $\sigma$ sits in two places in $d_2$. Write $d_2 = [\ln(V/D) + rT]/(\sigma\sqrt T) - \tfrac12\sigma\sqrt T$. Its slope against $\sigma$ is $-[\ln(V/D) + rT]/(\sigma^2\sqrt T) - \tfrac12\sqrt T$, which is $-d_1/\sigma$. So
+The volatility slope needs care, because $`\sigma`$ sits in two places in $`d_2`$. Write $`d_2 = [\ln(V/D) + rT]/(\sigma\sqrt T) - \tfrac12\sigma\sqrt T`$. Its slope against $`\sigma`$ is $`-[\ln(V/D) + rT]/(\sigma^2\sqrt T) - \tfrac12\sqrt T`$, which is $`-d_1/\sigma`$. So
 
-$$\frac{\partial Q}{\partial \sigma} = \frac{\varphi(d_2)\,d_1}{\sigma} = \frac{0.1791 \times 1.4657}{0.2} \text{ per unit} = 0.0131 \text{ per point}.$$
+```math
+\frac{\partial Q}{\partial \sigma} = \frac{\varphi(d_2)\,d_1}{\sigma} = \frac{0.1791 \times 1.4657}{0.2} \text{ per unit} = 0.0131 \text{ per point}.
+```
 
-It has the sign of $d_1$. For any firm whose assets comfortably cover its debt $d_1 > 0$ (here 1.4657), so more volatility makes default likelier. A deeply insolvent firm, with $d_1 < 0$, is the exception: volatility lowers $Q$, yet the spread still widens, because the debt's value falls.
+It has the sign of $`d_1`$. For any firm whose assets comfortably cover its debt $`d_1 > 0`$ (here 1.4657), so more volatility makes default likelier. A deeply insolvent firm, with $`d_1 < 0`$, is the exception: volatility lowers $`Q`$, yet the spread still widens, because the debt's value falls.
 
-The assets and the rate enter $d_2$ only through $\ln V + rT$, so a rate one point higher acts like assets 1 percent higher. At \$100m of assets that is \$1m, which is why both default-probability slopes read −0.0090.
+The assets and the rate enter $`d_2`$ only through $`\ln V + rT`$, so a rate one point higher acts like assets 1 percent higher. At \$100m of assets that is \$1m, which is why both default-probability slopes read −0.0090.
 
 ### Step 4: the spread, and why only leverage matters
 
-The debt's yield $y$ solves $B = De^{-yT}$, so $y = -\ln(B/D)/T$, and the spread is $s = y - r$. A log's slope is one over its argument, so against the assets or the volatility
+The debt's yield $`y`$ solves $`B = De^{-yT}`$, so $`y = -\ln(B/D)/T`$, and the spread is $`s = y - r`$. A log's slope is one over its argument, so against the assets or the volatility
 
-$$\frac{\partial s}{\partial x} = -\frac{1}{T\,B}\,\frac{\partial B}{\partial x}.$$
+```math
+\frac{\partial s}{\partial x} = -\frac{1}{T\,B}\,\frac{\partial B}{\partial x}.
+```
 
 For volatility: 13.63 divided by 75.41, scaled to basis points per volatility point, is 18.07 bp.
 
-Now scale the firm. Double assets and debt together and every dollar amount doubles, while $d_1$ and $d_2$ stay put. Equity is **homogeneous of degree one**: scaling both inputs by a factor scales the value by that factor. Two things follow.
+Now scale the firm. Double assets and debt together and every dollar amount doubles, while $`d_1`$ and $`d_2`$ stay put. Equity is **homogeneous of degree one**: scaling both inputs by a factor scales the value by that factor. Two things follow.
 
-First, the default probability and the spread depend on $V$ and $D$ only through their ratio. Call $De^{-rT}/V$ the firm's **leverage**, the riskless value of its debt as a share of its assets: 0.761 here. Assets falling to \$90m and face rising to \$88.89m give the same leverage, and the code prints the same 23.00 percent and 246.27 bp for both.
+First, the default probability and the spread depend on $`V`$ and $`D`$ only through their ratio. Call $`De^{-rT}/V`$ the firm's **leverage**, the riskless value of its debt as a share of its assets: 0.761 here. Assets falling to \$90m and face rising to \$88.89m give the same leverage, and the code prints the same 23.00 percent and 246.27 bp for both.
 
-Second, Euler's rule for such functions: $E = V\,\partial E/\partial V + D\,\partial E/\partial D$. Here 100 × 0.9286 − 80 × 0.8534 = 24.59, the equity. The two slopes rebuild the price: a sharp check on both.
+Second, Euler's rule for such functions: $`E = V\,\partial E/\partial V + D\,\partial E/\partial D`$. Here 100 × 0.9286 − 80 × 0.8534 = 24.59, the equity. The two slopes rebuild the price: a sharp check on both.
 
 ### Step 5: time, and the hump in the spread
 
 Time pulls the spread two ways. More time lets the assets wander further, raising the default probability. But the loss is then spread over more years, and the pricing world's assets drift up at the riskless rate, away from the debt. The first wins early, the second late.
 
-The default probability rises with maturity while $\ln(V/D) > (r - \tfrac12\sigma^2)T$, the bracket in the table's time cell. The spread turns earlier: it rises 42.68 bp per year at one year, peaks near two years at 105.21 bp, and falls to 56.87 bp at ten. For the \$90m firm the peak is already past: 246.27 bp at one year, 202.69 at two. "Time widens the spread" holds for a sound firm's short debt, not for a distressed firm's.
+The default probability rises with maturity while $`\ln(V/D) > (r - \tfrac12\sigma^2)T`$, the bracket in the table's time cell. The spread turns earlier: it rises 42.68 bp per year at one year, peaks near two years at 105.21 bp, and falls to 56.87 bp at ten. For the \$90m firm the peak is already past: 246.27 bp at one year, 202.69 at two. "Time widens the spread" holds for a sound firm's short debt, not for a distressed firm's.
 
 The code reaches all 25 slopes a second way, with none of this algebra: nudge each input up and down by a hundredth of a percent of its value, reprice, and divide the change in price by the change in input.
 
@@ -184,22 +198,22 @@ The code reaches all 25 slopes a second way, with none of this algebra: nudge ea
 
 ## Worked numbers, by hand
 
-The firm: $V = 100$, $D = 80$, $\sigma = 20\%$, $r = 5\%$, $T = 1$. The inputs to every slope come from the Merton card.
+The firm: $`V = 100`$, $`D = 80`$, $`\sigma = 20\%`$, $`r = 5\%`$, $`T = 1`$. The inputs to every slope come from the Merton card.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$, $d_2$ | from the Merton card | 1.4657, 1.2657 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.9286, 0.8972 |
-| $\varphi(d_1)$, $\varphi(d_2)$ | bell-curve heights | 0.1363, 0.1791 |
-| equity per $1m of assets | $N(d_1)$ | 0.9286 |
-| debt per $1m of assets | $1 - 0.9286$ | 0.0714 |
-| equity per volatility point | $100 \times 0.1363 \times 1 \times 0.01$ | $0.1363m |
-| equity per $1m of face | $-0.9512 \times 0.8972$ | −0.8534 |
-| equity per year | $1.3627 + 3.4137$ | 4.7765 |
-| equity per rate point | $1 \times 80 \times 0.9512 \times 0.8972 \times 0.01$ | 0.6827 |
-| default probability per volatility point | $0.1791 \times 1.4657 / 0.2 \times 0.01$ | 0.0131 |
-| spread per volatility point | $0.1363 / 75.41 \times 10^4$ | 18.07 bp |
-| Euler check | $100 \times 0.9286 - 80 \times 0.8534$ | **24.59 = equity** |
+| $`d_1`$, $`d_2`$ | from the Merton card | 1.4657, 1.2657 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.9286, 0.8972 |
+| $`\varphi(d_1)`$, $`\varphi(d_2)`$ | bell-curve heights | 0.1363, 0.1791 |
+| equity per $1m of assets | $`N(d_1)`$ | 0.9286 |
+| debt per $1m of assets | $`1 - 0.9286`$ | 0.0714 |
+| equity per volatility point | $`100 \times 0.1363 \times 1 \times 0.01`$ | $0.1363m |
+| equity per $1m of face | $`-0.9512 \times 0.8972`$ | −0.8534 |
+| equity per year | $`1.3627 + 3.4137`$ | 4.7765 |
+| equity per rate point | $`1 \times 80 \times 0.9512 \times 0.8972 \times 0.01`$ | 0.6827 |
+| default probability per volatility point | $`0.1791 \times 1.4657 / 0.2 \times 0.01`$ | 0.0131 |
+| spread per volatility point | $`0.1363 / 75.41 \times 10^4`$ | 18.07 bp |
+| Euler check | $`100 \times 0.9286 - 80 \times 0.8534`$ | **24.59 = equity** |
 
 So one volatility point moves $0.1363m from lenders to shareholders, adds 1.31 points to the chance of default, and adds 18.07 bp to the spread.
 
@@ -209,7 +223,7 @@ So one volatility point moves $0.1363m from lenders to shareholders, adds 1.31 p
 | --- | --- | --- |
 | Equity at 40% volatility from the slope at 20% | $27.31m, truth $28.98m | Vega grows with volatility here |
 | Spread at 40% volatility from the slope at 20% | 452.12 bp, truth 690.15 bp | The spread curves upward; a line undershoots |
-| The put's delta read as the default probability | 7.14%, truth 10.28% | $N(-d_1)$ weights outcomes by the assets; default is $N(-d_2)$ |
+| The put's delta read as the default probability | 7.14%, truth 10.28% | $`N(-d_1)`$ weights outcomes by the assets; default is $`N(-d_2)`$ |
 | "Longer debt pays more" for the $90m firm | above 246.27 bp at two years; truth 202.69 bp | A distressed firm's curve slopes down |
 
 The code prints every number in this table.
@@ -263,7 +277,7 @@ Lower line: the base firm, $100m of assets, rising from 13.94 bp at three months
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer; the bell-curve area is Simpson's rule (adding up thin strips under the curve) on the curve's height. Three roads. Road one: the closed forms and the Greek table above. Road two: nudge each input and reprice, never touching a Greek formula. Road three: average each claim's payoff over every asset value at maturity, with the default point found by bisection (halving an interval until it pins the root), never computing $d_1$ or $d_2$. The debt is priced there from its own payoff, the smaller of the assets and the face, so "equity plus debt is the firm" is tested, not assumed.
+Nothing imported knows the answer; the bell-curve area is Simpson's rule (adding up thin strips under the curve) on the curve's height. Three roads. Road one: the closed forms and the Greek table above. Road two: nudge each input and reprice, never touching a Greek formula. Road three: average each claim's payoff over every asset value at maturity, with the default point found by bisection (halving an interval until it pins the root), never computing $`d_1`$ or $`d_2`$. The debt is priced there from its own payoff, the smaller of the assets and the face, so "equity plus debt is the firm" is tested, not assumed.
 
 ### Python
 
@@ -701,13 +715,13 @@ The two outputs are identical line for line.
 
 Lean proves the equity's and debt's slopes and two spread facts, for any positive assets, face, volatility and time, and any rate.
 
-- Take any such firm. Then $\partial E/\partial\sigma = V\varphi(d_1)\sqrt{T} > 0$, and $\partial B/\partial\sigma$ is exactly minus that.
-- Take any such firm. Then $\partial E/\partial V = N(d_1)$ and $\partial B/\partial V = N(-d_1)$.
+- Take any such firm. Then $`\partial E/\partial\sigma = V\varphi(d_1)\sqrt{T} > 0`$, and $`\partial B/\partial\sigma`$ is exactly minus that.
+- Take any such firm. Then $`\partial E/\partial V = N(d_1)`$ and $`\partial B/\partial V = N(-d_1)`$.
 - The equity's slopes against face, time and rate match the Equity row of the Greek table. The debt's are exactly minus them.
 - Scaling the assets and the face by the same factor leaves the spread unchanged. So the spread depends on them only through leverage.
 - With the assets held still, a larger face always gives a strictly wider spread.
 - The \$90m firm with \$80m face and the \$100m firm with \$800/9m face have exactly the same leverage.
-- Take 20 percent volatility and one year. Then $\sigma\sqrt{T}$, the gap between $d_1$ and $d_2$, is exactly 0.20.
+- Take 20 percent volatility and one year. Then $`\sigma\sqrt{T}`$, the gap between $`d_1`$ and $`d_2`$, is exactly 0.20.
 
 The put, the default probability, the spread's slopes and hump in time, and every printed number are left to the Python and Rust checks.
 
@@ -1051,7 +1065,7 @@ end StructuralSensitivities
 > **Treating risk as bad for everyone who holds a claim.** It is bad for the lenders only. The shareholders own a call, and a call gains from volatility. Doubling asset volatility takes $4.39m from the lenders and hands exactly $4.39m to the shareholders, while the firm is worth the same $100m throughout. That is why lenders write covenants limiting what a firm may invest in.
 >
 > Smaller traps:
-> - **Reading $N(-d_1)$ as the default probability.** It is the debt's slope against the assets, and minus the put's delta: 7.14 percent. The default chance is $N(-d_2)$, 10.28 percent.
+> - **Reading $`N(-d_1)`$ as the default probability.** It is the debt's slope against the assets, and minus the put's delta: 7.14 percent. The default chance is $`N(-d_2)`$, 10.28 percent.
 > - **Stretching a slope across a big move.** From 20 to 40 percent volatility the slope predicts a spread of 452.12 bp; the truth is 690.15. Reprice for big moves.
 > - **Assuming longer debt always pays more.** For the $90m firm, two-year debt pays 202.69 bp against 246.27 at one year.
 > - **Reading the face slope as the effect of new borrowing.** It holds the assets fixed. Borrowing $8m that stays in the firm as cash raises the assets too. The face slope describes a larger promise on the same assets, as when borrowed money is paid out as a dividend.
@@ -1072,7 +1086,7 @@ end StructuralSensitivities
 ## What this builds on
 
 - [Merton's model](01-merton-model-equity-as-a-call.md): the five prices this card differentiates, and why equity is a call.
-- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the slope against the underlying, here $N(d_1)$ for the equity.
+- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the slope against the underlying, here $`N(d_1)`$ for the equity.
 - [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the slope against volatility, and the identity that makes the cancellations in Step 1 work.
 
 ## Where this goes next

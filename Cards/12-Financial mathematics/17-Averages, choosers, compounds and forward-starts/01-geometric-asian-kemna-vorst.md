@@ -46,48 +46,60 @@ First line: profit after the premium, flat at −$4.99 until the average passes 
 
 ## The formula
 
-Notation first. Write $G$ for the geometric average of Acme's price over the year, and $C_G$ for the price today of the call that pays $\max(G - K, 0)$ at the end. The continuous geometric average is the exponential of the time-average of the log price:
+Notation first. Write $`G`$ for the geometric average of Acme's price over the year, and $`C_G`$ for the price today of the call that pays $`\max(G - K, 0)`$ at the end. The continuous geometric average is the exponential of the time-average of the log price:
 
-$$G = \exp\!\left(\frac{1}{T}\int_0^T \ln S_t\,dt\right)$$
+```math
+G = \exp\!\left(\frac{1}{T}\int_0^T \ln S_t\,dt\right)
+```
 
 Kemna and Vorst's result is the Black-Scholes call with two inputs replaced:
 
-$$C_G = S\,e^{-\hat q T}\,N(d_1) \;-\; K\,e^{-rT}\,N(d_2)$$
+```math
+C_G = S\,e^{-\hat q T}\,N(d_1) \;-\; K\,e^{-rT}\,N(d_2)
+```
 
-$$\sigma_G = \frac{\sigma}{\sqrt{3}}, \qquad \hat q = \frac{r+q}{2} + \frac{\sigma^2}{12}$$
+```math
+\sigma_G = \frac{\sigma}{\sqrt{3}}, \qquad \hat q = \frac{r+q}{2} + \frac{\sigma^2}{12}
+```
 
 **Read it aloud:** price the average as if it were a share whose volatility is Acme's divided by √3 and whose growth is about half Acme's, then use the ordinary call formula on that share.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C_G$ | price today of the call on the geometric average | $4.99 | is the answer |
-| $G$, $G_n$, $n$ | the geometric average over the year; the same average taken on $n$ fixing dates | continuous; weekly is 52 | more fixings: price falls toward the continuous $4.99 |
-| $S$, $S_t$ | Acme's price today; its price at time t | $100 | rises: every path starts higher |
-| $K$ | the strike the average is compared with | $100 | falls: further for the average to climb |
-| $T$, $t$ | life of the contract in years; a time inside it | 1 | rises: more room for the average to travel |
-| $r$, $q$ | bank rate and dividend yield, continuously compounded; $e^{-rT}$ discounts a dollar due at T | 5% and 2% | r up: rises; q up: falls |
-| $\sigma$ | Acme's volatility: the spread of its yearly log return | 20% | rises: more spread in the average too |
-| $\nu$, $W_t$ | the drift of the log price in the pretend world where everything grows at the bank rate, r − q − σ^2/2; the Brownian path, the random part of the log price | 0.01 | — |
-| $\sigma_G$ | volatility of the average, σ divided by √3 | 0.1155 | is the vol the option sees |
-| $\hat q$, $b$ | the stand-in yield that slows the average; b = r − q̂, the average's growth rate | 0.0383; 0.0117 | q̂ up: falls |
-| $d_1$, $d_2$ | distances of the strike, counted in standard deviations of ln G | 0.1588; 0.0433 | — |
-| $N$ | the bell-curve area to the left of a point | N(d1) 0.5631 | — |
+| $`C_G`$ | price today of the call on the geometric average | $4.99 | is the answer |
+| $`G`$, $`G_n`$, $`n`$ | the geometric average over the year; the same average taken on $`n`$ fixing dates | continuous; weekly is 52 | more fixings: price falls toward the continuous $4.99 |
+| $`S`$, $`S_t`$ | Acme's price today; its price at time t | $100 | rises: every path starts higher |
+| $`K`$ | the strike the average is compared with | $100 | falls: further for the average to climb |
+| $`T`$, $`t`$ | life of the contract in years; a time inside it | 1 | rises: more room for the average to travel |
+| $`r`$, $`q`$ | bank rate and dividend yield, continuously compounded; $`e^{-rT}`$ discounts a dollar due at T | 5% and 2% | r up: rises; q up: falls |
+| $`\sigma`$ | Acme's volatility: the spread of its yearly log return | 20% | rises: more spread in the average too |
+| $`\nu`$, $`W_t`$ | the drift of the log price in the pretend world where everything grows at the bank rate, r − q − σ^2/2; the Brownian path, the random part of the log price | 0.01 | — |
+| $`\sigma_G`$ | volatility of the average, σ divided by √3 | 0.1155 | is the vol the option sees |
+| $`\hat q`$, $`b`$ | the stand-in yield that slows the average; b = r − q̂, the average's growth rate | 0.0383; 0.0117 | q̂ up: falls |
+| $`d_1`$, $`d_2`$ | distances of the strike, counted in standard deviations of ln G | 0.1588; 0.0433 | — |
+| $`N`$ | the bell-curve area to the left of a point | N(d1) 0.5631 | — |
 
 The two distances are the Black-Scholes ones with the substitution made:
 
-$$d_1 = \frac{\ln(S/K) + \left(r - \hat q + \tfrac12\sigma_G^2\right)T}{\sigma_G\sqrt{T}}, \qquad d_2 = d_1 - \sigma_G\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S/K) + \left(r - \hat q + \tfrac12\sigma_G^2\right)T}{\sigma_G\sqrt{T}}, \qquad d_2 = d_1 - \sigma_G\sqrt{T}
+```
 
-In words: $d_2$ counts how far the average is expected to land above the strike, in units of its own spread; $d_1$ is one spread further.
+In words: $`d_2`$ counts how far the average is expected to land above the strike, in units of its own spread; $`d_1`$ is one spread further.
 
-The same price in forward form, the way a desk writes it. The expected average in the pretend world is $S e^{bT}$, with $b = \tfrac12(r - q) - \tfrac{1}{12}\sigma^2$:
+The same price in forward form, the way a desk writes it. The expected average in the pretend world is $`S e^{bT}`$, with $`b = \tfrac12(r - q) - \tfrac{1}{12}\sigma^2`$:
 
-$$C_G = e^{-rT}\left[\,S e^{bT} N(d_1) - K N(d_2)\,\right]$$
+```math
+C_G = e^{-rT}\left[\,S e^{bT} N(d_1) - K N(d_2)\,\right]
+```
 
 **Read it aloud:** the expected average times its share-counted chance, less the strike times its cash-counted chance, all discounted.
 
-For $n$ equally spaced fixings, the last at T and today not counted, the log of the average has mean and variance
+For $`n`$ equally spaced fixings, the last at T and today not counted, the log of the average has mean and variance
 
-$$\ln S + \nu T\,\frac{n+1}{2n} \qquad\text{and}\qquad \sigma^2 T\,\frac{(n+1)(2n+1)}{6n^2},$$
+```math
+\ln S + \nu T\,\frac{n+1}{2n} \qquad\text{and}\qquad \sigma^2 T\,\frac{(n+1)(2n+1)}{6n^2},
+```
 
 and the same Black formula applies to that lognormal. At one fixing it is the vanilla (ordinary) call. As the fixings multiply, the two fractions fall to one half and one third, the continuous formula above.
 
@@ -113,9 +125,9 @@ So the log of the average is bell-curved, the average is lognormal, and everythi
 
 ### Step 1: the centre collects half the drift
 
-In the pretend world the log price is a straight line plus a random path: $\ln S_t = \ln S + \nu t + \sigma W_t$. The random part has mean zero, so the centre of the log average is the average of the straight line, $\ln S$ plus the average of $\nu t$ over the year.
+In the pretend world the log price is a straight line plus a random path: $`\ln S_t = \ln S + \nu t + \sigma W_t`$. The random part has mean zero, so the centre of the log average is the average of the straight line, $`\ln S`$ plus the average of $`\nu t`$ over the year.
 
-A line that climbs from 0 to $\nu T$ averages half its top: $\nu T/2$. So the log average is centred at $\ln S + \tfrac12\nu T$: half the drift. For Acme, ν = 0.05 − 0.02 − 0.02 = 0.01.
+A line that climbs from 0 to $`\nu T`$ averages half its top: $`\nu T/2`$. So the log average is centred at $`\ln S + \tfrac12\nu T`$: half the drift. For Acme, ν = 0.05 − 0.02 − 0.02 = 0.01.
 
 ### Step 2: the spread is a third of the variance
 
@@ -123,32 +135,38 @@ Build the path from tiny independent shocks, one per instant. A shock that lands
 
 Independent shocks add in variance, and a weight scales a variance by its square. The average of the squared weight over the year is
 
-$$\frac{1}{T}\int_0^T \left(\frac{T-s}{T}\right)^2 ds = \frac{1}{3}.$$
+```math
+\frac{1}{T}\int_0^T \left(\frac{T-s}{T}\right)^2 ds = \frac{1}{3}.
+```
 
-So the log average carries a third of the variance of the last log price: $\sigma^2 T/3$, which is 0.013333 for Acme. A third of the variance is $1/\sqrt{3}$ of the volatility, which gives $\sigma_G = 0.20/\sqrt{3} = 0.1155$.
+So the log average carries a third of the variance of the last log price: $`\sigma^2 T/3`$, which is 0.013333 for Acme. A third of the variance is $`1/\sqrt{3}`$ of the volatility, which gives $`\sigma_G = 0.20/\sqrt{3} = 0.1155`$.
 
 <details>
 <summary>Detailed proof: the variance of the continuous and the discrete average</summary>
 
-**Continuous.** The time integral of the Brownian path equals a weighted sum of its shocks. From $d(tW_t) = W_t\,dt + t\,dW_t$, integrating over the year gives $T W_T = \int_0^T W_t\,dt + \int_0^T t\,dW_t$. Since $W_T = \int_0^T dW_s$,
-$$\int_0^T W_t\,dt = \int_0^T (T - s)\,dW_s.$$
-Itô's isometry says the variance of such an integral is the integral of the squared weight: $\int_0^T (T-s)^2 ds = T^3/3$. The log average is $\ln S + \tfrac12\nu T + (\sigma/T)\int_0^T W_t\,dt$, so its variance is $(\sigma^2/T^2)(T^3/3) = \sigma^2 T/3$. The same number is the double integral of the covariance $\min(s, u)$ over the square, divided by $T^2$: the route the code takes, by brute-force summation.
+**Continuous.** The time integral of the Brownian path equals a weighted sum of its shocks. From $`d(tW_t) = W_t\,dt + t\,dW_t`$, integrating over the year gives $`T W_T = \int_0^T W_t\,dt + \int_0^T t\,dW_t`$. Since $`W_T = \int_0^T dW_s`$,
 
-**Discrete.** With fixings at $t_i = iT/n$, the shock in step k appears in the $n - k + 1$ fixings at or after it, so the log average is $\ln S + \nu T(n+1)/(2n)$ plus $(\sigma\sqrt{T/n}/n)\sum_{k=1}^n (n-k+1)\varepsilon_k$, with the $\varepsilon_k$ independent standard normals. The mean uses $1 + 2 + \dots + n = n(n+1)/2$. The variance is $(\sigma^2 T/n^3)\sum_{m=1}^n m^2 = \sigma^2 T (n+1)(2n+1)/(6n^2)$, using $\sum m^2 = n(n+1)(2n+1)/6$. As n grows the fraction tends to $2n^2/6n^2 = 1/3$. At $n = 1$ it is 1, the last price.
+$`\displaystyle \int_0^T W_t\,dt = \int_0^T (T - s)\,dW_s.`$
+
+Itô's isometry says the variance of such an integral is the integral of the squared weight: $`\int_0^T (T-s)^2 ds = T^3/3`$. The log average is $`\ln S + \tfrac12\nu T + (\sigma/T)\int_0^T W_t\,dt`$, so its variance is $`(\sigma^2/T^2)(T^3/3) = \sigma^2 T/3`$. The same number is the double integral of the covariance $`\min(s, u)`$ over the square, divided by $`T^2`$: the route the code takes, by brute-force summation.
+
+**Discrete.** With fixings at $`t_i = iT/n`$, the shock in step k appears in the $`n - k + 1`$ fixings at or after it, so the log average is $`\ln S + \nu T(n+1)/(2n)`$ plus $`(\sigma\sqrt{T/n}/n)\sum_{k=1}^n (n-k+1)\varepsilon_k`$, with the $`\varepsilon_k`$ independent standard normals. The mean uses $`1 + 2 + \dots + n = n(n+1)/2`$. The variance is $`(\sigma^2 T/n^3)\sum_{m=1}^n m^2 = \sigma^2 T (n+1)(2n+1)/(6n^2)`$, using $`\sum m^2 = n(n+1)(2n+1)/6`$. As n grows the fraction tends to $`2n^2/6n^2 = 1/3`$. At $`n = 1`$ it is 1, the last price.
 
 </details>
 
 ### Step 3: match the average to a stand-in share
 
-A Black-Scholes share with yield $\hat q$ and volatility $\sigma_G$ has, at T, a log price centred at $\ln S + (r - \hat q - \tfrac12\sigma_G^2)T$ with variance $\sigma_G^2 T$. The variances already match. Setting the centres equal:
+A Black-Scholes share with yield $`\hat q`$ and volatility $`\sigma_G`$ has, at T, a log price centred at $`\ln S + (r - \hat q - \tfrac12\sigma_G^2)T`$ with variance $`\sigma_G^2 T`$. The variances already match. Setting the centres equal:
 
-$$r - \hat q = \tfrac12\nu + \tfrac12\sigma_G^2 = \tfrac12(r - q) - \tfrac14\sigma^2 + \tfrac16\sigma^2 = \tfrac12(r - q) - \tfrac{1}{12}\sigma^2.$$
+```math
+r - \hat q = \tfrac12\nu + \tfrac12\sigma_G^2 = \tfrac12(r - q) - \tfrac14\sigma^2 + \tfrac16\sigma^2 = \tfrac12(r - q) - \tfrac{1}{12}\sigma^2.
+```
 
-That is the growth rate b of the average: half the stock's carry (r − q, its growth rate net of dividends), less a variance term. The −σ^2/12 comes from the −σ^2/2 inside the log drift being halved, then partly given back by the smaller volatility's own +σ_G^2/2. Rearranged, $\hat q = \tfrac12(r + q) + \tfrac{1}{12}\sigma^2$: 0.0383 for Acme.
+That is the growth rate b of the average: half the stock's carry (r − q, its growth rate net of dividends), less a variance term. The −σ^2/12 comes from the −σ^2/2 inside the log drift being halved, then partly given back by the smaller volatility's own +σ_G^2/2. Rearranged, $`\hat q = \tfrac12(r + q) + \tfrac{1}{12}\sigma^2`$: 0.0383 for Acme.
 
 ### Step 4: price it as Black-Scholes
 
-The average now has exactly the law of that stand-in share at T. The call on it is the Black-Scholes integral done on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), term for term. Split the payoff into "receive the average" and "hand over the strike" on the event that the average ends above K. The cash half is $K e^{-rT} N(d_2)$. Counting in units of the average slides the bell curve by one spread, giving $S e^{-\hat q T} N(d_1)$. Nothing is approximated. Given the model, the price is exact.
+The average now has exactly the law of that stand-in share at T. The call on it is the Black-Scholes integral done on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), term for term. Split the payoff into "receive the average" and "hand over the strike" on the event that the average ends above K. The cash half is $`K e^{-rT} N(d_2)`$. Counting in units of the average slides the bell curve by one spread, giving $`S e^{-\hat q T} N(d_1)`$. Nothing is approximated. Given the model, the price is exact.
 
 ### Step 5: fixing dates move it toward the vanilla
 
@@ -176,12 +194,12 @@ Acme: S = K = 100, r = 5%, q = 2%, σ = 20%, T = 1 year, continuous averaging.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| volatility of the average, $\sigma_G$ | 0.20 / √3 | 0.1155 |
-| stand-in yield, $\hat q$ | (0.05 + 0.02)/2 + 0.04/12 | 0.0383 |
+| volatility of the average, $`\sigma_G`$ | 0.20 / √3 | 0.1155 |
+| stand-in yield, $`\hat q`$ | (0.05 + 0.02)/2 + 0.04/12 | 0.0383 |
 | growth rate of the average, b | 0.05 − 0.0383 | 0.0117 |
 | expected average | 100 × e^0.0117 | $101.17 |
-| $d_1$ | (0 + 0.0117 + 0.1155^2/2) / 0.1155 | 0.1588 |
-| $d_2$ | 0.1588 − 0.1155 | 0.0433 |
+| $`d_1`$ | (0 + 0.0117 + 0.1155^2/2) / 0.1155 | 0.1588 |
+| $`d_2`$ | 0.1588 − 0.1155 | 0.0433 |
 | N(d1), N(d2) | bell-curve table | 0.5631, 0.5173 |
 | average half | 100 × e^−0.0383 × 0.5631 | $54.19 |
 | cash half | 100 × e^−0.05 × 0.5173 | $49.20 |
@@ -656,13 +674,13 @@ The two outputs agree line for line, simulation included: both languages run the
 
 Lean proves the continuous Kemna-Vorst formula, the law of the log average on fixing dates, and its limits, inside the Black-Scholes model.
 
-- Suppose $S$, $K$, $\sigma$ and $T$ are positive, $r$ and $q$ are constant, and $\ln S_t = \ln S + \nu t + \sigma W_t$. Then $C_G = S e^{-\hat q T} N(d_1) - K e^{-rT} N(d_2)$ exactly.
-- Take $n \ge 1$ equally spaced fixings, the last at T, with today not counted. Then $\ln G_n$ is bell-curved, with mean $\ln S + \nu T(n+1)/(2n)$. Its variance is $\sigma^2 T(n+1)(2n+1)/(6n^2)$.
-- Take one fixing. Then the mean and variance are $\ln S + \nu T$ and $\sigma^2 T$, those of the last price.
-- Let the number of fixings $n$ grow. Then the mean tends to $\ln S + \nu T/2$ and the variance to $\sigma^2 T/3$.
+- Suppose $`S`$, $`K`$, $`\sigma`$ and $`T`$ are positive, $`r`$ and $`q`$ are constant, and $`\ln S_t = \ln S + \nu t + \sigma W_t`$. Then $`C_G = S e^{-\hat q T} N(d_1) - K e^{-rT} N(d_2)`$ exactly.
+- Take $`n \ge 1`$ equally spaced fixings, the last at T, with today not counted. Then $`\ln G_n`$ is bell-curved, with mean $`\ln S + \nu T(n+1)/(2n)`$. Its variance is $`\sigma^2 T(n+1)(2n+1)/(6n^2)`$.
+- Take one fixing. Then the mean and variance are $`\ln S + \nu T`$ and $`\sigma^2 T`$, those of the last price.
+- Let the number of fixings $`n`$ grow. Then the mean tends to $`\ln S + \nu T/2`$ and the variance to $`\sigma^2 T/3`$.
 - Take the prices 81 and 121. Then the geometric average is exactly 99 and the arithmetic one 101.
-- Take Acme's inputs. Then $\nu = 1/100$, $\hat q = 23/600$, $b = 7/600$, and $\ln G$ has variance $1/75$.
-- Take 52 weekly fixings. Then the variance of $\ln G_n$ is exactly $1855/135200$, which is 0.013720.
+- Take Acme's inputs. Then $`\nu = 1/100`$, $`\hat q = 23/600`$, $`b = 7/600`$, and $`\ln G`$ has variance $`1/75`$.
+- Take 52 weekly fixings. Then the variance of $`\ln G_n`$ is exactly $`1855/135200`$, which is 0.013720.
 
 The dollar prices, the Greeks and the simulations are left to the Python and Rust checks.
 
@@ -1209,7 +1227,7 @@ example : ((12 : ℚ) + 1) * (2 * 12 + 1) / (6 * 12 ^ 2) = 325 / 864 := by norm_
 > **Pricing a traded Asian with this formula.** Desks settle on arithmetic averages. The arithmetic average is never below the geometric one, path by path, so this formula gives a floor, not a price. On the weekly paths above, the arithmetic call simulates at $5.26 and the geometric at $5.07. The arithmetic call has no exact formula at all; its pricing is the next card.
 >
 > Smaller traps:
-> - **Shrinking the volatility and nothing else.** Divide σ by √3 but leave the yield at q and the call comes out at $6.04. The average also grows more slowly, and the yield must move to $\hat q$.
+> - **Shrinking the volatility and nothing else.** Divide σ by √3 but leave the yield at q and the call comes out at $6.04. The average also grows more slowly, and the yield must move to $`\hat q`$.
 > - **Forgetting the −σ^2/12.** Halving the carry without the variance term gives $5.17. The term is small, but it is the difference between halving the log drift and halving the price drift.
 > - **Treating fixings as independent.** Fifty-two readings are not fifty-two separate coins: each shares all the earlier shocks. σ/√52 prices the weekly contract at $1.71 against the right $5.06.
 > - **Using the continuous price on a monthly contract.** $4.99 against the right $5.33. Match the fixing count, and check whether today's price counts as a fixing: it changes both the mean and the variance.

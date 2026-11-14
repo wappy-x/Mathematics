@@ -10,7 +10,7 @@ A swimming pool of any outline, kidney or L-shape, can be redrawn as a round poo
 
 The concrete pool is a half strip: the points z = x + iy with x between −π/2 and π/2 and y above 0. It is a lane of width π, open at the top, with square corners.
 
-The function sin z sends it onto the upper half plane, the points with positive imaginary part; the corners land on −1 and 1. The Cayley map $C(w) = (w - i)/(w + i)$, a Möbius map (a fraction whose top and bottom are each a number times w plus a number: [Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)), then bends the half plane round into the disc, i to 0.
+The function sin z sends it onto the upper half plane, the points with positive imaginary part; the corners land on −1 and 1. The Cayley map $`C(w) = (w - i)/(w + i)`$, a Möbius map (a fraction whose top and bottom are each a number times w plus a number: [Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)), then bends the half plane round into the disc, i to 0.
 
 Riemann's theorem says such a map exists and counts them. The Schwarz-Christoffel formula writes it out for polygons, rebuilding sin z from the lane's two corners.
 
@@ -28,49 +28,57 @@ To scale: 30 units per unit length, 50 in the disc. sin z sends the corners to �
 
 ## The formula
 
-Notation first, in words. A region is **without holes**, or simply connected, when every loop in it shrinks to a point without leaving it. The unit disc is written $\mathbb{D}$. A bar is the conjugate, read "a-bar": $\bar a$ flips the sign of a's imaginary part.
+Notation first, in words. A region is **without holes**, or simply connected, when every loop in it shrinks to a point without leaving it. The unit disc is written $`\mathbb{D}`$. A bar is the conjugate, read "a-bar": $`\bar a`$ flips the sign of a's imaginary part.
 
-**The Riemann mapping theorem.** Let D be a region without holes, not the whole plane, and $z_0$ a point in it. Exactly one one-to-one holomorphic map $F$ of D onto $\mathbb{D}$ has
+**The Riemann mapping theorem.** Let D be a region without holes, not the whole plane, and $`z_0`$ a point in it. Exactly one one-to-one holomorphic map $`F`$ of D onto $`\mathbb{D}`$ has
 
-$$F(z_0) = 0, \qquad F'(z_0) \text{ real and positive.}$$
+```math
+F(z_0) = 0, \qquad F'(z_0) \text{ real and positive.}
+```
 
 **Read it aloud:** one conformal map sends the region onto the disc, the chosen point to the centre, its direction unturned.
 
 Every conformal map of the disc onto itself is a **Blaschke factor** times a turn:
 
-$$\varphi(u) = e^{i\theta}\,\frac{u - a}{1 - \bar a\,u}, \qquad \lvert a\rvert < 1.$$
+```math
+\varphi(u) = e^{i\theta}\,\frac{u - a}{1 - \bar a\,u}, \qquad \lvert a\rvert < 1.
+```
 
-**Read it aloud:** send the point a to the centre, divide so the rim stays on the rim, then turn by the angle $\theta$.
+**Read it aloud:** send the point a to the centre, divide so the rim stays on the rim, then turn by the angle $`\theta`$.
 
-So the disc's self-maps have three real parameters: two for a, one for $\theta$. $F(z_0) = 0$ fixes a; a positive $F'(z_0)$ fixes $\theta$.
+So the disc's self-maps have three real parameters: two for a, one for $`\theta`$. $`F(z_0) = 0`$ fixes a; a positive $`F'(z_0)`$ fixes $`\theta`$.
 
-**The Schwarz-Christoffel formula.** Take a polygon with interior angles $\alpha_1\pi, \dots, \alpha_n\pi$, its corners the images of real points $x_1 < \dots < x_n$. With complex constants $A$ (scale and turn) and $B$ (shift), a map of the upper half plane $H$ onto its inside is
+**The Schwarz-Christoffel formula.** Take a polygon with interior angles $`\alpha_1\pi, \dots, \alpha_n\pi`$, its corners the images of real points $`x_1 < \dots < x_n`$. With complex constants $`A`$ (scale and turn) and $`B`$ (shift), a map of the upper half plane $`H`$ onto its inside is
 
-$$f(w) = A \int_0^{w} (t - x_1)^{\alpha_1 - 1} \cdots (t - x_n)^{\alpha_n - 1}\, dt + B.$$
+```math
+f(w) = A \int_0^{w} (t - x_1)^{\alpha_1 - 1} \cdots (t - x_n)^{\alpha_n - 1}\, dt + B.
+```
 
 **Read it aloud:** each corner gives one factor, a power set by its angle; the integral traces the polygon.
 
-The half strip has right angles, $\alpha_k = 1/2$, at $x_k = \pm 1$; the top, where the walls meet at infinity, is the image of $w = \infty$ and needs no factor. The two factors multiply to $1/\sqrt{t^2 - 1}$, a constant times $1/\sqrt{1 - t^2}$; absorbing it, $A = 1$, $B = 0$:
+The half strip has right angles, $`\alpha_k = 1/2`$, at $`x_k = \pm 1`$; the top, where the walls meet at infinity, is the image of $`w = \infty`$ and needs no factor. The two factors multiply to $`1/\sqrt{t^2 - 1}`$, a constant times $`1/\sqrt{1 - t^2}`$; absorbing it, $`A = 1`$, $`B = 0`$:
 
-$$f(w) = \int_0^{w} \frac{dt}{\sqrt{1 - t^2}}, \qquad \sin f(w) = w.$$
+```math
+f(w) = \int_0^{w} \frac{dt}{\sqrt{1 - t^2}}, \qquad \sin f(w) = w.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$, $w$, $t$, $u$ | a point of the region; of the half plane; on the integral's path; of the disc | $w = 1 + i$ | — |
-| $S$, $H$, $\mathbb{D}$ | half strip; upper half plane; unit disc | width π | — |
-| $F$, $G$, $z_0$, $y_0$, $w_1$ | the normalised map; a second map; the point $F$ sends to 0, and its height; the point of $H$ that $G$ sends to 0 | $z_0 = 0.881374i$, $w_1 = 1 + 2i$ | — |
-| $C$ | the Cayley map $(w - i)/(w + i)$, half plane onto disc | i to 0 | — |
-| $a$, $\bar a$ | the point a disc map sends to 0; its conjugate | 0.2 + 0.4i | nearer the rim, larger stretch at a |
-| $\varphi$, $\psi$, $\theta$ | Blaschke factor times turn; any disc self-map; the turn | $\theta = -2.214297$ | — |
-| $x_k$, $\alpha_k$, $n$ | points that become corners; interior angle over π; corner count | ±1; 1/2; 2 | larger $\alpha_k$, wider corner |
-| $f$, $A$, $B$ | the Schwarz-Christoffel map; scale-and-turn; shift | the reverse of sin; 1; 0 | larger A, bigger polygon |
+| $`z`$, $`w`$, $`t`$, $`u`$ | a point of the region; of the half plane; on the integral's path; of the disc | $`w = 1 + i`$ | — |
+| $`S`$, $`H`$, $`\mathbb{D}`$ | half strip; upper half plane; unit disc | width π | — |
+| $`F`$, $`G`$, $`z_0`$, $`y_0`$, $`w_1`$ | the normalised map; a second map; the point $`F`$ sends to 0, and its height; the point of $`H`$ that $`G`$ sends to 0 | $`z_0 = 0.881374i`$, $`w_1 = 1 + 2i`$ | — |
+| $`C`$ | the Cayley map $`(w - i)/(w + i)`$, half plane onto disc | i to 0 | — |
+| $`a`$, $`\bar a`$ | the point a disc map sends to 0; its conjugate | 0.2 + 0.4i | nearer the rim, larger stretch at a |
+| $`\varphi`$, $`\psi`$, $`\theta`$ | Blaschke factor times turn; any disc self-map; the turn | $`\theta = -2.214297`$ | — |
+| $`x_k`$, $`\alpha_k`$, $`n`$ | points that become corners; interior angle over π; corner count | ±1; 1/2; 2 | larger $`\alpha_k`$, wider corner |
+| $`f`$, $`A`$, $`B`$ | the Schwarz-Christoffel map; scale-and-turn; shift | the reverse of sin; 1; 0 | larger A, bigger polygon |
 
 ### When it holds
 
 - **No holes.** In the ring 1 < |z| < 2 a loop round the hole cannot shrink; in the disc every loop can, and a map would carry the shrinking back.
 - **Not the whole plane.** A map of the plane into the disc is bounded and holomorphic everywhere, so constant by Liouville ([Liouville's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md)).
-- **Both normalising conditions.** Drop "real and positive" and every turn of $F$ qualifies.
-- **Schwarz-Christoffel.** Straight edges; three corner points $x_k$ are free, the rest solved numerically.
+- **Both normalising conditions.** Drop "real and positive" and every turn of $`F`$ qualifies.
+- **Schwarz-Christoffel.** Straight edges; three corner points $`x_k`$ are free, the rest solved numerically.
 
 ---
 
@@ -78,11 +86,11 @@ $$f(w) = \int_0^{w} \frac{dt}{\sqrt{1 - t^2}}, \qquad \sin f(w) = w.$$
 
 ### Step 0: maps compose, so only the disc's own maps need listing
 
-If $F$ and $G$ both carry D onto the disc, $G$ after the reverse of $F$ carries the disc onto itself: uniqueness is a question about the disc alone.
+If $`F`$ and $`G`$ both carry D onto the disc, $`G`$ after the reverse of $`F`$ carries the disc onto itself: uniqueness is a question about the disc alone.
 
 ### Step 1: a Blaschke factor keeps the rim on the rim
 
-On the rim $\lvert u\rvert = 1$, so $\lvert 1 - \bar a u\rvert = \lvert \bar u - \bar a\rvert = \lvert u - a\rvert$: top and bottom are equal in size. Inside, the maximum modulus principle (the size of a holomorphic function has no peak inside a region, only on its edge: [The maximum modulus principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md)) keeps the modulus below 1. It sends a to 0; the factor built on −a undoes it.
+On the rim $`\lvert u\rvert = 1`$, so $`\lvert 1 - \bar a u\rvert = \lvert \bar u - \bar a\rvert = \lvert u - a\rvert`$: top and bottom are equal in size. Inside, the maximum modulus principle (the size of a holomorphic function has no peak inside a region, only on its edge: [The maximum modulus principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md)) keeps the modulus below 1. It sends a to 0; the factor built on −a undoes it.
 
 ### Step 2: every self-map of the disc is a Blaschke factor times a turn
 
@@ -91,39 +99,39 @@ Undo a self-map's choice of centre with a Blaschke factor; what is left fixes 0,
 <details>
 <summary>Detailed proof: the disc's self-maps</summary>
 
-Let $\psi$ map $\mathbb{D}$ conformally onto itself with $\psi(a) = 0$. Write $\varphi_a(u) = (u - a)/(1 - \bar a u)$, whose reverse is $\varphi_{-a}$. Then $s = \psi \circ \varphi_{-a}$ maps the disc onto itself with $s(0) = 0$.
+Let $`\psi`$ map $`\mathbb{D}`$ conformally onto itself with $`\psi(a) = 0`$. Write $`\varphi_a(u) = (u - a)/(1 - \bar a u)`$, whose reverse is $`\varphi_{-a}`$. Then $`s = \psi \circ \varphi_{-a}`$ maps the disc onto itself with $`s(0) = 0`$.
 
-The Schwarz lemma (folded on the maximum-modulus card) gives $\lvert s(u)\rvert \le \lvert u\rvert$. The reverse of s also fixes 0, so $\lvert u\rvert \le \lvert s(u)\rvert$. Equality everywhere is the lemma's equality case: $s(u) = e^{i\theta}u$, so $\psi = e^{i\theta}\varphi_a$.
+The Schwarz lemma (folded on the maximum-modulus card) gives $`\lvert s(u)\rvert \le \lvert u\rvert`$. The reverse of s also fixes 0, so $`\lvert u\rvert \le \lvert s(u)\rvert`$. Equality everywhere is the lemma's equality case: $`s(u) = e^{i\theta}u`$, so $`\psi = e^{i\theta}\varphi_a`$.
 
 </details>
 
 ### Step 3: uniqueness spends the three parameters
 
-If $F$ and $G$ both send $z_0$ to 0, Step 2 gives $G = e^{i\theta}F$; positive derivatives force $e^{i\theta} = 1$.
+If $`F`$ and $`G`$ both send $`z_0`$ to 0, Step 2 gives $`G = e^{i\theta}F`$; positive derivatives force $`e^{i\theta} = 1`$.
 
-With a moved centre, $G = (\sin z - w_1)/(\sin z - \bar w_1)$, $w_1 = 1 + 2i$, also maps the half strip onto the disc. At five test points it equals the Blaschke factor with a = 0.2 + 0.4i after $F$, turned by $\theta = -2.214297$.
+With a moved centre, $`G = (\sin z - w_1)/(\sin z - \bar w_1)`$, $`w_1 = 1 + 2i`$, also maps the half strip onto the disc. At five test points it equals the Blaschke factor with a = 0.2 + 0.4i after $`F`$, turned by $`\theta = -2.214297`$.
 
 ### Step 4: existence, the shape of the proof
 
-1. **Squeeze D into the disc.** D misses a point p; with no holes, $\sqrt{z - p}$ is holomorphic on D. It never takes both q and −q, so its image misses a small disc, and a Möbius map moves it inside $\mathbb{D}$.
-2. **Take the most stretching map.** Among one-to-one maps into $\mathbb{D}$ sending $z_0$ to 0, Montel's theorem (bounded holomorphic families have convergent subsequences) gives one with largest $\lvert F'(z_0)\rvert$, still one-to-one.
-3. **It fills the disc.** If it missed a point, two Blaschke factors round a square root would stretch more at $z_0$.
+1. **Squeeze D into the disc.** D misses a point p; with no holes, $`\sqrt{z - p}`$ is holomorphic on D. It never takes both q and −q, so its image misses a small disc, and a Möbius map moves it inside $`\mathbb{D}`$.
+2. **Take the most stretching map.** Among one-to-one maps into $`\mathbb{D}`$ sending $`z_0`$ to 0, Montel's theorem (bounded holomorphic families have convergent subsequences) gives one with largest $`\lvert F'(z_0)\rvert`$, still one-to-one.
+3. **It fills the disc.** If it missed a point, two Blaschke factors round a square root would stretch more at $`z_0`$.
 
 ### Step 5: why sin z maps the half strip onto the half plane
 
-$\sin(x + iy) = \sin x \cosh y + i \cos x \sinh y$, where $\cosh y = (e^y + e^{-y})/2$ and $\sinh y = (e^y - e^{-y})/2$. Inside S, $\cos x > 0$ and $\sinh y > 0$, so the image lies in $H$: $\sin(0.5 + 0.5i) = 0.540613 + 0.457304i$. The floor goes to $\sin x$, from −1 to 1; the right wall to $\cosh y$, from 1 up (1.543081 at height 1); the left wall to the mirror image.
+$`\sin(x + iy) = \sin x \cosh y + i \cos x \sinh y`$, where $`\cosh y = (e^y + e^{-y})/2`$ and $`\sinh y = (e^y - e^{-y})/2`$. Inside S, $`\cos x > 0`$ and $`\sinh y > 0`$, so the image lies in $`H`$: $`\sin(0.5 + 0.5i) = 0.540613 + 0.457304i`$. The floor goes to $`\sin x`$, from −1 to 1; the right wall to $`\cosh y`$, from 1 up (1.543081 at height 1); the left wall to the mirror image.
 
-Points with equal sines differ by a multiple of 2π or add to an odd multiple of π; no such pair lies in S, so sin is one-to-one there. Step 6 builds the reverse for every point of $H$: it is onto.
+Points with equal sines differ by a multiple of 2π or add to an odd multiple of π; no such pair lies in S, so sin is one-to-one there. Step 6 builds the reverse for every point of $`H`$: it is onto.
 
 ### Step 6: Schwarz-Christoffel rebuilds the same map
 
-Walk t along the real axis. Between −1 and 1, $f'$ is positive: $f$ runs right, along the floor. Past 1, the root of $1 - t^2$ is imaginary and $f$ runs straight up a wall. Each factor turns the direction by $(1 - \alpha_k)\pi$ at its corner and nowhere else.
+Walk t along the real axis. Between −1 and 1, $`f'`$ is positive: $`f`$ runs right, along the floor. Past 1, the root of $`1 - t^2`$ is imaginary and $`f`$ runs straight up a wall. Each factor turns the direction by $`(1 - \alpha_k)\pi`$ at its corner and nowhere else.
 
-The corner is $f(1) = \int_0^1 dt/\sqrt{1 - t^2}$. Put $t = 1 - u^2$ to remove the blow-up at 1: the integrand becomes $2/\sqrt{2 - u^2}$. Simpson's rule (a weighted sum of equally spaced samples, exact for parabolas) gives 1.570796 = π/2, with errors 0.000683695, 0.000056456, 0.000003907 on 4, 8, 16 steps.
+The corner is $`f(1) = \int_0^1 dt/\sqrt{1 - t^2}`$. Put $`t = 1 - u^2`$ to remove the blow-up at 1: the integrand becomes $`2/\sqrt{2 - u^2}`$. Simpson's rule (a weighted sum of equally spaced samples, exact for parabolas) gives 1.570796 = π/2, with errors 0.000683695, 0.000056456, 0.000003907 on 4, 8, 16 steps.
 
-Also $f(i) = 0.881374i = z_0$, matching $\log(1 + \sqrt 2) = 0.881374$; and $f(1 + i) = 0.666239 + 1.061275i$, whose sine is $1 + i$.
+Also $`f(i) = 0.881374i = z_0`$, matching $`\log(1 + \sqrt 2) = 0.881374`$; and $`f(1 + i) = 0.666239 + 1.061275i`$, whose sine is $`1 + i`$.
 
-So $f$ reverses sin, and $F = i\,C(\sin z)$ is the half strip's Riemann map.
+So $`f`$ reverses sin, and $`F = i\,C(\sin z)`$ is the half strip's Riemann map.
 
 ---
 
@@ -131,25 +139,25 @@ So $f$ reverses sin, and $F = i\,C(\sin z)$ is the half strip's Riemann map.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| corners | $\sin(\pm\pi/2)$ | ±1 |
-| right wall at height 1 | $\cosh 1$ | 1.543081 |
-| the point sent to i | $\sinh y_0 = 1$, $y_0 = \log(1 + \sqrt 2)$ | $z_0 = 0.881374i$ |
-| on to the disc | $F(z_0) = i\,C(i)$ | **0** |
-| Cayley stretch at i | $C'(w) = 2i/(w + i)^2$ at i | −0.5i |
-| sin stretch at $z_0$ | $\cos(iy_0) = \cosh y_0 = \sqrt 2$ | 1.414214 |
-| stretch of $F$ | $i \times (-0.5i) \times \sqrt 2$ | **0.707107** |
-| Schwarz-Christoffel corner | $\int_0^1 dt/\sqrt{1 - t^2}$ | **1.570796** |
+| corners | $`\sin(\pm\pi/2)`$ | ±1 |
+| right wall at height 1 | $`\cosh 1`$ | 1.543081 |
+| the point sent to i | $`\sinh y_0 = 1`$, $`y_0 = \log(1 + \sqrt 2)`$ | $`z_0 = 0.881374i`$ |
+| on to the disc | $`F(z_0) = i\,C(i)`$ | **0** |
+| Cayley stretch at i | $`C'(w) = 2i/(w + i)^2`$ at i | −0.5i |
+| sin stretch at $`z_0`$ | $`\cos(iy_0) = \cosh y_0 = \sqrt 2`$ | 1.414214 |
+| stretch of $`F`$ | $`i \times (-0.5i) \times \sqrt 2`$ | **0.707107** |
+| Schwarz-Christoffel corner | $`\int_0^1 dt/\sqrt{1 - t^2}`$ | **1.570796** |
 
-The factor i turns the stretch at $z_0$ positive: $F$ is the promised map.
+The factor i turns the stretch at $`z_0`$ positive: $`F`$ is the promised map.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Whole plane, as a growing disc of radius R | best stretch 1/R: 0.100000, 0.010000, 0.001000 | Only constants map the plane into the disc |
-| Strip twice as wide | $\sin(2.5 + i) = 0.923491 - 0.941505i$ | sin is not one-to-one there ($\sin(\pi - z) = \sin z$) and leaves the half plane |
-| No condition on direction | derivative −0.707107i at $z_0$ | Every turn of $F$ also works |
-| Exponent $+1/2$ for $-1/2$ | corner at 0.785398, not 1.570796 | The power is $\alpha_k - 1$ |
+| Strip twice as wide | $`\sin(2.5 + i) = 0.923491 - 0.941505i`$ | sin is not one-to-one there ($`\sin(\pi - z) = \sin z`$) and leaves the half plane |
+| No condition on direction | derivative −0.707107i at $`z_0`$ | Every turn of $`F`$ also works |
+| Exponent $`+1/2`$ for $`-1/2`$ | corner at 0.785398, not 1.570796 | The power is $`\alpha_k - 1`$ |
 
 The code prints all four.
 
@@ -157,7 +165,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to one map: sin z in closed form, and the Schwarz-Christoffel integral by Simpson's rule, its square root built from the modulus and atan2. They must agree on the corners, the centre point and 1 + i; then $G$ is tested against a turned Blaschke factor after $F$.
+Two roads to one map: sin z in closed form, and the Schwarz-Christoffel integral by Simpson's rule, its square root built from the modulus and atan2. They must agree on the corners, the centre point and 1 + i; then $`G`$ is tested against a turned Blaschke factor after $`F`$.
 
 ### Python
 
@@ -356,10 +364,10 @@ The two outputs match line for line.
 
 Lean proves the theorem for every region without holes, the rule for every disc self-map, and the sin step, plus the hand arithmetic.
 
-- Let D be a region without holes, not the whole plane, and $z_0$ a point in it. Exactly one one-to-one holomorphic map $F$ of D onto $\mathbb{D}$ has $F(z_0) = 0$ and $F'(z_0)$ real and positive.
-- The one-to-one holomorphic maps of the disc onto itself are exactly the Blaschke factors times turns, with $\lvert a\rvert < 1$.
+- Let D be a region without holes, not the whole plane, and $`z_0`$ a point in it. Exactly one one-to-one holomorphic map $`F`$ of D onto $`\mathbb{D}`$ has $`F(z_0) = 0`$ and $`F'(z_0)`$ real and positive.
+- The one-to-one holomorphic maps of the disc onto itself are exactly the Blaschke factors times turns, with $`\lvert a\rvert < 1`$.
 - sin z sends the half strip of width π one-to-one onto the upper half plane.
-- The hand arithmetic holds exactly. It covers $\sin(\pm\pi/2) = \pm 1$ and $F(z_0) = i\,C(i) = 0$. It also covers the Cayley stretch −0.5i, a = 0.2 + 0.4i and the stretch $\sqrt 2/2$.
+- The hand arithmetic holds exactly. It covers $`\sin(\pm\pi/2) = \pm 1`$ and $`F(z_0) = i\,C(i) = 0`$. It also covers the Cayley stretch −0.5i, a = 0.2 + 0.4i and the stretch $`\sqrt 2/2`$.
 
 The Schwarz-Christoffel integral, Simpson's rule, the decimals, the second map's turn, the breaks and the figure are left to the Python and Rust checks.
 
@@ -1953,7 +1961,7 @@ example : I * (-I / 2) * (Real.sqrt 2 : ℂ) = (Real.sqrt 2 : ℂ) / 2 := by
 
 - [The Poisson formula](06-poisson-integral-formula.md): the disc's formula now solves boundary problems on any such region.
 
-Left open: placing the $x_k$ for four or more corners, a numerical problem (Driscoll and Trefethen).
+Left open: placing the $`x_k`$ for four or more corners, a numerical problem (Driscoll and Trefethen).
 
 ---
 

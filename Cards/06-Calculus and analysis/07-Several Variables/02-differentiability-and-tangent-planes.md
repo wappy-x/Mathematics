@@ -34,43 +34,49 @@ Orange: the hill's height along the path. Green: the tangent plane's height alon
 
 ## The formula
 
-Notation first, in words. A point on the map is written $(x, y)$: $x$ metres east and $y$ metres north of the peg. The hill's height there is $f(x, y)$. The slope east is written $f_x$, short for the partial derivative $\partial f/\partial x$; the slope north is $f_y$. The surveyor's point is $(a, b)$ = (100, 50). A step from there is $h$ metres east and $k$ metres north; its length on the map is $\rho$ (rho), by Pythagoras $\rho = \sqrt{h^2 + k^2}$.
+Notation first, in words. A point on the map is written $`(x, y)`$: $`x`$ metres east and $`y`$ metres north of the peg. The hill's height there is $`f(x, y)`$. The slope east is written $`f_x`$, short for the partial derivative $`\partial f/\partial x`$; the slope north is $`f_y`$. The surveyor's point is $`(a, b)`$ = (100, 50). A step from there is $`h`$ metres east and $`k`$ metres north; its length on the map is $`\rho`$ (rho), by Pythagoras $`\rho = \sqrt{h^2 + k^2}`$.
 
-The tangent plane at $(a, b)$ is the flat surface of heights
+The tangent plane at $`(a, b)`$ is the flat surface of heights
 
-$$z = f(a,b) + f_x(a,b)\,(x - a) + f_y(a,b)\,(y - b)$$
+```math
+z = f(a,b) + f_x(a,b)\,(x - a) + f_y(a,b)\,(y - b)
+```
 
 **Read it aloud:** start at the height here, then add the east slope times the distance east and the north slope times the distance north.
 
-The **remainder** $R$ is the true height minus the plane's height, after a step $(h, k)$:
+The **remainder** $`R`$ is the true height minus the plane's height, after a step $`(h, k)`$:
 
-$$R(h,k) = f(a+h,\, b+k) - \big[f(a,b) + f_x(a,b)\,h + f_y(a,b)\,k\big]$$
+```math
+R(h,k) = f(a+h,\, b+k) - \big[f(a,b) + f_x(a,b)\,h + f_y(a,b)\,k\big]
+```
 
-The definition. The hill is **differentiable** at $(a, b)$ when
+The definition. The hill is **differentiable** at $`(a, b)`$ when
 
-$$\frac{R(h,k)}{\rho} \to 0 \quad \text{as } \rho \to 0, \text{ from every direction at once}$$
+```math
+\frac{R(h,k)}{\rho} \to 0 \quad \text{as } \rho \to 0, \text{ from every direction at once}
+```
 
 **Read it aloud:** the plane's error, measured per metre of step, heads for zero however the step shrinks.
 
 "Every direction at once" is the honest part: for any tolerance, one radius must serve every step inside it, east, north or slanting.
 
-The arrow $(-f_x, -f_y, 1)$, here (0.225, 0.250, 1), stands straight out of the plane, its **normal**. Every arrow lying in the plane has zero dot product with it ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
+The arrow $`(-f_x, -f_y, 1)`$, here (0.225, 0.250, 1), stands straight out of the plane, its **normal**. Every arrow lying in the plane has zero dot product with it ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $z$ | height of the hill; height of the plane | 62.5 m at the surveyor | — |
-| $x$, $y$ | metres east and north of the peg | any nearby point | — |
-| $a$, $b$ | the point where the plane touches | 100 m, 50 m | new point, new plane |
-| $h$, $k$ | a step east and north from there | 10 m, 20 m | remainder grows as step squared |
-| $f_x$, $f_y$ | slope east and slope north, metres of height per metre walked | −0.225, −0.25 | plane tilts more steeply |
-| $\rho$ | length of the step on the map | 22.360680 m | error per metre grows |
-| $R$ | true height minus plane height | −1.0 m at that step | — |
-| $g$, $t$ | a creased surface that fails the test; its distance along the diagonal | $g = xy/\sqrt{x^2+y^2}$ | ratio stays 0.5 |
+| $`f`$, $`z`$ | height of the hill; height of the plane | 62.5 m at the surveyor | — |
+| $`x`$, $`y`$ | metres east and north of the peg | any nearby point | — |
+| $`a`$, $`b`$ | the point where the plane touches | 100 m, 50 m | new point, new plane |
+| $`h`$, $`k`$ | a step east and north from there | 10 m, 20 m | remainder grows as step squared |
+| $`f_x`$, $`f_y`$ | slope east and slope north, metres of height per metre walked | −0.225, −0.25 | plane tilts more steeply |
+| $`\rho`$ | length of the step on the map | 22.360680 m | error per metre grows |
+| $`R`$ | true height minus plane height | −1.0 m at that step | — |
+| $`g`$, $`t`$ | a creased surface that fails the test; its distance along the diagonal | $`g = xy/\sqrt{x^2+y^2}`$ | ratio stays 0.5 |
 
 ### When it holds
 
 - **Slopes exist near the point.** The proof walks short lines beside it.
-- **Slopes are continuous at the point** (nearby slopes are close to these). Drop this and the crease $g$ below has both slopes zero and no tangent plane.
+- **Slopes are continuous at the point** (nearby slopes are close to these). Drop this and the crease $`g`$ below has both slopes zero and no tangent plane.
 - **The point is inside the region.** At a cliff edge, outward steps are not allowed.
 - **The test is enough, not required.** Some surfaces with jumpy slopes are still differentiable.
 
@@ -84,17 +90,17 @@ On a continuous surface the error shrinks with the step whatever the tilt. Divid
 
 ### Step 1: if a plane works, its slopes are the partial derivatives
 
-Suppose some plane $f(a,b) + Ah + Bk$ passes the test. Step due east, so $k = 0$: the ratio says the east difference quotient minus A heads for zero, so A is the east slope. Stepping north makes B the north slope. The two slopes name the only candidate.
+Suppose some plane $`f(a,b) + Ah + Bk`$ passes the test. Step due east, so $`k = 0`$: the ratio says the east difference quotient minus A heads for zero, so A is the east slope. Stepping north makes B the north slope. The two slopes name the only candidate.
 
 A differentiable surface is also continuous: its height change is the plane's change plus the remainder, and both shrink with the step.
 
 ### Step 2: continuous slopes guarantee the plane
 
-Walk from $(a, b)$ to $(a+h, b+k)$ in two legs, east then north. Each leg moves one coordinate, a one-variable problem. The [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) says each leg's height change is its length times the slope at some point along it.
+Walk from $`(a, b)`$ to $`(a+h, b+k)`$ in two legs, east then north. Each leg moves one coordinate, a one-variable problem. The [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) says each leg's height change is its length times the slope at some point along it.
 
 On the hill, walking to (110, 70): the east leg changes the height by −2.35 m, which is 10 × −0.235, the east slope at (105, 50). The north leg by −5.9 m, 20 × −0.295, the north slope at (110, 60). Together, −8.25 m: exactly 62.5 m down to 54.25 m.
 
-The leg slopes are taken near $(a, b)$, not at it. If slopes are continuous, they differ from $f_x$ and $f_y$ by amounts that shrink with the step. The remainder is those differences times $h$ and $k$, so per metre it heads for zero.
+The leg slopes are taken near $`(a, b)`$, not at it. If slopes are continuous, they differ from $`f_x`$ and $`f_y`$ by amounts that shrink with the step. The remainder is those differences times $`h`$ and $`k`$, so per metre it heads for zero.
 
 <details>
 <summary>Detailed proof: continuous partial derivatives imply differentiable</summary>
@@ -107,21 +113,23 @@ So R = h·α + k·β, with α = f_x(ξ, b) − f_x(a, b) and β = f_y(a+h, η) �
 
 ### Step 3: the hill passes, with numbers
 
-The hill's height is $f(x,y) = 80 - 0.001x^2 - 0.0005xy - 0.002y^2$ metres. Its slopes, $-0.002x - 0.0005y$ east and $-0.0005x - 0.004y$ north, are continuous everywhere, so Step 2 applies. Expanding the height at $(100+h, 50+k)$ gives the remainder exactly:
+The hill's height is $`f(x,y) = 80 - 0.001x^2 - 0.0005xy - 0.002y^2`$ metres. Its slopes, $`-0.002x - 0.0005y`$ east and $`-0.0005x - 0.004y`$ north, are continuous everywhere, so Step 2 applies. Expanding the height at $`(100+h, 50+k)`$ gives the remainder exactly:
 
-$$R(h,k) = -\left(0.001h^2 + 0.0005hk + 0.002k^2\right)$$
+```math
+R(h,k) = -\left(0.001h^2 + 0.0005hk + 0.002k^2\right)
+```
 
-Since $0.001h^2 + 0.002k^2$ is at most $0.002\rho^2$, and twice $|hk|$ is at most $h^2 + k^2 = \rho^2$, the size of $R$ is at most 0.00225 times $\rho^2$. So the error per metre is at most 0.00225 times $\rho$.
+Since $`0.001h^2 + 0.002k^2`$ is at most $`0.002\rho^2`$, and twice $`|hk|`$ is at most $`h^2 + k^2 = \rho^2`$, the size of $`R`$ is at most 0.00225 times $`\rho^2`$. So the error per metre is at most 0.00225 times $`\rho`$.
 
 The tolerance game, with numbers: to keep the error below a thousandth of the step in every direction, any step up to 0.44 m works, where the bound gives 0.000990. A scan of 360 directions there finds the worst ratio at 0.000906. Along the surveyor's path, a tenfold shorter step gives a tenfold smaller ratio: −0.044721, −0.004472, −0.000447.
 
 ### Step 4: a crease the slopes cannot see
 
-Take the surface $g(x, y) = xy/\sqrt{x^2 + y^2}$, with height 0 at the origin. It is a cone with its tip at the origin. Every line through the tip is straight on it, rising over two quarters of the map and falling over the other two. The east and north lines lie flat at height 0, so both slopes at the origin are 0 and the only candidate plane is $z = 0$.
+Take the surface $`g(x, y) = xy/\sqrt{x^2 + y^2}`$, with height 0 at the origin. It is a cone with its tip at the origin. Every line through the tip is straight on it, rising over two quarters of the map and falling over the other two. The east and north lines lie flat at height 0, so both slopes at the origin are 0 and the only candidate plane is $`z = 0`$.
 
-Walk out along the diagonal to the point $(t, t)$. The height is $|t|/\sqrt{2}$ and the step length is $\sqrt{2}\,|t|$, so the ratio is 0.5 however small $t$ is. At $t$ = 0.01 the height is 0.007071 m over a step of 0.014142 m.
+Walk out along the diagonal to the point $`(t, t)`$. The height is $`|t|/\sqrt{2}`$ and the step length is $`\sqrt{2}\,|t|`$, so the ratio is 0.5 however small $`t`$ is. At $`t`$ = 0.01 the height is 0.007071 m over a step of 0.014142 m.
 
-No tangent plane exists, though both slopes do and the surface is continuous (twice $|xy|$ is at most $x^2 + y^2$, so the height is at most half the step). The broken hypothesis: the east slope is 0.353553 at every diagonal point $(t, t)$ but 0 at the origin, so it is not continuous there.
+No tangent plane exists, though both slopes do and the surface is continuous (twice $`|xy|`$ is at most $`x^2 + y^2`$, so the height is at most half the step). The broken hypothesis: the east slope is 0.353553 at every diagonal point $`(t, t)`$ but 0 at the origin, so it is not continuous there.
 
 In one variable the same test is the tangent line of [Linear approximation](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md), where one slope is enough.
 
@@ -147,8 +155,8 @@ A walk of about 22 m leaves the board 1 m above the grass; at a tenth of the wal
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Treating the plane as exact a step away | 55.25 m, against a true 54.25 m | The remainder is −1.0 m |
-| Plane from zero slopes on the crease $g$ | $z = 0$ misses 0.007071 m over a 0.014142 m step | Continuity of the slopes was dropped |
-| Dropping the shift by $a$ and $b$ | 20.25 m at (110, 70) | Slopes multiply distance from the point, not from the peg |
+| Plane from zero slopes on the crease $`g`$ | $`z = 0`$ misses 0.007071 m over a 0.014142 m step | Continuity of the slopes was dropped |
+| Dropping the shift by $`a`$ and $`b`$ | 20.25 m at (110, 70) | Slopes multiply distance from the point, not from the peg |
 
 The code prints all three.
 
@@ -328,8 +336,8 @@ ALL CHECKS PASS
 Lean proves the card's three facts for every surface, and checks the hill's hand arithmetic exactly.
 
 - If both slopes exist near a point and are continuous there, the plane built from them passes the test. Its error per metre of step heads for zero in every direction at once.
-- If any plane $f(a,b) + Ah + Bk$ passes the test, then A is the east slope and B the north slope.
-- The crease $g$ is continuous and has both slopes 0 at the origin, yet no plane there passes the test.
+- If any plane $`f(a,b) + Ah + Bk`$ passes the test, then A is the east slope and B the north slope.
+- The crease $`g`$ is continuous and has both slopes 0 at the origin, yet no plane there passes the test.
 - The hand arithmetic holds exactly: height, slopes, plane and hill at (110, 70), the remainder, the two legs and the 20.25 m mistake.
 
 The difference quotients, the chart, the path ratios, the 360-direction scan and the crease's diagonal numbers are left to the Python and Rust checks.
@@ -598,9 +606,9 @@ example : (125 : ℚ) / 2 - 225 / 1000 * 110 - 1 / 4 * 70 = 2025 / 100 := by nor
 ## The usual mistake
 
 > [!warning]
-> **Two slopes, therefore a plane.** The slopes are checked on two lines only. The crease $g$ has both slopes 0 at the origin, yet along the diagonal $z = 0$ misses by half the step. The slopes name the only possible plane; the ratio test, or continuous slopes, proves it works.
+> **Two slopes, therefore a plane.** The slopes are checked on two lines only. The crease $`g`$ has both slopes 0 at the origin, yet along the diagonal $`z = 0`$ misses by half the step. The slopes name the only possible plane; the ratio test, or continuous slopes, proves it works.
 >
-> - **Error to zero is not enough.** The crease's error is 0.000707 m at $t$ = 0.001, yet 0.5 per metre of step.
+> - **Error to zero is not enough.** The crease's error is 0.000707 m at $`t`$ = 0.001, yet 0.5 per metre of step.
 > - **Forgetting to shift.** 62.5 − 0.225x − 0.25y measures from the peg, not the surveyor: 20.25 m at (110, 70).
 
 ---

@@ -36,36 +36,44 @@ Orange: after 100 s, peak 0.282 µg per cm. Teal: after 400 s, peak 0.141. Both 
 
 ## The formula
 
-Notation first, in words. $u(x, t)$ is the dye per cm at $x$ cm from the drop, $t$ seconds after it. Subscripts are rates ([A partial differential equation](01-what-a-pde-says.md)): $u_t$ the change per second, $u_{xx}$ the curvature along the tube. The heat equation ([The heat equation](03-the-heat-equation.md)) is $u_t = \kappa u_{xx}$, with a start $u(x, 0) = f(x)$.
+Notation first, in words. $`u(x, t)`$ is the dye per cm at $`x`$ cm from the drop, $`t`$ seconds after it. Subscripts are rates ([A partial differential equation](01-what-a-pde-says.md)): $`u_t`$ the change per second, $`u_{xx}`$ the curvature along the tube. The heat equation ([The heat equation](03-the-heat-equation.md)) is $`u_t = \kappa u_{xx}`$, with a start $`u(x, 0) = f(x)`$.
 
-$$G(x, t) = \frac{1}{\sqrt{4\pi\kappa t}}\; e^{-x^2/(4\kappa t)}$$
+```math
+G(x, t) = \frac{1}{\sqrt{4\pi\kappa t}}\; e^{-x^2/(4\kappa t)}
+```
 
 **Read it aloud:** the dye per cm at distance x is e to the minus x squared over 4 kappa t, divided by the root of 4 pi kappa t so the total stays 1.
 
-$$u(x, t) = \int_{-\infty}^{\infty} G(x - y, t)\, f(y)\, dy$$
+```math
+u(x, t) = \int_{-\infty}^{\infty} G(x - y, t)\, f(y)\, dy
+```
 
 **Read it aloud:** each starting point y sends out a bell sized by its dye; the dye at x sums those bells.
 
 That integral is a convolution ([Convolution](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md)), with G as the impulse response. The width, the root of the average squared distance from the centre, is
 
-$$\sigma = \sqrt{2\kappa t}, \qquad G = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-x^2/(2\sigma^2)}.$$
+```math
+\sigma = \sqrt{2\kappa t}, \qquad G = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-x^2/(2\sigma^2)}.
+```
 
 The step start (strength 1 left of 0, clear water right) gives
 
-$$u(x, t) = \tfrac12\Big(1 - \mathrm{erf}\big(\tfrac{x}{2\sqrt{\kappa t}}\big)\Big), \qquad \mathrm{erf}(z) = \frac{2}{\sqrt{\pi}}\int_0^z e^{-s^2}\, ds,$$
+```math
+u(x, t) = \tfrac12\Big(1 - \mathrm{erf}\big(\tfrac{x}{2\sqrt{\kappa t}}\big)\Big), \qquad \mathrm{erf}(z) = \frac{2}{\sqrt{\pi}}\int_0^z e^{-s^2}\, ds,
+```
 
 where s is only the integral's running variable.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $f$, $u_t$, $u_{xx}$ | dye per cm at place and time; $f$ the start; subscripts are rates | 0.2197 at 1 cm, 100 s | — |
-| $x$, $y$ | distance along the tube, in cm; $y$ a starting point | x = 1 | the bell's value falls |
-| $t$ | time since the start, in s | 100 and 400 | wider, lower bell |
-| $\kappa$ | diffusivity: the spreading rate, in cm^2/s | 0.01 | faster spreading |
-| $G$, $F$ | the heat kernel; $F$ its fixed shape before stretching | peak 0.2821 at 100 s | — |
-| $\sigma$ | the bell's width, in cm | 1.4142 at 100 s | lower, flatter bell |
-| $z$, erf | scaled distance x/√(κt); the error function, fed z/2 for the step start | z = 1 at x = 1 cm, 100 s | — |
-| $a$, $\tau$ | cell width and tick of the halving walk | 0.1 cm, 0.5 s | — |
+| $`u`$, $`f`$, $`u_t`$, $`u_{xx}`$ | dye per cm at place and time; $`f`$ the start; subscripts are rates | 0.2197 at 1 cm, 100 s | — |
+| $`x`$, $`y`$ | distance along the tube, in cm; $`y`$ a starting point | x = 1 | the bell's value falls |
+| $`t`$ | time since the start, in s | 100 and 400 | wider, lower bell |
+| $`\kappa`$ | diffusivity: the spreading rate, in cm^2/s | 0.01 | faster spreading |
+| $`G`$, $`F`$ | the heat kernel; $`F`$ its fixed shape before stretching | peak 0.2821 at 100 s | — |
+| $`\sigma`$ | the bell's width, in cm | 1.4142 at 100 s | lower, flatter bell |
+| $`z`$, erf | scaled distance x/√(κt); the error function, fed z/2 for the step start | z = 1 at x = 1 cm, 100 s | — |
+| $`a`$, $`\tau`$ | cell width and tick of the halving walk | 0.1 cm, 0.5 s | — |
 
 ### When it holds
 
@@ -84,7 +92,7 @@ The heat equation is linear, so solutions add, and sliding along the tube change
 
 ### Step 1: the shape keeps its form, only stretched
 
-If u(x, t) solves $u_t = \kappa u_{xx}$, so does u(Lx, L^2 t) for any stretch L: both sides gain L^2. A point has no length of its own, so its spread depends on x and t only through z = x/√(κt), the **similarity variable**. Keeping 1 µg in total makes the height fall as the width grows:
+If u(x, t) solves $`u_t = \kappa u_{xx}`$, so does u(Lx, L^2 t) for any stretch L: both sides gain L^2. A point has no length of its own, so its spread depends on x and t only through z = x/√(κt), the **similarity variable**. Keeping 1 µg in total makes the height fall as the width grows:
 
 G(x, t) = F(z) / √(κt), with z = x / √(κt).
 
@@ -364,9 +372,9 @@ The outputs match line for line.
 
 Lean proves the card's main facts for every κ > 0, every t > 0 and every bounded, continuous start.
 
-- Take κ > 0 and t > 0. Then G obeys $u_t = \kappa u_{xx}$, its total is 1, and its average squared distance is 2κt. So its width is √(2κt).
-- Take κ > 0 and a start f that is bounded and continuous. Then at every t > 0, the blend's curvature $u_{xx}$ exists and is continuous, and $u_t = \kappa u_{xx}$ everywhere. As t shrinks to 0, the blend at each x tends to the start f(x).
-- Take the step start, strength 1 left of 0, with κ > 0 and t > 0. Then the blend at x is $\tfrac12(1 - \mathrm{erf}(x/(2\sqrt{\kappa t})))$. At the old edge x = 0, it is exactly 1/2.
+- Take κ > 0 and t > 0. Then G obeys $`u_t = \kappa u_{xx}`$, its total is 1, and its average squared distance is 2κt. So its width is √(2κt).
+- Take κ > 0 and a start f that is bounded and continuous. Then at every t > 0, the blend's curvature $`u_{xx}`$ exists and is continuous, and $`u_t = \kappa u_{xx}`$ everywhere. As t shrinks to 0, the blend at each x tends to the start f(x).
+- Take the step start, strength 1 left of 0, with κ > 0 and t > 0. Then the blend at x is $`\tfrac12(1 - \mathrm{erf}(x/(2\sqrt{\kappa t})))`$. At the old edge x = 0, it is exactly 1/2.
 - The hand arithmetic holds exactly, with κ = 0.01: 4κt is 4 cm^2 at 100 s. The squared width 2κt is 2, 4 and 8 cm^2 at 100, 200 and 400 s. So four times the wait gives twice the width: √8 = 2√2.
 - The halving walk's numbers hold too. A tick is a^2/(2κ) = 0.5 s, and 200 ticks make 100 s and add 2 cm^2.
 

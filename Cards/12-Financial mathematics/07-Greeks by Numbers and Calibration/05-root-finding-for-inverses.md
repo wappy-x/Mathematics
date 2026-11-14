@@ -38,48 +38,58 @@ The climbing line is the price as the volatility runs from 5 to 40 percent. The 
 
 ## The formula
 
-Notation first, in words. A **residual** is what you have minus what you wanted: the model's price at the current guess, minus the price on the screen. Write $g$ for the model run forwards, $x$ for the input hunted, $y_*$ for the quoted number. The residual is a function of the guess alone:
+Notation first, in words. A **residual** is what you have minus what you wanted: the model's price at the current guess, minus the price on the screen. Write $`g`$ for the model run forwards, $`x`$ for the input hunted, $`y_*`$ for the quoted number. The residual is a function of the guess alone:
 
-$$f(x) = g(x) - y_*$$
+```math
+f(x) = g(x) - y_*
+```
 
 **Read it aloud:** the residual is the model's answer minus the number on the screen, and the input that drives it to zero is the answer.
 
-A **bracket** is a pair of guesses, a low end $\ell$ and a high end $u$, whose residuals have opposite signs: one prices too cheap, the other too dear. Bisection tests the middle, $m$, and keeps the half that still straddles zero:
+A **bracket** is a pair of guesses, a low end $`\ell`$ and a high end $`u`$, whose residuals have opposite signs: one prices too cheap, the other too dear. Bisection tests the middle, $`m`$, and keeps the half that still straddles zero:
 
-$$m = \frac{\ell + u}{2}$$
+```math
+m = \frac{\ell + u}{2}
+```
 
-Newton ignores the bracket and trusts the slope. From the guess $x_n$ it follows the tangent line of the residual down to the axis:
+Newton ignores the bracket and trusts the slope. From the guess $`x_n`$ it follows the tangent line of the residual down to the axis:
 
-$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+```math
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
+```
 
-The slope $f'$ is the model's own, since subtracting a fixed quote changes no slope. Here it is **vega**: the dollars the call gains per 1.00 of volatility. Where no formula for the slope exists, the last two points stand in — the **secant** step, a line through them instead of a tangent:
+The slope $`f'`$ is the model's own, since subtracting a fixed quote changes no slope. Here it is **vega**: the dollars the call gains per 1.00 of volatility. Where no formula for the slope exists, the last two points stand in — the **secant** step, a line through them instead of a tangent:
 
-$$x_{n+1} = x_n - f(x_n)\,\frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})}$$
+```math
+x_{n+1} = x_n - f(x_n)\,\frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})}
+```
 
-Brent's method proposes a fast step — the secant, or the curve through the last three points — and accepts it only if it lands well inside the bracket and its stride is still shrinking. Otherwise it takes $m$, and the bracket halves anyway.
+Brent's method proposes a fast step — the secant, or the curve through the last three points — and accepts it only if it lands well inside the bracket and its stride is still shrinking. Otherwise it takes $`m`$, and the bracket halves anyway.
 
 Last, the rule that turns a leftover residual into an accuracy. It is the formula people skip:
 
-$$|x_n - x_*| \;\le\; \frac{|f(x_n)|}{\min |f'|}$$
+```math
+|x_n - x_*| \;\le\; \frac{|f(x_n)|}{\min |f'|}
+```
 
-Here $x_*$ is the true answer. In words: **the distance from it is at most the leftover residual divided by the flattest the slope gets in between.** Dollars on top, dollars per unit of input underneath, input units out.
+Here $`x_*`$ is the true answer. In words: **the distance from it is at most the leftover residual divided by the flattest the slope gets in between.** Dollars on top, dollars per unit of input underneath, input units out.
 
-A solver can stop in either unit. Bisection and Brent stop on a bracket narrower than a width $\delta$ in the input's own units; Newton stops on a residual under so many dollars. This inequality is the only bridge between the two.
+A solver can stop in either unit. Bisection and Brent stop on a bracket narrower than a width $`\delta`$ in the input's own units; Newton stops on a residual under so many dollars. This inequality is the only bridge between the two.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $g(x)$ | the model run forwards: input in, number out | the Black–Scholes call price | — |
-| $x$, $x_n$ | the input hunted, and the guess after each step | volatility; 1.00, then 0.140197963021, then 0.200338956973 | — |
-| $y_*$ | the quoted number the model has to reproduce | $9.227005508154 | rises: so does the volatility explaining it |
-| $x_*$ | the true answer: the input whose residual is zero | 0.20 | — |
-| $f(x)$ | the residual: the model's price at $x$, minus the quote | zero at 0.20 | — |
-| $f'(x)$ | the residual's slope, which is the model's own | vega, $37.90 per 1.00 of volatility | rises: the same residual leaves a smaller error |
-| $\ell$, $u$ | the bracket's low and high ends | 0.01 and 1.00 | wider: more steps, same answer |
-| $m$ | the midpoint of the range still in play | the fallback when a clever step is refused | — |
-| $\delta$ | the stopping width, in the input's own units | 0.000000000001 of volatility for the bracket; Newton instead stops at a residual under $0.000000000001 | tighter: more steps |
-| $\sigma$ | volatility, the unknown here. Say "sigma". | 0.20, quoted as 20 percent | rises: the call costs more |
-| $C(\sigma)$ | the Acme call's price at volatility $\sigma$ | $9.23 | — |
-| $K$ | the strike, the price the call may buy at | 100 at the money, 200 on the wing | — |
+| $`g(x)`$ | the model run forwards: input in, number out | the Black–Scholes call price | — |
+| $`x`$, $`x_n`$ | the input hunted, and the guess after each step | volatility; 1.00, then 0.140197963021, then 0.200338956973 | — |
+| $`y_*`$ | the quoted number the model has to reproduce | $9.227005508154 | rises: so does the volatility explaining it |
+| $`x_*`$ | the true answer: the input whose residual is zero | 0.20 | — |
+| $`f(x)`$ | the residual: the model's price at $`x`$, minus the quote | zero at 0.20 | — |
+| $`f'(x)`$ | the residual's slope, which is the model's own | vega, $37.90 per 1.00 of volatility | rises: the same residual leaves a smaller error |
+| $`\ell`$, $`u`$ | the bracket's low and high ends | 0.01 and 1.00 | wider: more steps, same answer |
+| $`m`$ | the midpoint of the range still in play | the fallback when a clever step is refused | — |
+| $`\delta`$ | the stopping width, in the input's own units | 0.000000000001 of volatility for the bracket; Newton instead stops at a residual under $0.000000000001 | tighter: more steps |
+| $`\sigma`$ | volatility, the unknown here. Say "sigma". | 0.20, quoted as 20 percent | rises: the call costs more |
+| $`C(\sigma)`$ | the Acme call's price at volatility $`\sigma`$ | $9.23 | — |
+| $`K`$ | the strike, the price the call may buy at | 100 at the money, 200 on the wing | — |
 
 ### When it holds
 
@@ -120,21 +130,27 @@ Then the reason to bother. The error squares at every step. The guesses run 1.00
 <details>
 <summary>Detailed proof: existence, the halving bound, and why Newton squares its error</summary>
 
-**Existence.** Let the residual be continuous on the closed bracket from $\ell$ to $u$, with opposite signs at the two ends. The intermediate value theorem gives a point between them where the residual is zero. That is the only fact bisection needs, and it survives any ugliness short of a jump.
+**Existence.** Let the residual be continuous on the closed bracket from $`\ell`$ to $`u`$, with opposite signs at the two ends. The intermediate value theorem gives a point between them where the residual is zero. That is the only fact bisection needs, and it survives any ugliness short of a jump.
 
-**Uniqueness, for this problem.** Vega is $S e^{-qT}\varphi(d_1)\sqrt{T}$: the share price, shrunk for the dividend yield, times the bell curve's height at the usual distance-to-strike, times the square root of the years left. A height is strictly positive at every finite argument, so the call price strictly increases with volatility and meets each attainable price once.
+**Uniqueness, for this problem.** Vega is $`S e^{-qT}\varphi(d_1)\sqrt{T}`$: the share price, shrunk for the dividend yield, times the bell curve's height at the usual distance-to-strike, times the square root of the years left. A height is strictly positive at every finite argument, so the call price strictly increases with volatility and meets each attainable price once.
 
-**The halving bound.** Each test replaces the bracket by a half that still straddles zero, so the width $w_t$ after $t$ tests is the starting width $w_0$ divided by two once per test:
-$$w_t = \frac{w_0}{2^{\,t}}, \qquad w_t \le \delta \iff t \ge \log_2\!\left(\frac{w_0}{\delta}\right).$$
+**The halving bound.** Each test replaces the bracket by a half that still straddles zero, so the width $`w_t`$ after $`t`$ tests is the starting width $`w_0`$ divided by two once per test:
+
+$`\displaystyle w_t = \frac{w_0}{2^{\,t}}, \qquad w_t \le \delta \iff t \ge \log_2\!\left(\frac{w_0}{\delta}\right).`$
+
 Width 0.99 and stopping width 0.000000000001 give 40 tests, a count that does not depend on the function at all.
 
 **Newton's squaring.** Suppose the residual has two derivatives near the answer. Taylor's theorem with remainder ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)), expanded at the guess and evaluated at the answer, gives
-$$0 = f(x_n) + f'(x_n)\,(x_* - x_n) + \tfrac12 f''(\xi)\,(x_* - x_n)^2$$
-for some point between the two. Divide by the slope at the guess and substitute the Newton update. Write $e_n$ for the size of the error after step $n$, $|x_n - x_*|$:
-$$x_{n+1} - x_* = \frac{f''(\xi)}{2 f'(x_n)}\,(x_n - x_*)^2 ,\qquad\text{hence}\qquad e_{n+1} \le \frac{\max |f''|}{2 \min |f'|}\; e_n^2 .$$
+
+$`\displaystyle 0 = f(x_n) + f'(x_n)\,(x_* - x_n) + \tfrac12 f''(\xi)\,(x_* - x_n)^2`$
+
+for some point between the two. Divide by the slope at the guess and substitute the Newton update. Write $`e_n`$ for the size of the error after step $`n`$, $`|x_n - x_*|`$:
+
+$`\displaystyle x_{n+1} - x_* = \frac{f''(\xi)}{2 f'(x_n)}\,(x_n - x_*)^2 ,\qquad\text{hence}\qquad e_{n+1} \le \frac{\max |f''|}{2 \min |f'|}\; e_n^2 .`$
+
 The next error is the old one squared, times the bend over twice the slope. Near the answer that collapses the error and the digits double. Far away, or wherever the slope's lower bound is near zero, the inequality says nothing at all — and Step 4 shows what nothing looks like.
 
-**Residual to answer.** The mean value theorem ([Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)) gives $f(x_n) - f(x_*) = f'(\xi)(x_n - x_*)$ for some point in between, and the residual at the answer is zero. Divide by that intermediate slope, then replace it with the flattest slope on the bracket, and the inequality in The formula falls out. Where the slope can be zero, there is no bound at all.
+**Residual to answer.** The mean value theorem ([Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)) gives $`f(x_n) - f(x_*) = f'(\xi)(x_n - x_*)`$ for some point in between, and the residual at the answer is zero. Divide by that intermediate slope, then replace it with the flattest slope on the bracket, and the inequality in The formula falls out. Where the slope can be zero, there is no bound at all.
 
 </details>
 
@@ -156,7 +172,7 @@ Then the guards. The proposal is accepted only if it lands in the three-quarters
 
 So the usual case is secant-fast, the bracket never widens, and the worst case cannot run away: Brent's paper bounds the pathological case at roughly the square of bisection's count of halvings.
 
-On the Acme quote Brent takes 8 trips and never falls back to the midpoint. On the flat $K = 200$ wing the same routine falls back 5 times: the net earns its keep exactly where unguarded Newton dies.
+On the Acme quote Brent takes 8 trips and never falls back to the midpoint. On the flat $`K = 200`$ wing the same routine falls back 5 times: the net earns its keep exactly where unguarded Newton dies.
 
 ```mermaid
 flowchart TB
@@ -178,7 +194,7 @@ The stopping test is in dollars. The answer is in volatility. The exchange rate 
 
 At the money the flattest vega between 10 and 40 percent volatility is $36.781009021915, so one cent of leftover residual leaves the volatility wrong by at most 0.000271879436 — under three hundredths of a volatility point.
 
-Out on the $K = 200$ wing the call is worth $0.003259459731 and vega is $0.222184525705. Feed the same solver a quote one cent higher and it returns 0.223852158829: 2.385215882902 volatility points away. Same solver, same tolerance, and the error is now whole volatility points instead of hundredths of one. The residual never mentioned it; the slope did.
+Out on the $`K = 200`$ wing the call is worth $0.003259459731 and vega is $0.222184525705. Feed the same solver a quote one cent higher and it returns 0.223852158829: 2.385215882902 volatility points away. Same solver, same tolerance, and the error is now whole volatility points instead of hundredths of one. The residual never mentioned it; the slope did.
 
 One more comparison settles how many digits are worth printing. The screen shows $9.23, not 9.227005508154. Invert the rounded number and the answer is 0.200079007731 — 0.007900773104 volatility points from the truth, larger than anything the solver's last eight digits could fix.
 
@@ -203,11 +219,11 @@ The shelf's market: Acme at $100, strike $100, 5 percent cash rate, 2 percent di
 | 5 | residual now under 10^-12 dollars, so stop | **0.200000000000** |
 | the same answer with no slope at all | 41 trips: the first end, then forty halvings of 0.01 to 1.00 | **0.200000000000** |
 | the same answer, guarded | Brent, 8 trips, no midpoint fallbacks | **0.200000000000** |
-| a cross-check on the pricer itself | the shelf's delta, $e^{-qT}N(d_1)$ | 0.586851146135 |
+| a cross-check on the pricer itself | the shelf's delta, $`e^{-qT}N(d_1)`$ | 0.586851146135 |
 
 The market's $9.23 is the price of 20.000 percent volatility. That number, not the dollar price, is what a desk quotes and compares across strikes; the dollars are its packaging.
 
-The last row is the shelf's house number, delta 0.5869, reproduced by this card's pricer: the thing being inverted is the thing the neighbouring cards differentiate ([Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md)). Delta is the dollars the call gains per dollar on the share. In its formula, $e^{-qT}$ is the shrink for the 2 percent dividend yield $q$ over the one year $T$, and $N(d_1)$ is a bell-curve area the pricer already computes.
+The last row is the shelf's house number, delta 0.5869, reproduced by this card's pricer: the thing being inverted is the thing the neighbouring cards differentiate ([Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md)). Delta is the dollars the call gains per dollar on the share. In its formula, $`e^{-qT}`$ is the shrink for the 2 percent dividend yield $`q`$ over the one year $`T`$, and $`N(d_1)`$ is a bell-curve area the pricer already computes.
 
 ### The cost of each route
 
@@ -224,7 +240,7 @@ Newton is cheapest and the only one that can fail with a sound bracket in hand. 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Read a one-cent price error on the $K = 200$ wing as a good answer | 0.223852158829, which is 2.385215882902 volatility points out | The slope there is $0.222184525705 per 1.00 of volatility, not $37.90 |
+| Read a one-cent price error on the $`K = 200`$ wing as a good answer | 0.223852158829, which is 2.385215882902 volatility points out | The slope there is $0.222184525705 per 1.00 of volatility, not $37.90 |
 | Run Newton from 0.01 with no bracket | 14.801246082628, then a negative number of order 10^12 | Vega there is $0.000000000049; dividing by it is a leap into nothing |
 | Bisect on 0.01 to 0.10, where both ends price under the quote | 0.100000000000 | No sign change, so nothing was trapped; the loop walked to the end |
 | Invert a quote of $2.50, below the $2.896924880604 floor | no sign change | No volatility produces that price. The quote is wrong, not the solver |
@@ -677,10 +693,10 @@ The two outputs match line for line, Newton's trace included: the point of runni
 
 Lean proves the general rules behind bracketing and the residual bound, for every model meeting their conditions, plus the card's halving count.
 
-- Take a model $g$ that moves continuously and one way only from $\ell$ to $u$, with end residuals of opposite signs or a zero. Then exactly one input between them reproduces the quote $y_*$.
-- Take a residual $f$ that moves continuously from $\ell$ to $u$, with opposite signs at the ends or a zero. Then after $t$ tests the bracket stays inside, has width $w_0/2^t$, and still holds a zero.
-- Take the same residual after $t$ tests. Then the bracket's midpoint $m$ lies within $w_0/2^{t+1}$ of that zero.
-- Suppose $f$ moves continuously on the bracket, and its slope exists and never drops below a positive floor inside it. Then $|x_n - x_*|$ is at most $|f(x_n)|$ divided by that floor, for any guess $x_n$ in the bracket.
+- Take a model $`g`$ that moves continuously and one way only from $`\ell`$ to $`u`$, with end residuals of opposite signs or a zero. Then exactly one input between them reproduces the quote $`y_*`$.
+- Take a residual $`f`$ that moves continuously from $`\ell`$ to $`u`$, with opposite signs at the ends or a zero. Then after $`t`$ tests the bracket stays inside, has width $`w_0/2^t`$, and still holds a zero.
+- Take the same residual after $`t`$ tests. Then the bracket's midpoint $`m`$ lies within $`w_0/2^{t+1}`$ of that zero.
+- Suppose $`f`$ moves continuously on the bracket, and its slope exists and never drops below a positive floor inside it. Then $`|x_n - x_*|`$ is at most $`|f(x_n)|`$ divided by that floor, for any guess $`x_n`$ in the bracket.
 - From the bracket 0.01 to 1.00, forty halvings bring the width under 0.000000000001, and thirty-nine do not.
 - Counting the first end, that makes 41 trips through the pricer.
 
@@ -872,7 +888,7 @@ example : 1 + 40 = 41 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Believing that a small residual means a good answer.** It does not. The residual is in the model's output units, the answer is in its input units, and the exchange rate is the slope. On the $K = 200$ wing, one cent of price error is 2.385215882902 volatility points of answer error, and the residual looked excellent throughout. Divide the leftover residual by the flattest slope on the bracket, and report *that*.
+> **Believing that a small residual means a good answer.** It does not. The residual is in the model's output units, the answer is in its input units, and the exchange rate is the slope. On the $`K = 200`$ wing, one cent of price error is 2.385215882902 volatility points of answer error, and the residual looked excellent throughout. Divide the leftover residual by the flattest slope on the bracket, and report *that*.
 >
 > Four smaller traps, each of which has cost somebody real money:
 > - **The tolerance in the wrong units.** "Within a cent" is a dollar test; "bracket under 0.000000000001" is a volatility test. They are related only through the slope.

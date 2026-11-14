@@ -35,44 +35,48 @@ Three lines. Top (orange): the distribution function F, the chance of a wait of 
 
 ## The formula
 
-Notation first, in words. The **reference measure** $\mu$ decides which sets count as empty; $\nu$ is the measure being split. Both size the sets of one sigma-algebra $\mathcal{F}$, the collection of sets we allow ourselves to measure, on a space $\Omega$. A $\mu$-**null set** is a set $A$ with $\mu(A) = 0$. On the line the reference is Lebesgue measure $\lambda$: length.
+Notation first, in words. The **reference measure** $`\mu`$ decides which sets count as empty; $`\nu`$ is the measure being split. Both size the sets of one sigma-algebra $`\mathcal{F}`$, the collection of sets we allow ourselves to measure, on a space $`\Omega`$. A $`\mu`$-**null set** is a set $`A`$ with $`\mu(A) = 0`$. On the line the reference is Lebesgue measure $`\lambda`$: length.
 
-Two reminders from [Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md). $\nu \ll \mu$, read "$\nu$ is absolutely continuous with respect to $\mu$", means every $\mu$-null set is $\nu$-null. $\nu \perp \mu$, read "$\nu$ is singular to $\mu$", means $\nu$ lives entirely on one $\mu$-null set. A measure is **σ-finite** when the space is a countable union of pieces of finite measure; every probability law is.
+Two reminders from [Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md). $`\nu \ll \mu`$, read "$`\nu`$ is absolutely continuous with respect to $`\mu`$", means every $`\mu`$-null set is $`\nu`$-null. $`\nu \perp \mu`$, read "$`\nu`$ is singular to $`\mu`$", means $`\nu`$ lives entirely on one $`\mu`$-null set. A measure is **σ-finite** when the space is a countable union of pieces of finite measure; every probability law is.
 
-$$\nu = \nu_{ac} + \nu_s, \qquad \nu_{ac} \ll \mu, \qquad \nu_s \perp \mu, \qquad \nu_{ac}(A) = \int_A f \, d\mu$$
+```math
+\nu = \nu_{ac} + \nu_s, \qquad \nu_{ac} \ll \mu, \qquad \nu_s \perp \mu, \qquad \nu_{ac}(A) = \int_A f \, d\mu
+```
 
-**Read it aloud:** $\nu$ is the sum of a part that respects $\mu$'s empty sets and has a density $f$ against it, and a part that sits wholly on a set $\mu$ calls empty.
+**Read it aloud:** $`\nu`$ is the sum of a part that respects $`\mu`$'s empty sets and has a density $`f`$ against it, and a part that sits wholly on a set $`\mu`$ calls empty.
 
-Both pieces are unique; $f$ is unique up to a $\mu$-null set. For the bus against length, $\nu_{ac}(A) = \int_A 0.7 e^{-x} \, dx$ over the positive part of A, and $\nu_s = 0.3\,\delta_0$. Here $\delta_x$ is the **point mass** at x: 1 on every set containing x, 0 on the rest.
+Both pieces are unique; $`f`$ is unique up to a $`\mu`$-null set. For the bus against length, $`\nu_{ac}(A) = \int_A 0.7 e^{-x} \, dx`$ over the positive part of A, and $`\nu_s = 0.3\,\delta_0`$. Here $`\delta_x`$ is the **point mass** at x: 1 on every set containing x, 0 on the rest.
 
 On the line, against length, a law splits three ways:
 
-$$\nu = \nu_{ac} + \nu_d + \nu_{sc}, \qquad F = F_{ac} + F_d + F_{sc}$$
+```math
+\nu = \nu_{ac} + \nu_d + \nu_{sc}, \qquad F = F_{ac} + F_d + F_{sc}
+```
 
 **Read it aloud:** a law on the line is a density part, plus point masses, plus a part with no point masses that still lives on a length-zero set; its distribution function adds up the same way.
 
-The **discrete part** $\nu_d = \sum_k p_k \, \delta_{x_k}$ puts mass $p_k$ on each of countably many points $x_k$. The **singular continuous part** $\nu_{sc}$ gives every point mass 0 yet lives on a set of length zero. $F_{ac}$ has a slope and no jumps, $F_d$ only jumps, and $F_{sc}$ is a continuous staircase such as the Cantor function $C$ ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)).
+The **discrete part** $`\nu_d = \sum_k p_k \, \delta_{x_k}`$ puts mass $`p_k`$ on each of countably many points $`x_k`$. The **singular continuous part** $`\nu_{sc}`$ gives every point mass 0 yet lives on a set of length zero. $`F_{ac}`$ has a slope and no jumps, $`F_d`$ only jumps, and $`F_{sc}`$ is a continuous staircase such as the Cantor function $`C`$ ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mu$ | reference measure: decides which sets are empty | length $\lambda$; on the die, a die with faces 5 and 6 blank | more non-empty sets, less room for $\nu_s$ |
-| $\nu$ | the measure being split | law of the bus wait | — |
-| $\lambda$ | Lebesgue measure: length | length of {0} is 0 | — |
-| $\Omega$, $\Omega_k$, $\mathcal{F}$, $A$, $E$, $A_n$ | the space and its finite-mass pieces; the sigma-algebra; sets in it | the line; Borel sets (sets built from intervals); A = (0, 2] | — |
-| $\nu_{ac}$, $\nu_s$ | the part with a density; the part on a $\mu$-null set | 0.7 spread out; 0.3 at zero | — |
-| $\nu_d$, $\nu_{sc}$ | point-mass part; continuous singular part | 0.3 at zero; none for the bus | — |
-| $f$ | density of $\nu_{ac}$ against $\mu$, also written $d\nu_{ac}/d\mu$ | $0.7 e^{-x}$ for x > 0 | taller f, more mass there |
-| $N$, $s$, $N_1$, $N_2$ | the $\mu$-null set carrying $\nu_s$; the most $\nu$-mass any $\mu$-null set holds; null sets of a rival split | N = {0}, s = 0.3 | larger s, larger singular part |
-| $\delta_x$, $p_k$, $x_k$ | point mass at x; the k-th jump size and place | $0.3\,\delta_0$ | — |
-| $F$, $F_{ac}$, $F_d$, $F_{sc}$ | distribution function and its three pieces | F(1) = 0.742484 = 0.442484 + 0.3 + 0 | — |
-| $C$ | Cantor function: the standard staircase | C(1/3) = 1/2 | — |
-| $n$, $h$ | stage counter; cell width $3^{-n}$ | n = 10 | finer cells, sharper split |
+| $`\mu`$ | reference measure: decides which sets are empty | length $`\lambda`$; on the die, a die with faces 5 and 6 blank | more non-empty sets, less room for $`\nu_s`$ |
+| $`\nu`$ | the measure being split | law of the bus wait | — |
+| $`\lambda`$ | Lebesgue measure: length | length of {0} is 0 | — |
+| $`\Omega`$, $`\Omega_k`$, $`\mathcal{F}`$, $`A`$, $`E`$, $`A_n`$ | the space and its finite-mass pieces; the sigma-algebra; sets in it | the line; Borel sets (sets built from intervals); A = (0, 2] | — |
+| $`\nu_{ac}`$, $`\nu_s`$ | the part with a density; the part on a $`\mu`$-null set | 0.7 spread out; 0.3 at zero | — |
+| $`\nu_d`$, $`\nu_{sc}`$ | point-mass part; continuous singular part | 0.3 at zero; none for the bus | — |
+| $`f`$ | density of $`\nu_{ac}`$ against $`\mu`$, also written $`d\nu_{ac}/d\mu`$ | $`0.7 e^{-x}`$ for x > 0 | taller f, more mass there |
+| $`N`$, $`s`$, $`N_1`$, $`N_2`$ | the $`\mu`$-null set carrying $`\nu_s`$; the most $`\nu`$-mass any $`\mu`$-null set holds; null sets of a rival split | N = {0}, s = 0.3 | larger s, larger singular part |
+| $`\delta_x`$, $`p_k`$, $`x_k`$ | point mass at x; the k-th jump size and place | $`0.3\,\delta_0`$ | — |
+| $`F`$, $`F_{ac}`$, $`F_d`$, $`F_{sc}`$ | distribution function and its three pieces | F(1) = 0.742484 = 0.442484 + 0.3 + 0 | — |
+| $`C`$ | Cantor function: the standard staircase | C(1/3) = 1/2 | — |
+| $`n`$, $`h`$ | stage counter; cell width $`3^{-n}`$ | n = 10 | finer cells, sharper split |
 
 ### When it holds
 
-- **Same sigma-algebra.** Otherwise "null for $\mu$" means nothing to $\nu$.
-- **$\nu$ σ-finite.** Counting measure on [0, 1], mass 1 on each point, has no split against length (What breaks, last row).
-- **$\mu$ σ-finite, for the density.** The split itself needs only $\nu$ σ-finite. Writing $\nu_{ac}$ as $\int f \, d\mu$ is Radon-Nikodym, which fails for length against counting measure ([The Radon-Nikodym theorem](03-radon-nikodym-theorem.md)).
+- **Same sigma-algebra.** Otherwise "null for $`\mu`$" means nothing to $`\nu`$.
+- **$`\nu`$ σ-finite.** Counting measure on [0, 1], mass 1 on each point, has no split against length (What breaks, last row).
+- **$`\mu`$ σ-finite, for the density.** The split itself needs only $`\nu`$ σ-finite. Writing $`\nu_{ac}`$ as $`\int f \, d\mu`$ is Radon-Nikodym, which fails for length against counting measure ([The Radon-Nikodym theorem](03-radon-nikodym-theorem.md)).
 - **On the line, finite on bounded sets.** Then the distribution function exists ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)) and the point masses are countable. A law, with total mass 1, always qualifies.
 
 ---
@@ -81,64 +85,64 @@ The **discrete part** $\nu_d = \sum_k p_k \, \delta_{x_k}$ puts mass $p_k$ on ea
 
 ### Step 0: find the biggest set the reference cannot see
 
-Mass that $\nu$ puts on a $\mu$-null set cannot come from a density against $\mu$. So collect as much $\nu$-mass as possible onto one $\mu$-null set N. Outside N no null set holds any $\nu$-mass, or it would have been added to N. So the part outside N respects $\mu$'s null sets, and Radon-Nikodym gives it a density.
+Mass that $`\nu`$ puts on a $`\mu`$-null set cannot come from a density against $`\mu`$. So collect as much $`\nu`$-mass as possible onto one $`\mu`$-null set N. Outside N no null set holds any $`\nu`$-mass, or it would have been added to N. So the part outside N respects $`\mu`$'s null sets, and Radon-Nikodym gives it a density.
 
 ### Step 1: on a die, list every null set
 
-Take the house die, loaded with face weights $\nu$ = (0.1, 0.1, 0.1, 0.1, 0.2, 0.4). Measure it against a reference die $\mu$ whose faces 5 and 6 are blank and never come up: $\mu$ = (0.25, 0.25, 0.25, 0.25, 0, 0). Of the 64 sets of faces, 4 are $\mu$-null: the subsets of {5, 6}. The one $\nu$ weighs most is {5, 6}, with 0.6. So N = {5, 6} and s = 0.6.
+Take the house die, loaded with face weights $`\nu`$ = (0.1, 0.1, 0.1, 0.1, 0.2, 0.4). Measure it against a reference die $`\mu`$ whose faces 5 and 6 are blank and never come up: $`\mu`$ = (0.25, 0.25, 0.25, 0.25, 0, 0). Of the 64 sets of faces, 4 are $`\mu`$-null: the subsets of {5, 6}. The one $`\nu`$ weighs most is {5, 6}, with 0.6. So N = {5, 6} and s = 0.6.
 
-The split: $\nu_s$ = (0, 0, 0, 0, 0.2, 0.4), the loaded die's mass on the blank faces. $\nu_{ac}$ = (0.1, 0.1, 0.1, 0.1, 0, 0). Its density against $\mu$ is 0.1/0.25 = 0.4 on faces 1 to 4. The code confirms $\nu(A) = \int_A f \, d\mu + \nu_s(A)$ on all 64 sets.
+The split: $`\nu_s`$ = (0, 0, 0, 0, 0.2, 0.4), the loaded die's mass on the blank faces. $`\nu_{ac}`$ = (0.1, 0.1, 0.1, 0.1, 0, 0). Its density against $`\mu`$ is 0.1/0.25 = 0.4 on faces 1 to 4. The code confirms $`\nu(A) = \int_A f \, d\mu + \nu_s(A)`$ on all 64 sets.
 
 ### Step 2: the biggest null set exists
 
-Take $\nu$ finite first. Let s be the supremum (least upper bound) of $\nu(A)$ over $\mu$-null sets A. Pick null sets $A_n$ with $\nu(A_n) > s - 1/n$ and let N be their union. A countable union of null sets is null, so N is a candidate, and it holds at least $s - 1/n$ for every n. So N holds exactly s: the supremum is attained. On a die it is a maximum over 64 sets; on the line the countable union does the work.
+Take $`\nu`$ finite first. Let s be the supremum (least upper bound) of $`\nu(A)`$ over $`\mu`$-null sets A. Pick null sets $`A_n`$ with $`\nu(A_n) > s - 1/n`$ and let N be their union. A countable union of null sets is null, so N is a candidate, and it holds at least $`s - 1/n`$ for every n. So N holds exactly s: the supremum is attained. On a die it is a maximum over 64 sets; on the line the countable union does the work.
 
 ### Step 3: split on N
 
-Set $\nu_s$ = $\nu$ restricted to N, and $\nu_{ac}$ = $\nu$ restricted to the rest. They add to $\nu$. $\nu_s$ is singular because it lives on N. $\nu_{ac}$ is absolutely continuous: if a $\mu$-null set E held $\nu$-mass outside N, adding that part to N would give a null set holding more than s. The comparison subtracts s, so s must be finite; a σ-finite $\nu$ is split piece by piece.
+Set $`\nu_s`$ = $`\nu`$ restricted to N, and $`\nu_{ac}`$ = $`\nu`$ restricted to the rest. They add to $`\nu`$. $`\nu_s`$ is singular because it lives on N. $`\nu_{ac}`$ is absolutely continuous: if a $`\mu`$-null set E held $`\nu`$-mass outside N, adding that part to N would give a null set holding more than s. The comparison subtracts s, so s must be finite; a σ-finite $`\nu`$ is split piece by piece.
 
 ### Step 4: the split is unique
 
-Two splits have singular parts living on null sets $N_1$ and $N_2$. On their union, still null, both absolutely continuous parts give 0, so both singular parts equal $\nu$ there; off it, both singular parts give 0. So the singular parts agree, and then so do the rest. The code searches all 240 splits of the loaded die into tenths and finds exactly 1.
+Two splits have singular parts living on null sets $`N_1`$ and $`N_2`$. On their union, still null, both absolutely continuous parts give 0, so both singular parts equal $`\nu`$ there; off it, both singular parts give 0. So the singular parts agree, and then so do the rest. The code searches all 240 splits of the loaded die into tenths and finds exactly 1.
 
 ### Step 5: the density
 
-$\nu_{ac} \ll \mu$, and with $\mu$ σ-finite the Radon-Nikodym theorem gives a measurable $f \ge 0$ with $\nu_{ac}(A) = \int_A f \, d\mu$ for every A. Against the fair die $\mu$ = (1/6, …, 1/6) instead, the only null set is the empty set, so the same loaded die has no singular part at all and density (0.6, 0.6, 0.6, 0.6, 1.2, 2.4). The split depends on the reference measure.
+$`\nu_{ac} \ll \mu`$, and with $`\mu`$ σ-finite the Radon-Nikodym theorem gives a measurable $`f \ge 0`$ with $`\nu_{ac}(A) = \int_A f \, d\mu`$ for every A. Against the fair die $`\mu`$ = (1/6, …, 1/6) instead, the only null set is the empty set, so the same loaded die has no singular part at all and density (0.6, 0.6, 0.6, 0.6, 1.2, 2.4). The split depends on the reference measure.
 
 <details>
 <summary>Detailed proof: Lebesgue decomposition for σ-finite measures</summary>
 
-*Setting.* $\mu$ and $\nu$ are measures on $(\Omega, \mathcal{F})$, $\nu$ σ-finite. Claim: there are unique measures $\nu_{ac} \ll \mu$ and $\nu_s \perp \mu$ with $\nu = \nu_{ac} + \nu_s$. If $\mu$ is σ-finite too, $\nu_{ac}(A) = \int_A f \, d\mu$ for a measurable $f \ge 0$, unique $\mu$-a.e. (almost everywhere: except on a $\mu$-null set).
+*Setting.* $`\mu`$ and $`\nu`$ are measures on $`(\Omega, \mathcal{F})`$, $`\nu`$ σ-finite. Claim: there are unique measures $`\nu_{ac} \ll \mu`$ and $`\nu_s \perp \mu`$ with $`\nu = \nu_{ac} + \nu_s`$. If $`\mu`$ is σ-finite too, $`\nu_{ac}(A) = \int_A f \, d\mu`$ for a measurable $`f \ge 0`$, unique $`\mu`$-a.e. (almost everywhere: except on a $`\mu`$-null set).
 
-*Finite case.* Assume $\nu(\Omega) < \infty$. Let $\mathcal{N} = \{A \in \mathcal{F} : \mu(A) = 0\}$ and $s = \sup_{A \in \mathcal{N}} \nu(A) \le \nu(\Omega) < \infty$. Choose $A_n \in \mathcal{N}$ with $\nu(A_n) > s - 1/n$. Set $N = \bigcup_n A_n$. By countable subadditivity $\mu(N) \le \sum_n \mu(A_n) = 0$, so $N \in \mathcal{N}$ and $\nu(N) \le s$. By monotonicity $\nu(N) \ge \nu(A_n) > s - 1/n$ for all n, so $\nu(N) = s$.
+*Finite case.* Assume $`\nu(\Omega) < \infty`$. Let $`\mathcal{N} = \{A \in \mathcal{F} : \mu(A) = 0\}`$ and $`s = \sup_{A \in \mathcal{N}} \nu(A) \le \nu(\Omega) < \infty`$. Choose $`A_n \in \mathcal{N}`$ with $`\nu(A_n) > s - 1/n`$. Set $`N = \bigcup_n A_n`$. By countable subadditivity $`\mu(N) \le \sum_n \mu(A_n) = 0`$, so $`N \in \mathcal{N}`$ and $`\nu(N) \le s`$. By monotonicity $`\nu(N) \ge \nu(A_n) > s - 1/n`$ for all n, so $`\nu(N) = s`$.
 
-Define $\nu_s(E) = \nu(E \cap N)$ and $\nu_{ac}(E) = \nu(E \cap N^c)$, with $N^c$ the complement of N. Intersecting a disjoint union with a fixed set leaves it disjoint, so both are measures, and they add to $\nu$.
+Define $`\nu_s(E) = \nu(E \cap N)`$ and $`\nu_{ac}(E) = \nu(E \cap N^c)`$, with $`N^c`$ the complement of N. Intersecting a disjoint union with a fixed set leaves it disjoint, so both are measures, and they add to $`\nu`$.
 
-$\nu_s \perp \mu$: $\nu_s(N^c) = \nu(\varnothing) = 0$ and $\mu(N) = 0$.
+$`\nu_s \perp \mu`$: $`\nu_s(N^c) = \nu(\varnothing) = 0`$ and $`\mu(N) = 0`$.
 
-$\nu_{ac} \ll \mu$: let $\mu(E) = 0$. Then $N \cup (E \cap N^c) \in \mathcal{N}$, so $s \ge \nu(N \cup (E \cap N^c)) = \nu(N) + \nu(E \cap N^c) = s + \nu_{ac}(E)$. As $s < \infty$, $\nu_{ac}(E) = 0$.
+$`\nu_{ac} \ll \mu`$: let $`\mu(E) = 0`$. Then $`N \cup (E \cap N^c) \in \mathcal{N}`$, so $`s \ge \nu(N \cup (E \cap N^c)) = \nu(N) + \nu(E \cap N^c) = s + \nu_{ac}(E)`$. As $`s < \infty`$, $`\nu_{ac}(E) = 0`$.
 
-*σ-finite case.* Write $\Omega = \bigcup_k \Omega_k$, disjoint, $\nu(\Omega_k) < \infty$. Apply the finite case to $\nu$ restricted to $\Omega_k$, giving null sets $N_k \subseteq \Omega_k$. Let $N = \bigcup_k N_k$; $\mu(N) = 0$ by subadditivity. Define $\nu_s$ and $\nu_{ac}$ from N as above. If $\mu(E) = 0$ then $\nu(E \cap \Omega_k \cap N_k^c) = 0$ for each k by the finite case, and summing over k gives $\nu_{ac}(E) = 0$.
+*σ-finite case.* Write $`\Omega = \bigcup_k \Omega_k`$, disjoint, $`\nu(\Omega_k) < \infty`$. Apply the finite case to $`\nu`$ restricted to $`\Omega_k`$, giving null sets $`N_k \subseteq \Omega_k`$. Let $`N = \bigcup_k N_k`$; $`\mu(N) = 0`$ by subadditivity. Define $`\nu_s`$ and $`\nu_{ac}`$ from N as above. If $`\mu(E) = 0`$ then $`\nu(E \cap \Omega_k \cap N_k^c) = 0`$ for each k by the finite case, and summing over k gives $`\nu_{ac}(E) = 0`$.
 
-*Uniqueness.* Let $\nu = a + b = a' + b'$ with $a, a' \ll \mu$, $b(N_1^c) = 0 = b'(N_2^c)$, $\mu(N_1) = \mu(N_2) = 0$. Put $M = N_1 \cup N_2$, so $\mu(M) = 0$. For any E: $a(E \cap M) = a'(E \cap M) = 0$, so $b(E \cap M) = \nu(E \cap M) = b'(E \cap M)$; and $b(E \cap M^c) = 0 = b'(E \cap M^c)$. Adding, $b(E) = b'(E)$. Then for $E \subseteq \Omega_k$, $a(E) = \nu(E) - b(E) = a'(E)$, all terms finite; summing over k gives $a = a'$.
+*Uniqueness.* Let $`\nu = a + b = a' + b'`$ with $`a, a' \ll \mu`$, $`b(N_1^c) = 0 = b'(N_2^c)`$, $`\mu(N_1) = \mu(N_2) = 0`$. Put $`M = N_1 \cup N_2`$, so $`\mu(M) = 0`$. For any E: $`a(E \cap M) = a'(E \cap M) = 0`$, so $`b(E \cap M) = \nu(E \cap M) = b'(E \cap M)`$; and $`b(E \cap M^c) = 0 = b'(E \cap M^c)`$. Adding, $`b(E) = b'(E)`$. Then for $`E \subseteq \Omega_k`$, $`a(E) = \nu(E) - b(E) = a'(E)`$, all terms finite; summing over k gives $`a = a'`$.
 
-*Density.* $\nu_{ac} \ll \mu$, both σ-finite ($\nu_{ac} \le \nu$). By the Radon-Nikodym theorem there is a measurable $f \ge 0$, unique $\mu$-a.e., with $\nu_{ac}(A) = \int_A f \, d\mu$.
+*Density.* $`\nu_{ac} \ll \mu`$, both σ-finite ($`\nu_{ac} \le \nu`$). By the Radon-Nikodym theorem there is a measurable $`f \ge 0`$, unique $`\mu`$-a.e., with $`\nu_{ac}(A) = \int_A f \, d\mu`$.
 
 </details>
 
 ### Step 6: on the line, pull the jumps out
 
-Now $\mu = \lambda$ and $\nu$ is a law. A point has length 0, so $\nu_{ac}$ gives it mass 0: every point mass of $\nu$ belongs to $\nu_s$.
+Now $`\mu = \lambda`$ and $`\nu`$ is a law. A point has length 0, so $`\nu_{ac}`$ gives it mass 0: every point mass of $`\nu`$ belongs to $`\nu_s`$.
 
-The points with mass above 1/m number fewer than m, or their masses would add past 1. Taking m = 1, 2, 3, … lists every point with positive mass: countably many, the $x_k$ with masses $p_k$. Set $\nu_d(E) = \sum_{x_k \in E} p_k$, a measure since nonnegative sums regroup freely, and singular since a countable set has length 0.
+The points with mass above 1/m number fewer than m, or their masses would add past 1. Taking m = 1, 2, 3, … lists every point with positive mass: countably many, the $`x_k`$ with masses $`p_k`$. Set $`\nu_d(E) = \sum_{x_k \in E} p_k`$, a measure since nonnegative sums regroup freely, and singular since a countable set has length 0.
 
-Set $\nu_{sc} = \nu_s - \nu_d$. It is never negative: $\nu_s(E)$ is at least $\nu_s$ of the $x_k$ in E, which is $\nu_d(E)$. A nonnegative difference of finite measures is a measure. It has no point masses, since each $p_k$ was removed, and gives nothing outside N. So $\nu_{sc}$ is continuous and singular. The jumps fix $\nu_d$ and Step 4 fixes the rest, so the three-way split is unique.
+Set $`\nu_{sc} = \nu_s - \nu_d`$. It is never negative: $`\nu_s(E)`$ is at least $`\nu_s`$ of the $`x_k`$ in E, which is $`\nu_d(E)`$. A nonnegative difference of finite measures is a measure. It has no point masses, since each $`p_k`$ was removed, and gives nothing outside N. So $`\nu_{sc}`$ is continuous and singular. The jumps fix $`\nu_d`$ and Step 4 fixes the rest, so the three-way split is unique.
 
-Adding the three measures of the half-line $(-\infty, x]$ gives $F = F_{ac} + F_d + F_{sc}$. A jump of a distribution function is a point mass ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)), so $F_{ac}$ and $F_{sc}$ are continuous and every jump of F sits in $F_d$.
+Adding the three measures of the half-line $`(-\infty, x]`$ gives $`F = F_{ac} + F_d + F_{sc}`$. A jump of a distribution function is a point mass ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)), so $`F_{ac}`$ and $`F_{sc}`$ are continuous and every jump of F sits in $`F_d`$.
 
 ### Step 7: read the three pieces off a distribution function
 
-For the bus, a length-zero set holding the most law-mass is N = {0}. Any length-zero set gets at most the 0.3 at zero, since the density part gives length-zero sets nothing. The jump at zero is F(0) − F(0−) = 0.3 − 0 = 0.3. Here F(0−) is the value F approaches from just below zero. The density part has total mass $\int_0^\infty 0.7 e^{-x} \, dx = 0.7$. The two account for 1, so $F_{sc} = 0$.
+For the bus, a length-zero set holding the most law-mass is N = {0}. Any length-zero set gets at most the 0.3 at zero, since the density part gives length-zero sets nothing. The jump at zero is F(0) − F(0−) = 0.3 − 0 = 0.3. Here F(0−) is the value F approaches from just below zero. The density part has total mass $`\int_0^\infty 0.7 e^{-x} \, dx = 0.7`$. The two account for 1, so $`F_{sc} = 0`$.
 
 To see the third piece, build a law with all three: mass 0.3 at zero, 0.5 spread exponentially at rate 1, and 0.2 following the Cantor function on [0, 1]. Its N is {0} together with the Cantor set, of length 0 and law-mass 0.5.
 
@@ -152,9 +156,9 @@ xychart-beta
     line [0.00, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10, 0.15, 0.15, 0.20]
 ```
 
-Two lines. The upper (orange) is F for the three-piece law, starting at 0.30 because of the jump at zero. The lower (green) is the staircase piece $0.2\,C$, flat across the middle ninths and ending at 0.20. At the ninths the staircase moves only in steps; between the ninths it keeps climbing on ever-finer pieces of the Cantor set.
+Two lines. The upper (orange) is F for the three-piece law, starting at 0.30 because of the jump at zero. The lower (green) is the staircase piece $`0.2\,C`$, flat across the middle ninths and ending at 0.20. At the ninths the staircase moves only in steps; between the ninths it keeps climbing on ever-finer pieces of the Cantor set.
 
-The code reads the pieces back from F alone. It cuts (−1, 2] into cells of width $h = 3^{-n}$ and sorts each cell's rise of F:
+The code reads the pieces back from F alone. It cuts (−1, 2] into cells of width $`h = 3^{-n}`$ and sorts each cell's rise of F:
 
 - at least 0.05 is a **jump**;
 - more than 1 per minute of width is **steep**;
@@ -162,13 +166,13 @@ The code reads the pieces back from F alone. It cuts (−1, 2] into cells of wid
 
 At n = 2 the Cantor pieces rise 0.05 each and pass for jumps, so the jump total reads 0.643295. At n = 10 the census reads jump 0.300000, steep 0.205593, flat 0.494407, closing in on 0.3, 0.2 and 0.5.
 
-From n = 4 on the error is at most 0.5 × (2/3)^n, 0.008671 at n = 10. The reason: the steep cells are the $2^n$ Cantor cells, of total width $(2/3)^n$, and the exponential adds at most 0.5 per minute on them.
+From n = 4 on the error is at most 0.5 × (2/3)^n, 0.008671 at n = 10. The reason: the steep cells are the $`2^n`$ Cantor cells, of total width $`(2/3)^n`$, and the exponential adds at most 0.5 per minute on them.
 
 ### What the code shows and what only the proof shows
 
 The code lists every set of a die and sorts cells for one law at five mesh sizes. That the biggest null set exists for every σ-finite measure, and that the split is unique, only the proof shows. That flat cells recover the density part for every law rests on slopes recovering the density almost everywhere, proved on [Lebesgue's theorem on monotone functions](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/03-monotone-functions-differentiable-almost-everywhere.md).
 
-A second route to the whole theorem, when $\mu$ is σ-finite too, applies Radon-Nikodym to $\nu$ against $\mu + \nu$, which always dominates $\nu$: every $(\mu + \nu)$-null set is $\nu$-null. The set where the resulting density equals 1 is where $\mu$ has no say, and it becomes N. The route in the steps above needs no density until the end.
+A second route to the whole theorem, when $`\mu`$ is σ-finite too, applies Radon-Nikodym to $`\nu`$ against $`\mu + \nu`$, which always dominates $`\nu`$: every $`(\mu + \nu)`$-null set is $`\nu`$-null. The set where the resulting density equals 1 is where $`\mu`$ has no say, and it becomes N. The route in the steps above needs no density until the end.
 
 ---
 
@@ -195,7 +199,7 @@ Out of 100 mornings, about 30 have no wait, about 44 more a wait of up to a minu
 | Bus: keep only the density | total 0.700000, missing 0.300000 | a density gives the point zero nothing |
 | Cantor law alone: keep jumps plus density | jump 0.000000, flat 0.000000, of a total 1 | the staircase is the third piece |
 | Loaded die against the fair die instead | singular part 0.0, not 0.6 | the split depends on the reference measure |
-| Counting measure on [0, 1] against length | N = 4097 dyadic points misses 1/3, N = 6562 triadic points misses 1/2; the would-be density part gives that point mass 1, length 0 | $\nu$ not σ-finite: no split exists |
+| Counting measure on [0, 1] against length | N = 4097 dyadic points misses 1/3, N = 6562 triadic points misses 1/2; the would-be density part gives that point mass 1, length 0 | $`\nu`$ not σ-finite: no split exists |
 
 The last row is a hypothesis failing. Dyadic points are fractions whose denominator is a power of 2; triadic points use a power of 3. The code tries two length-zero sets for N, of counting mass 4097 and 6562; finer grids hold more, so the most mass a null set can hold is infinite. Off each, a search finds a point, and the would-be density part gives it mass 1 on a set of length 0: that part is not ≪ length. The same happens for every length-zero N, since none holds all of [0, 1].
 
@@ -559,13 +563,13 @@ The two outputs match line for line.
 
 Lean proves the two-way and three-way splits and the density for every measure meeting the conditions, and the card's exact arithmetic.
 
-- Take any reference measure $\mu$ and a σ-finite measure $\nu$ on the same sigma-algebra. Then $\nu = \nu_{ac} + \nu_s$ in exactly one way, with $\nu_{ac} \ll \mu$ and $\nu_s \perp \mu$. The reference $\mu$ need not be σ-finite.
-- Suppose $\mu$ is σ-finite too. Then $\nu_{ac}(A) = \int_A f \, d\mu$ for some measurable $f \ge 0$. Any other such f agrees with it except on a $\mu$-null set.
-- Take a measure $\nu$ on the line that is finite on bounded sets. Then $\nu = \nu_{ac} + \nu_d + \nu_{sc}$ in exactly one way. Here $\nu_{ac} \ll \lambda$, $\nu_d$ lives on a countable set, and $\nu_{sc} \perp \lambda$ with no point masses.
-- On the loaded die, 4 of the 64 sets are $\mu$-null, and none holds more than {5, 6}, with 0.6.
+- Take any reference measure $`\mu`$ and a σ-finite measure $`\nu`$ on the same sigma-algebra. Then $`\nu = \nu_{ac} + \nu_s`$ in exactly one way, with $`\nu_{ac} \ll \mu`$ and $`\nu_s \perp \mu`$. The reference $`\mu`$ need not be σ-finite.
+- Suppose $`\mu`$ is σ-finite too. Then $`\nu_{ac}(A) = \int_A f \, d\mu`$ for some measurable $`f \ge 0`$. Any other such f agrees with it except on a $`\mu`$-null set.
+- Take a measure $`\nu`$ on the line that is finite on bounded sets. Then $`\nu = \nu_{ac} + \nu_d + \nu_{sc}`$ in exactly one way. Here $`\nu_{ac} \ll \lambda`$, $`\nu_d`$ lives on a countable set, and $`\nu_{sc} \perp \lambda`$ with no point masses.
+- On the loaded die, 4 of the 64 sets are $`\mu`$-null, and none holds more than {5, 6}, with 0.6.
 - The split adds back face by face. The density is 0.4 on faces 1 to 4, and 0.6, 1.2, 2.4 against the fair die.
 - The bus leaves exactly 0 for a staircase, and the three-piece mean is exactly 0.6.
-- The staircase piece at the ninths, the steep cells' width $(2/3)^{10}$ and the grids of 4097 and 6562 points also check.
+- The staircase piece at the ninths, the steep cells' width $`(2/3)^{10}`$ and the grids of 4097 and 6562 points also check.
 
 The decimals, charts, Simpson rule, cell census, layer-cake mean and counting-measure search are left to the Python and Rust checks.
 

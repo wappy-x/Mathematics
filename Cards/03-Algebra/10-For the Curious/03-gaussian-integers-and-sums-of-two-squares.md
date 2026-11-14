@@ -37,29 +37,37 @@ Rows are b, columns a, 0 to 4; each cell is a^2 + b^2. So 5 appears twice, at 2 
 
 A **Gaussian integer** is a + bi, with a and b whole numbers and i fixed by one rule:
 
-$$\mathbb{Z}[i] = \{a + bi : a, b \text{ whole numbers}\}, \qquad i \times i = -1$$
+```math
+\mathbb{Z}[i] = \{a + bi : a, b \text{ whole numbers}\}, \qquad i \times i = -1
+```
 
 Add coordinate by coordinate: (2 + i) + (3 + 2i) = 5 + 3i. Multiply by expanding, then replacing i × i:
 
-$$(a + bi)(c + di) = (ac - bd) + (ad + bc)i$$
+```math
+(a + bi)(c + di) = (ac - bd) + (ad + bc)i
+```
 
 The **conjugate** of a + bi is a - bi, the same point with its up-coordinate flipped. A point times its conjugate is its **norm**:
 
-$$N(a + bi) = (a + bi)(a - bi) = a^2 + b^2$$
+```math
+N(a + bi) = (a + bi)(a - bi) = a^2 + b^2
+```
 
 **Read it aloud:** multiply grid points as brackets always multiply, turning i × i into -1; a point times its mirror image is the sum of its two squared coordinates.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$ | the new number, ruled by i × i = -1 | why 5 splits | a definition, not a dial |
-| $a + bi$, $c + di$ | grid points: across, up, whole | 2 + i, 3 + 2i | further out, larger norm |
-| $\mathbb{Z}[i]$ | all of them, "Z adjoin i"; the colon reads "such that" | the grid | — |
-| $a - bi$ | the conjugate: b flipped | 2 - i | — |
-| $N(a + bi)$ | the norm, a^2 + b^2 | 5, for 2 + i | — |
+| $`i`$ | the new number, ruled by i × i = -1 | why 5 splits | a definition, not a dial |
+| $`a + bi`$, $`c + di`$ | grid points: across, up, whole | 2 + i, 3 + 2i | further out, larger norm |
+| $`\mathbb{Z}[i]`$ | all of them, "Z adjoin i"; the colon reads "such that" | the grid | — |
+| $`a - bi`$ | the conjugate: b flipped | 2 - i | — |
+| $`N(a + bi)`$ | the norm, a^2 + b^2 | 5, for 2 + i | — |
 
 One consequence carries the card: a product's norm is the product of the norms:
 
-$$(ac - bd)^2 + (ad + bc)^2 = (a^2 + b^2)(c^2 + d^2)$$
+```math
+(ac - bd)^2 + (ad + bc)^2 = (a^2 + b^2)(c^2 + d^2)
+```
 
 So a sum of two squares times a sum of two squares is another.
 
@@ -96,7 +104,9 @@ But 3 cannot split: it sits at 3 + 0i, norm 9, so a split needs two factors of n
 
 To divide, multiply top and bottom by the conjugate of the bottom, turning the bottom into its own norm:
 
-$$\frac{a + bi}{c + di} = \frac{(a + bi)(c - di)}{c^2 + d^2}$$
+```math
+\frac{a + bi}{c + di} = \frac{(a + bi)(c - di)}{c^2 + d^2}
+```
 
 So c + di divides a + bi exactly when c^2 + d^2 divides both coordinates of the top. Dividing 5 by 2 + i gives numerators (10, -5) over 5: quotient 2 - i, exact.
 

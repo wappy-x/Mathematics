@@ -32,24 +32,28 @@ The third arrow is the one people leave out.
 
 ## The formula
 
-Three counts, in words first. $V$ is how many dots, or vertices, the drawing has — pads here — and $E$ how many lines, or edges, join them: tracks. $F$ is new on this card: the number of **faces**, the patches the drawing cuts the sheet into, the one outside everything included.
+Three counts, in words first. $`V`$ is how many dots, or vertices, the drawing has — pads here — and $`E`$ how many lines, or edges, join them: tracks. $`F`$ is new on this card: the number of **faces**, the patches the drawing cuts the sheet into, the one outside everything included.
 
 A drawing whose lines meet only at dots is a **plane drawing**; a network of dots and lines, a graph, that can be drawn that way is **planar**.
 
-$$V - E + F = 2$$
+```math
+V - E + F = 2
+```
 
 **Read it aloud:** dots, minus lines, plus regions including the outside, is two for any crossing-free drawing in one piece.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | dots: pads | 8 | add one on a track and $E$ rises too, so the total holds |
-| $E$ | lines: tracks | 12 | a track inside a patch splits it, so $F$ rises |
-| $F$ | faces: patches of bare board, the outside counted | 6 | pinned by the other two |
-| $c$ | pieces of the drawing | 1 | each piece adds 1, giving $1 + c$ |
+| $`V`$ | dots: pads | 8 | add one on a track and $`E`$ rises too, so the total holds |
+| $`E`$ | lines: tracks | 12 | a track inside a patch splits it, so $`F`$ rises |
+| $`F`$ | faces: patches of bare board, the outside counted | 6 | pinned by the other two |
+| $`c`$ | pieces of the drawing | 1 | each piece adds 1, giving $`1 + c`$ |
 
 Rearranged, it gives the face count:
 
-$$F = E - V + 2$$
+```math
+F = E - V + 2
+```
 
 Here 12 − 8 + 2 = 6: the patch count, without the picture.
 
@@ -57,7 +61,7 @@ Here 12 − 8 + 2 = 6: the patch count, without the picture.
 
 - **Finitely many dots and lines.** An endless grid has nothing to add up.
 - **Already drawn with no crossings.** The claim is about a drawing, not a network. Each crossing adds a patch without adding a pad, so the total overshoots: 2 plus one per crossing. Redraw to fix it.
-- **In one piece.** Two boards side by side share one outside patch and come to 3; $c$ pieces give $1 + c$.
+- **In one piece.** Two boards side by side share one outside patch and come to 3; $`c`$ pieces give $`1 + c`$.
 - **The outside patch counted.** Drop it and the board reads 1.
 
 ---
@@ -70,15 +74,17 @@ A **cycle** is a closed run of tracks back to its start, no pad repeated ([Walks
 
 ### Step 1: a drawing with no cycle is a tree, and cuts nothing out
 
-Connected with no cycle is the definition of a tree, and a tree has one fewer line than dots ([Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)). Drawn flat it encloses nothing, so $F = 1$ and
+Connected with no cycle is the definition of a tree, and a tree has one fewer line than dots ([Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)). Drawn flat it encloses nothing, so $`F = 1`$ and
 
-$$V - E + F = V - (V - 1) + 1 = 2.$$
+```math
+V - E + F = V - (V - 1) + 1 = 2.
+```
 
 Every tree, at once.
 
 ### Step 2: one rub-out loses a track and a patch together
 
-Rub out a track lying on a cycle. The pads are untouched, so $V$ holds. One track is gone, so $E$ falls by 1. By Step 0 the two faces along it were different, so they merge and $F$ falls by 1. The falls cancel, $V - E + F$ does not move, and the rest of the cycle keeps the drawing in one piece.
+Rub out a track lying on a cycle. The pads are untouched, so $`V`$ holds. One track is gone, so $`E`$ falls by 1. By Step 0 the two faces along it were different, so they merge and $`F`$ falls by 1. The falls cancel, $`V - E + F`$ does not move, and the rest of the cycle keeps the drawing in one piece.
 
 ### Step 3: keep rubbing out until the tree shows
 
@@ -143,7 +149,7 @@ Four drawings — board, tree, dual, region map — and the same count from each
 | --- | --- | --- |
 | The outside patch left out | 1 | That patch is what makes the total 2 |
 | The corridors read as one ring | −1 | The spokes cut it into four |
-| Two boards as one drawing | 3 | Two pieces give $1 + c$ |
+| Two boards as one drawing | 3 | Two pieces give $`1 + c`$ |
 
 The code prints all three.
 
@@ -151,7 +157,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The drawing arrives the only way it can without a picture: for each pad, the cyclic order in which its tracks leave it. Walking that order traces one face at a time, so the patch count is read off the drawing, not assumed; each track is walked from both sides, 24 sides for 12 tracks. Road one counts the traced faces, road two predicts the number from $E - V + 2$, and the proof runs as a program. The dual gives the second case: the map's five-region graph.
+Nothing is imported. The drawing arrives the only way it can without a picture: for each pad, the cyclic order in which its tracks leave it. Walking that order traces one face at a time, so the patch count is read off the drawing, not assumed; each track is walked from both sides, 24 sides for 12 tracks. Road one counts the traced faces, road two predicts the number from $`E - V + 2`$, and the proof runs as a program. The dual gives the second case: the map's five-region graph.
 
 ### Python
 

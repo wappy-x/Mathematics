@@ -36,29 +36,33 @@ The upper line is gold's forward if nobody paid to borrow it: spot grown at the 
 
 ## The formula
 
-Notation first, in words. The letter $l$ stands for the lease rate, the interest gold earns in gold. Rates are continuously compounded ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) uses the same convention): a deposit of 1 grows to $e^{rT}$ in $T$ years.
+Notation first, in words. The letter $`l`$ stands for the lease rate, the interest gold earns in gold. Rates are continuously compounded ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) uses the same convention): a deposit of 1 grows to $`e^{rT}`$ in $`T`$ years.
 
-$$F = S\,e^{(r - l)\,T}$$
+```math
+F = S\,e^{(r - l)\,T}
+```
 
 **Read it aloud:** the forward price of gold is today's price, grown for the life of the contract at the dollar rate minus the lease rate.
 
 | Symbol | Plain meaning | In our example | Push it up and the forward… |
 | --- | --- | --- | --- |
-| $S$ | spot price: dollars for one troy ounce delivered now | 2,000.00 | rises in proportion |
-| $F$ | forward price: dollars for one ounce, agreed now, delivered at $T$ | 2,081.62 | (the answer) |
-| $r$ | dollar rate: what a dollar deposit pays per year, continuously compounded | 5% | rises: the gold's buyer is charged the interest on the dollars that bought it |
-| $l$ | lease rate: what a gold deposit pays per year, in ounces, same basis | 1% | falls: gold held earns more, so it costs less for later delivery |
-| $T$ | years until delivery | 1 | rises when $r$ exceeds $l$, as here |
-| $e^{-lT}$ | ounces to lend today so that exactly one comes back at $T$ | 0.990050 | (built from $l$ and $T$) |
-| $e^{-rT}$ | discount factor, D(T): today's value of one dollar due at $T$ | (for the proof) | |
-| $e^{(r-l)T}$ | carry factor: how far the forward sits above spot, as a multiple | 1.040811 | (built from the three above) |
-| $F_q$ | a forward price someone quotes, which may differ from $F$ | 2,100 or 2,060 | above $F$ the seller of the forward profits; below, the buyer |
-| $S_T$ | the spot price that turns up on delivery day | unknown today | does not appear in $F$ at all |
-| $H$ | a fixed dollar fee paid to a gold lender at $T$, in place of lease ounces (tip in Why it works only) | not used | lowers that contract's forward one for one |
+| $`S`$ | spot price: dollars for one troy ounce delivered now | 2,000.00 | rises in proportion |
+| $`F`$ | forward price: dollars for one ounce, agreed now, delivered at $`T`$ | 2,081.62 | (the answer) |
+| $`r`$ | dollar rate: what a dollar deposit pays per year, continuously compounded | 5% | rises: the gold's buyer is charged the interest on the dollars that bought it |
+| $`l`$ | lease rate: what a gold deposit pays per year, in ounces, same basis | 1% | falls: gold held earns more, so it costs less for later delivery |
+| $`T`$ | years until delivery | 1 | rises when $`r`$ exceeds $`l`$, as here |
+| $`e^{-lT}`$ | ounces to lend today so that exactly one comes back at $`T`$ | 0.990050 | (built from $`l`$ and $`T`$) |
+| $`e^{-rT}`$ | discount factor, D(T): today's value of one dollar due at $`T`$ | (for the proof) | |
+| $`e^{(r-l)T}`$ | carry factor: how far the forward sits above spot, as a multiple | 1.040811 | (built from the three above) |
+| $`F_q`$ | a forward price someone quotes, which may differ from $`F`$ | 2,100 or 2,060 | above $`F`$ the seller of the forward profits; below, the buyer |
+| $`S_T`$ | the spot price that turns up on delivery day | unknown today | does not appear in $`F`$ at all |
+| $`H`$ | a fixed dollar fee paid to a gold lender at $`T`$, in place of lease ounces (tip in Why it works only) | not used | lowers that contract's forward one for one |
 
 Two helper formulas follow from taking logs of both sides.
 
-$$\frac{1}{T}\ln\frac{F}{S} = r - l \qquad\qquad l = r - \frac{1}{T}\ln\frac{F}{S}$$
+```math
+\frac{1}{T}\ln\frac{F}{S} = r - l \qquad\qquad l = r - \frac{1}{T}\ln\frac{F}{S}
+```
 
 In words: the **forward premium**, the yearly rate at which the forward sits above spot, is exactly the gap between the two interest rates, 4 percent here. Read the other way, a quoted forward reveals the lease rate the market is charging. A quote of 2,100 implies a lease rate of 0.121 percent.
 
@@ -66,7 +70,7 @@ In words: the **forward premium**, the yearly rate at which the forward sits abo
 
 ### When it holds
 
-- **Gold can be lent and borrowed at one lease rate, repaid in ounces.** Real banks lend gold dearer than they borrow it. The single $F$ then widens into a band, and a quote inside the band gives no free profit. A lease whose interest is a fixed dollar fee is a different contract, with a different formula (the tip in Why it works).
+- **Gold can be lent and borrowed at one lease rate, repaid in ounces.** Real banks lend gold dearer than they borrow it. The single $`F`$ then widens into a band, and a quote inside the band gives no free profit. A lease whose interest is a fixed dollar fee is a different contract, with a different formula (the tip in Why it works).
 - **One dollar rate for borrowing and lending.** A trader who borrows dollars dearer than it lends them faces a second band, stacked on the first.
 - **The ounce returned is the ounce delivered.** The loan must repay metal of the fineness, bar size and vault location the forward names. In March 2020, with flights grounded, New York gold futures traded tens of dollars above London spot for days, because a London bar could not become a New York delivery in time.
 - **Holding gold costs nothing worth counting.** Vaulting and insurance are small next to 2,000 dollars an ounce, so this card ignores them. For a commodity where storage is heavy and the reverse trade is blocked, the equality breaks into a ceiling: [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md).
@@ -78,22 +82,24 @@ In words: the **forward premium**, the yearly rate at which the forward sits abo
 
 ### Step 0: gold earns interest in gold, so an ounce next year costs less than an ounce today
 
-Holding a share of stock earns dividends. Holding dollars earns interest. Holding gold in a vault earns nothing, but gold lent to a bank earns the lease rate, paid in more gold. So nobody needs a full ounce today to have one ounce in a year. Lend $e^{-lT}$ = 0.990050 ounces today and exactly one ounce comes back.
+Holding a share of stock earns dividends. Holding dollars earns interest. Holding gold in a vault earns nothing, but gold lent to a bank earns the lease rate, paid in more gold. So nobody needs a full ounce today to have one ounce in a year. Lend $`e^{-lT}`$ = 0.990050 ounces today and exactly one ounce comes back.
 
 That gives two ways to own one ounce on delivery day, both fixed today.
 
-- **Route A, through the forward.** Agree today to pay $F$ dollars at $T$. To be sure of the dollars, set aside $F e^{-rT}$ now in a dollar deposit; it grows to exactly $F$.
-- **Route B, through spot and a gold loan.** Buy 0.990050 ounces today and lend them out. The cost today is $S e^{-lT}$ dollars.
+- **Route A, through the forward.** Agree today to pay $`F`$ dollars at $`T`$. To be sure of the dollars, set aside $`F e^{-rT}`$ now in a dollar deposit; it grows to exactly $`F`$.
+- **Route B, through spot and a gold loan.** Buy 0.990050 ounces today and lend them out. The cost today is $`S e^{-lT}`$ dollars.
 
 Both deliver the same ounce on the same day with no risk, so they must cost the same:
 
-$$F\,e^{-rT} = S\,e^{-lT} \quad\Longrightarrow\quad F = S\,e^{(r - l)T}.$$
+```math
+F\,e^{-rT} = S\,e^{-lT} \quad\Longrightarrow\quad F = S\,e^{(r - l)T}.
+```
 
 At the house numbers both routes cost 1,980.10 dollars today. Two cards already hold this argument. In [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) the asset pays an income yield, like a dividend; here that yield is the lease rate. In [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) the foreign currency earns its own deposit rate; here gold is the foreign currency and the lease rate is that deposit rate.
 
 ### Step 1: the seller's ledger, when the quote is too high
 
-Say a dealer quotes $F_q$ = 2,100, above 2,081.62; dealers call such a quote rich. Sell the forward and cover it with borrowed dollars and lent gold. The trade is sized to deliver exactly one ounce.
+Say a dealer quotes $`F_q`$ = 2,100, above 2,081.62; dealers call such a quote rich. Sell the forward and cover it with borrowed dollars and lent gold. The trade is sized to deliver exactly one ounce.
 
 | Step | Today | On delivery day |
 | --- | --- | --- |
@@ -103,11 +109,11 @@ Say a dealer quotes $F_q$ = 2,100, above 2,081.62; dealers call such a quote ric
 | Sell 1 oz forward at 2,100 | nothing | −1 oz, +2,100.00 dollars |
 | **Net** | **0** | **+18.38 dollars** |
 
-Nothing is paid today. Every delivery-day amount was fixed this morning. The spot price on delivery day, $S_T$, appears nowhere in the table: the gold that comes back from the loan is the gold that goes into the forward. This direction is called **cash-and-carry**: buy the metal with borrowed cash and carry it to delivery, here earning the lease rate on the way.
+Nothing is paid today. Every delivery-day amount was fixed this morning. The spot price on delivery day, $`S_T`$, appears nowhere in the table: the gold that comes back from the loan is the gold that goes into the forward. This direction is called **cash-and-carry**: buy the metal with borrowed cash and carry it to delivery, here earning the lease rate on the way.
 
 ### Step 2: the buyer's ledger, when the quote is too low
 
-Now $F_q$ = 2,060, below 2,081.62; the quote is cheap. Run every leg the other way. This direction, **reverse cash-and-carry**, needs gold that can be borrowed, which is the whole reason gold gets an equality.
+Now $`F_q`$ = 2,060, below 2,081.62; the quote is cheap. Run every leg the other way. This direction, **reverse cash-and-carry**, needs gold that can be borrowed, which is the whole reason gold gets an equality.
 
 | Step | Today | On delivery day |
 | --- | --- | --- |
@@ -121,36 +127,38 @@ The forward delivers the ounce that repays the gold loan. The deposit pays for i
 
 ### Step 3: close the gap in general
 
-Write the seller's ledger for any quote $F_q$. On delivery day the forward pays $F_q$ for the ounce the gold loan returned, and the dollar loan costs $S e^{-lT} e^{rT}$. So
+Write the seller's ledger for any quote $`F_q`$. On delivery day the forward pays $`F_q`$ for the ounce the gold loan returned, and the dollar loan costs $`S e^{-lT} e^{rT}`$. So
 
-$$\text{seller's profit} = F_q - S\,e^{(r - l)T} = F_q - F, \qquad \text{buyer's profit} = F - F_q.$$
+```math
+\text{seller's profit} = F_q - S\,e^{(r - l)T} = F_q - F, \qquad \text{buyer's profit} = F - F_q.
+```
 
-Because the trade is sized to one delivered ounce, the profit is the mispricing itself, with no extra factor. At 2,100 it is 18.38 and at 2,060 it is 21.62, the ledgers to the cent. The sign of $F_q - F$ picks the side that wins; only $F_q = F$ leaves neither side a sure profit.
+Because the trade is sized to one delivered ounce, the profit is the mispricing itself, with no extra factor. At 2,100 it is 18.38 and at 2,060 it is 21.62, the ledgers to the cent. The sign of $`F_q - F`$ picks the side that wins; only $`F_q = F`$ leaves neither side a sure profit.
 
 <details>
 <summary>Detailed proof: no quote other than F survives</summary>
 
-Assume one continuously compounded rate $r$ to borrow and lend dollars, one rate $l$ to borrow and lend gold with interest repaid in ounces, no fees, the same deliverable metal on every leg, and contracts honoured. Let the market quote $F_q$ for one ounce at $T$.
+Assume one continuously compounded rate $`r`$ to borrow and lend dollars, one rate $`l`$ to borrow and lend gold with interest repaid in ounces, no fees, the same deliverable metal on every leg, and contracts honoured. Let the market quote $`F_q`$ for one ounce at $`T`$.
 
-Seller's strategy at time 0: borrow $S e^{-lT}$ dollars, buy $e^{-lT}$ ounces, lend them at $l$, and sell one ounce forward at $F_q$. Dollars at 0: $+S e^{-lT} - S e^{-lT} = 0$. Ounces at 0: $+e^{-lT} - e^{-lT} = 0$. At $T$ the gold loan returns $e^{-lT} e^{lT} = 1$ ounce, which goes into the forward for $F_q$ dollars, and the dollar loan costs $S e^{-lT} e^{rT} = F$. Net ounces at $T$: zero. Net dollars at $T$: $F_q - F$. No term depends on $S_T$.
+Seller's strategy at time 0: borrow $`S e^{-lT}`$ dollars, buy $`e^{-lT}`$ ounces, lend them at $`l`$, and sell one ounce forward at $`F_q`$. Dollars at 0: $`+S e^{-lT} - S e^{-lT} = 0`$. Ounces at 0: $`+e^{-lT} - e^{-lT} = 0`$. At $`T`$ the gold loan returns $`e^{-lT} e^{lT} = 1`$ ounce, which goes into the forward for $`F_q`$ dollars, and the dollar loan costs $`S e^{-lT} e^{rT} = F`$. Net ounces at $`T`$: zero. Net dollars at $`T`$: $`F_q - F`$. No term depends on $`S_T`$.
 
-Buyer's strategy: borrow $e^{-lT}$ ounces, sell them for $S e^{-lT}$ dollars, deposit the dollars at $r$, and buy one ounce forward at $F_q$. Every position at 0 nets to zero. At $T$ the deposit pays $F$, the forward takes $F_q$ and delivers one ounce, and that ounce repays the gold loan. Net dollars at $T$: $F - F_q$.
+Buyer's strategy: borrow $`e^{-lT}`$ ounces, sell them for $`S e^{-lT}`$ dollars, deposit the dollars at $`r`$, and buy one ounce forward at $`F_q`$. Every position at 0 nets to zero. At $`T`$ the deposit pays $`F`$, the forward takes $`F_q`$ and delivers one ounce, and that ounce repays the gold loan. Net dollars at $`T`$: $`F - F_q`$.
 
-If $F_q > F$ the seller's strategy costs nothing and pays a positive amount for certain: an arbitrage, a sure profit from no outlay. If $F_q < F$ the buyer's does. In a market with no arbitrage, $F_q = F$. Both directions are needed. Without the gold loan in Step 2, only the upper half of the argument survives and $F$ becomes a ceiling, which is the situation on [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md).
+If $`F_q > F`$ the seller's strategy costs nothing and pays a positive amount for certain: an arbitrage, a sure profit from no outlay. If $`F_q < F`$ the buyer's does. In a market with no arbitrage, $`F_q = F`$. Both directions are needed. Without the gold loan in Step 2, only the upper half of the argument survives and $`F`$ becomes a ceiling, which is the situation on [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md).
 
 </details>
 
 ### Step 4: the forward premium is the rate gap, and a quote reveals the lease rate
 
-Take logs of $F = S e^{(r-l)T}$ and divide by $T$. The forward premium, $\ln(F/S)/T$, is 4 percent: the dollar rate less the lease rate, nothing else. As a plain ratio the forward sits 4.0811 percent above spot, which is $e^{0.04} - 1$, not 4 percent.
+Take logs of $`F = S e^{(r-l)T}`$ and divide by $`T`$. The forward premium, $`\ln(F/S)/T`$, is 4 percent: the dollar rate less the lease rate, nothing else. As a plain ratio the forward sits 4.0811 percent above spot, which is $`e^{0.04} - 1`$, not 4 percent.
 
-Turn it around and the market's forward quote reveals the lease rate: $l = r - \ln(F_q/S)/T$. Before solving, three questions every inverse must answer.
+Turn it around and the market's forward quote reveals the lease rate: $`l = r - \ln(F_q/S)/T`$. Before solving, three questions every inverse must answer.
 
-- **Existence.** For $S$, $F_q$ and $T$ all positive, $e^{(r - l)T}$ runs from very large to very near zero as $l$ climbs, passing every positive ratio $F_q/S$ once. So every positive quote has a lease rate, though not always a positive one.
-- **Uniqueness.** The curve only falls as $l$ rises, so it hits each ratio exactly once.
-- **Boundary cases.** At $T = 0$ the forward is spot and says nothing about $l$: a quote equal to 2,000 fits every lease rate, and any other quote fits none. A quote of zero or below has no logarithm and no answer. A quote above full dollar carry, $S e^{rT}$ = 2,102.54, solves only with a negative lease rate, which free storage rules out (the chart below shows why); the tradable quotes run from just above 0 to 2,102.54.
+- **Existence.** For $`S`$, $`F_q`$ and $`T`$ all positive, $`e^{(r - l)T}`$ runs from very large to very near zero as $`l`$ climbs, passing every positive ratio $`F_q/S`$ once. So every positive quote has a lease rate, though not always a positive one.
+- **Uniqueness.** The curve only falls as $`l`$ rises, so it hits each ratio exactly once.
+- **Boundary cases.** At $`T = 0`$ the forward is spot and says nothing about $`l`$: a quote equal to 2,000 fits every lease rate, and any other quote fits none. A quote of zero or below has no logarithm and no answer. A quote above full dollar carry, $`S e^{rT}`$ = 2,102.54, solves only with a negative lease rate, which free storage rules out (the chart below shows why); the tradable quotes run from just above 0 to 2,102.54.
 
-A quote of 2,100 implies $l$ = 0.05 − ln(1.05) = 0.121 percent. A bisection search on the formula, which never takes a logarithm, finds the same number to twelve decimals.
+A quote of 2,100 implies $`l`$ = 0.05 − ln(1.05) = 0.121 percent. A bisection search on the formula, which never takes a logarithm, finds the same number to twelve decimals.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -166,33 +174,33 @@ The line falls as the quote rises: a dearer forward means gold earns less by bei
 <details>
 <summary>What if the lease interest is paid in dollars?</summary>
 
-Some gold loans pay the lender a fixed dollar fee, $H$ at $T$, and return exactly one ounce. The same two routes then give $F = S e^{rT} - H$: buy an ounce with borrowed dollars, lend it, and the fee shaves the dollar debt. The two contracts give nearly the same forward when $H$ is close to the dollar value of the lease ounces, but not the same one, because ounces paid at $T$ are worth whatever gold is then worth, while $H$ is fixed. Read the lease contract before using the formula.
+Some gold loans pay the lender a fixed dollar fee, $`H`$ at $`T`$, and return exactly one ounce. The same two routes then give $`F = S e^{rT} - H`$: buy an ounce with borrowed dollars, lend it, and the fee shaves the dollar debt. The two contracts give nearly the same forward when $`H`$ is close to the dollar value of the lease ounces, but not the same one, because ounces paid at $`T`$ are worth whatever gold is then worth, while $`H`$ is fixed. Read the lease contract before using the formula.
 
 </details>
 
 ### The other door: an average, and a daily ledger
 
-The code reaches the same 2,081.62 two more ways. First, as an average. Suppose gold's price drifts at $r - l$ a year and wobbles randomly around that path (the risk-neutral valuation of [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)). Then the average of 200,000 simulated delivery-day prices lands on the forward, within its sampling error. Let gold drift at 8 percent instead, a forecast, and the average is 2,166.59: a different number, because the forward is not a forecast. Second, as a ledger rolled a day at a time, with the gold loan and the dollar loan each compounding once a day. That lands less than a cent below the continuous answer.
+The code reaches the same 2,081.62 two more ways. First, as an average. Suppose gold's price drifts at $`r - l`$ a year and wobbles randomly around that path (the risk-neutral valuation of [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)). Then the average of 200,000 simulated delivery-day prices lands on the forward, within its sampling error. Let gold drift at 8 percent instead, a forecast, and the average is 2,166.59: a different number, because the forward is not a forecast. Second, as a ledger rolled a day at a time, with the gold loan and the dollar loan each compounding once a day. That lands less than a cent below the continuous answer.
 
 ---
 
 ## Worked numbers, by hand
 
-Gold $S$ = 2,000 dollars an ounce, $r$ = 5%, $l$ = 1%, one year.
+Gold $`S`$ = 2,000 dollars an ounce, $`r`$ = 5%, $`l`$ = 1%, one year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | the rate gap | 0.05 − 0.01, times 1 year | 0.04 |
-| carry factor | $e^{0.04}$ | 1.040811 |
-| gold to lend today | $e^{-0.01}$ | 0.990050 oz |
+| carry factor | $`e^{0.04}`$ | 1.040811 |
+| gold to lend today | $`e^{-0.01}`$ | 0.990050 oz |
 | dollars to buy it | 2,000 × 0.990050 | 1,980.10 |
-| dollar debt at delivery | 1,980.10 × $e^{0.05}$ | 2,081.62 |
+| dollar debt at delivery | 1,980.10 × $`e^{0.05}`$ | 2,081.62 |
 | cross-check | 2,000 × 1.040811 | 2,081.62 |
 | **one-year forward** | | **2,081.62** |
 | seller's profit at 2,100 | 2,100.00 − 2,081.62 | 18.38 |
 | buyer's profit at 2,060 | 2,081.62 − 2,060.00 | 21.62 |
 | implied lease at 2,100 | 0.05 − ln(2,100 / 2,000) | 0.121% |
-| **five-year forward** | 2,000 × $e^{0.04 \times 5}$ | **2,442.81** |
+| **five-year forward** | 2,000 × $`e^{0.04 \times 5}`$ | **2,442.81** |
 
 A jeweller who wants gold in a year and a mine that will produce it in a year can agree on 2,081.62 today without either of them having a view on gold.
 
@@ -204,9 +212,9 @@ Same gold, correct forward 2,081.62. Every wrong answer below is printed by the 
 | --- | --- | --- |
 | Forget the lease rate | 2,102.54 | Treats gold as a metal that earns nothing. A 2,100 quote then looks cheap by 2.54 when it is rich by 18.38: the trader buys the forward the wrong way round. |
 | Add the lease rate | 2,123.67 | Treats the lease as a cost of holding gold. It is income to the holder who lends it. |
-| Simple rate gap, $S(1 + (r-l)T)$ | 2,080.00 | Ignores compounding: interest earned on interest. The error grows with $T$. |
+| Simple rate gap, $`S(1 + (r-l)T)`$ | 2,080.00 | Ignores compounding: interest earned on interest. The error grows with $`T`$. |
 | Discount instead of grow | 1,921.58 | Shrinks spot by the carry instead of growing it: the forward moved the wrong way from spot. |
-| Lend a whole ounce at 2,100 | −2.54 dollars and 0.010050 oz loose | The lease interest arrives in ounces. Lending a whole ounce leaves those ounces unsold, and their value depends on $S_T$: the lock is gone. |
+| Lend a whole ounce at 2,100 | −2.54 dollars and 0.010050 oz loose | The lease interest arrives in ounces. Lending a whole ounce leaves those ounces unsold, and their value depends on $`S_T`$: the lock is gone. |
 
 ---
 
@@ -584,16 +592,16 @@ The two outputs match line for line, including the simulated average: both langu
 
 ### Lean
 
-Lean proves the forward formula, the two ledgers and the implied lease rate, the last for positive spot, quote and $T$.
+Lean proves the forward formula, the two ledgers and the implied lease rate, the last for positive spot, quote and $`T`$.
 
-- Take any quote $F_q$. Suppose neither the seller's nor the buyer's ledger is a sure profit, whatever $S_T$ turns out to be. Then $F_q = S e^{(r-l)T}$.
-- Lending $e^{-lT}$ ounces today returns exactly one ounce at $T$.
-- Take any quote $F_q$ and any delivery-day price $S_T$. Then the seller's profit is $F_q - S e^{(r-l)T}$, and the buyer's is the same with the sign flipped.
-- Take $S$, $F_q$ and $T$ all positive. Then $F_q = S e^{(r-l)T}$ exactly when $l = r - \ln(F_q/S)/T$. So each positive quote has one implied lease rate.
+- Take any quote $`F_q`$. Suppose neither the seller's nor the buyer's ledger is a sure profit, whatever $`S_T`$ turns out to be. Then $`F_q = S e^{(r-l)T}`$.
+- Lending $`e^{-lT}`$ ounces today returns exactly one ounce at $`T`$.
+- Take any quote $`F_q`$ and any delivery-day price $`S_T`$. Then the seller's profit is $`F_q - S e^{(r-l)T}`$, and the buyer's is the same with the sign flipped.
+- Take $`S`$, $`F_q`$ and $`T`$ all positive. Then $`F_q = S e^{(r-l)T}`$ exactly when $`l = r - \ln(F_q/S)/T`$. So each positive quote has one implied lease rate.
 - Take gold at 2,000, dollars at 5% and lease at 1% for one year. Then the rate gap is 0.04, and the simple rate gap mistake gives exactly 2,080.
-- Take a lease rate of 5%, equal to the dollar rate, or take $T$ = 0. Then the forward is spot, 2,000.
+- Take a lease rate of 5%, equal to the dollar rate, or take $`T`$ = 0. Then the forward is spot, 2,000.
 - The five-year forward at a 1% lease equals the four-year forward with no lease, exactly.
-- Take a quote of 2,100. Then the implied lease rate is exactly $0.05 - \ln 1.05$.
+- Take a quote of 2,100. Then the implied lease rate is exactly $`0.05 - \ln 1.05`$.
 
 The decimal values, the daily ledger and the simulated average are left to the Python and Rust checks.
 
@@ -718,7 +726,7 @@ example : (5 / 100 : ℝ) - log (2100 / 2000) / 1 = 5 / 100 - log (21 / 20) := b
 > - **Adding the lease rate.** The lease is income to the holder of gold, not a storage cost. Adding it gives 2,123.67.
 > - **Lending a whole ounce to deliver a whole ounce.** The lease pays in ounces, so the trade needs 0.990050 ounces, not 1. Lending 1 leaves 0.010050 ounces unhedged.
 > - **Treating an implied lease rate as a tradable one.** A 2,100 quote implies 0.121 percent. That is the rate that makes the quote fair, not a promise that any bank will lend gold at it.
-> - **Mixing compounding.** A lease quoted as simple interest over a day count is not the $l$ in $e^{-lT}$. Convert it first, as [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) does for deposit rates.
+> - **Mixing compounding.** A lease quoted as simple interest over a day count is not the $`l`$ in $`e^{-lT}`$. Convert it first, as [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) does for deposit rates.
 
 ---
 
@@ -726,7 +734,7 @@ example : (5 / 100 : ℝ) - log (2100 / 2000) / 1 = 5 / 100 - log (21 / 20) := b
 
 - **Gold mines hedging.** A mine that sells its next year's output forward locks in a price. The bank that buys that forward is on the buyer's side of Step 2: it borrows gold, often from a central bank, sells it at spot, and deposits the dollars. Its ledger closes when the mine delivers.
 - **Central banks' reserves.** Gold held in reserve earns nothing in a vault. Lent to bullion banks, it earns the lease rate. Those loans are the supply of borrowable gold that makes Step 2 possible.
-- **Gold on the currency desk.** Because gold behaves like a currency, banks trade it the way they trade currencies: spot, forwards, and swaps that buy gold now and sell it forward. The forward points on such a swap are $F - S$, read exactly as in [Forward points and the FX swap](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/03-forward-points-and-fx-swaps.md).
+- **Gold on the currency desk.** Because gold behaves like a currency, banks trade it the way they trade currencies: spot, forwards, and swaps that buy gold now and sell it forward. The forward points on such a swap are $`F - S`$, read exactly as in [Forward points and the FX swap](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/03-forward-points-and-fx-swaps.md).
 - **Gold futures.** Exchange-traded futures settle gains and losses every day. With a fixed dollar rate their price equals the forward, and the gap otherwise is the subject of [Futures](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md).
 - **The rest of the shelf.** Wheat and crude oil cannot be lent the way gold can. Their forwards are bounds, not equalities: [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md) and [Convenience yield](03-convenience-yield-implied-by-the-forward.md).
 

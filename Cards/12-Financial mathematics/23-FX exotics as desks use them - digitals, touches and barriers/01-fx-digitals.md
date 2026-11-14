@@ -37,44 +37,50 @@ The step is the payoff on expiry day, the same for both contracts in their own c
 
 ## The formula
 
-Notation first. The rate $S$ is quoted in dollars per euro, so the euro is the **foreign** currency (the one being priced) and the dollar the **domestic** one (the currency prices are counted in). $r_d$ is the dollar interest rate and $r_f$ the euro rate, both continuously compounded. Everything else is the Garman-Kohlhagen notation of [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md); $N(x)$ is the area under the standard bell curve to the left of $x$.
+Notation first. The rate $`S`$ is quoted in dollars per euro, so the euro is the **foreign** currency (the one being priced) and the dollar the **domestic** one (the currency prices are counted in). $`r_d`$ is the dollar interest rate and $`r_f`$ the euro rate, both continuously compounded. Everything else is the Garman-Kohlhagen notation of [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md); $`N(x)`$ is the area under the standard bell curve to the left of $`x`$.
 
-The dollar digital pays one dollar if $S_T > K$. The euro digital pays one euro if $S_T > K$ and is valued here in euros:
+The dollar digital pays one dollar if $`S_T > K`$. The euro digital pays one euro if $`S_T > K`$ and is valued here in euros:
 
-$$D_d = e^{-r_d T}\,N(d_2), \qquad D_f = e^{-r_f T}\,N(d_1)$$
+```math
+D_d = e^{-r_d T}\,N(d_2), \qquad D_f = e^{-r_f T}\,N(d_1)
+```
 
 **Read it aloud:** "the dollar bet is the chance counted in dollars, discounted at the dollar rate; the euro bet is the chance counted in euros, discounted at the euro rate."
 
-On a smile, the volatility $\sigma$ depends on the strike, and each digital gains one term built from vega $\nu$ (the call's change per unit of volatility) and the smile's slope $\beta$ (change in volatility per unit of strike):
+On a smile, the volatility $`\sigma`$ depends on the strike, and each digital gains one term built from vega $`\nu`$ (the call's change per unit of volatility) and the smile's slope $`\beta`$ (change in volatility per unit of strike):
 
-$$D_d^{\text{smile}} = e^{-r_d T}N(d_2) - \nu\,\beta, \qquad D_f^{\text{smile}} = e^{-r_f T}N(d_1) - \frac{K}{S}\,\nu\,\beta$$
+```math
+D_d^{\text{smile}} = e^{-r_d T}N(d_2) - \nu\,\beta, \qquad D_f^{\text{smile}} = e^{-r_f T}N(d_1) - \frac{K}{S}\,\nu\,\beta
+```
 
 **Read it aloud:** "on a smile, take the flat price at the strike's own volatility, then subtract vega times the smile's slope."
 
 | Symbol | Plain meaning | In our example | Push it up and the dollar digital… |
 | --- | --- | --- | --- |
-| $S$, $S_T$ | today's rate, dollars per euro; $S_T$ is the rate on expiry day | 1.10 | rises: the euro starts nearer the payout zone |
-| $K$, $w$ | the strike, the level the euro must finish above; $w$ is a call spread's width | 1.10 | falls: a higher bar |
-| $T$ | time to expiry, in years | 1 | depends: more time to drift up, more discounting |
-| $r_d$, $r_f$ | dollar and euro interest rates, continuously compounded | 5%, 3% | $r_d$ up: rises in chance, falls in discount; $r_f$ up: falls |
-| $\sigma$ | volatility, the yearly jumpiness of the log of the rate | 10% | here falls: more spread pulls the chance toward a coin flip |
-| $F$ | the forward, $S e^{(r_d - r_f)T}$, the rate fixed today for delivery at $T$ | 1.122221 | |
-| $d_1$, $d_2$ | distance from strike to forward in units of $\sigma\sqrt{T}$; $d_1 = d_2 + \sigma\sqrt{T}$ | 0.25, 0.15 | |
-| $N$, $\phi$ | bell-curve area to the left, and bell-curve height | 0.598706, 0.559618 | |
-| $D_d$ | dollar digital, dollars per dollar of payout | 0.532325 | |
-| $D_f$ | euro digital, euros per euro of payout | 0.581012 | |
-| $\nu$ | vega, $S e^{-r_f T}\phi(d_1)\sqrt{T}$: the call's change per unit of volatility | 0.344608 at 1.201425 | |
-| $\beta$ | the smile's slope, change in volatility per unit of strike | −0.005031 at 1.201425 | |
+| $`S`$, $`S_T`$ | today's rate, dollars per euro; $`S_T`$ is the rate on expiry day | 1.10 | rises: the euro starts nearer the payout zone |
+| $`K`$, $`w`$ | the strike, the level the euro must finish above; $`w`$ is a call spread's width | 1.10 | falls: a higher bar |
+| $`T`$ | time to expiry, in years | 1 | depends: more time to drift up, more discounting |
+| $`r_d`$, $`r_f`$ | dollar and euro interest rates, continuously compounded | 5%, 3% | $`r_d`$ up: rises in chance, falls in discount; $`r_f`$ up: falls |
+| $`\sigma`$ | volatility, the yearly jumpiness of the log of the rate | 10% | here falls: more spread pulls the chance toward a coin flip |
+| $`F`$ | the forward, $`S e^{(r_d - r_f)T}`$, the rate fixed today for delivery at $`T`$ | 1.122221 | |
+| $`d_1`$, $`d_2`$ | distance from strike to forward in units of $`\sigma\sqrt{T}`$; $`d_1 = d_2 + \sigma\sqrt{T}`$ | 0.25, 0.15 | |
+| $`N`$, $`\phi`$ | bell-curve area to the left, and bell-curve height | 0.598706, 0.559618 | |
+| $`D_d`$ | dollar digital, dollars per dollar of payout | 0.532325 | |
+| $`D_f`$ | euro digital, euros per euro of payout | 0.581012 | |
+| $`\nu`$ | vega, $`S e^{-r_f T}\phi(d_1)\sqrt{T}`$: the call's change per unit of volatility | 0.344608 at 1.201425 | |
+| $`\beta`$ | the smile's slope, change in volatility per unit of strike | −0.005031 at 1.201425 | |
 
 The helper:
 
-$$d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: $d_2$ is how many wiggle units, $\sigma\sqrt{T}$ each, the euro has to spare above the strike in the dollar pricing world; $d_1$ is one wiggle unit more.
+In words: $`d_2`$ is how many wiggle units, $`\sigma\sqrt{T}`$ each, the euro has to spare above the strike in the dollar pricing world; $`d_1`$ is one wiggle unit more.
 
 ### When it holds
 
-- **A lognormal rate with one volatility.** The flat formulas assume it. On a smile, the flat price at the strike's own volatility misses exactly the $-\nu\beta$ term: at 1.10 on the house smile, 0.530331 flat against 0.567758 on the smile.
+- **A lognormal rate with one volatility.** The flat formulas assume it. On a smile, the flat price at the strike's own volatility misses exactly the $`-\nu\beta`$ term: at 1.10 on the house smile, 0.530331 flat against 0.567758 on the smile.
 - **Known, constant interest rates in both currencies.** If rates move, both discount factors and the forward move; the digital carries two rate risks, one per currency.
 - **One look, on expiry day.** A payout that fires the first time the rate touches a level is a different contract with a different price: [One-touch and no-touch](04-fx-one-touch-and-no-touch.md).
 - **Ordinary options at every strike, traded without cost.** The replication in Why it works needs calls a hair apart. Real call spreads have a finite width, so desks charge the spread's price, which sits above the formula.
@@ -85,63 +91,71 @@ In words: $d_2$ is how many wiggle units, $\sigma\sqrt{T}$ each, the euro has to
 
 ### Step 0: a digital is the slope of the call price in the strike
 
-Buy calls struck at $K$ and sell calls struck at $K + w$, a small width $w$ higher, on $1/w$ euros each. Below $K$ both are worthless. Above $K + w$ the pair pays exactly $w \times (1/w) = 1$ dollar. In between, the payout ramps from 0 to 1. Shrink $w$ and the ramp becomes a step: the dollar digital.
+Buy calls struck at $`K`$ and sell calls struck at $`K + w`$, a small width $`w`$ higher, on $`1/w`$ euros each. Below $`K`$ both are worthless. Above $`K + w`$ the pair pays exactly $`w \times (1/w) = 1`$ dollar. In between, the payout ramps from 0 to 1. Shrink $`w`$ and the ramp becomes a step: the dollar digital.
 
-The pair costs $\big(C(K) - C(K+w)\big)/w$ today, where $C(K)$ is the call price at strike $K$. As $w$ shrinks, that ratio becomes minus the slope of the call price against the strike. So
+The pair costs $`\big(C(K) - C(K+w)\big)/w`$ today, where $`C(K)`$ is the call price at strike $`K`$. As $`w`$ shrinks, that ratio becomes minus the slope of the call price against the strike. So
 
-$$D_d = -\frac{\partial C}{\partial K}.$$
+```math
+D_d = -\frac{\partial C}{\partial K}.
+```
 
 Everything below works out that slope: in a flat market, in the other currency, and on a smile.
 
 ### Step 1: in a flat market the slope is a discounted probability
 
-Garman-Kohlhagen prices the call as $C = S e^{-r_f T} N(d_1) - K e^{-r_d T} N(d_2)$. Differentiating in $K$ gives three pieces. $K$ appears directly in the cash half, giving $-e^{-r_d T}N(d_2)$. $K$ also sits inside $d_1$ and $d_2$, giving two terms with bell-curve heights, $S e^{-r_f T}\phi(d_1)$ and $K e^{-r_d T}\phi(d_2)$. Those two heights are equal, so the two terms cancel. What survives:
+Garman-Kohlhagen prices the call as $`C = S e^{-r_f T} N(d_1) - K e^{-r_d T} N(d_2)`$. Differentiating in $`K`$ gives three pieces. $`K`$ appears directly in the cash half, giving $`-e^{-r_d T}N(d_2)`$. $`K`$ also sits inside $`d_1`$ and $`d_2`$, giving two terms with bell-curve heights, $`S e^{-r_f T}\phi(d_1)`$ and $`K e^{-r_d T}\phi(d_2)`$. Those two heights are equal, so the two terms cancel. What survives:
 
-$$-\frac{\partial C}{\partial K} = e^{-r_d T} N(d_2).$$
+```math
+-\frac{\partial C}{\partial K} = e^{-r_d T} N(d_2).
+```
 
-The same answer comes from the pricing world directly. In the dollar pricing world the log of the rate is bell-shaped, centred at $\ln S + (r_d - r_f - \tfrac12\sigma^2)T$ with spread $\sigma\sqrt{T}$. The chance of finishing above $K$ is $N(d_2)$. A dollar paid at $T$ is worth $e^{-r_d T}$ today. Chance times discount: $e^{-r_d T}N(d_2)$, as on [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md), with the euro rate in place of the dividend yield.
+The same answer comes from the pricing world directly. In the dollar pricing world the log of the rate is bell-shaped, centred at $`\ln S + (r_d - r_f - \tfrac12\sigma^2)T`$ with spread $`\sigma\sqrt{T}`$. The chance of finishing above $`K`$ is $`N(d_2)`$. A dollar paid at $`T`$ is worth $`e^{-r_d T}`$ today. Chance times discount: $`e^{-r_d T}N(d_2)`$, as on [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md), with the euro rate in place of the dividend yield.
 
-A digital put pays one dollar when $S_T \le K$. Call and put together pay one dollar for sure, so together they cost $e^{-r_d T}$: $0.532325 + 0.418905 = 0.951229$.
+A digital put pays one dollar when $`S_T \le K`$. Call and put together pay one dollar for sure, so together they cost $`e^{-r_d T}`$: $`0.532325 + 0.418905 = 0.951229`$.
 
 <details>
 <summary>Detailed proof: the two bell-curve heights are equal</summary>
 
-Write $\phi(d_1) = \phi(d_2 + \sigma\sqrt{T}) = \phi(d_2)\,e^{-d_2\sigma\sqrt{T} - \frac12\sigma^2 T}$, from expanding the square in $e^{-x^2/2}$.
-Substitute $d_2\sigma\sqrt{T} = \ln(S/K) + (r_d - r_f - \tfrac12\sigma^2)T$. The exponent becomes $-\ln(S/K) - (r_d - r_f)T$, so $\phi(d_1) = \phi(d_2)\,\frac{K}{S}\,e^{-(r_d - r_f)T}$.
-Multiply by $S e^{-r_f T}$: $S e^{-r_f T}\phi(d_1) = K e^{-r_d T}\phi(d_2)$.
-In $\partial C/\partial K$ the first height multiplies $\partial d_1/\partial K = -1/(K\sigma\sqrt{T})$ and the second multiplies the same $\partial d_2/\partial K$. The two terms are equal and opposite, and cancel. Only $-e^{-r_d T}N(d_2)$ is left.
+Write $`\phi(d_1) = \phi(d_2 + \sigma\sqrt{T}) = \phi(d_2)\,e^{-d_2\sigma\sqrt{T} - \frac12\sigma^2 T}`$, from expanding the square in $`e^{-x^2/2}`$.
+Substitute $`d_2\sigma\sqrt{T} = \ln(S/K) + (r_d - r_f - \tfrac12\sigma^2)T`$. The exponent becomes $`-\ln(S/K) - (r_d - r_f)T`$, so $`\phi(d_1) = \phi(d_2)\,\frac{K}{S}\,e^{-(r_d - r_f)T}`$.
+Multiply by $`S e^{-r_f T}`$: $`S e^{-r_f T}\phi(d_1) = K e^{-r_d T}\phi(d_2)`$.
+In $`\partial C/\partial K`$ the first height multiplies $`\partial d_1/\partial K = -1/(K\sigma\sqrt{T})`$ and the second multiplies the same $`\partial d_2/\partial K`$. The two terms are equal and opposite, and cancel. Only $`-e^{-r_d T}N(d_2)`$ is left.
 
 </details>
 
 ### Step 2: the euro digital is the share half, counted in euros
 
-One euro paid when $S_T > K$ is worth $S_T$ dollars at that moment. So in dollars the euro digital pays $S_T$ if $S_T > K$: an asset-or-nothing payoff, the "share half" of the call ([Asset-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md)). Its dollar value is $S e^{-r_f T} N(d_1)$. Divide by today's rate to state it in euros:
+One euro paid when $`S_T > K`$ is worth $`S_T`$ dollars at that moment. So in dollars the euro digital pays $`S_T`$ if $`S_T > K`$: an asset-or-nothing payoff, the "share half" of the call ([Asset-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md)). Its dollar value is $`S e^{-r_f T} N(d_1)`$. Divide by today's rate to state it in euros:
 
-$$D_f = e^{-r_f T} N(d_1).$$
+```math
+D_f = e^{-r_f T} N(d_1).
+```
 
-Two things changed from the dollar digital. The discount is the euro rate, because the payout is a euro. The chance is $N(d_1)$, not $N(d_2)$, because counting in euros weights the futures where the euro is strong, and those are exactly the futures that pay. That shift is one wiggle unit, $\sigma\sqrt{T}$, the same slide that separates the two halves of the Black-Scholes call.
+Two things changed from the dollar digital. The discount is the euro rate, because the payout is a euro. The chance is $`N(d_1)`$, not $`N(d_2)`$, because counting in euros weights the futures where the euro is strong, and those are exactly the futures that pay. That shift is one wiggle unit, $`\sigma\sqrt{T}`$, the same slide that separates the two halves of the Black-Scholes call.
 
-A second route gives the same number without a new formula. A call is the asset-or-nothing minus $K$ dollar digitals. Rearranged: asset-or-nothing $= C + K D_d$. So $D_f = (C + K D_d)/S$.
+A second route gives the same number without a new formula. A call is the asset-or-nothing minus $`K`$ dollar digitals. Rearranged: asset-or-nothing $`= C + K D_d`$. So $`D_f = (C + K D_d)/S`$.
 
 ### Step 3: from the euro side, the euro digital is a plain digital on the inverted quote
 
-A euro-based bank quotes the same market the other way up: $1/S$ euros per dollar, about 0.909. For that bank the euro is domestic, its rate $r_f$ does the discounting, and the dollar is foreign with rate $r_d$. The volatility of $1/S$ is the same 10%, because the log of $1/S$ is minus the log of $S$.
+A euro-based bank quotes the same market the other way up: $`1/S`$ euros per dollar, about 0.909. For that bank the euro is domestic, its rate $`r_f`$ does the discounting, and the dollar is foreign with rate $`r_d`$. The volatility of $`1/S`$ is the same 10%, because the log of $`1/S`$ is minus the log of $`S`$.
 
-The event "euro above 1.10" is the event "dollar below $1/1.10$ euros". So the euro digital is a digital **put** on the inverted quote, paying one unit of that bank's domestic currency. Its price is the Step 1 formula for a put, with the rates swapped and the strike inverted: $e^{-r_f T} N(-d_2^{\text{inv}})$. Working out $d_2^{\text{inv}}$ with $1/S$, $1/K$, $r_f$ domestic and $r_d$ foreign gives exactly $-d_1$. So $N(-d_2^{\text{inv}}) = N(d_1)$, and the two views agree.
+The event "euro above 1.10" is the event "dollar below $`1/1.10`$ euros". So the euro digital is a digital **put** on the inverted quote, paying one unit of that bank's domestic currency. Its price is the Step 1 formula for a put, with the rates swapped and the strike inverted: $`e^{-r_f T} N(-d_2^{\text{inv}})`$. Working out $`d_2^{\text{inv}}`$ with $`1/S`$, $`1/K`$, $`r_f`$ domestic and $`r_d`$ foreign gives exactly $`-d_1`$. So $`N(-d_2^{\text{inv}}) = N(d_1)`$, and the two views agree.
 
 So there is only one formula: a foreign-paying digital is a domestic-paying digital seen from the other side of the quote, as on [One option, two currencies](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md).
 
 ### Step 4: on a smile the slope picks up vega times the smile's slope
 
-The market does not quote one volatility. The house smile, built on [The vanna-volga smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md), runs through 10.75% at the 25-delta put strike 1.052466, 10.00% at the at-the-money strike 1.127847 and 9.75% at the 25-delta call strike 1.201425. A 25-delta strike is the strike where the option's delta, its change in value per 1.00 move in spot, is 0.25 in size. Every call is priced at its own strike's volatility: $C\big(K, \sigma(K)\big)$.
+The market does not quote one volatility. The house smile, built on [The vanna-volga smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md), runs through 10.75% at the 25-delta put strike 1.052466, 10.00% at the at-the-money strike 1.127847 and 9.75% at the 25-delta call strike 1.201425. A 25-delta strike is the strike where the option's delta, its change in value per 1.00 move in spot, is 0.25 in size. Every call is priced at its own strike's volatility: $`C\big(K, \sigma(K)\big)`$.
 
-Step 0 still holds, because it only used call prices. But now $K$ enters twice: directly, and through $\sigma(K)$. The chain rule (the slope of a function inside a function) gives
+Step 0 still holds, because it only used call prices. But now $`K`$ enters twice: directly, and through $`\sigma(K)`$. The chain rule (the slope of a function inside a function) gives
 
-$$\frac{dC}{dK} = \frac{\partial C}{\partial K} + \frac{\partial C}{\partial \sigma}\,\frac{d\sigma}{dK} = -e^{-r_d T}N(d_2) + \nu\,\beta.$$
+```math
+\frac{dC}{dK} = \frac{\partial C}{\partial K} + \frac{\partial C}{\partial \sigma}\,\frac{d\sigma}{dK} = -e^{-r_d T}N(d_2) + \nu\,\beta.
+```
 
-Flip the sign: $D_d^{\text{smile}} = e^{-r_d T}N(d_2) - \nu\beta$, with $d_2$ at the strike's own volatility. Where the smile falls with strike, $\beta < 0$ and the digital is dearer than the flat price. A call spread across a falling smile has its long leg priced at the higher volatility, so it costs more; the digital is that spread.
+Flip the sign: $`D_d^{\text{smile}} = e^{-r_d T}N(d_2) - \nu\beta`$, with $`d_2`$ at the strike's own volatility. Where the smile falls with strike, $`\beta < 0`$ and the digital is dearer than the flat price. A call spread across a falling smile has its long leg priced at the higher volatility, so it costs more; the digital is that spread.
 
-For the euro digital, repeat Step 2 on the smile: asset-or-nothing $= C + K D_d^{\text{smile}}$. The call part adds nothing new, so the euro digital gains $-K\nu\beta$ dollars, which is $-(K/S)\nu\beta$ euros.
+For the euro digital, repeat Step 2 on the smile: asset-or-nothing $`= C + K D_d^{\text{smile}}`$. The call part adds nothing new, so the euro digital gains $`-K\nu\beta`$ dollars, which is $`-(K/S)\nu\beta`$ euros.
 
 <details>
 <summary>Why the house smile is nearly flat at the 25-delta call</summary>
@@ -152,25 +166,25 @@ A positive butterfly bends the smile upward; a negative risk reversal tilts it d
 
 ### The other door
 
-Differentiate once more in the strike: minus the digital's slope is the pricing-world density of the rate at $K$, discounted. That is Breeden and Litzenberger's reading of the smile as a probability density, and it is why a digital quote pins down the smile's slope as tightly as a vanilla quote pins down its level.
+Differentiate once more in the strike: minus the digital's slope is the pricing-world density of the rate at $`K`$, discounted. That is Breeden and Litzenberger's reading of the smile as a probability density, and it is why a digital quote pins down the smile's slope as tightly as a vanilla quote pins down its level.
 
 ---
 
 ## Worked numbers, by hand
 
-House market: $S = 1.10$, $K = 1.10$, $r_d = 5\%$, $r_f = 3\%$, $\sigma = 10\%$, $T = 1$ year.
+House market: $`S = 1.10`$, $`K = 1.10`$, $`r_d = 5\%`$, $`r_f = 3\%`$, $`\sigma = 10\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forward $F$ | $1.10 \times e^{0.02}$ | 1.122221 |
-| $\ln(S/K)$ | $\ln 1$ | 0 |
-| drift for $d_1$ | $0.05 - 0.03 + \tfrac12(0.01)$ | 0.025 |
-| $d_1$ | $0.025 / 0.10$ | 0.25 |
-| $d_2$ | $0.25 - 0.10$ | 0.15 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.598706, 0.559618 |
-| $e^{-r_d T}$, $e^{-r_f T}$ | $e^{-0.05}$, $e^{-0.03}$ | 0.951229, 0.970446 |
-| **dollar digital** | $0.951229 \times 0.559618$ | **0.532325** |
-| **euro digital** | $0.970446 \times 0.598706$ | **0.581012** |
+| forward $`F`$ | $`1.10 \times e^{0.02}`$ | 1.122221 |
+| $`\ln(S/K)`$ | $`\ln 1`$ | 0 |
+| drift for $`d_1`$ | $`0.05 - 0.03 + \tfrac12(0.01)`$ | 0.025 |
+| $`d_1`$ | $`0.025 / 0.10`$ | 0.25 |
+| $`d_2`$ | $`0.25 - 0.10`$ | 0.15 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.598706, 0.559618 |
+| $`e^{-r_d T}`$, $`e^{-r_f T}`$ | $`e^{-0.05}`$, $`e^{-0.03}`$ | 0.951229, 0.970446 |
+| **dollar digital** | $`0.951229 \times 0.559618`$ | **0.532325** |
+| **euro digital** | $`0.970446 \times 0.598706`$ | **0.581012** |
 
 On USD 1 million of payout the dollar digital costs USD 532,325. On EUR 1 million the euro digital costs EUR 581,012, which is USD 639,113 at today's rate. The euro digital is dearer in its own currency for two reasons: the euro rate discounts less, and the euro-counted chance is higher.
 
@@ -180,17 +194,17 @@ The 25-delta call strike, 1.201425, is where the smile's right-hand pillar sits.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| flat dollar digital at 9.75% | $e^{-r_d T}N(d_2)$ | 0.216085 |
-| smile's slope $\beta$ | from the vanna-volga curve | −0.005031 per unit of strike |
-| vega $\nu$ | $S e^{-r_f T}\phi(d_1)\sqrt{T}$ | 0.344608 |
-| skew term | $-0.344608 \times (-0.005031)$ | +0.001734 |
-| **dollar digital on the smile** | $0.216085 + 0.001734$ | **0.217818** |
-| skew term as a share of flat | $0.001734 / 0.216085$ | 0.008023 |
+| flat dollar digital at 9.75% | $`e^{-r_d T}N(d_2)`$ | 0.216085 |
+| smile's slope $`\beta`$ | from the vanna-volga curve | −0.005031 per unit of strike |
+| vega $`\nu`$ | $`S e^{-r_f T}\phi(d_1)\sqrt{T}`$ | 0.344608 |
+| skew term | $`-0.344608 \times (-0.005031)`$ | +0.001734 |
+| **dollar digital on the smile** | $`0.216085 + 0.001734`$ | **0.217818** |
+| skew term as a share of flat | $`0.001734 / 0.216085`$ | 0.008023 |
 | call spread along the smile, width 0.00001 | second road | 0.217818 |
-| euro digital, flat | $e^{-r_f T}N(d_1)$ | 0.250000 |
-| euro digital on the smile | $0.25 - (K/S)\nu\beta$ | 0.251894 |
+| euro digital, flat | $`e^{-r_f T}N(d_1)`$ | 0.250000 |
+| euro digital on the smile | $`0.25 - (K/S)\nu\beta`$ | 0.251894 |
 
-The skew term lifts the 25-delta dollar digital by 0.8% of its flat price. The euro digital there is worth exactly 0.25 euros flat. That is no accident: $e^{-r_f T}N(d_1)$ is also the call's spot delta, and the strike was chosen to make it 0.25.
+The skew term lifts the 25-delta dollar digital by 0.8% of its flat price. The euro digital there is worth exactly 0.25 euros flat. That is no accident: $`e^{-r_f T}N(d_1)`$ is also the call's spot delta, and the strike was chosen to make it 0.25.
 
 Near the money the smile is steeper and the correction much larger. At 1.10 the house smile gives 10.2161%. The flat price at that volatility is 0.530331; the skew term adds 0.037427, about 7% of it, for 0.567758 on the smile.
 
@@ -208,7 +222,7 @@ Lower line to the left: the flat formula at each strike's own smile volatility. 
 
 ### The call spread a desk actually trades
 
-The replication needs a width. A desk that sells the digital buys calls at $K - w$ and sells calls at $K$, on $1/w$ euros each. That spread pays at least as much as the digital everywhere, so it is a safe cover, and it costs more:
+The replication needs a width. A desk that sells the digital buys calls at $`K - w`$ and sells calls at $`K`$, on $`1/w`$ euros each. That spread pays at least as much as the digital everywhere, so it is a safe cover, and it costs more:
 
 ```
 one-sided call spread, K - w to K, value per dollar of payout
@@ -218,14 +232,14 @@ w = 0.001   ██████████████████████�
 digital     ████████████████████████████████    0.532325
 ```
 
-The excess over 0.532325 is the charge for a spread of nonzero width. Narrower is cheaper, but the notional $1/w$ grows without limit.
+The excess over 0.532325 is the charge for a spread of nonzero width. Narrower is cheaper, but the notional $`1/w`$ grows without limit.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $N(d_1)$ in the dollar digital | 0.569507 (right: 0.532325) | The euro-counted chance paid in dollars. The same number is the euro digital discounted at the dollar rate. |
-| Rates swapped, $r_d \leftrightarrow r_f$ | 0.389434 | The forward now sits below the strike and the discount is wrong: a different market. |
+| $`N(d_1)`$ in the dollar digital | 0.569507 (right: 0.532325) | The euro-counted chance paid in dollars. The same number is the euro digital discounted at the dollar rate. |
+| Rates swapped, $`r_d \leftrightarrow r_f`$ | 0.389434 | The forward now sits below the strike and the discount is wrong: a different market. |
 | Skew term added with a plus sign, 25-delta | 0.214351 (right: 0.217818) | The digital comes out cheaper than flat on a falling smile, the wrong direction. |
 | 25-delta digital at the 10% at-the-money volatility | 0.220770 (right: 0.217818) | Ignores both the smile's level at the strike and its slope. |
 
@@ -240,13 +254,13 @@ Sensitivities per unit of payout, at the 1.10 strike, flat 10%:
 | vega, per volatility point | −0.009381 | −0.005629 |
 | spot where vega changes sign | 1.072841 | 1.083623 |
 
-The checks confirm the dollar delta and vega by bumping spot and volatility. Both deltas are 3.411276 only because the strike equals the spot: then the Step 1 identity makes the two bell-curve heights equal. Vega is negative at the money. More volatility spreads the outcomes, and a bet already more likely than not to pay loses some of its edge. Vega turns positive only below 1.072841 for the dollar digital, where $d_1 = 0$, not at the strike. Near expiry the delta becomes a tall spike around the strike, which is the hedging problem [Greeks at the wall](06-barrier-and-touch-greeks.md) takes up at a barrier.
+The checks confirm the dollar delta and vega by bumping spot and volatility. Both deltas are 3.411276 only because the strike equals the spot: then the Step 1 identity makes the two bell-curve heights equal. Vega is negative at the money. More volatility spreads the outcomes, and a bet already more likely than not to pay loses some of its edge. Vega turns positive only below 1.072841 for the dollar digital, where $`d_1 = 0`$, not at the strike. Near expiry the delta becomes a tall spike around the strike, which is the hedging problem [Greeks at the wall](06-barrier-and-touch-greeks.md) takes up at a barrier.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts price both digitals by **five roads**: the formula, a tight call spread, a Monte Carlo average over 200,000 year-end rates from a hand-written generator, the identity $(C + K D_d)/S$, and the inverted quote by formula and by put spread. The smile is the Castagna-Mercurio second-order curve through the three house pillars; the 25-delta digital is priced by vega times slope and, independently, by a call spread whose legs sit at their own smile volatilities. Every number on this card is printed by both scripts.
+The scripts price both digitals by **five roads**: the formula, a tight call spread, a Monte Carlo average over 200,000 year-end rates from a hand-written generator, the identity $`(C + K D_d)/S`$, and the inverted quote by formula and by put spread. The smile is the Castagna-Mercurio second-order curve through the three house pillars; the 25-delta digital is priced by vega times slope and, independently, by a call spread whose legs sit at their own smile volatilities. Every number on this card is printed by both scripts.
 
 ### Python
 
@@ -646,16 +660,16 @@ The two outputs agree line for line, including the Monte Carlo rows.
 
 ### Lean
 
-Lean proves the flat, smile and inverted-quote formulas for every positive $S$, $K$, $\sigma$ and $T$, and checks the worked numbers.
+Lean proves the flat, smile and inverted-quote formulas for every positive $`S`$, $`K`$, $`\sigma`$ and $`T`$, and checks the worked numbers.
 
-- Take a lognormal rate with one volatility $\sigma$ and known constant rates. Then the dollar digital, chance times discount, is $e^{-r_d T}N(d_2)$.
-- Take the same market. Then the euro digital's dollar value, divided by $S$, is $e^{-r_f T}N(d_1)$.
+- Take a lognormal rate with one volatility $`\sigma`$ and known constant rates. Then the dollar digital, chance times discount, is $`e^{-r_d T}N(d_2)`$.
+- Take the same market. Then the euro digital's dollar value, divided by $`S`$, is $`e^{-r_f T}N(d_1)`$.
 - In the same market, the dollar digital is minus the slope of the call price against the strike.
-- Take a smile $\sigma(K)$ with slope $\beta$ at the strike, and $\sigma(K) > 0$. Then minus the smile call's slope is $e^{-r_d T}N(d_2) - \nu\beta$.
-- Take the same smile, with $d_1$, $d_2$ and $\nu$ at the strike's own volatility. Then $(C + K D_d)/S$ is $e^{-r_f T}N(d_1) - (K/S)\nu\beta$.
-- Take the euro-side view: rate $1/S$, the two rates swapped, the same volatility. Then the digital put below $1/K$ costs $e^{-r_f T}N(-d_2^{\text{inv}})$.
-- Take that view. Then $-d_2^{\text{inv}} = d_1$, so the digital put costs exactly the euro digital's price.
-- Take the house market. Then $d_1$ = 0.25, $d_2$ = 0.15 and $d_2^{\text{inv}}$ = −0.25, exactly.
+- Take a smile $`\sigma(K)`$ with slope $`\beta`$ at the strike, and $`\sigma(K) > 0`$. Then minus the smile call's slope is $`e^{-r_d T}N(d_2) - \nu\beta`$.
+- Take the same smile, with $`d_1`$, $`d_2`$ and $`\nu`$ at the strike's own volatility. Then $`(C + K D_d)/S`$ is $`e^{-r_f T}N(d_1) - (K/S)\nu\beta`$.
+- Take the euro-side view: rate $`1/S`$, the two rates swapped, the same volatility. Then the digital put below $`1/K`$ costs $`e^{-r_f T}N(-d_2^{\text{inv}})`$.
+- Take that view. Then $`-d_2^{\text{inv}} = d_1`$, so the digital put costs exactly the euro digital's price.
+- Take the house market. Then $`d_1`$ = 0.25, $`d_2`$ = 0.15 and $`d_2^{\text{inv}}`$ = −0.25, exactly.
 
 The bell-curve values, the house smile, the call spreads, the Monte Carlo runs and the Greeks are left to the Python and Rust checks.
 
@@ -1035,14 +1049,14 @@ example : (530331 / 1000000 : ℚ) + 37427 / 1000000 = 567758 / 1000000 := by no
 ## The usual mistake
 
 > [!warning]
-> **Pricing a digital as the chance at the strike's own volatility.** On a smile that is the wrong price, and not by a rounding error. A digital is a call spread, and a call spread across a sloping smile has its two legs at different volatilities. The flat formula misses the whole $-\nu\beta$ term: at 1.10 on the house smile the digital is 0.567758, not the 0.530331 the strike's own 10.2161% gives.
+> **Pricing a digital as the chance at the strike's own volatility.** On a smile that is the wrong price, and not by a rounding error. A digital is a call spread, and a call spread across a sloping smile has its two legs at different volatilities. The flat formula misses the whole $`-\nu\beta`$ term: at 1.10 on the house smile the digital is 0.567758, not the 0.530331 the strike's own 10.2161% gives.
 >
 > Smaller traps:
-> - **The wrong chance for the currency.** $N(d_2)$ goes with a dollar payout, $N(d_1)$ with a euro payout. Mixed up, the dollar digital reads 0.569507.
+> - **The wrong chance for the currency.** $`N(d_2)`$ goes with a dollar payout, $`N(d_1)`$ with a euro payout. Mixed up, the dollar digital reads 0.569507.
 > - **The wrong discount.** A euro paid in a year is discounted at the euro rate. Discounting the euro digital at the dollar rate gives 0.569507 against 0.581012.
-> - **Reading $N(d_2)$ as the real-world chance.** It is the chance in the dollar pricing world, with the drift set by the two rates. Nobody's forecast enters.
-> - **Units in the skew term.** $\nu$ is per 1.00 of volatility and $\beta$ per 1.00 of strike. Vega per volatility point makes the term 100 times too small.
-> - **Assuming vega changes sign at the strike.** For the dollar digital it changes at $d_1 = 0$, spot 1.072841, below the 1.10 strike.
+> - **Reading $`N(d_2)`$ as the real-world chance.** It is the chance in the dollar pricing world, with the drift set by the two rates. Nobody's forecast enters.
+> - **Units in the skew term.** $`\nu`$ is per 1.00 of volatility and $`\beta`$ per 1.00 of strike. Vega per volatility point makes the term 100 times too small.
+> - **Assuming vega changes sign at the strike.** For the dollar digital it changes at $`d_1 = 0`$, spot 1.072841, below the 1.10 strike.
 
 ---
 
@@ -1055,13 +1069,13 @@ example : (530331 / 1000000 : ℚ) + 37427 / 1000000 = 567758 / 1000000 := by no
 - **Smile risk in exotics.** The skew term is the simplest case of the correction that [Barriers on a smile](07-barriers-with-the-smile.md) applies to contracts that watch the whole path.
 
 > **Say it back**
-> A currency digital pays a fixed amount, in dollars or in euros, if the rate finishes above the strike. It is the slope of the call price against the strike, so a tight call spread builds it. In a flat market the dollar digital is $e^{-r_d T}N(d_2)$ and the euro digital is $e^{-r_f T}N(d_1)$: each is a chance counted and discounted in the currency it pays. Seen from the euro side, the euro digital is an ordinary digital on the inverted quote. On a smile each gains minus vega times the smile's slope.
+> A currency digital pays a fixed amount, in dollars or in euros, if the rate finishes above the strike. It is the slope of the call price against the strike, so a tight call spread builds it. In a flat market the dollar digital is $`e^{-r_d T}N(d_2)`$ and the euro digital is $`e^{-r_f T}N(d_1)`$: each is a chance counted and discounted in the currency it pays. Seen from the euro side, the euro digital is an ordinary digital on the inverted quote. On a smile each gains minus vega times the smile's slope.
 
 ---
 
 ## What this builds on
 
-- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the call price, $d_1$, $d_2$ and vega that every step here differentiates.
+- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the call price, $`d_1`$, $`d_2`$ and vega that every step here differentiates.
 - [The vanna-volga smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md): the house smile, the curve whose slope the skew term uses.
 - [One option, two currencies](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md): the inverted quote, which turns a euro payout into a domestic one.
 - [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): the dollar digital on a share, which this card moves to a currency.

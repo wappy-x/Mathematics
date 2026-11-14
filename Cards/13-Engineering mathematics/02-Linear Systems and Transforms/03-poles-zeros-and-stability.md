@@ -35,44 +35,50 @@ The line is the simulated speed, sampled every 5 s. It passes 27 m/s at 10.304 s
 
 ## The formula
 
-Reminder from [Transfer functions](02-impulse-response-and-transfer-functions.md): the transfer function $G(s)$ says what the system does to each exponential e^(st) fed into it, and its inverse Laplace transform is the impulse response, written h(t) there and $g(t)$ here, the output after one sharp kick. Engineers write j for the square root of −1, as this wing does; the rest of the library writes i.
+Reminder from [Transfer functions](02-impulse-response-and-transfer-functions.md): the transfer function $`G(s)`$ says what the system does to each exponential e^(st) fed into it, and its inverse Laplace transform is the impulse response, written h(t) there and $`g(t)`$ here, the output after one sharp kick. Engineers write j for the square root of −1, as this wing does; the rest of the library writes i.
 
 For the car on cruise control, from set speed to road speed (derived in Step 1):
 
-$$G(s) = \frac{0.16\,(s + 0.125)}{s^2 + 0.2\,s + 0.02} = \frac{0.16\,(s - z_1)}{(s - p_1)(s - p_2)}, \qquad p_{1,2} = -0.1 \pm 0.1j, \quad z_1 = -0.125.$$
+```math
+G(s) = \frac{0.16\,(s + 0.125)}{s^2 + 0.2\,s + 0.02} = \frac{0.16\,(s - z_1)}{(s - p_1)(s - p_2)}, \qquad p_{1,2} = -0.1 \pm 0.1j, \quad z_1 = -0.125.
+```
 
-A **pole** is a value of $s$ where the denominator is zero and $G(s)$ blows up. A **zero** is a value of $s$ where the numerator is zero and the system blocks that exponential completely. With distinct poles, partial fractions split $G(s)$ into one simple piece per pole, and each piece is the transform of one exponential:
+A **pole** is a value of $`s`$ where the denominator is zero and $`G(s)`$ blows up. A **zero** is a value of $`s`$ where the numerator is zero and the system blocks that exponential completely. With distinct poles, partial fractions split $`G(s)`$ into one simple piece per pole, and each piece is the transform of one exponential:
 
-$$G(s) = \sum_{i=1}^{n} \frac{r_i}{s - p_i} \quad\Longrightarrow\quad g(t) = \sum_{i=1}^{n} r_i\, e^{p_i t}, \qquad r_i = \lim_{s \to p_i} (s - p_i)\,G(s).$$
+```math
+G(s) = \sum_{i=1}^{n} \frac{r_i}{s - p_i} \quad\Longrightarrow\quad g(t) = \sum_{i=1}^{n} r_i\, e^{p_i t}, \qquad r_i = \lim_{s \to p_i} (s - p_i)\,G(s).
+```
 
 **Read it aloud:** the kick response is one exponential per pole, each scaled by its residue.
 
 The test that the poles decide:
 
-$$\text{every input with } |\text{input}(t)| \le M \text{ gives a bounded output} \iff \int_0^\infty |g(t)|\,dt < \infty \iff \operatorname{Re} p_i < 0 \text{ for every } i.$$
+```math
+\text{every input with } |\text{input}(t)| \le M \text{ gives a bounded output} \iff \int_0^\infty |g(t)|\,dt < \infty \iff \mathrm{Re}\, p_i < 0 \text{ for every } i.
+```
 
-**Read it aloud:** a system is stable in the bounded-input bounded-output sense, BIBO for short, exactly when the area under the size of its kick response, |g(t)|, is finite, and that happens exactly when every pole sits strictly left of the imaginary axis. The output then never exceeds $M$ times that area.
+**Read it aloud:** a system is stable in the bounded-input bounded-output sense, BIBO for short, exactly when the area under the size of its kick response, |g(t)|, is finite, and that happens exactly when every pole sits strictly left of the imaginary axis. The output then never exceeds $`M`$ times that area.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | the rate in a test exponential e^(st), in 1/s; complex, its imaginary part in rad/s | any complex number | — |
-| $G(s)$ | transfer function, set speed to road speed | 0.16 (s + 0.125) / (s^2 + 0.2 s + 0.02) | — |
-| $p_i$ | a pole: a root of the denominator, in 1/s | −0.1 ± 0.1j | real part up: slower decay, then growth past 0 |
-| $\sigma$, $\omega$ | decay rate and ring rate: the pole is −σ ± jω | 0.1 1/s and 0.1 rad/s | σ up: faster settling; ω up: faster ring |
-| $z_i$ | a zero: a root of the numerator, in 1/s | −0.125 | with the poles held: toward 0, bigger overshoot; past 0, a dip first |
-| $r_i$ | residue: how much of mode i the kick excites | 0.08 − 0.02j | bigger swing in that mode |
-| $t$, $g(t)$ | time in s; impulse response, per s | g(0) = 0.16 per s | — |
-| $m$, $b$ | car mass in kg; drag slope in N per (m/s) | 1,500 kg; 60 N per (m/s) | m up: slower car pole −b/m |
-| $k$ | controller gain, N of push per (m/s) of shortfall | 240 N per (m/s) | poles move: table in Step 2 |
-| $a$ | controller zero at s = −a, in 1/s | 0.125 1/s | integrator acts harder |
-| $M$ | the largest size the input ever reaches | ±1 m/s of set-speed change | output bound grows with it |
-| $v$, $u$, $E$ | in Step 1: speed change in m/s; throttle push in N; the shortfall, set speed minus speed, in m/s | E starts at 2 m/s after the tap; v ends at 2 m/s | — |
-| $T$, $\tau$ | in Step 4: the time the output is read, and the age of each slice of input, in s | τ from 0 to T | — |
+| $`s`$ | the rate in a test exponential e^(st), in 1/s; complex, its imaginary part in rad/s | any complex number | — |
+| $`G(s)`$ | transfer function, set speed to road speed | 0.16 (s + 0.125) / (s^2 + 0.2 s + 0.02) | — |
+| $`p_i`$ | a pole: a root of the denominator, in 1/s | −0.1 ± 0.1j | real part up: slower decay, then growth past 0 |
+| $`\sigma`$, $`\omega`$ | decay rate and ring rate: the pole is −σ ± jω | 0.1 1/s and 0.1 rad/s | σ up: faster settling; ω up: faster ring |
+| $`z_i`$ | a zero: a root of the numerator, in 1/s | −0.125 | with the poles held: toward 0, bigger overshoot; past 0, a dip first |
+| $`r_i`$ | residue: how much of mode i the kick excites | 0.08 − 0.02j | bigger swing in that mode |
+| $`t`$, $`g(t)`$ | time in s; impulse response, per s | g(0) = 0.16 per s | — |
+| $`m`$, $`b`$ | car mass in kg; drag slope in N per (m/s) | 1,500 kg; 60 N per (m/s) | m up: slower car pole −b/m |
+| $`k`$ | controller gain, N of push per (m/s) of shortfall | 240 N per (m/s) | poles move: table in Step 2 |
+| $`a`$ | controller zero at s = −a, in 1/s | 0.125 1/s | integrator acts harder |
+| $`M`$ | the largest size the input ever reaches | ±1 m/s of set-speed change | output bound grows with it |
+| $`v`$, $`u`$, $`E`$ | in Step 1: speed change in m/s; throttle push in N; the shortfall, set speed minus speed, in m/s | E starts at 2 m/s after the tap; v ends at 2 m/s | — |
+| $`T`$, $`\tau`$ | in Step 4: the time the output is read, and the age of each slice of input, in s | τ from 0 to T | — |
 
 ### When it holds
 
 - **Linear and time-invariant.** Real drag grows with the square of speed; the card uses its slope near 25 m/s. For a 10 m/s change the straight line gives 600 N of extra drag where a 1.2 v^2 law gives 720 N, so poles drawn at 25 m/s do not describe a jump to 35 m/s.
-- **A rational G with common factors cancelled.** A zero that lands on a pole erases it from $G(s)$, but the mode is still inside the machine: an erased runaway pole still runs away, unseen at the output ([State space](../04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md) tracks it).
+- **A rational G with common factors cancelled.** A zero that lands on a pole erases it from $`G(s)`$, but the mode is still inside the machine: an erased runaway pole still runs away, unseen at the output ([State space](../04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md) tracks it).
 - **Distinct poles, or care with repeats.** A pole repeated twice gives a mode t e^(pt). The test is unchanged in the open left half-plane, but a repeated pole on the axis grows like t.
 - **Numerator degree below the denominator's, for the sum as written.** At equal degree G also has a constant term: that share of the input passes straight through, so g gains an instant spike of that size, and the area of |g| gains the size too. Above it, a pure differentiator, G(s) = s, has no pole yet fails the test: a bounded input that wiggles ever faster has an unbounded slope.
 - **Starting from rest.** BIBO is about the input-to-output map with zero initial stored energy; a start from a disturbed state adds the same modes with other amounts.
@@ -91,7 +97,9 @@ Call the speed change v, in m/s, and the throttle push u, in N. Newton's law wit
 
 The controller pushes u = k E + k a × (running total of E), where E is the shortfall, set speed minus speed. Its transfer function is k + k a / s = k (s + a)/s: a **pole at the origin**, the integrator, and a zero at −a = −0.125 1/s. Closing the loop, v = (controller × car)(set speed − v), and solving for v over set speed:
 
-$$G(s) = \frac{(k/m)(s + a)}{s^2 + \frac{b + k}{m}\, s + \frac{k a}{m}} = \frac{0.16\,(s + 0.125)}{s^2 + 0.2\,s + 0.02}.$$
+```math
+G(s) = \frac{(k/m)(s + a)}{s^2 + \frac{b + k}{m}\, s + \frac{k a}{m}} = \frac{0.16\,(s + 0.125)}{s^2 + 0.2\,s + 0.02}.
+```
 
 G(0) = 0.02 / 0.02 = 1.0000: a held change in set speed ends as the same change in road speed. That is the integrator's job, and [Final value and bandwidth](05-final-value-theorem-and-steady-gain.md) proves it in general.
 
@@ -123,15 +131,21 @@ The two crosses on the left are this car's poles. The circle at −0.125 is the 
 
 The residue at p1 is the rest of G with the factor (s − p1) removed, evaluated at p1:
 
-$$r_1 = \frac{0.16\,p_1 + 0.02}{p_1 - p_2} = \frac{0.004 + 0.016j}{0.2j} = 0.08 - 0.02j,$$
+```math
+r_1 = \frac{0.16\,p_1 + 0.02}{p_1 - p_2} = \frac{0.004 + 0.016j}{0.2j} = 0.08 - 0.02j,
+```
 
 and r2 is its mirror image, 0.08 + 0.02j. Adding the pair:
 
-$$g(t) = e^{-0.1t}\,(0.16 \cos 0.1t + 0.04 \sin 0.1t)\ \text{per s}.$$
+```math
+g(t) = e^{-0.1t}\,(0.16 \cos 0.1t + 0.04 \sin 0.1t)\ \text{per s}.
+```
 
 The response to the tap is the running area of g, so its own residues are those of G(s)/s: 1 at the new pole s = 0, and r1/p1 = −0.5 − 0.3j at p1. Per m/s of set-speed change,
 
-$$\text{speed change}(t) = 1 - e^{-0.1t}\,(\cos 0.1t - 0.6 \sin 0.1t).$$
+```math
+\text{speed change}(t) = 1 - e^{-0.1t}\,(\cos 0.1t - 0.6 \sin 0.1t).
+```
 
 ### Step 4: a bounded input gives a bounded output exactly when the area of |g| is finite
 
@@ -572,10 +586,10 @@ The two outputs are identical line for line.
 
 Lean proves the bounded-input bounded-output test for every sum of modes with distinct poles, and checks the worked numbers.
 
-- Take a kick response $g(t) = \sum r_i e^{p_i t}$ with distinct poles and no residue zero. Then, starting from rest, every bounded input gives a bounded output exactly when each pole has negative real part.
-- Take a continuous kick response $g$ with finite area of $\lvert g\rvert$, and an input whose size never exceeds $M$. Then the output never exceeds $M$ times that area.
-- Suppose some constant $C$ makes every input of size at most $M$ give an output of size at most $M C$. Then the area of $\lvert g\rvert$ is finite.
-- Take the same sum of modes, with distinct poles and no residue zero. Then the area of $\lvert g\rvert$ is finite exactly when each pole has negative real part.
+- Take a kick response $`g(t) = \sum r_i e^{p_i t}`$ with distinct poles and no residue zero. Then, starting from rest, every bounded input gives a bounded output exactly when each pole has negative real part.
+- Take a continuous kick response $`g`$ with finite area of $`\lvert g\rvert`$, and an input whose size never exceeds $`M`$. Then the output never exceeds $`M`$ times that area.
+- Suppose some constant $`C`$ makes every input of size at most $`M`$ give an output of size at most $`M C`$. Then the area of $`\lvert g\rvert`$ is finite.
+- Take the same sum of modes, with distinct poles and no residue zero. Then the area of $`\lvert g\rvert`$ is finite exactly when each pole has negative real part.
 - The car's coefficients 0.16, 0.2 and 0.02 hold, with G(0) = 1 and discriminant −0.04.
 - The pole −0.1 + 0.1j is a root, with residue 0.08 − 0.02j and step residue −0.5 − 0.3j.
 - The integrator's 3000 N and 30000 N hold, and so do the drag figures, 600 N against 720 N.

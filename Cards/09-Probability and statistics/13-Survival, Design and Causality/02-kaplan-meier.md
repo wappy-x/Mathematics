@@ -26,36 +26,40 @@ Each line is one patient, drawn to scale from joining the trial at month 0. A cr
 
 ## The formula
 
-Notation first. The sibling card [Survival](01-survival-functions-and-hazards.md) writes $S(t)$ for the **survival function**: the chance that a patient is still relapse-free at time $t$. A hat marks an estimate made from data, so $\hat S(t)$ is the estimate of $S(t)$ from the twelve records. The months at which at least one relapse is seen are listed in order and called $t_j$, where the label j counts them: the first is month 3, the second month 5, and so on. At each one, $r_j$ counts the patients **at risk**: still in the study, relapse-free, just before $t_j$. $d_j$ counts the relapses at $t_j$. The capital pi, $\prod$, means "multiply together", as the capital sigma, $\sum$, means "add together".
+Notation first. The sibling card [Survival](01-survival-functions-and-hazards.md) writes $`S(t)`$ for the **survival function**: the chance that a patient is still relapse-free at time $`t`$. A hat marks an estimate made from data, so $`\hat S(t)`$ is the estimate of $`S(t)`$ from the twelve records. The months at which at least one relapse is seen are listed in order and called $`t_j`$, where the label j counts them: the first is month 3, the second month 5, and so on. At each one, $`r_j`$ counts the patients **at risk**: still in the study, relapse-free, just before $`t_j`$. $`d_j`$ counts the relapses at $`t_j`$. The capital pi, $`\prod`$, means "multiply together", as the capital sigma, $`\sum`$, means "add together".
 
-$$\hat S(t) \;=\; \prod_{t_j \le t} \left(1 - \frac{d_j}{r_j}\right)$$
+```math
+\hat S(t) \;=\; \prod_{t_j \le t} \left(1 - \frac{d_j}{r_j}\right)
+```
 
 **Read it aloud:** the estimated chance of being relapse-free at month t is the product, over every relapse month up to t, of the share of patients at risk who did not relapse that month.
 
 **Greenwood's formula** gives its variance, the square of its standard error:
 
-$$\widehat{\mathrm{Var}}\big(\hat S(t)\big) \;=\; \hat S(t)^2 \sum_{t_j \le t} \frac{d_j}{r_j\,(r_j - d_j)}$$
+```math
+\widehat{\mathrm{Var}}\big(\hat S(t)\big) \;=\; \hat S(t)^2 \sum_{t_j \le t} \frac{d_j}{r_j\,(r_j - d_j)}
+```
 
 **Read it aloud:** the squared error is the curve's height squared, times a running sum that adds, at each relapse month, the relapses divided by the number at risk times the number who got through.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | patients in the study | 12 | the error bar narrows, roughly like one over the square root of n |
-| $t$ | time since joining, in months | 14 | the curve steps down or stays level, never rises |
-| $t_j$ | the j-th month at which a relapse is seen | 3, 5, 8, 11, 14, 20 | — |
-| $r_j$ | patients at risk just before $t_j$: in the study and relapse-free | 12 at month 3, 4 at month 14 | that month's drop is smaller |
-| $d_j$ | relapses seen at $t_j$ | 2 at month 5 | that month's drop is larger |
-| $h_j$, $h$ | the true chance of relapsing at $t_j$ for a patient at risk; $d_j/r_j$ estimates it | estimated 1/4 = 0.25 at month 14 | the curve falls further |
-| $S(t)$ | true chance of being relapse-free at $t$ | unknown | — |
-| $\hat S(t)$ | its Kaplan-Meier estimate | 0.401042 at month 14 | — |
-| $\prod$, $\sum$ | multiply together, add together, over the relapse months up to $t$ | — | — |
-| $\mathrm{Var}$ | variance: the average squared miss of an estimate | the SE squared | — |
-| $\mathrm{SE}$ | standard error, the square root of the variance | 0.163937 at month 14 | — |
-| $z$ | the normal quantile for a 95% interval | 1.96 | a wider interval |
+| $`n`$ | patients in the study | 12 | the error bar narrows, roughly like one over the square root of n |
+| $`t`$ | time since joining, in months | 14 | the curve steps down or stays level, never rises |
+| $`t_j`$ | the j-th month at which a relapse is seen | 3, 5, 8, 11, 14, 20 | — |
+| $`r_j`$ | patients at risk just before $`t_j`$: in the study and relapse-free | 12 at month 3, 4 at month 14 | that month's drop is smaller |
+| $`d_j`$ | relapses seen at $`t_j`$ | 2 at month 5 | that month's drop is larger |
+| $`h_j`$, $`h`$ | the true chance of relapsing at $`t_j`$ for a patient at risk; $`d_j/r_j`$ estimates it | estimated 1/4 = 0.25 at month 14 | the curve falls further |
+| $`S(t)`$ | true chance of being relapse-free at $`t`$ | unknown | — |
+| $`\hat S(t)`$ | its Kaplan-Meier estimate | 0.401042 at month 14 | — |
+| $`\prod`$, $`\sum`$ | multiply together, add together, over the relapse months up to $`t`$ | — | — |
+| $`\mathrm{Var}`$ | variance: the average squared miss of an estimate | the SE squared | — |
+| $`\mathrm{SE}`$ | standard error, the square root of the variance | 0.163937 at month 14 | — |
+| $`z`$ | the normal quantile for a 95% interval | 1.96 | a wider interval |
 
-A dropout never appears in any $d_j$. It appears in every $r_j$ up to and including the month it leaves. When a relapse and a dropout share a month, as at month 8, the relapse is counted first: the dropout was still under watch that month, so it stays in that month's $r_j$.
+A dropout never appears in any $`d_j`$. It appears in every $`r_j`$ up to and including the month it leaves. When a relapse and a dropout share a month, as at month 8, the relapse is counted first: the dropout was still under watch that month, so it stays in that month's $`r_j`$.
 
-The plain 95% **confidence interval** ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)) is $\hat S(t)$ plus or minus $z$ standard errors. Some packages, Python's lifelines among them, instead work on the scale of the log of minus the log of $\hat S(t)$ and transform back, which keeps both ends between 0 and 1. Its half-width on that scale is $z$ times the square root of the Greenwood sum, divided by the size of the log of $\hat S(t)$. R's survival package uses the plain log of $\hat S(t)$ by default instead.
+The plain 95% **confidence interval** ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)) is $`\hat S(t)`$ plus or minus $`z`$ standard errors. Some packages, Python's lifelines among them, instead work on the scale of the log of minus the log of $`\hat S(t)`$ and transform back, which keeps both ends between 0 and 1. Its half-width on that scale is $`z`$ times the square root of the Greenwood sum, divided by the size of the log of $`\hat S(t)`$. R's survival package uses the plain log of $`\hat S(t)`$ by default instead.
 
 ### When it holds
 
@@ -82,20 +86,22 @@ For the trial, month 5 has 10 patients at risk (12 minus the month-3 relapse and
 
 ### Step 2: each factor is the best fit to the record
 
-A month with no relapse could carry its own unknown chance $h$. But it enters the record's chance only through one factor $1 - h$ for each patient at risk, since all of them get through it. That product is largest at $h = 0$. So the best fit puts no relapse chance there, and only the relapse months need unknowns. Treat the true chance of relapsing at the j-th relapse month, for someone at risk, as an unknown number $h_j$. Every patient's record then has a chance: a relapse at month 14 needs survival through the earlier relapse months, then a relapse; a dropout at month 12 needs survival through the relapse months up to 12. Collecting the factors that involve $h_j$, the record's chance is proportional to
+A month with no relapse could carry its own unknown chance $`h`$. But it enters the record's chance only through one factor $`1 - h`$ for each patient at risk, since all of them get through it. That product is largest at $`h = 0`$. So the best fit puts no relapse chance there, and only the relapse months need unknowns. Treat the true chance of relapsing at the j-th relapse month, for someone at risk, as an unknown number $`h_j`$. Every patient's record then has a chance: a relapse at month 14 needs survival through the earlier relapse months, then a relapse; a dropout at month 12 needs survival through the relapse months up to 12. Collecting the factors that involve $`h_j`$, the record's chance is proportional to
 
-$$\prod_j h_j^{\,d_j}\,(1 - h_j)^{\,r_j - d_j}.$$
+```math
+\prod_j h_j^{\,d_j}\,(1 - h_j)^{\,r_j - d_j}.
+```
 
-Each factor is the chance of $d_j$ relapses and $r_j - d_j$ survivals among $r_j$ patients, the binomial shape ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). Each is largest at $h_j = d_j/r_j$, so the Kaplan-Meier curve is the **maximum-likelihood estimate** ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)): the curve under which the record actually seen is most probable. Independent censoring is what lets the dropout terms separate out; the code checks the maximum at all six relapse months by a grid search.
+Each factor is the chance of $`d_j`$ relapses and $`r_j - d_j`$ survivals among $`r_j`$ patients, the binomial shape ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). Each is largest at $`h_j = d_j/r_j`$, so the Kaplan-Meier curve is the **maximum-likelihood estimate** ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)): the curve under which the record actually seen is most probable. Independent censoring is what lets the dropout terms separate out; the code checks the maximum at all six relapse months by a grid search.
 
 <details>
 <summary>Detailed proof: the record's chance factorises and d/r maximises each factor</summary>
 
-Assume dropout time and relapse time are independent. A patient who relapses at $t_j$ contributes, for each earlier relapse month, one minus that month's $h$, then $h_j$, times the chance of not having dropped out by $t_j$. A patient who drops out at month c contributes a factor $1-h_j$ for every relapse month $t_j$ up to and including c, times the chance of dropping out at c. The dropout chances contain no $h$, so they form a separate factor that does not affect where the maximum in $h$ lies.
+Assume dropout time and relapse time are independent. A patient who relapses at $`t_j`$ contributes, for each earlier relapse month, one minus that month's $`h`$, then $`h_j`$, times the chance of not having dropped out by $`t_j`$. A patient who drops out at month c contributes a factor $`1-h_j`$ for every relapse month $`t_j`$ up to and including c, times the chance of dropping out at c. The dropout chances contain no $`h`$, so they form a separate factor that does not affect where the maximum in $`h`$ lies.
 
-Now count, for one relapse month $t_j$, how often $h_j$ and $1-h_j$ appear. $h_j$ appears once per relapse at $t_j$: $d_j$ times. $1 - h_j$ appears once for every patient who is still at risk at $t_j$ and gets through it, relapsing later or dropping out at or after $t_j$: $r_j - d_j$ times. Multiplying over patients gives the product above.
+Now count, for one relapse month $`t_j`$, how often $`h_j`$ and $`1-h_j`$ appear. $`h_j`$ appears once per relapse at $`t_j`$: $`d_j`$ times. $`1 - h_j`$ appears once for every patient who is still at risk at $`t_j`$ and gets through it, relapsing later or dropping out at or after $`t_j`$: $`r_j - d_j`$ times. Multiplying over patients gives the product above.
 
-Take logs of one factor: $d \ln h + (r - d)\ln(1-h)$. Its derivative in h is $d/h - (r-d)/(1-h)$, which equals $(d - rh)/(h(1-h))$. That is positive for h below $d/r$ and negative above, so $d/r$ is the unique maximum when $0 < d < r$. If $d = r$ the factor $h^r$ is largest at $h = 1$, which is again $d/r$. The factors involve different unknowns, so the product is largest when each factor is. Substituting $h_j = d_j/r_j$ into $S = \prod (1 - h_j)$ gives the Kaplan-Meier estimate.
+Take logs of one factor: $`d \ln h + (r - d)\ln(1-h)`$. Its derivative in h is $`d/h - (r-d)/(1-h)`$, which equals $`(d - rh)/(h(1-h))`$. That is positive for h below $`d/r`$ and negative above, so $`d/r`$ is the unique maximum when $`0 < d < r`$. If $`d = r`$ the factor $`h^r`$ is largest at $`h = 1`$, which is again $`d/r`$. The factors involve different unknowns, so the product is largest when each factor is. Substituting $`h_j = d_j/r_j`$ into $`S = \prod (1 - h_j)`$ gives the Kaplan-Meier estimate.
 
 </details>
 
@@ -108,20 +114,20 @@ At month 4 the dropout's twelfth is split among the 10 patients still ahead. At 
 <details>
 <summary>Detailed proof: redistribution gives the product</summary>
 
-Claim: just before each time, every patient still at risk holds the same share, equal to the current survival estimate divided by the number at risk, $S/r$. At the start every share is $1/n$ and $S = 1$, so the claim holds. A relapse month with d relapses spends $d \cdot S/r$, leaving $S(1 - d/r)$ with the $r - d$ survivors, each still holding $S/r$. A dropout's equal share is split equally among the patients after it, so they remain equal to each other, and the total held by the patients at risk is unchanged; the number at risk falls by one, so each share becomes the unchanged total divided by the new count. Both moves keep the claim, and the relapse move multiplies the remaining total by $1 - d/r$: exactly the Kaplan-Meier factor.
+Claim: just before each time, every patient still at risk holds the same share, equal to the current survival estimate divided by the number at risk, $`S/r`$. At the start every share is $`1/n`$ and $`S = 1`$, so the claim holds. A relapse month with d relapses spends $`d \cdot S/r`$, leaving $`S(1 - d/r)`$ with the $`r - d`$ survivors, each still holding $`S/r`$. A dropout's equal share is split equally among the patients after it, so they remain equal to each other, and the total held by the patients at risk is unchanged; the number at risk falls by one, so each share becomes the unchanged total divided by the new count. Both moves keep the claim, and the relapse move multiplies the remaining total by $`1 - d/r`$: exactly the Kaplan-Meier factor.
 
 </details>
 
 ### Step 4: Greenwood's error bar
 
-Take logs, so the product becomes a sum: $\ln \hat S(t) = \sum \ln(1 - d_j/r_j)$. Given who is at risk, $d_j$ behaves like a binomial count out of $r_j$ with chance $h_j$, so the estimated chance $d_j/r_j$ has variance $h_j(1-h_j)/r_j$. The **delta method** ([Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)) carries that through the log: the variance is multiplied by the slope squared, $1/(1-h_j)^2$, which leaves $h_j/(r_j(1-h_j))$. Putting in $d_j/r_j$ for $h_j$ gives $d_j/(r_j(r_j - d_j))$, one term of the Greenwood sum.
+Take logs, so the product becomes a sum: $`\ln \hat S(t) = \sum \ln(1 - d_j/r_j)`$. Given who is at risk, $`d_j`$ behaves like a binomial count out of $`r_j`$ with chance $`h_j`$, so the estimated chance $`d_j/r_j`$ has variance $`h_j(1-h_j)/r_j`$. The **delta method** ([Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)) carries that through the log: the variance is multiplied by the slope squared, $`1/(1-h_j)^2`$, which leaves $`h_j/(r_j(1-h_j))`$. Putting in $`d_j/r_j`$ for $`h_j`$ gives $`d_j/(r_j(r_j - d_j))`$, one term of the Greenwood sum.
 
-The terms at different months are added as if they were independent. They are not quite: the number at risk depends on what happened earlier. But each month's relapse count, given the past, is a fresh draw with average zero error, and errors of that kind are uncorrelated. The proof of that step uses martingales: processes whose best forecast of the next value is the current value ([Martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md)). A second use of the delta method returns from the log to the curve itself: the variance of $\hat S$ is about $\hat S^2$ times the variance of $\ln \hat S$.
+The terms at different months are added as if they were independent. They are not quite: the number at risk depends on what happened earlier. But each month's relapse count, given the past, is a fresh draw with average zero error, and errors of that kind are uncorrelated. The proof of that step uses martingales: processes whose best forecast of the next value is the current value ([Martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md)). A second use of the delta method returns from the log to the curve itself: the variance of $`\hat S`$ is about $`\hat S^2`$ times the variance of $`\ln \hat S`$.
 
 <details>
 <summary>The algebra of the delta-method steps</summary>
 
-For one factor, with $\hat h = d/r$ and true chance h: $\mathrm{Var}(\hat h) = h(1-h)/r$. The slope of $\ln(1 - x)$ at $x = h$ is $-1/(1-h)$, so $\mathrm{Var}(\ln(1 - \hat h)) \approx h(1-h)/(r(1-h)^2) = h/(r(1-h))$. With $h = d/r$ this is $(d/r)/(r - d) = d/(r(r-d))$. Summing over relapse months gives $\mathrm{Var}(\ln \hat S)$. The slope of $e^x$ at $x = \ln S$ is S, so $\mathrm{Var}(\hat S) \approx S^2\,\mathrm{Var}(\ln \hat S)$, Greenwood's formula.
+For one factor, with $`\hat h = d/r`$ and true chance h: $`\mathrm{Var}(\hat h) = h(1-h)/r`$. The slope of $`\ln(1 - x)`$ at $`x = h`$ is $`-1/(1-h)`$, so $`\mathrm{Var}(\ln(1 - \hat h)) \approx h(1-h)/(r(1-h)^2) = h/(r(1-h))`$. With $`h = d/r`$ this is $`(d/r)/(r - d) = d/(r(r-d))`$. Summing over relapse months gives $`\mathrm{Var}(\ln \hat S)`$. The slope of $`e^x`$ at $`x = \ln S`$ is S, so $`\mathrm{Var}(\hat S) \approx S^2\,\mathrm{Var}(\ln \hat S)`$, Greenwood's formula.
 
 </details>
 
@@ -146,7 +152,7 @@ The whole trial, one row per month at which anything happens.
 | 20 | 2 | 1 | 0 | 1/2 = 0.5000 | 0.2005 | 0.667100 | 0.1638 |
 | 24 | 1 | 0 | 1 | 1 | 0.2005 | 0.667100 | 0.1638 |
 
-At month 14 the estimate is $0.401042$, exactly $77/192$. Its Greenwood sum is $1/132 + 2/80 + 1/56 + 1/30 + 1/12$, and its standard error is 0.163937. The plain 95% interval is 0.0797 to 0.7224; the log-log interval is 0.1113 to 0.6837.
+At month 14 the estimate is $`0.401042`$, exactly $`77/192`$. Its Greenwood sum is $`1/132 + 2/80 + 1/56 + 1/30 + 1/12`$, and its standard error is 0.163937. The plain 95% interval is 0.0797 to 0.7224; the log-log interval is 0.1113 to 0.6837.
 
 About 4 in 10 patients are estimated to be still in remission at 14 months. The interval is wide: the method behind it covers the true value in about 95% of trials, and here anything from about 1 in 9 to about 2 in 3 fits the record. The curve first falls to 0.5 or below at month 14, so the estimated median time in remission is 14 months; but the log-log band contains 0.5 at every month from 5 to 24, so the record cannot pin the median down to better than "month 5 or later".
 
@@ -580,18 +586,18 @@ The two outputs are identical line for line, simulation included, because both p
 
 Lean proves both "Why it works" results for every record counted in whole months, and the card's trial numbers.
 
-- Take dropout unrelated to relapse, and any monthly relapse chances $h$ between 0 and 1. Then the record is at most as likely under $h$ as under $d/r$.
-- Suppose $0 < d < r$. Then $h^d (1-h)^{r-d}$ is largest at $h = d/r$, and every other $h$ from 0 to 1 gives less.
+- Take dropout unrelated to relapse, and any monthly relapse chances $`h`$ between 0 and 1. Then the record is at most as likely under $`h`$ as under $`d/r`$.
+- Suppose $`0 < d < r`$. Then $`h^d (1-h)^{r-d}`$ is largest at $`h = d/r`$, and every other $`h`$ from 0 to 1 gives less.
 - Take records in time order, with each month's relapses listed before its dropouts. Then redistribute-to-the-right gives the Kaplan-Meier curve at every month.
 - In the trial, 12, 10, 8, 6, 4 and 2 patients are at risk at months 3, 5, 8, 11, 14 and 20.
 - Month 5 has 2 relapses, month 8 has 1, and the month-4 dropout adds none.
-- Take the trial's twelve records. Then $\hat S(14) = 77/192$ and $\hat S(20) = 77/384$.
-- Take the hand product $11/12 \cdot 8/10 \cdot 7/8 \cdot 5/6 \cdot 3/4$. Then it equals 77/192.
-- Take the trial at month 14. Then the Greenwood sum is $1/132 + 2/80 + 1/56 + 1/30 + 1/12$.
-- Suppose every dropout is counted as a relapse. Then $\hat S(14) = 1/4$.
-- Suppose the dropouts are deleted instead. Then $\hat S(14) = 1/7$.
+- Take the trial's twelve records. Then $`\hat S(14) = 77/192`$ and $`\hat S(20) = 77/384`$.
+- Take the hand product $`11/12 \cdot 8/10 \cdot 7/8 \cdot 5/6 \cdot 3/4`$. Then it equals 77/192.
+- Take the trial at month 14. Then the Greenwood sum is $`1/132 + 2/80 + 1/56 + 1/30 + 1/12`$.
+- Suppose every dropout is counted as a relapse. Then $`\hat S(14) = 1/4`$.
+- Suppose the dropouts are deleted instead. Then $`\hat S(14) = 1/7`$.
 - Five of the 12 patients were never seen to relapse.
-- Suppose the month-4 dropout relapses instead. Then $\hat S(14) = 35/96$.
+- Suppose the month-4 dropout relapses instead. Then $`\hat S(14) = 35/96`$.
 
 The decimals, standard errors, intervals, the month-8 mistake, the simulation, the chart and the figure are left to the Python and Rust checks.
 
@@ -1094,7 +1100,7 @@ end KaplanMeier
 > **Try changing**
 > Guess the direction first, then run it.
 > - **Make the month-4 dropout a relapse.** Change `(4, 0)` to `(4, 1)`. S(14) falls from 0.401042 to **0.364583**.
-> - **Double every record.** Run the trial with each patient entered twice. S(14) stays at **0.401042**, since every share is unchanged, but the standard error falls from 0.163937 to **0.115921**: exactly the old value divided by the square root of 2, since every Greenwood term $d/(r(r-d))$ is halved.
+> - **Double every record.** Run the trial with each patient entered twice. S(14) stays at **0.401042**, since every share is unchanged, but the standard error falls from 0.163937 to **0.115921**: exactly the old value divided by the square root of 2, since every Greenwood term $`d/(r(r-d))`$ is halved.
 > - **Let the last patient relapse at month 24.** Change `(24, 0)` to `(24, 1)`. With 1 at risk and 1 relapse the factor is zero, and S(24) is **0.000000**. A curve reaches zero only when the last patient at risk has the event.
 > - **Let sick patients leave.** The `sick` list in the simulation sends half of the patients headed for relapse before month 12 away at half their relapse time. The estimate of a true 0.5 averages **0.6879**. No formula can repair dropout that is tied to the outcome.
 

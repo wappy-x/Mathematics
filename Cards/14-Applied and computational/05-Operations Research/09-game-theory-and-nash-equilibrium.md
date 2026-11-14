@@ -39,32 +39,36 @@ Each arrow is one player switching alone to do better against the other's curren
 
 ## The formula
 
-Notation first, in words. A **strategy** $s_i$ is what player $i$ does: a plain choice such as "shoot Left" (a **pure strategy**), or a rule for picking one at random with stated chances (a **mixed strategy**). $s_{-i}$ is everyone else's strategy, read "s minus i". $u_i$ is player $i$'s payoff: what they get, averaged over any randomness. A star marks the equilibrium choice.
+Notation first, in words. A **strategy** $`s_i`$ is what player $`i`$ does: a plain choice such as "shoot Left" (a **pure strategy**), or a rule for picking one at random with stated chances (a **mixed strategy**). $`s_{-i}`$ is everyone else's strategy, read "s minus i". $`u_i`$ is player $`i`$'s payoff: what they get, averaged over any randomness. A star marks the equilibrium choice.
 
-$$u_i(s_i^*,\, s_{-i}^*) \;\ge\; u_i(s_i,\, s_{-i}^*) \quad \text{for every player } i \text{ and every strategy } s_i$$
+```math
+u_i(s_i^*,\, s_{-i}^*) \;\ge\; u_i(s_i,\, s_{-i}^*) \quad \text{for every player } i \text{ and every strategy } s_i
+```
 
-**Read it aloud:** with everyone else holding their equilibrium choice fixed, nothing player $i$ could switch to pays more than their own equilibrium choice.
+**Read it aloud:** with everyone else holding their equilibrium choice fixed, nothing player $`i`$ could switch to pays more than their own equilibrium choice.
 
-For a 2 by 2 game with no equilibrium in plain choices, write the kicker's scoring chances as $a$, $b$ (shoot Left; keeper Left, Right) and $c$, $d$ (shoot Right; keeper Left, Right). Let $p$ be the kicker's chance of shooting Left and $q$ the keeper's chance of diving Left. Then
+For a 2 by 2 game with no equilibrium in plain choices, write the kicker's scoring chances as $`a`$, $`b`$ (shoot Left; keeper Left, Right) and $`c`$, $`d`$ (shoot Right; keeper Left, Right). Let $`p`$ be the kicker's chance of shooting Left and $`q`$ the keeper's chance of diving Left. Then
 
-$$p^* = \frac{c - d}{b + c - a - d}, \qquad q^* = \frac{b - d}{b + c - a - d}, \qquad V = \frac{bc - ad}{b + c - a - d}$$
+```math
+p^* = \frac{c - d}{b + c - a - d}, \qquad q^* = \frac{b - d}{b + c - a - d}, \qquad V = \frac{bc - ad}{b + c - a - d}
+```
 
-**Read it aloud:** the kicker's Left chance is how much a Right shot loses when the keeper switches from Left to Right, the keeper's Left chance is how much a Left shot beats a Right shot when the keeper dives Right, each divided by the same total, and $V$ is the scoring rate both sides then live with.
+**Read it aloud:** the kicker's Left chance is how much a Right shot loses when the keeper switches from Left to Right, the keeper's Left chance is how much a Left shot beats a Right shot when the keeper dives Right, each divided by the same total, and $`V`$ is the scoring rate both sides then live with.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$ | which player | kicker or keeper | — |
-| $s_i$ | player $i$'s strategy: a plain choice or a random mix | "shoot Left 38.33% of the time" | — |
-| $s_{-i}$ | everyone else's strategy | the keeper's mix, from the kicker's view | — |
-| $u_i$ | player $i$'s payoff, averaged over the randomness | the kicker's chance of scoring | — |
-| $s^*$ | the equilibrium: one strategy per player | (38.33% Left, 41.67% Left) | — |
-| $a$ | scoring chance, shoot Left, keeper Left | 58% | both lean Left more: the keeper guards it, the kicker uses it |
-| $b$ | scoring chance, shoot Left, keeper Right | 95% | the keeper dives Left more; the kicker shoots Left less |
-| $c$ | scoring chance, shoot Right, keeper Left | 93% | the kicker shoots Left more; the keeper dives Left less |
-| $d$ | scoring chance, shoot Right, keeper Right | 70% | both lean Left less |
-| $p$, $p^*$ | kicker's chance of shooting Left; its equilibrium value | 23/60 = 0.3833 | — |
-| $q$, $q^*$ | keeper's chance of diving Left; its equilibrium value | 25/60 = 0.4167 | — |
-| $V$ | the **value**: scoring chance at the equilibrium | 79.58% | — |
+| $`i`$ | which player | kicker or keeper | — |
+| $`s_i`$ | player $`i`$'s strategy: a plain choice or a random mix | "shoot Left 38.33% of the time" | — |
+| $`s_{-i}`$ | everyone else's strategy | the keeper's mix, from the kicker's view | — |
+| $`u_i`$ | player $`i`$'s payoff, averaged over the randomness | the kicker's chance of scoring | — |
+| $`s^*`$ | the equilibrium: one strategy per player | (38.33% Left, 41.67% Left) | — |
+| $`a`$ | scoring chance, shoot Left, keeper Left | 58% | both lean Left more: the keeper guards it, the kicker uses it |
+| $`b`$ | scoring chance, shoot Left, keeper Right | 95% | the keeper dives Left more; the kicker shoots Left less |
+| $`c`$ | scoring chance, shoot Right, keeper Left | 93% | the kicker shoots Left more; the keeper dives Left less |
+| $`d`$ | scoring chance, shoot Right, keeper Right | 70% | both lean Left less |
+| $`p`$, $`p^*`$ | kicker's chance of shooting Left; its equilibrium value | 23/60 = 0.3833 | — |
+| $`q`$, $`q^*`$ | keeper's chance of diving Left; its equilibrium value | 25/60 = 0.4167 | — |
+| $`V`$ | the **value**: scoring chance at the equilibrium | 79.58% | — |
 
 ### When it holds
 
@@ -103,42 +107,46 @@ This is the shape called the **prisoner's dilemma**. An equilibrium is a resting
 
 ### Step 2: a mix pays the weighted average
 
-Let the keeper dive Left with chance $q$. Shooting Left then scores with chance $58q + 95(1 - q)$: each outcome weighted by how often it happens, which is an expectation ([Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)). Shooting Right scores $93q + 70(1 - q)$.
+Let the keeper dive Left with chance $`q`$. Shooting Left then scores with chance $`58q + 95(1 - q)`$: each outcome weighted by how often it happens, which is an expectation ([Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)). Shooting Right scores $`93q + 70(1 - q)`$.
 
-Both are straight lines in $q$. At $q = 0$, Left scores 95% and Right 70%. At $q = 1$, Left scores 58% and Right 93%. They cross once, somewhere between. Below the crossing the kicker should shoot Left every time; above it, Right every time. Only at the crossing is any mix a best reply.
+Both are straight lines in $`q`$. At $`q = 0`$, Left scores 95% and Right 70%. At $`q = 1`$, Left scores 58% and Right 93%. They cross once, somewhere between. Below the crossing the kicker should shoot Left every time; above it, Right every time. Only at the crossing is any mix a best reply.
 
-The same holds one level up. A kicker who shoots Left with chance $p$ scores $p$ times the Left line plus $1 - p$ times the Right line. A weighted average of two numbers can never beat the larger one. So no mix ever beats the better plain choice, and to test an equilibrium it is enough to test the plain deviations.
+The same holds one level up. A kicker who shoots Left with chance $`p`$ scores $`p`$ times the Left line plus $`1 - p`$ times the Right line. A weighted average of two numbers can never beat the larger one. So no mix ever beats the better plain choice, and to test an equilibrium it is enough to test the plain deviations.
 
 ### Step 3: solve the two indifference equations
 
-The keeper's $q^*$ is the crossing of the kicker's two lines:
+The keeper's $`q^*`$ is the crossing of the kicker's two lines:
 
-$$q a + (1 - q) b = q c + (1 - q) d \;\Longrightarrow\; q^* = \frac{b - d}{b + c - a - d}.$$
+```math
+q a + (1 - q) b = q c + (1 - q) d \;\Longrightarrow\; q^* = \frac{b - d}{b + c - a - d}.
+```
 
-The kicker's $p^*$ is the crossing of the keeper's two lines. A Left dive lets in $pa + (1-p)c$; a Right dive, $pb + (1-p)d$:
+The kicker's $`p^*`$ is the crossing of the keeper's two lines. A Left dive lets in $`pa + (1-p)c`$; a Right dive, $`pb + (1-p)d`$:
 
-$$p a + (1 - p) c = p b + (1 - p) d \;\Longrightarrow\; p^* = \frac{c - d}{b + c - a - d}.$$
+```math
+p a + (1 - p) c = p b + (1 - p) d \;\Longrightarrow\; p^* = \frac{c - d}{b + c - a - d}.
+```
 
-Put $q^*$ back into either of the kicker's lines and the common height is $V = (bc - ad)/(b + c - a - d)$.
+Put $`q^*`$ back into either of the kicker's lines and the common height is $`V = (bc - ad)/(b + c - a - d)`$.
 
 <details>
 <summary>The algebra, line by line</summary>
 
-Kicker indifferent: $qa + b - qb = qc + d - qd$. Gather the $q$ terms: $q(a - b - c + d) = d - b$. Multiply top and bottom by $-1$: $q^* = (b - d)/(b + c - a - d)$.
+Kicker indifferent: $`qa + b - qb = qc + d - qd`$. Gather the $`q`$ terms: $`q(a - b - c + d) = d - b`$. Multiply top and bottom by $`-1`$: $`q^* = (b - d)/(b + c - a - d)`$.
 
-Keeper indifferent: $pa + c - pc = pb + d - pd$, so $p(a - c - b + d) = d - c$, and $p^* = (c - d)/(b + c - a - d)$.
+Keeper indifferent: $`pa + c - pc = pb + d - pd`$, so $`p(a - c - b + d) = d - c`$, and $`p^* = (c - d)/(b + c - a - d)`$.
 
-The value: Left at $q^*$ scores $b + q^*(a - b)$. Over the common denominator this is $\big(b(b + c - a - d) + (b - d)(a - b)\big)/(b + c - a - d)$. Expand the top: $b^2 + bc - ab - bd + ab - b^2 - ad + bd = bc - ad$.
+The value: Left at $`q^*`$ scores $`b + q^*(a - b)`$. Over the common denominator this is $`\big(b(b + c - a - d) + (b - d)(a - b)\big)/(b + c - a - d)`$. Expand the top: $`b^2 + bc - ab - bd + ab - b^2 - ad + bd = bc - ad`$.
 
-When the best replies cycle as in the picture ($a < c$ and $d < b$ for the kicker, $a < b$ and $d < c$ for the keeper), the denominator is positive and both $p^*$ and $q^*$ lie strictly between 0 and 1. The converse fails: with $b = 60$ (Try changing, below) the denominator is still positive, yet Right dominates for the kicker and the formula's $q^*$ is negative. A positive denominator is no test for a missing pure equilibrium; search the cells.
+When the best replies cycle as in the picture ($`a < c`$ and $`d < b`$ for the kicker, $`a < b`$ and $`d < c`$ for the keeper), the denominator is positive and both $`p^*`$ and $`q^*`$ lie strictly between 0 and 1. The converse fails: with $`b = 60`$ (Try changing, below) the denominator is still positive, yet Right dominates for the kicker and the formula's $`q^*`$ is negative. A positive denominator is no test for a missing pure equilibrium; search the cells.
 
 </details>
 
 ### Step 4: check that nobody gains alone
 
-At $q^*$ the kicker's two lines meet, so every $p$, pure or mixed, scores exactly $V$. Nothing beats $p^*$, so $p^*$ is a best reply. At $p^*$ the keeper's two lines meet, so every dive concedes exactly $V$, and $q^*$ is a best reply too. The pair meets the definition: a Nash equilibrium.
+At $`q^*`$ the kicker's two lines meet, so every $`p`$, pure or mixed, scores exactly $`V`$. Nothing beats $`p^*`$, so $`p^*`$ is a best reply. At $`p^*`$ the keeper's two lines meet, so every dive concedes exactly $`V`$, and $`q^*`$ is a best reply too. The pair meets the definition: a Nash equilibrium.
 
-The figure plots both best replies. The kicker's (solid) jumps from "always Left" to "always Right" as $q$ crosses 0.417. The keeper's (dashed) jumps from "always Right" to "always Left" as $p$ crosses 0.383. A Nash equilibrium is a point on both lines at once, and they meet only once. So this equilibrium is the only one.
+The figure plots both best replies. The kicker's (solid) jumps from "always Left" to "always Right" as $`q`$ crosses 0.417. The keeper's (dashed) jumps from "always Right" to "always Left" as $`p`$ crosses 0.383. A Nash equilibrium is a point on both lines at once, and they meet only once. So this equilibrium is the only one.
 
 <p align="center"><img src="../figures/game-theory-and-nash-equilibrium.svg" alt="Unit square with the kicker's chance of shooting Left across and the keeper's chance of diving Left up; the kicker's best-reply line and the keeper's dashed best-reply line cross once, at 0.383 across and 0.417 up" width="420"></p>
 
@@ -159,14 +167,14 @@ In a game like the penalty, where one side's gain is the other's loss (a **zero-
 | kicker's best reply to a Left dive | 93% against 58% | Right |
 | kicker's best reply to a Right dive | 95% against 70% | Left |
 | pure equilibria | no cell is a best reply for both | none |
-| denominator, $b + c - a - d$ | 95 + 93 − 58 − 70 | 60 |
-| kicker's Left chance, $p^*$ | (93 − 70) / 60 = 23/60 | 0.3833 |
-| kicker's Right chance, $1 - p^*$ | 1 − 0.3833 | 0.6167 |
-| keeper's Left chance, $q^*$ | (95 − 70) / 60 = 25/60 | 0.4167 |
-| top of $V$, $bc - ad$ | 95 × 93 − 58 × 70 = 8,835 − 4,060 | 4,775 |
-| **scoring chance, $V$** | 4,775 / 60 | **79.58%** |
-| check: kicker shoots Left against $q^*$ | 0.4167 × 58 + 0.5833 × 95 | 79.58% |
-| check: kicker shoots Right against $q^*$ | 0.4167 × 93 + 0.5833 × 70 | 79.58% |
+| denominator, $`b + c - a - d`$ | 95 + 93 − 58 − 70 | 60 |
+| kicker's Left chance, $`p^*`$ | (93 − 70) / 60 = 23/60 | 0.3833 |
+| kicker's Right chance, $`1 - p^*`$ | 1 − 0.3833 | 0.6167 |
+| keeper's Left chance, $`q^*`$ | (95 − 70) / 60 = 25/60 | 0.4167 |
+| top of $`V`$, $`bc - ad`$ | 95 × 93 − 58 × 70 = 8,835 − 4,060 | 4,775 |
+| **scoring chance, $`V`$** | 4,775 / 60 | **79.58%** |
+| check: kicker shoots Left against $`q^*`$ | 0.4167 × 58 + 0.5833 × 95 | 79.58% |
+| check: kicker shoots Right against $`q^*`$ | 0.4167 × 93 + 0.5833 × 70 | 79.58% |
 
 Played this way, about 4 kicks in 5 score, and neither the kicker nor the keeper can push that number their way by changing only their own habit.
 
@@ -508,11 +516,11 @@ The two outputs match line for line. Fictitious play misses the formula by 0.002
 
 Lean proves the 2 by 2 formula for every zero-sum table with no pure equilibrium, and checks the card's worked numbers.
 
-- Take any table $a$, $b$, $c$, $d$ with no pure equilibrium. Then $p^*$ and $q^*$ both lie strictly between 0 and 1.
-- Take the same table. Then against $q^*$ no kicker mix beats $p^*$, against $p^*$ no keeper mix beats $q^*$, and the kick scores $V$.
-- Take the same table and any pair of mixes where neither player gains by changing alone. Then that pair is $(p^*, q^*)$.
+- Take any table $`a`$, $`b`$, $`c`$, $`d`$ with no pure equilibrium. Then $`p^*`$ and $`q^*`$ both lie strictly between 0 and 1.
+- Take the same table. Then against $`q^*`$ no kicker mix beats $`p^*`$, against $`p^*`$ no keeper mix beats $`q^*`$, and the kick scores $`V`$.
+- Take the same table and any pair of mixes where neither player gains by changing alone. Then that pair is $`(p^*, q^*)`$.
 - Against any keeper mix, a kicker's mix never scores more than the better of shooting Left and shooting Right.
-- Take the penalty table. Then no cell is a pure equilibrium, $p^* = 23/60$ and $q^* = 25/60$.
+- Take the penalty table. Then no cell is a pure equilibrium, $`p^* = 23/60`$ and $`q^* = 25/60`$.
 - At those mixes the kick scores 4,775/60, the 79.58% in the worked numbers.
 - The 50-50 kicker, the kicker using 0.4167, and the 50-50 keeper come out at 75.50%, 78.42% and 81.50%.
 - In the bakery price war, (Low, Low) is the only pure equilibrium, and cutting alone from (High, High) gains £300.
@@ -856,7 +864,7 @@ example : (1500 - 1200 : ℤ) = 300 := by norm_num
 > Guess first, then run it. The asserts are pinned to this table, so expect some to stop the program.
 > - **The kicker gets better at Right.** Guess first: does the kicker shoot Right more? Set `D = 75`. Yes: the kicker's Left shots fall to 18/55 = 0.3273. The keeper adjusts too, guarding Right more: Left dives fall to 20/55 = 0.3636. Scoring rises to 81.5455%. The 1/600 grid no longer lands on 18/55, so the second assert stops it.
 > - **Starve fictitious play.** Guess first: is 1,000 rounds enough? Set `ROUNDS = 1000`. The keeper's frequency reads 0.4420 against 0.4167, and the fictitious-play assert stops it.
-> - **Give the kicker a dominant side.** Guess first: what does the formula say? Set `B = 60`. Now Right is better whatever the keeper does, and the cell search finds the pure equilibrium (R, R) at 70%. The formula still returns $p^* = 0.92$ and $q^* = -0.40$, which is nonsense. Search the cells first.
+> - **Give the kicker a dominant side.** Guess first: what does the formula say? Set `B = 60`. Now Right is better whatever the keeper does, and the cell search finds the pure equilibrium (R, R) at 70%. The formula still returns $`p^* = 0.92`$ and $`q^* = -0.40`$, which is nonsense. Search the cells first.
 > - **Make the price war vicious.** Guess first: what if both cutting is ruinous? Set the (Low, Low) profit to 600. Against a Low rival we now prefer High (£700 against £600), and the search finds two pure equilibria, (High, Low) and (Low, High): one bakery cuts, the other holds.
 
 ---
@@ -868,7 +876,7 @@ example : (1500 - 1200 : ℤ) = 300 := by norm_num
 >
 > - **Splitting 50-50 because it feels random.** Random is not enough; the rate matters. At 50-50 the keeper always dives Left and scoring falls to 75.50%.
 > - **Taking the best joint outcome for the equilibrium.** The bakeries would both make £1,200 at (High, High), but either one gains £300 by cutting alone. The equilibrium is (Low, Low) at £900 each.
-> - **Using the 2 by 2 formula without searching the cells.** With a dominant side ($b = 60$) it returns a chance of −0.40. Look for pure equilibria first.
+> - **Using the 2 by 2 formula without searching the cells.** With a dominant side ($`b = 60`$) it returns a chance of −0.40. Look for pure equilibria first.
 > - **Reading indifference as "anything goes".** At the equilibrium the kicker scores 79.58% whichever side is chosen, but only because the keeper is mixing at 0.4167. Drift from 0.3833 and the keeper can stop mixing and punish it.
 
 ---

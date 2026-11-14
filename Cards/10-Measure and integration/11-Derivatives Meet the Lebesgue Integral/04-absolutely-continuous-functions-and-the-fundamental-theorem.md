@@ -35,51 +35,59 @@ One line: the odometer in km, every 0.1 hours. It curves up as the car pulls awa
 
 ## The formula
 
-Notation first, in words. $F$ is a function on a closed interval of times from $a$ to $b$; here the odometer on the hour from 0 to 1. Lebesgue measure $\lambda$ gives a set of times its total length ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). $L^1$ is the collection of functions whose absolute value has a finite integral against $\lambda$ ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). "Almost everywhere", a.e., means "except on a set of length zero".
+Notation first, in words. $`F`$ is a function on a closed interval of times from $`a`$ to $`b`$; here the odometer on the hour from 0 to 1. Lebesgue measure $`\lambda`$ gives a set of times its total length ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). $`L^1`$ is the collection of functions whose absolute value has a finite integral against $`\lambda`$ ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). "Almost everywhere", a.e., means "except on a set of length zero".
 
-**The definition.** $F$ is **absolutely continuous** on $[a, b]$ when for every $\varepsilon > 0$ there is a $\delta > 0$ such that, for every finite collection of non-overlapping intervals $(a_1, b_1), \ldots, (a_n, b_n)$ inside $[a, b]$,
+**The definition.** $`F`$ is **absolutely continuous** on $`[a, b]`$ when for every $`\varepsilon > 0`$ there is a $`\delta > 0`$ such that, for every finite collection of non-overlapping intervals $`(a_1, b_1), \ldots, (a_n, b_n)`$ inside $`[a, b]`$,
 
-$$\sum_{k=1}^{n} (b_k - a_k) < \delta \quad\Longrightarrow\quad \sum_{k=1}^{n} \lvert F(b_k) - F(a_k) \rvert < \varepsilon .$$
+```math
+\sum_{k=1}^{n} (b_k - a_k) < \delta \quad\Longrightarrow\quad \sum_{k=1}^{n} \lvert F(b_k) - F(a_k) \rvert < \varepsilon .
+```
 
 **Read it aloud:** name any tolerance epsilon; there is a total length delta so that intervals adding up to less than delta, however many, move F by less than epsilon in total.
 
-**The theorem.** For a function $F$ on $[a, b]$ these two statements are equivalent:
+**The theorem.** For a function $`F`$ on $`[a, b]`$ these two statements are equivalent:
 
-$$F \text{ is absolutely continuous} \quad\Longleftrightarrow\quad F(x) = F(a) + \int_{[a,x]} f \, d\lambda \ \text{ for every } x \text{ in } [a,b], \text{ for some } f \in L^1 .$$
+```math
+F \text{ is absolutely continuous} \quad\Longleftrightarrow\quad F(x) = F(a) + \int_{[a,x]} f \, d\lambda \ \text{ for every } x \text{ in } [a,b], \text{ for some } f \in L^1 .
+```
 
-When they hold, $F$ has a derivative at almost every point and
+When they hold, $`F`$ has a derivative at almost every point and
 
-$$F' = f \quad \text{a.e.}, \qquad\text{so}\qquad F(b) - F(a) = \int_{[a,b]} F' \, d\lambda .$$
+```math
+F' = f \quad \text{a.e.}, \qquad\text{so}\qquad F(b) - F(a) = \int_{[a,b]} F' \, d\lambda .
+```
 
 **Read it aloud:** a function is a running integral exactly when it is absolutely continuous; its derivative then exists except on a set of length zero, equals the rate it was built from, and integrates back to the total change.
 
-**The chain.** $F$ is **Lipschitz** with constant $L$ when $\lvert F(x) - F(y) \rvert \le L \lvert x - y \rvert$ for all $x, y$: its slopes never exceed $L$ in size. Then
+**The chain.** $`F`$ is **Lipschitz** with constant $`L`$ when $`\lvert F(x) - F(y) \rvert \le L \lvert x - y \rvert`$ for all $`x, y`$: its slopes never exceed $`L`$ in size. Then
 
-$$\text{Lipschitz} \;\Longrightarrow\; \text{absolutely continuous} \;\Longrightarrow\; \text{continuous and of bounded variation},$$
+```math
+\text{Lipschitz} \;\Longrightarrow\; \text{absolutely continuous} \;\Longrightarrow\; \text{continuous and of bounded variation},
+```
 
-and neither arrow reverses: $\sqrt{t}$ is absolutely continuous and not Lipschitz; the Cantor function $c$ is continuous and of bounded variation and not absolutely continuous. Bounded variation means the total up-and-down movement is finite ([Bounded variation](01-functions-of-bounded-variation.md)).
+and neither arrow reverses: $`\sqrt{t}`$ is absolutely continuous and not Lipschitz; the Cantor function $`c`$ is continuous and of bounded variation and not absolutely continuous. Bounded variation means the total up-and-down movement is finite ([Bounded variation](01-functions-of-bounded-variation.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$, $F'$ | the function; its derivative, where it exists | odometer in km; the speed | — |
-| $f$, $g$, $v$, $g_V$, $g_Q$, $\nu$ | integrable rates (densities); the trip's speed in km/h; the rates of $V$ and $Q$; the measure $A \mapsto \int_A \lvert f \rvert \, d\lambda$ | $v$ = 300$t$, 90, 0, 45 on the four legs | faster legs, larger total |
-| $t$, $h$, $x$, $y$, $s$ | time since the start, hours; a small step in time; any two times; a time inside an integral | 0 to 1; $h$ = 0.001 | smaller $h$, quotient nearer the speed |
-| $a$, $b$ | ends of the interval | 0 and 1 hour | — |
-| $a_k$, $b_k$, $n$, $k$, $m$, $N$, $x_j$, $I_j$ | ends of the $k$-th of $n$ non-overlapping intervals; counts; cut points; open intervals | any collection of short stretches of time | more intervals, same length budget |
-| $\varepsilon$, $\delta$ | a tolerance for total movement; a length budget that meets it | $\varepsilon$ = 0.1 km, $\delta$ = 0.1/90 h, 4.0 s | smaller $\varepsilon$, smaller $\delta$ |
-| $\lambda$, $E$ | Lebesgue measure: length; a set of length zero | the three gear-change instants | — |
-| $L$ | a Lipschitz constant: the largest slope | 90 km/h for the trip | larger $L$, smaller $\delta = \varepsilon / L$ |
-| $c$, $\mu_c$ | the Cantor function, the staircase counter; its measure | rises 0 to 1 km over the hour | — |
-| $V$, $Q$ | running total variation of $F$; $Q = V - F$ | for the rising odometer, $V$ = $F$ | — |
-| $\mu_F$, $G$, $\mu_G$ | the measure giving an interval the rise of a rising $F$ (or $G$) across it | km covered during a set of times | — |
-| $A$, $U$ | a set of times; an open set around it | $A$ = [0.1, 0.3] ∪ [0.45, 0.55] ∪ [0.7, 0.95] | — |
+| $`F`$, $`F'`$ | the function; its derivative, where it exists | odometer in km; the speed | — |
+| $`f`$, $`g`$, $`v`$, $`g_V`$, $`g_Q`$, $`\nu`$ | integrable rates (densities); the trip's speed in km/h; the rates of $`V`$ and $`Q`$; the measure $`A \mapsto \int_A \lvert f \rvert \, d\lambda`$ | $`v`$ = 300$`t`$, 90, 0, 45 on the four legs | faster legs, larger total |
+| $`t`$, $`h`$, $`x`$, $`y`$, $`s`$ | time since the start, hours; a small step in time; any two times; a time inside an integral | 0 to 1; $`h`$ = 0.001 | smaller $`h`$, quotient nearer the speed |
+| $`a`$, $`b`$ | ends of the interval | 0 and 1 hour | — |
+| $`a_k`$, $`b_k`$, $`n`$, $`k`$, $`m`$, $`N`$, $`x_j`$, $`I_j`$ | ends of the $`k`$-th of $`n`$ non-overlapping intervals; counts; cut points; open intervals | any collection of short stretches of time | more intervals, same length budget |
+| $`\varepsilon`$, $`\delta`$ | a tolerance for total movement; a length budget that meets it | $`\varepsilon`$ = 0.1 km, $`\delta`$ = 0.1/90 h, 4.0 s | smaller $`\varepsilon`$, smaller $`\delta`$ |
+| $`\lambda`$, $`E`$ | Lebesgue measure: length; a set of length zero | the three gear-change instants | — |
+| $`L`$ | a Lipschitz constant: the largest slope | 90 km/h for the trip | larger $`L`$, smaller $`\delta = \varepsilon / L`$ |
+| $`c`$, $`\mu_c`$ | the Cantor function, the staircase counter; its measure | rises 0 to 1 km over the hour | — |
+| $`V`$, $`Q`$ | running total variation of $`F`$; $`Q = V - F`$ | for the rising odometer, $`V`$ = $`F`$ | — |
+| $`\mu_F`$, $`G`$, $`\mu_G`$ | the measure giving an interval the rise of a rising $`F`$ (or $`G`$) across it | km covered during a set of times | — |
+| $`A`$, $`U`$ | a set of times; an open set around it | $`A`$ = [0.1, 0.3] ∪ [0.45, 0.55] ∪ [0.7, 0.95] | — |
 
 ### When it holds
 
-- **A closed, bounded interval.** On the whole line the statement holds interval by interval: $F(t) = t$ is absolutely continuous on every $[a, b]$, yet its rate 1 has infinite integral over the whole line.
+- **A closed, bounded interval.** On the whole line the statement holds interval by interval: $`F(t) = t`$ is absolutely continuous on every $`[a, b]`$, yet its rate 1 has infinite integral over the whole line.
 - **Collections, not single intervals.** One short interval moving F a little is only continuity; the Cantor function passes that test and is not an integral.
-- **The rate must be Lebesgue integrable.** $t^2 \sin(1/t^2)$ is differentiable everywhere, but its derivative has infinite integral of its absolute value near 0; it is not absolutely continuous.
-- **"Almost everywhere" is exact.** $F'$ may be missing on a set of length zero, as at the gear changes; $f$ is fixed only up to such sets.
+- **The rate must be Lebesgue integrable.** $`t^2 \sin(1/t^2)`$ is differentiable everywhere, but its derivative has infinite integral of its absolute value near 0; it is not absolutely continuous.
+- **"Almost everywhere" is exact.** $`F'`$ may be missing on a set of length zero, as at the gear changes; $`f`$ is fixed only up to such sets.
 
 ---
 
@@ -87,33 +95,33 @@ and neither arrow reverses: $\sqrt{t}$ is absolutely continuous and not Lipschit
 
 ### Step 0: distance during a set of times is a measure
 
-The whole theorem rests on one move. The odometer gives every set of times a size: the km covered during those times. During the set $A$ in the table the car covers 29.25 km. That assignment of sizes is a measure, $\mu_F$ ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)).
+The whole theorem rests on one move. The odometer gives every set of times a size: the km covered during those times. During the set $`A`$ in the table the car covers 29.25 km. That assignment of sizes is a measure, $`\mu_F`$ ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)).
 
-Absolute continuity of the function is exactly absolute continuity of that measure against length: a set of times of length zero carries no distance ([Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)). The Radon–Nikodym theorem then hands over a density: a rate $f$ with distance equal to the integral of $f$ ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)). The Lebesgue differentiation theorem says that rate is the derivative almost everywhere ([The Lebesgue differentiation theorem](02-lebesgue-differentiation-theorem.md)). Three earlier results, chained.
+Absolute continuity of the function is exactly absolute continuity of that measure against length: a set of times of length zero carries no distance ([Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)). The Radon–Nikodym theorem then hands over a density: a rate $`f`$ with distance equal to the integral of $`f`$ ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)). The Lebesgue differentiation theorem says that rate is the derivative almost everywhere ([The Lebesgue differentiation theorem](02-lebesgue-differentiation-theorem.md)). Three earlier results, chained.
 
 The Riemann version ([Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)) needs a derivative at every inside point and a Riemann-integrable rate; this one allows corners, asks only a finite Lebesgue integral, and says exactly which functions arise.
 
 ### Step 1: Lipschitz gives absolute continuity, which gives bounded variation
 
-The odometer's slope never exceeds 90 km/h, so it is Lipschitz with $L$ = 90. Intervals of total length under $\delta$ move it by at most 90 times that length. So $\delta = \varepsilon / L$ works: for $\varepsilon$ = 0.1 km, $\delta$ = 0.1/90 hours, 4.0 seconds.
+The odometer's slope never exceeds 90 km/h, so it is Lipschitz with $`L`$ = 90. Intervals of total length under $`\delta`$ move it by at most 90 times that length. So $`\delta = \varepsilon / L`$ works: for $`\varepsilon`$ = 0.1 km, $`\delta`$ = 0.1/90 hours, 4.0 seconds.
 
-Absolute continuity bounds the total up-and-down movement. Take $\varepsilon$ = 1 and $\delta$ = 1/90. Cut the hour into 91 pieces, each shorter than $\delta$. Inside one piece F moves by less than 1 in total, so the variation is at most 91. The odometer's true variation is 51 km: crude, but finite. Taking a collection of a single interval shows an absolutely continuous function is continuous.
+Absolute continuity bounds the total up-and-down movement. Take $`\varepsilon`$ = 1 and $`\delta`$ = 1/90. Cut the hour into 91 pieces, each shorter than $`\delta`$. Inside one piece F moves by less than 1 in total, so the variation is at most 91. The odometer's true variation is 51 km: crude, but finite. Taking a collection of a single interval shows an absolutely continuous function is continuous.
 
 ### Step 2: every running integral is absolutely continuous
 
-Suppose $F(x) = F(a) + \int_{[a,x]} f \, d\lambda$ with $f$ in $L^1$. Across a collection of intervals, F moves by at most the integral of $\lvert f \rvert$ over their union. The measure $A \mapsto \int_A \lvert f \rvert \, d\lambda$ is finite and has a density, so it is absolutely continuous against length, and a finite absolutely continuous measure keeps an epsilon-delta promise ([Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md), Theorem 2). Sets of length under $\delta$ carry less than $\varepsilon$ of it. That is the definition.
+Suppose $`F(x) = F(a) + \int_{[a,x]} f \, d\lambda`$ with $`f`$ in $`L^1`$. Across a collection of intervals, F moves by at most the integral of $`\lvert f \rvert`$ over their union. The measure $`A \mapsto \int_A \lvert f \rvert \, d\lambda`$ is finite and has a density, so it is absolutely continuous against length, and a finite absolutely continuous measure keeps an epsilon-delta promise ([Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md), Theorem 2). Sets of length under $`\delta`$ carry less than $`\varepsilon`$ of it. That is the definition.
 
-The code draws 2000 random collections of up to eight intervals, skips the few that overlap, and tests the rest on the trip. The largest total movement is 0.0999 km, under $\varepsilon$ = 0.1; the worst case by hand, every interval inside the 90 km/h leg, gives the same 0.0999.
+The code draws 2000 random collections of up to eight intervals, skips the few that overlap, and tests the rest on the trip. The largest total movement is 0.0999 km, under $`\varepsilon`$ = 0.1; the worst case by hand, every interval inside the 90 km/h leg, gives the same 0.0999.
 
-The first arrow of the chain does not reverse. $\sqrt{t}$ is the running integral of $1/(2\sqrt{s})$, and that rate is in $L^1$: its integral over $[h, 1]$ is $1 - \sqrt{h}$, which rises to exactly 1 as $h$ shrinks to 0, by monotone convergence. So $\sqrt{t}$ is absolutely continuous. Midpoint sums over [0, 1] illustrate the limit: 0.9698 with 100 pieces, 0.9970 with 10000. Its slope at 0 is unbounded: $\sqrt{h}/h$ is 10.00 at $h$ = 0.01 and 100.00 at $h$ = 0.0001. Because the rate falls, a set of length $\delta$ collects the most pushed against 0, where it collects $\sqrt{\delta}$; so $\delta = \varepsilon^2$ works. With $\varepsilon$ = 0.1 that one interval moves $\sqrt{t}$ by 0.0999; random collections reach 0.0618.
+The first arrow of the chain does not reverse. $`\sqrt{t}`$ is the running integral of $`1/(2\sqrt{s})`$, and that rate is in $`L^1`$: its integral over $`[h, 1]`$ is $`1 - \sqrt{h}`$, which rises to exactly 1 as $`h`$ shrinks to 0, by monotone convergence. So $`\sqrt{t}`$ is absolutely continuous. Midpoint sums over [0, 1] illustrate the limit: 0.9698 with 100 pieces, 0.9970 with 10000. Its slope at 0 is unbounded: $`\sqrt{h}/h`$ is 10.00 at $`h`$ = 0.01 and 100.00 at $`h`$ = 0.0001. Because the rate falls, a set of length $`\delta`$ collects the most pushed against 0, where it collects $`\sqrt{\delta}`$; so $`\delta = \varepsilon^2`$ works. With $`\varepsilon`$ = 0.1 that one interval moves $`\sqrt{t}`$ by 0.0999; random collections reach 0.0618.
 
 ### Step 3: the rate is the derivative almost everywhere
 
-The Lebesgue differentiation theorem says that for $f$ in $L^1$, the average of $f$ over a shrinking interval next to $x$ tends to $f(x)$ at almost every $x$. The average of $f$ over $[x, x+h]$ is exactly the difference quotient $(F(x+h) - F(x))/h$. So the quotient tends to $f(x)$, and $F'(x) = f(x)$, except on a set of length zero.
+The Lebesgue differentiation theorem says that for $`f`$ in $`L^1`$, the average of $`f`$ over a shrinking interval next to $`x`$ tends to $`f(x)`$ at almost every $`x`$. The average of $`f`$ over $`[x, x+h]`$ is exactly the difference quotient $`(F(x+h) - F(x))/h`$. So the quotient tends to $`f(x)`$, and $`F'(x) = f(x)`$, except on a set of length zero.
 
 On the trip, the code draws 1000 random times and compares the central difference quotient, with a step of a millionth of an hour, against the speed. All 1000 agree to within 0.0001 km/h; none fell within a millionth of an hour of a gear change. At the gear changes themselves the one-sided quotients disagree:
 
-| Gear change | Left quotient, $h$ = 0.001 | Right quotient, $h$ = 0.001 |
+| Gear change | Left quotient, $`h`$ = 0.001 | Right quotient, $`h`$ = 0.001 |
 | --- | --- | --- |
 | 0.2 h | 59.85 | 90.00 |
 | 0.5 h | 90.00 | 0.00 |
@@ -125,39 +133,39 @@ The left quotient at 0.2 h is 59.85 rather than 60 because the speed is still ri
 
 This is the harder direction, the one that needs Radon–Nikodym. In outline:
 
-1. **Reduce to rising functions.** $F$ has bounded variation (Step 1), so $F = V - Q$ with $V$ its running variation and $Q = V - F$, both rising and both absolutely continuous.
-2. **Turn a rising one into a measure.** $\mu_F$ gives each interval the rise of $F$ across it: for the odometer, the distance covered during a set of times.
-3. **Length zero carries nothing.** A set of length zero sits inside an open set of length under $\delta$, a union of non-overlapping open intervals; every finite batch of them rises by under $\varepsilon$, so the whole set carries at most $\varepsilon$, hence nothing.
-4. **Collect the density.** Radon–Nikodym gives $f \ge 0$ with $\mu_F$ of $(a, x]$ equal to $\int_{[a,x]} f \, d\lambda$, which is $F(x) - F(a)$; at $x = b$ the integral is finite, so $f$ is in $L^1$.
+1. **Reduce to rising functions.** $`F`$ has bounded variation (Step 1), so $`F = V - Q`$ with $`V`$ its running variation and $`Q = V - F`$, both rising and both absolutely continuous.
+2. **Turn a rising one into a measure.** $`\mu_F`$ gives each interval the rise of $`F`$ across it: for the odometer, the distance covered during a set of times.
+3. **Length zero carries nothing.** A set of length zero sits inside an open set of length under $`\delta`$, a union of non-overlapping open intervals; every finite batch of them rises by under $`\varepsilon`$, so the whole set carries at most $`\varepsilon`$, hence nothing.
+4. **Collect the density.** Radon–Nikodym gives $`f \ge 0`$ with $`\mu_F`$ of $`(a, x]`$ equal to $`\int_{[a,x]} f \, d\lambda`$, which is $`F(x) - F(a)`$; at $`x = b`$ the integral is finite, so $`f`$ is in $`L^1`$.
 
-Stein and Shakarchi reach this direction by the Vitali covering lemma instead; the route here reuses Radon–Nikodym. The code checks the density identity on the trip with the set $A$ of three stretches. Odometer differences give 29.25 km. The midpoint integral of the speed over $A$ gives 29.25 km.
+Stein and Shakarchi reach this direction by the Vitali covering lemma instead; the route here reuses Radon–Nikodym. The code checks the density identity on the trip with the set $`A`$ of three stretches. Odometer differences give 29.25 km. The midpoint integral of the speed over $`A`$ gives 29.25 km.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $F : [a, b] \to \mathbb{R}$. Intervals in a collection are non-overlapping: they share at most endpoints.
+**Setting.** $`F : [a, b] \to \mathbb{R}`$. Intervals in a collection are non-overlapping: they share at most endpoints.
 
-**Lemma 1 (Lipschitz gives AC).** If $\lvert F(x) - F(y) \rvert \le L \lvert x - y \rvert$ with $L > 0$, take $\delta = \varepsilon / L$. Then $\sum \lvert F(b_k) - F(a_k) \rvert \le L \sum (b_k - a_k) < L\delta = \varepsilon$.
+**Lemma 1 (Lipschitz gives AC).** If $`\lvert F(x) - F(y) \rvert \le L \lvert x - y \rvert`$ with $`L > 0`$, take $`\delta = \varepsilon / L`$. Then $`\sum \lvert F(b_k) - F(a_k) \rvert \le L \sum (b_k - a_k) < L\delta = \varepsilon`$.
 
-**Lemma 2 (AC gives BV).** Take $\varepsilon = 1$ and its $\delta$, and points $a = x_0 < \cdots < x_N = b$ with every gap under $\delta$. Adding the $x_j$ to any partition never lowers $\sum \lvert \Delta F \rvert$ (triangle inequality), and the refined sum splits into $N$ sums over collections of total length under $\delta$, each under 1. So the total variation is at most $N$.
+**Lemma 2 (AC gives BV).** Take $`\varepsilon = 1`$ and its $`\delta`$, and points $`a = x_0 < \cdots < x_N = b`$ with every gap under $`\delta`$. Adding the $`x_j`$ to any partition never lowers $`\sum \lvert \Delta F \rvert`$ (triangle inequality), and the refined sum splits into $`N`$ sums over collections of total length under $`\delta`$, each under 1. So the total variation is at most $`N`$.
 
-**Lemma 3 (the variation function is AC).** Let $V(x)$ be the variation of $F$ on $[a, x]$, finite by Lemma 2; $V(y) - V(x)$ is the variation on $[x, y]$ ([Bounded variation](01-functions-of-bounded-variation.md)). Take $\delta$ for $\varepsilon/2$. For intervals $(a_k, b_k)$ of total length under $\delta$, partitions of all the $[a_k, b_k]$ together form one collection of total length under $\delta$, so their $\sum \lvert \Delta F \rvert$ is under $\varepsilon/2$. The supremum over the partitions gives $\sum (V(b_k) - V(a_k)) \le \varepsilon/2 < \varepsilon$. Since $\lvert F(y) - F(x) \rvert \le V(y) - V(x)$, $Q = V - F$ rises, and it is AC as a difference of AC functions.
+**Lemma 3 (the variation function is AC).** Let $`V(x)`$ be the variation of $`F`$ on $`[a, x]`$, finite by Lemma 2; $`V(y) - V(x)`$ is the variation on $`[x, y]`$ ([Bounded variation](01-functions-of-bounded-variation.md)). Take $`\delta`$ for $`\varepsilon/2`$. For intervals $`(a_k, b_k)`$ of total length under $`\delta`$, partitions of all the $`[a_k, b_k]`$ together form one collection of total length under $`\delta`$, so their $`\sum \lvert \Delta F \rvert`$ is under $`\varepsilon/2`$. The supremum over the partitions gives $`\sum (V(b_k) - V(a_k)) \le \varepsilon/2 < \varepsilon`$. Since $`\lvert F(y) - F(x) \rvert \le V(y) - V(x)`$, $`Q = V - F`$ rises, and it is AC as a difference of AC functions.
 
-**Lemma 4 (a rising AC function has an absolutely continuous measure).** Let $G$ rise and be AC, hence continuous. By [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md) there is a finite Borel measure $\mu_G$ on $[a, b]$ with $\mu_G((c, d]) = G(d) - G(c)$; continuity of $G$ makes every single point $\mu_G$-null, so open, closed and half-open intervals all get $G(d) - G(c)$. Let $\lambda(E) = 0$, $\varepsilon > 0$, and $\delta$ from the AC of $G$. By [Outer measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md) some open $U \supseteq E$ has $\lambda(U) < \delta$, and $U \cap (a, b)$ is a disjoint union of countably many open intervals $I_j$. Any first $m$ of them form a collection of total length under $\delta$, so $\sum_{j \le m} \mu_G(I_j) < \varepsilon$. Countable additivity, and null endpoints, give $\mu_G(E) \le \varepsilon$ for every $\varepsilon$. So $\mu_G \ll \lambda$.
+**Lemma 4 (a rising AC function has an absolutely continuous measure).** Let $`G`$ rise and be AC, hence continuous. By [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md) there is a finite Borel measure $`\mu_G`$ on $`[a, b]`$ with $`\mu_G((c, d]) = G(d) - G(c)`$; continuity of $`G`$ makes every single point $`\mu_G`$-null, so open, closed and half-open intervals all get $`G(d) - G(c)`$. Let $`\lambda(E) = 0`$, $`\varepsilon > 0`$, and $`\delta`$ from the AC of $`G`$. By [Outer measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md) some open $`U \supseteq E`$ has $`\lambda(U) < \delta`$, and $`U \cap (a, b)`$ is a disjoint union of countably many open intervals $`I_j`$. Any first $`m`$ of them form a collection of total length under $`\delta`$, so $`\sum_{j \le m} \mu_G(I_j) < \varepsilon`$. Countable additivity, and null endpoints, give $`\mu_G(E) \le \varepsilon`$ for every $`\varepsilon`$. So $`\mu_G \ll \lambda`$.
 
-**Theorem, AC implies integral.** By Lemma 3, $F = V - Q$ with $V$, $Q$ rising and AC. By Lemma 4 and the Radon–Nikodym theorem ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md); both measures are finite on $[a, b]$) there are measurable $g_V, g_Q \ge 0$ with $\mu_V(A) = \int_A g_V \, d\lambda$ and $\mu_Q(A) = \int_A g_Q \, d\lambda$. Taking $A = (a, x]$: $V(x) - V(a) = \int_{[a,x]} g_V \, d\lambda$ (the point $a$ is $\lambda$-null), and likewise for $Q$. With $A = [a, b]$ both integrals are finite, so $g_V, g_Q \in L^1$. Put $f = g_V - g_Q \in L^1$; subtracting, $F(x) - F(a) = \int_{[a,x]} f \, d\lambda$.
+**Theorem, AC implies integral.** By Lemma 3, $`F = V - Q`$ with $`V`$, $`Q`$ rising and AC. By Lemma 4 and the Radon–Nikodym theorem ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md); both measures are finite on $`[a, b]`$) there are measurable $`g_V, g_Q \ge 0`$ with $`\mu_V(A) = \int_A g_V \, d\lambda`$ and $`\mu_Q(A) = \int_A g_Q \, d\lambda`$. Taking $`A = (a, x]`$: $`V(x) - V(a) = \int_{[a,x]} g_V \, d\lambda`$ (the point $`a`$ is $`\lambda`$-null), and likewise for $`Q`$. With $`A = [a, b]`$ both integrals are finite, so $`g_V, g_Q \in L^1`$. Put $`f = g_V - g_Q \in L^1`$; subtracting, $`F(x) - F(a) = \int_{[a,x]} f \, d\lambda`$.
 
-**Theorem, integral implies AC.** Let $F(x) = F(a) + \int_{[a,x]} f \, d\lambda$ with $f \in L^1$. The set function $\nu(A) = \int_A \lvert f \rvert \, d\lambda$ is a finite measure with $\nu \ll \lambda$ (a density always gives absolute continuity, Theorem 1 of [Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)). By Theorem 2 of the same card, for each $\varepsilon$ there is $\delta$ with $\lambda(E) < \delta \Rightarrow \nu(E) < \varepsilon$. For a collection of total length under $\delta$, let $E$ be the union of the open intervals, so $\lambda(E) < \delta$. Then $\sum \lvert F(b_k) - F(a_k) \rvert = \sum \lvert \int_{(a_k, b_k)} f \, d\lambda \rvert \le \sum \int_{(a_k, b_k)} \lvert f \rvert \, d\lambda = \nu(E) < \varepsilon$.
+**Theorem, integral implies AC.** Let $`F(x) = F(a) + \int_{[a,x]} f \, d\lambda`$ with $`f \in L^1`$. The set function $`\nu(A) = \int_A \lvert f \rvert \, d\lambda`$ is a finite measure with $`\nu \ll \lambda`$ (a density always gives absolute continuity, Theorem 1 of [Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)). By Theorem 2 of the same card, for each $`\varepsilon`$ there is $`\delta`$ with $`\lambda(E) < \delta \Rightarrow \nu(E) < \varepsilon`$. For a collection of total length under $`\delta`$, let $`E`$ be the union of the open intervals, so $`\lambda(E) < \delta`$. Then $`\sum \lvert F(b_k) - F(a_k) \rvert = \sum \lvert \int_{(a_k, b_k)} f \, d\lambda \rvert \le \sum \int_{(a_k, b_k)} \lvert f \rvert \, d\lambda = \nu(E) < \varepsilon`$.
 
-**Theorem, the derivative.** With $f \in L^1$ as above, for $h > 0$, $(F(x+h) - F(x))/h = \frac{1}{h}\int_{[x, x+h]} f \, d\lambda$, and for $h < 0$ the same with $[x+h, x]$. By the Lebesgue differentiation theorem ([The Lebesgue differentiation theorem](02-lebesgue-differentiation-theorem.md)), at every Lebesgue point $x$ of $f$ the average $\frac{1}{\lvert h \rvert}\int \lvert f - f(x) \rvert \, d\lambda$ over these intervals tends to 0, so both quotients tend to $f(x)$. Almost every point is a Lebesgue point, so $F' = f$ a.e. If $g$ is another rate for the same $F$, then $g = F' = f$ a.e., which is the uniqueness.
+**Theorem, the derivative.** With $`f \in L^1`$ as above, for $`h > 0`$, $`(F(x+h) - F(x))/h = \frac{1}{h}\int_{[x, x+h]} f \, d\lambda`$, and for $`h < 0`$ the same with $`[x+h, x]`$. By the Lebesgue differentiation theorem ([The Lebesgue differentiation theorem](02-lebesgue-differentiation-theorem.md)), at every Lebesgue point $`x`$ of $`f`$ the average $`\frac{1}{\lvert h \rvert}\int \lvert f - f(x) \rvert \, d\lambda`$ over these intervals tends to 0, so both quotients tend to $`f(x)`$. Almost every point is a Lebesgue point, so $`F' = f`$ a.e. If $`g`$ is another rate for the same $`F`$, then $`g = F' = f`$ a.e., which is the uniqueness.
 
-**Theorem, the Cantor function is not AC.** At stage $n$ ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)) the kept set is $2^n$ closed intervals of total length $(2/3)^n$, and $c$ is constant on each removed interval, so telescoping $c(1) - c(0) = 1$ puts the whole rise on the kept intervals. For $\varepsilon = 1/2$ and any $\delta$, choose $(2/3)^n < \delta$: the interiors of the kept intervals form a collection of total length under $\delta$ that moves $c$ by $1 > \varepsilon$. And $c' = 0$ on the removed intervals, of total length 1, so $\int c' \, d\lambda = 0 \ne 1$.
+**Theorem, the Cantor function is not AC.** At stage $`n`$ ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)) the kept set is $`2^n`$ closed intervals of total length $`(2/3)^n`$, and $`c`$ is constant on each removed interval, so telescoping $`c(1) - c(0) = 1`$ puts the whole rise on the kept intervals. For $`\varepsilon = 1/2`$ and any $`\delta`$, choose $`(2/3)^n < \delta`$: the interiors of the kept intervals form a collection of total length under $`\delta`$ that moves $`c`$ by $`1 > \varepsilon`$. And $`c' = 0`$ on the removed intervals, of total length 1, so $`\int c' \, d\lambda = 0 \ne 1`$.
 
 </details>
 
 ### Step 5: the staircase sits outside the class
 
-The Cantor function $c$ is built on the Cantor set: remove the open middle third of [0, 1], then the middle third of each piece left, for ever ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)). The counter holds still across every removed third and climbs only on what is kept. At stage $n$ the kept part is $2^n$ intervals of total length $(2/3)^n$.
+The Cantor function $`c`$ is built on the Cantor set: remove the open middle third of [0, 1], then the middle third of each piece left, for ever ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)). The counter holds still across every removed third and climbs only on what is kept. At stage $`n`$ the kept part is $`2^n`$ intervals of total length $`(2/3)^n`$.
 
 <p align="center"><img src="../figures/absolutely-continuous-functions-and-the-fundamental-theorem.svg" alt="The stage-3 Cantor staircase drawn at 200 units per hour and per km: flat across every removed third, rising 1/8 km across each of the eight kept intervals" width="420"></p>
 
@@ -170,9 +178,9 @@ Drawn to scale from the `figure,` line of both checks: stage 3 of the staircase,
 | 10 | 1024 | 0.017342 | 1.0000 | 0.0000 | 0.982658 |
 | 12 | 4096 | 0.007707 | 1.0000 | 0.0000 | 0.992293 |
 
-The kept intervals shrink toward length zero and carry the whole rise of 1 km at every stage. So for $\varepsilon$ = 0.5 no $\delta$ works: for $\delta$ = 0.01, stage 12 is the first whose 4096 intervals total under 0.01, and they still move the counter by 1.
+The kept intervals shrink toward length zero and carry the whole rise of 1 km at every stage. So for $`\varepsilon`$ = 0.5 no $`\delta`$ works: for $`\delta`$ = 0.01, stage 12 is the first whose 4096 intervals total under 0.01, and they still move the counter by 1.
 
-The derivative is zero on the gaps, whose length tends to 1. So $c' = 0$ almost everywhere, its integral is 0, and the counter climbed 1. Its measure $\mu_c$ lives on the Cantor set, of length zero: singular to length, the opposite extreme.
+The derivative is zero on the gaps, whose length tends to 1. So $`c' = 0`$ almost everywhere, its integral is 0, and the counter climbed 1. Its measure $`\mu_c`$ lives on the Cantor set, of length zero: singular to length, the opposite extreme.
 
 One interval at a time the staircase looks harmless: a single stage-10 interval has length 0.0000169 hours and rise 0.0009766 km. Only the 1024 together give the full rise of 1. That is why the definition quantifies over collections.
 
@@ -182,15 +190,15 @@ One interval at a time the staircase looks harmless: a single stage-10 interval 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| leg 1 distance, speed 300$t$ from 0 to 0.2 h | area of a triangle: 0.5 × 0.2 × 60 | 6 km |
+| leg 1 distance, speed 300$`t`$ from 0 to 0.2 h | area of a triangle: 0.5 × 0.2 × 60 | 6 km |
 | leg 2 distance | 90 × 0.3 | 27 km |
 | leg 3 distance | 0 × 0.1 | 0 km |
 | leg 4 distance | 45 × 0.4 | 18 km |
 | integral of the speed | 6 + 27 + 0 + 18 | 51 km |
-| odometer change | $F(1) - F(0)$ = 51 − 0 | **51 km** |
+| odometer change | $`F(1) - F(0)`$ = 51 − 0 | **51 km** |
 | Lipschitz constant | the largest speed | 90 km/h |
-| $\delta$ for $\varepsilon$ = 0.1 km | 0.1 ÷ 90 | 0.001111 h, 4.0 s |
-| variation bound from $\varepsilon$ = 1 | 91 pieces of length 1/91 < 1/90, under 1 km each | at most 91 km; actual 51 km |
+| $`\delta`$ for $`\varepsilon`$ = 0.1 km | 0.1 ÷ 90 | 0.001111 h, 4.0 s |
+| variation bound from $`\varepsilon`$ = 1 | 91 pieces of length 1/91 < 1/90, under 1 km each | at most 91 km; actual 51 km |
 
 The integral of the speedometer equals the odometer's change, 51 km, even though the speed jumps three times and the odometer has no derivative at those three instants.
 
@@ -198,9 +206,9 @@ The integral of the speedometer equals the odometer's change, 51 km, even though
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Continuity plus a derivative a.e. is enough | Cantor counter: $\int c'$ = 0, rise 1.0000 | continuity controls one interval, not collections |
+| Continuity plus a derivative a.e. is enough | Cantor counter: $`\int c'`$ = 0, rise 1.0000 | continuity controls one interval, not collections |
 | Testing one short interval at a time | stage 10: one interval rises 0.0009766 km; 1024 together rise 1.0000 | the collection test is the whole content |
-| Taking Lipschitz as the definition | $\sqrt{t}$: slope quotient 100.00 at $h$ = 0.0001, yet midpoint sums 0.9698, 0.9970 reach 1 | absolutely continuous functions may have unbounded slopes |
+| Taking Lipschitz as the definition | $`\sqrt{t}`$: slope quotient 100.00 at $`h`$ = 0.0001, yet midpoint sums 0.9698, 0.9970 reach 1 | absolutely continuous functions may have unbounded slopes |
 | Reading "a.e." as "everywhere" | at 0.2 h: left quotient 59.85, right 90.00 | the derivative may be missing on a set of length zero |
 
 The code prints every entry.
@@ -209,7 +217,7 @@ The code prints every entry.
 
 ## Code, from first principles, and it actually runs
 
-The code shows instances; the statements for every function rest on the proofs above. The trip's distance comes three ways: the odometer's formula, a midpoint integral of the speed, and the layer-cake integral adding up the time spent above each speed. The distance during $A$ comes from odometer differences and from integrating the speed over $A$. Difference quotients check the derivative at 1000 random times and at the gear changes. Random collections of intervals test absolute continuity against the hand-found worst case, for the trip and for $\sqrt{t}$. The Cantor stages are listed interval by interval, the counter read off ternary digits, and compared with $(2/3)^n$ and the total rise 1. Python works in exact fractions for the staircase; Rust does the same in whole numbers, counting time in units of 1/3^12 hours and distance in units of 1/2^12 km. Random draws come from SplitMix64 with seed 20260929 in both.
+The code shows instances; the statements for every function rest on the proofs above. The trip's distance comes three ways: the odometer's formula, a midpoint integral of the speed, and the layer-cake integral adding up the time spent above each speed. The distance during $`A`$ comes from odometer differences and from integrating the speed over $`A`$. Difference quotients check the derivative at 1000 random times and at the gear changes. Random collections of intervals test absolute continuity against the hand-found worst case, for the trip and for $`\sqrt{t}`$. The Cantor stages are listed interval by interval, the counter read off ternary digits, and compared with $`(2/3)^n`$ and the total rise 1. Python works in exact fractions for the staircase; Rust does the same in whole numbers, counting time in units of 1/3^12 hours and distance in units of 1/2^12 km. Random draws come from SplitMix64 with seed 20260929 in both.
 
 ### Python
 
@@ -555,18 +563,18 @@ The two outputs agree line for line.
 
 ### Lean
 
-Lean proves the theorem and the chain, for every function on every closed interval $[a, b]$.
+Lean proves the theorem and the chain, for every function on every closed interval $`[a, b]`$.
 
-- Take a function $F$ on $[a, b]$. Then $F$ is absolutely continuous exactly when it is the running integral of some rate $f$ in $L^1$.
-- Suppose $F(x) = F(a) + \int_{[a,x]} f \, d\lambda$ on $[a, b]$, with $f$ in $L^1$. Then $F$ has derivative $f(x)$ at almost every $x$ in $[a, b]$.
-- Take the same $F$ and $f$. Then $F(b) - F(a) = \int_{[a,b]} F' \, d\lambda$.
-- Suppose $F$ is Lipschitz on $[a, b]$. Then $F$ is absolutely continuous there.
-- Suppose $F$ is absolutely continuous on $[a, b]$. Then $F$ is continuous and of bounded variation there.
-- The trip arithmetic holds as exact fractions: legs of 6, 27 and 18 km, 51 km in all, and 29.25 km during $A$.
-- The budgets hold exactly too: $\delta$ = 0.1/90 h, or 4 seconds, and 91 pieces each shorter than 1/90.
+- Take a function $`F`$ on $`[a, b]`$. Then $`F`$ is absolutely continuous exactly when it is the running integral of some rate $`f`$ in $`L^1`$.
+- Suppose $`F(x) = F(a) + \int_{[a,x]} f \, d\lambda`$ on $`[a, b]`$, with $`f`$ in $`L^1`$. Then $`F`$ has derivative $`f(x)`$ at almost every $`x`$ in $`[a, b]`$.
+- Take the same $`F`$ and $`f`$. Then $`F(b) - F(a) = \int_{[a,b]} F' \, d\lambda`$.
+- Suppose $`F`$ is Lipschitz on $`[a, b]`$. Then $`F`$ is absolutely continuous there.
+- Suppose $`F`$ is absolutely continuous on $`[a, b]`$. Then $`F`$ is continuous and of bounded variation there.
+- The trip arithmetic holds as exact fractions: legs of 6, 27 and 18 km, 51 km in all, and 29.25 km during $`A`$.
+- The budgets hold exactly too: $`\delta`$ = 0.1/90 h, or 4 seconds, and 91 pieces each shorter than 1/90.
 - The Cantor counts hold exactly: stage 12 is the first under length 0.01, and its 4096 intervals rise 1 in all.
 
-The decimals, the random tests, $\sqrt{t}$ and the Cantor staircase are left to the Python and Rust checks.
+The decimals, the random tests, $`\sqrt{t}`$ and the Cantor staircase are left to the Python and Rust checks.
 
 ```lean
 -- Absolutely continuous functions and the fundamental theorem: a function on a closed interval is the running integral of an integrable rate exactly when it is absolutely continuous, that rate is then its derivative almost everywhere and integrates back to the total change, and Lipschitz implies absolutely continuous implies continuous with bounded variation.
@@ -694,8 +702,8 @@ example : (4096 : ℚ) * (1 / 2 ^ 12) = 1 := by norm_num
 > **Try changing**
 > - **Raise the Python stage cap from 12 to 15 and add 15 to the tuple of printed stages.** Guess first: does the rise column move? It stays at 1.0000 while the kept length keeps shrinking by a factor 2/3 per stage.
 > - **Change the quotient step from 1e-6 to 0.01, leaving the gear-change window at 1e-6.** Guess first: do all quotients still match? No: a few dozen random times lie within 0.01 h of a gear change, their quotients straddle the jump, and the assert fails. The theorem is untouched: it is a statement about the limit as the step shrinks.
-> - **Loosen the trip's $\delta$ from 0.1/90 to 0.1/60 in `worst_move`.** Guess first: does $\varepsilon$ = 0.1 still hold? No: 0.1/60 is the right $\delta$ only for slopes up to 60 km/h, collections inside the 90 km/h leg move the odometer by up to half as much again as 0.1, and the trip assert fails.
-> - **Test $\sqrt{t}$ with $\delta = \varepsilon$ instead of $\varepsilon^2$.** Guess first: one interval of length 0.1 against 0 moves $\sqrt{t}$ by about the square root of 0.1, well past 0.1, and the assert fails.
+> - **Loosen the trip's $`\delta`$ from 0.1/90 to 0.1/60 in `worst_move`.** Guess first: does $`\varepsilon`$ = 0.1 still hold? No: 0.1/60 is the right $`\delta`$ only for slopes up to 60 km/h, collections inside the 90 km/h leg move the odometer by up to half as much again as 0.1, and the trip assert fails.
+> - **Test $`\sqrt{t}`$ with $`\delta = \varepsilon`$ instead of $`\varepsilon^2`$.** Guess first: one interval of length 0.1 against 0 moves $`\sqrt{t}`$ by about the square root of 0.1, well past 0.1, and the assert fails.
 
 ---
 
@@ -704,9 +712,9 @@ example : (4096 : ℚ) * (1 / 2 ^ 12) = 1 := by norm_num
 > [!warning]
 > **"A continuous function that is differentiable almost everywhere, with an integrable derivative, is the integral of its derivative."** False. The Cantor counter is continuous, rises from 0 to 1, has derivative 0 almost everywhere, and its derivative integrates to 0. What the fundamental theorem needs is absolute continuity: control over collections of intervals, which continuity does not give.
 >
-> - **Confusing the two absolute continuities.** For a function it is the epsilon-delta condition on collections; for a measure, "length zero forces size zero". They match through $\mu_F$ (Step 4), but are different sentences.
-> - **Treating Lipschitz as necessary.** $\sqrt{t}$ has slope quotient 100.00 at $h$ = 0.0001 and is still absolutely continuous.
-> - **Expecting the derivative everywhere.** The odometer has no derivative at 0.2, 0.5 and 0.6 hours; the theorem promises $F' = f$ only almost everywhere.
+> - **Confusing the two absolute continuities.** For a function it is the epsilon-delta condition on collections; for a measure, "length zero forces size zero". They match through $`\mu_F`$ (Step 4), but are different sentences.
+> - **Treating Lipschitz as necessary.** $`\sqrt{t}`$ has slope quotient 100.00 at $`h`$ = 0.0001 and is still absolutely continuous.
+> - **Expecting the derivative everywhere.** The odometer has no derivative at 0.2, 0.5 and 0.6 hours; the theorem promises $`F' = f`$ only almost everywhere.
 > - **Forgetting non-overlap.** Overlapping intervals can reuse the same stretch of time; the sum of their lengths then says nothing about the set they cover.
 
 ---
@@ -732,7 +740,7 @@ example : (4096 : ℚ) * (1 / 2 ^ 12) = 1 := by norm_num
 
 ## Where this goes next
 
-- [The Lebesgue-Stieltjes integral](05-lebesgue-stieltjes-integral.md): integrating against $\mu_F$ itself, so that an absolutely continuous $F$ gives $\int g \, dF = \int g F' \, d\lambda$ and the Cantor function gives an integral no density can express.
+- [The Lebesgue-Stieltjes integral](05-lebesgue-stieltjes-integral.md): integrating against $`\mu_F`$ itself, so that an absolutely continuous $`F`$ gives $`\int g \, dF = \int g F' \, d\lambda`$ and the Cantor function gives an integral no density can express.
 
 This card says when the integral of the derivative recovers the total change. The question it leaves open is how to integrate against a rising function that is not absolutely continuous, such as the Cantor staircase. [The Lebesgue-Stieltjes integral](05-lebesgue-stieltjes-integral.md) answers it.
 

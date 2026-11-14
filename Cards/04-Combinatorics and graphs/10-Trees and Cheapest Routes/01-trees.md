@@ -36,31 +36,37 @@ B and D carry three lanes each, F two; A, C, E and G carry one apiece.
 
 ## The formula
 
-Notation first. A map is its houses and the pairs a lane joins: $V$ the houses, $E$ the lanes, $n$ and $m$ how many of each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)).
+Notation first. A map is its houses and the pairs a lane joins: $`V`$ the houses, $`E`$ the lanes, $`n`$ and $`m`$ how many of each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)).
 
-$G$ is any map, $T$ a tree; $c(G)$ counts its pieces and $\deg(v)$ the lanes at house $v$, its **degree** ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A house of degree 1 is a **leaf**, and the double arrow $\Longleftrightarrow$ reads "exactly when".
+$`G`$ is any map, $`T`$ a tree; $`c(G)`$ counts its pieces and $`\deg(v)`$ the lanes at house $`v`$, its **degree** ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A house of degree 1 is a **leaf**, and the double arrow $`\Longleftrightarrow`$ reads "exactly when".
 
-$$m = n - 1$$
+```math
+m = n - 1
+```
 
 **Read it aloud:** a tree carries one lane fewer than it has houses.
 
-$$\text{connected, no cycle} \;\Longleftrightarrow\; \text{one route per pair} \;\Longleftrightarrow\; \text{connected, } m = n - 1 \;\Longleftrightarrow\; \text{no cycle, } m = n - 1$$
+```math
+\text{connected, no cycle} \;\Longleftrightarrow\; \text{one route per pair} \;\Longleftrightarrow\; \text{connected, } m = n - 1 \;\Longleftrightarrow\; \text{no cycle, } m = n - 1
+```
 
 A map with no cycle anywhere, joined up or not, is a **forest**: trees side by side. Each piece spends one lane fewer than it has houses — the forest law.
 
-$$m = n - c(G)$$
+```math
+m = n - c(G)
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T$, $G$ | a tree; any map, tree or not | the village; the trap, a triangle A-B-C beside the path D-E-F-G, 6 lanes in 2 pieces | — |
-| $V$, $E$, $n$, $m$ | houses, lanes, how many of each | A to G; six lanes; 7 and 6 | one more house than lanes, always |
-| $c(G)$ | pieces the map falls into | 1, then 2 once B-D is cut | one lane fewer for each extra piece |
-| $\deg(v)$ | lanes at a house | 3 at B, 1 at A | fewer leaves |
-| $v$, $w$, $x$, $z$ | houses in general | B, D | — |
+| $`T`$, $`G`$ | a tree; any map, tree or not | the village; the trap, a triangle A-B-C beside the path D-E-F-G, 6 lanes in 2 pieces | — |
+| $`V`$, $`E`$, $`n`$, $`m`$ | houses, lanes, how many of each | A to G; six lanes; 7 and 6 | one more house than lanes, always |
+| $`c(G)`$ | pieces the map falls into | 1, then 2 once B-D is cut | one lane fewer for each extra piece |
+| $`\deg(v)`$ | lanes at a house | 3 at B, 1 at A | fewer leaves |
+| $`v`$, $`w`$, $`x`$, $`z`$ | houses in general | B, D | — |
 
 ### When it holds
 
-- **Finitely many houses.** A row running on for ever in both directions is joined up and loop-free with no leaf, and leaves $n - 1$ nothing to count.
+- **Finitely many houses.** A row running on for ever in both directions is joined up and loop-free with no leaf, and leaves $`n - 1`$ nothing to count.
 - **Lanes both ways, one per pair at most, none from a house to itself.** A second lane between one pair, or a lane looping back on one house, adds no house and breaks the count without making a cycle of three. One-way lanes split each question in two ([Directed graphs](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
 - **The count never travels alone.** Maps neither joined up nor loop-free also spend six lanes on seven houses.
 
@@ -70,7 +76,7 @@ $$m = n - c(G)$$
 
 ### Step 0: a second route is a loop, and a loop is a second route
 
-Follow two different routes from $v$ to $w$. Let $x$ be the last house they share before parting, $z$ the first beyond $x$ lying on both — they meet again, since both end at $w$. The two stretches from $x$ to $z$ share only their ends, so together they close a loop. They cannot both be the lane from $x$ to $z$, since there is at most one. The loop takes in three houses or more: a cycle.
+Follow two different routes from $`v`$ to $`w`$. Let $`x`$ be the last house they share before parting, $`z`$ the first beyond $`x`$ lying on both — they meet again, since both end at $`w`$. The two stretches from $`x`$ to $`z`$ share only their ends, so together they close a loop. They cannot both be the lane from $`x`$ to $`z`$, since there is at most one. The loop takes in three houses or more: a cycle.
 
 Read backwards, a cycle gives two routes between any two of its houses, one each way round. Spare routes and loops are one fact seen twice.
 
@@ -80,7 +86,7 @@ Connected gives every pair a route; no cycle forbids a second. Exactly one each:
 
 ### Step 2: two houses or more means two leaves or more
 
-Finitely many routes, so one of them is longest. Its first house is a leaf. A second lane there would run to a house $w$. With $w$ off the route, that lane on the front makes a longer route. With $w$ on it, the stretch along to $w$ closes a loop. Neither is allowed, and the far end goes the same way.
+Finitely many routes, so one of them is longest. Its first house is a leaf. A second lane there would run to a house $`w`$. With $`w`$ off the route, that lane on the front makes a longer route. With $`w`$ on it, the stretch along to $`w`$ closes a loop. Neither is allowed, and the far end goes the same way.
 
 The village has four leaves, A, C, E and G, its degrees adding to 12 — twice its six lanes ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)).
 
@@ -98,24 +104,24 @@ flowchart LR
     P2 -->|"peel a leaf"| P1["1 house<br/>0 lanes"]
 ```
 
-Each step drops a house and a lane together, which is all $m = n - 1$ says. One house holds $0 = 1 - 1$ lanes, and a tree on $n$ houses is a tree on one fewer with a house and a lane put back ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Each step drops a house and a lane together, which is all $`m = n - 1`$ says. One house holds $`0 = 1 - 1`$ lanes, and a tree on $`n`$ houses is a tree on one fewer with a house and a lane put back ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 ### Step 4: the count, with one companion, is enough
 
-Connected with $m = n - 1$ forbids a cycle. Drop a lane of the supposed cycle and the map stays connected, the rest of the loop still joining that lane's ends; keep going until no loop is left. What remains is a tree, with $n - 1$ lanes by Step 3 — yet lanes were thrown away. So there was no cycle.
+Connected with $`m = n - 1`$ forbids a cycle. Drop a lane of the supposed cycle and the map stays connected, the rest of the loop still joining that lane's ends; keep going until no loop is left. What remains is a tree, with $`n - 1`$ lanes by Step 3 — yet lanes were thrown away. So there was no cycle.
 
-Loop-free with $m = n - 1$ forces a single piece. Every piece is a tree in its own right, carrying one lane fewer than its houses, so the pieces add to the forest law. Then $m = n - 1$ makes $c(G) = 1$.
+Loop-free with $`m = n - 1`$ forces a single piece. Every piece is a tree in its own right, carrying one lane fewer than its houses, so the pieces add to the forest law. Then $`m = n - 1`$ makes $`c(G) = 1`$.
 
 <details>
 <summary>Detailed proof: why four descriptions need only six implications</summary>
 
-Call them (1) connected and no cycle, (2) one route between each pair, (3) connected and $m = n - 1$, (4) no cycle and $m = n - 1$. Steps 0 to 4 prove (1) $\Longleftrightarrow$ (2), (1) $\Longleftrightarrow$ (3) and (1) $\Longleftrightarrow$ (4). Six one-way proofs through the hub (1), not the twelve that every ordered pair would need.
+Call them (1) connected and no cycle, (2) one route between each pair, (3) connected and $`m = n - 1`$, (4) no cycle and $`m = n - 1`$. Steps 0 to 4 prove (1) $`\Longleftrightarrow`$ (2), (1) $`\Longleftrightarrow`$ (3) and (1) $`\Longleftrightarrow`$ (4). Six one-way proofs through the hub (1), not the twelve that every ordered pair would need.
 
 </details>
 
 ### Step 5: every lane a bridge, every missing lane one loop
 
-Each lane is the only route between its own two ends, so losing it leaves none. The pieces go from one to two, and the forest law reads off the remainder, $5 = 7 - 2$ lanes. Every lane of a tree is therefore a **bridge**, a lane whose loss raises the piece count ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)).
+Each lane is the only route between its own two ends, so losing it leaves none. The pieces go from one to two, and the forest law reads off the remainder, $`5 = 7 - 2`$ lanes. Every lane of a tree is therefore a **bridge**, a lane whose loss raises the piece count ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)).
 
 Adding a lane closes the unique old route between its ends into a ring, and no other. A new cycle must use the new lane, and the route it completes is unique. The check cuts all six lanes and adds all fifteen missing ones.
 
@@ -139,7 +145,7 @@ Six lanes for seven houses, 6 = 7 − 1: every lane load-bearing, every pair one
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Six lanes taken as proof enough | 6 lanes = 7 − 1, yet 2 pieces and a loop of 3 | A triangle beside a path spends the budget badly |
-| A forest called a tree | 5 lanes over 2 pieces, sized 3 and 4 | Cutting B-D leaves $n - c(G)$ lanes, not $n - 1$ |
+| A forest called a tree | 5 lanes over 2 pieces, sized 3 and 4 | Cutting B-D leaves $`n - c(G)`$ lanes, not $`n - 1`$ |
 | A spare lane laid for safety | 7 lanes, only 2 of which strand anyone | A lane on a ring is not load-bearing |
 
 The code prints all three.
@@ -345,9 +351,9 @@ The two outputs match line for line.
 
 Lean proves these for every map meeting When it holds, not just the village, and checks the village's own numbers.
 
-- With one house or more, these pick out the same maps: connected with no cycle, one route per pair, and $m = n - 1$ paired with either.
+- With one house or more, these pick out the same maps: connected with no cycle, one route per pair, and $`m = n - 1`$ paired with either.
 - A tree with two houses or more has at least two leaves.
-- A map with no cycle, joined up or not, obeys the forest law $m = n - c(G)$.
+- A map with no cycle, joined up or not, obeys the forest law $`m = n - c(G)`$.
 - The village spends 6 lanes on 7 houses, its degrees add to 12, and its leaves are A, C, E and G.
 - The trap also spends 6 lanes on 7 houses.
 
@@ -493,7 +499,7 @@ example : 2 ^ Nat.choose 5 2 = 1024 ∧ Nat.choose 10 4 = 210 ∧ 210 - 125 = 85
 > [!warning]
 > **Reading "one lane fewer than houses" as the whole test.** The number is right and not enough alone: a triangle A-B-C beside the path D-E-F-G spends six lanes on seven houses, with a loop and two pieces. Pair the count with joined-up, or with loop-free.
 >
-> - **Calling a forest a tree.** Cutting B-D leaves 5 lanes in 2 pieces, sized 3 and 4; loop-free maps obey $m = n - c(G)$, and only one piece makes that $n - 1$.
+> - **Calling a forest a tree.** Cutting B-D leaves 5 lanes in 2 pieces, sized 3 and 4; loop-free maps obey $`m = n - c(G)`$, and only one piece makes that $`n - 1`$.
 > - **Expecting every house to have two lanes.** Give every house two and a loop appears somewhere: a finite tree has at least two leaves, four here.
 > - **Reading "one route" as "one shortest route".** In a tree the route between a pair is the only one there is.
 
@@ -520,7 +526,7 @@ example : 2 ^ Nat.choose 5 2 = 1024 ∧ Nat.choose 10 4 = 210 ∧ 210 - 125 = 85
 
 - [Rooted trees](02-rooted-and-binary-trees.md): the same tree with one house named the top, so every other has a parent and a depth.
 - [Spanning trees](03-spanning-trees-and-cayleys-formula.md): trees inside a larger map, and how many a map holds.
-- [Planar graphs](../12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): what becomes of $m = n - 1$ when loops are allowed but crossings are not.
+- [Planar graphs](../12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): what becomes of $`m = n - 1`$ when loops are allowed but crossings are not.
 - Grammars and a stack: trees as the record of how a sentence or a program was built.
 
 Nothing here told one lane from another: put a price on each and the cheapest skeleton becomes a question, [The cheapest skeleton](04-minimum-spanning-trees.md).

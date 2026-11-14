@@ -28,41 +28,47 @@ Scale: 0.6 drawing units per metre, a point at 50 + 0.6x across and 210 − 0.6y
 
 ## The formula
 
-Notation first, in words. A route is written $y$: at distance $x$ east of A the cable runs $y$ metres north, with slope $y'$. Square brackets, $J[y]$, mark a functional: it takes the whole curve.
+Notation first, in words. A route is written $`y`$: at distance $`x`$ east of A the cable runs $`y`$ metres north, with slope $`y'`$. Square brackets, $`J[y]`$, mark a functional: it takes the whole curve.
 
-Inside sits $F$, the cost per metre east. For partial derivatives the slope gets its own slot, $p$: $F_y$ is the rate $F$ changes with height, $F_p$ with slope, other slots held still.
+Inside sits $`F`$, the cost per metre east. For partial derivatives the slope gets its own slot, $`p`$: $`F_y`$ is the rate $`F`$ changes with height, $`F_p`$ with slope, other slots held still.
 
-$$J[y] = \int_a^b F\big(x,\, y(x),\, y'(x)\big)\,dx$$
+```math
+J[y] = \int_a^b F\big(x,\, y(x),\, y'(x)\big)\,dx
+```
 
 **Read it aloud:** the cost of a route is the cost per metre east, added up from end to end.
 
-For the cable, $F = c\sqrt{1 + p^2}$: one metre east at slope $p$ is $\sqrt{1+p^2}$ metres of cable at $c$ pounds a metre.
+For the cable, $`F = c\sqrt{1 + p^2}`$: one metre east at slope $`p`$ is $`\sqrt{1+p^2}`$ metres of cable at $`c`$ pounds a metre.
 
-A nudge is a curve $\eta$ (eta), zero at both ends, scaled by a small number $\varepsilon$ (epsilon). The **first variation** is the rate the cost changes as $\varepsilon$ leaves zero:
+A nudge is a curve $`\eta`$ (eta), zero at both ends, scaled by a small number $`\varepsilon`$ (epsilon). The **first variation** is the rate the cost changes as $`\varepsilon`$ leaves zero:
 
-$$\delta J = \frac{d}{d\varepsilon}\,J[y + \varepsilon\eta]\,\Big|_{\varepsilon = 0} = \int_a^b \big(F_y\,\eta + F_p\,\eta'\big)\,dx$$
+```math
+\delta J = \frac{d}{d\varepsilon}\,J[y + \varepsilon\eta]\,\Big|_{\varepsilon = 0} = \int_a^b \big(F_y\,\eta + F_p\,\eta'\big)\,dx
+```
 
-The theorem: if $y$ is the cheapest route with its ends fixed, then $\delta J = 0$ for every nudge, and so
+The theorem: if $`y`$ is the cheapest route with its ends fixed, then $`\delta J = 0`$ for every nudge, and so
 
-$$F_y\big(x, y, y'\big) - \frac{d}{dx}\,F_p\big(x, y, y'\big) = 0 \qquad \text{for } a < x < b$$
+```math
+F_y\big(x, y, y'\big) - \frac{d}{dx}\,F_p\big(x, y, y'\big) = 0 \qquad \text{for } a < x < b
+```
 
 **Read it aloud:** along the best curve, the pull of height on the cost is matched by how fast the pull of slope changes along the way.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $a$, $b$ | distance east; the ends | 0 to 400 m | longer cable |
-| $y$, $p$ | the route; the slope slot, holding $y'$ | 0.75x; slope 0.75 | steeper stretches are longer |
-| $F$ | cost per metre east | $c\sqrt{1+p^2}$ | — |
-| $F_y$, $F_p$, $G$ | $F$'s rate with height, with slope; Step 3's bracket | 0; $cp/\sqrt{1+p^2}$; 0 | — |
-| $J$ | the functional: total cost | 500 m of cable, flat field | — |
-| $c$ | price per metre | £80 grass, £160 rock | the route avoids that ground |
-| $\eta$, $\varepsilon$ | nudge shape, zero at both ends; its size | 40 m bulge; −1 to 1 | at a minimum, cost rises as its square |
-| $\theta$, $s$ | angle between route and due east; border crossing | sines 0.7404, 0.3702; 220.30 m | — |
+| $`x`$, $`a`$, $`b`$ | distance east; the ends | 0 to 400 m | longer cable |
+| $`y`$, $`p`$ | the route; the slope slot, holding $`y'`$ | 0.75x; slope 0.75 | steeper stretches are longer |
+| $`F`$ | cost per metre east | $`c\sqrt{1+p^2}`$ | — |
+| $`F_y`$, $`F_p`$, $`G`$ | $`F`$'s rate with height, with slope; Step 3's bracket | 0; $`cp/\sqrt{1+p^2}`$; 0 | — |
+| $`J`$ | the functional: total cost | 500 m of cable, flat field | — |
+| $`c`$ | price per metre | £80 grass, £160 rock | the route avoids that ground |
+| $`\eta`$, $`\varepsilon`$ | nudge shape, zero at both ends; its size | 40 m bulge; −1 to 1 | at a minimum, cost rises as its square |
+| $`\theta`$, $`s`$ | angle between route and due east; border crossing | sines 0.7404, 0.3702; 220.30 m | — |
 
 ### When it holds
 
-- **Both ends fixed.** Let B slide and a boundary term $F_p\,\eta$ at B survives: moving B 10 m north changes the length by 6 m to first order.
-- **Smooth route, smooth $F$.** At a kink or a price jump, such as the rock border, the equation holds on each side and the folded proof matches $F_p$ across.
+- **Both ends fixed.** Let B slide and a boundary term $`F_p\,\eta`$ at B survives: moving B 10 m north changes the length by 6 m to first order.
+- **Smooth route, smooth $`F`$.** At a kink or a price jump, such as the rock border, the equation holds on each side and the folded proof matches $`F_p`$ across.
 - **Necessary, not sufficient.** Maxima and saddles (routes that some nudges make cheaper and others more costly) pass the test too; a minimum needs a separate argument.
 
 ---
@@ -71,9 +77,9 @@ $$F_y\big(x, y, y'\big) - \frac{d}{dx}\,F_p\big(x, y, y'\big) = 0 \qquad \text{f
 
 ### Step 0: a nudge turns a curve problem into a one-number problem
 
-Fix a nudge's shape $\eta$ and vary its size $\varepsilon$. The cost becomes a function of one number, smallest at $\varepsilon = 0$ if $y$ is best, so its derivative there is zero ([Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)). This holds for every shape.
+Fix a nudge's shape $`\eta`$ and vary its size $`\varepsilon`$. The cost becomes a function of one number, smallest at $`\varepsilon = 0`$ if $`y`$ is best, so its derivative there is zero ([Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)). This holds for every shape.
 
-The chart takes the straight cable and a 40 m bulge at its middle, $\eta = 40\sin(\pi x/400)$ metres, zero at both pylons.
+The chart takes the straight cable and a 40 m bulge at its middle, $`\eta = 40\sin(\pi x/400)`$ metres, zero at both pylons.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -88,46 +94,52 @@ The cable's length is level at size 0 and rises alike on both sides.
 
 ### Step 1: differentiate under the integral
 
-The nudged route has height $y + \varepsilon\eta$ and slope $y' + \varepsilon\eta'$. By the chain rule $\varepsilon$ reaches $F$ through two slots, giving $F_y\,\eta + F_p\,\eta'$ per stretch ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Summing the stretches gives the first-variation formula.
+The nudged route has height $`y + \varepsilon\eta`$ and slope $`y' + \varepsilon\eta'`$. By the chain rule $`\varepsilon`$ reaches $`F`$ through two slots, giving $`F_y\,\eta + F_p\,\eta'`$ per stretch ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Summing the stretches gives the first-variation formula.
 
 ### Step 2: move the derivative off the nudge
 
 Integration by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) gives
 
-$$\int_a^b F_p\,\eta'\,dx = \Big[F_p\,\eta\Big]_a^b - \int_a^b \frac{dF_p}{dx}\,\eta\,dx$$
+```math
+\int_a^b F_p\,\eta'\,dx = \Big[F_p\,\eta\Big]_a^b - \int_a^b \frac{dF_p}{dx}\,\eta\,dx
+```
 
 The bracket vanishes because the nudge is zero at both pylons. So
 
-$$\delta J = \int_a^b \Big(F_y - \frac{dF_p}{dx}\Big)\,\eta\,dx = 0 \quad \text{for every nudge.}$$
+```math
+\delta J = \int_a^b \Big(F_y - \frac{dF_p}{dx}\Big)\,\eta\,dx = 0 \quad \text{for every nudge.}
+```
 
 ### Step 3: what integrates to zero against every nudge is zero
 
-Call the bracket $G$. If $G$ were positive somewhere, it would stay positive on a short stretch, being continuous. A nudge shaped as a small hump on that stretch, zero elsewhere, then gives a positive integral, not zero. Negative values fail the same way.
+Call the bracket $`G`$. If $`G`$ were positive somewhere, it would stay positive on a short stretch, being continuous. A nudge shaped as a small hump on that stretch, zero elsewhere, then gives a positive integral, not zero. Negative values fail the same way.
 
-So $G = 0$ everywhere: the Euler-Lagrange equation. This step is the **fundamental lemma of the calculus of variations**.
+So $`G = 0`$ everywhere: the Euler-Lagrange equation. This step is the **fundamental lemma of the calculus of variations**.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The lemma.** Let $G$ be continuous on $[a, b]$, with $\int_a^b G\eta\,dx = 0$ for every nudge. Suppose $G(x_0) > 0$ inside. Continuity gives a stretch $[u, w]$ around that point with $G > G(x_0)/2$. Take $\eta = (x - u)^2 (w - x)^2$ there and 0 elsewhere; its value and slope vanish at both ends of the stretch. Then $\int G\eta\,dx \ge \tfrac12 G(x_0) \int_u^w \eta\,dx > 0$, a contradiction. Repeat for $-G$.
+**The lemma.** Let $`G`$ be continuous on $`[a, b]`$, with $`\int_a^b G\eta\,dx = 0`$ for every nudge. Suppose $`G(x_0) > 0`$ inside. Continuity gives a stretch $`[u, w]`$ around that point with $`G > G(x_0)/2`$. Take $`\eta = (x - u)^2 (w - x)^2`$ there and 0 elsewhere; its value and slope vanish at both ends of the stretch. Then $`\int G\eta\,dx \ge \tfrac12 G(x_0) \int_u^w \eta\,dx > 0`$, a contradiction. Repeat for $`-G`$.
 
-**When $F$ has no $y$ slot.** Then $\delta J = \int_a^b F_p\,\eta'\,dx = 0$, with no second derivative needed. Let $\bar F$ be the average of $F_p$ and $\eta(x) = \int_a^x \big(F_p(v) - \bar F\big)\,dv$, zero at both ends. Then $\int (F_p - \bar F)^2\,dx = \delta J - \bar F\,[\eta]_a^b = 0$, so $F_p = \bar F$, even across a kink or a price jump.
+**When $`F`$ has no $`y`$ slot.** Then $`\delta J = \int_a^b F_p\,\eta'\,dx = 0`$, with no second derivative needed. Let $`\bar F`$ be the average of $`F_p`$ and $`\eta(x) = \int_a^x \big(F_p(v) - \bar F\big)\,dv`$, zero at both ends. Then $`\int (F_p - \bar F)^2\,dx = \delta J - \bar F\,[\eta]_a^b = 0`$, so $`F_p = \bar F`$, even across a kink or a price jump.
 
 </details>
 
 ### Step 4: the flat field gives a straight line
 
-With one price, drop it: $F = \sqrt{1 + p^2}$ is metres of cable per metre east. No $y$ slot, so $F_y = 0$ and $F_p = p/\sqrt{1 + p^2}$ is constant along the route. Differentiating, $y''/(1 + y'^2)^{3/2} = 0$, so $y'' = 0$. The pylons fix the two constants ([Boundary value problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)): $y = 0.75x$, 500 m long.
+With one price, drop it: $`F = \sqrt{1 + p^2}`$ is metres of cable per metre east. No $`y`$ slot, so $`F_y = 0`$ and $`F_p = p/\sqrt{1 + p^2}`$ is constant along the route. Differentiating, $`y''/(1 + y'^2)^{3/2} = 0`$, so $`y'' = 0`$. The pylons fix the two constants ([Boundary value problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)): $`y = 0.75x`$, 500 m long.
 
 ### Step 5: the rocky field gives a bend
 
-Now $F = c(x)\sqrt{1 + p^2}$, with $c = 80$ west of the border and 160 east. Still no $y$ slot, so $F_p = c\,y'/\sqrt{1 + y'^2}$ is one constant along the whole route; on each side, where $c$ is fixed, $y'$ is fixed and the route is straight. With $\sin\theta = y'/\sqrt{1 + y'^2}$, $\theta$ the angle between route and due east, the constant reads
+Now $`F = c(x)\sqrt{1 + p^2}`$, with $`c = 80`$ west of the border and 160 east. Still no $`y`$ slot, so $`F_p = c\,y'/\sqrt{1 + y'^2}`$ is one constant along the whole route; on each side, where $`c`$ is fixed, $`y'`$ is fixed and the route is straight. With $`\sin\theta = y'/\sqrt{1 + y'^2}`$, $`\theta`$ the angle between route and due east, the constant reads
 
-$$80\,\sin\theta_{\text{grass}} = 160\,\sin\theta_{\text{rock}}$$
+```math
+80\,\sin\theta_{\text{grass}} = 160\,\sin\theta_{\text{rock}}
+```
 
-Crossing $s$ metres north of A, the grass leg has sine $s/\sqrt{200^2 + s^2}$ and the rock leg $(300 - s)/\sqrt{200^2 + (300 - s)^2}$. Solving gives $s = 220.30$ m, sines 0.7404 and 0.3702. This is Snell's law, by which light bends entering water.
+Crossing $`s`$ metres north of A, the grass leg has sine $`s/\sqrt{200^2 + s^2}`$ and the rock leg $`(300 - s)/\sqrt{200^2 + (300 - s)^2}`$. Solving gives $`s = 220.30`$ m, sines 0.7404 and 0.3702. This is Snell's law, by which light bends entering water.
 
-A second road skips the equation: chop the route into ten straight pieces, joint at the border, and move joints until the cost stops falling. The code shows this direct method landing on the same crossing. The case of an $F$ with no $x$ slot is [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md).
+A second road skips the equation: chop the route into ten straight pieces, joint at the border, and move joints until the cost stops falling. The code shows this direct method landing on the same crossing. The case of an $`F`$ with no $`x`$ slot is [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md).
 
 ---
 
@@ -135,12 +147,12 @@ A second road skips the equation: chop the route into ten straight pieces, joint
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| straight route, flat field | $\sqrt{400^2 + 300^2}$ | 500 m |
-| its slope term | $F_p = 0.75/\sqrt{1 + 0.75^2} = 0.75/1.25$ | 0.6, the same everywhere |
-| first variation, any nudge fixed at the pylons | $0.6 \times (\eta(400) - \eta(0))$ | **0** |
-| rocky field, the equation | $80\sin\theta_{\text{grass}} = 160\sin\theta_{\text{rock}}$ | sines 0.7404 and 0.3702 |
-| border crossing, by bisection | solve for $s$ | 220.30 m north |
-| cost of the bent route | $80 \times$ grass length $+ 160 \times$ rock length | **£58,250.73** |
+| straight route, flat field | $`\sqrt{400^2 + 300^2}`$ | 500 m |
+| its slope term | $`F_p = 0.75/\sqrt{1 + 0.75^2} = 0.75/1.25`$ | 0.6, the same everywhere |
+| first variation, any nudge fixed at the pylons | $`0.6 \times (\eta(400) - \eta(0))`$ | **0** |
+| rocky field, the equation | $`80\sin\theta_{\text{grass}} = 160\sin\theta_{\text{rock}}`$ | sines 0.7404 and 0.3702 |
+| border crossing, by bisection | solve for $`s`$ | 220.30 m north |
+| cost of the bent route | $`80 \times`$ grass length $`+ 160 \times`$ rock length | **£58,250.73** |
 
 The bend lays more cable, all on grass, and saves £1,749.27 on the straight route's £60,000.00.
 
@@ -148,9 +160,9 @@ The bend lays more cable, all on grass, and saves £1,749.27 on the straight rou
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Keep the flat-field answer on the rocky field | £60,000.00, £1,749.27 too much | The price is part of $F$; a new $F$ gives a new equation |
+| Keep the flat-field answer on the rocky field | £60,000.00, £1,749.27 too much | The price is part of $`F`$; a new $`F`$ gives a new equation |
 | Minimise the rock alone, straight across it | £60,844.41 | Cheapest in one piece is not cheapest in total |
-| Let the nudge move pylon B 10 m north | first variation 6 m, not 0 | The boundary term $F_p\,\eta$ at B survives |
+| Let the nudge move pylon B 10 m north | first variation 6 m, not 0 | The boundary term $`F_p\,\eta`$ at B survives |
 | Test a route bowed 60 m north | first variation 15.71 m for the 40 m bulge | Not stationary: nudging the other way shortens it |
 
 The code prints every row.
@@ -352,9 +364,9 @@ The two outputs match line for line.
 
 Lean proves the Euler-Lagrange equation and the fundamental lemma for every smooth case, and the flat-field line between these pylons.
 
-- Take a smooth $F$ and a smooth route that is cheapest among all smooth routes with the same two ends. Then $F_y - \frac{d}{dx}F_p = 0$ at every point strictly between the ends.
-- Take $G$ continuous on $[a, b]$, with $\int_a^b G\eta\,dx = 0$ for every nudge. Then $G = 0$ everywhere on $[a, b]$.
-- Take $F = \sqrt{1 + p^2}$ and a smooth route from A to B that satisfies the Euler-Lagrange equation. Then the route is the straight line $y = 0.75x$.
+- Take a smooth $`F`$ and a smooth route that is cheapest among all smooth routes with the same two ends. Then $`F_y - \frac{d}{dx}F_p = 0`$ at every point strictly between the ends.
+- Take $`G`$ continuous on $`[a, b]`$, with $`\int_a^b G\eta\,dx = 0`$ for every nudge. Then $`G = 0`$ everywhere on $`[a, b]`$.
+- Take $`F = \sqrt{1 + p^2}`$ and a smooth route from A to B that satisfies the Euler-Lagrange equation. Then the route is the straight line $`y = 0.75x`$.
 - The hand arithmetic holds: the 500 m line, its slope term 0.6, the 6 m from moving B, and the straight route's £60,000.
 
 The rocky-field bend, the direct method, the bulge chart and the first-variation quotients are left to the Python and Rust checks.
@@ -755,10 +767,10 @@ example : (80 : ℚ) * 250 + 160 * 250 = 60000 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading "the first variation is zero" as "this is the minimum".** Maxima and saddle routes pass the test too. For cable length, $\sqrt{1+p^2}$ curves upward as the slope grows, which makes the line a true minimum; other functionals need their own check.
+> **Reading "the first variation is zero" as "this is the minimum".** Maxima and saddle routes pass the test too. For cable length, $`\sqrt{1+p^2}`$ curves upward as the slope grows, which makes the line a true minimum; other functionals need their own check.
 >
 > - **Letting a nudge move an end.** Moving B 10 m north changes the length by 6 m to first order: the endpoint term was dropped only because the nudge vanished there.
-> - **Linking $y$ and $y'$ when taking partials.** Freeze the other slots first, then substitute the route: for the cable $F_y = 0$.
+> - **Linking $`y`$ and $`y'`$ when taking partials.** Freeze the other slots first, then substitute the route: for the cable $`F_y = 0`$.
 > - **Checking one nudge and stopping.** The lemma needs every nudge; the bowed route fails with 15.71 m for the bulge, but another shape could miss it.
 
 ---
@@ -778,12 +790,12 @@ example : (80 : ℚ) * 250 + 160 * 250 = 60000 := by norm_num
 
 - [Boundary value problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md): the Euler-Lagrange equation comes with conditions at both ends, not a starting slope.
 - [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): moves the derivative off the nudge in Step 2 and produces the endpoint term.
-- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): $F_y$ and $F_p$, with the other slots held still.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): $`F_y`$ and $`F_p`$, with the other slots held still.
 - [Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md): a smooth function has zero derivative at an interior minimum, used in Step 0.
 
 ## Where this goes next
 
-- [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md): a shortcut when $F$ has no $x$ slot, and the curve of fastest descent.
+- [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md): a shortcut when $`F`$ has no $`x`$ slot, and the curve of fastest descent.
 - [Lagrangian mechanics](04-lagrangian-mechanics.md): time in place of distance, and the laws of motion.
 - Dirichlet's principle: a surface as the unknown, and Laplace's equation.
 - Minimal surface: least area spanning a wire loop.

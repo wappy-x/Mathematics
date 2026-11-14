@@ -30,51 +30,59 @@ Each row is one simulated ward's interval. The vertical line is the true mean, 1
 
 ## The formula
 
-Notation first, in words. Write $n$ for the number of patients and $x_i$ for the i-th recovery time. A bar means an average: $\bar x$ is the average of the ten. The true mean of every possible patient is $\mu$ (mu). The spread of single recovery times, their standard deviation, is $\sigma$ (sigma) when it is known, and $s$ when it is estimated from the sample. A reminder from [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): Φ is the standard bell's area to the left of a point, where the standard bell is the normal law with mean 0 and spread 1, and $\Phi^{-1}$ undoes it.
+Notation first, in words. Write $`n`$ for the number of patients and $`x_i`$ for the i-th recovery time. A bar means an average: $`\bar x`$ is the average of the ten. The true mean of every possible patient is $`\mu`$ (mu). The spread of single recovery times, their standard deviation, is $`\sigma`$ (sigma) when it is known, and $`s`$ when it is estimated from the sample. A reminder from [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): Φ is the standard bell's area to the left of a point, where the standard bell is the normal law with mean 0 and spread 1, and $`\Phi^{-1}`$ undoes it.
 
-The estimated spread divides by $n - 1$, not $n$:
+The estimated spread divides by $`n - 1`$, not $`n`$:
 
-$$s = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar x)^2}$$
+```math
+s = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar x)^2}
+```
 
 In words: square each patient's distance from the average, add, divide by one fewer than the count, take the root. The ten distances always add to zero, so only nine of them are free; that count, n − 1, is the **degrees of freedom**.
 
 The two recipes:
 
-$$\text{z interval: } \bar x \pm z^*\,\frac{\sigma}{\sqrt n}, \qquad z^* = \Phi^{-1}(0.975) = 1.959964$$
+```math
+\text{z interval: } \bar x \pm z^*\,\frac{\sigma}{\sqrt n}, \qquad z^* = \Phi^{-1}(0.975) = 1.959964
+```
 
-$$\text{t interval: } \bar x \pm t^*_{n-1}\,\frac{s}{\sqrt n}, \qquad t^*_{9} = 2.262157$$
+```math
+\text{t interval: } \bar x \pm t^*_{n-1}\,\frac{s}{\sqrt n}, \qquad t^*_{9} = 2.262157
+```
 
 **Read it aloud:** take the average, work out how much an average of this many patients typically wobbles, and go out a fixed number of those wobbles on each side, 1.96 of them if the spread is known and 2.26 if it had to be estimated from nine degrees of freedom.
 
-The wobble of an average, $\sigma/\sqrt n$ or its estimate $s/\sqrt n$, is its **standard error**. Here $s$ = 2.9136 days, so it is 2.9136 divided by the square root of 10: 0.9214 days. The half-width, 2.262157 times 0.9214, is 2.0842 days: the "plus or minus 2.1".
+The wobble of an average, $`\sigma/\sqrt n`$ or its estimate $`s/\sqrt n`$, is its **standard error**. Here $`s`$ = 2.9136 days, so it is 2.9136 divided by the square root of 10: 0.9214 days. The half-width, 2.262157 times 0.9214, is 2.0842 days: the "plus or minus 2.1".
 
-The promise itself is about the data before they arrive. Capital letters mark the random versions: $\bar X$ and $S$ are the average and spread of ten patients not yet seen.
+The promise itself is about the data before they arrive. Capital letters mark the random versions: $`\bar X`$ and $`S`$ are the average and spread of ten patients not yet seen.
 
-$$P\!\left(\bar X - t^*_{n-1}\frac{S}{\sqrt n} \;\le\; \mu \;\le\; \bar X + t^*_{n-1}\frac{S}{\sqrt n}\right) = 0.95 \quad \text{for every } \mu \text{ and every } \sigma$$
+```math
+P\!\left(\bar X - t^*_{n-1}\frac{S}{\sqrt n} \;\le\; \mu \;\le\; \bar X + t^*_{n-1}\frac{S}{\sqrt n}\right) = 0.95 \quad \text{for every } \mu \text{ and every } \sigma
+```
 
 **Read it aloud:** before the patients are measured, the chance that the recipe's interval will contain the true mean is 0.95, whatever the true mean and spread turn out to be.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$ | the i-th patient's recovery time | 12, 9, 15, … days | moves the centre |
-| $n$ | number of patients | 10 | narrows, roughly like 1/√n |
-| $\bar x$ | their average, the interval's centre | 12.4 days | shifts the whole interval |
-| $\mu$ | true mean recovery time of all patients: fixed, unknown | 12 days in the simulation | nothing: the width ignores it |
-| $\sigma$ | known spread of single recovery times | 3 days (a registry figure) | widens the z interval |
-| $s$ | spread estimated from the sample | 2.9136 days | widens the t interval |
-| $\bar X$, $S$ | average and spread of a sample not yet drawn: random | — | — |
-| $z^*$ | the bell's cutoff leaving 0.975 to its left | 1.959964 | a higher level widens it |
-| $t^*_{n-1}$ | the t law's cutoff with n − 1 degrees of freedom | 2.262157 | falls toward 1.96 as n grows |
-| $E$ | the half-width a study wants, when planning it | 1 day | cuts the patients needed, like 1/E^2 |
-| $\Phi$ | standard bell's area left of a point | Φ(1.959964) = 0.975 | rises from 0 to 1 |
-| $Z$ | the average's miss in units of $\sigma/\sqrt n$ | — | — |
-| $T$ | the average's miss in units of $S/\sqrt n$ | — | — |
+| $`x_i`$ | the i-th patient's recovery time | 12, 9, 15, … days | moves the centre |
+| $`n`$ | number of patients | 10 | narrows, roughly like 1/√n |
+| $`\bar x`$ | their average, the interval's centre | 12.4 days | shifts the whole interval |
+| $`\mu`$ | true mean recovery time of all patients: fixed, unknown | 12 days in the simulation | nothing: the width ignores it |
+| $`\sigma`$ | known spread of single recovery times | 3 days (a registry figure) | widens the z interval |
+| $`s`$ | spread estimated from the sample | 2.9136 days | widens the t interval |
+| $`\bar X`$, $`S`$ | average and spread of a sample not yet drawn: random | — | — |
+| $`z^*`$ | the bell's cutoff leaving 0.975 to its left | 1.959964 | a higher level widens it |
+| $`t^*_{n-1}`$ | the t law's cutoff with n − 1 degrees of freedom | 2.262157 | falls toward 1.96 as n grows |
+| $`E`$ | the half-width a study wants, when planning it | 1 day | cuts the patients needed, like 1/E^2 |
+| $`\Phi`$ | standard bell's area left of a point | Φ(1.959964) = 0.975 | rises from 0 to 1 |
+| $`Z`$ | the average's miss in units of $`\sigma/\sqrt n`$ | — | — |
+| $`T`$ | the average's miss in units of $`S/\sqrt n`$ | — | — |
 
 ### When it holds
 
-- **Independent patients.** Each recovery must carry its own information. Ten patients of one surgeon on one bad week are closer to one reading than to ten: the true wobble of the average is larger than $s/\sqrt n$ says, and the interval is too narrow.
+- **Independent patients.** Each recovery must carry its own information. Ten patients of one surgeon on one bad week are closer to one reading than to ten: the true wobble of the average is larger than $`s/\sqrt n`$ says, and the interval is too narrow.
 - **Normal recovery times, or many patients.** The exact 95 needs readings from a normal law. Recovery times skew long; if they follow an exponential law with mean 12 days, the t interval on ten patients covers about 90 percent of the time (simulated 0.9042 ± 0.0021), not 95. With many patients the central limit theorem pulls the coverage back toward 95: an average of many independent readings is close to normal, whatever their law ([Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)).
-- **The right cutoff for the spread in hand.** 1.96 belongs with a known $\sigma$; with an estimated $s$ at ten patients it covers 91.84 percent.
+- **The right cutoff for the spread in hand.** 1.96 belongs with a known $`\sigma`$; with an estimated $`s`$ at ten patients it covers 91.84 percent.
 - **Everything fixed in advance.** The number of patients and the level are chosen before looking. Adding patients until the interval looks good, or picking the level afterwards, voids the promise.
 - **The target is the mean.** The interval locates the average patient, not the next one. Only 6 of the 10 patients' own recovery times lie inside it.
 
@@ -88,54 +96,62 @@ The truth is unknown, so no statement "the truth is probably here" can be comput
 
 ### Step 1: the average's wobble shrinks like one over root n
 
-Ten independent recovery times with spread σ have a sum whose variance is ten times one reading's variance, since variances of independent readings add ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)). Dividing the sum by 10 divides the variance by 100. So the average has variance $\sigma^2/n$ and spread $\sigma/\sqrt n$. With σ = 3 days and ten patients, the z interval's half-width is 1.959964 times 3 over the root of 10: 1.8594 days.
+Ten independent recovery times with spread σ have a sum whose variance is ten times one reading's variance, since variances of independent readings add ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)). Dividing the sum by 10 divides the variance by 100. So the average has variance $`\sigma^2/n`$ and spread $`\sigma/\sqrt n`$. With σ = 3 days and ten patients, the z interval's half-width is 1.959964 times 3 over the root of 10: 1.8594 days.
 
 A sum of independent normal readings is itself normal ([Adding continuous variables](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md)). So the standardised miss
 
-$$Z = \frac{\bar X - \mu}{\sigma/\sqrt n}$$
+```math
+Z = \frac{\bar X - \mu}{\sigma/\sqrt n}
+```
 
 follows the standard bell exactly, whatever μ is.
 
 ### Step 2: flip the event
 
-The standard bell leaves 0.975 of its area left of $z^*$ = 1.959964, and by symmetry the same area right of $-z^*$. So the middle holds 0.95:
+The standard bell leaves 0.975 of its area left of $`z^*`$ = 1.959964, and by symmetry the same area right of $`-z^*`$. So the middle holds 0.95:
 
-$$P(-z^* \le Z \le z^*) = 0.95$$
+```math
+P(-z^* \le Z \le z^*) = 0.95
+```
 
-Now read the inside of the bracket as a statement about μ. "The average is within $z^*$ standard errors of μ" and "μ is within $z^*$ standard errors of the average" are the same event, written twice. Multiply through by $\sigma/\sqrt n$, subtract $\bar X$, and flip the signs:
+Now read the inside of the bracket as a statement about μ. "The average is within $`z^*`$ standard errors of μ" and "μ is within $`z^*`$ standard errors of the average" are the same event, written twice. Multiply through by $`\sigma/\sqrt n`$, subtract $`\bar X`$, and flip the signs:
 
-$$\bar X - z^*\frac{\sigma}{\sqrt n} \;\le\; \mu \;\le\; \bar X + z^*\frac{\sigma}{\sqrt n}$$
+```math
+\bar X - z^*\frac{\sigma}{\sqrt n} \;\le\; \mu \;\le\; \bar X + z^*\frac{\sigma}{\sqrt n}
+```
 
 Same event, same chance: 0.95. The simulation's z intervals, with σ = 3 known, covered 0.9494 of 20,000 wards, give or take 0.0016.
 
 ### Step 3: an estimated spread costs a wider cutoff
 
-A registry figure for σ is a luxury. Usually the only spread available is $s$, computed from the same ten patients. Swapping it in changes the pivot:
+A registry figure for σ is a luxury. Usually the only spread available is $`s`$, computed from the same ten patients. Swapping it in changes the pivot:
 
-$$T = \frac{\bar X - \mu}{S/\sqrt n}$$
+```math
+T = \frac{\bar X - \mu}{S/\sqrt n}
+```
 
-$S$ wobbles too. When it happens to come out small, the ratio is inflated, so $T$ lands far out more often than the bell allows. Its law is Student's t with n − 1 degrees of freedom, proved in [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md). That law still does not involve μ or σ, so $T$ is a pivot. Its tails are heavier, so the cutoff leaving 0.975 to its left is 2.262157 at nine degrees of freedom, not 1.959964.
+$`S`$ wobbles too. When it happens to come out small, the ratio is inflated, so $`T`$ lands far out more often than the bell allows. Its law is Student's t with n − 1 degrees of freedom, proved in [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md). That law still does not involve μ or σ, so $`T`$ is a pivot. Its tails are heavier, so the cutoff leaving 0.975 to its left is 2.262157 at nine degrees of freedom, not 1.959964.
 
 The same flip as Step 2 gives the t interval: 12.4 ± 2.262157 × 0.9214, which is 10.3158 to 14.4842 days.
 
-Keeping 1.96 with the estimated $s$ gives 12.4 ± 1.8058: narrower, and wrong. Its coverage is the t law's area between −1.96 and 1.96, which at nine degrees of freedom is 91.84 percent. The simulation counted 0.9180, give or take 0.0019.
+Keeping 1.96 with the estimated $`s`$ gives 12.4 ± 1.8058: narrower, and wrong. Its coverage is the t law's area between −1.96 and 1.96, which at nine degrees of freedom is 91.84 percent. The simulation counted 0.9180, give or take 0.0019.
 
 <details>
 <summary>Detailed proof: the t interval covers with chance exactly 0.95</summary>
 
-Take independent readings $X_1, \dots, X_n$ from one normal law with mean μ and spread σ > 0, with n at least 2. [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md) proves three facts: $\bar X$ is normal with mean μ and spread $\sigma/\sqrt n$; $(n-1)S^2/\sigma^2$ follows the chi-square law with n − 1 degrees of freedom, the law of a sum of n − 1 squared standard bell readings; and the two are independent. From these it proves that $T = (\bar X - \mu)/(S/\sqrt n)$ follows the t law with n − 1 degrees of freedom, a law whose formula contains neither μ nor σ.
+Take independent readings $`X_1, \dots, X_n`$ from one normal law with mean μ and spread σ > 0, with n at least 2. [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md) proves three facts: $`\bar X`$ is normal with mean μ and spread $`\sigma/\sqrt n`$; $`(n-1)S^2/\sigma^2`$ follows the chi-square law with n − 1 degrees of freedom, the law of a sum of n − 1 squared standard bell readings; and the two are independent. From these it proves that $`T = (\bar X - \mu)/(S/\sqrt n)`$ follows the t law with n − 1 degrees of freedom, a law whose formula contains neither μ nor σ.
 
-$S$ is positive with chance 1, since n ≥ 2 readings from a continuous law are all equal with chance 0. On that event, and because $S/\sqrt n > 0$,
+$`S`$ is positive with chance 1, since n ≥ 2 readings from a continuous law are all equal with chance 0. On that event, and because $`S/\sqrt n > 0`$,
 
-$$-t^* \le T \le t^* \iff -t^*\frac{S}{\sqrt n} \le \bar X - \mu \le t^*\frac{S}{\sqrt n} \iff \bar X - t^*\frac{S}{\sqrt n} \le \mu \le \bar X + t^*\frac{S}{\sqrt n}.$$
+$`\displaystyle -t^* \le T \le t^* \iff -t^*\frac{S}{\sqrt n} \le \bar X - \mu \le t^*\frac{S}{\sqrt n} \iff \bar X - t^*\frac{S}{\sqrt n} \le \mu \le \bar X + t^*\frac{S}{\sqrt n}.`$
 
-The t law is continuous and symmetric about 0, so with $t^*$ its 0.975 point, $P(-t^* \le T \le t^*) = 0.975 - (1 - 0.975) = 0.95$. The two events are equal, so the chance that the interval contains μ is 0.95. Nothing in the argument used the value of μ or σ, so the equality holds at every μ and every σ > 0. The z interval is the same argument with σ known and the bell in place of the t law.
+The t law is continuous and symmetric about 0, so with $`t^*`$ its 0.975 point, $`P(-t^* \le T \le t^*) = 0.975 - (1 - 0.975) = 0.95`$. The two events are equal, so the chance that the interval contains μ is 0.95. Nothing in the argument used the value of μ or σ, so the equality holds at every μ and every σ > 0. The z interval is the same argument with σ known and the bell in place of the t law.
 
 </details>
 
 ### Step 4: what the 95 is a chance of
 
-The chance in Step 3 is taken before the patients are measured, over every sample the ward could produce. $\bar X$ and $S$ are random; μ is not. After the ten recovery times are in, the interval 10.3158 to 14.4842 is two fixed numbers, and μ is a fixed number. Either it lies between them or it does not. In the picture, ward 19's interval, 7.59 to 10.80, contains the true 12 with chance 0, not 0.95. Nothing in its numbers flags it.
+The chance in Step 3 is taken before the patients are measured, over every sample the ward could produce. $`\bar X`$ and $`S`$ are random; μ is not. After the ten recovery times are in, the interval 10.3158 to 14.4842 is two fixed numbers, and μ is a fixed number. Either it lies between them or it does not. In the picture, ward 19's interval, 7.59 to 10.80, contains the true 12 with chance 0, not 0.95. Nothing in its numbers flags it.
 
 So a confidence level describes the method's long-run record, and a single interval inherits the method's reputation, not a probability of its own. The simulation is that long run: 20,000 wards, 0.9507 of intervals containing the truth, give or take 0.0015.
 
@@ -144,8 +160,8 @@ So a confidence level describes the method's long-run record, and a single inter
 The half-width is cutoff times standard error. Three dials move it.
 
 - **The level.** 90 percent uses the cutoff 1.8331 and gives ±1.6889 days; 99 percent uses 3.2498 and gives ±2.9942. More certainty costs width.
-- **The number of patients.** With 40 patients and the same $s$, the cutoff drops to 2.0227 and the standard error halves: ±0.9318 days. Four times the patients cuts the width by a bit more than half, the extra coming from the smaller cutoff. Turned round, the z half-width plans a study: for a half-width of $E$ days with σ known, $n = (z^*\sigma/E)^2$, rounded up. For ±1 day with σ = 3 that is (1.959964 × 3 / 1)^2 = 34.57, so 35 patients.
-- **The spread.** Double $s$ and the width doubles.
+- **The number of patients.** With 40 patients and the same $`s`$, the cutoff drops to 2.0227 and the standard error halves: ±0.9318 days. Four times the patients cuts the width by a bit more than half, the extra coming from the smaller cutoff. Turned round, the z half-width plans a study: for a half-width of $`E`$ days with σ known, $`n = (z^*\sigma/E)^2`$, rounded up. For ±1 day with σ = 3 that is (1.959964 × 3 / 1)^2 = 34.57, so 35 patients.
+- **The spread.** Double $`s`$ and the width doubles.
 
 Nothing else enters: not the true mean, and not the size of the patient population the ten came from.
 
@@ -158,11 +174,11 @@ A second road to the same interval runs through tests: the t interval is the set
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | total of the ten | 12 + 9 + 15 + 7 + 14 + 13 + 17 + 11 + 12 + 14 | 124 days |
-| average $\bar x$ | 124 / 10 | 12.4 days |
+| average $`\bar x`$ | 124 / 10 | 12.4 days |
 | squared distances | add up (each time − 12.4)^2 over the ten | 76.4 |
-| estimated spread $s$ | root of 76.4 / 9 | 2.9136 days |
+| estimated spread $`s`$ | root of 76.4 / 9 | 2.9136 days |
 | standard error | 2.9136 / root of 10 | 0.9214 days |
-| cutoff $t^*_9$ | t law, 0.975 point, 9 degrees of freedom | 2.262157 |
+| cutoff $`t^*_9`$ | t law, 0.975 point, 9 degrees of freedom | 2.262157 |
 | half-width | 2.262157 × 0.9214 | 2.0842 days |
 | **95 percent t interval** | 12.4 ± 2.0842 | **10.3158 to 14.4842 days** |
 
@@ -172,7 +188,7 @@ The ward's patients recover in about 12.4 days on average; a recipe that is righ
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| 1.96 with the estimated $s$ | ±1.8058 days; covers 91.84 percent, simulated 0.9180 | the estimated spread wobbles; its cutoff is 2.262157 |
+| 1.96 with the estimated $`s`$ | ±1.8058 days; covers 91.84 percent, simulated 0.9180 | the estimated spread wobbles; its cutoff is 2.262157 |
 | t interval on skewed recovery times | exponential law, mean 12: covers 0.9042 ± 0.0021 (simulated), not 0.95 | ten readings are too few for the bell to take over |
 | interval read as a range for patients | only 6 of the 10 patients lie inside | it locates the mean; one patient varies far more |
 | 95 percent read as this interval's chance | ward 19's 7.59 to 10.80 holds the truth with chance 0 | the chance belongs to the recipe, before the data |
@@ -584,8 +600,8 @@ The two outputs match line for line, simulation included: both languages draw th
 
 Lean proves the z interval's 0.95 promise for any number of patients, plus the flip and the card's hand arithmetic.
 
-- Take independent patients whose recovery times follow one normal law, with known spread $\sigma$. Then the z interval contains the true mean with chance exactly 0.95, whatever $\mu$ and $\sigma$ are.
-- Suppose the estimated spread $s$ is positive. Then the pivot $T$ lands between $-t^*$ and $t^*$ exactly when the t interval contains $\mu$.
+- Take independent patients whose recovery times follow one normal law, with known spread $`\sigma`$. Then the z interval contains the true mean with chance exactly 0.95, whatever $`\mu`$ and $`\sigma`$ are.
+- Suppose the estimated spread $`s`$ is positive. Then the pivot $`T`$ lands between $`-t^*`$ and $`t^*`$ exactly when the t interval contains $`\mu`$.
 - For any number of patients, the distances of their recovery times from their average add to zero.
 - The hand arithmetic holds exactly: the total 124 days, the squared distances 76.4 and the one-pass check 764. So do the 6 of 10 patients inside the t interval and the 35 patients for ±1 day.
 
@@ -768,7 +784,7 @@ example : 34 * 10 ^ 12 < (1959964 * 3 : ℕ) ^ 2 ∧ (1959964 * 3 : ℕ) ^ 2 ≤
 > Guess first, then run it.
 > - **Move the truth.** Set `MU` to 50 and `SIGMA` to 10 on the constants line. Do the simulated coverages change? They do not move in any printed digit: the miss measured in standard errors has the same law for every mean and spread, which is what a pivot is.
 > - **Ask for 99 percent.** In the line defining `t2`, change 0.975 to 0.995. The interval widens to ±2.9942 days, the t coverage in the simulation moves to about 99 in 100, and the assert comparing the two t roads stops the run, since road 1 still seeks 0.975.
-> - **One long stay.** Change the 17 in `DAYS` to 27. The average moves up a little, but $s$ grows sharply and the interval widens far more than it shifts; the first assert, pinned to the original data, stops the run.
+> - **One long stay.** Change the 17 in `DAYS` to 27. The average moves up a little, but $`s`$ grows sharply and the interval widens far more than it shifts; the first assert, pinned to the original data, stops the run.
 
 ---
 
@@ -801,7 +817,7 @@ example : 34 * 10 ^ 12 < (1959964 * 3 : ℕ) ^ 2 ∧ (1959964 * 3 : ℕ) ^ 2 ≤
 ## What this builds on
 
 - [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): the t law of the average's miss when the spread is estimated, and its heavier tails.
-- [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): the cutoff $\Phi^{-1}(0.975)$ = 1.959964.
+- [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): the cutoff $`\Phi^{-1}(0.975)`$ = 1.959964.
 - [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): why the recipe survives non-normal readings once there are many.
 
 ## Where this goes next

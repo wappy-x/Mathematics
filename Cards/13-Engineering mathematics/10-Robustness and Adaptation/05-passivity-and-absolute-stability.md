@@ -41,13 +41,17 @@ Notation first. Write v for the belt speed and v₀ for the set speed, both in m
 
 The motor force is u = F(v₀) − K_p e − K_i z, where F(v₀) is the friction at the set speed. A real PI loop has no separate F(v₀) term: its integral builds up until it supplies that force, and z counts the running total from that resting value. Newton's law M v' = u − F(v), with a prime meaning a rate in time, becomes
 
-$$M e' = -K_p\, e - K_i\, z - \varphi(e), \qquad z' = e, \qquad \varphi(e) = F(v_0 + e) - F(v_0)$$
+```math
+M e' = -K_p\, e - K_i\, z - \varphi(e), \qquad z' = e, \qquad \varphi(e) = F(v_0 + e) - F(v_0)
+```
 
 **Read it aloud:** the speed error is braked by the proportional push, pulled back by the integral push, and shoved around by the change in friction away from its value at the set speed.
 
 The friction change φ is the unknown part. All we ask of it is a **band** (a sector condition): every chord of the friction curve from the set speed has slope at least −a.
 
-$$e\,\varphi(e) \ge -a\,e^2 \;\text{ for all } e, \qquad K_p > a \quad\Longrightarrow\quad V = \tfrac12 M e^2 + \tfrac12 K_i z^2 \;\text{ has }\; V' \le -(K_p - a)\,e^2$$
+```math
+e\,\varphi(e) \ge -a\,e^2 \;\text{ for all } e, \qquad K_p > a \quad\Longrightarrow\quad V = \tfrac12 M e^2 + \tfrac12 K_i z^2 \;\text{ has }\; V' \le -(K_p - a)\,e^2
+```
 
 **Read it aloud:** if the friction change never hands back more than a times the error squared, and the proportional gain beats a, then the stored energy V falls by at least (K_p − a) e² every second, and the belt returns to its set speed.
 
@@ -55,18 +59,18 @@ A loop that is stable for every nonlinearity in a band is called **absolutely st
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $v$, $v_0$ | belt speed; set speed, m/s | creep 0.05, running 1.00 | — |
-| $e$, $z$ | speed error v − v₀, m/s; its running total, m | kick to e = −0.03, z = 0 | V grows as their squares |
-| $M$ | belt plus load, kg | 500 (200 to 800 through the day) | slower settling, same verdict |
-| $K_p$ | proportional gain: push per m/s of error, N·s/m | 2000 | more margin over a |
-| $K_i$ | integral gain: push per metre of lag, N/m | 4000 | different settling, same verdict |
-| $F(v)$; $F_s$, $F_c$, $v_s$, $b$, $\varepsilon$ | friction force, N; breakaway force, sliding force, dip speed, viscous slope, smoothing speed | 600 N, 400 N, 0.1 m/s, 200 N·s/m, 0.002 m/s | larger F_s − F_c: deeper dip, larger a |
-| $\varphi(e)$ | change in friction from its value at v₀, N | 30.4 N at the kick | — |
-| $a$ | band floor: the steepest downhill slope of friction, N·s/m | 1515.5 | past K_p, no guarantee |
-| $V$, $V'$ | stored energy, J; its rate, W | 0.2250 J and −0.8881 W at the kick | — |
-| $u$, $w$ | motor force, N; push from the friction branch into the belt, −φ(e), N | w = −30.4 N at the kick | — |
-| $G(s)$, $s$, $\omega$, $j$ | transfer function from w to e; the Laplace variable; angular frequency, rad/s; √−1 | G(jω) traces a circle of diameter 1/K_p = 0.000500 m/(N·s) | — |
-| $\omega_n$, $\zeta$ | natural frequency and damping ratio of the loop with friction ignored | 2.8284 rad/s, 0.7071 | — |
+| $`v`$, $`v_0`$ | belt speed; set speed, m/s | creep 0.05, running 1.00 | — |
+| $`e`$, $`z`$ | speed error v − v₀, m/s; its running total, m | kick to e = −0.03, z = 0 | V grows as their squares |
+| $`M`$ | belt plus load, kg | 500 (200 to 800 through the day) | slower settling, same verdict |
+| $`K_p`$ | proportional gain: push per m/s of error, N·s/m | 2000 | more margin over a |
+| $`K_i`$ | integral gain: push per metre of lag, N/m | 4000 | different settling, same verdict |
+| $`F(v)`$; $`F_s`$, $`F_c`$, $`v_s`$, $`b`$, $`\varepsilon`$ | friction force, N; breakaway force, sliding force, dip speed, viscous slope, smoothing speed | 600 N, 400 N, 0.1 m/s, 200 N·s/m, 0.002 m/s | larger F_s − F_c: deeper dip, larger a |
+| $`\varphi(e)`$ | change in friction from its value at v₀, N | 30.4 N at the kick | — |
+| $`a`$ | band floor: the steepest downhill slope of friction, N·s/m | 1515.5 | past K_p, no guarantee |
+| $`V`$, $`V'`$ | stored energy, J; its rate, W | 0.2250 J and −0.8881 W at the kick | — |
+| $`u`$, $`w`$ | motor force, N; push from the friction branch into the belt, −φ(e), N | w = −30.4 N at the kick | — |
+| $`G(s)`$, $`s`$, $`\omega`$, $`j`$ | transfer function from w to e; the Laplace variable; angular frequency, rad/s; √−1 | G(jω) traces a circle of diameter 1/K_p = 0.000500 m/(N·s) | — |
+| $`\omega_n`$, $`\zeta`$ | natural frequency and damping ratio of the loop with friction ignored | 2.8284 rad/s, 0.7071 | — |
 
 ### When it holds
 
@@ -90,7 +94,9 @@ A total that cannot rise cannot run off to infinity. With one part burning energ
 
 Cut the loop at the friction. The belt side takes a push w, in N, and returns the speed error e, in m/s. The power flowing in is w·e, in W. Take the storage V = ½ M e² + ½ K_i z². By the product rule,
 
-$$V' = M e e' + K_i z z' = e(-K_p e - K_i z + w) + K_i z e = w\,e - K_p e^2.$$
+```math
+V' = M e e' + K_i z z' = e(-K_p e - K_i z + w) + K_i z e = w\,e - K_p e^2.
+```
 
 So the stored energy rises by at most the power paid in, minus K_p e² burned. The first half of V is the kinetic energy of the speed error. The second half belongs to the integral term, which acts like a spring of stiffness K_i stretched by the lag z: it stores energy and hands it back, but never makes any.
 
@@ -100,7 +106,9 @@ Kinetic energy alone is not a storage. After the kick it falls to 0 J at 0.474 s
 
 The friction side takes e and returns φ(e). The power it absorbs is e·φ(e). If the friction curve only goes uphill, every chord from the set speed has positive slope, so e·φ(e) ≥ 0: it is passive. Join the two sides, w = −φ(e):
 
-$$V' = -K_p e^2 - e\,\varphi(e) \le -K_p e^2.$$
+```math
+V' = -K_p e^2 - e\,\varphi(e) \le -K_p e^2.
+```
 
 V never rises, so e and z stay bounded. V′ is zero only where e = 0. A motion that stays on e = 0 has e′ = 0, so −K_i z = 0, so z = 0 too. By [LaSalle's principle](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/05-lasalle-and-the-damped-pendulum.md), every motion ends at e = 0, z = 0: the belt back at its set speed with the integral holding the right force.
 
@@ -112,17 +120,23 @@ A sticking dip breaks Step 2. From 0.05 m/s, slowing to 0.02 m/s raises friction
 
 Suppose instead that every chord has slope at least −a, that is e·φ(e) ≥ −a e². Move a e from one side of the loop to the other. The friction side becomes φ(e) + a e, which is passive, since e(φ + a e) ≥ 0. The belt side now burns only (K_p − a) e². The same calculation gives
 
-$$V' = -(K_p - a)\,e^2 - e\,\big(\varphi(e) + a e\big) \le -(K_p - a)\,e^2,$$
+```math
+V' = -(K_p - a)\,e^2 - e\,\big(\varphi(e) + a e\big) \le -(K_p - a)\,e^2,
+```
 
 and Step 2's ending applies whenever K_p > a. This is a **loop transformation**: lend the friction enough damping to make it passive, and check the controller can afford the loan. Notice what the proof never used: the shape of φ inside the band, and the mass M. One inequality covers every friction curve in the band and every load on the belt.
 
 Which a? A chord's slope always equals the curve's tangent slope somewhere between its ends (the mean value theorem). So the steepest downhill tangent anywhere bounds every chord from every set speed. For this model, F(v) = F_c + (F_s − F_c) exp(−(v/v_s)²) + b v at positive speed, where exp(x) means e (Euler's number, 2.718…) to the power x, not the speed error. Its slope is
 
-$$F'(v) = b - (F_s - F_c)\,\frac{2v}{v_s^2}\,\exp\!\big(-(v/v_s)^2\big),$$
+```math
+F'(v) = b - (F_s - F_c)\,\frac{2v}{v_s^2}\,\exp\!\big(-(v/v_s)^2\big),
+```
 
 steepest at v = v_s/√2 = 0.0707 m/s, where
 
-$$a = (F_s - F_c)\,\frac{\sqrt 2}{v_s}\,\exp(-1/2) - b = 1515.5 \text{ N·s/m}.$$
+```math
+a = (F_s - F_c)\,\frac{\sqrt 2}{v_s}\,\exp(-1/2) - b = 1515.5 \text{ N·s/m}.
+```
 
 ### Step 4: the same test, read in frequencies
 
@@ -141,7 +155,7 @@ To scale: 40 drawing units per 0.0001 m/(N·s). Black: G(jω) for K_p = 2000. Re
 
 Write G for G(jω). Then
 
-$$\operatorname{Re}\frac{G}{1 - aG} = \frac{\operatorname{Re}\big(G\,(1 - a\bar G)\big)}{|1 - aG|^2} = \frac{\operatorname{Re} G - a|G|^2}{|1 - aG|^2}.$$
+$`\displaystyle \mathrm{Re}\,\frac{G}{1 - aG} = \frac{\mathrm{Re}\big(G\,(1 - a\bar G)\big)}{|1 - aG|^2} = \frac{\mathrm{Re}\, G - a|G|^2}{|1 - aG|^2}.`$
 
 This is at least 0 exactly when |G|² ≤ (Re G)/a. Writing G = x + jy, that is x² + y² − x/a ≤ 0, or (x − 1/(2a))² + y² ≤ (1/(2a))²: the disk with centre 1/(2a) and radius 1/(2a). For our G, 1/G = K_p + j(Mω − K_i/ω), so Re G / |G|² = Re(1/G) = K_p, and the condition reads K_p ≥ a at every frequency, the time-domain answer again.
 
@@ -590,13 +604,13 @@ The roads agree: the bisection lands on 2000.0000 N·s/m, the formula's K_p, and
 
 Lean proves the results of Steps 2 to 4 for every load, gain and friction curve in the band, and checks the hand arithmetic.
 
-- Take any $M > 0$, a friction curve that depends only on the present speed, and any motion of the loop. Then the stored energy changes at the rate $V' = -K_p e^2 - e\,\varphi(e)$.
-- Suppose also the band holds: $e\,\varphi(e) \ge -a\,e^2$ for every $e$. Then $V' \le -(K_p - a)\,e^2$.
-- Suppose $M > 0$, $K_i > 0$, the friction curve has no jumps, the band holds, and $K_p > a$. Then along every motion, $e$ and $z$ both tend to 0: the belt settles at its set speed.
-- Take $a > 0$ and any complex value $G$. Then $G/(1 - aG)$ has real part at least 0 exactly when $G$ lies inside the disk with diameter from 0 to $1/a$.
-- Lean also checks the hand arithmetic: $\omega_n^2 = 8$, $\zeta^2 = 1/2$, and the stored energy and braking at the kick.
+- Take any $`M > 0`$, a friction curve that depends only on the present speed, and any motion of the loop. Then the stored energy changes at the rate $`V' = -K_p e^2 - e\,\varphi(e)`$.
+- Suppose also the band holds: $`e\,\varphi(e) \ge -a\,e^2`$ for every $`e`$. Then $`V' \le -(K_p - a)\,e^2`$.
+- Suppose $`M > 0`$, $`K_i > 0`$, the friction curve has no jumps, the band holds, and $`K_p > a`$. Then along every motion, $`e`$ and $`z`$ both tend to 0: the belt settles at its set speed.
+- Take $`a > 0`$ and any complex value $`G`$. Then $`G/(1 - aG)`$ has real part at least 0 exactly when $`G`$ lies inside the disk with diameter from 0 to $`1/a`$.
+- Lean also checks the hand arithmetic: $`\omega_n^2 = 8`$, $`\zeta^2 = 1/2`$, and the stored energy and braking at the kick.
 
-The band floor $a = 1515.5$, the Nyquist circle, the settling times and the juddering are left to the Python and Rust checks.
+The band floor $`a = 1515.5`$, the Nyquist circle, the settling times and the juddering are left to the Python and Rust checks.
 
 ```lean
 -- Passivity: a belt with a PI speed loop, joined to any friction curve whose chords from the set speed never slope downhill faster than a, returns to its set speed whenever the proportional gain beats a, and the band test reads in frequencies as a disk.

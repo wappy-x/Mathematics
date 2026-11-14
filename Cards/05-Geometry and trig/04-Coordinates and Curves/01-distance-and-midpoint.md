@@ -28,30 +28,36 @@ Drawn at 1 km = 30 units. The dashed legs run 5 km east and 3 km south and meet 
 
 ## The formula
 
-Notation first, in words. A small 1 or 2 written low after a letter says which point it belongs to: $x_1$ is A's east number, $x_2$ is B's. So A is $(x_1, y_1)$ and B is $(x_2, y_2)$.
+Notation first, in words. A small 1 or 2 written low after a letter says which point it belongs to: $`x_1`$ is A's east number, $`x_2`$ is B's. So A is $`(x_1, y_1)`$ and B is $`(x_2, y_2)`$.
 
-$$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$
+```math
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+```
 
 **Read it aloud:** take A's east number from B's, and A's north number from B's; square both differences, add them, and the positive square root is the distance.
 
-$$M = \left(\frac{x_1 + x_2}{2},\ \frac{y_1 + y_2}{2}\right)$$
+```math
+M = \left(\frac{x_1 + x_2}{2},\ \frac{y_1 + y_2}{2}\right)
+```
 
 **Read it aloud:** the midpoint's east number is the average of the two east numbers, and its north number is the average of the two north numbers.
 
-In space a point needs a third number, its height, written $z$. One more squared difference goes under the root, and the midpoint averages three numbers instead of two:
+In space a point needs a third number, its height, written $`z`$. One more squared difference goes under the root, and the midpoint averages three numbers instead of two:
 
-$$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}$$
+```math
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $B$ | the two points | the drops | — |
-| $x_1$, $y_1$ | A's east and north numbers | 3 and 4 km | changes both answers |
-| $x_2$, $y_2$ | B's east and north numbers | 8 and 1 km | changes both answers |
-| $x_2 - x_1$, $y_2 - y_1$ | the moves along each axis, signed | 5 and −3 km | a bigger move of either sign lengthens $d$ |
-| $d$ | the straight-line distance, never negative | 5.8309518948 km | — |
-| $M$ | the midpoint: halfway along the line | (5.5, 2.5) | moves half as far as the endpoint pushed |
-| $z_1$, $z_2$ | heights, for points in space | 0 and 12 m on the cable below | a bigger height gap lengthens $d$ |
-| $t$ | the fraction of the way from A to B | 1/2 at the midpoint | the point slides toward B |
+| $`A`$, $`B`$ | the two points | the drops | — |
+| $`x_1`$, $`y_1`$ | A's east and north numbers | 3 and 4 km | changes both answers |
+| $`x_2`$, $`y_2`$ | B's east and north numbers | 8 and 1 km | changes both answers |
+| $`x_2 - x_1`$, $`y_2 - y_1`$ | the moves along each axis, signed | 5 and −3 km | a bigger move of either sign lengthens $`d`$ |
+| $`d`$ | the straight-line distance, never negative | 5.8309518948 km | — |
+| $`M`$ | the midpoint: halfway along the line | (5.5, 2.5) | moves half as far as the endpoint pushed |
+| $`z_1`$, $`z_2`$ | heights, for points in space | 0 and 12 m on the cable below | a bigger height gap lengthens $`d`$ |
+| $`t`$ | the fraction of the way from A to B | 1/2 at the midpoint | the point slides toward B |
 
 ### When it holds
 
@@ -73,7 +79,9 @@ From A to B the east number changes by 5 and the north number by −3. Both move
 
 Walk from A east to the corner (8, 4), then south to B. The legs are 5 km and 3 km, square at the corner. Pythagoras ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)) gives
 
-$$d^2 = 5^2 + 3^2 = 25 + 9 = 34, \qquad d = \sqrt{34} = 5.8309518948 \text{ km}.$$
+```math
+d^2 = 5^2 + 3^2 = 25 + 9 = 34, \qquad d = \sqrt{34} = 5.8309518948 \text{ km}.
+```
 
 Squaring removes a move's sign: (−3)^2 = 3^2 = 9. So the formula uses the signed moves directly, and the order of the points does not matter.
 
@@ -81,20 +89,20 @@ If one move is zero, the points share a grid line and the formula gives the othe
 
 ### Step 2: the midpoint is half of each move
 
-Halfway along the line from A means half the east move and half the north move: 2.5 km east and 1.5 km south of A, which is (5.5, 2.5). In symbols, $x_1 + (x_2 - x_1)/2 = (x_1 + x_2)/2$: starting at A and adding half the move is the same as averaging. The north number works the same way.
+Halfway along the line from A means half the east move and half the north move: 2.5 km east and 1.5 km south of A, which is (5.5, 2.5). In symbols, $`x_1 + (x_2 - x_1)/2 = (x_1 + x_2)/2`$: starting at A and adding half the move is the same as averaging. The north number works the same way.
 
 ### Step 3: M is on the line, and exactly halfway
 
-Each half of the trip is the same move, 2.5 east and 1.5 south. By Step 1 each half has length $\sqrt{2.5^2 + 1.5^2} = 2.9154759474$ km, exactly half of 5.8309518948.
+Each half of the trip is the same move, 2.5 east and 1.5 south. By Step 1 each half has length $`\sqrt{2.5^2 + 1.5^2} = 2.9154759474`$ km, exactly half of 5.8309518948.
 
 The halves add up to the full distance, and a route through a point off the line is always longer than the line (the triangle inequality, [Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). So M sits on the line, with equal parts on each side.
 
 <details>
 <summary>Detailed proof: the only point that is halfway</summary>
 
-Every point P on the line from A to B is A plus a fraction $t$ of the whole move, $t$ between 0 and 1. Its moves from A are $t(x_2 - x_1)$ and $t(y_2 - y_1)$. Squaring multiplies each by $t^2$, so the root multiplies by $t$: P is $t d$ from A. Likewise it is $(1 - t) d$ from B.
+Every point P on the line from A to B is A plus a fraction $`t`$ of the whole move, $`t`$ between 0 and 1. Its moves from A are $`t(x_2 - x_1)`$ and $`t(y_2 - y_1)`$. Squaring multiplies each by $`t^2`$, so the root multiplies by $`t`$: P is $`t d`$ from A. Likewise it is $`(1 - t) d`$ from B.
 
-The two are equal only when $t = 1/2$: A plus half the move, the average of Step 2. So the midpoint is the one point on the line equally far from both ends.
+The two are equal only when $`t = 1/2`$: A plus half the move, the average of Step 2. So the midpoint is the one point on the line equally far from both ends.
 
 Off the line, a whole line of points is equally far from A and B, the perpendicular bisector ([Lines](02-lines-slopes-and-intersections.md)).
 

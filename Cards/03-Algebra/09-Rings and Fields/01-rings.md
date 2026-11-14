@@ -35,30 +35,36 @@ Four multipliers reach all twelve readings: 1, 5, 7 and 11. The rest fall short 
 
 ## The formula
 
-Notation first, in words. A ring takes a capital letter, $R$, its members small letters $a$, $b$, $c$, so one line covers every choice. Multiplying pushes letters together with no sign. The do-nothing members are 0 for adding and 1 for multiplying. The additive undo of $a$ is $-a$, the multiplicative undo $a^{-1}$, whose raised −1 means undo, not divide.
+Notation first, in words. A ring takes a capital letter, $`R`$, its members small letters $`a`$, $`b`$, $`c`$, so one line covers every choice. Multiplying pushes letters together with no sign. The do-nothing members are 0 for adding and 1 for multiplying. The additive undo of $`a`$ is $`-a`$, the multiplicative undo $`a^{-1}`$, whose raised −1 means undo, not divide.
 
 Eight rules, each holding for every choice of members:
 
-$$(a+b)+c = a+(b+c), \qquad a+b = b+a, \qquad a+0 = a, \qquad a+(-a) = 0$$
+```math
+(a+b)+c = a+(b+c), \qquad a+b = b+a, \qquad a+0 = a, \qquad a+(-a) = 0
+```
 
-$$(ab)c = a(bc), \qquad a1 = 1a = a$$
+```math
+(ab)c = a(bc), \qquad a1 = 1a = a
+```
 
-$$a(b+c) = ab+ac, \qquad (a+b)c = ac+bc$$
+```math
+a(b+c) = ab+ac, \qquad (a+b)c = ac+bc
+```
 
 **Read it aloud:** adding regroups, reorders and undoes; multiplying regroups and has a do-nothing member; a multiplier reaches every term in a bracket.
 
-Sums and products must also stay inside. The top line makes adding alone a group whose order does not matter ([Groups](../08-Groups/01-groups.md)), which gives subtracting: $a-b$ is $a+(-b)$. The last line is the distributive law ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)).
+Sums and products must also stay inside. The top line makes adding alone a group whose order does not matter ([Groups](../08-Groups/01-groups.md)), which gives subtracting: $`a-b`$ is $`a+(-b)`$. The last line is the distributive law ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)).
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
-| $R$ | a collection with two operations | the twelve readings | another may fail a rule |
-| $a$, $b$, $c$ | any members | any readings | — |
-| $0$ | changes nothing when added | where the 12 sits | — |
-| $1$ | changes nothing when multiplied | the reading 1 | 1 ≠ 0 here, or nothing else exists |
-| $-a$ | the additive undo of $a$ | the hours back round the dial | every member has one |
-| $a^{-1}$ | the multiplicative undo, if any | 5 is its own | most have none |
+| $`R`$ | a collection with two operations | the twelve readings | another may fail a rule |
+| $`a`$, $`b`$, $`c`$ | any members | any readings | — |
+| $`0`$ | changes nothing when added | where the 12 sits | — |
+| $`1`$ | changes nothing when multiplied | the reading 1 | 1 ≠ 0 here, or nothing else exists |
+| $`-a`$ | the additive undo of $`a`$ | the hours back round the dial | every member has one |
+| $`a^{-1}`$ | the multiplicative undo, if any | 5 is its own | most have none |
 
-Three more words. A ring is **commutative** when $ab = ba$ always: the dial is, the matrices below are not. A **unit** has a multiplicative undo; the units are what is safe to divide by, and form a group under multiplying ([Cosets and Lagrange's theorem](../08-Groups/04-cosets-and-lagranges-theorem.md)). A **zero divisor** is a nonzero $a$ with $ab = 0$ for a nonzero $b$, as 3 and 4 are; a commutative ring with none is an **integral domain**.
+Three more words. A ring is **commutative** when $`ab = ba`$ always: the dial is, the matrices below are not. A **unit** has a multiplicative undo; the units are what is safe to divide by, and form a group under multiplying ([Cosets and Lagrange's theorem](../08-Groups/04-cosets-and-lagranges-theorem.md)). A **zero divisor** is a nonzero $`a`$ with $`ab = 0`$ for a nonzero $`b`$, as 3 and 4 are; a commutative ring with none is an **integral domain**.
 
 ### When it holds
 
@@ -78,32 +84,36 @@ The dial's own argument is short. A reading stands for every whole number with t
 
 ### Step 1: zero swallows every product
 
-Nothing above says that $a$ multiplied by 0 is 0. It follows: since 0 + 0 = 0, the distributive rule gives
+Nothing above says that $`a`$ multiplied by 0 is 0. It follows: since 0 + 0 = 0, the distributive rule gives
 
-$$a0 = a(0+0) = a0+a0$$
+```math
+a0 = a(0+0) = a0+a0
+```
 
-Adding the additive undo of $a0$ to both sides leaves $0 = a0$; the right-hand rule gives $0a = 0$. So 0 is never a unit.
+Adding the additive undo of $`a0`$ to both sides leaves $`0 = a0`$; the right-hand rule gives $`0a = 0`$. So 0 is never a unit.
 
 ### Step 2: a unit is never a zero divisor
 
-Let $a$ be a unit with undo $a^{-1}$, and suppose $ab = 0$. Multiply on the left by $a^{-1}$:
+Let $`a`$ be a unit with undo $`a^{-1}`$, and suppose $`ab = 0`$. Multiply on the left by $`a^{-1}`$:
 
-$$a^{-1}(ab) = a^{-1}0$$
+```math
+a^{-1}(ab) = a^{-1}0
+```
 
-The right side is 0 by Step 1; the left regroups into $(a^{-1}a)b$, which is $b$. So $b = 0$.
+The right side is 0 by Step 1; the left regroups into $`(a^{-1}a)b`$, which is $`b`$. So $`b = 0`$.
 
-That splits the dial: its units 1, 5, 7 and 11 are no zero divisors, and no zero divisor has an undo. It also gives cancelling: $ab = ac$ makes $a(b-c) = 0$, and with no zero divisors and $a$ nonzero, $b = c$ — an integral domain cancels but cannot divide.
+That splits the dial: its units 1, 5, 7 and 11 are no zero divisors, and no zero divisor has an undo. It also gives cancelling: $`ab = ac`$ makes $`a(b-c) = 0`$, and with no zero divisors and $`a`$ nonzero, $`b = c`$ — an integral domain cancels but cannot divide.
 
 ### Step 3: on a dial, every nonzero reading is a unit or a zero divisor
 
 A reading has an undo exactly when it shares no factor above 1 with the dial size ([The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)) — when their greatest common divisor, the largest whole number dividing both, is 1. At 12 that leaves 1, 5, 7 and 11.
 
-Any other nonzero reading shares a factor $d$ above 1 with 12. Multiply it by 12 divided by $d$, a reading and not 0: the product is a whole number of turns, so it reads 0. So every nonzero reading is a unit or a zero divisor, never both (Step 2), its partner being 12 divided by the shared factor; the table below lists all seven pairs. The whole numbers have no such fork, where 2 is neither.
+Any other nonzero reading shares a factor $`d`$ above 1 with 12. Multiply it by 12 divided by $`d`$, a reading and not 0: the product is a whole number of turns, so it reads 0. So every nonzero reading is a unit or a zero divisor, never both (Step 2), its partner being 12 divided by the shared factor; the table below lists all seven pairs. The whole numbers have no such fork, where 2 is neither.
 
 <details>
 <summary>Detailed proof: why each bar is that tall</summary>
 
-Write $d$ for the greatest common divisor of a reading $a$ with the dial size. Multiplying by $a$ lands on multiples of $d$ only, since $d$ divides $a$, and on all of them, since some whole-number combination of $a$ and the dial size makes $d$. The dial holds its size divided by $d$ such multiples, and that is the bar's height.
+Write $`d`$ for the greatest common divisor of a reading $`a`$ with the dial size. Multiplying by $`a`$ lands on multiples of $`d`$ only, since $`d`$ divides $`a`$, and on all of them, since some whole-number combination of $`a`$ and the dial size makes $`d`$. The dial holds its size divided by $`d`$ such multiples, and that is the bar's height.
 
 </details>
 
@@ -476,7 +486,7 @@ example : !![(1 : ℤ), 0; 0, 0] * !![0, 0; 0, 1] = 0 := by decide
 > **Reading "nonzero" as "safe to divide by".** On the dial 2 is not 0, and nothing multiplies it up to 1; and 3 × 4 = 0 with neither factor 0.
 >
 > - **Cancelling a common factor.** From "2x = 2" it does not follow that x is 1: both 1 and 7 fit.
-> - **Confusing the two undos.** $-a$ undoes adding, $a^{-1}$ multiplying. Every member has the first; the dial has four of the second, the whole numbers two.
+> - **Confusing the two undos.** $`-a`$ undoes adding, $`a^{-1}`$ multiplying. Every member has the first; the dial has four of the second, the whole numbers two.
 > - **Borrowing an undo.** The reciprocal of 2 lives among fractions, not the whole numbers.
 
 ---
@@ -508,7 +518,7 @@ example : !![(1 : ℤ), 0; 0, 0] * !![0, 0; 0, 1] = 0 := by decide
 - [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): endless units.
 - [Boolean algebra](../10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): and and or.
 - Banach algebras: members with size.
-- C-star algebras: Banach algebras with a mirror operation, like swapping $i$ for $-i$ in a complex number.
+- C-star algebras: Banach algebras with a mirror operation, like swapping $`i`$ for $`-i`$ in a complex number.
 - Algebraic integers: numbers beyond the whole numbers that still form a ring.
 - Rings of integers: the algebraic integers inside one larger number system.
 - Domains, principal ideals and unique factorisation: factoring into primes.

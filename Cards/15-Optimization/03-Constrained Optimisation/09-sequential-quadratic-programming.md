@@ -8,7 +8,7 @@
 
 Three pumps feed a town's water main. Their powers are the choice: pump A, B and C each draw some number of kilowatts (kW). The job is to **minimise** the total power drawn. Two rules limit it. The pumps together must deliver 150 litres a second (L/s) of demand. And the hill tank at the far end must get at least 35 m of **head** (pressure, measured as the height of water it would lift).
 
-The rules are curved. A pump's flow grows only with the square root of its power: pump A gives $\sqrt{x/0.02}$ L/s from $x$ kW, so doubling its power does not double its flow. The cost, total power, is a plain sum. So all the difficulty sits in the rules.
+The rules are curved. A pump's flow grows only with the square root of its power: pump A gives $`\sqrt{x/0.02}`$ L/s from $`x`$ kW, so doubling its power does not double its flow. The cost, total power, is a plain sum. So all the difficulty sits in the rules.
 
 Today every pump runs at 100 kW: 300 kW in all. That sends 173.1671 L/s, 23.1671 L/s more than the town needs, and 36.5066 m of head. **Sequential quadratic programming** (SQP) fixes the schedule in steps. At each step it replaces the problem by a simpler one it can solve exactly: the rules become straight lines and the cost becomes a bowl (a quadratic, curving up). It solves that, moves, and repeats. From 100 kW each, three steps reach powers of 49.9974, 75.0025 and 124.9984 kW, meeting both rules to within 0.001 L/s and 0.001 m. A fourth lands on 50, 75 and 125 kW: 250 kW in all, the least any feasible schedule draws.
 
@@ -33,52 +33,58 @@ The line is the base-10 logarithm of the distance, in kW, from each step's power
 
 ## The formula
 
-Notation first, in words. The plan is $x = (x_1, x_2, x_3)$, the three pump powers in kW; $x_k$ is the plan after $k$ steps, from $x_0 = (100, 100, 100)$. The cost is $f_0(x) = x_1 + x_2 + x_3$.
+Notation first, in words. The plan is $`x = (x_1, x_2, x_3)`$, the three pump powers in kW; $`x_k`$ is the plan after $`k`$ steps, from $`x_0 = (100, 100, 100)`$. The cost is $`f_0(x) = x_1 + x_2 + x_3`$.
 
-Pump $i$'s flow is $q_i = \sqrt{x_i / a_i}$. The demand rule is $h_1(x) = 150 - \sum q_i = 0$. The head rule is $f_1(x) = 35 - \sum k_i q_i \le 0$, with multiplier $\nu$ ("nu") on demand and $\lambda \ge 0$ on head, as on the [KKT conditions](02-kkt-conditions.md) card.
+Pump $`i`$'s flow is $`q_i = \sqrt{x_i / a_i}`$. The demand rule is $`h_1(x) = 150 - \sum q_i = 0`$. The head rule is $`f_1(x) = 35 - \sum k_i q_i \le 0`$, with multiplier $`\nu`$ ("nu") on demand and $`\lambda \ge 0`$ on head, as on the [KKT conditions](02-kkt-conditions.md) card.
 
-The **Lagrangian** is $\mathcal{L} = f_0 + \nu h_1 + \lambda f_1$: the cost plus each rule weighted by its price.
+The **Lagrangian** is $`\mathcal{L} = f_0 + \nu h_1 + \lambda f_1`$: the cost plus each rule weighted by its price.
 
-This card holds the head rule as an equality, because it binds at the answer. The check is that its price comes out positive. Stack the two rules as $c(x) = (h_1(x), f_1(x))$, with Jacobian $J$ (row $j$ is rule $j$'s gradient).
+This card holds the head rule as an equality, because it binds at the answer. The check is that its price comes out positive. Stack the two rules as $`c(x) = (h_1(x), f_1(x))`$, with Jacobian $`J`$ (row $`j`$ is rule $`j`$'s gradient).
 
-At plan $x_k$ with prices $(\nu_k, \lambda_k)$, SQP solves the **quadratic subproblem**
+At plan $`x_k`$ with prices $`(\nu_k, \lambda_k)`$, SQP solves the **quadratic subproblem**
 
-$$\min_{d}\; \nabla f_0(x_k)^{\mathsf T} d + \tfrac12\, d^{\mathsf T} B_k\, d \quad\text{subject to}\quad c(x_k) + J(x_k)\, d = 0, \qquad B_k = \nabla^2_{x}\mathcal{L}(x_k, \nu_k, \lambda_k),$$
+```math
+\min_{d}\; \nabla f_0(x_k)^{\mathsf T} d + \tfrac12\, d^{\mathsf T} B_k\, d \quad\text{subject to}\quad c(x_k) + J(x_k)\, d = 0, \qquad B_k = \nabla^2_{x}\mathcal{L}(x_k, \nu_k, \lambda_k),
+```
 
 through its KKT linear system,
 
-$$\begin{bmatrix} B_k & J_k^{\mathsf T} \\ J_k & 0 \end{bmatrix}\begin{bmatrix} d_k \\ (\nu_{k+1}, \lambda_{k+1}) \end{bmatrix} = -\begin{bmatrix} \nabla f_0(x_k) \\ c(x_k) \end{bmatrix},$$
+```math
+\begin{bmatrix} B_k & J_k^{\mathsf T} \\ J_k & 0 \end{bmatrix}\begin{bmatrix} d_k \\ (\nu_{k+1}, \lambda_{k+1}) \end{bmatrix} = -\begin{bmatrix} \nabla f_0(x_k) \\ c(x_k) \end{bmatrix},
+```
 
-then moves to $x_{k+1} = x_k + \alpha_k d_k$. The step length $\alpha_k$ is the first of $1, \tfrac12, \tfrac14, \dots$ that lowers the **merit function**
+then moves to $`x_{k+1} = x_k + \alpha_k d_k`$. The step length $`\alpha_k`$ is the first of $`1, \tfrac12, \tfrac14, \dots`$ that lowers the **merit function**
 
-$$\varphi_\rho(x) = f_0(x) + \rho\,\bigl(\lvert h_1(x)\rvert + \max(0, f_1(x))\bigr)$$
+```math
+\varphi_\rho(x) = f_0(x) + \rho\,\bigl(\lvert h_1(x)\rvert + \max(0, f_1(x))\bigr)
+```
 
-by at least $10^{-4}\alpha_k \lvert D_k\rvert$, where $D_k$ is its predicted slope, $D_k = \nabla f_0^{\mathsf T} d_k - \rho\,(\lvert h_1\rvert + \max(0, f_1))$.
+by at least $`10^{-4}\alpha_k \lvert D_k\rvert`$, where $`D_k`$ is its predicted slope, $`D_k = \nabla f_0^{\mathsf T} d_k - \rho\,(\lvert h_1\rvert + \max(0, f_1))`$.
 
 **Read it aloud:** at each step, take the cost's slope, the Lagrangian's curvature and the rules' straight-line copies; solve that small quadratic problem for a step and new prices; and take as much of the step as makes power-plus-penalty fall.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_k$, $x^*$ | pump powers; after $k$ steps; the minimiser | $x_0 = (100, 100, 100)$, $x^* = (50, 75, 125)$ kW | — |
-| $f_0$, $g$ | total power, minimised; its gradient | 300 kW at $x_0$, 250 kW at $x^*$; $g = (1, 1, 1)$ | — |
-| $a_i$, $k_i$, $q_i$ | pump $i$'s power coefficient; head per L/s (not the step count $k$); flow | 0.02, 0.03, 0.05 kW per (L/s)²; 0.1, 0.2, 0.4 m per L/s; $q_i = \sqrt{x_i/a_i}$ | a dearer pump runs at less flow |
-| $h_1$, $f_1$, $c$ | demand miss, head miss (code: `miss`), stacked | −23.1671 L/s, −1.5066 m at $x_0$ | — |
-| $J$ | the rules' Jacobian: how each miss moves with each power | demand row $-q_i/(2x_i)$, head row $k_i$ times that | — |
-| $\nu$, $\lambda$; $\Delta\nu$, $\Delta\lambda$ | prices of demand and head (code: `mu`); their change in one step | 1 kW per L/s, 10 kW per m | — |
-| $\mathcal{L}$, $B_k$ | Lagrangian; its curvature in $x$ | $B_k$ diagonal, $(\nu_k + \lambda_k k_i)\,q_i/(4x_i^2)$ | the model's bowl steepens and steps shorten |
-| $d_k$, $\alpha_k$ | step direction; fraction taken | $d_0 = (-58.3265, -27.2582, 23.8062)$ kW, $\alpha_0 = 1$ | — |
-| $\varphi_\rho$, $\rho$ | merit: power plus penalty; penalty weight | $\rho = 20$ kW per unit of miss | more steps cut short near curved rules |
-| $D_k$ | the merit's predicted slope along $d_k$ | negative whenever $\rho$ beats the prices | — |
-| $\hat d$, $z$ | second-order correction; an allowed step ($Jz = 0$) | used in the Maratos case | — |
-| $e_k$, $C$ | distance from $x_k$ to $x^*$, the plan's part of the error; the constant in the rate for plan and prices together | 61.24, 8.709, 0.6289, 0.003918 kW | — |
+| $`x`$, $`x_k`$, $`x^*`$ | pump powers; after $`k`$ steps; the minimiser | $`x_0 = (100, 100, 100)`$, $`x^* = (50, 75, 125)`$ kW | — |
+| $`f_0`$, $`g`$ | total power, minimised; its gradient | 300 kW at $`x_0`$, 250 kW at $`x^*`$; $`g = (1, 1, 1)`$ | — |
+| $`a_i`$, $`k_i`$, $`q_i`$ | pump $`i`$'s power coefficient; head per L/s (not the step count $`k`$); flow | 0.02, 0.03, 0.05 kW per (L/s)²; 0.1, 0.2, 0.4 m per L/s; $`q_i = \sqrt{x_i/a_i}`$ | a dearer pump runs at less flow |
+| $`h_1`$, $`f_1`$, $`c`$ | demand miss, head miss (code: `miss`), stacked | −23.1671 L/s, −1.5066 m at $`x_0`$ | — |
+| $`J`$ | the rules' Jacobian: how each miss moves with each power | demand row $`-q_i/(2x_i)`$, head row $`k_i`$ times that | — |
+| $`\nu`$, $`\lambda`$; $`\Delta\nu`$, $`\Delta\lambda`$ | prices of demand and head (code: `mu`); their change in one step | 1 kW per L/s, 10 kW per m | — |
+| $`\mathcal{L}`$, $`B_k`$ | Lagrangian; its curvature in $`x`$ | $`B_k`$ diagonal, $`(\nu_k + \lambda_k k_i)\,q_i/(4x_i^2)`$ | the model's bowl steepens and steps shorten |
+| $`d_k`$, $`\alpha_k`$ | step direction; fraction taken | $`d_0 = (-58.3265, -27.2582, 23.8062)`$ kW, $`\alpha_0 = 1`$ | — |
+| $`\varphi_\rho`$, $`\rho`$ | merit: power plus penalty; penalty weight | $`\rho = 20`$ kW per unit of miss | more steps cut short near curved rules |
+| $`D_k`$ | the merit's predicted slope along $`d_k`$ | negative whenever $`\rho`$ beats the prices | — |
+| $`\hat d`$, $`z`$ | second-order correction; an allowed step ($`Jz = 0`$) | used in the Maratos case | — |
+| $`e_k`$, $`C`$ | distance from $`x_k`$ to $`x^*`$, the plan's part of the error; the constant in the rate for plan and prices together | 61.24, 8.709, 0.6289, 0.003918 kW | — |
 
 ### When it holds
 
-- **Smooth rules and cost, with independent rule gradients (LICQ).** The KKT matrix then has full rank once the bowl is right. With demand written twice, $J$ loses rank and the system is singular, as on [Lagrange multipliers, proved](01-lagrange-multipliers-revisited.md).
-- **A bowl on the allowed directions.** $B_k$ must curve up along every step $z$ with $J_k z = 0$. Here it does (curvature 0.006557 along the one allowed step at the answer). Use the cost's own curvature, zero for a sum of powers, and the system is singular: no step at all.
+- **Smooth rules and cost, with independent rule gradients (LICQ).** The KKT matrix then has full rank once the bowl is right. With demand written twice, $`J`$ loses rank and the system is singular, as on [Lagrange multipliers, proved](01-lagrange-multipliers-revisited.md).
+- **A bowl on the allowed directions.** $`B_k`$ must curve up along every step $`z`$ with $`J_k z = 0`$. Here it does (curvature 0.006557 along the one allowed step at the answer). Use the cost's own curvature, zero for a sum of powers, and the system is singular: no step at all.
 - **The right rules held as equalities.** SQP with a fixed list of active rules finds the best point *on* them. If a held rule's price comes out negative, it should be let go. A head limit of 25 m held as an equality gives a price of −5.5 kW per m. The choice of which rules to hold is the active-set pass on the [Quadratic programs](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/01-quadratic-programs-and-markowitz.md) card.
 - **The quadratic rate is local.** It needs a start near a point satisfying the second-order conditions, with positive prices on held inequalities. Far away, the full step can land on negative powers; the line search refuses any step with a negative power, then asks the merit function whether the step helped.
-- **The merit's weight must beat the prices.** Take $\rho = 5$, below the head price of 10, and the merit is lowest at a plan with only 31.7742 m of head.
+- **The merit's weight must beat the prices.** Take $`\rho = 5`$, below the head price of 10, and the merit is lowest at a plan with only 31.7742 m of head.
 
 ---
 
@@ -86,7 +92,7 @@ by at least $10^{-4}\alpha_k \lvert D_k\rvert$, where $D_k$ is its predicted slo
 
 ### Step 0: the optimum solves a square system, and Newton's method solves square systems
 
-At the best plan, two things hold: the Lagrangian's gradient is zero, and the rules are met. That is five equations, $\nabla f_0 + J^{\mathsf T}(\nu, \lambda) = 0$ (three, one per pump) and $c = 0$ (two), in five unknowns: three powers and two prices.
+At the best plan, two things hold: the Lagrangian's gradient is zero, and the rules are met. That is five equations, $`\nabla f_0 + J^{\mathsf T}(\nu, \lambda) = 0`$ (three, one per pump) and $`c = 0`$ (two), in five unknowns: three powers and two prices.
 
 Newton's method solves a square system by replacing it with its straight-line copy at the current point and solving that ([Newton and BFGS](../02-Unconstrained%20Methods/05-newton-and-quasi-newton-bfgs.md)). Doing so here gives exactly the KKT matrix in The formula.
 
@@ -94,54 +100,56 @@ That same matrix is also the KKT system of a small quadratic problem. So each Ne
 
 ### Step 1: linearise the optimality conditions
 
-Write $g(x) = \nabla f_0(x)$ and stack the conditions as one list, $\bigl(g + J^{\mathsf T}(\nu,\lambda),\ c\bigr)$. Its derivative in $x$ is the Lagrangian's curvature $B = \nabla^2 f_0 + \nu \nabla^2 h_1 + \lambda \nabla^2 f_1$; its derivative in the prices is $J^{\mathsf T}$. The rules' derivative in $x$ is $J$. A Newton step from $(x_k, \nu_k, \lambda_k)$ with changes $(d, \Delta\nu, \Delta\lambda)$ solves
+Write $`g(x) = \nabla f_0(x)`$ and stack the conditions as one list, $`\bigl(g + J^{\mathsf T}(\nu,\lambda),\ c\bigr)`$. Its derivative in $`x`$ is the Lagrangian's curvature $`B = \nabla^2 f_0 + \nu \nabla^2 h_1 + \lambda \nabla^2 f_1`$; its derivative in the prices is $`J^{\mathsf T}`$. The rules' derivative in $`x`$ is $`J`$. A Newton step from $`(x_k, \nu_k, \lambda_k)`$ with changes $`(d, \Delta\nu, \Delta\lambda)`$ solves
 
-$$B_k d + J_k^{\mathsf T}(\Delta\nu, \Delta\lambda) = -\bigl(g_k + J_k^{\mathsf T}(\nu_k, \lambda_k)\bigr), \qquad J_k d = -c_k.$$
+```math
+B_k d + J_k^{\mathsf T}(\Delta\nu, \Delta\lambda) = -\bigl(g_k + J_k^{\mathsf T}(\nu_k, \lambda_k)\bigr), \qquad J_k d = -c_k.
+```
 
-Move $J_k^{\mathsf T}(\nu_k, \lambda_k)$ to the left and it joins the change: the unknowns become $d$ and the *new* prices $(\nu_{k+1}, \lambda_{k+1})$. That is the system in The formula.
+Move $`J_k^{\mathsf T}(\nu_k, \lambda_k)`$ to the left and it joins the change: the unknowns become $`d`$ and the *new* prices $`(\nu_{k+1}, \lambda_{k+1})`$. That is the system in The formula.
 
 ### Step 2: the same system is a quadratic problem's KKT conditions
 
-Take the subproblem: minimise $g_k^{\mathsf T} d + \tfrac12 d^{\mathsf T} B_k d$ with $c_k + J_k d = 0$. Its Lagrange conditions are: gradient of the model, $g_k + B_k d$, plus $J_k^{\mathsf T}$ times the prices, equals zero; and the straight-line rules hold. Those are the two rows of the KKT matrix, line for line. If $B_k$ curves up on the allowed steps, the subproblem is a bowl sliced by flat planes, so its stationary point is its unique minimum.
+Take the subproblem: minimise $`g_k^{\mathsf T} d + \tfrac12 d^{\mathsf T} B_k d`$ with $`c_k + J_k d = 0`$. Its Lagrange conditions are: gradient of the model, $`g_k + B_k d`$, plus $`J_k^{\mathsf T}`$ times the prices, equals zero; and the straight-line rules hold. Those are the two rows of the KKT matrix, line for line. If $`B_k`$ curves up on the allowed steps, the subproblem is a bowl sliced by flat planes, so its stationary point is its unique minimum.
 
-This is why $B_k$ is the Lagrangian's curvature, not the cost's. Straightening the rules throws away their bend. The prices put that bend back into the bowl. For the pumps, $\nabla^2 f_0 = 0$: every scrap of the model's curvature comes from the curved rules, weighted by their prices.
+This is why $`B_k`$ is the Lagrangian's curvature, not the cost's. Straightening the rules throws away their bend. The prices put that bend back into the bowl. For the pumps, $`\nabla^2 f_0 = 0`$: every scrap of the model's curvature comes from the curved rules, weighted by their prices.
 
 ### Step 3: the hand-sized version
 
-Here $B_k$ is diagonal, so the top row gives each pump's step from the new prices: $d_i = -(1 + \nu J_{1i} + \lambda J_{2i})/B_{ii}$. Put those into $J d = -c$ and two equations in the two prices remain. The worked numbers below solve them; the code checks the result against the full five-by-five elimination.
+Here $`B_k`$ is diagonal, so the top row gives each pump's step from the new prices: $`d_i = -(1 + \nu J_{1i} + \lambda J_{2i})/B_{ii}`$. Put those into $`J d = -c`$ and two equations in the two prices remain. The worked numbers below solve them; the code checks the result against the full five-by-five elimination.
 
 ### Step 4: near the answer, the error squares each step
 
-Newton's method on a square system with an invertible derivative at the solution has a quadratic rate: once the error in plan and prices together is small, the next step's error is at most a constant $C$ times its square.
+Newton's method on a square system with an invertible derivative at the solution has a quadratic rate: once the error in plan and prices together is small, the next step's error is at most a constant $`C`$ times its square.
 
 The KKT matrix is invertible at the answer when three things hold: LICQ, a bowl on the allowed directions (the second-order sufficient condition of [Second-order conditions under constraints](03-second-order-conditions-for-constrained-problems.md)), and a positive price on every held inequality. Here all three hold.
 
-The code prints the plan's part of the error, $e_k$, and its ratios $e_{k+1}/e_k^2$ are 0.0023, 0.0083, 0.0099 and 0.0072: bounded, because at steps 0 to 3 the printed prices are nearer to (1, 10) than the plan is to the answer, so the plan's error stands in for the pair's. The statement and proof are in chapter 18 of Nocedal and Wright (Sources).
+The code prints the plan's part of the error, $`e_k`$, and its ratios $`e_{k+1}/e_k^2`$ are 0.0023, 0.0083, 0.0099 and 0.0072: bounded, because at steps 0 to 3 the printed prices are nearer to (1, 10) than the plan is to the answer, so the plan's error stands in for the pair's. The statement and proof are in chapter 18 of Nocedal and Wright (Sources).
 
 ### Step 5: far from the answer, a merit function decides how far to go
 
 A model is only as good as its neighbourhood. From 300 kW on every pump, the full step lands at −52.2325, −5.1779 and 89.5265 kW. A negative power has no flow, and the script would stop.
 
-SQP therefore asks a second question each step: did the move help? Help is measured by one number, power plus a fine for each unit of miss, $\varphi_\rho$. The idea is the exact penalty of [Penalties and augmented Lagrangians](07-penalty-and-augmented-lagrangian-methods.md). When $\rho$ is larger than every price, the constrained minimum is also a local minimum of $\varphi_\rho$, with no need for $\rho$ to grow without limit.
+SQP therefore asks a second question each step: did the move help? Help is measured by one number, power plus a fine for each unit of miss, $`\varphi_\rho`$. The idea is the exact penalty of [Penalties and augmented Lagrangians](07-penalty-and-augmented-lagrangian-methods.md). When $`\rho`$ is larger than every price, the constrained minimum is also a local minimum of $`\varphi_\rho`$, with no need for $`\rho`$ to grow without limit.
 
-Halve the step until $\varphi_\rho$ falls enough, as in [Line search](../02-Unconstrained%20Methods/04-line-search-armijo-and-wolfe.md). From 300 kW each, the first step is halved once, and every later step is full.
+Halve the step until $`\varphi_\rho`$ falls enough, as in [Line search](../02-Unconstrained%20Methods/04-line-search-armijo-and-wolfe.md). From 300 kW each, the first step is halved once, and every later step is full.
 
-The fold proves the key fact: the SQP step always points downhill for $\varphi_\rho$, so halving must eventually succeed.
+The fold proves the key fact: the SQP step always points downhill for $`\varphi_\rho`$, so halving must eventually succeed.
 
 <details>
 <summary>Detailed proof: the SQP step is a descent direction for the merit function</summary>
 
-Let $(d, \nu_+, \lambda_+)$ solve the KKT system at $x$, with $d \ne 0$, $d^{\mathsf T} B d > 0$, $\lambda_+ \ge 0$ and $\rho \ge \max(\lvert \nu_+\rvert, \lambda_+)$.
+Let $`(d, \nu_+, \lambda_+)`$ solve the KKT system at $`x`$, with $`d \ne 0`$, $`d^{\mathsf T} B d > 0`$, $`\lambda_+ \ge 0`$ and $`\rho \ge \max(\lvert \nu_+\rvert, \lambda_+)`$.
 
-The first block row says $g = -Bd - J^{\mathsf T}(\nu_+, \lambda_+)$. Dot it with $d$, and use the second block row, $Jd = -c$:
+The first block row says $`g = -Bd - J^{\mathsf T}(\nu_+, \lambda_+)`$. Dot it with $`d`$, and use the second block row, $`Jd = -c`$:
 
-$$g^{\mathsf T} d = -d^{\mathsf T} B d + \nu_+ h_1 + \lambda_+ f_1.$$
+$`\displaystyle g^{\mathsf T} d = -d^{\mathsf T} B d + \nu_+ h_1 + \lambda_+ f_1.`$
 
-Bound the last two terms: $\nu_+ h_1 \le \lvert\nu_+\rvert\,\lvert h_1\rvert$, and $\lambda_+ f_1 \le \lambda_+ \max(0, f_1)$ because $\lambda_+ \ge 0$. So
+Bound the last two terms: $`\nu_+ h_1 \le \lvert\nu_+\rvert\,\lvert h_1\rvert`$, and $`\lambda_+ f_1 \le \lambda_+ \max(0, f_1)`$ because $`\lambda_+ \ge 0`$. So
 
-$$D = g^{\mathsf T} d - \rho\bigl(\lvert h_1\rvert + \max(0, f_1)\bigr) \le -d^{\mathsf T} B d - (\rho - \lvert\nu_+\rvert)\lvert h_1\rvert - (\rho - \lambda_+)\max(0, f_1) < 0.$$
+$`\displaystyle D = g^{\mathsf T} d - \rho\bigl(\lvert h_1\rvert + \max(0, f_1)\bigr) \le -d^{\mathsf T} B d - (\rho - \lvert\nu_+\rvert)\lvert h_1\rvert - (\rho - \lambda_+)\max(0, f_1) < 0.`$
 
-It remains to show $D$ bounds the true one-sided slope of $\varphi_\rho$ along $d$. Along $x + \alpha d$, each miss changes at first order by $\alpha$ times its row of $Jd = -c$. So $\lvert h_1\rvert$ falls at rate $\lvert h_1\rvert$. The term $\max(0, f_1)$ falls at rate $\max(0, f_1)$ if $f_1 > 0$; if $f_1 \le 0$ it moves towards $f_1(1 - \alpha) \le 0$ and stays at 0 to first order. So the slope of $\varphi_\rho$ at $\alpha = 0^+$ is at most $D$. A negative slope means $\varphi_\rho(x + \alpha d) \le \varphi_\rho(x) + 10^{-4}\alpha D$ for every small enough $\alpha$, so the halving loop stops after finitely many halvings.
+It remains to show $`D`$ bounds the true one-sided slope of $`\varphi_\rho`$ along $`d`$. Along $`x + \alpha d`$, each miss changes at first order by $`\alpha`$ times its row of $`Jd = -c`$. So $`\lvert h_1\rvert`$ falls at rate $`\lvert h_1\rvert`$. The term $`\max(0, f_1)`$ falls at rate $`\max(0, f_1)`$ if $`f_1 > 0`$; if $`f_1 \le 0`$ it moves towards $`f_1(1 - \alpha) \le 0`$ and stays at 0 to first order. So the slope of $`\varphi_\rho`$ at $`\alpha = 0^+`$ is at most $`D`$. A negative slope means $`\varphi_\rho(x + \alpha d) \le \varphi_\rho(x) + 10^{-4}\alpha D`$ for every small enough $`\alpha`$, so the halving loop stops after finitely many halvings.
 
 </details>
 
@@ -151,11 +159,11 @@ The guard can misfire. Start on both rules at powers 58.32, 58.08 and 135.2 kW, 
 
 The full SQP step lands 2.2233 kW from the answer: a tenfold improvement. It also lowers the power from 251.6 to 248.6161 kW. But the rules are curved and the step follows their straight copies, so the new plan misses them by 0.5809 units in total.
 
-At $\rho = 20$ the fine outweighs the saving, and the merit rises from 251.6 to 260.2341. The line search rejects the step and settles for one-eighth of it. This is the **Maratos effect**.
+At $`\rho = 20`$ the fine outweighs the saving, and the merit rises from 251.6 to 260.2341. The line search rejects the step and settles for one-eighth of it. This is the **Maratos effect**.
 
-It happens for a reason that does not go away near the answer. A step of length $\lVert d\rVert$ along the straight copy leaves a curved rule by about $\lVert d \rVert^2$. The cost falls by about the same order. So the fine can win however close the start is, and the fast rate is lost.
+It happens for a reason that does not go away near the answer. A step of length $`\lVert d\rVert`$ along the straight copy leaves a curved rule by about $`\lVert d \rVert^2`$. The cost falls by about the same order. So the fine can win however close the start is, and the fast rate is lost.
 
-The repair used here is a **second-order correction**: after a rejected full step, take one more short move $\hat d = -J^{\mathsf T}(JJ^{\mathsf T})^{-1}c(x_k + d_k)$, the shortest move that cancels the new miss to first order. That pulls the plan back onto the curved rules, the merit falls, and the step is kept. With it, four steps reach the answer to below $10^{-6}$ kW; without it, four steps leave 8.6038 kW of error. On the main run from 100 kW each, every full step passed the merit test, so the correction never ran.
+The repair used here is a **second-order correction**: after a rejected full step, take one more short move $`\hat d = -J^{\mathsf T}(JJ^{\mathsf T})^{-1}c(x_k + d_k)`$, the shortest move that cancels the new miss to first order. That pulls the plan back onto the curved rules, the merit falls, and the step is kept. With it, four steps reach the answer to below $`10^{-6}`$ kW; without it, four steps leave 8.6038 kW of error. On the main run from 100 kW each, every full step passed the merit test, so the correction never ran.
 
 ```mermaid
 flowchart TB
@@ -180,31 +188,31 @@ Start at 100 kW on every pump, with the least-squares prices (the pair that come
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| flows | $q_i = \sqrt{100/a_i}$ | 70.7107, 57.7350, 44.7214 L/s |
-| misses | $150 - 173.1671$; $35 - 36.5066$ | −23.1671 L/s; −1.5066 m |
-| rule gradients | demand row $-q_i/(2 \times 100)$; head row $k_i$ times that | (−0.3536, −0.2887, −0.2236); (−0.0354, −0.0577, −0.0894) |
-| starting prices | least squares on $1 + \nu J_{1i} + \lambda J_{2i} = 0$ | $\nu_0 = 2.3047$, $\lambda_0 = 5.5010$ |
-| curvature $B_0$ | $(\nu_0 + \lambda_0 k_i)\,q_i/(4 \times 100^2)$ | 0.0050, 0.0049, 0.0050 per kW |
-| two equations in the new prices | $\sum_i J_{ji} J_{li}/B_{ii}$ against $c_j - \sum_i J_{ji}/B_{ii}$ | `[[51.6530, 9.8391], [9.8391, 2.5143]]` against (150.0257, 35.0050) |
-| new prices | solve the 2 × 2 | $\nu_1 = 0.9917$, $\lambda_1 = 10.0416$ |
-| step | $d_i = -(1 + \nu_1 J_{1i} + \lambda_1 J_{2i})/B_{ii}$ | −58.3265, −27.2582, 23.8062 kW |
-| merit test, $\rho = 20$ | 763.3413 before, 358.8859 after | full step kept, $\alpha_0 = 1$ |
-| step 1 lands | $100 + d_0$ | 41.6735, 72.7418, 123.8062 kW; misses 5.350518 L/s, 0.682703 m |
+| flows | $`q_i = \sqrt{100/a_i}`$ | 70.7107, 57.7350, 44.7214 L/s |
+| misses | $`150 - 173.1671`$; $`35 - 36.5066`$ | −23.1671 L/s; −1.5066 m |
+| rule gradients | demand row $`-q_i/(2 \times 100)`$; head row $`k_i`$ times that | (−0.3536, −0.2887, −0.2236); (−0.0354, −0.0577, −0.0894) |
+| starting prices | least squares on $`1 + \nu J_{1i} + \lambda J_{2i} = 0`$ | $`\nu_0 = 2.3047`$, $`\lambda_0 = 5.5010`$ |
+| curvature $`B_0`$ | $`(\nu_0 + \lambda_0 k_i)\,q_i/(4 \times 100^2)`$ | 0.0050, 0.0049, 0.0050 per kW |
+| two equations in the new prices | $`\sum_i J_{ji} J_{li}/B_{ii}`$ against $`c_j - \sum_i J_{ji}/B_{ii}`$ | `[[51.6530, 9.8391], [9.8391, 2.5143]]` against (150.0257, 35.0050) |
+| new prices | solve the 2 × 2 | $`\nu_1 = 0.9917`$, $`\lambda_1 = 10.0416`$ |
+| step | $`d_i = -(1 + \nu_1 J_{1i} + \lambda_1 J_{2i})/B_{ii}`$ | −58.3265, −27.2582, 23.8062 kW |
+| merit test, $`\rho = 20`$ | 763.3413 before, 358.8859 after | full step kept, $`\alpha_0 = 1`$ |
+| step 1 lands | $`100 + d_0`$ | 41.6735, 72.7418, 123.8062 kW; misses 5.350518 L/s, 0.682703 m |
 | step 2 | code | 49.4860, 75.3105, 124.8131 kW; misses 0.191637 L/s, 0.020041 m |
 | step 3 | code | 49.9974, 75.0025, 124.9984 kW; misses 0.000779 L/s, 0.000093 m: **feasible to 0.001** |
 | step 4 | code | **50, 75, 125 kW: 250 kW**; prices 1 kW per L/s and 10 kW per m |
 
 Run pump A at 50 kW, pump B at 75 kW and pump C at 125 kW: 250 kW in all, each pump delivering 50 L/s. No feasible schedule draws less.
 
-The evidence is the KKT residual of $2.2 \times 10^{-9}$, the positive head price, and two other roads. Rewritten in flows, the problem is the convex one on [Lagrange multipliers, proved](01-lagrange-multipliers-revisited.md), solved in one linear system. A scan of all 522,084 feasible plans on a 0.1 L/s grid of flows, with the head rule kept as a floor so that no rule is assumed to bind, finds the same 250 kW at 50 L/s from each pump.
+The evidence is the KKT residual of $`2.2 \times 10^{-9}`$, the positive head price, and two other roads. Rewritten in flows, the problem is the convex one on [Lagrange multipliers, proved](01-lagrange-multipliers-revisited.md), solved in one linear system. A scan of all 522,084 feasible plans on a 0.1 L/s grid of flows, with the head rule kept as a floor so that no rule is assumed to bind, finds the same 250 kW at 50 L/s from each pump.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Model curvature from $f_0$ alone, $B = 0$ | KKT matrix singular: no step | The cost is a plain sum, so all the bend is in the rules; only the Lagrangian carries it |
+| Model curvature from $`f_0`$ alone, $`B = 0`$ | KKT matrix singular: no step | The cost is a plain sum, so all the bend is in the rules; only the Lagrangian carries it |
 | Full steps, no merit test, from 300 kW each | first step to −52.2325, −5.1779, 89.5265 kW | The model was trusted far from where it is accurate; guarded, the first step is halved and then all steps are full |
-| Penalty weight $\rho = 5$, below the head price | merit lowest at 31.7742 m of head, 241.9355 against 250 | Paying the fine is cheaper than meeting the rule, so the merit pulls towards an infeasible plan |
+| Penalty weight $`\rho = 5`$, below the head price | merit lowest at 31.7742 m of head, 241.9355 against 250 | Paying the fine is cheaper than meeting the rule, so the merit pulls towards an infeasible plan |
 | Hold a slack rule: head at least 25 m, as an equality | head price −5.5 kW per m, 227.5 kW | Dropping the rule gives 217.7419 kW at 28.5484 m; the negative price says let it go |
 | Merit test without correction, near the answer | full step cuts error 21.4371 to 2.2233 kW but merit rises 251.6 to 260.2341; steps 0.125, 0.25, 0.25, 0.25 | The Maratos effect: the straight-rule step misses the curved rules by 0.5809 |
 
@@ -596,9 +604,9 @@ The two outputs match line for line.
 
 Lean proves the fold's descent fact and the bowl fact of Step 2 for any number of powers, and the pump answer exactly.
 
-- **Descent.** Let $d$ and the new prices solve the KKT system, with $d^{\mathsf T} B d > 0$, head price at least 0, and $\rho$ at least both prices. Then $D$ is negative, with the fold's bound.
-- **The line search stops.** Under the same conditions, every small enough fraction $\alpha$ lowers $\varphi_\rho$ by at least $10^{-4}\alpha\lvert D\rvert$.
-- **The step solves its model.** Suppose $B_{ij} = B_{ji}$, as for any curvature, and $B$ curves up on every allowed step. Then the KKT solution $d$ is the model's unique minimum.
+- **Descent.** Let $`d`$ and the new prices solve the KKT system, with $`d^{\mathsf T} B d > 0`$, head price at least 0, and $`\rho`$ at least both prices. Then $`D`$ is negative, with the fold's bound.
+- **The line search stops.** Under the same conditions, every small enough fraction $`\alpha`$ lowers $`\varphi_\rho`$ by at least $`10^{-4}\alpha\lvert D\rvert`$.
+- **The step solves its model.** Suppose $`B_{ij} = B_{ji}`$, as for any curvature, and $`B`$ curves up on every allowed step. Then the KKT solution $`d`$ is the model's unique minimum.
 - **The answer.** Pumps at 50, 75 and 125 kW meet both rules and draw 250 kW. No feasible schedule of non-negative powers draws less.
 
 The quadratic rate, the Maratos effect and every printed step are left to the Python and Rust checks.
@@ -819,7 +827,7 @@ example : 2 * (1 / 20 : ℚ) * 50 = 1 + 10 * (2 / 5) := by norm_num
 > - **Guess first: does a smaller fine soften the Maratos effect?** Set `RHO` to `12.0`, still above both prices. The main run is unchanged except for the merit column. In the Maratos case the full step is still rejected (merit 251.6 to 255.5869), but without correction the steps grow, 0.25, 0.5, 1, 1, and the error after four is 0.0018 kW. An assert stops it.
 > - **Guess first: does a worse start cost many more steps?** Set `p0` to `[10.0, 10.0, 10.0]`, 30 kW in all and 95.2398 L/s short. Every step is still full, and the rules are met to 0.001 after four steps instead of three. An assert stops it.
 > - **Guess first: does the correction change the main run?** Pass `soc=False` to `H = sqp(p0, mu0, 4)`. Nothing changes: every full step already passed the merit test.
-> - **Guess first: can SQP start with zero prices?** Set `mu0 = [0.0, 0.0]`. Then $B_0 = 0$: no bowl, and the script stops as soon as it divides by the zero curvature, in the by-hand elimination before the first step. Start prices matter because they shape the bowl.
+> - **Guess first: can SQP start with zero prices?** Set `mu0 = [0.0, 0.0]`. Then $`B_0 = 0`$: no bowl, and the script stops as soon as it divides by the zero curvature, in the by-hand elimination before the first step. Start prices matter because they shape the bowl.
 
 ---
 
@@ -829,7 +837,7 @@ example : 2 * (1 / 20 : ℚ) * 50 = 1 + 10 * (2 / 5) := by norm_num
 > **Building the model's bowl from the cost instead of the Lagrangian.** Straightening the rules throws away their bend, and only the prices put it back. Here the cost is a plain sum of powers, so its own curvature is zero, and a model built from it has no bowl: the KKT matrix is singular and there is no step. Where the cost does curve, the wrong bowl runs but loses the quadratic rate.
 >
 > - **Taking full steps from far away.** From 300 kW each, the first full step asks pump A for −52.2325 kW.
-> - **A penalty weight below the prices.** At $\rho = 5$ the merit's lowest point has 31.7742 m of head, short of the 35 m rule.
+> - **A penalty weight below the prices.** At $`\rho = 5`$ the merit's lowest point has 31.7742 m of head, short of the 35 m rule.
 > - **Holding a rule that should be slack.** A 25 m head limit held as an equality costs 227.5 kW against 217.7419; the price, −5.5 kW per m, is the warning.
 > - **Reading a rejected step as a bad step.** Near the answer, the merit rejected a step that cut the error from 21.4371 to 2.2233 kW. Without a correction, four steps leave 8.6038 kW of error.
 
@@ -850,7 +858,7 @@ example : 2 * (1 / 20 : ℚ) * 50 = 1 + 10 * (2 / 5) := by norm_num
 ## What this builds on
 
 - [Interior point methods](08-interior-point-methods.md): the other main family for curved rules. It keeps every inequality strictly slack behind a barrier, where SQP holds the binding ones as equalities and steps along them.
-- [Newton and BFGS](../02-Unconstrained%20Methods/05-newton-and-quasi-newton-bfgs.md): Newton's step on a square system and its quadratic rate, which SQP inherits. When the Lagrangian's curvature is too costly to compute, practical SQP codes replace $B_k$ by a BFGS update built from the changes in plan and gradient.
+- [Newton and BFGS](../02-Unconstrained%20Methods/05-newton-and-quasi-newton-bfgs.md): Newton's step on a square system and its quadratic rate, which SQP inherits. When the Lagrangian's curvature is too costly to compute, practical SQP codes replace $`B_k`$ by a BFGS update built from the changes in plan and gradient.
 - [Trust regions](../02-Unconstrained%20Methods/08-trust-region-methods.md): the other way to stop a model being trusted too far, by bounding the step's length instead of searching along it. Constrained versions of it replace the merit line search in many SQP codes.
 
 ## Where this goes next
@@ -868,5 +876,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Nocedal, Jorge, and Stephen J. Wright. *Numerical Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5). Chapter 15: the ℓ1 merit function, the Maratos effect and second-order correction. Chapter 18: SQP as Newton's method on the KKT conditions and the local quadratic rate.
 - Boggs, Paul T., and Jon W. Tolle. "Sequential Quadratic Programming." *Acta Numerica* 4 (1995): 1–51. [doi:10.1017/S0962492900002518](https://doi.org/10.1017/S0962492900002518). A survey of SQP: the subproblem, merit functions and their convergence theory.
 - Han, S. P. "A Globally Convergent Method for Nonlinear Programming." *Journal of Optimization Theory and Applications* 22 (1977): 297–309. [doi:10.1007/BF00932858](https://doi.org/10.1007/BF00932858). The exact ℓ1 penalty as a merit function for SQP, and the descent result proved in the fold.
-- Powell, M. J. D. "A Fast Algorithm for Nonlinearly Constrained Optimization Calculations." In *Numerical Analysis*, Lecture Notes in Mathematics 630, 144–157. Springer, 1978. [doi:10.1007/BFb0067703](https://doi.org/10.1007/BFb0067703). SQP with a quasi-Newton $B_k$ and a line search, the form most codes still follow.
+- Powell, M. J. D. "A Fast Algorithm for Nonlinearly Constrained Optimization Calculations." In *Numerical Analysis*, Lecture Notes in Mathematics 630, 144–157. Springer, 1978. [doi:10.1007/BFb0067703](https://doi.org/10.1007/BFb0067703). SQP with a quasi-Newton $`B_k`$ and a line search, the form most codes still follow.
 - Chamberlain, R. M., M. J. D. Powell, C. Lemarechal, and H. C. Pedersen. "The Watchdog Technique for Forcing Convergence in Algorithms for Constrained Optimization." *Mathematical Programming Studies* 16 (1982): 1–17. [doi:10.1007/BFb0120945](https://doi.org/10.1007/BFb0120945). The Maratos effect analysed, and a non-monotone remedy beside the second-order correction.

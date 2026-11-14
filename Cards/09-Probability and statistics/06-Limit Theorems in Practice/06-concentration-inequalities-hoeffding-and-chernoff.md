@@ -37,58 +37,66 @@ Orange, top: Chebyshev's ceiling, 100 divided by the number of flips, in percent
 
 ## The formula
 
-Notation from earlier cards: $P(\cdot)$ is the chance of the event in the brackets, $E[X]$ the long-run average of a random quantity, $\operatorname{Var}(X)$ its variance. Its moment generating function is $M(t) = E[e^{tX}]$, for a free number $t$ called here the **dial**. A sum written $\sum_{i=1}^n$ adds one term for each of $i = 1, 2, \dots, n$.
+Notation from earlier cards: $`P(\cdot)`$ is the chance of the event in the brackets, $`E[X]`$ the long-run average of a random quantity, $`\mathrm{Var}(X)`$ its variance. Its moment generating function is $`M(t) = E[e^{tX}]`$, for a free number $`t`$ called here the **dial**. A sum written $`\sum_{i=1}^n`$ adds one term for each of $`i = 1, 2, \dots, n`$.
 
-Score flip number i as $X_i$: 1 for heads, 0 for tails. Add the scores to get the heads count $S = X_1 + \dots + X_n$, and divide by the number of flips $n$ to get the share of heads $\bar X = S/n$, read "X bar". Its mean is $\mu$; the question asks about a gap $\varepsilon$ above it.
+Score flip number i as $`X_i`$: 1 for heads, 0 for tails. Add the scores to get the heads count $`S = X_1 + \dots + X_n`$, and divide by the number of flips $`n`$ to get the share of heads $`\bar X = S/n`$, read "X bar". Its mean is $`\mu`$; the question asks about a gap $`\varepsilon`$ above it.
 
-**Hoeffding's inequality.** Let $X_1, \dots, X_n$ be independent, each trapped in its own known range: $a_i \le X_i \le b_i$. Let $\mu$ be the average of their means. For every gap $\varepsilon > 0$,
+**Hoeffding's inequality.** Let $`X_1, \dots, X_n`$ be independent, each trapped in its own known range: $`a_i \le X_i \le b_i`$. Let $`\mu`$ be the average of their means. For every gap $`\varepsilon > 0`$,
 
-$$P(\bar X - \mu \ge \varepsilon) \le \exp\!\left(-\frac{2n^2\varepsilon^2}{\sum_{i=1}^n (b_i - a_i)^2}\right)$$
+```math
+P(\bar X - \mu \ge \varepsilon) \le \exp\!\left(-\frac{2n^2\varepsilon^2}{\sum_{i=1}^n (b_i - a_i)^2}\right)
+```
 
 **Read it aloud:** the chance the average overshoots its mean by at least the gap is at most e to the minus a ratio: two times n squared times the gap squared, over the sum of the squared range widths.
 
-When every range is 0 to 1, as for a coin, the sum of squared widths is $n$ and the bound becomes
+When every range is 0 to 1, as for a coin, the sum of squared widths is $`n`$ and the bound becomes
 
-$$P(\bar X - \mu \ge \varepsilon) \le e^{-2n\varepsilon^2}, \qquad P(\lvert \bar X - \mu \rvert \ge \varepsilon) \le 2e^{-2n\varepsilon^2}.$$
+```math
+P(\bar X - \mu \ge \varepsilon) \le e^{-2n\varepsilon^2}, \qquad P(\lvert \bar X - \mu \rvert \ge \varepsilon) \le 2e^{-2n\varepsilon^2}.
+```
 
-**Read it aloud:** one side costs e to the minus two n epsilon squared; both sides cost twice that. For the coin, $2n\varepsilon^2 = 2 \times 1000 \times 0.05^2 = 5$, and $e^{-5} = 0.0067$.
+**Read it aloud:** one side costs e to the minus two n epsilon squared; both sides cost twice that. For the coin, $`2n\varepsilon^2 = 2 \times 1000 \times 0.05^2 = 5`$, and $`e^{-5} = 0.0067`$.
 
-**The Chernoff bound for a binomial count.** Let $S$ count heads in $n$ independent flips, each heads with chance $p$, so $S \sim \text{Binomial}(n, p)$. For a cut $c$ above $p$,
+**The Chernoff bound for a binomial count.** Let $`S`$ count heads in $`n`$ independent flips, each heads with chance $`p`$, so $`S \sim \text{Binomial}(n, p)`$. For a cut $`c`$ above $`p`$,
 
-$$P(\bar X \ge c) \le e^{-n\,D(c\,\|\,p)}, \qquad D(c\,\|\,p) = c\ln\frac{c}{p} + (1 - c)\ln\frac{1 - c}{1 - p}.$$
+```math
+P(\bar X \ge c) \le e^{-n\,D(c\,\|\,p)}, \qquad D(c\,\|\,p) = c\ln\frac{c}{p} + (1 - c)\ln\frac{1 - c}{1 - p}.
+```
 
-**Read it aloud:** the chance the share of heads reaches the cut is at most e to the minus n times a fixed per-flip rate, and the rate measures how far a coin with chance $c$ is from the real coin with chance $p$. That rate is the **Kullback–Leibler divergence**, or relative entropy, between the two coins. For the fair coin at 0.55 it is 0.005008, and the bound is 0.00668.
+**Read it aloud:** the chance the share of heads reaches the cut is at most e to the minus n times a fixed per-flip rate, and the rate measures how far a coin with chance $`c`$ is from the real coin with chance $`p`$. That rate is the **Kullback–Leibler divergence**, or relative entropy, between the two coins. For the fair coin at 0.55 it is 0.005008, and the bound is 0.00668.
 
-Both come from one line, the **Chernoff method**: for every positive dial $t$,
+Both come from one line, the **Chernoff method**: for every positive dial $`t`$,
 
-$$P(S \ge nc) \le e^{-tnc}\,M(t)^n.$$
+```math
+P(S \ge nc) \le e^{-tnc}\,M(t)^n.
+```
 
-**Read it aloud:** the chance the count reaches $n c$ is at most the moment generating function of one flip, raised to the power $n$, discounted by e to the minus $t$ times $n c$; then turn the dial to make that smallest.
+**Read it aloud:** the chance the count reaches $`n c`$ is at most the moment generating function of one flip, raised to the power $`n`$, discounted by e to the minus $`t`$ times $`n c`$; then turn the dial to make that smallest.
 
-Chebyshev, for comparison, gives $P(\lvert \bar X - \mu \rvert \ge \varepsilon) \le \operatorname{Var}(X_i)/(n\varepsilon^2)$, which for the coin is $0.25/(1000 \times 0.05^2) = 0.1$.
+Chebyshev, for comparison, gives $`P(\lvert \bar X - \mu \rvert \ge \varepsilon) \le \mathrm{Var}(X_i)/(n\varepsilon^2)`$, which for the coin is $`0.25/(1000 \times 0.05^2) = 0.1`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of flips, or readings | 1,000 | every bound falls; the exponential ones fast |
-| $X_i$ | score of flip i: 1 for heads, 0 for tails | 0 or 1 | — |
-| $S$ | total score, the heads count | 550 or more is the event | — |
-| $\bar X$ | the average score $S/n$: the share of heads | 0.55 or more is the event | — |
-| $\mu$ | mean of the share, the average of the flips' means | 0.5 | — |
-| $c$ | the cut on the share | 0.55 | the event gets rarer; every bound falls |
-| $\varepsilon$ | the gap above the mean, $c - \mu$ | 0.05 | Hoeffding falls like $e^{-2n\varepsilon^2}$ |
-| $a_i$, $b_i$ | lowest and highest score flip i can take | 0 and 1 | a wider range weakens Hoeffding |
-| $t$ | the dial: a free positive number in the exponential | best at 0.2007 | too high or too low loosens the bound |
-| $M(t)$ | moment generating function of one flip, $E[e^{tX_i}]$ | $0.5 + 0.5e^t$ | — |
-| $p$ | chance of heads on one flip | 0.5 | with $c$ fixed, the event gets likelier |
-| $D(c\,\|\,p)$ | Chernoff's rate per flip, the relative entropy | 0.005008 | the bound falls like $e^{-nD}$ |
+| $`n`$ | number of flips, or readings | 1,000 | every bound falls; the exponential ones fast |
+| $`X_i`$ | score of flip i: 1 for heads, 0 for tails | 0 or 1 | — |
+| $`S`$ | total score, the heads count | 550 or more is the event | — |
+| $`\bar X`$ | the average score $`S/n`$: the share of heads | 0.55 or more is the event | — |
+| $`\mu`$ | mean of the share, the average of the flips' means | 0.5 | — |
+| $`c`$ | the cut on the share | 0.55 | the event gets rarer; every bound falls |
+| $`\varepsilon`$ | the gap above the mean, $`c - \mu`$ | 0.05 | Hoeffding falls like $`e^{-2n\varepsilon^2}`$ |
+| $`a_i`$, $`b_i`$ | lowest and highest score flip i can take | 0 and 1 | a wider range weakens Hoeffding |
+| $`t`$ | the dial: a free positive number in the exponential | best at 0.2007 | too high or too low loosens the bound |
+| $`M(t)`$ | moment generating function of one flip, $`E[e^{tX_i}]`$ | $`0.5 + 0.5e^t`$ | — |
+| $`p`$ | chance of heads on one flip | 0.5 | with $`c`$ fixed, the event gets likelier |
+| $`D(c\,\Vert\,p)`$ | Chernoff's rate per flip, the relative entropy | 0.005008 | the bound falls like $`e^{-nD}`$ |
 
 ### When it holds
 
 - **Independent pieces.** The proof turns the average of a product into a product of averages, and only independence allows that. Copy one flip 1,000 times and the share is 1 or 0: a share of 0.55 or more has chance 0.5, against a "ceiling" of 0.0067.
 - **Ranges known before the data, and true.** Hoeffding charges each piece its squared range width. Score heads as +1 and tails as −1, keep the width at 1 by mistake, and the "ceiling" on the same event reads 2.1 in a billion; the truth is 0.00087. A range seen in past data is not a range the next reading must respect.
 - **One number of flips, fixed in advance.** Checking the share after every flip from 100 to 1,000 and stopping the first time it reaches 0.55 succeeds with chance 0.308: about 3 runs in 10.
-- **For the binomial Chernoff form, one chance of heads for every flip, and a cut above it.** For a cut at or below $p$ the best dial is 0 and the bound is 1: true and empty.
-- **Useful once $2n\varepsilon^2$ is a few units.** At 100 flips Hoeffding allows 61 percent; the exponential needs room to act.
+- **For the binomial Chernoff form, one chance of heads for every flip, and a cut above it.** For a cut at or below $`p`$ the best dial is 0 and the bound is 1: true and empty.
+- **Useful once $`2n\varepsilon^2`$ is a few units.** At 100 flips Hoeffding allows 61 percent; the exponential needs room to act.
 
 ---
 
@@ -96,36 +104,42 @@ Chebyshev, for comparison, gives $P(\lvert \bar X - \mu \rvert \ge \varepsilon) 
 
 ### Step 0: raise the sum to a power before applying Markov
 
-Markov's inequality caps the chance that something never negative reaches a level by its mean divided by that level ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)). Chebyshev applies it to the squared distance from the mean. The exponential is every power at once, and applied to $e^{tS}$ Markov gains two allies. The exponential magnifies a large count enormously against a typical one. And for independent pieces, the average of the exponential of a sum splits into one simple average per flip. The card is those two facts plus a choice of dial.
+Markov's inequality caps the chance that something never negative reaches a level by its mean divided by that level ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)). Chebyshev applies it to the squared distance from the mean. The exponential is every power at once, and applied to $`e^{tS}`$ Markov gains two allies. The exponential magnifies a large count enormously against a typical one. And for independent pieces, the average of the exponential of a sum splits into one simple average per flip. The card is those two facts plus a choice of dial.
 
 ### Step 1: Markov on the exponential
 
-Fix a dial $t > 0$. The count reaches $n c$ exactly when $e^{tS}$ reaches $e^{tnc}$, since the exponential only climbs. $e^{tS}$ is never negative, so Markov gives
+Fix a dial $`t > 0`$. The count reaches $`n c`$ exactly when $`e^{tS}`$ reaches $`e^{tnc}`$, since the exponential only climbs. $`e^{tS}`$ is never negative, so Markov gives
 
-$$P(S \ge nc) = P(e^{tS} \ge e^{tnc}) \le e^{-tnc}\,E[e^{tS}].$$
+```math
+P(S \ge nc) = P(e^{tS} \ge e^{tnc}) \le e^{-tnc}\,E[e^{tS}].
+```
 
 This holds for every positive dial. It is a family of ceilings, one per setting.
 
 ### Step 2: independence turns the sum into a product
 
-$e^{tS} = e^{tX_1} \times e^{tX_2} \times \dots \times e^{tX_n}$. For independent pieces the average of a product is the product of the averages ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)), so $E[e^{tS}] = M(t)^n$. One flip has $M(t) = (1 - p) + pe^t$: tails contributes $e^0 = 1$, heads contributes $e^t$. That gives the Chernoff method,
+$`e^{tS} = e^{tX_1} \times e^{tX_2} \times \dots \times e^{tX_n}`$. For independent pieces the average of a product is the product of the averages ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)), so $`E[e^{tS}] = M(t)^n`$. One flip has $`M(t) = (1 - p) + pe^t`$: tails contributes $`e^0 = 1`$, heads contributes $`e^t`$. That gives the Chernoff method,
 
-$$P(S \ge nc) \le e^{-tnc}\,\big(1 - p + pe^t\big)^n.$$
+```math
+P(S \ge nc) \le e^{-tnc}\,\big(1 - p + pe^t\big)^n.
+```
 
-For the fair coin at dial 0.2 this reads $e^{-110}(0.5 + 0.5e^{0.2})^{1000} = 0.0067$, the lowest point of the chart below.
+For the fair coin at dial 0.2 this reads $`e^{-110}(0.5 + 0.5e^{0.2})^{1000} = 0.0067`$, the lowest point of the chart below.
 
 ### Step 3: turn the dial
 
-Every positive dial gives a true ceiling; the best is the smallest. Take logarithms and set the slope to zero. The best dial solves $e^t = c(1 - p)/(p(1 - c))$; for the coin, $e^t = 0.55 \times 0.5/(0.5 \times 0.45) = 11/9$, so $t = \ln(11/9) = 0.2007$. At that dial the exponent collapses to $-n\,D(c\,\|\,p)$, which is the Chernoff bound. For the coin, $D = 0.005008$ and the ceiling is $e^{-5.008} = 0.00668$.
+Every positive dial gives a true ceiling; the best is the smallest. Take logarithms and set the slope to zero. The best dial solves $`e^t = c(1 - p)/(p(1 - c))`$; for the coin, $`e^t = 0.55 \times 0.5/(0.5 \times 0.45) = 11/9`$, so $`t = \ln(11/9) = 0.2007`$. At that dial the exponent collapses to $`-n\,D(c\,\|\,p)`$, which is the Chernoff bound. For the coin, $`D = 0.005008`$ and the ceiling is $`e^{-5.008} = 0.00668`$.
 
 <details>
 <summary>The algebra behind the best dial</summary>
 
-The logarithm of the ceiling, per flip, is $g(t) = -tc + \ln(1 - p + pe^t)$. Its slope is $-c + pe^t/(1 - p + pe^t)$. Setting it to zero gives $pe^t(1 - c) = c(1 - p)$, so $e^{t} = \frac{c(1 - p)}{p(1 - c)}$, which is greater than 1, so the dial is positive, exactly when $c > p$.
+The logarithm of the ceiling, per flip, is $`g(t) = -tc + \ln(1 - p + pe^t)`$. Its slope is $`-c + pe^t/(1 - p + pe^t)`$. Setting it to zero gives $`pe^t(1 - c) = c(1 - p)`$, so $`e^{t} = \frac{c(1 - p)}{p(1 - c)}`$, which is greater than 1, so the dial is positive, exactly when $`c > p`$.
 
-At that dial, $1 - p + pe^t = 1 - p + \frac{c(1 - p)}{1 - c} = \frac{1 - p}{1 - c}$. So
-$$g = -c\ln\frac{c(1 - p)}{p(1 - c)} + \ln\frac{1 - p}{1 - c} = -c\ln\frac{c}{p} - (1 - c)\ln\frac{1 - c}{1 - p} = -D(c\,\|\,p).$$
-Multiplying by $n$ and exponentiating gives $e^{-nD(c\,\|\,p)}$. The slope of $g(t)$ rises steadily, since its second derivative is the variance of a coin with chance $pe^t/(1 - p + pe^t)$, never negative. So the zero of the slope is the minimum.
+At that dial, $`1 - p + pe^t = 1 - p + \frac{c(1 - p)}{1 - c} = \frac{1 - p}{1 - c}`$. So
+
+$`\displaystyle g = -c\ln\frac{c(1 - p)}{p(1 - c)} + \ln\frac{1 - p}{1 - c} = -c\ln\frac{c}{p} - (1 - c)\ln\frac{1 - c}{1 - p} = -D(c\,\|\,p).`$
+
+Multiplying by $`n`$ and exponentiating gives $`e^{-nD(c\,\|\,p)}`$. The slope of $`g(t)`$ rises steadily, since its second derivative is the variance of a coin with chance $`pe^t/(1 - p + pe^t)`$, never negative. So the zero of the slope is the minimum.
 
 </details>
 
@@ -140,55 +154,63 @@ xychart-beta
     line [100, 11.22, 2.35, 0.92, 0.67, 0.90, 2.26, 10.38, 87.64]
 ```
 
-The one line is $e^{-550t}(0.5 + 0.5e^t)^{1000}$ in percent. At dial 0 it says 100 percent: true and empty. It bottoms out at 0.67 percent near dial 0.2, and a careless dial of 0.4 gives 87.64 percent. The theorem holds at every dial; only the best one is worth quoting.
+The one line is $`e^{-550t}(0.5 + 0.5e^t)^{1000}`$ in percent. At dial 0 it says 100 percent: true and empty. It bottoms out at 0.67 percent near dial 0.2, and a careless dial of 0.4 gives 87.64 percent. The theorem holds at every dial; only the best one is worth quoting.
 
 ### Step 4: Hoeffding's lemma, a price list for any bounded piece
 
-For a coin, $M(t)$ is known exactly. For a reading known only to lie between two limits, it is not. Hoeffding's lemma prices it anyway. The price at dial $t$ is the moment generating function of the reading measured from its mean: if $a \le X \le b$ with mean $\mu$, then for every dial $t$,
+For a coin, $`M(t)`$ is known exactly. For a reading known only to lie between two limits, it is not. Hoeffding's lemma prices it anyway. The price at dial $`t`$ is the moment generating function of the reading measured from its mean: if $`a \le X \le b`$ with mean $`\mu`$, then for every dial $`t`$,
 
-$$E\big[e^{t(X - \mu)}\big] \le e^{t^2(b - a)^2/8}.$$
+```math
+E\big[e^{t(X - \mu)}\big] \le e^{t^2(b - a)^2/8}.
+```
 
 The reason is a chord. The exponential curve bends upward (it is convex), so between the two ends of the range it lies under the straight line joining them. Averaging, a reading anywhere in the range is priced no higher than a two-point reading sitting only at the ends with the same mean. A two-point reading's price, in logarithms, starts flat at dial 0 and curves up no faster than a parabola with coefficient one-eighth.
 
-For the fair coin at dial 0.2 the true price is $\cosh(0.1) = 1.0050042$, the average of $e^{0.1}$ and $e^{-0.1}$, and the lemma's ceiling is $e^{0.2^2/8} = 1.0050125$: almost equal, because a fair coin sits only at its two ends already.
+For the fair coin at dial 0.2 the true price is $`\cosh(0.1) = 1.0050042`$, the average of $`e^{0.1}`$ and $`e^{-0.1}`$, and the lemma's ceiling is $`e^{0.2^2/8} = 1.0050125`$: almost equal, because a fair coin sits only at its two ends already.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Hoeffding's lemma.** Let $a \le X \le b$ with $a < b$ and mean $\mu$. For a value $x$ in the range, write it as a blend of the ends: $x = \frac{b - x}{b - a}\,a + \frac{x - a}{b - a}\,b$, with weights between 0 and 1 that sum to 1. The exponential is convex (its second derivative $t^2 e^{tx}$ is never negative), so its value at a blend is at most the blend of its values:
-$$e^{tx} \le \frac{b - x}{b - a}\,e^{ta} + \frac{x - a}{b - a}\,e^{tb}.$$
-Average both sides over the law of the reading; the right side is linear in $x$, so its average puts $\mu$ in place of $x$. Write $\theta = (\mu - a)/(b - a)$ for the weight on the top end and $u = t(b - a)$ for the dial measured in range widths. Multiplying by $e^{-t\mu}$:
-$$E\big[e^{t(X - \mu)}\big] \le (1 - \theta)e^{-\theta u} + \theta e^{(1 - \theta)u} = e^{L(u)}, \qquad L(u) = -\theta u + \ln\big(1 - \theta + \theta e^{u}\big).$$
-Here $L(u)$ is the logarithm of the two-point reading's price, and $L(0) = 0$. Its slope is $L'(u) = -\theta + w(u)$ with $w(u) = \theta e^u/(1 - \theta + \theta e^u)$, a number between 0 and 1, and $w(0) = \theta$, so $L'(0) = 0$. Its second derivative is $L''(u) = w(u)\big(1 - w(u)\big)$, the variance of a coin with chance $w(u)$, at most $1/4$. Taylor's theorem with Lagrange's remainder writes $L(u)$ as $L(0) + L'(0)u$, both zero, plus half of $u^2$ times the second derivative at some point between 0 and $u$; that is at most $u^2/8$. So $E[e^{t(X - \mu)}] \le e^{t^2(b - a)^2/8}$. If $a = b$ the reading is constant and both sides equal 1.
+**Hoeffding's lemma.** Let $`a \le X \le b`$ with $`a < b`$ and mean $`\mu`$. For a value $`x`$ in the range, write it as a blend of the ends: $`x = \frac{b - x}{b - a}\,a + \frac{x - a}{b - a}\,b`$, with weights between 0 and 1 that sum to 1. The exponential is convex (its second derivative $`t^2 e^{tx}`$ is never negative), so its value at a blend is at most the blend of its values:
 
-**Hoeffding's inequality.** Let the $X_i$ be independent with $a_i \le X_i \le b_i$ and means $\mu_1, \dots, \mu_n$; put $\mu = (\mu_1 + \dots + \mu_n)/n$ and $W = \sum_{i=1}^n (b_i - a_i)^2$, the sum of the squared range widths, and assume $W > 0$. For a dial $t > 0$, Step 1 applied to the centred sum, then independence, then the lemma on each factor:
-$$P(\bar X - \mu \ge \varepsilon) = P\Big(e^{t\sum (X_i - \mu_i)} \ge e^{tn\varepsilon}\Big) \le e^{-tn\varepsilon}\prod_{i=1}^n E\big[e^{t(X_i - \mu_i)}\big] \le \exp\Big(-tn\varepsilon + \frac{t^2 W}{8}\Big).$$
-The exponent is a parabola in $t$, lowest at $t = 4n\varepsilon/W$, where it equals $-2n^2\varepsilon^2/W$. That is the inequality. The lower tail is the same argument applied to the readings $-X_i$, whose ranges have the same widths, and the two-sided form adds the two tails. For a coin, $W = n$, the best dial is $4\varepsilon = 0.2$, and the bound is $e^{-2n\varepsilon^2}$.
+$`\displaystyle e^{tx} \le \frac{b - x}{b - a}\,e^{ta} + \frac{x - a}{b - a}\,e^{tb}.`$
 
-**Chernoff for a binomial count** is Steps 1 to 3 with the exact $M(t)$ in place of the lemma's ceiling; the algebra callout above finds the best dial.
+Average both sides over the law of the reading; the right side is linear in $`x`$, so its average puts $`\mu`$ in place of $`x`$. Write $`\theta = (\mu - a)/(b - a)`$ for the weight on the top end and $`u = t(b - a)`$ for the dial measured in range widths. Multiplying by $`e^{-t\mu}`$:
+
+$`\displaystyle E\big[e^{t(X - \mu)}\big] \le (1 - \theta)e^{-\theta u} + \theta e^{(1 - \theta)u} = e^{L(u)}, \qquad L(u) = -\theta u + \ln\big(1 - \theta + \theta e^{u}\big).`$
+
+Here $`L(u)`$ is the logarithm of the two-point reading's price, and $`L(0) = 0`$. Its slope is $`L'(u) = -\theta + w(u)`$ with $`w(u) = \theta e^u/(1 - \theta + \theta e^u)`$, a number between 0 and 1, and $`w(0) = \theta`$, so $`L'(0) = 0`$. Its second derivative is $`L''(u) = w(u)\big(1 - w(u)\big)`$, the variance of a coin with chance $`w(u)`$, at most $`1/4`$. Taylor's theorem with Lagrange's remainder writes $`L(u)`$ as $`L(0) + L'(0)u`$, both zero, plus half of $`u^2`$ times the second derivative at some point between 0 and $`u`$; that is at most $`u^2/8`$. So $`E[e^{t(X - \mu)}] \le e^{t^2(b - a)^2/8}`$. If $`a = b`$ the reading is constant and both sides equal 1.
+
+**Hoeffding's inequality.** Let the $`X_i`$ be independent with $`a_i \le X_i \le b_i`$ and means $`\mu_1, \dots, \mu_n`$; put $`\mu = (\mu_1 + \dots + \mu_n)/n`$ and $`W = \sum_{i=1}^n (b_i - a_i)^2`$, the sum of the squared range widths, and assume $`W > 0`$. For a dial $`t > 0`$, Step 1 applied to the centred sum, then independence, then the lemma on each factor:
+
+$`\displaystyle P(\bar X - \mu \ge \varepsilon) = P\Big(e^{t\sum (X_i - \mu_i)} \ge e^{tn\varepsilon}\Big) \le e^{-tn\varepsilon}\prod_{i=1}^n E\big[e^{t(X_i - \mu_i)}\big] \le \exp\Big(-tn\varepsilon + \frac{t^2 W}{8}\Big).`$
+
+The exponent is a parabola in $`t`$, lowest at $`t = 4n\varepsilon/W`$, where it equals $`-2n^2\varepsilon^2/W`$. That is the inequality. The lower tail is the same argument applied to the readings $`-X_i`$, whose ranges have the same widths, and the two-sided form adds the two tails. For a coin, $`W = n`$, the best dial is $`4\varepsilon = 0.2`$, and the bound is $`e^{-2n\varepsilon^2}`$.
+
+**Chernoff for a binomial count** is Steps 1 to 3 with the exact $`M(t)`$ in place of the lemma's ceiling; the algebra callout above finds the best dial.
 
 </details>
 
 ### Step 5: Hoeffding, and why it nearly matches Chernoff on a fair coin
 
-Put the lemma into Steps 1 and 2 in place of the exact $M(t)$. The per-piece ceilings multiply, and the best dial turns the whole bound into Hoeffding's inequality. For the coin the best dial is 0.2000, against Chernoff's 0.2007, and the two ceilings read 0.00674 and 0.00668. They nearly agree because a fair coin spends all its time at the ends of its range, which is the case the lemma prices exactly.
+Put the lemma into Steps 1 and 2 in place of the exact $`M(t)`$. The per-piece ceilings multiply, and the best dial turns the whole bound into Hoeffding's inequality. For the coin the best dial is 0.2000, against Chernoff's 0.2007, and the two ceilings read 0.00674 and 0.00668. They nearly agree because a fair coin spends all its time at the ends of its range, which is the case the lemma prices exactly.
 
 A coin that shows heads 1 time in 10 is different. It sits at 0 nine times in ten, and the lemma still charges it the price of a range 0 to 1 with no allowance for that. For a share of heads of 0.15 or more in 1,000 such flips, Hoeffding allows 0.0067, Chernoff allows 0.0000049, and the exact chance is 0.00000045. Chernoff is nearly fourteen hundred times sharper here.
 
 <details>
 <summary>Why Chernoff is never worse than Hoeffding for a coin</summary>
 
-For flips scored 0 or 1, compare the two exponents: $D(c\,\|\,p)$ against $2(c - p)^2$. As a function of the cut, $D$ is 0 at $c = p$, its slope $\ln\frac{c}{p} - \ln\frac{1 - c}{1 - p}$ is 0 there too, and its second derivative is $\frac{1}{c} + \frac{1}{1 - c} = \frac{1}{c(1 - c)}$, at least 4 since $c(1 - c)$ is at most $1/4$. Taylor's theorem then gives $D(c\,\|\,p) \ge 2(c - p)^2$, so $e^{-nD} \le e^{-2n(c - p)^2}$. The gap is small at a fair coin, where $c(1 - c)$ is near its peak, and large for a rare one.
+For flips scored 0 or 1, compare the two exponents: $`D(c\,\|\,p)`$ against $`2(c - p)^2`$. As a function of the cut, $`D`$ is 0 at $`c = p`$, its slope $`\ln\frac{c}{p} - \ln\frac{1 - c}{1 - p}`$ is 0 there too, and its second derivative is $`\frac{1}{c} + \frac{1}{1 - c} = \frac{1}{c(1 - c)}`$, at least 4 since $`c(1 - c)`$ is at most $`1/4`$. Taylor's theorem then gives $`D(c\,\|\,p) \ge 2(c - p)^2`$, so $`e^{-nD} \le e^{-2n(c - p)^2}`$. The gap is small at a fair coin, where $`c(1 - c)`$ is near its peak, and large for a rare one.
 
 </details>
 
 ### Step 6: where Chebyshev loses, and where it does not
 
-Chebyshev is Markov on the square, the second power. The square grows slowly, so a large count is not magnified much, and the ceiling falls only like one over $n$. The exponential grows fast, so the ceiling falls like $e^{-2n\varepsilon^2}$. To be 99 percent sure the share stays below 0.55, Chebyshev (whose ceiling covers both sides at once) asks for 10,000 flips and Hoeffding for 922. The exact answer is that every run length from 561 flips on works (checked to 1,200).
+Chebyshev is Markov on the square, the second power. The square grows slowly, so a large count is not magnified much, and the ceiling falls only like one over $`n`$. The exponential grows fast, so the ceiling falls like $`e^{-2n\varepsilon^2}`$. To be 99 percent sure the share stays below 0.55, Chebyshev (whose ceiling covers both sides at once) asks for 10,000 flips and Hoeffding for 922. The exact answer is that every run length from 561 flips on works (checked to 1,200).
 
 Chebyshev keeps one advantage: it uses the true variance, and Hoeffding uses the worst variance a range allows, a quarter of the squared width. The shelf's die, rolled 1,000 times, has a variance of 35/12 per roll, far below the 6.25 its range of 1 to 6 would allow. For an average off by 0.1 or more on either side, Chebyshev allows 0.2917, the figure behind the guarantee in [Law of large numbers](01-law-of-large-numbers.md); Hoeffding allows 0.8987. Bounds that use both a range and a variance (Bernstein's inequality) combine the two strengths.
 
-The exact tail has the bell shape of [Central limit theorem](02-central-limit-theorem.md), read off by [Normal approximation](03-normal-approximation-to-binomial.md): an approximation with an error. These ceilings are guarantees at every $n$.
+The exact tail has the bell shape of [Central limit theorem](02-central-limit-theorem.md), read off by [Normal approximation](03-normal-approximation-to-binomial.md): an approximation with an error. These ceilings are guarantees at every $`n`$.
 
 ---
 
@@ -658,10 +680,10 @@ The two outputs match line for line. The simulated share, 0.000805 with a standa
 
 Lean proves Hoeffding's inequality, the Chernoff bound and Hoeffding's lemma for every number of readings, range and dial, plus the hand-worked arithmetic.
 
-- Suppose the readings $X_i$ are independent, with $a_i \le X_i \le b_i$, and take a gap $\varepsilon > 0$. Then $P(\bar X - \mu \ge \varepsilon)$ is at most Hoeffding's ceiling from The formula.
-- Suppose $n$ independent flips each show heads with chance $p$, and take a cut $c$ above $p$. Then $P(\bar X \ge c)$ is at most $e^{-n\,D(c\,\|\,p)}$.
-- Suppose a reading $X$ always lies between $a$ and $b$, with mean $\mu$, and take any dial $t$. Then $E[e^{t(X - \mu)}] \le e^{t^2(b - a)^2/8}$.
-- The hand-worked numbers check out: gap 0.05, Chebyshev's 0.1, Hoeffding's exponent 5, and Chernoff's best dial with $e^t = 11/9$.
+- Suppose the readings $`X_i`$ are independent, with $`a_i \le X_i \le b_i`$, and take a gap $`\varepsilon > 0`$. Then $`P(\bar X - \mu \ge \varepsilon)`$ is at most Hoeffding's ceiling from The formula.
+- Suppose $`n`$ independent flips each show heads with chance $`p`$, and take a cut $`c`$ above $`p`$. Then $`P(\bar X \ge c)`$ is at most $`e^{-n\,D(c\,\|\,p)}`$.
+- Suppose a reading $`X`$ always lies between $`a`$ and $`b`$, with mean $`\mu`$, and take any dial $`t`$. Then $`E[e^{t(X - \mu)}] \le e^{t^2(b - a)^2/8}`$.
+- The hand-worked numbers check out: gap 0.05, Chebyshev's 0.1, Hoeffding's exponent 5, and Chernoff's best dial with $`e^t = 11/9`$.
 - The exact tail, summed over every heads count from 550 to 1,000, lies between 0.000865 and 0.000866.
 - Chebyshev asks for 10,000 flips to be 99 percent sure, and for the die it allows 7/24, about 0.2917.
 - The die's Hoeffding exponent is 4/5, and the ±1 score with the width kept at 1 gives an exponent of 20.
@@ -949,12 +971,12 @@ example : (2 : ℚ) * 1000 * (1 / 10) ^ 2 = 20 := by norm_num
 ## What this builds on
 
 - [Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): Markov's inequality, applied here to an exponential, and Chebyshev's bound, the one this card beats.
-- [Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md): the average of $e^{tX}$, and the product rule for independent sums that Step 2 uses.
+- [Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md): the average of $`e^{tX}`$, and the product rule for independent sums that Step 2 uses.
 
 ## Where this goes next
 
 - [Tail bounds](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/02-tail-bounds-and-repeated-trials.md): Chernoff sets how many repeats drive an algorithm's error below any target.
-- Moments and cumulants: the logarithm of $M(t)$, minimised over here, as a generator of cumulants.
+- Moments and cumulants: the logarithm of $`M(t)`$, minimised over here, as a generator of cumulants.
 - BPP: why "right 2 times in 3" is as good as "right almost always".
 - Streaming: independent copies of a rough estimate, combined, and Chernoff counting the copies.
 

@@ -37,36 +37,38 @@ The holding rule picks a column; the middle one is impossible here.
 
 ## The formula
 
-Write $n$ for the things and $k$ for the boxes: here n = 5, k = 3. Three shorthands come from earlier cards:
+Write $`n`$ for the things and $`k`$ for the boxes: here n = 5, k = 3. Three shorthands come from earlier cards:
 
-- $C(m, r)$, "m choose r", the ways of picking r things out of m with order ignored ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
-- $k!$, "k factorial", k × (k − 1) × … × 1 ([Factorials](../01-Counting%20Principles/03-factorial.md)).
-- $S(n, k)$, the splits of n different things into k unnamed groups, none empty ([Stirling numbers of the second kind](04-stirling-numbers-second-kind.md)).
+- $`C(m, r)`$, "m choose r", the ways of picking r things out of m with order ignored ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
+- $`k!`$, "k factorial", k × (k − 1) × … × 1 ([Factorials](../01-Counting%20Principles/03-factorial.md)).
+- $`S(n, k)`$, the splits of n different things into k unnamed groups, none empty ([Stirling numbers of the second kind](04-stirling-numbers-second-kind.md)).
 
-The fourth is new, in words first: $p_k(n)$ counts the ways of writing n as a sum of exactly k positive parts, order ignored. Its partner $p_{\le k}(n)$ allows fewer parts, and the partitions card writes it $R_k(n)$. For example, 5 = 3 + 1 + 1 is one of the two counted by $p_3(5)$ ([Integer partitions](01-integer-partitions.md)).
+The fourth is new, in words first: $`p_k(n)`$ counts the ways of writing n as a sum of exactly k positive parts, order ignored. Its partner $`p_{\le k}(n)`$ allows fewer parts, and the partitions card writes it $`R_k(n)`$. For example, 5 = 3 + 1 + 1 is one of the two counted by $`p_3(5)`$ ([Integer partitions](01-integer-partitions.md)).
 
 | Parcels, vans | Any number | At most one each | At least one each |
 | --- | --- | --- | --- |
-| differ, differ | $k^n$ → 243 | $k(k-1)\cdots(k-n+1)$ → 0 | $k!\,S(n, k)$ → 150 |
-| differ, alike | $S(n, 1) + \cdots + S(n, k)$ → 41 | 1 when $n \le k$ → 0 | $S(n, k)$ → 25 |
-| alike, differ | $C(n + k - 1,\; k - 1)$ → 21 | $C(k, n)$ → 0 | $C(n - 1,\; k - 1)$ → 6 |
-| alike, alike | $p_{\le k}(n)$ → 5 | 1 when $n \le k$ → 0 | $p_k(n)$ → 2 |
+| differ, differ | $`k^n`$ → 243 | $`k(k-1)\cdots(k-n+1)`$ → 0 | $`k!\,S(n, k)`$ → 150 |
+| differ, alike | $`S(n, 1) + \cdots + S(n, k)`$ → 41 | 1 when $`n \le k`$ → 0 | $`S(n, k)`$ → 25 |
+| alike, differ | $`C(n + k - 1,\; k - 1)`$ → 21 | $`C(k, n)`$ → 0 | $`C(n - 1,\; k - 1)`$ → 6 |
+| alike, alike | $`p_{\le k}(n)`$ → 5 | 1 when $`n \le k`$ → 0 | $`p_k(n)`$ → 2 |
 
 **Read it aloud:** the labels pick a row, the holding rule picks a column, and their cell holds the formula.
 
 | Symbol | Plain meaning | In our example | Push it up… |
 | --- | --- | --- | --- |
-| $n$ | things to be placed | 5 parcels | "any" and "at least one" never fall; "at most one" is 0 past k |
-| $k$ | boxes for them | 3 vans | "at least one" rises, then falls, and is 0 past n |
-| $C(m, r)$ | ways of picking r out of m, order ignored | C(7, 2) = 21 | — |
-| $k!$ | the orders k things stand in | 3! = 6 | — |
-| $k(k-1)\cdots(k-n+1)$ | k counted down for n factors, one per thing | 3 × 2 × 1 × 0 × (−1) = 0 | — |
-| $S(n, k)$ | n things in exactly k groups, none empty, unnamed | S(5, 3) = 25 | — |
-| $p_k(n)$ | n as a sum of exactly k parts; $p_{\le k}(n)$ allows fewer | 2 ways, and 5 ways | — |
+| $`n`$ | things to be placed | 5 parcels | "any" and "at least one" never fall; "at most one" is 0 past k |
+| $`k`$ | boxes for them | 3 vans | "at least one" rises, then falls, and is 0 past n |
+| $`C(m, r)`$ | ways of picking r out of m, order ignored | C(7, 2) = 21 | — |
+| $`k!`$ | the orders k things stand in | 3! = 6 | — |
+| $`k(k-1)\cdots(k-n+1)`$ | k counted down for n factors, one per thing | 3 × 2 × 1 × 0 × (−1) = 0 | — |
+| $`S(n, k)`$ | n things in exactly k groups, none empty, unnamed | S(5, 3) = 25 | — |
+| $`p_k(n)`$ | n as a sum of exactly k parts; $`p_{\le k}(n)`$ allows fewer | 2 ways, and 5 ways | — |
 
 The count-down in full:
 
-$$k(k-1)(k-2)\cdots(k-n+1)$$
+```math
+k(k-1)(k-2)\cdots(k-n+1)
+```
 
 **In words:** the first thing has k boxes free, the next k − 1, and so on for n things; past k things a factor is 0.
 
@@ -97,7 +99,7 @@ Allow empty vans and dividing breaks: 243 ÷ 6 = 40.5 counts nothing, and the an
 <details>
 <summary>Detailed proof: when the names come off by dividing</summary>
 
-Take the loadings of $n$ things into $k$ boxes with no box empty. Two are the same grouping exactly when one of the $k!$ renamings of the boxes carries one to the other, so the loadings fall into blocks, one per grouping. Dividing needs every block to hold $k!$ of them.
+Take the loadings of $`n`$ things into $`k`$ boxes with no box empty. Two are the same grouping exactly when one of the $`k!`$ renamings of the boxes carries one to the other, so the loadings fall into blocks, one per grouping. Dividing needs every block to hold $`k!`$ of them.
 
 A block is short only if some renaming leaves a loading unchanged, putting each box's contents where another box's were. With no box empty those contents differ, so only the renaming that moves nothing qualifies. Every block is full: 150 ÷ 6 = 25.
 
@@ -115,7 +117,7 @@ At most one parcel a van needs a van per parcel, so the column reads 0 here. Sen
 
 With both labels on, the first parcel picks one of three vans and the second one of the two left, 3 × 2 = 6 ([Ordered picks](../01-Counting%20Principles/04-ordered-picks.md)). Sacks into named vans: which two are used, C(3, 2) = 3. Unnamed vans give 1 either way, nothing telling two such loadings apart.
 
-Two more routes cross-check the grid. A loading that leaves vans empty fills fewer of them. So each "any" cell is its row's "at least one" cell added over how many vans are used, times the choice of which when they are named: 243 = 3 + 90 + 150, 41 = 1 + 15 + 25, 21 = 3 + 12 + 6, 5 = 1 + 2 + 2. And the alike-van rows grow one thing at a time, by $S(n, k) = k\,S(n-1, k) + S(n-1, k-1)$ and $p_k(n) = p_{k-1}(n-1) + p_k(n-k)$, both run by the code.
+Two more routes cross-check the grid. A loading that leaves vans empty fills fewer of them. So each "any" cell is its row's "at least one" cell added over how many vans are used, times the choice of which when they are named: 243 = 3 + 90 + 150, 41 = 1 + 15 + 25, 21 = 3 + 12 + 6, 5 = 1 + 2 + 2. And the alike-van rows grow one thing at a time, by $`S(n, k) = k\,S(n-1, k) + S(n-1, k-1)`$ and $`p_k(n) = p_{k-1}(n-1) + p_k(n-k)`$, both run by the code.
 
 ---
 
@@ -344,12 +346,12 @@ The two outputs match line for line.
 
 Lean proves all twelve counts for any n ≥ 1 things and k ≥ 1 boxes, two steps of the proof, and the depot's numbers.
 
-- Things differ, boxes differ: $k^n$ loadings, $k(k-1)\cdots(k-n+1)$ with at most one a box, and $k!\,S(n, k)$ with at least one.
-- Things differ, boxes alike: $S(n, 1) + \cdots + S(n, k)$ groupings; with at most one, 1 if $n \le k$, else 0; with at least one, $S(n, k)$.
-- Things alike, boxes differ: $C(n + k - 1,\; k - 1)$ loadings, $C(k, n)$ with at most one a box, and $C(n - 1,\; k - 1)$ with at least one.
-- Things alike, boxes alike: $p_{\le k}(n)$ loadings, 1 when $n \le k$ and else 0 with at most one, and $p_k(n)$ with at least one.
+- Things differ, boxes differ: $`k^n`$ loadings, $`k(k-1)\cdots(k-n+1)`$ with at most one a box, and $`k!\,S(n, k)`$ with at least one.
+- Things differ, boxes alike: $`S(n, 1) + \cdots + S(n, k)`$ groupings; with at most one, 1 if $`n \le k`$, else 0; with at least one, $`S(n, k)`$.
+- Things alike, boxes differ: $`C(n + k - 1,\; k - 1)`$ loadings, $`C(k, n)`$ with at most one a box, and $`C(n - 1,\; k - 1)`$ with at least one.
+- Things alike, boxes alike: $`p_{\le k}(n)`$ loadings, 1 when $`n \le k`$ and else 0 with at most one, and $`p_k(n)`$ with at least one.
 - With no box empty, the only renaming of the boxes that leaves a loading unchanged is the one that moves nothing.
-- For any n and k, $k^n$ is the sum over j of $C(k, j) \times j! \times S(n, j)$: the top row split by boxes used.
+- For any n and k, $`k^n`$ is the sum over j of $`C(k, j) \times j! \times S(n, j)`$: the top row split by boxes used.
 - The depot's cells are 243, 0, 150; 41, 25; 21, 0, 6; 5 and 2, with 150, 21, 6, 5 and 2 also counted by listing.
 - Three vans cannot take five parcels one apiece, and two parcels give 6 and 3 in the middle column.
 - 243 ÷ 6 is no whole number, while 150 ÷ 6 = 25.

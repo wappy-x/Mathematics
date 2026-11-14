@@ -28,30 +28,36 @@ Scale 1 m = 30 units. Corner A sits at the origin, B 9 m along, and C above a po
 
 Corners are A, B and C, and each side takes the small letter of the corner it faces: side a faces A. K is the area, c the side taken as base, and h the height to it. The sign √ asks which positive number times itself gives what is under it.
 
-$$K = \tfrac12\, c\, h$$
+```math
+K = \tfrac12\, c\, h
+```
 
 **Read it aloud:** a triangle's area is half of one side times the height measured square on to that side.
 
-A parallelogram with base $c$ and height $h$ has area $c\,h$. A trapezoid whose parallel sides are $u$ and $v$, a height $h$ apart, has area
+A parallelogram with base $`c`$ and height $`h`$ has area $`c\,h`$. A trapezoid whose parallel sides are $`u`$ and $`v`$, a height $`h`$ apart, has area
 
-$$K = \frac{u + v}{2}\, h$$
+```math
+K = \frac{u + v}{2}\, h
+```
 
 **Read it aloud:** average the two parallel sides, then multiply by the distance between them.
 
 Heron's rule needs only the sides. First halve the perimeter:
 
-$$s = \frac{a + b + c}{2}, \qquad K = \sqrt{s\,(s - a)(s - b)(s - c)}$$
+```math
+s = \frac{a + b + c}{2}, \qquad K = \sqrt{s\,(s - a)(s - b)(s - c)}
+```
 
 **Read it aloud:** take half the perimeter, multiply it by what is left after taking away each side in turn, and take the square root.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $K$ | the area, in square metres | 26.832816 | — |
-| $a$, $b$, $c$ | the three sides; $c$ is the one chosen as base | 7, 8, 9 m | rises until the angle it faces is square, then falls |
-| $h$ | the height: square-on distance from the far corner to the base's line | 5.962848 m | grows in step: double it, double the area |
-| $s$ | the semiperimeter: half the distance round | 12 m | — |
-| $x$ | distance along the base from A to the foot of the height (where it meets the base) | 5.333333 m | slides the corner; area unchanged |
-| $u$, $v$ | the two parallel sides of a trapezoid | 9 m and 4.5 m | grows by half the height per metre |
+| $`K`$ | the area, in square metres | 26.832816 | — |
+| $`a`$, $`b`$, $`c`$ | the three sides; $`c`$ is the one chosen as base | 7, 8, 9 m | rises until the angle it faces is square, then falls |
+| $`h`$ | the height: square-on distance from the far corner to the base's line | 5.962848 m | grows in step: double it, double the area |
+| $`s`$ | the semiperimeter: half the distance round | 12 m | — |
+| $`x`$ | distance along the base from A to the foot of the height (where it meets the base) | 5.333333 m | slides the corner; area unchanged |
+| $`u`$, $`v`$ | the two parallel sides of a trapezoid | 9 m and 4.5 m | grows by half the height per metre |
 
 ### When it holds
 
@@ -77,7 +83,7 @@ Turn a copy of the bed half a turn and lay it against side BC, as drawn below. T
 
 Cut down the dashed height from C. Slide the left piece 9 m right and it fills the gap under D exactly, because the two slanted ends are parallel and equally long.
 
-The result is a rectangle 9 m wide and h tall. Nothing was stretched, so the parallelogram's area is $c\,h$: 53.665631 square metres.
+The result is a rectangle 9 m wide and h tall. Nothing was stretched, so the parallelogram's area is $`c\,h`$: 53.665631 square metres.
 
 ### The picture: two beds make a parallelogram, one cut makes a rectangle
 
@@ -87,13 +93,13 @@ Scale 1 m = 20 units. Shaded: the bed. The copy is the bed turned half a turn, s
 
 ### Step 2: a triangle is half a parallelogram
 
-The parallelogram's diagonal BC splits it into two triangles with the same three sides, so they match exactly and have equal area. Each is half: $K = \tfrac12\,c\,h$, or 26.832816 square metres.
+The parallelogram's diagonal BC splits it into two triangles with the same three sides, so they match exactly and have equal area. Each is half: $`K = \tfrac12\,c\,h`$, or 26.832816 square metres.
 
 Any side can be the base, with its own height: 7.666519 m to side a, 6.708204 m to b, 5.962848 m to c. Each product is 53.665631, twice the area.
 
 ### Step 3: a trapezoid is half a parallelogram too
 
-Two copies of any trapezoid, one turned half a turn, make a parallelogram with base $u + v$ and height $h$. Halve it: $K = \tfrac12 (u + v)\,h$.
+Two copies of any trapezoid, one turned half a turn, make a parallelogram with base $`u + v`$ and height $`h`$. Halve it: $`K = \tfrac12 (u + v)\,h`$.
 
 Run a hedge across the bed halfway up, parallel to the 9 m side; by [Similar triangles](04-similar-triangles-and-scale.md) it is 4.5 m long. The trapezoid below holds 20.124612 square metres, the triangle above 6.708204. Together, 26.832816: the whole bed, as Step 0 demands.
 
@@ -101,7 +107,7 @@ Any straight-edged plot splits the same way: draw lines between corners that sta
 
 ### Step 4: the height, from the three sides
 
-Lay side c along the ground with A at the start. Call the foot of the height $x$ metres from A. Two right-angled triangles stand either side of the height, and [Pythagoras](05-pythagoras-and-its-converse.md) gives one equation for each:
+Lay side c along the ground with A at the start. Call the foot of the height $`x`$ metres from A. Two right-angled triangles stand either side of the height, and [Pythagoras](05-pythagoras-and-its-converse.md) gives one equation for each:
 
 b^2 = x^2 + h^2 and a^2 = (c − x)^2 + h^2.
 

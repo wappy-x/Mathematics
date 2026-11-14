@@ -42,61 +42,69 @@ Three models, one rate. Highest on the right is this card's shifted model, 30 pe
 Notation first, in words.
 
 - The **fixing** is the rate read off on the appointed day, unknown today.
-- $F$ is the rate quoted today for that day, $K$ is the **strike** the payoff is measured against, and $a$ is the **shift**, the amount everything is slid up by.
-- The slid pair get their own letters: $G = F + a$ and $L = K + a$.
-- $T$ is the wait in years, $D$ the **discount factor**, what a dollar due on the payment day costs today, and $C$ and $P$ the premiums of a call on the rate and of a put on it, the floor.
-- $\sigma$, say "sigma", is the **volatility** of the slid rate, a yearly fraction of itself, and $w = \sigma\sqrt{T}$ is one **wiggle unit**, how far the slid rate typically travels over the whole wait.
-- $N(x)$ is the **bell-curve area** left of $x$, a chance between 0 and 1.
+- $`F`$ is the rate quoted today for that day, $`K`$ is the **strike** the payoff is measured against, and $`a`$ is the **shift**, the amount everything is slid up by.
+- The slid pair get their own letters: $`G = F + a`$ and $`L = K + a`$.
+- $`T`$ is the wait in years, $`D`$ the **discount factor**, what a dollar due on the payment day costs today, and $`C`$ and $`P`$ the premiums of a call on the rate and of a put on it, the floor.
+- $`\sigma`$, say "sigma", is the **volatility** of the slid rate, a yearly fraction of itself, and $`w = \sigma\sqrt{T}`$ is one **wiggle unit**, how far the slid rate typically travels over the whole wait.
+- $`N(x)`$ is the **bell-curve area** left of $`x`$, a chance between 0 and 1.
 
-$$C = D\,\bigl[\,G\,N(d_1) - L\,N(d_2)\,\bigr], \qquad P = D\,\bigl[\,L\,N(-d_2) - G\,N(-d_1)\,\bigr]$$
+```math
+C = D\,\bigl[\,G\,N(d_1) - L\,N(d_2)\,\bigr], \qquad P = D\,\bigl[\,L\,N(-d_2) - G\,N(-d_1)\,\bigr]
+```
 
 **Read it aloud:** Black-76, with the slid rate in place of the rate and the slid strike in place of the strike, and nothing else touched.
 
-$$d_1 = \frac{\ln(G/L) + \tfrac12 w^2}{w}, \qquad d_2 = d_1 - w$$
+```math
+d_1 = \frac{\ln(G/L) + \tfrac12 w^2}{w}, \qquad d_2 = d_1 - w
+```
 
-$d_1$ counts how many wiggle units of room the slid rate has above the slid strike, plus half a unit; $d_2$ is one unit less. Put $a = 0$ and every symbol is Black-76 unchanged: the check prices the shelf's house call that way and gets 9.227006, the number the rest of the shelf carries.
+$`d_1`$ counts how many wiggle units of room the slid rate has above the slid strike, plus half a unit; $`d_2`$ is one unit less. Put $`a = 0`$ and every symbol is Black-76 unchanged: the check prices the shelf's house call that way and gets 9.227006, the number the rest of the shelf carries.
 
-The card's second half is a conversion, because the market quotes this option in two languages. The proportional one is $\sigma$ above. The absolute one is $\sigma_N$, the **normal volatility**: how many basis points the rate itself wobbles in a year, no percentage anywhere. At the money, where $F = K$ and so $G = L$, the two are tied exactly:
+The card's second half is a conversion, because the market quotes this option in two languages. The proportional one is $`\sigma`$ above. The absolute one is $`\sigma_N`$, the **normal volatility**: how many basis points the rate itself wobbles in a year, no percentage anywhere. At the money, where $`F = K`$ and so $`G = L`$, the two are tied exactly:
 
-$$\sigma_N = G\,\sqrt{\frac{2\pi}{T}}\,\bigl[\,2N(w/2) - 1\,\bigr] \;=\; G\,\sigma\,R(w), \qquad R(w) = \int_0^1 e^{-w^2u^2/8}\,\mathrm{d}u$$
+```math
+\sigma_N = G\,\sqrt{\frac{2\pi}{T}}\,\bigl[\,2N(w/2) - 1\,\bigr] \;=\; G\,\sigma\,R(w), \qquad R(w) = \int_0^1 e^{-w^2u^2/8}\,\mathrm{d}u
+```
 
 **Read it aloud:** the absolute wobble is the slid rate times its percentage wobble, shrunk by a factor a little under one.
 
 That shrink factor is where the desk rule of thumb comes from, and how far it can be trusted:
 
-$$R(w) = 1 - \frac{w^2}{24} + \epsilon, \qquad 0 \le \epsilon \le \frac{w^4}{640}$$
+```math
+R(w) = 1 - \frac{w^2}{24} + \epsilon, \qquad 0 \le \epsilon \le \frac{w^4}{640}
+```
 
-So multiplying is right to within a whisker: $G\sigma$ is 75.00 bp here against the exact 74.719697 bp.
+So multiplying is right to within a whisker: $`G\sigma`$ is 75.00 bp here against the exact 74.719697 bp.
 
-Backwards needs no new formula, only the bell curve in reverse: the matching $\sigma$ is the one whose bracket $2N(w/2) - 1$ equals $\sigma_N\sqrt{T}/(G\sqrt{2\pi})$.
+Backwards needs no new formula, only the bell curve in reverse: the matching $`\sigma`$ is the one whose bracket $`2N(w/2) - 1`$ equals $`\sigma_N\sqrt{T}/(G\sqrt{2\pi})`$.
 
-That bracket climbs strictly from 0 towards 1 and never arrives, which settles existence, uniqueness and the boundary together: exactly one match exists when $0 < \sigma_N < G\sqrt{2\pi/T}$, below 626.657069 bp at this shift. Above that ceiling no lognormal volatility, however large, prices the option so dearly, since a positive slid rate cannot pay out more than everything it has.
+That bracket climbs strictly from 0 towards 1 and never arrives, which settles existence, uniqueness and the boundary together: exactly one match exists when $`0 < \sigma_N < G\sqrt{2\pi/T}`$, below 626.657069 bp at this shift. Above that ceiling no lognormal volatility, however large, prices the option so dearly, since a positive slid rate cannot pay out more than everything it has.
 
 | Symbol | Plain meaning | In our example | Push it up and the premium… |
 | --- | --- | --- | --- |
-| $C$, $P$ | the premium of the call and of the put, the floor | 29.660174 bp; 8.791906 bp | — |
-| $F$, $F_T$ | the rate quoted today for the fixing day, and the fixing itself | 50 bp; unknown today | rises: a call on the rate is dearer, a floor cheaper |
-| $K$ | the strike the payoff is measured against | 50 bp; 0 bp for the floor | rises: the call cheaper, the floor dearer |
-| $a$ | the shift, slid onto rate and strike alike. The model's floor sits at $-a$ | 200 bp | rises with $\sigma$ left alone: dearer, 65.252383 bp at a 500 bp shift |
-| $G$, $L$ | the slid rate $F + a$ and the slid strike $K + a$, both above zero | 250 bp and 250 bp | — |
-| $\sigma$ | the volatility of the slid rate, as a fraction of itself per year | 30 percent | rises: dearer, 39.432200 bp at 40 percent |
-| $\sigma_N$ | the normal volatility: the rate's own wobble, in bp per year | 74.719697 bp | rises: dearer, and it is the quantity the quotes agree on |
-| $w$ | one wiggle unit, $\sigma\sqrt{T}$ | 0.300000 | — |
-| $T$ | the wait to the fixing, in years | 1 | rises: more room to move |
-| $D$ | the discount factor, $e^{-rT}$ on a flat curve, $r$ = 0.50 percent | 0.995012 | rises: the premium scales with it, one for one |
-| $N(x)$, $\phi(x)$ | the bell-curve area to the left of $x$, and the curve's height at $x$ | $N(d_1) = 0.559618$ | — |
-| $d_1$, $d_2$ | the two cut-offs, in wiggle units | 0.150000 and −0.150000 | — |
-| $R$, $\epsilon$ | the shrink factor in the conversion, and its leftover | 0.996263 | — |
+| $`C`$, $`P`$ | the premium of the call and of the put, the floor | 29.660174 bp; 8.791906 bp | — |
+| $`F`$, $`F_T`$ | the rate quoted today for the fixing day, and the fixing itself | 50 bp; unknown today | rises: a call on the rate is dearer, a floor cheaper |
+| $`K`$ | the strike the payoff is measured against | 50 bp; 0 bp for the floor | rises: the call cheaper, the floor dearer |
+| $`a`$ | the shift, slid onto rate and strike alike. The model's floor sits at $`-a`$ | 200 bp | rises with $`\sigma`$ left alone: dearer, 65.252383 bp at a 500 bp shift |
+| $`G`$, $`L`$ | the slid rate $`F + a`$ and the slid strike $`K + a`$, both above zero | 250 bp and 250 bp | — |
+| $`\sigma`$ | the volatility of the slid rate, as a fraction of itself per year | 30 percent | rises: dearer, 39.432200 bp at 40 percent |
+| $`\sigma_N`$ | the normal volatility: the rate's own wobble, in bp per year | 74.719697 bp | rises: dearer, and it is the quantity the quotes agree on |
+| $`w`$ | one wiggle unit, $`\sigma\sqrt{T}`$ | 0.300000 | — |
+| $`T`$ | the wait to the fixing, in years | 1 | rises: more room to move |
+| $`D`$ | the discount factor, $`e^{-rT}`$ on a flat curve, $`r`$ = 0.50 percent | 0.995012 | rises: the premium scales with it, one for one |
+| $`N(x)`$, $`\phi(x)`$ | the bell-curve area to the left of $`x`$, and the curve's height at $`x`$ | $`N(d_1) = 0.559618`$ | — |
+| $`d_1`$, $`d_2`$ | the two cut-offs, in wiggle units | 0.150000 and −0.150000 | — |
+| $`R`$, $`\epsilon`$ | the shrink factor in the conversion, and its leftover | 0.996263 | — |
 
 ### When it holds
 
 - **The slid rate wanders lognormally, with one constant volatility.** An assumption, not a fact. Ten points off the quote takes the premium from 29.660174 to 39.432200 bp, a third of the ticket.
-- **The floor is chosen, not fitted.** The fixing cannot fall below $-a$, ever, so a 200 bp shift asserts that −2 percent is impossible. If rates can reach −2.5 percent, that shift is not cautious but wrong, and it misprices the low strikes worst.
-- **Both slid numbers must be above zero.** With the strike at or below the floor, so $L \le 0$, nothing is left to solve: the call is worth $D(F - K)$ and the floor nothing, at any volatility, since the fixing cannot reach that strike. The check prices that branch too.
+- **The floor is chosen, not fitted.** The fixing cannot fall below $`-a`$, ever, so a 200 bp shift asserts that −2 percent is impossible. If rates can reach −2.5 percent, that shift is not cautious but wrong, and it misprices the low strikes worst.
+- **Both slid numbers must be above zero.** With the strike at or below the floor, so $`L \le 0`$, nothing is left to solve: the call is worth $`D(F - K)`$ and the floor nothing, at any volatility, since the fixing cannot reach that strike. The check prices that branch too.
 - **The conversion is exact only at the money.** Away from it, price in one model and invert in the other, one strike at a time. The shifted model's left-hand wall stops it matching the normal model at every strike at once.
-- **Volatility runs to the fixing; the discount runs to the day the cash arrives.** One day here, so $D = e^{-rT}$. A real caplet (one period of a cap, insurance against the rate going above the strike: [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)) fixes on one date and pays months later, and using one date for both is the standard way to get one wrong.
+- **Volatility runs to the fixing; the discount runs to the day the cash arrives.** One day here, so $`D = e^{-rT}`$. A real caplet (one period of a cap, insurance against the rate going above the strike: [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)) fixes on one date and pays months later, and using one date for both is the standard way to get one wrong.
 
-**Conventions verified 19 Sep 2026:** market shifts are a quoting convention and have changed, from 1 percent towards 3 percent as euro rates fell; rates here are continuously compounded and $T$ counts calendar years. Convert before substituting.
+**Conventions verified 19 Sep 2026:** market shifts are a quoting convention and have changed, from 1 percent towards 3 percent as euro rates fell; rates here are continuously compounded and $`T`$ counts calendar years. Convert before substituting.
 
 ---
 
@@ -106,44 +114,54 @@ That bracket climbs strictly from 0 towards 1 and never arrives, which settles e
 
 Suppose the fixing lands at −0.30 percent against a strike of 0.00 percent. The floor pays 0.30 percent. Now slide both up by 2 percent: 1.70 percent against 2.00 percent, and the floor pays 0.30 percent. Identical, at every outcome, not on average.
 
-That is an exact relabelling, not an approximation: the rate measured from $-a$ instead of from zero is the same rate, the way an afternoon is the same afternoon in Celsius or Fahrenheit. Since $F_T - K = (F_T + a) - L$ at every outcome, a floor on the rate is a plain put on the slid rate.
+That is an exact relabelling, not an approximation: the rate measured from $`-a`$ instead of from zero is the same rate, the way an afternoon is the same afternoon in Celsius or Fahrenheit. Since $`F_T - K = (F_T + a) - L`$ at every outcome, a floor on the rate is a plain put on the slid rate.
 
 ### Step 1: what the slide does change
 
 The relabelling is free; the modelling is not, because the assumption is about the slid quantity. Black's rule is that a move's size is proportional to the rate. The shifted rule makes it proportional to the rate's distance above the floor:
 
-$$\mathrm{d}F_t = \sigma\,(F_t + a)\,\mathrm{d}W_t$$
+```math
+\mathrm{d}F_t = \sigma\,(F_t + a)\,\mathrm{d}W_t
+```
 
-Read that as: over a short instant the rate gets a random nudge, whose typical size is $\sigma$ times the distance above the floor, and $\mathrm{d}W_t$ is the random kick of the wandering engine this shelf opens with ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md)). Three things fall out.
+Read that as: over a short instant the rate gets a random nudge, whose typical size is $`\sigma`$ times the distance above the floor, and $`\mathrm{d}W_t`$ is the random kick of the wandering engine this shelf opens with ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md)). Three things fall out.
 
-- At $F_t = -a$ the nudge is zero, so the rate stops moving: $-a$ is a wall the model cannot cross.
-- At $F_t = 0$ nothing special happens: the nudge is $\sigma a$, an ordinary number. Zero has stopped being a boundary, which was the point.
-- The shift is a dial. At $a = 0$ the rule is Black's; as $a$ grows with $\sigma(F+a)$ held fixed, the nudge stops depending on the rate, which is the normal model.
+- At $`F_t = -a`$ the nudge is zero, so the rate stops moving: $`-a`$ is a wall the model cannot cross.
+- At $`F_t = 0`$ nothing special happens: the nudge is $`\sigma a`$, an ordinary number. Zero has stopped being a boundary, which was the point.
+- The shift is a dial. At $`a = 0`$ the rule is Black's; as $`a`$ grows with $`\sigma(F+a)`$ held fixed, the nudge stops depending on the rate, which is the normal model.
 
-The rule has no drift, and the Black-76 card says why: a contract that costs nothing to sign cannot be expected to make money, so the quoted rate is a fair bet on its own fixing ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Sliding by a constant leaves that alone: if the rate averages out at $F$, the slid rate averages out at $G$.
+The rule has no drift, and the Black-76 card says why: a contract that costs nothing to sign cannot be expected to make money, so the quoted rate is a fair bet on its own fixing ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Sliding by a constant leaves that alone: if the rate averages out at $`F`$, the slid rate averages out at $`G`$.
 
 ### Step 2: the slid pair goes into Black-76 unchanged
 
-A drift-free lognormal quantity with average $G$ ends up at
+A drift-free lognormal quantity with average $`G`$ ends up at
 
-$$F_T + a \;=\; G\,\exp\!\left(-\tfrac12 w^2 + w Z\right), \qquad Z \ \text{a standard bell-curve draw}$$
+```math
+F_T + a \;=\; G\,\exp\!\left(-\tfrac12 w^2 + w Z\right), \qquad Z \ \text{a standard bell-curve draw}
+```
 
-and the $-\tfrac12 w^2$ is the drag that keeps the average at $G$: wiggling costs a quantity that multiplies, since up 50 percent then down 50 percent leaves the total down 25 percent.
+and the $`-\tfrac12 w^2`$ is the drag that keeps the average at $`G`$: wiggling costs a quantity that multiplies, since up 50 percent then down 50 percent leaves the total down 25 percent.
 
-Average the payoff $\max(F_T - K, 0) = \max(G\,e^{-w^2/2 + wZ} - L, 0)$ over the bell curve, discount once, and out comes the formula ([Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md) does that average in full on the unslid version). The premium is 29.660174 bp, and the code reaches it by averaging the payoff with no $d_1$ and no $d_2$ in that road.
+Average the payoff $`\max(F_T - K, 0) = \max(G\,e^{-w^2/2 + wZ} - L, 0)`$ over the bell curve, discount once, and out comes the formula ([Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md) does that average in full on the unslid version). The premium is 29.660174 bp, and the code reaches it by averaging the payoff with no $`d_1`$ and no $`d_2`$ in that road.
 
 <details>
 <summary>Detailed proof: the two integrals, and what the shift cannot move</summary>
 
-The payoff lives where $G e^{-w^2/2 + wz} > L$, that is where $z > \left[\ln(L/G) + \tfrac12 w^2\right]/w = -d_2$. So
-$$C = D\int_{-d_2}^{\infty}\left(G\,e^{-w^2/2 + wz} - L\right)\phi(z)\,\mathrm{d}z .$$
-The strike piece is $L$ times the curve's area above $-d_2$, which is $L\,N(d_2)$ by symmetry. The rate piece needs one identity: multiply the curve's height by the growth factor and complete the square.
-$$e^{-w^2/2}e^{wz}\,\phi(z) \;=\; \frac{1}{\sqrt{2\pi}}\,e^{-\frac12\left(z^2 - 2wz + w^2\right)} \;=\; \phi(z - w).$$
-The same curve, slid right by one wiggle unit. Substituting $u = z - w$ moves the lower limit from $-d_2$ to $-d_1$, so the rate piece is $G\,N(d_1)$. Subtract, and $C = D[G N(d_1) - L N(d_2)]$; the put follows by integrating below $-d_2$ instead.
+The payoff lives where $`G e^{-w^2/2 + wz} > L`$, that is where $`z > \left[\ln(L/G) + \tfrac12 w^2\right]/w = -d_2`$. So
 
-Two consequences, both checked. Subtracting the put from the call pays $F_T - K$ whichever way the rate goes, so
-$$C - P = D\,(G - L) = D\,(F - K),$$
-with no volatility and no shift in it: 49.750624 bp at the zero strike, against a put priced by its own separate integral. And since the payoff is below $G\,e^{-w^2/2+wZ}$, whose average is $G$, the premium stays under $D\,G$. That ceiling limits how small a shift can be: the nearer the floor, the less any volatility can buy.
+$`\displaystyle C = D\int_{-d_2}^{\infty}\left(G\,e^{-w^2/2 + wz} - L\right)\phi(z)\,\mathrm{d}z .`$
+
+The strike piece is $`L`$ times the curve's area above $`-d_2`$, which is $`L\,N(d_2)`$ by symmetry. The rate piece needs one identity: multiply the curve's height by the growth factor and complete the square.
+
+$`\displaystyle e^{-w^2/2}e^{wz}\,\phi(z) \;=\; \frac{1}{\sqrt{2\pi}}\,e^{-\frac12\left(z^2 - 2wz + w^2\right)} \;=\; \phi(z - w).`$
+
+The same curve, slid right by one wiggle unit. Substituting $`u = z - w`$ moves the lower limit from $`-d_2`$ to $`-d_1`$, so the rate piece is $`G\,N(d_1)`$. Subtract, and $`C = D[G N(d_1) - L N(d_2)]`$; the put follows by integrating below $`-d_2`$ instead.
+
+Two consequences, both checked. Subtracting the put from the call pays $`F_T - K`$ whichever way the rate goes, so
+
+$`\displaystyle C - P = D\,(G - L) = D\,(F - K),`$
+
+with no volatility and no shift in it: 49.750624 bp at the zero strike, against a put priced by its own separate integral. And since the payoff is below $`G\,e^{-w^2/2+wZ}`$, whose average is $`G`$, the premium stays under $`D\,G`$. That ceiling limits how small a shift can be: the nearer the floor, the less any volatility can buy.
 
 </details>
 
@@ -160,7 +178,7 @@ shift  500 bp   ██████████████                      
 shift 1000 bp   ███████                                               7.12 pct
 ```
 
-Sevenfold, across quotes that price one ticket identically. The same five as absolute wobble, $\sigma$ times the slid rate:
+Sevenfold, across quotes that price one ticket identically. The same five as absolute wobble, $`\sigma`$ times the slid rate:
 
 ```
 the same five quotes as absolute wobble, sigma times the slid rate, one bar = 1.5 bp
@@ -177,26 +195,34 @@ What pins the shift is a second strike. Those five settings agree at the money a
 
 ### Step 4: at the money the two languages convert exactly
 
-At the money $G = L$, so $\ln(G/L) = 0$, $d_1 = w/2$ and $d_2 = -w/2$. The formula collapses:
+At the money $`G = L`$, so $`\ln(G/L) = 0`$, $`d_1 = w/2`$ and $`d_2 = -w/2`$. The formula collapses:
 
-$$C = D\,G\,\bigl[\,N(w/2) - N(-w/2)\,\bigr] = D\,G\,\bigl[\,2N(w/2) - 1\,\bigr].$$
+```math
+C = D\,G\,\bigl[\,N(w/2) - N(-w/2)\,\bigr] = D\,G\,\bigl[\,2N(w/2) - 1\,\bigr].
+```
 
-The normal model at the money is one term, from its own card: $C = D\,\sigma_N\sqrt{T}\,\phi(0)$, with $\phi(0) = 1/\sqrt{2\pi}$ the bell curve's height at its middle. Set the two premiums equal, cancel the discount factor — the same cash on the same day in both — and rearrange:
+The normal model at the money is one term, from its own card: $`C = D\,\sigma_N\sqrt{T}\,\phi(0)`$, with $`\phi(0) = 1/\sqrt{2\pi}`$ the bell curve's height at its middle. Set the two premiums equal, cancel the discount factor — the same cash on the same day in both — and rearrange:
 
-$$\sigma_N = G\,\sqrt{\frac{2\pi}{T}}\,\bigl[\,2N(w/2) - 1\,\bigr].$$
+```math
+\sigma_N = G\,\sqrt{\frac{2\pi}{T}}\,\bigl[\,2N(w/2) - 1\,\bigr].
+```
 
 That is the whole conversion: 250 bp times a bracket, giving 74.719697 bp for a 30 percent quote at a 200 bp shift. The proof below turns the bracket into an integral whose leftover is bounded.
 
 <details>
 <summary>Detailed proof: the shrink factor and its remainder</summary>
 
-Write the bracket as twice the area from 0 to $w/2$, then substitute $x = wu/2$:
-$$2N(w/2) - 1 = 2\int_0^{w/2}\phi(x)\,\mathrm{d}x = \frac{w}{\sqrt{2\pi}}\int_0^1 e^{-w^2u^2/8}\,\mathrm{d}u = \frac{w}{\sqrt{2\pi}}\,R(w).$$
-Feeding that into the conversion and using $w = \sigma\sqrt{T}$ gives $\sigma_N = G\sigma R(w)$ exactly. The integrand is positive and, for $w > 0$, below 1 except at $u = 0$, so the shrink factor sits strictly between 0 and 1: multiplying always overstates the absolute wobble.
+Write the bracket as twice the area from 0 to $`w/2`$, then substitute $`x = wu/2`$:
 
-For the size of the overstatement, apply Taylor's theorem with remainder to the exponential at 0. For $u$ between 0 and 1,
-$$0 \le e^{-w^2u^2/8} - \left(1 - \frac{w^2u^2}{8}\right) \le \frac12\left(\frac{w^2u^2}{8}\right)^{2},$$
-since the remainder is half that square times the exponential somewhere between, which is at most 1. Integrate over $u$ from 0 to 1: $\int_0^1 w^2u^2/8\,\mathrm{d}u = w^2/24$, and the squared term integrates to $w^4/640$. That is the series and its one-sided bound. At $w = 0.3$ the bound is 0.000949 bp of volatility, and the exact 74.719697 bp sits just under the corrected 74.718750 bp plus that bound.
+$`\displaystyle 2N(w/2) - 1 = 2\int_0^{w/2}\phi(x)\,\mathrm{d}x = \frac{w}{\sqrt{2\pi}}\int_0^1 e^{-w^2u^2/8}\,\mathrm{d}u = \frac{w}{\sqrt{2\pi}}\,R(w).`$
+
+Feeding that into the conversion and using $`w = \sigma\sqrt{T}`$ gives $`\sigma_N = G\sigma R(w)`$ exactly. The integrand is positive and, for $`w > 0`$, below 1 except at $`u = 0`$, so the shrink factor sits strictly between 0 and 1: multiplying always overstates the absolute wobble.
+
+For the size of the overstatement, apply Taylor's theorem with remainder to the exponential at 0. For $`u`$ between 0 and 1,
+
+$`\displaystyle 0 \le e^{-w^2u^2/8} - \left(1 - \frac{w^2u^2}{8}\right) \le \frac12\left(\frac{w^2u^2}{8}\right)^{2},`$
+
+since the remainder is half that square times the exponential somewhere between, which is at most 1. Integrate over $`u`$ from 0 to 1: $`\int_0^1 w^2u^2/8\,\mathrm{d}u = w^2/24`$, and the squared term integrates to $`w^4/640`$. That is the series and its one-sided bound. At $`w = 0.3`$ the bound is 0.000949 bp of volatility, and the exact 74.719697 bp sits just under the corrected 74.718750 bp plus that bound.
 
 Read backwards, the same bracket gives the lognormal volatility from a normal quote; its strict climb is what made that answer exist and be unique. The check finds 24.057892 percent for the 60 bp quote twice: through the bell curve's inverse, and by bisection on the premium itself.
 
@@ -212,17 +238,17 @@ The rate quoted at 50 bp, struck at 50 bp, one year to the fixing, a 200 bp shif
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| slid rate, $G = F + a$ | $50 + 200$ | 250.000000 bp |
-| slid strike, $L = K + a$ | $50 + 200$ | 250.000000 bp |
-| one wiggle unit, $w = \sigma\sqrt{T}$ | $0.30 \times \sqrt{1}$ | 0.300000 |
-| $d_1$ | $(0 + 0.045)/0.30$ | 0.150000 |
-| $d_2$ | $0.150000 - 0.300000$ | −0.150000 |
-| $N(d_1)$ | bell-curve area left of $d_1$ | 0.559618 |
-| $N(d_2)$ | bell-curve area left of $d_2$ | 0.440382 |
-| **premium** | $0.995012 \times 250 \times (0.559618 - 0.440382)$ | **29.660174 bp** |
+| slid rate, $`G = F + a`$ | $`50 + 200`$ | 250.000000 bp |
+| slid strike, $`L = K + a`$ | $`50 + 200`$ | 250.000000 bp |
+| one wiggle unit, $`w = \sigma\sqrt{T}`$ | $`0.30 \times \sqrt{1}`$ | 0.300000 |
+| $`d_1`$ | $`(0 + 0.045)/0.30`$ | 0.150000 |
+| $`d_2`$ | $`0.150000 - 0.300000`$ | −0.150000 |
+| $`N(d_1)`$ | bell-curve area left of $`d_1`$ | 0.559618 |
+| $`N(d_2)`$ | bell-curve area left of $`d_2`$ | 0.440382 |
+| **premium** | $`0.995012 \times 250 \times (0.559618 - 0.440382)`$ | **29.660174 bp** |
 | the same, in money | 29.660174 bp of ten million for half a year | **14,830.09 dollars** |
-| the floor struck at 0 bp | the put, same inputs, $L = 200$ bp | **8.791906 bp** |
-| the normal volatility it converts to | $250 \times 0.30 \times 0.996263$ | **74.719697 bp** |
+| the floor struck at 0 bp | the put, same inputs, $`L = 200`$ bp | **8.791906 bp** |
+| the normal volatility it converts to | $`250 \times 0.30 \times 0.996263`$ | **74.719697 bp** |
 
 Insuring ten million dollars against that rate rising above 0.50 percent costs about fifteen thousand dollars; against its falling below zero, about four and a half thousand — the number Black-76 reported as nothing.
 
@@ -235,7 +261,7 @@ Same trade, correct answers 29.660174 bp at the money and 8.791906 bp for the fl
 | Slide the rate, leave the strike | 199.002496 bp | The payoff was changed, not relabelled: the ticket now pays whatever happens, so it is a forward, not insurance, and nearly seven times too dear |
 | A 30 percent quote used at a 100 bp shift | 17.796104 bp | Six tenths of the premium. The number was a translation through a 200 bp shift and means nothing at any other |
 | A 30 percent quote used with no shift at all | 5.932035 bp | A fifth of the premium, and priceable only because this strike is above zero; at the zero strike the same mistake returns nothing |
-| Drop the $-\tfrac12 w^2$ drag | 36.405657 bp | The model's average fixing becomes 61.506965 bp against the 50 bp quoted, so it disagrees with a rate anyone can lock in today |
+| Drop the $`-\tfrac12 w^2`$ drag | 36.405657 bp | The model's average fixing becomes 61.506965 bp against the 50 bp quoted, so it disagrees with a rate anyone can lock in today |
 | Read 30 percent against a 60 bp quote as one market | 74.719697 bp against 60 | Two languages, not two numbers: converted, the quotes are a quarter apart, 29.660174 bp against 23.817153 bp, a gap of 2,921.51 dollars |
 
 Every number in that table is printed by the code below.
@@ -244,7 +270,7 @@ Every number in that table is printed by the code below.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported already knows the answer. In Python the bell-curve area comes from `math.erf`; in Rust, which has no `erf`, it is built by adding up thin slices under the curve. The premium is reached by **three independent roads**: the shifted formula, a brute-force average of the payoff over the bell curve with the kink located by bisection and no $d_1$ or $d_2$ in sight, and a 2,000-step coin-flip tree on the slid rate. Then the conversion runs twice in each direction, the series bound is tested on both sides, parity is checked against a put priced by its own integral, the five shift-and-volatility pairs are re-solved, and the shelf's house call comes back at $a = 0$.
+Nothing imported already knows the answer. In Python the bell-curve area comes from `math.erf`; in Rust, which has no `erf`, it is built by adding up thin slices under the curve. The premium is reached by **three independent roads**: the shifted formula, a brute-force average of the payoff over the bell curve with the kink located by bisection and no $`d_1`$ or $`d_2`$ in sight, and a 2,000-step coin-flip tree on the slid rate. Then the conversion runs twice in each direction, the series bound is tested on both sides, parity is checked against a put priced by its own integral, the five shift-and-volatility pairs are re-solved, and the shelf's house call comes back at $`a = 0`$.
 
 ### Python
 
@@ -687,12 +713,12 @@ The two outputs match line for line, from different code taking different routes
 
 Lean proves the card's two theorems and the shrink factor's bounds for every input the card allows, plus the worked arithmetic exactly.
 
-- Suppose the fixing moves as in Step 2, and $G$, $L$, $\sigma$ and $T$ are all above zero. Then $C$ and $P$ are exactly Black-76 on the slid pair, as the formula says.
-- Suppose the strike equals the rate, and $G$, $\sigma$, $T$ and $\sigma_N$ are all above zero. Then the shifted and normal premiums agree exactly when $\sigma_N = G\sqrt{2\pi/T}[2N(w/2) - 1]$.
-- Take the same conditions. Then that conversion also equals $G\sigma R(w)$, with $R(w)$ the shrink factor.
-- Take any wiggle unit $w$. Then $R(w)$ lies between $1 - w^2/24$ and $1 - w^2/24 + w^4/640$.
-- Take any wiggle unit $w$ again. Then $R(w)$ is above zero, and below one whenever $w$ is not zero.
-- The worked arithmetic holds exactly: the slid pair, Step 0's payoff, $d_1$ and $d_2$, the drag and the corrected $G\sigma$.
+- Suppose the fixing moves as in Step 2, and $`G`$, $`L`$, $`\sigma`$ and $`T`$ are all above zero. Then $`C`$ and $`P`$ are exactly Black-76 on the slid pair, as the formula says.
+- Suppose the strike equals the rate, and $`G`$, $`\sigma`$, $`T`$ and $`\sigma_N`$ are all above zero. Then the shifted and normal premiums agree exactly when $`\sigma_N = G\sqrt{2\pi/T}[2N(w/2) - 1]`$.
+- Take the same conditions. Then that conversion also equals $`G\sigma R(w)`$, with $`R(w)`$ the shrink factor.
+- Take any wiggle unit $`w`$. Then $`R(w)`$ lies between $`1 - w^2/24`$ and $`1 - w^2/24 + w^4/640`$.
+- Take any wiggle unit $`w`$ again. Then $`R(w)`$ is above zero, and below one whenever $`w`$ is not zero.
+- The worked arithmetic holds exactly: the slid pair, Step 0's payoff, $`d_1`$ and $`d_2`$, the drag and the corrected $`G\sigma`$.
 
 Every decimal, the reverse conversion, call minus put, and the five shifts are left to the Python and Rust checks.
 
@@ -1157,7 +1183,7 @@ example : (250 : ℚ) * (3 / 10) = 75 ∧
 > [!TIP]
 > **Try changing**
 > Guess the direction first, then run it. The asserts are pinned to this trade, so expect one to stop the program.
-> - **Raise the volatility.** Set `sigma = 0.40`. The premium goes from 29.660174 to **39.432200 bp**: a third more volatility buys a shade under a third more premium, because the shrink factor $R(w)$ bends down as $w$ grows.
+> - **Raise the volatility.** Set `sigma = 0.40`. The premium goes from 29.660174 to **39.432200 bp**: a third more volatility buys a shade under a third more premium, because the shrink factor $`R(w)`$ bends down as $`w`$ grows.
 > - **Move the floor and leave the quote alone.** Set `a = 0.05`, a 500 bp shift, with `sigma` still 0.30. The premium jumps to **65.252383 bp**, more than double, and nothing about the market changed. Re-solve the volatility at that shift and it comes back to 29.660174 bp at 13.60 percent.
 > - **Take the shift away.** Set `a` to `0.0`. This at-the-money option still prices, at **5.932035 bp**, because its own strike is above zero — but the floor struck at zero collapses to nothing, which is where the card started, and the fourth assert stops the program.
 
@@ -1169,7 +1195,7 @@ example : (250 : ℚ) * (3 / 10) = 75 ∧
 > **Quoting a shifted volatility without its shift.** It is not a property of the market. It is a translation of a price through a convention somebody chose. One premium on this card reads as 50.34 percent at a 100 bp shift and 7.12 percent at a 1000 bp shift. Take a 30 percent number quoted at a 200 bp shift, drop it into a pricer configured for 100 bp, and the ticket values at 17.796104 bp instead of 29.660174: six tenths of the truth, and every trade at that price looks like a gift.
 >
 > - **Comparing volatilities across the two quoting languages.** "Our 30 looks cheap against their 60" is not a sentence. Converted at this shift, 30 percent is 74.719697 bp, a quarter above the 60 bp quote: 2,921.51 dollars on this ticket.
-> - **Treating the shift as a forecast.** The floor at $-a$ is a wall the model cannot cross, not a view on how low rates go. A desk that thinks −2.5 percent is possible and quotes a 200 bp shift has not been cautious; it has ruled out the outcome it is worried about.
+> - **Treating the shift as a forecast.** The floor at $`-a`$ is a wall the model cannot cross, not a view on how low rates go. A desk that thinks −2.5 percent is possible and quotes a 200 bp shift has not been cautious; it has ruled out the outcome it is worried about.
 > - **Fitting the shift and the volatility to one price.** They are not both identifiable: five shifts here reproduce one quote exactly. The shift comes from a row of strikes: at the zero strike those five settings run from 7.17 to 10.62 bp.
 > - **Re-using yesterday's shift in silence.** A desk moving from a 100 bp to a 200 bp shift has rebased its whole volatility surface, and a time series straddling the change compares two different things.
 

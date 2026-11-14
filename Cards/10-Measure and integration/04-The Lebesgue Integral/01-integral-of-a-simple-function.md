@@ -34,55 +34,61 @@ Caption: the curve is the depth, the shaded region is the rounded depth. The sha
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) that gives each such set a size of zero or more, possibly infinite ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
+Notation first, in words. A measure space $`(\Omega,\mathcal F,\mu)`$ is a set of points $`\Omega`$ (omega), the collection $`\mathcal F`$ of sets we allow ourselves to measure, and a measure $`\mu`$ (mu) that gives each such set a size of zero or more, possibly infinite ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
 
-On the river, $\Omega$ is the stretch [0, 1] in km and the measure is length, written $\lambda$ (lambda). The indicator $\mathbf 1_A$, read "one on A, zero off it", is the function that is 1 at points of the set A and 0 elsewhere.
+On the river, $`\Omega`$ is the stretch [0, 1] in km and the measure is length, written $`\lambda`$ (lambda). The indicator $`\mathbf 1_A`$, read "one on A, zero off it", is the function that is 1 at points of the set A and 0 elsewhere.
 
-A non-negative **simple function** is a finite sum of indicators with coefficients of zero or more ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). The new symbol $\int s\,d\mu$ is read "the integral of s against mu".
+A non-negative **simple function** is a finite sum of indicators with coefficients of zero or more ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). The new symbol $`\int s\,d\mu`$ is read "the integral of s against mu".
 
-Write the simple function $s$ in its **standard form**: list its distinct values $a_1, \dots, a_n$, and let $A_i$ be the set where $s$ equals $a_i$. The sets $A_i$ do not overlap and together cover $\Omega$.
+Write the simple function $`s`$ in its **standard form**: list its distinct values $`a_1, \dots, a_n`$, and let $`A_i`$ be the set where $`s`$ equals $`a_i`$. The sets $`A_i`$ do not overlap and together cover $`\Omega`$.
 
-$$\int s\,d\mu \;=\; \sum_{i=1}^{n} a_i\,\mu(A_i)\qquad\text{where}\qquad s=\sum_{i=1}^{n} a_i\,\mathbf 1_{A_i},\quad a_i\ge 0,\quad A_i\in\mathcal F .$$
+```math
+\int s\,d\mu \;=\; \sum_{i=1}^{n} a_i\,\mu(A_i)\qquad\text{where}\qquad s=\sum_{i=1}^{n} a_i\,\mathbf 1_{A_i},\quad a_i\ge 0,\quad A_i\in\mathcal F .
+```
 
 **Read it aloud:** for each value the function takes, multiply the value by the size of the set where it takes it, and add.
 
-One convention: $0\cdot\infty=0$. A zero value on a set of infinite size adds nothing. Without it, the zero function on the whole real line would have no integral.
+One convention: $`0\cdot\infty=0`$. A zero value on a set of infinite size adds nothing. Without it, the zero function on the whole real line would have no integral.
 
-Three facts turn the definition into a tool. For non-negative simple functions $s$ and $t$ and a number $c\ge 0$:
+Three facts turn the definition into a tool. For non-negative simple functions $`s`$ and $`t`$ and a number $`c\ge 0`$:
 
-$$\int \Big(\sum_{j=1}^{m} c_j\mathbf 1_{B_j}\Big)d\mu=\sum_{j=1}^{m} c_j\,\mu(B_j)\ \ \text{for any sets } B_j\in\mathcal F,\ \text{overlapping or not};$$
+```math
+\int \Big(\sum_{j=1}^{m} c_j\mathbf 1_{B_j}\Big)d\mu=\sum_{j=1}^{m} c_j\,\mu(B_j)\ \ \text{for any sets } B_j\in\mathcal F,\ \text{overlapping or not};
+```
 
-$$\int (s+t)\,d\mu=\int s\,d\mu+\int t\,d\mu,\qquad \int c\,s\,d\mu=c\int s\,d\mu;\qquad s\le t \text{ everywhere}\ \Rightarrow\ \int s\,d\mu\le\int t\,d\mu .$$
+```math
+\int (s+t)\,d\mu=\int s\,d\mu+\int t\,d\mu,\qquad \int c\,s\,d\mu=c\int s\,d\mu;\qquad s\le t \text{ everywhere}\ \Rightarrow\ \int s\,d\mu\le\int t\,d\mu .
+```
 
 **Read it aloud:** any way of writing the staircase as values on sets gives the same total; totals add and scale; a lower staircase never has the larger total.
 
-The first fact with one set gives $\int \mathbf 1_A\,d\mu=\mu(A)$: the integral of "one on A" is the size of A.
+The first fact with one set gives $`\int \mathbf 1_A\,d\mu=\mu(A)`$: the integral of "one on A" is the size of A.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $d$, $x$ | depth in metres at distance x km | d(x) = 4x(1 − x), 0 to 1 m | deeper river, more water under each step |
-| $s$ | the simple function: finitely many values on measurable sets | depth rounded down to 0.25 m | a higher staircase, a larger integral |
-| $a_i$, $n$ | the i-th of the n distinct values of s | 0, 0.25, 0.5, 0.75, 1 m; n = 5 | a_i up by 1 adds μ(A_i) |
-| $A_i$ | the level set where s equals a_i | {s = 0.75} is 0.25 to 0.75 km, minus the point 0.5 | a longer piece carries more weight |
-| $C_e$, $C$, $e_j$ | a cell: the points with one yes/no pattern e, where e_j says in B_j or not | the stretch 0.25 to 0.75 km: in all three layers | — |
-| $\mathbf 1_A$ | indicator: one on A, zero off it | one on the stretch where depth ≥ 0.5 m | — |
-| $\Omega$, $\mathcal F$ | the space and its measurable sets | [0, 1] km and its Borel sets (the sets built from intervals; [Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)) | — |
-| $\mu$, $P$ | a measure; P is one with total size 1 | length; the die's 1/6 per face | sizes up, integral up |
-| $\lambda$ | length on the line (Lebesgue measure) | λ{s = 0.5} = 0.2071 km | — |
-| $\int s\,d\mu$ | the integral of s against μ | 0.5183 km·m | — |
-| $B_j$, $c_j$, $m$ | another way of writing s: m sets that may overlap, with weights | the m = 4 layers {d ≥ c}, weight 0.25 each | — |
-| $t$, $c$ | a second simple function; a non-negative scale | silt depth u, or the half-metre staircase; c = 100 for centimetres | c doubles, integral doubles |
-| $b_k$, $D_k$ | the values of t and the sets where t takes them | half-metre staircase: 0.5 where the depth is at least 0.5 m, 1 at the deepest point, 0 elsewhere | — |
-| $u$ | the silt on the bed, a simple function | 0.2 m from 0.3 to 0.8 km, 0.1 m from 0.8 km to the far bank; integral 0.1200 km·m | thicker silt, a larger integral |
+| $`d`$, $`x`$ | depth in metres at distance x km | d(x) = 4x(1 − x), 0 to 1 m | deeper river, more water under each step |
+| $`s`$ | the simple function: finitely many values on measurable sets | depth rounded down to 0.25 m | a higher staircase, a larger integral |
+| $`a_i`$, $`n`$ | the i-th of the n distinct values of s | 0, 0.25, 0.5, 0.75, 1 m; n = 5 | a_i up by 1 adds μ(A_i) |
+| $`A_i`$ | the level set where s equals a_i | {s = 0.75} is 0.25 to 0.75 km, minus the point 0.5 | a longer piece carries more weight |
+| $`C_e`$, $`C`$, $`e_j`$ | a cell: the points with one yes/no pattern e, where e_j says in B_j or not | the stretch 0.25 to 0.75 km: in all three layers | — |
+| $`\mathbf 1_A`$ | indicator: one on A, zero off it | one on the stretch where depth ≥ 0.5 m | — |
+| $`\Omega`$, $`\mathcal F`$ | the space and its measurable sets | [0, 1] km and its Borel sets (the sets built from intervals; [Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)) | — |
+| $`\mu`$, $`P`$ | a measure; P is one with total size 1 | length; the die's 1/6 per face | sizes up, integral up |
+| $`\lambda`$ | length on the line (Lebesgue measure) | λ{s = 0.5} = 0.2071 km | — |
+| $`\int s\,d\mu`$ | the integral of s against μ | 0.5183 km·m | — |
+| $`B_j`$, $`c_j`$, $`m`$ | another way of writing s: m sets that may overlap, with weights | the m = 4 layers {d ≥ c}, weight 0.25 each | — |
+| $`t`$, $`c`$ | a second simple function; a non-negative scale | silt depth u, or the half-metre staircase; c = 100 for centimetres | c doubles, integral doubles |
+| $`b_k`$, $`D_k`$ | the values of t and the sets where t takes them | half-metre staircase: 0.5 where the depth is at least 0.5 m, 1 at the deepest point, 0 elsewhere | — |
+| $`u`$ | the silt on the bed, a simple function | 0.2 m from 0.3 to 0.8 km, 0.1 m from 0.8 km to the far bank; integral 0.1200 km·m | thicker silt, a larger integral |
 
 ### When it holds
 
 The integral itself is a definition, so it does not hold or fail; the three theorems need these hypotheses.
 
-- **Every piece measurable.** The sets $A_i$ must lie in $\mathcal F$, or $\mu(A_i)$ is not defined. A two-valued function that is 1 on the Vitali set ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)) has no integral against length.
+- **Every piece measurable.** The sets $`A_i`$ must lie in $`\mathcal F`$, or $`\mu(A_i)`$ is not defined. A two-valued function that is 1 on the Vitali set ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)) has no integral against length.
 - **Values of zero or more.** Then every term is at least zero and nothing cancels. With signs and infinite pieces, +1 on [0, ∞) and −1 on (−∞, 0) gives ∞ − ∞, and cutting the line at different places gives 0 or 1000 (What breaks, below).
 - **Finitely many values.** The sums are finite sums, so reordering and regrouping are free. Infinitely many values are the next card's business.
-- **Finite values.** Each $a_i$ is a real number; a set of size ∞ is allowed, a value ∞ is not.
+- **Finite values.** Each $`a_i`$ is a real number; a set of size ∞ is allowed, a value ∞ is not.
 
 ---
 
@@ -94,40 +100,42 @@ Two ways of writing the same staircase can always be cut down to a common set of
 
 ### Step 1: the formula is forced
 
-Ask two things of any integral. First, a block of height 1 over a set A has area μ(A): the integral of $\mathbf 1_A$ is $\mu(A)$. Second, integrals add and scale: the integral of $c_1\mathbf 1_{A_1}+c_2\mathbf 1_{A_2}$ is $c_1\mu(A_1)+c_2\mu(A_2)$. Every simple function is a finite sum of scaled indicators, so these two demands leave exactly one candidate: value times size, added. The definition is not a choice among many. The only question is whether it is consistent, since one function has many ways of being written.
+Ask two things of any integral. First, a block of height 1 over a set A has area μ(A): the integral of $`\mathbf 1_A`$ is $`\mu(A)`$. Second, integrals add and scale: the integral of $`c_1\mathbf 1_{A_1}+c_2\mathbf 1_{A_2}`$ is $`c_1\mu(A_1)+c_2\mu(A_2)`$. Every simple function is a finite sum of scaled indicators, so these two demands leave exactly one candidate: value times size, added. The definition is not a choice among many. The only question is whether it is consistent, since one function has many ways of being written.
 
 ### Step 2: any representation gives the same number
 
-The river staircase has two natural descriptions. As level sets: 0.25 on a piece of 0.1589 km, 0.5 on 0.2071 km, 0.75 on 0.5 km. As layers: $s=0.25\,\mathbf 1_{\{d\ge 0.25\}}+0.25\,\mathbf 1_{\{d\ge 0.5\}}+0.25\,\mathbf 1_{\{d\ge 0.75\}}+0.25\,\mathbf 1_{\{d\ge 1\}}$, where the sets are nested stretches of 0.8660, 0.7071 and 0.5 km, overlapping heavily, and the single point 0.5 km, length 0. A point at 0.4 km, depth 0.9600 m, lies in all three layers and gets 0.25 + 0.25 + 0.25 = 0.75, which is its level. The two sums agree, 0.5183 each.
+The river staircase has two natural descriptions. As level sets: 0.25 on a piece of 0.1589 km, 0.5 on 0.2071 km, 0.75 on 0.5 km. As layers: $`s=0.25\,\mathbf 1_{\{d\ge 0.25\}}+0.25\,\mathbf 1_{\{d\ge 0.5\}}+0.25\,\mathbf 1_{\{d\ge 0.75\}}+0.25\,\mathbf 1_{\{d\ge 1\}}`$, where the sets are nested stretches of 0.8660, 0.7071 and 0.5 km, overlapping heavily, and the single point 0.5 km, length 0. A point at 0.4 km, depth 0.9600 m, lies in all three layers and gets 0.25 + 0.25 + 0.25 = 0.75, which is its level. The two sums agree, 0.5183 each.
 
-The proof in outline. Given any representation with m sets $B_1,\dots,B_m$, look at the pieces cut out by asking, for each $B_j$, "in it or not". There are at most $2^m$ such **cells**; they do not overlap, they are measurable, and each $B_j$ is exactly the union of the cells inside it.
+The proof in outline. Given any representation with m sets $`B_1,\dots,B_m`$, look at the pieces cut out by asking, for each $`B_j`$, "in it or not". There are at most $`2^m`$ such **cells**; they do not overlap, they are measurable, and each $`B_j`$ is exactly the union of the cells inside it.
 
-On one cell the function has one value, the sum of the $c_j$ for the sets that contain that cell. Split each $\mu(B_j)$ over its cells, collect by cell, and the representation's total becomes "value on the cell times size of the cell", summed over cells. The standard form gives the same cell sum.
+On one cell the function has one value, the sum of the $`c_j`$ for the sets that contain that cell. Split each $`\mu(B_j)`$ over its cells, collect by cell, and the representation's total becomes "value on the cell times size of the cell", summed over cells. The standard form gives the same cell sum.
 
 For the river, the four layers cut [0, 1] into the two bank stretches, a pair of stretches each for 0.25 and 0.5, the middle stretch for 0.75 minus its centre, and the centre point for 1.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** Let $s=\sum_{j=1}^{m}c_j\mathbf 1_{B_j}$ with each $c_j\ge 0$ finite and each $B_j\in\mathcal F$. Then $\sum_j c_j\,\mu(B_j)=\sum_i a_i\,\mu(A_i)$, the standard-form value.
+**Claim.** Let $`s=\sum_{j=1}^{m}c_j\mathbf 1_{B_j}`$ with each $`c_j\ge 0`$ finite and each $`B_j\in\mathcal F`$. Then $`\sum_j c_j\,\mu(B_j)=\sum_i a_i\,\mu(A_i)`$, the standard-form value.
 
-**Arithmetic in [0, ∞].** Sums of terms in [0, ∞] are defined, and for finite sums they may be reordered and regrouped: a finite sum of non-negative terms is ∞ exactly when one term is ∞, and otherwise is an ordinary sum. For finite $c\ge0$ and $x,y\in[0,\infty]$, with $0\cdot\infty=0$, the rule $c(x+y)=cx+cy$ holds: if $c=0$ both sides are 0; if $c>0$ and one of x, y is ∞, both sides are ∞; otherwise it is ordinary algebra. The other distributive rule, $(c_1+\dots+c_m)\,x=c_1x+\dots+c_mx$, for any finite list of finite $c_j\ge0$ and any $x\in[0,\infty]$, holds too: if $x=\infty$, both sides are 0 when every $c_j$ is 0 and ∞ otherwise; if x is finite it is ordinary algebra. No subtraction appears anywhere below.
+**Arithmetic in [0, ∞].** Sums of terms in [0, ∞] are defined, and for finite sums they may be reordered and regrouped: a finite sum of non-negative terms is ∞ exactly when one term is ∞, and otherwise is an ordinary sum. For finite $`c\ge0`$ and $`x,y\in[0,\infty]`$, with $`0\cdot\infty=0`$, the rule $`c(x+y)=cx+cy`$ holds: if $`c=0`$ both sides are 0; if $`c>0`$ and one of x, y is ∞, both sides are ∞; otherwise it is ordinary algebra. The other distributive rule, $`(c_1+\dots+c_m)\,x=c_1x+\dots+c_mx`$, for any finite list of finite $`c_j\ge0`$ and any $`x\in[0,\infty]`$, holds too: if $`x=\infty`$, both sides are 0 when every $`c_j`$ is 0 and ∞ otherwise; if x is finite it is ordinary algebra. No subtraction appears anywhere below.
 
-**Cells.** For each choice $e=(e_1,\dots,e_m)$ of yes or no, let $C_e$ be the intersection over j of $B_j$ (if $e_j$ is yes) or its complement (if no). Complements and finite intersections of sets in $\mathcal F$ are in $\mathcal F$, so each $C_e$ is measurable ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). Every point lies in exactly one cell: its own yes/no pattern. So the cells are disjoint and cover $\Omega$. Discard the empty ones.
+**Cells.** For each choice $`e=(e_1,\dots,e_m)`$ of yes or no, let $`C_e`$ be the intersection over j of $`B_j`$ (if $`e_j`$ is yes) or its complement (if no). Complements and finite intersections of sets in $`\mathcal F`$ are in $`\mathcal F`$, so each $`C_e`$ is measurable ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). Every point lies in exactly one cell: its own yes/no pattern. So the cells are disjoint and cover $`\Omega`$. Discard the empty ones.
 
-**Each set is its cells.** $B_j$ is the disjoint union of the cells with $e_j$ yes. By finite additivity of $\mu$ ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)), $\mu(B_j)=\sum_{e:\,e_j=\text{yes}}\mu(C_e)$.
+**Each set is its cells.** $`B_j`$ is the disjoint union of the cells with $`e_j`$ yes. By finite additivity of $`\mu`$ ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)), $`\mu(B_j)=\sum_{e:\,e_j=\text{yes}}\mu(C_e)`$.
 
 **Regroup.** Using that and both distributive rules,
-$$\sum_j c_j\,\mu(B_j)=\sum_j\ \sum_{e:\,e_j=\text{yes}} c_j\,\mu(C_e)=\sum_e\Big(\sum_{j:\,e_j=\text{yes}}c_j\Big)\mu(C_e)=\sum_e s(C_e)\,\mu(C_e),$$
-where the middle step swaps the order of a finite double sum of non-negative terms, and $s(C_e)$ is the constant value of s on the non-empty cell $C_e$: at a point of $C_e$, exactly the indicators with $e_j$ yes are 1.
 
-**The standard form is one representation.** Apply the same computation to $s=\sum_i a_i\mathbf 1_{A_i}$. Its cells are the $A_i$ themselves (each point is in exactly one of them), so it gives $\sum_i a_i\,\mu(A_i)$.
+$`\displaystyle \sum_j c_j\,\mu(B_j)=\sum_j\ \sum_{e:\,e_j=\text{yes}} c_j\,\mu(C_e)=\sum_e\Big(\sum_{j:\,e_j=\text{yes}}c_j\Big)\mu(C_e)=\sum_e s(C_e)\,\mu(C_e),`$
 
-**Both equal the same cell sum.** Each standard-form set $A_i$ is the union of the cells $C_e$ with $s(C_e)=a_i$, since s is constant on each cell. Grouping the cell sum by value and using additivity once more, $\sum_e s(C_e)\mu(C_e)=\sum_i a_i\sum_{e:\,s(C_e)=a_i}\mu(C_e)=\sum_i a_i\,\mu(A_i)$. So every representation gives the standard-form number. ∎
+where the middle step swaps the order of a finite double sum of non-negative terms, and $`s(C_e)`$ is the constant value of s on the non-empty cell $`C_e`$: at a point of $`C_e`$, exactly the indicators with $`e_j`$ yes are 1.
 
-**Linearity.** If $s=\sum_i a_i\mathbf 1_{A_i}$ and $t=\sum_k b_k\mathbf 1_{D_k}$, then listing both families together is a representation of $s+t$. By the claim, $\int(s+t)\,d\mu=\sum_i a_i\mu(A_i)+\sum_k b_k\mu(D_k)=\int s\,d\mu+\int t\,d\mu$. For $c\ge0$, $c\,s=\sum_i (ca_i)\mathbf 1_{A_i}$ is a representation of $c\,s$, and the distributive rule gives $\int c\,s\,d\mu=c\int s\,d\mu$. ∎
+**The standard form is one representation.** Apply the same computation to $`s=\sum_i a_i\mathbf 1_{A_i}`$. Its cells are the $`A_i`$ themselves (each point is in exactly one of them), so it gives $`\sum_i a_i\,\mu(A_i)`$.
 
-**Monotonicity.** Suppose $s\le t$ at every point. Form the cells of the combined family $A_1,\dots,A_n,D_1,\dots$. Both s and t are constant on each non-empty cell $C$, with $s(C)\le t(C)$, since the inequality holds at any point of $C$. By the claim applied to each function, $\int s\,d\mu=\sum_C s(C)\mu(C)\le\sum_C t(C)\mu(C)=\int t\,d\mu$, comparing term by term: $s(C)\mu(C)\le t(C)\mu(C)$ holds also when $\mu(C)=\infty$. ∎
+**Both equal the same cell sum.** Each standard-form set $`A_i`$ is the union of the cells $`C_e`$ with $`s(C_e)=a_i`$, since s is constant on each cell. Grouping the cell sum by value and using additivity once more, $`\sum_e s(C_e)\mu(C_e)=\sum_i a_i\sum_{e:\,s(C_e)=a_i}\mu(C_e)=\sum_i a_i\,\mu(A_i)`$. So every representation gives the standard-form number. ∎
+
+**Linearity.** If $`s=\sum_i a_i\mathbf 1_{A_i}`$ and $`t=\sum_k b_k\mathbf 1_{D_k}`$, then listing both families together is a representation of $`s+t`$. By the claim, $`\int(s+t)\,d\mu=\sum_i a_i\mu(A_i)+\sum_k b_k\mu(D_k)=\int s\,d\mu+\int t\,d\mu`$. For $`c\ge0`$, $`c\,s=\sum_i (ca_i)\mathbf 1_{A_i}`$ is a representation of $`c\,s`$, and the distributive rule gives $`\int c\,s\,d\mu=c\int s\,d\mu`$. ∎
+
+**Monotonicity.** Suppose $`s\le t`$ at every point. Form the cells of the combined family $`A_1,\dots,A_n,D_1,\dots`$. Both s and t are constant on each non-empty cell $`C`$, with $`s(C)\le t(C)`$, since the inequality holds at any point of $`C`$. By the claim applied to each function, $`\int s\,d\mu=\sum_C s(C)\mu(C)\le\sum_C t(C)\mu(C)=\int t\,d\mu`$, comparing term by term: $`s(C)\mu(C)\le t(C)\mu(C)`$ holds also when $`\mu(C)=\infty`$. ∎
 
 </details>
 
@@ -562,10 +570,10 @@ ALL CHECKS PASS
 
 Lean defines the integral in standard form and proves the three theorems for every non-negative simple function on every measure space.
 
-- Suppose $s=\sum_j c_j\mathbf 1_{B_j}$ at every point, with each $c_j\ge 0$ finite and each $B_j$ measurable. Then $\int s\,d\mu=\sum_j c_j\,\mu(B_j)$, even when the sets overlap.
-- Take non-negative simple functions s and t. Then $\int (s+t)\,d\mu=\int s\,d\mu+\int t\,d\mu$.
-- Take a number $c\ge 0$. Then $\int c\,s\,d\mu=c\int s\,d\mu$.
-- Suppose $s\le t$ at every point. Then $\int s\,d\mu\le\int t\,d\mu$.
+- Suppose $`s=\sum_j c_j\mathbf 1_{B_j}`$ at every point, with each $`c_j\ge 0`$ finite and each $`B_j`$ measurable. Then $`\int s\,d\mu=\sum_j c_j\,\mu(B_j)`$, even when the sets overlap.
+- Take non-negative simple functions s and t. Then $`\int (s+t)\,d\mu=\int s\,d\mu+\int t\,d\mu`$.
+- Take a number $`c\ge 0`$. Then $`\int c\,s\,d\mu=c\int s\,d\mu`$.
+- Suppose $`s\le t`$ at every point. Then $`\int s\,d\mu\le\int t\,d\mu`$.
 - The die gives 5/3 both ways, point by point and by level sets.
 
 The river's numbers, the finer staircases and What breaks are left to the Python and Rust checks.
@@ -674,7 +682,7 @@ example : (0 : ℚ) * (3 / 6) + 2 * (2 / 6) + 6 * (1 / 6) = 5 / 3 := by norm_num
 >
 > - **Adding values, forgetting sizes.** 0.25 + 0.5 + 0.75 = 1.50 is not an integral; the integral weighs each value by how much of the space carries it.
 > - **Worrying about single points.** The rounded depth is 1 m at exactly one point, 0.5 km. That piece has length 0 and contributes 1 × 0 = 0. Changing a simple function on a set of measure zero never changes its integral.
-> - **Treating 0 × ∞ as undefined.** On the whole line the zero function has integral 0 by the convention $0\cdot\infty=0$; without it the definition would fail on its simplest input.
+> - **Treating 0 × ∞ as undefined.** On the whole line the zero function has integral 0 by the convention $`0\cdot\infty=0`$; without it the definition would fail on its simplest input.
 > - **Subtracting.** Everything here is non-negative. Differences of integrals, and signed functions, need the finite-integral condition of [Integrable functions](04-integrable-functions-and-l1.md).
 
 ---

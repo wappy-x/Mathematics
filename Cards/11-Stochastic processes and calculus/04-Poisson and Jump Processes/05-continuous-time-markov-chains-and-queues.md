@@ -34,46 +34,54 @@ Bars: the exact long-run share of time with n people in the system, per 100, fro
 
 ## The formula
 
-Notation first, in words. The number of people in the system at time t, counted in hours, is $X_t$, the value of the process at time t ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)).
+Notation first, in words. The number of people in the system at time t, counted in hours, is $`X_t`$, the value of the process at time t ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)).
 
-The **rate matrix** of a continuous-time chain, also called its generator (the Q-matrix in Norris), written $G$ in this wing (the letter Q is kept for a second probability measure), is a square table with one row and one column per state. Its entry $g_{ij}$, for two different states $i$ and $j$, is the rate of jumping from $i$ to $j$: in a short time $h$, the chance of that jump is about $g_{ij}\,h$, with an error that shrinks faster than $h$. Each diagonal entry is minus the total rate of leaving, so every row adds to 0:
+The **rate matrix** of a continuous-time chain, also called its generator (the Q-matrix in Norris), written $`G`$ in this wing (the letter Q is kept for a second probability measure), is a square table with one row and one column per state. Its entry $`g_{ij}`$, for two different states $`i`$ and $`j`$, is the rate of jumping from $`i`$ to $`j`$: in a short time $`h`$, the chance of that jump is about $`g_{ij}\,h`$, with an error that shrinks faster than $`h`$. Each diagonal entry is minus the total rate of leaving, so every row adds to 0:
 
-$$g_{ij} \ge 0 \ (i \ne j), \qquad g_{ii} = -q_i, \qquad q_i = \sum_{j \ne i} g_{ij}.$$
+```math
+g_{ij} \ge 0 \ (i \ne j), \qquad g_{ii} = -q_i, \qquad q_i = \sum_{j \ne i} g_{ij}.
+```
 
 **Read it aloud:** off the diagonal, how fast each jump happens; on the diagonal, minus how fast the chain leaves where it is.
 
-The chances at time t sit in a row $p(t)$, with entry $p_i(t)$ the chance of being in state $i$. They obey the **forward equations**, one linear differential equation for the whole row ([From one equation to a system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)):
+The chances at time t sit in a row $`p(t)`$, with entry $`p_i(t)`$ the chance of being in state $`i`$. They obey the **forward equations**, one linear differential equation for the whole row ([From one equation to a system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)):
 
-$$\frac{d}{dt}\,p(t) = p(t)\,G, \qquad p(t) = p(0)\,e^{tG}.$$
+```math
+\frac{d}{dt}\,p(t) = p(t)\,G, \qquad p(t) = p(0)\,e^{tG}.
+```
 
 **Read it aloud:** the chances change at the rate "chances now times rate matrix"; the solution is the start times the matrix exponential of t times G.
 
-**The desk with no hold line.** Suppose a caller who finds the agent busy hangs up. The states are idle (0) and busy (1). Idle turns busy at the arrival rate $\lambda$ = 4 an hour; busy turns idle at the service rate $\mu$ = 5 an hour. So `G = [[-4, 4], [5, -5]]`, rows and columns idle then busy. From idle at time 0,
+**The desk with no hold line.** Suppose a caller who finds the agent busy hangs up. The states are idle (0) and busy (1). Idle turns busy at the arrival rate $`\lambda`$ = 4 an hour; busy turns idle at the service rate $`\mu`$ = 5 an hour. So `G = [[-4, 4], [5, -5]]`, rows and columns idle then busy. From idle at time 0,
 
-$$p_1(t) = \frac{\lambda}{\lambda + \mu}\left(1 - e^{-(\lambda + \mu)\,t}\right) = \frac{4}{9}\left(1 - e^{-9t}\right).$$
+```math
+p_1(t) = \frac{\lambda}{\lambda + \mu}\left(1 - e^{-(\lambda + \mu)\,t}\right) = \frac{4}{9}\left(1 - e^{-9t}\right).
+```
 
 **Read it aloud:** the chance of busy climbs from 0 toward four-ninths, closing the gap at rate 9 an hour.
 
-**The desk with a hold line: M/M/1.** The name: memoryless (exponential) arrival gaps, memoryless service times, one server. The long-run shares $\pi_n$ of time with $n$ people in the system solve $\pi G = 0$, "rate out equals rate in". With $\rho = \lambda / \mu$, the load,
+**The desk with a hold line: M/M/1.** The name: memoryless (exponential) arrival gaps, memoryless service times, one server. The long-run shares $`\pi_n`$ of time with $`n`$ people in the system solve $`\pi G = 0`$, "rate out equals rate in". With $`\rho = \lambda / \mu`$, the load,
 
-$$\pi_n = (1 - \rho)\,\rho^n \quad (n = 0, 1, 2, \dots), \qquad L = \sum_n n\,\pi_n = \frac{\rho}{1 - \rho}, \qquad \rho < 1.$$
+```math
+\pi_n = (1 - \rho)\,\rho^n \quad (n = 0, 1, 2, \dots), \qquad L = \sum_n n\,\pi_n = \frac{\rho}{1 - \rho}, \qquad \rho < 1.
+```
 
 **Read it aloud:** the chance of n people is one minus the load, times the load to the power n; the average number is the load over one minus the load; all of it only if arrivals are slower than services.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_t$, $X_0$, $t$, $h$ | people in the system at time $t$ hours; $h$ a short stretch of time | $X_0$ = 0, the desk opens empty | — |
-| $i$, $j$, $n$, $k$ | states; $n$ a number of people; $k$ counts clock ticks in the proofs | 0 idle, 1 busy | — |
-| $G$, $g_{ij}$ | rate matrix; rate of jumping from $i$ to $j$, per hour | `[[-4, 4], [5, -5]]` without a hold line | faster jumps, faster settling |
-| $q_i$ | total rate of leaving $i$, equal to $-g_{ii}$; the mean stay in $i$ is $1/q_i$ | 4 when idle, 9 when busy with a hold line | shorter stays in $i$ |
-| $\lambda$ | arrival rate | 4 an hour | more people waiting, fast |
-| $\mu$ | service rate while working | 5 an hour | fewer people waiting |
-| $\rho$ | load, $\lambda / \mu$; the share of time busy with a hold line | 0.8 | $L$ blows up as it nears 1 |
-| $p(t)$, $p_i(t)$, $P(t)$ | row of chances at time $t$; its entry for state $i$; the table of chances over a stretch $t$, equal to $e^{tG}$ | busy at 15 minutes: 0.3976 | — |
-| $\pi$, $\pi_n$, $\pi_i$, $\pi_0$, $\pi_1$ | the stationary distribution: long-run share of time in each state | $\pi_0$ = 0.2, $\pi_1$ = 0.16 | — |
-| $L$, $W$ | mean number in the system; mean time a caller spends in it | 4 people; 1 hour | both grow like $1/(1 - \rho)$ |
-| $\nu$, $\nu_i$ | the jump chain's stationary distribution: long-run share of visits, not of time | idle in 0.1 of visits | — |
-| $C$, $K$, $I$, $J$, $D$, $H$ | a clock rate at least every $q_i$; $K = I + G/C$, a table of chances; $I$ the table that changes nothing; in the proofs, $J$ the jump chain's table, $D$ the leaving rates on a diagonal, $H$ a holding time | $C$ = 9 | — |
+| $`X_t`$, $`X_0`$, $`t`$, $`h`$ | people in the system at time $`t`$ hours; $`h`$ a short stretch of time | $`X_0`$ = 0, the desk opens empty | — |
+| $`i`$, $`j`$, $`n`$, $`k`$ | states; $`n`$ a number of people; $`k`$ counts clock ticks in the proofs | 0 idle, 1 busy | — |
+| $`G`$, $`g_{ij}`$ | rate matrix; rate of jumping from $`i`$ to $`j`$, per hour | `[[-4, 4], [5, -5]]` without a hold line | faster jumps, faster settling |
+| $`q_i`$ | total rate of leaving $`i`$, equal to $`-g_{ii}`$; the mean stay in $`i`$ is $`1/q_i`$ | 4 when idle, 9 when busy with a hold line | shorter stays in $`i`$ |
+| $`\lambda`$ | arrival rate | 4 an hour | more people waiting, fast |
+| $`\mu`$ | service rate while working | 5 an hour | fewer people waiting |
+| $`\rho`$ | load, $`\lambda / \mu`$; the share of time busy with a hold line | 0.8 | $`L`$ blows up as it nears 1 |
+| $`p(t)`$, $`p_i(t)`$, $`P(t)`$ | row of chances at time $`t`$; its entry for state $`i`$; the table of chances over a stretch $`t`$, equal to $`e^{tG}`$ | busy at 15 minutes: 0.3976 | — |
+| $`\pi`$, $`\pi_n`$, $`\pi_i`$, $`\pi_0`$, $`\pi_1`$ | the stationary distribution: long-run share of time in each state | $`\pi_0`$ = 0.2, $`\pi_1`$ = 0.16 | — |
+| $`L`$, $`W`$ | mean number in the system; mean time a caller spends in it | 4 people; 1 hour | both grow like $`1/(1 - \rho)`$ |
+| $`\nu`$, $`\nu_i`$ | the jump chain's stationary distribution: long-run share of visits, not of time | idle in 0.1 of visits | — |
+| $`C`$, $`K`$, $`I`$, $`J`$, $`D`$, $`H`$ | a clock rate at least every $`q_i`$; $`K = I + G/C`$, a table of chances; $`I`$ the table that changes nothing; in the proofs, $`J`$ the jump chain's table, $`D`$ the leaving rates on a diagonal, $`H`$ a holding time | $`C`$ = 9 | — |
 
 ### The picture: the M/M/1 chain
 
@@ -84,9 +92,9 @@ Each state is a number of people. Every arrow to the right is an arrival, at rat
 ### When it holds
 
 - **Memoryless gaps.** The chance of the next event in the next minute must not depend on how long the chain has sat still. Exponential gaps have it, and they are the only continuous waiting times that do ([Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). If every call takes close to the same time, the future depends on how long the current call has run, the number on the line is no longer a Markov chain, and the queue is shorter than M/M/1 says: that is the M/G/1 queue, with general service times, treated in Kleinrock's Chapter 5 (Sources). [Renewal processes](06-renewal-processes-in-outline.md) handles arrivals whose gaps are not exponential.
-- **Rates that do not change with the clock.** A lunchtime rush that raises the arrival rate for an hour is a different rate matrix for that hour. The formula for $\pi$ then describes no hour of the day.
-- **Load below 1, for the long-run law.** With $\lambda > \mu$ the line drifts upward without limit; at $\lambda = \mu$ it keeps emptying but never settles. Either way no stationary distribution exists; the forward equations still hold.
-- **Time to settle.** $\pi$ is a long-run statement. From an empty desk at opening, the average number on the line is 3.24 after 8 hours and 3.86 after 24, still short of 4.
+- **Rates that do not change with the clock.** A lunchtime rush that raises the arrival rate for an hour is a different rate matrix for that hour. The formula for $`\pi`$ then describes no hour of the day.
+- **Load below 1, for the long-run law.** With $`\lambda > \mu`$ the line drifts upward without limit; at $`\lambda = \mu`$ it keeps emptying but never settles. Either way no stationary distribution exists; the forward equations still hold.
+- **Time to settle.** $`\pi`$ is a long-run statement. From an empty desk at opening, the average number on the line is 3.24 after 8 hours and 3.86 after 24, still short of 4.
 
 ---
 
@@ -94,13 +102,13 @@ Each state is a number of people. Every arrow to the right is an arrival, at rat
 
 ### Step 0: memoryless waiting turns chances into rates
 
-A continuous-time chain has no step. What it has is a waiting time in each state. If that wait is exponential with rate $q_i$, the chance of leaving within the next $h$ hours is $1 - e^{-q_i h}$, about $q_i\,h$ for short $h$, whatever has happened so far. A chance per unit time that never depends on the past is a rate. That single property, memorylessness, is why a table of rates can replace a table of chances.
+A continuous-time chain has no step. What it has is a waiting time in each state. If that wait is exponential with rate $`q_i`$, the chance of leaving within the next $`h`$ hours is $`1 - e^{-q_i h}`$, about $`q_i\,h`$ for short $`h`$, whatever has happened so far. A chance per unit time that never depends on the past is a rate. That single property, memorylessness, is why a table of rates can replace a table of chances.
 
 ### Step 1: build the chain from waits and jumps
 
-A chain on a finite list of states runs like this. In state $i$, wait an exponential time with rate $q_i$. Then jump to $j$ with chance $g_{ij}/q_i$. Repeat. The states visited, ignoring the times, form the **jump chain**, an ordinary Markov chain; the waits are the **holding times**.
+A chain on a finite list of states runs like this. In state $`i`$, wait an exponential time with rate $`q_i`$. Then jump to $`j`$ with chance $`g_{ij}/q_i`$. Repeat. The states visited, ignoring the times, form the **jump chain**, an ordinary Markov chain; the waits are the **holding times**.
 
-Now look at a short stretch $h$. No jump happens with chance $e^{-q_i h} \approx 1 - q_i\,h$. Exactly one jump, to $j$, happens with chance about $q_i\,h \times g_{ij}/q_i = g_{ij}\,h$. Two or more jumps need two exponential events inside $h$, with chance of order $h^2$. So the table of chances over a stretch $h$ is
+Now look at a short stretch $`h`$. No jump happens with chance $`e^{-q_i h} \approx 1 - q_i\,h`$. Exactly one jump, to $`j`$, happens with chance about $`q_i\,h \times g_{ij}/q_i = g_{ij}\,h`$. Two or more jumps need two exponential events inside $`h`$, with chance of order $`h^2`$. So the table of chances over a stretch $`h`$ is
 
 `P(h) = I + h G + (terms smaller than h)`.
 
@@ -108,19 +116,21 @@ The rate matrix is the slope of the chance table at time 0.
 
 ### Step 2: the forward equations
 
-By the Markov property, the move in the next $h$ ignores how the chain reached its state at time $t$. So $p(t + h) = p(t)\,P(h) = p(t) + h\,p(t)\,G$ plus terms smaller than $h$. Subtract $p(t)$, divide by $h$, let $h$ shrink:
+By the Markov property, the move in the next $`h`$ ignores how the chain reached its state at time $`t`$. So $`p(t + h) = p(t)\,P(h) = p(t) + h\,p(t)\,G`$ plus terms smaller than $`h`$. Subtract $`p(t)`$, divide by $`h`$, let $`h`$ shrink:
 
-$$\frac{d}{dt}\,p(t) = p(t)\,G.$$
+```math
+\frac{d}{dt}\,p(t) = p(t)\,G.
+```
 
-Its only solution from $p(0)$ is $p(0)\,e^{tG}$ ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)).
+Its only solution from $`p(0)`$ is $`p(0)\,e^{tG}`$ ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)).
 
 ### Step 3: the desk with no hold line, solved twice
 
-The busy entry of the forward equations reads $p_1' = \lambda\,p_0 - \mu\,p_1$: chance flows in from idle at rate 4 and out of busy at rate 5. Since $p_0 = 1 - p_1$, this is $p_1' = \lambda - (\lambda + \mu)\,p_1$, a single linear equation. Its solution from $p_1(0) = 0$ is the formula above. The gap to 4/9 halves every 4.62 minutes.
+The busy entry of the forward equations reads $`p_1' = \lambda\,p_0 - \mu\,p_1`$: chance flows in from idle at rate 4 and out of busy at rate 5. Since $`p_0 = 1 - p_1`$, this is $`p_1' = \lambda - (\lambda + \mu)\,p_1`$, a single linear equation. Its solution from $`p_1(0) = 0`$ is the formula above. The gap to 4/9 halves every 4.62 minutes.
 
-A second road needs no calculus. Run a clock that ticks at rate $C$ = 9 an hour. At each tick, redraw the state from `K = I + G/9 = [[5/9, 4/9], [5/9, 4/9]]`. An idle agent then picks up at 9 × 4/9 = 4 an hour and a busy one finishes at 9 × 5/9 = 5 an hour, the right rates.
+A second road needs no calculus. Run a clock that ticks at rate $`C`$ = 9 an hour. At each tick, redraw the state from `K = I + G/9 = [[5/9, 4/9], [5/9, 4/9]]`. An idle agent then picks up at 9 × 4/9 = 4 an hour and a busy one finishes at 9 × 5/9 = 5 an hour, the right rates.
 
-This is **uniformization**: a chain with bounded rates is a discrete chain run at the ticks of a Poisson clock. Both rows of $K$ are the same, so after the first tick the agent is busy with chance 4/9, whatever came before. At least one tick by time $t$ has chance $1 - e^{-9t}$. Multiply, and $p_1(t) = \tfrac49(1 - e^{-9t})$ again.
+This is **uniformization**: a chain with bounded rates is a discrete chain run at the ticks of a Poisson clock. Both rows of $`K`$ are the same, so after the first tick the agent is busy with chance 4/9, whatever came before. At least one tick by time $`t`$ has chance $`1 - e^{-9t}`$. Multiply, and $`p_1(t) = \tfrac49(1 - e^{-9t})`$ again.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -132,60 +142,68 @@ xychart-beta
     line [0.00, 43.95, 44.44, 44.44, 44.44, 44.44, 44.44, 44.44, 44.44]
 ```
 
-Orange: with a hold line (M/M/1), $p(0)\,e^{tG}$ by uniformization, on enough states that the queue cannot outgrow them in 24 hours; it creeps toward 80. Green: no hold line, the formula of Step 3; it reaches 44.44 within the first hour. A hold line keeps the agent busier, and the desk takes many hours to reach its long-run state.
+Orange: with a hold line (M/M/1), $`p(0)\,e^{tG}`$ by uniformization, on enough states that the queue cannot outgrow them in 24 hours; it creeps toward 80. Green: no hold line, the formula of Step 3; it reaches 44.44 within the first hour. A hold line keeps the agent busier, and the desk takes many hours to reach its long-run state.
 
 ### Step 4: long-run shares balance flows
 
-A row $\pi$ of shares is stationary if starting from it keeps it: $\pi\,e^{tG} = \pi$ for every $t$. Differentiate at $t = 0$ and this gives $\pi G = 0$. Going back, if $\pi G = 0$ then $\pi\,e^{tG} = \pi(I + tG + t^2G^2/2 + \dots) = \pi$. Written out one state at a time, $\pi G = 0$ says
+A row $`\pi`$ of shares is stationary if starting from it keeps it: $`\pi\,e^{tG} = \pi`$ for every $`t`$. Differentiate at $`t = 0`$ and this gives $`\pi G = 0`$. Going back, if $`\pi G = 0`$ then $`\pi\,e^{tG} = \pi(I + tG + t^2G^2/2 + \dots) = \pi`$. Written out one state at a time, $`\pi G = 0`$ says
 
-$$\pi_i\,q_i = \sum_{j \ne i} \pi_j\,g_{ji}:$$
+```math
+\pi_i\,q_i = \sum_{j \ne i} \pi_j\,g_{ji}:
+```
 
-the long-run rate of leaving $i$ equals the long-run rate of entering it. This is the balance equation of [Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md), with rates in place of chances. Stationary does not mean standing still: calls keep arriving and ending, and only the shares stay fixed.
+the long-run rate of leaving $`i`$ equals the long-run rate of entering it. This is the balance equation of [Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md), with rates in place of chances. Stationary does not mean standing still: calls keep arriving and ending, and only the shares stay fixed.
 
-For the desk with no hold line: $4\,\pi_0 = 5\,\pi_1$, so $\pi$ = (5/9, 4/9). The agent is busy 4/9 of the time, about 44 percent. Calls arrive at a rate that ignores the state, so callers see the time shares ("Poisson arrivals see time averages"): about 44 percent hang up, and 2.22 calls an hour are served.
+For the desk with no hold line: $`4\,\pi_0 = 5\,\pi_1`$, so $`\pi`$ = (5/9, 4/9). The agent is busy 4/9 of the time, about 44 percent. Calls arrive at a rate that ignores the state, so callers see the time shares ("Poisson arrivals see time averages"): about 44 percent hang up, and 2.22 calls an hour are served.
 
 ### Step 5: M/M/1, by cutting the line
 
-With a hold line the states are 0, 1, 2, and on without end. Cut the list between $n$ and $n + 1$. The chain crosses that cut upward only by an arrival from $n$, at rate $\lambda$, and downward only by a completion from $n + 1$, at rate $\mu$. Crossings alternate, up then down, so in the long run they happen equally often:
+With a hold line the states are 0, 1, 2, and on without end. Cut the list between $`n`$ and $`n + 1`$. The chain crosses that cut upward only by an arrival from $`n`$, at rate $`\lambda`$, and downward only by a completion from $`n + 1`$, at rate $`\mu`$. Crossings alternate, up then down, so in the long run they happen equally often:
 
-$$\lambda\,\pi_n = \mu\,\pi_{n+1}, \quad \text{so} \quad \pi_{n+1} = \rho\,\pi_n \quad \text{and} \quad \pi_n = \pi_0\,\rho^n.$$
+```math
+\lambda\,\pi_n = \mu\,\pi_{n+1}, \quad \text{so} \quad \pi_{n+1} = \rho\,\pi_n \quad \text{and} \quad \pi_n = \pi_0\,\rho^n.
+```
 
-The shares must add to 1. The sum $\pi_0(1 + \rho + \rho^2 + \dots)$ is $\pi_0/(1 - \rho)$ when $\rho < 1$ and endless otherwise. So $\pi_0 = 1 - \rho$ = 0.2, and the agent is busy $1 - \pi_0 = \rho$ = 0.8 of the time. The mean is
+The shares must add to 1. The sum $`\pi_0(1 + \rho + \rho^2 + \dots)`$ is $`\pi_0/(1 - \rho)`$ when $`\rho < 1`$ and endless otherwise. So $`\pi_0 = 1 - \rho`$ = 0.2, and the agent is busy $`1 - \pi_0 = \rho`$ = 0.8 of the time. The mean is
 
-$$L = \sum_{n \ge 0} n\,(1 - \rho)\,\rho^n = (1 - \rho)\,\rho\,\frac{1}{(1 - \rho)^2} = \frac{\rho}{1 - \rho},$$
+```math
+L = \sum_{n \ge 0} n\,(1 - \rho)\,\rho^n = (1 - \rho)\,\rho\,\frac{1}{(1 - \rho)^2} = \frac{\rho}{1 - \rho},
+```
 
-using $\sum n\,\rho^{n-1} = 1/(1-\rho)^2$, the slope of the geometric series. The cut equations are the balance equations of Step 4 rearranged: adding the cuts on either side of $n$ gives rate out of $n$ equals rate in.
+using $`\sum n\,\rho^{n-1} = 1/(1-\rho)^2`$, the slope of the geometric series. The cut equations are the balance equations of Step 4 rearranged: adding the cuts on either side of $`n`$ gives rate out of $`n`$ equals rate in.
 
 ### Step 6: shares of time, not of visits
 
-The jump chain visits states; the continuous-time chain spends time in them. A visit to $i$ lasts $1/q_i$ on average. So the share of time in $i$ is the share of visits, weighted by the mean stay and rescaled to add to 1:
+The jump chain visits states; the continuous-time chain spends time in them. A visit to $`i`$ lasts $`1/q_i`$ on average. So the share of time in $`i`$ is the share of visits, weighted by the mean stay and rescaled to add to 1:
 
-$$\pi_i \propto \frac{\nu_i}{q_i}.$$
+```math
+\pi_i \propto \frac{\nu_i}{q_i}.
+```
 
-The sign $\propto$ means "proportional to": equal after one common rescaling.
+The sign $`\propto`$ means "proportional to": equal after one common rescaling.
 
 For the desk with no hold line the jump chain alternates, so each state gets half the visits. Idle spells last longer than busy ones, since the agent leaves idle at rate 4 and busy at rate 5, and weighting by the mean stay turns (1/2, 1/2) into (5/9, 4/9). For M/M/1 the jump chain is idle in only 0.1 of its visits, because each idle spell is followed by a busy period made of many visits; weighted by stays, idle time is 0.2 of the day.
 
-On a chain with bounded rates whose states all reach each other and that has a stationary distribution, the share of time in $i$ up to time $t$ tends to $\pi_i$, on almost every path (every path except a set of chance zero), from any start. This is the **ergodic theorem** for continuous-time chains. Its proof cuts the path at each return to $i$ and applies the strong law of large numbers, as on [Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md); for an endless list of states it is stated here, from Norris, Section 3.8. It makes "busy 80 percent of the time" a fact about one long day, not only an average over many desks.
+On a chain with bounded rates whose states all reach each other and that has a stationary distribution, the share of time in $`i`$ up to time $`t`$ tends to $`\pi_i`$, on almost every path (every path except a set of chance zero), from any start. This is the **ergodic theorem** for continuous-time chains. Its proof cuts the path at each return to $`i`$ and applies the strong law of large numbers, as on [Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md); for an endless list of states it is stated here, from Norris, Section 3.8. It makes "busy 80 percent of the time" a fact about one long day, not only an average over many desks.
 
 <details>
 <summary>Detailed proof</summary>
 
 **What is proved here, and what is cited.** Parts 1 to 4 are complete for a finite list of states. Part 5 is complete for the M/M/1 balance equations; that the chain's long-run time shares equal that solution on the endless list is the ergodic theorem, cited from Norris (Sections 2.6 to 2.8 for the construction and the forward equations with bounded rates, Sections 3.5 and 3.8 for invariant distributions and time averages).
 
-**1. Short-time chances.** Write $P_i$ for chances when the chain starts at $i$. From $i$, let $H$ be the holding time, exponential with rate $q_i$, and $H'$ the holding time after a jump to $j$, exponential with the leaving rate of $j$ and independent of $H$. Then $P_i(X_h = i) \ge P(H > h) = e^{-q_i h} = 1 - q_i h + O(h^2)$, where $O(h^2)$ is a term at most a fixed multiple of $h^2$, and, for $j \ne i$, $P_i(X_h = j) \ge P(H \le h)\,\frac{g_{ij}}{q_i}\,P(H' > h) = g_{ij} h + O(h^2)$. The lower bounds add up to $1 - O(h^2)$, and the chances add to 1, so each lower bound is exact up to $O(h^2)$: $P(h) = I + hG + O(h^2)$.
+**1. Short-time chances.** Write $`P_i`$ for chances when the chain starts at $`i`$. From $`i`$, let $`H`$ be the holding time, exponential with rate $`q_i`$, and $`H'`$ the holding time after a jump to $`j`$, exponential with the leaving rate of $`j`$ and independent of $`H`$. Then $`P_i(X_h = i) \ge P(H > h) = e^{-q_i h} = 1 - q_i h + O(h^2)`$, where $`O(h^2)`$ is a term at most a fixed multiple of $`h^2`$, and, for $`j \ne i`$, $`P_i(X_h = j) \ge P(H \le h)\,\frac{g_{ij}}{q_i}\,P(H' > h) = g_{ij} h + O(h^2)`$. The lower bounds add up to $`1 - O(h^2)`$, and the chances add to 1, so each lower bound is exact up to $`O(h^2)`$: $`P(h) = I + hG + O(h^2)`$.
 
-**2. Forward equations.** The Markov property gives $P(t + h) = P(t)\,P(h)$ (Chapman–Kolmogorov). So $\frac{P(t+h) - P(t)}{h} = P(t)\,\frac{P(h) - I}{h} \to P(t)\,G$. The equation $P' = PG$ with $P(0) = I$ is a linear system with constant coefficients; its unique solution is $e^{tG}$. Multiplying by a starting row gives $p(t) = p(0)\,e^{tG}$.
+**2. Forward equations.** The Markov property gives $`P(t + h) = P(t)\,P(h)`$ (Chapman–Kolmogorov). So $`\frac{P(t+h) - P(t)}{h} = P(t)\,\frac{P(h) - I}{h} \to P(t)\,G`$. The equation $`P' = PG`$ with $`P(0) = I`$ is a linear system with constant coefficients; its unique solution is $`e^{tG}`$. Multiplying by a starting row gives $`p(t) = p(0)\,e^{tG}`$.
 
-**3. Uniformization.** Let $C \ge \max_i q_i$ and $K = I + G/C$. Its off-diagonal entries are $g_{ij}/C \ge 0$, its diagonal entries $1 - q_i/C \ge 0$, and its rows add to 1: it is a table of chances. Since $I$ and $K$ commute, $e^{tG} = e^{tC(K - I)} = e^{-Ct}\,e^{tCK} = \sum_{k \ge 0} e^{-Ct}\frac{(Ct)^k}{k!}K^k$. The weights are the Poisson chances of $k$ ticks by time $t$. For the two-state desk, $K^k = K$ for $k \ge 1$, so $e^{tG} = e^{-9t} I + (1 - e^{-9t})K$.
+**3. Uniformization.** Let $`C \ge \max_i q_i`$ and $`K = I + G/C`$. Its off-diagonal entries are $`g_{ij}/C \ge 0`$, its diagonal entries $`1 - q_i/C \ge 0`$, and its rows add to 1: it is a table of chances. Since $`I`$ and $`K`$ commute, $`e^{tG} = e^{tC(K - I)} = e^{-Ct}\,e^{tCK} = \sum_{k \ge 0} e^{-Ct}\frac{(Ct)^k}{k!}K^k`$. The weights are the Poisson chances of $`k`$ ticks by time $`t`$. For the two-state desk, $`K^k = K`$ for $`k \ge 1`$, so $`e^{tG} = e^{-9t} I + (1 - e^{-9t})K`$.
 
-**4. Stationary rows.** If $\pi\,e^{tG} = \pi$ for all $t$, the derivative at 0 gives $\pi G = 0$. Conversely $\pi G = 0$ gives $\pi G^m = 0$ for $m \ge 1$, and the series for $e^{tG}$ leaves $\pi$ unchanged. With the jump chain's table $J$, $J_{ij} = g_{ij}/q_i$ for $j \ne i$ and $J_{ii} = 0$, we have $G = D(J - I)$ where $D$ is the diagonal table of the $q_i$. So $\nu J = \nu$ if and only if $(\nu D^{-1})\,G = 0$: the stationary row of the jump chain, divided entry by entry by the leaving rates, is proportional to $\pi$.
+**4. Stationary rows.** If $`\pi\,e^{tG} = \pi`$ for all $`t`$, the derivative at 0 gives $`\pi G = 0`$. Conversely $`\pi G = 0`$ gives $`\pi G^m = 0`$ for $`m \ge 1`$, and the series for $`e^{tG}`$ leaves $`\pi`$ unchanged. With the jump chain's table $`J`$, $`J_{ij} = g_{ij}/q_i`$ for $`j \ne i`$ and $`J_{ii} = 0`$, we have $`G = D(J - I)`$ where $`D`$ is the diagonal table of the $`q_i`$. So $`\nu J = \nu`$ if and only if $`(\nu D^{-1})\,G = 0`$: the stationary row of the jump chain, divided entry by entry by the leaving rates, is proportional to $`\pi`$.
 
-**5. M/M/1.** The rate matrix has $g_{n,n+1} = \lambda$, $g_{n+1,n} = \mu$, and $q_0 = \lambda$, $q_n = \lambda + \mu$ for $n \ge 1$. The balance equation at 0 is $\lambda\pi_0 = \mu\pi_1$. At $n \ge 1$ it is $(\lambda + \mu)\pi_n = \lambda\pi_{n-1} + \mu\pi_{n+1}$; subtracting the equation $\lambda\pi_{n-1} = \mu\pi_n$ already found leaves $\lambda\pi_n = \mu\pi_{n+1}$. By induction every cut balances and $\pi_n = \rho^n\pi_0$. For $\rho < 1$ the total fixes $\pi_0 = 1 - \rho$, the only solution. For $\rho \ge 1$ the sum is endless unless $\pi_0 = 0$: no stationary distribution exists.
+**5. M/M/1.** The rate matrix has $`g_{n,n+1} = \lambda`$, $`g_{n+1,n} = \mu`$, and $`q_0 = \lambda`$, $`q_n = \lambda + \mu`$ for $`n \ge 1`$. The balance equation at 0 is $`\lambda\pi_0 = \mu\pi_1`$. At $`n \ge 1`$ it is $`(\lambda + \mu)\pi_n = \lambda\pi_{n-1} + \mu\pi_{n+1}`$; subtracting the equation $`\lambda\pi_{n-1} = \mu\pi_n`$ already found leaves $`\lambda\pi_n = \mu\pi_{n+1}`$. By induction every cut balances and $`\pi_n = \rho^n\pi_0`$. For $`\rho < 1`$ the total fixes $`\pi_0 = 1 - \rho`$, the only solution. For $`\rho \ge 1`$ the sum is endless unless $`\pi_0 = 0`$: no stationary distribution exists.
 
 </details>
 
-**Another road.** Every rate here stays at most 9, so a computer can also step the forward equations forward in time with Euler's method, $p \leftarrow p + h\,p\,G$ ([From one equation to a system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)). The code does, at five step sizes, and prints the error halving with the step.
+**Another road.** Every rate here stays at most 9, so a computer can also step the forward equations forward in time with Euler's method, $`p \leftarrow p + h\,p\,G`$ ([From one equation to a system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)). The code does, at five step sizes, and prints the error halving with the step.
 
 ---
 
@@ -195,30 +213,30 @@ The desk with a hold line, arrivals 4 and services 5 an hour.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| load | $\rho = \lambda/\mu$ = 4/5 | 0.8 |
-| desk empty | $\pi_0 = 1 - \rho$ | 0.2 |
-| one person | $\pi_1 = 0.2 \times 0.8$ | 0.16 |
-| two people | $\pi_2 = 0.16 \times 0.8$ | 0.128 |
-| 5 or more | $\rho^5$ = 0.8^5 | 0.3277 |
-| 10 or more | $\rho^{10}$ = 0.8^10 | 0.1074 |
-| mean in system | $L = 0.8 / 0.2$ | **4** |
-| mean on hold, not being served | $L - (1 - \pi_0)$ = 4 − 0.8 | 3.2 |
-| mean time in system | $W = L/\lambda$ = 4/4 | **1 hour** |
+| load | $`\rho = \lambda/\mu`$ = 4/5 | 0.8 |
+| desk empty | $`\pi_0 = 1 - \rho`$ | 0.2 |
+| one person | $`\pi_1 = 0.2 \times 0.8`$ | 0.16 |
+| two people | $`\pi_2 = 0.16 \times 0.8`$ | 0.128 |
+| 5 or more | $`\rho^5`$ = 0.8^5 | 0.3277 |
+| 10 or more | $`\rho^{10}`$ = 0.8^10 | 0.1074 |
+| mean in system | $`L = 0.8 / 0.2`$ | **4** |
+| mean on hold, not being served | $`L - (1 - \pi_0)`$ = 4 − 0.8 | 3.2 |
+| mean time in system | $`W = L/\lambda`$ = 4/4 | **1 hour** |
 
-The chance of 5 or more is a sum over every $n$ from 5 up, $(1 - \rho)(\rho^5 + \rho^6 + \dots)$, which the geometric series collapses to $\rho^5$.
+The chance of 5 or more is a sum over every $`n`$ from 5 up, $`(1 - \rho)(\rho^5 + \rho^6 + \dots)`$, which the geometric series collapses to $`\rho^5`$.
 
-A caller spends an hour in the system on average, most of it on hold. The step from $L$ to $W$ is Little's law, $L = \lambda W$, which holds far beyond this queue ([Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md)).
+A caller spends an hour in the system on average, most of it on hold. The step from $`L`$ to $`W`$ is Little's law, $`L = \lambda W`$, which holds far beyond this queue ([Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md)).
 
-The load is the lever. At 4.5, 4.75 and 4.9 arrivals an hour, $\rho$ is 0.90, 0.95 and 0.98, and $L$ is 9.00, 19.00 and 49.00: the line depends on the load through $1/(1 - \rho)$.
+The load is the lever. At 4.5, 4.75 and 4.9 arrivals an hour, $`\rho`$ is 0.90, 0.95 and 0.98, and $`L`$ is 9.00, 19.00 and 49.00: the line depends on the load through $`1/(1 - \rho)`$.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Read $I + G$ as the chances over one hour | idle row −3.0, 4.0 | Rates are not chances; the one-hour table is $e^{G}$, idle row 0.5556, 0.4444 |
-| Use $\rho$ as the busy share with no hold line | 0.8000, against 0.4444 | Callers who hang up never add work; $\rho$ is the busy share only when every caller stays |
+| Read $`I + G`$ as the chances over one hour | idle row −3.0, 4.0 | Rates are not chances; the one-hour table is $`e^{G}`$, idle row 0.5556, 0.4444 |
+| Use $`\rho`$ as the busy share with no hold line | 0.8000, against 0.4444 | Callers who hang up never add work; $`\rho`$ is the busy share only when every caller stays |
 | Count visits instead of time | idle 0.1000, against 0.2000 | The jump chain's shares ignore how long each visit lasts |
-| Drop $\rho < 1$: 5.5 arrivals an hour | $L$ = −11.00 | No stationary law exists; from empty the true mean is 11.88 at 12 hours and 19.34 at 24, still climbing |
+| Drop $`\rho < 1`$: 5.5 arrivals an hour | $`L`$ = −11.00 | No stationary law exists; from empty the true mean is 11.88 at 12 hours and 19.34 at 24, still climbing |
 
 The code prints every row.
 
@@ -226,7 +244,7 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-The code takes four roads for each desk. No hold line: the closed form; Euler steps at five step sizes, the error printed shrinking; uniformization; and 100,000 simulated mornings read at 15 minutes. M/M/1: the geometric formula; a generic Gaussian-elimination solve of $\pi G = 0$ on 120 states, which knows nothing of cuts; the jump chain reweighted by leaving rates; and one simulated run of 100,000 hours, with standard errors from 100 blocks of 1,000 hours, since neighbouring hours are alike. The M/M/1 desk from empty, at 4 and at 5.5 arrivals an hour, is computed by uniformization and checked against Euler steps of the forward equations on the same 451 states. Random numbers come from SplitMix64, written out, seeds 20260929 and 20260930. The asserts pit each road against an independent one and hold each simulation within 4 standard errors.
+The code takes four roads for each desk. No hold line: the closed form; Euler steps at five step sizes, the error printed shrinking; uniformization; and 100,000 simulated mornings read at 15 minutes. M/M/1: the geometric formula; a generic Gaussian-elimination solve of $`\pi G = 0`$ on 120 states, which knows nothing of cuts; the jump chain reweighted by leaving rates; and one simulated run of 100,000 hours, with standard errors from 100 blocks of 1,000 hours, since neighbouring hours are alike. The M/M/1 desk from empty, at 4 and at 5.5 arrivals an hour, is computed by uniformization and checked against Euler steps of the forward equations on the same 451 states. Random numbers come from SplitMix64, written out, seeds 20260929 and 20260930. The asserts pit each road against an independent one and hold each simulation within 4 standard errors.
 
 ### Python
 
@@ -628,10 +646,10 @@ The two outputs agree line for line.
 
 Lean proves the three formulas on this card for any positive rates, with load below 1 for M/M/1.
 
-- **The M/M/1 law, and only it.** Take $0 < \lambda < \mu$. Then a row of shares solves "rate out equals rate in" and adds to 1 exactly when $\pi_n = (1 - \rho) \rho^n$.
-- **The mean number in the system.** Take $0 < \lambda < \mu$. Then $L = \sum_n n \pi_n$ equals $\rho / (1 - \rho)$.
-- **The desk with no hold line.** Suppose $\lambda, \mu > 0$, and the chances start idle and solve the forward equations for all $t \ge 0$. Then $p_1(t) = \frac{\lambda}{\lambda + \mu}(1 - e^{-(\lambda + \mu) t})$.
-- **The hand arithmetic.** The worked numbers, the no-hold-line shares (5/9, 4/9), and the uniformization table $K$, with $K^2 = K$, all check exactly.
+- **The M/M/1 law, and only it.** Take $`0 < \lambda < \mu`$. Then a row of shares solves "rate out equals rate in" and adds to 1 exactly when $`\pi_n = (1 - \rho) \rho^n`$.
+- **The mean number in the system.** Take $`0 < \lambda < \mu`$. Then $`L = \sum_n n \pi_n`$ equals $`\rho / (1 - \rho)`$.
+- **The desk with no hold line.** Suppose $`\lambda, \mu > 0`$, and the chances start idle and solve the forward equations for all $`t \ge 0`$. Then $`p_1(t) = \frac{\lambda}{\lambda + \mu}(1 - e^{-(\lambda + \mu) t})`$.
+- **The hand arithmetic.** The worked numbers, the no-hold-line shares (5/9, 4/9), and the uniformization table $`K`$, with $`K^2 = K`$, all check exactly.
 
 The general rate matrix, the jump chain, the start from an empty desk and the simulations are left to the Python and Rust checks.
 
@@ -821,9 +839,9 @@ example : (9 : ℚ) * (4 / 9) = 4 ∧ (9 : ℚ) * (5 / 9) = 5 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating a rate as a chance.** A rate of 4 an hour is not a chance of 4 per hour, and $I + G$ is not the one-hour table: its idle row reads −3.0, 4.0, which no table of chances can. Rates give chances only over short stretches, about $g_{ij}\,h$ for small $h$, and over any real stretch through $e^{tG}$. The one-hour idle row is 0.5556, 0.4444.
+> **Treating a rate as a chance.** A rate of 4 an hour is not a chance of 4 per hour, and $`I + G`$ is not the one-hour table: its idle row reads −3.0, 4.0, which no table of chances can. Rates give chances only over short stretches, about $`g_{ij}\,h`$ for small $`h`$, and over any real stretch through $`e^{tG}`$. The one-hour idle row is 0.5556, 0.4444.
 >
-> - **Load as utilisation in every system.** $\rho$ = 0.8 is the busy share only when every caller waits. With no hold line the agent is busy 0.4444 of the time.
+> - **Load as utilisation in every system.** $`\rho`$ = 0.8 is the busy share only when every caller waits. With no hold line the agent is busy 0.4444 of the time.
 > - **Visits for time.** The jump chain puts the M/M/1 desk idle in 0.1000 of its visits; the desk is idle 0.2000 of the time.
 > - **A long-run law read at opening.** From an empty desk, the mean line is 3.24 after 8 hours, not 4.
 
@@ -831,11 +849,11 @@ example : (9 : ℚ) * (4 / 9) = 4 ∧ (9 : ℚ) * (5 / 9) = 5 := by norm_num
 
 ## Where you meet it in real life
 
-- **Call centres.** Staffing tables come from chains like this one with many agents; the blow-up of $1/(1 - \rho)$ is why centres plan loads well below 1.
+- **Call centres.** Staffing tables come from chains like this one with many agents; the blow-up of $`1/(1 - \rho)`$ is why centres plan loads well below 1.
 - **Computer systems.** A server with one worker is an M/M/1 queue to a first approximation, and the same load curve sets response times. Merged request streams are Poisson again ([Splitting and merging](03-splitting-and-superposition.md)).
 - **Machines that fail and are repaired.** The two-state chain, with failure and repair rates, gives the share of time a machine is up.
 - **Chemistry.** The Gillespie algorithm simulates reacting molecules as the code here simulates the desk: exponential waits, then a jump chosen in proportion to the rates.
-- **Credit ratings.** Grades that move at rates form a continuous-time chain; the chance of default by time $t$ is an entry of $e^{tG}$.
+- **Credit ratings.** Grades that move at rates form a continuous-time chain; the chance of default by time $`t`$ is an entry of $`e^{tG}`$.
 
 > **Say it back**
 > A continuous-time Markov chain jumps at random times, and its behaviour is set by a rate matrix: off the diagonal, the rate of each jump; on the diagonal, minus the rate of leaving. The chances at time t solve the forward equations; for a desk with no hold line, the chance of busy climbs to 4/9 at rate 9 an hour. The long-run shares balance rate out against rate in; for one agent with a hold line, cutting between n and n + 1 gives the geometric law 0.2 × 0.8^n, busy 80 percent of the time and 4 people on average. That law needs arrivals slower than services, and it counts time, not visits.
@@ -850,7 +868,7 @@ example : (9 : ℚ) * (4 / 9) = 4 ∧ (9 : ℚ) * (5 / 9) = 5 := by norm_num
 
 ## Where this goes next
 
-- [Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md): Little's law, $L = \lambda W$, for any queue, and queues with many servers or general service times.
+- [Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md): Little's law, $`L = \lambda W`$, for any queue, and queues with many servers or general service times.
 - [Renewal processes](06-renewal-processes-in-outline.md), the next card: what survives when the gaps between events are not exponential.
 
 The M/M/1 desk puts a caller in the system for an hour on average, from nothing more than a count of 4 people and an arrival rate of 4 an hour; why that division works for every queue, whatever its gaps, is the question Queues answers.

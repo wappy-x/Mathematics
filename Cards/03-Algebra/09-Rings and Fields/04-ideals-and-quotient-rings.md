@@ -31,26 +31,32 @@ flowchart LR
 
 A ring is a collection where you can add, subtract and multiply, but not always divide ([Rings](01-rings.md)).
 
-Write $R$ for the ring being collapsed and $I$ for the set thrown away — here the multiples of 9, written 9Z, with Z naming the whole numbers. A **class** is a pile the collapse leaves: everything differing from a name $a$ by a thrown-away amount.
+Write $`R`$ for the ring being collapsed and $`I`$ for the set thrown away — here the multiples of 9, written 9Z, with Z naming the whole numbers. A **class** is a pile the collapse leaves: everything differing from a name $`a`$ by a thrown-away amount.
 
-$$a + I = \{\, a + i : i \in I \,\} \qquad a + I = b + I \ \text{ exactly when } \ a - b \in I$$
+```math
+a + I = \{\, a + i : i \in I \,\} \qquad a + I = b + I \ \text{ exactly when } \ a - b \in I
+```
 
-$$(a + I) + (b + I) = (a + b) + I \qquad (a + I)(b + I) = ab + I$$
+```math
+(a + I) + (b + I) = (a + b) + I \qquad (a + I)(b + I) = ab + I
+```
 
 **Read it aloud:** two numbers name one class when their difference was thrown away; to combine classes, combine any two names and see where the answer falls.
 
-A nonempty $I$ is an **ideal** when both hold for every $a$, $b$ in $I$ and every $r$ in $R$:
+A nonempty $`I`$ is an **ideal** when both hold for every $`a`$, $`b`$ in $`I`$ and every $`r`$ in $`R`$:
 
-$$a - b \in I \qquad ra \in I \ \text{ and } \ ar \in I$$
+```math
+a - b \in I \qquad ra \in I \ \text{ and } \ ar \in I
+```
 
 The first is closure under subtraction. The second is **absorbing**: a member times anything in the ring, either side, stays inside. Multiples of 9 absorb: a whole number times a multiple of 9 is another one.
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
-| $R$, $I$ | the ring collapsed, the set thrown away | the whole numbers; multiples of 9 | a larger ideal, fewer classes |
-| $a$, $b$, $r$ | members; a and b name classes, r is any member | 47, 23, any whole number | other names, same answer |
-| $a + I$, $R/I$ | the class of a, the ring of classes, "R over I" | …, −7, 2, 11, 20, …; Z mod 9 | — |
-| $\varphi$, $\ker\varphi$ | a ring map, all it sends to 0 | casting out nines; multiples of 9 | — |
+| $`R`$, $`I`$ | the ring collapsed, the set thrown away | the whole numbers; multiples of 9 | a larger ideal, fewer classes |
+| $`a`$, $`b`$, $`r`$ | members; a and b name classes, r is any member | 47, 23, any whole number | other names, same answer |
+| $`a + I`$, $`R/I`$ | the class of a, the ring of classes, "R over I" | …, −7, 2, 11, 20, …; Z mod 9 | — |
+| $`\varphi`$, $`\ker\varphi`$ | a ring map, all it sends to 0 | casting out nines; multiples of 9 | — |
 
 ### When it holds
 
@@ -68,13 +74,17 @@ With the multiples of 9 gone, 47 and 56 name one class, so "multiply the classes
 
 ### Step 1: where the test comes from
 
-Change the names $a$ and $b$ by thrown-away amounts i and j. Adding:
+Change the names $`a`$ and $`b`$ by thrown-away amounts i and j. Adding:
 
-$$(a + i) + (b + j) = (a + b) + (i + j)$$
+```math
+(a + i) + (b + j) = (a + b) + (i + j)
+```
 
 The answer moved by i + j, so the set must hold sums, and differences too because names differ by a member: closure under subtraction. Multiplying:
 
-$$(a + i)(b + j) = ab + aj + ib + ij$$
+```math
+(a + i)(b + j) = ab + aj + ib + ij
+```
 
 Now it moved by aj, ib and ij, each pairing a ring member with a thrown-away one, and nothing so far puts them inside. Demanding it is the second half of the test, and granting it holds the product's class still.
 
@@ -84,17 +94,19 @@ Small names first: 47 leaves 2, 23 leaves 5, and 2 × 5 = 10 leaves 1. Large nam
 
 ### Step 3: the clock is Z over 9Z
 
-Those nine classes are Z mod 9 ([Adding and multiplying on the clock](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)). Clock arithmetic is no separate invention: it is this construction, $R$ the whole numbers, $I$ the multiples of 9. Every ideal of Z is the multiples of some n: its smallest positive member divides the rest.
+Those nine classes are Z mod 9 ([Adding and multiplying on the clock](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)). Clock arithmetic is no separate invention: it is this construction, $`R`$ the whole numbers, $`I`$ the multiples of 9. Every ideal of Z is the multiples of some n: its smallest positive member divides the rest.
 
 ### Step 4: kernels are ideals
 
-A **ring map** $\varphi$ carries both operations across: sums go to sums, products to products. Casting out nines is one; its **kernel**, all it sends to 0, is the multiples of 9.
+A **ring map** $`\varphi`$ carries both operations across: sums go to sums, products to products. Casting out nines is one; its **kernel**, all it sends to 0, is the multiples of 9.
 
-Every kernel passes the test. If $a$ and $b$ go to 0, so does $a - b$: closed. If $a$ goes to 0, so do ra and ar, each an image times 0: absorbing.
+Every kernel passes the test. If $`a`$ and $`b`$ go to 0, so does $`a - b`$: closed. If $`a`$ goes to 0, so do ra and ar, each an image times 0: absorbing.
 
-And sending each member to its class is a ring map with kernel $I$, so ideals and kernels are one list. The **first isomorphism theorem** states the pairing:
+And sending each member to its class is a ring map with kernel $`I`$, so ideals and kernels are one list. The **first isomorphism theorem** states the pairing:
 
-$$R/\ker\varphi \;\cong\; \operatorname{im}\varphi$$
+```math
+R/\ker\varphi \;\cong\; \mathrm{im}\,\varphi
+```
 
 ≅ means one ring under two sets of names, and the image is what the map reaches: the nine classes are exactly the nine values the check returns.
 
@@ -142,7 +154,9 @@ The same runs on polynomials ([Polynomials behave like integers](03-polynomials-
 
 Multiplying (2 + 3x)(4 + x) out gives 8 + 14x + 3x^2; replacing 3x^2 by −3 leaves **5 + 14x**. The coordinate rule, with c, d, u, v real,
 
-$$(c + dx)(u + vx) = (cu - dv) + (cv + du)x$$
+```math
+(c + dx)(u + vx) = (cu - dv) + (cv + du)x
+```
 
 gives 5 + 14x as well. That world is the doorway to the complex numbers; the collapse run over a clock instead is [Finite fields](05-finite-fields.md).
 

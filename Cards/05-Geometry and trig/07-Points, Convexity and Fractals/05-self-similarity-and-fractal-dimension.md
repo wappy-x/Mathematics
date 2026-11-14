@@ -26,34 +26,38 @@ Drawn to scale, 1 cm = 7 units, centre at (180, 120). Dotted: the starting trian
 
 ## The formula
 
-Notation first, in words. A shape is magnified $s$ times, and $N$ counts the non-overlapping copies of the original inside the result. The **similarity dimension** $D$ is the power that turns $s$ into $N$.
+Notation first, in words. A shape is magnified $`s`$ times, and $`N`$ counts the non-overlapping copies of the original inside the result. The **similarity dimension** $`D`$ is the power that turns $`s`$ into $`N`$.
 
-$$N = s^D \qquad\text{so}\qquad D = \frac{\log N}{\log s}$$
+```math
+N = s^D \qquad\text{so}\qquad D = \frac{\log N}{\log s}
+```
 
 **Read it aloud:** N equals s to the power D, so D is log N over log s.
 
-Magnified 3 times, a segment holds 3 copies ($D$ = 1), a square 9 = 3^2 ($D$ = 2), a cube 27 = 3^3 ($D$ = 3).
+Magnified 3 times, a segment holds 3 copies ($`D`$ = 1), a square 9 = 3^2 ($`D`$ = 2), a cube 27 = 3^3 ($`D`$ = 3).
 
-One side of the snowflake, magnified 3 times, holds 4 copies of itself: $D$ = log 4 / log 3 = 1.2619.
+One side of the snowflake, magnified 3 times, holds 4 copies of itself: $`D`$ = log 4 / log 3 = 1.2619.
 
-The Sierpinski triangle starts from a triangle: join the midpoints of its sides, remove the middle one of the four small triangles, and repeat on every piece left. Magnified 2 times, it holds 3: $D$ = log 3 / log 2 = 1.5850. Any log base works if top and bottom share it ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+The Sierpinski triangle starts from a triangle: join the midpoints of its sides, remove the middle one of the four small triangles, and repeat on every piece left. Magnified 2 times, it holds 3: $`D`$ = log 3 / log 2 = 1.5850. Any log base works if top and bottom share it ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
-For the snowflake itself, with first side $L$ and stage number $n$:
+For the snowflake itself, with first side $`L`$ and stage number $`n`$:
 
-$$P_n = 3L\left(\tfrac{4}{3}\right)^n, \qquad A_n = A_0\left(\tfrac{8}{5} - \tfrac{3}{5}\left(\tfrac{4}{9}\right)^n\right), \qquad A_0 = \tfrac{\sqrt{3}}{4}L^2$$
+```math
+P_n = 3L\left(\tfrac{4}{3}\right)^n, \qquad A_n = A_0\left(\tfrac{8}{5} - \tfrac{3}{5}\left(\tfrac{4}{9}\right)^n\right), \qquad A_0 = \tfrac{\sqrt{3}}{4}L^2
+```
 
 **Read it aloud:** the perimeter gains a third each stage; the area's shortfall below eight fifths of the first triangle shrinks by four ninths each stage.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$ | the magnification | 3 (Koch), 2 (Sierpinski) | D falls |
-| $N$ | copies inside the magnified shape | 4 (Koch), 3 (Sierpinski) | D rises |
-| $D$ | similarity dimension | 1.2619, 1.5850 | — |
-| $L$ | side of the first triangle | 27 cm | every length scales with it |
-| $n$ | stage: rounds of replacing every side | 0 to 6 | perimeter grows, area creeps up |
-| $P_n$ | perimeter at stage n | 81 cm, then 108, 144 … | — |
-| $A_0$ | area of the first triangle | 315.6663 cm^2 | final area scales with it |
-| $A_n$ | area at stage n | 420.8883 cm^2 at stage 1 | — |
+| $`s`$ | the magnification | 3 (Koch), 2 (Sierpinski) | D falls |
+| $`N`$ | copies inside the magnified shape | 4 (Koch), 3 (Sierpinski) | D rises |
+| $`D`$ | similarity dimension | 1.2619, 1.5850 | — |
+| $`L`$ | side of the first triangle | 27 cm | every length scales with it |
+| $`n`$ | stage: rounds of replacing every side | 0 to 6 | perimeter grows, area creeps up |
+| $`P_n`$ | perimeter at stage n | 81 cm, then 108, 144 … | — |
+| $`A_0`$ | area of the first triangle | 315.6663 cm^2 | final area scales with it |
+| $`A_n`$ | area at stage n | 420.8883 cm^2 at stage 1 | — |
 
 ### When it holds
 
@@ -78,22 +82,22 @@ Four thirds is more than 1, so the powers pass any length named in advance. For 
 
 ### Step 2: the area gains less and less
 
-Stage n adds a small triangle on each of the 3 × 4^(n−1) sides of stage n − 1. Its sides are L/3^n, so its area is $A_0$ / 9^n: shrink lengths by 3^n and areas shrink by 9^n, the square ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)).
+Stage n adds a small triangle on each of the 3 × 4^(n−1) sides of stage n − 1. Its sides are L/3^n, so its area is $`A_0`$ / 9^n: shrink lengths by 3^n and areas shrink by 9^n, the square ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)).
 
-Stage 1 adds a third of the first area, reaching 420.8883 cm^2. Each later stage adds four ninths of the last gain: four times the triangles, each a ninth the size. Induction gives the formula for $A_n$: check stage 0, then show each stage carries it to the next ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Stage 1 adds a third of the first area, reaching 420.8883 cm^2. Each later stage adds four ninths of the last gain: four times the triangles, each a ninth the size. Induction gives the formula for $`A_n`$: check stage 0, then show each stage carries it to the next ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 <details>
 <summary>Detailed proof: the area formula, by induction</summary>
 
-At stage 0 the formula gives $A_0$ × (8/5 − 3/5) = $A_0$.
+At stage 0 the formula gives $`A_0`$ × (8/5 − 3/5) = $`A_0`$.
 
-Stage n adds 3 × 4^(n−1) triangles of area $A_0$ / 9^n, which is $A_0$ × (1/3) × (4/9)^(n−1).
+Stage n adds 3 × 4^(n−1) triangles of area $`A_0`$ / 9^n, which is $`A_0`$ × (1/3) × (4/9)^(n−1).
 
-The formula rises from stage n − 1 to n by $A_0$ × (3/5) × (4/9)^(n−1) × (1 − 4/9), the same amount. Right at stage 0 and carried from each stage to the next, it is right at every stage.
+The formula rises from stage n − 1 to n by $`A_0`$ × (3/5) × (4/9)^(n−1) × (1 − 4/9), the same amount. Right at stage 0 and carried from each stage to the next, it is right at every stage.
 
 </details>
 
-The shortfall below 8/5 × $A_0$ is (3/5) × (4/9)^n × $A_0$, which more than halves every stage and drops below any size named in advance. The area settles at 8/5 × 315.6663 = 505.0660 cm^2.
+The shortfall below 8/5 × $`A_0`$ is (3/5) × (4/9)^n × $`A_0`$, which more than halves every stage and drops below any size named in advance. The area settles at 8/5 × 315.6663 = 505.0660 cm^2.
 
 ### Step 3: a fence that no stage crosses
 
@@ -344,10 +348,10 @@ The two outputs match line for line.
 
 Lean proves the dimension formula and the snowflake's perimeter and area facts for every magnification above 1 and every starting side.
 
-- When $s$ is more than 1 and $N$ is at least 1, exactly one power $D$ has $s^D = N$: $D$ = log N / log s.
-- With first side $L$, stage n has 3 × 4^n sides of L/3^n, and this perimeter passes any length named in advance.
-- Stage n adds 3 × 4^(n−1) triangles of $A_0$ / 9^n, and these add up to the formula for $A_n$ at every stage.
-- The area stays below the hexagon's 2 × $A_0$ at every stage and settles at 8/5 × $A_0$.
+- When $`s`$ is more than 1 and $`N`$ is at least 1, exactly one power $`D`$ has $`s^D = N`$: $`D`$ = log N / log s.
+- With first side $`L`$, stage n has 3 × 4^n sides of L/3^n, and this perimeter passes any length named in advance.
+- Stage n adds 3 × 4^(n−1) triangles of $`A_0`$ / 9^n, and these add up to the formula for $`A_n`$ at every stage.
+- The area stays below the hexagon's 2 × $`A_0`$ at every stage and settles at 8/5 × $`A_0`$.
 - log 4 / log 3 for the Koch edge and log 3 / log 2 for the Sierpinski triangle both lie strictly between 1 and 2.
 - The card's own sums: perimeters 81 to 256 cm, stages 25 and 62, the side counts, the hexagon as twice the triangle, and Sierpinski's 729 triangles.
 

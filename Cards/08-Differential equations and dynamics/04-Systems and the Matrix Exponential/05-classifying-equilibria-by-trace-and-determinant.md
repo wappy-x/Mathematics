@@ -26,28 +26,32 @@ To scale: 30 units across per unit of trace, 24 up per unit of determinant. The 
 
 ## The formula
 
-Reminder: x' = Ax says "the rate of the state x is the matrix A times the state" ([From one equation to a system](01-from-one-equation-to-a-system.md)). Here A has entries `[[a, b], [c, d]]`, row by row. The Greek letter $\tau$ (tau) names the trace, $\Delta$ (capital delta) the determinant.
+Reminder: x' = Ax says "the rate of the state x is the matrix A times the state" ([From one equation to a system](01-from-one-equation-to-a-system.md)). Here A has entries `[[a, b], [c, d]]`, row by row. The Greek letter $`\tau`$ (tau) names the trace, $`\Delta`$ (capital delta) the determinant.
 
-$$\tau = a + d, \qquad \Delta = ad - bc, \qquad \lambda^2 - \tau\lambda + \Delta = 0$$
+```math
+\tau = a + d, \qquad \Delta = ad - bc, \qquad \lambda^2 - \tau\lambda + \Delta = 0
+```
 
 **Read it aloud:** the eigenvalues of A are the roots of a quadratic built from the trace and the determinant; they add to the trace and multiply to the determinant.
 
 The quadratic formula gives them:
 
-$$\lambda_1, \lambda_2 = \frac{\tau \pm \sqrt{\tau^2 - 4\Delta}}{2}$$
+```math
+\lambda_1, \lambda_2 = \frac{\tau \pm \sqrt{\tau^2 - 4\Delta}}{2}
+```
 
 The chart reads: Δ < 0, a **saddle**, unstable. Δ > 0 with a discriminant of at least 0, a **node**; below 0, a **spiral**; either one stable when τ < 0 and unstable when τ > 0. Δ > 0 with τ = 0, a **centre**: stable, not asymptotically stable.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the state, two numbers | rooms' temperatures above outside, C | — |
-| $t$ | time | hours (rooms), seconds (absorber) | — |
-| $A$ | the rate matrix | rooms `[[-2, 1], [1, -2]]`, per hour | — |
-| $a$, $b$, $c$, $d$ | the entries of A | −2, 1, 1, −2 | — |
-| $\tau$ | trace, a + d: the eigenvalues' sum, per unit time | rooms −4, absorber −2 | past 0, attraction turns to repulsion |
-| $\Delta$ | determinant, ad − bc: their product, per unit time^2 | rooms 3, absorber 5 | past 0, a saddle becomes a node or spiral |
-| $\tau^2 - 4\Delta$ | the discriminant, under the root | rooms 4, absorber −16 | past 0, a spiral becomes a node |
-| $\lambda$, $\lambda_1$, $\lambda_2$, $i$ | eigenvalues, the special motions' rates; i squares to −1 | rooms −1, −3; absorber $-1 \pm 2i$ | real part past 0, that motion grows |
+| $`x`$ | the state, two numbers | rooms' temperatures above outside, C | — |
+| $`t`$ | time | hours (rooms), seconds (absorber) | — |
+| $`A`$ | the rate matrix | rooms `[[-2, 1], [1, -2]]`, per hour | — |
+| $`a`$, $`b`$, $`c`$, $`d`$ | the entries of A | −2, 1, 1, −2 | — |
+| $`\tau`$ | trace, a + d: the eigenvalues' sum, per unit time | rooms −4, absorber −2 | past 0, attraction turns to repulsion |
+| $`\Delta`$ | determinant, ad − bc: their product, per unit time^2 | rooms 3, absorber 5 | past 0, a saddle becomes a node or spiral |
+| $`\tau^2 - 4\Delta`$ | the discriminant, under the root | rooms 4, absorber −16 | past 0, a spiral becomes a node |
+| $`\lambda`$, $`\lambda_1`$, $`\lambda_2`$, $`i`$ | eigenvalues, the special motions' rates; i squares to −1 | rooms −1, −3; absorber $`-1 \pm 2i`$ | real part past 0, that motion grows |
 
 ### When it holds
 
@@ -68,7 +72,9 @@ Every solution of x' = Ax is built from special motions changing like e^(λt), o
 
 An eigenvalue makes A − λI squash some direction to zero (I is the identity matrix), which happens exactly when its determinant is zero:
 
-$$(a - \lambda)(d - \lambda) - bc = \lambda^2 - (a + d)\lambda + (ad - bc) = 0.$$
+```math
+(a - \lambda)(d - \lambda) - bc = \lambda^2 - (a + d)\lambda + (ad - bc) = 0.
+```
 
 It also factors as (λ − λ1)(λ − λ2) = λ^2 − (λ1 + λ2)λ + λ1λ2, so λ1 + λ2 = τ and λ1λ2 = Δ. For the rooms, the pair adding to −4 and multiplying to 3 is −1 and −3.
 

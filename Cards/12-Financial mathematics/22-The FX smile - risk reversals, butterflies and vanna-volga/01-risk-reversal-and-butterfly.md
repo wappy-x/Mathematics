@@ -36,50 +36,60 @@ The sloping line is the smile: 10.75 percent at the 25-delta put strike, 10.00 a
 
 ## The formula
 
-$$\text{RR} = \sigma_{25c} - \sigma_{25p}, \qquad \text{BF} = \tfrac12\big(\sigma_{25c} + \sigma_{25p}\big) - \sigma_{\text{ATM}}$$
+```math
+\text{RR} = \sigma_{25c} - \sigma_{25p}, \qquad \text{BF} = \tfrac12\big(\sigma_{25c} + \sigma_{25p}\big) - \sigma_{\text{ATM}}
+```
 
 and, solved the other way,
 
-$$\sigma_{25c} = \sigma_{\text{ATM}} + \text{BF} + \tfrac12\text{RR}, \qquad \sigma_{25p} = \sigma_{\text{ATM}} + \text{BF} - \tfrac12\text{RR}$$
+```math
+\sigma_{25c} = \sigma_{\text{ATM}} + \text{BF} + \tfrac12\text{RR}, \qquad \sigma_{25p} = \sigma_{\text{ATM}} + \text{BF} - \tfrac12\text{RR}
+```
 
 **Read it aloud:** the risk reversal is the call wing's vol minus the put wing's vol; the butterfly is how far the wings' average sits above the middle; so each wing is the middle, plus the bow, plus or minus half the tilt.
 
 The two trades that carry the same names, each leg priced by Garman-Kohlhagen at its own vol:
 
-$$\text{RR trade} = C(K_{25c};\sigma_{25c}) - P(K_{25p};\sigma_{25p})$$
+```math
+\text{RR trade} = C(K_{25c};\sigma_{25c}) - P(K_{25p};\sigma_{25p})
+```
 
-$$\text{BF trade} = \big[C(K_{25c};\sigma_{25c}) + P(K_{25p};\sigma_{25p})\big] - \big[C(K_{\text{ATM}};\sigma_{\text{ATM}}) + P(K_{\text{ATM}};\sigma_{\text{ATM}})\big]$$
+```math
+\text{BF trade} = \big[C(K_{25c};\sigma_{25c}) + P(K_{25p};\sigma_{25p})\big] - \big[C(K_{\text{ATM}};\sigma_{\text{ATM}}) + P(K_{\text{ATM}};\sigma_{\text{ATM}})\big]
+```
 
 The risk reversal trade buys the 25-delta call and sells the 25-delta put. The butterfly trade buys the **strangle** (the two wing options together) and sells the **straddle** (a call and a put at the ATM strike).
 
 | Symbol | Plain meaning | In our example | Push it up and… |
 | --- | --- | --- | --- |
-| $\sigma_{\text{ATM}}$ | the at-the-money vol: the smile's height in the middle | 10.00% | every vol and every option price rises |
-| $\sigma_{25c}$, $\sigma_{25p}$ | the implied vols of the 25-delta euro call and euro put | 9.75%, 10.75% | that leg's price rises |
-| $\text{RR}$ | the risk reversal: call vol minus put vol, the smile's tilt | −1.00 | the call wing rises, the put wing falls, the RR trade gets dearer |
-| $\text{BF}$ | the butterfly: wing average minus ATM, the smile's bow | +0.25 | both wings rise together, the strangle gets dearer |
-| $K_{25c}$, $K_{25p}$, $K_{\text{ATM}}$ | the three strikes, in dollars per euro | 1.201425, 1.052466, 1.127847 | — |
-| $C(K;\sigma)$, $P(K;\sigma)$ | a euro call or euro put at strike $K$, priced by Garman-Kohlhagen at vol $\sigma$, in dollars per euro | 0.015390 (call), 0.018823 (put) | — |
-| $S$, $F$ | spot EURUSD today; the one-year forward $S\,e^{(r_d - r_f)T}$ | 1.1000, 1.122221 | — |
-| $r_d$, $r_f$ | the dollar and euro interest rates, continuously compounded | 5%, 3% | — |
-| $T$ | time to expiry, in years | 1 | — |
-| $N(x)$, $\varphi(x)$ | the bell-curve area to the left of $x$, and the bell curve's height at $x$ | — | — |
-| $d_1$ | $\ln(F/K)/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}$: how far the forward sits above the strike, in units of $\sigma\sqrt{T}$, plus a half-unit shift | — | — |
-| $\mathcal{V}$ | vega: dollars per euro gained per one vol point, $S\,e^{-r_f T}\varphi(d_1)\sqrt{T}/100$ | 0.003446 at each wing | — |
+| $`\sigma_{\text{ATM}}`$ | the at-the-money vol: the smile's height in the middle | 10.00% | every vol and every option price rises |
+| $`\sigma_{25c}`$, $`\sigma_{25p}`$ | the implied vols of the 25-delta euro call and euro put | 9.75%, 10.75% | that leg's price rises |
+| $`\text{RR}`$ | the risk reversal: call vol minus put vol, the smile's tilt | −1.00 | the call wing rises, the put wing falls, the RR trade gets dearer |
+| $`\text{BF}`$ | the butterfly: wing average minus ATM, the smile's bow | +0.25 | both wings rise together, the strangle gets dearer |
+| $`K_{25c}`$, $`K_{25p}`$, $`K_{\text{ATM}}`$ | the three strikes, in dollars per euro | 1.201425, 1.052466, 1.127847 | — |
+| $`C(K;\sigma)`$, $`P(K;\sigma)`$ | a euro call or euro put at strike $`K`$, priced by Garman-Kohlhagen at vol $`\sigma`$, in dollars per euro | 0.015390 (call), 0.018823 (put) | — |
+| $`S`$, $`F`$ | spot EURUSD today; the one-year forward $`S\,e^{(r_d - r_f)T}`$ | 1.1000, 1.122221 | — |
+| $`r_d`$, $`r_f`$ | the dollar and euro interest rates, continuously compounded | 5%, 3% | — |
+| $`T`$ | time to expiry, in years | 1 | — |
+| $`N(x)`$, $`\varphi(x)`$ | the bell-curve area to the left of $`x`$, and the bell curve's height at $`x`$ | — | — |
+| $`d_1`$ | $`\ln(F/K)/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}`$: how far the forward sits above the strike, in units of $`\sigma\sqrt{T}`$, plus a half-unit shift | — | — |
+| $`\mathcal{V}`$ | vega: dollars per euro gained per one vol point, $`S\,e^{-r_f T}\varphi(d_1)\sqrt{T}/100`$ | 0.003446 at each wing | — |
 
 The strikes come from the deltas, each at its own vol ([Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) derives them):
 
-$$K_{25} = F\exp\!\big(-d_1\,\sigma\sqrt{T} + \tfrac12\sigma^2 T\big), \qquad K_{\text{ATM}} = F\,e^{\sigma_{\text{ATM}}^2 T/2}$$
+```math
+K_{25} = F\exp\!\big(-d_1\,\sigma\sqrt{T} + \tfrac12\sigma^2 T\big), \qquad K_{\text{ATM}} = F\,e^{\sigma_{\text{ATM}}^2 T/2}
+```
 
-In words: a 25-delta strike is the forward moved by the $d_1$ that makes the hedge 0.25, in steps of $\sigma\sqrt{T}$; the ATM strike is the one where a call and a put together need no hedge at all. For the call, $d_1$ is the point where $e^{-r_f T}N(d_1) = 0.25$; for the put, it is the same number with its sign flipped.
+In words: a 25-delta strike is the forward moved by the $`d_1`$ that makes the hedge 0.25, in steps of $`\sigma\sqrt{T}`$; the ATM strike is the one where a call and a put together need no hedge at all. For the call, $`d_1`$ is the point where $`e^{-r_f T}N(d_1) = 0.25`$; for the put, it is the same number with its sign flipped.
 
 ### When it holds
 
 The two quote definitions are conventions: they hold because the market uses them. What can break is how they are read and priced.
 
 - **The right delta.** For EURUSD up to one year, the 25-delta strikes are set on spot delta with the premium not adjusted ([Four deltas for one option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md) sets out the choices). A different delta convention lands the same "25" on strikes tens of pips away (a pip is 0.0001 dollars per euro), and every price moves with it.
-- **The butterfly as a smile strangle.** This card reads BF as the bow of the smile itself. Brokers quote a *market* strangle, priced at one vol, $\sigma_{\text{ATM}} + \text{BF}$, for both wings; its smile bow differs by a fraction of a vol point, as [The broker butterfly](02-market-strangle-and-smile-strangle.md) shows.
-- **Positive wings.** Both recovered vols must be positive: $\sigma_{\text{ATM}} + \text{BF} > \tfrac12|\text{RR}|$. A quote that breaks this has no smile behind it.
+- **The butterfly as a smile strangle.** This card reads BF as the bow of the smile itself. Brokers quote a *market* strangle, priced at one vol, $`\sigma_{\text{ATM}} + \text{BF}`$, for both wings; its smile bow differs by a fraction of a vol point, as [The broker butterfly](02-market-strangle-and-smile-strangle.md) shows.
+- **Positive wings.** Both recovered vols must be positive: $`\sigma_{\text{ATM}} + \text{BF} > \tfrac12|\text{RR}|`$. A quote that breaks this has no smile behind it.
 - **Three points, not a curve.** The quotes fix the smile at three strikes only. A vol for any other strike needs an interpolation rule, and each rule gives a different answer.
 
 Conventions verified 27 Sep 2026, as set out in Reiswich and Wystup (2012): risk reversal quoted as call vol minus put vol, the delta-neutral straddle as at the money, spot delta without premium adjustment for EURUSD up to one year.
@@ -98,7 +108,9 @@ Inverting the quotes needs three facts before it solves. **Existence:** any thre
 
 Double the butterfly and add twice the ATM vol:
 
-$$2\,\text{BF} + 2\,\sigma_{\text{ATM}} = \sigma_{25c} + \sigma_{25p}.$$
+```math
+2\,\text{BF} + 2\,\sigma_{\text{ATM}} = \sigma_{25c} + \sigma_{25p}.
+```
 
 That is the sum of the wings. The risk reversal is their difference. A sum and a difference pin down two numbers: half the sum plus half the difference is the call vol, half the sum minus half the difference is the put vol. That gives the two formulas above, and on the house quotes a call vol of 9.75 and a put vol of 10.75.
 
@@ -106,8 +118,10 @@ That is the sum of the wings. The risk reversal is their difference. A sum and a
 <summary>Detailed proof: the map from vols to quotes can always be undone</summary>
 
 Write the three vols as a column (put, ATM, call) and the three quotes as a column (ATM, RR, BF). The quotes are the vols multiplied by one fixed matrix:
-$$\begin{pmatrix}\sigma_{\text{ATM}}\\ \text{RR}\\ \text{BF}\end{pmatrix} = \begin{pmatrix}0 & 1 & 0\\ -1 & 0 & 1\\ \tfrac12 & -1 & \tfrac12\end{pmatrix}\begin{pmatrix}\sigma_{25p}\\ \sigma_{\text{ATM}}\\ \sigma_{25c}\end{pmatrix}.$$
-Expanding along the first row, its determinant (the factor by which the map scales volume) is $-1 \times \big((-1)\cdot\tfrac12 - 1\cdot\tfrac12\big) = 1$. A determinant that is not zero means the matrix has an inverse, so every quote triple comes from exactly one vol triple: existence and uniqueness at once. The inverse is the pair of formulas in Step 1 together with $\sigma_{\text{ATM}} = \sigma_{\text{ATM}}$. Nothing in the algebra forces the answers to be positive, which is why the boundary condition has to be checked separately.
+
+$`\displaystyle \begin{pmatrix}\sigma_{\text{ATM}}\\ \text{RR}\\ \text{BF}\end{pmatrix} = \begin{pmatrix}0 & 1 & 0\\ -1 & 0 & 1\\ \tfrac12 & -1 & \tfrac12\end{pmatrix}\begin{pmatrix}\sigma_{25p}\\ \sigma_{\text{ATM}}\\ \sigma_{25c}\end{pmatrix}.`$
+
+Expanding along the first row, its determinant (the factor by which the map scales volume) is $`-1 \times \big((-1)\cdot\tfrac12 - 1\cdot\tfrac12\big) = 1`$. A determinant that is not zero means the matrix has an inverse, so every quote triple comes from exactly one vol triple: existence and uniqueness at once. The inverse is the pair of formulas in Step 1 together with $`\sigma_{\text{ATM}} = \sigma_{\text{ATM}}`$. Nothing in the algebra forces the answers to be positive, which is why the boundary condition has to be checked separately.
 
 </details>
 
@@ -121,11 +135,13 @@ Buy the 25-delta call, sell the 25-delta put, one euro of each. At expiry the po
 
 **Its delta is 0.50.** The call brings +0.25. Selling the put removes −0.25, which is +0.25. A risk reversal is half a euro long, plus a view on the smile. The check confirms it by nudging spot and repricing: 0.500000.
 
-**Its vega is zero to first order.** Vega at a strike depends on the vol only through $d_1$, and a 25-delta strike is defined by its $d_1$. The call's $d_1$ and the put's $d_1$ are the same number with opposite signs, and the bell curve is symmetric, so the two vegas are equal: 0.003446 dollars per euro per vol point at each wing. Long one, short the other: the vegas cancel. The trade does not care if all vols rise together. It cares if the tilt changes.
+**Its vega is zero to first order.** Vega at a strike depends on the vol only through $`d_1`$, and a 25-delta strike is defined by its $`d_1`$. The call's $`d_1`$ and the put's $`d_1`$ are the same number with opposite signs, and the bell curve is symmetric, so the two vegas are equal: 0.003446 dollars per euro per vol point at each wing. Long one, short the other: the vegas cancel. The trade does not care if all vols rise together. It cares if the tilt changes.
 
 **At its strikes, its price is almost all tilt.** Price each leg at its own vol and each moves from its ATM-vol price by about vega times the gap between its vol and the ATM vol. Subtract:
 
-$$\text{RR price} - \text{RR price at one vol} \approx \mathcal{V}\,(\sigma_{25c} - \sigma_{\text{ATM}}) - \mathcal{V}\,(\sigma_{25p} - \sigma_{\text{ATM}}) = \mathcal{V}\times\text{RR}.$$
+```math
+\text{RR price} - \text{RR price at one vol} \approx \mathcal{V}\,(\sigma_{25c} - \sigma_{\text{ATM}}) - \mathcal{V}\,(\sigma_{25p} - \sigma_{\text{ATM}}) = \mathcal{V}\times\text{RR}.
+```
 
 With one vol for both legs, the house strikes give a risk reversal worth −0.000015 dollars per euro: almost nothing. With the smile, it is worth −0.003433. The exact gap is −0.003417; vega times RR gives 0.003446 × (−1.00) = −0.003446, within 1 percent.
 
@@ -133,7 +149,9 @@ With one vol for both legs, the house strikes give a risk reversal worth −0.00
 
 Buy the strangle, sell the straddle. The straddle's delta is zero by the choice of its strike. The strangle's is 0.25 − 0.25 = 0. So the butterfly trade has no delta. The same vega argument, with a plus sign where the risk reversal had a minus, gives the wings' premium over one flat vol:
 
-$$\text{strangle} - \text{strangle at one vol} \approx \mathcal{V}\,(\sigma_{25c} - \sigma_{\text{ATM}}) + \mathcal{V}\,(\sigma_{25p} - \sigma_{\text{ATM}}) = 2\,\mathcal{V}\times\text{BF}.$$
+```math
+\text{strangle} - \text{strangle at one vol} \approx \mathcal{V}\,(\sigma_{25c} - \sigma_{\text{ATM}}) + \mathcal{V}\,(\sigma_{25p} - \sigma_{\text{ATM}}) = 2\,\mathcal{V}\times\text{BF}.
+```
 
 Exact: 0.001684 dollars per euro. Estimate: 0.001723. The tilt cancels; only the bow is left.
 
@@ -155,18 +173,18 @@ House market: EURUSD 1.1000, dollar rate 5 percent, euro rate 3 percent, one yea
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forward $F$ | $1.10\,e^{0.05 - 0.03}$ | 1.122221 |
-| call vol | $10.00 + 0.25 - 0.50$ | 9.75% |
-| put vol | $10.00 + 0.25 + 0.50$ | 10.75% |
+| forward $`F`$ | $`1.10\,e^{0.05 - 0.03}`$ | 1.122221 |
+| call vol | $`10.00 + 0.25 - 0.50`$ | 9.75% |
+| put vol | $`10.00 + 0.25 + 0.50`$ | 10.75% |
 | put strike, 25 delta at 10.75% | from [Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) | 1.052466 |
-| ATM strike | $1.122221 \times e^{0.01/2}$ | 1.127847 |
+| ATM strike | $`1.122221 \times e^{0.01/2}`$ | 1.127847 |
 | call strike, 25 delta at 9.75% | same card | 1.201425 |
 | 25-delta call at 9.75% | Garman-Kohlhagen | 0.015390 |
 | 25-delta put at 10.75% | Garman-Kohlhagen | 0.018823 |
-| **RR trade** | $0.015390 - 0.018823$ | **−0.003433** |
-| ATM straddle at 10% | $0.040054 + 0.045404$ | 0.085458 |
-| strangle at own vols | $0.015390 + 0.018823$ | 0.034213 |
-| **BF trade** | $0.034213 - 0.085458$ | **−0.051245** |
+| **RR trade** | $`0.015390 - 0.018823`$ | **−0.003433** |
+| ATM straddle at 10% | $`0.040054 + 0.045404`$ | 0.085458 |
+| strangle at own vols | $`0.015390 + 0.018823`$ | 0.034213 |
+| **BF trade** | $`0.034213 - 0.085458`$ | **−0.051245** |
 | on EUR 10 million | RR, BF | USD −34,325.07, −512,448.85 |
 
 The risk reversal costs less than nothing: its buyer receives 34.33 pips, because the put sold is worth more than the call bought. At these same strikes, one flat vol nets the two legs to −0.15 pips, so the tilt carries almost all of the premium. The butterfly trade receives 512.45 pips because a straddle is worth far more than a strangle; the smile makes that strangle 16.84 pips dearer than one flat vol would.
@@ -186,7 +204,7 @@ Every number in that table is printed by the checks below.
 
 ## Code, from first principles, and it actually runs
 
-The script unpacks the three quotes into three vols, finds the three strikes, and prices both trades. It takes **three independent roads**: the Garman-Kohlhagen formula for each leg; a brute-force average of each payoff over the bell curve, by Simpson's rule (adding up an area in many thin slices), which uses no $d_1$ at all; and a round trip that backs each leg's vol out of the brute-force price by bisection (halving the search range until the price matches) and rebuilds RR and BF from them. Strikes are found twice, by the closed form and by searching on delta. The bell-curve area is itself Simpson's rule written out, so nothing imported knows an answer. It also prints the Greeks, the vega estimates of Steps 3 and 4, every "what breaks" number and the chart points.
+The script unpacks the three quotes into three vols, finds the three strikes, and prices both trades. It takes **three independent roads**: the Garman-Kohlhagen formula for each leg; a brute-force average of each payoff over the bell curve, by Simpson's rule (adding up an area in many thin slices), which uses no $`d_1`$ at all; and a round trip that backs each leg's vol out of the brute-force price by bisection (halving the search range until the price matches) and rebuilds RR and BF from them. Strikes are found twice, by the closed form and by searching on delta. The bell-curve area is itself Simpson's rule written out, so nothing imported knows an answer. It also prints the Greeks, the vega estimates of Steps 3 and 4, every "what breaks" number and the chart points.
 
 ### Python
 
@@ -586,7 +604,7 @@ Lean proves that the three quotes give back exactly one set of three vols, and w
 
 - Take any ATM vol, risk reversal and butterfly, and any two wing vols. Then those wings give that RR and BF exactly when each wing follows the formulas above.
 - The matrix that turns the vols (put, ATM, call) into the quotes (ATM, RR, BF) has determinant 1. So the map can always be undone.
-- Take any ATM vol, RR and BF. Then both recovered wing vols are positive exactly when $\sigma_{\text{ATM}} + \text{BF} > \tfrac12|\text{RR}|$.
+- Take any ATM vol, RR and BF. Then both recovered wing vols are positive exactly when $`\sigma_{\text{ATM}} + \text{BF} > \tfrac12|\text{RR}|`$.
 - On the house quotes, ATM 10.00, RR −1.00 and BF +0.25 give a call vol of 9.75 and a put vol of 10.75.
 - Those two vols rebuild RR −1.00 and BF +0.25, and both house wings pass the positive-wings test.
 - Putting the whole RR on each wing leaves the wings 2.00 vol points apart, twice the quote.

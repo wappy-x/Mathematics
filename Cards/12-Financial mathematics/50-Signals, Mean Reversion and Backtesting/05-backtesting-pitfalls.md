@@ -37,46 +37,52 @@ Read it from the bottom. The honest backtest keeps the failed firms and charges 
 
 The Sharpe ratio, for a strategy measured day by day:
 
-$$\mathrm{SR} = \sqrt{252}\;\frac{\bar R}{s}$$
+```math
+\mathrm{SR} = \sqrt{252}\;\frac{\bar R}{s}
+```
 
 **Read it aloud:** the Sharpe ratio is the average daily return divided by the spread of daily returns, times the square root of 252, the number of trading days in a year.
 
-The model market pays no interest, so $\bar R$ is already the return above cash; with a real cash rate, subtract it first. The square root turns a daily ratio into a yearly one: over a year the average grows 252-fold, the spread only $\sqrt{252}$-fold ([The fundamental law](04-information-coefficient-and-the-fundamental-law.md) uses the same scaling for breadth).
+The model market pays no interest, so $`\bar R`$ is already the return above cash; with a real cash rate, subtract it first. The square root turns a daily ratio into a yearly one: over a year the average grows 252-fold, the spread only $`\sqrt{252}`$-fold ([The fundamental law](04-information-coefficient-and-the-fundamental-law.md) uses the same scaling for breadth).
 
-A backtest's average is the live average plus whatever the replay credits that trading could not earn. Call each such slice a **phantom gain**, $G$, with a subscript naming the pitfall:
+A backtest's average is the live average plus whatever the replay credits that trading could not earn. Call each such slice a **phantom gain**, $`G`$, with a subscript naming the pitfall:
 
-$$\bar R_{\text{backtest}} = \bar R_{\text{live}} + G_{\text{look}} + G_{\text{surv}} + G_{\text{cost}}$$
+```math
+\bar R_{\text{backtest}} = \bar R_{\text{live}} + G_{\text{look}} + G_{\text{surv}} + G_{\text{cost}}
+```
 
 **Read it aloud:** the average a backtest reports is the average a live strategy earns, plus the look-ahead gain, the survivor gain and the costs never charged.
 
-Since the pitfalls leave the spread $s$ almost unchanged, each phantom gain moves the Sharpe ratio by itself:
+Since the pitfalls leave the spread $`s`$ almost unchanged, each phantom gain moves the Sharpe ratio by itself:
 
-$$\mathrm{SR}_{\text{backtest}} - \mathrm{SR}_{\text{live}} \;\approx\; \frac{\sqrt{252}}{s}\,\bigl(G_{\text{look}} + G_{\text{surv}} + G_{\text{cost}}\bigr)$$
+```math
+\mathrm{SR}_{\text{backtest}} - \mathrm{SR}_{\text{live}} \;\approx\; \frac{\sqrt{252}}{s}\,\bigl(G_{\text{look}} + G_{\text{surv}} + G_{\text{cost}}\bigr)
+```
 
-Here $s$ is 26.35 bp a day, so $\sqrt{252}/s$ is 0.60: **every phantom basis point a day adds 0.60 to the Sharpe ratio.** Costs never charged are worth 1.21 bp a day, 0.73 of Sharpe. Firms deleted from the data are worth 1.28 bp a day, 0.77 of Sharpe. Together, 2.08 falls to 0.57.
+Here $`s`$ is 26.35 bp a day, so $`\sqrt{252}/s`$ is 0.60: **every phantom basis point a day adds 0.60 to the Sharpe ratio.** Costs never charged are worth 1.21 bp a day, 0.73 of Sharpe. Firms deleted from the data are worth 1.28 bp a day, 0.77 of Sharpe. Together, 2.08 falls to 0.57.
 
-Regime change is not a phantom gain. It is the live average itself moving: the ten-year $\bar R$ blends a regime that paid with one that does not.
+Regime change is not a phantom gain. It is the live average itself moving: the ten-year $`\bar R`$ blends a regime that paid with one that does not.
 
 | Symbol | Plain meaning | In our example | Push it up and the backtest's Sharpe ratio… |
 | --- | --- | --- | --- |
-| $\mathrm{SR}$ | Sharpe ratio: average return per unit of wobble, per year | 2.08 careless, 0.57 honest | — |
-| $\bar R$ | average daily return of the book | 3.45 bp careless, 0.95 bp honest | rises in proportion |
-| $s$ | spread (standard deviation) of the daily return | 26.35 bp | falls |
-| $G$ | phantom gain: daily return credited that trading cannot earn | 1.21 bp costs, 1.28 bp survivors | rises 0.60 per bp a day |
-| $e$ | edge: expected daily gain of one bet | 5.48 bp, years 1–5 | rises |
-| $\gamma$ | covariance of the signal with the return its bet collects (gamma) | −0.480 %^2, years 1–5 | a larger negative value, a larger edge |
-| $S$ | the signal: a stock's change in log price over its last 20 trading days | centred on 0 for a healthy stock | — |
-| $\sigma_S$ | spread of the 20-day signal (sigma S) | 6.99% | falls: the edge is diluted |
-| $b$ | carry-over: the share of a mispricing still there the next day | 0.5 | rises here: 0.8 gives 1.22 honest |
-| $\mu$ | daily drift of a failing firm in its last 250 trading days (mu) | −0.5% | a steeper fall (more negative) grows the survivor gain |
-| $p$ | chance a bet flips from long to short, or back, on a given day | 0.1325, years 1–5 | falls, once costs are charged |
-| $N(x)$ | bell-curve area to the left of $x$, a probability | $N(-1.431) = 0.0762$ | — |
+| $`\mathrm{SR}`$ | Sharpe ratio: average return per unit of wobble, per year | 2.08 careless, 0.57 honest | — |
+| $`\bar R`$ | average daily return of the book | 3.45 bp careless, 0.95 bp honest | rises in proportion |
+| $`s`$ | spread (standard deviation) of the daily return | 26.35 bp | falls |
+| $`G`$ | phantom gain: daily return credited that trading cannot earn | 1.21 bp costs, 1.28 bp survivors | rises 0.60 per bp a day |
+| $`e`$ | edge: expected daily gain of one bet | 5.48 bp, years 1–5 | rises |
+| $`\gamma`$ | covariance of the signal with the return its bet collects (gamma) | −0.480 %^2, years 1–5 | a larger negative value, a larger edge |
+| $`S`$ | the signal: a stock's change in log price over its last 20 trading days | centred on 0 for a healthy stock | — |
+| $`\sigma_S`$ | spread of the 20-day signal (sigma S) | 6.99% | falls: the edge is diluted |
+| $`b`$ | carry-over: the share of a mispricing still there the next day | 0.5 | rises here: 0.8 gives 1.22 honest |
+| $`\mu`$ | daily drift of a failing firm in its last 250 trading days (mu) | −0.5% | a steeper fall (more negative) grows the survivor gain |
+| $`p`$ | chance a bet flips from long to short, or back, on a given day | 0.1325, years 1–5 | falls, once costs are charged |
+| $`N(x)`$ | bell-curve area to the left of $`x`$, a probability | $`N(-1.431) = 0.0762`$ | — |
 
 A %^2 is a percent times a percent: the unit of a variance of returns quoted in percent.
 
 ### When it holds
 
-- **Daily returns roughly independent.** The $\sqrt{252}$ scaling assumes it; returns that trend or reverse from day to day make the yearly figure wrong, and Lo (2002) gives the correction.
+- **Daily returns roughly independent.** The $`\sqrt{252}`$ scaling assumes it; returns that trend or reverse from day to day make the yearly figure wrong, and Lo (2002) gives the correction.
 - **The spread barely moves between backtests.** Here it is 26.340 bp careless, 26.352 bp honest, so the ledger adds up. A pitfall that also changes the risk breaks the simple sum.
 - **The sizes belong to this model market.** Real pitfalls differ in size, not in direction: each makes the replay look better than trading would.
 - **The past average describes the future.** Regime change is where this fails: the ten-year 0.57 describes neither half.
@@ -93,30 +99,32 @@ One phantom basis point is invisible in any single day, against a daily spread o
 
 ### Step 1: where the edge comes from
 
-Each company's log price (the natural log of its price, so daily changes are close to percentage returns) is two parts added together. Its **fundamental value** wanders at random, 1.5 percent a day, with no memory. Its **mispricing** keeps half of itself each day, $b = 0.5$, and takes a fresh random shock of 1.2 percent a day. This is the discrete version of the pull-back process on [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md).
+Each company's log price (the natural log of its price, so daily changes are close to percentage returns) is two parts added together. Its **fundamental value** wanders at random, 1.5 percent a day, with no memory. Its **mispricing** keeps half of itself each day, $`b = 0.5`$, and takes a fresh random shock of 1.2 percent a day. This is the discrete version of the pull-back process on [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md).
 
-A stock that rose over 20 days is, on average, carrying some upward mispricing. The mispricing then decays, so the price tends to fall back. The rule bets on that: short after a rise, long after a fall. The **signal** $S$ is the 20-day change in log price; each bet is minus the sign of $S$, times the return the bet then collects.
+A stock that rose over 20 days is, on average, carrying some upward mispricing. The mispricing then decays, so the price tends to fall back. The rule bets on that: short after a rise, long after a fall. The **signal** $`S`$ is the 20-day change in log price; each bet is minus the sign of $`S`$, times the return the bet then collects.
 
 For two quantities that each follow a bell curve, an exact identity gives the average of such a sign bet:
 
-$$e = \sqrt{2/\pi}\;\frac{\lvert\gamma\rvert}{\sigma_S}$$
+```math
+e = \sqrt{2/\pi}\;\frac{\lvert\gamma\rvert}{\sigma_S}
+```
 
-In words: the edge is the covariance between signal and return (how much the two move together), divided by the signal's spread, times $\sqrt{2/\pi} = 0.798$. The covariance is negative: a high signal comes before a low return.
+In words: the edge is the covariance between signal and return (how much the two move together), divided by the signal's spread, times $`\sqrt{2/\pi} = 0.798`$. The covariance is negative: a high signal comes before a low return.
 
-For years 1 to 5 the covariance is $\gamma = -0.480$ %^2 and the signal's spread is $\sigma_S = 6.99$ percent. The edge is 5.48 bp per bet per day.
+For years 1 to 5 the covariance is $`\gamma = -0.480`$ %^2 and the signal's spread is $`\sigma_S = 6.99`$ percent. The edge is 5.48 bp per bet per day.
 
 <details>
 <summary>Detailed proof: the sign-bet identity and the covariance</summary>
 
-**The identity.** The signal $S$ follows a bell curve with some centre and spread $\sigma_S$; the return the bet collects follows a bell curve centred on zero. Split the return into two parts: $\gamma/\sigma_S^2$ times the signal's distance from its centre, plus a leftover unrelated to the signal. The leftover averages to zero against anything that depends only on the signal. So the average of $\operatorname{sign}(S)$ times the return is $\gamma/\sigma_S^2$ times the average of $\operatorname{sign}(S)$ times the distance from the centre.
+**The identity.** The signal $`S`$ follows a bell curve with some centre and spread $`\sigma_S`$; the return the bet collects follows a bell curve centred on zero. Split the return into two parts: $`\gamma/\sigma_S^2`$ times the signal's distance from its centre, plus a leftover unrelated to the signal. The leftover averages to zero against anything that depends only on the signal. So the average of $`\mathrm{sign}(S)`$ times the return is $`\gamma/\sigma_S^2`$ times the average of $`\mathrm{sign}(S)`$ times the distance from the centre.
 
-Write the signal as its centre plus $\sigma_S z$, with $z$ a standard bell-curve draw. The sign switches where $z$ crosses a cut point. The average needed is $\sigma_S$ times the integral of $z$ times the bell-curve height, counted with a plus sign above the cut and a minus sign below. The height's slope is minus $z$ times the height, so each side integrates to the height at the cut: the total is $2\sigma_S$ times that height.
+Write the signal as its centre plus $`\sigma_S z`$, with $`z`$ a standard bell-curve draw. The sign switches where $`z`$ crosses a cut point. The average needed is $`\sigma_S`$ times the integral of $`z`$ times the bell-curve height, counted with a plus sign above the cut and a minus sign below. The height's slope is minus $`z`$ times the height, so each side integrates to the height at the cut: the total is $`2\sigma_S`$ times that height.
 
-The average of $\operatorname{sign}(S)$ times the return is therefore $2\gamma/\sigma_S$ times the height at the cut. For a healthy stock the signal is centred on zero, the cut is at zero, the height there is $1/\sqrt{2\pi}$, and $2/\sqrt{2\pi} = \sqrt{2/\pi}$. The bet is minus the sign and $\gamma$ is negative, so $e = \sqrt{2/\pi}\,\lvert\gamma\rvert/\sigma_S$. For a failing firm the return has a negative centre of its own, which gives Step 3's drift part, and the signal's centre sits below zero, which moves the cut and gives its edge part.
+The average of $`\mathrm{sign}(S)`$ times the return is therefore $`2\gamma/\sigma_S`$ times the height at the cut. For a healthy stock the signal is centred on zero, the cut is at zero, the height there is $`1/\sqrt{2\pi}`$, and $`2/\sqrt{2\pi} = \sqrt{2/\pi}`$. The bet is minus the sign and $`\gamma`$ is negative, so $`e = \sqrt{2/\pi}\,\lvert\gamma\rvert/\sigma_S`$. For a failing firm the return has a negative centre of its own, which gives Step 3's drift part, and the signal's centre sits below zero, which moves the cut and gives its edge part.
 
-**The covariance.** The mispricing's steady variance is the shock's variance divided by $1 - b^2$: $1.2^2 / 0.75 = 1.920$ %^2. Its covariance with itself some days apart is that variance times $b$ raised to the number of days. The fundamental has no memory, so only the mispricing links the 20-day signal to a later day's return. Writing the signal and the return as differences of mispricings leaves four covariances, and they collapse to $-1.920 \times b(1-b)(1 - b^{20})$ for a return collected two days after the signal: $-1.920 \times 0.5 \times 0.5 = -0.480$ %^2. For a return collected the next day one factor of $b$ is missing: $-0.960$ %^2.
+**The covariance.** The mispricing's steady variance is the shock's variance divided by $`1 - b^2`$: $`1.2^2 / 0.75 = 1.920`$ %^2. Its covariance with itself some days apart is that variance times $`b`$ raised to the number of days. The fundamental has no memory, so only the mispricing links the 20-day signal to a later day's return. Writing the signal and the return as differences of mispricings leaves four covariances, and they collapse to $`-1.920 \times b(1-b)(1 - b^{20})`$ for a return collected two days after the signal: $`-1.920 \times 0.5 \times 0.5 = -0.480`$ %^2. For a return collected the next day one factor of $`b`$ is missing: $`-0.960`$ %^2.
 
-**The signal's spread.** Twenty days of fundamental moves add $20 \times 1.5^2$ %^2 to the signal's variance. The mispricing at the two ends adds $2 \times 1.920 \times (1 - b^{20})$. The root of the sum is 6.99 percent.
+**The signal's spread.** Twenty days of fundamental moves add $`20 \times 1.5^2`$ %^2 to the signal's variance. The mispricing at the two ends adds $`2 \times 1.920 \times (1 - b^{20})`$. The root of the sum is 6.99 percent.
 
 </details>
 
@@ -124,7 +132,7 @@ The average of $\operatorname{sign}(S)$ times the return is therefore $2\gamma/\
 
 The signal needs Monday's closing price, which exists only once the market has shut. In this one-price-a-day model, the first price a trade decided on Monday evening can get is Tuesday's close. The bet then collects the return from Tuesday's close to Wednesday's.
 
-A replay that fills at Monday's close collects Monday-to-Tuesday instead. That day is closer to the signal, so more of the mispricing is still there to decay. The covariance loses one factor of $b$ and doubles: $-0.960$ %^2 against $-0.480$. The edge doubles too, to 10.96 bp. The Sharpe ratio of the careless replay goes from 2.08 to 4.12.
+A replay that fills at Monday's close collects Monday-to-Tuesday instead. That day is closer to the signal, so more of the mispricing is still there to decay. The covariance loses one factor of $`b`$ and doubles: $`-0.960`$ %^2 against $`-0.480`$. The edge doubles too, to 10.96 bp. The Sharpe ratio of the careless replay goes from 2.08 to 4.12.
 
 That is **look-ahead bias**: using, at the moment of a decision, information or prices only available later. This version is mild, one day's slip in the fill; a replay whose signal sees the return it trades does far worse. The fix is the same: for every trade, record when each input was known and when the fill happened.
 
@@ -132,9 +140,9 @@ That is **look-ahead bias**: using, at the moment of a decision, information or 
 
 The careless replay uses today's list of 50 companies, with histories filled in backwards. Fifteen of the 50 slots had held a company that failed during the ten years and was replaced. Failed companies are not on today's list, so the replay never trades them. That is **survivorship bias**: testing only on what survived.
 
-In the model, a failing company falls 0.5 percent a day, $\mu = -0.005$, for its last 250 trading days. Once the fall fills the 20-day window, the signal's centre is $20 \times (-0.5\%) = -10$ percent, which is 1.431 signal spreads below zero. The chance the signal reads "up" is then $N(-1.431) = 0.0762$. So the rule is long on 92.38 percent of days, buying a stock that falls 0.5 percent a day.
+In the model, a failing company falls 0.5 percent a day, $`\mu = -0.005`$, for its last 250 trading days. Once the fall fills the 20-day window, the signal's centre is $`20 \times (-0.5\%) = -10`$ percent, which is 1.431 signal spreads below zero. The chance the signal reads "up" is then $`N(-1.431) = 0.0762`$. So the rule is long on 92.38 percent of days, buying a stock that falls 0.5 percent a day.
 
-The expected loss per day on that bet is the fall times how lopsided the positions are: $0.5\% \times (0.9238 - 0.0762)$, a drift part of −42.38 bp. The usual reversal edge adds back 1.97 bp. Net: −40.41 bp a day, against +5.48 bp for a healthy stock.
+The expected loss per day on that bet is the fall times how lopsided the positions are: $`0.5\% \times (0.9238 - 0.0762)`$, a drift part of −42.38 bp. The usual reversal edge adds back 1.97 bp. Net: −40.41 bp a day, against +5.48 bp for a healthy stock.
 
 <details>
 <summary>Why a reversal rule is hurt most</summary>
@@ -149,11 +157,13 @@ Spread over the whole book and the ten years, deleting the failures adds a phant
 
 A bet stays on its side until the 20-day signal crosses zero. The chance that today's signal and yesterday's have opposite signs is
 
-$$p = \frac{1}{\pi}\arccos(\text{correlation of today's signal with yesterday's})$$
+```math
+p = \frac{1}{\pi}\arccos(\text{correlation of today's signal with yesterday's})
+```
 
-This is Sheppard's rule for two bell-curve quantities: the chance their signs differ is the angle between them, as a share of a half-turn. Today's and yesterday's signal share 19 of their 20 days, so $p$ is small: 0.1325 in years 1 to 5, 0.1103 in years 6 to 10.
+This is Sheppard's rule for two bell-curve quantities: the chance their signs differ is the angle between them, as a share of a half-turn. Today's and yesterday's signal share 19 of their 20 days, so $`p`$ is small: 0.1325 in years 1 to 5, 0.1103 in years 6 to 10.
 
-Each flip closes a 1/50 position and opens one on the other side: 2/50 of the book traded. Across 50 stocks the book trades $2p$ of itself a day, 0.2428 on average over the ten years; the simulation counts 0.2423. At 5 bp per unit traded, that is 1.214 bp a day, worth 0.731 of Sharpe when a replay skips it. Against a ten-year edge of 3.45 bp a day, a rule that trades a quarter of its book daily lives or dies on its cost.
+Each flip closes a 1/50 position and opens one on the other side: 2/50 of the book traded. Across 50 stocks the book trades $`2p`$ of itself a day, 0.2428 on average over the ten years; the simulation counts 0.2423. At 5 bp per unit traded, that is 1.214 bp a day, worth 0.731 of Sharpe when a replay skips it. Against a ten-year edge of 3.45 bp a day, a rule that trades a quarter of its book daily lives or dies on its cost.
 
 A flat 5 bp is the simplest cost model. Real costs rise with trade size, because large orders move the price against themselves (**market impact**). So the net Sharpe ratio also falls as more money runs the rule; the size at which the net edge reaches zero is the rule's **capacity**.
 
@@ -180,7 +190,7 @@ A **walk-forward test** exposes it: decide on the rule using only an early windo
 
 ### The other road: simulate the market
 
-Every figure above comes from formulas, with one shortcut: failing firms are charged the healthy flip rate, which overcharges the honest backtest by about 0.02 bp a day, 0.01 of Sharpe. The second road ignores the formulas: it generates 40 ten-year histories of the 50 companies and 15 failures, runs all five backtests on each, and pools 400 years of daily returns. It never uses $\gamma$, $\sigma_S$, $N(x)$ or the arccos rule, and the exact road never draws a random number. They agree within the simulation's noise.
+Every figure above comes from formulas, with one shortcut: failing firms are charged the healthy flip rate, which overcharges the honest backtest by about 0.02 bp a day, 0.01 of Sharpe. The second road ignores the formulas: it generates 40 ten-year histories of the 50 companies and 15 failures, runs all five backtests on each, and pools 400 years of daily returns. It never uses $`\gamma`$, $`\sigma_S`$, $`N(x)`$ or the arccos rule, and the exact road never draws a random number. They agree within the simulation's noise.
 
 ---
 
@@ -190,23 +200,23 @@ Years 1 to 5 of the careless replay (survivors, no costs), then the ten years, t
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| mispricing's steady variance | $1.2^2 \div (1 - 0.5^2)$ | 1.920 %^2 |
-| covariance $\gamma$, signal with the return two days on | $-1.920 \times 0.5 \times 0.5$ | −0.480 %^2 |
-| signal spread $\sigma_S$ | $\sqrt{20 \times 1.5^2 + 2 \times 1.920}$ | 6.99% |
-| edge per bet $e$ | $0.798 \times 0.480 \div 6.99$ percent | 5.48 bp |
-| one bet's daily spread | $\sqrt{1.5^2 + 2 \times 1.920 \times 0.5}$ percent | 2.04% |
-| the book's daily spread $s$ | $2.04\% \div \sqrt{50}$ | 28.9 bp |
-| Sharpe ratio, years 1–5 | $15.87 \times 5.48 \div 28.9$ | 3.01 |
+| mispricing's steady variance | $`1.2^2 \div (1 - 0.5^2)`$ | 1.920 %^2 |
+| covariance $`\gamma`$, signal with the return two days on | $`-1.920 \times 0.5 \times 0.5`$ | −0.480 %^2 |
+| signal spread $`\sigma_S`$ | $`\sqrt{20 \times 1.5^2 + 2 \times 1.920}`$ | 6.99% |
+| edge per bet $`e`$ | $`0.798 \times 0.480 \div 6.99`$ percent | 5.48 bp |
+| one bet's daily spread | $`\sqrt{1.5^2 + 2 \times 1.920 \times 0.5}`$ percent | 2.04% |
+| the book's daily spread $`s`$ | $`2.04\% \div \sqrt{50}`$ | 28.9 bp |
+| Sharpe ratio, years 1–5 | $`15.87 \times 5.48 \div 28.9`$ | 3.01 |
 | years 6–10, same steps with a 0.6% shock | edge 1.41 bp, spread 23.4 bp | 0.96 |
-| ten-year average $\bar R$ | $(5.48 + 1.41) \div 2$ | 3.45 bp |
-| ten-year spread $s$ | both halves' spreads, plus the gap between their averages | 26.34 bp |
-| **careless Sharpe ratio** | $15.87 \times 3.446 \div 26.34$ | **2.08** |
-| costs, $G_{\text{cost}}$ | $0.2428 \times 5$ bp | 1.21 bp |
-| survivors, $G_{\text{surv}}$ | from Step 3 | 1.28 bp |
-| honest average | $3.446 - 1.214 - 1.281$ | 0.95 bp |
-| **honest Sharpe ratio** | $15.87 \times 0.952 \div 26.35$ | **0.57** |
+| ten-year average $`\bar R`$ | $`(5.48 + 1.41) \div 2`$ | 3.45 bp |
+| ten-year spread $`s`$ | both halves' spreads, plus the gap between their averages | 26.34 bp |
+| **careless Sharpe ratio** | $`15.87 \times 3.446 \div 26.34`$ | **2.08** |
+| costs, $`G_{\text{cost}}`$ | $`0.2428 \times 5`$ bp | 1.21 bp |
+| survivors, $`G_{\text{surv}}`$ | from Step 3 | 1.28 bp |
+| honest average | $`3.446 - 1.214 - 1.281`$ | 0.95 bp |
+| **honest Sharpe ratio** | $`15.87 \times 0.952 \div 26.35`$ | **0.57** |
 
-Here 15.87 is $\sqrt{252}$. An honest 0.57 over ten years, from a rule that reported 2.08, and only 1.62 then −0.70 once the ten years are split.
+Here 15.87 is $`\sqrt{252}`$. An honest 0.57 over ten years, from a rule that reported 2.08, and only 1.62 then −0.70 once the ten years are split.
 
 ### What breaks if you drop a piece
 
@@ -214,7 +224,7 @@ The pitfalls themselves are the ledger above. These are mistakes in reading the 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Annualise with 365 days | 0.69 | Markets trade 252 days a year; $\sqrt{365}$ inflates the ratio by a fifth |
+| Annualise with 365 days | 0.69 | Markets trade 252 days a year; $`\sqrt{365}`$ inflates the ratio by a fifth |
 | Multiply the daily ratio by 252, not its root | 9.11 | The average grows with time, the spread only with its square root |
 | Report only years 1–5 | 1.62 | The years that paid are over; years 6–10 score −0.70 |
 
@@ -616,11 +626,11 @@ The two outputs match line for line: the same generator gives both programs the 
 
 Lean proves the ledger exactly for any daily returns, proves the sign-bet identity for any cut point, and checks the worked numbers.
 
-- Suppose a backtest adds phantom gains to each day's live return, and its spread $s$ matches the live spread. Then its average is the live average plus the phantom averages.
-- In that case, its Sharpe ratio exceeds the live one by exactly $\sqrt{252}/s$ times the sum of the phantom averages.
-- Take the same phantom gain $G$ added to every day. Then the spread is exactly unchanged, and the Sharpe ratio rises by $\sqrt{252}\,G/s$.
-- Take a standard bell-curve draw $z$ and a cut point $c$. Then the sign bet, plus above $c$ and minus below, averages twice the bell-curve height at $c$.
-- At the cut $c = 0$, twice the height is exactly $\sqrt{2/\pi}$, the 0.798 in the edge formula.
+- Suppose a backtest adds phantom gains to each day's live return, and its spread $`s`$ matches the live spread. Then its average is the live average plus the phantom averages.
+- In that case, its Sharpe ratio exceeds the live one by exactly $`\sqrt{252}/s`$ times the sum of the phantom averages.
+- Take the same phantom gain $`G`$ added to every day. Then the spread is exactly unchanged, and the Sharpe ratio rises by $`\sqrt{252}\,G/s`$.
+- Take a standard bell-curve draw $`z`$ and a cut point $`c`$. Then the sign bet, plus above $`c`$ and minus below, averages twice the bell-curve height at $`c`$.
+- At the cut $`c = 0`$, twice the height is exactly $`\sqrt{2/\pi}`$, the 0.798 in the edge formula.
 - The arithmetic for 1.920 %^2, −0.480 %^2, −40.41 bp and 1.214 bp of costs also checks.
 
 The Sharpe ratios of the five backtests, the survivor gain and the simulation are left to the Python and Rust checks.
